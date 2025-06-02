@@ -36,7 +36,7 @@ For HTML sites, you can also load CSS via CDN.
 import { Box, Text, ... } from 'lism-css/react';
 
 // ...
-<Box p={20} bgc="base-2">
+<Box p='20' bgc="base-2">
 	<Text fz="l">Lorem ipsum text...</Text>
 </Box>
 // ...

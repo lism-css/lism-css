@@ -1,0 +1,23 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { Lism, Box, Text, Flex, Dummy, Container, Icon } from 'lism-css/astro';
+import AstroIcon from '../icons/astro-icon.astro';
+---
+
+<Layout title='Lism with Astro.'>
+	<Lism hasGutter bgc='base-2' py='30'>
+		<Flex ai='c' g='20'>
+			<Icon icon={AstroIcon} fz='3rem' />
+			<h1>Lism with Astro</h1>
+		</Flex>
+		<Text fz='xs'>This site is a playground for testing <code>@lism-ui/astro</code></Text>
+	</Lism>
+	<Container size='m' hasGutter isFlow mbs='50'>
+		<Dummy length='l' />
+		<Flex g={['20', '30', '40']} p={['20', '30', '40']} bd>
+			<Box lh='1' p='30' bd>1</Box>
+			<Box lh='1' p='30' bd>2</Box>
+			<Box lh='1' p='30' bd>3</Box>
+		</Flex>
+	</Container>
+</Layout>
