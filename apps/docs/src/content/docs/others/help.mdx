@@ -1,0 +1,288 @@
+---
+title: 'こんな時は？'
+description: ...
+---
+
+import { Box, Flex, Stack, Grid, Center, Layer, Frame, Container, Media, Text, Dummy, Lism } from 'lism-css/astro';
+import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage, Callout } from "~/components";
+
+
+よくあるつまづきポイントの対処法
+
+
+## Flexの要素が横に飛び出してしまう場合の対処法
+
+改行位置がない長い文字列があると、画面幅が狭い時に要素が外側へはみ出してしまうことがあります。
+
+そのような場合は、原因となる要素に`.-ovw:any`（`overflow-wrap: anywhere` のユーティリティクラス）を付けてください。
+
+
+<Preview>
+	<PreviewTitle>
+		画面幅が狭い時に横にはみ出す例(resizeして確認してください)
+	</PreviewTitle>
+	<PreviewArea resize p={40}>
+		<Flex g='20' className='has--itemGuide'>
+			<p>LooooooooooooongStrinnnnnnnnnnngs!!!!</p>
+			<p>AAA</p>
+			<p>BBB</p>
+			<p>CCC</p>
+		</Flex>
+	</PreviewArea>
+	
+	<PreviewCode>
+		```jsx
+		<Flex g='20'>
+			<p>LooooooooooooongStrinnnnnnnnnnngs!!!!</p>
+			<p>AAA</p>
+			<p>BBB</p>
+			<p>CCC</p>
+		</Flex>
+		```
+	</PreviewCode>
+</Preview>
+
+<Preview>
+	<PreviewTitle>
+		はみ出す原因となるテキストに `-ovw:any` を適用
+	</PreviewTitle>
+	<PreviewArea resize p='20'>
+		<Flex g='20' className='has--itemGuide'>
+			<Text className='-ovw:any'>LooooooooooooongStriiiinnnnnnnnnnngs!!!!</Text>
+			<p>AAA</p>
+			<p>BBB</p>
+			<p>CCC</p>
+		</Flex>
+	</PreviewArea>
+	<PreviewCode slot='tab' label='JSX'>
+	```jsx
+		<Flex g='20'>
+			<Text className='-ovw:any'>LooooooooooooongStriiiinnnnnnnnnnngs!!!!</Text>
+			<Text>AAA</Text>
+			<Text>BBB</Text>
+			<Text>CCC</Text>
+		</Flex>
+	```
+	</PreviewCode>
+	<PreviewCode slot='tab' label='HTML'>
+	```jsx
+	<div class="l--flex -g:20">
+		<p class="-ovw:any">LooooooooooooongStriiiinnnnnnnnnnngs!!!!</p>
+		<p>AAA</p>
+		<p>BBB</p>
+		<p>CCC</p>
+	</div>
+	```
+	</PreviewCode>
+</Preview>
+
+
+
+## Heroエリアで子要素の`minH`に`%`を使う方法
+
+{/* - l-stack(flex)の場合
+	- Heroの高さを h でセット→ HeroContent は h も minH,maxH も fxb も % が使用できる.
+	- Heroの高さを minH でセット → HeroContent は h も minH,maxH もfxb も % は無効になる。
+	- Heroのアスペクト比をセット→ HeroContent は h も minH,maxH も fxb も % が使用できる.
+		- minH, fxb を使うと、小さいウインドウではコンテンツに合わせてHeroの高さが可変する。
+		- h,maxH を使うと、小さいウインドウではHeroContentの高さが外に溢れていく（ovy='auto'で内部スクロールできる）
+- l-gridの場合
+	- 何で高さを確保しても、HeroContent の高さは%が使える。
+	- が、そのさらに子要素のhに%を使うには、結局 HeroContent をGrid にする必要がある。Layerを使ってもこれは一緒。
+	（ HeroContent 自体を色々装飾するとpaddingの位置が問題になってくるので、HeroContentの子要素の高さに%をつかえるのが大事。）
+
+→ 子要素に%を使うための複雑性はあまりかわらないので、その他の運用がシンプルになる stack の構成で決定。 */}
+
+{/* -  */}
+
+{/* Hero 自体の高さを`height`で固定している場合は、普通に子要素であるHeroContentや、そのさらに子要素の`height`や`min-height`にも`%`を使うことができます。
+
+<Preview>
+	<PreviewTitle>親の高さが`h`で指定されるケース</PreviewTitle>
+	<PreviewArea resize>
+		<Stack isFullwide h='400px' bgc='base-2'>
+			<Box h='50%' my='auto' px='40'>
+				<Center h='100%' bgc='base' bxsh='1'>
+					<Text fw='bold'>Height 50%</Text>
+				</Center>
+			</Box>
+		</Stack>
+	</PreviewArea>
+	<PreviewCode>
+		```jsx "h='400px'" "h='50%'"
+		<Stack isFullwide h='400px' bgc='base-2'>
+			<Box h='50%' my='auto' px='40'>
+				<Center h='100%' bgc='base' bxsh='1'>
+					<Text fw='bold'>Height 50%</Text>
+				</Center>
+			</Box>
+		</Stack>
+		```
+	</PreviewCode>
+</Preview> */}
+
+
+最低限の高さを確保しつつ、ウインドウが狭い時にコンテンツに合わせて高さを伸ばしたいケースについて。
+
+Heroコンテンツの高さを `min-height` や `aspect-ratio` で指定する場合、子要素の `height` や `min-height` に%を指定しても無効になってしまいます。
+
+{/* (ウインドウ幅が広い時は特定の高さに制限したいが、ウインドウ幅が狭くなって内部のコンテンツ量がはみ出す時は高さが伸びてくれるようなレイアウトを作りたいケース。)
+
+基本的に、`min-height`を指定した要素の子要素では、`height`や`min-height`に`%`を使っても無効となります。 */}
+
+
+<Preview>
+	<PreviewTitle>NG例</PreviewTitle>
+	<PreviewArea resize>
+		<Stack isFullwide minH='400px' bgc='base-2'>
+			<Box minH='50%' my='auto' bgc='base' p='20' px='40' ac='c'>
+				<Text fw='bold'>minH:50%が効かない</Text>
+				<Dummy length='s' />
+			</Box>
+		</Stack>
+	</PreviewArea>
+	<PreviewCode>
+		```jsx "minH='400px'" "minH='50%'"
+		<Stack isFullwide minH='400px' bgc='base-2'>
+			<Box minH='50%' my='auto' bgc='base' p='20' px='40' ac='c'>
+				<Text fw='bold'>minH:50%が効かない</Text>
+				<Dummy length='s' />
+			</Box>
+		</Stack>
+		```
+	</PreviewCode>
+</Preview>
+
+
+このため、少し工夫が必要です。
+
+<Preview>
+	<PreviewTitle>改善例</PreviewTitle>
+	<PreviewArea resize>
+		<Stack isFullwide minH='400px' bgc='base-2'>
+			<Box d='grid' fxg='1' ai='c' px='40'>
+				<Center minH='50%' bgc='base' p='30' bxsh='1'>
+					<Text fw='bold'>OK</Text>
+					<Dummy length='s' />
+				</Center>
+			</Box>
+		</Stack>
+	</PreviewArea>
+	<PreviewCode>
+		```jsx "d='grid'" "fxg='1' ai='c'" "minH='50%'"
+		<Stack isFullwide minH='400px' bgc='base-2'>
+			<Box d='grid' fxg='1' ai='c' px='40'>
+				<Center minH='50%' bgc='base' p='30' bxsh='1'>
+					<Text fw='bold'>OK</Text>
+					<Dummy length='s' />
+				</Center>
+			</Box>
+		</Stack>
+		```
+	</PreviewCode>
+</Preview>
+
+
+1. 親要素が`Stack` で構成されているので、子要素であるコンテンツの`flex-grow`を`1`にして高さを親に合わせて伸ばします。
+2. 子要素を`grid`にすることで、さらにその子要素で`height`や`min-height`に`%`を使えるようにします。  
+	（この時、その子要素を中央寄せ等にしないと`stretch`が適用されて高さが伸びることに注意してください。）
+	{/* - grid要素に`align-items:center`などを指定する。
+	- grid要素の子要素に`margin-block:auto` か `align-self:center`を指定する。 */}
+
+
+{/* `type="stretch"`を指定すると上記の工程を手軽に呼び出せます。（`as={Grid} fxg='1' ai='center'` をセットする） */}
+
+
+<Preview>
+	<PreviewTitle>活用例</PreviewTitle>
+	<PreviewArea resize>
+		<Stack isFullwide pos='r' minH='50vh'>
+			<Frame isLayer>
+				<Media src='/img/img-3.jpg' alt='' width='960' height='640'/>
+			</Frame>
+			<Grid pos='r' fxg='1' ai='c' hasGutter>
+				<Center minH='50%' p='30' c='white' bgc='black:75%' bdrs='2' g='20'>
+					<Text fw='bold' fz='xl'>min-height 50%</Text>
+					<Dummy length='l' />
+				</Center>
+			</Grid>
+		</Stack>
+	</PreviewArea>
+	<PreviewCode>
+		```jsx
+		<Stack isFullwide pos='r' minH='50vh'>
+			<Frame isLayer>
+				<Media src='/img/img-3.jpg' alt='' width='960' height='640'/>
+			</Frame>
+			<Grid fxg='1' ai='c' hasGutter>
+				<Center minH='50%' p='30' c='white' bgc='black:75%' bdrs='2' g='20'>
+					<Text fw='bold' fz='xl'>min-height 50%</Text>
+					<Dummy length='l' />
+				</Center>
+			</Grid>
+		</Stack>
+		```
+	</PreviewCode>
+</Preview>
+
+
+
+
+{/* ### Flexの子要素として使用する場合の注意点
+
+Flexの子要素でFrameを使用する場合、 `align-items:stretch;`の影響に注意してください。
+
+他の兄弟要素の高さの方が高い場合、そちらと同じ高さになってしまうため、それを回避したい場合は`align-items`を調整するか、Frame要素をさらにBoxで囲むなどの対処が必要です。
+
+<Preview>
+	<PreviewTitle>コンテンツ側の高さと揃っている例</PreviewTitle>
+	<PreviewArea resize p={20}>
+		<Flex g={20}>
+			<Frame ar='3/2'>
+				<Media src='/img/img-1.jpg' alt='' width='960' height='640' />
+			</Frame>
+			<Box bgc='base-2'>
+				<Dummy length='l' p='30' />
+			</Box>
+		</Flex>
+	</PreviewArea>
+	<PreviewCode slot='tab' label='JSX'>
+		```jsx "3/2" "3/2"
+		<Flex g={20}>
+			<Frame ar='3/2'>
+				<Media src='/img/img-1.jpg' alt='' width='960' height='640' />
+			</Frame>
+			<Box bgc='base-2'>
+				<Dummy length='l' p='30' />
+			</Box>
+		</Flex>
+		```
+	</PreviewCode>
+</Preview> */}
+
+{/* 
+<Preview>
+	<PreviewTitle>対処例（親のFlex要素を`align-items:start;`にする）</PreviewTitle>
+	<PreviewArea resize p={20}>
+		<Flex ai='start' g={20} fxw={['wrap', 'nowrap']}>
+			<Frame ar='3/2'>
+				<Media src='/img/img-1.jpg' alt='' width='960' height='640' />
+			</Frame>
+			<Box bgc='base-2'>
+				<Dummy length='xl' p='40' />
+			</Box>
+		</Flex>
+	</PreviewArea>
+	<PreviewCode slot='tab' label='JSX'>
+		```jsx "ai='start'"
+		<Flex ai='start' g={20} fxw={['wrap', 'nowrap']}>
+			<Frame ar='3/2'>
+				<Media src='/img/img-1.jpg' alt='' width='960' height='640' />
+			</Frame>
+			<Box bgc='base-2'>
+				<Dummy length='xl' p='40' />
+			</Box>
+		</Flex>
+		```
+	</PreviewCode>
+</Preview> */}

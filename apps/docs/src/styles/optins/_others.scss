@@ -1,0 +1,101 @@
+.-ar\:cinema {
+	aspect-ratio: 2.35/1;
+}
+.-ar\:silver {
+	aspect-ratio: 14.14/10;
+}
+.-ar\:bronze {
+	aspect-ratio: 33.03/10;
+}
+
+// --------------------
+// bd
+// --------------------
+.-bd\:guide {
+	--bds: dashed;
+	--bdc: rgba(160, 160, 160, 0.3);
+	border: var(--bd);
+	// border: 1px dashed rgba(160, 160, 160, 0.4);
+}
+
+// --------------------
+// keycol
+// --------------------
+// $colors: 'red', 'orange', 'yellow', 'green', 'blue', 'purple', 'pink', 'gray';
+// @each $c in $colors {
+// 	.-keycol\:#{$c} {
+// 		--keycol: var(--#{$c});
+// 	}
+// }
+
+// --------------------
+// Button offset
+// --------------------
+// :where(.c--button) {
+// 	--icon-scale: 1.25;
+// 	--icon-offset: 0%;
+// }
+
+// .c--button__icon {
+// 	&:where(:first-child) {
+// 		translate: calc(0px - var(--icon-offset));
+// 	}
+// 	&:where(:last-child) {
+// 		translate: var(--icon-offset);
+// 	}
+// }
+
+// --------------------
+// ...
+// --------------------
+
+// emoji
+// .l--icon--emoji {
+// 	font-family: var(--ff--emoji);
+// 	line-height: 1;
+// 	place-content: center; // justify-content: center;
+// 	place-items: center; // align-items: center;
+// }
+
+// .l--icon--mask {
+// 	width: 1em;
+// 	height: 1em;
+// 	background-color: currentColor;
+// 	mask: var(--icon-mask) no-repeat 50% 50% / contain;
+// }
+
+// --------------------
+// Accordion
+// --------------------
+.d--accordion__icon {
+	> .l--icon {
+		grid-area: 1 / 1;
+	}
+	> .l--icon:nth-last-of-type(2) {
+		opacity: var(--_isOpened, 0);
+	}
+	> .l--icon:nth-of-type(2) {
+		opacity: var(--_notOpened, 0);
+	}
+}
+
+// --------------------
+// data-role='trigger' だけをクリッカブルにする
+// --------------------
+.d--accordion__header:has(> [data-role='trigger']) {
+	pointer-events: none;
+}
+
+.d--accordion__label > a,
+.d--accordion__icon {
+	pointer-events: auto;
+}
+
+// --------------------
+// linkBoxのaltKey対応
+// --------------------
+.is--linkBox.-linkoff {
+	.u--overlayLink::before {
+		content: none;
+	}
+}

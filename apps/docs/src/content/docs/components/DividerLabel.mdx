@@ -1,0 +1,173 @@
+---
+title: 'DividerLabel'
+description: ...
+---
+
+import { Divider, Flex, Box, Stack, Text } from 'lism-css/astro';
+import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportSource } from "~/components";
+import DividerLabel from '~/components/ex/DividerLabel/index.astro';
+
+
+区切り線をラベルテキスト付きで描画するコンポーネントの作成例です。
+
+{/* <Preview>
+	<PreviewTitle>Preview</PreviewTitle>
+	<PreviewArea p='40'>
+		<DividerLabel>Label Text</DividerLabel>
+	</PreviewArea>
+	<PreviewCode slot='tab' label='JSX'>
+		```jsx
+		<DividerLabel>Label Text</DividerLabel>
+		```
+	</PreviewCode>
+	<PreviewCode slot='tab' label='HTML'>
+	```html
+	<div class="c--dividerLabel l--flex -ai:c -lh:1 -c:text-2 -g:30">
+		<div class="l--divider -bd:bs -fx:1" aria-hidden="true"></div>
+		<div class="c--dividerLabel__text">Label Text</div>
+		<div class="l--divider -bd:bs -fx:1" aria-hidden="true"></div>
+	</div>
+	```
+	</PreviewCode>
+</Preview>
+
+
+## Import
+<ImportSource name='DividerLabel' react astro/>
+
+## Props
+
+| プロパティ | 説明 |
+|---|---|
+|`textPosition`|ラベルテキストの位置。`start`,`end`を指定するとその方向にテキストが寄ります|
+| `bd`,`bdw`,`bds`,`bdc` | 区切り線のボーダープロパティ。 |
+ */}
+
+## Examples
+
+<Preview>
+	<PreviewTitle>例</PreviewTitle>
+	<PreviewArea p='30' >
+		<Box bgc='base-2' c='text-2' py='50' ta='c'>...Contents...</Box>
+		<Flex ai='c' g='30' lh='1'>
+			<Divider fx='1' />
+			<span>Label Text</span>
+			<Divider fx='1' />
+		</Flex> 
+		{/* <DividerLabel>Label Text</DividerLabel> */}
+		<Box bgc='base-2' c='text-2' py='50' ta='c'>...Contents...</Box>
+	</PreviewArea>
+	<PreviewCode>
+		```jsx {2-6}
+		<Box bgc='base-2' c='text-2' py='50' ta='c'>...Contents...</Box>
+		<Flex ai='c' g='30' lh='1'>
+			<Divider fx='1' />
+			<span>Label Text</span>
+			<Divider fx='1' />
+		</Flex> 
+		<Box bgc='base-2' c='text-2' py='50' ta='c'>...Contents...</Box>
+		```
+	</PreviewCode>
+</Preview>
+
+<Preview>
+	<PreviewTitle>例</PreviewTitle>
+	<PreviewArea p='30' >
+		<Box bgc='base-2' c='text-2' py='50' ta='c'>...Contents...</Box>
+		<Flex ai='c' g='30' lh='1'>
+			<span class='-fs:i'>Label Text</span>
+			<Divider fx='1' bdc='currentColor' op='mid' />
+		</Flex> 
+		<Box bgc='base-2' c='text-2' py='50' ta='c'>...Contents...</Box>
+		<Flex ai='c' g='30' lh='1' c='blue'>
+			<Divider fx='1' bdc='currentColor' bds='dotted' bdw='4px' op='low' />
+			<span class='-fs:i'>Label Text</span>
+		</Flex> 
+		<Box bgc='base-2' c='text-2' py='50' ta='c'>...Contents...</Box>
+	</PreviewArea>
+	<PreviewCode>
+		```jsx {2-5} {7-10}
+		<Box bgc='base-2' c='text-2' py='50' ta='c'>...Contents...</Box>
+		<Flex ai='c' g='30' lh='1'>
+			<span class='-fs:i'>Label Text</span>
+			<Divider fx='1' bdc='currentColor' op='mid' />
+		</Flex> 
+		<Box bgc='base-2' c='text-2' py='50' ta='c'>...Contents...</Box>
+		<Flex ai='c' g='30' lh='1' c='blue'>
+			<Divider fx='1' bdc='currentColor' bds='dotted' bdw='4px' op='low' />
+			<span class='-fs:i'>Label Text</span>
+		</Flex> 
+		<Box bgc='base-2' c='text-2' py='50' ta='c'>...Contents...</Box>
+		```
+	</PreviewCode>
+</Preview>
+
+
+
+
+### 縦方向
+
+<Preview>
+	<PreviewTitle>`flex-direction`を変更する</PreviewTitle>
+	<PreviewArea p='30' isFlow={false}>
+		<Flex ai='c' g='20'>
+			<Box fx='1' bgc='base-2' py='50' ta='c'>Contents</Box>
+			{/* <DividerLabel fxd='column' bd='is'  aslf='stretch'>Label</DividerLabel> */}
+			<Stack ai='c' g='20' lh='1' fz='s' aslf='stretch'>
+				<Divider fx='1' bd='is' />
+				<span>Label</span>
+				<Divider fx='1' bd='is' />
+			</Stack>
+			<Box fx='1' bgc='base-2' py='50' ta='c'>Contents</Box>
+		</Flex>
+	</PreviewArea>
+	<PreviewCode>
+		```jsx "fxd='column'" "bd='is'"
+		<Flex ai='c' g='20'>
+			<Box fx='1' bgc='base-2' py='50' ta='c'>Contents</Box>
+			<Stack ai='c' g='20' lh='1' fz='s' aslf='stretch'>
+				<Divider fx='1' bd='is' />
+				<span>Label</span>
+				<Divider fx='1' bd='is' />
+			</Stack> 
+			<Box fx='1' bgc='base-2' py='50' ta='c'>Contents</Box>
+		</Flex>
+		```
+	</PreviewCode>
+</Preview>
+
+<Preview>
+	<PreviewTitle>`writing-mode`を変更する</PreviewTitle>
+	<PreviewArea resize p='30' isFlow={false}>
+		<Flex ai='stretch' g='20'>
+			<Box fx='1' bgc='base-2' py='50' ta='c'>Box</Box>
+			<Stack ai='c' g='20' lh='1' fz='xs' aslf='stretch'>
+				<span class='-wm:v-rl'>Label</span>
+				<Divider fx='1' bd='is' />
+			</Stack>
+			<Box fx='1' bgc='base-2' py='50' ta='c'>Box</Box>
+			<Stack ai='c' g='20' lh='1' fz='xs' aslf='stretch'>
+			<Divider fx='1' bd='is' />
+				<span class='-wm:v-rl'>Label</span>
+			</Stack>
+			<Box fx='1' bgc='base-2' py='50' ta='c'>Box</Box>
+		</Flex>
+	</PreviewArea>
+	<PreviewCode>
+		```jsx "-wm:v-rl"
+		<Flex ai='stretch' g='20'>
+			<Box fx='1' bgc='base-2' py='50' ta='c'>Box</Box>
+			<Stack ai='c' g='20' lh='1' fz='xs' aslf='stretch'>
+				<span class='-wm:v-rl'>Label</span>
+				<Divider fx='1' bd='is' />
+			</Stack>
+			<Box fx='1' bgc='base-2' py='50' ta='c'>Box</Box>
+			<Stack ai='c' g='20' lh='1' fz='xs' aslf='stretch'>
+			<Divider fx='1' bd='is' />
+				<span class='-wm:v-rl'>Label</span>
+			</Stack>
+			<Box fx='1' bgc='base-2' py='50' ta='c'>Box</Box>
+		</Flex>
+		```
+	</PreviewCode>
+</Preview>

@@ -1,0 +1,55 @@
+.d--accordion {
+	--trsdu: var(--trsdu--acc);
+	// overflow: clip; // bdrs考慮
+	&.-opened {
+		--_notOpened: ;
+	}
+	&:not(.-opened) {
+		--_isOpened: ;
+	}
+}
+
+.d--accordion__header {
+	outline-offset: -1px; // overflow:clip|hidden; で見えなくなってしまうのを防ぐ
+	gap: 0.5em;
+
+	/* Safariで表示されるデフォルトの三角形アイコンを消します */
+	&::-webkit-details-marker {
+		display: none;
+	}
+}
+
+// .d--accordion__label {
+// 	flex: 1;
+// 	font: inherit;
+// }
+
+.d--accordion__body {
+	grid-template-rows: 1fr;
+	transition-property: margin-block, padding-block, opacity, grid-template-rows;
+	transition-duration: var(--trsdu);
+}
+
+// ※ 正常な animation に必須
+// .d--accordion__inner {
+// 	overflow: hidden;
+// }
+
+// 閉じている時
+:where(.d--accordion:not(.-opened)) {
+	> .d--accordion__body {
+		// opacity: 0.5;
+		grid-template-rows: 0fr;
+		padding-block: 0 !important;
+		margin-block: 0 !important;
+	}
+}
+
+// アコーディオンブロックのネスト時、別のアイコンタイプにすると表示が崩れるがそこまでは考慮しない。
+:where(.d--accordion__icon) {
+	// __icon 自体にborderつけたりすると回転が見えてしまうので、 icon自体を回転させる。
+	> .l--icon {
+		transition-duration: var(--trsdu);
+		rotate: var(--_isOpened, -180deg);
+	}
+}

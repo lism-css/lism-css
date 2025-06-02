@@ -1,0 +1,119 @@
+:root {
+	--sl-content-width: 56rem;
+	--sl-sidebar-width: 16rem;
+	--sl-color-bg-sidebar: transparent;
+	--sl-content-pad-x: var(--s40);
+	--codeBlock--radius: 0 0 var(--bdrs--2) var(--bdrs--2);
+}
+/*
+
+#starlight__sidebar
+main-frame
+  lg:sl-flex
+    right-sidebar-container
+	main-pane
+*/
+.main-pane {
+	// flex: 1 !important;
+	flex-shrink: 1;
+	width: auto !important;
+	flex-basis: var(--sl-content-width);
+	margin-inline: auto;
+}
+.right-sidebar-container {
+	flex-grow: 0;
+	flex-shrink: 0;
+	width: auto !important;
+	flex-basis: 16rem;
+	// max-width: var(--sl-sidebar-width);
+}
+.sl-container {
+	container-type: inline-size;
+	max-width: 100% !important;
+}
+
+.site-title {
+	--link-td: none;
+	color: inherit;
+	font-family: var(--ff--mono);
+
+	> span {
+		display: inline-flex;
+		gap: 0.375em;
+		align-items: center;
+		&::after {
+			content: 'β';
+			display: block;
+			line-height: 1;
+			padding: 0.25rem 0.375rem;
+			border-radius: 0.25rem;
+			font-size: 1rem;
+			background-color: var(--c--text);
+			color: var(--c--base);
+		}
+	}
+}
+
+:is(.sidebar, .right-sidebar) {
+	// --c--link: var(--c--text);
+	--link-td: none;
+
+	a[aria-current='page'] {
+		color: var(--c--base);
+	}
+	// 目次
+	a[aria-current='true'] {
+		color: var(--c--base);
+		background-color: var(--sl-color-text-accent);
+	}
+
+	a:not(:is([aria-current='page'], [aria-current='true'])) {
+		color: inherit;
+		opacity: 0.8;
+		&:hover {
+			opacity: 1;
+			background-color: var(--c--base-2);
+		}
+	}
+
+	.top-level > li > details {
+		margin-top: 1em;
+	}
+
+	._subtitle {
+		display: block;
+		pointer-events: none;
+		color: inherit;
+		margin-inline-start: -1px;
+		margin-top: 0.75em;
+		padding-inline-start: 0.5em;
+		padding-block: 0;
+		font-size: var(--sl-text-sm);
+		opacity: 0.5;
+	}
+	._divider {
+		padding-block: 0.5em;
+		padding-inline: 0.5em 0;
+
+		> span {
+			display: block;
+			border-top: 1px solid var(--sl-color-hairline-light);
+		}
+	}
+}
+
+header {
+	background-color: transparent;
+	-webkit-backdrop-filter: blur(16px);
+	backdrop-filter: blur(16px);
+	[data-has-hero] & {
+		border: none;
+	}
+}
+
+/* ----------------------------------------
+    footer
+ ---------------------------------------- */
+footer > .meta {
+	display: none;
+}

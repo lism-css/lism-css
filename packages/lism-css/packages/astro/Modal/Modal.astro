@@ -1,0 +1,20 @@
+---
+import type { LismProps } from '../types';
+import { getProps } from '../../../dist/components/Modal/getProps';
+import { Lism } from '../Lism';
+
+// Propsの定義
+interface Props extends LismProps {}
+const { layout, ...props } = Astro.props || {};
+const Layout = layout || Lism;
+---
+
+<Layout tag='dialog' {...getProps(props)}>
+	<slot />
+</Layout>
+
+<script>
+	import setModal from '../../../dist/components/Modal/setModal';
+	console.log('modal.astro');
+	setModal();
+</script>

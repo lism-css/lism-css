@@ -1,0 +1,21 @@
+---
+import { Container, Lism, Columns } from 'lism-css/astro';
+---
+
+<Lism tag='footer' py='50' hasGutter bd='bottom' bdc='divider' bgc='base-2'>
+	<Container size='m' hasGutter>
+		<Columns cols={[1, 2]}>
+			<Lism>
+				<Lism fz='l'>Dummy Footer</Lism>
+				<Lism c='text-2'>Lorem ipsum text ...</Lism>
+			</Lism>
+			<Lism>
+				<ul>
+					<li>menu</li>
+					<li>menu</li>
+					<li>menu</li>
+				</ul>
+			</Lism>
+		</Columns>
+	</Container>
+</Lism>

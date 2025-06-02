@@ -1,0 +1,67 @@
+@use '../_mixin' as mixin;
+
+// has--border?
+// bdc だけとかの指定でも -bd:出力？
+/*
+
+	使用される環境（resetCSS）によって挙動が変わりやすいので 各プロパティを変数で管理する。
+	ブラウザのデフォルト挙動では、bds指定でborder出現してくるが、nextraのresetCSSみたいな特殊な環境だとbdwの指定でborderでてきたりする。
+
+	borderはLismの中でも特殊な仕様になっている。
+	--bds, --bdw, --bdc で管理できるようにしていて、そのために .-bd: クラスを使う。
+*/
+
+// bdc, bdw などでカラーや太さを上書きできるように border 自体を変数管理
+// :where(.has--bd),
+@include mixin.maybe_where('[class*="-bd:"]', 'base') {
+	--bds: solid;
+	--bdw: 1px;
+	--bdc: currentColor;
+	--bd: var(--bdw) var(--bds) var(--bdc);
+}
+// .has--bd:where(:not([class*='-bd:'])) {
+.-bd\: {
+	border-style: var(--bds);
+	border-width: var(--bdw);
+	border-color: var(--bdc);
+}
+
+/* stylelint-disable */
+.-bd\:n {
+	border: none;
+}
+.-bd\:inherit {
+	border: inherit;
+}
+
+// 方向指定
+.-bd\:l {
+	border-left: var(--bd);
+}
+.-bd\:r {
+	border-right: var(--bd);
+}
+.-bd\:t {
+	border-top: var(--bd);
+}
+.-bd\:b {
+	border-bottom: var(--bd);
+}
+.-bd\:x {
+	border-inline: var(--bd);
+}
+.-bd\:y {
+	border-block: var(--bd);
+}
+.-bd\:is {
+	border-inline-start: var(--bd);
+}
+.-bd\:ie {
+	border-inline-end: var(--bd);
+}
+.-bd\:bs {
+	border-block-start: var(--bd);
+}
+.-bd\:be {
+	border-block-end: var(--bd);
+}

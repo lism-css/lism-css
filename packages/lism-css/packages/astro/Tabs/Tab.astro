@@ -1,0 +1,26 @@
+---
+import type { LismProps } from '../types';
+import { Lism } from '../Lism';
+
+export interface Props extends LismProps {
+	// controlId: string;
+	isActive?: boolean;
+	tabId?: string | number;
+	index?: number;
+}
+const { tabId = 'tab', index = 0, isActive, ...props } = Astro.props;
+const controlId = `${tabId}-${index}`;
+---
+
+<Lism
+	tag='button'
+	lismClass='d--tabs__tab'
+	className='re--style'
+	role='tab'
+	aria-controls={controlId}
+	aria-selected={isActive ? 'true' : 'false'}
+	skipState
+	{...props}
+>
+	<slot />
+</Lism>

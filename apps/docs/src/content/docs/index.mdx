@@ -1,0 +1,114 @@
+---
+title: Lism CSS
+description: CSSフレームワーク
+template: splash
+hero:
+    tagline: 独自のCSSフレームワークを元にしたコンポーネントライブラリ
+    actions:
+        - text: ドキュメント
+          link: /overview/
+          variant: primary
+        - text: GitHub
+          link: https://github.com/lism-ui/lism-css
+          variant: secondary
+---
+
+import { Lism, Container, Center, Stack, Text, Columns, Spacer } from 'lism-css/astro';
+import { Preview, PreviewArea, PreviewTitle, PreviewCode, Button } from '~/components';
+import { Card, CardGrid } from '@astrojs/starlight/components';
+import DemoLismComponent from '~/content/demo-lism-component.mdx';
+
+export const POINTS = [
+	{
+		icon: null,
+		title: 'reset.css レベルからの設計',
+		desc: `
+			Lism CSSは、reset.cssからユーティリティクラスまで、サイト全体のCSS設計理論を構築しています。
+		`,
+	},
+	{
+		icon: null,
+		title: 'デザイントークン',
+		desc: `
+			事前にデザイントークンをCSS変数で定義します。それらを流用することでサイト全体の一貫性を保ちます。
+		`,
+	},
+	{
+		icon: null,
+		title: 'レイアウトモジュール',
+		desc: `
+			WEBサイトでよく使われるレイアウト要素を細分化し、基礎となるモジュールを定義しています。
+		`,
+	},
+	{
+		icon: null,
+		title: 'レイアウトステート',
+		desc: `
+			状態として付与できるようなレイアウト機能はモジュールとは別に切り分けて定義しています。
+		`,
+	},
+
+	{
+		icon: null,
+		title: 'レスポンシブなユーティリティ設計',
+		desc: `
+			レスポンシブに対応するためのユーティリティクラスとCSS変数の組み合わせ設計を用意しています。
+		`,
+	},
+	{
+		icon: null,
+		title: 'どんなサイトにも使えます',
+		desc: 'Lismはあくまで設計理論。素のHTMLコーディングにも活用できます。',
+	},
+	// {
+	// 	icon: null,
+	// 	title: '専用コンポーネント',
+	// 	desc: 'Lism設計に基づいたコンポーネントを使うことでより手軽なWEBサイト制作を可能にします。',
+	// },
+	// {
+	// 	icon: null,
+	// 	title: '軽量',
+	// 	desc: `
+	// 		全てのユーティリティクラスをインポートしても、軽量です。
+	// 	`,
+	// },
+	// {
+	// 	icon: null,
+	// 	title: 'WordPressフレンドリー',
+	// 	desc: `
+	// 		ビルド処理が必須ではないので、WordPressでの制作にも採用可能です。（専用テーマも準備中です）
+	// 	`,
+	// },
+];
+
+<Container isFlow>
+	<section class="section-01 is--flow re--sh">
+		<h2>🎨 独自のCSS設計</h2>
+
+		<Columns cols={[2, 2, 3]} g={[30,40]}>
+			{POINTS.map((point, i) => {
+				return (
+					<Stack key={i} g='20' p='30' bdrs='3' bgc='base' bxsh='3'>
+						<Text fw='bold'>
+							{point.title}
+						</Text>
+						<Text fz='s' c='text-2'>{point.desc}</Text>
+					</Stack>
+				);
+			})}
+		</Columns>
+	</section>
+
+	<Spacer h='60' />
+	<section class="is--flow">
+		<h2>🧰 専用コンポーネント</h2>
+		<p>上記のような独自のCSS設計を手軽に扱えるように、ReactやAstroで利用できるコンポーネントを無償で提供しています。</p>
+
+		<PreviewTitle>専用のコンポーネントはこんな感じで使います</PreviewTitle>
+		<DemoLismComponent />
+	</section>
+	<Spacer h='40' />
+	<Center>
+		<Button variant='primary' href='/getting-started' bdrs='99'>Getting Started</Button>
+	</Center>
+</Container>

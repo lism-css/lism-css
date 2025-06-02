@@ -1,0 +1,133 @@
+---
+title: 'List'
+description: ...
+---
+
+import { Frame } from 'lism-css/astro';
+import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportSource } from "~/components";
+import List from '~/components/ex/List/index.jsx';
+
+
+アイコン部分にデザインを適用できるリストの作成例を紹介します。
+
+
+## Import
+
+<ImportSource name='List' css='css' react />
+
+
+## Usage
+
+<Preview>
+	<PreviewTitle>Preview</PreviewTitle>
+	<PreviewArea p='30'>
+		<List>
+			<li>List item 1</li>
+			<li>List item 2</li>
+			<li>
+				<Fragment>List item 3</Fragment>
+				<ul>
+					<li>Nested item</li>
+					<li>Nested item</li>
+				</ul>
+			</li>
+		</List>
+		<List variant='check'>
+			<li>List item 1</li>
+			<li>List item 2</li>
+			<li>
+				<Fragment>List item 3</Fragment>
+				<ul>
+					<li>Nested item</li>
+					<li>Nested item</li>
+				</ul>
+			</li>
+		</List>
+		<List variant='caret'>
+			<li>List item 1</li>
+			<li>List item 2</li>
+			<li>List item 3</li>
+		</List>
+	</PreviewArea>
+	<PreviewCode slot='tab' label='JSX'>
+		```jsx
+		<List>
+			<li>List item 1</li>
+			<li>List item 2</li>
+			<li>
+				<Fragment>List item 3</Fragment>
+				<ul>
+					<li>Nested item</li>
+					<li>Nested item</li>
+				</ul>
+			</li>
+		</List>
+		<List variant='check'>
+			<li>List item 1</li>
+			<li>List item 2</li>
+			<li>
+				<Fragment>List item 3</Fragment>
+				<ul>
+					<li>Nested item</li>
+					<li>Nested item</li>
+				</ul>
+			</li>
+		</List>
+		<List variant='caret'>
+			<li>List item 1</li>
+			<li>List item 2</li>
+			<li>List item 3</li>
+		</List>
+		```
+	</PreviewCode>
+	<PreviewCode slot='tab' label='HTML'>
+		```html
+		<ul class="c--list">
+			<li>List item 1</li>
+			<li>List item 2</li>
+			<li>
+				List item 3
+				<ul>
+					<li>Nested item</li>
+					<li>Nested item</li>
+				</ul>
+			</li>
+		</ul>
+		<ul class="c--list c--list--check">
+			<li>List item 1</li>
+			<li>List item 2</li>
+			<li>
+				List item 3
+				<ul>
+					<li>Nested item</li>
+					<li>Nested item</li>
+				</ul>
+			</li>
+		</ul>
+		<ul class="c--list c--list--caret">
+			<li>List item 1</li>
+			<li>List item 2</li>
+			<li>List item 3</li>
+		</ul>
+		```
+	</PreviewCode>
+</Preview>
+
+{/* ↓ lh大きくしたり改行ありのテスト */}
+{/* <List variant='caret' lh='2'>
+	<li>List item 1</li>
+	<li>List item 2</li>
+	<li>
+		<Fragment>List item 3</Fragment>
+		<ul>
+			<li>Nested item</li>
+			<li>Nested item</li>
+		</ul>
+	</li>
+</List>
+
+<List variant='dot' lh='2'>
+	<li>List item 1</li>
+	<li>List item 2<br />breaked text...lorem ipsum dolor sit amet</li>
+	<li>List item 3</li>
+</List> */}

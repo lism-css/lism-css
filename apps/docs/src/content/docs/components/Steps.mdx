@@ -1,0 +1,105 @@
+---
+title: 'Steps'
+description: ...
+---
+import { Text, Lism, Dummy, Flex, Stack, Icon, Center } from 'lism-css/react';
+import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportSource } from "~/components";
+import Steps from '~/components/ex/Steps/index.js';
+
+import { Question,ChatCircleDots } from '@phosphor-icons/react';
+import { ArrowFatLinesDown } from '@phosphor-icons/react';
+
+
+手順を示すレイアウトの構築例を紹介します。
+
+
+## Import
+
+<ImportSource name='Steps' hasRoot react/>
+
+
+## Usage
+
+<Preview>
+	<PreviewTitle>使用例</PreviewTitle>
+	<PreviewArea resize nogrid p='30'>
+		<Steps.Root>
+			<Steps.Item>
+				<Steps.Head tag='h3' num='1'>
+					<Fragment>手順1のタイトル</Fragment>
+				</Steps.Head>
+				<Steps.Body>
+					<Dummy lang='ja' length='s' />
+				</Steps.Body>
+			</Steps.Item>
+
+			<Center>
+				<Icon icon={ArrowFatLinesDown} weight='fill' fz='2xl' />
+			</Center>
+
+			<Steps.Item>
+				<Steps.Head tag='h3' num='2'>
+					<Fragment>手順2のタイトル</Fragment>
+				</Steps.Head>
+				<Steps.Body>
+					<Dummy lang='ja' length='s' />
+					<Dummy lang='ja' length='codes' />
+				</Steps.Body>
+			</Steps.Item>
+
+			<Center>
+				<Icon icon={ArrowFatLinesDown} weight='fill' fz='2xl' />
+			</Center>
+
+			<Steps.Item>
+				<Steps.Head tag='h3' num='3'>
+					<Fragment>手順3のタイトル.長いテキストのテスト、ステップタイトル。</Fragment>
+				</Steps.Head>
+				<Steps.Body>
+					<Dummy lang='ja' length='l' />
+				</Steps.Body>
+			</Steps.Item>
+		</Steps.Root>
+	</PreviewArea>
+	<PreviewCode slot='tab' label='JSX'>
+```jsx
+<Steps.Root>
+	<Steps.Item>
+		<Steps.Head tag='h3' num='1'>
+			<Fragment>手順1のタイトル</Fragment>
+		</Steps.Head>
+		<Steps.Body>
+			<Dummy lang='ja' length='s' />
+		</Steps.Body>
+	</Steps.Item>
+
+	<Center>
+		<Icon icon={ArrowFatLinesDown} weight='fill' fz='2xl' />
+	</Center>
+
+	<Steps.Item>
+		<Steps.Head tag='h3' num='2'>
+			<Fragment>手順2のタイトル</Fragment>
+		</Steps.Head>
+		<Steps.Body>
+			<Dummy lang='ja' length='s' />
+			<Dummy lang='ja' length='codes' />
+		</Steps.Body>
+	</Steps.Item>
+
+	<Center>
+		<Icon icon={ArrowFatLinesDown} weight='fill' fz='2xl' />
+	</Center>
+
+	<Steps.Item>
+		<Steps.Head tag='h3' num='3'>
+			<Fragment>手順3のタイトル</Fragment>
+		</Steps.Head>
+		<Steps.Body>
+			<Dummy lang='ja' length='l' />
+		</Steps.Body>
+	</Steps.Item>
+</Steps.Root>
+```
+	</PreviewCode>
+</Preview>

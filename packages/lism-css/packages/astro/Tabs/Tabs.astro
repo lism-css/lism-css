@@ -1,0 +1,60 @@
+---
+import type { LismProps } from '../types';
+import { Grid } from '../Grid';
+// import Tab from './Tab.astro';
+// import TabPanel from './TabPanel.astro';
+import TabList from './TabList.astro';
+import { uuidv4 } from '../helper/index.js';
+import transformTabitems from './transformTabitems.js';
+import getTabsProps from '../../../dist/components/Tabs/getProps';
+
+// import TheTab from './TheTab.astro';}
+// slotsについて: https://docs.astro.build/ja/reference/api-reference/#astroslots
+
+// Propsの定義
+interface Props extends LismProps {
+	uid?: string | number;
+	defaultIndex?: string | number;
+}
+// propsの取得
+const { defaultIndex = 1, tabId = '', listProps = {}, ...props } = Astro.props || {};
+
+// tabID生成
+const theTabID = tabId ? tabId : uuidv4();
+
+// 子要素の方から順番に処理されていくので、文字列処理でデータを抽出
+const { btns, panels } = transformTabitems(
+	await Astro.slots.render('default'),
+	theTabID,
+	defaultIndex
+);
+
+const hasItems = btns.length > 0;
+---
+
+<Grid {...getTabsProps(props)}>
+	{
+		btns && (
+			<TabList {...listProps}>
+				{btns.map((btn, index) => {
+					return <Fragment key={index} set:html={btn} />;
+				})}
+			</TabList>
+		)
+	}
+	{
+		panels.map((panel, index) => {
+			return <Fragment key={index} set:html={panel} />;
+		})
+	}
+	{!hasItems && <slot />}
+</Grid>
+
+<script>
+	// import setEvent from './setEvent';
+	import setEvent from '../../../dist/components/Tabs/setEvent';
+	const tabsAll = document.querySelectorAll('.d--tabs');
+	tabsAll.forEach((tabs) => {
+		setEvent(tabs);
+	});
+</script>

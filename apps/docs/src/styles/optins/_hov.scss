@@ -1,0 +1,72 @@
+// .c--preview_area {
+// 	--trsp: filter, opacity, visibility, box-shadow, translate, scale, border-color, color,
+// 		background-color;
+// }
+
+// --------------------
+// hover
+// --------------------
+@media (any-hover: hover) {
+	.-hov\:shadowUp:hover {
+		box-shadow: var(--bxsh--4);
+		translate: 0 -3px;
+	}
+}
+
+.-hov\:get\:zoom {
+	scale: var(--_isHov, 1.1);
+}
+.-hov\:get\:letterSpread {
+	letter-spacing: var(--_isHov, 0.125em);
+}
+.-hov\:get\:slide {
+	opacity: var(--_notHov, 0);
+	grid-template-rows: var(--_isHov, 1fr) var(--_notHov, 0fr);
+	transition-property: margin-block, padding-block, opacity, grid-template-rows;
+}
+
+// .-hov\:dark:hover {
+// 	filter: brightness(0.8) contrast(1.2); //grayscale(5%);
+// }
+// .-hov\:bright:hover {
+// 	filter: brightness(1.2) contrast(1.2); //grayscale(5%);
+// }
+// .-hov\:scale:hover {
+// 	scale: 1.05;
+// }
+
+// --------------------
+// reverse
+// --------------------
+.-hov\:reverse {
+	--hov-c: var(--bgc);
+	--hov-bgc: var(--c);
+	&:where(.c--button--fill) {
+		--hov-bgc: transparent;
+	}
+	&:where(.c--button--outline) {
+		--hov-c: var(--c--base);
+	}
+	@media (any-hover: hover) {
+		&:hover {
+			background-color: var(--hov-bgc) !important;
+			color: var(--hov-c) !important;
+		}
+	}
+}
+
+.-hov\:test {
+	color: var(--_isHov, green) var(--_notHov, blue);
+	background-color: var(--_notHov, lightgray);
+	box-shadow: var(--_isHov, var(--bxsh--3));
+}
+
+@supports selector(:has(*)) {
+	.is--linkBox:has(.u--overlayLink:focus-visible) {
+		outline: auto 1px;
+		outline: auto 1px -webkit-focus-ring-color;
+	}
+	.u--overlayLink:focus {
+		outline: 0;
+	}
+}

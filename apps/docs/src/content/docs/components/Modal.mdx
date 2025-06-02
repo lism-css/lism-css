@@ -1,0 +1,234 @@
+---
+title: 'Modal'
+description: ...
+---
+
+import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage, IconBadge } from '~/components';
+import { Modal, Lism, Dummy, Text, Flex, Stack, Center, Icon } from 'lism-css/astro';
+import {
+	ArrowFatDown,
+	ArrowRight,
+	ShoppingCartSimple,
+	ArrowCircleRight,
+} from "@phosphor-icons/react";
+import NavMenu from '~/components/ex/NavMenu';
+
+
+`dialog` タグでモーダルを表示するコンポーネントです。
+
+
+## 構造
+```pug
+button[data-modal-open='modalID']
+dialog.d--modal#modalID
+    .d--modal__inner.l--stack
+        .d--modal__body ...Contents...
+    button[data-modal-close='modalID']
+```
+
+`.d--modal`に`id`をつけ、`<button>`に`data-modal-open`属性と`data-modal-close`属性をつけることでそのモーダルの開閉ボタンになります。
+
+## Import
+
+<ImportPackage component='Modal' script='modal.js' />
+
+
+## Props
+
+| プロパティ | 説明 |
+|---|---|
+|`id`| Modal(d--modal)にはid属性が必要です。|
+|`layout`| レイアウト用コンポーネントを指定できます。|
+|`offset`(`--offset`)| Modalの非表示時の位置をずらすためのオフセット値|
+|`data-modal-open`| モーダルを開くトリガー要素にて、モーダルの`id`を指定します。|
+|`data-modal-open`| モーダルを閉じるトリガー要素にて、モーダルの`id`を指定します。|
+
+
+## Usage
+
+<Preview>
+	<PreviewTitle>`Modal`使用例</PreviewTitle>
+	<PreviewArea p='20'>
+		<button data-modal-open='modal-01' className='re--style -bd: -px:20 -py:5 -bdrs:2 -hov:fade'>Open Modal 01</button>
+
+		<Modal.Root id='modal-01' layout={Center} p='40'>
+			<Modal.Inner maxW='m' p='40' g='30' bdrs='3' bxsh='4'>
+				<Center pos='a' t='0' r='0' z='1' fz='xl' p='20' m='20' bdrs='99'>
+					<Modal.CloseIconBtn data-modal-close='modal-01' d='if' hov='fade'/>
+				</Center>
+				<Modal.Body isFlow='s'>
+					<div className='-fz:xl -fw:bold'>Modal Title</div>
+					<Dummy />
+					<Dummy length='l' />
+					<button data-modal-close='modal-01' className='re--style -bgc:base-2 -lh:xs -p:20 -bdrs:2 -hov:fade'>Close Modal</button>
+				</Modal.Body>
+			</Modal.Inner>
+		</Modal.Root>
+	</PreviewArea>
+	<PreviewCode slot='tab' label='JSX'>
+		```jsx "id='modal-01'" "data-modal-open='modal-01'" "data-modal-close='modal-01'"
+		<button data-modal-open='modal-01' className='re--style -bd: -px:20 -py:5 -bdrs:2 -hov:fade'>Open Modal 01</button>
+
+		<Modal.Root id='modal-01' layout={Center} p='40'>
+			<Modal.Inner maxW='m' p='40' g='30' bdrs='3' bxsh='4'>
+				<Center pos='a' t='0' r='0' z='1' fz='xl' p='20' m='20' bdrs='99'>
+					<Modal.CloseIconBtn data-modal-close='modal-01' d='if' hov='fade'/>
+				</Center>
+				<Modal.Body isFlow='s'>
+					<div className='-fz:xl -fw:bold'>Modal Title</div>
+					<Dummy />
+					<Dummy length='l' />
+					<button data-modal-close='modal-01' className='re--style -bgc:base-2 -lh:xs -p:20 -bdrs:2 -hov:fade'>Close Modal</button>
+				</Modal.Body>
+			</Modal.Inner>
+		</Modal.Root>
+		```
+	</PreviewCode>
+	<PreviewCode slot='tab' label='HTML'>
+		```html
+		```
+	</PreviewCode>
+</Preview>
+
+`.d--modal__body` が`overflow:auto`でスクロール可能なエリアになっていますので、常に見せておきたいコンテンツがあればその前後に配置します。
+
+<Preview>
+	<PreviewTitle>`Modal`使用例</PreviewTitle>
+	<PreviewArea p='20'>
+		<button data-modal-open='modal-02' className='re--style -bd: -px:20 -py:5 -bdrs:2 -hov:fade'>Open Modal 02</button>
+
+		<Modal.Root id='modal-02' p='40' ac='c'>
+			<Modal.Inner maxW='s' mx='a' maxH='80%' bdrs='3' bxsh='4'>
+				<Flex ai='c' jc='sb' py='20' bd='b'>
+					<Lism fz='l' fw='bold' lh='s' mis='40'>Modal Header</Lism>
+					<Center p='20' mx='20'>
+						<Modal.CloseIconBtn data-modal-close='modal-02' d='if' fz='xl' />
+					</Center>
+				</Flex>
+				<Modal.Body isFlow='s' px='40' py='30'>
+					<Dummy />
+					<Dummy length='xl' offset={1} />
+					<Dummy length='l' />
+					<Dummy length='xl' offset={3} />
+					<Dummy tag='ul' />
+					<Dummy length='codes'/>
+					<Dummy length='xl' offset={2}/>
+				</Modal.Body>
+				<Flex jc='e' px='40' py='30' bd='t'>
+					<Lism tag='button' data-modal-close='modal-02' bgc='text' c='base' lh='xs' px='20' py='10' bd='none' bdrs='2'>Close</Lism>
+				</Flex>
+			</Modal.Inner>
+		</Modal.Root>
+	</PreviewArea>
+	<PreviewCode slot='tab' label='JSX'>
+		```jsx "id='modal-02'" "data-modal-open='modal-02'" "data-modal-close='modal-02'"
+		<button data-modal-open='modal-02' className='re--style -bd: -px:20 -py:5 -bdrs:2 -hov:fade'>Open Modal 02</button>
+
+		<Modal.Root id='modal-02' p='40' ac='c'>
+			<Modal.Inner maxW='s' mx='a' maxH='80%' bdrs='3' bxsh='4'>
+				<Flex ai='c' jc='sb' py='20' bd='b'>
+					<Lism fz='l' fw='bold' lh='s' mis='40'>Modal Header</Lism>
+					<Center p='20' mx='20'>
+						<Modal.CloseIconBtn data-modal-close='modal-02' d='if' fz='xl' />
+					</Center>
+				</Flex>
+				<Modal.Body isFlow='s' px='40' py='30'>
+					<Dummy />
+					<Dummy length='xl' offset={1} />
+					<Dummy length='l' />
+					<Dummy length='xl' offset={3} />
+					<Dummy tag='ul' />
+					<Dummy length='codes'/>
+					<Dummy length='xl' offset={2}/>
+				</Modal.Body>
+				<Flex jc='e' px='40' py='30' bd='t'>
+					<Lism tag='button' data-modal-close='modal-02' bgc='text' c='base' lh='xs' px='20' py='10' bd='none' bdrs='2'>Close</Lism>
+				</Flex>
+			</Modal.Inner>
+		</Modal.Root>
+		```
+	</PreviewCode>
+	<PreviewCode slot='tab' label='HTML'>
+		```html
+		```
+	</PreviewCode>
+</Preview>
+
+
+### ドロワーメニューの作成例
+
+<IconBadge /> 以下では、追加インポートが必要な[`NavMenu`](/components/navmenu)も併用しています。
+
+<Preview>
+	<PreviewTitle>ドロワーメニューの作成例</PreviewTitle>
+	<PreviewArea p='20'>
+		<Flex
+			tag='button'
+			data-modal-open='modal-03'
+			className='re--style -ai:c -g:5 -hov:fade'
+		>
+			<Icon icon='menu' fz='xl' />
+			<span>MENU</span>
+		</Flex>
+		<Modal.Root id='modal-03' offset='-100px 0'>
+		<Modal.Inner maxW='25rem' w='90%' h='100%' p='40' g='30' bxsh='4'>
+			<Modal.Header>
+				<Center pos='a' t='0' r='0' z='1' fz='xl' p='20' m='20' bdrs='99'>
+					<Modal.CloseIconBtn data-modal-close='modal-03' d='if' hov='fade' />
+				</Center>
+				<Text fz='l' fw='bold' lh='s'>MENU</Text>
+			</Modal.Header>
+			<Modal.Body>
+				<NavMenu.Root hasDivider bd='y'>
+					<NavMenu.Item>
+						<NavMenu.Link href='#menu-link01'>Menu item 1</NavMenu.Link>
+					</NavMenu.Item>
+					<NavMenu.Item>
+						<NavMenu.Link href='#menu-link02'>Menu item 2</NavMenu.Link>
+					</NavMenu.Item>
+					<NavMenu.Item>
+						<NavMenu.Link href='#menu-link03'>Menu item 3</NavMenu.Link>
+					</NavMenu.Item>
+					<NavMenu.Item>
+						<NavMenu.Link href='#menu-link04'>Menu item 4</NavMenu.Link>
+					</NavMenu.Item>
+				</NavMenu.Root>
+			</Modal.Body>
+		</Modal.Inner>
+	</Modal.Root>
+	</PreviewArea>
+	<PreviewCode slot='tab' label='JSX'>
+		```jsx "id='modal-03'" "data-modal-open='modal-03'" "data-modal-close='modal-03'"
+		<Flex
+			tag='button'
+			data-modal-open='modal-03'
+			className='re--style -ai:c -g:5 -hov:fade'
+		>
+			<Icon icon='menu' fz='xl' />
+			<span>MENU</span>
+		</Flex>
+		<Modal.Root id='modal-03' offset='-100px 0'>
+			<Modal.Inner maxW='25rem' w='90%' h='100%' p='40' g='30' bxsh='4'>
+				<Modal.Header>
+					<Center pos='a' t='0' r='0' z='1' fz='xl' p='20' m='20' bdrs='99'>
+						<Modal.CloseIconBtn data-modal-close='modal-03' d='if' hov='fade' />
+					</Center>
+					<Text fz='l' fw='bold' lh='s'>MENU</Text>
+				</Modal.Header>
+				<Modal.Body>
+					<NavMenu.Root hasDivider bd='y'>
+						<NavMenu.Item>
+							<NavMenu.Link href='#menu-link01'>Menu item 1</NavMenu.Link>
+						</NavMenu.Item>
+						{/* ... */}
+					</NavMenu.Root>
+				</Modal.Body>
+			</Modal.Inner>
+		</Modal.Root>
+		```
+	</PreviewCode>
+	<PreviewCode slot='tab' label='HTML'>
+		```html
+		```
+	</PreviewCode>
+</Preview>

@@ -1,0 +1,75 @@
+// 小さいモニターで確認する用
+// @media (width < 1200px) {
+body {
+	// --size--xs: 30rem;
+	// --size--s: 45rem;
+	// --size--l: 1120px;
+	--size--m: 900px;
+}
+
+#demo-wrapper {
+	border: none !important;
+
+	> :is(p, h2, h3, h4, h5, h6) {
+		margin-inline: 2rem;
+	}
+}
+
+:has(> .c--attsLabels) {
+	position: relative;
+	padding-top: 1.75em;
+	padding-bottom: 1.5em;
+}
+
+.-bg\:stripe {
+	// --_bdc: rgba(200, 200, 200, 0.1);
+	--_bdc: color-mix(in srgb, var(--bgc, #555), transparent 50%);
+	--_bdw: 2px;
+	--_deg: -50deg;
+	--_interval: 6px;
+
+	background-image: repeating-linear-gradient(
+		var(--_deg),
+		var(--_bdc),
+		var(--_bdc) var(--_bdw),
+		transparent var(--_bdw),
+		transparent var(--_interval)
+	) !important;
+	background-position: center !important;
+}
+
+.is--container {
+	border: 2px dashed color-mix(in srgb, transparent, var(--green) 40%) !important;
+}
+[class*='-container:'] {
+	border: 2px dashed color-mix(in srgb, transparent, var(--blue) 70%) !important;
+}
+[class*='-container:'] > [class*='-container:'] {
+	border: 2px dotted color-mix(in srgb, transparent, var(--blue) 70%) !important;
+}
+.l--box {
+	border: 2px dashed color-mix(in srgb, transparent, var(--gray) 40%) !important;
+}
+
+.has--gutter {
+	position: relative;
+}
+.has--gutterGuide {
+	inset: 0;
+	max-width: 100%;
+	height: 100%;
+	display: flex;
+	justify-content: space-between;
+	pointer-events: none;
+
+	&::before,
+	&::after {
+		content: '';
+		display: block;
+		width: var(--gutter);
+		height: 100%;
+		background-color: var(--purple);
+		grid-area: guide;
+		opacity: 0.3;
+	}
+}

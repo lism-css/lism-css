@@ -1,0 +1,15 @@
+@layer lism.component {
+	.c--navMenu {
+		--link-td: none;
+		--pass-p: var(--s20);
+	}
+
+	.c--navMenu__link {
+		outline-offset: -1px; /* アコーディオン化した時にoutlineが一部見えなくなるのを防ぐ */
+	}
+}
+
+/* lism: pass-get */
+[data-lism-get~='p'] {
+	padding: var(--pass-p);
+}

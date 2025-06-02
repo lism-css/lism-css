@@ -1,0 +1,563 @@
+---
+title: 'Prop Class'
+description: ...
+sidebar:
+  order: 7
+---
+import { Lism, Text, Frame, Layer, Media, Dummy, Box, Flex, Grid } from "lism-css/astro";
+import { Preview, PreviewArea, PreviewTitle, PreviewCode, Reference, Note, Callout } from "~/components";
+import AllPropClasses from '../../all-prop-classes.mdx';
+
+
+export const PropTable = ({data={}, ...props}) => {
+	const dataKyes = Object.keys(data);
+	return (
+		<Lism tag='table' {...props}>
+			{/* <thead className='-ta:l'>
+				<tr>
+					<th>Class</th>
+					<th>Value</th>
+				</tr>
+			</thead> */}
+			<tbody>
+			{dataKyes.map((_propName) => {
+				const utils = data[_propName];
+				const utilsKeys = Object.keys(utils);
+				return (
+					<>
+						{utilsKeys.map((utilKey) => {
+							return (
+								<tr>
+									<td><code>{`.-${_propName}:${utilKey}`}</code></td>
+									<td><code>{`${utils[utilKey]}`}</code></td>
+								</tr>
+							);
+						})}
+					</>
+				)
+			})}
+			</tbody>
+		</Lism>
+	);
+
+}
+
+
+Lismでは、主要なCSSプロパティ群に対して、それらで頻繁に使用される値やトークンを手軽にセットできるようなユーティリティクラスを用意しています。  
+さらに、その中でも特に重要なCSSプロパティについてはブレイクポイント指定用クラスも用意しています。
+
+それらを [Prop Class](/css/methodology/#prop-class) と呼んでおり、`-{prop}:({value})`, `-{prop}@{bp}` という形式で定義しています。
+
+このページでは、その Prop Classの一覧を紹介します。
+
+
+
+<Callout type='info'>
+[SCSSでカスタマイズ](/css/customize/)することで、出力するクラスの種類は変更できます。
+</Callout>
+
+
+## 全Prop Class一覧
+
+<PreviewTitle>CSS (スクロールしてご覧いただけます）</PreviewTitle>
+<Frame ar='3/2' ovy='auto'>
+	<AllPropClasses />
+</Frame>
+
+
+## このページの表の見方
+
+ここからはテーブル形式で、各プロパティの情報をまとめていきます。
+
+|Property|Shorthand|Token|To Class|BP|
+|---|---|---|---|---|
+|CSSプロパティ|省略形|対応するトークンの種類。（必ずしもクラス化されるわけではありません）|ユーティリティクラス化される値|ブレイクポイント対応クラスの有無。|
+
+省略形の文字列(Shorthand)は、クラスとして出力されます。また、`Lism`コンポーネントに指定するプロパティも、この文字列です。
+
+
+
+## Typography
+
+|Property|Shorthand|Token|To Class|BP|
+|---|---|---|---|---|
+|`font`|`f`|-|`inherit`|-|
+|`font-size`|`fz`|[`TYPO.FZ`](/css/tokens/#typofz)|`TYPO.FZ`|○|
+|`font-family`|`ff`|[`TYPO.FF`](/css/tokens/#typoff)|`TYPO.FF`|-|
+|`font-weight`|`fw`|[`TYPO.FW`](/css/tokens/#typofw)|`TYPO.FW`|-|
+|`line-height`|`lh`|[`TYPO.LH`](/css/tokens/#typolh)|`TYPO.LH`|-|
+|`letter-spacing`|`lts`|[`TYPO.LTS`](/css/tokens/#typolts)|`TYPO.LTS`|-|
+|`text-align`|`ta`|-|`c`(`center`)<br/>`l`(`left`)<br/>`r`(`right`)|-|
+|`text-decoration`|`td`|-|`n`(`none`)<br/>`u`(`underline`)|-|
+|`white-space`|`whs`|-|`nw`(`nowrap`)|-|
+
+<Preview>
+	<PreviewTitle>Examples</PreviewTitle>
+	<PreviewArea p='30'>
+		<p class='-fz:xl -fw:bold -lts:l -ta:c'>Example text</p>
+	</PreviewArea>
+	<PreviewCode slot="tab" label="HTML">
+	```html
+	<p class='-fz:xl -fw:bold -lts:l -ta:c'>Example text</p>
+	```
+	</PreviewCode>
+	<PreviewCode slot="tab" label="JSX">
+	```jsx
+	<Text fz='xl' fw='bold' lts='l' ta='center'>Example text</Text>
+	```
+	</PreviewCode>
+</Preview>
+
+## Colors
+
+|Property|Shorthand|Token|To Class|BP|
+|---|---|---|---|---|
+|`color`|`c`|[`COLOR`](/css/tokens/#color)|`main`,`accent`<br />`text`,`text-2`,<br />`base`,<br />`mix`,<br />`inherit`|-|
+|`background-color`|`bgc`|[`COLOR`](/css/tokens/#color)|`main`,`accent`<br />`base`,`base-2`,<br />`text`,<br />`mix`,<br />`inherit`|-|
+|`--bdc`|`bdc`|[`COLOR`](/css/tokens/#color)|`main`,`accent`<br />`divider`,<br />`mix`,<br />`inherit`,<br />`t`(`transparent`)|-|
+|`--keycol`|`keycol`|[`COLOR`](/css/tokens/#color)|-|-|
+
+
+<Preview>
+	<PreviewTitle>Examples</PreviewTitle>
+	<PreviewArea p='30'>
+		<Text c='main' bgc='base-2' p='20'>Example text</Text>
+	</PreviewArea>
+	<PreviewCode slot="tab" label="HTML">
+	```html
+	<p class='-c:main -bgc:base-2 -p:20'>Example text</p>
+	```
+	</PreviewCode>
+	<PreviewCode slot="tab" label="JSX">
+	```jsx
+	<Text c='main' bgc='base-2' p='20'>Example text</Text>
+	```
+	</PreviewCode>
+</Preview>
+
+### `mix` クラスについて
+
+`-c:mix`,`-bgc:mix`,`-bdc:mix`クラスという特殊なクラスを用意しています。
+
+これらは、それぞれ対応する変数を受け取って`color-mix()`で色を生成します。
+
+
+```css
+.-c\:mix {
+	--c1: currentColor;
+	--c2: transparent;
+	--c: color-mix(in srgb, var(--c1) var(--c-pct, 50%), var(--c2));
+}
+.-bgc\:mix {
+	--bgc1: currentColor;
+	--bgc2: transparent;
+	--bgc: color-mix(in srgb, var(--bgc1) var(--bgc-pct, 50%), var(--bgc2));
+}
+.-bdc\:mix {
+	--bdc1: currentColor;
+	--bdc2: transparent;
+	--bdc: color-mix(in srgb, var(--bdc1) var(--bdc-pct, 50%), var(--bdc2));
+}
+```
+
+`Lism`コンポーネントでは、これらを手軽に呼び出せるように、`c='color1:(color2:)NUM%'` の書式で指定することができるようにもなっています。
+
+
+<Preview>
+	<PreviewTitle>使用例</PreviewTitle>
+	<PreviewArea resize p='30'>
+		<Lism bgc='blue:10%' c='blue:currentColor:40%' p='30'>
+			<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+		</Lism>
+	</PreviewArea>
+	<PreviewCode slot="tab" label="JSX">
+		```jsx
+		<Lism bgc='blue:10%' c='blue:currentColor:40%' p='30'>
+			<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+		</Lism>
+		```
+	</PreviewCode>
+	<PreviewCode slot="tab" label="HTML">
+		```html
+		<div
+			className='-bgc:mix -c:mix -p:30'
+			style='--bgc1:var(--blue);--bgc-pct:10%;--c1:var(--blue);--c2:currentColor;--c-pct:40%'
+		>
+			<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+		</div>
+		```
+	</PreviewCode>
+</Preview>
+
+
+## Spacing
+
+export const LinkSPACE = () => <a href="/css/tokens/#space"><code dir="auto">SPACE</code></a>;
+
+### Padding
+|Property|Shorthand|Token|To Class|BP|
+|---|---|---|---|---|
+|`padding`|`p`|<LinkSPACE/>|`SPACE.0~50`|○|
+|`padding-inline`|`px`|<LinkSPACE/>|`SPACE.0~50`|○|
+|`padding-block`|`py`|<LinkSPACE/>|`SPACE.0~50`|○|
+|`padding-inline-start`|`pis`|<LinkSPACE/>|`SPACE.0~50`|○|
+|`padding-block-start`|`pbs`|<LinkSPACE/>|`SPACE.0~50`|○|
+|`padding-left`|`pl`|<LinkSPACE/>|-|○|
+|`padding-right`|`pr`|<LinkSPACE/>|-|○|
+|`padding-top`|`pt`|<LinkSPACE/>|-|○|
+|`padding-bottom`|`pb`|<LinkSPACE/>|-|○|
+
+### Margin
+|Property|Shorthand|Token|To Class|BP|
+|---|---|---|---|---|
+|`margin`|`m`|<LinkSPACE/>|`a`(`auto`),<br />`SPACE.0~50`|○|
+|`margin-inline`|`mx`|<LinkSPACE/>|`a`(`auto`)|○|
+|`margin-block`|`my`|<LinkSPACE/>|`a`(`auto`)|○|
+|`margin-inline-start`|`mis`|<LinkSPACE/>|`a`(`auto`),<br />`SPACE.0~50`|○|
+|`margin-block-start`|`mbs`|<LinkSPACE/>|`a`(`auto`),<br />`SPACE.0~50`|○|
+|`margin-left`|`ml`|<LinkSPACE/>|`a`(`auto`)|○|
+|`margin-right`|`mr`|<LinkSPACE/>|`a`(`auto`)|○|
+|`margin-top`|`mt`|<LinkSPACE/>|`a`(`auto`)|○|
+|`margin-bottom`|`mb`|<LinkSPACE/>|`a`(`auto`)|○|
+
+### Gap
+|Property|Shorthand|Token|To Class|BP|
+|---|---|---|---|---|
+|`gap`|`g`|<LinkSPACE/>|`SPACE.0~50`,`inherit`|○|
+|`row-gap`|`rowg`|<LinkSPACE/>|-|○|
+|`column-gap`|`colg`|<LinkSPACE/>|-|○|
+
+<Preview>
+	<PreviewTitle>Examples</PreviewTitle>
+	<PreviewArea p='30' resize>
+		<Lism p={['20', '30']} bd>
+			<Text>Example text</Text>
+			<Text mbs='20' mis='40'>Example text</Text>
+		</Lism>
+	</PreviewArea>
+	<PreviewCode slot="tab" label="HTML">
+	```html
+	<div class="-p:20 -p@sm -bd:" style="--sm-p:var(--s30)">
+		<p>Example text</p>
+		<p class="-mbs:20 -mis:40">Example text</p>
+	</div>
+	```
+	</PreviewCode>
+	<PreviewCode slot="tab" label="JSX">
+	```jsx
+	<Lism p={['20', '30']} bd>
+		<Text>Example text</Text>
+		<Text mbs='20' mis='40'>Example text</Text>
+	</Lism>
+	```
+	</PreviewCode>
+</Preview>
+
+
+## Displays
+|Prop|Shorthand|To Class|BP|
+|---|---|---|---|
+|`display`|`d`|`n`(`none`),<br />`b`(`block`),<br />`f`(`flex`),<br />`g`(`grid`),<br />`i`(`inline`),<br />`ib`(`inline-block`),<br />`if`(`inline-flex`),<br />`ig`(`inline-grid`)|○|
+|`visibility`|`v`|`h`(`hidden`),<br /> `v`(`visible`)|-|
+|`overflow`|`ov`|`h`(`hidden`),<br />`a`(`auto`),<br />`c`(`clip`)|-|
+|`overflow-x`|`ovx`|`h`(`hidden`),<br />`a`(`auto`),<br />`c`(`clip`)|-|
+|`overflow-y`|`ovy`|`h`(`hidden`),<br />`a`(`auto`),<br />`c`(`clip`)|-|
+
+
+### Width & Height
+|Property|Shorthand|Token|To Class|BP|
+|---|---|---|---|---|
+|`width`|`w`|`SIZE`|`100%`,<br/>`fit`(`fit-content`)|○|
+|`height`|`h`|`SIZE`|`100%`,<br/>`fit`(`fit-content`)|○|
+|`max-width`|`maxW`|`SIZE`|`100%`|○|
+|`max-height`|`maxH`|`SIZE`|`100%`|○|
+|`min-width`|`minW`|`SIZE`|`100%`|○|
+|`min-height`|`minH`|`SIZE`|`100%`|○|
+
+
+## Layouts
+
+### Positions
+
+|Prop|Shorthand|Token|To Class|BP|
+|---|---|---|---|---|
+|`position`|`pos`|-|`r`(`relative`),<br />`a`(`absolute`),<br />`s`(`static`),<br />`f`(`fixed`),<br />`sti`(`sticky`)|-|
+|`top`|`t`|<LinkSPACE />|`0`,`50%`,`100%`|-|
+|`left`|`l`|<LinkSPACE />|`0`,`50%`,`100%`|-|
+|`right`|`r`|<LinkSPACE />|`0`,`50%`,`100%`|-|
+|`bottom`|`b`|<LinkSPACE />|`0`,`50%`,`100%`|-|
+|`inset`|`inset`|<LinkSPACE />|`0`|-|
+|`inset-inline-start`|`insets.is`|<LinkSPACE />|-|-|
+|`inset-inline-end`|`insets.ie`|<LinkSPACE />|-|-|
+|`inset-block-start`|`insets.bs`|<LinkSPACE />|-|-|
+|`inset-block-end`|`insets.be`|<LinkSPACE />|-|-|
+|`z-index`|`z`|-|`-1`, `0`, `1`, `2`, `99`|-|
+
+`position:absolute`で要素を配置する例をいくつか紹介します。
+
+
+<Preview>
+	<PreviewTitle>
+		配置の指定例
+	</PreviewTitle>
+	<PreviewArea resize p='5'>
+		<Box pos='r' ar='3/2' lh='1'>
+			<Box pos='a' l='0' t='0' bd p='20'>A</Box>
+			{/* <Box pos='a' l='0' t='0' m='40' bd p='20' bgc='base-2'>A'</Box> */}
+			<Box pos='a' l='50%' t='0' css={{translate:'-50X'}} bd p='20'>B</Box>
+			<Box pos='a' r='0' t='0' bd p='20'>C</Box>
+			<Box pos='a' l='0' t='50%' css={{translate:'-50Y'}} bd p='20'>D</Box>
+			<Box pos='a' l='50%' t='50%' css={{translate:'-50XY'}} bd p='20'>E</Box>
+			<Box pos='a' r='0' t='50%' css={{translate:'-50Y'}} bd p='20'>F</Box>
+			<Box pos='a' l='0' b='0' bd p='20'>G</Box>
+			<Box pos='a' l='50%' b='0' css={{translate:'-50X'}} bd p='20'>H</Box>
+			<Box pos='a' r='0' b='0' bd p='20'>I</Box>
+		</Box>
+	</PreviewArea>
+	<PreviewCode slot='tab' label='JSX'>
+		```jsx
+		<Box pos='r' ar='3/2' lh='1'>
+			<Box pos='a' l='0' t='0' bd p='20'>A</Box>
+			<Box pos='a' l='50%' t='0' css={{translate:'-50X'}} bd p='20'>B</Box>
+			<Box pos='a' r='0' t='0' bd p='20'>C</Box>
+			<Box pos='a' l='0' t='50%' css={{translate:'-50Y'}} bd p='20'>D</Box>
+			<Box pos='a' l='50%' t='50%' css={{translate:'-50XY'}} bd p='20'>E</Box>
+			<Box pos='a' r='0' t='50%' css={{translate:'-50Y'}} bd p='20'>F</Box>
+			<Box pos='a' l='0' b='0' bd p='20'>G</Box>
+			<Box pos='a' l='50%' b='0' css={{translate:'-50X'}} bd p='20'>H</Box>
+			<Box pos='a' r='0' b='0' bd p='20'>I</Box>
+		</Box>
+		```
+	</PreviewCode>
+	<PreviewCode slot='tab' label='HTML'>
+		```html
+		<div class="l--box -pos:r -ar:3/2 -lh:1">
+			<div class="l--box -pos:a -l:0 -t:0 -bd: -p:20">A</div>
+			<div class="l--box -pos:a -l:50% -t:0 -trslt:-50X -bd: -p:20">B</div>
+			<div class="l--box -pos:a -r:0 -t:0 -bd: -p:20">C</div>
+			<div class="l--box -pos:a -l:0 -t:50% -trslt:-50Y -bd: -p:20">D</div>
+			<div class="l--box -pos:a -l:50% -t:50% -trslt:-50XY -bd: -p:20">E</div>
+			<div class="l--box -pos:a -r:0 -t:50% -trslt:-50Y -bd: -p:20">F</div>
+			<div class="l--box -pos:a -l:0 -b:0 -bd: -p:20">G</div>
+			<div class="l--box -pos:a -l:50% -b:0 -trslt:-50X -bd: -p:20">H</div>
+			<div class="l--box -pos:a -r:0 -b:0 -bd: -p:20">I</div>
+		</div>
+		```
+	</PreviewCode>
+</Preview>
+
+
+### Places
+
+|Prop|Shorthand|To Class|BP|
+|---|---|---|---|
+|`align-items`|`ai`|`c`, `s`, `e`, `fs`, `fe`, `str`|⚪︎|
+|`align-content`|`ac`|`c`, `s`, `e`, `fs`, `fe`, `sb`|⚪︎|
+|`justify-items`|`ji`|`c`, `s`, `e`, `fs`, `fe`, `str`|⚪︎|
+|`justify-content`|`jc`|`c`, `s`, `e`, `fs`, `fe`, `sb`|⚪︎|
+|`place-items`|`pi`|-|-|
+|`place-content`|`pc`|-|-|
+|`align-self`|`aslf`|`c`, `s`, `e`, `str`|-|
+|`justify-self`|`jslf`|`c`, `s`, `e`, `str`|-|
+|`place-self`|`pslf`|-|-|
+|`order`|`ord`|`-1`, `0`, `1`|-|
+
+
+### Flex
+
+#### 親要素向けプロパティ
+
+以下のものをLism Propsとして使うには `flex` オブジェクト内、もしくは`Flex`系コンポーネントで指定することができます。
+
+|Prop|Shorthand|To Class|BP|
+|---|---|---|---|
+|`flex-wrap`|`flex.fxw`|`wrap`(`w`),<br /> `nw`(`nowrap`)|○|
+|`flex-direction`|`flex.fxd`|`c`(`column`),<br /> `cr`(`column-reverse`),<br /> `r`(`row`),<br /> `rr`(`row-reverse`)|○|
+
+#### 子要素向けプロパティ
+|Prop|Shorthand|To Class|BP|
+|---|---|---|---|
+|`flex`|`fx`|`1`|○|
+|`flex-shrink`|`fxsh`|`0`, `1`|-|
+|`flex-grow`|`fxg`|`0`, `1`|-|
+|`flex-basis`|`fxb`|-|○|
+
+
+### Grid
+
+
+#### 親要素向けプロパティ
+
+gridプロパティは `grid` オブジェクト、もしくは`Grid`系列のコンポーネントのみで指定できるようになっています。
+
+|Prop|Shorthand|To Class|BP|
+|---|---|---|---|
+|`grid`|`grid.gd`|-|○|
+|`grid-template`|`grid.gt`|-|-|
+|`grid-template-areas`|`grid.gta`|-|○|
+|`grid-template-columns`|`grid.gtc`|-|○|
+|`grid-template-rows`|`grid.gtr`|-|○|
+|`grid-auto-flow`|`grid.gaf`|-|○|
+|`grid-auto-rows`|`grid.gar`|-|○|
+|`grid-auto-columns`|`grid.gac`|-|○|
+{/* |`gt`|`grid-template`||-| */}
+
+
+{/* - `-gt:side:l`, `-gt:side:r` クラスは、（追加CSSファイルを読み込むと）`[dir='rtl']`時に方向が反転するようになっており、ltr言語でもrtl言語でも方向が一致するようになっています。 */}
+
+
+<PreviewTitle>基本的なgrid系プロパティの使用例</PreviewTitle>
+```jsx
+<Lism d='grid' ai='center' grid={{gtc:'1fr 1fr', g:40}}>...</Lism>
+```
+
+<PreviewTitle>`Grid`コンポーネントでは、`grid`オブジェクトを挟まずにそのまま指定できます。</PreviewTitle>
+
+```jsx
+// Grid系のコンポーネントを使う場合は、gridオブジェクトは不要です。
+<Grid ai='center' gtc='1fr 1fr' g={40}>...</Grid>
+```
+{/* <Grid gtc='1fr 1fr' g={40} ai='center'>
+<Box>aaa<br/>bbb</Box>
+<Box>aaa</Box>
+<Box>aaa</Box>
+</Grid> */}
+
+
+<Reference>
+詳しくは[`<Grid>`](/components/grid/)をご覧ください。
+</Reference>
+
+
+#### 子要素向けプロパティ
+
+以下のものは `gridItem` オブジェクト内で指定することができます。
+
+|Prop|Shorthand|To Class|BP|
+|---|---|---|---|
+|`grid-area`|`gridItem.ga`|-|○|
+|`grid-column`|`gridItem.gc`|-|○|
+|`grid-row`|`gridItem.gr`|-|○|
+|`grid-column-start`|`gridItem.gcs`|-|-|
+|`grid-row-start`|`gridItem.grs`|-|-|
+|`grid-column-end`|`gridItem.gce`|-|-|
+|`grid-row-end`|`gridItem.gre`|-|-|
+
+
+<PreviewTitle>使用例</PreviewTitle>
+```jsx
+// gridItemオブジェクトで各プロパティを指定します。
+<Lism gridItem={{gc:'2'}} aslf='end'>...</Lism>
+
+// GridItemのコンポーネントを使う場合は、gridItemオブジェクトは不要です。
+<GridItem gc='2' aslf='end'>...</GridItem>
+```
+
+
+## Styling
+
+|Prop|Shorthand|Token|To Class|BP|
+|---|---|---|---|---|
+|`box-shadow`|`bxsh`|[`SHADOW`](/css/tokens/#shadow)|`SHADOW`|-|
+|`border-radius`|`bdrs`|[`RADIUS`](/css/tokens/#radius)|`RADIUS`|○|
+|`opacity`|`op`|[`OPACITY`](/css/tokens/#opacity)|`OPACITY`,`0`|-|
+|`aspect-ratio`|`ar`|-|`16/9`,`3/2`,`1/1`,<br />`ogp`,`gold`|○|
+
+
+### Border
+|Prop|Shorthand|Token|To Class|BP|
+|---|---|---|---|---|
+|`border`|`bd`|-|`n`(`none`),<br />`l`,`r`,`t`,`b`,<br />`is`,`ie`,`bs`,`be`,<br /> `x`,`y`|-|
+|`--bdc`|`bdc`|`COLOR`,`PALETTE`|`divider`,`inherit`|-|
+|`--bdw`|`bdw`|-|-|○|
+|`--bds`|`bds`|-|-|-|
+
+
+{/* |`bdl`|`border-left`|-|-|-|
+|`bdr`|`border-right`|-|-|-|
+|`bdt`|`border-top`|-|-|-|
+|`bdb`|`border-bottom`|-|-|-|
+|`bdis`|`border-inline-start`|-|-|-|
+|`bdbs`|`border-block-start`|-|-|-| */}
+
+{/* さらに、以下のものを `borders` オブジェクト内で指定することができます。
+|Prop|CSS|Token|To Class|BP|
+|---|---|---|---|---|
+|`l`|`border-left`||- |-|
+|`r`|`border-right`||- |-|
+|`t`|`border-top`||- |-|
+|`b`|`border-bottom`||- |-|
+|`is`|`border-inline-start`||- |-|
+|`ie`|`border-inline-end`||- |-|
+|`bs`|`border-block-start`||-|-|
+|`be`|`border-block-end`||-|-| */}
+
+
+<Reference>
+borderに関する仕様は少し特殊になっています。詳しくは[borderページ](/css/border/)をご覧ください。
+</Reference>
+
+
+### Background
+
+|Prop|Shorthand|To Class|BP|
+|---|---|---|---|
+|`background`|`bg`|-|-|
+|`background-image`|`bgi`|-|-|
+|`background-repeat`|`bgr`|`n`(`no-repeat`)|-|
+|`background-position`|`bgp`|`c`(`center`)|-|
+|`background-size`|`bgsz`|`cv`(`cover`),`ct`(`contain`)|-|
+
+<Preview>
+	<PreviewTitle>使用例</PreviewTitle>
+	<PreviewArea p='30'>
+		<Frame ar='21/9' bg="url(/img/img-2.jpg) center / 50%"></Frame>
+		<Frame ar='21/9' bgi='url(/img/img-2.jpg)' bgp='center' bgsz='cover'></Frame>
+	</PreviewArea>
+	<PreviewCode label='JSX' slot='tab'>
+		```jsx "bg"
+		<Frame ar='21/9' bg="url(/img/img-2.jpg) center / 50%"></Frame>
+		<Frame ar='21/9' bgi='url(/img/img-2.jpg)' bgp='center' bgsz='cover'></Frame>
+		```
+	</PreviewCode>
+</Preview>
+
+
+<Preview>
+	<PreviewTitle>グラデーション</PreviewTitle>
+	<PreviewArea p='30'>
+		<Frame ar='21/9' bgi='linear-gradient(to top, #a8edea 0%, #fed6e3 100%)'></Frame>
+	</PreviewArea>
+	<PreviewCode label='JSX' slot='tab'>
+		```jsx
+		<Frame ar='16/9' bgi='linear-gradient(to top, #a8edea 0%, #fed6e3 100%)'></Frame>
+		```
+	</PreviewCode>
+</Preview>
+
+
+
+## Others
+
+
+その他、下記のCSSプロパティは `css` というプロパティにオブジェクトとして指定することで出力できます。  
+(Note: 以下に挙げているもの以外は、そのまま `style`に渡されます。)
+
+|Context|Prop|CSS|Token|To Class|BP|
+|---|---|---|---|---|---|
+|css.translate|translate||`-50X`,`-50Y`,`-50XY`||
+|css.rotate|rotate||`45`,`-45`,`90`,`-90`||
+|css.scale|scale||`-X`,`-Y`,`-XY`||
+
+### クラスで直接使用するしかできないもの
+最後に、`Lism` コンポーネントで対応した CSS Props がないものの、Prop Classの用意があるものをリストアップしておきます。
+
+{/* - `-whs:nw` */}
+- `-ovw:any`
+- `-bxz:cb`
+- `-wm:v-rl`
+- `-obf:cb`
+- `-obf:cv`
+
+{/* 
+|`overflow-wrap`|`ovw`|-|`anywhere`(`any`)|-| */}

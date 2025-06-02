@@ -1,0 +1,73 @@
+---
+title: 'FAQ'
+description: ...
+---
+
+
+import { Text, Lism, Flex, Stack, Icon, Decorator, Divider, Dummy } from 'lism-css/react'
+import { Accordion } from 'lism-css/astro'
+import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportSource } from "~/components";
+import Faq from '~/components/ex/Faq/index.js';
+
+Q&Aのレイアウト構築例を紹介します。
+
+
+## Import
+
+<ImportSource name='Faq' hasRoot react astro/>
+
+
+## Usage
+
+
+アコーディオンタイプの例
+
+<Preview>
+	<PreviewTitle>Example</PreviewTitle>
+	<PreviewArea p='30'>
+		<Stack g='20'>
+			<Faq.Root>
+				<Faq.Q>Question 1</Faq.Q>
+				<Faq.A>
+					<Dummy length='l' />
+				</Faq.A>
+			</Faq.Root>
+			<Faq.Root>
+				<Faq.Q>Question 2</Faq.Q>
+				<Faq.A>
+					<Dummy length='l' />
+				</Faq.A>
+			</Faq.Root>
+			<Faq.Root>
+				<Faq.Q>Question 3, Lorem ipsum dolor sit amet?</Faq.Q>
+				<Faq.A>
+					<Dummy length='l' />
+				</Faq.A>
+			</Faq.Root>
+		</Stack>
+	</PreviewArea>
+	<PreviewCode>
+		```jsx
+		<Stack g='20'>
+			<Faq.Root>
+				<Faq.Q>Question 1</Faq.Q>
+				<Faq.A>
+					<Dummy length='l' />
+				</Faq.A>
+			</Faq.Root>
+			<Faq.Root>
+				<Faq.Q>Question 2</Faq.Q>
+				<Faq.A>
+					<Dummy length='l' />
+				</Faq.A>
+			</Faq.Root>
+			<Faq.Root>
+				<Faq.Q>Question 3, Lorem ipsum dolor sit amet?</Faq.Q>
+				<Faq.A>
+					<Dummy length='l' />
+				</Faq.A>
+			</Faq.Root>
+		</Stack>
+		```
+	</PreviewCode>
+</Preview>

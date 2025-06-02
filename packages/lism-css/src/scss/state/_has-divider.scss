@@ -1,0 +1,30 @@
+// .has--divider {
+// 	--bdc: var(--c--divider);
+// 	--bds: solid;
+// 	--bdw: 1px;
+// }
+
+// :where(.has--divider:not(.l--flex)) > :not(:last-child) {
+// 	border-block-end: var(--bds) var(--bdw) var(--bdc);
+// }
+
+// :where(.has--divider.l--flex) > :not(:last-child) {
+// 	border-inline-end: var(--bds) var(--bdw) var(--bdc);
+// }
+
+// has--blockDivider
+.has--divider {
+	--bdc: var(--c--divider);
+	--bds: solid;
+	--bdw: 1px;
+	--_isRow: 0;
+	&:where(.l--flex, .-fxd\:r, .-fxd\:rr) {
+		--_isRow: 1;
+	}
+
+	> :where(:not(:last-child)) {
+		--_bdw: calc(var(--_isRow, 0) * var(--bdw)); // isRow 1 なら 1px, isRow 0 なら 0px
+		border-inline-end: var(--bds) var(--_bdw) var(--bdc);
+		border-block-end: var(--bds) calc(var(--bdw) - var(--_bdw)) var(--bdc);
+	}
+}

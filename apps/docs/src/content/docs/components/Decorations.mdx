@@ -1,0 +1,314 @@
+---
+title: 'Decorations'
+description: ...
+---
+
+import { Grid, Stack, Flex, GridItem, Decorator, Box, Spacer, Dummy } from 'lism-css/astro';
+import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage, Callout } from "~/components";
+
+装飾ボックスの作成例を紹介します。
+
+<Callout type='alert'>
+このページは準備中です...
+</Callout>
+
+
+{/* 対応クラスは`.c--decoBox--{variant}`。  
+(基本的にどういう装飾を行うかの指定が必須で`.c--decoBox`に何かスタイルがあるわけではないので、modifier付きクラス単体で使う） */}
+
+
+{/* ## Props
+variant, subvariant に対しての 各Props をプリセット登録できるようにする予定。プリセット登録せずに装飾内容を指定する場合は `data` に直接指定する。
+
+## Import
+
+```js
+import { DecoBox } from 'lism-css/react';
+``` */}
+
+## Usage
+
+
+### Call
+
+
+`mr:auto` は rtl言語でも同じ方向になるように、left,rightの方向指定を使ってます。
+
+<Preview>
+	<PreviewTitle>Call</PreviewTitle>
+	<PreviewArea resize p='30'>
+		<Grid ta='l'>
+			<Decorator
+				size='1.25em'
+				bd='left'
+				rotate='45deg'
+				transformOrigin='left bottom'
+				mr='auto'
+			/>
+			<Box p='30' mr='auto'>
+				<Dummy length='s'/>
+			</Box>
+			<Decorator
+				size='1.25em'
+				bd='left'
+				rotate='-45deg'
+				transformOrigin='left top'
+				mr='auto'
+			/>
+		</Grid>
+		<Grid as={Grid}>
+			<Decorator
+				size='1.25em'
+				bd='right'
+				rotate='-45deg'
+				transformOrigin='right bottom'
+				ml='auto'
+			/>
+			<Box p='30' ml='auto'>
+				<Dummy length='xs' />
+			</Box>
+			<Decorator
+				size='1.25em'
+				bd='right'
+				rotate='45deg'
+				transformOrigin='right top'
+				ml='auto'
+			/>
+		</Grid>
+		<Spacer h='10' />
+		<Flex variant='ltr' jc='center' ta='c'>
+			<Decorator
+				fxsh='0'
+				size='1.25em'
+				bd='top'
+				rotate='-45deg'
+				transformOrigin='right top'
+			/>
+			<Box px='20' py='5'>
+				<Dummy length='xs' />
+			</Box>
+			<Decorator
+				fxsh='0'
+				size='1.25em'
+				bd='top'
+				rotate='45deg'
+				transformOrigin='left top'
+			/>
+		</Flex>
+		<Spacer h='10' />
+		<Flex
+			variant='ltr'
+			jc='center'
+			ai='fe'
+			ta='c'
+		>
+			<Decorator
+				fxsh='0'
+				size='1.25em'
+				bd='bottom'
+				rotate='45deg'
+				transformOrigin='right bottom'
+			/>
+			<Box px='20' py='5' fxg=''>
+				<Dummy length='s' />
+			</Box>
+			<Decorator
+				fxsh='0'
+				size='1.25em'
+				bd='bottom'
+				rotate='-45deg'
+				transformOrigin='left bottom'
+			/>
+		</Flex>
+	</PreviewArea>
+	<PreviewCode>
+		```jsx
+		<Grid ta='l'>
+			<Decorator
+				size='1.25em'
+				bd='left'
+				rotate='45deg'
+				transformOrigin='left bottom'
+				mr='auto'
+			/>
+			<Box p='30' mr='auto'>
+				<Dummy length='s'/>
+			</Box>
+			<Decorator
+				size='1.25em'
+				bd='left'
+				rotate='-45deg'
+				transformOrigin='left top'
+				mr='auto'
+			/>
+		</Grid>
+		<Grid as={Grid}>
+			<Decorator
+				size='1.25em'
+				bd='right'
+				rotate='-45deg'
+				transformOrigin='right bottom'
+				ml='auto'
+			/>
+			<Box p='30' ml='auto'>
+				<Dummy length='xs' />
+			</Box>
+			<Decorator
+				size='1.25em'
+				bd='right'
+				rotate='45deg'
+				transformOrigin='right top'
+				ml='auto'
+			/>
+		</Grid>
+		<Spacer h='10' />
+		<Flex variant='ltr' jc='center' ta='c'>
+			<Decorator
+				fxsh='0'
+				size='1.25em'
+				bd='top'
+				rotate='-45deg'
+				transformOrigin='right top'
+			/>
+			<Box px='20' py='5'>
+				<Dummy length='xs' />
+			</Box>
+			<Decorator
+				fxsh='0'
+				size='1.25em'
+				bd='top'
+				rotate='45deg'
+				transformOrigin='left top'
+			/>
+		</Flex>
+		<Spacer h='10' />
+		<Flex
+			variant='ltr'
+			jc='center'
+			ai='fe'
+			ta='c'
+		>
+			<Decorator
+				fxsh='0'
+				size='1.25em'
+				bd='bottom'
+				rotate='45deg'
+				transformOrigin='right bottom'
+			/>
+			<Box px='20' py='5' fxg=''>
+				<Dummy length='s' />
+			</Box>
+			<Decorator
+				fxsh='0'
+				size='1.25em'
+				bd='bottom'
+				rotate='-45deg'
+				transformOrigin='left bottom'
+			/>
+		</Flex>
+		```
+	</PreviewCode>
+</Preview>
+
+
+
+### Kakko
+
+<Preview>
+	<PreviewTitle>Kakko</PreviewTitle>
+	<PreviewArea resize p='30'>
+		<Box p='40' pos='r'>
+			<Dummy />
+			<Decorator size='1.25em' pos='a' t='0' l='0' bd='l,t' />
+			<Decorator size='1.25em' pos='a' r='0' b='0' bd='r,b' />
+		</Box>
+		{/* <Box p='40' pos='r'>
+			<Dummy />
+			<Decorator size='1.25em' pos='a' t='0' r='0' bd='r,t' />
+			<Decorator size='1.25em' pos='a' l='0' b='0' bd='l,b' />
+		</Box> */}
+		<Box p='40' pos='r'>
+			<Dummy />
+			<Decorator pos='a' t='0' l='0' w='1em' h='100%' bd='l,y' />
+			<Decorator pos='a' t='0' r='0' w='1em' h='100%' bd='r,y' />
+		</Box>
+	</PreviewArea>
+	<PreviewCode>
+	```jsx
+	<Box p='40' pos='r'>
+		<Dummy />
+		<Decorator size='1.25em' pos='a' t='0' l='0' bd='l,t' />
+		<Decorator size='1.25em' pos='a' r='0' b='0' bd='r,b' />
+	</Box>
+	<Box p='40' pos='r'>
+		<Dummy />
+		<Decorator pos='a' t='0' l='0' w='1em' h='100%' bd='l,y' />
+		<Decorator pos='a' t='0' r='0' w='1em' h='100%' bd='r,y' />
+	</Box>
+	```
+	</PreviewCode>
+</Preview>
+
+### Sticky
+
+<Preview>
+	<PreviewTitle>Sticky</PreviewTitle>
+	<PreviewArea resize p='30'>
+		<Grid gd='"content ." / auto 1fr'>
+			<GridItem
+				ga='content'
+				minW='8em'
+				maxW='30em'
+				bgc='base-2'
+				p='30'
+				w='fit-content'
+				bd='r'
+				bdw='.5em'
+			>
+				<Dummy />
+			</GridItem>
+			<GridItem
+				as={Decorator}
+				ga='content'
+				w='50%'
+				maxW='12em'
+				h='1rem'
+				ml='auto'
+				mt='auto'
+				z='-1'
+				bgc='hsl(var(--sh-hsl) / 0.25)'
+				css={{ filter:'blur(4px)',rotate:'4deg', transformOrigin: 'left bottom', translate: '-4px -4px' }}
+			 />
+		</Grid>
+	</PreviewArea>
+	<PreviewCode>
+		```jsx
+		<Grid gd='"content ." / auto 1fr'>
+			<GridItem
+				ga='content'
+				minW='8em'
+				maxW='30em'
+				bgc='base-2'
+				p='30'
+				w='fit-content'
+				bd='r'
+				bdw='.5em'
+			>
+				<Dummy />
+			</GridItem>
+			<GridItem
+				as={Decorator}
+				ga='content'
+				w='50%'
+				maxW='12em'
+				h='1rem'
+				ml='auto'
+				mt='auto'
+				z='-1'
+				bgc='hsl(var(--sh-hsl) / 0.25)'
+				css={{ filter:'blur(4px)',rotate:'4deg', transformOrigin: 'left bottom', translate: '-4px -4px' }}
+			/>
+		</Grid>
+		```
+	</PreviewCode>
+</Preview>

@@ -1,0 +1,84 @@
+---
+title: 'GridItem'
+description: ...
+---
+
+import { Center, Grid, GridItem } from 'lism-css/astro';
+import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage } from "~/components";
+
+
+**Gridの子要素**向けのプロパティを扱いやすくするためのコンポーネントです。  
+
+
+## Props
+
+| プロパティ | 説明 |
+|---|---|
+|`layout`| 展開したい Lismコンポーネント を指定できます。|
+
+
+
+また、本来は [`gridItem`オブジェクト内で指定できるプロパティ](/css/prop-class/#grid) をコンポーネントに直接指定できるようになっています。
+
+|Prop|CSS|
+|---|---|
+|`ga`|`grid-area`|
+|`gc`|`grid-column`|
+|`gr`|`grid-row`|
+|`gcs`|`grid-column-start`|
+|`grs`|`grid-row-start`|
+|`gce`|`grid-column-end`|
+|`gre`|`grid-row-end`|
+
+
+<PreviewTitle>例えば、以下は同じ出力結果になります。</PreviewTitle>
+```jsx
+// 1.
+<Lism gridItem={{'ga': 'areaName'}}>...</Lism>
+
+// 2.
+<GridItem ga='areaName'>...</GridItem>
+```
+
+
+
+## Import
+
+<ImportPackage component='Grid, GridItem' />
+
+
+## Usage
+
+{/* <Grid
+	gaf='column'
+>
+	<GridItem px={20} bgc='base-2'>L</GridItem>
+	<GridItem px={20} bgc='base-2' order='3'>Center</GridItem>
+	<GridItem px={20} bgc='base-2' order='2'>R</GridItem>
+</Grid> */}
+
+<Preview>
+	<PreviewTitle>例</PreviewTitle>
+	<PreviewArea resize p={20}>
+		<Grid variant='repeat' cols='3' rows='3' g='5'>
+			<GridItem p='20' bgc='base-2'>item1</GridItem>
+			<GridItem p='20' bgc='base-2'>item2</GridItem>
+			<GridItem p='20' bgc='base-2'>item3</GridItem>
+			<GridItem p='20' bgc='base-2'>item4</GridItem>
+			<GridItem p='20' bgc='base-2' gc='span 2'>item5</GridItem>
+			<GridItem layout={Center} gc='3' gr='1 / -1' p='20' bgc='blue'>item6</GridItem>
+		</Grid>
+	</PreviewArea>
+	<PreviewCode slot='tab' label='JSX'>
+		```jsx " gc=" " gr="
+		<Grid variant='repeat' cols='3' rows='3' g='5'>
+			<GridItem p='20' bgc='base-2'>item1</GridItem>
+			<GridItem p='20' bgc='base-2'>item2</GridItem>
+			<GridItem p='20' bgc='base-2'>item3</GridItem>
+			<GridItem p='20' bgc='base-2'>item4</GridItem>
+			<GridItem p='20' bgc='base-2' gc='span 2'>item5</GridItem>
+			<GridItem layout={Center} gc='3' gr='1 / -1' p='20' bgc='blue'>item6</GridItem>
+		</Grid>
+		```
+	</PreviewCode>
+</Preview>

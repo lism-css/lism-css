@@ -1,0 +1,14 @@
+---
+import type { LismProps } from '../types';
+import { Lism } from '../Lism';
+import { getFlexProps } from '../../../dist/components/Flex/getProps';
+
+// Propsの定義
+interface Props extends LismProps {}
+
+let props = Astro.props || {};
+---
+
+<Lism {...getFlexProps(props)}>
+	<slot />
+</Lism>

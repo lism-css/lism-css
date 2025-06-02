@@ -1,0 +1,18 @@
+@use '../_mixin' as mixin;
+
+.is--linkBox {
+	position: relative;
+	display: block;
+	color: inherit;
+	pointer-events: auto;
+	text-decoration: none;
+	cursor: pointer;
+	isolation: isolate; // 内部のz-index順位と外部のz-indexを混同させない。
+}
+
+// リンクを全てクリック可能にしておく
+@include mixin.switch_selector('.is--linkBox > a', 'is--linkBox > :where(a)') {
+	pointer-events: auto; // カードメディア内のタグラベルをクリックできるようにする場合などに必要
+	position: relative; // isolation: isolate;
+	z-index: 1;
+}

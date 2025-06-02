@@ -1,0 +1,188 @@
+---
+title: 'Columns'
+description: ...
+---
+import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage, PropBadge } from "~/components";
+import { Box, Dummy, Columns } from 'lism-css/astro';
+
+指定した列数でカラムレイアウトを作成します。
+
+
+## Props
+
+| プロパティ | 説明 | デフォルト値 |
+|---|---|---|
+| `cols` <PropBadge type="cssvar">`--cols`</PropBadge> | 列数を指定します。ブレイクポイント指定も可能です。 | `2` |
+
+{/* - `cols`: 列数を指定します。ブレイクポイント指定も可能です。 */}
+その他、[`<Grid>`で使えるprops](/components/grid#props)が使えます。
+
+
+## Import
+
+<ImportPackage component='Columns' />
+
+
+## Usage
+
+<Preview>
+	<PreviewTitle>
+		2列の`<Columns>`
+	</PreviewTitle>
+	<PreviewArea resize p='20'>
+		<Columns cols={2} g='20'>
+			<Box bgc='base-2' p='30'>Box</Box>
+			<Box bgc='base-2' p='30'>Box</Box>
+			<Box bgc='base-2' p='30'>Box</Box>
+			<Box bgc='base-2' p='30'>Box</Box>
+		</Columns>
+	</PreviewArea>
+	<PreviewCode slot='tab' label='JSX'>
+		```jsx "cols={2}"
+		<Columns cols={2} g='20'>
+			<Box bgc='base-2' p='30'>Box</Box>
+			<Box bgc='base-2' p='30'>Box</Box>
+			<Box bgc='base-2' p='30'>Box</Box>
+			<Box bgc='base-2' p='30'>Box</Box>
+		</Columns>
+		```
+	</PreviewCode>
+	<PreviewCode slot='tab' label='HTML'>
+		```html "--cols:2"
+		<div class="l--columns -g:20" style="--cols:2">
+			<div class="l--box -bgc:base-2 -p:30">Box</div>
+			<div class="l--box -bgc:base-2 -p:30">Box</div>
+			<div class="l--box -bgc:base-2 -p:30">Box</div>
+			<div class="l--box -bgc:base-2 -p:30">Box</div>
+		</div>
+		```
+	</PreviewCode>
+</Preview>
+
+
+<Preview>
+	<PreviewTitle>
+		1列 → sm:2列 → md:3列
+	</PreviewTitle>
+	<PreviewArea resize p='20'>
+		<Columns cols={[1, 2, 3]} g='20'>
+			<Box bgc='base-2' p='30'>Box</Box>
+			<Box bgc='base-2' p='30'>Box</Box>
+			<Box bgc='base-2' p='30'>Box</Box>
+			<Box bgc='base-2' p='30'>Box</Box>
+			<Box bgc='base-2' p='30'>Box</Box>
+			<Box bgc='base-2' p='30'>Box</Box>
+		</Columns>
+	</PreviewArea>
+	<PreviewCode slot='tab' label='JSX'>
+		```jsx "cols={[1, 2, 3]}"
+		<Columns cols={[1, 2, 3]} g='20'>
+			<Box bgc='base-2' p='30'>Box</Box>
+			<Box bgc='base-2' p='30'>Box</Box>
+			<Box bgc='base-2' p='30'>Box</Box>
+			<Box bgc='base-2' p='30'>Box</Box>
+			<Box bgc='base-2' p='30'>Box</Box>
+			<Box bgc='base-2' p='30'>Box</Box>
+		</Columns>
+		```
+	</PreviewCode>
+	<PreviewCode slot='tab' label='HTML'>
+		```html "--cols:1;--sm-cols:2;--md-cols:3"
+		<div class="l--columns -g:20" style="--cols:1;--sm-cols:2;--md-cols:3">
+			<div class="l--box -bgc:base-2 -p:30">Box</div>
+			<div class="l--box -bgc:base-2 -p:30">Box</div>
+			<div class="l--box -bgc:base-2 -p:30">Box</div>
+			<div class="l--box -bgc:base-2 -p:30">Box</div>
+			<div class="l--box -bgc:base-2 -p:30">Box</div>
+			<div class="l--box -bgc:base-2 -p:30">Box</div>
+		</div>
+		```
+	</PreviewCode>
+</Preview>
+
+
+<Preview>
+	<PreviewTitle>2列 → `@md`:4列</PreviewTitle>
+	<PreviewArea resize p='20'>
+		<Columns cols={[2, null, 4]} g='20'>
+			<Box bgc='base-2' p='30'>Box</Box>
+			<Box bgc='base-2' p='30'>Box</Box>
+			<Box bgc='base-2' p='30'>Box</Box>
+			<Box bgc='base-2' p='30'>Box</Box>
+		</Columns>
+	</PreviewArea>
+
+<PreviewCode slot='tab' label='JSX'>
+```jsx "cols={[2, null, 4]}"
+<Columns cols={[2, null, 4]} g='20'>
+	...
+</Columns>
+```
+</PreviewCode>
+<PreviewCode slot='tab' label='HTML'>
+```html "--cols:2;--md-cols:4"
+<div class="l--columns -g:20" style="--cols:2;--md-cols:4">
+	...
+</div>
+```
+</PreviewCode>
+</Preview>
+
+
+
+## Variants
+
+### `variant='liquid'`
+
+列数を指定せず、**子要素が指定した幅より小さくならないように自動で折り返しされる**カラムレイアウトを作成します。
+
+
+子要素が維持する最小幅は`colSize`(`--col-size`) で指定できます。（デフォルトは`16rem`です）。
+
+<Preview>
+	<PreviewTitle>
+		デフォルト (`colSize`=`16rem`)
+	</PreviewTitle>
+	<PreviewArea resize p={20}>
+		<Columns variant='liquid' className="has--itemGuide">
+			<Dummy />
+			<Dummy />
+			<Dummy />
+			<Dummy />
+			<Dummy />
+			<Dummy />
+			<Dummy />
+			<Dummy />
+		</Columns>
+	</PreviewArea>
+	<PreviewCode>
+		```jsx
+		<Columns variant='liquid'>
+			...
+		</Columns>
+		```
+	</PreviewCode>
+</Preview>
+
+{/* <Columns variant='liquid' g='20' style={{'--col-size':'8rem', '--col-behavior':'auto-fit'}}> */}
+<Preview>
+	<PreviewTitle>
+		`colSize`=`8rem`
+	</PreviewTitle>
+	<PreviewArea resize p={20}>
+		<Columns variant='liquid' g='20' colSize='8rem'>
+			<Dummy bgc='base-2' />
+			<Dummy bgc='base-2' />
+			<Dummy bgc='base-2' />
+			<Dummy bgc='base-2' />
+		</Columns>
+	</PreviewArea>
+	<PreviewCode>
+		```jsx
+		<Columns variant='liquid'>
+			...
+		</Columns>
+		```
+	</PreviewCode>
+</Preview>
+

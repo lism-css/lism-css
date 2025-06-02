@@ -1,0 +1,547 @@
+---
+title: 'Card'
+description: ...
+---
+
+import { Dummy, Box, Flex, Stack, Grid, Frame, Text, LinkBox, Link, Layer, Columns, Media } from 'lism-css/react';
+import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportSource,Button } from '~/components';
+import Card from '~/components/ex/Card/index.jsx';
+
+
+カード型コンテンツを出力する、`<Card>`コンポーネントの作成例を紹介します。  
+全体をリンク化することにも対応しています。
+
+
+<Preview>
+	<PreviewTitle>Preview</PreviewTitle>
+	<PreviewArea resize p='30'>
+		<Card sideW='50%'>
+			<Frame data-is-side ar='16/9'>
+				<Media src='/img/img-1.jpg' alt='' width='960' height='640' />
+			</Frame>
+			<Stack g='10' p='30'>
+				<h3 className='-fz:l'>Card Title</h3>
+				<Dummy lang='ja' fz='s' mb='10' />
+			</Stack>
+		</Card>
+	</PreviewArea>
+	<PreviewCode slot='tab' label='JSX'>
+		```jsx
+		<Card sideW='50%'>
+			<Frame data-is-side ar='16/9'>
+				<Media src='/img/img-1.jpg' alt='' width='960' height='640' />
+			</Frame>
+			<Stack g='10' p='30'>
+				<h3 className='-fz:l'>Card Title</h3>
+				<Dummy lang='ja' fz='s' mb='10' />
+			</Stack>
+		</Card>
+		```
+	</PreviewCode>
+	<PreviewCode slot='tab' label='HTML'>
+		```html
+		<div class="c--card l--withSide -c:text -bgc:base -bdrs:3 -bxsh:2 -ov:h" style="--side-w:50%">
+			<div class="l--frame -ar:16/9" data-is-side>
+				<img src="/img/img-1.jpg" width="960" height="640">
+			</div>
+			<div class="l--stack -g:10 -p:30">
+				<h3 class="-fz:l">Card Title</h3>
+				<p class="-fz:s -mb:" style="--mb:var(--s10)">ロレムイプサムの座り雨、トマ好き学習だったエリット、しかし時と活力はそのような木々と楽しみ。ブラインド行うにはいくつかの重要な事柄が流れます。</p>
+			</div>
+		</div>
+		```
+	</PreviewCode>
+</Preview>
+
+
+## Import
+<ImportSource name='Card' react />
+
+
+{/* ### Child Components
+
+- `<CardMedia>`: `Frame.c--card__media`を呼び出します.
+- `<CardBody>`: `Stack.c--card__body`を呼び出します. */}
+
+
+## Props
+
+| プロパティ | 説明 |
+|---|---|
+|`layout`| 展開するレイアウトコンポーネントを指定します。デフォルトは`<WihSide>`です。|
+|`href`| この例では、hrefを指定すると自動で`a.is--linkBox`として展開されるようになっています。|
+
+
+
+## Examples
+
+<Preview>
+	<PreviewTitle>デフォルトは`<WihSide>`で構成されるので、画面サイズが小さいと縦並び、大きいと横並びになります。</PreviewTitle>
+	<PreviewArea resize p='30'>
+		<Card sideW='50%'>
+			<Frame data-is-side ar='16/9'>
+				<Media src='/img/img-1.jpg' alt='' width='960' height='640' />
+			</Frame>
+			<Stack g='10' p='30'>
+				<h3 className='-fz:l'>Card Title</h3>
+				<Dummy lang='ja' fz='s' mb='10' />
+			</Stack>
+		</Card>
+		<Card fxd='rr' sideW='50%' >
+			<Frame data-is-side ar='16/9'>
+				<Media src='/img/img-2.jpg' alt='' width='960' height='640' />
+			</Frame>
+			<Stack g='10' p='30'>
+				<h3 className='-fz:l'>Card Title</h3>
+				<Dummy lang='ja' fz='s' mb='10' />
+			</Stack>
+		</Card>
+	</PreviewArea>
+	<PreviewCode slot='tab' label='JSX'>
+		```jsx
+		<Card sideW='50%'>
+			<Frame data-is-side ar='16/9'>
+				<Media src='/img/img-1.jpg' alt='' width='960' height='640' />
+			</Frame>
+			<Stack g='10' p='30'>
+				<h3 className='-fz:l'>Card Title</h3>
+				<Dummy lang='ja' fz='s' mb='10' />
+			</Stack>
+		</Card>
+		<Card fxd='rr' sideW='50%' >
+			<Frame data-is-side ar='16/9'>
+				<Media src='/img/img-2.jpg' alt='' width='960' height='640' />
+			</Frame>
+			<Stack g='10' p='30'>
+				<h3 className='-fz:l'>Card Title</h3>
+				<Dummy lang='ja' fz='s' mb='10' />
+			</Stack>
+		</Card>
+		```
+	</PreviewCode>
+</Preview>
+
+
+### カードにリンクをつける
+
+`<Card>`に`href`を指定すると、`isLinkBox tag='a'` が適用され、カード全体を[`is--linkBox`](/components/linkbox/)でリンク化します。
+
+<Preview>
+	<PreviewTitle>例</PreviewTitle>
+	<PreviewArea resize p='30'>
+		<Card href='###' sideW='50%' >
+			<Frame data-is-side ar='16/9'>
+				<Media src='/img/img-1.jpg' alt='' width='960' height='640' />
+			</Frame>
+			<Stack g='10' p='30'>
+				<h3 className='-fz:l'>Card Title</h3>
+				<Dummy lang='ja' fz='s' mb='10' />
+			</Stack>
+		</Card>
+	</PreviewArea>
+	<PreviewCode slot='tab' label='JSX'>
+		```jsx "href='###'"
+		<Card href='###' sideW='50%' >
+			<Frame data-is-side ar='16/9'>
+				<Media src='/img/img-1.jpg' alt='' width='960' height='640' />
+			</Frame>
+			<Stack g='10' p='30'>
+				<h3 className='-fz:l'>Card Title</h3>
+				<Dummy lang='ja' fz='s' mb='10' />
+			</Stack>
+		</Card>
+		```
+	</PreviewCode>
+</Preview>
+
+
+リンク要素を一部の要素に限定したい場合や、カード全体をリンクにしつつ、別のリンクを含めたい場合、 `u--overlayLink` を使用してください。
+
+<Preview>
+	<PreviewTitle>`u--overlayLink`を使う例</PreviewTitle>
+	<PreviewArea resize p='40'>
+		<Card isLinkBox hov={{bxsh: '4'}} trs sideW='50%'>
+			<Frame data-is-side ar='16/9' pos='r'>
+				<Media src='/img/img-1.jpg' alt='' width='960' height='640' />
+				<Link href='#badge-link' pos='a' z='1' t='0' r='0' fz='s' bgc='black' c='white' m='20' px='20' bdrs='99' td='n' hov='fade'>Category</Link>
+			</Frame>
+			<Stack g='10' p='30'>
+				<h3 className='-fz:l'>
+					<Link className='u--overlayLink' href='#card-link'>Card Title(Link)</Link>
+				</h3>
+				<Dummy lang='ja' />
+				<Link href='#bottom-link' px='10' td='n' bd='b' aslf='end' mbs='auto'>Bottom Link</Link>
+			</Stack>
+		</Card>
+	</PreviewArea>
+	<PreviewCode slot='tab' label='JSX'>
+		```jsx "isLinkBox" "href=" "u--overlayLink"
+		<Card isLinkBox hov={{bxsh: '4'}} trs sideW='50%'>
+			<Frame data-is-side ar='16/9' pos='r'>
+				<Media src='/img/img-1.jpg' alt='' width='960' height='640' />
+				<Link href='#badge-link' pos='a' z='1' t='0' r='0' fz='s' bgc='black' c='white' m='20' px='20' bdrs='99' td='n' hov='fade'>Category</Link>
+			</Frame>
+			<Stack g='10' p='30'>
+				<h3 className='-fz:l'>
+					<Link className='u--overlayLink' href='#card-link'>Card Title(Link)</Link>
+				</h3>
+				<Dummy lang='ja' />
+				<Link href='#bottom-link' px='10' td='n' bd='b' aslf='end' mbs='auto'>Bottom Link</Link>
+			</Stack>
+		</Card>
+		```
+	</PreviewCode>
+</Preview>
+
+
+
+### 横並びで固定する
+
+
+<Preview>
+	<PreviewTitle>`layout={Flex}`を指定して横並びで常に表示できます。</PreviewTitle>
+	<PreviewArea resize p='30'>
+		<Card layout={Flex}>
+			<Frame w={['32%','40%', '50%']} fxsh='0'>
+				<Media src='/img/img-3.jpg' alt='' width='960' height='640' />
+			</Frame>
+			<Stack fxg='1' g='10' p='30'>
+				<h3 className='-fz:l'>Card Title</h3>
+				<Dummy lang='ja' fz='s' />
+			</Stack>
+		</Card>
+	</PreviewArea>
+	<PreviewCode slot='tab' label='JSX'>
+		```jsx "layout={Flex}" "fxsh='0'" "fxg='1'"
+		<Card layout={Flex}>
+			<Frame w={['32%','40%','50%']} fxsh='0'>
+				<Media src='/img/img-3.jpg' alt='' width='960' height='640' />
+			</Frame>
+			<Stack fxg='1' g='10' p='30'>
+				<h3 className='-fz:l'>Card Title</h3>
+				<Dummy lang='ja' fz='s' />
+			</Stack>
+		</Card>
+		```
+	</PreviewCode>
+</Preview>
+
+<Preview>
+	<PreviewTitle>メディア側のアスペクト比を指定すると、画面サイズが十分広ければそのアスペクト比で固定されます。</PreviewTitle>
+	<PreviewArea resize p='30'>
+		<Card layout={Flex} fxd='rr'>
+			<Frame w='40%' ar='1/1' fxsh='0'>
+				<Media src='/img/img-2.jpg' alt='' width='960' height='640' />
+			</Frame>
+			<Stack fxg='1' g='10' p='30'>
+				<h3 className='-fz:l'>Card Title</h3>
+				<Dummy lang='ja' fz='s' />s 
+			</Stack>
+		</Card>
+	</PreviewArea>
+	<PreviewCode slot='tab' label='JSX'>
+		```jsx "ar='1/1'"
+		<Card layout={Flex} fxd='rr'>
+			<Frame w={['32%','40%']} ar='1/1' fxsh='0'>
+				<Media src='/img/img-2.jpg' alt='' width='960' height='640' />
+			</Frame>
+			<Stack fxg='1' g='10' p='30'>
+				<h3 className='-fz:l'>Card Title</h3>
+				<Dummy lang='ja' fz='s' />
+				<Link href='#button-link' px='10' td='n' bd='b' aslf='end' mbs='auto'>Link Text</Link>
+			</Stack>
+		</Card>
+		```
+	</PreviewCode>
+</Preview>
+
+
+{/* Gridでも構成できる
+
+<Preview>
+	<PreviewTitle>横向きで固定 Gridパターン</PreviewTitle>
+	<PreviewArea resize p='30'>
+		<Card layout={Grid} gtc='40% 1fr'>
+			<Frame ar='1/1' h='100%' w='100%'>
+				<Media src='/img/img-1.jpg' alt='' width='960' height='640' />
+			</Frame>
+			<Stack g='10' p='30'>
+				<h3 className='-fz:l'>Card Title</h3>
+				<Dummy lang='ja' fz='s' />
+				<Link href='#button-link' px='10' td='n' bd='b' aslf='end' mbs='auto'>Link Text</Link>
+			</Stack>
+		</Card>
+	</PreviewArea>
+	<PreviewCode slot='tab' label='JSX'>
+		```jsx 
+		<Card layout={Grid} gtc='40% 1fr'>
+			<CardMedia>
+				<Media src='/img/img-1.jpg' alt='' width='960' height='640' />
+			</Frame>
+			<Stack g='10' p='30'>
+				<h3 className='-fz:l'>Card Title</h3>
+				<Dummy lang='ja' fz='s' />
+				<Link href='#button-link' px='10' td='n' bd='b' aslf='end' mbs='auto'>Link Text</Link>
+			</Stack>
+		</Card>
+		```
+	</PreviewCode>
+</Preview> */}
+
+
+### 縦並び
+
+
+`layout={Stack}`を指定して縦並びで常に表示する例を紹介します。
+
+<Preview>
+	<PreviewTitle>縦向きで固定</PreviewTitle>
+	<PreviewArea resize p='30'>
+		<Columns variant='liquid' g='40'>
+			<Card layout={Stack} href='#card-1'>
+				<Frame ar='16/9'>
+					<Media src='/img/img-1.jpg' alt='' width='960' height='640' />
+				</Frame>
+				<Stack fxg='1' p='30'>
+					<h3 className='-fz:l'>Card Title</h3>
+					<Dummy lang='ja' fz='s' />
+					<Text px='10' aslf='end' mbs='auto' fz='s' bd='b'>Bottom Text</Text>
+				</Stack>
+			</Card>
+			<Card layout={Stack} href='#card-2'>
+				<Frame ar='16/9'>
+					<Media src='/img/img-2.jpg' alt='' width='960' height='640' />
+				</Frame>
+				<Stack fxg='1' p='30'>
+					<h3 className='-fz:l'>Card Title</h3>
+					<Dummy lang='ja' length='s' fz='s'/>
+					<Text px='10' aslf='end' mbs='auto' fz='s' bd='b'>Bottom Text</Text>
+				</Stack>
+			</Card>
+		</Columns>
+	</PreviewArea>
+	<PreviewCode slot='tab' label='JSX'>
+		```jsx "href"
+		<Columns variant='liquid' g='40'>
+			<Card layout={Stack} href='#card-1'>
+				<Frame ar='16/9'>
+					<Media src='/img/img-1.jpg' alt='' width='960' height='640' />
+				</Frame>
+				<Stack fxg='1' p='30'>
+					<h3 className='-fz:l'>Card Title</h3>
+					<Dummy lang='ja' fz='s' />
+					<Text px='10' aslf='end' mbs='auto' fz='s' bd='b'>Bottom Text</Text>
+				</Stack>
+			</Card>
+			<Card layout={Stack} href='#card-2'>
+				<Frame ar='16/9'>
+					<Media src='/img/img-2.jpg' alt='' width='960' height='640' />
+				</Frame>
+				<Stack fxg='1' p='30'>
+					<h3 className='-fz:l'>Card Title</h3>
+					<Dummy lang='ja' length='s' fz='s'/>
+					<Text px='10' aslf='end' mbs='auto' fz='s' bd='b'>Bottom Text</Text>
+				</Stack>
+			</Card>
+		</Columns>
+		```
+	</PreviewCode>
+</Preview>
+
+
+{/* <Preview>
+	<PreviewTitle>rtl言語でのテスト</PreviewTitle>
+	<PreviewArea p={20} maxW='40em'>
+		<Card isFlex dir='rtl'>
+			<Frame w='40%'>
+				<img src='/img/img-1.jpg' alt='' width='960' height='640' />
+			</Frame>
+			<CardBody>
+				<h3 className='-fz:l'>ما هو 'لوريم إيبسوم' ؟</h3>
+				<p>هذا نص وهمي أنا أكتب جمل ليس لها معنى معين.هذا نص وهمي أنا أكتب جمل ليس لها معنى معين.هذا نص وهمي أنا أكتب جمل ليس لها معنى معين.</p>
+				<Lism fz='s' aslf='fe' mbs='auto'>النص السفلي</Lism>
+			</Stack>
+		</Card>
+	</PreviewArea>
+	<PreviewCode slot='tab' label='JSX'>
+		```jsx
+		<Card isFlex dir='rtl'>
+			<Frame w='40%'>
+				<img src='/img/img-1.jpg' alt='' width='960' height='640' />
+			</Frame>
+			<CardBody>
+				<h3 className='-fz:l'>ما هو 'لوريم إيبسوم' ؟</h3>
+				<p>هذا نص وهمي أنا أكتب جمل ليس لها معنى معين.هذا نص وهمي أنا أكتب جمل ليس لها معنى معين.هذا نص وهمي أنا أكتب جمل ليس لها معنى معين.</p>
+				<Lism fz='s' aslf='fe' mbs='auto'>النص السفلي</Lism>
+			</Stack>
+		</Card>
+		```
+	</PreviewCode>
+</Preview> */}
+
+
+## その他の例
+
+### bdrs='inner'
+<Preview>
+	<PreviewTitle>`bdrs='inner'`の活用</PreviewTitle>
+	<PreviewArea resize p='30'>
+		<Card sideW='45%' g='20' p='20' bdrs='4'>
+			<Frame data-is-side ar='16/9' bdrs='inner'>
+				<Media src='/img/img-1.jpg' alt='' width='960' height='640' />
+			</Frame>
+			<Stack g='10' p='10'>
+				<h3 className='-fz:l'>Card Title</h3>
+				<Dummy lang='ja' fz='s' mb='10' />
+			</Stack>
+		</Card>
+	</PreviewArea>
+	<PreviewCode slot='tab' label='JSX'>
+		```jsx "bdrs='inner'" "p='20' bdrs='4'"
+		<Card sideW='45%' g='20' p='20' bdrs='4'>
+			<Frame data-is-side ar='16/9' bdrs='inner'>
+				<Media src='/img/img-1.jpg' alt='' width='960' height='640' />
+			</Frame>
+			<Stack g='10' p='10'>
+				<h3 className='-fz:l'>Card Title</h3>
+				<Dummy lang='ja' fz='s' mb='10' />
+				<Link href='#button-link' px='10' td='n' bd='b' aslf='end' mbs='auto'>Link Text</Link>
+			</Stack>
+		</Card>
+		```
+	</PreviewCode>
+</Preview>
+
+
+### ホバーでコンテンツを出現させる例
+
+以下の例では、`.-hov\:get\:slide`クラスを別途用意する必要があります。
+
+{/* Note: PreviewAreaにresize つけると Filterの挙動変わることに注意。 */}
+<Preview>
+	<PreviewTitle>コンテンツをホバーして表示</PreviewTitle>
+	<PreviewArea p='30'>
+		<Columns variant='liquid' colSize='20rem' g='30'>
+			<Card href='#card-a' pos='r' bdrs='3' hov='set'>
+				<Frame ar='3/2'>
+					<img src='/img/img-1.jpg' alt='' width='960' height='640' />
+				</Frame>
+				<Stack pos='a' b='0' w='100%' p='20' bgc='white:50%'>
+					<Layer blur='4px' brightness='1.1'/>
+					<Box pos='relative' z='1' c='black' lh='s'>
+						<h3 className='-fz:l'>Card Title</h3>
+						<Grid trs hov='get:slide'>
+							<Box ov='h'>
+								<Dummy py='5' fz='s' lh='xs' op='high' />
+							</Box>
+						</Grid>
+						<Text fz='xs' op='high'>2000.01.01 / Author</Text>
+					</Box>
+				</Stack>
+			</Card>
+			<Card href='#card-b' pos='r' bdrs='3' hov='set'>
+				<Frame ar='3/2'>
+					<img src='/img/img-2.jpg' alt='' width='960' height='640' />
+				</Frame>
+				<Stack pos='a' b='0' w='100%' p='20' bgc='white:50%'>
+					<Layer blur='4px' brightness='1.1'/>
+					<Box pos='relative' z='1' c='black' lh='s'>
+						<h3 className='-fz:l'>Card Title</h3>
+						<Grid trs hov='get:slide'>
+							<Box ov='h'>
+								<Dummy py='5' fz='s' lh='xs' op='high' />
+							</Box>
+						</Grid>
+						<Text fz='xs' op='high'>2000.01.01 / Author</Text>
+					</Box>
+				</Stack>
+			</Card>
+		</Columns>
+	</PreviewArea>
+	<PreviewCode slot='tab' label='JSX'>
+	```jsx "hov='set'" "hov='get:slide'"
+	<Columns variant='liquid' colSize='20rem' g='30'>
+		<Card href='#card-a' pos='r' bdrs='2' hov='set'>
+			<Frame ar='3/2'>
+				<img src='/img/img-1.jpg' alt='' width='960' height='640' />
+			</Frame>
+			<Stack pos='a' b='0' w='100%' p='20' bgc='white:50%'>
+				<Layer blur='4px' brightness='1.1'/>
+				<Box pos='relative' z='1' c='black' lh='s'>
+					<h3 className='-fz:l'>Card Title</h3>
+					<Grid hov='get:slide'>
+						<Box ov='h'>
+							<Dummy py='5' fz='s' lh='xs' op='high' />
+						</Box>
+					</Grid>
+					<Text fz='xs' op='high'>2000.01.01 / Author</Text>
+				</Box>
+			</Stack>
+		</Card>
+		<Card href='#card-b' pos='r' bdrs='2' hov='set'>
+			<Frame ar='3/2'>
+				<img src='/img/img-2.jpg' alt='' width='960' height='640' />
+			</Frame>
+			<Stack pos='a' b='0' w='100%' p='20' bgc='white:50%'>
+				<Layer blur='4px' brightness='1.1'/>
+				<Box pos='relative' z='1' c='black' lh='s'>
+					<h3 className='-fz:l'>Card Title</h3>
+					<Grid hov='get:slide'>
+						<Box ov='h'>
+							<Dummy py='5' fz='s' lh='xs' op='high' />
+						</Box>
+					</Grid>
+					<Text fz='xs' op='high'>2000.01.01 / Author</Text>
+				</Box>
+			</Stack>
+		</Card>
+	</Columns>
+	```
+	</PreviewCode>
+<PreviewCode slot='tab' label='追加CSS'>
+```css
+.-hov\:get\:slide {
+	opacity: var(--_notHov, 0);
+	grid-template-rows: var(--_isHov, 1fr) var(--_notHov, 0fr);
+	transition-property: margin-block, padding-block, opacity, grid-template-rows;
+}
+```
+</PreviewCode>
+</Preview>
+
+
+
+
+### 横並びの時はコンテンツ側の高さにあわせ、縦並びの時はアスペクト比を維持
+
+`ar`(aspect-ratio)をブレイクポイント指定します。
+また、それに合わせて`Card`のレイアウトもブレイクポイントで切り替わるように `sidePosition`を指定します。
+
+<Preview>
+	<PreviewTitle>ブレイクポイントで切り替える場合</PreviewTitle>
+	<PreviewArea resize p='30'>
+		<Card sideW='50%' sidePosition='start start' bxsh='0' bdrs='0'>
+			<Frame data-is-side ar={['16/9', 'unset']} pos='r' bdrs='3'>
+				<Media pos='a' src='/img/img-1.jpg' alt='' width='960' height='640' />
+			</Frame>
+			<Stack g='10' p='30'>
+				<h3 className='-fz:l'>Card Title</h3>
+				<Dummy lang='ja' fz='s' />
+			</Stack>
+		</Card>
+	</PreviewArea>
+	<PreviewCode slot='tab' label='JSX'>
+		```jsx "sidePosition" "ar={['16/9', 'unset']}"
+		<Card sideW='50%' sidePosition='start start' bxsh='0' bdrs='0'>
+			<Frame data-is-side ar={['16/9', 'unset']} pos='r'>
+				<Media pos='a' src='/img/img-1.jpg' alt='' width='960' height='640' />
+			</Frame>
+			<Stack g='10' p='30'>
+				<h3 className='-fz:l'>Card Title</h3>
+				<Dummy lang='ja' fz='s' />
+			</Stack>
+		</Card>
+		```
+	</PreviewCode>
+</Preview>
+

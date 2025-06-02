@@ -1,0 +1,25 @@
+---
+import { Lism, Tabs } from 'lism-css/astro';
+
+// console.log('Astro', Astro.props);
+const slotKeys: string[] = Object.keys(Astro?.slots || {});
+
+let tabs = '';
+for (let index = 0; index < slotKeys.length; index++) {
+	const slotName = slotKeys[index];
+	if (slotName !== 'default') {
+		tabs += await Astro.slots.render(slotName);
+	}
+}
+---
+
+<Lism className='c--preview' {...Astro.props}>
+	<slot />
+	{
+		Astro.slots.has('tab') && (
+			<Tabs.Root className='c--preview_code' variant='line' g='20'>
+				<slot name='tab' />
+			</Tabs.Root>
+		)
+	}
+</Lism>

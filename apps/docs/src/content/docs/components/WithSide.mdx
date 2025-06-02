@@ -1,0 +1,209 @@
+---
+title: 'WithSide'
+description: ...
+---
+
+import { WithSide, Grid, Dummy, Box, Stack, Spacer, GridItem } from 'lism-css/astro';
+import {
+	Preview,
+	PreviewArea,
+	PreviewTitle,
+	PreviewCode,
+	ImportPackage,
+	PropBadge,
+	Callout,
+} from '~/components';
+
+メディアクエリ・コンテナクエリに依存せず、維持したいコンテンツの長さを基準にして横並びと縦並びの切り替えを行うことができる2カラムレイアウトを作成します。
+
+メインコンテンツとそのサイドコンテンツ、のようなレイアウトに活用できます。
+
+## 基本構造
+
+```pug
+div.l--withSide
+	div
+	div[data-is-side]
+```
+
+## Import
+
+<ImportPackage component='WithSide' />
+
+## Props
+
+| プロパティ | 出力                                            | 説明                       |
+| ---------- | ----------------------------------------------- | -------------------------- |
+| `sideW`    | <PropBadge type="cssvar">`--side-w`</PropBadge> | side要素の横幅             |
+| `mainW`    | <PropBadge type="cssvar">`--main-w`</PropBadge> | main要素で維持したい最小幅 |
+
+{/* その他、[`<Flex>`で使えるProps](/components/flex#props)が使えます。 */}
+
+## Usage
+
+子要素に`[data-is-side]`が必要です。  
+`[data-is-side]`の横幅を`--side-w`で指定した値に固定しつつ、もう一方が`--main-w`で指定した横幅を下回るようになると、自動で1カラムに切り替わるようになっています。
+
+<Preview>
+	<PreviewTitle>使用例</PreviewTitle>
+	<PreviewArea resize p='30'>
+		<WithSide sideW='10rem' mainW='16rem' g='30'>
+			<Box>
+				<Dummy />
+			</Box>
+			<Box data-is-side bgc='blue:20%'>
+				Side Content
+			</Box>
+		</WithSide>
+	</PreviewArea>
+	<PreviewCode slot='tab' label='JSX'>
+		```jsx "sideW" "data-is-side"
+		<WithSide sideW='10rem' mainW='16rem' g='30'>
+			<Box>
+				<Dummy />
+			</Box>
+			<Box data-is-side>Side Content</Box>
+		</WithSide>
+		```
+	</PreviewCode>
+	<PreviewCode slot='tab' label='HTML'>
+		```jsx "data-is-side" "--side-w"
+		<div class='l--withSide -g:30' style='--side-w:10rem;--main-w:16rem;'>
+			<div class='l--box'>
+				<p>Lorem ipsum dolor sit amet, ...</p>
+			</div>
+			<div class='l--box' data-is-side>
+				Side Content
+			</div>
+		</div>
+		```
+	</PreviewCode>
+</Preview>
+
+#### 反転
+
+`-fxd:rr`クラス（`flex-direction:row-reverse`）を併用することで、横並びの時の順番だけを反転させることができます。
+
+<Callout type='check'>
+	これにより、横並びの時は左側、縦並びの時は下側にside要素を配置できます。
+</Callout>
+
+<Preview>
+	<PreviewTitle>例</PreviewTitle>
+	<PreviewArea resize p='30'>
+		<WithSide fxd='rr' sideW='10rem' mainW='16rem' g='30'>
+			<Box>
+				<Dummy />
+			</Box>
+			<Box data-is-side bgc='blue:20%'>
+				Side Content
+			</Box>
+		</WithSide>
+	</PreviewArea>
+	<PreviewCode slot='tab' label='JSX'>
+		```jsx "fxd='rr'"
+		<WithSide fxd='rr' sideW='10rem' mainW='16rem' g='30'>
+			<Box>
+				<Dummy />
+			</Box>
+			<Box data-is-side>Side Content</Box>
+		</WithSide>
+		```
+	</PreviewCode>
+	<PreviewCode slot='tab' label='HTML'>
+		```jsx "-fxd:rr"
+		<div class='l--withSide -fxd:rr -g:30' style='--side-w:10rem;--main-w:16rem;'>
+			<div class='l--box'>
+				<p>Lorem ipsum dolor sit amet, ...</p>
+			</div>
+			<div class='l--box' data-is-side>
+				Side Content
+			</div>
+		</div>
+		```
+	</PreviewCode>
+</Preview>
+
+## `Grid`を使って似たレイアウトを構成する例
+
+`WithSide`(`.l--withSide`)はブレイクポイントに依存しませんが、[`Grid`](/components/grid)で構成することで、レイアウトの切り替えポイントをブレイクポイントで指定して同じようなレイアウトを構築することもできます。
+
+<Preview>
+	<PreviewTitle>`Grid`を使って`WithSide`のようなレイアウトを構築する例</PreviewTitle>
+	<PreviewArea resize p='30'>
+		<Grid gd={[`'.' 'side'`, `'. side' / 1fr 10rem`]} g='30'>
+			<GridItem>
+				<Dummy />
+			</GridItem>
+			<GridItem ga='side' bgc='blue:20%'>
+				Side Content
+			</GridItem>
+		</Grid>
+	</PreviewArea>
+	<PreviewCode slot='tab' label='JSX'>
+		```jsx "ga='side'" "gd=" "'.' 'side'" "'. side' / 1fr 10rem"
+		<Grid gd={[`'.' 'side'`, `'. side' / 1fr 10rem`]} g='30'>
+			<GridItem>
+				<Dummy />
+			</GridItem>
+			<GridItem ga='side'>Side Content</GridItem>
+		</Grid>
+		```
+	</PreviewCode>
+	<PreviewCode slot='tab' label='HTML'>
+		```jsx "-gd: -gd@sm" "gd=" "'.' 'side'" "'. side' / 1fr 10rem" "-ga:" "--ga:side"
+		<div class='l--grid -g:30 -gd: -gd@sm' style="--gd:'.' 'side';--sm-gd:'. side' / 1fr 10rem">
+			<div>
+				<p>
+					{' '}
+					Lorem ipsum dolor sit, amet consectetur adipisicing elit, sed do eiusmod tempor.
+					Non facere laudantium ex eos doloribus aut dolore nisi.{' '}
+				</p>
+			</div>
+			<div class='-ga:' style='--ga:side'>
+				Side Content
+			</div>
+		</div>
+		```
+	</PreviewCode>
+</Preview>
+
+<Preview>
+	<PreviewTitle>`side`を左側、ブレイクポイントを`@md`にする例</PreviewTitle>
+	<PreviewArea resize p='30'>
+		<Grid gd={[`'.' 'side'`, null, `'side .' / 10rem 1fr`]} g='30'>
+			<GridItem>
+				<Dummy />
+			</GridItem>
+			<GridItem ga='side' bgc='blue:20%'>
+				Side Content
+			</GridItem>
+		</Grid>
+	</PreviewArea>
+	<PreviewCode slot='tab' label='JSX'>
+		```jsx
+		<Grid gd={[`'.' 'side'`, null, `'side .' / 10rem 1fr`]} g='30'>
+			<GridItem>
+				<Dummy />
+			</GridItem>
+			<GridItem ga='side'>Side Content</GridItem>
+		</Grid>
+		```
+	</PreviewCode>
+	<PreviewCode slot='tab' label='HTML'>
+		```jsx
+		<div class='l--grid -g:30 -gd: -gd@md' style="--gd:'.' 'side';--md-gd:'side .' / 10rem 1fr">
+			<div>
+				<p>
+					{' '}
+					Lorem ipsum dolor sit, amet consectetur adipisicing elit, sed do eiusmod tempor.
+					Non facere laudantium ex eos doloribus aut dolore nisi.{' '}
+				</p>
+			</div>
+			<div class='-ga:' style='--ga:side'>
+				Side Content
+			</div>
+		</div>
+		```
+	</PreviewCode>
+</Preview>

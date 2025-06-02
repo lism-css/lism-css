@@ -1,0 +1,33 @@
+// .-get\:p,
+// .-pass\:p > * {
+// 	padding: var(--pass-p);
+// }
+// .-get\:minW,
+// .-pass\:minW > * {
+// 	min-width: var(--pass-minW);
+// }
+
+[data-lism-get~='p'],
+[data-lism-pass~='p'] > * {
+	padding: var(--pass-p);
+}
+[data-lism-get~='minW'],
+[data-lism-pass~='minW'] > * {
+	min-width: var(--pass-minW);
+}
+
+// 必要に応じて以下のような形式でCSSを追加してご利用してください。
+
+// .-get\:c {
+// 	color: var(--pass-c);
+// }
+
+// .-get\:bgc,
+// .-pass\:bgc > * {
+// 	background-color: var(--pass-bgc);
+// }
+
+// .-get\:w,
+// .-pass\:w > * {
+// 	width: var(--pass-w);
+// }
