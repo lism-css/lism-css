@@ -1,0 +1,59 @@
+---
+title: 'getLismProps()'
+description: ...
+sidebar:
+  order: 10
+---
+import { Preview, PreviewArea, PreviewTitle, PreviewCode, Reference, Note } from "~/components";
+import { Box, Flex } from "lism-css/astro";
+
+
+Lismで用意しているコンポーネント以外でも[Lism Props](/components/lism/#lism-props)を活用できるように、`getLismProps()`も用意しています。 
+
+
+例えば、下記 ①、② はそれぞれ同じ出力になります。
+
+```jsx
+// ① Lism コンポーネントを使う
+<Box p='20' bgc='base-2' fz='xl'>text</Box>
+
+// ② ただの div タグを使う
+<div {...getLismProps({className:'l--box', p:'20', fz:'xl'})}>text</div>
+```
+
+
+`getLismProps()`は、引数に渡したオブジェクトを解析し、Lism Props として処理できるものを`className`と`style`に変換して返します。
+
+
+- 引数:  Lism Props として解析したいプロパティをオブジェクトで指定します。
+- 返り値: `className`, `style` を含むオブジェクトです。Lismで処理できないPropsがあった場合はそのまま返ってきます。
+
+下記のようにして使用できます。
+
+<PreviewTitle>例</PreviewTitle>
+```jsx
+import getLismProps from 'lism-css/lib/getLismProps';
+
+const returnProps = getLismProps({className:'foo', fz:'xl', p:['30', '40']});
+```
+
+<PreviewTitle>返り値</PreviewTitle>
+```js
+{
+	className: 'foo -fz:l -p:30 -p@sm',
+	style: {'--sm-p':'var(--s40)'},
+}
+```
+
+{/* // const { className, style, ...otherProps} = getLismProps(exampleProps); */}
+
+<Note title='注意点' type='warning' isFlow='s'>
+	`getLismProps`をスプレッド構文で展開する際、classNameとstyleが含まれることに注意してください。  
+	例えば、次のようにclassNameの指定を分離すると、classNameが上書きされてしまいます。
+
+	<PreviewTitle>NG</PreviewTitle>
+	```jsx
+	<div className='foo' {...getLismProps({p:'20', fz:'xl'})}>text</div>
+	```
+</Note>
+

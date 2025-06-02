@@ -1,0 +1,30 @@
+---
+// Propsの定義
+interface Props {
+	size?: string | number;
+	fill?: string;
+	viewBox?: string;
+	path?: string;
+	[key: string]: any;
+}
+let {
+	size = '1em',
+	fill = 'currentColor',
+	viewBox = '0 0 24 24',
+	path,
+	...props
+} = Astro.props || {};
+---
+
+<svg
+	xmlns='http://www.w3.org/2000/svg'
+	viewBox={viewBox}
+	width={size}
+	height={size}
+	fill={fill}
+	focusable='false'
+	{...props}
+>
+	{path && <path d={path} />}
+	<slot />
+</svg>

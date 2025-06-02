@@ -1,0 +1,223 @@
+---
+title: 'Others'
+description: ...
+---
+
+
+import { Grid, Text, Box, Center,Container,Lism, Flex, Stack, Divider, Decorator, Link, Frame, Layer, Media, Dummy, Spacer } from 'lism-css/react';
+import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage } from "~/components";
+import {Question,ChatCircleDots} from '@phosphor-icons/react';
+import { ArrowFatLinesDown } from '@phosphor-icons/react';
+import ShapeDivider from '~/components/ex/ShapeDivider/index.astro';
+
+<Preview>
+	<PreviewTitle>ステップナビゲーション</PreviewTitle>
+	<PreviewArea resize p='30' nogrid>
+		<Flex className='c--stepNav' g='1.5rem'>
+			<Flex className='c--stepNav__item' bgc='text' c='base' op='low' px='30' py='10' pos='r'>
+				<Lism className='c--stepNav__body'>
+					<Text>入力</Text>
+				</Lism>
+				<Decorator pos='a' w='0.75em' h='100%' bgc='inherit' l='100%' t='0' css={{ clipPath: 'polygon(0% 0%, 0% 100%, 100% 50%)' }} />
+			</Flex>
+			<Flex className='c--stepNav__item' bgc='text' c='base' px='30' py='10' pos='r'>
+				<Lism className='c--stepNav__body'>
+					<Text>確認</Text>
+				</Lism>
+				<Decorator pos='a' w='0.75em' h='100%' bgc='inherit' l='100%' t='0' css={{ clipPath: 'polygon(0% 0%, 0% 100%, 100% 50%)' }} />
+			</Flex>
+			<Flex className='c--stepNav__item' bgc='text' c='base' op='low' px='30' py='10' pos='r'>
+				<Lism className='c--stepNav__body'>
+					<Text>完了</Text>
+				</Lism>
+			</Flex>
+		</Flex>
+	</PreviewArea>
+	<PreviewCode>
+		```jsx
+		<Flex className='c--stepNav' g='1.5rem'>
+			<Flex className='c--stepNav__item' bgc='text' c='base' op='low' px='30' py='10' pos='r'>
+				<Lism className='c--stepNav__body'>
+					<Text>入力</Text>
+				</Lism>
+				<Decorator pos='a' w='0.75em' h='100%' bgc='inherit' l='100%' t='0' css={{ clipPath: 'polygon(0% 0%, 0% 100%, 100% 50%)' }} />
+			</Flex>
+			<Flex className='c--stepNav__item' bgc='text' c='base' px='30' py='10' pos='r'>
+				<Lism className='c--stepNav__body'>
+					<Text>確認</Text>
+				</Lism>
+				<Decorator pos='a' w='0.75em' h='100%' bgc='inherit' l='100%' t='0' css={{ clipPath: 'polygon(0% 0%, 0% 100%, 100% 50%)' }} />
+			</Flex>
+			<Flex className='c--stepNav__item' bgc='text' c='base' op='low' px='30' py='10' pos='r'>
+				<Lism className='c--stepNav__body'>
+					<Text>完了</Text>
+				</Lism>
+			</Flex>
+		</Flex>
+		```
+	</PreviewCode>
+</Preview>
+
+
+
+---
+
+<Preview>
+	<PreviewTitle>メニュー表</PreviewTitle>
+	<PreviewArea resize p='30' nogrid>
+		<Stack className='c--priceMenu' g='30' fz={['s','m']} lh='s'>
+			<Grid gtc='auto 1fr auto' ai='center' g='30'>
+				<Text>とても美味しいトマトソースのスパゲッティ</Text>
+				<Divider minW='1em' />
+				<Text whs='nowrap'>1,000円</Text>
+			</Grid>
+			<Grid gtc='auto 1fr auto' ai='center' g='30'>
+				<Text>美味しいドリンク</Text>
+				<Divider minW='1em' />
+				<Text whs='nowrap'>500円</Text>
+			</Grid>
+		</Stack>
+	</PreviewArea>
+	<PreviewCode>
+		```jsx
+		<Stack className='c--priceMenu' g='30' fz={['s','m']} lh='s'>
+			<Grid gtc='auto 1fr auto' ai='center' g='30'>
+				<Text>とても美味しいトマトソースのスパゲッティ</Text>
+				<Divider minW='1em' />
+				<Text whs='nowrap'>1,000円</Text>
+			</Grid>
+			<Grid gtc='auto 1fr auto' ai='center' g='30'>
+				<Text>美味しいドリンク</Text>
+				<Divider minW='1em' />
+				<Text whs='nowrap'>500円</Text>
+			</Grid>
+		</Stack>
+		```
+	</PreviewCode>
+</Preview>
+
+
+---
+
+<Preview>
+	<PreviewTitle>コンテンツの高さに追従しつつ、最低限維持する比率を指定する</PreviewTitle>
+	<PreviewArea resize p='30'>
+		<Stack pos='r' bdrs='4' ov='h'>
+			<Frame isLayer>
+				<Media src="/img/img-3.jpg" alt="" width='960' height='640' loading='lazy' decoding='async' />
+			</Frame>
+			<Flex ar='16/9'>
+				<Stack fx='1' pos='r' g='20' p='40' z='1' minH='100%' h='auto' c='white' bgc='black:50%'>
+					<h3>Card Title</h3>
+					<Dummy lh='s' mb='auto' length='l'/>
+					<Link href='#button-test' keycol='white' c='inherit' bdrs='99' aslf='end' px='10' mbs='30'>Link Text</Link>
+				</Stack>
+			</Flex>
+		</Stack>
+	</PreviewArea>
+	<PreviewCode slot='tab' label='JSX'>
+		```jsx
+		<Stack pos='r' bdrs='4' ov='h'>
+			<Frame isLayer>
+				<Media src="/img/img-3.jpg" alt="" width='960' height='640' loading='lazy' decoding='async' />
+			</Frame>
+			<Flex ar='16/9'>
+				<Stack fx='1' pos='r' g='20' p='40' z='1' minH='100%' h='auto' c='white' bgc='black:50%'>
+					<h3>Card Title</h3>
+					<Dummy lh='s' mb='auto' length='l'/>
+					<Link href='#button-test' keycol='white' c='inherit' bdrs='99' aslf='end' px='10' mbs='30'>Link Text</Link>
+				</Stack>
+			</Flex>
+		</Stack>
+		```
+	</PreviewCode>
+</Preview>
+
+---
+
+
+
+## 独自ユーティリティクラスの作成例
+
+Lismのパッケージ内で用意しているクラスはありませんが、いくつか独自のユーティリティクラスを用意してそれを呼び出す例を紹介します。
+
+[ユーティリティクラスとして強制出力する方法](/components/lism#output-utility)を活用します。
+
+
+<Preview>
+	<PreviewTitle>stripe</PreviewTitle>
+	<PreviewArea resize nogrid p='30'>
+		<Box bg='u:stripe' p='40'>
+			<Dummy />
+		</Box>
+		<Box bg='u:stripe' p='40' className='u--colbox' keycol='blue'>
+			<Dummy />
+		</Box>
+	</PreviewArea>
+	<PreviewCode label='CSS' slot='tab'>
+```css
+.-bg\:stripe {
+	--stripe-bdc: color-mix(in srgb, currentColor, transparent 94%);
+	--stripe-bdw: 1px;
+	--stripe-deg: -40deg;
+	--stripe-interval: 6px;
+	background-image: repeating-linear-gradient(
+		var(--stripe-deg),
+		var(--stripe-bdc),
+		var(--stripe-bdc) var(--stripe-bdw),
+		transparent var(--stripe-bdw),
+		transparent var(--stripe-interval)
+	);
+
+	background-position: center;
+}
+```
+	</PreviewCode>
+		<PreviewCode label='JSX' slot='tab'>
+		```jsx "bg='u:stripe'"
+		<Box bg='u:stripe' p='40'>
+			<Dummy />
+		</Box>
+		<Box bg='u:stripe' p='40' className='u--colbox' keycol='blue'>
+			<Dummy />
+		</Box>
+		```
+	</PreviewCode>
+	<PreviewCode label='HTML' slot='tab'>
+		```html "-bg:stripe"
+		<div class="l--box -bg:stripe -p:40">
+			<p>...</p>
+		</div>
+		<div class="l--box u--colbox -bg:stripe -p:40 -keycol:blue">
+			<p>...</p>
+		</div>
+		```
+	</PreviewCode>
+</Preview>
+
+
+<Preview>
+	<PreviewTitle>`bg="u:sunset"`</PreviewTitle>
+	<PreviewArea resize p='20'>
+		<Frame ar='16/9' bg='u:sunset'/>
+	</PreviewArea>
+
+	<PreviewCode label='CSS' slot='tab'>
+	```css
+	.-bg\:sunset{
+		background: linear-bg(to top, #ddb672 5%, #e67a44 60%, #d16834 95%);
+	}
+	```
+	</PreviewCode>
+	<PreviewCode label='JSX' slot='tab'>
+		```jsx "bg='u:sunset'"
+		<Frame ar='16/9' bg='u:sunset'/>
+		```
+	</PreviewCode>
+	<PreviewCode label='HTML' slot='tab'>
+		```jsx "-bg:sunset"
+		<div class="l--frame -ar:16/9 -bg:sunset"></div>
+		```
+	</PreviewCode>
+</Preview>
+

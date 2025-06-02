@@ -1,0 +1,106 @@
+---
+title: 'Spacer'
+description: ...
+---
+
+import { Spacer, Box, Flex } from 'lism-css/astro';
+import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage, Callout } from "~/components";
+
+
+スペースを確保するためのモジュールです。
+
+
+## 構造
+```pug
+div.l--spacer[aria-hidden="true"]
+```
+
+
+## Props
+
+
+| プロパティ | 説明 |
+|---|---|
+|`w`| `width`の値|
+|`h`| `height`の値|
+
+<Callout type="info">
+`<Space>`では、`w`と`h`に対してSPACEトークンの値が使えます。
+</Callout>
+
+
+## Import
+
+<ImportPackage component='Spacer' />
+
+
+## Usage
+
+<Preview>
+	<PreviewTitle>`<Spacer>`の使用例</PreviewTitle>
+	<PreviewArea resize p='20' isFlow={false}>
+		<p>Content...</p>
+		<Spacer h="100px" />
+		<p>Content...</p>
+	</PreviewArea>
+	<PreviewCode slot='tab' label='JSX'>
+		```jsx {2}
+		<p>Content...</p>
+		<Spacer h="100px" />
+		<p>Content...</p>
+		```
+	</PreviewCode>
+	<PreviewCode slot='tab' label='HTML'>
+		```jsx
+		<p>Content...</p>
+		<div class="l--spacer -h:" style="--h:100px" aria-hidden="true"></div>
+		<p>Content...</p>
+		```
+	</PreviewCode>
+</Preview>
+
+<Preview>
+	<PreviewTitle>`SPACE`トークンを使う例</PreviewTitle>
+	<PreviewArea resize p='20' isFlow={false}>
+		<p>Box</p>
+		<Spacer h='60' />
+		<p>Box</p>
+	</PreviewArea>
+	<PreviewCode slot='tab' label='JSX'>
+		```jsx {2}
+		<p>Box</p>
+		<Spacer h='60' />
+		<p>Box</p>
+		```
+	</PreviewCode>
+	<PreviewCode slot='tab' label='HTML'>
+		```jsx
+		<p>Content...</p>
+		<div class="l--spacer -h:" style="--h:var(--s60)" aria-hidden="true"></div>
+		<p>Content...</p>
+		```
+	</PreviewCode>
+</Preview>
+
+
+<Preview>
+	<PreviewTitle>横方向のスペーサーの例</PreviewTitle>
+	<PreviewArea resize p='20' isFlow={false}>
+		<Flex g={10}>
+			<Box p='30' bd>Box</Box>
+			<Spacer w='40' />
+			<Box p='30' bd>Box</Box>
+			<Box p='30' bd>Box</Box>
+		</Flex>
+	</PreviewArea>
+	<PreviewCode>
+		```jsx "w="
+		<Flex g={10}>
+			<Box p='30' bd>Box</Box>
+			<Spacer w='40' />
+			<Box p='30' bd>Box</Box>
+			<Box p='30' bd>Box</Box>
+		</Flex>
+		```
+	</PreviewCode>
+</Preview>

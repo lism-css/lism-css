@@ -1,0 +1,28 @@
+/*
+  @layout 使う
+*/
+@use 'sass:meta';
+
+@layer lism.reset, lism.base, lism.state, lism.layout, lism.dynamic, lism.component, lism.utility;
+
+@layer lism.reset {
+	@include meta.load-css('reset');
+}
+@layer lism.base {
+	@include meta.load-css('base');
+}
+@layer lism.state {
+	@include meta.load-css('state');
+}
+@layer lism.layout {
+	@include meta.load-css('layout');
+}
+@layer lism.dynamic {
+	@include meta.load-css('dynamic');
+}
+// @layer lism-component {
+// 	@include meta.load-css('component');
+// }
+// @layer lism-utility {
+// 	@include meta.load-css('utility');
+// }

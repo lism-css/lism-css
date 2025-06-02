@@ -1,0 +1,41 @@
+// --avator-size: clamp(48px, 24px + 7.5cqw, 72px); // 320:48px~640:72px
+// --avator-size: clamp(48px, 32px + 5cqw, 64px); // 320:48px~640:64px
+// --avator-size: clamp(40px, 16px + 7.5cqw, 64px); // 320:40px~640:64px
+// @container (max-width: 480px) {
+// 	.c--chat.l--withSide {
+// 		gap: 0;
+// 		--avator-size: 3.25rem;
+// 		--deco-size: 1rem;
+// 		.c--chat__avatar {
+// 			margin-bottom: calc(-1.25rem - var(--avator-size) / 3); //-2rem;
+// 			z-index: 1;
+// 		}
+// 		.c--chat__deco {
+// 			top: auto;
+// 			bottom: 100%;
+// 			inset-inline: calc(var(--avator-size) * 0.75); //1.25rem;
+// 			rotate: 90deg;
+// 			scale: 1 -1;
+// 		}
+// 		&[data-chat-direction='start'] {
+// 			.c--chat__name {
+// 				margin-inline-start: auto; //calc(var(--avator-size) + 1rem);
+// 			}
+// 			.c--chat__body {
+// 				margin-inline-start: calc(var(--avator-size) * 0.4);
+// 			}
+// 		}
+// 		&[data-chat-direction='end'] {
+// 			.c--chat__name {
+// 				margin-inline-end: auto; //calc(var(--avator-size) + 1rem);
+// 			}
+// 			.c--chat__body {
+// 				margin-inline-end: calc(var(--avator-size) * 0.4);
+// 			}
+// 			.c--chat__deco {
+// 				inset-inline-start: auto;
+// 				scale: 1;
+// 			}
+// 		}
+// 	}
+// }

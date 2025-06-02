@@ -1,0 +1,81 @@
+/* https://github.com/withastro/starlight/tree/main/packages/starlight/style */
+@use './docs/layer';
+@use './docs/theme';
+@use './docs/layout';
+@use './docs/preview';
+@use './docs/code';
+@use './docs/home';
+
+/* ----------------------------------------
+    content
+ ---------------------------------------- */
+
+.z--mdcontent {
+	> :where(p, ul, ol) code {
+		display: inline-flex;
+		line-height: 1;
+	}
+	margin-bottom: var(--s60);
+	// :is(p code) {
+	// 	display: inline-flex;
+	// 	line-height: 1;
+	// }
+	code {
+		&:where(:not(:is(.c--preview_area, pre) code)) {
+			padding: 0.2em 0.3em;
+			color: var(--code-c);
+			font-size: 0.9em;
+			font-family: var(--ff--mono);
+			background-color: var(--code-bgc);
+			border-radius: 0.25em;
+		}
+	}
+
+	// スコア: 0-0-2 → code, kbd を上書きできるように
+	a > code {
+		// color: inherit;
+		text-decoration: inherit;
+	}
+
+	kbd {
+		&:where(:not(.c--preview_area kbd)) {
+			display: inline-block;
+			padding: 0.375em;
+			font-size: 0.95em;
+			font-family: var(--ff--mono);
+			line-height: 1;
+			border: solid 1px var(--c--divider);
+			border-radius: 0.25em;
+			box-shadow: 0 2px 0 var(--c--divider);
+			translate: 0 -1px;
+
+			// color: var(--c--text);
+			// background-color: var(--c--base);
+		}
+	}
+
+	> table {
+		font-size: 0.95em;
+		max-inline-size: 100%;
+		border: none;
+		border-collapse: collapse; // memo: oveflow の指定によっては separate にしないとborderが表示されない場合があるので横スクロール時には注意。
+		border-spacing: 0;
+		isolation: isolate;
+
+		:where(td, th) {
+			border-block: 1px solid var(--c--divider);
+		}
+		thead {
+			border-block-end: solid 2px;
+		}
+	}
+}
+
+// セル内のコードで、かつそれが唯一な要素であればは折り返さない
+td:first-child > code:only-child {
+	white-space: nowrap;
+}
+
+.pagination-links {
+	--link-td: none;
+}

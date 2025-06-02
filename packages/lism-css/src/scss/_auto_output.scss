@@ -1,0 +1,194 @@
+@use 'sass:meta';
+@use 'sass:map';
+@use 'sass:list';
+@use 'sass:string';
+
+@use './query' as query;
+@use './setting' as setting;
+
+@function map_get_with_default($map, $key, $default) {
+	$value: map.get($map, $key);
+	@return if($value != null, $value, $default);
+}
+
+@function get_important_str($is_important) {
+	@if $is_important == 1 {
+		@return ' !important';
+	}
+	@return '';
+}
+
+@mixin echoBaseUtil($key, $prop, $base_type, $important) {
+	@if $base_type == 2 {
+		[class*='-#{$key}:'] {
+			#{$prop}: var(--#{$key}) #{get_important_str($important)};
+		}
+	} @else if $base_type == 1 {
+		.-#{$key}\: {
+			#{$prop}: var(--#{$key}) #{get_important_str($important)};
+		}
+	}
+}
+
+@mixin echoDetailValues($selector, $values) {
+	#{$selector} {
+		@each $v_p, $v_v in $values {
+			#{$v_p}: #{$v_v};
+		}
+	}
+}
+
+// 各プロパティのユーティリティクラス
+@mixin echoUtilities($key, $prop, $utilities, $base_type, $important) {
+	@each $ukey, $value in $utilities {
+		$selector: '';
+		$has_comma: string.index($ukey, ',');
+
+		@if $has_comma {
+			$ukeys: string.split($ukey, ',');
+
+			@for $i from 1 through list.length($ukeys) {
+				$_selector: '.-#{$key}\\:#{list.nth($ukeys, $i)}';
+				@if $i == 1 {
+					$selector: $_selector;
+				} @else {
+					$selector: $selector + ',' + $_selector;
+				}
+			}
+		} @else {
+			$selector: '.-#{$key}\\:#{$ukey}';
+		}
+
+		// valueが(prop:val)で詳細に明示されている場合
+		@if (meta.type-of($value) == map) {
+			@include echoDetailValues($selector, $value);
+		} @else if $base_type == 2 {
+			// important は [class*=] についてるので不要
+			#{$selector} {
+				--#{$key}: #{$value};
+			}
+		} @else {
+			#{$selector} {
+				#{$prop}: #{$value} #{get_important_str($important)};
+			}
+		}
+	}
+}
+
+$bp_support_list: (); // list
+
+@each $key, $data in setting.$props {
+	$prop: map.get($data, prop); // 対応するCSSプロパティ名
+	$bp_support: map_get_with_default($data, bp, 0);
+	$important: map_get_with_default($data, important, setting.$default_important);
+
+	// baseセレクタタイプ: 基本は0, BPサポートオンなら 1がデフォ。
+	$base_type: map_get_with_default($data, base_type, if($bp_support != 0, 1, 0));
+
+	// ベースセレクタの出力
+	@if $base_type != 0 {
+		@include echoBaseUtil($key, $prop, $base_type, $important);
+	}
+
+	// utilityクラスのリストをまずは $data から取得
+	$utilities: map.get($data, utilities);
+	// @if not $utilities {
+	// 	// $data.utilities の指定がない場合は、setting.$utilities から $key で探してみる。
+	// 	$utilities: map.get(setting.$utilities, $key);
+	// }
+
+	// ユーティリティクラスのリストが取得できていれば出力
+	@if $utilities {
+		@include echoUtilities($key, $prop, $utilities, $base_type, $important);
+	}
+
+	// BPクラスを出力するプロパティのリストを作成
+
+	// $bp_support が 1 または 文字列（'sm','md','lg'などかどうか）
+	// Memo: 文字列がくるのは、ユーザーカスタマイズでプロパティ個別にサポートするブレイクポイントを変更したい時。
+	@if $bp_support == 1 or meta.type-of($bp_support) == string {
+		$bp_support_list: list.append($bp_support_list, $key);
+	}
+}
+// @debug $bp_support_list;
+
+// setting.$breakpoints のキーだけを抽出したリストを取得
+$bp_names: map.keys(setting.$breakpoints);
+$bp_outputs: (
+	'sm': [],
+	'md': [],
+	'lg': [],
+	'xl': [],
+);
+
+/* __stylelint-disable */
+
+// @containerの出力数を少なくするためにBPで先にループして出力
+// @each $bp in $bp_names {
+// 	@include query.bp-up($bp) {
+// 	}
+// }
+
+// BPサポートしてるプロパティのリストをループ
+@each $key in $bp_support_list {
+	$prop_data: map.get(setting.$props, $key);
+	$prop_bp_data: map.get($prop_data, bp);
+	$support_bp: setting.$common_support_bp;
+
+	@if (meta.type-of($prop_bp_data) == string) {
+		// サポートするブレイクポイントの上書き指定があればそれをセット
+		$support_bp: $prop_bp_data;
+	}
+	//  @else if ($prop_bp_data == 0) {
+	// 	// 0 が渡されれば、BPサポートを無効にする
+	// 	$output_bps: 0;
+	// }
+
+	$flag: true;
+	$i: 1;
+	@while $flag {
+		$bp: list.nth($bp_names, $i);
+
+		// mapから現在のリストを取得→リスト追加→更新されたリストを再びマージ
+		$_bp_list: map.get($bp_outputs, $bp);
+		$_bp_list: list.join($_bp_list, $key);
+		$bp_outputs: map.merge(
+			$bp_outputs,
+			(
+				$bp: $_bp_list,
+			)
+		);
+
+		// サポートするBPまで辿り着いたら終了
+		@if $bp == $support_bp or $i == list.length($bp_names) {
+			$flag: false;
+		}
+
+		$i: $i + 1;
+	}
+}
+
+// @debug $bp_outputs;
+
+//@containerの出力数を少なくするために出力は最後にまとめる。
+@each $bp, $data in $bp_outputs {
+	@include query.bp-up($bp) {
+		@each $key in $data {
+			$prop_data: map.get(setting.$props, $key);
+			$prop_name: map.get($prop_data, prop);
+			$important: map_get_with_default($prop_data, important, setting.$default_important);
+
+			// ここにきているものは デフォで 1
+			$base_type: map_get_with_default($prop_data, base_type, 1);
+
+			// memo: Note: base_type: 0  の時、かつBPサポートが有効な場合、変数がインラインスタイルで出力されるのでBPクラスにimportantが必要（現状はそのような組み合わせは存在しないが）
+			@if $base_type == 0 {
+				$important: 1;
+			}
+
+			.-#{$key}\@#{$bp} {
+				#{$prop_name}: var(--#{$bp}-#{$key}) #{get_important_str($important)};
+			}
+		}
+	}
+}

@@ -1,0 +1,20 @@
+@use '../_mixin' as mixin;
+
+// 変数初期セット（親子関係で影響しないように)
+@include mixin.maybe_where('.-trs\\:', 'base') {
+	--trsdu: var(--trsdu--default);
+	--trsp: all;
+	--trstf: ease;
+}
+
+.-trs\: {
+	transition: var(--trsdu) var(--trstf);
+	transition-property: var(--trsp);
+	// transition-duration: var(--trsdu);
+	// transition-timing-function: var(--trstf);
+}
+
+// .-trstf\:in {--trstf: ease-in;}
+// .-trstf\:out {--trstf: ease-out;}
+// .-trstf\:in-out {--trstf: ease-in-out;}
+// .-trstf\:linear {--trstf: linear;}

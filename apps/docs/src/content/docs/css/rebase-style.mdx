@@ -1,0 +1,210 @@
+---
+title: 'Rebase Style'
+description: ...
+sidebar:
+  order: 3
+---
+
+
+import { Lism, Box, Flex, Text, Stack, Spacer } from 'lism-css/astro';
+import { Preview, PreviewArea, PreviewTitle, PreviewCode, PreviewFrame, Reference, Callout, Note } from '~/components';
+import { Desktop } from '@phosphor-icons/react';
+
+Base階層の最後で定義されている、スタイルをリセット・再定義するためのユーティリティクラスを紹介します。
+
+
+## `re--style`
+
+主要スタイルをリセットするためのクラスです。
+
+```css
+:where(.re--style) {
+	color: inherit;
+	background: none;
+	border: none;
+	padding: 0;
+	margin: 0;
+	font: inherit;
+}
+```
+
+<Preview>
+	<PreviewTitle>`re--style`を併用する</PreviewTitle>
+	<PreviewArea p='30' isFlow={null}>
+		<div class='l--flex -g:30 -ff:mono'>
+			<button>button</button>
+			<button class='re--style'>button.re--style</button>
+		</div>
+	</PreviewArea>
+	<PreviewCode slot='tab' label='HTML'>
+	```html "'re--style'"
+	<div class='l--flex -g:30 -ff:mono'>
+		<button>button</button>
+		<button class='re--style'>button.re--style</button>
+	</div>
+	```
+	</PreviewCode>
+</Preview>
+
+
+
+## `re--list`
+
+リストをブラウザ標準スタイルに戻すためのクラスです。  
+(class属性のない`ul`,`ol`に対して適用しているスタイルと同じものを適用します。)
+
+
+```css
+.re--list {
+	--list-pis: 1.5em;
+	list-style: revert;
+}
+```
+
+<Preview>
+	<PreviewTitle>Preview</PreviewTitle>
+	<PreviewArea p='30'>
+		<ul class='re--list'>
+			<li>List item 1</li>
+			<li>
+				<Fragment>List item 2</Fragment>
+				<ul>
+					<li>Nested item</li>
+					<li>
+						<Fragment>...</Fragment>
+						<ul>
+							<li>Nested item</li>
+							<li>...</li>
+						</ul>
+					</li>
+				</ul>
+			</li>
+			<li>
+				<Fragment>List item 3</Fragment>
+				<ol>
+					<li>Nested item</li>
+					<li>
+						<Fragment>...</Fragment>
+					</li>
+				</ol>
+			</li>
+		</ul>
+	</PreviewArea>
+	<PreviewCode slot='tab' label='HTML'>
+		```html
+		<ul class='re--list'>
+			<li>List item 1</li>
+			<li>
+				List item 2
+				<ul>
+					<li>Nested item</li>
+					<li>...</li>
+				</ul>
+			</li>
+			<li>
+				List item 3
+				<ol>
+					<li>Nested item</li>
+					<li>...</li>
+				</ol>
+			</li>
+		</ul>
+		```
+	</PreviewCode>
+</Preview>
+
+<Preview>
+	<PreviewTitle>Ordered List</PreviewTitle>
+	<PreviewArea p='30'>
+		<ol class='re--list'>
+			<li>List item 1</li>
+			<li>
+				<Fragment>List item 2</Fragment>
+				<ol>
+					<li>Nested item</li>
+					<li>
+						<Fragment>...</Fragment>
+						<ol>
+							<li>Nested item</li>
+							<li>...</li>
+						</ol>
+					</li>
+				</ol>
+			</li>
+			<li>
+				<Fragment>List item 3</Fragment>
+				<ul>
+					<li>Nested item</li>
+					<li>
+						<Fragment>...</Fragment>
+					</li>
+				</ul>
+			</li>
+		</ol>
+	</PreviewArea>
+	<PreviewCode slot='tab' label='HTML'>
+		```html
+		<ol class='re--list'>
+			<li>List item 1</li>
+			<li>
+				List item 2
+				<ol>
+					<li>Nested item</li>
+					<li>...</li>
+				</ol>
+			</li>
+			<li>
+				List item 3
+				<ul>
+					<li>Nested item</li>
+					<li>...</li>
+				</ul>
+			</li>
+		</ol>
+		```
+	</PreviewCode>
+</Preview>
+
+
+
+## `re--sh`
+
+`.re--sh` クラスを指定した要素では、シャドウを構成する各CSS変数が再定義されます。  
+
+ここで変数を上書きすることで、シャドウの色味などを調整することが可能です。 
+
+<Preview>
+	<PreviewTitle>シャドウの上書き例</PreviewTitle>
+	<PreviewArea p='40' nogrid>
+		<Stack g='30'>
+			<Text> Default: </Text>
+			<Flex className='re--sh -g:40 -pis:30'>
+				<Box bxsh='2' p='40' bdrs='3'>Box</Box>
+				<Box bxsh='4' p='40' bdrs='3'>Box</Box>
+			</Flex>
+			<Spacer h='40' />
+			<Text> re--sh して 変数を上書きした例: </Text>
+			<Flex className='re--sh -g:40 -pis:30' style={{'--sh-hsl': '200 50% 50%', '--sh-a':'20%'}}>
+				<Box bxsh='2' p='40' bdrs='3'>Box</Box>
+				<Box bxsh='4' p='40' bdrs='3'>Box</Box>
+			</Flex>
+		</Stack>
+	</PreviewArea>
+		<PreviewCode slot='tab' label='HTML'>
+		```html "re--sh"
+		<div class="re--sh l--flex -g:40" style="--sh-hsl:200 50% 50%;--sh-a:20%">
+			<div class="l--box -bxsh:1 -p:40 -bdrs:3">Box</div>
+			<div class="l--box -bxsh:4 -p:40 -bdrs:3">Box</div>
+		</div>
+		```
+	</PreviewCode>
+	<PreviewCode slot='tab' label='JSX'>
+		```jsx "re--sh"
+		<Flex className='re--sh' g='40' style={{'--sh-hsl': '200 50% 50%', '--sh-a':'20%'}}>
+			<Box bxsh='2' p='40' bdrs='3'>Box</Box>
+			<Box bxsh='4' p='40' bdrs='3'>Box</Box>
+		</Flex>
+		```
+	</PreviewCode>
+</Preview>
+

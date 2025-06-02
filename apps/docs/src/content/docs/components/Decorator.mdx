@@ -1,0 +1,92 @@
+---
+title: 'Decorator'
+description: ...
+---
+
+import { Decorator, Box, Flex, Grid, GridItem, Spacer, Dummy } from 'lism-css/astro';
+import {
+	Preview,
+	PreviewArea,
+	PreviewTitle,
+	PreviewCode,
+	ImportPackage,
+	Reference,
+} from '~/components';
+
+コンテンツを装飾するための空要素を出力するためのコンポーネントです。  
+デフォルトで`aria-hidden="true"`で出力されます。
+
+## 構造
+
+```pug
+div.l--decorator[aria-hidden="true"]
+```
+
+## Props
+
+| Prop   | 説明                                                                                                                                                                    |
+| ------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `size` | デコレーターのサイズ（横幅・高さ）を一括指定します。<br/>この指定がある場合、指定したサイズは`w`(`width`)に渡され、`ar='1/1'`(`aspect-ratio:1/1`)が自動で付与されます。 |
+
+## Import
+
+<ImportPackage component='Decorator' />
+
+## Usage
+
+`<Decorator>`を使った装飾例を紹介します。
+
+<Preview>
+	<PreviewTitle>例</PreviewTitle>
+	<PreviewArea resize p={20}>
+		<Grid>
+			<Decorator size='1.25em' bd='l' rotate='45deg' transformOrigin='left bottom' />
+			<Box p='20'>
+				<Dummy />
+			</Box>
+			<Decorator size='1.25em' bd='l' rotate='-45deg' transformOrigin='left top' />
+		</Grid>
+	</PreviewArea>
+	<PreviewCode slot='tab' label='JSX'>
+		```jsx
+		<Grid>
+			<Decorator size='1.25em' bd='l' rotate='45deg' transformOrigin='left bottom' />
+			<Box p='20'>
+				<Dummy />
+			</Box>
+			<Decorator size='1.25em' bd='l' rotate='-45deg' transformOrigin='left top' />
+		</Grid>
+		```
+	</PreviewCode>
+	<PreviewCode slot='tab' label='HTML'>
+		```jsx
+		<div class='l--grid'>
+			<div
+				class='l--decorator -bd:l -trfo:lb -rotate:45 -ar:1/1 -w:'
+				style='--w:1.25em'
+				aria-hidden='true'
+			></div>
+			<div class='l--box -p:20'>
+				<p>
+					{' '}
+					Lorem ipsum dolor sit, amet consectetur adipisicing elit, sed do eiusmod tempor.
+					Non facere laudantium ex eos doloribus aut dolore nisi.{' '}
+				</p>
+			</div>
+			<div
+				class='l--decorator -bd:l -trfo:lt -rotate:-45 -ar:1/1 -w:'
+				style='--w:1.25em'
+				aria-hidden='true'
+			>
+				{' '}
+			</div>
+		</div>
+		```
+	</PreviewCode>
+</Preview>
+
+<Spacer h='20' />
+
+この他にも、以下のページで`<Decorator>`を活用したコンテンツの装飾例を複数紹介しています。
+
+<Reference>[装飾ボックスの例](/components/decorations)</Reference>

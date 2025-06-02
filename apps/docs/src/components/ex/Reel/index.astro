@@ -1,0 +1,10 @@
+---
+import { Grid } from 'lism-css/astro';
+import './style.css';
+
+const props = Astro.props;
+---
+
+<Grid lismClass='c--reel' tabIndex='0' {...props}>
+	<slot />
+</Grid>

@@ -1,0 +1,45 @@
+/*
+	flowG はクエリ調整不可。クエリ調整必要な場合はStack使ってもらえばいい。
+	end:0 がどうせ :first-child に必要なので、 mbs も > * + * 使わず上書き形式で。
+
+	memo: :first-child , :last-child の詳細度は 0-1-0
+
+	.-mbs で上書きできるように 0-1-0 を超えないように注意。
+*/
+
+.is--flow {
+	// --flowGap: var(--flowGap--m)
+	> * {
+		--mbs: var(--flowGap, var(--flowGap--m));
+		margin-block: var(--mbs) 0;
+	}
+}
+
+.-flow\:s > * {
+	--flowGap: var(--flowGap--s);
+}
+
+.-flow\:ms > * {
+	// --flowGap: var(--flowGap--m);
+	--flowGap: var(--flowGap--m);
+}
+.-flow\:l > * {
+	--flowGap: var(--flowGap--l);
+}
+
+// :where(.is--flow\:) > * {
+// 	--mbs: var(--flowG);
+// }
+
+// 見出しの上部余白は少しだけ広くする. ただし、見出し直後の見出しの場合を除く。
+// Note: :first-child での打消しのほうが優先度高くなるように注意する
+.is--flow > :where(h1, h2, h3:not(h2 + h3)) {
+	// --mbsではなく--flowGapを使うことで、is--flow単体（標準時）の直下でのみ効かせる。
+	--flowGap: var(--flowGap--h);
+}
+
+// :first-child への上書きのほうが優先度高くなるように。
+.is--flow > :first-child {
+	// --mbs への上書きが気軽に書けるよう、--flowGap を 0 に。
+	--flowGap: 0;
+}

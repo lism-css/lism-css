@@ -1,0 +1,34 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "Stylelint Fix Current File",
+			"type": "shell",
+			"command": "pnpm stylelint --fix \"${file}\"",
+			"problemMatcher": [],
+			"presentation": {
+				"reveal": "silent",
+				"close": true
+			},
+			"group": {
+				"kind": "build",
+				"isDefault": false
+			}
+		},
+		// memo: ESLintで現在のファイルを自動修正するタスク
+		{
+			"label": "ESLint Current File",
+			"type": "shell",
+			"command": "pnpm eslint \"${file}\"",
+			"problemMatcher": [],
+			"presentation": {
+				"reveal": "silent",
+				"close": true
+			},
+			"group": {
+				"kind": "build",
+				"isDefault": false
+			}
+		}
+	]
+}

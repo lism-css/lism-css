@@ -1,0 +1,75 @@
+---
+title: 'Avatar'
+description: ...
+---
+import { Flex, Media, Frame } from 'lism-css/astro';
+import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportSource } from "~/components";
+import Avatar from '~/components/ex/Avatar/index.astro';
+
+アバター画像用のコンポーネントの作成例を紹介します。
+
+<Preview>
+	<PreviewTitle>Preview</PreviewTitle>
+	<PreviewArea resize p='20'>
+		<Avatar size='4rem' src='/img/avatar01.jpg' alt='Avatar of xxxx'/>
+		{/* <Frame ar='1/1' w='4em' h='auto' bdrs='99'>
+			<Media src='/img/avatar01.jpg' alt='Avatar of xxxx' width='100%' height='100%' decoding='async' />
+		</Frame> */}
+	</PreviewArea>
+	<PreviewCode slot='tab' label='Component'>
+		```jsx
+		<Avatar size='4rem' src='/img/avatar01.jpg' alt='Avatar of xxxx'/>
+		```
+	</PreviewCode>
+	<PreviewCode slot='tab' label='JSX(only core)'>
+		```jsx
+		<Frame ar='1/1' w='4em' h='auto' bdrs='99'>
+			<Media src='/img/avatar01.jpg' alt='Avatar of xxxx' width='100%' height='100%' decoding='async' />
+		</Frame>　
+		```
+	</PreviewCode>
+	<PreviewCode slot='tab' label='HTML'>
+		```html
+		<div class="l--frame -ar:1/1 -w: -h:a -bdrs:99" style="--w:4rem">
+			<img src="/img/avatar01.jpg" alt="Avatar of xxxx" width="100%" height="100%" decoding="async">
+		</div>	
+		```
+	</PreviewCode>
+</Preview>
+
+## Import
+<ImportSource name='Avatar' react astro />
+
+
+## Props
+
+| プロパティ | 説明 |
+|---|---|
+|`size`| アバターのサイズを指定します。|
+|`src`| アバター画像のパス |
+|`alt`| altテキスト |
+
+
+{/* |`mediaProps`| 上記以外にメディア側に対してプロパティを指定したい場合はこのプロパティにオブジェクト形式で指定できます。| */}
+
+
+## Examples
+
+<Preview>
+	<PreviewTitle>影やボーダーをつける例</PreviewTitle>
+	<PreviewArea resize p='30'>
+		<Avatar size='5rem' src='/img/avatar01.jpg' alt='Avatar of xxxx' bd bdw='3px' bdc='blue' bxsh='2'/>
+	</PreviewArea>
+	<PreviewCode slot='tab' label='JSX'>
+		```jsx
+		<Avatar size='5rem' src='/img/avatar01.jpg' alt='Avatar of xxxx' bd bdw='3px' bdc='blue' bxsh='2'/>
+		```
+	</PreviewCode>
+	<PreviewCode slot='tab' label='HTML'>
+		```html
+		<div class="c--avatar l--frame -ar:1/1 -w: -h:a -bdrs:99 -bd: -bxsh:2" style="--w:5rem;--bdw:3px;--bdc:var(--blue)">
+			<img src="/img/avatar01.jpg" alt="Avatar of xxxx" width="100%" height="100%" decoding="async">
+		</div>	
+		```
+	</PreviewCode>
+</Preview>

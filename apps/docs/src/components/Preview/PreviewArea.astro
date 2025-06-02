@@ -1,0 +1,36 @@
+---
+import { Lism, Layer, Icon } from 'lism-css/astro';
+import { ArrowDownRight } from '@phosphor-icons/react';
+
+// Propsの定義
+interface Props {
+	as?: any;
+	tag?: string;
+}
+const { resize, nogrid = false, isFlow = true, p = '5', ...props } = Astro.props || {};
+
+const lismState = [];
+if (resize) lismState.push('is--resize');
+
+// data-bg-grid={nogrid ? '0' : '1'}
+---
+
+<Lism className='c--preview_area'>
+	<Lism
+		className='c--preview_inner'
+		lismState={lismState}
+		isFlow={isFlow}
+		p={p}
+		bxsh='-1'
+		{...props}
+	>
+		<slot />
+		{
+			resize && (
+				<Lism className='c--preview_help -pos:a -b:0 -r:0 -d:f -lh:1 -p:10 -g:5 -bdrs:1'>
+					リサイズ可能 <Icon as={ArrowDownRight} weight='fill' />
+				</Lism>
+			)
+		}
+	</Lism>
+</Lism>

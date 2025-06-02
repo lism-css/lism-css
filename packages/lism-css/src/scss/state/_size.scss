@@ -1,0 +1,60 @@
+// Note: [data-content-size] より後にかく。
+.is--fullwide {
+	// container-type: inline-size;
+	max-inline-size: 100%;
+
+	:where(.has--gutter) > & {
+		// --content-size 変数は min()で100%と比較してるので、直接セット
+		max-inline-size: calc(100% + var(--gutter) * 2);
+		margin-inline: calc(var(--gutter) * -1);
+	}
+}
+
+// Note: 詳細度は 0-1-0 より大きく.
+.is--fullwide + .is--fullwide {
+	--flowGap: 0;
+}
+
+// :is(.alignwide, .is--wide)
+.is--wide {
+	// container-type: inline-size;
+	max-inline-size: var(--wide-size, 100%);
+}
+
+.is--overwide {
+	max-inline-size: var(--overwide-size, 100vw);
+	margin-inline: calc(50% - var(--overwide-size) / 2);
+}
+
+// @property が使える環境であればコンテナのさらに親要素の幅を参照できるので、containerを1段階飛び出せる。
+// ↓ @property の疑似サポートチェック
+//   - @propety : chirome(85~),edge(85~),opera(71~),Samsung(14~)
+//   - content-visibility : chirome(85~),edge(85~),opera(71~), safari:x,firefox:x, Samsung(14~)
+//   - <length> lh : Safari(16.4~), Firefox(120~121 ?), Chrome,Edge(109~), Opera(95~), Samsung(21~)
+// ↓
+
+@supports (content-visibility: auto) or (top: 0lh) {
+	// cqw を算出値で保持するために登録済みカスタムプロパティとして定義
+	@property --overwide-size {
+		syntax: '<length-percentage>';
+		initial-value: 100%;
+		inherits: true;
+	}
+	.is--container {
+		--overwide-size: 100cqw;
+	}
+
+	// bodyにコンテナ適用して直下要素に100cqwをセットできればいいが、コンテナ内の fixed要素の挙動が変わるので廃止。
+	// @property --size--screenW {
+	// 	syntax: '<length-percentage>';
+	// 	initial-value: 100vw;
+	// 	inherits: true;
+	// }
+	// body {
+	// 	--size--screenW: 100cqw;
+	// }
+	// .alignscreen {
+	// 	max-inline-size: var(--size--screenW);
+	// 	margin-inline: calc(50% - var(--size--screenW) / 2);
+	// }
+}

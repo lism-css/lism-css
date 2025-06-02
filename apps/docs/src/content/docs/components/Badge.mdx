@@ -1,0 +1,294 @@
+---
+title: 'Badge'
+description: ...
+---
+import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportSource, Callout } from '~/components';
+import { Lism, Flex, Icon, Spacer } from 'lism-css/astro';
+import { Book, Cat, Baseball } from '@phosphor-icons/react';
+import Badge from '~/components/ex/Badge/index.astro';
+
+バッジを表示するコンポーネントの作成例を紹介します。
+
+
+<Preview>
+	<PreviewTitle>Preview</PreviewTitle>
+	<PreviewArea p='30'>
+		<Flex g='20'>
+			<Badge>Badge</Badge>
+			<Badge variant='outline'>Badge</Badge>
+			{/* <Lism tag='span' px='20' bgc='text' c='base' bd bdrs='2'>
+				Badge
+			</Lism>
+			<Lism tag='span' px='20' bd bdrs='2'>
+				Badge
+			</Lism> */}
+		</Flex>
+	</PreviewArea>
+	<PreviewCode slot='tab' label='Component'>
+		```jsx
+		<Flex g='20'>
+			<Badge>Badge</Badge>
+			<Badge variant='outline'>Badge</Badge>
+		</Flex>
+		```
+	</PreviewCode>
+	<PreviewCode slot='tab' label='JSX(only core)'>
+		```jsx
+		<Flex g='20'>
+			<Lism tag='span' px='20' bgc='text' c='base' bd bdrs='2'>Badge</Lism>
+			<Lism tag='span' px='20' bd bdrs='2'>Badge</Lism>
+		</Flex>
+		```
+	</PreviewCode>
+	<PreviewCode slot='tab' label='HTML'>
+		```html
+		<div class="l--flex -g:20">
+			<span class="c--badge -d:if -fz:s -px:20 -bdrs:1">Badge</span>
+			<span class="c--badge c--badge--outline -d:if -fz:s -px:20 -bdrs:1">Badge</span>
+		</div>
+		```
+	</PreviewCode>
+</Preview>
+
+
+## Import
+<ImportSource name='Badge' css='css' react astro />
+{/* <ImportSource css='Badge/style.scss' react='Badge/index.jsx' astro='Badge/index.astro' /> */}
+
+## Props
+
+| プロパティ | 説明 |
+|---|---|
+|`variant`| `c--badge--{variant}` クラスを出力します。|
+
+
+
+## Usage
+
+export const ColorDemos = ({variant = '',  colbox}) => {
+	const badgeProps = { variant };
+
+	return (
+		<Flex variant='cluster' g='20'>
+			{['red', 'orange', 'yellow', 'green', 'blue', 'purple', 'pink', 'gray'].map((_col) => {
+				if(colbox) {
+					badgeProps.className = 'u--colbox'; badgeProps.keycol = _col;
+				} else if(variant === 'outline') {
+					badgeProps.c = _col;
+				} else {
+					badgeProps.bgc = _col;
+				}
+
+				return (
+					<Badge key={_col}  {...badgeProps}>{_col}</Badge>
+				);
+			})}
+		</Flex>
+	);
+}
+
+
+<Preview>
+	<PreviewTitle>`<Badge>`の使用例</PreviewTitle>
+	<PreviewArea p='30'>
+		<Flex variant='cluster' g='20'>
+			<Badge bgc='main'>Badge</Badge>
+			<Badge bgc='#549005' fz='s' bdrs='99'>Badge</Badge>
+		</Flex>
+	</PreviewArea>
+	<PreviewCode slot='tab' label='JSX'>
+		```jsx
+		<Flex variant='cluster' g='20'>
+			<Badge bgc='main' fz='s'>Badge</Badge>
+			<Badge bgc='#549005' fz='s' bdrs='99'>Badge</Badge>
+		</Flex>
+		```
+	</PreviewCode>
+	<PreviewCode slot='tab' label='HTML'>
+		```html
+		<div class="l--flex l--flex--cluster -g:20">
+			<span class="c--badge -d:if -bdrs:1 -px:20 -bgc:main">Badge</span>
+			<span class="c--badge -d:if -bdrs:99 -px:20 -fz:s -bgc:" style="--bgc:#549005;">Badge</span>
+		</div>
+		```
+	</PreviewCode>
+</Preview>
+
+
+### Variants
+
+`outline`を標準で用意しています。
+
+<Preview>
+	<PreviewTitle>`variant='outline'`</PreviewTitle>
+	<PreviewArea p='30'>
+		<Flex variant='cluster' g='20'>
+			<Badge variant='outline' c='main'>Badge</Badge>
+			<Badge variant='outline' c='#549005' bdrs='99'>Badge</Badge>
+		</Flex>
+	</PreviewArea>
+	<PreviewCode slot='tab' label='JSX'>
+		```jsx
+		<Flex variant='cluster' g='20'>
+			<Badge variant='outline' c='main'>Badge</Badge>
+			<Badge variant='outline' c='#549005' bdrs='99'>Badge</Badge>
+		</Flex>
+		```
+	</PreviewCode>
+	<PreviewCode slot='tab' label='HTML'>
+		```html
+		<div class="l--flex l--flex--cluster -g:20">
+			<span class="c--badge c--badge--outline -bdrs:1 -px:20 -c:main">Badge</span>
+			<span class="c--badge c--badge--outline -bdrs:99 -px:20 -c:" style="--c:#549005;">Badge</span>
+		</div>
+		```
+	</PreviewCode>
+</Preview>
+
+### `u--colbox` との併用
+
+<Preview>
+	<PreviewTitle>`u--colbox`クラスを使ったスタイリングの例</PreviewTitle>
+	<PreviewArea p='30'>
+		<Flex variant='cluster' g='20'>
+			<Badge className='u--colbox' keycol='main'>Badge</Badge>
+			<Badge className='u--colbox' keycol='#549005' bdrs='99'>Badge</Badge>
+		</Flex>
+	</PreviewArea>
+	<PreviewCode slot='tab' label='JSX'>
+		```jsx
+		<Flex variant='cluster' g='20'>
+			<Badge className='u--colbox' keycol='main'>Badge</Badge>
+			<Badge className='u--colbox' keycol='#549005' bdrs='99'>Badge</Badge>
+		</Flex>
+		```
+	</PreviewCode>
+	<PreviewCode slot='tab' label='HTML'>
+		```html
+		<div class="l--flex l--flex--cluster -g:20">
+			<span class="u--colbox c--badge -d:if -bdrs:1 -px:20" style="--keycol:var(--c--main)">Badge</span>
+			<span class="u--colbox c--badge -d:if -bdrs:99 -px:20" style="--keycol:#549005">Badge</span>
+		</div>
+		```
+	</PreviewCode>
+</Preview>
+
+
+### アイコンを使用する例
+
+<Preview>
+	<PreviewTitle>例</PreviewTitle>
+	<PreviewArea p='20'>
+		<Flex g='30' ai='c'>
+			<Badge d='if' ai='c'><Icon offset='-10%' icon='star'/>Badge</Badge>
+			<Badge variant='outline' d='if' ai='c'><Icon offset='-10%' icon={Book}/>Badge</Badge>
+		</Flex>
+	</PreviewArea>
+	<PreviewCode slot='tab' label='JSX'>
+		```jsx
+		<Flex g='30' ai='c'>
+			<Badge d='if' ai='c'><Icon offset='-10%' icon='star'/>Badge</Badge>
+			<Badge variant='outline' d='if' ai='c'><Icon offset='-10%' icon={Book}/>Badge</Badge>
+		</Flex>
+		```
+	</PreviewCode>
+</Preview>
+
+
+
+### カラーとスタイルのバリエーション
+
+`PALETTE`トークンを使った例を紹介します。
+
+<Preview>
+	<PreviewTitle>基本状態でのカラーバリエーションの例</PreviewTitle>
+	<PreviewArea p='30'>
+		<Flex variant='cluster' g='20'>
+			<Badge bgc='red'>Red</Badge>
+			<Badge bgc='orange'>Orange</Badge>
+			<Badge bgc='yellow'>Yellow</Badge>
+			<Badge bgc='green'>Green</Badge>
+			<Badge bgc='blue'>Blue</Badge>
+			<Badge bgc='purple'>Purple</Badge>
+			<Badge bgc='pink'>Pink</Badge>
+			<Badge bgc='gray'>Gray</Badge>
+		</Flex>
+	</PreviewArea>
+	<PreviewCode slot='tab' label='JSX'>
+		```jsx
+		<Flex variant='cluster' g='20'>
+			<Badge bgc='red'>Red</Badge>
+			<Badge bgc='orange'>Orange</Badge>
+			<Badge bgc='yellow'>Yellow</Badge>
+			<Badge bgc='green'>Green</Badge>
+			<Badge bgc='blue'>Blue</Badge>
+			<Badge bgc='purple'>Purple</Badge>
+			<Badge bgc='pink'>Pink</Badge>
+			<Badge bgc='gray'>Gray</Badge>
+		</Flex>
+		```
+	</PreviewCode>
+</Preview>
+
+<Preview> 
+	<PreviewTitle>`variant='outline'`でのカラーバリエーションの例</PreviewTitle>
+	<PreviewArea p='30'>
+		<Flex variant='cluster' g='20'>
+			<Badge variant='outline' c='red'>Red</Badge>
+			<Badge variant='outline' c='orange'>Orange</Badge>
+			<Badge variant='outline' c='yellow'>Yellow</Badge>
+			<Badge variant='outline' c='green'>Green</Badge>
+			<Badge variant='outline' c='blue'>Blue</Badge>
+			<Badge variant='outline' c='purple'>Purple</Badge>
+			<Badge variant='outline' c='pink'>Pink</Badge>
+			<Badge variant='outline' c='gray'>Gray</Badge>
+		</Flex>
+	</PreviewArea>
+	<PreviewCode slot='tab' label='JSX'>
+		```jsx
+		<Flex variant='cluster' g='20'>
+			<Badge variant='outline' c='red'>Red</Badge>
+			<Badge variant='outline' c='orange'>Orange</Badge>
+			<Badge variant='outline' c='yellow'>Yellow</Badge>
+			<Badge variant='outline' c='green'>Green</Badge>
+			<Badge variant='outline' c='blue'>Blue</Badge>
+			<Badge variant='outline' c='purple'>Purple</Badge>
+			<Badge variant='outline' c='pink'>Pink</Badge>
+			<Badge variant='outline' c='gray'>Gray</Badge>
+		</Flex>
+		```
+	</PreviewCode>
+</Preview>
+
+<Preview>
+	<PreviewTitle>`u--colbox`を使った場合のカラーバリエーションの例</PreviewTitle>
+	<PreviewArea p='30'>
+		<Flex variant='cluster' g='20'>
+			<Badge className='u--colbox' keycol='red'>Red</Badge>
+			<Badge className='u--colbox' keycol='orange'>Orange</Badge>
+			<Badge className='u--colbox' keycol='yellow'>Yellow</Badge>
+			<Badge className='u--colbox' keycol='green'>Green</Badge>
+			<Badge className='u--colbox' keycol='blue'>Blue</Badge>
+			<Badge className='u--colbox' keycol='purple'>Purple</Badge>
+			<Badge className='u--colbox' keycol='pink'>Pink</Badge>
+			<Badge className='u--colbox' keycol='gray'>Gray</Badge>
+		</Flex>
+	</PreviewArea>
+	<PreviewCode slot='tab' label='JSX'>
+		```jsx
+		<Flex variant='cluster' g='20'>
+			<Badge className='u--colbox' keycol='red'>Red</Badge>
+			<Badge className='u--colbox' keycol='orange'>Orange</Badge>
+			<Badge className='u--colbox' keycol='yellow'>Yellow</Badge>
+			<Badge className='u--colbox' keycol='green'>Green</Badge>
+			<Badge className='u--colbox' keycol='blue'>Blue</Badge>
+			<Badge className='u--colbox' keycol='purple'>Purple</Badge>
+			<Badge className='u--colbox' keycol='pink'>Pink</Badge>
+			<Badge className='u--colbox' keycol='gray'>Gray</Badge>
+		</Flex>
+		```
+	</PreviewCode>
+</Preview>
+
+
+

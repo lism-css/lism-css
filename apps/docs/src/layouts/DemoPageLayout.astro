@@ -1,0 +1,17 @@
+---
+// import 'lism-css/scss/all.scss';
+// import 'lism-css/all_no_layer.css';
+import 'lism-css/all.css';
+const { title = '', lang = 'ja' } = Astro.props;
+---
+
+<html lang={lang}>
+	<head>
+		<meta charset='utf-8' />
+		<meta name='viewport' content='width=device-width, initial-scale=1' />
+		<title>Lism CSS Demo - {title}</title>
+	</head>
+	<body>
+		<slot />
+	</body>
+</html>

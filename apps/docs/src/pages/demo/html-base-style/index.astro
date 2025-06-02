@@ -1,0 +1,32 @@
+---
+import DemoPageLayout from '~/layouts/DemoPageLayout.astro';
+import RawHTML from './_RawHTML.astro';
+import { Lism } from 'lism-css/astro';
+
+// import './style.scss';
+---
+
+<DemoPageLayout title='HTML Base Style'>
+	<Lism isFlow='l' hasGutter py='50' isContainer='m'>
+		<hr />
+		<Lism isFlow='s'>
+			<RawHTML type='headings' />
+		</Lism>
+		<hr />
+		<Lism isFlow='m'>
+			<RawHTML type='texts' />
+		</Lism>
+		<hr />
+		<Lism isFlow='s'>
+			<RawHTML type='list' />
+		</Lism>
+		<hr />
+		<Lism isFlow='s'>
+			<RawHTML type='table' />
+		</Lism>
+		<hr />
+		<!-- <Lism isFlow='s'>
+			<RawHTML type='forms' />
+		</Lism> -->
+	</Lism>
+</DemoPageLayout>

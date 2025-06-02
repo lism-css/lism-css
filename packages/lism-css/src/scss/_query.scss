@@ -1,0 +1,40 @@
+@use 'sass:map';
+
+@use './setting' as setting;
+
+@mixin bp-up($bp_name) {
+	$bp_size: map.get(setting.$breakpoints, $bp_name);
+
+	// サイズが 0 の時はスキップ(カスタマイズでオフにできるように）
+	@if $bp_size and $bp_size != 0 {
+		@if setting.$is_container_query == 1 {
+			@container (min-width: #{$bp_size}) {
+				@content;
+			}
+		} @else {
+			@media (min-width: #{$bp_size}) {
+				@content;
+			}
+		}
+	}
+}
+@mixin bp-down($bp_name) {
+	$bp_size: map.get(setting.$breakpoints, $bp_name);
+	// サイズが 0 の時はスキップ(カスタマイズでオフにできるように）
+	@if $bp_size and $bp_size != 0 {
+		@if setting.$is_container_query == 1 {
+			@container not (min-width: #{$bp_size}) {
+				@content;
+			}
+		} @else {
+			@media not (min-width: #{$bp_size}) {
+				@content;
+			}
+		}
+	}
+}
+
+// 600px未満
+// @media not all and (min-width: 600px) {
+// 	@content;
+// }

@@ -1,0 +1,67 @@
+{
+	"name": "lism-css",
+	"version": "0.0.1",
+	"description": "",
+	"author": {
+		"name": "ddryo",
+		"url": "https://github.com/ddryo"
+	},
+	"license": "MIT",
+	"keywords": [
+		"css-framework",
+		"react",
+		"design-system"
+	],
+	"scripts": {
+		"dev": "vite",
+		"build": "vite build && npm run build:css",
+		"build:vite": "vite build",
+		"build:css": "node scss-builder.cjs",
+		"lint:style": "stylelint '**/*.{css,scss}'",
+		"preview": "vite preview"
+	},
+	"files": [
+		"dist",
+		"nexe-js",
+		"astro",
+		"src/scss"
+	],
+	"type": "module",
+	"main": "./dist/index.js",
+	"exports": {
+		".": "./dist/index.js",
+		"./*": "./dist/*",
+		"./react": "./dist/index.js",
+		"./react/*": "./dist/components/*",
+		"./next-js/*": "./packages/next-js/*",
+		"./astro": "./packages/astro/index.js",
+		"./astro/*": "./packages/astro/*",
+		"./scss/*": "./src/scss/*",
+		"./all_with_layer.css": "./dist/css/all_with_layer.css",
+		"./all.css": "./dist/css/all.css"
+	},
+	"homepage": "https://www.lism.style",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/lism-ui/lism-css.git",
+		"directory": "packages/lism-css"
+	},
+	"bugs": {
+		"url": "https://github.com/lism-ui/lism-css/issues"
+	},
+	"devDependencies": {
+		"@babel/cli": "^7.27.2",
+		"@babel/core": "^7.27.3",
+		"@babel/preset-env": "^7.27.2",
+		"@babel/preset-react": "^7.27.1",
+		"@rollup/plugin-babel": "^6.0.4",
+		"@vitejs/plugin-react-swc": "^3.10.0",
+		"glob": "^11.0.2",
+		"rollup": "^4.41.1",
+		"vite": "^6.3.5"
+	},
+	"peerDependencies": {
+		"react": ">=18.0.0"
+	},
+	"sideEffects": false
+}

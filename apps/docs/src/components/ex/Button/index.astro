@@ -1,0 +1,23 @@
+---
+import { Lism } from 'lism-css/astro';
+import './style.css';
+
+const props = Astro.props;
+---
+
+<Lism
+	lismClass='c--button'
+	variant='fill'
+	tag='a'
+	d='if'
+	td='n'
+	lh='xs'
+	px='30'
+	py='20'
+	ai='c'
+	hov='fade'
+	trs
+	{...props}
+>
+	<slot />
+</Lism>

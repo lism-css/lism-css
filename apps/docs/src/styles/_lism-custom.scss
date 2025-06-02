@@ -1,0 +1,45 @@
+// @import './optins/base';
+@use './optins/layout';
+@use './optins/table';
+@use './optins/tab';
+@use './optins/hov';
+@use './optins/bg';
+@use './optins/pass-get';
+@use './optins/others';
+
+/* ----------------------------------------
+ ---------------------------------------- */
+
+/* ----------------------------------------
+    guide
+ ---------------------------------------- */
+:where(.has--itemGuide > *) {
+	padding: 0 4px;
+	border: 1px dashed hsla(0, 0%, 63%, 0.4);
+}
+.-hov\:itemGuide {
+	> * {
+		position: relative;
+	}
+	&:hover > *:before {
+		position: absolute;
+		display: block;
+		border: 1px dashed rgba(150, 150, 160, 0.4);
+		content: '';
+		inset: 0;
+		// box-sizing: border-box;
+	}
+}
+
+.c--badge--prop {
+	padding: 0 0.25em;
+	> code {
+		padding: 0;
+		font: inherit;
+		background-color: transparent;
+	}
+
+	td > &:first-child {
+		margin-inline-start: 0;
+	}
+}

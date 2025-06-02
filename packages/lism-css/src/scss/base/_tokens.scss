@@ -1,0 +1,307 @@
+:root {
+	/* ------------------------------------------------------------
+	  コンテンツサイズ: ユーザー側で定義が必要
+	    コンテンツサイズは960 ~ 1120 くらいがよさそう.
+	    1080 にしてるのは、 1920 * 1080画像がきれいに配置できるため？
+	------------------------------------------------------------ */
+	// コンテンツサイズは960 ~ 1120 くらいがよさそう. @lg よりは大きく
+	--size--xl: 1600px; // 80*20
+	--size--l: 1280px; // 80*16
+	--size--m: 960px; // 80*12
+	--size--s: 640px; // 80*8
+	// --size--xs: 320px; // 80*4
+	--size--xs: 16rem; // 最低限維持したいアイテムサイズの標準値。withSide,reel,columns で使用
+
+	/* ------------------------------------------------------------
+	  Spacing
+	------------------------------------------------------------ */
+	--herfLeading: calc((1lh - 1em) / 2);
+
+	// フィボナッチ数列 0, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89,
+	// 0 .25rem, .5rem, .75rem, 1.25rem, M:(8):2rem, 3.25rem, 5.25rem, 8.5rem
+
+	// 1=0.125 Fibonacci数列
+	// --s1: 0.125rem;
+	--s5: 0.25rem;
+	--s10: 0.375rem;
+	// --s15: 0.5rem;
+	--s20: 0.625rem;
+	--s30: 1rem;
+	--s40: 1.625rem;
+	--s50: 2.625rem;
+	--s60: 4.25rem;
+	--s70: 6.875rem;
+	--s80: 11.125rem;
+	// --s90: 18rem;
+
+	// テキストのline-height分を考慮した上下左右の余白
+	// --p--box--s: 0.75em; //calc(0.75em - var(--herfLeading)) 0.75em; //0.625em 0.75em;
+	// --p--box: calc(1.25em - var(--herfLeading)) 1.25em;
+	// --p--box--l: calc(1.75em - var(--herfLeading)) 1.75em; //1.375em 1.5em;
+
+	// .is--flow の余白
+	// --flowGap-offset: calc(var(--herfLeading) * 2);
+	--flowGap--s: var(--s30);
+	--flowGap--m: var(--s40);
+	--flowGap--l: var(--s50);
+	--flowGap--h: 2.5em;
+	// --flowGap: var(--flowGap--m);
+
+	// コンテンツの左右の余白
+	--gutter: var(--s40);
+
+	/* ------------------------------------------------------------
+	    タイポグラフィ
+	------------------------------------------------------------ */
+
+	// --ff--sans: 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', 'Meiryo', sans-serif;
+	// --ff--serif: serif;
+
+	--ff--base:
+		-apple-system, 'BlinkMacSystemFont', 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo,
+		sans-serif, 'Segoe UI Emoji';
+
+	// Optima, Georgia, Garamond, Baskerville;
+	--ff--accent: 'Garamond', 'Baskerville', 'Times New Roman', serif;
+	--ff--mono: Menlo, Consolas, monaco, monospace;
+
+	// ------------------------------
+	// font-size 変数
+	// ------------------------------
+	// 倍音列(分子8) での計算値
+	// --fz--5xl: 4em; //calc(1em * 8 / 2);
+	// --fz--4xl: 2.667em; // calc(1em * 8 / 3);
+	// --fz--3xl: 2em; //calc(1em * 8 / 4);
+	// --fz--2xl: 1.6em; //calc(1em * 8 / 5);
+	// --fz--xl: 1.333em; //calc(1em * 8 / 6);
+	// --fz--l: 1.143em; //calc(1em * 8 / 7);
+	// --fz--m: 1em; // デフォルトでフォントサイズ 変わっているものを1emにリセットしたい時に必要
+	// --fz--s: 0.889em; // calc(1em * 8 / 9);
+	// --fz--xs: 0.8em; //calc(1em * 8 / 10);
+	// --fz--2xs: 0.727em; //calc(1em * 8 / 11);
+
+	--fz-mol: 8; // 7 ~ に対応.
+	// --fz--5xl: calc(1em * var(--fz-mol) / (var(--fz-mol) - 6));
+	--fz--4xl: calc(1em * var(--fz-mol) / (var(--fz-mol) - 5));
+	--fz--3xl: calc(1em * var(--fz-mol) / (var(--fz-mol) - 4));
+	--fz--2xl: calc(1em * var(--fz-mol) / (var(--fz-mol) - 3));
+	--fz--xl: calc(1em * var(--fz-mol) / (var(--fz-mol) - 2));
+	--fz--l: calc(1em * var(--fz-mol) / (var(--fz-mol) - 1));
+	--fz--m: 1em;
+	--fz--s: calc(1em * var(--fz-mol) / (var(--fz-mol) + 1));
+	--fz--xs: calc(1em * var(--fz-mol) / (var(--fz-mol) + 2));
+	--fz--2xs: calc(1em * var(--fz-mol) / (var(--fz-mol) + 3));
+
+	// clampでテキストサイズを変化させたい時用
+	// --fz-fluid--s: clamp(0.9rem, 0.75rem + 0.8cqw, 1rem); // 小さい方向のみ. 300: .9rem ~ 500: 1rem
+	// --fz-fluid: clamp(0.9rem, 0.8rem + 0.5cqw, 1.1rem); // 上下両方. 320: .9rem ~ 960: 1.1rem
+	// --fz-fluid--l: clamp(1rem, 0.9rem + 0.25cqw, 1.1rem); // 大きい方向のみ 640: 1rem a~ 960: 1.1rem
+
+	// ------------------------------
+	// font-weight
+	// ------------------------------
+	// --fw--thin: 100;
+	--fw--light: 300;
+	--fw--normal: 400;
+	--fw--medium: 500;
+	--fw--bold: 700;
+	// --fw--heavy: 900;
+
+	// ------------------------------
+	// line-height
+	// ------------------------------
+	// tight snug - relaxed loose or shorter short - tall taller ?
+	--lh--base: 1.75;
+	--lh--xs: calc(var(--lh--base) - 0.25);
+	--lh--s: calc(var(--lh--base) - 0.125);
+	--lh--l: calc(var(--lh--base) + 0.125);
+	--lh--xl: calc(var(--lh--base) + 0.25);
+
+	// ------------------------------
+	// letter-spacing
+	// ------------------------------
+	--lts--base: normal;
+	--lts--s: -0.05em;
+	--lts--l: 0.05em;
+	--lts--xl: 0.125em;
+
+	// ------------------------------------------------------------
+	// カラー
+	// ------------------------------------------------------------
+
+	// --hsl-black: 0 0% 0%;
+	// --hsl-white: 0 0% 100%;
+	// --hsl-gray: 210 8% 40%;
+	// --hsl-red: 4 72% 50%;
+	// --hsl-orange: 28 76% 50%;
+	// --hsl-yellow: 46 76% 48%;
+	// --hsl-green: 145 80% 40%;
+	// --hsl-blue: 205 76% 50%;
+	// --hsl-purple: 258 72% 50%;
+	// --hsl-pink: 325 72% 50%;
+	// --black: hsl(var(--hsl-black));
+	// --white: hsl(var(--hsl-white));
+	// --gray: hsl(var(--hsl-gray));
+	// --red: hsl(var(--hsl-red));
+	// --orange: hsl(var(--hsl-orange));
+	// --yellow: hsl(var(--hsl-yellow));
+	// --green: hsl(var(--hsl-green));
+	// --blue: hsl(var(--hsl-blue));
+	// --purple: hsl(var(--hsl-purple));
+	// --pink: hsl(var(--hsl-pink));
+	--black: #000;
+	--white: #fff;
+	--gray: hsl(210 16% 40%);
+	--red: hsl(4 72% 50%);
+	--orange: hsl(26 80% 48%);
+	--yellow: hsl(48 80% 48%);
+	--green: hsl(132 76% 42%);
+	--blue: hsl(204 74% 50%);
+	--purple: hsl(260 72% 50%);
+	--pink: hsl(320 72% 50%);
+
+	// --------------------
+	// basic カラー
+	// --------------------
+
+	// ベースカラーに合わせたカラーを段階的に用意
+	// --hs--bc: 215 8%;
+	// --hsl--bc: 215 8% 60%;
+
+	// n50?
+	// --b50: hsl(var(--hs--bc) 99%);
+	// --b100: hsl(var(--hs--bc) 96%);
+	// --b200: hsl(var(--hs--bc) 92%);
+	// --b300: hsl(var(--hs--bc) 84%);
+	// --b400: hsl(var(--hs--bc) 72%);
+	// --b500: hsl(var(--hs--bc) 60%);
+	// --b600: hsl(var(--hs--bc) 48%);
+	// --b700: hsl(var(--hs--bc) 36%);
+	// --b800: hsl(var(--hs--bc) 24%); // 淡い文字色 strong背景色
+	// --b900: hsl(var(--hs--bc) 12%); // ほんの少しだけ淡い文字色.
+	// --b950: hsl(var(--hs--bcc) 8%); // 文字色
+
+	// --------------------
+	// キーワードカラー main(brand?), accent, base, ...
+	// --------------------
+
+	// Main Color
+	--c--main: #1e4e6b;
+
+	// accent, accent-2, accent-3
+	--c--accent: #bc3453;
+	// --c--accent-2: #bc3453;
+	// --c--accent-3: #bc3453;
+
+	// base, base-2, base-3 … 基本、濃くなっていく
+	// text, text-2, text-3 …　基本、薄くなっていく
+
+	// base
+	// --c--base: hsl(225 8% 98%);
+	--c--base: hsl(224 6% 99%);
+	--c--base-2: hsl(224 10% 94%);
+	// --c--base-3: hsl(220 8% 86%); // border用
+
+	// text
+	--c--text-hsl: 224 4% 8%; // shadowにも使う
+	--c--text: hsl(var(--c--text-hsl));
+	--c--text-2: hsl(224 4% 40%);
+	// --text-3: hsl(224, 4%, 50%); //hsl(200, 12%, 92%);
+
+	// --sh-hsl
+
+	// divider (border-color)
+	--c--divider: hsl(224 4% 82%);
+	--c--link: #0c61e4;
+	// --divider?
+
+	// ボーダーはどちらでも使える感じか。
+	// --bdc-pale,base,strong
+
+	/* ------------------------------------------------------------
+	  opacity
+	------------------------------------------------------------ */
+	--op--low: 0.25;
+	--op--mid: 0.5;
+	--op--high: 0.75;
+
+	/* ------------------------------------------------------------
+	  transition-duration
+	------------------------------------------------------------ */
+	--trsdu--default: 0.4s;
+	--trsdu--modal: 0.5s;
+	--trsdu--acc: 0.4s;
+
+	/* ------------------------------------------------------------
+	  radius
+	------------------------------------------------------------ */
+	// 等比
+	--bdrs--1: 0.125rem; // base
+	--bdrs--2: 0.25rem; // * 2
+	--bdrs--3: 0.5rem; // * 4
+	--bdrs--4: 1rem; // * 8
+	--bdrs--5: 2rem; // * 16
+	--bdrs--99: 99rem;
+
+	// 1, 2, 3, 5, 8, 13,
+	// --bdrs--1: 0.125rem;
+	// --bdrs--2: 0.25rem; // base
+	// --bdrs--3: 0.5rem; // * 2
+	// --bdrs--4: 0.75rem; // * 3
+	// --bdrs--5: 1.25rem; // * 5
+	// --bdrs--99: 99rem;
+
+	/* ------------------------------------------------------------
+	  shadow
+	------------------------------------------------------------ */
+	// --sh-hsl: 220 20% 20%;
+	--sh-hsl: var(--c--text-hsl);
+	--sh-a: 6%;
+
+	// --sh-a--base: calc(var(--sh-a) - 4%);
+	// --sh-color--base: hsl(var(--sh-hsl) / var(--sh-a--base));
+
+	// x: fibo
+	// y: sh5 で x:y が 1:2。低い位置にあるほど比率を小さく。
+	// blur: x + y
+	// --sh-sz--0: 1px 1px 2px 0;
+	// --sh-sz--1: 2px 3px 5px 0;
+	// --sh-sz--2: 3px 5px 8px 0;
+	// --sh-sz--3: 5px 9px 15px 0;
+	// --sh-sz--4: 8px 16px 24px 0;
+	// --sh-sz--5: 13px 26px 39px 0;
+
+	// x:fibo, x:y=1:2, blur:y*2 のパターン
+	--sh-sz--0: 1px 2px 4px 0;
+	--sh-sz--1: 2px 4px 8px 0;
+	--sh-sz--2: 3px 6px 12px 0;
+	--sh-sz--3: 5px 10px 20px 0;
+	--sh-sz--4: 8px 16px 32px 0;
+	--sh-sz--5: 13px 26px 52px 0;
+
+	// 1:2 で xが等比パターン
+	// --sh-sz--0: 0px 1px 2px 0;
+	// --sh-sz--1: 1px 2px 4px 0;
+	// --sh-sz--2: 2px 4px 8px 0;
+	// --sh-sz--3: 4px 8px 16px 0;
+	// --sh-sz--4: 8px 16px 32px 0;
+	// --sh-sz--5: 16px 32px 64px 0;
+
+	/* ------------------------------------------------------------
+	  filter
+	------------------------------------------------------------ */
+	// --filter--blur: blur(4px);
+	// --filter--blur--l: blur(8px);
+	// --filter--lighten: brightness(1.15);
+	// --filter--darken: brightness(0.85);
+}
+
+// :lang(en) {
+// 	--herfLeading: calc((1lh - 1cap) / 2);
+// }
+// lh非サポートブラウザ用のフォールバック
+@supports not (gap: 1lh) {
+	:root {
+		--herfLeading: 0.125em;
+	}
+}

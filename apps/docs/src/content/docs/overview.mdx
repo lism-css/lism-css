@@ -1,0 +1,181 @@
+---
+title: 'Overview'
+description: ...
+---
+import { Preview, PreviewArea, PreviewTitle, PreviewCode, IconBadge, Callout } from "~/components";
+import { Box, Text, Center, Flex, Frame, Icon } from "lism-css/astro";
+import DemoLismComponent from '~/content/demo-lism-component.mdx';
+
+"**Lism CSS**" は、WEBサイトの骨組みをサクっと作るための軽量なCSSフレームワークです。
+
+**独自のCSS設計理論をゼロから構築**しており、以下のようなコンセプトになっています。
+
+- HTML側にクラスとCSS変数を書くだけでざっくりとしたレイアウトが素早く組める。
+- 細かい装飾や複雑なデザインはCSSでちゃんと書く。（Lism は干渉しない）
+- CSSを読み込むだけで、素のHTMLサイトやWordPressサイトにも導入できる。
+
+なんでもかんでも全部のスタイルをHTMLやJSX側に書いていくのではなく、主要なレイアウトやCSSプロパティをクラスとCSS変数だけで簡単に適用できるようにしつつも、細かい作り込みはCSS側に任せるという想定で設計しています。
+
+※ [Every Layout](https://every-layout.dev/) + [Bootstrap](https://getbootstrap.com/) + [Tailwind CSS](https://tailwindcss.com/) を 混ぜ合わせたようなイメージで設計しました。
+
+
+<Callout keycol="green" icon='good'>
+Lism CSSを元にした**コンポーネント集** をnpmパッケージとして提供しており、ReactとAstroではより手軽に利用できます。
+</Callout>
+
+
+## Lism コンポーネント
+
+Lism CSSを簡単に扱えるようにした専用のコンポーネントをReact,Astro形式で配布しています。
+
+[Chakra UI](https://chakra-ui.com/) や [MUI](https://mui.com/) のような使い心地で、Lism CSSの設計思想に則ったコンポーネントを手軽に扱えるようになります。
+
+<PreviewTitle>専用のコンポーネントはこんな感じで使います</PreviewTitle>
+
+<DemoLismComponent/>
+
+
+
+## CSS設計の特徴
+
+
+WEBサイトで一般的によく使われるレイアウト・デザイン要素を細分化し、汎用的に使い回せるような設計思想なっています。
+
+
+
+### ゼロビルドでどんな環境でも使えるフレームワーク
+
+あくまでも**HTMLとCSSの設計理論が主体**になっており、特殊なビルド処理は必須ではありません。
+
+{/* 最近流行りのゼロランタイムと逆行する、ゼロビルドです。 */}
+
+<Callout type="check">
+CSSを読み込むだけで導入でき、**素のHTMLサイト**や**WordPressサイトでも利用できる**ものになっています。
+</Callout>
+
+<Text c="text-2" mbs="10" fz="s">（一部、アコーディオンやタブの動作に関するJavaScriptが付属しています。）</Text>
+
+
+<IconBadge /> ただし、**Lism コンポーネント**を使った方が圧倒的に開発体験は向上します。基本的には Next.js、Astro 等の開発環境上でのコンポーネントの活用を推奨しています。
+
+
+
+### レイヤー階層・セレクタ優先度まで設計
+
+Lism CSS では、デザイン的なモジュールクラスやトークン設計を提供するだけでなく、`reset.css` レベルから**CSSの階層構造をあらかじめ定義**しています。
+
+事前に決められた階層ルールに従うことで、CSSで問題になりやすい詳細度の複雑化も軽減します。
+
+
+### WEBデザインの細分化
+
+Lism CSS では、WEBサイトのデザインを以下のような概念に分解して考えています。
+
+<Box p='30' bgc='base-2'>
+	- Design Tokens
+	- Layout State
+	- Layouts
+	- Components
+	- Utilities
+</Box>
+
+これらそれぞれの階層ごとの主要な要素に対して変数やクラスを定義し、流用できるようにしています。
+
+{/* 1. 汎用性を確保しつつも、CSSが肥大化しすぎないように。
+2. HTMLのコード量が爆増してしまうようなことがないように。
+
+上記のバランスを大事にして設計しています。 */}
+
+
+
+
+### CSS変数とクラスの組み合わせによるレスポンシブ対応
+
+LismではCSS変数（カスタムプロパティ）とクラス属性を組み合わせる設計が多くなっていますが、特に、その特徴が一番現れるのが**レスポンシブ対応**です。
+
+
+
+<Callout type='check'>
+主要なプロパティに関して、専用のクラスとそれに対応する変数を指定するだけで**簡単にブレイクポイントでの切り替えができる**ようになっています。
+</Callout>
+
+<Preview>
+	<PreviewTitle>実際の活用例</PreviewTitle>
+	<PreviewArea resize p='20'>
+		<div class="-p:20 -p@sm -p@md -bd:" style="--sm-p:var(--s30);--md-p:var(--s50);">
+			BOX
+		</div>
+	</PreviewArea>
+	<PreviewCode label="HTML" slot="tab">
+```html
+<div class="-p:20 -p@sm -p@md -bd:" style="--sm-p:var(--s30);--md-p:var(--s50);">
+	BOX
+</div>
+```
+	</PreviewCode>
+	<PreviewCode label="JSX" slot="tab">
+```jsx
+<Box p={[20, 30, 50]} bd>
+	BOX
+</Box>
+```
+	</PreviewCode>
+</Preview>
+
+
+
+
+### その他の特徴
+
+#### `@layer`の採用
+
+Lism は `@layer` をデフォルトで採用しています。
+
+
+
+#### コンテナクエリの採用
+
+Lism は メディアクエリではなくコンテナクエリをデフォルトで採用しています。  
+そのため、慣れていない方は少し注意が必要です。
+
+<IconBadge type='warning' /> コンテナ要素内では position: fixed の挙動が変わったり、サイズ関係の挙動が少し変わったりすることがあります。
+
+
+
+
+
+{/* #### Purge(Tree shaking)しやすいCSSの設計
+
+ユーティリティクラスの活用に少し癖がありますが、PurgeCSS などを使って超軽量にできるようにもなっています。
+`.-prop@bp`の形式で個別のプロパティごとに各ブレイクポイントに対応したクラスが1つずつあるのも、パージしやすくするためでもあります。 */}
+
+
+{/* #### ダークモードの実装も簡単
+
+ダークモードの実装など、カラーテーマの切り替えも、ルートのトークンを切り替える(CSS変数の上書きする)だけで実装できます。 */}
+
+{/* ### WordPressフレンドリー
+
+Lism は、WordPressにも導入しやすいように設計されており、Lism設計に基づいたブロックテーマも開発予定です。
+
+- 軽量
+- WordPress側のクラス名と衝突しない命名規則
+- Tokenを活用する点が、`theme.json` 関連機能との親和性が高い。
+- コンテンツ幅の制御手法などもWordPressに合わせた設計が可能。
+- Reactベースのコンポーネントがあるため、ブロック化しやすい。
+- Lismベースのブロックでコンテンツを管理すれば、WordPressをヘッドレスCMSとして使いやすくなる。(サイト全体のCSSとコンテンツに必要なCSSがLismに集約されるため) */}
+
+
+
+---
+
+## Inspirations
+
+- [Every Layout](https://every-layout.dev/) : "**レイアウトプリミティブ**"という考え方をLismでもベースに取り入れています。
+- [ITCSS](https://itcss.io/) : レイヤーの概念を参考にしています。
+- [daisyUI](https://daisyui.com/) : カラートークンの設計やコンポーネントの豊富さが非常に参考になりました。
+- [SmartHR Design System](https://smarthr.design/products/design-tokens/) : デザイントークン設計が非常に参考になりました。
+- [Chakra UI](https://chakra-ui.com/),  [MUI](https://mui.com/) : コンポーネントの使用感が非常に参考になりました。
+- [Tailwind CSS](https://tailwindcss.com/) : CSSプロパティと値のセットで細かくクラス化するという考え方が非常に参考になりました。
+
+{/* Chakra, Tailwind, Bootstrap, などのフレームワークも参考にしています。 */}

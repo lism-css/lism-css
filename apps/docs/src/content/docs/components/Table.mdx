@@ -1,0 +1,253 @@
+---
+title: 'Table'
+description: ...
+---
+
+import { Frame } from 'lism-css/astro';
+import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportSource } from "~/components";
+import Table from '~/components/ex/Table/index.jsx';
+
+
+1行目・一列目を固定表示することにも対応させた、汎用的なTableレイアウトの作成例です。
+
+変数でボーダースタイルを調整できるようにしておくことで、固定表示に対応できるように設計しています。
+
+## Import
+
+<ImportSource name='Table' css='scss' react />
+
+
+
+## Usage
+
+<Preview>
+	<PreviewTitle>Preview</PreviewTitle>
+	<PreviewArea p='30'>
+		<Table>
+			{/* <caption class=''>Caption</caption> */}
+			<thead>
+				<tr>
+					<th>Header 1</th>
+					<th>Header 2</th>
+					<th>Header 3</th>
+					<th>Header 4</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>Cell 1</td>
+					<td>Cell 2</td>
+					<td>Cell 3</td>
+					<td>Cell 4</td>
+				</tr>
+				<tr>
+					<td>Cell 2-1</td>
+					<td>Cell 2-2</td>
+					<td>Cell 2-3</td>
+					<td>Cell 2-4</td>
+				</tr>
+				<tr>
+					<td>Cell 3-1</td>
+					<td>Cell 3-2</td>
+					<td>Cell 3-3</td>
+					<td>Cell 3-4</td>
+				</tr>
+			</tbody>
+			<tfoot>
+				<tr>
+					<td>Footer 1</td>
+					<td>Footer 2</td>
+					<td>Footer 3</td>
+					<td>Footer 4</td>
+				</tr>
+			</tfoot>
+		</Table>
+	</PreviewArea>
+	<PreviewCode slot='tab' label='JSX'>
+		```jsx
+		<Table>
+			<caption>Caption</caption>
+			<thead>...</thead>
+			<tbody>...</tbody>
+			<tfoot>...</tfoot>
+		</Table>
+		```
+	</PreviewCode>
+	<PreviewCode slot='tab' label='HTML'>
+		```html
+		<table class='c--table'>
+			<caption>Caption</caption>
+			<thead>...</thead>
+			<tbody>...</tbody>
+			<tfoot>...</tfoot>
+		</table>
+		```
+	</PreviewCode>
+</Preview>
+
+
+<Preview>
+	<PreviewTitle>--bdwXで左右のボーダーをなくし、thのカラーリングを指定する例</PreviewTitle>
+	<PreviewArea p='30'>
+		<Table thBgc='base-2' bdwX='0px'>
+			<thead>
+				<tr>
+					<th>Header 1</th>
+					<th>Header 2</th>
+					<th>Header 3</th>
+					<th>Header 4</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>Cell 1</td>
+					<td>Cell 2</td>
+					<td>Cell 3</td>
+					<td>Cell 4</td>
+				</tr>
+				<tr>
+					<td>Cell 2-1</td>
+					<td>Cell 2-2</td>
+					<td>Cell 2-3</td>
+					<td>Cell 2-4</td>
+				</tr>
+				<tr>
+					<td>Cell 3-1</td>
+					<td>Cell 3-2</td>
+					<td>Cell 3-3</td>
+					<td>Cell 3-4</td>
+				</tr>
+			</tbody>
+			<tfoot>
+				<tr>
+					<td>Footer 1</td>
+					<td>Footer 2</td>
+					<td>Footer 3</td>
+					<td>Footer 4</td>
+				</tr>
+			</tfoot>
+		</Table>
+	</PreviewArea>
+	<PreviewCode slot='tab' label='JSX'>
+		```jsx
+		<Table thBgc='base-2' bdwX='1px'>
+			<thead>...</thead>
+			<tbody>...</tbody>
+			<tfoot>...</tfoot>
+		</Table>
+		```
+	</PreviewCode>
+	<PreviewCode slot='tab' label='HTML'>
+		```html
+		<table class='c--table' style="--bdwX:1px;--th-bgc:var(--c--base-2)">
+			<thead>...</thead>
+			<tbody>...</tbody>
+			<tfoot>...</tfoot>
+		</table>
+		```
+	</PreviewCode>
+</Preview>
+
+
+
+### スクロール時の固定表示
+
+以下のような2つのバリエーションクラスをこの例では定義しています。
+
+- セル１列目を固定する`c--table--fix1stCell`
+- theadを固定する`c--table--fixHead`
+
+
+
+<Preview>
+	<PreviewTitle>scroll時にtheadと、1列目のセルを固定する例</PreviewTitle>
+	<PreviewArea p='30' _dir='rtl'>
+	<Frame ov='auto' maxH='20rem'>
+		<Table variant='fix1stCell,fixHead' thBgc='base-2' style={{'--cell-minIs':'10rem','--bdwwX': '1px'}}>
+			<thead>
+				<tr>
+					<th>Header 1</th>
+					<th>Header 2</th>
+					<th>Header 3</th>
+					<th>Header 3</th>
+					<th>Header 3</th>
+					<th>Header 3</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<th>Cell 1</th>
+					<td>Cell 2</td>
+					<td>Cell 3</td>
+					<td>Cell 4</td>
+					<td>Cell 2</td>
+					<td>Cell 3</td>
+				</tr>
+				<tr>
+					<th rowSpan={2}>Cell 1</th>
+					<td>Cell 2</td>
+					<td>Cell 3<br />text</td>
+					<td>Cell 4</td>
+					<td>Cell 2</td>
+					<td>Cell 3<br />text</td>
+				</tr>
+				<tr>
+					{/* <th>Cell 1</th> */}
+					<td className='-nofix'>Cell 2</td>
+					<td>...</td>
+					<td>Cell 4</td>
+					<td>Cell 2</td>
+					<td>...</td>
+				</tr>
+				<tr>
+					<th>Cell 1</th>
+					<td>Cell 2</td>
+					<td>Cell 3<br />text</td>
+					<td>Cell 4</td>
+					<td>Cell 2</td>
+					<td>Cell 3<br />text</td>
+				</tr>
+				<tr>
+					<th>Cell 1</th>
+					<td>Cell 2</td>
+					<td>...</td>
+					<td>Cell 4</td>
+					<td>Cell 2</td>
+					<td>...</td>
+				</tr>
+				<tr>
+					<th>Cell 1</th>
+					<td>Cell 2</td>
+					<td>...</td>
+					<td>Cell 4</td>
+					<td>Cell 2</td>
+					<td>Cell 3<br />text</td>
+				</tr>
+			</tbody>
+		</Table>
+	</Frame>
+	</PreviewArea>
+	<PreviewCode slot='tab' label='JSX'>
+		```jsx "fix1stCell,fixHead"
+		<Frame ov='auto' maxH='20rem'>
+			<Table variant='fix1stCell,fixHead' thBgc='base-2' style={{'--cell-minIs':'10rem','--bdwwX': '1px'}}>
+				<thead>...</thead>
+				<tbody>...</tbody>
+				<tfoot>...</tfoot>
+			</Table>
+		</Frame>
+		```
+	</PreviewCode>
+	<PreviewCode slot='tab' label='HTML'>
+		```html " c--table--fix1stCell" "c--table--fixHead"
+		<div class="l--frame -ov:a" style="max-height:20rem">
+			<table class='c--table c--table--fix1stCell c--table--fixHead' style="--cell-minIs:10rem;--bdwwX:1px;--th-bgc:var(--c--base-2)">
+				<thead>...</thead>
+				<tbody>...</tbody>
+				<tfoot>...</tfoot>
+			</table>
+		</div>
+		```
+	</PreviewCode>
+</Preview>
+

@@ -1,0 +1,14 @@
+---
+import type { LismProps } from '../types';
+import { Lism } from '../Lism';
+
+// Propsの定義
+interface Props extends LismProps {
+	duration?: string | number;
+}
+const props = Astro.props || {};
+---
+
+<Lism data-lism='test-item' bd bds='dashed' {...props}>
+	<slot />
+</Lism>

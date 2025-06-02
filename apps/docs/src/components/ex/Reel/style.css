@@ -1,0 +1,16 @@
+@layer lism.component {
+	:where(.c--reel) {
+		--p: 0;
+		/* overflow: auto;
+	grid-auto-flow: column; */
+	}
+	.c--reel {
+		scroll-snap-type: var(--scSnapType, both mandatory);
+		scroll-behavior: var(--scBehavior, smooth); /* idリンクでスクロールされるように */
+		scroll-padding: var(--scPadding, var(--p)); /* paddingと合わせる */
+	}
+	.c--reel > * {
+		scroll-snap-align: var(--scSnapAlign, start);
+		scroll-snap-stop: var(--scSnapStop, normal);
+	}
+}

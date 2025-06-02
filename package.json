@@ -1,0 +1,56 @@
+{
+	"name": "lism-css-projects",
+	"version": "0.0.1",
+	"packageManager": "pnpm@8.15.8",
+	"description": "",
+	"main": "dist/index.js",
+	"module": "dist/index.js",
+	"scripts": {
+		"postinstall": "cd packages/lism-css && pnpm run build",
+		"dev": "turbo run dev",
+		"start": "turbo run start",
+		"lint": "turbo run lint",
+		"lint:style": "stylelint '*.{css,scss}'",
+		"clean": "turbo run clean",
+		"build": "turbo run build",
+		"build:core": "turbo run build --filter=./packages/lism-core",
+		"merge:dev": "git checkout main && git merge dev",
+		"merge:m2d": "git checkout dev && git merge main"
+	},
+	"workspaces": [
+		"packages/*",
+		"apps/docs",
+		"apps/playgrounds/*"
+	],
+	"keywords": [],
+	"private": true,
+	"author": {
+		"name": "ddryo",
+		"url": "https://github.com/ddryo"
+	},
+	"homepage": "https://...",
+	"license": "MIT",
+	"devDependencies": {
+		"autoprefixer": "^10.4.21",
+		"cross-env": "^7.0.3",
+		"css-mqpacker": "^7.0.0",
+		"cssnano": "^7.0.7",
+		"eslint": "^9.27.0",
+		"eslint-config-prettier": "^10.1.5",
+		"eslint-config-standard": "^17.1.0",
+		"eslint-plugin-react": "^7.37.5",
+		"globals": "^16.2.0",
+		"npm-check-updates": "^18.0.1",
+		"pkg-pr-new": "^0.0.50",
+		"postcss": "^8.5.3",
+		"prettier": "^3.5.3",
+		"prettier-plugin-astro": "^0.14.1",
+		"react-icons": "^5.5.0",
+		"sass": "^1.89.0",
+		"stylelint": "^16.19.1",
+		"stylelint-config-rational-order": "^0.1.2",
+		"stylelint-config-recommended-scss": "^15.0.1",
+		"stylelint-prettier": "^5.0.3",
+		"turbo": "^2.5.3"
+	}
+}

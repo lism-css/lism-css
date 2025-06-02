@@ -1,0 +1,8 @@
+---
+// memo: タブボタンが <button ~ button> で取得できることを前提にして<slot />だけにしている。
+// <slot name='tab' />,<slot name='panel' />に分け、それぞれをカスタムDOMで囲んだ方が確実にそれぞれの内容は取れるが、わざわざslot指定が必要になってしまう。
+---
+
+<lism-placeholder-tabitem>
+	<slot />
+</lism-placeholder-tabitem>

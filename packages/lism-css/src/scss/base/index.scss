@@ -1,0 +1,70 @@
+@use '../_mixin' as mixin;
+
+@forward './tokens';
+
+// 各html要素のベーススタイル
+@forward './dom';
+
+/* ----------------------------------------
+    デザイントークンとは別の設定値
+ ---------------------------------------- */
+:root {
+	--root-fz: clamp(0.875rem, 0.625rem + 1vw, 1rem); // 画面サイズ 400 - 600 で可変
+
+	// hover用
+	--hov-trsdu: 0.3s;
+
+	// is--overwide で使用
+	--overwide-size: 100vw;
+
+	// :rootで初期セットしてないが定義可能な変数
+	// --heading-ff
+	// --heading-fw
+	// --link-td
+	// --list-pis
+	// --cell-p
+	// --cell-minIs
+	// --td|th-c
+	// --td|th-bgc
+	// --acc-duration
+}
+
+:root,
+.re--sh {
+	--sh-color: hsl(var(--sh-hsl) / var(--sh-a));
+	// カラー変数込みで変数をセットしてしまうと、--sh-color がこの時点で固定されてしまう。
+	// --sh-size-1: 0.5px 1px 1px 0 var(--sh-color);
+	--bxsh--1: var(--sh-sz--0) var(--sh-color), var(--sh-sz--1) var(--sh-color);
+	--bxsh--2: var(--sh-sz--1) var(--sh-color), var(--sh-sz--2) var(--sh-color);
+	--bxsh--3: var(--sh-sz--2) var(--sh-color), var(--sh-sz--3) var(--sh-color);
+	--bxsh--4: var(--sh-sz--3) var(--sh-color), var(--sh-sz--4) var(--sh-color);
+	--bxsh--5: var(--sh-sz--4) var(--sh-color), var(--sh-sz--5) var(--sh-color);
+
+	--bxsh--i1: inset var(--sh-sz--0) var(--sh-color), inset var(--sh-sz--1) var(--sh-color);
+	--bxsh--i2: inset var(--sh-sz--1) var(--sh-color), inset var(--sh-sz--2) var(--sh-color);
+	// --bxsh--i3: inset var(--sh-sz--2) var(--sh-color), inset var(--sh-sz--3) var(--sh-color);
+}
+
+/* -----
+プロパティリセット系クラス。
+----- */
+
+// Note: dialog に影響する
+@include mixin.maybe_where('.re--style', '') {
+	width: auto;
+	height: auto;
+	max-width: unset;
+	max-height: unset;
+	color: inherit;
+	background: none;
+	border: none;
+	padding: 0;
+	margin: 0;
+	font: inherit;
+}
+
+// ブラウザデフォルトのような見た目に戻す（:not([class]) と同じ）
+.re--list {
+	--list-pis: 1.5em;
+	list-style: revert;
+}

@@ -1,0 +1,31 @@
+---
+import DemoPageLayout from '~/layouts/DemoPageLayout.astro';
+import DemoHeader from '../_DemoHeader.astro';
+import DemoFooter from '../_DemoFooter.astro';
+import DemoContent from '../_DemoContent.astro';
+import { Container, Box, Stack } from 'lism-css/astro';
+---
+
+<DemoPageLayout title='One Column Layout'>
+	<Stack id='wrap' minH='100vh'>
+		<DemoHeader />
+		<Box tag='main' py='60' fx='1'>
+			<Box tag='article'>
+				<Container size='m' tag='header' hasGutter>
+					<h1>Page Title</h1>
+				</Container>
+
+				<Container size='m' hasGutter isFlow mbs='60'>
+					<DemoContent />
+				</Container>
+
+				<Container tag='aside' size='m' hasGutter mbs='60'>
+					<Box bgc='base-2' p='50'>
+						<div>Comment area, etc...</div>
+					</Box>
+				</Container>
+			</Box>
+		</Box>
+		<DemoFooter />
+	</Stack>
+</DemoPageLayout>

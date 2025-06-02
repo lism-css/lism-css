@@ -1,0 +1,377 @@
+---
+title: 'Lism'
+description: ...
+---
+import { Lism, Text, Dummy, Link, Media, Frame, Spacer } from "lism-css/astro";
+import { Preview, PreviewArea, PreviewTitle, PreviewCode, IconBadge, Reference, ImportPackage, Callout } from "~/components";
+
+LismのCSS設計に対応した様々なプロパティを受け取ることができるようになっている汎用的なコンポーネントです。
+
+<Callout type='info'>
+Lismで配布しているほぼ全てのコンポーネントは、この`<Lism>`がベースなっています。  
+</Callout>
+
+
+
+## Usage
+
+<Preview>
+	<PreviewTitle>`<Lism>`の出力例</PreviewTitle>
+	<PreviewArea p='30'>
+		<Lism　p='30' fw='bold' c='blue' bgc='base-2' bdrs='3'>Lism content</Lism>
+	</PreviewArea>
+	<PreviewCode slot='tab' label='JSX'>
+		```jsx
+		<Lism　p='30' fw='bold' c='blue' bgc='base-2' bdrs='3'>Lism content</Lism>
+		```
+	</PreviewCode>
+	<PreviewCode slot='tab' label='HTML'>
+		```jsx
+		<div class="-p:30 -fw:bold -c: -bgc:base-2 -bdrs:3"> Lism content </div>
+		```
+	</PreviewCode>
+</Preview>
+
+
+<Preview>
+	<PreviewTitle>何も指定がなければ、ただの`<div>`タグを返します。</PreviewTitle>
+	<PreviewArea p='30'>
+		<Lism>Lism content</Lism>
+	</PreviewArea>
+	<PreviewCode slot='tab' label='JSX'>
+		```jsx
+		<Lism>Lism content</Lism>
+		```
+	</PreviewCode>
+	<PreviewCode slot='tab' label='HTML'>
+		```jsx
+		<div>Lism content</div>
+		```
+	</PreviewCode>
+</Preview>
+
+
+## Import
+
+<Preview>
+	<PreviewCode slot='tab' label='React'>
+```jsx
+import { Lism } from 'lism-css/react';
+```
+	</PreviewCode>
+	<PreviewCode slot='tab' label='Astro'>
+```jsx
+import { Lism } from 'lism-css/astro';
+```
+	</PreviewCode>
+</Preview>
+
+
+
+
+
+## Lism Props
+
+`<Lism>`をベースとした`@lism/core`で提供する各コンポーネントで受け取れるプロパティを**Lism Props**と呼んでいます。
+
+Lism Propsは、主に以下の3種類に分類されます。
+
+|種別|説明|
+|---|---|
+|**Common Props**|基本的な共通プロパティ|
+|**State Props**|[Layout State](/css/layout-state/) に分類されるクラスを出力するためのプロパティ|
+|**CSS Props**|[Prop Class](/css/prop-class/) に分類されるクラスを出力するためのプロパティ|
+
+<IconBadge type='warning' /> `skipState`が指定されているコンポーネントでは、**State Props**は受け取れません。
+
+
+### Common Props
+
+| Prop | 説明 |
+|---|---|
+|`tag`| 出力する HTMLタグを指定できます。デフォルトは`div`を返します。|
+|`lismClass`| Lismコンポーネント名となる主要なクラス名。|
+|`variant`| lismClassに対するバリエーションクラスを出力できます。lismClass に複数クラスが指定されている場合、先頭のクラスに対してバリエーションクラスを出力します。`,`区切りで複数指定できます。|
+
+上記の他、少し複雑なものがいくつかあります。それらについては後述の[補足](#補足)で解説しています。
+
+### State Props
+
+[Layout State](/css/layout-state/) クラスに対応するプロパティ群です。
+
+
+| Prop | 出力されるクラス |
+|---|---|
+| `isFlow(='{s\|l}')` | `.is--flow`+`(.-flow:{s\|l})` |
+| `isContainer(='{s\|m\|l}')` | `.is--container`+`(.-container:{s\|m\|l})` |
+| `isFrame` | `.l--frame` |
+| `isLayer` | `.is--layer` |
+| `isLinkBox` | `.is--linkBox` |
+| `isWide`,<br />`isFullwide`,<br />`isOverwide` | `.is--wide`,<br />`.is--fullwide`,<br />`.is--overwide` |
+| `hasGutter` | `.has--gutter` |
+| `hasDivider` | `.has--divider` |
+
+<Reference>
+[Layout State クラスについての解説と使用例はこちら](/css/layout-state/)
+</Reference>
+
+
+### CSS Props
+
+主要なCSSプロパティに対して、それぞれ省略記法でコンポーネントに指定できるようになっています。  
+例えば、`font-size` は `fz`、`padding` は `p` で指定できます。
+
+この時、[Prop Class](/css/prop-class/) に対応する値が指定されれば、下記のようにLismで用意しているユーティリティクラスが出力されるようになっています。
+
+<Preview>
+<PreviewTitle>例</PreviewTitle>
+<PreviewCode>
+```jsx
+<Lism fz='l' p='20'>contents</Lism>
+
+// ↓ 出力されるHTML
+<div class="-fz:l -p:20">contents</div>
+```
+</PreviewCode>
+</Preview>
+
+
+<Reference>
+[指定可能な Props 一覧はこちら](/css/prop-class/)
+</Reference>
+
+<Spacer h='20'/>
+
+トークン値ではなく各プロパティの主要なキーワード値に対応したクラスをする場合、値を省略してもしなくても出力されます。
+
+例：`text-align:center`用の `-ta:c` クラスや、`position:relative`用の `-pos:r` クラスは、以下のどちらの書き方でも出力されます。
+
+```jsx
+<Lism ta="center" pos="relative">...</Lism>
+<Lism ta="c" pos="r">...</Lism>
+
+// ↓ どちらも次のような出力になります
+
+<div class="-ta:c -pos:r">...</div>
+```
+
+
+
+#### 対応するProp Classがない値を指定した場合
+
+ユーティリティクラスに変換されない値を指定した場合、以下のいずれかで出力されます。
+
+1. 単純に`style`属性にインライン出力される。
+2. `-{prop}:` & `--{prop}` の組み合わせで出力される。
+3. `--{prop}`だけ出力されるもの（特殊）
+
+<Preview>
+<PreviewTitle>1. の単純なstyle属性への出力の例</PreviewTitle>
+<PreviewCode>
+```jsx  "op='0.75'" "opacity:0.75"
+<Lism op='0.75'>contents</Lism>
+↓
+<div style="opacity:0.75">contents</div>
+```
+</PreviewCode>
+</Preview>
+
+<Preview>
+<PreviewTitle>2. のクラスと変数の組み合わせ出力の例</PreviewTitle>
+<PreviewCode>
+```jsx "fz='20px'" "-fz:" "--fz:20px"
+<Lism fz='20px'>contents</Lism>
+// ↓　出力
+<div class="-fz:" style="--fz:20px">contents</div>
+```
+</PreviewCode>
+</Preview>
+
+ブレイクポイントでの切り替えに対応しているような主要なプロパティは、この`-{prop}:` & `--{prop}` で出力されます。
+
+{/* <p class='-fz:s -op:high -mbs:5'>そのほか、(変数管理できた方が利便性が高いので)主要なプロパティも変数化されるようになっています。</p> */}
+
+
+<Spacer h='10' />
+<Preview>
+<PreviewTitle>3. の変数のみ出力される例</PreviewTitle>
+<PreviewCode>
+```jsx
+<Lism bd bdc="#000" bdw="2px">...</Lism>
+
+// ↓　出力
+<div class="bd:" style="--bdc:#000;--bdw:2px">...</div>
+```
+</PreviewCode>
+</Preview>
+
+<p class='-mbs:5'>`-bd:`や`-trs:`と併用するようなプロパティがこれに当てはまります。</p>
+
+
+<div id='output-utility'></div>
+#### ユーティリティクラスとして強制的に出力する方法
+
+対応するProp Classがない場合でも、`u:`からはじめることでその後ろの文字列がユーティリティクラス名として出力されます。
+```jsx
+<Lism p='u:hoge'>...</Lism>
+
+↓
+
+<div class="-p:hoge">...</div>
+```
+
+必要に応じて独自のクラス名を定義してCSSを追加しておくと、それを活用することができます。
+
+```css
+.-p\;hoge{
+	/* ... your styles ... */
+}
+```
+
+<Callout>
+`className='-p:hoge'` としてももちろん大丈夫ですが、`u:`を使ってCSS Propとして渡すことで、Moduleクラスよりも後ろでこのクラスが出力されるようになります。
+</Callout>
+
+
+#### 変数なしで`-{prop}:`クラスのみを出力する方法
+CSS Props に対して`"-"`または`true`を指定すると、変数なしで`-{prop}:`クラスのみを出力します。
+
+<Preview>
+<PreviewTitle>例</PreviewTitle>
+<PreviewCode>
+```jsx "p='-'" "bdrs" "-p:" "-bdrs:"
+<Lism p='-' bdrs>contents</Lism>
+↓
+<div class="-p: -bdrs:">contents</div>
+```
+</PreviewCode>
+</Preview>
+
+CSS側で変数の中身を記述したい場合や、**親と同じ変数を継承したい場合**などに活用できます。
+
+
+## 補足
+
+{/* |`as`| Lism Propsの処理後、asに指定された別コンポーネントとして展開できます。 |
+|`exProps`| Lism Propsとして処理したくないpropsを指定できます。`as`で指定した外部コンポーネントに渡したいpropsを指定するのにも便利です。|
+|`skipState`| State Props用の処理をスキップできます。| */}
+
+### as
+
+`<Lism>`コンポーネントを最終的に**別の外部コンポーネント**として展開することができます。
+
+<Preview>
+	<PreviewTitle>例、Lismの`<Media>`コンポーネントをNext.jsの`<Image>`で展開する</PreviewTitle>
+	<PreviewCode>
+```jsx
+import Image from 'next/image';
+
+<Media as={Image} src='...' bxsh='2' bdrs='3' />
+```
+	</PreviewCode>
+</Preview>
+
+先に Lism Props を解析して `class`, `style` を生成してから、`as`で指定したコンポーネントに渡します。  
+Lismコンポーネント以外に対しても Lism Props を使いたい時に活用してください。
+
+
+### exProps
+
+Lism Props としての処理をスキップしたいプロパティを指定できます。
+
+
+`as`で指定した外部コンポートが受け取れるプロパティと Lism Props の名前が被っている場合など、外部コンポーネント用のプロパティであることを明示的にしたい時に便利です。  
+
+
+<Preview>
+	<PreviewTitle>例</PreviewTitle>
+	<PreviewCode>
+```jsx
+<Icon as={Hoge} exProps={{size:'1em'}} p='10' fz='l'>...</Icon>
+```
+	</PreviewCode>
+</Preview>
+
+上記のようにすることで、Lismの`Icon`コンポーネントで`p`, `fz` を受け取って処理し、`Hoge`という外部コンポーネント側で確実に`size`を受け取ることができます。  
+（現在は Lism 側では `size` は処理されませんが、`exProps`で指定しておくと将来的に影響がでる心配がなくなります。）
+
+
+### pass-get
+
+[`pass-get`](/css/pass-get) に関するプロパティとして、`passVars`を用意しています。
+
+- `passVars`: `--pass-{prop}` を出力します。オブジェクト形式 `{prop:value}` で指定します。
+{/* - `pass`: `.-pass:{prop}` を出力します。文字列で指定します。複数指定する場合は`,`で区切ります。 */}
+{/* - `get`: `.-get:{prop}` を出力します。文字列で指定します。複数指定する場合は`,`で区切ります。 */}
+
+
+### skipState
+
+State Props用の処理をスキップできます。`<Spacer>`や`<Divider>`、`<Text>`など、明らかに Layout Stateクラスがつかないような粒度のコンポーネントに対して内部的に指定されています。
+
+
+## レスポンジブ指定の方法
+
+`Lism` で使用できる CSS Propsは、[レスポンシブに対応した形式](/css/methodology/#レスポンシブ対応)で出力できるようになっています。
+
+
+
+次の2通りの書き方があります。
+
+1. 配列で順番に指定（ base → sm → md → ...）
+2. オブジェクトで直接ブレイクポイントを指定
+
+どちらも最終的に出力されるHTMLは同じで、ユーティリティクラスとCSS変数のペア（`-{prop}@{bp}:` & `--{bp}-{prop}`）で出力されます。
+
+<Preview>
+	<PreviewTitle>例1</PreviewTitle>
+	<PreviewCode label='配列での書き方' slot='tab'>
+		```jsx
+		<Lism p={['20', '30', '5rem']}>...</Lism>
+		```
+	</PreviewCode>
+	<PreviewCode label='オブジェクトでの書き方' slot='tab'>
+		```jsx
+		<Lism p={{ base: '20', sm: '30', md: '5rem' }}>...</Lism>
+		```
+	</PreviewCode>
+	<PreviewCode label='出力されるHTML' slot='tab'>
+		```jsx
+		<div class='-p:20 -p@sm -p@md' style='--sm-p:var(--s30);--md-p:5rem'>
+			...
+		</div>
+		```
+	</PreviewCode>
+</Preview>
+
+途中のブレイクポイントをスキップする場合は次のようになります。
+
+<Preview>
+	<PreviewTitle>例2:`@md`の値のみ指定</PreviewTitle>
+	<PreviewCode label='配列での書き方' slot='tab'>
+		```jsx
+		<Lism p={[null, null, '40']}>...</Lism>
+		```
+	</PreviewCode>
+	<PreviewCode label='オブジェクトでの書き方' slot='tab'>
+		```jsx
+		<Lism p={{ md: '40' }}>...</Lism>
+		```
+	</PreviewCode>
+	<PreviewCode label='出力されるHTML' slot='tab'>
+		```jsx
+		<div class='-p@md' style='--md-p:var(--s40)'>
+			...
+		</div>
+		```
+	</PreviewCode>
+</Preview>
+
+<Callout type='warning'>
+	実際に値が切り替わるかどうかは、そのプロパティがレスポンシブ対応している必要があります。
+	どのプロパティが対応してるかは[Prop Class](/css/prop-class) の **BP**（
+	<small>ブレイクポイントの略</small>） の欄をチェックしてください。
+</Callout>
+
+デフォルトでレスポンシブ対応されていない（CSSが用意されていない）プロパティに関しては、[SCSSによるカスタマイズ](/css/customize/)を行うことで対応できます。
+

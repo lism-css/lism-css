@@ -1,0 +1,48 @@
+.c--timeline {
+	--shape-size: 0.75rem;
+	--icon-size: 1.5rem;
+	--start-space: var(--s30);
+	--end-space: var(--s30);
+	--line-size: 100%;
+}
+
+// subグリッドでいい感じにできそう？
+.c--timeline__item {
+	// gap: 0 0.75em;
+	grid:
+		'.     .' var(--start-space)
+		'shape time'
+		'.     body'
+		'.     .' var(--end-space) / calc(var(--icon-size) + 8px) 1fr;
+}
+
+.c--timeline__line {
+	height: var(--line-size);
+}
+
+.c--timeline__shape {
+	--size: var(--shape-size);
+	width: var(--size);
+	height: var(--size);
+
+	&:has(> .l--icon) {
+		--size: var(--icon-size);
+		font-size: var(--size);
+	}
+}
+
+[data-timeline='start'] {
+	--start-space: 0;
+	--line-size: calc(100% - var(--icon-size) / 2);
+}
+[data-timeline='end'] {
+	--end-space: 0;
+	--line-size: calc(var(--start-space) + var(--icon-size) / 2);
+}
+
+// .-ga\:body {
+// 	grid-area: body;
+// }
+// .-ga\:time {
+// 	grid-area: time;
+// }

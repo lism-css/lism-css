@@ -1,0 +1,25 @@
+---
+import type { LismProps } from '../types';
+import getLismProps from '../../../dist/lib/getLismProps';
+import getProps from '../../../dist/components/Icon/getProps';
+import SVG from './SVG.astro';
+
+// Propsの定義
+interface Props extends LismProps {}
+
+const props = Astro.props || {};
+
+// const hasChildren = Astro.slots.has('default');
+// let { IconTag, iconProps, otherProps } = getProps(props, hasChildren);
+// if (IconTag === '_SVG_') IconTag = SVG;
+
+let { Component, lismProps, exProps } = getProps(props);
+
+if (Component === '_SVG_') {
+	Component = SVG;
+}
+---
+
+<Component {...getLismProps(lismProps)} {...exProps}>
+	<slot />
+</Component>

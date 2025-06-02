@@ -1,0 +1,87 @@
+---
+title: 'Breadcrumb'
+description: ...
+---
+
+import { Flex, Icon, Spacer, Box, Lism, Link, Decorator } from 'lism-css/astro';
+import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage, PropBadge, Reference } from "~/components";
+import { FolderSimple } from "@phosphor-icons/react";
+
+
+パンくずリストを表示するためのLismの使用例を紹介します。
+
+
+## Examples
+
+<Preview>
+	<PreviewTitle>実装例-1: with slash</PreviewTitle>
+	<PreviewArea p='30'>
+		<Flex variant='cluster' tag='ol' g='20'>
+			<Lism tag='li' d='if' ai='c' g='inherit'>
+				<Link href='#menu-1' c='inherit' >Menu item 1</Link>
+			</Lism>
+			<Lism tag='li' d='if' ai='c' g='inherit'>
+				<Decorator op='mid'>/</Decorator>
+				<Link href='#menu-2' c='inherit' >Menu item 2</Link>
+			</Lism>
+			<Lism tag='li' d='if' ai='c' g='inherit'>
+				<Decorator op='mid'>/</Decorator>
+				<span>Current page titile...</span>
+			</Lism>
+		</Flex>
+	</PreviewArea>
+	<PreviewCode>
+		```jsx
+		<Flex variant='cluster' tag='ol' g='20'>
+			<Lism tag='li' d='if' ai='c' g='inherit'>
+				<Link href='#menu-1' c='inherit' >Menu item 1</Link>
+			</Lism>
+			<Lism tag='li' d='if' ai='c' g='inherit'>
+				<Decorator op='mid'>/</Decorator>
+				<Link href='#menu-2' c='inherit' >Menu item 2</Link>
+			</Lism>
+			<Lism tag='li' d='if' ai='c' g='inherit'>
+				<Decorator op='mid'>/</Decorator>
+				<span>Current page titile...</span>
+			</Lism>
+		</Flex>
+		```
+	</PreviewCode>
+</Preview>
+
+<Preview>
+	<PreviewTitle>例-2: with Icon</PreviewTitle>
+	<PreviewArea p='30'>
+		<Flex variant='cluster' tag='ol' g='20' style={{'--c--link': 'currentColor'}}>
+			<Lism tag='li' d='if' ai='c' g='inherit'>
+				<a href='#menu-1'>Menu item 1</a>
+			</Lism>
+			<Lism tag='li' d='if' ai='c' g='inherit'>
+				<Icon icon='caret-down' c='text-2' css={{rotate:'-90deg'}}/>
+				<a href='#menu-2'>Menu item 2</a>
+			</Lism>
+			<Lism tag='li' d='if' ai='c' g='inherit'>
+				<Icon icon='caret-down' c='text-2' css={{rotate:'-90deg'}}/>
+				<span>Current page titile...</span>
+			</Lism>
+		</Flex>
+	</PreviewArea>
+	<PreviewCode>
+		```jsx
+		<Flex variant='cluster' tag='ol' g='20' style={{'--c--link': 'currentColor'}}>
+			<Lism tag='li' d='if' ai='c' g='inherit'>
+				<a href='#menu-1'>Menu item 1</a>
+			</Lism>
+			<Lism tag='li' d='if' ai='c' g='inherit'>
+				<Icon icon='caret-down' c='text-2' css={{rotate:'-90deg'}}/>
+				<a href='#menu-2'>Menu item 2</a>
+			</Lism>
+			<Lism tag='li' d='if' ai='c' g='inherit'>
+				<Icon icon='caret-down' c='text-2' css={{rotate:'-90deg'}}/>
+				<span>Current page titile...</span>
+			</Lism>
+		</Flex>
+		```
+	</PreviewCode>
+</Preview>
+

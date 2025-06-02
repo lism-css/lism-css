@@ -1,0 +1,73 @@
+// .-hov\: ユーティリティ
+// [class*='-hov:'] {
+// 	transition-property: var(--hov-trsp, all);
+// 	transition-duration: var(--hov-trsdu, 0.3s);
+// 	// transition: all var(--hov-trsdu);
+// }
+
+// :where(:any-link, :enabled, summary)
+
+@media (any-hover: hover) {
+	// ------------------------------------------------------------
+	// プリセット
+	// ------------------------------------------------------------
+	.-hov\:fade:hover {
+		opacity: 0.65;
+	}
+	// .-hov\:shadow:hover {
+	// 	box-shadow: var(--bxsh--4);
+	// }
+	// .-hov\:up:hover {
+	// 	translate: 0 -3px;
+	// }
+	// .-hov\:u:hover {
+	// 	text-decoration: underline !important;
+	// }
+
+	// ------------------------------------------------------------
+	// 値指定
+	// ------------------------------------------------------------
+	.-hov\:c\::hover {
+		color: var(--hov-c) !important;
+	}
+	.-hov\:bdc\::hover {
+		border-color: var(--hov-bdc) !important;
+	}
+	.-hov\:bgc\::hover {
+		background-color: var(--hov-bgc) !important;
+	}
+	.-hov\:bxsh\::hover {
+		box-shadow: var(--hov-bxsh);
+	}
+
+	// .-hov\:op\::hover {
+	// 	opacity: var(--hov-op) !important;
+	// }
+	// .-hov\:filter\::hover {
+	// 	filter: var(--hov-filter) !important;
+	// }
+	.-hov\:set:hover {
+		--_notHov: ;
+	}
+	.-hov\:set:not(:hover) {
+		--_isHov: ;
+	}
+}
+@media (any-hover: none) {
+	.-hov\:set {
+		--_isHov: ;
+	}
+}
+
+// ------------------------------------------------------------
+// .-hov\:get
+// ------------------------------------------------------------
+
+.-hov\:get\:hide {
+	opacity: var(--_isHov, 0);
+}
+
+.-hov\:get\:show {
+	opacity: var(--_notHov, 0);
+	visibility: var(--_notHov, hidden);
+}

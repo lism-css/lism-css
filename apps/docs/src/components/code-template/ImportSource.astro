@@ -1,0 +1,73 @@
+---
+import { Frame, Icon, Flex } from 'lism-css/astro';
+import { Preview, PreviewCode, PreviewTitle } from '~/components';
+// import Expressive from './Expressive.astro';
+import ImportExComponent from './ImportExComponent.astro';
+import EmbedCode from './EmbedCode.astro';
+
+const { name = '', hasRoot = false, react, astro, css, others = [], ...props } = Astro.props;
+---
+
+<Preview>
+	{
+		hasRoot && (
+			<PreviewCode slot='tab' label='index.js'>
+				<EmbedCode srcPath={`src/components/ex/${name}/index.js`} />
+			</PreviewCode>
+		)
+	}
+	{
+		react && (
+			<PreviewCode slot='tab' label='React (.jsx)'>
+				<EmbedCode
+					srcPath={`src/components/ex/${name}/${hasRoot ? `${name}.jsx` : 'index.jsx'}`}
+				/>
+				{/* <Frame ovy='auto' maxH='25rem'>
+					<script
+						src={`${embedUrl}?target=${encodeURI(`${basePath}${hasRoot ? `${name}.jsx` : 'index.jsx'}`)}&${queryMeta}`}
+					/>
+				</Frame> */}
+			</PreviewCode>
+		)
+	}
+	{
+		astro && (
+			<PreviewCode slot='tab' label='Astro(.astro)'>
+				<EmbedCode srcPath={`src/components/ex/${name}/index.astro`} />
+			</PreviewCode>
+		)
+	}
+	{
+		css && (
+			<PreviewCode slot='tab' label='CSS'>
+				<EmbedCode srcPath={`src/components/ex/${name}/style.${css}`} />
+			</PreviewCode>
+		)
+	}
+	{
+		others.map((path) => {
+			// pathの例: /apps/docs/src/components/ex/ 以降を渡して使う
+			return (
+				<PreviewCode slot='tab' label={path} key={path}>
+					<EmbedCode srcPath={`src/components/ex/${name}/${path}`} />
+				</PreviewCode>
+			);
+		})
+	}
+</Preview>
+
+<!-- <ImportPackage component='' /> -->
+
+<Flex ai='c' mbs='10' fz='s'>
+	<Icon variant='inline' icon='note' c='blue' /> ソースコードを手動でコピー&ペーストしてご利用ください。
+</Flex>
+
+<ImportExComponent component={name} react={react} astro={astro} hasRoot={hasRoot} />
+
+<!-- {
+	hasRoot && (
+		<Expressive copyCode={getCopyCode('core')}>
+			<Fragment set:html={getCode('core')} />
+		</Expressive>
+	)
+} -->

@@ -1,0 +1,152 @@
+---
+title: 'Note'
+description: ...
+---
+import { Icon, Box, Dummy } from 'lism-css/astro';
+import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportSource, HelpText } from "~/components";
+import Note from '~/components/ex/Note/index.jsx';
+
+
+ブログ記事などで、重要なポイントを示すためのコンポーネントです。
+
+
+<Preview>
+	<PreviewTitle>Preview</PreviewTitle>
+	<PreviewArea resize p='30'>
+		<Note title='Note Title'>
+			<Dummy lang='ja' />
+		</Note>
+	</PreviewArea>
+	<PreviewCode slot='tab' label='JSX'>
+		```jsx
+		<Note title='Note Title'>
+			<Dummy lang='ja' />
+		</Note>
+		```
+	</PreviewCode>
+	<PreviewCode slot='tab' label='HTML'>
+	```html
+	<div class="c--note l--stack u--colbox -p:30 -bd:is -bdc: -bdrs: -g:20" style="--keycol:var(--gray);--bdc:var(--keycol);--bdw:4px;--bdrs:2px">
+		<div class="c--note__head l--flex -fw:bold -ai:c -g:10">
+			<div class="c--note__icon l--center -fz:xl -c:" style="--c:var(--keycol)">
+				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="1em" height="1em" fill="currentColor" focusable="false" class="l--icon" aria-hidden="true">
+					<path d="M229.66,58.34l-32-32a8,8,0,0,0-11.32,0l-96,96A8,8,0,0,0,88,128v32a8,8,0,0,0,8,8h32a8,8,0,0,0,5.66-2.34l96-96A8,8,0,0,0,229.66,58.34ZM124.69,152H104V131.31l64-64L188.69,88ZM200,76.69,179.31,56,192,43.31,212.69,64ZM224,120v88a16,16,0,0,1-16,16H48a16,16,0,0,1-16-16V48A16,16,0,0,1,48,32h88a8,8,0,0,1,0,16H48V208H208V120a8,8,0,0,1,16,0Z">
+					</path>
+				</svg>
+			</div>
+			<span class="c--note__title">Note Title</span>
+		</div>
+		<div class="c--note__body is--flow -flow:s">
+			<p> ロレムイプサムの座り雨、トマ好き学習だったエリット、しかし時と活力はそのような木々と楽しみ。ブラインド行うにはいくつかの重要な事柄が流れます。 </p>
+		</div>
+	</div>
+	```
+	</PreviewCode>
+</Preview>
+
+
+## Import
+<ImportSource name='Note' react others={['presets.js']}/>
+
+
+## Props
+
+| プロパティ | 説明 |
+|---|---|
+|`keycol`| 表示カラーを指定します。|
+|`icon`| アイコンを指定できます。|
+|`type`|`keycol`と`icon`の組み合わせのプリセット値を指定できます。初期値:`"note"`|
+|`title`|タイトルテキストを指定します。|
+|`isFlow`|`__body`に渡されます|
+{/* - `variant`: `'fill'` | `'outline'` ? */}
+
+
+
+## Examples
+
+<Preview>
+	<PreviewTitle>`icon`、`keycol`を指定</PreviewTitle>
+	<PreviewArea p='30'>
+		<Note title='Heading text...' icon='star' keycol='blue'>
+			<Dummy lang='ja'/>
+		</Note>
+	</PreviewArea>
+	<PreviewCode>
+		```jsx
+		<Note title='Heading text...' icon='star' keycol='blue'>
+			<Dummy lang='ja'/>
+		</Note>
+		```
+	</PreviewCode>
+</Preview>
+
+<HelpText>※ アイコンは、`title` の指定がある時のみ表示されます。</HelpText>
+
+
+{/* <Preview>
+	<PreviewTitle>
+		Astroで`slot`を利用する例
+	</PreviewTitle>
+	<PreviewArea p='30'>
+		<Note keycol='purple'>
+			<Fragment slot='title'>Haeding Title</Fragment>
+			<Icon tag='svg' slot='icon' viewBox="0 0 256 256">
+				<path d="M208,24H72A32,32,0,0,0,40,56V224a8,8,0,0,0,8,8H192a8,8,0,0,0,0-16H56a16,16,0,0,1,16-16H208a8,8,0,0,0,8-8V32A8,8,0,0,0,208,24Zm-8,160H72a31.82,31.82,0,0,0-16,4.29V56A16,16,0,0,1,72,40H200Z"></path>
+			</Icon>
+			<Dummy lang='ja'/>
+		</Note>
+	</PreviewArea>
+	<PreviewCode>
+		```jsx
+		<Note keycol='purple'>
+			<Fragment slot='title'>Haeding Title</Fragment>
+			<Icon tag='svg' slot='icon' viewBox="0 0 256 256">
+				<path d="M208,24H72A32,32,0,0,0,40,56V224a8,8,0,0,0,8,8H192a8,8,0,0,0,0-16H56a16,16,0,0,1,16-16H208a8,8,0,0,0,8-8V32A8,8,0,0,0,208,24Zm-8,160H72a31.82,31.82,0,0,0-16,4.29V56A16,16,0,0,1,72,40H200Z"></path>
+			</Icon>
+			<Dummy lang='ja'/>
+		</Note>
+		```
+	</PreviewCode>
+</Preview> */}
+
+
+### Presets
+
+このページで紹介している構築例では、`type`を指定できるようにしています。
+
+<Preview>
+	<PreviewArea p='30'>
+		<Note title='Note: type="note"' type='note'>
+			<Dummy length='codes' lang='ja'/>
+		</Note>
+		<Note title='Note: type="alert"' type='alert'>
+			<Dummy length='codes' lang='ja'/>
+		</Note>
+		<Note title='Note: type="warning"' type='warning'>
+			<Dummy length='codes' lang='ja'/>
+		</Note>
+		<Note title='Note: type="point"' type='point'>
+			<Dummy length='codes' lang='ja'/>
+		</Note>
+		<Note title='Note: type="check"' type='check'>
+			<Dummy length='codes' lang='ja'/>
+		</Note>
+		<Note title='Note: type="info"' type='info'>
+			<Dummy length='codes' lang='ja'/>
+		</Note>
+		<Note title='Note: type="help"' type='help'>
+			<Dummy length='codes' lang='ja'/>
+		</Note>
+	</PreviewArea>
+	<PreviewCode>
+		```jsx
+		<Note title='type="note"' type='note'>...</Note>
+		<Note title='type="alert"' type='alert'>...</Note>
+		<Note title='type="warning"' type='warning'>...</Note>
+		<Note title='type="point"' type='point'>...</Note>
+		<Note title='type="check"' type='check'>...</Note>
+		<Note title='type="info"' type='info'>...</Note>
+		<Note title='type="help"' type='help'>...</Note>
+		```
+	</PreviewCode>
+</Preview>

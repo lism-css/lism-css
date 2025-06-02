@@ -1,0 +1,155 @@
+---
+title: 'pass-get'
+description: ...
+sidebar: 
+  order: 29
+---
+
+import { Lism, Flex, Divider, Stack, Box } from 'lism-css/react';
+import { Preview, PreviewArea, PreviewTitle, PreviewCode, Note, IconBadge } from '~/components';
+
+
+親要素から複数の子要素に対して同じプロパティを一括で管理したい場合、Lism では以下のような設計ルールを提案します。
+
+1. 受け渡す値を `--pass-{prop}`変数で親要素に定義しておく。
+2. 以下のいずれかでその値を適用する。
+	- 親要素に`-pass:{prop}`クラスをつけ、その直下要素すべてにその値を適用する。
+	- もしくは、個別の子孫要素に`-get:{prop}`クラスをつけて、必要な要素でのみ値を適用する。
+
+<PreviewTitle>例</PreviewTitle>
+
+<Note title='注意'>
+このpass-get設計に関して、`lism-css`ではCSSを実際に用意しているわけではありません。  
+あくまで、このようなクラスがもし必要になった場合は”こうすればよいのでは？”という一つの提案を示します。
+</Note>
+
+<p><IconBadge />[`NavMenu`コンポーネント](/components/navmenu/)の作成例では、この設計を採用しています。</p>
+
+## Example
+
+<Preview>
+	<PreviewTitle>`data-lism-pass`の使用例</PreviewTitle>
+	<PreviewArea p='30'>
+		<Flex
+			variant='cluster' g='20' ta='c' 
+			data-lism-pass='p minW'
+			passVars={{p:'20', minW:'8rem'}}
+		>
+			<Lism bd>Lorem ipsum</Lism>
+			<Lism bd>Dolor Sit</Lism>
+			<Lism bd>Amet</Lism>
+		</Flex>
+	</PreviewArea>
+
+	<PreviewCode slot="tab" label="CSS">
+		```css
+		[data-lism-pass~='p'] > * {
+			padding: var(--pass-p);
+		}
+		[data-lism-pass~='minW'] > * {
+			min-width: var(--pass-minW);
+		}
+		```
+	</PreviewCode>
+	<PreviewCode slot="tab" label="HTML">
+	```html "--pass-p" "--pass-minW" "data-lism-pass"
+	<div
+		class="l--flex l--flex--cluster -ta:c -g:20"
+		data-lism-pass="p minW"
+		style="--pass-p:var(--s20);--pass-minW:8rem"
+	>
+		<div class="-bd:">Box</div>
+		<div class="-bd:">Box</div>
+		<div class="-bd:">Box</div>
+	</div>
+	```
+	</PreviewCode>
+	<PreviewCode label='JSX' slot='tab'>
+		```jsx "passVars" "data-lism-pass"
+		<Flex
+			variant='cluster' g='20' ta='c'
+			data-lism-pass='p minW'
+			passVars={{p:'20', minW:'8rem'}}
+		>
+			<Lism bd>Box</Lism>
+			<Lism bd>Box</Lism>
+			<Lism bd>Box</Lism>
+		</Flex>
+		```
+	</PreviewCode>
+</Preview>
+
+
+<Preview>
+	<PreviewTitle>`data-lism-get`の使用例</PreviewTitle>
+	<PreviewArea p='30'>
+		<Stack
+			g='10' ta='c' fz='s'
+			style={{'--pass-p': 'var(--s5) var(--s20)'}}
+		>
+			<Flex variant='cluster' g='10' p='10'>
+				<Lism minW='4em' ta='l'>COLOR</Lism>
+				<Lism data-lism-get='p' bd c='red'>Red</Lism>
+				<Lism data-lism-get='p' bd c='blue'>Blue</Lism>
+			</Flex>
+			<Flex variant='cluster' g='10' p='10' style={{'--pass-minW': '2.5rem'}}>
+				<Lism minW='4em' ta='l'>SIZE</Lism>
+				<Lism data-lism-get='p minW' bgc='base-2'>S</Lism>
+				<Lism data-lism-get='p minW' bgc='base-2'>M</Lism>
+				<Lism data-lism-get='p minW' bgc='base-2'>L</Lism>
+				<Lism data-lism-get='p minW' bgc='base-2'>XL</Lism>
+			</Flex>
+		</Stack>
+	</PreviewArea>
+
+	<PreviewCode slot="tab" label="CSS">
+		```css
+		[data-lism-get~='p'] {
+			padding: var(--pass-p);
+		}
+		[data-lism-get~='minW'] {
+			min-width: var(--pass-minW);
+		}
+		```
+	</PreviewCode>
+	<PreviewCode slot="tab" label="HTML">
+	```html "data-lism-get" "--pass-p" "--pass-minW"
+	<div class="l--stack -g:10 -ta:c -fz:s" style="--pass-p:var(--s5) var(--s20)">
+		<div class="l--flex l--flex--cluster -g:10 -p:10">
+			<div class="-ta:l" style="min-width:4em">COLOR</div>
+			<div class="-bd: -c:" style="--c:var(--red)" data-lism-get="p">Red</div>
+			<div class="-bd: -c:" style="--c:var(--blue)" data-lism-get="p">Blue</div>
+		</div>
+		<div class="l--flex l--flex--cluster -g:10 -p:10" style="--pass-minW:2.5rem">
+			<div class="-ta:l" style="min-width:4em">SIZE</div>
+			<div class="-bgc:base-2" data-lism-get="p minW">S</div>
+			<div class="-bgc:base-2" data-lism-get="p minW">M</div>
+			<div class="-bgc:base-2" data-lism-get="p minW">L</div>
+			<div class="-bgc:base-2" data-lism-get="p minW">XL</div>
+		</div>
+	</div>
+	```
+	</PreviewCode>
+	<PreviewCode label='JSX' slot='tab'>
+		```jsx "data-lism-get" "--pass-p" "--pass-minW"
+		<Stack
+			g='10' ta='c' fz='s'
+			style={{'--pass-p': 'var(--s5) var(--s20)'}}
+		>
+			<Flex variant='cluster' g='10' p='10'>
+				<Lism minW='4em' ta='l'>COLOR</Lism>
+				<Lism data-lism-get='p' bd c='red'>Red</Lism>
+				<Lism data-lism-get='p' bd c='blue'>Blue</Lism>
+			</Flex>
+			<Flex variant='cluster' g='10' p='10' style={{'--pass-minW': '2.5rem'}}>
+				<Lism minW='4em' ta='l'>SIZE</Lism>
+				<Lism data-lism-get='p minW' bgc='base-2'>S</Lism>
+				<Lism data-lism-get='p minW' bgc='base-2'>M</Lism>
+				<Lism data-lism-get='p minW' bgc='base-2'>L</Lism>
+				<Lism data-lism-get='p minW' bgc='base-2'>XL</Lism>
+			</Flex>
+		</Stack>
+		```
+	</PreviewCode>
+</Preview>
+

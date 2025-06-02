@@ -1,0 +1,34 @@
+@layer lism.component {
+	.c--shapeDivider {
+		--level: 0;
+		--offsetY: 0;
+		--offsetX: 0;
+		--stretch: 1;
+
+		/* 600px時点を最小値, 1200px時点を最大値にして、clampで高さを変動させる */
+		--h: clamp(calc(6px * var(--level)), calc(1cqw * var(--level)), calc(12px * var(--level)));
+		height: var(--h);
+		overflow: hidden;
+		translate: 0 var(--offsetY);
+	}
+
+	.c--shapeDivider__inner {
+		scale: var(--stretch) 1;
+		translate: var(--offsetX) 0;
+	}
+}
+
+/* 左右にスライドするアニメーション */
+.-anim\:shapeSlide {
+	/* ↓ X 100% にしてるのは translateXのcalc計算で * -1 をしなくていいように。*/
+	transform-origin: 100% 0;
+	animation: LismShapeSlide 12s infinite alternate linear;
+}
+@keyframes LismShapeSlide {
+	0% {
+		transform: scaleX(4);
+	}
+	100% {
+		transform: scaleX(4) translateX(calc(100% - 25%));
+	}
+}

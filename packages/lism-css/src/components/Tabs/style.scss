@@ -1,0 +1,31 @@
+.d--tabs {
+	display: grid;
+	grid: 'list' 'panel';
+}
+.d--tabs__list {
+	grid-area: list;
+	overflow-x: auto;
+}
+.d--tabs__tab {
+	&[aria-selected='true'] {
+		--_notActive: ;
+	}
+	&[aria-selected='false'] {
+		--_isActive: ;
+	}
+	// 非アクティブの時、薄いカラーに
+	:where(&) {
+		color: var(--_notActive, var(--c--text-2));
+	}
+}
+
+.d--tabs__panel {
+	// position: relative;
+	grid-area: panel;
+	width: 100%;
+	overflow-x: auto;
+
+	&:where([aria-hidden='true']) {
+		display: none;
+	}
+}

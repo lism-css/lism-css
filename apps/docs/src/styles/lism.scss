@@ -1,0 +1,33 @@
+/* @use 'lism-css/scss/setting' as lism-setting with (
+	$props: (
+		'w': (
+			important: 1,
+			bp: 0,
+		),
+
+		'h': (
+			// 'h'のブレイクポイント対応クラスを出力しないようにする
+			bp: 0,
+		),
+		'fx': (
+			// 'fx'のユーティリティクラスもブレイクポイントに対応させる
+			bp: 1,
+		),
+		'p': (
+			// 'p'のユーティリティクラスは、xl サイズまで出力する
+			bp: 'xl',
+			//.-p:box{padding:2em} を出力
+			utilities: ('box': '2em'),
+			// utilities: '',
+		),
+	),
+	$breakpoints: (
+		'sm': '400px',
+		'md': '500px',
+		'lg': '600px',
+		'xl': '650px',
+	)
+); */
+// @use 'lism-css/scss/all_no_layer';
+@use 'lism-css/scss/all';
+@use './lism-custom';

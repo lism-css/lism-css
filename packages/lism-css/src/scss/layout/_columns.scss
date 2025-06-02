@@ -1,0 +1,18 @@
+// --------------------
+// カラム
+// 他のgrid 要素を指定することはない & flex か grid かパッと判断できないので個別にモジュール化。
+// --------------------
+.l--columns {
+	--cols: 2; // 初期値
+	display: grid;
+	grid-template-columns: repeat(var(--cols), minmax(0, 1fr));
+}
+
+.l--columns--liquid {
+	// auto-fill or auto-fit : 親の幅に対してアイテムが少ない時に、引き伸ばすか、伸ばさないか
+	--col-auto: auto-fill;
+	--col-size: var(--size--xs);
+
+	display: grid;
+	grid-template-columns: repeat(var(--col-auto), minmax(min(var(--col-size), 100%), 1fr));
+}

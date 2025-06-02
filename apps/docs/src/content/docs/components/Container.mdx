@@ -1,0 +1,57 @@
+---
+title: 'Container'
+description: ...
+---
+import { Container } from "lism-css/astro";
+import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage } from "~/components";
+
+[`is--container`](/css/layout-state/#is--container)をデフォルトで出力するコンポーネントです。
+
+下記の ①, ② はそれぞれ同じ結果になります。
+```jsx
+// ①
+<Lism isContainer='m'>...</Lism>
+
+// ②
+<Container size='m'>...</Container>
+```
+
+
+コンテナ要素としての役割をコード上でより明示的にわかりやすくするためにご利用ください。
+
+
+## Props
+| プロパティ | 説明 |
+|---|---|
+| `size` | コンテナサイズを指定します。|
+| `layer` | 展開したい Lismコンポーネント を指定できます。|
+
+
+## Import
+
+<ImportPackage component='Container' />
+
+
+## Usage
+
+通常のコンポーネントでは`isContainer='m'`のようにしてコンテナサイズを指定しますが、`Container`では`size='m'`のように書くことができます。
+
+<Preview>
+	<PreviewTitle>例</PreviewTitle>
+	<PreviewArea resize p={20}>
+		<Container size='m' isFlow p='40'>
+			<p>Content</p>
+			<p>Content</p>
+			<p>...</p>
+		</Container>
+	</PreviewArea>
+	<PreviewCode>
+		```jsx
+		<Container size='m' isFlow p='40'>
+			<p>Content</p>
+			<p>Content</p>
+			<p>...</p>
+		</Container>
+		```
+	</PreviewCode>
+</Preview>

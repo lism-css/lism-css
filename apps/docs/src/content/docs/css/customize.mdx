@@ -1,0 +1,93 @@
+---
+title: 'Customize'
+description: ...
+sidebar:
+  order: 50
+---
+
+import { Box, Flex } from "lism-css/astro";
+import { Preview, PreviewArea, PreviewTitle, PreviewCode } from "~/components";
+
+SCSSの変数を上書きすることで、出力するCSSのカスタマイズが可能です。
+
+- `lism-css/scss/query`
+	- `$breakpoints`: 各ブレイクポイントのサイズを指定できます。map型
+	- `$common_support_bp`: どのサイズまでのブレイクポイントをサポートするかを指定できます。文字列型
+	- `$is_container_query`: メディアクエリではなくコンテナクエリで出力するかを指定できます。数値型
+- `lism-css/scss/setting`
+	- `$props`: 各CSSプロパティに関する
+	設定を指定できます。map型
+	- `$utilities`: 各ユーティリティクラスに関する設定を指定できます。map型
+
+{/* $util_spaces: 5, 10, 15, 20, 30, 40, 50 !default;
+$util_em_tokens: 1, 2, 3, 5, 7, 10, 15, 20, 25, 30 !default; */}
+
+
+## ブレイクポイントの基本設定を変更する
+
+
+
+↓ 設定カスタマイズの書き方と各初期値
+```scss
+@use '../path/to/node_modules/lism-css/scss/setting' with (
+	$breakpoints: (
+		'sm': '480px',
+		'md': '720px',
+		'lg': '960px',
+	),
+	$common_support_bp: 'lg',
+	$is_container_query: 1,
+	$props: (
+		...
+	)
+);
+
+// lism の scssファイルを読み込む
+@use '../path/to/node_modules/lism-css/scss/all';
+```
+
+{/* 例えば、`sm`,`md`サイズのサポートだけで良い場合は、`$common_support_bp`を`md`に設定することで、`lg`以降のブレイクポイントのユーティリティクラスを出力しないようにできます。 */}
+
+
+↓カスタマイズ例
+```scss
+// 設定カスタマイズ
+@use '../path/to/node_modules/lism-css/scss/setting' with (
+	$breakpoints: (
+		'sm': '400px', // smサイズを変更する
+		'xl': '1200px', // xlサイズを追加で定義する
+	),
+	$common_support_bp: 'md',  // デフォルトでは mdサイズまでのユーティリティクラスしか生成しないようにする
+	$is_container_query: 0, // media query で出力する
+	$props: (
+		'fz': (
+			// fzのユーティリティクラスに対して !important を出力する
+			important: 1,
+		),
+		'h': (
+			// 'h'のブレイクポイント対応クラスを出力しないようにする
+			bp: 0,
+		),
+		'fx': (
+			// 'fx'のユーティリティクラスもブレイクポイントに対応させる
+			bp: 1, 
+		),
+		'p': (
+			// 'p'のユーティリティクラスは、xl サイズまで出力する
+			bp: 'xl', 
+			//.-p:box{padding:2em} を出力
+			utilities: ('box': '2em'),
+		),
+	)
+);
+
+// lism の scssファイルを読み込む
+@use '../path/to/node_modules/lism-css/scss/all';
+```
+
+Astroの場合は`../path/to/node_modules/`は不要です。
+
+{/* <div class='is--container'>
+<Box p={['u:box', '20', '30', null, '40']} h={['auto', '1em']} bd>box</Box>
+<Box p='u:box' h={['auto', '1em']} bd>box</Box>
+</div> */}

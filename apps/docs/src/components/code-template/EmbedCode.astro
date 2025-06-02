@@ -1,0 +1,13 @@
+---
+import { Frame } from 'lism-css/astro';
+const { srcPath = '', ...props } = Astro.props;
+
+// : → %3A , / → %2F
+const basePath = 'https://github.com/lism-ui/lism-css/blob/main/apps/docs/' + srcPath;
+const queryMeta = 'style=github-dark&type=code&showLineNumbers=on&showFileMeta=on&showCopy=on';
+---
+
+<Frame ovy='auto' maxH='25rem'>
+	<script src={`https://emgithub.com/embed-v2.js?target=${encodeURI(basePath)}&${queryMeta}`}
+	></script>
+</Frame>

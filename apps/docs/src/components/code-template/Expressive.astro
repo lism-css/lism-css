@@ -1,0 +1,17 @@
+---
+const { copyCode = '', ...props } = Astro.props;
+---
+
+<div class='expressive-code'>
+	<link rel='stylesheet' href='/_astro/ec.zcdqj.css' />
+	<script type='module' src='/_astro/ec.sgewm.js'></script>
+	<figure class='frame not-content'>
+		<!-- <figcaption class='header'></figcaption> -->
+		<pre tabindex='0' dir='ltr'><code><div class="ec-line"><slot /></div></code></pre>
+		<div class='copy'>
+			<button title='Copy to clipboard' data-copied='Copied!' data-code={copyCode}>
+				<div></div>
+			</button>
+		</div>
+	</figure>
+</div>

@@ -1,0 +1,239 @@
+---
+title: 'Flex'
+description: ...
+---
+
+import { Box, Flex, Text, Lism } from 'lism-css/astro';
+import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage, Callout } from "~/components";
+
+コンテンツを**Flexレイアウトで配置する**ためのコンポーネントです。
+
+
+## Import
+
+<ImportPackage component='Flex' />
+
+
+## Props
+
+
+Flexは[`flex`オブジェクト内で指定できるプロパティ](/css/prop-class/#flex) をコンポーネントに直接指定できるようになっています。
+
+|Prop|CSS|
+|---|---|
+|`fxw`|`flex-wrap`|
+|`fxd`|`flex-direction`|
+
+
+## Usage
+
+<Preview>
+	<PreviewTitle>`<Flex>`</PreviewTitle>
+	<PreviewArea p={40}>
+		<Flex className='has--itemGuide'>
+			<div>Item</div>
+			<div>Item</div>
+			<div>Item</div>
+		</Flex>
+	</PreviewArea>
+	<PreviewCode slot='tab' label='JSX'>
+	```jsx
+	<Flex>
+		<div>Item</div>
+		<div>Item</div>
+		<div>Item</div>
+	</Flex>
+	```
+	</PreviewCode>
+	<PreviewCode slot='tab' label='HTML'>
+	```jsx
+	<div class="l--flex">
+		<div>Item</div>
+		<div>Item</div>
+		<div>Item</div>
+	</div>
+	```
+	</PreviewCode>
+</Preview>
+
+<Preview>
+	<PreviewTitle>flexオプションの指定</PreviewTitle>
+	<PreviewArea resize p={40}>
+		<Flex g={30} fxw='wrap' jc={["baseline", "center"]} className='has--itemGuide'>
+			<div>Flex Content</div>
+			<div>Flex Content</div>
+			<div>Flex Content</div>
+		</Flex>
+	</PreviewArea>
+	<PreviewCode slot='tab' label='JSX'>
+	```jsx
+	<Flex fxw='wrap' jc='center' g='20'>
+		<div>Item</div>
+		<div>Item</div>
+		<div>Item</div>
+	</Flex>
+	```
+	</PreviewCode>
+	<PreviewCode slot='tab' label='HTML'>
+	```jsx
+	<div class="l--flex -fxw:w -g:30 -jc:c">
+		<div>Item</div>
+		<div>Item</div>
+		<div>Item</div>
+	</div>
+	```
+	</PreviewCode>
+</Preview>
+
+
+
+### variant: cluster
+
+複数の要素を横方向に連続的に並べて配置するレイアウトを作るためのバリエーションです。
+
+`variant="cluster"`を指定すると `.l--flex--cluster` が追加で出力されます。  
+このクラスには下記のようなCSSが適用されています。
+
+```css
+.l--flex--cluster{
+	flex-wrap: wrap;
+	align-items: center;
+}
+```
+
+<Preview>
+	<PreviewTitle>シンプルな`<Cluster>`の例</PreviewTitle>
+	<PreviewArea resize p='30'>
+		<Flex variant='cluster' g='20'>
+			<Lism bd px='10' bdrs='2'>Lorem ipsum</Lism>
+			<Lism bd px='10' bdrs='2'>Dolor</Lism>
+			<Lism bd px='10' bdrs='2'>Sit amet</Lism>
+			<Lism bd px='10' bdrs='2'>Consectetur</Lism>
+			<Lism bd px='10' bdrs='2'>Adipisicing</Lism>
+		</Flex>
+	</PreviewArea>
+	<PreviewCode slot="tab" label="JSX">
+	```jsx "variant='cluster'"
+	<Flex variant='cluster' g='20'>
+		<Lism bd px='10' bdrs='2'>Lorem ipsum</Lism>
+		<Lism bd px='10' bdrs='2'>Dolor</Lism>
+		<Lism bd px='10' bdrs='2'>Sit amet</Lism>
+		<Lism bd px='10' bdrs='2'>Consectetur</Lism>
+		<Lism bd px='10' bdrs='2'>Adipisicing</Lism>
+	</Flex>
+	```
+	</PreviewCode>
+	<PreviewCode slot="tab" label="HTML">
+	```html "l--flex l--flex--cluster"
+	<div class="l--flex l--flex--cluster -g:20">
+		<span class="-bd: -px:10 -bdrs:2">Lorem ipsum</span>
+		<span class="-bd: -px:10 -bdrs:2">Dolor</span>
+		<span class="-bd: -px:10 -bdrs:2">Sit amet</span>
+		<span class="-bd: -px:10 -bdrs:2">Consectetur</span>
+		<span class="-bd: -px:10 -bdrs:2">Adipisicing</span>
+	</div>
+	```
+	</PreviewCode>
+</Preview>
+
+
+## Opt-in
+
+CSSを追記することで実現できるバリエーション作成例を示します。
+
+### variant: ltr,rtl
+
+ltr言語でもrtl言語でも同じ方向に揃えたい時に使えるバリエーションです。
+
+次のように、`.l--flex--ltr`、`.l--flex--rtl` のスタイルを用意します。
+
+<PreviewTitle>以下のスタイルを追記</PreviewTitle>
+```css
+.l--flex--ltr {
+	flex-direction: row;
+}
+.l--flex--rtl {
+	flex-direction: row-reverse;
+}
+
+:where([dir='rtl']) {
+	.l--flex--ltr {
+		flex-direction: row-reverse;
+	}
+	.l--flex--rtl {
+		flex-direction: row;
+	}
+}
+```
+
+これらのクラスがある時、`dir="rtl"`では`flex-direction`が反転されるようになり、言語方向がどちらの場合でも、同じ方向で要素が配置できます。
+
+
+<Callout type="info">
+ただし、rtl言語の場合に`dir="rtl"`を`<html>`等に指定し、明示しておく必要があります。
+</Callout>
+
+
+<Preview>
+	<PreviewTitle>ltr言語での標準動作</PreviewTitle>
+	<PreviewArea p={40}>
+		<Flex variant='ltr' g='20' className='has--itemGuide'>
+			<Box bgc='red:20%'>box-1</Box>
+			<Box bgc='blue:20%'>box-2</Box>
+			<Box bgc='green:20%'>box-3</Box>
+		</Flex>
+	</PreviewArea>
+	<PreviewCode slot='tab' label='JSX'>
+	```jsx "variant='ltr'"
+	<Flex variant='ltr' g='20'>
+		<div>box-1</div>
+		<div>box-2</div>
+		<div>box-3</div>
+	</Flex>
+	```
+	</PreviewCode>
+	<PreviewCode slot='tab' label='HTML'>
+	```jsx "l--flex--ltr"
+	<div class="l--flex l--flex--ltr -g:20">
+		<div>box-1</div>
+		<div>box-2</div>
+		<div>box-3</div>
+	</div>
+	```
+	</PreviewCode>
+</Preview>
+
+<Preview>
+	<PreviewTitle>rtl言語での動作</PreviewTitle>
+	<PreviewArea p={40}>
+		<div dir="rtl">
+			<Flex className='has--itemGuide' variant='ltr' g='20'>
+				<Box bgc='red:20%'>صندوق-1</Box>
+				<Box bgc='blue:20%'>صندوق-2</Box>
+				<Box bgc='green:20%'>صندوق-3</Box>
+			</Flex>
+		</div>
+	</PreviewArea>
+	<PreviewCode slot='tab' label='JSX'>
+	```jsx "variant='ltr'"
+	<div dir="rtl">
+		<Flex variant='ltr' g='20'>
+			<div>صندوق-1</div>
+			<div>صندوق-2</div>
+			<div>صندوق-3</div>
+		</Flex>
+	</div>
+	```
+	</PreviewCode>
+	<PreviewCode slot='tab' label='HTML'>
+	```jsx "l--flex--ltr"
+	<div dir="rtl">
+		<div class="l--flex l--flex--ltr -g:20">
+			<div>صندوق-1</div>
+			<div>صندوق-2</div>
+			<div>صندوق-3</div>
+		</div>
+	</div>
+	```
+	</PreviewCode>
+</Preview>

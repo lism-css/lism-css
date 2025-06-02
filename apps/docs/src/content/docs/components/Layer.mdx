@@ -1,0 +1,222 @@
+---
+title: 'Layer'
+description: ...
+---
+
+
+import { Media, Layer, Stack, Flex, Text, Box, Columns, Center, Frame, Dummy } from 'lism-css/astro';
+import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage, Reference } from "~/components";
+
+
+{/* [`is--container`](/css/layout-state/#is--container) */}
+[`.is--layer`](/css/layout-state/#is--layer)をデフォルトで出力するコンポーネント(`<Lism isLayer>`のエイリアス）です。
+
+
+
+{/* <Reference>
+要素を単純に`position:absolute`で配置したいだけの場合は、`-pos:a`クラスなどを使用することもできます。
+参考：[absoluteで配置する方法](/components/props/others/absolute)
+</Reference> */}
+
+
+## Props
+
+| プロパティ | 説明 |
+|---|---|
+| `layout` | 展開したい Lismコンポーネント を指定できます。|
+| `blur`,`contrast`,`brightness`,`grayscale`,`hueRotate`,`invert`,`saturate`,`sepia` | これらをまとめて `css.backdropFilter` に受け渡します。|
+
+
+
+## Import
+
+<ImportPackage component='Layer' />
+
+## Usage
+
+<Preview>
+	<PreviewTitle>使用例</PreviewTitle>
+	<PreviewArea p='20'>
+		<Box pos='r' py='40'>
+			<Text fz='2xl' fw='bold' ta='c' lts='l' op='low'>BACKGROUND</Text>
+			<Layer p='20' bd bds='dashed' bgc='purple:10%'>
+				<p>Layer Contents...</p>
+			</Layer>
+		</Box>
+	</PreviewArea>
+	<PreviewCode slot='tab' label='JSX'>
+		```jsx
+		<Box pos='r' py='40'>
+			<Text fz='2xl' fw='bold' ta='c' lts='l' op='low'>BACKGROUND</Text>
+			<Layer p='20' bd bds='dashed' bgc='purple:10%'>
+				<p>Layer Contents...</p>
+			</Layer>
+		</Box>
+		```
+	</PreviewCode>
+	<PreviewCode slot='tab' label='HTML'>
+		```html
+		<div class="l--box -pos:r -py:40">
+			<p class="-fz:2xl -fw:bold -ta:c -lts:l -op:low">BACKGROUND</p>
+			<div class="is--layer -p:20 -bd: -bgc:mix" style="--bds:dashed;--bgc1:var(--purple);--bgc-pct:10%">
+				<p>Layer Contents...</p>
+			</div>
+		</div>
+		```
+	</PreviewCode>
+</Preview>
+
+
+### backdropFilterの活用
+
+Lismコンポーネントでは、`css.backdropFilter` に指定した値を`backdrop-filter`としてインラインスタイルを出力できるようになっていますが、`<Layer>`コンポーネントでは、この機能をより活用しやすいようになっています。
+
+<Preview>
+	<PreviewTitle>背景にブラーをかける</PreviewTitle>
+	<PreviewArea p='20'>
+		<Box pos='r' p='40'>
+			<Text fz='2xl' fw='bold' ta='c'>BACKGROUND</Text>
+			<Layer blur='3px' />
+		</Box>
+	</PreviewArea>
+	<PreviewCode slot='tab' label='JSX'>
+		```jsx {3}
+		<Box pos='r' p='40'>
+			<Text fz='2xl' fw='bold' ta='c'>BACKGROUND</Text>
+			<Layer blur='3px' />
+		</Box>
+		```
+	</PreviewCode>
+	<PreviewCode slot='tab' label='HTML'>
+		```html {3}
+		<div class="l--box -pos:r -p:40">
+			<p class="-fz:2xl -fw:bold -ta:c">BACKGROUND</p>
+			<div class="is--layer" style="backdrop-filter:blur(3px)"></div>
+		</div>
+		```
+	</PreviewCode>
+</Preview>
+
+<Preview>
+	<PreviewTitle>背景の色味を変える</PreviewTitle>
+	<PreviewArea p='20'>
+		<Frame ar='2/1' pos='r'>
+			<img src='/img.jpg' alt='' width='960' height='640' />
+			<Layer brightness={1.2} contrast={0.8} grayscale={1}/>
+			<Text pos='a' b='0' r='0' p='20' lh='1' c='white' fz='xs' op='mid'>Photo by xxxxxx</Text>
+		</Frame>
+		<Frame ar='2/1' pos='r'>
+			<img src='/img.jpg' alt='' width='960' height='640' />
+			<Layer contrast='1.2' sepia='25%' />
+		</Frame>
+		<Frame ar='2/1' pos='r'>
+			<img src='/img.jpg' alt='' width='960' height='640' />
+			<Layer mis='auto' invert='1' grayscale='20%' w='50%' />
+		</Frame>
+	</PreviewArea>
+	<PreviewCode>
+		```jsx {3,8,12}
+		<Frame ar='2/1' pos='r'>
+			<img src='/img.jpg' alt='' width='960' height='640' />
+			<Layer brightness={1.2} contrast={0.8} grayscale={1}/>
+			<Text pos='a' b='0' r='0' p='20' lh='1' c='white' fz='xs' op='mid'>Photo by xxxxxx</Text>
+		</Frame>
+		<Frame ar='2/1' pos='r'>
+			<img src='/img.jpg' alt='' width='960' height='640' />
+			<Layer contrast='1.2' sepia='25%' />
+		</Frame>
+		<Frame ar='2/1' pos='r'>
+			<img src='/img.jpg' alt='' width='960' height='640' />
+			<Layer mis='auto' invert='1' grayscale='20%' w='50%' />
+		</Frame>
+		```
+	</PreviewCode>
+</Preview>
+
+
+### メディアレイヤー
+
+`.is--layer`を使ってコンテンツの背景に画像を配置するようなレイアウトを組んでみます。
+
+<Preview>
+	<PreviewTitle>例</PreviewTitle>
+	<PreviewArea p='20'>
+		<Box hasGutter pos='r' py='50'>
+			<Frame isLayer>
+				<Media src="/img/img-3.jpg" alt="" width='960' height='640' loading='lazy' decoding='async' />
+			</Frame>
+			<Layer bgc='black:50%' />
+			<Stack pos='r'g='40' c='white'>
+				<Dummy/>
+				<Dummy length='l' />
+			</Stack>
+		</Box>
+	</PreviewArea>
+	<PreviewCode slot='tab' label='JSX'>
+		```jsx {2-4} "\<Frame isLayer"
+		<Box hasGutter pos='r' py='50'>
+			<Frame isLayer>
+				<Media src="/img/img-3.jpg" alt="" width='960' height='640' loading='lazy' decoding='async' />
+			</Frame>
+			<Layer bgc='black:50%' />
+			<Stack pos='r'g='40' c='white'>
+				<Dummy/>
+				<Dummy length='l' />
+			</Stack>
+		</Box>
+		```
+	</PreviewCode>
+	<PreviewCode slot='tab' label='HTML'>
+		```html {2-4}
+		<div class="l--box has--gutter -py:50">
+			<div class="l--frame is--layer">
+				<img src="/img/img-3.jpg" width="960" height="640" loading="lazy" decoding="async">
+			</div>
+			<div class="is--layer -bgc:mix" style="--bgc1:var(--black);--bgc-pct:50%"></div>
+			<div class="l--stack -pos:r -c: -g:40" style="--c:var(--white)">
+				<p>Lorem ipsum dolor sit amet...</p>
+				<p>Lorem ipsum dolor sit, amet...</p>
+			</div>
+		 </div>
+		```
+	</PreviewCode>
+</Preview>
+
+↓これでも同じことができます。
+<Preview>
+	<PreviewTitle>例</PreviewTitle>
+	<PreviewArea p='20'>
+		<Frame hasGutter pos='r' py='50'>
+			<Media isLayer src="/img/img-3.jpg" alt="" width='960' height='640' loading='lazy' decoding='async' />
+			<Layer bgc='rgb(0 0 0 / 50%)' />
+			<Stack pos='r' g='40' c='#fff'>
+				<Dummy/>
+				<Dummy length='l' />
+			</Stack>
+		</Frame>
+	</PreviewArea>
+	<PreviewCode slot='tab' label='JSX'>
+		```jsx "\<Media isLayer"
+		<Frame hasGutter pos='r' py='50'>
+			<Media isLayer src="/img/img-3.jpg" alt="" width='960' height='640' loading='lazy' decoding='async' />
+			<Layer bgc='rgb(0 0 0 / 50%)' />
+			<Stack pos='r' g='40' c='#fff'>
+				<Dummy/>
+				<Dummy length='l' />
+			</Stack>
+		</Frame>
+		```
+	</PreviewCode>
+	<PreviewCode slot='tab' label='HTML'>
+		```html
+		<div class="l--frame has--gutter -pos:r -py:50">
+			<img class="is--layer" src="/img/img-3.jpg" width="960" height="640" loading="lazy" decoding="async">
+			<div class="is--layer -bgc:" style="--bgc:rgb(0 0 0 / 50%)"></div>
+			<div class="l--stack -pos:r -c: -g:40" style="--c:#fff">
+				<p>Lorem ipsum dolor sit amet...</p>
+				<p>Lorem ipsum dolor sit, amet...</p>
+			</div>
+		 </div>
+		```
+	</PreviewCode>
+</Preview>
