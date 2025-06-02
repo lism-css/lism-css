@@ -38,10 +38,10 @@ export default defineConfig({
 			],
 			sidebar,
 			social: [
-				{ icon: 'github', label: 'GitHub', href: 'https://github.com/lism-ui/lism-css' },
+				{ icon: 'github', label: 'GitHub', href: 'https://github.com/lism-css/lism-css' },
 			],
 			// editLink: {
-			// 	baseUrl: 'https://github.com/lism-css/lism-ui/tree/main/apps/docs',
+			// 	baseUrl: 'https://github.com/lism-css/lism-css/tree/main/apps/docs',
 			// },
 
 			// コードブロックのカスタマイズ: https://starlight.astro.build/ja/reference/configuration/#expressivecode
