@@ -30,7 +30,10 @@
 	"exports": {
 		".": "./dist/index.js",
 		"./*": "./dist/*",
-		"./react": "./dist/index.js",
+		"./react": {
+			"import": "./dist/index.js",
+			"types": "./packages/types/index.d.ts"
+		},
 		"./react/*": "./dist/components/*",
 		"./next-js/*": "./packages/next-js/*",
 		"./astro": "./packages/astro/index.js",
