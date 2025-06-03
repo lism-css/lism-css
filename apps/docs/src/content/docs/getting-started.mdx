@@ -91,6 +91,30 @@ import { Box, Flex, ... } from 'lism-css/astro';
 
 
 
+<Note title='.astroを読み込む場合の注意点' type='warning'>
+`.astro`ファイルをnode_modeules内から直接読み込むことができず、追加の設定が必要な場合があります。  
+"**Directory import '...' is not supported resolving ES modules** ..." というエラーが発生した場合、`astro.config.js`の`vite.ssr.noExternal`に`"lism-css"`を追加してください。
+
+<PreviewTitle>`astro.config.js`</PreviewTitle>
+```js
+import { defineConfig } from "astro/config";
+
+export default defineConfig({
+  // ...other settings 
+  vite: {
+    ssr: {
+      noExternal: ["lism-css"],
+    },
+  },
+});
+```
+
+ 
+<small>（パッケージ配布方法の改善で対応できるかどうか調整中です...）</small>
+</Note>
+
+
+
 ### Next.js ( for App Router)
 
 
