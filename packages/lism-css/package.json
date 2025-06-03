@@ -14,9 +14,10 @@
 	],
 	"scripts": {
 		"dev": "vite",
-		"build": "vite build && npm run build:css",
+		"build": "vite build && pnpm build:css",
 		"build:vite": "vite build",
 		"build:css": "node scss-builder.cjs",
+		"lint": "pnpm lint:style",
 		"lint:style": "stylelint '**/*.{css,scss}'",
 		"preview": "vite preview"
 	},
