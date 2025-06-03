@@ -5,9 +5,6 @@ import { defineConfig } from 'vite';
 
 // import {useRef} from 'react'; とかした時に、React is not defined 言われないように
 import react from '@vitejs/plugin-react-swc';
-// import svgr from 'vite-plugin-svgr'; // svg を React Component として import できるようにする
-// import reactJsx from 'vite-react-jsx';
-// import { terser } from 'rollup-plugin-terser'
 
 // components/Box/Box → components/Box/index に変換
 function deleteDuplicateDir(filePath) {
@@ -43,11 +40,7 @@ const entries = {
 // build.lib を設定すると でライブラリモードになる。
 // https://ja.vitejs.dev/guide/build.html#library-mode
 export default defineConfig({
-	plugins: [react()],
-	resolve: {
-		// ここでこれやると外部からの import でエラーになる
-		// alias: [{ find: '@/', replacement: '/src/' }],
-	},
+	plugins: [react({ jsxRuntime: 'automatic' })], // React 17以降推奨のautomaticを明示
 	build: {
 		// target: 'es2015',
 		lib: {
@@ -58,7 +51,6 @@ export default defineConfig({
 			// name: 'Lism',
 
 			// デフォルトの formats は ['es', 'umd']で、複数のエントリを使用する場合は ['es', 'cjs']
-			// formats: ['es', 'cjs'],
 			formats: ['es'],
 
 			// 適切な拡張子が追加されます
@@ -70,12 +62,7 @@ export default defineConfig({
 			// },
 		},
 		rollupOptions: {
-			external: ['react'],
-			// umd/iife バンドルの外部インポートに必要な id:variableName ペアを指定します。
-			// globals: {
-			// 	react: 'React',
-			// 	'react-dom': 'ReactDOM',
-			// },
+			external: ['react', 'react-dom', 'react/jsx-runtime'],
 			output: {
 				dir: 'dist',
 				// exports: 'named',
@@ -93,27 +80,7 @@ export default defineConfig({
 					}
 					return `${fileName}.js`;
 				},
-				// entryFileNames: (chunkInfo) => {
-				// 	console.log('chunkInfo', chunkInfo);
-				// 	//fileName に components が含まれているかチェックする
-				// 	// if (fileName.indexOf('components') !== -1) {
-				// 	// 	// 重複するディレクトリ構造を削除する
-				// 	// 	const componentPath = deleteDuplicateDir(fileName);
-				// 	// 	return `${componentPath}/index.js`;
-				// 	// } else {
-				// 	// 	// console.log('fileName', fileName);
-				// 	// 	return `${fileName}.js`;
-				// 	// }
-				// 	return `${chunkInfo.name}.js`;
-				// 	// return `[format]/${chunkInfo.name}.js`;
-				// },
 			},
-			// plugins: [
-			// 	terser({
-			// 		compress: false,
-			// 		mangle: false,
-			// 	})
-			// ]
 		},
 	},
 });

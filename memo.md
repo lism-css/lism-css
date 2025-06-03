@@ -1,4 +1,3 @@
-
 # コマンドメモ
 
 ## publish
@@ -10,13 +9,22 @@ npm publish --access=public
 ## 開発時のキャッシュ削除
 
 turbo
+
 ```
 pnpm run clean
 ```
 
 next.js
+
 ```
 rm -rf .next/cache
+```
+
+```
+rm -rf node_modules pnpm-lock.yaml
+rm -rf apps/docs/node_modules
+rm -rf apps/playgrounds/*/node_modules
+rm -rf packages/*/node_modules
 ```
 
 # Prettier と Eslint,Stylelint についてのメモ
