@@ -32,13 +32,13 @@ export default defineConfig({
 				// 		defer: true,
 				// 	},
 				// },
-				{
-					tag: 'meta',
-					attrs: {
-						name: 'robots',
-						content: 'noindex',
-					},
-				},
+				// {
+				// 	tag: 'meta',
+				// 	attrs: {
+				// 		name: 'robots',
+				// 		content: 'noindex',
+				// 	},
+				// },
 			],
 			// logo: {
 			// 	src: './src/assets/my-logo.svg',
