@@ -1,6 +1,6 @@
 {
 	"name": "lism-css",
-	"version": "0.0.5",
+	"version": "0.0.6",
 	"description": "",
 	"author": {
 		"name": "ddryo",
@@ -9,8 +9,8 @@
 	"license": "MIT",
 	"keywords": [
 		"css-framework",
-		"react",
-		"design-system"
+		"astro-component",
+		"react-component"
 	],
 	"scripts": {
 		"dev": "vite",
@@ -27,6 +27,7 @@
 	],
 	"type": "module",
 	"main": "./dist/index.js",
+	"types": "./packages/types/index.d.ts",
 	"exports": {
 		".": "./dist/index.js",
 		"./*": "./dist/*",
@@ -36,10 +37,13 @@
 		},
 		"./react/*": "./dist/components/*",
 		"./next-js/*": "./packages/next-js/*",
-		"./astro": "./packages/astro/index.js",
+		"./astro": {
+			"import": "./packages/astro/index.js",
+			"types": "./packages/types/index.d.ts"
+		},
 		"./astro/*": "./packages/astro/*",
 		"./scss/*": "./src/scss/*",
-		"./all_with_layer.css": "./dist/css/all_with_layer.css",
+		"./all_no_layer.css": "./dist/css/all_no_layer.css",
 		"./all.css": "./dist/css/all.css"
 	},
 	"homepage": "https://www.lism.style",
