@@ -2,9 +2,6 @@
  * .astro でLismコンポーネントを配布
  */
 
-// Memo: コアのものを全部 export しつつ、.astro で用意できたものから上書きしていくパターン
-// export * from '@lism-ui/core'; // core はReact であることに注意。
-
 // export { default as Lism } from './Lism/Lism.astro';
 // export { Lism, Text, Media, Link } from './Lism';
 export * from './Lism';
