@@ -41,5 +41,6 @@
 // :first-child への上書きのほうが優先度高くなるように。
 .is--flow > :first-child {
 	// --mbs への上書きが気軽に書けるよう、--flowGap を 0 に。
-	--flowGap: 0;
+	// --flowGap を 0にすると、子要素に影響するので margin-block-startへ直セット
+	margin-block-start: 0;
 }
