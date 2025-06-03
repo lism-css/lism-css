@@ -22,6 +22,24 @@ export default defineConfig({
 		// mdx(), // 基本はmarkdownを継承する
 		starlight({
 			title: 'Lism CSS',
+			head: [
+				// Fathom のアナリティクススクリプトタグを追加する例。
+				// {
+				// 	tag: 'script',
+				// 	attrs: {
+				// 		src: 'https://cdn.usefathom.com/script.js',
+				// 		'data-site': 'MY-FATHOM-ID',
+				// 		defer: true,
+				// 	},
+				// },
+				{
+					tag: 'meta',
+					attrs: {
+						name: 'robots',
+						content: 'noindex',
+					},
+				},
+			],
 			// logo: {
 			// 	src: './src/assets/my-logo.svg',
 			// replacesTitle: true,
