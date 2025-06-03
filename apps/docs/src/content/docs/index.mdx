@@ -81,7 +81,30 @@ export const POINTS = [
 	// },
 ];
 
-<Container isFlow>
+<Container>
+	<section class="section-01 is--flow re--sh">
+		{/* <h2>🎨 Easy to Use</h2> */}
+		<Spacer h='40' />
+		<Columns cols={[1, 2]} g={[40]} lh='xs'>
+			<Stack g='5' py='40' px='50' bdrs='99' bgc='base' bxsh='3' bd bdc='blue'>
+				<Text fz='xl' fw='bold'>Easy</Text>
+				<Text c='text-2'>No config, No bulid. Just load the CSS to start using.</Text>
+			</Stack>
+			<Stack g='5' py='40' px='50' bdrs='99' bgc='base' bxsh='3' bd bdc='purple'>
+				<Text fz='xl' fw='bold'>Modern</Text>
+				<Text c='text-2'>@layer, Container Query, Grid, CSS Variables</Text>
+			</Stack>
+			<Stack g='5' py='40' px='50' bdrs='99' bgc='base' bxsh='3' bd bdc='pink'>
+				<Text fz='xl' fw='bold'>Lightweight</Text>
+				<Text c='text-2'>Start from just 30kb~, with responsive design included.</Text>
+			</Stack>
+			<Stack g='5' py='40' px='50' bdrs='99' bgc='base' bxsh='3' bd bdc='green'>
+				<Text fz='xl' fw='bold'>Free</Text>
+				<Text c='text-2'>Lism CSS is available for free.</Text>
+			</Stack>
+		</Columns>
+	</section>
+	<Spacer h='70' />
 	<section class="section-01 is--flow re--sh">
 		<h2>🎨 独自のCSS設計</h2>
 
@@ -107,7 +130,7 @@ export const POINTS = [
 		<PreviewTitle>専用のコンポーネントはこんな感じで使います</PreviewTitle>
 		<DemoLismComponent />
 	</section>
-	<Spacer h='40' />
+	<Spacer h='60' />
 	<Center>
 		<Button variant='primary' href='/getting-started' bdrs='99'>Getting Started</Button>
 	</Center>
