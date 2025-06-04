@@ -32,6 +32,13 @@ export default defineConfig({
 				// 		defer: true,
 				// 	},
 				// },
+				{
+					tag: 'meta',
+					attrs: {
+						property: 'og:image',
+						content: '/ogimg.jpg',
+					},
+				},
 				// {
 				// 	tag: 'meta',
 				// 	attrs: {
