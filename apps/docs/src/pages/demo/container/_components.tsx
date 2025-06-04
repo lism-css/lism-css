@@ -7,21 +7,7 @@ export function AttsLabels({ atts = '', ...props }) {
 	// attsを , で分割
 	const attsArray = atts.split(',') || [];
 	return (
-		<Flex
-			className='c--attsLabels u--skipFlow'
-			w='100%'
-			maxW='100%'
-			jc='c'
-			pos='a'
-			t='0'
-			l='0'
-			ta='c'
-			lh='1'
-			mt='-1.1em'
-			ov='h'
-			z='1'
-			{...props}
-		>
+		<Flex className='c--attsLabels u--skipFlow' w='100%' maxW='100%' jc='c' pos='a' t='0' l='0' ta='c' lh='1' mt='-1.1em' ov='h' z='1' {...props}>
 			{attsArray.map((att) => (
 				<TipCode key={att} text={att} />
 			))}

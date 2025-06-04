@@ -1,21 +1,6 @@
 ---
 import DemoPageLayout from '~/layouts/DemoPageLayout.astro';
-import {
-	Lism,
-	Frame,
-	Flex,
-	Media,
-	Spacer,
-	Box,
-	Divider,
-	Grid,
-	Dummy,
-	Text,
-	Container,
-	Layer,
-	Stack,
-	Center,
-} from 'lism-css/astro';
+import { Lism, Frame, Flex, Media, Spacer, Box, Divider, Grid, Dummy, Text, Container, Layer, Stack, Center } from 'lism-css/astro';
 import ShapeDivider from '~/components/ex/ShapeDivider/index.astro';
 ---
 
@@ -28,14 +13,7 @@ import ShapeDivider from '~/components/ex/ShapeDivider/index.astro';
 			</Container>
 		</Stack>
 		<Stack isFullwide hasGutter pos='r' minH='75vh' c='white' g='20'>
-			<ShapeDivider
-				viewBox='0 0 10 10'
-				c='base-2'
-				level='6'
-				scale='-Y'
-				offsetY='-0.5px'
-				z='1'
-			>
+			<ShapeDivider viewBox='0 0 10 10' c='base-2' level='6' scale='-Y' offsetY='-0.5px' z='1'>
 				<path d='M10,10V0L0,9.5V10L10,10z'></path>
 			</ShapeDivider>
 			<Frame isLayer>
@@ -99,14 +77,7 @@ import ShapeDivider from '~/components/ex/ShapeDivider/index.astro';
 		<!-- clamp = min:40px/400px, max:80px/1200px.  -->
 		<Box isFullwide style={{ '--slopeH': 'clamp(2.5rem, 1.25rem + 5cqw, 5rem)' }}>
 			<Stack isFullwide hasGutter pos='r' minH='50vh' c='white' g='20'>
-				<ShapeDivider
-					viewBox='0 0 10 10'
-					h='var(--slopeH)'
-					c='base'
-					scale='-Y'
-					offsetY='-0.5px'
-					z='1'
-				>
+				<ShapeDivider viewBox='0 0 10 10' h='var(--slopeH)' c='base' scale='-Y' offsetY='-0.5px' z='1'>
 					<path d='M10,10V0L0,9.5V10L10,10z'></path>
 				</ShapeDivider>
 				<Frame isLayer>
@@ -119,14 +90,7 @@ import ShapeDivider from '~/components/ex/ShapeDivider/index.astro';
 				</Container>
 				<Spacer h='var(--slopeH)' />
 			</Stack>
-			<Stack
-				isFullwide
-				hasGutter
-				pos='r'
-				minH='50vh'
-				c='white'
-				mbs='calc(0px - var(--slopeH))'
-			>
+			<Stack isFullwide hasGutter pos='r' minH='50vh' c='white' mbs='calc(0px - var(--slopeH))'>
 				<Frame
 					isLayer
 					style={{
@@ -141,14 +105,7 @@ import ShapeDivider from '~/components/ex/ShapeDivider/index.astro';
 					<Text fw='bold' fz='xl'>ShapDivider & Layers</Text>
 					<Dummy length='l' />
 				</Container>
-				<ShapeDivider
-					viewBox='0 0 10 10'
-					h='var(--slopeH)'
-					c='base'
-					scale='-X'
-					offsetY='0.5px'
-					z='1'
-				>
+				<ShapeDivider viewBox='0 0 10 10' h='var(--slopeH)' c='base' scale='-X' offsetY='0.5px' z='1'>
 					<path d='M10,10V0L0,9.5V10L10,10z'></path>
 				</ShapeDivider>
 			</Stack>
