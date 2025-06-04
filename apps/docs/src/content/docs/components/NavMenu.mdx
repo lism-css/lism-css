@@ -29,7 +29,7 @@ import NavMenu from '~/components/ex/NavMenu';
 <Preview>
 	<PreviewTitle>例</PreviewTitle>
 	<PreviewArea p='30'>
-		<NavMenu.Root hasDivider>
+		<NavMenu.Root>
 			<NavMenu.Item>
 				<NavMenu.Link href='#menu'>Menu item 1</NavMenu.Link>
 			</NavMenu.Item>
@@ -43,7 +43,7 @@ import NavMenu from '~/components/ex/NavMenu';
 	</PreviewArea>
 	<PreviewCode>
 		```jsx
-		<NavMenu.Root hasDivider>
+		<NavMenu.Root>
 			<NavMenu.Item>
 				<NavMenu.Link href='#menu'>Menu item 1</NavMenu.Link>
 			</NavMenu.Item>
@@ -88,7 +88,7 @@ import NavMenu from '~/components/ex/NavMenu';
 <Preview>
 	<PreviewTitle>アイコンやバッジを表示する例</PreviewTitle>
 	<PreviewArea p='30'>
-		<NavMenu.Root hasDivider bd='y'>
+		<NavMenu.Root bd='y'>
 			<NavMenu.Item>
 				<NavMenu.Link href='#menu1' g='10' ai='c'>
 					<Icon icon={FolderSimple} />
@@ -115,7 +115,7 @@ import NavMenu from '~/components/ex/NavMenu';
 import { FolderSimple } from "@phosphor-icons/react";
 // ↑ 外部のiconコンポーネント
 
-<NavMenu.Root hasDivider bd='y'>
+<NavMenu.Root bd='y'>
 	<NavMenu.Item>
 		<NavMenu.Link href='#menu1' g='10' ai='c'>
 			<Icon icon={FolderSimple} />
@@ -152,7 +152,7 @@ import { FolderSimple } from "@phosphor-icons/react";
 <Preview>
 	<PreviewTitle>hover時のカラー指定</PreviewTitle>
 	<PreviewArea p='30'>
-		<NavMenu.Root bd hasDivider hovBgc='text' hovC='base'>
+		<NavMenu.Root bd hovBgc='text' hovC='base'>
 			<NavMenu.Item>
 				<NavMenu.Link href='#menu1' hov='c:,bgc:'>Menu item</NavMenu.Link>
 			</NavMenu.Item>
@@ -166,7 +166,7 @@ import { FolderSimple } from "@phosphor-icons/react";
 	</PreviewArea>
 	<PreviewCode>
 		```jsx "hovBgc" "hovC" "hov='c:,bgc:'"
-		<NavMenu.Root bd hasDivider hovBgc='text' hovC='base'>
+		<NavMenu.Root bd hovBgc='text' hovC='base'>
 			<NavMenu.Item>
 				<NavMenu.Link href='#menu1' hov='c:,bgc:'>Menu item</NavMenu.Link>
 			</NavMenu.Item>
@@ -189,41 +189,45 @@ import { FolderSimple } from "@phosphor-icons/react";
 
 
 
-### 各リストのpaddingを一括で調整する方法
+### 各リストのpadding, ボーダーカラーを一括で調整する方法
 
-`<NavMenu.Link>`は、`data-lism-get`で`--pass-p`変数を受けとるようにしています。  
-これにより、`<NavMenu.Root>`に(`--pass-p`)をセットして、paddingを一括調整できます。
+- `<NavMenu.Item>` は `data-lism-get='bdc'`
+- `<NavMenu.Link>` は`data-lism-get='p'`
+
+が付与されており、それぞれ親の`--pass-bdc`,`--pass-p`変数を受けとるようになっています。
+これにより、`<NavMenu.Root>`に`--pass-bdc`や`--pass-p`をセットして一括調整できます。
+
 
 <Reference>
 [Lismで提案する pass-get について](/css/pass-get)
 </Reference>
 
 <Preview>
-	<PreviewTitle>`--pass-p` でpaddingを一括指定</PreviewTitle>
+	<PreviewTitle>`--pass-bdc`（Rootの`--bdc`が初期セットされます）と`--pass-p` で`padding`, `--bdc`を一括指定</PreviewTitle>
 	<PreviewArea p='30'>
-		{/* <NavMenu.Root bd hasDivider style={{'--pass-p': 'var(--s30)'}}> */}
-		<NavMenu.Root bd hasDivider passVars={{p:'30'}}>
+		{/* <NavMenu.Root bd style={{'--pass-p': 'var(--s30)'}}> */}
+		<NavMenu.Root bd bdc='divider' passVars={{p:'30'}}>
 			<NavMenu.Item>
 				<NavMenu.Link href='#menu1'>Menu item</NavMenu.Link>
 			</NavMenu.Item>
-			<NavMenu.Item>
+			<NavMenu.Item bd='t'>
 				<NavMenu.Link href='#menu2'>Menu item</NavMenu.Link>
 			</NavMenu.Item>
-			<NavMenu.Item>
+			<NavMenu.Item bd='t'>
 				<NavMenu.Link href='#menu3'>Menu item</NavMenu.Link>
 			</NavMenu.Item>
 		</NavMenu.Root>
 	</PreviewArea>
 	<PreviewCode>
-		```jsx "passVars={{p:'30'}}"
-		<NavMenu.Root bd hasDivider passVars={{p:'30'}}>
+		```jsx "bdc='divider'" "passVars={{p:'30'}}"
+		<NavMenu.Root bd bdc='divider' passVars={{p:'30'}}>
 			<NavMenu.Item>
 				<NavMenu.Link href='#menu1'>Menu item</NavMenu.Link>
 			</NavMenu.Item>
-			<NavMenu.Item>
+			<NavMenu.Item bd='t'>
 				<NavMenu.Link href='#menu2'>Menu item</NavMenu.Link>
 			</NavMenu.Item>
-			<NavMenu.Item>
+			<NavMenu.Item bd='t'>
 				<NavMenu.Link href='#menu3'>Menu item</NavMenu.Link>
 			</NavMenu.Item>
 		</NavMenu.Root>
@@ -240,23 +244,23 @@ import { FolderSimple } from "@phosphor-icons/react";
 <Preview>
 	<PreviewTitle>メニューのネスト</PreviewTitle>
 	<PreviewArea p='30'>
-		<NavMenu.Root hasDivider hovBgc='base-2' passVars={{p:'10'}} >
+		<NavMenu.Root bdc='divider' hovBgc='base-2' passVars={{p:'10'}} >
 			<NavMenu.Item>
 				<NavMenu.Link hov='bgc:' href='#menu1'>Menu item 1</NavMenu.Link>
 			</NavMenu.Item>
-			<NavMenu.Item>
+			<NavMenu.Item bd='t'>
 				<NavMenu.Link hov='bgc:' href='#menu2'>Menu item 2</NavMenu.Link>
-				<NavMenu.Nest hasDivider bd='t'>
+				<NavMenu.Nest bd='t'>
 					<NavMenu.Item>
 						<NavMenu.Link hov='bgc:' href='#child-menu1'>Nested item</NavMenu.Link>
 					</NavMenu.Item>
-					<NavMenu.Item>
+					<NavMenu.Item bd='t'>
 						<NavMenu.Link hov='bgc:' href='#child-menu3'>Nested item</NavMenu.Link>
-						<NavMenu.Nest hasDivider bd='t'>
+						<NavMenu.Nest bd='t'>
 							<NavMenu.Item>
 								<NavMenu.Link hov='bgc:' href='#child-menu4'>Nested level 2 item</NavMenu.Link>
 							</NavMenu.Item>
-							<NavMenu.Item>
+							<NavMenu.Item bd='t'>
 								<NavMenu.Link hov='bgc:' href='#child-menu5'>Nested level 2 item</NavMenu.Link>
 							</NavMenu.Item>
 						</NavMenu.Nest>
@@ -267,23 +271,23 @@ import { FolderSimple } from "@phosphor-icons/react";
 	</PreviewArea>
 	<PreviewCode>
 		```jsx "NavMenu.Nest"
-		<NavMenu.Root hasDivider hovBgc='base-2' passVars={{p:'10'}} >
+		<NavMenu.Root bdc='divider' hovBgc='base-2' passVars={{p:'10'}} >
 			<NavMenu.Item>
 				<NavMenu.Link hov='bgc:' href='#menu1'>Menu item 1</NavMenu.Link>
 			</NavMenu.Item>
-			<NavMenu.Item>
+			<NavMenu.Item bd='t'>
 				<NavMenu.Link hov='bgc:' href='#menu2'>Menu item 2</NavMenu.Link>
-				<NavMenu.Nest hasDivider bd='t'>
+				<NavMenu.Nest bd='t'>
 					<NavMenu.Item>
 						<NavMenu.Link hov='bgc:' href='#child-menu1'>Nested item</NavMenu.Link>
 					</NavMenu.Item>
-					<NavMenu.Item>
+					<NavMenu.Item bd='t'>
 						<NavMenu.Link hov='bgc:' href='#child-menu3'>Nested item</NavMenu.Link>
-						<NavMenu.Nest hasDivider bd='t'>
+						<NavMenu.Nest bd='t'>
 							<NavMenu.Item>
 								<NavMenu.Link hov='bgc:' href='#child-menu4'>Nested level 2 item</NavMenu.Link>
 							</NavMenu.Item>
-							<NavMenu.Item>
+							<NavMenu.Item bd='t'>
 								<NavMenu.Link hov='bgc:' href='#child-menu5'>Nested level 2 item</NavMenu.Link>
 							</NavMenu.Item>
 						</NavMenu.Nest>
@@ -428,7 +432,7 @@ import { FolderSimple } from "@phosphor-icons/react";
 	<PreviewTitle>hoverでネストメニューを表示</PreviewTitle>
 	<PreviewArea p='30'>
 		<Box minH="15rem">
-		<NavMenu.Root fxd='row' hasDivider lh='xs' passVars={{p:'20 30'}}>
+		<NavMenu.Root fxd='row' lh='xs' passVars={{p:'20 30'}}>
 			<NavMenu.Item>
 				<NavMenu.Link href='#menu1'>Menu item</NavMenu.Link>
 			</NavMenu.Item>
@@ -436,7 +440,7 @@ import { FolderSimple } from "@phosphor-icons/react";
 				<NavMenu.Link href='#menu3' d='f' ai='c'>
 					<Fragment>Hover Menu Item <Icon icon='caret-down' css={{translate:'40%'}} /></Fragment>
 				</NavMenu.Link>
-				<NavMenu.Nest hov='get:show' pos='a' t='100%' pis='0' lh='s' bgc='base' bxsh='2' bdrs='1' hasDivider>
+				<NavMenu.Nest hov='get:show' pos='a' t='100%' pis='0' lh='s' bgc='base' bxsh='2' bdrs='1'>
 					<NavMenu.Item>
 						<NavMenu.Link href='#child-menu1'>Nested item</NavMenu.Link>
 					</NavMenu.Item>
@@ -453,7 +457,7 @@ import { FolderSimple } from "@phosphor-icons/react";
 	</PreviewArea>
 	<PreviewCode>
 		```jsx "fxd='row'"
-		<NavMenu.Root fxd='row' hasDivider lh='xs' passVars={{p:'20 30'}}>
+		<NavMenu.Root fxd='row' lh='xs' passVars={{p:'20 30'}}>
 			<NavMenu.Item>
 				<NavMenu.Link href='#menu1'>Menu item</NavMenu.Link>
 			</NavMenu.Item>
@@ -461,7 +465,7 @@ import { FolderSimple } from "@phosphor-icons/react";
 				<NavMenu.Link href='#menu3' d='f' ai='c'>
 					<Fragment>Hover Menu Item <Icon icon='caret-down' css={{translate:'40%'}} /></Fragment>
 				</NavMenu.Link>
-				<NavMenu.Nest hov='get:show' pos='a' t='100%' pis='0' lh='s' bgc='base' bxsh='2' bdrs='1' hasDivider>
+				<NavMenu.Nest hov='get:show' pos='a' t='100%' pis='0' lh='s' bgc='base' bxsh='2' bdrs='1'>
 					<NavMenu.Item>
 						<NavMenu.Link href='#child-menu1'>Nested item</NavMenu.Link>
 					</NavMenu.Item>
@@ -483,7 +487,7 @@ import { FolderSimple } from "@phosphor-icons/react";
 	<PreviewTitle>アコーディオンでのメニュー展開</PreviewTitle>
 	<PreviewArea p='30'>
 		<Box minH="15rem">
-		<NavMenu.Root fxd='row' hasDivider lh='xs' passVars={{p:'20 30'}}>
+		<NavMenu.Root fxd='row' lh='xs' passVars={{p:'20 30'}}>
 			<NavMenu.Item>
 				<NavMenu.Link href='#menu1'>Menu item</NavMenu.Link>
 			</NavMenu.Item>
@@ -495,7 +499,7 @@ import { FolderSimple } from "@phosphor-icons/react";
 						<Accordion.Icon />
 					</Accordion.Header>
 					<Accordion.Body pos='a' bxsh='2' bgc='base' w='100%'>
-						<NavMenu.Nest hasDivider pis='0'>
+						<NavMenu.Nest pis='0'>
 							<NavMenu.Item>
 								<NavMenu.Link href='#child-menu1'>Child item</NavMenu.Link>
 							</NavMenu.Item>
@@ -516,7 +520,7 @@ import { FolderSimple } from "@phosphor-icons/react";
 						<Accordion.Icon isTrigger bd bgc='inherit' p='5'/>
 					</Accordion.Header>
 					<Accordion.Body pos='a' bxsh='2' bgc='base' w='100%'>
-						<NavMenu.Nest hasDivider pis='0'>
+						<NavMenu.Nest pis='0'>
 							<NavMenu.Item>
 								<NavMenu.Link href='#child-menu1'>Child item</NavMenu.Link>
 							</NavMenu.Item>
@@ -535,7 +539,7 @@ import { FolderSimple } from "@phosphor-icons/react";
 	</PreviewArea>
 	<PreviewCode>
 		```jsx
-		<NavMenu.Root fxd='row' hasDivider lh='xs' passVars={{p:'20 30'}}>
+		<NavMenu.Root fxd='row' lh='xs' passVars={{p:'20 30'}}>
 			<NavMenu.Item>
 				<NavMenu.Link href='#menu1'>Menu item</NavMenu.Link>
 			</NavMenu.Item>
@@ -547,7 +551,7 @@ import { FolderSimple } from "@phosphor-icons/react";
 						<Accordion.Icon />
 					</Accordion.Header>
 					<Accordion.Body pos='a' bxsh='2' bgc='base' w='100%'>
-						<NavMenu.Nest hasDivider pis='0'>
+						<NavMenu.Nest pis='0'>
 							<NavMenu.Item>
 								<NavMenu.Link href='#child-menu1'>Child item</NavMenu.Link>
 							</NavMenu.Item>
@@ -568,7 +572,7 @@ import { FolderSimple } from "@phosphor-icons/react";
 						<Accordion.Icon isTrigger bd bgc='inherit' p='5'/>
 					</Accordion.Header>
 					<Accordion.Body pos='a' bxsh='2' bgc='base' w='100%'>
-						<NavMenu.Nest hasDivider pis='0'>
+						<NavMenu.Nest pis='0'>
 							<NavMenu.Item>
 								<NavMenu.Link href='#child-menu1'>Child item</NavMenu.Link>
 							</NavMenu.Item>

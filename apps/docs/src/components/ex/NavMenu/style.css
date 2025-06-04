@@ -2,6 +2,7 @@
 	.c--navMenu {
 		--link-td: none;
 		--pass-p: var(--s20);
+		--pass-bdc: var(--bdc, currentColor);
 	}
 
 	.c--navMenu__link {
@@ -12,4 +13,7 @@
 /* lism: pass-get */
 [data-lism-get~='p'] {
 	padding: var(--pass-p);
+}
+[data-lism-get~='bdc'] {
+	--bdc: var(--pass-bdc);
 }

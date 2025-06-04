@@ -17,9 +17,9 @@ import {
 	<Flex jc='sb' ai='c' g='20'>
 		<Lism fz='xl' ff='mono'><a href='/'>Lism CSS</a></Lism>
 		<Flex mis='auto' g='20' d={['none', null, 'flex']}>
-			<Link href='###' hov='fade' c='inherit' td='n'>Menu 1</Link>
-			<Link href='###' hov='fade' c='inherit' td='n'>Menu 2</Link>
-			<Link href='###' hov='fade' c='inherit' td='n'>Menu 3</Link>
+			<Link href='###' hov='fade' px='5' c='inherit' td='n'>Menu 1</Link>
+			<Link href='###' hov='fade' px='5' c='inherit' td='n'>Menu 2</Link>
+			<Link href='###' hov='fade' px='5' c='inherit' td='n'>Menu 3</Link>
 		</Flex>
 		<Center
 			d={['grid', null, 'none']}
@@ -39,11 +39,17 @@ import {
 			<Modal.Header>
 				<Text fz='l' fw='bold' lh='s'>Menus</Text>
 			</Modal.Header>
-			<Modal.Body isFlow>
-				<Stack g='20' hasDivider>
-					<Link href='###' p='10' td='n'>Menu 1</Link>
-					<Link href='###' p='10' td='n'>Menu 2</Link>
-					<Link href='###' p='10' td='n'>Menu 3</Link>
+			<Modal.Body mbs='20'>
+				<Stack g='0' bd='b' bdc='divider'>
+					<Link href='###' p='10' py='20' c='inherit' td='n' bd='t' bdc='inherit'
+						>Menu 1</Link
+					>
+					<Link href='###' p='10' py='20' c='inherit' td='n' bd='t' bdc='inherit'
+						>Menu 2</Link
+					>
+					<Link href='###' p='10' py='20' c='inherit' td='n' bd='t' bdc='inherit'
+						>Menu 3</Link
+					>
 				</Stack>
 			</Modal.Body>
 			<Modal.Footer d='f' jc='e'>
