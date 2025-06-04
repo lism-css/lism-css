@@ -40,7 +40,14 @@ const { title = data.title, tagline, image, actions = [] } = data.hero || {};
 								{...attrs}
 							>
 								<span class='-pos:r'>{text}</span>
-								<Icon icon={variant === 'primary' ? 'book' : 'logo-github'} />
+								{variant === 'primary' && (
+									<Icon lh='1' fz='l'>
+										<Fragment>📖</Fragment>
+									</Icon>
+								)}
+								{variant === 'secondary' && (
+									<Icon lh='1' fz='l' icon='logo-github' />
+								)}
 							</Button>
 						)
 					)}

@@ -13,7 +13,7 @@ hero:
           variant: secondary
 ---
 
-import { Lism, Container, Center, Stack, Text, Columns, Spacer } from 'lism-css/astro';
+import { Lism, Container, Center, Stack, Text, Columns, Spacer, Icon } from 'lism-css/astro';
 import { Preview, PreviewArea, PreviewTitle, PreviewCode, Button } from '~/components';
 import { Card, CardGrid } from '@astrojs/starlight/components';
 import DemoLismComponent from '~/content/demo-lism-component.mdx';
@@ -132,6 +132,11 @@ export const POINTS = [
 	</section>
 	<Spacer h='60' />
 	<Center>
-		<Button variant='primary' href='/getting-started' bdrs='99'>Getting Started</Button>
+		<Button variant='primary' fz='l' href='/getting-started' bdrs='99' g='20'>
+			<span>Getting Started</span>
+			<Icon lh='1' fz='l'>
+				<Fragment>🚀</Fragment>
+			</Icon>
+		</Button>
 	</Center>
 </Container>
