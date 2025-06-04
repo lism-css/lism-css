@@ -221,3 +221,73 @@ Lismのパッケージ内で用意しているクラスはありませんが、�
 	</PreviewCode>
 </Preview>
 
+
+ 
+{/* ## `has--divider`
+
+子要素の間にボーダーを表示します。デフォルトでは`border-block-end`で線が描画されます。
+
+ボーダーの色や太さは、[`-bd:`クラス](/css/border)と同じく`--bdw`や`--bdc`変数で変更できます。
+
+<Preview>
+	<PreviewTitle>`has--divider`</PreviewTitle>
+	<PreviewArea p='30'>
+		<Box hasDivider>
+			<Box p='20'>Content</Box>
+			<Box p='20'>Content</Box>
+			<Box p='20'>Content</Box>
+		</Box>
+	</PreviewArea>
+	<PreviewCode slot='tab' label='HTML'>
+	```html
+	<div class="l--box has--divider">
+		<div class="-p:20">Content</div>
+		<div class="-p:20">Content</div>
+		<div class="-p:20">Content</div>
+	</div>
+	```
+	</PreviewCode>
+	<PreviewCode slot='tab' label='JSX'>
+	```jsx
+	<Stack hasDivider>
+		<Box p='20'>Content</Box>
+		<Box p='20'>Content</Box>
+		<Box p='20'>Content</Box>
+	</Stack>
+	```
+	</PreviewCode>
+</Preview>
+
+
+`--_isRow`変数が`1`の時、区切り線は`border-inline-end`で描画されます。  
+また、`l--flex`と併用された時、`--_isRow`変数は`1`にセットされるようにもなっています。
+
+<Preview>
+	<PreviewTitle>`l--flex`で使用する</PreviewTitle>
+	<PreviewArea p='30' nogrid>
+		<Flex hasDivider>
+			<Box px='20' py='5'>Content</Box>
+			<Box px='20' py='5'>Content</Box>
+			<Box px='20' py='5'>Content</Box>
+		</Flex>
+	</PreviewArea>
+	<PreviewCode slot='tab' label='HTML'>
+	```html
+	<div class="l--flex has--divider">
+		<div class="-px:20">Content</div>
+		<div class="-px:20">Content</div>
+		<div class="-px:20">Content</div>
+	</div>
+	```
+	</PreviewCode>
+	<PreviewCode slot='tab' label='JSX'>
+	```jsx
+	<Flex hasDivider>
+		<Box px='20'>Content</Box>
+		<Box px='20'>Content</Box>
+		<Box px='20'>Content</Box>
+	</Flex>
+	```
+	</PreviewCode>
+</Preview> */}
+

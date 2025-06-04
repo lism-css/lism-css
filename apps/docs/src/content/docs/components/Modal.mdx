@@ -179,17 +179,17 @@ dialog.d--modal#modalID
 				<Text fz='l' fw='bold' lh='s'>MENU</Text>
 			</Modal.Header>
 			<Modal.Body>
-				<NavMenu.Root hasDivider bd='y'>
+				<NavMenu.Root bd='y' bdc='divider'>
 					<NavMenu.Item>
 						<NavMenu.Link href='#menu-link01'>Menu item 1</NavMenu.Link>
 					</NavMenu.Item>
-					<NavMenu.Item>
+					<NavMenu.Item bd='t' bdc='inherit'>
 						<NavMenu.Link href='#menu-link02'>Menu item 2</NavMenu.Link>
 					</NavMenu.Item>
-					<NavMenu.Item>
+					<NavMenu.Item bd='t' bdc='inherit'>
 						<NavMenu.Link href='#menu-link03'>Menu item 3</NavMenu.Link>
 					</NavMenu.Item>
-					<NavMenu.Item>
+					<NavMenu.Item bd='t' bdc='inherit'>
 						<NavMenu.Link href='#menu-link04'>Menu item 4</NavMenu.Link>
 					</NavMenu.Item>
 				</NavMenu.Root>
@@ -216,12 +216,15 @@ dialog.d--modal#modalID
 					<Text fz='l' fw='bold' lh='s'>MENU</Text>
 				</Modal.Header>
 				<Modal.Body>
-					<NavMenu.Root hasDivider bd='y'>
-						<NavMenu.Item>
-							<NavMenu.Link href='#menu-link01'>Menu item 1</NavMenu.Link>
-						</NavMenu.Item>
-						{/* ... */}
-					</NavMenu.Root>
+					<NavMenu.Root bd='y' bdc='divider'>
+					<NavMenu.Item>
+						<NavMenu.Link href='#menu-link01'>Menu item 1</NavMenu.Link>
+					</NavMenu.Item>
+					<NavMenu.Item bd='t' bdc='inherit'>
+						<NavMenu.Link href='#menu-link02'>Menu item 2</NavMenu.Link>
+					</NavMenu.Item>
+					...
+				</NavMenu.Root>
 				</Modal.Body>
 			</Modal.Inner>
 		</Modal.Root>

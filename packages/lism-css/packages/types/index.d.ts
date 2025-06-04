@@ -151,7 +151,6 @@ export interface LismBaseProps {
 	isWide?: boolean;
 	isLayer?: boolean;
 	isLinkBox?: boolean;
-	hasDivider?: boolean;
 
 	// HTML attributes
 	className?: string;
