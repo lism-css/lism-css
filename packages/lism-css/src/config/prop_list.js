@@ -311,7 +311,7 @@ export const CONTEXT_PROPS = {
 	},
 	gridItem: {
 		// item
-		ga: { presets: 1 }, // grid-area
+		ga: { presets: 1, utils: { '1/1': '1' } }, // grid-area
 		gc: { presets: 1 }, // grid-column
 		gcs: { presets: 1, style: 'gridColumnStart' },
 		gce: { presets: 1, style: 'gridColumnEnd' },

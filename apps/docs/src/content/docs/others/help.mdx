@@ -3,7 +3,7 @@ title: 'こんな時は？'
 description: ...
 ---
 
-import { Box, Flex, Stack, Grid, Center, Layer, Frame, Container, Media, Text, Dummy, Lism } from 'lism-css/astro';
+import { Box, Flex, Stack, Grid, Center, Layer, Frame, Container, Media, Text, Dummy, Lism, Spacer } from 'lism-css/astro';
 import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage, Callout } from "~/components";
 
 
@@ -286,3 +286,124 @@ Flexの子要素でFrameを使用する場合、 `align-items:stretch;`の影響
 		```
 	</PreviewCode>
 </Preview> */}
+
+
+
+## Center で内部を スクロール可 にしたい時の注意点
+
+"**画面サイズに余裕がある時は上下中央揃えにしたいが、画面サイズが小さい時にコンテンツがはみ出すのでスクロールできるようにしておきたい。**"
+
+というケースでは、少し注意が必要です。
+
+<Callout type='alert'>
+`grid`や`flex`で上下中央揃えを実装する方法では、**スクロール時に上端が見えなくなる**という問題があります。
+</Callout>
+
+Lismの`<Center>` は `grid` を使ってるので、この問題が発生します。
+
+次のデモエリアをリサイズして挙動を確認してみてください。
+
+<Preview>
+	<PreviewTitle>
+		スクロール時にコンテンツが全て見えない 😱
+	</PreviewTitle>
+	<PreviewArea resize p={10}>
+		<Center px='30' py='50' g='20' h='45vh' ovy='auto' bd>
+			<Text fz='l' fw='700'>DEMO</Text>
+			<Dummy length='l' />
+			<Dummy length='xl' />
+		</Center>
+	</PreviewArea>
+	<PreviewCode slot='tab' label='JSX'>
+		```jsx "\<Center" "h='45vh' ovy='auto'"
+		<Center px='30' py='50' g='20' h='45vh' ovy='auto' bd>
+			<Text fz='l' fw='700'>DEMO</Text>
+			<Dummy length='l' />
+			<Dummy length='xl' />
+		</Center>
+		```
+	</PreviewCode>
+</Preview>
+
+<Spacer h='20' />
+
+これを回避するには、次のアプローチが必要です。
+
+- `<Center>`の親要素に高さやアスペクト比、`overflow-y:auto`を指定する。
+- `<Center>`には **`min-height:100%`** を指定する。
+
+<Callout type='alert'>
+`height:100%` だとうまくいかないので注意してください。
+</Callout>
+
+<Preview>
+	<PreviewTitle>
+		スクロール時、正常にコンテンツが見える 😄
+	</PreviewTitle>
+	<PreviewArea resize p={10}>
+		<Box px='30' py='50' h='45vh' ovy='auto' bd>
+			<Center g='20' minH='100%'>
+				<Text fz='l' fw='700'>DEMO</Text>
+				<Dummy length='l' />
+				<Dummy length='xl' />
+			</Center>
+		</Box>
+	</PreviewArea>
+	<PreviewCode slot='tab' label='JSX'>
+		```jsx "Center" "h='45vh'" "ovy='auto'" "minH='100%'"
+		<Box px='30' py='50' h='45vh' ovy='auto' bd>
+			<Center minH='100%' g='20'>
+				<Text fz='l' fw='700'>DEMO</Text>
+				<Dummy length='l' />
+				<Dummy length='xl' />
+			</Center>
+		</Box>
+		```
+	</PreviewCode>
+</Preview>
+
+アスペクト指定で、コンテンツがはみ出すとスクロール可能にしたい時も同様です。
+
+<Preview>
+	<PreviewTitle>OK</PreviewTitle>
+	<PreviewArea resize p={10}>
+		<Frame ar='16/9' ovy='auto' bd p='30' g='20'>
+			<Center minH='100%' g='20'>
+				<Text fz='l'>TEXT</Text>
+				<Dummy length='xs' lang='ja'/>
+				<Dummy length='xl' lang='ja'/>
+			</Center>
+		</Frame>
+	</PreviewArea>
+	<PreviewCode slot='tab' label='JSX'>
+		```jsx "Center" "ar='16/9'" "ovy='auto'" "minH='100%'"
+		<Frame ar='16/9' ovy='auto' bd p='30' g='20'>
+			<Center minH='100%' g='20'>
+				<Text fz='l'>TEXT</Text>
+				<Dummy length='xs' lang='ja'/>
+				<Dummy length='xl' lang='ja'/>
+			</Center>
+		</Frame>
+		```
+	</PreviewCode>
+</Preview>
+
+<Preview>
+	<PreviewTitle>NG</PreviewTitle>
+	<PreviewArea resize p={10}>
+		<Center ar='16/9' ovy='auto' bd p='30' g='20'>
+			<Text fz='l'>TEXT</Text>
+			<Dummy length='xs' lang='ja'/>
+			<Dummy length='xl' lang='ja'/>
+		</Center>
+	</PreviewArea>
+	<PreviewCode slot='tab' label='JSX'>
+		```jsx "Center" "ar='16/9'" "ovy='auto'" "minH='100%'"
+		<Center ar='16/9' ovy='auto' bd p='30' g='20'>
+			<Text fz='l'>TEXT</Text>
+			<Dummy length='xs' lang='ja'/>
+			<Dummy length='xl' lang='ja'/>
+		</Center>
+		```
+	</PreviewCode>
+</Preview>
