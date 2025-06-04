@@ -36,7 +36,7 @@ export default defineConfig({
 					tag: 'meta',
 					attrs: {
 						property: 'og:image',
-						content: '/ogimg.jpg',
+						content: 'https://www.lism-css.com/ogimg.jpg',
 					},
 				},
 				// {
