@@ -3,30 +3,17 @@ title: 'Frame'
 description: ...
 ---
 import { Box, Flex, Media, Lism, Text, Layer, Frame, Center, Columns, Dummy } from 'lism-css/astro';
-import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage, HelpText, Note } from "~/components";
+import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage, HelpText, Note, EmbedCode } from "~/components";
 
-
-# Frame
 
 アスペクト比や高さを指定した時、コンテンツがその高さを超えないように制限します。
 
 直下のメディア要素（`img`,`vieo`,`picture`,`iframe`）が `object-fit:cover` でサイズいっぱいに表示されるようにもなっています。
 
 {/* Layerを配置しやすいように position:relative; を指定しています。 */}
+## CSS
 
-
-```css
-.l--frame {
-	overflow: hidden;
-
-	> :where(img, video, picture, iframe) {
-		display: block;
-		width: 100%;
-		height: 100%;
-		object-fit: cover;
-	}
-}
-```
+<EmbedCode dirPath='packages/lism-css' srcPath='src/scss/layout/_frame.scss' />
 
 
 ## Props
@@ -38,6 +25,7 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage, HelpTex
 {/* | `objectPosition` | 直下のメディア要素のobject-positionを指定できます。 | */}
 
 <HelpText>(`ar` 自体はどのコンポーネントにも指定できる CSS Props です。)</HelpText>
+
 
 ## Import
 

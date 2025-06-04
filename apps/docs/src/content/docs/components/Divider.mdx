@@ -4,22 +4,28 @@ description: ...
 ---
 
 import { Divider, Flex, Box, Stack } from 'lism-css/astro';
-import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage } from "~/components";
+import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage, EmbedCode } from "~/components";
 
-区切り線を描画するコンポーネントです。
+区切り線を描画するコンポーネントです。`--bdc`が`var(--c--divider)`に初期セットされます。ボーダーの方向は[`-bd:`クラス](/css/border)で指定してください。
 
-{/* 縦向き・横向きをborderではなく */}
 
 ## 構造
 ```pug
 div.l--divider.-bd:[bs|is]
 ```
 
+
+## CSS
+
+<EmbedCode dirPath='packages/lism-css' srcPath='src/scss/layout/_divider.scss' />
+
+
 ## Props
 
 | プロパティ | 説明 |
 |---|---|
 | `bdw`,`bds`,`bdc` | 区切り線のボーダープロパティ |
+
 
 ## Import
 

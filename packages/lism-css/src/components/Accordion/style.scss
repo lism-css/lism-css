@@ -1,6 +1,5 @@
 .d--accordion {
 	--trsdu: var(--trsdu--acc);
-	// overflow: clip; // bdrs考慮
 	&.-opened {
 		--_notOpened: ;
 	}
@@ -13,7 +12,7 @@
 	outline-offset: -1px; // overflow:clip|hidden; で見えなくなってしまうのを防ぐ
 	gap: 0.5em;
 
-	/* Safariで表示されるデフォルトの三角形アイコンを消します */
+	/* Safariで表示されるデフォルトの三角形アイコンを消す */
 	&::-webkit-details-marker {
 		display: none;
 	}
@@ -30,7 +29,7 @@
 	transition-duration: var(--trsdu);
 }
 
-// ※ 正常な animation に必須
+// ※ 正常な animation には必須
 // .d--accordion__inner {
 // 	overflow: hidden;
 // }

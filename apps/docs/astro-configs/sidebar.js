@@ -135,10 +135,6 @@ export default [
 				link: '/components/divider/',
 			},
 			{
-				label: 'Spacer',
-				link: '/components/spacer/',
-			},
-			{
 				label: 'WithSide',
 				link: '/components/withside/',
 			},
@@ -152,10 +148,13 @@ export default [
 				link: '/components/decorator/',
 			},
 			{
+				label: 'Spacer',
+				link: '/components/spacer/',
+			},
+			{
 				label: 'Icon',
 				link: '/components/icon/',
 			},
-
 			{
 				label: 'Dynamic',
 				link: '###---',
