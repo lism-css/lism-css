@@ -3,7 +3,7 @@ title: 'Modal'
 description: ...
 ---
 
-import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage, IconBadge } from '~/components';
+import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage, EmbedCode, IconBadge } from '~/components';
 import { Modal, Lism, Dummy, Text, Flex, Stack, Center, Icon } from 'lism-css/astro';
 import {
 	ArrowFatDown,
@@ -27,6 +27,11 @@ dialog.d--modal#modalID
 ```
 
 `.d--modal`に`id`をつけ、`<button>`に`data-modal-open`属性と`data-modal-close`属性をつけることでそのモーダルの開閉ボタンになります。
+
+## CSS
+
+<EmbedCode dirPath='packages/lism-css' srcPath='src/components/Modal/style.scss' />
+
 
 ## Import
 

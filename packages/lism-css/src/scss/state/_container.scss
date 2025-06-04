@@ -1,6 +1,4 @@
-// @use '../_mixin' as mixin;
-
-// 内部のコンテンツ幅を制御する。
+// コンテナ定義 + 併用クラスで内部のコンテンツ幅を制御する。
 .is--container {
 	container-type: inline-size;
 	margin-inline: auto;
@@ -13,24 +11,7 @@
 	}
 }
 
-// 基本的には .is--container と併用する
-// [data-content-size],
-// .has--size
-// [class*='-contentSize:'] {
-// 	--size: 100%;
-// 	--wide-size: 100%;
-// 	> * {
-// 		max-inline-size: min(100%, var(--size));
-// 		margin-inline: auto;
-// 	}
-// }
-
-// それぞれの直下要素( > * ) に対してスタイルをセットした方が、ネスト時の影響をなくせるが、constrainedのネストが多様されることは少ないと思うので、一旦親側の変数管理のみで実装。
-// .-container\:s
-// .-container\:xs {
-// 	--size: var(--size--xs);
-// 	--wide-size: var(--size--s);
-// }
+// Memo: それぞれの直下要素( > * ) に対してスタイルをセットした方が、ネスト時の影響をなくせるが、constrainedのネストが多様されることは少ないので親側の変数管理のみで実装。
 .-container\:s {
 	--item-size: var(--size--s);
 	--wide-size: var(--size--m);

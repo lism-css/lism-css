@@ -4,7 +4,7 @@ description: ...
 ---
 
 import { Container, Columns, Grid, Stack, Flex, Spacer, Cluster, Icon, Center } from 'lism-css/astro';
-import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage, PropBadge, Note, Callout } from "~/components";
+import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage, PropBadge, Note, Callout, EmbedCode } from "~/components";
 import { Horse, Cat, Smiley, WarningCircle } from "@phosphor-icons/react";
 import {phIcons, logoIcons} from 'lism-css/components/Icon/presets';
 
@@ -27,8 +27,13 @@ export const PresetIcons = ({icons}) => {
 
 ## 構造
 ```pug
-svg.l--icon(.l--icon--inline)
+svg.l--icon
 ```
+
+
+## CSS
+
+<EmbedCode dirPath='packages/lism-css' srcPath='src/scss/layout/_icon.scss' />
 
 
 ## Props

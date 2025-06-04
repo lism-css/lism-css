@@ -4,7 +4,7 @@ description: ...
 ---
 
 import { Divider, Stack, Text, Center, Flex, Icon, Dummy, Accordion } from 'lism-css/astro';
-import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage, IconBadge, PropBadge, Note, Callout } from "~/components";
+import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage, EmbedCode, IconBadge, PropBadge, Note, Callout } from "~/components";
 import { Minus, Plus, X, Question, CaretDoubleDown, EyeClosed, Eyes } from "@phosphor-icons/react";
 
 {/* // import { Accordion } from 'lism-css/react'; */}
@@ -28,6 +28,12 @@ details.d--accordion
 - `grid` の `1fr` を使ったトランジションで "height:100% がアニメーションできない問題" を解決。
 	{/* - Note: コンテンツ側のpadding は、`__inner` ではなく `__body` につけるように注意が必要です。 */}
 </Note>
+
+
+## CSS
+
+<EmbedCode dirPath='packages/lism-css' srcPath='src/components/Accordion/style.scss' />
+
 
 
 ## Import

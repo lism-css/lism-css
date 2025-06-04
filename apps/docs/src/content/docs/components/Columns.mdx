@@ -2,7 +2,7 @@
 title: 'Columns'
 description: ...
 ---
-import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage, PropBadge } from "~/components";
+import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage, PropBadge, EmbedCode } from "~/components";
 import { Box, Dummy, Columns } from 'lism-css/astro';
 
 指定した列数でカラムレイアウトを作成します。
@@ -16,6 +16,12 @@ import { Box, Dummy, Columns } from 'lism-css/astro';
 
 {/* - `cols`: 列数を指定します。ブレイクポイント指定も可能です。 */}
 その他、[`<Grid>`で使えるprops](/components/grid#props)が使えます。
+
+
+## CSS
+
+<EmbedCode dirPath='packages/lism-css' srcPath='src/scss/layout/_columns.scss' />
+
 
 
 ## Import
