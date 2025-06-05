@@ -3,7 +3,7 @@ title: 'GridItem'
 description: ...
 ---
 
-import { Center, Grid, GridItem, Media, Frame, Lism, Decorator, Text } from 'lism-css/astro';
+import { Center, Flex, Grid, GridItem, Media, Frame, Lism, Decorator, Text, Dummy } from 'lism-css/astro';
 import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage } from "~/components";
 
 
@@ -120,6 +120,66 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage } from "
 			<div class="l--decorator -bgc: -w: -h: -ga:1" style="--bgc:var(--white);--w:50%;--h:4em;filter:blur(80px)" aria-hidden="true"></div>
 			<div class="-fz:2xl -z:1 -ga:1">SAMPLE TEXT</div>
 		</div>
+		```
+	</PreviewCode>
+</Preview>
+
+
+
+### subgridの活用
+
+<Preview>
+	<PreviewTitle>新着記事一覧リストの作成例</PreviewTitle>
+	<PreviewArea p='30' resize>
+		<Grid gtc={['auto','auto 1fr']} bd='b'>
+			<GridItem layout={Grid} gtc='subgrid' gc='1/-1' g='20' ai='start' bd='t' py='30'>
+				<Grid gtc={['auto auto', '1fr 1fr']} g='20' jc='s' ai='c'>
+					<Lism fz='xs'>2024.05.31</Lism>
+					<Lism d='if' jc='c' bd fz='xs' lh='1' bgc='text' c='base' p='10' bdrs='1'>NEWS</Lism>
+				</Grid>
+				<Dummy lang='ja' tag='a' href='####' hov='fade' c='inherit' td='n' className='u--trimHL' lh='s' />
+			</GridItem>
+			<GridItem layout={Grid} gtc='subgrid' gc='1/-1' g='20' ai='start' bd='t' py='30'>
+				<Grid gtc={['auto auto', '1fr 1fr']} g='20' jc='s' ai='c'>
+					<Lism fz='xs'>2024.05.29</Lism>
+					<Lism d='if' jc='c' bd fz='xs' lh='1' bgc='text' c='base' p='10' bdrs='1'>TIPS</Lism>
+				</Grid>
+				<Dummy lang='ja' offset='1' tag='a' href='####' hov='fade' c='inherit' td='n' length='s' className='u--trimHL' lh='s' />
+			</GridItem>
+			<GridItem layout={Grid} gtc='subgrid' gc='1/-1' g='20' ai='start' bd='t' py='30'>
+				<Grid gtc={['auto auto', '1fr 1fr']} g='20' jc='s' ai='c'>
+					<Lism fz='xs'>2024.05.18</Lism>
+					<Lism d='if' jc='c' bd fz='xs' lh='1' bgc='text' c='base' p='10' bdrs='1'>COLUMN</Lism>
+				</Grid>
+				<Dummy lang='ja' offset='2' tag='a' href='####' hov='fade' c='inherit' td='n' className='u--trimHL' lh='s' />
+			</GridItem>
+		</Grid>
+	</PreviewArea>
+	<PreviewCode slot='tab' label='JSX'>
+		```jsx
+		<Grid gtc={['auto','auto 1fr']} bd='b'>
+			<GridItem layout={Grid} gtc='subgrid' gc='1/-1' g='20' ai='start' bd='t' py='30'>
+				<Grid gtc={['auto auto', '1fr 1fr']} g='20' jc='s' ai='c'>
+					<Lism fz='xs'>2024.05.31</Lism>
+					<Lism d='if' jc='c' bd fz='xs' lh='1' bgc='text' c='base' p='10' bdrs='1'>NEWS</Lism>
+				</Grid>
+				<Dummy lang='ja' tag='a' href='####' hov='fade' c='inherit' td='n' className='u--trimHL' lh='s' />
+			</GridItem>
+			<GridItem layout={Grid} gtc='subgrid' gc='1/-1' g='20' ai='start' bd='t' py='30'>
+				<Grid gtc={['auto auto', '1fr 1fr']} g='20' jc='s' ai='c'>
+					<Lism fz='xs'>2024.05.29</Lism>
+					<Lism d='if' jc='c' bd fz='xs' lh='1' bgc='text' c='base' p='10' bdrs='1'>TIPS</Lism>
+				</Grid>
+				<Dummy lang='ja' offset='1' tag='a' href='####' hov='fade' c='inherit' td='n' length='s' className='u--trimHL' lh='s' />
+			</GridItem>
+			<GridItem layout={Grid} gtc='subgrid' gc='1/-1' g='20' ai='start' bd='t' py='30'>
+				<Grid gtc={['auto auto', '1fr 1fr']} g='20' jc='s' ai='c'>
+					<Lism fz='xs'>2024.05.18</Lism>
+					<Lism d='if' jc='c' bd fz='xs' lh='1' bgc='text' c='base' p='10' bdrs='1'>COLUMN</Lism>
+				</Grid>
+				<Dummy lang='ja' offset='2' tag='a' href='####' hov='fade' c='inherit' td='n' className='u--trimHL' lh='s' />
+			</GridItem>
+		</Grid>
 		```
 	</PreviewCode>
 </Preview>
