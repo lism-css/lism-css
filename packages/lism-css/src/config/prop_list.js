@@ -32,12 +32,12 @@ const trblUtils = { '0%': '0', '50%': '50%', '100%': '100%' };
 
 export default {
 	// size
-	w: { utils: { auto: 'a', 'fit-content': 'fit' }, presets: ['100%'], converter: 'size' },
-	h: { utils: { auto: 'a', 'fit-content': 'fit' }, presets: ['100%', 'full'], converter: 'size' },
+	w: { utils: { 'fit-content': 'fit' }, presets: ['100%'], converter: 'size' },
+	h: { utils: { 'fit-content': 'fit' }, presets: ['100%', '100lvh', '100svh'], converter: 'size' },
 	maxW: { style: 'maxWidth', presets: ['100%'], converter: 'size' },
 	maxH: { style: 'maxHeight', presets: ['100%'], converter: 'size' },
 	minW: { style: 'minWidth', presets: ['100%'], converter: 'size' },
-	minH: { style: 'minHeight', presets: ['100%'], converter: 'size' },
+	minH: { style: 'minHeight', presets: ['100%', '100lvh', '100svh'], converter: 'size' },
 	is: { style: 'inline-size', converter: 'size' },
 	bs: { style: 'block-size', converter: 'size' },
 	maxIs: { style: 'maxInlineSize', converter: 'size' },
