@@ -9,16 +9,16 @@ export default function Note({ type = 'note', keycol, icon, title, children, isF
 	}
 
 	return (
-		<Stack lismClass='c--note u--colbox' keycol={keycol} p='30' g='20' bd='is' bdw='4px' bdrs='2px' {...props}>
+		<Stack lismClass='c--note u--colbox' keycol={keycol} p='30' g='30' bd='is' bdw='4px' bdrs='1' {...props}>
 			{title && (
-				<Flex className='c--note__head' fw='bold' ai='c' g='20' skipState>
+				<Flex className='c--note__head u--trimHL' fw='bold' ai='c' g='20' skipState>
 					<Center className='c--note__icon' fz='l' c='keycol' skipState>
-						<Icon icon={icon} scale='1.25' />
+						<Icon icon={icon} scale='1.1' />
 					</Center>
 					<span className='c--note__title'>{title}</span>
 				</Flex>
 			)}
-			<Lism className='c--note__body' isFlow={isFlow}>
+			<Lism className='c--note__body u--trimBox' isFlow={isFlow}>
 				{children}
 			</Lism>
 		</Stack>

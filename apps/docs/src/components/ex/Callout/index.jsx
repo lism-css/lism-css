@@ -8,11 +8,11 @@ export default function Callout({ type = 'alert', keycol, icon, isFlow, children
 	const _color = keycol || presetData?.color || 'currentColor';
 
 	return (
-		<WithSide lismClass='c--callout' className='u--colbox' keycol={_color} p='20' g='20' bd bdrs='2' {...props}>
-			<Center data-is-side lismClass='c--callout__icon' c='keycol' fz='xl' p='5'>
+		<WithSide lismClass='c--callout u--colbox' keycol={_color} p='30' g='30' bd bdrs='2' {...props}>
+			<Center data-is-side lismClass='c--callout__icon' c='keycol' fz='xl'>
 				<Icon icon={_icon} />
 			</Center>
-			<Lism lismClass='c--callout__body' isFlow={isFlow}>
+			<Lism lismClass='c--callout__body u--trimBox' isFlow={isFlow}>
 				{children}
 			</Lism>
 		</WithSide>
