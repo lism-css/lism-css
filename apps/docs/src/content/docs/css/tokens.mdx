@@ -39,6 +39,10 @@ export const ColorBadge = ({color, label}) => {
 |<ColorBadge color='accent' />|`--c--accent`|
 
 
+モダンCSSでは`color-mix()`があるので、hsl値の中身を変数にすることはしていません。  
+ただし、[shadowカラー](#shadow)の初期値をテキストカラーと合わせるため、`--c--text`のみ、`hsl(var(--c--text-hsl))`となっています。
+
+
 ### PALETTE
 
 |パレットトークン|変数|
@@ -656,8 +660,8 @@ box-shadow は少し特殊で、ユーティリティクラス内で複数のsha
 
 |構成変数|初期値|
 |---|---|
-|`--sh-hsl`|`210 20% 20%`|
-|`--sh-a`|`10%`|
+|`--sh-hsl`|`hsl(var(--c--text-hsl))`|
+|`--sh-a`|`5%`|
 |`--sh-sz--0~5`||
 
 ```css
@@ -718,6 +722,9 @@ box-shadow は少し特殊で、ユーティリティクラス内で複数のsha
 
 |トークン値|変数|
 |---|---|
+|`xs`|`--size--xs`|
 |`s`|`--size--s`|
 |`m`|`--size--m`|
 |`l`|`--size--l`|
+
+[`.is--container`](/css/layout-state/#is--container) 等で使用されています。
