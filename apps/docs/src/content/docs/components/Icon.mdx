@@ -12,7 +12,7 @@ export const PresetIcons = ({icons}) => {
 	return <Columns variant='liquid' colSize='10rem' g='20'>
 			{Object.keys(icons).map((iconName) => {
 				return (
-					<Stack key={iconName} g='10' ai='c' bgc='base-2' bdrs='2' p='20' lh='1'>
+					<Stack key={iconName} g='10' ai='c' bgc='base-2' bdrs='2' p='20'>
 						<Icon icon={iconName} fz='xl' />
 						<span class='u--trimHL -fz:xs -ff:mono -d:b'>{iconName}</span>
 					</Stack>

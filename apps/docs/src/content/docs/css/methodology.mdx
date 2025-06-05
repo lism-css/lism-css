@@ -39,7 +39,7 @@ LismがどのようなCSS設計になっているかを説明します。
 		<tr>
 			<th>Layer</th>
 			<th>役割</th>
-			<th>`@layer`<br />基本詳細度</th>
+			<th>`@layer`</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -51,32 +51,32 @@ LismがどのようなCSS設計になっているかを説明します。
 		<tr>
 			<td>Reset</td>
 			<td>reset CSS</td>
-			<td><span class='-whs:nw'>`@lism-reset`</span><br />~0-0-1</td>
+			<td><span class='-whs:nw'>`@lism.reset`</span></td>
 		</tr>
 		<tr>
 			<td>Base</td>
 			<td>`:root`でのトークン定義, HTML要素に対するスタイルの初期セット</td>
-			<td>`@lism-base`<br />~0-0-1</td>
+			<td>`@lism.base`</td>
 		</tr>
 		<tr>
 			<td class='-whs:nw'>Layout State<br />`.is--{state}`<br />`.has--{state}`</td>
 			<td>レイアウトを組む上で特定の役割を持ち、複数のモジュールに対してつけ外しできるような汎用的な機能。</td>
-			<td><span class='-whs:nw'>`@lism-state`</span><br />0-1-0</td>
+			<td><span class='-whs:nw'>`@lism.state`</span></td>
 		</tr>
 		<tr>
 			<td class='-whs:nw'>Layout Module<br />`.l--{name}`</td>
 			<td>基礎的なレイアウトを組むためのモジュール群。レイアウトの構成単位となるようなモジュール。</td>
-			<td><span class='-whs:nw'>`@lism-layout`</span><br />0-1-0</td>
+			<td><span class='-whs:nw'>`@lism.layout`</span></td>
 		</tr>
 		<tr>
 			<td class='-whs:nw'>Dynamic Module<br />`.d--{name}`</td>
 			<td>動的な機能を持つ特殊なモジュール群。JavaScriptと組み合わせたものなど。</td>
-			<td><span class='-whs:nw'>`@lism-dynamic`</span><br />0-1-0</td>
+			<td><span class='-whs:nw'>`@lism.dynamic`</span></td>
 		</tr>
 		<tr>
 			<td>Components<br />`.c--{name}`</td>
 			<td>具体的な役割を持つコンポーネント群。他のクラスだけでは補えないコンポーネント特有のスタイルをまとめる。</td>
-			<td>`@lism-component`<br />0-1-0</td>
+			<td>`@lism.component`</td>
 		</tr>
 		{/* <tr>
 			<td>Block</td>
@@ -89,17 +89,17 @@ LismがどのようなCSS設計になっているかを説明します。
 		<tr>
 			<td class='-whs:nw'>Utility Class<br />`.u--{name}`</td>
 			<td>その他、機能やスタイルが明確なユーティリティクラス。</td>
-			<td><span class='-whs:nw'>`@lism-utility`</span><br />0-1-0</td>
+			<td>-</td>
 		</tr>
 		<tr>
 			<td class='-whs:nw'>Props Class<br />`.-{prop}:{val}`</td>
 			<td>単一のCSSプロパティティに紐づいたクラス。</td>
-			<td>0-1-0</td>
+			<td>-</td>
 		</tr>
 	</tbody>
 </table>
 
-<IconBadge /> 詳細度の値は、`@layer`を使わない場合の目安数値です。
+{/* <IconBadge /> 詳細度の値は、`@layer`を使わない場合の目安数値です。 */}
 
 {/* 
 基本的に、最大詳細度を超えないようにセレクタを調整してこの順番で読み込みます。

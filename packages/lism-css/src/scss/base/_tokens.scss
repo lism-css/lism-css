@@ -15,7 +15,6 @@
 	/* ------------------------------------------------------------
 	  Spacing
 	------------------------------------------------------------ */
-	--herfLeading: calc((1lh - 1em) / 2);
 
 	// フィボナッチ数列 0, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89,
 	// 0 .25rem, .5rem, .75rem, 1.25rem, M:(8):2rem, 3.25rem, 5.25rem, 8.5rem
@@ -34,13 +33,7 @@
 	--s80: 11.125rem;
 	// --s90: 18rem;
 
-	// テキストのline-height分を考慮した上下左右の余白
-	// --p--box--s: 0.75em; //calc(0.75em - var(--herfLeading)) 0.75em; //0.625em 0.75em;
-	// --p--box: calc(1.25em - var(--herfLeading)) 1.25em;
-	// --p--box--l: calc(1.75em - var(--herfLeading)) 1.75em; //1.375em 1.5em;
-
 	// .is--flow の余白
-	// --flowGap-offset: calc(var(--herfLeading) * 2);
 	--flowGap--s: var(--s30);
 	--flowGap--m: var(--s40);
 	--flowGap--l: var(--s50);
@@ -296,12 +289,33 @@
 	// --filter--darken: brightness(0.85);
 }
 
+/* ------------------------------------------------------------
+	ハーフレディング
+
+	Memo: --herfLeadingとは別に--negativeHLを定義しているのは、トリミングをしないために 0px に上書きした要素でも --herfLeading 自体の値は無効にしないようにするため。
+	これにより、imgに対してmargin-block-start:var(--herfLeading) を適用して余白を揃えたりできる。
+*/
+@property --herfLeading {
+	syntax: '*';
+	inherits: false;
+	initial-value: calc((1lh - 1em) / 2);
+}
+
+// トリミングするネガティブマージン
+// Memo: initial-valueでvar(--herfLeading)は使えなかった
+@property --trimHL {
+	syntax: '*';
+	inherits: false;
+	initial-value: calc((1lh - 1em) / 2 * -1);
+}
+
 // :lang(en) {
 // 	--herfLeading: calc((1lh - 1cap) / 2);
 // }
+
 // lh非サポートブラウザ用のフォールバック
-@supports not (gap: 1lh) {
-	:root {
-		--herfLeading: 0.125em;
-	}
-}
+// @supports not (gap: 1lh) {
+// 	:root {
+// 		--herfLeading: 0px;
+// 	}
+// }

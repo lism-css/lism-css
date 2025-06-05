@@ -1,3 +1,6 @@
+@forward './trimHL';
+@forward './colbox';
+
 // for screen reader
 .u--hidden {
 	position: absolute;
@@ -9,35 +12,6 @@
 	clip: rect(0, 0, 0, 0);
 	white-space: nowrap;
 	border-width: 0;
-}
-
-.u--trimHL {
-	> :where(p, h1, h2, h3, h4, h5, h6):first-child {
-		margin-block-start: calc(var(--herfLeading) * -1);
-	}
-	> :where(p, h1, h2, h3, h4, h5, h6):last-child {
-		margin-block-end: calc(var(--herfLeading) * -1);
-	}
-}
-
-/*
-    Note: c,bgc,bdc Prop Class より前で読み込むこと。
-*/
-// 優先度的なことを考慮をすると state系列にするより u-- の方がいい
-.u--colbox {
-	--c: var(--c--text);
-	--bgc: var(--c--base-2);
-	color: var(--c);
-	background-color: var(--bgc);
-}
-@supports (color: color-mix(in srgb, #000, #fff)) {
-	// --keycol は 必須. 親から引き継ぎたいこともあるかもしれないので、初期セットはしない
-	.u--colbox {
-		--c: color-mix(in srgb, var(--c--text), var(--keycol) var(--colbox-pct--c, 20%));
-		--c--link: var(--c);
-		--bgc: color-mix(in srgb, var(--c--base), var(--keycol) var(--colbox-pct--bg, 5%));
-		--bdc: var(--keycol);
-	}
 }
 
 .u--overlayLink {

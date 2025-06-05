@@ -1,0 +1,18 @@
+table,
+figure,
+img,
+video {
+	--trimHL: 0px;
+}
+
+.u--trimHL {
+	margin-block: var(--trimHL);
+}
+.u--trimBox {
+	> :first-child {
+		margin-block-start: var(--trimHL);
+	}
+	> :last-child {
+		margin-block-end: var(--trimHL);
+	}
+}
