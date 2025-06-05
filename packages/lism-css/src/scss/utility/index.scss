@@ -21,14 +21,9 @@
 }
 
 /*
-    Note: c,bgc,bdc ユーティリティより前で読み込むこと。
+    Note: c,bgc,bdc Prop Class より前で読み込むこと。
 */
-
-// @supports (color: color-mix(in srgb, #000, #fff)) {
-/* stylelint-disable */
-
-// 優先度的な考慮をすると state より utility の方がいい
-// --kc keyc
+// 優先度的なことを考慮をすると state系列にするより u-- の方がいい
 .u--colbox {
 	--c: var(--c--text);
 	--bgc: var(--c--base-2);
@@ -38,10 +33,10 @@
 @supports (color: color-mix(in srgb, #000, #fff)) {
 	// --keycol は 必須. 親から引き継ぎたいこともあるかもしれないので、初期セットはしない
 	.u--colbox {
-		--c: color-mix(in srgb, var(--c--text), var(--keycol) var(--colbox-pct--c, 16%));
+		--c: color-mix(in srgb, var(--c--text), var(--keycol) var(--colbox-pct--c, 40%));
 		--bgc: color-mix(in srgb, var(--c--base), var(--keycol) var(--colbox-pct--bg, 5%));
 		--bdc: color-mix(in srgb, var(--c--base), var(--keycol) var(--colbox-pct--bdc, 25%));
-		--c--link: var(--keycol);
+		--c--link: var(--c);
 	}
 }
 
@@ -57,11 +52,6 @@
 		content: '';
 	}
 }
-
-// .u--hiddenLink {
-// 	position: absolute;
-// 	inset: 0;
-// }
 
 // 次の要素の mbs を 0 にする。（hidden要素 や absoluteな要素が先頭に入り込んでいる時などに活用できる。）
 .u--skipFlow + * {
