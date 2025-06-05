@@ -1,6 +1,7 @@
 ---
 import { Lism, WithSide, Center, Icon } from 'lism-css/astro';
 import PRESETS from './presets';
+import './style.css';
 
 const { type = 'alert', keycol, icon, isFlow, ...props } = Astro.props;
 
@@ -9,7 +10,7 @@ const _icon = icon || presetData?.icon || 'info';
 const _color = keycol || presetData?.color || 'currentColor';
 ---
 
-<WithSide lismClass='c--callout u--colbox' keycol={_color} p='20' g='20' bd bdrs='2' {...props}>
+<WithSide lismClass='c--callout' class='u--colbox' keycol={_color} p='20' g='20' bd bdrs='2' {...props}>
 	<Center data-is-side lismClass='c--callout__icon' c='keycol' fz='xl' p='5'>
 		<Icon icon={_icon} />
 	</Center>

@@ -25,20 +25,23 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, Reference, Callout } f
 	<PreviewArea resize p='30'>
 		<Lism className='u--colbox' keycol='blue' p='30'><Dummy length='codes' /></Lism>
 		<Lism className='u--colbox' keycol='red' bd p='30'><Dummy length='codes' /></Lism>
-		<Lism className='u--colbox' keycol='#688f04' bd='is' bdc='keycol' bdw='4px' p='30'><Dummy length='codes' /></Lism>
+		<Lism className='u--colbox' keycol='purple' bd bdc='keycol:base:25%' p='30'><Dummy length='codes' /></Lism>
+		<Lism className='u--colbox' keycol='#688f04' bd='is' bdw='4px' p='30'><Dummy length='codes' /></Lism>
 	</PreviewArea>
 	<PreviewCode slot="tab" label="HTML">
 		```html
 		<div class='u--colbox -p:30' style='--keycol:var(--blue)'>...</div>
 		<div class='u--colbox -bd: -p:30' style='--keycol:var(--red)'>...</div>
-		<div class='u--colbox -bd:is -bdc: -p:30' style='--keycol:#688f04;--bdw:4px;--bdc:var(--keycol)'>...</div>
+		<div class="u--colbox -bd: -bdc:mix -p:30" style="--keycol:var(--purple);--bdc1:var(--keycol);--bdc2:var(--c--base);--bdc-pct:25%">...</div>
+		<div class='u--colbox -bd:is -p:30' style='--keycol:#688f04;--bdw:4px;'>...</div>
 		```
 	</PreviewCode>
 	<PreviewCode slot="tab" label='JSX'>
 		```jsx
 		<Lism className='u--colbox' keycol='blue' p='30'><Dummy length='codes' /></Lism>
 		<Lism className='u--colbox' keycol='red' bd p='30'><Dummy length='codes' /></Lism>
-		<Lism className='u--colbox' keycol='#688f04' bd='is' bdc='keycol' bdw='4px' p='30'><Dummy length='codes' /></Lism>
+		<Lism className='u--colbox' keycol='purple' bd bdc='keycol:base:25%' p='30'><Dummy length='codes' /></Lism>
+		<Lism className='u--colbox' keycol='#688f04' bd='is' bdw='4px' p='30'><Dummy length='codes' /></Lism>
 		```
 	</PreviewCode>
 </Preview>

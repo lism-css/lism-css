@@ -33,7 +33,11 @@ const trblUtils = { '0%': '0', '50%': '50%', '100%': '100%' };
 export default {
 	// size
 	w: { utils: { 'fit-content': 'fit' }, presets: ['100%'], converter: 'size' },
-	h: { utils: { 'fit-content': 'fit' }, presets: ['100%', '100lvh', '100svh'], converter: 'size' },
+	h: {
+		utils: { 'fit-content': 'fit' },
+		presets: ['100%', '100lvh', '100svh'],
+		converter: 'size',
+	},
 	maxW: { style: 'maxWidth', presets: ['100%'], converter: 'size' },
 	maxH: { style: 'maxHeight', presets: ['100%'], converter: 'size' },
 	minW: { style: 'minWidth', presets: ['100%'], converter: 'size' },
@@ -109,7 +113,6 @@ export default {
 			'divider',
 			// 'keycol',
 			'mix',
-			// 'cbox',
 		],
 		converter: 'color',
 	},
