@@ -4,8 +4,8 @@ description: ...
 sidebar:
   order: 5
 ---
-import { Lism, Center, Box, Dummy, Media, Flex } from "lism-css/astro";
-import { Preview, PreviewArea, PreviewTitle, PreviewCode, Reference, Callout } from "~/components";
+import { Lism, Stack, Center, Box, Dummy, Media, Flex } from "lism-css/astro";
+import { Preview, PreviewArea, PreviewTitle, PreviewCode, EmbedCode, Reference, Callout } from "~/components";
 
 
 ユーティリティクラスを紹介します。
@@ -19,6 +19,10 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, Reference, Callout } f
 `--keycol`変数をベースに、`--c`, `--bgc`, `--bdc` を `color-mix()` で生成します。
 
 `color`, `background-color` にそれぞれ生成された 変数がセットされますが、`--bdc`は変数定義のみになるため、ボーダーを表示する時は[`-bd:`クラス](/css/border)との併用が必要です。
+
+<PreviewTitle>CSS</PreviewTitle>
+<EmbedCode dirPath='packages/lism-css' srcPath='src/scss/utility/_colbox.scss' />
+
 
 <Preview>
 	<PreviewTitle>例</PreviewTitle>
@@ -76,41 +80,63 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, Reference, Callout } f
 	</PreviewCode>
 </Preview>
 
-
-## `u--trimHL`
+## `u--trimHL` & `u--trimBox`
 
 テキストのハーフレディング分の余白を調整するためのクラスです。
 
+自身のmargin-blockを調整するための`u--trimHL`と、子要素の最初と最後の要素の上下だけを調整するための`u--trimBox`があります。
+
+<PreviewTitle>CSS</PreviewTitle>
+<EmbedCode dirPath='packages/lism-css' srcPath='src/scss/utility/_trimHL.scss' />
 
 <Preview>
-	<PreviewTitle>例</PreviewTitle>
+	<PreviewTitle>`u--trimHL`</PreviewTitle>
 	<PreviewArea resize p='30'>
-		<Lism className='u--trimHL' bd p='30'>
+		<Box bd bds='dashed'>
+			<Dummy className='u--trimHL' length='s'/>
+		</Box>
+	</PreviewArea>
+	<PreviewCode slot="tab" label="HTML">
+		```html "u--trimHL"
+		<div class="l--box -bd:" style="--bds:dashed">
+			<p class="u--trimHL">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor.</p>
+		</div>
+		```
+	</PreviewCode>
+	<PreviewCode slot="tab" label='JSX'>
+		```jsx "u--trimHL"
+		<Box bd bds='dashed'>
+			<Dummy className='u--trimHL' length='s'/>
+		</Box>
+		```
+	</PreviewCode>
+</Preview>
+
+<Preview>
+	<PreviewTitle>`u--trimBox`</PreviewTitle>
+	<PreviewArea resize p='30'>
+		<Lism className='u--trimBox' isFlow='s' bd p='30'>
+			<Dummy length='s' />
 			<Dummy />
 		</Lism>
+		<Stack className='u--trimBox' g='10' bd p='30'>
+			<Media ar='ogp' src='/img/img-1.jpg'/>
+			<Box mbs='var(--herfLeading)'>
+				<Dummy tag='ul'/>
+			</Box>
+			<Dummy length='s' />
+		</Stack>
 	</PreviewArea>
-	<PreviewCode slot="tab" label='CSS'>
-```scss
-.u--trimHL {
-	> :where(p, h1, h2, h3, h4, h5, h6):first-child {
-		margin-block-start: calc(var(--herfLeading) * -1);
-	}
-	> :where(p, h1, h2, h3, h4, h5, h6):last-child {
-		margin-block-end: calc(var(--herfLeading) * -1);
-	}
-}
-```
-	</PreviewCode>
 	<PreviewCode slot="tab" label="HTML">
 		```html
-		<div class="u--trimHL -bd: -p:30">
+		<div class="u--trimBox -bd: -p:30">
 			<p>...</p>
 		</div>
 		```
 	</PreviewCode>
 	<PreviewCode slot="tab" label='JSX'>
 		```jsx
-		<Lism className='u--trimHL' bd p='30'>
+		<Lism className='u--trimBox' bd p='30'>
 			<Dummy />
 		</Lism>
 		```

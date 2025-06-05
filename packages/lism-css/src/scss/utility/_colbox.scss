@@ -1,0 +1,19 @@
+/*
+    Note: c,bgc,bdc Prop Class より前で読み込む(優先度を下げる）こと。
+*/
+// 優先度的なことを考慮をすると state系列にするより u-- の方がいい
+.u--colbox {
+	--c: var(--c--text);
+	--bgc: var(--c--base-2);
+	color: var(--c);
+	background-color: var(--bgc);
+}
+@supports (color: color-mix(in srgb, #000, #fff)) {
+	// --keycol は 必須. 親から引き継ぎたいこともあるかもしれないので、初期セットはしない
+	.u--colbox {
+		--c: color-mix(in srgb, var(--c--text), var(--keycol) var(--colbox-pct--c, 20%));
+		--c--link: var(--c);
+		--bgc: color-mix(in srgb, var(--c--base), var(--keycol) var(--colbox-pct--bg, 5%));
+		--bdc: var(--keycol);
+	}
+}
