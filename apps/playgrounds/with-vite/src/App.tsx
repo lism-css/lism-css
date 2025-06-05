@@ -11,12 +11,26 @@ function App() {
 				Lorem ipsum dolor sit amet, consectetur adipisicing elit. Repellat itaque et voluptatum, ducimus temporibus accusamus exercitationem
 				dolores id impedit corporis asperiores debitis soluta, nemo iusto optio quae. Ducimus, aperiam tempora!
 			</p>
+			<Flex g={['20', '30', '40']} p={['20', '30', '40']} bd bdc='divider'>
+				<Box lh='1' p='30' bd>
+					1
+				</Box>
+				<Box lh='1' p='30' bd>
+					2
+				</Box>
+				<Box lh='1' p='30' bd>
+					3
+				</Box>
+				<Box lh='1' p='30' bd mis='auto'>
+					4
+				</Box>
+			</Flex>
 			<Columns cols='2' g='40'>
 				<Box bgc='base' p='40' bdrs='2' bxsh='3'>
-					Columns &gt; Box
+					Columns
 				</Box>
 				<Box bgc='base' p='40' bdrs='2' bxsh='3'>
-					Columns &gt; Box
+					Columns
 				</Box>
 			</Columns>
 
