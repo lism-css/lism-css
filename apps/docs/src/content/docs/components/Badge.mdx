@@ -124,22 +124,22 @@ export const ColorDemos = ({variant = '',  colbox}) => {
 	<PreviewArea p='30'>
 		<Flex variant='cluster' g='20'>
 			<Badge variant='outline' c='main'>Badge</Badge>
-			<Badge variant='outline' c='#549005' bdrs='99'>Badge</Badge>
+			<Badge variant='outline' c='#549005' px='20' bdrs='99'>Badge</Badge>
 		</Flex>
 	</PreviewArea>
 	<PreviewCode slot='tab' label='JSX'>
 		```jsx
 		<Flex variant='cluster' g='20'>
 			<Badge variant='outline' c='main'>Badge</Badge>
-			<Badge variant='outline' c='#549005' bdrs='99'>Badge</Badge>
+			<Badge variant='outline' c='#549005' px='20' bdrs='99'>Badge</Badge>
 		</Flex>
 		```
 	</PreviewCode>
 	<PreviewCode slot='tab' label='HTML'>
 		```html
 		<div class="l--flex l--flex--cluster -g:20">
-			<span class="c--badge c--badge--outline -bdrs:1 -px:20 -c:main">Badge</span>
-			<span class="c--badge c--badge--outline -bdrs:99 -px:20 -c:" style="--c:#549005;">Badge</span>
+			<span class="c--badge c--badge--outline -px:10 -py:5 -lh:1 -bdrs:2 -c:main">Badge</span>
+			<span class="c--badge c--badge--outline -px:20 -py:5 -lh:1 -bdrs:99 -c:" style="--c:#549005;">Badge</span>
 		</div>
 		```
 	</PreviewCode>
@@ -148,26 +148,26 @@ export const ColorDemos = ({variant = '',  colbox}) => {
 ### `u--colbox` との併用
 
 <Preview>
-	<PreviewTitle>`u--colbox`クラスを使ったスタイリングの例</PreviewTitle>
+	<PreviewTitle>[`u--colbox`](/css/utility-class/#u--colbox)クラスを使ったスタイリングの例</PreviewTitle>
 	<PreviewArea p='30'>
 		<Flex variant='cluster' g='20'>
 			<Badge className='u--colbox' keycol='main'>Badge</Badge>
-			<Badge className='u--colbox' keycol='#549005' bdrs='99'>Badge</Badge>
+			<Badge className='u--colbox' keycol='#549005' bdc='keycol:base:40%' px='20' bdrs='99'>Badge</Badge>
 		</Flex>
 	</PreviewArea>
 	<PreviewCode slot='tab' label='JSX'>
 		```jsx
 		<Flex variant='cluster' g='20'>
 			<Badge className='u--colbox' keycol='main'>Badge</Badge>
-			<Badge className='u--colbox' keycol='#549005' bdrs='99'>Badge</Badge>
+			<Badge className='u--colbox' keycol='#549005' bdc='keycol:base:40%' px='20' bdrs='99'>Badge</Badge>
 		</Flex>
 		```
 	</PreviewCode>
 	<PreviewCode slot='tab' label='HTML'>
 		```html
 		<div class="l--flex l--flex--cluster -g:20">
-			<span class="u--colbox c--badge -d:if -bdrs:1 -px:20" style="--keycol:var(--c--main)">Badge</span>
-			<span class="u--colbox c--badge -d:if -bdrs:99 -px:20" style="--keycol:#549005">Badge</span>
+			<span class="c--badge u--colbox -px:10 -py:5 -lh:1 -bdrs:2" style="--keycol:var(--c--main)">Badge</span>
+			<span class="c--badge u--colbox -px:20 -py:5 -lh:1 -bdrs:99 -bdc:mix" style="--keycol:#549005;--bdc1:var(--keycol);--bdc2:var(--c--base);--bdc-pct:25%">  Badge  </span>
 		</div>
 		```
 	</PreviewCode>

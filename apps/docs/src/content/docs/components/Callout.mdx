@@ -6,7 +6,7 @@ import { Box, Icon, Layer, Dummy } from 'lism-css/astro';
 import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportSource } from '~/components';
 import { Book } from '@phosphor-icons/react';
 
-import Callout from '~/components/ex/Callout/index.jsx';
+import Callout from '~/components/ex/Callout/index.astro';
 
 {/* // import Callout from '~/components/ex/Callout/index.astro'; */}
 
@@ -47,7 +47,7 @@ import Callout from '~/components/ex/Callout/index.jsx';
 
 ## Import
 
-<ImportSource name='Callout' react astro others={['presets.js']}/>
+<ImportSource name='Callout' react astro css='css' others={['presets.js']}/>
 
 
 ## Props
