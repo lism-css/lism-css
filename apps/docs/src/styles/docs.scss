@@ -7,6 +7,41 @@
 @use './docs/home';
 
 /* ----------------------------------------
+    search
+ ---------------------------------------- */
+// .search-container{
+// }
+#starlight__search {
+	--sl-search-cancel-space: 5.5rem;
+	.pagefind-ui__search-input {
+		font-size: 16px;
+		// padding: 0 calc(70px * var(--pagefind-ui-scale)) 0 calc(54px * var(--pagefind-ui-scale));
+	}
+	.pagefind-ui__form::before {
+	}
+}
+
+:root {
+	--sl-menu-button-size: 32px;
+}
+header.header {
+	// searchボタン
+	button[aria-keyshortcuts='Meta+K'] {
+		font-size: 16px;
+	}
+}
+// menuボタン
+button[aria-controls='starlight__sidebar'] {
+	padding: 8px;
+	box-shadow: var(--bxsh--1);
+	font-size: 16px;
+	svg {
+		width: 1em;
+		height: 1em;
+	}
+}
+
+/* ----------------------------------------
     content
  ---------------------------------------- */
 
