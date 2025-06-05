@@ -14,7 +14,8 @@
 		"build": "turbo run build",
 		"build:core": "turbo run build --filter=./packages/lism-core",
 		"merge:dev": "git checkout main && git merge dev",
-		"merge:m2d": "git checkout dev && git merge main"
+		"merge:m2d": "git checkout dev && git merge main",
+		"deploy": "git checkout main && git merge dev && git push origin main && git checkout dev"
 	},
 	"workspaces": [
 		"packages/*",
