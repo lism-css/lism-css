@@ -300,8 +300,8 @@ export const CONTEXT_PROPS = {
 	grid: {
 		gd: {},
 		gt: { style: 'gridTemplate' },
-		gtc: {},
-		gtr: {},
+		gtc: { presets: ['subgrid'] },
+		gtr: { presets: ['subgrid'] },
 		gta: {},
 		gaf: {
 			utils: { row: 'r', column: 'c' },
