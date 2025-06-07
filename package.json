@@ -15,7 +15,7 @@
 		"build:core": "turbo run build --filter=./packages/lism-core",
 		"merge:dev": "git checkout main && git merge dev",
 		"merge:m2d": "git checkout dev && git merge main",
-		"deploy": "git checkout main && git merge dev && git push origin main && git checkout dev"
+		"deploy": "sh -c 'echo \"本当に main にマージしてデプロイしますか？ (yes/no)\"; read ans; if [ \"$ans\" = \"yes\" ]; then echo \"memo: mainブランチにdevをマージしてpushし、devに戻る\"; git checkout main && git merge dev && git push origin main && git checkout dev; else echo \"デプロイを中止しました\"; fi'"
 	},
 	"workspaces": [
 		"packages/*",
