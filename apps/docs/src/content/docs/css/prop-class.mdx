@@ -405,19 +405,13 @@ gridプロパティは `grid` オブジェクト、もしくは`Grid`系列の�
 
 {/* - `-gt:side:l`, `-gt:side:r` クラスは、（追加CSSファイルを読み込むと）`[dir='rtl']`時に方向が反転するようになっており、ltr言語でもrtl言語でも方向が一致するようになっています。 */}
 
-
-<PreviewTitle>基本的なgrid系プロパティの使用例</PreviewTitle>
-```jsx
-<Lism d='grid' ai='center' grid={{gtc:'1fr 1fr', g:40}}>...</Lism>
-```
-
 <PreviewTitle>`Grid`コンポーネントでは、`grid`オブジェクトを挟まずにそのまま指定できます。</PreviewTitle>
 
 ```jsx
 // Grid系のコンポーネントを使う場合は、gridオブジェクトは不要です。
-<Grid ai='center' gtc='1fr 1fr' g={40}>...</Grid>
+<Grid ai='center' gtc='1fr 1fr' g='40'>...</Grid>
 ```
-{/* <Grid gtc='1fr 1fr' g={40} ai='center'>
+{/* <Grid gtc='1fr 1fr' g='40' ai='center'>
 <Box>aaa<br/>bbb</Box>
 <Box>aaa</Box>
 <Box>aaa</Box>
