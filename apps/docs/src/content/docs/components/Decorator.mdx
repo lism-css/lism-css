@@ -44,48 +44,28 @@ div.l--decorator[aria-hidden="true"]
 
 <Preview>
 	<PreviewTitle>例</PreviewTitle>
-	<PreviewArea resize p={20}>
-		<Grid>
-			<Decorator size='1.25em' bd='l' rotate='45deg' transformOrigin='left bottom' />
-			<Box p='20'>
-				<Dummy />
-			</Box>
-			<Decorator size='1.25em' bd='l' rotate='-45deg' transformOrigin='left top' />
-		</Grid>
+	<PreviewArea p='30'>
+		<Box p='40' pos='r'>
+			<Dummy />
+			<Decorator size='1.25em' pos='a' t='0' l='0' bd='l,t' />
+			<Decorator size='1.25em' pos='a' r='0' b='0' bd='r,b' />
+		</Box>
 	</PreviewArea>
 	<PreviewCode slot='tab' label='JSX'>
 		```jsx
-		<Grid>
-			<Decorator size='1.25em' bd='l' rotate='45deg' transformOrigin='left bottom' />
-			<Box p='20'>
-				<Dummy />
-			</Box>
-			<Decorator size='1.25em' bd='l' rotate='-45deg' transformOrigin='left top' />
-		</Grid>
+		<Box p='40' pos='r'>
+			<Dummy />
+			<Decorator size='1.25em' pos='a' t='0' l='0' bd='l,t' />
+			<Decorator size='1.25em' pos='a' r='0' b='0' bd='r,b' />
+		</Box>
 		```
 	</PreviewCode>
 	<PreviewCode slot='tab' label='HTML'>
 		```jsx
-		<div class='l--grid'>
-			<div
-				class='l--decorator -bd:l -trfo:lb -rotate:45 -ar:1/1 -w'
-				style='--w:1.25em'
-				aria-hidden='true'
-			></div>
-			<div class='l--box -p:20'>
-				<p>
-					{' '}
-					Lorem ipsum dolor sit, amet consectetur adipisicing elit, sed do eiusmod tempor.
-					Non facere laudantium ex eos doloribus aut dolore nisi.{' '}
-				</p>
-			</div>
-			<div
-				class='l--decorator -bd:l -trfo:lt -rotate:-45 -ar:1/1 -w'
-				style='--w:1.25em'
-				aria-hidden='true'
-			>
-				{' '}
-			</div>
+		<div class='l--box -p:40 -pos:r'>
+			<p>Lorem ipsum dolor sit, amet consectetur adipisicing elit, sed do eiusmod tempor. Non facere laudantium ex eos doloribus aut dolore nisi.</p>
+			<div class='l--decorator -pos:a -t:0 -l:0 -bd:l -bd:t -ar:1/1 -w' style='--w:1.25em' aria-hidden='true'></div>
+			<div class='l--decorator -pos:a -r:0 -b:0 -bd:r -bd:b -ar:1/1 -w' style='--w:1.25em' aria-hidden='true'></div>
 		</div>
 		```
 	</PreviewCode>
