@@ -17,7 +17,7 @@ export default function Chat({ variant = 'speak', direction = 'start', name, ava
 			)}
 			<GridItem lismClass='c--chat__body' pos='r'>
 				<Decorator lismClass='c--chat__deco' className='u--colbox u--skipFlow' pos='a' scale={direction === 'start' ? '' : '-X'} />
-				<Lism lismClass='c--chat__content' className='u--colbox u--trimBox' bdrs='4' p='30' isFlow={isFlow} jslf={direction}>
+				<Lism lismClass='c--chat__content' className='u--colbox u--trimBox' bdrs='30' p='30' isFlow={isFlow} jslf={direction}>
 					{children}
 				</Lism>
 			</GridItem>

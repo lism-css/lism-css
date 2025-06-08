@@ -16,20 +16,20 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportSource } from '~
 <Preview>
 	<PreviewTitle>Preview</PreviewTitle>
 	<PreviewArea p='30'>
-		<Frame isLinkBox href='#banner-link' hov='fade' trs bdrs='4'>
+		<Frame isLinkBox href='#banner-link' hov='fade' trs bdrs='20'>
 			<img src='https://picsum.photos/seed/hogeee/1200/400' alt='' width='800' height='200' />
 		</Frame>
 	</PreviewArea>
 	<PreviewCode slot='tab' label='JSX'>
 		```jsx "Frame" "isLinkBox"
-		<Frame isLinkBox href='#banner-link' hov='fade' trs bdrs='4'>
+		<Frame isLinkBox href='#banner-link' hov='fade' trs bdrs='20'>
 			<img src='https://picsum.photos/seed/hogeee/1200/400' alt='' width='800' height='200' />
 		</Frame>
 		```
 	</PreviewCode>
 	<PreviewCode slot='tab' label='HTML'>
 		```html "l--frame" "is--linkBox"
-		<a class="c--banner l--frame is--linkBox -hov:fade -trs: -bdrs:4" href="#banner-link">
+		<a class="c--banner l--frame is--linkBox -hov:fade -trs -bdrs:20" href="#banner-link">
 			<img src='https://picsum.photos/seed/hogeee/1200/400' alt='' width='800' height='200' />
 		</a>
 		```
@@ -40,7 +40,7 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportSource } from '~
 <Preview>
 	<PreviewTitle>`Layer`で画像に被せてコンテンツを表示</PreviewTitle>
 	<PreviewArea p='30'>
-		<Frame isLinkBox href='#banner-link' hov='fade' trs ar='3/1' bdrs='4'>
+		<Frame isLinkBox href='#banner-link' hov='fade' trs ar='3/1' bdrs='20'>
 			<Media src='https://picsum.photos/seed/hogeee/1200/400' alt='' width='960' height='640' loading='lazy' />
 			<Stack isLayer jc='c' g='5' px='40' c='#fff' bgc='rgb(0 0 0 / 50%)' lh='s'>
 				<Text fz='xl' fw='bold'>Banner</Text>
@@ -50,7 +50,7 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportSource } from '~
 	</PreviewArea>
 	<PreviewCode>
 		```jsx
-		<Frame isLinkBox href='#banner-link' hov='fade' trs ar='3/1' bdrs='4'>
+		<Frame isLinkBox href='#banner-link' hov='fade' trs ar='3/1' bdrs='20'>
 			<Media src='https://picsum.photos/seed/hogeee/1200/400' alt='' width='960' height='640' loading='lazy' />
 			<Stack isLayer jc='c' g='5' px='40' c='#fff' bgc='rgb(0 0 0 / 50%)' lh='s'>
 				<Text fz='xl' fw='bold'>Banner</Text>

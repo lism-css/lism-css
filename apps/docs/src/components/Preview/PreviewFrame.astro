@@ -11,13 +11,13 @@ const { isInline = false, url, ...props } = Astro.props;
 {
 	!isInline ? (
 		<>
-			<Frame ar='3/2' bxsh='1'>
-				<Frame className='u--scalePreview' ar='3/2' bdrs='3' bd bdw='3px' {...props}>
+			<Frame ar='3/2' bxsh='10'>
+				<Frame className='u--scalePreview' ar='3/2' bdrs='20' bd bdw='3px' {...props}>
 					<iframe src={url} width='800' height='600' />
 				</Frame>
 			</Frame>
 			<Center mbs='40'>
-				<Button href={url} variant='fill' target='_blank' bdrs='2'>
+				<Button href={url} variant='fill' target='_blank' bdrs='10'>
 					大きい画面で見る
 				</Button>
 			</Center>

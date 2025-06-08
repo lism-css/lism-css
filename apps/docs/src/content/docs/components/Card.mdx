@@ -40,13 +40,13 @@ import Card from '~/components/ex/Card/index.jsx';
 	</PreviewCode>
 	<PreviewCode slot='tab' label='HTML'>
 		```html
-		<div class="c--card l--withSide -c:text -bgc:base -bdrs:3 -bxsh:2 -ov:h" style="--side-w:50%">
+		<div class="c--card l--withSide -c:text -bgc:base -bdrs:20 -bxsh:20 -ov:h" style="--side-w:50%">
 			<div class="l--frame -ar:16/9" data-is-side>
 				<img src="/img/img-1.jpg" width="960" height="640">
 			</div>
 			<div class="l--stack -g:10 -p:30">
 				<h3 class="-fz:l">Card Title</h3>
-				<p class="-fz:s -mb:" style="--mb:var(--s10)">ロレムイプサムの座り雨、トマ好き学習だったエリット、しかし時と活力はそのような木々と楽しみ。ブラインド行うにはいくつかの重要な事柄が流れます。</p>
+				<p class="-fz:s -mb" style="--mb:var(--s10)">ロレムイプサムの座り雨、トマ好き学習だったエリット、しかし時と活力はそのような木々と楽しみ。ブラインド行うにはいくつかの重要な事柄が流れます。</p>
 			</div>
 		</div>
 		```
@@ -160,7 +160,7 @@ import Card from '~/components/ex/Card/index.jsx';
 <Preview>
 	<PreviewTitle>`u--overlayLink`を使う例</PreviewTitle>
 	<PreviewArea resize p='40'>
-		<Card isLinkBox hov={{bxsh: '4'}} trs sideW='50%'>
+		<Card isLinkBox hov={{bxsh: '40'}} trs sideW='50%'>
 			<Frame data-is-side ar='16/9' pos='r'>
 				<Media src='/img/img-1.jpg' alt='' width='960' height='640' />
 				<Link href='#badge-link' pos='a' z='1' t='0' r='0' fz='s' bgc='black' c='white' m='20' px='20' bdrs='99' td='n' hov='fade'>Category</Link>
@@ -176,7 +176,7 @@ import Card from '~/components/ex/Card/index.jsx';
 	</PreviewArea>
 	<PreviewCode slot='tab' label='JSX'>
 		```jsx "isLinkBox" "href=" "u--overlayLink"
-		<Card isLinkBox hov={{bxsh: '4'}} trs sideW='50%'>
+		<Card isLinkBox hov={{bxsh: '40'}} trs sideW='50%'>
 			<Frame data-is-side ar='16/9' pos='r'>
 				<Media src='/img/img-1.jpg' alt='' width='960' height='640' />
 				<Link href='#badge-link' pos='a' z='1' t='0' r='0' fz='s' bgc='black' c='white' m='20' px='20' bdrs='99' td='n' hov='fade'>Category</Link>
@@ -387,7 +387,7 @@ import Card from '~/components/ex/Card/index.jsx';
 <Preview>
 	<PreviewTitle>`u--innerR`の活用</PreviewTitle>
 	<PreviewArea resize p='30'>
-		<Card sideW='45%' className='u--outerR' g='20' p='20' bdrs='4'>
+		<Card sideW='45%' className='u--outerR' g='20' p='20' bdrs='30'>
 			<Frame data-is-side ar='16/9' className='u--innerR'>
 				<Media src='/img/img-1.jpg' alt='' width='960' height='640' />
 			</Frame>
@@ -398,8 +398,8 @@ import Card from '~/components/ex/Card/index.jsx';
 		</Card>
 	</PreviewArea>
 	<PreviewCode slot='tab' label='JSX'>
-		```jsx "u--outerR" "u--innerR" "p='20' bdrs='4'"
-		<Card sideW='45%' className='u--outerR' g='20' p='20' bdrs='4'>
+		```jsx "u--outerR" "u--innerR" "p='20' bdrs='30'"
+		<Card sideW='45%' className='u--outerR' g='20' p='20' bdrs='30'>
 			<Frame data-is-side ar='16/9' className='u--innerR'>
 				<Media src='/img/img-1.jpg' alt='' width='960' height='640' />
 			</Frame>
@@ -423,7 +423,7 @@ import Card from '~/components/ex/Card/index.jsx';
 	<PreviewTitle>コンテンツをホバーして表示</PreviewTitle>
 	<PreviewArea p='30'>
 		<Columns variant='liquid' colSize='20rem' g='30'>
-			<Card href='#card-a' pos='r' bdrs='3' hov='set'>
+			<Card href='#card-a' pos='r' bdrs='20' hov='set'>
 				<Frame ar='3/2'>
 					<img src='/img/img-1.jpg' alt='' width='960' height='640' />
 				</Frame>
@@ -440,7 +440,7 @@ import Card from '~/components/ex/Card/index.jsx';
 					</Box>
 				</Stack>
 			</Card>
-			<Card href='#card-b' pos='r' bdrs='3' hov='set'>
+			<Card href='#card-b' pos='r' bdrs='20' hov='set'>
 				<Frame ar='3/2'>
 					<img src='/img/img-2.jpg' alt='' width='960' height='640' />
 				</Frame>
@@ -462,7 +462,7 @@ import Card from '~/components/ex/Card/index.jsx';
 	<PreviewCode slot='tab' label='JSX'>
 	```jsx "hov='set'" "hov='get:slide'"
 	<Columns variant='liquid' colSize='20rem' g='30'>
-		<Card href='#card-a' pos='r' bdrs='2' hov='set'>
+		<Card href='#card-a' pos='r' bdrs='10' hov='set'>
 			<Frame ar='3/2'>
 				<img src='/img/img-1.jpg' alt='' width='960' height='640' />
 			</Frame>
@@ -479,7 +479,7 @@ import Card from '~/components/ex/Card/index.jsx';
 				</Box>
 			</Stack>
 		</Card>
-		<Card href='#card-b' pos='r' bdrs='2' hov='set'>
+		<Card href='#card-b' pos='r' bdrs='10' hov='set'>
 			<Frame ar='3/2'>
 				<img src='/img/img-2.jpg' alt='' width='960' height='640' />
 			</Frame>
@@ -522,7 +522,7 @@ import Card from '~/components/ex/Card/index.jsx';
 	<PreviewTitle>ブレイクポイントで切り替える場合</PreviewTitle>
 	<PreviewArea resize p='30'>
 		<Card sideW='50%' sidePosition='start start' bxsh='0' bdrs='0'>
-			<Frame data-is-side ar={['16/9', 'unset']} pos='r' bdrs='3'>
+			<Frame data-is-side ar={['16/9', 'unset']} pos='r' bdrs='20'>
 				<Media pos='a' src='/img/img-1.jpg' alt='' width='960' height='640' />
 			</Frame>
 			<Stack g='10' p='30'>

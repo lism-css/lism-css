@@ -157,16 +157,15 @@ div.l--withSide
 		```
 	</PreviewCode>
 	<PreviewCode slot='tab' label='HTML'>
-		```jsx "-gd: -gd_sm" "gd=" "'.' 'side'" "'. side' / 1fr 10rem" "-ga:" "--ga:side"
-		<div class='l--grid -g:30 -gd: -gd_sm' style="--gd:'.' 'side';--gd_sm:'. side' / 1fr 10rem">
+		```jsx "-gd -gd_sm" "gd=" "'.' 'side'" "'. side' / 1fr 10rem" "-ga" "--ga:side"
+		<div class='l--grid -g:30 -gd -gd_sm' style="--gd:'.' 'side';--gd_sm:'. side' / 1fr 10rem">
 			<div>
 				<p>
-					{' '}
 					Lorem ipsum dolor sit, amet consectetur adipisicing elit, sed do eiusmod tempor.
-					Non facere laudantium ex eos doloribus aut dolore nisi.{' '}
+					Non facere laudantium ex eos doloribus aut dolore nisi.
 				</p>
 			</div>
-			<div class='-ga:' style='--ga:side'>
+			<div class='-ga' style='--ga:side'>
 				Side Content
 			</div>
 		</div>
@@ -198,15 +197,14 @@ div.l--withSide
 	</PreviewCode>
 	<PreviewCode slot='tab' label='HTML'>
 		```jsx
-		<div class='l--grid -g:30 -gd: -gd_md' style="--gd:'.' 'side';--gd_md:'side .' / 10rem 1fr">
+		<div class='l--grid -g:30 -gd -gd_md' style="--gd:'.' 'side';--gd_md:'side .' / 10rem 1fr">
 			<div>
 				<p>
-					{' '}
 					Lorem ipsum dolor sit, amet consectetur adipisicing elit, sed do eiusmod tempor.
-					Non facere laudantium ex eos doloribus aut dolore nisi.{' '}
+					Non facere laudantium ex eos doloribus aut dolore nisi.
 				</p>
 			</div>
-			<div class='-ga:' style='--ga:side'>
+			<div class='-ga' style='--ga:side'>
 				Side Content
 			</div>
 		</div>

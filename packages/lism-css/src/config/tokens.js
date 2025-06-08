@@ -24,8 +24,8 @@ export default {
 	ff: ['base', 'accent', 'mono'],
 	fw: ['thin', 'light', 'normal', 'medium', 'bold', 'heavy'],
 	op: ['low', 'mid', 'high'],
-	bdrs: ['1', '2', '3', '4', '5', '6', '99'],
-	bxsh: ['-1', '-2', '-3', '-4', '-5', '1', '2', '3', '4', '5'],
+	bdrs: ['5', '10', '20', '30', '40', '50', '60', '70', '80', '99'],
+	bxsh: ['-10', '-20', '-30', '-40', '-50', '-5', '5', '10', '20', '30', '40', '50'],
 
 	// size:['container', 'container:s', 'container:l'],
 	contentSize: ['xs', 's', 'm', 'l', 'xl'], // --size--xxx トークン

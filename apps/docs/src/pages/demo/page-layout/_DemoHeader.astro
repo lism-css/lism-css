@@ -2,7 +2,7 @@
 import { Container, Lism, Link, Flex, Stack, Center, Icon, Dummy, Text, Modal } from 'lism-css/astro';
 ---
 
-<Container tag='header' size='m' py='30' hasGutter bxsh='1'>
+<Container tag='header' size='m' py='30' hasGutter bxsh='10'>
 	<Flex jc='sb' ai='c' g='20'>
 		<Lism fz='xl' ff='mono'><a href='/'>Lism CSS</a></Lism>
 		<Flex mis='auto' g='20' d={['none', null, 'flex']}>
@@ -15,7 +15,7 @@ import { Container, Lism, Link, Flex, Stack, Center, Icon, Dummy, Text, Modal } 
 		</Center>
 	</Flex>
 	<Modal.Root id='modal-01' p='40' style={{ '--offset': '0 100px' }}>
-		<Modal.Inner maxW='m' m='a' p='40' g='30' bdrs='3' bxsh='4'>
+		<Modal.Inner maxW='m' m='a' p='40' g='30' bdrs='20' bxsh='40'>
 			<Center pos='a' t='0' r='0' z='1' fz='xl' p='20' m='20' bdrs='99'>
 				<Modal.CloseIconBtn modalId='modal-01' />
 			</Center>
@@ -30,7 +30,7 @@ import { Container, Lism, Link, Flex, Stack, Center, Icon, Dummy, Text, Modal } 
 				</Stack>
 			</Modal.Body>
 			<Modal.Footer d='f' jc='e'>
-				<Lism tag='button' data-modal-close='modal-01' bd='none' p='20' lh='xs' bdrs='2'>Close</Lism>
+				<Lism tag='button' data-modal-close='modal-01' bd='none' p='20' lh='xs' bdrs='10'>Close</Lism>
 			</Modal.Footer>
 		</Modal.Inner>
 	</Modal.Root>

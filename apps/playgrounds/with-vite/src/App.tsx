@@ -26,10 +26,10 @@ function App() {
 				</Box>
 			</Flex>
 			<Columns cols='2' g='40'>
-				<Box bgc='base' p='40' bdrs='2' bxsh='3'>
+				<Box bgc='base' p='40' bdrs='10' bxsh='30'>
 					Columns
 				</Box>
-				<Box bgc='base' p='40' bdrs='2' bxsh='3'>
+				<Box bgc='base' p='40' bdrs='10' bxsh='30'>
 					Columns
 				</Box>
 			</Columns>
@@ -38,7 +38,7 @@ function App() {
 			<Dummy length='l' />
 
 			<Flex jc='c'>
-				<Link href='###' hov='fade' bgc='text' lh='xs' c='base' px='30' py='20' td='n' bdrs='5'>
+				<Link href='###' hov='fade' bgc='text' lh='xs' c='base' px='30' py='20' td='n' bdrs='50'>
 					Link Button
 				</Link>
 			</Flex>

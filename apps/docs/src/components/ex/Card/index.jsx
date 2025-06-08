@@ -6,8 +6,8 @@ export default function Card({ layout, ...props }) {
 	const defaultProps = {
 		c: 'text',
 		bgc: 'base',
-		bdrs: '3',
-		bxsh: '2',
+		bdrs: '20',
+		bxsh: '20',
 		ov: 'h',
 	};
 

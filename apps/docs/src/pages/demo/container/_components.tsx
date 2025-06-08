@@ -48,7 +48,7 @@ export function TipCode({
 			lh='xs'
 			px='10'
 			m='5'
-			bdrs='1'
+			bdrs='5'
 			whs='nw'
 			// isColored
 			className='u--colbox'

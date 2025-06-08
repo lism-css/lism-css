@@ -5,7 +5,7 @@ sidebar:
   order: 7
 ---
 import { Lism, Text, Frame, Layer, Media, Dummy, Box, Flex, Grid } from "lism-css/astro";
-import { Preview, PreviewArea, PreviewTitle, PreviewCode, Reference, Note, Callout } from "~/components";
+import { Preview, PreviewArea, PreviewTitle, PreviewCode, EmbedCode, Reference, Note, Callout } from "~/components";
 import AllPropClasses from '../../all-prop-classes.mdx';
 
 
@@ -61,6 +61,7 @@ Lismでは、主要なCSSプロパティ群に対して、それらで頻繁に�
 
 <PreviewTitle>CSS (スクロールしてご覧いただけます）</PreviewTitle>
 <Frame ar='3/2' ovy='auto'>
+	{/* <EmbedCode dirPath='packages/lism-css' srcPath='dist/css/props.css' /> */}
 	<AllPropClasses />
 </Frame>
 

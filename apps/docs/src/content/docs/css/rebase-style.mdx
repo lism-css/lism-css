@@ -179,30 +179,30 @@ Base階層の最後で定義されている、スタイルをリセット・再�
 		<Stack g='30'>
 			<Text> Default: </Text>
 			<Flex className='re--sh -g:40 -pis:30'>
-				<Box bxsh='2' p='40' bdrs='3'>Box</Box>
-				<Box bxsh='4' p='40' bdrs='3'>Box</Box>
+				<Box bxsh='20' p='40' bdrs='20'>Box</Box>
+				<Box bxsh='40' p='40' bdrs='20'>Box</Box>
 			</Flex>
 			<Spacer h='40' />
 			<Text> re--sh して 変数を上書きした例: </Text>
 			<Flex className='re--sh -g:40 -pis:30' style={{'--sh-hsl': '200 50% 50%', '--sh-a':'20%'}}>
-				<Box bxsh='2' p='40' bdrs='3'>Box</Box>
-				<Box bxsh='4' p='40' bdrs='3'>Box</Box>
+				<Box bxsh='20' p='40' bdrs='20'>Box</Box>
+				<Box bxsh='40' p='40' bdrs='20'>Box</Box>
 			</Flex>
 		</Stack>
 	</PreviewArea>
 		<PreviewCode slot='tab' label='HTML'>
 		```html "re--sh"
 		<div class="re--sh l--flex -g:40" style="--sh-hsl:200 50% 50%;--sh-a:20%">
-			<div class="l--box -bxsh:1 -p:40 -bdrs:3">Box</div>
-			<div class="l--box -bxsh:4 -p:40 -bdrs:3">Box</div>
+			<div class="l--box -bxsh:20 -p:40 -bdrs:20">Box</div>
+			<div class="l--box -bxsh:40 -p:40 -bdrs:20">Box</div>
 		</div>
 		```
 	</PreviewCode>
 	<PreviewCode slot='tab' label='JSX'>
 		```jsx "re--sh"
 		<Flex className='re--sh' g='40' style={{'--sh-hsl': '200 50% 50%', '--sh-a':'20%'}}>
-			<Box bxsh='2' p='40' bdrs='3'>Box</Box>
-			<Box bxsh='4' p='40' bdrs='3'>Box</Box>
+			<Box bxsh='20' p='40' bdrs='20'>Box</Box>
+			<Box bxsh='40' p='40' bdrs='20'>Box</Box>
 		</Flex>
 		```
 	</PreviewCode>

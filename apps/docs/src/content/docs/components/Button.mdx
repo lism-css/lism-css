@@ -74,23 +74,23 @@ Common Props の `w`, `h` ではなく、`width`, `height` を使ってくださ
 	<PreviewArea p='20' bg='u:stripe'>
 		<Flex g='20'>
 			{/* <Button href='###' bgc='base-2' bdc='divider'>Button</Button> */}
-			<Button href='###' variant='fill' bgc='main' bdrs='3' hov='fade'>Fill Button</Button>
-			<Button href='###' variant='outline' c='#64a31c' bdrs='3' hov='fade'>Outline</Button>
+			<Button href='###' variant='fill' bgc='main' bdrs='20' hov='fade'>Fill Button</Button>
+			<Button href='###' variant='outline' c='#64a31c' bdrs='20' hov='fade'>Outline</Button>
 		</Flex>
 	</PreviewArea>
 	<PreviewCode slot='tab' label='JSX'>
 		```jsx "bgc='main'" "c='#64a31c'"
 		<Flex g='20'>
-			<Button href='###' variant='fill' bgc='main' bdrs='3' hov='fade'>Fill Button</Button>
-			<Button href='###' variant='outline' c='#64a31c' bdrs='3' hov='fade'>Outline</Button>
+			<Button href='###' variant='fill' bgc='main' bdrs='20' hov='fade'>Fill Button</Button>
+			<Button href='###' variant='outline' c='#64a31c' bdrs='20' hov='fade'>Outline</Button>
 		</Flex>
 		```
 	</PreviewCode>
 	<PreviewCode slot='tab' label='HTML'>
 		```html
 		<div class='l--flex -g:20'>
-			<a class='c--button l--flex c--button--fill -td:n -lh:xs -px:30 -py:20 -ai:c -bgc:main -bdrs:3 -hov:fade' href='###'>Fill Button</a>
-			<a class='c--button l--flex c--button--outline -td:n -lh:xs -px:30 -py:20 -ai:c -c -bdrs:3 -hov:fade' style='--c:#64a31c' href='###'>Outline</a>
+			<a class='c--button l--flex c--button--fill -td:n -lh:xs -px:30 -py:20 -ai:c -bgc:main -bdrs:20 -hov:fade' href='###'>Fill Button</a>
+			<a class='c--button l--flex c--button--outline -td:n -lh:xs -px:30 -py:20 -ai:c -c -bdrs:20 -hov:fade' style='--c:#64a31c' href='###'>Outline</a>
 		</div>
 		```
 	</PreviewCode>
@@ -101,11 +101,11 @@ Common Props の `w`, `h` ではなく、`width`, `height` を使ってくださ
 	<PreviewTitle>アイコンを使う例</PreviewTitle>
 	<PreviewArea p='20' bg='u:stripe'>
 		<Flex g='20'>
-			<Button href='###' variant='fill' g='10' bdrs='1'>
+			<Button href='###' variant='fill' g='10' bdrs='5'>
 				<Icon icon='cart' />
 				<span>Button</span>
 			</Button>
-			<Button href='###' variant='outline' g='5' bdrs='1'>
+			<Button href='###' variant='outline' g='5' bdrs='5'>
 				<span>Button</span>
 				<Icon icon={ArrowRightIcon} offset='20% 0'/>
 			</Button>
@@ -114,11 +114,11 @@ Common Props の `w`, `h` ではなく、`width`, `height` を使ってくださ
 	<PreviewCode slot='tab' label='JSX'>
 		```jsx
 		<Flex g='20'>
-			<Button href='###' variant='fill' g='10' bdrs='1'>
+			<Button href='###' variant='fill' g='10' bdrs='5'>
 				<Icon icon='cart' />
 				<span>Button</span>
 			</Button>
-			<Button href='###' variant='outline' g='5' bdrs='1'>
+			<Button href='###' variant='outline' g='5' bdrs='5'>
 				<span>Button</span>
 				<Icon icon={ArrowRightIcon} offset='20% 0'/>
 			</Button>
@@ -132,13 +132,13 @@ Common Props の `w`, `h` ではなく、`width`, `height` を使ってくださ
 <Preview>
 	<PreviewTitle>アイコンのみのボタン</PreviewTitle>
 	<PreviewArea p='20' bg='u:stripe'>
-		<Button href='###' variant='fill' w='fit' px='20' py='20' lh='1' bdrs='2'>
+		<Button href='###' variant='fill' w='fit' px='20' py='20' lh='1' bdrs='10'>
 			<Icon icon={{as:ShoppingCartSimpleIcon, weight:'fill'}} fz='l'/>
 		</Button> 
 	</PreviewArea>
 	<PreviewCode slot='tab' label='JSX'>
 		```jsx
-		<Button href='###' variant='fill' w='fit' px='20' py='20' lh='1' bdrs='2'>
+		<Button href='###' variant='fill' w='fit' px='20' py='20' lh='1' bdrs='10'>
 			<Icon icon={{as:ShoppingCartSimpleIcon, weight:'fill'}} fz='l'/>
 		</Button> 
 		```
@@ -158,19 +158,19 @@ Common Props の `w`, `h` ではなく、`width`, `height` を使ってくださ
 	<PreviewTitle>サイズの調整</PreviewTitle>
 	<PreviewArea p='20' isFlow='s' bg='u:stripe'>
 		{/* <Flex g='20'> */}
-		<Button href='###' variant='fill' g='10' w='fit' bdrs='2'>
+		<Button href='###' variant='fill' g='10' w='fit' bdrs='10'>
 			<Fragment>Button</Fragment>
 		</Button>
-		<Button href='###' variant='fill' maxW='25rem' jc='c' g='10' fz='l' bdrs='2'>
+		<Button href='###' variant='fill' maxW='25rem' jc='c' g='10' fz='l' bdrs='10'>
 			<Fragment>Button</Fragment>
 		</Button>
 	</PreviewArea>
 	<PreviewCode slot='tab' label='JSX'>
 		```jsx "w='fit'" "maxW='25rem'"
-		<Button href='###' variant='fill' g='10' w='fit' bdrs='2'>
+		<Button href='###' variant='fill' g='10' w='fit' bdrs='10'>
 			Button
 		</Button>
-		<Button href='###' variant='fill' maxW='25rem' jc='c' g='10' fz='l' bdrs='2'>
+		<Button href='###' variant='fill' maxW='25rem' jc='c' g='10' fz='l' bdrs='10'>
 			Button
 		</Button>
 		```

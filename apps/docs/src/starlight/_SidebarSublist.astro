@@ -14,9 +14,7 @@ export interface Link {
 }
 /** Turn the nested tree structure of a sidebar into a flat list of all the links. */
 function flattenSidebar(sidebar: SidebarEntry[]): Link[] {
-	return sidebar.flatMap((entry) =>
-		entry.type === 'group' ? flattenSidebar(entry.entries) : entry
-	);
+	return sidebar.flatMap((entry) => (entry.type === 'group' ? flattenSidebar(entry.entries) : entry));
 }
 
 interface Props {
@@ -37,15 +35,6 @@ const { sublist, nested } = Astro.props;
 					</li>
 				);
 			}
-
-			// if (entry.type === 'group' && entry.label === 'Layout') {
-			// 	return (
-			// 		<li class='_sublist' data-label={entry.label}>
-			// 			<span class='_subtitle'>{entry.label}</span>{' '}
-			// 			<Astro.self sublist={entry.entries} nested />
-			// 		</li>
-			// 	);
-			// }
 
 			if (entry.href && entry.href.includes('###')) {
 				return (
@@ -71,30 +60,19 @@ const { sublist, nested } = Astro.props;
 							{entry.badge && (
 								<>
 									{' '}
-									<Badge
-										text={entry.badge.text}
-										variant={entry.isCurrent ? 'outline' : entry.badge.variant}
-									/>
+									<Badge text={entry.badge.text} variant={entry.isCurrent ? 'outline' : entry.badge.variant} />
 								</>
 							)}
 						</a>
 					) : (
-						<details
-							open={
-								flattenSidebar(entry.entries).some((i) => i.isCurrent) ||
-								!entry.collapsed
-							}
-						>
-							<summary class='-pis:' style='--pis:.125em'>
+						<details open={flattenSidebar(entry.entries).some((i) => i.isCurrent) || !entry.collapsed}>
+							<summary class='-pis' style='--pis:.125em'>
 								<div class='group-label'>
 									<span class=''>{entry.label}</span>
 									{entry.badge && (
 										<>
 											{' '}
-											<Badge
-												text={entry.badge.text}
-												variant={entry.badge.variant}
-											/>
+											<Badge text={entry.badge.text} variant={entry.badge.variant} />
 										</>
 									)}
 								</div>
