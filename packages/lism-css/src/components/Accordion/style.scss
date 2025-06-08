@@ -1,9 +1,9 @@
 .d--accordion {
 	--trsdu: var(--trsdu--acc);
-	&.-opened {
+	&._opened {
 		--_notOpened: ;
 	}
-	&:not(.-opened) {
+	&:not(._opened) {
 		--_isOpened: ;
 	}
 }
@@ -35,7 +35,7 @@
 // }
 
 // 閉じている時
-:where(.d--accordion:not(.-opened)) {
+:where(.d--accordion:not(._opened)) {
 	> .d--accordion__body {
 		// opacity: 0.5;
 		grid-template-rows: 0fr;
