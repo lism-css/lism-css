@@ -29,22 +29,15 @@
 // }
 
 // --------------------
-// Button offset
+// Button
 // --------------------
-// :where(.c--button) {
-// 	--icon-scale: 1.25;
-// 	--icon-offset: 0%;
-// }
-
-// .c--button__icon {
-// 	&:where(:first-child) {
-// 		translate: calc(0px - var(--icon-offset));
-// 	}
-// 	&:where(:last-child) {
-// 		translate: var(--icon-offset);
-// 	}
-// }
-
+.c--button:where(.l--grid) {
+	grid-template-columns: 1em 1fr 1em;
+	justify-items: center;
+}
+.c--button:where(.l--grid) > :not(.l--icon) {
+	grid-column: 2;
+}
 // --------------------
 // ...
 // --------------------
