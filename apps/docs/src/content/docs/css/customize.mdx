@@ -29,21 +29,22 @@ $util_em_tokens: 1, 2, 3, 5, 7, 10, 15, 20, 25, 30 !default; */}
 
 ↓ 設定カスタマイズの書き方と各初期値
 ```scss
-@use '../path/to/node_modules/lism-css/scss/setting' with (
+@use '../path-to/node_modules/lism-css/scss/setting' with (
 	$breakpoints: (
 		'sm': '480px',
 		'md': '720px',
 		'lg': '960px',
 	),
-	$common_support_bp: 'lg',
+	$common_support_bp: 'md',
 	$is_container_query: 1,
+	$layer_mode: 1,
 	$props: (
 		...
 	)
 );
 
 // lism の scssファイルを読み込む
-@use '../path/to/node_modules/lism-css/scss/all';
+@use '../path-to/node_modules/lism-css/scss/all';
 ```
 
 {/* 例えば、`sm`,`md`サイズのサポートだけで良い場合は、`$common_support_bp`を`md`に設定することで、`lg`以降のブレイクポイントのユーティリティクラスを出力しないようにできます。 */}
@@ -52,13 +53,14 @@ $util_em_tokens: 1, 2, 3, 5, 7, 10, 15, 20, 25, 30 !default; */}
 ↓カスタマイズ例
 ```scss
 // 設定カスタマイズ
-@use '../path/to/node_modules/lism-css/scss/setting' with (
+@use '../path-to/node_modules/lism-css/scss/setting' with (
 	$breakpoints: (
 		'sm': '400px', // smサイズを変更する
 		'xl': '1200px', // xlサイズを追加で定義する
 	),
-	$common_support_bp: 'md',  // デフォルトでは mdサイズまでのユーティリティクラスしか生成しないようにする
+	$common_support_bp: 'lg',  // lgサイズまでのユーティリティクラスを生成する
 	$is_container_query: 0, // media query で出力する
+	$layer_mode: 0, // @layer を使わないようにする
 	$props: (
 		'fz': (
 			// fzのユーティリティクラスに対して !important を出力する
@@ -68,8 +70,8 @@ $util_em_tokens: 1, 2, 3, 5, 7, 10, 15, 20, 25, 30 !default; */}
 			// 'h'のブレイクポイント対応クラスを出力しないようにする
 			bp: 0,
 		),
-		'fx': (
-			// 'fx'のユーティリティクラスもブレイクポイントに対応させる
+		'i': (
+			// 'inset'のクラスもブレイクポイントに対応させる
 			bp: 1, 
 		),
 		'p': (
@@ -82,12 +84,45 @@ $util_em_tokens: 1, 2, 3, 5, 7, 10, 15, 20, 25, 30 !default; */}
 );
 
 // lism の scssファイルを読み込む
-@use '../path/to/node_modules/lism-css/scss/all';
+@use '../path-to/node_modules/lism-css/scss/all';
 ```
 
-Astroの場合は`../path/to/node_modules/`は不要です。
+Astroの場合は`../path-to/node_modules/`は不要です。
 
 {/* <div class='is--container'>
 <Box p={['u:box', '20', '30', null, '40']} h={['auto', '1em']} bd>box</Box>
 <Box p='u:box' h={['auto', '1em']} bd>box</Box>
 </div> */}
+
+
+## ビルド処理について
+
+ビルドコードによって、lism-cssのCSSと異なる内容になる可能性があります。
+
+コアパッケージのビルド処理部分のコードは以下のようになっていますので、できるだけ同じ処理でビルドするようにしてください。
+
+```js
+//sass
+const sass = require('sass');
+
+// postcss
+const postcss = require('postcss');
+const autoprefixer = require('autoprefixer');
+const cssnano = require('cssnano');
+```
+
+```js
+	try {
+		// dart sass コンパイル
+		const compiledCSS = sass.compile(srcPath, {
+			style: 'expanded', // 圧縮はcssnanoに任せる
+		});
+
+		// postcss実行
+		postcss([autoprefixer, cssnano])
+			.process(compiledCSS.css, { from: undefined })
+			.then((postcssResult) => {
+				writeCSS(distPath, postcssResult.css);
+			});
+	}
+```
