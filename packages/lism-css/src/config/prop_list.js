@@ -166,8 +166,8 @@ export default {
 		utils: {
 			none: 'n',
 			block: 'b',
-			// flex: 'f',
-			// grid: 'g',
+			flex: 'f',
+			grid: 'g',
 			inline: 'i',
 			'inline-flex': 'if',
 			'inline-grid': 'ig',
