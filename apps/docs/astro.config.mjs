@@ -57,14 +57,15 @@ export default defineConfig({
 			defaultLocale: 'root',
 			locales,
 			customCss: [
+				// @layer 読み込み順の定義
+				'./src/styles/layer.scss',
+				// 'lism-css/main.css',
+				'lism-css/main.css',
+				'./src/styles/lism-custom.scss',
 				'./src/styles/docs.scss',
-				'./src/styles/lism.scss',
-				// 'lism-css/all.css',
 			],
 			sidebar,
-			social: [
-				{ icon: 'github', label: 'GitHub', href: 'https://github.com/lism-css/lism-css' },
-			],
+			social: [{ icon: 'github', label: 'GitHub', href: 'https://github.com/lism-css/lism-css' }],
 			// editLink: {
 			// 	baseUrl: 'https://github.com/lism-css/lism-css/tree/main/apps/docs',
 			// },
