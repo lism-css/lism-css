@@ -35,7 +35,7 @@ Lismでは、`-hov`で始まるクラスを活用してhover時の挙動をコ�
 <Preview>
 	<PreviewTitle>`.-hov:fade`の使用例</PreviewTitle>
 	<PreviewArea p='40'>
-		<LinkBox href='###' hov='fade' bgc='base-2' bd p='30' bxsh='2'>
+		<LinkBox href='###' hov='fade' bgc='base-2' bd p='30' bxsh='20'>
 			<p>LinkBox</p>
 			<p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
 		</LinkBox>
@@ -120,17 +120,17 @@ Lismでは、以下のような`-trs`クラスを用意しています。
 <Preview>
 	<PreviewTitle>`-trs`と組み合わせてbxshの強さを変化させる例</PreviewTitle>
 	<PreviewArea p='40'>
-		<LinkBox href='###' trs bxsh='1' hov={{ bxsh:'4'}} bd p='30'>
+		<LinkBox href='###' trs bxsh='10' hov={{ bxsh: '40'}} bd p='30'>
 			<p>LinkBox</p>
 			<p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
 		</LinkBox>
 	</PreviewArea>
 	<PreviewCode slot='tab' label='HTML'>
-		```html "-trs" "-bxsh:1 -hov:bxsh" "--hov-bxsh:var(--bxsh--4)"
+		```html "-trs" "-bxsh:10 -hov:bxsh" "--hov-bxsh:var(--bxsh--40)"
 		<a
 			href="###"
-			class="is--linkBox -trs -bxsh:1 -hov:bxsh -bd -p:30"
-			style="--hov-bxsh:var(--bxsh--4)"
+			class="is--linkBox -trs -bxsh:10 -hov:bxsh -bd -p:30"
+			style="--hov-bxsh:var(--bxsh--40)"
 		>
 			<p>LinkBox</p>
 			<p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
@@ -138,8 +138,8 @@ Lismでは、以下のような`-trs`クラスを用意しています。
 		```
 	</PreviewCode>
 	<PreviewCode slot='tab' label='JSX'>
-	```jsx "trs" "bxsh='1' hov=\{\{ bxsh:'4'\}\}"
-		<LinkBox href='###' trs bxsh='1' hov={{ bxsh:'4'}} bd p='30'>
+	```jsx "trs" "bxsh='10' hov=\{\{ bxsh: '40'\}\}"
+		<LinkBox href='###' trs bxsh='10' hov={{ bxsh: '40'}} bd p='30'>
 			<p>LinkBox</p>
 			<p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
 		</LinkBox>
@@ -207,16 +207,17 @@ Lismコンポーネントにて、ユーティリティクラスの出力とオ�
 <Preview>
 	<PreviewTitle>`.-hov:shadowUp`を追加</PreviewTitle>
 	<PreviewArea p='40'>
-		<LinkBox href='###' trs hov='shadowUp' bxsh='1' bd p='30'>
+		<LinkBox href='###' trs hov='shadowUp' bxsh='10' bd p='30'>
 			<p>LinkBox</p>
 			<p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
 		</LinkBox>
 	</PreviewArea>
+
 	<PreviewCode slot='tab' label='追加CSS'>
 		```scss
 		@media (any-hover: hover) {
 			.-hov\:shadowUp:hover {
-				box-shadow: var(--bxsh--4);
+				box-shadow: var(--bxsh--40);
 				translate: 0 -3px;
 			}
 		}
@@ -283,7 +284,7 @@ Lismコンポーネントにて、ユーティリティクラスの出力とオ�
 		.-hov\:test {
 			color: var(--_isHov, red) var(--_notHov, blue); /* hover時はgreen, 非hover時はblue*/
 			background-color: var(--_notHov, lightgray); /* 非hover時はlightgray、hover時は無効な値 */
-			box-shadow: var(--_isHov, var(--bxsh--3)); /* hover時はshadowあり、非hover時は無効な値 */
+			box-shadow: var(--_isHov, var(--bxsh--30)); /* hover時はshadowあり、非hover時は無効な値 */
 		}
 		```
 	</PreviewCode>
@@ -325,7 +326,7 @@ Lismコンポーネントにて、ユーティリティクラスの出力とオ�
 <Preview>
 	<PreviewTitle>`get:show` を使う例</PreviewTitle>
 	<PreviewArea p='30'>
-		<Frame isLinkBox hov='set' href='#banner-link' ar='16/9' bdrs='4'>
+		<Frame isLinkBox hov='set' href='#banner-link' ar='16/9' bdrs='30'>
 			<Media isLayer src='/img/img-1.jpg' alt='' width='960' height='640' loading='lazy' />
 			<Layer trs hov='get:show' bgc='rgb(0 0 0 / 40%)' blur='6px'>
 				<Center h='100%' c='#fff'>
@@ -336,7 +337,7 @@ Lismコンポーネントにて、ユーティリティクラスの出力とオ�
 	</PreviewArea>
 	<PreviewCode slot='tab' label='HTML'>
 		```html "-hov:set" "-hov:get:show" "-trs"
-		<a class="l--frame is--linkBox -hov:set -ar:16/9 -bdrs:4" href="#banner-link">
+		<a class="l--frame is--linkBox -hov:set -ar:16/9 -bdrs:30" href="#banner-link">
 			<img class="is--layer" src="/img/img-1.jpg" width="960" height="640" loading="lazy">
 			<div class="is--layer -trs -hov:get:show -bgc" style="--bgc:rgb(0 0 0 / 10%);backdrop-filter:blur(6px)">
 				<div class="l--center -h:100% -c" style="--c:#fff">
@@ -348,7 +349,7 @@ Lismコンポーネントにて、ユーティリティクラスの出力とオ�
 	</PreviewCode>
 	<PreviewCode slot='tab' label='JSX'>
 		```jsx "hov='set'" "hov='get:show'" "trs"
-		<Frame isLinkBox hov='set' href='#banner-link' ar='16/9' bdrs='4'>
+		<Frame isLinkBox hov='set' href='#banner-link' ar='16/9' bdrs='30'>
 			<Media isLayer src='/img/img-1.jpg' alt='' width='960' height='640' loading='lazy' />
 			<Layer trs hov='get:show' bgc='rgb(0 0 0 / 40%)' blur='6px'>
 				<Center h='100%' c='#fff'>
@@ -374,7 +375,7 @@ Lismコンポーネントにて、ユーティリティクラスの出力とオ�
 	<PreviewArea p='30'>
 		<LinkBox
 			href='#banner-link'
-			hov='set' ov='h' ar='16/9' bdrs='4'
+			hov='set' ov='h' ar='16/9' bdrs='30'
 			style={{'--trsdu--default':'.6s'}}
 		>
 			<Frame isLayer>
@@ -401,7 +402,7 @@ Lismコンポーネントにて、ユーティリティクラスの出力とオ�
 		```html "-hov:set" "-hov:get:zoom" "-hov:get:letterSpread" "--trsdu--default"
 		<a
 			href="#banner-link"
-			class="is--linkBox -hov:set -ar:16/9 -ov:h -bdrs:4"
+			class="is--linkBox -hov:set -ar:16/9 -ov:h -bdrs:30"
 			style="--trsdu--default:.6s"
 		>
 			<div class="l--frame is--layer">
@@ -417,7 +418,7 @@ Lismコンポーネントにて、ユーティリティクラスの出力とオ�
 		```jsx "hov='set'" "hov='get:zoom'" "hov='get:letterSpread'" "--trsdu--default"
 		<LinkBox
 			href='#banner-link'
-			hov='set' ov='h' ar='16/9' bdrs='4'
+			hov='set' ov='h' ar='16/9' bdrs='30'
 			style={{'--trsdu--default':'.6s'}}
 		>
 			<Frame isLayer>

@@ -16,13 +16,13 @@ Lismでは、border系の指定が少し特殊になっています。
 
 <PreviewTitle>css</PreviewTitle>
 ```scss
-:where([class*='-bd:']) {
+:where(.-bd,[class*='-bd:']) {
 	--bds: solid;
 	--bdw: 1px;
 	--bdc: currentColor;
 	--bd var(--bdw) var(--bds) var(--bdc);
 }
-.-bd\: {
+.-bd {
 	border-style: var(--bds);
 	border-width: var(--bdw);
 	border-color: var(--bdc);

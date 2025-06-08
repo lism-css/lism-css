@@ -22,11 +22,6 @@ export const HelpText = ({ tag = 'p', children, ...props }) => {
 export const IconBadge = ({ type = 'info' }) => {
 	const presetData = type ? ICON_PRESETS[type] : null;
 	return <Icon icon={presetData?.icon} variant='inline' c={presetData?.color} />;
-	// return (
-	// 	<Lism tag='span' d='if' c={c} bd bdrs='1' p='2px'>
-	// 		<Icon icon={icon} />
-	// 	</Lism>
-	// );
 };
 
 export function Reference({ children }) {
@@ -51,18 +46,5 @@ export const PropBadge = ({ type = '', ...props }) => {
 	} else if (type === 'cssvar') {
 		keycol = 'purple';
 	}
-	return (
-		<Badge
-			variant='prop'
-			fz='xs'
-			ff='mono'
-			lh='xs'
-			m='5'
-			bdrs='1'
-			whs='nw'
-			className='u--colbox'
-			keycol={keycol}
-			{...props}
-		/>
-	);
+	return <Badge variant='prop' fz='xs' ff='mono' lh='xs' m='5' bdrs='5' whs='nw' className='u--colbox' keycol={keycol} {...props} />;
 };

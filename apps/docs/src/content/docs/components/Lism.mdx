@@ -18,16 +18,16 @@ Lismで配布しているほぼ全てのコンポーネントは、この`<Lism>
 <Preview>
 	<PreviewTitle>`<Lism>`の出力例</PreviewTitle>
 	<PreviewArea p='30'>
-		<Lism　p='30' fw='bold' c='blue' bgc='base-2' bdrs='3'>Lism content</Lism>
+		<Lism　p='30' fw='bold' c='blue' bgc='base-2' bdrs='20'>Lism content</Lism>
 	</PreviewArea>
 	<PreviewCode slot='tab' label='JSX'>
 		```jsx
-		<Lism　p='30' fw='bold' c='blue' bgc='base-2' bdrs='3'>Lism content</Lism>
+		<Lism　p='30' fw='bold' c='blue' bgc='base-2' bdrs='20'>Lism content</Lism>
 		```
 	</PreviewCode>
 	<PreviewCode slot='tab' label='HTML'>
 		```jsx
-		<div class="-p:30 -fw:bold -c -bgc:base-2 -bdrs:3"> Lism content </div>
+		<div class="-p:30 -fw:bold -c -bgc:base-2 -bdrs:20"> Lism content </div>
 		```
 	</PreviewCode>
 </Preview>
@@ -178,10 +178,10 @@ Lism Propsは、主に以下の3種類に分類されます。
 <Preview>
 <PreviewTitle>2. のクラスと変数の組み合わせ出力の例</PreviewTitle>
 <PreviewCode>
-```jsx "fz='20px'" "-fz:" "--fz:20px"
+```jsx "fz='20px'" "-fz" "--fz:20px"
 <Lism fz='20px'>contents</Lism>
 // ↓　出力
-<div class="-fz:" style="--fz:20px">contents</div>
+<div class="-fz" style="--fz:20px">contents</div>
 ```
 </PreviewCode>
 </Preview>
@@ -238,10 +238,10 @@ CSS Props に対して`"-"`または`true`を指定すると、変数なしで`-
 <Preview>
 <PreviewTitle>例</PreviewTitle>
 <PreviewCode>
-```jsx "p='-'" "bdrs" "-p" "-bdrs:"
+```jsx "p='-'" "bdrs" "-p" "-bdrs"
 <Lism p='-' bdrs>contents</Lism>
 ↓
-<div class="-p -bdrs:">contents</div>
+<div class="-p -bdrs">contents</div>
 ```
 </PreviewCode>
 </Preview>
@@ -265,7 +265,7 @@ CSS側で変数の中身を記述したい場合や、**親と同じ変数を継
 ```jsx
 import Image from 'next/image';
 
-<Media as={Image} src='...' bxsh='2' bdrs='3' />
+<Media as={Image} src='...' bxsh='20' bdrs='20' />
 ```
 	</PreviewCode>
 </Preview>

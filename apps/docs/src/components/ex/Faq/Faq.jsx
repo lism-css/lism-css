@@ -2,7 +2,7 @@ import { Icon, Accordion } from 'lism-css/react';
 
 export function Root({ children }) {
 	return (
-		<Accordion.Root lismClass='c--faq' p='30' bgc='base-2' bdrs='3'>
+		<Accordion.Root lismClass='c--faq' p='30' bgc='base-2' bdrs='20'>
 			{children}
 		</Accordion.Root>
 	);

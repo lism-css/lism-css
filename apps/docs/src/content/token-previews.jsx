@@ -20,17 +20,7 @@ export const BoxShadowDemos = ({ shadows = [] }) => {
 		<>
 			{shadows.map((name) => {
 				return (
-					<Center
-						key={name}
-						h='100%'
-						ar='1/1'
-						bgc='base'
-						bxsh={name}
-						bdrs='2'
-						ff='mono'
-						fz='xs'
-						c='text-2'
-					>
+					<Center key={name} h='100%' ar='1/1' bgc='base' bxsh={name} bdrs='10' ff='mono' fz='xs' c='text-2'>
 						{name}
 					</Center>
 				);

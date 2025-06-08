@@ -16,10 +16,10 @@ import Badge from '~/components/ex/Badge/index.astro';
 		<Flex g='20'>
 			<Badge>Badge</Badge>
 			<Badge variant='outline'>Badge</Badge>
-			{/* <Lism tag='span' px='20' bgc='text' c='base' bd bdrs='2'>
+			{/* <Lism tag='span' px='20' bgc='text' c='base' bd bdrs='10'>
 				Badge
 			</Lism>
-			<Lism tag='span' px='20' bd bdrs='2'>
+			<Lism tag='span' px='20' bd bdrs='10'>
 				Badge
 			</Lism> */}
 		</Flex>
@@ -35,16 +35,16 @@ import Badge from '~/components/ex/Badge/index.astro';
 	<PreviewCode slot='tab' label='JSX(only core)'>
 		```jsx
 		<Flex g='20'>
-			<Lism tag='span' px='20' bgc='text' c='base' bd bdrs='2'>Badge</Lism>
-			<Lism tag='span' px='20' bd bdrs='2'>Badge</Lism>
+			<Lism tag='span' px='20' bgc='text' c='base' bd bdrs='10'>Badge</Lism>
+			<Lism tag='span' px='20' bd bdrs='10'>Badge</Lism>
 		</Flex>
 		```
 	</PreviewCode>
 	<PreviewCode slot='tab' label='HTML'>
 		```html
 		<div class="l--flex -g:20">
-			<span class="c--badge -d:if -fz:s -px:20 -bdrs:1">Badge</span>
-			<span class="c--badge c--badge--outline -d:if -fz:s -px:20 -bdrs:1">Badge</span>
+			<span class="c--badge -d:if -fz:s -px:20 -bdrs:5">Badge</span>
+			<span class="c--badge c--badge--outline -d:if -fz:s -px:20 -bdrs:5">Badge</span>
 		</div>
 		```
 	</PreviewCode>
@@ -107,8 +107,8 @@ export const ColorDemos = ({variant = '',  colbox}) => {
 	<PreviewCode slot='tab' label='HTML'>
 		```html
 		<div class="l--flex l--flex--cluster -g:20">
-			<span class="c--badge -d:if -bdrs:1 -px:20 -bgc:main">Badge</span>
-			<span class="c--badge -d:if -bdrs:99 -px:20 -fz:s -bgc:" style="--bgc:#549005;">Badge</span>
+			<span class="c--badge -d:if -bdrs:5 -px:20 -bgc:main">Badge</span>
+			<span class="c--badge -d:if -bdrs:99 -px:20 -fz:s -bgc" style="--bgc:#549005;">Badge</span>
 		</div>
 		```
 	</PreviewCode>
@@ -138,7 +138,7 @@ export const ColorDemos = ({variant = '',  colbox}) => {
 	<PreviewCode slot='tab' label='HTML'>
 		```html
 		<div class="l--flex l--flex--cluster -g:20">
-			<span class="c--badge c--badge--outline -px:10 -py:5 -lh:1 -bdrs:2 -c:main">Badge</span>
+			<span class="c--badge c--badge--outline -px:10 -py:5 -lh:1 -bdrs:10 -c:main">Badge</span>
 			<span class="c--badge c--badge--outline -px:20 -py:5 -lh:1 -bdrs:99 -c" style="--c:#549005;">Badge</span>
 		</div>
 		```
@@ -166,7 +166,7 @@ export const ColorDemos = ({variant = '',  colbox}) => {
 	<PreviewCode slot='tab' label='HTML'>
 		```html
 		<div class="l--flex l--flex--cluster -g:20">
-			<span class="c--badge u--colbox -px:10 -py:5 -lh:1 -bdrs:2" style="--keycol:var(--c--main)">Badge</span>
+			<span class="c--badge u--colbox -px:10 -py:5 -lh:1 -bdrs:10" style="--keycol:var(--c--main)">Badge</span>
 			<span class="c--badge u--colbox -px:20 -py:5 -lh:1 -bdrs:99 -bdc:mix" style="--keycol:#549005;--bdc1:var(--keycol);--bdc2:var(--c--base);--bdc-pct:25%">  Badge  </span>
 		</div>
 		```

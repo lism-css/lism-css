@@ -54,10 +54,10 @@ dialog.d--modal#modalID
 <Preview>
 	<PreviewTitle>`Modal`使用例</PreviewTitle>
 	<PreviewArea p='20'>
-		<button data-modal-open='modal-01' className='re--style -bd -px:20 -py:5 -bdrs:2 -hov:fade'>Open Modal 01</button>
+		<button data-modal-open='modal-01' className='re--style -bd -px:20 -py:5 -bdrs:10 -hov:fade'>Open Modal 01</button>
 
 		<Modal.Root id='modal-01' layout={Center} p='40'>
-			<Modal.Inner maxW='m' p='40' g='30' bdrs='3' bxsh='4'>
+			<Modal.Inner maxW='m' p='40' g='30' bdrs='20' bxsh='40'>
 				<Center pos='a' t='0' r='0' z='1' fz='xl' p='20' m='20' bdrs='99'>
 					<Modal.CloseIconBtn data-modal-close='modal-01' d='if' hov='fade'/>
 				</Center>
@@ -65,17 +65,17 @@ dialog.d--modal#modalID
 					<div className='-fz:xl -fw:bold'>Modal Title</div>
 					<Dummy />
 					<Dummy length='l' />
-					<button data-modal-close='modal-01' className='re--style -bgc:base-2 -lh:xs -p:20 -bdrs:2 -hov:fade'>Close Modal</button>
+					<button data-modal-close='modal-01' className='re--style -bgc:base-2 -lh:xs -p:20 -bdrs:10 -hov:fade'>Close Modal</button>
 				</Modal.Body>
 			</Modal.Inner>
 		</Modal.Root>
 	</PreviewArea>
 	<PreviewCode slot='tab' label='JSX'>
 		```jsx "id='modal-01'" "data-modal-open='modal-01'" "data-modal-close='modal-01'"
-		<button data-modal-open='modal-01' className='re--style -bd -px:20 -py:5 -bdrs:2 -hov:fade'>Open Modal 01</button>
+		<button data-modal-open='modal-01' className='re--style -bd -px:20 -py:5 -bdrs:10 -hov:fade'>Open Modal 01</button>
 
 		<Modal.Root id='modal-01' layout={Center} p='40'>
-			<Modal.Inner maxW='m' p='40' g='30' bdrs='3' bxsh='4'>
+			<Modal.Inner maxW='m' p='40' g='30' bdrs='20' bxsh='40'>
 				<Center pos='a' t='0' r='0' z='1' fz='xl' p='20' m='20' bdrs='99'>
 					<Modal.CloseIconBtn data-modal-close='modal-01' d='if' hov='fade'/>
 				</Center>
@@ -83,7 +83,7 @@ dialog.d--modal#modalID
 					<div className='-fz:xl -fw:bold'>Modal Title</div>
 					<Dummy />
 					<Dummy length='l' />
-					<button data-modal-close='modal-01' className='re--style -bgc:base-2 -lh:xs -p:20 -bdrs:2 -hov:fade'>Close Modal</button>
+					<button data-modal-close='modal-01' className='re--style -bgc:base-2 -lh:xs -p:20 -bdrs:10 -hov:fade'>Close Modal</button>
 				</Modal.Body>
 			</Modal.Inner>
 		</Modal.Root>
@@ -100,10 +100,10 @@ dialog.d--modal#modalID
 <Preview>
 	<PreviewTitle>`Modal`使用例</PreviewTitle>
 	<PreviewArea p='20'>
-		<button data-modal-open='modal-02' className='re--style -bd -px:20 -py:5 -bdrs:2 -hov:fade'>Open Modal 02</button>
+		<button data-modal-open='modal-02' className='re--style -bd -px:20 -py:5 -bdrs:10 -hov:fade'>Open Modal 02</button>
 
 		<Modal.Root id='modal-02' p='40' ac='c'>
-			<Modal.Inner maxW='s' mx='a' maxH='80%' bdrs='3' bxsh='4'>
+			<Modal.Inner maxW='s' mx='a' maxH='80%' bdrs='20' bxsh='40'>
 				<Flex ai='c' jc='sb' py='20' bd='b'>
 					<Lism fz='l' fw='bold' lh='s' mis='40'>Modal Header</Lism>
 					<Center p='20' mx='20'>
@@ -120,17 +120,17 @@ dialog.d--modal#modalID
 					<Dummy length='xl' offset={2}/>
 				</Modal.Body>
 				<Flex jc='e' px='40' py='30' bd='t'>
-					<Lism tag='button' data-modal-close='modal-02' bgc='text' c='base' lh='xs' px='20' py='10' bd='none' bdrs='2'>Close</Lism>
+					<Lism tag='button' data-modal-close='modal-02' bgc='text' c='base' lh='xs' px='20' py='10' bd='none' bdrs='10'>Close</Lism>
 				</Flex>
 			</Modal.Inner>
 		</Modal.Root>
 	</PreviewArea>
 	<PreviewCode slot='tab' label='JSX'>
 		```jsx "id='modal-02'" "data-modal-open='modal-02'" "data-modal-close='modal-02'"
-		<button data-modal-open='modal-02' className='re--style -bd -px:20 -py:5 -bdrs:2 -hov:fade'>Open Modal 02</button>
+		<button data-modal-open='modal-02' className='re--style -bd -px:20 -py:5 -bdrs:10 -hov:fade'>Open Modal 02</button>
 
 		<Modal.Root id='modal-02' p='40' ac='c'>
-			<Modal.Inner maxW='s' mx='a' maxH='80%' bdrs='3' bxsh='4'>
+			<Modal.Inner maxW='s' mx='a' maxH='80%' bdrs='20' bxsh='40'>
 				<Flex ai='c' jc='sb' py='20' bd='b'>
 					<Lism fz='l' fw='bold' lh='s' mis='40'>Modal Header</Lism>
 					<Center p='20' mx='20'>
@@ -147,7 +147,7 @@ dialog.d--modal#modalID
 					<Dummy length='xl' offset={2}/>
 				</Modal.Body>
 				<Flex jc='e' px='40' py='30' bd='t'>
-					<Lism tag='button' data-modal-close='modal-02' bgc='text' c='base' lh='xs' px='20' py='10' bd='none' bdrs='2'>Close</Lism>
+					<Lism tag='button' data-modal-close='modal-02' bgc='text' c='base' lh='xs' px='20' py='10' bd='none' bdrs='10'>Close</Lism>
 				</Flex>
 			</Modal.Inner>
 		</Modal.Root>
@@ -176,7 +176,7 @@ dialog.d--modal#modalID
 			<span>MENU</span>
 		</Flex>
 		<Modal.Root id='modal-03' offset='-100px 0'>
-		<Modal.Inner maxW='25rem' w='90%' h='100%' p='40' g='30' bxsh='4'>
+		<Modal.Inner maxW='25rem' w='90%' h='100%' p='40' g='30' bxsh='40'>
 			<Modal.Header>
 				<Center pos='a' t='0' r='0' z='1' fz='xl' p='20' m='20' bdrs='99'>
 					<Modal.CloseIconBtn data-modal-close='modal-03' d='if' hov='fade' />
@@ -213,7 +213,7 @@ dialog.d--modal#modalID
 			<span>MENU</span>
 		</Flex>
 		<Modal.Root id='modal-03' offset='-100px 0'>
-			<Modal.Inner maxW='25rem' w='90%' h='100%' p='40' g='30' bxsh='4'>
+			<Modal.Inner maxW='25rem' w='90%' h='100%' p='40' g='30' bxsh='40'>
 				<Modal.Header>
 					<Center pos='a' t='0' r='0' z='1' fz='xl' p='20' m='20' bdrs='99'>
 						<Modal.CloseIconBtn data-modal-close='modal-03' d='if' hov='fade' />
