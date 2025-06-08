@@ -57,8 +57,8 @@ async function compileSCSS(src, dist) {
 			.replace('.scss', '.css')
 			.replace('/index.css', '.css');
 
-		// dart sass コンパイル
 		try {
+			// dart sass コンパイル
 			const compiledCSS = sass.compile(srcPath, {
 				style: 'expanded', // 圧縮はcssnanoに任せる
 			});
