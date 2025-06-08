@@ -10,30 +10,13 @@
 	}
 }
 
-// Note: 詳細度は 0-1-0 より大きく.
-.is--fullwide + .is--fullwide {
-	--flowGap: 0;
-}
-
 // :is(.alignwide, .is--wide)
 .is--wide {
 	// container-type: inline-size;
-	max-inline-size: var(--wide-size, 100%);
+	max-inline-size: var(--wideSize, 100%);
 }
 
 .is--overwide {
-	max-inline-size: var(--overwide-size, 100vw);
-	margin-inline: calc(50% - var(--overwide-size) / 2);
-}
-
-// @property が使える環境であればコンテナのさらに親要素の幅を参照できるので、containerを1段階飛び出せる。
-// cqw を算出値で保持するために登録済みカスタムプロパティとして定義
-@property --overwide-size {
-	syntax: '<length-percentage>';
-	initial-value: 100%;
-	inherits: true;
-}
-// is--container でその時点のサイズをセットする
-.is--container {
-	--overwide-size: 100cqw;
+	max-inline-size: var(--overwideSize, 100vw);
+	margin-inline: calc(50% - var(--overwideSize) / 2);
 }

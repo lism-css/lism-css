@@ -28,14 +28,14 @@ Lismでは、**メインコンテンツ間の余白を管理するためのク�
 `.is--flow`系の直下では、コンテンツの間隔が `margin-block-start` で管理されます。
 </Callout>
 
-| クラス名 | 余白量 | 初期値 |
-|---|---|---|
-| `.is--flow` | `--flowGap` | `--s40` |
-| `.is--flow.-flow:s` | `--flowGap--s` | `--s30` |
-{/* | `.is--flow.-flow:l` | `--flowGap--l` | */}
+| クラス名 | 余白量 |
+|---|---|
+| `.is--flow` | `var(--flowM, var(--flowM--m))` |
+| `.is--flow.-flow:s` | `--flowM--s` (`--s20`) |
+| `.is--flow.-flow:m` | `--flowM--m` (`--s40`) |
+{/* | `.is--flow.-flow:l` | `--flowM--l` | */}
 
-見出しタグのみ、`--flowGap`が`--flowGap--h`に上書きされ、余白が広くなるようになっています。  
-`-flow:s`クラスを併用すると、余白が少し狭くなります。さらにこの時、見出しタグも同じ余白量になります。
+見出しタグのみ、`--flowM--h` (`1em`) が加算され、余白が広くなるようになっています。  
 
 {/* <Lism isFlow> */}
 <Preview>
@@ -53,28 +53,6 @@ Lismでは、**メインコンテンツ間の余白を管理するためのク�
 			</ul>
 			<Dummy lang='ja' />
 		</Lism>
-		{/* <hr />
-		<Lism isFlow>
-			<Dummy lang='ja' length='s' />
-			<Dummy lang='ja' length='s' />
-			<Dummy lang='ja' length='s' />
-		
-			<Lism isFlow bgc='green:8%'>
-				<Dummy lang='ja' length='s' />
-				<Dummy lang='ja' length='s' />
-				<h2>Heading</h2>
-			</Lism>
-			<Lism isFlow='s' bgc='blue:8%'>
-				<Dummy lang='ja' length='s' />
-				<Dummy lang='ja' length='s' />
-				<h2>Heading</h2>
-			</Lism>
-			<Lism isFlow='2.5rem' bgc='red:8%'>
-				<Dummy lang='ja' length='s' />
-				<Dummy lang='ja' length='s' />
-				<h2>Heading</h2>
-			</Lism>
-		</Lism> */}
 	</PreviewArea>
 	<PreviewCode slot='tab' label='HTML'>
 	```html
@@ -120,7 +98,7 @@ Lismでは、**メインコンテンツ間の余白を管理するためのク�
 	</PreviewArea>
 	<PreviewCode slot='tab' label='HTML'>
 	```html
-	<div class="is--flow">
+	<div class="is--flow -flow:s">
 		<p>Lorem ipsum content...</p>
 		<p>Lorem ipsum content...</p>
 		<h2>Heading</h2>
@@ -131,7 +109,7 @@ Lismでは、**メインコンテンツ間の余白を管理するためのク�
 	</PreviewCode>
 	<PreviewCode slot='tab' label='JSX'>
 	```jsx
-	<Lism isFlow>
+	<Lism isFlow='s'>
 		<p>Lorem ipsum content...</p>
 		<p>Lorem ipsum content...</p>
 		<h2>Heading</h2>
@@ -142,13 +120,14 @@ Lismでは、**メインコンテンツ間の余白を管理するためのク�
 	</PreviewCode>
 </Preview>
 
-{/* 
-任意の余白量をセットしたい場合は、`-flow:`クラスと`--flowG`変数を組み合わせます。
+
+
+任意の余白量をセットしたい場合は、`--flowM`変数で指定します。
 
 <Preview>
 	<PreviewTitle>任意の値をセットする</PreviewTitle>
 	<PreviewArea p='30'>
-		<Lism isFlow='10px'>
+		<Lism isFlow='10px' className='-hov:itemGuide'>
 			<Text>Contents...</Text>
 			<Text>Contents...</Text>
 			<Text>Contents...</Text>
@@ -156,7 +135,7 @@ Lismでは、**メインコンテンツ間の余白を管理するためのク�
 	</PreviewArea>
 	<PreviewCode slot='tab' label='HTML'>
 	```html
-	<div class="is--flow -flow:" style="--flow:10px">
+	<div class="is--flow" style="--flowM:10px">
 		<p>Contents...</p>
 		<p>Contents...</p>
 		<p>Contents...</p>
@@ -174,60 +153,30 @@ Lismでは、**メインコンテンツ間の余白を管理するためのク�
 	</PreviewCode>
 </Preview>
 
-<Box fz='l' fw='bold' mbs='50'>
-`is--flow` をネストする時の注意点
-</Box>
+`is--flow`は`--flowM`が未定義であれば`--flowM--m`がセットされますが、ネストされていると親の値を継承されることに注意してください。
 
-
-`-flow:`の直下でさらに`-flow:`を配置すると、子要素側が自身の `--flowG` に干渉してしまいます。
-
-<Preview>
-	<PreviewTitle>NG例</PreviewTitle>
-	<PreviewArea p='30'>
-		<Box isFlow='2em'>
-			<p>Contents...</p>
-			<p>Contents...</p>
-			<Box isFlow='0.5em' bgc='blue:8%'>
-				<p>Nested contents...</p>
-				<p>Nested contents...</p>
-			</Box>
-			<p>Contents...</p>
-			<p>Contents...</p>
-		</Box>
-	</PreviewArea>
-	<PreviewCode>
-	```jsx {1,4}
-	<Box isFlow='2em'>
-		<p>Contents...</p>
-		<p>Contents...</p>
-		<Box isFlow='0.5em'>
-			<p>Nested contents...</p>
-			<p>Nested contents...</p>
-		</Box>
-		<p>Contents...</p>
-		<p>Contents...</p>
-	</Box>
-	```
-	</PreviewCode>
-</Preview>
-
-<Callout type='info'>
-	`.is--flow`, `.is--flow.-flow:s` をネストするのは問題ありません.
-</Callout> */}
+<Reference>
+[`is--flow` をネストする時の注意点](/others/addition/#is--flow-のネスト)
+</Reference>
 
 
 
 ## `is--container`
 
 `is--container`はコンテナ要素を定義するためのクラスです。  
-`-container:{s|m|l}`のいずれかでサイズを指定することで、子要素のコンテンツサイズを制御することもできます。
+また、`--contentSize`で直下の子要素サイズを制御でき、`-container:{s|m|l}`でプリセットサイズを指定することもできます。
+<Callout type='info'>
+	`-container:{s|m|l}`を使用すると、`--contentSize`だけではなく `.is--wide`の幅（`.--wideSize`）も同時に調整されます。
+</Callout>
 
-| クラス名 | コンテンツ幅 | 初期値 |
-|---|---|---|
-| `is--container`| `--item-size` | `100%` |
-| `-container:s` | | `--size--s` |
-| `-container:m` | | `--size--m` |
-| `-container:l` | | `--size--l` |
+<Spacer h='1rem' />
+
+| クラス名 | コンテンツ幅 (`--contentSize`) |
+|---|---|
+| `is--container`| `100%` |
+| `-container:s` | `--size--s` |
+| `-container:m` | `--size--m` |
+| `-container:l` | `--size--l` |
 
 
 <Preview>
@@ -256,9 +205,7 @@ Lismでは、**メインコンテンツ間の余白を管理するためのク�
 	</PreviewCode>
 </Preview>
 
-<Callout type='info'>
-	`-container:{s|m|l}`を使用すると、`--item-size`だけではなく `.is--wide`の幅（`.--wide-size`）も同時に調整されます。
-</Callout>
+
 
 
 
@@ -267,7 +214,7 @@ Lismでは、**メインコンテンツ間の余白を管理するためのク�
 </Box>
 
 
-s, m, l 以外の値をセットしたい場合は、`--item-size`変数を指定します。
+s, m, l 以外の値をセットしたい場合は、`--contentSize`変数を指定します。
 
 <Preview>
 	<PreviewTitle>is--container に任意の値をセットする</PreviewTitle>
@@ -279,7 +226,7 @@ s, m, l 以外の値をセットしたい場合は、`--item-size`変数を指�
 	</PreviewArea>
 	<PreviewCode slot='tab' label='HTML'>
 	```html
-	<div class="is--container" style="--item-size:20rem">
+	<div class="is--container" style="--contentSize:20rem">
 		<div>Contents...</div>
 		<div>Contents...</div>
 	</div>
@@ -434,102 +381,5 @@ Lism Componentsでは`hasMask`プロパティに指定した文字列が`--mask-
 
 
 <Spacer h='1rem' />
----
 
 
-## 補足
-
-### コンテンツのサイズ制御について
-
-ページのコンテンツエリアが次のような構造をしているとします。
-
-```html {3}
-<main>
-	<article>
-		...コンテンツ...
-	</article>
-</main>
-```
-
-ここで、例えば`article`内のコンテンツ幅を`800px`にしたい時を考えてみてください。
-
-主に、次の①か②の選択肢があると思います。
-
-```css
-/* ① コンテナ自身(コンテンツの親要素)の幅を制御する */
-article{
-	max-width: 800px;
-}
-
-/* ② 各コンテンツ（コンテナの直下要素）の幅を制御する */
-article > * {
-	max-width: 800px;
-	margin-inline: auto;
-}
-```
-
-どちらも一長一短ありますが、とくに理由がなければ①を採用することが多いのではないでしょうか。
-
-<Callout type="point">
-しかし、Lismでは ② の方法を推奨しています。  
-</Callout>
-
-この②のアプローチに対応するためのコンテンツ制御クラスが、`-container:`クラスです。また、②を前提として`is--wide`や`is--fullwide`クラスは設計されています。
-
-これはなぜかというと、① のアプローチをベースにした場合、途中で**全幅サイズで表示したいコンテンツ**を作る場合の処理が複雑になってしまうためです。
-
-<Preview>
-<PreviewTitle>こういうやつ</PreviewTitle>
-<PreviewArea>
-	<Container size='30rem' hasGutter py='40' bd='u:guide' bdc='blue'>
-		<Box bd='u:guide' py='10'>コンテンツ...</Box>
-		<Box isFullwide hasGutter bgc='gray:20%' py='20'>全幅コンテンツ</Box>
-		<Box bd='u:guide' py='10'>コンテンツ...</Box>
-	</Container>
-</PreviewArea>
-</Preview>
-
-②であれば、基本のCSSは`max-width:100%`だけでOKで、少しの例外処理を加えれば済みます。
-
-しかし①では、次のようなCSSになってしまいます。
-
-```css
-.fullwide{
-	max-width: 100vw;
-	left: calc(50% - 50vw);
-}
-
-/* その他環境を考慮したCSS... */
-```
-
-これだけみるとそこまで複雑ではないように見えますが、`vw`では**スクロールバーの幅が考慮されない**という問題点があったり、汎用性を考慮するとCSSがどんどん複雑化していきます。
-
-ただし、`@property`が有効なブラウザでは①の問題点もほぼ解消されるようになってきました。
-
-そこで、Lismでは、`is--overwide` を用意しています。
-
-①のようなアプローチを採用するには、`is--container`にmax-widthを指定して運用し、全幅コンテンツに対して`is--overwide`クラスを使用てください。
-
-<Preview>
-<PreviewTitle>例</PreviewTitle>
-<PreviewArea>
-<Box hasGutter>
-	<Container maxW='30rem' py='40' bd='u:guide' bdc='blue'>
-		<Box bd='u:guide' py='10'>...コンテンツ...</Box>
-		<Box isOverwide hasGutter bgc='gray:20%' py='20'>全幅コンテンツ</Box>
-		<Box bd='u:guide' py='10'>...コンテンツ...</Box>
-	</Container>
-</Box>
-</PreviewArea>
-<PreviewCode>
-```jsx "isOverwide"
-<Box hasGutter>
-	<Container maxW='30rem' py='40' bd='u:guide' bdc='blue'>
-		<Box bd='u:guide' py='10'>...コンテンツ...</Box>
-		<Box isOverwide hasGutter bgc='gray:20%' py='20'>全幅コンテンツ</Box>
-		<Box bd='u:guide' py='10'>...コンテンツ...</Box>
-	</Container>
-</Box>
-```
-</PreviewCode>
-</Preview>
