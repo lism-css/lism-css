@@ -148,7 +148,7 @@ export default {
 	// ovw: { style: 'overflowWrap', utils: { anywhere: 'any' } },
 
 	// others
-	bdrs: { presets: ['inner', '0', ...TOKENS.bdrs], converter: 'bdrs' },
+	bdrs: { presets: ['0', ...TOKENS.bdrs], converter: 'bdrs' },
 	bxsh: { presets: ['0', ...TOKENS.bxsh], converter: 'bxsh' },
 	// shColor: { converter: 'color', style: '--sh-color' },
 
@@ -166,8 +166,8 @@ export default {
 		utils: {
 			none: 'n',
 			block: 'b',
-			flex: 'f',
-			grid: 'g',
+			// flex: 'f',
+			// grid: 'g',
 			inline: 'i',
 			'inline-flex': 'if',
 			'inline-grid': 'ig',

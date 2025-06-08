@@ -4,8 +4,12 @@ description: ...
 sidebar:
   order: 1
 ---
-import { Box } from "lism-css/astro";
+import { Lism, Box } from "lism-css/astro";
 import { Preview, PreviewArea, PreviewTitle, PreviewCode, Reference, HelpText, Callout, IconBadge } from "~/components";
+
+export const WhsNw = ({children}) => {
+	return <span className='-whs:nw'>{children}</span>
+}
 
 LismがどのようなCSS設計になっているかを説明します。
 
@@ -188,16 +192,12 @@ Prop クラス には以下の3種類の形式があります。
 
 |形式|説明|例|
 |---|---|---|
-|`.-{prop}:{token\|value}`| 各プロパティごとの主要な値やトークンの値を利用するためのユーティリティクラス(\*1) |`.-fz:l`, `.-ta:c`|
-|`.-{prop}:`| 変数 `--{prop}:` を受け取るためのクラス(\*2) |`.-p:`, `.-fz:`|
-|`.-{prop}[:\|@bp]`| 変数 `--[bp-]{prop}` を受け取るためのクラス(\*3) |`.-p@sm`, `.-p@md`|
+|<WhsNw>`.-{prop}:{value}`</WhsNw>| 各プロパティごとの主要な値やトークンの値を利用するためのユーティリティクラス(\*1) |<WhsNw>`.-fz:l`</WhsNw>,<br/>`.-ta:c`|
+|`.-{prop}`| 変数 `--{prop}` を受け取るためのクラス(\*2) |`.-p`,<br/>`.-fz`|
+|`.-{prop}_{bp}`| 変数 `--{prop}_{bp}` を受け取るためのクラス(\*3) |<WhsNw>`.-p_sm`</WhsNw>,<br/>`.-p_md`|
 
 
-{/* `{value}`部分について
-- 小数点が付いた値 → `.`のままで。(CSS側で`\`使う必要あり)
-	- 例: `.-prop:1.5`
-- ネガティブ(マイナス)値の表記もそのままで。
-	- 例: `.-prop:-1` */}
+
 
 <Callout type="warning">
 	<div class="-fz:s">
@@ -215,12 +215,12 @@ Prop クラス には以下の3種類の形式があります。
 .-fz\:l { font-size: var(--fz--l); }
 .-fz\:3xl { font-size: var(--fz--3xl); }
 
-.-p\:{ padding: var(--p); }
+.-p{ padding: var(--p); }
 @container (min-width: 480px) {
-	.-p\@sm\:{ padding: var(--sm-p); }
+	.-p_sm{ padding: var(--p_sm); }
 }
 @container (min-width: 720px) {
-	.-p\@md\:{ padding: var(--md-p); }
+	.-p_md{ padding: var(--p_md); }
 }
 ```
 
@@ -229,7 +229,8 @@ Prop クラス には以下の3種類の形式があります。
 
 ### レスポンシブ対応
 
-直前に紹介した`.-{prop}[:|@bp]`形式のクラスと`--[bp-]{prop}`形式の変数によって、レスポンシブ対応を行います。
+
+直前に紹介した`.-{prop}_{bp}`形式のクラスと`--{prop}_{bp}`形式の変数によって、レスポンシブ対応を行います。
 
 {/* <Callout type="check">
 これにより、Lism では**クラスと変数を書くだけでレスポンシブデザイン**を実現できるようになっています。
@@ -238,13 +239,13 @@ Prop クラス には以下の3種類の形式があります。
 <Preview>
 	<PreviewTitle>実際の活用例は次の通りです。</PreviewTitle>
 	<PreviewArea resize>
-	<Box p={[20, 30, 50]} bd>
-		BOX
-	</Box>
+		<Lism p={[20, 30, 50]} bd>
+			BOX
+		</Lism>
 	</PreviewArea>
 	<PreviewCode label="HTML" slot="tab">
-```html "-p@sm" "-p@md" "--sm-p" "--md-p"
-<div class="-p:20 -p@sm -p@md -bd:" style="--sm-p:var(--s30);--md-p:var(--s50);">
+```html "-p_sm" "-p_md" "--p_sm" "--p_md"
+<div class="-p:20 -p_sm -p_md -bd" style="--p_sm:var(--s30);--p_md:var(--s50);">
 	BOX
 </div>
 ```
@@ -258,6 +259,10 @@ Prop クラス には以下の3種類の形式があります。
 	</PreviewCode>
 </Preview>
 
+<Reference>
+詳しくは[レスポンシブ対応解説ページ](/css/responsive/)を参照してください。
+</Reference>
+
 
 
 ### その他の推奨規則
@@ -268,55 +273,9 @@ Lismパッケージに内蔵されているクラスではありませんが、�
 |---|---|---|
 |ゾーニング|`.z--{zoneName}`|`.z--header`,<br />`.z--sidebar`,<br />`.z--article`|
 |ページの分類|`.p--{type}--{id\|slug}`|`.p--front`,<br />`.p--archive`,<br />`.p--post--{id}`,<br />`.p--page--{slug}`|
-|ユーティリティ|`.u--{utilityName}`|`.u--hoge`|
+{/* |ユーティリティ|`.u--{utilityName}`|`.u--hoge`| */}
 {/* |テキスト装飾|`.t--{textFormat}`|`.t--marker`| */}
 {/* |ユニーククラス|`.uq--{uniqueName}`|`.uq--hoge`| */}
-
-
-## コンテナクエリ・メディアクエリ
-
-Lismでは、デフォルトで**コンテナクエリ**を採用しています。
-
-<Callout type='point'>
-そのため、ブレイクポイントで値を切り替えるには、その先祖要素で**コンテナ要素**を定義しておく必要があります。
-</Callout>
-
-（Lism でコンテナ要素を配置するには、`.is--container`(`<Container>`)が便利です。）
-
-また、SCSSファイルで[カスタマイズ](/css/customize/)を行うことで、メディアクエリに切り替えることもできます。
-
-
-### ブレイクポイント
-
-ブレイクポイントは**モバイルファースト**で定義しており、数値としては480px~1200pxまでの240px刻みで設定しています。  
-（特定のデバイスサイズに依存した数値は採用していません。）
-
-|サイズ表記|デフォルトの設定値|
-|---|---|
-|`sm`|`width >= 480px`|
-|`md`|`width >= 720px`|
-|`lg`|`width >= 960px`|
-|(`xl`)|`width >= 1200px`|
-
-<Callout type="info">
-(xlサイズのサポートは別途SCSSの設定ファイルの上書きが必要)
-</Callout>
-
-
-これらの定義済みポイントをあなたのプロジェクトで用意したCSSで使用する場合、`.scss`ファイルからであれば次のようにして簡単に利用できます。
-
-{/* `@use`で`lism-css/scss/query`をインポートして、`query.cq()`を使ってください。 */}
-
-```scss
-@use '../path/to/node_modules/lism-css/scss/query' as query;
-
-@include query.cq('sm') {
-	// Your styles for sm sizes(width >= 480px) ...
-}
-@include query.cq('md') {
-	// Your styles for md sizes(width >= 720px) ...
-}
-```
 
 
 ## 補足事項
@@ -328,6 +287,14 @@ Lismでは、デフォルトで**コンテナクエリ**を採用しています
 
 ...
 
+`-{prop}:{value}`の`{value}`部分について
+
+- 小数点が付いた値 → `.`のままで。(CSS側で`\`使う必要あり)
+	- 例: `.-prop:1.5`
+- ネガティブ(マイナス)値の表記もそのままで。
+	- 例: `.-prop:-1`
+
+	
 ### 単語の省略について
 
 基本的には[Emmetの省略形](https://docs.emmet.io/cheat-sheet/) で統一するようにしています。

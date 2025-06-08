@@ -1,5 +1,5 @@
 ---
-title: '-bd:'
+title: '-bd'
 description: ...
 sidebar: 
   order: 20
@@ -11,7 +11,7 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, Callout } from "~/comp
 
 Lismでは、border系の指定が少し特殊になっています。
 
-全方向用の`-bd:`クラスと、特定の方向だけにボーダーを表示するための`.-bd\:{side}`クラスがあります。  
+全方向用の`-bd`クラスと、特定の方向だけにボーダーを表示するための`.-bd\:{side}`クラスがあります。  
 いずれも、細かなボーダースタイルは `--bdc`, `--bdw`, `--bds` の3つの変数で管理します。
 
 <PreviewTitle>css</PreviewTitle>
@@ -20,7 +20,7 @@ Lismでは、border系の指定が少し特殊になっています。
 	--bds: solid;
 	--bdw: 1px;
 	--bdc: currentColor;
-	--bd: var(--bdw) var(--bds) var(--bdc);
+	--bd var(--bdw) var(--bds) var(--bdc);
 }
 .-bd\: {
 	border-style: var(--bds);
@@ -63,8 +63,8 @@ Lismでは、border系の指定が少し特殊になっています。
 		```
 	</PreviewCode>
 	<PreviewCode label='HTML' slot='tab'>
-		```html "-bd\:" "-bd\:l" "--bdc" "--bdw" "--bds"
-		<div class="l--box -p:20 -bd:" style="--bdc:var(--red);--bds:dashed">
+		```html "-bd" "-bd\:l" "--bdc" "--bdw" "--bds"
+		<div class="l--box -p:20 -bd" style="--bdc:var(--red);--bds:dashed">
 			...
 		</div>
 		<div class="l--box -p:20 -bd:l" style="--bdc:var(--blue);--bdw:0.4em;">
@@ -80,7 +80,7 @@ Lismでは、border系の指定が少し特殊になっています。
 
 
 <Callout type='info'>
-一方向だけのボーダー指定をしたい場合、`.-bd:`の派生クラスを使います。
+一方向だけのボーダー指定をしたい場合、`.-bd`の派生クラスを使います。
 </Callout>
 
 
@@ -163,7 +163,7 @@ Lismでは、border系の指定が少し特殊になっています。
 </Preview>
 
 
-`.-bd\:`クラスが `border-style` `border-width` `border-color` を分割指定していることにより、以下のようなボーダーを出力することもできます。
+`.-bd\`クラスが `border-style` `border-width` `border-color` を分割指定していることにより、以下のようなボーダーを出力することもできます。
 
 <Preview>
 	<PreviewTitle>`bdw`,`bds`,`bdc`それぞれの方向指定</PreviewTitle>
@@ -181,7 +181,7 @@ Lismでは、border系の指定が少し特殊になっています。
 	</PreviewCode>
 	<PreviewCode label='HTML' slot='tab'>
 		```html
-		<div class="l--box -bd: -p:20" style="--bdw:0 0 1px .5em;--bds:dashed solid;--bdc:var(--purple) var(--blue)">
+		<div class="l--box -bd -p:20" style="--bdw:0 0 1px .5em;--bds:dashed solid;--bdc:var(--purple) var(--blue)">
 			border
 		</div>
 		```
@@ -206,7 +206,7 @@ Lismでは、border系の指定が少し特殊になっています。
 	</PreviewCode>
 	<PreviewCode label='HTML' slot='tab'>
 		```html
-		<div class="l--box -bd: -bdw@sm -bdw@md -p:20" style="--bdw:1px;--sm-bdw:3px;--md-bdw:6px">border</div>
+		<div class="l--box -bd -bdw_sm -bdw_md -p:20" style="--bdw:1px;--bdw_sm:3px;--bdw_md:6px">border</div>
 		```
 	</PreviewCode>
 </Preview>
@@ -250,14 +250,14 @@ Lismでは、border系の指定が少し特殊になっています。
 	</PreviewCode>
 	<PreviewCode label='HTML' slot='tab'>
 		```html
-		<div class="l--flex -bd: -fxd:c -fxd@sm" style="--bdc:var(--blue);--sm-fxd:row">
-			<div class="-bd: -bdw@sm -bdc:i -p:20 -fx:1" style="--bdw:0 0 1px 0;--sm-bdw:0 1px 0 0">
+		<div class="l--flex -bd -fxd:c -fxd_sm" style="--bdc:var(--blue);--fxd_sm:row">
+			<div class="-bd -bdw_sm -bdc:i -p:20 -fx:1" style="--bdw:0 0 1px 0;--bdw_sm:0 1px 0 0">
 				Box
 			</div>
-			<div class="-bd: -bdw@sm -bdc:i -p:20 -fx:1" style="--bdw:0 0 1px 0;--sm-bdw:0 1px 0 0">
+			<div class="-bd -bdw_sm -bdc:i -p:20 -fx:1" style="--bdw:0 0 1px 0;--bdw_sm:0 1px 0 0">
 				Box
 			</div>
-			<div class="-bd: -bdw@sm -bdc:i -p:20 -fx:1" style="--bdw:0 0 1px 0;--sm-bdw:0 1px 0 0">
+			<div class="-bd -bdw_sm -bdc:i -p:20 -fx:1" style="--bdw:0 0 1px 0;--bdw_sm:0 1px 0 0">
 				Box
 			</div>
 			<div class="-p:20 -fx:1">

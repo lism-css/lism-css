@@ -46,7 +46,7 @@ export const PropTable = ({data={}, ...props}) => {
 Lismでは、主要なCSSプロパティ群に対して、それらで頻繁に使用される値やトークンを手軽にセットできるようなユーティリティクラスを用意しています。  
 さらに、その中でも特に重要なCSSプロパティについてはブレイクポイント指定用クラスも用意しています。
 
-それらを [Prop Class](/css/methodology/#prop-class) と呼んでおり、`-{prop}:({value})`, `-{prop}@{bp}` という形式で定義しています。
+それらを [Prop Class](/css/methodology/#prop-class) と呼んでおり、`-{prop}(:{value})`, `-{prop}_{bp}` という形式で定義しています。
 
 このページでは、その Prop Classの一覧を紹介します。
 
@@ -237,7 +237,7 @@ export const LinkSPACE = () => <a href="/css/tokens/#space"><code dir="auto">SPA
 	</PreviewArea>
 	<PreviewCode slot="tab" label="HTML">
 	```html
-	<div class="-p:20 -p@sm -bd:" style="--sm-p:var(--s30)">
+	<div class="-p:20 -p_sm -bd" style="--p_sm:var(--s30)">
 		<p>Example text</p>
 		<p class="-mbs:20 -mis:40">Example text</p>
 	</div>
@@ -332,15 +332,15 @@ export const LinkSPACE = () => <a href="/css/tokens/#space"><code dir="auto">SPA
 	<PreviewCode slot='tab' label='HTML'>
 		```html
 		<div class="l--box -pos:r -ar:3/2 -lh:1">
-			<div class="l--box -pos:a -l:0 -t:0 -bd: -p:20">A</div>
-			<div class="l--box -pos:a -l:50% -t:0 -trslt:-50X -bd: -p:20">B</div>
-			<div class="l--box -pos:a -r:0 -t:0 -bd: -p:20">C</div>
-			<div class="l--box -pos:a -l:0 -t:50% -trslt:-50Y -bd: -p:20">D</div>
-			<div class="l--box -pos:a -l:50% -t:50% -trslt:-50XY -bd: -p:20">E</div>
-			<div class="l--box -pos:a -r:0 -t:50% -trslt:-50Y -bd: -p:20">F</div>
-			<div class="l--box -pos:a -l:0 -b:0 -bd: -p:20">G</div>
-			<div class="l--box -pos:a -l:50% -b:0 -trslt:-50X -bd: -p:20">H</div>
-			<div class="l--box -pos:a -r:0 -b:0 -bd: -p:20">I</div>
+			<div class="l--box -pos:a -l:0 -t:0 -bd -p:20">A</div>
+			<div class="l--box -pos:a -l:50% -t:0 -trslt:-50X -bd -p:20">B</div>
+			<div class="l--box -pos:a -r:0 -t:0 -bd -p:20">C</div>
+			<div class="l--box -pos:a -l:0 -t:50% -trslt:-50Y -bd -p:20">D</div>
+			<div class="l--box -pos:a -l:50% -t:50% -trslt:-50XY -bd -p:20">E</div>
+			<div class="l--box -pos:a -r:0 -t:50% -trslt:-50Y -bd -p:20">F</div>
+			<div class="l--box -pos:a -l:0 -b:0 -bd -p:20">G</div>
+			<div class="l--box -pos:a -l:50% -b:0 -trslt:-50X -bd -p:20">H</div>
+			<div class="l--box -pos:a -r:0 -b:0 -bd -p:20">I</div>
 		</div>
 		```
 	</PreviewCode>

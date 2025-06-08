@@ -57,33 +57,6 @@ export const ColorBadge = ({color, label}) => {
 |<ColorBadge color='black' />|`--black`|
 |<ColorBadge color='white' />|`--white`|
 
-{/* 
-パレットトークンについては、`-keycol:`と組み合わせた専用クラスも用意されています。  
-
-<Preview>
-	<PreviewTitle>使用例</PreviewTitle>
-	<PreviewArea p={20}>
-		<Box keycol='green' p='30'><Dummy  /></Box>
-		<Box keycol='blue' bd p='30'><Dummy  /></Box>
-	</PreviewArea>
-	<PreviewCode slot='tab' label='HTML'>
-		```html
-		<div class="l--box -keycol:green -p:box">...</div>
-		<div class="l--box -keycol:blue -bd: -p:box">...</div>
-		```
-	</PreviewCode>
-	<PreviewCode slot='tab' label='JSX'>
-		```jsx
-		<Box keycol='green' p='30'>...</Box>
-		<Box keycol='blue' bd p='30'>...</Box>
-		```
-	</PreviewCode>
-</Preview>
-
-<Reference>
-	[keycolについて詳しくはこちら→](/styles/keycol/)
-</Reference> */}
-
 
 
 {/* ### パレットカラーの不透明度の指定
@@ -99,11 +72,11 @@ export const ColorBadge = ({color, label}) => {
 	<PreviewCode slot='tab' label='HTML'>
 		```html
 		<div
-			class="l--box -bgc: -c: -p:box"
+			class="l--box -bgc: -c -p:box"
 			style="--bgc:hsl(var(--hsl-black) / 40%);--c:var(--white)"
 		>...</div>
 		<div
-			class="l--box -bgc: -c: -p:box"
+			class="l--box -bgc: -c -p:box"
 			style="--bgc:hsl(var(--hsl-green) / 10%);--c:hsl(var(--hsl-blue) / 75%)"
 		>...</div>
 		```

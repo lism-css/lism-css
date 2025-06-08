@@ -27,7 +27,7 @@ Lismで配布しているほぼ全てのコンポーネントは、この`<Lism>
 	</PreviewCode>
 	<PreviewCode slot='tab' label='HTML'>
 		```jsx
-		<div class="-p:30 -fw:bold -c: -bgc:base-2 -bdrs:3"> Lism content </div>
+		<div class="-p:30 -fw:bold -c -bgc:base-2 -bdrs:3"> Lism content </div>
 		```
 	</PreviewCode>
 </Preview>
@@ -161,7 +161,7 @@ Lism Propsは、主に以下の3種類に分類されます。
 ユーティリティクラスに変換されない値を指定した場合、以下のいずれかで出力されます。
 
 1. 単純に`style`属性にインライン出力される。
-2. `-{prop}:` & `--{prop}` の組み合わせで出力される。
+2. `-{prop}` & `--{prop}` の組み合わせで出力される。
 3. `--{prop}`だけ出力されるもの（特殊）
 
 <Preview>
@@ -186,7 +186,7 @@ Lism Propsは、主に以下の3種類に分類されます。
 </PreviewCode>
 </Preview>
 
-ブレイクポイントでの切り替えに対応しているような主要なプロパティは、この`-{prop}:` & `--{prop}` で出力されます。
+ブレイクポイントでの切り替えに対応しているような主要なプロパティは、この`-{prop}` & `--{prop}` で出力されます。
 
 {/* <p class='-fz:s -op:high -mbs:5'>そのほか、(変数管理できた方が利便性が高いので)主要なプロパティも変数化されるようになっています。</p> */}
 
@@ -204,7 +204,7 @@ Lism Propsは、主に以下の3種類に分類されます。
 </PreviewCode>
 </Preview>
 
-<p class='-mbs:5'>`-bd:`や`-trs:`と併用するようなプロパティがこれに当てはまります。</p>
+<p class='-mbs:5'>`-bd`や`-trs`と併用するようなプロパティがこれに当てはまります。</p>
 
 
 <div id='output-utility'></div>
@@ -232,16 +232,16 @@ Lism Propsは、主に以下の3種類に分類されます。
 </Callout>
 
 
-#### 変数なしで`-{prop}:`クラスのみを出力する方法
-CSS Props に対して`"-"`または`true`を指定すると、変数なしで`-{prop}:`クラスのみを出力します。
+#### 変数なしで`-{prop}`クラスのみを出力する方法
+CSS Props に対して`"-"`または`true`を指定すると、変数なしで`-{prop}`クラスのみを出力します。
 
 <Preview>
 <PreviewTitle>例</PreviewTitle>
 <PreviewCode>
-```jsx "p='-'" "bdrs" "-p:" "-bdrs:"
+```jsx "p='-'" "bdrs" "-p" "-bdrs:"
 <Lism p='-' bdrs>contents</Lism>
 ↓
-<div class="-p: -bdrs:">contents</div>
+<div class="-p -bdrs:">contents</div>
 ```
 </PreviewCode>
 </Preview>
@@ -311,7 +311,7 @@ State Props用の処理をスキップできます。`<Spacer>`や`<Divider>`、
 
 ## レスポンジブ指定の方法
 
-`Lism` で使用できる CSS Propsは、[レスポンシブに対応した形式](/css/methodology/#レスポンシブ対応)で出力できるようになっています。
+`Lism` で使用できる CSS Propsは、[レスポンシブに対応した形式](/css/responsive)で出力できるようになっています。
 
 
 
@@ -320,7 +320,7 @@ State Props用の処理をスキップできます。`<Spacer>`や`<Divider>`、
 1. 配列で順番に指定（ base → sm → md → ...）
 2. オブジェクトで直接ブレイクポイントを指定
 
-どちらも最終的に出力されるHTMLは同じで、ユーティリティクラスとCSS変数のペア（`-{prop}@{bp}:` & `--{bp}-{prop}`）で出力されます。
+どちらも最終的に出力されるHTMLは同じで、ユーティリティクラスとCSS変数のペア（`-{prop}_{bp}` & `--{prop}_{bp}`）で出力されます。
 
 <Preview>
 	<PreviewTitle>例1</PreviewTitle>
@@ -336,7 +336,7 @@ State Props用の処理をスキップできます。`<Spacer>`や`<Divider>`、
 	</PreviewCode>
 	<PreviewCode label='出力されるHTML' slot='tab'>
 		```jsx
-		<div class='-p:20 -p@sm -p@md' style='--sm-p:var(--s30);--md-p:5rem'>
+		<div class='-p:20 -p_sm -p_md' style='--p_sm:var(--s30);--p_md:5rem'>
 			...
 		</div>
 		```
@@ -359,7 +359,7 @@ State Props用の処理をスキップできます。`<Spacer>`や`<Divider>`、
 	</PreviewCode>
 	<PreviewCode label='出力されるHTML' slot='tab'>
 		```jsx
-		<div class='-p@md' style='--md-p:var(--s40)'>
+		<div class='-p_md' style='--p_md:var(--s40)'>
 			...
 		</div>
 		```
