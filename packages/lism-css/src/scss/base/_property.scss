@@ -1,0 +1,43 @@
+// @property が使える環境であればコンテナのさらに親要素の幅を参照できるので、containerを1段階飛び出せる。
+// cqw を算出値で保持するために登録済みカスタムプロパティとして定義
+@property --overwideSize {
+	syntax: '<length-percentage>';
+	initial-value: 100%;
+	inherits: true;
+}
+
+// @property --flowM {
+// 	syntax: '*';
+// 	inherits: true;
+// }
+
+/* ------------------------------------------------------------
+	ハーフレディング
+
+	Memo: --herfLeadingとは別に--negativeHLを定義しているのは、トリミングをしないために 0px に上書きした要素でも --herfLeading 自体の値は無効にしないようにするため。
+	これにより、imgに対してmargin-block-start:var(--herfLeading) を適用して余白を揃えたりできる。
+*/
+@property --herfLeading {
+	syntax: '*';
+	inherits: false;
+	initial-value: calc((1lh - 1em) / 2);
+}
+
+// トリミングするネガティブマージン
+// Memo: initial-valueでvar(--herfLeading)は使えなかった
+@property --trimHL {
+	syntax: '*';
+	inherits: false;
+	initial-value: calc((1lh - 1em) / 2 * -1);
+}
+
+// :lang(en) {
+// 	--herfLeading: calc((1lh - 1cap) / 2);
+// }
+
+// lh非サポートブラウザ用のフォールバック
+// @supports not (gap: 1lh) {
+// 	:root {
+// 		--herfLeading: 0px;
+// 	}
+// }

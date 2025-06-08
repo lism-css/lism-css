@@ -34,11 +34,10 @@
 	// --s90: 18rem;
 
 	// .is--flow の余白
-	--flowGap--s: var(--s30);
-	--flowGap--m: var(--s40);
-	--flowGap--l: var(--s50);
-	--flowGap--h: 2.5em;
-	// --flowGap: var(--flowGap--m);
+	--flowM--s: var(--s20);
+	--flowM--m: var(--s40);
+	// --flowM--l: var(--s50);
+	--flowM--h: 1em; /* --flowM に追加する値 */
 
 	// コンテンツの左右の余白
 	--gutter: var(--s40);
@@ -286,34 +285,3 @@
 	// --filter--lighten: brightness(1.15);
 	// --filter--darken: brightness(0.85);
 }
-
-/* ------------------------------------------------------------
-	ハーフレディング
-
-	Memo: --herfLeadingとは別に--negativeHLを定義しているのは、トリミングをしないために 0px に上書きした要素でも --herfLeading 自体の値は無効にしないようにするため。
-	これにより、imgに対してmargin-block-start:var(--herfLeading) を適用して余白を揃えたりできる。
-*/
-@property --herfLeading {
-	syntax: '*';
-	inherits: false;
-	initial-value: calc((1lh - 1em) / 2);
-}
-
-// トリミングするネガティブマージン
-// Memo: initial-valueでvar(--herfLeading)は使えなかった
-@property --trimHL {
-	syntax: '*';
-	inherits: false;
-	initial-value: calc((1lh - 1em) / 2 * -1);
-}
-
-// :lang(en) {
-// 	--herfLeading: calc((1lh - 1cap) / 2);
-// }
-
-// lh非サポートブラウザ用のフォールバック
-// @supports not (gap: 1lh) {
-// 	:root {
-// 		--herfLeading: 0px;
-// 	}
-// }
