@@ -382,12 +382,13 @@ import Card from '~/components/ex/Card/index.jsx';
 
 ## その他の例
 
-### bdrs='inner'
+### `u--innerR`の活用
+
 <Preview>
-	<PreviewTitle>`bdrs='inner'`の活用</PreviewTitle>
+	<PreviewTitle>`u--innerR`の活用</PreviewTitle>
 	<PreviewArea resize p='30'>
-		<Card sideW='45%' g='20' p='20' bdrs='4'>
-			<Frame data-is-side ar='16/9' bdrs='inner'>
+		<Card sideW='45%' className='u--outerR' g='20' p='20' bdrs='4'>
+			<Frame data-is-side ar='16/9' className='u--innerR'>
 				<Media src='/img/img-1.jpg' alt='' width='960' height='640' />
 			</Frame>
 			<Stack g='10' p='10'>
@@ -397,9 +398,9 @@ import Card from '~/components/ex/Card/index.jsx';
 		</Card>
 	</PreviewArea>
 	<PreviewCode slot='tab' label='JSX'>
-		```jsx "bdrs='inner'" "p='20' bdrs='4'"
-		<Card sideW='45%' g='20' p='20' bdrs='4'>
-			<Frame data-is-side ar='16/9' bdrs='inner'>
+		```jsx "u--outerR" "u--innerR" "p='20' bdrs='4'"
+		<Card sideW='45%' className='u--outerR' g='20' p='20' bdrs='4'>
+			<Frame data-is-side ar='16/9' className='u--innerR'>
 				<Media src='/img/img-1.jpg' alt='' width='960' height='640' />
 			</Frame>
 			<Stack g='10' p='10'>
