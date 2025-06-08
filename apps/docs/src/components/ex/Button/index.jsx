@@ -1,22 +1,11 @@
-import { Lism } from 'lism-css/react';
+import { Flex } from 'lism-css/react';
 import './style.css';
 
-export default function Badge({ children, ...props }) {
+export default function Button({ layout, children, ...props }) {
+	const Layout = layout || Flex;
 	return (
-		<Lism
-			lismClass='c--button'
-			tag='a'
-			d='if'
-			td='n'
-			lh='xs'
-			px='30'
-			py='20'
-			ai='c'
-			hov='fade'
-			trs
-			{...props}
-		>
+		<Layout lismClass='c--button' variant='fill' tag='a' td='n' lh='xs' px='30' py='20' ai='c' {...props}>
 			{children}
-		</Lism>
+		</Layout>
 	);
 }

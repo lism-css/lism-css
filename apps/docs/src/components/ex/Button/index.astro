@@ -1,23 +1,11 @@
 ---
-import { Lism } from 'lism-css/astro';
+import { Flex } from 'lism-css/astro';
 import './style.css';
 
-const props = Astro.props;
+const { layout, ...props } = Astro.props;
+const Layout = layout || Flex;
 ---
 
-<Lism
-	lismClass='c--button'
-	variant='fill'
-	tag='a'
-	d='if'
-	td='n'
-	lh='xs'
-	px='30'
-	py='20'
-	ai='c'
-	hov='fade'
-	trs
-	{...props}
->
+<Layout lismClass='c--button' variant='fill' tag='a' td='n' lh='xs' px='30' py='20' ai='c' {...props}>
 	<slot />
-</Lism>
+</Layout>
