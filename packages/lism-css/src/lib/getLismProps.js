@@ -273,10 +273,10 @@ class LismPropsData {
 		let utilName = `-${options.utilKey || name}`;
 
 		if (bp) {
-			styleName = `--${bp}-${name}`;
-			utilName += `@${bp}`;
-		} else {
-			utilName += ':';
+			// styleName = `--${bp}-${name}`;
+			// utilName += `@${bp}`;
+			styleName = `--${name}_${bp}`;
+			utilName += `_${bp}`;
 		}
 
 		// "u:"ではじまっている場合、それに続く文字列を取得してユーティリティ化
@@ -291,7 +291,7 @@ class LismPropsData {
 			if (presets) {
 				if (1 === presets) presets = name; // 1 は prop名をそのままキーとして取得
 				if (isPresetValue(presets, val)) {
-					this.addUtil(`${utilName}${val}`);
+					this.addUtil(`${utilName}:${val}`);
 					return;
 				}
 			}
@@ -299,9 +299,11 @@ class LismPropsData {
 				if (1 === utils) utils = name; // 1 は prop名をそのままキーとして取得
 				const utilVal = getMaybeUtilValue(utils, val);
 				if (utilVal) {
-					this.addUtil(`${utilName}${utilVal}`);
+					this.addUtil(`${utilName}:${utilVal}`);
 					return;
 				}
+			} else {
+				// utilName += ':';
 			}
 		}
 
@@ -393,7 +395,7 @@ class LismPropsData {
 		}
 
 		if (hoverData === '-' || hoverData === true) {
-			this.addUtil(`-hov:`);
+			this.addUtil(`-hov`);
 		} else if (typeof hoverData === 'string') {
 			// , 区切りでユーティリティクラスを複数出力可能
 			splitWithComma(hoverData).forEach((_val) => {
@@ -414,7 +416,7 @@ class LismPropsData {
 				const converter = getConverter(propName);
 				if (converter) value = getMaybeCssVar(value, converter, propName);
 
-				this.addUtil(`-hov:${propName}:`);
+				this.addUtil(`-hov:${propName}`);
 				this.addStyle(`--hov-${propName}`, value);
 			});
 		}
@@ -429,7 +431,7 @@ class LismPropsData {
 				splitWithComma(value).forEach((_val) => {
 					const utilVal = getMaybeUtilValue('bd', _val) || _val;
 					if (utilVal === 'all') {
-						if (utilVal) this.addUtil(`-bd:`);
+						if (utilVal) this.addUtil(`-bd`);
 					} else if (utilVal) {
 						this.addUtil(`-bd:${utilVal}`);
 					}
@@ -486,7 +488,7 @@ class LismPropsData {
 				this.lismState.push(`is--container -container:${value}`);
 			} else {
 				this.lismState.push(`is--container`);
-				this.addStyle(`--item-size`, getMaybeCssVar(value, 'size'));
+				this.addStyle(`--contentSize`, getMaybeCssVar(value, 'size'));
 			}
 		}
 	}
@@ -498,8 +500,9 @@ class LismPropsData {
 			if (isTokenValue('flow', value)) {
 				this.lismState.push(`is--flow -flow:${value}`);
 			} else {
-				this.lismState.push(`is--flow -flow:`);
-				this.addStyle(`--flowGap`, getMaybeCssVar(value, 'space'));
+				// this.lismState.push(`is--flow -flow:`);
+				this.lismState.push(`is--flow`);
+				this.addStyle(`--flowM`, getMaybeCssVar(value, 'space'));
 			}
 		}
 	}

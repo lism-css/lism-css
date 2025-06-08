@@ -19,12 +19,13 @@
 }
 
 @mixin echoBaseUtil($key, $prop, $base_type, $important) {
-	@if $base_type == 2 {
+	@if $base_type == 2 or $base_type == 3 {
+		.-#{$key},
 		[class*='-#{$key}:'] {
 			#{$prop}: var(--#{$key}) #{get_important_str($important)};
 		}
 	} @else if $base_type == 1 {
-		.-#{$key}\: {
+		.-#{$key} {
 			#{$prop}: var(--#{$key}) #{get_important_str($important)};
 		}
 	}
@@ -62,7 +63,7 @@
 		// valueが(prop:val)で詳細に明示されている場合
 		@if (meta.type-of($value) == map) {
 			@include echoDetailValues($selector, $value);
-		} @else if $base_type == 2 {
+		} @else if $base_type == 2 or $base_type == 3 {
 			// important は [class*=] についてるので不要
 			#{$selector} {
 				--#{$key}: #{$value};
@@ -186,9 +187,20 @@ $bp_outputs: (
 				$important: 1;
 			}
 
-			.-#{$key}\@#{$bp} {
-				#{$prop_name}: var(--#{$bp}-#{$key}) #{get_important_str($important)};
+			@if $base_type == 2 {
+				.-#{$key}_#{$bp} {
+					--#{$key}: var(--#{$key}_#{$bp}) !important;
+					#{$prop_name}: var(--#{$key}_#{$bp}) #{get_important_str($important)};
+				}
+			} @else {
+				.-#{$key}_#{$bp} {
+					#{$prop_name}: var(--#{$key}_#{$bp}) #{get_important_str($important)};
+				}
 			}
+
+			// .-#{$key}_#{$bp} {
+			// 	#{$prop_name}: var(--#{$key}_#{$bp}) #{get_important_str($important)};
+			// }
 		}
 	}
 }

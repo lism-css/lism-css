@@ -1,46 +1,31 @@
 ---
-title: '-hov:'
+title: '-hov'
 description: ...
 sidebar: 
   order: 20
 ---
 
 import { Flex, Media, Layer, Text, Spacer, Box, Center, Stack, Frame, LinkBox } from 'lism-css/react';
-import { Preview, PreviewArea, PreviewTitle, PreviewCode, Callout, IconBadge } from '~/components';
+import { Preview, PreviewArea, PreviewTitle, PreviewCode, EmbedCode, Callout, IconBadge } from '~/components';
 
 
 hover時の挙動をコントロールするためのCSS設計について紹介します。
 
 
-Lismでは、`-hov:`で始まるクラスを活用してhover時の挙動をコントロールします。
+Lismでは、`-hov`で始まるクラスを活用してhover時の挙動をコントロールします。
 
-さらに、`-trs:`クラスでトランジションの設定を行うことで、hover時の挙動をより細かくコントロールすることができます。
+さらに、`-trs`クラスでトランジションの設定を行うことで、hover時の挙動をより細かくコントロールすることができます。
 
 
 ## 基本的な使い方
 
-`.-hov:name` または `.-hov:{prop}:` の形式でクラスを準備します。  
+`.-hov:name` または `.-hov:{prop}` の形式でクラスを準備します。  
 前者はhover時の値を事前に決めておくクラスで、後者はcss変数と組み合わせを前提にしたクラスです。
 
 
-```css
-/* -hov: クラスの例 */
-.-hov\:fade:hover {
-	opacity: 0.7;
-}
-.-hov\:c\::hover {
-	color: var(--hov-c) !important;
-}
-.-hov\:bdc\::hover {
-	border-color: var(--hov-bdc) !important;
-}
-.-hov\:bgc\::hover {
-	background-color: var(--hov-bgc) !important;
-}
-.-hov\:bxsh\::hover {
-	box-shadow: var(--hov-bxsh);
-}
-```
+### CSS
+
+<EmbedCode dirPath='packages/lism-css' srcPath='src/scss/props/_hover.scss' />
 
 （Lismのコアパッケージには標準で上記のクラスを用意していますが、必要に合わせてこの形式でクラスを追加してください。）
 
@@ -57,7 +42,7 @@ Lismでは、`-hov:`で始まるクラスを活用してhover時の挙動をコ�
 	</PreviewArea>
 	<PreviewCode slot='tab' label='HTML'>
 		```html "-hov:fade"
-		<a href="###" class="is--linkBox -hov:fade -bgc:base-2 -bd: -p:30">
+		<a href="###" class="is--linkBox -hov:fade -bgc:base-2 -bd -p:30">
 			<p>LinkBox</p>
 			<p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
 		</a>
@@ -74,7 +59,7 @@ Lismでは、`-hov:`で始まるクラスを活用してhover時の挙動をコ�
 </Preview>
 
 <Callout type='info'>
-[`<Lism>`コンポーネント](/components/lism)では、`hov`プロパティに文字列を指定すると、自動的に`-hov:`クラスを出力します。
+[`<Lism>`コンポーネント](/components/lism)では、`hov`プロパティに文字列を指定すると、自動的に`-hov`クラスを出力します。
 </Callout>
 
 <Spacer h='20' />
@@ -89,9 +74,9 @@ Lismでは、`-hov:`で始まるクラスを活用してhover時の挙動をコ�
 		</LinkBox>
 	</PreviewArea>
 	<PreviewCode slot='tab' label='HTML'>
-	```html "-hov:bgc:" "-hov:c:" "--hov-bgc:" "--hov-c:"
+	```html "-hov:bgc" "-hov:c" "--hov-bgc" "--hov-c"
 	<a
-		class="is--linkBox -hov:bgc: -hov:c: -bgc:base-2 -p:30"
+		class="is--linkBox -hov:bgc -hov:c -bgc:base-2 -p:30"
 		style="--hov-bgc:var(--main);--hov-c:var(--white)"
 		href="###"
 	>
@@ -111,15 +96,15 @@ Lismでは、`-hov:`で始まるクラスを活用してhover時の挙動をコ�
 </Preview>
 
 <Callout type='info'>
-[`<Lism>`コンポーネント](/components/lism)では、`hov={{ prop:value }}`のようなオブジェクトを渡すと、`-hov:prop:`と`--hov-prop:value`のセットが出力されます。
+[`<Lism>`コンポーネント](/components/lism)では、`hov={{ prop:value }}`のようなオブジェクトを渡すと、`-hov:prop`と`--hov-prop:value`のセットが出力されます。
 </Callout>
 
 <Spacer h='20' />
 
 
-### `-trs:` でトランジションを設定する方法
+### `-trs` でトランジションを設定する方法
 
-Lismでは、以下のような`-trs:`クラスを用意しています。
+Lismでは、以下のような`-trs`クラスを用意しています。
 
 ```css
 .-trs\: {
@@ -133,7 +118,7 @@ Lismでは、以下のような`-trs:`クラスを用意しています。
 
 {/* hsl(25 50% 50% / 20%),rgb(250 50 50 / 20%)' */}
 <Preview>
-	<PreviewTitle>`-trs:`と組み合わせてbxshの強さを変化させる例</PreviewTitle>
+	<PreviewTitle>`-trs`と組み合わせてbxshの強さを変化させる例</PreviewTitle>
 	<PreviewArea p='40'>
 		<LinkBox href='###' trs bxsh='1' hov={{ bxsh:'4'}} bd p='30'>
 			<p>LinkBox</p>
@@ -141,10 +126,10 @@ Lismでは、以下のような`-trs:`クラスを用意しています。
 		</LinkBox>
 	</PreviewArea>
 	<PreviewCode slot='tab' label='HTML'>
-		```html "-trs:" "-bxsh:1 -hov:bxsh:" "--hov-bxsh:var(--bxsh--4)"
+		```html "-trs" "-bxsh:1 -hov:bxsh" "--hov-bxsh:var(--bxsh--4)"
 		<a
 			href="###"
-			class="is--linkBox -trs: -bxsh:1 -hov:bxsh: -bd: -p:30"
+			class="is--linkBox -trs -bxsh:1 -hov:bxsh -bd -p:30"
 			style="--hov-bxsh:var(--bxsh--4)"
 		>
 			<p>LinkBox</p>
@@ -172,9 +157,9 @@ Lismでは、以下のような`-trs:`クラスを用意しています。
 		</LinkBox>
 	</PreviewArea>
 	<PreviewCode slot='tab' label='HTML'>
-		```html "-trs:" "--trsdu:1s"
+		```html "-trs" "--trsdu:1s"
 		<a
-			class="is--linkBox -hov:bdc: -trs: -bd: -bdc:t -bgc:base-2 -p:30"
+			class="is--linkBox -hov:bdc -trs -bd -bdc:t -bgc:base-2 -p:30"
 			style="--hov-bdc:var(--red);--trsdu:1s;--bdw:3px" href="###"
 		>
 			<p>LinkBox</p>
@@ -217,7 +202,7 @@ Lismコンポーネントにて、ユーティリティクラスの出力とオ�
 </Preview> */}
 
 
-### `-hov:`クラスを自作する例
+### `-hov`クラスを自作する例
 
 <Preview>
 	<PreviewTitle>`.-hov:shadowUp`を追加</PreviewTitle>
@@ -239,7 +224,7 @@ Lismコンポーネントにて、ユーティリティクラスの出力とオ�
 	</PreviewCode>
 	<PreviewCode slot='tab' label='HTML'>
 		```html "-hov:shadow" "-hov:up"
-		<a href="###" class="is--linkBox -trs: -hov:shadow -hov:up -bd: -p:30">
+		<a href="###" class="is--linkBox -trs -hov:shadow -hov:up -bd -p:30">
 			<p>LinkBox</p>
 			<p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
 		</a>
@@ -289,7 +274,7 @@ Lismコンポーネントにて、ユーティリティクラスの出力とオ�
 <Preview>
 	<PreviewTitle>`.-hov:test`を追加</PreviewTitle>
 	<PreviewArea p='40'>
-		<div className='-p:40 -bd: -fz:l -hov:set -hov:test'>BOX</div>
+		<div className='-p:40 -bd -fz:l -hov:set -hov:test'>BOX</div>
 	</PreviewArea>
 
 	<PreviewCode slot='tab' label='追加CSS'>
@@ -304,7 +289,7 @@ Lismコンポーネントにて、ユーティリティクラスの出力とオ�
 	</PreviewCode>
 	<PreviewCode slot='tab' label='HTML'>
 		```html "-hov:set -hov:test"
-		<div className='-p:40 -bd: -fz:l -hov:set -hov:test'>BOX</div>
+		<div className='-p:40 -bd -fz:l -hov:set -hov:test'>BOX</div>
 		```
 	</PreviewCode>
 </Preview>
@@ -350,11 +335,11 @@ Lismコンポーネントにて、ユーティリティクラスの出力とオ�
 		</Frame>
 	</PreviewArea>
 	<PreviewCode slot='tab' label='HTML'>
-		```html "-hov:set" "-hov:get:show" "-trs:"
+		```html "-hov:set" "-hov:get:show" "-trs"
 		<a class="l--frame is--linkBox -hov:set -ar:16/9 -bdrs:4" href="#banner-link">
 			<img class="is--layer" src="/img/img-1.jpg" width="960" height="640" loading="lazy">
-			<div class="is--layer -trs: -hov:get:show -bgc:" style="--bgc:rgb(0 0 0 / 10%);backdrop-filter:blur(6px)">
-				<div class="l--center -h:100% -c:" style="--c:#fff">
+			<div class="is--layer -trs -hov:get:show -bgc" style="--bgc:rgb(0 0 0 / 10%);backdrop-filter:blur(6px)">
+				<div class="l--center -h:100% -c" style="--c:#fff">
 					<span class="-fz:2xl -fs:i -fw:light -lts:l -bdrs:99 -px:30 -py:10">View More</span>
 				</div>
 			</div>
@@ -377,7 +362,7 @@ Lismコンポーネントにて、ユーティリティクラスの出力とオ�
 
 
 
-### `-hov:get:`クラスを自作する例
+### `-hov:get`クラスを自作する例
 
 
 親がhoverされたらズーム表示されるような`-hov:get:zoom`クラスと、テキストが広がるような`-hov:get:letterSpread`クラスを自作して使ってみます。
@@ -420,9 +405,9 @@ Lismコンポーネントにて、ユーティリティクラスの出力とオ�
 			style="--trsdu--default:.6s"
 		>
 			<div class="l--frame is--layer">
-				<img class="is--layer -trs: -hov:get:zoom" src="/img/img-2.jpg" width="960" height="640" loading="lazy" />
+				<img class="is--layer -trs -hov:get:zoom" src="/img/img-2.jpg" width="960" height="640" loading="lazy" />
 			</div>
-			<div class="l--center is--layer -c: -bgc:" style="--c:#fff;--bgc:rgb(0 0 0 / 40%)">
+			<div class="l--center is--layer -c -bgc" style="--c:#fff;--bgc:rgb(0 0 0 / 40%)">
 				<span class="-hov:get:letterSpread -fz:2xl">LinkBox</span>
 			</div>
 		</a>

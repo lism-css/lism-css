@@ -1,6 +1,10 @@
 /*
-  resetした上で、 各要素の標準スタイルを定義する
+  @layerなし
 */
+@use './setting' with (
+	$layer_mode: 0
+);
+
 // reset
 @use './reset' as reset;
 

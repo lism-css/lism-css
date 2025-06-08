@@ -10,11 +10,11 @@ utilities: ユーティリティクラスのセレクタと値のリスト
 base_type:
 	0 →　なし（ユーティリティクラス以外は普通のインラインスタイルのみ）
 	1 →　.-d\:{display: var(--d)} 　(メリット：importantなしでbp対応できる)
-	2 → [class*='-p\:'] {padding: var(--p);} のように出力される
-	    トークンが定義されているような主要なプロパティは基本これ。
-	    メリット: ユーティリティクラスも変数を使えるので、数が多ければ文字数省略できる
-	        全て変数で出力されるようになるので、他の処理と絡ませることがしやすい。
-	    デメリット: *= は処理負荷が高い。
+	2 → .-p, [class*='-p\:'] {padding: var(--p);} の形式で、BPクラス含めて全て変数にセットするもの。
+	    常に変数で管理されるようになるので、他の処理と絡ませることがしやすい。
+	    デメリット: *= は処理負荷が高い。また、途中のBPから使えるようにするにはCSS記述増える）
+
+	3 → BPクラスには変数使わないが、文字数省略のため baseのProp classだけ変数化して *= セレクタ使う
 
 
 bp:1 は基本 base_type:1. --bdw などは base_type:0.
@@ -71,7 +71,6 @@ $place_utils: (
 $props: (
 	'w': (
 		prop: 'width',
-		base_type: 1,
 		utilities: (
 			// 'a': 'auto',
 			'fit': 'fit-content',
@@ -81,7 +80,6 @@ $props: (
 	),
 	'h': (
 		prop: 'height',
-		base_type: 1,
 		utilities: (
 			// 'a': 'auto',
 			'fit': 'fit-content',
@@ -93,7 +91,6 @@ $props: (
 	),
 	'maxW': (
 		prop: 'max-width',
-		base_type: 1,
 		utilities: (
 			'100\\%': '100%',
 		),
@@ -101,7 +98,6 @@ $props: (
 	),
 	'minW': (
 		prop: 'min-width',
-		base_type: 1,
 		utilities: (
 			'100\\%': '100%',
 		),
@@ -109,7 +105,6 @@ $props: (
 	),
 	'maxH': (
 		prop: 'max-height',
-		base_type: 1,
 		utilities: (
 			'100\\%': '100%',
 		),
@@ -117,7 +112,6 @@ $props: (
 	),
 	'minH': (
 		prop: 'min-height',
-		base_type: 1,
 		utilities: (
 			'100\\%': '100%',
 			'100lvh': '100lvh',
@@ -293,12 +287,12 @@ $props: (
 		utilities: (
 			'n': 'none',
 			'b': 'block',
-			'f': 'flex',
-			'g': 'grid',
+			// 'f': 'flex',
+			// 'g': 'grid',
 			'i': 'inline',
+			'ib': 'inline-block',
 			'if': 'inline-flex',
 			'ig': 'inline-grid',
-			'ib': 'inline-block',
 		),
 	),
 	'v': (
@@ -354,14 +348,10 @@ $props: (
 			'4': 'var(--bdrs--4)',
 			'5': 'var(--bdrs--5)',
 			'99': 'var(--bdrs--99)',
-			'inner': (
-				'border-radius': 'calc(var(--bdrs, 0) - var(--p, 0) * 0.9)',
-			),
 		),
 	),
 	'bxsh': (
 		prop: 'box-shadow',
-		base_type: 2,
 		utilities: (
 			'0': '0',
 			'1': 'var(--bxsh--1)',
@@ -381,13 +371,13 @@ $props: (
 	),
 	'px': (
 		prop: 'padding-inline',
-		base_type: 2,
+		base_type: 3,
 		bp: 1,
 		utilities: $space_values,
 	),
 	'py': (
 		prop: 'padding-block',
-		base_type: 2,
+		base_type: 3,
 		bp: 1,
 		utilities: $space_values,
 	),
@@ -409,13 +399,13 @@ $props: (
 	),
 	'pis': (
 		prop: 'padding-inline-start',
-		base_type: 2,
+		base_type: 3,
 		bp: 1,
 		utilities: $space_values,
 	),
 	'pbs': (
 		prop: 'padding-block-start',
-		base_type: 2,
+		base_type: 3,
 		bp: 1,
 		utilities: $space_values,
 	),
@@ -457,13 +447,13 @@ $props: (
 	),
 	'mis': (
 		prop: 'margin-inline-start',
-		base_type: 2,
+		base_type: 3,
 		bp: 1,
 		utilities: map.merge($auto, $space_values),
 	),
 	'mbs': (
 		prop: 'margin-block-start',
-		base_type: 2,
+		base_type: 3,
 		bp: 1,
 		utilities: map.merge($auto, $space_values),
 	),
@@ -695,7 +685,7 @@ $props: (
 			'-45': '-45deg',
 			'90': '90deg',
 			'-90': '-90deg',
-			'180': '180deg',
+			// '180': '180deg',
 		),
 	),
 	'whs': (

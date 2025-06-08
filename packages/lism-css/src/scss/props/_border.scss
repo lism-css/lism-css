@@ -13,14 +13,14 @@
 
 // bdc, bdw などでカラーや太さを上書きできるように border 自体を変数管理
 // :where(.has--bd),
-@include mixin.maybe_where('[class*="-bd:"]', 'base') {
+@include mixin.maybe_where('.-bd,[class*="-bd:"]', 'base') {
 	--bds: solid;
 	--bdw: 1px;
 	--bdc: currentColor;
 	--bd: var(--bdw) var(--bds) var(--bdc);
 }
 // .has--bd:where(:not([class*='-bd:'])) {
-.-bd\: {
+.-bd {
 	border-style: var(--bds);
 	border-width: var(--bdw);
 	border-color: var(--bdc);
