@@ -33,8 +33,8 @@ Each component follows this consistent structure:
 
 ```
 components/ComponentName/
-├── ComponentName.jsx    # Main React component
-├── getProps.js         # Props processing logic
+├── ComponentName.jsx  # Main React component
+├── getProps.js        # Props processing logic
 ├── index.js           # Exports
 ├── style.scss         # Component-specific styles (optional)
 └── script.js          # Client-side JavaScript (optional)
@@ -46,12 +46,14 @@ All components extend the base `Lism` component and use `getLismProps()` for pro
 
 The styling system uses CSS `@layer` for predictable specificity:
 
-- `reset` → `base` → `state` → `layout` → `dynamic` → `component` → `utility` → `props`
+- `lism.reset` → `lism.base` → `lism.state` → `lism.layout` → `lism.dynamic` → `lism.component` → (`lism.utility`)
+
+Note: utilityクラスとpropsクラスは`@layer`を付けません。ただし、ユーザーが利用できるように `lism.utility` のlayerも用意だけはしています。
 
 Two CSS outputs are generated:
 
-- `all.css` - Modern browsers with `@layer` support.
-- `all_no_layer.css` - Legacy browsers without layers.
+- `main.css` - Modern browsers with `@layer` support.
+- `main_legacy.css` - Legacy mode. Without `@layer`.
 
 SCSS Setting files:
 
@@ -64,8 +66,8 @@ SCSS Setting files:
 The framework converts React props to CSS classes and styles:
 
 - Responsive props: `{base: '20', md: '40', lg: '60'}` (can also be written as array: `['20', null, '40', '60']`)
-- Utility(Prop Class) pattern: `-prop:value` (e.g., `-p:20`, `-bgc:base-2`) or `-prop@bp` (e.g., `-p@sm`, `-g@md`)
-- Special props: `hov` (hover states), `bd` (borders), `trs` (transition)
+- Utility(Prop Class) pattern: `-prop:value` (e.g., `-p:20`, `-bgc:base-2`) or `-prop_bp` (e.g., `-p_sm`, `-g_md`)
+- Special props: `hov` (hover), `bd` (borders), `trs` (transition)
 
 ### Build Process
 
