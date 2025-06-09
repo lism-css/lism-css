@@ -145,23 +145,23 @@ Lismでは、主要なCSSプロパティ群に対して、それらで頻繁に�
 
 ```css
 .-c\:mix {
-	--c1: currentColor;
-	--c2: transparent;
-	--c: color-mix(in srgb, var(--c1) var(--c-pct, 50%), var(--c2));
+	--_c1: currentColor;
+	--_c2: transparent;
+	--c: color-mix(in srgb, var(--_c1) var(--_mixpct-c, 50%), var(--_c2));
 }
 .-bgc\:mix {
-	--bgc1: currentColor;
-	--bgc2: transparent;
-	--bgc: color-mix(in srgb, var(--bgc1) var(--bgc-pct, 50%), var(--bgc2));
+	--_bgc1: currentColor;
+	--_bgc2: transparent;
+	--bgc: color-mix(in srgb, var(--_bgc1) var(--_mixpct-bgc, 50%), var(--_bgc2));
 }
 .-bdc\:mix {
-	--bdc1: currentColor;
-	--bdc2: transparent;
-	--bdc: color-mix(in srgb, var(--bdc1) var(--bdc-pct, 50%), var(--bdc2));
+	--_bdc1: currentColor;
+	--_bdc2: transparent;
+	--bdc: color-mix(in srgb, var(--_bdc1) var(--_mixpct-bdc, 50%), var(--_bdc2));
 }
 ```
 
-`Lism`コンポーネントでは、これらを手軽に呼び出せるように、`c='color1:(color2:)NUM%'` の書式で指定することができるようにもなっています。
+`Lism`コンポーネントでは、これらを手軽に呼び出せるように、`c='{c1}:({c2}:){NUM}%'` の書式で指定することができるようにもなっています。
 
 
 <Preview>
@@ -182,7 +182,7 @@ Lismでは、主要なCSSプロパティ群に対して、それらで頻繁に�
 		```html
 		<div
 			className='-bgc:mix -c:mix -p:30'
-			style='--bgc1:var(--blue);--bgc-pct:10%;--c1:var(--blue);--c2:currentColor;--c-pct:40%'
+			style='--_bgc1:var(--blue);--_mixpct-bgc:10%;--_c1:var(--blue);--_c2:currentColor;--_mixpct-c:40%'
 		>
 			<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
 		</div>
