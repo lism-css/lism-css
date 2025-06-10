@@ -307,13 +307,13 @@ export const CONTEXT_PROPS = {
 	},
 	gridItem: {
 		// item
-		ga: { presets: 1, utils: { '1/1': '1' } }, // grid-area
-		gc: { presets: 1 }, // grid-column
-		gcs: { presets: 1, style: 'gridColumnStart' },
-		gce: { presets: 1, style: 'gridColumnEnd' },
-		gr: { presets: 1 }, // grid-row
-		grs: { presets: 1, style: 'gridRowStart' },
-		gre: { presets: 1, style: 'gridRowEnd' },
+		ga: { utils: { '1/1': '1', '1 / 1': '1' } }, // grid-area
+		gc: { presets: ['1/-1'], utils: { '1 / -1': '1/-1' } }, // grid-column
+		gr: { presets: ['1/-1'], utils: { '1 / -1': '1/-1' } }, // grid-row
+		gcs: { style: 'gridColumnStart' },
+		gce: { style: 'gridColumnEnd' },
+		grs: { style: 'gridRowStart' },
+		gre: { style: 'gridRowEnd' },
 		// ...itemProps,
 	},
 
