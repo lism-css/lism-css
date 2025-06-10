@@ -301,9 +301,9 @@ box-shadow は少し特殊で、ユーティリティクラス内で複数のsha
 
 |トークン|変数|クラス|
 |---|---|---|
-|`base`|<span className='-whs:nw'>`--ff-base`</span>|<span className='-whs:nw'>`-ff:base`</span>|
-|`accent`|<span className='-whs:nw'>`--ff-accent`</span>|<span className='-whs:nw'>`-ff:accent`</span>|
-|`mono`|<span className='-whs:nw'>`--ff-mono`</span>|<span className='-whs:nw'>`-ff:mono`</span>|
+|`base`|<span class='-whs:nw'>`--ff-base`</span>|<span class='-whs:nw'>`-ff:base`</span>|
+|`accent`|<span class='-whs:nw'>`--ff-accent`</span>|<span class='-whs:nw'>`-ff:accent`</span>|
+|`mono`|<span class='-whs:nw'>`--ff-mono`</span>|<span class='-whs:nw'>`-ff:mono`</span>|
 
 
 <Preview>
@@ -331,25 +331,23 @@ box-shadow は少し特殊で、ユーティリティクラス内で複数のsha
 |---|---|---|---|
 |`light`|`--fw-light`|`-fw:light`|`300`|
 |`normal`|`--fw-normal`|`-fw:normal`|`400`|
-|`medium`|`--fw-medium`|`-fw:medium`|`500`|
 |`bold`|`--fw-bold`|`-fw:bold`|`700`|
+{/* |`medium`|`--fw-medium`|`-fw:medium`|`500`| */}
 {/* |`thin`|`--fw-thin`|`-fw:thin`|`100`|
 |`heavy`|`--fw-heavy`|`-fw:heavy`|`900`| */}
 
 
 <Preview>
 	<PreviewTitle>Preview</PreviewTitle>
-	<PreviewArea p={20} isFlow='s'>
+	<PreviewArea p='20' isFlow='s'>
 		<Dummy length='s' fw='light' />
 		<Dummy length='s' fw='normal' />
-		<Dummy length='s' fw='medium' />
 		<Dummy length='s' fw='bold' />
 	</PreviewArea>
 	<PreviewCode slot='tab' label='HTML'>
 		```html
 		<p class="-fw:light">Lorem ipsum ...</p>
 		<p class="-fw:normal">Lorem ipsum ...</p>
-		<p class="-fw:medium">Lorem ipsum ...</p>
 		<p class="-fw:bold">Lorem ipsum ...</p>
 		```
 	</PreviewCode>
@@ -357,7 +355,6 @@ box-shadow は少し特殊で、ユーティリティクラス内で複数のsha
 		```jsx
 		<Text fw='light'>Lorem ipsum ...</Text>
 		<Text fw='normal'>Lorem ipsum ...</Text>
-		<Text fw='medium'>Lorem ipsum ...</Text>
 		<Text fw='bold'>Lorem ipsum ...</Text>
 		```
 	</PreviewCode>
