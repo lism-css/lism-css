@@ -26,7 +26,7 @@ export const IconBadge = ({ type = 'info' }) => {
 
 export function Reference({ children }) {
 	return (
-		<Callout icon={BookIcon} keycol='purple'>
+		<Callout icon={BookIcon} keycolor='purple'>
 			{children}
 		</Callout>
 	);
@@ -34,17 +34,17 @@ export function Reference({ children }) {
 
 export const MemoBadge = ({ children, color = 'orange', ...props }) => {
 	return (
-		<Badge fz='s' lh='1' p='5' lismClass='u--colbox' bd keycol={color} {...props}>
+		<Badge fz='s' lh='1' p='5' lismClass='u--cbox' bd keycolor={color} {...props}>
 			{children}
 		</Badge>
 	);
 };
 export const PropBadge = ({ type = '', ...props }) => {
-	let keycol = 'blue';
+	let keycolor = 'blue';
 	if (type === 'attr') {
-		keycol = 'green';
+		keycolor = 'green';
 	} else if (type === 'cssvar') {
-		keycol = 'purple';
+		keycolor = 'purple';
 	}
-	return <Badge variant='prop' fz='xs' ff='mono' lh='xs' m='5' bdrs='5' whs='nw' className='u--colbox' keycol={keycol} {...props} />;
+	return <Badge variant='prop' fz='xs' ff='mono' lh='xs' m='5' bdrs='5' whs='nw' className='u--cbox' keycolor={keycolor} {...props} />;
 };

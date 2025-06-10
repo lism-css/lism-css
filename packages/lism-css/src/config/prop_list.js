@@ -6,7 +6,7 @@ memo:
 	ユーティリティクラス化されない時の挙動パターン
 		1.  .-prop: かつ --prop ( ほとんどこれ )
 		2.  普通のstyleとして出力するだけ ( alignSelf など ) → style をもつ
-		3.  --prop のみ出力.( --keycol や --bdc など ) →  style をもつ
+		3.  --prop のみ出力.( --keycolor や --bdc など ) →  style をもつ
 
 
 禁止パターン: 
@@ -50,7 +50,7 @@ export default {
 			'base',
 			'text',
 			'text-2',
-			// 'keycol',
+			// 'keycolor',
 			'mix',
 			'main',
 			'accent',
@@ -68,14 +68,14 @@ export default {
 			'base-2',
 			'base-3',
 			'text',
-			// 'keycol',
+			// 'keycolor',
 			'mix',
 			// 'black',
 			// 'white',
 		],
 		converter: 'color',
 	},
-	keycol: { style: '--keycol', converter: 'color' },
+	keycolor: { style: '--keycolor', converter: 'color' },
 
 	bd: {
 		style: 'border',
@@ -105,13 +105,13 @@ export default {
 			'accent',
 			'mix',
 			'divider',
-			// 'keycol',
+			// 'keycolor',
 			'mix',
 		],
 		converter: 'color',
 	},
 
-	// boxcolor: { _presets: TOKENS.palette, style: '--keycol', converter: 'color' },
+	// boxcolor: { _presets: TOKENS.palette, style: '--keycolor', converter: 'color' },
 	bg: { utils: { none: 'n' } },
 	bgi: { style: 'backgroundImage' },
 	bgr: { style: 'backgroundRepeat', utils: { n: 'no-repeat' } },

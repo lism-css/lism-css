@@ -19,16 +19,6 @@
 }
 
 // --------------------
-// keycol
-// --------------------
-// $colors: 'red', 'orange', 'yellow', 'green', 'blue', 'purple', 'pink', 'gray';
-// @each $c in $colors {
-// 	.-keycol\:#{$c} {
-// 		--keycol: var(--#{$c});
-// 	}
-// }
-
-// --------------------
 // Button
 // --------------------
 .c--button:where(.l--grid) {
@@ -57,8 +47,8 @@
 // 	mask: var(--icon-mask) no-repeat 50% 50% / contain;
 // }
 
-.c--badge-subtle.u--colbox {
-	--bdc: color-mix(in srgb, var(--c-base), var(--keycol) 40%);
+.c--badge-subtle.u--cbox {
+	--bdc: color-mix(in srgb, var(--c-base), var(--keycolor) 40%);
 }
 
 // --------------------

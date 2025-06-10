@@ -72,7 +72,7 @@ export const ColorDemos = ({variant = '',  colbox}) => {
 		<Flex variant='cluster' g='20'>
 			{['red', 'orange', 'yellow', 'green', 'blue', 'purple', 'pink', 'gray'].map((_col) => {
 				if(colbox) {
-					badgeProps.className = 'u--colbox'; badgeProps.keycol = _col;
+					badgeProps.className = 'u--cbox'; badgeProps.keycolor = _col;
 				} else if(variant === 'outline') {
 					badgeProps.c = _col;
 				} else {
@@ -145,29 +145,29 @@ export const ColorDemos = ({variant = '',  colbox}) => {
 	</PreviewCode>
 </Preview>
 
-### `u--colbox` との併用
+### `u--cbox` との併用
 
 <Preview>
-	<PreviewTitle>[`u--colbox`](/css/utility-class/#u--colbox)クラスを使ったスタイリングの例</PreviewTitle>
+	<PreviewTitle>[`u--cbox`](/css/utility-class/#u--cbox)クラスを使ったスタイリングの例</PreviewTitle>
 	<PreviewArea p='30'>
 		<Flex variant='cluster' g='20'>
-			<Badge className='u--colbox' keycol='main'>Badge</Badge>
-			<Badge className='u--colbox' keycol='#549005' bdc='keycol:base:40%' px='20' bdrs='99'>Badge</Badge>
+			<Badge className='u--cbox' keycolor='main'>Badge</Badge>
+			<Badge className='u--cbox' keycolor='#549005' bdc='keycolor:base:40%' px='20' bdrs='99'>Badge</Badge>
 		</Flex>
 	</PreviewArea>
 	<PreviewCode slot='tab' label='JSX'>
 		```jsx
 		<Flex variant='cluster' g='20'>
-			<Badge className='u--colbox' keycol='main'>Badge</Badge>
-			<Badge className='u--colbox' keycol='#549005' bdc='keycol:base:40%' px='20' bdrs='99'>Badge</Badge>
+			<Badge className='u--cbox' keycolor='main'>Badge</Badge>
+			<Badge className='u--cbox' keycolor='#549005' bdc='keycolor:base:40%' px='20' bdrs='99'>Badge</Badge>
 		</Flex>
 		```
 	</PreviewCode>
 	<PreviewCode slot='tab' label='HTML'>
 		```html
 		<div class="l--flex l--flex-cluster -g:20">
-			<span class="c--badge u--colbox -px:10 -py:5 -lh:1 -bdrs:10" style="--keycol:var(--c-main)">Badge</span>
-			<span class="c--badge u--colbox -px:20 -py:5 -lh:1 -bdrs:99 -bdc:mix" style="--keycol:#549005;--_bdc1:var(--keycol);--_bdc2:var(--c-base);--_mixpct-bdc:25%">  Badge  </span>
+			<span class="c--badge u--cbox -px:10 -py:5 -lh:1 -bdrs:10" style="--keycolor:var(--c-main)">Badge</span>
+			<span class="c--badge u--cbox -px:20 -py:5 -lh:1 -bdrs:99 -bdc:mix" style="--keycolor:#549005;--_bdc1:var(--keycolor);--_bdc2:var(--c-base);--_mixpct-bdc:25%">  Badge  </span>
 		</div>
 		```
 	</PreviewCode>
@@ -261,30 +261,30 @@ export const ColorDemos = ({variant = '',  colbox}) => {
 </Preview>
 
 <Preview>
-	<PreviewTitle>`u--colbox`を使った場合のカラーバリエーションの例</PreviewTitle>
+	<PreviewTitle>`u--cbox`を使った場合のカラーバリエーションの例</PreviewTitle>
 	<PreviewArea p='30'>
 		<Flex variant='cluster' g='20'>
-			<Badge className='u--colbox' keycol='red'>Red</Badge>
-			<Badge className='u--colbox' keycol='orange'>Orange</Badge>
-			<Badge className='u--colbox' keycol='yellow'>Yellow</Badge>
-			<Badge className='u--colbox' keycol='green'>Green</Badge>
-			<Badge className='u--colbox' keycol='blue'>Blue</Badge>
-			<Badge className='u--colbox' keycol='purple'>Purple</Badge>
-			<Badge className='u--colbox' keycol='pink'>Pink</Badge>
-			<Badge className='u--colbox' keycol='gray'>Gray</Badge>
+			<Badge className='u--cbox' keycolor='red'>Red</Badge>
+			<Badge className='u--cbox' keycolor='orange'>Orange</Badge>
+			<Badge className='u--cbox' keycolor='yellow'>Yellow</Badge>
+			<Badge className='u--cbox' keycolor='green'>Green</Badge>
+			<Badge className='u--cbox' keycolor='blue'>Blue</Badge>
+			<Badge className='u--cbox' keycolor='purple'>Purple</Badge>
+			<Badge className='u--cbox' keycolor='pink'>Pink</Badge>
+			<Badge className='u--cbox' keycolor='gray'>Gray</Badge>
 		</Flex>
 	</PreviewArea>
 	<PreviewCode slot='tab' label='JSX'>
 		```jsx
 		<Flex variant='cluster' g='20'>
-			<Badge className='u--colbox' keycol='red'>Red</Badge>
-			<Badge className='u--colbox' keycol='orange'>Orange</Badge>
-			<Badge className='u--colbox' keycol='yellow'>Yellow</Badge>
-			<Badge className='u--colbox' keycol='green'>Green</Badge>
-			<Badge className='u--colbox' keycol='blue'>Blue</Badge>
-			<Badge className='u--colbox' keycol='purple'>Purple</Badge>
-			<Badge className='u--colbox' keycol='pink'>Pink</Badge>
-			<Badge className='u--colbox' keycol='gray'>Gray</Badge>
+			<Badge className='u--cbox' keycolor='red'>Red</Badge>
+			<Badge className='u--cbox' keycolor='orange'>Orange</Badge>
+			<Badge className='u--cbox' keycolor='yellow'>Yellow</Badge>
+			<Badge className='u--cbox' keycolor='green'>Green</Badge>
+			<Badge className='u--cbox' keycolor='blue'>Blue</Badge>
+			<Badge className='u--cbox' keycolor='purple'>Purple</Badge>
+			<Badge className='u--cbox' keycolor='pink'>Pink</Badge>
+			<Badge className='u--cbox' keycolor='gray'>Gray</Badge>
 		</Flex>
 		```
 	</PreviewCode>
