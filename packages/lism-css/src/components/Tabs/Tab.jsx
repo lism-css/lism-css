@@ -7,7 +7,7 @@ export default function Tab({ tabId = 'tab', index = 0, isActive = false, ...pro
 	return (
 		<Lism
 			tag='button'
-			lismClass='d--tabs__tab'
+			lismClass='d--tabs_tab'
 			className='re--style'
 			role='tab'
 			aria-controls={controlId}

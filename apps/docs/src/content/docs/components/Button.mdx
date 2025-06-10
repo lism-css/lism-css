@@ -32,8 +32,8 @@ import Button from '~/components/ex/Button/index.astro';
 	<PreviewCode slot='tab' label='HTML'>
 		```html
 		<div class="l--flex -g:20">
-			<a class="c--button l--flex c--button--fill -td:n -lh:xs -px:30 -py:20 -ai:c" href="###">Button</a>
-			<a class="c--button l--flex c--button--outline -td:n -lh:xs -px:30 -py:20 -ai:c" href="###">Button</a>
+			<a class="c--button l--flex c--button-fill -td:n -lh:xs -px:30 -py:20 -ai:c" href="###">Button</a>
+			<a class="c--button l--flex c--button-outline -td:n -lh:xs -px:30 -py:20 -ai:c" href="###">Button</a>
 		</div>
 		```
 	</PreviewCode>
@@ -46,7 +46,7 @@ import Button from '~/components/ex/Button/index.astro';
 
 | プロパティ | 説明 |
 |---|---|
-|`variant`| `c--button--{variant}` クラスを出力します。`fill`,`outline`の2種類のスタイルをこの例では用意しています。|
+|`variant`| `c--button-{variant}` クラスを出力します。`fill`,`outline`の2種類のスタイルをこの例では用意しています。|
 {/* |`layout`| Buttonを構成するレイアウト用コンポーネントを指定できます。デフォルトは`Lism`です。| */}
 {/* |`icon`, `endIcon` | ボタンテキストの左右に表示するアイコンを指定できます。| */}
 {/* |`hover`| デフォルトは`fade`が指定されています。| */}
@@ -87,8 +87,8 @@ Common Props の `w`, `h` ではなく、`width`, `height` を使ってくださ
 	<PreviewCode slot='tab' label='HTML'>
 		```html
 		<div class='l--flex -g:20'>
-			<a class='c--button l--flex c--button--fill -td:n -lh:xs -px:30 -py:20 -ai:c -bgc:main -bdrs:20 -hov:fade' href='###'>Fill Button</a>
-			<a class='c--button l--flex c--button--outline -td:n -lh:xs -px:30 -py:20 -ai:c -c -bdrs:20 -hov:fade' style='--c:#64a31c' href='###'>Outline</a>
+			<a class='c--button l--flex c--button-fill -td:n -lh:xs -px:30 -py:20 -ai:c -bgc:main -bdrs:20 -hov:fade' href='###'>Fill Button</a>
+			<a class='c--button l--flex c--button-outline -td:n -lh:xs -px:30 -py:20 -ai:c -c -bdrs:20 -hov:fade' style='--c:#64a31c' href='###'>Outline</a>
 		</div>
 		```
 	</PreviewCode>
@@ -264,10 +264,10 @@ Common Props の `w`, `h` ではなく、`width`, `height` を使ってくださ
 .-hov\:reverse {
 	--hov-c: var(--bgc);
 	--hov-bgc: var(--c);
-	&:where(.c--button--fill) {
+	&:where(.c--button-fill) {
 		--hov-bgc: transparent;
 	}
-	&:where(.c--button--outline) {
+	&:where(.c--button-outline) {
 		--hov-c: var(--c-base);
 	}
 	@media (any-hover: hover) {

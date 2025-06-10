@@ -54,6 +54,8 @@ button[aria-controls='starlight__sidebar'] {
 	// 	display: inline-flex;
 	// 	line-height: 1;
 	// }
+}
+:where(.z--mdcontent) {
 	code {
 		&:where(:not(:is(.c--preview_area, pre) code)) {
 			padding: 0.2em 0.3em;
@@ -102,6 +104,20 @@ button[aria-controls='starlight__sidebar'] {
 		thead {
 			border-block-end: solid 2px;
 		}
+	}
+}
+
+.c--badge-prop {
+	padding: 0 0.25em;
+	--bdc: color-mix(in srgb, var(--c-base), var(--keycol) 25%);
+	> code {
+		padding: 0 !important;
+		font: inherit !important;
+		background-color: transparent;
+	}
+
+	td > &:first-child {
+		margin-inline-start: 0;
 	}
 }
 

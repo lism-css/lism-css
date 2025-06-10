@@ -9,7 +9,7 @@ export function Timeline({ children, ...props }) {
 }
 
 export function Item({ icon, isStart, isEnd, isHighlighted, shapeColor, children, ...props }) {
-	let itemClass = 'c--timeline__item';
+	let itemClass = 'c--timeline_item';
 	let dataTimeline = null;
 	const lineProps = {};
 	const shapeProps = {
@@ -36,11 +36,9 @@ export function Item({ icon, isStart, isEnd, isHighlighted, shapeColor, children
 
 	return (
 		<Grid className={itemClass} data-timeline={dataTimeline} ai='c' colg='20' {...props}>
-			<GridItem layout={Decorator} className='c--timeline__line' w='2px' bgc='divider' jslf='c' gc='1' gr='1 / -1' {...lineProps} />
-			<GridItem className='c--timeline__shape' {...shapeProps}>
-				{isHighlighted && (
-					<Decorator className='c--timeline__highlight' tag='span' pos='a' z='-1' i='-3px' bgc='inherit' bdrs='99' op='low' />
-				)}
+			<GridItem layout={Decorator} className='c--timeline_line' w='2px' bgc='divider' jslf='c' gc='1' gr='1 / -1' {...lineProps} />
+			<GridItem className='c--timeline_shape' {...shapeProps}>
+				{isHighlighted && <Decorator className='c--timeline_highlight' tag='span' pos='a' z='-1' i='-3px' bgc='inherit' bdrs='99' op='low' />}
 				{icon && <Icon icon={icon} scale='0.75' fz='s' />}
 			</GridItem>
 			{children}
@@ -49,12 +47,12 @@ export function Item({ icon, isStart, isEnd, isHighlighted, shapeColor, children
 }
 
 export function Time(props) {
-	return <GridItem className='c--timeline__time' ga='time' fz='xs' lh='xs' c='text-2' {...props} />;
+	return <GridItem className='c--timeline_time' ga='time' fz='xs' lh='xs' c='text-2' {...props} />;
 }
 
 export function Title(props) {
-	return <GridItem className='c--timeline__title' ga='time' fz='xs' lh='xs' c='text-2' {...props} />;
+	return <GridItem className='c--timeline_title' ga='time' fz='xs' lh='xs' c='text-2' {...props} />;
 }
 export function Body(props) {
-	return <GridItem className='c--timeline__body' ga='body' mbs='10' {...props} />;
+	return <GridItem className='c--timeline_body' ga='body' mbs='10' {...props} />;
 }

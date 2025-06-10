@@ -17,39 +17,39 @@
 			'body avatar' / 1fr auto;
 	}
 
-	.c--chat__avatar {
+	.c--chat_avatar {
 		width: var(--avator-size);
 	}
-	.c--chat__content {
+	.c--chat_content {
 		max-width: 640px;
 	}
 
-	.c--chat__deco {
+	.c--chat_deco {
 		width: var(--deco-size);
 		height: var(--deco-size);
 		mask: var(--mask-img) center / contain no-repeat;
 	}
-	.c--chat--speak .c--chat__deco {
+	.c--chat-speak .c--chat_deco {
 		top: 0;
 		--mask-img: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="8" height="8"><path d="M8,8L8,8C7.4,4.8,5.4,2,2.6,0.4L2,0h6V8z"/></svg>');
 	}
-	.c--chat--think .c--chat__deco {
+	.c--chat-think .c--chat_deco {
 		top: 0.75rem;
 		--mask-img: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="8" height="8"><circle cx="1.5" cy="1.7" r="1.5"/><circle cx="4.5" cy="5.2" r="2.5"/></svg>');
 	}
 }
 
-[data-chat-dir='start'] > div > .c--chat__deco {
+[data-chat-dir='start'] > div > .c--chat_deco {
 	inset-inline-end: calc(100% - 1px);
 }
-[data-chat-dir='end'] > div > .c--chat__deco {
+[data-chat-dir='end'] > div > .c--chat_deco {
 	inset-inline-start: calc(100% - 1px);
 }
 
-/* .c--chat--speak[data-chat-dir='start'] > div > .c--chat__content {
+/* .c--chat-speak[data-chat-dir='start'] > div > .c--chat_content {
 	border-start-start-radius: 0;
 }
-.c--chat--speak[data-chat-dir='end'] > div > .c--chat__content {
+.c--chat-speak[data-chat-dir='end'] > div > .c--chat_content {
 	border-start-end-radius: 0;
 } */
 

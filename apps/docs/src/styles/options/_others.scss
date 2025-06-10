@@ -43,28 +43,28 @@
 // --------------------
 
 // emoji
-// .l--icon--emoji {
+// .l--icon-emoji {
 // 	font-family: var(--ff-emoji);
 // 	line-height: 1;
 // 	place-content: center; // justify-content: center;
 // 	place-items: center; // align-items: center;
 // }
 
-// .l--icon--mask {
+// .l--icon-mask {
 // 	width: 1em;
 // 	height: 1em;
 // 	background-color: currentColor;
 // 	mask: var(--icon-mask) no-repeat 50% 50% / contain;
 // }
 
-.c--badge--subtle.u--colbox {
+.c--badge-subtle.u--colbox {
 	--bdc: color-mix(in srgb, var(--c-base), var(--keycol) 40%);
 }
 
 // --------------------
 // Accordion
 // --------------------
-.d--accordion__icon {
+.d--accordion_icon {
 	> .l--icon {
 		grid-area: 1 / 1;
 	}
@@ -79,12 +79,12 @@
 // --------------------
 // data-role='trigger' だけをクリッカブルにする
 // --------------------
-.d--accordion__header:has(> [data-role='trigger']) {
+.d--accordion_header:has(> [data-role='trigger']) {
 	pointer-events: none;
 }
 
-.d--accordion__label > a,
-.d--accordion__icon {
+.d--accordion_label > a,
+.d--accordion_icon {
 	pointer-events: auto;
 }
 

@@ -24,7 +24,6 @@ export default function getProps({
 }) {
 	// props.skipState = true;
 	const iconClasses = [`l--icon`];
-	// if (variant) iconClasses.push(`l--icon--${variant}`);
 
 	let Component = tag || 'span';
 

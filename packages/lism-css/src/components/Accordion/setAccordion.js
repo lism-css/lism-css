@@ -12,7 +12,7 @@ const clickedEvent = async (details, force = false) => {
 	if (details.dataset.animating && !force) return;
 	details.dataset.animating = '1';
 
-	const body = details.querySelector('.d--accordion__body');
+	const body = details.querySelector('.d--accordion_body');
 
 	// オープン / クローズ 処理
 	if (!details.open) {
@@ -56,8 +56,7 @@ const toggleEvent = (e, details) => {
 export const setEvent = (currentRef) => {
 	const details = currentRef;
 	// トリガーが明示的に指定されていない場合は、<summary> 要素をトリガーとする
-	const clickBtn =
-		details.querySelector(`[data-role="trigger"]`) || details.querySelector('summary');
+	const clickBtn = details.querySelector(`[data-role="trigger"]`) || details.querySelector('summary');
 
 	if (!clickBtn) return;
 

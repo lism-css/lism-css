@@ -8,7 +8,7 @@ export function getAccProps({ lismClass, ...props }) {
 
 export function getAccIconProps({ isTrigger, ...props }) {
 	const defaultProps = {
-		lismClass: 'd--accordion__icon',
+		lismClass: 'd--accordion_icon',
 		tag: 'span',
 		d: 'inline-grid',
 	};
@@ -22,14 +22,14 @@ export function getAccIconProps({ isTrigger, ...props }) {
 }
 
 export const defaultProps = {
-	header: { lismClass: 'd--accordion__header', ai: 'c' },
-	label: { lismClass: 'd--accordion__label', tag: 'span', fx: '1' },
+	header: { lismClass: 'd--accordion_header', ai: 'c' },
+	label: { lismClass: 'd--accordion_label', tag: 'span', fx: '1' },
 	body: {
-		lismClass: 'd--accordion__body',
+		lismClass: 'd--accordion_body',
 		// trs: true,
 	},
 	inner: {
-		lismClass: 'd--accordion__inner',
+		lismClass: 'd--accordion_inner',
 		ov: 'hidden',
 	},
 };
