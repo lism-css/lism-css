@@ -23,17 +23,14 @@
 	--grid-bdc: color-mix(in srgb, currentColor, transparent 95%);
 	--grid-size: 1rem;
 	--grid-offset: calc(var(--grid-size) / 2);
-	background-image: linear-gradient(
-			transparent calc(100% - 1px),
-			var(--grid-bdc) 50%,
-			var(--grid-bdc)
-		),
+	background-image:
+		linear-gradient(transparent calc(100% - 1px), var(--grid-bdc) 50%, var(--grid-bdc)),
 		linear-gradient(90deg, transparent calc(100% - 1px), var(--grid-bdc) 50%, var(--grid-bdc));
 	background-position: var(--grid-offset) var(--grid-offset);
 	background-size: var(--grid-size) var(--grid-size);
 }
-// .-bg\:grid.u--colbox {
-// 	--grid-bdc: color-mix(in srgb, var(--keycol), transparent 88%);
+// .-bg\:grid.u--cbox {
+// 	--grid-bdc: color-mix(in srgb, var(--keycolor), transparent 88%);
 // }
 .-bg\:stripe {
 	--stripe-bdc: color-mix(in srgb, currentColor, transparent 95%);

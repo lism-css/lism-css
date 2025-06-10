@@ -31,8 +31,8 @@ import Callout from '~/components/ex/Callout/index.astro';
 	</PreviewCode>
 	<PreviewCode slot='tab' label='HTML'>
 		```jsx
-		<div class="c--callout l--withSide u--colbox -p:20 -bd -bdrs:10 -g:20" style="--keycol:var(--red)">
-			<div class="c--callout_icon l--center -c -fz:xl -p:5" data-is-side style='--c:var(--keycol)'>
+		<div class="c--callout l--withSide u--cbox -p:20 -bd -bdrs:10 -g:20" style="--keycolor:var(--red)">
+			<div class="c--callout_icon l--center -c -fz:xl -p:5" data-is-side style='--c:var(--keycolor)'>
 				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="1em" height="1em" fill="currentColor" focusable="false" class="l--icon" aria-hidden="true">...</svg>
 			</div>
 			<div class="c--callout_body">
@@ -54,9 +54,9 @@ import Callout from '~/components/ex/Callout/index.astro';
 
 | プロパティ | 説明 |
 |---|---|
-|`type`|`keycol`と`icon`の組み合わせを呼び出すキーワードを指定できます。初期値:`"alert"`|
+|`type`|`keycolor`と`icon`の組み合わせを呼び出すキーワードを指定できます。初期値:`"alert"`|
 |`icon`| アイコンを指定できます。デフォルトは `"alert"`です。|
-|`keycol`| キーカラーを指定します。|
+|`keycolor`| キーカラーを指定します。|
 |`isFlow`|`__body`に渡されます|
 {/* | `iconProps` | アイコン（`<Icon>`）に渡すpropsを指定できます。| */}
 {/* - `variant`: `'fill'` | `'outline'` ? */}
@@ -114,20 +114,20 @@ import Callout from '~/components/ex/Callout/index.astro';
 		その他、カラーとアイコンの指定例
 	</PreviewTitle>
 	<PreviewArea p='30'>
-		<Callout icon='good' keycol='pink'>
+		<Callout icon='good' keycolor='pink'>
 			<Dummy lang='ja' length='codes' />
 		</Callout>
-		{/* <Callout icon='bad' keycol='blue'>
+		{/* <Callout icon='bad' keycolor='blue'>
 			<Dummy lang='ja' length='codes' />
 		</Callout> */}
-		<Callout icon='book' keycol='#185b6e'>
+		<Callout icon='book' keycolor='#185b6e'>
 			<Dummy lang='ja' length='codes' />
 		</Callout>
 	</PreviewArea>
 	<PreviewCode slot='tab' label='JSX'>
 	```jsx
-	<Callout icon='good' keycol='green'>...</Callout>
-	<Callout icon='book' keycol='#185b6e'>...</Callout>
+	<Callout icon='good' keycolor='green'>...</Callout>
+	<Callout icon='book' keycolor='#185b6e'>...</Callout>
 	```
 	</PreviewCode>
 </Preview>
@@ -138,7 +138,7 @@ import Callout from '~/components/ex/Callout/index.astro';
 		Astroでアイコンをslotから指定する例
 	</PreviewTitle>
 	<PreviewArea resize p='30'>
-		<Callout keycol='#185b6e'>
+		<Callout keycolor='#185b6e'>
 			<Icon tag='svg' slot='icon' viewBox="0 0 256 256">
 				<path d="M208,24H72A32,32,0,0,0,40,56V224a8,8,0,0,0,8,8H192a8,8,0,0,0,0-16H56a16,16,0,0,1,16-16H208a8,8,0,0,0,8-8V32A8,8,0,0,0,208,24Zm-8,160H72a31.82,31.82,0,0,0-16,4.29V56A16,16,0,0,1,72,40H200Z"></path>
 			</Icon>
@@ -147,7 +147,7 @@ import Callout from '~/components/ex/Callout/index.astro';
 	</PreviewArea>
 	<PreviewCode slot='tab' label='Astro'>
 		```jsx "slot='icon'"
-		<Callout keycol='#185b6e'>
+		<Callout keycolor='#185b6e'>
 			<Icon tag='svg' slot='icon' viewBox="0 0 256 256">
 				<path d="M208,24H72A32,32,0,0,0,40,56V224a8,8,0,0,0,8,8H192a8,8,0,0,0,0-16H56a16,16,0,0,1,16-16H208a8,8,0,0,0,8-8V32A8,8,0,0,0,208,24Zm-8,160H72a31.82,31.82,0,0,0-16,4.29V56A16,16,0,0,1,72,40H200Z"></path>
 			</Icon>

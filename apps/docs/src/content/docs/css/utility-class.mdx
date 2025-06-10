@@ -14,9 +14,9 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, EmbedCode, Reference, 
 
 
 
-## `u--colbox`
+## `u--cbox`
 
-`--keycol`変数をベースに、`--c`, `--bgc`, `--bdc` を `color-mix()` で生成します。
+`--keycolor`変数をベースに、`--c`, `--bgc`, `--bdc` を `color-mix()` で生成します。
 
 `color`, `background-color` にそれぞれ生成された 変数がセットされますが、`--bdc`は変数定義のみになるため、ボーダーを表示する時は[`-bd`クラス](/css/border)との併用が必要です。
 
@@ -27,25 +27,25 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, EmbedCode, Reference, 
 <Preview>
 	<PreviewTitle>例</PreviewTitle>
 	<PreviewArea resize p='30'>
-		<Lism className='u--colbox' keycol='blue' p='30'><Dummy length='codes' /></Lism>
-		<Lism className='u--colbox' keycol='red' bd p='30'><Dummy length='codes' /></Lism>
-		<Lism className='u--colbox' keycol='purple' bd bdc='keycol:base:25%' p='30'><Dummy length='codes' /></Lism>
-		<Lism className='u--colbox' keycol='#688f04' bd='is' bdw='4px' p='30'><Dummy length='codes' /></Lism>
+		<Lism className='u--cbox' keycolor='blue' p='30'><Dummy length='codes' /></Lism>
+		<Lism className='u--cbox' keycolor='red' bd p='30'><Dummy length='codes' /></Lism>
+		<Lism className='u--cbox' keycolor='purple' bd bdc='keycolor:base:25%' p='30'><Dummy length='codes' /></Lism>
+		<Lism className='u--cbox' keycolor='#688f04' bd='is' bdw='4px' p='30'><Dummy length='codes' /></Lism>
 	</PreviewArea>
 	<PreviewCode slot="tab" label="HTML">
 		```html
-		<div class='u--colbox -p:30' style='--keycol:var(--blue)'>...</div>
-		<div class='u--colbox -bd -p:30' style='--keycol:var(--red)'>...</div>
-		<div class="u--colbox -bd -bdc:mix -p:30" style="--keycol:var(--purple);--_bdc1:var(--keycol);--_bdc2:var(--c-base);--_mixpct-bdc:25%">...</div>
-		<div class='u--colbox -bd:is -p:30' style='--keycol:#688f04;--bdw:4px;'>...</div>
+		<div class='u--cbox -p:30' style='--keycolor:var(--blue)'>...</div>
+		<div class='u--cbox -bd -p:30' style='--keycolor:var(--red)'>...</div>
+		<div class="u--cbox -bd -bdc:mix -p:30" style="--keycolor:var(--purple);--_bdc1:var(--keycolor);--_bdc2:var(--c-base);--_mixpct-bdc:25%">...</div>
+		<div class='u--cbox -bd:is -p:30' style='--keycolor:#688f04;--bdw:4px;'>...</div>
 		```
 	</PreviewCode>
 	<PreviewCode slot="tab" label='JSX'>
 		```jsx
-		<Lism className='u--colbox' keycol='blue' p='30'><Dummy length='codes' /></Lism>
-		<Lism className='u--colbox' keycol='red' bd p='30'><Dummy length='codes' /></Lism>
-		<Lism className='u--colbox' keycol='purple' bd bdc='keycol:base:25%' p='30'><Dummy length='codes' /></Lism>
-		<Lism className='u--colbox' keycol='#688f04' bd='is' bdw='4px' p='30'><Dummy length='codes' /></Lism>
+		<Lism className='u--cbox' keycolor='blue' p='30'><Dummy length='codes' /></Lism>
+		<Lism className='u--cbox' keycolor='red' bd p='30'><Dummy length='codes' /></Lism>
+		<Lism className='u--cbox' keycolor='purple' bd bdc='keycolor:base:25%' p='30'><Dummy length='codes' /></Lism>
+		<Lism className='u--cbox' keycolor='#688f04' bd='is' bdw='4px' p='30'><Dummy length='codes' /></Lism>
 		```
 	</PreviewCode>
 </Preview>

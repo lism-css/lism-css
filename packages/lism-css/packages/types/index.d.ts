@@ -91,7 +91,7 @@ export interface LismBaseProps {
 	c?: ResponsiveValue<string>;
 	bgc?: ResponsiveValue<string>;
 	bdc?: ResponsiveValue<string>;
-	keycol?: ResponsiveValue<string>;
+	keycolor?: ResponsiveValue<string>;
 
 	// Border
 	bd?: ResponsiveValue<string>;
