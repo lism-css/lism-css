@@ -14,7 +14,7 @@ import Table from '~/components/ex/Table/index.jsx';
 
 ## Import
 
-<ImportSource name='Table' css='scss' react />
+<ImportSource name='Table' css='css' react />
 
 
 
@@ -154,7 +154,7 @@ import Table from '~/components/ex/Table/index.jsx';
 
 以下のような2つのバリエーションクラスをこの例では定義しています。
 
-- セル１列目を固定する`c--table--fix1stCell`
+- セル１列目を固定する`c--table--fix1st`
 - theadを固定する`c--table--fixHead`
 
 
@@ -163,7 +163,7 @@ import Table from '~/components/ex/Table/index.jsx';
 	<PreviewTitle>scroll時にtheadと、1列目のセルを固定する例</PreviewTitle>
 	<PreviewArea p='30' _dir='rtl'>
 	<Frame ov='auto' maxH='20rem'>
-		<Table variant='fix1stCell,fixHead' thBgc='base-2' style={{'--bdwwX': '1px'}}>
+		<Table variant='fix1st,fixHead' thBgc='base-2' cellMinW='10rem'>
 			<thead>
 				<tr>
 					<th>Header 1</th>
@@ -176,61 +176,60 @@ import Table from '~/components/ex/Table/index.jsx';
 			</thead>
 			<tbody>
 				<tr>
-					<th>Cell 1</th>
-					<td>Cell 2</td>
-					<td>Cell 3</td>
-					<td>Cell 4</td>
-					<td>Cell 2</td>
-					<td>Cell 3</td>
+					<th>Cell 1-1</th>
+					<td>Cell 1-2<br />Lorem ipsum text</td>
+					<td>Cell 1-3</td>
+					<td>Cell 1-4</td>
+					<td>Cell 1-5<br />Lorem ipsum text</td>
+					<td>Cell 1-6</td>
 				</tr>
 				<tr>
-					<th rowSpan={2}>Cell 1</th>
-					<td>Cell 2</td>
-					<td>Cell 3<br />text</td>
-					<td>Cell 4</td>
-					<td>Cell 2</td>
-					<td>Cell 3<br />text</td>
+					<th rowSpan={2}>Cell 2-1</th>
+					<td>Cell 2-2</td>
+					<td>Cell 2-3<br />Lorem ipsum text</td>
+					<td>Cell 2-4</td>
+					<td>Cell 2-5</td>
+					<td>Cell 2-6<br />Lorem ipsum text</td>
 				</tr>
 				<tr>
-					{/* <th>Cell 1</th> */}
-					<td className='-nofix'>Cell 2</td>
-					<td>...</td>
-					<td>Cell 4</td>
-					<td>Cell 2</td>
-					<td>...</td>
+					<td className='_nofix'>Cell 3-2</td>
+					<td>Cell 3-3</td>
+					<td>Cell 3-4<br />Lorem ipsum text</td>
+					<td>Cell 3-5</td>
+					<td>Cell 3-6</td>
 				</tr>
 				<tr>
-					<th>Cell 1</th>
-					<td>Cell 2</td>
-					<td>Cell 3<br />text</td>
-					<td>Cell 4</td>
-					<td>Cell 2</td>
-					<td>Cell 3<br />text</td>
+					<th>Cell 4-1</th>
+					<td>Cell 4-2<br />Lorem ipsum text</td>
+					<td>Cell 4-3</td>
+					<td>Cell 4-4</td>
+					<td>Cell 4-5<br />Lorem ipsum text</td>
+					<td>Cell 4-6</td>
 				</tr>
 				<tr>
-					<th>Cell 1</th>
-					<td>Cell 2</td>
-					<td>...</td>
-					<td>Cell 4</td>
-					<td>Cell 2</td>
-					<td>...</td>
+					<th>Cell 5-1</th>
+					<td>Cell 5-2</td>
+					<td>Cell 5-3<br />Lorem ipsum text</td>
+					<td>Cell 5-4</td>
+					<td>Cell 5-5</td>
+					<td>Cell 5-6<br />Lorem ipsum text</td>
 				</tr>
 				<tr>
-					<th>Cell 1</th>
-					<td>Cell 2</td>
-					<td>...</td>
-					<td>Cell 4</td>
-					<td>Cell 2</td>
-					<td>Cell 3<br />text</td>
+					<th>Cell 6-1</th>
+					<td>Cell 6-2</td>
+					<td>Cell 6-3</td>
+					<td>Cell 6-4<br />Lorem ipsum text</td>
+					<td>Cell 6-5</td>
+					<td>Cell 6-6</td>
 				</tr>
 			</tbody>
 		</Table>
 	</Frame>
 	</PreviewArea>
 	<PreviewCode slot='tab' label='JSX'>
-		```jsx "fix1stCell,fixHead"
+		```jsx "fix1st,fixHead"
 		<Frame ov='auto' maxH='20rem'>
-			<Table variant='fix1stCell,fixHead' thBgc='base-2' style={{'--bdwwX': '1px'}}>
+			<Table variant='fix1st,fixHead' thBgc='base-2' cellMinW='10rem'>
 				<thead>...</thead>
 				<tbody>...</tbody>
 				<tfoot>...</tfoot>
@@ -239,9 +238,9 @@ import Table from '~/components/ex/Table/index.jsx';
 		```
 	</PreviewCode>
 	<PreviewCode slot='tab' label='HTML'>
-		```html " c--table--fix1stCell" "c--table--fixHead"
+		```html " c--table--fix1st" "c--table--fixHead"
 		<div class="l--frame -ov:a" style="max-height:20rem">
-			<table class='c--table c--table--fix1stCell c--table--fixHead' style="--bdwwX:1px;--th--bgc:var(--c-base-2)">
+			<table class='c--table c--table--fix1st c--table--fixHead' style="--th--bgc:var(--c-base-2);--cell_minW:10rem">
 				<thead>...</thead>
 				<tbody>...</tbody>
 				<tfoot>...</tfoot>
