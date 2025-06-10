@@ -17,11 +17,9 @@ import Button from '~/components/ex/Button/index.astro';
 
 <Preview>
 	<PreviewTitle>Preview</PreviewTitle>
-	<PreviewArea p='20' bg='u:stripe'>
-		<Flex g='20'>
-			<Button href='###' variant='fill'>Button</Button>
-			<Button href='###' variant='outline'>Outline</Button>
-		</Flex>
+	<PreviewArea p='20' bg='u:stripe' isFlow='s'>
+		<Button href='###' variant='fill' w='fit'>Button</Button>
+		<Button href='###' variant='outline' w='fit'>Outline</Button>
 	</PreviewArea>
 	<PreviewCode slot='tab' label='JSX'>
 		```jsx
