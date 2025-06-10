@@ -16,11 +16,9 @@ const { isInline = false, url, ...props } = Astro.props;
 					<iframe src={url} width='800' height='600' />
 				</Frame>
 			</Frame>
-			<Center mbs='40'>
-				<Button href={url} variant='fill' target='_blank' bdrs='10'>
-					大きい画面で見る
-				</Button>
-			</Center>
+			<Button href={url} variant='fill' target='_blank' bdrs='10' w='fit' mx='a'>
+				大きい画面で見る
+			</Button>
 		</>
 	) : (
 		<Frame ar='3/2' {...props}>
