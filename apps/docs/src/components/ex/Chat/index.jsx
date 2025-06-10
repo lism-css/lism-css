@@ -15,7 +15,7 @@ export default function Chat({ variant = 'speak', direction = 'start', name, ava
 			{avatar && (
 				<GridItem
 					layout={Frame}
-					lismClass='c--chat__avatar'
+					lismClass='c--chat_avatar'
 					ga='u:avatar'
 					src={avatar}
 					alt=''
@@ -28,13 +28,13 @@ export default function Chat({ variant = 'speak', direction = 'start', name, ava
 				</GridItem>
 			)}
 			{name && (
-				<GridItem lismClass='c--chat__name' ga='u:header' c='text-2' fs='i' fz='2xs' lh='1' py='5' px='10' aslf='e'>
+				<GridItem lismClass='c--chat_name' ga='u:header' c='text-2' fs='i' fz='2xs' lh='1' py='5' px='10' aslf='e'>
 					{name}
 				</GridItem>
 			)}
-			<GridItem lismClass='c--chat__body' ga='u:body' pos='r'>
-				<Decorator lismClass='c--chat__deco' className='u--colbox u--skipFlow' pos='a' scale={direction === 'start' ? '' : '-X'} />
-				<Lism lismClass='c--chat__content' className={contentClass} bdrs='30' p='30' isFlow={isFlow} jslf={direction}>
+			<GridItem lismClass='c--chat_body' ga='u:body' pos='r'>
+				<Decorator lismClass='c--chat_deco' className='u--colbox u--skipFlow' pos='a' scale={direction === 'start' ? '' : '-X'} />
+				<Lism lismClass='c--chat_content' className={contentClass} bdrs='30' p='30' isFlow={isFlow} jslf={direction}>
 					{children}
 				</Lism>
 			</GridItem>

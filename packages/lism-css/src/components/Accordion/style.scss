@@ -8,7 +8,7 @@
 	}
 }
 
-.d--accordion__header {
+.d--accordion_header {
 	outline-offset: -1px; // overflow:clip|hidden; で見えなくなってしまうのを防ぐ
 	gap: 0.5em;
 
@@ -18,25 +18,25 @@
 	}
 }
 
-// .d--accordion__label {
+// .d--accordion_label {
 // 	flex: 1;
 // 	font: inherit;
 // }
 
-.d--accordion__body {
+.d--accordion_body {
 	grid-template-rows: 1fr;
 	transition-property: margin-block, padding-block, opacity, grid-template-rows;
 	transition-duration: var(--trsdu);
 }
 
 // ※ 正常な animation には必須
-// .d--accordion__inner {
+// .d--accordion_inner {
 // 	overflow: hidden;
 // }
 
 // 閉じている時
 :where(.d--accordion:not(._opened)) {
-	> .d--accordion__body {
+	> .d--accordion_body {
 		// opacity: 0.5;
 		grid-template-rows: 0fr;
 		padding-block: 0 !important;
@@ -45,7 +45,7 @@
 }
 
 // アコーディオンブロックのネスト時、別のアイコンタイプにすると表示が崩れるがそこまでは考慮しない。
-:where(.d--accordion__icon) {
+:where(.d--accordion_icon) {
 	// __icon 自体にborderつけたりすると回転が見えてしまうので、 icon自体を回転させる。
 	> .l--icon {
 		transition-duration: var(--trsdu);

@@ -15,12 +15,12 @@ import { Minus, Plus, X, Question, CaretDoubleDown, EyeClosed, Eyes } from "@pho
 ## 基本構造
 ```pug
 details.d--accordion
-	summary.d--accordion__header.l--flex.-ai:c
-		span.d--accordion__label.-fx:1 ...Header label...
-		span.d--accordion__icon.-d:if
+	summary.d--accordion_header.l--flex.-ai:c
+		span.d--accordion_label.-fx:1 ...Header label...
+		span.d--accordion_icon.-d:if
 			svg.l--icon
-	div.d--accordion__body.l--grid
-		div.d--accordion__inner.-ov:h ...Contents...
+	div.d--accordion_body.l--grid
+		div.d--accordion_inner.-ov:h ...Contents...
 ```
 
 <Note title='実装方法について' type='info'>
@@ -81,14 +81,14 @@ details.d--accordion
 	<PreviewCode slot='tab' label='HTML'>
 ```html
 <details class="d--accordion -p:20">
-	<summary class="d--accordion__header l--flex -ai:c">
-		<span class="d--accordion__label -fx:1">Accordion.Label</span>
-		<span class="d--accordion__icon -d:if">
+	<summary class="d--accordion_header l--flex -ai:c">
+		<span class="d--accordion_label -fx:1">Accordion.Label</span>
+		<span class="d--accordion_icon -d:if">
 			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="1em" height="1em" fill="currentColor" focusable="false" class="l--icon" aria-hidden="true"><path d="M216.49,104.49l-80,80a12,12,0,0,1-17,0l-80-80a12,12,0,0,1,17-17L128,159l71.51-71.52a12,12,0,0,1,17,17Z"></path></svg>
 		</span>
 	</summary>
-	<div class="d--accordion__body l--grid -mbs:20">
-		<div class="d--accordion__inner -ov:h">
+	<div class="d--accordion_body l--grid -mbs:20">
+		<div class="d--accordion_inner -ov:h">
 			<p>Lorem ipsum...</p>
 		</div>
 	</div>
@@ -126,8 +126,8 @@ details.d--accordion
 	<PreviewCode slot='tab' label='HTML'>
 	```html "h3" "-f:i"
 	<details class="d--accordion -p:20">
-		<summary class="d--accordion__header l--flex -ai:c">
-			<h3 class="d--accordion__label -fx:1 -f:i -fw:bold">Accordion.Label</h3>
+		<summary class="d--accordion_header l--flex -ai:c">
+			<h3 class="d--accordion_label -fx:1 -f:i -fw:bold">Accordion.Label</h3>
 			...
 	```
 	</PreviewCode>
@@ -235,8 +235,8 @@ import { CaretDoubleDown } from "@phosphor-icons/react";
 	<PreviewCode slot='tab' label='HTML'>
 ```html "data-accordion-multiple=\"disallow\""
 <div class="l--stack" data-accordion-multiple="disallow">
-	<summary class="d--accordion__header ...">...</summary>
-	<summary class="d--accordion__header ...">...</summary>
+	<summary class="d--accordion_header ...">...</summary>
+	<summary class="d--accordion_header ...">...</summary>
 </div>
 ```
 	</PreviewCode>
@@ -310,8 +310,8 @@ import { CaretDoubleDown } from "@phosphor-icons/react";
 <PreviewCode slot='tab' label='HTML'>
 ```html "--acc--trsdu"
 <div class="l--stack -g:30" style="--acc--trsdu">
-	<summary class="d--accordion__header ...">...</summary>
-	<summary class="d--accordion__header ...">...</summary>
+	<summary class="d--accordion_header ...">...</summary>
+	<summary class="d--accordion_header ...">...</summary>
 </div>
 ```
 </PreviewCode>
@@ -367,7 +367,7 @@ CSSで`:root`の`--acc-duration`を上書きすると、デフォルトの開閉
 	</PreviewCode>
 	<PreviewCode slot='tab' label='追加CSS'>
 ```scss
-.d--accordion__icon {
+.d--accordion_icon {
 	> .l--icon {
 		grid-area: 1 / 1;
 	}
@@ -419,26 +419,26 @@ CSSで`:root`の`--acc-duration`を上書きすると、デフォルトの開閉
 	<PreviewCode slot='tab' label='HTML'>
 ```html "<button" "data-role=\"trigger\""
 <details class="d--accordion -p:20">
-	<summary class="d--accordion__header l--flex -ai:c">
-		<span class="d--accordion__label -fx:1">Labelテキスト（<a href="#acc-innerlink">ヘルプリンク</a></span>
-		<button class="d--accordion__icon -d:ig -bd -bdrs:5 -bgc:inherit -p:10" data-role="trigger">
+	<summary class="d--accordion_header l--flex -ai:c">
+		<span class="d--accordion_label -fx:1">Labelテキスト（<a href="#acc-innerlink">ヘルプリンク</a></span>
+		<button class="d--accordion_icon -d:ig -bd -bdrs:5 -bgc:inherit -p:10" data-role="trigger">
 			<svg class="l--icon"...>...</svg>
 		</button>
 	</summary>
-	<div class="d--accordion__body l--grid -mbs:20">
-		<div class="d--accordion__inner -ov:h">...</div>
+	<div class="d--accordion_body l--grid -mbs:20">
+		<div class="d--accordion_inner -ov:h">...</div>
 	</div>
 </details>
 ```
 	</PreviewCode>
 	<PreviewCode slot='tab' label='追加CSS'>
 		```css
-		.d--accordion__header:has(> [data-role='trigger']) {
+		.d--accordion_header:has(> [data-role='trigger']) {
 			pointer-events: none;
 		}
 
-		.d--accordion__label > a,
-		.d--accordion__icon {
+		.d--accordion_label > a,
+		.d--accordion_icon {
 			pointer-events: auto;
 		}
 		```

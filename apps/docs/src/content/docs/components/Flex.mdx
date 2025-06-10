@@ -96,11 +96,11 @@ Flexは[`flex`オブジェクト内で指定できるプロパティ](/css/prop-
 
 複数の要素を横方向に連続的に並べて配置するレイアウトを作るためのバリエーションです。
 
-`variant="cluster"`を指定すると `.l--flex--cluster` が追加で出力されます。  
+`variant="cluster"`を指定すると `.l--flex-cluster` が追加で出力されます。  
 このクラスには下記のようなCSSが適用されています。
 
 ```css
-.l--flex--cluster{
+.l--flex-cluster{
 	flex-wrap: wrap;
 	align-items: center;
 }
@@ -129,8 +129,8 @@ Flexは[`flex`オブジェクト内で指定できるプロパティ](/css/prop-
 	```
 	</PreviewCode>
 	<PreviewCode slot="tab" label="HTML">
-	```html "l--flex l--flex--cluster"
-	<div class="l--flex l--flex--cluster -g:20">
+	```html "l--flex l--flex-cluster"
+	<div class="l--flex l--flex-cluster -g:20">
 		<span class="-bd -px:10 -bdrs:10">Lorem ipsum</span>
 		<span class="-bd -px:10 -bdrs:10">Dolor</span>
 		<span class="-bd -px:10 -bdrs:10">Sit amet</span>
@@ -150,22 +150,22 @@ CSSを追記することで実現できるバリエーション作成例を示�
 
 ltr言語でもrtl言語でも同じ方向に揃えたい時に使えるバリエーションです。
 
-次のように、`.l--flex--ltr`、`.l--flex--rtl` のスタイルを用意します。
+次のように、`.l--flex-ltr`、`.l--flex-rtl` のスタイルを用意します。
 
 <PreviewTitle>以下のスタイルを追記</PreviewTitle>
 ```css
-.l--flex--ltr {
+.l--flex-ltr {
 	flex-direction: row;
 }
-.l--flex--rtl {
+.l--flex-rtl {
 	flex-direction: row-reverse;
 }
 
 :where([dir='rtl']) {
-	.l--flex--ltr {
+	.l--flex-ltr {
 		flex-direction: row-reverse;
 	}
-	.l--flex--rtl {
+	.l--flex-rtl {
 		flex-direction: row;
 	}
 }
@@ -198,8 +198,8 @@ ltr言語でもrtl言語でも同じ方向に揃えたい時に使えるバリ�
 	```
 	</PreviewCode>
 	<PreviewCode slot='tab' label='HTML'>
-	```jsx "l--flex--ltr"
-	<div class="l--flex l--flex--ltr -g:20">
+	```jsx "l--flex-ltr"
+	<div class="l--flex l--flex-ltr -g:20">
 		<div>box-1</div>
 		<div>box-2</div>
 		<div>box-3</div>
@@ -231,9 +231,9 @@ ltr言語でもrtl言語でも同じ方向に揃えたい時に使えるバリ�
 	```
 	</PreviewCode>
 	<PreviewCode slot='tab' label='HTML'>
-	```jsx "l--flex--ltr"
+	```jsx "l--flex-ltr"
 	<div dir="rtl">
-		<div class="l--flex l--flex--ltr -g:20">
+		<div class="l--flex l--flex-ltr -g:20">
 			<div>صندوق-1</div>
 			<div>صندوق-2</div>
 			<div>صندوق-3</div>

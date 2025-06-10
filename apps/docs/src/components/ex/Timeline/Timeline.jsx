@@ -10,12 +10,12 @@ export function Root({ children, isHorizontal, ...props }) {
 }
 
 export function Line(props) {
-	return <GridItem layout={Decorator} lismClass='c--timeline__line' bgc='divider' jslf='c' {...props} />;
+	return <GridItem layout={Decorator} lismClass='c--timeline_line' bgc='divider' jslf='c' {...props} />;
 }
 export function Shape(props) {
 	return (
 		<GridItem
-			lismClass='c--timeline__shape'
+			lismClass='c--timeline_shape'
 			layout={Center}
 			pos='r'
 			z='1'
@@ -55,7 +55,7 @@ export function Item({ isHorizontal, isStart, isEnd, isHighlighted, icon, iconPr
 	return (
 		<GridItem
 			layout={Grid}
-			lismClass='c--timeline__item'
+			lismClass='c--timeline_item'
 			data-timeline={dataTimeline}
 			ai='c'
 			ji={isHorizontal ? 'c' : null}
@@ -67,7 +67,7 @@ export function Item({ isHorizontal, isStart, isEnd, isHighlighted, icon, iconPr
 		>
 			<Line {...lineProps} />
 			<Shape bgc={shapeColor || 'text'} {...shapeProps}>
-				{isHighlighted && <Decorator className='c--timeline__highlight' tag='span' pos='a' z='-1' bgc='inherit' bdrs='99' op='low' />}
+				{isHighlighted && <Decorator className='c--timeline_highlight' tag='span' pos='a' z='-1' bgc='inherit' bdrs='99' op='low' />}
 				{icon && <Icon icon={icon} scale='0.75' fz='s' {...iconProps} />}
 			</Shape>
 			{children}
@@ -76,11 +76,11 @@ export function Item({ isHorizontal, isStart, isEnd, isHighlighted, icon, iconPr
 }
 
 export function Time(props) {
-	return <GridItem className='c--timeline__time' fz='xs' c='text-2' gr='2' gc='2' {...props} />;
+	return <GridItem className='c--timeline_time' fz='xs' c='text-2' gr='2' gc='2' {...props} />;
 }
 export function Title(props) {
-	return <GridItem className='c--timeline__title' fw='bold' gr='3' gc='2' {...props} />;
+	return <GridItem className='c--timeline_title' fw='bold' gr='3' gc='2' {...props} />;
 }
 export function Text(props) {
-	return <GridItem className='c--timeline__text' fz='s' mbs='10' gr='4' gc='2' {...props} />;
+	return <GridItem className='c--timeline_text' fz='s' mbs='10' gr='4' gc='2' {...props} />;
 }

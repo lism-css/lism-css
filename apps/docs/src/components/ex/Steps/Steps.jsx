@@ -4,7 +4,7 @@ export function Root(props) {
 	return <Stack lismClass='c--step' g='40' {...props} />;
 }
 export function Item(props) {
-	return <Stack lismClass='c--step__item' g='20' {...props} />;
+	return <Stack lismClass='c--step_item' g='20' {...props} />;
 }
 export function Head({ tag = 'div', num = '1', label = 'Step.', children, ...props }) {
 	return (

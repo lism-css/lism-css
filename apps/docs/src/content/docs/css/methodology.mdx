@@ -159,21 +159,19 @@ Blocks はAtom,Layoutクラスで構成されるような粒度（（他のBlock
 
 #### 子要素を持つ場合
 
-子要素も含めて一つのモジュールとして機能するものは、BEMでの Element にあたる文字列をクラスに付け加えます。
+子要素も含めて一つのモジュールとして機能するものは、BEMでいうところの Element にあたる文字列をクラスに付け加えます。
 
-- 形式: `.c--{componentName}__{elementName}`
-- 例: `.c--hoge__item`
+- 形式: `.{pre}--{componentName}_{elementName}`
+- 例: `.c--hoge_item`
 
 
-#### バリエーションスタイル(Modifier) を用意する場合
+#### バリエーションスタイル を用意する場合
 
-モジュールのバリエーションスタイルを定義する場合、BEMでの Modifier を付け加えたクラスを作成します。
+モジュールのバリエーションスタイルを定義する場合、BEMでいうところの Modifier を付け加えたクラスを作成します。  
+この時、元となるモジュールクラスも併記し、CSSコードの重複を避けるようにして運用します。
 
-- 形式:`.{prefix}--{name}--{variant}`
-- 例: `.c--button--outline`
-
-基本的には元となる`.{pefix}--{name}`も併記し、CSSコードの重複を避けるようにして運用します。
-
+- 形式:`.{pre}--{name}-{variant}`  
+- 例: `.c--button.c--button-outline`
 
 
 
@@ -272,7 +270,7 @@ Lismパッケージに内蔵されているクラスではありませんが、�
 |分類|形式|例|
 |---|---|---|
 |ゾーニング|`.z--{zoneName}`|`.z--header`,<br />`.z--sidebar`,<br />`.z--article`|
-|ページの分類|`.p--{type}--{id\|slug}`|`.p--front`,<br />`.p--archive`,<br />`.p--post--{id}`,<br />`.p--page--{slug}`|
+|ページの分類|`.p--{type}-{id\|slug}`|`.p--front`,<br />`.p--archive`,<br />`.p--post-{id}`,<br />`.p--page-{slug}`|
 {/* |ユーティリティ|`.u--{utilityName}`|`.u--hoge`| */}
 {/* |テキスト装飾|`.t--{textFormat}`|`.t--marker`| */}
 {/* |ユニーククラス|`.uq--{uniqueName}`|`.uq--hoge`| */}

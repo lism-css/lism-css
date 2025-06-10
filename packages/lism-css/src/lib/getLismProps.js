@@ -77,10 +77,10 @@ class LismPropsData {
 				.map((v) => v.trim())
 				.filter(Boolean);
 
-			// {baseClass}--{variant} 形式でクラス名を生成
-			const variantClasses = variantArr.map((v) => `${baseClass}--${v}`);
-			// lismClassの後ろにvariantクラスを追加
-			this.lismClass = lismClassArr.concat(variantClasses).join(' ');
+			// {baseClass}-{variant} 形式でクラス名を生成
+			const variantClasses = variantArr.map((v) => `${baseClass}-${v}`);
+			// baseClass の後ろにvariantクラスを追加
+			this.lismClass = [baseClass, ...variantClasses, ...lismClassArr.slice(1)].join(' ');
 		}
 
 		// クラスの結合
@@ -443,18 +443,7 @@ class LismPropsData {
 		this.analyzeProp('bd', value);
 	}
 
-	getStateProps({
-		skipState,
-		isOverwide,
-		isFullwide,
-		isWide,
-		isFlow,
-		isContainer,
-		hasGutter,
-		isLayer,
-		isLinkBox,
-		...props
-	}) {
+	getStateProps({ skipState, isOverwide, isFullwide, isWide, isFlow, isContainer, hasGutter, isLayer, isLinkBox, ...props }) {
 		if (!skipState) {
 			if (isContainer) {
 				this.setContainerData(isContainer);

@@ -27,7 +27,7 @@ export default function ShapeDivider({
 
 	return (
 		<Lism isFullwide lismClass='c--shapeDivider' css={css} style={style} {...props}>
-			<div className='c--shapeDivider__inner -h:100%'>
+			<div className='c--shapeDivider_inner -h:100%'>
 				<svg
 					xmlns='http://www.w3.org/2000/svg'
 					className={isAnimation ? '-anim:shapeSlide' : ''}

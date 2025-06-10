@@ -15,7 +15,7 @@ export function Root({ children, hovC, hovBgc, style = {}, ...props }) {
 
 export function Nest({ children, ...props }) {
 	return (
-		<Stack lismClass='c--navMenu__nest' tag='ul' pis='30' data-lism-get='bdc' {...props}>
+		<Stack lismClass='c--navMenu_nest' tag='ul' pis='30' data-lism-get='bdc' {...props}>
 			{children}
 		</Stack>
 	);
@@ -23,7 +23,7 @@ export function Nest({ children, ...props }) {
 
 export function Item({ children, ...props }) {
 	return (
-		<Lism lismClass='c--navMenu__item' tag='li' data-lism-get='bdc' skipState {...props}>
+		<Lism lismClass='c--navMenu_item' tag='li' data-lism-get='bdc' skipState {...props}>
 			{children}
 		</Lism>
 	);
@@ -34,16 +34,7 @@ export function Link({ href, tag = 'span', hov, children, ...props }) {
 		hov = hov || 'fade';
 	}
 	return (
-		<Flex
-			lismClass='c--navMenu__link'
-			tag={tag}
-			href={href}
-			hov={hov}
-			c='inherit'
-			skipState
-			data-lism-get='p'
-			{...props}
-		>
+		<Flex lismClass='c--navMenu_link' tag={tag} href={href} hov={hov} c='inherit' skipState data-lism-get='p' {...props}>
 			{children}
 		</Flex>
 	);

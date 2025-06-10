@@ -1,25 +1,25 @@
 /* Memo: ovx='auto' の時に margin がネガティブだとアウトなので、borderではなくbox-shadowで表現する。 */
-:where(.d--tabs--line) {
+:where(.d--tabs-line) {
 	--sh-size: inset 0 -2px;
 
-	.d--tabs__list {
+	.d--tabs_list {
 		box-shadow: var(--sh-size) 0 var(--c-divider);
 	}
-	.d--tabs__tab {
+	.d--tabs_tab {
 		font-size: var(--fz-s);
 		padding: 0.5em 0.875em;
 		box-shadow: var(--_isActive, var(--sh-size) 0 0 currentColor);
 	}
 }
 
-:where(.d--tabs--emboss) {
-	.d--tabs__list {
+:where(.d--tabs-emboss) {
+	.d--tabs_list {
 		padding: 4px;
 		font-size: var(--fz-s);
 		background-color: var(--c-base-2);
 		border-radius: var(--bdrs-20);
 	}
-	.d--tabs__tab {
+	.d--tabs_tab {
 		padding: 0.25em 0.75em;
 		border-radius: calc(var(--bdrs-20) - 2px); /* 親の bdrs - 親のpadding / 2 */
 		background-color: var(--_isActive, var(--c-base));
@@ -27,7 +27,7 @@
 	}
 }
 
-.c--preview_code .d--tabs__tab {
+.c--preview_code .d--tabs_tab {
 	// font-size: var(--fz-s);
 	// padding: 0.5em 0.875em;
 }

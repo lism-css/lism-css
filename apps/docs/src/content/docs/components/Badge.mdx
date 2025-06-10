@@ -44,7 +44,7 @@ import Badge from '~/components/ex/Badge/index.astro';
 		```html
 		<div class="l--flex -g:20">
 			<span class="c--badge -d:if -fz:s -px:20 -bdrs:5">Badge</span>
-			<span class="c--badge c--badge--outline -d:if -fz:s -px:20 -bdrs:5">Badge</span>
+			<span class="c--badge c--badge-outline -d:if -fz:s -px:20 -bdrs:5">Badge</span>
 		</div>
 		```
 	</PreviewCode>
@@ -59,7 +59,7 @@ import Badge from '~/components/ex/Badge/index.astro';
 
 | プロパティ | 説明 |
 |---|---|
-|`variant`| `c--badge--{variant}` クラスを出力します。|
+|`variant`| `c--badge-{variant}` クラスを出力します。|
 
 
 
@@ -106,7 +106,7 @@ export const ColorDemos = ({variant = '',  colbox}) => {
 	</PreviewCode>
 	<PreviewCode slot='tab' label='HTML'>
 		```html
-		<div class="l--flex l--flex--cluster -g:20">
+		<div class="l--flex l--flex-cluster -g:20">
 			<span class="c--badge -d:if -bdrs:5 -px:20 -bgc:main">Badge</span>
 			<span class="c--badge -d:if -bdrs:99 -px:20 -fz:s -bgc" style="--bgc:#549005;">Badge</span>
 		</div>
@@ -137,9 +137,9 @@ export const ColorDemos = ({variant = '',  colbox}) => {
 	</PreviewCode>
 	<PreviewCode slot='tab' label='HTML'>
 		```html
-		<div class="l--flex l--flex--cluster -g:20">
-			<span class="c--badge c--badge--outline -px:10 -py:5 -lh:1 -bdrs:10 -c:main">Badge</span>
-			<span class="c--badge c--badge--outline -px:20 -py:5 -lh:1 -bdrs:99 -c" style="--c:#549005;">Badge</span>
+		<div class="l--flex l--flex-cluster -g:20">
+			<span class="c--badge c--badge-outline -px:10 -py:5 -lh:1 -bdrs:10 -c:main">Badge</span>
+			<span class="c--badge c--badge-outline -px:20 -py:5 -lh:1 -bdrs:99 -c" style="--c:#549005;">Badge</span>
 		</div>
 		```
 	</PreviewCode>
@@ -165,7 +165,7 @@ export const ColorDemos = ({variant = '',  colbox}) => {
 	</PreviewCode>
 	<PreviewCode slot='tab' label='HTML'>
 		```html
-		<div class="l--flex l--flex--cluster -g:20">
+		<div class="l--flex l--flex-cluster -g:20">
 			<span class="c--badge u--colbox -px:10 -py:5 -lh:1 -bdrs:10" style="--keycol:var(--c-main)">Badge</span>
 			<span class="c--badge u--colbox -px:20 -py:5 -lh:1 -bdrs:99 -bdc:mix" style="--keycol:#549005;--_bdc1:var(--keycol);--_bdc2:var(--c-base);--_mixpct-bdc:25%">  Badge  </span>
 		</div>
