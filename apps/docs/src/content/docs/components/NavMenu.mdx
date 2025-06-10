@@ -154,27 +154,27 @@ import { FolderSimple } from "@phosphor-icons/react";
 	<PreviewArea p='30'>
 		<NavMenu.Root bd hovBgc='text' hovC='base'>
 			<NavMenu.Item>
-				<NavMenu.Link href='#menu1' hov='c:,bgc:'>Menu item</NavMenu.Link>
+				<NavMenu.Link href='#menu1' hov='c,bgc'>Menu item</NavMenu.Link>
 			</NavMenu.Item>
 			<NavMenu.Item>
-				<NavMenu.Link href='#menu2' hov='c:,bgc:'>Menu item</NavMenu.Link>
+				<NavMenu.Link href='#menu2' hov='c,bgc'>Menu item</NavMenu.Link>
 			</NavMenu.Item>
 			<NavMenu.Item>
-				<NavMenu.Link href='#menu4' hov='c:,bgc:'>Menu item</NavMenu.Link>
+				<NavMenu.Link href='#menu4' hov='c,bgc'>Menu item</NavMenu.Link>
 			</NavMenu.Item>
 		</NavMenu.Root>
 	</PreviewArea>
 	<PreviewCode>
-		```jsx "hovBgc" "hovC" "hov='c:,bgc:'"
+		```jsx "hovBgc" "hovC" "hov='c,bgc'"
 		<NavMenu.Root bd hovBgc='text' hovC='base'>
 			<NavMenu.Item>
-				<NavMenu.Link href='#menu1' hov='c:,bgc:'>Menu item</NavMenu.Link>
+				<NavMenu.Link href='#menu1' hov='c,bgc'>Menu item</NavMenu.Link>
 			</NavMenu.Item>
 			<NavMenu.Item>
-				<NavMenu.Link href='#menu2' hov='c:,bgc:'>Menu item</NavMenu.Link>
+				<NavMenu.Link href='#menu2' hov='c,bgc'>Menu item</NavMenu.Link>
 			</NavMenu.Item>
 			<NavMenu.Item>
-				<NavMenu.Link href='#menu4' hov='c:,bgc:'>Menu item</NavMenu.Link>
+				<NavMenu.Link href='#menu4' hov='c,bgc'>Menu item</NavMenu.Link>
 			</NavMenu.Item>
 		</NavMenu.Root>
 		```
@@ -246,22 +246,22 @@ import { FolderSimple } from "@phosphor-icons/react";
 	<PreviewArea p='30'>
 		<NavMenu.Root bdc='divider' hovBgc='base-2' passVars={{p:'10'}} >
 			<NavMenu.Item>
-				<NavMenu.Link hov='bgc:' href='#menu1'>Menu item 1</NavMenu.Link>
+				<NavMenu.Link hov='bgc' href='#menu1'>Menu item 1</NavMenu.Link>
 			</NavMenu.Item>
 			<NavMenu.Item bd='t'>
-				<NavMenu.Link hov='bgc:' href='#menu2'>Menu item 2</NavMenu.Link>
+				<NavMenu.Link hov='bgc' href='#menu2'>Menu item 2</NavMenu.Link>
 				<NavMenu.Nest bd='t'>
 					<NavMenu.Item>
-						<NavMenu.Link hov='bgc:' href='#child-menu1'>Nested item</NavMenu.Link>
+						<NavMenu.Link hov='bgc' href='#child-menu1'>Nested item</NavMenu.Link>
 					</NavMenu.Item>
 					<NavMenu.Item bd='t'>
-						<NavMenu.Link hov='bgc:' href='#child-menu3'>Nested item</NavMenu.Link>
+						<NavMenu.Link hov='bgc' href='#child-menu3'>Nested item</NavMenu.Link>
 						<NavMenu.Nest bd='t'>
 							<NavMenu.Item>
-								<NavMenu.Link hov='bgc:' href='#child-menu4'>Nested level 2 item</NavMenu.Link>
+								<NavMenu.Link hov='bgc' href='#child-menu4'>Nested level 2 item</NavMenu.Link>
 							</NavMenu.Item>
 							<NavMenu.Item bd='t'>
-								<NavMenu.Link hov='bgc:' href='#child-menu5'>Nested level 2 item</NavMenu.Link>
+								<NavMenu.Link hov='bgc' href='#child-menu5'>Nested level 2 item</NavMenu.Link>
 							</NavMenu.Item>
 						</NavMenu.Nest>
 					</NavMenu.Item>
@@ -273,22 +273,22 @@ import { FolderSimple } from "@phosphor-icons/react";
 		```jsx "NavMenu.Nest"
 		<NavMenu.Root bdc='divider' hovBgc='base-2' passVars={{p:'10'}} >
 			<NavMenu.Item>
-				<NavMenu.Link hov='bgc:' href='#menu1'>Menu item 1</NavMenu.Link>
+				<NavMenu.Link hov='bgc' href='#menu1'>Menu item 1</NavMenu.Link>
 			</NavMenu.Item>
 			<NavMenu.Item bd='t'>
-				<NavMenu.Link hov='bgc:' href='#menu2'>Menu item 2</NavMenu.Link>
+				<NavMenu.Link hov='bgc' href='#menu2'>Menu item 2</NavMenu.Link>
 				<NavMenu.Nest bd='t'>
 					<NavMenu.Item>
-						<NavMenu.Link hov='bgc:' href='#child-menu1'>Nested item</NavMenu.Link>
+						<NavMenu.Link hov='bgc' href='#child-menu1'>Nested item</NavMenu.Link>
 					</NavMenu.Item>
 					<NavMenu.Item bd='t'>
-						<NavMenu.Link hov='bgc:' href='#child-menu3'>Nested item</NavMenu.Link>
+						<NavMenu.Link hov='bgc' href='#child-menu3'>Nested item</NavMenu.Link>
 						<NavMenu.Nest bd='t'>
 							<NavMenu.Item>
-								<NavMenu.Link hov='bgc:' href='#child-menu4'>Nested level 2 item</NavMenu.Link>
+								<NavMenu.Link hov='bgc' href='#child-menu4'>Nested level 2 item</NavMenu.Link>
 							</NavMenu.Item>
 							<NavMenu.Item bd='t'>
-								<NavMenu.Link hov='bgc:' href='#child-menu5'>Nested level 2 item</NavMenu.Link>
+								<NavMenu.Link hov='bgc' href='#child-menu5'>Nested level 2 item</NavMenu.Link>
 							</NavMenu.Item>
 						</NavMenu.Nest>
 					</NavMenu.Item>
@@ -310,21 +310,21 @@ import { FolderSimple } from "@phosphor-icons/react";
 	<PreviewArea p='30'>
 		<NavMenu.Root bd='y' hovBgc='base-2'>
 			<NavMenu.Item>
-				<NavMenu.Link hov='bgc:' href='#menu1'>Menu item</NavMenu.Link>
+				<NavMenu.Link hov='bgc' href='#menu1'>Menu item</NavMenu.Link>
 			</NavMenu.Item>
 			<NavMenu.Item>
 				<Accordion.Root>
-					<Accordion.Header hov='bgc:' data-lism-get='p'>
+					<Accordion.Header hov='bgc' data-lism-get='p'>
 						<Accordion.Label>Menu item (Accordion)</Accordion.Label>
 						<Accordion.Icon />
 					</Accordion.Header>
 					<Accordion.Body>
 						<NavMenu.Nest>
 							<NavMenu.Item>
-								<NavMenu.Link hov='bgc:' href='#child-menu1'>Nested item</NavMenu.Link>
+								<NavMenu.Link hov='bgc' href='#child-menu1'>Nested item</NavMenu.Link>
 							</NavMenu.Item>
 							<NavMenu.Item>
-								<NavMenu.Link hov='bgc:' href='#child-menu2'>Nested item</NavMenu.Link>
+								<NavMenu.Link hov='bgc' href='#child-menu2'>Nested item</NavMenu.Link>
 							</NavMenu.Item>
 						</NavMenu.Nest>
 					</Accordion.Body>
@@ -336,21 +336,21 @@ import { FolderSimple } from "@phosphor-icons/react";
 		```jsx "Accordion.Root" "NavMenu.Nest" "data-lism-get='p'"
 		<NavMenu.Root bd='y' hovBgc='base-2'>
 			<NavMenu.Item>
-				<NavMenu.Link hov='bgc:' href='#menu1'>Menu item</NavMenu.Link>
+				<NavMenu.Link hov='bgc' href='#menu1'>Menu item</NavMenu.Link>
 			</NavMenu.Item>
 			<NavMenu.Item>
 				<Accordion.Root>
-					<Accordion.Header hov='bgc:' data-lism-get='p'>
+					<Accordion.Header hov='bgc' data-lism-get='p'>
 						<Accordion.Label>Menu item (Accordion)</Accordion.Label>
 						<Accordion.Icon />
 					</Accordion.Header>
 					<Accordion.Body>
 						<NavMenu.Nest>
 							<NavMenu.Item>
-								<NavMenu.Link hov='bgc:' href='#child-menu1'>Nested item</NavMenu.Link>
+								<NavMenu.Link hov='bgc' href='#child-menu1'>Nested item</NavMenu.Link>
 							</NavMenu.Item>
 							<NavMenu.Item>
-								<NavMenu.Link hov='bgc:' href='#child-menu2'>Nested item</NavMenu.Link>
+								<NavMenu.Link hov='bgc' href='#child-menu2'>Nested item</NavMenu.Link>
 							</NavMenu.Item>
 						</NavMenu.Nest>
 					</Accordion.Body>
