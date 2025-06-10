@@ -483,7 +483,6 @@ borderに関する仕様は少し特殊になっています。詳しくは[bord
 
 ## Others
 
-
 その他、下記のCSSプロパティは `css` というプロパティにオブジェクトとして指定することで出力できます。  
 (Note: 以下に挙げているもの以外は、そのまま `style`に渡されます。)
 
@@ -497,12 +496,18 @@ borderに関する仕様は少し特殊になっています。詳しくは[bord
 ### クラスで直接使用するしかできないもの
 最後に、`Lism` コンポーネントで対応した CSS Props がないものの、Prop Classの用意があるものをリストアップしておきます。
 
-{/* - `-whs:nw` */}
-- `-ovw:any`
-- `-bxz:cb`
-- `-wm:v-rl`
-- `-obf:cb`
-- `-obf:cv`
+|Class|CSS|
+|---|---|
+|`-iso:i`|`isolation: isolate`|
+|`-ovw:any`|`overflow-wrap: anywhere`|
+|`-bxz:cb`|`box-sizing: content-box`|
+|`-bxz:bb`|`box-sizing: border-box`|
+|`-wm:v-rl`|`writing-mode: vertical-rl`|
+|`-obf:cn`|`object-fit: contain`|
+|`-obf:cv`|`object-fit: cover`|
+|`-fl:l`|`float: left`|
+|`-fl:r`|`float: right`|
+|`-cl:b`|`clear: both`|
+|`-cl:l`|`clear: left`|
+|`-cl:r`|`clear: right`|
 
-{/* 
-|`overflow-wrap`|`ovw`|-|`anywhere`(`any`)|-| */}
