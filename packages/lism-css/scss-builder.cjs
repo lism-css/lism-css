@@ -42,7 +42,6 @@ const COLOR = {
 // scssファイル処理
 async function compileSCSS(src, dist) {
 	let files = [];
-	// files = [src + '/all_with_layout.scss', src + '/all.scss', src + '/reset.scss'];
 
 	const ignore = ['**/_*.scss'];
 	files = glob.sync(src + '/**/*.scss', { ignore });
@@ -52,10 +51,7 @@ async function compileSCSS(src, dist) {
 
 		const fileName = filePath.replace(src + '/', '');
 		const srcPath = path.resolve(__dirname, src, fileName);
-		const distPath = path
-			.resolve(__dirname, dist, fileName)
-			.replace('.scss', '.css')
-			.replace('/index.css', '.css');
+		const distPath = path.resolve(__dirname, dist, fileName).replace('.scss', '.css').replace('/index.css', '.css');
 
 		try {
 			// dart sass コンパイル
