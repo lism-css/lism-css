@@ -1,9 +1,9 @@
-export default function getColumnsProps({ colSize, colAuto, style = {}, ...props }) {
+export default function getColumnsProps({ colSize, autoType, style = {}, ...props }) {
 	if (colSize) {
-		style['--col-size'] = colSize;
+		style['--colSize'] = colSize;
 	}
-	if (colAuto) {
-		style['--col-auto'] = colAuto;
+	if (autoType) {
+		style['--autoType'] = autoType;
 	}
 	props.style = style;
 	return props;

@@ -28,38 +28,12 @@ export default {
 	bxsh: ['-10', '-20', '-30', '-40', '-50', '-5', '5', '10', '20', '30', '40', '50'],
 
 	// size:['container', 'container:s', 'container:l'],
-	contentSize: ['xs', 's', 'm', 'l', 'xl'], // --size--xxx トークン
+	contentSize: ['xs', 's', 'm', 'l', 'xl'], // --size-xxx トークン
 	flow: ['xs', 's', 'm', 'l', 'xl'], // getFlowDataで使う
 	size: [],
 
 	// --変数化できるキーワード
-	color: [
-		'base',
-		'base-2',
-		'base-3',
-		'text',
-		'text-2',
-		'text-3',
-		'divider',
-		'link',
-		'divider-2',
-		'main',
-		'accent',
-		'accent-2',
-		'accent-3',
-	],
-	palette: [
-		'red',
-		'blue',
-		'green',
-		'yellow',
-		'purple',
-		'orange',
-		'pink',
-		'gray',
-		'white',
-		'black',
-		'keycol',
-	],
+	color: ['base', 'base-2', 'base-3', 'text', 'text-2', 'text-3', 'divider', 'link', 'divider-2', 'main', 'accent', 'accent-2', 'accent-3'],
+	palette: ['red', 'blue', 'green', 'yellow', 'purple', 'orange', 'pink', 'gray', 'white', 'black', 'keycol'],
 	// filter: ['blur', 'blur:s', 'blur:l', 'darken', 'lighten'],
 };

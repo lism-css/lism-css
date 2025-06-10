@@ -14,17 +14,17 @@
 /* ------------------------------------------------------------
 	ハーフレディング
 
-	Memo: --herfLeadingとは別に--negativeHLを定義しているのは、トリミングをしないために 0px に上書きした要素でも --herfLeading 自体の値は無効にしないようにするため。
-	これにより、imgに対してmargin-block-start:var(--herfLeading) を適用して余白を揃えたりできる。
+	Memo: --HL とは別に --trimHL を定義しているのは、トリミング除外要素で 0px に上書きしても --HL 自体の値は無効にしないようにするため。
+	これにより、imgに対してmargin-block-start:var(--HL) を適用して余白を揃えたりできる。
 */
-@property --herfLeading {
+@property --HL {
 	syntax: '*';
 	inherits: false;
 	initial-value: calc((1lh - 1em) / 2);
 }
 
 // トリミングするネガティブマージン
-// Memo: initial-valueでvar(--herfLeading)は使えなかった
+// Memo: initial-valueでvar(--HL)は使えない
 @property --trimHL {
 	syntax: '*';
 	inherits: false;
@@ -32,12 +32,12 @@
 }
 
 // :lang(en) {
-// 	--herfLeading: calc((1lh - 1cap) / 2);
+// 	--HL: calc((1lh - 1cap) / 2);
 // }
 
 // lh非サポートブラウザ用のフォールバック
 // @supports not (gap: 1lh) {
 // 	:root {
-// 		--herfLeading: 0px;
+// 		--HL: 0px;
 // 	}
 // }

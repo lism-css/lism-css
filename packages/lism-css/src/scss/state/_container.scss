@@ -9,22 +9,22 @@
 	--overwideSize: 100cqw;
 
 	> * {
-		--maxIs: var(--contentSize, 100%);
-		max-inline-size: min(100%, var(--maxIs, 100%));
+		--maxIsz: var(--contentSize, 100%);
+		max-inline-size: min(100%, var(--maxIsz, 100%));
 		margin-inline: auto;
 	}
 }
 
 // Memo: それぞれの直下要素( > * ) に対してスタイルをセットした方が、ネスト時の影響をなくせるが、constrainedのネストが多様されることは少ないので親側の変数管理のみで実装。
 .-container\:s {
-	--contentSize: var(--size--s);
-	--wideSize: var(--size--m);
+	--contentSize: var(--size-s);
+	--wideSize: var(--size-m);
 }
 .-container\:m {
-	--contentSize: var(--size--m);
-	--wideSize: var(--size--l);
+	--contentSize: var(--size-m);
+	--wideSize: var(--size-l);
 }
 .-container\:l {
-	--contentSize: var(--size--l);
-	--wideSize: var(--size--xl);
+	--contentSize: var(--size-l);
+	--wideSize: var(--size-xl);
 }

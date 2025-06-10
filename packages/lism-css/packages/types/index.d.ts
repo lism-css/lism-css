@@ -45,10 +45,6 @@ export interface LismBaseProps {
 	minH?: ResponsiveValue<string | number>;
 	maxW?: ResponsiveValue<string | number>;
 	maxH?: ResponsiveValue<string | number>;
-	maxIs?: ResponsiveValue<string | number>;
-	maxBs?: ResponsiveValue<string | number>;
-	minIs?: ResponsiveValue<string | number>;
-	minBs?: ResponsiveValue<string | number>;
 
 	// Display
 	d?: ResponsiveValue<string>;
@@ -212,7 +208,7 @@ export interface WithSideProps extends LismProps {
 export interface CenterProps extends GridProps {}
 export interface ColumnsProps extends GridProps {
 	colSize?: ResponsiveValue<string>;
-	colAuto?: ResponsiveValue<string>;
+	autoType?: ResponsiveValue<string>;
 }
 export interface FrameProps extends LismProps {}
 export interface ContainerProps extends LismProps {

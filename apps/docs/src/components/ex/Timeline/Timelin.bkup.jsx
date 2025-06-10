@@ -36,28 +36,10 @@ export function Item({ icon, isStart, isEnd, isHighlighted, shapeColor, children
 
 	return (
 		<Grid className={itemClass} data-timeline={dataTimeline} ai='c' colg='20' {...props}>
-			<GridItem
-				layout={Decorator}
-				className='c--timeline__line'
-				w='2px'
-				bgc='divider'
-				jslf='c'
-				gc='1'
-				gr='1 / -1'
-				{...lineProps}
-			/>
+			<GridItem layout={Decorator} className='c--timeline__line' w='2px' bgc='divider' jslf='c' gc='1' gr='1 / -1' {...lineProps} />
 			<GridItem className='c--timeline__shape' {...shapeProps}>
 				{isHighlighted && (
-					<Decorator
-						className='c--timeline__highlight'
-						tag='span'
-						pos='a'
-						z='-1'
-						i='-3px'
-						bgc='inherit'
-						bdrs='99'
-						op='low'
-					/>
+					<Decorator className='c--timeline__highlight' tag='span' pos='a' z='-1' i='-3px' bgc='inherit' bdrs='99' op='low' />
 				)}
 				{icon && <Icon icon={icon} scale='0.75' fz='s' />}
 			</GridItem>
@@ -67,15 +49,11 @@ export function Item({ icon, isStart, isEnd, isHighlighted, shapeColor, children
 }
 
 export function Time(props) {
-	return (
-		<GridItem className='c--timeline__time' ga='time' fz='xs' lh='xs' c='text-2' {...props} />
-	);
+	return <GridItem className='c--timeline__time' ga='time' fz='xs' lh='xs' c='text-2' {...props} />;
 }
 
 export function Title(props) {
-	return (
-		<GridItem className='c--timeline__title' ga='time' fz='xs' lh='xs' c='text-2' {...props} />
-	);
+	return <GridItem className='c--timeline__title' ga='time' fz='xs' lh='xs' c='text-2' {...props} />;
 }
 export function Body(props) {
 	return <GridItem className='c--timeline__body' ga='body' mbs='10' {...props} />;

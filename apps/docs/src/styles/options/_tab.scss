@@ -3,10 +3,10 @@
 	--sh-size: inset 0 -2px;
 
 	.d--tabs__list {
-		box-shadow: var(--sh-size) 0 var(--c--divider);
+		box-shadow: var(--sh-size) 0 var(--c-divider);
 	}
 	.d--tabs__tab {
-		font-size: var(--fz--s);
+		font-size: var(--fz-s);
 		padding: 0.5em 0.875em;
 		box-shadow: var(--_isActive, var(--sh-size) 0 0 currentColor);
 	}
@@ -15,20 +15,20 @@
 :where(.d--tabs--emboss) {
 	.d--tabs__list {
 		padding: 4px;
-		font-size: var(--fz--s);
-		background-color: var(--c--base-2);
-		border-radius: var(--bdrs--20);
+		font-size: var(--fz-s);
+		background-color: var(--c-base-2);
+		border-radius: var(--bdrs-20);
 	}
 	.d--tabs__tab {
 		padding: 0.25em 0.75em;
-		border-radius: calc(var(--bdrs--20) - 2px); /* 親の bdrs - 親のpadding / 2 */
-		background-color: var(--_isActive, var(--c--base));
-		box-shadow: var(--_isActive, var(--bxsh--10));
+		border-radius: calc(var(--bdrs-20) - 2px); /* 親の bdrs - 親のpadding / 2 */
+		background-color: var(--_isActive, var(--c-base));
+		box-shadow: var(--_isActive, var(--bxsh-10));
 	}
 }
 
 .c--preview_code .d--tabs__tab {
-	// font-size: var(--fz--s);
+	// font-size: var(--fz-s);
 	// padding: 0.5em 0.875em;
 }
 

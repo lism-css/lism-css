@@ -245,14 +245,14 @@ import { CaretDoubleDown } from "@phosphor-icons/react";
 
 ### 開閉トランジションの時間を変更する
 
-アコーディオン用のトランジションは`--trsdu--acc`で秒数を管理できます。
+アコーディオン用のトランジションは`--acc--trsdu`で秒数を管理できます。
 
 親要素に変数をセットすると一括管理できます。
 
 <Preview>
 	<PreviewTitle>Preview</PreviewTitle>
 	<PreviewArea p='30'>
-		<Stack g='30' style={{'--trsdu--acc': '.2s'}}>
+		<Stack g='30' style={{'--acc--trsdu': '.2s'}}>
 			<Accordion.Root bgc='base-2' bxsh='10' bdrs='20'>
 				<Accordion.Header p='30'>
 					<Accordion.Label>Accordion.Label</Accordion.Label>
@@ -283,8 +283,8 @@ import { CaretDoubleDown } from "@phosphor-icons/react";
 		</Stack>
 	</PreviewArea>
 	<PreviewCode slot='tab' label='JSX'>
-		```jsx "--trsdu--acc"
-		<Stack g='30' style={{'--trsdu--acc': '.2s'}}>
+		```jsx "--acc--trsdu"
+		<Stack g='30' style={{'--acc--trsdu': '.2s'}}>
 			<Accordion.Root bgc='base-2' bxsh='10' bdrs='20'>
 				<Accordion.Header p='30'>
 					<Accordion.Label>Accordion.Label</Accordion.Label>
@@ -308,8 +308,8 @@ import { CaretDoubleDown } from "@phosphor-icons/react";
 		```
 	</PreviewCode>
 <PreviewCode slot='tab' label='HTML'>
-```html "--trsdu--acc"
-<div class="l--stack -g:30" style="--trsdu--acc">
+```html "--acc--trsdu"
+<div class="l--stack -g:30" style="--acc--trsdu">
 	<summary class="d--accordion__header ...">...</summary>
 	<summary class="d--accordion__header ...">...</summary>
 </div>

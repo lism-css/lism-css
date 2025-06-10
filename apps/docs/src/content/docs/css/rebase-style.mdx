@@ -19,11 +19,12 @@ Base階層の最後で定義されている、スタイルをリセット・再�
 
 ```css
 :where(.re--style) {
+	width: auto;
+	height: auto;
 	color: inherit;
 	background: none;
 	border: none;
 	padding: 0;
-	margin: 0;
 	font: inherit;
 }
 ```
@@ -56,7 +57,7 @@ Base階層の最後で定義されている、スタイルをリセット・再�
 
 ```css
 .re--list {
-	--list-pis: 1.5em;
+	--list--pis: 1.5em;
 	list-style: revert;
 }
 ```
@@ -184,7 +185,7 @@ Base階層の最後で定義されている、スタイルをリセット・再�
 			</Flex>
 			<Spacer h='40' />
 			<Text> re--sh して 変数を上書きした例: </Text>
-			<Flex className='re--sh -g:40 -pis:30' style={{'--sh-hsl': '200 50% 50%', '--sh-a':'20%'}}>
+			<Flex className='re--sh -g:40 -pis:30' style={{'--_shc-hsl': '200 50% 50%', '--_shc-a':'20%'}}>
 				<Box bxsh='20' p='40' bdrs='20'>Box</Box>
 				<Box bxsh='40' p='40' bdrs='20'>Box</Box>
 			</Flex>
@@ -192,7 +193,7 @@ Base階層の最後で定義されている、スタイルをリセット・再�
 	</PreviewArea>
 		<PreviewCode slot='tab' label='HTML'>
 		```html "re--sh"
-		<div class="re--sh l--flex -g:40" style="--sh-hsl:200 50% 50%;--sh-a:20%">
+		<div class="re--sh l--flex -g:40" style="--_shc-hsl:200 50% 50%;--_shc-a:20%">
 			<div class="l--box -bxsh:20 -p:40 -bdrs:20">Box</div>
 			<div class="l--box -bxsh:40 -p:40 -bdrs:20">Box</div>
 		</div>
@@ -200,7 +201,7 @@ Base階層の最後で定義されている、スタイルをリセット・再�
 	</PreviewCode>
 	<PreviewCode slot='tab' label='JSX'>
 		```jsx "re--sh"
-		<Flex className='re--sh' g='40' style={{'--sh-hsl': '200 50% 50%', '--sh-a':'20%'}}>
+		<Flex className='re--sh' g='40' style={{'--_shc-hsl': '200 50% 50%', '--_shc-a':'20%'}}>
 			<Box bxsh='20' p='40' bdrs='20'>Box</Box>
 			<Box bxsh='40' p='40' bdrs='20'>Box</Box>
 		</Flex>

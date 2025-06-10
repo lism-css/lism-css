@@ -5,9 +5,9 @@
 }
 
 .l--columns--liquid {
-	--col-auto: auto-fill; // auto-fill or auto-fit : 親の幅に対してアイテムが少ない時に、引き伸ばすか、伸ばさないか。
-	--col-size: var(--size--xs);
+	--autoType: auto-fill; // auto-fill or auto-fit : 親の幅に対してアイテムが少ない時に、引き伸ばすか、伸ばさないか。
+	--colSize: var(--size-xs);
 
 	display: grid;
-	grid-template-columns: repeat(var(--col-auto), minmax(min(var(--col-size), 100%), 1fr));
+	grid-template-columns: repeat(var(--autoType), minmax(min(var(--colSize), 100%), 1fr));
 }

@@ -126,11 +126,11 @@ Lismでは、以下のような`-trs`クラスを用意しています。
 		</LinkBox>
 	</PreviewArea>
 	<PreviewCode slot='tab' label='HTML'>
-		```html "-trs" "-bxsh:10 -hov:bxsh" "--hov-bxsh:var(--bxsh--40)"
+		```html "-trs" "-bxsh:10 -hov:bxsh" "--hov-bxsh:var(--bxsh-40)"
 		<a
 			href="###"
 			class="is--linkBox -trs -bxsh:10 -hov:bxsh -bd -p:30"
-			style="--hov-bxsh:var(--bxsh--40)"
+			style="--hov-bxsh:var(--bxsh-40)"
 		>
 			<p>LinkBox</p>
 			<p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
@@ -217,7 +217,7 @@ Lismコンポーネントにて、ユーティリティクラスの出力とオ�
 		```scss
 		@media (any-hover: hover) {
 			.-hov\:shadowUp:hover {
-				box-shadow: var(--bxsh--40);
+				box-shadow: var(--bxsh-40);
 				translate: 0 -3px;
 			}
 		}
@@ -284,7 +284,7 @@ Lismコンポーネントにて、ユーティリティクラスの出力とオ�
 		.-hov\:test {
 			color: var(--_isHov, red) var(--_notHov, blue); /* hover時はgreen, 非hover時はblue*/
 			background-color: var(--_notHov, lightgray); /* 非hover時はlightgray、hover時は無効な値 */
-			box-shadow: var(--_isHov, var(--bxsh--30)); /* hover時はshadowあり、非hover時は無効な値 */
+			box-shadow: var(--_isHov, var(--bxsh-30)); /* hover時はshadowあり、非hover時は無効な値 */
 		}
 		```
 	</PreviewCode>
@@ -368,7 +368,7 @@ Lismコンポーネントにて、ユーティリティクラスの出力とオ�
 
 親がhoverされたらズーム表示されるような`-hov:get:zoom`クラスと、テキストが広がるような`-hov:get:letterSpread`クラスを自作して使ってみます。
 
-さらに、親要素で`--trsdu--default`を上書きして子要素のトランジション時間を一括で変更してみましょう。
+さらに、親要素で`--trsdu-base`を上書きして子要素のトランジション時間を一括で変更してみましょう。
 
 <Preview>
 	<PreviewTitle>自作クラスで子要素のホバーアクションを調整する例</PreviewTitle>
@@ -376,7 +376,7 @@ Lismコンポーネントにて、ユーティリティクラスの出力とオ�
 		<LinkBox
 			href='#banner-link'
 			hov='set' ov='h' ar='16/9' bdrs='30'
-			style={{'--trsdu--default':'.6s'}}
+			style={{'--trsdu-base':'.6s'}}
 		>
 			<Frame isLayer>
 				<Media trs hov='get:zoom' src='/img/img-2.jpg' alt='' width='960' height='640' loading='lazy'/>
@@ -399,11 +399,11 @@ Lismコンポーネントにて、ユーティリティクラスの出力とオ�
 	```
 	</PreviewCode>
 	<PreviewCode slot='tab' label='HTML'>
-		```html "-hov:set" "-hov:get:zoom" "-hov:get:letterSpread" "--trsdu--default"
+		```html "-hov:set" "-hov:get:zoom" "-hov:get:letterSpread" "--trsdu-base"
 		<a
 			href="#banner-link"
 			class="is--linkBox -hov:set -ar:16/9 -ov:h -bdrs:30"
-			style="--trsdu--default:.6s"
+			style="--trsdu-base:.6s"
 		>
 			<div class="l--frame is--layer">
 				<img class="is--layer -trs -hov:get:zoom" src="/img/img-2.jpg" width="960" height="640" loading="lazy" />
@@ -415,11 +415,11 @@ Lismコンポーネントにて、ユーティリティクラスの出力とオ�
 		```
 	</PreviewCode>
 	<PreviewCode slot='tab' label='JSX'>
-		```jsx "hov='set'" "hov='get:zoom'" "hov='get:letterSpread'" "--trsdu--default"
+		```jsx "hov='set'" "hov='get:zoom'" "hov='get:letterSpread'" "--trsdu-base"
 		<LinkBox
 			href='#banner-link'
 			hov='set' ov='h' ar='16/9' bdrs='30'
-			style={{'--trsdu--default':'.6s'}}
+			style={{'--trsdu-base':'.6s'}}
 		>
 			<Frame isLayer>
 				<Media trs hov='get:zoom' src='/img/img-2.jpg' alt='' width='960' height='640' loading='lazy'/>

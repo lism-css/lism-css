@@ -58,17 +58,6 @@ export function getMaybeSpaceVar(value, propName) {
 		}
 	}
 
-	// emトークン
-	// if (typeof value === 'string' && value.startsWith('em')) {
-	// 	const emVal = value.replace('em', '');
-	// 	return `var(--em--${emVal})`;
-	// }
-
-	// box:s → --p--box--s
-	// if (propName && isTokenValue(propName, value)) {
-	// 	return `var(--${propName}--${value.replace(':', '--')})`;
-	// }
-
 	// それ以外はそのまま返す
 	return value;
 }
@@ -82,7 +71,7 @@ export function getMaybeColorVar(value, propType) {
 
 	// カラートークンかどうか
 	if (isTokenValue('color', value)) {
-		return `var(--c--${value})`;
+		return `var(--c-${value})`;
 	} else if (isTokenValue('palette', value)) {
 		return `var(--${value})`;
 	}
@@ -92,7 +81,7 @@ export function getMaybeColorVar(value, propType) {
 
 export function getMaybeSizeVar(value) {
 	if (isTokenValue('contentSize', value)) {
-		return `var(--size--${value})`;
+		return `var(--size-${value})`;
 	}
 
 	return value;
@@ -100,7 +89,7 @@ export function getMaybeSizeVar(value) {
 
 export function getMaybeRadiusVar(value) {
 	if (isTokenValue('bdrs', value)) {
-		return 'var(--bdrs--' + value + ')';
+		return 'var(--bdrs-' + value + ')';
 	}
 	return value;
 }
@@ -115,56 +104,22 @@ export function getMaybeShadowVar(value) {
 		// 0 は none
 		if (value === '0') return 'none';
 
-		return 'var(--bxsh--' + value + ')';
+		return 'var(--bxsh-' + value + ')';
 	}
 
-	// 数値指定の場合
-	// if (typeof value === 'number' || isNumStr(value)) {
-	// 	const shdwVal = Number(value);
-	// 	if (shdwVal === 0) {
-	// 		return 'none';
-	// 	} else if (shdwVal > 0) {
-	// 		const sh01 = `var(--sh-sz--${shdwVal}) var(--sh-color)`;
-	// 		const sh02 = `var(--sh-sz--${shdwVal + 1}) var(--sh-color)`;
-	// 		return `${sh01}, ${sh02}`;
-	// 	} else if (shdwVal < 0) {
-	// 		return `inset var(--sh-sz--${shdwVal * -1}), inset var(--sh-sz--${shdwVal * -1 + 1})`;
-	// 	}
-	// }
 	return value;
 }
 
-// export function getMaybeShadowSizeVar(value) {
-// 	// 数値指定の場合
-// 	if (typeof value === 'number' || isNumStr(value)) {
-// 		const sizeVal = Number(value);
-// 		if (sizeVal === 0) {
-// 			return '0 0 0';
-// 		} else if (sizeVal > 0) {
-// 			return `var(--sh-sz--${sizeVal})`;
-// 		} else if (sizeVal < 0) {
-// 			return `inset var(--sh-sz--${sizeVal * -1})`;
-// 		}
-// 	}
-// 	return value;
-// }
-
-// export function getMaybeOpacityVar(value) {
-// 	if (isTokenValue('op', value)) {
-// 		return 'var(--op--' + value + ')';
-// 	}
-// 	return value;
-// }
 export function getMaybeFzVar(value) {
 	if (isTokenValue('fz', value)) {
-		return 'var(--fz--' + value + ')';
+		return 'var(--fz-' + value + ')';
 	}
 	return value;
 }
 
 // export function getMaybeFilterVar(filter) {
 // 	if (isTokenValue('filter', filter)) {
-// 		return `var(--filter--${filter})`;
+// 		return `var(--filter-${filter})`;
 // 	}
 
 // 	return filter;
