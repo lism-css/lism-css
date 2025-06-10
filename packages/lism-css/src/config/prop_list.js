@@ -130,7 +130,7 @@ export default {
 	lh: { presets: ['1', ...TOKENS.lh], style: 'lineHeight' },
 	fw: {
 		style: 'fontWeight',
-		presets: TOKENS.fw,
+		presets: [...TOKENS.fw, '100', '200', '300', '400', '500', '600', '700', '800', '900'],
 	},
 	ff: { style: 'fontFamily', presets: ['base', 'accent', 'mono'], converter: 1 },
 	fs: { style: 'fontStyle', utils: { italic: 'i' } },
