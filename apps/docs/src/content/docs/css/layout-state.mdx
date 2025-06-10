@@ -30,12 +30,12 @@ Lismでは、**メインコンテンツ間の余白を管理するためのク�
 
 | クラス名 | 余白量 |
 |---|---|
-| `.is--flow` | `var(--flowM, var(--flowM--m))` |
-| `.is--flow.-flow:s` | `--flowM--s` (`--s20`) |
-| `.is--flow.-flow:m` | `--flowM--m` (`--s40`) |
-{/* | `.is--flow.-flow:l` | `--flowM--l` | */}
+| `.is--flow` | `var(--flowM, var(--flowM-m))` |
+| `.is--flow.-flow:s` | `--flowM-s` (`--s20`) |
+| `.is--flow.-flow:m` | `--flowM-m` (`--s40`) |
+{/* | `.is--flow.-flow:l` | `--flowM-l` | */}
 
-見出しタグのみ、`--flowM--h` (`1em`) が加算され、余白が広くなるようになっています。  
+見出しタグのみ、`--flowM-h` (`1em`) が加算され、余白が広くなるようになっています。  
 
 {/* <Lism isFlow> */}
 <Preview>
@@ -153,7 +153,7 @@ Lismでは、**メインコンテンツ間の余白を管理するためのク�
 	</PreviewCode>
 </Preview>
 
-`is--flow`は`--flowM`が未定義であれば`--flowM--m`がセットされますが、ネストされていると親の値を継承されることに注意してください。
+`is--flow`は`--flowM`が未定義であれば`--flowM-m`がセットされますが、ネストされていると親の値を継承されることに注意してください。
 
 <Reference>
 [`is--flow` をネストする時の注意点](/others/addition/#is--flow-のネスト)
@@ -174,9 +174,9 @@ Lismでは、**メインコンテンツ間の余白を管理するためのク�
 | クラス名 | コンテンツ幅 (`--contentSize`) |
 |---|---|
 | `is--container`| `100%` |
-| `-container:s` | `--size--s` |
-| `-container:m` | `--size--m` |
-| `-container:l` | `--size--l` |
+| `-container:s` | `--size-s` |
+| `-container:m` | `--size-m` |
+| `-container:l` | `--size-l` |
 
 
 <Preview>

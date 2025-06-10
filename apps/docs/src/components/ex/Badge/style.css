@@ -1,14 +1,14 @@
 @layer lism.component {
 	.c--badge {
-		--c: var(--c--base);
-		--bgc: var(--c--text);
+		--c: var(--c-base);
+		--bgc: var(--c-text);
 		--bdc: transparent;
 		color: var(--c);
 		background-color: var(--bgc);
 		border: solid 1px var(--bdc); /* 異なる variant を並べてもサイズに差が出ないようにborderを常に指定 */
 	}
 	.c--badge--outline {
-		--c: var(--c--text);
+		--c: var(--c-text);
 		--bgc: transparent;
 		--bdc: currentColor;
 	}

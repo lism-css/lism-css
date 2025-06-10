@@ -1,15 +1,14 @@
 // dialog,
 .d--modal {
-	// --maxIs: 100%; // container直下にきても影響しないように
+	--maxIsz: 100%; // container直下にきても影響しないように
 	--mbs: 0; // flow直下にきても影響しないように
 	--offset: 0 0; // アニメーション用
 	--backdrop: rgb(0 0 0 / 0.6);
 	// --trsdu: 0.5s;
-
-	transition-duration: var(--trsdu--modal);
+	transition-duration: var(--modal--trsdu, 0.5s);
 
 	&::backdrop {
-		transition: opacity var(--trsdu--modal);
+		transition: opacity var(--modal--trsdu, 0.5s);
 		background: var(--backdrop);
 	}
 }

@@ -42,14 +42,8 @@ export default {
 	maxH: { style: 'maxHeight', presets: ['100%'], converter: 'size' },
 	minW: { style: 'minWidth', presets: ['100%'], converter: 'size' },
 	minH: { style: 'minHeight', presets: ['100%', '100lvh', '100svh'], converter: 'size' },
-	is: { style: 'inline-size', converter: 'size' },
-	bs: { style: 'block-size', converter: 'size' },
-	maxIs: { style: 'maxInlineSize', converter: 'size' },
-	maxBs: { style: 'maxBlockSize', converter: 'size' },
-	minIs: { style: 'minInlineSize', converter: 'size' },
-	minBs: { style: 'minBlockSize', converter: 'size' },
 
-	// is: inline-size, bs: block-size, maxI, maxB, minIs, minBs
+	// is: inline-size, bs: block-size, maxI, maxB, minIsz, minBsz
 	c: {
 		presets: [
 			'inherit',
@@ -150,7 +144,6 @@ export default {
 	// others
 	bdrs: { presets: ['0', ...TOKENS.bdrs], converter: 'bdrs' },
 	bxsh: { presets: ['0', ...TOKENS.bxsh], converter: 'bxsh' },
-	// shColor: { converter: 'color', style: '--sh-color' },
 
 	// transition
 	trs: { style: 'transition' },
@@ -371,6 +364,14 @@ export const CONTEXT_PROPS = {
 	// 	ie: { style: 'borderInlineEnd', utilKey: 'bdie' },
 	// 	be: { style: 'borderBlockEnd', utilKey: 'bdbe' },
 	// },
+	sizes: {
+		i: { style: 'inline-size', utilKey: 'isz', converter: 'size' },
+		b: { style: 'block-size', utilKey: 'bsz', converter: 'size' },
+		maxI: { style: 'maxInlineSize', utilKey: 'maxIsz', converter: 'size' },
+		maxB: { style: 'maxBlockSize', utilKey: 'maxBsz', converter: 'size' },
+		minI: { style: 'minInlineSize', utilKey: 'minIsz', converter: 'size' },
+		minB: { style: 'minBlockSize', utilKey: 'minBsz', converter: 'size' },
+	},
 	insets: {
 		is: {
 			style: 'insetInlineStart',

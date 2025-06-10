@@ -2,17 +2,10 @@
     Note: c,bgc,bdc Prop Class より前で読み込む(優先度を下げる）こと。
 */
 .u--colbox {
-	--c: var(--c--text);
-	--bgc: var(--c--base-2);
+	--c: color-mix(in srgb, var(--c-text), var(--keycol) var(--colbox--pct-c, 20%));
+	--bgc: color-mix(in srgb, var(--c-base), var(--keycol) var(--colbox--pct-bg, 5%));
+	--bdc: var(--keycol);
+	--c-link: var(--c);
 	color: var(--c);
 	background-color: var(--bgc);
-}
-@supports (color: color-mix(in srgb, #000, #fff)) {
-	// --keycol は 必須. 親から引き継ぎたいこともあるかもしれないので、初期セットはしない
-	.u--colbox {
-		--c: color-mix(in srgb, var(--c--text), var(--keycol) var(--colbox-pct--c, 20%));
-		--c--link: var(--c);
-		--bgc: color-mix(in srgb, var(--c--base), var(--keycol) var(--colbox-pct--bg, 5%));
-		--bdc: var(--keycol);
-	}
 }

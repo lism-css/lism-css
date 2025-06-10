@@ -3,18 +3,18 @@
       flex-grow は 変数指定だと挙動が変になることにも注意。
  */
 .l--withSide {
-	--side-w: auto;
-	--main-w: max(var(--size--xs), 50%);
+	--sideW: auto;
+	--mainW: max(var(--size-xs), 50%);
 	display: flex;
 	flex-wrap: wrap;
 
 	> [data-is-side] {
-		flex-basis: var(--side-w);
+		flex-basis: var(--sideW);
 		flex-grow: 1; /* 0 だと折り返されたときに広がらない */
 	}
 
 	> :not([data-is-side]) {
 		flex-grow: 9999999; /* できるだけ fix側を 指定値ピッタリに近づけるためにかなり大きな数値を指定 */
-		flex-basis: min(100%, var(--main-w)); /* このサイズが折り返しポイントの基準となる */
+		flex-basis: min(100%, var(--mainW)); /* このサイズが折り返しポイントの基準となる */
 	}
 }

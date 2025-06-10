@@ -139,7 +139,7 @@ import Table from '~/components/ex/Table/index.jsx';
 	</PreviewCode>
 	<PreviewCode slot='tab' label='HTML'>
 		```html
-		<table class='c--table' style="--bdwX:1px;--th-bgc:var(--c--base-2)">
+		<table class='c--table' style="--bdwX:1px;--th--bgc:var(--c-base-2)">
 			<thead>...</thead>
 			<tbody>...</tbody>
 			<tfoot>...</tfoot>
@@ -163,7 +163,7 @@ import Table from '~/components/ex/Table/index.jsx';
 	<PreviewTitle>scroll時にtheadと、1列目のセルを固定する例</PreviewTitle>
 	<PreviewArea p='30' _dir='rtl'>
 	<Frame ov='auto' maxH='20rem'>
-		<Table variant='fix1stCell,fixHead' thBgc='base-2' style={{'--cell-minIs':'10rem','--bdwwX': '1px'}}>
+		<Table variant='fix1stCell,fixHead' thBgc='base-2' style={{'--bdwwX': '1px'}}>
 			<thead>
 				<tr>
 					<th>Header 1</th>
@@ -230,7 +230,7 @@ import Table from '~/components/ex/Table/index.jsx';
 	<PreviewCode slot='tab' label='JSX'>
 		```jsx "fix1stCell,fixHead"
 		<Frame ov='auto' maxH='20rem'>
-			<Table variant='fix1stCell,fixHead' thBgc='base-2' style={{'--cell-minIs':'10rem','--bdwwX': '1px'}}>
+			<Table variant='fix1stCell,fixHead' thBgc='base-2' style={{'--bdwwX': '1px'}}>
 				<thead>...</thead>
 				<tbody>...</tbody>
 				<tfoot>...</tfoot>
@@ -241,7 +241,7 @@ import Table from '~/components/ex/Table/index.jsx';
 	<PreviewCode slot='tab' label='HTML'>
 		```html " c--table--fix1stCell" "c--table--fixHead"
 		<div class="l--frame -ov:a" style="max-height:20rem">
-			<table class='c--table c--table--fix1stCell c--table--fixHead' style="--cell-minIs:10rem;--bdwwX:1px;--th-bgc:var(--c--base-2)">
+			<table class='c--table c--table--fix1stCell c--table--fixHead' style="--bdwwX:1px;--th--bgc:var(--c-base-2)">
 				<thead>...</thead>
 				<tbody>...</tbody>
 				<tfoot>...</tfoot>

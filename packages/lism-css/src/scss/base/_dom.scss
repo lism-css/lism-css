@@ -4,7 +4,7 @@
     html, body
  ---------------------------------------- */
 html {
-	font-size: var(--root-fz);
+	font-size: var(--root--fz);
 
 	tab-size: 4;
 
@@ -17,11 +17,11 @@ html {
 
 body {
 	font-size: 1rem;
-	font-family: var(--ff--base);
-	line-height: var(--lh--base);
-	letter-spacing: var(--lts--base);
-	background-color: var(--c--base);
-	color: var(--c--text);
+	font-family: var(--ff-base);
+	line-height: var(--lh-base);
+	letter-spacing: var(--lts-base);
+	background-color: var(--c-base);
+	color: var(--c-text);
 	overflow-x: clip;
 	// 子孫要素の position:fixed の挙動が変わってしまうので body には使わない
 	// container-type: inline-size;
@@ -31,49 +31,43 @@ body {
     Heading
  ---------------------------------------- */
 @include mixin.maybe_where('h1, h2, h3, h4, h5, h6', '') {
-	font-family: var(--heading-ff, inherit);
-	font-weight: var(--heading-fw, bolder);
+	font-family: var(--h--ff, inherit);
+	font-weight: var(--h--fw, bolder);
 	font-size: var(--fz, revert);
 	line-height: var(--lh, inherit);
 }
 h1 {
-	--fz: var(--fz--3xl);
-	--lh: var(--lh--xs);
+	--fz: var(--fz-3xl);
+	--lh: var(--lh-xs);
 }
 h2 {
-	--fz: var(--fz--2xl);
-	--lh: var(--lh--xs);
+	--fz: var(--fz-2xl);
+	--lh: var(--lh-xs);
 }
 h3 {
-	--fz: var(--fz--xl);
-	--lh: var(--lh--s);
+	--fz: var(--fz-xl);
+	--lh: var(--lh-s);
 }
 h4 {
-	--fz: var(--fz--l);
-	--lh: var(--lh--s);
+	--fz: var(--fz-l);
+	--lh: var(--lh-s);
 }
 h5 {
-	--fz: var(--fz--m);
-	// --lh: var(--lh--s);
+	--fz: var(--fz-m);
+	// --lh: var(--lh-s);
 }
 h6 {
-	--fz: var(--fz--s);
+	--fz: var(--fz-s);
 }
 
 /* ----------------------------------------
     list
  ---------------------------------------- */
 @include mixin.maybe_where('ul, ol', '') {
+	--pis: var(--list--pis, 0);
 	list-style: none;
 	padding: 0;
-	padding-inline-start: var(--list-pis, 0);
-}
-// classを持たない素の ul,ol はブラウザ標準のスタイルを復活させる
-@include mixin.maybe_where('ul, ol', 'is') {
-	&:not([class]) {
-		--list-pis: 1.5em;
-		list-style: revert;
-	}
+	padding-inline-start: var(--pis);
 }
 
 /* ----------------------------------------
@@ -81,24 +75,25 @@ h6 {
  ---------------------------------------- */
 // link
 @include mixin.maybe_where('a', '') {
-	color: var(--c--link);
-	text-decoration: var(--link-td, underline);
+	--c: var(--c-link);
+	--td: var(--link--td, underline);
+	color: var(--c);
+	text-decoration: var(--td);
 }
 
 /* ----------------------------------------
     table
  ---------------------------------------- */
 @include mixin.maybe_where('td, th', '') {
-	padding: var(--cell-p, 0.5em);
-	min-inline-size: var(--cell-minIs, unset);
+	padding: var(--cell--p, 0.5em);
 }
 @include mixin.maybe_where('th', '') {
-	color: var(--th-c, inherit);
-	background-color: var(--th-bgc, transparent);
+	color: var(--th--c, inherit);
+	background-color: var(--th--bgc, transparent);
 }
 @include mixin.maybe_where('td', '') {
-	color: var(--td-c, inherit);
-	background-color: var(--td-bgc, transparent);
+	color: var(--td--c, inherit);
+	background-color: var(--td--bgc, transparent);
 }
 
 /* ----------------------------------------
@@ -112,7 +107,7 @@ h6 {
 
 @include mixin.maybe_where('blockquote', '') {
 	border-inline-start: solid 3px currentColor;
-	padding: var(--s30);
+	padding: var(--s20) var(--s30);
 }
 
 @include mixin.maybe_where('pre', '') {

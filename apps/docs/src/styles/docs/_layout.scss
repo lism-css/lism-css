@@ -3,7 +3,7 @@
 	--sl-sidebar-width: 16rem;
 	--sl-color-bg-sidebar: transparent;
 	--sl-content-pad-x: var(--s40);
-	--codeBlock--radius: 0 0 var(--bdrs--20) var(--bdrs--20);
+	--codeBlock--radius: 0 0 var(--bdrs-20) var(--bdrs-20);
 }
 /*
 
@@ -33,9 +33,9 @@ main-frame
 }
 
 .site-title {
-	--link-td: none;
+	--link--td: none;
 	color: inherit;
-	font-family: var(--ff--mono);
+	font-family: var(--ff-mono);
 
 	> span {
 		display: inline-flex;
@@ -48,22 +48,22 @@ main-frame
 			padding: 0.25rem 0.375rem;
 			border-radius: 0.25rem;
 			font-size: 1rem;
-			background-color: var(--c--text);
-			color: var(--c--base);
+			background-color: var(--c-text);
+			color: var(--c-base);
 		}
 	}
 }
 
 :is(.sidebar, .right-sidebar) {
-	// --c--link: var(--c--text);
-	--link-td: none;
+	// --c-link: var(--c-text);
+	--link--td: none;
 
 	a[aria-current='page'] {
-		color: var(--c--base);
+		color: var(--c-base);
 	}
 	// 目次
 	a[aria-current='true'] {
-		color: var(--c--base);
+		color: var(--c-base);
 		background-color: var(--sl-color-text-accent);
 	}
 
@@ -72,7 +72,7 @@ main-frame
 		opacity: 0.8;
 		&:hover {
 			opacity: 1;
-			background-color: var(--c--base-2);
+			background-color: var(--c-base-2);
 		}
 	}
 

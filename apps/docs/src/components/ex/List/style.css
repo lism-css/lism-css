@@ -1,9 +1,9 @@
 @layer lism.component {
 	.c--list {
 		list-style: none;
-		--list-pis: 1.875em;
+		--list--pis: 1.875em;
 		--icon-svg: unset;
-		--icon-color: var(--c--main);
+		--icon-color: var(--c-main);
 		--icon-clip: circle(0.25em at 50%);
 		--icon-size: 1em;
 	}
@@ -15,7 +15,7 @@
 	.c--list > li::before {
 		position: absolute;
 		top: 0;
-		inset-inline-start: calc(0px - var(--list-pis) / 2 - var(--icon-size) / 2);
+		inset-inline-start: calc(0px - var(--list--pis) / 2 - var(--icon-size) / 2);
 		width: var(--icon-size);
 		height: auto;
 		background: var(--icon-color);

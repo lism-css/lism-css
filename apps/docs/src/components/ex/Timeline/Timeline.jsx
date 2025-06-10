@@ -10,15 +10,7 @@ export function Root({ children, ...props }) {
 }
 
 export function Line(props) {
-	return (
-		<GridItem
-			layout={Decorator}
-			lismClass='c--timeline__line'
-			bgc='divider'
-			jslf='c'
-			{...props}
-		/>
-	);
+	return <GridItem layout={Decorator} lismClass='c--timeline__line' bgc='divider' jslf='c' {...props} />;
 }
 export function Shape(props) {
 	return (
@@ -38,17 +30,7 @@ export function Shape(props) {
 	);
 }
 
-export function Item({
-	isHorizontal,
-	isStart,
-	isEnd,
-	isHighlighted,
-	icon,
-	iconProps = {},
-	shapeColor,
-	children,
-	...props
-}) {
+export function Item({ isHorizontal, isStart, isEnd, isHighlighted, icon, iconProps = {}, shapeColor, children, ...props }) {
 	let dataTimeline = null;
 	let lineProps = {
 		gr: isHorizontal ? '1' : '1 / -1',
@@ -65,10 +47,7 @@ export function Item({
 	}
 	if (isEnd) {
 		dataTimeline = 'end';
-		lineProps = Object.assign(
-			lineProps,
-			isHorizontal ? { jslf: 's' } : { gr: '1 / 3', aslf: 's' }
-		);
+		lineProps = Object.assign(lineProps, isHorizontal ? { jslf: 's' } : { gr: '1 / 3', aslf: 's' });
 	}
 	if (!icon) {
 		shapeProps.fz = '2xs';
@@ -86,17 +65,7 @@ export function Item({
 		>
 			<Line {...lineProps} />
 			<Shape bgc={shapeColor || 'text'} {...shapeProps}>
-				{isHighlighted && (
-					<Decorator
-						className='c--timeline__highlight'
-						tag='span'
-						pos='a'
-						z='-1'
-						bgc='inherit'
-						bdrs='99'
-						op='low'
-					/>
-				)}
+				{isHighlighted && <Decorator className='c--timeline__highlight' tag='span' pos='a' z='-1' bgc='inherit' bdrs='99' op='low' />}
 				{icon && <Icon icon={icon} scale='0.75' fz='s' {...iconProps} />}
 			</Shape>
 			{children}
