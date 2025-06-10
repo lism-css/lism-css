@@ -2,10 +2,10 @@
 	.c--list {
 		list-style: none;
 		--list--pis: 1.875em;
-		--icon-svg: unset;
-		--icon-color: var(--c-main);
-		--icon-clip: circle(0.25em at 50%);
-		--icon-size: 1em;
+		--iconC: var(--c-main);
+		--iconSz: 1em;
+		--iconImg: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10"><circle cx="5" cy="5" r="2"/></svg>');
+		/* --iconClip: circle(0.225em at 50%); */
 	}
 	.c--list > li {
 		position: relative;
@@ -15,24 +15,21 @@
 	.c--list > li::before {
 		position: absolute;
 		top: 0;
-		inset-inline-start: calc(0px - var(--list--pis) / 2 - var(--icon-size) / 2);
-		width: var(--icon-size);
+		inset-inline-start: calc(0px - var(--list--pis) / 2 - var(--iconSz) / 2);
+		width: var(--iconSz);
 		height: auto;
-		background: var(--icon-color);
-		mask: var(--icon-svg) no-repeat 50% / contain;
-		clip-path: var(--icon-clip);
+		background: var(--iconC);
+		mask: var(--iconImg) no-repeat 50% / contain;
 		content: '\00a0'; /* スペース */
 	}
 
 	.c--list--check {
-		--icon-color: var(--green);
-		--icon-clip: unset;
-		--icon-svg: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M11.2 20.56l-5.92-5.92c-0.16-0.16-0.4-0.16-0.56 0l-2.8 2.8c-0.16 0.16-0.16 0.4 0 0.56l9.040 9.040c0.16 0.16 0.4 0.16 0.56 0l18.64-18.64c0.16-0.16 0.16-0.4 0-0.56l-2.8-2.8c-0.16-0.16-0.4-0.16-0.56 0l-15.6 15.52z"></path></svg>');
+		--iconC: var(--green);
+		--iconImg: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><path d="M232.49,80.49l-128,128a12,12,0,0,1-17,0l-56-56a12,12,0,1,1,17-17L96,183,215.51,63.51a12,12,0,0,1,17,17Z"></path></svg>');
 	}
 
 	.c--list--caret {
-		--icon-color: var(--blue);
-		--icon-clip: unset;
-		--icon-svg: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M23.4,14.4L12.9,7C11.6,6,9.7,7,9.7,8.6v14.8c0,1.6,1.8,2.6,3.1,1.6l10.5-7.4C24.5,16.8,24.5,15.2,23.4,14.4z"/></svg>');
+		--iconC: var(--blue);
+		--iconImg: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><path d="M184.49,136.49l-80,80a12,12,0,0,1-17-17L159,128,87.51,56.49a12,12,0,1,1,17-17l80,80A12,12,0,0,1,184.49,136.49Z"/></svg>');
 	}
 }

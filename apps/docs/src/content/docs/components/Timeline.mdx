@@ -13,7 +13,7 @@ import { MegaphoneSimple } from '@phosphor-icons/react';
 
 ## Import
 
-<ImportSource name='Timeline' hasRoot react css='scss'/>
+<ImportSource name='Timeline' hasRoot react css='css'/>
 
 
 ## Examples
@@ -207,7 +207,7 @@ import { MegaphoneSimple } from '@phosphor-icons/react';
 <Preview>
 	<PreviewTitle>使用例</PreviewTitle>
 	<PreviewArea p='30'>
-		<Timeline.Root variant='horizontal'>
+		<Timeline.Root isHorizontal>
 				<Timeline.Item isHorizontal isStart>
 					<Timeline.Time>20yy年m月dd日</Timeline.Time>
 					<Timeline.Title>Lism x.y.z がリリース。</Timeline.Title>
@@ -233,7 +233,7 @@ import { MegaphoneSimple } from '@phosphor-icons/react';
 	</PreviewArea>
 	<PreviewCode>
 	```jsx "horizontal" "isHorizontal"
-		<Timeline.Root variant='horizontal'>
+		<Timeline.Root isHorizontal>
 			<Timeline.Item isHorizontal isStart>
 				<Timeline.Time>20yy年m月dd日</Timeline.Time>
 				<Timeline.Title>Lism x.y.z がリリース。</Timeline.Title>

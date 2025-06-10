@@ -1,9 +1,9 @@
 import { Center, Grid, GridItem, Icon, Decorator } from 'lism-css/react';
-import './style.scss';
+import './style.css';
 
-export function Root({ children, ...props }) {
+export function Root({ children, isHorizontal, ...props }) {
 	return (
-		<Grid lismClass='c--timeline' lh='s' {...props}>
+		<Grid lismClass='c--timeline' variant={isHorizontal ? 'horizontal' : null} gaf={isHorizontal ? 'c' : null} lh='s' {...props}>
 			{children}
 		</Grid>
 	);
@@ -19,9 +19,8 @@ export function Shape(props) {
 			layout={Center}
 			pos='r'
 			z='1'
-			w='1em'
-			h='1em'
 			c='base'
+			ar='1/1'
 			// bgc={shapeColor || 'text'}
 			bdrs='99'
 			jslf='c'
@@ -33,8 +32,8 @@ export function Shape(props) {
 export function Item({ isHorizontal, isStart, isEnd, isHighlighted, icon, iconProps = {}, shapeColor, children, ...props }) {
 	let dataTimeline = null;
 	let lineProps = {
-		gr: isHorizontal ? '1' : '1 / -1',
-		gc: isHorizontal ? '1 / -1' : '1',
+		gr: isHorizontal ? '1' : '1/-1',
+		gc: isHorizontal ? '1/-1' : '1',
 	};
 	let shapeProps = {
 		gr: isHorizontal ? '1' : '2',
@@ -49,16 +48,19 @@ export function Item({ isHorizontal, isStart, isEnd, isHighlighted, icon, iconPr
 		dataTimeline = 'end';
 		lineProps = Object.assign(lineProps, isHorizontal ? { jslf: 's' } : { gr: '1 / 3', aslf: 's' });
 	}
-	if (!icon) {
-		shapeProps.fz = '2xs';
+	if (icon) {
+		shapeProps.className = '_hasIcon';
 	}
 
 	return (
-		<Grid
+		<GridItem
+			layout={Grid}
 			lismClass='c--timeline__item'
 			data-timeline={dataTimeline}
 			ai='c'
 			ji={isHorizontal ? 'c' : null}
+			gtr={isHorizontal ? 'subgrid' : null}
+			gr={isHorizontal ? '1/-1' : null}
 			colg={isHorizontal ? null : '20'}
 			rowg={isHorizontal ? '10' : null}
 			{...props}
@@ -69,7 +71,7 @@ export function Item({ isHorizontal, isStart, isEnd, isHighlighted, icon, iconPr
 				{icon && <Icon icon={icon} scale='0.75' fz='s' {...iconProps} />}
 			</Shape>
 			{children}
-		</Grid>
+		</GridItem>
 	);
 }
 

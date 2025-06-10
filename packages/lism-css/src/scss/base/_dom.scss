@@ -85,15 +85,7 @@ h6 {
     table
  ---------------------------------------- */
 @include mixin.maybe_where('td, th', '') {
-	padding: var(--cell--p, 0.5em);
-}
-@include mixin.maybe_where('th', '') {
-	color: var(--th--c, inherit);
-	background-color: var(--th--bgc, transparent);
-}
-@include mixin.maybe_where('td', '') {
-	color: var(--td--c, inherit);
-	background-color: var(--td--bgc, transparent);
+	padding: 0.25em 0.375em; // var(--cell--p, 0.375em);
 }
 
 /* ----------------------------------------

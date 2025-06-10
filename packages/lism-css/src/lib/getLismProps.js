@@ -281,7 +281,7 @@ class LismPropsData {
 
 		// "u:"ではじまっている場合、それに続く文字列を取得してユーティリティ化
 		if (typeof val === 'string' && val.startsWith('u:')) {
-			this.addUtil(`${utilName}${val.replace('u:', '')}`);
+			this.addUtil(`${utilName}:${val.replace('u:', '')}`);
 			return;
 		}
 
@@ -379,7 +379,7 @@ class LismPropsData {
 				value = getMaybeCssVar(value, converterName, propName);
 			}
 
-			this.addStyle(`--pass-${propName}`, value);
+			this.addStyle(`--pass_${propName}`, value);
 		});
 	}
 

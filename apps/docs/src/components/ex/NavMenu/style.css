@@ -1,8 +1,8 @@
 @layer lism.component {
 	.c--navMenu {
 		--link--td: none;
-		--pass-p: var(--s20);
-		--pass-bdc: var(--bdc, currentColor);
+		--pass_p: var(--s20);
+		--pass_bdc: var(--bdc, currentColor);
 	}
 
 	.c--navMenu__link {
@@ -12,8 +12,8 @@
 
 /* lism: pass-get */
 [data-lism-get~='p'] {
-	padding: var(--pass-p);
+	padding: var(--pass_p);
 }
 [data-lism-get~='bdc'] {
-	--bdc: var(--pass-bdc);
+	--bdc: var(--pass_bdc);
 }

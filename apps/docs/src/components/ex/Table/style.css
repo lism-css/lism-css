@@ -1,0 +1,85 @@
+/* 
+方針 : td,thにボーダーをつける。
+    そのほうが特定のセルだけのボーダーカスタマイズもしやすい.
+    ただし、スクロール時にsticky要素の border が表示されない問題に対応するため、変数でのプロパティ管理を行う。
+*/
+
+@layer lism.component {
+	.c--table {
+		--bdwY: 1px;
+		--bdwX: 1px;
+		--bds: solid;
+		--bdc: var(--c-divider);
+
+		/* Note: collape にしているので、 1pxだと見えないことに注意。 */
+		--thead_bdbe: solid 2px;
+		--tfoot_bdbs: solid 2px;
+
+		border: none;
+		border-collapse: collapse; /* memo: oveflow の指定によっては separate にしないとborderが表示されない場合がある. 横スクロール時には注意。 */
+		border-spacing: 0;
+		isolation: isolate;
+		max-inline-size: 100%;
+	}
+
+	.c--table th {
+		color: var(--th_c, inherit);
+		background-color: var(--th_bgc, transparent);
+	}
+	.c--table td {
+		color: var(--td_c, inherit);
+		background-color: var(--td_bgc, transparent);
+	}
+	.c--table :is(td, th) {
+		min-inline-size: var(--cell_minW, initial);
+		padding: var(--cell_p, 0.375em);
+	}
+
+	.c--table :is(td, th),
+	.c--table :is(td, th)::before {
+		border-width: var(--bdwY) var(--bdwX);
+		border-color: var(--bdc);
+		border-style: var(--bds);
+	}
+
+	.c--table > thead {
+		border-block-end: var(--thead_bdbe);
+	}
+	.c--table > tfoot {
+		border-block-start: var(--tfoot_bdbs);
+	}
+}
+
+/* ._nofix: rowspan の対応に使用するクラス */
+.c--table--fix1st tr > :first-child:not(._nofix) {
+	position: sticky;
+	left: 0;
+	z-index: 1; /* 他のセルが relative だと上に来てしまうので、 z-index を少し上げておく */
+
+	/* スクロール時にborderが表示されない問題への対処 */
+	border-inline: none;
+}
+.c--table--fix1st tr > :first-child:not(._nofix)::before {
+	content: '';
+	position: absolute;
+	inset: 0 calc(var(--bdwX) * -1) 0 0;
+	border-block: none;
+}
+
+.c--table--fixHead > thead {
+	position: sticky;
+	top: 0;
+	z-index: 2; /* fix1st + 1 */
+
+	/* スクロール時にborderが表示されない問題への対処 */
+	border-block: none;
+}
+
+.c--table--fixHead > thead::before {
+	content: '';
+	position: absolute;
+	z-index: 2;
+	inset: 0 0 calc(var(--bdwY) * -0.5) 0;
+	border-block: var(--bdwY) var(--bds) var(--bdc);
+	border-block-end: var(--thead_bdbe);
+}

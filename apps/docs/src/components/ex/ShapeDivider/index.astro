@@ -2,19 +2,7 @@
 import { Lism } from 'lism-css/astro';
 import './style.css';
 
-const {
-	viewBox,
-	children,
-	isAnimation,
-	scale,
-	level = 5,
-	stretch,
-	offsetX,
-	offsetY,
-	css = {},
-	style = {},
-	...props
-} = Astro.props;
+const { viewBox, children, isAnimation, scale, level = 5, stretch, offsetX, offsetY, css = {}, style = {}, ...props } = Astro.props;
 
 // scaleをコンポーネントに直書きできるように
 if (null != scale) css.scale = scale;

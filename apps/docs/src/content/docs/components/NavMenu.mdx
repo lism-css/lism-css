@@ -194,8 +194,8 @@ import { FolderSimple } from "@phosphor-icons/react";
 - `<NavMenu.Item>` は `data-lism-get='bdc'`
 - `<NavMenu.Link>` は`data-lism-get='p'`
 
-が付与されており、それぞれ親の`--pass-bdc`,`--pass-p`変数を受けとるようになっています。
-これにより、`<NavMenu.Root>`に`--pass-bdc`や`--pass-p`をセットして一括調整できます。
+が付与されており、それぞれ親の`--pass_bdc`,`--pass_p`変数を受けとるようになっています。
+これにより、`<NavMenu.Root>`に`--pass_bdc`や`--pass_p`をセットして一括調整できます。
 
 
 <Reference>
@@ -203,9 +203,9 @@ import { FolderSimple } from "@phosphor-icons/react";
 </Reference>
 
 <Preview>
-	<PreviewTitle>`--pass-bdc`（Rootの`--bdc`が初期セットされます）と`--pass-p` で`padding`, `--bdc`を一括指定</PreviewTitle>
+	<PreviewTitle>`--pass_bdc`（Rootの`--bdc`が初期セットされます）と`--pass_p` で`padding`, `--bdc`を一括指定</PreviewTitle>
 	<PreviewArea p='30'>
-		{/* <NavMenu.Root bd style={{'--pass-p': 'var(--s30)'}}> */}
+		{/* <NavMenu.Root bd style={{'--pass_p': 'var(--s30)'}}> */}
 		<NavMenu.Root bd bdc='divider' passVars={{p:'30'}}>
 			<NavMenu.Item>
 				<NavMenu.Link href='#menu1'>Menu item</NavMenu.Link>
@@ -302,7 +302,7 @@ import { FolderSimple } from "@phosphor-icons/react";
 
 ### ネストしたメニューをアコーディオンで展開する
 
-リンクのpaddingは`--pass-p`で管理されているため、アコーディオン化した時に `-get:p`クラスを使えば同じ量のpaddingを受け取れます。  
+リンクのpaddingは`--pass_p`で管理されているため、アコーディオン化した時に `-get:p`クラスを使えば同じ量のpaddingを受け取れます。  
 
 
 <Preview>
