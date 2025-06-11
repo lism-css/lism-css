@@ -72,7 +72,7 @@ export default defineConfig({
 			social: [
 				{ icon: 'github', label: 'GitHub', href: 'https://github.com/lism-css/lism-css' },
 				{ icon: 'x.com', label: 'X', href: 'https://twitter.com/lismcss' },
-				// { icon: 'discord', label: 'Discord', href: 'https://discord.gg/lismcss' },
+				{ icon: 'discord', label: 'Discord', href: 'https://discord.gg/6PMcFHvc4h' },
 			],
 			// editLink: {
 			// 	baseUrl: 'https://github.com/lism-css/lism-css/tree/main/apps/docs',
