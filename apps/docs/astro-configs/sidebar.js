@@ -17,6 +17,10 @@ export default [
 				label: 'Getting Started',
 				link: '/getting-started/',
 			},
+			{
+				label: 'Updates',
+				link: '/updates/',
+			},
 
 			// {
 			// 	label: 'Example Guide',
