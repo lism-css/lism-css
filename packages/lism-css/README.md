@@ -19,7 +19,7 @@ pnpm add lism-css
 Please import CSS as a global style.
 
 ```js
-import 'lism-css/all.css';
+import 'lism-css/main.css';
 ```
 
 (For example, if it is Next.js, load it with `_app.js` or `layout.js`.)
@@ -27,7 +27,7 @@ import 'lism-css/all.css';
 For HTML sites, you can also load CSS via CDN.
 
 ```html
-<link href="https://cdn.jsdelivr.net/npm/lism-css/dist/css/all.css" rel="stylesheet" />
+<link href="https://cdn.jsdelivr.net/npm/lism-css/dist/css/main.css" rel="stylesheet" />
 ```
 
 ### 3. Using Components

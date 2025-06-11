@@ -44,7 +44,7 @@ $util_em_tokens: 1, 2, 3, 5, 7, 10, 15, 20, 25, 30 !default; */}
 );
 
 // lism の scssファイルを読み込む
-@use '../path-to/node_modules/lism-css/scss/all';
+@use '../path-to/node_modules/lism-css/scss/main';
 ```
 
 {/* 例えば、`sm`,`md`サイズのサポートだけで良い場合は、`$common_support_bp`を`md`に設定することで、`lg`以降のブレイクポイントのユーティリティクラスを出力しないようにできます。 */}
@@ -84,7 +84,7 @@ $util_em_tokens: 1, 2, 3, 5, 7, 10, 15, 20, 25, 30 !default; */}
 );
 
 // lism の scssファイルを読み込む
-@use '../path-to/node_modules/lism-css/scss/all';
+@use '../path-to/node_modules/lism-css/scss/main';
 ```
 
 Astroの場合は`../path-to/node_modules/`は不要です。
