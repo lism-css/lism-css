@@ -3,24 +3,26 @@ title: 'Overview'
 description: ...
 ---
 import { Preview, PreviewArea, PreviewTitle, PreviewCode, IconBadge, Callout } from "~/components";
-import { Box, Text, Center, Flex, Frame, Icon } from "lism-css/astro";
+import { Box, Text, Center, Flex, Frame, Icon, Spacer } from "lism-css/astro";
 import DemoLismComponent from '~/content/demo-lism-component.mdx';
 
-"**Lism CSS**" は、WEBサイトの骨組みをサクっと作るための軽量なCSSフレームワークです。
+"**Lism CSS**" は、WEBサイトの骨組みをサクっと作るための軽量でモダンなCSSフレームワークです。
 
-**独自のCSS設計理論をゼロから構築**しており、以下のようなコンセプトになっています。
+**CSS設計理論をゼロから構築**しています。
 
-- HTML側にクラスとCSS変数を書くだけでざっくりとしたレイアウトが素早く組める。
-- 細かい装飾や複雑なデザインはCSSでちゃんと書く。（Lism は干渉しない）
-- CSSを読み込むだけで、素のHTMLサイトやWordPressサイトにも導入できる。
+- **レイアウトファースト**なモジュール設計をベースに、**装飾はユーティリティクラス**が担います。
+- クラスとCSS変数の組み合わせでレスポンシブレイアウトが素早く組める。
+- ビルドや設定は不要。CSSを読み込むだけでも使えるため、WordPressにも導入できる。
 
-なんでもかんでも全部のスタイルをHTMLやJSX側に書いていくのではなく、主要なレイアウトやCSSプロパティをクラスとCSS変数だけで簡単に適用できるようにしつつも、細かい作り込みはCSS側に任せるという想定で設計しています。
+HTML側で全部書こうとせず、細かい作り込みやリッチな装飾はCSS側で書くことを前提としています。
 
-※ [Every Layout](https://every-layout.dev/) + [Bootstrap](https://getbootstrap.com/) + [Tailwind CSS](https://tailwindcss.com/) を 混ぜ合わせたようなイメージで設計しました。
+<IconBadge /> [Every Layout](https://every-layout.dev/) + [Bootstrap](https://getbootstrap.com/) + [Tailwind CSS](https://tailwindcss.com/) を 混ぜ合わせたようなCSS設計になっています。  
 
+<Spacer h='10' />
 
 <Callout keycolor="green" icon='good'>
-Lism CSSを元にした**コンポーネント集** をnpmパッケージとして提供しており、ReactとAstroではより手軽に利用できます。
+さらに、**Lism CSSを元にしたコンポーネント集をnpmパッケージとして提供**しています。  
+ReactやAstroではより手軽に利用できます。
 </Callout>
 
 
@@ -28,7 +30,7 @@ Lism CSSを元にした**コンポーネント集** をnpmパッケージとし�
 
 Lism CSSを簡単に扱えるようにした専用のコンポーネントをReact,Astro形式で配布しています。
 
-[Chakra UI](https://chakra-ui.com/) や [MUI](https://mui.com/) のような使い心地で、Lism CSSの設計思想に則ったコンポーネントを手軽に扱えるようになります。
+<IconBadge /> [Chakra UI](https://chakra-ui.com/) や [MUI](https://mui.com/) のような使い心地で、Lism CSSの設計思想に則ったコンポーネントを手軽に扱えるようになります。
 
 <PreviewTitle>専用のコンポーネントはこんな感じで使います</PreviewTitle>
 

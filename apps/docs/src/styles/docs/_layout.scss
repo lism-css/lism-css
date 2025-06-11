@@ -39,17 +39,26 @@ main-frame
 
 	> span {
 		display: inline-flex;
-		gap: 0.375em;
+		gap: 0.25em;
 		align-items: center;
-		&::after {
+		&::before {
 			content: 'β';
 			display: block;
 			line-height: 1;
+			margin-left: 0.25em;
 			padding: 0.25rem 0.375rem;
 			border-radius: 0.25rem;
 			font-size: 1rem;
 			background-color: var(--c-text);
 			color: var(--c-base);
+			order: 1;
+		}
+		&::after {
+			content: 'v.0.1';
+			line-height: 1;
+			font-size: 0.9rem;
+			letter-spacing: -0.125em;
+			order: 2;
 		}
 	}
 }

@@ -65,7 +65,15 @@ export default defineConfig({
 				'./src/styles/docs.scss',
 			],
 			sidebar,
-			social: [{ icon: 'github', label: 'GitHub', href: 'https://github.com/lism-css/lism-css' }],
+			// social: {
+			// 	github: 'https://github.com/withastro/starlight',
+			// 	'x.com': 'https://x.com/astrodotbuild',
+			// },
+			social: [
+				{ icon: 'github', label: 'GitHub', href: 'https://github.com/lism-css/lism-css' },
+				{ icon: 'x.com', label: 'X', href: 'https://twitter.com/lismcss' },
+				// { icon: 'discord', label: 'Discord', href: 'https://discord.gg/lismcss' },
+			],
 			// editLink: {
 			// 	baseUrl: 'https://github.com/lism-css/lism-css/tree/main/apps/docs',
 			// },
