@@ -160,19 +160,25 @@ class LismPropsData {
 
 			// Lism系のプロパティかどうか
 			const isLismProp = PROPS_KEYS.includes(propName);
-			const isContextProp = CONTEXT_PROPS_KEYS.includes(propName);
+			if (isLismProp) {
+				// value取得して attrsリストから削除しておく
+				const propVal = this.attrs[propName];
+				delete this.attrs[propName];
 
-			// それ以外はここでスキップ
-			if (!isLismProp && !isContextProp) return;
-
-			// value取得して attrsリストから削除しておく
-			const propVal = this.attrs[propName];
-			delete this.attrs[propName];
-
-			if (isContextProp) {
-				this.setContextProps(propName, propVal);
-			} else {
+				// 解析処理
 				this.analyzeProp(propName, propVal);
+				return;
+			}
+
+			const isContextProp = CONTEXT_PROPS_KEYS.includes(propName);
+			if (isContextProp) {
+				// value取得して attrsリストから削除しておく
+				const propVal = this.attrs[propName];
+				delete this.attrs[propName];
+
+				// 解析処理
+				this.setContextProps(propName, propVal);
+				return;
 			}
 		});
 	}
@@ -201,18 +207,21 @@ class LismPropsData {
 		// 	bpValues = bpData;
 		// }
 
-		// BP指定意外で成分プロパティが指定されている場合
+		// BP指定意外で成分プロパティが指定されてきた場合
+		// 例: trf={{scale: '-X'}}, p={{ l: '20', b='30' }}
 		if (null != propVal && typeof propVal === 'object') {
-			// 各成分の解析
-			if (objProcessor) {
-				// this.analyzeSideObj(propVal, objProcessor);
-				Object.keys(propVal).forEach((dataKey) => {
-					// 指定された成分に対応する prop名 を取得
-					const propName = objProcessor(dataKey);
+			// 各成分の解析メソッドがなければ処理を終了
+			if (!objProcessor) return;
+			Object.keys(propVal).forEach((_key) => {
+				// 指定された成分に対応する prop名 を取得
+				const { prop, context } = objProcessor(_key);
 
-					this.analyzeProp(propName, propVal[dataKey]);
-				});
-			}
+				if (context) {
+					this.setContextProps(propName, { [prop]: propVal[_key] });
+				} else {
+					this.analyzeProp(prop, propVal[_key]);
+				}
+			});
 		} else {
 			// オブジェクト以外の普通の処理
 			this.setAttrs(name || propName, propVal, options);
@@ -443,7 +452,18 @@ class LismPropsData {
 		this.analyzeProp('bd', value);
 	}
 
-	getStateProps({ skipState, isOverwide, isFullwide, isWide, isFlow, isContainer, hasGutter, isLayer, isLinkBox, ...props }) {
+	getStateProps({
+		skipState,
+		isOverwide,
+		isFullwide,
+		isWide,
+		isFlow,
+		isContainer,
+		hasGutter,
+		isLayer,
+		isLinkBox,
+		...props
+	}) {
 		if (!skipState) {
 			if (isContainer) {
 				this.setContainerData(isContainer);

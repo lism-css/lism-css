@@ -6,7 +6,7 @@ export function getLayerProps(props) {
 	// const positionProps = getLayerPositions(position);
 
 	let layerProps = getInsetProps(props); // l,r,t,b などのコンテキストpropsのマージ
-	layerProps = getFilterProps(layerProps, 'backdropFilter'); // filter系propsのマージ
+	layerProps = getFilterProps(layerProps, 'bdfltr'); // filter系propsのマージ
 
 	return layerProps;
 }

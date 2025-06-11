@@ -1,12 +1,11 @@
-export default function getInsetProps(props) {
-	if (null == props.insets) props.insets = {};
-
-	['is', 'ie', 'bs', 'be'].forEach((key) => {
+export default function getInsetProps({ i_ = {}, ...props }) {
+	['iis', 'iie', 'ibs', 'ibe'].forEach((key) => {
 		if (null != props[key]) {
-			props.insets[key] = props[key];
+			i_[key] = props[key];
 			delete props[key];
 		}
 	});
 
+	props.i_ = i_;
 	return props;
 }

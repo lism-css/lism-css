@@ -70,9 +70,12 @@ Lismでは、主要なCSSプロパティ群に対して、それらで頻繁に�
 
 ここからはテーブル形式で、各プロパティの情報をまとめていきます。
 
-|Property|Shorthand|Token|To Class|BP|
-|---|---|---|---|---|
-|CSSプロパティ|省略形|対応するトークンの種類。（必ずしもクラス化されるわけではありません）|ユーティリティクラス化される値|ブレイクポイント対応クラスの有無。|
+|カラム名|説明|
+|---|---|
+|Property|CSSプロパティ|
+|Shorthand|その省略形。Propクラスの`-{prop}:{val}`の`{prop}`にあたる文字列です。<br />また、Lismコンポーネントに指定するためのプロパティ名もこの文字列です。|
+|To Class|Propクラスとして出力される値|
+|BP|ブレイクポイント対応クラスの有無|
 
 省略形の文字列(Shorthand)は、クラスとして出力されます。また、`Lism`コンポーネントに指定するプロパティも、この文字列です。
 
@@ -216,17 +219,22 @@ export const LinkSPACE = () => <a href="/css/tokens/#space"><code>SPACE</code></
 |`overflow`|`ov`|`h`(`hidden`),<br />`a`(`auto`),<br />`c`(`clip`)|-|
 |`overflow-x`|`ovx`|`h`(`hidden`),<br />`a`(`auto`),<br />`c`(`clip`)|-|
 |`overflow-y`|`ovy`|`h`(`hidden`),<br />`a`(`auto`),<br />`c`(`clip`)|-|
+|`opacity`|`op`|[`OPACITY`](/css/tokens/#opacity), `0`|-|
+|`aspect-ratio`|`ar`|`16/9`,`3/2`,`1/1`,<br />`ogp`,`gold`|○|
 
 
-### Width & Height
-|Property|Shorthand|Token|To Class|BP|
-|---|---|---|---|---|
-|`width`|`w`|`SIZE`|`100%`,<br/>`fit`(`fit-content`)|○|
-|`height`|`h`|`SIZE`|`100%`,<br/>`100lvh`,`100svh`,<br/>`fit`(`fit-content`)|○|
-|`max-width`|`maxW`|`SIZE`|`100%`|○|
-|`max-height`|`maxH`|`SIZE`|`100%`|○|
-|`min-width`|`minW`|`SIZE`|`100%`|○|
-|`min-height`|`minH`|`SIZE`|`100%`,<br/>`100lvh`,`100svh`|○|
+## Width & Height
+|Property|Shorthand|To Class|BP|
+|---|---|---|---|
+|`width`|`w`|`100%`,<br/>`fit`(`fit-content`)|○|
+|`height`|`h`|`100%`,<br/>`100lvh`,`100svh`,<br/>`fit`(`fit-content`)|○|
+|`max-width`|`maxW`|`100%`|○|
+|`max-height`|`maxH`|`100%`|○|
+|`min-width`|`minW`|`100%`|○|
+|`min-height`|`minH`|`100%`,<br/>`100lvh`,`100svh`|○|
+
+
+関連トークン: <a href="/css/tokens/#size"><code>SIZE</code></a>
 
 
 ## Layouts
@@ -242,10 +250,10 @@ export const LinkSPACE = () => <a href="/css/tokens/#space"><code>SPACE</code></
 |`bottom`|`b`|`0`,`50%`,`100%`|-|
 |`inset`|`inset`|`0`|-|
 |`z-index`|`z`|`-1`, `0`, `1`, `2`, `99`|-|
-{/* |`inset-inline-start`|`insets.is`|-|-|
-|`inset-inline-end`|`insets.ie`|-|-|
-|`inset-block-start`|`insets.bs`|-|-|
-|`inset-block-end`|`insets.be`|-|-| */}
+|`inset-inline-start`|`(i_.)is`|-|-|
+|`inset-inline-end`|`(i_.)ie`|-|-|
+|`inset-block-start`|`(i_.)bs`|-|-|
+|`inset-block-end`|`(i_.)be`|-|-|
 
 `position:absolute`で要素を配置する例をいくつか紹介します。
 
@@ -258,13 +266,13 @@ export const LinkSPACE = () => <a href="/css/tokens/#space"><code>SPACE</code></
 		<Box pos='r' ar='3/2' lh='1'>
 			<Box pos='a' l='0' t='0' bd p='20'>A</Box>
 			{/* <Box pos='a' l='0' t='0' m='40' bd p='20' bgc='base-2'>A'</Box> */}
-			<Box pos='a' l='50%' t='0' css={{translate:'-50X'}} bd p='20'>B</Box>
+			<Box pos='a' l='50%' t='0' css={{trnslt:'-50X'}} bd p='20'>B</Box>
 			<Box pos='a' r='0' t='0' bd p='20'>C</Box>
-			<Box pos='a' l='0' t='50%' css={{translate:'-50Y'}} bd p='20'>D</Box>
-			<Box pos='a' l='50%' t='50%' css={{translate:'-50XY'}} bd p='20'>E</Box>
-			<Box pos='a' r='0' t='50%' css={{translate:'-50Y'}} bd p='20'>F</Box>
+			<Box pos='a' l='0' t='50%' css={{trnslt:'-50Y'}} bd p='20'>D</Box>
+			<Box pos='a' l='50%' t='50%' css={{trnslt:'-50XY'}} bd p='20'>E</Box>
+			<Box pos='a' r='0' t='50%' css={{trnslt:'-50Y'}} bd p='20'>F</Box>
 			<Box pos='a' l='0' b='0' bd p='20'>G</Box>
-			<Box pos='a' l='50%' b='0' css={{translate:'-50X'}} bd p='20'>H</Box>
+			<Box pos='a' l='50%' b='0' css={{trnslt:'-50X'}} bd p='20'>H</Box>
 			<Box pos='a' r='0' b='0' bd p='20'>I</Box>
 		</Box>
 	</PreviewArea>
@@ -272,13 +280,13 @@ export const LinkSPACE = () => <a href="/css/tokens/#space"><code>SPACE</code></
 		```jsx
 		<Box pos='r' ar='3/2' lh='1'>
 			<Box pos='a' l='0' t='0' bd p='20'>A</Box>
-			<Box pos='a' l='50%' t='0' css={{translate:'-50X'}} bd p='20'>B</Box>
+			<Box pos='a' l='50%' t='0' css={{trnslt:'-50X'}} bd p='20'>B</Box>
 			<Box pos='a' r='0' t='0' bd p='20'>C</Box>
-			<Box pos='a' l='0' t='50%' css={{translate:'-50Y'}} bd p='20'>D</Box>
-			<Box pos='a' l='50%' t='50%' css={{translate:'-50XY'}} bd p='20'>E</Box>
-			<Box pos='a' r='0' t='50%' css={{translate:'-50Y'}} bd p='20'>F</Box>
+			<Box pos='a' l='0' t='50%' css={{trnslt:'-50Y'}} bd p='20'>D</Box>
+			<Box pos='a' l='50%' t='50%' css={{trnslt:'-50XY'}} bd p='20'>E</Box>
+			<Box pos='a' r='0' t='50%' css={{trnslt:'-50Y'}} bd p='20'>F</Box>
 			<Box pos='a' l='0' b='0' bd p='20'>G</Box>
-			<Box pos='a' l='50%' b='0' css={{translate:'-50X'}} bd p='20'>H</Box>
+			<Box pos='a' l='50%' b='0' css={{trnslt:'-50X'}} bd p='20'>H</Box>
 			<Box pos='a' r='0' b='0' bd p='20'>I</Box>
 		</Box>
 		```
@@ -287,13 +295,13 @@ export const LinkSPACE = () => <a href="/css/tokens/#space"><code>SPACE</code></
 		```html
 		<div class="l--box -pos:r -ar:3/2 -lh:1">
 			<div class="l--box -pos:a -l:0 -t:0 -bd -p:20">A</div>
-			<div class="l--box -pos:a -l:50% -t:0 -trslt:-50X -bd -p:20">B</div>
+			<div class="l--box -pos:a -l:50% -t:0 -trnslt:-50X -bd -p:20">B</div>
 			<div class="l--box -pos:a -r:0 -t:0 -bd -p:20">C</div>
-			<div class="l--box -pos:a -l:0 -t:50% -trslt:-50Y -bd -p:20">D</div>
-			<div class="l--box -pos:a -l:50% -t:50% -trslt:-50XY -bd -p:20">E</div>
-			<div class="l--box -pos:a -r:0 -t:50% -trslt:-50Y -bd -p:20">F</div>
+			<div class="l--box -pos:a -l:0 -t:50% -trnslt:-50Y -bd -p:20">D</div>
+			<div class="l--box -pos:a -l:50% -t:50% -trnslt:-50XY -bd -p:20">E</div>
+			<div class="l--box -pos:a -r:0 -t:50% -trnslt:-50Y -bd -p:20">F</div>
 			<div class="l--box -pos:a -l:0 -b:0 -bd -p:20">G</div>
-			<div class="l--box -pos:a -l:50% -b:0 -trslt:-50X -bd -p:20">H</div>
+			<div class="l--box -pos:a -l:50% -b:0 -trnslt:-50X -bd -p:20">H</div>
 			<div class="l--box -pos:a -r:0 -b:0 -bd -p:20">I</div>
 		</div>
 		```
@@ -399,12 +407,29 @@ export const LinkSPACE = () => <a href="/css/tokens/#space"><code>SPACE</code></
 
 ## Styling
 
+
+### Shadow
 |Prop|Shorthand|To Class|BP|
 |---|---|---|---|
 |`box-shadow`|`bxsh`|[`SHADOW`](/css/tokens/#shadow)|-|
+
+
+
+### Radius
+
+|Prop|Shorthand|To Class|BP|
+|---|---|---|---|
 |`border-radius`|`bdrs`|[`RADIUS`](/css/tokens/#radius)|○|
-|`opacity`|`op`|[`OPACITY`](/css/tokens/#opacity), `0`|-|
-|`aspect-ratio`|`ar`|`16/9`,`3/2`,`1/1`,<br />`ogp`,`gold`|○|
+|`border-top-left-radius`|`(bdrs_.)bdtlrs`|-|-|
+|`border-top-right-radius`|`(bdrs_.)bdtrrs`|-|-|
+|`border-bottom-left-radius`|`(bdrs_.)bdblrs`|-|-|
+|`border-bottom-right-radius`|`(bdrs_.)bdbrrs`|-|-|
+|`border-start-start-radius`|`(bdrs_.)bdssrs`|-|-|
+|`border-start-end-radius`|`(bdrs_.)bdsers`|-|-|
+|`border-end-start-radius`|`(bdrs_.)bdesrs`|-|-|
+|`border-end-end-radius`|`(bdrs_.)bdeers`|-|-|
+
+
 
 
 ### Border
@@ -446,22 +471,33 @@ borderに関する仕様は少し特殊になっています。詳しくは[bord
 
 |Prop|Shorthand|To Class|BP|
 |---|---|---|---|
-|`background`|`bg`|-|-|
-|`background-image`|`bgi`|-|-|
-|`background-repeat`|`bgr`|`n`(`no-repeat`)|-|
-|`background-position`|`bgp`|`c`(`center`)|-|
-|`background-size`|`bgsz`|`cv`(`cover`),`ct`(`contain`)|-|
+|`background`|`bg`|-|⚪︎|
+|`background-image`|`(bg_.)bgi`|-|⚪︎|
+|`background-repeat`|`(bg_.)bgr`|`n`(`no-repeat`)|-|
+|`background-position`|`(bg_.)bgp`|`c`(`center`)|-|
+|`background-size`|`(bg_.)bgsz`|`cv`(`cover`),`ct`(`contain`)|-|
+|`background-attachment`|`(bg_.)bga`|-|-|
+|`background-origin`|`(bg_.)bgo`|-|-|
+|`background-clip`|`(bg_.)bcp`|-|-|
+|`background-blend-mode`|`(bg_.)bbm`|-|-|
 
 <Preview>
 	<PreviewTitle>使用例</PreviewTitle>
 	<PreviewArea p='30'>
-		<Frame ar='21/9' bg="url(/img/img-2.jpg) center / 50%"></Frame>
-		<Frame ar='21/9' bgi='url(/img/img-2.jpg)' bgp='center' bgsz='cover'></Frame>
+		{/* <Frame ar='ogp' bg="url(/img/img-2.jpg) center / cover"></Frame> */}
+		<Frame ar='ogp' bg_={{bgi:'url(/img/img-2.jpg)', bgp:'center', bgsz:'cover'}}></Frame>
 	</PreviewArea>
 	<PreviewCode label='JSX' slot='tab'>
-		```jsx "bg"
-		<Frame ar='21/9' bg="url(/img/img-2.jpg) center / 50%"></Frame>
-		<Frame ar='21/9' bgi='url(/img/img-2.jpg)' bgp='center' bgsz='cover'></Frame>
+		```jsx
+		<Frame ar='ogp' bg_={{bgi:'url(/img/img-2.jpg)', bgp:'center', bgsz:'cover'}}></Frame>
+
+		// ↓ 以下と表示は同じ（--bgに出力されます）
+		<Frame ar='ogp' bg="url(/img/img-2.jpg) center / 50%"></Frame>
+		```
+	</PreviewCode>
+	<PreviewCode label='HTML' slot='tab'>
+		```html
+		<div class="l--frame -ar:ogp -bgi -bgp:c -bgsz:cv" style="--bgi:url(/img/img-2.jpg)">  </div>
 		```
 	</PreviewCode>
 </Preview>
@@ -470,28 +506,46 @@ borderに関する仕様は少し特殊になっています。詳しくは[bord
 <Preview>
 	<PreviewTitle>グラデーション</PreviewTitle>
 	<PreviewArea p='30'>
-		<Frame ar='21/9' bgi='linear-gradient(to top, #a8edea 0%, #fed6e3 100%)'></Frame>
+		<Frame ar='ogp' bg='linear-gradient(to top, #a8edea 0%, #fed6e3 100%)'></Frame>
 	</PreviewArea>
 	<PreviewCode label='JSX' slot='tab'>
 		```jsx
-		<Frame ar='16/9' bgi='linear-gradient(to top, #a8edea 0%, #fed6e3 100%)'></Frame>
+		<Frame ar='ogp' bg='linear-gradient(to top, #a8edea 0%, #fed6e3 100%)'></Frame>
+		```
+	</PreviewCode>
+	<PreviewCode label='HTML' slot='tab'>
+		```html
+		<div class="l--frame -ar:ogp -bg" style="--bg:linear-gradient(to top, #a8edea 0%, #fed6e3 100%)">  </div>
 		```
 	</PreviewCode>
 </Preview>
 
 
 
-## Others
+## Other CSS
 
 その他、下記のCSSプロパティは `css` というプロパティにオブジェクトとして指定することで出力できます。  
-(Note: 以下に挙げているもの以外は、そのまま `style`に渡されます。)
+(Note: 以下に挙げているもの以外を`css`に渡すと、`style`に流れます。)
 
 |Prop|Shorthand|To Class|BP|
 |---|---|---|---|
-|`translate`|`trslt`|`-50X`,`-50Y`,`-50XY`|-|
-|`rotate`|`rotate`|`45`,`-45`,`90`,`-90`|-|
-|`scale`|`scale`|`-X`,`-Y`,`-XY`|-|
-
+|`inline-size`|`(css.)isz`|||
+|`block-size`|`(css.)bsz`|||
+|`max-inline-size`|`(css.)maxIsz`|||
+|`max-block-size`|`(css.)maxBsz`|||
+|`min-inline-size`|`(css.)minIsz`|||
+|`min-block-size`|`(css.)minBsz`|||
+|`transform`|`(css.)trf`|||
+|`transform-origin`|`(css.)trfo`|||
+|`translate`|`(css.)trnslt`|`-50X`,`-50Y`,`-50XY`|-|
+|`rotate`|`(css.)rotate`|`45`,`-45`,`90`,`-90`|-|
+|`scale`|`(css.)scale`|`-X`,`-Y`,`-XY`|-|
+|`filter`|`(css.)fltr`|||
+|`backdrop-filter`|`(css.)bdfltr`|||
+|`float`|`(css.)fl`|`l`(`left`),`r`(`right`)|⚪︎|
+|`clear`|`(css.)cl`|`l`(`left`),`r`(`right`),`b`(`both`)|⚪︎|
+|`object-fit`|`(css.)obf`|`cv`(`cover`),`cn`(`contain`)|⚪︎|
+|`object-position`|`(css.)obp`|||
 
 ### クラスで直接使用するしかできないもの
 最後に、`Lism` コンポーネントで対応した CSS Props がないものの、Prop Classの用意があるものをリストアップしておきます。
