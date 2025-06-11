@@ -59,8 +59,8 @@ export interface LismBaseProps {
 	// Flexbox & Grid
 	gap?: ResponsiveValue<string | number>;
 	g?: ResponsiveValue<string | number>;
-	rowg?: ResponsiveValue<string | number>;
-	colg?: ResponsiveValue<string | number>;
+	gx?: ResponsiveValue<string | number>;
+	gy?: ResponsiveValue<string | number>;
 	ai?: ResponsiveValue<string>;
 	jc?: ResponsiveValue<string>;
 	ac?: ResponsiveValue<string>;

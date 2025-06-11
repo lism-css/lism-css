@@ -311,14 +311,8 @@ Lismパッケージに内蔵されているクラスではありませんが、�
 	- 例: `.-prop:-1`
 
 
-## 補足事項
 
-その他の補足事項を説明します。
-
-
-
-	
-### 単語の省略について
+## 単語の省略について
 
 基本的には[Emmetの省略形](https://docs.emmet.io/cheat-sheet/) で統一するようにしています。
 
@@ -326,15 +320,21 @@ Lismパッケージに内蔵されているクラスではありませんが、�
 - `background-color` → `bgc`
 - `text-align:center`に対応するクラス → `.-ta:c`
 
-次のように例外 (Emmetと違うもの、Emmetっぽくないもの)もあります。
+次のように、例外 (Emmetと違うもの、Emmetっぽくないもの)もあります。
 
-- `colg`: (`column-gap`)
-	- Emmet では `colmg` だが、`column`→`col`, `columns` → `cols` とLism全体で揃えている。
+- `px`,`py`,`mx`,`my`
+- `gx`(`column-gap`),`gy`(`row-gap`)
 - `aslf`, `jslf`
 	- Emmet では`as`, `js`になるが `as` は Lism Prop と被り、`js`は javascript が思い浮かぶため、変形しています。
-- `-fxw:nw`(`flex-wrap:nowrap`)
-	- Emmetに従えば `fxw:n`だが、`whs:nw`(`white-space: nowrap`) と揃えています。
 
-Emmet で明確に定義されていないものは、それっぽく省略しています。
+
+Emmet で明確に定義されていないものもあります。  
+その場合は、それっぽく省略しています。**母音を抜く、または先頭の数文字を取る**、のどちらかでできるだけ省略するようにしています。
+
+ただし、省略すると極端にわかりづらくなる、または他と被りそうなものは、一部そのままです。
+
+例: 
 	- `object-fit` → `obf`
-	- `row-gap` → `rowg`
+	- `filter` → `fltr`
+	- `translate` → `trnslt`
+	- `scale` → `scale`

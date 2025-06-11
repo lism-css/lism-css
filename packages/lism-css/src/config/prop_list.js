@@ -251,8 +251,8 @@ export default {
 		presets: ['inherit', ...SPACE_PRESETS],
 		converter: 'space',
 	},
-	rowg: { converter: 'space' },
-	colg: { converter: 'space' },
+	gx: { converter: 'space' }, // colg
+	gy: { converter: 'space' }, // rowg
 	cols: { style: '--cols' },
 	rows: { style: '--rows' },
 
