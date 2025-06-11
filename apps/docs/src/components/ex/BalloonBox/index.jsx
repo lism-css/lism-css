@@ -1,6 +1,6 @@
 import { Flex, Lism, Decorator } from 'lism-css/react';
 
-export default function BalloonBox({ variant = 'left', bdw = '1px', bdc, bgc, keycolor, bdrs = '3', children, ...props }) {
+export default function BalloonBox({ variant = 'left', bdw = '1px', bdc, bgc, keycolor, bdrs = '20', children, ...props }) {
 	const colorProps = { bdc, bgc };
 	if (keycolor) {
 		colorProps.lismClass += ' u--cbox';
