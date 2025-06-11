@@ -113,14 +113,6 @@ export default {
 
 	// boxcolor: { _presets: TOKENS.palette, style: '--keycolor', converter: 'color' },
 	bg: { utils: { none: 'n' } },
-	bgi: { style: 'backgroundImage' },
-	bgr: { style: 'backgroundRepeat', utils: { n: 'no-repeat' } },
-	bgp: { style: 'backgroundPosition', utils: { center: 'c' } },
-	bgsz: { style: 'backgroundSize', utils: { cover: 'cv', contain: 'ct' } },
-	// bga: { style: 'backgroundAttachment' },
-	// bgo: { style: 'backgroundOrigin' },
-	// bcp: { style: 'backgroundClip' },
-	// bbm: { style: 'backgroundBlendMode' },
 
 	// mask: { map: 1 },
 
@@ -220,7 +212,7 @@ export default {
 		presets: SPACE_PRESETS, //[...SPACE_PRESETS, ...TOKENS.p],
 		converter: 'space',
 		// {x, y, t, b, l, r, is, bs } でも指定可能にする
-		objProcessor: (d) => `p${d}`,
+		objProcessor: (d) => ({ prop: `p${d}`, context: null }),
 	},
 	px: { presets: SPACE_PRESETS, converter: 'space' },
 	py: { presets: SPACE_PRESETS, converter: 'space' },
@@ -241,7 +233,7 @@ export default {
 		presets: SPACE_PRESETS,
 		converter: 'space',
 		// {x, y, t, b, l, r, is, bs } でも指定可能にする
-		objProcessor: (d) => `m${d}`,
+		objProcessor: (d) => ({ prop: `m${d}`, context: null }),
 	},
 	mx: { utils: auto, converter: 'space' },
 	my: { utils: auto, converter: 'space' },
@@ -280,6 +272,8 @@ export default {
 	fxg: { name: 'fxg', presets: ['0', '1'] },
 	fxsh: { name: 'fxsh', presets: ['0', '1'] },
 	fxb: { name: 'fxb' },
+
+	// transform系
 
 	// mask: { map: 1 },
 	// flex: { map: 1 },
@@ -320,7 +314,7 @@ export const CONTEXT_PROPS = {
 	flex: {
 		fxf: { style: 'flex-flow' },
 		// nowrap → Emmet は n だが、nw にしている. (whs と揃えている)
-		fxw: { utils: { wrap: 'w', nowrap: 'nw' } },
+		fxw: { utils: { wrap: 'w', nowrap: 'n' } },
 		fxd: { utils: { column: 'c', row: 'r', 'column-reverse': 'cr', 'row-reverse': 'rr' } },
 	},
 
@@ -338,70 +332,50 @@ export const CONTEXT_PROPS = {
 	// transform: {
 	// 	// transform
 	// 	transformOrigin: { style: 1, utilKey: 'trfo', utils: 'origin' },
-	// 	translate: { style: 1, utils: 1, utilKey: 'trslt' },
+	// 	translate: { style: 1, utils: 1, utilKey: 'trnslt' },
 	// 	rotate: { style: 1, utils: 1 },
 	// 	scale: { style: 1 },
 	// },
 
-	radii: {
-		tl: { style: 'borderTopLeftRadius', utilKey: 'bdtlrs', converter: 'bdrs' },
-		tr: { style: 'borderTopRightRadius', utilKey: 'bdtrrs', converter: 'bdrs' },
-		bl: { style: 'borderBottomLeftRadius', utilKey: 'bdblrs', converter: 'bdrs' },
-		br: { style: 'borderBottomRightRadius', utilKey: 'bdbrrs', converter: 'bdrs' },
-		ss: { style: 'borderStartStartRadius', utilKey: 'bdssrs', converter: 'bdrs' },
-		se: { style: 'borderStartEndRadius', utilKey: 'bdsers', converter: 'bdrs' },
-		es: { style: 'borderEndStartRadius', utilKey: 'bdesrs', converter: 'bdrs' },
-		ee: { style: 'borderEndEndRadius', utilKey: 'bdeers', converter: 'bdrs' },
+	bg_: {
+		bgi: {},
+		bgr: { style: 'backgroundRepeat', utils: { n: 'no-repeat' } },
+		bgp: { style: 'backgroundPosition', utils: { center: 'c' } },
+		bgsz: { style: 'backgroundSize', utils: { cover: 'cv', contain: 'ct' } },
+		bga: { style: 'backgroundAttachment' },
+		bgo: { style: 'backgroundOrigin' },
+		bcp: { style: 'backgroundClip' },
+		bbm: { style: 'backgroundBlendMode' },
+	},
+	bdrs_: {
+		bdtlrs: { style: 'borderTopLeftRadius', converter: 'bdrs' },
+		bdtrrs: { style: 'borderTopRightRadius', converter: 'bdrs' },
+		bdblrs: { style: 'borderBottomLeftRadius', converter: 'bdrs' },
+		bdbrrs: { style: 'borderBottomRightRadius', converter: 'bdrs' },
+		bdssrs: { style: 'borderStartStartRadius', converter: 'bdrs' },
+		bdsers: { style: 'borderStartEndRadius', converter: 'bdrs' },
+		bdesrs: { style: 'borderEndStartRadius', converter: 'bdrs' },
+		bdeers: { style: 'borderEndEndRadius', converter: 'bdrs' },
+	},
+	i_: {
+		iis: { style: 'insetInlineStart', converter: 'space' },
+		iie: { style: 'insetInlineEnd', converter: 'space' },
+		ibs: { style: 'insetBlockStart', converter: 'space' },
+		ibe: { style: 'insetBlockEnd', converter: 'space' },
 	},
 
-	// borders: {
-	// 	l: { style: 'borderLeft', utilKey: 'bdl' },
-	// 	r: { style: 'borderRight', utilKey: 'bdr' },
-	// 	t: { style: 'borderTop', utilKey: 'bdt' },
-	// 	b: { style: 'borderBottom', utilKey: 'bdb' },
-	// 	is: { style: 'borderInlineStart', utilKey: 'bdis' },
-	// 	bs: { style: 'borderBlockStart', utilKey: 'bdbs' },
-	// 	ie: { style: 'borderInlineEnd', utilKey: 'bdie' },
-	// 	be: { style: 'borderBlockEnd', utilKey: 'bdbe' },
-	// },
-	sizes: {
-		i: { style: 'inline-size', utilKey: 'isz', converter: 'size' },
-		b: { style: 'block-size', utilKey: 'bsz', converter: 'size' },
-		maxI: { style: 'maxInlineSize', utilKey: 'maxIsz', converter: 'size' },
-		maxB: { style: 'maxBlockSize', utilKey: 'maxBsz', converter: 'size' },
-		minI: { style: 'minInlineSize', utilKey: 'minIsz', converter: 'size' },
-		minB: { style: 'minBlockSize', utilKey: 'minBsz', converter: 'size' },
-	},
-	insets: {
-		is: {
-			style: 'insetInlineStart',
-			utilKey: 'iis',
-			converter: 'space',
-		},
-		ie: {
-			style: 'insetInlineEnd',
-			utilKey: 'iie',
-			converter: 'space',
-		},
-		bs: {
-			style: 'insetBlockStart',
-			utilKey: 'ibs',
-			converter: 'space',
-		},
-		be: {
-			style: 'insetBlockEnd',
-			utilKey: 'ibe',
-			converter: 'space',
-		},
-	},
-
-	mask: {},
-
+	// mask: {},
 	css: {
-		// transform系
-		translate: {
-			style: 1,
-			utilKey: 'trslt',
+		isz: { style: 'inline-size', converter: 'size' },
+		bsz: { style: 'block-size', converter: 'size' },
+		maxIsz: { style: 'maxInlineSize', converter: 'size' },
+		maxBsz: { style: 'maxBlockSize', converter: 'size' },
+		minIsz: { style: 'minInlineSize', converter: 'size' },
+		minBsz: { style: 'minBlockSize', converter: 'size' },
+		trf: { style: 'transform' },
+		trfo: { style: 'transformOrigin' },
+		trnslt: {
+			style: 'translate',
 			utils: {
 				'-50% -50%': '-50XY',
 				'-50%': '-50X',
@@ -421,15 +395,17 @@ export const CONTEXT_PROPS = {
 				'-1 -1': '-XY',
 			},
 		},
+		fltr: { style: 'filter' }, // fltr?
+		bdfltr: { style: 'backdropFilter' }, // bdfltr?
+		fl: { style: 'float', utils: { left: 'l', right: 'r' } },
+		cl: { style: 'clear', utils: { left: 'l', right: 'r', both: 'b' } },
+		obf: { style: 'objectFit', utils: { cover: 'cv', contain: 'cn' } },
+		obp: { style: 'objectPosition' },
 
 		// Memo: その他、コアの処理このcssに入り得るものは以下の通り.(将来的に何か処理を追加するかもしれないもの)
-		// transform,
-		// transformOrigin,
 		// clipPath: { style: 1 }, // cpp ?
 		// objectFit: { style: 1, utilKey: 'obf', utils: { cover: 'cv', contain: 'cn' } },
 		// objectPosition: { style: 1 },
-		// filter: { style: 1 }, // fltr?
-		// backdropFilter: { style: 1, presets:[] },
 	},
 
 	// hov: { c, bgc, bdc, bxsh },

@@ -20,7 +20,7 @@ export default function BalloonBox({ variant = 'left', bdw = '1px', bdc, bgc, ke
 				t: '50%',
 				l: '0',
 				rotate: '45deg',
-				translate: '-50% -50%',
+				trnslt: '-50% -50%',
 				clipPath: 'polygon(0% 0%, 0% 100%, 100% 100%)',
 			};
 			break;
@@ -30,7 +30,7 @@ export default function BalloonBox({ variant = 'left', bdw = '1px', bdc, bgc, ke
 				t: '50%',
 				l: '100%',
 				rotate: '-45deg',
-				translate: '-50% -50%',
+				trnslt: '-50% -50%',
 				clipPath: 'polygon(0% 100%, 100% 0%, 100% 100%)',
 			};
 			break;
@@ -40,7 +40,7 @@ export default function BalloonBox({ variant = 'left', bdw = '1px', bdc, bgc, ke
 				t: '0',
 				l: '50%',
 				rotate: '45deg',
-				translate: '-50% -50%',
+				trnslt: '-50% -50%',
 				clipPath: 'polygon(0% 0%, 0% 100%, 100% 0%)',
 			};
 			break;
@@ -50,7 +50,7 @@ export default function BalloonBox({ variant = 'left', bdw = '1px', bdc, bgc, ke
 				t: '100%',
 				l: '50%',
 				rotate: '45deg',
-				translate: '-50% -50%',
+				trnslt: '-50% -50%',
 				clipPath: 'polygon(100% 0%, 0% 100%, 100% 100%)',
 			};
 			break;

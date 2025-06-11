@@ -10,7 +10,7 @@ const FILTERS = [
 	'sepia',
 ];
 
-export default function getFilterProps({ css = {}, ...props }, type = 'filter') {
+export default function getFilterProps({ css = {}, ...props }, type = 'fltr') {
 	const filterValues = [];
 
 	if (null == css[type]) {
