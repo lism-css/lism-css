@@ -37,26 +37,26 @@ Gridは、[`grid`オブジェクト内で指定できるプロパティ](/css/pr
 ## Usage
 
 <Preview>
-	<PreviewTitle>1\:2 の比率でコンテンツを表示</PreviewTitle>
-	<PreviewArea resize p='20'>
-		<Grid gtc='1fr 2fr'>
-			<Box px='10' bgc='blue:20%'>A</Box>
-			<Box px='10' bgc='purple:10%'>B</Box>
+	<PreviewTitle>1\:1 → @smで1\:2 の比率でコンテンツを表示</PreviewTitle>
+	<PreviewArea resize p='30'>
+		<Grid gtc={['1fr 1fr', '1fr 2fr']}>
+			<Box p='30' bgc='blue:20%'>A</Box>
+			<Box p='30' bgc='purple:10%'>B</Box>
 		</Grid>
 	</PreviewArea>
 	<PreviewCode slot='tab' label='JSX'>
 		```jsx
-		<Grid gtc='1fr 2fr'>
-			<Box px='10' bgc='blue:20%'>A</Box>
-			<Box px='10' bgc='purple:10%'>B</Box>
+		<Grid gtc={['1fr 1fr', '1fr 2fr']}>
+			<Box p='30' bgc='blue:20%'>A</Box>
+			<Box p='30' bgc='purple:10%'>B</Box>
 		</Grid>
 		```
 	</PreviewCode>
 	<PreviewCode slot='tab' label='HTML'>
-		```jsx
-		<div class="l--grid -gtc" style="--gtc:1fr 2fr">
-			<div>A</div>
-			<div>B</div>
+		```html
+		<div class="l--grid -gtc -gtc_sm" style="--gtc:1fr 1fr;--gtc_sm:1fr 2fr">
+			<div class="l--box -p:30 -bgc:mix" style="--_bgc1:var(--blue);--_mixpct-bgc:20%">A</div>
+			<div class="l--box -p:30 -bgc:mix" style="--_bgc1:var(--purple);--_mixpct-bgc:10%">B</div>
 		</div>
 		```
 	</PreviewCode>
@@ -65,7 +65,7 @@ Gridは、[`grid`オブジェクト内で指定できるプロパティ](/css/pr
 
 <Preview>
 	<PreviewTitle>真ん中にメインコンテンツ</PreviewTitle>
-	<PreviewArea resize p='20'>
+	<PreviewArea p='30'>
 		<Grid gtc='auto 1fr auto' g='20'>
 			<Center p='30' bgc='base-2'>L</Center>
 			<Center p='30' bd>Center</Center>
@@ -82,7 +82,7 @@ Gridは、[`grid`オブジェクト内で指定できるプロパティ](/css/pr
 		```
 	</PreviewCode>
 	<PreviewCode slot='tab' label='HTML'>
-		```jsx
+		```html
 		<div class="l--grid -g:20 -gtc" style="--gtc:auto 1fr auto">
 			<div class="l--center -p:30 -bgc:base-2">L</div>
 			<div class="l--center -p:30 -bd">Center</div>
@@ -127,7 +127,7 @@ Gridは、[`grid`オブジェクト内で指定できるプロパティ](/css/pr
 		```
 	</PreviewCode>
 	<PreviewCode slot='tab' label='HTML'>
-		```jsx
+		```html
 		<div
 			class="l--grid -gta -gta_sm -gtc -gtc_sm -g:20"
 			style="--gta:'main main' 'left right';--gta_sm:'left main right';--gtc:1fr 1fr;--gtc_sm:8em 1fr 8em"

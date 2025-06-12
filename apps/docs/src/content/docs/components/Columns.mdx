@@ -35,8 +35,8 @@ import { Lism, Box, Media, Text, Dummy, Columns, Grid, GridItem, Divider } from 
 	<PreviewTitle>
 		2列の`<Columns>`
 	</PreviewTitle>
-	<PreviewArea resize p='20'>
-		<Columns cols={2} g='20'>
+	<PreviewArea resize p='30'>
+		<Columns cols={2} g='30'>
 			<Box bgc='base-2' p='30'>Box</Box>
 			<Box bgc='base-2' p='30'>Box</Box>
 			<Box bgc='base-2' p='30'>Box</Box>
@@ -45,7 +45,7 @@ import { Lism, Box, Media, Text, Dummy, Columns, Grid, GridItem, Divider } from 
 	</PreviewArea>
 	<PreviewCode slot='tab' label='JSX'>
 		```jsx "cols={2}"
-		<Columns cols={2} g='20'>
+		<Columns cols={2} g='30'>
 			<Box bgc='base-2' p='30'>Box</Box>
 			<Box bgc='base-2' p='30'>Box</Box>
 			<Box bgc='base-2' p='30'>Box</Box>
@@ -55,7 +55,7 @@ import { Lism, Box, Media, Text, Dummy, Columns, Grid, GridItem, Divider } from 
 	</PreviewCode>
 	<PreviewCode slot='tab' label='HTML'>
 		```html "--cols:2"
-		<div class="l--columns -g:20" style="--cols:2">
+		<div class="l--columns -g:30" style="--cols:2">
 			<div class="l--box -bgc:base-2 -p:30">Box</div>
 			<div class="l--box -bgc:base-2 -p:30">Box</div>
 			<div class="l--box -bgc:base-2 -p:30">Box</div>
@@ -70,37 +70,37 @@ import { Lism, Box, Media, Text, Dummy, Columns, Grid, GridItem, Divider } from 
 	<PreviewTitle>
 		1列 → sm:2列 → md:3列
 	</PreviewTitle>
-	<PreviewArea resize p='20'>
-		<Columns cols={[1, 2, 3]} g='20'>
-			<Box bgc='base-2' p='30'>Box</Box>
-			<Box bgc='base-2' p='30'>Box</Box>
-			<Box bgc='base-2' p='30'>Box</Box>
-			<Box bgc='base-2' p='30'>Box</Box>
-			<Box bgc='base-2' p='30'>Box</Box>
-			<Box bgc='base-2' p='30'>Box</Box>
+	<PreviewArea resize p='30'>
+		<Columns cols={[1, 2, 3]} g='30'>
+			<Box bgc='base-2' p='30'>Box1</Box>
+			<Box bgc='base-2' p='30'>Box2</Box>
+			<Box bgc='base-2' p='30'>Box3</Box>
+			<Box bgc='base-2' p='30'>Box4</Box>
+			<Box bgc='base-2' p='30'>Box5</Box>
+			<Box bgc='base-2' p='30'>Box6</Box>
 		</Columns>
 	</PreviewArea>
 	<PreviewCode slot='tab' label='JSX'>
 		```jsx "cols={[1, 2, 3]}"
-		<Columns cols={[1, 2, 3]} g='20'>
-			<Box bgc='base-2' p='30'>Box</Box>
-			<Box bgc='base-2' p='30'>Box</Box>
-			<Box bgc='base-2' p='30'>Box</Box>
-			<Box bgc='base-2' p='30'>Box</Box>
-			<Box bgc='base-2' p='30'>Box</Box>
-			<Box bgc='base-2' p='30'>Box</Box>
+		<Columns cols={[1, 2, 3]} g='30'>
+			<Box bgc='base-2' p='30'>Box1</Box>
+			<Box bgc='base-2' p='30'>Box2</Box>
+			<Box bgc='base-2' p='30'>Box3</Box>
+			<Box bgc='base-2' p='30'>Box4</Box>
+			<Box bgc='base-2' p='30'>Box5</Box>
+			<Box bgc='base-2' p='30'>Box6</Box>
 		</Columns>
 		```
 	</PreviewCode>
 	<PreviewCode slot='tab' label='HTML'>
 		```html "--cols:1;--cols_sm:2;--cols_md:3"
-		<div class="l--columns -g:20" style="--cols:1;--cols_sm:2;--cols_md:3">
-			<div class="l--box -bgc:base-2 -p:30">Box</div>
-			<div class="l--box -bgc:base-2 -p:30">Box</div>
-			<div class="l--box -bgc:base-2 -p:30">Box</div>
-			<div class="l--box -bgc:base-2 -p:30">Box</div>
-			<div class="l--box -bgc:base-2 -p:30">Box</div>
-			<div class="l--box -bgc:base-2 -p:30">Box</div>
+		<div class="l--columns -g:30" style="--cols:1;--cols_sm:2;--cols_md:3">
+			<div class="l--box -bgc:base-2 -p:30">Box1</div>
+			<div class="l--box -bgc:base-2 -p:30">Box2</div>
+			<div class="l--box -bgc:base-2 -p:30">Box3</div>
+			<div class="l--box -bgc:base-2 -p:30">Box4</div>
+			<div class="l--box -bgc:base-2 -p:30">Box5</div>
+			<div class="l--box -bgc:base-2 -p:30">Box6</div>
 		</div>
 		```
 	</PreviewCode>

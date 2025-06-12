@@ -103,25 +103,27 @@ Centerに**高さやアスペクト比**が設定されている時、垂直方�
 
 <Preview>
 	<PreviewTitle>
-		高さを設定した時
+		上下左右中央に配置
 	</PreviewTitle>
-	<PreviewArea resize p={10}>
-		<Center p='30' g='20' h='40vh'>
+	<PreviewArea>
+		<Center g='10' ar='3/2' lh='xs'>
 			<Text fz='l'>TEXT</Text>
-			<Dummy length='xs' lang='ja'/>
+			<Text fz='s'>Lorem ipsum dolor sit amet.</Text>
 		</Center>
 	</PreviewArea>
 	<PreviewCode slot='tab' label='JSX'>
-		```jsx "h='40vh'"
-		<Center h='40vh' p='30' g='20'>
+		```jsx "ar='3/2'"
+		<Center g='10' ar='3/2' lh='xs'>
 			<Text fz='l'>TEXT</Text>
+			<Text fz='s'>Lorem ipsum dolor sit amet.</Text>
 		</Center>
 		```
 	</PreviewCode>
 	<PreviewCode slot='tab' label='HTML'>
-		```jsx "-h" "--h:"
-		<div class="l--center -p:30 -h -g:20" style="--h:40vh">
+		```html "-ar:3/2"
+		<div class="l--center -g:10 -ar:3/2 -lh:xs">
 			<p class="-fz:l">TEXT</p>
+			<p class="-fz:s">ロレムイプサムの座り雨。</p>
 		</div>
 		```
 	</PreviewCode>

@@ -10,32 +10,45 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, Reference, HelpText, C
 
 ## レスポンシブ対応
 
-
 Lism では、`.-{prop}_{bp}`形式のクラスと`--{prop}_{bp}`形式の変数の組み合わせによって、レスポンシブ対応を行います。
-{/* <Callout type="check">
-これにより、Lism では**クラスと変数を書くだけでレスポンシブデザイン**を実現できるようになっています。
-</Callout> */}
+
+
+<PreviewTitle>例</PreviewTitle>
+```css
+.-p{ padding: var(--p); }
+
+/* @sm ~ */
+@container (min-width: 480px) {
+  .-p_sm{ padding: var(--p_sm); }
+}
+
+/* @md ~ */
+@container (min-width: 720px) {
+  .-p_md{ padding: var(--p_md); }
+}
+```
+
 
 <Preview>
-	<PreviewTitle>実際の活用例は次の通りです。</PreviewTitle>
+	<PreviewTitle>レスポンシブ対応の例</PreviewTitle>
 	<PreviewArea resize p='20'>
-	<Lism p={[20, 30, 50]} bd bdw={[null, '2px']}>
-		Example
-	</Lism>
+		<Lism p={[20, 30, 50]} bd>
+			<p>Example</p>
+		</Lism>
 	</PreviewArea>
 	<PreviewCode label="HTML" slot="tab">
-```html "-p_sm -p_md" "-bdw_sm" "-p_sm -p_md" "--p_md" "--bdw_sm"
-<div class="-p:20 -p_sm -p_md -bd -bdw_sm" style="-p_sm -p_md:var(--s30);--p_md:var(--s50);--bdw_sm:2px">
-	<p>Example</p>
-</div>
-```
+		```html "-p_sm -p_md" "--p_sm" "--p_md"
+		<div class="-p:20 -p_sm -p_md -bd" style="--p_sm:var(--s30);--p_md:var(--s50)">
+			<p>Example</p>
+		</div>
+		```
 	</PreviewCode>
 	<PreviewCode label="JSX" slot="tab">
-```jsx
-<Lism p={[20, 30, 50]} bd bdw={[null, '2px']}>
-	Example
-</Lism>
-```
+		```jsx
+		<Lism p={[20, 30, 50]} bd>
+			<p>Example</p>
+		</Lism>
+		```
 	</PreviewCode>
 </Preview>
 
