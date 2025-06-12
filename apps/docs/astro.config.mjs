@@ -23,15 +23,18 @@ export default defineConfig({
 		starlight({
 			title: 'Lism CSS',
 			head: [
-				// Fathom のアナリティクススクリプトタグを追加する例。
-				// {
-				// 	tag: 'script',
-				// 	attrs: {
-				// 		src: 'https://cdn.usefathom.com/script.js',
-				// 		'data-site': 'MY-FATHOM-ID',
-				// 		defer: true,
-				// 	},
-				// },
+				// <!-- Google tag (gtag.js) -->
+				{
+					tag: 'script',
+					content: `window.dataLayer = window.dataLayer || [];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());gtag('config', 'G-WHLSPPNEKZ');`,
+				},
+				{
+					tag: 'script',
+					attrs: {
+						src: 'https://www.googletagmanager.com/gtag/js?id=G-WHLSPPNEKZ',
+						async: true,
+					},
+				},
 				{
 					tag: 'meta',
 					attrs: {
@@ -65,10 +68,7 @@ export default defineConfig({
 				'./src/styles/docs.scss',
 			],
 			sidebar,
-			// social: {
-			// 	github: 'https://github.com/withastro/starlight',
-			// 	'x.com': 'https://x.com/astrodotbuild',
-			// },
+
 			social: [
 				{ icon: 'github', label: 'GitHub', href: 'https://github.com/lism-css/lism-css' },
 				{ icon: 'x.com', label: 'X', href: 'https://twitter.com/lismcss' },
