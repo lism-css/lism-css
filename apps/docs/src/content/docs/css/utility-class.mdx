@@ -4,7 +4,7 @@ description: ...
 sidebar:
   order: 5
 ---
-import { Lism, Stack, Center, Box, Dummy, Media, Frame, Flex, Layer, Spacer } from "lism-css/astro";
+import { Lism, Text, Stack, Center, Box, Dummy, Media, Frame, Flex, Layer, Spacer } from "lism-css/astro";
 import { Preview, PreviewArea, PreviewTitle, PreviewCode, EmbedCode, Reference, Callout } from "~/components";
 
 
@@ -65,17 +65,29 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, EmbedCode, Reference, 
 
 <Preview>
 	<PreviewTitle>例</PreviewTitle>
-	<PreviewArea resize p='30'>
-		<Center className='u--clipText' bgi='linear-gradient(to right, blue, red)' p='30'>
-			<Lism fz='5em' fw='bold' lts='l'>TEXT</Lism>
+	<PreviewArea>
+		<Center>
+			<Box className='u--clipText' bg='linear-gradient(45deg, var(--blue), var(--pink))'>
+				<Text fz='5xl' fw='900' lts='l'>TEXT</Text>
+			</Box>
 		</Center>
 	</PreviewArea>
 	<PreviewCode slot="tab" label="HTML">
 		```html
+		<div class="l--center">
+			<div class="l--box u--clipText -bg" style="--bg:linear-gradient(45deg, var(--blue), var(--pink))">
+				<p class="-fz:5xl -fw:900 -lts:l">TEXT</p>
+			</div>
+		</div>
 		```
 	</PreviewCode>
 	<PreviewCode slot="tab" label='JSX'>
 		```jsx
+		<Center>
+			<Box className='u--clipText' bg='linear-gradient(45deg, var(--blue), var(--pink))'>
+				<Text fz='5xl' fw='900' lts='l'>TEXT</Text>
+			</Box>
+		</Center>
 		```
 	</PreviewCode>
 </Preview>
@@ -146,17 +158,18 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, EmbedCode, Reference, 
 
 ## `u--outerR` & `u--innerR`
 
-親要素の角丸とPaddingの値から、角丸を計算するクラスです。
+親要素の角丸とPaddingの値から、内側の要素の角丸を計算するユーティリティペアクラスです。 
+親要素(`u--outerR`)に p(`--p`), bdrs(`--bdrs`) の指定が必須となります。
 
 <Preview>
 	<PreviewTitle>使用例</PreviewTitle>
 	<PreviewArea p='40'>
-	<Lism class='u--outerR' p='20' bd bxsh='20' bdrs='50'>
-		<Frame class='u--innerR' pos='r' ov='h'>
+	<Lism className='u--outerR' p='20' bd bxsh='20' bdrs='50'>
+		<Frame className='u--innerR'>
 			<Media ar='ogp' src='/img/img-4.jpg'/>
-			<Layer blur='10px' t='unset' bgc='rgb(255 255 255 / 50%)'>
+			{/* <Layer blur='10px' t='unset' bgc='rgb(255 255 255 / 50%)'>
 				<Dummy p='30' />
-			</Layer>
+			</Layer> */}
 		</Frame>
 	</Lism>
 	</PreviewArea>
@@ -164,14 +177,20 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, EmbedCode, Reference, 
 	</PreviewCode> */}
 	<PreviewCode label="JSX" slot="tab">
 ```jsx
-<Lism class='u--outerR' p='20' bd bxsh='20' bdrs='50'>
-	<Frame class='u--innerR' pos='r' ov='h'>
+<Lism className='u--outerR' p='20' bd bxsh='20' bdrs='50'>
+	<Frame className='u--innerR'>
 		<Media ar='ogp' src='/img/img-4.jpg'/>
-		<Layer blur='10px' t='unset' bgc='rgb(255 255 255 / 50%)'>
-			<Dummy p='30' />
-		</Layer>
 	</Frame>
 </Lism>
+```
+	</PreviewCode>
+	<PreviewCode label="HTML" slot="tab">
+```html
+<div class="u--outerR -p:20 -bd -bxsh:20 -bdrs:50">
+	<div class="l--frame u--innerR">
+		<img class="-ar:ogp" src="/img/img-4.jpg">
+	</div>
+</div>
 ```
 	</PreviewCode>
 </Preview>

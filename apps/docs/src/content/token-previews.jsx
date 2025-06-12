@@ -2,7 +2,7 @@ import { Box, Text, Stack, Frame, Center, Dummy } from 'lism-css/react';
 
 export const FzDemos = ({ lang = 'ja' }) => (
 	<Frame ar='16/9' ovy='auto' isFlow='s'>
-		{['2xs', 'xs', 's', 'm', 'l', 'xl', '2xl', '3xl', '4xl'].map((fz, i) => {
+		{['2xs', 'xs', 's', 'm', 'l', 'xl', '2xl', '3xl', '4xl', '5xl'].map((fz, i) => {
 			return (
 				<Stack key={fz} g='10'>
 					<Text className='is--sizeT ip' fz='12px' lh='s'>
