@@ -1,0 +1,104 @@
+---
+// import { Image } from 'astro:assets';
+import { Lism, Link, LinkBox, Frame, Stack, Columns, Spacer, Media } from 'lism-css/astro';
+import type { SidebarEntry } from '@/node_modules/@astrojs/starlight/utils/routing/types';
+import { imageExists, isLibSidebar } from '../helper';
+
+// import sidebarData from '@/astro-configs/sidebar';
+const { sidebar } = Astro.locals.starlightRoute;
+
+const { langPath = '', props } = Astro.props;
+
+const displaySidebar = sidebar.filter((entry) => {
+	// UI Components と Templates のみ表示
+	return isLibSidebar(entry);
+});
+
+const ComponentNavList: SidebarEntry = displaySidebar[0];
+const SectionNavList: SidebarEntry = displaySidebar[1];
+const TemplateNavList: SidebarEntry = displaySidebar[2];
+---
+
+<h2>Components</h2>
+<Columns cols={[2, 3, 4]} {...props}>
+	{
+		ComponentNavList.type === 'group' &&
+			ComponentNavList.entries?.map((entry) => {
+				if (entry.type !== 'link') return null;
+
+				if (entry.href === '/###---') {
+					return null;
+				}
+
+				const imagePath = `/thumb/components/${entry.label}.png`; // チェックしたい画像のパス
+				const thumb = imageExists(imagePath) ? imagePath : '/thumb/components/Empty.png';
+
+				return (
+					<LinkBox layout={Stack} href={`${langPath}${entry.href}`} p='30' g='30' bdc='#D9D9D9'>
+						<Frame ar='3/2' bd bdw='1px' bdrs='20' bdc='inherit' bgc='#fff'>
+							<Media src={thumb} alt={entry.label} />
+						</Frame>
+						<Lism class='u--trimHL -ff:mono -fz:s'>{entry.label}</Lism>
+					</LinkBox>
+				);
+			})
+	}
+</Columns>
+
+<Spacer h='60' />
+
+<h2>Sections</h2>
+<Columns cols={[1, null, 2]} {...props}>
+	{
+		SectionNavList.type === 'group' &&
+			SectionNavList.entries?.map((entry) => {
+				if (entry.type !== 'link') return null;
+
+				if (entry.href === '/###---') {
+					return null;
+				}
+
+				const imagePath = `/thumb/sections/${entry.href.replace(/\/+$/, '').split('/').pop()}.png`;
+				const thumb = imageExists(imagePath) ? imagePath : '/thumb/components/Empty.png';
+
+				return (
+					<LinkBox layout={Stack} href={`${langPath}${entry.href}`} p='30' g='30' bdc='#D9D9D9'>
+						<Frame ar='3/2' bd bdw='1px' bdrs='20' bdc='inherit' bgc='#fff'>
+							<Media src={thumb} alt={entry.label} />
+						</Frame>
+						<Lism class='u--trimHL -ff:mono -fz:s'>{entry.label}</Lism>
+					</LinkBox>
+				);
+			})
+	}
+</Columns>
+
+<Spacer h='60' />
+
+<h2>Templates</h2>
+<Columns cols={[1, null, 2]} {...props}>
+	{
+		TemplateNavList.type === 'group' &&
+			TemplateNavList.entries?.map((entry) => {
+				if (entry.type !== 'link') return null;
+
+				if (entry.href === '/###---') {
+					return null;
+				}
+
+				// entry.href
+
+				const imagePath = `/thumb/template/${entry.href.replace(/\/+$/, '').split('/').pop()}.png`;
+				const thumb = imageExists(imagePath) ? imagePath : '/thumb/components/Empty.png';
+
+				return (
+					<LinkBox layout={Stack} href={`${langPath}${entry.href}`} p='30' g='30' bdc='#D9D9D9'>
+						<Frame ar='3/2' bd bdw='1px' bdrs='20' bdc='inherit' bgc='#fff'>
+							<Media src={thumb} alt={entry.label} />
+						</Frame>
+						<Lism class='u--trimHL -ff:mono -fz:s'>{entry.label}</Lism>
+					</LinkBox>
+				);
+			})
+	}
+</Columns>

@@ -43,7 +43,7 @@ export default [
 
 	{
 		// index.mdxでlabel名読み取ってるので変更時は注意
-		label: 'Core Components',
+		label: 'Lism Components',
 		items: [
 			{
 				label: 'Lism',
@@ -65,21 +65,26 @@ export default [
 				label: 'Dummy',
 				link: '/components/dummy/',
 			},
+		],
+	},
+	{
+		label: 'Layout Components',
+		items: [
 			{
 				label: 'State',
 				link: '###---',
 			},
 			{
 				label: 'Container',
-				link: '/components/container/',
+				link: '/layout/container/',
 			},
 			{
 				label: 'Layer',
-				link: '/components/layer/',
+				link: '/layout/layer/',
 			},
 			{
 				label: 'LinkBox',
-				link: '/components/linkbox/',
+				link: '/layout/linkbox/',
 			},
 			// {
 			// 	label: 'getLismProps()',
@@ -96,11 +101,11 @@ export default [
 			},
 			{
 				label: 'Flex',
-				link: '/components/flex/',
+				link: '/layout/flex/',
 			},
 			{
 				label: 'Stack',
-				link: '/components/stack/',
+				link: '/layout/stack/',
 			},
 			{
 				label: '---',
@@ -108,19 +113,19 @@ export default [
 			},
 			{
 				label: 'Grid',
-				link: '/components/grid/',
+				link: '/layout/grid/',
 			},
 			{
 				label: 'GridItem',
-				link: '/components/griditem/',
+				link: '/layout/griditem/',
 			},
 			{
 				label: 'Center',
-				link: '/components/center/',
+				link: '/layout/center/',
 			},
 			{
 				label: 'Columns',
-				link: '/components/columns/',
+				link: '/layout/columns/',
 			},
 			{
 				label: '---',
@@ -128,19 +133,19 @@ export default [
 			},
 			{
 				label: 'Box',
-				link: '/components/box/',
+				link: '/layout/box/',
 			},
 			{
 				label: 'Frame',
-				link: '/components/frame/',
+				link: '/layout/frame/',
 			},
 			{
 				label: 'Divider',
-				link: '/components/divider/',
+				link: '/layout/divider/',
 			},
 			{
 				label: 'WithSide',
-				link: '/components/withside/',
+				link: '/layout/withside/',
 			},
 
 			{
@@ -149,15 +154,15 @@ export default [
 			},
 			{
 				label: 'Decorator',
-				link: '/components/decorator/',
+				link: '/layout/decorator/',
 			},
 			{
 				label: 'Spacer',
-				link: '/components/spacer/',
+				link: '/layout/spacer/',
 			},
 			{
 				label: 'Icon',
-				link: '/components/icon/',
+				link: '/layout/icon/',
 			},
 			{
 				label: 'Dynamic',
@@ -165,80 +170,100 @@ export default [
 			},
 			{
 				label: 'Accordion',
-				link: '/components/accordion/',
+				link: '/layout/accordion/',
 			},
 			{
 				label: 'Modal',
-				link: '/components/modal/',
+				link: '/layout/modal/',
 			},
 			{
 				label: 'Tabs',
-				link: '/components/tabs/',
+				link: '/layout/tabs/',
 			},
 		],
 	},
 	{
-		label: 'Opt-in Components',
+		label: 'UI Components',
+		link: '/lib',
+		// translations: {
+		// 	ja: '概要',
+		// },
+	},
+	// {
+	// 	label: 'Templates',
+	// 	link: '/lib',
+	// },
+	// {
+	// 	label: 'Lism Library',
+	// 	link: '/lib',
+	// },
+	{
+		label: 'Components',
+		// autogenerate: {
+		// 	directory: 'lib/components',
+		// 	collapsed: true,
+		// },
 		items: [
 			{
 				label: 'Avatar',
-				link: '/components/avatar/',
+				link: '/lib/components/avatar/',
 			},
 			{
 				label: 'Badge',
-				link: '/components/badge/',
+				link: '/lib/components/badge/',
 			},
 			{
 				label: 'Button',
-				link: '/components/button/',
+				link: '/lib/components/button/',
 			},
 			{
 				label: 'Callout',
-				link: '/components/callout/',
-			},
-			{
-				label: 'Card',
-				link: '/components/card/',
-			},
-			{
-				label: 'Chat',
-				link: '/components/chat/',
-			},
-			{
-				label: 'FAQ',
-				link: '/components/faq/',
-			},
-			{
-				label: 'List',
-				link: '/components/list/',
-			},
-			{
-				label: 'Table',
-				link: '/components/table/',
+				link: '/lib/components/callout/',
 			},
 			{
 				label: 'Note',
-				link: '/components/note/',
+				link: '/lib/components/note/',
 			},
 			{
+				label: 'Card',
+				link: '/lib/components/card/',
+			},
+			{
+				label: 'Chat',
+				link: '/lib/components/chat/',
+			},
+			{
+				label: 'FAQ',
+				link: '/lib/components/faq/',
+			},
+			{
+				label: 'List',
+				link: '/lib/components/list/',
+			},
+			{
+				label: 'Table',
+				link: '/lib/components/table/',
+			},
+
+			{
 				label: 'NavMenu',
-				link: '/components/navmenu/',
+				link: '/lib/components/navmenu/',
 			},
 			{
 				label: 'Reel',
-				link: '/components/reel/',
+				link: '/lib/components/reel/',
 			},
 			{
 				label: 'ShapeDivider',
-				link: '/components/shapedivider/',
+				link: '/lib/components/shapedivider/',
 			},
 			{
 				label: 'Steps',
-				link: '/components/steps/',
+				link: '/lib/components/steps/',
 			},
 			{
 				label: 'Timeline',
-				link: '/components/timeline/',
+				link: '/lib/components/timeline/',
 			},
 
 			{
@@ -255,31 +280,31 @@ export default [
 			},
 			{
 				label: 'Banner',
-				link: '/components/banner/',
+				link: '/lib/components/banner/',
 			},
 			{
 				label: 'Breadcrumb',
-				link: '/components/breadcrumb/',
+				link: '/lib/components/breadcrumb/',
 			},
 			{
 				label: 'BalloonBox',
-				link: '/components/balloonbox/',
+				link: '/lib/components/balloonbox/',
 			},
 			{
 				label: 'Decorations',
-				link: '/components/decorations/',
+				link: '/lib/components/decorations/',
 			},
 			{
 				label: 'DividerLabel',
-				link: '/components/dividerlabel/',
+				link: '/lib/components/dividerlabel/',
 			},
 			{
 				label: 'Hero',
-				link: '/components/hero/',
+				link: '/lib/components/hero/',
 			},
 			{
 				label: 'TermList',
-				link: '/components/termlist/',
+				link: '/lib/components/termlist/',
 			},
 			{
 				label: '---',
@@ -287,15 +312,22 @@ export default [
 			},
 			{
 				label: 'Others',
-				link: '/components/others/',
+				link: '/lib/components/others/',
 			},
 		],
 	},
 	{
-		label: 'Page Layout',
+		label: 'Sections',
 		// items: [],
 		autogenerate: {
-			directory: 'page-layout',
+			directory: '/lib/sections',
+		},
+	},
+	{
+		label: 'Templates',
+		// items: [],
+		autogenerate: {
+			directory: 'lib/page-layout',
 		},
 	},
 	{
