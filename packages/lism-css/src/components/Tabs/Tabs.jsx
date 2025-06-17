@@ -7,11 +7,23 @@ import TabPanel from './TabPanel';
 import getTabsProps from './getProps';
 // import { TabContext } from './context';
 
-export default function Tabs({ tabId = '', defaultIndex = 1, listProps = {}, children, ...props }) {
+export default function Tabs({
+	tabId = '',
+	getDefaultIndex = null,
+	defaultIndex = 1,
+	listProps = {},
+	children,
+	...props
+}) {
 	const [activeIndex, setActiveIndex] = React.useState(defaultIndex);
 	const theTabId = tabId || React.useId();
 	const btns = [];
 	const panels = [];
+
+	React.useEffect(() => {
+		if (!ref?.current) return;
+		return setEvent(ref?.current);
+	}, [ref]);
 
 	// Tabs.Item の処理
 	React.Children.forEach(children, (child, index) => {
@@ -28,6 +40,7 @@ export default function Tabs({ tabId = '', defaultIndex = 1, listProps = {}, chi
 								{...tabProps}
 								tabId={theTabId}
 								index={tabIndex}
+								key={tabIndex}
 								isActive={tabIndex === activeIndex}
 								onClick={() => setActiveIndex(tabIndex)}
 							/>
@@ -39,6 +52,7 @@ export default function Tabs({ tabId = '', defaultIndex = 1, listProps = {}, chi
 								{...panelProps}
 								tabId={theTabId}
 								index={tabIndex}
+								key={tabIndex}
 								isActive={tabIndex === activeIndex}
 							/>
 						);

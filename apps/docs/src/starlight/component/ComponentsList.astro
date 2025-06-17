@@ -1,8 +1,12 @@
 ---
+// export const prerender = false; // このページはSSR
+
 // import { Image } from 'astro:assets';
-import { Lism, Link, LinkBox, Frame, Stack, Columns, Spacer, Media } from 'lism-css/astro';
+// import { Lism, LinkBox, Frame, Stack, Columns, Spacer, Media } from 'lism-css/astro';
 import type { SidebarEntry } from '@/node_modules/@astrojs/starlight/utils/routing/types';
 import { imageExists, isLibSidebar } from '../helper';
+import LibTabs from './LibTabs';
+// import { Tabs } from 'lism-css/react';
 
 // import sidebarData from '@/astro-configs/sidebar';
 const { sidebar } = Astro.locals.starlightRoute;
@@ -17,88 +21,104 @@ const displaySidebar = sidebar.filter((entry) => {
 const ComponentNavList: SidebarEntry = displaySidebar[0];
 const SectionNavList: SidebarEntry = displaySidebar[1];
 const TemplateNavList: SidebarEntry = displaySidebar[2];
+
+// let defaultIndex = 1;
+// SSRじゃないとクエリは受け取れない
+// const url = new URL(Astro.request.url);
+// const tab = url.searchParams.get('tab'); // 例: 'components', 'sections', 'templates'
+
+const componentList =
+	ComponentNavList.type === 'group' && ComponentNavList.entries
+		? ComponentNavList.entries
+				.map((entry) => {
+					if (entry.type !== 'link') return null;
+					if (entry.href === '/###---') return null;
+
+					const imagePath = `/thumb/components/${entry.label}.png`; // チェックしたい画像のパス
+					const thumb = imageExists(imagePath) ? imagePath : '/thumb/components/Empty.png';
+
+					// entryのデータを返す
+					return {
+						href: `${langPath}${entry.href}`,
+						label: entry.label,
+						thumb: thumb,
+					};
+				})
+				.filter((data) => data !== null)
+		: [];
+
+const sectionList =
+	SectionNavList.type === 'group' && SectionNavList.entries
+		? SectionNavList.entries
+				.map((entry) => {
+					if (entry.type !== 'link') return null;
+					if (entry.href === '/###---') return null;
+
+					const imagePath = `/thumb/sections/${entry.href.replace(/\/+$/, '').split('/').pop()}.png`;
+					const thumb = imageExists(imagePath) ? imagePath : '/thumb/components/Empty.png';
+
+					// entryのデータを返す
+					return {
+						href: `${langPath}${entry.href}`,
+						label: entry.label,
+						thumb: thumb,
+					};
+				})
+				.filter((data) => data !== null)
+		: [];
+
+const templateList =
+	TemplateNavList.type === 'group' && TemplateNavList.entries
+		? TemplateNavList.entries
+				.map((entry) => {
+					if (entry.type !== 'link') return null;
+					if (entry.href === '/###---') return null;
+
+					const imagePath = `/thumb/template/${entry.href.replace(/\/+$/, '').split('/').pop()}.png`;
+					const thumb = imageExists(imagePath) ? imagePath : '/thumb/components/Empty.png';
+
+					// entryのデータを返す
+					return {
+						href: `${langPath}${entry.href}`,
+						label: entry.label,
+						thumb: thumb,
+					};
+				})
+				.filter((data) => data !== null)
+		: [];
 ---
 
-<h2>Components</h2>
-<Columns cols={[2, 3, 4]} {...props}>
-	{
-		ComponentNavList.type === 'group' &&
-			ComponentNavList.entries?.map((entry) => {
-				if (entry.type !== 'link') return null;
+<LibTabs client:load componentList={componentList} sectionList={sectionList} templateList={templateList} />
 
-				if (entry.href === '/###---') {
-					return null;
-				}
-
-				const imagePath = `/thumb/components/${entry.label}.png`; // チェックしたい画像のパス
-				const thumb = imageExists(imagePath) ? imagePath : '/thumb/components/Empty.png';
-
-				return (
-					<LinkBox layout={Stack} href={`${langPath}${entry.href}`} p='30' g='30' bdc='#D9D9D9'>
-						<Frame ar='3/2' bd bdw='1px' bdrs='20' bdc='inherit' bgc='#fff'>
-							<Media src={thumb} alt={entry.label} />
-						</Frame>
-						<Lism class='u--trimHL -ff:mono -fz:s'>{entry.label}</Lism>
-					</LinkBox>
-				);
-			})
+<script>
+	// memo: header.header の高さを取得して --header--h にセット
+	function setHeaderHeightVar() {
+		const header = document.querySelector('header.header') as HTMLElement;
+		if (header) {
+			const height = header.offsetHeight;
+			document.documentElement.style.setProperty('--header--h', height + 'px');
+		}
 	}
-</Columns>
+	// 初回実行
+	setHeaderHeightVar();
+	// リサイズ時も再計算
+	window.addEventListener('resize', setHeaderHeightVar);
+</script>
 
-<Spacer h='60' />
-
-<h2>Sections</h2>
-<Columns cols={[1, null, 2]} {...props}>
-	{
-		SectionNavList.type === 'group' &&
-			SectionNavList.entries?.map((entry) => {
-				if (entry.type !== 'link') return null;
-
-				if (entry.href === '/###---') {
-					return null;
-				}
-
-				const imagePath = `/thumb/sections/${entry.href.replace(/\/+$/, '').split('/').pop()}.png`;
-				const thumb = imageExists(imagePath) ? imagePath : '/thumb/components/Empty.png';
-
-				return (
-					<LinkBox layout={Stack} href={`${langPath}${entry.href}`} p='30' g='30' bdc='#D9D9D9'>
-						<Frame ar='3/2' bd bdw='1px' bdrs='20' bdc='inherit' bgc='#fff'>
-							<Media src={thumb} alt={entry.label} />
-						</Frame>
-						<Lism class='u--trimHL -ff:mono -fz:s'>{entry.label}</Lism>
-					</LinkBox>
-				);
-			})
+<style is:inline>
+	.d--tabs_list {
+		position: sticky;
+		top: var(--header--h, 3rem);
+		/* background-color: var(--c-base); */
+		z-index: 1;
+		box-shadow:
+			0 20px 30px 0px var(--c-base),
+			0 20px 20px -10px var(--c-base);
+		/* var(--c-base); */
+		/* background-color: transparent;
+		backdrop-filter: blur(16px);  */
 	}
-</Columns>
-
-<Spacer h='60' />
-
-<h2>Templates</h2>
-<Columns cols={[1, null, 2]} {...props}>
-	{
-		TemplateNavList.type === 'group' &&
-			TemplateNavList.entries?.map((entry) => {
-				if (entry.type !== 'link') return null;
-
-				if (entry.href === '/###---') {
-					return null;
-				}
-
-				// entry.href
-
-				const imagePath = `/thumb/template/${entry.href.replace(/\/+$/, '').split('/').pop()}.png`;
-				const thumb = imageExists(imagePath) ? imagePath : '/thumb/components/Empty.png';
-
-				return (
-					<LinkBox layout={Stack} href={`${langPath}${entry.href}`} p='30' g='30' bdc='#D9D9D9'>
-						<Frame ar='3/2' bd bdw='1px' bdrs='20' bdc='inherit' bgc='#fff'>
-							<Media src={thumb} alt={entry.label} />
-						</Frame>
-						<Lism class='u--trimHL -ff:mono -fz:s'>{entry.label}</Lism>
-					</LinkBox>
-				);
-			})
+	.d--tabs_tab {
+		padding-block: 0.5em;
 	}
-</Columns>
+</style>
