@@ -189,10 +189,10 @@ export default [
 		// 	ja: '概要',
 		// },
 	},
-	// {
-	// 	label: 'Templates',
-	// 	link: '/lib',
-	// },
+	{
+		label: 'Templates',
+		link: '/lib?tab=templates',
+	},
 	// {
 	// 	label: 'Lism Library',
 	// 	link: '/lib',
