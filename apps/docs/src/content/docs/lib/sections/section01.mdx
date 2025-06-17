@@ -1,0 +1,17 @@
+---
+title: section01
+description: section01の説明
+# sidebar:
+#   order: 3
+---
+
+import { Lism, Box } from 'lism-css/astro';
+import { Preview, PreviewArea, PreviewTitle, PreviewCode, PreviewFrame, EmbedCode } from "~/components";
+
+section01の説明がここに入ります。
+
+<PreviewTitle>プレビュー</PreviewTitle>
+<PreviewFrame url='/preview/sections/section01/' />
+
+<PreviewTitle>コード</PreviewTitle>
+<EmbedCode srcPath={`src/pages/preview/sections/section01/index.astro`} />
