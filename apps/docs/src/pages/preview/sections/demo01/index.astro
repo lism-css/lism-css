@@ -1,26 +1,11 @@
 ---
-title: section01
-description: section01の説明
-# sidebar:
-#   order: 1
+import DemoPageLayout from '~/layouts/DemoPageLayout.astro';
+
+import { Lism, Stack, Container, Columns, Text } from 'lism-css/astro';
+import './style.css';
 ---
 
-import { Lism } from 'lism-css/astro';
-import { Preview, PreviewArea, PreviewTitle, PreviewCode, PreviewFrame, EmbedCode } from "~/components";
-
-section01の説明...
-
-
-## プレビュー
-
-<PreviewFrame url='/preview/sections/demo01' />
-
-
-## ソースコード
-
-<Preview>
-	<PreviewCode label="JSX" slot="tab">
-	```jsx
+<DemoPageLayout title='demo01'>
 	<Container className='sec--demo01' size='m' py='60' hasGutter>
 		<h2>Demo01 heading title</h2>
 		<Text c='text-2' mbs='20'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.</Text>
@@ -52,8 +37,4 @@ section01の説明...
 			</Stack>
 		</Columns>
 	</Container>
-	```
-	</PreviewCode>
-</Preview>
-
-
+</DemoPageLayout>
