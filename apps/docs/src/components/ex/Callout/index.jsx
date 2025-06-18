@@ -9,10 +9,10 @@ export default function Callout({ type = 'alert', keycolor, icon, isFlow, childr
 
 	return (
 		<WithSide lismClass='c--callout u--cbox' keycolor={_color} p='30' g='30' bd bdrs='10' {...props}>
-			<Center data-is-side lismClass='c--callout_icon' c='keycolor' fz='xl'>
+			<Center data-is-side c='keycolor' fz='xl'>
 				<Icon icon={_icon} />
 			</Center>
-			<Lism lismClass='c--callout_body u--trimBox' isFlow={isFlow}>
+			<Lism className='u--trimBox' isFlow={isFlow}>
 				{children}
 			</Lism>
 		</WithSide>

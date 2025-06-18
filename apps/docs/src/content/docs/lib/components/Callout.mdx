@@ -2,8 +2,8 @@
 title: 'Callout'
 description: ...
 ---
-import { Box, Icon, Layer, Dummy } from 'lism-css/astro';
-import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportSource } from '~/components';
+import { Box, Icon, Layer, Dummy, Center, Lism, WithSide } from 'lism-css/astro';
+import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportSource, ImportExComponent } from '~/components';
 import { Book } from '@phosphor-icons/react';
 
 import Callout from '~/components/ex/Callout/index.astro';
@@ -21,54 +21,88 @@ import Callout from '~/components/ex/Callout/index.astro';
 		<Callout>
 			<Dummy lang='ja' />
 		</Callout>
-	</PreviewArea>
-	<PreviewCode slot='tab' label='JSX'>
-		```jsx
-		<Callout>
-			<p>ロレムイプサムの座り雨、トマ好き学習だったエリット、しかし時と活力はそのような木々と楽しみ。</p>
+		<Callout type='check'>
+			<Dummy lang='ja' length='codes' />
 		</Callout>
-		```
-	</PreviewCode>
-	<PreviewCode slot='tab' label='HTML'>
-		```jsx
-		<div class="c--callout l--withSide u--cbox -p:20 -bd -bdrs:10 -g:20" style="--keycolor:var(--red)">
-			<div class="c--callout_icon l--center -c -fz:xl -p:5" data-is-side style='--c:var(--keycolor)'>
-				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="1em" height="1em" fill="currentColor" focusable="false" class="l--icon" aria-hidden="true">...</svg>
-			</div>
-			<div class="c--callout_body">
-				<p>ロレムイプサムの座り雨、トマ好き学習だったエリット、しかし時と活力はそのような木々と楽しみ。ブラインド行うにはいくつかの重要な事柄が流れます。</p>
-			</div>
-		 </div>
-		```
-	</PreviewCode>
+	</PreviewArea>
 </Preview>
 
 内部で`<WithSide>`を使用しており、コンテンツ側の横幅が一定値を下回ると自動で縦並びになります。
 
-## Import
+
+## Only Core
+
+コンポーネントを作らずにLismのコア要素だけで構築する例も紹介しておきます。
+
+<Preview>
+	<PreviewTitle>Preview</PreviewTitle>
+	<PreviewArea p='30'>
+		<WithSide className='u--cbox' keycolor='red' p='30' g='30' bd bdrs='10'>
+			<Center data-is-side c='keycolor' fz='xl'>
+				<Icon icon='alert' />
+			</Center>
+			<Lism className='u--trimBox'>
+				<p>ロレムイプサムの座り雨、トマ好き学習だったエリット、しかし時と活力はそのような木々と楽しみ。ブラインド行うにはいくつかの重要な事柄が流れます。</p>
+			</Lism>
+		</WithSide>
+	</PreviewArea>
+	<PreviewCode slot='tab' label='JSX'>
+		```jsx
+		<WithSide className='u--cbox' keycolor='red' p='30' g='30' bd bdrs='10'>
+			<Center data-is-side c='keycolor' fz='xl'>
+				<Icon icon='alert' />
+			</Center>
+			<Lism className='u--trimBox'>
+				<p>ロレムイプサムの座り雨、トマ好き学習だったエリット、しかし時と活力はそのような木々と楽しみ。ブラインド行うにはいくつかの重要な事柄が流れます。</p>
+			</Lism>
+		</WithSide>
+		```
+	</PreviewCode>
+	<PreviewCode slot='tab' label='HTML'>
+		```html
+		<div class='l--withSide u--cbox -p:30 -g:30 -bd -bdrs:10' style='--keycolor:var(--red)' components='[object Object]' frontmatter='[object Object]'>
+			<div class='l--center -c -fz:xl' style='--c:var(--keycolor)' data-is-side='true'>
+				<svg xmlns='http://www.w3.org/2000/svg' class='l--icon' viewBox='0 0 256 256' width='1em' height='1em' fill='currentColor' focusable='false' aria-hidden='true'>
+					<path d='M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm0,192a88,88,0,1,1,88-88A88.1,88.1,0,0,1,128,216Zm-8-80V80a8,8,0,0,1,16,0v56a8,8,0,0,1-16,0Zm20,36a12,12,0,1,1-12-12A12,12,0,0,1,140,172Z'></path>
+				</svg>
+			</div>
+			<div class='u--trimBox'>
+				<p>ロレムイプサムの座り雨、トマ好き学習だったエリット、しかし時と活力はそのような木々と楽しみ。ブラインド行うにはいくつかの重要な事柄が流れます。</p>
+			</div>
+		</div>
+		```
+	</PreviewCode>
+</Preview>
+
+
+## Create Component
+
+ここからは`Callout`(`.c--callout`)というコンポーネントを作って利用する例を紹介していきます。
+
+### Source Code
 
 <ImportSource name='Callout' react astro css others={['presets.js']}/>
 
+### Import
+<ImportExComponent name='Callout' react astro />
 
-## Props
+
+### Props
 
 | プロパティ | 説明 |
 |---|---|
 |`type`|`keycolor`と`icon`の組み合わせを呼び出すキーワードを指定できます。初期値:`"alert"`|
-|`icon`| アイコンを指定できます。デフォルトは `"alert"`です。|
+|`icon`| [`Icon`](/layout/icon)コンポーネントに渡すアイコンを指定できます。デフォルトは `"alert"`です。|
 |`keycolor`| キーカラーを指定します。|
-|`isFlow`|`__body`に渡されます|
+|`isFlow`|コンテンツを囲むdiv要素に渡されます|
 {/* | `iconProps` | アイコン（`<Icon>`）に渡すpropsを指定できます。| */}
 {/* - `variant`: `'fill'` | `'outline'` ? */}
 
 
-## Examples
-
+## Usage
 
 <Preview>
-	<PreviewTitle>
-		typeの指定
-	</PreviewTitle>
+	<PreviewTitle>typeの指定</PreviewTitle>
 	<PreviewArea p='30' resize>
 		<Callout type='alert' bdrs='10'>
 			<Dummy lang='ja' length='codes' />
@@ -111,7 +145,7 @@ import Callout from '~/components/ex/Callout/index.astro';
 
 <Preview>
 	<PreviewTitle>
-		その他、カラーとアイコンの指定例
+		カラーとアイコンを指定する例
 	</PreviewTitle>
 	<PreviewArea p='30'>
 		<Callout icon='good' keycolor='pink'>
