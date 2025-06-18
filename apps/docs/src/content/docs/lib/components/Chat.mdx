@@ -11,19 +11,12 @@ import Chat from '~/components/ex/Chat';
 
 
 <Preview>
-	<PreviewTitle>`variant='speak'`</PreviewTitle>
+	<PreviewTitle>Preview</PreviewTitle>
 	<PreviewArea resize p='30' _dir='rtl'>
 		<Chat name='Taro' avatar='/img/avatar01.jpg'>
 			<Dummy lang='ja' />
 		</Chat>
 	</PreviewArea>
-	<PreviewCode>
-		```jsx
-		<Chat name='Taro' avatar='/img/avatar01.jpg'>
-			<Dummy lang='ja' />
-		</Chat>
-		```
-	</PreviewCode>
 </Preview>
 
 
@@ -48,30 +41,20 @@ import Chat from '~/components/ex/Chat';
 <Preview>
 	<PreviewTitle>`variant='speak'`</PreviewTitle>
 	<PreviewArea resize p='30' _dir='rtl'>
-		<Chat name='Taro' avatar='/img/avatar01.jpg' keycolor='green'>
-			<Dummy length='s' />
+		<Chat name='Taro' avatar='/img/avatar01.jpg'>
+			<Dummy lang='ja' />
 		</Chat>
-		<Chat direction='end' name='Hanako' avatar='/img/avatar02.jpg' keycolor='red'>
-			<Dummy length='codes' />
-			<Dummy length='s' />
+		<Chat direction='end' name='Hanako' avatar='/img/avatar02.jpg' keycolor='green'>
+			<Dummy lang='ja' length='codes' />
 		</Chat>
-		{/* <Chat avatar='/img/avatar03.jpg' keycolor='blue'>
-			<Dummy length='xs' />
-			<ul>
-				<li>Lorem ipsum...</li>
-				<li>Lorem ipsum...</li>
-				<li>Lorem ipsum...</li>
-			</ul>
-		</Chat> */}
 	</PreviewArea>
 	<PreviewCode>
 		```jsx
-		<Chat name='Taro' avatar='/img/avatar01.jpg' keycolor='green'>
-			<Dummy length='s' />
+		<Chat name='Taro' avatar='/img/avatar01.jpg'>
+			<Dummy lang='ja' />
 		</Chat>
-		<Chat direction='end' name='Hanako' avatar='/img/avatar02.jpg' keycolor='red'>
-			<Dummy length='codes' />
-			<Dummy length='s' />
+		<Chat direction='end' name='Hanako' avatar='/img/avatar02.jpg' keycolor='green'>
+			<Dummy lang='ja' length='codes' />
 		</Chat>
 		```
 	</PreviewCode>

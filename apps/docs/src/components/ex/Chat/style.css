@@ -1,14 +1,13 @@
 @layer lism.component {
 	.c--chat {
 		--cbox--pct-bg: 12%;
-
-		--avator-size: clamp(48px, 32px + 5cqw, 64px); /* @320px:40px ~ @640:64px */
-		--deco-size: calc(var(--avator-size) * 0.25 + 0.25rem); /* if simple: 1.25rem; */
+		--avator_size: clamp(48px, 32px + 5cqw, 64px); /* @320px:40px ~ @640:64px */
+		--deco_size: calc(var(--avator_size) * 0.25 + 0.25rem); /* if simple: 1.25rem; */
 
 		grid:
 			'avatar header' minmax(1.5rem, auto)
 			'avatar body' / auto 1fr;
-		gap: 0 calc(var(--deco-size) + 1px);
+		gap: 0 calc(var(--deco_size) + 1px);
 	}
 
 	[data-chat-dir='end'] {
@@ -18,24 +17,24 @@
 	}
 
 	.c--chat_avatar {
-		width: var(--avator-size);
+		width: var(--avator_size);
 	}
 	.c--chat_content {
-		max-width: 640px;
+		max-width: var(--size-s);
 	}
 
 	.c--chat_deco {
-		width: var(--deco-size);
-		height: var(--deco-size);
-		mask: var(--mask-img) center / contain no-repeat;
+		width: var(--deco_size);
+		height: var(--deco_size);
+		mask: var(--maskImg) center / contain no-repeat;
 	}
 	.c--chat-speak .c--chat_deco {
 		top: 0;
-		--mask-img: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="8" height="8"><path d="M8,8L8,8C7.4,4.8,5.4,2,2.6,0.4L2,0h6V8z"/></svg>');
+		--maskImg: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="8" height="8"><path d="M8,8L8,8C7.4,4.8,5.4,2,2.6,0.4L2,0h6V8z"/></svg>');
 	}
 	.c--chat-think .c--chat_deco {
 		top: 0.75rem;
-		--mask-img: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="8" height="8"><circle cx="1.5" cy="1.7" r="1.5"/><circle cx="4.5" cy="5.2" r="2.5"/></svg>');
+		--maskImg: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="8" height="8"><circle cx="1.5" cy="1.7" r="1.5"/><circle cx="4.5" cy="5.2" r="2.5"/></svg>');
 	}
 }
 
@@ -46,12 +45,12 @@
 	inset-inline-start: calc(100% - 1px);
 }
 
-/* .c--chat-speak[data-chat-dir='start'] > div > .c--chat_content {
+.c--chat-speak[data-chat-dir='start'] > div > .c--chat_content {
 	border-start-start-radius: 0;
 }
 .c--chat-speak[data-chat-dir='end'] > div > .c--chat_content {
 	border-start-end-radius: 0;
-} */
+}
 
 /* ----- 追加 Prop Class ----- */
 .-ga\:header {
@@ -62,10 +61,4 @@
 }
 .-ga\:avatar {
 	grid-area: avatar;
-}
-.-bdssrs\:0 {
-	border-start-start-radius: 0;
-}
-.-bdsers\:0 {
-	border-start-end-radius: 0;
 }

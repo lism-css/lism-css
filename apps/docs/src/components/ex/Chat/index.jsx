@@ -2,14 +2,7 @@ import React from 'react';
 import { Lism, GridItem, Grid, Frame, Media, Decorator } from 'lism-css/react';
 import './style.css';
 
-export default function Chat({ variant = 'speak', direction = 'start', name, avatar, isFlow, keycolor = 'gray', children, ...props }) {
-	let contentClass = 'u--cbox u--trimBox';
-	if (variant === 'speak' && direction === 'start') {
-		contentClass += ' -bdssrs:0';
-	} else if (variant === 'speak' && direction === 'end') {
-		contentClass += ' -bdsers:0';
-	}
-
+export default function Chat({ variant = 'speak', direction = 'start', name, avatar, keycolor = 'gray', isFlow, children, ...props }) {
 	return (
 		<Grid lismClass='c--chat' variant={variant} keycolor={keycolor} bg='none' data-chat-dir={direction} ji={direction} {...props}>
 			{avatar && (
@@ -34,7 +27,7 @@ export default function Chat({ variant = 'speak', direction = 'start', name, ava
 			)}
 			<GridItem lismClass='c--chat_body' ga='u:body' pos='r'>
 				<Decorator lismClass='c--chat_deco' className='u--cbox u--skipFlow' pos='a' scale={direction === 'start' ? '' : '-X'} />
-				<Lism lismClass='c--chat_content' className={contentClass} bdrs='30' p='30' isFlow={isFlow} jslf={direction}>
+				<Lism lismClass='c--chat_content' className='u--cbox u--trimBox' bdrs='30' p='30' isFlow={isFlow} jslf={direction}>
 					{children}
 				</Lism>
 			</GridItem>
