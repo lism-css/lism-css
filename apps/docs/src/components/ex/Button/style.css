@@ -1,23 +1,29 @@
 @layer lism.component {
 	.c--button {
-		--c: currentColor;
-		--bgc: transparent;
-		--bdc: transparent;
+		--c: var(--c-base);
+		--bgc: var(--c-text);
+		--bdc: var(--bgc);
 
 		color: var(--c);
 		background-color: var(--bgc);
 		border: solid 1px var(--bdc); /* 異なる variant を並べてもサイズに差が出ないようにborderを常に指定 */
-	}
-	.c--button-fill {
-		--c: var(--c-base);
-		--bgc: var(--c-text);
-		--bdc: var(--bgc);
+
+		line-height: 1.25;
+		padding: 0.5em 0.75em;
+		gap: 0.25em; /* icon の利用を考慮 */
 	}
 	.c--button-outline {
 		--c: var(--c-text);
+		--bgc: transparent;
 		--bdc: var(--c);
 	}
-	:where(.c--button) > .l--icon {
-		--scale: 1.125;
+
+	/* l--gridを使用する場合の追加スタイル */
+	.c--button:where(.l--grid) {
+		grid-template-columns: 1em 1fr 1em;
+		justify-items: center;
+	}
+	.c--button:where(.l--grid) > :not(.l--icon) {
+		grid-column: 2;
 	}
 }

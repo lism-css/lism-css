@@ -1,4 +1,5 @@
 :root {
+	--c-main: #0791d6;
 	// 基本: light用
 	--codeBlock--bgc: hsl(200, 18%, 95%);
 	--preview--resize-bdc: hsl(200, 16%, 60%);
@@ -17,7 +18,7 @@
 	--preview--resize-bdc: hsl(200, 16%, 40%);
 	--preview--help-bg: rgba(50, 50, 55, 0.5);
 
-	--c-main: #4082aa;
+	--c-main: #3ebefd;
 	--c-accent: #da3159;
 
 	// base
@@ -99,7 +100,9 @@
 
 .c--button-primary {
 	position: relative;
-	color: #fff !important;
+	--c: #fff;
+	--bgc: transparent;
+	border: none;
 	overflow: hidden;
 	font-weight: bold;
 	// text-shadow: 0 1px 4px rgb(0 0 0 / 0.1);
@@ -127,4 +130,6 @@
 }
 .c--button-secondary {
 	--bdc: currentColor;
+	--bgc: transparent;
+	--c: currentColor;
 }
