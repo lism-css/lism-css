@@ -42,6 +42,7 @@ class LismPropsData {
 		this.attrs = {};
 		this.lismClass = '';
 		this.lismState = [];
+		this._propConfig = {};
 
 		// 受け取るpropsとそうでないpropsを分ける
 		const {
@@ -54,6 +55,7 @@ class LismPropsData {
 			passVars,
 			// lismVar,
 			style = {},
+			_propConfig = {},
 
 			// hasBd,
 			...otherProps
@@ -62,6 +64,7 @@ class LismPropsData {
 		this.lismClass = lismClass;
 		this.lismState = lismState;
 		this.styles = style;
+		this._propConfig = _propConfig;
 
 		let others = this.getStateProps(otherProps);
 
@@ -191,6 +194,11 @@ class LismPropsData {
 		propData = propData || PROPS[propName] || null;
 		if (null === propData) return; // 一応 nullチェックここでも
 
+		// config上書き設定があるかどうか
+		if (this._propConfig[propName]) {
+			propData = Object.assign({}, propData, this._propConfig[propName]);
+		}
+
 		const { name, objProcessor, ...options } = propData;
 
 		// ブレイクポイント指定用のオブジェクト{base,sm,md,lg,xl}かどうかをチェック
@@ -207,8 +215,7 @@ class LismPropsData {
 		// 	bpValues = bpData;
 		// }
 
-		// BP指定意外で成分プロパティが指定されてきた場合
-		// 例: trf={{scale: '-X'}}, p={{ l: '20', b='30' }}
+		// BP指定意外で成分プロパティが指定されてきた場合 (例: p={{ l: '20', b='30' }}
 		if (null != propVal && typeof propVal === 'object') {
 			// 各成分の解析メソッドがなければ処理を終了
 			if (!objProcessor) return;
@@ -317,7 +324,7 @@ class LismPropsData {
 		}
 
 		// 以下、ユーティリティクラス化できない場合の処理
-		let { style, converter } = options;
+		let { style, isVar, converter } = options;
 
 		// .-prop: だけ出力するケース
 		// if ((!style && true === val) || '-' === val) {
@@ -344,9 +351,10 @@ class LismPropsData {
 			val = getMaybeCssVar(val, converter, name);
 		}
 
-		// style のみ出力
+		// style のみ出力するケース
+		if (isVar) style = `--${name}`;
 		if (!bp && style) {
-			if (1 === style) style = name; // 1 は prop名をそのままstyleとして使う
+			// if (1 === style) style = name; // 1 は prop名をそのままstyleとして使う
 			this.addStyle(style, val);
 			return;
 		}
