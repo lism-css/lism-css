@@ -2,15 +2,13 @@ import TOKENS from './tokens';
 const SPACE_PRESETS = ['0', '5', '10', '20', '30', '40', '50', '60', '70', '80'];
 const auto = { auto: 'a' };
 /* 
-memo: 
+Memo: 
 	ユーティリティクラス化されない時の挙動パターン
 		1.  .-prop: かつ --prop ( ほとんどこれ )
 		2.  普通のstyleとして出力するだけ ( alignSelf など ) → style をもつ
 		3.  --prop のみ出力.( --keycolor や --bdc など ) →  style をもつ
 
 
-禁止パターン: 
-	styleを持っていて BP:1 
 */
 
 const places = {
@@ -30,6 +28,16 @@ const selfPlaces = {
 
 const trblUtils = { '0%': '0', '50%': '50%', '100%': '100%' };
 
+/* 
+Memo: 
+	utils: Propクラスとして出力する値（{value:classKeyname}）
+	presets: Propクラスとして出力するキーワード値（そのままクラス化）
+	converter: トークン変換するための関数処理を指定するためのキーワード文字列
+	style: -{prop}:{val}クラスとして出力されない場合にstyleに渡す時のプロパティ名。この指定がなければ、 -{prop} クラスが出力される。
+	objProcessor: BP指定オブジェクト以外が渡ってきた時の処理関数
+
+
+*/
 export default {
 	// size
 	w: { utils: { 'fit-content': 'fit' }, presets: ['100%'], converter: 'size' },
@@ -94,10 +102,10 @@ export default {
 			'block-end': 'be',
 		},
 	},
-	bdw: { style: '--bdw' }, // --bdw のみ
-	bds: { style: '--bds' }, // --bds のみ
+	bdw: { isVar: 1 }, // --bdw のみ
+	bds: { isVar: 1 }, // --bds のみ
 	bdc: {
-		style: '--bdc',
+		isVar: 1,
 		utils: { transparent: 't' },
 		presets: [
 			'inherit',
@@ -253,8 +261,8 @@ export default {
 	},
 	gx: { converter: 'space' }, // colg
 	gy: { converter: 'space' }, // rowg
-	cols: { style: '--cols' },
-	rows: { style: '--rows' },
+	cols: { isVar: 1 },
+	rows: { isVar: 1 },
 
 	pi: { style: 'placeItems' },
 	pc: { style: 'placeContent' },
@@ -384,11 +392,11 @@ export const CONTEXT_PROPS = {
 			},
 		},
 		rotate: {
-			style: 1,
+			style: 'rotate',
 			utils: { '45deg': '45', '-45deg': '-45', '90deg': '90', '-90deg': '-90' },
 		},
 		scale: {
-			style: 1,
+			style: 'scale',
 			utils: {
 				'-1 1': '-X',
 				'1 -1': '-Y',
