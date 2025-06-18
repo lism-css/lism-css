@@ -3,8 +3,15 @@ import './style.css';
 
 export default function Button({ layout, children, ...props }) {
 	const Layout = layout || Flex;
+
+	// c--button では c, bgc は 変数で受け取る
+	const _propConfig = {
+		c: { isVar: 1 },
+		bgc: { isVar: 1 },
+	};
+
 	return (
-		<Layout lismClass='c--button' variant='fill' tag='a' td='n' lh='xs' px='30' py='20' ai='c' {...props}>
+		<Layout lismClass='c--button' tag='a' td='n' ai='c' hov='fade' _propConfig={_propConfig} {...props}>
 			{children}
 		</Layout>
 	);

@@ -2,18 +2,18 @@
 import Expressive from './Expressive.astro';
 import { Preview, PreviewCode } from '~/components';
 
-const { component = '', react, astro, hasRoot } = Astro.props;
-const fromPath = `@/components/lism/${component}`;
+const { name = '', react, astro, hasRoot } = Astro.props;
+const fromPath = `@/components/lism/${name}`;
 
 const getCode = (name: string) =>
 	`<span style='--0:#F97583;--1:#BF3441'>import</span>` +
-	`<span style='--0:#E1E4E8;--1:#24292E'> ${component} </span>` +
+	`<span style='--0:#E1E4E8;--1:#24292E'> ${name} </span>` +
 	`<span style='--0:#F97583;--1:#BF3441'>from</span>` +
 	` ` +
 	`<span style='--0:#9ECBFF;--1:#032F62'>'${fromPath}/index.${name}'</span>` +
 	`<span style='--0:#E1E4E8;--1:#24292E'>;</span>`;
 
-const getCopyCode = (name: string) => `import ${component} from '${fromPath}/index.${name}';`;
+const getCopyCode = (name: string) => `import ${name} from '${fromPath}/index.${name}';`;
 ---
 
 <Preview>

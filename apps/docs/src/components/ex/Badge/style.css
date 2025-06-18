@@ -6,10 +6,17 @@
 		color: var(--c);
 		background-color: var(--bgc);
 		border: solid 1px var(--bdc); /* 異なる variant を並べてもサイズに差が出ないようにborderを常に指定 */
+		padding: 0.375em 0.5em;
+		gap: 0.125em; /* icon の利用を考慮 */
 	}
 	.c--badge-outline {
 		--c: var(--c-text);
 		--bgc: transparent;
 		--bdc: currentColor;
 	}
+}
+
+.c--badge.u--cbox {
+	--cbox--pct-c: 75%;
+	--bdc: color-mix(in srgb, var(--c-base), var(--keycolor) 25%);
 }

@@ -1,8 +1,6 @@
 ---
-import { Frame, Icon, Flex } from 'lism-css/astro';
+import { Icon, Flex } from 'lism-css/astro';
 import { Preview, PreviewCode, PreviewTitle } from '~/components';
-// import Expressive from './Expressive.astro';
-import ImportExComponent from './ImportExComponent.astro';
 import EmbedCode from './EmbedCode.astro';
 
 const { name = '', hasRoot = false, react, astro, css, others = [], ...props } = Astro.props;
@@ -19,9 +17,7 @@ const { name = '', hasRoot = false, react, astro, css, others = [], ...props } =
 	{
 		react && (
 			<PreviewCode slot='tab' label='React (.jsx)'>
-				<EmbedCode
-					srcPath={`src/components/ex/${name}/${hasRoot ? `${name}.jsx` : 'index.jsx'}`}
-				/>
+				<EmbedCode srcPath={`src/components/ex/${name}/${hasRoot ? `${name}.jsx` : 'index.jsx'}`} />
 				{/* <Frame ovy='auto' maxH='25rem'>
 					<script
 						src={`${embedUrl}?target=${encodeURI(`${basePath}${hasRoot ? `${name}.jsx` : 'index.jsx'}`)}&${queryMeta}`}
@@ -40,7 +36,7 @@ const { name = '', hasRoot = false, react, astro, css, others = [], ...props } =
 	{
 		css && (
 			<PreviewCode slot='tab' label='CSS'>
-				<EmbedCode srcPath={`src/components/ex/${name}/style.${css}`} />
+				<EmbedCode srcPath={`src/components/ex/${name}/style.css`} />
 			</PreviewCode>
 		)
 	}
@@ -62,12 +58,5 @@ const { name = '', hasRoot = false, react, astro, css, others = [], ...props } =
 	<Icon variant='inline' icon='note' c='blue' /> ソースコードを手動でコピー&ペーストしてご利用ください。
 </Flex>
 
-<ImportExComponent component={name} react={react} astro={astro} hasRoot={hasRoot} />
-
-<!-- {
-	hasRoot && (
-		<Expressive copyCode={getCopyCode('core')}>
-			<Fragment set:html={getCode('core')} />
-		</Expressive>
-	)
-} -->
+<!-- <h2>Import</h2>
+<ImportExComponent name={name} react={react} astro={astro} hasRoot={hasRoot} /> -->
