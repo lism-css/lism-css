@@ -23,7 +23,7 @@
 	--bdc: var(--codeBlock--bgc);
 
 	position: relative;
-	border: solid 4px var(--bdc);
+	border: solid 3px var(--bdc);
 	border-radius: 2px;
 	transition: none !important;
 	container-type: inline-size;
@@ -42,6 +42,7 @@
 	position: relative;
 	container-type: inline-size;
 	border-radius: 2px;
+	box-shadow: inset 0 0 4px 0px var(--_shc);
 
 	&.is--resize {
 		min-width: min(100%, 340px);
@@ -95,6 +96,7 @@
 
 	pre {
 		border-radius: 0;
+		max-height: 20rem;
 		// border-start-start-radius: 0;
 		// border-start-end-radius: 0;
 	}
