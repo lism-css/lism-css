@@ -29,7 +29,7 @@ export default {
 	bxsh: ['-10', '-20', '-30', '-40', '-50', '-5', '5', '10', '20', '30', '40', '50'],
 
 	// size:['container', 'container:s', 'container:l'],
-	contentSize: ['xs', 's', 'm', 'l', 'xl'], // --size-xxx トークン
+	contentSize: ['min', 'xs', 's', 'm', 'l', 'xl'], // --size-xxx トークン
 	flow: ['xs', 's', 'm', 'l', 'xl'], // getFlowDataで使う
 	size: [],
 
