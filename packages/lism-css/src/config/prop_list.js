@@ -46,10 +46,10 @@ export default {
 		presets: ['100%', '100lvh', '100svh'],
 		converter: 'size',
 	},
-	maxW: { style: 'maxWidth', presets: ['100%'], converter: 'size' },
-	maxH: { style: 'maxHeight', presets: ['100%'], converter: 'size' },
-	minW: { style: 'minWidth', presets: ['100%'], converter: 'size' },
-	minH: { style: 'minHeight', presets: ['100%', '100lvh', '100svh'], converter: 'size' },
+	maxW: { presets: ['100%'], converter: 'size' },
+	maxH: { presets: ['100%'], converter: 'size' },
+	minW: { presets: ['100%'], converter: 'size' },
+	minH: { presets: ['100%', '100lvh', '100svh'], converter: 'size' },
 
 	// is: inline-size, bs: block-size, maxI, maxB, minIsz, minBsz
 	c: {
