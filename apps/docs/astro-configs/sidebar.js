@@ -225,17 +225,10 @@ export default [
 				link: '/lib/components/note/',
 			},
 			{
-				label: 'Card',
-				link: '/lib/components/card/',
-			},
-			{
 				label: 'Chat',
 				link: '/lib/components/chat/',
 			},
-			{
-				label: 'FAQ',
-				link: '/lib/components/faq/',
-			},
+
 			{
 				label: 'List',
 				link: '/lib/components/list/',
@@ -258,20 +251,11 @@ export default [
 				link: '/lib/components/shapedivider/',
 			},
 			{
-				label: 'Steps',
-				link: '/lib/components/steps/',
-			},
-			{
 				label: 'Timeline',
 				link: '/lib/components/timeline/',
 			},
-
 			{
-				label: '---',
-				link: '###---',
-			},
-			{
-				label: 'More Examples',
+				label: 'UI Blocks',
 				link: '###---',
 			},
 			{
@@ -287,6 +271,30 @@ export default [
 				link: '/lib/components/breadcrumb/',
 			},
 			{
+				label: 'Card',
+				link: '/lib/components/card/',
+			},
+			{
+				label: 'DividerLabel',
+				link: '/lib/components/dividerlabel/',
+			},
+			{
+				label: 'FAQ',
+				link: '/lib/components/faq/',
+			},
+			{
+				label: 'Hero',
+				link: '/lib/components/hero/',
+			},
+			{
+				label: 'Steps',
+				link: '/lib/components/steps/',
+			},
+			{
+				label: 'Decorations',
+				link: '###---',
+			},
+			{
 				label: 'BalloonBox',
 				link: '/lib/components/balloonbox/',
 			},
@@ -295,16 +303,8 @@ export default [
 				link: '/lib/components/decorations/',
 			},
 			{
-				label: 'DividerLabel',
-				link: '/lib/components/dividerlabel/',
-			},
-			{
-				label: 'Hero',
-				link: '/lib/components/hero/',
-			},
-			{
-				label: 'TermList',
-				link: '/lib/components/termlist/',
+				label: '---',
+				link: '###---',
 			},
 			{
 				label: '---',
