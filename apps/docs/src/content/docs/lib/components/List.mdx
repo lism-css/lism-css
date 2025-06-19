@@ -8,7 +8,7 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportSource } from "~
 import List from '~/components/ex/List/index.jsx';
 
 
-アイコン部分にデザインを適用できるリストの作成例を紹介します。
+アイコンを使った装飾リストの作成例を紹介します。
 
 
 ## Import
@@ -33,17 +33,21 @@ import List from '~/components/ex/List/index.jsx';
 			</li>
 		</List>
 		<List variant='check'>
-			<li>List item 1</li>
-			<li>List item 2</li>
-			<li>
+			<li class='-bd:b -bdc:divider' style='--bds:dashed'>List item 1</li>
+			<li class='-bd:b -bdc:divider' style='--bds:dashed'>List item 2</li>
+			<li class='-bd:b -bdc:divider' style='--bds:dashed'>
 				<Fragment>List item 3</Fragment>
 				<ul>
 					<li>Nested item</li>
 					<li>Nested item</li>
 				</ul>
 			</li>
+			<li class='-bd:b -bdc:divider' style='--bds:dashed'>List item 3</li>
 		</List>
-		<List variant='caret'>
+		<List
+			iconC='var(--purple)'
+			iconImg={`url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><path d="M184.49,136.49l-80,80a12,12,0,0,1-17-17L159,128,87.51,56.49a12,12,0,1,1,17-17l80,80A12,12,0,0,1,184.49,136.49Z"/></svg>')`}
+		>
 			<li>List item 1</li>
 			<li>List item 2</li>
 			<li>List item 3</li>
@@ -63,9 +67,9 @@ import List from '~/components/ex/List/index.jsx';
 			</li>
 		</List>
 		<List variant='check'>
-			<li>List item 1</li>
-			<li>List item 2</li>
-			<li>
+			<li class='-bd:b -bdc:divider' style='--bds:dashed'>List item 1</li>
+			<li class='-bd:b -bdc:divider' style='--bds:dashed'>List item 2</li>
+			<li class='-bd:b -bdc:divider' style='--bds:dashed'>
 				<Fragment>List item 3</Fragment>
 				<ul>
 					<li>Nested item</li>
@@ -73,7 +77,10 @@ import List from '~/components/ex/List/index.jsx';
 				</ul>
 			</li>
 		</List>
-		<List variant='caret'>
+		<List
+			iconC='var(--purple)'
+			iconImg={`url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><path d="M184.49,136.49l-80,80a12,12,0,0,1-17-17L159,128,87.51,56.49a12,12,0,1,1,17-17l80,80A12,12,0,0,1,184.49,136.49Z"/></svg>')`}
+		>
 			<li>List item 1</li>
 			<li>List item 2</li>
 			<li>List item 3</li>
@@ -94,9 +101,9 @@ import List from '~/components/ex/List/index.jsx';
 			</li>
 		</ul>
 		<ul class="c--list c--list-check">
-			<li>List item 1</li>
-			<li>List item 2</li>
-			<li>
+			<li class='-bd:b -bdc:divider' style='--bds:dashed'>List item 1</li>
+			<li class='-bd:b -bdc:divider' style='--bds:dashed'>List item 2</li>
+			<li class='-bd:b -bdc:divider' style='--bds:dashed'>
 				List item 3
 				<ul>
 					<li>Nested item</li>
@@ -104,7 +111,10 @@ import List from '~/components/ex/List/index.jsx';
 				</ul>
 			</li>
 		</ul>
-		<ul class="c--list c--list-caret">
+		<ul
+			class="c--list"
+			style="--iconC:var(--purple);--iconImg:url('data:image/svg+xml;utf8,<svg xmlns=&quot;http://www.w3.org/2000/svg&quot; viewBox=&quot;0 0 256 256&quot;><path d=&quot;M184.49,136.49l-80,80a12,12,0,0,1-17-17L159,128,87.51,56.49a12,12,0,1,1,17-17l80,80A12,12,0,0,1,184.49,136.49Z&quot;/></svg>')"
+		>
 			<li>List item 1</li>
 			<li>List item 2</li>
 			<li>List item 3</li>

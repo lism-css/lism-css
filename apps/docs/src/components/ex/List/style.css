@@ -1,21 +1,24 @@
 @layer lism.component {
 	.c--list {
 		list-style: none;
-		--list--pis: 1.875em;
 		--iconC: var(--c-main);
 		--iconSz: 1em;
 		--iconImg: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10"><circle cx="5" cy="5" r="2"/></svg>');
+		--li_pis: 1.875em;
 		/* --iconClip: circle(0.225em at 50%); */
 	}
+
+	/* ボーダースタイルをつけれるように、li 側の pis で余白調整をする */
 	.c--list > li {
 		position: relative;
+		padding-inline-start: var(--li_pis);
 	}
 
 	/* テキスト（半角スペース）を入れて、疑似要素の高さをリストのテキストに合わせる。（line-heightも含めて高さを一致させる）*/
 	.c--list > li::before {
 		position: absolute;
 		top: 0;
-		inset-inline-start: calc(0px - var(--list--pis) / 2 - var(--iconSz) / 2);
+		inset-inline-start: calc(var(--li_pis) / 2 - var(--iconSz) / 2);
 		width: var(--iconSz);
 		height: auto;
 		background: var(--iconC);
@@ -23,13 +26,9 @@
 		content: '\00a0'; /* スペース */
 	}
 
+	/* variationの例 */
 	.c--list-check {
 		--iconC: var(--green);
 		--iconImg: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><path d="M232.49,80.49l-128,128a12,12,0,0,1-17,0l-56-56a12,12,0,1,1,17-17L96,183,215.51,63.51a12,12,0,0,1,17,17Z"></path></svg>');
-	}
-
-	.c--list-caret {
-		--iconC: var(--blue);
-		--iconImg: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><path d="M184.49,136.49l-80,80a12,12,0,0,1-17-17L159,128,87.51,56.49a12,12,0,1,1,17-17l80,80A12,12,0,0,1,184.49,136.49Z"/></svg>');
 	}
 }
