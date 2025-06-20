@@ -3,18 +3,25 @@ title: 'Reel'
 description: ...
 ---
 import { Lism, Frame, Box, Flex, Dummy } from 'lism-css/astro';
-import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportSource, PropBadge } from "~/components";
+import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportSource, ImportExComponent, PropBadge } from "~/components";
 import Reel from '~/components/ex/Reel/index.jsx';
 
 
 コンテンツを横スクロールで表示するリールコンポーネントの作成例を紹介します。
 
-## Import
+
+## Create Component
+`Reel`(`.c--reel`)というコンポーネントを作って利用する例を紹介していきます。
+
+### Source Code
 <ImportSource name='Reel' css react astro />
-{/* <ImportSource css='Badge/style.scss' react='Badge/index.jsx' astro='Badge/index.astro' /> */}
+
+### Import
+<ImportExComponent name='Reel' css　react astro />
 
 
-## Props
+
+### Props
 
 | CSS変数 | 説明 |
 |---|---|
