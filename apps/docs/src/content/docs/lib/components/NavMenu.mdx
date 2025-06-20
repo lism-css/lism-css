@@ -4,17 +4,24 @@ description: ...
 ---
 import { Flex } from 'lism-css/react';
 import { Lism, Icon, Spacer, Box, Accordion } from 'lism-css/astro';
-import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportSource, PropBadge, Reference, Callout } from "~/components";
-import { FolderSimple } from "@phosphor-icons/react";
+import { Preview, PreviewArea, PreviewTitle, PreviewCode, PropBadge, Reference, ImportSource, ImportExComponent } from "~/components";
+import { FolderSimpleIcon } from "@phosphor-icons/react";
 import NavMenu from '~/components/ex/NavMenu';
+
 
 ナビメニューリストを設置できるコンポーネントの作成例を紹介します。
 
-## Import
 
-<ImportSource name='NavMenu' hasRoot react css/>
+## Create Component
+`NavMenu`(`.c--navMenu`)というコンポーネントを作って利用する例を紹介していきます。
 
-## Props
+### Source Code
+<ImportSource name='NavMenu' hasRoot css react />
+
+### Import
+<ImportExComponent name='NavMenu' hasRoot css　react />
+
+### Props
 
 | プロパティ | 説明 |
 |---|---|
@@ -91,20 +98,20 @@ import NavMenu from '~/components/ex/NavMenu';
 		<NavMenu.Root bd='y'>
 			<NavMenu.Item>
 				<NavMenu.Link href='#menu1' g='10' ai='c'>
-					<Icon icon={FolderSimple} />
+					<Icon icon={FolderSimpleIcon} />
 					<span>Menu item</span>
 					<Lism tag='span' bd px='10' bdrs='10' fz='xs' fw='bold' mis='auto'>New</Lism>
 				</NavMenu.Link>
 			</NavMenu.Item>
 			<NavMenu.Item>
 				<NavMenu.Link href='#menu2' g='10' ai='c'>
-					<Icon icon={FolderSimple} />
+					<Icon icon={FolderSimpleIcon} />
 					<span>Menu item</span>
 				</NavMenu.Link>
 			</NavMenu.Item>
 			<NavMenu.Item>
 				<NavMenu.Link href='#menu3' g='10' ai='c'>
-					<Icon icon={FolderSimple} />
+					<Icon icon={FolderSimpleIcon} />
 					<span>Menu item</span>
 				</NavMenu.Link>
 			</NavMenu.Item>
@@ -112,26 +119,26 @@ import NavMenu from '~/components/ex/NavMenu';
 	</PreviewArea>
 	<PreviewCode>
 ```jsx
-import { FolderSimple } from "@phosphor-icons/react";
+import { FolderSimpleIcon } from "@phosphor-icons/react";
 // ↑ 外部のiconコンポーネント
 
 <NavMenu.Root bd='y'>
 	<NavMenu.Item>
 		<NavMenu.Link href='#menu1' g='10' ai='c'>
-			<Icon icon={FolderSimple} />
+			<Icon icon={FolderSimpleIcon} />
 			<span>Menu item</span>
 			<Lism tag='span' bd px='10' bdrs='10' fz='xs' fw='bold' mis='auto'>New</Lism>
 		</NavMenu.Link>
 	</NavMenu.Item>
 	<NavMenu.Item>
 		<NavMenu.Link href='#menu2' g='10' ai='c'>
-			<Icon icon={FolderSimple} />
+			<Icon icon={FolderSimpleIcon} />
 			<span>Menu item</span>
 		</NavMenu.Link>
 	</NavMenu.Item>
 	<NavMenu.Item>
 		<NavMenu.Link href='#menu3' g='10' ai='c'>
-			<Icon icon={FolderSimple} />
+			<Icon icon={FolderSimpleIcon} />
 			<span>Menu item</span>
 		</NavMenu.Link>
 	</NavMenu.Item>

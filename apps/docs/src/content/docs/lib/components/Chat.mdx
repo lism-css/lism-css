@@ -3,12 +3,12 @@ title: 'Chat'
 description: ...
 ---
 
-import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportSource } from "~/components";
+import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportSource, ImportExComponent } from "~/components";
 import { Lism, Dummy } from 'lism-css/astro';
 import Chat from '~/components/ex/Chat';
 
-チャットツールの会話のようなコンポーネントを作成する例を紹介します。
 
+チャットの会話のようなコンポーネントを作成する例を紹介します。
 
 <Preview>
 	<PreviewTitle>Preview</PreviewTitle>
@@ -19,12 +19,18 @@ import Chat from '~/components/ex/Chat';
 	</PreviewArea>
 </Preview>
 
+## Create Component
 
-## Import
+`Chat`(`.c--chat`)というコンポーネントを作って利用する例を紹介していきます。
+
+### Source Code
 <ImportSource name='Chat' css react />
 
+### Import
+<ImportExComponent name='Chat' css　react />
 
-## Props
+### Props
+
 
 | プロパティ | 説明 |
 |---|---|

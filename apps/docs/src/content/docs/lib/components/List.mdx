@@ -4,16 +4,22 @@ description: ...
 ---
 
 import { Frame } from 'lism-css/astro';
-import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportSource } from "~/components";
+import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportSource, ImportExComponent } from "~/components";
 import List from '~/components/ex/List/index.jsx';
 
 
 アイコンを使った装飾リストの作成例を紹介します。
 
 
-## Import
+## Create Component
 
+`List`(`.c--list`)というコンポーネントを作って利用する例を紹介していきます。
+
+### Source Code
 <ImportSource name='List' css react />
+
+### Import
+<ImportExComponent name='List' css　react />
 
 
 ## Usage
