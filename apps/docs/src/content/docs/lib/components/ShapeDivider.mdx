@@ -3,34 +3,41 @@ title: 'ShapeDivider'
 description: ...
 ---
 
-import { Box, Dummy, Frame, Spacer, Layer, Media } from 'lism-css/astro';
-import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportSource } from "~/components";
+import { Box, Dummy, Container, Divider, Frame, Spacer, Layer, Media, Stack } from 'lism-css/astro';
+import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportSource, ImportExComponent } from "~/components";
 import ShapeDivider from '~/components/ex/ShapeDivider/index.astro';
-
 
 
 svgで境界線を描画するコンポーネントです。
 
 <Preview>
 	<PreviewTitle>Preview</PreviewTitle>
-	<PreviewArea resize>
-		<ShapeDivider viewBox='0 0 10 10' level='5'><path d="M10 10V0L0 10z"/></ShapeDivider>
+	<PreviewArea resize isFlow={false}>
+		<Stack g='40'>
+			<ShapeDivider viewBox='0 0 10 10'><path d="M10 10V0L0 10z"/></ShapeDivider>
+
+			<Divider bds='dashed'/>
+
+			<ShapeDivider viewBox='0 0 100 10'>
+				<path d="M100 6C89.3 3.3 82.7 9 70 9S48.4 3 38 3 24.5 6 17 6C7.4 6 0 0 0 0v10h100V6z"/>
+			</ShapeDivider>
+		</Stack>
 	</PreviewArea>
-	<PreviewCode slot='tab' label='JSX'>
-		```jsx
-		<ShapeDivider viewBox='0 0 10 10' level='5'><path d="M10 10V0L0 10z"/></ShapeDivider>
-		```
-	</PreviewCode>
-	<PreviewCode slot='tab' label='HTML'>
-	</PreviewCode>
 </Preview>
 
 
-## Import
-<ImportSource name='ShapeDivider' css react astro/>
+## Create Component
+`ShapeDivider`(`.c--shapeDivider`)というコンポーネントを作って利用する例を紹介していきます。
+
+### Source Code
+<ImportSource name='ShapeDivider' css react astro />
+
+### Import
+<ImportExComponent name='ShapeDivider' css　react astro />
 
 
-## Props
+
+### Props
 
 | プロパティ | 説明 |
 |---|---|
@@ -40,54 +47,76 @@ svgで境界線を描画するコンポーネントです。
 | `offsetX` | シェイプを水平方向にずらすための変数を出力します。 |
 | `stretch` | シェイプを水平方向に引き伸ばして表示するための変数を出力します。|
 | `scale` | `css.scale`に値を渡します。`-X`,`-Y`,`-XY`を指定するとユーティリティクラス化されます。|
+| `isEmpty` | シェイプを表示せず、Spacerのように使用することができます。|
+| `isEmpty` | シェイプを表示せず、Spacerのように使用することができます。|
 
 
 
-## Examples
-
+## Usage
 
 scaleで反転させることで、同じsvgを上下に利用できます。
 
 <Preview>
 	<PreviewTitle>Example 1</PreviewTitle>
 	<PreviewArea resize p='5' isFlow={false}>
-		<Box hasGutter py='50' bgc='text' c='base'>
-			<Dummy length='l' />
-		</Box>
-		<Box pos='r'>
+		<Container size='m' hasGutter py='50' bgc='text' c='base'>
+			<Dummy />
+		</Container>
+		<Container size='m' hasGutter>
 			<ShapeDivider viewBox='0 0 10 10' level='6' scale='-XY' offsetY='-0.5px'>
-				<path d="M10,10V0L0,9.5V10L10,10z"/>
+				<path d='M10,10V0L0,9.5V10L10,10z'></path>
 			</ShapeDivider>
-			<Box hasGutter py='50'>
+			<Box py='50'>
 				<Dummy length='l' />
 			</Box>
 			<ShapeDivider viewBox='0 0 10 10' level='6' offsetY='0.5px'>
-				<path d="M10,10V0L0,9.5V10L10,10z"/>
+				<path d='M10,10V0L0,9.5V10L10,10z'></path>
 			</ShapeDivider>
-		</Box>
-		<Box hasGutter py='50' bgc='text' c='base'>
-			<Dummy length='l' />
-		</Box>
+		</Container>
+		<Container size='m' hasGutter py='50' bgc='text' c='base'>
+			<Dummy />
+		</Container>
 	</PreviewArea>
 	<PreviewCode slot='tab' label='JSX'>
-		```jsx "slope1" "shapeFlip='xy'"
-		<Box hasGutter py='50' bgc='text' c='base'>
-			<Dummy length='l' />
-		</Box>
-		<Box pos='r'>
+		```jsx "\<ShapeDivider" "\/ShapeDivider\>"
+		<Container size='m' hasGutter py='50' bgc='text' c='base'>
+			<Dummy />
+		</Container>
+		<Container size='m' hasGutter>
 			<ShapeDivider viewBox='0 0 10 10' level='6' scale='-XY' offsetY='-0.5px'>
-				<path d="M10,10V0L0,9.5V10L10,10z"/>
+				<path d='M10,10V0L0,9.5V10L10,10z'></path>
 			</ShapeDivider>
-			<Box hasGutter py='50'>
+			<Box py='50'>
 				<Dummy length='l' />
 			</Box>
-			<ShapeDivider viewBox='0 0 10 10' level='6' offsetX='0.5px'>
-				<path d="M10,10V0L0,9.5V10L10,10z"/>
+			<ShapeDivider viewBox='0 0 10 10' level='6' offsetY='0.5px'>
+				<path d='M10,10V0L0,9.5V10L10,10z'></path>
 			</ShapeDivider>
-		</Box>
-		<Box hasGutter py='50' bgc='text' c='base'>
-			<Dummy length='l' />
-		</Box>
+		</Container>
+		<Container size='m' hasGutter py='50' bgc='text' c='base'>
+			<Dummy />
+		</Container>
+		```
+	</PreviewCode>
+	<PreviewCode slot='tab' label='HTML'>
+		```html
+		<Container size='m' hasGutter py='50' bgc='text' c='base'>
+			<Dummy />
+		</Container>
+		<Container size='m' hasGutter>
+			<ShapeDivider viewBox='0 0 10 10' level='6' scale='-XY' offsetY='-0.5px'>
+				<path d='M10,10V0L0,9.5V10L10,10z'></path>
+			</ShapeDivider>
+			<Box py='50'>
+				<Dummy length='l' />
+			</Box>
+			<ShapeDivider viewBox='0 0 10 10' level='6' offsetY='0.5px'>
+				<path d='M10,10V0L0,9.5V10L10,10z'></path>
+			</ShapeDivider>
+		</Container>
+		<Container size='m' hasGutter py='50' bgc='text' c='base'>
+			<Dummy />
+		</Container>
 		```
 	</PreviewCode>
 </Preview>
@@ -100,45 +129,43 @@ SVGは、描画時にほんの少し隙間ができてしまうことがある�
 以下はアニメーションをONにした時の例です。
 <Preview>
 	<PreviewTitle>Example 2</PreviewTitle>
-	<PreviewArea resize p='5' isFlow={false}>
-		<Box pos='r' hasGutter>
-			<Spacer h='50' />
-			<Frame isLayer z='-1'>
-				<Media src='/img/img-1.jpg' alt='' width='960' height='640' />
+	<PreviewArea p='20' isFlow={false}>
+		<Container pos='r' hasGutter>
+			<ShapeDivider isEmpty level='7' />
+			<Frame isLayer z='-1' maxW='100%'>
+				<Media src='/img/img-3.jpg' alt='' width='960' height='640' />
 				<Layer bgc='black:50%' />
 			</Frame>
-			<Box py='50' c='white'>
+			<Container size='m' py='50' c='white'>
 				<Dummy length='xl' />
-			</Box>
-			<ShapeDivider viewBox='0 0 100 10' isAnimation c='base' level='6' offsetY='0.5px'>
-				{/* <path opacity=".3" d="M100,5.5C91.5,3,79.5,7.5,71.5,8C58,9,49,0.5,36,2c-9,1-13.5,3.5-20.5,3.5C8.5,6,0,2,0,2v8h100V5.5z"/> */}
-				<path opacity=".3" d="M100,1.5C87.8,6.6,79.3,2.1,67.8,2.6S53,6.5,42.5,5.5S23,0,15,0S1,3,0,4v6h100V1.5z"/>
-				<path d="M100,7.5C91.5,5,77.1,11.8,54,8C34.6,4.8,14.4,4.1,0,8.5V10h100V7.5z"/>
+			</Container>
+			<ShapeDivider viewBox='0 0 100 10' isAnimation c='base' level='7' offsetY='0.5px'>
+				<path opacity='.3' d='M100,5.5C91.5,3,79.5,7.5,71.5,8C58,9,49,0.5,36,2c-9,1-13.5,3.5-20.5,3.5C8.5,6,0,2,0,2v8h100V5.5z'></path>
+				<path opacity='.3' d='M100,1.5C87.8,6.6,79.3,2.1,67.8,2.6S53,6.5,42.5,5.5S23,0,15,0S1,3,0,4v6h100V1.5z'></path>
+				<path d='M100,7.5C91.5,5,77.1,11.8,54,8C34.6,4.8,14.4,4.1,0,8.5V10h100V7.5z'></path>
 			</ShapeDivider>
-		</Box>
-		<Box hasGutter py='50'>
+		</Container>
+		<Container size='m' hasGutter py='50'>
 			<Dummy length='l' />
-		</Box>
+		</Container>
 	</PreviewArea>
 	<PreviewCode slot='tab' label='JSX'>
 		```jsx "isAnimation"
-		<Box pos='r' hasGutter>
-			<Spacer h='50' />
-			<Frame isLayer z='-1'>
-				<Media src='/img/img-1.jpg' alt='' width='960' height='640' />
+		<Container pos='r'>
+			<ShapeDivider isEmpty level='7' />
+			<Frame isLayer z='-1' maxW='100%'>
+				<Media src='/img/img-3.jpg' alt='' width='960' height='640' />
 				<Layer bgc='black:50%' />
 			</Frame>
-			<Box py='50' c='white'>
+			<Container size='m' hasGutter py='50' c='white'>
 				<Dummy length='xl' />
-			</Box>
-			<ShapeDivider viewBox='0 0 100 10' isAnimation c='base' level='6' offsetY='-0.5px'>
-				<path opacity=".3" d="M100,1.5C87.8,6.6,79.3,2.1,67.8,2.6S53,6.5,42.5,5.5S23,0,15,0S1,3,0,4v6h100V1.5z"/>
-				<path d="M100,7.5C91.5,5,77.1,11.8,54,8C34.6,4.8,14.4,4.1,0,8.5V10h100V7.5z"/>
+			</Container>
+			<ShapeDivider viewBox='0 0 100 10' isAnimation c='base' level='7' offsetY='0.5px'>
+				<path opacity='.3' d='M100,5.5C91.5,3,79.5,7.5,71.5,8C58,9,49,0.5,36,2c-9,1-13.5,3.5-20.5,3.5C8.5,6,0,2,0,2v8h100V5.5z'></path>
+				<path opacity='.3' d='M100,1.5C87.8,6.6,79.3,2.1,67.8,2.6S53,6.5,42.5,5.5S23,0,15,0S1,3,0,4v6h100V1.5z'></path>
+				<path d='M100,7.5C91.5,5,77.1,11.8,54,8C34.6,4.8,14.4,4.1,0,8.5V10h100V7.5z'></path>
 			</ShapeDivider>
-		</Box>
-		<Box hasGutter py='50'>
-			<Dummy length='l' />
-		</Box>
+		</Container>
 		```
 	</PreviewCode>
 </Preview>
@@ -151,55 +178,43 @@ SVGは、描画時にほんの少し隙間ができてしまうことがある�
 <Preview>
 	<PreviewTitle>`stretch`,`offsetX`の活用</PreviewTitle>
 	<PreviewArea resize p='5' isFlow={false}>
-		<Box hasGutter py='40'>
-			<Spacer h='20'/>
+		<Container size='m' hasGutter py='50'>
 			<Dummy length='l' />
-		</Box>
-		<Box pos='r' hasGutter>
+		</Container>
+		<Container pos='r' hasGutter c='base' bgc='text'>
 			<ShapeDivider viewBox='0 0 100 10' c='base' scale='-Y' level='8' stretch={1.1} offsetX='-5%' offsetY='-0.5px'>
-				<path d="M100 6C89.3 3.3 82.7 9 70 9S48.4 3 38 3 24.5 6 17 6C7.4 6 0 0 0 0v10h100V6z"/>
+				<path d='M100 6C89.3 3.3 82.7 9 70 9S48.4 3 38 3 24.5 6 17 6C7.4 6 0 0 0 0v10h100V6z'></path>
 			</ShapeDivider>
-			<Frame isLayer z='-1'>
-				<Media src='/img/img-2.jpg' alt='' width='960' height='640' />
-				<Layer bgc='text:70%' />
-			</Frame>
-			<Box py='50' c='base'>
+			<Container size='m' py='50'>
 				<Dummy length='xl' />
-			</Box>
+			</Container>
 			<ShapeDivider viewBox='0 0 100 10' c='base' level='8' stretch={1.1} offsetY='0.5px'>
-				<path d="M100 6C89.3 3.3 82.7 9 70 9S48.4 3 38 3 24.5 6 17 6C7.4 6 0 0 0 0v10h100V6z"/>
+				<path d='M100 6C89.3 3.3 82.7 9 70 9S48.4 3 38 3 24.5 6 17 6C7.4 6 0 0 0 0v10h100V6z'></path>
 			</ShapeDivider>
-		</Box>
-		<Box hasGutter py='40'>
+		</Container>
+		<Container size='m' hasGutter py='50'>
 			<Dummy length='l' />
-			<Spacer h='20'/>
-		</Box>
+		</Container>
 	</PreviewArea>
 	<PreviewCode slot='tab' label='JSX'>
 		```jsx "stretch=" "offsetX="
-		<Box hasGutter py='40'>
-			<Spacer h='20'/>
+		<Container size='m' hasGutter py='50'>
 			<Dummy length='l' />
-		</Box>
-		<Box pos='r' hasGutter>
+		</Container>
+		<Container pos='r' hasGutter c='base' bgc='text'>
 			<ShapeDivider viewBox='0 0 100 10' c='base' scale='-Y' level='8' stretch={1.1} offsetX='-5%' offsetY='-0.5px'>
-				<path d="M100 6C89.3 3.3 82.7 9 70 9S48.4 3 38 3 24.5 6 17 6C7.4 6 0 0 0 0v10h100V6z"/>
+				<path d='M100 6C89.3 3.3 82.7 9 70 9S48.4 3 38 3 24.5 6 17 6C7.4 6 0 0 0 0v10h100V6z'></path>
 			</ShapeDivider>
-			<Frame isLayer z='-1'>
-				<Media src='/img/img-2.jpg' alt='' width='960' height='640' />
-				<Layer bgc='text:70%' />
-			</Frame>
-			<Box py='50' c='base'>
+			<Container size='m' py='50'>
 				<Dummy length='xl' />
-			</Box>
+			</Container>
 			<ShapeDivider viewBox='0 0 100 10' c='base' level='8' stretch={1.1} offsetY='0.5px'>
-				<path d="M100 6C89.3 3.3 82.7 9 70 9S48.4 3 38 3 24.5 6 17 6C7.4 6 0 0 0 0v10h100V6z"/>
+				<path d='M100 6C89.3 3.3 82.7 9 70 9S48.4 3 38 3 24.5 6 17 6C7.4 6 0 0 0 0v10h100V6z'></path>
 			</ShapeDivider>
-		</Box>
-		<Box hasGutter py='40'>
+		</Container>
+		<Container size='m' hasGutter py='50'>
 			<Dummy length='l' />
-			<Spacer h='20'/>
-		</Box>
+		</Container>
 		```
 	</PreviewCode>
 </Preview>

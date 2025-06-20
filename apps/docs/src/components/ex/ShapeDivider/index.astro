@@ -2,7 +2,7 @@
 import { Lism } from 'lism-css/astro';
 import './style.css';
 
-const { viewBox, children, isAnimation, scale, level = 5, stretch, offsetX, offsetY, css = {}, style = {}, ...props } = Astro.props;
+const { viewBox, children, isAnimation, isEmpty, scale, level = 5, stretch, offsetX, offsetY, css = {}, style = {}, ...props } = Astro.props;
 
 // scaleをコンポーネントに直書きできるように
 if (null != scale) css.scale = scale;
@@ -16,21 +16,22 @@ style['--stretch'] = stretch || null;
 
 {
 	level && (
-		<Lism isFullwide lismClass='c--shapeDivider' css={css} style={style} {...props}>
+		<Lism isFullwide lismClass='c--shapeDivider' css={css} style={style} aria-hidden='true' {...props}>
 			<div class='c--shapeDivider_inner -h:100%'>
-				<svg
-					xmlns='http://www.w3.org/2000/svg'
-					class={isAnimation ? '-anim:shapeSlide' : ''}
-					viewBox={viewBox}
-					width='100%'
-					height='100%'
-					fill='currentColor'
-					aria-hidden='true'
-					focusable='false'
-					preserveAspectRatio='none'
-				>
-					<slot />
-				</svg>
+				{isEmpty ? null : (
+					<svg
+						xmlns='http://www.w3.org/2000/svg'
+						class={isAnimation ? '-anim:shapeSlide' : ''}
+						viewBox={viewBox}
+						width='100%'
+						height='100%'
+						fill='currentColor'
+						focusable='false'
+						preserveAspectRatio='none'
+					>
+						<slot />
+					</svg>
+				)}
 			</div>
 		</Lism>
 	)

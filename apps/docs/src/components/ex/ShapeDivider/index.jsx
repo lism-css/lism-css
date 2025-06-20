@@ -5,6 +5,7 @@ export default function ShapeDivider({
 	viewBox,
 	children,
 	isAnimation,
+	isEmpty,
 	scale,
 	level = 5,
 	stretch,
@@ -26,21 +27,22 @@ export default function ShapeDivider({
 	style['--stretch'] = stretch || null;
 
 	return (
-		<Lism isFullwide lismClass='c--shapeDivider' css={css} style={style} {...props}>
+		<Lism isFullwide lismClass='c--shapeDivider' css={css} style={style} aria-hidden='true' {...props}>
 			<div className='c--shapeDivider_inner -h:100%'>
-				<svg
-					xmlns='http://www.w3.org/2000/svg'
-					className={isAnimation ? '-anim:shapeSlide' : ''}
-					viewBox={viewBox}
-					width='100%'
-					height='100%'
-					fill='currentColor'
-					aria-hidden='true'
-					focusable='false'
-					preserveAspectRatio='none'
-				>
-					{children}
-				</svg>
+				{isEmpty ? null : (
+					<svg
+						xmlns='http://www.w3.org/2000/svg'
+						className={isAnimation ? '-anim:shapeSlide' : ''}
+						viewBox={viewBox}
+						width='100%'
+						height='100%'
+						fill='currentColor'
+						focusable='false'
+						preserveAspectRatio='none'
+					>
+						{children}
+					</svg>
+				)}
 			</div>
 		</Lism>
 	);
