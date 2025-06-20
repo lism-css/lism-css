@@ -4,7 +4,7 @@ description: ...
 ---
 
 import { Frame } from 'lism-css/astro';
-import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportSource } from "~/components";
+import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportSource, ImportExComponent } from "~/components";
 import Table from '~/components/ex/Table/index.jsx';
 
 
@@ -12,9 +12,16 @@ import Table from '~/components/ex/Table/index.jsx';
 
 変数でボーダースタイルを調整できるようにしておくことで、固定表示に対応できるように設計しています。
 
-## Import
 
+## Create Component
+
+`Table`(`.c--table`)というコンポーネントを作って利用する例を紹介していきます。
+
+### Source Code
 <ImportSource name='Table' css react />
+
+### Import
+<ImportExComponent name='Table' css　react />
 
 
 
