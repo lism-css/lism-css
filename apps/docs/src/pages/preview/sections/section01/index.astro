@@ -1,0 +1,23 @@
+---
+import DemoPageLayout from '~/layouts/DemoPageLayout.astro';
+
+import { Lism, Stack, Container, Columns, Text, Flex } from 'lism-css/astro';
+import Button from '~/components/ex/Button/index.astro';
+import './_style.css';
+---
+
+<DemoPageLayout title="section01">
+	<Container className="sec--section01" size="m" py="60" hasGutter>
+		<Stack g="30" w="36rem">
+			<Text fz="4xl" fw="bold" ta="c">Heading</Text>
+			<Text>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.
+				Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.
+				Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.
+			</Text>
+			<Flex g="30" ai="c" jc="c" mt="30">
+				<Button href='#' variant='outline' bdrs="20" w="8rem" jc="c" ver>Button</Button>
+				<Button href='#' variant='fill' bdrs="20" w="8rem" jc="c">Button</Button>
+			</Flex>
+		</Stack>
+	</Container>
+</DemoPageLayout>
