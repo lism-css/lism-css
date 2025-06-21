@@ -4,19 +4,24 @@ description: ...
 ---
 
 import { Lism, Dummy, Text, Stack, Grid, Decorator } from 'lism-css/react';
-import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportSource } from "~/components";
+import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportSource, ImportExComponent } from "~/components";
 import Timeline from '~/components/ex/Timeline';
-import { MegaphoneSimple } from '@phosphor-icons/react';
+import { MegaphoneSimpleIcon } from '@phosphor-icons/react';
 
 タイムラインの構築例を紹介します。
 
 
-## Import
+## Create Component
+`Timeline`(`.c--timeline`)というコンポーネントを作って利用する例を紹介していきます。
 
-<ImportSource name='Timeline' hasRoot react css/>
+### Source Code
+<ImportSource name='Timeline' css react hasRoot />
+
+### Import
+<ImportExComponent name='Timeline' css　react hasRoot />
 
 
-## Examples
+## Usage
 
 
 <Preview>
@@ -149,7 +154,7 @@ import { MegaphoneSimple } from '@phosphor-icons/react';
 	<PreviewTitle>使用例</PreviewTitle>
 	<PreviewArea p='30'>
 		<Timeline.Root>
-			<Timeline.Item icon={{as:MegaphoneSimple, weight:'fill'}}>
+			<Timeline.Item icon={{as:MegaphoneSimpleIcon, weight:'fill'}}>
 				<Timeline.Time>20yy年m月dd日</Timeline.Time>
 				<Timeline.Text>
 					<Text>Lism x.y.z がリリース。</Text>
@@ -175,7 +180,7 @@ import { MegaphoneSimple } from '@phosphor-icons/react';
 	<PreviewCode>
 	```jsx "icon="
 		<Timeline.Root>
-			<Timeline.Item icon={{as:MegaphoneSimple, weight:'fill'}}>
+			<Timeline.Item icon={{as:MegaphoneSimpleIcon, weight:'fill'}}>
 				<Timeline.Time>20yy年m月dd日</Timeline.Time>
 				<Timeline.Text>
 					<Text>Lism x.y.z がリリース。</Text>

@@ -12,11 +12,7 @@ import Faq from '~/components/ex/Faq/index.js';
 Q&Aのレイアウト構築例を紹介します。
 
 
-## Only Core
-
-コンポーネントを作らずにLismのコア要素だけで構築する例も紹介しておきます。
-
-### Simple style
+## Examples
 
 <Preview>
 	<PreviewTitle>シンプルなFAQ</PreviewTitle>
@@ -216,66 +212,87 @@ Q&Aのレイアウト構築例を紹介します。
 </Preview>
 
 
-## Create Component
-
-`Faq`(`.c--faq`)というコンポーネントを作って利用する例を紹介していきます。
-
-### Source Code
-
-<ImportSource name='Faq' hasRoot react astro/>
-
-
-### Import
-<ImportExComponent name='Faq' react astro hasRoot/>
-
-
-## Usage
-
 <Preview>
-	<PreviewTitle>`Faq`の使用例</PreviewTitle>
+	<PreviewTitle>例</PreviewTitle>
 	<PreviewArea p='30'>
 		<Stack g='20'>
-			<Faq.Root>
-				<Faq.Q>疲れたら踊ってもいいですか？</Faq.Q>
-				<Faq.A>
+			<Accordion.Root lismClass='c--faq' bgc='base-2' bdrs='10'>
+				<Accordion.Header p='30'>
+					<Icon viewBox='0 0 256 256' fz='xl' c='main'>
+						<path d='M192,96c0,28.51-24.47,52.11-56,55.56V160a8,8,0,0,1-16,0V144a8,8,0,0,1,8-8c26.47,0,48-17.94,48-40s-21.53-40-48-40S80,73.94,80,96a8,8,0,0,1-16,0c0-30.88,28.71-56,64-56S192,65.12,192,96Zm-64,96a16,16,0,1,0,16,16A16,16,0,0,0,128,192Z'></path>
+					</Icon>
+					<Accordion.Label fw='bold'>疲れたら踊ってもいいですか？</Accordion.Label>
+					<Accordion.Icon />
+				</Accordion.Header>
+				<Accordion.Body p='30' pbs='0' mis='5' isFlow='s'>
 					<p>もちろんです。汗をかいてリフレッシュしてください。</p>
-				</Faq.A>
-			</Faq.Root>
-			<Faq.Root>
-				<Faq.Q>猫がパソコンのキーボードの上に乗ってくるのはどうして？</Faq.Q>
-				<Faq.A>
+				</Accordion.Body>
+			</Accordion.Root>
+			<Accordion.Root lismClass='c--faq' bgc='base-2' bdrs='10'>
+				<Accordion.Header p='30'>
+					<Icon viewBox='0 0 256 256' fz='xl' c='main'>
+						<path d='M192,96c0,28.51-24.47,52.11-56,55.56V160a8,8,0,0,1-16,0V144a8,8,0,0,1,8-8c26.47,0,48-17.94,48-40s-21.53-40-48-40S80,73.94,80,96a8,8,0,0,1-16,0c0-30.88,28.71-56,64-56S192,65.12,192,96Zm-64,96a16,16,0,1,0,16,16A16,16,0,0,0,128,192Z'></path>
+					</Icon>
+					<Accordion.Label fw='bold'>猫がパソコンのキーボードの上に乗ってくるのはどうして？</Accordion.Label>
+					<Accordion.Icon />
+				</Accordion.Header>
+				<Accordion.Body p='30' pbs='0' mis='5' isFlow='s'>
 					<p>飼い主さんのそばにいたい気持ちや、キーボードの温かさが心地よいからという説があります。構ってほしいサインかもしれませんので、たくさん撫でてあげましょう。</p>
-				</Faq.A>
-			</Faq.Root>
-			<Faq.Root>
-				<Faq.Q>ペンギンはどうして空を飛ばないんですか？</Faq.Q>
-				<Faq.A>
+				</Accordion.Body>
+			</Accordion.Root>
+			<Accordion.Root lismClass='c--faq' bgc='base-2' bdrs='10'>
+				<Accordion.Header p='30'>
+					<Icon viewBox='0 0 256 256' fz='xl' c='main'>
+						<path d='M192,96c0,28.51-24.47,52.11-56,55.56V160a8,8,0,0,1-16,0V144a8,8,0,0,1,8-8c26.47,0,48-17.94,48-40s-21.53-40-48-40S80,73.94,80,96a8,8,0,0,1-16,0c0-30.88,28.71-56,64-56S192,65.12,192,96Zm-64,96a16,16,0,1,0,16,16A16,16,0,0,0,128,192Z'></path>
+					</Icon>
+					<Accordion.Label fw='bold'>ペンギンはどうして空を飛ばないんですか？</Accordion.Label>
+					<Accordion.Icon />
+				</Accordion.Header>
+				<Accordion.Body p='30' pbs='0' mis='5' isFlow='s'>
 					<p>ペンギンは泳ぐことに特化した体をしているので、空は飛べませんが、水中ではまるで鳥のように自由に動き回れます。</p>
-				</Faq.A>
-			</Faq.Root>
+				</Accordion.Body>
+			</Accordion.Root>
 		</Stack>
 	</PreviewArea>
 	<PreviewCode>
 		```jsx
 		<Stack g='20'>
-			<Faq.Root>
-				<Faq.Q>疲れたら踊ってもいいですか？</Faq.Q>
-				<Faq.A>
+			<Accordion.Root lismClass='c--faq' bgc='base-2' bdrs='10'>
+				<Accordion.Header p='30'>
+					<Icon viewBox='0 0 256 256' fz='xl' c='main'>
+						<path d='M192,96c0,28.51-24.47,52.11-56,55.56V160a8,8,0,0,1-16,0V144a8,8,0,0,1,8-8c26.47,0,48-17.94,48-40s-21.53-40-48-40S80,73.94,80,96a8,8,0,0,1-16,0c0-30.88,28.71-56,64-56S192,65.12,192,96Zm-64,96a16,16,0,1,0,16,16A16,16,0,0,0,128,192Z'></path>
+					</Icon>
+					<Accordion.Label fw='bold'>疲れたら踊ってもいいですか？</Accordion.Label>
+					<Accordion.Icon />
+				</Accordion.Header>
+				<Accordion.Body p='30' pbs='0' mis='5' isFlow='s'>
 					<p>もちろんです。汗をかいてリフレッシュしてください。</p>
-				</Faq.A>
-			</Faq.Root>
-			<Faq.Root>
-				<Faq.Q>猫がパソコンのキーボードの上に乗ってくるのはどうして？</Faq.Q>
-				<Faq.A>
+				</Accordion.Body>
+			</Accordion.Root>
+			<Accordion.Root lismClass='c--faq' bgc='base-2' bdrs='10'>
+				<Accordion.Header p='30'>
+					<Icon viewBox='0 0 256 256' fz='xl' c='main'>
+						<path d='M192,96c0,28.51-24.47,52.11-56,55.56V160a8,8,0,0,1-16,0V144a8,8,0,0,1,8-8c26.47,0,48-17.94,48-40s-21.53-40-48-40S80,73.94,80,96a8,8,0,0,1-16,0c0-30.88,28.71-56,64-56S192,65.12,192,96Zm-64,96a16,16,0,1,0,16,16A16,16,0,0,0,128,192Z'></path>
+					</Icon>
+					<Accordion.Label fw='bold'>猫がパソコンのキーボードの上に乗ってくるのはどうして？</Accordion.Label>
+					<Accordion.Icon />
+				</Accordion.Header>
+				<Accordion.Body p='30' pbs='0' mis='5' isFlow='s'>
 					<p>飼い主さんのそばにいたい気持ちや、キーボードの温かさが心地よいからという説があります。構ってほしいサインかもしれませんので、たくさん撫でてあげましょう。</p>
-				</Faq.A>
-			</Faq.Root>
-			<Faq.Root>
-				<Faq.Q>ペンギンはどうして空を飛ばないんですか？</Faq.Q>
-				<Faq.A>
+				</Accordion.Body>
+			</Accordion.Root>
+			<Accordion.Root lismClass='c--faq' bgc='base-2' bdrs='10'>
+				<Accordion.Header p='30'>
+					<Icon viewBox='0 0 256 256' fz='xl' c='main'>
+						<path d='M192,96c0,28.51-24.47,52.11-56,55.56V160a8,8,0,0,1-16,0V144a8,8,0,0,1,8-8c26.47,0,48-17.94,48-40s-21.53-40-48-40S80,73.94,80,96a8,8,0,0,1-16,0c0-30.88,28.71-56,64-56S192,65.12,192,96Zm-64,96a16,16,0,1,0,16,16A16,16,0,0,0,128,192Z'></path>
+					</Icon>
+					<Accordion.Label fw='bold'>ペンギンはどうして空を飛ばないんですか？</Accordion.Label>
+					<Accordion.Icon />
+				</Accordion.Header>
+				<Accordion.Body p='30' pbs='0' mis='5' isFlow='s'>
 					<p>ペンギンは泳ぐことに特化した体をしているので、空は飛べませんが、水中ではまるで鳥のように自由に動き回れます。</p>
-				</Faq.A>
-			</Faq.Root>
+				</Accordion.Body>
+			</Accordion.Root>
 		</Stack>
 		```
 	</PreviewCode>

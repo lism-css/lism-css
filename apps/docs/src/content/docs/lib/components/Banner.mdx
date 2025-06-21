@@ -3,7 +3,7 @@ title: 'Banner'
 description: ...
 ---
 
-import { Dummy, Text, Stack, Center, Layer, Media, LinkBox, Frame } from 'lism-css/astro';
+import { Dummy, Text, Stack, Center, Layer, Media, Icon, LinkBox, Frame, Flex } from 'lism-css/astro';
 import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportSource } from '~/components';
 
 
@@ -16,20 +16,20 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportSource } from '~
 <Preview>
 	<PreviewTitle>Preview</PreviewTitle>
 	<PreviewArea p='30'>
-		<Frame isLinkBox href='#banner-link' hov='fade' trs bdrs='20'>
+		<LinkBox layout={Frame} href='#banner-link' hov='fade' trs bdrs='20'>
 			<img src='https://picsum.photos/seed/hogeee/1200/400' alt='' width='800' height='200' />
-		</Frame>
+		</LinkBox>
 	</PreviewArea>
 	<PreviewCode slot='tab' label='JSX'>
-		```jsx "Frame" "isLinkBox"
-		<Frame isLinkBox href='#banner-link' hov='fade' trs bdrs='20'>
+		```jsx "Frame" "LinkBox"
+		<LinkBox layout={Frame} href='#banner-link' hov='fade' trs bdrs='20'>
 			<img src='https://picsum.photos/seed/hogeee/1200/400' alt='' width='800' height='200' />
-		</Frame>
+		</LinkBox>
 		```
 	</PreviewCode>
 	<PreviewCode slot='tab' label='HTML'>
 		```html "l--frame" "is--linkBox"
-		<a class="c--banner l--frame is--linkBox -hov:fade -trs -bdrs:20" href="#banner-link">
+		<a class='l--frame is--linkBox -hov:fade -trs -bdrs:20' href='#banner-link'>
 			<img src='https://picsum.photos/seed/hogeee/1200/400' alt='' width='800' height='200' />
 		</a>
 		```
@@ -39,24 +39,50 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportSource } from '~
 
 <Preview>
 	<PreviewTitle>`Layer`で画像に被せてコンテンツを表示</PreviewTitle>
-	<PreviewArea p='30'>
-		<Frame isLinkBox href='#banner-link' hov='fade' trs ar='3/1' bdrs='20'>
-			<Media src='https://picsum.photos/seed/hogeee/1200/400' alt='' width='960' height='640' loading='lazy' />
-			<Stack isLayer jc='c' g='5' px='40' c='#fff' bgc='rgb(0 0 0 / 50%)' lh='s'>
-				<Text fz='xl' fw='bold'>Banner</Text>
-				<Dummy fz='s' lang='ja' length='s'/>
-			</Stack>
-		</Frame>
+	<PreviewArea p='30' resize>
+		<LinkBox layout={Frame} href='#banner-link' hov='fade' trs bdrs='20'>
+			<Media isLayer src='https://picsum.photos/seed/hogeee/1200/400' alt='' width='960' height='640' loading='lazy' />
+			<Flex jc='sb' ai='c' g='30' p='30' c='#fff' bgc='rgb(0 0 0 / 50%)' pos='r' minH='25cqw'>
+				<Stack g='5' lh='s'>
+					<Text fz='xl' fw='bold'>Banner</Text>
+					<Dummy fz='s' lang='ja' length='s'/>
+				</Stack>
+				<Icon fz='2xl' viewBox="0 0 256 256" scale='1.2'>
+					<path d="M180.24,132.24l-80,80a6,6,0,0,1-8.48-8.48L167.51,128,91.76,52.24a6,6,0,0,1,8.48-8.48l80,80A6,6,0,0,1,180.24,132.24Z"></path>
+				</Icon>
+			</Flex>
+		</LinkBox>
 	</PreviewArea>
-	<PreviewCode>
+	<PreviewCode slot='tab' label='JSX'>
 		```jsx
-		<Frame isLinkBox href='#banner-link' hov='fade' trs ar='3/1' bdrs='20'>
-			<Media src='https://picsum.photos/seed/hogeee/1200/400' alt='' width='960' height='640' loading='lazy' />
-			<Stack isLayer jc='c' g='5' px='40' c='#fff' bgc='rgb(0 0 0 / 50%)' lh='s'>
-				<Text fz='xl' fw='bold'>Banner</Text>
-				<Dummy fz='s' lang='ja' length='s'/>
-			</Stack>
-		</Frame>
+		<LinkBox layout={Frame} href='#banner-link' hov='fade' trs bdrs='20'>
+			<Media isLayer src='https://picsum.photos/seed/hogeee/1200/400' alt='' width='960' height='640' loading='lazy' />
+			<Flex jc='sb' ai='c' g='30' p='30' c='#fff' bgc='rgb(0 0 0 / 50%)' pos='r' minH='25cqw'>
+				<Stack g='5' lh='s'>
+					<Text fz='xl' fw='bold'>Banner</Text>
+					<Dummy fz='s' lang='ja' length='s'/>
+				</Stack>
+				<Icon fz='2xl' viewBox="0 0 256 256" scale='1.2'>
+					<path d="M180.24,132.24l-80,80a6,6,0,0,1-8.48-8.48L167.51,128,91.76,52.24a6,6,0,0,1,8.48-8.48l80,80A6,6,0,0,1,180.24,132.24Z"></path>
+				</Icon>
+			</Flex>
+		</LinkBox>
+		```
+	</PreviewCode>
+	<PreviewCode slot='tab' label='HTML'>
+		```html "l--frame" "is--linkBox"
+		<a class='l--frame is--linkBox -hov:fade -trs -bdrs:20' href='#banner-link'>
+			<img class='is--layer' src='https://picsum.photos/seed/hogeee/1200/400' width='960' height='640' loading='lazy' />
+			<div class='l--flex -jc:sb -ai:c -g:30 -p:30 -c -bgc -pos:r -minH' style='--c:#fff;--bgc:rgb(0 0 0 / 50%);--minH:25cqw'>
+				<div class='l--stack -g:5 -lh:s'>
+					<p class='-fz:xl -fw:bold'>Banner</p>
+					<p class='-fz:s'>ロレムイプサムの座り雨、トマ好き学習だったエリット、しかし時と活力はそのような木々と楽しみ。</p>
+				</div>
+				<svg class='l--icon -fz:2xl' style='--scale:1.2' viewBox='0 0 256 256' aria-hidden='true'>
+					<path d='M180.24,132.24l-80,80a6,6,0,0,1-8.48-8.48L167.51,128,91.76,52.24a6,6,0,0,1,8.48-8.48l80,80A6,6,0,0,1,180.24,132.24Z'></path>
+				</svg>
+			</div>
+		</a>
 		```
 	</PreviewCode>
 </Preview>
