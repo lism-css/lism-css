@@ -235,8 +235,6 @@ box-shadow は少し特殊で、ユーティリティクラス内で複数のsha
 |`30`|`--bxsh-30`|`-bxsh:30`|
 |`20`|`--bxsh-20`|`-bxsh:20`|
 |`10`|`--bxsh-10`|`-bxsh:10`|
-|`-10`|`--bxsh-i10`|`-bxsh:-10`|
-|`-20`|`--bxsh-i20`|`-bxsh:-20`|
 
 
 `--bxsh-{token}`の値の中身は、次の変数で構成されます。
@@ -244,10 +242,12 @@ box-shadow は少し特殊で、ユーティリティクラス内で複数のsha
 
 |構成変数|初期値|
 |---|---|
-|`--_shc`|`hsl(var(--_shc-hsl) / var(--_shc-a))`|
-|`--_shc-hsl`|`220 4% 8%`|
-|`--_shc-a`|`5%`|
-|`--_shsz-[0~5]`|...|
+|`--_sh_c`|`hsl(var(--_sh_hsl) / var(--_sh_a))`|
+|`--_sh_hsl`|`220 4% 8%`|
+|`--_sh_a`|`5%`|
+|`--_sh_sz-[0~5]`|...|
+|`--_sh_i`|` `(空白)|
+
 
 
 
@@ -255,8 +255,8 @@ box-shadow は少し特殊で、ユーティリティクラス内で複数のsha
 
 <Preview>
 	<PreviewTitle>Preview</PreviewTitle>
-	<PreviewArea p='50'>
-		<Columns cols={[3, 5, 5]} g='60'>
+	<PreviewArea p={['40','50']} py='60'>
+		<Columns cols={[3, null, 5]} g={['50','60']}>
 			<BoxShadowDemos shadows={[ '10', '20', '30', '40', '50' ]}/>
 		</Columns>
 	</PreviewArea>
@@ -271,21 +271,8 @@ box-shadow は少し特殊で、ユーティリティクラス内で複数のsha
 	</PreviewCode>
 </Preview>
 
-
-<Preview>
-	<PreviewTitle>Preview(inset)</PreviewTitle>
-	<PreviewArea p='50'>
-		<Columns cols={[3, 5, 5]} g='60'>
-			<BoxShadowDemos shadows={[ '-10', '-20' ]}/>
-		</Columns>
-	</PreviewArea>
-	<PreviewCode slot='tab' label='HTML'>
-		```jsx
-		<div class="-bxsh:-10">...</div>
-		<div class="-bxsh:-20">...</div>
-		```
-	</PreviewCode>
-</Preview>
+`--_sh_i`に`inset`を指定することで、内向きshadowに変更できます。  
+(当ドキュメントサイトでは、ダークモード時にinsetになっています。)
 
 
 ## `TYPO`
