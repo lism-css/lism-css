@@ -421,11 +421,6 @@ class LismPropsData {
 		} else if (typeof hoverData === 'object') {
 			// hover={{c:'red', 'bgc': 'blue'}} みたいな指定の時
 
-			// bxsh: '2', → shSize'2', shSize:'3'に分割?
-			// if(hoverData.bxsh) {
-			// 	...
-			// }
-
 			Object.keys(hoverData).forEach((propName) => {
 				let value = hoverData[propName];
 

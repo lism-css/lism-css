@@ -138,6 +138,11 @@
 .-c\:inherit {
 	color: inherit;
 }
+.-c\:mix {
+	--_c1: currentColor;
+	--_c2: transparent;
+	--c: color-mix(in srgb, var(--_c1) var(--_mixpct-c, 50%), var(--_c2));
+}
 .-bgc,
 [class*='-bgc:'] {
 	background-color: var(--bgc);
@@ -160,15 +165,25 @@
 .-bgc\:inherit {
 	background-color: inherit;
 }
-.-c\:mix {
-	--_c1: currentColor;
-	--_c2: transparent;
-	--c: color-mix(in srgb, var(--_c1) var(--_mixpct-c, 50%), var(--_c2));
-}
 .-bgc\:mix {
 	--_bgc1: currentColor;
 	--_bgc2: transparent;
 	--bgc: color-mix(in srgb, var(--_bgc1) var(--_mixpct-bgc, 50%), var(--_bgc2));
+}
+.-bdc\:main {
+	--bdc: var(--c-main);
+}
+.-bdc\:accent {
+	--bdc: var(--c-accent);
+}
+.-bdc\:divider {
+	--bdc: var(--c-divider);
+}
+.-bdc\:inherit {
+	--bdc: inherit;
+}
+.-bdc\:t {
+	--bdc: transparent;
 }
 .-bdc\:mix {
 	--_bdc1: currentColor;
@@ -195,21 +210,6 @@
 }
 .-bgsz\:ct {
 	background-size: contain;
-}
-.-bdc\:main {
-	--bdc: var(--c-main);
-}
-.-bdc\:accent {
-	--bdc: var(--c-accent);
-}
-.-bdc\:divider {
-	--bdc: var(--c-divider);
-}
-.-bdc\:inherit {
-	--bdc: inherit;
-}
-.-bdc\:t {
-	--bdc: transparent;
 }
 .-f\:inherit {
 	font: inherit;
@@ -485,12 +485,6 @@
 }
 .-bxsh\:50 {
 	box-shadow: var(--bxsh-50);
-}
-.-bxsh\:-10 {
-	box-shadow: var(--bxsh-i10);
-}
-.-bxsh\:-20 {
-	box-shadow: var(--bxsh-i20);
 }
 .-p,
 [class*='-p:'] {
@@ -1258,14 +1252,14 @@
 	.-minH_sm {
 		min-height: var(--minH_sm);
 	}
+	.-bdw_sm {
+		--bdw: var(--bdw_sm) !important;
+	}
 	.-bg_sm {
 		background: var(--bg_sm);
 	}
 	.-bgi_sm {
 		background-image: var(--bgi_sm);
-	}
-	.-bdw_sm {
-		--bdw: var(--bdw_sm) !important;
 	}
 	.-fz_sm {
 		--fz: var(--fz_sm) !important;
@@ -1428,14 +1422,14 @@
 	.-minH_md {
 		min-height: var(--minH_md);
 	}
+	.-bdw_md {
+		--bdw: var(--bdw_md) !important;
+	}
 	.-bg_md {
 		background: var(--bg_md);
 	}
 	.-bgi_md {
 		background-image: var(--bgi_md);
-	}
-	.-bdw_md {
-		--bdw: var(--bdw_md) !important;
 	}
 	.-fz_md {
 		--fz: var(--fz_md) !important;
@@ -1581,7 +1575,7 @@
 }
 @media (any-hover: hover) {
 	.-hov\:fade:hover {
-		opacity: 0.65;
+		opacity: 0.7;
 	}
 	.-hov\:c:hover {
 		color: var(--hov-c);
@@ -1614,5 +1608,4 @@
 	opacity: var(--_notHov, 0);
 	visibility: var(--_notHov, hidden);
 }
-
 ```
