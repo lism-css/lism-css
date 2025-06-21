@@ -56,7 +56,7 @@ export default function TabsRoot({
 					</Columns>
 				</Tabs.Panel>
 			</Tabs.Item>
-			<Tabs.Item>
+			{/* <Tabs.Item>
 				<Tabs.Tab>Sections</Tabs.Tab>
 				<Tabs.Panel>
 					<h2>Sections</h2>
@@ -73,7 +73,7 @@ export default function TabsRoot({
 						})}
 					</Columns>
 				</Tabs.Panel>
-			</Tabs.Item>
+			</Tabs.Item> */}
 			<Tabs.Item>
 				<Tabs.Tab>Templates</Tabs.Tab>
 				<Tabs.Panel>
