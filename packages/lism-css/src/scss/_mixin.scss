@@ -1,8 +1,9 @@
-@use './setting' as setting;
+// @use './setting' as setting;
+$layer_mode: 1 !default;
 
 @mixin maybe_where($selectors, $mode) {
 	// memo: セレクタリストを引数で受け取り、modeで出力方法を切り替える
-	@if setting.$layer_mode == 1 {
+	@if $layer_mode == 1 {
 		@if $mode == '' {
 			#{$selectors} {
 				@content;
@@ -26,7 +27,7 @@
 }
 
 @mixin switch_selector($s_1, $s_2) {
-	@if setting.$layer_mode == 1 {
+	@if $layer_mode == 1 {
 		#{$s_1} {
 			@content;
 		}
