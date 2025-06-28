@@ -53,7 +53,7 @@ Note: utilityクラスとpropsクラスは`@layer`を付けません。ただし
 Two CSS outputs are generated:
 
 - `main.css` - Modern browsers with `@layer` support.
-- `main_legacy.css` - Legacy mode. Without `@layer`.
+- `main_no_layer.css` - Without `@layer`.
 
 SCSS Setting files:
 
