@@ -75,6 +75,7 @@
 	--fz-s: calc(1em * var(--_fzmol) / (var(--_fzmol) + 1));
 	--fz-xs: calc(1em * var(--_fzmol) / (var(--_fzmol) + 2));
 	--fz-2xs: calc(1em * var(--_fzmol) / (var(--_fzmol) + 3));
+	--fz-base: clamp(0.875rem, 0.625rem + 1vw, 1rem); // 画面サイズ 400 - 600 で可変
 
 	// clampでテキストサイズを変化させたい時用
 	// --fz-fluid-s: clamp(0.9rem, 0.75rem + 0.8cqw, 1rem); // 小さい方向のみ. 300: .9rem ~ 500: 1rem
@@ -236,8 +237,6 @@
 	/* ----------------------------------------
 		デザイントークンとは別のグローバル設定値
 	---------------------------------------- */
-
-	--root--fz: clamp(0.875rem, 0.625rem + 1vw, 1rem); // 画面サイズ 400 - 600 で可変
 	--gutter: var(--s40);
 
 	// Memo: :rootで初期セットしてないがグローバル定義可能な変数

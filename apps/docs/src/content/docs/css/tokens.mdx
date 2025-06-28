@@ -359,6 +359,9 @@ box-shadow は少し特殊で、ユーティリティクラス内で複数のsha
 |`3xl`|`--fz-3xl`|`-fz:3xl`|`calc(1em * 8 / 4)`|
 |`4xl`|`--fz-4xl`|`-fz:4xl`|`calc(1em * 8 / 3)`|
 |`5xl`|`--fz-5xl`|`-fz:5xl`|`calc(1em * 8 / 2)`|
+|`base`|`--fz-base`|`-fz:base`<sup>※1</sup>|`clamp(0.875rem, 0.625rem + 1vw, 1rem)`|
+
+<sup>※1</sup>: `-fz:base`クラスは、値としては`1rem`をセットします。（`html`で`font-size:var(--fz-base)`をセットしている）
 
 {/* <Callout type="info">
 	Memo:スケーリングは 4xl くらいまでにして、5xlのとこは `here` などのセマンティックトークンにしてもよさそう。2xsとかも?
