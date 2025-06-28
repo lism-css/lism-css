@@ -37,7 +37,6 @@ $util_em_tokens: 1, 2, 3, 5, 7, 10, 15, 20, 25, 30 !default; */}
 	),
 	$common_support_bp: 'md',
 	$is_container_query: 1,
-	$layer_mode: 1,
 	$props: (
 		...
 	)
@@ -60,7 +59,6 @@ $util_em_tokens: 1, 2, 3, 5, 7, 10, 15, 20, 25, 30 !default; */}
 	),
 	$common_support_bp: 'lg',  // lgサイズまでのユーティリティクラスを生成する
 	$is_container_query: 0, // media query で出力する
-	$layer_mode: 0, // @layer を使わないようにする
 	$props: (
 		'fz': (
 			// fzのユーティリティクラスに対して !important を出力する
@@ -85,14 +83,17 @@ $util_em_tokens: 1, 2, 3, 5, 7, 10, 15, 20, 25, 30 !default; */}
 
 // lism の scssファイルを読み込む
 @use '../path-to/node_modules/lism-css/scss/main';
+
+// @layer を使わないようにするなら main ではなく main_no_layer を読み込んでください
+@use '../path-to/node_modules/lism-css/scss/main_no_layer';
 ```
 
 Astroの場合は`../path-to/node_modules/`は不要です。
 
-{/* <div class='is--container'>
-<Box p={['u:box', '20', '30', null, '40']} h={['auto', '1em']} bd>box</Box>
+<div class='is--container'>
+<Box p={['u:box', '20', '30', '40', '50']} bd c='base' bgc='text'>box</Box>
 <Box p='u:box' h={['auto', '1em']} bd>box</Box>
-</div> */}
+</div>
 
 
 ## ビルド処理について
