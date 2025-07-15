@@ -28,22 +28,12 @@ const CONTEXT_PROPS_KEYS = Object.keys(CONTEXT_PROPS);
 
 class LismPropsData {
 	// propList = {};
-	// styles = {};
-	// className = '';
-	// uClasses = []; // props解析処理で追加される
-	// attrs = {};
+	className = '';
+	uClasses = []; // props解析処理で追加される
+	attrs = {};
+	styles = {};
 
 	constructor(allProps) {
-		// 初期化
-		// this.propList = {};
-		this.styles = {};
-		this.className = '';
-		this.uClasses = []; // props解析処理で追加される
-		this.attrs = {};
-		this.lismClass = '';
-		this.lismState = [];
-		this._propConfig = {};
-
 		// 受け取るpropsとそうでないpropsを分ける
 		const {
 			forwardedRef,
@@ -61,10 +51,10 @@ class LismPropsData {
 			...otherProps
 		} = allProps;
 
-		this.lismClass = lismClass;
-		this.lismState = lismState;
-		this.styles = style;
-		this._propConfig = _propConfig;
+		this.lismClass = lismClass || '';
+		this.lismState = structuredClone(lismState);
+		this.styles = structuredClone(style);
+		this._propConfig = structuredClone(_propConfig);
 
 		let others = this.getStateProps(otherProps);
 
@@ -455,18 +445,7 @@ class LismPropsData {
 		this.analyzeProp('bd', value);
 	}
 
-	getStateProps({
-		skipState,
-		isOverwide,
-		isFullwide,
-		isWide,
-		isFlow,
-		isContainer,
-		hasGutter,
-		isLayer,
-		isLinkBox,
-		...props
-	}) {
+	getStateProps({ skipState, isOverwide, isFullwide, isWide, isFlow, isContainer, hasGutter, isLayer, isLinkBox, ...props }) {
 		if (!skipState) {
 			if (isContainer) {
 				this.setContainerData(isContainer);
