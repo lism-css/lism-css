@@ -1,5 +1,18 @@
-// @use './setting' as setting;
+@use './setting' as setting;
+
 $layer_mode: 1 !default;
+
+$maybe_important: '';
+@if setting.$default_important == 1 {
+	$maybe_important: ' !important';
+}
+
+// @function maybe_important() {
+// 	@if setting.$default_important == 1 {
+// 		@return ' !important';
+// 	}
+// 	@return '';
+// }
 
 @mixin maybe_where($selectors, $mode) {
 	// memo: セレクタリストを引数で受け取り、modeで出力方法を切り替える
