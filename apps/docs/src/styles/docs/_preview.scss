@@ -23,10 +23,8 @@
 	--bdc: var(--codeBlock--bgc);
 
 	position: relative;
-	border: solid 3px var(--bdc);
-	border-radius: 2px;
 	transition: none !important;
-	container-type: inline-size;
+	// container-type: inline-size;
 
 	&:not(:first-child) {
 		margin-top: var(--s50);
@@ -38,11 +36,22 @@
 	}
 }
 
+.c--preview_area_frame {
+	// width: 160%;
+	// scale: 62.5%;
+	// width: 125%;
+	// scale: 0.8;
+	// transform-origin: 0 0;
+
+	border: solid 3px var(--bdc);
+	border-radius: 2px;
+}
+
 .c--preview_inner {
 	position: relative;
-	container-type: inline-size;
 	border-radius: 2px;
 	box-shadow: inset 0 0 4px 0px var(--_sh_c);
+	container-type: inline-size;
 
 	&.is--resize {
 		min-width: min(100%, 340px);

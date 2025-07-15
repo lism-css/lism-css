@@ -64,7 +64,7 @@ HTML:
 
 JSX:
 ```jsx
-<Lism p={[20, 30, 50]}>
+<Lism p={[20, 40, 50]}>
   <p>Example</p>
 </Lism>
 ```

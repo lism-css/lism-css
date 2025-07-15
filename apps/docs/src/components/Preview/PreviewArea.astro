@@ -16,14 +16,16 @@ if (resize) lismState.push('is--resize');
 ---
 
 <Lism className='c--preview_area'>
-	<Lism className='c--preview_inner' lismState={lismState} isFlow={isFlow} p={p} {...props}>
-		<slot />
-		{
-			resize && (
-				<Lism className='c--preview_help -pos:a -b:0 -r:0 -d:f -lh:1 -p:10 -g:5 -bdrs:5'>
-					リサイズ可能 <Icon as={ArrowDownRight} weight='fill' />
-				</Lism>
-			)
-		}
-	</Lism>
+	<div class='c--preview_area_frame'>
+		<Lism className='c--preview_inner' lismState={lismState} isFlow={isFlow} p={p} {...props}>
+			<slot />
+			{
+				resize && (
+					<Lism className='c--preview_help -pos:a -b:0 -r:0 -d:f -lh:1 -p:10 -g:5 -bdrs:5'>
+						リサイズ可能 <Icon as={ArrowDownRight} weight='fill' />
+					</Lism>
+				)
+			}
+		</Lism>
+	</div>
 </Lism>
