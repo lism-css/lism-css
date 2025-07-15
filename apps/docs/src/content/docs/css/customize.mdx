@@ -10,30 +10,22 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode } from "~/components";
 
 SCSSの変数を上書きすることで、出力するCSSのカスタマイズが可能です。
 
-- `lism-css/scss/query`
-	- `$breakpoints`: 各ブレイクポイントのサイズを指定できます。map型
-	- `$common_support_bp`: どのサイズまでのブレイクポイントをサポートするかを指定できます。文字列型
-	- `$is_container_query`: メディアクエリではなくコンテナクエリで出力するかを指定できます。数値型
-- `lism-css/scss/setting`
-	- `$props`: 各CSSプロパティに関する
-	設定を指定できます。map型
-	- `$utilities`: 各ユーティリティクラスに関する設定を指定できます。map型
-
-{/* $util_spaces: 5, 10, 15, 20, 30, 40, 50 !default;
-$util_em_tokens: 1, 2, 3, 5, 7, 10, 15, 20, 25, 30 !default; */}
 
 
-## ブレイクポイントの基本設定を変更する
+## `@layer`をオフにする
+
+`lism-css/main.css`(`lism-css/scss/main.scss`)ではなく、`lism-css/main_no_layer.css`(`lism-css/scss/main_no_layer.scss`)を読み込むことで、`@layer`をオフにすることができます。
 
 
 
-↓ 設定カスタマイズの書き方と各初期値
+## 設定カスタマイズの書き方と各初期値
+
 ```scss
 @use '../path-to/node_modules/lism-css/scss/setting' with (
 	$breakpoints: (
 		'sm': '480px',
-		'md': '720px',
-		'lg': '960px',
+		'md': '800px',
+		'lg': '1120px',
 	),
 	$common_support_bp: 'md',
 	$is_container_query: 1,
@@ -44,12 +36,21 @@ $util_em_tokens: 1, 2, 3, 5, 7, 10, 15, 20, 25, 30 !default; */}
 
 // lism の scssファイルを読み込む
 @use '../path-to/node_modules/lism-css/scss/main';
+
+// @layer を使わないようにするなら main ではなく main_no_layer を読み込んでください
+// @use '../path-to/node_modules/lism-css/scss/main_no_layer';
 ```
+
+（Astroの場合は`../path-to/node_modules/`は不要です。）
+
 
 {/* 例えば、`sm`,`md`サイズのサポートだけで良い場合は、`$common_support_bp`を`md`に設定することで、`lg`以降のブレイクポイントのユーティリティクラスを出力しないようにできます。 */}
 
 
-↓カスタマイズ例
+## カスタマイズ例
+
+### ブレイクポイントを変更する
+
 ```scss
 // 設定カスタマイズ
 @use '../path-to/node_modules/lism-css/scss/setting' with (
@@ -58,7 +59,34 @@ $util_em_tokens: 1, 2, 3, 5, 7, 10, 15, 20, 25, 30 !default; */}
 		'xl': '1200px', // xlサイズを追加で定義する
 	),
 	$common_support_bp: 'lg',  // lgサイズまでのユーティリティクラスを生成する
+);
+
+// lism の scssファイルを読み込む
+@use '../path-to/node_modules/lism-css/scss/main';
+```
+
+### コンテナクエリではなくメディアクエリを使用する
+
+```scss
+// 設定カスタマイズ
+@use '../path-to/node_modules/lism-css/scss/setting' with (
 	$is_container_query: 0, // media query で出力する
+);
+
+// lism の scssファイルを読み込む
+@use '../path-to/node_modules/lism-css/scss/main';
+
+// @layer を使わないようにするなら以下を読み込んでください
+// @use '../path-to/node_modules/lism-css/scss/main_no_layer';
+```
+
+
+### Prop Classの出力をカスタマイズする
+
+```scss
+// 設定カスタマイズ
+@use '../path-to/node_modules/lism-css/scss/setting' with (
+	$default_important: 1, // Prop クラスに対してデフォルトで !important を付与する
 	$props: (
 		'fz': (
 			// fzのユーティリティクラスに対して !important を出力する
@@ -73,8 +101,8 @@ $util_em_tokens: 1, 2, 3, 5, 7, 10, 15, 20, 25, 30 !default; */}
 			bp: 1, 
 		),
 		'p': (
-			// 'p'のユーティリティクラスは、xl サイズまで出力する
-			bp: 'xl', 
+			// 'p'のユーティリティクラスは、 lg サイズまで出力する
+			bp: 'lg', 
 			//.-p:box{padding:2em} を出力
 			utilities: ('box': '2em'),
 		),
@@ -83,17 +111,12 @@ $util_em_tokens: 1, 2, 3, 5, 7, 10, 15, 20, 25, 30 !default; */}
 
 // lism の scssファイルを読み込む
 @use '../path-to/node_modules/lism-css/scss/main';
-
-// @layer を使わないようにするなら main ではなく main_no_layer を読み込んでください
-@use '../path-to/node_modules/lism-css/scss/main_no_layer';
 ```
 
-Astroの場合は`../path-to/node_modules/`は不要です。
-
-<div class='is--container'>
+{/* <div class='is--container'>
 <Box p={['u:box', '20', '30', '40', '50']} bd c='base' bgc='text'>box</Box>
 <Box p='u:box' h={['auto', '1em']} bd>box</Box>
-</div>
+</div> */}
 
 
 ## ビルド処理について
