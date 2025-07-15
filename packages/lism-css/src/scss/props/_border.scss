@@ -21,47 +21,47 @@
 }
 // .has--bd:where(:not([class*='-bd:'])) {
 .-bd {
-	border-style: var(--bds);
-	border-width: var(--bdw);
-	border-color: var(--bdc);
+	border-style: var(--bds) #{mixin.$maybe_important};
+	border-width: var(--bdw) #{mixin.$maybe_important};
+	border-color: var(--bdc) #{mixin.$maybe_important};
 }
 
 /* stylelint-disable */
 .-bd\:n {
-	border: none;
+	border: none #{mixin.$maybe_important};
 }
 .-bd\:inherit {
-	border: inherit;
+	border: inherit #{mixin.$maybe_important};
 }
 
 // 方向指定
 .-bd\:l {
-	border-left: var(--bd);
+	border-left: var(--bd) #{mixin.$maybe_important};
 }
 .-bd\:r {
-	border-right: var(--bd);
+	border-right: var(--bd) #{mixin.$maybe_important};
 }
 .-bd\:t {
-	border-top: var(--bd);
+	border-top: var(--bd) #{mixin.$maybe_important};
 }
 .-bd\:b {
-	border-bottom: var(--bd);
+	border-bottom: var(--bd) #{mixin.$maybe_important};
 }
 .-bd\:x {
-	border-inline: var(--bd);
+	border-inline: var(--bd) #{mixin.$maybe_important};
 }
 .-bd\:y {
-	border-block: var(--bd);
+	border-block: var(--bd) #{mixin.$maybe_important};
 }
 .-bd\:is {
-	border-inline-start: var(--bd);
+	border-inline-start: var(--bd) #{mixin.$maybe_important};
 }
 .-bd\:ie {
-	border-inline-end: var(--bd);
+	border-inline-end: var(--bd) #{mixin.$maybe_important};
 }
 .-bd\:bs {
-	border-block-start: var(--bd);
+	border-block-start: var(--bd) #{mixin.$maybe_important};
 }
 .-bd\:be {
-	border-block-end: var(--bd);
+	border-block-end: var(--bd) #{mixin.$maybe_important};
 }
