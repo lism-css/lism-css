@@ -16,11 +16,15 @@ export default function atts(...args) {
 
 		if (!mix) continue;
 
-		if (typeof mix === 'string' || typeof mix === 'number') {
+		if (typeof mix === 'string') {
+			classes.push(...mix.trim().split(' '));
+		} else if (typeof mix === 'number') {
 			classes.push(mix);
 		} else if (Array.isArray(mix)) {
 			// 0 残す
 			classes.push(...mix.filter((v) => null != v));
+		} else if (mix instanceof Set) {
+			classes.push(...mix);
 		} else if (typeof mix === 'object') {
 			classes.push(...Object.keys(mix).filter((k) => !!mix[k]));
 		}

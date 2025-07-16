@@ -48,7 +48,6 @@ export default function getProps({
 	...props
 }) {
 	// props.skipState = true;
-	const iconClasses = [`l--icon`];
 	let Component = tag || 'span';
 	let content = '';
 
@@ -65,7 +64,7 @@ export default function getProps({
 
 				// class, styleは切り分ける
 				const { class: svgClass, style: svgStyle, ...svgAttrs } = svgProps;
-				className = svgClass;
+				className = atts(className, svgClass);
 				style = { ...svgStyle };
 
 				// 属性とコンテンツ
@@ -102,8 +101,9 @@ export default function getProps({
 	if (scale) style['--scale'] = scale;
 	if (offset) style['--offset'] = offset;
 
-	props.lismClass = atts(lismClass, iconClasses);
-	props.className = className;
+	// classNameをスペースで分割して重複を防いでマージ
+
+	props.lismClass = atts(lismClass, 'l--icon', className);
 	props.style = { ...style };
 
 	return { Component, lismProps: props, exProps, content };
