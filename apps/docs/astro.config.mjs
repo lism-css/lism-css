@@ -57,13 +57,13 @@ export default defineConfig({
 			// favicon: '/images/favicon.svg',
 
 			// このサイトのデフォルト言語として英語を設定します。
-			defaultLocale: 'root',
+			// defaultLocale: 'root',
 			locales,
 			customCss: [
 				// @layer 読み込み順の定義
 				'./src/styles/layer.scss',
 				// 'lism-css/main.css',
-				'lism-css/main.css',
+				// 'lism-css/main.css',
 				'./src/styles/lism-custom.scss',
 				'./src/styles/docs.scss',
 			],
