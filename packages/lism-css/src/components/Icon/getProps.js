@@ -1,6 +1,29 @@
 import presets from './presets';
 import atts from '../../lib/helper/atts';
 
+// SVG文字列をパースしてexPropsとコンテンツを生成する関数
+function parseSvgString(svgString) {
+	const svgProps = {};
+
+	// SVGの属性とコンテンツを一回のmatchで取得
+	const match = svgString.match(/<svg([^>]*?)>([\s\S]*?)<\/svg>/i);
+	if (match) {
+		const [, attributesString, svgContent] = match;
+
+		// 属性値をスペースで分解してオブジェクト化
+		const attributePattern = /(\w+)=["']([^"']*)["']/g;
+		let attrMatch;
+		while ((attrMatch = attributePattern.exec(attributesString)) !== null) {
+			const [, attrName, attrValue] = attrMatch;
+			svgProps[attrName] = attrValue;
+		}
+
+		return { svgProps, svgContent };
+	}
+
+	return {};
+}
+
 /*
 Icon の出力パターン
   - icon = 文字列の場合→preset で登録されたsvgアイコンを呼び出す
@@ -11,6 +34,8 @@ Icon の出力パターン
 */
 export default function getProps({
 	lismClass,
+	className = '',
+	style = {},
 	// variant,
 	as,
 	tag,
@@ -18,26 +43,41 @@ export default function getProps({
 	offset,
 	icon,
 	label,
-	style = {},
+
 	exProps = {},
 	...props
 }) {
 	// props.skipState = true;
 	const iconClasses = [`l--icon`];
-
 	let Component = tag || 'span';
+	let content = '';
 
 	// viewBoxがあれば、svg描画として扱う
 	if (props.viewBox) {
 		Component = 'svg';
 	} else if (icon) {
-		// icon が 文字列の場合、プリセットアイコンを呼び出す
+		// icon が 文字列の場合
 		if (typeof icon === 'string') {
-			// if (icon.startsWith('lism:')) {icon = icon.replace('lism:', '');}
-			const presetIconData = presets[icon] || null;
-			if (null != presetIconData) {
+			if (icon.startsWith('<svg')) {
+				// svg直接指定の場合
 				Component = '_SVG_';
-				exProps = { ...exProps, ...presetIconData };
+				const { svgProps = {}, svgContent = '' } = parseSvgString(icon);
+
+				// class, styleは切り分ける
+				const { class: svgClass, style: svgStyle, ...svgAttrs } = svgProps;
+				className = svgClass;
+				style = { ...svgStyle };
+
+				// 属性とコンテンツ
+				exProps = { ...exProps, ...svgAttrs };
+				content = svgContent;
+			} else {
+				// プリセットアイコンを呼び出す
+				const presetIconData = presets[icon] || null;
+				if (null != presetIconData) {
+					Component = '_SVG_';
+					exProps = { ...exProps, ...presetIconData };
+				}
 			}
 		} else if (typeof icon === 'object' && icon.as) {
 			const { as: _as, ..._exProps } = icon;
@@ -63,9 +103,10 @@ export default function getProps({
 	if (offset) style['--offset'] = offset;
 
 	props.lismClass = atts(lismClass, iconClasses);
-	props.style = style;
+	props.className = className;
+	props.style = { ...style };
 
-	return { Component, lismProps: props, exProps };
+	return { Component, lismProps: props, exProps, content };
 }
 
 // 子要素に Icon を持つコンポーネントが icon, iconProps で Icon 用の props を生成する処理
