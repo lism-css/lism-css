@@ -11,7 +11,7 @@ function parseSvgString(svgString) {
 		const [, attributesString, svgContent] = match;
 
 		// 属性値をスペースで分解してオブジェクト化
-		const attributePattern = /(\w+)=["']([^"']*)["']/g;
+		const attributePattern = /([\w-]+)=["']([^"']*)["']/g;
 		let attrMatch;
 		while ((attrMatch = attributePattern.exec(attributesString)) !== null) {
 			const [, attrName, attrValue] = attrMatch;
@@ -25,6 +25,7 @@ function parseSvgString(svgString) {
 						styleObj[property] = value;
 					}
 				});
+
 				svgProps[attrName] = styleObj;
 			} else {
 				svgProps[attrName] = attrValue;
@@ -78,7 +79,7 @@ export default function getProps({
 				// class, styleは切り分ける. fill は除去（<SVG> で currentColorセット
 				const { class: svgClass, style: svgStyle, ...svgAttrs } = svgProps;
 				className = atts(className, svgClass);
-				style = { ...svgStyle };
+				style = { ...style, ...svgStyle };
 
 				// 属性とコンテンツ
 				exProps = { ...exProps, ...svgAttrs, fill: 'currentColor' };
