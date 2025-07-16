@@ -15,7 +15,20 @@ function parseSvgString(svgString) {
 		let attrMatch;
 		while ((attrMatch = attributePattern.exec(attributesString)) !== null) {
 			const [, attrName, attrValue] = attrMatch;
-			svgProps[attrName] = attrValue;
+
+			// style属性の場合はオブジェクトに分割
+			if (attrName === 'style') {
+				const styleObj = {};
+				attrValue.split(';').forEach((rule) => {
+					const [property, value] = rule.split(':').map((str) => str.trim());
+					if (property && value) {
+						styleObj[property] = value;
+					}
+				});
+				svgProps[attrName] = styleObj;
+			} else {
+				svgProps[attrName] = attrValue;
+			}
 		}
 
 		return { svgProps, svgContent };
@@ -62,13 +75,13 @@ export default function getProps({
 				Component = '_SVG_';
 				const { svgProps = {}, svgContent = '' } = parseSvgString(icon);
 
-				// class, styleは切り分ける
+				// class, styleは切り分ける. fill は除去（<SVG> で currentColorセット
 				const { class: svgClass, style: svgStyle, ...svgAttrs } = svgProps;
 				className = atts(className, svgClass);
 				style = { ...svgStyle };
 
 				// 属性とコンテンツ
-				exProps = { ...exProps, ...svgAttrs };
+				exProps = { ...exProps, ...svgAttrs, fill: 'currentColor' };
 				content = svgContent;
 			} else {
 				// プリセットアイコンを呼び出す
