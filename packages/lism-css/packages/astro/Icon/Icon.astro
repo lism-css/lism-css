@@ -5,7 +5,12 @@ import getProps from '../../../dist/components/Icon/getProps';
 import SVG from './SVG.astro';
 
 // Propsの定義
-interface Props extends LismProps {}
+interface Props extends LismProps {
+	Component?: any;
+	lismProps?: LismProps;
+	exProps?: any;
+	content?: string;
+}
 
 const props = Astro.props || {};
 
@@ -13,10 +18,13 @@ const props = Astro.props || {};
 // let { IconTag, iconProps, otherProps } = getProps(props, hasChildren);
 // if (IconTag === '_SVG_') IconTag = SVG;
 
-let { Component, lismProps, exProps } = getProps(props);
+let { Component, lismProps, exProps = {}, content }: Props = getProps(props);
 
 if (Component === '_SVG_') {
 	Component = SVG;
+	if (content) {
+		exProps.__html = content;
+	}
 }
 ---
 
