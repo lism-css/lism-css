@@ -1,5 +1,7 @@
 # CLAUDE.md
 
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+
 このファイルはClaude Code (claude.ai/code)が作業する際のガイドラインを提供します。
 
 ## Common Development Commands
@@ -11,8 +13,29 @@ npm run dev
 # Build everything (React components + CSS)
 npm run build
 
+# Build only Vite (React components)
+npm run build:vite
+
+# Build only CSS
+npm run build:css
+
 # Lint SCSS/CSS files
 npm run lint:style
+
+# Preview built files
+npm run preview
+```
+
+### Working in Monorepo Context
+
+This package is part of a pnpm workspace. From the root directory:
+
+```bash
+# Work in this package specifically
+cd packages/lism-css && npm run dev
+
+# Build all packages from root
+pnpm build
 ```
 
 ## Important Notes
