@@ -8,7 +8,7 @@ export default function Callout({ type = 'alert', keycolor, icon, isFlow, childr
 	const _color = keycolor || presetData?.color || 'currentColor';
 
 	return (
-		<WithSide lismClass='c--callout u--cbox' keycolor={_color} p='30' g='30' bd bdrs='10' {...props}>
+		<WithSide lismClass='c--callout u--cbox' keycolor={_color} ai='c' p='30' g='30' bd bdrs='10' {...props}>
 			<Center data-is-side c='keycolor' fz='xl'>
 				<Icon icon={_icon} />
 			</Center>
