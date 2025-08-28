@@ -272,8 +272,9 @@ class LismPropsData {
 	}
 
 	// utilクラスを追加するか、styleにセットするかの分岐処理 @base
+	// 値が null, undefined, '', false の時はスキップ
 	setAttrs(name, val, options = {}, bp) {
-		if (null == val) return;
+		if (null == val || '' === val || false === val) return;
 
 		let styleName = `--${name}`;
 		let utilName = `-${options.utilKey || name}`;
@@ -394,32 +395,43 @@ class LismPropsData {
 		if (!hoverData) return;
 
 		// 配列のときは中身を再帰処理
-		if (Array.isArray(hoverData)) {
-			hoverData.forEach((_hov) => {
-				this.setHoverProps(_hov);
-			});
-			return;
-		}
+		// if (Array.isArray(hoverData)) {
+		// 	hoverData.forEach((_hov) => {
+		// 		this.setHoverProps(_hov);
+		// 	});
+		// 	return;
+		// }
 
 		if (hoverData === '-' || hoverData === true) {
 			this.addUtil(`-hov`);
 		} else if (typeof hoverData === 'string') {
-			// , 区切りでユーティリティクラスを複数出力可能
-			splitWithComma(hoverData).forEach((_val) => {
-				this.addUtil(`-hov:${_val}`);
+			// カンマ区切りで複数指定可能能
+			splitWithComma(hoverData).forEach((cls) => {
+				this.addUtil(`-hov:${cls}`);
 			});
 		} else if (typeof hoverData === 'object') {
 			// hover={{c:'red', 'bgc': 'blue'}} みたいな指定の時
 
 			Object.keys(hoverData).forEach((propName) => {
-				let value = hoverData[propName];
+				let hovVal = hoverData[propName];
+				if (null == hovVal || '' === hovVal || false === hovVal) return;
 
-				// データ取得
-				const converter = getConverter(propName);
-				if (converter) value = getMaybeCssVar(value, converter, propName);
+				// '-' の時は クラスのみ出力
+				if (hovVal === '-' || hovVal === true) {
+					this.addUtil(`-hov:${propName}`);
+				} else if (propName === 'class') {
+					// propNameが'class'の場合は文字列として-hov:{class}クラスを追加.(カンマ区切りで複数指定可能)
+					splitWithComma(hovVal).forEach((cls) => {
+						this.addUtil(`-hov:${cls}`);
+					});
+				} else {
+					// c,bgc などの処理
+					const converter = getConverter(propName);
+					if (converter) hovVal = getMaybeCssVar(hovVal, converter, propName);
 
-				this.addUtil(`-hov:${propName}`);
-				this.addStyle(`--hov-${propName}`, value);
+					this.addUtil(`-hov:${propName}`);
+					this.addStyle(`--hov-${propName}`, hovVal);
+				}
 			});
 		}
 	}

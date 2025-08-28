@@ -12,45 +12,57 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, EmbedCode, Callout, Ic
 hover時の挙動をコントロールするためのCSS設計について紹介します。
 
 
-Lismでは、`-hov`で始まるクラスを活用してhover時の挙動をコントロールします。
+Lismでは、`-hov:`で始まるクラスを活用してhover時の挙動をコントロールします。
 
-さらに、`-trs`クラスでトランジションの設定を行うことで、hover時の挙動をより細かくコントロールすることができます。
+{/* さらに、`-trs`クラスでトランジションの設定を行うことで、hover時の挙動をより細かくコントロールすることができます。 */}
 
 
 ## 基本的な使い方
 
-`.-hov:name` または `.-hov:{prop}` の形式でクラスを準備します。  
-前者はhover時の値を事前に決めておくクラスで、後者はcss変数と組み合わせを前提にしたクラスです。
+`.-hov:{prop}` という形式のクラスと、`--hov-{prop}` というcss変数を組み合わせて、hover時の挙動をコントロールします。
 
-
-### CSS
+Lismのコアパッケージでは、以下のようなクラスを標準で用意しています。
 
 <EmbedCode dirPath='packages/lism-css' srcPath='src/scss/props/_hover.scss' />
 
-（Lismのコアパッケージには標準で上記のクラスを用意していますが、必要に合わせてこの形式でクラスを追加してください。）
+（必要に合わせてこの形式でクラスを追加してください。）
 
 <Spacer h='20' />
 
+Lismに内包されているクラスでは、それぞれ初期値を定義しているため、クラスを付与するだけでも使用可能になっています。
+
 
 <Preview>
-	<PreviewTitle>`.-hov:fade`の使用例</PreviewTitle>
+	<PreviewTitle>`.-hov:op`,`.-hov:c`,`.-hov:bxsh`の使用例</PreviewTitle>
 	<PreviewArea p='40'>
-		<LinkBox href='###' hov='fade' bgc='base-2' bd p='30' bxsh='20'>
+		<LinkBox href='###' hov='op' bgc='base-2' bd p='30'>
+			<p>LinkBox</p>
+			<p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+		</LinkBox>
+		<LinkBox href='###' hov='c,bxsh' bd p='30'>
 			<p>LinkBox</p>
 			<p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
 		</LinkBox>
 	</PreviewArea>
 	<PreviewCode slot='tab' label='HTML'>
-		```html "-hov:fade"
-		<a href="###" class="is--linkBox -hov:fade -bgc:base-2 -bd -p:30">
+		```html "-hov:op" "-hov:c" "-hov:bxsh"
+		<a href="###" class="is--linkBox -hov:op -bgc:base-2 -bd -p:30">
+			<p>LinkBox</p>
+			<p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+		</a>
+		<a href="###" class="is--linkBox -hov:c -hov:bxsh -bd -p:30">
 			<p>LinkBox</p>
 			<p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
 		</a>
 		```
 	</PreviewCode>
 	<PreviewCode slot='tab' label='JSX'>
-		```jsx "hov='fade'"
-		<LinkBox href='###' hov='fade' bgc='base-2' bd p='30'>
+		```jsx "hov='op'" "hov='c,bxsh'"
+		<LinkBox href='###' hov='op' bgc='base-2' bd p='30'>
+			<p>LinkBox</p>
+			<p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+		</LinkBox>
+		<LinkBox href='###' hov='c,bxsh' bd p='30'>
 			<p>LinkBox</p>
 			<p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
 		</LinkBox>
@@ -64,6 +76,8 @@ Lismでは、`-hov`で始まるクラスを活用してhover時の挙動をコ�
 
 <Spacer h='20' />
 
+
+### プロパティを任意の値へ変化させる例
 
 <Preview>
 	<PreviewTitle>`bgc`,`c`を変化させる例</PreviewTitle>
@@ -178,28 +192,7 @@ Lismでは、以下のような`-trs`クラスを用意しています。
 		</LinkBox>
 		```
 	</PreviewCode>
-
 </Preview>
-
-
-{/* ### 配列での指定
-Lismコンポーネントにて、ユーティリティクラスの出力とオブジェクト形式での細かな変化を両方指定する場合は、配列で文字列とオブジェクトを指定してください。
-
-<Preview>
-	<PreviewTitle>`'fade'` に加え、オブジェクトで `c` を指定する例</PreviewTitle>
-	<PreviewArea p='40'>
-		<LinkBox href='###' hov={['fade', { c:'red' }]} bd p='30'>
-			<p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-		</LinkBox>
-	</PreviewArea>
-	<PreviewCode>
-	```jsx
-		<LinkBox href='###' hov={['fade', { c:'red' }]} bd p='30'>
-			<p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-		</LinkBox>
-	```
-	</PreviewCode>
-</Preview> */}
 
 
 ### `-hov`クラスを自作する例
