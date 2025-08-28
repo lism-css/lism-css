@@ -11,7 +11,7 @@ export default function Button({ layout, children, ...props }) {
 	};
 
 	return (
-		<Layout lismClass='c--button' tag='a' td='n' ai='c' hov='fade' _propConfig={_propConfig} {...props}>
+		<Layout lismClass='c--button' tag='a' td='n' ai='c' hov='op' _propConfig={_propConfig} {...props}>
 			{children}
 		</Layout>
 	);

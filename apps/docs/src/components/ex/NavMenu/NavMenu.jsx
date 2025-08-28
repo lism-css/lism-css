@@ -31,7 +31,7 @@ export function Item({ children, ...props }) {
 export function Link({ href, tag = 'span', hov, children, ...props }) {
 	if (href) {
 		tag = 'a';
-		hov = hov || 'fade';
+		hov = hov || 'op';
 	}
 	return (
 		<Flex lismClass='c--navMenu_link' tag={tag} href={href} hov={hov} c='inherit' skipState data-lism-get='p' {...props}>

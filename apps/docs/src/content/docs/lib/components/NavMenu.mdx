@@ -27,7 +27,7 @@ import NavMenu from '~/components/ex/NavMenu';
 |---|---|
 | <PropBadge>`<NavMenu.Root>`</PropBadge><br/>`hovBgc` | `--hov-bgc`を出力します。（`.c--navMenu_link`に`.-hov:bgc`を付けた時用）|
 | <PropBadge>`<NavMenu.Root>`</PropBadge><br/>`hovC` | `--hov-c`を出力します。 （`.c--navMenu_link`に`.-hov:c`を付けた時用）|
-| <PropBadge>`<NavMenu.Link>`</PropBadge><br/>`hov` | hover時のスタイルを指定できます。デフォルトは`fade`が指定されています。 |
+| <PropBadge>`<NavMenu.Link>`</PropBadge><br/>`hov` | hover時のスタイルを指定できます。デフォルトは`op`が指定されています。 |
 {/* | <PropBadge>`<NavMenu.Root>`</PropBadge><br/>`nestLevel` | ネストの深さを指定します。`[data-nest-level]`に値を出力します。<br />ただし、トップレベルでは指定しないでください。（`:not([data-nest-level])`で変数の初期値をセットするため）| */}
 
 
@@ -150,7 +150,7 @@ import { FolderSimpleIcon } from "@phosphor-icons/react";
 
 ### ホバースタイルの調整
 
-`<NavMenu.Link>`からデフォルトで出力されるのは`-hov:fade`になっています。
+`<NavMenu.Link>`からデフォルトで出力されるのは`-hov:op`になっています。
 
 カラーを変化させたい場合、`<NavMenu.Root>`に`hovBgc`(`--hov-c`)や`hovC`(`--hov-bgc`)を指定しておき、`<NavMenu.Link>`側で`-hov:c`や`-hov:bgc`クラスで受け取ると以下のようになります。
 

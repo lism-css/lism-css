@@ -1,41 +1,21 @@
 @use '../_mixin' as mixin;
 
 @media (any-hover: hover) {
-	// ------------------------------------------------------------
-	// プリセット
-	// ------------------------------------------------------------
-	.-hov\:fade:hover {
-		opacity: 0.7 #{mixin.$maybe_important};
-	}
-	// .-hov\:shadow:hover {
-	// 	box-shadow: var(--bxsh-4);
-	// }
-	// .-hov\:up:hover {
-	// 	translate: 0 -3px;
-	// }
-	// .-hov\:u:hover {
-	// 	text-decoration: underline !important;
-	// }
-
-	// ------------------------------------------------------------
-	// 値指定
-	// ------------------------------------------------------------
 	.-hov\:c:hover {
-		color: var(--hov-c) #{mixin.$maybe_important};
+		color: var(--hov-c, var(--c-link)) #{mixin.$maybe_important};
 	}
 	.-hov\:bdc:hover {
-		border-color: var(--hov-bdc) #{mixin.$maybe_important};
+		border-color: var(--hov-bdc, var(--c-link)) #{mixin.$maybe_important};
 	}
 	.-hov\:bgc:hover {
-		background-color: var(--hov-bgc) #{mixin.$maybe_important};
+		background-color: var(--hov-bgc, var(--c-base-2)) #{mixin.$maybe_important};
+	}
+	.-hov\:op:hover {
+		opacity: var(--hov-op, 0.7) !important;
 	}
 	.-hov\:bxsh:hover {
-		box-shadow: var(--hov-bxsh) #{mixin.$maybe_important};
+		box-shadow: var(--hov-bxsh, var(--bxsh-40)) #{mixin.$maybe_important};
 	}
-
-	// .-hov\:op:hover {
-	// 	opacity: var(--hov-op) !important;
-	// }
 	// .-hov\:filter:hover {
 	// 	filter: var(--hov-filter) !important;
 	// }
