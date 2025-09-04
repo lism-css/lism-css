@@ -6,8 +6,12 @@
 	// 	--wideSize: 100%;
 
 	// .is--overwide のサイズを is--container ごとにセット。
-	--overwideSize: 100cqw;
+	--overwideSize: 100cqi;
+	:where(.has--gutter) > & {
+		--overwideSize: calc(100cqi + var(--gutter) * 2);
+	}
 
+	// 子要素の制御
 	> * {
 		--maxIsz: var(--contentSize, 100%);
 		max-inline-size: min(100%, var(--maxIsz, 100%));
