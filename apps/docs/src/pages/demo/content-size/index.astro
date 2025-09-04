@@ -50,7 +50,8 @@ import '../container/_style.scss';
 		</Container>
 
 		<h2>is--fullwide</h2>
-		<p>is--fullwide は、親が has--gutter を持っていても全幅に広がります。</p>
+		<p><code>is--fullwide</code> は、親が <code>has--gutter</code> を持っていても全幅に広がります。</p>
+		<p>また、<code>is--flow</code> の直下で <code>is--fullwide</code> が連続すると、その間の余白は0となります。</p>
 		<Spacer h='5' />
 		<Container size='m' hasGutter isFlow='s'>
 			<AttsLabels atts='is--container,-container:m,has--gutter' />
@@ -58,50 +59,58 @@ import '../container/_style.scss';
 			<FullwideContent />
 			<FullwideContent />
 			<LoremContent />
+			<Box bd mbs='50'>
+				<AttsLabels atts='div' />
+				<p>↓親要素（ここではdiv）を飛び越えることはありません。</p>
+				<FullwideContent />
+			</Box>
 			<GutterGuide />
 		</Container>
 
 		<h2>is--overwide</h2>
 		<p>
 			<code>@propetry</code>
-			が有効なブラウザでは、直前のコンテナ要素が呼び出された位置を基準としたコンテナ幅（100cqw）まで広がります。
+			が有効なブラウザでは、<b>直前のコンテナ要素</b>が呼び出された位置を基準としたコンテナ幅 （<code>100cqi</code
+			>）まで広がります。(コンテナの親に<code>has--gutter</code>がある場合はその分を加算します。)
 		</p>
+		<p>親要素を飛び越えて広げたいコンテンツに活用できます。</p>
+		<!-- <p><code>@propetry</code>が無効なブラウザ</p> -->
 		<Spacer h='5' />
 
 		<Container size='m' isFlow='s' hasGutter>
 			<AttsLabels atts='is--container,-container:m' />
 			<LoremContent />
-			<FullwideContent />
+			<!-- <FullwideContent /> -->
 			<Overwide />
-
-			<Spacer h='5' />
-
-			<Container px='20' isFlow='s'>
-				<AttsLabels atts='is--container' />
+			<Spacer h='40' />
+			<Box bd isFlow='s'>
+				<AttsLabels atts='div' />
 				<FullwideContent />
 				<Overwide />
-				<Spacer h='5' />
-				<Container px='20' isFlow='s'>
-					<AttsLabels atts='is--container' />
-					<FullwideContent />
-					<Overwide />
-				</Container>
-			</Container>
-
-			<Spacer h='40' />
-
-			<Box px='20' bd isFlow='s'>
-				<AttsLabels atts='div' />
-				<Overwide />
-				<Spacer h='5' />
-				<Box px='20' bd isFlow='s'>
+				<Spacer h='10' />
+				<Box maxW='s' isFlow='s' mx='a'>
 					<AttsLabels atts='div' />
 					<Overwide />
 				</Box>
 			</Box>
+			<Spacer h='40' />
+			<Container isFlow='s'>
+				<AttsLabels atts='is--container' />
+				<Overwide />
+				<Spacer h='30' />
+				<Box maxW='s' isFlow='s'>
+					<AttsLabels atts='div,-maxW:s' />
+					<Overwide />
+				</Box>
+				<Spacer h='30' />
+				<Container size='s' isFlow='s'>
+					<AttsLabels atts='is--container,-container:s' />
+					<!-- <FullwideContent /> -->
+					<Overwide />
+				</Container>
+			</Container>
 
 			<GutterGuide />
-
 			<LoremContent />
 		</Container>
 

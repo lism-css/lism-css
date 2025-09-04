@@ -9,15 +9,15 @@ import './_style.scss';
 	<Lism id='demo-wrapper' isFlow py={50} p='1px'>
 		<h2>is--container</h2>
 		<p>
-			<TipCode text='is--container' />単体では、効果としては主に contaner-type:inline-size が適用されるだけです。
+			<TipCode text='is--container' />単体では、効果としては主に <code>contaner-type:inline-size</code> が適用されるだけです。
 		</p>
 		<Container>
 			<AttsLabels atts='is--container' />
 			<LoremContent />
 		</Container>
-		<p>ただし、margin-inline:auto も適用されているので、自身の横幅がセットされている時は中央寄せされます。</p>
+		<p>ただし、<code>margin-inline:auto</code> も適用されているので、自身の横幅がセットされている時は中央寄せされます。</p>
 		<Container maxW='s'>
-			<AttsLabels atts='is--container.-maxW' />
+			<AttsLabels atts='is--container,-maxW:s' />
 			<LoremContent />
 		</Container>
 
@@ -50,13 +50,20 @@ import './_style.scss';
 		<h2>container要素のネスト</h2>
 
 		<p>
-			<code>is--container</code> は子要素の幅を変数で制限するため、同じ変数を扱うコンテナがネストされると、（子要素側の）コンテナの幅がそのコンテンツサイズと同じ大きさになります。
+			<code>is--container</code> は子要素の幅を変数で制御しているため、直下にネストすると子コンテナ自身の幅も（同じ変数名なので）影響を受けます。
 		</p>
 		<Container size='m' hasGutter isFlow='s'>
 			<AttsLabels atts='is--container,-container:m,has--gutter' />
 			<LoremContent />
+			<!-- <Box isFullwide bgc='base-2'>Box</Box> -->
 			<LoremContent />
 			<Spacer h='.5rem' />
+			<Container size='l' isFlow='s'>
+				<AttsLabels atts='is--container,-container:l' />
+				<LoremContent />
+				<!-- <Box isFullwide bgc='base-2'>Box</Box> -->
+				<LoremContent />
+			</Container>
 			<Container size='s' isFlow='s'>
 				<AttsLabels atts='is--container,-container:s' />
 				<LoremContent />
@@ -71,34 +78,71 @@ import './_style.scss';
 		<p>
 			<br />
 			コンテナクエリの判定値は<b>直前の親コンテナの幅</b>になりますが、
-			<code>.-container:s|m|l</code> は子要素の幅を制限しているだけで、 自身の横幅は100%です。つまり、コンテナクエリの判定値もこの100%サイズが基準となります。
+			<code>.-container:s|m|l</code> は子要素の幅を制限しているだけで、<b>自身の横幅は100%</b>です。
+			<br />つまり、コンテナクエリの判定値もこの100%サイズが基準となります。
+		</p>
+		<p>
+			以下の例では、コンテナ直下のdivのサイズは <code>var(--size-s)</code> ですが、<code>100cqw</code> がそのSサイズになるのではなく、windowサイズと一致します。
 		</p>
 
 		<Container size='s' isFlow='s'>
 			<AttsLabels atts='is--container,-container:s' />
 			{/* <LoremContent /> */}
+
 			<Box isFlow='s'>
 				<AttsLabels atts='div' />
-				<p>ここでのコンテナクエリの判定値は、外側の（青色の点線で囲われた）コンテナ要素のサイズです。</p>
-				<Lism p='10' isFlow='s'>
+				<Lism isFlow='s'>
 					<Lism bd bdc='blue'>
-						<Lism w='50cqw' bgc='blue:20%' p='10' bg='u:stripe' bd='r' bdc='blue' whs='nw'>width: 50cqw を適用したBOX</Lism></Lism
+						<Lism w='75cqw' bgc='blue:20%' bg='u:stripe' bd='r' bdc='blue' whs='nw'>width: 75cqw を適用したBOX</Lism></Lism
 					>
-					<p>
-						コンテナクエリ適用状態 :
+					<p class='-fz:s'>
+						↑ コンテナクエリの適用状態 :
 						<Text tag='span' lh='1' p='5' bd className='u--cbox' keycolor='blue' d={['n', 'inline-block']}>@sm~</Text>
 						<Text tag='span' lh='1' p='5' bd className='u--cbox' keycolor='blue' d={['n', null, 'inline-block']}>@md~</Text>
 						<Text tag='span' lh='1' p='5' bd className='u--cbox' keycolor='blue' d={['n', null, null, 'inline-block']}>@lg~</Text>
 					</p>
 				</Lism>
 			</Box>
-			<Spacer h='1rem' />
+		</Container>
+		<p>
+			ここでのコンテナクエリの判定値( cqw )は、外側の<Text tag='span' class='_-container:_'>青色の点線</Text
+			>で囲われたコンテナ要素のサイズです。
+		</p>
+		<p>
+			もし、内部の要素のサイズ（ここでは <code>var(--size-s)</code>) を <code>100cqw</code>
+			となるようにコンテナクエリを内部のdivで使いたい場合は、コンテナ自身のサイズを明示的にSサイズにするか、コンテナをネストします。
+		</p>
+
+		<p class='-ta:c'>以下は、コンテナ自体のサイズを明示的に指定した例です。</p>
+		<Container maxW='s'>
+			<AttsLabels atts='is--container,-maxW:s' />
+
+			<Box isFlow='s'>
+				<AttsLabels atts='div' />
+				<!-- <p>ここでのコンテナクエリの判定値は、内部でさらに配置している（緑色の点線で囲われた）コンテナ要素のサイズです。</p> -->
+				<Lism isFlow='s'>
+					<Lism bd bdc='green'>
+						<Lism w='75cqw' bgc='green:20%' bg='u:stripe' bd='r' bdc='green' whs='nw'>width: 75cqw を適用したBOX</Lism></Lism
+					>
+					<p>
+						コンテナクエリ適用状態 :
+						<Text tag='span' lh='1' p='5' bd className='u--cbox' keycolor='green' d={['n', 'inline-block']}>@sm~</Text>
+						<Text tag='span' lh='1' p='5' bd className='u--cbox' keycolor='green' d={['n', null, 'inline-block']}>@md~</Text>
+						<Text tag='span' lh='1' p='5' bd className='u--cbox' keycolor='green' d={['n', null, null, 'inline-block']}>@lg~</Text>
+					</p>
+				</Lism>
+			</Box>
+		</Container>
+
+		<p class='-ta:c'>以下は、コンテナをネストした例です。</p>
+		<Container size='s'>
+			<AttsLabels atts='is--container,-container:s' />
 			<Container>
 				<AttsLabels atts='is--container' />
-				<p>ここでのコンテナクエリの判定値は、内部でさらに配置している（緑色の点線で囲われた）コンテナ要素のサイズです。</p>
-				<Lism p='10' isFlow='s'>
+				<!-- <p>ここでのコンテナクエリの判定値は、内部でさらに配置している（緑色の点線で囲われた）コンテナ要素のサイズです。</p> -->
+				<Lism isFlow='s'>
 					<Lism bd bdc='green'>
-						<Lism w='50cqw' bgc='green:20%' p='10' bg='u:stripe' bd='r' bdc='green' whs='nw'>width: 50cqw を適用したBOX</Lism></Lism
+						<Lism w='75cqw' bgc='green:20%' bg='u:stripe' bd='r' bdc='green' whs='nw'>width: 75cqw を適用したBOX</Lism></Lism
 					>
 					<p>
 						コンテナクエリ適用状態 :
@@ -109,6 +153,7 @@ import './_style.scss';
 				</Lism>
 			</Container>
 		</Container>
+
 		<Spacer h='10rem' />
 	</Lism>
 </DemoPageLayout>

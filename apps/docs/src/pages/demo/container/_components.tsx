@@ -35,7 +35,7 @@ export function TipCode({
 		color = 'green';
 	} else if (text.includes('flow')) {
 		color = 'orange';
-	} else if (text.includes('gutter')) {
+	} else if (text.includes('gutter') || text.startsWith('-')) {
 		color = 'purple';
 	}
 
