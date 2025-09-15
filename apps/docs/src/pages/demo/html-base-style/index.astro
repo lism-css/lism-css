@@ -28,5 +28,30 @@ import { Lism } from 'lism-css/astro';
 		<!-- <Lism isFlow='s'>
 			<RawHTML type='forms' />
 		</Lism> -->
+		<hr />
+		<h1>Medias</h1>
+		<p>（img, video 自体に display の初期セットはしていませんが、is--container 直下では display:block となります。）</p>
+		<img src='/img/img-1.jpg' alt='img' width='1200' height='675' />
+		<video controls width='1200' height='675'>
+			<source src='/Sky.mp4' type='video/webm' />
+		</video>
+		<audio controls src='/cat-meow.mp3'></audio>
+		<iframe
+			width='800'
+			height='450'
+			src='https://www.youtube.com/embed/4nB34V42-s8?si=YN-CJkuV2ptj_7Ns'
+			title='YouTube video player'
+			frameborder='0'
+			allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share'
+			referrerpolicy='strict-origin-when-cross-origin'
+			allowfullscreen></iframe>
+
+		<!-- <object data='/sample.pdf' type='application/pdf' width='800' height='800'>
+			<p><b>表示されない時の表示</b>: <a href='pdf.pdf'>PDF をダウンロード</a>.</p>
+		</object> -->
+		<!-- <picture>
+			<source srcset='/img/img-3.jpg' width='1200' height='675' />
+			<img src='/img/img-1.jpg' alt='' width='1200' height='675' />
+		</picture> -->
 	</Lism>
 </DemoPageLayout>

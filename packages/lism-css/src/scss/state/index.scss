@@ -5,3 +5,8 @@
 @forward './size'; // Note: container より後ろで読み込む
 @forward './linkbox';
 @forward './layer'; // Note: position の関係で、linkbox より後で読み込む
+
+// container, frame直下の要素は block に初期リセット
+:where(.is--container, .is--flow) > * {
+	display: block;
+}
