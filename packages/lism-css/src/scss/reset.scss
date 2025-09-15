@@ -40,24 +40,21 @@ rt {
 /* ------------------------------------------------------------
 	Medias
 ------------------------------------------------------------ */
-@include mixin.maybe_where('img', '') {
-	/* 親要素をはみ出さないように */
+
+/* 親要素をはみ出さないようにする */
+@include mixin.maybe_where('img, video', '') {
 	max-inline-size: 100%;
-
-	/* 隙間ができるのを防ぐ。( インラインな img, svg を考慮し、 display はいじらない。) */
-	vertical-align: middle;
-
-	// アスペクト比を保持
 	block-size: auto;
 }
 
-/* img 以外のメディア系も飛び出さないように。 ( audio, embed, object にも必要か...? ) */
-@include mixin.maybe_where('iframe, audio, picture, video', '') {
-	display: block;
-	max-inline-size: 100%;
+/* 隙間ができるのを防ぐ。( display はいじらない。) */
+@include mixin.maybe_where('img, video, audio', '') {
+	vertical-align: middle;
 }
 
-@include mixin.maybe_where('iframe', '') {
+/* iframe は display block */
+@include mixin.maybe_where('iframe, embed, object', '') {
+	display: block;
 	border: none;
 }
 
