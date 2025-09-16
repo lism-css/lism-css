@@ -9,7 +9,7 @@ interface ComponentNavData {
 	thumb: string;
 }
 
-export default function TabsRoot({
+export default function LibTabs({
 	componentList,
 	sectionList,
 	templateList,
@@ -26,9 +26,13 @@ export default function TabsRoot({
 		const tab = params.get('tab');
 		console.log('params', params, tab);
 
-		if (tab === 'sections') setDefaultIndex(2);
-		else if (tab === 'templates') setDefaultIndex(3);
-		else setDefaultIndex(1);
+		if (tab === 'sections') {
+			setDefaultIndex(3);
+		} else if (tab === 'templates') {
+			setDefaultIndex(2);
+		} else {
+			setDefaultIndex(1);
+		}
 	}, []);
 
 	return (
@@ -44,6 +48,24 @@ export default function TabsRoot({
 					<h2>Components</h2>
 					<Columns cols={[2, 3, 4]}>
 						{componentList.map((entry: any) => {
+							return (
+								<LinkBox layout={Stack} href={entry.href} p='30' g='30' bdc='#D9D9D9'>
+									<Frame ar='3/2' bd bdw='1px' bdrs='20' bdc='inherit' bgc='#fff'>
+										<Media src={entry.thumb} alt={entry.label} />
+									</Frame>
+									<Lism class='u--trimHL -ff:mono -fz:s'>{entry.label}</Lism>
+								</LinkBox>
+							);
+						})}
+					</Columns>
+				</Tabs.Panel>
+			</Tabs.Item>
+			<Tabs.Item>
+				<Tabs.Tab>Templates</Tabs.Tab>
+				<Tabs.Panel>
+					<h2>Templates</h2>
+					<Columns cols={[1, 2]}>
+						{templateList.map((entry: any) => {
 							return (
 								<LinkBox layout={Stack} href={entry.href} p='30' g='30' bdc='#D9D9D9'>
 									<Frame ar='3/2' bd bdw='1px' bdrs='20' bdc='inherit' bgc='#fff'>
@@ -74,24 +96,6 @@ export default function TabsRoot({
 					</Columns>
 				</Tabs.Panel>
 			</Tabs.Item> */}
-			<Tabs.Item>
-				<Tabs.Tab>Templates</Tabs.Tab>
-				<Tabs.Panel>
-					<h2>Templates</h2>
-					<Columns cols={[1, 2]}>
-						{templateList.map((entry: any) => {
-							return (
-								<LinkBox layout={Stack} href={entry.href} p='30' g='30' bdc='#D9D9D9'>
-									<Frame ar='3/2' bd bdw='1px' bdrs='20' bdc='inherit' bgc='#fff'>
-										<Media src={entry.thumb} alt={entry.label} />
-									</Frame>
-									<Lism class='u--trimHL -ff:mono -fz:s'>{entry.label}</Lism>
-								</LinkBox>
-							);
-						})}
-					</Columns>
-				</Tabs.Panel>
-			</Tabs.Item>
 		</Tabs.Root>
 	);
 }
