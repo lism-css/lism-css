@@ -6,7 +6,7 @@
 @forward './linkbox';
 @forward './layer'; // Note: position の関係で、linkbox より後で読み込む
 
-// container, frame直下の要素は block に初期リセット
-:where(.is--container, .is--flow) > * {
+// container, frame直下のメディア要素は block に初期リセット
+:where(.is--container, .is--flow) > :where(img, video, audio) {
 	display: block;
 }
