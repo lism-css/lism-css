@@ -1,0 +1,16 @@
+---
+title: Feature004
+description: 特徴・注目コンテンツ用のセクションです。
+---
+
+import { Lism, Box } from 'lism-css/astro';
+import { Preview, PreviewArea, PreviewTitle, PreviewCode, PreviewFrame, EmbedCode } from "~/components";
+
+特徴・注目コンテンツ用のセクションです。  
+breakpoint「md」以下はレイアウトが変わり、アイテムの並びが変更されます。
+
+<PreviewTitle>プレビュー</PreviewTitle>
+<PreviewFrame url='/preview/sections/Feature004/' />
+
+<PreviewTitle>コード</PreviewTitle>
+<EmbedCode srcPath={`src/pages/preview/sections/Feature004/index.astro`} />
