@@ -444,9 +444,7 @@ class LismPropsData {
 			if (value.includes(',') && !value.includes('(')) {
 				splitWithComma(value).forEach((_val) => {
 					const utilVal = getMaybeUtilValue('bd', _val) || _val;
-					if (utilVal === 'all') {
-						if (utilVal) this.addUtil(`-bd`);
-					} else if (utilVal) {
+					if (utilVal) {
 						this.addUtil(`-bd:${utilVal}`);
 					}
 				});
