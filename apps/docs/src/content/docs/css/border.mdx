@@ -8,11 +8,12 @@ import { Box, Dummy, Flex, Stack, Divider, Spacer } from 'lism-css/astro';
 import { Preview, PreviewArea, PreviewTitle, PreviewCode, Callout } from "~/components";
 
 
-
 Lismでは、border系の指定が少し特殊になっています。
 
-全方向用の`-bd`クラスと、特定の方向だけにボーダーを表示するための`.-bd\:{side}`クラスがあります。  
-いずれも、細かなボーダースタイルは `--bdc`, `--bdw`, `--bds` の3つの変数で管理します。
+- どの方向にボーダーを表示するかを `.-bd\:{side}`クラスで指定します。
+- 全方向表示には `-bd` クラスを使用します。
+- 細かなスタイルは `--bdc`, `--bdw`, `--bds` の3つの変数で指定します。
+- ブレイクポイントでボーダーの方向を変えたい場合、`--bdw` で調整します。
 
 <PreviewTitle>css</PreviewTitle>
 ```scss
@@ -20,17 +21,16 @@ Lismでは、border系の指定が少し特殊になっています。
 	--bds: solid;
 	--bdw: 1px;
 	--bdc: currentColor;
-	--bd var(--bdw) var(--bds) var(--bdc);
 }
-.-bd {
-	border-style: var(--bds);
+:where(.-bd,[class*='-bd:']) {
 	border-width: var(--bdw);
 	border-color: var(--bdc);
 }
-.-bd\:l { border-left: var(--bd) }
-.-bd\:r { border-right: var(--bd) }
-.-bd\:t { border-top: var(--bd) }
-.-bd\:b { border-bottom: var(--bd) }
+.-bd { border-style: var(--bds) }
+.-bd\:l { border-left-style: var(--bds) }
+.-bd\:r { border-right-style: var(--bds) }
+.-bd\:t { border-top-style: var(--bds) }
+.-bd\:b { border-bottom-style: var(--bds) }
 // ...
 ```
 

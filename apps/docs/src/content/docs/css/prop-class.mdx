@@ -51,19 +51,16 @@ Lismでは、主要なCSSプロパティ群に対して、それらで頻繁に�
 このページでは、その Prop Classの一覧を紹介します。
 
 
-
 <Callout type='info'>
 [SCSSでカスタマイズ](/css/customize/)することで、出力するクラスの種類は変更できます。
 </Callout>
 
 
-## 全Prop Class一覧
-
+{/* ## 全Prop Class一覧
 <PreviewTitle>CSS (スクロールしてご覧いただけます）</PreviewTitle>
 <Frame ar='3/2' ovy='auto'>
-	{/* <EmbedCode dirPath='packages/lism-css' srcPath='dist/css/props.css' /> */}
 	<AllPropClasses />
-</Frame>
+</Frame> */}
 
 
 ## このページの表の見方
@@ -72,10 +69,10 @@ Lismでは、主要なCSSプロパティ群に対して、それらで頻繁に�
 
 |カラム名|説明|
 |---|---|
-|Property|CSSプロパティ|
-|Shorthand|その省略形。Propクラスの`-{prop}:{val}`の`{prop}`にあたる文字列です。<br />また、Lismコンポーネントに指定するためのプロパティ名もこの文字列です。|
-|To Class|Propクラスとして出力される値|
-|BP|ブレイクポイント対応クラスの有無|
+|**Property**|CSSプロパティ|
+|**Shorthand**|その省略形。Propクラスの`-{prop}:{val}`の`{prop}`にあたる文字列です。<br />また、Lismコンポーネントに指定するためのプロパティ名もこの文字列です。|
+|**To Class**|Propクラスとして出力される値|
+|**BP**|ブレイクポイント対応クラスの有無|
 
 省略形の文字列(Shorthand)は、クラスとして出力されます。また、`Lism`コンポーネントに指定するプロパティも、この文字列です。
 
@@ -437,8 +434,8 @@ export const LinkSPACE = () => <a href="/css/tokens/#space"><code>SPACE</code></
 |---|---|---|---|
 |`border`|`bd`|`n`(`none`),<br />`l`,`r`,`t`,`b`,<br />`is`,`ie`,`bs`,`be`,<br /> `x`,`y`|-|
 |`--bdc`|`bdc`|`divider`,`inherit`|-|
+|`--bds`|`bds`|`ds`(`dashed`),`dt`(`dotted`),`db`(`double`)|-|
 |`--bdw`|`bdw`|-|○|
-|`--bds`|`bds`|-|-|
 
 {/* `COLOR`,`PALETTE` */}
 

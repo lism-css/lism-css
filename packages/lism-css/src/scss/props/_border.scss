@@ -17,51 +17,56 @@
 	--bds: solid;
 	--bdw: 1px;
 	--bdc: currentColor;
-	--bd: var(--bdw) var(--bds) var(--bdc);
 }
-// .has--bd:where(:not([class*='-bd:'])) {
-.-bd {
-	border-style: var(--bds) #{mixin.$maybe_important};
+
+.-bd,
+[class*='-bd:'] {
 	border-width: var(--bdw) #{mixin.$maybe_important};
 	border-color: var(--bdc) #{mixin.$maybe_important};
+}
+
+.-bd {
+	// --bd: var(--bdw) var(--bds) var(--bdc);
+	// border: var(--bd) #{mixin.$maybe_important};
+	border-style: var(--bds) #{mixin.$maybe_important};
 }
 
 /* stylelint-disable */
 .-bd\:n {
 	border: none #{mixin.$maybe_important};
 }
-.-bd\:inherit {
-	border: inherit #{mixin.$maybe_important};
-}
 
 // 方向指定
+// .-bd\:all {
+// 	border-style: var(--bds) #{mixin.$maybe_important};
+// }
 .-bd\:l {
-	border-left: var(--bd) #{mixin.$maybe_important};
+	border-left-style: var(--bds) #{mixin.$maybe_important};
 }
 .-bd\:r {
-	border-right: var(--bd) #{mixin.$maybe_important};
+	border-right-style: var(--bds) #{mixin.$maybe_important};
 }
 .-bd\:t {
-	border-top: var(--bd) #{mixin.$maybe_important};
+	border-top-style: var(--bds) #{mixin.$maybe_important};
 }
 .-bd\:b {
-	border-bottom: var(--bd) #{mixin.$maybe_important};
+	border-bottom-style: var(--bds) #{mixin.$maybe_important};
 }
 .-bd\:x {
-	border-inline: var(--bd) #{mixin.$maybe_important};
+	border-inline-style: var(--bds) #{mixin.$maybe_important};
 }
 .-bd\:y {
-	border-block: var(--bd) #{mixin.$maybe_important};
+	border-block-style: var(--bds) #{mixin.$maybe_important};
 }
 .-bd\:is {
-	border-inline-start: var(--bd) #{mixin.$maybe_important};
+	border-inline-start-style: var(--bds) #{mixin.$maybe_important};
 }
 .-bd\:ie {
-	border-inline-end: var(--bd) #{mixin.$maybe_important};
+	border-inline-end-style: var(--bds) #{mixin.$maybe_important};
 }
 .-bd\:bs {
-	border-block-start: var(--bd) #{mixin.$maybe_important};
+	border-block-start-style: var(--bds) #{mixin.$maybe_important};
 }
 .-bd\:be {
-	border-block-end: var(--bd) #{mixin.$maybe_important};
+	border-block-end-style: var(--bds) #{mixin.$maybe_important};
 }

@@ -89,7 +89,6 @@ export default {
 		style: 'border',
 		utils: {
 			none: 'n',
-			inherit: 'inherit',
 			left: 'l',
 			right: 'r',
 			top: 't',
@@ -103,7 +102,14 @@ export default {
 		},
 	},
 	bdw: { isVar: 1 }, // --bdw のみ
-	bds: { isVar: 1 }, // --bds のみ
+	bds: {
+		isVar: 1,
+		utils: {
+			dashed: 'ds',
+			dotted: 'dt',
+			double: 'db',
+		},
+	}, // --bds のみ
 	bdc: {
 		isVar: 1,
 		utils: { transparent: 't' },
