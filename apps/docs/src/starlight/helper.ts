@@ -7,9 +7,11 @@ export function imageExists(imagePath: string): boolean {
 	return existsSync(fullPath);
 }
 
+export const isLibTabGroup = (entry: any) => {
+	return entry.type === 'group' && (entry.label === 'Templates' || entry.label === 'Components');
+};
 export const isLibSidebar = (entry: any) => {
-	const isLibGroup = entry.type === 'group' && (entry.label === 'Templates' || entry.label === 'Components' || entry.label === 'Sections');
-	return isLibGroup || entry.label === 'Lism Library';
+	return isLibTabGroup(entry) || entry.label === 'Docs';
 };
 export const isBothSidebar = (entry: any) => {
 	// return false;
