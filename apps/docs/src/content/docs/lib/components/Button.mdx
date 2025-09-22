@@ -4,7 +4,7 @@ description: ...
 ---
 
 import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportSource, ImportExComponent } from '~/components';
-import { Box, Flex, Grid, GridItem, Frame, Link, Text, Media, Icon, Spacer, Center, Layer, Dummy } from 'lism-css/astro';
+import { Box, Flex, Grid, Lism, Frame, Link, Text, Media, Icon, Spacer, Center, Layer, Dummy } from 'lism-css/astro';
 import {
 	ArrowRightIcon,
 	ShoppingCartSimpleIcon,
@@ -38,7 +38,7 @@ import Button from '~/components/ex/Button/index.astro';
 			<Link href='###' d='if' w='fit' td='n' c='inherit' bd py='10' px='30' lh='xs' bdrs='20' hov='op'>Button</Link>
 		</Flex>
 		<Grid tag='a' href='###' gtc='1em 1fr 1em' ji='c' ai='c' px='30' py='20' g='40' w='16rem' td='n' lh='xs' bgc='text' c='base' bdrs='20'>
-			<GridItem tag='span' gc='2'>Button</GridItem>
+			<Lism tag='span' gc='2'>Button</Lism>
 			<Icon icon={ArrowRightIcon}/>
 		</Grid>
 	</PreviewArea>
@@ -49,7 +49,7 @@ import Button from '~/components/ex/Button/index.astro';
 			<Link href='###' d='if' w='fit' td='n' c='inherit' bd py='10' px='30' lh='xs' bdrs='20' hov='op'>Button</Link>
 		</Flex>
 		<Grid tag='a' href='###' gtc='1em 1fr 1em' ji='c' ai='c' px='30' py='20' g='40' w='16rem' td='n' lh='xs' bgc='text' c='base' bdrs='20'>
-			<GridItem tag='span' gc='2'>Button</GridItem>
+			<Lism tag='span' gc='2'>Button</Lism>
 			<Icon icon={ArrowRightIcon}/>
 		</Grid>
 		```

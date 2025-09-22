@@ -3,7 +3,7 @@ title: 'Card'
 description: ...
 ---
 
-import { Dummy, Box, Flex, Stack, Grid, GridItem, Frame, Text, LinkBox, Link, Layer, Columns, Media, WithSide } from 'lism-css/react';
+import { Dummy, Box, Flex, Stack, Grid, Frame, Text, LinkBox, Link, Layer, Columns, Media, WithSide } from 'lism-css/react';
 import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportSource, ImportExComponent } from '~/components';
 import Card from '~/components/ex/Card/index.jsx';
 
@@ -15,7 +15,7 @@ import Card from '~/components/ex/Card/index.jsx';
 	<PreviewArea resize bg='u:stripe' p='0' isFlow={null}>
 	<Box p={['30', null,'40']}>
 		<Columns cols={[1, 2]} g={['30', null, '40']} colSize='16rem' ai='s'>
-			<WithSide isLinkBox href='###' hov='bxsh' trs sideW='50%' bgc='base' bdrs='20' bxsh='10' ov='h' gridItem={{gc:'1/-1'}}>
+			<WithSide isLinkBox href='###' hov='bxsh' trs sideW='50%' bgc='base' bdrs='20' bxsh='10' ov='h' gc='1/-1'>
 				<Frame data-is-side ar='16/9' >
 					<Media src='/img/img-4.jpg' alt='' width='960' height='640' />
 				</Frame>
@@ -295,9 +295,9 @@ import Card from '~/components/ex/Card/index.jsx';
 			gd={[`'img' '.'`, `'img .' / 200px 1fr`]}
 			hov='set'
 		>
-			<GridItem layout={Frame} ga='img' aslf='stretch' ar={['ogp', '1/1']} maxW='100%' pos='r' bdrs='20' bxsh='10'>
+			<Frame ga='img' aslf='stretch' ar={['ogp', '1/1']} maxW='100%' pos='r' bdrs='20' bxsh='10'>
 				<Media css={{scale: 'var(--_isHov, 1.25)'}} trs src='/img/img-1.jpg' alt='' width='960' height='640' />
-			</GridItem>
+			</Frame>
 			<Stack g='30' py='30' px={['20','30']} op='var(--_isHov, 0.75)'>
 				<h3 className='u--trimHL -fz:l'>Card Title</h3>
 				<Text className='u--trimHL' fz='s' lh='s' op='high'>ロレムイプサムの座り雨、トマ好き学習だったエリット、しかし時と活力はそのような木々と楽しみ。ブラインド行うにはいくつかの重要な事柄が流れます。</Text>
@@ -312,9 +312,9 @@ import Card from '~/components/ex/Card/index.jsx';
 			gd={[`'img' '.'`, `'img .' / 200px 1fr`]}
 			hov='set'
 		>
-			<GridItem layout={Frame} ga='img' aslf='stretch' ar={['ogp', '1/1']} maxW='100%' pos='r' bdrs='20' bxsh='10'>
+			<Frame ga='img' aslf='stretch' ar={['ogp', '1/1']} maxW='100%' pos='r' bdrs='20' bxsh='10'>
 				<Media css={{scale: 'var(--_isHov, 1.25)'}} trs src='/img/img-1.jpg' alt='' width='960' height='640' />
-			</GridItem>
+			</Frame>
 			<Stack g='30' py='30' px={['20','30']} op='var(--_isHov, 0.75)'>
 				<h3 className='u--trimHL -fz:l'>Card Title</h3>
 				<Text className='u--trimHL' fz='s' lh='s' op='high'>ロレムイプサムの座り雨、トマ好き学習だったエリット、しかし時と活力はそのような木々と楽しみ。ブラインド行うにはいくつかの重要な事柄が流れます。</Text>

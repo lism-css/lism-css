@@ -3,10 +3,9 @@ import atts from '../../lib/helper/atts';
 import getTransformProps from '../getTransformProps';
 import getInsetProps from '../getInsetProps';
 import getFilterProps from '../getFilterProps';
-import { getGridItemProps } from '../Grid/getProps';
 
 export default function ({ lismClass, size, ...props }) {
-	props = getGridItemProps(getFilterProps(getTransformProps(getInsetProps(props))));
+	props = getFilterProps(getTransformProps(getInsetProps(props)));
 
 	if (size) {
 		props.ar = '1/1';

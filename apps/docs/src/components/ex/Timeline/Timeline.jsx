@@ -1,4 +1,4 @@
-import { Center, Grid, GridItem, Icon, Decorator } from 'lism-css/react';
+import { Lism, Center, Grid, Icon, Decorator } from 'lism-css/react';
 import './style.css';
 
 export function Root({ children, isHorizontal, ...props }) {
@@ -10,23 +10,10 @@ export function Root({ children, isHorizontal, ...props }) {
 }
 
 export function Line(props) {
-	return <GridItem layout={Decorator} lismClass='c--timeline_line' bgc='divider' jslf='c' {...props} />;
+	return <Lism layout={Decorator} lismClass='c--timeline_line' bgc='divider' jslf='c' {...props} />;
 }
 export function Shape(props) {
-	return (
-		<GridItem
-			lismClass='c--timeline_shape'
-			layout={Center}
-			pos='r'
-			z='1'
-			c='base'
-			ar='1/1'
-			// bgc={shapeColor || 'text'}
-			bdrs='99'
-			jslf='c'
-			{...props}
-		/>
-	);
+	return <Lism lismClass='c--timeline_shape' layout={Center} pos='r' z='1' c='base' ar='1/1' bdrs='99' jslf='c' {...props} />;
 }
 
 export function Item({ isHorizontal, isStart, isEnd, isHighlighted, icon, iconProps = {}, shapeColor, children, ...props }) {
@@ -53,8 +40,7 @@ export function Item({ isHorizontal, isStart, isEnd, isHighlighted, icon, iconPr
 	}
 
 	return (
-		<GridItem
-			layout={Grid}
+		<Grid
 			lismClass='c--timeline_item'
 			data-timeline={dataTimeline}
 			ai='c'
@@ -71,16 +57,16 @@ export function Item({ isHorizontal, isStart, isEnd, isHighlighted, icon, iconPr
 				{icon && <Icon icon={icon} scale='0.75' fz='s' {...iconProps} />}
 			</Shape>
 			{children}
-		</GridItem>
+		</Grid>
 	);
 }
 
 export function Time(props) {
-	return <GridItem className='c--timeline_time' fz='xs' c='text-2' gr='2' gc='2' {...props} />;
+	return <Lism className='c--timeline_time' fz='xs' c='text-2' gr='2' gc='2' {...props} />;
 }
 export function Title(props) {
-	return <GridItem className='c--timeline_title' fw='bold' gr='3' gc='2' {...props} />;
+	return <Lism className='c--timeline_title' fw='bold' gr='3' gc='2' {...props} />;
 }
 export function Text(props) {
-	return <GridItem className='c--timeline_text' fz='s' mbs='10' gr='4' gc='2' {...props} />;
+	return <Lism className='c--timeline_text' fz='s' mbs='10' gr='4' gc='2' {...props} />;
 }

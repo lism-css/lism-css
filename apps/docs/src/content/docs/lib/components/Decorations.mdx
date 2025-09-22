@@ -3,7 +3,7 @@ title: 'Decorations'
 description: ...
 ---
 
-import { Grid, Stack, Flex, GridItem, Decorator, Box, Spacer, Dummy } from 'lism-css/astro';
+import { Grid, Stack, Flex, Decorator, Box, Spacer, Dummy } from 'lism-css/astro';
 import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage, Callout } from "~/components";
 
 装飾ボックスの作成例を紹介します。
@@ -236,13 +236,14 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage, Callout
 	</PreviewCode>
 </Preview>
 
+
 ### Sticky
 
 <Preview>
 	<PreviewTitle>Sticky</PreviewTitle>
 	<PreviewArea resize p='30'>
 		<Grid gd='"content ." / auto 1fr'>
-			<GridItem
+			<Box
 				ga='content'
 				minW='8em'
 				maxW='30em'
@@ -253,9 +254,8 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage, Callout
 				bdw='.5em'
 			>
 				<Dummy />
-			</GridItem>
-			<GridItem
-				as={Decorator}
+			</Box>
+			<Decorator
 				ga='content'
 				w='50%'
 				maxW='12em'
@@ -271,7 +271,7 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage, Callout
 	<PreviewCode>
 		```jsx
 		<Grid gd='"content ." / auto 1fr'>
-			<GridItem
+			<Box
 				ga='content'
 				minW='8em'
 				maxW='30em'
@@ -282,9 +282,8 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage, Callout
 				bdw='.5em'
 			>
 				<Dummy />
-			</GridItem>
-			<GridItem
-				as={Decorator}
+			</Box>
+			<Decorator
 				ga='content'
 				w='50%'
 				maxW='12em'

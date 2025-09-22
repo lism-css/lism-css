@@ -121,6 +121,14 @@ export interface LismBaseProps {
 	bxsh?: ResponsiveValue<string>;
 	v?: ResponsiveValue<string>;
 
+	gc?: ResponsiveValue<string>;
+	gr?: ResponsiveValue<string>;
+	ga?: ResponsiveValue<string>;
+	gcs?: ResponsiveValue<string | number>;
+	gce?: ResponsiveValue<string | number>;
+	grs?: ResponsiveValue<string | number>;
+	gre?: ResponsiveValue<string | number>;
+
 	// Logical properties
 	is?: ResponsiveValue<string | number>;
 	ie?: ResponsiveValue<string | number>;
@@ -191,16 +199,7 @@ export interface GridProps extends LismProps {
 	gar?: ResponsiveValue<string>;
 	gac?: ResponsiveValue<string>;
 }
-export interface GridItemProps extends LismProps {
-	layout?: React.ElementType;
-	gc?: ResponsiveValue<string>;
-	gr?: ResponsiveValue<string>;
-	ga?: ResponsiveValue<string>;
-	gcs?: ResponsiveValue<string | number>;
-	gce?: ResponsiveValue<string | number>;
-	grs?: ResponsiveValue<string | number>;
-	gre?: ResponsiveValue<string | number>;
-}
+
 export interface WithSideProps extends LismProps {
 	sideW?: ResponsiveValue<string>;
 	mainW?: ResponsiveValue<string>;
@@ -307,7 +306,6 @@ export const FlexItem: React.FC<FlexItemProps>;
 export const Cluster: React.FC<FlexProps>;
 export const Stack: React.FC<StackProps>;
 export const Grid: React.FC<GridProps>;
-export const GridItem: React.FC<GridItemProps>;
 export const WithSide: React.FC<WithSideProps>;
 export const Center: React.FC<CenterProps>;
 export const Columns: React.FC<ColumnsProps>;
@@ -345,7 +343,6 @@ export default {
 	Cluster,
 	Stack,
 	Grid,
-	GridItem,
 	WithSide,
 	Center,
 	Columns,

@@ -237,8 +237,8 @@ export default {
 	// inline,block
 	pis: { presets: SPACE_PRESETS, converter: 'space' },
 	pbs: { presets: SPACE_PRESETS, converter: 'space' },
-	// pie: { converter: 'space' },
-	// pbe: { converter: 'space' },
+	pie: { converter: 'space' },
+	pbe: { converter: 'space' },
 	// pinln, pblck
 	// pse: paddingOption,
 	// pbe: paddingOption,
@@ -257,8 +257,8 @@ export default {
 	mb: { utils: auto, converter: 'space' },
 	mis: { presets: SPACE_PRESETS, utils: auto, converter: 'space' },
 	mbs: { presets: SPACE_PRESETS, utils: auto, converter: 'space' },
-	// mib: { converter: 'space' },
-	// mbe: { converter: 'space' },
+	mie: { converter: 'space' },
+	mbe: { converter: 'space' },
 	// me: marginOption,
 	// mbe: marginOption,
 	g: {
@@ -287,13 +287,20 @@ export default {
 	fxsh: { name: 'fxsh', presets: ['0', '1'] },
 	fxb: { name: 'fxb' },
 
+	// grid-item
+	ga: { utils: { '1/1': '1', '1 / 1': '1' } }, // grid-area
+	gc: { presets: ['1/-1'], utils: { '1 / -1': '1/-1' } }, // grid-column
+	gr: { presets: ['1/-1'], utils: { '1 / -1': '1/-1' } }, // grid-row
+	gcs: { style: 'gridColumnStart' },
+	gce: { style: 'gridColumnEnd' },
+	grs: { style: 'gridRowStart' },
+	gre: { style: 'gridRowEnd' },
+
 	// transform系
 
 	// mask: { map: 1 },
 	// flex: { map: 1 },
 	// grid: { map: 1 },
-	// flexItem: { map: 1 },
-	// gridItem: { map: 1 },
 	// css: { map: 1 },
 };
 
@@ -313,17 +320,6 @@ export const CONTEXT_PROPS = {
 
 		// autoFlow, autoRows, autoCols
 	},
-	gridItem: {
-		// item
-		ga: { utils: { '1/1': '1', '1 / 1': '1' } }, // grid-area
-		gc: { presets: ['1/-1'], utils: { '1 / -1': '1/-1' } }, // grid-column
-		gr: { presets: ['1/-1'], utils: { '1 / -1': '1/-1' } }, // grid-row
-		gcs: { style: 'gridColumnStart' },
-		gce: { style: 'gridColumnEnd' },
-		grs: { style: 'gridRowStart' },
-		gre: { style: 'gridRowEnd' },
-		// ...itemProps,
-	},
 
 	flex: {
 		fxf: { style: 'flex-flow' },
@@ -331,17 +327,6 @@ export const CONTEXT_PROPS = {
 		fxw: { utils: { wrap: 'w', nowrap: 'n' } },
 		fxd: { utils: { column: 'c', row: 'r', 'column-reverse': 'cr', 'row-reverse': 'rr' } },
 	},
-
-	// fx: {
-	// 	g,sh,b
-	// }
-
-	// flexItem: {
-	// 	fx: { style: 'flex', utils: { '1 1 0': '1' } },
-	// 	fxg: { name: 'fxg', presets: ['0', '1'] },
-	// 	fxsh: { name: 'fxsh', presets: ['0', '1'] },
-	// 	fxb: { name: 'fxb' },
-	// },
 
 	// transform: {
 	// 	// transform

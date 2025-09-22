@@ -3,18 +3,16 @@ title: 'Grid'
 description: ...
 ---
 
-import { Grid, GridItem, Box, Center, Dummy } from 'lism-css/astro';
+import { Grid, Lism, Box, Center, Decorator, Frame, Media, Dummy } from 'lism-css/astro';
 import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage, PropBadge, Callout } from "~/components";
 
 
-コンテンツを**Gridレイアウトで配置する**ためのコンポーネントです。  
-[`<GridItem>`](/components/griditem/)と組み合わせて使うとより便利です。
-
+コンテンツを**Gridレイアウトで配置する**ためのコンポーネントです。
 
 
 ## Import
 
-<ImportPackage component='Grid, GridItem' />
+<ImportPackage component='Grid, Box' />
 
 
 ## Props
@@ -104,9 +102,9 @@ Gridは、[`grid`オブジェクト内で指定できるプロパティ](/css/pr
 				`'left main right'`
 			]}
 		>
-			<GridItem ga='left' p='20' bgc='base-2'>Left</GridItem>
-			<GridItem ga='main' p='20' bd>Center</GridItem>
-			<GridItem ga='right' p='20' bgc='base-2'>Right</GridItem>
+			<Box ga='left' p='20' bgc='base-2'>Left</Box>
+			<Box ga='main' p='20' bd>Center</Box>
+			<Box ga='right' p='20' bgc='base-2'>Right</Box>
 		</Grid>
 	</PreviewArea>
 	<PreviewCode slot='tab' label='JSX'>
@@ -119,9 +117,9 @@ Gridは、[`grid`オブジェクト内で指定できるプロパティ](/css/pr
 				`'left main right'`
 			]}
 		>
-			<GridItem ga='left' p='20' bgc='base-2'>Left</GridItem>
-			<GridItem ga='main' p='20' bd>Center</GridItem>
-			<GridItem ga='right' p='20' bgc='base-2'>Right</GridItem>
+			<Box ga='left' p='20' bgc='base-2'>Left</Box>
+			<Box ga='main' p='20' bd>Center</Box>
+			<Box ga='right' p='20' bgc='base-2'>Right</Box>
 		</Grid>
 		```
 	</PreviewCode>
@@ -131,16 +129,113 @@ Gridは、[`grid`オブジェクト内で指定できるプロパティ](/css/pr
 			class="l--grid -gta -gta_sm -gtc -gtc_sm -g:20"
 			style="--gta:'main main' 'left right';--gta_sm:'left main right';--gtc:1fr 1fr;--gtc_sm:8em 1fr 8em"
 		>
-			<div class="-p:20 -p:30 -bgc:base-2 -ga" style="--ga:left">Left</div>
-			<div class="-p:20 -p:30 -bd -ga" style="--ga:main">Center</div>
-			<div class="-p:20 -bgc:base-2 -ga" style="--ga:right">Right</div>
+			<div class="l--box -p:20 -p:30 -bgc:base-2 -ga" style="--ga:left">Left</div>
+			<div class="l--box -p:20 -p:30 -bd -ga" style="--ga:main">Center</div>
+			<div class="l--box -p:20 -bgc:base-2 -ga" style="--ga:right">Right</div>
 		</div>
 		```
 	</PreviewCode>
 </Preview>
 
 
-<br />
+### 子要素を重ねて表示する
+
+`position:absolute`を使わず、`grid-area:1/1`(`.-ga:1`)を利用して要素を重ねる例を紹介します。
+
+<Preview>
+	<PreviewTitle>Gritの子要素を重ねて表示する</PreviewTitle>
+	<PreviewArea p='10'>
+		<Grid ar='16/9' ji='c' ai='c'>
+			<Frame ga='1/1' w='100%' h='100%'>
+				<Media src='/img/img-1.jpg' op='mid'/>
+			</Frame>
+			<Decorator ga='1' blur='80px' bgc='white' w='50%' h='4em'/>
+			<Box ga='1/1' fz='2xl' z='1'>SAMPLE TEXT</Box>
+		</Grid>
+	</PreviewArea>
+	<PreviewCode slot='tab' label='JSX'>
+		```jsx "ga='1'"
+		<Grid ar='16/9' ji='c' ai='c'>
+			<Frame ga='1/1' w='100%' h='100%'>
+				<Media src='/img/img-1.jpg' op='mid'/>
+			</Frame>
+			<Decorator ga='1/1' blur='80px' bgc='white' w='50%' h='4em'/>
+			<Box ga='1/1' fz='2xl' z='1'>SAMPLE TEXT</Box>
+		</Grid>
+		```
+	</PreviewCode>
+	<PreviewCode slot='tab' label='HTML'>
+		```jsx "-ga:1"
+		<div class="l--grid -ar:16/9 -ji:c -ai:c">
+			<div class="l--frame -w:100% -h:100% -ga:1">
+				<img class="-op:mid" src="/img/img-1.jpg">  
+			</div>
+			<div class="l--decorator -bgc -w -h -ga:1" style="--bgc:var(--white);--w:50%;--h:4em;filter:blur(80px)" aria-hidden="true"></div>
+			<div class="l--box -fz:2xl -z:1 -ga:1">SAMPLE TEXT</div>
+		</div>
+		```
+	</PreviewCode>
+</Preview>
+
+
+### subgridの活用
+
+<Preview>
+	<PreviewTitle>新着記事一覧リストの作成例</PreviewTitle>
+	<PreviewArea p='30' resize>
+		<Grid gtc={['auto','auto 1fr']} bd='b'>
+			<Grid gtc='subgrid' gc='1/-1' g='20' ai='start' bd='t' py='30'>
+				<Grid gtc={['auto auto', '1fr 1fr']} g='20' jc='s' ai='c'>
+					<Lism fz='xs'>2024.05.31</Lism>
+					<Lism d='if' jc='c' bd fz='xs' lh='1' bgc='text' c='base' p='10' bdrs='5'>NEWS</Lism>
+				</Grid>
+				<Dummy lang='ja' tag='a' href='####' hov='op' c='inherit' td='n' className='u--trimHL' lh='s' />
+			</Grid>
+			<Grid gtc='subgrid' gc='1/-1' g='20' ai='start' bd='t' py='30'>
+				<Grid gtc={['auto auto', '1fr 1fr']} g='20' jc='s' ai='c'>
+					<Lism fz='xs'>2024.05.29</Lism>
+					<Lism d='if' jc='c' bd fz='xs' lh='1' bgc='text' c='base' p='10' bdrs='5'>TIPS</Lism>
+				</Grid>
+				<Dummy lang='ja' offset='1' tag='a' href='####' hov='op' c='inherit' td='n' length='s' className='u--trimHL' lh='s' />
+			</Grid>
+			<Grid gtc='subgrid' gc='1/-1' g='20' ai='start' bd='t' py='30'>
+				<Grid gtc={['auto auto', '1fr 1fr']} g='20' jc='s' ai='c'>
+					<Lism fz='xs'>2024.05.18</Lism>
+					<Lism d='if' jc='c' bd fz='xs' lh='1' bgc='text' c='base' p='10' bdrs='5'>COLUMN</Lism>
+				</Grid>
+				<Dummy lang='ja' offset='2' tag='a' href='####' hov='op' c='inherit' td='n' className='u--trimHL' lh='s' />
+			</Grid>
+		</Grid>
+	</PreviewArea>
+	<PreviewCode slot='tab' label='JSX'>
+		```jsx
+		<Grid gtc={['auto','auto 1fr']} bd='b'>
+			<Grid gtc='subgrid' gc='1/-1' g='20' ai='start' bd='t' py='30'>
+				<Grid gtc={['auto auto', '1fr 1fr']} g='20' jc='s' ai='c'>
+					<Lism fz='xs'>2024.05.31</Lism>
+					<Lism d='if' jc='c' bd fz='xs' lh='1' bgc='text' c='base' p='10' bdrs='5'>NEWS</Lism>
+				</Grid>
+				<Dummy lang='ja' tag='a' href='####' hov='op' c='inherit' td='n' className='u--trimHL' lh='s' />
+			</Grid>
+			<Grid gtc='subgrid' gc='1/-1' g='20' ai='start' bd='t' py='30'>
+				<Grid gtc={['auto auto', '1fr 1fr']} g='20' jc='s' ai='c'>
+					<Lism fz='xs'>2024.05.29</Lism>
+					<Lism d='if' jc='c' bd fz='xs' lh='1' bgc='text' c='base' p='10' bdrs='5'>TIPS</Lism>
+				</Grid>
+				<Dummy lang='ja' offset='1' tag='a' href='####' hov='op' c='inherit' td='n' length='s' className='u--trimHL' lh='s' />
+			</Grid>
+			<Grid gtc='subgrid' gc='1/-1' g='20' ai='start' bd='t' py='30'>
+				<Grid gtc={['auto auto', '1fr 1fr']} g='20' jc='s' ai='c'>
+					<Lism fz='xs'>2024.05.18</Lism>
+					<Lism d='if' jc='c' bd fz='xs' lh='1' bgc='text' c='base' p='10' bdrs='5'>COLUMN</Lism>
+				</Grid>
+				<Dummy lang='ja' offset='2' tag='a' href='####' hov='op' c='inherit' td='n' className='u--trimHL' lh='s' />
+			</Grid>
+		</Grid>
+		```
+	</PreviewCode>
+</Preview>
+
 
 
 ## Variants
@@ -150,23 +245,30 @@ Gridは、[`grid`オブジェクト内で指定できるプロパティ](/css/pr
 
 <Preview>
 	<PreviewTitle>例</PreviewTitle>
-	<PreviewArea resize p='20'>
-		<Grid variant='repeat' cols='6' rows='4' minH='15rem'>
-			<GridItem gc='1 / 3' gr='1 / 5' p='20' bgc='blue:20%'>A</GridItem>
-			<GridItem gc='3 / 6' gr='2 / 5' p='20' bgc='green:20%'>B</GridItem>
-			<GridItem gc='4 / 7' gr='1' p='20' bgc='red:20%'>C</GridItem>
+	<PreviewArea resize p={20}>
+		<Grid variant='repeat' cols='3' rows='3' g='5'>
+			<Box p='20' bgc='base-2'>item1</Box>
+			<Box p='20' bgc='base-2'>item2</Box>
+			<Box p='20' bgc='base-2'>item3</Box>
+			<Box p='20' bgc='base-2'>item4</Box>
+			<Box p='20' bgc='base-2' gc='span 2'>item5</Box>
+			<Center gc='3' gr='1 / -1' p='20' bgc='blue'>item6</Center>
 		</Grid>
 	</PreviewArea>
-	<PreviewCode>
-		```jsx "variant='repeat'"
-		<Grid variant='repeat' cols='4' rows='4' minH='15rem'>
-			<GridItem gc='1 / 3' gr='1 / 5' p='20' bgc='blue:20%'>A</GridItem>
-			<GridItem gc='3 / 6' gr='2 / 5' p='20' bgc='green:20%'>B</GridItem>
-			<GridItem gc='4 / 7' gr='1' p='20' bgc='red:20%'>C</GridItem>
+	<PreviewCode slot='tab' label='JSX'>
+		```jsx " gc=" " gr="
+		<Grid variant='repeat' cols='3' rows='3' g='5'>
+			<Box p='20' bgc='base-2'>item1</Box>
+			<Box p='20' bgc='base-2'>item2</Box>
+			<Box p='20' bgc='base-2'>item3</Box>
+			<Box p='20' bgc='base-2'>item4</Box>
+			<Box p='20' bgc='base-2' gc='span 2'>item5</Box>
+			<Center gc='3' gr='1 / -1' p='20' bgc='blue'>item6</Center>
 		</Grid>
 		```
 	</PreviewCode>
 </Preview>
+
 
 <Preview>
 	<PreviewTitle>
@@ -174,19 +276,19 @@ Gridは、[`grid`オブジェクト内で指定できるプロパティ](/css/pr
 	</PreviewTitle>
 	<PreviewArea resize p='20'>
 		<Grid variant='repeat' cols='3' g='20'>
-			<GridItem><img src='/img/img-1.jpg' alt='' /></GridItem>
-			<GridItem p='20' bgc='base-2' gc='span 2'><Dummy /></GridItem>
-			<GridItem p='20' bgc='base-2' gc='span 2'><Dummy length='l'/></GridItem>
-			<GridItem><img src='/img/img-2.jpg' alt='' /></GridItem>
+			<Box><img src='/img/img-1.jpg' alt='' /></Box>
+			<Box p='20' bgc='base-2' gc='span 2'><Dummy /></Box>
+			<Box p='20' bgc='base-2' gc='span 2'><Dummy length='l'/></Box>
+			<Box><img src='/img/img-2.jpg' alt='' /></Box>
 		</Grid>
 	</PreviewArea>
 	<PreviewCode>
 		```jsx "variant='repeat'"
 		<Grid variant='repeat' cols='3' g='20'>
-			<GridItem><img src='/img/img-1.jpg' alt='' /></GridItem>
-			<GridItem p='20' bgc='base-2' gc='span 2'><Dummy /></GridItem>
-			<GridItem p='20' bgc='base-2' gc='span 2'><Dummy length='l'/></GridItem>
-			<GridItem><img src='/img/img-2.jpg' alt='' /></GridItem>
+			<Box><img src='/img/img-1.jpg' alt='' /></Box>
+			<Box p='20' bgc='base-2' gc='span 2'><Dummy /></Box>
+			<Box p='20' bgc='base-2' gc='span 2'><Dummy length='l'/></Box>
+			<Box><img src='/img/img-2.jpg' alt='' /></Box>
 		</Grid>
 		```
 	</PreviewCode>
@@ -199,21 +301,21 @@ cols,rows はそれぞれブレイクポイント指定も可能です。
 	<PreviewTitle>例</PreviewTitle>
 	<PreviewArea resize p='20'>
 		<Grid variant='repeat' cols={['4','6','8']} rows='4'>
-			<GridItem gc='1 / -1' p='20' bgc='purple:20%'>A</GridItem>
-			<GridItem gr='2 / 4' p='20' bgc='blue:20%'>B</GridItem>
-			<GridItem gc='2 / -2' gr='2 / 4' p='20' bgc='green:20%'>C</GridItem>
-			<GridItem gr='2 / 4' p='20' bgc='blue:20%'>D</GridItem>
-			<GridItem gc='1 / -1' gre='-1' p='20' bgc='purple:20%'>E</GridItem>
+			<Box gc='1 / -1' p='20' bgc='purple:20%'>A</Box>
+			<Box gr='2 / 4' p='20' bgc='blue:20%'>B</Box>
+			<Box gc='2 / -2' gr='2 / 4' p='20' bgc='green:20%'>C</Box>
+			<Box gr='2 / 4' p='20' bgc='blue:20%'>D</Box>
+			<Box gc='1 / -1' gre='-1' p='20' bgc='purple:20%'>E</Box>
 		</Grid>
 	</PreviewArea>
 	<PreviewCode>
 		```jsx "variant='repeat'"
 		<Grid variant='repeat' cols={['4','6','8']} rows='4'>
-			<GridItem gc='1 / -1' p='20' bgc='purple:20%'>A</GridItem>
-			<GridItem gr='2 / 4' p='20' bgc='blue:20%'>B</GridItem>
-			<GridItem gc='2 / -2' gr='2 / 4' p='20' bgc='green:20%'>C</GridItem>
-			<GridItem gr='2 / 4' p='20' bgc='blue:20%'>D</GridItem>
-			<GridItem gc='1 / -1' gre='-1' p='20' bgc='purple:20%'>E</GridItem>
+			<Box gc='1 / -1' p='20' bgc='purple:20%'>A</Box>
+			<Box gr='2 / 4' p='20' bgc='blue:20%'>B</Box>
+			<Box gc='2 / -2' gr='2 / 4' p='20' bgc='green:20%'>C</Box>
+			<Box gr='2 / 4' p='20' bgc='blue:20%'>D</Box>
+			<Box gc='1 / -1' gre='-1' p='20' bgc='purple:20%'>E</Box>
 		</Grid>
 		```
 	</PreviewCode>
@@ -225,23 +327,23 @@ gc, gr もブレイクポイントに対応しています。
 	<PreviewTitle>例</PreviewTitle>
 	<PreviewArea resize p='20'>
 		<Grid variant='repeat' cols='3' rows='3'>
-			<GridItem gc={['1 / -1','1 / 3']} gr={['1 / -2','1 / -1']} p='30' bgc='base-2'>
+			<Box gc={['1 / -1','1 / 3']} gr={['1 / -2','1 / -1']} p='30' bgc='base-2'>
 				<Box ar='16/9'>A</Box>
-			</GridItem>
-			<GridItem gc={['1', '3 / -1']} gr={['3','1']} p='30' bgc='green:20%'>B</GridItem>
-			<GridItem gc={['2', '3 / -1']} gr={['3','2']} p='30' bgc='blue:20%'>C</GridItem>
-			<GridItem gc={['3', '3 / -1']} gr={['3','3']} p='30' bgc='red:20%'>D</GridItem>
+			</Box>
+			<Box gc={['1', '3 / -1']} gr={['3','1']} p='30' bgc='green:20%'>B</Box>
+			<Box gc={['2', '3 / -1']} gr={['3','2']} p='30' bgc='blue:20%'>C</Box>
+			<Box gc={['3', '3 / -1']} gr={['3','3']} p='30' bgc='red:20%'>D</Box>
 		</Grid>
 	</PreviewArea>
 	<PreviewCode>
 		```jsx "variant='repeat'"
 		<Grid variant='repeat' cols='3' rows='3'>
-			<GridItem gc={['1 / -1','1 / 3']} gr={['1 / -2','1 / -1']} p='30' bgc='base-2'>
+			<Box gc={['1 / -1','1 / 3']} gr={['1 / -2','1 / -1']} p='30' bgc='base-2'>
 				<Box ar='16/9'>A</Box>
-			</GridItem>
-			<GridItem gc={['1', '3 / -1']} gr={['3','1']} p='30' bgc='green:20%'>B</GridItem>
-			<GridItem gc={['2', '3 / -1']} gr={['3','2']} p='30' bgc='blue:20%'>C</GridItem>
-			<GridItem gc={['3', '3 / -1']} gr={['3','3']} p='30' bgc='red:20%'>D</GridItem>
+			</Box>
+			<Box gc={['1', '3 / -1']} gr={['3','1']} p='30' bgc='green:20%'>B</Box>
+			<Box gc={['2', '3 / -1']} gr={['3','2']} p='30' bgc='blue:20%'>C</Box>
+			<Box gc={['3', '3 / -1']} gr={['3','3']} p='30' bgc='red:20%'>D</Box>
 		</Grid>
 		```
 	</PreviewCode>
