@@ -26,16 +26,3 @@ const { isInline = false, url, ...props } = Astro.props;
 		</Frame>
 	)
 }
-
-<style is:global>
-	.u--scalePreview {
-		max-width: unset;
-		width: 160%;
-		transform: scale(0.625);
-		transform-origin: 0 0;
-	}
-	.u--scalePreview > iframe {
-		width: 100%;
-		height: 100%;
-	}
-</style>

@@ -5,7 +5,7 @@
 // import { Lism, LinkBox, Frame, Stack, Columns, Spacer, Media } from 'lism-css/astro';
 import type { SidebarEntry } from '@/node_modules/@astrojs/starlight/utils/routing/types';
 import { imageExists, isLibSidebar } from '../helper';
-import LibTabs from './LibTabs';
+import LibTabs, { type NavLinkData } from './LibTabs';
 // import { Tabs } from 'lism-css/react';
 
 // import sidebarData from '@/astro-configs/sidebar';
@@ -19,76 +19,68 @@ const displaySidebar = sidebar.filter((entry) => {
 });
 
 const ComponentNavList: SidebarEntry = displaySidebar[0];
-const SectionNavList: SidebarEntry = displaySidebar[1];
-const TemplateNavList: SidebarEntry = displaySidebar[2];
+const TemplateNavList: SidebarEntry = displaySidebar[1];
+
+console.log(TemplateNavList, 'TemplateNavList');
 
 // let defaultIndex = 1;
 // SSRじゃないとクエリは受け取れない
 // const url = new URL(Astro.request.url);
 // const tab = url.searchParams.get('tab'); // 例: 'components', 'sections', 'templates'
 
-const componentList =
-	ComponentNavList.type === 'group' && ComponentNavList.entries
-		? ComponentNavList.entries
-				.map((entry) => {
-					if (entry.type !== 'link') return null;
-					if (entry.href === '/###---') return null;
+const getPageLinkList = (entries: SidebarEntry[], type: string): NavLinkData[] => {
+	if (!entries) return [];
+	return entries
+		.map<NavLinkData | null>((entry) => {
+			if (entry.type === 'group') {
+				return {
+					type: 'group',
+					label: entry.label.charAt(0).toUpperCase() + entry.label.slice(1),
+					entries: getPageLinkList(entry.entries, type),
+				};
+			}
 
-					const imagePath = `/thumb/components/${entry.label}.png`; // チェックしたい画像のパス
-					const thumb = imageExists(imagePath) ? imagePath : '/thumb/components/Empty.png';
+			if (entry.type !== 'link') return null;
+			if (entry.href === '/###---') return null;
 
-					// entryのデータを返す
-					return {
-						href: `${langPath}${entry.href}`,
-						label: entry.label,
-						thumb: thumb,
-					};
-				})
-				.filter((data) => data !== null)
-		: [];
+			let thumb = '';
+			let imagePath = '';
+			let iframePath = '';
+			if (type === 'components') {
+				imagePath = `/thumb/components/${entry.label}.png`;
+				thumb = imageExists(imagePath) ? imagePath : '/thumb/components/Empty.png';
+			} else {
+				// hrefを'/'で分割し、最後から2つのセグメントを結合してファイル名を生成
+				const segments = entry.href.replace(/\/+$/, '').split('/'); // 末尾スラッシュを除去して split
+				const file = segments[segments.length - 1] || '';
+				const cat = segments[segments.length - 2] || '';
+				imagePath = `/thumb/${type}/${cat}/${file}.png`;
+				// thumb = imageExists(imagePath) ? imagePath : '/thumb/components/Empty.png';
+				if (!imageExists(imagePath)) {
+					iframePath = `/${type}/${cat}/${file}`;
+				} else {
+					thumb = imagePath;
+				}
+			}
 
-const sectionList =
-	SectionNavList.type === 'group' && SectionNavList.entries
-		? SectionNavList.entries
-				.map((entry) => {
-					if (entry.type !== 'link') return null;
-					if (entry.href === '/###---') return null;
+			// entryのデータを返す
+			return {
+				type: 'link',
+				href: `${langPath}${entry.href}`,
+				label: entry.label,
+				thumb,
+				iframePath,
+			};
+		})
+		.filter((data): data is NavLinkData => data !== null);
+};
 
-					const imagePath = `/thumb/sections/${entry.href.replace(/\/+$/, '').split('/').pop()}.png`;
-					const thumb = imageExists(imagePath) ? imagePath : '/thumb/components/Empty.png';
-
-					// entryのデータを返す
-					return {
-						href: `${langPath}${entry.href}`,
-						label: entry.label,
-						thumb: thumb,
-					};
-				})
-				.filter((data) => data !== null)
-		: [];
-
-const templateList =
-	TemplateNavList.type === 'group' && TemplateNavList.entries
-		? TemplateNavList.entries
-				.map((entry) => {
-					if (entry.type !== 'link') return null;
-					if (entry.href === '/###---') return null;
-
-					const imagePath = `/thumb/template/${entry.href.replace(/\/+$/, '').split('/').pop()}.png`;
-					const thumb = imageExists(imagePath) ? imagePath : '/thumb/components/Empty.png';
-
-					// entryのデータを返す
-					return {
-						href: `${langPath}${entry.href}`,
-						label: entry.label,
-						thumb: thumb,
-					};
-				})
-				.filter((data) => data !== null)
-		: [];
+const componentList = ComponentNavList.type === 'group' ? getPageLinkList(ComponentNavList?.entries, 'components') : [];
+const templateList = TemplateNavList.type === 'group' ? getPageLinkList(TemplateNavList?.entries, 'templates') : [];
+// const sectionList = SectionNavList.type === 'group' && SectionNavList.entries ? getPageLinkList(SectionNavList.entries) : [];
 ---
 
-<LibTabs client:load componentList={componentList} sectionList={sectionList} templateList={templateList} />
+<LibTabs client:load componentList={componentList} templateList={templateList} />
 
 <script>
 	// memo: header.header の高さを取得して --header--h にセット
