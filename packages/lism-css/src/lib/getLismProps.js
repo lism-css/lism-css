@@ -18,9 +18,6 @@ const getConverter = (propName) => {
 	return converter || null;
 };
 
-const PROPS_KEYS = Object.keys(PROPS);
-const CONTEXT_PROPS_KEYS = Object.keys(CONTEXT_PROPS);
-
 // const PROP_FULL_NAMES = {
 // 	padding: 'p',
 // 	margin: 'm',
@@ -152,7 +149,7 @@ class LismPropsData {
 			// if (PROP_FULL_NAMES[propName]) propName = PROP_FULL_NAMES[propName];
 
 			// Lism系のプロパティかどうか
-			const isLismProp = PROPS_KEYS.includes(propName);
+			const isLismProp = Object.hasOwn(PROPS, propName);
 			if (isLismProp) {
 				// value取得して attrsリストから削除しておく
 				const propVal = this.attrs[propName];
@@ -163,7 +160,7 @@ class LismPropsData {
 				return;
 			}
 
-			const isContextProp = CONTEXT_PROPS_KEYS.includes(propName);
+			const isContextProp = Object.hasOwn(CONTEXT_PROPS, propName);
 			if (isContextProp) {
 				// value取得して attrsリストから削除しておく
 				const propVal = this.attrs[propName];
