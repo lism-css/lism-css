@@ -212,11 +212,15 @@ export default {
 		},
 	},
 	z: { style: 'zIndex', presets: ['-1', '0', '1', '2', '99'] },
-	i: { style: 'inset', utils: { '0%': '0' }, converter: 'space' },
 	t: { style: 'top', utils: trblUtils, converter: 'space' },
 	l: { style: 'left', utils: trblUtils, converter: 'space' },
 	r: { style: 'right', utils: trblUtils, converter: 'space' },
 	b: { style: 'bottom', utils: trblUtils, converter: 'space' },
+	i: { style: 'inset', utils: { '0%': '0' }, converter: 'space' },
+	iis: { style: 'insetInlineStart', converter: 'space' },
+	iie: { style: 'insetInlineEnd', converter: 'space' },
+	ibs: { style: 'insetBlockStart', converter: 'space' },
+	ibe: { style: 'insetBlockEnd', converter: 'space' },
 
 	// isolation
 	// flip: {},
@@ -345,12 +349,6 @@ export const CONTEXT_PROPS = {
 		bdsers: { style: 'borderStartEndRadius', converter: 'bdrs' },
 		bdesrs: { style: 'borderEndStartRadius', converter: 'bdrs' },
 		bdeers: { style: 'borderEndEndRadius', converter: 'bdrs' },
-	},
-	i_: {
-		iis: { style: 'insetInlineStart', converter: 'space' },
-		iie: { style: 'insetInlineEnd', converter: 'space' },
-		ibs: { style: 'insetBlockStart', converter: 'space' },
-		ibe: { style: 'insetBlockEnd', converter: 'space' },
 	},
 
 	// mask: {},
