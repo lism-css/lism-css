@@ -179,6 +179,10 @@ export default [
 		],
 	},
 	{
+		label: 'Docs',
+		link: '/overview/',
+	},
+	{
 		label: 'UI Components',
 		link: '/lib',
 		// translations: {

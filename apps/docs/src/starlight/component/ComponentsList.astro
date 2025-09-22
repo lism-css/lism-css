@@ -4,7 +4,7 @@
 // import { Image } from 'astro:assets';
 // import { Lism, LinkBox, Frame, Stack, Columns, Spacer, Media } from 'lism-css/astro';
 import type { SidebarEntry } from '@/node_modules/@astrojs/starlight/utils/routing/types';
-import { imageExists, isLibSidebar } from '../helper';
+import { imageExists, isLibTabGroup } from '../helper';
 import LibTabs, { type NavLinkData } from './LibTabs';
 // import { Tabs } from 'lism-css/react';
 
@@ -13,13 +13,15 @@ const { sidebar } = Astro.locals.starlightRoute;
 
 const { langPath = '', props } = Astro.props;
 
-const displaySidebar = sidebar.filter((entry) => {
-	// UI Components と Templates のみ表示
-	return isLibSidebar(entry);
+// Components と Templates のみ表示
+const filteredTabGroup = sidebar.filter((entry) => {
+	return isLibTabGroup(entry);
 });
 
-const ComponentNavList: SidebarEntry = displaySidebar[0];
-const TemplateNavList: SidebarEntry = displaySidebar[1];
+// console.log('filteredTabGroup', filteredTabGroup);
+
+const ComponentNavList: SidebarEntry = filteredTabGroup[0];
+const TemplateNavList: SidebarEntry = filteredTabGroup[1];
 
 // let defaultIndex = 1;
 // SSRじゃないとクエリは受け取れない
