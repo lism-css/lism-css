@@ -1,0 +1,30 @@
+.u--scalePreview {
+	max-width: unset;
+	width: 200%;
+	transform: scale(0.5);
+	transform-origin: 0 0;
+}
+.u--scalePreview > iframe {
+	width: 100%;
+	height: 100%;
+}
+
+@container (min-width: 440px) {
+	.u--scalePreview {
+		width: 160%;
+		transform: scale(0.625);
+	}
+}
+
+@container (min-width: 800px) {
+	.u--scalePreview {
+		width: 125%;
+		transform: scale(0.8);
+	}
+}
+
+.u--scalePreview[data-scalePreview-type='list'] {
+	width: 250%;
+	transform: scale(0.4);
+	pointer-events: none;
+}

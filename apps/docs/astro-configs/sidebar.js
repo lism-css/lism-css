@@ -313,17 +313,10 @@ export default [
 		],
 	},
 	{
-		label: 'Sections',
-		// items: [],
-		autogenerate: {
-			directory: '/lib/sections',
-		},
-	},
-	{
 		label: 'Templates',
 		// items: [],
 		autogenerate: {
-			directory: 'lib/page-layout',
+			directory: 'lib/templates',
 		},
 	},
 	{
