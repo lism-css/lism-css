@@ -8,22 +8,20 @@ import atts from '../../lib/helper/atts';
 // 	return 'grid';
 // }
 
-export function mergeGridContextProps(props) {
-	if (null == props.grid) props.grid = {};
+// export function mergeGridContextProps(props) {
+// 	if (null == props.grid) props.grid = {};
 
-	['gd', 'gt', 'gta', 'gtc', 'gtr', 'gaf', 'gar', 'gac'].forEach((key) => {
-		if (null != props[key]) {
-			props.grid[key] = props[key];
-			delete props[key];
-		}
-	});
+// 	['gd', 'gt', 'gta', 'gtc', 'gtr', 'gaf', 'gar', 'gac'].forEach((key) => {
+// 		if (null != props[key]) {
+// 			props.grid[key] = props[key];
+// 			delete props[key];
+// 		}
+// 	});
 
-	return props;
-}
+// 	return props;
+// }
 
 export function getGridProps({ _grid = 'grid', lismClass, ...props }) {
-	// grid 系の props をまとめる
-	props = mergeGridContextProps(props);
 	props.lismClass = atts(lismClass, `l--${_grid}`);
 	return props;
 }

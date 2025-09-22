@@ -1,5 +1,4 @@
 import atts from '../../lib/helper/atts';
-import { mergeFlexContextProps } from '../Flex/getProps';
 
 export function getWithSideProps({ lismClass, sideW, mainW, style = {}, ...props }) {
 	if (null != sideW) {
@@ -9,11 +8,9 @@ export function getWithSideProps({ lismClass, sideW, mainW, style = {}, ...props
 		style['--mainW'] = mainW;
 	}
 
-	return Object.assign(
-		{
-			lismClass: atts(lismClass, `l--withSide`),
-			style,
-		},
-		mergeFlexContextProps(props)
-	);
+	return {
+		lismClass: atts(lismClass, `l--withSide`),
+		style,
+		...props,
+	};
 }

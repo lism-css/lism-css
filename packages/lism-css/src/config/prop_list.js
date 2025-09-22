@@ -281,11 +281,29 @@ export default {
 	pslf: { style: 'placeSelf', utilKey: 'pslf', utils: selfPlaces },
 	ord: { style: 'order', utilKey: 'ord', presets: ['0', '-1', '1'] },
 
+	// flex
+	fxf: { style: 'flex-flow' },
+	fxw: { utils: { wrap: 'w', nowrap: 'n' } }, // nowrap、 Emmet は n だが、nw にしている. (whs と揃えている)
+	fxd: { utils: { column: 'c', row: 'r', 'column-reverse': 'cr', 'row-reverse': 'rr' } },
+
 	// flex-item
 	fx: { style: 'flex', utils: { '1 1 0': '1' } },
 	fxg: { name: 'fxg', presets: ['0', '1'] },
 	fxsh: { name: 'fxsh', presets: ['0', '1'] },
 	fxb: { name: 'fxb' },
+
+	// grid
+	gd: {},
+	gt: { style: 'gridTemplate' },
+	gtc: { presets: ['subgrid'] },
+	gtr: { presets: ['subgrid'] },
+	gta: {},
+	gaf: {
+		utils: { row: 'r', column: 'c' },
+		_style: 'gridAutoFlow',
+	},
+	gac: { _style: 'gridAutoColumns' },
+	gar: { _style: 'gridAutoRows' },
 
 	// grid-item
 	ga: { utils: { '1/1': '1', '1 / 1': '1' } }, // grid-area
@@ -297,38 +315,10 @@ export default {
 	gre: { style: 'gridRowEnd' },
 
 	// transform系
-
-	// mask: { map: 1 },
-	// flex: { map: 1 },
-	// grid: { map: 1 },
-	// css: { map: 1 },
 };
 
 export const CONTEXT_PROPS = {
-	grid: {
-		gd: {},
-		gt: { style: 'gridTemplate' },
-		gtc: { presets: ['subgrid'] },
-		gtr: { presets: ['subgrid'] },
-		gta: {},
-		gaf: {
-			utils: { row: 'r', column: 'c' },
-			_style: 'gridAutoFlow',
-		},
-		gac: { _style: 'gridAutoColumns' },
-		gar: { _style: 'gridAutoRows' },
-
-		// autoFlow, autoRows, autoCols
-	},
-
-	flex: {
-		fxf: { style: 'flex-flow' },
-		// nowrap → Emmet は n だが、nw にしている. (whs と揃えている)
-		fxw: { utils: { wrap: 'w', nowrap: 'n' } },
-		fxd: { utils: { column: 'c', row: 'r', 'column-reverse': 'cr', 'row-reverse': 'rr' } },
-	},
-
-	// transform: {
+	// transform: {z
 	// 	// transform
 	// 	transformOrigin: { style: 1, utilKey: 'trfo', utils: 'origin' },
 	// 	translate: { style: 1, utils: 1, utilKey: 'trnslt' },

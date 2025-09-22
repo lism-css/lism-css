@@ -3,7 +3,7 @@ import atts from '../../lib/helper/atts';
 // duration: [s]
 export function getAccProps({ lismClass, ...props }) {
 	props.lismClass = atts(lismClass, 'd--accordion');
-	return props; //mergeFlexContextProps(props);
+	return props;
 }
 
 export function getAccIconProps({ isTrigger, ...props }) {
