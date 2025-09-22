@@ -338,7 +338,6 @@ export const LinkSPACE = () => <a href="/css/tokens/#space"><code>SPACE</code></
 </Reference>
 
 
-
 #### 子要素向けプロパティ
 |Prop|Shorthand|To Class|BP|
 |---|---|---|---|
@@ -352,7 +351,6 @@ export const LinkSPACE = () => <a href="/css/tokens/#space"><code>SPACE</code></
 
 
 #### 親要素向けプロパティ
-
 
 |Prop|Shorthand|To Class|BP|
 |---|---|---|---|
@@ -377,29 +375,14 @@ export const LinkSPACE = () => <a href="/css/tokens/#space"><code>SPACE</code></
 
 |Prop|Shorthand|To Class|BP|
 |---|---|---|---|
-|`grid-area`|`(gridItem.)ga`|-|○|
-|`grid-column`|`(gridItem.)gc`|`1/-1`|○|
-|`grid-row`|`(gridItem.)gr`|`1/-1`|○|
-|`grid-column-start`|`(gridItem.)gcs`|-|-|
-|`grid-row-start`|`(gridItem.)grs`|-|-|
-|`grid-column-end`|`(gridItem.)gce`|-|-|
-|`grid-row-end`|`(gridItem.)gre`|-|-|
+|`grid-area`|`ga`|-|○|
+|`grid-column`|`gc`|`1/-1`|○|
+|`grid-row`|`gr`|`1/-1`|○|
+|`grid-column-start`|`gcs`|-|-|
+|`grid-row-start`|`grs`|-|-|
+|`grid-column-end`|`gce`|-|-|
+|`grid-row-end`|`gre`|-|-|
 
-
-<PreviewTitle>使用例</PreviewTitle>
-```jsx
-// gridItemオブジェクトで各プロパティを指定します。
-<Lism gridItem={{gc:'2'}} aslf='end'>...</Lism>
-
-// GridItemのコンポーネントを使う場合は、gridItemオブジェクトは不要です。
-<GridItem gc='2' aslf='end'>...</GridItem>
-```
-
-<p class='-mbs:30 -fz:s'>これらをLism コンポーネントで使うには `gridItem` オブジェクト内、もしくは`GridItem`系コンポーネントで指定します。</p>
-
-<Reference>
-詳しくは[`<GridItem>`](/components/griditem/)をご覧ください。
-</Reference>
 
 
 ## Styling

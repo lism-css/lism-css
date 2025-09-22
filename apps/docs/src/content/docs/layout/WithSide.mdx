@@ -3,7 +3,7 @@ title: 'WithSide'
 description: ...
 ---
 
-import { WithSide, Grid, Dummy, Box, Stack, Spacer, GridItem } from 'lism-css/astro';
+import { WithSide, Grid, Dummy, Box, Stack, Spacer } from 'lism-css/astro';
 import {
 	Preview,
 	PreviewArea,
@@ -143,34 +143,34 @@ div.l--withSide
 	<PreviewTitle>`Grid`を使って`WithSide`のようなレイアウトを構築する例</PreviewTitle>
 	<PreviewArea resize p='30'>
 		<Grid gd={[`'.' 'side'`, `'. side' / 1fr 10rem`]} g='30'>
-			<GridItem>
+			<Box>
 				<Dummy />
-			</GridItem>
-			<GridItem ga='side' bgc='blue:20%'>
+			</Box>
+			<Box ga='side' bgc='blue:20%'>
 				Side Content
-			</GridItem>
+			</Box>
 		</Grid>
 	</PreviewArea>
 	<PreviewCode slot='tab' label='JSX'>
 		```jsx "ga='side'" "gd=" "'.' 'side'" "'. side' / 1fr 10rem"
 		<Grid gd={[`'.' 'side'`, `'. side' / 1fr 10rem`]} g='30'>
-			<GridItem>
+			<Box>
 				<Dummy />
-			</GridItem>
-			<GridItem ga='side'>Side Content</GridItem>
+			</Box>
+			<Box ga='side'>Side Content</Box>
 		</Grid>
 		```
 	</PreviewCode>
 	<PreviewCode slot='tab' label='HTML'>
 		```html "-gd -gd_sm" "gd=" "'.' 'side'" "'. side' / 1fr 10rem" "-ga" "--ga:side"
 		<div class='l--grid -g:30 -gd -gd_sm' style="--gd:'.' 'side';--gd_sm:'. side' / 1fr 10rem">
-			<div>
+			<div class='l--box'>
 				<p>
 					Lorem ipsum dolor sit, amet consectetur adipisicing elit, sed do eiusmod tempor.
 					Non facere laudantium ex eos doloribus aut dolore nisi.
 				</p>
 			</div>
-			<div class='-ga' style='--ga:side'>
+			<div class='l--box -ga' style='--ga:side'>
 				Side Content
 			</div>
 		</div>
@@ -182,34 +182,34 @@ div.l--withSide
 	<PreviewTitle>`side`を左側、ブレイクポイントを`@md`にする例</PreviewTitle>
 	<PreviewArea resize p='30'>
 		<Grid gd={[`'.' 'side'`, null, `'side .' / 10rem 1fr`]} g='30'>
-			<GridItem>
+			<Box>
 				<Dummy />
-			</GridItem>
-			<GridItem ga='side' bgc='blue:20%'>
+			</Box>
+			<Box ga='side' bgc='blue:20%'>
 				Side Content
-			</GridItem>
+			</Box>
 		</Grid>
 	</PreviewArea>
 	<PreviewCode slot='tab' label='JSX'>
 		```jsx
 		<Grid gd={[`'.' 'side'`, null, `'side .' / 10rem 1fr`]} g='30'>
-			<GridItem>
+			<Box>
 				<Dummy />
-			</GridItem>
-			<GridItem ga='side'>Side Content</GridItem>
+			</Box>
+			<Box ga='side'>Side Content</Box>
 		</Grid>
 		```
 	</PreviewCode>
 	<PreviewCode slot='tab' label='HTML'>
 		```html
 		<div class='l--grid -g:30 -gd -gd_md' style="--gd:'.' 'side';--gd_md:'side .' / 10rem 1fr">
-			<div>
+			<div class='l--box'>
 				<p>
 					Lorem ipsum dolor sit, amet consectetur adipisicing elit, sed do eiusmod tempor.
 					Non facere laudantium ex eos doloribus aut dolore nisi.
 				</p>
 			</div>
-			<div class='-ga' style='--ga:side'>
+			<div class='l--box -ga' style='--ga:side'>
 				Side Content
 			</div>
 		</div>

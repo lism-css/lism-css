@@ -3,7 +3,7 @@ title: 'Decorator'
 description: ...
 ---
 
-import { Decorator, Box, Flex, Grid, GridItem, Spacer, Dummy } from 'lism-css/astro';
+import { Decorator, Box, Flex, Grid, Spacer, Dummy } from 'lism-css/astro';
 import {
 	Preview,
 	PreviewArea,
@@ -30,10 +30,6 @@ div.l--decorator[aria-hidden="true"]
 | `iis`,`iie`,`ibs`,`ibe` | これらを `i_` へ渡します。|
 | `trf`, `trfo`, `translate`, `rotate`, `scale`, `clipPath` | これらを`css`へ渡します|
 | `blur`,`contrast`,`brightness`,`grayscale`,`hueRotate`,`invert`,`saturate`,`sepia` | これらをまとめて連結し `css.fltr` に受け渡します。|
-
-
-また、**`gridItem`系プロパティも直接利用できます。**
-
 
 
 ## Import
@@ -72,9 +68,3 @@ div.l--decorator[aria-hidden="true"]
 		```
 	</PreviewCode>
 </Preview>
-
-<Spacer h='20' />
-
-この他にも、以下のページで`<Decorator>`を活用したコンテンツの装飾例を複数紹介しています。
-
-<Reference>[装飾ボックスの例](/components/decorations)</Reference>

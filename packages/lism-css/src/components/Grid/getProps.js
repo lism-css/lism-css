@@ -28,26 +28,27 @@ export function getGridProps({ _grid = 'grid', lismClass, ...props }) {
 	return props;
 }
 
-export function getGridItemProps(props) {
-	if (null == props.gridItem) props.gridItem = {};
-	[
-		'ga',
-		'gc',
-		'gr',
-		'gcs',
-		'gce',
-		'grs',
-		'gre',
-		//'aslf', 'jslf', 'pslf', 'ord'
-	].forEach((key) => {
-		if (null != props[key]) {
-			props.gridItem[key] = props[key];
-			delete props[key];
-		}
-	});
+// gridItemを省略指定できるようにする
+// export function getGridItemProps(props) {
+// 	if (null == props.gridItem) props.gridItem = {};
+// 	[
+// 		'ga',
+// 		'gc',
+// 		'gr',
+// 		'gcs',
+// 		'gce',
+// 		'grs',
+// 		'gre',
+// 		//'aslf', 'jslf', 'pslf', 'ord'
+// 	].forEach((key) => {
+// 		if (null != props[key]) {
+// 			props.gridItem[key] = props[key];
+// 			delete props[key];
+// 		}
+// 	});
 
-	return props;
-}
+// 	return props;
+// }
 
 // 1:2:3 → 1fr 2fr 3fr に変換
 // function getMaybeFrs(value) {

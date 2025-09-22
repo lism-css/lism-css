@@ -116,10 +116,6 @@ export default [
 				link: '/layout/grid/',
 			},
 			{
-				label: 'GridItem',
-				link: '/layout/griditem/',
-			},
-			{
 				label: 'Center',
 				link: '/layout/center/',
 			},

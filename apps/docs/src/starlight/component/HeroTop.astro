@@ -1,6 +1,6 @@
 ---
 import Button from '~/components/ex/Button/index.astro';
-import { Lism, Grid, GridItem, Icon } from 'lism-css/astro';
+import { Lism, Grid, Icon } from 'lism-css/astro';
 import Gradbox from './Gradbox.astro';
 // import { PAGE_TITLE_ID } from '@astrojs/starlight/constants';
 // import LinkButton from '@astrojs/starlight/user-components/LinkButton.astro';
@@ -13,7 +13,7 @@ const { title = data.title, tagline, image, actions = [] } = data.hero || {};
 ---
 
 <Grid class='z--hero' variant='repeat' cols='5' rows='1' minH={['50svh', '75vh']} ai='c'>
-	<GridItem class='z--hero_content l--stack -g:40' gc='1 / 5' gr='1' z='1'>
+	<Lism class='z--hero_content l--stack -g:40' gc='1 / 5' gr='1' z='1'>
 		<div class='l--stack -g:20 copy'>
 			<div class='z--hero_h1wrap u--clipText -w:fit'>
 				<h1 id={PAGE_TITLE_ID} class='-fz:5xl' data-page-title set:html={title} />
@@ -37,10 +37,10 @@ const { title = data.title, tagline, image, actions = [] } = data.hero || {};
 				</div>
 			)
 		}
-	</GridItem>
-	<GridItem class='z--hero_image' gc='3 / 6' gr='1' pb='20' z='0'>
+	</Lism>
+	<Lism class='z--hero_image' gc='3 / 6' gr='1' pb='20' z='0'>
 		<Gradbox />
-	</GridItem>
+	</Lism>
 </Grid>
 
 <!-- <style is:global>

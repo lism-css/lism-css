@@ -1,7 +1,6 @@
 ---
 import type { LismProps } from '../types';
 import { Lism } from '../Lism';
-import { getGridItemProps } from '../../../dist/components/Grid/getProps';
 
 // Propsの定義
 interface Props extends LismProps {}
@@ -10,6 +9,6 @@ let { layout, ...props } = Astro.props;
 const LismComponent = layout || Lism;
 ---
 
-<LismComponent {...getGridItemProps(props)}>
+<LismComponent {...props}>
 	<slot />
 </LismComponent>
