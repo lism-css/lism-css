@@ -1,11 +1,10 @@
 import atts from '../../lib/helper/atts';
 
 import getTransformProps from '../getTransformProps';
-import getInsetProps from '../getInsetProps';
 import getFilterProps from '../getFilterProps';
 
 export default function ({ lismClass, size, ...props }) {
-	props = getFilterProps(getTransformProps(getInsetProps(props)));
+	props = getFilterProps(getTransformProps(props));
 
 	if (size) {
 		props.ar = '1/1';
