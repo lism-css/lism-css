@@ -507,22 +507,52 @@ borderに関する仕様は少し特殊になっています。詳しくは[bord
 
 ## Other CSS
 
+|Prop|Shorthand|To Class|BP|
+|---|---|---|---|
+|`transform`|`trf`|||
+|`transform-origin`|`trfo`|||
+|`translate`|`trnslt`|`-50X`,`-50Y`,`-50XY`|-|
+|`rotate`|`rotate`|`45`,`-45`,`90`,`-90`|-|
+|`scale`|`scale`|`-X`,`-Y`,`-XY`|-|
+
+### filter
+|Prop|Shorthand|To Class|BP|
+|---|---|---|---|
+|`filter`|`fltr`|||
+|`backdrop-filter`|`bdfltr`|
+
+
+### float
+
+|Prop|Shorthand|To Class|BP|
+|---|---|---|---|
+|`float`|`fl`|`l`(`left`),`r`(`right`)|⚪︎|
+|`clear`|`cl`|`l`(`left`),`r`(`right`),`b`(`both`)|⚪︎|
+
+### object-fit
+|Prop|Shorthand|To Class|BP|
+|---|---|---|---|
+|`object-fit`|`obf`|`cv`(`cover`),`cn`(`contain`)|⚪︎|
+|`object-position`|`obp`|||
+
+
+
 その他、下記のCSSプロパティは `css` というプロパティにオブジェクトとして指定することで出力できます。  
 (Note: 以下に挙げているもの以外を`css`に渡すと、`style`に流れます。)
 
 |Prop|Shorthand|To Class|BP|
 |---|---|---|---|
-|`transform`|`(css.)trf`|||
-|`transform-origin`|`(css.)trfo`|||
-|`translate`|`(css.)trnslt`|`-50X`,`-50Y`,`-50XY`|-|
-|`rotate`|`(css.)rotate`|`45`,`-45`,`90`,`-90`|-|
-|`scale`|`(css.)scale`|`-X`,`-Y`,`-XY`|-|
-|`filter`|`(css.)fltr`|||
-|`backdrop-filter`|`(css.)bdfltr`|||
-|`float`|`(css.)fl`|`l`(`left`),`r`(`right`)|⚪︎|
-|`clear`|`(css.)cl`|`l`(`left`),`r`(`right`),`b`(`both`)|⚪︎|
-|`object-fit`|`(css.)obf`|`cv`(`cover`),`cn`(`contain`)|⚪︎|
-|`object-position`|`(css.)obp`|||
+|`transform`|`trf`|||
+|`transform-origin`|`trfo`|||
+|`translate`|`trnslt`|`-50X`,`-50Y`,`-50XY`|-|
+|`rotate`|`rotate`|`45`,`-45`,`90`,`-90`|-|
+|`scale`|`scale`|`-X`,`-Y`,`-XY`|-|
+|`filter`|`fltr`|||
+|`backdrop-filter`|`bdfltr`|||
+|`float`|`fl`|`l`(`left`),`r`(`right`)|⚪︎|
+|`clear`|`cl`|`l`(`left`),`r`(`right`),`b`(`both`)|⚪︎|
+|`object-fit`|`obf`|`cv`(`cover`),`cn`(`contain`)|⚪︎|
+|`object-position`|`obp`|||
 
 ### クラスで直接使用するしかできないもの
 最後に、`Lism` コンポーネントで対応した CSS Props がないものの、Prop Classの用意があるものをリストアップしておきます。
