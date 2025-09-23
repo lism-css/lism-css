@@ -325,6 +325,43 @@ export default {
 	gre: { style: 'gridRowEnd' },
 
 	// transform系
+	trf: { style: 'transform' },
+	trfo: { style: 'transformOrigin' },
+	trnslt: {
+		style: 'translate',
+		utils: {
+			'-50% -50%': '-50XY',
+			'-50%': '-50X',
+			'-50% 0': '-50X',
+			'0 -50%': '-50Y',
+		},
+	},
+	//rtt
+	rotate: {
+		style: 'rotate',
+		utils: { '45deg': '45', '-45deg': '-45', '90deg': '90', '-90deg': '-90' },
+	},
+	//scl
+	scale: {
+		style: 'scale',
+		utils: {
+			'-1 1': '-X',
+			'1 -1': '-Y',
+			'-1 -1': '-XY',
+		},
+	},
+
+	// float
+	fl: { style: 'float', utils: { left: 'l', right: 'r' } },
+	cl: { style: 'clear', utils: { left: 'l', right: 'r', both: 'b' } },
+
+	// object-fit
+	obf: { style: 'objectFit', utils: { cover: 'cv', contain: 'cn' } },
+	obp: { style: 'objectPosition' },
+
+	// filter
+	fltr: { style: 'filter' }, // fltr?
+	bdfltr: { style: 'backdropFilter' }, // bdfltr?
 };
 
 export const CONTEXT_PROPS = {
@@ -359,41 +396,8 @@ export const CONTEXT_PROPS = {
 
 	// mask: {},
 	css: {
-		trf: { style: 'transform' },
-		trfo: { style: 'transformOrigin' },
-		trnslt: {
-			style: 'translate',
-			utils: {
-				'-50% -50%': '-50XY',
-				'-50%': '-50X',
-				'-50% 0': '-50X',
-				'0 -50%': '-50Y',
-			},
-		},
-		rotate: {
-			style: 'rotate',
-			utils: { '45deg': '45', '-45deg': '-45', '90deg': '90', '-90deg': '-90' },
-		},
-		scale: {
-			style: 'scale',
-			utils: {
-				'-1 1': '-X',
-				'1 -1': '-Y',
-				'-1 -1': '-XY',
-			},
-		},
-
-		fltr: { style: 'filter' }, // fltr?
-		bdfltr: { style: 'backdropFilter' }, // bdfltr?
-		fl: { style: 'float', utils: { left: 'l', right: 'r' } },
-		cl: { style: 'clear', utils: { left: 'l', right: 'r', both: 'b' } },
-		obf: { style: 'objectFit', utils: { cover: 'cv', contain: 'cn' } },
-		obp: { style: 'objectPosition' },
-
-		// Memo: その他、コアの処理このcssに入り得るものは以下の通り.(将来的に何か処理を追加するかもしれないもの)
+		// Memo: その他、このcssに入り得るもの.(将来的に何か処理を追加するかもしれないもの)
 		// clipPath: { style: 1 }, // cpp ?
-		// objectFit: { style: 1, utilKey: 'obf', utils: { cover: 'cv', contain: 'cn' } },
-		// objectPosition: { style: 1 },
 	},
 
 	// hov: { c, bgc, bdc, bxsh },

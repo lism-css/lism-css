@@ -24,7 +24,7 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage, Referen
 | プロパティ | 説明 |
 |---|---|
 | `layout` | 展開したい Lismコンポーネント を指定できます。|
-| `blur`,`contrast`,`brightness`,`grayscale`,`hueRotate`,`invert`,`saturate`,`sepia` | これらをまとめて連結し、 `css.bdfltr` に受け渡します。|
+| `blur`,`contrast`,`brightness`,`grayscale`,`hueRotate`,`invert`,`saturate`,`sepia` | これらをまとめて連結し、 `bdfltr` に受け渡します。|
 
 
 
@@ -67,9 +67,9 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage, Referen
 </Preview>
 
 
-### backdropFilterの活用
+### backdrop-filterの活用
 
-Lismコンポーネントでは、`css.backdropFilter` に指定した値を`backdrop-filter`としてインラインスタイルを出力できるようになっていますが、`<Layer>`コンポーネントでは、この機能をより活用しやすいようになっています。
+Lismコンポーネントでは、`bdfltr` に指定した値を`backdrop-filter`として出力できるようになっていますが、`<Layer>`コンポーネントでは、`blur`などの主要成分を個別に指定できるように追加調整されており、この機能をより活用しやすいようになっています。
 
 <Preview>
 	<PreviewTitle>背景にブラーをかける</PreviewTitle>
