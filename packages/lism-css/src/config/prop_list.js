@@ -50,6 +50,12 @@ export default {
 	maxH: { presets: ['100%'], converter: 'size' },
 	minW: { presets: ['100%'], converter: 'size' },
 	minH: { presets: ['100%', '100lvh', '100svh'], converter: 'size' },
+	isz: { style: 'inline-size', converter: 'size' },
+	bsz: { style: 'block-size', converter: 'size' },
+	maxIsz: { style: 'maxInlineSize', converter: 'size' },
+	maxBsz: { style: 'maxBlockSize', converter: 'size' },
+	minIsz: { style: 'minInlineSize', converter: 'size' },
+	minBsz: { style: 'minBlockSize', converter: 'size' },
 
 	// is: inline-size, bs: block-size, maxI, maxB, minIsz, minBsz
 	c: {
@@ -353,12 +359,6 @@ export const CONTEXT_PROPS = {
 
 	// mask: {},
 	css: {
-		isz: { style: 'inline-size', converter: 'size' },
-		bsz: { style: 'block-size', converter: 'size' },
-		maxIsz: { style: 'maxInlineSize', converter: 'size' },
-		maxBsz: { style: 'maxBlockSize', converter: 'size' },
-		minIsz: { style: 'minInlineSize', converter: 'size' },
-		minBsz: { style: 'minBlockSize', converter: 'size' },
 		trf: { style: 'transform' },
 		trfo: { style: 'transformOrigin' },
 		trnslt: {
@@ -382,6 +382,7 @@ export const CONTEXT_PROPS = {
 				'-1 -1': '-XY',
 			},
 		},
+
 		fltr: { style: 'filter' }, // fltr?
 		bdfltr: { style: 'backdropFilter' }, // bdfltr?
 		fl: { style: 'float', utils: { left: 'l', right: 'r' } },
