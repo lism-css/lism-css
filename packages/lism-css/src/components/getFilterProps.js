@@ -3,7 +3,7 @@ const FILTERS = ['blur', 'contrast', 'brightness', 'dropShadow', 'grayscale', 'h
 export default function getFilterProps(props, filterType = 'filter') {
 	const filterValues = [];
 
-	const style = props.style || {};
+	const style = structuredClone(props.style || {});
 
 	if (null == props[filterType]) {
 		FILTERS.forEach((filterName) => {
@@ -20,5 +20,6 @@ export default function getFilterProps(props, filterType = 'filter') {
 		}
 	}
 
+	props.style = style;
 	return props;
 }
