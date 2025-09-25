@@ -1,9 +1,11 @@
 const FILTERS = ['blur', 'contrast', 'brightness', 'dropShadow', 'grayscale', 'hueRotate', 'invert', 'saturate', 'sepia'];
 
-export default function getFilterProps(props, type = 'fltr') {
+export default function getFilterProps(props, filterType = 'filter') {
 	const filterValues = [];
 
-	if (null == props[type]) {
+	const style = props.style || {};
+
+	if (null == props[filterType]) {
 		FILTERS.forEach((filterName) => {
 			if (props[filterName]) {
 				// filterName を filter-name に変換（キャメルケースをケバブケースに変換）
@@ -14,7 +16,7 @@ export default function getFilterProps(props, type = 'fltr') {
 		});
 
 		if (filterValues.length > 0) {
-			props[type] = filterValues.join(' ');
+			style[filterType] = filterValues.join(' ');
 		}
 	}
 
