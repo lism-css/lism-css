@@ -90,7 +90,7 @@ Lismでは、主要なCSSプロパティ群に対して、それらで頻繁に�
 |`letter-spacing`|`lts`|[`TYPO.LTS`](/css/tokens/#typolts)|-|
 |`text-align`|`ta`|`c`(`center`)<br/>`l`(`left`)<br/>`r`(`right`)|-|
 |`text-decoration`|`td`|`n`(`none`)<br/>`u`(`underline`)|-|
-|`white-space`|`whs`|`nw`(`nowrap`)|-|
+
 
 <Preview>
 	<PreviewTitle>Examples</PreviewTitle>
@@ -208,17 +208,6 @@ export const LinkSPACE = () => <a href="/css/tokens/#space"><code>SPACE</code></
 </Preview>
 
 
-## Displays
-|Prop|Shorthand|To Class|BP|
-|---|---|---|---|
-|`display`|`d`|`n`(`none`),<br />`b`(`block`),<br />`f`(`flex`),<br />`g`(`grid`),<br />`i`(`inline`),<br />`ib`(`inline-block`),<br />`if`(`inline-flex`),<br />`ig`(`inline-grid`)|○|
-|`visibility`|`v`|`h`(`hidden`),<br /> `v`(`visible`)|-|
-|`overflow`|`ov`|`h`(`hidden`),<br />`a`(`auto`),<br />`c`(`clip`)|-|
-|`overflow-x`|`ovx`|`h`(`hidden`),<br />`a`(`auto`),<br />`c`(`clip`)|-|
-|`overflow-y`|`ovy`|`h`(`hidden`),<br />`a`(`auto`),<br />`c`(`clip`)|-|
-|`opacity`|`op`|[`OPACITY`](/css/tokens/#opacity), `0`|-|
-|`aspect-ratio`|`ar`|`16/9`,`3/2`,`1/1`,<br />`ogp`|○|
-
 
 ## Width & Height
 |Property|Shorthand|To Class|BP|
@@ -240,9 +229,20 @@ export const LinkSPACE = () => <a href="/css/tokens/#space"><code>SPACE</code></
 関連トークン: <a href="/css/tokens/#size"><code>SIZE</code></a>
 
 
-## Layouts
 
-### Positions
+## Displays
+|Prop|Shorthand|To Class|BP|
+|---|---|---|---|
+|`display`|`d`|`n`(`none`),<br />`b`(`block`),<br />`f`(`flex`),<br />`g`(`grid`),<br />`i`(`inline`),<br />`ib`(`inline-block`),<br />`if`(`inline-flex`),<br />`ig`(`inline-grid`)|○|
+|`visibility`|`v`|`h`(`hidden`),<br /> `v`(`visible`)|-|
+|`opacity`|`op`|[`OPACITY`](/css/tokens/#opacity), `0`|-|
+|`overflow`|`ov`|`h`(`hidden`),<br />`a`(`auto`),<br />`c`(`clip`)|-|
+|`overflow-x`|`ovx`|`h`(`hidden`),<br />`a`(`auto`),<br />`c`(`clip`)|-|
+|`overflow-y`|`ovy`|`h`(`hidden`),<br />`a`(`auto`),<br />`c`(`clip`)|-|
+|`aspect-ratio`|`ar`|`16/9`,`3/2`,`1/1`,<br />`ogp`|○|
+
+
+## Positions
 
 |Prop|Shorthand|To Class|BP|
 |---|---|---|---|
@@ -253,10 +253,11 @@ export const LinkSPACE = () => <a href="/css/tokens/#space"><code>SPACE</code></
 |`bottom`|`b`|`0`,`50%`,`100%`|-|
 |`inset`|`inset`|`0`|-|
 |`z-index`|`z`|`-1`, `0`, `1`, `2`, `99`|-|
-|`inset-inline-start`|`iis`|-|-|
+|`isolation`|`iso`|`i`(`isolate`)|-|
+{/* |`inset-inline-start`|`iis`|-|-|
 |`inset-inline-end`|`iie`|-|-|
 |`inset-block-start`|`ibs`|-|-|
-|`inset-block-end`|`ibe`|-|-|
+|`inset-block-end`|`ibe`|-|-| */}
 
 `position:absolute`で要素を配置する例をいくつか紹介します。
 
@@ -312,39 +313,15 @@ export const LinkSPACE = () => <a href="/css/tokens/#space"><code>SPACE</code></
 </Preview>
 
 
-### Places
 
-|Prop|Shorthand|To Class|BP|
-|---|---|---|---|
-|`align-items`|`ai`|`c`, `s`, `e`, `fs`, `fe`, `str`|⚪︎|
-|`align-content`|`ac`|`c`, `s`, `e`, `fs`, `fe`, `sb`|⚪︎|
-|`justify-items`|`ji`|`c`, `s`, `e`, `fs`, `fe`, `str`|⚪︎|
-|`justify-content`|`jc`|`c`, `s`, `e`, `fs`, `fe`, `sb`|⚪︎|
-|`place-items`|`pi`|-|-|
-|`place-content`|`pc`|-|-|
-|`align-self`|`aslf`|`c`, `s`, `e`, `str`|-|
-|`justify-self`|`jslf`|`c`, `s`, `e`, `str`|-|
-|`place-self`|`pslf`|-|-|
-|`order`|`ord`|`-1`, `0`, `1`|-|
-
+## Layouts
 
 ### Flex
-
-#### 親要素向けプロパティ
 
 |Prop|Shorthand|To Class|BP|
 |---|---|---|---|
 |`flex-wrap`|`fxw`|`wrap`(`w`),<br /> `nw`(`nowrap`)|○|
 |`flex-direction`|`fxd`|`c`(`column`),<br /> `cr`(`column-reverse`),<br /> `r`(`row`),<br /> `rr`(`row-reverse`)|○|
-
-<Reference>
-詳しくは[`<Flex>`](/components/flex/)をご覧ください。
-</Reference>
-
-
-#### 子要素向けプロパティ
-|Prop|Shorthand|To Class|BP|
-|---|---|---|---|
 |`flex`|`fx`|`1`|○|
 |`flex-shrink`|`fxsh`|`0`, `1`|-|
 |`flex-grow`|`fxg`|`0`, `1`|-|
@@ -352,9 +329,6 @@ export const LinkSPACE = () => <a href="/css/tokens/#space"><code>SPACE</code></
 
 
 ### Grid
-
-
-#### 親要素向けプロパティ
 
 |Prop|Shorthand|To Class|BP|
 |---|---|---|---|
@@ -368,14 +342,6 @@ export const LinkSPACE = () => <a href="/css/tokens/#space"><code>SPACE</code></
 |`grid-auto-columns`|`gac`|-|○|
 {/* |`gt`|`grid-template`||-| */}
 
-
-<Reference>
-詳しくは[`<Grid>`](/components/grid/)をご覧ください。
-</Reference>
-
-
-#### 子要素向けプロパティ
-
 |Prop|Shorthand|To Class|BP|
 |---|---|---|---|
 |`grid-area`|`ga`|-|○|
@@ -385,6 +351,24 @@ export const LinkSPACE = () => <a href="/css/tokens/#space"><code>SPACE</code></
 |`grid-row-start`|`grs`|-|-|
 |`grid-column-end`|`gce`|-|-|
 |`grid-row-end`|`gre`|-|-|
+
+
+### Places
+
+|Prop|Shorthand|To Class|BP|
+|---|---|---|---|
+|`align-items`|`ai`|`c`, `s`, `e`, `fs`, `fe`, `str`|⚪︎|
+|`align-content`|`ac`|`c`, `s`, `e`, `fs`, `fe`, `sb`|⚪︎|
+|`align-self`|`aslf`|`c`, `s`, `e`, `str`|-|
+|`justify-items`|`ji`|`c`, `s`, `e`, `fs`, `fe`, `str`|⚪︎|
+|`justify-content`|`jc`|`c`, `s`, `e`, `fs`, `fe`, `sb`|⚪︎|
+|`justify-self`|`jslf`|`c`, `s`, `e`, `str`|-|
+|`order`|`ord`|`-1`, `0`, `1`|-|
+
+{/* |`place-items`|`pi`|-|-|
+|`place-content`|`pc`|-|-|
+|`place-self`|`pslf`|-|-| */}
+
 
 
 
@@ -403,16 +387,14 @@ export const LinkSPACE = () => <a href="/css/tokens/#space"><code>SPACE</code></
 |Prop|Shorthand|To Class|BP|
 |---|---|---|---|
 |`border-radius`|`bdrs`|[`RADIUS`](/css/tokens/#radius)|○|
-|`border-top-left-radius`|`(bdrs_.)bdtlrs`|-|-|
+{/* |`border-top-left-radius`|`(bdrs_.)bdtlrs`|-|-|
 |`border-top-right-radius`|`(bdrs_.)bdtrrs`|-|-|
 |`border-bottom-left-radius`|`(bdrs_.)bdblrs`|-|-|
 |`border-bottom-right-radius`|`(bdrs_.)bdbrrs`|-|-|
 |`border-start-start-radius`|`(bdrs_.)bdssrs`|-|-|
 |`border-start-end-radius`|`(bdrs_.)bdsers`|-|-|
 |`border-end-start-radius`|`(bdrs_.)bdesrs`|-|-|
-|`border-end-end-radius`|`(bdrs_.)bdeers`|-|-|
-
-
+|`border-end-end-radius`|`(bdrs_.)bdeers`|-|-| */}
 
 
 ### Border
@@ -455,32 +437,29 @@ borderに関する仕様は少し特殊になっています。詳しくは[bord
 |Prop|Shorthand|To Class|BP|
 |---|---|---|---|
 |`background`|`bg`|-|⚪︎|
-|`background-image`|`(bg_.)bgi`|-|⚪︎|
-|`background-repeat`|`(bg_.)bgr`|`n`(`no-repeat`)|-|
-|`background-position`|`(bg_.)bgp`|`c`(`center`)|-|
-|`background-size`|`(bg_.)bgsz`|`cv`(`cover`),`ct`(`contain`)|-|
-|`background-attachment`|`(bg_.)bga`|-|-|
-|`background-origin`|`(bg_.)bgo`|-|-|
-|`background-clip`|`(bg_.)bcp`|-|-|
-|`background-blend-mode`|`(bg_.)bbm`|-|-|
+
+{/* |`background-image`|`bgi`|-|⚪︎|
+|`background-position`|`bgp`|`c`(`center`)|-|
+|`background-size`|`bgsz`|`cv`(`cover`),`ct`(`contain`)|-|
+|`background-repeat`|`bgr`|`n`(`no-repeat`)|-|
+|`background-clip`|`bgcp`|txt?|-|
+|`background-attachment`|`bga`|-|-|
+|`background-origin`|`bgo`|-|-|
+|`background-blend-mode`|`bgbm`|-|-| */}
 
 <Preview>
 	<PreviewTitle>使用例</PreviewTitle>
-	<PreviewArea p='30'>
-		{/* <Frame ar='ogp' bg="url(/img/img-2.jpg) center / cover"></Frame> */}
-		<Frame ar='ogp' bg_={{bgi:'url(/img/img-2.jpg)', bgp:'center', bgsz:'cover'}}></Frame>
+	<PreviewArea p='30' resize>
+		<Frame ar='ogp' bg='url(/img/pattern.png) center / 4rem'></Frame>
 	</PreviewArea>
 	<PreviewCode label='JSX' slot='tab'>
 		```jsx
-		<Frame ar='ogp' bg_={{bgi:'url(/img/img-2.jpg)', bgp:'center', bgsz:'cover'}}></Frame>
-
-		// ↓ 以下と表示は同じ（--bgに出力されます）
-		<Frame ar='ogp' bg="url(/img/img-2.jpg) center / 50%"></Frame>
+		<Frame ar='ogp' bg='url(/img/pattern.png) center / 4rem'></Frame>
 		```
 	</PreviewCode>
 	<PreviewCode label='HTML' slot='tab'>
 		```html
-		<div class="l--frame -ar:ogp -bgi -bgp:c -bgsz:cv" style="--bgi:url(/img/img-2.jpg)"></div>
+		<div class="l--frame -ar:ogp -bg" style="--bg:url(/img/pattern.png) center / 4rem"></div>
 		```
 	</PreviewCode>
 </Preview>
@@ -504,71 +483,47 @@ borderに関する仕様は少し特殊になっています。詳しくは[bord
 </Preview>
 
 
-
-## Other CSS
+### Transforms
 
 |Prop|Shorthand|To Class|BP|
 |---|---|---|---|
-|`transform`|`trf`|||
-|`transform-origin`|`trfo`|||
 |`translate`|`trnslt`|`-50X`,`-50Y`,`-50XY`|-|
 |`rotate`|`rotate`|`45`,`-45`,`90`,`-90`|-|
 |`scale`|`scale`|`-X`,`-Y`,`-XY`|-|
 
-### filter
-|Prop|Shorthand|To Class|BP|
-|---|---|---|---|
-|`filter`|`fltr`|||
-|`backdrop-filter`|`bdfltr`|
 
 
-### float
-
-|Prop|Shorthand|To Class|BP|
-|---|---|---|---|
-|`float`|`fl`|`l`(`left`),`r`(`right`)|⚪︎|
-|`clear`|`cl`|`l`(`left`),`r`(`right`),`b`(`both`)|⚪︎|
-
-### object-fit
-|Prop|Shorthand|To Class|BP|
-|---|---|---|---|
-|`object-fit`|`obf`|`cv`(`cover`),`cn`(`contain`)|⚪︎|
-|`object-position`|`obp`|||
+## Other CSS
 
 
 
 その他、下記のCSSプロパティは `css` というプロパティにオブジェクトとして指定することで出力できます。  
 (Note: 以下に挙げているもの以外を`css`に渡すと、`style`に流れます。)
 
-|Prop|Shorthand|To Class|BP|
-|---|---|---|---|
-|`transform`|`trf`|||
-|`transform-origin`|`trfo`|||
-|`translate`|`trnslt`|`-50X`,`-50Y`,`-50XY`|-|
-|`rotate`|`rotate`|`45`,`-45`,`90`,`-90`|-|
-|`scale`|`scale`|`-X`,`-Y`,`-XY`|-|
-|`filter`|`fltr`|||
-|`backdrop-filter`|`bdfltr`|||
-|`float`|`fl`|`l`(`left`),`r`(`right`)|⚪︎|
-|`clear`|`cl`|`l`(`left`),`r`(`right`),`b`(`both`)|⚪︎|
-|`object-fit`|`obf`|`cv`(`cover`),`cn`(`contain`)|⚪︎|
-|`object-position`|`obp`|||
+
 
 ### クラスで直接使用するしかできないもの
 最後に、`Lism` コンポーネントで対応した CSS Props がないものの、Prop Classの用意があるものをリストアップしておきます。
 
 |Class|CSS|
 |---|---|
-|`-iso:i`|`isolation: isolate`|
-|`-ovw:any`|`overflow-wrap: anywhere`|
-|`-bxz:cb`|`box-sizing: content-box`|
-|`-bxz:bb`|`box-sizing: border-box`|
-|`-wm:v-rl`|`writing-mode: vertical-rl`|
-{/* |`-obf:cn`|`object-fit: contain`|
-|`-obf:cv`|`object-fit: cover`| */}
-{/* |`-fl:l`|`float: left`|
+|`-bxsz:cb`|`box-sizing: content-box`|
+|`-bxsz:bb`|`box-sizing: border-box`|
+|`-fl:l`|`float: left`|
 |`-fl:r`|`float: right`|
 |`-cl:b`|`clear: both`|
 |`-cl:l`|`clear: left`|
-|`-cl:r`|`clear: right`| */}
+|`-cl:r`|`clear: right`|
+|`-ovw:any`|`overflow-wrap: anywhere`|
+|`-whs:nw`|`white-space: nowrap`|
+{/* |`-objf:cn`|`object-fit: contain`|
+|`-objf:cv`|`object-fit: cover`| */}
+{/* |`-wrm:v-rl`|`writing-mode: vertical-rl`| */}
+{/* |`filter`|`fltr`|||
+|`backdrop-filter`|`bdfltr`||| */}
+
+{/* |`background-position`|`bgp`|`c`(`center`)|-| */}
+{/* |`background-size`|`bgsz`|`cv`(`cover`),`ct`(`contain`)|-| */}
+{/* |`background-repeat`|`bgr`|`n`(`no-repeat`)|-| */}
+
 

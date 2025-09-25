@@ -1,4 +1,4 @@
-import { PROPS, CONTEXT_PROPS } from '../config';
+import { PROPS } from '../config';
 import isPresetValue from './isPresetValue';
 import isTokenValue from './isTokenValue';
 import getMaybeUtilValue from './getMaybeUtilValue';
@@ -18,6 +18,40 @@ const getConverter = (propName) => {
 	return converter || null;
 };
 
+const STATE_CLASSES = {
+	isContainer: (value) => {
+		if (value === true) {
+			return { className: 'is--container' };
+		} else if (value) {
+			if (isTokenValue('contentSize', value)) {
+				return { className: `is--container -container:${value}` };
+			} else {
+				return { className: 'is--container', styleKey: '--contentSize', styleValue: getMaybeCssVar(value, 'size') };
+			}
+		}
+		return {};
+	},
+	isFlow: (value) => {
+		if (value === true) {
+			return { className: 'is--flow' };
+		} else if (value) {
+			if (isTokenValue('flow', value)) {
+				return { className: `is--flow -flow:${value}` };
+			} else {
+				return { className: 'is--flow', styleKey: '--flowM', styleValue: getMaybeCssVar(value, 'space') };
+			}
+		}
+		return {};
+	},
+	isVertical: 'is--vertical',
+	isLayer: 'is--layer',
+	isLinkBox: 'is--linkBox',
+	isWide: 'is--wide',
+	isFullwide: 'is--fullwide',
+	isOverwide: 'is--overwide',
+	hasGutter: 'has--gutter',
+};
+
 // const PROP_FULL_NAMES = {
 // 	padding: 'p',
 // 	margin: 'm',
@@ -27,8 +61,8 @@ class LismPropsData {
 	// propList = {};
 	className = '';
 	uClasses = []; // props解析処理で追加される
-	attrs = {};
 	styles = {};
+	attrs = {};
 
 	constructor(allProps) {
 		// 受け取るpropsとそうでないpropsを分ける
@@ -45,15 +79,13 @@ class LismPropsData {
 			_propConfig = {},
 
 			// hasBd,
-			...otherProps
+			...others
 		} = allProps;
 
 		this.lismClass = lismClass || '';
 		this.lismState = structuredClone(lismState);
 		this.styles = structuredClone(style);
 		this._propConfig = structuredClone(_propConfig);
-
-		let others = this.getStateProps(otherProps);
 
 		// ここで variant 処理
 		if (variant && lismClass) {
@@ -73,15 +105,10 @@ class LismPropsData {
 			this.lismClass = [baseClass, ...variantClasses, ...lismClassArr.slice(1)].join(' ');
 		}
 
-		// クラスの結合
-		this.className = atts(this.lismClass, this.lismState, classFromAstro, className);
-
 		// propsの処理
 		if (!isEmptyObj(others)) {
-			this.attrs = others;
-
-			// props処理
-			this.analyzeProps(others);
+			this.attrs = structuredClone(others);
+			this.analyzeProps();
 		}
 
 		// ref
@@ -89,6 +116,7 @@ class LismPropsData {
 			this.attrs.ref = forwardedRef;
 		}
 
+		// pass-get
 		if (null != passVars && typeof passVars === 'object') {
 			this.setPassProps(passVars);
 		}
@@ -99,82 +127,62 @@ class LismPropsData {
 		// 		this.addUtil(`-pass:${_propName}`);
 		// 	});
 		// }
-
 		// if (null != get) {
 		// 	// , 区切りでユーティリティクラスを複数出力可能
 		// 	splitWithComma(get).forEach((_propName) => {
 		// 		this.addUtil(`-get:${_propName}`);
 		// 	});
 		// }
-	}
 
-	// 特定の条件下で受け取るpropの処理
-	setContextProps(name, values) {
-		// if (typeof values !== 'object') return;
-
-		const contextProps = CONTEXT_PROPS[name];
-		if (!contextProps) return;
-
-		Object.keys(values).forEach((propName) => {
-			const propData = contextProps[propName];
-			if (propData) {
-				const propValue = values[propName];
-
-				// console.log(propName, propValue, propData);
-				this.analyzeProp(propName, propValue, propData);
-			} else if (name === 'css') {
-				// cssオブジェクトに入ってきたが、Lism側で一致するデータがないものはそのままstyleへ流す
-				this.addStyle(propName, values[propName]);
-			}
-		});
+		// クラスの結合
+		this.className = atts(this.lismClass, this.lismState, classFromAstro, className, this.uClasses);
 	}
 
 	// prop解析
-	analyzeProps(attrs) {
-		const attrKeys = Object.keys(attrs);
-
-		attrKeys.forEach((propName) => {
-			// 特殊系
-			if (propName === 'hov') {
+	analyzeProps() {
+		Object.keys(this.attrs).forEach((propName) => {
+			// state チェック
+			if (Object.hasOwn(STATE_CLASSES, propName)) {
 				const propVal = this.extractProp(propName);
-				this.setHoverProps(propVal);
-				return;
-			}
-			if (propName === 'bd') {
-				const propVal = this.extractProp(propName);
-				this.setBdProps(propVal);
-				return;
-			}
-
-			// if (PROP_FULL_NAMES[propName]) propName = PROP_FULL_NAMES[propName];
-
-			// Lism系のプロパティかどうか
-			const isLismProp = Object.hasOwn(PROPS, propName);
-			if (isLismProp) {
+				const statePropData = STATE_CLASSES[propName];
+				if (typeof statePropData === 'string') {
+					this.lismState.push(STATE_CLASSES[propName]);
+				} else {
+					const { className, styleKey, styleValue } = statePropData(propVal);
+					if (className) {
+						this.lismState.push(className);
+					}
+					if (styleKey) {
+						this.addStyle(styleKey, styleValue);
+					}
+				}
+			} else if (Object.hasOwn(PROPS, propName)) {
+				// Lism系のプロパティかどうか
 				// value取得して attrsリストから削除しておく
 				const propVal = this.attrs[propName];
 				delete this.attrs[propName];
 
 				// 解析処理
-				this.analyzeProp(propName, propVal);
-				return;
-			}
-
-			const isContextProp = Object.hasOwn(CONTEXT_PROPS, propName);
-			if (isContextProp) {
-				// value取得して attrsリストから削除しておく
-				const propVal = this.attrs[propName];
-				delete this.attrs[propName];
-
-				// 解析処理
-				this.setContextProps(propName, propVal);
-				return;
+				this.analyzeLismProp(propName, propVal);
+			} else {
+				// 特殊系
+				if (propName === 'hov') {
+					const propVal = this.extractProp(propName);
+					this.setHoverProps(propVal);
+				} else if (propName === 'bd') {
+					const propVal = this.extractProp(propName);
+					this.setBdProps(propVal);
+				} else if (propName === 'css') {
+					// cssオブジェクトに入ってきたものはstyleへ流す
+					const cssVales = this.extractProp('css');
+					this.addStyles(cssVales);
+				}
 			}
 		});
 	}
 
-	// prop解析
-	analyzeProp(propName, propVal, propData) {
+	// Lism Prop 解析
+	analyzeLismProp(propName, propVal, propData) {
 		if (null == propVal) return;
 
 		// propデータ取得
@@ -186,47 +194,34 @@ class LismPropsData {
 			propData = Object.assign({}, propData, this._propConfig[propName]);
 		}
 
-		const { name, objProcessor, ...options } = propData;
-
 		// ブレイクポイント指定用のオブジェクト{base,sm,md,lg,xl}かどうかをチェック
 		const { base: baseValue, ...bpValues } = getBpData(propVal);
-		propVal = baseValue;
+		// propVal = baseValue;
 		// let bpValues = null;
 
-		// if (typeof propVal === 'object') {
-		// }
-		// if (BP) {
-		// 	// 事前にBP指定用の { sm, md, ...} 形式で取り出す
-		// 	const { base: baseValue, ...bpData } = getBpData(propVal);
-		// 	propVal = baseValue;
-		// 	bpValues = bpData;
-		// }
-
 		// BP指定意外で成分プロパティが指定されてきた場合 (例: p={{ l: '20', b='30' }}
-		if (null != propVal && typeof propVal === 'object') {
-			// 各成分の解析メソッドがなければ処理を終了
-			if (!objProcessor) return;
-			Object.keys(propVal).forEach((_key) => {
-				// 指定された成分に対応する prop名 を取得
-				const { prop, context } = objProcessor(_key);
+		// if (null != propVal && typeof propVal === 'object') {
+		// 	// 各成分の解析メソッドがなければ処理を終了
+		// 	if (!propData.objProcessor) return;
+		// 	Object.keys(propVal).forEach((_key) => {
+		// 		// 指定された成分に対応する prop名 を取得
+		// 		const { prop, context } = objProcessor(_key);
 
-				if (context) {
-					this.setContextProps(propName, { [prop]: propVal[_key] });
-				} else {
-					this.analyzeProp(prop, propVal[_key]);
-				}
-			});
-		} else {
-			// オブジェクト以外の普通の処理
-			this.setAttrs(name || propName, propVal, options);
-		}
+		// 		if (context) {
+		// 			this.setContextProps(propName, { [prop]: propVal[_key] });
+		// 		} else {
+		// 			this.analyzeLismProp(prop, propVal[_key]);
+		// 		}
+		// 	});
+		// } else {
 
-		// if (null !== bpValues) {
+		// base値の処理
+		this.setAttrs(propName, baseValue, propData);
+
 		// 各BP成分の処理
 		Object.keys(bpValues).forEach((bp) => {
-			this.setAttrs(name || propName, bpValues[bp], options, bp);
+			this.setAttrs(propName, bpValues[bp], propData, bp);
 		});
-		// }
 	}
 
 	addUtil(util) {
@@ -270,11 +265,13 @@ class LismPropsData {
 
 	// utilクラスを追加するか、styleにセットするかの分岐処理 @base
 	// 値が null, undefined, '', false の時はスキップ
-	setAttrs(name, val, options = {}, bp) {
+	setAttrs(propName, val, propData = {}, bp = '') {
 		if (null == val || '' === val || false === val) return;
 
+		const name = propData.name || propName;
+
 		let styleName = `--${name}`;
-		let utilName = `-${options.utilKey || name}`;
+		let utilName = `-${propData.utilKey || name}`;
 
 		if (bp) {
 			// styleName = `--${bp}-${name}`;
@@ -291,7 +288,7 @@ class LismPropsData {
 
 		// ユーティリティクラス化できるかどうかをチェック
 		if (!bp) {
-			let { presets, utils } = options;
+			let { presets, utils } = propData;
 			if (presets) {
 				if (1 === presets) presets = name; // 1 は prop名をそのままキーとして取得
 				if (isPresetValue(presets, val)) {
@@ -312,7 +309,7 @@ class LismPropsData {
 		}
 
 		// 以下、ユーティリティクラス化できない場合の処理
-		let { style, isVar, converter } = options;
+		let { style, isVar, converter } = propData;
 
 		// .-prop: だけ出力するケース
 		// if ((!style && true === val) || '-' === val) {
@@ -449,61 +446,61 @@ class LismPropsData {
 			}
 		}
 
-		this.analyzeProp('bd', value);
+		this.analyzeLismProp('bd', value);
 	}
 
-	getStateProps({ skipState, isOverwide, isFullwide, isWide, isFlow, isContainer, hasGutter, isLayer, isLinkBox, ...props }) {
-		if (!skipState) {
-			if (isContainer) {
-				this.setContainerData(isContainer);
-			}
-			if (isFlow) {
-				this.setFlowData(isFlow);
-			}
+	// getStateProps({ skipState, isOverwide, isFullwide, isWide, isFlow, isContainer, hasGutter, isLayer, isLinkBox, ...props }) {
+	// 	if (!skipState) {
+	// 		if (isContainer) {
+	// 			this.setContainerData(isContainer);
+	// 		}
+	// 		if (isFlow) {
+	// 			this.setFlowData(isFlow);
+	// 		}
 
-			isOverwide && this.lismState.push('is--overwide');
-			isFullwide && this.lismState.push('is--fullwide');
-			isWide && this.lismState.push('is--wide');
-			hasGutter && this.lismState.push('has--gutter');
-		}
+	// 		isOverwide && this.lismState.push('is--overwide');
+	// 		isFullwide && this.lismState.push('is--fullwide');
+	// 		isWide && this.lismState.push('is--wide');
+	// 		hasGutter && this.lismState.push('has--gutter');
+	// 	}
 
-		// skipStateに関係なくチェック
-		if (isLayer) {
-			this.lismState.push('is--layer');
-		}
-		if (isLinkBox) {
-			this.lismState.push('is--linkBox');
-		}
+	// 	// skipStateに関係なくチェック
+	// 	if (isLayer) {
+	// 		this.lismState.push('is--layer');
+	// 	}
+	// 	if (isLinkBox) {
+	// 		this.lismState.push('is--linkBox');
+	// 	}
 
-		return props;
-	}
+	// 	return props;
+	// }
 
-	setContainerData(value) {
-		if (value === true) {
-			this.lismState.push('is--container');
-		} else if (value) {
-			if (isTokenValue('contentSize', value)) {
-				this.lismState.push(`is--container -container:${value}`);
-			} else {
-				this.lismState.push(`is--container`);
-				this.addStyle(`--contentSize`, getMaybeCssVar(value, 'size'));
-			}
-		}
-	}
+	// setContainerData(value) {
+	// 	if (value === true) {
+	// 		this.lismState.push('is--container');
+	// 	} else if (value) {
+	// 		if (isTokenValue('contentSize', value)) {
+	// 			this.lismState.push(`is--container -container:${value}`);
+	// 		} else {
+	// 			this.lismState.push(`is--container`);
+	// 			this.addStyle(`--contentSize`, getMaybeCssVar(value, 'size'));
+	// 		}
+	// 	}
+	// }
 
-	setFlowData(value) {
-		if (value === true) {
-			this.lismState.push('is--flow');
-		} else if (value) {
-			if (isTokenValue('flow', value)) {
-				this.lismState.push(`is--flow -flow:${value}`);
-			} else {
-				// this.lismState.push(`is--flow -flow:`);
-				this.lismState.push(`is--flow`);
-				this.addStyle(`--flowM`, getMaybeCssVar(value, 'space'));
-			}
-		}
-	}
+	// setFlowData(value) {
+	// 	if (value === true) {
+	// 		this.lismState.push('is--flow');
+	// 	} else if (value) {
+	// 		if (isTokenValue('flow', value)) {
+	// 			this.lismState.push(`is--flow -flow:${value}`);
+	// 		} else {
+	// 			// this.lismState.push(`is--flow -flow:`);
+	// 			this.lismState.push(`is--flow`);
+	// 			this.addStyle(`--flowM`, getMaybeCssVar(value, 'space'));
+	// 		}
+	// 	}
+	// }
 }
 
 /**
@@ -522,14 +519,10 @@ export default function getLismProps(props, options = {}) {
 		return {};
 	}
 
-	// const beforeMethod = performance.now();
 	const propObj = new LismPropsData(props);
-	// const afterMethod = performance.now();
-	// const theTime = afterMethod - beforeMethod;
-	// if (theTime > 0) console.log('TIME ' + theTime + ' ms');
 
 	return filterEmptyObj({
-		className: atts(propObj.className, propObj.uClasses),
+		className: propObj.className,
 		style: filterEmptyObj(propObj.styles), //filterEmptyObj(styles), // filterEmptyObj は最後にかける
 		...propObj.attrs, // 処理されずに残っているprops
 	});
