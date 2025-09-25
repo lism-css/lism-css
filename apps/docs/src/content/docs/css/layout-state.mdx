@@ -271,6 +271,42 @@ s, m, l 以外の値をセットしたい場合は、`--contentSize`変数を指
 <PreviewFrame url='/demo/content-size' />
 
 
+## `is--vertical`
+
+縦書きモードに変更するクラスです。`writing-mode: vertical-rl;` をセットします。
+
+
+<Preview>
+	<PreviewTitle>例</PreviewTitle>
+	<PreviewArea p='20'>
+		<Lism className='is--vertical' isFlow w='100%'>
+			<p>Lorem ipsum ...</p>
+			<p>Lorem ipsum content...</p>
+			<p>Lorem ipsum content...</p>
+		</Lism>
+	</PreviewArea>
+	<PreviewCode slot='tab' label='HTML'>
+	```html "is--vertical"
+	<div class='is--flow is--vertical -w:100%' isFlow w='100%'>
+		<p>Lorem ipsum ...</p>
+		<p>Lorem ipsum content...</p>
+		<p>Lorem ipsum content...</p>
+	</div>
+	```
+	</PreviewCode>
+	<PreviewCode slot='tab' label='JSX'>
+	```jsx
+	<Lism className='is--vertical' isFlow w='100%'>
+		<p>Lorem ipsum ...</p>
+		<p>Lorem ipsum content...</p>
+		<p>Lorem ipsum content...</p>
+	</Lism>
+	```
+	</PreviewCode>
+</Preview>
+
+
+
 
 ## `is--layer`
 
