@@ -40,21 +40,7 @@ export function TipCode({
 	}
 
 	return (
-		<Lism
-			tag='code'
-			bd
-			d='if'
-			fz='s'
-			lh='xs'
-			px='10'
-			m='5'
-			bdrs='5'
-			whs='nw'
-			// isColored
-			className='u--cbox'
-			keycolor={color}
-			{...props}
-		>
+		<Lism tag='code' bd d='if' fz='s' lh='xs' px='10' m='5' bdrs='5' className='u--cbox -whs:nw' keycolor={color} {...props}>
 			{text || children}
 		</Lism>
 	);

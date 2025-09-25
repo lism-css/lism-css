@@ -133,8 +133,27 @@ export default {
 
 	// boxcolor: { _presets: TOKENS.palette, style: '--keycolor', converter: 'color' },
 	bg: { utils: { none: 'n' } },
+	// bgi: {},
+	// bgr: { style: 'backgroundRepeat', utils: { n: 'no-repeat' } },
+	// bgp: { style: 'backgroundPosition', utils: { center: 'c' } },
+	// bgsz: { style: 'backgroundSize', utils: { cover: 'cv', contain: 'ct' } },
+	// bgcp: { style: 'backgroundClip' },
+	// bga: { style: 'backgroundAttachment' },
+	// bgo: { style: 'backgroundOrigin' },
+	// bgbm: { style: 'backgroundBlendMode' },
 
-	// mask: { map: 1 },
+	// mask
+	msk: {},
+	// mski: { style: 'maskImage' },
+	// mskbd: { style: 'maskBorder' },
+	// msktyp: { style: 'maskType' },
+	// mskclp: { style: 'maskClip' },
+	// mskcmp: { style: 'maskComposite' },
+	// mskmd: { style: 'maskMode' },
+	// msko: { style: 'maskOrigin' },
+	// mskp: { style: 'maskPosition' },
+	// mskr: { style: 'maskRepeat' },
+	// msksz: { style: 'maskSize' },
 
 	// Typography
 	f: { style: 'font', presets: ['inherit'] },
@@ -149,13 +168,23 @@ export default {
 	lts: { style: 'letterSpacing', presets: TOKENS.lts },
 	ta: { style: 'textAlign', utils: { center: 'c', left: 'l', right: 'r' } },
 	td: { style: 'textDecoration', utils: { underline: 'u', none: 'n' } },
-	whs: { style: 'whiteSpace', utils: { nowrap: 'nw' } },
 	// tsh: { style: 'textShadow' },
+	// whs: { style: 'whiteSpace', utils: { nowrap: 'nw' } },
 	// ovw: { style: 'overflowWrap', utils: { anywhere: 'any' } },
 
-	// others
-	bdrs: { presets: ['0', ...TOKENS.bdrs], converter: 'bdrs' },
+	// shadow
 	bxsh: { presets: ['0', ...TOKENS.bxsh], converter: 'bxsh' },
+
+	// radius
+	bdrs: { presets: ['0', ...TOKENS.bdrs], converter: 'bdrs' },
+	// bdtlrs: { style: 'borderTopLeftRadius', converter: 'bdrs' },
+	// bdtrrs: { style: 'borderTopRightRadius', converter: 'bdrs' },
+	// bdblrs: { style: 'borderBottomLeftRadius', converter: 'bdrs' },
+	// bdbrrs: { style: 'borderBottomRightRadius', converter: 'bdrs' },
+	// bdssrs: { style: 'borderStartStartRadius', converter: 'bdrs' },
+	// bdsers: { style: 'borderStartEndRadius', converter: 'bdrs' },
+	// bdesrs: { style: 'borderEndStartRadius', converter: 'bdrs' },
+	// bdeers: { style: 'borderEndEndRadius', converter: 'bdrs' },
 
 	// transition
 	trs: { style: 'transition' },
@@ -218,15 +247,16 @@ export default {
 		},
 	},
 	z: { style: 'zIndex', presets: ['-1', '0', '1', '2', '99'] },
+	// iso: { style: 'isolation', utils: { isolate: 'i' } },
 	t: { style: 'top', utils: trblUtils, converter: 'space' },
 	l: { style: 'left', utils: trblUtils, converter: 'space' },
 	r: { style: 'right', utils: trblUtils, converter: 'space' },
 	b: { style: 'bottom', utils: trblUtils, converter: 'space' },
 	i: { style: 'inset', utils: { '0%': '0' }, converter: 'space' },
-	iis: { style: 'insetInlineStart', converter: 'space' },
-	iie: { style: 'insetInlineEnd', converter: 'space' },
-	ibs: { style: 'insetBlockStart', converter: 'space' },
-	ibe: { style: 'insetBlockEnd', converter: 'space' },
+	// iis: { style: 'insetInlineStart', converter: 'space' },
+	// iie: { style: 'insetInlineEnd', converter: 'space' },
+	// ibs: { style: 'insetBlockStart', converter: 'space' },
+	// ibe: { style: 'insetBlockEnd', converter: 'space' },
 
 	// isolation
 	// flip: {},
@@ -236,7 +266,7 @@ export default {
 		presets: SPACE_PRESETS, //[...SPACE_PRESETS, ...TOKENS.p],
 		converter: 'space',
 		// {x, y, t, b, l, r, is, bs } でも指定可能にする
-		objProcessor: (d) => ({ prop: `p${d}`, context: null }),
+		// objProcessor: (d) => ({ prop: `p${d}`, context: null }),
 	},
 	px: { presets: SPACE_PRESETS, converter: 'space' },
 	py: { presets: SPACE_PRESETS, converter: 'space' },
@@ -257,7 +287,7 @@ export default {
 		presets: SPACE_PRESETS,
 		converter: 'space',
 		// {x, y, t, b, l, r, is, bs } でも指定可能にする
-		objProcessor: (d) => ({ prop: `m${d}`, context: null }),
+		// objProcessor: (d) => ({ prop: `m${d}`, context: null }),
 	},
 	mx: { utils: auto, converter: 'space' },
 	my: { utils: auto, converter: 'space' },
@@ -293,7 +323,7 @@ export default {
 
 	// flex
 	fxf: { style: 'flex-flow' },
-	fxw: { utils: { wrap: 'w', nowrap: 'n' } }, // nowrap、 Emmet は n だが、nw にしている. (whs と揃えている)
+	fxw: { utils: { wrap: 'w', nowrap: 'n' } },
 	fxd: { utils: { column: 'c', row: 'r', 'column-reverse': 'cr', 'row-reverse': 'rr' } },
 
 	// flex-item
@@ -325,8 +355,8 @@ export default {
 	gre: { style: 'gridRowEnd' },
 
 	// transform系
-	trf: { style: 'transform' },
-	trfo: { style: 'transformOrigin' },
+	// trf: { style: 'transform' },
+	// trfo: { style: 'transformOrigin' },
 	trnslt: {
 		style: 'translate',
 		utils: {
@@ -352,53 +382,14 @@ export default {
 	},
 
 	// float
-	fl: { style: 'float', utils: { left: 'l', right: 'r' } },
-	cl: { style: 'clear', utils: { left: 'l', right: 'r', both: 'b' } },
+	// fl: { style: 'float', utils: { left: 'l', right: 'r' } },
+	// cl: { style: 'clear', utils: { left: 'l', right: 'r', both: 'b' } },
 
 	// object-fit
-	obf: { style: 'objectFit', utils: { cover: 'cv', contain: 'cn' } },
-	obp: { style: 'objectPosition' },
+	// objf: { style: 'objectFit', utils: { cover: 'cv', contain: 'cn' } },
+	// objp: { style: 'objectPosition' },
 
 	// filter
-	fltr: { style: 'filter' }, // fltr?
-	bdfltr: { style: 'backdropFilter' }, // bdfltr?
-};
-
-export const CONTEXT_PROPS = {
-	// transform: {z
-	// 	// transform
-	// 	transformOrigin: { style: 1, utilKey: 'trfo', utils: 'origin' },
-	// 	translate: { style: 1, utils: 1, utilKey: 'trnslt' },
-	// 	rotate: { style: 1, utils: 1 },
-	// 	scale: { style: 1 },
-	// },
-
-	bg_: {
-		bgi: {},
-		bgr: { style: 'backgroundRepeat', utils: { n: 'no-repeat' } },
-		bgp: { style: 'backgroundPosition', utils: { center: 'c' } },
-		bgsz: { style: 'backgroundSize', utils: { cover: 'cv', contain: 'ct' } },
-		bga: { style: 'backgroundAttachment' },
-		bgo: { style: 'backgroundOrigin' },
-		bcp: { style: 'backgroundClip' },
-		bbm: { style: 'backgroundBlendMode' },
-	},
-	bdrs_: {
-		bdtlrs: { style: 'borderTopLeftRadius', converter: 'bdrs' },
-		bdtrrs: { style: 'borderTopRightRadius', converter: 'bdrs' },
-		bdblrs: { style: 'borderBottomLeftRadius', converter: 'bdrs' },
-		bdbrrs: { style: 'borderBottomRightRadius', converter: 'bdrs' },
-		bdssrs: { style: 'borderStartStartRadius', converter: 'bdrs' },
-		bdsers: { style: 'borderStartEndRadius', converter: 'bdrs' },
-		bdesrs: { style: 'borderEndStartRadius', converter: 'bdrs' },
-		bdeers: { style: 'borderEndEndRadius', converter: 'bdrs' },
-	},
-
-	// mask: {},
-	css: {
-		// Memo: その他、このcssに入り得るもの.(将来的に何か処理を追加するかもしれないもの)
-		// clipPath: { style: 1 }, // cpp ?
-	},
-
-	// hov: { c, bgc, bdc, bxsh },
+	// fltr: { style: 'filter' }, // fltr?
+	// bdfltr: { style: 'backdropFilter' }, // bdfltr?
 };
