@@ -174,34 +174,34 @@ import DividerLabel from '~/components/ex/DividerLabel/index.astro';
 </Preview>
 
 <Preview>
-	<PreviewTitle>`writing-mode`を変更する</PreviewTitle>
+	<PreviewTitle>labelも縦書き</PreviewTitle>
 	<PreviewArea resize p='30' isFlow={false}>
 		<Flex ai='stretch' g='20'>
 			<Box fx='1' bgc='base-2' py='50' ta='c'>Box</Box>
 			<Stack ai='c' g='20' lh='1' fz='xs' aslf='stretch'>
-				<span class='-wm:v-rl'>Label</span>
+				<span class='is--vertical'>Label</span>
 				<Divider fx='1' bd='is' />
 			</Stack>
 			<Box fx='1' bgc='base-2' py='50' ta='c'>Box</Box>
 			<Stack ai='c' g='20' lh='1' fz='xs' aslf='stretch'>
 			<Divider fx='1' bd='is' />
-				<span class='-wm:v-rl'>Label</span>
+				<span class='is--vertical'>Label</span>
 			</Stack>
 			<Box fx='1' bgc='base-2' py='50' ta='c'>Box</Box>
 		</Flex>
 	</PreviewArea>
 	<PreviewCode slot='tab' label='JSX'>
-		```jsx "-wm:v-rl"
+		```jsx "is--vertical"
 		<Flex ai='stretch' g='20'>
 			<Box fx='1' bgc='base-2' py='50' ta='c'>Box</Box>
 			<Stack ai='c' g='20' lh='1' fz='xs' aslf='stretch'>
-				<span class='-wm:v-rl'>Label</span>
+				<span className='is--vertical'>Label</span>
 				<Divider fx='1' bd='is' />
 			</Stack>
 			<Box fx='1' bgc='base-2' py='50' ta='c'>Box</Box>
 			<Stack ai='c' g='20' lh='1' fz='xs' aslf='stretch'>
 			<Divider fx='1' bd='is' />
-				<span class='-wm:v-rl'>Label</span>
+				<span className='is--vertical'>Label</span>
 			</Stack>
 			<Box fx='1' bgc='base-2' py='50' ta='c'>Box</Box>
 		</Flex>
@@ -212,13 +212,13 @@ import DividerLabel from '~/components/ex/DividerLabel/index.astro';
 		<div class='l--flex -ai:str -g:20'>
 			<div class='l--box -fx:1 -bgc:base-2 -py:50 -ta:c'>Box</div>
 			<div class='l--stack -ai:c -g:20 -lh:1 -fz:xs -aslf:str'>
-				<span class='-wm:v-rl'>Label</span>
+				<span class='is--vertical'>Label</span>
 				<div class='l--divider -bd:is -fx:1' aria-hidden='true'></div>
 			</div>
 			<div class='l--box -fx:1 -bgc:base-2 -py:50 -ta:c'>Box</div>
 			<div class='l--stack -ai:c -g:20 -lh:1 -fz:xs -aslf:str'>
 				<div class='l--divider -bd:is -fx:1' aria-hidden='true'></div>
-				<span class='-wm:v-rl'>Label</span>
+				<span class='is--vertical'>Label</span>
 			</div>
 			<div class='l--box -fx:1 -bgc:base-2 -py:50 -ta:c'>Box</div>
 		</div>
