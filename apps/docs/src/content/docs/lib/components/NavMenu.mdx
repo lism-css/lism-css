@@ -231,7 +231,7 @@ import { FolderSimpleIcon } from "@phosphor-icons/react";
 	<PreviewTitle>`--pass_bdc`（Rootの`--bdc`が初期セットされます）と`--pass_p` で`padding`, `--bdc`を一括指定</PreviewTitle>
 	<PreviewArea p='30'>
 		{/* <NavMenu.Root bd style={{'--pass_p': 'var(--s30)'}}> */}
-		<NavMenu.Root bd bdc='divider' passVars={{p:'30'}}>
+		<NavMenu.Root bd bdc='line' passVars={{p:'30'}}>
 			<NavMenu.Item>
 				<NavMenu.Link href='#menu1'>Menu item</NavMenu.Link>
 			</NavMenu.Item>
@@ -244,8 +244,8 @@ import { FolderSimpleIcon } from "@phosphor-icons/react";
 		</NavMenu.Root>
 	</PreviewArea>
 	<PreviewCode>
-		```jsx "bdc='divider'" "passVars={{p:'30'}}"
-		<NavMenu.Root bd bdc='divider' passVars={{p:'30'}}>
+		```jsx "bdc='line'" "passVars={{p:'30'}}"
+		<NavMenu.Root bd bdc='line' passVars={{p:'30'}}>
 			<NavMenu.Item>
 				<NavMenu.Link href='#menu1'>Menu item</NavMenu.Link>
 			</NavMenu.Item>
@@ -269,7 +269,7 @@ import { FolderSimpleIcon } from "@phosphor-icons/react";
 <Preview>
 	<PreviewTitle>メニューのネスト</PreviewTitle>
 	<PreviewArea p='30'>
-		<NavMenu.Root bdc='divider' hovBgc='base-2' passVars={{p:'10'}} >
+		<NavMenu.Root bdc='line' hovBgc='base-2' passVars={{p:'10'}} >
 			<NavMenu.Item>
 				<NavMenu.Link hov='bgc' href='#menu1'>Menu item 1</NavMenu.Link>
 			</NavMenu.Item>
@@ -296,7 +296,7 @@ import { FolderSimpleIcon } from "@phosphor-icons/react";
 	</PreviewArea>
 	<PreviewCode>
 		```jsx "NavMenu.Nest"
-		<NavMenu.Root bdc='divider' hovBgc='base-2' passVars={{p:'10'}} >
+		<NavMenu.Root bdc='line' hovBgc='base-2' passVars={{p:'10'}} >
 			<NavMenu.Item>
 				<NavMenu.Link hov='bgc' href='#menu1'>Menu item 1</NavMenu.Link>
 			</NavMenu.Item>

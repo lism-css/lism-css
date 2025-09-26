@@ -11,7 +11,7 @@ function App() {
 				Lorem ipsum dolor sit amet, consectetur adipisicing elit. Repellat itaque et voluptatum, ducimus temporibus accusamus exercitationem
 				dolores id impedit corporis asperiores debitis soluta, nemo iusto optio quae. Ducimus, aperiam tempora!
 			</p>
-			<Flex g={['20', '30', '40']} p={['20', '30', '40']} bd bdc='divider'>
+			<Flex g={['20', '30', '40']} p={['20', '30', '40']} bd bdc='line'>
 				<Box lh='1' p='30' bd>
 					1
 				</Box>
