@@ -4,7 +4,7 @@ description: ...
 sidebar:
   order: 7
 ---
-import { Lism, Text, Frame, Layer, Media, Dummy, Box, Flex, Grid } from "lism-css/astro";
+import { Lism, Text, Frame, Layer, Media, Dummy, Box, Flex, Grid, Columns } from "lism-css/astro";
 import { Preview, PreviewArea, PreviewTitle, PreviewCode, EmbedCode, Reference, Note, Callout } from "~/components";
 import AllPropClasses from '../../all-prop-classes.mdx';
 
@@ -437,29 +437,38 @@ borderに関する仕様は少し特殊になっています。詳しくは[bord
 |Prop|Shorthand|To Class|BP|
 |---|---|---|---|
 |`background`|`bg`|-|⚪︎|
-
-{/* |`background-image`|`bgi`|-|⚪︎|
+|`background-image`|`bgi`|-|⚪︎|
+|`background-color`|`bgc`|`main`,`accent`<br />`base`,`base-2`,<br />`text`,<br /><LinkMix />,<br />`inherit`|-|
 |`background-position`|`bgp`|`c`(`center`)|-|
 |`background-size`|`bgsz`|`cv`(`cover`),`ct`(`contain`)|-|
 |`background-repeat`|`bgr`|`n`(`no-repeat`)|-|
-|`background-clip`|`bgcp`|txt?|-|
 |`background-attachment`|`bga`|-|-|
 |`background-origin`|`bgo`|-|-|
-|`background-blend-mode`|`bgbm`|-|-| */}
+|`background-blend-mode`|`bgbm`|-|-|
+{/* |`background-clip`|`bgcp`|txt?|-| */}
 
 <Preview>
 	<PreviewTitle>使用例</PreviewTitle>
 	<PreviewArea p='30' resize>
-		<Frame ar='ogp' bg='url(/img/pattern.png) center / 4rem'></Frame>
+		<Columns g='20'>
+			<Frame ar='16/9' bg='url(/img/pattern.png) center / 4rem'></Frame>
+			<Frame ar='16/9' bgi='url(/img/pattern.png)' bgp='center' bgsz='4rem' bgbm='difference' bgc='white'></Frame>
+		</Columns>
 	</PreviewArea>
 	<PreviewCode label='JSX' slot='tab'>
 		```jsx
-		<Frame ar='ogp' bg='url(/img/pattern.png) center / 4rem'></Frame>
+		<Columns g='20'>
+			<Frame ar='16/9' bg='url(/img/pattern.png) center / 4rem'></Frame>
+			<Frame ar='16/9' bgi='url(/img/pattern.png)' bgp='center' bgsz='4rem' bgbm='difference' bgc='white'></Frame>
+		</Columns>
 		```
 	</PreviewCode>
 	<PreviewCode label='HTML' slot='tab'>
 		```html
-		<div class="l--frame -ar:ogp -bg" style="--bg:url(/img/pattern.png) center / 4rem"></div>
+		<div class="l--columns -g:20">
+			<div class="l--frame -ar:16/9 -bg" style="--bg:url(/img/pattern.png) center / 4rem"></div>
+			<div class="l--frame -ar:16/9 -bgi -bgp:c -bgc" style="--bgi:url(/img/pattern.png);background-size:4rem;background-blend-mode:difference;--bgc:var(--white)"></div>
+		</div>
 		```
 	</PreviewCode>
 </Preview>
