@@ -159,6 +159,40 @@ Lismでは、**メインコンテンツ間の余白を管理するためのク�
 [`is--flow` をネストする時の注意点](/others/addition/#is--flow-のネスト)
 </Reference>
 
+### `is--skipFlow`
+
+`.is--flow` 直下で使用すると、次に続く兄弟要素との余白量を打ち消します。  
+フローコンテンツの先頭に absolute な要素を配置したい場合などに活用できます。
+
+```css
+.is--skipFlow + * {
+	--mbs: 0;
+}
+```
+
+<Preview>
+	<PreviewTitle>例</PreviewTitle>
+	<PreviewArea p='30'>
+		<div class="is--flow -p:10">
+			<div class='is--skipFlow'>skipFlow...</div>
+			<p>Lorem ipsum, Example content...</p>
+			<p>Lorem ipsum, Example content...</p>
+			<p>Lorem ipsum, Example content...</p>
+		</div>
+	</PreviewArea>
+	<PreviewCode slot='tab' label='HTML'>
+	```html
+	<div class="is--flow -p:10">
+		<div class='is--skipFlow'>skipFlow...</div>
+		<p>Lorem ipsum, Example content...</p>
+		<p>Lorem ipsum, Example content...</p>
+		<p>Lorem ipsum, Example content...</p>
+	</div>
+	```
+	</PreviewCode>
+</Preview>
+
+
 
 
 ## `is--container`
