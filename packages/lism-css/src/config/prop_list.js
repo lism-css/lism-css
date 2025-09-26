@@ -116,16 +116,7 @@ const PROPS = {
 	}, // --bds のみ
 	bdc: {
 		isVar: 1,
-		utils: { transparent: 't' },
-		presets: [
-			'inherit',
-			'main',
-			'accent',
-			'mix',
-			'divider',
-			// 'keycolor',
-			'mix',
-		],
+		presets: ['inherit', 'main', 'accent', 'divider', 'mix', 'mix'],
 		token: 'color',
 	},
 
