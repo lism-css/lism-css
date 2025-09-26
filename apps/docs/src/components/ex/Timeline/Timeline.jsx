@@ -10,10 +10,10 @@ export function Root({ children, isHorizontal, ...props }) {
 }
 
 export function Line(props) {
-	return <Lism layout={Decorator} lismClass='c--timeline_line' bgc='divider' jslf='c' {...props} />;
+	return <Decorator lismClass='c--timeline_line' bgc='divider' jslf='c' {...props} />;
 }
 export function Shape(props) {
-	return <Lism lismClass='c--timeline_shape' layout={Center} pos='r' z='1' c='base' ar='1/1' bdrs='99' jslf='c' {...props} />;
+	return <Center lismClass='c--timeline_shape' pos='r' z='1' c='base' ar='1/1' bdrs='99' jslf='c' {...props} />;
 }
 
 export function Item({ isHorizontal, isStart, isEnd, isHighlighted, icon, iconProps = {}, shapeColor, children, ...props }) {
@@ -54,7 +54,7 @@ export function Item({ isHorizontal, isStart, isEnd, isHighlighted, icon, iconPr
 			<Line {...lineProps} />
 			<Shape bgc={shapeColor || 'text'} {...shapeProps}>
 				{isHighlighted && <Decorator className='c--timeline_highlight' tag='span' pos='a' z='-1' bgc='inherit' bdrs='99' op='low' />}
-				{icon && <Icon icon={icon} scale='0.75' fz='s' {...iconProps} />}
+				{icon && <Icon icon={icon} scale='0.625' {...iconProps} />}
 			</Shape>
 			{children}
 		</Grid>
