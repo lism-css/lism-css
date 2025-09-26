@@ -32,30 +32,28 @@ const trblUtils = { '0%': '0', '50%': '50%', '100%': '100%' };
 Memo: 
 	utils: Propクラスとして出力する値（{value:classKeyname}）
 	presets: Propクラスとして出力するキーワード値（そのままクラス化）
-	converter: トークン変換するための関数処理を指定するためのキーワード文字列
+	token: トークン変換するための関数処理を指定するためのキーワード文字列
 	style: -{prop}:{val}クラスとして出力されない場合にstyleに渡す時のプロパティ名。この指定がなければ、 -{prop} クラスが出力される。
-	objProcessor: BP指定オブジェクト以外が渡ってきた時の処理関数
-
 
 */
-export default {
+const PROPS = {
 	// size
-	w: { utils: { 'fit-content': 'fit' }, presets: ['100%'], converter: 'size' },
+	w: { utils: { 'fit-content': 'fit' }, presets: ['100%'], token: 'size' },
 	h: {
 		utils: { 'fit-content': 'fit' },
 		presets: ['100%', '100lvh', '100svh'],
-		converter: 'size',
+		token: 'size',
 	},
-	maxW: { presets: ['100%'], converter: 'size' },
-	maxH: { presets: ['100%'], converter: 'size' },
-	minW: { presets: ['100%'], converter: 'size' },
-	minH: { presets: ['100%', '100lvh', '100svh'], converter: 'size' },
-	isz: { style: 'inline-size', converter: 'size' },
-	bsz: { style: 'block-size', converter: 'size' },
-	maxIsz: { style: 'maxInlineSize', converter: 'size' },
-	maxBsz: { style: 'maxBlockSize', converter: 'size' },
-	minIsz: { style: 'minInlineSize', converter: 'size' },
-	minBsz: { style: 'minBlockSize', converter: 'size' },
+	maxW: { presets: ['100%'], token: 'size' },
+	maxH: { presets: ['100%'], token: 'size' },
+	minW: { presets: ['100%'], token: 'size' },
+	minH: { presets: ['100%', '100lvh', '100svh'], token: 'size' },
+	isz: { style: 'inline-size', token: 'size' },
+	bsz: { style: 'block-size', token: 'size' },
+	maxIsz: { style: 'maxInlineSize', token: 'size' },
+	maxBsz: { style: 'maxBlockSize', token: 'size' },
+	minIsz: { style: 'minInlineSize', token: 'size' },
+	minBsz: { style: 'minBlockSize', token: 'size' },
 
 	// is: inline-size, bs: block-size, maxI, maxB, minIsz, minBsz
 	c: {
@@ -71,7 +69,7 @@ export default {
 			// 'black',
 			// 'white',
 		],
-		converter: 'color',
+		token: 'color',
 	},
 	bgc: {
 		presets: [
@@ -87,9 +85,9 @@ export default {
 			// 'black',
 			// 'white',
 		],
-		converter: 'color',
+		token: 'color',
 	},
-	keycolor: { style: '--keycolor', converter: 'color' },
+	keycolor: { style: '--keycolor', token: 'color' },
 
 	bd: {
 		style: 'border',
@@ -128,10 +126,10 @@ export default {
 			// 'keycolor',
 			'mix',
 		],
-		converter: 'color',
+		token: 'color',
 	},
 
-	// boxcolor: { _presets: TOKENS.palette, style: '--keycolor', converter: 'color' },
+	// boxcolor: { _presets: TOKENS.palette, style: '--keycolor', token: 'color' },
 	bg: { utils: { none: 'n' } },
 	bgi: {},
 	bgr: { style: 'backgroundRepeat', utils: { n: 'no-repeat' } },
@@ -157,13 +155,13 @@ export default {
 
 	// Typography
 	f: { style: 'font', presets: ['inherit'] },
-	fz: { presets: TOKENS.fz, converter: 'fz' },
-	lh: { presets: ['1', ...TOKENS.lh], style: 'lineHeight' },
+	fz: { presets: TOKENS.fz, token: 'fz' },
+	lh: { style: 'lineHeight', presets: ['1', ...TOKENS.lh] },
 	fw: {
 		style: 'fontWeight',
 		presets: [...TOKENS.fw, '100', '200', '300', '400', '500', '600', '700', '800', '900'],
 	},
-	ff: { style: 'fontFamily', presets: ['base', 'accent', 'mono'], converter: 1 },
+	ff: { style: 'fontFamily', presets: ['base', 'accent', 'mono'], token: 'ff' },
 	fs: { style: 'fontStyle', utils: { italic: 'i' } },
 	lts: { style: 'letterSpacing', presets: TOKENS.lts },
 	ta: { style: 'textAlign', utils: { center: 'c', left: 'l', right: 'r' } },
@@ -173,18 +171,18 @@ export default {
 	// ovw: { style: 'overflowWrap', utils: { anywhere: 'any' } },
 
 	// shadow
-	bxsh: { presets: ['0', ...TOKENS.bxsh], converter: 'bxsh' },
+	bxsh: { presets: ['0', ...TOKENS.bxsh], token: 'bxsh' },
 
 	// radius
-	bdrs: { presets: ['0', ...TOKENS.bdrs], converter: 'bdrs' },
-	// bdtlrs: { style: 'borderTopLeftRadius', converter: 'bdrs' },
-	// bdtrrs: { style: 'borderTopRightRadius', converter: 'bdrs' },
-	// bdblrs: { style: 'borderBottomLeftRadius', converter: 'bdrs' },
-	// bdbrrs: { style: 'borderBottomRightRadius', converter: 'bdrs' },
-	// bdssrs: { style: 'borderStartStartRadius', converter: 'bdrs' },
-	// bdsers: { style: 'borderStartEndRadius', converter: 'bdrs' },
-	// bdesrs: { style: 'borderEndStartRadius', converter: 'bdrs' },
-	// bdeers: { style: 'borderEndEndRadius', converter: 'bdrs' },
+	bdrs: { presets: ['0', ...TOKENS.bdrs], token: 'bdrs' },
+	// bdtlrs: { style: 'borderTopLeftRadius', token: 'bdrs' },
+	// bdtrrs: { style: 'borderTopRightRadius', token: 'bdrs' },
+	// bdblrs: { style: 'borderBottomLeftRadius', token: 'bdrs' },
+	// bdbrrs: { style: 'borderBottomRightRadius', token: 'bdrs' },
+	// bdssrs: { style: 'borderStartStartRadius', token: 'bdrs' },
+	// bdsers: { style: 'borderStartEndRadius', token: 'bdrs' },
+	// bdesrs: { style: 'borderEndStartRadius', token: 'bdrs' },
+	// bdeers: { style: 'borderEndEndRadius', token: 'bdrs' },
 
 	// transition
 	trs: { style: 'transition' },
@@ -211,7 +209,7 @@ export default {
 	op: {
 		style: 'opacity',
 		presets: [...TOKENS.op, '0'],
-		converter: 1,
+		token: 'op',
 	}, // op
 	v: { style: 'visibility', utils: { hidden: 'h', visible: 'v' } },
 	ov: { style: 'overflow', utils: { scroll: 's', hidden: 'h', auto: 'a', clip: 'c' } },
@@ -248,15 +246,15 @@ export default {
 	},
 	z: { style: 'zIndex', presets: ['-1', '0', '1', '2', '99'] },
 	// iso: { style: 'isolation', utils: { isolate: 'i' } },
-	t: { style: 'top', utils: trblUtils, converter: 'space' },
-	l: { style: 'left', utils: trblUtils, converter: 'space' },
-	r: { style: 'right', utils: trblUtils, converter: 'space' },
-	b: { style: 'bottom', utils: trblUtils, converter: 'space' },
-	i: { style: 'inset', utils: { '0%': '0' }, converter: 'space' },
-	// iis: { style: 'insetInlineStart', converter: 'space' },
-	// iie: { style: 'insetInlineEnd', converter: 'space' },
-	// ibs: { style: 'insetBlockStart', converter: 'space' },
-	// ibe: { style: 'insetBlockEnd', converter: 'space' },
+	t: { style: 'top', utils: trblUtils, token: 'space' },
+	l: { style: 'left', utils: trblUtils, token: 'space' },
+	r: { style: 'right', utils: trblUtils, token: 'space' },
+	b: { style: 'bottom', utils: trblUtils, token: 'space' },
+	i: { style: 'inset', utils: { '0%': '0' }, token: 'space' },
+	// iis: { style: 'insetInlineStart', token: 'space' },
+	// iie: { style: 'insetInlineEnd', token: 'space' },
+	// ibs: { style: 'insetBlockStart', token: 'space' },
+	// ibe: { style: 'insetBlockEnd', token: 'space' },
 
 	// isolation
 	// flip: {},
@@ -264,49 +262,49 @@ export default {
 	// Spacing
 	p: {
 		presets: SPACE_PRESETS, //[...SPACE_PRESETS, ...TOKENS.p],
-		converter: 'space',
+		token: 'space',
 		// {x, y, t, b, l, r, is, bs } でも指定可能にする
 		// objProcessor: (d) => ({ prop: `p${d}`, context: null }),
 	},
-	px: { presets: SPACE_PRESETS, converter: 'space' },
-	py: { presets: SPACE_PRESETS, converter: 'space' },
-	pl: { presets: [], converter: 'space' },
-	pr: { presets: [], converter: 'space' },
-	pt: { presets: [], converter: 'space' },
-	pb: { presets: [], converter: 'space' },
+	px: { presets: SPACE_PRESETS, token: 'space' },
+	py: { presets: SPACE_PRESETS, token: 'space' },
+	pl: { presets: [], token: 'space' },
+	pr: { presets: [], token: 'space' },
+	pt: { presets: [], token: 'space' },
+	pb: { presets: [], token: 'space' },
 	// inline,block
-	pis: { presets: SPACE_PRESETS, converter: 'space' },
-	pbs: { presets: SPACE_PRESETS, converter: 'space' },
-	pie: { converter: 'space' },
-	pbe: { converter: 'space' },
+	pis: { presets: SPACE_PRESETS, token: 'space' },
+	pbs: { presets: SPACE_PRESETS, token: 'space' },
+	pie: { token: 'space' },
+	pbe: { token: 'space' },
 	// pinln, pblck
 	// pse: paddingOption,
 	// pbe: paddingOption,
 	m: {
 		utils: auto,
 		presets: SPACE_PRESETS,
-		converter: 'space',
+		token: 'space',
 		// {x, y, t, b, l, r, is, bs } でも指定可能にする
 		// objProcessor: (d) => ({ prop: `m${d}`, context: null }),
 	},
-	mx: { utils: auto, converter: 'space' },
-	my: { utils: auto, converter: 'space' },
-	ml: { utils: auto, converter: 'space' },
-	mr: { utils: auto, converter: 'space' },
-	mt: { utils: auto, converter: 'space' },
-	mb: { utils: auto, converter: 'space' },
-	mis: { presets: SPACE_PRESETS, utils: auto, converter: 'space' },
-	mbs: { presets: SPACE_PRESETS, utils: auto, converter: 'space' },
-	mie: { converter: 'space' },
-	mbe: { converter: 'space' },
+	mx: { utils: auto, token: 'space' },
+	my: { utils: auto, token: 'space' },
+	ml: { utils: auto, token: 'space' },
+	mr: { utils: auto, token: 'space' },
+	mt: { utils: auto, token: 'space' },
+	mb: { utils: auto, token: 'space' },
+	mis: { presets: SPACE_PRESETS, utils: auto, token: 'space' },
+	mbs: { presets: SPACE_PRESETS, utils: auto, token: 'space' },
+	mie: { token: 'space' },
+	mbe: { token: 'space' },
 	// me: marginOption,
 	// mbe: marginOption,
 	g: {
 		presets: ['inherit', ...SPACE_PRESETS],
-		converter: 'space',
+		token: 'space',
 	},
-	gx: { converter: 'space' }, // colg
-	gy: { converter: 'space' }, // rowg
+	gx: { token: 'space' }, // colg
+	gy: { token: 'space' }, // rowg
 	cols: { isVar: 1 },
 	rows: { isVar: 1 },
 
@@ -327,10 +325,10 @@ export default {
 	fxd: { utils: { column: 'c', row: 'r', 'column-reverse': 'cr', 'row-reverse': 'rr' } },
 
 	// flex-item
-	fx: { style: 'flex', utils: { '1 1 0': '1' } },
-	fxg: { name: 'fxg', presets: ['0', '1'] },
-	fxsh: { name: 'fxsh', presets: ['0', '1'] },
-	fxb: { name: 'fxb' },
+	fx: { utils: { '1 1 0': '1' } },
+	fxg: { style: 'flexGrow', presets: ['0', '1'] },
+	fxsh: { style: 'flexShrink', presets: ['0', '1'] },
+	fxb: {},
 
 	// grid
 	gd: {},
@@ -393,3 +391,12 @@ export default {
 	// fltr: { style: 'filter' }, // fltr?
 	// bdfltr: { style: 'backdropFilter' }, // bdfltr?
 };
+
+// PROPS の presets を Set に変換しておく
+Object.keys(PROPS).forEach((key) => {
+	if (PROPS[key].presets) {
+		PROPS[key].presets = new Set(PROPS[key].presets);
+	}
+});
+
+export default PROPS;
