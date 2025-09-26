@@ -23,7 +23,7 @@ export function Nest({ children, ...props }) {
 
 export function Item({ children, ...props }) {
 	return (
-		<Lism lismClass='c--navMenu_item' tag='li' data-lism-get='bdc' skipState {...props}>
+		<Lism lismClass='c--navMenu_item' tag='li' data-lism-get='bdc' {...props}>
 			{children}
 		</Lism>
 	);
@@ -34,7 +34,7 @@ export function Link({ href, tag = 'span', hov, children, ...props }) {
 		hov = hov || 'op';
 	}
 	return (
-		<Flex lismClass='c--navMenu_link' tag={tag} href={href} hov={hov} c='inherit' skipState data-lism-get='p' {...props}>
+		<Flex lismClass='c--navMenu_link' tag={tag} href={href} hov={hov} c='inherit' data-lism-get='p' {...props}>
 			{children}
 		</Flex>
 	);

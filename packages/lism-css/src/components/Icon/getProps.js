@@ -61,7 +61,6 @@ export default function getProps({
 	exProps = {},
 	...props
 }) {
-	// props.skipState = true;
 	let Component = tag || 'span';
 	let content = '';
 

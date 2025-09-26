@@ -12,7 +12,6 @@ export default function Tab({ tabId = 'tab', index = 0, isActive = false, ...pro
 			role='tab'
 			aria-controls={controlId}
 			aria-selected={isActive ? 'true' : 'false'}
-			skipState
 			{...props}
 		/>
 	);

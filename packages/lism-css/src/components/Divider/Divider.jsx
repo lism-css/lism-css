@@ -3,5 +3,5 @@ import { Lism } from '../Lism';
 import { getDividerProps } from './getProps';
 
 export default function Divider(props) {
-	return <Lism skipState {...getDividerProps(props)} />;
+	return <Lism {...getDividerProps(props)} />;
 }
