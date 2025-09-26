@@ -165,7 +165,7 @@ Lismでは、以下のような`-trs`クラスを用意しています。
 <Preview>
 	<PreviewTitle>border-colorをゆっくり変化させる例</PreviewTitle>
 	<PreviewArea p='40'>
-		<LinkBox href='###' trs hov={{ bdc:'red' }}  bd bdc='transparent' bdw='3px' bgc='base-2' p='30' style={{'--trsdu':'1s'}}>
+		<LinkBox href='###' trs hov={{ bdc:'red' }} bd bdw='3px' bgc='base-2' p='30' style={{'--trsdu':'1s'}}>
 			<p>LinkBox</p>
 			<p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
 		</LinkBox>
@@ -173,7 +173,7 @@ Lismでは、以下のような`-trs`クラスを用意しています。
 	<PreviewCode slot='tab' label='HTML'>
 		```html "-trs" "--trsdu:1s"
 		<a
-			class="is--linkBox -hov:bdc -trs -bd -bdc:t -bgc:base-2 -p:30"
+			class="is--linkBox -hov:bdc -trs -bd -bgc:base-2 -p:30"
 			style="--hov-bdc:var(--red);--trsdu:1s;--bdw:3px" href="###"
 		>
 			<p>LinkBox</p>
@@ -184,8 +184,8 @@ Lismでは、以下のような`-trs`クラスを用意しています。
 	<PreviewCode slot='tab' label='JSX'>
 		```jsx "trs" "--trsdu"
 		<LinkBox
-			href='###' trs hov={{ bdc:'red' }} bd bdc='transparent' bdw='3px' bgc='base-2' p='30'
-			style={{'--trsdu':'1s'}}
+			href='###' trs hov={{ bdc:'red' }} bd bdw='3px' bgc='base-2' p='30'
+			style={{'--trsdu':'1s'}}~
 		>
 			<p>LinkBox</p>
 			<p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
