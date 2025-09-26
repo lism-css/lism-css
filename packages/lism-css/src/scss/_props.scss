@@ -119,73 +119,6 @@ $props: (
 		),
 		bp: 1,
 	),
-	'c': (
-		prop: 'color',
-		// 主要カラーは変数をhoverやcolor-mixで活用するので、変数管理
-		base_type: 2,
-		utilities: (
-			'main': 'var(--c-main)',
-			'accent': 'var(--c-accent)',
-			'base': 'var(--c-base)',
-			'text': 'var(--c-text)',
-			'text-2': 'var(--c-text-2)',
-			'inherit': (
-				'color': 'inherit',
-			),
-			'mix': (
-				'--_c1': 'currentColor',
-				'--_c2': 'transparent',
-				'--c': 'color-mix(in srgb, var(--_c1) var(--_mixpct-c, 50%), var(--_c2))',
-			),
-		),
-	),
-	'bgc': (
-		prop: 'background-color',
-		base_type: 2,
-		utilities: (
-			'main': 'var(--c-main)',
-			'accent': 'var(--c-accent)',
-			'base': 'var(--c-base)',
-			'base-2': 'var(--c-base-2)',
-			'text': 'var(--c-text)',
-			'inherit': (
-				'background-color': 'inherit',
-			),
-			'mix': (
-				'--_bgc1': 'currentColor',
-				'--_bgc2': 'transparent',
-				'--bgc': 'color-mix(in srgb, var(--_bgc1) var(--_mixpct-bgc, 50%), var(--_bgc2))',
-			),
-		),
-	),
-	'bdc': (
-		prop: '--bdc',
-		utilities: (
-			'main': 'var(--c-main)',
-			'accent': 'var(--c-accent)',
-			'divider': 'var(--c-divider)',
-			'inherit': 'inherit',
-			't': 'transparent',
-			'mix': (
-				'--_bdc1': 'currentColor',
-				'--_bdc2': 'transparent',
-				'--bdc': 'color-mix(in srgb, var(--_bdc1) var(--_mixpct-bdc, 50%), var(--_bdc2))',
-			),
-		),
-	),
-	'bds': (
-		prop: '--bds',
-		utilities: (
-			'ds': 'dashed',
-			'dt': 'dotted',
-			'db': 'double',
-		),
-	),
-	'bdw': (
-		prop: '--bdw',
-		base_type: 0,
-		bp: 1,
-	),
 	'bg': (
 		prop: 'background',
 		bp: 1,
@@ -220,11 +153,78 @@ $props: (
 		prop: 'background-clip',
 		utilities: (
 			'text': (
-				// 'color': 'transparent',
+				'color': 'transparent',
 				// '-webkit-background-clip': 'text',
 				'background-clip': 'text',
 			),
 		),
+	),
+	'bgc': (
+		prop: 'background-color',
+		base_type: 2,
+		utilities: (
+			'main': 'var(--c-main)',
+			'accent': 'var(--c-accent)',
+			'base': 'var(--c-base)',
+			'base-2': 'var(--c-base-2)',
+			'text': 'var(--c-text)',
+			'inherit': (
+				'background-color': 'inherit',
+			),
+			'mix': (
+				'--_bgc1': 'currentColor',
+				'--_bgc2': 'transparent',
+				'--bgc': 'color-mix(in srgb, var(--_bgc1) var(--_mixpct-bgc, 50%), var(--_bgc2))',
+			),
+		),
+	),
+	'c': (
+		// Note: bg系（bgcp）より後にくるように。
+		prop: 'color',
+		base_type: 2,
+		utilities: (
+			'main': 'var(--c-main)',
+			'accent': 'var(--c-accent)',
+			'base': 'var(--c-base)',
+			'text': 'var(--c-text)',
+			'text-2': 'var(--c-text-2)',
+			'inherit': (
+				'color': 'inherit',
+			),
+			'mix': (
+				'--_c1': 'currentColor',
+				'--_c2': 'transparent',
+				'--c': 'color-mix(in srgb, var(--_c1) var(--_mixpct-c, 50%), var(--_c2))',
+			),
+		),
+	),
+	'bdc': (
+		prop: '--bdc',
+		utilities: (
+			'main': 'var(--c-main)',
+			'accent': 'var(--c-accent)',
+			'divider': 'var(--c-divider)',
+			'inherit': 'inherit',
+			't': 'transparent',
+			'mix': (
+				'--_bdc1': 'currentColor',
+				'--_bdc2': 'transparent',
+				'--bdc': 'color-mix(in srgb, var(--_bdc1) var(--_mixpct-bdc, 50%), var(--_bdc2))',
+			),
+		),
+	),
+	'bds': (
+		prop: '--bds',
+		utilities: (
+			'ds': 'dashed',
+			'dt': 'dotted',
+			'db': 'double',
+		),
+	),
+	'bdw': (
+		prop: '--bdw',
+		base_type: 0,
+		bp: 1,
 	),
 
 	'msk': (
