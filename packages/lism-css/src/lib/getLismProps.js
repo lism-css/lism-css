@@ -83,9 +83,9 @@ class LismPropsData {
 		} = allProps;
 
 		this.lismClass = lismClass || '';
-		this.lismState = structuredClone(lismState);
-		this.styles = structuredClone(style);
-		this._propConfig = structuredClone(_propConfig);
+		this.lismState = [...lismState];
+		this.styles = { ...style };
+		this._propConfig = { ..._propConfig };
 
 		// ここで variant 処理
 		if (variant && lismClass) {
@@ -107,7 +107,7 @@ class LismPropsData {
 
 		// propsの処理
 		if (!isEmptyObj(others)) {
-			this.attrs = structuredClone(others);
+			this.attrs = { ...others };
 			this.analyzeProps();
 		}
 
