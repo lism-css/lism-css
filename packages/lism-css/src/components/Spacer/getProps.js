@@ -11,7 +11,7 @@ export default function getSpacerProps({ lismClass, ...props }) {
 	if (null != props.h) {
 		let hObj = getBpData(props.h);
 
-		// getMaybeCssVar() を適用する
+		// スペーストークンに変換
 		hObj = Object.entries(hObj).reduce((newObj, [key, h]) => {
 			newObj[key] = getMaybeCssVar(h, 'space');
 			return newObj;
@@ -22,7 +22,7 @@ export default function getSpacerProps({ lismClass, ...props }) {
 	if (null != props.w) {
 		let wObj = getBpData(props.w);
 
-		// getMaybeCssVar() を適用する
+		// スペーストークンに変換
 		wObj = Object.entries(wObj).reduce((newObj, [key, w]) => {
 			newObj[key] = getMaybeCssVar(w, 'space');
 			return newObj;

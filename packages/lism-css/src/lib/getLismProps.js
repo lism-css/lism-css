@@ -14,8 +14,7 @@ const getConverter = (propName) => {
 	const propData = PROPS[propName];
 	if (!propData) return null;
 
-	const { converter } = propData;
-	return converter || null;
+	return propData?.converter || null;
 };
 
 const STATE_CLASSES = {
@@ -23,7 +22,7 @@ const STATE_CLASSES = {
 		if (value === true) {
 			return { className: 'is--container' };
 		} else if (value) {
-			if (isTokenValue('contentSize', value)) {
+			if (isTokenValue('size', value)) {
 				return { className: `is--container -container:${value}` };
 			} else {
 				return { className: 'is--container', styleKey: '--contentSize', styleValue: getMaybeCssVar(value, 'size') };
@@ -198,24 +197,6 @@ class LismPropsData {
 
 		// ブレイクポイント指定用のオブジェクト{base,sm,md,lg,xl}かどうかをチェック
 		const { base: baseValue, ...bpValues } = getBpData(propVal);
-		// propVal = baseValue;
-		// let bpValues = null;
-
-		// BP指定意外で成分プロパティが指定されてきた場合 (例: p={{ l: '20', b='30' }}
-		// if (null != propVal && typeof propVal === 'object') {
-		// 	// 各成分の解析メソッドがなければ処理を終了
-		// 	if (!propData.objProcessor) return;
-		// 	Object.keys(propVal).forEach((_key) => {
-		// 		// 指定された成分に対応する prop名 を取得
-		// 		const { prop, context } = objProcessor(_key);
-
-		// 		if (context) {
-		// 			this.setContextProps(propName, { [prop]: propVal[_key] });
-		// 		} else {
-		// 			this.analyzeLismProp(prop, propVal[_key]);
-		// 		}
-		// 	});
-		// } else {
 
 		// base値の処理
 		this.setAttrs(propName, baseValue, propData);
@@ -270,7 +251,7 @@ class LismPropsData {
 	setAttrs(propName, val, propData = {}, bp = '') {
 		if (null == val || '' === val || false === val) return;
 
-		const name = propData.name || propName;
+		const name = propName;
 
 		let styleName = `--${name}`;
 		let utilName = `-${propData.utilKey || name}`;
@@ -290,28 +271,23 @@ class LismPropsData {
 
 		// ユーティリティクラス化できるかどうかをチェック
 		if (!bp) {
-			let { presets, utils } = propData;
-			if (presets) {
-				if (1 === presets) presets = name; // 1 は prop名をそのままキーとして取得
-				if (isPresetValue(presets, val)) {
+			if (propData.presets) {
+				if (isPresetValue(propData.presets, val)) {
 					this.addUtil(`${utilName}:${val}`);
 					return;
 				}
 			}
-			if (utils) {
-				if (1 === utils) utils = name; // 1 は prop名をそのままキーとして取得
-				const utilVal = getMaybeUtilValue(utils, val);
+			if (propData.utils) {
+				const utilVal = getMaybeUtilValue(propData.utils, val);
 				if (utilVal) {
 					this.addUtil(`${utilName}:${utilVal}`);
 					return;
 				}
-			} else {
-				// utilName += ':';
 			}
 		}
 
 		// 以下、ユーティリティクラス化できない場合の処理
-		let { style, isVar, converter } = propData;
+		let { style, isVar, token } = propData;
 
 		// .-prop: だけ出力するケース
 		// if ((!style && true === val) || '-' === val) {
@@ -320,9 +296,9 @@ class LismPropsData {
 			return;
 		}
 
-		//converter color の時の特殊処理
-		if ((name === 'bgc' || name === 'c' || name === 'bdc') && typeof val === 'string') {
-			// if (val.startsWith('mix:'))
+		//token を持つ場合の処理
+		if (token === 'color' && name !== 'keycolor' && typeof val === 'string') {
+			//token: color の時の特殊処理
 
 			// bgc='col1:(colo2:)mix%'
 			// color が ":数値%" で終わるかどうか
@@ -330,12 +306,8 @@ class LismPropsData {
 				this.setMixColor(name, val);
 				return;
 			}
-		}
-
-		// converter(getMaybe...)があればそれを通す
-		if (converter) {
-			// memo: nameチェックでの変数化が必要なケースは、この時点でユーティリティクラス化されているのでnameの受け渡しをスキップしてもいいかも
-			val = getMaybeCssVar(val, converter, name);
+		} else if (token) {
+			val = getMaybeCssVar(val, token);
 		}
 
 		// style のみ出力するケース
@@ -355,12 +327,12 @@ class LismPropsData {
 		const mixdata = val.split(':');
 		if (mixdata.length === 3) {
 			const [color1, color2, mixper] = mixdata;
-			this.addStyle(`--_${name}1`, getMaybeCssVar(color1, 'color', name));
-			this.addStyle(`--_${name}2`, getMaybeCssVar(color2, 'color', name));
+			this.addStyle(`--_${name}1`, getMaybeCssVar(color1, 'color'));
+			this.addStyle(`--_${name}2`, getMaybeCssVar(color2, 'color'));
 			this.addStyle(`--_mixpct-${name}`, mixper);
 		} else if (mixdata.length === 2) {
 			const [color1, mixper] = mixdata;
-			this.addStyle(`--_${name}1`, getMaybeCssVar(color1, 'color', name));
+			this.addStyle(`--_${name}1`, getMaybeCssVar(color1, 'color'));
 			this.addStyle(`--_mixpct-${name}`, mixper);
 		}
 		// [color1, mixper]
@@ -380,7 +352,7 @@ class LismPropsData {
 			// コンバーター通して取得
 			const converterName = getConverter(propName);
 			if (converterName) {
-				value = getMaybeCssVar(value, converterName, propName);
+				value = getMaybeCssVar(value, converterName);
 			}
 
 			this.addStyle(`--pass_${propName}`, value);
@@ -423,7 +395,7 @@ class LismPropsData {
 				} else {
 					// c,bgc などの処理
 					const converter = getConverter(propName);
-					if (converter) hovVal = getMaybeCssVar(hovVal, converter, propName);
+					if (converter) hovVal = getMaybeCssVar(hovVal, converter);
 
 					this.addUtil(`-hov:${propName}`);
 					this.addStyle(`--hov-${propName}`, hovVal);
@@ -450,59 +422,6 @@ class LismPropsData {
 
 		this.analyzeLismProp('bd', value);
 	}
-
-	// getStateProps({ skipState, isOverwide, isFullwide, isWide, isFlow, isContainer, hasGutter, isLayer, isLinkBox, ...props }) {
-	// 	if (!skipState) {
-	// 		if (isContainer) {
-	// 			this.setContainerData(isContainer);
-	// 		}
-	// 		if (isFlow) {
-	// 			this.setFlowData(isFlow);
-	// 		}
-
-	// 		isOverwide && this.lismState.push('is--overwide');
-	// 		isFullwide && this.lismState.push('is--fullwide');
-	// 		isWide && this.lismState.push('is--wide');
-	// 		hasGutter && this.lismState.push('has--gutter');
-	// 	}
-
-	// 	// skipStateに関係なくチェック
-	// 	if (isLayer) {
-	// 		this.lismState.push('is--layer');
-	// 	}
-	// 	if (isLinkBox) {
-	// 		this.lismState.push('is--linkBox');
-	// 	}
-
-	// 	return props;
-	// }
-
-	// setContainerData(value) {
-	// 	if (value === true) {
-	// 		this.lismState.push('is--container');
-	// 	} else if (value) {
-	// 		if (isTokenValue('contentSize', value)) {
-	// 			this.lismState.push(`is--container -container:${value}`);
-	// 		} else {
-	// 			this.lismState.push(`is--container`);
-	// 			this.addStyle(`--contentSize`, getMaybeCssVar(value, 'size'));
-	// 		}
-	// 	}
-	// }
-
-	// setFlowData(value) {
-	// 	if (value === true) {
-	// 		this.lismState.push('is--flow');
-	// 	} else if (value) {
-	// 		if (isTokenValue('flow', value)) {
-	// 			this.lismState.push(`is--flow -flow:${value}`);
-	// 		} else {
-	// 			// this.lismState.push(`is--flow -flow:`);
-	// 			this.lismState.push(`is--flow`);
-	// 			this.addStyle(`--flowM`, getMaybeCssVar(value, 'space'));
-	// 		}
-	// 	}
-	// }
 }
 
 /**
