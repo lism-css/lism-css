@@ -5,6 +5,6 @@ import Lism from './Lism.astro';
 interface Props extends LismProps {}
 ---
 
-<Lism skipState tag='a' {...Astro.props || {}}>
+<Lism tag='a' {...Astro.props || {}}>
 	<slot />
 </Lism>

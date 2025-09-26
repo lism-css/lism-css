@@ -146,7 +146,6 @@ export interface LismBaseProps {
 	_?: string | string[];
 
 	// State classes
-	skipState?: boolean;
 	isFlow?: boolean | string;
 	hasGutter?: boolean | string;
 	isContainer?: boolean | string;

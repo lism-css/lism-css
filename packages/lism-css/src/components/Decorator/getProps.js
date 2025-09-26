@@ -19,7 +19,6 @@ export default function ({ lismClass, size, clipPath, style = {}, ...props }) {
 
 	const defaultProps = {
 		lismClass: atts(lismClass, `l--decorator`),
-		skipState: true,
 		'aria-hidden': 'true',
 	};
 

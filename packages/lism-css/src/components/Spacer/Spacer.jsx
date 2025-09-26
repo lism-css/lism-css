@@ -4,5 +4,5 @@ import getProps from './getProps';
 
 // 縦書きの時どうする？
 export default function Spacer(props) {
-	return <Lism skipState {...getProps(props)} />;
+	return <Lism {...getProps(props)} />;
 }
