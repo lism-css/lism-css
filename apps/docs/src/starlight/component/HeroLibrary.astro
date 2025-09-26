@@ -16,13 +16,13 @@ const { title = data.title, tagline, image, actions = [] } = data.hero || {};
 <Grid class='z--hero' variant='repeat' cols='5' rows='1' minH='50svh' ai='c'>
 	<Lism class='z--hero_content l--stack -g:50' gc='1 / 5' gr='1' z='1'>
 		<div class='l--stack -g:20 copy'>
-			<div class='z--hero_h1wrap u--clipText -w:fit'>
+			<Lism class='z--hero_h1wrap -bgcp:text -w:fit' c='transparent'>
 				<Lism tag='h1' id={PAGE_TITLE_ID} fz={['3rem', null, '4rem']} data-page-title>
 					<span>UI Components & Templates</span>
 					<br />
 					<Lism tag='span'>with Lism CSS</Lism>
 				</Lism>
-			</div>
+			</Lism>
 			{tagline && <div class='z--hero_tagline' set:html={tagline} />}
 		</div>
 		{

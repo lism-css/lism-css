@@ -137,7 +137,7 @@ export default {
 	bgr: { style: 'backgroundRepeat', utils: { n: 'no-repeat' } },
 	bgp: { style: 'backgroundPosition', utils: { center: 'c' } },
 	bgsz: { style: 'backgroundSize', utils: { cover: 'cv', contain: 'ct' } },
-	bgcp: { style: 'backgroundClip' },
+	bgcp: { style: 'backgroundClip', presets: ['text'] },
 	bga: { style: 'backgroundAttachment' },
 	bgo: { style: 'backgroundOrigin' },
 	bgbm: { style: 'backgroundBlendMode' },

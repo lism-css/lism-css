@@ -51,46 +51,6 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, EmbedCode, Reference, 
 </Preview>
 
 
-## `u--clipText`
-
-テキストで背景をクリッピングします
-
-```css
-.u--clipText{
-	color: transparent;
-	-webkit-background-clip: text;
-	background-clip: text;
-}
-```
-
-<Preview>
-	<PreviewTitle>例</PreviewTitle>
-	<PreviewArea>
-		<Center>
-			<Box className='u--clipText' bg='linear-gradient(45deg, var(--blue), var(--pink))'>
-				<Text fz='5xl' fw='900' lts='l'>TEXT</Text>
-			</Box>
-		</Center>
-	</PreviewArea>
-	<PreviewCode slot="tab" label="HTML">
-		```html
-		<div class="l--center">
-			<div class="l--box u--clipText -bg" style="--bg:linear-gradient(45deg, var(--blue), var(--pink))">
-				<p class="-fz:5xl -fw:900 -lts:l">TEXT</p>
-			</div>
-		</div>
-		```
-	</PreviewCode>
-	<PreviewCode slot="tab" label='JSX'>
-		```jsx
-		<Center>
-			<Box className='u--clipText' bg='linear-gradient(45deg, var(--blue), var(--pink))'>
-				<Text fz='5xl' fw='900' lts='l'>TEXT</Text>
-			</Box>
-		</Center>
-		```
-	</PreviewCode>
-</Preview>
 
 ## `u--trimHL` & `u--trimBox`
 
