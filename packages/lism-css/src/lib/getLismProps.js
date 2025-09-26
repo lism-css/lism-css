@@ -47,6 +47,7 @@ const STATE_CLASSES = {
 	isSkipFlow: 'is--skipFlow',
 	isLayer: 'is--layer',
 	isLinkBox: 'is--linkBox',
+	isOverlayLink: 'is--overlayLink',
 	isWide: 'is--wide',
 	isFullwide: 'is--fullwide',
 	isOverwide: 'is--overwide',
