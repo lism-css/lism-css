@@ -116,7 +116,7 @@ const PROPS = {
 	}, // --bds のみ
 	bdc: {
 		isVar: 1,
-		presets: ['inherit', 'main', 'accent', 'divider', 'mix', 'mix'],
+		presets: ['inherit', 'main', 'accent', 'line', 'mix'],
 		token: 'color',
 	},
 

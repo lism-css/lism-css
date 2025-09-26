@@ -20,7 +20,7 @@ export default {
 		'text',
 		'text-2',
 		// 'text-3',
-		'divider',
+		'line',
 		'link',
 		'main',
 		'accent',
