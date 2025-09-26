@@ -8,7 +8,6 @@ import { Lism } from 'lism-css/astro';
 import { Preview, PreviewArea, PreviewTitle, PreviewCode, Callout } from "~/components";
 
 `c`, `bgc`, `bdc` に対して、それぞれ`-c:mix`,`-bgc:mix`,`-bdc:mix`クラスという `color-mix()` で色を生成できる特殊なProp クラスを用意しています。
-
 <PreviewTitle>CSS</PreviewTitle>
 ```css
 .-c\:mix {
@@ -28,6 +27,8 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, Callout } from "~/comp
 }
 ```
 
+
+`Lism`コンポーネントでは、これらを手軽に呼び出せるように、`c='{c1}:({c2}:){NUM}%'` の書式で指定することができるようにもなっています。
 
 
 <Preview>
@@ -50,19 +51,6 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, Callout } from "~/comp
 		</div>
 		```
 	</PreviewCode>
-</Preview>
-
-
-`Lism`コンポーネントでは、これらを手軽に呼び出せるように、`c='{c1}:({c2}:){NUM}%'` の書式で指定することができるようにもなっています。
-
-
-<Preview>
-	<PreviewTitle>JSXでの使用方法</PreviewTitle>
-	<PreviewArea resize p='30'>
-		<Lism bgc='blue:10%' c='blue:currentColor:40%' p='30'>
-			<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-		</Lism>
-	</PreviewArea>
 	<PreviewCode slot="tab" label="JSX">
 		```jsx
 		<Lism bgc='blue:10%' c='blue:currentColor:40%' p='30'>
