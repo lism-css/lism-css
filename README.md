@@ -49,7 +49,7 @@ import { Box, Stack, Flex, Grid,... } from "lism-css/react";
 - Layout State: `is--container`, `is--flow`, `is--layer`, etc.
 - Layout Module: `⁠l--flex⁠`, `⁠l--grid⁠`, `⁠l--center⁠`, `⁠l--columns⁠`, `⁠l--withSide⁠`, etc.
 - Prop Class: `⁠-p:20⁠`, `⁠-bgc:base-2`⁠, `⁠-fz:l⁠`, etc.
-- Decoration Utility: `⁠u--cbox⁠`, `⁠u--clipText⁠`, etc.
+- Decoration Utility: `⁠u--cbox⁠`, etc.
 
 
 
