@@ -44,6 +44,7 @@ const STATE_CLASSES = {
 		return {};
 	},
 	isVertical: 'is--vertical',
+	isSkipFlow: 'is--skipFlow',
 	isLayer: 'is--layer',
 	isLinkBox: 'is--linkBox',
 	isWide: 'is--wide',
