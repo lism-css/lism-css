@@ -133,14 +133,14 @@ export default {
 
 	// boxcolor: { _presets: TOKENS.palette, style: '--keycolor', converter: 'color' },
 	bg: { utils: { none: 'n' } },
-	// bgi: {},
-	// bgr: { style: 'backgroundRepeat', utils: { n: 'no-repeat' } },
-	// bgp: { style: 'backgroundPosition', utils: { center: 'c' } },
-	// bgsz: { style: 'backgroundSize', utils: { cover: 'cv', contain: 'ct' } },
-	// bgcp: { style: 'backgroundClip' },
-	// bga: { style: 'backgroundAttachment' },
-	// bgo: { style: 'backgroundOrigin' },
-	// bgbm: { style: 'backgroundBlendMode' },
+	bgi: {},
+	bgr: { style: 'backgroundRepeat', utils: { n: 'no-repeat' } },
+	bgp: { style: 'backgroundPosition', utils: { center: 'c' } },
+	bgsz: { style: 'backgroundSize', utils: { cover: 'cv', contain: 'ct' } },
+	bgcp: { style: 'backgroundClip' },
+	bga: { style: 'backgroundAttachment' },
+	bgo: { style: 'backgroundOrigin' },
+	bgbm: { style: 'backgroundBlendMode' },
 
 	// mask
 	msk: {},
