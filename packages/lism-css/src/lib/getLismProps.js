@@ -296,17 +296,19 @@ class LismPropsData {
 			return;
 		}
 
-		//token を持つ場合の処理
-		if (token === 'color' && name !== 'keycolor' && typeof val === 'string') {
-			//token: color の時の特殊処理
-
+		//token: color の時の特殊処理
+		if (token === 'color' && name !== 'keycolor') {
 			// bgc='col1:(colo2:)mix%'
+
 			// color が ":数値%" で終わるかどうか
-			if (val.endsWith('%')) {
+			if (typeof val === 'string' && val.endsWith('%')) {
 				this.setMixColor(name, val);
 				return;
 			}
-		} else if (token) {
+		}
+
+		//token を持つ場合の処理
+		if (token) {
 			val = getMaybeCssVar(val, token);
 		}
 
