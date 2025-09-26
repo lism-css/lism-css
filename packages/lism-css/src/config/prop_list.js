@@ -275,8 +275,8 @@ const PROPS = {
 	// inline,block
 	pis: { presets: SPACE_PRESETS, token: 'space' },
 	pbs: { presets: SPACE_PRESETS, token: 'space' },
-	pie: { token: 'space' },
-	pbe: { token: 'space' },
+	pie: { style: 'paddingInlineEnd', token: 'space' },
+	pbe: { style: 'paddingInlineStart', token: 'space' },
 	// pinln, pblck
 	// pse: paddingOption,
 	// pbe: paddingOption,
@@ -295,8 +295,8 @@ const PROPS = {
 	mb: { utils: auto, token: 'space' },
 	mis: { presets: SPACE_PRESETS, utils: auto, token: 'space' },
 	mbs: { presets: SPACE_PRESETS, utils: auto, token: 'space' },
-	mie: { token: 'space' },
-	mbe: { token: 'space' },
+	mie: { style: 'marginInlineEnd', token: 'space' },
+	mbe: { style: 'marginInlineStart', token: 'space' },
 	// me: marginOption,
 	// mbe: marginOption,
 	g: {
