@@ -142,7 +142,7 @@ div.l--withSide
 <Preview>
 	<PreviewTitle>`Grid`を使って`WithSide`のようなレイアウトを構築する例</PreviewTitle>
 	<PreviewArea resize p='30'>
-		<Grid gd={[`'.' 'side'`, `'. side' / 1fr 10rem`]} g='30'>
+		<Grid gta={[`'.' 'side'`, `'. side'`]} gtc={[null, '1fr 10rem']} g='30'>
 			<Box>
 				<Dummy />
 			</Box>
@@ -152,8 +152,8 @@ div.l--withSide
 		</Grid>
 	</PreviewArea>
 	<PreviewCode slot='tab' label='JSX'>
-		```jsx "ga='side'" "gd=" "'.' 'side'" "'. side' / 1fr 10rem"
-		<Grid gd={[`'.' 'side'`, `'. side' / 1fr 10rem`]} g='30'>
+		```jsx "gta=" "gtc="
+		<Grid gta={[`'.' 'side'`, `'. side'`]} gtc={[null, '1fr 10rem']} g='30'>
 			<Box>
 				<Dummy />
 			</Box>
@@ -163,7 +163,7 @@ div.l--withSide
 	</PreviewCode>
 	<PreviewCode slot='tab' label='HTML'>
 		```html "-gd -gd_sm" "gd=" "'.' 'side'" "'. side' / 1fr 10rem" "-ga" "--ga:side"
-		<div class='l--grid -g:30 -gd -gd_sm' style="--gd:'.' 'side';--gd_sm:'. side' / 1fr 10rem">
+		<div class="l--grid -gta -gta_sm -gtc_sm -g:30" style="--gta:'.' 'side';--gta_sm:'. side';--gtc_sm:1fr 10rem">
 			<div class='l--box'>
 				<p>
 					Lorem ipsum dolor sit, amet consectetur adipisicing elit, sed do eiusmod tempor.
@@ -181,7 +181,7 @@ div.l--withSide
 <Preview>
 	<PreviewTitle>`side`を左側、ブレイクポイントを`@md`にする例</PreviewTitle>
 	<PreviewArea resize p='30'>
-		<Grid gd={[`'.' 'side'`, null, `'side .' / 10rem 1fr`]} g='30'>
+		<Grid gta={[`'.' 'side'`, null, `'side .'`]} gtc={[null, null, '10rem 1fr']} g='30'>
 			<Box>
 				<Dummy />
 			</Box>
@@ -192,7 +192,7 @@ div.l--withSide
 	</PreviewArea>
 	<PreviewCode slot='tab' label='JSX'>
 		```jsx
-		<Grid gd={[`'.' 'side'`, null, `'side .' / 10rem 1fr`]} g='30'>
+		<Grid gta={[`'.' 'side'`, null, `'side .'`]} gtc={[null, null, '10rem 1fr']} g='30'>
 			<Box>
 				<Dummy />
 			</Box>
@@ -202,7 +202,7 @@ div.l--withSide
 	</PreviewCode>
 	<PreviewCode slot='tab' label='HTML'>
 		```html
-		<div class='l--grid -g:30 -gd -gd_md' style="--gd:'.' 'side';--gd_md:'side .' / 10rem 1fr">
+		<div class="l--grid -gta -gta_md -gtc_md -g:30" style="--gta:'.' 'side';--gta_md:'side .';--gtc_md:10rem 1fr">
 			<div class='l--box'>
 				<p>
 					Lorem ipsum dolor sit, amet consectetur adipisicing elit, sed do eiusmod tempor.
