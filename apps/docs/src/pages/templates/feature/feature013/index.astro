@@ -1,0 +1,51 @@
+---
+import DemoPageLayout from '~/layouts/DemoPageLayout.astro';
+
+import { Container, Frame, Grid, GridItem, Layer, Media, Stack, Text } from 'lism-css/astro';
+import Button from '~/components/ex/Button/index.astro';
+import './_style.css';
+---
+
+<DemoPageLayout title='Feature013'>
+	<Container bgc='base'>
+		<Grid gtc={['repeat(2, 1fr)', null, 'repeat(4, 1fr)']} gtr={['repeat(2, 1fr)', null, '1fr']} g='0'>
+			<GridItem layout={Stack} gr='1 / -1' gc='1 / -1' g='50' ai='c' jc='c' p={['60 50', null, '60']} pos='r' z='1'>
+				<Layer blur='8px' bgc='black:30%' z='0' />
+				<Container size='s' z='1'>
+					<Stack g='50' ai='c' c='white'>
+						<Stack g='40' ai='c'>
+							<Text class='u--trimHL' fz='5xl' fw='100' lts='l'>Feature</Text>
+							<Text class='u--trimHL' fz='l' lts='l'>私たちの製品のこと</Text>
+						</Stack>
+						<Stack g='40'>
+							<p>
+								どんなに美しいデザインも、使い心地が伴わなければ意味がありません。
+								私たちは、触れた瞬間に意図が伝わる、直感的でシームレスな操作性を追求しました。
+							</p>
+							<p>
+								光の点滅や、耳に心地よい操作音、滑らかなダイヤルの感触。五感に訴えかける細やかな設計が、
+								日々の何気ない動作をストレスのない、豊かな体験へと昇華させます。
+								テクノロジーを意識させない、水のような自然な使い心地をお楽しみください。
+							</p>
+						</Stack>
+						<Button layout={Grid} href='#' variant='outline' gtc='1em 1fr 1em' minW='200px' jc='c' p='30' c='white' bdrs='99'>
+							<GridItem layout={Text} gc='2'>View More</GridItem>
+						</Button>
+					</Stack>
+				</Container>
+			</GridItem>
+			<GridItem layout={Frame} tag='figure' gr={['1', null, '1']} gc={['1', null, '1']} g='20'>
+				<Media src='/img/img-1.jpg' alt='' width='960' height='640' />
+			</GridItem>
+			<GridItem layout={Frame} tag='figure' gr={['1', null, '1']} gc={['2', null, '2']} g='20'>
+				<Media src='/img/img-2.jpg' alt='' width='960' height='640' />
+			</GridItem>
+			<GridItem layout={Frame} tag='figure' gr={['2', null, '1']} gc={['1', null, '3']} g='20'>
+				<Media src='/img/img-3.jpg' alt='' width='960' height='640' />
+			</GridItem>
+			<GridItem layout={Frame} tag='figure' gr={['2', null, '1']} gc={['2', null, '4']} g='20'>
+				<Media src='/img/img-4.jpg' alt='' width='960' height='640' />
+			</GridItem>
+		</Grid>
+	</Container>
+</DemoPageLayout>

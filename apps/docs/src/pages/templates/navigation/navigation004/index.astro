@@ -1,0 +1,104 @@
+---
+import DemoPageLayout from '~/layouts/DemoPageLayout.astro';
+
+import { Stack, Container, Frame, Flex, Grid, GridItem, Media, Text, Layer, LinkBox, Icon } from 'lism-css/astro';
+import './_style.css';
+---
+
+<DemoPageLayout title='Navigation004'>
+	<Grid gtr='auto' gtc={['auto', null, 'auto 1fr']} pos='r'>
+		<GridItem layout={Container} size='l' gr='1' gc='1' py='60' hasGutter pos='r' z='1'>
+			<Stack g='50'>
+				<Stack g='40' ai='fs' c='white'>
+					<Text class='u--trimHL' fz='2xl' fw='bold' ta='c'>製品カテゴリーから探す</Text>
+					<p>
+						キッチン家電やオーディオ機器など、様々な製品カテゴリーをご用意しています。<br />
+						お客様のライフスタイルに合わせた商品を見つけてください。
+					</p>
+				</Stack>
+				<Stack g='60'>
+					<Grid gtc='repeat(auto-fit, minmax(250px, 1fr))' g={['40', null, '40']}>
+						<LinkBox href='#' layout={Flex} g='40' ai='c' jc='sb' p='40' bgc='white' bdrs='10'>
+							<Stack jc='c' g='20'>
+								<Text class='u--trimHL' fz='m' fw='bold'>洗濯機・衣類ケア</Text>
+								<Text class='u--trimHL' fz='xs' op='mid'>LAUNDRY</Text>
+							</Stack>
+							<Flex ai='c' jc='c' bgc='black' bdrs='99' p='10'>
+								<Icon icon='caret-right' fz='xs' c='white' />
+							</Flex>
+						</LinkBox>
+						<LinkBox href='#' layout={Flex} g='40' ai='c' jc='sb' p='40' bgc='white' bdrs='10'>
+							<Stack jc='c' g='20'>
+								<Text class='u--trimHL' fz='m' fw='bold'>掃除機</Text>
+								<Text class='u--trimHL' fz='xs' op='mid'>CLEANING</Text>
+							</Stack>
+							<Flex ai='c' jc='c' bgc='black' bdrs='99' p='10'>
+								<Icon icon='caret-right' fz='xs' c='white' />
+							</Flex>
+						</LinkBox>
+						<LinkBox href='#' layout={Flex} g='40' ai='c' jc='sb' p='40' bgc='white' bdrs='10'>
+							<Stack jc='c' g='20'>
+								<Text class='u--trimHL' fz='m' fw='bold'>オーディオ</Text>
+								<Text class='u--trimHL' fz='xs' op='mid'>AUDIO</Text>
+							</Stack>
+							<Flex ai='c' jc='c' bgc='black' bdrs='99' p='10'>
+								<Icon icon='caret-right' fz='xs' c='white' />
+							</Flex>
+						</LinkBox>
+						<LinkBox href='#' layout={Flex} g='40' ai='c' jc='sb' p='40' bgc='white' bdrs='10'>
+							<Stack jc='c' g='20'>
+								<Text class='u--trimHL' fz='m' fw='bold'>美容・健康家電</Text>
+								<Text class='u--trimHL' fz='xs' op='mid'>BEAUTY & HEALTH</Text>
+							</Stack>
+							<Flex ai='c' jc='c' bgc='black' bdrs='99' p='10'>
+								<Icon icon='caret-right' fz='xs' c='white' />
+							</Flex>
+						</LinkBox>
+						<LinkBox href='#' layout={Flex} g='40' ai='c' jc='sb' p='40' bgc='white' bdrs='10'>
+							<Stack jc='c' g='20'>
+								<Text class='u--trimHL' fz='m' fw='bold'>照明</Text>
+								<Text class='u--trimHL' fz='xs' op='mid'>LIGHTING</Text>
+							</Stack>
+							<Flex ai='c' jc='c' bgc='black' bdrs='99' p='10'>
+								<Icon icon='caret-right' fz='xs' c='white' />
+							</Flex>
+						</LinkBox>
+						<LinkBox href='#' layout={Flex} g='40' ai='c' jc='sb' p='40' bgc='white' bdrs='10'>
+							<Stack jc='c' g='20'>
+								<Text class='u--trimHL' fz='m' fw='bold'>スマートホーム</Text>
+								<Text class='u--trimHL' fz='xs' op='mid'>SMART HOME</Text>
+							</Stack>
+							<Flex ai='c' jc='c' bgc='black' bdrs='99' p='10'>
+								<Icon icon='caret-right' fz='xs' c='white' />
+							</Flex>
+						</LinkBox>
+						<LinkBox href='#' layout={Flex} g='40' ai='c' jc='sb' p='40' bgc='white' bdrs='10'>
+							<Stack jc='c' g='20'>
+								<Text class='u--trimHL' fz='m' fw='bold'>キッチン</Text>
+								<Text class='u--trimHL' fz='xs' op='mid'>KITCHEN</Text>
+							</Stack>
+							<Flex ai='c' jc='c' bgc='black' bdrs='99' p='10'>
+								<Icon icon='caret-right' fz='xs' c='white' />
+							</Flex>
+						</LinkBox>
+						<LinkBox href='#' layout={Flex} g='40' ai='c' jc='sb' p='40' bgc='white' bdrs='10'>
+							<Stack jc='c' g='20'>
+								<Text class='u--trimHL' fz='m' fw='bold'>空調・生活家電</Text>
+								<Text class='u--trimHL' fz='xs' op='mid'>LIVING & AIR</Text>
+							</Stack>
+							<Flex ai='c' jc='c' bgc='black' bdrs='99' p='10'>
+								<Icon icon='caret-right' fz='xs' c='white' />
+							</Flex>
+						</LinkBox>
+					</Grid>
+				</Stack>
+			</Stack>
+		</GridItem>
+		<GridItem gr='1' gc='1' pos='a' w='100%' h='100%'>
+			<Frame h='100%'>
+				<Media src='/img/img-4.jpg' alt='' width='960' height='640' />
+				<Layer bgc='black:30%' />
+			</Frame>
+		</GridItem>
+	</Grid>
+</DemoPageLayout>

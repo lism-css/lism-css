@@ -1,0 +1,52 @@
+---
+import DemoPageLayout from '~/layouts/DemoPageLayout.astro';
+import Button from '~/components/ex/Button/index.astro';
+
+import { Container, Frame, Flex, Grid, GridItem, Layer, Media, Stack, Text } from 'lism-css/astro';
+import './_style.css';
+---
+
+<DemoPageLayout title='Feature011'>
+	<Container bgc='base'>
+		<Grid gtr={['auto', '100svh']} gtc='auto'>
+			<GridItem layout={Grid} gr='1 / -1' gc='1 / -1' gtc='1fr 1fr' gtr='1fr 1fr'>
+				<GridItem layout={Frame} tag='figure' gr='1' gc='1'>
+					<Media src='/img/img-1.jpg' alt='' width='960' height='640' />
+				</GridItem>
+				<GridItem layout={Frame} tag='figure' gr='1' gc='2'>
+					<Media src='/img/img-2.jpg' alt='' width='960' height='640' h='100%' />
+				</GridItem>
+				<GridItem layout={Frame} tag='figure' gr='2' gc='1'>
+					<Media src='/img/img-3.jpg' alt='' width='960' height='640' />
+				</GridItem>
+				<GridItem layout={Frame} tag='figure' gr='2' gc='2'>
+					<Media src='/img/img-4.jpg' alt='' width='960' height='640' />
+				</GridItem>
+			</GridItem>
+			<GridItem layout={Grid} pos='r' gr='1 / -1' gc='1 / -1'>
+				<GridItem layout={Layer} gr='1 / -1' gc='1 / -1' blur='4px' bgc='black:30%' z='0' />
+				<GridItem layout={Grid} gr='1 / -1' gc='1 / -1' ai='c' jc='c' p='60 50' z='1'>
+					<GridItem layout={Stack} g='50' ai='c' w='stretch' maxW='450px' bgc='base' bdrs='10' p={['50', '60']} z='1'>
+						<Text class='u--trimHL' fz='2xl' fw='bold'>心を整える時間</Text>
+						<Stack g='30'>
+							<p>忙しい毎日の中で、つい自分のことは後回しになりがち。 ほんの数分でも、自分の心と静かに向き合う時間を作りませんか？</p>
+							<p>
+								私たちのサービスは、専門家の監修によるガイド付きの瞑想や、心地よい自然音など、
+								あなたの心を穏やかにするコンテンツを提供します。
+							</p>
+							<p>
+								朝の始まりに、仕事の合間に、おやすみ前に。いつでもどこでも、手軽に心をリセットして、
+								穏やかで前向きな自分を取り戻しましょう。
+							</p>
+						</Stack>
+						<Flex w='stretch' jc='c'>
+							<Button layout={Grid} href='#' gtc='1em 1fr 1em' jc='c' w='100%' maxW='250px' p='20' bdrs='10'>
+								<GridItem tag='span' gc='2'>View More</GridItem>
+							</Button>
+						</Flex>
+					</GridItem>
+				</GridItem>
+			</GridItem>
+		</Grid>
+	</Container>
+</DemoPageLayout>

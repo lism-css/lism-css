@@ -1,67 +1,81 @@
 ---
-import DemoPageLayout from "~/layouts/DemoPageLayout.astro";
+import DemoPageLayout from '~/layouts/DemoPageLayout.astro';
 
-import { Stack, Container, Frame, Grid, Media, Text, Flex, Icon, Layer } from "lism-css/astro";
-import "./_style.css";
+import { Stack, Container, Frame, Grid, Media, Text, Flex, Icon, Layer } from 'lism-css/astro';
+import './_style.css';
 ---
 
-<DemoPageLayout title="Feature005">
-	<Container size="l" py="60" hasGutter>
-		<Grid gtc={["1fr", null, "repeat(3, 1fr)"]} g="40">
-			<Stack g="30">
-				<Frame tag="a" isLinkbox href="#" pos="r" ar="3/4" bdrs="10" bxsh="30" td="n">
-					<Media isLayer src="/img/img-2.jpg" alt="" width="960" height="640" />
-					<Layer bgc="rgb(0 0 0 / 20%)" />
-					<Stack pos="r" h="100%" jc="fe" c="white" p="40" g="30" mbs="auto">
-						<Grid gtc="1fr auto" ai="end" g="40">
-							<Stack g="30">
-								<Text class="u--trimHL" fz="l" fw="bold" lh="s">革新的な技術力</Text>
-								<Text class="u--trimHL" fz="s" lh="s" op="high">Advanced Technology</Text>
+<DemoPageLayout title='Feature005'>
+	<Container size='l' py='60' hasGutter>
+		<Grid gtc={['1fr', null, 'repeat(3, 1fr)']} g='40'>
+			<Stack g='30'>
+				<Frame tag='a' isLinkbox href='#' pos='r' ar='3/4' bdrs='10' bxsh='30' td='n' hov='set'>
+					<Media isLayer src='/img/img-2.jpg' alt='' width='960' height='640' trs hov='get:zoom' />
+					<Layer bgc='rgb(0 0 0 / 20%)' />
+					<Stack pos='r' h='100%' jc='fe' c='white' p='40' g='30' mbs='auto'>
+						<Grid gtc='1fr auto' ai='end' g='40'>
+							<Stack g='30'>
+								<Text class='u--trimHL' fz='l' fw='bold' lh='s'>革新的な技術力</Text>
+								<Text class='u--trimHL' fz='s' lh='s' op='high'>Advanced Technology</Text>
 							</Stack>
-							<Flex ai="c" jc="c" bd bdc="white" p="20" bdrs="99">
-								<Icon icon="arrow-right" fz="s" c="white" />
-							</Box>
+							<Flex ai='c' jc='c' bd bdc='white' p='20' bdrs='99' trs hov='get:bgcWhite'>
+								<Icon icon='arrow-right' fz='s' c='white' trs hov='get:cBlack' />
+							</Flex>
 						</Grid>
 					</Stack>
 				</Frame>
-				<Text pb="30">最新のAIとロボット技術を駆使し、高精度なものづくりで未来の産業を支えます。</Text>
+				<Text pb='30'>最新のAIとロボット技術を駆使し、高精度なものづくりで未来の産業を支えます。</Text>
 			</Stack>
-			<Stack g="30">
-				<Frame tag="a" isLinkbox href="#" pos="r" ar="3/4" bdrs="10" bxsh="30" td="n">
-					<Media isLayer src="/img/img-5.jpg" alt="" width="960" height="640" />
-					<Layer bgc="rgb(0 0 0 / 20%)" />
-					<Stack pos="r" h="100%" jc="fe" c="white" p="40" g="30" mbs="auto">
-						<Grid gtc="1fr auto" ai="end" g="40">
-							<Stack g="30">
-								<Text class="u--trimHL" fz="l" fw="bold" lh="s">徹底した品質管理</Text>
-								<Text class="u--trimHL" fz="s" lh="s" op="high">Quality First</Text>
+			<Stack g='30'>
+				<Frame tag='a' isLinkbox href='#' pos='r' ar='3/4' bdrs='10' bxsh='30' td='n' hov='set'>
+					<Media isLayer src='/img/img-5.jpg' alt='' width='960' height='640' trs hov='get:zoom' />
+					<Layer bgc='rgb(0 0 0 / 20%)' />
+					<Stack pos='r' h='100%' jc='fe' c='white' p='40' g='30' mbs='auto'>
+						<Grid gtc='1fr auto' ai='end' g='40'>
+							<Stack g='30'>
+								<Text class='u--trimHL' fz='l' fw='bold' lh='s'>徹底した品質管理</Text>
+								<Text class='u--trimHL' fz='s' lh='s' op='high'>Quality First</Text>
 							</Stack>
-							<Flex ai="c" jc="c" bd bdc="white" p="20" bdrs="99">
-								<Icon icon="arrow-right" fz="s" c="white" />
-							</Box>
+							<Flex ai='c' jc='c' bd bdc='white' p='20' bdrs='99' trs hov='get:bgcWhite'>
+								<Icon icon='arrow-right' fz='s' c='white' trs hov='get:cBlack' />
+							</Flex>
 						</Grid>
 					</Stack>
 				</Frame>
-				<Text pb="30">ミクロン単位の精度を追求し、すべての製品においてお客様に安心と信頼をお届けします。</Text>
+				<Text pb='30'>ミクロン単位の精度を追求し、すべての製品においてお客様に安心と信頼をお届けします。</Text>
 			</Stack>
-			<Stack g="30">
-				<Frame tag="a" isLinkbox href="#" pos="r" ar="3/4" bdrs="10" bxsh="30" td="n">
-					<Media isLayer src="/img/img-6.jpg" alt="" width="960" height="640" />
-					<Layer bgc="rgb(0 0 0 / 20%)" />
-					<Stack pos="r" h="100%" jc="fe" c="white" p="40" g="30" mbs="auto">
-						<Grid gtc="1fr auto" ai="end" g="40">
-							<Stack g="30">
-								<Text class="u--trimHL" fz="l" fw="bold" lh="s">グローバル供給体制</Text>
-								<Text class="u--trimHL" fz="s" lh="s" op="high">Global Network</Text>
+			<Stack g='30'>
+				<Frame tag='a' isLinkbox href='#' pos='r' ar='3/4' bdrs='10' bxsh='30' td='n' hov='set'>
+					<Media isLayer src='/img/img-6.jpg' alt='' width='960' height='640' trs hov='get:zoom' />
+					<Layer bgc='rgb(0 0 0 / 20%)' />
+					<Stack pos='r' h='100%' jc='fe' c='white' p='40' g='30' mbs='auto'>
+						<Grid gtc='1fr auto' ai='end' g='40'>
+							<Stack g='30'>
+								<Text class='u--trimHL' fz='l' fw='bold' lh='s'>グローバル供給体制</Text>
+								<Text class='u--trimHL' fz='s' lh='s' op='high'>Global Network</Text>
 							</Stack>
-							<Flex ai="c" jc="c" bd bdc="white" p="20" bdrs="99">
-								<Icon icon="arrow-right" fz="s" c="white" />
-							</Box>
+							<Flex ai='c' jc='c' bd bdc='white' p='20' bdrs='99' trs hov='get:bgcWhite'>
+								<Icon icon='arrow-right' fz='s' c='white' trs hov='get:cBlack' />
+							</Flex>
 						</Grid>
 					</Stack>
 				</Frame>
-				<Text pb="30">世界中の拠点を結び、お客様のニーズに迅速かつ柔軟に対応するグローバル供給網です。</Text>
+				<Text pb='30'>世界中の拠点を結び、お客様のニーズに迅速かつ柔軟に対応するグローバル供給網です。</Text>
 			</Stack>
 		</Grid>
 	</Container>
 </DemoPageLayout>
+
+<style>
+	@media (any-hover: hover) {
+		.-hov\:get\:zoom {
+			scale: var(--_isHov, 1.1);
+		}
+		.-hov\:get\:bgcWhite {
+			background-color: var(--_isHov, var(--white));
+		}
+		.-hov\:get\:cBlack {
+			color: var(--_isHov, var(--black));
+		}
+	}
+</style>

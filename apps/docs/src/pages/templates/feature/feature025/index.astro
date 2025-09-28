@@ -1,0 +1,35 @@
+---
+import DemoPageLayout from '~/layouts/DemoPageLayout.astro';
+
+import { Container, Grid, GridItem, Text, Frame, Media, Stack } from 'lism-css/astro';
+import './_style.css';
+---
+
+<DemoPageLayout title='Feature025'>
+	<Container size='l' py='60' hasGutter>
+		<Grid gtc={['auto', null, 'auto 1fr']} g='50 60'>
+			<GridItem>
+				<Text class='u--trimHL' fz='3xl' fw='bold'>最高のユーザー体験を<br />提供する未来のために</Text>
+			</GridItem>
+			<GridItem>
+				<Text class='u--trimHL' fz='m'>
+					私たちのサービスは、ユーザーの皆様に最高の体験を提供することを目指しています。
+					最新の技術を駆使し、使いやすさと安全性を両立させたプラットフォームを構築しました。
+					多様なニーズに対応するため、柔軟なカスタマイズオプションも用意しています。
+				</Text>
+			</GridItem>
+			<GridItem layout={Frame} ar='2/1' gc='1 / -1'>
+				<Media src='/img/img-4.jpg' alt='' />
+			</GridItem>
+			<GridItem layout={Stack} gc='1 / -1' jc='fe' g='40'>
+				<p>
+					多様なニーズに対応するため、柔軟なカスタマイズオプションも用意しています。
+					また、環境への配慮も忘れず、持続可能な未来を見据えた取り組みを進めています。
+					ユーザーの皆様が安心して利用できるよう、常に改善と革新を追求し続けます。
+					さらに、コミュニティとの連携を強化し、ユーザー同士が交流できる場を提供することで、
+					より豊かな体験を創出しています。私たちは、技術と人間性の融合を図り、 未来志向のサービスを展開していくことをお約束します。
+				</p>
+			</GridItem>
+		</Grid>
+	</Container>
+</DemoPageLayout>
