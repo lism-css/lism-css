@@ -1,11 +1,14 @@
 import atts from '../../lib/helper/atts';
 import getFilterProps from '../getFilterProps';
 
-export default function ({ lismClass, size, clipPath, style = {}, ...props }) {
+export default function ({ lismClass, size, clipPath, boxSizing, style = {}, ...props }) {
 	props = getFilterProps(props);
 
 	if (clipPath) {
 		style.clipPath = clipPath;
+	}
+	if (boxSizing) {
+		style.boxSizing = boxSizing;
 	}
 
 	if (size) {
