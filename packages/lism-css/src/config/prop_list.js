@@ -335,9 +335,9 @@ const PROPS = {
 	gar: { _style: 'gridAutoRows' },
 
 	// grid-item
-	ga: { utils: { '1/1': '1', '1 / 1': '1' } }, // grid-area
-	gc: { presets: ['1/-1'], utils: { '1 / -1': '1/-1' } }, // grid-column
-	gr: { presets: ['1/-1'], utils: { '1 / -1': '1/-1' } }, // grid-row
+	ga: { presets: ['1/1'] }, // grid-area
+	gc: { presets: ['1/-1'] }, // grid-column
+	gr: { presets: ['1/-1'] }, // grid-rowf
 	gcs: { style: 'gridColumnStart' },
 	gce: { style: 'gridColumnEnd' },
 	grs: { style: 'gridRowStart' },
