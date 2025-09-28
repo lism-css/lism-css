@@ -5,59 +5,70 @@ import { Stack, Container, Frame, Grid, GridItem, Media, Text, Flex, Icon } from
 import './_style.css';
 ---
 
-<DemoPageLayout title="Feature003">
+<DemoPageLayout title='Feature003'>
 	<Container size='l' py='60' hasGutter>
-		<Stack g="50">
-			<Grid gtc={["1fr", null, "auto 1fr"]} g="50">
+		<Stack g='50'>
+			<Grid gtc={['1fr', null, 'auto 1fr']} g='50'>
 				<Stack>
-					<Text class="u--trimHL" fz="2xl" fw="bold">私たちの取り組み</Text>
-					<Text class="u--trimHL" fz="l" mbs='20' op="mid">Feature section</Text>
+					<Text class='u--trimHL' fz='2xl' fw='bold'>私たちの取り組み</Text>
+					<Text class='u--trimHL' fz='l' mbs='20' op='mid'>Feature section</Text>
 				</Stack>
-				<Flex jc={["s", null, "end"]}>
-					<Text class="u--trimHL" maxW="32rem" fz="s" op="high">
+				<Flex jc={['s', null, 'end']}>
+					<Text class='u--trimHL' maxW='32rem' fz='s' op='high'>
 						地域の未来を見据え、持続可能な社会の実現に向けた取り組みを進めています。
 						環境保護や地域活性化を通じて、次世代に誇れる街づくりを目指します。
 					</Text>
 				</Flex>
 			</Grid>
-			<Grid gtc={["1fr", "repeat(2, 1fr)", "repeat(4, 1fr)"]} g={["40", "50"]}>
-				<GridItem layout={Grid} gtr="subgrid" gr="span 2" tag="a" isLinkBox href="#" g="30" ai="s">
-					<Frame ar="1/1" bdrs="10">
-						<Media src='/img/img-2.jpg' alt='' width='960' height='640'/>
+			<Grid gtc={['1fr', 'repeat(2, 1fr)', 'repeat(4, 1fr)']} g={['40', '50']}>
+				<GridItem layout={Grid} gtr='subgrid' gr='span 2' isLinkBox href='#' g='30' ai='s' hov='set'>
+					<Frame ar='1/1' bdrs='10'>
+						<Media src='/img/img-2.jpg' alt='' width='960' height='640' trs hov='get:zoom' />
 					</Frame>
-					<Flex ai="c" jc="fs" g="20" fz="m" lh="s" mb="20">
+					<Flex ai='c' jc='fs' g='20' fz='m' lh='s' mb='20'>
 						<Text>地域の未来を共に描く</Text>
-						<Icon fz="125%" icon='arrow-right' op="low" ml="auto" />
+						<Icon fz='125%' icon='arrow-right' mis='auto' trs hov='get:opDefault' />
 					</Flex>
 				</GridItem>
-				<GridItem layout={Grid} gtr="subgrid" gr="span 2" tag="a" isLinkBox href="#" g="30" ai="s">
-					<Frame ar="1/1" bdrs="10">
-						<Media src='/img/img-4.jpg' alt='' width='960' height='640'/>
+				<GridItem layout={Grid} gtr='subgrid' gr='span 2' isLinkBox href='#' g='30' ai='s' hov='set'>
+					<Frame ar='1/1' bdrs='10'>
+						<Media src='/img/img-4.jpg' alt='' width='960' height='640' trs hov='get:zoom' />
 					</Frame>
-					<Flex ai="c" jc="fs" g="20" fz="m" lh="s" mb="20">
+					<Flex ai='c' jc='fs' g='20' fz='m' lh='s' mb='20'>
 						<Text>誰もが集える憩いの場</Text>
-						<Icon fz="125%" icon='arrow-right' op="low" ml="auto" />
+						<Icon fz='125%' icon='arrow-right' mis='auto' trs hov='get:opDefault' />
 					</Flex>
 				</GridItem>
-				<GridItem layout={Grid} gtr="subgrid" gr="span 2" tag="a" isLinkBox href="#" g="30" ai="s">
-					<Frame ar="1/1" bdrs="10">
-						<Media src='/img/img-3.jpg' alt='' width='960' height='640'/>
+				<GridItem layout={Grid} gtr='subgrid' gr='span 2' isLinkBox href='#' g='30' ai='s' hov='set'>
+					<Frame ar='1/1' bdrs='10'>
+						<Media src='/img/img-3.jpg' alt='' width='960' height='640' trs hov='get:zoom' />
 					</Frame>
-					<Flex ai="c" jc="fs" g="20" fz="m" lh="s" mb="20">
+					<Flex ai='c' jc='fs' g='20' fz='m' lh='s' mb='20'>
 						<Text>地元の恵みを食卓へ</Text>
-						<Icon fz="125%" icon='arrow-right' op="low" ml="auto" />
+						<Icon fz='125%' icon='arrow-right' mis='auto' trs hov='get:opDefault' />
 					</Flex>
 				</GridItem>
-				<GridItem layout={Grid} gtr="subgrid" gr="span 2" tag="a" isLinkBox href="#" g="30" ai="s">
-					<Frame ar="1/1" bdrs="10">
-						<Media src='/img/img-5.jpg' alt='' width='960' height='640'/>
+				<GridItem layout={Grid} gtr='subgrid' gr='span 2' isLinkBox href='#' g='30' ai='s' hov='set'>
+					<Frame ar='1/1' bdrs='10'>
+						<Media src='/img/img-5.jpg' alt='' width='960' height='640' trs hov='get:zoom' />
 					</Frame>
-					<Flex ai="c" jc="fs" g="20" fz="m" lh="s" mb="20">
+					<Flex ai='c' jc='fs' g='20' fz='m' lh='s' mb='20'>
 						<Text>緑豊かな景観づくり</Text>
-						<Icon fz="125%" icon='arrow-right' op="low" ml="auto" />
+						<Icon fz='125%' icon='arrow-right' mis='auto' trs hov='get:opDefault' />
 					</Flex>
 				</GridItem>
 			</Grid>
 		</Stack>
 	</Container>
 </DemoPageLayout>
+
+<style>
+	@media (any-hover: hover) {
+		.-hov\:get\:zoom {
+			scale: var(--_isHov, 1.1);
+		}
+		.-hov\:get\:opDefault {
+			opacity: var(--_notHov, var(--op-low));
+		}
+	}
+</style>

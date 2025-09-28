@@ -1,0 +1,96 @@
+---
+import DemoPageLayout from '~/layouts/DemoPageLayout.astro';
+
+import { Stack, Container, Frame, Grid, GridItem, Media, Text, Flex } from 'lism-css/astro';
+import './_style.css';
+---
+
+<DemoPageLayout title='Feature027'>
+	<Container size='l' bgc='base-2' py='60' hasGutter>
+		<Stack g='50'>
+			<Stack ai='c'>
+				<Text fz='2xl' fw='bold'>厳選された商品</Text>
+				<Text fz='m' op='mid'>Pickup Products</Text>
+			</Stack>
+			<Grid gtc={['1fr', 'repeat(2, 1fr)', 'repeat(3, 1fr)']} gtr='auto auto' g='50'>
+				<GridItem
+					class='u--outerR'
+					layout={Grid}
+					hov='set'
+					gr='span 2'
+					gc='1 / -1'
+					gtc={['auto', null, '1fr 1fr']}
+					tag='a'
+					isLinkBox
+					href='#'
+					bgc='white'
+					ov='h'
+					bdrs='20'
+				>
+					<Frame pos='r' minH='100%'>
+						<Media src='/img/img-5.jpg' alt='' width='960' height='640' trs hov='get:zoom' />
+					</Frame>
+					<Stack g='40' jc='c' p='50'>
+						<Text class='u--trimHL' fz='l' fw='bold'>期間限定コラボモデル</Text>
+						<Text class='u--trimHL' fz='s'
+							>ここでしか出会えない特別な一品を。アーティストとのコラボなど、数量限定のモデル。自分を慈しむ時間を、もっと豊かに。毎日のセルフケアを、心地よい体験へと変える。</Text
+						>
+						<Flex class='u--innerR' trs hov='get:bgcReverse' jc='c' bd bdc='divider' p='10'>
+							<Text fz='m'>View Detail</Text>
+						</Flex>
+					</Stack>
+				</GridItem>
+				<GridItem layout={Grid} hov='set' gr='span 2' g='40' tag='a' isLinkBox href='#'>
+					<Frame ar='16/9' bdrs='20' pos='r'>
+						<Media src='/img/img-1.jpg' alt='' width='960' height='640' trs hov='get:zoom' />
+					</Frame>
+					<Stack g='40'>
+						<Text class='u--trimHL' fz='m' fw='bold'>空調・生活家電</Text>
+						<Text class='u--trimHL' fz='s'>空間に溶け込み、心地よい空気と時間を作り出す。日々の暮らしの質を高めるアイテム。</Text>
+						<Flex trs hov='get:bgcReverse' jc='c' bd bdc='divider' p='10' bdrs='20'>
+							<Text fz='m'>View Detail</Text>
+						</Flex>
+					</Stack>
+				</GridItem>
+				<GridItem layout={Grid} hov='set' gr='span 2' g='40' tag='a' isLinkBox href='#'>
+					<Frame ar='16/9' bdrs='20' pos='r'>
+						<Media src='/img/img-2.jpg' alt='' width='960' height='640' trs hov='get:zoom' />
+					</Frame>
+					<Stack g='40'>
+						<Text class='u--trimHL' fz='m' fw='bold'>スマートホーム</Text>
+						<Text class='u--trimHL' fz='s'>家電たちが静かに連携し、暮らしをサポート。テクノロジーを意識させない、未来の日常。</Text>
+						<Flex trs hov='get:bgcReverse' jc='c' bd bdc='divider' p='10' bdrs='20'>
+							<Text fz='m'>View Detail</Text>
+						</Flex>
+					</Stack>
+				</GridItem>
+				<GridItem layout={Grid} hov='set' gr='span 2' g='40' tag='a' isLinkBox href='#'>
+					<Frame ar='16/9' bdrs='20' pos='r'>
+						<Media src='/img/img-4.jpg' alt='' width='960' height='640' trs hov='get:zoom' />
+					</Frame>
+					<Stack g='40'>
+						<Text class='u--trimHL' fz='m' fw='bold'>アクセサリ</Text>
+						<Text class='u--trimHL' fz='s'>製品体験をさらに豊かにする専用アクセサリ。細部にまで、ブランドの美意識を宿します。</Text>
+						<Flex trs hov='get:bgcReverse' jc='c' bd bdc='divider' p='10' bdrs='20'>
+							<Text fz='m'>View Detail</Text>
+						</Flex>
+					</Stack>
+				</GridItem>
+			</Grid>
+		</Stack>
+	</Container>
+</DemoPageLayout>
+
+<style>
+	@media (any-hover: hover) {
+		.-hov\:get\:zoom {
+			scale: var(--_isHov, 1.1);
+		}
+		.-hov\:get\:bgcReverse {
+			--bgc-reverse: var(--black);
+			--c-reverse: var(--white);
+			background-color: var(--_isHov, var(--bgc-reverse));
+			color: var(--_isHov, var(--c-reverse));
+		}
+	}
+</style>
