@@ -2,11 +2,11 @@ import isNumStr from './helper/isNumStr';
 import isTokenValue from './isTokenValue';
 
 // 対応するCSS変数があれば返す
-export default function getMaybeCssVar(value, converterKey) {
-	if (!converterKey) return value;
+export default function getMaybeCssVar(value, tokenKey) {
+	if (!tokenKey) return value;
 
-	// if (typeof converterKey === 'string') {
-	switch (converterKey) {
+	// if (typeof tokenKey === 'string') {
+	switch (tokenKey) {
 		case 'space':
 			return getMaybeSpaceVar(value);
 		case 'color':
@@ -14,8 +14,8 @@ export default function getMaybeCssVar(value, converterKey) {
 		case 'bxsh':
 			return getMaybeShadowVar(value);
 		default:
-			if (isTokenValue(converterKey, value)) {
-				return `var(--${converterKey}-${value})`;
+			if (isTokenValue(tokenKey, value)) {
+				return `var(--${tokenKey}-${value})`;
 			}
 			break;
 	}
