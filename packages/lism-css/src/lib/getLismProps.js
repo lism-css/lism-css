@@ -10,11 +10,11 @@ import filterEmptyObj from './helper/filterEmptyObj';
 import splitWithComma from './helper/splitWithComma';
 // import svg2ImgUrl from './helper/svg2ImgUrl';
 
-const getConverter = (propName) => {
+const getTokenKey = (propName) => {
 	const propData = PROPS[propName];
-	if (!propData) return null;
+	if (!propData) return '';
 
-	return propData?.converter || null;
+	return propData?.token || '';
 };
 
 const STATE_CLASSES = {
@@ -352,12 +352,8 @@ class LismPropsData {
 			let value = passVars[propName];
 			if (null === value) return;
 
-			// コンバーター通して取得
-			const converterName = getConverter(propName);
-			if (converterName) {
-				value = getMaybeCssVar(value, converterName);
-			}
-
+			// トークン値であれば変換
+			value = getMaybeCssVar(value, getTokenKey(propName));
 			this.addStyle(`--pass_${propName}`, value);
 		});
 	}
@@ -396,9 +392,8 @@ class LismPropsData {
 						this.addUtil(`-hov:${cls}`);
 					});
 				} else {
-					// c,bgc などの処理
-					const converter = getConverter(propName);
-					if (converter) hovVal = getMaybeCssVar(hovVal, converter);
+					// トークン値の処理
+					hovVal = getMaybeCssVar(hovVal, getTokenKey(propName));
 
 					this.addUtil(`-hov:${propName}`);
 					this.addStyle(`--hov-${propName}`, hovVal);
@@ -431,14 +426,9 @@ class LismPropsData {
  * props から styleに変換する要素 と その他 に分離する
  *
  * @param {Object} props
- * @param {Object} options
  * @return {Object} styles & attrs
  */
-
-// styleを生成するための共通処理
-// options:初期値などが渡ってくる
-export default function getLismProps(props, options = {}) {
-	props = Object.assign(options, props);
+export default function getLismProps(props) {
 	if (props.length === 0) {
 		return {};
 	}
