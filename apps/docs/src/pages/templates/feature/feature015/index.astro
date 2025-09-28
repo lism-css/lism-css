@@ -1,0 +1,31 @@
+---
+import DemoPageLayout from '~/layouts/DemoPageLayout.astro';
+
+import { Container, Frame, Grid, GridItem, Media, Stack, Text } from 'lism-css/astro';
+import './_style.css';
+---
+
+<DemoPageLayout title='Feature015'>
+	<Container bgc='base' py='60'>
+		<Stack g={['50', null, '60']}>
+			<Stack ai='c' g='30' px='40'>
+				<Text fz='clamp(1.5rem, 4.5vw, 2rem)' fw='bold' ta='c'>大地の恵みを、あなたの毎日へ</Text>
+				<Text>自然由来の環境負荷を抑えた製法で、一つひとつ丁寧に手作りしています。</Text>
+			</Stack>
+			<Grid gtr={['repeat(12, 1fr)', null, 'repeat(6, 1fr)']} gtc={['repeat(2, 1fr)', null, 'repeat(4, 1fr)']} g={['40', '50']}>
+				<GridItem layout={Frame} gr={['1 / span 5', null, '1 / span 5']} gc={['1', null, '1']}>
+					<Media src='/img/img-1.jpg' width='960' height='640' />
+				</GridItem>
+				<GridItem layout={Frame} gr={['2 / span 5', null, '2 / span 5']} gc={['2', null, '2']}>
+					<Media src='/img/img-6.jpg' width='960' height='640' />
+				</GridItem>
+				<GridItem layout={Frame} gr={['6 / span 5', null, '1 / span 5']} gc={['1', null, '3']}>
+					<Media src='/img/img-2.jpg' width='960' height='640' />
+				</GridItem>
+				<GridItem layout={Frame} gr={['7 / span 5', null, '2 / span 5']} gc={['2', null, '4']}>
+					<Media src='/img/img-3.jpg' width='960' height='640' />
+				</GridItem>
+			</Grid>
+		</Stack>
+	</Container>
+</DemoPageLayout>

@@ -1,0 +1,49 @@
+---
+import DemoPageLayout from '~/layouts/DemoPageLayout.astro';
+
+import { Container, Frame, Grid, GridItem, Media, Stack, Text } from 'lism-css/astro';
+import Button from '~/components/ex/Button/index.astro';
+import './_style.css';
+---
+
+<DemoPageLayout title='Feature008'>
+	<Container bgc='base'>
+		<Grid gtc={['repeat(2, 1fr)', null, 'repeat(4, 1fr)']} gtr={['repeat(4, 1fr)', null, 'repeat(2, 1fr)']} g='5'>
+			<GridItem
+				layout={Stack}
+				gr={['2 / span 2', null, '1 / -1']}
+				gc={['1 / -1', null, '2 / span 2']}
+				g='50'
+				bgc='base-2'
+				ai='c'
+				jc='c'
+				p={['60 50', null, '60']}
+			>
+				<Text fz='2xl' fw='bold'>思い出をかたちに</Text>
+				<Stack g='40'>
+					<p>
+						「何か新しいことを始めたい」と思っても、何から手をつければ良いか分からない。
+						そんな時は、私たちにお任せください。あなたの興味関心を分析し、新しい趣味や学びの世界への扉を開きます。
+					</p>
+					<p>
+						オンライン講座から地域のワークショップまで、あなたの可能性を広げるきっかけがここにあります。
+						昨日より成長した自分に出会える毎日があなたを待っています。
+					</p>
+				</Stack>
+				<Button href='#' minW='250px' jc='c' p='30' bdrs='10'>View More</Button>
+			</GridItem>
+			<Frame tag='figure'>
+				<Media src='/img/img-1.jpg' alt='' width='960' height='640' />
+			</Frame>
+			<Frame tag='figure'>
+				<Media src='/img/img-2.jpg' alt='' width='960' height='640' />
+			</Frame>
+			<Frame tag='figure'>
+				<Media src='/img/img-3.jpg' alt='' width='960' height='640' />
+			</Frame>
+			<Frame tag='figure'>
+				<Media src='/img/img-4.jpg' alt='' width='960' height='640' />
+			</Frame>
+		</Grid>
+	</Container>
+</DemoPageLayout>

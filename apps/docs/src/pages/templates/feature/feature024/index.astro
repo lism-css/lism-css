@@ -1,0 +1,33 @@
+---
+import DemoPageLayout from '~/layouts/DemoPageLayout.astro';
+
+import { Container, Grid, Text, Frame, Flex, Media, Stack } from 'lism-css/astro';
+import Button from '~/components/ex/Button/index.astro';
+import './_style.css';
+---
+
+<DemoPageLayout title='Feature024'>
+	<Container size='l' bgc='gray' py='60' hasGutter>
+		<Grid gtc={['auto', null, 'repeat(3, 1fr)']} g='50' c='white'>
+			<Stack g='40'>
+				<Text class='u--trimHL' fz='5xl' fw='100' lts='l'>Feature</Text>
+				<p>
+					私たちのサービスは、ユーザーの皆様に最高の体験を提供することを目指しています。
+					最新の技術を駆使し、使いやすさと安全性を両立させたプラットフォームを構築しました。
+				</p>
+			</Stack>
+			<Frame ar={['4/3', null, '3/4']} minW='300px'>
+				<Media src='/img/img-2.jpg' alt='' />
+			</Frame>
+			<Stack jc='fe' g='40'>
+				<p>
+					最新の技術を駆使し、使いやすさと安全性を両立させたプラットフォームを構築しました。
+					多様なニーズに対応するため、柔軟なカスタマイズオプションも用意しています。
+				</p>
+				<Flex>
+					<Button href='#' variant='outline' c='white' jc='c' w='stretch' minW='8rem' p='20' bdrs='10'>View Detail</Button>
+				</Flex>
+			</Stack>
+		</Grid>
+	</Container>
+</DemoPageLayout>

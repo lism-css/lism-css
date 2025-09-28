@@ -1,0 +1,72 @@
+---
+import DemoPageLayout from '~/layouts/DemoPageLayout.astro';
+
+import { Container, Flex, Grid, Icon, LinkBox, Stack, Text } from 'lism-css/astro';
+import './_style.css';
+---
+
+<DemoPageLayout title='Navigation003'>
+	<Container size='l' bgc='base-2' py='60' hasGutter>
+		<Stack g='60'>
+			<Text class='u--trimHL' fz='2xl' fw='bold' ta='c'>製品カテゴリー</Text>
+			<Stack g='60'>
+				<Grid gtc='repeat(auto-fit, minmax(300px, 1fr))' g='50'>
+					<LinkBox href='#' layout={Flex} g='40' ai='c' jc='sb' p='40' bd bdc='divider' bgc='white' bdrs='10'>
+						<Text class='u--trimHL' fz='m' fw='bold'>キッチン家電</Text>
+						<Flex ai='c' jc='c' bgc='black' bdrs='99' p='10'>
+							<Icon icon='arrow-right' fz='xs' c='white' />
+						</Flex>
+					</LinkBox>
+					<LinkBox href='#' layout={Flex} g='40' ai='c' jc='sb' p='40' bd bdc='divider' bgc='white' bdrs='10'>
+						<Text class='u--trimHL' fz='m' fw='bold'>オーディオ</Text>
+						<Flex ai='c' jc='c' bg='black' bdrs='99' p='10'>
+							<Icon icon='arrow-right' fz='xs' c='white' />
+						</Flex>
+					</LinkBox>
+					<LinkBox href='#' layout={Flex} g='40' ai='c' jc='sb' p='40' bd bdc='divider' bgc='white' bdrs='10'>
+						<Text class='u--trimHL' fz='m' fw='bold'>生活家電</Text>
+						<Flex ai='c' jc='c' bg='black' bdrs='99' p='10'>
+							<Icon icon='arrow-right' fz='xs' c='white' />
+						</Flex>
+					</LinkBox>
+					<LinkBox href='#' layout={Flex} g='40' ai='c' jc='sb' p='40' bd bdc='divider' bgc='white' bdrs='10'>
+						<Text class='u--trimHL' fz='m' fw='bold'>冷蔵庫</Text>
+						<Flex ai='c' jc='c' bg='black' bdrs='99' p='10'>
+							<Icon icon='arrow-right' fz='xs' c='white' />
+						</Flex>
+					</LinkBox>
+					<LinkBox href='#' layout={Flex} g='40' ai='c' jc='sb' p='40' bd bdc='divider' bgc='white' bdrs='10'>
+						<Text class='u--trimHL' fz='m' fw='bold'>洗濯機・衣類ケア</Text>
+						<Flex ai='c' jc='c' bg='black' bdrs='99' p='10'>
+							<Icon icon='arrow-right' fz='xs' c='white' />
+						</Flex>
+					</LinkBox>
+					<LinkBox href='#' layout={Flex} g='40' ai='c' jc='sb' p='40' bd bdc='divider' bgc='white' bdrs='10'>
+						<Text class='u--trimHL' fz='m' fw='bold'>美容</Text>
+						<Flex ai='c' jc='c' bg='black' bdrs='99' p='10'>
+							<Icon icon='arrow-right' fz='xs' c='white' />
+						</Flex>
+					</LinkBox>
+					<LinkBox href='#' layout={Flex} g='40' ai='c' jc='sb' p='40' bd bdc='divider' bgc='white' bdrs='10'>
+						<Text class='u--trimHL' fz='m' fw='bold'>照明器具</Text>
+						<Flex ai='c' jc='c' bg='black' bdrs='99' p='10'>
+							<Icon icon='arrow-right' fz='xs' c='white' />
+						</Flex>
+					</LinkBox>
+					<LinkBox href='#' layout={Flex} g='40' ai='c' jc='sb' p='40' bd bdc='divider' bgc='white' bdrs='10'>
+						<Text class='u--trimHL' fz='m' fw='bold'>パソコン・周辺機器</Text>
+						<Flex ai='c' jc='c' bg='black' bdrs='99' p='10'>
+							<Icon icon='arrow-right' fz='xs' c='white' />
+						</Flex>
+					</LinkBox>
+				</Grid>
+				<Flex jc='fe'>
+					<LinkBox href='#' layout={Flex} ai='c' g='10'>
+						<Text class='u--trimHL'>全てのカテゴリーを見る</Text>
+						<Icon icon='arrow-right' />
+					</LinkBox>
+				</Flex>
+			</Stack>
+		</Stack>
+	</Container>
+</DemoPageLayout>

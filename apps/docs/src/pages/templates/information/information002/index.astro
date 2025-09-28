@@ -1,0 +1,91 @@
+---
+import DemoPageLayout from '~/layouts/DemoPageLayout.astro';
+
+import { Container, Frame, Grid, GridItem, Media, Stack, Text } from 'lism-css/astro';
+import './_style.css';
+---
+
+<DemoPageLayout title='Information002'>
+	<Container size='m' bgc='base' py='60' hasGutter>
+		<Stack g='30' ai='c' mb='50'>
+			<Text class='u--trimHL' fz='2xl' fw='bold'>会社情報</Text>
+			<Text class='u--trimHL' fz='s' ta='c' op='low'>Company Information</Text>
+		</Stack>
+		<Stack g='40'>
+			<Text fz='l' fw='bold'>概要</Text>
+			<Grid gtc={['auto', null, '1fr 1fr']} g='50 60'>
+				<Grid tag='dl' gtr='auto' gtc='auto 1fr' g='0 50' bd='t' bdc='divider'>
+					<GridItem layout={Grid} gtc='subgrid' gc='1/-1' bd='b' bdc='divider' p='30'>
+						<dt>会社名</dt>
+						<dd>株式会社リズム</dd>
+					</GridItem>
+					<GridItem layout={Grid} gtc='subgrid' gc='1/-1' bd='b' bdc='divider' p='30'>
+						<dt>設立</dt>
+						<dd>2020年1月1日</dd>
+					</GridItem>
+					<GridItem layout={Grid} gtc='subgrid' gc='1/-1' bd='b' bdc='divider' p='30'>
+						<dt>所在地</dt>
+						<dd>東京都千代田区丸の内10000</dd>
+					</GridItem>
+					<GridItem layout={Grid} gtc='subgrid' gc='1/-1' bd='b' bdc='divider' p='30'>
+						<dt>代表者</dt>
+						<dd>田中　太郎</dd>
+					</GridItem>
+					<GridItem layout={Grid} gtc='subgrid' gc='1/-1' bd='b' bdc='divider' p='30'>
+						<dt>事業内容</dt>
+						<dd>ソフトウェア開発、システムインテグレーション、ITコンサルティング</dd>
+					</GridItem>
+					<GridItem layout={Grid} gtc='subgrid' gc='1/-1' bd='b' bdc='divider' p='30'>
+						<dt>資本金</dt>
+						<dd>1億円</dd>
+					</GridItem>
+					<GridItem layout={Grid} gtc='subgrid' gc='1/-1' bd='b' bdc='divider' p='30'>
+						<dt>従業員数</dt>
+						<dd>100名</dd>
+					</GridItem>
+					<GridItem layout={Grid} gtc='subgrid' gc='1/-1' bd='b' bdc='divider' p='30'>
+						<dt>取引銀行</dt>
+						<dd>三菱UFJ銀行、みずほ銀行</dd>
+					</GridItem>
+					<GridItem layout={Grid} gtc='subgrid' gc='1/-1' bd='b' bdc='divider' p='30'>
+						<dt>主要取引先</dt>
+						<dd>株式会社ABC、XYZ株式会社、123株式会社</dd>
+					</GridItem>
+				</Grid>
+				<Frame>
+					<Media src='/img/img-5.jpg' alt='' width='960' height='640' />
+				</Frame>
+			</Grid>
+		</Stack>
+		<Stack g='40' mbs='60'>
+			<Text fz='l' fw='bold'>沿革</Text>
+			<Grid gtc={['auto', null, '1fr 1fr']} g='50 60'>
+				<Grid tag='dl' gtr='auto' gtc='auto 1fr' g='0 50' bd='t' bdc='divider'>
+					<GridItem layout={Grid} gtc='subgrid' gc='1/-1' bd='b' bdc='divider' p='30'>
+						<dt>2020年</dt>
+						<dd>株式会社リズム設立</dd>
+					</GridItem>
+					<GridItem layout={Grid} gtc='subgrid' gc='1/-1' bd='b' bdc='divider' p='30'>
+						<dt>2021年</dt>
+						<dd>初の自社製品をリリース</dd>
+					</GridItem>
+					<GridItem layout={Grid} gtc='subgrid' gc='1/-1' bd='b' bdc='divider' p='30'>
+						<dt>2022年</dt>
+						<dd>事業拡大に伴いオフィス移転</dd>
+					</GridItem>
+					<GridItem layout={Grid} gtc='subgrid' gc='1/-1' bd='b' bdc='divider' p='30'>
+						<dt>2023年</dt>
+						<dd>新規事業としてAIソリューションを開始</dd>
+					</GridItem>
+					<GridItem layout={Grid} gtc='subgrid' gc='1/-1' bd='b' bdc='divider' p='30'>
+						<dt>2024年</dt>
+						<dd>グローバル展開を開始</dd>
+					</GridItem>
+				</Grid>
+				<Frame>
+					<Media src='/img/img-1.jpg' alt='' width='960' height='640' />
+				</Frame>
+			</Grid>
+		</Stack>
+	</Container>
+</DemoPageLayout>
