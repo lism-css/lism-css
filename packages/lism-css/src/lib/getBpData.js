@@ -1,6 +1,6 @@
 import filterEmptyObj from './helper/filterEmptyObj';
 import hasKeys from './helper/hasKeys';
-import { BREAK_POINTS } from '../config';
+import { BREAK_POINTS } from 'lism-css/config';
 
 const BREAK_POINTS_ALL = ['base', ...BREAK_POINTS];
 

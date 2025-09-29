@@ -30,7 +30,6 @@ function deleteDuplicateDir(filePath) {
 const entries = {
 	index: resolve(__dirname, 'src/components/index.js'),
 	// 'components/Box/index': resolve(__dirname, 'src/components/Box/index.js'),
-	config: resolve(__dirname, 'src/config/index.js'),
 	// ↓ scripts.jsのビルドと、setEvent.js もこれでビルドされる.
 	'scripts/tabs': resolve(__dirname, 'src/components/Tabs/script.js'),
 	'scripts/accordion': resolve(__dirname, 'src/components/Accordion/script.js'),

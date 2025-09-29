@@ -1,4 +1,4 @@
-// object がに keys のいずれかをキーとして持っているか。
+// object が keys のいずれかをキーとして持っているか。
 // objcet: objcet
 // keys: array
 export default function hasKeys(object, keys) {
