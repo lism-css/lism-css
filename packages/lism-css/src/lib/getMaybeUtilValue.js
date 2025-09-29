@@ -2,14 +2,16 @@
 export default function getMaybeUtilValue(utils, value) {
 	if (null == utils || typeof utils !== 'object') return '';
 
-	// fullname
-	if (utils?.[value]) {
-		return utils[value];
+	// keyから検索
+	if (value in utils) {
+		return value; //utils[value];
 	}
 
-	// shortname
-	if (Object.values(utils).includes(value)) {
-		return value;
+	// 値に一致するキーを検索
+	for (const [key, val] of Object.entries(utils)) {
+		if (val === value) {
+			return key;
+		}
 	}
 
 	return '';

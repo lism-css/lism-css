@@ -1,0 +1,26 @@
+export default {
+	isContainer: {
+		className: 'is--container',
+		preset: ['s', 'm', 'l'],
+		presetClass: '-container',
+		customVar: '--contentSize',
+		tokenKey: 'size',
+	},
+	isFlow: {
+		className: 'is--flow',
+		preset: ['s', 'm'],
+		presetClass: '-flow',
+		customVar: '--flowM',
+		tokenKey: 'space',
+	},
+	isVertical: 'is--vertical',
+	isSkipFlow: 'is--skipFlow',
+	isLayer: 'is--layer',
+	isIsolate: 'is--isolate',
+	isLinkBox: 'is--linkBox',
+	isOverlayLink: 'is--overlayLink',
+	isWide: 'is--wide',
+	isFullwide: 'is--fullwide',
+	isOverwide: 'is--overwide',
+	hasGutter: 'has--gutter',
+};

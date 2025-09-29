@@ -1,8 +1,10 @@
-import { PROPS } from '../config';
+// import { PROPS } from '../config';
+import { PROPS, STATES } from 'lism-css/config';
 import isPresetValue from './isPresetValue';
 import isTokenValue from './isTokenValue';
 import getMaybeUtilValue from './getMaybeUtilValue';
 import getMaybeCssVar from './getMaybeCssVar';
+import getMaybeTokenValue from './getMaybeTokenValue';
 import getBpData from './getBpData';
 import atts from './helper/atts';
 import isEmptyObj from './helper/isEmptyObj';
@@ -16,48 +18,6 @@ const getTokenKey = (propName) => {
 
 	return propData?.token || '';
 };
-
-const STATE_CLASSES = {
-	isContainer: (value) => {
-		if (value === true) {
-			return { className: 'is--container' };
-		} else if (value) {
-			if (isTokenValue('size', value)) {
-				return { className: `is--container -container:${value}` };
-			} else {
-				return { className: 'is--container', styleKey: '--contentSize', styleValue: getMaybeCssVar(value, 'size') };
-			}
-		}
-		return {};
-	},
-	isFlow: (value) => {
-		if (value === true) {
-			return { className: 'is--flow' };
-		} else if (value) {
-			if (isTokenValue('flow', value)) {
-				return { className: `is--flow -flow:${value}` };
-			} else {
-				return { className: 'is--flow', styleKey: '--flowM', styleValue: getMaybeCssVar(value, 'space') };
-			}
-		}
-		return {};
-	},
-	isVertical: 'is--vertical',
-	isSkipFlow: 'is--skipFlow',
-	isLayer: 'is--layer',
-	isIsolate: 'is--isolate',
-	isLinkBox: 'is--linkBox',
-	isOverlayLink: 'is--overlayLink',
-	isWide: 'is--wide',
-	isFullwide: 'is--fullwide',
-	isOverwide: 'is--overwide',
-	hasGutter: 'has--gutter',
-};
-
-// const PROP_FULL_NAMES = {
-// 	padding: 'p',
-// 	margin: 'm',
-// };
 
 class LismPropsData {
 	// propList = {};
@@ -144,20 +104,29 @@ class LismPropsData {
 	analyzeProps() {
 		Object.keys(this.attrs).forEach((propName) => {
 			// state チェック
-			if (Object.hasOwn(STATE_CLASSES, propName)) {
+			if (Object.hasOwn(STATES, propName)) {
 				const propVal = this.extractProp(propName);
-				const statePropData = STATE_CLASSES[propName];
-				if (typeof statePropData === 'string') {
-					this.lismState.push(STATE_CLASSES[propName]);
+				const statePropData = STATES[propName];
+
+				if (typeof statePropData === 'string' && propVal) {
+					// そのままクラス化
+					this.lismState.push(statePropData);
 				} else {
-					const { className, styleKey, styleValue } = statePropData(propVal);
-					if (className) {
+					// isFlowやisContainerなどの特別な処理が必要なレイアウトステート
+					const { className, preset, presetClass, customVar, tokenKey } = statePropData;
+					if (propVal === true) {
 						this.lismState.push(className);
-					}
-					if (styleKey) {
-						this.addStyle(styleKey, styleValue);
+					} else if (isPresetValue(preset, propVal)) {
+						this.lismState.push(`${className} ${presetClass}:${propVal}`);
+					} else if (propVal) {
+						// カスタム値
+						this.lismState.push(className);
+						this.addStyle(customVar, getMaybeTokenValue(tokenKey, propVal));
 					}
 				}
+			} else if (propName === 'bd') {
+				const propVal = this.extractProp(propName);
+				this.setBdProps(propVal);
 			} else if (Object.hasOwn(PROPS, propName)) {
 				// Lism系のプロパティかどうか
 				// value取得して attrsリストから削除しておく
@@ -166,45 +135,39 @@ class LismPropsData {
 
 				// 解析処理
 				this.analyzeLismProp(propName, propVal);
-			} else {
-				// 特殊系
-				if (propName === 'hov') {
-					const propVal = this.extractProp(propName);
-					this.setHoverProps(propVal);
-				} else if (propName === 'bd') {
-					const propVal = this.extractProp(propName);
-					this.setBdProps(propVal);
-				} else if (propName === 'css') {
-					// cssオブジェクトに入ってきたものはstyleへ流す
-					const cssVales = this.extractProp('css');
-					this.addStyles(cssVales);
-				}
+			} else if (propName === 'hov') {
+				const propVal = this.extractProp(propName);
+				this.setHoverProps(propVal);
+			} else if (propName === 'css') {
+				// cssオブジェクトに入ってきたものはstyleへ流す
+				const cssVales = this.extractProp('css');
+				this.addStyles(cssVales);
 			}
 		});
 	}
 
 	// Lism Prop 解析
-	analyzeLismProp(propName, propVal, propData) {
+	analyzeLismProp(propName, propVal) {
 		if (null == propVal) return;
 
 		// propデータ取得
-		propData = propData || PROPS[propName] || null;
-		if (null === propData) return; // 一応 nullチェックここでも
+		let propConfig = PROPS[propName] || null;
+		if (null === propConfig) return; // 一応 nullチェックここでも
 
 		// config上書き設定があるかどうか
 		if (this._propConfig[propName]) {
-			propData = Object.assign({}, propData, this._propConfig[propName]);
+			propConfig = Object.assign({}, propConfig, this._propConfig[propName]);
 		}
 
 		// ブレイクポイント指定用のオブジェクト{base,sm,md,lg,xl}かどうかをチェック
 		const { base: baseValue, ...bpValues } = getBpData(propVal);
 
 		// base値の処理
-		this.setAttrs(propName, baseValue, propData);
+		this.setAttrs(propName, baseValue, propConfig);
 
 		// 各BP成分の処理
 		Object.keys(bpValues).forEach((bp) => {
-			this.setAttrs(propName, bpValues[bp], propData, bp);
+			this.setAttrs(propName, bpValues[bp], propConfig, bp);
 		});
 	}
 
@@ -249,19 +212,15 @@ class LismPropsData {
 
 	// utilクラスを追加するか、styleにセットするかの分岐処理 @base
 	// 値が null, undefined, '', false の時はスキップ
-	setAttrs(propName, val, propData = {}, bp = '') {
+	setAttrs(propKey, val, propConfig = {}, bpKey = '') {
 		if (null == val || '' === val || false === val) return;
 
-		const name = propName;
+		let styleName = `--${propKey}`;
+		let utilName = `-${propConfig.utilKey || propKey}`;
 
-		let styleName = `--${name}`;
-		let utilName = `-${propData.utilKey || name}`;
-
-		if (bp) {
-			// styleName = `--${bp}-${name}`;
-			// utilName += `@${bp}`;
-			styleName = `--${name}_${bp}`;
-			utilName += `_${bp}`;
+		if (bpKey) {
+			styleName = `--${propKey}_${bpKey}`;
+			utilName += `_${bpKey}`;
 		}
 
 		// "u:"ではじまっている場合、それに続く文字列を取得してユーティリティ化
@@ -271,15 +230,19 @@ class LismPropsData {
 		}
 
 		// ユーティリティクラス化できるかどうかをチェック
-		if (!bp) {
-			if (propData.presets) {
-				if (isPresetValue(propData.presets, val)) {
-					this.addUtil(`${utilName}:${val}`);
-					return;
-				}
+		if (!bpKey) {
+			const { presets, tokenClass, utils } = propConfig;
+			if (presets && isPresetValue(presets, val)) {
+				this.addUtil(`${utilName}:${val}`);
+				return;
 			}
-			if (propData.utils) {
-				const utilVal = getMaybeUtilValue(propData.utils, val);
+			// tokenもそのままクラス化する場合
+			if (tokenClass && isTokenValue(propConfig.token, val)) {
+				this.addUtil(`${utilName}:${val}`);
+				return;
+			}
+			if (utils) {
+				const utilVal = getMaybeUtilValue(utils, val);
 				if (utilVal) {
 					this.addUtil(`${utilName}:${utilVal}`);
 					return;
@@ -287,23 +250,22 @@ class LismPropsData {
 			}
 		}
 
-		// 以下、ユーティリティクラス化できない場合の処理
-		let { style, isVar, token } = propData;
-
 		// .-prop: だけ出力するケース
-		// if ((!style && true === val) || '-' === val) {
 		if (true === val || '-' === val) {
 			this.addUtil(utilName);
 			return;
 		}
 
+		// 以下、ユーティリティクラス化できない場合の処理
+		let { prop, isVar, alwaysVar, token, bp } = propConfig;
+
 		//token: color の時の特殊処理
-		if (token === 'color' && name !== 'keycolor') {
+		if (token === 'color' && propKey !== 'keycolor') {
 			// bgc='col1:(colo2:)mix%'
 
 			// color が ":数値%" で終わるかどうか
 			if (typeof val === 'string' && val.endsWith('%')) {
-				this.setMixColor(name, val);
+				this.setMixColor(propKey, val);
 				return;
 			}
 		}
@@ -313,19 +275,24 @@ class LismPropsData {
 			val = getMaybeCssVar(val, token);
 		}
 
-		// style のみ出力するケース
-		if (isVar) style = `--${name}`;
-		if (!bp && style) {
-			// if (1 === style) style = name; // 1 は prop名をそのままstyleとして使う
-			this.addStyle(style, val);
-			return;
+		// baseスタイルの追加処理
+		if (!bpKey) {
+			if (isVar) {
+				this.addStyle(`--${propKey}`, val);
+				return;
+			} else if (!bp && !alwaysVar) {
+				// インラインでスタイル出力するだけ
+				this.addStyle(prop, val);
+				return;
+			}
 		}
 
-		// .-prop: & --prop で 出力
+		// .-prop & --prop / .-prop_bp & --prop_bpで 出力
 		this.addUtil(utilName);
 		this.addStyle(styleName, val);
 	}
 
+	// mix color
 	setMixColor(name, val) {
 		const mixdata = val.split(':');
 		if (mixdata.length === 3) {

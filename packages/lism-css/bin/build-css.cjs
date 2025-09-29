@@ -28,14 +28,15 @@ const COLOR = {
 // const TARGET_DIR = process.argv[2] || '';
 
 (() => {
-	// パス
-	let src = 'src/scss';
-	let dist = 'dist/css';
+	// パス（絶対パスに変換）
+	let src = path.resolve(__dirname, '../src/scss');
+	let dist = path.resolve(__dirname, '../dist/css');
 	compileSCSS(src, dist);
 
 	// component
-	src = 'src/components';
-	dist = 'dist/components';
+	src = path.resolve(__dirname, '../src/components');
+	dist = path.resolve(__dirname, '../dist/components');
+	console.log('compileSCSS', src, dist);
 	compileSCSS(src, dist);
 })();
 
@@ -45,6 +46,7 @@ async function compileSCSS(src, dist) {
 
 	const ignore = ['**/_*.scss'];
 	files = glob.sync(src + '/**/*.scss', { ignore });
+	// console.log('files', files);
 
 	for (const filePath of files) {
 		console.log(COLOR.green + 'Start sassRender: ' + COLOR.reset + filePath);

@@ -15,14 +15,17 @@
 	"scripts": {
 		"dev": "vite",
 		"build": "vite build && pnpm build:css",
+		"build:config": "node bin/build-config.js",
 		"build:vite": "vite build",
-		"build:css": "node scss-builder.cjs",
+		"build:css": "node bin/build-config.js &&node bin/build-css.cjs",
 		"lint": "pnpm lint:style",
 		"lint:style": "stylelint '**/*.{css,scss}'",
 		"preview": "vite preview"
 	},
 	"files": [
 		"dist",
+		"config",
+		"bin",
 		"packages",
 		"src/scss"
 	],
@@ -32,6 +35,8 @@
 	"exports": {
 		".": "./dist/index.js",
 		"./*": "./dist/*",
+		"./config.js": "./config.js",
+		"./config": "./config/index.js",
 		"./react": {
 			"import": "./dist/index.js",
 			"types": "./packages/types/index.d.ts"
