@@ -183,16 +183,13 @@ export default [
 		link: '/overview/',
 	},
 	{
-		label: 'UI Components',
+		label: 'Template Library ',
 		link: '/lib',
-		// translations: {
-		// 	ja: '概要',
-		// },
 	},
-	{
-		label: 'Templates',
-		link: '/lib?tab=templates',
-	},
+	// {
+	// 	label: 'Templates',
+	// 	link: '/lib?tab=templates',
+	// },
 	// {
 	// 	label: 'Lism Library',
 	// 	link: '/lib',
@@ -321,6 +318,13 @@ export default [
 		// items: [],
 		autogenerate: {
 			directory: 'lib/templates',
+		},
+	},
+	{
+		label: 'Page Layout',
+		// items: [],
+		autogenerate: {
+			directory: 'lib/page-layout',
 		},
 	},
 	{

@@ -18,12 +18,13 @@ const { title = data.title, tagline, image, actions = [] } = data.hero || {};
 		<div class='l--stack -g:20 copy'>
 			<Lism class='z--hero_h1wrap -bgcp:text -w:fit'>
 				<Lism tag='h1' id={PAGE_TITLE_ID} fz={['3rem', null, '4rem']} data-page-title>
-					<span>UI Components & Templates</span>
+					<span>Template Library</span>
 					<br />
-					<Lism tag='span'>with Lism CSS</Lism>
+					<span class='-fz:2xs -pis:10'>with </span>
+					<span>Lism</span>
 				</Lism>
 			</Lism>
-			{tagline && <div class='z--hero_tagline' set:html={tagline} />}
+			{tagline && <div class='z--hero_tagline -mbs:20' set:html={tagline} />}
 		</div>
 		{
 			actions.length > 0 && (

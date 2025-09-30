@@ -12,7 +12,15 @@ export interface NavLinkData {
 	entries?: NavLinkData[];
 }
 
-export default function LibTabs({ componentList, templateList }: { componentList: NavLinkData[]; templateList: NavLinkData[] }) {
+export default function LibTabs({
+	componentList,
+	templateList,
+	layoutList,
+}: {
+	componentList: NavLinkData[];
+	templateList: NavLinkData[];
+	layoutList: NavLinkData[];
+}) {
 	// memo: クエリパラメータからタブのインデックスを決定
 	const [defaultIndex, setDefaultIndex] = React.useState(1);
 
@@ -53,15 +61,15 @@ export default function LibTabs({ componentList, templateList }: { componentList
 					</Columns>
 				</Tabs.Panel>
 			</Tabs.Item>
-			{/* <Tabs.Item>
-				<Tabs.Tab>Sections</Tabs.Tab>
+			<Tabs.Item>
+				<Tabs.Tab>Page Layout</Tabs.Tab>
 				<Tabs.Panel>
-					<h2>Sections</h2>
+					<h2>Page Layout</h2>
 					<Columns cols={[1, 2]}>
-						<UIBlockList entries={sectionList} />
+						<UIBlockList entries={layoutList} />
 					</Columns>
 				</Tabs.Panel>
-			</Tabs.Item> */}
+			</Tabs.Item>
 		</Tabs.Root>
 	);
 }
