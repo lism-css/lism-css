@@ -8,7 +8,7 @@ export function imageExists(imagePath: string): boolean {
 }
 
 export const isLibTabGroup = (entry: any) => {
-	return entry.type === 'group' && (entry.label === 'Templates' || entry.label === 'Components');
+	return entry.type === 'group' && (entry.label === 'Templates' || entry.label === 'Components' || entry.label === 'Page Layout');
 };
 export const isLibSidebar = (entry: any) => {
 	return isLibTabGroup(entry) || entry.label === 'Docs';
