@@ -259,17 +259,6 @@ class LismPropsData {
 		// 以下、ユーティリティクラス化できない場合の処理
 		let { prop, isVar, alwaysVar, token, bp } = propConfig;
 
-		//token: color の時の特殊処理
-		if (token === 'color' && propKey !== 'keycolor') {
-			// bgc='col1:(colo2:)mix%'
-
-			// color が ":数値%" で終わるかどうか
-			if (typeof val === 'string' && val.endsWith('%')) {
-				this.setMixColor(propKey, val);
-				return;
-			}
-		}
-
 		//token を持つ場合の処理
 		if (token) {
 			val = getMaybeCssVar(val, token);
@@ -290,23 +279,6 @@ class LismPropsData {
 		// .-prop & --prop / .-prop_bp & --prop_bpで 出力
 		this.addUtil(utilName);
 		this.addStyle(styleName, val);
-	}
-
-	// mix color
-	setMixColor(name, val) {
-		const mixdata = val.split(':');
-		if (mixdata.length === 3) {
-			const [color1, color2, mixper] = mixdata;
-			this.addStyle(`--_${name}1`, getMaybeCssVar(color1, 'color'));
-			this.addStyle(`--_${name}2`, getMaybeCssVar(color2, 'color'));
-			this.addStyle(`--_mix-${name}`, mixper);
-		} else if (mixdata.length === 2) {
-			const [color1, mixper] = mixdata;
-			this.addStyle(`--_${name}1`, getMaybeCssVar(color1, 'color'));
-			this.addStyle(`--_mix-${name}`, mixper);
-		}
-		// [color1, mixper]
-		this.addUtil(`-${name}:mix`);
 	}
 
 	setPassProps(passVars) {

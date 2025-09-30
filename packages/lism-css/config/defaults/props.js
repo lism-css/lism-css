@@ -64,15 +64,10 @@ export default {
 	},
 	bgc: {
 		prop: 'backgroundColor',
-		presets: ['base', 'base-2', 'text', 'inherit', 'main', 'accent', 'mix'],
+		presets: ['base', 'base-2', 'text', 'inherit', 'main', 'accent'],
 		token: 'color',
 		exUtility: {
 			inherit: { 'background-color': 'inherit' }, // --c ではなく color で出力したい
-			mix: {
-				'--_bgc1': 'currentColor',
-				'--_bgc2': 'transparent',
-				'--bgc': 'color-mix(in srgb, var(--_bgc1) var(--_mix-bgc, 50%), var(--_bgc2))',
-			},
 		},
 		alwaysVar: 1,
 	},
@@ -80,15 +75,15 @@ export default {
 	c: {
 		// Note: bg系（bgcp）より後にくるように。
 		prop: 'color',
-		presets: ['base', 'text', 'text-2', 'main', 'accent', 'inherit', 'mix'],
+		presets: ['base', 'text', 'text-2', 'main', 'accent', 'inherit'],
 		token: 'color',
 		exUtility: {
 			inherit: { color: 'inherit' }, // --c ではなく color で出力したい
-			mix: {
-				'--_c1': 'currentColor',
-				'--_c2': 'transparent',
-				'--c': 'color-mix(in srgb, var(--_c1) var(--_mix-c, 50%), var(--_c2))',
-			},
+			// mix: {
+			// 	'--_c1': 'currentColor',
+			// 	'--_c2': 'transparent',
+			// 	'--c': 'color-mix(in srgb, var(--_c1) var(--_mix-c, 50%), var(--_c2))',
+			// },
 		},
 		alwaysVar: 1,
 	},
@@ -113,13 +108,8 @@ export default {
 	bds: { isVar: 1, utils: { ds: 'dashed', dt: 'dotted', db: 'double' } },
 	bdc: {
 		isVar: 1,
-		presets: ['inherit', 'main', 'accent', 'line', 'mix'],
+		presets: ['inherit', 'main', 'accent', 'line'],
 		token: 'color',
-		// 'mix': (
-		// 	'--_bdc1': 'currentColor',
-		// 	'--_bdc2': 'transparent',
-		// 	'--bdc': 'color-mix(in srgb, var(--_bdc1) var(--_mix-bdc, 50%), var(--_bdc2))',
-		// ),
 	},
 	bdw: { isVar: 1, bp: 1 }, // --bdw のみ
 
