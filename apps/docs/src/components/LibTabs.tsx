@@ -47,7 +47,7 @@ export default function LibTabs({
 				<Tabs.Tab>Components</Tabs.Tab>
 				<Tabs.Panel>
 					<h2>Components</h2>
-					<Columns cols={[2, 3, 4]}>
+					<Columns cols={[2, 3, 4]} style={{ 'content-visibility': 'auto' }}>
 						<UIBlockList entries={componentList} />
 					</Columns>
 				</Tabs.Panel>
@@ -56,7 +56,7 @@ export default function LibTabs({
 				<Tabs.Tab>Templates</Tabs.Tab>
 				<Tabs.Panel>
 					<h2>Templates</h2>
-					<Columns cols={[1, 2]}>
+					<Columns cols={[1, 2]} style={{ 'content-visibility': 'auto' }}>
 						<UIBlockList entries={templateList} />
 					</Columns>
 				</Tabs.Panel>
@@ -65,7 +65,7 @@ export default function LibTabs({
 				<Tabs.Tab>Page Layout</Tabs.Tab>
 				<Tabs.Panel>
 					<h2>Page Layout</h2>
-					<Columns cols={[1, 2]}>
+					<Columns cols={[1, 2]} style={{ 'content-visibility': 'auto' }}>
 						<UIBlockList entries={layoutList} />
 					</Columns>
 				</Tabs.Panel>
@@ -94,7 +94,7 @@ function UIBlockList({ entries }: { entries: NavLinkData[] }) {
 							{entry.thumb && <Media src={entry.thumb} alt={entry.label} />}
 							{entry.iframePath && (
 								<Frame className='u--scalePreview' ar='3/2' data-scalePreview-type='list'>
-									<iframe src={entry.iframePath} width='800' height='600' />
+									<iframe src={entry.iframePath} width='800' height='600' loading='lazy' />
 								</Frame>
 							)}
 						</Frame>
