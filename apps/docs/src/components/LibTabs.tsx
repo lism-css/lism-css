@@ -1,7 +1,7 @@
 import React from 'react';
 // import { useEffect, useState } from 'react';
 import { Tabs, Columns, LinkBox, Frame, Stack, Media, Lism } from 'lism-css/react';
-import type { SidebarEntry } from '@/node_modules/@astrojs/starlight/utils/routing/types';
+// import type { SidebarEntry } from '@/node_modules/@astrojs/starlight/utils/routing/types';
 
 export interface NavLinkData {
 	type: 'link' | 'group';
