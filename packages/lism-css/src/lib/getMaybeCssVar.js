@@ -34,10 +34,16 @@ export function getMaybeSpaceVar(value) {
 }
 
 export function getMaybeColorVar(value) {
-	// ユーティリティクラス化されない文脈で COLOR:数値% で指定されてしまった場合に呼び出される
+	// COLOR:数値% で指定された場合
 	if (typeof value === 'string' && value.endsWith('%')) {
-		const [color, alpha] = value.split(':');
-		return `color-mix(in srgb, ${getMaybeTokenValue('color', color)} ${alpha}, transparent)`;
+		const mixColors = value.split(':');
+		if (mixColors.length === 3) {
+			const [color1, color2, alpha] = mixColors;
+			return `color-mix(in srgb, ${getMaybeTokenValue('color', color1)} ${alpha}, ${getMaybeTokenValue('color', color2)})`;
+		} else if (mixColors.length === 2) {
+			const [color, alpha] = mixColors;
+			return `color-mix(in srgb, ${getMaybeTokenValue('color', color)} ${alpha}, transparent)`;
+		}
 	}
 
 	return getMaybeTokenValue('color', value);
