@@ -15,5 +15,5 @@ export const isLibSidebar = (entry: any) => {
 };
 export const isBothSidebar = (entry: any) => {
 	// return false;
-	return entry.type !== 'group' && (entry.label === 'Templates' || entry.label === 'UI Components');
+	return entry.type !== 'group' && entry.label === 'Template Library';
 };
