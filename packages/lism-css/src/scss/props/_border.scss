@@ -13,14 +13,14 @@
 
 // bdc, bdw などでカラーや太さを上書きできるように border 自体を変数管理
 // :where(.has--bd),
-@include mixin.maybe_where('.-bd,[class*="-bd:"]', 'base') {
+@include mixin.maybe_where('.-bd,[class*="-bd-"]', 'base') {
 	--bds: solid;
 	--bdw: 1px;
 	--bdc: currentColor;
 }
 
 .-bd,
-[class*='-bd:'] {
+[class*='-bd-'] {
 	border-width: var(--bdw) #{mixin.$maybe_important};
 	border-color: var(--bdc) #{mixin.$maybe_important};
 }
@@ -37,36 +37,48 @@
 }
 
 // 方向指定
-// .-bd\:all {
+// .-bd-all {
 // 	border-style: var(--bds) #{mixin.$maybe_important};
 // }
-.-bd\:l {
-	border-left-style: var(--bds) #{mixin.$maybe_important};
-}
-.-bd\:r {
-	border-right-style: var(--bds) #{mixin.$maybe_important};
-}
-.-bd\:t {
-	border-top-style: var(--bds) #{mixin.$maybe_important};
-}
-.-bd\:b {
-	border-bottom-style: var(--bds) #{mixin.$maybe_important};
-}
-.-bd\:x {
+// .-bd-l {
+// 	border-left-style: var(--bds) #{mixin.$maybe_important};
+// }
+// .-bd-r {
+// 	border-right-style: var(--bds) #{mixin.$maybe_important};
+// }
+// .-bd-t {
+// 	border-top-style: var(--bds) #{mixin.$maybe_important};
+// }
+// .-bd-b {
+// 	border-bottom-style: var(--bds) #{mixin.$maybe_important};
+// }
+.-bd-x {
 	border-inline-style: var(--bds) #{mixin.$maybe_important};
 }
-.-bd\:y {
+.-bd-y {
 	border-block-style: var(--bds) #{mixin.$maybe_important};
 }
-.-bd\:is {
+.-bd-s {
 	border-inline-start-style: var(--bds) #{mixin.$maybe_important};
 }
-.-bd\:ie {
+.-bd-e {
 	border-inline-end-style: var(--bds) #{mixin.$maybe_important};
 }
-.-bd\:bs {
+.-bd-t {
+	border-top-style: var(--bds) #{mixin.$maybe_important};
+}
+.-bd-b {
+	border-bottom-style: var(--bds) #{mixin.$maybe_important};
+}
+.-bd-l {
+	border-left-style: var(--bds) #{mixin.$maybe_important};
+}
+.-bd-r {
+	border-left-style: var(--bds) #{mixin.$maybe_important};
+}
+.-bd-bs {
 	border-block-start-style: var(--bds) #{mixin.$maybe_important};
 }
-.-bd\:be {
+.-bd-be {
 	border-block-end-style: var(--bds) #{mixin.$maybe_important};
 }

@@ -95,7 +95,7 @@ import NavMenu from '~/components/ex/NavMenu';
 <Preview>
 	<PreviewTitle>アイコンやバッジを表示する例</PreviewTitle>
 	<PreviewArea p='30'>
-		<NavMenu.Root bd='y'>
+		<NavMenu.Root bd-y>
 			<NavMenu.Item>
 				<NavMenu.Link href='#menu1' g='10' ai='c'>
 					<Icon icon={FolderSimpleIcon} />
@@ -122,7 +122,7 @@ import NavMenu from '~/components/ex/NavMenu';
 import { FolderSimpleIcon } from "@phosphor-icons/react";
 // ↑ 外部のiconコンポーネント
 
-<NavMenu.Root bd='y'>
+<NavMenu.Root bd-y>
 	<NavMenu.Item>
 		<NavMenu.Link href='#menu1' g='10' ai='c'>
 			<Icon icon={FolderSimpleIcon} />
@@ -235,10 +235,10 @@ import { FolderSimpleIcon } from "@phosphor-icons/react";
 			<NavMenu.Item>
 				<NavMenu.Link href='#menu1'>Menu item</NavMenu.Link>
 			</NavMenu.Item>
-			<NavMenu.Item bd='t'>
+			<NavMenu.Item bd-t>
 				<NavMenu.Link href='#menu2'>Menu item</NavMenu.Link>
 			</NavMenu.Item>
-			<NavMenu.Item bd='t'>
+			<NavMenu.Item bd-t>
 				<NavMenu.Link href='#menu3'>Menu item</NavMenu.Link>
 			</NavMenu.Item>
 		</NavMenu.Root>
@@ -249,10 +249,10 @@ import { FolderSimpleIcon } from "@phosphor-icons/react";
 			<NavMenu.Item>
 				<NavMenu.Link href='#menu1'>Menu item</NavMenu.Link>
 			</NavMenu.Item>
-			<NavMenu.Item bd='t'>
+			<NavMenu.Item bd-t>
 				<NavMenu.Link href='#menu2'>Menu item</NavMenu.Link>
 			</NavMenu.Item>
-			<NavMenu.Item bd='t'>
+			<NavMenu.Item bd-t>
 				<NavMenu.Link href='#menu3'>Menu item</NavMenu.Link>
 			</NavMenu.Item>
 		</NavMenu.Root>
@@ -273,19 +273,19 @@ import { FolderSimpleIcon } from "@phosphor-icons/react";
 			<NavMenu.Item>
 				<NavMenu.Link hov='bgc' href='#menu1'>Menu item 1</NavMenu.Link>
 			</NavMenu.Item>
-			<NavMenu.Item bd='t'>
+			<NavMenu.Item bd-t>
 				<NavMenu.Link hov='bgc' href='#menu2'>Menu item 2</NavMenu.Link>
-				<NavMenu.Nest bd='t'>
+				<NavMenu.Nest bd-t>
 					<NavMenu.Item>
 						<NavMenu.Link hov='bgc' href='#child-menu1'>Nested item</NavMenu.Link>
 					</NavMenu.Item>
-					<NavMenu.Item bd='t'>
+					<NavMenu.Item bd-t>
 						<NavMenu.Link hov='bgc' href='#child-menu3'>Nested item</NavMenu.Link>
-						<NavMenu.Nest bd='t'>
+						<NavMenu.Nest bd-t>
 							<NavMenu.Item>
 								<NavMenu.Link hov='bgc' href='#child-menu4'>Nested level 2 item</NavMenu.Link>
 							</NavMenu.Item>
-							<NavMenu.Item bd='t'>
+							<NavMenu.Item bd-t>
 								<NavMenu.Link hov='bgc' href='#child-menu5'>Nested level 2 item</NavMenu.Link>
 							</NavMenu.Item>
 						</NavMenu.Nest>
@@ -300,19 +300,19 @@ import { FolderSimpleIcon } from "@phosphor-icons/react";
 			<NavMenu.Item>
 				<NavMenu.Link hov='bgc' href='#menu1'>Menu item 1</NavMenu.Link>
 			</NavMenu.Item>
-			<NavMenu.Item bd='t'>
+			<NavMenu.Item bd-t>
 				<NavMenu.Link hov='bgc' href='#menu2'>Menu item 2</NavMenu.Link>
-				<NavMenu.Nest bd='t'>
+				<NavMenu.Nest bd-t>
 					<NavMenu.Item>
 						<NavMenu.Link hov='bgc' href='#child-menu1'>Nested item</NavMenu.Link>
 					</NavMenu.Item>
-					<NavMenu.Item bd='t'>
+					<NavMenu.Item bd-t>
 						<NavMenu.Link hov='bgc' href='#child-menu3'>Nested item</NavMenu.Link>
-						<NavMenu.Nest bd='t'>
+						<NavMenu.Nest bd-t>
 							<NavMenu.Item>
 								<NavMenu.Link hov='bgc' href='#child-menu4'>Nested level 2 item</NavMenu.Link>
 							</NavMenu.Item>
-							<NavMenu.Item bd='t'>
+							<NavMenu.Item bd-t>
 								<NavMenu.Link hov='bgc' href='#child-menu5'>Nested level 2 item</NavMenu.Link>
 							</NavMenu.Item>
 						</NavMenu.Nest>
@@ -333,7 +333,7 @@ import { FolderSimpleIcon } from "@phosphor-icons/react";
 <Preview>
 	<PreviewTitle>例</PreviewTitle>
 	<PreviewArea p='30'>
-		<NavMenu.Root bd='y' hovBgc='base-2'>
+		<NavMenu.Root bd-y hovBgc='base-2'>
 			<NavMenu.Item>
 				<NavMenu.Link hov='bgc' href='#menu1'>Menu item</NavMenu.Link>
 			</NavMenu.Item>
@@ -359,7 +359,7 @@ import { FolderSimpleIcon } from "@phosphor-icons/react";
 	</PreviewArea>
 	<PreviewCode>
 		```jsx "Accordion.Root" "NavMenu.Nest" "data-lism-get='p'"
-		<NavMenu.Root bd='y' hovBgc='base-2'>
+		<NavMenu.Root bd-y hovBgc='base-2'>
 			<NavMenu.Item>
 				<NavMenu.Link hov='bgc' href='#menu1'>Menu item</NavMenu.Link>
 			</NavMenu.Item>
@@ -390,7 +390,7 @@ import { FolderSimpleIcon } from "@phosphor-icons/react";
 <Preview>
 	<PreviewTitle>親メニューのリンクも残してアコーディオンで展開</PreviewTitle>
 	<PreviewArea p='30'>
-		<NavMenu.Root bd='y'>
+		<NavMenu.Root bd-y>
 			<NavMenu.Item>
 				<NavMenu.Link href='#menu1'>Menu item</NavMenu.Link>
 			</NavMenu.Item>
@@ -418,7 +418,7 @@ import { FolderSimpleIcon } from "@phosphor-icons/react";
 	</PreviewArea>
 	<PreviewCode>
 		```jsx "Accordion.Root" "NavMenu.Nest" "data-lism-get='p'"
-		<NavMenu.Root bd='y'>
+		<NavMenu.Root bd-y>
 			<NavMenu.Item>
 				<NavMenu.Link href='#menu1'>Menu item</NavMenu.Link>
 			</NavMenu.Item>

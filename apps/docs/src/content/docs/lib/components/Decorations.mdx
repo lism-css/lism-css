@@ -27,7 +27,7 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage, Callout
 		<Grid ta='l'>
 			<Decorator
 				size='1.25em'
-				bd='left'
+				bd-l
 				rotate='45deg'
 				mr='auto'
 				style={{'transformOrigin':'left bottom'}}
@@ -37,7 +37,7 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage, Callout
 			</Box>
 			<Decorator
 				size='1.25em'
-				bd='left'
+				bd-l
 				rotate='-45deg'
 				mr='auto'
 				style={{'transformOrigin':'left top'}}
@@ -46,7 +46,7 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage, Callout
 		<Grid as={Grid}>
 			<Decorator
 				size='1.25em'
-				bd='right'
+				bd-r
 				rotate='-45deg'
 				ml='auto'
 				style={{'transformOrigin':'right bottom'}}
@@ -56,7 +56,7 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage, Callout
 			</Box>
 			<Decorator
 				size='1.25em'
-				bd='right'
+				bd-r
 				rotate='45deg'
 				ml='auto'
 				style={{'transformOrigin':'right top'}}
@@ -67,7 +67,7 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage, Callout
 			<Decorator
 				fxsh='0'
 				size='1.25em'
-				bd='top'
+				bd-t
 				rotate='-45deg'
 				style={{'transformOrigin':'right top'}}
 			/>
@@ -78,7 +78,7 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage, Callout
 			<Decorator
 				fxsh='0'
 				size='1.25em'
-				bd='top'
+				bd-t
 				rotate='45deg'
 				style={{'transformOrigin':'left top'}}
 			/>
@@ -93,7 +93,7 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage, Callout
 			<Decorator
 				fxsh='0'
 				size='1.25em'
-				bd='bottom'
+				bd-b
 				rotate='45deg'
 				style={{'transformOrigin':'right bottom'}}
 			/>
@@ -103,7 +103,7 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage, Callout
 			<Decorator
 				fxsh='0'
 				size='1.25em'
-				bd='bottom'
+				bd-b
 				rotate='-45deg'
 				style={{'transformOrigin':'left bottom'}}
 			/>
@@ -114,7 +114,7 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage, Callout
 		<Grid ta='l'>
 			<Decorator
 				size='1.25em'
-				bd='left'
+				bd-l
 				rotate='45deg'
 				mr='auto'
 				style={{'transformOrigin':'left bottom'}}
@@ -124,7 +124,7 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage, Callout
 			</Box>
 			<Decorator
 				size='1.25em'
-				bd='left'
+				bd-l
 				rotate='-45deg'
 				mr='auto'
 				style={{'transformOrigin':'left top'}}
@@ -133,7 +133,7 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage, Callout
 		<Grid as={Grid}>
 			<Decorator
 				size='1.25em'
-				bd='right'
+				bd-r
 				rotate='-45deg'
 				ml='auto'
 				style={{'transformOrigin':'right bottom'}}
@@ -143,7 +143,7 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage, Callout
 			</Box>
 			<Decorator
 				size='1.25em'
-				bd='right'
+				bd-r
 				rotate='45deg'
 				ml='auto'
 				style={{'transformOrigin':'right top'}}
@@ -154,7 +154,7 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage, Callout
 			<Decorator
 				fxsh='0'
 				size='1.25em'
-				bd='top'
+				bd-t
 				rotate='-45deg'
 				style={{'transformOrigin':'right top'}}
 			/>
@@ -164,7 +164,7 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage, Callout
 			<Decorator
 				fxsh='0'
 				size='1.25em'
-				bd='top'
+				bd-t
 				rotate='45deg'
 				style={{'transformOrigin':'left top'}}
 			/>
@@ -179,7 +179,7 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage, Callout
 			<Decorator
 				fxsh='0'
 				size='1.25em'
-				bd='bottom'
+				bd-b
 				rotate='45deg'
 				style={{'transformOrigin':'right bottom'}}
 			/>
@@ -190,7 +190,7 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage, Callout
 			<Decorator
 				fxsh='0'
 				size='1.25em'
-				bd='bottom'
+				bd-b
 				rotate='-45deg'
 				style={{'transformOrigin':'left bottom'}}
 			/>
@@ -208,31 +208,26 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage, Callout
 	<PreviewArea resize p='30'>
 		<Box p='40' pos='r'>
 			<Dummy />
-			<Decorator size='1.25em' pos='a' t='0' l='0' bd='l,t' />
-			<Decorator size='1.25em' pos='a' r='0' b='0' bd='r,b' />
+			<Decorator size='1.25em' pos='a' t='0' l='0' bd-l bd-t />
+			<Decorator size='1.25em' pos='a' r='0' b='0' bd-r bd-b />
 		</Box>
-		{/* <Box p='40' pos='r'>
-			<Dummy />
-			<Decorator size='1.25em' pos='a' t='0' r='0' bd='r,t' />
-			<Decorator size='1.25em' pos='a' l='0' b='0' bd='l,b' />
-		</Box> */}
 		<Box p='40' pos='r'>
 			<Dummy />
-			<Decorator pos='a' t='0' l='0' w='1em' h='100%' bd='l,y' />
-			<Decorator pos='a' t='0' r='0' w='1em' h='100%' bd='r,y' />
+			<Decorator pos='a' t='0' l='0' w='1em' h='100%' bd-l bd-y />
+			<Decorator pos='a' t='0' r='0' w='1em' h='100%' bd-r bd-y />
 		</Box>
 	</PreviewArea>
 	<PreviewCode>
 	```jsx
 	<Box p='40' pos='r'>
 		<Dummy />
-		<Decorator size='1.25em' pos='a' t='0' l='0' bd='l,t' />
-		<Decorator size='1.25em' pos='a' r='0' b='0' bd='r,b' />
+		<Decorator size='1.25em' pos='a' t='0' l='0' bd-l bd-t />
+		<Decorator size='1.25em' pos='a' r='0' b='0' bd-r bd-b />
 	</Box>
 	<Box p='40' pos='r'>
 		<Dummy />
-		<Decorator pos='a' t='0' l='0' w='1em' h='100%' bd='l,y' />
-		<Decorator pos='a' t='0' r='0' w='1em' h='100%' bd='r,y' />
+		<Decorator pos='a' t='0' l='0' w='1em' h='100%' bd-l bd-y />
+		<Decorator pos='a' t='0' r='0' w='1em' h='100%' bd-r bd-y />
 	</Box>
 	```
 	</PreviewCode>
@@ -244,7 +239,7 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage, Callout
 <Preview>
 	<PreviewTitle>Sticky</PreviewTitle>
 	<PreviewArea resize p='30'>
-		<Grid gd='"content ." / auto 1fr'>
+		<Grid gt='"content ." / auto 1fr'>
 			<Box
 				ga='content'
 				minW='8em'
@@ -252,7 +247,7 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage, Callout
 				bgc='base-2'
 				p='30'
 				w='fit-content'
-				bd='r'
+				bd-e
 				bdw='.5em'
 			>
 				<Dummy />
@@ -272,7 +267,7 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage, Callout
 	</PreviewArea>
 	<PreviewCode>
 		```jsx
-		<Grid gd='"content ." / auto 1fr'>
+		<Grid gt='"content ." / auto 1fr'>
 			<Box
 				ga='content'
 				minW='8em'
@@ -280,7 +275,7 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage, Callout
 				bgc='base-2'
 				p='30'
 				w='fit-content'
-				bd='r'
+				bd-e
 				bdw='.5em'
 			>
 				<Dummy />
