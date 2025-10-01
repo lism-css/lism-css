@@ -29,6 +29,20 @@ export function getMaybeSpaceVar(value) {
 		return `var(--s${value})`;
 	}
 
+	//
+	// + があれば calcで足す?
+	// ...
+
+	// スペース区切りで一括指定されている場合
+	if (typeof value === 'string' && value.includes(' ')) {
+		// calc(), var() 等 があれば対象外
+		if (!value.includes('calc(') && !value.includes('var(') && !value.includes(',')) {
+			// spaceを' 'で配列化して、数値なら変数化する
+			const spaceArr = value.split(' ');
+			return spaceArr.map((_s) => getMaybeSpaceVar(_s)).join(' ');
+		}
+	}
+
 	// それ以外はそのまま返す
 	return value;
 }
