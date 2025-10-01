@@ -43,16 +43,16 @@ div.l--decorator[aria-hidden="true"]
 	<PreviewArea p='30'>
 		<Box p='40' pos='r'>
 			<Dummy />
-			<Decorator size='1.25em' pos='a' t='0' l='0' bd='l,t' />
-			<Decorator size='1.25em' pos='a' r='0' b='0' bd='r,b' />
+			<Decorator size='1.25em' pos='a' t='0' l='0' bd-s bd-bs />
+			<Decorator size='1.25em' pos='a' r='0' b='0' bd-e bd-be />
 		</Box>
 	</PreviewArea>
 	<PreviewCode slot='tab' label='JSX'>
 		```jsx
 		<Box p='40' pos='r'>
 			<Dummy />
-			<Decorator size='1.25em' pos='a' t='0' l='0' bd='l,t' />
-			<Decorator size='1.25em' pos='a' r='0' b='0' bd='r,b' />
+			<Decorator size='1.25em' pos='a' t='0' l='0' bd-s bd-bs />
+			<Decorator size='1.25em' pos='a' r='0' b='0' bd-e bd-be />
 		</Box>
 		```
 	</PreviewCode>
@@ -60,8 +60,8 @@ div.l--decorator[aria-hidden="true"]
 		```jsx
 		<div class='l--box -p:40 -pos:r'>
 			<p>Lorem ipsum dolor sit, amet consectetur adipisicing elit, sed do eiusmod tempor. Non facere laudantium ex eos doloribus aut dolore nisi.</p>
-			<div class='l--decorator -pos:a -t:0 -l:0 -bd:l -bd:t -ar:1/1 -w' style='--w:1.25em' aria-hidden='true'></div>
-			<div class='l--decorator -pos:a -r:0 -b:0 -bd:r -bd:b -ar:1/1 -w' style='--w:1.25em' aria-hidden='true'></div>
+			<div class='l--decorator -pos:a -t:0 -l:0 -bd-s -bd-bs -ar:1/1 -w' style='--w:1.25em' aria-hidden='true'></div>
+			<div class='l--decorator -pos:a -r:0 -b:0 -bd-e -bd-be -ar:1/1 -w' style='--w:1.25em' aria-hidden='true'></div>
 		</div>
 		```
 	</PreviewCode>
