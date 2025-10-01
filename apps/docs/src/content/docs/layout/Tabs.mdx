@@ -201,7 +201,7 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage, EmbedCo
 	_listProps.fxd = [null, 'column'];
 }*/}
 
-`<Tabs.Root>`(`.d--tabs`)に`grid:'list panel' auto / auto 1fr;` を指定すると、タブリストとコンテンツが横並びになります。
+`<Tabs.Root>`(`.d--tabs`)に`grid-template:'list panel' auto / auto 1fr;` を指定すると、タブリストとコンテンツが横並びになります。
 
 それと同時に、タブリスト(`.d--tabs_list`)のボタンを縦並び（`flex-direction:column;`）に変更すると、以下のようなレイアウトが実現できます。
 
@@ -210,7 +210,7 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage, EmbedCo
 	<PreviewArea p={30} resize>
 		<Tabs.Root
 			g='20'
-			gd={[null, '"list panel" auto / auto 1fr']}
+			gt={[null, '"list panel" auto / auto 1fr']}
 			listProps={{fxd: [null, 'column'], bd: '-', bdw:['0 0 1px 0','0 1px 0 0']}}
 		>
 			<Tabs.Item>
@@ -231,7 +231,7 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage, EmbedCo
 		```jsx
 		<Tabs.Root
 			g='20'
-			gd={[null, '"list panel" auto / auto 1fr']}
+			gt={[null, '"list panel" auto / auto 1fr']}
 			listProps={{fxd: [null, 'column'], bd: '-', bdw:['0 0 1px 0','0 1px 0 0']}}
 		>
 			<Tabs.Item>
