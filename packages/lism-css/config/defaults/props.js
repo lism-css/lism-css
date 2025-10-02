@@ -17,14 +17,10 @@
 export default {
 	f: { prop: 'font', presets: ['inherit'] },
 	fz: { prop: 'fontSize', token: 'fz', tokenClass: 1, bp: 1, alwaysVar: 1 },
-	lh: { prop: 'lineHeight', presets: ['1'], token: 'lh', tokenClass: 1, bp: 1, alwaysVar: 1 },
-	fw: {
-		prop: 'fontWeight',
-		token: 'fw',
-		tokenClass: 1,
-	},
+	fw: { prop: 'fontWeight', token: 'fw', tokenClass: 1 },
 	ff: { prop: 'fontFamily', token: 'ff', tokenClass: 1 },
-	fs: { prop: 'fontStyle', utils: { i: 'italic' } },
+	fs: { prop: 'fontStyle', presets: ['italic'] },
+	lh: { prop: 'lineHeight', presets: ['1'], token: 'lh', tokenClass: 1, bp: 1, alwaysVar: 1 },
 	lts: { prop: 'letterSpacing', token: 'lts', tokenClass: 1 },
 	ta: { prop: 'textAlign', utils: { c: 'center', l: 'left', r: 'right' } },
 	td: { prop: 'textDecoration', utils: { u: 'underline', n: 'none' } },
