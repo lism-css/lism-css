@@ -17,14 +17,14 @@ import { FolderSimple } from "@phosphor-icons/react";
 	<PreviewTitle>実装例-1: with slash</PreviewTitle>
 	<PreviewArea p='30'>
 		<Flex variant='cluster' tag='ol' g='20'>
-			<Lism tag='li' d='inline-flex' ai='c' g='inherit'>
+			<Lism tag='li' d='if' ai='c' g='inherit'>
 				<Link href='#menu-1' c='inherit' >Menu item 1</Link>
 			</Lism>
-			<Lism tag='li' d='inline-flex' ai='c' g='inherit'>
+			<Lism tag='li' d='if' ai='c' g='inherit'>
 				<Decorator op='mid'>/</Decorator>
 				<Link href='#menu-2' c='inherit' >Menu item 2</Link>
 			</Lism>
-			<Lism tag='li' d='inline-flex' ai='c' g='inherit'>
+			<Lism tag='li' d='if' ai='c' g='inherit'>
 				<Decorator op='mid'>/</Decorator>
 				<span>Current page titile...</span>
 			</Lism>
@@ -33,14 +33,14 @@ import { FolderSimple } from "@phosphor-icons/react";
 	<PreviewCode slot='tab' label='JSX'>
 		```jsx
 		<Flex variant='cluster' tag='ol' g='20'>
-			<Lism tag='li' d='inline-flex' ai='c' g='inherit'>
+			<Lism tag='li' d='if' ai='c' g='inherit'>
 				<Link href='#menu-1' c='inherit' >Menu item 1</Link>
 			</Lism>
-			<Lism tag='li' d='inline-flex' ai='c' g='inherit'>
+			<Lism tag='li' d='if' ai='c' g='inherit'>
 				<Decorator op='mid'>/</Decorator>
 				<Link href='#menu-2' c='inherit' >Menu item 2</Link>
 			</Lism>
-			<Lism tag='li' d='inline-flex' ai='c' g='inherit'>
+			<Lism tag='li' d='if' ai='c' g='inherit'>
 				<Decorator op='mid'>/</Decorator>
 				<span>Current page titile...</span>
 			</Lism>
@@ -50,14 +50,14 @@ import { FolderSimple } from "@phosphor-icons/react";
 	<PreviewCode slot='tab' label='HTML'>
 		```html
 		<ol class='l--flex l--flex-cluster -g:20'>
-			<li class='-d:inline-flex -ai:c -g:inherit'>
+			<li class='-d:if -ai:c -g:inherit'>
 				<a class='-c:inherit' href='#menu-1'> Menu item 1 </a>
 			</li>
-			<li class='-d:inline-flex -ai:c -g:inherit'>
+			<li class='-d:if -ai:c -g:inherit'>
 				<div class='l--decorator -op:mid' aria-hidden='true'>/</div>
 				<a class='-c:inherit' href='#menu-2'> Menu item 2 </a>
 			</li>
-			<li class='-d:inline-flex -ai:c -g:inherit'>
+			<li class='-d:if -ai:c -g:inherit'>
 				<div class='l--decorator -op:mid' aria-hidden='true'>/</div>
 				<span>Current page titile…</span>
 			</li>
@@ -70,14 +70,14 @@ import { FolderSimple } from "@phosphor-icons/react";
 	<PreviewTitle>例-2: with Icon</PreviewTitle>
 	<PreviewArea p='30'>
 		<Flex variant='cluster' tag='ol' g='20'>
-			<Lism tag='li' d='inline-flex' ai='c' g='inherit'>
+			<Lism tag='li' d='if' ai='c' g='inherit'>
 				<a class='-c:inherit -td:n' href='#menu-1'>Menu item 1</a>
 			</Lism>
-			<Lism tag='li' d='inline-flex' ai='c' g='inherit'>
+			<Lism tag='li' d='if' ai='c' g='inherit'>
 				<Icon icon='caret-right' c='text-2' />
 				<a class='-c:inherit -td:n' href='#menu-2'>Menu item 2</a>
 			</Lism>
-			<Lism tag='li' d='inline-flex' ai='c' g='inherit'>
+			<Lism tag='li' d='if' ai='c' g='inherit'>
 				<Icon icon='caret-right' c='text-2' />
 				<span class='-c:text-2'>Current page titile...</span>
 			</Lism>
@@ -86,14 +86,14 @@ import { FolderSimple } from "@phosphor-icons/react";
 	<PreviewCode slot='tab' label='JSX'>
 		```jsx
 		<Flex variant='cluster' tag='ol' g='20'>
-			<Lism tag='li' d='inline-flex' ai='c' g='inherit'>
+			<Lism tag='li' d='if' ai='c' g='inherit'>
 				<a class='-c:inherit -td:n' href='#menu-1'>Menu item 1</a>
 			</Lism>
-			<Lism tag='li' d='inline-flex' ai='c' g='inherit'>
+			<Lism tag='li' d='if' ai='c' g='inherit'>
 				<Icon icon='caret-right' c='text-2' />
 				<a class='-c:inherit -td:n' href='#menu-2'>Menu item 2</a>
 			</Lism>
-			<Lism tag='li' d='inline-flex' ai='c' g='inherit'>
+			<Lism tag='li' d='if' ai='c' g='inherit'>
 				<Icon icon='caret-right' c='text-2' />
 				<span class='-c:text-2'>Current page titile...</span>
 			</Lism>
@@ -103,16 +103,16 @@ import { FolderSimple } from "@phosphor-icons/react";
 	<PreviewCode slot='tab' label='HTML'>
 		```html
 		<ol class='l--flex l--flex-cluster -g:20'>
-			<li class='-d:inline-flex -ai:c -g:inherit'>
+			<li class='-d:if -ai:c -g:inherit'>
 				<a class='-c:inherit -td:n' href='#menu-1'>Menu item 1</a>
 			</li>
-			<li class='-d:inline-flex -ai:c -g:inherit'>
+			<li class='-d:if -ai:c -g:inherit'>
 				<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 256 256' width='1em' height='1em' fill='currentColor' focusable='false' class='l--icon -c:text-2' aria-hidden='true'>
 					<path d='M184.49,136.49l-80,80a12,12,0,0,1-17-17L159,128,87.51,56.49a12,12,0,1,1,17-17l80,80A12,12,0,0,1,184.49,136.49Z'></path>
 				</svg>
 				<a class='-c:inherit -td:n' href='#menu-2'>Menu item 2</a>
 			</li>
-			<li class='-d:inline-flex -ai:c -g:inherit'>
+			<li class='-d:if -ai:c -g:inherit'>
 				<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 256 256' width='1em' height='1em' fill='currentColor' focusable='false' class='l--icon -c:text-2' aria-hidden='true'>
 					<path d='M184.49,136.49l-80,80a12,12,0,0,1-17-17L159,128,87.51,56.49a12,12,0,1,1,17-17l80,80A12,12,0,0,1,184.49,136.49Z'></path>
 				</svg>

@@ -3,7 +3,7 @@ title: 'Grid'
 description: ...
 ---
 
-import { Grid, Lism, Box, Center, Decorator, Frame, Media, Link, Dummy } from 'lism-css/astro';
+import { Grid, Lism, Box, Center, Decorator, Frame, Media, Dummy } from 'lism-css/astro';
 import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage, PropBadge, Callout } from "~/components";
 
 
@@ -182,64 +182,52 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage, PropBad
 	<PreviewTitle>新着記事一覧リストの作成例</PreviewTitle>
 	<PreviewArea p='30' resize>
 		<Grid gtc={['auto','auto 1fr']} bd-b>
-			<Grid gtc='subgrid' gc='1/-1' g='20' ai='center' bd-t py='30'>
-				<Grid gtc={['auto auto', '1fr 1fr']} g='20' jc='s' ai='c' aslf='start'>
+			<Grid gtc='subgrid' gc='1/-1' g='20' ai='start' bd-t py='30'>
+				<Grid gtc={['auto auto', '1fr 1fr']} g='20' jc='s' ai='c'>
 					<Lism fz='xs'>2024.05.31</Lism>
-					<Lism d='inline-flex' jc='c' bd fz='xs' lh='1' bgc='text' c='base' p='10' bdrs='5'>NEWS</Lism>
+					<Lism d='if' jc='c' bd fz='xs' lh='1' bgc='text' c='base' p='10' bdrs='5'>NEWS</Lism>
 				</Grid>
-				<Link href='####' hov='op' c='inherit' td='n' className='u--trimHL' lh='s'>
-					<Dummy lang='ja' tag='span' />
-				</Link>
+				<Dummy lang='ja' tag='a' href='####' hov='op' c='inherit' td='n' className='u--trimHL' lh='s' />
 			</Grid>
-			<Grid gtc='subgrid' gc='1/-1' g='20' ai='center' bd-t py='30'>
-				<Grid gtc={['auto auto', '1fr 1fr']} g='20' jc='s' ai='c' aslf='start'>
+			<Grid gtc='subgrid' gc='1/-1' g='20' ai='start' bd-t py='30'>
+				<Grid gtc={['auto auto', '1fr 1fr']} g='20' jc='s' ai='c'>
 					<Lism fz='xs'>2024.05.29</Lism>
-					<Lism d='inline-flex' jc='c' bd fz='xs' lh='1' bgc='text' c='base' p='10' bdrs='5'>TIPS</Lism>
+					<Lism d='if' jc='c' bd fz='xs' lh='1' bgc='text' c='base' p='10' bdrs='5'>TIPS</Lism>
 				</Grid>
-				<Link href='####' hov='op' c='inherit' td='n' className='u--trimHL' lh='s'>
-					<Dummy lang='ja' offset='1' tag='span' />
-				</Link>
+				<Dummy lang='ja' offset='1' tag='a' href='####' hov='op' c='inherit' td='n' length='s' className='u--trimHL' lh='s' />
 			</Grid>
-			<Grid gtc='subgrid' gc='1/-1' g='20' ai='center' bd-t py='30'>
-				<Grid gtc={['auto auto', '1fr 1fr']} g='20' jc='s' ai='c' aslf='start'>
+			<Grid gtc='subgrid' gc='1/-1' g='20' ai='start' bd-t py='30'>
+				<Grid gtc={['auto auto', '1fr 1fr']} g='20' jc='s' ai='c'>
 					<Lism fz='xs'>2024.05.18</Lism>
-					<Lism d='inline-flex' jc='c' bd fz='xs' lh='1' bgc='text' c='base' p='10' bdrs='5'>COLUMN</Lism>
+					<Lism d='if' jc='c' bd fz='xs' lh='1' bgc='text' c='base' p='10' bdrs='5'>COLUMN</Lism>
 				</Grid>
-				<Link href='####' hov='op' c='inherit' td='n' className='u--trimHL' lh='s'>
-					<Dummy lang='ja' offset='2' tag='span' />
-				</Link>
+				<Dummy lang='ja' offset='2' tag='a' href='####' hov='op' c='inherit' td='n' className='u--trimHL' lh='s' />
 			</Grid>
 		</Grid>
 	</PreviewArea>
 	<PreviewCode slot='tab' label='JSX'>
 		```jsx
 		<Grid gtc={['auto','auto 1fr']} bd-b>
-			<Grid gtc='subgrid' gc='1/-1' g='20' ai='center' bd-t py='30'>
-				<Grid gtc={['auto auto', '1fr 1fr']} g='20' jc='s' ai='c' aslf='start'>
+			<Grid gtc='subgrid' gc='1/-1' g='20' ai='start' bd-t py='30'>
+				<Grid gtc={['auto auto', '1fr 1fr']} g='20' jc='s' ai='c'>
 					<Lism fz='xs'>2024.05.31</Lism>
-					<Lism d='inline-flex' jc='c' bd fz='xs' lh='1' bgc='text' c='base' p='10' bdrs='5'>NEWS</Lism>
+					<Lism d='if' jc='c' bd fz='xs' lh='1' bgc='text' c='base' p='10' bdrs='5'>NEWS</Lism>
 				</Grid>
-				<Link href='####' hov='op' c='inherit' td='n' className='u--trimHL' lh='s'>
-					<Dummy lang='ja' tag='span' />
-				</Link>
+				<Dummy lang='ja' tag='a' href='####' hov='op' c='inherit' td='n' className='u--trimHL' lh='s' />
 			</Grid>
-			<Grid gtc='subgrid' gc='1/-1' g='20' ai='center' bd-t py='30'>
-				<Grid gtc={['auto auto', '1fr 1fr']} g='20' jc='s' ai='c' aslf='start'>
+			<Grid gtc='subgrid' gc='1/-1' g='20' ai='start' bd-t py='30'>
+				<Grid gtc={['auto auto', '1fr 1fr']} g='20' jc='s' ai='c'>
 					<Lism fz='xs'>2024.05.29</Lism>
-					<Lism d='inline-flex' jc='c' bd fz='xs' lh='1' bgc='text' c='base' p='10' bdrs='5'>TIPS</Lism>
+					<Lism d='if' jc='c' bd fz='xs' lh='1' bgc='text' c='base' p='10' bdrs='5'>TIPS</Lism>
 				</Grid>
-				<Link href='####' hov='op' c='inherit' td='n' className='u--trimHL' lh='s'>
-					<Dummy lang='ja' offset='1' tag='span' />
-				</Link>
+				<Dummy lang='ja' offset='1' tag='a' href='####' hov='op' c='inherit' td='n' length='s' className='u--trimHL' lh='s' />
 			</Grid>
-			<Grid gtc='subgrid' gc='1/-1' g='20' ai='center' bd-t py='30'>
-				<Grid gtc={['auto auto', '1fr 1fr']} g='20' jc='s' ai='c' aslf='start'>
+			<Grid gtc='subgrid' gc='1/-1' g='20' ai='start' bd-t py='30'>
+				<Grid gtc={['auto auto', '1fr 1fr']} g='20' jc='s' ai='c'>
 					<Lism fz='xs'>2024.05.18</Lism>
-					<Lism d='inline-flex' jc='c' bd fz='xs' lh='1' bgc='text' c='base' p='10' bdrs='5'>COLUMN</Lism>
+					<Lism d='if' jc='c' bd fz='xs' lh='1' bgc='text' c='base' p='10' bdrs='5'>COLUMN</Lism>
 				</Grid>
-				<Link href='####' hov='op' c='inherit' td='n' className='u--trimHL' lh='s'>
-					<Dummy lang='ja' offset='2' tag='span' />
-				</Link>
+				<Dummy lang='ja' offset='2' tag='a' href='####' hov='op' c='inherit' td='n' className='u--trimHL' lh='s' />
 			</Grid>
 		</Grid>
 		```
