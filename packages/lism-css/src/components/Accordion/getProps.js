@@ -10,7 +10,7 @@ export function getAccIconProps({ isTrigger, ...props }) {
 	const defaultProps = {
 		lismClass: 'd--accordion_icon',
 		tag: 'span',
-		d: 'inline-grid',
+		d: 'inline-flex',
 	};
 	// isTrigger なら、buttun にする
 	if (isTrigger) {
