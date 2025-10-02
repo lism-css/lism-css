@@ -6,6 +6,7 @@
  *
  * ↓コンポーネント処理で使用される
  * tokenClass: 1 → 対応するトークン値がそのまま全てユーティリティクラス化されるもの。
+ * shorthands: → コンポーネント側で短く書くための設定
  *
  * ↓SCSS出力で使用される
  * alwaysVar: 1 → .-prop,[class*=-prop:] {propaty:var(--prop)} で、ユーティリティクラス時も常に変数管理となる。
@@ -151,12 +152,10 @@ export default {
 	// position
 	pos: {
 		prop: 'position',
-		utils: {
+		presets: ['relative', 'absolute', 'static', 'fixed', 'sticky'],
+		shorthands: {
 			r: 'relative',
 			a: 'absolute',
-			s: 'static',
-			f: 'fixed',
-			sti: 'sticky',
 		},
 	},
 	z: { prop: 'zIndex', presets: ['-1', '0', '1', '2', '99'] },

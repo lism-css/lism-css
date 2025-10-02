@@ -2,7 +2,7 @@
 import { PROPS, STATES } from 'lism-css/config';
 import isPresetValue from './isPresetValue';
 import isTokenValue from './isTokenValue';
-import getMaybeUtilValue from './getMaybeUtilValue';
+import getUtilKey from './getUtilKey';
 import getMaybeCssVar from './getMaybeCssVar';
 import getMaybeTokenValue from './getMaybeTokenValue';
 import getBpData from './getBpData';
@@ -124,9 +124,6 @@ class LismPropsData {
 						this.addStyle(customVar, getMaybeTokenValue(tokenKey, propVal));
 					}
 				}
-			} else if (propName === 'bd') {
-				const propVal = this.extractProp(propName);
-				this.setBdProps(propVal);
 			} else if (Object.hasOwn(PROPS, propName)) {
 				// Lism系のプロパティかどうか
 				// value取得して attrsリストから削除しておく
@@ -231,7 +228,7 @@ class LismPropsData {
 
 		// ユーティリティクラス化できるかどうかをチェック
 		if (!bpKey) {
-			const { presets, tokenClass, utils } = propConfig;
+			const { presets, tokenClass, utils, shorthands } = propConfig;
 			if (presets && isPresetValue(presets, val)) {
 				this.addUtil(`${utilName}:${val}`);
 				return;
@@ -241,12 +238,17 @@ class LismPropsData {
 				this.addUtil(`${utilName}:${val}`);
 				return;
 			}
+
+			let utilKey = '';
 			if (utils) {
-				const utilVal = getMaybeUtilValue(utils, val);
-				if (utilVal) {
-					this.addUtil(`${utilName}:${utilVal}`);
-					return;
-				}
+				utilKey = getUtilKey(utils, val);
+			}
+			if (shorthands) {
+				utilKey = getUtilKey(shorthands, val, true);
+			}
+			if (utilKey) {
+				this.addUtil(`${utilName}:${utilKey}`);
+				return;
 			}
 		}
 
@@ -339,25 +341,6 @@ class LismPropsData {
 				}
 			});
 		}
-	}
-
-	setBdProps(value) {
-		if (!value) return;
-
-		if (typeof value === 'string') {
-			// , 区切りでユーティリティを複数指定できる（var() や rgba() などがないかチェック）
-			if (value.includes(',') && !value.includes('(')) {
-				splitWithComma(value).forEach((_val) => {
-					const utilVal = getMaybeUtilValue('bd', _val) || _val;
-					if (utilVal) {
-						this.addUtil(`-bd:${utilVal}`);
-					}
-				});
-				return;
-			}
-		}
-
-		this.analyzeLismProp('bd', value);
 	}
 }
 
