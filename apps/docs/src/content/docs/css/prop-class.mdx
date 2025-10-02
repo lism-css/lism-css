@@ -476,16 +476,20 @@ borderに関する仕様は少し特殊になっています。詳しくは[bord
 <Preview>
 	<PreviewTitle>グラデーション</PreviewTitle>
 	<PreviewArea p='30'>
-		<Frame ar='ogp' bg='linear-gradient(to top, #a8edea 0%, #fed6e3 100%)'></Frame>
+		<Frame p='50' bg='linear-gradient(to top, #a8edea 0%, #fed6e3 100%)'>Gradient</Frame>
 	</PreviewArea>
 	<PreviewCode label='JSX' slot='tab'>
 		```jsx
-		<Frame ar='ogp' bg='linear-gradient(to top, #a8edea 0%, #fed6e3 100%)'></Frame>
+		<Frame p='50' bg='linear-gradient(to top, #a8edea 0%, #fed6e3 100%)'>Gradient</Frame>
 		```
 	</PreviewCode>
 	<PreviewCode label='HTML' slot='tab'>
 		```html
-		<div class="l--frame -ar:ogp -bg" style="--bg:linear-gradient(to top, #a8edea 0%, #fed6e3 100%)">  </div>
+		<div class="l--center">
+			<div class="l--box -bg" style="--bg:linear-gradient(45deg, var(--blue), var(--pink))">
+				<p class="-fz:5xl -fw:bold -lh:1 -lts:l">TEXT</p>
+			</div>
+		</div>
 		```
 	</PreviewCode>
 </Preview>
@@ -496,13 +500,17 @@ borderに関する仕様は少し特殊になっています。詳しくは[bord
 	<PreviewArea p='30'>
 		<Center>
 			<Box bg='linear-gradient(45deg, var(--blue), var(--pink))' bgcp='text'>
-				<Text fz='5xl' fw='900' lh='1' lts='l'>TEXT</Text>
+				<Text fz='5xl' fw='bold' lh='1' lts='l'>TEXT</Text>
 			</Box>
 		</Center>
 	</PreviewArea>
 	<PreviewCode label='JSX' slot='tab'>
 		```jsx
-		<Frame ar='ogp' bg='linear-gradient(to top, #a8edea 0%, #fed6e3 100%)'></Frame>
+		<Center>
+			<Box bg='linear-gradient(45deg, var(--blue), var(--pink))' bgcp='text'>
+				<Text fz='5xl' fw='bold' lh='1' lts='l'>TEXT</Text>
+			</Box>
+		</Center>
 		```
 	</PreviewCode>
 	<PreviewCode label='HTML' slot='tab'>
