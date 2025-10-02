@@ -3,7 +3,7 @@ export default {
 	lh: ['base', 'xs', 's', 'l', 'xl'],
 	lts: ['base', 's', 'l'],
 	ff: ['base', 'accent', 'mono'],
-	fw: ['light', 'normal', 'bold'],
+	fw: ['thin', 'light', 'normal', 'medium', 'bold', 'black'],
 	op: ['low', 'mid', 'high'],
 	bdrs: ['5', '10', '20', '30', '40', '50', '99'],
 	bxsh: ['5', '10', '20', '30', '40', '50'],
