@@ -12,9 +12,8 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, EmbedCode, Callout, Ic
 hover時の挙動をコントロールするためのCSS設計について紹介します。
 
 
-Lismでは、`-hov:`で始まるクラスを活用してhover時の挙動をコントロールします。
-
-{/* さらに、`-trs`クラスでトランジションの設定を行うことで、hover時の挙動をより細かくコントロールすることができます。 */}
+Lismでは、てhover時のスタイルは`-hov:`で始まるPropクラスで定義します。  
+また、`has--transition`クラスを併用することでトランジションの設定を行います。
 
 
 ## 基本的な使い方
@@ -116,34 +115,30 @@ Lismに内包されているクラスでは、それぞれ初期値を定義し�
 <Spacer h='20' />
 
 
-### `-trs` でトランジションを設定する方法
+<div class='u--hidden' id='has--transition'></div>
+### トランジションを設定する方法
 
-Lismでは、以下のような`-trs`クラスを用意しています。
+[`has--transition`](/css/layout-state#has--transition)クラスを用意しています。
 
-```css
-.-trs\: {
-	transition: var(--trsdu) var(--trstf);
-	transition-property: var(--trsp);
-}
-```
+
 
 このクラスとcss変数を組み合わせて、トランジションの設定を行うことができます。
 
 
 {/* hsl(25 50% 50% / 20%),rgb(250 50 50 / 20%)' */}
 <Preview>
-	<PreviewTitle>`-trs`と組み合わせてbxshの強さを変化させる例</PreviewTitle>
+	<PreviewTitle>`has--transition`と組み合わせてbxshの強さを変化させる例</PreviewTitle>
 	<PreviewArea p='40'>
-		<LinkBox href='###' trs bxsh='10' hov={{ bxsh: '40'}} bd p='30'>
+		<LinkBox href='###' hasTransition bxsh='10' hov={{ bxsh: '40'}} bd p='30'>
 			<p>LinkBox</p>
 			<p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
 		</LinkBox>
 	</PreviewArea>
 	<PreviewCode slot='tab' label='HTML'>
-		```html "-trs" "-bxsh:10 -hov:bxsh" "--hov-bxsh:var(--bxsh-40)"
+		```html "has--transition" "-bxsh:10 -hov:bxsh" "--hov-bxsh:var(--bxsh-40)"
 		<a
 			href="###"
-			class="is--linkBox -trs -bxsh:10 -hov:bxsh -bd -p:30"
+			class="is--linkBox has--transition -bxsh:10 -hov:bxsh -bd -p:30"
 			style="--hov-bxsh:var(--bxsh-40)"
 		>
 			<p>LinkBox</p>
@@ -152,8 +147,8 @@ Lismでは、以下のような`-trs`クラスを用意しています。
 		```
 	</PreviewCode>
 	<PreviewCode slot='tab' label='JSX'>
-	```jsx "trs" "bxsh='10' hov=\{\{ bxsh: '40'\}\}"
-		<LinkBox href='###' trs bxsh='10' hov={{ bxsh: '40'}} bd p='30'>
+	```jsx "hasTransition" "bxsh='10' hov=\{\{ bxsh: '40'\}\}"
+		<LinkBox href='###' hasTransition bxsh='10' hov={{ bxsh: '40'}} bd p='30'>
 			<p>LinkBox</p>
 			<p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
 		</LinkBox>
@@ -165,16 +160,16 @@ Lismでは、以下のような`-trs`クラスを用意しています。
 <Preview>
 	<PreviewTitle>border-colorをゆっくり変化させる例</PreviewTitle>
 	<PreviewArea p='40'>
-		<LinkBox href='###' trs hov={{ bdc:'red' }} bd bdw='3px' bgc='base-2' p='30' style={{'--trsdu':'1s'}}>
+		<LinkBox href='###' hasTransition hov={{ bdc:'red' }} bd bdw='3px' bgc='base-2' p='30' style={{'--duration':'1s'}}>
 			<p>LinkBox</p>
 			<p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
 		</LinkBox>
 	</PreviewArea>
 	<PreviewCode slot='tab' label='HTML'>
-		```html "-trs" "--trsdu:1s"
+		```html "has--transition" "--duration:1s"
 		<a
-			class="is--linkBox -hov:bdc -trs -bd -bgc:base-2 -p:30"
-			style="--hov-bdc:var(--red);--trsdu:1s;--bdw:3px" href="###"
+			class="is--linkBox -hov:bdc has--transition -bd -bgc:base-2 -p:30"
+			style="--hov-bdc:var(--red);--duration:1s;--bdw:3px" href="###"
 		>
 			<p>LinkBox</p>
 			<p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
@@ -182,10 +177,10 @@ Lismでは、以下のような`-trs`クラスを用意しています。
 		```
 	</PreviewCode>
 	<PreviewCode slot='tab' label='JSX'>
-		```jsx "trs" "--trsdu"
+		```jsx "hasTransition" "--duration"
 		<LinkBox
-			href='###' trs hov={{ bdc:'red' }} bd bdw='3px' bgc='base-2' p='30'
-			style={{'--trsdu':'1s'}}~
+			href='###' hasTransition hov={{ bdc:'red' }} bd bdw='3px' bgc='base-2' p='30'
+			style={{'--duration':'1s'}}~
 		>
 			<p>LinkBox</p>
 			<p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
@@ -200,7 +195,7 @@ Lismでは、以下のような`-trs`クラスを用意しています。
 <Preview>
 	<PreviewTitle>`.-hov:shadowUp`を追加</PreviewTitle>
 	<PreviewArea p='40'>
-		<LinkBox href='###' trs hov='shadowUp' bxsh='10' bd p='30'>
+		<LinkBox href='###' hasTransition hov='shadowUp' bxsh='10' bd p='30'>
 			<p>LinkBox</p>
 			<p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
 		</LinkBox>
@@ -218,7 +213,7 @@ Lismでは、以下のような`-trs`クラスを用意しています。
 	</PreviewCode>
 	<PreviewCode slot='tab' label='HTML'>
 		```html "-hov:shadow" "-hov:up"
-		<a href="###" class="is--linkBox -trs -hov:shadow -hov:up -bd -p:30">
+		<a href="###" class="is--linkBox has--transition -hov:shadow -hov:up -bd -p:30">
 			<p>LinkBox</p>
 			<p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
 		</a>
@@ -226,7 +221,7 @@ Lismでは、以下のような`-trs`クラスを用意しています。
 	</PreviewCode>
 	<PreviewCode slot='tab' label='JSX'>
 		```jsx "hov='shadowUp'"
-		<LinkBox href='###' trs hov='shadowUp' bd p='30'>
+		<LinkBox href='###' hasTransition hov='shadowUp' bd p='30'>
 			<p>LinkBox</p>
 			<p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
 		</LinkBox>
@@ -235,11 +230,11 @@ Lismでは、以下のような`-trs`クラスを用意しています。
 </Preview>
 
 
-<div class='u--hidden' id='hov-set'></div>
-## `.-hov:set` と特殊変数
+<div class='u--hidden' id='has--hover'></div>
+## `.has--hover` と特殊変数
 
 
-<IconBadge /> Lism では、`-hov:set`というクラスを定義しており、このクラスでは`--_isHov`変数と`--_notHov`変数を定義しています。
+<IconBadge /> Lism では、[`has--hover`](/css/layout-state#has--hover)というクラスを定義しており、このクラスでは`--_isHov`変数と`--_notHov`変数を定義しています。
 
 - `--_isHov`は非hover時にのみ空白定義されています。
 - `--_notHov`は逆に、hover時にのみ空白定義されています。
@@ -268,12 +263,12 @@ Lismでは、以下のような`-trs`クラスを用意しています。
 <Preview>
 	<PreviewTitle>`.-hov:test`を追加</PreviewTitle>
 	<PreviewArea p='40'>
-		<div className='-p:40 -bd -fz:l -hov:set -hov:test'>BOX</div>
+		<div className='-p:40 -bd -fz:l has--hover -hov:test'>BOX</div>
 	</PreviewArea>
 
 	<PreviewCode slot='tab' label='追加CSS'>
 		```scss
-		/* 変数は.-hov:set で定義済み */
+		/* 変数は.has--hover で定義済み */
 		.-hov\:test {
 			color: var(--_isHov, red) var(--_notHov, blue); /* hover時はgreen, 非hover時はblue*/
 			background-color: var(--_notHov, lightgray); /* 非hover時はlightgray、hover時は無効な値 */
@@ -282,8 +277,8 @@ Lismでは、以下のような`-trs`クラスを用意しています。
 		```
 	</PreviewCode>
 	<PreviewCode slot='tab' label='HTML'>
-		```html "-hov:set -hov:test"
-		<div className='-p:40 -bd -fz:l -hov:set -hov:test'>BOX</div>
+		```html "has--hover -hov:test"
+		<div className='-p:40 -bd -fz:l has--hover -hov:test'>BOX</div>
 		```
 	</PreviewCode>
 </Preview>
@@ -295,20 +290,20 @@ Lismでは、以下のような`-trs`クラスを用意しています。
 
 ### 子要素にホバー状態を渡す
 
-さて、この`-hov:set`が便利なのはここからです。
-親要素に`-hov:set`を付与してその子要素で`--_isHov`変数と`--_notHov`変数をうまく使うことで、hover時の子要素の挙動をコントロールできるようになります。
+さて、この`has--hover`が便利なのはここからです。
+親要素に`has--hover`を付与してその子要素で`--_isHov`変数と`--_notHov`変数をうまく使うことで、hover時の子要素の挙動をコントロールできるようになります。
 
 
 コアパッケージには、そのような子要素向けのクラスを `-hov:get:xxx` として2つだけ標準で用意しています。
 
 ```css
 
-/* 親の -hov:set がhoverされたら非表示にする */
+/* 親の has--hover がhoverされたら非表示にする */
 .-hov\:get\:hide {
 	opacity: var(--_isHov, 0);
 }
 
-/* 親の -hov:set がhoverされたら表示する */
+/* 親の has--hover がhoverされたら表示する */
 .-hov\:get\:show {
 	opacity: var(--_notHov, 0);
 	visibility: var(--_notHov, hidden);
@@ -319,9 +314,9 @@ Lismでは、以下のような`-trs`クラスを用意しています。
 <Preview>
 	<PreviewTitle>`get:show` を使う例</PreviewTitle>
 	<PreviewArea p='30'>
-		<Frame isLinkBox hov='set' href='#banner-link' ar='16/9' bdrs='30'>
+		<Frame isLinkBox hasHover href='#banner-link' ar='16/9' bdrs='30'>
 			<Media isLayer src='/img/img-1.jpg' alt='' width='960' height='640' loading='lazy' />
-			<Layer trs hov='get:show' bgc='rgb(0 0 0 / 40%)' blur='6px'>
+			<Layer hasTransition hov='get:show' bgc='rgb(0 0 0 / 40%)' blur='6px'>
 				<Center h='100%' c='#fff'>
 					<Text tag='span' fz='2xl' fs='i' fw='light' lts='l' bdrs='99' px='30' py='10'>View More</Text>
 				</Center>
@@ -329,10 +324,10 @@ Lismでは、以下のような`-trs`クラスを用意しています。
 		</Frame>
 	</PreviewArea>
 	<PreviewCode slot='tab' label='HTML'>
-		```html "-hov:set" "-hov:get:show" "-trs"
-		<a class="l--frame is--linkBox -hov:set -ar:16/9 -bdrs:30" href="#banner-link">
+		```html "has--hover" "-hov:get:show" "has--transition"
+		<a class="l--frame is--linkBox has--hover -ar:16/9 -bdrs:30" href="#banner-link">
 			<img class="is--layer" src="/img/img-1.jpg" width="960" height="640" loading="lazy">
-			<div class="is--layer -trs -hov:get:show -bgc" style="--bgc:rgb(0 0 0 / 10%);backdrop-filter:blur(6px)">
+			<div class="is--layer has--transition -hov:get:show -bgc" style="--bgc:rgb(0 0 0 / 10%);backdrop-filter:blur(6px)">
 				<div class="l--center -h:100% -c" style="--c:#fff">
 					<span class="-fz:2xl -fs:i -fw:light -lts:l -bdrs:99 -px:30 -py:10">View More</span>
 				</div>
@@ -341,10 +336,10 @@ Lismでは、以下のような`-trs`クラスを用意しています。
 		```
 	</PreviewCode>
 	<PreviewCode slot='tab' label='JSX'>
-		```jsx "hov='set'" "hov='get:show'" "trs"
-		<Frame isLinkBox hov='set' href='#banner-link' ar='16/9' bdrs='30'>
+		```jsx "hasHover" "hov='get:show'" "hasTransition"
+		<Frame isLinkBox hasHover href='#banner-link' ar='16/9' bdrs='30'>
 			<Media isLayer src='/img/img-1.jpg' alt='' width='960' height='640' loading='lazy' />
-			<Layer trs hov='get:show' bgc='rgb(0 0 0 / 40%)' blur='6px'>
+			<Layer hasTransition hov='get:show' bgc='rgb(0 0 0 / 40%)' blur='6px'>
 				<Center h='100%' c='#fff'>
 					<Text tag='span' fz='2xl' fs='i' fw='light' lts='l' bdrs='99' px='30' py='10'>View More</Text>
 				</Center>
@@ -361,22 +356,22 @@ Lismでは、以下のような`-trs`クラスを用意しています。
 
 親がhoverされたらズーム表示されるような`-hov:get:zoom`クラスと、テキストが広がるような`-hov:get:letterSpread`クラスを自作して使ってみます。
 
-さらに、親要素で`--trsdu-base`を上書きして子要素のトランジション時間を一括で変更してみましょう。
+さらに、親要素で`--transition--duration`を上書きして子要素のトランジション時間を一括で変更してみましょう。
 
 <Preview>
 	<PreviewTitle>自作クラスで子要素のホバーアクションを調整する例</PreviewTitle>
 	<PreviewArea p='30'>
 		<LinkBox
 			href='#banner-link'
-			hov='set' ov='h' ar='16/9' bdrs='30'
-			style={{'--trsdu-base':'.6s'}}
+			hasHover ov='h' ar='16/9' bdrs='30'
+			style={{'--transition--duration':'.6s'}}
 		>
 			<Frame isLayer>
-				<Media trs hov='get:zoom' src='/img/img-2.jpg' alt='' width='960' height='640' loading='lazy'/>
+				<Media hasTransition hov='get:zoom' src='/img/img-2.jpg' alt='' width='960' height='640' loading='lazy'/>
 			</Frame>
-			<Layer trs hov='get:hide' grayscale='70%'/>
+			<Layer hasTransition hov='get:hide' grayscale='70%'/>
 			<Center isLayer c='#fff' bgc='rgb(0 0 0 / 40%)'>
-				<Text trs hov='get:letterSpread' fz='2xl'>LinkBox</Text>
+				<Text hasTransition hov='get:letterSpread' fz='2xl'>LinkBox</Text>
 			</Center>
 		</LinkBox>
 	</PreviewArea>
@@ -392,14 +387,14 @@ Lismでは、以下のような`-trs`クラスを用意しています。
 	```
 	</PreviewCode>
 	<PreviewCode slot='tab' label='HTML'>
-		```html "-hov:set" "-hov:get:zoom" "-hov:get:letterSpread" "--trsdu-base"
+		```html "has--hover" "-hov:get:zoom" "-hov:get:letterSpread" "--transition--duration"
 		<a
 			href="#banner-link"
-			class="is--linkBox -hov:set -ar:16/9 -ov:h -bdrs:30"
-			style="--trsdu-base:.6s"
+			class="is--linkBox has--hover -ar:16/9 -ov:h -bdrs:30"
+			style="--transition--duration:.6s"
 		>
 			<div class="l--frame is--layer">
-				<img class="is--layer -trs -hov:get:zoom" src="/img/img-2.jpg" width="960" height="640" loading="lazy" />
+				<img class="is--layer has--transition -hov:get:zoom" src="/img/img-2.jpg" width="960" height="640" loading="lazy" />
 			</div>
 			<div class="l--center is--layer -c -bgc" style="--c:#fff;--bgc:rgb(0 0 0 / 40%)">
 				<span class="-hov:get:letterSpread -fz:2xl">LinkBox</span>
@@ -408,18 +403,18 @@ Lismでは、以下のような`-trs`クラスを用意しています。
 		```
 	</PreviewCode>
 	<PreviewCode slot='tab' label='JSX'>
-		```jsx "hov='set'" "hov='get:zoom'" "hov='get:letterSpread'" "--trsdu-base"
+		```jsx "hasHover" "hov='get:zoom'" "hov='get:letterSpread'" "--transition--duration"
 		<LinkBox
 			href='#banner-link'
-			hov='set' ov='h' ar='16/9' bdrs='30'
-			style={{'--trsdu-base':'.6s'}}
+			hasHover ov='h' ar='16/9' bdrs='30'
+			style={{'--transition--duration':'.6s'}}
 		>
 			<Frame isLayer>
-				<Media trs hov='get:zoom' src='/img/img-2.jpg' alt='' width='960' height='640' loading='lazy'/>
+				<Media hasTransition hov='get:zoom' src='/img/img-2.jpg' alt='' width='960' height='640' loading='lazy'/>
 			</Frame>
-			<Layer trs hov='get:hide' grayscale='70%'/>
+			<Layer hasTransition hov='get:hide' grayscale='70%'/>
 			<Center isLayer c='#fff' bgc='rgb(0 0 0 / 40%)'>
-				<Text trs hov='get:letterSpread' fz='2xl'>LinkBox</Text>
+				<Text hasTransition hov='get:letterSpread' fz='2xl'>LinkBox</Text>
 			</Center>
 		</LinkBox>
 		```

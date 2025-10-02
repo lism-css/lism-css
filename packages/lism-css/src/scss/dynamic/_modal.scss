@@ -4,11 +4,10 @@
 	--mbs: 0; // flow直下にきても影響しないように
 	--offset: 0 0; // アニメーション用
 	--backdrop: rgb(0 0 0 / 0.6);
-	// --trsdu: 0.5s;
-	transition-duration: var(--modal--trsdu, 0.5s);
+	transition-duration: var(--modal--duration, 0.5s);
 
 	&::backdrop {
-		transition: opacity var(--modal--trsdu, 0.5s);
+		transition: opacity var(--modal--duration, 0.5s);
 		background: var(--backdrop);
 	}
 }

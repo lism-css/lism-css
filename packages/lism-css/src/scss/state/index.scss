@@ -2,22 +2,16 @@
 @forward './gutter';
 @forward './flow';
 @forward './container'; // Note: flow より後ろで読み込む
+@forward './skipflow';
 @forward './size'; // Note: container より後ろで読み込む
-@forward './linkbox';
 @forward './layer'; // Note: position の関係で、linkbox より後で読み込む
+@forward './isolate';
+@forward './vertical';
+@forward './linkbox';
+@forward './hover';
+@forward './transition';
 
 // container, frame直下のメディア要素は block に初期リセット
 :where(.is--container, .is--flow) > :where(img, video, audio) {
 	display: block;
-}
-.is--isolate {
-	isolation: isolate;
-}
-.is--vertical {
-	writing-mode: var(--verticalMode, vertical-rl);
-}
-
-// 次の要素の mbs を 0 にする。（hidden要素 や absoluteな要素が先頭に入り込んでいる時などに活用できる。）
-.is--skipFlow + * {
-	--mbs: 0;
 }

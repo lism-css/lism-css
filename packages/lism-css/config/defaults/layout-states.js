@@ -23,4 +23,6 @@ export default {
 	isFullwide: 'is--fullwide',
 	isOverwide: 'is--overwide',
 	hasGutter: 'has--gutter',
+	hasTransition: 'has--transition',
+	hasHover: 'has--hover',
 };
