@@ -20,7 +20,6 @@ export default {
 	lh: { prop: 'lineHeight', presets: ['1'], token: 'lh', tokenClass: 1, bp: 1, alwaysVar: 1 },
 	fw: {
 		prop: 'fontWeight',
-		presets: ['100', '200', '300', '400', '500', '600', '700', '800', '900'],
 		token: 'fw',
 		tokenClass: 1,
 	},

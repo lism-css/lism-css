@@ -311,20 +311,22 @@ box-shadow は少し特殊で、ユーティリティクラス内で複数のsha
 
 |トークン|変数|クラス|初期値|
 |---|---|---|---|
+|`thin`|`--fw-thin`|`-fw:thin`|`100`|
 |`light`|`--fw-light`|`-fw:light`|`300`|
 |`normal`|`--fw-normal`|`-fw:normal`|`400`|
+|`medium`|`--fw-medium`|`-fw:medium`|`500`|
 |`bold`|`--fw-bold`|`-fw:bold`|`700`|
-{/* |`medium`|`--fw-medium`|`-fw:medium`|`500`| */}
-{/* |`thin`|`--fw-thin`|`-fw:thin`|`100`|
-|`heavy`|`--fw-heavy`|`-fw:heavy`|`900`| */}
+|`black`|`--fw-black`|`-fw:black`|`900`|
 
 
 <Preview>
 	<PreviewTitle>Preview</PreviewTitle>
 	<PreviewArea p='20' isFlow='s'>
+		<Dummy length='s' fw='thin' />
 		<Dummy length='s' fw='light' />
 		<Dummy length='s' fw='normal' />
 		<Dummy length='s' fw='bold' />
+		<Dummy length='s' fw='black' />
 	</PreviewArea>
 	<PreviewCode slot='tab' label='HTML'>
 		```html
