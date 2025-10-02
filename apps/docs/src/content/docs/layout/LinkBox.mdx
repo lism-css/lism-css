@@ -81,7 +81,7 @@ LinkBox内部に**別のリンク**も配置するには、2 を採用してく�
 <Preview>
 	<PreviewTitle id='linkbox-demo02'>例</PreviewTitle>
 	<PreviewArea p='30'>
-		<LinkBox p='40' bgc='base' bdc='line' bd bdrs='30' trs hov='bxsh'>
+		<LinkBox p='40' bgc='base' bdc='line' bd bdrs='30' hasTransition hov='bxsh'>
 			<Text fz='xl' fw='bold'>
 				<Link isOverlayLink href='#linkbox-demo02'>Heading link text</Link>
 			</Text>
@@ -93,7 +93,7 @@ LinkBox内部に**別のリンク**も配置するには、2 を採用してく�
 	</PreviewArea>
 	<PreviewCode slot='tab' label='JSX'>
 		```jsx "isOverlayLink" "is--overlayLink"
-		<LinkBox p='40' bgc='base' bdc='line' bd bdrs='30' trs hov='bxsh'>
+		<LinkBox p='40' bgc='base' bdc='line' bd bdrs='30' hasTransition hov='bxsh'>
 			<Text fz='xl' fw='bold'>
 				<Link isOverlayLink href='#linkbox-demo02'>Heading link text</Link>
 			</Text>
@@ -106,7 +106,7 @@ LinkBox内部に**別のリンク**も配置するには、2 を採用してく�
 	</PreviewCode>
 	<PreviewCode slot='tab' label='HTML'>
 		```jsx "is--overlayLink"
-		<div class="is--linkBox -hov:bxsh -p:40 -bgc:base -bdc:divider -bd -bdrs:30 -trs">
+		<div class="is--linkBox -hov:bxsh -p:40 -bgc:base -bdc:divider -bd -bdrs:30 has--transition">
 			<p class="-fz:xl -fw:bold">
 				<a class="is--overlayLink" href="#linkbox-demo02">Heading Link</a>
 			</p>

@@ -289,15 +289,6 @@ export default {
 	pslf: { prop: 'placeSelf' },
 	ord: { prop: 'order', presets: ['0', '-1', '1'] },
 
-	// transition
-	trs: { prop: 'transition', skipSCSS: 1 },
-	// trsdu: { prop: '--trsdu' },
-	// trsp: { prop: '--trsp' },
-	// trspt: {
-	// 	prop: '--trspt',
-	// 	// utils: { 'ease-in': 'in', 'ease-out': 'out', 'ease-in-out': 'in-out', linear: 'linear' },
-	// },
-
 	// transform
 	trnslt: {
 		prop: 'translate',
@@ -334,4 +325,9 @@ export default {
 	ovw: { prop: 'overflowWrap', utils: { any: 'anywhere' } },
 	fl: { prop: 'float', utils: { l: 'left', r: 'right' } },
 	cl: { prop: 'clear', utils: { b: 'both' } },
+
+	// transition
+	duration: { isVar: 1 },
+	delay: { isVar: 1 },
+	ease: { isVar: 1 },
 };

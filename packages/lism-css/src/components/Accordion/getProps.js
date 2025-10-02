@@ -26,7 +26,6 @@ export const defaultProps = {
 	label: { lismClass: 'd--accordion_label', tag: 'span', fx: '1' },
 	body: {
 		lismClass: 'd--accordion_body',
-		// trs: true,
 	},
 	inner: {
 		lismClass: 'd--accordion_inner',

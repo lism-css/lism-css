@@ -5,7 +5,7 @@ export default function LinkBox({ layout, children, ...props }) {
 	const tag = hasHref ? 'a' : 'div';
 	const LismComponent = layout || Lism;
 	return (
-		<LismComponent isLinkBox hov='op' tag={tag} {...props}>
+		<LismComponent isLinkBox tag={tag} {...props}>
 			{children}
 		</LismComponent>
 	);
