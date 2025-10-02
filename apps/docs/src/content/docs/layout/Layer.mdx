@@ -14,7 +14,7 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage, Referen
 
 
 {/* <Reference>
-要素を単純に`position:absolute`で配置したいだけの場合は、`-pos:a`クラスなどを使用することもできます。
+要素を単純に`position:absolute`で配置したいだけの場合は、`-pos:absolute`クラスなどを使用することもできます。
 参考：[absoluteで配置する方法](/components/props/others/absolute)
 </Reference> */}
 
@@ -56,7 +56,7 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage, Referen
 	</PreviewCode>
 	<PreviewCode slot='tab' label='HTML'>
 		```html
-		<div class="l--box -pos:r -py:40">
+		<div class="l--box -pos:relative -py:40">
 			<p class="-fz:2xl -fw:bold -ta:c -lts:l -op:low">BACKGROUND</p>
 			<div class="is--layer -p:20 -bd" style="--bgc:color-mix(in srgb, var(--purple) 10%, transparent)">
 				<p>Layer Contents...</p>
@@ -89,7 +89,7 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage, Referen
 	</PreviewCode>
 	<PreviewCode slot='tab' label='HTML'>
 		```html {3}
-		<div class="l--box -pos:r -p:40">
+		<div class="l--box -pos:relative -p:40">
 			<p class="-fz:2xl -fw:bold -ta:c">BACKGROUND</p>
 			<div class="is--layer" style="backdrop-filter:blur(3px)"></div>
 		</div>
@@ -173,7 +173,7 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage, Referen
 				<img src="/img/img-3.jpg" width="960" height="640" loading="lazy" decoding="async">
 			</div>
 			<div class="is--layer" style="--bgc:color-mix(in srgb, var(--black) 50%, transparent)"></div>
-			<div class="l--stack -pos:r -c -g:40" style="--c:var(--white)">
+			<div class="l--stack -pos:relative -c -g:40" style="--c:var(--white)">
 				<p>Lorem ipsum dolor sit amet...</p>
 				<p>Lorem ipsum dolor sit, amet...</p>
 			</div>
@@ -209,10 +209,10 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage, Referen
 	</PreviewCode>
 	<PreviewCode slot='tab' label='HTML'>
 		```html
-		<div class="l--frame has--gutter -pos:r -py:50">
+		<div class="l--frame has--gutter -pos:relative -py:50">
 			<img class="is--layer" src="/img/img-3.jpg" width="960" height="640" loading="lazy" decoding="async">
 			<div class="is--layer -bgc" style="--bgc:rgb(0 0 0 / 50%)"></div>
-			<div class="l--stack -pos:r -c -g:40" style="--c:#fff">
+			<div class="l--stack -pos:relative -c -g:40" style="--c:#fff">
 				<p>Lorem ipsum dolor sit amet...</p>
 				<p>Lorem ipsum dolor sit, amet...</p>
 			</div>
