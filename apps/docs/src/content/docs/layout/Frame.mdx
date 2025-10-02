@@ -170,7 +170,7 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage, HelpTex
 		<div class="l--frame -ar:16/9 -pos:relative -c" style="--c:#fff">
 			<img src="/img/img-1.jpg" alt="" width="960" height="640">
 			<div class="is--layer -bgc" style="--bgc:rgb(0 0 0 / 40%);backdrop-filter:blur(4px)"></div>
-			<div class="is--layer -p:40 -ov:a">
+			<div class="is--layer -p:40 -ov:auto">
 				<div class="l--center -minH:100% -g:10">
 					<p class="-fz:2xl -lh:xs -fw:bold">  Heading  </p>
 					<p>  Lorem ipsum dolor sit, amet consectetur adipisicing elit, sed do eiusmod tempor. Non facere laudantium ex eos doloribus aut dolore nisi.  </p>
@@ -194,7 +194,7 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage, HelpTex
 <Preview>
 	<PreviewTitle>Boxにarを指定する例</PreviewTitle>
 	<PreviewArea resize p='5'>
-		<Box ar='16/9' ovy='auto' isFlow p='40' bgc='base'>
+		<Box ar='16/9' ov-y='auto' isFlow p='40' bgc='base'>
 			<Dummy />
 			<Dummy length="l" />
 			<Frame ar='16/9' maxW='50%'>
@@ -205,8 +205,8 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage, HelpTex
 		</Box>
 	</PreviewArea>
 	<PreviewCode slot='tab' label='JSX'>
-		```jsx "Box ar='16/9'" "ovy='auto'"
-		<Box ar='16/9' ovy='auto' isFlow p='40'>
+		```jsx "Box ar='16/9'" "ov-y='auto'"
+		<Box ar='16/9' ov-y='auto' isFlow p='40'>
 			...
 		</Box>
 		```

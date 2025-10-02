@@ -85,7 +85,7 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage, Callout
 	- Heroの高さを minH でセット → HeroContent は h も minH,maxH もfxb も % は無効になる。
 	- Heroのアスペクト比をセット→ HeroContent は h も minH,maxH も fxb も % が使用できる.
 		- minH, fxb を使うと、小さいウインドウではコンテンツに合わせてHeroの高さが可変する。
-		- h,maxH を使うと、小さいウインドウではHeroContentの高さが外に溢れていく（ovy='auto'で内部スクロールできる）
+		- h,maxH を使うと、小さいウインドウではHeroContentの高さが外に溢れていく（ov-y='auto'で内部スクロールできる）
 - l-gridの場合
 	- 何で高さを確保しても、HeroContent の高さは%が使える。
 	- が、そのさらに子要素のhに%を使うには、結局 HeroContent をGrid にする必要がある。Layerを使ってもこれは一緒。
@@ -308,15 +308,15 @@ Lismの`<Center>` は `grid` を使ってるので、この問題が発生しま
 		スクロール時にコンテンツが全て見えない 😱
 	</PreviewTitle>
 	<PreviewArea resize p={10}>
-		<Center px='30' py='50' g='20' h='45vh' ovy='auto' bd>
+		<Center px='30' py='50' g='20' h='45vh' ov-y='auto' bd>
 			<Text fz='l' fw='700'>DEMO</Text>
 			<Dummy length='l' />
 			<Dummy length='xl' />
 		</Center>
 	</PreviewArea>
 	<PreviewCode slot='tab' label='JSX'>
-		```jsx "\<Center" "h='45vh' ovy='auto'"
-		<Center px='30' py='50' g='20' h='45vh' ovy='auto' bd>
+		```jsx "\<Center" "h='45vh' ov-y='auto'"
+		<Center px='30' py='50' g='20' h='45vh' ov-y='auto' bd>
 			<Text fz='l' fw='700'>DEMO</Text>
 			<Dummy length='l' />
 			<Dummy length='xl' />
@@ -341,7 +341,7 @@ Lismの`<Center>` は `grid` を使ってるので、この問題が発生しま
 		スクロール時、正常にコンテンツが見える 😄
 	</PreviewTitle>
 	<PreviewArea resize p={10}>
-		<Box px='30' py='50' h='45vh' ovy='auto' bd>
+		<Box px='30' py='50' h='45vh' ov-y='auto' bd>
 			<Center g='20' minH='100%'>
 				<Text fz='l' fw='700'>DEMO</Text>
 				<Dummy length='l' />
@@ -350,8 +350,8 @@ Lismの`<Center>` は `grid` を使ってるので、この問題が発生しま
 		</Box>
 	</PreviewArea>
 	<PreviewCode slot='tab' label='JSX'>
-		```jsx "Center" "h='45vh'" "ovy='auto'" "minH='100%'"
-		<Box px='30' py='50' h='45vh' ovy='auto' bd>
+		```jsx "Center" "h='45vh'" "ov-y='auto'" "minH='100%'"
+		<Box px='30' py='50' h='45vh' ov-y='auto' bd>
 			<Center minH='100%' g='20'>
 				<Text fz='l' fw='700'>DEMO</Text>
 				<Dummy length='l' />
@@ -367,7 +367,7 @@ Lismの`<Center>` は `grid` を使ってるので、この問題が発生しま
 <Preview>
 	<PreviewTitle>OK</PreviewTitle>
 	<PreviewArea resize p={10}>
-		<Frame ar='16/9' ovy='auto' bd p='30' g='20'>
+		<Frame ar='16/9' ov-y='auto' bd p='30' g='20'>
 			<Center minH='100%' g='20'>
 				<Text fz='l'>TEXT</Text>
 				<Dummy length='xs' lang='ja'/>
@@ -376,8 +376,8 @@ Lismの`<Center>` は `grid` を使ってるので、この問題が発生しま
 		</Frame>
 	</PreviewArea>
 	<PreviewCode slot='tab' label='JSX'>
-		```jsx "Center" "ar='16/9'" "ovy='auto'" "minH='100%'"
-		<Frame ar='16/9' ovy='auto' bd p='30' g='20'>
+		```jsx "Center" "ar='16/9'" "ov-y='auto'" "minH='100%'"
+		<Frame ar='16/9' ov-y='auto' bd p='30' g='20'>
 			<Center minH='100%' g='20'>
 				<Text fz='l'>TEXT</Text>
 				<Dummy length='xs' lang='ja'/>
@@ -391,15 +391,15 @@ Lismの`<Center>` は `grid` を使ってるので、この問題が発生しま
 <Preview>
 	<PreviewTitle>NG</PreviewTitle>
 	<PreviewArea resize p={10}>
-		<Center ar='16/9' ovy='auto' bd p='30' g='20'>
+		<Center ar='16/9' ov-y='auto' bd p='30' g='20'>
 			<Text fz='l'>TEXT</Text>
 			<Dummy length='xs' lang='ja'/>
 			<Dummy length='xl' lang='ja'/>
 		</Center>
 	</PreviewArea>
 	<PreviewCode slot='tab' label='JSX'>
-		```jsx "Center" "ar='16/9'" "ovy='auto'" "minH='100%'"
-		<Center ar='16/9' ovy='auto' bd p='30' g='20'>
+		```jsx "Center" "ar='16/9'" "ov-y='auto'" "minH='100%'"
+		<Center ar='16/9' ov-y='auto' bd p='30' g='20'>
 			<Text fz='l'>TEXT</Text>
 			<Dummy length='xs' lang='ja'/>
 			<Dummy length='xl' lang='ja'/>
