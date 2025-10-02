@@ -9,21 +9,21 @@ import './_style.css';
 <DemoPageLayout title='Feature006'>
 	<Container size='l' py='60' hasGutter>
 		<Grid gtc={['auto', null, '1fr minmax(20rem, 1fr)']} gtr={['1fr', null, '1fr auto auto 1fr']} g='50 70' }>
-			<GridItem layout={Stack} gr={['1', null, '2']} g='50'>
+			<Stack gr={['1', null, '2']} g='50'>
 				<Text class='u--trimHL' fz='2xl' fw='bold'>暮らしを、もっと豊かに</Text>
 				<Text class='u--trimHL'
 					>私の役割は複雑なテクノロジーを誰もが直感的に、そして快適に使えるようにデザインすることです。
 					ユーザーインタビューやテストを繰り返し、徹底的に「ユーザーの声」に耳を傾けながら、最高の体験を追求しています。
 				</Text>
-			</GridItem>
-			<GridItem layout={Grid} gr={['2', null, '1 / -1']} gc={['1', null, '2']} gtc='repeat(2, 1fr)' g='30' minH='min(70svw, 30rem)'>
-				<GridItem layout={Frame} tag='figure' gr='1 / -1'>
+			</Stack>
+			<Grid gr={['2', null, '1 / -1']} gc={['1', null, '2']} gtc='repeat(2, 1fr)' g='30' minH='min(70svw, 30rem)'>
+				<Frame tag='figure' gr='1 / -1'>
 					<Media src='/img/img-5.jpg' alt='' width='960' height='640' />
-				</GridItem>
-				<GridItem layout={Frame} tag='figure' gr='1 / -1'>
+				</Frame>
+				<Frame tag='figure' gr='1 / -1'>
 					<Media src='/img/img-2.jpg' alt='' width='960' height='640' />
-				</GridItem>
-			</GridItem>
+				</Frame>
+			</Grid>
 			<GridItem gr='3'>
 				<Flex ai='c' g='20'>
 					<Button href='#' minW={['100%', null, '150px']} jc='c' p='20' bdrs='10'>View More</Button>

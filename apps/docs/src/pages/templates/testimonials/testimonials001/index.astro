@@ -1,8 +1,8 @@
 ---
 import DemoPageLayout from '~/layouts/DemoPageLayout.astro';
-import Button from '~/components/ex/Button/index.astro';
+// import Button from '~/components/ex/Button/index.astro';
 
-import { Container, Frame, Grid, GridItem, Media, Stack, Text } from 'lism-css/astro';
+import { Container, Frame, Grid, Media, Stack, Text } from 'lism-css/astro';
 import './_style.css';
 ---
 
@@ -11,7 +11,7 @@ import './_style.css';
 		<Stack g='60'>
 			<Text class='u--trimHL' fz='2xl' fw='bold' ta='c'>お客様の声</Text>
 			<Grid gtc='repeat(auto-fit, minmax(300px, 1fr))' g='50'>
-				<GridItem layout={Grid} gtr='subgrid' gr='span 2' g='40' bgc='white' p='50' bdw='2px' bdrs='20' bxsh='20'>
+				<Grid gtr='subgrid' gr='span 2' g='40' bgc='white' p='50' bdw='2px' bdrs='20' bxsh='20'>
 					<Grid gtc='auto 1fr' ai='c' g='30'>
 						<Frame ar='1/1' w='stretch' maxW='5rem' bdrs='99'>
 							<Media src='/img/img-1.jpg' width='960' height='640' />
@@ -24,8 +24,8 @@ import './_style.css';
 					<Text class='u--trimHL' fz='m' op='high'>
 						仕事から帰ると部屋がきれいになっているのが嬉しいです。面倒な掃除から解放されて、平日の夜にゆとりができました。
 					</Text>
-				</GridItem>
-				<GridItem layout={Grid} gtr='subgrid' gr='span 2' g='40' bgc='white' p='50' bdw='2px' bdrs='20' bxsh='20'>
+				</Grid>
+				<Grid gtr='subgrid' gr='span 2' g='40' bgc='white' p='50' bdw='2px' bdrs='20' bxsh='20'>
 					<Grid gtc='auto 1fr' ai='c' g='30'>
 						<Frame ar='1/1' w='stretch' maxW='5rem' bdrs='99'>
 							<Media src='/img/img-2.jpg' width='960' height='640' />
@@ -38,8 +38,8 @@ import './_style.css';
 					<Text class='u--trimHL' fz='m' op='high'>
 						材料を入れてボタンを押すだけで本格的な煮込み料理が完成。 火を使わないので、子供から目を離さずに調理できて安心です。
 					</Text>
-				</GridItem>
-				<GridItem layout={Grid} gtr='subgrid' gr='span 2' g='40' bgc='white' p='50' bdw='2px' bdrs='20' bxsh='20'>
+				</Grid>
+				<Grid gtr='subgrid' gr='span 2' g='40' bgc='white' p='50' bdw='2px' bdrs='20' bxsh='20'>
 					<Grid gtc='auto 1fr' ai='c' g='30'>
 						<Frame ar='1/1' w='stretch' maxW='5rem' bdrs='99'>
 							<Media src='/img/img-3.jpg' width='960' height='640' />
@@ -52,8 +52,8 @@ import './_style.css';
 					<Text class='u--trimHL' fz='m' op='high'>
 						気づいた時にサッと掃除できる手軽さが最高です。 コードレスなので、車の中の掃除にも使えて本当に便利だと思います。
 					</Text>
-				</GridItem>
-				<GridItem layout={Grid} gtr='subgrid' gr='span 2' g='40' bgc='white' p='50' bdw='2px' bdrs='20' bxsh='20'>
+				</Grid>
+				<Grid gtr='subgrid' gr='span 2' g='40' bgc='white' p='50' bdw='2px' bdrs='20' bxsh='20'>
 					<Grid gtc='auto 1fr' ai='c' g='30'>
 						<Frame ar='1/1' w='stretch' maxW='5rem' bdrs='99'>
 							<Media src='/img/img-4.jpg' width='960' height='640' />
@@ -66,8 +66,8 @@ import './_style.css';
 					<Text class='u--trimHL' fz='m' op='high'>
 						毎日の食器洗いの手間がなくなり、食後に家族とゆっくり過ごせる時間が増えました。 手洗いよりきれいに洗える気がします。
 					</Text>
-				</GridItem>
-				<GridItem layout={Grid} gtr='subgrid' gr='span 2' g='40' bgc='white' p='50' bdw='2px' bdrs='20' bxsh='20'>
+				</Grid>
+				<Grid gtr='subgrid' gr='span 2' g='40' bgc='white' p='50' bdw='2px' bdrs='20' bxsh='20'>
 					<Grid gtc='auto 1fr' ai='c' g='30'>
 						<Frame ar='1/1' w='stretch' maxW='5rem' bdrs='99'>
 							<Media src='/img/img-5.jpg' width='960' height='640' />
@@ -80,8 +80,8 @@ import './_style.css';
 					<Text class='u--trimHL' fz='m' op='high'>
 						油を使わずに揚げ物ができるので、ヘルシーで後片付けも楽ちんです。 外はサクサク、中はジューシーで味も本格的です。
 					</Text>
-				</GridItem>
-				<GridItem layout={Grid} gtr='subgrid' gr='span 2' g='40' bgc='white' p='50' bdw='2px' bdrs='20' bxsh='20'>
+				</Grid>
+				<Grid gtr='subgrid' gr='span 2' g='40' bgc='white' p='50' bdw='2px' bdrs='20' bxsh='20'>
 					<Grid gtc='auto 1fr' ai='c' g='30'>
 						<Frame ar='1/1' w='stretch' maxW='5rem' bdrs='99'>
 							<Media src='/img/img-6.jpg' width='960' height='640' />
@@ -94,7 +94,7 @@ import './_style.css';
 					<Text class='u--trimHL' fz='m' op='high'>
 						声だけで音楽をかけたり天気を調べたりできるのが未来的。 朝の忙しい時間に、ニュースを聞きながら準備できるのがお気に入り。
 					</Text>
-				</GridItem>
+				</Grid>
 			</Grid>
 		</Stack>
 	</Container>

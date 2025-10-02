@@ -9,24 +9,24 @@ import './_style.css';
 <DemoPageLayout title='Feature011'>
 	<Container bgc='base'>
 		<Grid gtr={['auto', '100svh']} gtc='auto'>
-			<GridItem layout={Grid} gr='1 / -1' gc='1 / -1' gtc='1fr 1fr' gtr='1fr 1fr'>
-				<GridItem layout={Frame} tag='figure' gr='1' gc='1'>
+			<Grid gr='1 / -1' gc='1 / -1' gtc='1fr 1fr' gtr='1fr 1fr'>
+				<Frame tag='figure' gr='1' gc='1'>
 					<Media src='/img/img-1.jpg' alt='' width='960' height='640' />
-				</GridItem>
-				<GridItem layout={Frame} tag='figure' gr='1' gc='2'>
+				</Frame>
+				<Frame tag='figure' gr='1' gc='2'>
 					<Media src='/img/img-2.jpg' alt='' width='960' height='640' h='100%' />
-				</GridItem>
-				<GridItem layout={Frame} tag='figure' gr='2' gc='1'>
+				</Frame>
+				<Frame tag='figure' gr='2' gc='1'>
 					<Media src='/img/img-3.jpg' alt='' width='960' height='640' />
-				</GridItem>
-				<GridItem layout={Frame} tag='figure' gr='2' gc='2'>
+				</Frame>
+				<Frame tag='figure' gr='2' gc='2'>
 					<Media src='/img/img-4.jpg' alt='' width='960' height='640' />
-				</GridItem>
-			</GridItem>
-			<GridItem layout={Grid} pos='r' gr='1 / -1' gc='1 / -1'>
-				<GridItem layout={Layer} gr='1 / -1' gc='1 / -1' blur='4px' bgc='black:30%' z='0' />
-				<GridItem layout={Grid} gr='1 / -1' gc='1 / -1' ai='c' jc='c' p='60 50' z='1'>
-					<GridItem layout={Stack} g='50' ai='c' w='stretch' maxW='450px' bgc='base' bdrs='10' p={['50', '60']} z='1'>
+				</Frame>
+			</Grid>
+			<Grid pos='r' gr='1 / -1' gc='1 / -1'>
+				<Layer} gr='1 / -1' gc='1 / -1' blur='4px' bgc='black:30%' z='0' />
+				<Grid gr='1 / -1' gc='1 / -1' ai='c' jc='c' p='60 50' z='1'>
+					<Stack g='50' ai='c' w='stretch' maxW='450px' bgc='base' bdrs='10' p={['50', '60']} z='1'>
 						<Text class='u--trimHL' fz='2xl' fw='bold'>心を整える時間</Text>
 						<Stack g='30'>
 							<p>忙しい毎日の中で、つい自分のことは後回しになりがち。 ほんの数分でも、自分の心と静かに向き合う時間を作りませんか？</p>
@@ -44,9 +44,9 @@ import './_style.css';
 								<GridItem tag='span' gc='2'>View More</GridItem>
 							</Button>
 						</Flex>
-					</GridItem>
-				</GridItem>
-			</GridItem>
+					</Stack>
+				</Grid>
+			</Grid>
 		</Grid>
 	</Container>
 </DemoPageLayout>

@@ -10,8 +10,8 @@ import './_style.css';
 	<Container size='m' bgc='base' py='60' hasGutter>
 		<Grid gtr={['auto 1fr auto', null, 'auto 1fr']} gtc={['1fr', null, '1fr auto']} g='50'>
 			<Text class='u--trimHL' fz='2xl' fw='bold'>この季節だからこそ</Text>
-			<GridItem layout={Grid} gc='1 / -1' gtc={['1fr', null, 'repeat(2, 1fr)']} g='50'>
-				<GridItem layout={Stack} isLinkBox href='#' g='40' hasHover>
+			<Grid gc='1 / -1' gtc={['1fr', null, 'repeat(2, 1fr)']} g='50'>
+				<Stack isLinkBox href='#' g='40' hasHover>
 					<Frame ar='16/9' bdrs='10' pos='r'>
 						<Media src='/img/img-1.jpg' width='960' height='640' />
 						<Layer hasTransition hov='get:show' bgc='rgb(0 0 0 / 30%)' blur='4px'>
@@ -24,8 +24,8 @@ import './_style.css';
 						<Text class='u--trimHL' fz='m' fw='bold'>夏のおすすめ</Text>
 						<Text class='u--trimHL' fz='s' op='mid'>Summer recommended products</Text>
 					</Stack>
-				</GridItem>
-				<GridItem layout={Stack} isLinkBox href='#' g='40' hasHover>
+				</Stack>
+				<Stack isLinkBox href='#' g='40' hasHover>
 					<Frame ar='16/9' bdrs='10' pos='r'>
 						<Media src='/img/img-2.jpg' width='960' height='640' />
 						<Layer hasTransition hov='get:show' bgc='rgb(0 0 0 / 30%)' blur='4px'>
@@ -38,8 +38,8 @@ import './_style.css';
 						<Text class='u--trimHL' fz='m' fw='bold'>登山に使いやすい</Text>
 						<Text class='u--trimHL' fz='s' op='mid'>Mountain special goods</Text>
 					</Stack>
-				</GridItem>
-				<GridItem layout={Stack} isLinkBox href='#' g='40' hasHover>
+				</Stack>
+				<Stack isLinkBox href='#' g='40' hasHover>
 					<Frame ar='16/9' bdrs='10' pos='r'>
 						<Media src='/img/img-4.jpg' width='960' height='640' />
 						<Layer hasTransition hov='get:show' bgc='rgb(0 0 0 / 30%)' blur='4px'>
@@ -52,8 +52,8 @@ import './_style.css';
 						<Text class='u--trimHL' fz='m' fw='bold'>秋の気配を感じて</Text>
 						<Text class='u--trimHL' fz='s' op='mid'>Feeling the signs of autumn</Text>
 					</Stack>
-				</GridItem>
-				<GridItem layout={Stack} isLinkBox href='#' g='40' hasHover>
+				</Stack>
+				<Stack isLinkBox href='#' g='40' hasHover>
 					<Frame ar='16/9' bdrs='10' pos='r'>
 						<Media src='/img/img-5.jpg' width='960' height='640' />
 						<Layer hasTransition hov='get:show' bgc='rgb(0 0 0 / 30%)' blur='4px'>
@@ -66,11 +66,11 @@ import './_style.css';
 						<Text class='u--trimHL' fz='m' fw='bold'>旅をしたくなる季節</Text>
 						<Text class='u--trimHL' fz='s' op='mid'>A season that makes you want to travel</Text>
 					</Stack>
-				</GridItem>
-			</GridItem>
+				</Stack>
+			</Grid>
 			<GridItem gr={['3', null, '1']} gc={['1 / -1', null, '2']}>
 				<Button layout={Grid} href='#' gtc='1em 1fr 1em' variant='outline' jc='c' ai='c' minW='8rem' bdrs='10'>
-					<GridItem layout={Text} gc='2'>View All</GridItem>
+					<Text gc='2'>View All</Text>
 				</Button>
 			</GridItem>
 		</Grid>

@@ -1,7 +1,7 @@
 ---
 import DemoPageLayout from '~/layouts/DemoPageLayout.astro';
 
-import { Stack, Container, Frame, Grid, GridItem, Media, Text, Flex, Icon } from 'lism-css/astro';
+import { Stack, Container, Frame, Grid, Media, Text, Flex, Icon } from 'lism-css/astro';
 import './_style.css';
 ---
 
@@ -26,9 +26,9 @@ import './_style.css';
 						</Flex>
 					</Flex>
 				</Stack>
-				<GridItem layout={Frame} gr={[null, null, '1']} gc={['1', null, '2']}>
+				<Frame gr={[null, null, '1']} gc={['1', null, '2']}>
 					<Media src='/img/img-4.jpg' alt='' width='960' height='640' />
-				</GridItem>
+				</Frame>
 			</Grid>
 		</Stack>
 	</Container>

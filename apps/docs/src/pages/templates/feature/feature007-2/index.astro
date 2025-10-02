@@ -1,7 +1,7 @@
 ---
 import DemoPageLayout from '~/layouts/DemoPageLayout.astro';
 
-import { Container, Frame, Grid, GridItem, Media, Stack, Text } from 'lism-css/astro';
+import { Container, Frame, Grid, Media, Stack, Text } from 'lism-css/astro';
 import Button from '~/components/ex/Button/index.astro';
 import './_style.css';
 ---
@@ -9,7 +9,7 @@ import './_style.css';
 <DemoPageLayout title='Feature007-2'>
 	<Container bgc='base'>
 		<Grid gtc={['auto', null, '1fr 1fr']} gtr={['auto, auto', null, '1fr']} g='5'>
-			<GridItem layout={Stack} g='50' bgc='base-2' ai='c' jc='c' p={['60 50', null, '60']}>
+			<Stack g='50' bgc='base-2' ai='c' jc='c' p={['60 50', null, '60']}>
 				<Text fz='2xl' fw='bold'>感動をその手に</Text>
 				<Stack g='40'>
 					<p>
@@ -20,8 +20,8 @@ import './_style.css';
 					<p>いつもの帰り道が、新しい発見に満ちた冒険の道に変わる。そんな体験を、私たちと一緒に始めましょう。</p>
 				</Stack>
 				<Button href='#' minW='250px' jc='c' p='30' bdrs='10'>View More</Button>
-			</GridItem>
-			<GridItem layout={Grid} gr={['2', null, '1']} gtr='1fr 1fr' gtc='1fr 1fr' g='5'>
+			</Stack>
+			<Grid gr={['2', null, '1']} gtr='1fr 1fr' gtc='1fr 1fr' g='5'>
 				<Frame tag='figure'>
 					<Media src='/img/img-1.jpg' alt='' width='960' height='640' />
 				</Frame>
@@ -34,7 +34,7 @@ import './_style.css';
 				<Frame tag='figure'>
 					<Media src='/img/img-4.jpg' alt='' width='960' height='640' />
 				</Frame>
-			</GridItem>
+			</Grid>
 		</Grid>
 	</Container>
 </DemoPageLayout>
