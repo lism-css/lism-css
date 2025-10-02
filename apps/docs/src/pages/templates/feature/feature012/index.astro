@@ -13,18 +13,7 @@ import './_style.css';
 			gtc={['1fr minmax(320px, 1fr) 1fr', null, 'minmax(320px, 1fr) 0.5fr 0.5fr']}
 			h={['auto', null, '100svh']}
 		>
-			<GridItem
-				layout={Stack}
-				gr='1 / -1'
-				gc={['2 / span 1', null, '1 / span 1']}
-				g='50'
-				ai='c'
-				w='stretch'
-				bgc='black:35%'
-				p='60 50'
-				pos='r'
-				z='1'
-			>
+			<Stack gr='1 / -1' gc={['2 / span 1', null, '1 / span 1']} g='50' ai='c' w='stretch' bgc='black:35%' p='60 50' pos='r' z='1'>
 				<Layer blur='8px' z='0' />
 				<Stack g='50' c='white' ai='c' jc='c' h='100%' z='1'>
 					<Text class='u--trimHL' fz='2xl' fw='bold'>とっておきの週末</Text>
@@ -51,22 +40,22 @@ import './_style.css';
 						</Button>
 					</Flex>
 				</Stack>
-			</GridItem>
-			<GridItem layout={Frame} tag='figure' gr={['1 / span 2', null, '1 / -1']} gc={['2', null, '1']}>
+			</Stack>
+			<Frame tag='figure' gr={['1 / span 2', null, '1 / -1']} gc={['2', null, '1']}>
 				<Media src='/img/img-1.jpg' alt='' width='960' height='640' />
-			</GridItem>
-			<GridItem layout={Frame} tag='figure' gr={['1', null, '1 / span 2']} gc={['1', null, '2']}>
+			</Frame>
+			<Frame tag='figure' gr={['1', null, '1 / span 2']} gc={['1', null, '2']}>
 				<Media src='/img/img-2.jpg' alt='' width='960' height='640' />
-			</GridItem>
-			<GridItem layout={Frame} tag='figure' gr={['1', null, '1 / span 2']} gc={['3', null, '3']}>
+			</Frame>
+			<Frame tag='figure' gr={['1', null, '1 / span 2']} gc={['3', null, '3']}>
 				<Media src='/img/img-3.jpg' alt='' width='960' height='640' />
-			</GridItem>
-			<GridItem layout={Frame} tag='figure' gr={['2', null, '3 / span 2']} gc={['1', null, '2']}>
+			</Frame>
+			<Frame tag='figure' gr={['2', null, '3 / span 2']} gc={['1', null, '2']}>
 				<Media src='/img/img-4.jpg' alt='' width='960' height='640' />
-			</GridItem>
-			<GridItem layout={Frame} tag='figure' gr={['2', null, '3 / span 2']} gc={['3', null, '3']}>
+			</Frame>
+			<Frame tag='figure' gr={['2', null, '3 / span 2']} gc={['3', null, '3']}>
 				<Media src='/img/img-5.jpg' alt='' width='960' height='640' />
-			</GridItem>
+			</Frame>
 		</Grid>
 	</Container>
 </DemoPageLayout>

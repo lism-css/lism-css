@@ -1,7 +1,7 @@
 ---
 import DemoPageLayout from '~/layouts/DemoPageLayout.astro';
 
-import { Container, Frame, Grid, GridItem, Media, Stack, Text, Layer, Center } from 'lism-css/astro';
+import { Container, Frame, Grid, Media, Stack, Text, Layer, Center } from 'lism-css/astro';
 import './_style.css';
 ---
 
@@ -9,7 +9,7 @@ import './_style.css';
 	<Container size='m' bgc='base' py='60' hasGutter>
 		<Text fz='2xl' fw='bold' ta='c' mb='50'>製品について</Text>
 		<Grid gtc={['auto', null, 'repeat(2, 1fr)']} g='50'>
-			<GridItem isLinkBox href='#' layout={Grid} gtc='1fr 2fr' bxsh='20' hasTransition hasHover hov='bxsh'>
+			<Grid isLinkBox href='#' gtc='1fr 2fr' bxsh='20' hasTransition hasHover hov='bxsh'>
 				<Frame tag='figure' pos='r'>
 					<Media src='/img/img-1.jpg' alt='' width='960' height='640' />
 					<Layer hasTransition hov='get:show' bgc='rgb(0 0 0 / 30%)' blur='4px'>
@@ -22,8 +22,8 @@ import './_style.css';
 					<Text class='u--trimHL' fz='m' fw='bold'>衣類をいたわる</Text>
 					<Text class='u--trimHL' fz='s' op='high'>繊維の奥の汚れを落とし、衣類の傷みを抑えながら、ふんわりと優しく洗い上げます。</Text>
 				</Stack>
-			</GridItem>
-			<GridItem isLinkBox href='#' layout={Grid} gtc='1fr 2fr' bxsh='20' hasTransition hasHover hov='bxsh'>
+			</Grid>
+			<Grid isLinkBox href='#' gtc='1fr 2fr' bxsh='20' hasTransition hasHover hov='bxsh'>
 				<Frame tag='figure' pos='r'>
 					<Media src='/img/img-2.jpg' alt='' width='960' height='640' />
 					<Layer hasTransition hov='get:show' bgc='rgb(0 0 0 / 30%)' blur='4px'>
@@ -36,8 +36,8 @@ import './_style.css';
 					<Text class='u--trimHL' fz='m' fw='bold'>空気をデザインする</Text>
 					<Text class='u--trimHL' fz='s' op='high'>快適な室温はもちろん、空気清浄機能でウイルスや花粉の活動を抑制します。</Text>
 				</Stack>
-			</GridItem>
-			<GridItem isLinkBox href='#' layout={Grid} gtc='1fr 2fr' bxsh='20' hasTransition hasHover hov='bxsh'>
+			</Grid>
+			<Grid isLinkBox href='#' gtc='1fr 2fr' bxsh='20' hasTransition hasHover hov='bxsh'>
 				<Frame tag='figure' pos='r'>
 					<Media src='/img/img-3.jpg' alt='' width='960' height='640' />
 					<Layer hasTransition hov='get:show' bgc='rgb(0 0 0 / 30%)' blur='4px'>
@@ -50,8 +50,8 @@ import './_style.css';
 					<Text class='u--trimHL' fz='m' fw='bold'>毎日ごちそうを</Text>
 					<Text class='u--trimHL' fz='s' op='high'>過熱水蒸気の力で、本格的なオーブン料理が誰でも簡単においしく作れます。</Text>
 				</Stack>
-			</GridItem>
-			<GridItem isLinkBox href='#' layout={Grid} gtc='1fr 2fr' bxsh='20' hasTransition hasHover hov='bxsh'>
+			</Grid>
+			<Grid isLinkBox href='#' gtc='1fr 2fr' bxsh='20' hasTransition hasHover hov='bxsh'>
 				<Frame tag='figure' pos='r'>
 					<Media src='/img/img-4.jpg' alt='' width='960' height='640' />
 					<Layer hasTransition hov='get:show' bgc='rgb(0 0 0 / 30%)' blur='4px'>
@@ -64,7 +64,7 @@ import './_style.css';
 					<Text class='u--trimHL' fz='m' fw='bold'>深呼吸したくなる空間へ</Text>
 					<Text class='u--trimHL' fz='s' op='high'>高性能フィルターが微細な粒子を99%捕集。静かな運転音で寝室にも最適。</Text>
 				</Stack>
-			</GridItem>
+			</Grid>
 		</Grid>
 	</Container>
 </DemoPageLayout>

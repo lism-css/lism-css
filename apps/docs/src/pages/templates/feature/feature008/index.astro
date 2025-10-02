@@ -1,7 +1,7 @@
 ---
 import DemoPageLayout from '~/layouts/DemoPageLayout.astro';
 
-import { Container, Frame, Grid, GridItem, Media, Stack, Text } from 'lism-css/astro';
+import { Container, Frame, Grid, Media, Stack, Text } from 'lism-css/astro';
 import Button from '~/components/ex/Button/index.astro';
 import './_style.css';
 ---
@@ -9,8 +9,7 @@ import './_style.css';
 <DemoPageLayout title='Feature008'>
 	<Container bgc='base'>
 		<Grid gtc={['repeat(2, 1fr)', null, 'repeat(4, 1fr)']} gtr={['repeat(4, 1fr)', null, 'repeat(2, 1fr)']} g='5'>
-			<GridItem
-				layout={Stack}
+			<Stack
 				gr={['2 / span 2', null, '1 / -1']}
 				gc={['1 / -1', null, '2 / span 2']}
 				g='50'
@@ -31,7 +30,7 @@ import './_style.css';
 					</p>
 				</Stack>
 				<Button href='#' minW='250px' jc='c' p='30' bdrs='10'>View More</Button>
-			</GridItem>
+			</Stack>
 			<Frame tag='figure'>
 				<Media src='/img/img-1.jpg' alt='' width='960' height='640' />
 			</Frame>

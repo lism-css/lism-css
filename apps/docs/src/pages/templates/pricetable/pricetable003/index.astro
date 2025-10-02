@@ -2,7 +2,7 @@
 import DemoPageLayout from '~/layouts/DemoPageLayout.astro';
 import Button from '~/components/ex/Button/index.astro';
 
-import { Container, Flex, Grid, GridItem, Icon, Stack, Text } from 'lism-css/astro';
+import { Container, Flex, Grid, Icon, Stack, Text } from 'lism-css/astro';
 import './_style.css';
 ---
 
@@ -11,7 +11,7 @@ import './_style.css';
 		<Stack g='60'>
 			<Text class='u--trimHL' fz='2xl' fw='bold' ta='c'>料金プラン</Text>
 			<Grid gtr={['repeat(2, auto)', null, '1fr']} gtc={['auto', null, 'repeat(2, 1fr)']} g={['50', null, '0']} ai='c'>
-				<GridItem layout={Grid} g='40' ai='s' bgc='white' p='50' bd bdc='blue' bdw='2px' bdrs='20' bxsh='20' z='1'>
+				<Grid g='40' ai='s' bgc='white' p='50' bd bdc='blue' bdw='2px' bdrs='20' bxsh='20' z='1'>
 					<Stack w='stretch' g='30'>
 						<Text class='u--trimHL' fz='m' fw='bold' c='blue'>Hobby</Text>
 						<Text class='u--trimHL' fz='xl' fw='bold'>無料</Text>
@@ -31,8 +31,8 @@ import './_style.css';
 						<Flex tag='li' g='20' ai='c'><Icon icon='check' c='blue' /><Text tag='span' fz='s'>電話サポート</Text></Flex>
 					</Stack>
 					<Button href='#' jc='c' bgc='blue' p='30' bdrs='10'>今すぐはじめる</Button>
-				</GridItem>
-				<GridItem layout={Grid} g='40' bgc='gray:5%' p='50' bdrs='20' bxsh='20'>
+				</Grid>
+				<Grid g='40' bgc='gray:5%' p='50' bdrs='20' bxsh='20'>
 					<Stack w='stretch' g='30'>
 						<Text class='u--trimHL' fz='m' fw='bold' c='blue'>Personal</Text>
 						<Flex ai='e' g='10'>
@@ -51,7 +51,7 @@ import './_style.css';
 						<Flex tag='li' g='20' ai='c'><Icon icon='check' c='blue' /><Text tag='span' fz='s'>請求書郵送代行</Text></Flex>
 					</Stack>
 					<Button href='#' jc='c' p='30' bdrs='10'>このプランを選択</Button>
-				</GridItem>
+				</Grid>
 			</Grid>
 		</Stack>
 	</Container>

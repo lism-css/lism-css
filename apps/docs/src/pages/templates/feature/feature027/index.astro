@@ -1,7 +1,7 @@
 ---
 import DemoPageLayout from '~/layouts/DemoPageLayout.astro';
 
-import { Stack, Container, Frame, Grid, GridItem, Media, Text, Flex } from 'lism-css/astro';
+import { Stack, Container, Frame, Grid, Media, Text, Flex } from 'lism-css/astro';
 import './_style.css';
 ---
 
@@ -13,9 +13,8 @@ import './_style.css';
 				<Text fz='m' op='mid'>Pickup Products</Text>
 			</Stack>
 			<Grid gtc={['1fr', 'repeat(2, 1fr)', 'repeat(3, 1fr)']} gtr='auto auto' g='50'>
-				<GridItem
+				<Grid
 					class='u--outerR'
-					layout={Grid}
 					hasHover
 					gr='span 2'
 					gc='1 / -1'
@@ -39,8 +38,8 @@ import './_style.css';
 							<Text fz='m'>View Detail</Text>
 						</Flex>
 					</Stack>
-				</GridItem>
-				<GridItem layout={Grid} hasHover gr='span 2' g='40' tag='a' isLinkBox href='#'>
+				</Grid>
+				<Grid hasHover gr='span 2' g='40' tag='a' isLinkBox href='#'>
 					<Frame ar='16/9' bdrs='20' pos='r'>
 						<Media src='/img/img-1.jpg' alt='' width='960' height='640' hasTransition hov='get:zoom' />
 					</Frame>
@@ -51,8 +50,8 @@ import './_style.css';
 							<Text fz='m'>View Detail</Text>
 						</Flex>
 					</Stack>
-				</GridItem>
-				<GridItem layout={Grid} hasHover gr='span 2' g='40' tag='a' isLinkBox href='#'>
+				</Grid>
+				<Grid hasHover gr='span 2' g='40' tag='a' isLinkBox href='#'>
 					<Frame ar='16/9' bdrs='20' pos='r'>
 						<Media src='/img/img-2.jpg' alt='' width='960' height='640' hasTransition hov='get:zoom' />
 					</Frame>
@@ -63,8 +62,8 @@ import './_style.css';
 							<Text fz='m'>View Detail</Text>
 						</Flex>
 					</Stack>
-				</GridItem>
-				<GridItem layout={Grid} hasHover gr='span 2' g='40' tag='a' isLinkBox href='#'>
+				</Grid>
+				<Grid hasHover gr='span 2' g='40' tag='a' isLinkBox href='#'>
 					<Frame ar='16/9' bdrs='20' pos='r'>
 						<Media src='/img/img-4.jpg' alt='' width='960' height='640' hasTransition hov='get:zoom' />
 					</Frame>
@@ -75,7 +74,7 @@ import './_style.css';
 							<Text fz='m'>View Detail</Text>
 						</Flex>
 					</Stack>
-				</GridItem>
+				</Grid>
 			</Grid>
 		</Stack>
 	</Container>

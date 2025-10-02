@@ -1,7 +1,7 @@
 ---
 import DemoPageLayout from '~/layouts/DemoPageLayout.astro';
 
-import { Container, Frame, Flex, Grid, GridItem, Icon, LinkBox, Media, Stack, Text } from 'lism-css/astro';
+import { Container, Frame, Flex, Grid, Icon, LinkBox, Media, Stack, Text } from 'lism-css/astro';
 import './_style.css';
 ---
 
@@ -10,7 +10,7 @@ import './_style.css';
 		<Stack g='60'>
 			<Text class='u--trimHL' fz='2xl' fw='bold' ta='c'>スタッフ一覧</Text>
 			<Grid gtc={['auto', null, 'repeat(2, 1fr)']} g='50'>
-				<GridItem layout={Grid} gtr='subgrid' gr='span 2' g='40' bgc='white' p='40' bdrs='10'>
+				<Grid gtr='subgrid' gr='span 2' g='40' bgc='white' p='40' bdrs='10'>
 					<Grid gtc='auto 1fr' g='40'>
 						<Frame ar='1/1' w='stretch' maxW='120px' bdrs='10'>
 							<Media src='/img/img-1.jpg' width='960' height='640' />
@@ -30,8 +30,8 @@ import './_style.css';
 						2010年に当社を設立。クリエイティブの力で数々のクライアント課題を解決。
 						プロジェクト全体の品質に目を配り、チームを力強く牽引する。週末のキャンプが何よりの楽しみ。
 					</Text>
-				</GridItem>
-				<GridItem layout={Grid} gtr='subgrid' gr='span 2' g='40' bgc='white' p='40' bdrs='10'>
+				</Grid>
+				<Grid gtr='subgrid' gr='span 2' g='40' bgc='white' p='40' bdrs='10'>
 					<Grid gtc='auto 1fr' g='40'>
 						<Frame ar='1/1' w='stretch' maxW='120px' bdrs='10'>
 							<Media src='/img/img-5.jpg' width='960' height='640' />
@@ -51,8 +51,8 @@ import './_style.css';
 						人間の心理や行動に基づいた、直感的で美しいUI/UXデザインを得意とする。
 						ユーザーにとって本当に価値のある体験とは何かを常に追求し、ビジュアル全体を統括する。
 					</Text>
-				</GridItem>
-				<GridItem layout={Grid} gtr='subgrid' gr='span 2' g='40' bgc='white' p='40' bdrs='10'>
+				</Grid>
+				<Grid gtr='subgrid' gr='span 2' g='40' bgc='white' p='40' bdrs='10'>
 					<Grid gtc='auto 1fr' g='40'>
 						<Frame ar='1/1' w='stretch' maxW='120px' bdrs='10'>
 							<Media src='/img/img-3.jpg' width='960' height='640' />
@@ -72,8 +72,8 @@ import './_style.css';
 						最新のWeb技術に対する探究心が武器。困難な要件でも、最適な技術選定と実装でプロジェクトを成功に導く。
 						後輩の育成にも情熱を注ぐ、頼れる技術リーダー。
 					</Text>
-				</GridItem>
-				<GridItem layout={Grid} gtr='subgrid' gr='span 2' g='40' bgc='white' p='40' bdrs='10'>
+				</Grid>
+				<Grid gtr='subgrid' gr='span 2' g='40' bgc='white' p='40' bdrs='10'>
 					<Grid gtc='auto 1fr' g='40'>
 						<Frame ar='1/1' w='stretch' maxW='120px' bdrs='10'>
 							<Media src='/img/img-4.jpg' width='960' height='640' />
@@ -92,7 +92,7 @@ import './_style.css';
 						クライアントと制作チームの架け橋となり、プロジェクトを円滑に進行させる司令塔。
 						丁寧なコミュニケーションと緻密なスケジュール管理で、お客様からの信頼も厚い。
 					</Text>
-				</GridItem>
+				</Grid>
 			</Grid>
 		</Stack>
 	</Container>
