@@ -128,9 +128,10 @@ export default {
 
 	op: { prop: 'opacity', presets: ['0'], token: 'op', tokenClass: 1 },
 	v: { prop: 'visibility', utils: { h: 'hidden', v: 'visible' } },
-	ov: { prop: 'overflow', utils: { h: 'hidden', a: 'auto', c: 'clip', s: 'scroll' } },
-	ovx: { prop: 'overflowX', utils: { h: 'hidden', a: 'auto', c: 'clip', s: 'scroll' } },
-	ovy: { prop: 'overflowY', utils: { h: 'hidden', a: 'auto', c: 'clip', s: 'scroll' } },
+
+	ov: { prop: 'overflow', presets: ['hidden', 'auto', 'clip', 'scroll'] },
+	'ov-x': { prop: 'overflowX', presets: ['hidden', 'auto', 'clip', 'scroll'] },
+	'ov-y': { prop: 'overflowY', presets: ['hidden', 'auto', 'clip', 'scroll'] },
 	// overflow-clip-margin → safariで使えない
 	ar: {
 		prop: 'aspectRatio',

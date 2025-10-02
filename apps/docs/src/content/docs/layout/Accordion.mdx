@@ -20,7 +20,7 @@ details.d--accordion
 		span.d--accordion_icon.-d:if
 			svg.l--icon
 	div.d--accordion_body.l--grid
-		div.d--accordion_inner.-ov:h ...Contents...
+		div.d--accordion_inner.-ov:hidden ...Contents...
 ```
 
 <Note title='実装方法について' type='info'>
@@ -88,7 +88,7 @@ details.d--accordion
 		</span>
 	</summary>
 	<div class="d--accordion_body l--grid -mbs:20">
-		<div class="d--accordion_inner -ov:h">
+		<div class="d--accordion_inner -ov:hidden">
 			<p>Lorem ipsum...</p>
 		</div>
 	</div>
@@ -426,7 +426,7 @@ CSSで`:root`の`--acc-duration`を上書きすると、デフォルトの開閉
 		</button>
 	</summary>
 	<div class="d--accordion_body l--grid -mbs:20">
-		<div class="d--accordion_inner -ov:h">...</div>
+		<div class="d--accordion_inner -ov:hidden">...</div>
 	</div>
 </details>
 ```

@@ -18,7 +18,7 @@ export function AttsLabels({ atts = '', ...props }) {
 			ta='c'
 			lh='1'
 			mt='-1.1em'
-			ov='h'
+			ov='hidden'
 			z='1'
 			{...props}
 		>

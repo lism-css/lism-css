@@ -15,7 +15,7 @@ import Card from '~/components/ex/Card/index.jsx';
 	<PreviewArea resize bg='u:stripe' p='0' isFlow={null}>
 	<Box p={['30', null,'40']}>
 		<Columns cols={[1, 2]} g={['30', null, '40']} colSize='16rem' ai='s'>
-			<WithSide isLinkBox href='###' hov='bxsh' hasTransition sideW='50%' bgc='base' bdrs='20' bxsh='10' ov='h' gc='1/-1'>
+			<WithSide isLinkBox href='###' hov='bxsh' hasTransition sideW='50%' bgc='base' bdrs='20' bxsh='10' ov='hidden' gc='1/-1'>
 				<Frame data-is-side ar='16/9' >
 					<Media src='/img/img-4.jpg' alt='' width='960' height='640' />
 				</Frame>
@@ -174,7 +174,7 @@ import Card from '~/components/ex/Card/index.jsx';
 <Preview>
 	<PreviewTitle>Preview</PreviewTitle>
 	<PreviewArea resize p='40'>
-		<WithSide tag='a' isLinkBox href='#_' hov='bxsh' hasTransition sideW='50%' bgc='base' bdrs='20' bxsh='10' ov='h'>
+		<WithSide tag='a' isLinkBox href='#_' hov='bxsh' hasTransition sideW='50%' bgc='base' bdrs='20' bxsh='10' ov='hidden'>
 			<Frame data-is-side ar='16/9' >
 				<Media src='/img/img-4.jpg' alt='' width='960' height='640' />
 			</Frame>
@@ -187,7 +187,7 @@ import Card from '~/components/ex/Card/index.jsx';
 	</PreviewArea>
 	<PreviewCode slot='tab' label='JSX'>
 		```jsx "WithSide" "tag='a' isLinkBox"
-		<WithSide tag='a' isLinkBox href='#_' hov='bxsh' hasTransition sideW='50%' bgc='base' bdrs='20' bxsh='10' ov='h'>
+		<WithSide tag='a' isLinkBox href='#_' hov='bxsh' hasTransition sideW='50%' bgc='base' bdrs='20' bxsh='10' ov='hidden'>
 			<Frame data-is-side ar='16/9' >
 				<Media src='/img/img-4.jpg' alt='' width='960' height='640' />
 			</Frame>
@@ -207,7 +207,7 @@ import Card from '~/components/ex/Card/index.jsx';
 <Preview>
 	<PreviewTitle>`is--overlayLink`を使う例</PreviewTitle>
 	<PreviewArea resize p='40'>
-		<WithSide isLinkBox href='#_' hov='bxsh' hasTransition sideW='50%' bgc='base' bdrs='20' bxsh='10' ov='h'>
+		<WithSide isLinkBox href='#_' hov='bxsh' hasTransition sideW='50%' bgc='base' bdrs='20' bxsh='10' ov='hidden'>
 			<Frame data-is-side ar='16/9' pos='r'>
 				<Media src='/img/img-5.jpg' alt='' width='960' height='640' />
 				<Link href='#badge-link' pos='a' z='1' t='0' r='0' fz='s' bgc='black' c='white' m='20' px='20' bdrs='99' td='n' hov='op'>Category</Link>
@@ -223,7 +223,7 @@ import Card from '~/components/ex/Card/index.jsx';
 	</PreviewArea>
 	<PreviewCode slot='tab' label='JSX'>
 		```jsx "isLinkBox" "\<Link " "is--overlayLink"
-		<WithSide isLinkBox href='#_' hov='bxsh' hasTransition sideW='50%' bgc='base' bdrs='20' bxsh='10' ov='h'>
+		<WithSide isLinkBox href='#_' hov='bxsh' hasTransition sideW='50%' bgc='base' bdrs='20' bxsh='10' ov='hidden'>
 			<Frame data-is-side ar='16/9' pos='r'>
 				<Media src='/img/img-5.jpg' alt='' width='960' height='640' />
 				<Link href='#badge-link' pos='a' z='1' t='0' r='0' fz='s' bgc='black' c='white' m='20' px='20' bdrs='99' td='n' hov='op'>Category</Link>
@@ -335,7 +335,7 @@ import Card from '~/components/ex/Card/index.jsx';
 <Preview>
 	<PreviewTitle>Preview</PreviewTitle>
 	<PreviewArea p='30'>
-		<LinkBox href='#card-a' pos='r' bdrs='20' bxsh='20' ov='h' hasHover maxW='xs' mx='auto'>
+		<LinkBox href='#card-a' pos='r' bdrs='20' bxsh='20' ov='hidden' hasHover maxW='xs' mx='auto'>
 			<Frame ar='1/1'>
 				<img src='/img/img-5.jpg' alt='' width='960' height='640' />
 			</Frame>
@@ -345,7 +345,7 @@ import Card from '~/components/ex/Card/index.jsx';
 				<Box pos='r' z='1' c='white' lh='s' css={{textShadow: '0 0 1em rgb(0 0 0 / 20%)'}}>
 					<h3 className='-fz:l'>Card Title</h3>
 					<Grid hasTransition hov='get:slide'>
-						<Box ov='h'>
+						<Box ov='hidden'>
 							<Dummy py='5' fz='s' lh='xs'/>
 						</Box>
 					</Grid>
@@ -356,7 +356,7 @@ import Card from '~/components/ex/Card/index.jsx';
 	</PreviewArea>
 	<PreviewCode slot='tab' label='JSX'>
 	```jsx "hasHover" "hov='get:slide'"
-	<LinkBox href='#card-a' pos='r' bdrs='20' bxsh='20' ov='h' hasHover maxW='xs' mx='auto'>
+	<LinkBox href='#card-a' pos='r' bdrs='20' bxsh='20' ov='hidden' hasHover maxW='xs' mx='auto'>
 		<Frame ar='1/1'>
 			<img src='/img/img-5.jpg' alt='' width='960' height='640' />
 		</Frame>
@@ -366,7 +366,7 @@ import Card from '~/components/ex/Card/index.jsx';
 			<Box pos='r' z='1' c='white' lh='s' css={{textShadow: '0 0 1em rgb(0 0 0 / 20%)'}}>
 				<h3 className='-fz:l'>Card Title</h3>
 				<Grid hasTransition hov='get:slide'>
-					<Box ov='h'>
+					<Box ov='hidden'>
 						<Dummy py='5' fz='s' lh='xs'/>
 					</Box>
 				</Grid>

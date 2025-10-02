@@ -18,7 +18,7 @@ const { name = '', hasRoot = false, react, astro, css, others = [], ...props } =
 		react && (
 			<PreviewCode slot='tab' label='React (.jsx)'>
 				<EmbedCode srcPath={`src/components/ex/${name}/${hasRoot ? `${name}.jsx` : 'index.jsx'}`} />
-				{/* <Frame ovy='auto' maxH='25rem'>
+				{/* <Frame ov-y='auto' maxH='25rem'>
 					<script
 						src={`${embedUrl}?target=${encodeURI(`${basePath}${hasRoot ? `${name}.jsx` : 'index.jsx'}`)}&${queryMeta}`}
 					/>
