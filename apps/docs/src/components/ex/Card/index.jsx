@@ -8,7 +8,7 @@ export default function Card({ layout, ...props }) {
 		bgc: 'base',
 		bdrs: '20',
 		bxsh: '20',
-		ov: 'hidden',
+		ov: 'h',
 	};
 
 	// hrefが指定されていればlink化

@@ -17,7 +17,7 @@ import { Minus, Plus, X, Question, CaretDoubleDown, EyeClosed, Eyes } from "@pho
 details.d--accordion
 	summary.d--accordion_header.l--flex.-ai:c
 		span.d--accordion_label.-fx:1 ...Header label...
-		span.d--accordion_icon.-d:inline-flex
+		span.d--accordion_icon.-d:if
 			svg.l--icon
 	div.d--accordion_body.l--grid
 		div.d--accordion_inner.-ov:hidden ...Contents...
@@ -83,7 +83,7 @@ details.d--accordion
 <details class="d--accordion -p:20">
 	<summary class="d--accordion_header l--flex -ai:c">
 		<span class="d--accordion_label -fx:1">Accordion.Label</span>
-		<span class="d--accordion_icon -d:inline-flex">
+		<span class="d--accordion_icon -d:if">
 			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="1em" height="1em" fill="currentColor" focusable="false" class="l--icon" aria-hidden="true"><path d="M216.49,104.49l-80,80a12,12,0,0,1-17,0l-80-80a12,12,0,0,1,17-17L128,159l71.51-71.52a12,12,0,0,1,17,17Z"></path></svg>
 		</span>
 	</summary>
@@ -421,7 +421,7 @@ CSSで`:root`の`--acc-duration`を上書きすると、デフォルトの開閉
 <details class="d--accordion -p:20">
 	<summary class="d--accordion_header l--flex -ai:c">
 		<span class="d--accordion_label -fx:1">Labelテキスト（<a href="#acc-innerlink">ヘルプリンク</a></span>
-		<button class="d--accordion_icon -d:inline-flex -bd -bdrs:5 -bgc:inherit -p:10" data-role="trigger">
+		<button class="d--accordion_icon -d:ig -bd -bdrs:5 -bgc:inherit -p:10" data-role="trigger">
 			<svg class="l--icon"...>...</svg>
 		</button>
 	</summary>

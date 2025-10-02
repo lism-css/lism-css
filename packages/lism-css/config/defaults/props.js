@@ -109,8 +109,7 @@ export default {
 
 	d: {
 		prop: 'display',
-		presets: ['none', 'block', 'flex', 'grid', 'inline', 'inline-flex', 'inline-block'],
-		shorthands: {
+		utils: {
 			n: 'none',
 			b: 'block',
 			f: 'flex',
@@ -123,7 +122,7 @@ export default {
 	},
 
 	op: { prop: 'opacity', presets: ['0'], token: 'op', tokenClass: 1 },
-	v: { prop: 'visibility', presets: ['hidden', 'visible'] },
+	v: { prop: 'visibility', utils: { h: 'hidden', v: 'visible' } },
 
 	ov: { prop: 'overflow', presets: ['hidden', 'auto', 'clip', 'scroll'] },
 	'ov-x': { prop: 'overflowX', presets: ['hidden', 'auto', 'clip', 'scroll'] },
