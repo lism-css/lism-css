@@ -219,8 +219,16 @@ export default {
 
 	// flex
 	fxf: { prop: 'flexFlow' },
-	fxw: { prop: 'flexWrap', utils: { w: 'wrap', n: 'nowrap' }, bp: 1 },
-	fxd: { prop: 'flexDirection', utils: { col: 'column', 'col-r': 'column-reverse', row: 'row', 'row-r': 'row-reverse' }, bp: 1 },
+	fxw: {
+		prop: 'flexWrap',
+		bp: 1,
+		utils: { w: 'wrap', n: 'nowrap' },
+	},
+	fxd: {
+		prop: 'flexDirection',
+		bp: 1,
+		utils: { c: 'column', cr: 'column-reverse', r: 'row', rr: 'row-reverse' },
+	},
 	fx: { prop: 'flex', bp: 1, presets: ['1'] },
 	fxg: { prop: 'flexGrow', presets: ['1'] },
 	fxsh: { prop: 'flexShrink', presets: ['0'] },
@@ -237,9 +245,9 @@ export default {
 	gar: { prop: 'gridAutoRows', bp: 1 },
 
 	// grid item
-	ga: { prop: 'gridArea', bp: 1, utils: { '1/1': ' 1 / 1' } },
-	gc: { prop: 'gridColumn', bp: 1, utils: { '1/-1': '1 / -1' } },
-	gr: { prop: 'gridRow', bp: 1, utils: { '1/-1': '1 / -1' } },
+	ga: { prop: 'gridArea', bp: 1, presets: ['1/1'] },
+	gc: { prop: 'gridColumn', bp: 1, presets: ['1/-1'] },
+	gr: { prop: 'gridRow', bp: 1, presets: ['1/-1'] },
 	gcs: { prop: 'gridColumnStart' },
 	gce: { prop: 'gridColumnEnd' },
 	grs: { prop: 'gridRowStart' },

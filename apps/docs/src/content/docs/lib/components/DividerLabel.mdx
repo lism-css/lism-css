@@ -136,6 +136,7 @@ import DividerLabel from '~/components/ex/DividerLabel/index.astro';
 	<PreviewArea p='30' isFlow={false}>
 		<Flex ai='c' g='20'>
 			<Box fx='1' bgc='base-2' py='50' ta='c'>Box</Box>
+			{/* <DividerLabel fxd='column' bd-s  aslf='stretch'>Label</DividerLabel> */}
 			<Stack ai='c' g='20' lh='1' fz='s' aslf='stretch'>
 				<Divider fx='1' bd-s />
 				<span>Label</span>
@@ -145,7 +146,7 @@ import DividerLabel from '~/components/ex/DividerLabel/index.astro';
 		</Flex>
 	</PreviewArea>
 	<PreviewCode slot='tab' label='JSX'>
-		```jsx "bd-s"
+		```jsx "fxd='column'" "bd-s"
 		<Flex ai='c' g='20'>
 			<Box fx='1' bgc='base-2' py='50' ta='c'>Box</Box>
 			<Stack ai='c' g='20' lh='1' fz='s' aslf='stretch'>
