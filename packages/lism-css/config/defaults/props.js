@@ -89,16 +89,6 @@ export default {
 		presets: ['none'],
 		skipSCSS: 1,
 	},
-	'bd-x': { prop: 'borderInline' },
-	'bd-y': { prop: 'borderBlock' },
-	'bd-s': { prop: 'borderInlineStart' },
-	'bd-e': { prop: 'borderInlineEnd' },
-	'bd-bs': { prop: 'borderBlockStart' },
-	'bd-be': { prop: 'borderBlockEnd' },
-	'bd-t': { prop: 'borderTop' },
-	'bd-b': { prop: 'borderBottom' },
-	'bd-l': { prop: 'borderLeft' },
-	'bd-r': { prop: 'borderRight' },
 	bds: { isVar: 1, presets: ['dashed', 'dotted', 'double'] },
 	bdc: {
 		isVar: 1,
@@ -107,6 +97,16 @@ export default {
 		token: 'color',
 	},
 	bdw: { isVar: 1, bp: 1 }, // --bdw のみ
+	'bd-x': { prop: 'borderInline' },
+	'bd-y': { prop: 'borderBlock' },
+	'bd-x-s': { prop: 'borderInlineStart' },
+	'bd-x-e': { prop: 'borderInlineEnd' },
+	'bd-y-s': { prop: 'borderBlockStart' },
+	'bd-y-e': { prop: 'borderBlockEnd' },
+	'bd-t': { prop: 'borderTop' },
+	'bd-b': { prop: 'borderBottom' },
+	'bd-l': { prop: 'borderLeft' },
+	'bd-r': { prop: 'borderRight' },
 
 	d: {
 		prop: 'display',

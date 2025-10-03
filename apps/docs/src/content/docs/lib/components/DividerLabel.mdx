@@ -10,38 +10,6 @@ import DividerLabel from '~/components/ex/DividerLabel/index.astro';
 
 区切り線をラベルテキスト付きで描画するコンポーネントの作成例です。
 
-{/* <Preview>
-	<PreviewTitle>Preview</PreviewTitle>
-	<PreviewArea p='40'>
-		<DividerLabel>Label Text</DividerLabel>
-	</PreviewArea>
-	<PreviewCode slot='tab' label='JSX'>
-		```jsx
-		<DividerLabel>Label Text</DividerLabel>
-		```
-	</PreviewCode>
-	<PreviewCode slot='tab' label='HTML'>
-	```html
-	<div class="c--dividerLabel l--flex -ai:c -lh:1 -c:text-2 -g:30">
-		<div class="l--divider -bd-bs -fx:1" aria-hidden="true"></div>
-		<div class="c--dividerLabel_text">Label Text</div>
-		<div class="l--divider -bd-bs -fx:1" aria-hidden="true"></div>
-	</div>
-	```
-	</PreviewCode>
-</Preview>
-
-
-## Import
-<ImportSource name='DividerLabel' react astro/>
-
-## Props
-
-| プロパティ | 説明 |
-|---|---|
-|`textPosition`|ラベルテキストの位置。`start`,`end`を指定するとその方向にテキストが寄ります|
-| `bd`,`bdw`,`bds`,`bdc` | 区切り線のボーダープロパティ。 |
- */}
 
 ## Examples
 
@@ -71,9 +39,9 @@ import DividerLabel from '~/components/ex/DividerLabel/index.astro';
 		```html
 		<div class='l--box -bgc:base-2 -c:text-2 -py:50 -ta:c'>…Contents…</div>
 		<div class='l--flex -ai:c -g:30 -lh:1'>
-			<div class='l--divider -bd-bs -fx:1' aria-hidden='true'></div>
+			<div class='l--divider -fx:1' aria-hidden='true'></div>
 			<span>Label Text</span>
-			<div class='l--divider -bd-bs -fx:1' aria-hidden='true'></div>
+			<div class='l--divider -fx:1' aria-hidden='true'></div>
 		</div>
 		<div class='l--box -bgc:base-2 -c:text-2 -py:50 -ta:c'>…Contents…</div>
 		```
@@ -115,11 +83,11 @@ import DividerLabel from '~/components/ex/DividerLabel/index.astro';
 		<div class='l--box -bgc:base-2 -c:text-2 -py:50 -ta:c'>…Contents…</div>
 		<div class='l--flex -ai:c -g:30 -lh:1'>
 			<span class='-fs:italic'>Label Text</span>
-			<div class='l--divider -bd-bs -fx:1 -op:mid' style='--bdc:currentColor' aria-hidden='true'></div>
+			<div class='l--divider -fx:1 -op:mid' style='--bdc:currentColor' aria-hidden='true'></div>
 		</div>
 		<div class='l--box -bgc:base-2 -c:text-2 -py:50 -ta:c'>…Contents…</div>
 		<div class='l--flex -ai:c -g:30 -lh:1 -c' style='--c:var(--blue)'>
-			<div class='l--divider -bd-bs -fx:1 -op:low' style='--bdc:currentColor;--bds:dotted;--bdw:4px' aria-hidden='true'></div>
+			<div class='l--divider -fx:1 -op:low' style='--bdc:currentColor;--bds:dotted;--bdw:4px' aria-hidden='true'></div>
 			<span class='-fs:italic'>Label Text</span>
 		</div>
 		<div class='l--box -bgc:base-2 -c:text-2 -py:50 -ta:c'>…Contents…</div>
@@ -136,24 +104,23 @@ import DividerLabel from '~/components/ex/DividerLabel/index.astro';
 	<PreviewArea p='30' isFlow={false}>
 		<Flex ai='c' g='20'>
 			<Box fx='1' bgc='base-2' py='50' ta='c'>Box</Box>
-			{/* <DividerLabel fxd='column' bd-s  aslf='stretch'>Label</DividerLabel> */}
 			<Stack ai='c' g='20' lh='1' fz='s' aslf='stretch'>
-				<Divider fx='1' bd-s />
+				<Divider fx='1' isVertical />
 				<span>Label</span>
-				<Divider fx='1' bd-s />
+				<Divider fx='1' isVertical />
 			</Stack>
 			<Box fx='1' bgc='base-2' py='50' ta='c'>Box</Box>
 		</Flex>
 	</PreviewArea>
 	<PreviewCode slot='tab' label='JSX'>
-		```jsx "fxd='column'" "bd-s"
+		```jsx "fxd='column'" "isVertical"
 		<Flex ai='c' g='20'>
 			<Box fx='1' bgc='base-2' py='50' ta='c'>Box</Box>
 			<Stack ai='c' g='20' lh='1' fz='s' aslf='stretch'>
-				<Divider fx='1' bd-s />
+				<Divider fx='1' isVertical />
 				<span>Label</span>
-				<Divider fx='1' bd-s />
-			</Stack> 
+				<Divider fx='1' isVertical />
+			</Stack>
 			<Box fx='1' bgc='base-2' py='50' ta='c'>Box</Box>
 		</Flex>
 		```
@@ -162,10 +129,10 @@ import DividerLabel from '~/components/ex/DividerLabel/index.astro';
 		```html
 		<div class='l--flex -ai:c -g:20'>
 			<div class='l--box -fx:1 -bgc:base-2 -py:50 -ta:c'>Box</div>
-			<div class='l--stack -ai:c -g:20 -lh:1 -fz:s -aslf:str'>
-				<div class='l--divider -bd-s -fx:1' aria-hidden='true'></div>
+			<div class="l--stack -ai:c -g:20 -lh:1 -fz:s -aslf:stretch">
+				<div class="l--divider is--vertical -fx:1" aria-hidden="true"></div>
 				<span>Label</span>
-				<div class='l--divider -bd-s -fx:1' aria-hidden='true'></div>
+				<div class="l--divider is--vertical -fx:1" aria-hidden="true"></div>
 			</div>
 			<div class='l--box -fx:1 -bgc:base-2 -py:50 -ta:c'>Box</div>
 		</div>
@@ -178,15 +145,15 @@ import DividerLabel from '~/components/ex/DividerLabel/index.astro';
 	<PreviewArea resize p='30' isFlow={false}>
 		<Flex ai='stretch' g='20'>
 			<Box fx='1' bgc='base-2' py='50' ta='c'>Box</Box>
-			<Stack ai='c' g='20' lh='1' fz='xs' aslf='stretch'>
-				<span class='is--vertical'>Label</span>
-				<Divider fx='1' bd-s />
-			</Stack>
+			<Flex isVertical ai='c' g='20' lh='1' fz='xs' aslf='stretch'>
+				<span>Label</span>
+				<Divider fx='1' />
+			</Flex>
 			<Box fx='1' bgc='base-2' py='50' ta='c'>Box</Box>
-			<Stack ai='c' g='20' lh='1' fz='xs' aslf='stretch'>
-			<Divider fx='1' bd-s />
-				<span class='is--vertical'>Label</span>
-			</Stack>
+			<Flex isVertical ai='c' g='20' lh='1' fz='xs' aslf='stretch'>
+			<Divider fx='1' />
+				<span>Label</span>
+			</Flex>
 			<Box fx='1' bgc='base-2' py='50' ta='c'>Box</Box>
 		</Flex>
 	</PreviewArea>
@@ -194,15 +161,15 @@ import DividerLabel from '~/components/ex/DividerLabel/index.astro';
 		```jsx "is--vertical"
 		<Flex ai='stretch' g='20'>
 			<Box fx='1' bgc='base-2' py='50' ta='c'>Box</Box>
-			<Stack ai='c' g='20' lh='1' fz='xs' aslf='stretch'>
-				<span className='is--vertical'>Label</span>
-				<Divider fx='1' bd-s />
-			</Stack>
+			<Flex isVertical ai='c' g='20' lh='1' fz='xs' aslf='stretch'>
+				<span>Label</span>
+				<Divider fx='1' />
+			</Flex>
 			<Box fx='1' bgc='base-2' py='50' ta='c'>Box</Box>
-			<Stack ai='c' g='20' lh='1' fz='xs' aslf='stretch'>
-			<Divider fx='1' bd-s />
-				<span className='is--vertical'>Label</span>
-			</Stack>
+			<Flex isVertical ai='c' g='20' lh='1' fz='xs' aslf='stretch'>
+			<Divider fx='1' />
+				<span>Label</span>
+			</Flex>
 			<Box fx='1' bgc='base-2' py='50' ta='c'>Box</Box>
 		</Flex>
 		```
@@ -211,14 +178,14 @@ import DividerLabel from '~/components/ex/DividerLabel/index.astro';
 		```html
 		<div class='l--flex -ai:str -g:20'>
 			<div class='l--box -fx:1 -bgc:base-2 -py:50 -ta:c'>Box</div>
-			<div class='l--stack -ai:c -g:20 -lh:1 -fz:xs -aslf:str'>
-				<span class='is--vertical'>Label</span>
-				<div class='l--divider -bd-s -fx:1' aria-hidden='true'></div>
+			<div class='l--flex is--vertical -ai:c -g:20 -lh:1 -fz:xs -aslf:str'>
+				<span>Label</span>
+				<div class='l--divider -fx:1' aria-hidden='true'></div>
 			</div>
 			<div class='l--box -fx:1 -bgc:base-2 -py:50 -ta:c'>Box</div>
-			<div class='l--stack -ai:c -g:20 -lh:1 -fz:xs -aslf:str'>
-				<div class='l--divider -bd-s -fx:1' aria-hidden='true'></div>
-				<span class='is--vertical'>Label</span>
+			<div class='l--flex -ai:c -g:20 -lh:1 -fz:xs -aslf:str'>
+				<div class='l--divider -fx:1' aria-hidden='true'></div>
+				<span>Label</span>
 			</div>
 			<div class='l--box -fx:1 -bgc:base-2 -py:50 -ta:c'>Box</div>
 		</div>

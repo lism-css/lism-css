@@ -1,18 +1,17 @@
 @use '../_mixin' as mixin;
 
-// has--border?
-// bdc だけとかの指定でも -bd:出力？
 /*
 
 	使用される環境（resetCSS）によって挙動が変わりやすいので 各プロパティを変数で管理する。
-	ブラウザのデフォルト挙動では、bds指定でborder出現してくるが、nextraのresetCSSみたいな特殊な環境だとbdwの指定でborderでてきたりする。
+	Memo: ブラウザのデフォルト挙動では、bds指定でborder出現してくるが、nextraのresetCSSみたいな特殊な環境だとbdwの指定でborderでてきたりする。
 
-	borderはLismの中でも特殊な仕様になっている。
-	--bds, --bdw, --bdc で管理できるようにしていて、そのために .-bd: クラスを使う。
+	各方向にそれぞれBP対応しているとCSSが肥大化することもあり、border はLismの中でも特殊な仕様になっている。
+	--bds, --bdw, --bdc で管理できるようにしていて、そのために .-bd, .-bd-{side} クラスを使う。
+
+	--bdw を変化させることで方向を変化させたりできるようになっている。
 */
 
 // bdc, bdw などでカラーや太さを上書きできるように border 自体を変数管理
-// :where(.has--bd),
 @include mixin.maybe_where('.-bd,[class*="-bd-"]', 'base') {
 	--bds: solid;
 	--bdw: 1px;
@@ -58,10 +57,10 @@
 .-bd-y {
 	border-block-style: var(--bds) #{mixin.$maybe_important};
 }
-.-bd-s {
+.-bd-x-s {
 	border-inline-start-style: var(--bds) #{mixin.$maybe_important};
 }
-.-bd-e {
+.-bd-x-e {
 	border-inline-end-style: var(--bds) #{mixin.$maybe_important};
 }
 .-bd-t {
@@ -76,9 +75,9 @@
 .-bd-r {
 	border-left-style: var(--bds) #{mixin.$maybe_important};
 }
-.-bd-bs {
+.-bd-y-s {
 	border-block-start-style: var(--bds) #{mixin.$maybe_important};
 }
-.-bd-be {
+.-bd-y-e {
 	border-block-end-style: var(--bds) #{mixin.$maybe_important};
 }
