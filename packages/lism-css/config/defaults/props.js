@@ -151,8 +151,8 @@ export default {
 	// position
 	pos: {
 		prop: 'position',
-		presets: ['relative', 'absolute', 'static', 'fixed', 'sticky'],
-		shorthands: {
+		presets: ['static', 'fixed', 'sticky'],
+		utils: {
 			r: 'relative',
 			a: 'absolute',
 		},
