@@ -436,29 +436,29 @@ borderに関する仕様は少し特殊になっています。詳しくは[bord
 |Prop|Shorthand|To Class|BP|
 |---|---|---|---|
 |`background`|`bg`|-|⚪︎|
-|`background-image`|`bgi`|-|⚪︎|
+|`background-image`|`bgimg`|-|⚪︎|
 |`background-color`|`bgc`|`main`,`accent`<br />`base`,`base-2`,<br />`text`,<br /><LinkMix />,<br />`inherit`|-|
-|`background-position`|`bgp`|`c`(`center`)|-|
-|`background-size`|`bgsz`|`cv`(`cover`),`ct`(`contain`)|-|
-|`background-repeat`|`bgr`|`n`(`no-repeat`)|-|
-|`background-attachment`|`bga`|-|-|
-|`background-origin`|`bgo`|-|-|
-|`background-blend-mode`|`bgbm`|-|-|
-{/* |`background-clip`|`bgcp`|txt?|-| */}
+|`background-position`|`bgpos`|`c`(`center`)|-|
+|`background-size`|`bgsz`|`cover`, `contain`|-|
+|`background-repeat`|`bgrpt`|`no`(`no-repeat`)|-|
+|`background-attachment`|`bgatt`|-|-|
+|`background-origin`|`bgorigin`|-|-|
+|`background-blend-mode`|`bgblend`|-|-|
+|`background-clip`|`bgclip`|`text`|-|
 
 <Preview>
 	<PreviewTitle>使用例</PreviewTitle>
 	<PreviewArea p='30' resize>
 		<Columns g='20'>
 			<Frame ar='16/9' bg='url(/img/pattern.png) center / 4rem'></Frame>
-			<Frame ar='16/9' bgi='url(/img/pattern.png)' bgp='center' bgsz='4rem' bgbm='difference' bgc='white'></Frame>
+			<Frame ar='16/9' bgimg='url(/img/pattern.png)' bgpos='center' bgsz='4rem' bgblend='difference' bgc='white'></Frame>
 		</Columns>
 	</PreviewArea>
 	<PreviewCode label='JSX' slot='tab'>
 		```jsx
 		<Columns g='20'>
 			<Frame ar='16/9' bg='url(/img/pattern.png) center / 4rem'></Frame>
-			<Frame ar='16/9' bgi='url(/img/pattern.png)' bgp='center' bgsz='4rem' bgbm='difference' bgc='white'></Frame>
+			<Frame ar='16/9' bgimg='url(/img/pattern.png)' bgpos='center' bgsz='4rem' bgblend='difference' bgc='white'></Frame>
 		</Columns>
 		```
 	</PreviewCode>
@@ -466,7 +466,7 @@ borderに関する仕様は少し特殊になっています。詳しくは[bord
 		```html
 		<div class="l--columns -g:20">
 			<div class="l--frame -ar:16/9 -bg" style="--bg:url(/img/pattern.png) center / 4rem"></div>
-			<div class="l--frame -ar:16/9 -bgi -bgp:c -bgc" style="--bgi:url(/img/pattern.png);background-size:4rem;background-blend-mode:difference;--bgc:var(--white)"></div>
+			<div class="l--frame -ar:16/9 -bgimg -bgpos:c -bgc" style="--bgimg:url(/img/pattern.png);background-size:4rem;background-blend-mode:difference;--bgc:var(--white)"></div>
 		</div>
 		```
 	</PreviewCode>
@@ -499,7 +499,7 @@ borderに関する仕様は少し特殊になっています。詳しくは[bord
 	<PreviewTitle>テキストで背景をクリッピング</PreviewTitle>
 	<PreviewArea p='30'>
 		<Center>
-			<Box bg='linear-gradient(45deg, var(--blue), var(--pink))' bgcp='text'>
+			<Box bg='linear-gradient(45deg, var(--blue), var(--pink))' bgclip='text' c='trsp'>
 				<Text fz='5xl' fw='bold' lh='1' lts='l'>TEXT</Text>
 			</Box>
 		</Center>
@@ -507,7 +507,7 @@ borderに関する仕様は少し特殊になっています。詳しくは[bord
 	<PreviewCode label='JSX' slot='tab'>
 		```jsx
 		<Center>
-			<Box bg='linear-gradient(45deg, var(--blue), var(--pink))' bgcp='text'>
+			<Box bg='linear-gradient(45deg, var(--blue), var(--pink))' bgclip='text' c='trsp'>
 				<Text fz='5xl' fw='bold' lh='1' lts='l'>TEXT</Text>
 			</Box>
 		</Center>

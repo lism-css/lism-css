@@ -43,27 +43,22 @@ export default {
 	minBsz: { prop: 'minBlockSize', token: 'size' },
 
 	// bg
-	bg: { prop: 'background', utils: { none: 'n' }, bp: 1 },
-	bgi: { prop: 'backgroundImage', bp: 1 },
-	bgr: { prop: 'backgroundRepeat', utils: { n: 'no-repeat' } },
-	bgp: { prop: 'backgroundPosition', utils: { c: 'center' } },
-	bgsz: { prop: 'backgroundSize', utils: { cv: 'cover', ct: 'contain' } },
-	bga: { prop: 'backgroundAttachment' },
-	bgo: { prop: 'backgroundOrigin' },
-	bgbm: { prop: 'backgroundBlendMode' },
-	bgcp: {
+	bg: { prop: 'background', bp: 1 },
+	bgimg: { prop: 'backgroundImage', bp: 1 },
+	bgrpt: { prop: 'backgroundRepeat', utils: { no: 'no-repeat' } },
+	bgpos: { prop: 'backgroundPosition', utils: { c: 'center' } },
+	bgsz: { prop: 'backgroundSize', presets: ['cover', 'contain'] },
+	bgatt: { prop: 'backgroundAttachment' }, // fixed
+	bgorigin: { prop: 'backgroundOrigin' }, // border, padding, content
+	bgblend: { prop: 'backgroundBlendMode' },
+	bgclip: {
 		prop: 'backgroundClip',
 		presets: ['text'],
-		exUtility: {
-			text: {
-				color: 'transparent',
-				'background-clip': 'text',
-			},
-		},
 	},
 	bgc: {
 		prop: 'backgroundColor',
 		presets: ['base', 'base-2', 'text', 'inherit', 'main', 'accent'],
+		utils: { trsp: 'transparent' },
 		token: 'color',
 		exUtility: {
 			inherit: { 'background-color': 'inherit' }, // --c ではなく color で出力したい
@@ -72,9 +67,11 @@ export default {
 	},
 
 	c: {
-		// Note: bg系（bgcp）より後にくるように。
+		// Note: bg系（bgclip）より後にくるように。
 		prop: 'color',
 		presets: ['base', 'text', 'text-2', 'main', 'accent', 'inherit'],
+		utils: { trsp: 'transparent' },
+		// tt
 		token: 'color',
 		exUtility: {
 			inherit: { color: 'inherit' }, // --c ではなく color で出力したい
@@ -105,7 +102,8 @@ export default {
 	bds: { isVar: 1, presets: ['dashed', 'dotted', 'double'] },
 	bdc: {
 		isVar: 1,
-		presets: ['inherit', 'main', 'accent', 'line'],
+		presets: ['main', 'accent', 'line', 'inherit'],
+		utils: { trsp: 'transparent' },
 		token: 'color',
 	},
 	bdw: { isVar: 1, bp: 1 }, // --bdw のみ
