@@ -4,7 +4,7 @@ import './style.css';
 
 export default function Chat({ variant = 'speak', direction = 'start', name, avatar, keycolor = 'gray', isFlow, children, ...props }) {
 	return (
-		<Grid lismClass='c--chat' variant={variant} keycolor={keycolor} bg='none' data-chat-dir={direction} ji={direction} {...props}>
+		<Grid lismClass='c--chat' variant={variant} keycolor={keycolor} data-chat-dir={direction} ji={direction} {...props}>
 			{avatar && (
 				<Frame lismClass='c--chat_avatar' ga='u:avatar' src={avatar} alt='' bgc='base' ar='1/1' bdrs='99' aria-hidden='true'>
 					<Media src={avatar} alt='' width='60' height='60' decoding='async' />
