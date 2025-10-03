@@ -8,7 +8,7 @@ export const FzDemos = ({ lang = 'ja' }) => (
 					<Text className='is--sizeT ip' fz='12px' lh='s'>
 						<code>{fz}</code>
 					</Text>
-					<Dummy lang={lang} length='s' fz={fz} className='-whs:nw -lh:1' />
+					<Dummy lang={lang} length='s' fz={fz} className='-whitespace:nowrap -lh:1' />
 				</Stack>
 			);
 		})}

@@ -316,8 +316,8 @@ export default {
 
 	// others
 	msk: { prop: 'mask', bp: 1 },
-	whs: { prop: 'whiteSpace', utils: { nw: 'nowrap' } },
 	ovw: { prop: 'overflowWrap', utils: { any: 'anywhere' } },
+	whitespace: { prop: 'whiteSpace', presets: ['nowrap'] },
 	fl: { prop: 'float', utils: { l: 'left', r: 'right' } },
 	cl: { prop: 'clear', utils: { b: 'both' } },
 
