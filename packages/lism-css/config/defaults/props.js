@@ -312,8 +312,8 @@ export default {
 	ovw: { prop: 'overflowWrap', utils: { any: 'anywhere' } },
 	whitespace: { prop: 'whiteSpace', presets: ['nowrap'] },
 	wordbreak: { prop: 'wordBreak', utils: { keep: 'keep-all', all: 'break-all' } },
-	fl: { prop: 'float', utils: { l: 'left', r: 'right' } },
-	cl: { prop: 'clear', utils: { b: 'both' } },
+	float: { prop: 'float', utils: { l: 'left', r: 'right' } },
+	clear: { prop: 'clear', presets: ['both'] },
 
 	// transition
 	duration: { isVar: 1 },
