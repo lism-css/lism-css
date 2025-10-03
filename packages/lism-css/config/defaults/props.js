@@ -24,6 +24,9 @@ export default {
 	lts: { prop: 'letterSpacing', token: 'lts', tokenClass: 1 },
 	ta: { prop: 'textAlign', utils: { c: 'center', l: 'left', r: 'right' } },
 	td: { prop: 'textDecoration', utils: { u: 'underline', n: 'none' } },
+	tt: { prop: 'textTransform', utils: { upper: 'uppercase', lower: 'lowercase' } },
+	// te: { prop: 'textEmphasis', presets: ['filled'] },
+	// tsh: { prop: 'textShadow' },
 
 	// size
 	w: { prop: 'width', utils: { fit: 'fit-content' }, presets: ['100%'], token: 'size', bp: 1 },
@@ -318,6 +321,7 @@ export default {
 	msk: { prop: 'mask', bp: 1 },
 	ovw: { prop: 'overflowWrap', utils: { any: 'anywhere' } },
 	whitespace: { prop: 'whiteSpace', presets: ['nowrap'] },
+	wordbreak: { prop: 'wordBreak', utils: { keep: 'keep-all', all: 'break-all' } },
 	fl: { prop: 'float', utils: { l: 'left', r: 'right' } },
 	cl: { prop: 'clear', utils: { b: 'both' } },
 
