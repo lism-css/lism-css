@@ -93,7 +93,7 @@ div.l--withSide
 
 #### 反転
 
-`-fxd:row-r`クラス（`flex-direction:row-reverse`）を併用することで、横並びの時の順番だけを反転させることができます。
+`-fxd:rr`クラス（`flex-direction:row-reverse`）を併用することで、横並びの時の順番だけを反転させることができます。
 
 <Callout type='check'>
 	これにより、横並びの時は左側、縦並びの時は下側にside要素を配置できます。
@@ -102,7 +102,7 @@ div.l--withSide
 <Preview>
 	<PreviewTitle>例</PreviewTitle>
 	<PreviewArea resize p='30'>
-		<WithSide fxd='row-r' sideW='10rem' mainW='16rem' g='30'>
+		<WithSide fxd='rr' sideW='10rem' mainW='16rem' g='30'>
 			<Box>
 				<Dummy />
 			</Box>
@@ -112,8 +112,8 @@ div.l--withSide
 		</WithSide>
 	</PreviewArea>
 	<PreviewCode slot='tab' label='JSX'>
-		```jsx "fxd='row-r'"
-		<WithSide fxd='row-r' sideW='10rem' mainW='16rem' g='30'>
+		```jsx "fxd='rr'"
+		<WithSide fxd='rr' sideW='10rem' mainW='16rem' g='30'>
 			<Box>
 				<Dummy />
 			</Box>
@@ -122,8 +122,8 @@ div.l--withSide
 		```
 	</PreviewCode>
 	<PreviewCode slot='tab' label='HTML'>
-		```html "-fxd:row-r"
-		<div class='l--withSide -fxd:row-r -g:30' style='--sideW:10rem;--mainW:16rem;'>
+		```html "-fxd:rr"
+		<div class='l--withSide -fxd:rr -g:30' style='--sideW:10rem;--mainW:16rem;'>
 			<div class='l--box'>
 				<p>Lorem ipsum dolor sit amet, ...</p>
 			</div>
