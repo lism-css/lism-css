@@ -157,7 +157,7 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage, EmbedCo
 <Preview>
 	<PreviewTitle>例</PreviewTitle>
 	<PreviewArea p='30'>
-		<Tabs.Root defaultIndex={2} listProps={{bd: 'b'}}>
+		<Tabs.Root defaultIndex={2} listProps={{'bd-b': '-'}}>
 			<Tabs.Item>
 				<Tabs.Tab p='10'>Tab 1</Tabs.Tab>
 				<Tabs.Panel p='10'>
@@ -174,7 +174,7 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage, EmbedCo
 	</PreviewArea>
 	<PreviewCode slot='tab' label='JSX'>
 		```jsx "defaultIndex=\{2\}"
-		<Tabs.Root defaultIndex={2} listProps={{bd: 'b'}}>
+		<Tabs.Root defaultIndex={2} listProps={{'bd-b': '-'}}>
 			<Tabs.Item>
 				<Tabs.Tab p='10'>Tab 1</Tabs.Tab>
 				<Tabs.Panel p='10'>

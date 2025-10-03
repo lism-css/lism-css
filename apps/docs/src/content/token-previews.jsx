@@ -37,12 +37,12 @@ export const SpacingDemos = ({ spaces, isValueLabel }) => {
 				return (
 					<Stack key={s} g='5'>
 						{!isValueLabel && (
-							<Text bd='left' bdw='2px' lh='1' pl='10' fz='2xs'>
+							<Text bd-l bdw='2px' lh='1' pl='10' fz='2xs'>
 								{s}
 							</Text>
 						)}
 						<Box pl={s} bgc='main'>
-							<Text bgc='base' pl={10} fz='xs'>
+							<Text bgc='base' pl='10' fz='xs'>
 								{label}
 							</Text>
 						</Box>
