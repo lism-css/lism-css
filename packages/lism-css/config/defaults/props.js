@@ -224,11 +224,7 @@ export default {
 		bp: 1,
 		utils: { w: 'wrap', n: 'nowrap' },
 	},
-	fxd: {
-		prop: 'flexDirection',
-		bp: 1,
-		utils: { c: 'column', cr: 'column-reverse', r: 'row', rr: 'row-reverse' },
-	},
+	fxd: { prop: 'flexDirection', bp: 1, utils: { c: 'column', 'c-r': 'column-reverse', r: 'row', 'r-r': 'row-reverse' } },
 	fx: { prop: 'flex', bp: 1, presets: ['1'] },
 	fxg: { prop: 'flexGrow', presets: ['1'] },
 	fxsh: { prop: 'flexShrink', presets: ['0'] },
