@@ -217,7 +217,7 @@ export default {
 
 	// flex
 	fxf: { prop: 'flexFlow' },
-	fxw: { prop: 'flexWrap', utils: { w: 'wrap', n: 'nowrap' }, bp: 1 },
+	fxw: { prop: 'flexWrap', utils: { w: 'wrap', no: 'nowrap' }, bp: 1 },
 	fxd: { prop: 'flexDirection', utils: { c: 'column', 'c-r': 'column-reverse', r: 'row', 'r-r': 'row-reverse' }, bp: 1 },
 	fx: { prop: 'flex', presets: ['1'], bp: 1 },
 	fxg: { prop: 'flexGrow', presets: ['1'] },
