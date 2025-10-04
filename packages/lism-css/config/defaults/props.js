@@ -289,7 +289,7 @@ export default {
 	ord: { prop: 'order', presets: ['0', '-1', '1'] },
 
 	// transform
-	trnslt: {
+	translate: {
 		prop: 'translate',
 		utils: {
 			'-50X': '-50% 0',
