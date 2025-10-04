@@ -20,7 +20,7 @@ export function Q({ children }) {
 }
 export function A({ children }) {
 	return (
-		<Accordion.Body mbs='30' isFlow='s'>
+		<Accordion.Body my-s='30' isFlow='s'>
 			{children}
 		</Accordion.Body>
 	);

@@ -21,7 +21,7 @@ function App() {
 				<Box lh='1' p='30' bd>
 					3
 				</Box>
-				<Box lh='1' p='30' bd mis='auto'>
+				<Box lh='1' p='30' bd mx-s='auto'>
 					4
 				</Box>
 			</Flex>

@@ -30,10 +30,10 @@ HTMLのそれぞれのタグのデフォルトスタイルを確認するため�
 :where(ul, ol) {
 	list-style: none;
 	padding: 0;
-	padding-inline-start: var(--list--pis, 0);
+	padding-inline-start: var(--list--px-s, 0);
 }
 :where(ul, ol):not([class]){
-	--list--pis: 1.5em;
+	--list--px-s: 1.5em;
 	list-style: revert;
 }
 ```

@@ -10,7 +10,7 @@ export const HelpText = ({ tag = 'p', children, ...props }) => {
 		_props.d = 'b';
 		_props.fz = 'xs';
 	} else {
-		_props.mbs = '20';
+		_props['my-s'] = '20';
 	}
 	return (
 		<Text {..._props} {...props}>

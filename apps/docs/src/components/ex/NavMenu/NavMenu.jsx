@@ -15,7 +15,7 @@ export function Root({ children, hovC, hovBgc, style = {}, ...props }) {
 
 export function Nest({ children, ...props }) {
 	return (
-		<Stack lismClass='c--navMenu_nest' tag='ul' pis='30' data-lism-get='bdc' {...props}>
+		<Stack lismClass='c--navMenu_nest' tag='ul' px-s='30' data-lism-get='bdc' {...props}>
 			{children}
 		</Stack>
 	);

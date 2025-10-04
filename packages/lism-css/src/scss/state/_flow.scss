@@ -1,5 +1,5 @@
 /*
-	Meomo: end:0 がどうせ :first-child に必要なので、 mbs も > * + * 使わず上書き形式で。
+	Meomo: end:0 がどうせ :first-child に必要なので、 my-s も > * + * 使わず上書き形式で。
 	is--containerと合わせて、カスタム値のセットは is--flow + 変数定義だけでできるように。
 */
 
@@ -8,27 +8,27 @@
 	// --_fgap: var(--flowM, var(--flowM-m));
 
 	> * {
-		--mbs: var(--flowM, var(--flowM-m));
-		margin-block: var(--mbs) 0;
+		--my-s: var(--flowM, var(--flowM-m));
+		margin-block: var(--my-s) 0;
 	}
 }
 .-flow\:s > * {
-	--mbs: var(--flowM-s);
+	--my-s: var(--flowM-s);
 }
 .-flow\:m > * {
-	--mbs: var(--flowM-m);
+	--my-s: var(--flowM-m);
 }
 // .-flow\:l > * {
 // 	--flowM: var(--flowM-l);
 // }
 // .-flow\: > * {
-// 	--mbs: var(--flowM);
+// 	--my-s: var(--flowM);
 // }
 
 // 見出しの上部余白は少しだけ広くする. ただし、見出し直後の見出しの場合を除く。
 // Note: :first-child での打消しのほうが優先度高くなるように注意する
 .is--flow > :where(h1, h2, h3, h4) {
-	margin-block-start: calc(var(--mbs) + var(--flowM-h));
+	margin-block-start: calc(var(--my-s) + var(--flowM-h));
 }
 // :where(h2 + h3, h3 + h4) {
 // 	--flowM-h: 0px;
@@ -36,7 +36,7 @@
 
 // fullwideの連結に余白は基本不要
 .is--flow > :where(.is--fullwide + .is--fullwide) {
-	--mbs: 0;
+	--my-s: 0;
 }
 
 // :first-child への上書きのほうが優先度高くなるように。

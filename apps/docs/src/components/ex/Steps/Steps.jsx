@@ -20,5 +20,5 @@ export function Head({ tag = 'div', num = '1', label = 'Step.', children, ...pro
 	);
 }
 export function Body(props) {
-	return <Lism isFlow='s' mis='5' {...props} />;
+	return <Lism isFlow='s' mx-s='5' {...props} />;
 }
