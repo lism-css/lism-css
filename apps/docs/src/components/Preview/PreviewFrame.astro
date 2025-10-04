@@ -40,7 +40,7 @@ const { isInline = false, hasSizeSwitch = false, url, ...props } = Astro.props;
 				</div>
 			)}
 
-			<Frame id='preview-iframe' class='c--previewFrame' data-preview-url={url} ar bxsh='10' mx='auto' maxW='100%' style={{"--ar":"3/2"}}>
+			<Frame id='preview-iframe' class='c--previewFrame' data-preview-url={url} ar bxsh='10' mx='auto' max-w='100%' style={{"--ar":"3/2"}}>
 				<Frame className='u--scalePreview' ar bdrs='20' bd bdw='3px' {...props}>
 					<iframe src={url} width='800' height='600' />
 				</Frame>

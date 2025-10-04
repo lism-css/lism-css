@@ -30,16 +30,17 @@ export default {
 	// size
 	w: { prop: 'width', utils: { fit: 'fit-content' }, presets: ['100%'], token: 'size', bp: 1 },
 	h: { prop: 'height', utils: { fit: 'fit-content' }, presets: ['100%'], token: 'size', bp: 1 },
-	maxW: { prop: 'maxWidth', presets: ['100%'], token: 'size', bp: 1 },
-	maxH: { prop: 'maxHeight', presets: ['100%'], token: 'size', bp: 1 },
-	minW: { prop: 'minWidth', presets: ['100%'], token: 'size', bp: 1 },
-	minH: { prop: 'minHeight', presets: ['100%'], token: 'size', bp: 1 },
-	isz: { prop: 'inlineSize', token: 'size' },
-	bsz: { prop: 'blockSize', token: 'size' },
-	maxIsz: { prop: 'maxInlineSize', token: 'size' },
-	maxBsz: { prop: 'maxBlockSize', token: 'size' },
-	minIsz: { prop: 'minInlineSize', token: 'size' },
-	minBsz: { prop: 'minBlockSize', token: 'size' },
+	'min-w': { prop: 'minWidth', presets: ['100%'], token: 'size', bp: 1 },
+	'max-w': { prop: 'maxWidth', presets: ['100%'], token: 'size', bp: 1 },
+	'min-h': { prop: 'minHeight', presets: ['100%'], token: 'size', bp: 1 },
+	'max-h': { prop: 'maxHeight', presets: ['100%'], token: 'size', bp: 1 },
+
+	xsz: { prop: 'inlineSize', token: 'size' },
+	ysz: { prop: 'blockSize', token: 'size' },
+	'min-xsz': { prop: 'minInlineSize', token: 'size' },
+	'max-xsz': { prop: 'maxInlineSize', token: 'size' },
+	'min-ysz': { prop: 'minBlockSize', token: 'size' },
+	'max-ysz': { prop: 'maxBlockSize', token: 'size' },
 
 	// bg
 	bg: { prop: 'background', bp: 1 },

@@ -78,14 +78,14 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage, Callout
 
 
 
-## Heroエリアで子要素の`minH`に`%`を使う方法
+## Heroエリアで子要素の`min-h`に`%`を使う方法
 
 {/* - l-stack(flex)の場合
-	- Heroの高さを h でセット→ HeroContent は h も minH,maxH も fxb も % が使用できる.
-	- Heroの高さを minH でセット → HeroContent は h も minH,maxH もfxb も % は無効になる。
-	- Heroのアスペクト比をセット→ HeroContent は h も minH,maxH も fxb も % が使用できる.
-		- minH, fxb を使うと、小さいウインドウではコンテンツに合わせてHeroの高さが可変する。
-		- h,maxH を使うと、小さいウインドウではHeroContentの高さが外に溢れていく（ov-y='auto'で内部スクロールできる）
+	- Heroの高さを h でセット→ HeroContent は h も min-h,max-h も fxb も % が使用できる.
+	- Heroの高さを min-h でセット → HeroContent は h も min-h,max-h もfxb も % は無効になる。
+	- Heroのアスペクト比をセット→ HeroContent は h も min-h,max-h も fxb も % が使用できる.
+		- min-h, fxb を使うと、小さいウインドウではコンテンツに合わせてHeroの高さが可変する。
+		- h,max-h を使うと、小さいウインドウではHeroContentの高さが外に溢れていく（ov-y='auto'で内部スクロールできる）
 - l-gridの場合
 	- 何で高さを確保しても、HeroContent の高さは%が使える。
 	- が、そのさらに子要素のhに%を使うには、結局 HeroContent をGrid にする必要がある。Layerを使ってもこれは一緒。
@@ -134,18 +134,18 @@ Heroコンテンツの高さを `min-height` や `aspect-ratio` で指定する�
 <Preview>
 	<PreviewTitle>NG例</PreviewTitle>
 	<PreviewArea resize>
-		<Stack isFullwide minH='400px' bgc='base-2'>
-			<Box minH='50%' my='auto' bgc='base' p='20' px='40' ac='c'>
-				<Text fw='bold'>minH:50%が効かない</Text>
+		<Stack isFullwide min-h='400px' bgc='base-2'>
+			<Box min-h='50%' my='auto' bgc='base' p='20' px='40' ac='c'>
+				<Text fw='bold'>min-h:50%が効かない</Text>
 				<Dummy length='s' />
 			</Box>
 		</Stack>
 	</PreviewArea>
 	<PreviewCode>
-		```jsx "minH='400px'" "minH='50%'"
-		<Stack isFullwide minH='400px' bgc='base-2'>
-			<Box minH='50%' my='auto' bgc='base' p='20' px='40' ac='c'>
-				<Text fw='bold'>minH:50%が効かない</Text>
+		```jsx "min-h='400px'" "min-h='50%'"
+		<Stack isFullwide min-h='400px' bgc='base-2'>
+			<Box min-h='50%' my='auto' bgc='base' p='20' px='40' ac='c'>
+				<Text fw='bold'>min-h:50%が効かない</Text>
 				<Dummy length='s' />
 			</Box>
 		</Stack>
@@ -159,9 +159,9 @@ Heroコンテンツの高さを `min-height` や `aspect-ratio` で指定する�
 <Preview>
 	<PreviewTitle>改善例</PreviewTitle>
 	<PreviewArea resize>
-		<Stack isFullwide minH='400px' bgc='base-2'>
+		<Stack isFullwide min-h='400px' bgc='base-2'>
 			<Grid fxg='1' ai='c' px='40'>
-				<Center minH='50%' bgc='base' p='30' bxsh='10'>
+				<Center min-h='50%' bgc='base' p='30' bxsh='10'>
 					<Text fw='bold'>OK</Text>
 					<Dummy length='s' />
 				</Center>
@@ -169,10 +169,10 @@ Heroコンテンツの高さを `min-height` や `aspect-ratio` で指定する�
 		</Stack>
 	</PreviewArea>
 	<PreviewCode>
-		```jsx "\<Grid" "fxg='1' ai='c'" "minH='50%'"
-		<Stack isFullwide minH='400px' bgc='base-2'>
+		```jsx "\<Grid" "fxg='1' ai='c'" "min-h='50%'"
+		<Stack isFullwide min-h='400px' bgc='base-2'>
 			<Grid fxg='1' ai='c' px='40'>
-				<Center minH='50%' bgc='base' p='30' bxsh='10'>
+				<Center min-h='50%' bgc='base' p='30' bxsh='10'>
 					<Text fw='bold'>OK</Text>
 					<Dummy length='s' />
 				</Center>
@@ -196,12 +196,12 @@ Heroコンテンツの高さを `min-height` や `aspect-ratio` で指定する�
 <Preview>
 	<PreviewTitle>活用例</PreviewTitle>
 	<PreviewArea resize>
-		<Stack isFullwide pos='r' minH='50vh'>
+		<Stack isFullwide pos='r' min-h='50vh'>
 			<Frame isLayer>
 				<Media src='/img/img-3.jpg' alt='' width='960' height='640'/>
 			</Frame>
 			<Grid pos='r' fxg='1' ai='c' hasGutter>
-				<Center minH='50%' p='30' c='white' bgc='black:75%' bdrs='10' g='20'>
+				<Center min-h='50%' p='30' c='white' bgc='black:75%' bdrs='10' g='20'>
 					<Text fw='bold' fz='xl'>min-height 50%</Text>
 					<Dummy length='l' />
 				</Center>
@@ -210,12 +210,12 @@ Heroコンテンツの高さを `min-height` や `aspect-ratio` で指定する�
 	</PreviewArea>
 	<PreviewCode>
 		```jsx
-		<Stack isFullwide pos='r' minH='50vh'>
+		<Stack isFullwide pos='r' min-h='50vh'>
 			<Frame isLayer>
 				<Media src='/img/img-3.jpg' alt='' width='960' height='640'/>
 			</Frame>
 			<Grid fxg='1' ai='c' hasGutter>
-				<Center minH='50%' p='30' c='white' bgc='black:75%' bdrs='10' g='20'>
+				<Center min-h='50%' p='30' c='white' bgc='black:75%' bdrs='10' g='20'>
 					<Text fw='bold' fz='xl'>min-height 50%</Text>
 					<Dummy length='l' />
 				</Center>
@@ -342,7 +342,7 @@ Lismの`<Center>` は `grid` を使ってるので、この問題が発生しま
 	</PreviewTitle>
 	<PreviewArea resize p={10}>
 		<Box px='30' py='50' h='45vh' ov-y='auto' bd>
-			<Center g='20' minH='100%'>
+			<Center g='20' min-h='100%'>
 				<Text fz='l' fw='bold'>DEMO</Text>
 				<Dummy length='l' />
 				<Dummy length='xl' />
@@ -350,9 +350,9 @@ Lismの`<Center>` は `grid` を使ってるので、この問題が発生しま
 		</Box>
 	</PreviewArea>
 	<PreviewCode slot='tab' label='JSX'>
-		```jsx "Center" "h='45vh'" "ov-y='auto'" "minH='100%'"
+		```jsx "Center" "h='45vh'" "ov-y='auto'" "min-h='100%'"
 		<Box px='30' py='50' h='45vh' ov-y='auto' bd>
-			<Center minH='100%' g='20'>
+			<Center min-h='100%' g='20'>
 				<Text fz='l' fw='bold'>DEMO</Text>
 				<Dummy length='l' />
 				<Dummy length='xl' />
@@ -368,7 +368,7 @@ Lismの`<Center>` は `grid` を使ってるので、この問題が発生しま
 	<PreviewTitle>OK</PreviewTitle>
 	<PreviewArea resize p={10}>
 		<Frame ar='16/9' ov-y='auto' bd p='30' g='20'>
-			<Center minH='100%' g='20'>
+			<Center min-h='100%' g='20'>
 				<Text fz='l'>TEXT</Text>
 				<Dummy length='xs' lang='ja'/>
 				<Dummy length='xl' lang='ja'/>
@@ -376,9 +376,9 @@ Lismの`<Center>` は `grid` を使ってるので、この問題が発生しま
 		</Frame>
 	</PreviewArea>
 	<PreviewCode slot='tab' label='JSX'>
-		```jsx "Center" "ar='16/9'" "ov-y='auto'" "minH='100%'"
+		```jsx "Center" "ar='16/9'" "ov-y='auto'" "min-h='100%'"
 		<Frame ar='16/9' ov-y='auto' bd p='30' g='20'>
-			<Center minH='100%' g='20'>
+			<Center min-h='100%' g='20'>
 				<Text fz='l'>TEXT</Text>
 				<Dummy length='xs' lang='ja'/>
 				<Dummy length='xl' lang='ja'/>
@@ -398,7 +398,7 @@ Lismの`<Center>` は `grid` を使ってるので、この問題が発生しま
 		</Center>
 	</PreviewArea>
 	<PreviewCode slot='tab' label='JSX'>
-		```jsx "Center" "ar='16/9'" "ov-y='auto'" "minH='100%'"
+		```jsx "Center" "ar='16/9'" "ov-y='auto'" "min-h='100%'"
 		<Center ar='16/9' ov-y='auto' bd p='30' g='20'>
 			<Text fz='l'>TEXT</Text>
 			<Dummy length='xs' lang='ja'/>

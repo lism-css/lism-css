@@ -41,10 +41,10 @@ export interface LismBaseProps {
 	// Sizing
 	w?: ResponsiveValue<string | number>;
 	h?: ResponsiveValue<string | number>;
-	minW?: ResponsiveValue<string | number>;
-	minH?: ResponsiveValue<string | number>;
-	maxW?: ResponsiveValue<string | number>;
-	maxH?: ResponsiveValue<string | number>;
+	'min-w'?: ResponsiveValue<string | number>;
+	'min-h'?: ResponsiveValue<string | number>;
+	'max-w'?: ResponsiveValue<string | number>;
+	'max-h'?: ResponsiveValue<string | number>;
 
 	// Display
 	d?: ResponsiveValue<string>;
