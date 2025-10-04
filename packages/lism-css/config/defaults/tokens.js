@@ -4,7 +4,7 @@ export default {
 	lts: ['base', 's', 'l'],
 	ff: ['base', 'accent', 'mono'],
 	fw: ['thin', 'light', 'normal', 'medium', 'bold', 'black'],
-	op: ['low', 'mid', 'high'],
+	o: ['ghost', 'pale', 'soft', 'mild', 'solid'],
 	bdrs: ['5', '10', '20', '30', '40', '50', '99'],
 	bxsh: ['5', '10', '20', '30', '40', '50'],
 	size: ['min', 'xs', 's', 'm', 'l', 'xl'], // --size-xxx トークン

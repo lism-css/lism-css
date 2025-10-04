@@ -5,9 +5,9 @@ export default function DividerLabel({ children, textPosition, bd = 'bs', bdc = 
 
 	return (
 		<Flex lismClass='c--dividerLabel' ai='c' g='30' lh='1' {...props}>
-			{textPosition !== 'start' && <Divider op='mid' fx='1' {...bdProps} />}
+			{textPosition !== 'start' && <Divider o='soft' fx='1' {...bdProps} />}
 			<div className='c--dividerLabel_text'>{children}</div>
-			{textPosition !== 'end' && <Divider op='mid' fx='1' {...bdProps} />}
+			{textPosition !== 'end' && <Divider o='soft' fx='1' {...bdProps} />}
 		</Flex>
 	);
 }

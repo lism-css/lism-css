@@ -591,29 +591,39 @@ base値は 日本語では `1.625`, `1.75`, `1.875` あたりがおすすめで�
 
 |トークン値|変数|クラス|初期値|
 |---|---|---|---|
-|`low`|`--op-low`|`-op:low`|`0.25`|
-|`mid`|`--op-mid`|`-op:mid`|`0.5`|
-|`high`|`--op-high`|`-op:high`|`0.75`|
+|`ghost`|`--o-ghost`|`-o:ghost`|`0.125`|
+|`pale`|`--o-pale`|`-o:pale`|`0.25`|
+|`soft`|`--o-soft`|`-o:soft`|`0.5`|
+|`mild`|`--o-mild`|`-o:mild`|`0.75`|
+|`solid`|`--o-solid`|`-o:solid`|`0.9`|
+
 
 <Preview>
 	<PreviewTitle>Preview</PreviewTitle>
 	<PreviewArea p='50'>
-		<Dummy op='low'/>
-		<Dummy op='mid'/>
-		<Dummy op='high'/>
+		<Dummy o='ghost' pre='ghost: ' />
+		<Dummy o='pale' pre='pale: ' />
+		<Dummy o='soft' pre='soft: ' />
+		<Dummy o='mild' pre='mild: ' />
+		<Dummy o='solid' pre='solid: ' />
+		<Dummy pre='1: '/>
 	</PreviewArea>
 	<PreviewCode slot='tab' label='HTML'>
 		```jsx
-		<p class="-op:low">Lorem ipsum ...</p>
-		<p class="-op:mid">Lorem ipsum ...</p>
-		<p class="-op:high">Lorem ipsum ...</p>
+		<p class="-o:ghost">Lorem ipsum ...</p>
+		<p class="-o:pale">Lorem ipsum ...</p>
+		<p class="-o:soft">Lorem ipsum ...</p>
+		<p class="-o:mild">Lorem ipsum ...</p>
+		<p class="-o:solid">Lorem ipsum ...</p>
 		```
 	</PreviewCode>
 	<PreviewCode slot='tab' label='JSX'>
 		```jsx
-		<Text op='low'>Lorem ipsum ...</Text>
-		<Text op='mid'>Lorem ipsum ...</Text>
-		<Text op='high'>Lorem ipsum ...</Text>
+		<Text o='ghost'>Lorem ipsum ...</Text>
+		<Text o='pale'>Lorem ipsum ...</Text>
+		<Text o='soft'>Lorem ipsum ...</Text>
+		<Text o='mild'>Lorem ipsum ...</Text>
+		<Text o='solid'>Lorem ipsum ...</Text>
 		```
 	</PreviewCode>
 </Preview>
