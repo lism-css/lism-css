@@ -32,7 +32,7 @@ import ShapeDivider from '~/components/ex/ShapeDivider/index.astro';
 <Preview>
 	<PreviewTitle>例 1</PreviewTitle>
 	<PreviewArea resize>
-		<Stack isFullwide minH='50vh' bgc='base-2'>
+		<Stack isFullwide min-h='50vh' bgc='base-2'>
 			<Container size='m' hasGutter isFlow my='auto'>
 				<Text fw='bold' fz='xl'>DEMO 01</Text>
 				<Dummy length='l' lang='ja'/>
@@ -41,7 +41,7 @@ import ShapeDivider from '~/components/ex/ShapeDivider/index.astro';
 	</PreviewArea>
 	<PreviewCode>
 		```jsx
-		<Stack isFullwide minH='50vh' bgc='base-2'>
+		<Stack isFullwide min-h='50vh' bgc='base-2'>
 			<Container size='m' hasGutter isFlow my='auto'>
 				<Text fw='bold' fz='xl'>DEMO 01</Text>
 				<Dummy length='l' lang='ja'/>
@@ -56,7 +56,7 @@ import ShapeDivider from '~/components/ex/ShapeDivider/index.astro';
 <Preview>
 	<PreviewTitle>例2: ヘッダー・フッター・レイヤー要素 を追加</PreviewTitle>
 	<PreviewArea resize>
-		<Stack isFullwide minH='70vh' g='30' c='white' pos='r'>
+		<Stack isFullwide min-h='70vh' g='30' c='white' pos='r'>
 			<Frame isLayer>
 				<Media isLayer src='/img/img-1.jpg' alt='' width='960' height='640'/>
 				<Layer blur='4px' bgc='black:50%' />
@@ -77,7 +77,7 @@ import ShapeDivider from '~/components/ex/ShapeDivider/index.astro';
 	</PreviewArea>
 	<PreviewCode>
 		```jsx
-		<Stack isFullwide minH='70vh' g='30' c='white' pos='r'>
+		<Stack isFullwide min-h='70vh' g='30' c='white' pos='r'>
 			<Frame isLayer>
 				<Media isLayer src='/img/img-1.jpg' alt='' width='960' height='640'/>
 				<Layer blur='4px' bgc='black:50%' />
@@ -108,7 +108,7 @@ import ShapeDivider from '~/components/ex/ShapeDivider/index.astro';
 {/* <Preview>
 	<PreviewTitle>With Layers</PreviewTitle>
 	<PreviewArea resize>
-		<Stack isFullwide pos='r' minH='50vh'>
+		<Stack isFullwide pos='r' min-h='50vh'>
 			<Frame isLayer>
 				<Media src='/img.jpg' alt='' width='960' height='640'/>
 			</Frame>
@@ -121,7 +121,7 @@ import ShapeDivider from '~/components/ex/ShapeDivider/index.astro';
 	</PreviewArea>
 	<PreviewCode>
 		```jsx "\<Frame isLayer"
-		<Stack isFullwide pos='r' minH='50vh'>
+		<Stack isFullwide pos='r' min-h='50vh'>
 			<Frame isLayer>
 				<Media src='/img.jpg' alt='' width='960' height='640'/>
 			</Frame>
@@ -142,7 +142,7 @@ import ShapeDivider from '~/components/ex/ShapeDivider/index.astro';
 <Preview>
 	<PreviewTitle>With ShapDivide & Layers</PreviewTitle>
 	<PreviewArea resize>
-		<Stack isFullwide hasGutter pos='r' minH='50vh' c='white' g='20'>
+		<Stack isFullwide hasGutter pos='r' min-h='50vh' c='white' g='20'>
 			<ShapeDivider viewBox='0 0 10 10' c='base' level='6' scale='-Y' offsetY='-0.5px' z='1'>
 				<path d="M10,10V0L0,9.5V10L10,10z"/>
 			</ShapeDivider>
@@ -162,7 +162,7 @@ import ShapeDivider from '~/components/ex/ShapeDivider/index.astro';
 	</PreviewArea>
 	<PreviewCode>
 		```jsx "\<Frame isLayer" "\<ShapeDivider"
-		<Stack isFullwide hasGutter pos='r' minH='50vh' c='white' g='20'>
+		<Stack isFullwide hasGutter pos='r' min-h='50vh' c='white' g='20'>
 			<ShapeDivider viewBox='0 0 10 10' c='base' level='6' scale='-Y' offsetY='-0.5px' z='1'>
 				<path d="M10,10V0L0,9.5V10L10,10z"/>
 			</ShapeDivider>
@@ -189,7 +189,7 @@ import ShapeDivider from '~/components/ex/ShapeDivider/index.astro';
 	<PreviewTitle>clipPathと組み合わせ、背景に画像があるコンテンツの境界を斜めにつなぐ</PreviewTitle>
 	<PreviewArea resize p='30'>
 		<Box isFullwide style={{ '--slopeH': 'clamp(2.5rem, 1.25rem + 5cqw, 5rem)' }}>
-			<Stack isFullwide hasGutter pos='r' minH='50vh' c='white' g='20'>
+			<Stack isFullwide hasGutter pos='r' min-h='50vh' c='white' g='20'>
 				<ShapeDivider viewBox='0 0 10 10' h='var(--slopeH)' c='base' scale='-Y' offsetY='-0.5px' z='1'>
 					<path d='M10,10V0L0,9.5V10L10,10z'></path>
 				</ShapeDivider>
@@ -203,7 +203,7 @@ import ShapeDivider from '~/components/ex/ShapeDivider/index.astro';
 				</Container>
 				<Spacer h='var(--slopeH)' />
 			</Stack>
-			<Stack isFullwide hasGutter pos='r' minH='50vh' c='white' my-s='calc(0px - var(--slopeH))'>
+			<Stack isFullwide hasGutter pos='r' min-h='50vh' c='white' my-s='calc(0px - var(--slopeH))'>
 				<Frame
 					isLayer
 					style={{
@@ -227,7 +227,7 @@ import ShapeDivider from '~/components/ex/ShapeDivider/index.astro';
 	<PreviewCode>
 		```jsx "--slopeH"
 		<Box isFullwide style={{ '--slopeH': 'clamp(2.5rem, 1.25rem + 5cqw, 5rem)' }}>
-			<Stack isFullwide hasGutter pos='r' minH='50vh' c='white' g='20'>
+			<Stack isFullwide hasGutter pos='r' min-h='50vh' c='white' g='20'>
 				<ShapeDivider viewBox='0 0 10 10' h='var(--slopeH)' c='base' scale='-Y' offsetY='-0.5px' z='1'>
 					<path d='M10,10V0L0,9.5V10L10,10z'></path>
 				</ShapeDivider>
@@ -241,7 +241,7 @@ import ShapeDivider from '~/components/ex/ShapeDivider/index.astro';
 				</Container>
 				<Spacer h='var(--slopeH)' />
 			</Stack>
-			<Stack isFullwide hasGutter pos='r' minH='50vh' c='white' my-s='calc(0px - var(--slopeH))'>
+			<Stack isFullwide hasGutter pos='r' min-h='50vh' c='white' my-s='calc(0px - var(--slopeH))'>
 				<Frame
 					isLayer
 					style={{

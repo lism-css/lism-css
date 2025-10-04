@@ -57,7 +57,7 @@ import Card from '~/components/ex/Card/index.jsx';
 <Preview>
 	<PreviewTitle>Preview</PreviewTitle>
 	<PreviewArea resize p='30'>
-		<Frame pos='r' ar='3/4' bdrs='30' bxsh='30' mx='auto' maxW='xs'>
+		<Frame pos='r' ar='3/4' bdrs='30' bxsh='30' mx='auto' max-w='xs'>
 			<Media src='/img/img-1.jpg' alt='' width='960' height='640' />
 			<Layer bgc='rgb(0 0 0 / 20%)'/>
 			<Layer layout={Stack} c='white' p='30' g='30'>
@@ -69,7 +69,7 @@ import Card from '~/components/ex/Card/index.jsx';
 	</PreviewArea>
 	<PreviewCode slot='tab' label='JSX'>
 		```jsx
-		<Frame pos='r' ar='3/4' bdrs='30' bxsh='30' mx='auto' maxW='xs'>
+		<Frame pos='r' ar='3/4' bdrs='30' bxsh='30' mx='auto' max-w='xs'>
 			<Media src='/img/img-1.jpg' alt='' width='960' height='640' />
 			<Layer bgc='rgb(0 0 0 / 20%)'/>
 			<Layer layout={Stack} c='white' p='30' g='30'>
@@ -82,7 +82,7 @@ import Card from '~/components/ex/Card/index.jsx';
 	</PreviewCode>
 	<PreviewCode slot='tab' label='HTML'>
 		```html
-		<div class='l--frame -pos:r -ar -bdrs:30 -bxsh:30 -mx:auto -maxW' style='--ar:3/4;--maxW:var(--size-xs)'>
+		<div class='l--frame -pos:r -ar -bdrs:30 -bxsh:30 -mx:auto -max-w' style='--ar:3/4;--max-w:var(--size-xs)'>
 			<img src='/img/img-1.jpg' width='960' height='640' />
 			<div class='is--layer -bgc' style='--bgc:rgb(0 0 0 / 50%)'></div>
 			<div class='l--stack is--layer -c -p:30 -g:30' style='--c:var(--white)'>
@@ -102,7 +102,7 @@ import Card from '~/components/ex/Card/index.jsx';
 <Preview>
 	<PreviewTitle>Preview</PreviewTitle>
 	<PreviewArea resize p='30'>
-		<Stack p='10' g='20' c='text' bgc='base' bdrs='30' bxsh='30' className='u--outerR' maxW='xs' mx='auto'>
+		<Stack p='10' g='20' c='text' bgc='base' bdrs='30' bxsh='30' className='u--outerR' max-w='xs' mx='auto'>
 			<Frame data-is-side ar='16/9' >
 				<Media src='/img/img-1.jpg' alt='' width='960' height='640' className='u--innerR'/>
 			</Frame>
@@ -115,7 +115,7 @@ import Card from '~/components/ex/Card/index.jsx';
 	</PreviewArea>
 	<PreviewCode slot='tab' label='JSX'>
 		```jsx
-		<Stack p='10' g='20' c='text' bgc='base' bdrs='30' bxsh='30' className='u--outerR' maxW='xs' mx='auto'>
+		<Stack p='10' g='20' c='text' bgc='base' bdrs='30' bxsh='30' className='u--outerR' max-w='xs' mx='auto'>
 			<Frame data-is-side ar='16/9' >
 				<Media src='/img/img-1.jpg' alt='' width='960' height='640' className='u--innerR'/>
 			</Frame>
@@ -129,7 +129,7 @@ import Card from '~/components/ex/Card/index.jsx';
 	</PreviewCode>
 	<PreviewCode slot='tab' label='HTML'>
 		```html
-		<div class='l--stack u--outerR -p:10 -g:20 -c:text -bgc:base -bdrs:30 -bxsh:30 -mx:auto -maxW' style='--maxW:var(--size-xs)'>
+		<div class='l--stack u--outerR -p:10 -g:20 -c:text -bgc:base -bdrs:30 -bxsh:30 -mx:auto -max-w' style='--max-w:var(--size-xs)'>
 			<div class='l--frame -ar:16/9' data-is-side='true'>
 				<img class='u--innerR' src='/img/img-1.jpg' width='960' height='640' />
 			</div>
@@ -295,7 +295,7 @@ import Card from '~/components/ex/Card/index.jsx';
 			gt={[`'img' '.'`, `'img .' / 200px 1fr`]}
 			hasHover
 		>
-			<Frame ga='img' aslf='stretch' ar={['ogp', '1/1']} maxW='100%' pos='r' bdrs='20' bxsh='10'>
+			<Frame ga='img' aslf='stretch' ar={['ogp', '1/1']} max-w='100%' pos='r' bdrs='20' bxsh='10'>
 				<Media css={{scale: 'var(--_isHov, 1.25)'}} hasTransition src='/img/img-1.jpg' alt='' width='960' height='640' />
 			</Frame>
 			<Stack g='30' py='30' px={['20','30']} o='var(--_isHov, 0.75)'>
@@ -312,7 +312,7 @@ import Card from '~/components/ex/Card/index.jsx';
 			gt={[`'img' '.'`, `'img .' / 200px 1fr`]}
 			hasHover
 		>
-			<Frame ga='img' aslf='stretch' ar={['ogp', '1/1']} maxW='100%' pos='r' bdrs='20' bxsh='10'>
+			<Frame ga='img' aslf='stretch' ar={['ogp', '1/1']} max-w='100%' pos='r' bdrs='20' bxsh='10'>
 				<Media css={{scale: 'var(--_isHov, 1.25)'}} hasTransition src='/img/img-1.jpg' alt='' width='960' height='640' />
 			</Frame>
 			<Stack g='30' py='30' px={['20','30']} o='var(--_isHov, 0.75)'>
@@ -335,7 +335,7 @@ import Card from '~/components/ex/Card/index.jsx';
 <Preview>
 	<PreviewTitle>Preview</PreviewTitle>
 	<PreviewArea p='30'>
-		<LinkBox href='#card-a' pos='r' bdrs='20' bxsh='20' ov='hidden' hasHover maxW='xs' mx='auto'>
+		<LinkBox href='#card-a' pos='r' bdrs='20' bxsh='20' ov='hidden' hasHover max-w='xs' mx='auto'>
 			<Frame ar='1/1'>
 				<img src='/img/img-5.jpg' alt='' width='960' height='640' />
 			</Frame>
@@ -356,7 +356,7 @@ import Card from '~/components/ex/Card/index.jsx';
 	</PreviewArea>
 	<PreviewCode slot='tab' label='JSX'>
 	```jsx "hasHover" "hov='get:slide'"
-	<LinkBox href='#card-a' pos='r' bdrs='20' bxsh='20' ov='hidden' hasHover maxW='xs' mx='auto'>
+	<LinkBox href='#card-a' pos='r' bdrs='20' bxsh='20' ov='hidden' hasHover max-w='xs' mx='auto'>
 		<Frame ar='1/1'>
 			<img src='/img/img-5.jpg' alt='' width='960' height='640' />
 		</Frame>
@@ -391,7 +391,7 @@ import Card from '~/components/ex/Card/index.jsx';
 
 {/* <Preview>
 	<PreviewTitle>rtl言語でのテスト</PreviewTitle>
-	<PreviewArea p={20} maxW='40em'>
+	<PreviewArea p={20} max-w='40em'>
 		<Card isFlex dir='rtl'>
 			<Frame w='40%'>
 				<img src='/img/img-1.jpg' alt='' width='960' height='640' />

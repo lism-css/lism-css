@@ -17,7 +17,7 @@ export function getProps({ lismClass = '', duration, offset, style = {}, ...prop
 
 export const defaultProps = {
 	body: { lismClass: 'd--modal_body', ov: 'auto' },
-	inner: { lismClass: 'd--modal_inner', pos: 'relative', maxH: '100%', bgc: 'base' },
+	inner: { lismClass: 'd--modal_inner', pos: 'relative', 'max-h': '100%', bgc: 'base' },
 	closeBtn: { lismClass: 'd--modal_close', lismState: ['re--style'], tag: 'button' },
 	header: { lismClass: 'd--modal_header' },
 	footer: { lismClass: 'd--modal_footer' },

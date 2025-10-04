@@ -10,7 +10,7 @@ export function AttsLabels({ atts = '', ...props }) {
 		<Flex
 			className='c--attsLabels is--skipFlow'
 			w='100%'
-			maxW='100%'
+			max-w='100%'
 			jc='c'
 			pos='a'
 			t='0'
