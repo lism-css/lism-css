@@ -20,11 +20,11 @@ const { title = data.title, tagline, image, actions = [] } = data.hero || {};
 				<Lism tag='h1' id={PAGE_TITLE_ID} fz={['3rem', null, '4rem']} data-page-title>
 					<span>Template Library</span>
 					<br />
-					<span class='-fz:2xs -pis:10'>with </span>
+					<span class='-fz:2xs -px:10'>with </span>
 					<span>Lism</span>
 				</Lism>
 			</Lism>
-			{tagline && <div class='z--hero_tagline -mbs:20' set:html={tagline} />}
+			{tagline && <div class='z--hero_tagline -my-s:20' set:html={tagline} />}
 		</div>
 		{
 			actions.length > 0 && (

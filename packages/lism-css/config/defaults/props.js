@@ -134,7 +134,6 @@ export default {
 		presets: ['16/9', '3/2', '1/1', 'ogp'], // 4/3, 2/1
 		bp: 1,
 	},
-
 	bxsh: { prop: 'boxShadow', utils: { 0: 'none' }, token: 'bxsh', tokenClass: 1, bp: 1, alwaysVar: 1 },
 	bdrs: {
 		prop: 'borderRadius',
@@ -145,6 +144,14 @@ export default {
 		alwaysVar: 1,
 		overwriteBaseVar: 1,
 	},
+	'bdrs-tl': { prop: 'borderTopLeftRadius', token: 'bdrs' },
+	'bdrs-tr': { prop: 'borderTopRightRadius', token: 'bdrs' },
+	'bdrs-br': { prop: 'borderBottomRightRadius', token: 'bdrs' },
+	'bdrs-bl': { prop: 'borderBottomLeftRadius', token: 'bdrs' },
+	'bdrs-ss': { prop: 'borderStartStartRadius', token: 'bdrs' },
+	'bdrs-se': { prop: 'borderStartEndRadius', token: 'bdrs' },
+	'bdrs-es': { prop: 'borderEndStartRadius', token: 'bdrs' },
+	'bdrs-ee': { prop: 'borderEndEndRadius', token: 'bdrs' },
 
 	// position
 	pos: {
@@ -161,6 +168,12 @@ export default {
 	r: { prop: 'right', utils: { 0: '0%' }, presets: ['50%', '100%'], token: 'space' },
 	b: { prop: 'bottom', utils: { 0: '0%' }, presets: ['50%', '100%'], token: 'space' },
 	i: { prop: 'inset', utils: { 0: '0%' }, token: 'space' },
+	'i-x': { prop: 'insetInline', token: 'space' },
+	'i-y': { prop: 'insetBlock', token: 'space' },
+	'i-x-s': { prop: 'insetInlineStart', token: 'space' },
+	'i-x-e': { prop: 'insetInlineEnd', token: 'space' },
+	'i-y-s': { prop: 'insetBlockStart', token: 'space' },
+	'i-y-e': { prop: 'insetBlockEnd', token: 'space' },
 	// iso: { prop: 'isolation', utils: { isolate: 'i' } },
 
 	// space
@@ -174,14 +187,14 @@ export default {
 	},
 	px: { prop: 'paddingInline', token: 'space', tokenClass: 1, alwaysVar: 1, bp: 1 },
 	py: { prop: 'paddingBlock', token: 'space', tokenClass: 1, alwaysVar: 1, bp: 1 },
-	pis: { prop: 'paddingInlineStart', token: 'space', tokenClass: 1, alwaysVar: 1, bp: 1 },
-	pbs: { prop: 'paddingBlockStart', token: 'space', tokenClass: 1, alwaysVar: 1, bp: 1 },
-	pie: { prop: 'paddingInlineEnd', token: 'space', tokenClass: 1, alwaysVar: 1, bp: 1 },
-	pbe: { prop: 'paddingInlineStart', token: 'space', tokenClass: 1, alwaysVar: 1, bp: 1 },
-	pl: { prop: 'paddingLeft', token: 'space' },
-	pr: { prop: 'paddingRight', token: 'space' },
-	pt: { prop: 'paddingTop', token: 'space' },
-	pb: { prop: 'paddingBottom', token: 'space' },
+	pl: { prop: 'paddingLeft', token: 'space', bp: 1 },
+	pr: { prop: 'paddingRight', token: 'space', bp: 1 },
+	pt: { prop: 'paddingTop', token: 'space', bp: 1 },
+	pb: { prop: 'paddingBottom', token: 'space', bp: 1 },
+	'px-s': { prop: 'paddingInlineStart', token: 'space', bp: 1 },
+	'px-e': { prop: 'paddingInlineEnd', token: 'space', bp: 1 },
+	'py-s': { prop: 'paddingBlockStart', token: 'space', bp: 1 },
+	'py-e': { prop: 'paddingBlockEnd', token: 'space', bp: 1 },
 	m: {
 		prop: 'margin',
 		presets: ['auto'],
@@ -193,14 +206,14 @@ export default {
 	},
 	mx: { prop: 'marginInline', presets: ['auto'], token: 'space', tokenClass: 1, alwaysVar: 1, bp: 1 },
 	my: { prop: 'marginBlock', presets: ['auto'], token: 'space', tokenClass: 1, alwaysVar: 1, bp: 1 },
-	mis: { prop: 'marginInlineStart', presets: ['auto'], token: 'space', tokenClass: 1, alwaysVar: 1, bp: 1 },
-	mbs: { prop: 'marginBlockStart', presets: ['auto'], token: 'space', tokenClass: 1, alwaysVar: 1, bp: 1 },
-	mie: { prop: 'marginInlineEnd', presets: ['auto'], token: 'space', tokenClass: 1, alwaysVar: 1, bp: 1 },
-	mbe: { prop: 'marginInlineStart', presets: ['auto'], token: 'space', tokenClass: 1, alwaysVar: 1, bp: 1 },
-	ml: { prop: 'marginLeft', token: 'space' },
-	mr: { prop: 'marginRight', token: 'space' },
-	mt: { prop: 'marginTop', token: 'space' },
-	mb: { prop: 'marginBottom', token: 'space' },
+	ml: { prop: 'marginLeft', token: 'space', bp: 1 },
+	mr: { prop: 'marginRight', token: 'space', bp: 1 },
+	mt: { prop: 'marginTop', token: 'space', bp: 1 },
+	mb: { prop: 'marginBottom', token: 'space', bp: 1 },
+	'mx-s': { prop: 'marginInlineStart', presets: ['auto'], bp: 1 },
+	'mx-e': { prop: 'marginInlineEnd', presets: ['auto'], bp: 1 },
+	'my-s': { prop: 'marginBlockStart', token: 'space', bp: 1, presets: ['auto'], tokenClass: 1 },
+	'my-e': { prop: 'marginInlineEnd', token: 'space', bp: 1 },
 
 	g: {
 		prop: 'gap',
@@ -210,8 +223,8 @@ export default {
 		overwriteBaseVar: 1,
 		bp: 1,
 	},
-	gx: { prop: 'columnGap', token: 'space', bp: 1 },
-	gy: { prop: 'rowGap', token: 'space', bp: 1 },
+	'g-x': { prop: 'columnGap', token: 'space', bp: 1 },
+	'g-y': { prop: 'rowGap', token: 'space', bp: 1 },
 	cols: { isVar: 1, bp: 1 },
 	rows: { isVar: 1, bp: 1 },
 

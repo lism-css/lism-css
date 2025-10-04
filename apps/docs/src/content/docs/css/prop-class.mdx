@@ -154,8 +154,8 @@ export const LinkSPACE = () => <a href="/css/tokens/#space"><code>SPACE</code></
 |`padding`|`p`|<LinkSPACE/>|○|
 |`padding-inline`|`px`|<LinkSPACE/>|○|
 |`padding-block`|`py`|<LinkSPACE/>|○|
-|`padding-inline-start`|`pis`|<LinkSPACE/>|○|
-|`padding-block-start`|`pbs`|<LinkSPACE/>|○|
+|`padding-inline-start`|`px-s`|<LinkSPACE/>|○|
+|`padding-block-start`|`py-s`|<LinkSPACE/>|○|
 |`padding-left`|`pl`|-|○|
 |`padding-right`|`pr`|-|○|
 |`padding-top`|`pt`|-|○|
@@ -167,8 +167,8 @@ export const LinkSPACE = () => <a href="/css/tokens/#space"><code>SPACE</code></
 |`margin`|`m`|<LinkSPACE/>,<br/>`a`(`auto`)|○|
 |`margin-inline`|`mx`|`a`(`auto`)|○|
 |`margin-block`|`my`|`a`(`auto`)|○|
-|`margin-inline-start`|`mis`|<LinkSPACE/>,<br/>`a`(`auto`)|○|
-|`margin-block-start`|`mbs`|<LinkSPACE/>,<br/>`a`(`auto`)|○|
+|`margin-inline-start`|`mx-s`|<LinkSPACE/>,<br/>`auto`|○|
+|`margin-block-start`|`my-s`|<LinkSPACE/>,<br/>`auto`|○|
 |`margin-left`|`ml`|`a`(`auto`)|○|
 |`margin-right`|`mr`|`a`(`auto`)|○|
 |`margin-top`|`mt`|`a`(`auto`)|○|
@@ -178,22 +178,22 @@ export const LinkSPACE = () => <a href="/css/tokens/#space"><code>SPACE</code></
 |Property|Shorthand|To Class|BP|
 |---|---|---|---|
 |`gap`|`g`|<LinkSPACE/>,`inherit`|○|
-|`column-gap`|`gx`|-|○|
-|`row-gap`|`gy`|-|○|
+|`column-gap`|`g-x`|-|○|
+|`row-gap`|`g-y`|-|○|
 
 <Preview>
 	<PreviewTitle>Examples</PreviewTitle>
 	<PreviewArea p='30' resize>
 		<Lism p={['20', '30']} bd>
 			<Text>Example text</Text>
-			<Text mbs='20' mis='40'>Example text</Text>
+			<Text my-s='20' mx='40'>Example text</Text>
 		</Lism>
 	</PreviewArea>
 	<PreviewCode slot="tab" label="HTML">
 	```html
 	<div class="-p:20 -p_sm -bd" style="--p_sm:var(--s30)">
 		<p>Example text</p>
-		<p class="-mbs:20 -mis:40">Example text</p>
+		<p class="-my-s:20 -mx:40">Example text</p>
 	</div>
 	```
 	</PreviewCode>
@@ -201,7 +201,7 @@ export const LinkSPACE = () => <a href="/css/tokens/#space"><code>SPACE</code></
 	```jsx
 	<Lism p={['20', '30']} bd>
 		<Text>Example text</Text>
-		<Text mbs='20' mis='40'>Example text</Text>
+		<Text my-s='20' mx='40'>Example text</Text>
 	</Lism>
 	```
 	</PreviewCode>

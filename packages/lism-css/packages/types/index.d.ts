@@ -21,10 +21,10 @@ export interface LismBaseProps {
 	pr?: ResponsiveValue<string | number>;
 	pt?: ResponsiveValue<string | number>;
 	pb?: ResponsiveValue<string | number>;
-	pis?: ResponsiveValue<string | number>;
-	pie?: ResponsiveValue<string | number>;
-	pbs?: ResponsiveValue<string | number>;
-	pbe?: ResponsiveValue<string | number>;
+	'px-s'?: ResponsiveValue<string | number>;
+	'px-e'?: ResponsiveValue<string | number>;
+	'py-s'?: ResponsiveValue<string | number>;
+	'py-e'?: ResponsiveValue<string | number>;
 
 	m?: ResponsiveValue<string | number>;
 	mx?: ResponsiveValue<string | number>;
@@ -33,10 +33,10 @@ export interface LismBaseProps {
 	mr?: ResponsiveValue<string | number>;
 	mt?: ResponsiveValue<string | number>;
 	mb?: ResponsiveValue<string | number>;
-	mis?: ResponsiveValue<string | number>;
-	mie?: ResponsiveValue<string | number>;
-	mbs?: ResponsiveValue<string | number>;
-	mbe?: ResponsiveValue<string | number>;
+	'mx-s'?: ResponsiveValue<string | number>;
+	'mx-e'?: ResponsiveValue<string | number>;
+	'my-s'?: ResponsiveValue<string | number>;
+	'my-e'?: ResponsiveValue<string | number>;
 
 	// Sizing
 	w?: ResponsiveValue<string | number>;
@@ -59,8 +59,8 @@ export interface LismBaseProps {
 	// Flexbox & Grid
 	gap?: ResponsiveValue<string | number>;
 	g?: ResponsiveValue<string | number>;
-	gx?: ResponsiveValue<string | number>;
-	gy?: ResponsiveValue<string | number>;
+	'g-x'?: ResponsiveValue<string | number>;
+	'g-y'?: ResponsiveValue<string | number>;
 	ai?: ResponsiveValue<string>;
 	jc?: ResponsiveValue<string>;
 	ac?: ResponsiveValue<string>;

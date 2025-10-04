@@ -47,8 +47,8 @@ export function Item({ isHorizontal, isStart, isEnd, isHighlighted, icon, iconPr
 			ji={isHorizontal ? 'c' : null}
 			gtr={isHorizontal ? 'subgrid' : null}
 			gr={isHorizontal ? '1/-1' : null}
-			gx={isHorizontal ? null : '20'}
-			gy={isHorizontal ? '10' : null}
+			g-x={isHorizontal ? null : '20'}
+			g-y={isHorizontal ? '10' : null}
 			{...props}
 		>
 			<Line {...lineProps} />
@@ -68,5 +68,5 @@ export function Title(props) {
 	return <Lism className='c--timeline_title' fw='bold' gr='3' gc='2' {...props} />;
 }
 export function Text(props) {
-	return <Lism className='c--timeline_text' fz='s' mbs='10' gr='4' gc='2' {...props} />;
+	return <Lism className='c--timeline_text' fz='s' my-s='10' gr='4' gc='2' {...props} />;
 }
