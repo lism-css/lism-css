@@ -53,7 +53,7 @@ export function Item({ isHorizontal, isStart, isEnd, isHighlighted, icon, iconPr
 		>
 			<Line {...lineProps} />
 			<Shape bgc={shapeColor || 'text'} {...shapeProps}>
-				{isHighlighted && <Decorator className='c--timeline_highlight' tag='span' pos='a' z='-1' bgc='inherit' bdrs='99' op='low' />}
+				{isHighlighted && <Decorator className='c--timeline_highlight' tag='span' pos='a' z='-1' bgc='inherit' bdrs='99' o='pale' />}
 				{icon && <Icon icon={icon} scale='0.625' {...iconProps} />}
 			</Shape>
 			{children}

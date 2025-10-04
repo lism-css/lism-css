@@ -120,7 +120,7 @@ export default {
 		bp: 1,
 	},
 
-	op: { prop: 'opacity', presets: ['0'], token: 'op', tokenClass: 1 },
+	o: { prop: 'opacity', presets: ['0'], token: 'o', tokenClass: 1 },
 	v: { prop: 'visibility', presets: ['hidden', 'visible'] },
 
 	ov: { prop: 'overflow', presets: ['hidden', 'auto', 'clip', 'scroll'] },
