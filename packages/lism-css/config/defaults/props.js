@@ -11,7 +11,6 @@
  * ↓SCSS出力で使用される
  * alwaysVar: 1 → .-prop,[class*=-prop:] {propaty:var(--prop)} で、ユーティリティクラス時も常に変数管理となる。
  * overwriteBaseVar: 1 → ブレイクポイントクラスで --prop: var(--prop_$bp) がセットされ、常にベース変数の --prop で値が取得できるようになる。
- * skipSCSS: 1 → scssのオート生成をスキップ（少し複雑で手動で記述するもの）
  * important: 1 → !important を付けて最終的に出力する
  */
 export default {
@@ -23,7 +22,7 @@ export default {
 	lh: { prop: 'lineHeight', presets: ['1'], token: 'lh', tokenClass: 1, bp: 1, alwaysVar: 1 },
 	lts: { prop: 'letterSpacing', token: 'lts', tokenClass: 1 },
 	ta: { prop: 'textAlign', utils: { c: 'center', l: 'left', r: 'right' } },
-	td: { prop: 'textDecoration', utils: { u: 'underline', n: 'none' } },
+	td: { prop: 'textDecoration', utils: { under: 'underline', n: 'none' } },
 	tt: { prop: 'textTransform', utils: { upper: 'uppercase', lower: 'lowercase' } },
 	// te: { prop: 'textEmphasis', presets: ['filled'] },
 	// tsh: { prop: 'textShadow' },
@@ -86,8 +85,7 @@ export default {
 	keycolor: { isVar: 1, token: 'color' },
 	bd: {
 		prop: 'border',
-		presets: ['none'],
-		skipSCSS: 1,
+		utils: { n: 'none' },
 	},
 	bds: { isVar: 1, presets: ['dashed', 'dotted', 'double'] },
 	bdc: {
@@ -116,8 +114,8 @@ export default {
 			f: 'flex',
 			g: 'grid',
 			i: 'inline',
-			if: 'inline-flex',
-			ib: 'inline-block',
+			'i-f': 'inline-flex',
+			'i-b': 'inline-block',
 		},
 		bp: 1,
 	},
@@ -230,8 +228,8 @@ export default {
 
 	// flex
 	fxf: { prop: 'flexFlow' },
-	fxw: { prop: 'flexWrap', utils: { w: 'wrap', no: 'nowrap' }, bp: 1 },
-	fxd: { prop: 'flexDirection', utils: { c: 'column', 'c-r': 'column-reverse', r: 'row', 'r-r': 'row-reverse' }, bp: 1 },
+	fxw: { prop: 'flexWrap', utils: { wrap: 'wrap', no: 'nowrap' }, bp: 1 },
+	fxd: { prop: 'flexDirection', utils: { col: 'column', 'col-r': 'column-reverse', row: 'row', 'row-r': 'row-reverse' }, bp: 1 },
 	fx: { prop: 'flex', presets: ['1'], bp: 1 },
 	fxg: { prop: 'flexGrow', presets: ['1'] },
 	fxsh: { prop: 'flexShrink', presets: ['0'] },
@@ -243,7 +241,7 @@ export default {
 	gta: { prop: 'gridTemplateAreas', bp: 1 },
 	gtc: { prop: 'gridTemplateColumns', presets: ['subgrid'], bp: 1 },
 	gtr: { prop: 'gridTemplateRows', presets: ['subgrid'], bp: 1 },
-	gaf: { prop: 'gridAutoFlow', bp: 1 }, // utils: { r: 'row', c: 'col' }, //dense
+	gaf: { prop: 'gridAutoFlow', utils: { row: 'row', col: 'column' }, bp: 1 }, //dense
 	gac: { prop: 'gridAutoColumns', bp: 1 },
 	gar: { prop: 'gridAutoRows', bp: 1 },
 
