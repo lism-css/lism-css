@@ -166,13 +166,13 @@ import { FolderSimpleIcon } from "@phosphor-icons/react";
 					<Icon icon='caret-right' />
 				</NavMenu.Link>
 			</NavMenu.Item>
-			<NavMenu.Item>
+			<NavMenu.Item bd-t>
 				<NavMenu.Link href='#menu2' hov='c,bgc' jc='between' ai='c'>
 					<span>Menu item</span>
 					<Icon icon='caret-right' />
 				</NavMenu.Link>
 			</NavMenu.Item>
-			<NavMenu.Item>
+			<NavMenu.Item bd-t>
 				<NavMenu.Link href='#menu4' hov='c,bgc' jc='between' ai='c'>
 					<span>Menu item</span>
 					<Icon icon='caret-right' />
@@ -189,13 +189,13 @@ import { FolderSimpleIcon } from "@phosphor-icons/react";
 					<Icon icon='caret-right' />
 				</NavMenu.Link>
 			</NavMenu.Item>
-			<NavMenu.Item>
+			<NavMenu.Item bd-t>
 				<NavMenu.Link href='#menu2' hov='c,bgc' jc='between' ai='c'>
 					<span>Menu item</span>
 					<Icon icon='caret-right' />
 				</NavMenu.Link>
 			</NavMenu.Item>
-			<NavMenu.Item>
+			<NavMenu.Item bd-t>
 				<NavMenu.Link href='#menu4' hov='c,bgc' jc='between' ai='c'>
 					<span>Menu item</span>
 					<Icon icon='caret-right' />
@@ -214,24 +214,18 @@ import { FolderSimpleIcon } from "@phosphor-icons/react";
 
 
 
-### 各リストのpadding, ボーダーカラーを一括で調整する方法
+### 各リストのpaddingを一括で調整する方法
 
-- `<NavMenu.Item>` は `data-lism-get='bdc'`
-- `<NavMenu.Link>` は`data-lism-get='p'`
+- `itemP`を指定すると`--item-p`変数をセットできるようになっています。
 
-が付与されており、それぞれ親の`--pass_bdc`,`--pass_p`変数を受けとるようになっています。
-これにより、`<NavMenu.Root>`に`--pass_bdc`や`--pass_p`をセットして一括調整できます。
+ただし、ブレイクポイントで値を変更させたい場合は、`<NavMenu.Link>`それぞれに`p`を指定してください。
 
-
-<Reference>
-[Lismで提案する pass-get について](/css/pass-get)
-</Reference>
 
 <Preview>
-	<PreviewTitle>`--pass_bdc`（Rootの`--bdc`が初期セットされます）と`--pass_p` で`padding`, `--bdc`を一括指定</PreviewTitle>
+	<PreviewTitle>`itemP`を指定</PreviewTitle>
 	<PreviewArea p='30'>
 		{/* <NavMenu.Root bd style={{'--pass_p': 'var(--s30)'}}> */}
-		<NavMenu.Root bd bdc='line' passVars={{p:'30'}}>
+		<NavMenu.Root bd bdc='line' itemP='30'>
 			<NavMenu.Item>
 				<NavMenu.Link href='#menu1'>Menu item</NavMenu.Link>
 			</NavMenu.Item>
@@ -244,8 +238,8 @@ import { FolderSimpleIcon } from "@phosphor-icons/react";
 		</NavMenu.Root>
 	</PreviewArea>
 	<PreviewCode>
-		```jsx "bdc='line'" "passVars={{p:'30'}}"
-		<NavMenu.Root bd bdc='line' passVars={{p:'30'}}>
+		```jsx "bdc='line'" "itemP='30'"
+		<NavMenu.Root bd bdc='line' itemP='30'>
 			<NavMenu.Item>
 				<NavMenu.Link href='#menu1'>Menu item</NavMenu.Link>
 			</NavMenu.Item>
@@ -269,7 +263,7 @@ import { FolderSimpleIcon } from "@phosphor-icons/react";
 <Preview>
 	<PreviewTitle>メニューのネスト</PreviewTitle>
 	<PreviewArea p='30'>
-		<NavMenu.Root bdc='line' hovBgc='base-2' passVars={{p:'10'}} >
+		<NavMenu.Root bdc='line' hovBgc='base-2' itemP='10'>
 			<NavMenu.Item>
 				<NavMenu.Link hov='bgc' href='#menu1'>Menu item 1</NavMenu.Link>
 			</NavMenu.Item>
@@ -296,7 +290,7 @@ import { FolderSimpleIcon } from "@phosphor-icons/react";
 	</PreviewArea>
 	<PreviewCode>
 		```jsx "NavMenu.Nest"
-		<NavMenu.Root bdc='line' hovBgc='base-2' passVars={{p:'10'}} >
+		<NavMenu.Root bdc='line' hovBgc='base-2' itemP='10'>
 			<NavMenu.Item>
 				<NavMenu.Link hov='bgc' href='#menu1'>Menu item 1</NavMenu.Link>
 			</NavMenu.Item>
@@ -339,7 +333,7 @@ import { FolderSimpleIcon } from "@phosphor-icons/react";
 			</NavMenu.Item>
 			<NavMenu.Item>
 				<Accordion.Root>
-					<Accordion.Header hov='bgc' data-lism-get='p'>
+					<Accordion.Header hov='bgc' p='var(--item-p)'>
 						<Accordion.Label>Menu item (Accordion)</Accordion.Label>
 						<Accordion.Icon />
 					</Accordion.Header>
@@ -358,14 +352,14 @@ import { FolderSimpleIcon } from "@phosphor-icons/react";
 		</NavMenu.Root>
 	</PreviewArea>
 	<PreviewCode>
-		```jsx "Accordion.Root" "NavMenu.Nest" "data-lism-get='p'"
+		```jsx "Accordion.Root" "NavMenu.Nest"
 		<NavMenu.Root bd-y hovBgc='base-2'>
 			<NavMenu.Item>
 				<NavMenu.Link hov='bgc' href='#menu1'>Menu item</NavMenu.Link>
 			</NavMenu.Item>
 			<NavMenu.Item>
 				<Accordion.Root>
-					<Accordion.Header hov='bgc' data-lism-get='p'>
+					<Accordion.Header hov='bgc' p='var(--item-p)'>
 						<Accordion.Label>Menu item (Accordion)</Accordion.Label>
 						<Accordion.Icon />
 					</Accordion.Header>
@@ -417,7 +411,7 @@ import { FolderSimpleIcon } from "@phosphor-icons/react";
 		</NavMenu.Root>
 	</PreviewArea>
 	<PreviewCode>
-		```jsx "Accordion.Root" "NavMenu.Nest" "data-lism-get='p'"
+		```jsx "Accordion.Root" "NavMenu.Nest" "Accordion.Icon isTrigger"
 		<NavMenu.Root bd-y>
 			<NavMenu.Item>
 				<NavMenu.Link href='#menu1'>Menu item</NavMenu.Link>
@@ -457,13 +451,13 @@ import { FolderSimpleIcon } from "@phosphor-icons/react";
 	<PreviewTitle>hoverでネストメニューを表示</PreviewTitle>
 	<PreviewArea p='30'>
 		<Box min-h="15rem">
-		<NavMenu.Root fxd='row' lh='xs' passVars={{p:'20 30'}}>
+		<NavMenu.Root fxd='row' lh='xs' itemP='20 30'>
 			<NavMenu.Item>
 				<NavMenu.Link href='#menu1'>Menu item</NavMenu.Link>
 			</NavMenu.Item>
 			<NavMenu.Item hasHover pos='r'>
 				<NavMenu.Link href='#menu3' ai='c'>
-					<Fragment>Hover Menu Item <Icon icon='caret-down' css={{translate:'40%'}} /></Fragment>
+					<Fragment>Hover Menu Item <Icon icon='caret-down' translate='40%' /></Fragment>
 				</NavMenu.Link>
 				<NavMenu.Nest hov='get:show' pos='a' t='100%' px-s='0' lh='s' bgc='base' bxsh='20' bdrs='5'>
 					<NavMenu.Item>
@@ -482,13 +476,13 @@ import { FolderSimpleIcon } from "@phosphor-icons/react";
 	</PreviewArea>
 	<PreviewCode>
 		```jsx "fxd='row'"
-		<NavMenu.Root fxd='row' lh='xs' passVars={{p:'20 30'}}>
+		<NavMenu.Root fxd='row' lh='xs' itemP='20 30'>
 			<NavMenu.Item>
 				<NavMenu.Link href='#menu1'>Menu item</NavMenu.Link>
 			</NavMenu.Item>
 			<NavMenu.Item hasHover pos='r'>
 				<NavMenu.Link href='#menu3' ai='c'>
-					<Fragment>Hover Menu Item <Icon icon='caret-down' css={{translate:'40%'}} /></Fragment>
+					<Fragment>Hover Menu Item <Icon icon='caret-down' translate='40%' /></Fragment>
 				</NavMenu.Link>
 				<NavMenu.Nest hov='get:show' pos='a' t='100%' px-s='0' lh='s' bgc='base' bxsh='20' bdrs='5'>
 					<NavMenu.Item>
@@ -512,14 +506,14 @@ import { FolderSimpleIcon } from "@phosphor-icons/react";
 	<PreviewTitle>アコーディオンでのメニュー展開</PreviewTitle>
 	<PreviewArea p='30'>
 		<Box min-h="15rem">
-		<NavMenu.Root fxd='row' lh='xs' passVars={{p:'20 30'}}>
+		<NavMenu.Root fxd='row' lh='xs' itemP='20 30'>
 			<NavMenu.Item>
 				<NavMenu.Link href='#menu1'>Menu item</NavMenu.Link>
 			</NavMenu.Item>
 
 			<NavMenu.Item pos='r'>
 				<Accordion.Root>
-					<Accordion.Header data-lism-get='p'>
+					<Accordion.Header p='var(--item-p)'>
 						<Accordion.Label>Accordion Menu</Accordion.Label>
 						<Accordion.Icon />
 					</Accordion.Header>
@@ -564,14 +558,14 @@ import { FolderSimpleIcon } from "@phosphor-icons/react";
 	</PreviewArea>
 	<PreviewCode>
 		```jsx
-		<NavMenu.Root fxd='row' lh='xs' passVars={{p:'20 30'}}>
+		<NavMenu.Root fxd='row' lh='xs' itemP='20 30'>
 			<NavMenu.Item>
 				<NavMenu.Link href='#menu1'>Menu item</NavMenu.Link>
 			</NavMenu.Item>
 
 			<NavMenu.Item pos='r'>
 				<Accordion.Root>
-					<Accordion.Header data-lism-get='p'>
+					<Accordion.Header p='var(--item-p)'>
 						<Accordion.Label>Accordion Menu</Accordion.Label>
 						<Accordion.Icon />
 					</Accordion.Header>

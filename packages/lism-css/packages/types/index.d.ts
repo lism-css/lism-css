@@ -140,7 +140,7 @@ export interface LismBaseProps {
 
 	// Context props
 	css?: Record<string, any>;
-	passVars?: string | string[];
+	// passVars?: string | string[];
 
 	// Utility classes
 	_?: string | string[];

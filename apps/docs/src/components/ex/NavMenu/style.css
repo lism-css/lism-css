@@ -1,19 +1,20 @@
 @layer lism.component {
 	.c--navMenu {
 		--link--td: none;
-		--pass_p: var(--s20);
-		--pass_bdc: var(--bdc, currentColor);
+		--item-p: var(--s20);
+	}
+
+	.c--navMenu_nest {
+		--item-p: inherit;
 	}
 
 	.c--navMenu_link {
+		padding: var(--item-p);
 		outline-offset: -1px; /* アコーディオン化した時にoutlineが一部見えなくなるのを防ぐ */
 	}
-}
 
-/* lism: pass-get */
-[data-lism-get~='p'] {
-	padding: var(--pass_p);
-}
-[data-lism-get~='bdc'] {
-	--bdc: var(--pass_bdc);
+	.c--navMenu_nest,
+	.c--navMenu_item {
+		--bdc: inherit;
+	}
 }
