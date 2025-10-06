@@ -35,7 +35,7 @@ class LismPropsData {
 			lismClass,
 			lismState = [],
 			variant,
-			passVars,
+			// passVars,
 			// lismVar,
 			style = {},
 			_propConfig = {},
@@ -79,9 +79,9 @@ class LismPropsData {
 		}
 
 		// pass-get
-		if (null != passVars && typeof passVars === 'object') {
-			this.setPassProps(passVars);
-		}
+		// if (null != passVars && typeof passVars === 'object') {
+		// 	this.setPassProps(passVars);
+		// }
 
 		// if (null != pass) {
 		// 	// , 区切りでユーティリティクラスを複数出力可能
@@ -283,21 +283,21 @@ class LismPropsData {
 		this.addStyle(styleName, val);
 	}
 
-	setPassProps(passVars) {
-		let dataList = [];
-		Object.keys(passVars).forEach((propName) => {
-			// プロバイダーリストに追加
-			dataList.push(propName);
+	// setPassProps(passVars) {
+	// 	let dataList = [];
+	// 	Object.keys(passVars).forEach((propName) => {
+	// 		// プロバイダーリストに追加
+	// 		dataList.push(propName);
 
-			// 渡す値
-			let value = passVars[propName];
-			if (null === value) return;
+	// 		// 渡す値
+	// 		let value = passVars[propName];
+	// 		if (null === value) return;
 
-			// トークン値であれば変換
-			value = getMaybeCssVar(value, getTokenKey(propName));
-			this.addStyle(`--pass_${propName}`, value);
-		});
-	}
+	// 		// トークン値であれば変換
+	// 		value = getMaybeCssVar(value, getTokenKey(propName));
+	// 		this.addStyle(`--pass_${propName}`, value);
+	// 	});
+	// }
 
 	setHoverProps(hoverData) {
 		if (!hoverData) return;
