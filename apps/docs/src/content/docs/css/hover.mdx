@@ -294,17 +294,17 @@ Lismに内包されているクラスでは、それぞれ初期値を定義し�
 親要素に`has--hover`を付与してその子要素で`--_isHov`変数と`--_notHov`変数をうまく使うことで、hover時の子要素の挙動をコントロールできるようになります。
 
 
-コアパッケージには、そのような子要素向けのクラスを `-hov:get:xxx` として2つだけ標準で用意しています。
+コアパッケージには、そのような子要素向けのクラスを `-hov:to:xxx` として2つだけ標準で用意しています。
 
 ```css
 
 /* 親の has--hover がhoverされたら非表示にする */
-.-hov\:get\:hide {
+.-hov\:to\:hide {
 	opacity: var(--_isHov, 0);
 }
 
 /* 親の has--hover がhoverされたら表示する */
-.-hov\:get\:show {
+.-hov\:to\:show {
 	opacity: var(--_notHov, 0);
 	visibility: var(--_notHov, hidden);
 }
@@ -324,10 +324,10 @@ Lismに内包されているクラスでは、それぞれ初期値を定義し�
 		</Frame>
 	</PreviewArea>
 	<PreviewCode slot='tab' label='HTML'>
-		```html "has--hover" "-hov:get:show" "has--transition"
+		```html "has--hover" "-hov:to:show" "has--transition"
 		<a class="l--frame is--linkBox has--hover -ar:16/9 -bdrs:30" href="#banner-link">
 			<img class="is--layer" src="/img/img-1.jpg" width="960" height="640" loading="lazy">
-			<div class="is--layer has--transition -hov:get:show -bgc" style="--bgc:rgb(0 0 0 / 10%);backdrop-filter:blur(6px)">
+			<div class="is--layer has--transition -hov:to:show -bgc" style="--bgc:rgb(0 0 0 / 10%);backdrop-filter:blur(6px)">
 				<div class="l--center -h:100% -c" style="--c:#fff">
 					<span class="-fz:2xl -fs:italic -fw:light -lts:l -bdrs:99 -px:30 -py:10">View More</span>
 				</div>
@@ -351,10 +351,10 @@ Lismに内包されているクラスでは、それぞれ初期値を定義し�
 
 
 
-### `-hov:get`クラスを自作する例
+### `-hov:to`クラスを自作する例
 
 
-親がhoverされたらズーム表示されるような`-hov:get:zoom`クラスと、テキストが広がるような`-hov:get:letterSpread`クラスを自作して使ってみます。
+親がhoverされたらズーム表示されるような`-hov:to:zoom`クラスと、テキストが広がるような`-hov:to:letterSpread`クラスを自作して使ってみます。
 
 さらに、親要素で`--transition--duration`を上書きして子要素のトランジション時間を一括で変更してみましょう。
 
@@ -378,26 +378,26 @@ Lismに内包されているクラスでは、それぞれ初期値を定義し�
 
 	<PreviewCode slot='tab' label='追加CSS'>
 	```css
-	.-hov\:get\:zoom {
+	.-hov\:to\:zoom {
 		scale: var(--_isHov, 1.1);
 	}
-	.-hov\:get\:letterSpread {
+	.-hov\:to\:letterSpread {
 		letter-spacing: var(--_isHov, 0.125em);
 	}
 	```
 	</PreviewCode>
 	<PreviewCode slot='tab' label='HTML'>
-		```html "has--hover" "-hov:get:zoom" "-hov:get:letterSpread" "--transition--duration"
+		```html "has--hover" "-hov:to:zoom" "-hov:to:letterSpread" "--transition--duration"
 		<a
 			href="#banner-link"
 			class="is--linkBox has--hover -ar:16/9 -ov:hidden -bdrs:30"
 			style="--transition--duration:.6s"
 		>
 			<div class="l--frame is--layer">
-				<img class="is--layer has--transition -hov:get:zoom" src="/img/img-2.jpg" width="960" height="640" loading="lazy" />
+				<img class="is--layer has--transition -hov:to:zoom" src="/img/img-2.jpg" width="960" height="640" loading="lazy" />
 			</div>
 			<div class="l--center is--layer -c -bgc" style="--c:#fff;--bgc:rgb(0 0 0 / 40%)">
-				<span class="-hov:get:letterSpread -fz:2xl">LinkBox</span>
+				<span class="-hov:to:letterSpread -fz:2xl">LinkBox</span>
 			</div>
 		</a>
 		```

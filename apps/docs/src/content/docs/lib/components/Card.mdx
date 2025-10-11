@@ -329,7 +329,7 @@ import Card from '~/components/ex/Card/index.jsx';
 
 ### ホバーでテキストを出現させる例
 
-以下の例では、`.-hov\:get\:slide`クラスを別途用意する必要があります。
+以下の例では、`.-hov\:to\:slide`クラスを別途用意する必要があります。
 
 {/* Note: PreviewAreaにresize つけると Filterの挙動変わることに注意。 */}
 <Preview>
@@ -378,7 +378,7 @@ import Card from '~/components/ex/Card/index.jsx';
 	</PreviewCode>
 <PreviewCode slot='tab' label='追加CSS'>
 ```css
-.-hov\:get\:slide {
+.-hov\:to\:slide {
 	opacity: var(--_notHov, 0);
 	grid-template-rows: var(--_isHov, 1fr) var(--_notHov, 0fr);
 	transition-property: margin-block, padding-block, opacity, grid-template-rows;
