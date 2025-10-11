@@ -38,7 +38,7 @@ function App() {
 			<Dummy length='l' />
 
 			<Flex jc='c'>
-				<Link href='###' hov='op' bgc='text' lh='xs' c='base' px='30' py='20' td='n' bdrs='50'>
+				<Link href='###' hov='o' bgc='text' lh='xs' c='base' px='30' py='20' td='n' bdrs='50'>
 					Link Button
 				</Link>
 			</Flex>
