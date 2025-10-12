@@ -9,4 +9,5 @@ const { tag = 'p', pre = '', length = 'm', lang = 'en', offset = 0, ...props } =
 const content = getContent({ tag, pre, lang, length, offset });
 ---
 
-<Lism tag={tag} {...props} set:html={content} />
+{tag === 'img' && <Lism tag='img' src='https://placehold.co/300x200?text=placeholder' width='300' height='200' alt='' {...props} />}
+{tag !== 'img' && <Lism tag={tag} {...props} set:html={content} />}
