@@ -15,12 +15,12 @@
 		height: 1.5em;
 		background-color: var(--c-base-2);
 		border-radius: 2px;
-		box-shadow: var(--_sh_sz-0) var(--_sh_c);
+		box-shadow: var(--sh--0) var(--sh-c);
 	}
 }
 
 .c--preview_area {
-	--bdc: var(--codeBlock--bgc);
+	--bdc: var(--lsdoc-codeBlock-bgc);
 
 	position: relative;
 	transition: none !important;
@@ -50,7 +50,7 @@
 .c--preview_inner {
 	position: relative;
 	border-radius: 2px;
-	box-shadow: inset 0 0 4px 0px var(--_sh_c);
+	box-shadow: inset 0 0 4px 0px var(--sh-c);
 	container-type: inline-size;
 
 	&.is--resize {
@@ -59,7 +59,7 @@
 		margin: 0 auto;
 		overflow-y: auto;
 		resize: horizontal;
-		// box-shadow: inset 0 0 8px -2px var(--preview--resize-bdc);
+		// box-shadow: inset 0 0 8px -2px var(--lsdoc-preview_resize-bdc);
 
 		&:after {
 			position: absolute;
@@ -68,9 +68,9 @@
 			display: block;
 			width: 14px;
 			height: 14px;
-			border-top: 1px dotted var(--preview--resize-bdc);
+			border-top: 1px dotted var(--lsdoc-preview_resize-bdc);
 			content: '';
-			border-inline-start: 1px dotted var(--preview--resize-bdc);
+			border-inline-start: 1px dotted var(--lsdoc-preview_resize-bdc);
 			border-start-start-radius: 12px;
 		}
 	}
@@ -81,8 +81,8 @@
 	z-index: 1;
 	margin: 0.875em;
 	font-size: 11px;
-	background-color: var(--preview--help-bg);
-	border: 1px solid var(--preview--resize-bdc);
+	background-color: var(--lsdoc-preview_help-bg);
+	border: 1px solid var(--lsdoc-preview_resize-bdc);
 	visibility: hidden;
 	opacity: 0;
 	backdrop-filter: blur(2px);
@@ -95,8 +95,8 @@
 
 .c--preview_area + .c--preview_code {
 	overflow: hidden;
-	background-color: var(--codeBlock--bgc);
-	border-radius: var(--codeBlock--radius);
+	background-color: var(--lsdoc-codeBlock-bgc);
+	border-radius: var(--lsdoc-codeBlock-radius);
 	margin-block-start: -4px;
 
 	&.d--tabs {
@@ -212,33 +212,4 @@
 // 	--fz-s: calc(1em * 12 / 14);
 // 	--fz-xs: calc(1em * 12 / 15);
 // 	--fz-2xs: calc(1em * 12 / 16);
-// }
-
-// .is--linkBox[href="/"]{
-// 	opacity: .4;
-// }
-
-// .-setFz.-setFz {
-// 	font-size: 1.2em;
-// }
-// .-setFzVar.-setFzVar {
-// 	--fz: 1.2em;
-// }
-// .-setLh.-setLh {
-// 	line-height: 1.2;
-// }
-// .-setLhVar.-setLhVar {
-// 	--lh: 1.2;
-// }
-// .setLhParent {
-// 	--lh: 1.2;
-// 	line-height: 1.2;
-// 	// --ls--lh-min: 1em;//下限も下げる
-// }
-// .setLhParent--onlyVar {
-// 	--lh: 1.2;
-// 	// --ls--lh-min: 1em;//下限も下げる
-// }
-// .setLhParent--onlyProp {
-// 	line-height: 1.2;
 // }

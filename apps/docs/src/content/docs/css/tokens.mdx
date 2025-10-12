@@ -31,6 +31,7 @@ export const ColorBadge = ({color, label}) => {
 |<ColorBadge color='accent' />|`--c-accent`|
 
 
+
 モダンCSSでは`color-mix()`があるので、hsl値の中身を変数にすることはしていません。
 
 
@@ -242,11 +243,11 @@ box-shadow は少し特殊で、ユーティリティクラス内で複数のsha
 
 |構成変数|初期値|
 |---|---|
-|`--_sh_c`|`hsl(var(--_sh_hsl) / var(--_sh_a))`|
-|`--_sh_hsl`|`220 4% 8%`|
-|`--_sh_a`|`5%`|
-|`--_sh_sz-[0~5]`|...|
-|`--_sh_i`|` `(空白)|
+|`--sh-c`|`hsl(var(--sh-hsl) / var(--sh-a))`|
+|`--sh-hsl`|`220 4% 8%`|
+|`--sh-a`|`5%`|
+|`--sh--[0~5]`|...|
+|`--sh-i`|` `(空白)|
 
 
 
@@ -271,7 +272,7 @@ box-shadow は少し特殊で、ユーティリティクラス内で複数のsha
 	</PreviewCode>
 </Preview>
 
-`--_sh_i`に`inset`を指定することで、内向きshadowに変更できます。  
+`--sh-i`に`inset`を指定することで、内向きshadowに変更できます。  
 (当ドキュメントサイトでは、ダークモード時にinsetになっています。)
 
 
@@ -351,16 +352,16 @@ box-shadow は少し特殊で、ユーティリティクラス内で複数のsha
 
 |トークン|変数|クラス|初期値|
 |---|---|---|---|
-|`2xs`|`--fz-2xs`|`-fz:2xs`|`calc(1em * 8 / 11)`|
-|`xs`|`--fz-xs`|`-fz:xs`|`calc(1em * 8 / 10)`|
-|`s`|`--fz-s`|`-fz:s`|`calc(1em * 8 / 9)`|
+|`2xs`|`--fz-2xs`|`-fz:2xs`|`1em * 8 / 11`|
+|`xs`|`--fz-xs`|`-fz:xs`|`1em * 8 / 10`|
+|`s`|`--fz-s`|`-fz:s`|`1em * 8 / 9`|
 |`m`|`--fz-m`|`-fz:m`|`1em`|
-|`l`|`--fz-l`|`-fz:l`|`calc(1em * 8 / 7)`|
-|`xl`|`--fz-xl`|`-fz:xl`|`calc(1em * 8 / 6)`|
-|`2xl`|`--fz-2xl`|`-fz:2xl`|`calc(1em * 8 / 5)`|
-|`3xl`|`--fz-3xl`|`-fz:3xl`|`calc(1em * 8 / 4)`|
-|`4xl`|`--fz-4xl`|`-fz:4xl`|`calc(1em * 8 / 3)`|
-|`5xl`|`--fz-5xl`|`-fz:5xl`|`calc(1em * 8 / 2)`|
+|`l`|`--fz-l`|`-fz:l`|`1em * 8 / 7`|
+|`xl`|`--fz-xl`|`-fz:xl`|`1em * 8 / 6`|
+|`2xl`|`--fz-2xl`|`-fz:2xl`|`1em * 8 / 5`|
+|`3xl`|`--fz-3xl`|`-fz:3xl`|`1em * 8 / 4`|
+|`4xl`|`--fz-4xl`|`-fz:4xl`|`1em * 8 / 3`|
+|`5xl`|`--fz-5xl`|`-fz:5xl`|`1em * 8 / 2`|
 |`base`|`--fz-base`|`-fz:base`<sup>※1</sup>|`clamp(0.875rem, 0.625rem + 1vw, 1rem)`|
 
 <sup>※1</sup>: `-fz:base`クラスは、値としては`1rem`をセットします。（`html`で`font-size:var(--fz-base)`をセットしている）

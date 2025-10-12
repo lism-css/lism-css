@@ -42,15 +42,8 @@ svg.l--icon
 |---|---|
 | `icon` | アイコンを指定できます。指定した内容によって出力処理が変わります。 |
 | `size` | プリセットアイコンを呼び出す場合に有効。`width`, `height`として出力されます。|
-| `scale` <PropBadge type="cssvar">--scale</PropBadge>| アイコンの scale を指定できます。css変数で出力されます。 |
 | `label` <PropBadge type="attr">aria-label</PropBadge>| `aria-label`として出力します。指定があれば`role="img"`が同時に出力され、指定がない場合は`aria-hidden="true"`が出力されます。 |
 
-
-{/*
-| `variant` | 指定すると、`.l--icon-{variant}`クラスも同時に出力されます。 |
-| `as` | 外部のアイコンコンポーネントを指定して呼び出せます。 |
-| `exProps` | 外部のアイコンコンポーネントに渡すpropsを指定できます。 |
-*/}
 
 
 
@@ -263,25 +256,25 @@ Lismパッケージ（`lism-css`)内にはいくつかsvgアイコンを内包�
 <PreviewTitle>追加CSS</PreviewTitle>
 ```css
 .l--icon-inline {
-	--scale: 1.125; /* アイコンは小さくなりがちなので、デフォルトでほんのり拡大 */
+	--_scale: 1.125; /* アイコンは小さくなりがちなので、デフォルトでほんのり拡大 */
 	vertical-align: -0.125em; /* テキストの下部付近に揃える */
-	margin-inline: calc(1em * (var(--scale) - 1) / 2); /* scaleを考慮し、マージンを確保 */
+	margin-inline: calc(1em * (var(--_scale) - 1) / 2); /* scaleを考慮し、マージンを確保 */
 }
 ```
 
 <Preview>
 	<PreviewTitle>使用例</PreviewTitle>
 	<PreviewArea p='30'>
-		<p>Horse <Icon variant='inline' as={Horse} />, and Cat <Icon variant='inline' as={Cat}/>.</p>
-		<p><Icon variant='inline' icon={{as:WarningCircle, weight:'fill'}} scale='2' c='red' /> Lorem ipsum dolor sit amet.</p>
+		<p><Icon variant='inline' as={Horse} /> Horse, and Cat <Icon variant='inline' as={Cat}/>.</p>
+		<p><Icon variant='inline' icon={{as:WarningCircle, weight:'fill'}} c='red' fz='xl' /> Lorem ipsum dolor sit amet.</p>
 	</PreviewArea>
 	<PreviewCode>
 		```jsx "variant='inline'"
 		<p>
-			Horse <Icon variant='inline' as={Horse} />, and Cat <Icon variant='inline' as={Cat}/>.
+			<Icon variant='inline' as={Horse} /> Horse, and Cat <Icon variant='inline' as={Cat}/>.
 		</p>
 		<p>
-			<Icon variant='inline' icon={{as:WarningCircle, weight:'fill'}} scale='2' c='red' /> Lorem ipsum dolor sit amet.
+			<Icon variant='inline' icon={{as:WarningCircle, weight:'fill'}} c='red' fz='xl' /> Lorem ipsum dolor sit amet.
 		</p>
 		```
 	</PreviewCode>

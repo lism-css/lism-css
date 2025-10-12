@@ -2,13 +2,12 @@
 import { Lism } from 'lism-css/astro';
 import './style.css';
 
-const { viewBox, children, isAnimation, isEmpty, level = 5, stretch, offsetX, offsetY, style = {}, ...props } = Astro.props;
+const { viewBox, children, isAnimation, isEmpty, level = 5, stretch, offset, style = {}, ...props } = Astro.props;
 
 // 変数セット
 style['--level'] = level || null;
-style['--offsetX'] = offsetX || null;
-style['--offsetY'] = offsetY || null;
-style['--stretch'] = stretch || null;
+style['--_inner-offset'] = offset || null;
+style['--_inner-stretch'] = stretch || null;
 ---
 
 {

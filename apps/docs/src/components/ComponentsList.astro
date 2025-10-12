@@ -86,12 +86,12 @@ const layoutList = LayoutNavList.type === 'group' && LayoutNavList.entries ? get
 <LibTabs client:load componentList={componentList} templateList={templateList} layoutList={layoutList} />
 
 <script>
-	// memo: header.header の高さを取得して --header--h にセット
+	// memo: header.header の高さを取得して --header-h にセット
 	function setHeaderHeightVar() {
 		const header = document.querySelector('header.header') as HTMLElement;
 		if (header) {
 			const height = header.offsetHeight;
-			document.documentElement.style.setProperty('--header--h', height + 'px');
+			document.documentElement.style.setProperty('--header-h', height + 'px');
 		}
 	}
 	// 初回実行
@@ -103,7 +103,7 @@ const layoutList = LayoutNavList.type === 'group' && LayoutNavList.entries ? get
 <style is:inline>
 	.d--tabs_list {
 		position: sticky;
-		top: var(--header--h, 3rem);
+		top: var(--header-h, 3rem);
 		/* background-color: var(--c-base); */
 		z-index: 1;
 		box-shadow:

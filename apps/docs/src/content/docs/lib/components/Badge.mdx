@@ -32,7 +32,6 @@ import Badge from '~/components/ex/Badge/index.astro';
 		<Flex variant='cluster' g='20'>
 			<Lism tag='span' p='10' lh='1' fz='s' bgc='text' c='base' bdrs='10'>Badge</Lism>
 			<Lism tag='span' p='10' lh='1' fz='s' bd bdrs='10'>Badge</Lism>
-			{/* <Lism tag='span' d='i-f' ai='c' p='10' lh='1' fz='s' bd bdrs='10'><Icon offset='-10%' icon='dot'/>Badge</Lism> */}
 			<Lism tag='span' className='u--cbox' keycolor='blue' bd bdc='keycolor:base:25%' p='10' lh='1' fz='s' bdrs='99'>Badge</Lism>
 		</Flex>
 	</PreviewArea>
@@ -217,7 +216,7 @@ import { BookIcon } from '@phosphor-icons/react';
 	<PreviewArea p='30' bg='u:stripe'>
 		<Flex g='30' ai='c'>
 			<Badge d='i-f' ai='c'><Icon icon='star-fill' />Badge</Badge>
-			<Badge variant='outline' d='i-f' ai='c' bdrs='5'><Icon icon='tag' offset='-10%' />Badge</Badge>
+			<Badge variant='outline' d='i-f' ai='c' bdrs='5'><Icon icon='tag' translate='-10%' />Badge</Badge>
 			<Badge className='u--cbox' keycolor='pink' d='i-f' ai='c' bdrs='99'><Icon icon='dot' />Badge</Badge>
 		</Flex>
 	</PreviewArea>
@@ -225,7 +224,7 @@ import { BookIcon } from '@phosphor-icons/react';
 		```jsx
 		<Flex g='30' ai='c'>
 			<Badge d='i-f' ai='c'><Icon icon='star-fill' />Badge</Badge>
-			<Badge variant='outline' d='i-f' ai='c' bdrs='5'><Icon icon='tag' offset='-10%' />Badge</Badge>
+			<Badge variant='outline' d='i-f' ai='c' bdrs='5'><Icon icon='tag' translate='-10%' />Badge</Badge>
 			<Badge className='u--cbox' keycolor='pink' d='i-f' ai='c' bdrs='99'><Icon icon='dot' />Badge</Badge>
 		</Flex>
 		```

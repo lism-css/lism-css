@@ -1,10 +1,10 @@
 .d--accordion {
-	--duration: var(--acc--duration, 0.4s);
+	--duration: var(--acc-duration, 0.4s);
 	&._opened {
-		--_notOpened: ;
+		--notOpened_: ;
 	}
 	&:not(._opened) {
-		--_isOpened: ;
+		--isOpened_: ;
 	}
 }
 
@@ -49,6 +49,6 @@
 	// __icon 自体にborderつけたりすると回転が見えてしまうので、 icon自体を回転させる。
 	> .l--icon {
 		transition-duration: var(--duration);
-		rotate: var(--_isOpened, -180deg);
+		rotate: var(--isOpened_, -180deg);
 	}
 }

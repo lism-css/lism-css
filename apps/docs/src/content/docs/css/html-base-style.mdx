@@ -30,10 +30,10 @@ HTMLのそれぞれのタグのデフォルトスタイルを確認するため�
 :where(ul, ol) {
 	list-style: none;
 	padding: 0;
-	padding-inline-start: var(--list--px-s, 0);
+	padding-inline-start: var(--list-px-s, 0);
 }
 :where(ul, ol):not([class]){
-	--list--px-s: 1.5em;
+	--list-px-s: 1.5em;
 	list-style: revert;
 }
 ```
@@ -49,7 +49,7 @@ ul,liの標準スタイルはリセットした上で、class属性を持たな�
 <PreviewTitle>CSS</PreviewTitle>
 ```css
 :where(td, th) {
-	padding: var(--cell--p, 0.5em);
+	padding: var(--cell-p, 0.5em);
 }
 :where(th) {
 	color: var(--th--c, inherit);
