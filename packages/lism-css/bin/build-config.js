@@ -27,7 +27,7 @@ function getMaybeTokenValue(value, tokenKey) {
 
 	if (Array.isArray(tokenValues)) {
 		if (tokenValues.includes(value)) {
-			return `var(--${tokenKey}-${value})`;
+			return `var(--${tokenKey}--${value})`;
 		}
 	} else if (typeof tokenValues === 'object') {
 		const { pre = '', values = [] } = tokenValues || {};
