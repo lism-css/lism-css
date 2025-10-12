@@ -24,7 +24,7 @@ export default function getMaybeTokenValue(tokenKey, value) {
 
 	if (tokenValues instanceof Set) {
 		if (tokenValues.has(value)) {
-			return `var(--${tokenKey}-${value})`;
+			return `var(--${tokenKey}--${value})`;
 		}
 	} else if (typeof tokenValues === 'object') {
 		const { pre = '', values = new Set() } = tokenValues || {};
