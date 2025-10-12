@@ -135,11 +135,11 @@ Lismに内包されているクラスでは、それぞれ初期値を定義し�
 		</LinkBox>
 	</PreviewArea>
 	<PreviewCode slot='tab' label='HTML'>
-		```html "has--transition" "-bxsh:10 -hov:bxsh" "--hov-bxsh:var(--bxsh-40)"
+		```html "has--transition" "-bxsh:10 -hov:bxsh" "--hov-bxsh:var(--bxsh--40)"
 		<a
 			href="###"
 			class="is--linkBox has--transition -bxsh:10 -hov:bxsh -bd -p:30"
-			style="--hov-bxsh:var(--bxsh-40)"
+			style="--hov-bxsh:var(--bxsh--40)"
 		>
 			<p>LinkBox</p>
 			<p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
@@ -205,7 +205,7 @@ Lismに内包されているクラスでは、それぞれ初期値を定義し�
 		```scss
 		@media (any-hover: hover) {
 			.-hov\:shadowUp:hover {
-				box-shadow: var(--bxsh-40);
+				box-shadow: var(--bxsh--40);
 				translate: 0 -3px;
 			}
 		}
@@ -272,7 +272,7 @@ Lismに内包されているクラスでは、それぞれ初期値を定義し�
 		.-hov\:test {
 			color: var(--isHov_, red) var(--notHov_, blue); /* hover時はgreen, 非hover時はblue*/
 			background-color: var(--notHov_, lightgray); /* 非hover時はlightgray、hover時は無効な値 */
-			box-shadow: var(--isHov_, var(--bxsh-30)); /* hover時はshadowあり、非hover時は無効な値 */
+			box-shadow: var(--isHov_, var(--bxsh--30)); /* hover時はshadowあり、非hover時は無効な値 */
 		}
 		```
 	</PreviewCode>
