@@ -80,7 +80,7 @@ LismがどのようなCSS設計になっているかを説明します。
 		<tr>
 			<td>Components<br />`.c--{name}`</td>
 			<td>具体的な役割を持つコンポーネント群。他のクラスだけでは補えないコンポーネント特有のスタイルをまとめる。</td>
-			<td>`@lism.component`</td>
+			<td><span class='-whitespace:nowrap'>`@lism.component`</span></td>
 		</tr>
 		{/* <tr>
 			<td>Block</td>
@@ -93,17 +93,18 @@ LismがどのようなCSS設計になっているかを説明します。
 		<tr>
 			<td class='-whitespace:nowrap'>Utility Class<br />`.u--{name}`</td>
 			<td>その他、機能やスタイルが明確なユーティリティクラス。</td>
-			<td>-</td>
+			<td><span class='-whitespace:nowrap'>`@lism.utility`</span>,<br />レイヤーなし</td>
 		</tr>
 		<tr>
 			<td class='-whitespace:nowrap'>Props Class<br />`.-{prop}:{val}`</td>
 			<td>単一のCSSプロパティティに紐づいたクラス。</td>
-			<td>-</td>
+			<td>レイヤーなし</td>
 		</tr>
 	</tbody>
 </table>
 
-{/* <IconBadge /> 詳細度の値は、`@layer`を使わない場合の目安数値です。 */}
+<IconBadge /> Utility Class は、レイヤーあり、なしの両方が許容されます。（Prop Classより優先度を下げたいものはレイヤー内に定義します）
+
 
 {/* 
 基本的に、最大詳細度を超えないようにセレクタを調整してこの順番で読み込みます。
