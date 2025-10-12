@@ -50,11 +50,8 @@ export default function getProps({
 	lismClass,
 	className = '',
 	style = {},
-	// variant,
 	as,
 	tag,
-	scale,
-	offset,
 	icon,
 	label,
 
@@ -111,8 +108,6 @@ export default function getProps({
 	}
 
 	// 専用変数
-	if (scale) style['--scale'] = scale;
-	if (offset) style['--offset'] = offset;
 
 	// classNameをスペースで分割して重複を防いでマージ
 

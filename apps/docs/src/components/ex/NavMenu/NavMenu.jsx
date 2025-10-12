@@ -5,7 +5,7 @@ import './style.css';
 export function Root({ children, hovC, hovBgc, itemP, style = {}, ...props }) {
 	if (hovBgc) style['--hov-bgc'] = getMaybeCssVar(hovBgc, 'color');
 	if (hovC) style['--hov-c'] = getMaybeCssVar(hovC, 'color');
-	if (itemP) style['--item-p'] = getMaybeCssVar(itemP, 'space');
+	if (itemP) style['--_item-p'] = getMaybeCssVar(itemP, 'space');
 
 	return (
 		<Stack lismClass='c--navMenu' tag='ul' style={style} {...props}>

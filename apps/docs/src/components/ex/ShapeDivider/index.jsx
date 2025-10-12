@@ -1,14 +1,13 @@
 import { Lism } from 'lism-css/react';
 import './style.css';
 
-export default function ShapeDivider({ viewBox, children, isAnimation, isEmpty, level = 5, stretch, offsetX, offsetY, style = {}, ...props }) {
+export default function ShapeDivider({ viewBox, children, isAnimation, isEmpty, level = 5, stretch, offset, style = {}, ...props }) {
 	if (level === 0) return null;
 
 	// 変数セット
 	style['--level'] = level || null;
-	style['--offsetX'] = offsetX || null;
-	style['--offsetY'] = offsetY || null;
-	style['--stretch'] = stretch || null;
+	style['--_inner-offset'] = offset || null;
+	style['--_inner-stretch'] = stretch || null;
 
 	return (
 		<Lism isFullwide lismClass='c--shapeDivider' aria-hidden='true' style={style} {...props}>

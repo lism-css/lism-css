@@ -32,8 +32,8 @@ body {
     Heading
  ---------------------------------------- */
 @include mixin.maybe_where('h1, h2, h3, h4, h5, h6', '') {
-	font-family: var(--h--ff, inherit);
-	font-weight: var(--h--fw, bolder);
+	font-family: var(--heading-ff, inherit);
+	font-weight: var(--heading-fw, bolder);
 	font-size: var(--fz, revert);
 	line-height: var(--lh, inherit);
 }
@@ -65,10 +65,9 @@ h6 {
     list
  ---------------------------------------- */
 @include mixin.maybe_where('ul, ol', '') {
-	--px-s: var(--list--px-s, 0);
 	list-style: none;
 	padding: 0;
-	padding-inline-start: var(--px-s);
+	padding-inline-start: var(--list-px-s, 0);
 }
 
 /* ----------------------------------------
@@ -77,16 +76,25 @@ h6 {
 // link
 @include mixin.maybe_where('a', '') {
 	--c: var(--c-link);
-	--td: var(--link--td, underline);
 	color: var(--c);
-	text-decoration: var(--td);
+	text-decoration: var(--link-td, underline);
 }
 
 /* ----------------------------------------
     table
  ---------------------------------------- */
+@include mixin.maybe_where('th', '') {
+	color: var(--th--c, inherit);
+	background-color: var(--th--bgc, transparent);
+}
+// @include mixin.maybe_where('td', '') {
+// 	color: var(--td--c, inherit);
+// 	background-color: var(--td--bgc, transparent);
+// }
+
 @include mixin.maybe_where('td, th', '') {
-	padding: var(--cell--p, 0.375em 0.5em);
+	padding: var(--cell-p, 0.375em 0.5em);
+	min-inline-size: var(--cell-minW, initial);
 }
 
 /* ----------------------------------------

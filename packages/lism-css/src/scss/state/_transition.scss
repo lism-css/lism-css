@@ -1,11 +1,12 @@
 @use '../_mixin' as mixin;
 
 .has--transition {
-	--duration: var(--transition--duration, 0.4s);
+	--duration: var(--transition-duration, 0.4s);
 	--delay: 0s;
 	--ease: ease;
+	--property: all;
 	transition: var(--duration) var(--ease) var(--delay);
-	transition-property: var(--transition--property, all);
+	transition-property: var(--property);
 }
 
 // .-ease\:in {--ease: ease-in;}

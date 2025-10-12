@@ -3,12 +3,14 @@
 	--max-xsz: 100%; // container直下にきても影響しないように
 	--my-s: 0; // flow直下にきても影響しないように
 	--offset: 0 0; // アニメーション用
-	--backdrop: rgb(0 0 0 / 0.6);
-	transition-duration: var(--modal--duration, 0.5s);
+	--duration: var(--modal-duration, 0.5s);
+	--backdropBg: rgb(0 0 0 / 0.6);
+
+	transition-duration: var(--duration, 0.5s);
 
 	&::backdrop {
-		transition: opacity var(--modal--duration, 0.5s);
-		background: var(--backdrop);
+		transition: opacity var(--duration, 0.5s);
+		background: var(--backdropBg);
 	}
 }
 

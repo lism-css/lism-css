@@ -234,28 +234,28 @@ Lismに内包されているクラスでは、それぞれ初期値を定義し�
 ## `.has--hover` と特殊変数
 
 
-<IconBadge /> Lism では、[`has--hover`](/css/layout-state#has--hover)というクラスを定義しており、このクラスでは`--_isHov`変数と`--_notHov`変数を定義しています。
+<IconBadge /> Lism では、[`has--hover`](/css/layout-state#has--hover)というクラスを定義しており、このクラスでは`--isHov_`変数と`--notHov_`変数を定義しています。
 
-- `--_isHov`は非hover時にのみ空白定義されています。
-- `--_notHov`は逆に、hover時にのみ空白定義されています。
+- `--isHov_`は非hover時にのみ空白定義されています。
+- `--notHov_`は逆に、hover時にのみ空白定義されています。
 
 ```css
 @media (any-hover: hover) {
 	.-hov\:set:hover {
-		--_notHov: ;
+		--notHov_: ;
 	}
 	.-hov\:set:not(:hover) {
-		--_isHov: ;
+		--isHov_: ;
 	}
 }
 @media (any-hover: none) {
 	.-hov\:set {
-		--_isHov: ;
+		--isHov_: ;
 	}
 }
 ```
 
-例えば `var(--_isHov, value)` とすると、`--_isHov`はhover時は未定義となるため、`value`が適用されます。  
+例えば `var(--isHov_, value)` とすると、`--isHov_`はhover時は未定義となるため、`value`が適用されます。  
 非hover時は空白の定義がされているため、無効な値となり無視されます。（ただし同じ要素の同じプロパティに対してすでにスタイルを適用している場合、それも無効となることに注意が必要です。）
 
 以下に例を示します。
@@ -270,9 +270,9 @@ Lismに内包されているクラスでは、それぞれ初期値を定義し�
 		```scss
 		/* 変数は.has--hover で定義済み */
 		.-hov\:test {
-			color: var(--_isHov, red) var(--_notHov, blue); /* hover時はgreen, 非hover時はblue*/
-			background-color: var(--_notHov, lightgray); /* 非hover時はlightgray、hover時は無効な値 */
-			box-shadow: var(--_isHov, var(--bxsh-30)); /* hover時はshadowあり、非hover時は無効な値 */
+			color: var(--isHov_, red) var(--notHov_, blue); /* hover時はgreen, 非hover時はblue*/
+			background-color: var(--notHov_, lightgray); /* 非hover時はlightgray、hover時は無効な値 */
+			box-shadow: var(--isHov_, var(--bxsh-30)); /* hover時はshadowあり、非hover時は無効な値 */
 		}
 		```
 	</PreviewCode>
@@ -291,7 +291,7 @@ Lismに内包されているクラスでは、それぞれ初期値を定義し�
 ### 子要素にホバー状態を渡す
 
 さて、この`has--hover`が便利なのはここからです。
-親要素に`has--hover`を付与してその子要素で`--_isHov`変数と`--_notHov`変数をうまく使うことで、hover時の子要素の挙動をコントロールできるようになります。
+親要素に`has--hover`を付与してその子要素で`--isHov_`変数と`--notHov_`変数をうまく使うことで、hover時の子要素の挙動をコントロールできるようになります。
 
 
 コアパッケージには、そのような子要素向けのクラスを `-hov:to:xxx` として2つだけ標準で用意しています。
@@ -300,13 +300,13 @@ Lismに内包されているクラスでは、それぞれ初期値を定義し�
 
 /* 親の has--hover がhoverされたら非表示にする */
 .-hov\:to\:hide {
-	opacity: var(--_isHov, 0);
+	opacity: var(--isHov_, 0);
 }
 
 /* 親の has--hover がhoverされたら表示する */
 .-hov\:to\:show {
-	opacity: var(--_notHov, 0);
-	visibility: var(--_notHov, hidden);
+	opacity: var(--notHov_, 0);
+	visibility: var(--notHov_, hidden);
 }
 ```
 
@@ -356,7 +356,7 @@ Lismに内包されているクラスでは、それぞれ初期値を定義し�
 
 親がhoverされたらズーム表示されるような`-hov:to:zoom`クラスと、テキストが広がるような`-hov:to:letterSpread`クラスを自作して使ってみます。
 
-さらに、親要素で`--transition--duration`を上書きして子要素のトランジション時間を一括で変更してみましょう。
+さらに、親要素で`--transition-duration`を上書きして子要素のトランジション時間を一括で変更してみましょう。
 
 <Preview>
 	<PreviewTitle>自作クラスで子要素のホバーアクションを調整する例</PreviewTitle>
@@ -364,7 +364,7 @@ Lismに内包されているクラスでは、それぞれ初期値を定義し�
 		<LinkBox
 			href='#banner-link'
 			hasHover ov='hidden' ar='16/9' bdrs='30'
-			style={{'--transition--duration':'.6s'}}
+			style={{'--transition-duration':'.6s'}}
 		>
 			<Frame isLayer>
 				<Media hasTransition hov='get:zoom' src='/img/img-2.jpg' alt='' width='960' height='640' loading='lazy'/>
@@ -379,19 +379,19 @@ Lismに内包されているクラスでは、それぞれ初期値を定義し�
 	<PreviewCode slot='tab' label='追加CSS'>
 	```css
 	.-hov\:to\:zoom {
-		scale: var(--_isHov, 1.1);
+		scale: var(--isHov_, 1.1);
 	}
 	.-hov\:to\:letterSpread {
-		letter-spacing: var(--_isHov, 0.125em);
+		letter-spacing: var(--isHov_, 0.125em);
 	}
 	```
 	</PreviewCode>
 	<PreviewCode slot='tab' label='HTML'>
-		```html "has--hover" "-hov:to:zoom" "-hov:to:letterSpread" "--transition--duration"
+		```html "has--hover" "-hov:to:zoom" "-hov:to:letterSpread" "--transition-duration"
 		<a
 			href="#banner-link"
 			class="is--linkBox has--hover -ar:16/9 -ov:hidden -bdrs:30"
-			style="--transition--duration:.6s"
+			style="--transition-duration:.6s"
 		>
 			<div class="l--frame is--layer">
 				<img class="is--layer has--transition -hov:to:zoom" src="/img/img-2.jpg" width="960" height="640" loading="lazy" />
@@ -403,11 +403,11 @@ Lismに内包されているクラスでは、それぞれ初期値を定義し�
 		```
 	</PreviewCode>
 	<PreviewCode slot='tab' label='JSX'>
-		```jsx "hasHover" "hov='get:zoom'" "hov='get:letterSpread'" "--transition--duration"
+		```jsx "hasHover" "hov='get:zoom'" "hov='get:letterSpread'" "--transition-duration"
 		<LinkBox
 			href='#banner-link'
 			hasHover ov='hidden' ar='16/9' bdrs='30'
-			style={{'--transition--duration':'.6s'}}
+			style={{'--transition-duration':'.6s'}}
 		>
 			<Frame isLayer>
 				<Media hasTransition hov='get:zoom' src='/img/img-2.jpg' alt='' width='960' height='640' loading='lazy'/>

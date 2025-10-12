@@ -2,10 +2,10 @@ import atts from '../../lib/helper/atts';
 
 export function getWithSideProps({ lismClass, sideW, mainW, style = {}, ...props }) {
 	if (null != sideW) {
-		style['--sideW'] = sideW;
+		style['--_side-w'] = sideW;
 	}
 	if (null != mainW) {
-		style['--mainW'] = mainW;
+		style['--_main-w'] = mainW;
 	}
 
 	return {

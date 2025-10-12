@@ -19,7 +19,8 @@
 }
 
 .l--icon-inline {
-	--scale: 1.125; // inline時、余白でテキストより小さく見えがちなのでほんの少し拡大する
-	vertical-align: -0.125em; // scale とは無関係
-	margin-inline: calc(1em * (var(--scale) - 1) / 2);
+	--_scale: 1.2; // inline時、余白でテキストより小さく見えがちなのでほんの少し拡大する
+	scale: var(--_scale);
+	margin-inline: calc(1em * (var(--_scale) - 1) / 2);
+	translate: 0 calc(-1 * (0.35em - 0.5ex)); // 0.5cap - 0.5ex が英文では理想。
 }

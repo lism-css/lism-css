@@ -14,14 +14,14 @@
 }
 
 .-hov\:to\:zoom {
-	scale: var(--_isHov, 1.1);
+	scale: var(--isHov_, 1.1);
 }
 .-hov\:to\:letterSpread {
-	letter-spacing: var(--_isHov, 0.125em);
+	letter-spacing: var(--isHov_, 0.125em);
 }
 .-hov\:to\:slide {
-	opacity: var(--_notHov, 0);
-	grid-template-rows: var(--_isHov, 1fr) var(--_notHov, 0fr);
+	opacity: var(--notHov_, 0);
+	grid-template-rows: var(--isHov_, 1fr) var(--notHov_, 0fr);
 	transition-property: margin-block, padding-block, opacity, grid-template-rows;
 }
 
@@ -56,9 +56,9 @@
 }
 
 .-hov\:test {
-	color: var(--_isHov, green) var(--_notHov, blue);
-	background-color: var(--_notHov, lightgray);
-	box-shadow: var(--_isHov, var(--bxsh-30));
+	color: var(--isHov_, green) var(--notHov_, blue);
+	background-color: var(--notHov_, lightgray);
+	box-shadow: var(--isHov_, var(--bxsh-30));
 }
 
 // @supports selector(:has(*)) {

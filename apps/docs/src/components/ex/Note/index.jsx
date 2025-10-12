@@ -11,9 +11,9 @@ export default function Note({ type = 'note', keycolor, icon, title, children, i
 	return (
 		<Stack lismClass='c--note u--cbox' keycolor={keycolor} p='30' g='20' bd-x-s bdw='4px' bdrs='5' {...props}>
 			{title && (
-				<Flex className='c--note_head' fw='bold' ai='c' g='20'>
-					<Center className='c--note_icon' fz='l' c='keycolor'>
-						<Icon icon={icon} scale='1.1' />
+				<Flex className='c--note_head' fw='bold' ai='c' g='10'>
+					<Center className='c--note_icon' fz='xl' c='keycolor'>
+						<Icon icon={icon} />
 					</Center>
 					<span className='c--note_title'>{title}</span>
 				</Flex>

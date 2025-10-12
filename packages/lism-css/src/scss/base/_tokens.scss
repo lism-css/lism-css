@@ -1,3 +1,13 @@
+@use '../_setting' as setting;
+@use 'sass:math';
+
+// フォントサイズ計算用の関数
+@function fz-calc($offset) {
+	$fzmol: setting.$fzmol;
+	$fz: math.div($fzmol, ($fzmol - $offset));
+	@return math.div(math.round($fz * 1000), 1000);
+}
+
 :root {
 	/* ------------------------------------------------------------
 	  Spacing
@@ -51,29 +61,18 @@
 	// ------------------------------
 	// font-size 変数
 	// ------------------------------
-	// 倍音列(分子8) での計算値
-	// --fz-5xl: 4em; //calc(1em * 8 / 2);
-	// --fz-4xl: 2.667em; // calc(1em * 8 / 3);
-	// --fz-3xl: 2em; //calc(1em * 8 / 4);
-	// --fz-2xl: 1.6em; //calc(1em * 8 / 5);
-	// --fz-xl: 1.333em; //calc(1em * 8 / 6);
-	// --fz-l: 1.143em; //calc(1em * 8 / 7);
-	// --fz-m: 1em; // デフォルトでフォントサイズ 変わっているものを1emにリセットしたい時に必要
-	// --fz-s: 0.889em; // calc(1em * 8 / 9);
-	// --fz-xs: 0.8em; //calc(1em * 8 / 10);
-	// --fz-2xs: 0.727em; //calc(1em * 8 / 11);
-
-	--_fzmol: 8; // 7 ~ に対応.
-	--fz-5xl: calc(1em * var(--_fzmol) / (var(--_fzmol) - 6));
-	--fz-4xl: calc(1em * var(--_fzmol) / (var(--_fzmol) - 5));
-	--fz-3xl: calc(1em * var(--_fzmol) / (var(--_fzmol) - 4));
-	--fz-2xl: calc(1em * var(--_fzmol) / (var(--_fzmol) - 3));
-	--fz-xl: calc(1em * var(--_fzmol) / (var(--_fzmol) - 2));
-	--fz-l: calc(1em * var(--_fzmol) / (var(--_fzmol) - 1));
+	// 倍音列での計算値
+	--fz-5xl: #{fz-calc(6)}em;
+	--fz-4xl: #{fz-calc(5)}em;
+	--fz-3xl: #{fz-calc(4)}em;
+	--fz-2xl: #{fz-calc(3)}em;
+	--fz-xl: #{fz-calc(2)}em;
+	--fz-l: #{fz-calc(1)}em;
 	--fz-m: 1em;
-	--fz-s: calc(1em * var(--_fzmol) / (var(--_fzmol) + 1));
-	--fz-xs: calc(1em * var(--_fzmol) / (var(--_fzmol) + 2));
-	--fz-2xs: calc(1em * var(--_fzmol) / (var(--_fzmol) + 3));
+	--fz-s: #{fz-calc(-1)}em;
+	--fz-xs: #{fz-calc(-2)}em;
+	--fz-2xs: #{fz-calc(-3)}em;
+
 	--fz-base: clamp(0.875rem, 0.625rem + 1vw, 1rem); // 画面サイズ 400 - 600 で可変
 
 	// clampでテキストサイズを変化させたい時用
@@ -144,15 +143,7 @@
 	--purple: hsl(260 72% 50%);
 	--pink: hsl(320 72% 50%);
 
-	// --------------------
-	// basic カラー
-	// --------------------
-
 	// ベースカラーに合わせたカラーを段階的に用意
-	// --hs--bc: 215 8%;
-	// --hsl--bc: 215 8% 60%;
-
-	// n50?
 	// --b50: hsl(var(--hs--bc) 99%);
 	// --b100: hsl(var(--hs--bc) 96%);
 	// --b200: hsl(var(--hs--bc) 92%);
@@ -172,26 +163,22 @@
 	// Main Color
 	--c-main: #1e4e6b;
 
-	// accent, accent-2, accent-3
+	// accent, accent-2, accent-3, ...
 	--c-accent: #bc3453;
 	// --c-accent-2: #bc3453;
 	// --c-accent-3: #bc3453;
 
-	// base, base2, base-3 … 基本、濃くなっていく
-	// text, text2, text-3 …　基本、薄くなっていく
-
 	// base
-	// --c-base: hsl(225 8% 98%);
+	// --hs--base: 224 8%;
 	--c-base: hsl(224 6% 99%);
 	--c-base-2: hsl(224 10% 94%); // secondary
-	// --c-base-3: hsl(220 8% 86%); // border用
 
 	// text
+	// --hs--text: 224 4%;
 	--c-text: hsl(224 4% 8%);
 	--c-text-2: hsl(224 4% 40%); // secondary
-	// --text-3: hsl(224, 4%, 50%); //hsl(200, 12%, 92%);
 
-	// --_sh_hsl
+	// --sh-hsl
 
 	// divider (border-color)
 	--c-line: hsl(224 4% 82%);
@@ -228,14 +215,6 @@
 	--bdrs-40: 1.5rem; // ≒ 24px
 	--bdrs-50: 2rem; // ≒ 32px
 	--bdrs-99: 99rem;
-
-	/* ------------------------------------------------------------
-	  filter
-	------------------------------------------------------------ */
-	// --filter--blur: blur(4px);
-	// --filter--blur--l: blur(8px);
-	// --filter--lighten: brightness(1.15);
-	// --filter--darken: brightness(0.85);
 
 	/* ----------------------------------------
 		デザイントークンとは別のグローバル設定値

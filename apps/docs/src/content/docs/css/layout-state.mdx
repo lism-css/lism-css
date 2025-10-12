@@ -426,16 +426,6 @@ CSSは以下のようになっており、`inset:0`と`overflow:hidden`も指定
 
 専用の変数を用いて、transitionプロパティをセットします。
 
-```scss
-.has--transition {
-	--duration: var(--duration--base);
-	--delay: 0s;
-	--ease: ease;
-	transition: var(--duration) var(--ease) var(--delay);
-	transition-property: var(--transition-prop, all);
-}
-```
-
 <Reference>
 活用例は [`hover`の解説ページ](/css/hover#has--transition) を参照してください。
 </Reference>
@@ -447,15 +437,15 @@ CSSは以下のようになっており、`inset:0`と`overflow:hidden`も指定
 ```scss
 @media (any-hover: hover) {
 	.has--hover:hover {
-		--_notHov: ;
+		--notHov_: ;
 	}
 	.has--hover:not(:hover) {
-		--_isHov: ;
+		--isHov_: ;
 	}
 }
 @media (any-hover: none) {
 	.has--hover {
-		--_isHov: ;
+		--isHov_: ;
 	}
 }
 ```

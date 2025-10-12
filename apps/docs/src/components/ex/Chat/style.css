@@ -1,13 +1,15 @@
 @layer lism.component {
 	.c--chat {
-		--cbox--pct-bg: 12%;
-		--avator_size: clamp(48px, 32px + 5cqw, 64px); /* @320px:40px ~ @640:64px */
-		--deco_size: calc(var(--avator_size) * 0.25 + 0.25rem); /* if simple: 1.25rem; */
+		--cbox-bgPct: 12%;
+		--_avator-size: clamp(48px, 32px + 5cqw, 64px); /* @320px:40px ~ @640:64px */
+		--_deco-size: calc(var(--_avator-size) * 0.25 + 0.25rem); /* if simple: 1.25rem; */
+		--_deco-mask: none;
+		--_deco-t: 0;
 
 		grid:
 			'avatar header' minmax(1.5rem, auto)
 			'avatar body' / auto 1fr;
-		gap: 0 calc(var(--deco_size) + 1px);
+		gap: 0 calc(var(--_deco-size) + 1px);
 	}
 
 	[data-chat-dir='end'] {
@@ -17,24 +19,24 @@
 	}
 
 	.c--chat_avatar {
-		width: var(--avator_size);
+		width: var(--_avator-size);
 	}
 	.c--chat_content {
 		max-width: var(--size-s);
 	}
 
 	.c--chat_deco {
-		width: var(--deco_size);
-		height: var(--deco_size);
-		mask: var(--maskImg) center / contain no-repeat;
+		top: var(--_deco-t);
+		width: var(--_deco-size);
+		height: var(--_deco-size);
+		mask: var(--_deco-mask) center / contain no-repeat;
 	}
-	.c--chat-speak .c--chat_deco {
-		top: 0;
-		--maskImg: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="8" height="8"><path d="M8,8L8,8C7.4,4.8,5.4,2,2.6,0.4L2,0h6V8z"/></svg>');
+	.c--chat-speak {
+		--_deco-mask: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="8" height="8"><path d="M8,8L8,8C7.4,4.8,5.4,2,2.6,0.4L2,0h6V8z"/></svg>');
 	}
-	.c--chat-think .c--chat_deco {
-		top: 0.75rem;
-		--maskImg: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="8" height="8"><circle cx="1.5" cy="1.7" r="1.5"/><circle cx="4.5" cy="5.2" r="2.5"/></svg>');
+	.c--chat-think {
+		--_deco-t: 0.75rem;
+		--_deco-mask: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="8" height="8"><circle cx="1.5" cy="1.7" r="1.5"/><circle cx="4.5" cy="5.2" r="2.5"/></svg>');
 	}
 }
 
