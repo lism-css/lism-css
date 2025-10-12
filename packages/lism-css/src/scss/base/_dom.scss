@@ -21,8 +21,8 @@ body {
 	font-family: var(--ff--base);
 	line-height: var(--lh--base);
 	letter-spacing: var(--lts--base);
-	background-color: var(--c-base);
-	color: var(--c-text);
+	background-color: var(--c--base);
+	color: var(--c--text);
 	overflow-x: clip;
 	// 子孫要素の position:fixed の挙動が変わってしまうので body には使わない
 	// container-type: inline-size;
@@ -75,8 +75,7 @@ h6 {
  ---------------------------------------- */
 // link
 @include mixin.maybe_where('a', '') {
-	--c: var(--c-link);
-	color: var(--c);
+	color: var(--c--link);
 	text-decoration: var(--link-td, underline);
 }
 
