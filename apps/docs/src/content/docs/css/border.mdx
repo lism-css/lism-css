@@ -43,29 +43,29 @@ Lismでは、border系の指定が少し特殊になっています。
 <Preview>
 	<PreviewTitle>使用例</PreviewTitle>
 	<PreviewArea p='40'>
-		<Box bd>
+		<Box bd bdc='line' p='10'>
 			<Dummy length='s'/>
 		</Box>
-		<Box bd bds='dashed' bdw='2px' bdc='blue' p='20'>
+		<Box bd bds='dashed' bdw='4px' bdc='red' p='20'>
 			<Dummy length='s'/>
 		</Box>
 	</PreviewArea>
 	<PreviewCode label='JSX' slot='tab'>
 		```jsx
-		<Box bd>
+		<Box bd bdc='line' p='10'>
 			<Dummy length='s'/>
 		</Box>
-		<Box bd bds='dashed' bdw='2px' bdc='blue' p='20'>
+		<Box bd bds='dashed' bdw='4px' bdc='red' p='20'>
 			<Dummy length='s'/>
 		</Box>
 		```
 	</PreviewCode>
 	<PreviewCode label='HTML' slot='tab'>
 		```html "-bd" "--bdc" "--bdw" "--bds"
-		<div class="l--box -bd">
+		<div class="l--box -bd -bdc:line -p:10">
 			<p> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor. </p>
 		</div>
-		<div class="l--box -bd -bds:dashed -p:20" style="--bdw:2px;--bdc:var(--blue)">
+		<div class="l--box -bd -bds:dashed -p:20" style="--bdw:4px;--bdc:var(--red)">
 			<p> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor. </p>
 		</div>
 		```
@@ -81,32 +81,61 @@ Lismでは、border系の指定が少し特殊になっています。
 一方向だけのボーダー指定をしたい場合、`.-bd-{side}`クラスを使います。
 </Callout>
 
+
 <Preview>
-	<PreviewTitle>block, inline方向での指定</PreviewTitle>
+	<PreviewTitle>4方向の指定</PreviewTitle>
 	<PreviewArea p='40' isFlow='50'>
-		<Box bd-x-s p='10' bgc='base-2'>inline-start</Box>
-		<Box bd-x-e p='10' bgc='base-2'>inline-end</Box>
-		<Box bd-y-s p='10' bgc='base-2'>block-start</Box>
-		<Box bd-y-e bds='dashed' bdw='2px' bdc='red' p='10' bgc='base-2'>block-end</Box>
-		<Box bd-x p='10' bgc='base-2'>inline</Box>
-		<Box bd-y p='10' bgc='base-2' bdc='blue'>block</Box>
+		<Box bd-t px='10'>-t: Top</Box>
+		<Box bd-r px='10'>-r: Right</Box>
+		<Box bd-b px='10'>-b: Bottom</Box>
+		<Box bd-l px='10'>-l: Left</Box>
 	</PreviewArea>
 	<PreviewCode label='JSX' slot='tab'>
-		```jsx "bd-s" "bd-x-e" "bd-y-s" "bd-y-e"
-		<Box bd-x-s p='10' bgc='base-2'>inline-start</Box>
-		<Box bd-x-e p='10' bgc='base-2'>inline-end</Box>
-		<Box bd-y-s p='10' bgc='base-2'>block-start</Box>
-		<Box bd-y-e bds='dashed' bdw='2px' bdc='red' p='10' bgc='base-2'>block-end</Box>
-		<Box bd-x p='10' bgc='base-2'>inline</Box>
-		<Box bd-y p='10' bgc='base-2' bdc='blue'>block</Box>
+		```jsx "bd-t" "bd-r" "bd-b" "bd-l"
+		<Box bd-t px='10'>-t: Top</Box>
+		<Box bd-r px='10'>-r: Right</Box>
+		<Box bd-b px='10'>-b: Bottom</Box>
+		<Box bd-l px='10'>-l: Left</Box>
 		```
 	</PreviewCode>
 	<PreviewCode label='HTML' slot='tab'>
-		```html "-bd-x-s" "-bd-x-e" "-bd-y-s" "-bd-y-e"
-		<div class="l--box -bd-x-s -p:10 -bgc:base-2">inline-start</div>
-		<div class="l--box -bd-x-e -p:10 -bgc:base-2">inline-end</div>
-		<div class="l--box -bd-y-s -p:10 -bgc:base-2">block-start</div>
-		<div class="l--box -bd-y-e -bds:ds -p:10 -bgc:base-2" style="--bdw:2px;--bdc:var(--red)">block-end</div>
+		```html "-bd-t" "-bd-r" "-bd-b" "-bd-l"
+		<div class='l--box -bd-t -px:10'>-t: Top</div>
+		<div class='l--box -bd-r -px:10'>-r: Right</div>
+		<div class='l--box -bd-b -px:10'>-b: Bottom</div>
+		<div class='l--box -bd-l -px:10'>-l: Left</div>
+		```
+	</PreviewCode>
+</Preview>
+
+<Preview>
+	<PreviewTitle>block, inline方向での指定</PreviewTitle>
+	<PreviewArea p='40' isFlow='50'>
+		<Box bd-x-s bdw='2px' px='10' bgc='base-2'>inline-start</Box>
+		<Box bd-x-e bdw='2px' px='10' bgc='base-2'>inline-end</Box>
+		<Box bd-y-s bdw='2px' px='10' bgc='base-2'>block-start</Box>
+		<Box bd-y-e bdw='2px' px='10' bgc='base-2'>block-end</Box>
+		<Box bd-x bdw='2px' px='10' bgc='base-2'>inline</Box>
+		<Box bd-y bdw='2px' px='10' bgc='base-2'>block</Box>
+	</PreviewArea>
+	<PreviewCode label='JSX' slot='tab'>
+		```jsx "bd-x" "bd-y" "bd-x-s" "bd-x-e" "bd-y-s" "bd-y-e" 
+		<Box bd-x-s bdw='2px' px='10' bgc='base-2'>inline-start</Box>
+		<Box bd-x-e bdw='2px' px='10' bgc='base-2'>inline-end</Box>
+		<Box bd-y-s bdw='2px' px='10' bgc='base-2'>block-start</Box>
+		<Box bd-y-e bdw='2px' px='10' bgc='base-2'>block-end</Box>
+		<Box bd-x bdw='2px' px='10' bgc='base-2'>inline</Box>
+		<Box bd-y bdw='2px' px='10' bgc='base-2'>block</Box>
+		```
+	</PreviewCode>
+	<PreviewCode label='HTML' slot='tab'>
+		```html "-bd-x" "-bd-y" "-bd-x-s" "-bd-x-e" "-bd-y-s" "-bd-y-e" 
+		<div class="l--box -bd-x-s -px:10 -bgc:base-2" style="--bdw:2px">inline-start</div>
+		<div class="l--box -bd-x-e -px:10 -bgc:base-2" style="--bdw:2px">inline-end</div>
+		<div class="l--box -bd-y-s -px:10 -bgc:base-2" style="--bdw:2px">block-start</div>
+		<div class="l--box -bd-y-e -px:10 -bgc:base-2" style="--bdw:2px">block-end</div>
+		<div class="l--box -bd-x -px:10 -bgc:base-2" style="--bdw:2px">inline</div>
+		<div class="l--box -bd-y -px:10 -bgc:base-2" style="--bdw:2px">block</div>
 		```
 	</PreviewCode>
 </Preview>
@@ -163,57 +192,35 @@ Lismでは、border系の指定が少し特殊になっています。
 </Preview>
 
 
+
+### ボーダーの方向を切り替える
+
+bdwをブレイクポイントで切り替えることで、ボーダーの方向を切り替えることができます。
+
 <Preview>
 	<PreviewTitle>ボーダーの方向を切り替える</PreviewTitle>
 	<PreviewArea p='40' resize>
-		<Flex fxd={['column','row']} bd bdc='blue'>
-			<Box fx='1' bd bdw={['0 0 1px 0','0 1px 0 0']} bdc='inherit' p='20'>
-				Box
-			</Box>
-			<Box fx='1' bd bdw={['0 0 1px 0','0 1px 0 0']} bdc='inherit' p='20'>
-				Box
-			</Box>
-			<Box fx='1' bd bdw={['0 0 1px 0','0 1px 0 0']} bdc='inherit' p='20'>
-				Box
-			</Box>
-			<Box fx='1' p='20'>
-				Box
-			</Box>
+		<Flex fxd={['column','row']}>
+			<Box px='20' py='5'>Box</Box>
+			<Box px='20' py='5' bd-x-s bd-y-s bdw={['1px 0', '0 1px']}>Box</Box>
+			<Box px='20' py='5' bd-x-s bd-y-s bdw={['1px 0', '0 1px']}>Box</Box>
 		</Flex>
 	</PreviewArea>
 	<PreviewCode label='JSX' slot='tab'>
 		```jsx
-		<Flex fxd={['column','row']} bd bdc='blue'>
-			<Box fx='1' bd bdw={['0 0 1px 0','0 1px 0 0']} bdc='inherit' p='20'>
-				Box
-			</Box>
-			<Box fx='1' bd bdw={['0 0 1px 0','0 1px 0 0']} bdc='inherit' p='20'>
-				Box
-			</Box>
-			<Box fx='1' bd bdw={['0 0 1px 0','0 1px 0 0']} bdc='inherit' p='20'>
-				Box
-			</Box>
-			<Box fx='1' p='20'>
-				Box
-			</Box>
+		<Flex fxd={['column','row']}>
+			<Box px='20' py='5'>Box</Box>
+			<Box px='20' py='5' bd-x-s bd-y-s bdw={['1px 0', '0 1px']}>Box</Box>
+			<Box px='20' py='5' bd-x-s bd-y-s bdw={['1px 0', '0 1px']}>Box</Box>
 		</Flex>
 		```
 	</PreviewCode>
 	<PreviewCode label='HTML' slot='tab'>
 		```html
-		<div class="l--flex -bd -fxd:col -fxd_sm" style="--bdc:var(--blue);--fxd_sm:row">
-			<div class="-bd -bdw_sm -bdc:i -p:20 -fx:1" style="--bdw:0 0 1px 0;--bdw_sm:0 1px 0 0">
-				Box
-			</div>
-			<div class="-bd -bdw_sm -bdc:i -p:20 -fx:1" style="--bdw:0 0 1px 0;--bdw_sm:0 1px 0 0">
-				Box
-			</div>
-			<div class="-bd -bdw_sm -bdc:i -p:20 -fx:1" style="--bdw:0 0 1px 0;--bdw_sm:0 1px 0 0">
-				Box
-			</div>
-			<div class="-p:20 -fx:1">
-				Box
-			</div>
+		<div class='l--flex -fxd:col -fxd_sm' style='--fxd_sm:row'>
+			<div class='l--box -px:20 -py:5'>Box</div>
+			<div class='l--box -px:20 -py:5 -bd-x-s -bd-y-s -bdw_sm' style='--bdw:1px 0;--bdw_sm:0 1px'>Box</div>
+			<div class='l--box -px:20 -py:5 -bd-x-s -bd-y-s -bdw_sm' style='--bdw:1px 0;--bdw_sm:0 1px'>Box</div>
 		</div>
 		```
 	</PreviewCode>
@@ -221,7 +228,7 @@ Lismでは、border系の指定が少し特殊になっています。
 
 
 
-
+{/* 
 ## 任意の`border`をインライン出力する方法
 
 `bd`に直接値を指定することももちろん可能です。
@@ -241,7 +248,7 @@ Lismでは、border系の指定が少し特殊になっています。
 		<div class="l--box -p:10" style="border:solid 1px #555">border</div>
 		```
 	</PreviewCode>
-</Preview>
+</Preview> */}
 
 
 {/* 各方向のボーダー(`border-left`,`border-top`など)に任意の値を指定するには、`borders`プロパティを使用します。
