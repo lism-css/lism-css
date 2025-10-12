@@ -86,7 +86,7 @@ import Button from '~/components/ex/Button/index.astro';
 
 | プロパティ | 説明 |
 |---|---|
-|`variant`<small>(必須)</small>| `c--button-{variant}` クラスを出力します。`fill`,`outline`の2種類のスタイルをこの例では用意しています。|
+|`variant`<small>(必須)</small>| `c--button--{variant}` クラスを出力します。`fill`,`outline`の2種類のスタイルをこの例では用意しています。|
 {/* |`layout`| Buttonを構成するレイアウト用コンポーネントを指定できます。デフォルトは`Lism`です。| */}
 {/* |`icon`, `endIcon` | ボタンテキストの左右に表示するアイコンを指定できます。| */}
 {/* |`hover`| デフォルトは`op`が指定されています。| */}
@@ -157,9 +157,9 @@ Common Props の `w`, `h` ではなく、`width`, `height` を使ってくださ
 	<PreviewCode slot='tab' label='HTML'>
 		```html
 		<div class='l--flex -g:20'>
-			<a class='c--button c--button-outline l--flex -td:n -ai:c -hov:o' href='###'>Button</a>
-			<a class='c--button c--button-outline l--flex -td:n -ai:c -hov:o -c:main -bdrs:20' href='###'>Button</a>
-			<a class='c--button c--button-outline l--flex -td:n -ai:c -hov:o -bdrs:99' href='###' style="--c:#d13d5e">
+			<a class='c--button c--button--outline l--flex -td:n -ai:c -hov:o' href='###'>Button</a>
+			<a class='c--button c--button--outline l--flex -td:n -ai:c -hov:o -c:main -bdrs:20' href='###'>Button</a>
+			<a class='c--button c--button--outline l--flex -td:n -ai:c -hov:o -bdrs:99' href='###' style="--c:#d13d5e">
 				<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 256 256' width='1em' height='1em' fill='currentColor' focusable='false' class='l--icon' aria-hidden='true'>
 					<path d='M230.14,58.87A8,8,0,0,0,224,56H62.68L56.6,22.57A8,8,0,0,0,48.73,16H24a8,8,0,0,0,0,16h18L67.56,172.29a24,24,0,0,0,5.33,11.27,28,28,0,1,0,44.4,8.44h45.42A27.75,27.75,0,0,0,160,204a28,28,0,1,0,28-28H91.17a8,8,0,0,1-7.87-6.57L80.13,152h116a24,24,0,0,0,23.61-19.71l12.16-66.86A8,8,0,0,0,230.14,58.87ZM104,204a12,12,0,1,1-12-12A12,12,0,0,1,104,204Zm96,0a12,12,0,1,1-12-12A12,12,0,0,1,200,204Zm4-74.57A8,8,0,0,1,196.1,136H77.22L65.59,72H214.41Z' ></path>
 				</svg>
@@ -311,10 +311,10 @@ Common Props の `w`, `h` ではなく、`width`, `height` を使ってくださ
 	.-hov\:reverse {
 		--hov-c: var(--bgc);
 		--hov-bgc: var(--c);
-		&:where(.c--button-fill) {
+		&:where(.c--button--fill) {
 			--hov-bgc: transparent;
 		}
-		&:where(.c--button-outline) {
+		&:where(.c--button--outline) {
 			--hov-c: var(--c--base);
 		}
 		@media (any-hover: hover) {

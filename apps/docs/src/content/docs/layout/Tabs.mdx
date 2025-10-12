@@ -24,7 +24,7 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage, EmbedCo
 
 | プロパティ | 説明 |
 |---|---|
-|<PropBadge>`<Tabs.Root>`</PropBadge><br/>`variant`|`d--tabs-{variant}`クラスが出力されます。|
+|<PropBadge>`<Tabs.Root>`</PropBadge><br/>`variant`|`d--tabs--{variant}`クラスが出力されます。|
 |<PropBadge>`<Tabs.Root>`</PropBadge><br/>`tabId`|`aria-controls`の値として使用されるタブを特定するためのIDを文字列で指定できます。|
 |<PropBadge>`<Tabs.Root>`</PropBadge><br/>`defaultIndex`|最初に開いておくタブ番号を指定できます。|
 |<PropBadge>`<Tabs.Root>`</PropBadge><br/>`listProps`|タブボタンを囲むリスト要素(`d--tabs_list`)へ渡すpropsを指定できます。|
@@ -283,7 +283,7 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage, EmbedCo
 	<PreviewCode slot='tab' label='追加CSS'>
 ```scss
 /* Memo: ov-x='auto' の時に margin がネガティブだとアウトなので、borderではなくbox-shadowで表現する。 */
-:where(.d--tabs-line) {
+:where(.d--tabs--line) {
 	--sh-size: inset 0 -2px;
 
 	.d--tabs_list {
@@ -338,7 +338,7 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage, EmbedCo
 	</PreviewArea>
 	<PreviewCode slot='tab' label='追加CSS'>
 ```scss
-:where(.d--tabs-emboss) {
+:where(.d--tabs--emboss) {
 	.d--tabs_list {
 		padding: 4px;
 		font-size: var(--fz--s);
