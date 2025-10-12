@@ -30,12 +30,12 @@ Lismでは、**メインコンテンツ間の余白を管理するためのク�
 
 | クラス名 | 余白量 |
 |---|---|
-| `.is--flow` | `var(--flowM, var(--flowM-m))` |
-| `.is--flow.-flow:s` | `--flowM-s` (`--s20`) |
-| `.is--flow.-flow:m` | `--flowM-m` (`--s40`) |
-{/* | `.is--flow.-flow:l` | `--flowM-l` | */}
+| `.is--flow` | `var(--flow-gap, var(--flow--m))` |
+| `.is--flow.-flow:s` | `--flow--s` (`--s20`) |
+| `.is--flow.-flow:m` | `--flow--m` (`--s40`) |
+{/* | `.is--flow.-flow:l` | `--flow--l` | */}
 
-見出しタグのみ、`--flowM-h` (`1em`) が加算され、余白が広くなるようになっています。  
+見出しタグのみ、`--flow--h` (`1em`) が加算され、余白が広くなるようになっています。  
 
 {/* <Lism isFlow> */}
 <Preview>
@@ -122,7 +122,7 @@ Lismでは、**メインコンテンツ間の余白を管理するためのク�
 
 
 
-任意の余白量をセットしたい場合は、`--flowM`変数で指定します。
+任意の余白量をセットしたい場合は、`--flow-gap`変数で指定します。
 
 <Preview>
 	<PreviewTitle>任意の値をセットする</PreviewTitle>
@@ -135,7 +135,7 @@ Lismでは、**メインコンテンツ間の余白を管理するためのク�
 	</PreviewArea>
 	<PreviewCode slot='tab' label='HTML'>
 	```html
-	<div class="is--flow" style="--flowM:10px">
+	<div class="is--flow" style="--flow-gap:10px">
 		<p>Contents...</p>
 		<p>Contents...</p>
 		<p>Contents...</p>
@@ -153,7 +153,7 @@ Lismでは、**メインコンテンツ間の余白を管理するためのク�
 	</PreviewCode>
 </Preview>
 
-`is--flow`は`--flowM`が未定義であれば`--flowM-m`がセットされますが、ネストされていると親の値を継承されることに注意してください。
+`is--flow`は`--flow-gap`が未定義であれば`--flow--m`がセットされますが、ネストされていると親の値を継承されることに注意してください。
 
 <Reference>
 [`is--flow` をネストする時の注意点](/others/addition/#is--flow-のネスト)
@@ -198,19 +198,19 @@ Lismでは、**メインコンテンツ間の余白を管理するためのク�
 ## `is--container`
 
 `is--container`はコンテナ要素を定義するためのクラスです。  
-また、`--contentSize`で直下の子要素サイズを制御でき、`-container:{s|m|l}`でプリセットサイズを指定することもできます。
+また、`--content-size`で直下の子要素サイズを制御でき、`-container:{s|m|l}`でプリセットサイズを指定することもできます。
 <Callout type='info'>
-	`-container:{s|m|l}`を使用すると、`--contentSize`だけではなく `.is--wide`の幅（`.--wideSize`）も同時に調整されます。
+	`-container:{s|m|l}`を使用すると、`--content-size`だけではなく `.is--wide`の幅（`.--wide-size`）も同時に調整されます。
 </Callout>
 
 <Spacer h='1rem' />
 
-| クラス名 | コンテンツ幅 (`--contentSize`) |
+| クラス名 | コンテンツ幅 (`--content-size`) |
 |---|---|
 | `is--container`| `100%` |
-| `-container:s` | `--size-s` |
-| `-container:m` | `--size-m` |
-| `-container:l` | `--size-l` |
+| `-container:s` | `--sz--s` |
+| `-container:m` | `--sz--m` |
+| `-container:l` | `--sz--l` |
 
 
 <Preview>
@@ -248,7 +248,7 @@ Lismでは、**メインコンテンツ間の余白を管理するためのク�
 </Box>
 
 
-s, m, l 以外の値をセットしたい場合は、`--contentSize`変数を指定します。
+s, m, l 以外の値をセットしたい場合は、`--content-size`変数を指定します。
 
 <Preview>
 	<PreviewTitle>is--container に任意の値をセットする</PreviewTitle>
@@ -260,7 +260,7 @@ s, m, l 以外の値をセットしたい場合は、`--contentSize`変数を指
 	</PreviewArea>
 	<PreviewCode slot='tab' label='HTML'>
 	```html
-	<div class="is--container" style="--contentSize:20rem">
+	<div class="is--container" style="--content-size:20rem">
 		<div>Contents...</div>
 		<div>Contents...</div>
 	</div>

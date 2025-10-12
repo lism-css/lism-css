@@ -9,7 +9,7 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage, Callout
 
 ## is--flow のネスト時の注意点
 
-`--flowM`を直接指定する時、ネストに注意が必要です。
+`--flow-gap`を直接指定する時、ネストに注意が必要です。
 
 <Preview>
 	<PreviewTitle>`is--flow` > `is--flow.-flow:s`は問題なし</PreviewTitle>
@@ -68,16 +68,16 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage, Callout
 </Preview> */}
 
 
-`is--flow`は`--flowM`が未定義であれば`--flowM-m`がセットされます。
-しかし、`--flowM`をセットした先祖があればその値を継承します。
+`is--flow`は`--flow-gap`が未定義であれば`--flow--m`がセットされます。
+しかし、`--flow-gap`をセットした先祖があればその値を継承します。
 
-ネストされた状態でデフォルト値の`--flowM-m`を再度使用したい場合は、`-flow:m`を併用して明示的に指定してください。
+ネストされた状態でデフォルト値の`--flow--m`を再度使用したい場合は、`-flow:m`を併用して明示的に指定してください。
 
 <Preview>
-	<PreviewTitle>`--flowM`をセットした`is--flow`の中でのネスト</PreviewTitle>
+	<PreviewTitle>`--flow-gap`をセットした`is--flow`の中でのネスト</PreviewTitle>
 	<PreviewArea p='30' isFlow={false}>
 		<Box isFlow='4px'>
-			<p>`is--flow[--flowM:4px]`</p>
+			<p>`is--flow[--flow-gap:4px]`</p>
 			<p>Contents...</p>
 			<Box isFlow bgc='red:10%'>
 				<p>`is--flow`</p>
@@ -96,7 +96,7 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage, Callout
 	<PreviewCode>
 	```jsx "isFlow"
 	<Box isFlow='4px'>
-		<p>`is--flow[--flowM:4px]`</p>
+		<p>`is--flow[--flow-gap:4px]`</p>
 		<p>Contents...</p>
 		<Box isFlow bgc='red:10%'>
 			<p>`is--flow`</p>
@@ -115,10 +115,10 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage, Callout
 	</PreviewCode>
 </Preview>
 
-さらに、`is--flow`の直下で`--flowM`を定義すると、自身のmargin-block-startにも影響が出ることに注意してください。
+さらに、`is--flow`の直下で`--flow-gap`を定義すると、自身のmargin-block-startにも影響が出ることに注意してください。
 
 <Preview>
-	<PreviewTitle>`is--flow`の直下で`--flowM`を定義</PreviewTitle>
+	<PreviewTitle>`is--flow`の直下で`--flow-gap`を定義</PreviewTitle>
 	<PreviewArea p='30' isFlow={false}>
 		<Box isFlow>
 			<p>`is--flow`</p>
