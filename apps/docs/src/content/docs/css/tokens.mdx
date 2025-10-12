@@ -284,9 +284,9 @@ box-shadow は少し特殊で、ユーティリティクラス内で複数のsha
 
 |トークン|変数|クラス|
 |---|---|---|
-|`base`|<span class='-whitespace:nowrap'>`--ff-base`</span>|<span class='-whitespace:nowrap'>`-ff:base`</span>|
-|`accent`|<span class='-whitespace:nowrap'>`--ff-accent`</span>|<span class='-whitespace:nowrap'>`-ff:accent`</span>|
-|`mono`|<span class='-whitespace:nowrap'>`--ff-mono`</span>|<span class='-whitespace:nowrap'>`-ff:mono`</span>|
+|`base`|<span class='-whitespace:nowrap'>`--ff--base`</span>|<span class='-whitespace:nowrap'>`-ff:base`</span>|
+|`accent`|<span class='-whitespace:nowrap'>`--ff--accent`</span>|<span class='-whitespace:nowrap'>`-ff:accent`</span>|
+|`mono`|<span class='-whitespace:nowrap'>`--ff--mono`</span>|<span class='-whitespace:nowrap'>`-ff:mono`</span>|
 
 
 <Preview>
@@ -312,12 +312,12 @@ box-shadow は少し特殊で、ユーティリティクラス内で複数のsha
 
 |トークン|変数|クラス|初期値|
 |---|---|---|---|
-|`thin`|`--fw-thin`|`-fw:thin`|`100`|
-|`light`|`--fw-light`|`-fw:light`|`300`|
-|`normal`|`--fw-normal`|`-fw:normal`|`400`|
-|`medium`|`--fw-medium`|`-fw:medium`|`500`|
-|`bold`|`--fw-bold`|`-fw:bold`|`700`|
-|`black`|`--fw-black`|`-fw:black`|`900`|
+|`thin`|`--fw--thin`|`-fw:thin`|`100`|
+|`light`|`--fw--light`|`-fw:light`|`300`|
+|`normal`|`--fw--normal`|`-fw:normal`|`400`|
+|`medium`|`--fw--medium`|`-fw:medium`|`500`|
+|`bold`|`--fw--bold`|`-fw:bold`|`700`|
+|`black`|`--fw--black`|`-fw:black`|`900`|
 
 
 <Preview>
@@ -352,19 +352,19 @@ box-shadow は少し特殊で、ユーティリティクラス内で複数のsha
 
 |トークン|変数|クラス|初期値|
 |---|---|---|---|
-|`2xs`|`--fz-2xs`|`-fz:2xs`|`1em * 8 / 11`|
-|`xs`|`--fz-xs`|`-fz:xs`|`1em * 8 / 10`|
-|`s`|`--fz-s`|`-fz:s`|`1em * 8 / 9`|
-|`m`|`--fz-m`|`-fz:m`|`1em`|
-|`l`|`--fz-l`|`-fz:l`|`1em * 8 / 7`|
-|`xl`|`--fz-xl`|`-fz:xl`|`1em * 8 / 6`|
-|`2xl`|`--fz-2xl`|`-fz:2xl`|`1em * 8 / 5`|
-|`3xl`|`--fz-3xl`|`-fz:3xl`|`1em * 8 / 4`|
-|`4xl`|`--fz-4xl`|`-fz:4xl`|`1em * 8 / 3`|
-|`5xl`|`--fz-5xl`|`-fz:5xl`|`1em * 8 / 2`|
-|`base`|`--fz-base`|`-fz:base`<sup>※1</sup>|`clamp(0.875rem, 0.625rem + 1vw, 1rem)`|
+|`2xs`|`--fz--2xs`|`-fz:2xs`|`1em * 8 / 11`|
+|`xs`|`--fz--xs`|`-fz:xs`|`1em * 8 / 10`|
+|`s`|`--fz--s`|`-fz:s`|`1em * 8 / 9`|
+|`m`|`--fz--m`|`-fz:m`|`1em`|
+|`l`|`--fz--l`|`-fz:l`|`1em * 8 / 7`|
+|`xl`|`--fz--xl`|`-fz:xl`|`1em * 8 / 6`|
+|`2xl`|`--fz--2xl`|`-fz:2xl`|`1em * 8 / 5`|
+|`3xl`|`--fz--3xl`|`-fz:3xl`|`1em * 8 / 4`|
+|`4xl`|`--fz--4xl`|`-fz:4xl`|`1em * 8 / 3`|
+|`5xl`|`--fz--5xl`|`-fz:5xl`|`1em * 8 / 2`|
+|`base`|`--fz--base`|`-fz:base`<sup>※1</sup>|`clamp(0.875rem, 0.625rem + 1vw, 1rem)`|
 
-<sup>※1</sup>: `-fz:base`クラスは、値としては`1rem`をセットします。（`html`で`font-size:var(--fz-base)`をセットしている）
+<sup>※1</sup>: `-fz:base`クラスは、値としては`1rem`をセットします。（`html`で`font-size:var(--fz--base)`をセットしている）
 
 {/* <Callout type="info">
 	Memo:スケーリングは 4xl くらいまでにして、5xlのとこは `here` などのセマンティックトークンにしてもよさそう。2xsとかも?
@@ -410,15 +410,15 @@ Lism では、フォントサイズのスケーリングには数学的に美し
 ```scss
 :root{
 	--_fzmol: 8;
-	--fz-4xl: calc(1em * var(--_fzmol) / (var(--_fzmol) - 5));
-	--fz-3xl: calc(1em * var(--_fzmol) / (var(--_fzmol) - 4));
-	--fz-2xl: calc(1em * var(--_fzmol) / (var(--_fzmol) - 3));
-	--fz-xl: calc(1em * var(--_fzmol) / (var(--_fzmol) - 2));
-	--fz-l: calc(1em * var(--_fzmol) / (var(--_fzmol) - 1));
-	--fz-m: 1em;
-	--fz-s: calc(1em * var(--_fzmol) / (var(--_fzmol) + 1));
-	--fz-xs: calc(1em * var(--_fzmol) / (var(--_fzmol) + 2));
-	--fz-2xs: calc(1em * var(--_fzmol) / (var(--_fzmol) + 3));
+	--fz--4xl: calc(1em * var(--_fzmol) / (var(--_fzmol) - 5));
+	--fz--3xl: calc(1em * var(--_fzmol) / (var(--_fzmol) - 4));
+	--fz--2xl: calc(1em * var(--_fzmol) / (var(--_fzmol) - 3));
+	--fz--xl: calc(1em * var(--_fzmol) / (var(--_fzmol) - 2));
+	--fz--l: calc(1em * var(--_fzmol) / (var(--_fzmol) - 1));
+	--fz--m: 1em;
+	--fz--s: calc(1em * var(--_fzmol) / (var(--_fzmol) + 1));
+	--fz--xs: calc(1em * var(--_fzmol) / (var(--_fzmol) + 2));
+	--fz--2xs: calc(1em * var(--_fzmol) / (var(--_fzmol) + 3));
 }
 ```
 
@@ -473,11 +473,11 @@ Lism では、フォントサイズのスケーリングには数学的に美し
 
 |トークン|変数|クラス|初期値|
 |---|---|---|---|
-|`base`|`--lh-base`|`-lh:base`|`1.75`|
-|`xs`|`--lh-xs`|`-lh:xs`|`calc({base} - 0.25)`|
-|`s`|`--lh-s`|`-lh:s`|`calc({base} - 0.125)`|
-|`l`|`--lh-l`|`-lh:l`|`calc({base} + 0.125)`|
-|`xl`|`--lh-xl`|`-lh:xl`|`calc({base} + 0.25)`|
+|`base`|`--lh--base`|`-lh:base`|`1.75`|
+|`xs`|`--lh--xs`|`-lh:xs`|`calc({base} - 0.25)`|
+|`s`|`--lh--s`|`-lh:s`|`calc({base} - 0.125)`|
+|`l`|`--lh--l`|`-lh:l`|`calc({base} + 0.125)`|
+|`xl`|`--lh--xl`|`-lh:xl`|`calc({base} + 0.25)`|
 
 
 <Callout type='info'>
@@ -538,10 +538,10 @@ base値は 日本語では `1.625`, `1.75`, `1.875` あたりがおすすめで�
 
 |トークン|変数|クラス|初期値
 |---|---|---|---|
-|`base`|`--lts-base`|`-lts:base`|`normal`|
-|`s`|`--lts-s`|`-lts:s`|`-0.05em`|
-|`l`|`--lts-l`|`-lts:l`|`0.05em`|
-{/* |`xl`|`--lts-xl`|`-lts:xl`|`0.125em`| */}
+|`base`|`--lts--base`|`-lts:base`|`normal`|
+|`s`|`--lts--s`|`-lts:s`|`-0.05em`|
+|`l`|`--lts--l`|`-lts:l`|`0.05em`|
+{/* |`xl`|`--lts--xl`|`-lts:xl`|`0.125em`| */}
 
 <Preview>
 	<PreviewTitle>Preview</PreviewTitle>

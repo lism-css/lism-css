@@ -210,8 +210,8 @@ Prop クラス には以下の3種類の形式があります。
 ```css
 .-ta\:c { text-align: center; }
 .-ta\:l { text-align: left; }
-.-fz\:l { font-size: var(--fz-l); }
-.-fz\:3xl { font-size: var(--fz-3xl); }
+.-fz\:l { font-size: var(--fz--l); }
+.-fz\:3xl { font-size: var(--fz--3xl); }
 
 .-p{ padding: var(--p); }
 @container (min-width: 480px) {
@@ -279,7 +279,7 @@ Lismパッケージに内蔵されているクラスではありませんが、�
 変数名の各ブロックはキャメルケースで、`--{varName}`のように表現します。
 
 - トークン値など、一つのプロパティに対するバリエーションを示すものは、`--{prop}-{token}`のようにハイフンを1つ使って表現します。
-	- 例: `--fz-s`, `--fz-l`
+	- 例: `--fz--s`, `--fz--l`
 	- ただし、spaceトークンのみ特殊になっており、。`s`はプロパティ名ではなく`space`の省略であること、特に頻出なトークンであることから、`--s{Num}`とします。
 		- 例: `--s10`, `--s40`
 - 特定の要素に対するプロパティで、`:root`で上書き可能な値は`--{target}-{prop}`の形式で表現します。
