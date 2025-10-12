@@ -3,17 +3,17 @@
 	container-type: inline-size;
 	margin-inline: auto;
 	inline-size: 100%; // gridやflex内での挙動を考慮。（container-type:inline-sizeだと横幅つぶれる）
-	// 	--wideSize: 100%;
+	// 	--wide-size: 100%;
 
 	// .is--overwide のサイズを is--container ごとにセット。
-	--overwideSize: 100cqi;
+	--overwide-size: 100cqi;
 	:where(.has--gutter) > & {
-		--overwideSize: calc(100cqi + var(--gutter) * 2);
+		--overwide-size: calc(100cqi + var(--gutter) * 2);
 	}
 
 	// 子要素の制御
 	> * {
-		--max-xsz: var(--contentSize, 100%);
+		--max-xsz: var(--content-size, 100%);
 		max-inline-size: min(100%, var(--max-xsz, 100%));
 		margin-inline: auto;
 	}
@@ -21,14 +21,14 @@
 
 // Memo: それぞれの直下要素( > * ) に対してスタイルをセットした方が、ネスト時の影響をなくせるが、constrainedのネストが多様されることは少ないので親側の変数管理のみで実装。
 .-container\:s {
-	--contentSize: var(--size-s);
-	--wideSize: var(--size-m);
+	--content-size: var(--sz--s);
+	--wide-size: var(--sz--m);
 }
 .-container\:m {
-	--contentSize: var(--size-m);
-	--wideSize: var(--size-l);
+	--content-size: var(--sz--m);
+	--wide-size: var(--sz--l);
 }
 .-container\:l {
-	--contentSize: var(--size-l);
-	--wideSize: var(--size-xl);
+	--content-size: var(--sz--l);
+	--wide-size: var(--sz--xl);
 }
