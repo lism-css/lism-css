@@ -61,8 +61,8 @@ class LismPropsData {
 				.map((v) => v.trim())
 				.filter(Boolean);
 
-			// {baseClass}-{variant} 形式でクラス名を生成
-			const variantClasses = variantArr.map((v) => `${baseClass}-${v}`);
+			// {baseClass}--{variant} 形式でクラス名を生成
+			const variantClasses = variantArr.map((v) => `${baseClass}--${v}`);
 			// baseClass の後ろにvariantクラスを追加
 			this.lismClass = [baseClass, ...variantClasses, ...lismClassArr.slice(1)].join(' ');
 		}

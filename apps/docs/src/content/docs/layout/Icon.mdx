@@ -250,12 +250,12 @@ Lismパッケージ（`lism-css`)内にはいくつかsvgアイコンを内包�
 アイコンをインラインで文字と並んでも見やすくなるような調整を追加したようなバリエーションクラスの追加例を紹介します。
 
 
-`.l--icon-inline`に対しては次のようなCSSが適用されており、インラインで文字と並んでも見やすくなるような調整がデフォルトで入っています。
+`.l--icon--inline`に対しては次のようなCSSが適用されており、インラインで文字と並んでも見やすくなるような調整がデフォルトで入っています。
 
 
 <PreviewTitle>追加CSS</PreviewTitle>
 ```css
-.l--icon-inline {
+.l--icon--inline {
 	--_scale: 1.125; /* アイコンは小さくなりがちなので、デフォルトでほんのり拡大 */
 	vertical-align: -0.125em; /* テキストの下部付近に揃える */
 	margin-inline: calc(1em * (var(--_scale) - 1) / 2); /* scaleを考慮し、マージンを確保 */
@@ -286,7 +286,7 @@ Lismパッケージ（`lism-css`)内にはいくつかsvgアイコンを内包�
 
 ### emoji の指定
 
-`icon`ではなく`emoji`に絵文字を指定すると、`.l--icon-emoji`クラスが付与され、絵文字用のCSSが適用されます。
+`icon`ではなく`emoji`に絵文字を指定すると、`.l--icon--emoji`クラスが付与され、絵文字用のCSSが適用されます。
 
 <Preview>
 	<PreviewTitle>絵文字を使う</PreviewTitle>

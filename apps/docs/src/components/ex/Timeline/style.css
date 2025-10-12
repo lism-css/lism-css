@@ -41,17 +41,17 @@
 		--_line-len: calc(100% - var(--_line-offset));
 	}
 
-	.c--timeline-horizontal {
+	.c--timeline--horizontal {
 		--edge: var(--s20);
 		--_line-offset: calc(50% - var(--edge) / 2);
 		grid-template-rows: var(--shapeSpace) auto auto auto;
 	}
 
-	.c--timeline-horizontal > .c--timeline_item {
+	.c--timeline--horizontal > .c--timeline_item {
 		grid-template-columns: var(--startSpace) auto var(--endSpace);
 	}
 
-	.c--timeline-horizontal .c--timeline_line {
+	.c--timeline--horizontal .c--timeline_line {
 		width: var(--_line-len);
 		height: var(--_line-bold);
 	}

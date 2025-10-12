@@ -38,7 +38,7 @@
 }
 
 /* ._nofix: rowspan の対応に使用するクラス */
-.c--table-fix1st tr > :first-child:not(._nofix) {
+.c--table--fix1st tr > :first-child:not(._nofix) {
 	position: sticky;
 	left: 0;
 	z-index: 1; /* 他のセルが relative だと上に来てしまうので、 z-index を少し上げておく */
@@ -46,14 +46,14 @@
 	/* スクロール時にborderが表示されない問題への対処 */
 	border-inline: none;
 }
-.c--table-fix1st tr > :first-child:not(._nofix)::before {
+.c--table--fix1st tr > :first-child:not(._nofix)::before {
 	content: '';
 	position: absolute;
 	inset: 0 calc(var(--bdw-x) * -1) 0 0;
 	border-block: none;
 }
 
-.c--table-fixHead > thead {
+.c--table--fixHead > thead {
 	position: sticky;
 	top: 0;
 	z-index: 2; /* fix1st + 1 */
@@ -62,7 +62,7 @@
 	border-block: none;
 }
 
-.c--table-fixHead > thead::before {
+.c--table--fixHead > thead::before {
 	content: '';
 	position: absolute;
 	z-index: 2;

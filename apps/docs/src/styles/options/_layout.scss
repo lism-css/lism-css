@@ -1,24 +1,24 @@
 // --------------------
 // variants
 // --------------------
-.l--flex-ltr {
+.l--flex--ltr {
 	flex-direction: row;
 }
-.l--flex-rtl {
+.l--flex--rtl {
 	flex-direction: row-reverse;
 }
 
 // rtlで左右を反転させないようにする
 :where([dir='rtl']) {
-	.l--flex-ltr {
+	.l--flex--ltr {
 		flex-direction: row-reverse;
 	}
-	.l--flex-rtl {
+	.l--flex--rtl {
 		flex-direction: row;
 	}
 }
 
-.l--icon-inline {
+.l--icon--inline {
 	--_scale: 1.2; // inline時、余白でテキストより小さく見えがちなのでほんの少し拡大する
 	scale: var(--_scale);
 	margin-inline: calc(1em * (var(--_scale) - 1) / 2);

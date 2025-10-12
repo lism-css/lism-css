@@ -46,7 +46,7 @@ import Badge from '~/components/ex/Badge/index.astro';
 	</PreviewCode>
 	<PreviewCode slot='tab' label='HTML'>
 		```html
-		<div class="l--flex l--flex-cluster -g:20">
+		<div class="l--flex l--flex--cluster -g:20">
 			<span class="-p:10 -lh:1 -fz:s -bgc:text -c:base -bdrs:10">Badge</span>
 			<span class="-p:10 -lh:1 -fz:s -bd -bdrs:10">Badge</span>
 			<span class="u--cbox -bd -p:10 -lh:1 -fz:s -bdrs:99" style="--keycolor:var(--blue);--bdc:color-mix(in srgb, var(--keycolor) 25%, var(--c--base))">Badge</span>
@@ -71,7 +71,7 @@ import Badge from '~/components/ex/Badge/index.astro';
 
 | プロパティ | 説明 |
 |---|---|
-|`variant`| `c--badge-{variant}` クラスを出力します。| */}
+ */}
 
 
 ## Usage
@@ -108,7 +108,7 @@ import Badge from '~/components/ex/Badge/index.astro';
 	</PreviewCode>
 	<PreviewCode slot='tab' label='HTML'>
 		```html
-		<div class='l--flex l--flex-cluster -g:20'>
+		<div class='l--flex l--flex--cluster -g:20'>
 			<span class='c--badge -fz:s -lh:1 -bdrs:10'>Badge</span>
 			<span class='c--badge -fz:s -lh:1 -bdrs:10' style='--bgc:var(--red)'>Badge</span>
 			...
@@ -154,11 +154,11 @@ import Badge from '~/components/ex/Badge/index.astro';
 	</PreviewCode>
 	<PreviewCode slot='tab' label='HTML'>
 		```html
-		<div class='l--flex l--flex-cluster -g:20'>
-			<span class='c--badge c--badge-outline -fz:s -lh:1 -bdrs:10'>Badge</span>
-			<span class='c--badge c--badge-outline -fz:s -lh:1 -bdrs:10' style='--c:var(--red)'>Badge</span> 
+		<div class='l--flex l--flex--cluster -g:20'>
+			<span class='c--badge c--badge--outline -fz:s -lh:1 -bdrs:10'>Badge</span>
+			<span class='c--badge c--badge--outline -fz:s -lh:1 -bdrs:10' style='--c:var(--red)'>Badge</span> 
 			...
-			<span class='c--badge c--badge-outline -fz:xs -lh:1 -bdrs:99' style='--c:var(--blue)'>Badge</span>
+			<span class='c--badge c--badge--outline -fz:xs -lh:1 -bdrs:99' style='--c:var(--blue)'>Badge</span>
 			...
 		</div>
 		```
@@ -193,7 +193,7 @@ import Badge from '~/components/ex/Badge/index.astro';
 	</PreviewCode>
 		<PreviewCode slot='tab' label='HTML'>
 		```html
-		<div class="l--flex l--flex-cluster -g:20">
+		<div class="l--flex l--flex--cluster -g:20">
 			<span class="c--badge u--cbox -fz:s -lh:1 -bdrs:10" style="--keycolor:var(--red)">Red</span>
 			<span class="c--badge u--cbox -fz:s -lh:1 -bdrs:10" style="--keycolor:var(--orange)">Orange</span>
 			<span class="c--badge u--cbox -fz:s -lh:1 -bdrs:10" style="--keycolor:var(--yellow)">Orange</span>
