@@ -3,7 +3,7 @@ title: 'Columns'
 description: ...
 ---
 import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage, PropBadge, EmbedCode } from "~/components";
-import { Lism, Box, Media, Text, Dummy, Columns, Grid, Divider } from 'lism-css/astro';
+import { Lism, Box, Frame, Media, Text, Dummy, Columns, Grid, Divider } from 'lism-css/astro';
 
 指定した列数でカラムレイアウトを作成します。
 
@@ -65,11 +65,10 @@ import { Lism, Box, Media, Text, Dummy, Columns, Grid, Divider } from 'lism-css/
 	</PreviewCode>
 </Preview>
 
+### 1列 → 2列 → 3列
 
 <Preview>
-	<PreviewTitle>
-		1列 → sm:2列 → md:3列
-	</PreviewTitle>
+	<PreviewTitle>1列 → sm:2列 → md:3列</PreviewTitle>
 	<PreviewArea resize p='30'>
 		<Columns cols={[1, 2, 3]} g='30'>
 			<Box bgc='base-2' p='30'>Box1</Box>
@@ -106,6 +105,7 @@ import { Lism, Box, Media, Text, Dummy, Columns, Grid, Divider } from 'lism-css/
 	</PreviewCode>
 </Preview>
 
+### 2列 → 4列
 
 <Preview>
 	<PreviewTitle>2列 → `@md`:4列</PreviewTitle>
@@ -117,82 +117,57 @@ import { Lism, Box, Media, Text, Dummy, Columns, Grid, Divider } from 'lism-css/
 			<Box bgc='base-2' p='30'>Box</Box>
 		</Columns>
 	</PreviewArea>
-
-<PreviewCode slot='tab' label='JSX'>
-```jsx "cols={[2, null, 4]}"
-<Columns cols={[2, null, 4]} g='20'>
-	...
-</Columns>
-```
-</PreviewCode>
-<PreviewCode slot='tab' label='HTML'>
-```html "--cols:2;--cols_md:4"
-<div class="l--columns -g:20" style="--cols:2;--cols_md:4">
-	...
-</div>
-```
-</PreviewCode>
-</Preview>
-
-
-## Variants
-
-### `variant='liquid'`
-
-列数を指定せず、**子要素が指定した幅より小さくならないように自動で折り返しされる**カラムレイアウトを作成します。
-
-
-子要素が維持する最小幅は`colSize`(`--colSize`) で指定できます。（デフォルトは`16rem`です）。
-
-<Preview>
-	<PreviewTitle>
-		デフォルト (`colSize`=`16rem`)
-	</PreviewTitle>
-	<PreviewArea resize p={20}>
-		<Columns variant='liquid' className="has--itemGuide">
-			<Dummy />
-			<Dummy />
-			<Dummy />
-			<Dummy />
-			<Dummy />
-			<Dummy />
-			<Dummy />
-			<Dummy />
-		</Columns>
-	</PreviewArea>
-	<PreviewCode>
-		```jsx
-		<Columns variant='liquid'>
+	<PreviewCode slot='tab' label='JSX'>
+		```jsx "cols={[2, null, 4]}"
+		<Columns cols={[2, null, 4]} g='20'>
 			...
 		</Columns>
 		```
 	</PreviewCode>
+	<PreviewCode slot='tab' label='HTML'>
+		```html "--cols:2;--cols_md:4"
+		<div class="l--columns -g:20" style="--cols:2;--cols_md:4">
+			...
+		</div>
+		```
+	</PreviewCode>
 </Preview>
 
-{/* <Columns variant='liquid' g='20' style={{'--colSize':'8rem', '--col-behavior':'auto-fit'}}> */}
+### gc(grid-column)の活用
 <Preview>
-	<PreviewTitle>
-		`colSize`=`8rem`
-	</PreviewTitle>
-	<PreviewArea resize p={20}>
-		<Columns variant='liquid' g='20' colSize='8rem'>
-			<Dummy bgc='base-2' />
-			<Dummy bgc='base-2' />
-			<Dummy bgc='base-2' />
-			<Dummy bgc='base-2' />
+	<PreviewTitle>1:2, 2:1 で順番にコンテンツを表示</PreviewTitle>
+	<PreviewArea resize p='20'>
+		<Columns cols='6' g='20'>
+			<Frame gc='span 2'><img src='/img/img-1.jpg' alt='' /></Frame>
+			<Frame gc='span 4'><img src='/img/img-3.jpg' alt='' /></Frame>
+			<Frame gc='span 4'><img src='/img/img-4.jpg' alt='' /></Frame>
+			<Frame gc='span 2'><img src='/img/img-2.jpg' alt='' /></Frame>
+			<Frame gc='span 1'><Dummy tag='img' /></Frame>
+			<Frame gc='span 2'><Dummy tag='img' /></Frame>
+			<Frame gc='span 2'><Dummy tag='img' /></Frame>
+			<Frame gc='span 1'><Dummy tag='img' /></Frame>
+			{/* <Frame gc='span 3'><Dummy tag='img' /></Frame> */}
+			{/* <Frame gc='span 3'><Dummy tag='img' /></Frame> */}
 		</Columns>
 	</PreviewArea>
 	<PreviewCode>
 		```jsx
-		<Columns variant='liquid'>
-			...
+		<Columns cols='3' g='20'>
+			<Frame gc='span 2'><img src='/img/img-1.jpg' alt='' /></Frame>
+			<Frame gc='span 4'><img src='/img/img-3.jpg' alt='' /></Frame>
+			<Frame gc='span 4'><img src='/img/img-4.jpg' alt='' /></Frame>
+			<Frame gc='span 2'><img src='/img/img-2.jpg' alt='' /></Frame>
+			<Frame gc='span 1'><Dummy tag='img' /></Frame>
+			<Frame gc='span 2'><Dummy tag='img' /></Frame>
+			<Frame gc='span 2'><Dummy tag='img' /></Frame>
+			<Frame gc='span 1'><Dummy tag='img' /></Frame>
 		</Columns>
 		```
 	</PreviewCode>
 </Preview>
 
 
-## subgrid の利用例
+### subgrid の活用
 
 1→2→3列のカラムレイアウトで、subgridを利用したカードコンテンツを作成します。
 
@@ -284,5 +259,3 @@ import { Lism, Box, Media, Text, Dummy, Columns, Grid, Divider } from 'lism-css/
 ```
 </PreviewCode>
 </Preview>
-
-
