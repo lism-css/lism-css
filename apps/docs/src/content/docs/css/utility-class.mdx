@@ -4,7 +4,7 @@ description: ...
 sidebar:
   order: 5
 ---
-import { Lism, Text, Stack, Center, Box, Dummy, Media, Frame, Flex, Layer, Spacer } from "lism-css/astro";
+import { Lism, Text, Grid, Stack, Center, Box, Dummy, Media, Frame, Flex, Layer, Spacer } from "lism-css/astro";
 import { Preview, PreviewArea, PreviewTitle, PreviewCode, EmbedCode, Reference, Callout } from "~/components";
 
 
@@ -201,4 +201,89 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, EmbedCode, Reference, 
 	border-width: 0;
 }
 ```
+
+
+## `u--gridBorder`
+
+グリッド・フレックスボックスの子要素にテーブルのようなボーダーを表示します。（box-shadowで表現）
+
+<Preview>
+	<PreviewTitle>例</PreviewTitle>
+	<PreviewArea resize p='30'>
+		<Grid variant='liquid' className='u--gridBorder' cols='12rem' bdc='line'>
+			<Box p='20'><Dummy /></Box>
+			<Box p='20'><Dummy /></Box>
+			<Box p='20'><Dummy /></Box>
+			<Box p='20'><Dummy /></Box>
+			<Box p='20'><Dummy /></Box>
+			<Box p='20'><Dummy /></Box>
+			<Box p='20'><Dummy /></Box>
+		</Grid>
+	</PreviewArea>
+	<PreviewCode>
+		```jsx
+		<Grid variant='liquid' className='u--gridBorder' cols='12rem' bdc='line'>
+			<Box p='20'><Dummy /></Box>
+			<Box p='20'><Dummy /></Box>
+			<Box p='20'><Dummy /></Box>
+			<Box p='20'><Dummy /></Box>
+			<Box p='20'><Dummy /></Box>
+			<Box p='20'><Dummy /></Box>
+			<Box p='20'><Dummy /></Box>
+		</Grid>
+		```
+	</PreviewCode>
+</Preview>
+
+<Preview>
+	<PreviewTitle>横並び・縦並びが変わってもテーブルのようなボーダーを表示できます</PreviewTitle>
+	<PreviewArea resize p='30'>
+		<Flex fxd={['column','row']} className='u--gridBorder'>
+			<Box fx='1' p='20'>Box</Box>
+			<Box fx='1' p='20'>Box</Box>
+			<Box fx='1' p='20'>Box</Box>
+			<Box fx='1' p='20'>Box</Box>
+		</Flex>
+	</PreviewArea>
+	<PreviewCode>
+		```jsx
+		<Flex fxd={['column','row']} className='u--gridBorder'>
+			<Box fx='1' p='20'>Box</Box>
+			<Box fx='1' p='20'>Box</Box>
+			<Box fx='1' p='20'>Box</Box>
+			<Box fx='1' p='20'>Box</Box>
+		</Flex>
+		```
+	</PreviewCode>
+</Preview>
+
+
+
+親グリッドに、このクラスと同時に`ov='clip'`と `p='0'`, `bd`を指定すると、要素が埋まっていないところだけボーダーを表示しないカレンダーのような表現が可能です。
+
+<Preview>
+	<PreviewTitle>`ov='clip'`と `p='0'`, `bd`を指定</PreviewTitle>
+	<PreviewArea resize p='30'>
+		<Grid variant='liquid' className='u--gridBorder' cols='10rem' ov='clip' p='0' bd bdc='line' bdrs='20'>
+			<Box p='20'><Dummy length='s'/></Box>
+			<Box p='20'><Dummy length='s'/></Box>
+			<Box p='20'><Dummy length='s'/></Box>
+			<Box p='20'><Dummy length='s'/></Box>
+			<Box p='20'><Dummy length='s'/></Box>
+			<Box p='20'><Dummy length='s'/></Box>
+		</Grid>
+	</PreviewArea>
+	<PreviewCode>
+		```jsx
+		<Grid variant='liquid' className='u--gridBorder' cols='10rem' ov='clip' p='0' bd bdc='line' bdrs='20'>
+			<Box p='20'><Dummy length='s'/></Box>
+			<Box p='20'><Dummy length='s'/></Box>
+			<Box p='20'><Dummy length='s'/></Box>
+			<Box p='20'><Dummy length='s'/></Box>
+			<Box p='20'><Dummy length='s'/></Box>
+			<Box p='20'><Dummy length='s'/></Box>
+		</Grid>
+		```
+	</PreviewCode>
+</Preview>
 

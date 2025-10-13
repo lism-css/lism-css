@@ -7,3 +7,14 @@
 .u--innerR {
 	border-radius: var(--inner-bdrs);
 }
+
+.u--gridBorder {
+	--bdw: 1px;
+	--bdc: currentColor;
+	gap: var(--bdw);
+	padding: var(--bdw);
+
+	& > * {
+		box-shadow: 0 0 0 var(--bdw) var(--bdc);
+	}
+}
