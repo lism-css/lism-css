@@ -130,7 +130,8 @@ export default {
 	// overflow-clip-margin → safariで使えない
 	ar: {
 		prop: 'aspectRatio',
-		presets: ['16/9', '3/2', '1/1', 'ogp'], // 4/3, 2/1
+		presets: ['21/9', '16/9', '3/2', '1/1'], // 4/3, 2/1
+		utils: { og: '1.91/1', golden: '1.618/1' },
 		bp: 1,
 	},
 	bxsh: { prop: 'boxShadow', utils: { 0: 'none' }, token: 'bxsh', tokenClass: 1, bp: 1, alwaysVar: 1 },
