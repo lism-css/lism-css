@@ -12,7 +12,7 @@ const { data } = Astro.locals.starlightRoute.entry;
 const { title = data.title, tagline, image, actions = [] } = data.hero || {};
 ---
 
-<Grid class='z--hero' variant='repeat' cols='5' rows='1' min-h={['50svh', '75vh']} ai='c'>
+<Grid class='z--hero' variant='repeat' cols='5' rows='1' min-h={['50svh', '75vh']} ai='center'>
 	<Lism class='z--hero_content l--stack -g:40' gc='1 / 5' gr='1' z='1'>
 		<div class='l--stack -g:20 copy'>
 			<Lism class='z--hero_h1wrap -bgclip:text -c:trsp -w:fit'>

@@ -10,8 +10,8 @@ import './_style.css';
 	<Container size='l' bgc='base' py='60' hasGutter>
 		<Stack g='60'>
 			<Text class='u--trimHL' fz='2xl' fw='bold' ta='center'>料金プラン</Text>
-			<Grid gtr={['repeat(2, auto)', null, '1fr']} gtc={['auto', null, 'repeat(2, 1fr)']} g={['50', null, '0']} ai='c'>
-				<Grid g='40' ai='s' bgc='white' p='50' bd bdc='blue' bdw='2px' bdrs='20' bxsh='20' z='1'>
+			<Grid gtr={['repeat(2, auto)', null, '1fr']} gtc={['auto', null, 'repeat(2, 1fr)']} g={['50', null, '0']} ai='center'>
+				<Grid g='40' ai='start' bgc='white' p='50' bd bdc='blue' bdw='2px' bdrs='20' bxsh='20' z='1'>
 					<Stack w='stretch' g='30'>
 						<Text class='u--trimHL' fz='m' fw='bold' c='blue'>Hobby</Text>
 						<Text class='u--trimHL' fz='xl' fw='bold'>無料</Text>
@@ -21,21 +21,21 @@ import './_style.css';
 						契約期間の縛りもないためいつでも安心してプランの変更や解約が可能です。
 					</Text>
 					<Stack tag='ul' g='10'>
-						<Flex tag='li' g='20' ai='c'><Icon icon='check' c='blue' /><Text tag='span' fz='s'>確定申告書類の作成</Text></Flex>
-						<Flex tag='li' g='20' ai='c'><Icon icon='check' c='blue' /><Text tag='span' fz='s'>銀行口座・カード連携</Text></Flex>
-						<Flex tag='li' g='20' ai='c'><Icon icon='check' c='blue' /><Text tag='span' fz='s'>仕訳データの自動入力</Text></Flex>
-						<Flex tag='li' g='20' ai='c'><Icon icon='check' c='blue' /><Text tag='span' fz='s'>月次決算レポート</Text></Flex>
-						<Flex tag='li' g='20' ai='c'><Icon icon='check' c='blue' /><Text tag='span' fz='s'>メンバー招待（最大3名）</Text></Flex>
-						<Flex tag='li' g='20' ai='c'><Icon icon='check' c='blue' /><Text tag='span' fz='s'>データバックアップ</Text></Flex>
-						<Flex tag='li' g='20' ai='c'><Icon icon='check' c='blue' /><Text tag='span' fz='s'>チャットサポート</Text></Flex>
-						<Flex tag='li' g='20' ai='c'><Icon icon='check' c='blue' /><Text tag='span' fz='s'>電話サポート</Text></Flex>
+						<Flex tag='li' g='20' ai='center'><Icon icon='check' c='blue' /><Text tag='span' fz='s'>確定申告書類の作成</Text></Flex>
+						<Flex tag='li' g='20' ai='center'><Icon icon='check' c='blue' /><Text tag='span' fz='s'>銀行口座・カード連携</Text></Flex>
+						<Flex tag='li' g='20' ai='center'><Icon icon='check' c='blue' /><Text tag='span' fz='s'>仕訳データの自動入力</Text></Flex>
+						<Flex tag='li' g='20' ai='center'><Icon icon='check' c='blue' /><Text tag='span' fz='s'>月次決算レポート</Text></Flex>
+						<Flex tag='li' g='20' ai='center'><Icon icon='check' c='blue' /><Text tag='span' fz='s'>メンバー招待（最大3名）</Text></Flex>
+						<Flex tag='li' g='20' ai='center'><Icon icon='check' c='blue' /><Text tag='span' fz='s'>データバックアップ</Text></Flex>
+						<Flex tag='li' g='20' ai='center'><Icon icon='check' c='blue' /><Text tag='span' fz='s'>チャットサポート</Text></Flex>
+						<Flex tag='li' g='20' ai='center'><Icon icon='check' c='blue' /><Text tag='span' fz='s'>電話サポート</Text></Flex>
 					</Stack>
-					<Button href='#' jc='c' bgc='blue' p='30' bdrs='10'>今すぐはじめる</Button>
+					<Button href='#' jc='center' bgc='blue' p='30' bdrs='10'>今すぐはじめる</Button>
 				</Grid>
 				<Grid g='40' bgc='gray:5%' p='50' bdrs='20' bxsh='20'>
 					<Stack w='stretch' g='30'>
 						<Text class='u--trimHL' fz='m' fw='bold' c='blue'>Personal</Text>
-						<Flex ai='e' g='10'>
+						<Flex ai='end' g='10'>
 							<Text class='u--trimHL' fz='xl' fw='bold'>1,980</Text>
 							<Text class='u--trimHL' fz='xs' fw='bold'>/ 円</Text>
 						</Flex>
@@ -45,12 +45,12 @@ import './_style.css';
 						操作方法で不明な点や会計に関するご相談など、メールやチャットでいつでもお気軽にお問い合わせください。
 					</Text>
 					<Stack tag='ul' g='10'>
-						<Flex tag='li' g='20' ai='c'><Icon icon='check' c='blue' /><Text tag='span' fz='s'>チャットサポート</Text></Flex>
-						<Flex tag='li' g='20' ai='c'><Icon icon='check' c='blue' /><Text tag='span' fz='s'>電話サポート</Text></Flex>
-						<Flex tag='li' g='20' ai='c'><Icon icon='check' c='blue' /><Text tag='span' fz='s'>API連携</Text></Flex>
-						<Flex tag='li' g='20' ai='c'><Icon icon='check' c='blue' /><Text tag='span' fz='s'>請求書郵送代行</Text></Flex>
+						<Flex tag='li' g='20' ai='center'><Icon icon='check' c='blue' /><Text tag='span' fz='s'>チャットサポート</Text></Flex>
+						<Flex tag='li' g='20' ai='center'><Icon icon='check' c='blue' /><Text tag='span' fz='s'>電話サポート</Text></Flex>
+						<Flex tag='li' g='20' ai='center'><Icon icon='check' c='blue' /><Text tag='span' fz='s'>API連携</Text></Flex>
+						<Flex tag='li' g='20' ai='center'><Icon icon='check' c='blue' /><Text tag='span' fz='s'>請求書郵送代行</Text></Flex>
 					</Stack>
-					<Button href='#' jc='c' p='30' bdrs='10'>このプランを選択</Button>
+					<Button href='#' jc='center' p='30' bdrs='10'>このプランを選択</Button>
 				</Grid>
 			</Grid>
 		</Stack>

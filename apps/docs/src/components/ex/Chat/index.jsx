@@ -11,7 +11,7 @@ export default function Chat({ variant = 'speak', direction = 'start', name, ava
 				</Frame>
 			)}
 			{name && (
-				<Lism lismClass='c--chat_name' ga='u:header' c='text-2' fs='italic' fz='2xs' lh='1' py='5' px='10' aslf='e'>
+				<Lism lismClass='c--chat_name' ga='u:header' c='text-2' fs='italic' fz='2xs' lh='1' py='5' px='10' aslf='end'>
 					{name}
 				</Lism>
 			)}

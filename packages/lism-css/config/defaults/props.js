@@ -13,6 +13,11 @@
  * overwriteBaseVar: 1 → ブレイクポイントクラスで --prop: var(--prop_$bp) がセットされ、常にベース変数の --prop で値が取得できるようになる。
  * important: 1 → !important を付けて最終的に出力する
  */
+
+const PLACE_PRESETS = ['start', 'center', 'end'];
+const PLACE_UTILS = { 'flex-s': 'flex-start', 'flex-e': 'flex-end' };
+const PLACE_SHORTHANDS = { s: 'start', e: 'end', c: 'center', fs: 'flex-s', fe: 'flex-e' };
+
 export default {
 	f: { prop: 'font', presets: ['inherit'] },
 	fz: { prop: 'fontSize', token: 'fz', tokenClass: 1, bp: 1, alwaysVar: 1 },
@@ -246,33 +251,44 @@ export default {
 	gre: { prop: 'gridRowEnd' },
 
 	// places
+	// -(ai|ac|ji|jc|aslf|jslf):   /    -$1:
 	ai: {
 		prop: 'alignItems',
+		presets: [...PLACE_PRESETS, 'stretch'],
+		utils: PLACE_UTILS,
+		shorthands: PLACE_SHORTHANDS,
 		bp: 1,
-		utils: { c: 'center', s: 'start', e: 'end', 'fx-s': 'flex-start', 'fx-e': 'flex-end', stretch: 'stretch' },
 	},
 	ac: {
 		prop: 'alignContent',
+		presets: PLACE_PRESETS,
+		utils: { ...PLACE_UTILS, between: 'space-between' },
+		shorthands: PLACE_SHORTHANDS,
 		bp: 1,
-		utils: { c: 'center', s: 'start', e: 'end', 'fx-s': 'flex-start', 'fx-e': 'flex-end', between: 'space-between' },
 	},
 	ji: {
 		prop: 'justifyItems',
+		presets: [...PLACE_PRESETS, 'stretch'],
+		utils: PLACE_UTILS,
+		shorthands: PLACE_SHORTHANDS,
 		bp: 1,
-		utils: { c: 'center', s: 'start', e: 'end', 'fx-s': 'flex-start', 'fx-e': 'flex-end', stretch: 'stretch' },
 	},
 	jc: {
 		prop: 'justifyContent',
+		presets: PLACE_PRESETS,
+		utils: { ...PLACE_UTILS, between: 'space-between' },
+		shorthands: PLACE_SHORTHANDS,
 		bp: 1,
-		utils: { c: 'center', s: 'start', e: 'end', 'fx-s': 'flex-start', 'fx-e': 'flex-end', between: 'space-between' },
 	},
 	aslf: {
 		prop: 'alignSelf',
-		utils: { c: 'center', s: 'start', e: 'end', stretch: 'stretch' },
+		presets: [...PLACE_PRESETS, 'stretch'],
+		shorthands: PLACE_SHORTHANDS,
 	},
 	jslf: {
 		prop: 'justifySelf',
-		utils: { c: 'center', s: 'start', e: 'end', stretch: 'stretch' },
+		presets: [...PLACE_PRESETS, 'stretch'],
+		shorthands: PLACE_SHORTHANDS,
 	},
 	pi: { prop: 'placeItems' },
 	pc: { prop: 'placeContent' },
