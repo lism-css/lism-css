@@ -103,10 +103,7 @@ export default {
 		alwaysVar: 1,
 	},
 	keycolor: { isVar: 1, token: 'color' },
-	bd: {
-		prop: 'border',
-		utils: { n: 'none' },
-	},
+	bd: { prop: 'border', presets: ['none'] },
 	bds: { isVar: 1, presets: ['dashed', 'dotted', 'double'] },
 	bdc: {
 		isVar: 1,
