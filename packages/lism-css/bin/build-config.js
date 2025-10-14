@@ -48,14 +48,7 @@ function generateUtilities(propConfig) {
 	const { utils = {}, presets = [], token = '', tokenClass = 0 } = propConfig;
 	const utilities = {};
 
-	// utilsが定義されている場合
-	if (utils) {
-		Object.entries(utils).forEach(([key, value]) => {
-			utilities[key] = value;
-		});
-	}
-
-	// tokenがあれば
+	// tokenをクラス化するのであれば presetsへ追加
 	if (token && tokenClass) {
 		const tokenValues = TOKENS[token];
 		if (tokenValues && Array.isArray(tokenValues)) {
@@ -69,6 +62,13 @@ function generateUtilities(propConfig) {
 	if (presets.length > 0) {
 		presets.forEach((preset) => {
 			utilities[preset] = getMaybeTokenValue(preset, token, TOKENS);
+		});
+	}
+
+	// utilsが定義されている場合
+	if (utils) {
+		Object.entries(utils).forEach(([key, value]) => {
+			utilities[key] = value;
 		});
 	}
 
