@@ -123,7 +123,6 @@ export default {
 	'bd-l': { prop: 'borderLeft' },
 	'bd-r': { prop: 'borderRight' },
 
-	bxsh: { prop: 'boxShadow', utils: { 0: 'none' }, token: 'bxsh', tokenClass: 1, bp: 1, alwaysVar: 1 },
 	bdrs: {
 		prop: 'borderRadius',
 		presets: ['0'],
@@ -142,13 +141,15 @@ export default {
 	'bdrs-es': { prop: 'borderEndStartRadius', token: 'bdrs' },
 	'bdrs-ee': { prop: 'borderEndEndRadius', token: 'bdrs' },
 
+	bxsh: { prop: 'boxShadow', utils: { 0: 'none' }, token: 'bxsh', tokenClass: 1, bp: 1, alwaysVar: 1 },
+
 	// position
 	pos: {
 		prop: 'position',
 		presets: ['static', 'fixed', 'sticky'],
 		utils: { rel: 'relative', abs: 'absolute' },
 	},
-	z: { prop: 'zIndex', presets: ['-1', '0', '1', '2', '99'] },
+	z: { prop: 'zIndex', presets: ['-1', '0', '1', '99'] },
 	t: { prop: 'top', utils: { 0: '0%' }, presets: ['50%', '100%'], token: 'space' },
 	l: { prop: 'left', utils: { 0: '0%' }, presets: ['50%', '100%'], token: 'space' },
 	r: { prop: 'right', utils: { 0: '0%' }, presets: ['50%', '100%'], token: 'space' },
