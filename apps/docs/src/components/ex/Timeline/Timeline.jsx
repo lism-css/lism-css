@@ -13,7 +13,7 @@ export function Line(props) {
 	return <Decorator lismClass='c--timeline_line' bgc='line' jslf='c' {...props} />;
 }
 export function Shape(props) {
-	return <Center lismClass='c--timeline_shape' pos='r' z='1' c='base' ar='1/1' bdrs='99' jslf='c' {...props} />;
+	return <Center lismClass='c--timeline_shape' pos='rel' z='1' c='base' ar='1/1' bdrs='99' jslf='c' {...props} />;
 }
 
 export function Item({ isHorizontal, isStart, isEnd, isHighlighted, icon, iconProps = {}, shapeColor, children, ...props }) {
@@ -53,7 +53,7 @@ export function Item({ isHorizontal, isStart, isEnd, isHighlighted, icon, iconPr
 		>
 			<Line {...lineProps} />
 			<Shape bgc={shapeColor || 'text'} {...shapeProps}>
-				{isHighlighted && <Decorator className='c--timeline_highlight' tag='span' pos='a' z='-1' bgc='inherit' bdrs='99' o='pale' />}
+				{isHighlighted && <Decorator className='c--timeline_highlight' tag='span' pos='abs' z='-1' bgc='inherit' bdrs='99' o='pale' />}
 				{icon && <Icon icon={icon} scale='0.625' {...iconProps} />}
 			</Shape>
 			{children}

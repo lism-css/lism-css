@@ -31,7 +31,7 @@ const { title = data.title, tagline, image, actions = [] } = data.hero || {};
 				<div class='l--flex -g:30'>
 					{actions.map(({ attrs: { class: className, ...attrs } = {}, icon, link: href, text, variant }) => (
 						<Button {href} {variant} icon={icon?.name} class:list={[className]} g='10' bdrs='99' {...attrs}>
-							<span class='-pos:r'>{text}</span>
+							<span class='-pos:rel'>{text}</span>
 							{variant === 'primary' && (
 								<Icon lh='1' fz='l'>
 									<Fragment>📖</Fragment>

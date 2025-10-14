@@ -15,8 +15,8 @@ export default function Chat({ variant = 'speak', direction = 'start', name, ava
 					{name}
 				</Lism>
 			)}
-			<Lism lismClass='c--chat_body' ga='u:body' pos='r'>
-				<Decorator lismClass='c--chat_deco' className='u--cbox is--skipFlow' pos='a' scale={direction === 'start' ? '' : '-X'} />
+			<Lism lismClass='c--chat_body' ga='u:body' pos='rel'>
+				<Decorator lismClass='c--chat_deco' className='u--cbox is--skipFlow' pos='abs' scale={direction === 'start' ? '' : '-X'} />
 				<Lism lismClass='c--chat_content' className='u--cbox u--trimBox' bdrs='30' p='30' isFlow={isFlow} jslf={direction}>
 					{children}
 				</Lism>
