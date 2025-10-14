@@ -1,6 +1,11 @@
 @forward './trimHL';
 @forward './cbox';
 
+.u--flatLink {
+	--link-td: none;
+	color: inherit;
+}
+
 .u--outerR {
 	--inner-bdrs: calc(var(--bdrs, 0px) - var(--p, 0px));
 }
@@ -13,6 +18,7 @@
 	--bdc: currentColor;
 	gap: var(--bdw);
 	padding: var(--bdw);
+	overflow: clip; // paddingを0にすれば外枠が消えるように
 
 	& > * {
 		box-shadow: 0 0 0 var(--bdw) var(--bdc);
