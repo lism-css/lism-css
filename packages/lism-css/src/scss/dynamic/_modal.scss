@@ -1,11 +1,11 @@
 // dialog,
 .d--modal {
-	--max-xsz: 100%; // container直下にきても影響しないように
 	--my-s: 0; // flow直下にきても影響しないように
 	--offset: 0 0; // アニメーション用
 	--duration: var(--modal-duration, 0.5s);
 	--backdropBg: rgb(0 0 0 / 0.6);
-
+	max-width: 100%;
+	max-height: 100%;
 	transition-duration: var(--duration, 0.5s);
 
 	&::backdrop {
@@ -14,7 +14,13 @@
 	}
 }
 
+.d--modal_inner {
+	max-height: 100%;
+	background-color: var(--c--base);
+}
+
 .d--modal_body {
+	overflow: auto;
 	overscroll-behavior: contain;
 }
 

@@ -14,24 +14,22 @@ import { Container, Lism, Link, Flex, Stack, Center, Icon, Dummy, Text, Modal } 
 			<Icon icon='menu' fz='l' />
 		</Center>
 	</Flex>
-	<Modal.Root id='modal-01' p='40' style={{ '--offset': '0 100px' }}>
-		<Modal.Inner max-w='m' m='auto' p='40' g='30' bdrs='20' bxsh='40'>
-			<Center pos='a' t='0' r='0' z='1' fz='xl' p='20' m='20' bdrs='99'>
-				<Modal.CloseIconBtn modalId='modal-01' />
-			</Center>
-			<Modal.Header>
-				<Text fz='l' fw='bold' lh='s'>Menus</Text>
-			</Modal.Header>
+	<Modal.Root id='modal-01' isContainer='s' p='40' style={{ '--offset': '0 100px' }}>
+		<Modal.Inner pos='r' p='40' g='30' bdrs='20' bxsh='40'>
+			<Modal.CloseBtn modalId='modal-01' pos='a' t='0' r='0' z='1' fz='xl' p='20' />
+			<Lism>
+				<Text fz='l' fw='bold'>Menu</Text>
+			</Lism>
 			<Modal.Body my-s='20'>
-				<Stack g='0' bd-b bdc='line'>
-					<Link href='###' p='10' py='20' c='inherit' td='n' bd-t bdc='inherit'>Menu 1</Link>
-					<Link href='###' p='10' py='20' c='inherit' td='n' bd-t bdc='inherit'>Menu 2</Link>
-					<Link href='###' p='10' py='20' c='inherit' td='n' bd-t bdc='inherit'>Menu 3</Link>
+				<Stack bd-y bdc='line' className='u--gridBorder' bdc='line' bd-b p='0'>
+					<Link href='###' p='10' py='20' className='u--flatLink'>Menu 1</Link>
+					<Link href='###' p='10' py='20' className='u--flatLink'>Menu 2</Link>
+					<Link href='###' p='10' py='20' className='u--flatLink'>Menu 3</Link>
 				</Stack>
 			</Modal.Body>
-			<Modal.Footer d='f' jc='e'>
+			<Flex jc='c'>
 				<Lism tag='button' data-modal-close='modal-01' bd='none' p='20' lh='xs' bdrs='10'>Close</Lism>
-			</Modal.Footer>
+			</Flex>
 		</Modal.Inner>
 	</Modal.Root>
 </Container>

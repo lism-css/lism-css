@@ -5,9 +5,10 @@ import { Stack } from '../Stack';
 
 // Propsの定義
 interface Props extends LismProps {}
-const props = Astro.props || {};
+const { layout, ...props } = Astro.props || {};
+const Layout = layout || Stack;
 ---
 
-<Stack {...defaultProps.inner} {...props}>
+<Layout {...defaultProps.inner} {...props}>
 	<slot />
-</Stack>
+</Layout>
