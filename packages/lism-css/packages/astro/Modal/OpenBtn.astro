@@ -5,10 +5,10 @@ import { Lism } from '../Lism';
 
 // Propsの定義
 interface Props extends LismProps {}
-const { layout, ...props } = Astro.props || {};
-const Layout = layout || Lism;
+const { modalId = '', ...props } = Astro.props || {};
+const btnProps = { ...defaultProps.openBtn, ...props };
 ---
 
-<Layout {...defaultProps.footer} {...props}>
+<Lism data-modal-open={modalId} {...btnProps}>
 	<slot />
-</Layout>
+</Lism>

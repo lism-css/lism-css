@@ -2,13 +2,7 @@ import { Lism } from '../Lism';
 import { Icon } from '../Icon';
 import { defaultProps } from './getProps';
 // duration: [s]
-export default function DialogCloseIconBtn({
-	children,
-	modalId = '',
-	icon,
-	srText = 'Close',
-	...props
-}) {
+export default function CloseBtn({ children, modalId = '', icon, srText = 'Close', ...props }) {
 	// const lismProps = getLismProps(getAccProps(props));
 
 	return (
