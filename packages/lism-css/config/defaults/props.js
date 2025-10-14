@@ -27,6 +27,25 @@ export default {
 	// te: { prop: 'textEmphasis', presets: ['filled'] },
 	// tsh: { prop: 'textShadow' },
 
+	d: {
+		prop: 'display',
+		presets: ['none', 'block'],
+		utils: { 'i-flex': 'inline-flex' },
+		bp: 1,
+	},
+	o: { prop: 'opacity', presets: ['0'], token: 'o', tokenClass: 1 },
+	v: { prop: 'visibility', presets: ['hidden', 'visible'] },
+	ov: { prop: 'overflow', presets: ['hidden', 'auto', 'clip', 'scroll'] },
+	'ov-x': { prop: 'overflowX', presets: ['hidden', 'auto', 'clip', 'scroll'] },
+	'ov-y': { prop: 'overflowY', presets: ['hidden', 'auto', 'clip', 'scroll'] },
+	// overflow-clip-margin → safariで使えない
+	ar: {
+		prop: 'aspectRatio',
+		presets: ['21/9', '16/9', '3/2', '1/1'], // 4/3, 2/1
+		utils: { og: '1.91/1', golden: '1.618/1' },
+		bp: 1,
+	},
+
 	// size
 	w: { prop: 'width', utils: { fit: 'fit-content' }, presets: ['100%'], token: 'sz', bp: 1 },
 	h: { prop: 'height', utils: { fit: 'fit-content' }, presets: ['100%'], token: 'sz', bp: 1 },
@@ -107,33 +126,6 @@ export default {
 	'bd-l': { prop: 'borderLeft' },
 	'bd-r': { prop: 'borderRight' },
 
-	d: {
-		prop: 'display',
-		utils: {
-			n: 'none',
-			b: 'block',
-			f: 'flex',
-			g: 'grid',
-			i: 'inline',
-			'i-f': 'inline-flex',
-			'i-b': 'inline-block',
-		},
-		bp: 1,
-	},
-
-	o: { prop: 'opacity', presets: ['0'], token: 'o', tokenClass: 1 },
-	v: { prop: 'visibility', presets: ['hidden', 'visible'] },
-
-	ov: { prop: 'overflow', presets: ['hidden', 'auto', 'clip', 'scroll'] },
-	'ov-x': { prop: 'overflowX', presets: ['hidden', 'auto', 'clip', 'scroll'] },
-	'ov-y': { prop: 'overflowY', presets: ['hidden', 'auto', 'clip', 'scroll'] },
-	// overflow-clip-margin → safariで使えない
-	ar: {
-		prop: 'aspectRatio',
-		presets: ['21/9', '16/9', '3/2', '1/1'], // 4/3, 2/1
-		utils: { og: '1.91/1', golden: '1.618/1' },
-		bp: 1,
-	},
 	bxsh: { prop: 'boxShadow', utils: { 0: 'none' }, token: 'bxsh', tokenClass: 1, bp: 1, alwaysVar: 1 },
 	bdrs: {
 		prop: 'borderRadius',
