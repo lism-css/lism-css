@@ -47,7 +47,8 @@ export default {
 	ar: {
 		prop: 'aspectRatio',
 		presets: ['21/9', '16/9', '3/2', '1/1'], // 4/3, 2/1
-		utils: { og: '1.91/1', golden: '1.618/1' },
+		token: 'ar',
+		tokenClass: 1,
 		bp: 1,
 	},
 

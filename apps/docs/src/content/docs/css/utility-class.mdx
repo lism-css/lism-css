@@ -125,21 +125,16 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, EmbedCode, Reference, 
 	<PreviewTitle>使用例</PreviewTitle>
 	<PreviewArea p='40'>
 	<Lism className='u--outerR' p='20' bd bxsh='20' bdrs='50'>
-		<Frame className='u--innerR'>
-			<Media ar='og' src='/img/img-4.jpg'/>
-			{/* <Layer blur='10px' t='unset' bgc='rgb(255 255 255 / 50%)'>
-				<Dummy p='30' />
-			</Layer> */}
+		<Frame className='u--innerR' ar='og'>
+			<Media src='/img/img-4.jpg'/>
 		</Frame>
 	</Lism>
 	</PreviewArea>
-	{/* <PreviewCode label="HTML" slot="tab">
-	</PreviewCode> */}
 	<PreviewCode label="JSX" slot="tab">
 ```jsx
 <Lism className='u--outerR' p='20' bd bxsh='20' bdrs='50'>
-	<Frame className='u--innerR'>
-		<Media ar='og' src='/img/img-4.jpg'/>
+	<Frame className='u--innerR' ar='og'>
+		<Media src='/img/img-4.jpg'/>
 	</Frame>
 </Lism>
 ```
@@ -147,8 +142,8 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, EmbedCode, Reference, 
 	<PreviewCode label="HTML" slot="tab">
 ```html
 <div class="u--outerR -p:20 -bd -bxsh:20 -bdrs:50">
-	<div class="l--frame u--innerR">
-		<img class="-ar:ogp" src="/img/img-4.jpg">
+	<div class="l--frame u--innerR -ar:og">
+		<img src="/img/img-4.jpg">
 	</div>
 </div>
 ```
