@@ -14,19 +14,19 @@ import ShapeDivider from '~/components/ex/ShapeDivider/index.astro';
 	<PreviewTitle>ステップナビゲーション</PreviewTitle>
 	<PreviewArea resize p='30' nogrid>
 		<Flex className='c--stepNav' g='1.5rem'>
-			<Flex className='c--stepNav_item' bgc='text' c='base' o='pale' px='30' py='10' pos='r'>
+			<Flex className='c--stepNav_item' bgc='text' c='base' o='pale' px='30' py='10' pos='rel'>
 				<Lism className='c--stepNav_body'>
 					<Text>入力</Text>
 				</Lism>
-				<Decorator pos='a' w='0.75em' h='100%' bgc='inherit' l='100%' t='0' style={{ clipPath: 'polygon(0% 0%, 0% 100%, 100% 50%)' }} />
+				<Decorator pos='abs' w='0.75em' h='100%' bgc='inherit' l='100%' t='0' style={{ clipPath: 'polygon(0% 0%, 0% 100%, 100% 50%)' }} />
 			</Flex>
-			<Flex className='c--stepNav_item' bgc='text' c='base' px='30' py='10' pos='r'>
+			<Flex className='c--stepNav_item' bgc='text' c='base' px='30' py='10' pos='rel'>
 				<Lism className='c--stepNav_body'>
 					<Text>確認</Text>
 				</Lism>
-				<Decorator pos='a' w='0.75em' h='100%' bgc='inherit' l='100%' t='0' style={{ clipPath: 'polygon(0% 0%, 0% 100%, 100% 50%)' }} />
+				<Decorator pos='abs' w='0.75em' h='100%' bgc='inherit' l='100%' t='0' style={{ clipPath: 'polygon(0% 0%, 0% 100%, 100% 50%)' }} />
 			</Flex>
-			<Flex className='c--stepNav_item' bgc='text' c='base' o='pale' px='30' py='10' pos='r'>
+			<Flex className='c--stepNav_item' bgc='text' c='base' o='pale' px='30' py='10' pos='rel'>
 				<Lism className='c--stepNav_body'>
 					<Text>完了</Text>
 				</Lism>
@@ -36,19 +36,19 @@ import ShapeDivider from '~/components/ex/ShapeDivider/index.astro';
 	<PreviewCode>
 		```jsx
 		<Flex className='c--stepNav' g='1.5rem'>
-			<Flex className='c--stepNav_item' bgc='text' c='base' o='pale' px='30' py='10' pos='r'>
+			<Flex className='c--stepNav_item' bgc='text' c='base' o='pale' px='30' py='10' pos='rel'>
 				<Lism className='c--stepNav_body'>
 					<Text>入力</Text>
 				</Lism>
-				<Decorator pos='a' w='0.75em' h='100%' bgc='inherit' l='100%' t='0' style={{ clipPath: 'polygon(0% 0%, 0% 100%, 100% 50%)' }} />
+				<Decorator pos='abs' w='0.75em' h='100%' bgc='inherit' l='100%' t='0' style={{ clipPath: 'polygon(0% 0%, 0% 100%, 100% 50%)' }} />
 			</Flex>
-			<Flex className='c--stepNav_item' bgc='text' c='base' px='30' py='10' pos='r'>
+			<Flex className='c--stepNav_item' bgc='text' c='base' px='30' py='10' pos='rel'>
 				<Lism className='c--stepNav_body'>
 					<Text>確認</Text>
 				</Lism>
-				<Decorator pos='a' w='0.75em' h='100%' bgc='inherit' l='100%' t='0' style={{ clipPath: 'polygon(0% 0%, 0% 100%, 100% 50%)' }} />
+				<Decorator pos='abs' w='0.75em' h='100%' bgc='inherit' l='100%' t='0' style={{ clipPath: 'polygon(0% 0%, 0% 100%, 100% 50%)' }} />
 			</Flex>
-			<Flex className='c--stepNav_item' bgc='text' c='base' o='pale' px='30' py='10' pos='r'>
+			<Flex className='c--stepNav_item' bgc='text' c='base' o='pale' px='30' py='10' pos='rel'>
 				<Lism className='c--stepNav_body'>
 					<Text>完了</Text>
 				</Lism>
@@ -102,12 +102,12 @@ import ShapeDivider from '~/components/ex/ShapeDivider/index.astro';
 <Preview>
 	<PreviewTitle>コンテンツの高さに追従しつつ、最低限維持する比率を指定する</PreviewTitle>
 	<PreviewArea resize p='30'>
-		<Stack pos='r' bdrs='30' ov='hidden'>
+		<Stack pos='rel' bdrs='30' ov='hidden'>
 			<Frame isLayer>
 				<Media src="/img/img-3.jpg" alt="" width='960' height='640' loading='lazy' decoding='async' />
 			</Frame>
 			<Flex ar='16/9'>
-				<Stack fx='1' pos='r' g='20' p='40' z='1' min-h='100%' h='auto' c='white' bgc='black:50%'>
+				<Stack fx='1' pos='rel' g='20' p='40' z='1' min-h='100%' h='auto' c='white' bgc='black:50%'>
 					<h3>Card Title</h3>
 					<Dummy lh='s' mb='auto' length='l'/>
 					<Link href='#button-test' keycolor='white' c='inherit' bdrs='99' aslf='end' px='10' my-s='30'>Link Text</Link>
@@ -117,12 +117,12 @@ import ShapeDivider from '~/components/ex/ShapeDivider/index.astro';
 	</PreviewArea>
 	<PreviewCode slot='tab' label='JSX'>
 		```jsx
-		<Stack pos='r' bdrs='30' ov='hidden'>
+		<Stack pos='rel' bdrs='30' ov='hidden'>
 			<Frame isLayer>
 				<Media src="/img/img-3.jpg" alt="" width='960' height='640' loading='lazy' decoding='async' />
 			</Frame>
 			<Flex ar='16/9'>
-				<Stack fx='1' pos='r' g='20' p='40' z='1' min-h='100%' h='auto' c='white' bgc='black:50%'>
+				<Stack fx='1' pos='rel' g='20' p='40' z='1' min-h='100%' h='auto' c='white' bgc='black:50%'>
 					<h3>Card Title</h3>
 					<Dummy lh='s' mb='auto' length='l'/>
 					<Link href='#button-test' keycolor='white' c='inherit' bdrs='99' aslf='end' px='10' my-s='30'>Link Text</Link>

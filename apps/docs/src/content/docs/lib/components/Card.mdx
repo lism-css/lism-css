@@ -25,7 +25,7 @@ import Card from '~/components/ex/Card/index.jsx';
 					<Text d='i-flex' mx-s='auto' my-s='auto' c='inherit' td='none' bd-b lh='1' p='10'>View More →</Text>
 				</Stack>
 			</WithSide>
-			<Frame pos='r' ar='3/4' bdrs='30' bxsh='30'>
+			<Frame pos='rel' ar='3/4' bdrs='30' bxsh='30'>
 				<Media src='/img/img-1.jpg' alt='' width='960' height='640' />
 				<Layer bgc='rgb(0 0 0 / 20%)'/>
 				<Layer layout={Stack} c='white' p='30' g='30'>
@@ -57,7 +57,7 @@ import Card from '~/components/ex/Card/index.jsx';
 <Preview>
 	<PreviewTitle>Preview</PreviewTitle>
 	<PreviewArea resize p='30'>
-		<Frame pos='r' ar='3/4' bdrs='30' bxsh='30' mx='auto' max-w='xs'>
+		<Frame pos='rel' ar='3/4' bdrs='30' bxsh='30' mx='auto' max-w='xs'>
 			<Media src='/img/img-1.jpg' alt='' width='960' height='640' />
 			<Layer bgc='rgb(0 0 0 / 20%)'/>
 			<Layer layout={Stack} c='white' p='30' g='30'>
@@ -69,7 +69,7 @@ import Card from '~/components/ex/Card/index.jsx';
 	</PreviewArea>
 	<PreviewCode slot='tab' label='JSX'>
 		```jsx
-		<Frame pos='r' ar='3/4' bdrs='30' bxsh='30' mx='auto' max-w='xs'>
+		<Frame pos='rel' ar='3/4' bdrs='30' bxsh='30' mx='auto' max-w='xs'>
 			<Media src='/img/img-1.jpg' alt='' width='960' height='640' />
 			<Layer bgc='rgb(0 0 0 / 20%)'/>
 			<Layer layout={Stack} c='white' p='30' g='30'>
@@ -82,7 +82,7 @@ import Card from '~/components/ex/Card/index.jsx';
 	</PreviewCode>
 	<PreviewCode slot='tab' label='HTML'>
 		```html
-		<div class='l--frame -pos:r -ar -bdrs:30 -bxsh:30 -mx:auto -max-w' style='--ar:3/4;--max-w:var(--sz--xs)'>
+		<div class='l--frame -pos:rel -ar -bdrs:30 -bxsh:30 -mx:auto -max-w' style='--ar:3/4;--max-w:var(--sz--xs)'>
 			<img src='/img/img-1.jpg' width='960' height='640' />
 			<div class='is--layer -bgc' style='--bgc:rgb(0 0 0 / 50%)'></div>
 			<div class='l--stack is--layer -c -p:30 -g:30' style='--c:var(--white)'>
@@ -208,9 +208,9 @@ import Card from '~/components/ex/Card/index.jsx';
 	<PreviewTitle>`is--overlayLink`を使う例</PreviewTitle>
 	<PreviewArea resize p='40'>
 		<WithSide isLinkBox href='#_' hov='bxsh' hasTransition sideW='50%' bgc='base' bdrs='20' bxsh='10' ov='hidden'>
-			<Frame data-is-side ar='16/9' pos='r'>
+			<Frame data-is-side ar='16/9' pos='rel'>
 				<Media src='/img/img-5.jpg' alt='' width='960' height='640' />
-				<Link href='#badge-link' pos='a' z='1' t='0' r='0' fz='s' bgc='black' c='white' m='20' px='20' bdrs='99' td='none' hov='o'>Category</Link>
+				<Link href='#badge-link' pos='abs' z='1' t='0' r='0' fz='s' bgc='black' c='white' m='20' px='20' bdrs='99' td='none' hov='o'>Category</Link>
 			</Frame>
 			<Stack g='30' p='30'>
 				<h3 className='u--trimHL -fz:l'>
@@ -224,9 +224,9 @@ import Card from '~/components/ex/Card/index.jsx';
 	<PreviewCode slot='tab' label='JSX'>
 		```jsx "isLinkBox" "\<Link " "is--overlayLink"
 		<WithSide isLinkBox href='#_' hov='bxsh' hasTransition sideW='50%' bgc='base' bdrs='20' bxsh='10' ov='hidden'>
-			<Frame data-is-side ar='16/9' pos='r'>
+			<Frame data-is-side ar='16/9' pos='rel'>
 				<Media src='/img/img-5.jpg' alt='' width='960' height='640' />
-				<Link href='#badge-link' pos='a' z='1' t='0' r='0' fz='s' bgc='black' c='white' m='20' px='20' bdrs='99' td='none' hov='o'>Category</Link>
+				<Link href='#badge-link' pos='abs' z='1' t='0' r='0' fz='s' bgc='black' c='white' m='20' px='20' bdrs='99' td='none' hov='o'>Category</Link>
 			</Frame>
 			<Stack g='30' p='30'>
 				<h3 className='u--trimHL -fz:l'>
@@ -295,7 +295,7 @@ import Card from '~/components/ex/Card/index.jsx';
 			gt={[`'img' '.'`, `'img .' / 200px 1fr`]}
 			hasHover
 		>
-			<Frame ga='img' aslf='stretch' ar={['og', '1/1']} max-w='100%' pos='r' bdrs='20' bxsh='10'>
+			<Frame ga='img' aslf='stretch' ar={['og', '1/1']} max-w='100%' pos='rel' bdrs='20' bxsh='10'>
 				<Media css={{scale: 'var(--isHov_, 1.25)'}} hasTransition src='/img/img-1.jpg' alt='' width='960' height='640' />
 			</Frame>
 			<Stack g='30' py='30' px={['20','30']} o='var(--isHov_, 0.75)'>
@@ -312,7 +312,7 @@ import Card from '~/components/ex/Card/index.jsx';
 			gt={[`'img' '.'`, `'img .' / 200px 1fr`]}
 			hasHover
 		>
-			<Frame ga='img' aslf='stretch' ar={['og', '1/1']} max-w='100%' pos='r' bdrs='20' bxsh='10'>
+			<Frame ga='img' aslf='stretch' ar={['og', '1/1']} max-w='100%' pos='rel' bdrs='20' bxsh='10'>
 				<Media css={{scale: 'var(--isHov_, 1.25)'}} hasTransition src='/img/img-1.jpg' alt='' width='960' height='640' />
 			</Frame>
 			<Stack g='30' py='30' px={['20','30']} o='var(--isHov_, 0.75)'>
@@ -335,14 +335,14 @@ import Card from '~/components/ex/Card/index.jsx';
 <Preview>
 	<PreviewTitle>Preview</PreviewTitle>
 	<PreviewArea p='30'>
-		<LinkBox href='#card-a' pos='r' bdrs='20' bxsh='20' ov='hidden' hasHover max-w='xs' mx='auto'>
+		<LinkBox href='#card-a' pos='rel' bdrs='20' bxsh='20' ov='hidden' hasHover max-w='xs' mx='auto'>
 			<Frame ar='1/1'>
 				<img src='/img/img-5.jpg' alt='' width='960' height='640' />
 			</Frame>
 			<Layer bgc='rgba(0 0 0 / 10%)'/>
-			<Stack pos='a' b='0' w='100%' p={['20', '30']} bgc='rgb(255 255 255 / 20%)'>
+			<Stack pos='abs' b='0' w='100%' p={['20', '30']} bgc='rgb(255 255 255 / 20%)'>
 				<Layer blur='6px' brightness='1.1'/>
-				<Box pos='r' z='1' c='white' lh='s' css={{textShadow: '0 0 1em rgb(0 0 0 / 20%)'}}>
+				<Box pos='rel' z='1' c='white' lh='s' css={{textShadow: '0 0 1em rgb(0 0 0 / 20%)'}}>
 					<h3 className='-fz:l'>Card Title</h3>
 					<Grid hasTransition hov='get:slide'>
 						<Box ov='hidden'>
@@ -356,14 +356,14 @@ import Card from '~/components/ex/Card/index.jsx';
 	</PreviewArea>
 	<PreviewCode slot='tab' label='JSX'>
 	```jsx "hasHover" "hov='get:slide'"
-	<LinkBox href='#card-a' pos='r' bdrs='20' bxsh='20' ov='hidden' hasHover max-w='xs' mx='auto'>
+	<LinkBox href='#card-a' pos='rel' bdrs='20' bxsh='20' ov='hidden' hasHover max-w='xs' mx='auto'>
 		<Frame ar='1/1'>
 			<img src='/img/img-5.jpg' alt='' width='960' height='640' />
 		</Frame>
 		<Layer bgc='rgba(0 0 0 / 10%)'/>
-		<Stack pos='a' b='0' w='100%' p={['20', '30']} bgc='rgb(255 255 255 / 20%)'>
+		<Stack pos='abs' b='0' w='100%' p={['20', '30']} bgc='rgb(255 255 255 / 20%)'>
 			<Layer blur='6px' brightness='1.1'/>
-			<Box pos='r' z='1' c='white' lh='s' css={{textShadow: '0 0 1em rgb(0 0 0 / 20%)'}}>
+			<Box pos='rel' z='1' c='white' lh='s' css={{textShadow: '0 0 1em rgb(0 0 0 / 20%)'}}>
 				<h3 className='-fz:l'>Card Title</h3>
 				<Grid hasTransition hov='get:slide'>
 					<Box ov='hidden'>

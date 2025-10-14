@@ -59,24 +59,24 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage, HelpTex
 <Preview>
 	<PreviewTitle>`figure`, `figcaption`の使用</PreviewTitle>
 	<PreviewArea resize>
-		<Frame tag='figure' ar='16/9' pos='r'>
+		<Frame tag='figure' ar='16/9' pos='rel'>
 			<Media src='/img/img-1.jpg' objectPosition='50% 70%' alt='' width='960' height='640' />
-			<Flex tag='figcaption' pos='a' z='1' b='0' w='100%' jc='c' c='white' bgc='rgb(0 0 0 / 40%)'>Lorem ipsum text.</Flex>
+			<Flex tag='figcaption' pos='abs' z='1' b='0' w='100%' jc='c' c='white' bgc='rgb(0 0 0 / 40%)'>Lorem ipsum text.</Flex>
 		</Frame>
 	</PreviewArea>
 	<PreviewCode slot='tab' label='JSX'>
 		```jsx
-		<Frame tag='figure' ar='16/9' pos='r'>
+		<Frame tag='figure' ar='16/9' pos='rel'>
 			<Media src='/img/img-1.jpg' objectPosition='50% 70%' alt='' width='960' height='640' />
-			<Flex tag='figcaption' pos='a' z='1' b='0' w='100%' jc='c' c='white' bgc='rgb(0 0 0 / 40%)'>Lorem ipsum text.</Flex>
+			<Flex tag='figcaption' pos='abs' z='1' b='0' w='100%' jc='c' c='white' bgc='rgb(0 0 0 / 40%)'>Lorem ipsum text.</Flex>
 		</Frame>
 		```
 	</PreviewCode>
 	<PreviewCode slot='tab' label='HTML'>
 		```html
-		<figure class="l--frame -ar:16/9 -pos:r">
+		<figure class="l--frame -ar:16/9 -pos:rel">
 			<img style="object-position:50% 70%" src="/img/img-1.jpg" width="960" height="640">
-			<figcaption class="-pos:a -z:1 -b:0 -w:100% -d:f -jc:c -c -bgc" style="--c:var(--white);--bgc:rgb(0 0 0 / 40%)"> Lorem ipsum text. </figcaption>
+			<figcaption class="-pos:abs -z:1 -b:0 -w:100% -d:f -jc:c -c -bgc" style="--c:var(--white);--bgc:rgb(0 0 0 / 40%)"> Lorem ipsum text. </figcaption>
 		</figure>
 		```
 	</PreviewCode>
@@ -140,7 +140,7 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage, HelpTex
 <Preview>
 	<PreviewTitle>Layer系を活用する</PreviewTitle>
 	<PreviewArea resize p={20}>
-		<Frame ar='16/9' pos='r' c='#fff'>
+		<Frame ar='16/9' pos='rel' c='#fff'>
 			<img src='/img/img-1.jpg' alt='' width='960' height='640' />
 			<Layer blur='4px' bgc='rgb(0 0 0 / 40%)' />
 			<Layer p='40' ov='auto'>
@@ -153,7 +153,7 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage, HelpTex
 	</PreviewArea>
 	<PreviewCode slot='tab' label='JSX'>
 		```jsx
-		<Frame ar='16/9' pos='r' c='#fff'>
+		<Frame ar='16/9' pos='rel' c='#fff'>
 			<img src='/img/img-1.jpg' alt='' width='960' height='640' />
 			<Layer blur='4px' bgc='rgb(0 0 0 / 40%)' />
 			<Layer p='40' ov='auto'>
@@ -167,7 +167,7 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage, HelpTex
 	</PreviewCode>
 		<PreviewCode slot='tab' label='HTML'>
 		```jsx
-		<div class="l--frame -ar:16/9 -pos:r -c" style="--c:#fff">
+		<div class="l--frame -ar:16/9 -pos:rel -c" style="--c:#fff">
 			<img src="/img/img-1.jpg" alt="" width="960" height="640">
 			<div class="is--layer -bgc" style="--bgc:rgb(0 0 0 / 40%);backdrop-filter:blur(4px)"></div>
 			<div class="is--layer -p:40 -ov:auto">
@@ -217,9 +217,9 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage, HelpTex
 <Preview>
 	<PreviewTitle>`ar`はブレイクポイントで変更することも可能です。</PreviewTitle>
 	<PreviewArea resize p='20'>
-		<Frame ar={['1/1', '3/2', '16/9']} pos='r'>
+		<Frame ar={['1/1', '3/2', '16/9']} pos='rel'>
 			<img src='/img/img-1.jpg' alt='' width='960' height='640' />
-			<Box pos='a' l='0' t='0' bgc='black' c='white' p='10' lh='xs' fz='s' m='20' bdrs='10'>
+			<Box pos='abs' l='0' t='0' bgc='black' c='white' p='10' lh='xs' fz='s' m='20' bdrs='10'>
 				{`比率:`}
 				<Text tag="span" d={['inline', 'none']}>1/1</Text>
 				<Text tag="span" d={['none', 'inline', 'none']}>3/2</Text>
@@ -229,7 +229,7 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage, HelpTex
 	</PreviewArea>
 	<PreviewCode slot='tab' label='JSX'>
 		```jsx
-		<Frame ar={['1/1', '3/2', '16/9']} pos='r'>
+		<Frame ar={['1/1', '3/2', '16/9']} pos='rel'>
 			...
 		</Frame>
 		```
@@ -237,7 +237,7 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage, HelpTex
 	<PreviewCode slot='tab' label='HTML'>
 		```html
 		<div
-			class="l--frame -ar:1/1 -pos:r -ar_sm -ar_md"
+			class="l--frame -ar:1/1 -pos:rel -ar_sm -ar_md"
 			style="--ar_sm:3/2;--ar_md:16/9"
 		>...</div>
 		```

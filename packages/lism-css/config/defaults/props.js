@@ -146,10 +146,7 @@ export default {
 	pos: {
 		prop: 'position',
 		presets: ['static', 'fixed', 'sticky'],
-		utils: {
-			r: 'relative',
-			a: 'absolute',
-		},
+		utils: { rel: 'relative', abs: 'absolute' },
 	},
 	z: { prop: 'zIndex', presets: ['-1', '0', '1', '2', '99'] },
 	t: { prop: 'top', utils: { 0: '0%' }, presets: ['50%', '100%'], token: 'space' },
