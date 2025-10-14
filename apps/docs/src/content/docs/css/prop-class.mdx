@@ -13,7 +13,7 @@ export const PropTable = ({data={}, ...props}) => {
 	const dataKyes = Object.keys(data);
 	return (
 		<Lism tag='table' {...props}>
-			{/* <thead className='-ta:l'>
+			{/* <thead className='-ta:left'>
 				<tr>
 					<th>Class</th>
 					<th>Value</th>
@@ -95,11 +95,11 @@ Lismでは、主要なCSSプロパティ群に対して、それらで頻繁に�
 <Preview>
 	<PreviewTitle>Examples</PreviewTitle>
 	<PreviewArea p='30'>
-		<p class='-fz:xl -fw:bold -lts:l -ta:c'>Example text</p>
+		<p class='-fz:xl -fw:bold -lts:l -ta:center'>Example text</p>
 	</PreviewArea>
 	<PreviewCode slot="tab" label="HTML">
 	```html
-	<p class='-fz:xl -fw:bold -lts:l -ta:c'>Example text</p>
+	<p class='-fz:xl -fw:bold -lts:l -ta:center'>Example text</p>
 	```
 	</PreviewCode>
 	<PreviewCode slot="tab" label="JSX">
