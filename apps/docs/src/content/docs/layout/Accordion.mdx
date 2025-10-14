@@ -15,7 +15,7 @@ import { Minus, Plus, X, Question, CaretDoubleDown, EyeClosed, Eyes } from "@pho
 ## 基本構造
 ```pug
 details.d--accordion
-	summary.d--accordion_header.l--flex.-ai:c
+	summary.d--accordion_header.l--flex.-ai:center
 		span.d--accordion_label.-fx:1 ...Header label...
 		span.d--accordion_icon.-d:i-f
 			svg.l--icon
@@ -81,7 +81,7 @@ details.d--accordion
 	<PreviewCode slot='tab' label='HTML'>
 ```html
 <details class="d--accordion -p:20">
-	<summary class="d--accordion_header l--flex -ai:c">
+	<summary class="d--accordion_header l--flex -ai:center">
 		<span class="d--accordion_label -fx:1">Accordion.Label</span>
 		<span class="d--accordion_icon -d:i-f">
 			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="1em" height="1em" fill="currentColor" focusable="false" class="l--icon" aria-hidden="true"><path d="M216.49,104.49l-80,80a12,12,0,0,1-17,0l-80-80a12,12,0,0,1,17-17L128,159l71.51-71.52a12,12,0,0,1,17,17Z"></path></svg>
@@ -126,7 +126,7 @@ details.d--accordion
 	<PreviewCode slot='tab' label='HTML'>
 	```html "h3" "-f:i"
 	<details class="d--accordion -p:20">
-		<summary class="d--accordion_header l--flex -ai:c">
+		<summary class="d--accordion_header l--flex -ai:center">
 			<h3 class="d--accordion_label -fx:1 -f:i -fw:bold">Accordion.Label</h3>
 			...
 	```
@@ -419,7 +419,7 @@ CSSで`:root`の`--acc-duration`を上書きすると、デフォルトの開閉
 	<PreviewCode slot='tab' label='HTML'>
 ```html "<button" "data-role=\"trigger\""
 <details class="d--accordion -p:20">
-	<summary class="d--accordion_header l--flex -ai:c">
+	<summary class="d--accordion_header l--flex -ai:center">
 		<span class="d--accordion_label -fx:1">Labelテキスト（<a href="#acc-innerlink">ヘルプリンク</a></span>
 		<button class="d--accordion_icon -d:ig -bd -bdrs:5 -bgc:inherit -p:10" data-role="trigger">
 			<svg class="l--icon"...>...</svg>

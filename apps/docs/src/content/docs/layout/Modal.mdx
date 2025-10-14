@@ -108,7 +108,7 @@ dialog.d--modal#modalID.re--style
 
 		<Modal.Root id='modal-02' layout={Stack} jc='center' isContainer='s' px='40' py='60'>
 			<Modal.Inner bdrs='20' bxsh='40'>
-				<Flex ai='c' jc='between' py='20' bd-b>
+				<Flex ai='center' jc='between' py='20' bd-b>
 					<Lism fz='l' fw='bold' lh='s' mx-s='40'>Modal Header</Lism>
 					<Modal.CloseBtn modalId='modal-02' fz='xl' p='20' mx='20'/>
 				</Flex>
@@ -120,7 +120,7 @@ dialog.d--modal#modalID.re--style
 					<Dummy tag='ul' />
 					<Dummy length='xl' offset={2}/>
 				</Modal.Body>
-				<Flex jc='e' px='40' py='30' bd-t>
+				<Flex jc='end' px='40' py='30' bd-t>
 					<Modal.CloseBtn modalId='modal-02' bgc='text' c='base' lh='xs' px='20' py='10' bd='none' bdrs='10'>Close</Modal.CloseBtn>
 				</Flex>
 			</Modal.Inner>
@@ -132,7 +132,7 @@ dialog.d--modal#modalID.re--style
 
 		<Modal.Root id='modal-02' layout={Stack} jc='center' isContainer='s' px='40' py='60'>
 			<Modal.Inner bdrs='20' bxsh='40'>
-				<Flex ai='c' jc='between' py='20' bd-b>
+				<Flex ai='center' jc='between' py='20' bd-b>
 					<Lism fz='l' fw='bold' lh='s' mx-s='40'>Modal Header</Lism>
 					<Modal.CloseBtn modalId='modal-02' fz='xl' p='20' mx='20'/>
 				</Flex>
@@ -144,7 +144,7 @@ dialog.d--modal#modalID.re--style
 					<Dummy tag='ul' />
 					<Dummy length='xl' offset={2}/>
 				</Modal.Body>
-				<Flex jc='e' px='40' py='30' bd-t>
+				<Flex jc='end' px='40' py='30' bd-t>
 					<Modal.CloseBtn modalId='modal-02' bgc='text' c='base' lh='xs' px='20' py='10' bd='none' bdrs='10'>Close</Modal.CloseBtn>
 				</Flex>
 			</Modal.Inner>
@@ -165,13 +165,13 @@ dialog.d--modal#modalID.re--style
 <Preview>
 	<PreviewTitle>ドロワーメニューの作成例</PreviewTitle>
 	<PreviewArea p='20'>
-		<Modal.OpenBtn modalId='modal-03' ai='c' g='5'>
+		<Modal.OpenBtn modalId='modal-03' ai='center' g='5'>
 			<Icon icon='menu' fz='xl' /><span>MENU</span>
 		</Modal.OpenBtn>
 
 		<Modal.Root id='modal-03' offset='-100px 0'>
 			<Modal.Inner max-w='24rem' h='100%' bxsh='40'>
-				<Flex bd-b ai='c' jc='between' p='30'>
+				<Flex bd-b ai='center' jc='between' p='30'>
 					<Lism fz='l'>MENU</Lism>
 					<Modal.CloseBtn modalId='modal-03' fz='xl' p='5'/>
 				</Flex>
@@ -188,13 +188,13 @@ dialog.d--modal#modalID.re--style
 	</PreviewArea>
 	<PreviewCode slot='tab' label='JSX'>
 		```jsx "'modal-03'"
-		<Modal.OpenBtn modalId='modal-03' ai='c' g='5'>
+		<Modal.OpenBtn modalId='modal-03' ai='center' g='5'>
 			<Icon icon='menu' fz='xl' /><span>MENU</span>
 		</Modal.OpenBtn>
 
 		<Modal.Root id='modal-03' offset='-100px 0'>
 			<Modal.Inner max-w='24rem' h='100%' bxsh='40'>
-				<Flex bd-b ai='c' jc='between' p='30'>
+				<Flex bd-b ai='center' jc='between' p='30'>
 					<Lism fz='l'>MENU</Lism>
 					<Modal.CloseBtn modalId='modal-03' fz='xl' p='5'/>
 				</Flex>

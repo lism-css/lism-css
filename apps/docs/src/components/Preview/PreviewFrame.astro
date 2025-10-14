@@ -15,7 +15,7 @@ const { isInline = false, hasSizeSwitch = false, url, ...props } = Astro.props;
 		<>
 			{/* プレビューサイズ切り替えボタン */}
 			{hasSizeSwitch && (
-				<div class='c--previewSizeSwitcher l--flex -g:20 -jc:c' data-preview-url={url}>
+				<div class='c--previewSizeSwitcher l--flex -g:20 -jc:center' data-preview-url={url}>
 					<button
 						class='c--previewSizeSwitcher_btn l--center -bdrs:10'
 						data-size='400px'

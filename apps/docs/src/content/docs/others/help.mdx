@@ -135,7 +135,7 @@ Heroコンテンツの高さを `min-height` や `aspect-ratio` で指定する�
 	<PreviewTitle>NG例</PreviewTitle>
 	<PreviewArea resize>
 		<Stack isFullwide min-h='400px' bgc='base-2'>
-			<Box min-h='50%' my='auto' bgc='base' p='20' px='40' ac='c'>
+			<Box min-h='50%' my='auto' bgc='base' p='20' px='40' ac='center'>
 				<Text fw='bold'>min-h:50%が効かない</Text>
 				<Dummy length='s' />
 			</Box>
@@ -144,7 +144,7 @@ Heroコンテンツの高さを `min-height` や `aspect-ratio` で指定する�
 	<PreviewCode>
 		```jsx "min-h='400px'" "min-h='50%'"
 		<Stack isFullwide min-h='400px' bgc='base-2'>
-			<Box min-h='50%' my='auto' bgc='base' p='20' px='40' ac='c'>
+			<Box min-h='50%' my='auto' bgc='base' p='20' px='40' ac='center'>
 				<Text fw='bold'>min-h:50%が効かない</Text>
 				<Dummy length='s' />
 			</Box>
@@ -160,7 +160,7 @@ Heroコンテンツの高さを `min-height` や `aspect-ratio` で指定する�
 	<PreviewTitle>改善例</PreviewTitle>
 	<PreviewArea resize>
 		<Stack isFullwide min-h='400px' bgc='base-2'>
-			<Grid fxg='1' ai='c' px='40'>
+			<Grid fxg='1' ai='center' px='40'>
 				<Center min-h='50%' bgc='base' p='30' bxsh='10'>
 					<Text fw='bold'>OK</Text>
 					<Dummy length='s' />
@@ -169,9 +169,9 @@ Heroコンテンツの高さを `min-height` や `aspect-ratio` で指定する�
 		</Stack>
 	</PreviewArea>
 	<PreviewCode>
-		```jsx "\<Grid" "fxg='1' ai='c'" "min-h='50%'"
+		```jsx "\<Grid" "fxg='1' ai='center'" "min-h='50%'"
 		<Stack isFullwide min-h='400px' bgc='base-2'>
-			<Grid fxg='1' ai='c' px='40'>
+			<Grid fxg='1' ai='center' px='40'>
 				<Center min-h='50%' bgc='base' p='30' bxsh='10'>
 					<Text fw='bold'>OK</Text>
 					<Dummy length='s' />
@@ -200,7 +200,7 @@ Heroコンテンツの高さを `min-height` や `aspect-ratio` で指定する�
 			<Frame isLayer>
 				<Media src='/img/img-3.jpg' alt='' width='960' height='640'/>
 			</Frame>
-			<Grid pos='rel' fxg='1' ai='c' hasGutter>
+			<Grid pos='rel' fxg='1' ai='center' hasGutter>
 				<Center min-h='50%' p='30' c='white' bgc='black:75%' bdrs='10' g='20'>
 					<Text fw='bold' fz='xl'>min-height 50%</Text>
 					<Dummy length='l' />
@@ -214,7 +214,7 @@ Heroコンテンツの高さを `min-height` や `aspect-ratio` で指定する�
 			<Frame isLayer>
 				<Media src='/img/img-3.jpg' alt='' width='960' height='640'/>
 			</Frame>
-			<Grid fxg='1' ai='c' hasGutter>
+			<Grid fxg='1' ai='center' hasGutter>
 				<Center min-h='50%' p='30' c='white' bgc='black:75%' bdrs='10' g='20'>
 					<Text fw='bold' fz='xl'>min-height 50%</Text>
 					<Dummy length='l' />

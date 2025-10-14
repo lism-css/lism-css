@@ -10,7 +10,7 @@ import { Lism, Dummy, Box, Text, Stack, Flex, Columns, Frame, Center, Tabs } fro
 import { FzDemos, SpacingDemos, BoxShadowDemos } from "~/content/token-previews.jsx";
 
 export const ColorBadge = ({color, label}) => {
-	return <span className='-d:f -ai:c -g:10'>
+	return <span className='-d:f -ai:center -g:10'>
 			<Lism tag='span' w='1.5em' ar='1/1' bgc={color} bdrs='10' bxsh='10' />
 			<code>{label || color}</code>
 		</span>;
