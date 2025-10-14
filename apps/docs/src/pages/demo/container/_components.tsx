@@ -15,7 +15,7 @@ export function AttsLabels({ atts = '', ...props }) {
 			pos='a'
 			t='0'
 			l='0'
-			ta='c'
+			ta='center'
 			lh='1'
 			mt='-1.1em'
 			ov='hidden'
@@ -67,7 +67,7 @@ export function GutterGuide(props?: any) {
 export function WideContent(props: any) {
 	const { children, ...atts } = props;
 	return (
-		<Lism isWide ta='c' bg='u:stripe' bgc='yellow:12%' {...atts}>
+		<Lism isWide ta='center' bg='u:stripe' bgc='yellow:12%' {...atts}>
 			<TipCode text='is--wide' color='yellow' m='5' />
 			{children}
 		</Lism>
@@ -77,7 +77,7 @@ export function WideContent(props: any) {
 export function FullwideContent(props: any) {
 	const { children, ...atts } = props;
 	return (
-		<Lism isFullwide ta='c' bg='u:stripe' bgc='orange:12%' {...atts}>
+		<Lism isFullwide ta='center' bg='u:stripe' bgc='orange:12%' {...atts}>
 			<TipCode text='is--fullwide' color='orange' m='5' />
 			{children}
 		</Lism>
@@ -87,7 +87,7 @@ export function FullwideContent(props: any) {
 export function Overwide(props: any) {
 	const { children, ...atts } = props;
 	return (
-		<Lism isOverwide ta='c' bg='u:stripe' bgc='pink:12%' {...atts}>
+		<Lism isOverwide ta='center' bg='u:stripe' bgc='pink:12%' {...atts}>
 			<TipCode text='Overwide' color='pink' m='5' />
 			{children}
 		</Lism>
