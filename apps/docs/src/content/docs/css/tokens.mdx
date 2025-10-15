@@ -5,7 +5,7 @@ sidebar:
   order: 2
 ---
 
-import { Preview, PreviewArea, PreviewTitle, PreviewCode, Reference, Callout } from "~/components";
+import { Preview, PreviewArea, PreviewTitle, PreviewCode, Reference, Callout, Note } from "~/components";
 import { Lism, Dummy, Box, Text, Stack, Flex, Columns, Frame, Center, Tabs } from 'lism-css/astro';
 import { FzDemos, SpacingDemos, BoxShadowDemos } from "~/content/token-previews.jsx";
 
@@ -29,6 +29,7 @@ export const ColorBadge = ({color, label}) => {
 |<ColorBadge color='link' />|`--c--link`|
 |<ColorBadge color='main' />|`--c--main`|
 |<ColorBadge color='accent' />|`--c--accent`|
+{/* |<ColorBadge color='accent-2' />|`--c--accent-2`| */}
 
 
 
@@ -658,16 +659,18 @@ opacityは数値として見た場合と"どれだけ薄めるか"で見た場�
     - `:root`や`body`にセットされている値に戻すためのものは `base`。そうでないが基本的な中心値となるものは`m`で表現。
 	- sm, md, lg ではない理由は、ブレイクポイント表記と被らないようにするため。
 2. 0, (5,) 10, 20, 30,... などの数値による段階表記
-    - **基本となる値がなく、0スタートで段階的なトークン値を持つものを表すトークン。**
+    - **基本となる値がなく、0(`none`)スタートで段階的なトークン値を持つものを表すトークン。**
 	- 0,1,2,3... という単純な繰り上げではなく数値に間隔を持たせているのは、ユーザーが既存トークンの間に新しいトークンを追加できるようにするため。
-3. それ以外のセマンティックトークン
-    - サイズ表記や段階表記では表現できないものを表すトークン。
+3. その他
+    - それぞれのプロパティに合うように、セマンティックなトークン名を定義します。
 
 
-### カラートークンのバリエーション名について
+<Note type='info' title='カラートークンのバリエーションについて'>
 
-`base-2`, `text-2`などは、よくある表現としては `secondary`, `weak`, `subtle` などがありますが、これといった正解があるわけではなく、命名するのが非常に難しいトークンです。  
-名前を決めてしまうと、ユーザーによっては意味合いとして明確なズレが発生する可能性もあります。
+`base`/`text` に対する `base-2`/`text-2` についての補足です。  
+これらはサイトのカラー設計するときにその都度意味合いが変わり得るものなので、意味付けを避けています。
 
-そのため、単純に数値を後ろにつけることによって意味付けをなくし、バリエーションを表すだけにしました。  
-トークンを追加したい時も、名前に悩む必要はなく`base-3`,`accent-2`のように増やしていけます。
+デフォルトでは`base-2`は`base`より少し濃い色、`text-2`は`text`より少し薄い色となっていますが、これを`dark`/`light`, `strong`/`weak`などの表現をしてしまうと用途が固定されてしまうので、シンプルなバリエーション表現として数値を採用しています。
+
+単純に数値でのバリエーション表現にすることで、サイトによっては`base-3`,`text-3`のように増やしていくこともできるようにしています。
+</Note>
