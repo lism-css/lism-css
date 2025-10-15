@@ -10,6 +10,185 @@ v.1.0リリースまでしばらく激しい変更が続く可能性があるた
 
 ---
 
+
+
+
+## v.0.5
+
+2025.09.27 v.0.5
+
+全体を通して、クラス名・CSS変数名に関する命名規則について大幅に再整理しました。
+
+
+### Prop Class の省略名についての変更
+
+これまではできる限り省略した短いクラス名を採用していましたが、**極端な省略は避ける**ように変更しました。
+
+`-{prop}:{value}`において、
+- `{prop}`部分については、主要なプロパティのみ 1~3文字への極端な省略名を用います。
+- `{value}`部分については、基本的には省略はせず、長いキーワード値は意味がわかる程度に省略します。
+
+`{value}`部分の省略を避けることで、`{prop}`側が省略されていてもその組み合わせを見てどのプロパティを示すか予測しやすいようになりました。
+
+
+#### value部分の変更
+
+|対象| 変更前 | 変更後 |
+| ------ | ------ | ------ |
+| `fs` | `-fs:i`   | `-fs:italic`  |
+| `td` | `-td:u`, `-td:n`   | `-td:under`, `-td:none`  |
+| `v` | `-v:h`, `-v:v`  | `-v:hidden`, `-v:visible` |
+| `pos` | `r`, `a`, `s`, `f`, `sti`   | `rel`, `abs`, `static`, `fixed`, `sticky`  |
+| `d` | `n`, `b`, `if` | `none`, `block`, `in-flex` |
+| `ov`系 | `h`, `a`, `c`, `s`   | `hidden`, `auto`, `clip`, `scroll`  |
+| `m`系 | `a`                       | `auto`                                              |
+| `fxw` | `w`, `n`   | `wrap`, `no` |
+| `fxd` | `c`, `r`, `cr`, `rr`   | `col`, `row`, `col-r`, `row-r` |
+| `-bds:` | `ds`, `dt`, `db`   | `dashed`, `dotted`, `double` |
+| `ga` | `-ga:1` | `-ga:1/1` |
+| `a[i\|c]`,<br/>`j[i\|c]`      | `c`,`s`,`e`,`fs`,`fe`,`str`, `sb` | `center`,`start`, `end`, `flex-s`, `flex-e`, `stretch`, `between` |
+
+
+#### prop部分の変更
+
+| プロパティ| 変更前    | 変更後   |
+| ------ | --------- | ------- |
+| opacity | `op`   | `o`  |
+| translate | `trnslt`   | `translate`  |
+| whitespace | `whs` | `whitespace`  |
+| float | `fl` | `float`  |
+| clear | `cl` | `clear`  |
+| max-width | `maxW` | `max-w`  |
+| min-width | `minW` | `min-w`  |
+| max-height | `maxH` | `max-h`  |
+| min-height | `minH` | `min-h`  |
+
+
+opacityが`op` → `o` となったため、 `hov='op'`(`.-hov:op`) も `hov='o'` (`-hov:o`) に変更しました。
+
+
+
+
+### 方向指定系のプロパティについて
+
+- 方向指定プロパティは原則として`-`で繋げる`{prop}-{side}`ような命名規則になりました。
+- ただし、`p`,`m` は (`pt`,`px`)などの書き方が一般的なため、最初のハイフンを省略します。
+
+| 対象プロパティ         | 変更前 | 変更後 |
+| ---------------------- | ------ | ------ |
+| `column-gap`           | `gx`   | `g-x`  |
+| `row-gap`              | `gy`   | `g-y`  |
+| `overflow-x`           | `ovx`   | `ov-x`  |
+| `overflow-y`           | `ovy`   | `ov-y`  |
+| `padding-inline-start` | `pis`  | `px-s` |
+| `padding-inline-end`   | `pie`  | `px-e` |
+| `padding-block-start`  | `pbs`  | `py-s` |
+| `padding-block-end`    | `pbe`  | `py-e` |
+| `margin-inline-start`  | `mis`  | `mx-s` |
+| `margin-inline-end`    | `mie`  | `mx-e` |
+| `margin-block-start`   | `mbs`  | `my-s` |
+| `margin-block-end`     | `mbe`  | `my-e` |
+| `inset-inline-start`   | `iis`  | `i-x-s`  |
+| `inset-inline-end`     | `iee`  | `i-x-e`  |
+| `inset-block-start`    | `ibs`  | `i-y-s`  |
+| `inset-block-end`      | `ibe`  | `i-y-e`  |
+
+
+### border系のプロパティについて
+
+さらに、borderの方向指定クラスが `-bd:{side}` → `-bd-{side}` に変更されました。  
+コンポーネントでの指定方法も、`bd='{side}'` → `bd-{side}` に変更されました。
+
+| プロパティ| 変更前 | 変更後 |
+| ------ | ------ | ------ |
+| `border-top`           | `bd="t"`  | `bd-t` |
+| `border-bottom`        | `bd="b"`  | `bd-b` |
+| `border-left`          | `bd="l"`  | `bd-l` |
+| `border-right`         | `bd="r"`  | `bd-r` |
+| `border-inline`        | `bd="x"`  | `bd-x` |
+| `border-block`         | `bd="y"`  | `bd-y` |
+| `border-inline-start`  | `bd="is"`  | `bd-x-s` |
+| `border-inline-end`    | `bd="ie"`  | `bd-x-e` |
+| `border-block-start`   | `bd="bs"`  | `bd-y-s` |
+| `border-block-end`     | `bd="be"`  | `bd-y-e` |
+
+
+
+
+### トークンの変更
+
+| トークン | 変更前 | 変更 |
+| ------ | ------ | ------ |
+| `fw` | `light` `normal` `bold` | `thin` `light` `normal` `medium` `bold` `black` |
+| `c` | `divider` | `line` |
+| `o` (旧`op`) | `low` `mid` `high` | `ghost` `pale` `soft` `mild` |
+
+
+
+### hover, transitionの変更
+
+| 変更前 | 変更後 |
+| ------ | ------ |
+| `.-hov:set`   | `.has--hover`  |
+| `.-hov:get:xxx`   | `.-hov:to:xxx`  |
+| `.-trs`   | `.has--transiton`  |
+| `--trsdu`   | `--duration`  |
+| `--trstf`   | `--ease`  |
+| `--trsp`   | `--property`  |
+
+
+### 廃止になったもの
+
+- 使用頻度の少ないであろう`grid`プロパティ指定用の`gd`を廃止しました。`gt`, `gar`, `gac` を使用してください。
+- `l--flex`, `l--grid`があるので`-d:f`, `-d:g`を廃止しました。
+- 使用頻度が少ないと判断し、`-d:i`, `-d:ib` を廃止しました。
+- `-fw:100`~`-fw:900` を廃止し、セマンティックトークンを増やしました。
+- `-c:mix` 系クラスを廃止しました。`black:50%`のような指定方法は引き続き利用できますが、単純に`color-mix()`で`style`属性に出力されます。
+- `l--frame`があるので不要と判断し、`obf` (`object-fit`)をLism Propから除外しました。
+- `iso`, `bxsz`, `trf`, `trfo`, `fltr`, `bdfltr` をLism Propから除外しました。
+- `u--clipText`を廃止し、`-bgclip:text`と`-c:trsp`を追加しました。
+
+
+### トークン・CSS変数命名規則の変更
+
+現状のルール詳細は [命名規則に関する説明](/css/methodology/#命名規則) をご覧ください.
+
+
+|| 変更前 | 変更後 |
+| ------ | ------ | ------ |
+| トークン | `--{token}-` | `--{token}--` |
+| ローカルな子要素プロパティ| `--{item}-{prop}` | `--_{item}-{prop}` |
+| root上書きできるベース値 | `--{target}--{prop}` | `--{target}-{prop}` |
+| 特殊変数 | `--_{varName}` | `--{varName}_`|
+
+
+
+| 変更前 | 変更後 |
+| ------ | ------ |
+| `--size-` | `--sz--` |
+| `--op-` | `--o--` |
+| `--contentSize` | `--content-size` |
+| `--flowM` | `--flow-gap` |
+| `--wideSize` | `--wide-size` |
+| `--overwideSize` | `--overwide-size` |
+
+
+
+
+### その他の変更
+- `is--isolate` を追加.
+- `re--sh` to `re--shadow`
+- LinkBox のデフォルトで設定されていた　`hov='op'` を削除しました。
+- `-ar:ogp` → `-ar:og`
+- `<Column variant='liquid'>`(`l--column--liquid`) →　`<Grid variant='liquid'>`(`l--grid--liquid`)
+
+
+.
+
+
+
+## ~ v.0.3
+
 - 2025.09.22 v.0.3.5
 	- grid子要素のプロパティ指定をどのコンポーネントでもできるようにし、GridItemを廃止（`gridItem`プロパティを廃止）しました。
 - 2025.09.20 v.0.3.4
@@ -36,12 +215,6 @@ v.1.0リリースまでしばらく激しい変更が続く可能性があるた
 - 2025.06.20 v.0.1.2
 	- `--size-xs`の数値を変更、`--size-min`の追加
 	- shadowトークンの仕様を変更。
-		- `--_shc` → `--_sh_c` へ変更
-		- `--_shc-hsl` → `--_sh_hsl` へ変更
-		- `--_shc-a` → `--_sh_a` へ変更
-		- `--_shsz-` → `--_sh_sz-` へ変更
-		- `--_sh_i` を追加. (`inset`切り替えに対応。)
-		- `-bxsh:-10`, `-bxsh:-20` を廃止
 - 2025.06.12 v.0.1.1
 	- `-fz:5xl`, `var(--fz-5xl)` を追加
 - 2025.06.11 v.0.1.0 リリース
