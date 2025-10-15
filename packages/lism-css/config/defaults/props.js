@@ -35,7 +35,7 @@ export default {
 	d: {
 		prop: 'display',
 		presets: ['none', 'block'],
-		utils: { 'i-flex': 'inline-flex' },
+		utils: { 'in-flex': 'inline-flex' },
 		bp: 1,
 	},
 	o: { prop: 'opacity', presets: ['0'], token: 'o', tokenClass: 1 },
