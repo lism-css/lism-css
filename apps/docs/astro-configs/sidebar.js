@@ -108,6 +108,10 @@ export default [
 				link: '/layout/stack/',
 			},
 			{
+				label: 'WithSide',
+				link: '/layout/withside/',
+			},
+			{
 				label: '---',
 				link: '###---',
 			},
@@ -134,10 +138,6 @@ export default [
 			{
 				label: 'Frame',
 				link: '/layout/frame/',
-			},
-			{
-				label: 'WithSide',
-				link: '/layout/withside/',
 			},
 
 			{
