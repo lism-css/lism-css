@@ -6,11 +6,9 @@ import { Box, Flex, Media, Lism, Text, Layer, Frame, Center, Columns, Dummy } fr
 import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage, HelpText, Note, EmbedCode } from "~/components";
 
 
-アスペクト比や高さを指定した時、コンテンツがその高さを超えないように制限します。
+直下のメディア要素（`img`,`vieo`,`picture`,`iframe`）を `object-fit:cover` で自身のサイズに合わせて表示します。
 
-直下のメディア要素（`img`,`vieo`,`picture`,`iframe`）が `object-fit:cover` でサイズいっぱいに表示されるようにもなっています。
 
-{/* Layerを配置しやすいように position:relative; を指定しています。 */}
 ## CSS
 
 <EmbedCode dirPath='packages/lism-css' srcPath='src/scss/layout/_frame.scss' />
@@ -21,7 +19,6 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage, HelpTex
 | プロパティ | 説明 |
 |---|---|
 | `ar` | フレームの比率を指定できます。|
-| `layout` | 展開したい Lismコンポーネント を指定できます。|
 {/* | `objectPosition` | 直下のメディア要素のobject-positionを指定できます。 | */}
 
 <HelpText>(`ar` 自体はどのコンポーネントにも指定できる CSS Props です。)</HelpText>
