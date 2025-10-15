@@ -9,7 +9,7 @@ export function Item(props) {
 export function Head({ tag = 'div', num = '1', label = 'Step.', children, ...props }) {
 	return (
 		<Stack g='20' ai='center' fxd={[null, 'row']} {...props}>
-			<Lism d='i-flex' lh='xs' px='20' py='5' ai='end' ff='mono' fs='italic' bd bdrs='99'>
+			<Lism d='in-flex' lh='xs' px='20' py='5' ai='end' ff='mono' fs='italic' bd bdrs='99'>
 				<span className='-fz:2xs'>{label}</span>
 				<span className='-fz:l -lh:1'>{num}</span>
 			</Lism>

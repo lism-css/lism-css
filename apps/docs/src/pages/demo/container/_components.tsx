@@ -54,7 +54,7 @@ export function TipCode({
 	}
 
 	return (
-		<Lism tag='code' bd d='i-flex' fz='s' lh='xs' px='10' m='5' bdrs='5' whitespace='nowrap' className='u--cbox' keycolor={color} {...props}>
+		<Lism tag='code' bd d='in-flex' fz='s' lh='xs' px='10' m='5' bdrs='5' whitespace='nowrap' className='u--cbox' keycolor={color} {...props}>
 			{text || children}
 		</Lism>
 	);
