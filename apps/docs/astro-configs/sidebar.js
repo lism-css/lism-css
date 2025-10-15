@@ -136,10 +136,6 @@ export default [
 				link: '/layout/frame/',
 			},
 			{
-				label: 'Divider',
-				link: '/layout/divider/',
-			},
-			{
 				label: 'WithSide',
 				link: '/layout/withside/',
 			},
@@ -149,12 +145,16 @@ export default [
 				link: '###---',
 			},
 			{
-				label: 'Decorator',
-				link: '/layout/decorator/',
+				label: 'Divider',
+				link: '/layout/divider/',
 			},
 			{
 				label: 'Spacer',
 				link: '/layout/spacer/',
+			},
+			{
+				label: 'Decorator',
+				link: '/layout/decorator/',
 			},
 			{
 				label: 'Icon',
