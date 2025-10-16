@@ -22,7 +22,7 @@ LismがどのようなCSS設計になっているかを説明します。
 
 
 
-## CSSの階層構造
+## Lism CSSの階層構造
 
 詳細度が複雑になりがちな問題への対策として、LismではCSSの階層構造を明確に定義しています。
 
@@ -43,7 +43,6 @@ LismがどのようなCSS設計になっているかを説明します。
 		<tr>
 			<th>Layer</th>
 			<th>役割</th>
-			<th>`@layer`</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -53,57 +52,67 @@ LismがどのようなCSS設計になっているかを説明します。
 			<td>-</td>
 		</tr>
 		<tr>
-			<td>Reset</td>
+			<td>Reset<br/>`@lism.reset`</td>
 			<td>reset CSS</td>
-			<td><span class='-whitespace:nowrap'>`@lism.reset`</span></td>
 		</tr>
 		<tr>
-			<td>Base</td>
-			<td>`:root`でのトークン定義, HTML要素に対するスタイルの初期セット</td>
-			<td>`@lism.base`</td>
+			<td>Base<br/>`@lism.base`</td>
+			<td>トークン定義や変数セット、HTML要素の初期スタイルをセットするレイヤー。<br />Base Set (`.set--{syle}`)
+			クラスもここに入ります。</td>
 		</tr>
 		<tr>
-			<td class='-whitespace:nowrap'>Layout State<br />`.is--{state}`<br />`.has--{state}`</td>
-			<td>レイアウトを組む上で特定の役割を持ち、複数のモジュールに対してつけ外しできるような汎用的な機能。</td>
-			<td><span class='-whitespace:nowrap'>`@lism.state`</span></td>
+			<td class='-whitespace:nowrap'>Modules<br/>`@lism.modules`</td>
+			<td>
+				モジュール群を定義するレイヤー。<br />
+				この中でさらにレイヤーが分かれており、 `.is--{state}`, `.l--{layout}`, `.d--{dynamic}` が定義されます。
+			</td>
 		</tr>
 		<tr>
-			<td class='-whitespace:nowrap'>Layout Module<br />`.l--{name}`</td>
-			<td>基礎的なレイアウトを組むためのモジュール群。レイアウトの構成単位となるようなモジュール。</td>
-			<td><span class='-whitespace:nowrap'>`@lism.layout`</span></td>
+			<td class='-whitespace:nowrap'>Custom Modules<br/>`@lism.custom`</td>
+			<td>その他、ユーザーが定義する具体的な役割を持つカスタムモジュール・UIコンポーネント群 (`.c--{modules}`) 。</td>
 		</tr>
 		<tr>
-			<td class='-whitespace:nowrap'>Dynamic Module<br />`.d--{name}`</td>
-			<td>動的な機能を持つ特殊なモジュール群。JavaScriptと組み合わせたものなど。</td>
-			<td><span class='-whitespace:nowrap'>`@lism.dynamic`</span></td>
+			<td class='-whitespace:nowrap'>Utility<br/>`@lism.utility`</td>
+			<td>その他、機能やスタイルが明確なユーティリティクラス`.u--{name}`を定義するレイヤー。</td>
 		</tr>
 		<tr>
-			<td>Components<br />`.c--{name}`</td>
-			<td>具体的な役割を持つコンポーネント群。他のクラスだけでは補えないコンポーネント特有のスタイルをまとめる。</td>
-			<td><span class='-whitespace:nowrap'>`@lism.component`</span></td>
-		</tr>
-		{/* <tr>
-			<td>Block</td>
-		</tr> */}
-		{/* <tr>
-			<td>Format</td>
-			<td>書式スタイル</td>
-			<td>0-1-0</td>
-		</tr> */}
-		<tr>
-			<td class='-whitespace:nowrap'>Utility Class<br />`.u--{name}`</td>
-			<td>その他、機能やスタイルが明確なユーティリティクラス。</td>
-			<td><span class='-whitespace:nowrap'>`@lism.utility`</span>,<br />レイヤーなし</td>
-		</tr>
-		<tr>
-			<td class='-whitespace:nowrap'>Props Class<br />`.-{prop}:{val}`</td>
-			<td>単一のCSSプロパティティに紐づいたクラス。</td>
-			<td>レイヤーなし</td>
+			<td class='-whitespace:nowrap'>Props<br/>`-`</td>
+			<td>単一のCSSプロパティティに紐づいた Prop Class (`.-{prop}:{val}`) 。レイヤー外で定義します。</td>
 		</tr>
 	</tbody>
 </table>
 
-<IconBadge /> Utility Class は、レイヤーあり、なしの両方が許容されます。（Prop Classより優先度を下げたいものはレイヤー内に定義します）
+<IconBadge /> Prop Class は、レイヤーから外すことで外部CSSとある程度共存できるようにします.
+
+### Modules レイヤーでのさらなる階層構造
+
+<table className="l--table">
+	<thead>
+		<tr>
+			<th>Layer</th>
+			<th>役割</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td class='-whitespace:nowrap'>State Modules<br/>`@lism.modules.state`</td>
+			<td>
+				レイアウトを組む上で特定の役割を持ち、複数のレイアウトモジュールに対してつけ外しできるような汎用的な機能を持つクラス。(`.is|has--{state}`)
+			</td>
+		</tr>
+		<tr>
+			<td class='-whitespace:nowrap'>Layout Modules<br/>`@lism.modules.layout`</td>
+			<td>
+				レイアウトの構成単位となるようなモジュール群（`.l--{module}`）を定義するレイヤー。
+			</td>
+		</tr>
+		<tr>
+			<td class='-whitespace:nowrap'>Dynamic Modules<br/>`@lism.modules.dynamic`</td>
+			<td>JavaScriptと組み合わせて動的な機能を持つ特殊なモジュール群 (`.d--{module}`) 。</td>
+		</tr>
+	</tbody>
+</table>
+
 
 
 {/* 

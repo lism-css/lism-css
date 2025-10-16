@@ -104,21 +104,21 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportSource } from "~
 		<Flex ai='center' g='20'>
 			<Box fx='1' bgc='base-2' py='50' ta='center'>Box</Box>
 			<Stack ai='center' g='20' lh='1' fz='s' aslf='stretch'>
-				<Divider fx='1' isVertical />
+				<Divider fx='1' writing='vertical' />
 				<span>Label</span>
-				<Divider fx='1' isVertical />
+				<Divider fx='1' writing='vertical' />
 			</Stack>
 			<Box fx='1' bgc='base-2' py='50' ta='center'>Box</Box>
 		</Flex>
 	</PreviewArea>
 	<PreviewCode slot='tab' label='JSX'>
-		```jsx "fxd='column'" "isVertical"
+		```jsx "fxd='column'" "writing='vertical'"
 		<Flex ai='center' g='20'>
 			<Box fx='1' bgc='base-2' py='50' ta='center'>Box</Box>
 			<Stack ai='center' g='20' lh='1' fz='s' aslf='stretch'>
-				<Divider fx='1' isVertical />
+				<Divider fx='1' writing='vertical' />
 				<span>Label</span>
-				<Divider fx='1' isVertical />
+				<Divider fx='1' writing='vertical' />
 			</Stack>
 			<Box fx='1' bgc='base-2' py='50' ta='center'>Box</Box>
 		</Flex>
@@ -129,9 +129,9 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportSource } from "~
 		<div class='l--flex -ai:center -g:20'>
 			<div class='l--box -fx:1 -bgc:base-2 -py:50 -ta:center'>Box</div>
 			<div class="l--stack -ai:center -g:20 -lh:1 -fz:s -aslf:stretch">
-				<div class="l--divider is--vertical -fx:1" aria-hidden="true"></div>
+				<div class="l--divider -writing:vertical -fx:1" aria-hidden="true"></div>
 				<span>Label</span>
-				<div class="l--divider is--vertical -fx:1" aria-hidden="true"></div>
+				<div class="l--divider -writing:vertical -fx:1" aria-hidden="true"></div>
 			</div>
 			<div class='l--box -fx:1 -bgc:base-2 -py:50 -ta:center'>Box</div>
 		</div>
@@ -144,12 +144,12 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportSource } from "~
 	<PreviewArea resize p='30' isFlow={false}>
 		<Flex ai='stretch' g='20'>
 			<Box fx='1' bgc='base-2' py='50' ta='center'>Box</Box>
-			<Flex isVertical ai='center' g='20' lh='1' fz='xs' aslf='stretch'>
+			<Flex writing='vertical' ai='center' g='20' lh='1' fz='xs' aslf='stretch'>
 				<span>Label</span>
 				<Divider fx='1' />
 			</Flex>
 			<Box fx='1' bgc='base-2' py='50' ta='center'>Box</Box>
-			<Flex isVertical ai='center' g='20' lh='1' fz='xs' aslf='stretch'>
+			<Flex writing='vertical' ai='center' g='20' lh='1' fz='xs' aslf='stretch'>
 			<Divider fx='1' />
 				<span>Label</span>
 			</Flex>
@@ -157,15 +157,15 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportSource } from "~
 		</Flex>
 	</PreviewArea>
 	<PreviewCode slot='tab' label='JSX'>
-		```jsx "is--vertical"
+		```jsx "writing='vertical'"
 		<Flex ai='stretch' g='20'>
 			<Box fx='1' bgc='base-2' py='50' ta='center'>Box</Box>
-			<Flex isVertical ai='center' g='20' lh='1' fz='xs' aslf='stretch'>
+			<Flex writing='vertical' ai='center' g='20' lh='1' fz='xs' aslf='stretch'>
 				<span>Label</span>
 				<Divider fx='1' />
 			</Flex>
 			<Box fx='1' bgc='base-2' py='50' ta='center'>Box</Box>
-			<Flex isVertical ai='center' g='20' lh='1' fz='xs' aslf='stretch'>
+			<Flex writing='vertical' ai='center' g='20' lh='1' fz='xs' aslf='stretch'>
 			<Divider fx='1' />
 				<span>Label</span>
 			</Flex>
@@ -174,15 +174,15 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportSource } from "~
 		```
 	</PreviewCode>
 	<PreviewCode slot='tab' label='HTML'>
-		```html
+		```html "-writing:vertical"
 		<div class='l--flex -ai:stretch -g:20'>
 			<div class='l--box -fx:1 -bgc:base-2 -py:50 -ta:center'>Box</div>
-			<div class='l--flex is--vertical -ai:center -g:20 -lh:1 -fz:xs -aslf:stretch'>
+			<div class='l--flex is--vertical -writing:vertical -ai:center -g:20 -lh:1 -fz:xs -aslf:stretch'>
 				<span>Label</span>
 				<div class='l--divider -fx:1' aria-hidden='true'></div>
 			</div>
 			<div class='l--box -fx:1 -bgc:base-2 -py:50 -ta:center'>Box</div>
-			<div class='l--flex -ai:center -g:20 -lh:1 -fz:xs -aslf:stretch'>
+			<div class='l--flex -writing:vertical -ai:center -g:20 -lh:1 -fz:xs -aslf:stretch'>
 				<div class='l--divider -fx:1' aria-hidden='true'></div>
 				<span>Label</span>
 			</div>

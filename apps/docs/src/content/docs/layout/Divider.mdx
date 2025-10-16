@@ -88,26 +88,28 @@ div.l--divider
 	<PreviewArea resize p='30' isFlow={false}>
 		<Flex ai='center' g='30'>
 			<Box fx='1' bgc='base-2' py='50' ta='center'>...Contents...</Box>
-			<Divider isVertical aslf='stretch' />
+			<Divider writing='vertical' bds='dashed' bdw='2px' aslf='stretch' />
 			<Box fx='1' bgc='base-2' py='50' ta='center'>...Contents...</Box>
 		</Flex>
 	</PreviewArea>
 	<PreviewCode slot='tab' label='JSX'>
-		```jsx {3} "isVertical"
+		```jsx {3} "writing='vertical'"
 		<Flex ai='center' g='30'>
 			<Box fx='1' bgc='base-2' py='50' ta='center'>...Contents...</Box>
-			<Divider isVertical aslf='stretch' />
+			<Divider writing='vertical' bds='dashed' bdw='2px' aslf='stretch' />
 			<Box fx='1' bgc='base-2' py='50' ta='center'>...Contents...</Box>
 		</Flex>
 		```
 	</PreviewCode>
 	<PreviewCode slot='tab' label='HTML'>
-		```html {3} "is--vertical"
+		```html {3} "-writing:vertical"
 		<div class="l--flex -g:30 -ai:center">
 			<div class="-fx:1 -bgc:base-2 -py:50 -ta:center">...Contents...</div>
-			<div class="l--divider is--vertical -aslf:stretch" aria-hidden="true"></div>
+			<div class="l--divider -writing:vertical -bds:dashed -aslf:stretch" style="--bdw:2px" aria-hidden="true"></div>
 			<div class="-fx:1 -bgc:base-2 -py:50 -ta:center">...Contents...</div>
 		</div>
 		```
 	</PreviewCode>
 </Preview>
+
+

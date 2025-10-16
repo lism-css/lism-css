@@ -15,7 +15,6 @@ export default function ({ lismClass, size, clipPath, boxSizing, style = {}, ...
 		props.ar = '1/1';
 		props.w = size;
 		// style['--size'] = size;
-		// props.lismState = ['has--size'];
 	}
 
 	props.style = style;

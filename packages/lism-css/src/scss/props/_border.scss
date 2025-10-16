@@ -11,13 +11,7 @@
 	--bdw を変化させることで方向を変化させたりできるようになっている。
 */
 
-// bdc, bdw などでカラーや太さを上書きできるように border 自体を変数管理
-@include mixin.maybe_where('.-bd,[class*="-bd-"]', 'base') {
-	--bds: solid;
-	--bdw: 1px;
-	--bdc: currentColor;
-}
-
+// Memo: base レイヤーで初期値セット済み
 .-bd,
 [class*='-bd-'] {
 	border-width: var(--bdw) #{mixin.$maybe_important};

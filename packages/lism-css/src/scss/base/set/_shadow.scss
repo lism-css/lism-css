@@ -1,0 +1,27 @@
+// Memo: カラー変数込みで変数をセットしてしまうと、--sh-c がその時点で固定されるので、再セットできる set--shadow クラスを用意。
+:root,
+.set--shadow {
+	/* ------------------------------------------------------------
+	  shadow
+	------------------------------------------------------------ */
+	--sh-i: ; // for inset
+	--sh-hsl: 220 4% 8%;
+	--sh-a: 5%;
+	--sh-c: hsl(var(--sh-hsl) / var(--sh-a));
+
+	// x:fibo, y=fibo, blur=x+y*2 のパターン
+	// --sh--0: var(--sh-i) 0px 1px 2px var(--sh-c);
+	--sh--5: var(--sh-i) 0px 2px 4px var(--sh-c);
+	--sh--10: var(--sh-i) 1px 3px 6px var(--sh-c);
+	--sh--20: var(--sh-i) 1px 5px 10px var(--sh-c);
+	--sh--30: var(--sh-i) 2px 8px 16px var(--sh-c);
+	--sh--40: var(--sh-i) 3px 13px 26px var(--sh-c);
+	--sh--50: var(--sh-i) 5px 21px 42px var(--sh-c);
+
+	// --bxsh--5: var(--sh--0), var(--sh--5);
+	--bxsh--10: var(--sh--5), var(--sh--10);
+	--bxsh--20: var(--sh--10), var(--sh--20);
+	--bxsh--30: var(--sh--20), var(--sh--30);
+	--bxsh--40: var(--sh--30), var(--sh--40);
+	--bxsh--50: var(--sh--40), var(--sh--50);
+}

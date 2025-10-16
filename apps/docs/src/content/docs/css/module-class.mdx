@@ -1,0 +1,38 @@
+---
+title: 'Module Class'
+description: ...
+sidebar:
+  order: 4
+---
+
+
+import { Dummy, Box, Text, Lism, Stack, Flex, Container, Frame, Center, Spacer, Media } from 'lism-css/astro';
+import { Preview, PreviewArea, PreviewTitle, PreviewCode, PreviewFrame, Reference, Callout, Note } from '~/components';
+import { Desktop } from '@phosphor-icons/react';
+import ModuleList from '~/components/ModuleList.astro';
+
+
+Lismでは、次のようなモジュールクラスを使います。
+
+- `l--{module}`: レイアウトの構成単位となるようなモジュール群
+- `d--{module}`: JavaScriptと組み合わせて動的な機能を持つ特殊なモジュール群
+- `c--{module}`: その他のより具体的な役割を持つコンポーネント群。（他のクラスとの組み合わせを前提にした設計になっているものが多い。）
+
+基本的に、各レイヤーの他モジュールクラスとの複数併用はしないことを前提として設計しています。  
+たとえば、`.l--`と`.c--`は併用できますが、`.l--XXX`と`.l--YYY`、`.c--XXX`と`.c--YYY`は同一属性内では併用しないものとします。
+
+
+## Layout Modules
+
+`l--flex `, `l--grid`, `l--center`などがLayout Modulesにあたります。
+
+<ModuleList moduleType='Layout Components'/>
+
+
+## Dynamic Modules
+
+`d--accordion`, `d--modal`, `d--tabs`がDynamic Modulesにあたります。
+
+
+## Custom Modules
+`c--button`, `c--card` がCustom Modulesにあたります。
