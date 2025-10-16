@@ -170,9 +170,9 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage, PropBad
 
 
 <Preview>
-	<PreviewTitle>`u--gridBorder`を使ってテーブルのような表現にする</PreviewTitle>
+	<PreviewTitle>`u--itemDivider`を使ってテーブルのような表現にする</PreviewTitle>
 	<PreviewArea resize p='30'>
-		<Grid gtc={['2fr 3fr', '1fr 2fr']} className='u--gridBorder' bdc='line'>
+		<Grid gtc={['2fr 3fr', '1fr 2fr']} className='u--itemDivider' bd bdc='line'>
 			<Box p='20' bgc='base-2'>A</Box>
 			<Box p='20' bgc='base-2'>B</Box>
 			<Box p='20'>Lorem ipsum</Box>
@@ -183,7 +183,7 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage, PropBad
 	</PreviewArea>
 	<PreviewCode slot='tab' label='JSX'>
 		```jsx
-		<Grid gtc={['2fr 3fr', '1fr 2fr']} className='u--gridBorder' bdc='line'>
+		<Grid gtc={['2fr 3fr', '1fr 2fr']} className='u--itemDivider' bd bdc='line'>
 			<Box p='20' bgc='base-2'>A</Box>
 			<Box p='20' bgc='base-2'>B</Box>
 			<Box p='20'>Lorem ipsum</Box>
@@ -195,7 +195,7 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage, PropBad
 	</PreviewCode>
 	<PreviewCode slot='tab' label='HTML'>
 		```html
-		<div class='l--grid u--gridBorder -gtc -gtc_sm -bdc:line' style='--gtc:2fr 3fr;--gtc_sm:1fr 2fr'>
+		<div class='l--grid u--itemDivider -gtc -gtc_sm -bd -bdc:line' style='--gtc:2fr 3fr;--gtc_sm:1fr 2fr'>
 			<div class='l--box -p:20 -bgc:base-2'>A</div>
 			<div class='l--box -p:20 -bgc:base-2'>B</div>
 			<div class='l--box -p:20'>Lorem ipsum</div>
