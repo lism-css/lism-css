@@ -331,6 +331,7 @@ export default {
 	ovw: { prop: 'overflowWrap', utils: { any: 'anywhere' } },
 	whitespace: { prop: 'whiteSpace', presets: ['nowrap'] },
 	wordbreak: { prop: 'wordBreak', utils: { keep: 'keep-all', all: 'break-all' } },
+	writing: { prop: 'writingMode', token: 'writing', tokenClass: 1, bp: 1 },
 	float: { prop: 'float', utils: { l: 'left', r: 'right' } },
 	clear: { prop: 'clear', presets: ['both'] },
 

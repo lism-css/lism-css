@@ -1,9 +1,9 @@
 import atts from '../../lib/helper/atts';
 
-export function getProps({ lismClass = '', duration, offset, style = {}, ...props }) {
+export function getProps({ lismClass = '', setClass = '', duration, offset, style = {}, ...props }) {
 	const theProps = {
 		lismClass: atts(lismClass, 'd--modal'),
-		lismState: ['re--style'],
+		setClass: atts(setClass, 'set--plain'),
 	};
 	if (duration) {
 		style['--duration'] = duration;
@@ -18,6 +18,6 @@ export function getProps({ lismClass = '', duration, offset, style = {}, ...prop
 export const defaultProps = {
 	body: { lismClass: 'd--modal_body' },
 	inner: { lismClass: 'd--modal_inner' },
-	closeBtn: { tag: 'button', lismState: ['re--style'], hov: 'o', d: 'in-flex' },
-	openBtn: { tag: 'button', lismState: ['re--style'], hov: 'o', d: 'in-flex' },
+	closeBtn: { tag: 'button', setClass: 'set--plain', hov: 'o', d: 'in-flex' },
+	openBtn: { tag: 'button', setClass: 'set--plain', hov: 'o', d: 'in-flex' },
 };

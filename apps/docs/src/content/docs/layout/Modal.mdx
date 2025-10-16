@@ -20,7 +20,7 @@ import NavMenu from '~/components/ex/NavMenu';
 ## 構造
 ```pug
 button[data-modal-open='modalID']
-dialog.d--modal#modalID.re--style
+dialog.d--modal#modalID.set--plain
     .d--modal_inner
         .d--modal_body ...Contents...
     button[data-modal-close='modalID']
@@ -176,11 +176,11 @@ dialog.d--modal#modalID.re--style
 					<Modal.CloseBtn modalId='modal-03' fz='xl' p='5'/>
 				</Flex>
 				<Modal.Body>
-					<Stack className='u--gridBorder' bdc='line' bd-b p='0' ov='clip'>
-						<Link href='#menu-link01' className='u--flatLink' hov='o' px='30' py='20'>Menu item 1</Link>
-						<Link href='#menu-link02' className='u--flatLink' hov='o' px='30' py='20'>Menu item 2</Link>
-						<Link href='#menu-link03' className='u--flatLink' hov='o' px='30' py='20'>Menu item 3</Link>
-						<Link href='#menu-link04' className='u--flatLink' hov='o' px='30' py='20'>Menu item 4</Link>
+					<Stack className='u--itemDivider' bdc='line' bd-b p='0' ov='clip'>
+						<Link href='#menu-link01' className='set--plain' hov='o' px='30' py='20'>Menu item 1</Link>
+						<Link href='#menu-link02' className='set--plain' hov='o' px='30' py='20'>Menu item 2</Link>
+						<Link href='#menu-link03' className='set--plain' hov='o' px='30' py='20'>Menu item 3</Link>
+						<Link href='#menu-link04' className='set--plain' hov='o' px='30' py='20'>Menu item 4</Link>
 					</Stack>
 				</Modal.Body>
 			</Modal.Inner>
@@ -199,18 +199,18 @@ dialog.d--modal#modalID.re--style
 					<Modal.CloseBtn modalId='modal-03' fz='xl' p='5'/>
 				</Flex>
 				<Modal.Body>
-					<Stack tag='ul' className='u--gridBorder' bdc='line' bd-b p='0' ov='clip'>
+					<Stack tag='ul' className='u--itemDivider' bdc='line' bd-b p='0' ov='clip'>
 						<Lism tag='li'>
-							<Link href='#menu-link01' className='u--flatLink' hov='o' px='30' py='20'>Menu item 1</Link>
+							<Link href='#menu-link01' className='set--plain' hov='o' px='30' py='20'>Menu item 1</Link>
 						</Lism>
 						<Lism tag='li'>
-							<Link href='#menu-link02' className='u--flatLink' hov='o' px='30' py='20'>Menu item 2</Link>
+							<Link href='#menu-link02' className='set--plain' hov='o' px='30' py='20'>Menu item 2</Link>
 						</Lism>
 						<Lism tag='li'>
-							<Link href='#menu-link03' className='u--flatLink' hov='o' px='30' py='20'>Menu item 3</Link>
+							<Link href='#menu-link03' className='set--plain' hov='o' px='30' py='20'>Menu item 3</Link>
 						</Lism>
 						<Lism tag='li'>
-							<Link href='#menu-link04' className='u--flatLink' hov='o' px='30' py='20'>Menu item 4</Link>
+							<Link href='#menu-link04' className='set--plain' hov='o' px='30' py='20'>Menu item 4</Link>
 						</Lism>
 					</Stack>
 				</Modal.Body>

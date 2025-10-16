@@ -34,37 +34,31 @@ class LismPropsData {
 			className,
 			lismClass,
 			lismState = [],
+			setClass = '',
 			variant,
-			// passVars,
-			// lismVar,
 			style = {},
 			_propConfig = {},
-
-			// hasBd,
 			...others
 		} = allProps;
 
-		this.lismClass = lismClass || '';
 		this.lismState = [...lismState];
 		this.styles = { ...style };
 		this._propConfig = { ..._propConfig };
 
-		// ここで variant 処理
+		let _lismClass = lismClass || '';
+		// variantがあれば追加処理
 		if (variant && lismClass) {
 			// lismClassをスペースで分割して配列化
 			const lismClassArr = lismClass.split(' ');
 			const baseClass = lismClassArr[0];
 
 			// variantを","で分割して配列化
-			const variantArr = variant
-				.split(',')
-				.map((v) => v.trim())
-				.filter(Boolean);
+			const variantArr = variant.split(',').map((v) => v.trim());
 
 			// {baseClass}--{variant} 形式でクラス名を生成
 			const variantClasses = variantArr.map((v) => `${baseClass}--${v}`);
 			// baseClass の後ろにvariantクラスを追加
-			this.lismClass = [baseClass, ...variantClasses, ...lismClassArr.slice(1)].join(' ');
+			_lismClass = [baseClass, ...variantClasses, ...lismClassArr.slice(1)].join(' ');
 		}
 
 		// propsの処理
@@ -97,7 +91,7 @@ class LismPropsData {
 		// }
 
 		// クラスの結合
-		this.className = atts(this.lismClass, this.lismState, classFromAstro, className, this.uClasses);
+		this.className = atts(classFromAstro, className, _lismClass, this.lismState, setClass, this.uClasses);
 	}
 
 	// prop解析

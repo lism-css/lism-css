@@ -13,16 +13,17 @@ export default {
 		customVar: '--flow-gap',
 		tokenKey: 'space',
 	},
-	isVertical: 'is--vertical',
-	isSkipFlow: 'is--skipFlow',
 	isLayer: 'is--layer',
-	isIsolate: 'is--isolate',
+	isVertical: 'is--vertical',
 	isLinkBox: 'is--linkBox',
-	isOverlayLink: 'is--overlayLink',
+
 	isWide: 'is--wide',
 	isFullwide: 'is--fullwide',
 	isOverwide: 'is--overwide',
 	hasGutter: 'has--gutter',
-	hasTransition: 'has--transition',
-	hasHover: 'has--hover',
+	// set
+	setIsolate: 'set--isolate',
+	setClickExpand: 'set--clickExpand',
+	setTransition: 'set--transition',
+	setHover: 'set--hover',
 };

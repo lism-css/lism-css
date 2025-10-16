@@ -4,8 +4,8 @@ description: ...
 sidebar:
   order: 7
 ---
-import { Lism, Text, Frame, Layer, Media, Dummy, Box, Flex, Grid, Center, Columns } from "lism-css/astro";
-import { Preview, PreviewArea, PreviewTitle, PreviewCode, EmbedCode, Reference, Note, Callout } from "~/components";
+import { Lism, Container, Text, Frame, Layer, Media, Dummy, Box, Flex, Grid, Center, Columns } from "lism-css/astro";
+import { Preview, PreviewArea, PreviewTitle, PreviewCode, EmbedCode, Reference, Note, Callout, IconBadge } from "~/components";
 import AllPropClasses from '../../all-prop-classes.mdx';
 
 
@@ -71,8 +71,8 @@ Lismでは、主要なCSSプロパティ群に対して、それらで頻繁に�
 |---|---|
 |**Property**|CSSプロパティ|
 |**Shorthand**|その省略形。Propクラスの`-{prop}:{val}`の`{prop}`にあたる文字列です。<br />また、Lismコンポーネントに指定するためのプロパティ名もこの文字列です。|
-|**To Class**|Propクラスとして出力される値|
-|**BP**|ブレイクポイント対応クラスの有無|
+|**To Class**|Prop Utility クラスとして出力される値|
+|**BP**|ブレイクポイント対応クラス（`-{prop}_{bp}`）サポートの有無|
 
 省略形の文字列(Shorthand)は、クラスとして出力されます。また、`Lism`コンポーネントに指定するプロパティも、この文字列です。
 
@@ -90,6 +90,7 @@ Lismでは、主要なCSSプロパティ群に対して、それらで頻繁に�
 |`letter-spacing`|`lts`|[`TYPO.LTS`](/css/tokens/#typolts)|-|
 |`text-align`|`ta`|`c`(`center`)<br/>`l`(`left`)<br/>`r`(`right`)|-|
 |`text-decoration`|`td`|`n`(`none`)<br/>`u`(`underline`)|-|
+|`writing-mode`|`writing`|`vertical`|⚪︎|
 
 
 <Preview>
@@ -105,6 +106,44 @@ Lismでは、主要なCSSプロパティ群に対して、それらで頻繁に�
 	<PreviewCode slot="tab" label="JSX">
 	```jsx
 	<Text fz='xl' fw='bold' lts='l' ta='center'>Example text</Text>
+	```
+	</PreviewCode>
+</Preview>
+
+
+### writing-mode
+
+
+縦書き用の値は、トークン（`--writing--vertical`）で管理しています。 （<span class='-fz:s'>これにより、lang属性に合わせて変数を上書きすることで、`vertical-rl`か`vertical-lr`を切り替えることができるようにもなっています。</span>）
+
+<Preview>
+	<PreviewTitle>縦書きにする例</PreviewTitle>
+	<PreviewArea p='20' resize>
+		<Box h='20em' w='100%' writing='vertical'>
+			<Lism isFlow hasGutter>
+				<Dummy lang='ja' length='s' />
+				<Dummy lang='ja' length='l' offset='3' />
+			</Lism>
+		</Box>
+	</PreviewArea>
+	<PreviewCode slot='tab' label='HTML'>
+	```html "-writing:vertical"
+	<div class='l--box -h -w:100% -writing:vertical' style='--h:20em'>
+		<div class='is--flow has--gutter'>
+			<p>ロレムイプサムの座り雨、トマ好き学習だったエリット、しかし時と活力はそのような木々と楽しみ。</p>
+			<p>ブラインド行うにはいくつかの重要な事柄が流れます。長年にわたり、私は学区と長寿であれば、そのような Liberroy,...</p>
+		</div>
+	</div>
+	```
+	</PreviewCode>
+	<PreviewCode slot='tab' label='JSX'>
+	```jsx "writing='vertical'"
+	<Box h='20em' w='100%' writing='vertical'>
+		<Lism isFlow hasGutter>
+			<Dummy lang='ja' length='s' />
+			<Dummy lang='ja' length='l' offset='3' />
+		</Lism>
+	</Box>
 	```
 	</PreviewCode>
 </Preview>
@@ -127,16 +166,16 @@ export const LinkMix = () => <a href="/css/mix"><code>mix</code></a>;
 <Preview>
 	<PreviewTitle>Examples</PreviewTitle>
 	<PreviewArea p='30'>
-		<Text c='main' bgc='base-2' p='20'>Example text</Text>
+		<Text c='main' bgc='base-2' bd bdc='line' p='40'>Example text</Text>
 	</PreviewArea>
 	<PreviewCode slot="tab" label="HTML">
 	```html
-	<p class='-c:main -bgc:base-2 -p:20'>Example text</p>
+	<p class='-c:main -bgc:base-2 -bd -bdc:line -p:40'>Example text</p>
 	```
 	</PreviewCode>
 	<PreviewCode slot="tab" label="JSX">
 	```jsx
-	<Text c='main' bgc='base-2' p='20'>Example text</Text>
+	<Text c='main' bgc='base-2' bd bdc='line' p='40'>Example text</Text>
 	```
 	</PreviewCode>
 </Preview>

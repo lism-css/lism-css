@@ -29,7 +29,7 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage, Callout
 `<LinkBox>`(`.is--linkBox`）は、主に次の2通りの使い方ができます。
 
 1. `<LinkBox>`(`.is--linkBox`）を`<a>`タグにしてそのままリンクにする。
-2. `<LinkBox>`(`.is--linkBox`）を`<div>`にして、内部に`a.is--overlayLink`を配置する。
+2. `<LinkBox>`(`.is--linkBox`）を`<div>`にして、内部に`a.set--clickExpand`を配置する。
 
 <Callout type='info'>
 LinkBox内部に**別のリンク**も配置するには、2 を採用してください。
@@ -72,18 +72,18 @@ LinkBox内部に**別のリンク**も配置するには、2 を採用してく�
 </Preview>
 
 
-### 2. 内部に`is--overlayLink`を配置する
+### 2. 内部に`set--clickExpand`を配置する
 
-内部のアンカー要素に`.is--overlayLink`を併用してもボックス全体をリンクにすることができます。
+内部のアンカー要素に`.set--clickExpand`を併用してもボックス全体をリンクにすることができます。
 
 この時、LinkBoxの内部に別のリンクも配置できます。
 
 <Preview>
 	<PreviewTitle id='linkbox-demo02'>例</PreviewTitle>
 	<PreviewArea p='30'>
-		<LinkBox p='40' bgc='base' bdc='line' bd bdrs='30' hasTransition hov='bxsh'>
+		<LinkBox p='40' bgc='base' bdc='line' bd bdrs='30' setTransition hov='bxsh'>
 			<Text fz='xl' fw='bold'>
-				<Link isOverlayLink href='#linkbox-demo02'>Heading link text</Link>
+				<Link setClickExpand href='#linkbox-demo02'>Heading link text</Link>
 			</Text>
 			<Dummy c='text-2' lh='s' my-s='20' />
 			<Text id='inner-link02' my-s='10'>
@@ -92,10 +92,10 @@ LinkBox内部に**別のリンク**も配置するには、2 を採用してく�
 		</LinkBox>
 	</PreviewArea>
 	<PreviewCode slot='tab' label='JSX'>
-		```jsx "isOverlayLink" "is--overlayLink"
-		<LinkBox p='40' bgc='base' bdc='line' bd bdrs='30' hasTransition hov='bxsh'>
+		```jsx "setClickExpand" "set--clickExpand"
+		<LinkBox p='40' bgc='base' bdc='line' bd bdrs='30' setTransition hov='bxsh'>
 			<Text fz='xl' fw='bold'>
-				<Link isOverlayLink href='#linkbox-demo02'>Heading link text</Link>
+				<Link setClickExpand href='#linkbox-demo02'>Heading link text</Link>
 			</Text>
 			<Dummy c='text-2' lh='s' my-s='20' />
 			<Text id='inner-link02' my-s='10'>
@@ -105,10 +105,10 @@ LinkBox内部に**別のリンク**も配置するには、2 を採用してく�
 		```
 	</PreviewCode>
 	<PreviewCode slot='tab' label='HTML'>
-		```jsx "is--overlayLink"
-		<div class="is--linkBox -hov:bxsh -p:40 -bgc:base -bdc:divider -bd -bdrs:30 has--transition">
+		```jsx "set--clickExpand"
+		<div class="is--linkBox -hov:bxsh -p:40 -bgc:base -bdc:divider -bd -bdrs:30 set--transition">
 			<p class="-fz:xl -fw:bold">
-				<a class="is--overlayLink" href="#linkbox-demo02">Heading Link</a>
+				<a class="set--clickExpand" href="#linkbox-demo02">Heading Link</a>
 			</p>
 			<p class="-c:text-2 -lh:s -my-s:20">
 				Lorem ipsum dolor sit, amet consectetur adipisicing elit, sed do eiusmod tempor. Non facere laudantium ex eos doloribus aut dolore nisi provident.
@@ -126,17 +126,17 @@ LinkBox内部に**別のリンク**も配置するには、2 を採用してく�
 
 ### Tabキーでフォーカスした時のアウトラインをLinkBox全体に広げ
 
-`is--overlayLink`でリンクを設置すると、Tabキーでフォーカスした時はアウトラインがボックス全体ではなくリンクテキスト部分のみになります。
+`set--clickExpand`でリンクを設置すると、Tabキーでフォーカスした時はアウトラインがボックス全体ではなくリンクテキスト部分のみになります。
 
 もしこれをボックス全体に広げたい場合、以下のようなCSSを追記してください。
 
 ```css
 @supports selector(:has(*)) {
-	.is--linkBox:has(.is--overlayLink:focus-visible) {
+	.is--linkBox:has(.set--clickExpand:focus-visible) {
 		outline: auto 1px;
 		outline: auto 1px -webkit-focus-ring-color;
 	}
-	.is--overlayLink:focus {
+	.set--clickExpand:focus {
 		outline: 0;
 	}
 }
@@ -147,7 +147,7 @@ LinkBox内部に**別のリンク**も配置するには、2 を採用してく�
 前提として、ボックス全体をリンク化する実装方法についてはさまざまな議論があります。
 
 - `<LinkBox>`自体を`a`タグにした場合は、スクリーンリーダーの読み上げが助長になってしまうことや、ボックス内部に別のリンクを配置できないという問題があります。
-- `is--overlayLink`のようにリンク要素の擬似要素を広げてボックス全体をクリックできるようにする手法では、altキーを押しながらのリンク内テキスト選択ができなくなるという問題があります。
+- `set--clickExpand`のようにリンク要素の擬似要素を広げてボックス全体をクリックできるようにする手法では、altキーを押しながらのリンク内テキスト選択ができなくなるという問題があります。
 
 その他の手法もいくつかありますが、それぞれ別の問題があります。基本的には上の2つからその場に適した方を選べばよいと思いますが、後者の問題がどうしても気になる場合は、以下のようなスクリプトでaltキーを押しながらのテキスト選択を有効にすることもできます。
 

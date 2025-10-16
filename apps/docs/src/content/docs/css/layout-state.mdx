@@ -10,7 +10,9 @@ import { Dummy, Box, Text, Lism, Stack, Flex, Container, Frame, Center, Spacer, 
 import { Preview, PreviewArea, PreviewTitle, PreviewCode, PreviewFrame, Reference, Callout, Note } from '~/components';
 import { Desktop } from '@phosphor-icons/react';
 
-Lismでは、レイアウトを組む上で特定の役割を持ち、複数のモジュールに対してつけ外しできるような汎用性の高いセレクタを Layout State として分類しています。
+Lismでは、`l--`で始まる Layout Module クラスがいくつか用意されていますが、それとは別に、`is--`または`has--`で始まる **Layout State** というクラスもあります。
+
+レイアウトを組む上で特定の役割を持ちつつ複数のレイアウトモジュールに対してもつけ外しできるような汎用性の高いものがこの Layout State に分類されています。
 
 
 {/* - `is--container` : コンテナ要素で、かつ**自身の横幅**を制御できるクラス
@@ -18,6 +20,49 @@ Lismでは、レイアウトを組む上で特定の役割を持ち、複数の�
 - `is--flow` : コンテンツ間隔の余白量を制御するためのクラス
 - `has--gutter` : サイトを通してコンテンツの左右に統一された余白をつけるためのクラス
 - etc... */}
+
+
+
+## `has--gutter`
+
+コンテンツの左右にあらかじめ定義済みの余白をつけることができるクラスです。  
+サイト全体で統一した余白量を左右に確保するためのものとして、padding系のユーティリティとは別のクラスとして用意しています。
+
+| クラス名 | 余白量 |初期値 |
+|---|---|---|
+| `has--gutter` | `--gutter` | `--s40` |
+
+<Preview>
+	<PreviewTitle>例</PreviewTitle>
+	<PreviewArea resize p='20'>
+		<Lism hasGutter>
+			<p>Lorem ipsum content...</p>
+			<p>Lorem ipsum content...</p>
+			<p>Lorem ipsum content...</p>
+		</Lism>
+	</PreviewArea>
+	<PreviewCode slot='tab' label='HTML'>
+	```html
+	<div class="has--gutter">
+		<p>Lorem ipsum content...</p>
+		<p>Lorem ipsum content...</p>
+		<p>Lorem ipsum content...</p>
+	</div>
+	```
+	</PreviewCode>
+	<PreviewCode slot='tab' label='JSX'>
+	```jsx
+	<Lism hasGutter>
+		<p>Lorem ipsum content...</p>
+		<p>Lorem ipsum content...</p>
+		<p>Lorem ipsum content...</p>
+	</Lism>
+	```
+	</PreviewCode>
+</Preview>
+
+
+
 
 
 ## `is--flow`
@@ -159,22 +204,18 @@ Lismでは、**メインコンテンツ間の余白を管理するためのク�
 [`is--flow` をネストする時の注意点](/others/addition/#is--flow-のネスト)
 </Reference>
 
-### `is--skipFlow`
+
+### `-flow:skip`
 
 `.is--flow` 直下で使用すると、次に続く兄弟要素との余白量を打ち消します。  
 フローコンテンツの先頭に absolute な要素を配置したい場合などに活用できます。
 
-```css
-.is--skipFlow + * {
-	--my-s: 0;
-}
-```
 
 <Preview>
 	<PreviewTitle>例</PreviewTitle>
 	<PreviewArea p='30'>
 		<div class="is--flow -p:10">
-			<div class='is--skipFlow'>skipFlow...</div>
+			<div class='-flow:skip'>Skip flow...</div>
 			<p>Lorem ipsum, Example content...</p>
 			<p>Lorem ipsum, Example content...</p>
 			<p>Lorem ipsum, Example content...</p>
@@ -183,7 +224,7 @@ Lismでは、**メインコンテンツ間の余白を管理するためのク�
 	<PreviewCode slot='tab' label='HTML'>
 	```html
 	<div class="is--flow -p:10">
-		<div class='is--skipFlow'>skipFlow...</div>
+		<div class='-flow:skip'>skip flow...</div>
 		<p>Lorem ipsum, Example content...</p>
 		<p>Lorem ipsum, Example content...</p>
 		<p>Lorem ipsum, Example content...</p>
@@ -305,43 +346,6 @@ s, m, l 以外の値をセットしたい場合は、`--content-size`変数を�
 <PreviewFrame url='/demo/content-size' />
 
 
-## `is--vertical`
-
-縦書きモードに変更するクラスです。`writing-mode: vertical-rl;` をセットします。
-
-
-<Preview>
-	<PreviewTitle>例</PreviewTitle>
-	<PreviewArea p='20'>
-		<Lism isVertical isFlow w='100%'>
-			<p>Lorem ipsum ...</p>
-			<p>Lorem ipsum content...</p>
-			<p>Lorem ipsum content...</p>
-		</Lism>
-	</PreviewArea>
-	<PreviewCode slot='tab' label='HTML'>
-	```html "is--vertical"
-	<div class='is--flow is--vertical -w:100%' isFlow w='100%'>
-		<p>Lorem ipsum ...</p>
-		<p>Lorem ipsum content...</p>
-		<p>Lorem ipsum content...</p>
-	</div>
-	```
-	</PreviewCode>
-	<PreviewCode slot='tab' label='JSX'>
-	```jsx
-	<Lism isVertical isFlow w='100%'>
-		<p>Lorem ipsum ...</p>
-		<p>Lorem ipsum content...</p>
-		<p>Lorem ipsum content...</p>
-	</Lism>
-	```
-	</PreviewCode>
-</Preview>
-
-
-
-
 ## `is--layer`
 
 `position:absolute`で要素を親要素サイズに合わせて配置できます。
@@ -361,9 +365,6 @@ CSSは以下のようになっており、`inset:0`と`overflow:hidden`も指定
 </Reference>
 
 
-## `is--isolate`
-
-`isolation: isolate;` をセットします。
 
 
 
@@ -372,131 +373,5 @@ CSSは以下のようになっており、`inset:0`と`overflow:hidden`も指定
 ボックス全体をリンク化するためのクラスです。
 
 
-### `is--overlayLink`
-
-`is--linkBox`と併用して、内部のリンクをボックス全体に広げるために使用します。
-
-<Reference>
-活用例は [`<LinkBox>`](/layout/linkbox) を参照してください。
-</Reference>
-
-
-
-## `has--gutter`
-
-コンテンツの左右に余白をつけることができるクラスです。  
-サイト全体で統一した余白量を左右に確保するためのものとして、padding系のユーティリティとは別のクラスとして用意しています。
-
-| クラス名 | 余白量 |初期値 |
-|---|---|---|
-| `has--gutter` | `--gutter` | `--s40` |
-
-<Preview>
-	<PreviewTitle>例</PreviewTitle>
-	<PreviewArea resize p='20'>
-		<Lism hasGutter>
-			<p>Lorem ipsum content...</p>
-			<p>Lorem ipsum content...</p>
-			<p>Lorem ipsum content...</p>
-		</Lism>
-	</PreviewArea>
-	<PreviewCode slot='tab' label='HTML'>
-	```html
-	<div class="has--gutter">
-		<p>Lorem ipsum content...</p>
-		<p>Lorem ipsum content...</p>
-		<p>Lorem ipsum content...</p>
-	</div>
-	```
-	</PreviewCode>
-	<PreviewCode slot='tab' label='JSX'>
-	```jsx
-	<Lism hasGutter>
-		<p>Lorem ipsum content...</p>
-		<p>Lorem ipsum content...</p>
-		<p>Lorem ipsum content...</p>
-	</Lism>
-	```
-	</PreviewCode>
-</Preview>
-
-
-
-## `has--transition`
-
-専用の変数を用いて、transitionプロパティをセットします。
-
-<Reference>
-活用例は [`hover`の解説ページ](/css/hover#has--transition) を参照してください。
-</Reference>
-
-## `has--hover`
-
-ホバースタイル管理用のCSS変数をセットします。主に子要素のホバースタイルを制御するために使用します。
-
-```scss
-@media (any-hover: hover) {
-	.has--hover:hover {
-		--notHov_: ;
-	}
-	.has--hover:not(:hover) {
-		--isHov_: ;
-	}
-}
-@media (any-hover: none) {
-	.has--hover {
-		--isHov_: ;
-	}
-}
-```
-
-<Reference>
-活用例は [`hover`の解説ページ](/css/hover#has--hover) を参照してください。
-</Reference>
-
-
-
-{/* 
-## `has--mask`
-
-
-`--mask-img`変数と組み合わせて、自身にmaskを適用します。
-
-
-```css
-.has--mask{
-	mask: var(--mask-img) no-repeat 50% / contain;
-}
-```
-
-Lism Componentsでは`hasMask`プロパティに指定した文字列が`--mask-img`として出力されるようになっています。（この時、`<svg>`を渡すと、base64へエンコードされます。
-
-<Preview>
-	<PreviewTitle>例</PreviewTitle>
-	<PreviewArea p='10'>
-	<Media src='/img/img-3.jpg' alt='' ar='16/9' width='960' height='640' loading='lazy' hasMask='<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><path fill="#FF0066" d="M170.4,25.7c16.1,14.2,23.2,38.5,24.8,61.7c1.7,23.3-1.8,45.5-12.9,62.3c-11,16.9-29.3,28.6-48.8,34.5 c-19.4,5.9-40,6.1-59.5,0.4c-19.5-5.6-37.9-17.4-51.7-34.9c-14-17.5-23.2-40.8-18-60.2c5-19.4,24.5-34.7,43.5-48.4 s37.6-25.7,59.5-29.7C129.1,7.3,154.2,11.4,170.4,25.7z" /></svg>' />
-	</PreviewArea>
-	<PreviewCode slot='tab' label='JSX'>
-		```jsx
-		<Media
-			src='/img/img-3.jpg' alt='' ar='16/9' width='960' height='640' loading='lazy'
-			hasMask='<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><path fill="#FF0066" d="M170.4,25.7c16.1,14.2,23.2,38.5,24.8,61.7c1.7,23.3-1.8,45.5-12.9,62.3c-11,16.9-29.3,28.6-48.8,34.5 c-19.4,5.9-40,6.1-59.5,0.4c-19.5-5.6-37.9-17.4-51.7-34.9c-14-17.5-23.2-40.8-18-60.2c5-19.4,24.5-34.7,43.5-48.4 s37.6-25.7,59.5-29.7C129.1,7.3,154.2,11.4,170.4,25.7z" /></svg>'
-		/>
-		```
-	</PreviewCode>
-	<PreviewCode slot='tab' label='HTML'>
-		```html
-		<img
-			src="/img/img-3.jpg" width="960" height="640" loading="lazy"
-			class="has--mask -ar:16/9"
-			style="--mask-img:url(data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMjAwIDIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBmaWxsPSIjRkYwMDY2IiBkPSJNMTcwLjQsMjUuN2MxNi4xLDE0LjIsMjMuMiwzOC41LDI0LjgsNjEuN2MxLjcsMjMuMy0xLjgsNDUuNS0xMi45LDYyLjNjLTExLDE2LjktMjkuMywyOC42LTQ4LjgsMzQuNSBjLTE5LjQsNS45LTQwLDYuMS01OS41LDAuNGMtMTkuNS01LjYtMzcuOS0xNy40LTUxLjctMzQuOWMtMTQtMTcuNS0yMy4yLTQwLjgtMTgtNjAuMmM1LTE5LjQsMjQuNS0zNC43LDQzLjUtNDguNCBzMzcuNi0yNS43LDU5LjUtMjkuN0MxMjkuMSw3LjMsMTU0LjIsMTEuNCwxNzAuNCwyNS43eiIgLz48L3N2Zz4=)"
-		/>
-		```
-	</PreviewCode>
-</Preview> */}
-
-
-
 <Spacer h='1rem' />
-
 

@@ -16,20 +16,20 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportSource } from '~
 <Preview>
 	<PreviewTitle>Preview</PreviewTitle>
 	<PreviewArea p='30'>
-		<LinkBox layout={Frame} href='#banner-link' hov='o' hasTransition bdrs='20'>
+		<LinkBox layout={Frame} href='#banner-link' hov='o' setTransition bdrs='20'>
 			<img src='https://picsum.photos/seed/hogeee/1200/400' alt='' width='800' height='200' />
 		</LinkBox>
 	</PreviewArea>
 	<PreviewCode slot='tab' label='JSX'>
 		```jsx "Frame" "LinkBox"
-		<LinkBox layout={Frame} href='#banner-link' hov='o' hasTransition bdrs='20'>
+		<LinkBox layout={Frame} href='#banner-link' hov='o' setTransition bdrs='20'>
 			<img src='https://picsum.photos/seed/hogeee/1200/400' alt='' width='800' height='200' />
 		</LinkBox>
 		```
 	</PreviewCode>
 	<PreviewCode slot='tab' label='HTML'>
 		```html "l--frame" "is--linkBox"
-		<a class='l--frame is--linkBox -hov:o has--transition -bdrs:20' href='#banner-link'>
+		<a class='l--frame is--linkBox -hov:o set--transition -bdrs:20' href='#banner-link'>
 			<img src='https://picsum.photos/seed/hogeee/1200/400' alt='' width='800' height='200' />
 		</a>
 		```
@@ -40,7 +40,7 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportSource } from '~
 <Preview>
 	<PreviewTitle>`Layer`で画像に被せてコンテンツを表示</PreviewTitle>
 	<PreviewArea p='30' resize>
-		<LinkBox layout={Frame} href='#banner-link' hov='o' hasTransition bdrs='20'>
+		<LinkBox layout={Frame} href='#banner-link' hov='o' setTransition bdrs='20'>
 			<Media isLayer src='https://picsum.photos/seed/hogeee/1200/400' alt='' width='960' height='640' loading='lazy' />
 			<Flex jc='between' ai='center' g='30' p='30' c='#fff' bgc='rgb(0 0 0 / 50%)' pos='rel' min-h='25cqw'>
 				<Stack g='5' lh='s'>
@@ -55,7 +55,7 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportSource } from '~
 	</PreviewArea>
 	<PreviewCode slot='tab' label='JSX'>
 		```jsx
-		<LinkBox layout={Frame} href='#banner-link' hov='o' hasTransition bdrs='20'>
+		<LinkBox layout={Frame} href='#banner-link' hov='o' setTransition bdrs='20'>
 			<Media isLayer src='https://picsum.photos/seed/hogeee/1200/400' alt='' width='960' height='640' loading='lazy' />
 			<Flex jc='between' ai='center' g='30' p='30' c='#fff' bgc='rgb(0 0 0 / 50%)' pos='rel' min-h='25cqw'>
 				<Stack g='5' lh='s'>
@@ -71,7 +71,7 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportSource } from '~
 	</PreviewCode>
 	<PreviewCode slot='tab' label='HTML'>
 		```html "l--frame" "is--linkBox"
-		<a class='l--frame is--linkBox -hov:o has--transition -bdrs:20' href='#banner-link'>
+		<a class='l--frame is--linkBox -hov:o set--transition -bdrs:20' href='#banner-link'>
 			<img class='is--layer' src='https://picsum.photos/seed/hogeee/1200/400' width='960' height='640' loading='lazy' />
 			<div class='l--flex -jc:sb -ai:center -g:30 -p:30 -c -bgc -pos:rel -min-h' style='--c:#fff;--bgc:rgb(0 0 0 / 50%);--min-h:25cqw'>
 				<div class='l--stack -g:5 -lh:s'>

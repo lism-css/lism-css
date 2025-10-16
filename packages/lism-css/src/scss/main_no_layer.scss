@@ -5,26 +5,16 @@
 	$layer_mode: 0
 );
 
-// reset
-@use './reset' as reset;
-
 // base
+@use './reset' as reset;
 @use './base/index' as base;
 
-// layout state
-@use './state/index' as state;
-
-// layout modules
-@use './layout/index' as layout;
-
-// dynamic modules
-@use './dynamic/index' as dynamic;
-
-// other modules
+// Modules
+@use './modules/state/index' as state;
+@use './modules/layout/index' as layout;
+@use './modules/dynamic/index' as dynamic;
 // @use './component/index' as component;
 
 // utility
 @use './utility/index' as utility;
-
-// props
 @use './props/index' as props;

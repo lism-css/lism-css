@@ -1,0 +1,11 @@
+.u--itemDivider {
+	--bdw: 1px;
+	--bdc: currentColor;
+	gap: var(--bdw);
+	// padding: var(--bdw); → 外枠も見せるなら
+	overflow: clip;
+
+	& > * {
+		box-shadow: 0 0 0 var(--bdw) var(--bdc);
+	}
+}

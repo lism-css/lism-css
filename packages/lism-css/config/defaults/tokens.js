@@ -21,4 +21,5 @@ export default {
 		pre: '--',
 		values: ['red', 'blue', 'green', 'yellow', 'purple', 'orange', 'pink', 'gray', 'white', 'black', 'keycolor'],
 	},
+	writing: ['vertical'],
 };

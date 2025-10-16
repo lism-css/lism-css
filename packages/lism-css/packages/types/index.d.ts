@@ -171,6 +171,7 @@ export interface LismProps extends LismBaseProps {
 	children?: React.ReactNode;
 	variant?: string;
 	lismClass?: string;
+	setClass?: string;
 	lismState?: string[];
 	forwardedRef?: React.Ref<any>;
 }

@@ -24,20 +24,20 @@
 // .-flow\: > * {
 // 	--my-s: var(--flow-gap);
 // }
+.-flow\:skip + * {
+	--my-s: 0;
+}
 
 // 見出しの上部余白は少しだけ広くする. ただし、見出し直後の見出しの場合を除く。
 // Note: :first-child での打消しのほうが優先度高くなるように注意する
 .is--flow > :where(h1, h2, h3, h4) {
 	margin-block-start: calc(var(--my-s) + var(--flow--h));
 }
-// :where(h2 + h3, h3 + h4) {
-// 	--flow--h: 0px;
-// }
 
 // fullwideの連結に余白は基本不要
-.is--flow > :where(.is--fullwide + .is--fullwide) {
-	--my-s: 0;
-}
+// .is--flow > :where(.is--fullwide + .is--fullwide) {
+// 	--my-s: 0;
+// }
 
 // :first-child への上書きのほうが優先度高くなるように。
 .is--flow > :first-child {
