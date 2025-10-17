@@ -1,6 +1,6 @@
 import atts from '../lib/helper/atts';
 export default function getLayoutProps(layout, props) {
-	if (!layout) return props;
+	if (!layout || typeof layout !== 'string') return props;
 
 	const { lismClass, ...rest } = props;
 	rest.lismClass = atts(lismClass, `l--${layout}`);
