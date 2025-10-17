@@ -1,14 +1,15 @@
 ---
 import type { LismProps } from '../../types';
 import getLismProps from '../../../dist/lib/getLismProps';
+import getLayoutProps from '../../../dist/components/getLayoutProps';
 
 // Propsの定義
 interface Props extends LismProps {}
 
-const { as, exProps, tag, ...props } = Astro.props || {};
+const { as, tag, layout, exProps, ...props } = Astro.props || {};
 const JSX = as || tag || 'div';
 ---
 
-<JSX {...getLismProps(props)} {...exProps}>
+<JSX {...getLismProps(getLayoutProps(layout, props))} {...exProps}>
 	<slot />
 </JSX>

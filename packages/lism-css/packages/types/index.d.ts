@@ -184,9 +184,7 @@ export interface FlexProps extends LismProps {
 	fxd?: ResponsiveValue<string>;
 	fxf?: ResponsiveValue<string>;
 }
-export interface FlexItemProps extends LismProps {
-	layout?: React.ElementType;
-}
+
 export interface StackProps extends LismProps {}
 export interface GridProps extends LismProps {
 	_grid?: string;

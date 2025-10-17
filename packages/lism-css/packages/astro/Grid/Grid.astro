@@ -1,13 +1,5 @@
 ---
-import type { LismProps } from '../../types';
 import { Lism } from '../Lism';
-import { getGridProps } from '../../../dist/components/Grid/getProps';
-
-// Propsの定義
-interface Props extends LismProps {}
-let props = Astro.props;
 ---
 
-<Lism {...getGridProps(props)}>
-	<slot />
-</Lism>
+<Lism layout='grid' {...Astro.props}><slot /></Lism>
