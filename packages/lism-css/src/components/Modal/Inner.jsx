@@ -1,11 +1,10 @@
-import { Stack } from '../Stack';
+import { Lism } from '../Lism';
 import { defaultProps } from './getProps';
 
-export default function ModalInner({ children, layout, ...props }) {
-	const Layout = layout || Stack;
+export default function ModalInner({ children, ...props }) {
 	return (
-		<Layout {...defaultProps.inner} {...props}>
+		<Lism {...defaultProps.inner} {...props}>
 			{children}
-		</Layout>
+		</Lism>
 	);
 }
