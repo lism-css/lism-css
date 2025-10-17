@@ -234,6 +234,7 @@ export default {
 
 	// grid
 	// gd: { prop: 'grid' },
+	gt: { prop: 'gridTemplate', bp: 1 },
 	gta: { isVar: 1, bp: 1 },
 	gtc: { isVar: 1, presets: ['subgrid'], bp: 1 },
 	gtr: { isVar: 1, presets: ['subgrid'], bp: 1 },
