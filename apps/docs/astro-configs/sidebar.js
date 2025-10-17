@@ -240,10 +240,6 @@ export default [
 				link: '/lib/components/navmenu/',
 			},
 			{
-				label: 'Reel',
-				link: '/lib/components/reel/',
-			},
-			{
 				label: 'ShapeDivider',
 				link: '/lib/components/shapedivider/',
 			},
@@ -274,6 +270,10 @@ export default [
 			{
 				label: 'DividerLabel',
 				link: '/lib/components/dividerlabel/',
+			},
+			{
+				label: 'Reel',
+				link: '/lib/components/reel/',
 			},
 			{
 				label: 'FAQ',

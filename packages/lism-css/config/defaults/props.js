@@ -234,13 +234,12 @@ export default {
 
 	// grid
 	// gd: { prop: 'grid' },
-	gt: { prop: 'gridTemplate', bp: 1 },
-	gta: { prop: 'gridTemplateAreas', bp: 1 },
-	gtc: { prop: 'gridTemplateColumns', presets: ['subgrid'], bp: 1 },
-	gtr: { prop: 'gridTemplateRows', presets: ['subgrid'], bp: 1 },
+	gta: { isVar: 1, bp: 1 },
+	gtc: { isVar: 1, presets: ['subgrid'], bp: 1 },
+	gtr: { isVar: 1, presets: ['subgrid'], bp: 1 },
 	gaf: { prop: 'gridAutoFlow', utils: { row: 'row', col: 'column' }, bp: 1 }, //dense
-	gac: { prop: 'gridAutoColumns', bp: 1 },
-	gar: { prop: 'gridAutoRows', bp: 1 },
+	gac: { prop: 'gridAutoColumns' },
+	gar: { prop: 'gridAutoRows' },
 
 	// grid item
 	ga: { prop: 'gridArea', presets: ['1/1'], bp: 1 },
