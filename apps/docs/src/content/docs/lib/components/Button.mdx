@@ -239,37 +239,37 @@ Common Props の `w`, `h` ではなく、`width`, `height` を使ってくださ
 
 ### `Grid`でアイコンを端に寄せる
 
-`layout={Grid}`を指定すると gridレイアウト（`.l--grid`クラス）に切り替えることができます。  
+`layout='grid'`を指定すると gridレイアウト（`.l--grid`クラス）に切り替えることができます。  
 これにより、アイコンを端に寄せるレイアウトを組むこともできます。
 
 <Preview>
 	<PreviewTitle>Preview</PreviewTitle>
 	<PreviewArea resize p='20' isFlow='20'>
-		<Button href='###' layout={Grid} max-w='20rem' bdrs='10'>
+		<Button href='###' layout='grid' max-w='20rem' bdrs='10'>
 			<Icon icon='cart'/>
 			<span>Button</span>
 		</Button>
-		<Button href='###' layout={Grid} max-w='20rem' bdrs='10'>
+		<Button href='###' layout='grid' max-w='20rem' bdrs='10'>
 			<span>Button</span>
 			<Icon icon={ArrowRightIcon}/>
 		</Button>
-		<Button href='###' layout={Grid} max-w='20rem' bdrs='10'>
+		<Button href='###' layout='grid' max-w='20rem' bdrs='10'>
 			<Icon icon='cart'/>
 			<span>Button</span>
 			<Icon icon={ArrowRightIcon}/>
 		</Button>
 	</PreviewArea>
 	<PreviewCode slot='tab' label='JSX'>
-		```jsx "layout={Grid}"
-		<Button href='###' layout={Grid} max-w='20rem' bdrs='10'>
+		```jsx "layout='grid'"
+		<Button href='###' layout='grid' max-w='20rem' bdrs='10'>
 			<Icon icon='cart'/>
 			<span>Button</span>
 		</Button>
-		<Button href='###' layout={Grid} max-w='20rem' bdrs='10'>
-			<span gc='2'>Button</span>
+		<Button href='###' layout='grid' max-w='20rem' bdrs='10'>
+			<span>Button</span>
 			<Icon icon={ArrowRightIcon}/>
 		</Button>
-		<Button href='###' layout={Grid} max-w='20rem' bdrs='10'>
+		<Button href='###' layout='grid' max-w='20rem' bdrs='10'>
 			<Icon icon='cart'/>
 			<span>Button</span>
 			<Icon icon={ArrowRightIcon}/>

@@ -3,7 +3,7 @@ title: 'Card'
 description: ...
 ---
 
-import { Dummy, Box, Flex, Stack, Center, Grid, Frame, Text, LinkBox, Link, Layer, Columns, Media, WithSide } from 'lism-css/react';
+import { Dummy, Box, Flex, Stack, Center, Grid, Frame, Text, LinkBox, Link, Layer, Columns, Media, WithSide } from 'lism-css/astro';
 import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportSource, ImportExComponent } from '~/components';
 import Card from '~/components/ex/Card/index.jsx';
 
@@ -28,7 +28,7 @@ import Card from '~/components/ex/Card/index.jsx';
 			<Frame pos='rel' ar='3/4' bdrs='30' bxsh='30'>
 				<Media src='/img/img-1.jpg' alt='' width='960' height='640' />
 				<Layer bgc='rgb(0 0 0 / 20%)'/>
-				<Layer layout={Stack} c='white' p='30' g='30'>
+				<Layer layout='stack' c='white' p='30' g='30'>
 					<h3 className='u--trimHL -fz:l -my-s:auto'>Card Title</h3>
 					<Text className='u--trimHL' fz='s' lh='s' o='mild'>ロレムイプサムの座り雨、トマ好き学習だったエリット、しかし時と活力はそのような木々と楽しみ。</Text>
 					<Center tag='a' href='#' c='black' bgc='white' td='none' lh='1' p='20' bdrs='99' hov='o'>Link Text</Center>
@@ -44,11 +44,11 @@ import Card from '~/components/ex/Card/index.jsx';
 					<Link href='#' d='in-flex' mx-s='auto' c='base' bgc='text' td='none' bd-b lh='1' py='20' px='30' jc='center' hov='o' className='u--innerR'>Link Text</Link>
 				</Stack>
 			</Stack>
-			
 		</Columns>
 		</Box>
 	</PreviewArea>
 </Preview>
+
 
 ## Examples
 
@@ -56,11 +56,11 @@ import Card from '~/components/ex/Card/index.jsx';
 
 <Preview>
 	<PreviewTitle>Preview</PreviewTitle>
-	<PreviewArea resize p='30'>
+	<PreviewArea p='30'>
 		<Frame pos='rel' ar='3/4' bdrs='30' bxsh='30' mx='auto' max-w='xs'>
 			<Media src='/img/img-1.jpg' alt='' width='960' height='640' />
 			<Layer bgc='rgb(0 0 0 / 20%)'/>
-			<Layer layout={Stack} c='white' p='30' g='30'>
+			<Layer layout='stack' c='white' p='30' g='30'>
 				<h3 className='u--trimHL -fz:l -my-s:auto'>Card Title</h3>
 				<Text className='u--trimHL' fz='s' lh='s' o='mild'>ロレムイプサムの座り雨、トマ好き学習だったエリット、しかし時と活力はそのような木々と楽しみ。</Text>
 				<Center tag='a' href='#' c='black' bgc='white' td='none' lh='1' p='20' bdrs='99' hov='o'>Link Text</Center>
@@ -72,7 +72,7 @@ import Card from '~/components/ex/Card/index.jsx';
 		<Frame pos='rel' ar='3/4' bdrs='30' bxsh='30' mx='auto' max-w='xs'>
 			<Media src='/img/img-1.jpg' alt='' width='960' height='640' />
 			<Layer bgc='rgb(0 0 0 / 20%)'/>
-			<Layer layout={Stack} c='white' p='30' g='30'>
+			<Layer layout='stack' c='white' p='30' g='30'>
 				<h3 className='u--trimHL -fz:l -my-s:auto'>Card Title</h3>
 				<Text className='u--trimHL' fz='s' lh='s' o='mild'>ロレムイプサムの座り雨、トマ好き学習だったエリット、しかし時と活力はそのような木々と楽しみ。</Text>
 				<Center tag='a' href='#' c='black' bgc='white' td='none' lh='1' p='20' bdrs='99' hov='o'>Link Text</Center>
@@ -247,7 +247,8 @@ import Card from '~/components/ex/Card/index.jsx';
 <Preview>
 	<PreviewTitle>Flex時にメディア側のアスペクト比を指定すると、コンテンツ側の高さが低い場合にその比率で固定されます。</PreviewTitle>
 	<PreviewArea resize p='30'>
-		<LinkBox layout={Flex}
+		<LinkBox
+			layout='flex'
 			href='#_' c='text' bgc='base' p='10' bdrs='20'
 			bd bdw='3px' bdc='base-2'
 			hov={{set: true, bdc: 'link'}}
@@ -264,7 +265,8 @@ import Card from '~/components/ex/Card/index.jsx';
 	</PreviewArea>
 	<PreviewCode slot='tab' label='JSX'>
 		```jsx "ar='1/1'"
-		<LinkBox layout={Flex}
+		<LinkBox
+			layout='flex'
 			href='#_' c='text' bgc='base' p='10' bdrs='20'
 			bd bdw='3px' bdc='base-2'
 			hov={{set: true, bdc: 'link'}}
@@ -290,7 +292,8 @@ import Card from '~/components/ex/Card/index.jsx';
 <Preview>
 	<PreviewTitle>ブレイクポイントで切り替える場合</PreviewTitle>
 	<PreviewArea resize p='30'>
-		<LinkBox layout={Grid}
+		<LinkBox
+			layout='grid'
 			href='#_'
 			gt={[`'img' '.'`, `'img .' / 200px 1fr`]}
 			setHover
@@ -307,7 +310,8 @@ import Card from '~/components/ex/Card/index.jsx';
 	</PreviewArea>
 	<PreviewCode slot='tab' label='JSX'>
 		```jsx
-		<LinkBox layout={Grid}
+		<LinkBox
+			layout='grid'
 			href='#_'
 			gt={[`'img' '.'`, `'img .' / 200px 1fr`]}
 			setHover
@@ -387,34 +391,3 @@ import Card from '~/components/ex/Card/index.jsx';
 </PreviewCode>
 </Preview>
 
-
-
-{/* <Preview>
-	<PreviewTitle>rtl言語でのテスト</PreviewTitle>
-	<PreviewArea p={20} max-w='40em'>
-		<Card isFlex dir='rtl'>
-			<Frame w='40%'>
-				<img src='/img/img-1.jpg' alt='' width='960' height='640' />
-			</Frame>
-			<CardBody>
-				<h3 className='-fz:l'>ما هو 'لوريم إيبسوم' ؟</h3>
-				<p>هذا نص وهمي أنا أكتب جمل ليس لها معنى معين.هذا نص وهمي أنا أكتب جمل ليس لها معنى معين.هذا نص وهمي أنا أكتب جمل ليس لها معنى معين.</p>
-				<Lism fz='s' aslf='flex-e' my-s='auto'>النص السفلي</Lism>
-			</Stack>
-		</Card>
-	</PreviewArea>
-	<PreviewCode slot='tab' label='JSX'>
-		```jsx
-		<Card isFlex dir='rtl'>
-			<Frame w='40%'>
-				<img src='/img/img-1.jpg' alt='' width='960' height='640' />
-			</Frame>
-			<CardBody>
-				<h3 className='-fz:l'>ما هو 'لوريم إيبسوم' ؟</h3>
-				<p>هذا نص وهمي أنا أكتب جمل ليس لها معنى معين.هذا نص وهمي أنا أكتب جمل ليس لها معنى معين.هذا نص وهمي أنا أكتب جمل ليس لها معنى معين.</p>
-				<Lism fz='s' aslf='flex-e' my-s='auto'>النص السفلي</Lism>
-			</Stack>
-		</Card>
-		```
-	</PreviewCode>
-</Preview> */}

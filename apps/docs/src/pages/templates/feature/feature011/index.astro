@@ -2,7 +2,7 @@
 import DemoPageLayout from '~/layouts/DemoPageLayout.astro';
 import Button from '~/components/ex/Button/index.astro';
 
-import { Container, Frame, Flex, Grid, GridItem, Layer, Media, Stack, Text } from 'lism-css/astro';
+import { Container, Frame, Flex, Grid, Layer, Media, Stack, Text } from 'lism-css/astro';
 import './_style.css';
 ---
 
@@ -40,8 +40,8 @@ import './_style.css';
 							</p>
 						</Stack>
 						<Flex w='stretch' jc='center'>
-							<Button layout={Grid} href='#' gtc='1em 1fr 1em' jc='center' w='100%' max-w='250px' p='20' bdrs='10'>
-								<GridItem tag='span' gc='2'>View More</GridItem>
+							<Button layout='grid' href='#' w='100%' max-w='250px' p='20' bdrs='10'>
+								<span>View More</span>
 							</Button>
 						</Flex>
 					</Stack>

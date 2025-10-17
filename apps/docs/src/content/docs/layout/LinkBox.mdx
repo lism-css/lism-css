@@ -19,9 +19,7 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage, Callout
 | Prop | 説明 |
 |---|---|
 |`href`|リンク先を指定できます。`href`が指定されている場合は`a`タグとなり、なければ`div`として出力されます。|
-{/* |`layout`|指定したLismコンポーネントでLinkBoxを展開できます。|
-|`target`|target属性を指定できます。|
-|`rel`|rel属性を指定できます| */}
+
 
 
 ## Usage
@@ -81,7 +79,7 @@ LinkBox内部に**別のリンク**も配置するには、2 を採用してく�
 <Preview>
 	<PreviewTitle id='linkbox-demo02'>例</PreviewTitle>
 	<PreviewArea p='30'>
-		<LinkBox p='40' bgc='base' bdc='line' bd bdrs='30' setTransition hov='bxsh'>
+		<LinkBox tag='section' p='40' bgc='base' bdc='line' bd bdrs='30' setTransition hov='bxsh'>
 			<Text fz='xl' fw='bold'>
 				<Link setClickExpand href='#linkbox-demo02'>Heading link text</Link>
 			</Text>

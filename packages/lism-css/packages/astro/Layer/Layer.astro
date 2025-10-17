@@ -1,15 +1,8 @@
 ---
-import type { LismProps } from '../../types';
 import { Lism } from '../Lism';
-import { getLayerProps } from '../../../dist/components/Layer/getProps';
-
-// Propsの定義
-interface Props extends LismProps {}
-
-let { layout, ...props } = Astro.props || {};
-const Layout = layout || Lism;
+import getFilterProps from '../../../dist/components/getFilterProps';
 ---
 
-<Layout isLayer {...getLayerProps(props)}>
+<Lism isLayer {...getFilterProps(Astro.props, 'backdropFilter')}>
 	<slot />
-</Layout>
+</Lism>
