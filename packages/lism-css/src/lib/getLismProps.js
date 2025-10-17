@@ -35,6 +35,7 @@ class LismPropsData {
 			lismClass,
 			lismState = [],
 			setClass = '',
+			layout,
 			variant,
 			style = {},
 			_propConfig = {},
@@ -52,13 +53,15 @@ class LismPropsData {
 			const lismClassArr = lismClass.split(' ');
 			const baseClass = lismClassArr[0];
 
-			// variantを","で分割して配列化
-			const variantArr = variant.split(',').map((v) => v.trim());
-
 			// {baseClass}--{variant} 形式でクラス名を生成
-			const variantClasses = variantArr.map((v) => `${baseClass}--${v}`);
+			const variantClass = `${baseClass}--${variant}`;
+
 			// baseClass の後ろにvariantクラスを追加
-			_lismClass = [baseClass, ...variantClasses, ...lismClassArr.slice(1)].join(' ');
+			_lismClass = [baseClass, variantClass, ...lismClassArr.slice(1)].join(' ');
+		}
+
+		if (typeof layout === 'string' && layout) {
+			_lismClass = atts(_lismClass, `l--${layout}`);
 		}
 
 		// propsの処理
