@@ -1,6 +1,6 @@
 ---
 import type { LismProps } from '../types';
-import { Flex } from '../Flex';
+import { Grid } from '../Grid';
 import { defaultProps } from '../../../dist/components/Accordion/getProps';
 
 interface Props extends LismProps {}
@@ -8,6 +8,6 @@ interface Props extends LismProps {}
 const props = Astro.props || {};
 ---
 
-<Flex tag='summary' {...defaultProps.header} {...props}>
+<Grid tag='summary' {...defaultProps.header} {...props}>
 	<slot />
-</Flex>
+</Grid>

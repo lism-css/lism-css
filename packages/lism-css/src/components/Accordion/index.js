@@ -1,4 +1,4 @@
-import { Accordion as Root, Header, Label, Body } from './Accordion';
+import { Accordion as Root, Header, Label, Body, HeaderLabel } from './Accordion';
 import { default as Icon } from './AccIcon';
 
-export default { Root, Header, Label, Icon, Body };
+export default { Root, Header, Label, Icon, Body, HeaderLabel };
