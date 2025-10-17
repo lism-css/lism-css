@@ -1,11 +1,10 @@
 ---
 import type { LismProps } from '../../types';
 import { Lism } from '../Lism';
-import getProps from '../../../dist/components/Box/getProps';
 
 // Propsの定義
 interface Props extends LismProps {}
 const props = Astro.props || {};
 ---
 
-<Lism {...getProps(props)}><slot /></Lism>
+<Lism layout='box' {...props}><slot /></Lism>

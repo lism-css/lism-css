@@ -3,7 +3,8 @@ const FILTERS = ['blur', 'contrast', 'brightness', 'dropShadow', 'grayscale', 'h
 export default function getFilterProps(props, filterType = 'filter') {
 	const filterValues = [];
 
-	const style = structuredClone(props.style || {});
+	// 安全にstyleオブジェクトをコピー（structuredCloneの代わりにスプレッド演算子を使用）
+	const style = { ...(props.style || {}) };
 
 	if (null == props[filterType]) {
 		FILTERS.forEach((filterName) => {
@@ -20,6 +21,9 @@ export default function getFilterProps(props, filterType = 'filter') {
 		}
 	}
 
-	props.style = style;
-	return props;
+	// propsオブジェクトを直接変更せず、新しいオブジェクトを返す
+	return {
+		...props,
+		style,
+	};
 }

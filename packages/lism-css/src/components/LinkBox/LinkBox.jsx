@@ -1,12 +1,11 @@
 import { Lism } from '../Lism';
 
-export default function LinkBox({ layout, children, ...props }) {
+export default function LinkBox({ children, ...props }) {
 	const hasHref = !!props.href;
 	const tag = hasHref ? 'a' : 'div';
-	const LismComponent = layout || Lism;
 	return (
-		<LismComponent isLinkBox tag={tag} {...props}>
+		<Lism isLinkBox tag={tag} {...props}>
 			{children}
-		</LismComponent>
+		</Lism>
 	);
 }
