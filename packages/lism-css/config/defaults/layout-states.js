@@ -21,9 +21,13 @@ export default {
 	isFullwide: 'is--fullwide',
 	isOverwide: 'is--overwide',
 	hasGutter: 'has--gutter',
-	// set
+
+	// set class
 	setIsolate: 'set--isolate',
 	setClickExpand: 'set--clickExpand',
 	setTransition: 'set--transition',
 	setHover: 'set--hover',
+	setScrollSnap: 'set--scrollSnap',
+	setPlain: 'set--plain',
+	setShadow: 'set--shadow',
 };
