@@ -10,7 +10,7 @@ export function getAccIconProps({ isTrigger, ...props }) {
 	const defaultProps = {
 		lismClass: 'd--accordion_icon',
 		tag: 'span',
-		d: 'inline-grid',
+		// d: 'inline-grid',
 	};
 	// isTrigger なら、buttun にする
 	if (isTrigger) {
@@ -22,13 +22,12 @@ export function getAccIconProps({ isTrigger, ...props }) {
 }
 
 export const defaultProps = {
-	header: { lismClass: 'd--accordion_header', ai: 'c' },
-	label: { lismClass: 'd--accordion_label', tag: 'span', fx: '1' },
+	header: { lismClass: 'd--accordion_header' },
+	label: { lismClass: 'd--accordion_label', tag: 'span' },
 	body: {
 		lismClass: 'd--accordion_body',
 	},
 	inner: {
 		lismClass: 'd--accordion_inner',
-		ov: 'hidden',
 	},
 };

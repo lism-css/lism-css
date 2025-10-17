@@ -92,8 +92,8 @@ Q&Aのレイアウト構築例を紹介します。
 <Preview>
 	<PreviewTitle>アコーディオン形式のFAQ</PreviewTitle>
 	<PreviewArea p='30'>
-		<Stack>
-			<Accordion.Root p='30' px='10' bd-b bdc='line'>
+		<Stack className='u--itemDivider' bdc='line'>
+			<Accordion.Root p='30' px='10'>
 				<Accordion.Header>
 					<Accordion.Label fw='bold'>疲れたら踊ってもいいですか？</Accordion.Label>
 					<Accordion.Icon />
@@ -102,7 +102,7 @@ Q&Aのレイアウト構築例を紹介します。
 					<p>もちろんです。汗をかいてリフレッシュしてください。</p>
 				</Accordion.Body>
 			</Accordion.Root>
-			<Accordion.Root p='30' px='10' bd-b bdc='line'>
+			<Accordion.Root p='30' px='10'>
 				<Accordion.Header>
 					<Accordion.Label fw='bold'>猫がパソコンのキーボードの上に乗ってくるのはどうして？</Accordion.Label>
 					<Accordion.Icon />
@@ -111,7 +111,7 @@ Q&Aのレイアウト構築例を紹介します。
 					<p>飼い主さんのそばにいたい気持ちや、キーボードの温かさが心地よいからという説があります。構ってほしいサインかもしれませんので、たくさん撫でてあげましょう。</p>
 				</Accordion.Body>
 			</Accordion.Root>
-			<Accordion.Root p='30' px='10' bdc='line'>
+			<Accordion.Root p='30' px='10'>
 				<Accordion.Header>
 					<Accordion.Label fw='bold'>ペンギンはどうして空を飛ばないんですか？</Accordion.Label>
 					<Accordion.Icon />
@@ -124,8 +124,8 @@ Q&Aのレイアウト構築例を紹介します。
 	</PreviewArea>
 	<PreviewCode slot='tab' label='JSX'>
 		```jsx
-		<Stack>
-			<Accordion.Root p='30' px='10' bd-b bdc='line'>
+		<Stack className='u--itemDivider' bdc='line'>
+			<Accordion.Root p='30' px='10'>
 				<Accordion.Header>
 					<Accordion.Label fw='bold'>疲れたら踊ってもいいですか？</Accordion.Label>
 					<Accordion.Icon />
@@ -134,7 +134,7 @@ Q&Aのレイアウト構築例を紹介します。
 					<p>もちろんです。汗をかいてリフレッシュしてください。</p>
 				</Accordion.Body>
 			</Accordion.Root>
-			<Accordion.Root p='30' px='10' bd-b bdc='line'>
+			<Accordion.Root p='30' px='10'>
 				<Accordion.Header>
 					<Accordion.Label fw='bold'>猫がパソコンのキーボードの上に乗ってくるのはどうして？</Accordion.Label>
 					<Accordion.Icon />
@@ -143,7 +143,7 @@ Q&Aのレイアウト構築例を紹介します。
 					<p>飼い主さんのそばにいたい気持ちや、キーボードの温かさが心地よいからという説があります。構ってほしいサインかもしれませんので、たくさん撫でてあげましょう。</p>
 				</Accordion.Body>
 			</Accordion.Root>
-			<Accordion.Root p='30' px='10' bdc='line'>
+			<Accordion.Root p='30' px='10'>
 				<Accordion.Header>
 					<Accordion.Label fw='bold'>ペンギンはどうして空を飛ばないんですか？</Accordion.Label>
 					<Accordion.Icon />
@@ -159,8 +159,8 @@ Q&Aのレイアウト構築例を紹介します。
 		```html
 		<script type="module" src="https://cdn.jsdelivr.net/npm/lism-css/dist/scripts/accordion.js"></script>
 
-		<div class='l--stack'>
-			<details class='d--accordion -p:30 -px:10 -bd-b -bdc:divider'>
+		<div class='u--itemDivider l--stack -bdc:line'>
+			<details class='d--accordion -p:30 -px:10'>
 				<summary class='d--accordion_header l--flex -ai:center'>
 					<span class='d--accordion_label -fx:1 -fw:bold'>疲れたら踊ってもいいですか？</span>
 					<span class='d--accordion_icon -d:ig'>
@@ -176,7 +176,7 @@ Q&Aのレイアウト構築例を紹介します。
 				</div>
 			</details>
 			
-			<details class='d--accordion -p:30 -px:10 -bd-b -bdc:divider'>
+			<details class='d--accordion -p:30 -px:10'>
 				<summary class='d--accordion_header l--flex -ai:center'>
 					<span class='d--accordion_label -fx:1 -fw:bold'>猫がパソコンのキーボードの上に乗ってくるのはどうして？</span>
 					<span class='d--accordion_icon -d:ig'>
@@ -191,7 +191,7 @@ Q&Aのレイアウト構築例を紹介します。
 					</div>
 				</div>
 			</details>
-			<details class='d--accordion -p:30 -px:10 -bdc:divider'>
+			<details class='d--accordion -p:30 -px:10'>
 				<summary class='d--accordion_header l--flex -ai:center'>
 					<span class='d--accordion_label -fx:1 -fw:bold'> ペンギンはどうして空を飛ばないんですか？ </span>
 					<span class='d--accordion_icon -d:ig'>
@@ -218,10 +218,12 @@ Q&Aのレイアウト構築例を紹介します。
 		<Stack g='20'>
 			<Accordion.Root lismClass='c--faq' bgc='base-2' bdrs='10'>
 				<Accordion.Header p='30'>
-					<Icon viewBox='0 0 256 256' fz='xl' c='main'>
-						<path d='M192,96c0,28.51-24.47,52.11-56,55.56V160a8,8,0,0,1-16,0V144a8,8,0,0,1,8-8c26.47,0,48-17.94,48-40s-21.53-40-48-40S80,73.94,80,96a8,8,0,0,1-16,0c0-30.88,28.71-56,64-56S192,65.12,192,96Zm-64,96a16,16,0,1,0,16,16A16,16,0,0,0,128,192Z'></path>
-					</Icon>
-					<Accordion.Label fw='bold'>疲れたら踊ってもいいですか？</Accordion.Label>
+					<Accordion.Label layout='flex' ai='center' g='10' fw='bold'>
+						<Icon viewBox='0 0 256 256' fz='xl' c='main'>
+							<path d='M192,96c0,28.51-24.47,52.11-56,55.56V160a8,8,0,0,1-16,0V144a8,8,0,0,1,8-8c26.47,0,48-17.94,48-40s-21.53-40-48-40S80,73.94,80,96a8,8,0,0,1-16,0c0-30.88,28.71-56,64-56S192,65.12,192,96Zm-64,96a16,16,0,1,0,16,16A16,16,0,0,0,128,192Z'></path>
+						</Icon>
+						<span>疲れたら踊ってもいいですか？</span>
+					</Accordion.Label>
 					<Accordion.Icon />
 				</Accordion.Header>
 				<Accordion.Body p='30' py-s='0' mx-s='5' isFlow='s'>
@@ -230,39 +232,30 @@ Q&Aのレイアウト構築例を紹介します。
 			</Accordion.Root>
 			<Accordion.Root lismClass='c--faq' bgc='base-2' bdrs='10'>
 				<Accordion.Header p='30'>
-					<Icon viewBox='0 0 256 256' fz='xl' c='main'>
-						<path d='M192,96c0,28.51-24.47,52.11-56,55.56V160a8,8,0,0,1-16,0V144a8,8,0,0,1,8-8c26.47,0,48-17.94,48-40s-21.53-40-48-40S80,73.94,80,96a8,8,0,0,1-16,0c0-30.88,28.71-56,64-56S192,65.12,192,96Zm-64,96a16,16,0,1,0,16,16A16,16,0,0,0,128,192Z'></path>
-					</Icon>
-					<Accordion.Label fw='bold'>猫がパソコンのキーボードの上に乗ってくるのはどうして？</Accordion.Label>
+					<Accordion.Label layout='flex' ai='center' g='10' fw='bold'>
+						<Icon viewBox='0 0 256 256' fz='xl' c='main'>
+							<path d='M192,96c0,28.51-24.47,52.11-56,55.56V160a8,8,0,0,1-16,0V144a8,8,0,0,1,8-8c26.47,0,48-17.94,48-40s-21.53-40-48-40S80,73.94,80,96a8,8,0,0,1-16,0c0-30.88,28.71-56,64-56S192,65.12,192,96Zm-64,96a16,16,0,1,0,16,16A16,16,0,0,0,128,192Z'></path>
+						</Icon>
+						<span>猫がパソコンのキーボードの上に乗ってくるのはどうして？</span>
+					</Accordion.Label>
 					<Accordion.Icon />
 				</Accordion.Header>
 				<Accordion.Body p='30' py-s='0' mx-s='5' isFlow='s'>
 					<p>飼い主さんのそばにいたい気持ちや、キーボードの温かさが心地よいからという説があります。構ってほしいサインかもしれませんので、たくさん撫でてあげましょう。</p>
-				</Accordion.Body>
-			</Accordion.Root>
-			<Accordion.Root lismClass='c--faq' bgc='base-2' bdrs='10'>
-				<Accordion.Header p='30'>
-					<Icon viewBox='0 0 256 256' fz='xl' c='main'>
-						<path d='M192,96c0,28.51-24.47,52.11-56,55.56V160a8,8,0,0,1-16,0V144a8,8,0,0,1,8-8c26.47,0,48-17.94,48-40s-21.53-40-48-40S80,73.94,80,96a8,8,0,0,1-16,0c0-30.88,28.71-56,64-56S192,65.12,192,96Zm-64,96a16,16,0,1,0,16,16A16,16,0,0,0,128,192Z'></path>
-					</Icon>
-					<Accordion.Label fw='bold'>ペンギンはどうして空を飛ばないんですか？</Accordion.Label>
-					<Accordion.Icon />
-				</Accordion.Header>
-				<Accordion.Body p='30' py-s='0' mx-s='5' isFlow='s'>
-					<p>ペンギンは泳ぐことに特化した体をしているので、空は飛べませんが、水中ではまるで鳥のように自由に動き回れます。</p>
 				</Accordion.Body>
 			</Accordion.Root>
 		</Stack>
 	</PreviewArea>
 	<PreviewCode>
 		```jsx
-		<Stack g='20'>
-			<Accordion.Root lismClass='c--faq' bgc='base-2' bdrs='10'>
+		<Accordion.Root lismClass='c--faq' bgc='base-2' bdrs='10'>
 				<Accordion.Header p='30'>
-					<Icon viewBox='0 0 256 256' fz='xl' c='main'>
-						<path d='M192,96c0,28.51-24.47,52.11-56,55.56V160a8,8,0,0,1-16,0V144a8,8,0,0,1,8-8c26.47,0,48-17.94,48-40s-21.53-40-48-40S80,73.94,80,96a8,8,0,0,1-16,0c0-30.88,28.71-56,64-56S192,65.12,192,96Zm-64,96a16,16,0,1,0,16,16A16,16,0,0,0,128,192Z'></path>
-					</Icon>
-					<Accordion.Label fw='bold'>疲れたら踊ってもいいですか？</Accordion.Label>
+					<Accordion.Label layout='flex' ai='center' g='10' fw='bold'>
+						<Icon viewBox='0 0 256 256' fz='xl' c='main'>
+							<path d='M192,96c0,28.51-24.47,52.11-56,55.56V160a8,8,0,0,1-16,0V144a8,8,0,0,1,8-8c26.47,0,48-17.94,48-40s-21.53-40-48-40S80,73.94,80,96a8,8,0,0,1-16,0c0-30.88,28.71-56,64-56S192,65.12,192,96Zm-64,96a16,16,0,1,0,16,16A16,16,0,0,0,128,192Z'></path>
+						</Icon>
+						<span>疲れたら踊ってもいいですか？</span>
+					</Accordion.Label>
 					<Accordion.Icon />
 				</Accordion.Header>
 				<Accordion.Body p='30' py-s='0' mx-s='5' isFlow='s'>
@@ -271,26 +264,16 @@ Q&Aのレイアウト構築例を紹介します。
 			</Accordion.Root>
 			<Accordion.Root lismClass='c--faq' bgc='base-2' bdrs='10'>
 				<Accordion.Header p='30'>
-					<Icon viewBox='0 0 256 256' fz='xl' c='main'>
-						<path d='M192,96c0,28.51-24.47,52.11-56,55.56V160a8,8,0,0,1-16,0V144a8,8,0,0,1,8-8c26.47,0,48-17.94,48-40s-21.53-40-48-40S80,73.94,80,96a8,8,0,0,1-16,0c0-30.88,28.71-56,64-56S192,65.12,192,96Zm-64,96a16,16,0,1,0,16,16A16,16,0,0,0,128,192Z'></path>
-					</Icon>
-					<Accordion.Label fw='bold'>猫がパソコンのキーボードの上に乗ってくるのはどうして？</Accordion.Label>
+					<Accordion.Label layout='flex' ai='center' g='10' fw='bold'>
+						<Icon viewBox='0 0 256 256' fz='xl' c='main'>
+							<path d='M192,96c0,28.51-24.47,52.11-56,55.56V160a8,8,0,0,1-16,0V144a8,8,0,0,1,8-8c26.47,0,48-17.94,48-40s-21.53-40-48-40S80,73.94,80,96a8,8,0,0,1-16,0c0-30.88,28.71-56,64-56S192,65.12,192,96Zm-64,96a16,16,0,1,0,16,16A16,16,0,0,0,128,192Z'></path>
+						</Icon>
+						<span>猫がパソコンのキーボードの上に乗ってくるのはどうして？</span>
+					</Accordion.Label>
 					<Accordion.Icon />
 				</Accordion.Header>
 				<Accordion.Body p='30' py-s='0' mx-s='5' isFlow='s'>
 					<p>飼い主さんのそばにいたい気持ちや、キーボードの温かさが心地よいからという説があります。構ってほしいサインかもしれませんので、たくさん撫でてあげましょう。</p>
-				</Accordion.Body>
-			</Accordion.Root>
-			<Accordion.Root lismClass='c--faq' bgc='base-2' bdrs='10'>
-				<Accordion.Header p='30'>
-					<Icon viewBox='0 0 256 256' fz='xl' c='main'>
-						<path d='M192,96c0,28.51-24.47,52.11-56,55.56V160a8,8,0,0,1-16,0V144a8,8,0,0,1,8-8c26.47,0,48-17.94,48-40s-21.53-40-48-40S80,73.94,80,96a8,8,0,0,1-16,0c0-30.88,28.71-56,64-56S192,65.12,192,96Zm-64,96a16,16,0,1,0,16,16A16,16,0,0,0,128,192Z'></path>
-					</Icon>
-					<Accordion.Label fw='bold'>ペンギンはどうして空を飛ばないんですか？</Accordion.Label>
-					<Accordion.Icon />
-				</Accordion.Header>
-				<Accordion.Body p='30' py-s='0' mx-s='5' isFlow='s'>
-					<p>ペンギンは泳ぐことに特化した体をしているので、空は飛べませんが、水中ではまるで鳥のように自由に動き回れます。</p>
 				</Accordion.Body>
 			</Accordion.Root>
 		</Stack>

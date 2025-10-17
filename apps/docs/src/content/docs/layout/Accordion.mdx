@@ -15,12 +15,12 @@ import { Minus, Plus, X, Question, CaretDoubleDown, EyeClosed, Eyes } from "@pho
 ## 基本構造
 ```pug
 details.d--accordion
-	summary.d--accordion_header.l--flex.-ai:center
-		span.d--accordion_label.-fx:1 ...Header label...
-		span.d--accordion_icon.-d:i-f
+	summary.d--accordion_header.l--flex
+		span.d--accordion_label ...Header label...
+		span.d--accordion_icon
 			svg.l--icon
 	div.d--accordion_body.l--grid
-		div.d--accordion_inner.-ov:hidden ...Contents...
+		div.d--accordion_inner ...Contents...
 ```
 
 <Note title='実装方法について' type='info'>
@@ -40,14 +40,34 @@ details.d--accordion
 
 <ImportPackage component='Accordion' script='accordion.js'/>
 
+以下のコンポーネントが利用できます。
+- `<Accordion.Root>`
+- `<Accordion.Header>`
+- `<Accordion.Label>`
+- `<Accordion.Icon>`
+- `<Accordion.Body>`
+
+また、`.HeaderLabel` を使うと、`.Header`, `.Label`, `.Icon` をまとめて配置できます。
+
+```jsx
+<Accordion.HeaderLabel {...props}>Text</Accordion.HeaderLabel>
+
+↓ これは以下のように内部で展開されます
+
+<Accordion.Header {...props}>
+	<Accordion.Label>Text</Accordion.Label>
+	<Accordion.Icon/>
+</Accordion.Header>
+```
+
 
 ## Props
 
 | プロパティ | 説明 | 
 |---|---|
 | <PropBadge>`<Accordion.Icon>`</PropBadge><br/>`icon` | 内部で呼び出される`<Icon>` に渡す `icon` を指定できます。ただし、`<Accordion.Icon>`に子要素が配置されている場合は無視されます。 |
-| <PropBadge>`<Accordion.Icon>`</PropBadge><br/>`isTrigger` | <PropBadge type="attr">`data-role="trigger"`</PropBadge> `button`タグでの出力となり`[data-role="trigger"]`が付与されます。|
-
+| <PropBadge>`<Accordion.Icon>`</PropBadge><br/>`isTrigger` | アイコンが `button`タグでの出力となり`[data-role="trigger"]`が付与されます。|
+{/* <PropBadge type="attr">`data-role="trigger"`</PropBadge> */}
 
 
 ## Usage
@@ -56,10 +76,7 @@ details.d--accordion
 	<PreviewTitle>Preview</PreviewTitle>
 	<PreviewArea p='20'>
 		<Accordion.Root p='20'>
-			<Accordion.Header>
-				<Accordion.Label>Accordion.Label</Accordion.Label>
-				<Accordion.Icon/>
-			</Accordion.Header>
+			<Accordion.HeaderLabel>Accordion Label</Accordion.HeaderLabel>
 			<Accordion.Body my-s='20'>
 				<Dummy length='l' />
 			</Accordion.Body>
@@ -68,10 +85,7 @@ details.d--accordion
 	<PreviewCode slot='tab' label='JSX'>
 		```jsx
 		<Accordion.Root p='20'>
-			<Accordion.Header>
-				<Accordion.Label>Accordion.Label</Accordion.Label>
-				<Accordion.Icon/>
-			</Accordion.Header>
+			<Accordion.HeaderLabel>Accordion Label</Accordion.HeaderLabel>
 			<Accordion.Body my-s='20'>
 				<Dummy length='l' />
 			</Accordion.Body>
@@ -81,14 +95,14 @@ details.d--accordion
 	<PreviewCode slot='tab' label='HTML'>
 ```html
 <details class="d--accordion -p:20">
-	<summary class="d--accordion_header l--flex -ai:center">
-		<span class="d--accordion_label -fx:1">Accordion.Label</span>
-		<span class="d--accordion_icon -d:i-f">
+	<summary class="d--accordion_header l--grid">
+		<span class="d--accordion_label">Accordion Label</span>
+		<span class="d--accordion_icon">
 			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="1em" height="1em" fill="currentColor" focusable="false" class="l--icon" aria-hidden="true"><path d="M216.49,104.49l-80,80a12,12,0,0,1-17,0l-80-80a12,12,0,0,1,17-17L128,159l71.51-71.52a12,12,0,0,1,17,17Z"></path></svg>
 		</span>
 	</summary>
 	<div class="d--accordion_body l--grid -my-s:20">
-		<div class="d--accordion_inner -ov:hidden">
+		<div class="d--accordion_inner">
 			<p>Lorem ipsum...</p>
 		</div>
 	</div>
@@ -102,7 +116,7 @@ details.d--accordion
 	<PreviewArea p='20'>
 		<Accordion.Root p='30'>
 			<Accordion.Header>
-				<Accordion.Label tag='h3' f='inherit' fw='bold'>Accordion.Label</Accordion.Label>
+				<Accordion.Label tag='h3' f='inherit' fw='bold'>Accordion Label</Accordion.Label>
 				<Accordion.Icon/>
 			</Accordion.Header>
 			<Accordion.Body my-s='20'>
@@ -114,7 +128,7 @@ details.d--accordion
 	```jsx "tag='h3'"
 	<Accordion.Root p='20'>
 		<Accordion.Header>
-			<Accordion.Label tag='h3' f='inherit' fw='bold'>Accordion.Label</Accordion.Label>
+			<Accordion.Label tag='h3' f='inherit' fw='bold'>Accordion Label</Accordion.Label>
 			<Accordion.Icon/>
 		</Accordion.Header>
 		<Accordion.Body my-s='20'>
@@ -126,8 +140,8 @@ details.d--accordion
 	<PreviewCode slot='tab' label='HTML'>
 	```html "h3" "-f:i"
 	<details class="d--accordion -p:20">
-		<summary class="d--accordion_header l--flex -ai:center">
-			<h3 class="d--accordion_label -fx:1 -f:i -fw:bold">Accordion.Label</h3>
+		<summary class="d--accordion_header l--grid">
+			<h3 class="d--accordion_label -f:i -fw:bold">Accordion Label</h3>
 			...
 	```
 	</PreviewCode>
@@ -143,7 +157,7 @@ details.d--accordion
 	<PreviewArea p='20'>
 		<Accordion.Root p='20'>
 			<Accordion.Header>
-				<Accordion.Label>Accordion.Label</Accordion.Label>
+				<Accordion.Label>Accordion Label</Accordion.Label>
 				<Accordion.Icon icon={CaretDoubleDown}/>
 			</Accordion.Header>
 			<Accordion.Body my-s='20'>
@@ -157,7 +171,7 @@ import { CaretDoubleDown } from "@phosphor-icons/react";
 
 <Accordion.Root p='20'>
 	<Accordion.Header>
-		<Accordion.Label>Accordion.Label</Accordion.Label>
+		<Accordion.Label>Accordion Label</Accordion.Label>
 		<Accordion.Icon icon={CaretDoubleDown}/>
 	</Accordion.Header>
 	<Accordion.Body my-s='20'>
@@ -179,28 +193,19 @@ import { CaretDoubleDown } from "@phosphor-icons/react";
 	<PreviewArea p={30}>
 		<Stack g='1px' data-accordion-multiple='disallow'>
 			<Accordion.Root>
-				<Accordion.Header p='30' bgc='text' c='base'>
-					<Accordion.Label>Accordion.Label</Accordion.Label>
-					<Accordion.Icon/>
-				</Accordion.Header>
+				<Accordion.HeaderLabel p='30' bgc='text' c='base'>Accordion Label</Accordion.HeaderLabel>
 				<Accordion.Body p='30'>
 					<Dummy length='l' />
 				</Accordion.Body>
 			</Accordion.Root>
 			<Accordion.Root>
-				<Accordion.Header p='30' bgc='text' c='base'>
-					<Accordion.Label>Accordion.Label</Accordion.Label>
-					<Accordion.Icon/>
-				</Accordion.Header>
+				<Accordion.HeaderLabel p='30' bgc='text' c='base'>Accordion Label</Accordion.HeaderLabel>
 				<Accordion.Body p='30'>
-					<Dummy length='l' />
+					<Dummy length='xl' />
 				</Accordion.Body>
 			</Accordion.Root>
 			<Accordion.Root>
-				<Accordion.Header p='30' bgc='text' c='base'>
-					<Accordion.Label>Accordion.Label</Accordion.Label>
-					<Accordion.Icon/>
-				</Accordion.Header>
+				<Accordion.HeaderLabel p='30' bgc='text' c='base'>Accordion Label</Accordion.HeaderLabel>
 				<Accordion.Body p='30'>
 					<Dummy length='l' />
 				</Accordion.Body>
@@ -211,21 +216,15 @@ import { CaretDoubleDown } from "@phosphor-icons/react";
 ```jsx "data-accordion-multiple='disallow'"
 <Stack g='1px' data-accordion-multiple='disallow'>
 	<Accordion.Root>
-		<Accordion.Header p='30' bgc='text' c='base'>
-			<Accordion.Label>Accordion.Label</Accordion.Label>
-			<Accordion.Icon/>
-		</Accordion.Header>
+		<Accordion.HeaderLabel p='30' bgc='text' c='base'>Accordion Label</Accordion.HeaderLabel>
 		<Accordion.Body p='30'>
 			<Dummy length='l' />
 		</Accordion.Body>
 	</Accordion.Root>
 	<Accordion.Root>
-		<Accordion.Header p='30' bgc='text' c='base'>
-			<Accordion.Label>Accordion.Label</Accordion.Label>
-			<Accordion.Icon/>
-		</Accordion.Header>
+		<Accordion.HeaderLabel p='30' bgc='text' c='base'>Accordion Label</Accordion.HeaderLabel>
 		<Accordion.Body p='30'>
-			<Dummy length='l' />
+			<Dummy length='xl' />
 		</Accordion.Body>
 	</Accordion.Root>
 	...
@@ -252,30 +251,21 @@ import { CaretDoubleDown } from "@phosphor-icons/react";
 <Preview>
 	<PreviewTitle>Preview</PreviewTitle>
 	<PreviewArea p='30'>
-		<Stack g='30' style={{'--acc-duration': '.2s'}}>
+		<Stack g='30' style={{'--acc-duration': '.25s'}}>
 			<Accordion.Root bgc='base-2' bxsh='10' bdrs='20'>
-				<Accordion.Header p='30'>
-					<Accordion.Label>Accordion.Label</Accordion.Label>
-					<Accordion.Icon/>
-				</Accordion.Header>
+				<Accordion.HeaderLabel p='30'>Accordion Label</Accordion.HeaderLabel>
 				<Accordion.Body p='30' bd-t bdc='line'>
 					<Dummy length='l' />
 				</Accordion.Body>
 			</Accordion.Root>
 			<Accordion.Root bgc='base-2' bxsh='10' bdrs='20'>
-				<Accordion.Header p='30'>
-					<Accordion.Label>Accordion.Label</Accordion.Label>
-					<Accordion.Icon/>
-				</Accordion.Header>
+				<Accordion.HeaderLabel p='30'>Accordion Label</Accordion.HeaderLabel>
 				<Accordion.Body p='30' bd-t bdc='line'>
 					<Dummy length='l' />
 				</Accordion.Body>
 			</Accordion.Root>
 			<Accordion.Root bgc='base-2' bxsh='10' bdrs='20'>
-				<Accordion.Header p='30'>
-					<Accordion.Label>Accordion.Label</Accordion.Label>
-					<Accordion.Icon/>
-				</Accordion.Header>
+				<Accordion.HeaderLabel p='30'>Accordion Label</Accordion.HeaderLabel>
 				<Accordion.Body  p='30' bd-t bdc='line'>
 					<Dummy length='l' />
 				</Accordion.Body>
@@ -284,21 +274,15 @@ import { CaretDoubleDown } from "@phosphor-icons/react";
 	</PreviewArea>
 	<PreviewCode slot='tab' label='JSX'>
 		```jsx "--acc-duration"
-		<Stack g='30' style={{'--acc-duration': '.2s'}}>
+		<Stack g='30' style={{'--acc-duration': '.25s'}}>
 			<Accordion.Root bgc='base-2' bxsh='10' bdrs='20'>
-				<Accordion.Header p='30'>
-					<Accordion.Label>Accordion.Label</Accordion.Label>
-					<Accordion.Icon/>
-				</Accordion.Header>
+				<Accordion.HeaderLabel p='30'>Accordion Label</Accordion.HeaderLabel>
 				<Accordion.Body p='30' bd-t bdc='line'>
 					<Dummy length='l' />
 				</Accordion.Body>
 			</Accordion.Root>
 			<Accordion.Root bgc='base-2' bxsh='10' bdrs='20'>
-				<Accordion.Header p='30'>
-					<Accordion.Label>Accordion.Label</Accordion.Label>
-					<Accordion.Icon/>
-				</Accordion.Header>
+				<Accordion.HeaderLabel p='30'>Accordion Label</Accordion.HeaderLabel>
 				<Accordion.Body p='30' bd-t bdc='line'>
 					<Dummy length='l' />
 				</Accordion.Body>
@@ -338,10 +322,10 @@ CSSで`:root`の`--acc-duration`を上書きすると、デフォルトの開閉
 	<PreviewArea>
 		<Accordion.Root p='20'>
 			<Accordion.Header>
-				<Accordion.Label>Accordion.Label</Accordion.Label>
+				<Accordion.Label>Accordion Label</Accordion.Label>
 				<Accordion.Icon>
-					<Icon setTransition icon={{as:Plus, weight:'bold'}} />
-					<Icon setTransition icon={{as:Minus, weight:'bold'}} />
+					<Icon setTransition ga='1/1' icon={{as:Plus, weight:'bold'}} />
+					<Icon setTransition ga='1/1' icon={{as:Minus, weight:'bold'}} />
 				</Accordion.Icon>
 			</Accordion.Header>
 			<Accordion.Body my-s='20'>
@@ -353,10 +337,10 @@ CSSで`:root`の`--acc-duration`を上書きすると、デフォルトの開閉
 		```jsx "\<Icon "
 		<Accordion.Root p='20'>
 			<Accordion.Header>
-				<Accordion.Label>Accordion.Label</Accordion.Label>
+				<Accordion.Label>Accordion Label</Accordion.Label>
 				<Accordion.Icon>
-					<Icon icon={{as:Plus, weight:'bold'}} />
-					<Icon icon={{as:Minus, weight:'bold'}} />
+					<Icon setTransition ga='1/1' icon={{as:Plus, weight:'bold'}} />
+					<Icon setTransition ga='1/1' icon={{as:Minus, weight:'bold'}} />
 				</Accordion.Icon>
 			</Accordion.Header>
 			<Accordion.Body my-s='20'>
@@ -365,12 +349,9 @@ CSSで`:root`の`--acc-duration`を上書きすると、デフォルトの開閉
 		</Accordion.Root>
 		```
 	</PreviewCode>
-	<PreviewCode slot='tab' label='追加CSS'>
+	<PreviewCode slot='tab' label='**追加CSS**'>
 ```scss
 .d--accordion_icon {
-	> .l--icon {
-		grid-area: 1 / 1;
-	}
 	> .l--icon:nth-last-of-type(2) {
 		opacity: var(--isOpened_, 0);
 	}
@@ -419,14 +400,14 @@ CSSで`:root`の`--acc-duration`を上書きすると、デフォルトの開閉
 	<PreviewCode slot='tab' label='HTML'>
 ```html "<button" "data-role=\"trigger\""
 <details class="d--accordion -p:20">
-	<summary class="d--accordion_header l--flex -ai:center">
-		<span class="d--accordion_label -fx:1">Labelテキスト（<a href="#acc-innerlink">ヘルプリンク</a></span>
+	<summary class="d--accordion_header l--grid">
+		<span class="d--accordion_label">Labelテキスト（<a href="#acc-innerlink">ヘルプリンク</a></span>
 		<button class="d--accordion_icon -d:ig -bd -bdrs:5 -bgc:inherit -p:10" data-role="trigger">
 			<svg class="l--icon"...>...</svg>
 		</button>
 	</summary>
 	<div class="d--accordion_body l--grid -my-s:20">
-		<div class="d--accordion_inner -ov:hidden">...</div>
+		<div class="d--accordion_inner">...</div>
 	</div>
 </details>
 ```
