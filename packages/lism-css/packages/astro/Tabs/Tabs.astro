@@ -1,5 +1,5 @@
 ---
-import type { LismProps } from '../types';
+import type { LismProps } from '../../types';
 import { Grid } from '../Grid';
 // import Tab from './Tab.astro';
 // import TabPanel from './TabPanel.astro';
@@ -23,11 +23,7 @@ const { defaultIndex = 1, tabId = '', listProps = {}, ...props } = Astro.props |
 const theTabID = tabId ? tabId : uuidv4();
 
 // 子要素の方から順番に処理されていくので、文字列処理でデータを抽出
-const { btns, panels } = transformTabitems(
-	await Astro.slots.render('default'),
-	theTabID,
-	defaultIndex
-);
+const { btns, panels } = transformTabitems(await Astro.slots.render('default'), theTabID, defaultIndex);
 
 const hasItems = btns.length > 0;
 ---
