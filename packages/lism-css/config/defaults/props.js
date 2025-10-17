@@ -39,10 +39,10 @@ export default {
 		bp: 1,
 	},
 	o: { prop: 'opacity', presets: ['0'], token: 'o', tokenClass: 1 },
-	v: { prop: 'visibility', presets: ['hidden', 'visible'] },
+	v: { prop: 'visibility', presets: ['hidden'] },
 	ov: { prop: 'overflow', presets: ['hidden', 'auto', 'clip', 'scroll'] },
-	'ov-x': { prop: 'overflowX', presets: ['hidden', 'auto', 'clip', 'scroll'] },
-	'ov-y': { prop: 'overflowY', presets: ['hidden', 'auto', 'clip', 'scroll'] },
+	'ov-x': { prop: 'overflowX', presets: ['auto', 'scroll'] },
+	'ov-y': { prop: 'overflowY', presets: ['auto', 'scroll'] },
 	// overflow-clip-margin → safariで使えない
 	ar: {
 		prop: 'aspectRatio',
