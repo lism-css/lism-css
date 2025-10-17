@@ -240,7 +240,7 @@ class LismPropsData {
 			if (utils) {
 				utilKey = getUtilKey(utils, val);
 			}
-			if (shorthands) {
+			if (!utilKey && shorthands) {
 				utilKey = getUtilKey(shorthands, val, true);
 			}
 			if (utilKey) {
