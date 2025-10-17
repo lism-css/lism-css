@@ -1,7 +1,6 @@
 import { Lism } from '../Lism';
-import { getLayerProps } from './getProps';
+import getFilterProps from '../getFilterProps';
 
-export default function Layer({ layout, ...props }) {
-	const Layout = layout || Lism;
-	return <Layout isLayer {...getLayerProps(props)} />;
+export default function Layer(props) {
+	return <Lism isLayer {...getFilterProps(props, 'backdropFilter')} />;
 }

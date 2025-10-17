@@ -1,8 +1,6 @@
-import { WithSide } from 'lism-css/react';
+import { Lism } from 'lism-css/react';
 
-export default function Card({ layout, ...props }) {
-	const Layout = layout || WithSide;
-
+export default function Card({ layout = 'withSide', ...props }) {
 	const defaultProps = {
 		c: 'text',
 		bgc: 'base',
@@ -17,5 +15,5 @@ export default function Card({ layout, ...props }) {
 		defaultProps.isLinkBox = true;
 	}
 
-	return <Layout lismClass='c--card' {...defaultProps} {...props} />;
+	return <Lism lismClass='c--card' {...defaultProps} {...props} />;
 }

@@ -89,7 +89,7 @@ function UIBlockList({ entries }: { entries: NavLinkData[] }) {
 					);
 				}
 				return (
-					<LinkBox key={index} layout={Stack} href={entry.href} p='30' g='30' bdc='#D9D9D9'>
+					<LinkBox key={index} layout='stack' href={entry.href} p='30' g='30' bdc='#D9D9D9'>
 						<Frame ar='3/2' bd bdw='1px' bdrs='20' bdc='inherit' bgc='#fff' isContainer>
 							{entry.thumb && <Media src={entry.thumb} alt={entry.label} />}
 							{entry.iframePath && (
