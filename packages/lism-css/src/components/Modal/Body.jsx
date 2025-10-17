@@ -1,11 +1,10 @@
 import { Lism } from '../Lism';
 import { defaultProps } from './getProps';
 
-export default function ModalBody({ layout, children, ...props }) {
-	const Layout = layout || Lism;
+export default function ModalBody({ children, ...props }) {
 	return (
-		<Layout {...defaultProps.body} {...props}>
+		<Lism {...defaultProps.body} {...props}>
 			{children}
-		</Layout>
+		</Lism>
 	);
 }

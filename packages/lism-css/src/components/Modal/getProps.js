@@ -12,12 +12,12 @@ export function getProps({ lismClass = '', setClass = '', duration, offset, styl
 		style['--offset'] = offset;
 	}
 
-	return { ...theProps, style, ...props };
+	return { tag: 'dialog', ...theProps, style, ...props };
 }
 
 export const defaultProps = {
 	body: { lismClass: 'd--modal_body' },
-	inner: { lismClass: 'd--modal_inner' },
+	inner: { lismClass: 'd--modal_inner', layout: 'stack' },
 	closeBtn: { tag: 'button', setClass: 'set--plain', hov: 'o', d: 'in-flex' },
 	openBtn: { tag: 'button', setClass: 'set--plain', hov: 'o', d: 'in-flex' },
 };
