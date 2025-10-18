@@ -23,7 +23,6 @@ export default {
 	hasGutter: 'has--gutter',
 
 	// set class
-	setIsolate: 'set--isolate',
 	setClickExpand: 'set--clickExpand',
 	setTransition: 'set--transition',
 	setHover: 'set--hover',

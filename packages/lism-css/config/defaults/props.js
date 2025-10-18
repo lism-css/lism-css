@@ -333,7 +333,7 @@ export default {
 	writing: { prop: 'writingMode', token: 'writing', tokenClass: 1, bp: 1 },
 	float: { prop: 'float', utils: { l: 'left', r: 'right' } },
 	clear: { prop: 'clear', presets: ['both'] },
-	// isolation: { prop: 'isolation', utils: { isolate: 'i' } },
+	isolation: { prop: 'isolation', presets: ['isolate'] },
 
 	// transition
 	duration: { isVar: 1 },
