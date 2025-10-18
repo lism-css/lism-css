@@ -96,7 +96,12 @@ main-frame
 	}
 
 	.top-level > li > details {
-		margin-top: 1em;
+		> summary {
+			padding-bottom: 0.5em;
+		}
+		> ul {
+			margin-bottom: 0.75em;
+		}
 	}
 
 	._subtitle {
@@ -123,7 +128,7 @@ main-frame
 
 .sidebar {
 	.top-level > li:has(> .large) {
-		margin-top: var(--s30);
+		margin-block: var(--s30);
 		border-radius: 8px;
 		background-image: linear-gradient(120deg, var(--grad_01), var(--grad_02));
 		padding: 2px;

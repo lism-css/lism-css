@@ -1,5 +1,5 @@
 import presets from './presets';
-import atts from '../../lib/helper/atts';
+import atts from 'lism-css/lib/helper/atts';
 
 // SVG文字列をパースしてexPropsとコンテンツを生成する関数
 function parseSvgString(svgString) {
@@ -111,7 +111,7 @@ export default function getProps({
 
 	// classNameをスペースで分割して重複を防いでマージ
 
-	props.lismClass = atts(lismClass, 'l--icon', className);
+	props.lismClass = atts(lismClass, 'a--icon', className);
 	props.style = { ...style };
 
 	return { Component, lismProps: props, exProps, content };

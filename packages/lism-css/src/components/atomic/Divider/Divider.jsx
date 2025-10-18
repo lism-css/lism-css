@@ -1,5 +1,5 @@
 // import React from 'react';
-import { Lism } from '../Lism';
+import { Lism } from '../../Lism';
 import { getDividerProps } from './getProps';
 
 export default function Divider(props) {

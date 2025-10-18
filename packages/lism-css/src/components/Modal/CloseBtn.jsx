@@ -1,5 +1,5 @@
 import { Lism } from '../Lism';
-import { Icon } from '../Icon';
+import { Icon } from '../atomic/Icon';
 import { defaultProps } from './getProps';
 // duration: [s]
 export default function CloseBtn({ children, modalId = '', icon, srText = 'Close', ...props }) {
