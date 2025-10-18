@@ -57,7 +57,7 @@ LismがどのようなCSS設計になっているかを説明します。
 		</tr>
 		<tr>
 			<td>Base<br/>`@lism.base`</td>
-			<td>トークン定義や変数セット、HTML要素の初期スタイルをセットするレイヤー。<br />Base Set (`.set--{syle}`)
+			<td>トークン定義や変数セット、HTML要素の初期スタイルをセットするレイヤー。<br />Base Set Utility (`.set--{syle}`)
 			クラスもここに入ります。</td>
 		</tr>
 		<tr>
@@ -89,7 +89,7 @@ LismがどのようなCSS設計になっているかを説明します。
 <table className="l--table">
 	<thead>
 		<tr>
-			<th>Layer</th>
+			<th>Module Layer</th>
 			<th>役割</th>
 		</tr>
 	</thead>
@@ -97,18 +97,26 @@ LismがどのようなCSS設計になっているかを説明します。
 		<tr>
 			<td class='-whitespace:nowrap'>State Modules<br/>`@lism.modules.state`</td>
 			<td>
-				レイアウトを組む上で特定の役割を持ち、複数のレイアウトモジュールに対してつけ外しできるような汎用的な機能を持つクラス。(`.is|has--{state}`)
+				レイアウトを構成する役割を持ちつつ、複数のレイアウトモジュールに対してつけ外しできるような汎用性の高いモジュール群。<br />`.is|has--{state}` の形式で定義します。
 			</td>
 		</tr>
 		<tr>
 			<td class='-whitespace:nowrap'>Layout Modules<br/>`@lism.modules.layout`</td>
 			<td>
-				レイアウトの構成単位となるようなモジュール群（`.l--{module}`）を定義するレイヤー。
+				レイアウトの構成単位となるようなモジュール群。<br />`.l--{module}` の形式で定義します。
+			</td>
+		</tr>
+		<tr>
+			<td class='-whitespace:nowrap'>Atomic Modules<br/>`@lism.modules.atomic`</td>
+			<td>
+				レイアウトの構成単位としてそれ以上分解できない最小単位のモジュール群。<br />`.a--{module}` の形式で定義します。
 			</td>
 		</tr>
 		<tr>
 			<td class='-whitespace:nowrap'>Dynamic Modules<br/>`@lism.modules.dynamic`</td>
-			<td>JavaScriptと組み合わせて動的な機能を持つ特殊なモジュール群 (`.d--{module}`) 。</td>
+			<td>
+				JavaScriptと組み合わせて動的な機能を持つ特殊なモジュール群。<br />`.d--{module}` の形式で定義します。
+			</td>
 		</tr>
 	</tbody>
 </table>
@@ -125,9 +133,7 @@ LismがどのようなCSS設計になっているかを説明します。
 
 タイポグラフィ、余白、カラー、シャドウなど、主要なプロパティに対して段階的なプリセット値やセマンティックなキーワードでCSSカスタムプロパティを定義しています。
 
-トークンを流用することで、サイトを通してデザインに**一貫性**が生まれ、使用しているプロパティの**意図**も第三者が読み取れるようになります。
-
-あとからサイト全体を微調整する必要が出てきてもトークンの値を変更するだけでよくなり、**メンテナンス性**も高まります。
+トークンを流用することでデザインに**一貫性**が生まれ、使用しているプロパティの**意図**も読み取りやすくなります。また、あとからサイト全体を微調整する必要が出てきてもトークンの値を変更するだけでよくなり、**メンテナンス性**も高まります。
 
 <Reference>
 詳しくは[トークン解説ページ](/css/tokens/)を参照してください。
@@ -139,32 +145,15 @@ LismがどのようなCSS設計になっているかを説明します。
 Lismでは、レイアウト・デザインの構成要素を細分化していくつかの種類に分類しています。
 
 
-
-### State Class
-
-|分類|形式|例|
-|---|---|---|
-|Layout State<HelpText>状態として付け外しできるようなデザイン機能を持つもの</HelpText>|`.is\|has--{stateName}`|`.is--container`, `has--gutter`|
-|Temporary State<HelpText>js操作等によって付け外しされるようなクラス</HelpText>|`._{state}`|`._active`, `._opened`|
-
-Layout State はそれ単体でスタイルを持ち、Temporary State はそれ単体ではスタイルを持ちません。
-
-
-
 ### Module Class
 
 |分類|形式|例|
 |---|---|---|
-|Layout<HelpText tag='small'>レイアウトの構成単位となるようなモジュール</HelpText>|`.l--{name}`|`.l--grid`|
-|Dynamic<HelpText tag='small'>JSと組み合わせた動きのあるモジュール</HelpText>|`.d--{name}`|`.d--tabs`|
-|Component<HelpText tag='small'>その他のコンポーネント</HelpText>|`.c--{name}`|`.c--card`|
-
-{/* それぞれ[CSS階層](#cssの階層構造)に沿って詳細度と読み込み順序を調整してクラスとスタイルを定義します。  
-<small>（ただし、Temporary Stateはそれ単体でスタイルを持たないので、適宜必要なところでスタイルを定義してください。）</small> */}
-
-<Callout type="info">
-Blocks はAtom,Layoutクラスで構成されるような粒度（（他のBlock,Componentが内部に入らない規模）で、Componentは Layout,Atom,Block 等で構成されるような粒度でイメージしてください。
-</Callout>
+|Modules State<HelpText>状態として付け外しできるようなレイアウト機能を持つもの</HelpText>|`.is\|has--{stateName}`|`.is--container`,<br />`.has--gutter`|
+|Layout Modules<HelpText>レイアウトの構成単位となるようなモジュール</HelpText>|`.l--{name}`|`.l--grid`,<br />`.l--columns`|
+|Atomic Modules<HelpText>レイアウトの最小単位となるモジュール</HelpText>|`.a--{name}`|`.a--divider`,<br />`.a--icon`|
+|Dynamic<HelpText>JSと組み合わせた動きのあるモジュール</HelpText>|`.d--{name}`|`.d--accordion`,<br />`.d--modal`,<br />`.d--tabs`|
+|Custom Modules<HelpText>その他、より具体的な役割を持つコンポーネント群</HelpText>|`.c--{name}`|`.c--button`,<br />`.c--note`|
 
 
 #### 子要素を持つ場合
@@ -184,38 +173,48 @@ Blocks はAtom,Layoutクラスで構成されるような粒度（（他のBlock
 - 例: `.c--button.c--button--outline`
 
 
+### Dynamic State
+
+`d--{module}`と合わせて、Javascriptで動的に付け外しされるようなクラス。
+
+|分類|形式|例|
+|---|---|---|
+|Dynamic State<HelpText>jsによって動的に付け外しされるようなクラス</HelpText>|`.js-{state}`|`.js-active`,<br />`.js-opened`|
+
+
+### Utility Class
+
+|分類|形式|例|
+|---|---|---|
+|Base Utility<HelpText>初期スタイルや機能変数をセットするユーティリティクラス。<br/>`@lism.base`で定義されます。</HelpText>|`.set-{style}`|`.set-plain`,<br />`.set-transition`|
+|Style Utility<HelpText>装飾的なスタイルをセットするユーティリティクラス。<br/>`@lism.utility`で定義されます。</HelpText>|`.u-{style}`|`.u-cbox`,<br />`.u-itemDivider`|
 
 ### Prop Class
 
-特定のCSSプロパティに対応するユーティリティクラスを定義しています。  
-基本的にはそれぞれのクラスが単一のCSSプロパティをコントロールするためのになっています。（一部、例外もあります。）
+Lism では、単一のCSSプロパティに対応するユーティリティクラスを **Props Class** として定義しています。
 
-{/* 
-3. ユーティリティクラス
-	- 主要なプロパティに対して、よく使われる値やトークンに合わせたユーティリティクラスを定義しています。
-	- 汎用的な値はクラスのセットだけで完了できるように。
-	- ブレイクポイントへの対応もユーティリティクラスが重要な役割を担っています。 */}
+主要なプロパティに対して、よく使われる値や専用のトークン値に合わせたユーティリティクラスを定義しており、レスポンシブ対応できるようになっています。
+
 
 Prop クラス には以下の3種類の形式があります。
 
 |形式|説明|例|
 |---|---|---|
-|<WhsNw>`.-{prop}:{value}`</WhsNw>| 各プロパティごとの主要な値やトークンの値を利用するためのユーティリティクラス(\*1) |<WhsNw>`.-fz:l`</WhsNw>,<br/>`.-ta:center`|
-|`.-{prop}`| 変数 `--{prop}` を受け取るためのクラス(\*2) |`.-p`,<br/>`.-fz`|
-|`.-{prop}_{bp}`| 変数 `--{prop}_{bp}` を受け取るためのクラス(\*3) |<WhsNw>`.-p_sm`</WhsNw>,<br/>`.-p_md`|
-
-
+|<WhsNw>`.-{prop}:{value}`</WhsNw>| 各プロパティごとの主要な値やトークンの値を利用するためのユーティリティクラス |<WhsNw>`.-fz:l`</WhsNw>,<br/>`.-d:none`|
+|`.-{prop}`| 変数 `--{prop}` を受け取るためのクラス |`.-p`,<br/>`.-fz`|
+|`.-{prop}_{bp}`| 変数 `--{prop}_{bp}` を受け取るためのクラス |<WhsNw>`.-p_sm`</WhsNw>,<br/>`.-p_md`|
 
 
 <Callout type="warning">
 	<div class="-fz:s">
-	\*1: 全てのトークンにユーティリティクラスがデフォルトで用意されているわけではありません。  
-	\*2: 全てのCSSプロパティに対応するクラスがデフォルトで用意されているわけではありません。  
-	\*3: ブレークポイントに対応したクラスがデフォルトで用意されているものは一部のプロパティのみです。
+	\* 全てのCSSプロパティに対応するクラスがデフォルトで用意されているわけではありません。  
+	\* ブレークポイント対応クラスも、さらにその中で主要な一部のプロパティのみ標準でサポートされています。  
 	</div>
 </Callout>
 
-<PreviewTitle>上の表で示したクラスは、例えば以下のようなものがあります。</PreviewTitle>
+
+
+<PreviewTitle>例えば以下のようなものがあります。</PreviewTitle>
 
 ```css
 .-ta\:c { text-align: center; }
@@ -232,12 +231,17 @@ Prop クラス には以下の3種類の形式があります。
 }
 ```
 
-<HelpText>（厳密には少し異なるものもありますが、イメージとしてはこんな感じです。）</HelpText>
+<HelpText>（厳密には異なる形態のものもありますが、イメージとしてはこんな感じです。）</HelpText>
 
 
-### レスポンシブ対応
+<Reference>
+詳しくは[Prop Class 一覧ページ](/css/prop-class)を参照してください。
+</Reference>
 
-直前に紹介した`.-{prop}_{bp}`形式のクラスと`--{prop}_{bp}`形式の変数によって、レスポンシブ対応を行います。
+
+### レスポンシブ対応の Prop Class
+
+直前に紹介した`.-{prop}_{bp}`形式のクラスと`--{prop}_{bp}`形式の変数によって、レスポンシブ対応を行えるようになっています。
 
 <Preview>
 	<PreviewTitle>実際の活用例は次の通りです。</PreviewTitle>
@@ -270,7 +274,7 @@ Prop クラス には以下の3種類の形式があります。
 
 ### その他の推奨規則
 
-Lismパッケージに内蔵されているクラスではありませんが、次のような感じで命名すると統一感でると思います。
+Lismパッケージに内蔵されているクラスではありませんが、次のような感じで`@lism.modules`に命名すると統一感がでると思います。
 
 |分類|形式|例|
 |---|---|---|
@@ -281,7 +285,7 @@ Lismパッケージに内蔵されているクラスではありませんが、�
 {/* |ユニーククラス|`.uq--{uniqueName}`|`.uq--hoge`| */}
 
 
-## 命名規則
+## 命名規則について
 
 
 ### CSS変数の命名規則
@@ -306,7 +310,13 @@ Lismパッケージに内蔵されているクラスではありませんが、�
 
 
 ### クラスの命名規則
-...
+
+プレフィックスについて
+
+- `l--`, `a--` など、ハイフンが2つ（`--`) 繋ぎのものは、同階層のクラスは同じ要素に使用できないことを示します。
+- `set-`, `is-`, `u-` など ハイフンが一つで始まるものは、同階層を同じ要素に使用できることを示します。
+
+
 
 `-{prop}:{value}`の`{value}`部分について
 
@@ -319,22 +329,71 @@ Lismパッケージに内蔵されているクラスではありませんが、�
 
 ## 単語の省略について
 
-基本的には[Emmetの省略形](https://docs.emmet.io/cheat-sheet/) で統一するようにしています。
+Prop Class`-{prop}:{value}`と、それに対応したCSS変数やコンポーネントで指定できるプロパティのキー名の省略ルールについて、`{prop}`側と`{value}`側の2つについてそれぞれの省略ルールを説明します。
+
+### `{prop}`部分について
+
+レイアウト・タイポグラフィ・カラーに関わる主要なプロパティは、 [Emmet](https://docs.emmet.io/cheat-sheet/) のような 1~3文字への極端な省略名を用います。
 
 - `font-size` → `fz`
 - `background-color` → `bgc`
+- `padding` → `p`
+- `flex` → `fx`
+- `grid-template-columns` → `gtc`
+
+その他のプロパティは、そのままか、もしくは用意にプロパティーが予測できる範囲で省略します。
+ただし、元になるプロパティ名に入っている**ハイフン(`-`)は一部例外ルールを除いて基本的に全て省略**します。
+
+- `clear` → `clear`
+- `white-space` → `whitespace`
+- `writing-mode` → `writing`
+
+
+`max-`, `min-`プロパティは、そのままハイフンを使います。
+
+- `max-width` → `max-w`
+- `min-width` → `min-w`
+- `max-height` → `max-h`
+- `min-height` → `min-h`
+
+
+
+#### 方向指定系のプロパティについて
+
+また、方向指定プロパティも`-`で繋げて、`{prop}-{side}`ような命名規則になります。  
+ただし、`p`,`m` のみ、 (`pt`,`px`)などの書き方がすでに一般的なため、最初のハイフンを省略します。
+
+| 対象プロパティ         | 省略形 |
+| ---------------------- | ------ |
+| `gap`                  | `g`  |
+| `column-gap`           | `g-x`  |
+| `row-gap`              | `g-y`  |
+| `overflow`             | `ov`  |
+| `overflow-x`           | `ov-x`  |
+| `border`               | `bd`  |
+| `border-left`          | `bd-l`  |
+| `border-inline`        | `bd-x`  |
+| `border-inline-start`  | `bd-x-s`  |
+| `padding`              | `p` |
+| `padding-inline`       | `px` |
+| `padding-inline-start` | `px-s` |
+| `margin`               | `m` |
+| `margin-top`           | `mt` |
+| `margin-block`         | `my` |
+| `margin-block-start`   | `my-s` |
+
+
+
+### `{value}`部分について
+
+`{value}`部分については、基本的には極端な省略はせず、`{prop}`部分が極端に省略されていても`{value}`部分があればその組み合わせを見てどのプロパティを示すか予測しやすいようになっています。
+
+
+長いキーワード値のみ、意味がわかる程度に省略します。
+
+- `display:none`に対応するクラス → `.-d:none`
+- `display:inline-flex`に対応するクラス → `.-d:in-flex`
+- `position:relative`に対応するクラス → `.-pos:rel`
 - `text-align:center`に対応するクラス → `.-ta:center`
 
-次のように、例外 (Emmetと違うもの、Emmetっぽくないもの)もあります。
-
-- `px`,`py`,`mx`,`my`
-- `gx`(`column-gap`),`gy`(`row-gap`)
-- `aslf`, `jslf`
-	- Emmet では`as`, `js`になるが `as` は Lism Prop と被り、`js`は javascript が思い浮かぶため、変形しています。
-
-
-Emmet で明確に定義されていないものもあります。  
-その場合は、それっぽく省略しています。**母音を抜く、または先頭の数文字を取る**、のどちらかでできるだけ省略するようにしています。
-
-ただし、省略すると極端にわかりづらくなる、または他と被りそうなものは、一部そのままです。
 

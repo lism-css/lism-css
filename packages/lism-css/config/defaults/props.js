@@ -167,7 +167,6 @@ export default {
 	'i-x-e': { prop: 'insetInlineEnd', token: 'space' },
 	'i-y-s': { prop: 'insetBlockStart', token: 'space' },
 	'i-y-e': { prop: 'insetBlockEnd', token: 'space' },
-	// iso: { prop: 'isolation', utils: { isolate: 'i' } },
 
 	// space
 	p: {
@@ -334,6 +333,7 @@ export default {
 	writing: { prop: 'writingMode', token: 'writing', tokenClass: 1, bp: 1 },
 	float: { prop: 'float', utils: { l: 'left', r: 'right' } },
 	clear: { prop: 'clear', presets: ['both'] },
+	// isolation: { prop: 'isolation', utils: { isolate: 'i' } },
 
 	// transition
 	duration: { isVar: 1 },
