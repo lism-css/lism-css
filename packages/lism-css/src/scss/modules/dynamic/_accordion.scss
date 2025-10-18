@@ -1,9 +1,9 @@
 .d--accordion {
 	--duration: var(--acc-duration, 0.4s);
-	&._opened {
+	&.js-opened {
 		--notOpened_: ;
 	}
-	&:not(._opened) {
+	&:not(.js-opened) {
 		--isOpened_: ;
 	}
 }
@@ -32,7 +32,7 @@
 }
 
 // 閉じている時
-.d--accordion:not(._opened) {
+.d--accordion:not(.js-opened) {
 	> .d--accordion_body {
 		--gtr: 0fr;
 		padding-block: 0 !important;

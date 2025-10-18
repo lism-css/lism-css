@@ -5,41 +5,36 @@
 
 .is--flow {
 	display: flow-root;
-	// --_fgap: var(--flow-gap, var(--flow--m));
 
 	> * {
-		--my-s: var(--flow-gap, var(--flow--m));
+		--my-s: var(--flow-gap, var(--flow--m)); // 初期値は m
 		margin-block: var(--my-s) 0;
 	}
+
+	// flow 直下のメディア要素は block に初期リセット
+	> :where(img, video, audio) {
+		display: block;
+	}
 }
+
 .-flow\:s > * {
-	--my-s: var(--flow--s);
+	--flow-gap: var(--flow--s);
 }
 .-flow\:m > * {
-	--my-s: var(--flow--m);
+	--flow-gap: var(--flow--m);
 }
 // .-flow\:l > * {
 // 	--flow-gap: var(--flow--l);
 // }
-// .-flow\: > * {
-// 	--my-s: var(--flow-gap);
-// }
+
+// 見出しの上部余白は少しだけ広くする.
+.is--flow > :where(h1, h2, h3, h4) {
+	--my-s: calc(var(--flow-gap) + var(--flow--h));
+}
+
+// Note: 打ち消しを最後に書く
+// .is--flow > :where(.is--fullwide + .is--fullwide),
+.is--flow > :first-child,
 .-flow\:skip + * {
 	--my-s: 0;
-}
-
-// 見出しの上部余白は少しだけ広くする. ただし、見出し直後の見出しの場合を除く。
-// Note: :first-child での打消しのほうが優先度高くなるように注意する
-.is--flow > :where(h1, h2, h3, h4) {
-	margin-block-start: calc(var(--my-s) + var(--flow--h));
-}
-
-// fullwideの連結に余白は基本不要
-// .is--flow > :where(.is--fullwide + .is--fullwide) {
-// 	--my-s: 0;
-// }
-
-// :first-child への上書きのほうが優先度高くなるように。
-.is--flow > :first-child {
-	margin-block-start: 0;
 }
