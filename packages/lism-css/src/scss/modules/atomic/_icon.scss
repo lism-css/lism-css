@@ -1,16 +1,16 @@
-.l--icon {
+.a--icon {
 	display: inline-flex;
 	vertical-align: middle; //下にスペースができるのを防ぐ
 	flex-shrink: 0; // Callout など、アイコンはflex直下の子要素にしたい場合も多いので、指定しておく
 }
 
 /* fill指定のない svg にテキストカラーを継承させる */
-.l--icon:where(:not([fill])) {
+.a--icon:where(:not([fill])) {
 	fill: currentcolor;
 }
 
 /* 属性によるサイズ指定がない場合　*/
-.l--icon:where(:not([width])) {
+.a--icon:where(:not([width])) {
 	width: 1em;
 	height: 1em;
 }

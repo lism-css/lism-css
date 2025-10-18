@@ -18,7 +18,7 @@ details.d--accordion
 	summary.d--accordion_header.l--flex
 		span.d--accordion_label ...Header label...
 		span.d--accordion_icon
-			svg.l--icon
+			svg.a--icon
 	div.d--accordion_body.l--grid
 		div.d--accordion_inner ...Contents...
 ```
@@ -98,7 +98,7 @@ details.d--accordion
 	<summary class="d--accordion_header l--grid">
 		<span class="d--accordion_label">Accordion Label</span>
 		<span class="d--accordion_icon">
-			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="1em" height="1em" fill="currentColor" focusable="false" class="l--icon" aria-hidden="true"><path d="M216.49,104.49l-80,80a12,12,0,0,1-17,0l-80-80a12,12,0,0,1,17-17L128,159l71.51-71.52a12,12,0,0,1,17,17Z"></path></svg>
+			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="1em" height="1em" fill="currentColor" focusable="false" class="a--icon" aria-hidden="true"><path d="M216.49,104.49l-80,80a12,12,0,0,1-17,0l-80-80a12,12,0,0,1,17-17L128,159l71.51-71.52a12,12,0,0,1,17,17Z"></path></svg>
 		</span>
 	</summary>
 	<div class="d--accordion_body l--grid -my-s:20">
@@ -352,10 +352,10 @@ CSSで`:root`の`--acc-duration`を上書きすると、デフォルトの開閉
 	<PreviewCode slot='tab' label='**追加CSS**'>
 ```scss
 .d--accordion_icon {
-	> .l--icon:nth-last-of-type(2) {
+	> .a--icon:nth-last-of-type(2) {
 		opacity: var(--isOpened_, 0);
 	}
-	> .l--icon:nth-of-type(2) {
+	> .a--icon:nth-of-type(2) {
 		opacity: var(--notOpened_, 0);
 	}
 }
@@ -403,7 +403,7 @@ CSSで`:root`の`--acc-duration`を上書きすると、デフォルトの開閉
 	<summary class="d--accordion_header l--grid">
 		<span class="d--accordion_label">Labelテキスト（<a href="#acc-innerlink">ヘルプリンク</a></span>
 		<button class="d--accordion_icon -d:ig -bd -bdrs:5 -bgc:inherit -p:10" data-role="trigger">
-			<svg class="l--icon"...>...</svg>
+			<svg class="a--icon"...>...</svg>
 		</button>
 	</summary>
 	<div class="d--accordion_body l--grid -my-s:20">

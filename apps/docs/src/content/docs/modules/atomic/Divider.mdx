@@ -11,13 +11,13 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage, EmbedCo
 
 ## 構造
 ```pug
-div.l--divider
+div.a--divider
 ```
 
 
 ## CSS
 
-<EmbedCode dirPath='packages/lism-css' srcPath='src/scss/layout/_divider.scss' />
+<EmbedCode dirPath='packages/lism-css' srcPath='src/scss/modules/atomic/_divider.scss' />
 
 
 ## Props
@@ -51,7 +51,7 @@ div.l--divider
 	<PreviewCode slot='tab' label='HTML'>
 		```html {2}
 		<div class="l--box -bgc:base-2 -py:50 -ta:center">...Contents...</div>
-		<div class="l--divider -bd-y-s" aria-hidden="true"></div>
+		<div class="a--divider -bd-y-s" aria-hidden="true"></div>
 		<div class="l--box -bgc:base-2 -py:50 -ta:center">...Contents...</div>
 		```
 	</PreviewCode>
@@ -75,7 +75,7 @@ div.l--divider
 	<PreviewCode slot='tab' label='HTML'>
 		```html {2}
 		<div class="l--box -bgc:base-2 -py:50 -ta:center">...Contents...</div>
-		<div class="l--divider -bd-y-s" aria-hidden="true" style="--bds:dotted;--bdw:4px;--bdc:var(--blue)"></div>
+		<div class="a--divider -bd-y-s" aria-hidden="true" style="--bds:dotted;--bdw:4px;--bdc:var(--blue)"></div>
 		<div class="l--box -bgc:base-2 -py:50 -ta:center">...Contents...</div>
 		```
 	</PreviewCode>
@@ -105,7 +105,7 @@ div.l--divider
 		```html {3} "-writing:vertical"
 		<div class="l--flex -g:30 -ai:center">
 			<div class="-fx:1 -bgc:base-2 -py:50 -ta:center">...Contents...</div>
-			<div class="l--divider -writing:vertical -bds:dashed -aslf:stretch" style="--bdw:2px" aria-hidden="true"></div>
+			<div class="a--divider -writing:vertical -bds:dashed -aslf:stretch" style="--bdw:2px" aria-hidden="true"></div>
 			<div class="-fx:1 -bgc:base-2 -py:50 -ta:center">...Contents...</div>
 		</div>
 		```

@@ -1,4 +1,4 @@
-import getLismProps from '../../lib/getLismProps';
+import getLismProps from 'lism-css/lib/getLismProps';
 import getProps from './getProps';
 import SVG from './SVG';
 

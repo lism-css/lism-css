@@ -1,5 +1,5 @@
-import atts from '../../lib/helper/atts';
-import getFilterProps from '../getFilterProps';
+import atts from 'lism-css/lib/helper/atts';
+import getFilterProps from '../../getFilterProps';
 
 export default function ({ lismClass, size, clipPath, boxSizing, style = {}, ...props }) {
 	props = getFilterProps(props);
@@ -20,7 +20,7 @@ export default function ({ lismClass, size, clipPath, boxSizing, style = {}, ...
 	props.style = style;
 
 	const defaultProps = {
-		lismClass: atts(lismClass, `l--decorator`),
+		lismClass: atts(lismClass, `a--decorator`),
 		'aria-hidden': 'true',
 	};
 

@@ -11,6 +11,12 @@ v.1.0リリースまでしばらく激しい変更が続く可能性があるた
 ---
 
 
+layoutプロパティについて、共通で文字列指定できるようになりました。
+- `layout={Grid}` → `layout='grid'`
+- gtc,gtr,gta は l--grid専用。
+- l--grid の初期状態を変更。 l--grid--repeatに。
+
+
 
 
 ## v.0.5
@@ -147,6 +153,7 @@ opacityが`op` → `o` となったため、 `hov='op'`(`.-hov:op`) も `hov='o'
 - `l--frame`があるので不要と判断し、`obf` (`object-fit`)をLism Propから除外しました。
 - `iso`, `bxsz`, `trf`, `trfo`, `fltr`, `bdfltr` をLism Propから除外しました。
 - `u--clipText`を廃止し、`-bgclip:text`と`-c:trsp`を追加しました。
+- ov-x,ov-yのhidden,clip
 
 
 ### トークン・CSS変数命名規則の変更

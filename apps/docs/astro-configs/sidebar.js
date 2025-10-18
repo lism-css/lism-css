@@ -68,12 +68,8 @@ export default [
 		],
 	},
 	{
-		label: 'Layout Components',
+		label: 'State Modules',
 		items: [
-			{
-				label: 'State',
-				link: '###---',
-			},
 			{
 				label: 'Container',
 				link: '/layout/container/',
@@ -86,14 +82,18 @@ export default [
 				label: 'LinkBox',
 				link: '/layout/linkbox/',
 			},
-			// {
-			// 	label: 'getLismProps()',
-			// 	link: '/props/get-lism-props/',
-			// },
-
+		],
+	},
+	{
+		label: 'Layout Modules',
+		items: [
 			{
-				label: 'Layouts',
-				link: '###---',
+				label: 'Box',
+				link: '/layout/box/',
+			},
+			{
+				label: 'Frame',
+				link: '/layout/frame/',
 			},
 			{
 				label: '---',
@@ -131,39 +131,32 @@ export default [
 				label: '---',
 				link: '###---',
 			},
-			{
-				label: 'Box',
-				link: '/layout/box/',
-			},
-			{
-				label: 'Frame',
-				link: '/layout/frame/',
-			},
-
-			{
-				label: '---',
-				link: '###---',
-			},
+		],
+	},
+	{
+		label: 'Atomic Modules',
+		items: [
 			{
 				label: 'Divider',
-				link: '/layout/divider/',
+				link: '/modules/atomic/divider/',
 			},
 			{
 				label: 'Spacer',
-				link: '/layout/spacer/',
+				link: '/modules/atomic/spacer/',
 			},
 			{
 				label: 'Decorator',
-				link: '/layout/decorator/',
+				link: '/modules/atomic/decorator/',
 			},
 			{
 				label: 'Icon',
-				link: '/layout/icon/',
+				link: '/modules/atomic/icon/',
 			},
-			{
-				label: 'Dynamic',
-				link: '###---',
-			},
+		],
+	},
+	{
+		label: 'Dynamic Modules',
+		items: [
 			{
 				label: 'Accordion',
 				link: '/layout/accordion/',
