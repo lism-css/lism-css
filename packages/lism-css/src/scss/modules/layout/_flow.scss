@@ -1,13 +1,15 @@
 /*
 	Meomo: end:0 がどうせ :first-child に必要なので、 my-s も > * + * 使わず上書き形式で。
-	is--containerと合わせて、カスタム値のセットは is--flow + 変数定義だけでできるように。
 */
 
-.is--flow {
+:root {
+	--flow-gap: var(--flow--base);
+}
+.l--flow {
 	display: flow-root;
 
 	> * {
-		--my-s: var(--flow-gap, var(--flow--m)); // 初期値は m
+		--my-s: var(--flow-gap); // 初期値は m
 		margin-block: var(--my-s) 0;
 	}
 
@@ -17,24 +19,26 @@
 	}
 }
 
+.-flow\:m > *,
+.-flow\:base > * {
+	--flow-gap: var(--flow--base);
+}
 .-flow\:s > * {
 	--flow-gap: var(--flow--s);
 }
-.-flow\:m > * {
-	--flow-gap: var(--flow--m);
+.-flow\:l > * {
+	--flow-gap: var(--flow--l);
 }
-// .-flow\:l > * {
-// 	--flow-gap: var(--flow--l);
-// }
 
 // 見出しの上部余白は少しだけ広くする.
-.is--flow > :where(h1, h2, h3, h4) {
+.l--flow > :where(h1, h2, h3, h4) {
+	// --my-s: var(--flow--h);
 	--my-s: calc(var(--flow-gap) + var(--flow--h));
 }
 
 // Note: 打ち消しを最後に書く
-// .is--flow > :where(.is--fullwide + .is--fullwide),
-.is--flow > :first-child,
+// .l--flow > :where(.is--fullwide + .is--fullwide),
+.l--flow > :first-child,
 .-flow\:skip + * {
 	--my-s: 0;
 }

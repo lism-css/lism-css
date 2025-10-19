@@ -92,6 +92,10 @@ export default [
 				link: '/layout/box/',
 			},
 			{
+				label: 'Flow',
+				link: '/layout/flow/',
+			},
+			{
 				label: 'Frame',
 				link: '/layout/frame/',
 			},

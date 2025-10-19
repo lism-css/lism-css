@@ -71,7 +71,7 @@ export const ColorBadge = ({color, label}) => {
 
 <Preview>
 	<PreviewTitle>Preview</PreviewTitle>
-	<PreviewArea p={20} isFlow='s' resize>
+	<PreviewArea p={20} flowGap='s' resize>
 		<SpacingDemos spaces={[
 			5, 10, 20, 30, 40, 50, 60, 70, 80
 		]} isValueLabel />
@@ -112,7 +112,7 @@ export const ColorBadge = ({color, label}) => {
 
 <Preview>
 	<PreviewTitle>`1=0.25`で計算</PreviewTitle>
-	<PreviewArea p={20} isFlow='s'>
+	<PreviewArea p={20} flowGap='s'>
 		<FiboCalcDemos unit={0.25}/>
 	</PreviewArea>
 </Preview>
@@ -126,14 +126,14 @@ export const ColorBadge = ({color, label}) => {
 
 <Preview>
 	<PreviewTitle>比率 `1.62` (≒ 黄金比率) の例</PreviewTitle>
-	<PreviewArea p={20} isFlow='s'>
+	<PreviewArea p={20} flowGap='s'>
 		<RatioCalcDemos ratio={1.62} />
 	</PreviewArea>
 </Preview>
 
 <Preview>
 	<PreviewTitle>比率 `1.5` (完全五度) の例</PreviewTitle>
-	<PreviewArea p={20} isFlow='s'>
+	<PreviewArea p={20} flowGap='s'>
 		<RatioCalcDemos ratio={1.5} />
 	</PreviewArea>
 </Preview>
@@ -143,7 +143,7 @@ export const ColorBadge = ({color, label}) => {
 
 <Preview>
 	<PreviewTitle>前半をフィボナッチ数列、後半を完全5度(`1.5`)の等比数列</PreviewTitle>
-	<PreviewArea p={20} isFlow='s'>
+	<PreviewArea p={20} flowGap='s'>
 		<SpacingDemos spaces={[
 			'0rem',
 			'0.25rem',
@@ -162,7 +162,7 @@ export const ColorBadge = ({color, label}) => {
 
 <Preview>
 	<PreviewTitle>前半50までをフィボナッチ数列 `.125`、後半を完全5度(`1.5`)の等比数列</PreviewTitle>
-	<PreviewArea p={20} isFlow='s'>
+	<PreviewArea p={20} flowGap='s'>
 		<SpacingDemos spaces={[
 			'0rem',
 			'0.25rem',
@@ -292,7 +292,7 @@ box-shadow は少し特殊で、ユーティリティクラス内で複数のsha
 
 <Preview>
 	<PreviewTitle>Preview</PreviewTitle>
-	<PreviewArea p={20} isFlow='s'>
+	<PreviewArea p={20} flowGap='s'>
 		<Text ff='base' fz='xl'>base: English text, 漢字ひらがな</Text>
 		<Text ff='accent' fz='xl'>accent: English text, 漢字ひらがな</Text>
 		<Text ff='mono' fz='xl'>mono: English text, 漢字ひらがな</Text>
@@ -323,7 +323,7 @@ box-shadow は少し特殊で、ユーティリティクラス内で複数のsha
 
 <Preview>
 	<PreviewTitle>Preview</PreviewTitle>
-	<PreviewArea p='20' isFlow='s'>
+	<PreviewArea p='20' flowGap='s'>
 		<Dummy length='s' fw='thin' />
 		<Dummy length='s' fw='light' />
 		<Dummy length='s' fw='normal' />
@@ -374,7 +374,7 @@ box-shadow は少し特殊で、ユーティリティクラス内で複数のsha
 
 <Preview>
 	<PreviewTitle>Preview</PreviewTitle>
-	<PreviewArea p={20} isFlow='s'>
+	<PreviewArea p={20} flowGap='s'>
 		<Box ov-x='auto'>
 			<FzDemos />
 		</Box>
@@ -487,7 +487,7 @@ base値は 日本語では `1.625`, `1.75`, `1.875` あたりがおすすめで�
 
 <Preview>
 	<PreviewTitle>Preview</PreviewTitle>
-	<PreviewArea p={20} isFlow='s'>
+	<PreviewArea p={20} flowGap='s'>
 		<Dummy pre='<code class="-fz:s">xs:</code> ' lh='xs' bd bds='dotted' bdc='line' />
 		<Dummy pre='<code class="-fz:s">s:</code> ' lh='s' bd bds='dotted' bdc='line' />
 		<Dummy pre='<code class="-fz:s">base:</code> ' lh='base' bd bds='dotted' bdc='line' />
@@ -518,7 +518,7 @@ base値は 日本語では `1.625`, `1.75`, `1.875` あたりがおすすめで�
 {/* ### Headings の font-size, line-height について
 <Preview>
 	<PreviewTitle>Headings</PreviewTitle>
-	<PreviewArea p={20} isFlow='s'>
+	<PreviewArea p={20} flowGap='s'>
 		<div class='l--stack -g:30'>
 			<h1>Heading 1: <Dummy  tag='span' lang='ja' /></h1>
 			<h2>Heading 2: <Dummy  tag='span' lang='ja' /></h2>
@@ -546,7 +546,7 @@ base値は 日本語では `1.625`, `1.75`, `1.875` あたりがおすすめで�
 
 <Preview>
 	<PreviewTitle>Preview</PreviewTitle>
-	<PreviewArea p={20} isFlow='s'>
+	<PreviewArea p={20} flowGap='s'>
 		<Dummy length='s' pre='<code>s:</code> ' lts='s' />
 		<Dummy length='s' pre='<code>base:</code> ' lts='base' />
 		<Dummy length='s' pre='<code>l:</code> ' lts='l' />
@@ -647,7 +647,7 @@ opacityは数値として見た場合と"どれだけ薄めるか"で見た場�
 |`m`|`--sz--m`|
 |`l`|`--sz--l`|
 
-[`.is--container`](/css/layout-state/#is--container) 等で使用されています。
+[`.is--container`](/css/module-class/#is--container) 等で使用されています。
 
 
 

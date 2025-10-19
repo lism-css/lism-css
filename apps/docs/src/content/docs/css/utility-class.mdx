@@ -4,7 +4,7 @@ description: ...
 sidebar:
   order: 5
 ---
-import { Lism, Text, Grid, Stack, Center, Box, Dummy, Media, Frame, Flex, Layer, Spacer } from "lism-css/astro";
+import { Lism, Flow, Text, Grid, Stack, Center, Box, Dummy, Media, Frame, Flex, Layer, Spacer } from "lism-css/astro";
 import { Preview, PreviewArea, PreviewTitle, PreviewCode, EmbedCode, Reference, Callout } from "~/components";
 
 
@@ -87,30 +87,47 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, EmbedCode, Reference, 
 <Preview>
 	<PreviewTitle>`u--trimBox`</PreviewTitle>
 	<PreviewArea resize p='30'>
-		<Lism className='u--trimBox' isFlow='s' bd p='30'>
-			<Dummy length='s' />
-			<Dummy />
-		</Lism>
-		<Stack className='u--trimBox' g='10' bd p='30'>
+		<Stack className='u--trimBox' bd g='30' p='30'>
+			<Dummy lang='ja' length='s' />
+			<Dummy lang='ja' />
+		</Stack>
+		<Stack className='u--trimBox' bd g='40' p='40'>
 			<Media ar='og' src='/img/img-1.jpg'/>
-			<Box my-s='var(--HL)'>
-				<Dummy tag='ul'/>
-			</Box>
-			<Dummy length='s' />
+			<Dummy lang='ja' tag='ul'/>
+			<Dummy lang='ja' length='s' />
+			<Dummy lang='ja'  />
 		</Stack>
 	</PreviewArea>
 	<PreviewCode slot="tab" label="HTML">
 		```html
-		<div class="u--trimBox -bd -p:30">
-			<p>...</p>
+		<div class='u--trimBox l--stack -bd -g:30 -p:30'>
+			<p>ロレムイプサムの座り雨、トマ好き学習だったエリット、しかし時と活力はそのような木々と楽しみ。</p>
+			<p>ロレムイプサムの座り雨、トマ好き学習だったエリット、しかし時と活力はそのような木々と楽しみ。ブラインド行うにはいくつかの重要な事柄が流れます。</p>
+		</div><div class='u--trimBox l--stack -bd -g:40 -p:40'>
+			<img class='-ar:og' src='/img/img-1.jpg' />
+			<ul>
+				<li>ロレムイプサムの座り雨、</li>
+				<li>トマ好き学習だったエリット、</li>
+				<li>しかし時と活力はそのような木々と楽しみ。</li>
+				<li>ブラインド行うにはいくつかの重要な事柄が流れます。</li>
+			</ul>
+			<p>ロレムイプサムの座り雨、トマ好き学習だったエリット、しかし時と活力はそのような木々と楽しみ。</p>
+			<p>ロレムイプサムの座り雨、トマ好き学習だったエリット、しかし時と活力はそのような木々と楽しみ。ブラインド行うにはいくつかの重要な事柄が流れます。</p>
 		</div>
 		```
 	</PreviewCode>
 	<PreviewCode slot="tab" label='JSX'>
 		```jsx
-		<Lism className='u--trimBox' bd p='30'>
-			<Dummy />
-		</Lism>
+		<Stack className='u--trimBox' bd g='30' p='30'>
+			<Dummy lang='ja' length='s' />
+			<Dummy lang='ja' />
+		</Stack>
+		<Stack className='u--trimBox' bd g='40' p='40'>
+			<Media ar='og' src='/img/img-1.jpg'/>
+			<Dummy lang='ja' tag='ul'/>
+			<Dummy lang='ja' length='s' />
+			<Dummy lang='ja'  />
+		</Stack>
 		```
 	</PreviewCode>
 </Preview>

@@ -1,15 +1,15 @@
 ---
 import type { LismProps } from '../../types';
-import { Lism } from '../Lism';
+import { Flow } from '../Flow';
 import { Grid } from '../Grid';
 import { defaultProps } from '../../../dist/components/Accordion/getProps';
 
 interface Props extends LismProps {}
-const { isFlow, innerProps, ...props } = Astro.props || {};
+const { flowGap, innerProps, ...props } = Astro.props || {};
 ---
 
 <Grid {...defaultProps.body} {...props}>
-	<Lism isFlow={isFlow} {...defaultProps.inner} {...innerProps}>
+	<Flow flowGap={flowGap} {...defaultProps.inner} {...innerProps}>
 		<slot />
-	</Lism>
+	</Flow>
 </Grid>

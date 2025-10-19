@@ -1,7 +1,7 @@
-import { Lism, Flex, Stack, Icon, Center } from 'lism-css/react';
+import { Flow, Flex, Stack, Icon, Center } from 'lism-css/react';
 import PRESETS from './presets.js';
 
-export default function Note({ type = 'note', keycolor, icon, title, children, isFlow = 's', ...props }) {
+export default function Note({ type = 'note', keycolor, icon, title, children, flowGap = 's', ...props }) {
 	const presets = type ? PRESETS[type] : null;
 	if (presets) {
 		keycolor = keycolor || presets?.color || null;
@@ -18,9 +18,9 @@ export default function Note({ type = 'note', keycolor, icon, title, children, i
 					<span className='c--note_title'>{title}</span>
 				</Flex>
 			)}
-			<Lism className='c--note_body' isFlow={isFlow}>
+			<Flow className='c--note_body' flowGap={flowGap}>
 				{children}
-			</Lism>
+			</Flow>
 		</Stack>
 	);
 }

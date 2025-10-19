@@ -42,10 +42,10 @@ export function Label({ children, ...props }) {
 	);
 }
 
-export function Body({ children, isFlow, innerProps, ...props }) {
+export function Body({ children, flowGap, innerProps, ...props }) {
 	return (
 		<Grid {...defaultProps.body} {...props}>
-			<Lism isFlow={isFlow} {...defaultProps.inner} {...innerProps}>
+			<Lism layout='flow' flowGap={flowGap} {...defaultProps.inner} {...innerProps}>
 				{children}
 			</Lism>
 		</Grid>

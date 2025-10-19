@@ -2,7 +2,7 @@ import React from 'react';
 import { Lism, Grid, Frame, Media, Decorator } from 'lism-css/react';
 import './style.css';
 
-export default function Chat({ variant = 'speak', direction = 'start', name, avatar, keycolor = 'gray', isFlow, children, ...props }) {
+export default function Chat({ variant = 'speak', direction = 'start', name, avatar, keycolor = 'gray', flowGap = 's', children, ...props }) {
 	return (
 		<Grid lismClass='c--chat' variant={variant} keycolor={keycolor} data-chat-dir={direction} ji={direction} {...props}>
 			{avatar && (
@@ -17,7 +17,7 @@ export default function Chat({ variant = 'speak', direction = 'start', name, ava
 			)}
 			<Lism lismClass='c--chat_body' ga='u:body' pos='rel'>
 				<Decorator lismClass='c--chat_deco' className='u--cbox -flow:skip' pos='abs' scale={direction === 'start' ? '' : '-X'} />
-				<Lism lismClass='c--chat_content' className='u--cbox u--trimBox' bdrs='30' p='30' isFlow={isFlow} jslf={direction}>
+				<Lism lismClass='c--chat_content' layout='flow' className='u--cbox u--trimBox' bdrs='30' p='30' flowGap={flowGap} jslf={direction}>
 					{children}
 				</Lism>
 			</Lism>

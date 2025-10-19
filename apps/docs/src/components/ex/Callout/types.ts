@@ -1,6 +1,6 @@
 export interface Props {
 	type?: string;
 	keycolor?: string;
-	isFlow?: string | boolean;
+	flowGap?: string | boolean;
 	[key: string]: any;
 }

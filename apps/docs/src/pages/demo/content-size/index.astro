@@ -9,14 +9,14 @@ import {
 	Overwide,
 	LoremContent,
 } from '../container/_components.js';
-import { Lism, Box, Container, Spacer } from 'lism-css/astro';
+import { Lism, Box, Flow, Container, Spacer } from 'lism-css/astro';
 import '../container/_style.scss';
 ---
 
 <DemoPageLayout title='コンテンツサイズ'>
-	<Lism id='demo-wrapper' isFlow py={50} p='1px'>
+	<Flow id='demo-wrapper' py={50} p='1px'>
 		<h2>コンテンツサイズ</h2>
-		<Container>
+		<Container layout='stack' g='10' py='10'>
 			<Lism w='xl' bd className='u--cbox' keycolor='red'>width: xl</Lism>
 			<Lism w='l' bd className='u--cbox' keycolor='orange'>width: l</Lism>
 			<Lism w='m' bd className='u--cbox' keycolor='green'>width: m</Lism>
@@ -28,32 +28,32 @@ import '../container/_style.scss';
 		<p>親のコンテナ幅によってかわります。</p>
 		<Spacer h='5' />
 
-		<Container size='s' isFlow='s' hasGutter>
+		<Flow isContainer='s' flowGap='s' hasGutter>
 			<AttsLabels atts='is--container,-container:s' />
 			<LoremContent />
 			<WideContent />
 			<GutterGuide />
-		</Container>
-		<Container size='m' isFlow='s' hasGutter>
+		</Flow>
+		<Flow isContainer='m' flowGap='s' hasGutter>
 			<AttsLabels atts='is--container,-container:m' />
 			<LoremContent />
 			<LoremContent />
 			<WideContent />
 			<GutterGuide />
-		</Container>
-		<Container size='l' isFlow='s' hasGutter>
+		</Flow>
+		<Flow isContainer='l' flowGap='s' hasGutter>
 			<AttsLabels atts='is--container,-container:l' />
 			<LoremContent />
 			<LoremContent />
 			<WideContent />
 			<GutterGuide />
-		</Container>
+		</Flow>
 
 		<h2>is--fullwide</h2>
 		<p><code>is--fullwide</code> は、親が <code>has--gutter</code> を持っていても全幅に広がります。</p>
-		<p>また、<code>is--flow</code> の直下で <code>is--fullwide</code> が連続すると、その間の余白は0となります。</p>
+		<p>また、<code>l--flow</code> の直下で <code>is--fullwide</code> が連続すると、その間の余白は0となります。</p>
 		<Spacer h='5' />
-		<Container size='m' hasGutter isFlow='s'>
+		<Flow isContainer='m' flowGap='s' hasGutter>
 			<AttsLabels atts='is--container,-container:m,has--gutter' />
 			<LoremContent />
 			<FullwideContent />
@@ -65,7 +65,7 @@ import '../container/_style.scss';
 				<FullwideContent />
 			</Box>
 			<GutterGuide />
-		</Container>
+		</Flow>
 
 		<h2>is--overwide</h2>
 		<p>
@@ -77,56 +77,56 @@ import '../container/_style.scss';
 		<!-- <p><code>@propetry</code>が無効なブラウザ</p> -->
 		<Spacer h='5' />
 
-		<Container size='m' isFlow='s' hasGutter>
+		<Flow isContainer='m' flowGap='s' hasGutter>
 			<AttsLabels atts='is--container,-container:m' />
 			<LoremContent />
 			<!-- <FullwideContent /> -->
 			<Overwide />
 			<Spacer h='40' />
-			<Box bd isFlow='s'>
+			<Flow flowGap='s' bd>
 				<AttsLabels atts='div' />
 				<FullwideContent />
 				<Overwide />
 				<Spacer h='10' />
-				<Box max-w='s' isFlow='s' mx='auto'>
+				<Box max-w='s' mx='auto'>
 					<AttsLabels atts='div' />
 					<Overwide />
 				</Box>
-			</Box>
+			</Flow>
 			<Spacer h='40' />
-			<Container isFlow='s'>
+			<Flow isContainer flowGap='s'>
 				<AttsLabels atts='is--container' />
 				<Overwide />
 				<Spacer h='30' />
-				<Box max-w='s' isFlow='s'>
+				<Box max-w='s'>
 					<AttsLabels atts='div,-max-w:s' />
 					<Overwide />
 				</Box>
 				<Spacer h='30' />
-				<Container size='s' isFlow='s'>
+				<Flow isContainer='s' flowGap='s'>
 					<AttsLabels atts='is--container,-container:s' />
 					<!-- <FullwideContent /> -->
 					<Overwide />
-				</Container>
-			</Container>
+				</Flow>
+			</Flow>
 
 			<GutterGuide />
 			<LoremContent />
-		</Container>
+		</Flow>
 
 		<Spacer h='5' />
 
-		<Box isFlow='s' hasGutter>
+		<Box hasGutter bd>
 			<AttsLabels atts='div' />
-			<Container max-w='s' isFlow='s'>
+			<Flow isContainer max-w='s' flowGap='s'>
 				<AttsLabels atts='is--container.-max-w' />
 				<LoremContent />
 				<FullwideContent />
 				<Overwide />
 				<Spacer h='5' />
-			</Container>
+			</Flow>
 			<GutterGuide />
 		</Box>
-	</Lism>
+	</Flow>
 	<Spacer h='50' />
 </DemoPageLayout>

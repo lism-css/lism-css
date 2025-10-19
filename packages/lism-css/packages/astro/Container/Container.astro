@@ -4,8 +4,7 @@ import { Lism } from '../Lism';
 
 interface Props extends LismProps {}
 
-const { layout, size = true, ...props } = Astro.props || {};
-const Layout = layout || Lism;
+const { size = true, ...props } = Astro.props || {};
 ---
 
-<Layout isContainer={size} {...props}><slot /></Layout>
+<Lism isContainer={size} {...props}><slot /></Lism>

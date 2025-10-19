@@ -4,7 +4,7 @@ description: ...
 sidebar:
   order: 7
 ---
-import { Lism, Container, Text, Frame, Layer, Media, Dummy, Box, Flex, Grid, Center, Columns } from "lism-css/astro";
+import { Lism, Flow, Container, Text, Frame, Layer, Media, Dummy, Box, Flex, Grid, Center, Columns } from "lism-css/astro";
 import { Preview, PreviewArea, PreviewTitle, PreviewCode, EmbedCode, Reference, Note, Callout, IconBadge } from "~/components";
 import AllPropClasses from '../../all-prop-classes.mdx';
 
@@ -120,16 +120,16 @@ Lismでは、主要なCSSプロパティ群に対して、それらで頻繁に�
 	<PreviewTitle>縦書きにする例</PreviewTitle>
 	<PreviewArea p='20' resize>
 		<Box h='20em' w='100%' writing='vertical'>
-			<Lism isFlow hasGutter>
+			<Flow hasGutter>
 				<Dummy lang='ja' length='s' />
 				<Dummy lang='ja' length='l' offset='3' />
-			</Lism>
+			</Flow>
 		</Box>
 	</PreviewArea>
 	<PreviewCode slot='tab' label='HTML'>
 	```html "-writing:vertical"
 	<div class='l--box -h -w:100% -writing:vertical' style='--h:20em'>
-		<div class='is--flow has--gutter'>
+		<div class='l--flow has--gutter'>
 			<p>ロレムイプサムの座り雨、トマ好き学習だったエリット、しかし時と活力はそのような木々と楽しみ。</p>
 			<p>ブラインド行うにはいくつかの重要な事柄が流れます。長年にわたり、私は学区と長寿であれば、そのような Liberroy,...</p>
 		</div>
@@ -139,10 +139,10 @@ Lismでは、主要なCSSプロパティ群に対して、それらで頻繁に�
 	<PreviewCode slot='tab' label='JSX'>
 	```jsx "writing='vertical'"
 	<Box h='20em' w='100%' writing='vertical'>
-		<Lism isFlow hasGutter>
+		<Flow hasGutter>
 			<Dummy lang='ja' length='s' />
 			<Dummy lang='ja' length='l' offset='3' />
-		</Lism>
+		</Flow>
 	</Box>
 	```
 	</PreviewCode>

@@ -7,7 +7,6 @@ description: ...
 import { Text, Lism, Flex, Stack, Icon, Decorator, Divider, Dummy } from 'lism-css/react'
 import { Accordion } from 'lism-css/astro'
 import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportSource, ImportExComponent } from "~/components";
-import Faq from '~/components/ex/Faq/index.js';
 
 Q&Aのレイアウト構築例を紹介します。
 
@@ -98,7 +97,7 @@ Q&Aのレイアウト構築例を紹介します。
 					<Accordion.Label fw='bold'>疲れたら踊ってもいいですか？</Accordion.Label>
 					<Accordion.Icon />
 				</Accordion.Header>
-				<Accordion.Body my-s='30' isFlow='s'>
+				<Accordion.Body my-s='30' flowGap='s'>
 					<p>もちろんです。汗をかいてリフレッシュしてください。</p>
 				</Accordion.Body>
 			</Accordion.Root>
@@ -107,7 +106,7 @@ Q&Aのレイアウト構築例を紹介します。
 					<Accordion.Label fw='bold'>猫がパソコンのキーボードの上に乗ってくるのはどうして？</Accordion.Label>
 					<Accordion.Icon />
 				</Accordion.Header>
-				<Accordion.Body my-s='30' isFlow='s'>
+				<Accordion.Body my-s='30' flowGap='s'>
 					<p>飼い主さんのそばにいたい気持ちや、キーボードの温かさが心地よいからという説があります。構ってほしいサインかもしれませんので、たくさん撫でてあげましょう。</p>
 				</Accordion.Body>
 			</Accordion.Root>
@@ -116,7 +115,7 @@ Q&Aのレイアウト構築例を紹介します。
 					<Accordion.Label fw='bold'>ペンギンはどうして空を飛ばないんですか？</Accordion.Label>
 					<Accordion.Icon />
 				</Accordion.Header>
-				<Accordion.Body my-s='30' isFlow='s'>
+				<Accordion.Body my-s='30' flowGap='s'>
 					<p>ペンギンは泳ぐことに特化した体をしているので、空は飛べませんが、水中ではまるで鳥のように自由に動き回れます。</p>
 				</Accordion.Body>
 			</Accordion.Root>
@@ -130,7 +129,7 @@ Q&Aのレイアウト構築例を紹介します。
 					<Accordion.Label fw='bold'>疲れたら踊ってもいいですか？</Accordion.Label>
 					<Accordion.Icon />
 				</Accordion.Header>
-				<Accordion.Body my-s='30' isFlow='s'>
+				<Accordion.Body my-s='30' flowGap='s'>
 					<p>もちろんです。汗をかいてリフレッシュしてください。</p>
 				</Accordion.Body>
 			</Accordion.Root>
@@ -139,7 +138,7 @@ Q&Aのレイアウト構築例を紹介します。
 					<Accordion.Label fw='bold'>猫がパソコンのキーボードの上に乗ってくるのはどうして？</Accordion.Label>
 					<Accordion.Icon />
 				</Accordion.Header>
-				<Accordion.Body my-s='30' isFlow='s'>
+				<Accordion.Body my-s='30' flowGap='s'>
 					<p>飼い主さんのそばにいたい気持ちや、キーボードの温かさが心地よいからという説があります。構ってほしいサインかもしれませんので、たくさん撫でてあげましょう。</p>
 				</Accordion.Body>
 			</Accordion.Root>
@@ -148,7 +147,7 @@ Q&Aのレイアウト構築例を紹介します。
 					<Accordion.Label fw='bold'>ペンギンはどうして空を飛ばないんですか？</Accordion.Label>
 					<Accordion.Icon />
 				</Accordion.Header>
-				<Accordion.Body my-s='30' isFlow='s'>
+				<Accordion.Body my-s='30' flowGap='s'>
 					<p>ペンギンは泳ぐことに特化した体をしているので、空は飛べませんが、水中ではまるで鳥のように自由に動き回れます。</p>
 				</Accordion.Body>
 			</Accordion.Root>
@@ -170,7 +169,7 @@ Q&Aのレイアウト構築例を紹介します。
 					</span>
 				</summary>
 				<div class='d--accordion_body l--grid -my-s:30'>
-					<div class='d--accordion_inner is--flow -flow:s -ov:hidden'>
+					<div class='d--accordion_inner l--flow -flow:s -ov:hidden'>
 						<p>もちろんです。汗をかいてリフレッシュしてください。</p>
 					</div>
 				</div>
@@ -186,7 +185,7 @@ Q&Aのレイアウト構築例を紹介します。
 					</span>
 				</summary>
 				<div class='d--accordion_body l--grid -my-s:30'>
-					<div class='d--accordion_inner is--flow -flow:s -ov:hidden'>
+					<div class='d--accordion_inner l--flow -flow:s -ov:hidden'>
 						<p>飼い主さんのそばにいたい気持ちや、キーボードの温かさが心地よいからという説があります。構ってほしいサインかもしれませんので、たくさん撫でてあげましょう。</p>
 					</div>
 				</div>
@@ -201,7 +200,7 @@ Q&Aのレイアウト構築例を紹介します。
 					</span>
 				</summary>
 				<div class='d--accordion_body l--grid -my-s:30'>
-					<div class='d--accordion_inner is--flow -flow:s -ov:hidden'>
+					<div class='d--accordion_inner l--flow -flow:s -ov:hidden'>
 						<p>ペンギンは泳ぐことに特化した体をしているので、空は飛べませんが、水中ではまるで鳥のように自由に動き回れます。</p>
 					</div>
 				</div>
@@ -226,7 +225,7 @@ Q&Aのレイアウト構築例を紹介します。
 					</Accordion.Label>
 					<Accordion.Icon />
 				</Accordion.Header>
-				<Accordion.Body p='30' py-s='0' mx-s='5' isFlow='s'>
+				<Accordion.Body p='30' py-s='0' mx-s='5' flowGap='s'>
 					<p>もちろんです。汗をかいてリフレッシュしてください。</p>
 				</Accordion.Body>
 			</Accordion.Root>
@@ -240,7 +239,7 @@ Q&Aのレイアウト構築例を紹介します。
 					</Accordion.Label>
 					<Accordion.Icon />
 				</Accordion.Header>
-				<Accordion.Body p='30' py-s='0' mx-s='5' isFlow='s'>
+				<Accordion.Body p='30' py-s='0' mx-s='5' flowGap='s'>
 					<p>飼い主さんのそばにいたい気持ちや、キーボードの温かさが心地よいからという説があります。構ってほしいサインかもしれませんので、たくさん撫でてあげましょう。</p>
 				</Accordion.Body>
 			</Accordion.Root>
@@ -258,7 +257,7 @@ Q&Aのレイアウト構築例を紹介します。
 					</Accordion.Label>
 					<Accordion.Icon />
 				</Accordion.Header>
-				<Accordion.Body p='30' py-s='0' mx-s='5' isFlow='s'>
+				<Accordion.Body p='30' py-s='0' mx-s='5' flowGap='s'>
 					<p>もちろんです。汗をかいてリフレッシュしてください。</p>
 				</Accordion.Body>
 			</Accordion.Root>
@@ -272,7 +271,7 @@ Q&Aのレイアウト構築例を紹介します。
 					</Accordion.Label>
 					<Accordion.Icon />
 				</Accordion.Header>
-				<Accordion.Body p='30' py-s='0' mx-s='5' isFlow='s'>
+				<Accordion.Body p='30' py-s='0' mx-s='5' flowGap='s'>
 					<p>飼い主さんのそばにいたい気持ちや、キーボードの温かさが心地よいからという説があります。構ってほしいサインかもしれませんので、たくさん撫でてあげましょう。</p>
 				</Accordion.Body>
 			</Accordion.Root>

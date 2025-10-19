@@ -7,6 +7,7 @@
 export * from './Lism';
 export * from './Dummy';
 export * from './Box';
+export * from './Flow';
 export * from './Flex';
 export * from './Stack';
 export * from './Grid';

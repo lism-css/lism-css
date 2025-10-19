@@ -12,7 +12,7 @@ svgで境界線を描画するコンポーネントです。
 
 <Preview>
 	<PreviewTitle>Preview</PreviewTitle>
-	<PreviewArea resize isFlow={false}>
+	<PreviewArea resize layout=''>
 		<Stack g='40'>
 			<ShapeDivider viewBox='0 0 10 10'><path d="M10 10V0L0 10z"/></ShapeDivider>
 
@@ -55,7 +55,7 @@ scaleで反転させることで、同じsvgを上下に利用できます。
 
 <Preview>
 	<PreviewTitle>Example 1</PreviewTitle>
-	<PreviewArea resize p='5' isFlow={false}>
+	<PreviewArea resize p='5' layout=''>
 		<Container size='m' hasGutter py='50' bgc='text' c='base'>
 			<Dummy />
 		</Container>
@@ -124,7 +124,7 @@ scaleで反転させることで、同じsvgを上下に利用できます。
 以下はアニメーションをONにした時の例です。
 <Preview>
 	<PreviewTitle>Example 2</PreviewTitle>
-	<PreviewArea p='20' isFlow={false}>
+	<PreviewArea p='20' layout=''>
 		<Container pos='rel' hasGutter>
 			<ShapeDivider isEmpty level='7' />
 			<Frame isLayer z='-1' max-w='100%'>
@@ -172,7 +172,7 @@ scaleで反転させることで、同じsvgを上下に利用できます。
 
 <Preview>
 	<PreviewTitle>`stretch`,`offset`の活用</PreviewTitle>
-	<PreviewArea resize p='5' isFlow={false}>
+	<PreviewArea resize p='5' layout=''>
 		<Container size='m' hasGutter py='50'>
 			<Dummy length='l' />
 		</Container>

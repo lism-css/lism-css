@@ -12,6 +12,7 @@ export * from './Layer';
 export * from './LinkBox';
 
 export * from './Box';
+export * from './Flow';
 export * from './Flex';
 export * from './Stack';
 export * from './Grid';
