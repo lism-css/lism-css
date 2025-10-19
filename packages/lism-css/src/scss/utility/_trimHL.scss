@@ -1,18 +1,22 @@
-table,
-figure,
-img,
-video {
-	--trimHL: 0px;
+.u--trimHL {
+	// 詰まりすぎにならないようにほんの少しだけ余裕を持たせる
+	margin-block: calc(0.5px + var(--HL) * -1);
 }
 
-.u--trimHL {
-	margin-block: var(--trimHL);
-}
 .u--trimBox {
+	:where(&) > * {
+		--trimHL: calc(0.5px + var(--HL) * -1);
+	}
 	> :first-child {
 		margin-block-start: var(--trimHL);
 	}
 	> :last-child {
 		margin-block-end: var(--trimHL);
 	}
+}
+
+table,
+figure,
+img {
+	--trimHL: 0px;
 }
