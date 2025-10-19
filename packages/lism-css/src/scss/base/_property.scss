@@ -23,14 +23,6 @@
 	initial-value: calc((1lh - 1em) / 2);
 }
 
-// トリミングするネガティブマージン
-// Memo: initial-valueでvar(--HL)は使えない
-@property --trimHL {
-	syntax: '*';
-	inherits: false;
-	initial-value: calc((1lh - 1em) / 2 * -1);
-}
-
 // :lang(en) {
 // 	--HL: calc((1lh - 1cap) / 2);
 // }
