@@ -41,8 +41,8 @@ export default {
 	o: { prop: 'opacity', presets: ['0'], token: 'o', tokenClass: 1 },
 	v: { prop: 'visibility', presets: ['hidden'] },
 	ov: { prop: 'overflow', presets: ['hidden', 'auto', 'clip', 'scroll'] },
-	'ov-x': { prop: 'overflowX', presets: ['auto', 'scroll'] },
-	'ov-y': { prop: 'overflowY', presets: ['auto', 'scroll'] },
+	'ov-x': { prop: 'overflowX', presets: ['clip', 'auto', 'scroll'] },
+	'ov-y': { prop: 'overflowY', presets: ['clip', 'auto', 'scroll'] },
 	// overflow-clip-margin → safariで使えない
 	ar: {
 		prop: 'aspectRatio',
