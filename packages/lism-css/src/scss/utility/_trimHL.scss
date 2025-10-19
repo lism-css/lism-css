@@ -6,13 +6,14 @@
 .u--trimBox {
 	:where(&) > * {
 		--trimHL: calc(0.5px + var(--HL) * -1);
+		margin-block: var(--trimHL);
 	}
-	> :first-child {
-		margin-block-start: var(--trimHL);
-	}
-	> :last-child {
-		margin-block-end: var(--trimHL);
-	}
+	// > :first-child {
+	// 	margin-block-start: var(--trimHL);
+	// }
+	// > :last-child {
+	// 	margin-block-end: var(--trimHL);
+	// }
 }
 
 table,
