@@ -1,7 +1,7 @@
-import { Box, Text, Stack, Frame, Center, Dummy } from 'lism-css/react';
+import { Box, Text, Stack, Flow, Center, Dummy } from 'lism-css/react';
 
 export const FzDemos = ({ lang = 'ja' }) => (
-	<Frame ar='16/9' ov-y='auto' isFlow='s'>
+	<Flow flowGap='s' ar='16/9' ov-y='auto' ov-x='clip'>
 		{['2xs', 'xs', 's', 'm', 'l', 'xl', '2xl', '3xl', '4xl', '5xl'].map((fz, i) => {
 			return (
 				<Stack key={fz} g='10'>
@@ -12,7 +12,7 @@ export const FzDemos = ({ lang = 'ja' }) => (
 				</Stack>
 			);
 		})}
-	</Frame>
+	</Flow>
 );
 
 export const BoxShadowDemos = ({ shadows = [] }) => {

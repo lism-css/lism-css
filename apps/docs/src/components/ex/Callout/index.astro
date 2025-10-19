@@ -1,9 +1,9 @@
 ---
-import { Lism, WithSide, Center, Icon } from 'lism-css/astro';
+import { Flow, WithSide, Center, Icon } from 'lism-css/astro';
 import PRESETS from './presets';
 import './style.css';
 
-const { type = 'alert', keycolor, icon, isFlow, ...props } = Astro.props;
+const { type = 'alert', keycolor, icon, flowGap = 's', ...props } = Astro.props;
 
 const presetData = type && PRESETS[type as keyof typeof PRESETS];
 const _icon = icon || presetData?.icon || 'info';
@@ -14,7 +14,7 @@ const _color = keycolor || presetData?.color || 'currentColor';
 	<Center data-is-side c='keycolor' fz='xl'>
 		<Icon icon={_icon} />
 	</Center>
-	<Lism class='u--trimBox' isFlow={isFlow}>
+	<Flow flowGap={flowGap}>
 		<slot />
-	</Lism>
+	</Flow>
 </WithSide>

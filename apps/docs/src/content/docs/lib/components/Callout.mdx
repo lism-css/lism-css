@@ -2,7 +2,7 @@
 title: 'Callout'
 description: ...
 ---
-import { Box, Icon, Layer, Dummy, Center, Lism, WithSide } from 'lism-css/astro';
+import { Box, Flow, Icon, Layer, Dummy, Center, Lism, WithSide } from 'lism-css/astro';
 import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportSource, ImportExComponent } from '~/components';
 import { Book } from '@phosphor-icons/react';
 
@@ -19,10 +19,10 @@ import Callout from '~/components/ex/Callout/index.astro';
 	<PreviewTitle>Preview</PreviewTitle>
 	<PreviewArea resize p='30'>
 		<Callout>
-			<Dummy lang='ja' />
+			<Dummy lang='ja' length='codes' />
 		</Callout>
 		<Callout type='check'>
-			<Dummy lang='ja' length='codes' />
+			<Dummy lang='ja' />
 		</Callout>
 	</PreviewArea>
 </Preview>
@@ -41,9 +41,9 @@ import Callout from '~/components/ex/Callout/index.astro';
 			<Center data-is-side c='keycolor' fz='xl'>
 				<Icon icon='alert' />
 			</Center>
-			<Lism className='u--trimBox'>
+			<Flow>
 				<p>ロレムイプサムの座り雨、トマ好き学習だったエリット、しかし時と活力はそのような木々と楽しみ。ブラインド行うにはいくつかの重要な事柄が流れます。</p>
-			</Lism>
+			</Flow>
 		</WithSide>
 	</PreviewArea>
 	<PreviewCode slot='tab' label='JSX'>
@@ -52,9 +52,9 @@ import Callout from '~/components/ex/Callout/index.astro';
 			<Center data-is-side c='keycolor' fz='xl'>
 				<Icon icon='alert' />
 			</Center>
-			<Lism className='u--trimBox'>
+			<Flow>
 				<p>ロレムイプサムの座り雨、トマ好き学習だったエリット、しかし時と活力はそのような木々と楽しみ。ブラインド行うにはいくつかの重要な事柄が流れます。</p>
-			</Lism>
+			</Flow>
 		</WithSide>
 		```
 	</PreviewCode>
@@ -66,7 +66,7 @@ import Callout from '~/components/ex/Callout/index.astro';
 					<path d='M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm0,192a88,88,0,1,1,88-88A88.1,88.1,0,0,1,128,216Zm-8-80V80a8,8,0,0,1,16,0v56a8,8,0,0,1-16,0Zm20,36a12,12,0,1,1-12-12A12,12,0,0,1,140,172Z'></path>
 				</svg>
 			</div>
-			<div class='u--trimBox'>
+			<div class='l--flow'>
 				<p>ロレムイプサムの座り雨、トマ好き学習だったエリット、しかし時と活力はそのような木々と楽しみ。ブラインド行うにはいくつかの重要な事柄が流れます。</p>
 			</div>
 		</div>
@@ -94,7 +94,7 @@ import Callout from '~/components/ex/Callout/index.astro';
 |`type`|`keycolor`と`icon`の組み合わせを呼び出すキーワードを指定できます。初期値:`"alert"`|
 |`icon`| [`Icon`](/modules/atomic/icon)コンポーネントに渡すアイコンを指定できます。デフォルトは `"alert"`です。|
 |`keycolor`| キーカラーを指定します。|
-|`isFlow`|コンテンツを囲むdiv要素に渡されます|
+|`flowGap`|コンテンツを囲むdiv要素に渡されます|
 {/* | `iconProps` | アイコン（`<Icon>`）に渡すpropsを指定できます。| */}
 {/* - `variant`: `'fill'` | `'outline'` ? */}
 

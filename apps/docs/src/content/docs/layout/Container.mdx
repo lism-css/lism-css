@@ -5,7 +5,7 @@ description: ...
 import { Container } from "lism-css/astro";
 import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage } from "~/components";
 
-[`is--container`](/css/layout-state/#is--container)をデフォルトで出力するコンポーネントです。
+[`is--container`](/css/module-class/#is--container)をデフォルトで出力するコンポーネントです。
 
 下記の ①, ② はそれぞれ同じ結果になります。
 ```jsx
@@ -39,7 +39,7 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage } from "
 <Preview>
 	<PreviewTitle>例</PreviewTitle>
 	<PreviewArea resize p={20}>
-		<Container size='m' isFlow p='40'>
+		<Container size='m' layout='flow' p='40'>
 			<p>Content</p>
 			<p>Content</p>
 			<p>...</p>
@@ -47,7 +47,7 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage } from "
 	</PreviewArea>
 	<PreviewCode>
 		```jsx
-		<Container size='m' isFlow p='40'>
+		<Container size='m' layout='flow' p='40'>
 			<p>Content</p>
 			<p>Content</p>
 			<p>...</p>

@@ -1,12 +1,12 @@
 ---
 import DemoPageLayout from '~/layouts/DemoPageLayout.astro';
 import { AttsLabels, TipCode, GutterGuide, LoremContent } from './_components.js';
-import { Lism, Box, Container, Spacer, Text } from 'lism-css/astro';
+import { Lism, Flow, Box, Container, Spacer, Text } from 'lism-css/astro';
 import './_style.scss';
 ---
 
 <DemoPageLayout title='container'>
-	<Lism id='demo-wrapper' isFlow py={50} p='1px'>
+	<Flow id='demo-wrapper' py={50} p='1px'>
 		<h2>is--container</h2>
 		<p>
 			<TipCode text='is--container' />単体では、効果としては主に <code>contaner-type:inline-size</code> が適用されるだけです。
@@ -26,24 +26,24 @@ import './_style.scss';
 		<h2>is--container (-container: あり)</h2>
 		<p><code>.-container:s|m|l</code> クラスにより、内部のコンテンツ幅を制御できます。</p>
 		<!-- </Container> -->
-		<Container size='m' isFlow>
+		<Flow isContainer='m' flowGap='s'>
 			<AttsLabels atts='is--container,-container:m' />
 			<LoremContent />
 			<LoremContent />
 			<!-- <GutterGuide /> -->
-		</Container>
-		<Container size='s' isFlow>
+		</Flow>
+		<Flow isContainer='s' flowGap='s'>
 			<AttsLabels atts='is--container,-container:s' />
 			<LoremContent />
 			<LoremContent />
 			<!-- <GutterGuide /> -->
-		</Container>
-		<Container size='l' isFlow='s'>
+		</Flow>
+		<Flow isContainer='l' flowGap='s'>
 			<AttsLabels atts='is--container,-container:l' />
 			<LoremContent />
 			<LoremContent />
 			<!-- <GutterGuide /> -->
-		</Container>
+		</Flow>
 
 		<Spacer h='1rem' />
 
@@ -52,25 +52,25 @@ import './_style.scss';
 		<p>
 			<code>is--container</code> は子要素の幅を変数で制御しているため、直下にネストすると子コンテナ自身の幅も（同じ変数名なので）影響を受けます。
 		</p>
-		<Container size='m' hasGutter isFlow='s'>
+		<Flow isContainer='m' flowGap='s' hasGutter>
 			<AttsLabels atts='is--container,-container:m,has--gutter' />
 			<LoremContent />
 			<!-- <Box isFullwide bgc='base-2'>Box</Box> -->
 			<LoremContent />
 			<Spacer h='.5rem' />
-			<Container size='l' isFlow='s'>
+			<Flow isContainer='l' flowGap='s'>
 				<AttsLabels atts='is--container,-container:l' />
 				<LoremContent />
 				<!-- <Box isFullwide bgc='base-2'>Box</Box> -->
 				<LoremContent />
-			</Container>
-			<Container size='s' isFlow='s'>
+			</Flow>
+			<Flow isContainer='s' flowGap='s'>
 				<AttsLabels atts='is--container,-container:s' />
 				<LoremContent />
 				<LoremContent />
-			</Container>
+			</Flow>
 			<GutterGuide />
-		</Container>
+		</Flow>
 
 		<Spacer h='1rem' />
 
@@ -85,13 +85,13 @@ import './_style.scss';
 			以下の例では、コンテナ直下のdivのサイズは <code>var(--sz--s)</code> ですが、<code>100cqw</code> がそのSサイズになるのではなく、windowサイズと一致します。
 		</p>
 
-		<Container size='s' isFlow='s'>
+		<Flow isContainer='s' flowGap='s'>
 			<AttsLabels atts='is--container,-container:s' />
 			{/* <LoremContent /> */}
 
-			<Box isFlow='s'>
+			<Flow flowGap='s'>
 				<AttsLabels atts='div' />
-				<Lism isFlow='s'>
+				<Flow flowGap='s'>
 					<Lism bd bdc='blue'>
 						<Lism w='75cqw' bgc='blue:20%' bg='u:stripe' bd-x-e bdc='blue' whitespace='nowrap'>width: 75cqw を適用したBOX</Lism></Lism
 					>
@@ -101,9 +101,9 @@ import './_style.scss';
 						<Text tag='span' lh='1' p='5' bd className='u--cbox' keycolor='blue' d={['none', null, 'inline-block']}>@md~</Text>
 						<Text tag='span' lh='1' p='5' bd className='u--cbox' keycolor='blue' d={['none', null, null, 'inline-block']}>@lg~</Text>
 					</p>
-				</Lism>
-			</Box>
-		</Container>
+				</Flow>
+			</Flow>
+		</Flow>
 		<p>
 			ここでのコンテナクエリの判定値( cqw )は、外側の<Text tag='span' class='_-container:_'>青色の点線</Text
 			>で囲われたコンテナ要素のサイズです。
@@ -117,10 +117,10 @@ import './_style.scss';
 		<Container max-w='s'>
 			<AttsLabels atts='is--container,-max-w:s' />
 
-			<Box isFlow='s'>
+			<Flow flowGap='s'>
 				<AttsLabels atts='div' />
 				<!-- <p>ここでのコンテナクエリの判定値は、内部でさらに配置している（緑色の点線で囲われた）コンテナ要素のサイズです。</p> -->
-				<Lism isFlow='s'>
+				<Flow flowGap='s'>
 					<Lism bd bdc='green'>
 						<Lism w='75cqw' bgc='green:20%' bg='u:stripe' bd-x-e bdc='green' whitespace='nowrap'>width: 75cqw を適用したBOX</Lism></Lism
 					>
@@ -130,8 +130,8 @@ import './_style.scss';
 						<Text tag='span' lh='1' p='5' bd className='u--cbox' keycolor='green' d={['none', null, 'inline-block']}>@md~</Text>
 						<Text tag='span' lh='1' p='5' bd className='u--cbox' keycolor='green' d={['none', null, null, 'inline-block']}>@lg~</Text>
 					</p>
-				</Lism>
-			</Box>
+				</Flow>
+			</Flow>
 		</Container>
 
 		<p class='-ta:center'>以下は、コンテナをネストした例です。</p>
@@ -140,7 +140,7 @@ import './_style.scss';
 			<Container>
 				<AttsLabels atts='is--container' />
 				<!-- <p>ここでのコンテナクエリの判定値は、内部でさらに配置している（緑色の点線で囲われた）コンテナ要素のサイズです。</p> -->
-				<Lism isFlow='s'>
+				<Flow flowGap='s'>
 					<Lism bd bdc='green'>
 						<Lism w='75cqw' bgc='green:20%' bg='u:stripe' bd-x-e bdc='green' whitespace='nowrap'>width: 75cqw を適用したBOX</Lism></Lism
 					>
@@ -150,10 +150,10 @@ import './_style.scss';
 						<Text tag='span' lh='1' p='5' bd className='u--cbox' keycolor='green' d={['none', null, 'inline-block']}>@md~</Text>
 						<Text tag='span' lh='1' p='5' bd className='u--cbox' keycolor='green' d={['none', null, null, 'inline-block']}>@lg~</Text>
 					</p>
-				</Lism>
+				</Flow>
 			</Container>
 		</Container>
 
 		<Spacer h='10rem' />
-	</Lism>
+	</Flow>
 </DemoPageLayout>

@@ -7,7 +7,7 @@ interface Props {
 	as?: any;
 	tag?: string;
 }
-const { resize, nogrid = false, isFlow = true, p = '5', ...props } = Astro.props || {};
+const { resize, nogrid = false, p = '5', ...props } = Astro.props || {};
 
 const lismState = [];
 if (resize) lismState.push('is--resize');
@@ -17,7 +17,7 @@ if (resize) lismState.push('is--resize');
 
 <Lism className='c--preview_area'>
 	<div class='c--preview_area_frame'>
-		<Lism className='c--preview_inner' lismState={lismState} isFlow={isFlow} p={p} {...props}>
+		<Lism className='c--preview_inner' layout='flow' lismState={lismState} p={p} {...props}>
 			<slot />
 			{
 				resize && (

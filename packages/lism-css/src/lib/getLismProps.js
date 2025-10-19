@@ -109,7 +109,7 @@ class LismPropsData {
 					// そのままクラス化
 					this.lismState.push(statePropData);
 				} else {
-					// isFlowやisContainerなどの特別な処理が必要なレイアウトステート
+					// isContainerなどの特別な処理が必要なレイアウトステート
 					const { className, preset, presetClass, customVar, tokenKey } = statePropData;
 					if (propVal === true) {
 						this.lismState.push(className);

@@ -2,7 +2,7 @@ import { Box, Flex, Container, Link, Dummy, Divider, Columns } from 'lism-css/re
 
 function App() {
 	return (
-		<Container size='m' hasGutter isFlow>
+		<Container size='m' hasGutter layout='flow'>
 			<Flex g='20' py='20'>
 				<img src='vite.svg' />
 				<h1>Vite + Lism UI</h1>

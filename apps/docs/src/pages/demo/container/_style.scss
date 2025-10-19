@@ -37,7 +37,9 @@ body {
 	) !important;
 	background-position: center !important;
 }
-
+:is(.l--box, .l--flow):has(> .c--attsLabels) {
+	border: 2px dashed color-mix(in srgb, transparent, var(--gray) 40%) !important;
+}
 .is--container {
 	border: 2px dashed color-mix(in srgb, transparent, var(--green) 40%) !important;
 }
@@ -46,9 +48,6 @@ body {
 }
 [class*='-container:'] > [class*='-container:'] {
 	border: 2px dotted color-mix(in srgb, transparent, var(--blue) 70%) !important;
-}
-.l--box {
-	border: 2px dashed color-mix(in srgb, transparent, var(--gray) 40%) !important;
 }
 
 .has--gutter {

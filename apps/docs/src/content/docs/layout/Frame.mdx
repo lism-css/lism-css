@@ -2,7 +2,7 @@
 title: 'Frame'
 description: ...
 ---
-import { Box, Flex, Media, Lism, Text, Layer, Frame, Center, Columns, Dummy } from 'lism-css/astro';
+import { Box, Flow, Flex, Media, Lism, Text, Layer, Frame, Center, Columns, Dummy } from 'lism-css/astro';
 import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage, HelpText, Note, EmbedCode } from "~/components";
 
 
@@ -189,9 +189,9 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage, HelpTex
 
 
 <Preview>
-	<PreviewTitle>Boxにarを指定する例</PreviewTitle>
+	<PreviewTitle>Flowにarを指定する例</PreviewTitle>
 	<PreviewArea resize p='5'>
-		<Box ar='16/9' ov-y='auto' isFlow p='40' bgc='base'>
+		<Flow ar='16/9' ov-y='auto' p='40' bgc='base'>
 			<Dummy />
 			<Dummy length="l" />
 			<Frame ar='16/9' max-w='50%'>
@@ -199,13 +199,13 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage, HelpTex
 			</Frame>
 			<Dummy length="xl" />
 			<Dummy />
-		</Box>
+		</Flow>
 	</PreviewArea>
 	<PreviewCode slot='tab' label='JSX'>
-		```jsx "Box ar='16/9'" "ov-y='auto'"
-		<Box ar='16/9' ov-y='auto' isFlow p='40'>
+		```jsx "Flow ar='16/9'" "ov-y='auto'"
+		<Flow ar='16/9' ov-y='auto' p='40'>
 			...
-		</Box>
+		</Flow>
 		```
 	</PreviewCode>
 </Preview>

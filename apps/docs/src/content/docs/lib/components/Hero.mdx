@@ -3,7 +3,7 @@ title: 'Hero'
 description: ...
 ---
 
-import { Spacer, Box, Flex, Grid, Media, Dummy, Text, Container, Layer, Stack, Center, Frame } from 'lism-css/astro';
+import { Spacer, Box, Flow, Flex, Grid, Media, Dummy, Text, Container, Layer, Stack, Center, Frame } from 'lism-css/astro';
 import { Preview, PreviewArea, PreviewTitle, PreviewCode, PreviewFrame } from "~/components";
 import ShapeDivider from '~/components/ex/ShapeDivider/index.astro';
 
@@ -17,35 +17,24 @@ import ShapeDivider from '~/components/ex/ShapeDivider/index.astro';
 
 ## Examples
 
-{/* `HeroContent` には`type`を指定でき、`top`、`center`、`bottom`のいずれかを指定することができます。  
-それぞれのキーワードに合わせて出力されるpropsが変わります。 */}
-
-{/* たとえば、`type='center'`の場合は、`my='auto'`, `hasGutter`, `isContainer='m'`が呼び出されます。 */}
-
-{/* <Stack isFullwide ar='2/1' bgc='base-2' py='50'>
-	<Container size='m' hasGutter isFlow my='auto'>
-		<Text fw='bold' fz='xl'>DEMO 01</Text>
-		<Dummy length='xl' lang='ja'/>
-	</Container>
-</Stack> */}
 
 <Preview>
 	<PreviewTitle>例 1</PreviewTitle>
 	<PreviewArea resize>
 		<Stack isFullwide min-h='50vh' bgc='base-2'>
-			<Container size='m' hasGutter isFlow my='auto'>
+			<Flow isContainer='m' hasGutter my='auto'>
 				<Text fw='bold' fz='xl'>DEMO 01</Text>
 				<Dummy length='l' lang='ja'/>
-			</Container>
+			</Flow>
 		</Stack>
 	</PreviewArea>
 	<PreviewCode>
 		```jsx
 		<Stack isFullwide min-h='50vh' bgc='base-2'>
-			<Container size='m' hasGutter isFlow my='auto'>
+			<Flow isContainer='m' hasGutter my='auto'>
 				<Text fw='bold' fz='xl'>DEMO 01</Text>
 				<Dummy length='l' lang='ja'/>
-			</Container>
+			</Flow>
 		</Stack>
 		```
 	</PreviewCode>
@@ -68,10 +57,10 @@ import ShapeDivider from '~/components/ex/ShapeDivider/index.astro';
 					<div>XXX</div>
 				</Flex>
 			</Flex>
-			<Container size='m' hasGutter isFlow my='auto' z='0'>
+			<Flow isContainer='m' hasGutter my='auto' z='0'>
 				<Text fw='bold' fz='xl'>DEMO 02</Text>
 				<Dummy length='l' />
-			</Container>
+			</Flow>
 			<Center p='20' z='0'>Footer</Center>
 		</Stack>
 	</PreviewArea>
@@ -89,10 +78,10 @@ import ShapeDivider from '~/components/ex/ShapeDivider/index.astro';
 					<div>XXX</div>
 				</Flex>
 			</Flex>
-			<Container size='m' hasGutter isFlow my='auto' z='0'>
+			<Flow isContainer='m' hasGutter my='auto' z='0'>
 				<Text fw='bold' fz='xl'>DEMO 02</Text>
 				<Dummy length='l' />
-			</Container>
+			</Flow>
 			<Center p='20' z='0'>Footer</Center>
 		</Stack>
 		```
@@ -104,37 +93,6 @@ import ShapeDivider from '~/components/ex/ShapeDivider/index.astro';
 
 ### `is--layer`, `ShapeDivider` との組み合わせ
 
-
-{/* <Preview>
-	<PreviewTitle>With Layers</PreviewTitle>
-	<PreviewArea resize>
-		<Stack isFullwide pos='rel' min-h='50vh'>
-			<Frame isLayer>
-				<Media src='/img.jpg' alt='' width='960' height='640'/>
-			</Frame>
-			<Layer blur='4px' bgc='black:50%' />
-			<Container size='m' hasGutter isFlow my='auto' c='white' z='0'>
-				<Text fw='bold' fz='xl'>With Layers</Text>
-				<Dummy length='l' />
-			</Container>
-		</Stack>
-	</PreviewArea>
-	<PreviewCode>
-		```jsx "\<Frame isLayer"
-		<Stack isFullwide pos='rel' min-h='50vh'>
-			<Frame isLayer>
-				<Media src='/img.jpg' alt='' width='960' height='640'/>
-			</Frame>
-			<Media isLayer src='/img.jpg' alt='' width='960' height='640'/>
-			<Layer blur='4px' bgc='black:50%' />
-			<Container size='m' hasGutter isFlow my='auto' c='white' z='0'>
-				<Text fw='bold' fz='xl'>With Layers</Text>
-				<Dummy length='l' />
-			</Container>
-		</Stack>
-		```
-	</PreviewCode>
-</Preview> */}
 
 {/* <Spacer h='10'/> */}
 
@@ -150,10 +108,10 @@ import ShapeDivider from '~/components/ex/ShapeDivider/index.astro';
 				<Media isLayer src='/img/img-2.jpg' alt='' width='960' height='640'/>
 				<Layer blur='4px' bgc='black:50%' />
 			</Frame>
-			<Container size='m' isFlow py='40' my='auto' z='0'>
+			<Flow isContainer='m' py='40' my='auto' z='0'>
 				<Text fw='bold' fz='xl'>ShapDivider & Layers</Text>
 				<Dummy length='l' />
-			</Container>
+			</Flow>
 			<Box z='0' ta='center'>Footer</Box>
 			<ShapeDivider viewBox='0 0 10 10' c='base' level='6' z='1'>
 				<path d="M10,10V0L0,9.5V10L10,10z"/>
@@ -170,10 +128,10 @@ import ShapeDivider from '~/components/ex/ShapeDivider/index.astro';
 				<Media isLayer src='/img/img-2.jpg' alt='' width='960' height='640'/>
 				<Layer blur='4px' bgc='black:50%' />
 			</Frame>
-			<Container size='m' isFlow py='40' my='auto' z='0'>
+			<Flow isContainer='m' py='40' my='auto' z='0'>
 				<Text fw='bold' fz='xl'>ShapDivider & Layers</Text>
 				<Dummy length='l' />
-			</Container>
+			</Flow>
 			<Box z='0' ta='center'>Footer</Box>
 			<ShapeDivider viewBox='0 0 10 10' c='base' level='6' z='1'>
 				<path d="M10,10V0L0,9.5V10L10,10z"/>
@@ -197,10 +155,10 @@ import ShapeDivider from '~/components/ex/ShapeDivider/index.astro';
 					<Media isLayer src='/img/img-1.jpg' alt='' width='960' height='640' />
 					<Layer bgc='black:50%' />
 				</Frame>
-				<Container size='m' isFlow py='40' pr={['0', '25%', '33%']} my='auto' z='0'>
+				<Flow isContainer='m' py='40' pr={['0', '25%', '33%']} my='auto' z='0'>
 					<Text fw='bold' fz='xl'>ShapDivider & Layers</Text>
 					<Dummy length='l' />
-				</Container>
+				</Flow>
 				<Spacer h='var(--slopeH)' />
 			</Stack>
 			<Stack isFullwide hasGutter pos='rel' min-h='50vh' c='white' my-s='calc(0px - var(--slopeH))'>
@@ -214,10 +172,10 @@ import ShapeDivider from '~/components/ex/ShapeDivider/index.astro';
 					<Layer bgc='black:50%' />
 				</Frame>
 				<Spacer h='var(--slopeH)' />
-				<Container size='m' isFlow py='40' pl={['0', '25%', '33%']} my='auto' z='0'>
+				<Flow isContainer='m' py='40' pl={['0', '25%', '33%']} my='auto' z='0'>
 					<Text fw='bold' fz='xl'>ShapDivider & Layers</Text>
 					<Dummy length='l' />
-				</Container>
+				</Flow>
 				<ShapeDivider viewBox='0 0 10 10' h='var(--slopeH)' c='base' scale='-X' z='1'>
 					<path d='M10,10V0L0,9.5V10L10,10z'></path>
 				</ShapeDivider>
@@ -235,10 +193,10 @@ import ShapeDivider from '~/components/ex/ShapeDivider/index.astro';
 					<Media isLayer src='/img/img-1.jpg' alt='' width='960' height='640' />
 					<Layer bgc='black:50%' />
 				</Frame>
-				<Container size='m' isFlow py='40' pr={['0', '25%', '33%']} my='auto' z='0'>
+				<Flow isContainer='m' py='40' pr={['0', '25%', '33%']} my='auto' z='0'>
 					<Text fw='bold' fz='xl'>ShapDivider & Layers</Text>
 					<Dummy length='l' />
-				</Container>
+				</Flow>
 				<Spacer h='var(--slopeH)' />
 			</Stack>
 			<Stack isFullwide hasGutter pos='rel' min-h='50vh' c='white' my-s='calc(0px - var(--slopeH))'>
@@ -252,10 +210,10 @@ import ShapeDivider from '~/components/ex/ShapeDivider/index.astro';
 					<Layer bgc='black:50%' />
 				</Frame>
 				<Spacer h='var(--slopeH)' />
-				<Container size='m' isFlow py='40' pl={['0', '25%', '33%']} my='auto' z='0'>
+				<Flow isContainer='m' py='40' pl={['0', '25%', '33%']} my='auto' z='0'>
 					<Text fw='bold' fz='xl'>ShapDivider & Layers</Text>
 					<Dummy length='l' />
-				</Container>
+				</Flow>
 				<ShapeDivider viewBox='0 0 10 10' h='var(--slopeH)' c='base' scale='-X' z='1'>
 					<path d='M10,10V0L0,9.5V10L10,10z'></path>
 				</ShapeDivider>

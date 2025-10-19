@@ -6,13 +6,6 @@ export default {
 		customVar: '--content-size',
 		tokenKey: 'sz',
 	},
-	isFlow: {
-		className: 'is--flow',
-		preset: ['s', 'm'],
-		presetClass: '-flow',
-		customVar: '--flow-gap',
-		tokenKey: 'space',
-	},
 	isLayer: 'is--layer',
 	isVertical: 'is--vertical',
 	isLinkBox: 'is--linkBox',
