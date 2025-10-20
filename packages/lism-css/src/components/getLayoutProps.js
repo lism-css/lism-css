@@ -10,6 +10,8 @@ export default function getLayoutProps(layout, props) {
 
 	if (layout === 'flow') {
 		return getFlowProps(rest);
+	} else if (layout === 'grid') {
+		return geGridProps(rest);
 	} else if (layout === 'withSide') {
 		return getWithSideProps(rest);
 	} else if (layout === 'columns') {
@@ -17,6 +19,16 @@ export default function getLayoutProps(layout, props) {
 	}
 
 	return rest;
+}
+
+function geGridProps({ _propConfig = {}, ...props }) {
+	// gt系のベース値は l--grid は 変数のみでいい
+	_propConfig.gta = { isVar: 1 };
+	_propConfig.gtc = { isVar: 1 };
+	_propConfig.gtr = { isVar: 1 };
+
+	props._propConfig = _propConfig;
+	return props;
 }
 
 function getWithSideProps({ sideW, mainW, style = {}, ...props }) {

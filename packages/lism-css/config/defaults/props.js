@@ -40,7 +40,7 @@ export default {
 	},
 	o: { prop: 'opacity', presets: ['0'], token: 'o', tokenClass: 1 },
 	v: { prop: 'visibility', presets: ['hidden'] },
-	ov: { prop: 'overflow', presets: ['hidden', 'auto', 'clip', 'scroll'] },
+	ov: { prop: 'overflow', presets: ['hidden', 'auto', 'clip'] },
 	'ov-x': { prop: 'overflowX', presets: ['clip', 'auto', 'scroll'] },
 	'ov-y': { prop: 'overflowY', presets: ['clip', 'auto', 'scroll'] },
 	// overflow-clip-margin → safariで使えない
@@ -78,12 +78,12 @@ export default {
 
 	// bg
 	bg: { prop: 'background', bp: 1 },
-	bgimg: { prop: 'backgroundImage', bp: 1 },
-	bgrpt: { prop: 'backgroundRepeat', utils: { no: 'no-repeat' } },
-	bgpos: { prop: 'backgroundPosition', utils: { c: 'center' } },
+	bgi: { prop: 'backgroundImage' },
+	bgr: { prop: 'backgroundRepeat', utils: { no: 'no-repeat' } },
+	bgp: { prop: 'backgroundPosition', presets: ['center'] },
 	bgsz: { prop: 'backgroundSize', presets: ['cover', 'contain'] },
-	bgatt: { prop: 'backgroundAttachment' }, // fixed
-	bgorigin: { prop: 'backgroundOrigin' }, // border, padding, content
+	bga: { prop: 'backgroundAttachment' }, // fixed
+	bgo: { prop: 'backgroundOrigin' }, // border, padding, content
 	bgblend: { prop: 'backgroundBlendMode' },
 	bgclip: {
 		prop: 'backgroundClip',
@@ -227,8 +227,8 @@ export default {
 
 	// flex
 	fxf: { prop: 'flexFlow' },
-	fxw: { prop: 'flexWrap', utils: { wrap: 'wrap', no: 'nowrap' }, bp: 1 },
-	fxd: { prop: 'flexDirection', utils: { col: 'column', 'col-r': 'column-reverse', row: 'row', 'row-r': 'row-reverse' }, bp: 1 },
+	fxw: { prop: 'flexWrap', presets: ['wrap'], bp: 1 },
+	fxd: { prop: 'flexDirection', utils: { col: 'column', 'col-r': 'column-reverse', 'row-r': 'row-reverse' }, bp: 1 },
 	fx: { prop: 'flex', presets: ['1'], bp: 1 },
 	fxg: { prop: 'flexGrow', presets: ['1'] },
 	fxsh: { prop: 'flexShrink', presets: ['0'] },
@@ -237,17 +237,17 @@ export default {
 	// grid
 	// gd: { prop: 'grid' },
 	gt: { prop: 'gridTemplate', bp: 1 },
-	gta: { isVar: 1, bp: 1 },
-	gtc: { isVar: 1, presets: ['subgrid'], bp: 1 },
-	gtr: { isVar: 1, presets: ['subgrid'], bp: 1 },
+	gta: { prop: 'gridTemplateAreas', bp: 1 },
+	gtc: { prop: 'gridTemplateColumns', presets: ['subgrid'], bp: 1 },
+	gtr: { prop: 'gridTemplateRows', presets: ['subgrid'], bp: 1 },
 	gaf: { prop: 'gridAutoFlow', utils: { row: 'row', col: 'column' }, bp: 1 }, //dense
 	gac: { prop: 'gridAutoColumns' },
 	gar: { prop: 'gridAutoRows' },
 
 	// grid item
-	ga: { prop: 'gridArea', presets: ['1/1'], bp: 1 },
-	gc: { prop: 'gridColumn', presets: ['1/-1'], bp: 1 },
-	gr: { prop: 'gridRow', presets: ['1/-1'], bp: 1 },
+	ga: { prop: 'gridArea', utils: { '1/1': '1 / 1' }, bp: 1 },
+	gc: { prop: 'gridColumn', utils: { '1/-1': '1 / -1' }, bp: 1 },
+	gr: { prop: 'gridRow', utils: { '1/-1': '1 / -1' }, bp: 1 },
 	gcs: { prop: 'gridColumnStart' },
 	gce: { prop: 'gridColumnEnd' },
 	grs: { prop: 'gridRowStart' },
@@ -296,7 +296,7 @@ export default {
 	pi: { prop: 'placeItems' },
 	pc: { prop: 'placeContent' },
 	pslf: { prop: 'placeSelf' },
-	ord: { prop: 'order', presets: ['0', '-1', '1'] },
+	order: { prop: 'order', presets: ['0', '-1', '1'] },
 
 	// transform
 	translate: {
@@ -332,9 +332,9 @@ export default {
 	msk: { prop: 'mask', bp: 1 },
 	ovw: { prop: 'overflowWrap', utils: { any: 'anywhere' } },
 	whitespace: { prop: 'whiteSpace', presets: ['nowrap'] },
-	wordbreak: { prop: 'wordBreak', utils: { keep: 'keep-all', all: 'break-all' } },
+	// wordbreak: { prop: 'wordBreak', utils: { keep: 'keep-all', all: 'break-all' } },
 	writing: { prop: 'writingMode', token: 'writing', tokenClass: 1, bp: 1 },
-	float: { prop: 'float', utils: { l: 'left', r: 'right' } },
+	float: { prop: 'float', presets: ['left', 'right'] },
 	clear: { prop: 'clear', presets: ['both'] },
 	isolation: { prop: 'isolation', presets: ['isolate'] },
 
