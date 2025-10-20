@@ -37,24 +37,26 @@ body {
 	) !important;
 	background-position: center !important;
 }
-:is(.l--box, .l--flow):has(> .c--attsLabels) {
-	border: 2px dashed color-mix(in srgb, transparent, var(--gray) 40%) !important;
+:where(.l--box, .l--flow, .is--container):has(> .c--attsLabels) {
+	--guideColor: var(--gray) 40%;
+	border: 2px dashed color-mix(in srgb, transparent, var(--guideColor)) !important;
 }
 .is--container {
-	border: 2px dashed color-mix(in srgb, transparent, var(--green) 40%) !important;
+	--guideColor: var(--green) 40%;
 }
 [class*='-container:'] {
-	border: 2px dashed color-mix(in srgb, transparent, var(--blue) 70%) !important;
+	--guideColor: var(--blue) 60%;
 }
-[class*='-container:'] > [class*='-container:'] {
-	border: 2px dotted color-mix(in srgb, transparent, var(--blue) 70%) !important;
-}
+// [class*='-container:'] > [class*='-container:'] {
+// 	--guideColor: var(--blue) 60%;
+// }
 
 .has--gutter {
 	position: relative;
 }
 .has--gutterGuide {
 	inset: 0;
+	width: 100%;
 	max-width: 100%;
 	height: 100%;
 	display: flex;

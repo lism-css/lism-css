@@ -149,9 +149,6 @@ export interface LismBaseProps {
 	flowGap?: boolean | string;
 	hasGutter?: boolean | string;
 	isContainer?: boolean | string;
-	isOverwide?: boolean;
-	isFullwide?: boolean;
-	isWide?: boolean;
 	isLayer?: boolean;
 	isLinkBox?: boolean;
 
@@ -298,7 +295,8 @@ export interface ModalProps extends LismProps {
 
 // Export components
 export const Lism: React.FC<LismProps>;
-export const Box: React.FC<BoxProps>;
+export const Box: React.FC<LismProps>;
+export const Flow: React.FC<LismProps>;
 export const Flex: React.FC<FlexProps>;
 export const FlexItem: React.FC<FlexItemProps>;
 export const Cluster: React.FC<FlexProps>;

@@ -7,12 +7,7 @@ export default {
 		tokenKey: 'sz',
 	},
 	isLayer: 'is--layer',
-	isVertical: 'is--vertical',
 	isLinkBox: 'is--linkBox',
-
-	isWide: 'is--wide',
-	isFullwide: 'is--fullwide',
-	isOverwide: 'is--overwide',
 	hasGutter: 'has--gutter',
 
 	// set class

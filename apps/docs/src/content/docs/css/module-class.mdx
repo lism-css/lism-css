@@ -8,8 +8,9 @@ sidebar:
 
 import { Dummy, Box, Text, Lism, Stack, Flex, Container, Frame, Center, Spacer, Media } from 'lism-css/astro';
 import { Preview, PreviewArea, PreviewTitle, PreviewCode, PreviewFrame, Reference, Callout, Note } from '~/components';
-import { Desktop } from '@phosphor-icons/react';
 import ModuleList from '~/components/ModuleList.astro';
+
+{/* import { Desktop } from '@phosphor-icons/react'; */}
 
 
 Lismでは、次のようなモジュールクラスを使います。
@@ -69,10 +70,7 @@ Lismでは、次のようなモジュールクラスを使います。
 ### `is--container`
 
 `is--container`はコンテナ要素を定義するためのクラスです。  
-また、`--content-size`で直下の子要素サイズを制御でき、`-container:{s|m|l}`でプリセットサイズを指定することもできます。
-<Callout type='info'>
-	`-container:{s|m|l}`を使用すると、`--content-size`だけではなく `.is--wide`の幅（`.--wide-size`）も同時に調整されます。
-</Callout>
+`--content-size`で直下の子要素サイズを制御でき、`-container:{s|m|l}`でプリセットサイズを指定することもできます。
 
 <Spacer h='1rem' />
 
@@ -111,69 +109,11 @@ Lismでは、次のようなモジュールクラスを使います。
 </Preview>
 
 
+<Reference>
+活用例は [`<Container>`](/layout/container) を参照してください。
+</Reference>
 
 
-
-<Box fz='l' fw='bold' my-s='50'>
-`.is--container` に 任意の値をセットする方法
-</Box>
-
-
-s, m, l 以外の値をセットしたい場合は、`--content-size`変数を指定します。
-
-<Preview>
-	<PreviewTitle>is--container に任意の値をセットする</PreviewTitle>
-	<PreviewArea resize p='20'>
-		<Lism isContainer='20rem' className='-bd:guide -hov:itemGuide'>
-			<div>Contents...</div>
-			<div>Contents...</div>
-		</Lism>
-	</PreviewArea>
-	<PreviewCode slot='tab' label='HTML'>
-	```html
-	<div class="is--container" style="--content-size:20rem">
-		<div>Contents...</div>
-		<div>Contents...</div>
-	</div>
-	```
-	</PreviewCode>
-	<PreviewCode slot='tab' label='JSX'>
-	```jsx
-	<Lism isContainer='20rem'>
-		<div>Contents...</div>
-		<div>Contents...</div>
-	</Lism>
-	```
-	</PreviewCode>
-</Preview>
-
-
-<Spacer h='1rem' />
-
-#### DEMO
-<Callout icon={Desktop} keycolor='purple'>
-`is--container`関連の挙動を確認できるデモページを用意しています。  
-ぜひ広い画面でご確認ください。
-</Callout>
-
-<PreviewFrame url='/demo/container' />
-
-
-
-### `is--{wide|fullwide|overwide} `
-
-コンテンツサイズの制御クラスを3種類用意しています。
-
-| クラス名 | 説明 |
-|---|---|
-| `is--wide` | `.-container:{s\|m\|l}`クラス直下では、コンテンツ幅よりも1段階広いサイズになります.  |
-| `is--fullwide` | `.has--gutter`の直下でも、親要素のサイズいっぱいに広がります。 |
-| `is--overwide` | 直前のコンテナ要素が呼び出された位置を基準としたコンテナ幅（`100cqw`）まで広がります。（`@propetry`を使っています。） |
-
-
-これらのクラスの挙動についても、別ページで確認できます。
-
-<PreviewFrame url='/demo/content-size' />
 
 
 ### `is--layer`

@@ -12,7 +12,7 @@ style['--_inner-stretch'] = stretch || null;
 
 {
 	level && (
-		<Lism isFullwide lismClass='c--shapeDivider' aria-hidden='true' style={style} {...props}>
+		<Lism lismClass='c--shapeDivider' max-sz='full' aria-hidden='true' style={style} {...props}>
 			<div class='c--shapeDivider_inner -h:100%'>
 				{isEmpty ? null : (
 					<svg

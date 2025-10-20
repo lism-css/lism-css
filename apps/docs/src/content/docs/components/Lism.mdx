@@ -87,6 +87,7 @@ Lism Propsは、主に以下の3種類に分類されます。
 | Prop | 説明 |
 |---|---|
 |`tag`| 出力する HTMLタグを指定できます。デフォルトは`div`を返します。|
+|`layout`| レイアウトモジュールを指定できます。例えば`layout='flow'`とすると、`.l--flow`クラスが出力されます。|
 |`lismClass`| Lismコンポーネント名となる主要なクラス名。|
 |`variant`| lismClassに対するバリエーションクラスを出力できます。lismClass に複数クラスが指定されている場合、先頭のクラスに対してバリエーションクラスを出力します。`,`区切りで複数指定できます。|
 |`as`| `<Lism>`を**別の外部コンポーネント**として展開することができます。 |
@@ -139,11 +140,9 @@ Lism Props としての処理をスキップしたいプロパティを指定で
 
 
 
-
-
 ### State Props
 
-[Layout State](/css/module-class/) クラスに対応するプロパティ群です。
+[State Modules](/css/module-class/) クラスに対応するプロパティ群です。
 
 
 | Prop | 出力されるクラス |
@@ -151,11 +150,10 @@ Lism Props としての処理をスキップしたいプロパティを指定で
 | `isContainer(='{s\|m\|l}')` | `.is--container`+`(.-container:{s\|m\|l})` |
 | `isLayer` | `.is--layer` |
 | `isLinkBox` | `.is--linkBox` |
-| `isWide`,<br />`isFullwide`,<br />`isOverwide` | `.is--wide`,<br />`.is--fullwide`,<br />`.is--overwide` |
 | `hasGutter` | `.has--gutter` |
 
 <Reference>
-[Layout State クラスについての解説と使用例はこちら](/css/module-class/)
+[State Modules クラスについての解説と使用例はこちら](/css/module-class/)
 </Reference>
 
 

@@ -60,12 +60,22 @@ export default {
 	'min-h': { prop: 'minHeight', presets: ['100%'], token: 'sz', bp: 1 },
 	'max-h': { prop: 'maxHeight', presets: ['100%'], token: 'sz', bp: 1 },
 
-	xsz: { prop: 'inlineSize', token: 'sz' },
-	ysz: { prop: 'blockSize', token: 'sz' },
-	'min-xsz': { prop: 'minInlineSize', token: 'sz' },
-	'max-xsz': { prop: 'maxInlineSize', token: 'sz' },
-	'min-ysz': { prop: 'minBlockSize', token: 'sz' },
-	'max-ysz': { prop: 'maxBlockSize', token: 'sz' },
+	sz: { prop: 'inlineSize', token: 'sz' },
+	'min-sz': { prop: 'minInlineSize', token: 'sz' },
+	'max-sz': {
+		prop: 'maxInlineSize',
+		token: 'sz',
+		tokenClass: 1,
+		exUtility: {
+			min: '',
+			full: '',
+			outer: '',
+		},
+	},
+
+	// ysz: { prop: 'blockSize', token: 'sz' },
+	// 'min-ysz': { prop: 'minBlockSize', token: 'sz' },
+	// 'max-ysz': { prop: 'maxBlockSize', token: 'sz' },
 
 	// bg
 	bg: { prop: 'background', bp: 1 },
@@ -85,9 +95,7 @@ export default {
 		presets: ['base', 'base-2', 'text', 'inherit', 'main', 'accent'],
 		utils: { trsp: 'transparent' },
 		token: 'color',
-		exUtility: {
-			inherit: { 'background-color': 'inherit' }, // --c ではなく color で出力したい
-		},
+		exUtility: { inherit: { 'background-color': 'inherit' } },
 		alwaysVar: 1,
 	},
 
@@ -100,11 +108,7 @@ export default {
 		token: 'color',
 		exUtility: {
 			inherit: { color: 'inherit' }, // --c ではなく color で出力したい
-			// mix: {
-			// 	'--_c1': 'currentColor',
-			// 	'--_c2': 'transparent',
-			// 	'--c': 'color-mix(in srgb, var(--_c1) var(--_mix-c, 50%), var(--_c2))',
-			// },
+			// mix: {'--_c1:currentColor;--_c2:transparent;--c:color-mix(in srgb, var(--_c1) var(--_mix-c, 50%), var(--_c2))'},
 		},
 		alwaysVar: 1,
 	},
