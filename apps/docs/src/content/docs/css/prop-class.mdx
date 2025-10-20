@@ -4,7 +4,7 @@ description: ...
 sidebar:
   order: 7
 ---
-import { Lism, Flow, Container, Text, Frame, Layer, Media, Dummy, Box, Flex, Grid, Center, Columns } from "lism-css/astro";
+import { Lism, Flow, Container, Text, Frame, Layer, Media, Dummy, Box, Flex, Grid, Center, Columns, Spacer } from "lism-css/astro";
 import { Preview, PreviewArea, PreviewTitle, PreviewCode, EmbedCode, Reference, Note, Callout, IconBadge } from "~/components";
 import AllPropClasses from '../../all-prop-classes.mdx';
 
@@ -85,12 +85,13 @@ Lismでは、主要なCSSプロパティ群に対して、それらで頻繁に�
 |`font`|`f`|`inherit`|-|
 |`font-size`|`fz`|[`TYPO.FZ`](/css/tokens/#typofz)|○|
 |`font-family`|`ff`|[`TYPO.FF`](/css/tokens/#typoff)|-|
-|`font-weight`|`fw`|[`TYPO.FW`](/css/tokens/#typofw)<br/>`100`,`200`,..`900`|-|
-|`line-height`|`lh`|[`TYPO.LH`](/css/tokens/#typolh), `1`|-|
+|`font-weight`|`fw`|[`TYPO.FW`](/css/tokens/#typofw)|-|
+|`font-style`|`fs`|`italic`|-|
+|`line-height`|`lh`|[`TYPO.LH`](/css/tokens/#typolh), <br/>`1`|-|
 |`letter-spacing`|`lts`|[`TYPO.LTS`](/css/tokens/#typolts)|-|
-|`text-align`|`ta`|`c`(`center`)<br/>`l`(`left`)<br/>`r`(`right`)|-|
-|`text-decoration`|`td`|`n`(`none`)<br/>`u`(`underline`)|-|
-|`writing-mode`|`writing`|`vertical`|⚪︎|
+|`text-align`|`ta`|`center`<br/>`left`<br/>`right`|-|
+|`text-decoration`|`td`|`none`<br/>`under`|-|
+|`text-transform`|`tt`|`upper`<br/>`lower`|-|
 
 
 <Preview>
@@ -112,6 +113,11 @@ Lismでは、主要なCSSプロパティ群に対して、それらで頻繁に�
 
 
 ### writing-mode
+
+|Property|Shorthand|To Class|BP|
+|---|---|---|---|
+|`writing-mode`|`writing`|`vertical`|⚪︎|
+
 
 
 縦書き用の値は、トークン（`--writing--vertical`）で管理しています。 （<span class='-fz:s'>これにより、lang属性に合わせて変数を上書きすることで、`vertical-rl`か`vertical-lr`を切り替えることができるようにもなっています。</span>）
@@ -152,13 +158,13 @@ Lismでは、主要なCSSプロパティ群に対して、それらで頻繁に�
 
 ## Colors
 
-export const LinkMix = () => <a href="/css/mix"><code>mix</code></a>;
+
 
 |Property|Shorthand|To Class|BP|
 |---|---|---|---|
-|`color`|`c`|`main`,`accent`<br />`text`,`text-2`,<br />`base`,<br /><LinkMix />,<br />`inherit`|-|
-|`background-color`|`bgc`|`main`,`accent`<br />`base`,`base-2`,<br />`text`,<br /><LinkMix />,<br />`inherit`|-|
-|`--bdc`|`bdc`|`main`,`accent`<br />`divider`,<br /><LinkMix />,<br />`inherit`,<br />`t`(`transparent`)|-|
+|`color`|`c`|`main`,`accent`<br />`text`,`text-2`,<br />`base`,<br />`inherit`<br />`trsp`(`transparent`)|-|
+|`background-color`|`bgc`|`main`,`accent`<br />`base`,`base-2`,<br />`text`,<br />`inherit`<br />`trsp`(`transparent`)|-|
+|`--bdc`|`bdc`|`main`,`accent`<br />`divider`,<br />`inherit`,<br />`trsp`(`transparent`)|-|
 {/* |`--keycolor`|`keycolor`|-|-| */}
 
 {/* (`--keycolor`は、[`u--cbox`](/css/utility-class/#u--cbox)クラスと合わせて利用します。) */}
@@ -193,8 +199,10 @@ export const LinkSPACE = () => <a href="/css/tokens/#space"><code>SPACE</code></
 |`padding`|`p`|<LinkSPACE/>|○|
 |`padding-inline`|`px`|<LinkSPACE/>|○|
 |`padding-block`|`py`|<LinkSPACE/>|○|
-|`padding-inline-start`|`px-s`|<LinkSPACE/>|○|
-|`padding-block-start`|`py-s`|<LinkSPACE/>|○|
+|`padding-inline-start`|`px-s`|-|○|
+|`padding-inline-end`|`px-e`|-|○|
+|`padding-block-start`|`py-s`|-|○|
+|`padding-block-end`|`py-e`|-|○|
 |`padding-left`|`pl`|-|○|
 |`padding-right`|`pr`|-|○|
 |`padding-top`|`pt`|-|○|
@@ -203,25 +211,23 @@ export const LinkSPACE = () => <a href="/css/tokens/#space"><code>SPACE</code></
 ### Margin
 |Property|Shorthand|To Class|BP|
 |---|---|---|---|
-|`margin`|`m`|<LinkSPACE/>,<br/>`a`(`auto`)|○|
-|`margin-inline`|`mx`|`a`(`auto`)|○|
-|`margin-block`|`my`|`a`(`auto`)|○|
-|`margin-inline-start`|`mx-s`|<LinkSPACE/>,<br/>`auto`|○|
-|`margin-block-start`|`my-s`|<LinkSPACE/>,<br/>`auto`|○|
-|`margin-left`|`ml`|`a`(`auto`)|○|
-|`margin-right`|`mr`|`a`(`auto`)|○|
-|`margin-top`|`mt`|`a`(`auto`)|○|
-|`margin-bottom`|`mb`|`a`(`auto`)|○|
+|`margin`|`m`|`auto`, <LinkSPACE/>|○|
+|`margin-inline`|`mx`|`auto`, <LinkSPACE/>|○|
+|`margin-block`|`my`|`auto`, <LinkSPACE/>|○|
+|`margin-inline-start`|`mx-s`|`auto`|○|
+|`margin-inline-end`|`mx-e`|`auto`|○|
+|`margin-block-start`|`my-s`|`auto`, <LinkSPACE/>|○|
+|`margin-block-end`|`my-e`|`auto`|○|
+|`margin-left`|`ml`|`auto`|○|
+|`margin-right`|`mr`|`auto`|○|
+|`margin-top`|`mt`|`auto`|○|
+|`margin-bottom`|`mb`|`auto`|○|
 
-### Gap
-|Property|Shorthand|To Class|BP|
-|---|---|---|---|
-|`gap`|`g`|<LinkSPACE/>,`inherit`|○|
-|`column-gap`|`g-x`|-|○|
-|`row-gap`|`g-y`|-|○|
+
+<Spacer h='1rem' />
 
 <Preview>
-	<PreviewTitle>Examples</PreviewTitle>
+	<PreviewTitle>Space Examples</PreviewTitle>
 	<PreviewArea p='30' resize>
 		<Lism p={['20', '30']} bd>
 			<Text>Example text</Text>
@@ -256,13 +262,13 @@ export const LinkSPACE = () => <a href="/css/tokens/#space"><code>SPACE</code></
 |`max-width`|`max-w`|`100%`|○|
 |`max-height`|`max-h`|`100%`|○|
 |`min-width`|`min-w`|`100%`|○|
-|`min-height`|`min-h`|`100%`,<br/>`100lvh`,`100svh`|○|
-|`inline-size`|`sz`||-|
+|`min-height`|`min-h`|`100%`|○|
+|`inline-size`|`sz`|-|-|
 |`max-inline-size`|`max-sz`|`s`,`m`,`l`,`xl`,`outer`,`full`|-|
-|`min-inline-size`|`min-sz`||-|
-|`block-size`|`ysz`||-|
-|`max-block-size`|`max-ysz`||-|
-|`min-block-size`|`min-ysz`||-|
+|`min-inline-size`|`min-sz`|-|-|
+|`block-size`|`ysz`|-|-|
+|`max-block-size`|`max-ysz`|-|-|
+|`min-block-size`|`min-ysz`|-|-|
 
 
 関連トークン: <a href="/css/tokens/#size"><code>SIZE</code></a>
@@ -272,30 +278,32 @@ export const LinkSPACE = () => <a href="/css/tokens/#space"><code>SPACE</code></
 ## Displays
 |Prop|Shorthand|To Class|BP|
 |---|---|---|---|
-|`display`|`d`|`n`(`none`),<br />`b`(`block`),<br />`f`(`flex`),<br />`g`(`grid`),<br />`i`(`inline`),<br />`ib`(`inline-block`),<br />`if`(`inline-flex`),<br />`ig`(`inline-grid`)|○|
-|`visibility`|`v`|`h`(`hidden`),<br /> `v`(`visible`)|-|
+|`display`|`d`|`none`,<br />`block`,<br />`in-flex`(`inline-flex`)|○|
+|`visibility`|`v`|`hidden`|-|
 |`opacity`|`op`|[`OPACITY`](/css/tokens/#opacity), `0`|-|
-|`overflow`|`ov`|`hidden`, `auto`, `clip`, `scroll`|-|
-|`overflow-x`|`ovx`|`auto`, `scroll`|-|
-|`overflow-y`|`ovy`|`auto`, `scroll`|-|
-|`aspect-ratio`|`ar`|`16/9`,`3/2`,`1/1`,<br />`ogp`|○|
+|`overflow`|`ov`| `auto`, `clip`, `hidden`|-|
+|`overflow-x`|`ovx`|`auto`, `clip`, `scroll`|-|
+|`overflow-y`|`ovy`|`auto`, `clip`, `scroll`|-|
+|`aspect-ratio`|`ar`|`21/9`,`16/9`,`3/2`,`1/1`,<br />`og`|○|
 
 
 ## Positions
 
 |Prop|Shorthand|To Class|BP|
 |---|---|---|---|
-|`position`|`pos`|`r`(`relative`),<br />`a`(`absolute`),<br />`s`(`static`),<br />`f`(`fixed`),<br />`sti`(`sticky`)|-|
+|`position`|`pos`|`rel`(`relative`),<br />`abs`(`absolute`),<br />`static`,<br />`fixed`,<br />`sticky`|-|
 |`top`|`t`|`0`,`50%`,`100%`|-|
 |`left`|`l`|`0`,`50%`,`100%`|-|
 |`right`|`r`|`0`,`50%`,`100%`|-|
 |`bottom`|`b`|`0`,`50%`,`100%`|-|
-|`inset`|`inset`|`0`|-|
-|`z-index`|`z`|`-1`, `0`, `1`, `2`, `99`|-|
-{/* |`inset-inline-start`|`iis`|-|-|
-|`inset-inline-end`|`iie`|-|-|
-|`inset-block-start`|`ibs`|-|-|
-|`inset-block-end`|`ibe`|-|-| */}
+|`z-index`|`z`|`-1`, `0`, `1`, `99`|-|
+|`inset`|`i`|`0`|-|
+|`inset-inline`|`i-x`|-|-|
+|`inset-block`|`i-y`|-|-|
+|`inset-inline-start`|`i-x-s`|-|-|
+|`inset-inline-end`|`i-x-e`|-|-|
+|`inset-block-start`|`i-y-s`|-|-|
+|`inset-block-end`|`i-y-e`|-|-|
 
 `position:absolute`で要素を配置する例をいくつか紹介します。
 
@@ -354,15 +362,25 @@ export const LinkSPACE = () => <a href="/css/tokens/#space"><code>SPACE</code></
 
 ## Layouts
 
+
+### Gap
+
+|Property|Shorthand|To Class|BP|
+|---|---|---|---|
+|`gap`|`g`|<LinkSPACE/>,`inherit`|○|
+|`column-gap`|`g-x`|-|○|
+|`row-gap`|`g-y`|-|○|
+
+
 ### Flex
 
 |Prop|Shorthand|To Class|BP|
 |---|---|---|---|
-|`flex-wrap`|`fxw`|`wrap`,<br /> `no`(`nowrap`)|○|
-|`flex-direction`|`fxd`|`col`(`column`),<br /> `col-r`(`column-reverse`),<br /> `row`,<br /> `row-r`(`row-reverse`)|○|
+|`flex-wrap`|`fxw`|`wrap`|○|
+|`flex-direction`|`fxd`|`col`(`column`),<br /> `col-r`(`column-reverse`),<br /> `row-r`(`row-reverse`)|○|
 |`flex`|`fx`|`1`|○|
-|`flex-shrink`|`fxsh`|`0`, `1`|-|
-|`flex-grow`|`fxg`|`0`, `1`|-|
+|`flex-shrink`|`fxsh`|`0`|-|
+|`flex-grow`|`fxg`|`1`|-|
 |`flex-basis`|`fxb`|-|○|
 
 
@@ -370,19 +388,14 @@ export const LinkSPACE = () => <a href="/css/tokens/#space"><code>SPACE</code></
 
 |Prop|Shorthand|To Class|BP|
 |---|---|---|---|
-|`grid`|`gd`|-|○|
-|`grid-template`|`gt`|-|-|
+|`grid-template`|`gt`|-|○|
 |`grid-template-areas`|`gta`|-|○|
 |`grid-template-columns`|`gtc`|`subgrid`|○|
 |`grid-template-rows`|`gtr`|`subgrid`|○|
 |`grid-auto-flow`|`gaf`|`col`(`column`),<br />`row`|○|
-|`grid-auto-rows`|`gar`|-|○|
-|`grid-auto-columns`|`gac`|-|○|
-{/* |`gt`|`grid-template`||-| */}
-
-|Prop|Shorthand|To Class|BP|
-|---|---|---|---|
-|`grid-area`|`ga`|-|○|
+|`grid-auto-rows`|`gar`|-|-|
+|`grid-auto-columns`|`gac`|-|-|
+|`grid-area`|`ga`|`1/1`|○|
 |`grid-column`|`gc`|`1/-1`|○|
 |`grid-row`|`gr`|`1/-1`|○|
 |`grid-column-start`|`gcs`|-|-|
@@ -395,13 +408,13 @@ export const LinkSPACE = () => <a href="/css/tokens/#space"><code>SPACE</code></
 
 |Prop|Shorthand|To Class|BP|
 |---|---|---|---|
-|`align-items`|`ai`|`c`, `s`, `e`, `fs`, `fe`, `str`|⚪︎|
-|`align-content`|`ac`|`c`, `s`, `e`, `fs`, `fe`, `sb`|⚪︎|
-|`align-self`|`aslf`|`c`, `s`, `e`, `str`|-|
-|`justify-items`|`ji`|`c`, `s`, `e`, `fs`, `fe`, `str`|⚪︎|
-|`justify-content`|`jc`|`c`, `s`, `e`, `fs`, `fe`, `sb`|⚪︎|
-|`justify-self`|`jslf`|`c`, `s`, `e`, `str`|-|
-|`order`|`ord`|`-1`, `0`, `1`|-|
+|`align-items`|`ai`|`center`, `start`, `end`, `flex-s`, `flex-e`, `stretch`|⚪︎|
+|`align-content`|`ac`|`center`, `start`, `end`, `flex-s`, `flex-e`, `between`|⚪︎|
+|`justify-items`|`ji`|`center`, `start`, `end`, `flex-s`, `flex-e`, `stretch`|⚪︎|
+|`justify-content`|`jc`|`center`, `start`, `end`, `flex-s`, `flex-e`, `between`|⚪︎|
+|`align-self`|`aslf`|`center`, `start`, `end`, `stretch`|-|
+|`justify-self`|`jslf`|`center`, `start`, `end`, `stretch`|-|
+|`order`|`order`|`-1`, `0`, `1`|-|
 
 {/* |`place-items`|`pi`|-|-|
 |`place-content`|`pc`|-|-|
@@ -438,10 +451,20 @@ export const LinkSPACE = () => <a href="/css/tokens/#space"><code>SPACE</code></
 ### Border
 |Prop|Shorthand|To Class|BP|
 |---|---|---|---|
-|`border`|`bd`|`n`(`none`),<br />`l`,`r`,`t`,`b`,<br />`is`,`ie`,`bs`,`be`,<br /> `x`,`y`|-|
-|`--bdc`|`bdc`|`divider`,`inherit`|-|
-|`--bds`|`bds`|`ds`(`dashed`),`dt`(`dotted`),`db`(`double`)|-|
+|`border`|`bd`|`none`|-|
+|`--bdc`|`bdc`|`line`(`--c--line`), `inherit`|-|
+|`--bds`|`bds`|`dashed`,`dotted`,`double`|-|
 |`--bdw`|`bdw`|-|○|
+|`border-top`|`bd-t`|-|-|
+|`border-right`|`bd-r`|-|-|
+|`border-bottom`|`bd-b`|-|-|
+|`border-left`|`bd-l`|-|-|
+|`border-inline`|`bd-x`|-|-|
+|`border-block`|`bd-y`|-|-|
+|`border-inline-start`|`bd-x-s`|-|-|
+|`border-inline-end`|`bd-x-e`|-|-|
+|`border-block-start`|`bd-y-s`|-|-|
+|`border-block-end`|`bd-y-e`|-|-|
 
 {/* `COLOR`,`PALETTE` */}
 
@@ -475,29 +498,28 @@ borderに関する仕様は少し特殊になっています。詳しくは[bord
 |Prop|Shorthand|To Class|BP|
 |---|---|---|---|
 |`background`|`bg`|-|⚪︎|
-|`background-image`|`bgimg`|-|⚪︎|
-|`background-color`|`bgc`|`main`,`accent`<br />`base`,`base-2`,<br />`text`,<br /><LinkMix />,<br />`inherit`|-|
-|`background-position`|`bgpos`|`c`(`center`)|-|
+|`background-image`|`bgi`|-|-|
+|`background-position`|`bgp`|`center`|-|
 |`background-size`|`bgsz`|`cover`, `contain`|-|
-|`background-repeat`|`bgrpt`|`no`(`no-repeat`)|-|
-|`background-attachment`|`bgatt`|-|-|
-|`background-origin`|`bgorigin`|-|-|
-|`background-blend-mode`|`bgblend`|-|-|
+|`background-repeat`|`bgr`|`no`(`no-repeat`)|-|
+|`background-attachment`|`bga`|-|-|
+|`background-origin`|`bgo`|-|-|
 |`background-clip`|`bgclip`|`text`|-|
+|`background-blend-mode`|`bgblend`|-|-|
 
 <Preview>
 	<PreviewTitle>使用例</PreviewTitle>
 	<PreviewArea p='30' resize>
 		<Columns g='20'>
 			<Frame ar='16/9' bg='url(/img/pattern.png) center / 4rem'></Frame>
-			<Frame ar='16/9' bgimg='url(/img/pattern.png)' bgpos='center' bgsz='4rem' bgblend='difference' bgc='white'></Frame>
+			<Frame ar='16/9' bgi='url(/img/pattern.png)' bgp='center' bgsz='4rem' bgblend='difference' bgc='white'></Frame>
 		</Columns>
 	</PreviewArea>
 	<PreviewCode label='JSX' slot='tab'>
 		```jsx
 		<Columns g='20'>
 			<Frame ar='16/9' bg='url(/img/pattern.png) center / 4rem'></Frame>
-			<Frame ar='16/9' bgimg='url(/img/pattern.png)' bgpos='center' bgsz='4rem' bgblend='difference' bgc='white'></Frame>
+			<Frame ar='16/9' bgi='url(/img/pattern.png)' bgp='center' bgsz='4rem' bgblend='difference' bgc='white'></Frame>
 		</Columns>
 		```
 	</PreviewCode>
@@ -505,7 +527,7 @@ borderに関する仕様は少し特殊になっています。詳しくは[bord
 		```html
 		<div class="l--columns -g:20">
 			<div class="l--frame -ar:16/9 -bg" style="--bg:url(/img/pattern.png) center / 4rem"></div>
-			<div class="l--frame -ar:16/9 -bgimg -bgpos:c -bgc" style="--bgimg:url(/img/pattern.png);background-size:4rem;background-blend-mode:difference;--bgc:var(--white)"></div>
+			<div class="l--frame -ar:16/9 -bgi -bgp:c -bgc" style="--bgi:url(/img/pattern.png);background-size:4rem;background-blend-mode:difference;--bgc:var(--white)"></div>
 		</div>
 		```
 	</PreviewCode>
@@ -572,31 +594,21 @@ borderに関する仕様は少し特殊になっています。詳しくは[bord
 
 ## Other CSS
 
-
-
-その他、下記のCSSプロパティは `css` というプロパティにオブジェクトとして指定することで出力できます。  
-(Note: 以下に挙げているもの以外を`css`に渡すと、`style`に流れます。)
-
-
-
-### クラスで直接使用するしかできないもの
-最後に、`Lism` コンポーネントで対応した CSS Props がないものの、Prop Classの用意があるものをリストアップしておきます。
-
-|Class|CSS|
-|---|---|
-|`-fl:l`|`float: left`|
-|`-fl:r`|`float: right`|
-|`-cl:b`|`clear: both`|
-|`-ovw:any`|`overflow-wrap: anywhere`|
-|`-whitespace:nowrap`|`white-space: nowrap`|
-
-
+|Prop|Shorthand|To Class|BP|
+|---|---|---|---|
+|`float`|`float`|`left`,`right`|-|
+|`clear`|`clear`|`both`|-|
+|`isolation`|`isolation`|`isolate`|-|
+|`overflow-wrap`|`ovwrap`|`any`(`anywhere`)|-|
+|`white-space`|`whitespace`|`nowrap`|-|
+{/* |`word-break`|`wordbreak`|`keep`(`keep-all`),<br />`all`(`break-all`)|-| */}
+{/* |`linebreak`|`linebreak`|`strict`|-| */}
 
 {/* |`-bxsz:cb`|`box-sizing: content-box`|
 |`-bxsz:bb`|`box-sizing: border-box`| */}
 
 {/* |`-objf:cn`|`object-fit: contain`|
 |`-objf:cv`|`object-fit: cover`| */}
-{/* |`-wrm:v-rl`|`writing-mode: vertical-rl`| */}
+
 {/* |`filter`|`fltr`|||
 |`backdrop-filter`|`bdfltr`||| */}
