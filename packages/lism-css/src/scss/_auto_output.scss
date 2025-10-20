@@ -33,31 +33,27 @@ base_type:
 @mixin echoUtilities($key, $prop, $utilities, $base_type, $important) {
 	@each $ukey, $value in $utilities {
 		$selector: '';
-		$has_comma: string.index($ukey, ',');
 
-		@if $has_comma {
-			$ukeys: string.split($ukey, ',');
+		// ,で複数指定
+		// $has_comma: string.index($ukey, ',');
+		// @if $has_comma {
+		// 	$ukeys: string.split($ukey, ',');
 
-			@for $i from 1 through list.length($ukeys) {
-				$val_key: list.nth($ukeys, $i);
-				$_selector: '.-#{$key}\\:#{$val_key}';
-				@if $i == 1 {
-					$selector: $_selector;
-				} @else {
-					$selector: $selector + ',' + $_selector;
-				}
-			}
-		} @else {
-			$selector: '.-#{$key}\\:#{$ukey}';
-		}
+		// 	@for $i from 1 through list.length($ukeys) {
+		// 		$val_key: list.nth($ukeys, $i);
+		// 		$_selector: '.-#{$key}\\:#{$val_key}';
+		// 		@if $i == 1 {
+		// 			$selector: $_selector;
+		// 		} @else {
+		// 			$selector: $selector + ',' + $_selector;
+		// 		}
+		// 	}
+		// } @else {
+		$selector: '.-#{$key}\\:#{$ukey}';
+		// }
 
 		// valueが(prop:val)で詳細に明示されている場合
 		@if (meta.type-of($value) == map) {
-			#{$selector} {
-				@each $v_p, $v_v in $value {
-					#{$v_p}: #{$v_v};
-				}
-			}
 		} @else if $base_type == 2 {
 			// important は [class*=] についてるので不要
 			#{$selector} {
@@ -114,12 +110,27 @@ $bp_support_list: (); // list
 		}
 	}
 
-	// utilityクラスのリストをまずは $data から取得
+	// utilityクラスのリストを $data から取得
 	$utilities: map.get($data, utilities);
+	$exUtilities: map.get($data, exUtility);
 
 	// ユーティリティクラスのリストが取得できていれば出力
 	@if $utilities {
 		@include echoUtilities($key, $prop, $utilities, $base_type, $important);
+	}
+
+	// exUtilityが存在する場合の処理
+	@if $exUtilities {
+		@each $exKey, $exValue in $exUtilities {
+			// 文字列の場合はそのまま展開
+			@if (meta.type-of($exValue) == map) {
+				.-#{$key}\:#{$exKey} {
+					@each $_p, $_v in $exValue {
+						#{$_p}: #{$_v};
+					}
+				}
+			}
+		}
 	}
 
 	// BPクラスを出力するプロパティのリストを作成

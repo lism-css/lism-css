@@ -80,47 +80,6 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage, Callout
 
 ## Heroエリアで子要素の`min-h`に`%`を使う方法
 
-{/* - l-stack(flex)の場合
-	- Heroの高さを h でセット→ HeroContent は h も min-h,max-h も fxb も % が使用できる.
-	- Heroの高さを min-h でセット → HeroContent は h も min-h,max-h もfxb も % は無効になる。
-	- Heroのアスペクト比をセット→ HeroContent は h も min-h,max-h も fxb も % が使用できる.
-		- min-h, fxb を使うと、小さいウインドウではコンテンツに合わせてHeroの高さが可変する。
-		- h,max-h を使うと、小さいウインドウではHeroContentの高さが外に溢れていく（ov-y='auto'で内部スクロールできる）
-- l-gridの場合
-	- 何で高さを確保しても、HeroContent の高さは%が使える。
-	- が、そのさらに子要素のhに%を使うには、結局 HeroContent をGrid にする必要がある。Layerを使ってもこれは一緒。
-	（ HeroContent 自体を色々装飾するとpaddingの位置が問題になってくるので、HeroContentの子要素の高さに%をつかえるのが大事。）
-
-→ 子要素に%を使うための複雑性はあまりかわらないので、その他の運用がシンプルになる stack の構成で決定。 */}
-
-{/* -  */}
-
-{/* Hero 自体の高さを`height`で固定している場合は、普通に子要素であるHeroContentや、そのさらに子要素の`height`や`min-height`にも`%`を使うことができます。
-
-<Preview>
-	<PreviewTitle>親の高さが`h`で指定されるケース</PreviewTitle>
-	<PreviewArea resize>
-		<Stack isFullwide h='400px' bgc='base-2'>
-			<Box h='50%' my='auto' px='40'>
-				<Center h='100%' bgc='base' bxsh='10'>
-					<Text fw='bold'>Height 50%</Text>
-				</Center>
-			</Box>
-		</Stack>
-	</PreviewArea>
-	<PreviewCode>
-		```jsx "h='400px'" "h='50%'"
-		<Stack isFullwide h='400px' bgc='base-2'>
-			<Box h='50%' my='auto' px='40'>
-				<Center h='100%' bgc='base' bxsh='10'>
-					<Text fw='bold'>Height 50%</Text>
-				</Center>
-			</Box>
-		</Stack>
-		```
-	</PreviewCode>
-</Preview> */}
-
 
 最低限の高さを確保しつつ、ウインドウが狭い時にコンテンツに合わせて高さを伸ばしたいケースについて。
 
@@ -134,7 +93,7 @@ Heroコンテンツの高さを `min-height` や `aspect-ratio` で指定する�
 <Preview>
 	<PreviewTitle>NG例</PreviewTitle>
 	<PreviewArea resize>
-		<Stack isFullwide min-h='400px' bgc='base-2'>
+		<Stack max-sz='full' min-h='400px' bgc='base-2'>
 			<Box min-h='50%' my='auto' bgc='base' p='20' px='40' ac='center'>
 				<Text fw='bold'>min-h:50%が効かない</Text>
 				<Dummy length='s' />
@@ -143,7 +102,7 @@ Heroコンテンツの高さを `min-height` や `aspect-ratio` で指定する�
 	</PreviewArea>
 	<PreviewCode>
 		```jsx "min-h='400px'" "min-h='50%'"
-		<Stack isFullwide min-h='400px' bgc='base-2'>
+		<Stack max-sz='full' min-h='400px' bgc='base-2'>
 			<Box min-h='50%' my='auto' bgc='base' p='20' px='40' ac='center'>
 				<Text fw='bold'>min-h:50%が効かない</Text>
 				<Dummy length='s' />
@@ -159,7 +118,7 @@ Heroコンテンツの高さを `min-height` や `aspect-ratio` で指定する�
 <Preview>
 	<PreviewTitle>改善例</PreviewTitle>
 	<PreviewArea resize>
-		<Stack isFullwide min-h='400px' bgc='base-2'>
+		<Stack max-sz='full' min-h='400px' bgc='base-2'>
 			<Grid fxg='1' ai='center' px='40'>
 				<Center min-h='50%' bgc='base' p='30' bxsh='10'>
 					<Text fw='bold'>OK</Text>
@@ -170,7 +129,7 @@ Heroコンテンツの高さを `min-height` や `aspect-ratio` で指定する�
 	</PreviewArea>
 	<PreviewCode>
 		```jsx "\<Grid" "fxg='1' ai='center'" "min-h='50%'"
-		<Stack isFullwide min-h='400px' bgc='base-2'>
+		<Stack max-sz='full' min-h='400px' bgc='base-2'>
 			<Grid fxg='1' ai='center' px='40'>
 				<Center min-h='50%' bgc='base' p='30' bxsh='10'>
 					<Text fw='bold'>OK</Text>
@@ -196,7 +155,7 @@ Heroコンテンツの高さを `min-height` や `aspect-ratio` で指定する�
 <Preview>
 	<PreviewTitle>活用例</PreviewTitle>
 	<PreviewArea resize>
-		<Stack isFullwide pos='rel' min-h='50vh'>
+		<Stack max-sz='full' pos='rel' min-h='50vh'>
 			<Frame isLayer>
 				<Media src='/img/img-3.jpg' alt='' width='960' height='640'/>
 			</Frame>
@@ -210,7 +169,7 @@ Heroコンテンツの高さを `min-height` や `aspect-ratio` で指定する�
 	</PreviewArea>
 	<PreviewCode>
 		```jsx
-		<Stack isFullwide pos='rel' min-h='50vh'>
+		<Stack max-sz='full' pos='rel' min-h='50vh'>
 			<Frame isLayer>
 				<Media src='/img/img-3.jpg' alt='' width='960' height='640'/>
 			</Frame>

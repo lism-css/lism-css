@@ -104,27 +104,36 @@ function generatePropScss(propKey, propConfig) {
 	}
 
 	if (hasUtilities) {
-		const exs = propConfig.exUtility || {};
+		const exs = propConfig.exUtility || null;
 
 		scss += `\t\tutilities: (\n`;
 		Object.entries(utilities).forEach(([utilKey, value]) => {
 			// キーに特殊文字が含まれる場合はエスケープ(/,%, : の前に \\ をつける(最終的にscss側の処理で \ ひとつになるようにここでは \\ ))
 			const escapedKey = utilKey.replace(/\//g, '\\\\/').replace(/%/g, '\\\\%').replace(/:/g, '\\\\:');
 
-			if (exs[utilKey]) {
-				scss += `\t\t\t'${escapedKey}': (\n`;
-				for (const exProp in exs[utilKey]) {
-					const exValue = exs[utilKey][exProp];
-					if (exValue) {
-						scss += `\t\t\t\t'${exProp}': '${exValue}',\n`;
-					}
-				}
-				scss += `\t\t\t),\n`;
-			} else {
+			// exUtility としても定義されている場合はスキップ
+			if (undefined === exs?.[utilKey]) {
 				scss += `\t\t\t'${escapedKey}': '${value}',\n`;
 			}
 		});
 		scss += `\t\t),\n`;
+
+		if (exs) {
+			scss += `\t\texUtility: (\n`;
+
+			for (const [exKey, exProps] of Object.entries(exs)) {
+				if (typeof exProps === 'object') {
+					scss += `\t\t\t'${exKey}': (\n`;
+					for (const _prop in exProps) {
+						if (exProps[_prop]) {
+							scss += `\t\t\t\t'${_prop}': '${exProps[_prop]}',\n`;
+						}
+					}
+					scss += `\t\t\t),\n`;
+				}
+			}
+			scss += `\t\t),\n`;
+		}
 	}
 
 	if (bp !== undefined) {

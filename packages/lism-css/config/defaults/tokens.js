@@ -7,7 +7,7 @@ export default {
 	o: ['ghost', 'pale', 'soft', 'mild'],
 	bdrs: ['5', '10', '20', '30', '40', '50', '99'],
 	bxsh: ['5', '10', '20', '30', '40', '50'],
-	sz: ['min', 'xs', 's', 'm', 'l', 'xl'],
+	sz: ['xs', 's', 'm', 'l', 'xl', 'min', 'full', 'outer'],
 	ar: ['og'],
 	space: {
 		pre: '--s',

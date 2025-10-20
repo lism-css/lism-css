@@ -2,39 +2,52 @@
 title: 'Container'
 description: ...
 ---
-import { Container } from "lism-css/astro";
-import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage } from "~/components";
+import { Container, Box, Text, Lism, Spacer } from "lism-css/astro";
+import { Preview, PreviewFrame, PreviewArea, PreviewTitle, PreviewCode, ImportPackage, Callout } from "~/components";
+import { Desktop } from '@phosphor-icons/react';
 
-[`is--container`](/css/module-class/#is--container)をデフォルトで出力するコンポーネントです。
+[`is--container`](/css/module-class/#is--container) クラスをコンポーネントで利用する例を紹介していきます。
 
-下記の ①, ② はそれぞれ同じ結果になります。
-```jsx
-// ①
-<Lism isContainer='m'>...</Lism>
+`is--container` は基本的に `isContainer`プロパティで**どのコンポーネントからでも呼び出せるようになっています。**
 
-// ②
-<Container size='m'>...</Container>
-```
-
-
-コンテナ要素としての役割をコード上でより明示的にわかりやすくするためにご利用ください。
+| プロパティ | 出力 |
+|---|---|
+| `isContainer`| `.is--container` |
+| `isContainer='s'` | `.is--container.-container:s` |
+| `isContainer='m'` | `.is--container.-container:m` |
+| `isContainer='l'` | `.is--container.-container:l` |
+| `isContainer={value}` | `.is--container`, `--container-size:{value}` |
 
 
-## Props
+## 専用コンポーネント
+
+`<Lism isContainer>` のエイリアスとして、`<Container>` も用意しています。
+
+
+### Props
 | プロパティ | 説明 |
 |---|---|
 | `size` | コンテナサイズを指定します。|
-| `layout` | 展開したい Lismコンポーネント を指定できます。|
+| `layout` | 展開したい Layoutモジュールを指定できます。|
+
+<PreviewTitle>下記の ①, ② はそれぞれ同じ結果になります。</PreviewTitle>
+
+```jsx
+// ①
+<Flow isContainer='m'>...</Lism>
+
+// ②
+<Container size='m' layout='flow'>...</Container>
+```
 
 
-## Import
+
+### Import
 
 <ImportPackage component='Container' />
 
 
 ## Usage
-
-通常のコンポーネントでは`isContainer='m'`のようにしてコンテナサイズを指定しますが、`Container`では`size='m'`のように書くことができます。
 
 <Preview>
 	<PreviewTitle>例</PreviewTitle>
@@ -45,7 +58,7 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage } from "
 			<p>...</p>
 		</Container>
 	</PreviewArea>
-	<PreviewCode>
+	<PreviewCode slot='tab' label='JSX'>
 		```jsx
 		<Container size='m' layout='flow' p='40'>
 			<p>Content</p>
@@ -54,4 +67,80 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage } from "
 		</Container>
 		```
 	</PreviewCode>
+	<PreviewCode slot='tab' label='HTML'>
+		```html
+		<div class='l--flow is--container -container:m -p:40'>
+			<p>Content</p>
+			<p>Content</p>
+			<p>...</p>
+		</div>
+		```
+	</PreviewCode>
 </Preview>
+
+### 任意のコンテナサイズをセットする
+
+s, m, l 以外の値をセットしたい場合は、`--content-size`変数を指定します。
+
+<Preview>
+	<PreviewTitle>is--container に任意の値をセットする</PreviewTitle>
+	<PreviewArea resize p='20'>
+		<Lism isContainer='20rem' className='-bd:guide -hov:itemGuide'>
+			<div>Contents...</div>
+			<div>Contents...</div>
+		</Lism>
+	</PreviewArea>
+	<PreviewCode slot='tab' label='JSX'>
+	```jsx
+	<Lism isContainer='20rem'>
+		<div>Contents...</div>
+		<div>Contents...</div>
+	</Lism>
+	```
+	</PreviewCode>
+	<PreviewCode slot='tab' label='HTML'>
+	```html
+	<div class="is--container" style="--content-size:20rem">
+		<div>Contents...</div>
+		<div>Contents...</div>
+	</div>
+	```
+	</PreviewCode>
+</Preview>
+
+
+### DEMOページ
+
+<Callout icon={Desktop} keycolor='purple'>
+`is--container`関連の挙動を確認できるデモページを用意しています。  
+ぜひ広い画面でご確認ください。
+</Callout>
+
+<PreviewFrame url='/demo/container' />
+
+
+## サイズ制御クラス `-max-sz:{sz}`
+
+Lismには、コンテンツサイズ用のトークンとして`--sz--{sz}`が用意されています、（`{sz}`: `xs` `s` `m`, `l`, `xl`）
+
+`-container:{s|m|l}` クラスを呼び出すと、それぞれ`--sz--s`, `--sz--m`, `--sz--l` が利用されますが、`-max-sz`クラスに対しても、それぞれユーティリティクラスが用意されています。
+
+{/* `is--container`が`max-inline-size`でコンテンツサイズを制御するので、それに合わせて`-max-sz`Propクラスのプリセット値も用意しています。 */}
+
+`-max-sz:{xs~xl}`はそのまま`--sz--{xs~xl}`がセットされるクラスです。
+
+その他、特徴的なクラスがありますのでそれらを紹介しておきます。
+
+| クラス名 | 説明 |
+|---|---|
+| `-max-sz:full` | `.has--gutter`の直下でも、親要素のサイズいっぱいに広がります。 |
+| `-max-sz:outer` | 先祖コンテナ要素が呼び出された位置を基準としたコンテナ幅（`100cqw`）まで広がります。（`@propetry`を使っています。） |
+
+{/* | `-max-sz:wide` | `.-container:{s\|m\|l}`クラス直下では、コンテンツ幅よりも1段階広いサイズになります.  | */}
+
+
+### DEMOページ
+
+これらの`-max-sz`クラスの挙動についても、別ページで確認できますのでぜひご覧ください。
+
+<PreviewFrame url='/demo/content-size' />

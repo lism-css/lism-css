@@ -31,7 +31,7 @@ export function AttsLabels({ atts = '', ...props }) {
 
 export function TipCode({
 	text = '',
-	color = 'gray',
+	color,
 	children,
 	...props
 }: {
@@ -43,14 +43,18 @@ export function TipCode({
 	// <TipCode text='is--container' color='orange' />
 
 	// text が "container:" を含むかどうかを判定
-	if (text.includes('container:') || text.includes('data-content-size')) {
-		color = 'blue';
-	} else if (text.includes('container')) {
-		color = 'green';
-	} else if (text.includes('flow')) {
-		color = 'orange';
-	} else if (text.includes('gutter') || text.startsWith('-')) {
-		color = 'purple';
+	if (!color) {
+		if (text.includes('container:')) {
+			color = 'blue';
+		} else if (text.includes('container')) {
+			color = 'green';
+		} else if (text.includes('flow')) {
+			color = 'orange';
+		} else if (text.includes('gutter') || text.startsWith('-')) {
+			color = 'purple';
+		} else {
+			color = 'gray';
+		}
 	}
 
 	return (
@@ -67,18 +71,18 @@ export function GutterGuide(props?: any) {
 export function WideContent(props: any) {
 	const { children, ...atts } = props;
 	return (
-		<Lism isWide ta='center' bg='u:stripe' bgc='yellow:12%' {...atts}>
-			<TipCode text='is--wide' color='yellow' m='5' />
+		<Lism max-sz='wide' ta='center' bg='u:stripe' bgc='yellow:12%' {...atts}>
+			<TipCode text='-max-sz:wide' color='yellow' m='5' />
 			{children}
 		</Lism>
 	);
 }
 
-export function FullwideContent(props: any) {
+export function FullSizeContent(props: any) {
 	const { children, ...atts } = props;
 	return (
-		<Lism isFullwide ta='center' bg='u:stripe' bgc='orange:12%' {...atts}>
-			<TipCode text='is--fullwide' color='orange' m='5' />
+		<Lism max-sz='full' ta='center' bg='u:stripe' bgc='orange:12%' {...atts}>
+			<TipCode text='-max-sz:full' color='orange' m='5' />
 			{children}
 		</Lism>
 	);
@@ -87,8 +91,8 @@ export function FullwideContent(props: any) {
 export function Overwide(props: any) {
 	const { children, ...atts } = props;
 	return (
-		<Lism isOverwide ta='center' bg='u:stripe' bgc='pink:12%' {...atts}>
-			<TipCode text='Overwide' color='pink' m='5' />
+		<Lism max-sz='outer' ta='center' bg='u:stripe' bgc='pink:12%' {...atts}>
+			<TipCode text='-max-sz:outer' color='pink' m='5' />
 			{children}
 		</Lism>
 	);

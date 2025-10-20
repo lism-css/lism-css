@@ -10,7 +10,7 @@ export default function ShapeDivider({ viewBox, children, isAnimation, isEmpty, 
 	style['--_inner-stretch'] = stretch || null;
 
 	return (
-		<Lism isFullwide lismClass='c--shapeDivider' aria-hidden='true' style={style} {...props}>
+		<Lism lismClass='c--shapeDivider' max-sz='full' aria-hidden='true' style={style} {...props}>
 			<div className='c--shapeDivider_inner -h:100%'>
 				{isEmpty ? null : (
 					<svg
