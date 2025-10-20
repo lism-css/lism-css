@@ -1,7 +1,7 @@
 /* eslint-disable */
 import React from 'react';
 
-import { Lism, Layer, Text, Flex } from 'lism-css/react';
+import { Lism, Layer, Flex, Dummy } from 'lism-css/react';
 
 export function AttsLabels({ atts = '', ...props }) {
 	// attsを , で分割
@@ -98,10 +98,6 @@ export function Overwide(props: any) {
 	);
 }
 export function LoremContent(props: any) {
-	const { children, ...atts } = props;
-	return (
-		<Text py='5' px='10' bg='u:stripe' bgc='gray:4%' {...atts}>
-			Lorem content ...
-		</Text>
-	);
+	const { children, length = 'l', ...atts } = props;
+	return <Dummy py='5' px='10' bg='u:stripe' bgc='gray:4%' length={length} {...atts} />;
 }

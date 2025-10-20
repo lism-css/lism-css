@@ -1,7 +1,7 @@
 ---
 import DemoPageLayout from '~/layouts/DemoPageLayout.astro';
 import { AttsLabels, TipCode, GutterGuide, LoremContent } from './_components.js';
-import { Lism, Flow, Box, Container, Spacer, Text } from 'lism-css/astro';
+import { Lism, Flow, Dummy, Container, Spacer, Text } from 'lism-css/astro';
 import './_style.scss';
 ---
 
@@ -15,31 +15,38 @@ import './_style.scss';
 			<AttsLabels atts='is--container' />
 			<LoremContent />
 		</Container>
-		<p>ただし、<code>margin-inline:auto</code> も適用されているので、自身の横幅がセットされている時は中央寄せされます。</p>
+		<!-- <p>ただし、<code>margin-inline:auto</code> も適用されているので、自身の横幅がセットされている時は中央寄せされます。</p>
 		<Container max-w='s'>
 			<AttsLabels atts='is--container,-max-w:s' />
 			<LoremContent />
-		</Container>
+		</Container> -->
 
 		<Spacer h='1rem' />
 
 		<h2>is--container (-container: あり)</h2>
-		<p><code>.-container:s|m|l</code> クラスにより、内部のコンテンツ幅を制御できます。</p>
+		<p><code>.-container:s|m|l</code> クラス、または<code>--content-size</code>により、内部のコンテンツ幅を制御できます。</p>
 		<!-- </Container> -->
-		<Flow isContainer='m' flowGap='s'>
-			<AttsLabels atts='is--container,-container:m' />
+		<Flow isContainer='s' flowGap='s' hasGutter>
+			<AttsLabels atts='is--container,-container:s,has--gutter' />
 			<LoremContent />
 			<LoremContent />
-			<!-- <GutterGuide /> -->
+			<GutterGuide />
 		</Flow>
-		<Flow isContainer='s' flowGap='s'>
-			<AttsLabels atts='is--container,-container:s' />
+		<Flow isContainer='m' flowGap='s' hasGutter>
+			<AttsLabels atts='is--container,-container:m,has--gutter' />
 			<LoremContent />
 			<LoremContent />
-			<!-- <GutterGuide /> -->
+			<GutterGuide />
 		</Flow>
-		<Flow isContainer='l' flowGap='s'>
-			<AttsLabels atts='is--container,-container:l' />
+		<Flow isContainer='l' flowGap='s' hasGutter>
+			<AttsLabels atts='is--container,-container:l,has--gutter' />
+			<LoremContent />
+			<LoremContent />
+			<GutterGuide />
+		</Flow>
+
+		<Flow isContainer='320px' flowGap='s'>
+			<AttsLabels atts='is--container,--content-size:320px' />
 			<LoremContent />
 			<LoremContent />
 			<!-- <GutterGuide /> -->
@@ -57,16 +64,13 @@ import './_style.scss';
 			<LoremContent />
 			<LoremContent />
 			<Spacer h='.5rem' />
-			<Flow isContainer='l' flowGap='s'>
-				<AttsLabels atts='is--container,-container:l' />
-				<LoremContent />
-				<LoremContent />
-			</Flow>
-			<Flow isContainer='s' flowGap='s'>
+			<Flow isContainer='s'>
 				<AttsLabels atts='is--container,-container:s' />
 				<LoremContent />
 				<LoremContent />
 			</Flow>
+			<Spacer h='.5rem' />
+
 			<GutterGuide />
 		</Flow>
 
@@ -112,7 +116,7 @@ import './_style.scss';
 		</p>
 
 		<p class='-ta:center'>以下は、コンテナ自体のサイズを明示的に指定した例です。</p>
-		<Container max-w='s'>
+		<Container max-w='s' mx='auto'>
 			<AttsLabels atts='is--container,-max-w:s' />
 
 			<Flow flowGap='s'>

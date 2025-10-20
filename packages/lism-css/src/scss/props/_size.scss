@@ -2,7 +2,6 @@
 	max-inline-size: 100%;
 
 	:where(.has--gutter) > & {
-		// --content-size 変数は min()で100%と比較してるので、直接セット
 		max-inline-size: calc(100% + var(--gutter) * 2);
 		margin-inline: calc(var(--gutter) * -1);
 	}
