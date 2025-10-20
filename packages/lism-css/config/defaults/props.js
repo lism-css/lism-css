@@ -72,10 +72,9 @@ export default {
 			outer: '',
 		},
 	},
-
-	// ysz: { prop: 'blockSize', token: 'sz' },
-	// 'min-ysz': { prop: 'minBlockSize', token: 'sz' },
-	// 'max-ysz': { prop: 'maxBlockSize', token: 'sz' },
+	ysz: { prop: 'blockSize', token: 'sz' },
+	'min-ysz': { prop: 'minBlockSize', token: 'sz' },
+	'max-ysz': { prop: 'maxBlockSize', token: 'sz' },
 
 	// bg
 	bg: { prop: 'background', bp: 1 },
