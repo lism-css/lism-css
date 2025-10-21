@@ -13,7 +13,7 @@ hover時の挙動をコントロールするためのCSS設計について紹介
 
 
 Lismでは、てhover時のスタイルは`-hov:`で始まるPropクラスで定義します。  
-また、`set--transition`クラスを併用することでトランジションの設定を行います。
+また、`set-transition`クラスを併用することでトランジションの設定を行います。
 
 
 ## 基本的な使い方
@@ -115,10 +115,10 @@ Lismに内包されているクラスでは、それぞれ初期値を定義し�
 <Spacer h='20' />
 
 
-<div class='u--hidden' id='set--transition'></div>
+<div class='u-hidden' id='set-transition'></div>
 ### トランジションを設定する方法
 
-[`set--transition`](/css/module-class#set--transition)クラスを用意しています。
+[`set-transition`](/css/module-class#set-transition)クラスを用意しています。
 
 
 
@@ -127,7 +127,7 @@ Lismに内包されているクラスでは、それぞれ初期値を定義し�
 
 {/* hsl(25 50% 50% / 20%),rgb(250 50 50 / 20%)' */}
 <Preview>
-	<PreviewTitle>`set--transition`と組み合わせてbxshの強さを変化させる例</PreviewTitle>
+	<PreviewTitle>`set-transition`と組み合わせてbxshの強さを変化させる例</PreviewTitle>
 	<PreviewArea p='40'>
 		<LinkBox href='###' setTransition bxsh='10' hov={{ bxsh: '40'}} bd p='30'>
 			<p>LinkBox</p>
@@ -135,10 +135,10 @@ Lismに内包されているクラスでは、それぞれ初期値を定義し�
 		</LinkBox>
 	</PreviewArea>
 	<PreviewCode slot='tab' label='HTML'>
-		```html "set--transition" "-bxsh:10 -hov:bxsh" "--hov-bxsh:var(--bxsh--40)"
+		```html "set-transition" "-bxsh:10 -hov:bxsh" "--hov-bxsh:var(--bxsh--40)"
 		<a
 			href="###"
-			class="is--linkBox set--transition -bxsh:10 -hov:bxsh -bd -p:30"
+			class="is--linkBox set-transition -bxsh:10 -hov:bxsh -bd -p:30"
 			style="--hov-bxsh:var(--bxsh--40)"
 		>
 			<p>LinkBox</p>
@@ -166,9 +166,9 @@ Lismに内包されているクラスでは、それぞれ初期値を定義し�
 		</LinkBox>
 	</PreviewArea>
 	<PreviewCode slot='tab' label='HTML'>
-		```html "set--transition" "--duration:1s"
+		```html "set-transition" "--duration:1s"
 		<a
-			class="is--linkBox -hov:bdc set--transition -bd -bgc:base-2 -p:30"
+			class="is--linkBox -hov:bdc set-transition -bd -bgc:base-2 -p:30"
 			style="--hov-bdc:var(--red);--duration:1s;--bdw:3px" href="###"
 		>
 			<p>LinkBox</p>
@@ -213,7 +213,7 @@ Lismに内包されているクラスでは、それぞれ初期値を定義し�
 	</PreviewCode>
 	<PreviewCode slot='tab' label='HTML'>
 		```html "-hov:shadow" "-hov:up"
-		<a href="###" class="is--linkBox set--transition -hov:shadow -hov:up -bd -p:30">
+		<a href="###" class="is--linkBox set-transition -hov:shadow -hov:up -bd -p:30">
 			<p>LinkBox</p>
 			<p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
 		</a>
@@ -230,11 +230,11 @@ Lismに内包されているクラスでは、それぞれ初期値を定義し�
 </Preview>
 
 
-<div class='u--hidden' id='set--hover'></div>
-## `.set--hover` と特殊変数
+<div class='u-hidden' id='set-hov'></div>
+## `.set-hov` と特殊変数
 
 
-<IconBadge /> Lism では、[`set--hover`](/css/module-class#set--hover)というクラスを定義しており、このクラスでは`--isHov_`変数と`--notHov_`変数を定義しています。
+<IconBadge /> Lism では、[`set-hov`](/css/module-class#set-hov)というクラスを定義しており、このクラスでは`--isHov_`変数と`--notHov_`変数を定義しています。
 
 - `--isHov_`は非hover時にのみ空白定義されています。
 - `--notHov_`は逆に、hover時にのみ空白定義されています。
@@ -263,12 +263,12 @@ Lismに内包されているクラスでは、それぞれ初期値を定義し�
 <Preview>
 	<PreviewTitle>`.-hov:test`を追加</PreviewTitle>
 	<PreviewArea p='40'>
-		<div className='-p:40 -bd -fz:l set--hover -hov:test'>BOX</div>
+		<div className='-p:40 -bd -fz:l set-hov -hov:test'>BOX</div>
 	</PreviewArea>
 
 	<PreviewCode slot='tab' label='追加CSS'>
 		```scss
-		/* 変数は.set--hover で定義済み */
+		/* 変数は.set-hov で定義済み */
 		.-hov\:test {
 			color: var(--isHov_, red) var(--notHov_, blue); /* hover時はgreen, 非hover時はblue*/
 			background-color: var(--notHov_, lightgray); /* 非hover時はlightgray、hover時は無効な値 */
@@ -277,8 +277,8 @@ Lismに内包されているクラスでは、それぞれ初期値を定義し�
 		```
 	</PreviewCode>
 	<PreviewCode slot='tab' label='HTML'>
-		```html "set--hover -hov:test"
-		<div className='-p:40 -bd -fz:l set--hover -hov:test'>BOX</div>
+		```html "set-hov -hov:test"
+		<div className='-p:40 -bd -fz:l set-hov -hov:test'>BOX</div>
 		```
 	</PreviewCode>
 </Preview>
@@ -290,20 +290,20 @@ Lismに内包されているクラスでは、それぞれ初期値を定義し�
 
 ### 子要素にホバー状態を渡す
 
-さて、この`set--hover`が便利なのはここからです。
-親要素に`set--hover`を付与してその子要素で`--isHov_`変数と`--notHov_`変数をうまく使うことで、hover時の子要素の挙動をコントロールできるようになります。
+さて、この`set-hov`が便利なのはここからです。
+親要素に`set-hov`を付与してその子要素で`--isHov_`変数と`--notHov_`変数をうまく使うことで、hover時の子要素の挙動をコントロールできるようになります。
 
 
 コアパッケージには、そのような子要素向けのクラスを `-hov:to:xxx` として2つだけ標準で用意しています。
 
 ```css
 
-/* 親の set--hover がhoverされたら非表示にする */
+/* 親の set-hov がhoverされたら非表示にする */
 .-hov\:to\:hide {
 	opacity: var(--isHov_, 0);
 }
 
-/* 親の set--hover がhoverされたら表示する */
+/* 親の set-hov がhoverされたら表示する */
 .-hov\:to\:show {
 	opacity: var(--notHov_, 0);
 	visibility: var(--notHov_, hidden);
@@ -312,11 +312,11 @@ Lismに内包されているクラスでは、それぞれ初期値を定義し�
 
 
 <Preview>
-	<PreviewTitle>`get:show` を使う例</PreviewTitle>
+	<PreviewTitle>`to:show` を使う例</PreviewTitle>
 	<PreviewArea p='30'>
-		<Frame isLinkBox setHover href='#banner-link' ar='16/9' bdrs='30'>
+		<Frame isLinkBox setHov href='#banner-link' ar='16/9' bdrs='30'>
 			<Media isLayer src='/img/img-1.jpg' alt='' width='960' height='640' loading='lazy' />
-			<Layer setTransition hov='get:show' bgc='rgb(0 0 0 / 40%)' blur='6px'>
+			<Layer setTransition hov='to:show' bgc='rgb(0 0 0 / 40%)' blur='6px'>
 				<Center h='100%' c='#fff'>
 					<Text tag='span' fz='2xl' fs='italic' fw='light' lts='l' bdrs='99' px='30' py='10'>View More</Text>
 				</Center>
@@ -324,10 +324,10 @@ Lismに内包されているクラスでは、それぞれ初期値を定義し�
 		</Frame>
 	</PreviewArea>
 	<PreviewCode slot='tab' label='HTML'>
-		```html "set--hover" "-hov:to:show" "set--transition"
-		<a class="l--frame is--linkBox set--hover -ar:16/9 -bdrs:30" href="#banner-link">
+		```html "set-hov" "-hov:to:show" "set-transition"
+		<a class="l--frame is--linkBox set-hov -ar:16/9 -bdrs:30" href="#banner-link">
 			<img class="is--layer" src="/img/img-1.jpg" width="960" height="640" loading="lazy">
-			<div class="is--layer set--transition -hov:to:show -bgc" style="--bgc:rgb(0 0 0 / 10%);backdrop-filter:blur(6px)">
+			<div class="is--layer set-transition -hov:to:show -bgc" style="--bgc:rgb(0 0 0 / 10%);backdrop-filter:blur(6px)">
 				<div class="l--center -h:100% -c" style="--c:#fff">
 					<span class="-fz:2xl -fs:italic -fw:light -lts:l -bdrs:99 -px:30 -py:10">View More</span>
 				</div>
@@ -336,10 +336,10 @@ Lismに内包されているクラスでは、それぞれ初期値を定義し�
 		```
 	</PreviewCode>
 	<PreviewCode slot='tab' label='JSX'>
-		```jsx "setHover" "hov='get:show'" "setTransition"
-		<Frame isLinkBox setHover href='#banner-link' ar='16/9' bdrs='30'>
+		```jsx "setHov" "hov='to:show'" "setTransition"
+		<Frame isLinkBox setHov href='#banner-link' ar='16/9' bdrs='30'>
 			<Media isLayer src='/img/img-1.jpg' alt='' width='960' height='640' loading='lazy' />
-			<Layer setTransition hov='get:show' bgc='rgb(0 0 0 / 40%)' blur='6px'>
+			<Layer setTransition hov='to:show' bgc='rgb(0 0 0 / 40%)' blur='6px'>
 				<Center h='100%' c='#fff'>
 					<Text tag='span' fz='2xl' fs='italic' fw='light' lts='l' bdrs='99' px='30' py='10'>View More</Text>
 				</Center>
@@ -363,15 +363,15 @@ Lismに内包されているクラスでは、それぞれ初期値を定義し�
 	<PreviewArea p='30'>
 		<LinkBox
 			href='#banner-link'
-			setHover ov='hidden' ar='16/9' bdrs='30'
+			setHov ov='hidden' ar='16/9' bdrs='30'
 			style={{'--transition-duration':'.6s'}}
 		>
 			<Frame isLayer>
-				<Media setTransition hov='get:zoom' src='/img/img-2.jpg' alt='' width='960' height='640' loading='lazy'/>
+				<Media setTransition hov='to:zoom' src='/img/img-2.jpg' alt='' width='960' height='640' loading='lazy'/>
 			</Frame>
-			<Layer setTransition hov='get:hide' grayscale='70%'/>
+			<Layer setTransition hov='to:hide' grayscale='70%'/>
 			<Center isLayer c='#fff' bgc='rgb(0 0 0 / 40%)'>
-				<Text setTransition hov='get:letterSpread' fz='2xl'>LinkBox</Text>
+				<Text setTransition hov='to:letterSpread' fz='2xl'>LinkBox</Text>
 			</Center>
 		</LinkBox>
 	</PreviewArea>
@@ -387,14 +387,14 @@ Lismに内包されているクラスでは、それぞれ初期値を定義し�
 	```
 	</PreviewCode>
 	<PreviewCode slot='tab' label='HTML'>
-		```html "set--hover" "-hov:to:zoom" "-hov:to:letterSpread" "--transition-duration"
+		```html "set-hov" "-hov:to:zoom" "-hov:to:letterSpread" "--transition-duration"
 		<a
 			href="#banner-link"
-			class="is--linkBox set--hover -ar:16/9 -ov:hidden -bdrs:30"
+			class="is--linkBox set-hov -ar:16/9 -ov:hidden -bdrs:30"
 			style="--transition-duration:.6s"
 		>
 			<div class="l--frame is--layer">
-				<img class="is--layer set--transition -hov:to:zoom" src="/img/img-2.jpg" width="960" height="640" loading="lazy" />
+				<img class="is--layer set-transition -hov:to:zoom" src="/img/img-2.jpg" width="960" height="640" loading="lazy" />
 			</div>
 			<div class="l--center is--layer -c -bgc" style="--c:#fff;--bgc:rgb(0 0 0 / 40%)">
 				<span class="-hov:to:letterSpread -fz:2xl">LinkBox</span>
@@ -403,18 +403,18 @@ Lismに内包されているクラスでは、それぞれ初期値を定義し�
 		```
 	</PreviewCode>
 	<PreviewCode slot='tab' label='JSX'>
-		```jsx "setHover" "hov='get:zoom'" "hov='get:letterSpread'" "--transition-duration"
+		```jsx "setHov" "hov='to:zoom'" "hov='to:letterSpread'" "--transition-duration"
 		<LinkBox
 			href='#banner-link'
-			setHover ov='hidden' ar='16/9' bdrs='30'
+			setHov ov='hidden' ar='16/9' bdrs='30'
 			style={{'--transition-duration':'.6s'}}
 		>
 			<Frame isLayer>
-				<Media setTransition hov='get:zoom' src='/img/img-2.jpg' alt='' width='960' height='640' loading='lazy'/>
+				<Media setTransition hov='to:zoom' src='/img/img-2.jpg' alt='' width='960' height='640' loading='lazy'/>
 			</Frame>
-			<Layer setTransition hov='get:hide' grayscale='70%'/>
+			<Layer setTransition hov='to:hide' grayscale='70%'/>
 			<Center isLayer c='#fff' bgc='rgb(0 0 0 / 40%)'>
-				<Text setTransition hov='get:letterSpread' fz='2xl'>LinkBox</Text>
+				<Text setTransition hov='to:letterSpread' fz='2xl'>LinkBox</Text>
 			</Center>
 		</LinkBox>
 		```

@@ -4,7 +4,7 @@ description: ...
 sidebar:
   order: 3
 ---
-import { Lism, Box, Media, Flex, Text, Stack, Spacer } from 'lism-css/astro';
+import { Lism, Box, Media, Flex, Text, Stack, Spacer, Frame } from 'lism-css/astro';
 import { Preview, PreviewArea, PreviewTitle, PreviewCode, PreviewFrame, Reference, Callout, Note } from "~/components";
 import Button from '~/components/ex/Button/index.astro';
 import { Desktop } from '@phosphor-icons/react';
@@ -33,13 +33,13 @@ HTMLのそれぞれのタグのデフォルトスタイルを紹介します。
 `@lism.base`の階層で定義され、トークン再定義や変数のセット、HTMLスタイルの再定義などを行うクラスを `set:{style}` の形式で定義しています。
 
 
-### `set--revert`
+### `set-revert`
 
 ブラウザ標準スタイル、またはそれに近いスタイルを再定義するためのクラスです。
 
 現状、基本的には ol,ul に対してのみ有効です。
 
-リストタグのベーススタイルについては次のようになっており、ul,liの標準スタイルは reset.css で打ち消した上で、classを持たないかProps Class で始まるリスト、もしくは`set--revert`クラスを指定したリストについては、ブラウザ標準のスタイルへ上書きするような仕様になっています。
+リストタグのベーススタイルについては次のようになっており、ul,liの標準スタイルは reset.css で打ち消した上で、classを持たないかProps Class で始まるリスト、もしくは`set-revert`クラスを指定したリストについては、ブラウザ標準のスタイルへ上書きするような仕様になっています。
 
 
 <PreviewTitle>CSS</PreviewTitle>
@@ -50,7 +50,7 @@ HTMLのそれぞれのタグのデフォルトスタイルを紹介します。
 	padding-inline-start: var(--list-px-s, 0);
 }
 
-:is(ul, ol):where(:not([class]), [class^='-'], .set--revert) { {
+:is(ul, ol):where(:not([class]), [class^='-'], .set-revert) { {
 	--list-px-s: 1.5em;
 	list-style: revert;
 }
@@ -59,7 +59,7 @@ HTMLのそれぞれのタグのデフォルトスタイルを紹介します。
 <Preview>
 	<PreviewTitle>Preview</PreviewTitle>
 	<PreviewArea p='30'>
-		<ul class='set--revert'>
+		<ul class='set-revert'>
 			<li>List item 1</li>
 			<li>
 				<Fragment>List item 2</Fragment>
@@ -87,7 +87,7 @@ HTMLのそれぞれのタグのデフォルトスタイルを紹介します。
 	</PreviewArea>
 	<PreviewCode slot='tab' label='HTML'>
 		```html
-		<ul class='set--revert'>
+		<ul class='set-revert'>
 			<li>List item 1</li>
 			<li>
 				List item 2
@@ -111,7 +111,7 @@ HTMLのそれぞれのタグのデフォルトスタイルを紹介します。
 <Preview>
 	<PreviewTitle>Ordered List</PreviewTitle>
 	<PreviewArea p='30'>
-		<ol class='set--revert'>
+		<ol class='set-revert'>
 			<li>List item 1</li>
 			<li>
 				<Fragment>List item 2</Fragment>
@@ -139,7 +139,7 @@ HTMLのそれぞれのタグのデフォルトスタイルを紹介します。
 	</PreviewArea>
 	<PreviewCode slot='tab' label='HTML'>
 		```html
-		<ol class='set--revert'>
+		<ol class='set-revert'>
 			<li>List item 1</li>
 			<li>
 				List item 2
@@ -168,12 +168,12 @@ HTMLのそれぞれのタグのデフォルトスタイルを紹介します。
 Base階層の最後で定義されている、スタイルをリセット・再定義するためのユーティリティクラスを紹介します。
 
 
-### `set--plain`
+### `set-plain`
 
 主要スタイルをリセットするためのクラスです。
 
 ```css
-.set--plain {
+.set-plain {
 	font: inherit;
 	width: auto;
 	height: auto;
@@ -186,16 +186,16 @@ Base階層の最後で定義されている、スタイルをリセット・再�
 ```
 
 <Preview>
-	<PreviewTitle>`set--plain`を`button`に適用する例</PreviewTitle>
+	<PreviewTitle>`set-plain`を`button`に適用する例</PreviewTitle>
 	<PreviewArea p='30' layout=''>
 		<div class='l--flex -g:30 -ff:mono'>
-			<button class='set--plain'>button</button>
+			<button class='set-plain'>button</button>
 		</div>
 	</PreviewArea>
 	<PreviewCode slot='tab' label='HTML'>
-	```html "'set--plain'"
+	```html "'set-plain'"
 	<div class='l--flex -g:30 -ff:mono'>
-		<button class='set--plain'>button</button>
+		<button class='set-plain'>button</button>
 	</div>
 	```
 	</PreviewCode>
@@ -204,9 +204,9 @@ Base階層の最後で定義されている、スタイルをリセット・再�
 
 
 
-### `set--shadow`
+### `set-shadow`
 
-`.set--shadow` クラスを指定した要素では、シャドウを構成する各CSS変数が再定義されます。  
+`.set-shadow` クラスを指定した要素では、シャドウを構成する各CSS変数が再定義されます。  
 
 ここで変数を上書きすることで、シャドウの色味などを調整することが可能です。 
 
@@ -215,29 +215,29 @@ Base階層の最後で定義されている、スタイルをリセット・再�
 	<PreviewArea p='40' nogrid>
 		<Stack g='30'>
 			<Text> Default: </Text>
-			<Flex className='set--shadow -g:40' px-s='20'>
+			<Flex className='set-shadow -g:40' px-s='20'>
 				<Box bxsh='20' p='40' bdrs='20'>Box</Box>
 				<Box bxsh='40' p='40' bdrs='20'>Box</Box>
 			</Flex>
 			<Spacer h='40' />
-			<Text> set--shadow して 変数を上書きした例: </Text>
-			<Flex className='set--shadow -g:40' px-s='20' style={{'--sh-hsl': '200 50% 50%', '--sh-a':'20%'}}>
+			<Text> set-shadow して 変数を上書きした例: </Text>
+			<Flex className='set-shadow -g:40' px-s='20' style={{'--sh-hsl': '200 50% 50%', '--sh-a':'20%'}}>
 				<Box bxsh='20' p='40' bdrs='20'>Box</Box>
 				<Box bxsh='40' p='40' bdrs='20'>Box</Box>
 			</Flex>
 		</Stack>
 	</PreviewArea>
 		<PreviewCode slot='tab' label='HTML'>
-		```html "set--shadow"
-		<div class="set--shadow l--flex -g:40" style="--sh-hsl:200 50% 50%;--sh-a:20%">
+		```html "set-shadow"
+		<div class="set-shadow l--flex -g:40" style="--sh-hsl:200 50% 50%;--sh-a:20%">
 			<div class="l--box -bxsh:20 -p:40 -bdrs:20">Box</div>
 			<div class="l--box -bxsh:40 -p:40 -bdrs:20">Box</div>
 		</div>
 		```
 	</PreviewCode>
 	<PreviewCode slot='tab' label='JSX'>
-		```jsx "set--shadow"
-		<Flex className='set--shadow' g='40' style={{'--sh-hsl': '200 50% 50%', '--sh-a':'20%'}}>
+		```jsx "set-shadow"
+		<Flex className='set-shadow' g='40' style={{'--sh-hsl': '200 50% 50%', '--sh-a':'20%'}}>
 			<Box bxsh='20' p='40' bdrs='20'>Box</Box>
 			<Box bxsh='40' p='40' bdrs='20'>Box</Box>
 		</Flex>
@@ -246,88 +246,46 @@ Base階層の最後で定義されている、スタイルをリセット・再�
 </Preview>
 
 
-### `set--transition`
+### `set-transition`
 
 専用の変数を用いて、transitionプロパティをセットします。
 
 <Reference>
-活用例は [`hover`の解説ページ](/css/hover#set--transition) を参照してください。
+活用例は [`hover`の解説ページ](/css/hover#set-transition) を参照してください。
 </Reference>
 
 
-### `set--hover`
+### `set-hov`
 
 ホバースタイル管理用のCSS変数をセットします。主に子要素のホバースタイルを制御するために使用します。
 
 ```scss
 @media (any-hover: hover) {
-	.set--hover:hover {
+	.set-hov:hover {
 		--notHov_: ;
 	}
-	.set--hover:not(:hover) {
+	.set-hov:not(:hover) {
 		--isHov_: ;
 	}
 }
 @media (any-hover: none) {
-	.set--hover {
+	.set-hov {
 		--isHov_: ;
 	}
 }
 ```
 
 <Reference>
-活用例は [`hover`の解説ページ](/css/hover#set--hover) を参照してください。
+活用例は [`hover`の解説ページ](/css/hover#set-hov) を参照してください。
 </Reference>
 
 
 
-
-
-### `set--mask`
-
-
-`--mask`変数と組み合わせて、自身にmaskを適用します。
-
-
-```css
-.set--mask {
-	mask: var(--mask) no-repeat 50% / contain;
-}
-```
-
-Lism Componentsでは`setMask`プロパティに指定した文字列が`--mask-img`として出力されるようになっています。（この時、`<svg>`を渡すと、base64へエンコードされます。
-
-<Preview>
-	<PreviewTitle>例</PreviewTitle>
-	<PreviewArea p='10'>
-		<img
-			src="/img/img-5.jpg" width="960" height="640" loading="lazy"
-			class="set--mask -ar:og"
-			style={{'--mask': `url("data:image/svg+xml,<svg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'><path fill='%23000000' d='M170.4,25.7c16.1,14.2,23.2,38.5,24.8,61.7c1.7,23.3-1.8,45.5-12.9,62.3c-11,16.9-29.3,28.6-48.8,34.5 c-19.4,5.9-40,6.1-59.5,0.4c-19.5-5.6-37.9-17.4-51.7-34.9c-14-17.5-23.2-40.8-18-60.2c5-19.4,24.5-34.7,43.5-48.4 s37.6-25.7,59.5-29.7C129.1,7.3,154.2,11.4,170.4,25.7z' /></svg>")`}}
-		/>
-		{/* <img
-			src="/img/img-3.jpg" width="960" height="640" loading="lazy"
-			class="set--mask -ar:16/9"
-			style="--mask-img:url(data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMjAwIDIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBmaWxsPSIjRkYwMDY2IiBkPSJNMTcwLjQsMjUuN2MxNi4xLDE0LjIsMjMuMiwzOC41LDI0LjgsNjEuN2MxLjcsMjMuMy0xLjgsNDUuNS0xMi45LDYyLjNjLTExLDE2LjktMjkuMywyOC42LTQ4LjgsMzQuNSBjLTE5LjQsNS45LTQwLDYuMS01OS41LDAuNGMtMTkuNS01LjYtMzcuOS0xNy40LTUxLjctMzQuOWMtMTQtMTcuNS0yMy4yLTQwLjgtMTgtNjAuMmM1LTE5LjQsMjQuNS0zNC43LDQzLjUtNDguNCBzMzcuNi0yNS43LDU5LjUtMjkuN0MxMjkuMSw3LjMsMTU0LjIsMTEuNCwxNzAuNCwyNS43eiIgLz48L3N2Zz4=)"
-		/> */}
-	</PreviewArea>
-	<PreviewCode slot='tab' label='HTML'>
-		```html
-		<img
-			src="/img/img-3.jpg" width="960" height="640" loading="lazy"
-			class="set--mask -ar:og"
-			style={{'--mask': `url("data:image/svg+xml,<svg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'><path fill='%23000000' d='M170.4,25.7c16.1,14.2,23.2,38.5,24.8,61.7c1.7,23.3-1.8,45.5-12.9,62.3c-11,16.9-29.3,28.6-48.8,34.5 c-19.4,5.9-40,6.1-59.5,0.4c-19.5-5.6-37.9-17.4-51.7-34.9c-14-17.5-23.2-40.8-18-60.2c5-19.4,24.5-34.7,43.5-48.4 s37.6-25.7,59.5-29.7C129.1,7.3,154.2,11.4,170.4,25.7z' /></svg>")`}}
-		/>
-		```
-	</PreviewCode>
-</Preview> 
-
-
-### `set--scrollSnap`
+### `set-snap`
 
 `scroll-snap-`系のプロパティをCSS変数でセットできるようにします。
 
-<Box class='set--scrollSnap' ov='auto' ar='16/9' bd>
+<Box class='set-snap' ov='auto' ar='16/9' bd>
 	<div className='l--frame -ar:16/9 -p:20'><img src='/img/img-1.jpg' width='960' height='640' loading='lazy' /></div>
 	<div className='l--frame -ar:16/9 -p:20'><img src='/img/img-2.jpg' width='960' height='640' loading='lazy' /></div>
 	<div className='l--frame -ar:16/9 -p:20'><img src='/img/img-3.jpg' width='960' height='640' loading='lazy' /></div>
@@ -338,12 +296,64 @@ Lism Componentsでは`setMask`プロパティに指定した文字列が`--mask-
 
 
 
-### `set--clickExpand`
+## `set-innerRs`
 
-クリック範囲を親要素に広げるためのクラスです。
+親要素の角丸とPaddingの値から、内側の要素の角丸(`--bdrs--inner`)を計算するユーティリティクラスです。 
+親要素(`set--innerRs`)の p(`--p`), bdrs(`--bdrs`) を元に計算します。（これらの指定が必須となります。）
 
-主に`is--linkBox`と併用して、内部のリンクをボックス全体に広げるために使用します。
+計算された`--bdrs--inner`をセットするには、子要素で`-bdrs:inner`を指定します。
 
-<Reference>
-活用例は [`<LinkBox>`](/layout/linkbox) を参照してください。
-</Reference>
+<Preview>
+	<PreviewTitle>使用例</PreviewTitle>
+	<PreviewArea p='40'>
+	<Lism className='set-innerRs' p='20' bd bxsh='20' bdrs='50'>
+		<Frame bdrs='inner' ar='og'>
+			<Media src='/img/img-4.jpg'/>
+		</Frame>
+	</Lism>
+	</PreviewArea>
+	<PreviewCode label="JSX" slot="tab">
+```jsx
+<Lism className='set-innerRs' p='20' bd bxsh='20' bdrs='50'>
+	<Frame bdrs='inner' ar='og'>
+		<Media src='/img/img-4.jpg'/>
+	</Frame>
+</Lism>
+```
+	</PreviewCode>
+	<PreviewCode label="HTML" slot="tab">
+```html
+<div class="set-innerRs -p:20 -bd -bxsh:20 -bdrs:50">
+	<div class="l--frame -bdrs:inner -ar:og">
+		<img src="/img/img-4.jpg">
+	</div>
+</div>
+```
+	</PreviewCode>
+</Preview>
+
+<Spacer h='1rem' />
+
+`p`, `bdrs`はブレイクポイントで値を変えても変数管理されているため、`set-innerRs`の角丸もレスポンシブ対応できます。
+
+<Preview>
+	<PreviewTitle>使用例</PreviewTitle>
+	<PreviewArea p='30' resize>
+	<Lism p={[10, 20, 30]} bd bdw='2px' bdrs={['40',null,'50']} class='set-innerRs'>
+		<Lism bd p='20' bdrs='inner'>
+			Example
+		</Lism>
+	</Lism>
+	</PreviewArea>
+	{/* <PreviewCode label="HTML" slot="tab">
+	</PreviewCode> */}
+	<PreviewCode label="JSX" slot="tab">
+```jsx
+<Lism p={[10, 20, 30]} bd bdw='2px' bdrs={['40',null,'50']} class='set-innerRs'>
+	<Lism bd p='20' bdrs='inner'>
+		Example
+	</Lism>
+</Lism>
+```
+	</PreviewCode>
+</Preview>

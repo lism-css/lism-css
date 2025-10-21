@@ -329,7 +329,7 @@ export default {
 	},
 
 	// others
-	msk: { prop: 'mask', bp: 1 },
+	// msk: { prop: 'mask', bp: 1 },
 	ovw: { prop: 'overflowWrap', utils: { any: 'anywhere' } },
 	whitespace: { prop: 'whiteSpace', presets: ['nowrap'] },
 	// wordbreak: { prop: 'wordBreak', utils: { keep: 'keep-all', all: 'break-all' } },

@@ -4,8 +4,8 @@ export default {
 	lts: ['base', 's', 'l'],
 	ff: ['base', 'accent', 'mono'],
 	fw: ['thin', 'light', 'normal', 'medium', 'bold', 'black'],
-	o: ['ghost', 'pale', 'soft', 'mild'],
-	bdrs: ['5', '10', '20', '30', '40', '50', '99'],
+	o: ['ghost', 'pale', 'soft', 'mild', 'solid'], // 5 20 50 70 90
+	bdrs: ['5', '10', '20', '30', '40', '50', '99', 'inner'],
 	bxsh: ['5', '10', '20', '30', '40', '50'],
 	sz: ['xs', 's', 'm', 'l', 'xl', 'min', 'full', 'outer'],
 	ar: ['og'],

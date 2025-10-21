@@ -12,7 +12,7 @@ export default function CloseBtn({ children, modalId = '', icon, srText = 'Close
 			) : (
 				<>
 					<Icon icon={icon || 'x'} />
-					<span className='u--hidden'>{srText || 'Close'}</span>
+					<span className='u-hidden'>{srText || 'Close'}</span>
 				</>
 			)}
 		</Lism>

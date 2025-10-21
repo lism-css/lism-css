@@ -34,7 +34,7 @@ export function Reference({ children }) {
 
 export const MemoBadge = ({ children, color = 'orange', ...props }) => {
 	return (
-		<Badge fz='s' lh='1' p='5' lismClass='u--cbox' bd keycolor={color} {...props}>
+		<Badge fz='s' lh='1' p='5' lismClass='u-cbox' bd keycolor={color} {...props}>
 			{children}
 		</Badge>
 	);
@@ -46,5 +46,5 @@ export const PropBadge = ({ type = '', ...props }) => {
 	} else if (type === 'cssvar') {
 		keycolor = 'purple';
 	}
-	return <Badge variant='prop' fz='xs' ff='mono' lh='xs' m='5' bdrs='5' className='u--cbox -whitespace:nowrap' keycolor={keycolor} {...props} />;
+	return <Badge variant='prop' fz='xs' ff='mono' lh='xs' m='5' bdrs='5' className='u-cbox -whitespace:nowrap' keycolor={keycolor} {...props} />;
 };

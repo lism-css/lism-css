@@ -14,7 +14,7 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, EmbedCode, Reference, 
 
 
 
-## `u--cbox`
+## `u-cbox`
 
 `--keycolor`変数をベースに、`--c`, `--bgc`, `--bdc` を `color-mix()` で生成します。
 
@@ -27,104 +27,113 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, EmbedCode, Reference, 
 <Preview>
 	<PreviewTitle>例</PreviewTitle>
 	<PreviewArea resize p='30'>
-		<Lism className='u--cbox' keycolor='blue' p='30'><Dummy length='codes' /></Lism>
-		<Lism className='u--cbox' keycolor='red' bd p='30'><Dummy length='codes' /></Lism>
-		<Lism className='u--cbox' keycolor='purple' bd bdc='keycolor:base:25%' p='30'><Dummy length='codes' /></Lism>
-		<Lism className='u--cbox' keycolor='#688f04' bd-x-s bdw='4px' p='30'><Dummy length='codes' /></Lism>
+		<Lism className='u-cbox' keycolor='blue' p='30'><Dummy length='codes' /></Lism>
+		<Lism className='u-cbox' keycolor='red' bd p='30'><Dummy length='codes' /></Lism>
+		<Lism className='u-cbox' keycolor='purple' bd bdc='keycolor:base:25%' p='30'><Dummy length='codes' /></Lism>
+		<Lism className='u-cbox' keycolor='#688f04' bd-x-s bdw='4px' p='30'><Dummy length='codes' /></Lism>
 	</PreviewArea>
 	<PreviewCode slot="tab" label="HTML">
 		```html
-		<div class='u--cbox -p:30' style='--keycolor:var(--blue)'>...</div>
-		<div class='u--cbox -bd -p:30' style='--keycolor:var(--red)'>...</div>
-		<div class="u--cbox -bd -p:30" style="--keycolor:var(--purple);--bdc:color-mix(in srgb, var(--keycolor) 25%, var(--c--base))">...</div>
-		<div class='u--cbox -bd-x-s -p:30' style='--keycolor:#688f04;--bdw:4px;'>...</div>
+		<div class='u-cbox -p:30' style='--keycolor:var(--blue)'>...</div>
+		<div class='u-cbox -bd -p:30' style='--keycolor:var(--red)'>...</div>
+		<div class="u-cbox -bd -p:30" style="--keycolor:var(--purple);--bdc:color-mix(in srgb, var(--keycolor) 25%, var(--c--base))">...</div>
+		<div class='u-cbox -bd-x-s -p:30' style='--keycolor:#688f04;--bdw:4px;'>...</div>
 		```
 	</PreviewCode>
 	<PreviewCode slot="tab" label='JSX'>
 		```jsx
-		<Lism className='u--cbox' keycolor='blue' p='30'><Dummy length='codes' /></Lism>
-		<Lism className='u--cbox' keycolor='red' bd p='30'><Dummy length='codes' /></Lism>
-		<Lism className='u--cbox' keycolor='purple' bd bdc='keycolor:base:25%' p='30'><Dummy length='codes' /></Lism>
-		<Lism className='u--cbox' keycolor='#688f04' bd-x-s bdw='4px' p='30'><Dummy length='codes' /></Lism>
+		<Lism className='u-cbox' keycolor='blue' p='30'><Dummy length='codes' /></Lism>
+		<Lism className='u-cbox' keycolor='red' bd p='30'><Dummy length='codes' /></Lism>
+		<Lism className='u-cbox' keycolor='purple' bd bdc='keycolor:base:25%' p='30'><Dummy length='codes' /></Lism>
+		<Lism className='u-cbox' keycolor='#688f04' bd-x-s bdw='4px' p='30'><Dummy length='codes' /></Lism>
 		```
 	</PreviewCode>
 </Preview>
 
 
 
-## `u--trimHL` & `u--trimBox`
+## `u-trim` & `u-trimItems`
 
 テキストのハーフレディング分の余白を調整するためのクラスです。
 
-自身のmargin-blockを調整するための`u--trimHL`と、子要素の最初と最後の要素の上下だけを調整するための`u--trimBox`があります。
+自身のmargin-blockを調整するだけの`u-trim`と、子要素全ての上下マージンを調整するための`u-trimItems`があります。
 
 <PreviewTitle>CSS</PreviewTitle>
 <EmbedCode dirPath='packages/lism-css' srcPath='src/scss/utility/_trimHL.scss' />
 
 <Preview>
-	<PreviewTitle>`u--trimHL`</PreviewTitle>
+	<PreviewTitle>`u-trim`</PreviewTitle>
 	<PreviewArea resize p='30'>
 		<Box bd bds='dashed'>
-			<Dummy className='u--trimHL' length='s'/>
+			<Dummy className='u-trim' length='s'/>
 		</Box>
 	</PreviewArea>
 	<PreviewCode slot="tab" label="HTML">
-		```html "u--trimHL"
+		```html "u-trim"
 		<div class="l--box -bd" style="--bds:dashed">
-			<p class="u--trimHL">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor.</p>
+			<p class="u-trim">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor.</p>
 		</div>
 		```
 	</PreviewCode>
 	<PreviewCode slot="tab" label='JSX'>
-		```jsx "u--trimHL"
+		```jsx "u-trim"
 		<Box bd bds='dashed'>
-			<Dummy className='u--trimHL' length='s'/>
+			<Dummy className='u-trim' length='s'/>
 		</Box>
 		```
 	</PreviewCode>
 </Preview>
 
 <Preview>
-	<PreviewTitle>`u--trimBox`</PreviewTitle>
+	<PreviewTitle>`u-trimItems`</PreviewTitle>
 	<PreviewArea resize p='30'>
-		<Stack className='u--trimBox' bd g='30' p='30'>
+		<Stack className='u-trimItems' bd p='30'>
 			<Dummy lang='ja' length='s' />
 			<Dummy lang='ja' />
-		</Stack>
-		<Stack className='u--trimBox' bd g='40' p='40'>
-			<Media ar='og' src='/img/img-1.jpg'/>
-			<Dummy lang='ja' tag='ul'/>
-			<Dummy lang='ja' length='s' />
-			<Dummy lang='ja'  />
 		</Stack>
 	</PreviewArea>
 	<PreviewCode slot="tab" label="HTML">
 		```html
-		<div class='u--trimBox l--stack -bd -g:30 -p:30'>
-			<p>ロレムイプサムの座り雨、トマ好き学習だったエリット、しかし時と活力はそのような木々と楽しみ。</p>
-			<p>ロレムイプサムの座り雨、トマ好き学習だったエリット、しかし時と活力はそのような木々と楽しみ。ブラインド行うにはいくつかの重要な事柄が流れます。</p>
-		</div><div class='u--trimBox l--stack -bd -g:40 -p:40'>
-			<img class='-ar:og' src='/img/img-1.jpg' />
-			<ul>
-				<li>ロレムイプサムの座り雨、</li>
-				<li>トマ好き学習だったエリット、</li>
-				<li>しかし時と活力はそのような木々と楽しみ。</li>
-				<li>ブラインド行うにはいくつかの重要な事柄が流れます。</li>
-			</ul>
-			<p>ロレムイプサムの座り雨、トマ好き学習だったエリット、しかし時と活力はそのような木々と楽しみ。</p>
-			<p>ロレムイプサムの座り雨、トマ好き学習だったエリット、しかし時と活力はそのような木々と楽しみ。ブラインド行うにはいくつかの重要な事柄が流れます。</p>
+		<div class='u-trimItems l--stack -bd -g:30 -p:30'>
+			<p>ロレム・イプサムの座り雨、トマ好き学習だったエリット、しかし時と活力はそのような木々と楽しみ。</p>
+			<p>ロレム・イプサムの座り雨、トマ好き学習だったエリット、しかし時と活力はそのような木々と楽しみ。ブラインド行うにはいくつかの重要な事柄が流れます。</p>
 		</div>
 		```
 	</PreviewCode>
 	<PreviewCode slot="tab" label='JSX'>
 		```jsx
-		<Stack className='u--trimBox' bd g='30' p='30'>
+		<Stack className='u-trimItems' bd g='30' p='30'>
 			<Dummy lang='ja' length='s' />
 			<Dummy lang='ja' />
 		</Stack>
-		<Stack className='u--trimBox' bd g='40' p='40'>
+		```
+	</PreviewCode>
+</Preview>
+
+`u-trimItems`内の`img`, `figure`, `table`に対してはマージンの調節を無効化しています。
+
+<Preview>
+	<PreviewTitle>`u-trimItems`</PreviewTitle>
+	<PreviewArea resize p='30'>
+		<Stack className='u-trimItems' bd lh='s' g='40' p='30' bdrs='10' max-sz='s'>
 			<Media ar='og' src='/img/img-1.jpg'/>
-			<Dummy lang='ja' tag='ul'/>
+			<Dummy lang='ja' length='s' fw='bold' fz='l' />
+			<Dummy lang='ja' length='l' o='mild' fz='s'/>
+		</Stack>
+	</PreviewArea>
+	<PreviewCode slot="tab" label="HTML">
+		```html
+		<div class='u-trimItems l--stack -bd -g:40 -p:30 -bdrs:10'>
+			<img class='-ar:og' src='/img/img-1.jpg' />
+			<p>ロレム・イプサムの座り雨、トマ好き学習だったエリット、しかし時と活力はそのような木々と楽しみ。</p>
+			<p>ロレム・イプサムの座り雨、トマ好き学習だったエリット、しかし時と活力はそのような木々と楽しみ。ブラインド行うにはいくつかの重要な事柄が流れます...。</p>
+		</div>
+		```
+	</PreviewCode>
+	<PreviewCode slot="tab" label='JSX'>
+		```jsx
+		<Stack className='u-trimItems' bd g='40' p='30' bdrs='10'>
+			<Media ar='og' src='/img/img-1.jpg'/>
 			<Dummy lang='ja' length='s' />
 			<Dummy lang='ja'  />
 		</Stack>
@@ -132,90 +141,7 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, EmbedCode, Reference, 
 	</PreviewCode>
 </Preview>
 
-
-## `u--outerR` & `u--innerR`
-
-親要素の角丸とPaddingの値から、内側の要素の角丸を計算するユーティリティペアクラスです。 
-親要素(`u--outerR`)に p(`--p`), bdrs(`--bdrs`) の指定が必須となります。
-
-<Preview>
-	<PreviewTitle>使用例</PreviewTitle>
-	<PreviewArea p='40'>
-	<Lism className='u--outerR' p='20' bd bxsh='20' bdrs='50'>
-		<Frame className='u--innerR' ar='og'>
-			<Media src='/img/img-4.jpg'/>
-		</Frame>
-	</Lism>
-	</PreviewArea>
-	<PreviewCode label="JSX" slot="tab">
-```jsx
-<Lism className='u--outerR' p='20' bd bxsh='20' bdrs='50'>
-	<Frame className='u--innerR' ar='og'>
-		<Media src='/img/img-4.jpg'/>
-	</Frame>
-</Lism>
-```
-	</PreviewCode>
-	<PreviewCode label="HTML" slot="tab">
-```html
-<div class="u--outerR -p:20 -bd -bxsh:20 -bdrs:50">
-	<div class="l--frame u--innerR -ar:og">
-		<img src="/img/img-4.jpg">
-	</div>
-</div>
-```
-	</PreviewCode>
-</Preview>
-
-<Spacer h='1rem' />
-
-`p`, `bdrs`はブレイクポイントで値を変えても変数管理されているため、`u--innerR`の角丸もレスポンシブ対応できます。
-
-<Preview>
-	<PreviewTitle>使用例</PreviewTitle>
-	<PreviewArea p='30' resize>
-	<Lism p={[10, 20, 30]} bd bdw='2px' bdrs={['40',null,'50']} class='u--outerR'>
-		<Lism bd p='20' class='u--innerR'>
-			Example
-		</Lism>
-	</Lism>
-	</PreviewArea>
-	{/* <PreviewCode label="HTML" slot="tab">
-	</PreviewCode> */}
-	<PreviewCode label="JSX" slot="tab">
-```jsx
-<Lism p={[10, 20, 30]} bd bdw='2px' bdrs={['40',null,'50']} class='u--outerR'>
-	<Lism bd p='20' class='u--innerR'>
-		Example
-	</Lism>
-</Lism>
-```
-	</PreviewCode>
-</Preview>
-
-
-
-## `u--hidden`
-
-要素を視覚的に隠すことができるクラスです。  
-スクリーンリーダー用のテキストなどに利用してください。
-
-```css
-.u--hidden {
-	position: absolute;
-	width: 1px;
-	height: 1px;
-	padding: 0;
-	margin: -1px;
-	overflow: hidden;
-	clip: rect(0, 0, 0, 0);
-	white-space: nowrap;
-	border-width: 0;
-}
-```
-
-
-## `u--itemDivider`
+## `u-itemDivider`
 
 グリッド・フレックスボックス等の子要素間に区切りとなるようなボーダーを表示します。  
 （実装としてはbox-shadowで表現していますので、少し扱いに注意が必要です。）
@@ -223,7 +149,7 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, EmbedCode, Reference, 
 <Preview>
 	<PreviewTitle>例</PreviewTitle>
 	<PreviewArea resize p='30'>
-		<Grid variant='liquid' className='u--itemDivider' cols='12rem' bdc='line'>
+		<Grid variant='liquid' className='u-itemDivider' cols='12rem' bdc='line'>
 			<Box p='20'><Dummy /></Box>
 			<Box p='20'><Dummy /></Box>
 			<Box p='20'><Dummy /></Box>
@@ -235,7 +161,7 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, EmbedCode, Reference, 
 	</PreviewArea>
 	<PreviewCode>
 		```jsx
-		<Grid variant='liquid' className='u--itemDivider' cols='12rem' bdc='line'>
+		<Grid variant='liquid' className='u-itemDivider' cols='12rem' bdc='line'>
 			<Box p='20'><Dummy /></Box>
 			<Box p='20'><Dummy /></Box>
 			<Box p='20'><Dummy /></Box>
@@ -251,7 +177,7 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, EmbedCode, Reference, 
 <Preview>
 	<PreviewTitle>pに`var(--bdw)`をセットすると、clipされた周囲のボーダーも見えるようになります。</PreviewTitle>
 	<PreviewArea resize p='30'>
-		<Grid variant='liquid' className='u--itemDivider' cols='12rem' bdc='line' p='var(--bdw)'>
+		<Grid variant='liquid' className='u-itemDivider' cols='12rem' bdc='line' p='var(--bdw)'>
 			<Box p='20'><Dummy /></Box>
 			<Box p='20'><Dummy /></Box>
 			<Box p='20'><Dummy /></Box>
@@ -263,7 +189,7 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, EmbedCode, Reference, 
 	</PreviewArea>
 	<PreviewCode>
 		```jsx
-		<Grid variant='liquid' className='u--itemDivider' cols='12rem' bdc='line'>
+		<Grid variant='liquid' className='u-itemDivider' cols='12rem' bdc='line'>
 			<Box p='20'><Dummy /></Box>
 			<Box p='20'><Dummy /></Box>
 			<Box p='20'><Dummy /></Box>
@@ -282,7 +208,7 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, EmbedCode, Reference, 
 <Preview>
 	<PreviewTitle>`bd`を指定</PreviewTitle>
 	<PreviewArea resize p='30'>
-		<Grid variant='liquid' className='u--itemDivider' cols='10rem' ov='clip' p='0' bd bdc='line' bdrs='20'>
+		<Grid variant='liquid' className='u-itemDivider' cols='10rem' ov='clip' p='0' bd bdc='line' bdrs='20'>
 			<Box p='20'><Dummy length='s'/></Box>
 			<Box p='20'><Dummy length='s'/></Box>
 			<Box p='20'><Dummy length='s'/></Box>
@@ -293,7 +219,7 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, EmbedCode, Reference, 
 	</PreviewArea>
 	<PreviewCode>
 		```jsx
-		<Grid variant='liquid' className='u--itemDivider' cols='10rem' ov='clip' p='0' bd bdc='line' bdrs='20'>
+		<Grid variant='liquid' className='u-itemDivider' cols='10rem' ov='clip' p='0' bd bdc='line' bdrs='20'>
 			<Box p='20'><Dummy length='s'/></Box>
 			<Box p='20'><Dummy length='s'/></Box>
 			<Box p='20'><Dummy length='s'/></Box>
@@ -312,7 +238,7 @@ Flexboxで横並び・縦並びが変わるようなレイアウトでも、こ�
 <Preview>
 	<PreviewTitle>例</PreviewTitle>
 	<PreviewArea resize p='30'>
-		<Flex fxd={['column','row']} bd className='u--itemDivider'>
+		<Flex fxd={['column','row']} bd className='u-itemDivider'>
 			<Box fx='1' p='20'>Box</Box>
 			<Box fx='1' p='20'>Box</Box>
 			<Box fx='1' p='20'>Box</Box>
@@ -321,7 +247,7 @@ Flexboxで横並び・縦並びが変わるようなレイアウトでも、こ�
 	</PreviewArea>
 	<PreviewCode>
 		```jsx
-		<Flex fxd={['column','row']} bd className='u--itemDivider'>
+		<Flex fxd={['column','row']} bd className='u-itemDivider'>
 			<Box fx='1' p='20'>Box</Box>
 			<Box fx='1' p='20'>Box</Box>
 			<Box fx='1' p='20'>Box</Box>
@@ -333,3 +259,69 @@ Flexboxで横並び・縦並びが変わるようなレイアウトでも、こ�
 
 
 
+
+## `u-linkExpand`
+
+クリック範囲を親要素に広げるためのクラスです。
+
+主に`is--linkBox`と併用して、内部のリンクをボックス全体に広げるために使用します。
+
+<Reference>
+活用例は [`<LinkBox>`](/layout/linkbox) を参照してください。
+</Reference>
+
+
+## `u-masked`
+
+
+`--mask`変数と組み合わせて、自身にmaskを適用します。
+
+
+```css
+.u-masked {
+	mask: var(--mask) no-repeat 50% / contain;
+}
+```
+
+Lism Componentsでは`setMask`プロパティに指定した文字列が`--mask-img`として出力されるようになっています。（この時、`<svg>`を渡すと、base64へエンコードされます。
+
+<Preview>
+	<PreviewTitle>例</PreviewTitle>
+	<PreviewArea p='10'>
+		<img
+			src="/img/img-5.jpg" width="960" height="640" loading="lazy"
+			class="u-masked -ar:og"
+			style={{'--mask': `url("data:image/svg+xml,<svg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'><path fill='%23000000' d='M170.4,25.7c16.1,14.2,23.2,38.5,24.8,61.7c1.7,23.3-1.8,45.5-12.9,62.3c-11,16.9-29.3,28.6-48.8,34.5 c-19.4,5.9-40,6.1-59.5,0.4c-19.5-5.6-37.9-17.4-51.7-34.9c-14-17.5-23.2-40.8-18-60.2c5-19.4,24.5-34.7,43.5-48.4 s37.6-25.7,59.5-29.7C129.1,7.3,154.2,11.4,170.4,25.7z' /></svg>")`}}
+		/>
+	</PreviewArea>
+	<PreviewCode slot='tab' label='HTML'>
+		```html
+		<img
+			src="/img/img-3.jpg" width="960" height="640" loading="lazy"
+			class="u-masked -ar:og"
+			style={{'--mask': `url("data:image/svg+xml,<svg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'><path fill='%23000000' d='M170.4,25.7c16.1,14.2,23.2,38.5,24.8,61.7c1.7,23.3-1.8,45.5-12.9,62.3c-11,16.9-29.3,28.6-48.8,34.5 c-19.4,5.9-40,6.1-59.5,0.4c-19.5-5.6-37.9-17.4-51.7-34.9c-14-17.5-23.2-40.8-18-60.2c5-19.4,24.5-34.7,43.5-48.4 s37.6-25.7,59.5-29.7C129.1,7.3,154.2,11.4,170.4,25.7z' /></svg>")`}}
+		/>
+		```
+	</PreviewCode>
+</Preview> 
+
+
+
+## `u-hidden`
+
+要素を視覚的に隠すことができるクラスです。  
+スクリーンリーダー用のテキストなどに利用してください。
+
+```css
+.u-hidden {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	padding: 0;
+	margin: -1px;
+	overflow: hidden;
+	clip: rect(0, 0, 0, 0);
+	white-space: nowrap;
+	border-width: 0;
+}
+```
