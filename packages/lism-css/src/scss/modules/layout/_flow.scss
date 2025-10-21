@@ -1,15 +1,16 @@
 /*
 	Meomo: end:0 がどうせ :first-child に必要なので、 my-s も > * + * 使わず上書き形式で。
-*/
 
-:root {
-	--flow-gap: var(--flow--base);
-}
+	--flow-gap をinheritさせることで -flow:custom クラスがなくても任意の値をセットできるようにしつつ、離れたネストであれば l--flow 単体で使っても base に戻るようにしている。
+	ただし直下のネストでは影響が出る。
+*/
 .l--flow {
 	display: flow-root;
+	--flow-gap: var(--flow--base);
 
 	> * {
-		--my-s: var(--flow-gap); // 初期値は m
+		--flow-gap: inherit;
+		--my-s: var(--flow-gap);
 		margin-block: var(--my-s) 0;
 	}
 
@@ -19,7 +20,6 @@
 	}
 }
 
-.-flow\:m > *,
 .-flow\:base > * {
 	--flow-gap: var(--flow--base);
 }
@@ -40,5 +40,5 @@
 // .l--flow > :where(.-max-sz\:full + .-max-sz\:full),
 .l--flow > :first-child,
 .-flow\:skip + * {
-	--my-s: 0;
+	--my-s: 0px;
 }

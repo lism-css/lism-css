@@ -127,6 +127,8 @@ Lismでは、**コンテンツ間の余白を管理するためのクラス**と
 	<PreviewArea p='30'>
 		<Flow flowGap='10px' hov='itemGuide'>
 			<Text>Contents...</Text>
+			<h2>Heading</h2>
+			<Dummy lang='ja' length='s' />
 			<Text>Contents...</Text>
 			<Text>Contents...</Text>
 		</Flow>
@@ -189,8 +191,8 @@ Lismでは、**コンテンツ間の余白を管理するためのクラス**と
 
 ## `l--flow` を入れ子にする時の注意点
 
-`--flow-gap`が指定された`l--flow`の内部で`l--flow`をネストする場合、余白量（`--flow-gap`）が親の値を継承してしまうことに注意が必要です。  
-ネストされた状態でデフォルト値の`--flow--base`を再度使用したい場合は、`-flow:base`を併用して明示的に指定してください。
+`--flow-gap`が指定された`l--flow`の直下で`l--flow`をネストする場合、余白量（`--flow-gap`）が親の値を継承してしまうことに注意が必要です。  
+一階層さらに別要素でラップするか、`-flow:base`をして明示的に`base`の値を指定してください。
 
 <Preview>
 	<PreviewTitle>`-flow:s`をセットした`l--flow`の中でのネスト</PreviewTitle>
@@ -201,13 +203,14 @@ Lismでは、**コンテンツ間の余白を管理するためのクラス**と
 				<p>*Nested <code class='-fz:s -bd -p:5 -bdrs:10'>`l--flow`</code> contents...</p>
 				<p>*Nested flow contents...</p>
 			</Flow>
-			<p>Flow contents...</p>
-			<p>Flow contents...</p>
 			
+			<p>Flow contents...</p>
+			<p>Flow contents...</p>
 			<Flow flowGap='base' bgc='green:10%' hov='itemGuide'>
 				<p>*Nested <code class='-fz:s -bd -p:5 -bdrs:10'>`l--flow.-flow:base`</code> contents...</p>
 				<p>*Nested flow contents...</p>
 			</Flow>
+			<p>Flow contents...</p>
 			<p>Flow contents...</p>
 		</Flow>
 	</PreviewArea>
@@ -235,13 +238,14 @@ Lismでは、**コンテンツ間の余白を管理するためのクラス**と
 
 もう一つ注意点があります。
 
-`l--flow`の直下にネストした`l--flow`に`--flow-gap`を直接定義すると、その`l--flow`自身の`margin-block-start`にも影響が出ることに注意してください。  
-(直下にネストしなければ問題ないため、divなどでラップしてください)
+`l--flow`の直下にネストした`l--flow`に`--flow-gap`を変数で直接指定すると、その`l--flow`自身の`margin-block-start`にも影響が出ることに注意してください。  
+(こちらも直下にネストしなければ問題ないため、一階層さらに別要素でラップしてください)
 
 <Preview>
 	<PreviewTitle>`l--flow`の直下の`l--flow`で`--flow-gap`を定義した場合</PreviewTitle>
 	<PreviewArea p='30' layout=''>
 		<Flow hov='itemGuide'>
+		<p>Flow contents...</p>
 			<p>Flow contents...</p>
 			<Flow flowGap='5px' bgc='orange:10%' hov='itemGuide'>
 				<p>*Nested <code class='-fz:s -bd -p:5 -bdrs:10'>`l--flow`(`--flow-gap:5px`)</code></p>
