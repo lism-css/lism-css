@@ -35,26 +35,6 @@
 // 	scale: 1.05;
 // }
 
-// --------------------
-// reverse
-// --------------------
-.-hov\:reverse {
-	--hov-c: var(--bgc);
-	--hov-bgc: var(--c);
-	&:where(.c--button--fill) {
-		--hov-bgc: transparent;
-	}
-	&:where(.c--button--outline) {
-		--hov-c: var(--c--base);
-	}
-	@media (any-hover: hover) {
-		&:hover {
-			background-color: var(--hov-bgc) !important;
-			color: var(--hov-c) !important;
-		}
-	}
-}
-
 .-hov\:test {
 	color: var(--isHov_, green) var(--notHov_, blue);
 	background-color: var(--notHov_, lightgray);
