@@ -13,15 +13,16 @@ v.1.0リリースまでしばらく激しい変更が続く可能性があるた
 
 layoutプロパティについて、共通で文字列指定できるようになりました。
 - `layout={Grid}` → `layout='grid'`
-- gtc,gtr,gta は l--grid専用。
-- l--grid の初期状態を変更。 l--grid--repeatに。
 
 
 .is--fullwide → .-max-sz:full
 .is--overwide → .-max-sz:outer
 .is--wide → 廃止
 
-
+- `u--` → `u-`へ。
+- `u--innerR`, `u--innerL` → `set-innerR`, `-bdrs:inner` へ。
+- `u-trimHL`→`u-trim`
+- `u-trimBox` → `u-trimItems` へ。最初と最後の上下のみトリミングするのではなく、子要素全てにu-trimを適用するような機能へ変更。
 
 ## v.0.5
 
