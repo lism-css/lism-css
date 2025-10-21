@@ -18,7 +18,7 @@ import Button from '~/components/ex/Button/index.astro';
 <Preview>
 	<PreviewTitle>Preview</PreviewTitle>
 	<PreviewArea p='30' bg='u:stripe' layout=''>
-		<Flex variant='cluster' g='20'>
+		<Flex layout='cluster' g='20'>
 			<Button href='###' variant='fill'>Button</Button>
 			<Button href='###' variant='outline'>Outline</Button>
 			<Button href='###' variant='outline' bdrs='99' c='#d13d5e'><Icon icon='cart' />Outline</Button>
@@ -339,7 +339,7 @@ Common Props の `w`, `h` ではなく、`width`, `height` を使ってくださ
 {/* <Preview>
 	<PreviewTitle>color指定ありでのreverseの動作例</PreviewTitle>
 	<PreviewArea resize p='20' bg='u:stripe'>
-		<Flex variant='cluster' g='20'>
+		<Flex layout='cluster' g='20'>
 			<Button href='###' hov='reverse' variant='fill' bgc='main'>Button</Button>
 			<Button href='###' hov='reverse' variant='outline' c='#64a31c'>Button</Button>
 			<Button href='###' hov='reverse' variant='' bgc='base-2' c='link'>Button</Button>
@@ -347,7 +347,7 @@ Common Props の `w`, `h` ではなく、`width`, `height` を使ってくださ
 	</PreviewArea>
 	<PreviewCode slot='tab' label='JSX'>
 		```jsx
-		<Flex variant='cluster' g='20'>
+		<Flex layout='cluster' g='20'>
 			<Button href='###' hov='reverse' variant='fill' bgc='main'>Button</Button>
 			<Button href='###' hov='reverse' variant='outline' c='#64a31c'>Button</Button>
 			<Button href='###' hov='reverse' variant='' bgc='base-2' c='link'>Button</Button>

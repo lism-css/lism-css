@@ -11,7 +11,7 @@ import Avatar from '~/components/ex/Avatar/index.astro';
 <Preview>
 	<PreviewTitle>Preview</PreviewTitle>
 	<PreviewArea p='30' bg='u:stripe'>
-		<Flex variant='cluster' g='30'>
+		<Flex layout='cluster' g='30'>
 			<Avatar size='4rem' src='/img/avatar01.jpg' alt='Avatar of xxxx'/>
 			<Avatar size='5rem' src='/img/avatar02.jpg' alt='Avatar of xxxx' bd bdw='2px' bdc='base' bxsh='20'/>
 		</Flex>
@@ -75,7 +75,7 @@ import Avatar from '~/components/ex/Avatar/index.astro';
 <Preview>
 	<PreviewTitle>`Avatar`の使用例</PreviewTitle>
 	<PreviewArea p='30' bg='u:stripe'>
-		<Flex variant='cluster' g='30'>
+		<Flex layout='cluster' g='30'>
 			<Avatar size='4rem' src='/img/avatar01.jpg' alt='Avatar of xxxx'/>
 			<Avatar size='5rem' src='/img/avatar02.jpg' alt='Avatar of xxxx' bd bdw='2px' bdc='base' bxsh='20'/>
 		</Flex>
@@ -90,7 +90,8 @@ import Avatar from '~/components/ex/Avatar/index.astro';
 		```html
 		<div class='c--avatar l--frame -ar:1/1 -w -bdrs:99' style='--w:4rem'>
 			<img src='/img/avatar01.jpg' alt='Avatar of xxxx' width='100%' height='100%' decoding='async' />
-		</div><div class='c--avatar l--frame -ar:1/1 -w -bdrs:99 -bd -bxsh:20' style='--w:5rem;--bdw:2px;--bdc:var(--c--base)'>
+		</div>
+		<div class='c--avatar l--frame -ar:1/1 -w -bdrs:99 -bd -bxsh:20' style='--w:5rem;--bdw:2px;--bdc:var(--c--base)'>
 			<img src='/img/avatar02.jpg' alt='Avatar of xxxx' width='100%' height='100%' decoding='async' />
 		</div>
 		```

@@ -14,6 +14,7 @@ export * from './LinkBox';
 export * from './Box';
 export * from './Flow';
 export * from './Flex';
+export * from './Cluster';
 export * from './Stack';
 export * from './Grid';
 export * from './WithSide';

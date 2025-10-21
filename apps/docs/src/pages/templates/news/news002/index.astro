@@ -1,7 +1,7 @@
 ---
 import DemoPageLayout from '~/layouts/DemoPageLayout.astro';
 
-import { Box, Stack, Container, Frame, Grid, GridItem, Media, Text, Flex, Layer, Center } from 'lism-css/astro';
+import { Box, Cluster, Stack, Container, Frame, Grid, Media, Text, Flex, Layer, Center } from 'lism-css/astro';
 import Button from '~/components/ex/Button/index.astro';
 import './_style.css';
 ---
@@ -12,7 +12,7 @@ import './_style.css';
 			<Flex gr={['1', '1 / 2']} gc={['1', '1 / 2']} ai='flex-e' jc='flex-s'>
 				<Text fz='2xl' fw='bold'>最近のニュース</Text>
 			</Flex>
-			<GridItem gr='2' , gc={['1', '1 / 3']}>
+			<Box gr='2' , gc={['1', '1 / 3']}>
 				<Grid gtc={['1fr', 'repeat(auto-fit, minmax(300px, 1fr))']} gtr='auto auto' g='50'>
 					<Grid gtr='subgrid' gr='span 2' g='0' isLinkBox href='#' bdrs='10' bxsh='20' ov='hidden' setHov>
 						<Frame ar='og' pos='rel'>
@@ -24,12 +24,13 @@ import './_style.css';
 							</Layer>
 						</Frame>
 						<Stack g='40' p='40'>
-							<Flex ai='center' g='30'>
+							<Cluster g='30'>
 								<Text class='u-trim' fz='m' fw='bold'>2025.07.14</Text>
-								<Flex variant='cluster' g='20'>
+								<Cluster g='20'>
 									<Box class='u-trim' bgc='base-2' fz='xs' lh='xs' bdrs='10' p='5 10'>セキュリティ</Box>
-								</Flex>
-							</Flex>
+									<Box class='u-trim' bgc='base-2' fz='xs' lh='xs' bdrs='10' p='5 10'>金融</Box>
+								</Cluster>
+							</Cluster>
 							<Text className='u-trim' fz='m' o='mild'>不正送金対策の強化に伴うワンタイムパスワードの仕様変更のお知らせ</Text>
 						</Stack>
 					</Grid>
@@ -43,12 +44,12 @@ import './_style.css';
 							</Layer>
 						</Frame>
 						<Stack g='40' p='40'>
-							<Flex ai='center' g='30'>
+							<Cluster g='30'>
 								<Text class='u-trim' fz='m' fw='bold'>2025.07.14</Text>
-								<Flex variant='cluster' g='20'>
+								<Cluster g='20'>
 									<Box class='u-trim' bgc='base-2' fz='xs' lh='xs' bdrs='10' p='5 10'>重要なお知らせ</Box>
-								</Flex>
-							</Flex>
+								</Cluster>
+							</Cluster>
 							<Text className='u-trim' fz='m' o='mild'
 								>2025年9月1日よりインターネットバンキングのサービス提供時間を24時間に拡大いたします</Text
 							>
@@ -64,19 +65,19 @@ import './_style.css';
 							</Layer>
 						</Frame>
 						<Stack g='40' p='40'>
-							<Flex ai='center' g='30'>
+							<Cluster g='30'>
 								<Text class='u-trim' fz='m' fw='bold'>2025.07.14</Text>
-								<Flex variant='cluster' g='20'>
+								<Cluster g='20'>
 									<Box class='u-trim' bgc='base-2' fz='xs' lh='xs' bdrs='10' p='5 10'>キャンペーン</Box>
-								</Flex>
-							</Flex>
+								</Cluster>
+							</Cluster>
 							<Text className='u-trim' fz='m' o='mild'
 								>現在新規で口座を開設されたお客様を対象に円定期預金の金利を特別優遇するキャンペーンを実施中です</Text
 							>
 						</Stack>
 					</Grid>
 				</Grid>
-			</GridItem>
+			</Box>
 			<Flex gr={['3', '1 / 2']} gc={['1', '2 / 3']} ai='flex-e' jc='flex-e'>
 				<Button href='#' variant='outline' jc='center' w={['stretch', 'auto']} min-w='8rem' fz='s' p='20' bdrs='10'>View All</Button>
 			</Flex>

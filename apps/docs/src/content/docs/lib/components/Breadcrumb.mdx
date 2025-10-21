@@ -3,7 +3,7 @@ title: 'Breadcrumb'
 description: ...
 ---
 
-import { Flex, Icon, Spacer, Box, Lism, Link, Decorator } from 'lism-css/astro';
+import { Cluster, Icon, Spacer, Box, Lism, Link, Decorator } from 'lism-css/astro';
 import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage, PropBadge, Reference } from "~/components";
 import { FolderSimple } from "@phosphor-icons/react";
 
@@ -16,7 +16,7 @@ import { FolderSimple } from "@phosphor-icons/react";
 <Preview>
 	<PreviewTitle>実装例-1: with slash</PreviewTitle>
 	<PreviewArea p='30'>
-		<Flex variant='cluster' tag='ol' g='20'>
+		<Cluster tag='ol' g='20'>
 			<Lism tag='li' d='in-flex' ai='center' g='inherit'>
 				<Link href='#menu-1' c='inherit' >Menu item 1</Link>
 			</Lism>
@@ -28,11 +28,11 @@ import { FolderSimple } from "@phosphor-icons/react";
 				<Decorator o='soft'>/</Decorator>
 				<span>Current page titile...</span>
 			</Lism>
-		</Flex>
+		</Cluster>
 	</PreviewArea>
 	<PreviewCode slot='tab' label='JSX'>
 		```jsx
-		<Flex variant='cluster' tag='ol' g='20'>
+		<Cluster tag='ol' g='20'>
 			<Lism tag='li' d='in-flex' ai='center' g='inherit'>
 				<Link href='#menu-1' c='inherit' >Menu item 1</Link>
 			</Lism>
@@ -44,12 +44,12 @@ import { FolderSimple } from "@phosphor-icons/react";
 				<Decorator o='soft'>/</Decorator>
 				<span>Current page titile...</span>
 			</Lism>
-		</Flex>
+		</Cluster>
 		```
 	</PreviewCode>
 	<PreviewCode slot='tab' label='HTML'>
 		```html
-		<ol class='l--flex l--flex--cluster -g:20'>
+		<ol class='l--cluster -g:20'>
 			<li class='-d:i-f -ai:center -g:inherit'>
 				<a class='-c:inherit' href='#menu-1'> Menu item 1 </a>
 			</li>
@@ -69,7 +69,7 @@ import { FolderSimple } from "@phosphor-icons/react";
 <Preview>
 	<PreviewTitle>例-2: with Icon</PreviewTitle>
 	<PreviewArea p='30'>
-		<Flex variant='cluster' tag='ol' g='20'>
+		<Cluster tag='ol' g='20'>
 			<Lism tag='li' d='in-flex' ai='center' g='inherit'>
 				<a class='-c:inherit -td:none' href='#menu-1'>Menu item 1</a>
 			</Lism>
@@ -81,11 +81,11 @@ import { FolderSimple } from "@phosphor-icons/react";
 				<Icon icon='caret-right' c='text-2' />
 				<span class='-c:text-2'>Current page titile...</span>
 			</Lism>
-		</Flex>
+		</Cluster>
 	</PreviewArea>
 	<PreviewCode slot='tab' label='JSX'>
 		```jsx
-		<Flex variant='cluster' tag='ol' g='20'>
+		<Cluster tag='ol' g='20'>
 			<Lism tag='li' d='in-flex' ai='center' g='inherit'>
 				<a class='-c:inherit -td:none' href='#menu-1'>Menu item 1</a>
 			</Lism>
@@ -97,12 +97,12 @@ import { FolderSimple } from "@phosphor-icons/react";
 				<Icon icon='caret-right' c='text-2' />
 				<span class='-c:text-2'>Current page titile...</span>
 			</Lism>
-		</Flex>
+		</Cluster>
 		```
 	</PreviewCode>
 	<PreviewCode slot='tab' label='HTML'>
 		```html
-		<ol class='l--flex l--flex--cluster -g:20'>
+		<ol class='l--cluster -g:20'>
 			<li class='-d:i-f -ai:center -g:inherit'>
 				<a class='-c:inherit -td:none' href='#menu-1'>Menu item 1</a>
 			</li>

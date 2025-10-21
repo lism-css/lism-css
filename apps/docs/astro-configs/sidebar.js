@@ -108,6 +108,10 @@ export default [
 				link: '/layout/flex/',
 			},
 			{
+				label: 'Cluster',
+				link: '/layout/cluster/',
+			},
+			{
 				label: 'Stack',
 				link: '/layout/stack/',
 			},
