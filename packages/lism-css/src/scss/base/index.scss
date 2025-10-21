@@ -10,12 +10,12 @@
 @forward './set/shadow';
 @forward './set/hover';
 @forward './set/transition';
-@forward './set/scrollSnap';
-@forward './set/mask';
+@forward './set/snap';
+@forward './set/innerRs';
 @forward './set/plain';
 
 // classを持たない素のリスト、または Prop Class で始まるリストはブラウザ標準のスタイルを復活させる
-:is(ul, ol):where(:not([class]), [class^='-'], .set--revert) {
+:is(ul, ol):where(:not([class]), [class^='-'], .set-revert) {
 	--list-px-s: 1.5em;
 	list-style: revert;
 }

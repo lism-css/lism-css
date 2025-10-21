@@ -11,10 +11,12 @@ export default {
 	hasGutter: 'has--gutter',
 
 	// set class
-	setClickExpand: 'set--clickExpand',
-	setTransition: 'set--transition',
-	setHover: 'set--hover',
-	setScrollSnap: 'set--scrollSnap',
-	setPlain: 'set--plain',
-	setShadow: 'set--shadow',
+
+	setShadow: 'set-shadow',
+	setHov: 'set-hov',
+	setTransition: 'set-transition',
+	setSnap: 'set-snap',
+	setPlain: 'set-plain',
+	setRevert: 'set-revert',
+	setInnerRs: 'set-innerRs',
 };

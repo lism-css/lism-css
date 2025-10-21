@@ -175,87 +175,86 @@ import { Lism, Box, Frame, Media, Text, Dummy, Columns, Grid, Divider } from 'li
 	<PreviewTitle>subgrid</PreviewTitle>
 	<PreviewArea resize p='20'>
 		<Columns cols={[1, 2, 3]} g='20'>
-			<Grid g='30' p='30' gtr='subgrid' gr='span 5' bgc='base-2' bdrs='10'>
-				<Text className='u--trimHL' tag='h2' fz='m'>Card Title</Text>
+			<Grid className='u-trimItems' g='30' p='30' gtr='subgrid' gr='span 5' bgc='base-2' bdrs='10'>
 				<Media ar='og' bdrs='10' src='/img/img-1.jpg'/>
-				<Dummy className='u--trimHL' lh='xs' />
-				<Divider />
-				<Lism className='u--trimHL' lh='xs' fz='s' o='mild' >Date: 2025-01-01</Lism>
+				<Text aslf='center' tag='h2' fz='m'>Card Title</Text>
+				<Dummy lh='xs' />
+				<Divider my='0' />
+				<Lism lh='xs' fz='s' o='mild' >Date: 2025-01-01</Lism>
 			</Grid>
-			<Grid g='30' p='30' gtr='subgrid' gr='span 5' bgc='base-2' bdrs='10'>
-				<Text className='u--trimHL' tag='h2' fz='m'>Card Title</Text>
+			<Grid className='u-trimItems' g='30' p='30' gtr='subgrid' gr='span 5' bgc='base-2' bdrs='10'>
 				<Media ar='og' bdrs='10' src='/img/img-2.jpg' />
-				<Dummy className='u--trimHL' lh='xs' length='s' />
-				<Divider />
-				<Lism className='u--trimHL' lh='xs' fz='s' o='mild' >Date: 2025-01-01</Lism>
+				<Text aslf='center' tag='h2' fz='m'>Card Title Lorem ipsum</Text>
+				<Dummy lh='xs' length='s' />
+				<Divider my='0' />
+				<Lism lh='xs' fz='s' o='mild' >Date: 2025-01-01</Lism>
 			</Grid>
-			<Grid g='30' p='30' gtr='subgrid' gr='span 5' bgc='base-2' bdrs='10'>
-				<Text className='u--trimHL' tag='h2' fz='m'>Card Title, long, long, long, very long long looong.</Text>
+			<Grid className='u-trimItems' g='30' p='30' gtr='subgrid' gr='span 5' bgc='base-2' bdrs='10'>
 				<Media ar='og' bdrs='10' src='/img/img-3.jpg' />
-				<Dummy className='u--trimHL' lh='xs' />
-				<Divider />
-				<Lism className='u--trimHL' lh='xs' fz='s' o='mild' >Date: 2025-01-01</Lism>
+				<Text aslf='center' tag='h2' fz='m'>Card Title, long, long, long, very long long looong.</Text>
+				<Dummy lh='xs' />
+				<Divider my='0' />
+				<Lism lh='xs' fz='s' o='mild' >Date: 2025-01-01</Lism>
 			</Grid>
-			<Grid g='30' p='30' gtr='subgrid' gr='span 5' bgc='base-2' bdrs='10'>
-				<Text className='u--trimHL' tag='h2' fz='m'>Card Title</Text>
+			<Grid className='u-trimItems' g='30' p='30' gtr='subgrid' gr='span 5' bgc='base-2' bdrs='10'>
 				<Media ar='og' bdrs='10' src='/img/img-4.jpg' />
-				<Dummy className='u--trimHL' lh='xs' length='s' />
-				<Divider />
-				<Lism className='u--trimHL' lh='xs' fz='s' o='mild' >Date: 2025-01-01</Lism>
+				<Text aslf='center' tag='h2' fz='m'>Card Title</Text>
+				<Dummy lh='xs' length='s' />
+				<Divider my='0' />
+				<Lism lh='xs' fz='s' o='mild' >Date: 2025-01-01</Lism>
 			</Grid>
-			<Grid g='30' p='30' gtr='subgrid' gr='span 5' bgc='base-2' bdrs='10'>
-				<Text className='u--trimHL' tag='h2' fz='m'>Card Title</Text>
+			<Grid className='u-trimItems' g='30' p='30' gtr='subgrid' gr='span 5' bgc='base-2' bdrs='10'>
 				<Media ar='og' bdrs='10' src='/img/img-5.jpg' />
-				<Dummy className='u--trimHL' lh='xs' />
-				<Divider />
-				<Lism className='u--trimHL' lh='xs' fz='s' o='mild' >Date: 2025-01-01</Lism>
+				<Text aslf='center' tag='h2' fz='m'>Card Title</Text>
+				<Dummy lh='xs' />
+				<Divider my='0' />
+				<Lism lh='xs' fz='s' o='mild' >Date: 2025-01-01</Lism>
 			</Grid>
 		</Columns>
 	</PreviewArea>
-
-<PreviewCode slot='tab' label='JSX'>
-```jsx "gtr='subgrid' gr='span 5'"
-<Columns cols={[1, 2, 3]} g='20'>
-	<Grid g='30' p='30' gtr='subgrid' gr='span 5' bgc='base-2' bdrs='10'>
-		<Text className='u--trimHL' tag='h2' fz='m'>Card Title</Text>
-		<Media ar='og' bdrs='10' src='/img/img-1.jpg'/>
-		<Dummy className='u--trimHL' lh='xs' />
-		<Divider />
-		<Lism className='u--trimHL' lh='xs' fz='s' o='mild' >Date: 2025-01-01</Lism>
-	</Grid>
-	<Grid g='30' p='30' gtr='subgrid' gr='span 5' bgc='base-2' bdrs='10'>
-		<Text className='u--trimHL' tag='h2' fz='m'>Card Title</Text>
-		<Media ar='og' bdrs='10' src='/img/img-2.jpg' />
-		<Dummy className='u--trimHL' lh='xs' length='s' />
-		<Divider />
-		<Lism className='u--trimHL' lh='xs' fz='s' o='mild' >Date: 2025-01-01</Lism>
-	</Grid>
-	<Grid g='30' p='30' gtr='subgrid' gr='span 5' bgc='base-2' bdrs='10'>
-		<Text className='u--trimHL' tag='h2' fz='m'>Card Title, long, long, long, very long long looong.</Text>
-		<Media ar='og' bdrs='10' src='/img/img-3.jpg' />
-		<Dummy className='u--trimHL' lh='xs' />
-		<Divider />
-		<Lism className='u--trimHL' lh='xs' fz='s' o='mild' >Date: 2025-01-01</Lism>
-	</Grid>
-	<Grid g='30' p='30' gtr='subgrid' gr='span 5' bgc='base-2' bdrs='10'>
-		<Text className='u--trimHL' tag='h2' fz='m'>Card Title</Text>
-		<Media ar='og' bdrs='10' src='/img/img-4.jpg' />
-		<Dummy className='u--trimHL' lh='xs' length='s' />
-		<Divider />
-		<Lism className='u--trimHL' lh='xs' fz='s' o='mild' >Date: 2025-01-01</Lism>
-	</Grid>
-	<Grid g='30' p='30' gtr='subgrid' gr='span 5' bgc='base-2' bdrs='10'>
-		<Text className='u--trimHL' tag='h2' fz='m'>Card Title</Text>
-		<Media ar='og' bdrs='10' src='/img/img-5.jpg' />
-		<Dummy className='u--trimHL' lh='xs' />
-		<Divider />
-		<Lism className='u--trimHL' lh='xs' fz='s' o='mild' >Date: 2025-01-01</Lism>
-	</Grid>
-</Columns>
-```
-</PreviewCode>
-<PreviewCode slot='tab' label='HTML'>
-```html
-```
-</PreviewCode>
+	<PreviewCode slot='tab' label='JSX'>
+		```jsx "gtr='subgrid' gr='span 5'"
+		<Columns cols={[1, 2, 3]} g='20'>
+			<Grid className='u-trimItems' g='30' p='30' gtr='subgrid' gr='span 5' bgc='base-2' bdrs='10'>
+				<Media ar='og' bdrs='10' src='/img/img-1.jpg'/>
+				<Text aslf='center' tag='h2' fz='m'>Card Title</Text>
+				<Dummy lh='xs' />
+				<Divider my='0' />
+				<Lism lh='xs' fz='s' o='mild' >Date: 2025-01-01</Lism>
+			</Grid>
+			<Grid className='u-trimItems' g='30' p='30' gtr='subgrid' gr='span 5' bgc='base-2' bdrs='10'>
+				<Media ar='og' bdrs='10' src='/img/img-2.jpg' />
+				<Text aslf='center' tag='h2' fz='m'>Card Title Lorem ipsum</Text>
+				<Dummy lh='xs' length='s' />
+				<Divider my='0' />
+				<Lism lh='xs' fz='s' o='mild' >Date: 2025-01-01</Lism>
+			</Grid>
+			<Grid className='u-trimItems' g='30' p='30' gtr='subgrid' gr='span 5' bgc='base-2' bdrs='10'>
+				<Media ar='og' bdrs='10' src='/img/img-3.jpg' />
+				<Text aslf='center' tag='h2' fz='m'>Card Title, long, long, long, very long long looong.</Text>
+				<Dummy lh='xs' />
+				<Divider my='0' />
+				<Lism lh='xs' fz='s' o='mild' >Date: 2025-01-01</Lism>
+			</Grid>
+			<Grid className='u-trimItems' g='30' p='30' gtr='subgrid' gr='span 5' bgc='base-2' bdrs='10'>
+				<Media ar='og' bdrs='10' src='/img/img-4.jpg' />
+				<Text aslf='center' tag='h2' fz='m'>Card Title</Text>
+				<Dummy lh='xs' length='s' />
+				<Divider my='0' />
+				<Lism lh='xs' fz='s' o='mild' >Date: 2025-01-01</Lism>
+			</Grid>
+			<Grid className='u-trimItems' g='30' p='30' gtr='subgrid' gr='span 5' bgc='base-2' bdrs='10'>
+				<Media ar='og' bdrs='10' src='/img/img-5.jpg' />
+				<Text aslf='center' tag='h2' fz='m'>Card Title</Text>
+				<Dummy lh='xs' />
+				<Divider my='0' />
+				<Lism lh='xs' fz='s' o='mild' >Date: 2025-01-01</Lism>
+			</Grid>
+		</Columns>
+		```
+	</PreviewCode>
+	<PreviewCode slot='tab' label='HTML'>
+	```html
+	```
+	</PreviewCode>
 </Preview>

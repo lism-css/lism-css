@@ -16,7 +16,7 @@ import Badge from '~/components/ex/Badge/index.astro';
 		<Flex variant='cluster' g='20'>
 			<Badge>Badge</Badge>
 			<Badge variant='outline'>Badge</Badge>
-			<Badge className='u--cbox' keycolor='blue' bdrs='99'>Badge</Badge>
+			<Badge className='u-cbox' keycolor='blue' bdrs='99'>Badge</Badge>
 		</Flex>
 	</PreviewArea>
 </Preview>
@@ -32,7 +32,7 @@ import Badge from '~/components/ex/Badge/index.astro';
 		<Flex variant='cluster' g='20'>
 			<Lism tag='span' p='10' lh='1' fz='s' bgc='text' c='base' bdrs='10'>Badge</Lism>
 			<Lism tag='span' p='10' lh='1' fz='s' bd bdrs='10'>Badge</Lism>
-			<Lism tag='span' className='u--cbox' keycolor='blue' bd bdc='keycolor:base:25%' p='10' lh='1' fz='s' bdrs='99'>Badge</Lism>
+			<Lism tag='span' className='u-cbox' keycolor='blue' bd bdc='keycolor:base:25%' p='10' lh='1' fz='s' bdrs='99'>Badge</Lism>
 		</Flex>
 	</PreviewArea>
 	<PreviewCode slot='tab' label='JSX'>
@@ -40,7 +40,7 @@ import Badge from '~/components/ex/Badge/index.astro';
 		<Flex variant='cluster' g='20'>
 			<Lism tag='span' p='10' lh='1' fz='s' bgc='text' c='base' bdrs='10'>Badge</Lism>
 			<Lism tag='span' p='10' lh='1' fz='s' bd bdrs='10'>Badge</Lism>
-			<Lism tag='span' className='u--cbox' keycolor='blue' bd bdc='keycolor:base:25%' p='10' lh='1' fz='s' bdrs='99'>Badge</Lism>
+			<Lism tag='span' className='u-cbox' keycolor='blue' bd bdc='keycolor:base:25%' p='10' lh='1' fz='s' bdrs='99'>Badge</Lism>
 		</Flex>
 		```
 	</PreviewCode>
@@ -49,7 +49,7 @@ import Badge from '~/components/ex/Badge/index.astro';
 		<div class="l--flex l--flex--cluster -g:20">
 			<span class="-p:10 -lh:1 -fz:s -bgc:text -c:base -bdrs:10">Badge</span>
 			<span class="-p:10 -lh:1 -fz:s -bd -bdrs:10">Badge</span>
-			<span class="u--cbox -bd -p:10 -lh:1 -fz:s -bdrs:99" style="--keycolor:var(--blue);--bdc:color-mix(in srgb, var(--keycolor) 25%, var(--c--base))">Badge</span>
+			<span class="u-cbox -bd -p:10 -lh:1 -fz:s -bdrs:99" style="--keycolor:var(--blue);--bdc:color-mix(in srgb, var(--keycolor) 25%, var(--c--base))">Badge</span>
 		</div>
 		```
 	</PreviewCode>
@@ -165,28 +165,28 @@ import Badge from '~/components/ex/Badge/index.astro';
 	</PreviewCode>
 </Preview>
 
-### `u--cbox` との併用
+### `u-cbox` との併用
 
 <Preview>
-	<PreviewTitle>[`u--cbox`](/css/utility-class/#u--cbox)クラスを使ったスタイリングの例</PreviewTitle>
+	<PreviewTitle>[`u-cbox`](/css/utility-class/#u-cbox)クラスを使ったスタイリングの例</PreviewTitle>
 	<PreviewArea p='30' bg='u:stripe'>
 		<Flex variant='cluster' g='20'>
-			<Badge className='u--cbox' keycolor='red'>Red</Badge>
-			<Badge className='u--cbox' keycolor='orange'>Orange</Badge>
-			<Badge className='u--cbox' keycolor='yellow'>Yellow</Badge>
-			<Badge className='u--cbox' keycolor='green'>Green</Badge>
-			<Badge className='u--cbox' keycolor='blue'>Blue</Badge>
-			<Badge className='u--cbox' keycolor='purple'>Purple</Badge>
-			<Badge className='u--cbox' keycolor='pink'>Pink</Badge>
-			<Badge className='u--cbox' keycolor='gray'>Gray</Badge>
+			<Badge className='u-cbox' keycolor='red'>Red</Badge>
+			<Badge className='u-cbox' keycolor='orange'>Orange</Badge>
+			<Badge className='u-cbox' keycolor='yellow'>Yellow</Badge>
+			<Badge className='u-cbox' keycolor='green'>Green</Badge>
+			<Badge className='u-cbox' keycolor='blue'>Blue</Badge>
+			<Badge className='u-cbox' keycolor='purple'>Purple</Badge>
+			<Badge className='u-cbox' keycolor='pink'>Pink</Badge>
+			<Badge className='u-cbox' keycolor='gray'>Gray</Badge>
 		</Flex>
 	</PreviewArea>
 	<PreviewCode slot='tab' label='JSX'>
 		```jsx
 		<Flex variant='cluster' g='20'>
-			<Badge className='u--cbox' keycolor='red'>Red</Badge>
-			<Badge className='u--cbox' keycolor='orange'>Orange</Badge>
-			<Badge className='u--cbox' keycolor='yellow'>Yellow</Badge>
+			<Badge className='u-cbox' keycolor='red'>Red</Badge>
+			<Badge className='u-cbox' keycolor='orange'>Orange</Badge>
+			<Badge className='u-cbox' keycolor='yellow'>Yellow</Badge>
 			...
 		</Flex>
 		```
@@ -194,9 +194,9 @@ import Badge from '~/components/ex/Badge/index.astro';
 		<PreviewCode slot='tab' label='HTML'>
 		```html
 		<div class="l--flex l--flex--cluster -g:20">
-			<span class="c--badge u--cbox -fz:s -lh:1 -bdrs:10" style="--keycolor:var(--red)">Red</span>
-			<span class="c--badge u--cbox -fz:s -lh:1 -bdrs:10" style="--keycolor:var(--orange)">Orange</span>
-			<span class="c--badge u--cbox -fz:s -lh:1 -bdrs:10" style="--keycolor:var(--yellow)">Orange</span>
+			<span class="c--badge u-cbox -fz:s -lh:1 -bdrs:10" style="--keycolor:var(--red)">Red</span>
+			<span class="c--badge u-cbox -fz:s -lh:1 -bdrs:10" style="--keycolor:var(--orange)">Orange</span>
+			<span class="c--badge u-cbox -fz:s -lh:1 -bdrs:10" style="--keycolor:var(--yellow)">Orange</span>
 			...
 		</div>
 		```
@@ -217,7 +217,7 @@ import { BookIcon } from '@phosphor-icons/react';
 		<Flex g='30' ai='center'>
 			<Badge d='in-flex' ai='center'><Icon icon='star-fill' />Badge</Badge>
 			<Badge variant='outline' d='in-flex' ai='center' bdrs='5'><Icon icon='tag' translate='-10%' />Badge</Badge>
-			<Badge className='u--cbox' keycolor='pink' d='in-flex' ai='center' bdrs='99'><Icon icon='dot' />Badge</Badge>
+			<Badge className='u-cbox' keycolor='pink' d='in-flex' ai='center' bdrs='99'><Icon icon='dot' />Badge</Badge>
 		</Flex>
 	</PreviewArea>
 	<PreviewCode slot='tab' label='JSX'>
@@ -225,7 +225,7 @@ import { BookIcon } from '@phosphor-icons/react';
 		<Flex g='30' ai='center'>
 			<Badge d='in-flex' ai='center'><Icon icon='star-fill' />Badge</Badge>
 			<Badge variant='outline' d='in-flex' ai='center' bdrs='5'><Icon icon='tag' translate='-10%' />Badge</Badge>
-			<Badge className='u--cbox' keycolor='pink' d='in-flex' ai='center' bdrs='99'><Icon icon='dot' />Badge</Badge>
+			<Badge className='u-cbox' keycolor='pink' d='in-flex' ai='center' bdrs='99'><Icon icon='dot' />Badge</Badge>
 		</Flex>
 		```
 	</PreviewCode>

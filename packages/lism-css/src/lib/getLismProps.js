@@ -131,7 +131,7 @@ class LismPropsData {
 				this.analyzeLismProp(propName, propVal);
 			} else if (propName === 'hov') {
 				const propVal = this.extractProp(propName);
-				this.setHoverProps(propVal);
+				this.setHovProps(propVal);
 			} else if (propName === 'css') {
 				// cssオブジェクトに入ってきたものはstyleへ流す
 				const cssVales = this.extractProp('css');
@@ -296,13 +296,13 @@ class LismPropsData {
 	// 	});
 	// }
 
-	setHoverProps(hoverData) {
+	setHovProps(hoverData) {
 		if (!hoverData) return;
 
 		// 配列のときは中身を再帰処理
 		// if (Array.isArray(hoverData)) {
 		// 	hoverData.forEach((_hov) => {
-		// 		this.setHoverProps(_hov);
+		// 		this.setHovProps(_hov);
 		// 	});
 		// 	return;
 		// }

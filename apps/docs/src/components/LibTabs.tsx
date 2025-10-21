@@ -81,7 +81,7 @@ function UIBlockList({ entries }: { entries: NavLinkData[] }) {
 				if (entry.type === 'group') {
 					return (
 						<React.Fragment key={index}>
-							<Lism tag='h3' class='u--trimHL -fz:l -gc:1/-1' py='30' my-s='30'>
+							<Lism tag='h3' class='u-trim -fz:l -gc:1/-1' py='30' my-s='30'>
 								{entry.label}
 							</Lism>
 							<UIBlockList entries={entry.entries || []} />
@@ -98,7 +98,7 @@ function UIBlockList({ entries }: { entries: NavLinkData[] }) {
 								</Frame>
 							)}
 						</Frame>
-						<Lism class='u--trimHL -ff:mono -fz:s'>{entry.label}</Lism>
+						<Lism class='u-trim -ff:mono -fz:s'>{entry.label}</Lism>
 					</LinkBox>
 				);
 			})}
