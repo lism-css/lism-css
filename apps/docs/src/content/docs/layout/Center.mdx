@@ -3,7 +3,7 @@ title: 'Center'
 description: ...
 ---
 
-import { Center, Frame, Box, Text, Spacer, Dummy, Media } from 'lism-css/astro';
+import { Center, Frame, Box, HTML, Spacer, Dummy, Media } from 'lism-css/astro';
 import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage, EmbedCode, Callout } from '~/components';
 
 **要素**を上下左右中央揃えで配置するためのモジュールです。
@@ -46,13 +46,13 @@ Centerが**高さを持たない**場合は、コンテンツを水平方向に�
 	</PreviewTitle>
 	<PreviewArea resize p={10}>
 		<Center p='30'>
-			<Text fz='l'>TEXT</Text>
+			<HTML.p fz='l'>TEXT</HTML.p>
 		</Center>
 	</PreviewArea>
 	<PreviewCode slot='tab' label='JSX'>
 		```jsx
 		<Center p='30'>
-			<Text fz='l'>TEXT</Text>
+			<HTML.p fz='l'>TEXT</HTML.p>
 		</Center>
 		```
 	</PreviewCode>
@@ -71,7 +71,7 @@ Centerが**高さを持たない**場合は、コンテンツを水平方向に�
 	</PreviewTitle>
 	<PreviewArea resize p={10}>
 		<Center p='40' g='20'>
-			<Text fz='l'>TEXT</Text>
+			<HTML.p fz='l'>TEXT</HTML.p>
 			<Dummy length='xs' lang='ja'/>
 			<Dummy lang='ja'/>
 		</Center>
@@ -79,7 +79,7 @@ Centerが**高さを持たない**場合は、コンテンツを水平方向に�
 	<PreviewCode slot='tab' label='JSX'>
 		```jsx
 		<Center p='40' g='20'>
-			<Text fz='l'>TEXT</Text>
+			<HTML.p fz='l'>TEXT</HTML.p>
 			<p>...</p>
 			<p>...</p>
 		</Center>
@@ -107,15 +107,15 @@ Centerに**高さやアスペクト比**が設定されている時、垂直方�
 	</PreviewTitle>
 	<PreviewArea>
 		<Center g='10' ar='3/2' lh='xs'>
-			<Text fz='l'>TEXT</Text>
-			<Text fz='s'>Lorem ipsum dolor sit amet.</Text>
+			<HTML.p fz='l'>TEXT</HTML.p>
+			<HTML.p fz='s'>Lorem ipsum dolor sit amet.</HTML.p>
 		</Center>
 	</PreviewArea>
 	<PreviewCode slot='tab' label='JSX'>
 		```jsx "ar='3/2'"
 		<Center g='10' ar='3/2' lh='xs'>
-			<Text fz='l'>TEXT</Text>
-			<Text fz='s'>Lorem ipsum dolor sit amet.</Text>
+			<HTML.p fz='l'>TEXT</HTML.p>
+			<HTML.p fz='s'>Lorem ipsum dolor sit amet.</HTML.p>
 		</Center>
 		```
 	</PreviewCode>

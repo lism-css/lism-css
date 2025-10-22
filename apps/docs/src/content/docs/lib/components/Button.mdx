@@ -4,7 +4,7 @@ description: ...
 ---
 
 import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportSource, ImportExComponent } from '~/components';
-import { Box, Flex, Grid, Lism, Frame, Link, Text, Media, Icon, Spacer, Center, Layer, Dummy } from 'lism-css/astro';
+import { Box, Flex, Grid, Lism, Frame, HTML, Media, Icon, Spacer, Center, Layer, Dummy } from 'lism-css/astro';
 import {
 	ArrowRightIcon,
 	ShoppingCartSimpleIcon,
@@ -29,13 +29,13 @@ import Button from '~/components/ex/Button/index.astro';
 
 ## Only Core
 
-コンポーネントを作らずにボタンを作るコード例も紹介しておきます。
+**コンポーネントを作らずにボタンを作るコード例も紹介しておきます。**
 <Preview>
 	<PreviewTitle>Preview</PreviewTitle>
 	<PreviewArea p='30' bg=':stripe' flowGap='s'>
 		<Flex g='20'>
-			<Link href='###' d='in-flex' w='fit' td='none' c='base' bgc='text' py='10' px='30' lh='xs' bdrs='20' hov='o'>Button</Link>
-			<Link href='###' d='in-flex' w='fit' td='none' c='inherit' bd py='10' px='30' lh='xs' bdrs='20' hov='o'>Button</Link>
+			<HTML.a href='###' d='in-flex' w='fit' td='none' c='base' bgc='text' py='10' px='30' lh='xs' bdrs='20' hov='o'>Button</HTML.a>
+			<HTML.a href='###' d='in-flex' w='fit' td='none' c='inherit' bd py='10' px='30' lh='xs' bdrs='20' hov='o'>Button</HTML.a>
 		</Flex>
 		<Grid tag='a' href='###' gtc='1em 1fr 1em' ji='center' ai='center' px='30' py='20' g='40' w='16rem' td='none' lh='xs' bgc='text' c='base' bdrs='20'>
 			<Lism tag='span' gc='2'>Button</Lism>
@@ -45,8 +45,8 @@ import Button from '~/components/ex/Button/index.astro';
 	<PreviewCode slot='tab' label='JSX'>
 		```jsx
 		<Flex g='20'>
-			<Link href='###' d='in-flex' w='fit' td='none' c='base' bgc='text' py='10' px='30' lh='xs' bdrs='20' hov='o'>Button</Link>
-			<Link href='###' d='in-flex' w='fit' td='none' c='inherit' bd py='10' px='30' lh='xs' bdrs='20' hov='o'>Button</Link>
+			<HTML.a href='###' d='in-flex' w='fit' td='none' c='base' bgc='text' py='10' px='30' lh='xs' bdrs='20' hov='o'>Button</HTML.a>
+			<HTML.a href='###' d='in-flex' w='fit' td='none' c='inherit' bd py='10' px='30' lh='xs' bdrs='20' hov='o'>Button</HTML.a>
 		</Flex>
 		<Grid tag='a' href='###' gtc='1em 1fr 1em' ji='center' ai='center' px='30' py='20' g='40' w='16rem' td='none' lh='xs' bgc='text' c='base' bdrs='20'>
 			<Lism tag='span' gc='2'>Button</Lism>

@@ -33,11 +33,11 @@ For HTML sites, you can also load CSS via CDN.
 ### 3. Using Components
 
 ```jsx
-import { Box, Text, ... } from 'lism-css/react';
+import { Box, HTML, ... } from 'lism-css/react';
 
 // ...
 <Box p='20' bgc="base-2">
-	<Text fz="l">Lorem ipsum text...</Text>
+	<HTML.p fz="l">Lorem ipsum text...</HTML.p>
 </Box>
 // ...
 ```

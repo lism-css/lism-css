@@ -4,7 +4,7 @@ description: ...
 sidebar:
   order: 7
 ---
-import { Lism, Flow, Container, Text, Frame, Layer, Media, Dummy, Box, Flex, Grid, Center, Columns, Spacer } from "lism-css/astro";
+import { Lism, Flow, Container, HTML, Frame, Layer, Media, Dummy, Box, Flex, Grid, Center, Columns, Spacer } from "lism-css/astro";
 import { Preview, PreviewArea, PreviewTitle, PreviewCode, EmbedCode, Reference, Note, Callout, IconBadge } from "~/components";
 import AllPropClasses from '../../all-prop-classes.mdx';
 
@@ -106,7 +106,7 @@ Lismでは、主要なCSSプロパティ群に対して、それらで頻繁に�
 	</PreviewCode>
 	<PreviewCode slot="tab" label="JSX">
 	```jsx
-	<Text fz='xl' fw='bold' lts='l' ta='center'>Example text</Text>
+	<HTML.p fz='xl' fw='bold' lts='l' ta='center'>Example text</HTML.p>
 	```
 	</PreviewCode>
 </Preview>
@@ -172,7 +172,7 @@ Lismでは、主要なCSSプロパティ群に対して、それらで頻繁に�
 <Preview>
 	<PreviewTitle>Examples</PreviewTitle>
 	<PreviewArea p='30'>
-		<Text c='main' bgc='base-2' bd bdc='line' p='40'>Example text</Text>
+		<HTML.p c='main' bgc='base-2' bd bdc='line' p='40'>Example text</HTML.p>
 	</PreviewArea>
 	<PreviewCode slot="tab" label="HTML">
 	```html
@@ -181,7 +181,7 @@ Lismでは、主要なCSSプロパティ群に対して、それらで頻繁に�
 	</PreviewCode>
 	<PreviewCode slot="tab" label="JSX">
 	```jsx
-	<Text c='main' bgc='base-2' bd bdc='line' p='40'>Example text</Text>
+	<HTML.p c='main' bgc='base-2' bd bdc='line' p='40'>Example text</HTML.p>
 	```
 	</PreviewCode>
 </Preview>
@@ -230,8 +230,8 @@ export const LinkSPACE = () => <a href="/css/tokens/#space"><code>SPACE</code></
 	<PreviewTitle>Space Examples</PreviewTitle>
 	<PreviewArea p='30' resize>
 		<Lism p={['20', '30']} bd>
-			<Text>Example text</Text>
-			<Text my-s='20' mx='40'>Example text</Text>
+			<HTML.p>Example text</HTML.p>
+			<HTML.p my-s='20' mx='40'>Example text</HTML.p>
 		</Lism>
 	</PreviewArea>
 	<PreviewCode slot="tab" label="HTML">
@@ -245,8 +245,8 @@ export const LinkSPACE = () => <a href="/css/tokens/#space"><code>SPACE</code></
 	<PreviewCode slot="tab" label="JSX">
 	```jsx
 	<Lism p={['20', '30']} bd>
-		<Text>Example text</Text>
-		<Text my-s='20' mx='40'>Example text</Text>
+		<HTML.p>Example text</HTML.p>
+		<HTML.p my-s='20' mx='40'>Example text</HTML.p>
 	</Lism>
 	```
 	</PreviewCode>
@@ -561,7 +561,7 @@ borderに関する仕様は少し特殊になっています。詳しくは[bord
 	<PreviewArea p='30'>
 		<Center>
 			<Box bg='linear-gradient(45deg, var(--blue), var(--pink))' bgclip='text' c='trsp'>
-				<Text fz='5xl' fw='bold' lh='1' lts='l'>TEXT</Text>
+				<HTML.p fz='5xl' fw='bold' lh='1' lts='l'>TEXT</HTML.p>
 			</Box>
 		</Center>
 	</PreviewArea>
@@ -569,7 +569,7 @@ borderに関する仕様は少し特殊になっています。詳しくは[bord
 		```jsx
 		<Center>
 			<Box bg='linear-gradient(45deg, var(--blue), var(--pink))' bgclip='text' c='trsp'>
-				<Text fz='5xl' fw='bold' lh='1' lts='l'>TEXT</Text>
+				<HTML.p fz='5xl' fw='bold' lh='1' lts='l'>TEXT</HTML.p>
 			</Box>
 		</Center>
 		```

@@ -50,12 +50,8 @@ export default [
 				link: '/components/lism/',
 			},
 			{
-				label: 'Text',
-				link: '/components/text/',
-			},
-			{
-				label: 'Link',
-				link: '/components/link/',
+				label: 'HTML',
+				link: '/components/html/',
 			},
 			{
 				label: 'Media',

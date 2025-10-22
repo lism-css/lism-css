@@ -1,4 +1,4 @@
-import { Text, Icon } from 'lism-css/react';
+import { HTML, Icon } from 'lism-css/react';
 import Callout from '~/components/ex/Callout/index.jsx';
 import Badge from '~/components/ex/Badge/index.jsx';
 import ICON_PRESETS from '~/components/ex/Callout/presets.js';
@@ -13,9 +13,9 @@ export const HelpText = ({ tag = 'p', children, ...props }) => {
 		_props['my-s'] = '20';
 	}
 	return (
-		<Text {..._props} {...props}>
+		<HTML.p {..._props} {...props}>
 			{children}
-		</Text>
+		</HTML.p>
 	);
 };
 

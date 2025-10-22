@@ -4,7 +4,7 @@ description: ...
 sidebar:
   order: 3
 ---
-import { Lism, Box, Media, Flex, Text, Stack, Spacer, Frame } from 'lism-css/astro';
+import { Lism, Box, Media, Flex, HTML, Stack, Spacer, Frame } from 'lism-css/astro';
 import { Preview, PreviewArea, PreviewTitle, PreviewCode, PreviewFrame, Reference, Callout, Note } from "~/components";
 import Button from '~/components/ex/Button/index.astro';
 import { Desktop } from '@phosphor-icons/react';
@@ -214,13 +214,13 @@ Base階層の最後で定義されている、スタイルをリセット・再�
 	<PreviewTitle>シャドウの上書き例</PreviewTitle>
 	<PreviewArea p='40' nogrid>
 		<Stack g='30'>
-			<Text> Default: </Text>
+			<HTML.p> Default: </HTML.p>
 			<Flex className='set-shadow -g:40' px-s='20'>
 				<Box bxsh='20' p='40' bdrs='20'>Box</Box>
 				<Box bxsh='40' p='40' bdrs='20'>Box</Box>
 			</Flex>
 			<Spacer h='40' />
-			<Text> set-shadow して 変数を上書きした例: </Text>
+			<HTML.p> set-shadow して 変数を上書きした例: </HTML.p>
 			<Flex className='set-shadow -g:40' px-s='20' style={{'--sh-hsl': '200 50% 50%', '--sh-a':'20%'}}>
 				<Box bxsh='20' p='40' bdrs='20'>Box</Box>
 				<Box bxsh='40' p='40' bdrs='20'>Box</Box>

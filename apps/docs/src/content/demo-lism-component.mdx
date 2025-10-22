@@ -1,41 +1,41 @@
-import { Lism, Frame, Center, Text, Flex, Box, Link } from 'lism-css/react';
+import { Lism, Frame, Center, Flex, HTML } from 'lism-css/react';
 import { Preview, PreviewArea, PreviewTitle, PreviewCode } from '~/components';
 
 <Preview>
 	<PreviewArea p='10'>
 		<Center p='40' ar='16/9' bgc='base'>
-			<Lism tag='h1' fz='4xl' lh='1' ff='accent'>
+			<HTML.h lv='h1' fz='4xl' lh='1' ff='accent'>
 				Lism CSS
-			</Lism>
-			<Lism my-s='20' o='mild'>
+			</HTML.h>
+			<HTML.p my-s='20' o='mild'>
 				The some description text is here...
-			</Lism>
+			</HTML.p>
 			<Flex g='30' my-s='40'>
-				<Link href='###' d='in-flex' bdrs='5' td='none' c='base' bgc='text' py='5' px='20'>
+				<HTML.a href='###' d='in-flex' bdrs='5' td='none' c='base' bgc='text' py='5' px='20'>
 					Documents
-				</Link>
-				<Link href='###' d='in-flex' bdrs='5' td='none' c='text' bd py='5' px='20'>
+				</HTML.a>
+				<HTML.a href='###' d='in-flex' bdrs='5' td='none' c='text' bd py='5' px='20'>
 					Github
-				</Link>
+				</HTML.a>
 			</Flex>
 		</Center>
 	</PreviewArea>
 	<PreviewCode>
 		```jsx
 		<Center p='40' ar='16/9' bgc='base'>
-			<Lism tag='h1' fz='4xl' lh='1' ff='accent'>
+			<HTML.h lv='h1' fz='4xl' lh='1' ff='accent'>
 				Lism CSS
-			</Lism>
-			<Lism my-s='20' o='mild'>
+			</HTML.h>
+			<HTML.div my-s='20' o='mild'>
 				The some description text is here...
-			</Lism>
+			</HTML.div>
 			<Flex g='30' my-s='40'>
-				<Link href='###' d='in-flex' bdrs='5' td='none' c='base' bgc='text' py='5' px='20'>
+				<HTML.a href='###' d='in-flex' bdrs='5' td='none' c='base' bgc='text' py='5' px='20'>
 					Documents
-				</Link>
-				<Link href='###' d='in-flex' bdrs='5' td='none' c='text' bd py='5' px='20'>
+				</HTML.a>
+				<HTML.a href='###' d='in-flex' bdrs='5' td='none' c='text' bd py='5' px='20'>
 					Github
-				</Link>
+				</HTML.a>
 			</Flex>
 		</Center>
 		```

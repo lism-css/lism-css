@@ -3,7 +3,7 @@ title: 'Card'
 description: ...
 ---
 
-import { Dummy, Box, Flex, Stack, Center, Grid, Frame, Text, LinkBox, Link, Layer, Columns, Media, WithSide } from 'lism-css/astro';
+import { Dummy, HTML, Box, Flex, Stack, Center, Grid, Frame, LinkBox, Layer, Columns, Media, WithSide } from 'lism-css/astro';
 import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportSource, ImportExComponent } from '~/components';
 import Card from '~/components/ex/Card/index.jsx';
 
@@ -21,8 +21,8 @@ import Card from '~/components/ex/Card/index.jsx';
 				</Frame>
 				<Stack g='30' p='30'>
 					<h3 className='u-trim -fz:l'>Card Title</h3>
-					<Text className='u-trim' fz='s' lh='s' o='mild'>ロレム・イプサムの座り雨、トマ好き学習だったエリット、しかし時と活力はそのような木々と楽しみ。</Text>
-					<Text d='in-flex' mx-s='auto' my-s='auto' c='inherit' td='none' bd-b lh='1' p='10'>View More →</Text>
+					<HTML.p className='u-trim' fz='s' lh='s' o='mild'>ロレム・イプサムの座り雨、トマ好き学習だったエリット、しかし時と活力はそのような木々と楽しみ。</HTML.p>
+					<HTML.span d='in-flex' mx-s='auto' my-s='auto' c='inherit' td='none' bd-b lh='1' p='10'>View More →</HTML.span>
 				</Stack>
 			</WithSide>
 			<Frame pos='rel' ar='3/4' bdrs='30' bxsh='30'>
@@ -30,7 +30,7 @@ import Card from '~/components/ex/Card/index.jsx';
 				<Layer bgc='rgb(0 0 0 / 20%)'/>
 				<Layer layout='stack' c='white' p='30' g='30'>
 					<h3 className='u-trim -fz:l -my-s:auto'>Card Title</h3>
-					<Text className='u-trim' fz='s' lh='s' o='mild'>ロレム・イプサムの座り雨、トマ好き学習だったエリット、しかし時と活力はそのような木々と楽しみ。</Text>
+					<HTML.p className='u-trim' fz='s' lh='s' o='mild'>ロレム・イプサムの座り雨、トマ好き学習だったエリット、しかし時と活力はそのような木々と楽しみ。</HTML.p>
 					<Center tag='a' href='#' c='black' bgc='white' td='none' lh='1' p='20' bdrs='99' hov='o'>Link Text</Center>
 				</Layer>
 			</Frame>
@@ -40,8 +40,8 @@ import Card from '~/components/ex/Card/index.jsx';
 				</Frame>
 				<Stack g='30' p='10'>
 					<h3 className='u-trim -fz:l'>Card Title</h3>
-					<Text className='u-trim' fz='s' lh='s' o='mild'>ロレム・イプサムの座り雨、トマ好き学習だったエリット、しかし時と活力はそのような木々と楽しみ。</Text>
-					<Link href='#' d='in-flex' mx-s='auto' c='base' bgc='text' td='none' bd-b lh='1' py='20' px='30' jc='center' hov='o' bdrs='inner'>Link Text</Link>
+					<HTML.p className='u-trim' fz='s' lh='s' o='mild'>ロレム・イプサムの座り雨、トマ好き学習だったエリット、しかし時と活力はそのような木々と楽しみ。</HTML.p>
+					<HTML.a href='#' d='in-flex' mx-s='auto' c='base' bgc='text' td='none' bd-b lh='1' py='20' px='30' jc='center' hov='o' bdrs='inner'>Link Text</HTML.a>
 				</Stack>
 			</Stack>
 		</Columns>
@@ -62,8 +62,8 @@ import Card from '~/components/ex/Card/index.jsx';
 			<Layer bgc='rgb(0 0 0 / 20%)'/>
 			<Layer layout='stack' c='white' p='30' g='30'>
 				<h3 className='u-trim -fz:l -my-s:auto'>Card Title</h3>
-				<Text className='u-trim' fz='s' lh='s' o='mild'>ロレム・イプサムの座り雨、トマ好き学習だったエリット、しかし時と活力はそのような木々と楽しみ。</Text>
-				<Center tag='a' href='#' c='black' bgc='white' td='none' lh='1' p='20' bdrs='99' hov='o'>Link Text</Center>
+				<HTML.p className='u-trim' fz='s' lh='s' o='mild'>ロレム・イプサムの座り雨、トマ好き学習だったエリット、しかし時と活力はそのような木々と楽しみ。</HTML.p>
+				<HTML.a layout='center' href='#' c='black' bgc='white' td='none' lh='1' p='20' bdrs='99' hov='o'>Link Text</HTML.a>
 			</Layer>
 		</Frame>
 	</PreviewArea>
@@ -74,8 +74,8 @@ import Card from '~/components/ex/Card/index.jsx';
 			<Layer bgc='rgb(0 0 0 / 20%)'/>
 			<Layer layout='stack' c='white' p='30' g='30'>
 				<h3 className='u-trim -fz:l -my-s:auto'>Card Title</h3>
-				<Text className='u-trim' fz='s' lh='s' o='mild'>ロレム・イプサムの座り雨、トマ好き学習だったエリット、しかし時と活力はそのような木々と楽しみ。</Text>
-				<Center tag='a' href='#' c='black' bgc='white' td='none' lh='1' p='20' bdrs='99' hov='o'>Link Text</Center>
+				<HTML.p className='u-trim' fz='s' lh='s' o='mild'>ロレム・イプサムの座り雨、トマ好き学習だったエリット、しかし時と活力はそのような木々と楽しみ。</HTML.p>
+				<HTML.a layout='center' href='#' c='black' bgc='white' td='none' lh='1' p='20' bdrs='99' hov='o'>Link Text</HTML.a>
 			</Layer>
 		</Frame>
 		```
@@ -88,7 +88,7 @@ import Card from '~/components/ex/Card/index.jsx';
 			<div class='l--stack is--layer -c -p:30 -g:30' style='--c:var(--white)'>
 				<h3 class='u-trim -fz:l -my-s:auto'>Card Title</h3>
 				<p class='u-trim -fz:s -lh:s -o:mild'>ロレム・イプサムの座り雨、トマ好き学習だったエリット、しかし時と活力はそのような木々と楽しみ。</p>
-				<a class='-d:f -c -bgc -td:none -lh:1 -p:20 -jc:center -bdrs:99 -hov:o' style='--c:var(--black);--bgc:var(--white)' href='#'>Link Text</a>
+				<a class='l--center -c -bgc -td:none -lh:1 -p:20 -bdrs:99 -hov:o' style='--c:var(--black);--bgc:var(--white)' href='#'>Link Text</a>
 			</div>
 		</div>
 		```
@@ -108,8 +108,8 @@ import Card from '~/components/ex/Card/index.jsx';
 			</Frame>
 			<Stack g='30' p='20'>
 				<h3 className='u-trim -fz:l'>Card Title</h3>
-				<Text className='u-trim' fz='s' lh='s' o='mild'>ロレム・イプサムの座り雨、トマ好き学習だったエリット、しかし時と活力はそのような木々と楽しみ。</Text>
-				<Link href='#' bdrs='inner' d='in-flex' mx-s='auto' c='base' bgc='text' td='none' bd-b lh='1' py='20' px='30' jc='center' hov='o'>Link Text</Link>
+				<HTML.p className='u-trim' fz='s' lh='s' o='mild'>ロレム・イプサムの座り雨、トマ好き学習だったエリット、しかし時と活力はそのような木々と楽しみ。</HTML.p>
+				<HTML.a href='#' bdrs='inner' d='in-flex' mx-s='auto' c='base' bgc='text' td='none' bd-b lh='1' py='20' px='30' jc='center' hov='o'>Link Text</HTML.a>
 			</Stack>
 		</Stack>
 	</PreviewArea>
@@ -121,8 +121,8 @@ import Card from '~/components/ex/Card/index.jsx';
 			</Frame>
 			<Stack g='30' p='10'>
 				<h3 className='u-trim -fz:l'>Card Title</h3>
-				<Text className='u-trim' fz='s' lh='s' o='mild'>ロレム・イプサムの座り雨、トマ好き学習だったエリット、しかし時と活力はそのような木々と楽しみ。</Text>
-				<Link href='#' bdrs='inner' d='in-flex' mx-s='auto' c='base' bgc='text' td='none' bd-b lh='1' py='20' px='30' jc='center' hov='o'>Link Text</Link>
+				<HTML.p className='u-trim' fz='s' lh='s' o='mild'>ロレム・イプサムの座り雨、トマ好き学習だったエリット、しかし時と活力はそのような木々と楽しみ。</HTML.p>
+				<HTML.a href='#' bdrs='inner' d='in-flex' mx-s='auto' c='base' bgc='text' td='none' bd-b lh='1' py='20' px='30' jc='center' hov='o'>Link Text</HTML.a>
 			</Stack>
 		</Stack>
 		```
@@ -180,8 +180,8 @@ import Card from '~/components/ex/Card/index.jsx';
 			</Frame>
 			<Stack g='30' p='30'>
 				<h3 className='u-trim -fz:l'>Card Title</h3>
-				<Text className='u-trim' fz='s' lh='s' o='mild'>ロレム・イプサムの座り雨、トマ好き学習だったエリット、しかし時と活力はそのような木々と楽しみ。</Text>
-				<Text d='in-flex' mx-s='auto' my-s='auto' c='inherit' td='none' bd-b lh='1' p='10'>View More →</Text>
+				<HTML.p className='u-trim' fz='s' lh='s' o='mild'>ロレム・イプサムの座り雨、トマ好き学習だったエリット、しかし時と活力はそのような木々と楽しみ。</HTML.p>
+				<HTML.p d='in-flex' mx-s='auto' my-s='auto' c='inherit' td='none' bd-b lh='1' p='10'>View More →</HTML.p>
 			</Stack>
 		</WithSide>
 	</PreviewArea>
@@ -193,8 +193,8 @@ import Card from '~/components/ex/Card/index.jsx';
 			</Frame>
 			<Stack g='30' p='30'>
 				<h3 className='u-trim -fz:l'>Card Title</h3>
-				<Text className='u-trim' fz='s' lh='s' o='mild'>ロレム・イプサムの座り雨、トマ好き学習だったエリット、しかし時と活力はそのような木々と楽しみ。</Text>
-				<Text d='in-flex' mx-s='auto' my-s='auto' c='inherit' td='none' bd-b lh='1' p='10'>View More →</Text>
+				<HTML.p className='u-trim' fz='s' lh='s' o='mild'>ロレム・イプサムの座り雨、トマ好き学習だったエリット、しかし時と活力はそのような木々と楽しみ。</HTML.p>
+				<HTML.p d='in-flex' mx-s='auto' my-s='auto' c='inherit' td='none' bd-b lh='1' p='10'>View More →</HTML.p>
 			</Stack>
 		</WithSide>
 		```
@@ -210,30 +210,30 @@ import Card from '~/components/ex/Card/index.jsx';
 		<WithSide isLinkBox href='#_' hov='bxsh' setTransition sideW='50%' bgc='base' bdrs='20' bxsh='10' ov='hidden'>
 			<Frame data-is-side ar='16/9' pos='rel'>
 				<Media src='/img/img-5.jpg' alt='' width='960' height='640' />
-				<Link href='#badge-link' pos='abs' z='1' t='0' r='0' fz='s' bgc='black' c='white' m='20' px='20' bdrs='99' td='none' hov='o'>Category</Link>
+				<HTML.a href='#badge-link' pos='abs' z='1' t='0' r='0' fz='s' bgc='black' c='white' m='20' px='20' bdrs='99' td='none' hov='o'>Category</HTML.a>
 			</Frame>
 			<Stack g='30' p='30'>
 				<h3 className='u-trim -fz:l'>
-					<Link className='u-linkExpand set-plain' href='#card-link'>Card Title ( u-linkExpand )</Link>
+					<HTML.a className='u-linkExpand set-plain' href='#card-link'>Card Title ( u-linkExpand )</HTML.a>
 				</h3>
-				<Text className='u-trim' fz='s' lh='s' o='mild'>ロレム・イプサムの座り雨、トマ好き学習だったエリット、しかし時と活力はそのような木々と楽しみ。</Text>
-				<Text d='in-flex' mx-s='auto' my-s='auto' c='inherit' td='none' bd-b lh='1' p='10'>View More →</Text>
+				<HTML.p className='u-trim' fz='s' lh='s' o='mild'>ロレム・イプサムの座り雨、トマ好き学習だったエリット、しかし時と活力はそのような木々と楽しみ。</HTML.p>
+				<HTML.span d='in-flex' mx-s='auto' my-s='auto' c='inherit' td='none' bd-b lh='1' p='10'>View More →</HTML.span>
 			</Stack>
 		</WithSide>
 	</PreviewArea>
 	<PreviewCode slot='tab' label='JSX'>
-		```jsx "isLinkBox" "\<Link " "u-linkExpand"
+		```jsx "isLinkBox" "\<HTML.a " "u-linkExpand"
 		<WithSide isLinkBox href='#_' hov='bxsh' setTransition sideW='50%' bgc='base' bdrs='20' bxsh='10' ov='hidden'>
 			<Frame data-is-side ar='16/9' pos='rel'>
 				<Media src='/img/img-5.jpg' alt='' width='960' height='640' />
-				<Link href='#badge-link' pos='abs' z='1' t='0' r='0' fz='s' bgc='black' c='white' m='20' px='20' bdrs='99' td='none' hov='o'>Category</Link>
+				<HTML.a href='#badge-link' pos='abs' z='1' t='0' r='0' fz='s' bgc='black' c='white' m='20' px='20' bdrs='99' td='none' hov='o'>Category</HTML.a>
 			</Frame>
 			<Stack g='30' p='30'>
 				<h3 className='u-trim -fz:l'>
-					<Link className='u-linkExpand' href='#card-link'>Card Title (overlayLink)</Link>
+					<HTML.a className='u-linkExpand' href='#card-link'>Card Title (overlayLink)</HTML.a>
 				</h3>
-				<Text className='u-trim' fz='s' lh='s' o='mild'>ロレム・イプサムの座り雨、トマ好き学習だったエリット、しかし時と活力はそのような木々と楽しみ。</Text>
-				<Text d='in-flex' mx-s='auto' my-s='auto' c='inherit' td='none' bd-b lh='1' p='10'>View More →</Text>
+				<HTML.p className='u-trim' fz='s' lh='s' o='mild'>ロレム・イプサムの座り雨、トマ好き学習だったエリット、しかし時と活力はそのような木々と楽しみ。</HTML.p>
+				<HTML.span d='in-flex' mx-s='auto' my-s='auto' c='inherit' td='none' bd-b lh='1' p='10'>View More →</HTML.span>
 			</Stack>
 		</WithSide>
 		```
@@ -258,8 +258,8 @@ import Card from '~/components/ex/Card/index.jsx';
 			</Frame>
 			<Stack fxg='1' g='30' p='30'>
 				<h3 className='u-trim -fz:l'>Card Title</h3>
-				<Text className='u-trim' fz='s' lh='s' o='mild'>ロレム・イプサムの座り雨、トマ好き学習だったエリット、しかし時と活力はそのような木々と楽しみ。ブラインド行うにはいくつかの重要な事柄が流れます。</Text>
-				<Text d='in-flex' mx-s='auto' my-s='auto' c='var(--isHov_, var(--c--link)) var(--notHov_, inherit)' td='none' bd-b lh='1' p='10'>View More →</Text>
+				<HTML.p className='u-trim' fz='s' lh='s' o='mild'>ロレム・イプサムの座り雨、トマ好き学習だったエリット、しかし時と活力はそのような木々と楽しみ。ブラインド行うにはいくつかの重要な事柄が流れます。</HTML.p>
+				<HTML.span d='in-flex' mx-s='auto' my-s='auto' c='var(--isHov_, var(--c--link)) var(--notHov_, inherit)' td='none' bd-b lh='1' p='10'>View More →</HTML.span>
 			</Stack>
 		</LinkBox>
 	</PreviewArea>
@@ -276,8 +276,8 @@ import Card from '~/components/ex/Card/index.jsx';
 			</Frame>
 			<Stack fxg='1' g='30' p='30'>
 				<h3 className='u-trim -fz:l'>Card Title</h3>
-				<Text className='u-trim' fz='s' lh='s' o='mild'>ロレム・イプサムの座り雨、トマ好き学習だったエリット、しかし時と活力はそのような木々と楽しみ。ブラインド行うにはいくつかの重要な事柄が流れます。</Text>
-				<Text d='in-flex' mx-s='auto' my-s='auto' c='var(--isHov_, var(--c--link)) var(--notHov_, inherit)' td='none' bd-b lh='1' p='10'>View More →</Text>
+				<HTML.p className='u-trim' fz='s' lh='s' o='mild'>ロレム・イプサムの座り雨、トマ好き学習だったエリット、しかし時と活力はそのような木々と楽しみ。ブラインド行うにはいくつかの重要な事柄が流れます。</HTML.p>
+				<HTML.span d='in-flex' mx-s='auto' my-s='auto' c='var(--isHov_, var(--c--link)) var(--notHov_, inherit)' td='none' bd-b lh='1' p='10'>View More →</HTML.span>
 			</Stack>
 		</LinkBox>
 		```
@@ -303,8 +303,8 @@ import Card from '~/components/ex/Card/index.jsx';
 			</Frame>
 			<Stack g='30' py='30' px={['20','30']} o='var(--isHov_, 0.75)'>
 				<h3 className='u-trim -fz:l'>Card Title</h3>
-				<Text className='u-trim' fz='s' lh='s' o='mild'>ロレム・イプサムの座り雨、トマ好き学習だったエリット、しかし時と活力はそのような木々と楽しみ。ブラインド行うにはいくつかの重要な事柄が流れます。</Text>
-				<Text d='in-flex' mx-s='auto' my-s='auto' c='inherit' td='none' bd-b lh='1' p='10'>View More →</Text>
+				<HTML.p className='u-trim' fz='s' lh='s' o='mild'>ロレム・イプサムの座り雨、トマ好き学習だったエリット、しかし時と活力はそのような木々と楽しみ。ブラインド行うにはいくつかの重要な事柄が流れます。</HTML.p>
+				<HTML.span d='in-flex' mx-s='auto' my-s='auto' c='inherit' td='none' bd-b lh='1' p='10'>View More →</HTML.span>
 			</Stack>
 		</LinkBox>
 	</PreviewArea>
@@ -321,8 +321,8 @@ import Card from '~/components/ex/Card/index.jsx';
 			</Frame>
 			<Stack g='30' py='30' px={['20','30']} o='var(--isHov_, 0.75)'>
 				<h3 className='u-trim -fz:l'>Card Title</h3>
-				<Text className='u-trim' fz='s' lh='s' o='mild'>ロレム・イプサムの座り雨、トマ好き学習だったエリット、しかし時と活力はそのような木々と楽しみ。ブラインド行うにはいくつかの重要な事柄が流れます。</Text>
-				<Text d='in-flex' mx-s='auto' my-s='auto' c='inherit' td='none' bd-b lh='1' p='10'>View More →</Text>
+				<HTML.p className='u-trim' fz='s' lh='s' o='mild'>ロレム・イプサムの座り雨、トマ好き学習だったエリット、しかし時と活力はそのような木々と楽しみ。ブラインド行うにはいくつかの重要な事柄が流れます。</HTML.p>
+				<HTML.span d='in-flex' mx-s='auto' my-s='auto' c='inherit' td='none' bd-b lh='1' p='10'>View More →</HTML.span>
 			</Stack>
 		</LinkBox>
 		```
@@ -353,7 +353,7 @@ import Card from '~/components/ex/Card/index.jsx';
 							<Dummy py='5' fz='s' lh='xs'/>
 						</Box>
 					</Grid>
-					<Text className='u-trim' fz='xs' o='mild'>2000.01.01 / Author</Text>
+					<HTML.div className='u-trim' fz='xs' o='mild'>2000.01.01 / Author</HTML.div>
 				</Box>
 			</Stack>
 		</LinkBox>
@@ -374,7 +374,7 @@ import Card from '~/components/ex/Card/index.jsx';
 						<Dummy py='5' fz='s' lh='xs'/>
 					</Box>
 				</Grid>
-				<Text className='u-trim' fz='xs' o='mild'>2000.01.01 / Author</Text>
+				<HTML.div className='u-trim' fz='xs' o='mild'>2000.01.01 / Author</HTML.div>
 			</Box>
 		</Stack>
 	</LinkBox>

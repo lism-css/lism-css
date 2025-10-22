@@ -2,14 +2,14 @@
 import DemoPageLayout from '~/layouts/DemoPageLayout.astro';
 import Button from '~/components/ex/Button/index.astro';
 
-import { Container, Frame, Grid, Media, Stack, Text } from 'lism-css/astro';
+import { Container, Frame, Grid, Media, Stack, HTML } from 'lism-css/astro';
 import './_style.css';
 ---
 
 <DemoPageLayout title='Testimonials002'>
 	<Container bgc='gray:5%' py='60'>
 		<Stack g='50'>
-			<Text class='u-trim' fz='2xl' fw='bold' ta='center'>お客様の声</Text>
+			<HTML.p class='u-trim' fz='2xl' fw='bold' ta='center'>お客様の声</HTML.p>
 			<Grid class='c--reel' tabIndex='0' gaf='column' gac={['70vw', '26rem']} ov='auto' g={['40', '50']} p={['40 40', '40 50']}>
 				<Grid gtr='subgrid' gr='span 2' g='40' bgc='white' p='50' bdw='2px' bdrs='20' bxsh='20'>
 					<Grid gtc='auto 1fr' ai='center' g='30'>
@@ -17,13 +17,13 @@ import './_style.css';
 							<Media src='/img/img-1.jpg' width='960' height='640' />
 						</Frame>
 						<Stack w='stretch' g='30'>
-							<Text class='u-trim' fz='m' fw='bold'>自由な時間が増えた</Text>
-							<Text class='u-trim' fz='s' o='soft'>30代 / 会社員</Text>
+							<HTML.p class='u-trim' fz='m' fw='bold'>自由な時間が増えた</HTML.p>
+							<HTML.p class='u-trim' fz='s' o='soft'>30代 / 会社員</HTML.p>
 						</Stack>
 					</Grid>
-					<Text class='u-trim' fz='m' o='mild'>
+					<HTML.p class='u-trim' fz='m' o='mild'>
 						仕事から帰ると部屋がきれいになっているのが嬉しいです。面倒な掃除から解放されて、平日の夜にゆとりができました。
-					</Text>
+					</HTML.p>
 				</Grid>
 				<Grid gtr='subgrid' gr='span 2' g='40' bgc='white' p='50' bdw='2px' bdrs='20' bxsh='20'>
 					<Grid gtc='auto 1fr' ai='center' g='30'>
@@ -31,13 +31,13 @@ import './_style.css';
 							<Media src='/img/img-2.jpg' width='960' height='640' />
 						</Frame>
 						<Stack w='stretch' g='30'>
-							<Text class='u-trim' fz='m' fw='bold'>まるでもう一人の自分</Text>
-							<Text class='u-trim' fz='s' o='soft'>40代 / 主婦</Text>
+							<HTML.p class='u-trim' fz='m' fw='bold'>まるでもう一人の自分</HTML.p>
+							<HTML.p class='u-trim' fz='s' o='soft'>40代 / 主婦</HTML.p>
 						</Stack>
 					</Grid>
-					<Text class='u-trim' fz='m' o='mild'>
+					<HTML.p class='u-trim' fz='m' o='mild'>
 						材料を入れてボタンを押すだけで本格的な煮込み料理が完成。 火を使わないので、子供から目を離さずに調理できて安心です。
-					</Text>
+					</HTML.p>
 				</Grid>
 				<Grid gtr='subgrid' gr='span 2' g='40' bgc='white' p='50' bdw='2px' bdrs='20' bxsh='20'>
 					<Grid gtc='auto 1fr' ai='center' g='30'>
@@ -45,13 +45,13 @@ import './_style.css';
 							<Media src='/img/img-3.jpg' width='960' height='640' />
 						</Frame>
 						<Stack w='stretch' g='30'>
-							<Text class='u-trim' fz='m' fw='bold'>気づいた時にすぐ！</Text>
-							<Text class='u-trim' fz='s' o='soft'>20代 / 大学生</Text>
+							<HTML.p class='u-trim' fz='m' fw='bold'>気づいた時にすぐ！</HTML.p>
+							<HTML.p class='u-trim' fz='s' o='soft'>20代 / 大学生</HTML.p>
 						</Stack>
 					</Grid>
-					<Text class='u-trim' fz='m' o='mild'>
+					<HTML.p class='u-trim' fz='m' o='mild'>
 						気づいた時にサッと掃除できる手軽さが最高です。 コードレスなので、車の中の掃除にも使えて本当に便利だと思います。
-					</Text>
+					</HTML.p>
 				</Grid>
 				<Grid gtr='subgrid' gr='span 2' g='40' bgc='white' p='50' bdw='2px' bdrs='20' bxsh='20'>
 					<Grid gtc='auto 1fr' ai='center' g='30'>
@@ -59,13 +59,13 @@ import './_style.css';
 							<Media src='/img/img-4.jpg' width='960' height='640' />
 						</Frame>
 						<Stack w='stretch' g='30'>
-							<Text class='u-trim' fz='m' fw='bold'>食後の時間にゆとりを</Text>
-							<Text class='u-trim' fz='s' o='soft'>30代 / パート</Text>
+							<HTML.p class='u-trim' fz='m' fw='bold'>食後の時間にゆとりを</HTML.p>
+							<HTML.p class='u-trim' fz='s' o='soft'>30代 / パート</HTML.p>
 						</Stack>
 					</Grid>
-					<Text class='u-trim' fz='m' o='mild'>
+					<HTML.p class='u-trim' fz='m' o='mild'>
 						毎日の食器洗いの手間がなくなり、食後に家族とゆっくり過ごせる時間が増えました。 手洗いよりきれいに洗える気がします。
-					</Text>
+					</HTML.p>
 				</Grid>
 				<Grid gtr='subgrid' gr='span 2' g='40' bgc='white' p='50' bdw='2px' bdrs='20' bxsh='20'>
 					<Grid gtc='auto 1fr' ai='center' g='30'>
@@ -73,13 +73,13 @@ import './_style.css';
 							<Media src='/img/img-5.jpg' width='960' height='640' />
 						</Frame>
 						<Stack w='stretch' g='30'>
-							<Text class='u-trim' fz='m' fw='bold'>ヘルシーなのに本格的</Text>
-							<Text class='u-trim' fz='s' o='soft'>40代 / 会社員</Text>
+							<HTML.p class='u-trim' fz='m' fw='bold'>ヘルシーなのに本格的</HTML.p>
+							<HTML.p class='u-trim' fz='s' o='soft'>40代 / 会社員</HTML.p>
 						</Stack>
 					</Grid>
-					<Text class='u-trim' fz='m' o='mild'>
+					<HTML.p class='u-trim' fz='m' o='mild'>
 						油を使わずに揚げ物ができるので、ヘルシーで後片付けも楽ちんです。 外はサクサク、中はジューシーで味も本格的です。
-					</Text>
+					</HTML.p>
 				</Grid>
 				<Grid gtr='subgrid' gr='span 2' g='40' bgc='white' p='50' bdw='2px' bdrs='20' bxsh='20'>
 					<Grid gtc='auto 1fr' ai='center' g='30'>
@@ -87,13 +87,13 @@ import './_style.css';
 							<Media src='/img/img-6.jpg' width='960' height='640' />
 						</Frame>
 						<Stack w='stretch' g='30'>
-							<Text class='u-trim' fz='m' fw='bold'>暮らしの良き相棒</Text>
-							<Text class='u-trim' fz='s' o='soft'>20代 / ITエンジニア</Text>
+							<HTML.p class='u-trim' fz='m' fw='bold'>暮らしの良き相棒</HTML.p>
+							<HTML.p class='u-trim' fz='s' o='soft'>20代 / ITエンジニア</HTML.p>
 						</Stack>
 					</Grid>
-					<Text class='u-trim' fz='m' o='mild'>
+					<HTML.p class='u-trim' fz='m' o='mild'>
 						声だけで音楽をかけたり天気を調べたりできるのが未来的。 朝の忙しい時間に、ニュースを聞きながら準備できるのがお気に入り。
-					</Text>
+					</HTML.p>
 				</Grid>
 			</Grid>
 		</Stack>

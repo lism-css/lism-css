@@ -3,7 +3,7 @@ title: 'Columns'
 description: ...
 ---
 import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage, PropBadge, EmbedCode } from "~/components";
-import { Lism, Box, Frame, Media, Text, Dummy, Columns, Grid, Divider } from 'lism-css/astro';
+import { Lism, Box, Frame, Media, HTML, Dummy, Columns, Grid, Divider } from 'lism-css/astro';
 
 指定した列数でカラムレイアウトを作成します。
 
@@ -177,35 +177,35 @@ import { Lism, Box, Frame, Media, Text, Dummy, Columns, Grid, Divider } from 'li
 		<Columns cols={[1, 2, 3]} g='20'>
 			<Grid className='u-trimItems' g='30' p='30' gtr='subgrid' gr='span 5' bgc='base-2' bdrs='10'>
 				<Media ar='og' bdrs='10' src='/img/img-1.jpg'/>
-				<Text aslf='center' tag='h2' fz='m'>Card Title</Text>
+				<HTML.h lv='2' aslf='center' fz='m'>Card Title</HTML.h>
 				<Dummy lh='xs' />
 				<Divider my='0' />
 				<Lism lh='xs' fz='s' o='mild' >Date: 2025-01-01</Lism>
 			</Grid>
 			<Grid className='u-trimItems' g='30' p='30' gtr='subgrid' gr='span 5' bgc='base-2' bdrs='10'>
 				<Media ar='og' bdrs='10' src='/img/img-2.jpg' />
-				<Text aslf='center' tag='h2' fz='m'>Card Title Lorem ipsum</Text>
+				<HTML.h lv='2' aslf='center' fz='m'>Card Title Lorem ipsum</HTML.h>
 				<Dummy lh='xs' length='s' />
 				<Divider my='0' />
 				<Lism lh='xs' fz='s' o='mild' >Date: 2025-01-01</Lism>
 			</Grid>
 			<Grid className='u-trimItems' g='30' p='30' gtr='subgrid' gr='span 5' bgc='base-2' bdrs='10'>
 				<Media ar='og' bdrs='10' src='/img/img-3.jpg' />
-				<Text aslf='center' tag='h2' fz='m'>Card Title, long, long, long, very long long looong.</Text>
+				<HTML.h lv='2' aslf='center' fz='m'>Card Title, long, long, long, very long long looong.</HTML.h>
 				<Dummy lh='xs' />
 				<Divider my='0' />
 				<Lism lh='xs' fz='s' o='mild' >Date: 2025-01-01</Lism>
 			</Grid>
 			<Grid className='u-trimItems' g='30' p='30' gtr='subgrid' gr='span 5' bgc='base-2' bdrs='10'>
 				<Media ar='og' bdrs='10' src='/img/img-4.jpg' />
-				<Text aslf='center' tag='h2' fz='m'>Card Title</Text>
+				<HTML.h lv='2' aslf='center' fz='m'>Card Title</HTML.h>
 				<Dummy lh='xs' length='s' />
 				<Divider my='0' />
 				<Lism lh='xs' fz='s' o='mild' >Date: 2025-01-01</Lism>
 			</Grid>
 			<Grid className='u-trimItems' g='30' p='30' gtr='subgrid' gr='span 5' bgc='base-2' bdrs='10'>
 				<Media ar='og' bdrs='10' src='/img/img-5.jpg' />
-				<Text aslf='center' tag='h2' fz='m'>Card Title</Text>
+				<HTML.h lv='2' aslf='center' fz='m'>Card Title</HTML.h>
 				<Dummy lh='xs' />
 				<Divider my='0' />
 				<Lism lh='xs' fz='s' o='mild' >Date: 2025-01-01</Lism>
@@ -217,35 +217,35 @@ import { Lism, Box, Frame, Media, Text, Dummy, Columns, Grid, Divider } from 'li
 		<Columns cols={[1, 2, 3]} g='20'>
 			<Grid className='u-trimItems' g='30' p='30' gtr='subgrid' gr='span 5' bgc='base-2' bdrs='10'>
 				<Media ar='og' bdrs='10' src='/img/img-1.jpg'/>
-				<Text aslf='center' tag='h2' fz='m'>Card Title</Text>
+				<HTML.h lv='2' aslf='center' fz='m'>Card Title</HTML.h>
 				<Dummy lh='xs' />
 				<Divider my='0' />
 				<Lism lh='xs' fz='s' o='mild' >Date: 2025-01-01</Lism>
 			</Grid>
 			<Grid className='u-trimItems' g='30' p='30' gtr='subgrid' gr='span 5' bgc='base-2' bdrs='10'>
 				<Media ar='og' bdrs='10' src='/img/img-2.jpg' />
-				<Text aslf='center' tag='h2' fz='m'>Card Title Lorem ipsum</Text>
+				<HTML.h lv='2' aslf='center' fz='m'>Card Title Lorem ipsum</HTML.h>
 				<Dummy lh='xs' length='s' />
 				<Divider my='0' />
 				<Lism lh='xs' fz='s' o='mild' >Date: 2025-01-01</Lism>
 			</Grid>
 			<Grid className='u-trimItems' g='30' p='30' gtr='subgrid' gr='span 5' bgc='base-2' bdrs='10'>
 				<Media ar='og' bdrs='10' src='/img/img-3.jpg' />
-				<Text aslf='center' tag='h2' fz='m'>Card Title, long, long, long, very long long looong.</Text>
+				<HTML.h lv='2' aslf='center' fz='m'>Card Title, long, long, long, very long long looong.</HTML.h>
 				<Dummy lh='xs' />
 				<Divider my='0' />
 				<Lism lh='xs' fz='s' o='mild' >Date: 2025-01-01</Lism>
 			</Grid>
 			<Grid className='u-trimItems' g='30' p='30' gtr='subgrid' gr='span 5' bgc='base-2' bdrs='10'>
 				<Media ar='og' bdrs='10' src='/img/img-4.jpg' />
-				<Text aslf='center' tag='h2' fz='m'>Card Title</Text>
+				<HTML.h lv='2' aslf='center' fz='m'>Card Title</HTML.h>
 				<Dummy lh='xs' length='s' />
 				<Divider my='0' />
 				<Lism lh='xs' fz='s' o='mild' >Date: 2025-01-01</Lism>
 			</Grid>
 			<Grid className='u-trimItems' g='30' p='30' gtr='subgrid' gr='span 5' bgc='base-2' bdrs='10'>
 				<Media ar='og' bdrs='10' src='/img/img-5.jpg' />
-				<Text aslf='center' tag='h2' fz='m'>Card Title</Text>
+				<HTML.h lv='2' aslf='center' fz='m'>Card Title</HTML.h>
 				<Dummy lh='xs' />
 				<Divider my='0' />
 				<Lism lh='xs' fz='s' o='mild' >Date: 2025-01-01</Lism>

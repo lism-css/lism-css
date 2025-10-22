@@ -3,7 +3,7 @@ title: 'こんな時は？'
 description: ...
 ---
 
-import { Box, Flex, Stack, Grid, Center, Layer, Frame, Container, Media, Text, Dummy, Lism, Spacer } from 'lism-css/astro';
+import { Box, Flex, Stack, Grid, Center, Layer, Frame, Container, Media, HTML, Dummy, Lism, Spacer } from 'lism-css/astro';
 import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage, Callout } from "~/components";
 
 
@@ -48,7 +48,7 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage, Callout
 	</PreviewTitle>
 	<PreviewArea resize p='20'>
 		<Flex g='20' className='has--itemGuide'>
-			<Text className='-ovw:any'>LooooooooooooongStriiiinnnnnnnnnnngs!!!!</Text>
+			<HTML.p className='-ovw:any'>LooooooooooooongStriiiinnnnnnnnnnngs!!!!</HTML.p>
 			<p>AAA</p>
 			<p>BBB</p>
 			<p>CCC</p>
@@ -57,10 +57,10 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage, Callout
 	<PreviewCode slot='tab' label='JSX'>
 	```jsx
 		<Flex g='20'>
-			<Text className='-ovw:any'>LooooooooooooongStriiiinnnnnnnnnnngs!!!!</Text>
-			<Text>AAA</Text>
-			<Text>BBB</Text>
-			<Text>CCC</Text>
+			<HTML.p className='-ovw:any'>LooooooooooooongStriiiinnnnnnnnnnngs!!!!</HTML.p>
+			<HTML.p>AAA</HTML.p>
+			<HTML.p>BBB</HTML.p>
+			<HTML.p>CCC</HTML.p>
 		</Flex>
 	```
 	</PreviewCode>
@@ -95,7 +95,7 @@ Heroコンテンツの高さを `min-height` や `aspect-ratio` で指定する�
 	<PreviewArea resize>
 		<Stack max-sz='full' min-h='400px' bgc='base-2'>
 			<Box min-h='50%' my='auto' bgc='base' p='20' px='40' ac='center'>
-				<Text fw='bold'>min-h:50%が効かない</Text>
+				<HTML.p fw='bold'>min-h:50%が効かない</HTML.p>
 				<Dummy length='s' />
 			</Box>
 		</Stack>
@@ -104,7 +104,7 @@ Heroコンテンツの高さを `min-height` や `aspect-ratio` で指定する�
 		```jsx "min-h='400px'" "min-h='50%'"
 		<Stack max-sz='full' min-h='400px' bgc='base-2'>
 			<Box min-h='50%' my='auto' bgc='base' p='20' px='40' ac='center'>
-				<Text fw='bold'>min-h:50%が効かない</Text>
+				<HTML.p fw='bold'>min-h:50%が効かない</HTML.p>
 				<Dummy length='s' />
 			</Box>
 		</Stack>
@@ -121,7 +121,7 @@ Heroコンテンツの高さを `min-height` や `aspect-ratio` で指定する�
 		<Stack max-sz='full' min-h='400px' bgc='base-2'>
 			<Grid fxg='1' ai='center' px='40'>
 				<Center min-h='50%' bgc='base' p='30' bxsh='10'>
-					<Text fw='bold'>OK</Text>
+					<HTML.p fw='bold'>OK</HTML.p>
 					<Dummy length='s' />
 				</Center>
 			</Grid>
@@ -132,7 +132,7 @@ Heroコンテンツの高さを `min-height` や `aspect-ratio` で指定する�
 		<Stack max-sz='full' min-h='400px' bgc='base-2'>
 			<Grid fxg='1' ai='center' px='40'>
 				<Center min-h='50%' bgc='base' p='30' bxsh='10'>
-					<Text fw='bold'>OK</Text>
+					<HTML.p fw='bold'>OK</HTML.p>
 					<Dummy length='s' />
 				</Center>
 			</Grid>
@@ -161,7 +161,7 @@ Heroコンテンツの高さを `min-height` や `aspect-ratio` で指定する�
 			</Frame>
 			<Grid pos='rel' fxg='1' ai='center' hasGutter>
 				<Center min-h='50%' p='30' c='white' bgc='black:75%' bdrs='10' g='20'>
-					<Text fw='bold' fz='xl'>min-height 50%</Text>
+					<HTML.p fw='bold' fz='xl'>min-height 50%</HTML.p>
 					<Dummy length='l' />
 				</Center>
 			</Grid>
@@ -175,7 +175,7 @@ Heroコンテンツの高さを `min-height` や `aspect-ratio` で指定する�
 			</Frame>
 			<Grid fxg='1' ai='center' hasGutter>
 				<Center min-h='50%' p='30' c='white' bgc='black:75%' bdrs='10' g='20'>
-					<Text fw='bold' fz='xl'>min-height 50%</Text>
+					<HTML.p fw='bold' fz='xl'>min-height 50%</HTML.p>
 					<Dummy length='l' />
 				</Center>
 			</Grid>
@@ -268,7 +268,7 @@ Lismの`<Center>` は `grid` を使ってるので、この問題が発生しま
 	</PreviewTitle>
 	<PreviewArea resize p={10}>
 		<Center px='30' py='50' g='20' h='45vh' ov-y='auto' bd>
-			<Text fz='l' fw='bold'>DEMO</Text>
+			<HTML.p fz='l' fw='bold'>DEMO</HTML.p>
 			<Dummy length='l' />
 			<Dummy length='xl' />
 		</Center>
@@ -276,7 +276,7 @@ Lismの`<Center>` は `grid` を使ってるので、この問題が発生しま
 	<PreviewCode slot='tab' label='JSX'>
 		```jsx "\<Center" "h='45vh' ov-y='auto'"
 		<Center px='30' py='50' g='20' h='45vh' ov-y='auto' bd>
-			<Text fz='l' fw='bold'>DEMO</Text>
+			<HTML.p fz='l' fw='bold'>DEMO</HTML.p>
 			<Dummy length='l' />
 			<Dummy length='xl' />
 		</Center>
@@ -302,7 +302,7 @@ Lismの`<Center>` は `grid` を使ってるので、この問題が発生しま
 	<PreviewArea resize p={10}>
 		<Box px='30' py='50' h='45vh' ov-y='auto' bd>
 			<Center g='20' min-h='100%'>
-				<Text fz='l' fw='bold'>DEMO</Text>
+				<HTML.p fz='l' fw='bold'>DEMO</HTML.p>
 				<Dummy length='l' />
 				<Dummy length='xl' />
 			</Center>
@@ -312,7 +312,7 @@ Lismの`<Center>` は `grid` を使ってるので、この問題が発生しま
 		```jsx "Center" "h='45vh'" "ov-y='auto'" "min-h='100%'"
 		<Box px='30' py='50' h='45vh' ov-y='auto' bd>
 			<Center min-h='100%' g='20'>
-				<Text fz='l' fw='bold'>DEMO</Text>
+				<HTML.p fz='l' fw='bold'>DEMO</HTML.p>
 				<Dummy length='l' />
 				<Dummy length='xl' />
 			</Center>
@@ -328,7 +328,7 @@ Lismの`<Center>` は `grid` を使ってるので、この問題が発生しま
 	<PreviewArea resize p={10}>
 		<Frame ar='16/9' ov-y='auto' bd p='30' g='20'>
 			<Center min-h='100%' g='20'>
-				<Text fz='l'>TEXT</Text>
+				<HTML.p fz='l'>TEXT</HTML.p>
 				<Dummy length='xs' lang='ja'/>
 				<Dummy length='xl' lang='ja'/>
 			</Center>
@@ -338,7 +338,7 @@ Lismの`<Center>` は `grid` を使ってるので、この問題が発生しま
 		```jsx "Center" "ar='16/9'" "ov-y='auto'" "min-h='100%'"
 		<Frame ar='16/9' ov-y='auto' bd p='30' g='20'>
 			<Center min-h='100%' g='20'>
-				<Text fz='l'>TEXT</Text>
+				<HTML.p fz='l'>TEXT</HTML.p>
 				<Dummy length='xs' lang='ja'/>
 				<Dummy length='xl' lang='ja'/>
 			</Center>
@@ -351,7 +351,7 @@ Lismの`<Center>` は `grid` を使ってるので、この問題が発生しま
 	<PreviewTitle>NG</PreviewTitle>
 	<PreviewArea resize p={10}>
 		<Center ar='16/9' ov-y='auto' bd p='30' g='20'>
-			<Text fz='l'>TEXT</Text>
+			<HTML.p fz='l'>TEXT</HTML.p>
 			<Dummy length='xs' lang='ja'/>
 			<Dummy length='xl' lang='ja'/>
 		</Center>
@@ -359,7 +359,7 @@ Lismの`<Center>` は `grid` を使ってるので、この問題が発生しま
 	<PreviewCode slot='tab' label='JSX'>
 		```jsx "Center" "ar='16/9'" "ov-y='auto'" "min-h='100%'"
 		<Center ar='16/9' ov-y='auto' bd p='30' g='20'>
-			<Text fz='l'>TEXT</Text>
+			<HTML.p fz='l'>TEXT</HTML.p>
 			<Dummy length='xs' lang='ja'/>
 			<Dummy length='xl' lang='ja'/>
 		</Center>

@@ -3,6 +3,7 @@
 
 export * from './Lism';
 export * from './Dummy';
+export { default as HTML } from './HTML';
 
 //is--
 
@@ -10,7 +11,6 @@ export * from './Dummy';
 export * from './Container';
 export * from './Layer';
 export * from './LinkBox';
-
 export * from './Box';
 export * from './Flow';
 export * from './Flex';

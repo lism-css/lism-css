@@ -2,27 +2,27 @@
 import DemoPageLayout from '~/layouts/DemoPageLayout.astro';
 import Button from '~/components/ex/Button/index.astro';
 
-import { Container, Frame, Grid, GridItem, Media, Stack, Text, Layer, Center } from 'lism-css/astro';
+import { Container, HTML, Frame, Grid, Media, Stack, Layer, Center } from 'lism-css/astro';
 import './_style.css';
 ---
 
 <DemoPageLayout title='Feature015'>
 	<Container size='m' bgc='base' py='60' hasGutter>
 		<Grid gtr={['auto 1fr auto', null, 'auto 1fr']} gtc={['1fr', null, '1fr auto']} g='50'>
-			<Text class='u-trim' fz='2xl' fw='bold'>この季節だからこそ</Text>
+			<h2 class='u-trim'>この季節だからこそ</h2>
 			<Grid gc='1 / -1' gtc={['1fr', null, 'repeat(2, 1fr)']} g='50'>
 				<Stack isLinkBox href='#' g='40' setHov>
 					<Frame ar='16/9' bdrs='10' pos='rel'>
 						<Media src='/img/img-1.jpg' width='960' height='640' />
 						<Layer setTransition hov='to:show' bgc='rgb(0 0 0 / 30%)' blur='4px'>
 							<Center h='100%' c='white'>
-								<Text tag='span' fz='xl' fs='italic' fw='light' lts='l' px='30' py='10'>View More</Text>
+								<HTML.span fz='xl' fs='italic' fw='light' lts='l' px='30' py='10'>View More</HTML.span>
 							</Center>
 						</Layer>
 					</Frame>
 					<Stack g='30'>
-						<Text class='u-trim' fz='m' fw='bold'>夏のおすすめ</Text>
-						<Text class='u-trim' fz='s' o='soft'>Summer recommended products</Text>
+						<HTML.p class='u-trim' fz='m' fw='bold'>夏のおすすめ</HTML.p>
+						<HTML.p class='u-trim' fz='s' o='soft'>Summer recommended products</HTML.p>
 					</Stack>
 				</Stack>
 				<Stack isLinkBox href='#' g='40' setHov>
@@ -30,13 +30,13 @@ import './_style.css';
 						<Media src='/img/img-2.jpg' width='960' height='640' />
 						<Layer setTransition hov='to:show' bgc='rgb(0 0 0 / 30%)' blur='4px'>
 							<Center h='100%' c='white'>
-								<Text tag='span' fz='xl' fs='italic' fw='light' lts='l' px='30' py='10'>View More</Text>
+								<HTML.span fz='xl' fs='italic' fw='light' lts='l' px='30' py='10'>View More</HTML.span>
 							</Center>
 						</Layer>
 					</Frame>
 					<Stack g='30'>
-						<Text class='u-trim' fz='m' fw='bold'>登山に使いやすい</Text>
-						<Text class='u-trim' fz='s' o='soft'>Mountain special goods</Text>
+						<HTML.p class='u-trim' fz='m' fw='bold'>登山に使いやすい</HTML.p>
+						<HTML.p class='u-trim' fz='s' o='soft'>Mountain special goods</HTML.p>
 					</Stack>
 				</Stack>
 				<Stack isLinkBox href='#' g='40' setHov>
@@ -44,13 +44,13 @@ import './_style.css';
 						<Media src='/img/img-4.jpg' width='960' height='640' />
 						<Layer setTransition hov='to:show' bgc='rgb(0 0 0 / 30%)' blur='4px'>
 							<Center h='100%' c='white'>
-								<Text tag='span' fz='xl' fs='italic' fw='light' lts='l' px='30' py='10'>View More</Text>
+								<HTML.span fz='xl' fs='italic' fw='light' lts='l' px='30' py='10'>View More</HTML.span>
 							</Center>
 						</Layer>
 					</Frame>
 					<Stack g='30'>
-						<Text class='u-trim' fz='m' fw='bold'>秋の気配を感じて</Text>
-						<Text class='u-trim' fz='s' o='soft'>Feeling the signs of autumn</Text>
+						<HTML.p class='u-trim' fz='m' fw='bold'>秋の気配を感じて</HTML.p>
+						<HTML.p class='u-trim' fz='s' o='soft'>Feeling the signs of autumn</HTML.p>
 					</Stack>
 				</Stack>
 				<Stack isLinkBox href='#' g='40' setHov>
@@ -58,21 +58,19 @@ import './_style.css';
 						<Media src='/img/img-5.jpg' width='960' height='640' />
 						<Layer setTransition hov='to:show' bgc='rgb(0 0 0 / 30%)' blur='4px'>
 							<Center h='100%' c='white'>
-								<Text tag='span' fz='xl' fs='italic' fw='light' lts='l' px='30' py='10'>View More</Text>
+								<HTML.span fz='xl' fs='italic' fw='light' lts='l' px='30' py='10'>View More</HTML.span>
 							</Center>
 						</Layer>
 					</Frame>
 					<Stack g='30'>
-						<Text class='u-trim' fz='m' fw='bold'>旅をしたくなる季節</Text>
-						<Text class='u-trim' fz='s' o='soft'>A season that makes you want to travel</Text>
+						<HTML.p class='u-trim' fz='m' fw='bold'>旅をしたくなる季節</HTML.p>
+						<HTML.p class='u-trim' fz='s' o='soft'>A season that makes you want to travel</HTML.p>
 					</Stack>
 				</Stack>
 			</Grid>
-			<GridItem gr={['3', null, '1']} gc={['1 / -1', null, '2']}>
-				<Button layout='grid' href='#' variant='outline' min-w='8rem' bdrs='10'>
-					<span>View All</span>
-				</Button>
-			</GridItem>
+			<Button href='#' variant='outline' layout='grid' gr={['3', null, '1']} gc={['1 / -1', null, '2']} min-w='8rem' bdrs='10'>
+				<span>View All</span>
+			</Button>
 		</Grid>
 	</Container>
 </DemoPageLayout>

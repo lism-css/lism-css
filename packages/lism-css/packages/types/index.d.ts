@@ -295,6 +295,7 @@ export interface ModalProps extends LismProps {
 
 // Export components
 export const Lism: React.FC<LismProps>;
+export const HTML: React.FC<LismProps>;
 export const Box: React.FC<LismProps>;
 export const Flow: React.FC<LismProps>;
 export const Flex: React.FC<FlexProps>;
@@ -333,6 +334,7 @@ export const Modal: React.FC<ModalProps>;
 // Re-export all as default
 export default {
 	Lism,
+	HTML,
 	Box,
 	Flex,
 	FlexItem,

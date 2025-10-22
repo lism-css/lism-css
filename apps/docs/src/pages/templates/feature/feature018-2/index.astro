@@ -1,7 +1,7 @@
 ---
 import DemoPageLayout from '~/layouts/DemoPageLayout.astro';
 
-import { Stack, Container, Frame, Grid, Media, Text, Flex, Icon } from 'lism-css/astro';
+import { Stack, Container, Frame, Grid, Media, HTML, Flex, Icon } from 'lism-css/astro';
 import './_style.css';
 ---
 
@@ -11,14 +11,14 @@ import './_style.css';
 			<Grid gtc={['auto', null, '1fr 1fr']}>
 				<Stack g='60' jc='center' p={['50', null, '60']}>
 					<Stack tag='hgroup' g='40' ai='flex-s' jc='center'>
-						<Text class='u-trim' fz='4rem' fw='100' lts='l'>Feature</Text>
-						<Text class='u-trim' fz='xl' fw='bold' lts='l'>目指す社会は、その先に</Text>
+						<HTML.p class='u-trim' fz='4rem' fw='100' lts='l'>Feature</HTML.p>
+						<HTML.p class='u-trim' fz='xl' fw='bold' lts='l'>目指す社会は、その先に</HTML.p>
 					</Stack>
-					<Text fz='m' lh='l'>
+					<HTML.p fz='m' lh='l'>
 						私たちのサービスは、持続可能な未来を目指し、環境への配慮と社会的責任を重視しています。<br />
 						地域社会との連携を深め、多様な価値観を尊重することで、共に成長できるコミュニティを築いています。 革新的な技術とデザインを活用し、ユーザー体験の向上に努めるとともに、
 						透明性の高い情報発信を行い、信頼関係の構築に努めています。 これからも、持続可能な発展と社会貢献を両立させるための取り組みを続けてまいります。
-					</Text>
+					</HTML.p>
 					<Flex jc='flex-e'>
 						<Flex isLinkBox href='#' ai='center' g='10' setTransition hov='o'>
 							<span>詳しく見る</span>

@@ -1,7 +1,7 @@
 ---
 import DemoPageLayout from '~/layouts/DemoPageLayout.astro';
 
-import { Container, Grid, Text, Frame, Flex, Media, Stack } from 'lism-css/astro';
+import { Container, Grid, HTML, Frame, Flex, Media, Stack } from 'lism-css/astro';
 import Button from '~/components/ex/Button/index.astro';
 import './_style.css';
 ---
@@ -10,7 +10,7 @@ import './_style.css';
 	<Container size='l' bgc='gray' py='60' hasGutter>
 		<Grid gtc={['auto', null, 'repeat(3, 1fr)']} g='50' c='white'>
 			<Stack g='40'>
-				<Text class='u-trim' fz='5xl' fw='100' lts='l'>Feature</Text>
+				<HTML.p class='u-trim' fz='5xl' fw='100' lts='l'>Feature</HTML.p>
 				<p>
 					私たちのサービスは、ユーザーの皆様に最高の体験を提供することを目指しています。
 					最新の技術を駆使し、使いやすさと安全性を両立させたプラットフォームを構築しました。

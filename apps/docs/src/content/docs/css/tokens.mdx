@@ -6,14 +6,14 @@ sidebar:
 ---
 
 import { Preview, PreviewArea, PreviewTitle, PreviewCode, Reference, Callout, Note } from "~/components";
-import { Lism, Dummy, Box, Text, Stack, Flex, Columns, Frame, Center, Tabs } from 'lism-css/astro';
+import { Dummy, Box, HTML, Stack, Cluster, Columns, Frame, Center, Tabs } from 'lism-css/astro';
 import { FzDemos, SpacingDemos, BoxShadowDemos } from "~/content/token-previews.jsx";
 
 export const ColorBadge = ({color, label}) => {
-	return <span className='-d:f -ai:center -g:10'>
-			<Lism tag='span' w='1.5em' ar='1/1' bgc={color} bdrs='10' bxsh='10' />
+	return <Cluster g='10'>
+			<HTML.span w='1.5em' ar='1/1' bgc={color} bdrs='10' bxsh='10' />
 			<code>{label || color}</code>
-		</span>;
+		</Cluster>;
 }
 
 
@@ -293,9 +293,9 @@ box-shadow は少し特殊で、ユーティリティクラス内で複数のsha
 <Preview>
 	<PreviewTitle>Preview</PreviewTitle>
 	<PreviewArea p={20} flowGap='s'>
-		<Text ff='base' fz='xl'>base: English text, 漢字ひらがな</Text>
-		<Text ff='accent' fz='xl'>accent: English text, 漢字ひらがな</Text>
-		<Text ff='mono' fz='xl'>mono: English text, 漢字ひらがな</Text>
+		<HTML.p ff='base' fz='xl'>base: English text, 漢字ひらがな</HTML.p>
+		<HTML.p ff='accent' fz='xl'>accent: English text, 漢字ひらがな</HTML.p>
+		<HTML.p ff='mono' fz='xl'>mono: English text, 漢字ひらがな</HTML.p>
 	</PreviewArea>
 	<PreviewCode>
 	```jsx
@@ -339,9 +339,9 @@ box-shadow は少し特殊で、ユーティリティクラス内で複数のsha
 	</PreviewCode>
 	<PreviewCode slot='tab' label='JSX'>
 		```jsx
-		<Text fw='light'>Lorem ipsum ...</Text>
-		<Text fw='normal'>Lorem ipsum ...</Text>
-		<Text fw='bold'>Lorem ipsum ...</Text>
+		<HTML.p fw='light'>Lorem ipsum ...</HTML.p>
+		<HTML.p fw='normal'>Lorem ipsum ...</HTML.p>
+		<HTML.p fw='bold'>Lorem ipsum ...</HTML.p>
 		```
 	</PreviewCode>
 </Preview>
@@ -374,10 +374,8 @@ box-shadow は少し特殊で、ユーティリティクラス内で複数のsha
 
 <Preview>
 	<PreviewTitle>Preview</PreviewTitle>
-	<PreviewArea p={20} flowGap='s'>
-		<Box ov-x='auto'>
-			<FzDemos />
-		</Box>
+	<PreviewArea p='0' flowGap='s'>
+		<FzDemos />
 	</PreviewArea>
 	<PreviewCode>
 		```html
@@ -440,7 +438,7 @@ Lism では、フォントサイズのスケーリングには数学的に美し
 	<Tabs.Tab>分子7</Tabs.Tab>
 	<Tabs.Panel>
 		<PreviewTitle>`:root{--_fzmol:7}`</PreviewTitle>
-		<PreviewArea p='20' className='fzDemo set--fz' style={{'--_fzmol':7}}>
+		<PreviewArea p='0' className='fzDemo set--fz' style={{'--_fzmol':7}}>
 			<FzDemos />
 		</PreviewArea>
 		</Tabs.Panel>
@@ -449,7 +447,7 @@ Lism では、フォントサイズのスケーリングには数学的に美し
 	<Tabs.Tab>分子8</Tabs.Tab>
 	<Tabs.Panel>
 		<PreviewTitle>`:root{--_fzmol:8}`</PreviewTitle>
-		<PreviewArea p='20' className='fzDemo set--fz' style={{'--_fzmol':8}}>
+		<PreviewArea p='0' className='fzDemo set--fz' style={{'--_fzmol':8}}>
 			<FzDemos />
 		</PreviewArea>
 		</Tabs.Panel>
@@ -458,7 +456,7 @@ Lism では、フォントサイズのスケーリングには数学的に美し
 	<Tabs.Tab>分子9</Tabs.Tab>
 	<Tabs.Panel>
 		<PreviewTitle>`:root{--_fzmol:9}`</PreviewTitle>
-		<PreviewArea p='20' className='fzDemo set--fz' style={{'--_fzmol':9}}>
+		<PreviewArea p='0' className='fzDemo set--fz' style={{'--_fzmol':9}}>
 			<FzDemos />
 		</PreviewArea>
 		</Tabs.Panel>
@@ -505,11 +503,11 @@ base値は 日本語では `1.625`, `1.75`, `1.875` あたりがおすすめで�
 	</PreviewCode>
 	<PreviewCode slot='tab' label='JSX'>
 		```jsx
-		<Text lh='xs'>Lorem ipsum ...</Text>
-		<Text lh='s'>Lorem ipsum ...</Text>
-		<Text lh='base'>Lorem ipsum ...</Text>
-		<Text lh='l'>Lorem ipsum ...</Text>
-		<Text lh='xl'>Lorem ipsum ...</Text>
+		<HTML.p lh='xs'>Lorem ipsum ...</HTML.p>
+		<HTML.p lh='s'>Lorem ipsum ...</HTML.p>
+		<HTML.p lh='base'>Lorem ipsum ...</HTML.p>
+		<HTML.p lh='l'>Lorem ipsum ...</HTML.p>
+		<HTML.p lh='xl'>Lorem ipsum ...</HTML.p>
 		```
 	</PreviewCode>
 </Preview>
@@ -561,9 +559,9 @@ base値は 日本語では `1.625`, `1.75`, `1.875` あたりがおすすめで�
 	</PreviewCode>
 	<PreviewCode slot='tab' label='JSX'>
 		```jsx
-		<Text lts='s'>Lorem ipsum ...</Text>
-		<Text lts='base'>Lorem ipsum ...</Text>
-		<Text lts='l'>Lorem ipsum ...</Text>
+		<HTML.p lts='s'>Lorem ipsum ...</HTML.p>
+		<HTML.p lts='base'>Lorem ipsum ...</HTML.p>
+		<HTML.p lts='l'>Lorem ipsum ...</HTML.p>
 		```
 	</PreviewCode>
 </Preview>
@@ -625,10 +623,10 @@ opacityは数値として見た場合と"どれだけ薄めるか"で見た場�
 	</PreviewCode>
 	<PreviewCode slot='tab' label='JSX'>
 		```jsx
-		<Text o='ghost'>Lorem ipsum ...</Text>
-		<Text o='pale'>Lorem ipsum ...</Text>
-		<Text o='soft'>Lorem ipsum ...</Text>
-		<Text o='mild'>Lorem ipsum ...</Text>
+		<HTML.p o='ghost'>Lorem ipsum ...</HTML.p>
+		<HTML.p o='pale'>Lorem ipsum ...</HTML.p>
+		<HTML.p o='soft'>Lorem ipsum ...</HTML.p>
+		<HTML.p o='mild'>Lorem ipsum ...</HTML.p>
 		```
 	</PreviewCode>
 </Preview>

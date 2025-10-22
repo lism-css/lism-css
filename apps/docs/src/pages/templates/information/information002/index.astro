@@ -1,18 +1,18 @@
 ---
 import DemoPageLayout from '~/layouts/DemoPageLayout.astro';
 
-import { Container, Frame, Grid, Media, Stack, Text } from 'lism-css/astro';
+import { Container, Frame, Grid, Media, Stack, HTML } from 'lism-css/astro';
 import './_style.css';
 ---
 
 <DemoPageLayout title='Information002'>
 	<Container size='m' bgc='base' py='60' hasGutter>
 		<Stack g='30' ai='center' mb='50'>
-			<Text class='u-trim' fz='2xl' fw='bold'>会社情報</Text>
-			<Text class='u-trim' fz='s' ta='center' o='pale'>Company Information</Text>
+			<h2 class='u-trim'>会社情報</h2>
+			<HTML.p class='u-trim' fz='s' ta='center' o='pale'>Company Information</HTML.p>
 		</Stack>
 		<Stack g='40'>
-			<Text fz='l' fw='bold'>概要</Text>
+			<HTML.p fz='l' fw='bold'>概要</HTML.p>
 			<Grid gtc={['auto', null, '1fr 1fr']} g='50 60'>
 				<Grid tag='dl' gtr='auto' gtc='auto 1fr' g='0 50' bd-t bdc='divider'>
 					<Grid gtc='subgrid' gc='1/-1' bd-b bdc='divider' p='30'>
@@ -58,7 +58,7 @@ import './_style.css';
 			</Grid>
 		</Stack>
 		<Stack g='40' my-s='60'>
-			<Text fz='l' fw='bold'>沿革</Text>
+			<HTML.p fz='l' fw='bold'>沿革</HTML.p>
 			<Grid gtc={['auto', null, '1fr 1fr']} g='50 60'>
 				<Grid tag='dl' gtr='auto' gtc='auto 1fr' g='0 50' bd-t bdc='divider'>
 					<Grid gtc='subgrid' gc='1/-1' bd-b bdc='divider' p='30'>

@@ -3,7 +3,7 @@ title: 'Flow'
 description: ...
 ---
 
-import { Flow, Box, Dummy, Lism, Text } from 'lism-css/astro';
+import { Flow, Box, Dummy, Lism, HTML } from 'lism-css/astro';
 import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage, PreviewFrame, Reference, Callout, Note } from '~/components';
 
 
@@ -126,11 +126,11 @@ Lismでは、**コンテンツ間の余白を管理するためのクラス**と
 	<PreviewTitle>任意の値をセットする</PreviewTitle>
 	<PreviewArea p='30'>
 		<Flow flowGap='10px' hov='itemGuide'>
-			<Text>Contents...</Text>
+			<HTML.p>Contents...</HTML.p>
 			<h2>Heading</h2>
 			<Dummy lang='ja' length='s' />
-			<Text>Contents...</Text>
-			<Text>Contents...</Text>
+			<HTML.p>Contents...</HTML.p>
+			<HTML.p>Contents...</HTML.p>
 		</Flow>
 	</PreviewArea>
 	<PreviewCode slot='tab' label='JSX'>

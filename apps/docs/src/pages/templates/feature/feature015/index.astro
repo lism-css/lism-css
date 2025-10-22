@@ -1,7 +1,7 @@
 ---
 import DemoPageLayout from '~/layouts/DemoPageLayout.astro';
 
-import { Container, Frame, Grid, Media, Stack, Text } from 'lism-css/astro';
+import { Container, Frame, Grid, Media, Stack, HTML } from 'lism-css/astro';
 import './_style.css';
 ---
 
@@ -9,8 +9,8 @@ import './_style.css';
 	<Container bgc='base' py='60'>
 		<Stack g={['50', null, '60']}>
 			<Stack ai='center' g='30' px='40'>
-				<Text fz='clamp(1.5rem, 4.5vw, 2rem)' fw='bold' ta='center'>大地の恵みを、あなたの毎日へ</Text>
-				<Text>自然由来の環境負荷を抑えた製法で、一つひとつ丁寧に手作りしています。</Text>
+				<HTML.p fz='clamp(1.5rem, 4.5vw, 2rem)' fw='bold' ta='center'>大地の恵みを、あなたの毎日へ</HTML.p>
+				<HTML.p>自然由来の環境負荷を抑えた製法で、一つひとつ丁寧に手作りしています。</HTML.p>
 			</Stack>
 			<Grid gtr={['repeat(12, 1fr)', null, 'repeat(6, 1fr)']} gtc={['repeat(2, 1fr)', null, 'repeat(4, 1fr)']} g={['40', '50']}>
 				<Frame gr={['1 / span 5', null, '1 / span 5']} gc={['1', null, '1']}>

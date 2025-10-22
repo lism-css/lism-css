@@ -4,7 +4,7 @@ description: ...
 ---
 
 
-import { Grid, Text, Box, Center,Container,Lism, Flex, Stack, Divider, Decorator, Link, Frame, Layer, Media, Dummy, Spacer } from 'lism-css/react';
+import { Grid, HTML, Box, Center, Container, Lism, Flex, Stack, Divider, Decorator, Frame, Layer, Media, Dummy, Spacer } from 'lism-css/react';
 import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage } from "~/components";
 import {Question,ChatCircleDots} from '@phosphor-icons/react';
 import { ArrowFatLinesDown } from '@phosphor-icons/react';
@@ -15,21 +15,21 @@ import ShapeDivider from '~/components/ex/ShapeDivider/index.astro';
 	<PreviewArea resize p='30' nogrid>
 		<Flex className='c--stepNav' g='1.5rem'>
 			<Flex className='c--stepNav_item' bgc='text' c='base' o='pale' px='30' py='10' pos='rel'>
-				<Lism className='c--stepNav_body'>
-					<Text>入力</Text>
-				</Lism>
+				<HTML.div className='c--stepNav_body'>
+					<HTML.span>入力</HTML.span>
+				</HTML.div>
 				<Decorator pos='abs' w='0.75em' h='100%' bgc='inherit' l='100%' t='0' style={{ clipPath: 'polygon(0% 0%, 0% 100%, 100% 50%)' }} />
 			</Flex>
 			<Flex className='c--stepNav_item' bgc='text' c='base' px='30' py='10' pos='rel'>
-				<Lism className='c--stepNav_body'>
-					<Text>確認</Text>
-				</Lism>
+				<HTML.div className='c--stepNav_body'>
+					<HTML.span>確認</HTML.span>
+				</HTML.div>
 				<Decorator pos='abs' w='0.75em' h='100%' bgc='inherit' l='100%' t='0' style={{ clipPath: 'polygon(0% 0%, 0% 100%, 100% 50%)' }} />
 			</Flex>
 			<Flex className='c--stepNav_item' bgc='text' c='base' o='pale' px='30' py='10' pos='rel'>
-				<Lism className='c--stepNav_body'>
-					<Text>完了</Text>
-				</Lism>
+				<HTML.div className='c--stepNav_body'>
+					<HTML.span>完了</HTML.span>
+				</HTML.div>
 			</Flex>
 		</Flex>
 	</PreviewArea>
@@ -37,21 +37,21 @@ import ShapeDivider from '~/components/ex/ShapeDivider/index.astro';
 		```jsx
 		<Flex className='c--stepNav' g='1.5rem'>
 			<Flex className='c--stepNav_item' bgc='text' c='base' o='pale' px='30' py='10' pos='rel'>
-				<Lism className='c--stepNav_body'>
-					<Text>入力</Text>
-				</Lism>
+				<HTML.div className='c--stepNav_body'>
+					<HTML.span>入力</HTML.span>
+				</HTML.div>
 				<Decorator pos='abs' w='0.75em' h='100%' bgc='inherit' l='100%' t='0' style={{ clipPath: 'polygon(0% 0%, 0% 100%, 100% 50%)' }} />
 			</Flex>
 			<Flex className='c--stepNav_item' bgc='text' c='base' px='30' py='10' pos='rel'>
-				<Lism className='c--stepNav_body'>
-					<Text>確認</Text>
-				</Lism>
+				<HTML.div className='c--stepNav_body'>
+					<HTML.span>確認</HTML.span>
+				</HTML.div>
 				<Decorator pos='abs' w='0.75em' h='100%' bgc='inherit' l='100%' t='0' style={{ clipPath: 'polygon(0% 0%, 0% 100%, 100% 50%)' }} />
 			</Flex>
 			<Flex className='c--stepNav_item' bgc='text' c='base' o='pale' px='30' py='10' pos='rel'>
-				<Lism className='c--stepNav_body'>
-					<Text>完了</Text>
-				</Lism>
+				<HTML.div className='c--stepNav_body'>
+					<HTML.span>完了</HTML.span>
+				</HTML.div>
 			</Flex>
 		</Flex>
 		```
@@ -67,12 +67,12 @@ import ShapeDivider from '~/components/ex/ShapeDivider/index.astro';
 	<PreviewArea resize p='30' nogrid>
 		<Stack className='c--priceMenu' g='30' fz={['s','m']} lh='s'>
 			<Grid gtc='auto 1fr auto' ai='center' g='30'>
-				<Text>とても美味しいトマトソースのスパゲッティ</Text>
+				<HTML.p>とても美味しいトマトソースのスパゲッティ</HTML.p>
 				<Divider min-w='1em' />
 				<span className='-whitespace:nowrap'>1,000円</span>
 			</Grid>
 			<Grid gtc='auto 1fr auto' ai='center' g='30'>
-				<Text>美味しいドリンク</Text>
+				<HTML.p>美味しいドリンク</HTML.p>
 				<Divider min-w='1em' />
 				<span className='-whitespace:nowrap'>500円</span>
 			</Grid>
@@ -82,12 +82,12 @@ import ShapeDivider from '~/components/ex/ShapeDivider/index.astro';
 		```jsx
 		<Stack className='c--priceMenu' g='30' fz={['s','m']} lh='s'>
 			<Grid gtc='auto 1fr auto' ai='center' g='30'>
-				<Text>とても美味しいトマトソースのスパゲッティ</Text>
+				<HTML.p>とても美味しいトマトソースのスパゲッティ</HTML.p>
 				<Divider min-w='1em' />
 				<span className='-whitespace:nowrap'>1,000円</span>
 			</Grid>
 			<Grid gtc='auto 1fr auto' ai='center' g='30'>
-				<Text>美味しいドリンク</Text>
+				<HTML.p>美味しいドリンク</HTML.p>
 				<Divider min-w='1em' />
 				<span className='-whitespace:nowrap'>500円</span>
 			</Grid>
@@ -110,7 +110,7 @@ import ShapeDivider from '~/components/ex/ShapeDivider/index.astro';
 				<Stack fx='1' pos='rel' g='20' p='40' z='1' min-h='100%' h='auto' c='white' bgc='black:50%'>
 					<h3>Card Title</h3>
 					<Dummy lh='s' mb='auto' length='l'/>
-					<Link href='#button-test' keycolor='white' c='inherit' bdrs='99' aslf='end' px='10' my-s='30'>Link Text</Link>
+					<HTML.a href='#button-test' keycolor='white' c='inherit' bdrs='99' aslf='end' px='10' my-s='30'>Link Text</HTML.a>
 				</Stack>
 			</Flex>
 		</Stack>
@@ -125,7 +125,7 @@ import ShapeDivider from '~/components/ex/ShapeDivider/index.astro';
 				<Stack fx='1' pos='rel' g='20' p='40' z='1' min-h='100%' h='auto' c='white' bgc='black:50%'>
 					<h3>Card Title</h3>
 					<Dummy lh='s' mb='auto' length='l'/>
-					<Link href='#button-test' keycolor='white' c='inherit' bdrs='99' aslf='end' px='10' my-s='30'>Link Text</Link>
+					<HTML.a href='#button-test' keycolor='white' c='inherit' bdrs='99' aslf='end' px='10' my-s='30'>Link Text</HTML.a>
 				</Stack>
 			</Flex>
 		</Stack>

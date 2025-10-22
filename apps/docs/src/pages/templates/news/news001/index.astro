@@ -1,7 +1,7 @@
 ---
 import DemoPageLayout from '~/layouts/DemoPageLayout.astro';
 
-import { Container, Grid, GridItem, Text, Flex, Icon, Stack } from 'lism-css/astro';
+import { Container, Grid, Box, Flex, Icon, HTML } from 'lism-css/astro';
 import Button from '~/components/ex/Button/index.astro';
 import './_style.css';
 ---
@@ -9,45 +9,45 @@ import './_style.css';
 <DemoPageLayout title='News001'>
 	<Container size='m' py='60' hasGutter>
 		<Grid gtc={['1fr', 'auto 1fr']} g='50'>
-			<GridItem gr={['1', '1 / 2']} gc={['1', '1 / 2']}>
-				<Text class='u-trim' fz='2xl' fw='bold'>お知らせ</Text>
-			</GridItem>
-			<GridItem gr={['2', '2']} gc={['1', '1 / 3']}>
+			<Box gr={['1', '1 / 2']} gc={['1', '1 / 2']}>
+				<h2 class='u-trim'>お知らせ</h2>
+			</Box>
+			<Box gr={['2', '2']} gc={['1', '1 / 3']}>
 				<Grid gtc={['auto', 'auto 1fr']} bd-t bdc='divider'>
 					<Grid gtc='subgrid' gc='1 / -1' g={['30', '40']} bd-b bdc='divider' py='40'>
 						<Grid gtc={['auto auto', 'auto 1fr']} g='40' jc='start' ai='center'>
-							<Text fz='s'>2025.07.13</Text>
-							<Text d='in-flex' jc='center' fz='xs' lh='xs' c='text' bgc='white' bd p='10 20' bdrs='99'>新サービス</Text>
+							<HTML.span fz='s'>2025.07.13</HTML.span>
+							<HTML.p d='in-flex' jc='center' fz='xs' lh='xs' c='text' bgc='white' bd p='10 20' bdrs='99'>新サービス</HTML.p>
 						</Grid>
 						<Flex isLinkBox href='#' ai='center' c='text' td='none' g='40' hov='o'>
-							<Text>目標金額を設定して貯蓄ができる「目的別預金」が登場。楽しみながら計画的な資産形成が行えます。</Text>
+							<HTML.p>目標金額を設定して貯蓄ができる「目的別預金」が登場。楽しみながら計画的な資産形成が行えます。</HTML.p>
 							<Icon icon='arrow-right' fz='s' c='text' mx-s='auto' />
 						</Flex>
 					</Grid>
 					<Grid gtc='subgrid' gc='1 / -1' g={['30', '40']} bd-b bdc='divider' py='40'>
 						<Grid gtc={['auto auto', 'auto 1fr']} g='40' jc='start' ai='center'>
-							<Text fz='s'>2025.07.13</Text>
-							<Text d='in-flex' jc='center' fz='xs' lh='xs' c='white' bgc='text' p='10 20' bdrs='99'>セキュリティ</Text>
+							<HTML.span fz='s'>2025.07.13</HTML.span>
+							<HTML.p d='in-flex' jc='center' fz='xs' lh='xs' c='white' bgc='text' p='10 20' bdrs='99'>セキュリティ</HTML.p>
 						</Grid>
 						<Flex isLinkBox href='#' ai='center' c='text' td='none' g='40' hov='o'>
-							<Text>当行を装った不審なメール（フィッシング詐欺）にご注意ください</Text>
+							<HTML.p>当行を装った不審なメール（フィッシング詐欺）にご注意ください</HTML.p>
 							<Icon icon='arrow-right' fz='s' c='text' mx-s='auto' />
 						</Flex>
 					</Grid>
 					<Grid gtc='subgrid' gc='1 / -1' g={['30', '40']} bd-b bdc='divider' py='40'>
 						<Grid gtc={['auto auto', 'auto 1fr']} g='40' jc='start' ai='center'>
-							<Text fz='s'>2025.07.13</Text>
-							<Text d='in-flex' jc='center' bd bdc='accent' fz='xs' lh='xs' c='white' bgc='accent' p='10 20' bdrs='99'
-								>重要なお知らせ</Text
+							<HTML.span fz='s'>2025.07.13</HTML.span>
+							<HTML.p d='in-flex' jc='center' bd bdc='accent' fz='xs' lh='xs' c='white' bgc='accent' p='10 20' bdrs='99'
+								>重要なお知らせ</HTML.p
 							>
 						</Grid>
 						<Flex isLinkBox href='#' ai='center' c='text' td='none' g='40' hov='o'>
-							<Text>インターネットバンキングサービス利用規定の一部改定について</Text>
+							<HTML.p>インターネットバンキングサービス利用規定の一部改定について</HTML.p>
 							<Icon icon='arrow-right' fz='s' c='text' mx-s='auto' />
 						</Flex>
 					</Grid>
 				</Grid>
-			</GridItem>
+			</Box>
 			<Flex gr={['3', '1 / 2']} gc={['1', '2 / 3']} ai='flex-e' jc='flex-e'>
 				<Button href='#' variant='outline' jc='center' w={['stretch', 'auto']} min-w='8rem' fz='s' p='20' bdrs='10'>View All</Button>
 			</Flex>
