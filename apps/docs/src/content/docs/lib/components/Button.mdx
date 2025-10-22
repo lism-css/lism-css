@@ -17,7 +17,7 @@ import Button from '~/components/ex/Button/index.astro';
 
 <Preview>
 	<PreviewTitle>Preview</PreviewTitle>
-	<PreviewArea p='30' bg='u:stripe' layout=''>
+	<PreviewArea p='30' bg=':stripe' layout=''>
 		<Flex layout='cluster' g='20'>
 			<Button href='###' variant='fill'>Button</Button>
 			<Button href='###' variant='outline'>Outline</Button>
@@ -32,7 +32,7 @@ import Button from '~/components/ex/Button/index.astro';
 コンポーネントを作らずにボタンを作るコード例も紹介しておきます。
 <Preview>
 	<PreviewTitle>Preview</PreviewTitle>
-	<PreviewArea p='30' bg='u:stripe' flowGap='s'>
+	<PreviewArea p='30' bg=':stripe' flowGap='s'>
 		<Flex g='20'>
 			<Link href='###' d='in-flex' w='fit' td='none' c='base' bgc='text' py='10' px='30' lh='xs' bdrs='20' hov='o'>Button</Link>
 			<Link href='###' d='in-flex' w='fit' td='none' c='inherit' bd py='10' px='30' lh='xs' bdrs='20' hov='o'>Button</Link>
@@ -92,16 +92,13 @@ import Button from '~/components/ex/Button/index.astro';
 {/* |`hover`| デフォルトは`op`が指定されています。| */}
 
 
-{/* ## 注意点
-Common Props の `w`, `h` ではなく、`width`, `height` を使ってください。 */}
-
 
 
 ## Usage
 
 <Preview>
 	<PreviewTitle>`Button`の使用例</PreviewTitle>
-	<PreviewArea p='30' bg='u:stripe' layout=''>
+	<PreviewArea p='30' bg=':stripe' layout=''>
 		<Flex g='20'>
 			<Button href='###'>Button</Button>
 			<Button href='###' bgc='main' bdrs='20'>Button</Button>
@@ -137,7 +134,7 @@ Common Props の `w`, `h` ではなく、`width`, `height` を使ってくださ
 ### variant: outline
 <Preview>
 	<PreviewTitle>`outline`の使用例</PreviewTitle>
-	<PreviewArea p='30' bg='u:stripe' layout=''>
+	<PreviewArea p='30' bg=':stripe' layout=''>
 		<Flex g='20'>
 			<Button href='###'>Button</Button>
 			<Button href='###' variant='outline' c='main' bdrs='20'>Button</Button>
@@ -173,7 +170,7 @@ Common Props の `w`, `h` ではなく、`width`, `height` を使ってくださ
 ### アイコンを使う例
 <Preview>
 	<PreviewTitle>アイコンを使う例</PreviewTitle>
-	<PreviewArea p='30' bg='u:stripe' layout=''>
+	<PreviewArea p='30' bg=':stripe' layout=''>
 		<Flex g='20'>
 			<Button href='###' g='10' bdrs='5'>
 				<Icon icon='cart' />
@@ -215,7 +212,7 @@ Common Props の `w`, `h` ではなく、`width`, `height` を使ってくださ
 
 <Preview>
 	<PreviewTitle>サイズの調整</PreviewTitle>
-	<PreviewArea p='30' bg='u:stripe' flowGap='s'>
+	<PreviewArea p='30' bg=':stripe' flowGap='s'>
 		<Button href='###' g='10' w='fit' bdrs='10'>
 			<Fragment>Button</Fragment>
 		</Button>
@@ -299,7 +296,7 @@ Common Props の `w`, `h` ではなく、`width`, `height` を使ってくださ
 
 <Preview>
 	<PreviewTitle>例</PreviewTitle>
-	<PreviewArea p='30' bg='u:stripe' layout=''>
+	<PreviewArea p='30' bg=':stripe' layout=''>
 		<Flex g='20'>
 			<Button href='###' hov='reverse' variant='fill'>Button</Button>
 			<Button href='###' hov='reverse' variant='outline'>Button</Button>
@@ -338,7 +335,7 @@ Common Props の `w`, `h` ではなく、`width`, `height` を使ってくださ
 
 {/* <Preview>
 	<PreviewTitle>color指定ありでのreverseの動作例</PreviewTitle>
-	<PreviewArea resize p='20' bg='u:stripe'>
+	<PreviewArea resize p='20' bg=':stripe'>
 		<Flex layout='cluster' g='20'>
 			<Button href='###' hov='reverse' variant='fill' bgc='main'>Button</Button>
 			<Button href='###' hov='reverse' variant='outline' c='#64a31c'>Button</Button>

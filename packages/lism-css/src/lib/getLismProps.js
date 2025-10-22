@@ -217,9 +217,9 @@ class LismPropsData {
 			utilName += `_${bpKey}`;
 		}
 
-		// "u:"ではじまっている場合、それに続く文字列を取得してユーティリティ化
-		if (typeof val === 'string' && val.startsWith('u:')) {
-			this.addUtil(`${utilName}:${val.replace('u:', '')}`);
+		// ":"ではじまっている場合、それに続く文字列を取得してユーティリティ化
+		if (typeof val === 'string' && val.startsWith(':')) {
+			this.addUtil(`${utilName}:${val.replace(':', '')}`);
 			return;
 		}
 
