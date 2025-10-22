@@ -5,7 +5,7 @@ sidebar:
   order: 20
 ---
 
-import { Flex, Media, Layer, Text, Spacer, Box, Center, Stack, Frame, LinkBox } from 'lism-css/react';
+import { Flex, HTML, Media, Layer, Spacer, Box, Center, Stack, Frame, LinkBox } from 'lism-css/react';
 import { Preview, PreviewArea, PreviewTitle, PreviewCode, EmbedCode, Callout, IconBadge } from '~/components';
 
 
@@ -318,7 +318,7 @@ Lismに内包されているクラスでは、それぞれ初期値を定義し�
 			<Media isLayer src='/img/img-1.jpg' alt='' width='960' height='640' loading='lazy' />
 			<Layer setTransition hov='to:show' bgc='rgb(0 0 0 / 40%)' blur='6px'>
 				<Center h='100%' c='#fff'>
-					<Text tag='span' fz='2xl' fs='italic' fw='light' lts='l' bdrs='99' px='30' py='10'>View More</Text>
+					<HTML.span fz='2xl' fs='italic' fw='light' lts='l' bdrs='99' px='30' py='10'>View More</HTML.span>
 				</Center>
 			</Layer>
 		</Frame>
@@ -341,7 +341,7 @@ Lismに内包されているクラスでは、それぞれ初期値を定義し�
 			<Media isLayer src='/img/img-1.jpg' alt='' width='960' height='640' loading='lazy' />
 			<Layer setTransition hov='to:show' bgc='rgb(0 0 0 / 40%)' blur='6px'>
 				<Center h='100%' c='#fff'>
-					<Text tag='span' fz='2xl' fs='italic' fw='light' lts='l' bdrs='99' px='30' py='10'>View More</Text>
+					<HTML.span fz='2xl' fs='italic' fw='light' lts='l' bdrs='99' px='30' py='10'>View More</HTML.span>
 				</Center>
 			</Layer>
 		</Frame>
@@ -371,7 +371,7 @@ Lismに内包されているクラスでは、それぞれ初期値を定義し�
 			</Frame>
 			<Layer setTransition hov='to:hide' grayscale='70%'/>
 			<Center isLayer c='#fff' bgc='rgb(0 0 0 / 40%)'>
-				<Text setTransition hov='to:letterSpread' fz='2xl'>LinkBox</Text>
+				<HTML.p setTransition hov='to:letterSpread' fz='2xl'>LinkBox</HTML.p>
 			</Center>
 		</LinkBox>
 	</PreviewArea>
@@ -414,7 +414,7 @@ Lismに内包されているクラスでは、それぞれ初期値を定義し�
 			</Frame>
 			<Layer setTransition hov='to:hide' grayscale='70%'/>
 			<Center isLayer c='#fff' bgc='rgb(0 0 0 / 40%)'>
-				<Text setTransition hov='to:letterSpread' fz='2xl'>LinkBox</Text>
+				<HTML.p setTransition hov='to:letterSpread' fz='2xl'>LinkBox</HTML.p>
 			</Center>
 		</LinkBox>
 		```

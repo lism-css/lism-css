@@ -1,7 +1,7 @@
 ---
 import DemoPageLayout from '~/layouts/DemoPageLayout.astro';
 
-import { Container, Grid, GridItem, Text, Flex, Icon } from 'lism-css/astro';
+import { Container, Grid, Box, HTML, Flex, Icon } from 'lism-css/astro';
 import Button from '~/components/ex/Button/index.astro';
 import './_style.css';
 ---
@@ -9,10 +9,10 @@ import './_style.css';
 <DemoPageLayout title='Feature023'>
 	<Container size='m' bgc='base-2' py='60' hasGutter>
 		<Grid gtc={['1fr', null, 'auto 1fr']} g='50'>
-			<GridItem gr={['1', null, '1 / 2']} gc={['1', null, '1 / 2']}>
-				<Text class='u-trim' fz='2xl' fw='bold'>サービスの特徴について</Text>
-			</GridItem>
-			<GridItem gr={['2', null, '2']} gc={['1', null, '1 / 3']}>
+			<Box gr={['1', null, '1 / 2']} gc={['1', null, '1 / 2']}>
+				<h2 class='u-trim'>サービスの特徴について</h2>
+			</Box>
+			<Box gr={['2', null, '2']} gc={['1', null, '1 / 3']}>
 				<Grid gtc={['auto', null, 'auto 1fr']} g='40'>
 					<Grid
 						isLinkBox
@@ -28,11 +28,11 @@ import './_style.css';
 						hov='bxsh'
 					>
 						<Grid gtc={['auto auto', 'auto 1fr']} g='40' jc='start' ai='center'>
-							<Text d='in-flex' jc='center' fz='xs' lh='xs' c='white' p='10 20' bgc='text' bdrs='99'>POINT 1</Text>
-							<Text fz='m' fw='bold'>楽しみながら計画的に資産形成</Text>
+							<HTML.span d='in-flex' jc='center' fz='xs' lh='xs' c='white' py='10' px='30' bgc='text' bdrs='99'>POINT 1</HTML.span>
+							<HTML.p fz='m' fw='bold'>楽しみながら計画的に資産形成</HTML.p>
 						</Grid>
 						<Flex ai='center' c='text' td='none' g='40'>
-							<Text>目標金額を設定して貯蓄ができる「目的別預金」が登場。楽しみながら計画的な資産形成が行えます。</Text>
+							<HTML.p>目標金額を設定して貯蓄ができる「目的別預金」が登場。楽しみながら計画的な資産形成が行えます。</HTML.p>
 							<Flex ai='center' jc='center' bd bdc='text' p='20' bdrs='99' setTransition hov='to:bgcBlack'>
 								<Icon icon='arrow-right' fz='s' c='text' mx-s='auto' setTransition hov='to:cWhite' />
 							</Flex>
@@ -52,11 +52,11 @@ import './_style.css';
 						hov='bxsh'
 					>
 						<Grid gtc={['auto auto', 'auto 1fr']} g='40' jc='start' ai='center'>
-							<Text d='in-flex' jc='center' fz='xs' lh='xs' c='white' p='10 20' bgc='text' bdrs='99'>POINT 2</Text>
-							<Text fz='m' fw='bold'>安心のセキュリティ体制</Text>
+							<HTML.span d='in-flex' jc='center' fz='xs' lh='xs' c='white' py='10' px='30' bgc='text' bdrs='99'>POINT 2</HTML.span>
+							<HTML.p fz='m' fw='bold'>安心のセキュリティ体制</HTML.p>
 						</Grid>
 						<Flex ai='center' c='text' td='none' g='40'>
-							<Text>通信の暗号化や二段階認証を導入。お客様の大切な資産と個人情報を厳重に保護します。</Text>
+							<HTML.p>通信の暗号化や二段階認証を導入。お客様の大切な資産と個人情報を厳重に保護します。</HTML.p>
 							<Flex ai='center' jc='center' bd bdc='text' p='20' bdrs='99' setTransition hov='to:bgcBlack'>
 								<Icon icon='arrow-right' fz='s' c='text' mx-s='auto' setTransition hov='to:cWhite' />
 							</Flex>
@@ -76,18 +76,18 @@ import './_style.css';
 						hov='bxsh'
 					>
 						<Grid gtc={['auto auto', 'auto 1fr']} g='40' jc='start' ai='center'>
-							<Text d='in-flex' jc='center' fz='xs' lh='xs' c='white' p='10 20' bgc='text' bdrs='99'>POINT 3</Text>
-							<Text fz='m' fw='bold'>必要なものはスマホだけ！</Text>
+							<HTML.span d='in-flex' jc='center' fz='xs' lh='xs' c='white' py='10' px='30' bgc='text' bdrs='99'>POINT 3</HTML.span>
+							<HTML.p fz='m' fw='bold'>必要なものはスマホだけ！</HTML.p>
 						</Grid>
 						<Flex ai='center' c='text' td='none' g='40'>
-							<Text>口座開設から運用状況の確認までスマホアプリで完結。いつでも手軽に資産をチェックできます。</Text>
+							<HTML.p>口座開設から運用状況の確認までスマホアプリで完結。いつでも手軽に資産をチェックできます。</HTML.p>
 							<Flex ai='center' jc='center' bd bdc='text' p='20' bdrs='99' setTransition hov='to:bgcBlack'>
 								<Icon icon='arrow-right' fz='s' c='text' mx-s='auto' setTransition hov='to:cWhite' />
 							</Flex>
 						</Flex>
 					</Grid>
 				</Grid>
-			</GridItem>
+			</Box>
 			<Flex gr={['3', null, '1 / 2']} gc={['1', null, '2 / 3']} ai='flex-e' jc='flex-e'>
 				<Button href='#' variant='outline' jc='center' w={['stretch', null, 'auto']} min-w='8rem' fz='s' bd bdc='text' p='20' bdrs='10'
 					>View Detail</Button

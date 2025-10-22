@@ -1,7 +1,7 @@
 ---
 import DemoPageLayout from '~/layouts/DemoPageLayout.astro';
 
-import { Container, Frame, Grid, GridItem, Media, Stack, Text } from 'lism-css/astro';
+import { Container, Frame, Grid, Box, Media, Stack, HTML } from 'lism-css/astro';
 import './_style.css';
 ---
 
@@ -9,8 +9,8 @@ import './_style.css';
 	<Container size='m' bgc='base' py='60' hasGutter>
 		<Stack g='50'>
 			<Stack g='30' ai='center'>
-				<Text class='u-trim' fz='2xl' fw='bold'>会社情報</Text>
-				<Text class='u-trim' fz='s' ta='center' o='pale'>Company Information</Text>
+				<h2 class='u-trim'>会社情報</h2>
+				<HTML.span class='u-trim' fz='s' ta='center' o='pale'>Company Information</HTML.span>
 			</Stack>
 			<Frame ar='3/1' bdrs='10'>
 				<Media src='/img/img-5.jpg' alt='' width='960' height='640' />
@@ -55,7 +55,7 @@ import './_style.css';
 				<Grid gtc='subgrid' gc='1/-1' g='40 50' bd-b bdc='divider' p='30'>
 					<dt>アクセス</dt>
 					<dd>東京駅から徒歩0分<br />※以下は東京駅の地図です</dd>
-					<GridItem gc='1/-1'>
+					<Box gc='1/-1'>
 						<iframe
 							src='https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3240.8252786101943!2d139.7644908758969!3d35.68130392996982!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x60188bfbd89f700b%3A0x277c49ba34ed38!2z5p2x5Lqs6aeF!5e0!3m2!1sja!2sjp!4v1755771376764!5m2!1sja!2sjp'
 							width='100%'
@@ -64,7 +64,7 @@ import './_style.css';
 							allowfullscreen=''
 							loading='lazy'
 							referrerpolicy='no-referrer-when-downgrade'></iframe>
-					</GridItem>
+					</Box>
 				</Grid>
 			</Grid>
 		</Stack>

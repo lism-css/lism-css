@@ -1,7 +1,7 @@
 ---
 import DemoPageLayout from '~/layouts/DemoPageLayout.astro';
 
-import { Container, Frame, Grid, Layer, Media, Stack, Text } from 'lism-css/astro';
+import { Container, Frame, Grid, Layer, Media, Stack, HTML } from 'lism-css/astro';
 import Button from '~/components/ex/Button/index.astro';
 import './_style.css';
 ---
@@ -14,8 +14,8 @@ import './_style.css';
 				<Container size='s' z='1'>
 					<Stack g='50' ai='center' c='white'>
 						<Stack g='40' ai='center'>
-							<Text class='u-trim' fz='5xl' fw='100' lts='l'>Feature</Text>
-							<Text class='u-trim' fz='l' lts='l'>私たちの製品のこと</Text>
+							<HTML.p class='u-trim' fz='5xl' fw='100' lts='l'>Feature</HTML.p>
+							<HTML.p class='u-trim' fz='l' lts='l'>私たちの製品のこと</HTML.p>
 						</Stack>
 						<Stack g='40'>
 							<p>

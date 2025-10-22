@@ -2,7 +2,7 @@
 import DemoPageLayout from '~/layouts/DemoPageLayout.astro';
 import Button from '~/components/ex/Button/index.astro';
 
-import { Container, Frame, Flex, Grid, GridItem, Layer, Media, Stack, Text } from 'lism-css/astro';
+import { Container, Frame, Flex, Grid, GridItem, Layer, Media, Stack, HTML } from 'lism-css/astro';
 import './_style.css';
 ---
 
@@ -16,7 +16,7 @@ import './_style.css';
 			<Stack gr='1 / -1' gc={['2 / span 1', null, '1 / span 1']} g='50' ai='center' w='stretch' bgc='black:35%' p='60 50' pos='rel' z='1'>
 				<Layer blur='8px' z='0' />
 				<Stack g='50' c='white' ai='center' jc='center' h='100%' z='1'>
-					<Text class='u-trim' fz='2xl' fw='bold'>とっておきの週末</Text>
+					<h2 class='u-trim'>とっておきの週末</h2>
 					<Stack g='30'>
 						<p>
 							いつもの週末を、忘れられない特別な一日に。ガイドブックには載っていない、

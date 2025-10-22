@@ -1,4 +1,4 @@
-import { Box, Flex, Container, Link, Dummy, Divider, Columns } from 'lism-css/react';
+import { Box, Flex, Container, HTML, Dummy, Divider, Columns } from 'lism-css/react';
 
 function App() {
 	return (
@@ -38,9 +38,9 @@ function App() {
 			<Dummy length='l' />
 
 			<Flex jc='center'>
-				<Link href='###' hov='o' bgc='text' lh='xs' c='base' px='30' py='20' td='none' bdrs='50'>
+				<HTML.a href='###' hov='o' bgc='text' lh='xs' c='base' px='30' py='20' td='none' bdrs='50'>
 					Link Button
-				</Link>
+				</HTML.a>
 			</Flex>
 			<Divider />
 		</Container>

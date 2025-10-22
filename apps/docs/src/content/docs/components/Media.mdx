@@ -2,7 +2,7 @@
 title: 'Media'
 description: ...
 ---
-import { Lism, Text, Dummy, Media, Frame } from "lism-css/astro";
+import { Lism, HTML, Dummy, Media, Frame } from "lism-css/astro";
 import { Preview, PreviewArea, PreviewTitle, PreviewCode, Callout } from "~/components";
 
 
@@ -33,14 +33,14 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, Callout } from "~/comp
 	<PreviewArea>
 		<Frame tag='figure' ar='2/1' pos='rel'>
 			<Media contrast={1.1} saturate={0.2} src='/img/img-2.jpg' alt='' width='960' height='640' />
-			<Text tag='figcaption' pos='abs' z='1' b='0' p='5' w='100%' c='white' ta='center' lts='l'>Lorem ipsum text.</Text>
+			<Lism tag='figcaption' pos='abs' z='1' b='0' p='5' w='100%' c='white' ta='center' lts='l'>Lorem ipsum text.</HTML.p>
 		</Frame>
 	</PreviewArea>
 	<PreviewCode slot='tab' label='JSX'>
 		```jsx "contrast={1.1} saturate={0.2}"
 		<Frame tag='figure' ar='2/1' pos='rel'>
 			<Media contrast={1.1} saturate={0.2} src='/img/img-2.jpg' alt='' width='960' height='640' />
-			<Text tag='figcaption' pos='abs' z='1' b='0' p='5' w='100%' c='white' ta='center' lts='l'>Lorem ipsum text.</Text>
+			<Lism tag='figcaption' pos='abs' z='1' b='0' p='5' w='100%' c='white' ta='center' lts='l'>Lorem ipsum text.</Lism>
 		</Frame>
 		```
 	</PreviewCode>

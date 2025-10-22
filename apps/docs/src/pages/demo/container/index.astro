@@ -1,7 +1,7 @@
 ---
 import DemoPageLayout from '~/layouts/DemoPageLayout.astro';
 import { AttsLabels, TipCode, GutterGuide, LoremContent } from './_components.js';
-import { Lism, Flow, Dummy, Container, Spacer, Text } from 'lism-css/astro';
+import { Lism, HTML, Flow, Dummy, Container, Spacer } from 'lism-css/astro';
 import './_style.scss';
 ---
 
@@ -99,15 +99,15 @@ import './_style.scss';
 					>
 					<p class='-fz:s'>
 						↑ コンテナクエリの適用状態 :
-						<Text tag='span' lh='1' p='5' bd className='u-cbox' keycolor='blue' d={['none', 'inline-block']}>@sm~</Text>
-						<Text tag='span' lh='1' p='5' bd className='u-cbox' keycolor='blue' d={['none', null, 'inline-block']}>@md~</Text>
-						<Text tag='span' lh='1' p='5' bd className='u-cbox' keycolor='blue' d={['none', null, null, 'inline-block']}>@lg~</Text>
+						<HTML.span lh='1' p='5' bd className='u-cbox' keycolor='blue' d={['none', 'inline-block']}>@sm~</HTML.span>
+						<HTML.span lh='1' p='5' bd className='u-cbox' keycolor='blue' d={['none', null, 'inline-block']}>@md~</HTML.span>
+						<HTML.span lh='1' p='5' bd className='u-cbox' keycolor='blue' d={['none', null, null, 'inline-block']}>@lg~</HTML.span>
 					</p>
 				</Flow>
 			</Flow>
 		</Flow>
 		<p>
-			ここでのコンテナクエリの判定値( cqw )は、外側の<Text tag='span' class='_-container:_'>青色の点線</Text
+			ここでのコンテナクエリの判定値( cqw )は、外側の<HTML.span bd bds='dashed' bdc='blue'>青色の点線</HTML.span
 			>で囲われたコンテナ要素のサイズです。
 		</p>
 		<p>
@@ -128,9 +128,9 @@ import './_style.scss';
 					>
 					<p>
 						コンテナクエリ適用状態 :
-						<Text tag='span' lh='1' p='5' bd className='u-cbox' keycolor='green' d={['none', 'inline-block']}>@sm~</Text>
-						<Text tag='span' lh='1' p='5' bd className='u-cbox' keycolor='green' d={['none', null, 'inline-block']}>@md~</Text>
-						<Text tag='span' lh='1' p='5' bd className='u-cbox' keycolor='green' d={['none', null, null, 'inline-block']}>@lg~</Text>
+						<HTML.span lh='1' p='5' bd className='u-cbox' keycolor='green' d={['none', 'inline-block']}>@sm~</HTML.span>
+						<HTML.span lh='1' p='5' bd className='u-cbox' keycolor='green' d={['none', null, 'inline-block']}>@md~</HTML.span>
+						<HTML.span lh='1' p='5' bd className='u-cbox' keycolor='green' d={['none', null, null, 'inline-block']}>@lg~</HTML.span>
 					</p>
 				</Flow>
 			</Flow>
@@ -148,9 +148,9 @@ import './_style.scss';
 					>
 					<p>
 						コンテナクエリ適用状態 :
-						<Text tag='span' lh='1' p='5' bd className='u-cbox' keycolor='green' d={['none', 'inline-block']}>@sm~</Text>
-						<Text tag='span' lh='1' p='5' bd className='u-cbox' keycolor='green' d={['none', null, 'inline-block']}>@md~</Text>
-						<Text tag='span' lh='1' p='5' bd className='u-cbox' keycolor='green' d={['none', null, null, 'inline-block']}>@lg~</Text>
+						<HTML.span lh='1' p='5' bd className='u-cbox' keycolor='green' d={['none', 'inline-block']}>@sm~</HTML.span>
+						<HTML.span lh='1' p='5' bd className='u-cbox' keycolor='green' d={['none', null, 'inline-block']}>@md~</HTML.span>
+						<HTML.span lh='1' p='5' bd className='u-cbox' keycolor='green' d={['none', null, null, 'inline-block']}>@lg~</HTML.span>
 					</p>
 				</Flow>
 			</Container>

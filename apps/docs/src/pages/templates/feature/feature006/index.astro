@@ -1,7 +1,7 @@
 ---
 import DemoPageLayout from '~/layouts/DemoPageLayout.astro';
 
-import { Container, Flex, Frame, Grid, GridItem, Media, Stack, Text } from 'lism-css/astro';
+import { Container, Flex, Frame, Grid, Box, Media, Stack, HTML } from 'lism-css/astro';
 import Button from '~/components/ex/Button/index.astro';
 import './_style.css';
 ---
@@ -10,11 +10,11 @@ import './_style.css';
 	<Container size='l' py='60' hasGutter>
 		<Grid gtc={['auto', null, '1fr minmax(20rem, 1fr)']} gtr={['1fr', null, '1fr auto auto 1fr']} g='50 70' }>
 			<Stack gr={['1', null, '2']} g='50'>
-				<Text class='u-trim' fz='2xl' fw='bold'>暮らしを、もっと豊かに</Text>
-				<Text class='u-trim'
-					>私の役割は複雑なテクノロジーを誰もが直感的に、そして快適に使えるようにデザインすることです。
+				<h2 class='u-trim'>暮らしを、もっと豊かに</h2>
+				<p class='u-trim'>
+					私の役割は複雑なテクノロジーを誰もが直感的に、そして快適に使えるようにデザインすることです。
 					ユーザーインタビューやテストを繰り返し、徹底的に「ユーザーの声」に耳を傾けながら、最高の体験を追求しています。
-				</Text>
+				</p>
 			</Stack>
 			<Grid gr={['2', null, '1 / -1']} gc={['1', null, '2']} gtc='repeat(2, 1fr)' g='30' min-h='min(70svw, 30rem)'>
 				<Frame tag='figure' gr='1 / -1'>
@@ -24,11 +24,11 @@ import './_style.css';
 					<Media src='/img/img-2.jpg' alt='' width='960' height='640' />
 				</Frame>
 			</Grid>
-			<GridItem gr='3'>
+			<Box gr='3'>
 				<Flex ai='center' g='20'>
 					<Button href='#' min-w={['100%', null, '150px']} jc='center' p='20' bdrs='10'>View More</Button>
 				</Flex>
-			</GridItem>
+			</Box>
 		</Grid>
 	</Container>
 </DemoPageLayout>

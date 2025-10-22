@@ -1,7 +1,7 @@
 ---
 import DemoPageLayout from '~/layouts/DemoPageLayout.astro';
 
-import { Stack, Container, Frame, Grid, Media, Text, Flex, Icon } from 'lism-css/astro';
+import { Stack, Container, Frame, Grid, Media, HTML, Flex, Icon } from 'lism-css/astro';
 import './_style.css';
 ---
 
@@ -10,14 +10,14 @@ import './_style.css';
 		<Stack g='50'>
 			<Grid gtc={['1fr', null, 'auto 1fr']} g='50'>
 				<Stack class='u-trimItems' g='20'>
-					<Text fz='2xl' fw='bold'>私たちの取り組み</Text>
-					<Text fz='l' o='soft'>Feature section</Text>
+					<h2>私たちの取り組み</h2>
+					<HTML.p fz='l' o='soft'>Feature section</HTML.p>
 				</Stack>
 				<Flex jc={['s', null, 'end']} class='u-trimItems'>
-					<Text max-w='32rem' fz='s' o='mild'>
+					<HTML.p max-w='32rem' fz='s' o='mild'>
 						地域の未来を見据え、持続可能な社会の実現に向けた取り組みを進めています。
 						環境保護や地域活性化を通じて、次世代に誇れる街づくりを目指します。
-					</Text>
+					</HTML.p>
 				</Flex>
 			</Grid>
 			<Grid gtc={['1fr', 'repeat(2, 1fr)', 'repeat(4, 1fr)']} g={['40', '50']}>
@@ -25,8 +25,8 @@ import './_style.css';
 					<Frame ar='1/1' bdrs='10'>
 						<Media src='/img/img-2.jpg' alt='' width='960' height='640' setTransition hov='to:zoom' />
 					</Frame>
-					<Flex ai='center' jc='flex-s' g='20' fz='m' lh='s' mb='20'>
-						<Text>地域の未来を共に描く</Text>
+					<Flex ai='center' jc='flex-s' g='20' fz='m' lh='s'>
+						<HTML.span>地域の未来を共に描く</HTML.span>
 						<Icon fz='125%' icon='arrow-right' mx-s='auto' setTransition hov='to:solid' />
 					</Flex>
 				</Grid>
@@ -34,8 +34,8 @@ import './_style.css';
 					<Frame ar='1/1' bdrs='10'>
 						<Media src='/img/img-4.jpg' alt='' width='960' height='640' setTransition hov='to:zoom' />
 					</Frame>
-					<Flex ai='center' jc='flex-s' g='20' fz='m' lh='s' mb='20'>
-						<Text>誰もが集える憩いの場</Text>
+					<Flex ai='center' jc='flex-s' g='20' fz='m' lh='s'>
+						<HTML.span>誰もが集える憩いの場</HTML.span>
 						<Icon fz='125%' icon='arrow-right' mx-s='auto' setTransition hov='to:solid' />
 					</Flex>
 				</Grid>
@@ -43,8 +43,8 @@ import './_style.css';
 					<Frame ar='1/1' bdrs='10'>
 						<Media src='/img/img-3.jpg' alt='' width='960' height='640' setTransition hov='to:zoom' />
 					</Frame>
-					<Flex ai='center' jc='flex-s' g='20' fz='m' lh='s' mb='20'>
-						<Text>地元の恵みを食卓へ</Text>
+					<Flex ai='center' jc='flex-s' g='20' fz='m' lh='s'>
+						<HTML.span>地元の恵みを食卓へ</HTML.span>
 						<Icon fz='125%' icon='arrow-right' mx-s='auto' setTransition hov='to:solid' />
 					</Flex>
 				</Grid>
@@ -52,8 +52,8 @@ import './_style.css';
 					<Frame ar='1/1' bdrs='10'>
 						<Media src='/img/img-5.jpg' alt='' width='960' height='640' setTransition hov='to:zoom' />
 					</Frame>
-					<Flex ai='center' jc='flex-s' g='20' fz='m' lh='s' mb='20'>
-						<Text>緑豊かな景観づくり</Text>
+					<Flex ai='center' jc='flex-s' g='20' fz='m' lh='s'>
+						<HTML.span>緑豊かな景観づくり</HTML.span>
 						<Icon fz='125%' icon='arrow-right' mx-s='auto' setTransition hov='to:solid' />
 					</Flex>
 				</Grid>

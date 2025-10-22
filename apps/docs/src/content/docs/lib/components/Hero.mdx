@@ -3,7 +3,7 @@ title: 'Hero'
 description: ...
 ---
 
-import { Spacer, Box, Flow, Flex, Grid, Media, Dummy, Text, Container, Layer, Stack, Center, Frame } from 'lism-css/astro';
+import { Spacer, Box, Flow, Flex, Grid, Media, Dummy, HTML, Container, Layer, Stack, Center, Frame } from 'lism-css/astro';
 import { Preview, PreviewArea, PreviewTitle, PreviewCode, PreviewFrame } from "~/components";
 import ShapeDivider from '~/components/ex/ShapeDivider/index.astro';
 
@@ -23,7 +23,7 @@ import ShapeDivider from '~/components/ex/ShapeDivider/index.astro';
 	<PreviewArea resize>
 		<Stack max-sz='full' min-h='50vh' bgc='base-2'>
 			<Flow isContainer='m' hasGutter my='auto'>
-				<Text fw='bold' fz='xl'>DEMO 01</Text>
+				<HTML.p fw='bold' fz='xl'>DEMO 01</HTML.p>
 				<Dummy length='l' lang='ja'/>
 			</Flow>
 		</Stack>
@@ -32,7 +32,7 @@ import ShapeDivider from '~/components/ex/ShapeDivider/index.astro';
 		```jsx
 		<Stack max-sz='full' min-h='50vh' bgc='base-2'>
 			<Flow isContainer='m' hasGutter my='auto'>
-				<Text fw='bold' fz='xl'>DEMO 01</Text>
+				<HTML.p fw='bold' fz='xl'>DEMO 01</HTML.p>
 				<Dummy length='l' lang='ja'/>
 			</Flow>
 		</Stack>
@@ -58,7 +58,7 @@ import ShapeDivider from '~/components/ex/ShapeDivider/index.astro';
 				</Flex>
 			</Flex>
 			<Flow isContainer='m' hasGutter my='auto' z='0'>
-				<Text fw='bold' fz='xl'>DEMO 02</Text>
+				<HTML.p fw='bold' fz='xl'>DEMO 02</HTML.p>
 				<Dummy length='l' />
 			</Flow>
 			<Center p='20' z='0'>Footer</Center>
@@ -79,7 +79,7 @@ import ShapeDivider from '~/components/ex/ShapeDivider/index.astro';
 				</Flex>
 			</Flex>
 			<Flow isContainer='m' hasGutter my='auto' z='0'>
-				<Text fw='bold' fz='xl'>DEMO 02</Text>
+				<HTML.p fw='bold' fz='xl'>DEMO 02</HTML.p>
 				<Dummy length='l' />
 			</Flow>
 			<Center p='20' z='0'>Footer</Center>
@@ -109,7 +109,7 @@ import ShapeDivider from '~/components/ex/ShapeDivider/index.astro';
 				<Layer blur='4px' bgc='black:50%' />
 			</Frame>
 			<Flow isContainer='m' py='40' my='auto' z='0'>
-				<Text fw='bold' fz='xl'>ShapDivider & Layers</Text>
+				<HTML.p fw='bold' fz='xl'>ShapDivider & Layers</HTML.p>
 				<Dummy length='l' />
 			</Flow>
 			<Box z='0' ta='center'>Footer</Box>
@@ -129,7 +129,7 @@ import ShapeDivider from '~/components/ex/ShapeDivider/index.astro';
 				<Layer blur='4px' bgc='black:50%' />
 			</Frame>
 			<Flow isContainer='m' py='40' my='auto' z='0'>
-				<Text fw='bold' fz='xl'>ShapDivider & Layers</Text>
+				<HTML.p fw='bold' fz='xl'>ShapDivider & Layers</HTML.p>
 				<Dummy length='l' />
 			</Flow>
 			<Box z='0' ta='center'>Footer</Box>
@@ -156,7 +156,7 @@ import ShapeDivider from '~/components/ex/ShapeDivider/index.astro';
 					<Layer bgc='black:50%' />
 				</Frame>
 				<Flow isContainer='m' py='40' pr={['0', '25%', '33%']} my='auto' z='0'>
-					<Text fw='bold' fz='xl'>ShapDivider & Layers</Text>
+					<HTML.p fw='bold' fz='xl'>ShapDivider & Layers</HTML.p>
 					<Dummy length='l' />
 				</Flow>
 				<Spacer h='var(--slopeH)' />
@@ -173,7 +173,7 @@ import ShapeDivider from '~/components/ex/ShapeDivider/index.astro';
 				</Frame>
 				<Spacer h='var(--slopeH)' />
 				<Flow isContainer='m' py='40' pl={['0', '25%', '33%']} my='auto' z='0'>
-					<Text fw='bold' fz='xl'>ShapDivider & Layers</Text>
+					<HTML.p fw='bold' fz='xl'>ShapDivider & Layers</HTML.p>
 					<Dummy length='l' />
 				</Flow>
 				<ShapeDivider viewBox='0 0 10 10' h='var(--slopeH)' c='base' scale='-X' z='1'>
@@ -194,7 +194,7 @@ import ShapeDivider from '~/components/ex/ShapeDivider/index.astro';
 					<Layer bgc='black:50%' />
 				</Frame>
 				<Flow isContainer='m' py='40' pr={['0', '25%', '33%']} my='auto' z='0'>
-					<Text fw='bold' fz='xl'>ShapDivider & Layers</Text>
+					<HTML.p fw='bold' fz='xl'>ShapDivider & Layers</HTML.p>
 					<Dummy length='l' />
 				</Flow>
 				<Spacer h='var(--slopeH)' />
@@ -211,7 +211,7 @@ import ShapeDivider from '~/components/ex/ShapeDivider/index.astro';
 				</Frame>
 				<Spacer h='var(--slopeH)' />
 				<Flow isContainer='m' py='40' pl={['0', '25%', '33%']} my='auto' z='0'>
-					<Text fw='bold' fz='xl'>ShapDivider & Layers</Text>
+					<HTML.p fw='bold' fz='xl'>ShapDivider & Layers</HTML.p>
 					<Dummy length='l' />
 				</Flow>
 				<ShapeDivider viewBox='0 0 10 10' h='var(--slopeH)' c='base' scale='-X' z='1'>
