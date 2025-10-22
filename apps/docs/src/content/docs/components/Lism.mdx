@@ -1,11 +1,14 @@
 ---
 title: 'Lism'
 description: ...
+tableOfContents:
+    maxHeadingLevel: 4
 ---
 import { Lism, Text, Dummy, Link, Media, Frame, Spacer } from "lism-css/astro";
 import { Preview, PreviewArea, PreviewTitle, PreviewCode, IconBadge, Reference, ImportPackage, Callout } from "~/components";
 
-LismのCSS設計に対応した様々なプロパティを受け取ることができるようになっている汎用的なコンポーネントです。
+LismのCSS設計に対応した様々なプロパティを受け取ることができるようになっている汎用的なコンポーネントです。  
+何も指定がなければ、ただの`<div>`を返します。
 
 <Callout type='info'>
 Lismで配布しているほぼ全てのコンポーネントは、この`<Lism>`がベースなっています。  
@@ -31,23 +34,6 @@ Lismで配布しているほぼ全てのコンポーネントは、この`<Lism>
 </Preview>
 
 
-<Preview>
-	<PreviewTitle>何も指定がなければ、ただの`<div>`タグを返します。</PreviewTitle>
-	<PreviewArea p='30'>
-		<Lism>Lism content</Lism>
-	</PreviewArea>
-	<PreviewCode slot='tab' label='JSX'>
-		```jsx
-		<Lism>Lism content</Lism>
-		```
-	</PreviewCode>
-	<PreviewCode slot='tab' label='HTML'>
-		```jsx
-		<div>Lism content</div>
-		```
-	</PreviewCode>
-</Preview>
-
 
 ## Import
 
@@ -70,38 +56,81 @@ import { Lism } from 'lism-css/astro';
 
 ## Lism Props
 
-`<Lism>`をベースとした`lism-css`で提供する各コンポーネントで受け取れるプロパティを**Lism Props**と呼んでいます。
+`<Lism>`で受け取れる、Lism CSS 専用プロパティを**Lism Props**と呼んでいます。
 
-Lism Propsは、主に以下の3種類に分類されます。
+{/* 上記の他、少し複雑なものがいくつかあります。それらについては後述の[補足](#補足)で解説しています */}
 
-|種別|説明|
+
+{/* Lism Propsは、主に以下の3種類に分類されます。 */}
+
+{/* |種別|説明|
 |---|---|
 |**Common Props**|基本的な共通プロパティ|
 |**State Props**|[State Modules](/css/module-class/#state-modules) に分類されるクラスを出力するためのプロパティ|
-|**CSS Props**|[Prop Class](/css/prop-class/) に分類されるクラスを出力するためのプロパティ|
+|**CSS Props**|[Prop Class](/css/prop-class/) に分類されるクラスを出力するためのプロパティ| */}
 
 
+### `tag`
 
-### Common Props
+出力する HTMLタグを指定できます。デフォルトは`div`です。
 
-| Prop | 説明 |
-|---|---|
-|`tag`| 出力する HTMLタグを指定できます。デフォルトは`div`を返します。|
-|`layout`| レイアウトモジュールを指定できます。例えば`layout='flow'`とすると、`.l--flow`クラスが出力されます。|
-|`lismClass`| Lismコンポーネント名となる主要なクラス名。|
-|`variant`| lismClassに対するバリエーションクラスを出力できます。lismClass に複数クラスが指定されている場合、先頭のクラスに対してバリエーションクラスを出力します。`,`区切りで複数指定できます。|
-|`as`| `<Lism>`を**別の外部コンポーネント**として展開することができます。 |
-|`exProps`| Lism Propsとして処理したくないプロパティを指定できます。|
+<PreviewTitle>例</PreviewTitle>
+```jsx "tag='p'"
+<Lism tag='p' fz='l'>Lorem ipsum texts...</Lism>
 
-{/* |`passVars`|[`pass-get`](/css/pass-get) に関するプロパティ。オブジェクト形式 `{prop:value}` で指定でき、`--pass_[prop]:[value]` を出力します。| */}
+↓
 
-上記の他、少し複雑なものがいくつかあります。それらについては後述の[補足](#補足)で解説しています。
+<p class="-fz:l">Lorem ipsum texts...</p>
+```
+
+### `lismClass`
+
+現在のコンポーネントの主要なクラス名を指定できます。
+`<Lism>`のクラス処理の中で優先度が高めの出力順となります。
+
+<PreviewTitle>例</PreviewTitle>
+```jsx "lismClass='c--myComponent'"
+<Lism p='10' lismClass='c--myComponent'>Lorem ipsum texts...</Lism>
+
+↓
+
+<div class="c--myComponent -p:10">Lorem ipsum texts...</div>
+```
 
 
+### `variant`
 
-#### as
+`lismClass`に対するバリエーションクラスを出力できます。  
+`lismClass` に複数クラスが指定されている場合、先頭のクラスに対してバリエーションクラスを出力します。
 
-`<Lism>`コンポーネントを最終的に**別の外部コンポーネント**として展開することができます。
+
+<PreviewTitle>例</PreviewTitle>
+```jsx "variant='secondary'"
+<Lism lismClass='c--myComponent' variant='secondary'>Lorem ipsum texts...</Lism>
+
+↓
+
+<div class="c--myComponent c--myComponent--secondary">Lorem ipsum texts...</div>
+```
+
+
+### layout
+
+レイアウトモジュールを指定できます。例えば`layout='flow'`とすると、`.l--flow`クラスが出力されます。
+
+<PreviewTitle>例</PreviewTitle>
+```jsx "layout='flow'"
+<Lism layout='flow'>Lorem ipsum texts...</Lism>
+
+↓
+
+<div class="l--flow">Lorem ipsum texts...</div>
+```
+
+
+### as , exProps
+
+`as` に外部コンポーネントを指定すると、`<Lism>`を最終的に**別の外部コンポーネントとして展開する**ことができます。
 
 <Preview>
 	<PreviewTitle>例、Lismの`<Media>`コンポーネントをNext.jsの`<Image>`で展開する</PreviewTitle>
@@ -118,10 +147,8 @@ import Image from 'next/image';
 Lismコンポーネント以外に対しても Lism Props を使いたい時に活用してください。
 
 
-#### exProps
 
-Lism Props としての処理をスキップしたいプロパティを指定できます。
-
+さらに、`exProps` には **Lism Props としての処理をスキップしたいプロパティ**を指定できます。
 
 `as`で指定した外部コンポートが受け取れるプロパティと Lism Props の名前が被っている場合など、外部コンポーネント用のプロパティであることを明示的にしたい時に便利です。  
 
@@ -136,7 +163,7 @@ Lism Props としての処理をスキップしたいプロパティを指定で
 </Preview>
 
 上記のようにすることで、Lismの`Icon`コンポーネントで`p`, `fz` を受け取って処理し、`Hoge`という外部コンポーネント側で確実に`size`を受け取ることができます。  
-（現在は Lism 側では `size` は処理されませんが、`exProps`で指定しておくと将来的に影響がでる心配がなくなります。）
+（現状、Lism 側では `size` は処理されないためこの例では`exProps`は不要ですが、外部コンポーネント用のプロパティを明示的に指定しておくと、将来的にも影響がでる心配がなくなります。）
 
 
 
@@ -318,33 +345,33 @@ Lism Props としての処理をスキップしたいプロパティを指定で
 
 
 <div id='output-utility'></div>
-### `u:` でユーティリティクラスとして強制的に出力
+### `:` でユーティリティクラスとして強制的に出力
 
-対応するProp Classがない場合でも、`u:`からはじめることでその後ろの文字列がユーティリティクラス名として出力されます。
+対応するProp Classがない場合でも、`:`からはじめることでその後ろの文字列がユーティリティクラス名として出力されます。
 ```jsx
-<Lism p='u:hoge'>...</Lism>
+<Lism p=':hoge'>...</Lism>
 
 ↓
 
 <div class="-p:hoge">...</div>
 ```
 
-必要に応じて独自のクラス名を定義してCSSを追加しておくと、それを活用することができます。
+任意のユーティリティクラスをCSSへ追加し、ご利用ください。
 
 ```css
-.-p\;hoge{
+.-p\:hoge{
 	/* ... your styles ... */
 }
 ```
 
-<Callout>
-`className='-p:hoge'` としてももちろん大丈夫ですが、`u:`を使ってCSS Propとして渡すことで、Moduleクラスよりも後ろでこのクラスが出力されるようになります。
+<Callout type='info'>
+`className='-p:hoge'` としてももちろん大丈夫ですが、`:`を使ってCSS Propとして渡すこと出力順序が統一されます。
 </Callout>
 
 
-### `-{prop}`クラスのみを出力する方法
+### `.-{prop}`クラスのみを出力する方法
 
-CSS Props に対して`"-"`または`true`を指定すると、変数なしで`-{prop}`クラスのみを出力します。
+CSS Props に対して`"-"`または`true`を指定すると、変数なしで`.-{prop}`クラスのみを出力します。
 
 <Preview>
 <PreviewTitle>例</PreviewTitle>
@@ -366,6 +393,6 @@ CSS側で変数の中身を記述したい場合や、**親と同じ変数を継
 
 - そのトークン専用のクラスがある場合は、そのクラスが出力されます。
     - 例: `fz='l'` の場合は `-fz:l` クラスが出力されます。
-- 対応トークンがない場合、CSS変数がインラインスタイルで出力されます。
+- 対応トークンがあるがクラスとして登録されていない場合、CSS変数がインラインスタイルで出力されます。
     - 例: `c='red'` の場合は `class="-c"`と`style="--c:var(--red)"` が出力されます。
 	{/* - 例: `pb='20'` の場合は `class="-pb"`と`style="--pb:var(--s20)"` が出力されます。 */}

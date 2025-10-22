@@ -71,7 +71,7 @@ export function GutterGuide(props?: any) {
 export function WideContent(props: any) {
 	const { children, ...atts } = props;
 	return (
-		<Lism max-sz='wide' ta='center' bg='u:stripe' bgc='yellow:12%' {...atts}>
+		<Lism max-sz='wide' ta='center' bg=':stripe' bgc='yellow:12%' {...atts}>
 			<TipCode text='-max-sz:wide' color='yellow' m='5' />
 			{children}
 		</Lism>
@@ -81,7 +81,7 @@ export function WideContent(props: any) {
 export function FullSizeContent(props: any) {
 	const { children, ...atts } = props;
 	return (
-		<Lism max-sz='full' ta='center' bg='u:stripe' bgc='orange:12%' {...atts}>
+		<Lism max-sz='full' ta='center' bg=':stripe' bgc='orange:12%' {...atts}>
 			<TipCode text='-max-sz:full' color='orange' m='5' />
 			{children}
 		</Lism>
@@ -91,7 +91,7 @@ export function FullSizeContent(props: any) {
 export function Overwide(props: any) {
 	const { children, ...atts } = props;
 	return (
-		<Lism max-sz='outer' ta='center' bg='u:stripe' bgc='pink:12%' {...atts}>
+		<Lism max-sz='outer' ta='center' bg=':stripe' bgc='pink:12%' {...atts}>
 			<TipCode text='-max-sz:outer' color='pink' m='5' />
 			{children}
 		</Lism>
@@ -99,5 +99,5 @@ export function Overwide(props: any) {
 }
 export function LoremContent(props: any) {
 	const { children, length = 'l', ...atts } = props;
-	return <Dummy py='5' px='10' bg='u:stripe' bgc='gray:4%' length={length} {...atts} />;
+	return <Dummy py='5' px='10' bg=':stripe' bgc='gray:4%' length={length} {...atts} />;
 }
