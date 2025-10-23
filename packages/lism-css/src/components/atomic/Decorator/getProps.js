@@ -1,4 +1,4 @@
-import atts from 'lism-css/lib/helper/atts';
+import atts from '../../../lib/helper/atts';
 import getFilterProps from '../../getFilterProps';
 
 export default function ({ lismClass, size, clipPath, boxSizing, style = {}, ...props }) {

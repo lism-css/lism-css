@@ -1,6 +1,6 @@
-import atts from 'lism-css/lib/helper/atts';
-import getBpData from 'lism-css/lib/getBpData';
-import getMaybeCssVar from 'lism-css/lib/getMaybeCssVar';
+import atts from '../../../lib/helper/atts';
+import getBpData from '../../../lib/getBpData';
+import getMaybeCssVar from '../../../lib/getMaybeCssVar';
 
 export default function getSpacerProps({ lismClass, ...props }) {
 	const defaultProps = {
