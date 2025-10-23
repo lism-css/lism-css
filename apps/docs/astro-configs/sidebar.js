@@ -64,15 +64,15 @@ export default [
 		items: [
 			{
 				label: 'Container',
-				link: '/layout/container/',
+				link: '/modules/state/container/',
 			},
 			{
 				label: 'Layer',
-				link: '/layout/layer/',
+				link: '/modules/state/layer/',
 			},
 			{
 				label: 'LinkBox',
-				link: '/layout/linkbox/',
+				link: '/modules/state/linkbox/',
 			},
 		],
 	},
@@ -81,15 +81,15 @@ export default [
 		items: [
 			{
 				label: 'Box',
-				link: '/layout/box/',
+				link: '/modules/layout/box/',
 			},
 			{
 				label: 'Flow',
-				link: '/layout/flow/',
+				link: '/modules/layout/flow/',
 			},
 			{
 				label: 'Frame',
-				link: '/layout/frame/',
+				link: '/modules/layout/frame/',
 			},
 			{
 				label: '---',
@@ -97,19 +97,19 @@ export default [
 			},
 			{
 				label: 'Flex',
-				link: '/layout/flex/',
+				link: '/modules/layout/flex/',
 			},
 			{
 				label: 'Cluster',
-				link: '/layout/cluster/',
+				link: '/modules/layout/cluster/',
 			},
 			{
 				label: 'Stack',
-				link: '/layout/stack/',
+				link: '/modules/layout/stack/',
 			},
 			{
 				label: 'WithSide',
-				link: '/layout/withside/',
+				link: '/modules/layout/withside/',
 			},
 			{
 				label: '---',
@@ -117,15 +117,15 @@ export default [
 			},
 			{
 				label: 'Grid',
-				link: '/layout/grid/',
+				link: '/modules/layout/grid/',
 			},
 			{
 				label: 'Center',
-				link: '/layout/center/',
+				link: '/modules/layout/center/',
 			},
 			{
 				label: 'Columns',
-				link: '/layout/columns/',
+				link: '/modules/layout/columns/',
 			},
 			{
 				label: '---',
@@ -163,15 +163,15 @@ export default [
 		items: [
 			{
 				label: 'Accordion',
-				link: '/layout/accordion/',
+				link: '/modules/dynamic/accordion/',
 			},
 			{
 				label: 'Modal',
-				link: '/layout/modal/',
+				link: '/modules/dynamic/modal/',
 			},
 			{
 				label: 'Tabs',
-				link: '/layout/tabs/',
+				link: '/modules/dynamic/tabs/',
 			},
 		],
 	},
