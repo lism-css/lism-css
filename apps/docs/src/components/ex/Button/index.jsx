@@ -9,7 +9,7 @@ export default function Button({ layout = 'flex', children, ...props }) {
 	};
 
 	return (
-		<Lism lismClass='c--button' layout='flex' tag='a' td='none' ai='center' hov='o' _propConfig={_propConfig} {...props}>
+		<Lism lismClass='c--button' layout='flex' tag='a' hov='o' _propConfig={_propConfig} {...props}>
 			{children}
 		</Lism>
 	);
