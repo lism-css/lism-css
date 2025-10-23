@@ -84,31 +84,6 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, EmbedCode, Reference, 
 	</PreviewCode>
 </Preview>
 
-<Preview>
-	<PreviewTitle>`u-trimItems`</PreviewTitle>
-	<PreviewArea resize p='30'>
-		<Stack className='u-trimItems' bd p='30'>
-			<Dummy lang='ja' length='s' />
-			<Dummy lang='ja' />
-		</Stack>
-	</PreviewArea>
-	<PreviewCode slot="tab" label="HTML">
-		```html
-		<div class='u-trimItems l--stack -bd -g:30 -p:30'>
-			<p>ロレム・イプサムの座り雨、トマ好き学習だったエリット、しかし時と活力はそのような木々と楽しみ。</p>
-			<p>ロレム・イプサムの座り雨、トマ好き学習だったエリット、しかし時と活力はそのような木々と楽しみ。ブラインド行うにはいくつかの重要な事柄が流れます。</p>
-		</div>
-		```
-	</PreviewCode>
-	<PreviewCode slot="tab" label='JSX'>
-		```jsx
-		<Stack className='u-trimItems' bd g='30' p='30'>
-			<Dummy lang='ja' length='s' />
-			<Dummy lang='ja' />
-		</Stack>
-		```
-	</PreviewCode>
-</Preview>
 
 `u-trimItems`内の`img`, `figure`, `table`に対してはマージンの調節を無効化しています。
 
@@ -124,7 +99,7 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, EmbedCode, Reference, 
 	<PreviewCode slot="tab" label="HTML">
 		```html
 		<div class='u-trimItems l--stack -bd -g:40 -p:30 -bdrs:10'>
-			<img class='-ar:og' src='/img/img-1.jpg' />
+			<img class='a--media -ar:og' src='/img/img-1.jpg' />
 			<p>ロレム・イプサムの座り雨、トマ好き学習だったエリット、しかし時と活力はそのような木々と楽しみ。</p>
 			<p>ロレム・イプサムの座り雨、トマ好き学習だったエリット、しかし時と活力はそのような木々と楽しみ。ブラインド行うにはいくつかの重要な事柄が流れます...。</p>
 		</div>

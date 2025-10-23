@@ -26,6 +26,7 @@ export * from './Frame';
 export * from './atomic/Decorator';
 export * from './atomic/Divider';
 export * from './atomic/Icon';
+export * from './atomic/Media';
 export * from './atomic/Spacer';
 
 // d--

@@ -2,7 +2,7 @@
 title: 'Avatar'
 description: ...
 ---
-import { Flex, Media, Frame } from 'lism-css/astro';
+import { Flex,  Frame } from 'lism-css/astro';
 import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportSource, ImportExComponent } from "~/components";
 import Avatar from '~/components/ex/Avatar/index.astro';
 
@@ -27,13 +27,13 @@ import Avatar from '~/components/ex/Avatar/index.astro';
 	<PreviewTitle>Preview</PreviewTitle>
 	<PreviewArea p='30' bg=':stripe'>
 		<Frame ar='1/1' w='4em' bdrs='99'>
-			<Media src='/img/avatar01.jpg' alt='Avatar of xxxx' width='100%' height='100%' decoding='async' />
+			<img src='/img/avatar01.jpg' alt='Avatar of xxxx' width='100%' height='100%' decoding='async' />
 		</Frame>
 	</PreviewArea>
 	<PreviewCode slot='tab' label='JSX'>
 		```jsx
 		<Frame ar='1/1' w='4em' bdrs='99'>
-			<Media src='/img/avatar01.jpg' alt='Avatar of xxxx' width='100%' height='100%' decoding='async' />
+			<img src='/img/avatar01.jpg' alt='Avatar of xxxx' width='100%' height='100%' decoding='async' />
 		</Frame>　
 		```
 	</PreviewCode>

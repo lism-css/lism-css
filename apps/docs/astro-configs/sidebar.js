@@ -54,10 +54,6 @@ export default [
 				link: '/components/html/',
 			},
 			{
-				label: 'Media',
-				link: '/components/media/',
-			},
-			{
 				label: 'Dummy',
 				link: '/components/dummy/',
 			},
@@ -141,20 +137,24 @@ export default [
 		label: 'Atomic Modules',
 		items: [
 			{
-				label: 'Divider',
-				link: '/modules/atomic/divider/',
-			},
-			{
-				label: 'Spacer',
-				link: '/modules/atomic/spacer/',
-			},
-			{
 				label: 'Decorator',
 				link: '/modules/atomic/decorator/',
 			},
 			{
+				label: 'Divider',
+				link: '/modules/atomic/divider/',
+			},
+			{
 				label: 'Icon',
 				link: '/modules/atomic/icon/',
+			},
+			{
+				label: 'Media',
+				link: '/modules/atomic/media/',
+			},
+			{
+				label: 'Spacer',
+				link: '/modules/atomic/spacer/',
 			},
 		],
 	},

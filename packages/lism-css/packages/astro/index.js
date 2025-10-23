@@ -22,10 +22,11 @@ export * from './Container';
 export * from './Layer';
 export * from './LinkBox';
 
-export * from './Spacer';
 export * from './Decorator';
 export * from './Divider';
 export * from './Icon';
+export * from './Media';
+export * from './Spacer';
 
 export { default as Accordion } from './Accordion';
 export { default as Modal } from './Modal';
