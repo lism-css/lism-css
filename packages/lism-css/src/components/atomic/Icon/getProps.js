@@ -1,5 +1,5 @@
 import presets from './presets';
-import atts from 'lism-css/lib/helper/atts';
+import atts from '../../../lib/helper/atts';
 
 // SVG文字列をパースしてexPropsとコンテンツを生成する関数
 function parseSvgString(svgString) {

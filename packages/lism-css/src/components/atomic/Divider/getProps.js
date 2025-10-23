@@ -1,4 +1,4 @@
-import atts from 'lism-css/lib/helper/atts';
+import atts from '../../../lib/helper/atts';
 
 export function getDividerProps({ lismClass, ...props }) {
 	const defaultProps = {
