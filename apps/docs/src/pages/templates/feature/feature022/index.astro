@@ -1,12 +1,18 @@
 ---
 import DemoPageLayout from '~/layouts/DemoPageLayout.astro';
 
-import { Stack, Container, Frame, Grid, GridItem, Media, HTML, Layer } from 'lism-css/astro';
+import { Stack, Container, Frame, Grid, Media, HTML, Layer } from 'lism-css/astro';
 import './_style.css';
 ---
 
 <DemoPageLayout title='Feature022'>
 	<Grid gtr='auto' gtc={['auto', null, 'auto 1fr']} pos='rel'>
+		<Layer>
+			<Frame h='100%'>
+				<Media src='/img/img-1.jpg' alt='' width='960' height='640' />
+				<Layer bgc='black:30%' />
+			</Frame>
+		</Layer>
 		<Container size='m' gr='1' gc='1' hasGutter pos='rel' z='1'>
 			<Grid gtc={['auto', null, 'auto 1fr']} c='white' g='60' py='60'>
 				<HTML.p class='u-trim' fz='3xl' fw='bold'>自然素材が生み出す<br />癒やしのひととき</HTML.p>
@@ -29,11 +35,5 @@ import './_style.css';
 				</Stack>
 			</Grid>
 		</Container>
-		<GridItem gr='1' gc='1' pos='abs' w='100%' h='100%'>
-			<Frame h='100%'>
-				<Media src='/img/img-1.jpg' alt='' width='960' height='640' />
-				<Layer bgc='black:30%' />
-			</Frame>
-		</GridItem>
 	</Grid>
 </DemoPageLayout>
