@@ -1,5 +1,5 @@
 import React from 'react';
-import { Lism, Stack, Grid, Frame, Media, Decorator } from 'lism-css/react';
+import { Lism, Stack, Grid, Frame, Decorator } from 'lism-css/react';
 import './style.css';
 
 export default function Chat({ variant = 'speak', direction = 'start', name, avatar, keycolor = 'gray', flowGap = 's', children, ...props }) {
@@ -7,7 +7,7 @@ export default function Chat({ variant = 'speak', direction = 'start', name, ava
 		<Grid lismClass='c--chat' variant={variant} keycolor={keycolor} data-chat-dir={direction} ji={direction} {...props}>
 			{avatar && (
 				<Frame lismClass='c--chat_avatar' ga=':avatar' src={avatar} alt='' bgc='base' ar='1/1' bdrs='99' aria-hidden='true'>
-					<Media src={avatar} alt='' width='60' height='60' decoding='async' />
+					<img src={avatar} alt='' width='60' height='60' decoding='async' />
 				</Frame>
 			)}
 			{name && (

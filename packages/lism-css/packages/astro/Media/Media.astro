@@ -1,16 +1,8 @@
 ---
-import type { LismProps } from '../../types';
 import getLismProps from '../../../dist/lib/getLismProps';
-import getMediaProps from '../../../dist/components/getMediaProps';
+import getMediaProps from '../../../dist/components/atomic/Media/getProps';
 import { Image } from 'astro:assets';
 
-// Propsの定義
-interface Props extends LismProps {
-	// src?: string;
-	// alt?: string;
-	// width?: string | number;
-	// height?: string | number;
-}
 const { as, exProps, tag, ...props } = Astro.props || {};
 
 let JSX = as || tag || 'img';
