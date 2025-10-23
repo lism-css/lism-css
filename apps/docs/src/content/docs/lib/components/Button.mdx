@@ -99,8 +99,8 @@ import Button from '~/components/ex/Button/index.astro';
 <Preview>
 	<PreviewTitle>`Button`の使用例</PreviewTitle>
 	<PreviewArea p='30' bg=':stripe' layout=''>
-		<Flex g='20'>
-			<Button href='###'>Button</Button>
+		<Button href='###' max-sz="xs">Button</Button>
+		<Flex g='20' my-s='30'>
 			<Button href='###' bgc='main' bdrs='20'>Button</Button>
 			<Button href='###' bgc='#d13d5e' bdrs='99'><Icon icon='cart'/>Button</Button>
 		</Flex>
@@ -108,8 +108,8 @@ import Button from '~/components/ex/Button/index.astro';
 
 	<PreviewCode slot='tab' label='JSX'>
 		```jsx
-		<Flex g='20'>
-			<Button href='###'>Button</Button>
+		<Button href='###' max-w="xs">Button</Button>
+		<Flex g='20' my-s='30'>
 			<Button href='###' bgc='main' bdrs='20'>Button</Button>
 			<Button href='###' bgc='#d13d5e' bdrs='99'><Icon icon='cart'/>Button</Button>
 		</Flex>
@@ -118,9 +118,9 @@ import Button from '~/components/ex/Button/index.astro';
 	<PreviewCode slot='tab' label='HTML'>
 		```html
 		<div class='l--flex -g:20'>
-			<a class='c--button l--flex -td:none -ai:center -hov:o' href='###'>Button</a>
-			<a class='c--button l--flex -td:none -ai:center -hov:o -bgc:main -bdrs:20' href='###'>Button</a>
-			<a class='c--button l--flex -td:none -ai:center -hov:o -bdrs:99' href='###' style="--bgc:#d13d5e">
+			<a class='c--button l--flex -hov:o -max-sz:xs' href='###'>Button</a>
+			<a class='c--button l--flex -hov:o -bgc:main -bdrs:20' href='###'>Button</a>
+			<a class='c--button l--flex -hov:o -bdrs:99' href='###' style="--bgc:#d13d5e">
 				<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 256 256' width='1em' height='1em' fill='currentColor' focusable='false' class='a--icon' aria-hidden='true'>
 					<path d='M230.14,58.87A8,8,0,0,0,224,56H62.68L56.6,22.57A8,8,0,0,0,48.73,16H24a8,8,0,0,0,0,16h18L67.56,172.29a24,24,0,0,0,5.33,11.27,28,28,0,1,0,44.4,8.44h45.42A27.75,27.75,0,0,0,160,204a28,28,0,1,0,28-28H91.17a8,8,0,0,1-7.87-6.57L80.13,152h116a24,24,0,0,0,23.61-19.71l12.16-66.86A8,8,0,0,0,230.14,58.87ZM104,204a12,12,0,1,1-12-12A12,12,0,0,1,104,204Zm96,0a12,12,0,1,1-12-12A12,12,0,0,1,200,204Zm4-74.57A8,8,0,0,1,196.1,136H77.22L65.59,72H214.41Z' ></path>
 				</svg>
@@ -154,9 +154,9 @@ import Button from '~/components/ex/Button/index.astro';
 	<PreviewCode slot='tab' label='HTML'>
 		```html
 		<div class='l--flex -g:20'>
-			<a class='c--button c--button--outline l--flex -td:none -ai:center -hov:o' href='###'>Button</a>
-			<a class='c--button c--button--outline l--flex -td:none -ai:center -hov:o -c:main -bdrs:20' href='###'>Button</a>
-			<a class='c--button c--button--outline l--flex -td:none -ai:center -hov:o -bdrs:99' href='###' style="--c:#d13d5e">
+			<a class='c--button c--button--outline l--flex -hov:o' href='###'>Button</a>
+			<a class='c--button c--button--outline l--flex -hov:o -c:main -bdrs:20' href='###'>Button</a>
+			<a class='c--button c--button--outline l--flex -hov:o -bdrs:99' href='###' style="--c:#d13d5e">
 				<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 256 256' width='1em' height='1em' fill='currentColor' focusable='false' class='a--icon' aria-hidden='true'>
 					<path d='M230.14,58.87A8,8,0,0,0,224,56H62.68L56.6,22.57A8,8,0,0,0,48.73,16H24a8,8,0,0,0,0,16h18L67.56,172.29a24,24,0,0,0,5.33,11.27,28,28,0,1,0,44.4,8.44h45.42A27.75,27.75,0,0,0,160,204a28,28,0,1,0,28-28H91.17a8,8,0,0,1-7.87-6.57L80.13,152h116a24,24,0,0,0,23.61-19.71l12.16-66.86A8,8,0,0,0,230.14,58.87ZM104,204a12,12,0,1,1-12-12A12,12,0,0,1,104,204Zm96,0a12,12,0,1,1-12-12A12,12,0,0,1,200,204Zm4-74.57A8,8,0,0,1,196.1,136H77.22L65.59,72H214.41Z' ></path>
 				</svg>
@@ -216,7 +216,7 @@ import Button from '~/components/ex/Button/index.astro';
 		<Button href='###' g='10' w='fit' bdrs='10'>
 			<Fragment>Button</Fragment>
 		</Button>
-		<Button href='###' max-w='20rem' py='20' jc='center' g='10' fz='l' bdrs='10'>
+		<Button href='###' max-sz='20rem' py='20' g='10' fz='l' bdrs='10'>
 			<Fragment>Button</Fragment>
 		</Button>
 	</PreviewArea>
@@ -225,7 +225,7 @@ import Button from '~/components/ex/Button/index.astro';
 		<Button href='###' g='10' w='fit' bdrs='10'>
 			Button
 		</Button>
-		<Button href='###' max-w='20rem' py='30' jc='center' g='10' fz='l' bdrs='10'>
+		<Button href='###' max-sz='20rem' py='30' g='10' fz='l' bdrs='10'>
 			Button
 		</Button>
 		```
