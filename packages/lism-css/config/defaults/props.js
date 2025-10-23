@@ -54,7 +54,7 @@ export default {
 
 	// size
 	w: { prop: 'width', utils: { fit: 'fit-content' }, presets: ['100%'], token: 'sz', bp: 1 },
-	h: { prop: 'height', utils: { fit: 'fit-content' }, presets: ['100%'], token: 'sz', bp: 1 },
+	h: { prop: 'height', presets: ['100%'], token: 'sz', bp: 1 },
 	'min-w': { prop: 'minWidth', presets: ['100%'], token: 'sz', bp: 1 },
 	'max-w': { prop: 'maxWidth', presets: ['100%'], token: 'sz', bp: 1 },
 	'min-h': { prop: 'minHeight', presets: ['100%'], token: 'sz', bp: 1 },
