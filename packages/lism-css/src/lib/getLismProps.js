@@ -22,27 +22,15 @@ const getTokenKey = (propName) => {
 class LismPropsData {
 	// propList = {};
 	className = '';
-	uClasses = []; // props解析処理で追加される
+	uClasses = [];
+	lismState = [];
 	styles = {};
 	attrs = {};
 
 	constructor(allProps) {
 		// 受け取るpropsとそうでないpropsを分ける
-		const {
-			forwardedRef,
-			class: classFromAstro,
-			className,
-			lismClass,
-			lismState = [],
-			setClass = '',
-			layout,
-			variant,
-			style = {},
-			_propConfig = {},
-			...others
-		} = allProps;
+		const { forwardedRef, class: classFromAstro, className, lismClass, layout, variant, style = {}, _propConfig = {}, ...others } = allProps;
 
-		this.lismState = [...lismState];
 		this.styles = { ...style };
 		this._propConfig = { ..._propConfig };
 
@@ -94,7 +82,7 @@ class LismPropsData {
 		// }
 
 		// クラスの結合
-		this.className = atts(classFromAstro, className, _lismClass, this.lismState, setClass, this.uClasses);
+		this.className = atts(className || classFromAstro, _lismClass, this.lismState, this.uClasses);
 	}
 
 	// prop解析

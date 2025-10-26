@@ -8,7 +8,7 @@ export default function Tab({ tabId = 'tab', index = 0, isActive = false, ...pro
 		<Lism
 			tag='button'
 			lismClass='d--tabs_tab'
-			setClass='set-plain'
+			setPlain
 			role='tab'
 			aria-controls={controlId}
 			aria-selected={isActive ? 'true' : 'false'}
