@@ -12,7 +12,7 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, EmbedCode, Callout, Ic
 hover時の挙動をコントロールするためのCSS設計について紹介します。
 
 
-Lismでは、てhover時のスタイルは`-hov:`で始まるPropクラスで定義します。  
+Lismでは、hover時のスタイルは`-hov:`で始まるPropクラスで定義します。  
 また、`set-transition`クラスを併用することでトランジションの設定を行います。
 
 
@@ -270,7 +270,7 @@ Lismに内包されているクラスでは、それぞれ初期値を定義し�
 		```scss
 		/* 変数は.set-hov で定義済み */
 		.-hov\:test {
-			color: var(--isHov_, red) var(--notHov_, blue); /* hover時はgreen, 非hover時はblue*/
+			color: var(--isHov_, red) var(--notHov_, blue); /* hover時はred, 非hover時はblue*/
 			background-color: var(--notHov_, lightgray); /* 非hover時はlightgray、hover時は無効な値 */
 			box-shadow: var(--isHov_, var(--bxsh--30)); /* hover時はshadowあり、非hover時は無効な値 */
 		}
