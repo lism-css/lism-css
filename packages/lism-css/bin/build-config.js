@@ -1,8 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import { CONFIG } from 'lism-css/config';
-// import { getMaybeTokenValue } from 'lism-css/config/helper.js';
+import { CONFIG } from '../config/index.js';
 
 // ES modules用の__dirname取得
 const __filename = fileURLToPath(import.meta.url);

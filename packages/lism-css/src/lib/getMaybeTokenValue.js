@@ -1,4 +1,4 @@
-import { TOKENS } from 'lism-css/config';
+import { TOKENS } from '../../config/index.js';
 
 export default function getMaybeTokenValue(tokenKey, value) {
 	if (typeof tokenKey !== 'string') return value;
