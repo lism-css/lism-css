@@ -1,5 +1,5 @@
 // import { PROPS } from '../config';
-import { PROPS, STATES } from 'lism-css/config';
+import { PROPS, STATES } from '../../config/index.js';
 import isPresetValue from './isPresetValue';
 import isTokenValue from './isTokenValue';
 import getUtilKey from './getUtilKey';
