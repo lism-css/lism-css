@@ -4,9 +4,9 @@ description: ...
 sidebar:
   order: 5
 ---
-import { Lism, Flow, HTML, Grid, Stack, Center, Box, Dummy, Media, Frame, Flex, Layer, Spacer } from "lism-css/astro";
+import { Lism, Flow, HTML, Grid, Stack, Center, Box, Dummy, Media, Frame, Flex, Layer, Spacer, Icon } from "lism-css/astro";
 import { Preview, PreviewArea, PreviewTitle, PreviewCode, EmbedCode, Reference, Callout } from "~/components";
-
+import { Dog, Cat, Smiley, WarningCircle } from "@phosphor-icons/react";
 
 ユーティリティクラスを紹介します。
 
@@ -300,3 +300,36 @@ Lism Componentsでは`setMask`プロパティに指定した文字列が`--mask-
 	border-width: 0;
 }
 ```
+
+
+## `u-inlineCenter`
+
+絵文字やインラインアイコンをテキストのセンター位置に合わせて配置するためのクラスです。
+`vertical-align: middle;`だけではずれが発生するため、追加で`translate`で調整を加えています。
+
+
+<PreviewTitle>追加CSS</PreviewTitle>
+```scss
+.u-inlineCenter {
+	vertical-align: middle; // 基準をmiddleにセット
+	translate: 0 calc(-1 * (0.35em - 0.5ex)); // middleの計算式を元に追加で調整。（0.5cap - 0.5ex が英文では理想。）
+}
+```
+
+<Preview>
+	<PreviewTitle>使用例</PreviewTitle>
+	<PreviewArea p='30'>
+		<p><Icon className='u-inlineCenter' icon='alert' c='red' fz='xl' /> Lorem ipsum dolor sit amet.</p>
+		<p><Icon className='u-inlineCenter' as={Dog} fz='l' />Dog, and <Icon className='u-inlineCenter' as={Cat} fz='l'/>Cat.</p>
+		<p><span class='u-inlineCenter -fz:xl'>🚀</span> Emoji.</p>
+		<p><Icon fz='2xl' className='u-inlineCenter' src="https://emojix.s3.ap-northeast-1.amazonaws.com/g3/svg/1f916.svg" alt="image" /> Inline img icon.</p>
+	</PreviewArea>
+	<PreviewCode>
+		```jsx "u-inlineCenter"
+		<p><Icon className='u-inlineCenter' icon='alert' c='red' fz='xl' /> Lorem ipsum dolor sit amet.</p>
+		<p><Icon className='u-inlineCenter' as={Dog} fz='l' />Dog, and <Icon className='u-inlineCenter' as={Cat} fz='l'/>Cat.</p>
+		<p><span class='u-inlineCenter -fz:xl'>🚀</span> Emoji.</p>
+		<p><Icon fz='2xl' className='u-inlineCenter' src="https://emojix.s3.ap-northeast-1.amazonaws.com/g3/svg/1f916.svg" alt="image" /> Inline img icon.</p>
+		```
+	</PreviewCode>
+</Preview>

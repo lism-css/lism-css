@@ -187,7 +187,6 @@ Lismパッケージ（`lism-css`)内にはいくつかsvgアイコンを内包�
 </Preview>
 
 
-
 ### svgを直接記述する方法
 
 `<Icon>`は、`viewBox`の指定があれば`<svg>`で出力されます。  
@@ -218,6 +217,27 @@ Lismパッケージ（`lism-css`)内にはいくつかsvgアイコンを内包�
 </Preview>
 
 
+### src でimgを指定する方法
+
+
+<Preview>
+	<PreviewTitle>使用例</PreviewTitle>
+	<PreviewArea p='30'>
+	<Flex g='10' ai='center'>
+		<Icon fz='4xl' src="/img/avatar01.jpg" alt="image" />
+		<span>Img icon.</span>
+	</Flex>
+	</PreviewArea>
+	<PreviewCode>
+		```jsx
+		<Flex g='10' ai='center'>
+			<Icon fz='4xl' src="/img/avatar01.jpg" alt="image" />
+			<span>Img icon.</span>
+		</Flex>
+		```
+	</PreviewCode>
+</Preview>
+
 {/* ### has--mask との併用
 
 `<Icon>`で （[`hasMask`(`.shas--mask`)](/css/module-class/#has--mask)  を使う例を紹介します。
@@ -241,44 +261,6 @@ Lismパッケージ（`lism-css`)内にはいくつかsvgアイコンを内包�
 	</PreviewCode>
 </Preview> */}
 
-
-
-## Opt-in
-
-### `variant='inline'`
-
-アイコンをインラインで文字と並んでも見やすくなるような調整を追加したようなバリエーションクラスの追加例を紹介します。
-
-
-`.a--icon--inline`に対しては次のようなCSSが適用されており、インラインで文字と並んでも見やすくなるような調整がデフォルトで入っています。
-
-
-<PreviewTitle>追加CSS</PreviewTitle>
-```css
-.a--icon--inline {
-	--_scale: 1.125; /* アイコンは小さくなりがちなので、デフォルトでほんのり拡大 */
-	vertical-align: -0.125em; /* テキストの下部付近に揃える */
-	margin-inline: calc(1em * (var(--_scale) - 1) / 2); /* scaleを考慮し、マージンを確保 */
-}
-```
-
-<Preview>
-	<PreviewTitle>使用例</PreviewTitle>
-	<PreviewArea p='30'>
-		<p><Icon variant='inline' as={Horse} /> Horse, and Cat <Icon variant='inline' as={Cat}/>.</p>
-		<p><Icon variant='inline' icon={{as:WarningCircle, weight:'fill'}} c='red' fz='xl' /> Lorem ipsum dolor sit amet.</p>
-	</PreviewArea>
-	<PreviewCode>
-		```jsx "variant='inline'"
-		<p>
-			<Icon variant='inline' as={Horse} /> Horse, and Cat <Icon variant='inline' as={Cat}/>.
-		</p>
-		<p>
-			<Icon variant='inline' icon={{as:WarningCircle, weight:'fill'}} c='red' fz='xl' /> Lorem ipsum dolor sit amet.
-		</p>
-		```
-	</PreviewCode>
-</Preview>
 
 
 

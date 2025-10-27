@@ -64,6 +64,8 @@ export default function getProps({
 	// viewBoxがあれば、svg描画として扱う
 	if (props.viewBox) {
 		Component = 'svg';
+	} else if (props.src) {
+		Component = 'img';
 	} else if (icon) {
 		// icon が 文字列の場合
 		if (typeof icon === 'string') {
