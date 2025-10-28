@@ -18,7 +18,8 @@ const { isInline = false, hasSizeSwitch = false, url, ...props } = Astro.props;
 				<div class='c--previewSizeSwitcher l--flex -g:20 -jc:center' data-preview-url={url}>
 					<button
 						class='c--previewSizeSwitcher_btn l--center -bdrs:10'
-						data-size='400px'
+						data-size='360px'
+						data-w-pct='120'
 						data-ar='2/3'
 					>
 						<Icon as={DeviceMobileCameraIcon} fz="xl"/>
@@ -84,15 +85,23 @@ const { isInline = false, hasSizeSwitch = false, url, ...props } = Astro.props;
 				
 				if (!prevFrame) return;
 
+				const prevDiv = prevFrame.querySelector('.u--scalePreview');
+
 				// ボタンクリック時の処理
 				sizeButtons.forEach((button) => {
 					button.addEventListener('click', function () {
 						const size = this.dataset.size;
 						const aspectRatio = this.dataset.ar;
+						const wPct = this.dataset.wPct;
 
 						// prevFrameのサイズとアスペクト比を更新
 						prevFrame.style.width = size;
 						prevFrame.style.setProperty('--ar', aspectRatio);
+						if (wPct) {
+							prevDiv.style.setProperty('--w-pct', wPct);
+						} else {
+							prevDiv.style.removeProperty('--w-pct');
+						}
 
 						// アクティブクラスの切り替え
 						sizeButtons.forEach((btn) => {
