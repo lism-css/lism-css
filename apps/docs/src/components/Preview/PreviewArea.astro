@@ -4,12 +4,13 @@ import { ArrowDownRight } from '@phosphor-icons/react';
 
 const { resize, nogrid = false, p = '5', ...props } = Astro.props || {};
 
-// data-bg-grid={nogrid ? '0' : '1'}
+let innerClass = 'c--preview_inner';
+if (resize) innerClass += ' is--resize';
 ---
 
 <Lism className='c--preview_area'>
 	<div class='c--preview_area_frame'>
-		<Lism className='c--preview_inner is--resize' layout='flow' p={p} {...props}>
+		<Lism className={innerClass} layout='flow' p={p} {...props}>
 			<slot />
 			{
 				resize && (
