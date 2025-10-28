@@ -1,14 +1,14 @@
 ---
 import DemoPageLayout from '~/layouts/DemoPageLayout.astro';
 
-import { HTML, Container, Frame, Grid, Media, Stack, Layer, Center } from 'lism-css/astro';
+import { HTML, Container, Frame, Columns, Grid, Media, Stack, Layer, Center } from 'lism-css/astro';
 import './_style.css';
 ---
 
 <DemoPageLayout title='Feature008'>
 	<Container size='m' bgc='base' py='60' hasGutter>
 		<HTML.h lv='2' ta='center' mb='50'>製品について</HTML.h>
-		<Grid gtc={['auto', null, 'repeat(2, 1fr)']} g='50'>
+		<Columns cols={[1, null, 2]} g={['40', null, '50']}>
 			<Grid isLinkBox href='#' gtc='1fr 2fr' bxsh='20' setTransition setHov hov='bxsh'>
 				<Frame tag='figure' pos='rel'>
 					<Media src='/img/img-1.jpg' alt='' width='960' height='640' />
@@ -65,7 +65,7 @@ import './_style.css';
 					<HTML.p class='u-trim' fz='s' o='mild'>高性能フィルターが微細な粒子を99%捕集。静かな運転音で寝室にも最適。</HTML.p>
 				</Stack>
 			</Grid>
-		</Grid>
+		</Columns>
 	</Container>
 </DemoPageLayout>
 

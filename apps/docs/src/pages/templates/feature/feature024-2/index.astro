@@ -8,18 +8,18 @@ import './_style.css';
 
 <DemoPageLayout title='Feature024'>
 	<Container size='l' bgc='gray' py='60' hasGutter>
-		<Columns cols={[1, null, 3]} g={['40', null, '50']} c='white'>
-			<Stack g='40'>
+		<Columns cols={[1, null, 5]} g='50' c='white'>
+			<Stack g='40' gc={{ md: '1 / span 3' }} gr={{ md: '1' }} z='1'>
 				<HTML.p class='u-trim' fz='5xl' ff='accent' fs='italic' fw='light' lts='l'>Feature</HTML.p>
 				<p>
 					私たちのサービスは、ユーザーの皆様に最高の体験を提供することを目指しています。
 					最新の技術を駆使し、使いやすさと安全性を両立させたプラットフォームを構築しました。
 				</p>
 			</Stack>
-			<Frame ar='3/4'>
+			<Frame ar={['1/1']} min-w='300px' mb='70' gc={{ md: '2 / span 3' }} gr={{ md: '1' }}>
 				<Media src='/img/img-2.jpg' alt='' />
 			</Frame>
-			<Stack aslf='end' g='40'>
+			<Stack aslf='end' bdrs='20' p='40' g='40' gc={{ md: '4 / span 2' }} gr={{ md: '1' }} z='1'>
 				<p>
 					最新の技術を駆使し、使いやすさと安全性を両立させたプラットフォームを構築しました。
 					多様なニーズに対応するため、柔軟なカスタマイズオプションも用意しています。
@@ -31,3 +31,13 @@ import './_style.css';
 		</Columns>
 	</Container>
 </DemoPageLayout>
+
+<style is:inline>
+	@media (any-hover: hover) {
+		.l--frame {
+			border-radius: 50%;
+			mask-image: radial-gradient(black 50%, transparent 70%);
+			/* linear-gradient(to right, transparent, black 20%, black 80%, transparent 100%); */
+		}
+	}
+</style>

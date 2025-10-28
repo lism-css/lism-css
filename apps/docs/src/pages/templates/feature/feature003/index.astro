@@ -1,14 +1,14 @@
 ---
 import DemoPageLayout from '~/layouts/DemoPageLayout.astro';
 
-import { Stack, Container, Frame, Grid, Media, HTML, Flex, Icon } from 'lism-css/astro';
+import { Stack, Container, Frame, Columns, Grid, Media, HTML, Flex, Icon } from 'lism-css/astro';
 import './_style.css';
 ---
 
 <DemoPageLayout title='Feature003'>
 	<Container size='l' py='60' hasGutter>
-		<Stack g='50'>
-			<Grid gtc={['1fr', null, 'auto 1fr']} g='50'>
+		<Stack g={['40', '50']}>
+			<Grid gtc={['1fr', null, 'auto 1fr']} g='inherit'>
 				<Stack class='u-trimItems' g='20'>
 					<h2>私たちの取り組み</h2>
 					<HTML.p fz='l' o='soft'>Feature section</HTML.p>
@@ -20,8 +20,8 @@ import './_style.css';
 					</HTML.p>
 				</Flex>
 			</Grid>
-			<Grid gtc={['1fr', 'repeat(2, 1fr)', 'repeat(4, 1fr)']} g={['40', '50']}>
-				<Grid gtr='subgrid' gr='span 2' isLinkBox href='#' g='30' ai='start' setHov>
+			<Columns cols={[2, null, 4]} g={['40', '50']}>
+				<Grid isLinkBox href='#' g='30' ai='start' setHov>
 					<Frame ar='1/1' bdrs='10'>
 						<Media src='/img/img-2.jpg' alt='' width='960' height='640' setTransition hov='to:zoom' />
 					</Frame>
@@ -30,7 +30,7 @@ import './_style.css';
 						<Icon fz='125%' icon='arrow-right' mx-s='auto' setTransition hov='to:solid' />
 					</Flex>
 				</Grid>
-				<Grid gtr='subgrid' gr='span 2' isLinkBox href='#' g='30' ai='start' setHov>
+				<Grid isLinkBox href='#' g='30' ai='start' setHov>
 					<Frame ar='1/1' bdrs='10'>
 						<Media src='/img/img-4.jpg' alt='' width='960' height='640' setTransition hov='to:zoom' />
 					</Frame>
@@ -39,7 +39,7 @@ import './_style.css';
 						<Icon fz='125%' icon='arrow-right' mx-s='auto' setTransition hov='to:solid' />
 					</Flex>
 				</Grid>
-				<Grid gtr='subgrid' gr='span 2' isLinkBox href='#' g='30' ai='start' setHov>
+				<Grid isLinkBox href='#' g='30' ai='start' setHov>
 					<Frame ar='1/1' bdrs='10'>
 						<Media src='/img/img-3.jpg' alt='' width='960' height='640' setTransition hov='to:zoom' />
 					</Frame>
@@ -48,7 +48,7 @@ import './_style.css';
 						<Icon fz='125%' icon='arrow-right' mx-s='auto' setTransition hov='to:solid' />
 					</Flex>
 				</Grid>
-				<Grid gtr='subgrid' gr='span 2' isLinkBox href='#' g='30' ai='start' setHov>
+				<Grid isLinkBox href='#' g='30' ai='start' setHov>
 					<Frame ar='1/1' bdrs='10'>
 						<Media src='/img/img-5.jpg' alt='' width='960' height='640' setTransition hov='to:zoom' />
 					</Frame>
@@ -57,7 +57,7 @@ import './_style.css';
 						<Icon fz='125%' icon='arrow-right' mx-s='auto' setTransition hov='to:solid' />
 					</Flex>
 				</Grid>
-			</Grid>
+			</Columns>
 		</Stack>
 	</Container>
 </DemoPageLayout>

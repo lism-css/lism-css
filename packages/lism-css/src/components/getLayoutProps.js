@@ -5,8 +5,16 @@ import getMaybeTokenValue from '../lib/getMaybeTokenValue';
 export default function getLayoutProps(layout, props) {
 	if (!layout || typeof layout !== 'string') return props;
 
-	const { lismClass, ...rest } = props;
+	const {
+		lismClass,
+		//[layout]: variant,
+		...rest
+	} = props;
 	rest.lismClass = atts(lismClass, `l--${layout}`);
+
+	// if (variant) {
+	// 	rest.lismClass = atts(rest.lismClass, `${layout}:${variant}`);
+	// }
 
 	if (layout === 'flow') {
 		return getFlowProps(rest);
@@ -32,8 +40,8 @@ function geGridProps({ _propConfig = {}, ...props }) {
 }
 
 function getWithSideProps({ sideW, mainW, style = {}, ...props }) {
-	if (null != sideW) style['--_side-w'] = sideW;
-	if (null != mainW) style['--_main-w'] = mainW;
+	if (null != sideW) style['--_side-w'] = getMaybeTokenValue('sz', sideW);
+	if (null != mainW) style['--_main-w'] = getMaybeTokenValue('sz', mainW);
 
 	props.style = style;
 	return props;

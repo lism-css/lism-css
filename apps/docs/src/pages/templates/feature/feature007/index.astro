@@ -1,14 +1,14 @@
 ---
 import DemoPageLayout from '~/layouts/DemoPageLayout.astro';
 
-import { Container, Frame, Grid, Media, Stack } from 'lism-css/astro';
+import { Container, Frame, WithSide, Grid, Media, Stack } from 'lism-css/astro';
 import Button from '~/components/ex/Button/index.astro';
 import './_style.css';
 ---
 
 <DemoPageLayout title='Feature007'>
 	<Container bgc='base'>
-		<Grid gtc={['auto', null, '1fr 1fr']} gtr={['auto, auto', null, '1fr']} g='5'>
+		<WithSide sideW='50%' mainW='s' g='5'>
 			<Stack g='50' bgc='base-2' ai='center' jc='center' p={['60 50', null, '60']}>
 				<h2>感動をその手に</h2>
 				<Stack g='40'>
@@ -22,19 +22,19 @@ import './_style.css';
 				<Button href='#' min-w='250px' p='30' bdrs='10'>View More</Button>
 			</Stack>
 			<Grid gtr='1fr 1fr' gtc='1fr 1fr' g='5'>
-				<Frame tag='figure'>
+				<Frame tag='figure' ar='3/2' w='100%' h='100%'>
 					<Media src='/img/img-1.jpg' alt='' width='960' height='640' />
 				</Frame>
-				<Frame tag='figure'>
+				<Frame tag='figure' ar='3/2' w='100%' h='100%'>
 					<Media src='/img/img-2.jpg' alt='' width='960' height='640' />
 				</Frame>
-				<Frame tag='figure'>
+				<Frame tag='figure' ar='3/2' w='100%' h='100%'>
 					<Media src='/img/img-3.jpg' alt='' width='960' height='640' />
 				</Frame>
-				<Frame tag='figure'>
+				<Frame tag='figure' ar='3/2' w='100%' h='100%'>
 					<Media src='/img/img-4.jpg' alt='' width='960' height='640' />
 				</Frame>
 			</Grid>
-		</Grid>
+		</WithSide>
 	</Container>
 </DemoPageLayout>
