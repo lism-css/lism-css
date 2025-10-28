@@ -213,7 +213,8 @@ export default {
 
 	g: {
 		prop: 'gap',
-		presets: ['0'],
+		presets: ['0', 'inherit'],
+		exUtility: { inherit: { gap: 'inherit' } },
 		token: 'space',
 		tokenClass: 1,
 		alwaysVar: 1,
@@ -236,10 +237,34 @@ export default {
 
 	// grid
 	// gd: { prop: 'grid' },
-	gt: { prop: 'gridTemplate', bp: 1 },
+	gt: {
+		prop: 'gridTemplate',
+		presets: ['repeat'],
+		exUtility: {
+			repeat: {
+				'--cols': '1',
+				'--rows': '1',
+				'grid-template': 'repeat(var(--rows), 1fr) / repeat(var(--cols), 1fr)',
+			},
+		},
+		bp: 1,
+	},
 	gta: { prop: 'gridTemplateAreas', bp: 1 },
-	gtc: { prop: 'gridTemplateColumns', presets: ['subgrid'], bp: 1 },
-	gtr: { prop: 'gridTemplateRows', presets: ['subgrid'], bp: 1 },
+	gtc: {
+		prop: 'gridTemplateColumns',
+		presets: ['subgrid', 'liquid'],
+		exUtility: {
+			// repeat: { '--cols': '1', '--gtc': 'repeat(var(--cols), 1fr)' },
+			liquid: { '--cols': 'var(--sz--min)', '--gtc': 'repeat(auto-fill, minmax(min(var(--cols), 100%), 1fr))' },
+		},
+		bp: 1,
+	},
+	gtr: {
+		prop: 'gridTemplateRows',
+		presets: ['subgrid'],
+		// exUtility: { repeat: { '--rows': '1', '--gtr': 'repeat(var(--rows), 1fr)' } },
+		bp: 1,
+	},
 	gaf: { prop: 'gridAutoFlow', utils: { row: 'row', col: 'column' }, bp: 1 }, //dense
 	gac: { prop: 'gridAutoColumns' },
 	gar: { prop: 'gridAutoRows' },

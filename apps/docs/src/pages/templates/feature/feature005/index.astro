@@ -1,13 +1,13 @@
 ---
 import DemoPageLayout from '~/layouts/DemoPageLayout.astro';
 
-import { Stack, Container, Frame, Grid, Media, HTML, Flex, Icon, Layer } from 'lism-css/astro';
+import { Stack, Container, Frame, Grid, Columns, Media, HTML, Flex, Icon, Layer } from 'lism-css/astro';
 import './_style.css';
 ---
 
 <DemoPageLayout title='Feature005'>
 	<Container size='l' py='60' hasGutter>
-		<Grid gtc={['1fr', null, 'repeat(3, 1fr)']} g='40'>
+		<Columns cols={[1, null, 3]} g='40'>
 			<Stack g='30'>
 				<Frame tag='a' isLinkbox href='#' pos='rel' ar='3/4' bdrs='10' bxsh='30' td='none' setHov>
 					<Media isLayer src='/img/img-2.jpg' alt='' width='960' height='640' setTransition hov='to:zoom' />
@@ -62,7 +62,7 @@ import './_style.css';
 				</Frame>
 				<HTML.p pb='30'>世界中の拠点を結び、お客様のニーズに迅速かつ柔軟に対応するグローバル供給網です。</HTML.p>
 			</Stack>
-		</Grid>
+		</Columns>
 	</Container>
 </DemoPageLayout>
 

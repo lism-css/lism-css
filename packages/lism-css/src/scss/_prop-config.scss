@@ -1,4 +1,4 @@
-// 自動生成されたファイル. 生成日時: 2025-10-26T07:17:58.762Z
+// 自動生成されたファイル. 生成日時: 2025-10-28T02:52:42.798Z
 $props: (
 	'f': (
 		prop: 'font',
@@ -598,6 +598,11 @@ $props: (
 			'70': 'var(--s70)',
 			'80': 'var(--s80)',
 		),
+		exUtility: (
+			'inherit': (
+				'gap': 'inherit',
+			),
+		),
 		bp: 1,
 		alwaysVar: 1,
 		overwriteBaseVar: 1,
@@ -661,6 +666,15 @@ $props: (
 	),
 	'gt': (
 		prop: 'grid-template',
+		utilities: (
+		),
+		exUtility: (
+			'repeat': (
+				'--cols': '1',
+				'--rows': '1',
+				'grid-template': 'repeat(var(--rows), 1fr) / repeat(var(--cols), 1fr)',
+			),
+		),
 		bp: 1,
 	),
 	'gta': (
@@ -671,6 +685,12 @@ $props: (
 		prop: 'grid-template-columns',
 		utilities: (
 			'subgrid': 'subgrid',
+		),
+		exUtility: (
+			'liquid': (
+				'--cols': 'var(--sz--min)',
+				'--gtc': 'repeat(auto-fill, minmax(min(var(--cols), 100%), 1fr))',
+			),
 		),
 		bp: 1,
 	),

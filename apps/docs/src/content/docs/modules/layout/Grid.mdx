@@ -311,25 +311,20 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage, PropBad
 
 
 
-## Variants
+### `-gtc:liquid`
 
-### `variant='liquid'`
+`l--grid` との併用が前提の、`gtc`ユーティリティクラスです。
 
 列数を指定せず、**子要素が指定した幅より小さくならないように自動で折り返しされる**カラムレイアウトを作成します。
 
-#### Props
+#### ペアプロパティ
 
-|Prop|説明|
-|---|---|
-|`cols`|子要素が維持する最小幅（デフォルトは`--sz--min`です）。|
-
-
-#### Usage
+`cols`で子要素が維持する最小幅を指定できます（デフォルトは`--sz--min`です）。
 
 <Preview>
-	<PreviewTitle>デフォルト</PreviewTitle>
+	<PreviewTitle>デフォルト幅</PreviewTitle>
 	<PreviewArea resize p='20'>
-		<Grid variant='liquid' g='20'>
+		<Grid gtc='liquid' g='20'>
 			<Box bxsh='20' p='20'><Dummy/></Box>
 			<Box bxsh='20' p='20'><Dummy/></Box>
 			<Box bxsh='20' p='20'><Dummy offset='1' /></Box>
@@ -340,7 +335,7 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage, PropBad
 	</PreviewArea>
 	<PreviewCode>
 		```jsx
-		<Grid variant='liquid' g='20'>
+		<Grid gtc='liquid' g='20'>
 			<Box bxsh='20' p='20'><Dummy/></Box>
 			<Box bxsh='20' p='20'><Dummy/></Box>
 			<Box bxsh='20' p='20'><Dummy offset='1' /></Box>
@@ -352,11 +347,11 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage, PropBad
 	</PreviewCode>
 </Preview>
 
-{/* <Grid variant='liquid' g='20' style={{'--cols':'8rem', '--col-behavior':'auto-fit'}}> */}
+
 <Preview>
 	<PreviewTitle>`cols=12rem`</PreviewTitle>
 	<PreviewArea resize p='20'>
-		<Grid variant='liquid' g='20' cols='12rem'>
+		<Grid gtc='liquid' g='20' cols='12rem'>
 			<Box bxsh='20' p='20'><Dummy length='s' /></Box>
 			<Box bxsh='20' p='20'><Dummy length='s' /></Box>
 			<Box bxsh='20' p='20'><Dummy /></Box>
@@ -367,7 +362,7 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage, PropBad
 	</PreviewArea>
 	<PreviewCode>
 		```jsx
-		<Grid variant='liquid' g='20' cols='12rem'>
+		<Grid gtc='liquid' g='20' cols='12rem'>
 			<Box bxsh='20' p='20'><Dummy length='s' /></Box>
 			<Box bxsh='20' p='20'><Dummy length='s' /></Box>
 			<Box bxsh='20' p='20'><Dummy /></Box>
@@ -380,25 +375,17 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage, PropBad
 </Preview>
 
 
-### `variant='repeat'`
+### `-gt:repeat`
 
-列数・行数を指定したリピートグリッドを定義できます。
+`cols`で列数、`rows`で行数を指定できる`gt`ユーティリティクラスです。
 
+それぞれ、ブレイクポイント指定も可能で初期値は `1` です。
 
-#### Props
-
-|Prop|CSS|説明|
-|---|---|---|
-|`cols`|`--cols`|列数を指定します。ブレイクポイント指定も可能です。（初期値: `1`）|
-|`rows`|`--rows`|行数を指定します。ブレイクポイント指定も可能です。（初期値: `1`）|
-
-
-#### Usage
 
 <Preview>
 	<PreviewTitle>例</PreviewTitle>
 	<PreviewArea resize p='20'>
-		<Grid variant='repeat' cols='3' rows='3' g='5' min-h='50svh'>
+		<Grid gt='repeat' cols='3' rows='3' g='5' min-h='50svh'>
 			<Box p='20' bgc='base-2'>item1</Box>
 			<Box p='20' bgc='base-2'>item2</Box>
 			<Box p='20' bgc='base-2'>item3</Box>
@@ -409,7 +396,7 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage, PropBad
 	</PreviewArea>
 	<PreviewCode slot='tab' label='JSX'>
 		```jsx " gc=" " gr="
-		<Grid variant='repeat' cols='3' rows='3' g='5' min-h='50svh'>
+		<Grid gt='repeat' cols='3' rows='3' g='5' min-h='50svh'>
 			<Box p='20' bgc='base-2'>item1</Box>
 			<Box p='20' bgc='base-2'>item2</Box>
 			<Box p='20' bgc='base-2'>item3</Box>
@@ -427,7 +414,7 @@ cols,rows はそれぞれブレイクポイント指定も可能です。
 <Preview>
 	<PreviewTitle>例</PreviewTitle>
 	<PreviewArea resize p='20'>
-		<Grid variant='repeat' cols={['2', '3']} rows='4' min-h='50svh' gaf='row dense'>
+		<Grid gt='repeat' cols={['2', '3']} rows='4' min-h='50svh' gaf='row dense'>
 			<Box gc={['1 / -1','span 2']} gr={['span 2', '1 / -1']} p='30' bgc='base-2'>A</Box>
 			<Box p='30' bgc='green:20%'>B</Box>
 			<Box p='30' bgc='blue:20%'>C</Box>
@@ -436,8 +423,8 @@ cols,rows はそれぞれブレイクポイント指定も可能です。
 		</Grid>
 	</PreviewArea>
 	<PreviewCode>
-		```jsx "variant='repeat'"
-		<Grid variant='repeat' cols={['2', '3']} rows='4' min-h='50svh' gaf='row dense'>
+		```jsx "gt='repeat'"
+		<Grid gt='repeat' cols={['2', '3']} rows='4' min-h='50svh' gaf='row dense'>
 			<Box gc={['1 / -1','span 2']} gr={['span 2', '1 / -1']} p='30' bgc='base-2'>A</Box>
 			<Box p='30' bgc='green:20%'>B</Box>
 			<Box p='30' bgc='blue:20%'>C</Box>

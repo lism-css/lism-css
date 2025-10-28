@@ -1,7 +1,7 @@
 ---
 import DemoPageLayout from '~/layouts/DemoPageLayout.astro';
 
-import { HTML, Stack, Container, Frame, Grid, Media, Flex, Icon } from 'lism-css/astro';
+import { HTML, Stack, Container, Frame, Columns, Grid, Media, Flex, Icon } from 'lism-css/astro';
 import './_style.css';
 ---
 
@@ -12,9 +12,9 @@ import './_style.css';
 				<h2>新しい挑戦が生まれる</h2>
 				<HTML.p fz='s' my-s='20' o='mild'>誰もが安心して暮らせる環境づくりに力を入れています。</HTML.p>
 			</Stack>
-			<Grid gtc={['1fr', null, 'repeat(3, 1fr)']} gtr='auto auto' g='50'>
-				<Grid gtr='subgrid' gr='span 2' g='0' tag='a' isLinkBox href='#' bdrs='10' bxsh='20' ov='hidden' setHov>
-					<Frame ar='gold'>
+			<Columns cols={['1', null, '3']} g='50'>
+				<Grid g='0' tag='a' isLinkBox href='#' bdrs='10' bxsh='20' ov='hidden' setHov>
+					<Frame ar='og'>
 						<Media src='/img/img-1.jpg' alt='' width='960' height='640' />
 					</Frame>
 					<Stack g='40' p='40' className='u-trimItems'>
@@ -26,8 +26,8 @@ import './_style.css';
 						</Flex>
 					</Stack>
 				</Grid>
-				<Grid gtr='subgrid' gr='span 2' g='0' tag='a' isLinkBox href='#' bdrs='10' bxsh='20' ov='hidden' setHov>
-					<Frame ar='gold'>
+				<Grid g='0' tag='a' isLinkBox href='#' bdrs='10' bxsh='20' ov='hidden' setHov>
+					<Frame ar='og'>
 						<Media src='/img/img-2.jpg' alt='' width='960' height='640' />
 					</Frame>
 					<Stack g='40' p='40' className='u-trimItems'>
@@ -39,8 +39,8 @@ import './_style.css';
 						</Flex>
 					</Stack>
 				</Grid>
-				<Grid gtr='subgrid' gr='span 2' g='0' tag='a' isLinkBox href='#' bdrs='10' bxsh='20' ov='hidden' setHov>
-					<Frame ar='gold'>
+				<Grid g='0' tag='a' isLinkBox href='#' bdrs='10' bxsh='20' ov='hidden' setHov>
+					<Frame ar='og'>
 						<Media src='/img/img-4.jpg' alt='' width='960' height='640' />
 					</Frame>
 					<Stack g='40' p='40' className='u-trimItems'>
@@ -52,7 +52,7 @@ import './_style.css';
 						</Flex>
 					</Stack>
 				</Grid>
-			</Grid>
+			</Columns>
 		</Stack>
 	</Container>
 </DemoPageLayout>
