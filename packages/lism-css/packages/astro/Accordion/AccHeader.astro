@@ -1,6 +1,6 @@
 ---
 import type { LismProps } from '../../types';
-import { Grid } from '../Grid';
+import { Lism } from '../Lism';
 import { defaultProps } from '../../../dist/components/Accordion/getProps';
 
 interface Props extends LismProps {}
@@ -8,6 +8,6 @@ interface Props extends LismProps {}
 const props = Astro.props || {};
 ---
 
-<Grid tag='summary' {...defaultProps.header} {...props}>
+<Lism tag='summary' {...defaultProps.header} {...props}>
 	<slot />
-</Grid>
+</Lism>
