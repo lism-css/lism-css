@@ -40,15 +40,15 @@ div.l--withSide
 
 | プロパティ | 出力 | 説明  |
 |---|---|---|
-| `sideW`| <PropBadge type="cssvar">`--_side-w`</PropBadge> | side要素の横幅 |
-| `mainW` | <PropBadge type="cssvar">`--_main-w`</PropBadge> | main要素で維持したい最小幅 |
+| `sideW`| <PropBadge type="cssvar">`--sideW`</PropBadge> | side要素の横幅 |
+| `mainW` | <PropBadge type="cssvar">`--mainW`</PropBadge> | main要素で維持したい最小幅 |
 
 {/* その他、[`<Flex>`で使えるProps](/components/flex#props)が使えます。 */}
 
 ## Usage
 
 子要素に`[data-is-side]`が必要です。  
-`[data-is-side]`の横幅を`--_side-w`で指定した値に固定しつつ、もう一方が`--_main-w`で指定した横幅を下回るようになると、自動で1カラムに切り替わるようになっています。
+`[data-is-side]`の横幅を`--sideW`で指定した値に固定しつつ、もう一方が`--mainW`で指定した横幅を下回るようになると、自動で1カラムに切り替わるようになっています。
 
 <Preview>
 	<PreviewTitle>使用例</PreviewTitle>
@@ -77,8 +77,8 @@ div.l--withSide
 		```
 	</PreviewCode>
 	<PreviewCode slot='tab' label='HTML'>
-		```html "data-is-side" "--_side-w"
-		<div class='l--withSide -g:30' style='--_side-w:12rem;--_main-w:20rem'>
+		```html "data-is-side" "--sideW"
+		<div class='l--withSide -g:30' style='--sideW:12rem;--mainW:20rem'>
 			<div class='l--box -p:20 -bd' style='--bdc:var(--blue)'>
 				<p>Main Content</p>
 				<p>Lorem ipsum dolor sit, amet consectetur adipisicing elit, sed do eiusmod tempor. Non facere laudantium ex eos doloribus aut dolore nisi.</p>
@@ -123,7 +123,7 @@ div.l--withSide
 	</PreviewCode>
 	<PreviewCode slot='tab' label='HTML'>
 		```html "-fxd:row-r"
-		<div class='l--withSide -fxd:row-r -g:30' style='--_side-w:10rem;--_main-w:16rem;'>
+		<div class='l--withSide -fxd:row-r -g:30' style='--sideW:10rem;--mainW:16rem;'>
 			<div class='l--box'>
 				<p>Lorem ipsum dolor sit amet, ...</p>
 			</div>
