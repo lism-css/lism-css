@@ -15,10 +15,10 @@ import ModuleList from '~/components/ModuleList.astro';
 
 Lismでは、次のようなモジュールクラスを使います。
 
-- `l--{module}`: レイアウトの構成単位となるようなモジュール群
-- `d--{module}`: JavaScriptと組み合わせて動的な機能を持つ特殊なモジュール群
+- `l--{module}`: レイアウトの構成単位となるようなモジュール群。
+- `d--{module}`: JavaScriptと組み合わせて動的な機能を持つ特殊なモジュール群。
 - `c--{module}`: その他のより具体的な役割を持つコンポーネント群。（他のクラスとの組み合わせを前提にした設計になっているものが多い。）
-- `is|has--{module}`: レイアウトを構成する役割を持ちつつ、複数のレイアウトモジュールに対してつけ外しできるような汎用性の高いモジュール群
+- `is|has--{module}`: レイアウトを構成する役割を持ちつつ、複数の種類のモジュールに対してつけ外しできるような汎用性の高いモジュール群。
 
 基本的に、State Modulesを除いた各レイヤーの他モジュールクラスとの複数併用はできません。  
 たとえば、`.l--`と`.c--`は併用できますが、`.l--XXX`と`.l--YYY`、`.c--XXX`と`.c--YYY`は同一属性内では併用しないものとします。
@@ -70,11 +70,11 @@ Lismでは、次のようなモジュールクラスを使います。
 ### `is--container`
 
 `is--container`はコンテナ要素を定義するためのクラスです。  
-`--content-size`で直下の子要素サイズを制御でき、`-container:{s|m|l}`でプリセットサイズを指定することもできます。
+`--contentSz`で直下の子要素サイズを制御でき、`-container:{s|m|l}`でプリセットサイズを指定することもできます。
 
 <Spacer h='1rem' />
 
-| クラス名 | コンテンツ幅 (`--content-size`) |
+| クラス名 | コンテンツ幅 (`--contentSz`) |
 |---|---|
 | `is--container`| `100%` |
 | `-container:s` | `--sz--s` |
@@ -144,6 +144,23 @@ CSSは以下のようになっており、`inset:0`と`overflow:hidden`も指定
 </Reference>
 
 <Spacer h='1rem' />
+
+
+### `is--side`
+
+`l--withSide`のside要素に付与するクラスです。
+
+<Reference>
+活用例は [`<WithSide>`](/modules/layout/withside) を参照してください。
+</Reference>
+
+### `is--skipFlow`
+
+`l--flow`の直下で使用すると、次に続く兄弟要素との余白量を打ち消します。
+
+<Reference>
+活用例は [`<Flow>`](/modules/layout/flow) を参照してください。
+</Reference>
 
 
 ## Layout Modules

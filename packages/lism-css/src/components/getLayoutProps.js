@@ -55,11 +55,11 @@ function getColumnsProps({ colSize, autoType, style = {}, ...props }) {
 	return props;
 }
 
-function getFlowProps({ flowGap, style = {}, ...props }) {
-	if (isTokenValue('flow', flowGap)) {
-		props.lismClass = atts(props.lismClass, `-flow:${flowGap}`);
-	} else if (flowGap) {
-		style['--flow-gap'] = getMaybeTokenValue('space', flowGap);
+function getFlowProps({ flow, style = {}, ...props }) {
+	if (isTokenValue('flow', flow)) {
+		props.lismClass = atts(props.lismClass, `-flow:${flow}`);
+	} else if (flow) {
+		style['--flow'] = getMaybeTokenValue('space', flow);
 	}
 	props.style = style;
 

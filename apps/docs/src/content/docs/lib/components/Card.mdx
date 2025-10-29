@@ -16,7 +16,7 @@ import Card from '~/components/ex/Card/index.jsx';
 	<Box p={['30', null,'40']}>
 		<Columns cols={[1, 2]} g={['30', null, '40']} colSize='16rem' ai='start'>
 			<WithSide isLinkBox href='###' hov='bxsh' setTransition sideW='50%' bgc='base' bdrs='20' bxsh='10' ov='hidden' gc='1/-1'>
-				<Frame data-is-side ar='16/9' >
+				<Frame isSide ar='16/9' >
 					<Media src='/img/img-4.jpg' alt='' width='960' height='640' />
 				</Frame>
 				<Stack g='30' p='30'>
@@ -35,7 +35,7 @@ import Card from '~/components/ex/Card/index.jsx';
 				</Layer>
 			</Frame>
 			<Stack p='20' g='20' c='text' bgc='base' bdrs='30' bxsh='30' className='set-innerRs'>
-				<Frame data-is-side ar='16/9' >
+				<Frame isSide ar='16/9' >
 					<Media src='/img/img-1.jpg' alt='' width='960' height='640' bdrs='inner'/>
 				</Frame>
 				<Stack g='30' p='10'>
@@ -103,7 +103,7 @@ import Card from '~/components/ex/Card/index.jsx';
 	<PreviewTitle>Preview</PreviewTitle>
 	<PreviewArea resize p='30'>
 		<Stack p='10' g='20' c='text' bgc='base' bdrs='30' bxsh='30' className='set-innerRs' max-w='xs' mx='auto'>
-			<Frame data-is-side ar='16/9' >
+			<Frame isSide ar='16/9' >
 				<Media src='/img/img-1.jpg' alt='' width='960' height='640' bdrs='inner'/>
 			</Frame>
 			<Stack g='30' p='20'>
@@ -116,7 +116,7 @@ import Card from '~/components/ex/Card/index.jsx';
 	<PreviewCode slot='tab' label='JSX'>
 		```jsx
 		<Stack p='10' g='20' c='text' bgc='base' bdrs='30' bxsh='30' className='set-innerRs' max-w='xs' mx='auto'>
-			<Frame data-is-side ar='16/9' >
+			<Frame isSide ar='16/9' >
 				<Media src='/img/img-1.jpg' alt='' width='960' height='640' bdrs='inner'/>
 			</Frame>
 			<Stack g='30' p='10'>
@@ -130,7 +130,7 @@ import Card from '~/components/ex/Card/index.jsx';
 	<PreviewCode slot='tab' label='HTML'>
 		```html
 		<div class='l--stack set-innerRs -p:10 -g:20 -c:text -bgc:base -bdrs:30 -bxsh:30 -mx:auto -max-w' style='--max-w:var(--sz--xs)'>
-			<div class='l--frame -ar:16/9' data-is-side='true'>
+			<div class='l--frame is--side -ar:16/9'>
 				<img class='a--media -bdrs:inner' src='/img/img-1.jpg' width='960' height='640' />
 			</div>
 			<div class='l--stack -g:30 -p:10'>
@@ -175,7 +175,7 @@ import Card from '~/components/ex/Card/index.jsx';
 	<PreviewTitle>Preview</PreviewTitle>
 	<PreviewArea resize p='40'>
 		<WithSide tag='a' isLinkBox href='#_' hov='bxsh' setTransition sideW='50%' bgc='base' bdrs='20' bxsh='10' ov='hidden'>
-			<Frame data-is-side ar='16/9' >
+			<Frame isSide ar='16/9' >
 				<Media src='/img/img-4.jpg' alt='' width='960' height='640' />
 			</Frame>
 			<Stack g='30' p='30'>
@@ -188,7 +188,7 @@ import Card from '~/components/ex/Card/index.jsx';
 	<PreviewCode slot='tab' label='JSX'>
 		```jsx "WithSide" "tag='a' isLinkBox"
 		<WithSide tag='a' isLinkBox href='#_' hov='bxsh' setTransition sideW='50%' bgc='base' bdrs='20' bxsh='10' ov='hidden'>
-			<Frame data-is-side ar='16/9' >
+			<Frame isSide ar='16/9' >
 				<Media src='/img/img-4.jpg' alt='' width='960' height='640' />
 			</Frame>
 			<Stack g='30' p='30'>
@@ -202,19 +202,19 @@ import Card from '~/components/ex/Card/index.jsx';
 </Preview>
 
 
-カード全体をリンクにしつつ別のリンクを含めたい場合、 `u-linkExpand` を使用してください。
+カード全体をリンクにしつつ別のリンクを含めたい場合、 `u-expandedLink` を使用してください。
 
 <Preview>
-	<PreviewTitle>`u-linkExpand`を使う例</PreviewTitle>
+	<PreviewTitle>`u-expandedLink`を使う例</PreviewTitle>
 	<PreviewArea resize p='40'>
 		<WithSide isLinkBox href='#_' hov='bxsh' setTransition sideW='50%' bgc='base' bdrs='20' bxsh='10' ov='hidden'>
-			<Frame data-is-side ar='16/9' pos='rel'>
+			<Frame isSide ar='16/9' pos='rel'>
 				<Media src='/img/img-5.jpg' alt='' width='960' height='640' />
 				<HTML.a href='#badge-link' pos='abs' z='1' t='0' r='0' fz='s' bgc='black' c='white' m='20' px='20' bdrs='99' td='none' hov='o'>Category</HTML.a>
 			</Frame>
 			<Stack g='30' p='30'>
 				<h3 className='u-trim -fz:l'>
-					<HTML.a className='u-linkExpand set-plain' href='#card-link'>Card Title ( u-linkExpand )</HTML.a>
+					<HTML.a className='u-expandedLink set-plain' href='#card-link'>Card Title ( u-expandedLink )</HTML.a>
 				</h3>
 				<HTML.p className='u-trim' fz='s' lh='s' o='mild'>ロレム・イプサムの座り雨、トマ好き学習だったエリット、しかし時と活力はそのような木々と楽しみ。</HTML.p>
 				<HTML.span d='in-flex' mx-s='auto' my-s='auto' c='inherit' td='none' bd-b lh='1' p='10'>View More →</HTML.span>
@@ -222,15 +222,15 @@ import Card from '~/components/ex/Card/index.jsx';
 		</WithSide>
 	</PreviewArea>
 	<PreviewCode slot='tab' label='JSX'>
-		```jsx "isLinkBox" "\<HTML.a " "u-linkExpand"
+		```jsx "isLinkBox" "\<HTML.a " "u-expandedLink"
 		<WithSide isLinkBox href='#_' hov='bxsh' setTransition sideW='50%' bgc='base' bdrs='20' bxsh='10' ov='hidden'>
-			<Frame data-is-side ar='16/9' pos='rel'>
+			<Frame isSide ar='16/9' pos='rel'>
 				<Media src='/img/img-5.jpg' alt='' width='960' height='640' />
 				<HTML.a href='#badge-link' pos='abs' z='1' t='0' r='0' fz='s' bgc='black' c='white' m='20' px='20' bdrs='99' td='none' hov='o'>Category</HTML.a>
 			</Frame>
 			<Stack g='30' p='30'>
 				<h3 className='u-trim -fz:l'>
-					<HTML.a className='u-linkExpand' href='#card-link'>Card Title (overlayLink)</HTML.a>
+					<HTML.a className='u-expandedLink' href='#card-link'>Card Title (overlayLink)</HTML.a>
 				</h3>
 				<HTML.p className='u-trim' fz='s' lh='s' o='mild'>ロレム・イプサムの座り雨、トマ好き学習だったエリット、しかし時と活力はそのような木々と楽しみ。</HTML.p>
 				<HTML.span d='in-flex' mx-s='auto' my-s='auto' c='inherit' td='none' bd-b lh='1' p='10'>View More →</HTML.span>

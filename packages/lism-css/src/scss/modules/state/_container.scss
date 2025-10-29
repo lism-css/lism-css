@@ -14,7 +14,7 @@
 
 	// 子要素の制御
 	> * {
-		--max-sz: var(--content-size, 100%);
+		--max-sz: var(--contentSz, 100%);
 		max-inline-size: var(--max-sz, 100%);
 		margin-inline: auto;
 	}
@@ -27,14 +27,11 @@
 
 // Memo: それぞれの直下要素( > * ) に対してスタイルをセットした方がネスト時の影響をなくせるが、constrainedのネストが多様されることは少ないので親側の変数管理のみで実装。
 .-container\:s {
-	--content-size: var(--sz--s);
-	// --sz--wide: var(--sz--m);
+	--contentSz: var(--sz--s);
 }
 .-container\:m {
-	--content-size: var(--sz--m);
-	// --sz--wide: var(--sz--l);
+	--contentSz: var(--sz--m);
 }
 .-container\:l {
-	--content-size: var(--sz--l);
-	// --sz--wide: var(--sz--xl);
+	--contentSz: var(--sz--l);
 }

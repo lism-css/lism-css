@@ -8,7 +8,7 @@ export function AttsLabels({ atts = '', ...props }) {
 	const attsArray = atts.split(',') || [];
 	return (
 		<Flex
-			className='c--attsLabels -flow:skip'
+			className='c--attsLabels is--skipFlow'
 			w='100%'
 			max-w='100%'
 			jc='center'

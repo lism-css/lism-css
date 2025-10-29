@@ -1,16 +1,16 @@
 /*
 	Meomo: end:0 がどうせ :first-child に必要なので、 my-s も > * + * 使わず上書き形式で。
 
-	--flow-gap をinheritさせることで -flow:custom クラスがなくても任意の値をセットできるようにしつつ、離れたネストであれば l--flow 単体で使っても base に戻るようにしている。
+	--flow をinheritさせることで -flow:custom クラスがなくても任意の値をセットできるようにしつつ、離れたネストであれば l--flow 単体で使っても base に戻るようにしている。
 	ただし直下のネストでは影響が出る。
 */
 .l--flow {
 	display: flow-root;
-	--flow-gap: var(--flow--base);
+	--flow: var(--flow--base);
 
 	> * {
-		--flow-gap: inherit;
-		--my-s: var(--flow-gap);
+		--flow: inherit;
+		--my-s: var(--flow);
 		margin-block: var(--my-s) 0;
 	}
 
@@ -21,24 +21,27 @@
 }
 
 .-flow\:base > * {
-	--flow-gap: var(--flow--base);
+	--flow: var(--flow--base);
 }
 .-flow\:s > * {
-	--flow-gap: var(--flow--s);
+	--flow: var(--flow--s);
 }
 .-flow\:l > * {
-	--flow-gap: var(--flow--l);
+	--flow: var(--flow--l);
 }
 
 // 見出しの上部余白は少しだけ広くする.
 .l--flow > :where(h1, h2, h3, h4) {
 	// --my-s: var(--flow--h);
-	--my-s: calc(var(--flow-gap) + var(--flow--h));
+	--my-s: calc(var(--flow) + var(--flow--h));
 }
 
 // Note: 打ち消しを最後に書く
 // .l--flow > :where(.-max-sz\:full + .-max-sz\:full),
 .l--flow > :first-child,
-.-flow\:skip + * {
+.is--skipFlow + * {
 	--my-s: 0px;
 }
+
+// is--side
+// is--skipFlow

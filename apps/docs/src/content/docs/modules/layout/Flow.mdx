@@ -10,7 +10,7 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage, Preview
 Lismでは、**コンテンツ間の余白を管理するためのクラス**として、`.l--flow` を用意しています。
 
 <Callout type='point'>
-`.l--flow`系の直下では、コンテンツの間隔が `--flow-gap`と`margin-block-start` で管理されます。
+`.l--flow`系の直下では、コンテンツの間隔が `--flow`と`margin-block-start` で管理されます。
 </Callout>
 
 
@@ -31,7 +31,7 @@ Lismでは、**コンテンツ間の余白を管理するためのクラス**と
 
 | プロパティ | 説明 |
 |---|---|
-| `flowGap` | `--flow-gap` の値を指定できます。<br />`s`, `l`, `bae` を指定した場合、`.-flow:{s\|l\|base}` クラスが付与されます。|
+| `flow` | `--flow` の値を指定できます。<br />`s`, `l`, `bae` を指定した場合、`.-flow:{s\|l\|base}` クラスが付与されます。|
 
 
 ## Usage
@@ -81,7 +81,7 @@ Lismでは、**コンテンツ間の余白を管理するためのクラス**と
 <Preview>
 	<PreviewTitle>`-flow:s`を併用する</PreviewTitle>
 	<PreviewArea p='30' layout=''>
-		<Flow flowGap='s' hov='itemGuide'>
+		<Flow flow='s' hov='itemGuide'>
 			<Dummy lang='ja' />
 			<h2>Heading</h2>
 			<Dummy lang='ja' length='s' />
@@ -95,8 +95,8 @@ Lismでは、**コンテンツ間の余白を管理するためのクラス**と
 		</Flow>
 	</PreviewArea>
 	<PreviewCode slot='tab' label='JSX'>
-	```jsx "flowGap='s'"
-	<Flow flowGap='s'>
+	```jsx "flow='s'"
+	<Flow flow='s'>
 		<p>Lorem ipsum content...</p>
 		<p>Lorem ipsum content...</p>
 		<h2>Heading</h2>
@@ -120,12 +120,12 @@ Lismでは、**コンテンツ間の余白を管理するためのクラス**と
 
 
 
-`flowGap`にトークン値以外を指定すると、`--flow-gap`変数で出力されます。
+`flow`にトークン値以外を指定すると、`--flow`変数で出力されます。
 
 <Preview>
 	<PreviewTitle>任意の値をセットする</PreviewTitle>
 	<PreviewArea p='30'>
-		<Flow flowGap='10px' hov='itemGuide'>
+		<Flow flow='10px' hov='itemGuide'>
 			<HTML.p>Contents...</HTML.p>
 			<h2>Heading</h2>
 			<Dummy lang='ja' length='s' />
@@ -134,8 +134,8 @@ Lismでは、**コンテンツ間の余白を管理するためのクラス**と
 		</Flow>
 	</PreviewArea>
 	<PreviewCode slot='tab' label='JSX'>
-	```jsx "flowGap='10px'"
-	<Flow flowGap='10px'>
+	```jsx "flow='10px'"
+	<Flow flow='10px'>
 		<p>Contents...</p>
 		<p>Contents...</p>
 		<p>Contents...</p>
@@ -143,8 +143,8 @@ Lismでは、**コンテンツ間の余白を管理するためのクラス**と
 	```
 	</PreviewCode>
 	<PreviewCode slot='tab' label='HTML'>
-	```html "--flow-gap:10px"
-	<div class="l--flow" style="--flow-gap:10px">
+	```html "--flow:10px"
+	<div class="l--flow" style="--flow:10px">
 		<p>Contents...</p>
 		<p>Contents...</p>
 		<p>Contents...</p>
@@ -153,14 +153,14 @@ Lismでは、**コンテンツ間の余白を管理するためのクラス**と
 	</PreviewCode>
 </Preview>
 
-`l--flow`は`--flow-gap`が未定義であれば`--flow--base`がセットされますが、ネストされていると親の値を継承されることに注意してください。
+`l--flow`は`--flow`が未定義であれば`--flow--base`がセットされますが、ネストされていると親の値を継承されることに注意してください。
 
 <Reference>
 [`l--flow` をネストする時の注意点](/others/addition/#l--flow-のネスト)
 </Reference>
 
 
-### `-flow:skip`
+### `is--skipFlow`
 
 `.l--flow` 直下で使用すると、次に続く兄弟要素との余白量を打ち消します。  
 フローコンテンツの先頭に absolute な要素を配置したい場合などに活用できます。
@@ -170,7 +170,7 @@ Lismでは、**コンテンツ間の余白を管理するためのクラス**と
 	<PreviewTitle>例</PreviewTitle>
 	<PreviewArea p='30'>
 		<div class="l--flow -hov:itemGuide">
-			<div class='-flow:skip'>Skip flow...</div>
+			<div class='is--skipFlow'>Skip flow...</div>
 			<p>Lorem ipsum, Example content...</p>
 			<p>Lorem ipsum, Example content...</p>
 			<p>Lorem ipsum, Example content...</p>
@@ -179,7 +179,7 @@ Lismでは、**コンテンツ間の余白を管理するためのクラス**と
 	<PreviewCode slot='tab' label='HTML'>
 	```html
 	<div class="l--flow">
-		<div class='-flow:skip'>skip flow...</div>
+		<div class='is--skipFlow'>skip flow...</div>
 		<p>Lorem ipsum, Example content...</p>
 		<p>Lorem ipsum, Example content...</p>
 		<p>Lorem ipsum, Example content...</p>
@@ -191,13 +191,13 @@ Lismでは、**コンテンツ間の余白を管理するためのクラス**と
 
 ## `l--flow` を入れ子にする時の注意点
 
-`--flow-gap`が指定された`l--flow`の直下で`l--flow`をネストする場合、余白量（`--flow-gap`）が親の値を継承してしまうことに注意が必要です。  
+`--flow`が指定された`l--flow`の直下で`l--flow`をネストする場合、余白量（`--flow`）が親の値を継承してしまうことに注意が必要です。  
 一階層さらに別要素でラップするか、`-flow:base`をして明示的に`base`の値を指定してください。
 
 <Preview>
 	<PreviewTitle>`-flow:s`をセットした`l--flow`の中でのネスト</PreviewTitle>
 	<PreviewArea p='30' layout=''>
-		<Flow flowGap='s' hov='itemGuide'>
+		<Flow flow='s' hov='itemGuide'>
 			<p>Flow contents...</p>
 			<Flow bgc='orange:10%' hov='itemGuide'>
 				<p>*Nested <code class='-fz:s -bd -p:5 -bdrs:10'>`l--flow`</code> contents...</p>
@@ -206,7 +206,7 @@ Lismでは、**コンテンツ間の余白を管理するためのクラス**と
 			
 			<p>Flow contents...</p>
 			<p>Flow contents...</p>
-			<Flow flowGap='base' bgc='green:10%' hov='itemGuide'>
+			<Flow flow='base' bgc='green:10%' hov='itemGuide'>
 				<p>*Nested <code class='-fz:s -bd -p:5 -bdrs:10'>`l--flow.-flow:base`</code> contents...</p>
 				<p>*Nested flow contents...</p>
 			</Flow>
@@ -216,7 +216,7 @@ Lismでは、**コンテンツ間の余白を管理するためのクラス**と
 	</PreviewArea>
 	<PreviewCode slot='tab' label='JSX'>
 	```jsx {3-6} {9-12}
-	<Flow flowGap='5px' hov='itemGuide'>
+	<Flow flow='5px' hov='itemGuide'>
 		<p>Flow contents...</p>
 		<Flow>
 			<p>*Nested <code class='-fz:s -bd -p:5 -bdrs:10'>l--flow</code> contents...</p>
@@ -224,7 +224,7 @@ Lismでは、**コンテンツ間の余白を管理するためのクラス**と
 		</Flow>
 		<p>Flow contents...</p>
 		<p>Flow contents...</p>
-		<Flow flowGap='base'>
+		<Flow flow='base'>
 			<p>*Nested <code class='-fz:s -bd -p:5 -bdrs:10'>l--flow.-flow:base</code> contents...</p>
 			<p>*Nested flow contents...</p>
 		</Flow>
@@ -238,17 +238,17 @@ Lismでは、**コンテンツ間の余白を管理するためのクラス**と
 
 もう一つ注意点があります。
 
-`l--flow`の直下にネストした`l--flow`に`--flow-gap`を変数で直接指定すると、その`l--flow`自身の`margin-block-start`にも影響が出ることに注意してください。  
+`l--flow`の直下にネストした`l--flow`に`--flow`を変数で直接指定すると、その`l--flow`自身の`margin-block-start`にも影響が出ることに注意してください。  
 (こちらも直下にネストしなければ問題ないため、一階層さらに別要素でラップしてください)
 
 <Preview>
-	<PreviewTitle>`l--flow`の直下の`l--flow`で`--flow-gap`を定義した場合</PreviewTitle>
+	<PreviewTitle>`l--flow`の直下の`l--flow`で`--flow`を定義した場合</PreviewTitle>
 	<PreviewArea p='30' layout=''>
 		<Flow hov='itemGuide'>
 		<p>Flow contents...</p>
 			<p>Flow contents...</p>
-			<Flow flowGap='5px' bgc='orange:10%' hov='itemGuide'>
-				<p>*Nested <code class='-fz:s -bd -p:5 -bdrs:10'>`l--flow`(`--flow-gap:5px`)</code></p>
+			<Flow flow='5px' bgc='orange:10%' hov='itemGuide'>
+				<p>*Nested <code class='-fz:s -bd -p:5 -bdrs:10'>`l--flow`(`--flow:5px`)</code></p>
 				<p>*Nested flow contents...</p>
 			</Flow>
 			<p>Flow contents...</p>
@@ -258,8 +258,8 @@ Lismでは、**コンテンツ間の余白を管理するためのクラス**と
 	```jsx
 	<Flow hov='itemGuide'>
 		<p>Flow contents...</p>
-		<Flow flowGap='5px' bgc='orange:10%' hov='itemGuide'>
-			<p>*Nested <code class='-fz:s -bd -p:5 -bdrs:10'>`l--flow`(`--flow-gap:5px`)</code></p>
+		<Flow flow='5px' bgc='orange:10%' hov='itemGuide'>
+			<p>*Nested <code class='-fz:s -bd -p:5 -bdrs:10'>`l--flow`(`--flow:5px`)</code></p>
 			<p>*Nested flow contents...</p>
 		</Flow>
 		<p>Flow contents...</p>

@@ -24,7 +24,7 @@ import {
 ```pug
 div.l--withSide
 	div
-	div[data-is-side]
+	div.is--side
 ```
 
 ## CSS
@@ -47,8 +47,8 @@ div.l--withSide
 
 ## Usage
 
-子要素に`[data-is-side]`が必要です。  
-`[data-is-side]`の横幅を`--sideW`で指定した値に固定しつつ、もう一方が`--mainW`で指定した横幅を下回るようになると、自動で1カラムに切り替わるようになっています。
+子要素に`.is--side`が必要です。  
+`.is--side`の横幅を`--sideW`で指定した値に固定しつつ、もう一方が`--mainW`で指定した横幅を下回るようになると、自動で1カラムに切り替わるようになっています。
 
 <Preview>
 	<PreviewTitle>使用例</PreviewTitle>
@@ -58,32 +58,32 @@ div.l--withSide
 				<p>Main Content</p>
 				<Dummy />
 			</Box>
-			<Box data-is-side p='20' bd bdc='red'>
+			<Box isSide p='20' bd bdc='red'>
 				<p>Side Content</p>
 			</Box>
 		</WithSide>
 	</PreviewArea>
 	<PreviewCode slot='tab' label='JSX'>
-		```jsx "sideW" "data-is-side"
+		```jsx "sideW" "isSide"
 		<WithSide sideW='12rem' mainW='20rem' g='30'>
 			<Box p='20' bd bdc='blue'>
 				<p>Main Content</p>
 				<Dummy />
 			</Box>
-			<Box data-is-side p='20' bd bdc='red'>
+			<Box isSide p='20' bd bdc='red'>
 				<p>Side Content</p>
 			</Box>
 		</WithSide>
 		```
 	</PreviewCode>
 	<PreviewCode slot='tab' label='HTML'>
-		```html "data-is-side" "--sideW"
+		```html "is--side" "--sideW"
 		<div class='l--withSide -g:30' style='--sideW:12rem;--mainW:20rem'>
 			<div class='l--box -p:20 -bd' style='--bdc:var(--blue)'>
 				<p>Main Content</p>
 				<p>Lorem ipsum dolor sit, amet consectetur adipisicing elit, sed do eiusmod tempor. Non facere laudantium ex eos doloribus aut dolore nisi.</p>
 			</div>
-			<div class='l--box -p:20 -bd' style='--bdc:var(--red)' data-is-side='true'>
+			<div class='l--box is--side -p:20 -bd' style='--bdc:var(--red)'>
 				<p>Side Content</p>
 			</div>
 		</div>
@@ -106,7 +106,7 @@ div.l--withSide
 			<Box>
 				<Dummy />
 			</Box>
-			<Box data-is-side bgc='blue:20%'>
+			<Box isSide bgc='blue:20%'>
 				Side Content
 			</Box>
 		</WithSide>
@@ -117,7 +117,7 @@ div.l--withSide
 			<Box>
 				<Dummy />
 			</Box>
-			<Box data-is-side>Side Content</Box>
+			<Box isSide>Side Content</Box>
 		</WithSide>
 		```
 	</PreviewCode>
@@ -127,7 +127,7 @@ div.l--withSide
 			<div class='l--box'>
 				<p>Lorem ipsum dolor sit amet, ...</p>
 			</div>
-			<div class='l--box' data-is-side>
+			<div class='l--box is--side'>
 				Side Content
 			</div>
 		</div>

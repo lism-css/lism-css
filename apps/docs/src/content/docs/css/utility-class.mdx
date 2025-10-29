@@ -235,7 +235,7 @@ Flexboxで横並び・縦並びが変わるようなレイアウトでも、こ�
 
 
 
-## `u-linkExpand`
+## `u-expandedLink`
 
 クリック範囲を親要素に広げるためのクラスです。
 
@@ -244,41 +244,6 @@ Flexboxで横並び・縦並びが変わるようなレイアウトでも、こ�
 <Reference>
 活用例は [`<LinkBox>`](/modules/state/linkbox) を参照してください。
 </Reference>
-
-
-## `u-masked`
-
-
-`--mask`変数と組み合わせて、自身にmaskを適用します。
-
-
-```css
-.u-masked {
-	mask: var(--mask) no-repeat 50% / contain;
-}
-```
-
-Lism Componentsでは`setMask`プロパティに指定した文字列が`--mask-img`として出力されるようになっています。（この時、`<svg>`を渡すと、base64へエンコードされます。
-
-<Preview>
-	<PreviewTitle>例</PreviewTitle>
-	<PreviewArea p='10'>
-		<img
-			src="/img/img-5.jpg" width="960" height="640" loading="lazy"
-			class="u-masked -ar:og"
-			style={{'--mask': `url("data:image/svg+xml,<svg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'><path fill='%23000000' d='M170.4,25.7c16.1,14.2,23.2,38.5,24.8,61.7c1.7,23.3-1.8,45.5-12.9,62.3c-11,16.9-29.3,28.6-48.8,34.5 c-19.4,5.9-40,6.1-59.5,0.4c-19.5-5.6-37.9-17.4-51.7-34.9c-14-17.5-23.2-40.8-18-60.2c5-19.4,24.5-34.7,43.5-48.4 s37.6-25.7,59.5-29.7C129.1,7.3,154.2,11.4,170.4,25.7z' /></svg>")`}}
-		/>
-	</PreviewArea>
-	<PreviewCode slot='tab' label='HTML'>
-		```html
-		<img
-			src="/img/img-3.jpg" width="960" height="640" loading="lazy"
-			class="u-masked -ar:og"
-			style={{'--mask': `url("data:image/svg+xml,<svg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'><path fill='%23000000' d='M170.4,25.7c16.1,14.2,23.2,38.5,24.8,61.7c1.7,23.3-1.8,45.5-12.9,62.3c-11,16.9-29.3,28.6-48.8,34.5 c-19.4,5.9-40,6.1-59.5,0.4c-19.5-5.6-37.9-17.4-51.7-34.9c-14-17.5-23.2-40.8-18-60.2c5-19.4,24.5-34.7,43.5-48.4 s37.6-25.7,59.5-29.7C129.1,7.3,154.2,11.4,170.4,25.7z' /></svg>")`}}
-		/>
-		```
-	</PreviewCode>
-</Preview> 
 
 
 
