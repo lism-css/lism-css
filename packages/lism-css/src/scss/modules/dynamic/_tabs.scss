@@ -4,6 +4,7 @@
 }
 .d--tabs_list {
 	grid-area: list;
+	display: flex;
 	overflow-x: auto;
 }
 .d--tabs_tab {
@@ -20,10 +21,8 @@
 }
 
 .d--tabs_panel {
-	// position: relative;
 	grid-area: panel;
 	width: 100%;
-	overflow-x: auto;
 
 	&:where([aria-hidden='true']) {
 		display: none;
