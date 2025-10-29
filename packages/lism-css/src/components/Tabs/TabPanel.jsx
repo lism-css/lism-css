@@ -1,4 +1,4 @@
-import React from 'react';
+// import React from 'react';
 import { Lism } from '../Lism';
 
 export default function TabPanel({ tabId = 'tab', isActive = false, index = 0, ...props }) {

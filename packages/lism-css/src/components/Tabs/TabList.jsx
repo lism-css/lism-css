@@ -1,6 +1,6 @@
-import { Flex } from '../Flex';
+import { Lism } from '../Lism';
 
 export default function TabList(props) {
 	// jc: 's',
-	return <Flex lismClass='d--tabs_list' role='tablist' {...props} />;
+	return <Lism lismClass='d--tabs_list' role='tablist' {...props} />;
 }

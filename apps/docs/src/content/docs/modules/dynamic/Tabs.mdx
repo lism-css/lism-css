@@ -10,9 +10,22 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage, EmbedCo
 タブ要素を作成できるコンポーネントです。  
 スタイリングはほぼなく、動きに関わる部分だけを提供しています。表示スタイルは適宜カスタマイズしてご利用ください。
 
+## 基本構造
+```pug
+d--tabs
+	div.d--tabs_list[role="tablist"]
+		button.d--tabs_tab.set-plain[role="tab"][aria-controls="{tabID}"][aria-selected="true"]
+		...button
+
+	div.d--tabs_panel[id="{tabID}"][role="tabpanel"][aria-hidden="false"]
+		...Contents...
+	...div.d--tabs_panel
+```
+
+
 ## CSS
 
-<EmbedCode dirPath='packages/lism-css' srcPath='src/components/Tabs/style.scss' />
+<EmbedCode dirPath='packages/lism-css' srcPath='src/scss/modules/dynamic/_tabs.scss' />
 
 
 ## Import

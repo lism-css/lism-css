@@ -1,6 +1,6 @@
 ---
 import type { LismProps } from '../../types';
-import { Grid } from '../Grid';
+import { Lism } from '../Lism';
 // import Tab from './Tab.astro';
 // import TabPanel from './TabPanel.astro';
 import TabList from './TabList.astro';
@@ -28,7 +28,7 @@ const { btns, panels } = transformTabitems(await Astro.slots.render('default'), 
 const hasItems = btns.length > 0;
 ---
 
-<Grid {...getTabsProps(props)}>
+<Lism {...getTabsProps(props)}>
 	{
 		btns && (
 			<TabList {...listProps}>
@@ -44,7 +44,7 @@ const hasItems = btns.length > 0;
 		})
 	}
 	{!hasItems && <slot />}
-</Grid>
+</Lism>
 
 <script>
 	// import setEvent from './setEvent';
