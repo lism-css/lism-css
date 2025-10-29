@@ -3,8 +3,6 @@ import getLismProps from '../../lib/getLismProps';
 import { getAccProps, defaultProps } from './getProps';
 import { setEvent } from './setAccordion';
 import { Lism } from '../Lism';
-// import { Flex } from '../Flex';
-import { Grid } from '../Grid';
 
 // import { AccContext } from './context';
 
@@ -29,9 +27,9 @@ export function Accordion({ children, ...props }) {
 
 export function Header({ children, ...props }) {
 	return (
-		<Grid tag='summary' {...defaultProps.header} {...props}>
+		<Lism tag='summary' {...defaultProps.header} {...props}>
 			{children}
-		</Grid>
+		</Lism>
 	);
 }
 export function Label({ children, ...props }) {
@@ -44,11 +42,11 @@ export function Label({ children, ...props }) {
 
 export function Body({ children, flow, innerProps, ...props }) {
 	return (
-		<Grid {...defaultProps.body} {...props}>
+		<Lism {...defaultProps.body} {...props}>
 			<Lism layout='flow' flow={flow} {...defaultProps.inner} {...innerProps}>
 				{children}
 			</Lism>
-		</Grid>
+		</Lism>
 	);
 }
 export function HeaderLabel({ children, ...props }) {

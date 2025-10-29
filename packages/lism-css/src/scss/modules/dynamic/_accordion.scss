@@ -9,10 +9,11 @@
 }
 
 .d--accordion_header {
-	outline-offset: -1px; // overflow:clip|hidden; で見えなくなってしまうのを防ぐ
+	display: grid;
+	grid: auto / 1fr auto;
 	gap: 0.5em;
 	align-items: center;
-	--gtc: 1fr auto;
+	outline-offset: -1px; // overflow:clip|hidden; で見えなくなってしまうのを防ぐ
 
 	/* Safariで表示されるデフォルトの三角形アイコンを消す */
 	&::-webkit-details-marker {
@@ -21,8 +22,9 @@
 }
 
 .d--accordion_body {
-	--gtr: 1fr;
-	transition-property: margin-block, padding-block, opacity, grid-template-rows;
+	display: grid;
+	grid: 1fr / auto;
+	transition-property: margin-block, padding-block, opacity, grid-template;
 	transition-duration: var(--duration);
 }
 
@@ -34,7 +36,7 @@
 // 閉じている時
 .d--accordion:not(.js-opened) {
 	> .d--accordion_body {
-		--gtr: 0fr;
+		grid: 0fr / auto;
 		padding-block: 0 !important;
 		margin-block: 0 !important;
 	}
