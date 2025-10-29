@@ -1,13 +1,13 @@
-import minifyHtml from './minifyHtml.js';
+// import minifyHtml from './minifyHtml.js';
 
 /**
  * svgをcssの image url に変換
  */
-const svg2ImgUrl = (svg, encode = '') => {
+const getSvgUrl = (svg, encode = '') => {
 	if (!svg) return '';
 
 	// minify化
-	svg = minifyHtml(svg);
+	// svg = minifyHtml(svg);
 
 	if ('base64' === encode) {
 		// memo: btoa() だけだとマルチバイト文字が入った時にエラーになる。
@@ -17,11 +17,12 @@ const svg2ImgUrl = (svg, encode = '') => {
 		// memo: Buffer 使えば非推奨な関数を使わなくてもいい see: https://hackersheet.com/naopoyo/sheets/bvtrkwt
 		svg = Buffer.from(svg).toString('base64');
 		return `url(data:image/svg+xml;base64,${svg})`;
-	} else {
-		// カラーコードの先頭の # → %23 に置換
-		svg = svg.replaceAll('="#', '="%23');
 	}
 
-	return `url('data:image/svg+xml;utf8,${svg}')`;
+	// シングルクォートをダブルクォートに変換
+	svg = svg.replace(/'/g, '"');
+	// カラーコードの先頭の # → %23 に置換
+	svg = svg.replace(/="#/g, '="%23');
+	return `url('data:image/svg+xml,${svg}')`;
 };
-export default svg2ImgUrl;
+export default getSvgUrl;

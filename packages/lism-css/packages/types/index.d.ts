@@ -146,7 +146,7 @@ export interface LismBaseProps {
 	_?: string | string[];
 
 	// State classes
-	flowGap?: boolean | string;
+	flow?: boolean | string;
 	hasGutter?: boolean | string;
 	isContainer?: boolean | string;
 	isLayer?: boolean;
@@ -269,7 +269,7 @@ export interface AccordionProps extends LismProps {
 export interface AccordionHeaderProps extends FlexProps {}
 export interface AccordionLabelProps extends LismProps {}
 export interface AccordionBodyProps extends LismProps {
-	flowGap?: boolean | string;
+	flow?: boolean | string;
 	innerProps?: LismProps;
 }
 

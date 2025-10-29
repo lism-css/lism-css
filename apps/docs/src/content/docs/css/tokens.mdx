@@ -71,7 +71,7 @@ export const ColorBadge = ({color, label}) => {
 
 <Preview>
 	<PreviewTitle>Preview</PreviewTitle>
-	<PreviewArea p={20} flowGap='s' resize>
+	<PreviewArea p={20} flow='s' resize>
 		<SpacingDemos spaces={[
 			5, 10, 20, 30, 40, 50, 60, 70, 80
 		]} isValueLabel />
@@ -112,7 +112,7 @@ export const ColorBadge = ({color, label}) => {
 
 <Preview>
 	<PreviewTitle>`1=0.25`で計算</PreviewTitle>
-	<PreviewArea p={20} flowGap='s'>
+	<PreviewArea p={20} flow='s'>
 		<FiboCalcDemos unit={0.25}/>
 	</PreviewArea>
 </Preview>
@@ -126,14 +126,14 @@ export const ColorBadge = ({color, label}) => {
 
 <Preview>
 	<PreviewTitle>比率 `1.62` (≒ 黄金比率) の例</PreviewTitle>
-	<PreviewArea p={20} flowGap='s'>
+	<PreviewArea p={20} flow='s'>
 		<RatioCalcDemos ratio={1.62} />
 	</PreviewArea>
 </Preview>
 
 <Preview>
 	<PreviewTitle>比率 `1.5` (完全五度) の例</PreviewTitle>
-	<PreviewArea p={20} flowGap='s'>
+	<PreviewArea p={20} flow='s'>
 		<RatioCalcDemos ratio={1.5} />
 	</PreviewArea>
 </Preview>
@@ -143,7 +143,7 @@ export const ColorBadge = ({color, label}) => {
 
 <Preview>
 	<PreviewTitle>前半をフィボナッチ数列、後半を完全5度(`1.5`)の等比数列</PreviewTitle>
-	<PreviewArea p={20} flowGap='s'>
+	<PreviewArea p={20} flow='s'>
 		<SpacingDemos spaces={[
 			'0rem',
 			'0.25rem',
@@ -162,7 +162,7 @@ export const ColorBadge = ({color, label}) => {
 
 <Preview>
 	<PreviewTitle>前半50までをフィボナッチ数列 `.125`、後半を完全5度(`1.5`)の等比数列</PreviewTitle>
-	<PreviewArea p={20} flowGap='s'>
+	<PreviewArea p={20} flow='s'>
 		<SpacingDemos spaces={[
 			'0rem',
 			'0.25rem',
@@ -292,7 +292,7 @@ box-shadow は少し特殊で、ユーティリティクラス内で複数のsha
 
 <Preview>
 	<PreviewTitle>Preview</PreviewTitle>
-	<PreviewArea p={20} flowGap='s'>
+	<PreviewArea p={20} flow='s'>
 		<HTML.p ff='base' fz='xl'>base: English text, 漢字ひらがな</HTML.p>
 		<HTML.p ff='accent' fz='xl'>accent: English text, 漢字ひらがな</HTML.p>
 		<HTML.p ff='mono' fz='xl'>mono: English text, 漢字ひらがな</HTML.p>
@@ -323,7 +323,7 @@ box-shadow は少し特殊で、ユーティリティクラス内で複数のsha
 
 <Preview>
 	<PreviewTitle>Preview</PreviewTitle>
-	<PreviewArea p='20' flowGap='s'>
+	<PreviewArea p='20' flow='s'>
 		<Dummy length='s' fw='thin' />
 		<Dummy length='s' fw='light' />
 		<Dummy length='s' fw='normal' />
@@ -374,7 +374,7 @@ box-shadow は少し特殊で、ユーティリティクラス内で複数のsha
 
 <Preview>
 	<PreviewTitle>Preview</PreviewTitle>
-	<PreviewArea p='0' flowGap='s'>
+	<PreviewArea p='0' flow='s'>
 		<FzDemos />
 	</PreviewArea>
 	<PreviewCode>
@@ -408,20 +408,18 @@ Lism では、フォントサイズのスケーリングには数学的に美し
 
 ```scss
 :root{
-	--_fzmol: 8;
-	--fz--4xl: calc(1em * var(--_fzmol) / (var(--_fzmol) - 5));
-	--fz--3xl: calc(1em * var(--_fzmol) / (var(--_fzmol) - 4));
-	--fz--2xl: calc(1em * var(--_fzmol) / (var(--_fzmol) - 3));
-	--fz--xl: calc(1em * var(--_fzmol) / (var(--_fzmol) - 2));
-	--fz--l: calc(1em * var(--_fzmol) / (var(--_fzmol) - 1));
+	$fzmol: 8;
+	--fz--4xl: calc(1em * $fzmol / ($fzmol - 5));
+	--fz--3xl: calc(1em * $fzmol / ($fzmol - 4));
+	--fz--2xl: calc(1em * $fzmol / ($fzmol - 3));
+	--fz--xl: calc(1em * $fzmol / ($fzmol - 2));
+	--fz--l: calc(1em * $fzmol / ($fzmol - 1));
 	--fz--m: 1em;
-	--fz--s: calc(1em * var(--_fzmol) / (var(--_fzmol) + 1));
-	--fz--xs: calc(1em * var(--_fzmol) / (var(--_fzmol) + 2));
-	--fz--2xs: calc(1em * var(--_fzmol) / (var(--_fzmol) + 3));
+	--fz--s: calc(1em * $fzmol / ($fzmol + 1));
+	--fz--xs: calc(1em * $fzmol / ($fzmol + 2));
+	--fz--2xs: calc(1em * $fzmol / ($fzmol + 3));
 }
 ```
-
-`:root`で指定している `--_fzmol` を上書きすることで、スケーリングの基準（分子）を変更できます。
 
 <Callout type='info'>
 分子は `7`~`9` あたりで選ぶのがおすすめです。
@@ -430,7 +428,7 @@ Lism では、フォントサイズのスケーリングには数学的に美し
 {/* <script src='/typo.js' /> */}
 
 
-#### `--_fzmol`の違い
+#### `fzmol`の違い
 
 <Preview>
 <Tabs.Root variant='line' g='30'>
@@ -485,7 +483,7 @@ base値は 日本語では `1.625`, `1.75`, `1.875` あたりがおすすめで�
 
 <Preview>
 	<PreviewTitle>Preview</PreviewTitle>
-	<PreviewArea p={20} flowGap='s'>
+	<PreviewArea p={20} flow='s'>
 		<Dummy pre='<code class="-fz:s">xs:</code> ' lh='xs' bd bds='dotted' bdc='line' />
 		<Dummy pre='<code class="-fz:s">s:</code> ' lh='s' bd bds='dotted' bdc='line' />
 		<Dummy pre='<code class="-fz:s">base:</code> ' lh='base' bd bds='dotted' bdc='line' />
@@ -516,7 +514,7 @@ base値は 日本語では `1.625`, `1.75`, `1.875` あたりがおすすめで�
 {/* ### Headings の font-size, line-height について
 <Preview>
 	<PreviewTitle>Headings</PreviewTitle>
-	<PreviewArea p={20} flowGap='s'>
+	<PreviewArea p={20} flow='s'>
 		<div class='l--stack -g:30'>
 			<h1>Heading 1: <Dummy  tag='span' lang='ja' /></h1>
 			<h2>Heading 2: <Dummy  tag='span' lang='ja' /></h2>
@@ -544,7 +542,7 @@ base値は 日本語では `1.625`, `1.75`, `1.875` あたりがおすすめで�
 
 <Preview>
 	<PreviewTitle>Preview</PreviewTitle>
-	<PreviewArea p={20} flowGap='s'>
+	<PreviewArea p={20} flow='s'>
 		<Dummy length='s' pre='<code>s:</code> ' lts='s' />
 		<Dummy length='s' pre='<code>base:</code> ' lts='base' />
 		<Dummy length='s' pre='<code>l:</code> ' lts='l' />

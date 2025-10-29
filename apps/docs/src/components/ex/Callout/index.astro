@@ -3,7 +3,7 @@ import { Flow, WithSide, Center, Icon } from 'lism-css/astro';
 import PRESETS from './presets';
 import './style.css';
 
-const { type = 'alert', keycolor, icon, flowGap = 's', ...props } = Astro.props;
+const { type = 'alert', keycolor, icon, flow = 's', ...props } = Astro.props;
 
 const presetData = type && PRESETS[type as keyof typeof PRESETS];
 const _icon = icon || presetData?.icon || 'info';
@@ -11,10 +11,10 @@ const _color = keycolor || presetData?.color || 'currentColor';
 ---
 
 <WithSide lismClass='c--callout u-cbox' keycolor={_color} ai='center' p='30' g='30' bd bdrs='10' {...props}>
-	<Center data-is-side c='keycolor' fz='xl'>
+	<Center isSide c='keycolor' fz='xl'>
 		<Icon icon={_icon} />
 	</Center>
-	<Flow flowGap={flowGap}>
+	<Flow flow={flow}>
 		<slot />
 	</Flow>
 </WithSide>

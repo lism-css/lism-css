@@ -24,29 +24,29 @@ import './_style.scss';
 		<Spacer h='1rem' />
 
 		<h2>is--container (-container: あり)</h2>
-		<p><code>.-container:s|m|l</code> クラス、または<code>--content-size</code>により、内部のコンテンツ幅を制御できます。</p>
+		<p><code>.-container:s|m|l</code> クラス、または<code>--contentSz</code>により、内部のコンテンツ幅を制御できます。</p>
 		<!-- </Container> -->
-		<Flow isContainer='s' flowGap='s' hasGutter>
+		<Flow isContainer='s' flow='s' hasGutter>
 			<AttsLabels atts='is--container,-container:s,has--gutter' />
 			<LoremContent />
 			<LoremContent />
 			<GutterGuide />
 		</Flow>
-		<Flow isContainer='m' flowGap='s' hasGutter>
+		<Flow isContainer='m' flow='s' hasGutter>
 			<AttsLabels atts='is--container,-container:m,has--gutter' />
 			<LoremContent />
 			<LoremContent />
 			<GutterGuide />
 		</Flow>
-		<Flow isContainer='l' flowGap='s' hasGutter>
+		<Flow isContainer='l' flow='s' hasGutter>
 			<AttsLabels atts='is--container,-container:l,has--gutter' />
 			<LoremContent />
 			<LoremContent />
 			<GutterGuide />
 		</Flow>
 
-		<Flow isContainer='320px' flowGap='s'>
-			<AttsLabels atts='is--container,--content-size:320px' />
+		<Flow isContainer='320px' flow='s'>
+			<AttsLabels atts='is--container,--contentSz:320px' />
 			<LoremContent />
 			<LoremContent />
 			<!-- <GutterGuide /> -->
@@ -59,7 +59,7 @@ import './_style.scss';
 		<p>
 			<code>is--container</code> は子要素の幅を変数で制御しているため、直下にネストすると子コンテナ自身の幅も（同じ変数名なので）影響を受けます。
 		</p>
-		<Flow isContainer='m' flowGap='s' hasGutter>
+		<Flow isContainer='m' flow='s' hasGutter>
 			<AttsLabels atts='is--container,-container:m,has--gutter' />
 			<LoremContent />
 			<LoremContent />
@@ -87,13 +87,13 @@ import './_style.scss';
 			以下の例では、コンテナ直下のdivのサイズは <code>var(--sz--s)</code> ですが、<code>100cqw</code> がそのSサイズになるのではなく、windowサイズと一致します。
 		</p>
 
-		<Flow isContainer='s' flowGap='s'>
+		<Flow isContainer='s' flow='s'>
 			<AttsLabels atts='is--container,-container:s' />
 			{/* <LoremContent /> */}
 
-			<Flow flowGap='s'>
+			<Flow flow='s'>
 				<AttsLabels atts='div' />
-				<Flow flowGap='s'>
+				<Flow flow='s'>
 					<Lism bd bdc='blue'>
 						<Lism w='75cqw' bgc='blue:20%' bg=':stripe' bd-x-e bdc='blue' whitespace='nowrap'>width: 75cqw を適用したBOX</Lism></Lism
 					>
@@ -119,10 +119,10 @@ import './_style.scss';
 		<Container max-w='s' mx='auto'>
 			<AttsLabels atts='is--container,-max-w:s' />
 
-			<Flow flowGap='s'>
+			<Flow flow='s'>
 				<AttsLabels atts='div' />
 				<!-- <p>ここでのコンテナクエリの判定値は、内部でさらに配置している（緑色の点線で囲われた）コンテナ要素のサイズです。</p> -->
-				<Flow flowGap='s'>
+				<Flow flow='s'>
 					<Lism bd bdc='green'>
 						<Lism w='75cqw' bgc='green:20%' bg=':stripe' bd-x-e bdc='green' whitespace='nowrap'>width: 75cqw を適用したBOX</Lism></Lism
 					>
@@ -142,7 +142,7 @@ import './_style.scss';
 			<Container>
 				<AttsLabels atts='is--container' />
 				<!-- <p>ここでのコンテナクエリの判定値は、内部でさらに配置している（緑色の点線で囲われた）コンテナ要素のサイズです。</p> -->
-				<Flow flowGap='s'>
+				<Flow flow='s'>
 					<Lism bd bdc='green'>
 						<Lism w='75cqw' bgc='green:20%' bg=':stripe' bd-x-e bdc='green' whitespace='nowrap'>width: 75cqw を適用したBOX</Lism></Lism
 					>

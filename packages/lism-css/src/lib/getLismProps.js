@@ -10,7 +10,6 @@ import atts from './helper/atts';
 import isEmptyObj from './helper/isEmptyObj';
 import filterEmptyObj from './helper/filterEmptyObj';
 import splitWithComma from './helper/splitWithComma';
-// import svg2ImgUrl from './helper/svg2ImgUrl';
 
 const getTokenKey = (propName) => {
 	const propData = PROPS[propName];
@@ -85,6 +84,24 @@ class LismPropsData {
 		this.className = atts(className || classFromAstro, _lismClass, this.lismState, this.uClasses);
 	}
 
+	analyzeState(statePropData, propVal) {
+		// isContainerなどの特別な処理が必要なレイアウトステート
+		const { className, preset, presetClass, customVar, tokenKey, setStyles } = statePropData;
+		if (propVal === true) {
+			this.lismState.push(className);
+		} else if (preset && isPresetValue(preset, propVal)) {
+			this.lismState.push(`${className} ${presetClass}:${propVal}`);
+		} else if (propVal) {
+			// カスタム値
+			this.lismState.push(className);
+			if (tokenKey) {
+				this.addStyle(customVar, getMaybeTokenValue(tokenKey, propVal));
+			} else if (setStyles) {
+				this.addStyles(setStyles(propVal));
+			}
+		}
+	}
+
 	// prop解析
 	analyzeProps() {
 		Object.keys(this.attrs).forEach((propName) => {
@@ -93,21 +110,12 @@ class LismPropsData {
 				const propVal = this.extractProp(propName);
 				const statePropData = STATES[propName];
 
-				if (typeof statePropData === 'string' && propVal) {
+				if (typeof statePropData === 'string') {
 					// そのままクラス化
-					this.lismState.push(statePropData);
+					if (propVal) this.lismState.push(statePropData);
 				} else {
 					// isContainerなどの特別な処理が必要なレイアウトステート
-					const { className, preset, presetClass, customVar, tokenKey } = statePropData;
-					if (propVal === true) {
-						this.lismState.push(className);
-					} else if (isPresetValue(preset, propVal)) {
-						this.lismState.push(`${className} ${presetClass}:${propVal}`);
-					} else if (propVal) {
-						// カスタム値
-						this.lismState.push(className);
-						this.addStyle(customVar, getMaybeTokenValue(tokenKey, propVal));
-					}
+					this.analyzeState(statePropData, propVal);
 				}
 			} else if (Object.hasOwn(PROPS, propName)) {
 				// Lism系のプロパティかどうか

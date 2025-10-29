@@ -16,7 +16,7 @@ import { Desktop } from '@phosphor-icons/react';
 | `isContainer='s'` | `.is--container.-container:s` |
 | `isContainer='m'` | `.is--container.-container:m` |
 | `isContainer='l'` | `.is--container.-container:l` |
-| `isContainer={value}` | `.is--container`, `--container-size:{value}` |
+| `isContainer={value}` | `.is--container`, `--contentSz:{value}` |
 
 
 ## 専用コンポーネント
@@ -80,7 +80,7 @@ import { Desktop } from '@phosphor-icons/react';
 
 ### 任意のコンテナサイズをセットする
 
-s, m, l 以外の値をセットしたい場合は、`--content-size`変数を指定します。
+s, m, l 以外の値をセットしたい場合は、`--contentSz`変数を指定します。
 
 <Preview>
 	<PreviewTitle>is--container に任意の値をセットする</PreviewTitle>
@@ -100,7 +100,7 @@ s, m, l 以外の値をセットしたい場合は、`--content-size`変数を�
 	</PreviewCode>
 	<PreviewCode slot='tab' label='HTML'>
 	```html
-	<div class="is--container" style="--content-size:20rem">
+	<div class="is--container" style="--contentSz:20rem">
 		<div>Contents...</div>
 		<div>Contents...</div>
 	</div>
