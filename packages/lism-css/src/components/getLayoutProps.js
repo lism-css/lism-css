@@ -40,8 +40,8 @@ function geGridProps({ _propConfig = {}, ...props }) {
 }
 
 function getWithSideProps({ sideW, mainW, style = {}, ...props }) {
-	if (null != sideW) style['--_side-w'] = getMaybeTokenValue('sz', sideW);
-	if (null != mainW) style['--_main-w'] = getMaybeTokenValue('sz', mainW);
+	if (null != sideW) style['--sideW'] = getMaybeTokenValue('sz', sideW);
+	if (null != mainW) style['--mainW'] = getMaybeTokenValue('sz', mainW);
 
 	props.style = style;
 	return props;
