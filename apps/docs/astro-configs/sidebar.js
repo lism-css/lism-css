@@ -18,8 +18,8 @@ export default [
 				link: '/getting-started/',
 			},
 			{
-				label: 'Updates',
-				link: '/updates/',
+				label: 'Changelog',
+				link: '/changelog/',
 			},
 
 			// {
