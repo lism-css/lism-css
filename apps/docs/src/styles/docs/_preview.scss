@@ -92,15 +92,9 @@
 		opacity: 1;
 	}
 }
-
-.c--preview_area + .c--preview_code {
-	overflow: hidden;
-	background-color: var(--lsdoc-codeBlock-bgc);
-	border-radius: var(--lsdoc-codeBlock-radius);
-	margin-block-start: -4px;
-
-	&.d--tabs {
-		gap: 0 !important;
+.c--preview_code {
+	.d--tabs_panel {
+		overflow-x: auto;
 	}
 
 	.expressive-code {
@@ -116,6 +110,17 @@
 	}
 	pre {
 		border-radius: 0;
+	}
+}
+
+.c--preview_area + .c--preview_code {
+	overflow: hidden;
+	background-color: var(--lsdoc-codeBlock-bgc);
+	border-radius: var(--lsdoc-codeBlock-radius);
+	margin-block-start: -4px;
+
+	&.d--tabs {
+		gap: 0 !important;
 	}
 }
 .set--fz {
