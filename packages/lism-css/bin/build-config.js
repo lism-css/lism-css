@@ -2,41 +2,13 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { CONFIG } from '../config/index.js';
+import getMaybeTokenValue from '../src/lib/getMaybeTokenValue.js';
 
 // ES modules用の__dirname取得
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const { tokens: TOKENS, props: PROPS } = CONFIG;
-
-// 値が指定された token の値を一致すれば var() に変換して返す.
-function getMaybeTokenValue(value, tokenKey) {
-	// color トークンの場合は c と palette での変換を試行
-	if (tokenKey === 'color') {
-		let result = getMaybeTokenValue(value, 'c');
-		if (result === value) {
-			// まだ何も変わってなければ palette での変換
-			result = getMaybeTokenValue(value, 'palette');
-		}
-		return result;
-	}
-
-	const tokenValues = TOKENS[tokenKey];
-	if (!tokenValues) return value;
-
-	if (Array.isArray(tokenValues)) {
-		if (tokenValues.includes(value)) {
-			return `var(--${tokenKey}--${value})`;
-		}
-	} else if (typeof tokenValues === 'object') {
-		const { pre = '', values = [] } = tokenValues || {};
-		if (values.includes(value)) {
-			return `var(${pre}${value})`;
-		}
-	}
-
-	return value;
-}
 
 /**
  * ユーティリティ値を生成
@@ -60,7 +32,7 @@ function generateUtilities(propConfig) {
 	// presetsが定義されている場合
 	if (presets.length > 0) {
 		presets.forEach((preset) => {
-			utilities[preset] = getMaybeTokenValue(preset, token, TOKENS);
+			utilities[preset] = getMaybeTokenValue(token, preset);
 		});
 	}
 
