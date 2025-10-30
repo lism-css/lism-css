@@ -1,3 +1,4 @@
+import { TOKENS } from '../../config/index.js';
 import isNumStr from './helper/isNumStr';
 import getMaybeTokenValue from './getMaybeTokenValue';
 
@@ -14,10 +15,10 @@ export default function getMaybeCssVar(value, tokenKey) {
 		case 'bxsh':
 			// 0 は none
 			if (value === '0' || value === 0) return 'none';
-			return getMaybeTokenValue(tokenKey, value);
+			return getMaybeTokenValue(tokenKey, value, TOKENS);
 
 		default:
-			return getMaybeTokenValue(tokenKey, value);
+			return getMaybeTokenValue(tokenKey, value, TOKENS);
 	}
 }
 
@@ -53,12 +54,12 @@ export function getMaybeColorVar(value) {
 		const mixColors = value.split(':');
 		if (mixColors.length === 3) {
 			const [color1, color2, alpha] = mixColors;
-			return `color-mix(in srgb, ${getMaybeTokenValue('color', color1)} ${alpha}, ${getMaybeTokenValue('color', color2)})`;
+			return `color-mix(in srgb, ${getMaybeTokenValue('color', color1, TOKENS)} ${alpha}, ${getMaybeTokenValue('color', color2, TOKENS)})`;
 		} else if (mixColors.length === 2) {
 			const [color, alpha] = mixColors;
-			return `color-mix(in srgb, ${getMaybeTokenValue('color', color)} ${alpha}, transparent)`;
+			return `color-mix(in srgb, ${getMaybeTokenValue('color', color, TOKENS)} ${alpha}, transparent)`;
 		}
 	}
 
-	return getMaybeTokenValue('color', value);
+	return getMaybeTokenValue('color', value, TOKENS);
 }
