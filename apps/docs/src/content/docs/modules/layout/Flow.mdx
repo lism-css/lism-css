@@ -4,13 +4,13 @@ description: ...
 ---
 
 import { Flow, Box, Dummy, Lism, HTML } from 'lism-css/astro';
-import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage, PreviewFrame, Reference, Callout, Note } from '~/components';
+import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage, EmbedCode, PreviewFrame, Reference, Callout, Note } from '~/components';
 
 
-Lismでは、**コンテンツ間の余白を管理するためのクラス**として、`.l--flow` を用意しています。
+`l--flow` は、`display`が`flow-root`で、かつ**子要素間の余白を管理できる**レイアウトモジュールです。
 
 <Callout type='point'>
-`.l--flow`系の直下では、コンテンツの間隔が `--flow`と`margin-block-start` で管理されます。
+`l--flow`系の直下では、コンテンツの間隔が `--flow`と`margin-block-start` で管理されます。
 </Callout>
 
 
@@ -21,13 +21,23 @@ Lismでは、**コンテンツ間の余白を管理するためのクラス**と
 | `.l--flow.-flow:base` | `--flow--base` (`--s40`) |
 | `.l--flow.-flow:l` | `--flow--l` (`--s50`) |
 
-見出しタグのみ、`--flow--h` が加算され、余白が広くなるようになっています。
+また、見出しタグのみ、`--flow--h` が加算され、余白が少し広くなるようになっています。
 
-## Import
+
+<PreviewTitle>CSS</PreviewTitle>
+<EmbedCode dirPath='packages/lism-css' srcPath='src/scss/modules/layout/_flow.scss' />
+
+
+## 対応コンポーネント
+
+`lism-css` では`<Flow>`コンポーネントを配布しています。
+
+
+### Import
 
 <ImportPackage component='Flow' />
 
-## Props
+### Props
 
 | プロパティ | 説明 |
 |---|---|

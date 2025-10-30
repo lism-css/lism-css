@@ -1,8 +1,7 @@
 /*
-	Meomo: end:0 がどうせ :first-child に必要なので、 my-s も > * + * 使わず上書き形式で。
-
-	--flow をinheritさせることで -flow:custom クラスがなくても任意の値をセットできるようにしつつ、離れたネストであれば l--flow 単体で使っても base に戻るようにしている。
-	ただし直下のネストでは影響が出る。
+  Memo:
+	- > * + * を使えば :first-child への my-s の打ち消しは不要になるが、 my-e 0 を :first-child にも効かせたいので、 > * で書いている。
+	- --flow を inherit させることで -flow:custom クラスがなくても任意の値をセットできるようにしつつ、離れたネストであれば l--flow 単体で使っても base に戻るようにしている。(ただし直下のネストでは影響が出る。)
 */
 .l--flow {
 	display: flow-root;
