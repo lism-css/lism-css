@@ -1,6 +1,6 @@
 import atts from '../lib/helper/atts';
 import isTokenValue from '../lib/isTokenValue';
-import getMaybeTokenValue from '../lib/getMaybeTokenValue';
+import getMaybeCssVar from '../lib/getMaybeCssVar';
 
 export default function getLayoutProps(layout, props) {
 	if (!layout || typeof layout !== 'string') return props;
@@ -40,8 +40,8 @@ function geGridProps({ _propConfig = {}, ...props }) {
 }
 
 function getWithSideProps({ sideW, mainW, style = {}, ...props }) {
-	if (null != sideW) style['--sideW'] = getMaybeTokenValue('sz', sideW);
-	if (null != mainW) style['--mainW'] = getMaybeTokenValue('sz', mainW);
+	if (null != sideW) style['--sideW'] = getMaybeCssVar('sz', sideW);
+	if (null != mainW) style['--mainW'] = getMaybeCssVar('sz', mainW);
 
 	props.style = style;
 	return props;
@@ -59,7 +59,7 @@ function getFlowProps({ flow, style = {}, ...props }) {
 	if (isTokenValue('flow', flow)) {
 		props.lismClass = atts(props.lismClass, `-flow:${flow}`);
 	} else if (flow) {
-		style['--flow'] = getMaybeTokenValue('space', flow);
+		style['--flow'] = getMaybeCssVar('space', flow);
 	}
 	props.style = style;
 

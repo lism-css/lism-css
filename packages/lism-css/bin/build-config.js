@@ -1,21 +1,18 @@
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import { CONFIG } from '../config/index.js';
 import getMaybeTokenValue from '../src/lib/getMaybeTokenValue.js';
 
 // ES modules用の__dirname取得
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const { tokens: TOKENS, props: PROPS } = CONFIG;
-
 /**
  * ユーティリティ値を生成
  * @param {Object} propConfig - プロパティ設定
  * @returns {Object} ユーティリティ値のオブジェクト
  */
-function generateUtilities(propConfig) {
+function generateUtilities(propConfig, TOKENS) {
 	const { utils = {}, presets = [], token = '', tokenClass = 0 } = propConfig;
 	const utilities = {};
 
@@ -32,7 +29,7 @@ function generateUtilities(propConfig) {
 	// presetsが定義されている場合
 	if (presets.length > 0) {
 		presets.forEach((preset) => {
-			utilities[preset] = getMaybeTokenValue(token, preset);
+			utilities[preset] = getMaybeTokenValue(token, preset, TOKENS);
 		});
 	}
 
@@ -52,11 +49,11 @@ function generateUtilities(propConfig) {
  * @param {Object} propConfig - プロパティ設定
  * @returns {string} SCSS形式の文字列
  */
-function generatePropScss(propKey, propConfig) {
+function generatePropScss(propKey, propConfig, TOKENS) {
 	const { prop = '', bp, isVar, alwaysVar, overwriteBaseVar, important } = propConfig;
 
 	// styleが定義されている場合はそれを使用、なければpropKeyをそのまま使用
-	const utilities = generateUtilities(propConfig);
+	const utilities = generateUtilities(propConfig, TOKENS);
 
 	// ユーティリティが存在するかどうか
 	const hasUtilities = Object.keys(utilities).length > 0;
@@ -131,7 +128,8 @@ function generatePropScss(propKey, propConfig) {
 /**
  * メイン処理
  */
-async function outputPropConfigSCSS() {
+export default async function buildConfig(CONFIG) {
+	const { tokens: TOKENS, props: PROPS } = CONFIG;
 	console.log('_prop-config.scssを生成中...');
 
 	let scssContent = `// 自動生成されたファイル. 生成日時: ${new Date().toISOString()}\n`;
@@ -139,7 +137,7 @@ async function outputPropConfigSCSS() {
 	scssContent += '$props: (\n';
 	// 各プロパティをSCSS形式に変換
 	Object.entries(PROPS).forEach(([propKey, propConfig], index, array) => {
-		const propContent = generatePropScss(propKey, propConfig);
+		const propContent = generatePropScss(propKey, propConfig, TOKENS);
 		if (!propContent) return;
 		scssContent += propContent;
 
@@ -157,6 +155,3 @@ async function outputPropConfigSCSS() {
 
 	console.log(`✅ _prop-config.scssを生成しました: ${outputPath}`);
 }
-
-// スクリプト実行
-outputPropConfigSCSS().catch(console.error);
