@@ -24,6 +24,10 @@ export default function getMaybeTokenValue(tokenKey, value) {
 
 	if (tokenValues instanceof Set) {
 		if (tokenValues.has(value)) {
+			// マイナスの値を変換（-10 → n10）
+			if (value.startsWith('-')) {
+				value = `n${value.slice(1)}`;
+			}
 			return `var(--${tokenKey}--${value})`;
 		}
 	} else if (typeof tokenValues === 'object') {

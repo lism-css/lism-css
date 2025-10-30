@@ -4,7 +4,6 @@ import isPresetValue from './isPresetValue';
 import isTokenValue from './isTokenValue';
 import getUtilKey from './getUtilKey';
 import getMaybeCssVar from './getMaybeCssVar';
-import getMaybeTokenValue from './getMaybeTokenValue';
 import getBpData from './getBpData';
 import atts from './helper/atts';
 import isEmptyObj from './helper/isEmptyObj';
@@ -95,7 +94,7 @@ class LismPropsData {
 			// カスタム値
 			this.lismState.push(className);
 			if (tokenKey) {
-				this.addStyle(customVar, getMaybeTokenValue(tokenKey, propVal));
+				this.addStyle(customVar, getMaybeCssVar(propVal, tokenKey));
 			} else if (setStyles) {
 				this.addStyles(setStyles(propVal));
 			}
