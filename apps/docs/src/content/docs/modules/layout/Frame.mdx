@@ -6,15 +6,22 @@ import { HTML, Box, Flow, Flex, Media, Layer, Frame, Center, Columns, Dummy } fr
 import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage, HelpText, Note, EmbedCode } from "~/components";
 
 
-直下のメディア要素（`img`,`vieo`,`picture`,`iframe`）を `object-fit:cover` で自身のサイズに合わせて表示します。
+`l--frame` は、直下のメディア要素（`img`,`video`,`iframe`）を 自身のサイズに合わせて表示するレイアウトモジュールです。
 
 
-## CSS
+<PreviewTitle>CSS</PreviewTitle>
+<EmbedCode dirPath='packages/lism-css' srcPath='src/scss/modules/layout/_frame.scss' />
 
-<EmbedCode dirPath='packages/lism-css' srcPath='src/scss/layout/_frame.scss' />
 
+## 対応コンポーネント
 
-## Props
+`lism-css` では`<Frame>`コンポーネントを配布しています。
+
+### Import
+
+<ImportPackage component='Frame' />
+
+### Props
 
 | プロパティ | 説明 |
 |---|---|
@@ -24,9 +31,6 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage, HelpTex
 <HelpText>(`ar` 自体はどのコンポーネントにも指定できる CSS Props です。)</HelpText>
 
 
-## Import
-
-<ImportPackage component='Frame' />
 
 ## Usage
 
