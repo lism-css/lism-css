@@ -93,7 +93,7 @@ function UIBlockList({ entries }: { entries: NavLinkData[] }) {
 						<Frame ar='3/2' bd bdw='1px' bdrs='20' bdc='inherit' bgc='#fff' isContainer>
 							{entry.thumb && <Media src={entry.thumb} alt={entry.label} />}
 							{entry.iframePath && (
-								<Frame className='u--scalePreview' ar='3/2' data-scalePreview-type='list'>
+								<Frame className='u--scalePreview' ar='3/2' data-scale-preview-type='list'>
 									<iframe src={entry.iframePath} width='800' height='600' loading='lazy' />
 								</Frame>
 							)}
