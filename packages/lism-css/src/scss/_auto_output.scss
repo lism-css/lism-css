@@ -76,11 +76,15 @@ base_type:
  */
 $bp_support_list: (); // list
 @each $key, $data in setting.$props {
-	$prop: map.get($data, prop); // 対応するCSSプロパティ名
+	$prop: map_get_with_default($data, prop, ''); // 対応するCSSプロパティ名
 	$bp_support: map_get_with_default($data, bp, 0);
 	$isVar: map_get_with_default($data, isVar, 0);
 	$alwaysVar: map_get_with_default($data, alwaysVar, 0);
 	$important: map_get_with_default($data, important, setting.$default_important);
+
+	@if $prop == '' {
+		@continue;
+	}
 
 	// 基本的なbaseセレクタタイプ: 基本は0, BPサポートオンなら 1.
 	$base_type: 0;
