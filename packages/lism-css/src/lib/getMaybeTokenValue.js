@@ -42,7 +42,7 @@ export default function getMaybeTokenValue(tokenKey, value, TOKENS) {
 	} else if (typeof tokenValues === 'object') {
 		const { pre = '', values = [] } = tokenValues || {};
 
-		if (tokenValues instanceof Set && values.has(value)) {
+		if (values instanceof Set && values.has(value)) {
 			return `var(${pre}${value})`;
 		} else if (Array.isArray(values) && values.includes(value)) {
 			return `var(${pre}${value})`;
