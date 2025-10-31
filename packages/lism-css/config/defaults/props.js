@@ -28,7 +28,7 @@ export default {
 	lts: { prop: 'letterSpacing', token: 'lts', tokenClass: 1 },
 	ta: { prop: 'textAlign', presets: ['center', 'left', 'right'] },
 	td: { prop: 'textDecoration', utils: { under: 'underline', none: 'none' } },
-	tt: { prop: 'textTransform', utils: { upper: 'uppercase', lower: 'lowercase' } },
+	// tt: { prop: 'textTransform', utils: { upper: 'uppercase', lower: 'lowercase' } },
 	// te: { prop: 'textEmphasis', presets: ['filled'] },
 	// tsh: { prop: 'textShadow' },
 
