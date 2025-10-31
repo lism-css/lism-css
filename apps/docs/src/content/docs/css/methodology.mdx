@@ -142,10 +142,11 @@ LismがどのようなCSS設計になっているかを説明します。
 
 ## CSSのクラス設計
 
-Lismでは、レイアウト・デザインの構成要素を細分化していくつかの種類に分類しています。
-
+Lism CSS の中心的なクラス群について、その設計思想を説明します。
 
 ### Module Class
+
+Lismでは、レイアウトの構成要素を細分化してモジュールとして定義し、いくつかの種類に分類しています。
 
 |分類|形式|例|
 |---|---|---|
@@ -164,34 +165,37 @@ Lismでは、レイアウト・デザインの構成要素を細分化してい�
 - 例: `.c--hoge_item`
 
 
-#### バリエーションスタイル を用意する場合
+#### スタイルバリエーション を用意する場合
 
-モジュールのバリエーションスタイルを定義する場合、BEMでいうところの Modifier を付け加えたクラスを作成します。  
+モジュールのバリエーションを定義する場合、BEMでいうところの Modifier を付け加えたクラスを作成します。  
 この時、元となるモジュールクラスも併記し、CSSコードの重複を避けるようにして運用します。
 
 - 形式:`.{pre}--{name}--{variant}`  
 - 例: `.c--button.c--button--outline`
 
 
+### Utility Class
+
+Lism CSS では、`@lism.modules`レイヤーの前後それぞれにユーティリティクラスを定義するレイヤーが用意されています。
+
+|分類|形式|例|
+|---|---|---|
+|Base Utility<HelpText>ベーススタイルの上書きや機能的なプロパティを初期セットするためのユーティリティクラス。<br/>`@lism.base`で定義されます。</HelpText>|`.set-{style}`|`.set-plain`,<br />`.set-transition`|
+|Style Utility<HelpText>用途が明確な装飾・機能をまとめてセットするユーティリティクラス。<br/>`@lism.utility`で定義されます。</HelpText>|`.u-{style}`|`.u-cbox`,<br />`.u-itemDivider`|
+
+
 ### Dynamic State
 
-`d--{module}`と合わせて、Javascriptで動的に付け外しされるようなクラス。
+`d--{module}`と合わせて、Javascriptで動的に付け外しされるようなクラスです。
 
 |分類|形式|例|
 |---|---|---|
 |Dynamic State<HelpText>jsによって動的に付け外しされるようなクラス</HelpText>|`.js-{state}`|`.js-active`,<br />`.js-opened`|
 
 
-### Utility Class
-
-|分類|形式|例|
-|---|---|---|
-|Base Utility<HelpText>初期スタイルや機能変数をセットするユーティリティクラス。<br/>`@lism.base`で定義されます。</HelpText>|`.set-{style}`|`.set-plain`,<br />`.set-transition`|
-|Style Utility<HelpText>装飾的なスタイルをセットするユーティリティクラス。<br/>`@lism.utility`で定義されます。</HelpText>|`.u-{style}`|`.u-cbox`,<br />`.u-itemDivider`|
-
 ### Prop Class
 
-Lism では、単一のCSSプロパティに対応するユーティリティクラスを **Props Class** として定義しています。
+Lism CSS では、単一のCSSプロパティに対応するユーティリティクラスを **Props Class** として定義しています。
 
 主要なプロパティに対して、よく使われる値や専用のトークン値に合わせたユーティリティクラスを定義しており、レスポンシブ対応できるようになっています。
 
