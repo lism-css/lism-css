@@ -40,8 +40,8 @@ function geGridProps({ _propConfig = {}, ...props }) {
 }
 
 function getWithSideProps({ sideW, mainW, style = {}, ...props }) {
-	if (null != sideW) style['--sideW'] = getMaybeCssVar('sz', sideW);
-	if (null != mainW) style['--mainW'] = getMaybeCssVar('sz', mainW);
+	if (null != sideW) style['--sideW'] = getMaybeCssVar(sideW, 'sz');
+	if (null != mainW) style['--mainW'] = getMaybeCssVar(mainW, 'sz');
 
 	props.style = style;
 	return props;
@@ -59,7 +59,7 @@ function getFlowProps({ flow, style = {}, ...props }) {
 	if (isTokenValue('flow', flow)) {
 		props.lismClass = atts(props.lismClass, `-flow:${flow}`);
 	} else if (flow) {
-		style['--flow'] = getMaybeCssVar('space', flow);
+		style['--flow'] = getMaybeCssVar(flow, 'space');
 	}
 	props.style = style;
 
