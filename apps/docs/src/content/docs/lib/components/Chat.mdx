@@ -13,7 +13,7 @@ import Chat from '~/components/ex/Chat';
 <Preview>
 	<PreviewTitle>Preview</PreviewTitle>
 	<PreviewArea resize p='30' _dir='rtl'>
-		<Chat name='Taro' avatar='/img/avatar01.jpg'>
+		<Chat name='Taro' avatar='https://cdn.lism-css.com/img/avatar/a-01.jpg'>
 			<Dummy lang='ja' />
 		</Chat>
 	</PreviewArea>
@@ -48,20 +48,20 @@ import Chat from '~/components/ex/Chat';
 <Preview>
 	<PreviewTitle>`variant='speak'`</PreviewTitle>
 	<PreviewArea resize p='30' _dir='rtl'>
-		<Chat name='Taro' avatar='/img/avatar01.jpg'>
+		<Chat name='Taro' avatar='https://cdn.lism-css.com/img/avatar/a-01.jpg'>
 			<Dummy lang='ja' />
 		</Chat>
-		<Chat direction='end' name='Hanako' avatar='/img/avatar02.jpg' keycolor='green'>
+		<Chat direction='end' name='Hanako' avatar='https://cdn.lism-css.com/img/avatar/a-02.jpg' keycolor='green'>
 			<Dummy lang='ja' length='codes' />
 			<Dummy lang='ja' />
 		</Chat>
 	</PreviewArea>
 	<PreviewCode>
 		```jsx
-		<Chat name='Taro' avatar='/img/avatar01.jpg'>
+		<Chat name='Taro' avatar='https://cdn.lism-css.com/img/avatar/a-01.jpg'>
 			<Dummy lang='ja' />
 		</Chat>
-		<Chat direction='end' name='Hanako' avatar='/img/avatar02.jpg' keycolor='green'>
+		<Chat direction='end' name='Hanako' avatar='https://cdn.lism-css.com/img/avatar/a-02.jpg' keycolor='green'>
 			<Dummy lang='ja' length='codes' />
 		</Chat>
 		```
@@ -72,19 +72,19 @@ import Chat from '~/components/ex/Chat';
 <Preview>
 	<PreviewTitle>`variant='think'`</PreviewTitle>
 	<PreviewArea resize p='30' _dir='rtl'>
-		<Chat variant='think' name='Name B' avatar='/img/avatar01.jpg' keycolor='blue'>
+		<Chat variant='think' name='Name B' avatar='https://cdn.lism-css.com/img/avatar/a-01.jpg' keycolor='blue'>
 			<Dummy length='s' />
 		</Chat>
-		<Chat variant='think' direction='end' name='Name B' avatar='/img/avatar02.jpg' keycolor='purple'>
+		<Chat variant='think' direction='end' name='Name B' avatar='https://cdn.lism-css.com/img/avatar/a-02.jpg' keycolor='purple'>
 			<Dummy length='codes' />
 		</Chat>
 	</PreviewArea>
 	<PreviewCode>
 		```jsx
-		<Chat variant='think' name='Name B' avatar='/img/avatar01.jpg' keycolor='blue'>
+		<Chat variant='think' name='Name B' avatar='https://cdn.lism-css.com/img/avatar/a-01.jpg' keycolor='blue'>
 			<Dummy length='s' />
 		</Chat>
-		<Chat variant='think' direction='end' name='Name B' avatar='/img/avatar02.jpg' keycolor='purple'>
+		<Chat variant='think' direction='end' name='Name B' avatar='https://cdn.lism-css.com/img/avatar/a-02.jpg' keycolor='purple'>
 			<Dummy length='codes' />
 		</Chat>
 		```
@@ -99,7 +99,7 @@ Astroでは、name,footerをslotで指定することが可能です。
 <Preview>
 	<PreviewTitle>`slot`の使用例</PreviewTitle>
 	<PreviewArea resize p='30'>
-		<Chat name='Name A' avatar='/img/avatar01.jpg' keycolor='green'>
+		<Chat name='Name A' avatar='https://cdn.lism-css.com/img/avatar/a-01.jpg' keycolor='green'>
 			<b slot='name'>Taro</b>
 			<Dummy length='codes' />
 			<Fragment slot='footer'>time:<b>20:10</b></Fragment>
@@ -107,7 +107,7 @@ Astroでは、name,footerをslotで指定することが可能です。
 	</PreviewArea>
 	<PreviewCode>
 		```jsx "slot='name'" "slot='footer'"
-		<Chat name='Name A' avatar='/img/avatar01.jpg' keycolor='green'>
+		<Chat name='Name A' avatar='https://cdn.lism-css.com/img/avatar/a-01.jpg' keycolor='green'>
 			<b slot='name'>Taro</b>
 			<p>Lorem ipsum...</p>
 			<Fragment slot='footer'>time:<b>20:10</b></Fragment>
