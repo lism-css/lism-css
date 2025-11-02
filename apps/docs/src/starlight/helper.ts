@@ -7,8 +7,14 @@ export function imageExists(imagePath: string): boolean {
 	return existsSync(fullPath);
 }
 
-export const isLibTabGroup = (entry: any) => {
-	return entry.type === 'group' && (entry.label === 'Templates' || entry.label === 'Components' || entry.label === 'Page Layout');
+export const isLibTabGroup = (entry: any, target: string = '') => {
+	if (entry.type === 'group') {
+		// 最初のリンクurlを調べる
+		const childHref = entry.entries[0].href;
+		return childHref.includes(`/lib/${target}`);
+	}
+	return false;
+	// return entry.type === 'group' && (entry.label === 'Templates' || entry.label === 'Components' || entry.label === 'Page Layout');
 };
 export const isLibSidebar = (entry: any) => {
 	return isLibTabGroup(entry) || entry.label === 'Docs';

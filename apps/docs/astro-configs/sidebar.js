@@ -180,7 +180,7 @@ export default [
 		link: '/overview/',
 	},
 	{
-		label: 'Template Library ',
+		label: 'Template Library',
 		link: '/lib',
 	},
 	// {
