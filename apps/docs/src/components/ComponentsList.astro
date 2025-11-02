@@ -2,27 +2,28 @@
 // export const prerender = false; // このページはSSR
 
 // import { Image } from 'astro:assets';
-// import { Lism, LinkBox, Frame, Stack, Columns, Spacer, Media } from 'lism-css/astro';
+import { Lism, LinkBox, Frame, Stack, Columns, Spacer, Media } from 'lism-css/astro';
 import type { SidebarEntry } from '@/node_modules/@astrojs/starlight/utils/routing/types';
 import { imageExists, isLibTabGroup } from '~/starlight/helper';
 import LibTabs, { type NavLinkData } from './LibTabs';
+import UIBlockList from './UIBlockList';
 // import { Tabs } from 'lism-css/react';
 
 // import sidebarData from '@/astro-configs/sidebar';
 const { sidebar } = Astro.locals.starlightRoute;
 
-const { langPath = '', props } = Astro.props;
+const { langPath = '', target = '', cols = [2, 3, 4], ...props } = Astro.props;
 
-// Components と Templates のみ表示
+// Library系ページのみ表示
 const filteredTabGroup = sidebar.filter((entry) => {
-	return isLibTabGroup(entry);
+	return isLibTabGroup(entry, target);
 });
 
 // console.log('filteredTabGroup', filteredTabGroup);
 
-const ComponentNavList: SidebarEntry = filteredTabGroup[0];
-const TemplateNavList: SidebarEntry = filteredTabGroup[1];
-const LayoutNavList: SidebarEntry = filteredTabGroup[2];
+// const ComponentNavList: SidebarEntry = filteredTabGroup[0];
+// const TemplateNavList: SidebarEntry = filteredTabGroup[1];
+// const LayoutNavList: SidebarEntry = filteredTabGroup[2];
 
 // let defaultIndex = 1;
 // SSRじゃないとクエリは受け取れない
@@ -43,6 +44,11 @@ const getPageLinkList = (entries: SidebarEntry[], type: string): NavLinkData[] =
 
 			if (entry.type !== 'link') return null;
 			if (entry.href === '/###---') return null;
+
+			// index.mdx
+			if (entry.href === `/lib/${target}/`) {
+				return null;
+			}
 
 			let thumb = '';
 			let imagePath = '';
@@ -78,12 +84,54 @@ const getPageLinkList = (entries: SidebarEntry[], type: string): NavLinkData[] =
 		.filter((data): data is NavLinkData => data !== null);
 };
 
-const componentList = ComponentNavList.type === 'group' ? getPageLinkList(ComponentNavList?.entries, 'components') : [];
-const templateList = TemplateNavList.type === 'group' ? getPageLinkList(TemplateNavList?.entries, 'templates') : [];
-const layoutList = LayoutNavList.type === 'group' && LayoutNavList.entries ? getPageLinkList(LayoutNavList.entries, 'page-layout') : [];
+// const libraryList = ComponentNavList.type === 'group' ? getPageLinkList(ComponentNavList?.entries, target) : [];
+
+// 各タブの設定
+const TABS = [
+	{ href: '/lib/components/', label: 'UI Components', target: 'components' },
+	{ href: '/lib/templates/', label: 'Templates', target: 'templates' },
+	{ href: '/lib/page-layout/', label: 'Page Layout', target: 'page-layout' },
+];
 ---
 
-<LibTabs client:load componentList={componentList} templateList={templateList} layoutList={layoutList} />
+{
+	(() => {
+		return (
+			<div class='d--tabs--emboss'>
+				<div class='d--tabs_list'>
+					{TABS.map((tab) => {
+						// lib/{target} が href と一致していれば aria-selected='true'
+						const isSelected = target === tab.target;
+						return (
+							<a href={tab.href} class='d--tabs_tab set-plain' aria-selected={isSelected ? 'true' : 'false'}>
+								{tab.label}
+							</a>
+						);
+					})}
+				</div>
+			</div>
+		);
+	})()
+}
+{
+	filteredTabGroup.map((entry) => {
+		// console.log(entry);
+
+		const libraryList = entry.type === 'group' ? getPageLinkList(entry?.entries, target) : [];
+		// TABSからtargetに一致するlabelを取得
+		// const tabLabel = TABS.find((tab) => tab.target === target)?.label || entry.label;
+		return (
+			<>
+				{/* <h2>{tabLabel}</h2> */}
+				<Columns cols={cols} style={{ 'content-visibility': 'auto' }}>
+					<UIBlockList entries={libraryList} />
+				</Columns>
+			</>
+		);
+	})
+}
+
+<!-- <LibTabs client:load componentList={componentList} templateList={templateList} layoutList={layoutList} /> -->
 
 <script>
 	// memo: header.header の高さを取得して --header-h にセット
@@ -100,8 +148,8 @@ const layoutList = LayoutNavList.type === 'group' && LayoutNavList.entries ? get
 	window.addEventListener('resize', setHeaderHeightVar);
 </script>
 
-<style is:inline>
-	.d--tabs_list {
+<style>
+	.d--tabs--emboss {
 		position: sticky;
 		top: var(--header-h, 3rem);
 		/* background-color: var(--c--base); */
