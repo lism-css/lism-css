@@ -59,6 +59,7 @@ function getFlowProps({ flow, style = {}, ...props }) {
 	if (isTokenValue('flow', flow)) {
 		props.lismClass = atts(props.lismClass, `-flow:${flow}`);
 	} else if (flow) {
+		props.lismClass = atts(props.lismClass, `-flow:`);
 		style['--flow'] = getMaybeCssVar(flow, 'space');
 	}
 	props.style = style;
