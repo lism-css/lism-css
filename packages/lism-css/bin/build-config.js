@@ -1,7 +1,8 @@
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import getMaybeTokenValue from '../src/lib/getMaybeTokenValue.js';
+// CLI実行時にsrcからとると見つかれないので dist からとる
+import getMaybeTokenValue from '../dist/lib/getMaybeTokenValue.js';
 
 // ES modules用の__dirname取得
 const __filename = fileURLToPath(import.meta.url);
