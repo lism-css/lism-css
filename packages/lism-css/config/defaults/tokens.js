@@ -22,5 +22,5 @@ export default {
 		values: ['red', 'blue', 'green', 'yellow', 'purple', 'orange', 'pink', 'gray', 'white', 'black', 'keycolor'],
 	},
 	writing: ['vertical'],
-	flow: ['s', 'base', 'l'],
+	flow: ['s', 'l'],
 };

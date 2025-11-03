@@ -1,14 +1,13 @@
 /*
   Memo:
 	- > * + * を使えば :first-child への my-s の打ち消しは不要になるが、 my-e 0 を :first-child にも効かせたいので、 > * で書いている。
-	- --flow を inherit させることで -flow:custom クラスがなくても任意の値をセットできるようにしつつ、離れたネストであれば l--flow 単体で使っても base に戻るようにしている。(ただし直下のネストでは影響が出る。)
 */
 .l--flow {
 	display: flow-root;
-	--flow: var(--flow--base);
+	// --flow: var(--flow--base);
 
 	> * {
-		--flow: inherit;
+		--flow: var(--flow--base);
 		--my-s: var(--flow);
 		margin-block: var(--my-s) 0;
 	}
@@ -19,14 +18,14 @@
 	}
 }
 
-.-flow\:base > * {
-	--flow: var(--flow--base);
-}
 .-flow\:s > * {
 	--flow: var(--flow--s);
 }
 .-flow\:l > * {
 	--flow: var(--flow--l);
+}
+.-flow\: > * {
+	--flow: inherit;
 }
 
 // 見出しの上部余白は少しだけ広くする.
