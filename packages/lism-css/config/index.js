@@ -2,7 +2,15 @@ import defaultConfig from './default-config.js';
 import userConfig from 'lism-css/config.js'; // ユーザーが上書きできる
 import { objDeepMerge, arrayConvertToSet } from './helper.js';
 
-export const CONFIG = objDeepMerge(defaultConfig, userConfig);
+// ビルド時の設定をマージ
+let mergedConfig = objDeepMerge(defaultConfig, userConfig);
+
+// ブラウザ環境で window._LISM_CSS_CONFIG_ があればランタイムでマージ
+if (typeof window !== 'undefined' && window._LISM_CSS_CONFIG_) {
+	mergedConfig = objDeepMerge(mergedConfig, window._LISM_CSS_CONFIG_);
+}
+
+export const CONFIG = mergedConfig;
 
 const { tokens, props, states } = CONFIG;
 
