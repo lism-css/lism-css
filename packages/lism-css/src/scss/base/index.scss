@@ -20,11 +20,3 @@
 	--list-px-s: 1.5em;
 	list-style: revert;
 }
-
-// bdc, bdw などでカラーや太さを上書きできるように border 自体を変数管理
-// .-bd .set--bd
-@include mixin.maybe_where('.-bd,[class*="-bd-"]', '') {
-	--bds: solid;
-	--bdw: 1px;
-	--bdc: currentColor;
-}

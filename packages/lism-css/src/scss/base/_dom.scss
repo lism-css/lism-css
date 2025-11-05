@@ -31,7 +31,7 @@ body {
 /* ----------------------------------------
     Heading
  ---------------------------------------- */
-@include mixin.maybe_where('h1, h2, h3, h4, h5, h6', '') {
+@include mixin.maybe_where('h1, h2, h3, h4, h5, h6') {
 	font-family: var(--heading-ff, inherit);
 	font-weight: var(--heading-fw, bolder);
 	font-size: var(--fz, revert);
@@ -64,7 +64,7 @@ h6 {
 /* ----------------------------------------
     list
  ---------------------------------------- */
-@include mixin.maybe_where('ul, ol', '') {
+@include mixin.maybe_where('ul, ol') {
 	list-style: none;
 	padding: 0;
 	padding-inline-start: var(--list-px-s, 0);
@@ -74,7 +74,7 @@ h6 {
     texts
  ---------------------------------------- */
 // link
-@include mixin.maybe_where('a', '') {
+@include mixin.maybe_where('a') {
 	color: var(--c--link);
 	text-decoration: var(--link-td, underline);
 	// text-underline-offset: var(--underline-offset, auto);
@@ -84,16 +84,16 @@ h6 {
 /* ----------------------------------------
     table
  ---------------------------------------- */
-@include mixin.maybe_where('th', '') {
+@include mixin.maybe_where('th') {
 	color: var(--th--c, inherit);
 	background-color: var(--th--bgc, transparent);
 }
-// @include mixin.maybe_where('td', '') {
+// @include mixin.maybe_where('td') {
 // 	color: var(--td--c, inherit);
 // 	background-color: var(--td--bgc, transparent);
 // }
 
-@include mixin.maybe_where('td, th', '') {
+@include mixin.maybe_where('td, th') {
 	padding: var(--cell-p, 0.375em 0.5em);
 	min-inline-size: var(--cell-minW, initial);
 }
@@ -101,18 +101,18 @@ h6 {
 /* ----------------------------------------
     others
  ---------------------------------------- */
-@include mixin.maybe_where('hr', '') {
+@include mixin.maybe_where('hr') {
 	border: none;
 	border-block-start: 1px solid;
 	block-size: 0;
 }
 
-@include mixin.maybe_where('blockquote', '') {
+@include mixin.maybe_where('blockquote') {
 	border-inline-start: solid 3px currentColor;
 	padding: var(--s20) var(--s30);
 }
 
-@include mixin.maybe_where('pre', '') {
+@include mixin.maybe_where('pre') {
 	// 横にスクロールできるように（overflow-inline: auto; ← まだ使えない）
 	overflow-x: auto; // 縦書きモードにしてもこれでいけた
 }

@@ -12,8 +12,12 @@
 */
 
 // Memo: base レイヤーで初期値セット済み
-.-bd,
-[class*='-bd-'] {
+// bdc, bdw などでカラーや太さを上書きできるように border 自体を変数管理
+// .-bd .set--bd
+@include mixin.maybe_where('.-bd,[class*=" -bd-"],[class^="-bd-"]', '@base') {
+	--bds: solid;
+	--bdw: 1px;
+	--bdc: currentColor;
 	border-width: var(--bdw) #{mixin.$maybe_important};
 	border-color: var(--bdc) #{mixin.$maybe_important};
 }
