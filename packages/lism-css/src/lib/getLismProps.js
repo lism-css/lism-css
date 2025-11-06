@@ -1,5 +1,6 @@
 // import { PROPS } from '../config';
 import { PROPS, STATES } from '../../config/index.js';
+import getLayoutProps from './getLayoutProps';
 import isPresetValue from './isPresetValue';
 import isTokenValue from './isTokenValue';
 import getUtilKey from './getUtilKey';
@@ -27,7 +28,7 @@ class LismPropsData {
 
 	constructor(allProps) {
 		// 受け取るpropsとそうでないpropsを分ける
-		const { forwardedRef, class: classFromAstro, className, lismClass, layout, variant, style = {}, _propConfig = {}, ...others } = allProps;
+		const { forwardedRef, class: classFromAstro, className, lismClass, variant, style = {}, _propConfig = {}, ...others } = allProps;
 
 		this.styles = { ...style };
 		this._propConfig = { ..._propConfig };
@@ -44,10 +45,6 @@ class LismPropsData {
 
 			// baseClass の後ろにvariantクラスを追加
 			_lismClass = [baseClass, variantClass, ...lismClassArr.slice(1)].join(' ');
-		}
-
-		if (typeof layout === 'string' && layout) {
-			_lismClass = atts(_lismClass, `l--${layout}`);
 		}
 
 		// propsの処理
@@ -347,7 +344,8 @@ export default function getLismProps(props) {
 		return {};
 	}
 
-	const propObj = new LismPropsData(props);
+	const { layout, ...rest } = props;
+	const propObj = new LismPropsData(getLayoutProps(layout, rest));
 
 	return filterEmptyObj({
 		className: propObj.className,
