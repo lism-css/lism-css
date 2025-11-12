@@ -1,72 +1,121 @@
 ---
 import DemoPageLayout from '~/layouts/DemoPageLayout.astro';
-import Button from '~/components/ex/Button/index.astro';
 
-import { Container, Frame, Flex, Grid, GridItem, Layer, Media, Stack, Text } from 'lism-css/astro';
+import { HTML, Stack, Container, Frame, Columns, Grid, Media, Flex, Layer, Center } from 'lism-css/astro';
 import './_style.css';
 ---
 
 <DemoPageLayout title='Feature012'>
-	<Container bgc='base'>
-		<Grid
-			gtr={['repeat(2, 1fr)', null, 'repeat(4, auto)']}
-			gtc={['1fr minmax(320px, 1fr) 1fr', null, 'minmax(320px, 1fr) 0.5fr 0.5fr']}
-			h={['auto', null, '100svh']}
-		>
-			<GridItem
-				layout={Stack}
-				gr='1 / -1'
-				gc={['2 / span 1', null, '1 / span 1']}
-				g='50'
-				ai='c'
-				w='stretch'
-				bgc='black:35%'
-				p='60 50'
-				pos='r'
-				z='1'
-			>
-				<Layer blur='8px' z='0' />
-				<Stack g='50' c='white' ai='c' jc='c' h='100%' z='1'>
-					<Text class='u--trimHL' fz='2xl' fw='bold'>とっておきの週末</Text>
+	<Container size='l' py='60' hasGutter>
+		<Stack g='50'>
+			<Flex ai='baseline' g='0 30' fxw='wrap'>
+				<h2>カテゴリーから探す</h2>
+				<HTML.span fz='m' fw='bold' o='-20'>Categories</HTML.span>
+			</Flex>
+			<Columns cols={[1, 2, 3]} g='50' g-x='40'>
+				<Grid g='40' tag='a' isLinkBox href='#' setHov>
+					<Frame ar='16/9' bdrs='20' pos='rel'>
+						<Media src='https://cdn.lism-css.com/img/random-2510?r=1' alt='' width='960' height='640' />
+						<Layer setTransition hov='to:show' bgc='rgb(0 0 0 / 30%)' blur='4px'>
+							<Center h='100%' c='white'>
+								<HTML.span fz='xl' fs='italic' fw='light' lts='l' px='30' py='10'>View More</HTML.span>
+							</Center>
+						</Layer>
+						<Flex pos='abs' t='0' l='0' lh='1' fz='xs' c='white' bgc='black' p='0.625em .875em' m='30' bdrs='99'>
+							<HTML.span>KITCHEN</HTML.span>
+						</Flex>
+					</Frame>
 					<Stack g='30'>
-						<p>
-							いつもの週末を、忘れられない特別な一日に。ガイドブックには載っていない、
-							地域に根差したユニークな体験を予約できるサービスです。
-						</p>
-						<p>日常から少し離れて、心に残る思い出を作りませんか。 あなたの知らない、まちの魅力がきっと見つかります。</p>
+						<HTML.p class='u-trim' fz='l' fw='bold'>キッチン</HTML.p>
+						<HTML.p class='u-trim' fz='s'>毎日の料理を心躍る体験に。キッチンを美しく彩る、ミニマルなデザインの調理家電。</HTML.p>
 					</Stack>
-					<Flex w='100%' jc='c'>
-						<Button
-							layout={Grid}
-							variant='outline'
-							href='#'
-							gtc='1em 1fr 1em'
-							jc='c'
-							c='white'
-							minW={['100%', null, '200px']}
-							p='20'
-							bdrs='10'
-						>
-							<GridItem tag='span' gc='2'>View More</GridItem>
-						</Button>
-					</Flex>
-				</Stack>
-			</GridItem>
-			<GridItem layout={Frame} tag='figure' gr={['1 / span 2', null, '1 / -1']} gc={['2', null, '1']}>
-				<Media src='/img/img-1.jpg' alt='' width='960' height='640' />
-			</GridItem>
-			<GridItem layout={Frame} tag='figure' gr={['1', null, '1 / span 2']} gc={['1', null, '2']}>
-				<Media src='/img/img-2.jpg' alt='' width='960' height='640' />
-			</GridItem>
-			<GridItem layout={Frame} tag='figure' gr={['1', null, '1 / span 2']} gc={['3', null, '3']}>
-				<Media src='/img/img-3.jpg' alt='' width='960' height='640' />
-			</GridItem>
-			<GridItem layout={Frame} tag='figure' gr={['2', null, '3 / span 2']} gc={['1', null, '2']}>
-				<Media src='/img/img-4.jpg' alt='' width='960' height='640' />
-			</GridItem>
-			<GridItem layout={Frame} tag='figure' gr={['2', null, '3 / span 2']} gc={['3', null, '3']}>
-				<Media src='/img/img-5.jpg' alt='' width='960' height='640' />
-			</GridItem>
-		</Grid>
+				</Grid>
+				<Grid g='40' tag='a' isLinkBox href='#' setHov>
+					<Frame ar='16/9' bdrs='20' pos='rel'>
+						<Media src='https://cdn.lism-css.com/img/random-2510?r=2' alt='' width='960' height='640' />
+						<Layer setTransition hov='to:show' bgc='rgb(0 0 0 / 30%)' blur='4px'>
+							<Center h='100%' c='white'>
+								<HTML.span fz='xl' fs='italic' fw='light' lts='l' px='30' py='10'>View More</HTML.span>
+							</Center>
+						</Layer>
+						<Flex pos='abs' t='0' l='0' lh='1' fz='xs' c='white' bgc='black' p='0.625em .875em' m='30' bdrs='99'>
+							<HTML.span>LIVING & AIR</HTML.span>
+						</Flex>
+					</Frame>
+					<Stack g='30'>
+						<HTML.p class='u-trim' fz='l' fw='bold'>空調・生活家電</HTML.p>
+						<HTML.p class='u-trim' fz='s'>空間に溶け込み、心地よい空気と時間を作り出す。日々の暮らしの質を高めるアイテム。</HTML.p>
+					</Stack>
+				</Grid>
+				<Grid g='40' tag='a' isLinkBox href='#' setHov>
+					<Frame ar='16/9' bdrs='20' pos='rel'>
+						<Media src='https://cdn.lism-css.com/img/random-2510?r=3' alt='' width='960' height='640' />
+						<Layer setTransition hov='to:show' bgc='rgb(0 0 0 / 30%)' blur='4px'>
+							<Center h='100%' c='white'>
+								<HTML.span fz='xl' fs='italic' fw='light' lts='l' px='30' py='10'>View More</HTML.span>
+							</Center>
+						</Layer>
+						<Flex pos='abs' t='0' l='0' lh='1' fz='xs' c='white' bgc='black' p='0.625em .875em' m='30' bdrs='99'>
+							<HTML.span>CLEANING</HTML.span>
+						</Flex>
+					</Frame>
+					<Stack g='30'>
+						<HTML.p class='u-trim' fz='l' fw='bold'>掃除機</HTML.p>
+						<HTML.p class='u-trim' fz='s'>掃除さえも、美しい時間に変える。パワフルな吸引力と、オブジェのような佇まい。</HTML.p>
+					</Stack>
+				</Grid>
+				<Grid g='40' tag='a' isLinkBox href='#' setHov>
+					<Frame ar='16/9' bdrs='20' pos='rel'>
+						<Media src='https://cdn.lism-css.com/img/random-2510?r=4' alt='' width='960' height='640' />
+						<Layer setTransition hov='to:show' bgc='rgb(0 0 0 / 30%)' blur='4px'>
+							<Center h='100%' c='white'>
+								<HTML.span fz='xl' fs='italic' fw='light' lts='l' px='30' py='10'>View More</HTML.span>
+							</Center>
+						</Layer>
+						<Flex pos='abs' t='0' l='0' lh='1' fz='xs' c='white' bgc='black' p='0.625em .875em' m='30' bdrs='99'>
+							<HTML.span>LAUNDRY</HTML.span>
+						</Flex>
+					</Frame>
+					<Stack g='30'>
+						<HTML.p class='u-trim' fz='l' fw='bold'>洗濯機・衣類ケア</HTML.p>
+						<HTML.p class='u-trim' fz='s'>大切な衣類を、優しく、美しく。静かでクリーンなデザインが、空間を洗練させます。</HTML.p>
+					</Stack>
+				</Grid>
+				<Grid g='40' tag='a' isLinkBox href='#' setHov>
+					<Frame ar='16/9' bdrs='20' pos='rel'>
+						<Media src='https://cdn.lism-css.com/img/random-2510?r=5' alt='' width='960' height='640' />
+						<Layer setTransition hov='to:show' bgc='rgb(0 0 0 / 30%)' blur='4px'>
+							<Center h='100%' c='white'>
+								<HTML.span fz='xl' fs='italic' fw='light' lts='l' px='30' py='10'>View More</HTML.span>
+							</Center>
+						</Layer>
+						<Flex pos='abs' t='0' l='0' lh='1' fz='xs' c='white' bgc='black' p='0.625em .875em' m='30' bdrs='99'>
+							<HTML.span>AUDIO</HTML.span>
+						</Flex>
+					</Frame>
+					<Stack g='30'>
+						<HTML.p class='u-trim' fz='l' fw='bold'>オーディオ</HTML.p>
+						<HTML.p class='u-trim' fz='s'>心を揺さぶる、クリアで立体的なサウンド。音楽をアートのように空間に飾るオーディオ。</HTML.p>
+					</Stack>
+				</Grid>
+				<Grid g='40' tag='a' isLinkBox href='#' setHov>
+					<Frame ar='16/9' bdrs='20' pos='rel'>
+						<Media src='https://cdn.lism-css.com/img/random-2510?r=6' alt='' width='960' height='640' />
+						<Layer setTransition hov='to:show' bgc='rgb(0 0 0 / 30%)' blur='4px'>
+							<Center h='100%' c='white'>
+								<HTML.span fz='xl' fs='italic' fw='light' lts='l' px='30' py='10'>View More</HTML.span>
+							</Center>
+						</Layer>
+						<Flex pos='abs' t='0' l='0' lh='1' fz='xs' c='white' bgc='black' p='0.625em .875em' m='30' bdrs='99'>
+							<HTML.span>LIGHTING</HTML.span>
+						</Flex>
+					</Frame>
+					<Stack g='30'>
+						<HTML.p class='u-trim' fz='l' fw='bold'>照明</HTML.p>
+						<HTML.p class='u-trim' fz='s'>光と影を操り、空間をドラマチックに演出。シーンに合わせて、心地よい光をデザイン。</HTML.p>
+					</Stack>
+				</Grid>
+			</Columns>
+		</Stack>
 	</Container>
 </DemoPageLayout>

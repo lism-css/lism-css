@@ -1,34 +1,78 @@
 ---
 import DemoPageLayout from '~/layouts/DemoPageLayout.astro';
 
-import { Container, Flex, Frame, Grid, GridItem, Media, Stack, Text } from 'lism-css/astro';
-import Button from '~/components/ex/Button/index.astro';
+import { HTML, Container, Frame, Grid, Media, Stack, Layer, Center } from 'lism-css/astro';
 import './_style.css';
 ---
 
 <DemoPageLayout title='Feature006'>
-	<Container size='l' py='60' hasGutter>
-		<Grid gtc={['auto', null, '1fr minmax(20rem, 1fr)']} gtr={['1fr', null, '1fr auto auto 1fr']} g='50 70' }>
-			<GridItem layout={Stack} gr={['1', null, '2']} g='50'>
-				<Text class='u--trimHL' fz='2xl' fw='bold'>暮らしを、もっと豊かに</Text>
-				<Text class='u--trimHL'
-					>私の役割は複雑なテクノロジーを誰もが直感的に、そして快適に使えるようにデザインすることです。
-					ユーザーインタビューやテストを繰り返し、徹底的に「ユーザーの声」に耳を傾けながら、最高の体験を追求しています。
-				</Text>
-			</GridItem>
-			<GridItem layout={Grid} gr={['2', null, '1 / -1']} gc={['1', null, '2']} gtc='repeat(2, 1fr)' g='30' minH='min(70svw, 30rem)'>
-				<GridItem layout={Frame} tag='figure' gr='1 / -1'>
-					<Media src='/img/img-5.jpg' alt='' width='960' height='640' />
-				</GridItem>
-				<GridItem layout={Frame} tag='figure' gr='1 / -1'>
-					<Media src='/img/img-2.jpg' alt='' width='960' height='640' />
-				</GridItem>
-			</GridItem>
-			<GridItem gr='3'>
-				<Flex ai='c' g='20'>
-					<Button href='#' minW={['100%', null, '150px']} jc='c' p='20' bdrs='10'>View More</Button>
-				</Flex>
-			</GridItem>
+	<Container size='m' bgc='base' py='60' hasGutter>
+		<HTML.h lv='2' ta='center'>ここに特徴が並びます</HTML.h>
+		<Grid gt='repeat' cols={['1', null, '2']} rows={['1', null, '3']} my-s='50' g={['40', '50']}>
+			<Grid tag='a' isLinkBox href='#' gr='1 / span 3' gtr='1fr auto' bxsh='20' setTransition setHov hov='bxsh'>
+				<Frame tag='figure' pos='rel'>
+					<Media src='https://cdn.lism-css.com/img/random-2510?r=1' alt='' width='960' height='640' setTransition hov='to:zoom' />
+					<Layer setTransition hov='to:show' bgc='rgb(0 0 0 / 30%)' blur='4px'>
+						<Center h='100%' c='white'>
+							<HTML.span fz='xl' fs='italic' fw='light' lts='l' px='30' py='10'>View More</HTML.span>
+						</Center>
+					</Layer>
+				</Frame>
+				<Stack g='40' p='40'>
+					<HTML.p class='u-trim' fz='m' fw='bold'>衣類をいたわる</HTML.p>
+					<HTML.p class='u-trim' fz='s' o='-10'>繊維の奥の汚れを落とし、衣類の傷みを抑えながら、ふんわりと優しく洗い上げます。</HTML.p>
+				</Stack>
+			</Grid>
+			<Grid tag='a' isLinkBox href='#' gtc='1fr 2fr' bxsh='20' setTransition setHov hov='bxsh'>
+				<Frame tag='figure' pos='rel'>
+					<Media src='https://cdn.lism-css.com/img/random-2510?r=2' alt='' width='960' height='640' setTransition hov='to:zoom' />
+					<Layer setTransition hov='to:show' bgc='rgb(0 0 0 / 30%)' blur='4px'>
+						<Center h='100%' c='white'>
+							<HTML.span fz='s' fs='italic' fw='light' lts='l' px='30' py='10'>View More</HTML.span>
+						</Center>
+					</Layer>
+				</Frame>
+				<Stack g='40' p='40'>
+					<HTML.p class='u-trim' fz='m' fw='bold'>空気をデザインする</HTML.p>
+					<HTML.p class='u-trim' fz='s' o='-10'>快適な室温はもちろん、空気清浄機能でウイルスや花粉の活動を抑制します。</HTML.p>
+				</Stack>
+			</Grid>
+			<Grid tag='a' isLinkBox href='#' gtc='1fr 2fr' bxsh='20' setTransition setHov hov='bxsh'>
+				<Frame tag='figure' pos='rel'>
+					<Media src='https://cdn.lism-css.com/img/random-2510?r=3' alt='' width='960' height='640' setTransition hov='to:zoom' />
+					<Layer setTransition hov='to:show' bgc='rgb(0 0 0 / 30%)' blur='4px'>
+						<Center h='100%' c='white'>
+							<HTML.span fz='s' fs='italic' fw='light' lts='l' px='30' py='10'>View More</HTML.span>
+						</Center>
+					</Layer>
+				</Frame>
+				<Stack g='40' p='40'>
+					<HTML.p class='u-trim' fz='m' fw='bold'>毎日ごちそうを</HTML.p>
+					<HTML.p class='u-trim' fz='s' o='-10'>過熱水蒸気の力で、本格的なオーブン料理が誰でも簡単においしく作れます。</HTML.p>
+				</Stack>
+			</Grid>
+			<Grid tag='a' isLinkBox href='#' gtc='1fr 2fr' bxsh='20' setTransition setHov hov='bxsh'>
+				<Frame tag='figure' pos='rel'>
+					<Media src='https://cdn.lism-css.com/img/random-2510?r=4' alt='' width='960' height='640' setTransition hov='to:zoom' />
+					<Layer setTransition hov='to:show' bgc='rgb(0 0 0 / 30%)' blur='4px'>
+						<Center h='100%' c='white'>
+							<HTML.span fz='s' fs='italic' fw='light' lts='l' px='30' py='10'>View More</HTML.span>
+						</Center>
+					</Layer>
+				</Frame>
+				<Stack g='40' p='40'>
+					<HTML.p class='u-trim' fz='m' fw='bold'>深呼吸したくなる空間へ</HTML.p>
+					<HTML.p class='u-trim' fz='s' o='-10'>高性能フィルターが微細な粒子を99%捕集。静かな運転音で寝室にも最適。</HTML.p>
+				</Stack>
+			</Grid>
 		</Grid>
 	</Container>
 </DemoPageLayout>
+
+<style>
+	@media (any-hover: hover) {
+		.-hov\:to\:zoom {
+			scale: var(--isHov_, 1.1);
+		}
+	}
+</style>
