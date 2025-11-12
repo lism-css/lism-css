@@ -18,8 +18,8 @@ export default [
 				link: '/getting-started/',
 			},
 			{
-				label: 'Updates',
-				link: '/updates/',
+				label: 'Changelog',
+				link: '/changelog/',
 			},
 
 			// {
@@ -50,16 +50,8 @@ export default [
 				link: '/components/lism/',
 			},
 			{
-				label: 'Text',
-				link: '/components/text/',
-			},
-			{
-				label: 'Link',
-				link: '/components/link/',
-			},
-			{
-				label: 'Media',
-				link: '/components/media/',
+				label: 'HTML',
+				link: '/components/html/',
 			},
 			{
 				label: 'Dummy',
@@ -68,32 +60,36 @@ export default [
 		],
 	},
 	{
-		label: 'Layout Components',
+		label: 'State Modules',
 		items: [
 			{
-				label: 'State',
-				link: '###---',
-			},
-			{
 				label: 'Container',
-				link: '/layout/container/',
+				link: '/modules/state/container/',
 			},
 			{
 				label: 'Layer',
-				link: '/layout/layer/',
+				link: '/modules/state/layer/',
 			},
 			{
 				label: 'LinkBox',
-				link: '/layout/linkbox/',
+				link: '/modules/state/linkbox/',
 			},
-			// {
-			// 	label: 'getLismProps()',
-			// 	link: '/props/get-lism-props/',
-			// },
-
+		],
+	},
+	{
+		label: 'Layout Modules',
+		items: [
 			{
-				label: 'Layouts',
-				link: '###---',
+				label: 'Box',
+				link: '/modules/layout/box/',
+			},
+			{
+				label: 'Flow',
+				link: '/modules/layout/flow/',
+			},
+			{
+				label: 'Frame',
+				link: '/modules/layout/frame/',
 			},
 			{
 				label: '---',
@@ -101,11 +97,19 @@ export default [
 			},
 			{
 				label: 'Flex',
-				link: '/layout/flex/',
+				link: '/modules/layout/flex/',
+			},
+			{
+				label: 'Cluster',
+				link: '/modules/layout/cluster/',
 			},
 			{
 				label: 'Stack',
-				link: '/layout/stack/',
+				link: '/modules/layout/stack/',
+			},
+			{
+				label: 'WithSide',
+				link: '/modules/layout/withside/',
 			},
 			{
 				label: '---',
@@ -113,82 +117,76 @@ export default [
 			},
 			{
 				label: 'Grid',
-				link: '/layout/grid/',
+				link: '/modules/layout/grid/',
 			},
 			{
 				label: 'Center',
-				link: '/layout/center/',
+				link: '/modules/layout/center/',
 			},
 			{
 				label: 'Columns',
-				link: '/layout/columns/',
+				link: '/modules/layout/columns/',
 			},
 			{
 				label: '---',
 				link: '###---',
-			},
-			{
-				label: 'Box',
-				link: '/layout/box/',
-			},
-			{
-				label: 'Frame',
-				link: '/layout/frame/',
-			},
-			{
-				label: 'Divider',
-				link: '/layout/divider/',
-			},
-			{
-				label: 'WithSide',
-				link: '/layout/withside/',
-			},
-
-			{
-				label: '---',
-				link: '###---',
-			},
-			{
-				label: 'Decorator',
-				link: '/layout/decorator/',
-			},
-			{
-				label: 'Spacer',
-				link: '/layout/spacer/',
-			},
-			{
-				label: 'Icon',
-				link: '/layout/icon/',
-			},
-			{
-				label: 'Dynamic',
-				link: '###---',
-			},
-			{
-				label: 'Accordion',
-				link: '/layout/accordion/',
-			},
-			{
-				label: 'Modal',
-				link: '/layout/modal/',
-			},
-			{
-				label: 'Tabs',
-				link: '/layout/tabs/',
 			},
 		],
 	},
 	{
-		label: 'UI Components',
-		link: '/lib',
-		// translations: {
-		// 	ja: '概要',
-		// },
+		label: 'Atomic Modules',
+		items: [
+			{
+				label: 'Decorator',
+				link: '/modules/atomic/decorator/',
+			},
+			{
+				label: 'Divider',
+				link: '/modules/atomic/divider/',
+			},
+			{
+				label: 'Icon',
+				link: '/modules/atomic/icon/',
+			},
+			{
+				label: 'Media',
+				link: '/modules/atomic/media/',
+			},
+			{
+				label: 'Spacer',
+				link: '/modules/atomic/spacer/',
+			},
+		],
 	},
 	{
-		label: 'Templates',
-		link: '/lib?tab=templates',
+		label: 'Dynamic Modules',
+		items: [
+			{
+				label: 'Accordion',
+				link: '/modules/dynamic/accordion/',
+			},
+			{
+				label: 'Modal',
+				link: '/modules/dynamic/modal/',
+			},
+			{
+				label: 'Tabs',
+				link: '/modules/dynamic/tabs/',
+			},
+		],
 	},
+	{
+		label: 'Docs',
+		link: '/overview/',
+	},
+	{
+		label: 'Template Library',
+		link: '/lib',
+	},
+	// {
+	// 	label: 'Templates',
+	// 	link: '/lib?tab=templates',
+	// },
 	// {
 	// 	label: 'Lism Library',
 	// 	link: '/lib',
@@ -239,10 +237,6 @@ export default [
 				link: '/lib/components/navmenu/',
 			},
 			{
-				label: 'Reel',
-				link: '/lib/components/reel/',
-			},
-			{
 				label: 'ShapeDivider',
 				link: '/lib/components/shapedivider/',
 			},
@@ -273,6 +267,10 @@ export default [
 			{
 				label: 'DividerLabel',
 				link: '/lib/components/dividerlabel/',
+			},
+			{
+				label: 'Reel',
+				link: '/lib/components/reel/',
 			},
 			{
 				label: 'FAQ',
@@ -317,6 +315,13 @@ export default [
 		// items: [],
 		autogenerate: {
 			directory: 'lib/templates',
+		},
+	},
+	{
+		label: 'Page Layout',
+		// items: [],
+		autogenerate: {
+			directory: 'lib/page-layout',
 		},
 	},
 	{

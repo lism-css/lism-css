@@ -1,0 +1,260 @@
+---
+title: 'Columns'
+description: ...
+---
+import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage, PropBadge, EmbedCode } from "~/components";
+import { Lism, Box, Frame, Media, HTML, Dummy, Columns, Grid, Divider } from 'lism-css/astro';
+
+指定した列数でカラムレイアウトを作成します。
+
+
+## Props
+
+| プロパティ | 説明 | デフォルト値 |
+|---|---|---|
+| `cols` <PropBadge type="cssvar">`--cols`</PropBadge> | 列数を指定します。ブレイクポイント指定も可能です。 | `2` |
+
+{/* - `cols`: 列数を指定します。ブレイクポイント指定も可能です。 */}
+その他、[`<Grid>`で使えるprops](/components/grid#props)が使えます。
+
+
+## CSS
+
+<EmbedCode dirPath='packages/lism-css' srcPath='src/scss/modules/layout/_columns.scss' />
+
+
+
+## Import
+
+<ImportPackage component='Columns' />
+
+
+## Usage
+
+<Preview>
+	<PreviewTitle>
+		2列の`<Columns>`
+	</PreviewTitle>
+	<PreviewArea resize p='30'>
+		<Columns cols={2} g='30'>
+			<Box bgc='base-2' p='30'>Box<Dummy length='xl'/></Box>
+			<Box bgc='base-2' p='30'>Box</Box>
+			<Box bgc='base-2' p='30'>Box</Box>
+			<Box bgc='base-2' p='30'>Box</Box>
+		</Columns>
+	</PreviewArea>
+	<PreviewCode slot='tab' label='JSX'>
+		```jsx "cols={2}"
+		<Columns cols={2} g='30'>
+			<Box bgc='base-2' p='30'>Box</Box>
+			<Box bgc='base-2' p='30'>Box</Box>
+			<Box bgc='base-2' p='30'>Box</Box>
+			<Box bgc='base-2' p='30'>Box</Box>
+		</Columns>
+		```
+	</PreviewCode>
+	<PreviewCode slot='tab' label='HTML'>
+		```html "--cols:2"
+		<div class="l--columns -g:30" style="--cols:2">
+			<div class="l--box -bgc:base-2 -p:30">Box</div>
+			<div class="l--box -bgc:base-2 -p:30">Box</div>
+			<div class="l--box -bgc:base-2 -p:30">Box</div>
+			<div class="l--box -bgc:base-2 -p:30">Box</div>
+		</div>
+		```
+	</PreviewCode>
+</Preview>
+
+### 1列 → 2列 → 3列
+
+<Preview>
+	<PreviewTitle>1列 → sm:2列 → md:3列</PreviewTitle>
+	<PreviewArea resize p='30'>
+		<Columns cols={[1, 2, 3]} g='30'>
+			<Box bgc='base-2' p='30'>Box1</Box>
+			<Box bgc='base-2' p='30'>Box2</Box>
+			<Box bgc='base-2' p='30'>Box3</Box>
+			<Box bgc='base-2' p='30'>Box4</Box>
+			<Box bgc='base-2' p='30'>Box5</Box>
+			<Box bgc='base-2' p='30'>Box6</Box>
+		</Columns>
+	</PreviewArea>
+	<PreviewCode slot='tab' label='JSX'>
+		```jsx "cols={[1, 2, 3]}"
+		<Columns cols={[1, 2, 3]} g='30'>
+			<Box bgc='base-2' p='30'>Box1</Box>
+			<Box bgc='base-2' p='30'>Box2</Box>
+			<Box bgc='base-2' p='30'>Box3</Box>
+			<Box bgc='base-2' p='30'>Box4</Box>
+			<Box bgc='base-2' p='30'>Box5</Box>
+			<Box bgc='base-2' p='30'>Box6</Box>
+		</Columns>
+		```
+	</PreviewCode>
+	<PreviewCode slot='tab' label='HTML'>
+		```html "--cols:1;--cols_sm:2;--cols_md:3"
+		<div class="l--columns -g:30" style="--cols:1;--cols_sm:2;--cols_md:3">
+			<div class="l--box -bgc:base-2 -p:30">Box1</div>
+			<div class="l--box -bgc:base-2 -p:30">Box2</div>
+			<div class="l--box -bgc:base-2 -p:30">Box3</div>
+			<div class="l--box -bgc:base-2 -p:30">Box4</div>
+			<div class="l--box -bgc:base-2 -p:30">Box5</div>
+			<div class="l--box -bgc:base-2 -p:30">Box6</div>
+		</div>
+		```
+	</PreviewCode>
+</Preview>
+
+### 2列 → 4列
+
+<Preview>
+	<PreviewTitle>2列 → `@md`:4列</PreviewTitle>
+	<PreviewArea resize p='20'>
+		<Columns cols={[2, null, 4]} g='20'>
+			<Box bgc='base-2' p='30'>Box</Box>
+			<Box bgc='base-2' p='30'>Box</Box>
+			<Box bgc='base-2' p='30'>Box</Box>
+			<Box bgc='base-2' p='30'>Box</Box>
+		</Columns>
+	</PreviewArea>
+	<PreviewCode slot='tab' label='JSX'>
+		```jsx "cols={[2, null, 4]}"
+		<Columns cols={[2, null, 4]} g='20'>
+			...
+		</Columns>
+		```
+	</PreviewCode>
+	<PreviewCode slot='tab' label='HTML'>
+		```html "--cols:2;--cols_md:4"
+		<div class="l--columns -g:20" style="--cols:2;--cols_md:4">
+			...
+		</div>
+		```
+	</PreviewCode>
+</Preview>
+
+### gc(grid-column)の活用
+<Preview>
+	<PreviewTitle>1:2, 2:1 で順番にコンテンツを表示</PreviewTitle>
+	<PreviewArea resize p='20'>
+		<Columns cols='6' g='20'>
+			<Frame gc='span 2'><img src='https://cdn.lism-css.com/img/a-1.jpg' alt='' /></Frame>
+			<Frame gc='span 4'><img src='https://cdn.lism-css.com/img/a-3.jpg' alt='' /></Frame>
+			<Frame gc='span 4'><img src='https://cdn.lism-css.com/img/a-4.jpg' alt='' /></Frame>
+			<Frame gc='span 2'><img src='https://cdn.lism-css.com/img/a-2.jpg' alt='' /></Frame>
+			<Frame gc='span 1'><Dummy tag='img' /></Frame>
+			<Frame gc='span 2'><Dummy tag='img' /></Frame>
+			<Frame gc='span 2'><Dummy tag='img' /></Frame>
+			<Frame gc='span 1'><Dummy tag='img' /></Frame>
+			{/* <Frame gc='span 3'><Dummy tag='img' /></Frame> */}
+			{/* <Frame gc='span 3'><Dummy tag='img' /></Frame> */}
+		</Columns>
+	</PreviewArea>
+	<PreviewCode>
+		```jsx
+		<Columns cols='3' g='20'>
+			<Frame gc='span 2'><img src='https://cdn.lism-css.com/img/a-1.jpg' alt='' /></Frame>
+			<Frame gc='span 4'><img src='https://cdn.lism-css.com/img/a-3.jpg' alt='' /></Frame>
+			<Frame gc='span 4'><img src='https://cdn.lism-css.com/img/a-4.jpg' alt='' /></Frame>
+			<Frame gc='span 2'><img src='https://cdn.lism-css.com/img/a-2.jpg' alt='' /></Frame>
+			<Frame gc='span 1'><Dummy tag='img' /></Frame>
+			<Frame gc='span 2'><Dummy tag='img' /></Frame>
+			<Frame gc='span 2'><Dummy tag='img' /></Frame>
+			<Frame gc='span 1'><Dummy tag='img' /></Frame>
+		</Columns>
+		```
+	</PreviewCode>
+</Preview>
+
+
+### subgrid の活用
+
+1→2→3列のカラムレイアウトで、subgridを利用したカードコンテンツを作成します。
+
+<Preview>
+	<PreviewTitle>subgrid</PreviewTitle>
+	<PreviewArea resize p='20'>
+		<Columns cols={[1, 2, 3]} g='20'>
+			<Grid className='u-trimItems' g='30' p='30' gtr='subgrid' gr='span 5' bgc='base-2' bdrs='10'>
+				<Media ar='og' bdrs='10' src='https://cdn.lism-css.com/img/a-1.jpg'/>
+				<HTML.h lv='2' aslf='center' fz='m'>Card Title</HTML.h>
+				<Dummy lh='xs' />
+				<Divider my='0' />
+				<Lism lh='xs' fz='s' o='-10' >Date: 2025-01-01</Lism>
+			</Grid>
+			<Grid className='u-trimItems' g='30' p='30' gtr='subgrid' gr='span 5' bgc='base-2' bdrs='10'>
+				<Media ar='og' bdrs='10' src='https://cdn.lism-css.com/img/a-2.jpg' />
+				<HTML.h lv='2' aslf='center' fz='m'>Card Title Lorem ipsum</HTML.h>
+				<Dummy lh='xs' length='s' />
+				<Divider my='0' />
+				<Lism lh='xs' fz='s' o='-10' >Date: 2025-01-01</Lism>
+			</Grid>
+			<Grid className='u-trimItems' g='30' p='30' gtr='subgrid' gr='span 5' bgc='base-2' bdrs='10'>
+				<Media ar='og' bdrs='10' src='https://cdn.lism-css.com/img/a-3.jpg' />
+				<HTML.h lv='2' aslf='center' fz='m'>Card Title, long, long, long, very long long looong.</HTML.h>
+				<Dummy lh='xs' />
+				<Divider my='0' />
+				<Lism lh='xs' fz='s' o='-10' >Date: 2025-01-01</Lism>
+			</Grid>
+			<Grid className='u-trimItems' g='30' p='30' gtr='subgrid' gr='span 5' bgc='base-2' bdrs='10'>
+				<Media ar='og' bdrs='10' src='https://cdn.lism-css.com/img/a-4.jpg' />
+				<HTML.h lv='2' aslf='center' fz='m'>Card Title</HTML.h>
+				<Dummy lh='xs' length='s' />
+				<Divider my='0' />
+				<Lism lh='xs' fz='s' o='-10' >Date: 2025-01-01</Lism>
+			</Grid>
+			<Grid className='u-trimItems' g='30' p='30' gtr='subgrid' gr='span 5' bgc='base-2' bdrs='10'>
+				<Media ar='og' bdrs='10' src='https://cdn.lism-css.com/img/a-5.jpg' />
+				<HTML.h lv='2' aslf='center' fz='m'>Card Title</HTML.h>
+				<Dummy lh='xs' />
+				<Divider my='0' />
+				<Lism lh='xs' fz='s' o='-10' >Date: 2025-01-01</Lism>
+			</Grid>
+		</Columns>
+	</PreviewArea>
+	<PreviewCode slot='tab' label='JSX'>
+		```jsx "gtr='subgrid' gr='span 5'"
+		<Columns cols={[1, 2, 3]} g='20'>
+			<Grid className='u-trimItems' g='30' p='30' gtr='subgrid' gr='span 5' bgc='base-2' bdrs='10'>
+				<Media ar='og' bdrs='10' src='https://cdn.lism-css.com/img/a-1.jpg'/>
+				<HTML.h lv='2' aslf='center' fz='m'>Card Title</HTML.h>
+				<Dummy lh='xs' />
+				<Divider my='0' />
+				<Lism lh='xs' fz='s' o='-10' >Date: 2025-01-01</Lism>
+			</Grid>
+			<Grid className='u-trimItems' g='30' p='30' gtr='subgrid' gr='span 5' bgc='base-2' bdrs='10'>
+				<Media ar='og' bdrs='10' src='https://cdn.lism-css.com/img/a-2.jpg' />
+				<HTML.h lv='2' aslf='center' fz='m'>Card Title Lorem ipsum</HTML.h>
+				<Dummy lh='xs' length='s' />
+				<Divider my='0' />
+				<Lism lh='xs' fz='s' o='-10' >Date: 2025-01-01</Lism>
+			</Grid>
+			<Grid className='u-trimItems' g='30' p='30' gtr='subgrid' gr='span 5' bgc='base-2' bdrs='10'>
+				<Media ar='og' bdrs='10' src='https://cdn.lism-css.com/img/a-3.jpg' />
+				<HTML.h lv='2' aslf='center' fz='m'>Card Title, long, long, long, very long long looong.</HTML.h>
+				<Dummy lh='xs' />
+				<Divider my='0' />
+				<Lism lh='xs' fz='s' o='-10' >Date: 2025-01-01</Lism>
+			</Grid>
+			<Grid className='u-trimItems' g='30' p='30' gtr='subgrid' gr='span 5' bgc='base-2' bdrs='10'>
+				<Media ar='og' bdrs='10' src='https://cdn.lism-css.com/img/a-4.jpg' />
+				<HTML.h lv='2' aslf='center' fz='m'>Card Title</HTML.h>
+				<Dummy lh='xs' length='s' />
+				<Divider my='0' />
+				<Lism lh='xs' fz='s' o='-10' >Date: 2025-01-01</Lism>
+			</Grid>
+			<Grid className='u-trimItems' g='30' p='30' gtr='subgrid' gr='span 5' bgc='base-2' bdrs='10'>
+				<Media ar='og' bdrs='10' src='https://cdn.lism-css.com/img/a-5.jpg' />
+				<HTML.h lv='2' aslf='center' fz='m'>Card Title</HTML.h>
+				<Dummy lh='xs' />
+				<Divider my='0' />
+				<Lism lh='xs' fz='s' o='-10' >Date: 2025-01-01</Lism>
+			</Grid>
+		</Columns>
+		```
+	</PreviewCode>
+	<PreviewCode slot='tab' label='HTML'>
+	```html
+	```
+	</PreviewCode>
+</Preview>

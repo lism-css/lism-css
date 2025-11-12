@@ -1,7 +1,7 @@
 ---
-import type { LismProps } from '../types';
+import type { LismProps } from '../../types';
 import getLismProps from '../../../dist/lib/getLismProps';
-import getProps from '../../../dist/components/Icon/getProps';
+import getProps from '../../../dist/components/atomic/Icon/getProps';
 import SVG from './SVG.astro';
 
 // Propsの定義
@@ -28,6 +28,4 @@ if (Component === '_SVG_') {
 }
 ---
 
-<Component {...getLismProps(lismProps)} {...exProps}>
-	<slot />
-</Component>
+<Component {...getLismProps(lismProps)} {...exProps}><slot /></Component>

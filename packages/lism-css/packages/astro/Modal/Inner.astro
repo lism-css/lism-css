@@ -1,13 +1,13 @@
 ---
-import type { LismProps } from '../types';
+import type { LismProps } from '../../types';
 import { defaultProps } from '../../../dist/components/Modal/getProps';
-import { Stack } from '../Stack';
+import { Lism } from '../Lism';
 
 // Propsの定義
 interface Props extends LismProps {}
 const props = Astro.props || {};
 ---
 
-<Stack {...defaultProps.inner} {...props}>
+<Lism {...defaultProps.inner} {...props}>
 	<slot />
-</Stack>
+</Lism>

@@ -18,7 +18,7 @@ const { name = '', hasRoot = false, react, astro, css, others = [], ...props } =
 		react && (
 			<PreviewCode slot='tab' label='React (.jsx)'>
 				<EmbedCode srcPath={`src/components/ex/${name}/${hasRoot ? `${name}.jsx` : 'index.jsx'}`} />
-				{/* <Frame ovy='auto' maxH='25rem'>
+				{/* <Frame ov-y='auto' max-h='25rem'>
 					<script
 						src={`${embedUrl}?target=${encodeURI(`${basePath}${hasRoot ? `${name}.jsx` : 'index.jsx'}`)}&${queryMeta}`}
 					/>
@@ -54,7 +54,7 @@ const { name = '', hasRoot = false, react, astro, css, others = [], ...props } =
 
 <!-- <ImportPackage component='' /> -->
 
-<Flex ai='c' mbs='10' fz='s'>
+<Flex ai='center' my-s='10' fz='s'>
 	<Icon variant='inline' icon='note' c='blue' /> ソースコードを手動でコピー&ペーストしてご利用ください。
 </Flex>
 

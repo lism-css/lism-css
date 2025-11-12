@@ -1,47 +1,5 @@
 @forward './trimHL';
 @forward './cbox';
-
-// for screen reader
-.u--hidden {
-	position: absolute;
-	width: 1px;
-	height: 1px;
-	padding: 0;
-	margin: -1px;
-	overflow: hidden;
-	clip: rect(0, 0, 0, 0);
-	white-space: nowrap;
-	border-width: 0;
-}
-
-.u--overlayLink {
-	text-decoration: none;
-	position: static;
-	color: inherit;
-
-	&::before {
-		position: absolute;
-		inset: 0;
-		z-index: 0;
-		content: '';
-	}
-}
-
-// 次の要素の mbs を 0 にする。（hidden要素 や absoluteな要素が先頭に入り込んでいる時などに活用できる。）
-.u--skipFlow + * {
-	--mbs: 0;
-}
-
-// background-clip: text;は -webkit-
-.u--clipText {
-	color: transparent;
-	-webkit-background-clip: text !important;
-	background-clip: text !important;
-}
-
-.u--outerR {
-	--inner-bdrs: calc(var(--bdrs, 0px) - var(--p, 0px));
-}
-.u--innerR {
-	border-radius: var(--inner-bdrs);
-}
+@forward './itemDivider';
+@forward './linkExpand';
+@forward './hidden';

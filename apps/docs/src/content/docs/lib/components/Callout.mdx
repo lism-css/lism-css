@@ -2,7 +2,7 @@
 title: 'Callout'
 description: ...
 ---
-import { Box, Icon, Layer, Dummy, Center, Lism, WithSide } from 'lism-css/astro';
+import { Box, Flow, Icon, Layer, Dummy, Center, Lism, WithSide } from 'lism-css/astro';
 import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportSource, ImportExComponent } from '~/components';
 import { Book } from '@phosphor-icons/react';
 
@@ -19,10 +19,10 @@ import Callout from '~/components/ex/Callout/index.astro';
 	<PreviewTitle>Preview</PreviewTitle>
 	<PreviewArea resize p='30'>
 		<Callout>
-			<Dummy lang='ja' />
+			<Dummy lang='ja' length='codes' />
 		</Callout>
 		<Callout type='check'>
-			<Dummy lang='ja' length='codes' />
+			<Dummy lang='ja' />
 		</Callout>
 	</PreviewArea>
 </Preview>
@@ -37,37 +37,37 @@ import Callout from '~/components/ex/Callout/index.astro';
 <Preview>
 	<PreviewTitle>Preview</PreviewTitle>
 	<PreviewArea p='30'>
-		<WithSide className='u--cbox' keycolor='red' ai='c' p='30' g='30' bd bdrs='10'>
-			<Center data-is-side c='keycolor' fz='xl'>
+		<WithSide className='u-cbox' keycolor='red' ai='center' p='30' g='30' bd bdrs='10'>
+			<Center isSide c='keycolor' fz='xl'>
 				<Icon icon='alert' />
 			</Center>
-			<Lism className='u--trimBox'>
-				<p>ロレムイプサムの座り雨、トマ好き学習だったエリット、しかし時と活力はそのような木々と楽しみ。ブラインド行うにはいくつかの重要な事柄が流れます。</p>
-			</Lism>
+			<Flow>
+				<p>ロレム・イプサムの座り雨、トマ好き学習だったエリット、しかし時と活力はそのような木々と楽しみ。ブラインド行うにはいくつかの重要な事柄が流れます。</p>
+			</Flow>
 		</WithSide>
 	</PreviewArea>
 	<PreviewCode slot='tab' label='JSX'>
 		```jsx
-		<WithSide className='u--cbox' keycolor='red' ai='c' p='30' g='30' bd bdrs='10'>
-			<Center data-is-side c='keycolor' fz='xl'>
+		<WithSide className='u-cbox' keycolor='red' ai='center' p='30' g='30' bd bdrs='10'>
+			<Center isSide c='keycolor' fz='xl'>
 				<Icon icon='alert' />
 			</Center>
-			<Lism className='u--trimBox'>
-				<p>ロレムイプサムの座り雨、トマ好き学習だったエリット、しかし時と活力はそのような木々と楽しみ。ブラインド行うにはいくつかの重要な事柄が流れます。</p>
-			</Lism>
+			<Flow>
+				<p>ロレム・イプサムの座り雨、トマ好き学習だったエリット、しかし時と活力はそのような木々と楽しみ。ブラインド行うにはいくつかの重要な事柄が流れます。</p>
+			</Flow>
 		</WithSide>
 		```
 	</PreviewCode>
 	<PreviewCode slot='tab' label='HTML'>
 		```html
-		<div class='l--withSide u--cbox -ai:c -p:30 -g:30 -bd -bdrs:10' style='--keycolor:var(--red)'>
-			<div class='l--center -c -fz:xl' style='--c:var(--keycolor)' data-is-side='true'>
-				<svg xmlns='http://www.w3.org/2000/svg' class='l--icon' viewBox='0 0 256 256' width='1em' height='1em' fill='currentColor' focusable='false' aria-hidden='true'>
+		<div class='l--withSide is--side u-cbox -ai:center -p:30 -g:30 -bd -bdrs:10' style='--keycolor:var(--red)'>
+			<div class='l--center -c -fz:xl' style='--c:var(--keycolor)'>
+				<svg xmlns='http://www.w3.org/2000/svg' class='a--icon' viewBox='0 0 256 256' width='1em' height='1em' fill='currentColor' focusable='false' aria-hidden='true'>
 					<path d='M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm0,192a88,88,0,1,1,88-88A88.1,88.1,0,0,1,128,216Zm-8-80V80a8,8,0,0,1,16,0v56a8,8,0,0,1-16,0Zm20,36a12,12,0,1,1-12-12A12,12,0,0,1,140,172Z'></path>
 				</svg>
 			</div>
-			<div class='u--trimBox'>
-				<p>ロレムイプサムの座り雨、トマ好き学習だったエリット、しかし時と活力はそのような木々と楽しみ。ブラインド行うにはいくつかの重要な事柄が流れます。</p>
+			<div class='l--flow'>
+				<p>ロレム・イプサムの座り雨、トマ好き学習だったエリット、しかし時と活力はそのような木々と楽しみ。ブラインド行うにはいくつかの重要な事柄が流れます。</p>
 			</div>
 		</div>
 		```
@@ -92,9 +92,9 @@ import Callout from '~/components/ex/Callout/index.astro';
 | プロパティ | 説明 |
 |---|---|
 |`type`|`keycolor`と`icon`の組み合わせを呼び出すキーワードを指定できます。初期値:`"alert"`|
-|`icon`| [`Icon`](/layout/icon)コンポーネントに渡すアイコンを指定できます。デフォルトは `"alert"`です。|
+|`icon`| [`Icon`](/modules/atomic/icon)コンポーネントに渡すアイコンを指定できます。デフォルトは `"alert"`です。|
 |`keycolor`| キーカラーを指定します。|
-|`isFlow`|コンテンツを囲むdiv要素に渡されます|
+|`flow`|コンテンツを囲むdiv要素に渡されます|
 {/* | `iconProps` | アイコン（`<Icon>`）に渡すpropsを指定できます。| */}
 {/* - `variant`: `'fill'` | `'outline'` ? */}
 

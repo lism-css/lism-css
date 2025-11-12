@@ -1,5 +1,5 @@
 import React from 'react';
-import { Grid } from '../Grid';
+import { Lism } from '../Lism';
 import Tab from './Tab';
 import TabItem from './TabItem';
 import TabList from './TabList';
@@ -36,13 +36,7 @@ export default function Tabs({ tabId = '', defaultIndex = 1, listProps = {}, chi
 					} else if (nestedChild.type === TabPanel) {
 						const panelProps = nestedChild.props;
 						panels.push(
-							<TabPanel
-								{...panelProps}
-								tabId={theTabId}
-								index={tabIndex}
-								key={tabIndex}
-								isActive={tabIndex === activeIndex}
-							/>
+							<TabPanel {...panelProps} tabId={theTabId} index={tabIndex} key={tabIndex} isActive={tabIndex === activeIndex} />
 						);
 					}
 				}
@@ -51,7 +45,7 @@ export default function Tabs({ tabId = '', defaultIndex = 1, listProps = {}, chi
 	});
 
 	return (
-		<Grid {...getTabsProps(props)}>
+		<Lism {...getTabsProps(props)}>
 			{btns.length === 0 ? (
 				// TabItemを使わず直接TabListなどを子要素に配置する場合
 				children
@@ -61,6 +55,6 @@ export default function Tabs({ tabId = '', defaultIndex = 1, listProps = {}, chi
 					{panels}
 				</>
 			)}
-		</Grid>
+		</Lism>
 	);
 }

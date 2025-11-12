@@ -1,6 +1,6 @@
 {
 	"name": "lism-css",
-	"version": "0.3.4",
+	"version": "0.6.1",
 	"description": "A layout-first CSS framework for websites.",
 	"author": {
 		"name": "ddryo",
@@ -16,13 +16,20 @@
 		"dev": "vite",
 		"build": "vite build && pnpm build:css",
 		"build:vite": "vite build",
-		"build:css": "node scss-builder.cjs",
+		"build:css": "node bin/script-build-css.js",
 		"lint": "pnpm lint:style",
 		"lint:style": "stylelint '**/*.{css,scss}'",
 		"preview": "vite preview"
 	},
+	"bin": {
+		"lism-css": "./bin/cli.mjs"
+	},
 	"files": [
 		"dist",
+		"config",
+		"config.js",
+		"vite-plugin.js",
+		"bin",
 		"packages",
 		"src/scss"
 	],
@@ -31,7 +38,12 @@
 	"types": "./packages/types/index.d.ts",
 	"exports": {
 		".": "./dist/index.js",
-		"./*": "./dist/*",
+		"./config.js": "./config.js",
+		"./config": "./config/index.js",
+		"./default-config": "./config/default-config.js",
+		"./vite-plugin": "./vite-plugin.mjs",
+		"./lib/*": "./dist/lib/*",
+		"./components/*": "./dist/components/*",
 		"./react": {
 			"import": "./dist/index.js",
 			"types": "./packages/types/index.d.ts"
@@ -43,6 +55,7 @@
 			"types": "./packages/types/index.d.ts"
 		},
 		"./astro/*": "./packages/astro/*",
+		"./types": "./packages/types/index.d.ts",
 		"./scss/*": "./src/scss/*",
 		"./*.css": "./dist/css/*.css"
 	},

@@ -1,16 +1,15 @@
 ---
-import type { LismProps } from '../types';
+import type { LismProps } from '../../types';
 import { Lism } from '../Lism';
 // import getProps from '../../../dist/components/LinkBox/getProps';
 
 interface Props extends LismProps {}
-const { layout, ...props } = Astro.props || {};
+const props = Astro.props || {};
 
 const hasHref = !!props.href;
 const tag = hasHref ? 'a' : 'div';
-const LismComponent = layout || Lism;
 ---
 
-<LismComponent isLinkBox hov='op' tag={tag} {...props}>
+<Lism isLinkBox tag={tag} {...props}>
 	<slot />
-</LismComponent>
+</Lism>

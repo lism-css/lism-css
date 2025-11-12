@@ -24,77 +24,78 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage, Callout
 <Preview>
 	<PreviewTitle>Call</PreviewTitle>
 	<PreviewArea resize p='30'>
-		<Grid ta='l'>
+		<Grid ta='left'>
 			<Decorator
 				size='1.25em'
-				bd='left'
+				bd-l
 				rotate='45deg'
-				trfo='left bottom'
 				mr='auto'
+				style={{'transformOrigin':'left bottom'}}
 			/>
 			<Box p='30' mr='auto'>
 				<Dummy length='s'/>
 			</Box>
 			<Decorator
 				size='1.25em'
-				bd='left'
+				bd-l
 				rotate='-45deg'
-				trfo='left top'
 				mr='auto'
+				style={{'transformOrigin':'left top'}}
 			/>
 		</Grid>
 		<Grid as={Grid}>
 			<Decorator
 				size='1.25em'
-				bd='right'
+				bd-r
 				rotate='-45deg'
-				trfo='right bottom'
 				ml='auto'
+				style={{'transformOrigin':'right bottom'}}
 			/>
 			<Box p='30' ml='auto'>
 				<Dummy length='xs' />
 			</Box>
 			<Decorator
 				size='1.25em'
-				bd='right'
+				bd-r
 				rotate='45deg'
-				trfo='right top'
 				ml='auto'
+				style={{'transformOrigin':'right top'}}
 			/>
 		</Grid>
 		<Spacer h='10' />
-		<Flex variant='ltr' jc='center' ta='c'>
+		<Flex variant='ltr' jc='center' ta='center'>
 			<Decorator
 				fxsh='0'
 				size='1.25em'
-				bd='top'
+				bd-t
 				rotate='-45deg'
-				trfo='right top'
+				style={{'transformOrigin':'right top'}}
 			/>
+			
 			<Box px='20' py='5'>
 				<Dummy length='xs' />
 			</Box>
 			<Decorator
 				fxsh='0'
 				size='1.25em'
-				bd='top'
+				bd-t
 				rotate='45deg'
-				trfo='left top'
+				style={{'transformOrigin':'left top'}}
 			/>
 		</Flex>
 		<Spacer h='10' />
 		<Flex
 			variant='ltr'
 			jc='center'
-			ai='fe'
-			ta='c'
+			ai='flex-e'
+			ta='center'
 		>
 			<Decorator
 				fxsh='0'
 				size='1.25em'
-				bd='bottom'
+				bd-b
 				rotate='45deg'
-				trfo='right bottom'
+				style={{'transformOrigin':'right bottom'}}
 			/>
 			<Box px='20' py='5' fxg=''>
 				<Dummy length='s' />
@@ -102,60 +103,60 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage, Callout
 			<Decorator
 				fxsh='0'
 				size='1.25em'
-				bd='bottom'
+				bd-b
 				rotate='-45deg'
-				trfo='left bottom'
+				style={{'transformOrigin':'left bottom'}}
 			/>
 		</Flex>
 	</PreviewArea>
 	<PreviewCode>
 		```jsx
-		<Grid ta='l'>
+		<Grid ta='left'>
 			<Decorator
 				size='1.25em'
-				bd='left'
+				bd-l
 				rotate='45deg'
-				trfo='left bottom'
 				mr='auto'
+				style={{'transformOrigin':'left bottom'}}
 			/>
 			<Box p='30' mr='auto'>
 				<Dummy length='s'/>
 			</Box>
 			<Decorator
 				size='1.25em'
-				bd='left'
+				bd-l
 				rotate='-45deg'
-				trfo='left top'
 				mr='auto'
+				style={{'transformOrigin':'left top'}}
 			/>
 		</Grid>
 		<Grid as={Grid}>
 			<Decorator
 				size='1.25em'
-				bd='right'
+				bd-r
 				rotate='-45deg'
-				trfo='right bottom'
 				ml='auto'
+				style={{'transformOrigin':'right bottom'}}
 			/>
 			<Box p='30' ml='auto'>
 				<Dummy length='xs' />
 			</Box>
 			<Decorator
 				size='1.25em'
-				bd='right'
+				bd-r
 				rotate='45deg'
-				trfo='right top'
 				ml='auto'
+				style={{'transformOrigin':'right top'}}
 			/>
 		</Grid>
 		<Spacer h='10' />
-		<Flex variant='ltr' jc='center' ta='c'>
+		<Flex variant='ltr' jc='center' ta='center'>
 			<Decorator
 				fxsh='0'
 				size='1.25em'
-				bd='top'
+				bd-t
 				rotate='-45deg'
-				trfo='right top'
+				style={{'transformOrigin':'right top'}}
 			/>
 			<Box px='20' py='5'>
 				<Dummy length='xs' />
@@ -163,34 +164,35 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage, Callout
 			<Decorator
 				fxsh='0'
 				size='1.25em'
-				bd='top'
+				bd-t
 				rotate='45deg'
-				trfo='left top'
+				style={{'transformOrigin':'left top'}}
 			/>
 		</Flex>
 		<Spacer h='10' />
 		<Flex
 			variant='ltr'
 			jc='center'
-			ai='fe'
-			ta='c'
+		 	ai='flex-e'
+			ta='center'
 		>
 			<Decorator
 				fxsh='0'
 				size='1.25em'
-				bd='bottom'
+				bd-b
 				rotate='45deg'
-				trfo='right bottom'
+				style={{'transformOrigin':'right bottom'}}
 			/>
+			
 			<Box px='20' py='5' fxg=''>
 				<Dummy length='s' />
 			</Box>
 			<Decorator
 				fxsh='0'
 				size='1.25em'
-				bd='bottom'
+				bd-b
 				rotate='-45deg'
-				trfo='left bottom'
+				style={{'transformOrigin':'left bottom'}}
 			/>
 		</Flex>
 		```
@@ -204,33 +206,28 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage, Callout
 <Preview>
 	<PreviewTitle>Kakko</PreviewTitle>
 	<PreviewArea resize p='30'>
-		<Box p='40' pos='r'>
+		<Box p='40' pos='rel'>
 			<Dummy />
-			<Decorator size='1.25em' pos='a' t='0' l='0' bd='l,t' />
-			<Decorator size='1.25em' pos='a' r='0' b='0' bd='r,b' />
+			<Decorator size='1.25em' pos='abs' t='0' l='0' bd-l bd-t />
+			<Decorator size='1.25em' pos='abs' r='0' b='0' bd-r bd-b />
 		</Box>
-		{/* <Box p='40' pos='r'>
+		<Box p='40' pos='rel'>
 			<Dummy />
-			<Decorator size='1.25em' pos='a' t='0' r='0' bd='r,t' />
-			<Decorator size='1.25em' pos='a' l='0' b='0' bd='l,b' />
-		</Box> */}
-		<Box p='40' pos='r'>
-			<Dummy />
-			<Decorator pos='a' t='0' l='0' w='1em' h='100%' bd='l,y' />
-			<Decorator pos='a' t='0' r='0' w='1em' h='100%' bd='r,y' />
+			<Decorator pos='abs' t='0' l='0' w='1em' h='100%' bd-l bd-y />
+			<Decorator pos='abs' t='0' r='0' w='1em' h='100%' bd-r bd-y />
 		</Box>
 	</PreviewArea>
 	<PreviewCode>
 	```jsx
-	<Box p='40' pos='r'>
+	<Box p='40' pos='rel'>
 		<Dummy />
-		<Decorator size='1.25em' pos='a' t='0' l='0' bd='l,t' />
-		<Decorator size='1.25em' pos='a' r='0' b='0' bd='r,b' />
+		<Decorator size='1.25em' pos='abs' t='0' l='0' bd-l bd-t />
+		<Decorator size='1.25em' pos='abs' r='0' b='0' bd-r bd-b />
 	</Box>
-	<Box p='40' pos='r'>
+	<Box p='40' pos='rel'>
 		<Dummy />
-		<Decorator pos='a' t='0' l='0' w='1em' h='100%' bd='l,y' />
-		<Decorator pos='a' t='0' r='0' w='1em' h='100%' bd='r,y' />
+		<Decorator pos='abs' t='0' l='0' w='1em' h='100%' bd-l bd-y />
+		<Decorator pos='abs' t='0' r='0' w='1em' h='100%' bd-r bd-y />
 	</Box>
 	```
 	</PreviewCode>
@@ -242,15 +239,15 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage, Callout
 <Preview>
 	<PreviewTitle>Sticky</PreviewTitle>
 	<PreviewArea resize p='30'>
-		<Grid gd='"content ." / auto 1fr'>
+		<Grid gt='"content ." / auto 1fr'>
 			<Box
 				ga='content'
-				minW='8em'
-				maxW='30em'
+				min-w='8em'
+				max-w='30em'
 				bgc='base-2'
 				p='30'
 				w='fit-content'
-				bd='r'
+				bd-x-e
 				bdw='.5em'
 			>
 				<Dummy />
@@ -258,27 +255,27 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage, Callout
 			<Decorator
 				ga='content'
 				w='50%'
-				maxW='12em'
+				max-w='12em'
 				h='1rem'
 				ml='auto'
 				mt='auto'
 				z='-1'
-				bgc='hsl(var(--_sh_hsl) / 0.25)'
-				css={{ filter:'blur(4px)',rotate:'4deg', trfo: 'left bottom', translate: '-4px -4px' }}
+				bgc='hsl(var(--sh-hsl) / 0.25)'
+				style={{ filter:'blur(4px)',rotate:'4deg', transformOrigin: 'left bottom', translate: '-4px -4px' }}
 			 />
 		</Grid>
 	</PreviewArea>
 	<PreviewCode>
 		```jsx
-		<Grid gd='"content ." / auto 1fr'>
+		<Grid gt='"content ." / auto 1fr'>
 			<Box
 				ga='content'
-				minW='8em'
-				maxW='30em'
+				min-w='8em'
+				max-w='30em'
 				bgc='base-2'
 				p='30'
 				w='fit-content'
-				bd='r'
+				bd-x-e
 				bdw='.5em'
 			>
 				<Dummy />
@@ -286,13 +283,13 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage, Callout
 			<Decorator
 				ga='content'
 				w='50%'
-				maxW='12em'
+				max-w='12em'
 				h='1rem'
 				ml='auto'
 				mt='auto'
 				z='-1'
-				bgc='hsl(var(--_sh_hsl) / 0.25)'
-				css={{ filter:'blur(4px)',rotate:'4deg', trfo: 'left bottom', translate: '-4px -4px' }}
+				bgc='hsl(var(--sh-hsl) / 0.25)'
+				style={{ filter:'blur(4px)',rotate:'4deg', transformOrigin: 'left bottom', translate: '-4px -4px' }}
 			/>
 		</Grid>
 		```

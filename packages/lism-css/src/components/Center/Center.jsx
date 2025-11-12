@@ -1,6 +1,5 @@
-import { Grid } from '../Grid';
-// import getProps from './getProps';
+import { Lism } from '../Lism';
 
 export default function Center(props) {
-	return <Grid _grid='center' {...props} />;
+	return <Lism layout='center' {...props} />;
 }

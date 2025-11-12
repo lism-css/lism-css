@@ -146,7 +146,7 @@ import Table from '~/components/ex/Table/index.jsx';
 	</PreviewCode>
 	<PreviewCode slot='tab' label='HTML'>
 		```html
-		<table class='c--table' style="--bdwX:1px;--th--bgc:var(--c-base-2)">
+		<table class='c--table' style="--bdwX:1px;--th--bgc:var(--c--base-2)">
 			<thead>...</thead>
 			<tbody>...</tbody>
 			<tfoot>...</tfoot>
@@ -159,18 +159,18 @@ import Table from '~/components/ex/Table/index.jsx';
 
 ### スクロール時の固定表示
 
-以下のような2つのバリエーションクラスをこの例では定義しています。
+`[data-table-sticky]`属性に以下を指定できます。
 
-- セル１列目を固定する`c--table-fix1st`
-- theadを固定する`c--table-fixHead`
+- `col`: セル１列目を固定する
+- `head`: theadを固定する
 
 
 
 <Preview>
 	<PreviewTitle>scroll時にtheadと、1列目のセルを固定する例</PreviewTitle>
 	<PreviewArea p='30' _dir='rtl'>
-	<Frame ov='auto' maxH='20rem'>
-		<Table variant='fix1st,fixHead' thBgc='base-2' cellMinW='10rem'>
+	<Frame ov='auto' max-h='20rem'>
+		<Table data-table-sticky='col head' thBgc='base-2' cellMinW='10rem'>
 			<thead>
 				<tr>
 					<th>Header 1</th>
@@ -235,8 +235,8 @@ import Table from '~/components/ex/Table/index.jsx';
 	</PreviewArea>
 	<PreviewCode slot='tab' label='JSX'>
 		```jsx "fix1st,fixHead"
-		<Frame ov='auto' maxH='20rem'>
-			<Table variant='fix1st,fixHead' thBgc='base-2' cellMinW='10rem'>
+		<Frame ov='auto' max-h='20rem'>
+			<Table data-table-sticky='col head' thBgc='base-2' cellMinW='10rem'>
 				<thead>...</thead>
 				<tbody>...</tbody>
 				<tfoot>...</tfoot>
@@ -245,9 +245,9 @@ import Table from '~/components/ex/Table/index.jsx';
 		```
 	</PreviewCode>
 	<PreviewCode slot='tab' label='HTML'>
-		```html " c--table-fix1st" "c--table-fixHead"
-		<div class="l--frame -ov:a" style="max-height:20rem">
-			<table class='c--table c--table-fix1st c--table-fixHead' style="--th--bgc:var(--c-base-2);--cell_minW:10rem">
+		```html " c--table--fix1st" "c--table--fixHead"
+		<div class="l--frame -ov:auto" style="max-height:20rem">
+			<table class='c--table' data-table-sticky='col head' style="--th--bgc:var(--c--base-2);--cell_minW:10rem">
 				<thead>...</thead>
 				<tbody>...</tbody>
 				<tfoot>...</tfoot>

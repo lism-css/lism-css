@@ -1,12 +1,11 @@
 @use 'sass:map';
 @use 'sass:string';
+@use './prop-config' as props;
 
-@use './props' as props;
-
-$layer_mode: 1 !default;
 $default_important: 0 !default;
 $is_container_query: 1 !default;
 $common_support_bp: 'md' !default;
+$fzmol: 8 !default; // 7 ~ に対応.
 
 $breakpoints: () !default;
 $breakpoints: map.merge(

@@ -66,7 +66,7 @@ const { sublist, nested } = Astro.props;
 						</a>
 					) : (
 						<details open={flattenSidebar(entry.entries).some((i) => i.isCurrent) || !entry.collapsed}>
-							<summary class='-pis' style='--pis:.125em'>
+							<summary class='-px-s' style='--px-s:.125em'>
 								<div class='group-label'>
 									<span class=''>{entry.label}</span>
 									{entry.badge && (

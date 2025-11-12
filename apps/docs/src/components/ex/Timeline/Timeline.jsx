@@ -10,10 +10,10 @@ export function Root({ children, isHorizontal, ...props }) {
 }
 
 export function Line(props) {
-	return <Lism layout={Decorator} lismClass='c--timeline_line' bgc='divider' jslf='c' {...props} />;
+	return <Decorator lismClass='c--timeline_line' bgc='line' jslf='center' {...props} />;
 }
 export function Shape(props) {
-	return <Lism lismClass='c--timeline_shape' layout={Center} pos='r' z='1' c='base' ar='1/1' bdrs='99' jslf='c' {...props} />;
+	return <Center lismClass='c--timeline_shape' pos='rel' z='1' c='base' ar='1/1' bdrs='99' jslf='center' {...props} />;
 }
 
 export function Item({ isHorizontal, isStart, isEnd, isHighlighted, icon, iconProps = {}, shapeColor, children, ...props }) {
@@ -43,18 +43,18 @@ export function Item({ isHorizontal, isStart, isEnd, isHighlighted, icon, iconPr
 		<Grid
 			lismClass='c--timeline_item'
 			data-timeline={dataTimeline}
-			ai='c'
+			ai='center'
 			ji={isHorizontal ? 'c' : null}
 			gtr={isHorizontal ? 'subgrid' : null}
 			gr={isHorizontal ? '1/-1' : null}
-			gx={isHorizontal ? null : '20'}
-			gy={isHorizontal ? '10' : null}
+			g-x={isHorizontal ? null : '20'}
+			g-y={isHorizontal ? '10' : null}
 			{...props}
 		>
 			<Line {...lineProps} />
 			<Shape bgc={shapeColor || 'text'} {...shapeProps}>
-				{isHighlighted && <Decorator className='c--timeline_highlight' tag='span' pos='a' z='-1' bgc='inherit' bdrs='99' op='low' />}
-				{icon && <Icon icon={icon} scale='0.75' fz='s' {...iconProps} />}
+				{isHighlighted && <Decorator className='c--timeline_highlight' tag='span' pos='abs' z='-1' bgc='inherit' bdrs='99' o='-30' />}
+				{icon && <Icon icon={icon} scale='0.625' {...iconProps} />}
 			</Shape>
 			{children}
 		</Grid>
@@ -68,5 +68,5 @@ export function Title(props) {
 	return <Lism className='c--timeline_title' fw='bold' gr='3' gc='2' {...props} />;
 }
 export function Text(props) {
-	return <Lism className='c--timeline_text' fz='s' mbs='10' gr='4' gc='2' {...props} />;
+	return <Lism className='c--timeline_text' fz='s' my-s='10' gr='4' gc='2' {...props} />;
 }

@@ -1,20 +1,24 @@
-@layer lism.component {
+@layer lism.custom {
 	.c--shapeDivider {
 		--level: 0;
-		--offsetY: 0;
-		--offsetX: 0;
-		--stretch: 1;
+		--translate-y: 0.5px;
+		--_inner-offset: 0;
+		--_inner-stretch: 1;
 
 		/* 600px時点を最小値, 1200px時点を最大値にして、clampで高さを変動させる */
 		--h: clamp(calc(6px * var(--level)), calc(1cqw * var(--level)), calc(12px * var(--level)));
 		height: var(--h);
 		overflow: hidden;
-		translate: 0 var(--offsetY);
+		translate: 0 var(--translate-y);
+	}
+
+	.c--shapeDivider:where(.-scale\:-Y, .-scale\:-XY) {
+		--translate-y: -0.5px;
 	}
 
 	.c--shapeDivider_inner {
-		scale: var(--stretch) 1;
-		translate: var(--offsetX) 0;
+		scale: var(--_inner-stretch) 1;
+		translate: var(--_inner-offset) 0;
 	}
 }
 

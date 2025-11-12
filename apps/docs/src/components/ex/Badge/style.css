@@ -1,7 +1,7 @@
-@layer lism.component {
+@layer lism.custom {
 	.c--badge {
-		--c: var(--c-base);
-		--bgc: var(--c-text);
+		--c: var(--c--base);
+		--bgc: var(--c--text);
 		--bdc: transparent;
 		color: var(--c);
 		background-color: var(--bgc);
@@ -9,14 +9,14 @@
 		padding: 0.375em 0.5em;
 		gap: 0.125em; /* icon の利用を考慮 */
 	}
-	.c--badge-outline {
-		--c: var(--c-text);
+	.c--badge--outline {
+		--c: var(--c--text);
 		--bgc: transparent;
 		--bdc: currentColor;
 	}
 }
 
-.c--badge.u--cbox {
-	--cbox--pct-c: 75%;
-	--bdc: color-mix(in srgb, var(--c-base), var(--keycolor) 25%);
+.c--badge.u-cbox {
+	--cbox-cPct: 75%;
+	--bdc: color-mix(in srgb, var(--c--base), var(--keycolor) 25%);
 }

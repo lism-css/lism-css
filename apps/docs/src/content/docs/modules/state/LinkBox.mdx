@@ -1,0 +1,154 @@
+---
+title: 'LinkBox'
+description: ...
+---
+import { LinkBox, HTML, Spacer, Dummy } from 'lism-css/astro';
+import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage, Callout, Note } from "~/components";
+
+ボックス全体をリンク化する`is--linkBox`クラスを出力できる`<Lism>`コンポーネントです。
+
+デフォルトでは`<Lism isLinkBox>`のエイリアスで、プロパティに合わせて専用処理を加えています。
+
+## Import
+
+<ImportPackage component='LinkBox, Link' />
+
+
+## Props
+
+| Prop | 説明 |
+|---|---|
+|`href`|リンク先を指定できます。`href`が指定されている場合は`a`タグとなり、なければ`div`として出力されます。|
+
+
+
+## Usage
+
+`<LinkBox>`(`.is--linkBox`）は、主に次の2通りの使い方ができます。
+
+1. `<LinkBox>`(`.is--linkBox`）を`<a>`タグにしてそのままリンクにする。
+2. `<LinkBox>`(`.is--linkBox`）を`<div>`にして、内部に`a.u-expandedLink`を配置する。
+
+<Callout type='info'>
+LinkBox内部に**別のリンク**も配置するには、2 を採用してください。
+</Callout>
+
+
+### 1. `<LinkBox>`を`a`タグにして使う
+
+`<LinkBox>`に`href`を指定すると`<LinkBox>`自体が`<a>`タグになります。
+
+<Preview>
+	<PreviewTitle id='linkbox-demo01'>例</PreviewTitle>
+	<PreviewArea p='30'>
+		<LinkBox href='#linkbox-demo01' p='40' bgc='base' bdc='line' bd bdrs='30'>
+			<HTML.div fz='xl' fw='bold'>Heading text</HTML.div>
+			<Dummy lh='s' my-s='20' />
+			<HTML.div fz='s' c='text-2' ta='right' lh='1' my-s='10'>MORE →</HTML.div>
+		</LinkBox>
+	</PreviewArea>
+	<PreviewCode slot='tab' label='JSX'>
+		```jsx {1} "href="
+		<LinkBox href='#linkbox-demo01' p='40' bgc='base' bdc='line' bd bdrs='30'>
+			<HTML.div fz='xl' fw='bold'>Heading text</HTML.div>
+			<HTML.p lh='s' my-s='20'>
+				Lorem ipsum dolor sit, amet consectetur adipisicing elit, sed do eiusmod tempor. Non facere laudantium ex eos doloribus aut dolore nisi provident.
+			</HTML.p>
+			<HTML.div fz='s' c='text-2' ta='right' lh='1' my-s='10'>MORE →</HTML.div>
+		</LinkBox>
+		```
+	</PreviewCode>
+	<PreviewCode slot='tab' label='HTML'>
+		```jsx {1} "<a class=\"is--linkBox"
+		<a class="is--linkBox -hov:o -p:40 -bgc:base -bd -bdc:divider -bdrs:30" href="#linkbox-demo01">
+			<p class="-fz:xl -fw:bold">Heading text</p>
+			<p class="-c:text-2 -lh:s -my-s:20">Lorem ipsum dolor sit, amet consectetur adipisicing elit, sed do eiusmod tempor. Non facere laudantium ex eos doloribus aut dolore nisi provident.</p>
+			<p class="-fz:s -c:text-2 -ta:right -lh:1 -my-s:10">MORE →</p>
+		</a>
+		```
+	</PreviewCode>
+</Preview>
+
+
+### 2. 内部に`u-expandedLink`を配置する
+
+内部のアンカー要素に`.u-expandedLink`を併用してもボックス全体をリンクにすることができます。
+
+この時、LinkBoxの内部に別のリンクも配置できます。
+
+<Preview>
+	<PreviewTitle id='linkbox-demo02'>例</PreviewTitle>
+	<PreviewArea p='30'>
+		<LinkBox tag='section' p='40' bgc='base' bdc='line' bd bdrs='30' setTransition hov='bxsh'>
+			<HTML.div fz='xl' fw='bold'>
+				<HTML.a className='u-expandedLink set-plain' href='#linkbox-demo02'>Heading link text</HTML.a>
+			</HTML.div>
+			<Dummy c='text-2' lh='s' my-s='20' />
+			<HTML.div id='inner-link02' my-s='10'>
+				<a href='#inner-link02' className='-hov:o'>Inner Link</a>
+			</HTML.div>
+		</LinkBox>
+	</PreviewArea>
+	<PreviewCode slot='tab' label='JSX'>
+		```jsx "className='u-expandedLink'"
+		<LinkBox p='40' bgc='base' bdc='line' bd bdrs='30' setTransition hov='bxsh'>
+			<HTML.div fz='xl' fw='bold'>
+				<HTML.a className='u-expandedLink set-plain' href='#linkbox-demo02'>Heading link text</HTML.a>
+			</HTML.div>
+			<Dummy c='text-2' lh='s' my-s='20' />
+			<HTML.div id='inner-link02' my-s='10'>
+				<a href='#inner-link02' className='-hov:o'>Inner Link</a>
+			</HTML.div>
+		</LinkBox>
+		```
+	</PreviewCode>
+	<PreviewCode slot='tab' label='HTML'>
+		```jsx "u-expandedLink"
+		<div class="is--linkBox -hov:bxsh -p:40 -bgc:base -bdc:divider -bd -bdrs:30 set-transition">
+			<div class="-fz:xl -fw:bold">
+				<a class="u-expandedLink" href="#linkbox-demo02">Heading Link</a>
+			</div>
+			<p class="-c:text-2 -lh:s -my-s:20">
+				Lorem ipsum dolor sit, amet consectetur adipisicing elit, sed do eiusmod tempor. Non facere laudantium ex eos doloribus aut dolore nisi provident.
+			</p>
+			<div id="inner-link02" class="-my-s:10" >
+				<a href='#inner-link02' class="-hov:o">Inner Link</a>
+			</div>
+		</div>
+		```
+	</PreviewCode>
+</Preview>
+
+
+## Opt-in
+
+### Tabキーでフォーカスした時のアウトラインをLinkBox全体に広げ
+
+`u-expandedLink`でリンクを設置すると、Tabキーでフォーカスした時はアウトラインがボックス全体ではなくリンクテキスト部分のみになります。
+
+もしこれをボックス全体に広げたい場合、以下のようなCSSを追記してください。
+
+```css
+@supports selector(:has(*)) {
+	.is--linkBox:has(.u-expandedLink:focus-visible) {
+		outline: auto 1px;
+		outline: auto 1px -webkit-focus-ring-color;
+	}
+	.u-expandedLink:focus {
+		outline: 0;
+	}
+}
+```
+
+{/* ### altキーを押しながらのテキスト選択を有効にしたい場合
+
+前提として、ボックス全体をリンク化する実装方法についてはさまざまな議論があります。
+
+- `<LinkBox>`自体を`a`タグにした場合は、スクリーンリーダーの読み上げが助長になってしまうことや、ボックス内部に別のリンクを配置できないという問題があります。
+- `u-expandedLink`のようにリンク要素の擬似要素を広げてボックス全体をクリックできるようにする手法では、altキーを押しながらのリンク内テキスト選択ができなくなるという問題があります。
+
+その他の手法もいくつかありますが、それぞれ別の問題があります。基本的には上の2つからその場に適した方を選べばよいと思いますが、後者の問題がどうしても気になる場合は、以下のようなスクリプトでaltキーを押しながらのテキスト選択を有効にすることもできます。
+
+```js
+``` */}
+

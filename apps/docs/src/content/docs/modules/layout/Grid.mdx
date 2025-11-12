@@ -1,0 +1,463 @@
+---
+title: 'Grid'
+description: ...
+---
+
+import { Grid, Lism, Box, Center, Decorator, Frame, Media, Dummy } from 'lism-css/astro';
+import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage, PropBadge, Callout } from "~/components";
+
+
+コンテンツを**Gridレイアウトで配置する**ためのコンポーネントです。
+
+
+## Import
+
+<ImportPackage component='Grid' />
+
+
+## Props
+
+|Prop|CSS|
+|---|---|
+|`gd`|`grid`|
+|`gt`|`grid-template`|
+|`gta`|`grid-template-areas`|
+|`gtc`|`grid-template-columns`|
+|`gtr`|`grid-template-rows`|
+|`gaf`|`grid-auto-flow`|
+|`gar`|`grid-auto-rows`|
+|`gac`|`grid-auto-columns`|
+
+
+## Usage
+
+
+<Preview>
+	<PreviewTitle>真ん中にメインコンテンツ</PreviewTitle>
+	<PreviewArea p='30'>
+		<Grid gtc='auto 1fr auto' g='20'>
+			<Center p='30' bgc='base-2'>L</Center>
+			<Center p='30' bd>Center</Center>
+			<Center p='30' bgc='base-2'>R</Center>
+		</Grid>
+	</PreviewArea>
+	<PreviewCode slot='tab' label='JSX'>
+		```jsx
+		<Grid gtc='auto 1fr auto' g='20'>
+			<Center p='30' bgc='base-2'>L</Center>
+			<Center p='30' bd>Center</Center>
+			<Center p='30' bgc='base-2'>R</Center>
+		</Grid>
+		```
+	</PreviewCode>
+	<PreviewCode slot='tab' label='HTML'>
+		```html
+		<div class="l--grid -g:20 -gtc" style="--gtc:auto 1fr auto">
+			<div class="l--center -p:30 -bgc:base-2">L</div>
+			<div class="l--center -p:30 -bd">Center</div>
+			<div class="l--center -p:30 -bgc:base-2">R</div>
+		</div>
+		```
+	</PreviewCode>
+</Preview>
+
+
+
+<Preview>
+	<PreviewTitle>ブレイクポイントでエリアを切り替える</PreviewTitle>
+	<PreviewArea resize p='20'>
+		<Grid
+			g='20'
+			gtc={['1fr 1fr', '8em 1fr 8em']}
+			gta={[
+				`'main main' 'left right'`,
+				`'left main right'`
+			]}
+		>
+			<Box ga='left' p='20' bgc='base-2'>Left</Box>
+			<Box ga='main' p='20' bd>Center</Box>
+			<Box ga='right' p='20' bgc='base-2'>Right</Box>
+		</Grid>
+	</PreviewArea>
+	<PreviewCode slot='tab' label='JSX'>
+		```jsx
+		<Grid
+			g='20'
+			gtc={['1fr 1fr', '8em 1fr 8em']}
+			gta={[
+				`'main main' 'left right'`,
+				`'left main right'`
+			]}
+		>
+			<Box ga='left' p='20' bgc='base-2'>Left</Box>
+			<Box ga='main' p='20' bd>Center</Box>
+			<Box ga='right' p='20' bgc='base-2'>Right</Box>
+		</Grid>
+		```
+	</PreviewCode>
+	<PreviewCode slot='tab' label='HTML'>
+		```html
+		<div
+			class="l--grid -gta -gta_sm -gtc -gtc_sm -g:20"
+			style="--gta:'main main' 'left right';--gta_sm:'left main right';--gtc:1fr 1fr;--gtc_sm:8em 1fr 8em"
+		>
+			<div class="l--box -p:20 -p:30 -bgc:base-2 -ga" style="--ga:left">Left</div>
+			<div class="l--box -p:20 -p:30 -bd -ga" style="--ga:main">Center</div>
+			<div class="l--box -p:20 -bgc:base-2 -ga" style="--ga:right">Right</div>
+		</div>
+		```
+	</PreviewCode>
+</Preview>
+
+
+### 比率を固定して要素を並べる
+
+<Preview>
+	<PreviewTitle>1\:1 → @smで1\:2 の比率でコンテンツを表示</PreviewTitle>
+	<PreviewArea resize p='30'>
+		<Grid gtc={['1fr 1fr', '1fr 2fr']} ai='center' g='30'>
+			<Box>
+				<Frame ar='16/9'><img src='https://cdn.lism-css.com/img/a-1.jpg' alt='' /></Frame>
+			</Box>
+			<Box>
+				<Dummy />
+			</Box>
+			<Box>
+				<Frame ar='16/9'><img src='https://cdn.lism-css.com/img/a-2.jpg' alt='' /></Frame>
+			</Box>
+			<Box>
+				<Dummy length='l'/>
+			</Box>
+		</Grid>
+	</PreviewArea>
+	<PreviewCode slot='tab' label='JSX'>
+		```jsx
+		<Grid gtc={['1fr 1fr', '1fr 2fr']} ai='center' g='30'>
+			<Box>
+				<Frame ar='16/9'><img src='https://cdn.lism-css.com/img/a-1.jpg' alt='' /></Frame>
+			</Box>
+			<Box>
+				<Dummy />
+			</Box>
+			<Box>
+				<Frame ar='16/9'><img src='https://cdn.lism-css.com/img/a-2.jpg' alt='' /></Frame>
+			</Box>
+			<Box>
+				<Dummy length='l'/>
+			</Box>
+		</Grid>
+		```
+	</PreviewCode>
+	<PreviewCode slot='tab' label='HTML'>
+		```html
+		<div class='l--grid -gtc -gtc_sm -ai:center -g:30' style='--gtc:1fr 1fr;--gtc_sm:1fr 2fr'>
+			<div class='l--box'>
+				<div class='l--frame -ar:16/9'><img src='https://cdn.lism-css.com/img/a-1.jpg' alt='' /></div>
+			</div>
+			<div class='l--box'>
+				<p>Lorem ipsum dolor sit, amet...</p>
+			</div>
+			<div class='l--box'>
+				<div class='l--frame -ar:16/9'><img src='https://cdn.lism-css.com/img/a-2.jpg' alt='' /></div>
+			</div>
+			<div class='l--box'>
+				<p>Lorem ipsum dolor sit, amet...</p>
+			</div>
+		</div>
+		```
+	</PreviewCode>
+</Preview>
+
+
+<Preview>
+	<PreviewTitle>`u-itemDivider`を使ってテーブルのような表現にする</PreviewTitle>
+	<PreviewArea resize p='30'>
+		<Grid gtc={['2fr 3fr', '1fr 2fr']} className='u-itemDivider' bd bdc='line'>
+			<Box p='20' bgc='base-2'>A</Box>
+			<Box p='20' bgc='base-2'>B</Box>
+			<Box p='20'>Lorem ipsum</Box>
+			<Box p='20'><Dummy /></Box>
+			<Box p='20'>Dolor sit amet</Box>
+			<Box p='20'><Dummy length='l'/></Box>
+		</Grid>
+	</PreviewArea>
+	<PreviewCode slot='tab' label='JSX'>
+		```jsx
+		<Grid gtc={['2fr 3fr', '1fr 2fr']} className='u-itemDivider' bd bdc='line'>
+			<Box p='20' bgc='base-2'>A</Box>
+			<Box p='20' bgc='base-2'>B</Box>
+			<Box p='20'>Lorem ipsum</Box>
+			<Box p='20'><Dummy /></Box>
+			<Box p='20'>Dolor sit amet</Box>
+			<Box p='20'><Dummy length='l'/></Box>
+		</Grid>
+		```
+	</PreviewCode>
+	<PreviewCode slot='tab' label='HTML'>
+		```html
+		<div class='l--grid u-itemDivider -gtc -gtc_sm -bd -bdc:line' style='--gtc:2fr 3fr;--gtc_sm:1fr 2fr'>
+			<div class='l--box -p:20 -bgc:base-2'>A</div>
+			<div class='l--box -p:20 -bgc:base-2'>B</div>
+			<div class='l--box -p:20'>Lorem ipsum</div>
+			<div class='l--box -p:20'>
+				<p>Lorem ipsum dolor sit, amet...</p>
+			</div>
+			<div class='l--box -p:20'>Dolor sit amet</div>
+			<div class='l--box -p:20'>
+				<p>Lorem ipsum dolor sit, amet...</p>
+			</div>
+		</div>
+		```
+	</PreviewCode>
+</Preview>
+
+### 子要素を重ねて表示する
+
+`position:absolute`を使わず、`grid-area:1/1`(`.-ga:1`)を利用して要素を重ねる例を紹介します。
+
+<Preview>
+	<PreviewTitle>Gritの子要素を重ねて表示する</PreviewTitle>
+	<PreviewArea p='10'>
+		<Grid ar='16/9' ji='center' ai='center'>
+			<Frame ga='1/1' w='100%' h='100%'>
+				<Media src='https://cdn.lism-css.com/img/a-1.jpg' o='-20'/>
+			</Frame>
+			<Decorator ga='1/1' blur='80px' bgc='white' w='50%' h='4em'/>
+			<Box ga='1/1' fz='2xl' z='1'>SAMPLE TEXT</Box>
+		</Grid>
+	</PreviewArea>
+	<PreviewCode slot='tab' label='JSX'>
+		```jsx "ga='1/1'"
+		<Grid ar='16/9' ji='center' ai='center'>
+			<Frame ga='1/1' w='100%' h='100%'>
+				<Media src='https://cdn.lism-css.com/img/a-1.jpg' o='-20'/>
+			</Frame>
+			<Decorator ga='1/1' blur='80px' bgc='white' w='50%' h='4em'/>
+			<Box ga='1/1' fz='2xl' z='1'>SAMPLE TEXT</Box>
+		</Grid>
+		```
+	</PreviewCode>
+	<PreviewCode slot='tab' label='HTML'>
+		```jsx "-ga:1"
+		<div class="l--grid -ar:16/9 -ji:center -ai:center">
+			<div class="l--frame -w:100% -h:100% -ga:1">
+				<img class="a--media -o:soft" src="https://cdn.lism-css.com/img/a-1.jpg">  
+			</div>
+			<div class="a--decorator -bgc -w -h -ga:1" style="--bgc:var(--white);--w:50%;--h:4em;filter:blur(80px)" aria-hidden="true"></div>
+			<div class="l--box -fz:2xl -z:1 -ga:1">SAMPLE TEXT</div>
+		</div>
+		```
+	</PreviewCode>
+</Preview>
+
+
+### subgridの活用
+
+<Preview>
+	<PreviewTitle>新着記事一覧リストの作成例</PreviewTitle>
+	<PreviewArea p='30' resize>
+		<Grid gtc={['auto','auto 1fr']} bd-b>
+			<Grid gtc='subgrid' gc='1/-1' g='20' ai='center' bd-t py='30'>
+				<Grid gtc={['auto auto', '1fr 1fr']} g='20' jc='start' ai='center'>
+					<Lism fz='xs'>2024.05.31</Lism>
+					<Lism d='in-flex' jc='center' bd fz='xs' lh='1' bgc='text' c='base' p='10' bdrs='5'>NEWS</Lism>
+				</Grid>
+				<Dummy lang='ja' tag='a' href='####' hov='o' c='inherit' td='none' className='u-trim' lh='s' />
+			</Grid>
+			<Grid gtc='subgrid' gc='1/-1' g='20' ai='center' bd-t py='30'>
+				<Grid gtc={['auto auto', '1fr 1fr']} g='20' jc='start' ai='center'>
+					<Lism fz='xs'>2024.05.29</Lism>
+					<Lism d='in-flex' jc='center' bd fz='xs' lh='1' bgc='text' c='base' p='10' bdrs='5'>TIPS</Lism>
+				</Grid>
+				<Dummy lang='ja' offset='1' tag='a' href='####' hov='o' c='inherit' td='none' length='s' className='u-trim' lh='s' />
+			</Grid>
+			<Grid gtc='subgrid' gc='1/-1' g='20' ai='center' bd-t py='30'>
+				<Grid gtc={['auto auto', '1fr 1fr']} g='20' jc='start' ai='center'>
+					<Lism fz='xs'>2024.05.18</Lism>
+					<Lism d='in-flex' jc='center' bd fz='xs' lh='1' bgc='text' c='base' p='10' bdrs='5'>COLUMN</Lism>
+				</Grid>
+				<Dummy lang='ja' offset='2' tag='a' href='####' hov='o' c='inherit' td='none' className='u-trim' lh='s' />
+			</Grid>
+		</Grid>
+	</PreviewArea>
+	<PreviewCode slot='tab' label='JSX'>
+		```jsx
+		<Grid gtc={['auto','auto 1fr']} bd-b>
+			<Grid gtc='subgrid' gc='1/-1' g='20' ai='center' bd-t py='30'>
+				<Grid gtc={['auto auto', '1fr 1fr']} g='20' jc='start' ai='center'>
+					<Lism fz='xs'>2024.05.31</Lism>
+					<Lism d='in-flex' jc='center' bd fz='xs' lh='1' bgc='text' c='base' p='10' bdrs='5'>NEWS</Lism>
+				</Grid>
+				<Dummy lang='ja' tag='a' href='####' hov='o' c='inherit' td='none' className='u-trim' lh='s' />
+			</Grid>
+			<Grid gtc='subgrid' gc='1/-1' g='20' ai='center' bd-t py='30'>
+				<Grid gtc={['auto auto', '1fr 1fr']} g='20' jc='start' ai='center'>
+					<Lism fz='xs'>2024.05.29</Lism>
+					<Lism d='in-flex' jc='center' bd fz='xs' lh='1' bgc='text' c='base' p='10' bdrs='5'>TIPS</Lism>
+				</Grid>
+				<Dummy lang='ja' offset='1' tag='a' href='####' hov='o' c='inherit' td='none' length='s' className='u-trim' lh='s' />
+			</Grid>
+			<Grid gtc='subgrid' gc='1/-1' g='20' ai='center' bd-t py='30'>
+				<Grid gtc={['auto auto', '1fr 1fr']} g='20' jc='start' ai='center'>
+					<Lism fz='xs'>2024.05.18</Lism>
+					<Lism d='in-flex' jc='center' bd fz='xs' lh='1' bgc='text' c='base' p='10' bdrs='5'>COLUMN</Lism>
+				</Grid>
+				<Dummy lang='ja' offset='2' tag='a' href='####' hov='o' c='inherit' td='none' className='u-trim' lh='s' />
+			</Grid>
+		</Grid>
+		```
+	</PreviewCode>
+</Preview>
+
+
+
+### `-gtc:liquid`
+
+`l--grid` との併用が前提の、`gtc`ユーティリティクラスです。
+
+列数を指定せず、**子要素が指定した幅より小さくならないように自動で折り返しされる**カラムレイアウトを作成します。
+
+#### ペアプロパティ
+
+`cols`で子要素が維持する最小幅を指定できます（デフォルトは`--sz--min`です）。
+
+<Preview>
+	<PreviewTitle>デフォルト幅</PreviewTitle>
+	<PreviewArea resize p='20'>
+		<Grid gtc='liquid' g='20'>
+			<Box bxsh='20' p='20'><Dummy/></Box>
+			<Box bxsh='20' p='20'><Dummy/></Box>
+			<Box bxsh='20' p='20'><Dummy offset='1' /></Box>
+			<Box bxsh='20' p='20'><Dummy offset='2' /></Box>
+			<Box bxsh='20' p='20'><Dummy length='s' /></Box>
+			<Box bxsh='20' p='20'><Dummy /></Box>
+		</Grid>
+	</PreviewArea>
+	<PreviewCode>
+		```jsx
+		<Grid gtc='liquid' g='20'>
+			<Box bxsh='20' p='20'><Dummy/></Box>
+			<Box bxsh='20' p='20'><Dummy/></Box>
+			<Box bxsh='20' p='20'><Dummy offset='1' /></Box>
+			<Box bxsh='20' p='20'><Dummy offset='2' /></Box>
+			<Box bxsh='20' p='20'><Dummy length='s' /></Box>
+			<Box bxsh='20' p='20'><Dummy /></Box>
+		</Grid>
+		```
+	</PreviewCode>
+</Preview>
+
+
+<Preview>
+	<PreviewTitle>`cols=12rem`</PreviewTitle>
+	<PreviewArea resize p='20'>
+		<Grid gtc='liquid' g='20' cols='12rem'>
+			<Box bxsh='20' p='20'><Dummy length='s' /></Box>
+			<Box bxsh='20' p='20'><Dummy length='s' /></Box>
+			<Box bxsh='20' p='20'><Dummy /></Box>
+			<Box bxsh='20' p='20'><Dummy offset='1' /></Box>
+			<Box bxsh='20' p='20'><Dummy offset='2' /></Box>
+			<Box bxsh='20' p='20'><Dummy length='s' /></Box>
+		</Grid>
+	</PreviewArea>
+	<PreviewCode>
+		```jsx
+		<Grid gtc='liquid' g='20' cols='12rem'>
+			<Box bxsh='20' p='20'><Dummy length='s' /></Box>
+			<Box bxsh='20' p='20'><Dummy length='s' /></Box>
+			<Box bxsh='20' p='20'><Dummy /></Box>
+			<Box bxsh='20' p='20'><Dummy offset='1' /></Box>
+			<Box bxsh='20' p='20'><Dummy offset='2' /></Box>
+			<Box bxsh='20' p='20'><Dummy length='s' /></Box>
+		</Grid>
+		```
+	</PreviewCode>
+</Preview>
+
+
+### `-gt:repeat`
+
+`cols`で列数、`rows`で行数を指定できる`gt`ユーティリティクラスです。
+
+それぞれ、ブレイクポイント指定も可能で初期値は `1` です。
+
+
+<Preview>
+	<PreviewTitle>例</PreviewTitle>
+	<PreviewArea resize p='20'>
+		<Grid gt='repeat' cols='3' rows='3' g='5' min-h='50svh'>
+			<Box p='20' bgc='base-2'>item1</Box>
+			<Box p='20' bgc='base-2'>item2</Box>
+			<Box p='20' bgc='base-2'>item3</Box>
+			<Box p='20' bgc='base-2'>item4</Box>
+			<Box p='20' bgc='base-2' gc='span 2'>item5</Box>
+			<Center gc='3' gr='1 / -1' p='20' bgc='blue'>item6</Center>
+		</Grid>
+	</PreviewArea>
+	<PreviewCode slot='tab' label='JSX'>
+		```jsx " gc=" " gr="
+		<Grid gt='repeat' cols='3' rows='3' g='5' min-h='50svh'>
+			<Box p='20' bgc='base-2'>item1</Box>
+			<Box p='20' bgc='base-2'>item2</Box>
+			<Box p='20' bgc='base-2'>item3</Box>
+			<Box p='20' bgc='base-2'>item4</Box>
+			<Box p='20' bgc='base-2' gc='span 2'>item5</Box>
+			<Center gc='3' gr='1 / -1' p='20' bgc='blue'>item6</Center>
+		</Grid>
+		```
+	</PreviewCode>
+</Preview>
+
+
+cols,rows はそれぞれブレイクポイント指定も可能です。
+
+<Preview>
+	<PreviewTitle>例</PreviewTitle>
+	<PreviewArea resize p='20'>
+		<Grid gt='repeat' cols={['2', '3']} rows='4' min-h='50svh' gaf='row dense'>
+			<Box gc={['1 / -1','span 2']} gr={['span 2', '1 / -1']} p='30' bgc='base-2'>A</Box>
+			<Box p='30' bgc='green:20%'>B</Box>
+			<Box p='30' bgc='blue:20%'>C</Box>
+			<Box p='30' bgc='red:20%'>D</Box>
+			<Box p='30' bgc='purple:20%'>E</Box>
+		</Grid>
+	</PreviewArea>
+	<PreviewCode>
+		```jsx "gt='repeat'"
+		<Grid gt='repeat' cols={['2', '3']} rows='4' min-h='50svh' gaf='row dense'>
+			<Box gc={['1 / -1','span 2']} gr={['span 2', '1 / -1']} p='30' bgc='base-2'>A</Box>
+			<Box p='30' bgc='green:20%'>B</Box>
+			<Box p='30' bgc='blue:20%'>C</Box>
+			<Box p='30' bgc='red:20%'>D</Box>
+			<Box p='30' bgc='purple:20%'>E</Box>
+		</Grid>
+		```
+	</PreviewCode>
+</Preview>
+
+
+{/* --repeat-c,repeat-c */}
+
+{/* <Preview>
+	<PreviewTitle>1列 → 2列 → 幅200pxで3列かつ、中央よせ</PreviewTitle>
+	<PreviewArea resize p='20'>
+		<Grid gtc={['1fr', 'repeat(2, 1fr)', 'repeat(3, 200px)']} jc='center' g='20' className='has--itemGuide'>
+			<Dummy/>
+			<Dummy/>
+			<Dummy/>
+			<Dummy/>
+			<Dummy/>
+			<Dummy/>
+		</Grid>
+	</PreviewArea>
+	<PreviewCode>
+	```jsx
+	<Grid gtc={['1fr', 'repeat(2, 1fr)', 'repeat(3, 200px)']} jc='center' g='20'>
+		...
+	</Grid>
+	```
+	</PreviewCode>
+</Preview> */}
+
+
+

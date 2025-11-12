@@ -1,10 +1,10 @@
 ---
-import type { LismProps } from '../types';
-import { Grid } from '../Grid';
+import type { LismProps } from '../../types';
+import { Lism } from '../Lism';
 // import Tab from './Tab.astro';
 // import TabPanel from './TabPanel.astro';
 import TabList from './TabList.astro';
-import { uuidv4 } from '../helper/index.js';
+import { uuidv4 } from '../helper.js';
 import transformTabitems from './transformTabitems.js';
 import getTabsProps from '../../../dist/components/Tabs/getProps';
 
@@ -23,16 +23,12 @@ const { defaultIndex = 1, tabId = '', listProps = {}, ...props } = Astro.props |
 const theTabID = tabId ? tabId : uuidv4();
 
 // 子要素の方から順番に処理されていくので、文字列処理でデータを抽出
-const { btns, panels } = transformTabitems(
-	await Astro.slots.render('default'),
-	theTabID,
-	defaultIndex
-);
+const { btns, panels } = transformTabitems(await Astro.slots.render('default'), theTabID, defaultIndex);
 
 const hasItems = btns.length > 0;
 ---
 
-<Grid {...getTabsProps(props)}>
+<Lism {...getTabsProps(props)}>
 	{
 		btns && (
 			<TabList {...listProps}>
@@ -48,7 +44,7 @@ const hasItems = btns.length > 0;
 		})
 	}
 	{!hasItems && <slot />}
-</Grid>
+</Lism>
 
 <script>
 	// import setEvent from './setEvent';

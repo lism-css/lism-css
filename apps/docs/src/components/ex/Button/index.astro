@@ -2,8 +2,7 @@
 import { Flex } from 'lism-css/astro';
 import './style.css';
 
-const { layout, ...props } = Astro.props;
-const Layout = layout || Flex;
+const props = Astro.props;
 
 // c--button では c, bgc は 変数で受け取る
 const _propConfig = {
@@ -12,6 +11,6 @@ const _propConfig = {
 };
 ---
 
-<Layout lismClass='c--button' tag='a' td='n' ai='c' hov='op' _propConfig={_propConfig} {...props}>
+<Flex lismClass='c--button' tag='a' hov='o' _propConfig={_propConfig} {...props}>
 	<slot />
-</Layout>
+</Flex>

@@ -1,0 +1,18 @@
+---
+title: 2カラムレイアウト
+description: 2カラムレイアウトの実装例を紹介します。
+sidebar:
+  order: 2
+---
+
+import { Lism, Box } from 'lism-css/astro';
+import { Preview, PreviewArea, PreviewTitle, PreviewCode, PreviewFrame, EmbedCode } from "~/components";
+
+
+Lismで2カラムページの全体レイアウトを組む場合の例を紹介します。
+
+<PreviewTitle>プレビュー</PreviewTitle>
+<PreviewFrame url='/page-layout/two-columns/' hasSizeSwitch />
+
+<PreviewTitle>コード</PreviewTitle>
+<EmbedCode srcPath={`src/pages/page-layout/two-columns/index.astro`} />

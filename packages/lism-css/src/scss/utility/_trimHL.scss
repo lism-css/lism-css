@@ -1,18 +1,34 @@
-table,
-figure,
-img,
-video {
-	--trimHL: 0px;
+// そのうち text-box-trim が使える
+
+.u-trim {
+	// 詰まりすぎにならないようにほんの少しだけ余裕を持たせる
+	margin-block: calc(0.5px + var(--HL) * -1);
 }
 
-.u--trimHL {
-	margin-block: var(--trimHL);
-}
-.u--trimBox {
-	> :first-child {
-		margin-block-start: var(--trimHL);
+/*
+--HL とは別に --trimHL を定義しているのは、トリミング除外要素で 0px に上書きしても --HL 自体の値は無効にしないようにするため。
+	これにより、imgに対してmargin-block-start:var(--HL) を適用して余白を揃えたりできる。
+*/
+
+.u-trimItems {
+	> * {
+		--trimHL: calc(0.5px + var(--HL) * -1);
+		margin-block: var(--trimHL);
 	}
-	> :last-child {
-		margin-block-end: var(--trimHL);
+
+	> :where(figure, img, button) {
+		--trimHL: 0px;
 	}
 }
+
+// .u-trimBox {
+// 	:where(&) > * {
+// 		--trimHL: calc(0.5px + var(--HL) * -1);
+// 	}
+// 	> :first-child {
+// 		margin-block-start: var(--trimHL);
+// 	}
+// 	> :last-child {
+// 		margin-block-end: var(--trimHL);
+// 	}
+// }

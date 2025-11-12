@@ -1,4 +1,4 @@
-import { Text, Icon } from 'lism-css/react';
+import { HTML, Icon } from 'lism-css/react';
 import Callout from '~/components/ex/Callout/index.jsx';
 import Badge from '~/components/ex/Badge/index.jsx';
 import ICON_PRESETS from '~/components/ex/Callout/presets.js';
@@ -10,12 +10,12 @@ export const HelpText = ({ tag = 'p', children, ...props }) => {
 		_props.d = 'b';
 		_props.fz = 'xs';
 	} else {
-		_props.mbs = '20';
+		_props['my-s'] = '20';
 	}
 	return (
-		<Text {..._props} {...props}>
+		<HTML.p {..._props} {...props}>
 			{children}
-		</Text>
+		</HTML.p>
 	);
 };
 
@@ -34,7 +34,7 @@ export function Reference({ children }) {
 
 export const MemoBadge = ({ children, color = 'orange', ...props }) => {
 	return (
-		<Badge fz='s' lh='1' p='5' lismClass='u--cbox' bd keycolor={color} {...props}>
+		<Badge fz='s' lh='1' p='5' lismClass='u-cbox' bd keycolor={color} {...props}>
 			{children}
 		</Badge>
 	);
@@ -46,5 +46,5 @@ export const PropBadge = ({ type = '', ...props }) => {
 	} else if (type === 'cssvar') {
 		keycolor = 'purple';
 	}
-	return <Badge variant='prop' fz='xs' ff='mono' lh='xs' m='5' bdrs='5' whs='nw' className='u--cbox' keycolor={keycolor} {...props} />;
+	return <Badge variant='prop' fz='xs' ff='mono' lh='xs' m='5' bdrs='5' className='u-cbox -whitespace:nowrap' keycolor={keycolor} {...props} />;
 };

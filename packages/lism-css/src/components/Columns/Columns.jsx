@@ -1,6 +1,4 @@
-import { Grid } from '../Grid';
-import getProps from './getProps';
-
+import { Lism } from '../Lism';
 export default function Columns(props) {
-	return <Grid _grid='columns' {...getProps(props)} />;
+	return <Lism layout='columns' {...props} />;
 }

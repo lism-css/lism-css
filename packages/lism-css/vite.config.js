@@ -5,6 +5,7 @@ import { defineConfig } from 'vite';
 
 // import {useRef} from 'react'; とかした時に、React is not defined 言われないように
 import react from '@vitejs/plugin-react-swc';
+// import { lismResolver } from './plugins/lism-resolver.js';
 
 // components/Box/Box → components/Box/index に変換
 function deleteDuplicateDir(filePath) {
@@ -30,7 +31,6 @@ function deleteDuplicateDir(filePath) {
 const entries = {
 	index: resolve(__dirname, 'src/components/index.js'),
 	// 'components/Box/index': resolve(__dirname, 'src/components/Box/index.js'),
-	config: resolve(__dirname, 'src/config/index.js'),
 	// ↓ scripts.jsのビルドと、setEvent.js もこれでビルドされる.
 	'scripts/tabs': resolve(__dirname, 'src/components/Tabs/script.js'),
 	'scripts/accordion': resolve(__dirname, 'src/components/Accordion/script.js'),
@@ -40,7 +40,10 @@ const entries = {
 // build.lib を設定すると でライブラリモードになる。
 // https://ja.vitejs.dev/guide/build.html#library-mode
 export default defineConfig({
-	plugins: [react({ jsxRuntime: 'automatic' })], // React 17以降推奨のautomaticを明示
+	plugins: [
+		react({ jsxRuntime: 'automatic' }), // React 17以降推奨のautomaticを明示
+		// lismResolver() // lism-css/パッケージ名の解決プラグイン
+	],
 	build: {
 		// target: 'es2015',
 		lib: {
@@ -62,7 +65,7 @@ export default defineConfig({
 			// },
 		},
 		rollupOptions: {
-			external: ['react', 'react-dom', 'react/jsx-runtime'],
+			external: ['react', 'react-dom', 'react/jsx-runtime', 'lism-css/config.js'],
 			output: {
 				dir: 'dist',
 				// exports: 'named',

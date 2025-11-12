@@ -1,3 +1,13 @@
+@use '../_setting' as setting;
+@use 'sass:math';
+
+// フォントサイズ計算用の関数
+@function fz-calc($offset) {
+	$fzmol: setting.$fzmol;
+	$fz: math.div($fzmol, ($fzmol - $offset));
+	@return math.div(math.round($fz * 1000), 1000);
+}
+
 :root {
 	/* ------------------------------------------------------------
 	  Spacing
@@ -22,92 +32,82 @@
 	/* ------------------------------------------------------------
 	  コンテンツサイズ
 	------------------------------------------------------------ */
-	--size-xl: 1600px; // 80*20
-	--size-l: 1280px; // 80*16
-	--size-m: 960px; // 80*12
-	--size-s: 640px; // 80*8
-	--size-xs: 480px; // 80*6
-	--size-min: 16rem; // 最低限維持したいアイテムサイズの標準値。withSide,reel,columns で使用
+	--sz--xl: 1600px; // 80*20
+	--sz--l: 1280px; // 80*16
+	--sz--m: 960px; // 80*12
+	--sz--s: 640px; // 80*8
+	--sz--xs: 480px; // 80*6
 
-	// .is--flow の余白
-	--flowM-s: var(--s20);
-	--flowM-m: var(--s40);
-	// --flowM-l: var(--s50);
-	--flowM-h: 1em; /* --flowM に追加する値 */
+	--sz--min: 16rem; // 最低限維持したいコンテンツサイズの標準値。 withSide等 で使用
+
+	// .l--flow の余白
+	--flow--base: var(--s40);
+	--flow--s: var(--s20);
+	--flow--l: var(--s50);
+	--flow--h: 0.75em;
 
 	/* ------------------------------------------------------------
 	    タイポグラフィ
 	------------------------------------------------------------ */
 
-	// --ff-sans: 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', 'Meiryo', sans-serif;
-	// --ff-serif: serif;
+	// --ff--sans: 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', 'Meiryo', sans-serif;
+	// --ff--serif: serif;
 
-	--ff-base: -apple-system, 'BlinkMacSystemFont', 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, sans-serif, 'Segoe UI Emoji';
+	--ff--base: -apple-system, 'BlinkMacSystemFont', 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, sans-serif, 'Segoe UI Emoji';
 
 	// Optima, Georgia, Garamond, Baskerville;
-	--ff-accent: 'Garamond', 'Baskerville', 'Times New Roman', serif;
-	--ff-mono: Menlo, Consolas, monaco, monospace;
+	--ff--accent: 'Garamond', 'Baskerville', 'Times New Roman', serif;
+	--ff--mono: Menlo, Consolas, monaco, monospace;
 
 	// ------------------------------
 	// font-size 変数
 	// ------------------------------
-	// 倍音列(分子8) での計算値
-	// --fz-5xl: 4em; //calc(1em * 8 / 2);
-	// --fz-4xl: 2.667em; // calc(1em * 8 / 3);
-	// --fz-3xl: 2em; //calc(1em * 8 / 4);
-	// --fz-2xl: 1.6em; //calc(1em * 8 / 5);
-	// --fz-xl: 1.333em; //calc(1em * 8 / 6);
-	// --fz-l: 1.143em; //calc(1em * 8 / 7);
-	// --fz-m: 1em; // デフォルトでフォントサイズ 変わっているものを1emにリセットしたい時に必要
-	// --fz-s: 0.889em; // calc(1em * 8 / 9);
-	// --fz-xs: 0.8em; //calc(1em * 8 / 10);
-	// --fz-2xs: 0.727em; //calc(1em * 8 / 11);
+	// 倍音列での計算値
+	--fz--5xl: #{fz-calc(6)}em;
+	--fz--4xl: #{fz-calc(5)}em;
+	--fz--3xl: #{fz-calc(4)}em;
+	--fz--2xl: #{fz-calc(3)}em;
+	--fz--xl: #{fz-calc(2)}em;
+	--fz--l: #{fz-calc(1)}em;
+	--fz--m: 1em;
+	--fz--s: #{fz-calc(-1)}em;
+	--fz--xs: #{fz-calc(-2)}em;
+	--fz--2xs: #{fz-calc(-3)}em;
 
-	--_fzmol: 8; // 7 ~ に対応.
-	--fz-5xl: calc(1em * var(--_fzmol) / (var(--_fzmol) - 6));
-	--fz-4xl: calc(1em * var(--_fzmol) / (var(--_fzmol) - 5));
-	--fz-3xl: calc(1em * var(--_fzmol) / (var(--_fzmol) - 4));
-	--fz-2xl: calc(1em * var(--_fzmol) / (var(--_fzmol) - 3));
-	--fz-xl: calc(1em * var(--_fzmol) / (var(--_fzmol) - 2));
-	--fz-l: calc(1em * var(--_fzmol) / (var(--_fzmol) - 1));
-	--fz-m: 1em;
-	--fz-s: calc(1em * var(--_fzmol) / (var(--_fzmol) + 1));
-	--fz-xs: calc(1em * var(--_fzmol) / (var(--_fzmol) + 2));
-	--fz-2xs: calc(1em * var(--_fzmol) / (var(--_fzmol) + 3));
-	--fz-base: clamp(0.875rem, 0.625rem + 1vw, 1rem); // 画面サイズ 400 - 600 で可変
+	--fz--base: clamp(0.875rem, 0.625rem + 1vw, 1rem); // 画面サイズ 400 - 600 で可変
 
 	// clampでテキストサイズを変化させたい時用
-	// --fz-fluid-s: clamp(0.9rem, 0.75rem + 0.8cqw, 1rem); // 小さい方向のみ. 300: .9rem ~ 500: 1rem
-	// --fz-fluid: clamp(0.9rem, 0.8rem + 0.5cqw, 1.1rem); // 上下両方. 320: .9rem ~ 960: 1.1rem
-	// --fz-fluid-l: clamp(1rem, 0.9rem + 0.25cqw, 1.1rem); // 大きい方向のみ 640: 1rem a~ 960: 1.1rem
+	// --fz--fluid-s: clamp(0.9rem, 0.75rem + 0.8cqw, 1rem); // 小さい方向のみ. 300: .9rem ~ 500: 1rem
+	// --fz--fluid: clamp(0.9rem, 0.8rem + 0.5cqw, 1.1rem); // 上下両方. 320: .9rem ~ 960: 1.1rem
+	// --fz--fluid-l: clamp(1rem, 0.9rem + 0.25cqw, 1.1rem); // 大きい方向のみ 640: 1rem a~ 960: 1.1rem
 
 	// ------------------------------
 	// font-weight
 	// ------------------------------
-	// --fw-thin: 100;
-	--fw-light: 300;
-	--fw-normal: 400;
-	// --fw-medium: 500;
-	--fw-bold: 700;
-	// --fw-heavy: 900;
+	--fw--thin: 100;
+	--fw--light: 300;
+	--fw--normal: 400;
+	--fw--medium: 500;
+	--fw--bold: 700;
+	--fw--black: 900;
 
 	// ------------------------------
 	// line-height
 	// ------------------------------
 	// tight snug - relaxed loose or shorter short - tall taller ?
-	--lh-base: 1.75;
-	--lh-xs: calc(var(--lh-base) - 0.25);
-	--lh-s: calc(var(--lh-base) - 0.125);
-	--lh-l: calc(var(--lh-base) + 0.125);
-	--lh-xl: calc(var(--lh-base) + 0.25);
+	--lh--base: 1.75;
+	--lh--xs: calc(var(--lh--base) - 0.25);
+	--lh--s: calc(var(--lh--base) - 0.125);
+	--lh--l: calc(var(--lh--base) + 0.125);
+	--lh--xl: calc(var(--lh--base) + 0.25);
 
 	// ------------------------------
 	// letter-spacing
 	// ------------------------------
-	--lts-base: normal;
-	--lts-s: -0.05em;
-	--lts-l: 0.05em;
-	// --lts-xl: 0.125em;
+	--lts--base: normal;
+	--lts--s: -0.05em;
+	--lts--l: 0.05em;
+	// --lts--xl: 0.125em;
 
 	// ------------------------------------------------------------
 	// カラー
@@ -144,15 +144,7 @@
 	--purple: hsl(260 72% 50%);
 	--pink: hsl(320 72% 50%);
 
-	// --------------------
-	// basic カラー
-	// --------------------
-
 	// ベースカラーに合わせたカラーを段階的に用意
-	// --hs--bc: 215 8%;
-	// --hsl--bc: 215 8% 60%;
-
-	// n50?
 	// --b50: hsl(var(--hs--bc) 99%);
 	// --b100: hsl(var(--hs--bc) 96%);
 	// --b200: hsl(var(--hs--bc) 92%);
@@ -170,32 +162,28 @@
 	// --------------------
 
 	// Main Color
-	--c-main: #1e4e6b;
+	--c--main: #1e4e6b;
 
-	// accent, accent-2, accent-3
-	--c-accent: #bc3453;
-	// --c-accent-2: #bc3453;
-	// --c-accent-3: #bc3453;
-
-	// base, base2, base-3 … 基本、濃くなっていく
-	// text, text2, text-3 …　基本、薄くなっていく
+	// accent, accent-2, accent-3, ...
+	--c--accent: #bc3453;
+	// --c--accent-2: #bc3453;
+	// --c--accent-3: #bc3453;
 
 	// base
-	// --c-base: hsl(225 8% 98%);
-	--c-base: hsl(224 6% 99%);
-	--c-base-2: hsl(224 10% 94%); // secondary
-	// --c-base-3: hsl(220 8% 86%); // border用
+	// --hs--base: 224 8%;
+	--c--base: hsl(224 6% 99%);
+	--c--base-2: hsl(224 10% 94%); // secondary
 
 	// text
-	--c-text: hsl(224 4% 8%);
-	--c-text-2: hsl(224 4% 40%); // secondary
-	// --text-3: hsl(224, 4%, 50%); //hsl(200, 12%, 92%);
+	// --hs--text: 224 4%;
+	--c--text: hsl(224 4% 8%);
+	--c--text-2: hsl(224 4% 40%); // secondary
 
-	// --_sh_hsl
+	// --sh-hsl
 
 	// divider (border-color)
-	--c-divider: hsl(224 4% 82%);
-	--c-link: #0c61e4;
+	--c--line: hsl(224 4% 82%);
+	--c--link: #0c61e4;
 	// --divider?
 
 	// ボーダーはどちらでも使える感じか。
@@ -204,49 +192,50 @@
 	/* ------------------------------------------------------------
 	  opacity
 	------------------------------------------------------------ */
-	--op-low: 0.25;
-	--op-mid: 0.5;
-	--op-high: 0.75;
+	// 質感で表現
+	--o--n10: 0.75;
+	--o--n20: 0.5;
+	--o--n30: 0.25;
+
+	// 数値
+	// low mid high
+
+	// 距離
+	// distant → far → mid → near → close
+
+	// 質感
+	// ghost → pale → soft → mild → solid
+
+	// シンプル系 軽さ・厚み
+	// thin → light → mid → bold → (thick)
+
+	// 濃度, 霧
+	// wisp mist haze fog dense
+
+	/* ------------------------------------------------------------
+	  aspect-ratio
+	------------------------------------------------------------ */
+	--ar--og: 1.91/1;
+
+	/* ------------------------------------------------------------
+	  writng-mode langに合わせて切り替えれるようにトークンで管理
+	------------------------------------------------------------ */
+	--writing--vertical: vertical-rl;
 
 	/* ------------------------------------------------------------
 	  radius
 	------------------------------------------------------------ */
 	// 等比
-	--bdrs-5: 2px;
-	--bdrs-10: 0.25rem; // ≒ 4px
-	--bdrs-20: 0.5rem; // ≒ 8px
-	--bdrs-30: 1rem; // ≒ 16px
-	--bdrs-40: 1.5rem; // ≒ 24px
-	--bdrs-50: 2rem; // ≒ 32px
-	--bdrs-99: 99rem;
-
-	/* ------------------------------------------------------------
-	　　transition
-	------------------------------------------------------------ */
-	--trsdu-base: 0.4s;
-
-	/* ------------------------------------------------------------
-	  filter
-	------------------------------------------------------------ */
-	// --filter--blur: blur(4px);
-	// --filter--blur--l: blur(8px);
-	// --filter--lighten: brightness(1.15);
-	// --filter--darken: brightness(0.85);
+	--bdrs--5: 2px;
+	--bdrs--10: 0.25rem; // ≒ 4px
+	--bdrs--20: 0.5rem; // ≒ 8px
+	--bdrs--30: 1rem; // ≒ 16px
+	--bdrs--40: 1.5rem; // ≒ 24px
+	--bdrs--50: 2rem; // ≒ 32px
+	--bdrs--99: 99rem;
 
 	/* ----------------------------------------
 		デザイントークンとは別のグローバル設定値
 	---------------------------------------- */
 	--gutter: var(--s40);
-
-	// Memo: :rootで初期セットしてないがグローバル定義可能な変数
-	//    (コールバックに初期値を記述しているもの）
-	// --h--ff
-	// --h--fw
-	// --link--td
-	// --list--pis
-	// --cell--p
-	// --td|th--c
-	// --td|th--bgc
-	// --modal--trsdu
-	// --acc--trsdu
 }

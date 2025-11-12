@@ -1,0 +1,16 @@
+---
+import getLismProps from '../../../dist/lib/getLismProps';
+import getMediaProps from '../../../dist/components/atomic/Media/getProps';
+import { Image } from 'astro:assets';
+
+const { as, exProps, tag, ...props } = Astro.props || {};
+
+let JSX = as || tag || 'img';
+if (JSX === 'AstroImage') {
+	JSX = Image;
+}
+---
+
+<JSX {...getLismProps(getMediaProps(props))} {...exProps}>
+	<slot />
+</JSX>

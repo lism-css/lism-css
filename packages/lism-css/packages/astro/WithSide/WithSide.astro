@@ -1,12 +1,5 @@
 ---
-import type { LismProps } from '../types';
 import { Lism } from '../Lism';
-import { getWithSideProps } from '../../../dist/components/WithSide/getProps';
-
-// Propsの定義
-interface Props extends LismProps {}
-
-const props = Astro.props || {};
 ---
 
-<Lism {...getWithSideProps(props)}><slot /></Lism>
+<Lism layout='withSide' {...Astro.props}><slot /></Lism>

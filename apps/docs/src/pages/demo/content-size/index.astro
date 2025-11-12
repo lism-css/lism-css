@@ -5,128 +5,129 @@ import {
 	// TipCode,
 	GutterGuide,
 	WideContent,
-	FullwideContent,
+	FullSizeContent,
 	Overwide,
 	LoremContent,
 } from '../container/_components.js';
-import { Lism, Box, Container, Spacer } from 'lism-css/astro';
+import { Lism, Box, Flow, Container, Spacer } from 'lism-css/astro';
 import '../container/_style.scss';
 ---
 
 <DemoPageLayout title='コンテンツサイズ'>
-	<Lism id='demo-wrapper' isFlow py={50} p='1px'>
+	<Flow id='demo-wrapper' py={50} p='1px'>
 		<h2>コンテンツサイズ</h2>
-		<Container>
-			<Lism w='xl' bd className='u--cbox' keycolor='red'>width: xl</Lism>
-			<Lism w='l' bd className='u--cbox' keycolor='orange'>width: l</Lism>
-			<Lism w='m' bd className='u--cbox' keycolor='green'>width: m</Lism>
-			<Lism w='s' bd className='u--cbox' keycolor='purple'>width: s</Lism>
-			<Lism w='xs' bd className='u--cbox' keycolor='blue'>width: xs</Lism>
+		<Container layout='flow' py='10' bd='none'>
+			<Lism max-sz='xl' bd px='10' className='u-cbox' keycolor='red'><code>-max-sz:xl</code></Lism>
+			<Lism max-sz='l' bd px='10' className='u-cbox' keycolor='orange'><code>-max-sz:l</code></Lism>
+			<Lism max-sz='m' bd px='10' className='u-cbox' keycolor='purple'><code>-max-sz:m</code></Lism>
+			<Lism max-sz='s' bd px='10' className='u-cbox' keycolor='blue'><code>-max-sz:s</code></Lism>
+			<Lism max-sz='xs' bd px='10' className='u-cbox' keycolor='gray'><code>-max-sz:xs</code></Lism>
 		</Container>
 
-		<h2>is--wide</h2>
+		<!-- <h2>is--wide</h2>
 		<p>親のコンテナ幅によってかわります。</p>
 		<Spacer h='5' />
 
-		<Container size='s' isFlow='s' hasGutter>
+		<Flow isContainer='s' flow='s' hasGutter>
 			<AttsLabels atts='is--container,-container:s' />
 			<LoremContent />
 			<WideContent />
 			<GutterGuide />
-		</Container>
-		<Container size='m' isFlow='s' hasGutter>
+		</Flow>
+		<Flow isContainer='m' flow='s' hasGutter>
 			<AttsLabels atts='is--container,-container:m' />
 			<LoremContent />
 			<LoremContent />
 			<WideContent />
 			<GutterGuide />
-		</Container>
-		<Container size='l' isFlow='s' hasGutter>
+		</Flow>
+		<Flow isContainer='l' flow='s' hasGutter>
 			<AttsLabels atts='is--container,-container:l' />
 			<LoremContent />
 			<LoremContent />
 			<WideContent />
 			<GutterGuide />
-		</Container>
+		</Flow> -->
 
-		<h2>is--fullwide</h2>
-		<p><code>is--fullwide</code> は、親が <code>has--gutter</code> を持っていても全幅に広がります。</p>
-		<p>また、<code>is--flow</code> の直下で <code>is--fullwide</code> が連続すると、その間の余白は0となります。</p>
+		<h2><code>-max-sz:full</code></h2>
+		<p><code>-max-sz:full</code> は、基本的には 100% ですが、親が <code>has--gutter</code> を持っていても全幅に広がります。</p>
+		<!-- <p>また、<code>l--flow</code> の直下で <code>-max-sz:full</code> が連続すると、その間の余白は0となります。</p> -->
+
 		<Spacer h='5' />
-		<Container size='m' hasGutter isFlow='s'>
+		<Flow isContainer='m' flow='s' hasGutter>
 			<AttsLabels atts='is--container,-container:m,has--gutter' />
 			<LoremContent />
-			<FullwideContent />
-			<FullwideContent />
+			<FullSizeContent />
 			<LoremContent />
-			<Box bd mbs='50'>
+			<Box bd my-s='50'>
 				<AttsLabels atts='div' />
 				<p>↓親要素（ここではdiv）を飛び越えることはありません。</p>
-				<FullwideContent />
+				<FullSizeContent />
 			</Box>
 			<GutterGuide />
-		</Container>
+		</Flow>
 
-		<h2>is--overwide</h2>
+		<h2><code>-max-sz:outer</code></h2>
 		<p>
 			<code>@propetry</code>
-			が有効なブラウザでは、<b>直前のコンテナ要素</b>が呼び出された位置を基準としたコンテナ幅 （<code>100cqi</code
-			>）まで広がります。(コンテナの親に<code>has--gutter</code>がある場合はその分を加算します。)
+			が有効なブラウザでは、<b>先祖コンテナ要素</b>が呼び出された位置を基準とした幅 （<code>100cqi</code>）まで広がります。
+			<!-- <br />(コンテナの親に<code>has--gutter</code>がある場合はその分を加算します。) -->
 		</p>
-		<p>親要素を飛び越えて広げたいコンテンツに活用できます。</p>
+		<p>フルブリードレイアウトなど、親要素を飛び越えて外側まで広げたいコンテンツに活用できます。</p>
 		<!-- <p><code>@propetry</code>が無効なブラウザ</p> -->
 		<Spacer h='5' />
 
-		<Container size='m' isFlow='s' hasGutter>
-			<AttsLabels atts='is--container,-container:m' />
+		<Flow isContainer='m' flow='s' hasGutter>
+			<AttsLabels atts='is--container,-container:m,has--gutter' />
 			<LoremContent />
-			<!-- <FullwideContent /> -->
+			<FullSizeContent />
 			<Overwide />
 			<Spacer h='40' />
-			<Box bd isFlow='s'>
+			<Flow bd>
 				<AttsLabels atts='div' />
-				<FullwideContent />
+				<FullSizeContent />
 				<Overwide />
 				<Spacer h='10' />
-				<Box maxW='s' isFlow='s' mx='a'>
+				<Flow max-w='s' mx='auto'>
 					<AttsLabels atts='div' />
+					<FullSizeContent />
 					<Overwide />
-				</Box>
-			</Box>
+				</Flow>
+			</Flow>
 			<Spacer h='40' />
-			<Container isFlow='s'>
+			<Flow isContainer>
 				<AttsLabels atts='is--container' />
 				<Overwide />
 				<Spacer h='30' />
-				<Box maxW='s' isFlow='s'>
-					<AttsLabels atts='div,-maxW:s' />
+				<!-- <Box max-w='s'>
+					<AttsLabels atts='div,-max-w:s' />
 					<Overwide />
 				</Box>
-				<Spacer h='30' />
-				<Container size='s' isFlow='s'>
+				<Spacer h='30' /> -->
+				<Flow isContainer='s'>
 					<AttsLabels atts='is--container,-container:s' />
-					<!-- <FullwideContent /> -->
+					<!-- <FullSizeContent /> -->
 					<Overwide />
-				</Container>
-			</Container>
+				</Flow>
+			</Flow>
 
 			<GutterGuide />
 			<LoremContent />
-		</Container>
+		</Flow>
 
 		<Spacer h='5' />
 
-		<Box isFlow='s' hasGutter>
+		<Box hasGutter bd>
 			<AttsLabels atts='div' />
-			<Container maxW='s' isFlow='s'>
-				<AttsLabels atts='is--container.-maxW' />
+			<Flow isContainer max-w='s' mx='auto' flow='s'>
+				<AttsLabels atts='is--container.-max-w' />
 				<LoremContent />
-				<FullwideContent />
+				<FullSizeContent />
 				<Overwide />
 				<Spacer h='5' />
-			</Container>
+			</Flow>
 			<GutterGuide />
 		</Box>
-	</Lism>
+	</Flow>
 	<Spacer h='50' />
 </DemoPageLayout>

@@ -4,8 +4,8 @@ description: ...
 sidebar:
   order: 7
 ---
-import { Lism, Text, Frame, Layer, Media, Dummy, Box, Flex, Grid } from "lism-css/astro";
-import { Preview, PreviewArea, PreviewTitle, PreviewCode, EmbedCode, Reference, Note, Callout } from "~/components";
+import { Lism, Flow, Container, HTML, Frame, Layer, Media, Dummy, Box, Flex, Grid, Center, Columns, Spacer } from "lism-css/astro";
+import { Preview, PreviewArea, PreviewTitle, PreviewCode, EmbedCode, Reference, Note, Callout, IconBadge } from "~/components";
 import AllPropClasses from '../../all-prop-classes.mdx';
 
 
@@ -13,7 +13,7 @@ export const PropTable = ({data={}, ...props}) => {
 	const dataKyes = Object.keys(data);
 	return (
 		<Lism tag='table' {...props}>
-			{/* <thead className='-ta:l'>
+			{/* <thead className='-ta:left'>
 				<tr>
 					<th>Class</th>
 					<th>Value</th>
@@ -58,7 +58,7 @@ Lismでは、主要なCSSプロパティ群に対して、それらで頻繁に�
 
 {/* ## 全Prop Class一覧
 <PreviewTitle>CSS (スクロールしてご覧いただけます）</PreviewTitle>
-<Frame ar='3/2' ovy='auto'>
+<Frame ar='3/2' ov-y='auto'>
 	<AllPropClasses />
 </Frame> */}
 
@@ -71,8 +71,8 @@ Lismでは、主要なCSSプロパティ群に対して、それらで頻繁に�
 |---|---|
 |**Property**|CSSプロパティ|
 |**Shorthand**|その省略形。Propクラスの`-{prop}:{val}`の`{prop}`にあたる文字列です。<br />また、Lismコンポーネントに指定するためのプロパティ名もこの文字列です。|
-|**To Class**|Propクラスとして出力される値|
-|**BP**|ブレイクポイント対応クラスの有無|
+|**To Class**|Prop Utility クラスとして出力される値|
+|**BP**|ブレイクポイント対応クラス（`-{prop}_{bp}`）サポートの有無|
 
 省略形の文字列(Shorthand)は、クラスとして出力されます。また、`Lism`コンポーネントに指定するプロパティも、この文字列です。
 
@@ -83,28 +83,73 @@ Lismでは、主要なCSSプロパティ群に対して、それらで頻繁に�
 |Property|Shorthand|To Class|BP|
 |---|---|---|---|
 |`font`|`f`|`inherit`|-|
-|`font-size`|`fz`|[`TYPO.FZ`](/css/tokens/#typofz)|○|
-|`font-family`|`ff`|[`TYPO.FF`](/css/tokens/#typoff)|-|
-|`font-weight`|`fw`|[`TYPO.FW`](/css/tokens/#typofw)<br/>`100`,`200`,..`900`|-|
-|`line-height`|`lh`|[`TYPO.LH`](/css/tokens/#typolh), `1`|-|
-|`letter-spacing`|`lts`|[`TYPO.LTS`](/css/tokens/#typolts)|-|
-|`text-align`|`ta`|`c`(`center`)<br/>`l`(`left`)<br/>`r`(`right`)|-|
-|`text-decoration`|`td`|`n`(`none`)<br/>`u`(`underline`)|-|
-|`white-space`|`whs`|`nw`(`nowrap`)|-|
+|`font-size`|`fz`|[`TYPE.FZ`](/css/tokens/#typofz)|○|
+|`font-family`|`ff`|[`TYPE.FF`](/css/tokens/#typoff)|-|
+|`font-weight`|`fw`|[`TYPE.FW`](/css/tokens/#typofw)|-|
+|`font-style`|`fs`|`italic`|-|
+|`line-height`|`lh`|[`TYPE.LH`](/css/tokens/#typolh), <br/>`1`|-|
+|`letter-spacing`|`lts`|[`TYPE.LTS`](/css/tokens/#typolts)|-|
+|`text-align`|`ta`|`center`<br/>`left`<br/>`right`|-|
+|`text-decoration`|`td`|`none`<br/>`under`|-|
+{/* |`text-transform`|`tt`|`upper`<br/>`lower`|-| */}
+
 
 <Preview>
 	<PreviewTitle>Examples</PreviewTitle>
 	<PreviewArea p='30'>
-		<p class='-fz:xl -fw:bold -lts:l -ta:c'>Example text</p>
+		<p class='-fz:xl -fw:bold -lts:l -ta:center'>Example text</p>
 	</PreviewArea>
 	<PreviewCode slot="tab" label="HTML">
 	```html
-	<p class='-fz:xl -fw:bold -lts:l -ta:c'>Example text</p>
+	<p class='-fz:xl -fw:bold -lts:l -ta:center'>Example text</p>
 	```
 	</PreviewCode>
 	<PreviewCode slot="tab" label="JSX">
 	```jsx
-	<Text fz='xl' fw='bold' lts='l' ta='center'>Example text</Text>
+	<HTML.p fz='xl' fw='bold' lts='l' ta='center'>Example text</HTML.p>
+	```
+	</PreviewCode>
+</Preview>
+
+
+### writing-mode
+
+|Property|Shorthand|To Class|BP|
+|---|---|---|---|
+|`writing-mode`|`writing`|`vertical`|⚪︎|
+
+
+
+縦書き用の値は、トークン（`--writing--vertical`）で管理しています。 （<span class='-fz:s'>これにより、lang属性に合わせて変数を上書きすることで、`vertical-rl`か`vertical-lr`を切り替えることができるようにもなっています。</span>）
+
+<Preview>
+	<PreviewTitle>縦書きにする例</PreviewTitle>
+	<PreviewArea p='20' resize>
+		<Box h='20em' w='100%' writing='vertical'>
+			<Flow hasGutter>
+				<Dummy lang='ja' length='s' />
+				<Dummy lang='ja' length='l' offset='3' />
+			</Flow>
+		</Box>
+	</PreviewArea>
+	<PreviewCode slot='tab' label='HTML'>
+	```html "-writing:vertical"
+	<div class='l--box -h -w:100% -writing:vertical' style='--h:20em'>
+		<div class='l--flow has--gutter'>
+			<p>ロレム・イプサムの座り雨、トマ好き学習だったエリット、しかし時と活力はそのような木々と楽しみ。</p>
+			<p>ブラインド行うにはいくつかの重要な事柄が流れます。長年にわたり、私は学区と長寿であれば、そのような Liberroy,...</p>
+		</div>
+	</div>
+	```
+	</PreviewCode>
+	<PreviewCode slot='tab' label='JSX'>
+	```jsx "writing='vertical'"
+	<Box h='20em' w='100%' writing='vertical'>
+		<Flow hasGutter>
+			<Dummy lang='ja' length='s' />
+			<Dummy lang='ja' length='l' offset='3' />
+		</Flow>
+	</Box>
 	```
 	</PreviewCode>
 </Preview>
@@ -113,30 +158,30 @@ Lismでは、主要なCSSプロパティ群に対して、それらで頻繁に�
 
 ## Colors
 
-export const LinkMix = () => <a href="/css/mix"><code>mix</code></a>;
+
 
 |Property|Shorthand|To Class|BP|
 |---|---|---|---|
-|`color`|`c`|`main`,`accent`<br />`text`,`text-2`,<br />`base`,<br /><LinkMix />,<br />`inherit`|-|
-|`background-color`|`bgc`|`main`,`accent`<br />`base`,`base-2`,<br />`text`,<br /><LinkMix />,<br />`inherit`|-|
-|`--bdc`|`bdc`|`main`,`accent`<br />`divider`,<br /><LinkMix />,<br />`inherit`,<br />`t`(`transparent`)|-|
+|`color`|`c`|`main`,`accent`<br />`text`,`text-2`,<br />`base`,<br />`inherit`<br />`trsp`(`transparent`)|-|
+|`background-color`|`bgc`|`main`,`accent`<br />`base`,`base-2`,<br />`text`,<br />`inherit`<br />`trsp`(`transparent`)|-|
+|`--bdc`|`bdc`|`main`,`accent`<br />`line`,<br />`inherit`,<br />`trsp`(`transparent`)|-|
 {/* |`--keycolor`|`keycolor`|-|-| */}
 
-{/* (`--keycolor`は、[`u--cbox`](/css/utility-class/#u--cbox)クラスと合わせて利用します。) */}
+{/* (`--keycolor`は、[`u-cbox`](/css/utility-class/#u-cbox)クラスと合わせて利用します。) */}
 
 <Preview>
 	<PreviewTitle>Examples</PreviewTitle>
 	<PreviewArea p='30'>
-		<Text c='main' bgc='base-2' p='20'>Example text</Text>
+		<HTML.p c='main' bgc='base-2' bd bdc='line' p='40'>Example text</HTML.p>
 	</PreviewArea>
 	<PreviewCode slot="tab" label="HTML">
 	```html
-	<p class='-c:main -bgc:base-2 -p:20'>Example text</p>
+	<p class='-c:main -bgc:base-2 -bd -bdc:line -p:40'>Example text</p>
 	```
 	</PreviewCode>
 	<PreviewCode slot="tab" label="JSX">
 	```jsx
-	<Text c='main' bgc='base-2' p='20'>Example text</Text>
+	<HTML.p c='main' bgc='base-2' bd bdc='line' p='40'>Example text</HTML.p>
 	```
 	</PreviewCode>
 </Preview>
@@ -154,8 +199,10 @@ export const LinkSPACE = () => <a href="/css/tokens/#space"><code>SPACE</code></
 |`padding`|`p`|<LinkSPACE/>|○|
 |`padding-inline`|`px`|<LinkSPACE/>|○|
 |`padding-block`|`py`|<LinkSPACE/>|○|
-|`padding-inline-start`|`pis`|<LinkSPACE/>|○|
-|`padding-block-start`|`pbs`|<LinkSPACE/>|○|
+|`padding-inline-start`|`px-s`|-|○|
+|`padding-inline-end`|`px-e`|-|○|
+|`padding-block-start`|`py-s`|-|○|
+|`padding-block-end`|`py-e`|-|○|
 |`padding-left`|`pl`|-|○|
 |`padding-right`|`pr`|-|○|
 |`padding-top`|`pt`|-|○|
@@ -164,93 +211,99 @@ export const LinkSPACE = () => <a href="/css/tokens/#space"><code>SPACE</code></
 ### Margin
 |Property|Shorthand|To Class|BP|
 |---|---|---|---|
-|`margin`|`m`|<LinkSPACE/>,<br/>`a`(`auto`)|○|
-|`margin-inline`|`mx`|`a`(`auto`)|○|
-|`margin-block`|`my`|`a`(`auto`)|○|
-|`margin-inline-start`|`mis`|<LinkSPACE/>,<br/>`a`(`auto`)|○|
-|`margin-block-start`|`mbs`|<LinkSPACE/>,<br/>`a`(`auto`)|○|
-|`margin-left`|`ml`|`a`(`auto`)|○|
-|`margin-right`|`mr`|`a`(`auto`)|○|
-|`margin-top`|`mt`|`a`(`auto`)|○|
-|`margin-bottom`|`mb`|`a`(`auto`)|○|
+|`margin`|`m`|`auto`, <LinkSPACE/>|○|
+|`margin-inline`|`mx`|`auto`, <LinkSPACE/>|○|
+|`margin-block`|`my`|`auto`, <LinkSPACE/>|○|
+|`margin-inline-start`|`mx-s`|`auto`|○|
+|`margin-inline-end`|`mx-e`|`auto`|○|
+|`margin-block-start`|`my-s`|`auto`, <LinkSPACE/>|○|
+|`margin-block-end`|`my-e`|`auto`|○|
+|`margin-left`|`ml`|`auto`|○|
+|`margin-right`|`mr`|`auto`|○|
+|`margin-top`|`mt`|`auto`|○|
+|`margin-bottom`|`mb`|`auto`|○|
 
-### Gap
-|Property|Shorthand|To Class|BP|
-|---|---|---|---|
-|`gap`|`g`|<LinkSPACE/>,`inherit`|○|
-|`column-gap`|`gx`|-|○|
-|`row-gap`|`gy`|-|○|
+
+<Spacer h='1rem' />
 
 <Preview>
-	<PreviewTitle>Examples</PreviewTitle>
+	<PreviewTitle>Space Examples</PreviewTitle>
 	<PreviewArea p='30' resize>
 		<Lism p={['20', '30']} bd>
-			<Text>Example text</Text>
-			<Text mbs='20' mis='40'>Example text</Text>
+			<HTML.p>Example text</HTML.p>
+			<HTML.p my-s='20' mx='40'>Example text</HTML.p>
 		</Lism>
 	</PreviewArea>
 	<PreviewCode slot="tab" label="HTML">
 	```html
 	<div class="-p:20 -p_sm -bd" style="--p_sm:var(--s30)">
 		<p>Example text</p>
-		<p class="-mbs:20 -mis:40">Example text</p>
+		<p class="-my-s:20 -mx:40">Example text</p>
 	</div>
 	```
 	</PreviewCode>
 	<PreviewCode slot="tab" label="JSX">
 	```jsx
 	<Lism p={['20', '30']} bd>
-		<Text>Example text</Text>
-		<Text mbs='20' mis='40'>Example text</Text>
+		<HTML.p>Example text</HTML.p>
+		<HTML.p my-s='20' mx='40'>Example text</HTML.p>
 	</Lism>
 	```
 	</PreviewCode>
 </Preview>
 
 
-## Displays
-|Prop|Shorthand|To Class|BP|
-|---|---|---|---|
-|`display`|`d`|`n`(`none`),<br />`b`(`block`),<br />`f`(`flex`),<br />`g`(`grid`),<br />`i`(`inline`),<br />`ib`(`inline-block`),<br />`if`(`inline-flex`),<br />`ig`(`inline-grid`)|○|
-|`visibility`|`v`|`h`(`hidden`),<br /> `v`(`visible`)|-|
-|`overflow`|`ov`|`h`(`hidden`),<br />`a`(`auto`),<br />`c`(`clip`)|-|
-|`overflow-x`|`ovx`|`h`(`hidden`),<br />`a`(`auto`),<br />`c`(`clip`)|-|
-|`overflow-y`|`ovy`|`h`(`hidden`),<br />`a`(`auto`),<br />`c`(`clip`)|-|
-|`opacity`|`op`|[`OPACITY`](/css/tokens/#opacity), `0`|-|
-|`aspect-ratio`|`ar`|`16/9`,`3/2`,`1/1`,<br />`ogp`|○|
-
 
 ## Width & Height
 |Property|Shorthand|To Class|BP|
 |---|---|---|---|
 |`width`|`w`|`100%`,<br/>`fit`(`fit-content`)|○|
-|`height`|`h`|`100%`,<br/>`100lvh`,`100svh`,<br/>`fit`(`fit-content`)|○|
-|`max-width`|`maxW`|`100%`|○|
-|`max-height`|`maxH`|`100%`|○|
-|`min-width`|`minW`|`100%`|○|
-|`min-height`|`minH`|`100%`,<br/>`100lvh`,`100svh`|○|
+|`height`|`h`|`100%`|○|
+|`max-width`|`max-w`|`100%`|○|
+|`max-height`|`max-h`|`100%`|○|
+|`min-width`|`min-w`|`100%`|○|
+|`min-height`|`min-h`|`100%`|○|
+|`inline-size`|`sz`|-|-|
+|`max-inline-size`|`max-sz`|`s`,`m`,`l`,`xl`,`outer`,`full`|-|
+|`min-inline-size`|`min-sz`|-|-|
+|`block-size`|`ysz`|-|-|
+|`max-block-size`|`max-ysz`|-|-|
+|`min-block-size`|`min-ysz`|-|-|
 
 
 関連トークン: <a href="/css/tokens/#size"><code>SIZE</code></a>
 
 
-## Layouts
 
-### Positions
+## Displays
+|Prop|Shorthand|To Class|BP|
+|---|---|---|---|
+|`display`|`d`|`none`,<br />`block`,<br />`in-flex`(`inline-flex`)|○|
+|`visibility`|`v`|`hidden`|-|
+|`opacity`|`op`|[`OPACITY`](/css/tokens/#opacity), `0`|-|
+|`overflow`|`ov`| `auto`, `clip`, `hidden`|-|
+|`overflow-x`|`ovx`|`auto`, `clip`, `scroll`|-|
+|`overflow-y`|`ovy`|`auto`, `clip`, `scroll`|-|
+|`aspect-ratio`|`ar`|`21/9`,`16/9`,`3/2`,`1/1`,<br />`og`|○|
+
+
+## Positions
 
 |Prop|Shorthand|To Class|BP|
 |---|---|---|---|
-|`position`|`pos`|`r`(`relative`),<br />`a`(`absolute`),<br />`s`(`static`),<br />`f`(`fixed`),<br />`sti`(`sticky`)|-|
+|`position`|`pos`|`rel`(`relative`),<br />`abs`(`absolute`),<br />`static`,<br />`fixed`,<br />`sticky`|-|
 |`top`|`t`|`0`,`50%`,`100%`|-|
 |`left`|`l`|`0`,`50%`,`100%`|-|
 |`right`|`r`|`0`,`50%`,`100%`|-|
 |`bottom`|`b`|`0`,`50%`,`100%`|-|
-|`inset`|`inset`|`0`|-|
-|`z-index`|`z`|`-1`, `0`, `1`, `2`, `99`|-|
-|`inset-inline-start`|`(i_.)is`|-|-|
-|`inset-inline-end`|`(i_.)ie`|-|-|
-|`inset-block-start`|`(i_.)bs`|-|-|
-|`inset-block-end`|`(i_.)be`|-|-|
+|`z-index`|`z`|`-1`, `0`, `1`, `99`|-|
+|`inset`|`i`|`0`|-|
+|`inset-inline`|`i-x`|-|-|
+|`inset-block`|`i-y`|-|-|
+|`inset-inline-start`|`i-x-s`|-|-|
+|`inset-inline-end`|`i-x-e`|-|-|
+|`inset-block-start`|`i-y-s`|-|-|
+|`inset-block-end`|`i-y-e`|-|-|
 
 `position:absolute`で要素を配置する例をいくつか紹介します。
 
@@ -260,128 +313,113 @@ export const LinkSPACE = () => <a href="/css/tokens/#space"><code>SPACE</code></
 		配置の指定例
 	</PreviewTitle>
 	<PreviewArea resize p='5'>
-		<Box pos='r' ar='3/2' lh='1'>
-			<Box pos='a' l='0' t='0' bd p='20'>A</Box>
-			{/* <Box pos='a' l='0' t='0' m='40' bd p='20' bgc='base-2'>A'</Box> */}
-			<Box pos='a' l='50%' t='0' css={{trnslt:'-50X'}} bd p='20'>B</Box>
-			<Box pos='a' r='0' t='0' bd p='20'>C</Box>
-			<Box pos='a' l='0' t='50%' css={{trnslt:'-50Y'}} bd p='20'>D</Box>
-			<Box pos='a' l='50%' t='50%' css={{trnslt:'-50XY'}} bd p='20'>E</Box>
-			<Box pos='a' r='0' t='50%' css={{trnslt:'-50Y'}} bd p='20'>F</Box>
-			<Box pos='a' l='0' b='0' bd p='20'>G</Box>
-			<Box pos='a' l='50%' b='0' css={{trnslt:'-50X'}} bd p='20'>H</Box>
-			<Box pos='a' r='0' b='0' bd p='20'>I</Box>
+		<Box pos='rel' ar='3/2' lh='1'>
+			<Box pos='abs' l='0' t='0' bd p='20'>A</Box>
+			{/* <Box pos='abs' l='0' t='0' m='40' bd p='20' bgc='base-2'>A'</Box> */}
+			<Box pos='abs' l='50%' t='0' translate='-50X' bd p='20'>B</Box>
+			<Box pos='abs' r='0' t='0' bd p='20'>C</Box>
+			<Box pos='abs' l='0' t='50%' translate='-50Y' bd p='20'>D</Box>
+			<Box pos='abs' l='50%' t='50%' translate='-50XY' bd p='20'>E</Box>
+			<Box pos='abs' r='0' t='50%' translate='-50Y' bd p='20'>F</Box>
+			<Box pos='abs' l='0' b='0' bd p='20'>G</Box>
+			<Box pos='abs' l='50%' b='0' translate='-50X' bd p='20'>H</Box>
+			<Box pos='abs' r='0' b='0' bd p='20'>I</Box>
 		</Box>
 	</PreviewArea>
 	<PreviewCode slot='tab' label='JSX'>
 		```jsx
-		<Box pos='r' ar='3/2' lh='1'>
-			<Box pos='a' l='0' t='0' bd p='20'>A</Box>
-			<Box pos='a' l='50%' t='0' css={{trnslt:'-50X'}} bd p='20'>B</Box>
-			<Box pos='a' r='0' t='0' bd p='20'>C</Box>
-			<Box pos='a' l='0' t='50%' css={{trnslt:'-50Y'}} bd p='20'>D</Box>
-			<Box pos='a' l='50%' t='50%' css={{trnslt:'-50XY'}} bd p='20'>E</Box>
-			<Box pos='a' r='0' t='50%' css={{trnslt:'-50Y'}} bd p='20'>F</Box>
-			<Box pos='a' l='0' b='0' bd p='20'>G</Box>
-			<Box pos='a' l='50%' b='0' css={{trnslt:'-50X'}} bd p='20'>H</Box>
-			<Box pos='a' r='0' b='0' bd p='20'>I</Box>
+		<Box pos='rel' ar='3/2' lh='1'>
+			<Box pos='abs' l='0' t='0' bd p='20'>A</Box>
+			<Box pos='abs' l='50%' t='0' translate='-50X' bd p='20'>B</Box>
+			<Box pos='abs' r='0' t='0' bd p='20'>C</Box>
+			<Box pos='abs' l='0' t='50%' translate='-50Y' bd p='20'>D</Box>
+			<Box pos='abs' l='50%' t='50%' translate='-50XY' bd p='20'>E</Box>
+			<Box pos='abs' r='0' t='50%' translate='-50Y' bd p='20'>F</Box>
+			<Box pos='abs' l='0' b='0' bd p='20'>G</Box>
+			<Box pos='abs' l='50%' b='0' translate='-50X' bd p='20'>H</Box>
+			<Box pos='abs' r='0' b='0' bd p='20'>I</Box>
 		</Box>
 		```
 	</PreviewCode>
 	<PreviewCode slot='tab' label='HTML'>
 		```html
-		<div class="l--box -pos:r -ar:3/2 -lh:1">
-			<div class="l--box -pos:a -l:0 -t:0 -bd -p:20">A</div>
-			<div class="l--box -pos:a -l:50% -t:0 -trnslt:-50X -bd -p:20">B</div>
-			<div class="l--box -pos:a -r:0 -t:0 -bd -p:20">C</div>
-			<div class="l--box -pos:a -l:0 -t:50% -trnslt:-50Y -bd -p:20">D</div>
-			<div class="l--box -pos:a -l:50% -t:50% -trnslt:-50XY -bd -p:20">E</div>
-			<div class="l--box -pos:a -r:0 -t:50% -trnslt:-50Y -bd -p:20">F</div>
-			<div class="l--box -pos:a -l:0 -b:0 -bd -p:20">G</div>
-			<div class="l--box -pos:a -l:50% -b:0 -trnslt:-50X -bd -p:20">H</div>
-			<div class="l--box -pos:a -r:0 -b:0 -bd -p:20">I</div>
+		<div class="l--box -pos:rel -ar:3/2 -lh:1">
+			<div class="l--box -pos:abs -l:0 -t:0 -bd -p:20">A</div>
+			<div class="l--box -pos:abs -l:50% -t:0 -translate:-50X -bd -p:20">B</div>
+			<div class="l--box -pos:abs -r:0 -t:0 -bd -p:20">C</div>
+			<div class="l--box -pos:abs -l:0 -t:50% -translate:-50Y -bd -p:20">D</div>
+			<div class="l--box -pos:abs -l:50% -t:50% -translate:-50XY -bd -p:20">E</div>
+			<div class="l--box -pos:abs -r:0 -t:50% -translate:-50Y -bd -p:20">F</div>
+			<div class="l--box -pos:abs -l:0 -b:0 -bd -p:20">G</div>
+			<div class="l--box -pos:abs -l:50% -b:0 -translate:-50X -bd -p:20">H</div>
+			<div class="l--box -pos:abs -r:0 -b:0 -bd -p:20">I</div>
 		</div>
 		```
 	</PreviewCode>
 </Preview>
 
 
-### Places
 
-|Prop|Shorthand|To Class|BP|
+## Layouts
+
+
+### Gap
+
+|Property|Shorthand|To Class|BP|
 |---|---|---|---|
-|`align-items`|`ai`|`c`, `s`, `e`, `fs`, `fe`, `str`|⚪︎|
-|`align-content`|`ac`|`c`, `s`, `e`, `fs`, `fe`, `sb`|⚪︎|
-|`justify-items`|`ji`|`c`, `s`, `e`, `fs`, `fe`, `str`|⚪︎|
-|`justify-content`|`jc`|`c`, `s`, `e`, `fs`, `fe`, `sb`|⚪︎|
-|`place-items`|`pi`|-|-|
-|`place-content`|`pc`|-|-|
-|`align-self`|`aslf`|`c`, `s`, `e`, `str`|-|
-|`justify-self`|`jslf`|`c`, `s`, `e`, `str`|-|
-|`place-self`|`pslf`|-|-|
-|`order`|`ord`|`-1`, `0`, `1`|-|
+|`gap`|`g`|<LinkSPACE/>,`inherit`|○|
+|`column-gap`|`g-x`|-|○|
+|`row-gap`|`g-y`|-|○|
 
 
 ### Flex
 
-#### 親要素向けプロパティ
-
 |Prop|Shorthand|To Class|BP|
 |---|---|---|---|
-|`flex-wrap`|`(flex.)fxw`|`wrap`(`w`),<br /> `nw`(`nowrap`)|○|
-|`flex-direction`|`(flex.)fxd`|`c`(`column`),<br /> `cr`(`column-reverse`),<br /> `r`(`row`),<br /> `rr`(`row-reverse`)|○|
-
-<p class='-mbs:30 -fz:s'>これらをLism コンポーネントで使うには `flex` オブジェクト内、もしくは`Flex`系コンポーネントで指定します。</p>
-
-<Reference>
-詳しくは[`<Flex>`](/components/flex/)をご覧ください。
-</Reference>
-
-
-#### 子要素向けプロパティ
-|Prop|Shorthand|To Class|BP|
-|---|---|---|---|
+|`flex-wrap`|`fxw`|`wrap`|○|
+|`flex-direction`|`fxd`|`col`(`column`),<br /> `col-r`(`column-reverse`),<br /> `row-r`(`row-reverse`)|○|
 |`flex`|`fx`|`1`|○|
-|`flex-shrink`|`fxsh`|`0`, `1`|-|
-|`flex-grow`|`fxg`|`0`, `1`|-|
+|`flex-shrink`|`fxsh`|`0`|-|
+|`flex-grow`|`fxg`|`1`|-|
 |`flex-basis`|`fxb`|-|○|
 
 
 ### Grid
 
-
-#### 親要素向けプロパティ
-
 |Prop|Shorthand|To Class|BP|
 |---|---|---|---|
-|`grid`|`(grid.)gd`|-|○|
-|`grid-template`|`(grid.)gt`|-|-|
-|`grid-template-areas`|`(grid.)gta`|-|○|
-|`grid-template-columns`|`(grid.)gtc`|`subgrid`|○|
-|`grid-template-rows`|`(grid.)gtr`|`subgrid`|○|
-|`grid-auto-flow`|`(grid.)gaf`|`c`(`column`),<br />`r`(`row`)|○|
-|`grid-auto-rows`|`(grid.)gar`|-|○|
-|`grid-auto-columns`|`(grid.)gac`|-|○|
-{/* |`gt`|`grid-template`||-| */}
-
-<p class='-mbs:30 -fz:s'>これらをLism コンポーネントで使うには `grid` オブジェクト内、もしくは`Grid`系コンポーネントで指定します。</p>
-
-<Reference>
-詳しくは[`<Grid>`](/components/grid/)をご覧ください。
-</Reference>
-
-
-#### 子要素向けプロパティ
-
-|Prop|Shorthand|To Class|BP|
-|---|---|---|---|
-|`grid-area`|`ga`|-|○|
+|`grid-template`|`gt`|-|○|
+|`grid-template-areas`|`gta`|-|○|
+|`grid-template-columns`|`gtc`|`subgrid`|○|
+|`grid-template-rows`|`gtr`|`subgrid`|○|
+|`grid-auto-flow`|`gaf`|`col`(`column`),<br />`row`|○|
+|`grid-auto-rows`|`gar`|-|-|
+|`grid-auto-columns`|`gac`|-|-|
+|`grid-area`|`ga`|`1/1`|○|
 |`grid-column`|`gc`|`1/-1`|○|
 |`grid-row`|`gr`|`1/-1`|○|
 |`grid-column-start`|`gcs`|-|-|
 |`grid-row-start`|`grs`|-|-|
 |`grid-column-end`|`gce`|-|-|
 |`grid-row-end`|`gre`|-|-|
+
+
+### Places
+
+|Prop|Shorthand|To Class|BP|
+|---|---|---|---|
+|`align-items`|`ai`|`center`, `start`, `end`, `flex-s`, `flex-e`, `stretch`|⚪︎|
+|`align-content`|`ac`|`center`, `start`, `end`, `flex-s`, `flex-e`, `between`|⚪︎|
+|`justify-items`|`ji`|`center`, `start`, `end`, `flex-s`, `flex-e`, `stretch`|⚪︎|
+|`justify-content`|`jc`|`center`, `start`, `end`, `flex-s`, `flex-e`, `between`|⚪︎|
+|`align-self`|`aslf`|`center`, `start`, `end`, `stretch`|-|
+|`justify-self`|`jslf`|`center`, `start`, `end`, `stretch`|-|
+|`order`|`order`|`-1`, `0`, `1`|-|
+
+{/* |`place-items`|`pi`|-|-|
+|`place-content`|`pc`|-|-|
+|`place-self`|`pslf`|-|-| */}
+
 
 
 
@@ -400,25 +438,33 @@ export const LinkSPACE = () => <a href="/css/tokens/#space"><code>SPACE</code></
 |Prop|Shorthand|To Class|BP|
 |---|---|---|---|
 |`border-radius`|`bdrs`|[`RADIUS`](/css/tokens/#radius)|○|
-|`border-top-left-radius`|`(bdrs_.)bdtlrs`|-|-|
+{/* |`border-top-left-radius`|`(bdrs_.)bdtlrs`|-|-|
 |`border-top-right-radius`|`(bdrs_.)bdtrrs`|-|-|
 |`border-bottom-left-radius`|`(bdrs_.)bdblrs`|-|-|
 |`border-bottom-right-radius`|`(bdrs_.)bdbrrs`|-|-|
 |`border-start-start-radius`|`(bdrs_.)bdssrs`|-|-|
 |`border-start-end-radius`|`(bdrs_.)bdsers`|-|-|
 |`border-end-start-radius`|`(bdrs_.)bdesrs`|-|-|
-|`border-end-end-radius`|`(bdrs_.)bdeers`|-|-|
-
-
+|`border-end-end-radius`|`(bdrs_.)bdeers`|-|-| */}
 
 
 ### Border
 |Prop|Shorthand|To Class|BP|
 |---|---|---|---|
-|`border`|`bd`|`n`(`none`),<br />`l`,`r`,`t`,`b`,<br />`is`,`ie`,`bs`,`be`,<br /> `x`,`y`|-|
-|`--bdc`|`bdc`|`divider`,`inherit`|-|
-|`--bds`|`bds`|`ds`(`dashed`),`dt`(`dotted`),`db`(`double`)|-|
+|`border`|`bd`|`none`|-|
+|`--bdc`|`bdc`|`line`(`--c--line`), `inherit`|-|
+|`--bds`|`bds`|`dashed`,`dotted`,`double`|-|
 |`--bdw`|`bdw`|-|○|
+|`border-top`|`bd-t`|-|-|
+|`border-right`|`bd-r`|-|-|
+|`border-bottom`|`bd-b`|-|-|
+|`border-left`|`bd-l`|-|-|
+|`border-inline`|`bd-x`|-|-|
+|`border-block`|`bd-y`|-|-|
+|`border-inline-start`|`bd-x-s`|-|-|
+|`border-inline-end`|`bd-x-e`|-|-|
+|`border-block-start`|`bd-y-s`|-|-|
+|`border-block-end`|`bd-y-e`|-|-|
 
 {/* `COLOR`,`PALETTE` */}
 
@@ -443,7 +489,7 @@ export const LinkSPACE = () => <a href="/css/tokens/#space"><code>SPACE</code></
 
 
 <Reference>
-borderに関する仕様は少し特殊になっています。詳しくは[borderページ](/css/border/)をご覧ください。
+borderに関する仕様は少し特殊になっています。詳しくは[borderページ](/css/bd/)をご覧ください。
 </Reference>
 
 
@@ -452,32 +498,37 @@ borderに関する仕様は少し特殊になっています。詳しくは[bord
 |Prop|Shorthand|To Class|BP|
 |---|---|---|---|
 |`background`|`bg`|-|⚪︎|
-|`background-image`|`(bg_.)bgi`|-|⚪︎|
-|`background-repeat`|`(bg_.)bgr`|`n`(`no-repeat`)|-|
-|`background-position`|`(bg_.)bgp`|`c`(`center`)|-|
-|`background-size`|`(bg_.)bgsz`|`cv`(`cover`),`ct`(`contain`)|-|
-|`background-attachment`|`(bg_.)bga`|-|-|
-|`background-origin`|`(bg_.)bgo`|-|-|
-|`background-clip`|`(bg_.)bcp`|-|-|
-|`background-blend-mode`|`(bg_.)bbm`|-|-|
+|`background-image`|`bgi`|-|-|
+|`background-position`|`bgp`|`center`|-|
+|`background-size`|`bgsz`|`cover`, `contain`|-|
+|`background-repeat`|`bgr`|`no`(`no-repeat`)|-|
+|`background-attachment`|`bga`|-|-|
+|`background-origin`|`bgo`|-|-|
+|`background-clip`|`bgclip`|`text`|-|
+|`background-blend-mode`|`bgblend`|-|-|
 
 <Preview>
 	<PreviewTitle>使用例</PreviewTitle>
-	<PreviewArea p='30'>
-		{/* <Frame ar='ogp' bg="url(/img/img-2.jpg) center / cover"></Frame> */}
-		<Frame ar='ogp' bg_={{bgi:'url(/img/img-2.jpg)', bgp:'center', bgsz:'cover'}}></Frame>
+	<PreviewArea p='30' resize>
+		<Columns g='20'>
+			<Frame ar='16/9' bg='url(/img/pattern.png) center / 4rem'></Frame>
+			<Frame ar='16/9' bgi='url(/img/pattern.png)' bgp='center' bgsz='4rem' bgblend='difference' bgc='white'></Frame>
+		</Columns>
 	</PreviewArea>
 	<PreviewCode label='JSX' slot='tab'>
 		```jsx
-		<Frame ar='ogp' bg_={{bgi:'url(/img/img-2.jpg)', bgp:'center', bgsz:'cover'}}></Frame>
-
-		// ↓ 以下と表示は同じ（--bgに出力されます）
-		<Frame ar='ogp' bg="url(/img/img-2.jpg) center / 50%"></Frame>
+		<Columns g='20'>
+			<Frame ar='16/9' bg='url(/img/pattern.png) center / 4rem'></Frame>
+			<Frame ar='16/9' bgi='url(/img/pattern.png)' bgp='center' bgsz='4rem' bgblend='difference' bgc='white'></Frame>
+		</Columns>
 		```
 	</PreviewCode>
 	<PreviewCode label='HTML' slot='tab'>
 		```html
-		<div class="l--frame -ar:ogp -bgi -bgp:c -bgsz:cv" style="--bgi:url(/img/img-2.jpg)"></div>
+		<div class="l--columns -g:20">
+			<div class="l--frame -ar:16/9 -bg" style="--bg:url(/img/pattern.png) center / 4rem"></div>
+			<div class="l--frame -ar:16/9 -bgi -bgp:c -bgc" style="--bgi:url(/img/pattern.png);background-size:4rem;background-blend-mode:difference;--bgc:var(--white)"></div>
+		</div>
 		```
 	</PreviewCode>
 </Preview>
@@ -486,62 +537,78 @@ borderに関する仕様は少し特殊になっています。詳しくは[bord
 <Preview>
 	<PreviewTitle>グラデーション</PreviewTitle>
 	<PreviewArea p='30'>
-		<Frame ar='ogp' bg='linear-gradient(to top, #a8edea 0%, #fed6e3 100%)'></Frame>
+		<Frame p='50' bg='linear-gradient(to top, #a8edea 0%, #fed6e3 100%)'>Gradient</Frame>
 	</PreviewArea>
 	<PreviewCode label='JSX' slot='tab'>
 		```jsx
-		<Frame ar='ogp' bg='linear-gradient(to top, #a8edea 0%, #fed6e3 100%)'></Frame>
+		<Frame p='50' bg='linear-gradient(to top, #a8edea 0%, #fed6e3 100%)'>Gradient</Frame>
 		```
 	</PreviewCode>
 	<PreviewCode label='HTML' slot='tab'>
 		```html
-		<div class="l--frame -ar:ogp -bg" style="--bg:linear-gradient(to top, #a8edea 0%, #fed6e3 100%)">  </div>
+		<div class="l--center">
+			<div class="l--box -bg" style="--bg:linear-gradient(45deg, var(--blue), var(--pink))">
+				<p class="-fz:5xl -fw:bold -lh:1 -lts:l">TEXT</p>
+			</div>
+		</div>
 		```
 	</PreviewCode>
 </Preview>
 
 
+<Preview>
+	<PreviewTitle>テキストで背景をクリッピング</PreviewTitle>
+	<PreviewArea p='30'>
+		<Center>
+			<Box bg='linear-gradient(45deg, var(--blue), var(--pink))' bgclip='text' c='trsp'>
+				<HTML.p fz='5xl' fw='bold' lh='1' lts='l'>TEXT</HTML.p>
+			</Box>
+		</Center>
+	</PreviewArea>
+	<PreviewCode label='JSX' slot='tab'>
+		```jsx
+		<Center>
+			<Box bg='linear-gradient(45deg, var(--blue), var(--pink))' bgclip='text' c='trsp'>
+				<HTML.p fz='5xl' fw='bold' lh='1' lts='l'>TEXT</HTML.p>
+			</Box>
+		</Center>
+		```
+	</PreviewCode>
+	<PreviewCode label='HTML' slot='tab'>
+		```html
+		<div class="l--frame -ar:og -bg" style="--bg:linear-gradient(to top, #a8edea 0%, #fed6e3 100%)">  </div>
+		```
+	</PreviewCode>
+</Preview>
 
-## Other CSS
 
-その他、下記のCSSプロパティは `css` というプロパティにオブジェクトとして指定することで出力できます。  
-(Note: 以下に挙げているもの以外を`css`に渡すと、`style`に流れます。)
+### Transforms
 
 |Prop|Shorthand|To Class|BP|
 |---|---|---|---|
-|`inline-size`|`(css.)isz`|||
-|`block-size`|`(css.)bsz`|||
-|`max-inline-size`|`(css.)maxIsz`|||
-|`max-block-size`|`(css.)maxBsz`|||
-|`min-inline-size`|`(css.)minIsz`|||
-|`min-block-size`|`(css.)minBsz`|||
-|`transform`|`(css.)trf`|||
-|`transform-origin`|`(css.)trfo`|||
-|`translate`|`(css.)trnslt`|`-50X`,`-50Y`,`-50XY`|-|
-|`rotate`|`(css.)rotate`|`45`,`-45`,`90`,`-90`|-|
-|`scale`|`(css.)scale`|`-X`,`-Y`,`-XY`|-|
-|`filter`|`(css.)fltr`|||
-|`backdrop-filter`|`(css.)bdfltr`|||
-|`float`|`(css.)fl`|`l`(`left`),`r`(`right`)|⚪︎|
-|`clear`|`(css.)cl`|`l`(`left`),`r`(`right`),`b`(`both`)|⚪︎|
-|`object-fit`|`(css.)obf`|`cv`(`cover`),`cn`(`contain`)|⚪︎|
-|`object-position`|`(css.)obp`|||
+|`translate`|`translate`|`-50X`,`-50Y`,`-50XY`|-|
+|`rotate`|`rotate`|`45`,`-45`,`90`,`-90`|-|
+|`scale`|`scale`|`-X`,`-Y`,`-XY`|-|
 
-### クラスで直接使用するしかできないもの
-最後に、`Lism` コンポーネントで対応した CSS Props がないものの、Prop Classの用意があるものをリストアップしておきます。
 
-|Class|CSS|
-|---|---|
-|`-iso:i`|`isolation: isolate`|
-|`-ovw:any`|`overflow-wrap: anywhere`|
-|`-bxz:cb`|`box-sizing: content-box`|
-|`-bxz:bb`|`box-sizing: border-box`|
-|`-wm:v-rl`|`writing-mode: vertical-rl`|
-{/* |`-obf:cn`|`object-fit: contain`|
-|`-obf:cv`|`object-fit: cover`| */}
-{/* |`-fl:l`|`float: left`|
-|`-fl:r`|`float: right`|
-|`-cl:b`|`clear: both`|
-|`-cl:l`|`clear: left`|
-|`-cl:r`|`clear: right`| */}
 
+## Other CSS
+
+|Prop|Shorthand|To Class|BP|
+|---|---|---|---|
+|`float`|`float`|`left`,`right`|-|
+|`clear`|`clear`|`both`|-|
+|`isolation`|`isolation`|`isolate`|-|
+|`overflow-wrap`|`ovwrap`|`any`(`anywhere`)|-|
+|`white-space`|`whitespace`|`nowrap`|-|
+{/* |`word-break`|`wordbreak`|`keep`(`keep-all`),<br />`all`(`break-all`)|-| */}
+{/* |`linebreak`|`linebreak`|`strict`|-| */}
+
+{/* |`-bxsz:cb`|`box-sizing: content-box`|
+|`-bxsz:bb`|`box-sizing: border-box`| */}
+
+{/* |`-objf:cn`|`object-fit: contain`|
+|`-objf:cv`|`object-fit: cover`| */}
+
+{/* |`filter`|`fltr`|||
+|`backdrop-filter`|`bdfltr`||| */}

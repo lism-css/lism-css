@@ -12,10 +12,7 @@
 // bd
 // --------------------
 .-bd\:guide {
-	--bds: dashed;
-	--bdc: rgba(160, 160, 160, 0.3);
-	border: var(--bd);
-	// border: 1px dashed rgba(160, 160, 160, 0.4);
+	border: 1px dashed rgba(160, 160, 160, 0.5);
 }
 
 // --------------------
@@ -27,14 +24,14 @@
 // --------------------
 
 // emoji
-// .l--icon-emoji {
-// 	font-family: var(--ff-emoji);
+// .a--icon--emoji {
+// 	font-family: var(--ff--emoji);
 // 	line-height: 1;
 // 	place-content: center; // justify-content: center;
 // 	place-items: center; // align-items: center;
 // }
 
-// .l--icon-mask {
+// .a--icon--mask {
 // 	width: 1em;
 // 	height: 1em;
 // 	background-color: currentColor;
@@ -45,14 +42,14 @@
 // Accordion
 // --------------------
 .d--accordion_icon {
-	> .l--icon {
+	> .a--icon {
 		grid-area: 1 / 1;
 	}
-	> .l--icon:nth-last-of-type(2) {
-		opacity: var(--_isOpened, 0);
+	> .a--icon:nth-last-of-type(2) {
+		opacity: var(--isOpened_, 0);
 	}
-	> .l--icon:nth-of-type(2) {
-		opacity: var(--_notOpened, 0);
+	> .a--icon:nth-of-type(2) {
+		opacity: var(--notOpened_, 0);
 	}
 }
 
@@ -72,24 +69,7 @@
 // linkBoxのaltKey対応
 // --------------------
 .is--linkBox.-linkoff {
-	.u--overlayLink::before {
+	.u-expandedLink::before {
 		content: none;
-	}
-}
-
-// has--blockDivider
-._has--divider {
-	--bdc: var(--c-divider);
-	--bds: solid;
-	--bdw: 1px;
-	--_isRow: 0;
-	&:where(.l--flex, .-fxd\:r, .-fxd\:rr) {
-		--_isRow: 1;
-	}
-
-	> :where(:not(:last-child)) {
-		--_bdw: calc(var(--_isRow, 0) * var(--bdw)); // isRow 1 なら 1px, isRow 0 なら 0px
-		border-inline-end: var(--bds) var(--_bdw) var(--bdc);
-		border-block-end: var(--bds) calc(var(--bdw) - var(--_bdw)) var(--bdc);
 	}
 }

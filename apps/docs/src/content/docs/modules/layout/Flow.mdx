@@ -1,0 +1,231 @@
+---
+title: 'Flow'
+description: ...
+---
+
+import { Flow, Box, Dummy, Lism, HTML } from 'lism-css/astro';
+import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage, EmbedCode, PreviewFrame, Reference, Callout, Note } from '~/components';
+
+
+`l--flow` は、`display`が`flow-root`で、かつ**子要素間の余白を管理できる**レイアウトモジュールです。
+
+<Callout type='point'>
+`l--flow`系の直下では、コンテンツの間隔が `--flow`と`margin-block-start` で管理されます。
+</Callout>
+
+
+| クラス名 | 余白量 |
+|---|---|
+| `.l--flow` | `--flow--base` |
+| `.l--flow.-flow:s` | `--flow--s` (`--s20`) |
+| `.l--flow.-flow:l` | `--flow--l` (`--s50`) |
+| `.l--flow.-flow:` | `--flow` |
+
+また、見出しタグのみ、`--flow--h` が加算され、余白が少し広くなるようになっています。
+
+
+<PreviewTitle>CSS</PreviewTitle>
+<EmbedCode dirPath='packages/lism-css' srcPath='src/scss/modules/layout/_flow.scss' />
+
+
+## 対応コンポーネント
+
+`lism-css` では`<Flow>`コンポーネントを配布しています。
+
+
+### Import
+
+<ImportPackage component='Flow' />
+
+### Props
+
+| プロパティ | 説明 |
+|---|---|
+| `flow` | `--flow` の値を指定できます。<br />`s`, `l` を指定した場合、`.-flow:{s\|l}` クラスが付与されます。|
+
+
+## Usage
+
+<Preview>
+	<PreviewTitle>`l--flow`</PreviewTitle>
+	<PreviewArea p='30' layout=''>
+		<Flow hov='itemGuide'>
+			<Dummy lang='ja' />
+			<h2>Heading</h2>
+			<Dummy lang='ja' length='s' />
+			<Dummy lang='ja' length='l' />
+			<ul>
+				<li>Lorem ipsum, LIST content...</li>
+				<li>Lorem ipsum, LIST content...</li>
+				<li>Lorem ipsum, LIST content...</li>
+			</ul>
+			<Dummy lang='ja' />
+		</Flow>
+	</PreviewArea>
+	<PreviewCode slot='tab' label='JSX'>
+	```jsx
+	<Flow>
+		<p>Lorem ipsum content...</p>
+		<p>Lorem ipsum content...</p>
+		<h2>Heading</h2>
+		<p>Lorem ipsum content...</p>
+		<p>Lorem ipsum content...</p>
+	</Flow>
+	```
+	</PreviewCode>
+	<PreviewCode slot='tab' label='HTML'>
+	```html
+	<div class="l--flow">
+		<p>Lorem ipsum content...</p>
+		<p>Lorem ipsum content...</p>
+		<h2>Heading</h2>
+		<p>Lorem ipsum content...</p>
+		<p>Lorem ipsum content...</p>
+	</div>
+	```
+	</PreviewCode>
+</Preview>
+{/* </Lism> */}
+
+
+<Preview>
+	<PreviewTitle>`-flow:s`を併用する</PreviewTitle>
+	<PreviewArea p='30' layout=''>
+		<Flow flow='s' hov='itemGuide'>
+			<Dummy lang='ja' />
+			<h2>Heading</h2>
+			<Dummy lang='ja' length='s' />
+			<Dummy lang='ja' length='l' />
+			<ul>
+				<li>Lorem ipsum, LIST content...</li>
+				<li>Lorem ipsum, LIST content...</li>
+				<li>Lorem ipsum, LIST content...</li>
+			</ul>
+			<Dummy lang='ja' />
+		</Flow>
+	</PreviewArea>
+	<PreviewCode slot='tab' label='JSX'>
+	```jsx "flow='s'"
+	<Flow flow='s'>
+		<p>Lorem ipsum content...</p>
+		<p>Lorem ipsum content...</p>
+		<h2>Heading</h2>
+		<p>Lorem ipsum content...</p>
+		<p>Lorem ipsum content...</p>
+	</Flow>
+	```
+	</PreviewCode>
+	<PreviewCode slot='tab' label='HTML'>
+	```html "-flow:s"
+	<div class="l--flow -flow:s">
+		<p>Lorem ipsum content...</p>
+		<p>Lorem ipsum content...</p>
+		<h2>Heading</h2>
+		<p>Lorem ipsum content...</p>
+		<p>Lorem ipsum content...</p>
+	</div>
+	```
+	</PreviewCode>
+</Preview>
+
+
+
+`flow`にトークン値以外を指定すると、`-flow:` クラスと`--flow`変数で出力されます。
+
+<Preview>
+	<PreviewTitle>任意の値をセットする</PreviewTitle>
+	<PreviewArea p='30'>
+		<Flow flow='10px' hov='itemGuide'>
+			<HTML.p>Contents...</HTML.p>
+			<h2>Heading</h2>
+			<Dummy lang='ja' length='s' />
+			<HTML.p>Contents...</HTML.p>
+			<HTML.p>Contents...</HTML.p>
+		</Flow>
+	</PreviewArea>
+	<PreviewCode slot='tab' label='JSX'>
+	```jsx "flow='10px'"
+	<Flow flow='10px'>
+		<p>Contents...</p>
+		<p>Contents...</p>
+		<p>Contents...</p>
+	</Flow>
+	```
+	</PreviewCode>
+	<PreviewCode slot='tab' label='HTML'>
+	```html "--flow:10px"
+	<div class="l--flow -flow:" style="--flow:10px">
+		<p>Contents...</p>
+		<p>Contents...</p>
+		<p>Contents...</p>
+	</div>
+	```
+	</PreviewCode>
+</Preview>
+
+`l--flow`は`--flow`が未定義であれば`--flow--base`がセットされますが、ネストされていると親の値を継承されることに注意してください。
+
+
+
+### `is--skipFlow`
+
+`.l--flow` 直下で使用すると、次に続く兄弟要素との余白量を打ち消します。  
+フローコンテンツの先頭に absolute な要素を配置したい場合などに活用できます。
+
+
+<Preview>
+	<PreviewTitle>例</PreviewTitle>
+	<PreviewArea p='30'>
+		<div class="l--flow -hov:itemGuide">
+			<div class='is--skipFlow'>Skip flow...</div>
+			<p>Lorem ipsum, Example content...</p>
+			<p>Lorem ipsum, Example content...</p>
+			<p>Lorem ipsum, Example content...</p>
+		</div>
+	</PreviewArea>
+	<PreviewCode slot='tab' label='HTML'>
+	```html
+	<div class="l--flow">
+		<div class='is--skipFlow'>skip flow...</div>
+		<p>Lorem ipsum, Example content...</p>
+		<p>Lorem ipsum, Example content...</p>
+		<p>Lorem ipsum, Example content...</p>
+	</div>
+	```
+	</PreviewCode>
+</Preview>
+
+
+## `l--flow` を入れ子にする時の注意点
+
+
+`l--flow`の直下で`l--flow`をネストしてカスタム値を設定（`--flow`を変数で直接指定）すると、その子側の`l--flow`自身の`margin-block-start`にも影響が出ることに注意してください。  
+(直下にネストしなければ問題ないため、一階層さらに別要素でラップすることでこの問題は回避できます)
+
+<Preview>
+	<PreviewTitle>`l--flow`の直下の`l--flow`で`--flow`を定義した場合</PreviewTitle>
+	<PreviewArea p='30' layout=''>
+		<Flow hov='itemGuide'>
+		<p>Flow contents...</p>
+			<p>Flow contents...</p>
+			<Flow flow='5px' bgc='orange:10%' hov='itemGuide'>
+				<p>*Nested <code class='-fz:s -bd -p:5 -bdrs:10'>`l--flow`(`--flow:5px`)</code></p>
+				<p>*Nested flow contents...</p>
+			</Flow>
+			<p>Flow contents...</p>
+		</Flow>
+	</PreviewArea>
+	<PreviewCode slot='tab' label='JSX'>
+	```jsx "\<Flow " "\<Flow flow='5px'"
+	<Flow hov='itemGuide'>
+		<p>Flow contents...</p>
+		<Flow flow='5px' bgc='orange:10%' hov='itemGuide'>
+			<p>*Nested <code class='-fz:s -bd -p:5 -bdrs:10'>`l--flow`(`--flow:5px`)</code></p>
+			<p>*Nested flow contents...</p>
+		</Flow>
+		<p>Flow contents...</p>
+	</Flow>
+	```
+	</PreviewCode>
+</Preview>
+

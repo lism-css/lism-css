@@ -1,15 +1,15 @@
-@layer lism.component {
+@layer lism.custom {
 	.c--timeline {
-		--shape_size: 1.375rem;
-		--highlight_inset: -3px;
-		--line_len: 100%;
-		--line_bold: 1px;
-		--line_offset: calc(var(--shape_size) / 2);
+		--_shape-size: 1.375rem;
+		--_line-len: 100%;
+		--_line-bold: 1px;
+		--_line-offset: calc(var(--_shape-size) / 2);
+		--_highlight-inset: -3px;
 
-		--edgeSpace: var(--s30);
-		--startSpace: var(--edgeSpace);
-		--endSpace: var(--edgeSpace);
-		--shapeSpace: calc(var(--shape_size) + var(--highlight_inset) * -1);
+		--edge: var(--s30);
+		--startSpace: var(--edge);
+		--endSpace: var(--edge);
+		--shapeSpace: calc(var(--_shape-size) + var(--_highlight-inset) * -1);
 	}
 
 	.c--timeline_item {
@@ -17,42 +17,42 @@
 	}
 
 	.c--timeline_line {
-		width: var(--line_bold);
-		height: var(--line_len);
+		width: var(--_line-bold);
+		height: var(--_line-len);
 	}
 
 	.c--timeline_shape {
-		font-size: var(--shape_size);
+		font-size: var(--_shape-size);
 		width: 0.5em; /* icon ない時は 縮める */
 	}
 	.c--timeline_shape._hasIcon {
 		width: 1em;
 	}
 	.c--timeline_highlight {
-		inset: var(--highlight_inset);
+		inset: var(--_highlight-inset);
 	}
 
 	[data-timeline='start'] {
 		--startSpace: 0;
-		--line_len: calc(100% - var(--line_offset));
+		--_line-len: calc(100% - var(--_line-offset));
 	}
 	[data-timeline='end'] {
 		--endSpace: 0;
-		--line_len: calc(100% - var(--line_offset));
+		--_line-len: calc(100% - var(--_line-offset));
 	}
 
-	.c--timeline-horizontal {
-		--edgeSpace: var(--s20);
-		--line_offset: calc(50% - var(--edgeSpace) / 2);
+	.c--timeline--horizontal {
+		--edge: var(--s20);
+		--_line-offset: calc(50% - var(--edge) / 2);
 		grid-template-rows: var(--shapeSpace) auto auto auto;
 	}
 
-	.c--timeline-horizontal > .c--timeline_item {
+	.c--timeline--horizontal > .c--timeline_item {
 		grid-template-columns: var(--startSpace) auto var(--endSpace);
 	}
 
-	.c--timeline-horizontal .c--timeline_line {
-		width: var(--line_len);
-		height: var(--line_bold);
+	.c--timeline--horizontal .c--timeline_line {
+		width: var(--_line-len);
+		height: var(--_line-bold);
 	}
 }

@@ -1,0 +1,45 @@
+/*
+  Memo:
+	- > * + * を使えば :first-child への my-s の打ち消しは不要になるが、 my-e 0 を :first-child にも効かせたいので、 > * で書いている。
+*/
+.l--flow {
+	display: flow-root;
+	// --flow: var(--flow--base);
+
+	> * {
+		--flow: var(--flow--base);
+		--my-s: var(--flow);
+		margin-block: var(--my-s) 0;
+	}
+
+	// flow 直下のメディア要素は block に初期リセット
+	> :where(img, video, audio) {
+		display: block;
+	}
+}
+
+.-flow\:s > * {
+	--flow: var(--flow--s);
+}
+.-flow\:l > * {
+	--flow: var(--flow--l);
+}
+.-flow\: > * {
+	--flow: inherit;
+}
+
+// 見出しの上部余白は少しだけ広くする.
+.l--flow > :where(h1, h2, h3, h4) {
+	// --my-s: var(--flow--h);
+	--my-s: calc(var(--flow) + var(--flow--h));
+}
+
+// Note: 打ち消しを最後に書く
+// .l--flow > :where(.-max-sz\:full + .-max-sz\:full),
+.l--flow > :first-child,
+.is--skipFlow + * {
+	--my-s: 0px;
+}
+
+// is--side
+// is--skipFlow

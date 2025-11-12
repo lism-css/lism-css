@@ -14,7 +14,7 @@ $maybe_important: '';
 // 	@return '';
 // }
 
-@mixin maybe_where($selectors, $mode) {
+@mixin maybe_where($selectors, $mode: '') {
 	// memo: セレクタリストを引数で受け取り、modeで出力方法を切り替える
 	@if $layer_mode == 1 {
 		@if $mode == '' {
@@ -25,7 +25,7 @@ $maybe_important: '';
 			:is(#{$selectors}) {
 				@content;
 			}
-		} @else if $mode == 'base' {
+		} @else if $mode == '@base' {
 			@layer lism.base {
 				#{$selectors} {
 					@content;

@@ -1,0 +1,444 @@
+---
+title: 'Tabs'
+description: ...
+---
+
+import { Dummy, Tabs, Icon } from 'lism-css/astro';
+import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage, EmbedCode, PropBadge, Callout, IconBadge } from "~/components";
+
+
+タブ要素を作成できるコンポーネントです。  
+スタイリングはほぼなく、動きに関わる部分だけを提供しています。表示スタイルは適宜カスタマイズしてご利用ください。
+
+## 基本構造
+```pug
+d--tabs
+	div.d--tabs_list[role="tablist"]
+		button.d--tabs_tab.set-plain[role="tab"][aria-controls="{tabID}"][aria-selected="true"]
+		...button
+
+	div.d--tabs_panel[id="{tabID}"][role="tabpanel"][aria-hidden="false"]
+		...Contents...
+	...div.d--tabs_panel
+```
+
+
+## CSS
+
+<EmbedCode dirPath='packages/lism-css' srcPath='src/scss/modules/dynamic/_tabs.scss' />
+
+
+## Import
+
+<ImportPackage component='Tabs' script='tabs.js' />
+
+
+## Props
+
+| プロパティ | 説明 |
+|---|---|
+|<PropBadge>`<Tabs.Root>`</PropBadge><br/>`variant`|`d--tabs--{variant}`クラスが出力されます。|
+|<PropBadge>`<Tabs.Root>`</PropBadge><br/>`tabId`|`aria-controls`の値として使用されるタブを特定するためのIDを文字列で指定できます。|
+|<PropBadge>`<Tabs.Root>`</PropBadge><br/>`defaultIndex`|最初に開いておくタブ番号を指定できます。|
+|<PropBadge>`<Tabs.Root>`</PropBadge><br/>`listProps`|タブボタンを囲むリスト要素(`d--tabs_list`)へ渡すpropsを指定できます。|
+{/* |<PropBadge>`<Tabs.Item>`</PropBadge><br/>`label` | タブテキストを指定します。 | */}
+
+
+{/* |<PropBadge>`<Tabs.Root>`</PropBadge><br/>`keepHeight`|`[data-tabs-height="keep"]`が出力され、タブの高さを一番コンテンツ量の多いパネルに合わせて固定することができます。| */}
+
+{/* **ボタンカラーについて**
+
+平常時のカラーと、アクティブ時のカラーをそれぞれ専用の変数で管理しています。
+
+```css
+:where(.d--tabs) {
+	--tab-c: var(--c--text);
+	--tab-c--active: var(--c--base);
+	--tab-bgc: var(--c--base-2);
+	--tab-bgc--active: var(--c--text);
+}
+``` */}
+
+
+{/* - `<Tabs.Root>`
+	- `keepHeight` が true の場合、タブの高さを固定する（切り替えた時に高さが動かないようにする）
+	- `defaultIndex`で最初に開くタブを指定できる
+	- `tabId`: tabId.指定しなければランダム生成されます。(ページ内で一意の値の指定である必要があります。)
+- `<Tabs.Item>`
+	- `index`: (必須) タブのindex番号 */}
+
+
+## Usage
+
+<Callout type='warning'>
+`<Tabs.Item>`の子要素は`<Tabs.Tab>`と`<Tabs.Panel>`のみしか認識しません。また、この2つは必ず両方使用してください。
+</Callout>
+
+
+<Preview>
+	<PreviewTitle>例</PreviewTitle>
+	<PreviewArea p='30'>
+		<Tabs.Root g='20'>
+			<Tabs.Item>
+				<Tabs.Tab px='10'>Tab 1</Tabs.Tab>
+				<Tabs.Panel>
+					<Dummy pre='Tab 01: '/>
+				</Tabs.Panel>
+			</Tabs.Item>
+			<Tabs.Item>
+				<Tabs.Tab px='10'>Tab 2</Tabs.Tab>
+				<Tabs.Panel>
+					<Dummy length='l' offset={1} pre='Tab 02: ' />
+				</Tabs.Panel>
+			</Tabs.Item>
+		</Tabs.Root>
+	</PreviewArea>
+	<PreviewCode slot='tab' label='JSX'>
+		```jsx
+		<Tabs.Root g='20'>
+			<Tabs.Item>
+				<Tabs.Tab px='10'>Tab 1</Tabs.Tab>
+				<Tabs.Panel>
+					<Dummy pre='Tab 01: '/>
+				</Tabs.Panel>
+			</Tabs.Item>
+			<Tabs.Item>
+				<Tabs.Tab px='10'>Tab 2</Tabs.Tab>
+				<Tabs.Panel>
+					<Dummy length='l' offset={1} pre='Tab 02: ' />
+				</Tabs.Panel>
+			</Tabs.Item>
+		</Tabs.Root>
+		```
+	</PreviewCode>
+	<PreviewCode slot='tab' label='HTML'>
+		```html
+		```
+	</PreviewCode>
+</Preview>
+
+
+`listProps`で`.d--tabs_list`にプロパティを渡せます。
+
+<Preview>
+	<PreviewTitle>`listProps`を使う例</PreviewTitle>
+	<PreviewArea p='30'>
+		<Tabs.Root g='20' ji='center' listProps={{bd: '-', bdrs: '99', p: '10', lh:'xs'}}>
+			<Tabs.Item>
+				<Tabs.Tab px='10'>Tab 1</Tabs.Tab>
+				<Tabs.Panel>
+					<Dummy pre='Tab 01: '/>
+				</Tabs.Panel>
+			</Tabs.Item>
+			<Tabs.Item>
+				<Tabs.Tab px='10'>Tab 2</Tabs.Tab>
+				<Tabs.Panel>
+					<Dummy length='l' offset={1} pre='Tab 02: ' />
+				</Tabs.Panel>
+			</Tabs.Item>
+		</Tabs.Root>
+	</PreviewArea>
+	<PreviewCode slot='tab' label='JSX'>
+		```jsx "listProps"
+		<Tabs.Root g='20' ji='center' listProps={{bd: '-', bdrs: '99', p: '10', lh:'xs'}}>
+			<Tabs.Item>
+				<Tabs.Tab px='10'>Tab 1</Tabs.Tab>
+				<Tabs.Panel>
+					<Dummy pre='Tab 01: '/>
+				</Tabs.Panel>
+			</Tabs.Item>
+			<Tabs.Item>
+				<Tabs.Tab px='10'>Tab 2</Tabs.Tab>
+				<Tabs.Panel>
+					<Dummy length='l' offset={1} pre='Tab 02: ' />
+				</Tabs.Panel>
+			</Tabs.Item>
+		</Tabs.Root>
+		```
+	</PreviewCode>
+</Preview>
+
+
+
+
+
+### 最初に開いておくタブ番号を指定する
+
+`<Tabs.Root>`の `defaultIndex` で、最初に開いておくタブ番号を指定できます。  
+(インデックス番号は`1`から始まります。)
+
+<Preview>
+	<PreviewTitle>例</PreviewTitle>
+	<PreviewArea p='30'>
+		<Tabs.Root defaultIndex={2} listProps={{'bd-b': '-'}}>
+			<Tabs.Item>
+				<Tabs.Tab p='10'>Tab 1</Tabs.Tab>
+				<Tabs.Panel p='10'>
+					<Dummy pre='Tab 01: '/>
+				</Tabs.Panel>
+			</Tabs.Item>
+			<Tabs.Item>
+				<Tabs.Tab p='10'>Tab 2</Tabs.Tab>
+				<Tabs.Panel p='10'>
+					<Dummy length='l' offset={1} pre='Tab 02: ' />
+				</Tabs.Panel>
+			</Tabs.Item>
+		</Tabs.Root>
+	</PreviewArea>
+	<PreviewCode slot='tab' label='JSX'>
+		```jsx "defaultIndex=\{2\}"
+		<Tabs.Root defaultIndex={2} listProps={{'bd-b': '-'}}>
+			<Tabs.Item>
+				<Tabs.Tab p='10'>Tab 1</Tabs.Tab>
+				<Tabs.Panel p='10'>
+					<Dummy pre='Tab 01: '/>
+				</Tabs.Panel>
+			</Tabs.Item>
+			<Tabs.Item>
+				<Tabs.Tab p='10'>Tab 2</Tabs.Tab>
+				<Tabs.Panel p='10'>
+					<Dummy length='l' offset={1} pre='Tab 02: ' />
+				</Tabs.Panel>
+			</Tabs.Item>
+		</Tabs.Root>
+		```
+	</PreviewCode>
+</Preview>
+
+
+
+
+### タブコンテンツを横並び配置にする
+{/* if (isHorizontal) {
+	defaultProps.gd = [null, 'var(--gd--hz)'];
+	_listProps.fxd = [null, 'column'];
+}*/}
+
+`<Tabs.Root>`(`.d--tabs`)に`grid-template:'list panel' auto / auto 1fr;` を指定すると、タブリストとコンテンツが横並びになります。
+
+それと同時に、タブリスト(`.d--tabs_list`)のボタンを縦並び（`flex-direction:column;`）に変更すると、以下のようなレイアウトが実現できます。
+
+<Preview>
+	<PreviewTitle>`@sm`サイズより大きい場合、コンテンツを横並びにする例</PreviewTitle>
+	<PreviewArea p={30} resize>
+		<Tabs.Root
+			g='20'
+			gt={[null, '"list panel" auto / auto 1fr']}
+			listProps={{fxd: [null, 'column'], bd: '-', bdw:['0 0 1px 0','0 1px 0 0']}}
+		>
+			<Tabs.Item>
+				<Tabs.Tab px='20' px-s='10' py='10' py-s='5'>Tab 1</Tabs.Tab>
+				<Tabs.Panel p='5'>
+					<Dummy pre='Tab 01: '/>
+				</Tabs.Panel>
+			</Tabs.Item>
+			<Tabs.Item>
+				<Tabs.Tab px='20' px-s='10' py='10' py-s='5'>Tab 2</Tabs.Tab>
+				<Tabs.Panel p='5'>
+					<Dummy length='l' offset={1} pre='Tab 02: ' />
+				</Tabs.Panel>
+			</Tabs.Item>
+		</Tabs.Root>
+	</PreviewArea>
+	<PreviewCode>
+		```jsx
+		<Tabs.Root
+			g='20'
+			gt={[null, '"list panel" auto / auto 1fr']}
+			listProps={{fxd: [null, 'column'], bd: '-', bdw:['0 0 1px 0','0 1px 0 0']}}
+		>
+			<Tabs.Item>
+				<Tabs.Tab px='20' px-s='10' py='10' py-s='5'>Tab 1</Tabs.Tab>
+				<Tabs.Panel p='5'>
+					<Dummy pre='Tab 01: '/>
+				</Tabs.Panel>
+			</Tabs.Item>
+			<Tabs.Item>
+				<Tabs.Tab px='20' px-s='10' py='10' py-s='5'>Tab 2</Tabs.Tab>
+				<Tabs.Panel p='5'>
+					<Dummy length='l' offset={1} pre='Tab 02: ' />
+				</Tabs.Panel>
+			</Tabs.Item>
+		</Tabs.Root>
+		```
+	</PreviewCode>
+</Preview>
+
+
+
+## スタイルバリエーションの作成例
+
+コアではスタイルを特に持ちませんので、サイトごとにスタイルを用意してご利用ください。  
+
+`d--tabs_tab`では`--isSelected_`, `--notSelected_`が使えるようになっています。  
+<IconBadge type='help'/> （[`set-hov`](/css/hov#set-hov)の`--isHov_`,`--notHov_`の解説を参考にしてください。）
+
+ここではいくつかのスタイリング例を紹介します。
+
+<Preview>
+	<PreviewTitle>`variant='line'`</PreviewTitle>
+	<PreviewArea p={30}>
+		<Tabs.Root variant='line' g='20'>
+			<Tabs.Item>
+				<Tabs.Tab>Tab 1</Tabs.Tab>
+				<Tabs.Panel>
+					<Dummy pre='Tab 01: '/>
+				</Tabs.Panel>
+			</Tabs.Item>
+			<Tabs.Item>
+				<Tabs.Tab>Tab 2</Tabs.Tab>
+				<Tabs.Panel>
+					<Dummy length='l' offset={1} pre='Tab 02: ' />
+				</Tabs.Panel>
+			</Tabs.Item>
+		</Tabs.Root>
+	</PreviewArea>
+	<PreviewCode slot='tab' label='追加CSS'>
+```scss
+/* Memo: ov-x='auto' の時に margin がネガティブだとアウトなので、borderではなくbox-shadowで表現する。 */
+:where(.d--tabs--line) {
+	--sh-size: inset 0 -2px;
+
+	.d--tabs_list {
+		box-shadow: var(--sh-size) 0 var(--c--line);
+	}
+	.d--tabs_tab {
+		font-size: var(--fz--s);
+		padding: 0.5em 0.875em;
+		box-shadow: var(--isSelected_, var(--sh-size) 0 0 currentColor);
+	}
+}
+```
+	</PreviewCode>
+	<PreviewCode slot='tab' label='JSX'>
+		```jsx "variant='line'"
+		<Tabs.Root variant='line' g='20'>
+			<Tabs.Item>
+				<Tabs.Tab>Tab 1</Tabs.Tab>
+				<Tabs.Panel>
+					<Dummy pre='Tab 01: '/>
+				</Tabs.Panel>
+			</Tabs.Item>
+			<Tabs.Item>
+				<Tabs.Tab>Tab 2</Tabs.Tab>
+				<Tabs.Panel>
+					<Dummy length='l' offset={1} pre='Tab 02: ' />
+				</Tabs.Panel>
+			</Tabs.Item>
+		</Tabs.Root>
+		```
+	</PreviewCode>
+</Preview>
+
+
+<Preview>
+	<PreviewTitle>`variant='emboss'`</PreviewTitle>
+	<PreviewArea p={30}>
+		<Tabs.Root variant='emboss' g='20' ji='center'>
+			<Tabs.Item>
+				<Tabs.Tab>Tab 1</Tabs.Tab>
+				<Tabs.Panel>
+					<Dummy pre='Tab 01: '/>
+				</Tabs.Panel>
+			</Tabs.Item>
+			<Tabs.Item>
+				<Tabs.Tab>Tab 2</Tabs.Tab>
+				<Tabs.Panel>
+					<Dummy length='l' offset={1} pre='Tab 02: ' />
+				</Tabs.Panel>
+			</Tabs.Item>
+		</Tabs.Root>
+	</PreviewArea>
+	<PreviewCode slot='tab' label='追加CSS'>
+```scss
+:where(.d--tabs--emboss) {
+	.d--tabs_list {
+		padding: 4px;
+		font-size: var(--fz--s);
+		background-color: var(--c--base-2);
+		border-radius: var(--bdrs--20);
+	}
+	.d--tabs_tab {
+		padding: 0.25em 0.75em;
+		border-radius: calc(var(--bdrs--20) - 2px); /* 親の bdrs - 親のpadding / 2 */
+		background-color: var(--isSelected_, var(--c--base));
+		box-shadow: var(--isSelected_, var(--bxsh--10));
+	}
+}
+```
+	</PreviewCode>
+	<PreviewCode slot='tab' label='JSX'>
+		```jsx "variant='emboss'"
+		<Tabs.Root variant='emboss' g='20' ji='center'>
+			<Tabs.Item>
+				<Tabs.Tab>Tab 1</Tabs.Tab>
+				<Tabs.Panel>
+					<Dummy pre='Tab 01: '/>
+				</Tabs.Panel>
+			</Tabs.Item>
+			<Tabs.Item>
+				<Tabs.Tab>Tab 2</Tabs.Tab>
+				<Tabs.Panel>
+					<Dummy length='l' offset={1} pre='Tab 02: ' />
+				</Tabs.Panel>
+			</Tabs.Item>
+		</Tabs.Root>
+		```
+	</PreviewCode>
+</Preview>
+
+
+
+## Opt-in
+
+### 高さを固定する方法
+
+タブ全体の高さを一番長いコンテンツパネルに合わせて固定する方法を紹介します。
+
+<PreviewTitle>必要な追加CSS</PreviewTitle>
+```scss
+[data-tabs-keep-height] > [aria-hidden='true'] {
+	display: block;
+	visibility: hidden;
+	opacity: 0;
+}
+```
+
+<Preview>
+	<PreviewTitle>例（Tab 2の高さに固定されます）</PreviewTitle>
+	<PreviewArea p='30'>
+		<Tabs.Root data-tabs-keep-height g='20'>
+			<Tabs.Item>
+				<Tabs.Tab px='10'>Tab 1</Tabs.Tab>
+				<Tabs.Panel>
+					<Dummy pre='Tab 01: '/>
+				</Tabs.Panel>
+			</Tabs.Item>
+			<Tabs.Item>
+				<Tabs.Tab px='10'>Tab 2</Tabs.Tab>
+				<Tabs.Panel>
+					<Dummy length='xl' offset={1} pre='Tab 02: ' />
+				</Tabs.Panel>
+			</Tabs.Item>
+		</Tabs.Root>
+	</PreviewArea>
+	<PreviewCode>
+		```jsx "data-tabs-keep-height"
+		<Tabs.Root data-tabs-keep-height g='20'>
+			<Tabs.Item>
+				<Tabs.Tab px='10'>Tab 1</Tabs.Tab>
+				<Tabs.Panel>
+					<Dummy pre='Tab 01: '/>
+				</Tabs.Panel>
+			</Tabs.Item>
+			<Tabs.Item>
+				<Tabs.Tab px='10'>Tab 2</Tabs.Tab>
+				<Tabs.Panel>
+					<Dummy length='xl' offset={1} pre='Tab 02: ' />
+				</Tabs.Panel>
+			</Tabs.Item>
+		</Tabs.Root>
+		```
+	</PreviewCode>
+</Preview>
+

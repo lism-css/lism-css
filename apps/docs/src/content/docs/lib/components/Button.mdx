@@ -4,7 +4,7 @@ description: ...
 ---
 
 import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportSource, ImportExComponent } from '~/components';
-import { Box, Flex, Grid, Lism, Frame, Link, Text, Media, Icon, Spacer, Center, Layer, Dummy } from 'lism-css/astro';
+import { Box, Flex, Grid, Lism, Frame, HTML, Media, Icon, Spacer, Center, Layer, Dummy } from 'lism-css/astro';
 import {
 	ArrowRightIcon,
 	ShoppingCartSimpleIcon,
@@ -17,8 +17,8 @@ import Button from '~/components/ex/Button/index.astro';
 
 <Preview>
 	<PreviewTitle>Preview</PreviewTitle>
-	<PreviewArea p='30' bg='u:stripe' isFlow={null}>
-		<Flex variant='cluster' g='20'>
+	<PreviewArea p='30' bg=':stripe' layout=''>
+		<Flex layout='cluster' g='20'>
 			<Button href='###' variant='fill'>Button</Button>
 			<Button href='###' variant='outline'>Outline</Button>
 			<Button href='###' variant='outline' bdrs='99' c='#d13d5e'><Icon icon='cart' />Outline</Button>
@@ -29,15 +29,15 @@ import Button from '~/components/ex/Button/index.astro';
 
 ## Only Core
 
-コンポーネントを作らずにボタンを作るコード例も紹介しておきます。
+**コンポーネントを作らずにボタンを作るコード例も紹介しておきます。**
 <Preview>
 	<PreviewTitle>Preview</PreviewTitle>
-	<PreviewArea p='30' bg='u:stripe' isFlow='s'>
+	<PreviewArea p='30' bg=':stripe' flow='s'>
 		<Flex g='20'>
-			<Link href='###' d='if' w='fit' td='n' c='base' bgc='text' py='10' px='30' lh='xs' bdrs='20' hov='op'>Button</Link>
-			<Link href='###' d='if' w='fit' td='n' c='inherit' bd py='10' px='30' lh='xs' bdrs='20' hov='op'>Button</Link>
+			<HTML.a href='###' d='in-flex' w='fit' td='none' c='base' bgc='text' py='10' px='30' lh='xs' bdrs='20' hov='o'>Button</HTML.a>
+			<HTML.a href='###' d='in-flex' w='fit' td='none' c='inherit' bd py='10' px='30' lh='xs' bdrs='20' hov='o'>Button</HTML.a>
 		</Flex>
-		<Grid tag='a' href='###' gtc='1em 1fr 1em' ji='c' ai='c' px='30' py='20' g='40' w='16rem' td='n' lh='xs' bgc='text' c='base' bdrs='20'>
+		<Grid tag='a' href='###' gtc='1em 1fr 1em' ji='center' ai='center' px='30' py='20' g='40' w='16rem' td='none' lh='xs' bgc='text' c='base' bdrs='20'>
 			<Lism tag='span' gc='2'>Button</Lism>
 			<Icon icon={ArrowRightIcon}/>
 		</Grid>
@@ -45,10 +45,10 @@ import Button from '~/components/ex/Button/index.astro';
 	<PreviewCode slot='tab' label='JSX'>
 		```jsx
 		<Flex g='20'>
-			<Link href='###' d='if' w='fit' td='n' c='base' bgc='text' py='10' px='30' lh='xs' bdrs='20' hov='op'>Button</Link>
-			<Link href='###' d='if' w='fit' td='n' c='inherit' bd py='10' px='30' lh='xs' bdrs='20' hov='op'>Button</Link>
+			<HTML.a href='###' d='in-flex' w='fit' td='none' c='base' bgc='text' py='10' px='30' lh='xs' bdrs='20' hov='o'>Button</HTML.a>
+			<HTML.a href='###' d='in-flex' w='fit' td='none' c='inherit' bd py='10' px='30' lh='xs' bdrs='20' hov='o'>Button</HTML.a>
 		</Flex>
-		<Grid tag='a' href='###' gtc='1em 1fr 1em' ji='c' ai='c' px='30' py='20' g='40' w='16rem' td='n' lh='xs' bgc='text' c='base' bdrs='20'>
+		<Grid tag='a' href='###' gtc='1em 1fr 1em' ji='center' ai='center' px='30' py='20' g='40' w='16rem' td='none' lh='xs' bgc='text' c='base' bdrs='20'>
 			<Lism tag='span' gc='2'>Button</Lism>
 			<Icon icon={ArrowRightIcon}/>
 		</Grid>
@@ -57,12 +57,12 @@ import Button from '~/components/ex/Button/index.astro';
 	<PreviewCode slot='tab' label='HTML'>
 		```html
 		<div class='l--flex -g:20'>
-			<a href='###' class='-d:if -w:fit -td:n -c:base -bgc:text -py:10 -px:30 -lh:xs -bdrs:20 -hov:op'>Button</a>
-			<a href='###' class='-bxz:cb -d:if -w:fit -td:n -c:inherit -bd -py:10 -px:30 -lh:xs -bdrs:20 -hov:op'>Button</a>
+			<a href='###' class='-d:i-f -w:fit -td:none -c:base -bgc:text -py:10 -px:30 -lh:xs -bdrs:20 -hov:o'>Button</a>
+			<a href='###' class='-d:i-f -w:fit -td:none -c:inherit -bd -py:10 -px:30 -lh:xs -bdrs:20 -hov:o'>Button</a>
 		</div>
-		<a class="l--grid -ji:c -ai:c -px:30 -py:20 -g:40 -w -td:n -lh:xs -bgc:text -c:base -bdrs:20 -gtc" style="--w:16rem;--gtc:1em 1fr 1em" href="###">
+		<a class="l--grid -ji:center -ai:center -px:30 -py:20 -g:40 -w -td:none -lh:xs -bgc:text -c:base -bdrs:20 -gtc" style="--w:16rem;--gtc:1em 1fr 1em" href="###">
 			<span class="-gc" style="--gc:2">Button</span>
-			<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 256 256" class="l--icon" aria-hidden="true">
+			<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 256 256" class="a--icon" aria-hidden="true">
 				<path d="M221.66,133.66l-72,72a8,8,0,0,1-11.32-11.32L196.69,136H40a8,8,0,0,1,0-16H196.69L138.34,61.66a8,8,0,0,1,11.32-11.32l72,72A8,8,0,0,1,221.66,133.66Z"></path>
 			</svg>
 		</a>
@@ -86,14 +86,11 @@ import Button from '~/components/ex/Button/index.astro';
 
 | プロパティ | 説明 |
 |---|---|
-|`variant`<small>(必須)</small>| `c--button-{variant}` クラスを出力します。`fill`,`outline`の2種類のスタイルをこの例では用意しています。|
+|`variant`<small>(必須)</small>| `c--button--{variant}` クラスを出力します。`fill`,`outline`の2種類のスタイルをこの例では用意しています。|
 {/* |`layout`| Buttonを構成するレイアウト用コンポーネントを指定できます。デフォルトは`Lism`です。| */}
 {/* |`icon`, `endIcon` | ボタンテキストの左右に表示するアイコンを指定できます。| */}
 {/* |`hover`| デフォルトは`op`が指定されています。| */}
 
-
-{/* ## 注意点
-Common Props の `w`, `h` ではなく、`width`, `height` を使ってください。 */}
 
 
 
@@ -101,19 +98,18 @@ Common Props の `w`, `h` ではなく、`width`, `height` を使ってくださ
 
 <Preview>
 	<PreviewTitle>`Button`の使用例</PreviewTitle>
-	<PreviewArea p='30' bg='u:stripe' isFlow={null}>
-		<Flex g='20'>
-			<Button href='###'>Button</Button>
+	<PreviewArea p='30' bg=':stripe' layout=''>
+		<Button href='###' max-sz="xs">Button</Button>
+		<Flex g='20' my-s='30'>
 			<Button href='###' bgc='main' bdrs='20'>Button</Button>
 			<Button href='###' bgc='#d13d5e' bdrs='99'><Icon icon='cart'/>Button</Button>
-			{/* <Button href='###' bgc='accent' bdrs='99' px='30' g='0'>Button<Icon icon='caret-right' offset='25%'/></Button> */}
 		</Flex>
 	</PreviewArea>
 
 	<PreviewCode slot='tab' label='JSX'>
 		```jsx
-		<Flex g='20'>
-			<Button href='###'>Button</Button>
+		<Button href='###' max-w="xs">Button</Button>
+		<Flex g='20' my-s='30'>
 			<Button href='###' bgc='main' bdrs='20'>Button</Button>
 			<Button href='###' bgc='#d13d5e' bdrs='99'><Icon icon='cart'/>Button</Button>
 		</Flex>
@@ -122,10 +118,10 @@ Common Props の `w`, `h` ではなく、`width`, `height` を使ってくださ
 	<PreviewCode slot='tab' label='HTML'>
 		```html
 		<div class='l--flex -g:20'>
-			<a class='c--button l--flex -td:n -ai:c -hov:op' href='###'>Button</a>
-			<a class='c--button l--flex -td:n -ai:c -hov:op -bgc:main -bdrs:20' href='###'>Button</a>
-			<a class='c--button l--flex -td:n -ai:c -hov:op -bdrs:99' href='###' style="--bgc:#d13d5e">
-				<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 256 256' width='1em' height='1em' fill='currentColor' focusable='false' class='l--icon' aria-hidden='true'>
+			<a class='c--button l--flex -hov:o -max-sz:xs' href='###'>Button</a>
+			<a class='c--button l--flex -hov:o -bgc:main -bdrs:20' href='###'>Button</a>
+			<a class='c--button l--flex -hov:o -bdrs:99' href='###' style="--bgc:#d13d5e">
+				<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 256 256' width='1em' height='1em' fill='currentColor' focusable='false' class='a--icon' aria-hidden='true'>
 					<path d='M230.14,58.87A8,8,0,0,0,224,56H62.68L56.6,22.57A8,8,0,0,0,48.73,16H24a8,8,0,0,0,0,16h18L67.56,172.29a24,24,0,0,0,5.33,11.27,28,28,0,1,0,44.4,8.44h45.42A27.75,27.75,0,0,0,160,204a28,28,0,1,0,28-28H91.17a8,8,0,0,1-7.87-6.57L80.13,152h116a24,24,0,0,0,23.61-19.71l12.16-66.86A8,8,0,0,0,230.14,58.87ZM104,204a12,12,0,1,1-12-12A12,12,0,0,1,104,204Zm96,0a12,12,0,1,1-12-12A12,12,0,0,1,200,204Zm4-74.57A8,8,0,0,1,196.1,136H77.22L65.59,72H214.41Z' ></path>
 				</svg>
 				Button
@@ -138,7 +134,7 @@ Common Props の `w`, `h` ではなく、`width`, `height` を使ってくださ
 ### variant: outline
 <Preview>
 	<PreviewTitle>`outline`の使用例</PreviewTitle>
-	<PreviewArea p='30' bg='u:stripe' isFlow={null}>
+	<PreviewArea p='30' bg=':stripe' layout=''>
 		<Flex g='20'>
 			<Button href='###'>Button</Button>
 			<Button href='###' variant='outline' c='main' bdrs='20'>Button</Button>
@@ -158,10 +154,10 @@ Common Props の `w`, `h` ではなく、`width`, `height` を使ってくださ
 	<PreviewCode slot='tab' label='HTML'>
 		```html
 		<div class='l--flex -g:20'>
-			<a class='c--button c--button-outline l--flex -td:n -ai:c -hov:op' href='###'>Button</a>
-			<a class='c--button c--button-outline l--flex -td:n -ai:c -hov:op -c:main -bdrs:20' href='###'>Button</a>
-			<a class='c--button c--button-outline l--flex -td:n -ai:c -hov:op -bdrs:99' href='###' style="--c:#d13d5e">
-				<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 256 256' width='1em' height='1em' fill='currentColor' focusable='false' class='l--icon' aria-hidden='true'>
+			<a class='c--button c--button--outline l--flex -hov:o' href='###'>Button</a>
+			<a class='c--button c--button--outline l--flex -hov:o -c:main -bdrs:20' href='###'>Button</a>
+			<a class='c--button c--button--outline l--flex -hov:o -bdrs:99' href='###' style="--c:#d13d5e">
+				<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 256 256' width='1em' height='1em' fill='currentColor' focusable='false' class='a--icon' aria-hidden='true'>
 					<path d='M230.14,58.87A8,8,0,0,0,224,56H62.68L56.6,22.57A8,8,0,0,0,48.73,16H24a8,8,0,0,0,0,16h18L67.56,172.29a24,24,0,0,0,5.33,11.27,28,28,0,1,0,44.4,8.44h45.42A27.75,27.75,0,0,0,160,204a28,28,0,1,0,28-28H91.17a8,8,0,0,1-7.87-6.57L80.13,152h116a24,24,0,0,0,23.61-19.71l12.16-66.86A8,8,0,0,0,230.14,58.87ZM104,204a12,12,0,1,1-12-12A12,12,0,0,1,104,204Zm96,0a12,12,0,1,1-12-12A12,12,0,0,1,200,204Zm4-74.57A8,8,0,0,1,196.1,136H77.22L65.59,72H214.41Z' ></path>
 				</svg>
 				Button
@@ -174,7 +170,7 @@ Common Props の `w`, `h` ではなく、`width`, `height` を使ってくださ
 ### アイコンを使う例
 <Preview>
 	<PreviewTitle>アイコンを使う例</PreviewTitle>
-	<PreviewArea p='30' bg='u:stripe' isFlow={null}>
+	<PreviewArea p='30' bg=':stripe' layout=''>
 		<Flex g='20'>
 			<Button href='###' g='10' bdrs='5'>
 				<Icon icon='cart' />
@@ -182,7 +178,7 @@ Common Props の `w`, `h` ではなく、`width`, `height` を使ってくださ
 			</Button>
 			<Button href='###' variant='outline' g='5' bdrs='5'>
 				<span>Button</span>
-				<Icon icon={ArrowRightIcon} offset='20% 0'/>
+				<Icon icon={ArrowRightIcon} translate='20% 0'/>
 			</Button>
 			<Button href='###' w='fit' px='20' py='20' lh='1' bdrs='10'>
 				<Icon icon={{as:ShoppingCartSimpleIcon, weight:'fill'}} fz='l'/>
@@ -198,7 +194,7 @@ Common Props の `w`, `h` ではなく、`width`, `height` を使ってくださ
 			</Button>
 			<Button href='###' variant='outline' g='5' bdrs='5'>
 				<span>Button</span>
-				<Icon icon={ArrowRightIcon} offset='20% 0'/>
+				<Icon icon={ArrowRightIcon} translate='20% 0'/>
 			</Button>
 			<Button href='###' w='fit' px='20' py='20' lh='1' bdrs='10'>
 				<Icon icon={{as:ShoppingCartSimpleIcon, weight:'fill'}} fz='l'/>
@@ -216,20 +212,20 @@ Common Props の `w`, `h` ではなく、`width`, `height` を使ってくださ
 
 <Preview>
 	<PreviewTitle>サイズの調整</PreviewTitle>
-	<PreviewArea p='30' bg='u:stripe' isFlow='s'>
+	<PreviewArea p='30' bg=':stripe' flow='s'>
 		<Button href='###' g='10' w='fit' bdrs='10'>
 			<Fragment>Button</Fragment>
 		</Button>
-		<Button href='###' maxW='20rem' py='20' jc='c' g='10' fz='l' bdrs='10'>
+		<Button href='###' max-w='20rem' py='20' g='10' fz='l' bdrs='10'>
 			<Fragment>Button</Fragment>
 		</Button>
 	</PreviewArea>
 	<PreviewCode slot='tab' label='JSX'>
-		```jsx "w='fit'" "maxW='20rem'"
+		```jsx "w='fit'" "max-w='20rem'"
 		<Button href='###' g='10' w='fit' bdrs='10'>
 			Button
 		</Button>
-		<Button href='###' maxW='20rem' py='30' jc='c' g='10' fz='l' bdrs='10'>
+		<Button href='###' max-w='20rem' py='30' g='10' fz='l' bdrs='10'>
 			Button
 		</Button>
 		```
@@ -240,37 +236,37 @@ Common Props の `w`, `h` ではなく、`width`, `height` を使ってくださ
 
 ### `Grid`でアイコンを端に寄せる
 
-`layout={Grid}`を指定すると gridレイアウト（`.l--grid`クラス）に切り替えることができます。  
+`layout='grid'`を指定すると gridレイアウト（`.l--grid`クラス）に切り替えることができます。  
 これにより、アイコンを端に寄せるレイアウトを組むこともできます。
 
 <Preview>
 	<PreviewTitle>Preview</PreviewTitle>
-	<PreviewArea resize p='20' isFlow='20'>
-		<Button href='###' layout={Grid} maxW='20rem' bdrs='10'>
+	<PreviewArea resize p='20' flow='20'>
+		<Button href='###' layout='grid' max-w='20rem' bdrs='10'>
 			<Icon icon='cart'/>
 			<span>Button</span>
 		</Button>
-		<Button href='###' layout={Grid} maxW='20rem' bdrs='10'>
+		<Button href='###' layout='grid' max-w='20rem' bdrs='10'>
 			<span>Button</span>
 			<Icon icon={ArrowRightIcon}/>
 		</Button>
-		<Button href='###' layout={Grid} maxW='20rem' bdrs='10'>
+		<Button href='###' layout='grid' max-w='20rem' bdrs='10'>
 			<Icon icon='cart'/>
 			<span>Button</span>
 			<Icon icon={ArrowRightIcon}/>
 		</Button>
 	</PreviewArea>
 	<PreviewCode slot='tab' label='JSX'>
-		```jsx "layout={Grid}"
-		<Button href='###' layout={Grid} maxW='20rem' bdrs='10'>
+		```jsx "layout='grid'"
+		<Button href='###' layout='grid' max-w='20rem' bdrs='10'>
 			<Icon icon='cart'/>
 			<span>Button</span>
 		</Button>
-		<Button href='###' layout={Grid} maxW='20rem' bdrs='10'>
-			<span gc='2'>Button</span>
+		<Button href='###' layout='grid' max-w='20rem' bdrs='10'>
+			<span>Button</span>
 			<Icon icon={ArrowRightIcon}/>
 		</Button>
-		<Button href='###' layout={Grid} maxW='20rem' bdrs='10'>
+		<Button href='###' layout='grid' max-w='20rem' bdrs='10'>
 			<Icon icon='cart'/>
 			<span>Button</span>
 			<Icon icon={ArrowRightIcon}/>
@@ -284,7 +280,7 @@ Common Props の `w`, `h` ではなく、`width`, `height` を使ってくださ
 		grid-template-columns: 1em 1fr 1em;
 		justify-items: center;
 	}
-	.c--button:where(.l--grid) > :not(.l--icon) {
+	.c--button:where(.l--grid) > :not(.a--icon) {
 		grid-column: 2;
 	}
 	```
@@ -296,11 +292,11 @@ Common Props の `w`, `h` ではなく、`width`, `height` を使ってくださ
 
 ### `hov="reverse"`
 
-ホバー時に、fill,outlineが入れ替わるような [`-hov`クラス](/css/hover)を追加する例を紹介します。
+ホバー時に、fill,outlineが入れ替わるような [`-hov`クラス](/css/hov)を追加する例を紹介します。
 
 <Preview>
 	<PreviewTitle>例</PreviewTitle>
-	<PreviewArea p='30' bg='u:stripe' isFlow={null}>
+	<PreviewArea p='30' bg=':stripe' layout=''>
 		<Flex g='20'>
 			<Button href='###' hov='reverse' variant='fill'>Button</Button>
 			<Button href='###' hov='reverse' variant='outline'>Button</Button>
@@ -312,11 +308,11 @@ Common Props の `w`, `h` ではなく、`width`, `height` を使ってくださ
 	.-hov\:reverse {
 		--hov-c: var(--bgc);
 		--hov-bgc: var(--c);
-		&:where(.c--button-fill) {
+		&:where(.c--button--fill) {
 			--hov-bgc: transparent;
 		}
-		&:where(.c--button-outline) {
-			--hov-c: var(--c-base);
+		&:where(.c--button--outline) {
+			--hov-c: var(--c--base);
 		}
 		@media (any-hover: hover) {
 			&:hover {
@@ -339,8 +335,8 @@ Common Props の `w`, `h` ではなく、`width`, `height` を使ってくださ
 
 {/* <Preview>
 	<PreviewTitle>color指定ありでのreverseの動作例</PreviewTitle>
-	<PreviewArea resize p='20' bg='u:stripe'>
-		<Flex variant='cluster' g='20'>
+	<PreviewArea resize p='20' bg=':stripe'>
+		<Flex layout='cluster' g='20'>
 			<Button href='###' hov='reverse' variant='fill' bgc='main'>Button</Button>
 			<Button href='###' hov='reverse' variant='outline' c='#64a31c'>Button</Button>
 			<Button href='###' hov='reverse' variant='' bgc='base-2' c='link'>Button</Button>
@@ -348,7 +344,7 @@ Common Props の `w`, `h` ではなく、`width`, `height` を使ってくださ
 	</PreviewArea>
 	<PreviewCode slot='tab' label='JSX'>
 		```jsx
-		<Flex variant='cluster' g='20'>
+		<Flex layout='cluster' g='20'>
 			<Button href='###' hov='reverse' variant='fill' bgc='main'>Button</Button>
 			<Button href='###' hov='reverse' variant='outline' c='#64a31c'>Button</Button>
 			<Button href='###' hov='reverse' variant='' bgc='base-2' c='link'>Button</Button>

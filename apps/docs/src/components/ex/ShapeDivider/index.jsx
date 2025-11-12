@@ -1,33 +1,16 @@
 import { Lism } from 'lism-css/react';
 import './style.css';
 
-export default function ShapeDivider({
-	viewBox,
-	children,
-	isAnimation,
-	isEmpty,
-	scale,
-	level = 5,
-	stretch,
-	offsetX,
-	offsetY,
-	css = {},
-	style = {},
-	...props
-}) {
+export default function ShapeDivider({ viewBox, children, isAnimation, isEmpty, level = 5, stretch, offset, style = {}, ...props }) {
 	if (level === 0) return null;
-
-	// scaleをコンポーネントに直書きできるように
-	if (null != scale) css.scale = scale;
 
 	// 変数セット
 	style['--level'] = level || null;
-	style['--offsetX'] = offsetX || null;
-	style['--offsetY'] = offsetY || null;
-	style['--stretch'] = stretch || null;
+	style['--_inner-offset'] = offset || null;
+	style['--_inner-stretch'] = stretch || null;
 
 	return (
-		<Lism isFullwide lismClass='c--shapeDivider' css={css} style={style} aria-hidden='true' {...props}>
+		<Lism lismClass='c--shapeDivider' max-sz='full' aria-hidden='true' style={style} {...props}>
 			<div className='c--shapeDivider_inner -h:100%'>
 				{isEmpty ? null : (
 					<svg

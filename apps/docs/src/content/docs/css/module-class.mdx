@@ -1,0 +1,188 @@
+---
+title: 'Module Class'
+description: ...
+sidebar:
+  order: 4
+---
+
+
+import { Dummy, Box, HTML, Lism, Stack, Flex, Container, Frame, Center, Spacer, Media } from 'lism-css/astro';
+import { Preview, PreviewArea, PreviewTitle, PreviewCode, PreviewFrame, Reference, Callout, Note } from '~/components';
+import ModuleList from '~/components/ModuleList.astro';
+
+{/* import { Desktop } from '@phosphor-icons/react'; */}
+
+
+Lismでは、次のようなモジュールクラスを使います。
+
+- `l--{module}`: レイアウトの構成単位となるようなモジュール群。
+- `d--{module}`: JavaScriptと組み合わせて動的な機能を持つ特殊なモジュール群。
+- `c--{module}`: その他のより具体的な役割を持つコンポーネント群。（他のクラスとの組み合わせを前提にした設計になっているものが多い。）
+- `is|has--{module}`: レイアウトを構成する役割を持ちつつ、複数の種類のモジュールに対してつけ外しできるような汎用性の高いモジュール群。
+
+基本的に、State Modulesを除いた各レイヤーの他モジュールクラスとの複数併用はできません。  
+たとえば、`.l--`と`.c--`は併用できますが、`.l--XXX`と`.l--YYY`、`.c--XXX`と`.c--YYY`は同一属性内では併用しないものとします。
+
+
+## State Module
+
+### `has--gutter`
+
+コンテンツの左右にあらかじめ定義済みの余白をつけることができるクラスです。  
+サイト全体で統一した余白量を左右に確保するためのものとして、padding系のユーティリティとは別のクラスとして用意しています。
+
+| クラス名 | 余白量 |初期値 |
+|---|---|---|
+| `has--gutter` | `--gutter` | `--s40` |
+
+<Preview>
+	<PreviewTitle>例</PreviewTitle>
+	<PreviewArea resize p='20'>
+		<Lism hasGutter>
+			<p>Lorem ipsum content...</p>
+			<p>Lorem ipsum content...</p>
+			<p>Lorem ipsum content...</p>
+		</Lism>
+	</PreviewArea>
+	<PreviewCode slot='tab' label='HTML'>
+	```html
+	<div class="has--gutter">
+		<p>Lorem ipsum content...</p>
+		<p>Lorem ipsum content...</p>
+		<p>Lorem ipsum content...</p>
+	</div>
+	```
+	</PreviewCode>
+	<PreviewCode slot='tab' label='JSX'>
+	```jsx
+	<Lism hasGutter>
+		<p>Lorem ipsum content...</p>
+		<p>Lorem ipsum content...</p>
+		<p>Lorem ipsum content...</p>
+	</Lism>
+	```
+	</PreviewCode>
+</Preview>
+
+
+
+
+### `is--container`
+
+`is--container`はコンテナ要素を定義するためのクラスです。  
+`--contentSz`で直下の子要素サイズを制御でき、`-container:{s|m|l}`でプリセットサイズを指定することもできます。
+
+<Spacer h='1rem' />
+
+| クラス名 | コンテンツ幅 (`--contentSz`) |
+|---|---|
+| `is--container`| `100%` |
+| `-container:s` | `--sz--s` |
+| `-container:m` | `--sz--m` |
+| `-container:l` | `--sz--l` |
+
+
+<Preview>
+	<PreviewTitle>例</PreviewTitle>
+	<PreviewArea resize p='20'>
+		<Lism isContainer='s' className='-bd:guide -hov:itemGuide'>
+			<div>Contents...</div>
+			<div>Contents...</div>
+		</Lism>
+	</PreviewArea>
+	<PreviewCode slot='tab' label='HTML'>
+	```html
+	<div class="is--container -container:s">
+		<div>Contents...</div>
+		<div>Contents...</div>
+	</div>
+	```
+	</PreviewCode>
+	<PreviewCode slot='tab' label='JSX'>
+	```jsx
+	<Lism isContainer='s'>
+		<div>Contents...</div>
+		<div>Contents...</div>
+	</Lism>
+	```
+	</PreviewCode>
+</Preview>
+
+
+<Reference>
+活用例は [`<Container>`](/modules/state/container) を参照してください。
+</Reference>
+
+
+
+
+### `is--layer`
+
+`position:absolute`で要素を親要素サイズに合わせて配置できます。
+
+CSSは以下のようになっており、`inset:0`と`overflow:hidden`も指定された状態で配置されます。
+
+```css
+.is--layer {
+	position: absolute;
+	inset: 0;
+	overflow: hidden;
+}
+```
+
+<Reference>
+活用例は [`<Layer>`](/modules/state/layer) を参照してください。
+</Reference>
+
+
+### `is--linkBox`
+
+ボックス全体をリンク化するためのクラスです。
+
+<Reference>
+活用例は [`<LinkBox>`](/modules/state/linkbox) を参照してください。
+</Reference>
+
+<Spacer h='1rem' />
+
+
+### `is--side`
+
+`l--withSide`のside要素に付与するクラスです。
+
+<Reference>
+活用例は [`<WithSide>`](/modules/layout/withside) を参照してください。
+</Reference>
+
+### `is--skipFlow`
+
+`l--flow`の直下で使用すると、次に続く兄弟要素との余白量を打ち消します。
+
+<Reference>
+活用例は [`<Flow>`](/modules/layout/flow) を参照してください。
+</Reference>
+
+
+## Layout Modules
+
+`l--flex `, `l--grid`, `l--center`などがLayout Modulesにあたります。
+
+<ModuleList moduleType='Layout Modules'/>
+
+
+## Atomic Modules
+
+`a--divider`, `a--spacer`, `a--decorator`, `a--icon`がAtom Modulesにあたります。
+
+<ModuleList moduleType='Atomic Modules'/>
+
+
+## Dynamic Modules
+
+`d--accordion`, `d--modal`, `d--tabs`がDynamic Modulesにあたります。
+
+<ModuleList moduleType='Dynamic Modules'/>
+
+
+## Custom Modules
+`c--button`, `c--card` がCustom Modulesにあたります。

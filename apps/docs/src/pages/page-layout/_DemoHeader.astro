@@ -1,0 +1,35 @@
+---
+import { Container, HTML, Flex, Stack, Center, Icon, Modal } from 'lism-css/astro';
+---
+
+<Container tag='header' size='m' py='30' hasGutter bxsh='10'>
+	<Flex jc='between' ai='center' g='20'>
+		<HTML.div fz='xl' ff='mono'><a href='/'>Lism CSS</a></HTML.div>
+		<Flex mx-s='auto' g='20' d={['none', null, 'flex']}>
+			<HTML.a href='###' hov='o' px='5' c='inherit' td='none'>Menu 1</HTML.a>
+			<HTML.a href='###' hov='o' px='5' c='inherit' td='none'>Menu 2</HTML.a>
+			<HTML.a href='###' hov='o' px='5' c='inherit' td='none'>Menu 3</HTML.a>
+		</Flex>
+		<Center d={['grid', null, 'none']} tag='button' fz='xl' className='set-plain' data-modal-open='modal-01'>
+			<Icon icon='menu' fz='l' />
+		</Center>
+	</Flex>
+	<Modal.Root id='modal-01' isContainer='s' p='40' style={{ '--offset': '0 100px' }}>
+		<Modal.Inner pos='rel' p='40' g='30' bdrs='20' bxsh='40'>
+			<Modal.CloseBtn modalId='modal-01' pos='abs' t='0' r='0' z='1' fz='xl' p='20' />
+			<HTML.div>
+				<HTML.span fz='l' fw='bold'>Menu</HTML.span>
+			</HTML.div>
+			<Modal.Body my-s='20'>
+				<Stack bd-y bdc='line' className='u-itemDivider' bdc='line' bd-b p='0'>
+					<HTML.a href='###' p='10' py='20' className='set-plain'>Menu 1</HTML.a>
+					<HTML.a href='###' p='10' py='20' className='set-plain'>Menu 2</HTML.a>
+					<HTML.a href='###' p='10' py='20' className='set-plain'>Menu 3</HTML.a>
+				</Stack>
+			</Modal.Body>
+			<Center>
+				<HTML.button data-modal-close='modal-01' bd='none' p='20' lh='xs' bdrs='10'>Close</HTML.button>
+			</Center>
+		</Modal.Inner>
+	</Modal.Root>
+</Container>

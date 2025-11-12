@@ -1,0 +1,20 @@
+/*
+	Note: fxgの比率を 1:でかい数 にして、fix側を広がらないようにする。
+      flex-grow は 変数指定だと挙動が変になることにも注意。
+ */
+.l--withSide {
+	--sideW: auto;
+	--mainW: max(var(--sz--min), 50%);
+	display: flex;
+	flex-wrap: wrap;
+
+	> .is--side {
+		flex-basis: var(--sideW);
+		flex-grow: 1; /* 0 だと折り返されたときに広がらない */
+	}
+
+	> :not(.is--side) {
+		flex-grow: 9999999; /* できるだけ fix側を 指定値ピッタリに近づけるためにかなり大きな数値を指定 */
+		flex-basis: min(100%, var(--mainW)); /* このサイズが折り返しポイントの基準となる */
+	}
+}

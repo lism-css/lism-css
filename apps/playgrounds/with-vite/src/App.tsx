@@ -1,8 +1,8 @@
-import { Box, Flex, Container, Link, Dummy, Divider, Columns } from 'lism-css/react';
+import { Box, Flex, Container, HTML, Dummy, Divider, Columns } from 'lism-css/react';
 
 function App() {
 	return (
-		<Container size='m' hasGutter isFlow>
+		<Container size='m' hasGutter layout='flow'>
 			<Flex g='20' py='20'>
 				<img src='vite.svg' />
 				<h1>Vite + Lism UI</h1>
@@ -11,7 +11,7 @@ function App() {
 				Lorem ipsum dolor sit amet, consectetur adipisicing elit. Repellat itaque et voluptatum, ducimus temporibus accusamus exercitationem
 				dolores id impedit corporis asperiores debitis soluta, nemo iusto optio quae. Ducimus, aperiam tempora!
 			</p>
-			<Flex g={['20', '30', '40']} p={['20', '30', '40']} bd bdc='divider'>
+			<Flex g={['20', '30', '40']} p={['20', '30', '40']} bd bdc='line'>
 				<Box lh='1' p='30' bd>
 					1
 				</Box>
@@ -21,7 +21,7 @@ function App() {
 				<Box lh='1' p='30' bd>
 					3
 				</Box>
-				<Box lh='1' p='30' bd mis='auto'>
+				<Box lh='1' p='30' bd mx-s='auto'>
 					4
 				</Box>
 			</Flex>
@@ -37,10 +37,10 @@ function App() {
 			<Dummy length='s' />
 			<Dummy length='l' />
 
-			<Flex jc='c'>
-				<Link href='###' hov='op' bgc='text' lh='xs' c='base' px='30' py='20' td='n' bdrs='50'>
+			<Flex jc='center'>
+				<HTML.a href='###' hov='o' bgc='text' lh='xs' c='base' px='30' py='20' td='none' bdrs='50'>
 					Link Button
-				</Link>
+				</HTML.a>
 			</Flex>
 			<Divider />
 		</Container>
