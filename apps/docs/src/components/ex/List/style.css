@@ -1,34 +1,34 @@
-@layer lism.component {
+@layer lism.custom {
 	.c--list {
 		list-style: none;
-		--iconC: var(--c-main);
-		--iconSz: 1em;
-		--iconImg: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10"><circle cx="5" cy="5" r="2"/></svg>');
-		--li_pis: 1.875em;
-		/* --iconClip: circle(0.225em at 50%); */
+		--_icon-c: var(--c--main);
+		--_icon-size: 1em;
+		--_icon-img: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10"><circle cx="5" cy="5" r="2"/></svg>');
+		--_li-px-s: 1.875em;
+		/* --_icon-clip: circle(0.225em at 50%); */
 	}
 
-	/* ボーダースタイルをつけれるように、li 側の pis で余白調整をする */
+	/* ボーダースタイルをつけれるように、li 側の px-s で余白調整をする */
 	.c--list > li {
 		position: relative;
-		padding-inline-start: var(--li_pis);
+		padding-inline-start: var(--_li-px-s);
 	}
 
 	/* テキスト（半角スペース）を入れて、疑似要素の高さをリストのテキストに合わせる。（line-heightも含めて高さを一致させる）*/
 	.c--list > li::before {
 		position: absolute;
 		top: 0;
-		inset-inline-start: calc(var(--li_pis) / 2 - var(--iconSz) / 2);
-		width: var(--iconSz);
+		inset-inline-start: calc(var(--_li-px-s) / 2 - var(--_icon-size) / 2);
+		width: var(--_icon-size);
 		height: auto;
-		background: var(--iconC);
-		mask: var(--iconImg) no-repeat 50% / contain;
+		background: var(--_icon-c);
+		mask: var(--_icon-img) no-repeat 50% / contain;
 		content: '\00a0'; /* スペース */
 	}
 
 	/* variationの例 */
-	.c--list-check {
-		--iconC: var(--green);
-		--iconImg: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><path d="M232.49,80.49l-128,128a12,12,0,0,1-17,0l-56-56a12,12,0,1,1,17-17L96,183,215.51,63.51a12,12,0,0,1,17,17Z"></path></svg>');
+	.c--list--check {
+		--_icon-c: var(--green);
+		--_icon-img: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><path d="M232.49,80.49l-128,128a12,12,0,0,1-17,0l-56-56a12,12,0,1,1,17-17L96,183,215.51,63.51a12,12,0,0,1,17,17Z"></path></svg>');
 	}
 }

@@ -1,0 +1,20 @@
+@use '../../_mixin' as mixin;
+
+.set-transition {
+	--duration: var(--transition-duration, 0.4s);
+	--delay: 0s;
+	--ease: ease;
+	--property: all;
+	transition: var(--duration) var(--ease) var(--delay);
+	transition-property: var(--property);
+}
+
+// .-ease\:in {--ease: ease-in;}
+// .-ease\:out {--ease: ease-out;}
+// .-ease\:in-out {--ease: ease-in-out;}
+// .-ease\:linear {--ease: linear;}
+
+// .set--animation {
+// 	animation: var(--duration) var(--ease) var(--delay) var(--animation);
+// }
+// .-anim:slideIn

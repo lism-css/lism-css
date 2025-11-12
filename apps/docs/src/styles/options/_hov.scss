@@ -8,21 +8,21 @@
 // --------------------
 @media (any-hover: hover) {
 	.-hov\:shadowUp:hover {
-		box-shadow: var(--bxsh-40);
+		box-shadow: var(--bxsh--40);
 		translate: 0 -3px;
 	}
 }
 
-.-hov\:get\:zoom {
-	scale: var(--_isHov, 1.1);
+.-hov\:to\:zoom {
+	scale: var(--isHov_, 1.1);
 }
-.-hov\:get\:letterSpread {
-	letter-spacing: var(--_isHov, 0.125em);
+.-hov\:to\:letterSpread {
+	letter-spacing: var(--isHov_, 0.125em);
 }
-.-hov\:get\:slide {
-	opacity: var(--_notHov, 0);
-	grid-template-rows: var(--_isHov, 1fr) var(--_notHov, 0fr);
-	transition-property: margin-block, padding-block, opacity, grid-template-rows;
+.-hov\:to\:slide {
+	opacity: var(--notHov_, 0);
+	grid-template-rows: var(--isHov_, 1fr) var(--notHov_, 0fr);
+	transition-property: margin-block, padding-block, opacity, grid-template;
 }
 
 // .-hov\:dark:hover {
@@ -35,38 +35,18 @@
 // 	scale: 1.05;
 // }
 
-// --------------------
-// reverse
-// --------------------
-.-hov\:reverse {
-	--hov-c: var(--bgc);
-	--hov-bgc: var(--c);
-	&:where(.c--button-fill) {
-		--hov-bgc: transparent;
-	}
-	&:where(.c--button-outline) {
-		--hov-c: var(--c-base);
-	}
-	@media (any-hover: hover) {
-		&:hover {
-			background-color: var(--hov-bgc) !important;
-			color: var(--hov-c) !important;
-		}
-	}
-}
-
 .-hov\:test {
-	color: var(--_isHov, green) var(--_notHov, blue);
-	background-color: var(--_notHov, lightgray);
-	box-shadow: var(--_isHov, var(--bxsh-30));
+	color: var(--isHov_, green) var(--notHov_, blue);
+	background-color: var(--notHov_, lightgray);
+	box-shadow: var(--isHov_, var(--bxsh--30));
 }
 
-@supports selector(:has(*)) {
-	.is--linkBox:has(.u--overlayLink:focus-visible) {
-		outline: auto 1px;
-		outline: auto 1px -webkit-focus-ring-color;
-	}
-	.u--overlayLink:focus {
-		outline: 0;
-	}
-}
+// @supports selector(:has(*)) {
+// 	.is--linkBox:has(.u-expandedLink:focus-visible) {
+// 		outline: auto 1px;
+// 		outline: auto 1px -webkit-focus-ring-color;
+// 	}
+// 	.u-expandedLink:focus {
+// 		outline: 0;
+// 	}
+// }

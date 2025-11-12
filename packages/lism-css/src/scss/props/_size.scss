@@ -1,0 +1,17 @@
+.-max-sz\:full {
+	max-inline-size: 100%;
+
+	:where(.has--gutter) > & {
+		max-inline-size: calc(100% + var(--gutter) * 2);
+		margin-inline: calc(var(--gutter) * -1);
+	}
+}
+
+.-max-sz\:outer {
+	max-inline-size: var(--sz--outer, 100vi);
+	margin-inline: calc(50% - var(--sz--outer) / 2);
+}
+
+// .-max-sz\:wide {
+// 	max-inline-size: var(--sz--wide, 100%);
+// }

@@ -1,5 +1,5 @@
 ---
-import type { LismProps } from '../types';
+import type { LismProps } from '../../types';
 import { Lism } from '../Lism';
 import getContent from '../../../dist/components/Dummy/getContent';
 
@@ -9,4 +9,5 @@ const { tag = 'p', pre = '', length = 'm', lang = 'en', offset = 0, ...props } =
 const content = getContent({ tag, pre, lang, length, offset });
 ---
 
-<Lism tag={tag} {...props} set:html={content} />
+{tag === 'img' && <Lism tag='img' src='https://cdn.lism-css.com/dummy-image.jpg' width='600' height='400' alt='' {...props} />}
+{tag !== 'img' && <Lism tag={tag} {...props} set:html={content} />}

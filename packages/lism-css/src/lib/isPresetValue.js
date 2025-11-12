@@ -1,9 +1,14 @@
 export default function isPresetValue(presets, value) {
-	if (!Array.isArray(presets)) return false;
-
 	// 数値の時は文字列化してから判定
 	if (typeof value === 'number') {
-		return presets.includes(`${value}`);
+		value = `${value}`;
 	}
-	return presets.includes(value);
+
+	if (presets instanceof Set) {
+		return presets.has(value);
+	} else if (Array.isArray(presets)) {
+		return presets.includes(value);
+	}
+
+	return false;
 }

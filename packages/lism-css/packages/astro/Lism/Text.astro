@@ -1,10 +1,10 @@
 ---
-import type { LismProps } from '../types';
+import type { LismProps } from '../../types';
 import Lism from './Lism.astro';
 
 interface Props extends LismProps {}
 ---
 
-<Lism skipState tag='p' {...Astro.props || {}}>
+<Lism tag='p' {...Astro.props || {}}>
 	<slot />
 </Lism>

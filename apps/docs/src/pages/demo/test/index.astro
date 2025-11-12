@@ -1,0 +1,20 @@
+---
+import 'lism-css/scss/main.scss';
+// import { Box, Lism, Spacer } from 'lism-css/astro';
+import DemoPageLayout from '~/layouts/DemoPageLayout.astro';
+import { Lism, HTML, Flow, Dummy, Box } from 'lism-css/astro';
+---
+
+<DemoPageLayout>
+	<Flow hasGutter py='40' isContainer='m'>
+		<Dummy />
+
+		<!-- <Spacer h='40' /> -->
+		<Box p='40' bd>Box</Box>
+
+		<Box bgc='base' p='30'>
+			<HTML.div bd p='10'>HTML.div</HTML.div>
+			<HTML.p bgc='base-2' p='10'>lism.p <HTML.a href='###'>link</HTML.a> </HTML.p>
+		</Box>
+	</Flow>
+</DemoPageLayout>

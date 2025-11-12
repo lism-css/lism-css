@@ -7,6 +7,8 @@ import sidebar from './astro-configs/sidebar';
 import locales from './astro-configs/locales';
 // import purgecss from 'astro-purgecss';
 
+import lism from 'lism-css/vite-plugin';
+
 // https://astro.build/config
 export default defineConfig({
 	// markdown: {
@@ -100,6 +102,7 @@ export default defineConfig({
 		// purgecss(),
 	],
 	vite: {
+		plugins: [lism()],
 		resolve: {
 			alias: {
 				'~/': '/src/',

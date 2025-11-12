@@ -1,0 +1,116 @@
+---
+title: 'Flex'
+description: ...
+---
+
+import { Box, Flex, HTML, Lism } from 'lism-css/astro';
+import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage, EmbedCode, Callout } from "~/components";
+
+コンテンツを**Flexレイアウトで配置する**ためのコンポーネントです。
+
+
+## CSS
+
+<EmbedCode dirPath='packages/lism-css' srcPath='src/scss/modules/layout/_flex.scss' />
+
+
+## Import
+
+<ImportPackage component='Flex' />
+
+
+## Props
+
+|Prop|CSS|
+|---|---|
+|`fxf`|`flex-flow`|
+|`fxw`|`flex-wrap`|
+|`fxd`|`flex-direction`|
+
+
+## Usage
+
+<Preview>
+	<PreviewTitle>`<Flex>`</PreviewTitle>
+	<PreviewArea p={40}>
+		<Flex className='has--itemGuide'>
+			<div>Item</div>
+			<div>Item</div>
+			<div>Item</div>
+		</Flex>
+	</PreviewArea>
+	<PreviewCode slot='tab' label='JSX'>
+	```jsx
+	<Flex>
+		<div>Item</div>
+		<div>Item</div>
+		<div>Item</div>
+	</Flex>
+	```
+	</PreviewCode>
+	<PreviewCode slot='tab' label='HTML'>
+	```html
+	<div class="l--flex">
+		<div>Item</div>
+		<div>Item</div>
+		<div>Item</div>
+	</div>
+	```
+	</PreviewCode>
+</Preview>
+
+<Preview>
+	<PreviewTitle>flexプロパティの使用例</PreviewTitle>
+	<PreviewArea resize p={40}>
+		<Flex g='30' fxw='wrap' jc={["baseline", "center"]} className='has--itemGuide'>
+			<div>Flex Content</div>
+			<div>Flex Content</div>
+			<div>Flex Content</div>
+		</Flex>
+	</PreviewArea>
+	<PreviewCode slot='tab' label='JSX'>
+	```jsx
+	<Flex fxw='wrap' jc='center' g='30'>
+		<div>Flex Content</div>
+		<div>Flex Content</div>
+		<div>Flex Content</div>
+	</Flex>
+	```
+	</PreviewCode>
+	<PreviewCode slot='tab' label='HTML'>
+	```html
+	<div class="l--flex -fxw:wrap -g:30 -jc:center">
+		<div>Flex Content</div>
+		<div>Flex Content</div>
+		<div>Flex Content</div>
+	</div>
+	```
+	</PreviewCode>
+</Preview>
+
+
+<Preview>
+	<PreviewTitle>子要素のflexプロパティの使用例</PreviewTitle>
+	<PreviewArea resize p={40}>
+		<Flex g='30' className='has--itemGuide'>
+			<Lism fx='1'>Flex Content</Lism>
+			<Lism fxb={['33%', '25%']}>Flex Content</Lism>
+		</Flex>
+	</PreviewArea>
+	<PreviewCode slot='tab' label='JSX'>
+	```jsx
+	<Flex g='30'>
+		<Lism fx='1'>Flex Content</Lism>
+		<Lism fxb={['33%', '25%']}>Flex Content</Lism>
+	</Flex>
+	```
+	</PreviewCode>
+	<PreviewCode slot='tab' label='HTML'>
+	```html
+	<div class="l--flex -g:30">
+		<div class="-fx:1">Flex Content</div>
+		<div class="-fxb -fxb_sm" style="--fxb:33%;--fxb_sm:25%">Flex Content</div>
+	</div>
+	```
+	</PreviewCode>
+</Preview>

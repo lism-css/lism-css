@@ -1,34 +1,22 @@
 // @property が使える環境であればコンテナのさらに親要素の幅を参照できるので、containerを1段階飛び出せる。
 // cqi を算出値で保持するために登録済みカスタムプロパティとして定義
-@property --overwideSize {
+// --parent-cq
+@property --sz--outer {
 	syntax: '<length-percentage>';
 	initial-value: 100%;
 	inherits: true;
 }
 
-// @property --flowM {
-// 	syntax: '*';
-// 	inherits: true;
-// }
-
 /* ------------------------------------------------------------
 	ハーフレディング
 
-	Memo: --HL とは別に --trimHL を定義しているのは、トリミング除外要素で 0px に上書きしても --HL 自体の値は無効にしないようにするため。
-	これにより、imgに対してmargin-block-start:var(--HL) を適用して余白を揃えたりできる。
+	トリミングした時に詰まりすぎる印象が出てしまうことがあるため、ほんの少し余裕を持たせる。
+
 */
 @property --HL {
 	syntax: '*';
 	inherits: false;
 	initial-value: calc((1lh - 1em) / 2);
-}
-
-// トリミングするネガティブマージン
-// Memo: initial-valueでvar(--HL)は使えない
-@property --trimHL {
-	syntax: '*';
-	inherits: false;
-	initial-value: calc((1lh - 1em) / 2 * -1);
 }
 
 // :lang(en) {

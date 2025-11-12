@@ -3,7 +3,7 @@ import getLismProps from '../../lib/getLismProps';
 /**
  * Lism Propsを処理できるだけのコンポーネント
  */
-export default function Lism({ children, as, exProps, tag, ...props }) {
+export default function Lism({ children, as, tag, exProps, ...props }) {
 	// tagは文字列のみ。（asはコンポーネントも指定できる。）
 	// if (tag && typeof tag !== 'string') {
 	// 	console.error('@Lism : "tag" prop should be a string.');

@@ -2,7 +2,7 @@
 title: 'Dummy'
 description: ...
 ---
-import { Lism, Text, Dummy } from "lism-css/astro";
+import { Lism, HTML, Dummy } from "lism-css/astro";
 import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage } from "~/components";
 
 ダミーテキストを出力できるLismコンポーネントです。
@@ -100,6 +100,22 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage } from "
 		```jsx
 		<Dummy tag='ul' />
 		<Dummy tag='ol' />
+		```
+	</PreviewCode>
+</Preview>
+
+
+## ダミー画像
+
+`tag='img'` を指定した場合は、`https://cdn.lism-css.com/`からダミー画像を出力します。
+<Preview>
+	<PreviewTitle>例</PreviewTitle>
+	<PreviewArea p='30'>
+		<Dummy tag='img' />
+	</PreviewArea>
+	<PreviewCode>
+		```jsx
+		<Dummy tag='img' />
 		```
 	</PreviewCode>
 </Preview>

@@ -1,34 +1,34 @@
-/* Memo: ovx='auto' の時に margin がネガティブだとアウトなので、borderではなくbox-shadowで表現する。 */
-:where(.d--tabs-line) {
+/* Memo: ov-x='auto' の時に margin がネガティブだとアウトなので、borderではなくbox-shadowで表現する。 */
+:where(.d--tabs--line) {
 	--sh-size: inset 0 -2px;
 
 	.d--tabs_list {
-		box-shadow: var(--sh-size) 0 var(--c-divider);
+		box-shadow: var(--sh-size) 0 var(--c--line);
 	}
 	.d--tabs_tab {
-		font-size: var(--fz-s);
+		font-size: var(--fz--s);
 		padding: 0.5em 0.875em;
-		box-shadow: var(--_isActive, var(--sh-size) 0 0 currentColor);
+		box-shadow: var(--isSelected_, var(--sh-size) 0 0 currentColor);
 	}
 }
 
-:where(.d--tabs-emboss) {
+:where(.d--tabs--emboss) {
 	.d--tabs_list {
 		padding: 4px;
-		font-size: var(--fz-s);
-		background-color: var(--c-base-2);
-		border-radius: var(--bdrs-20);
+		font-size: var(--fz--s);
+		background-color: var(--c--base-2);
+		border-radius: var(--bdrs--20);
 	}
 	.d--tabs_tab {
 		padding: 0.25em 0.75em;
-		border-radius: calc(var(--bdrs-20) - 2px); /* 親の bdrs - 親のpadding / 2 */
-		background-color: var(--_isActive, var(--c-base));
-		box-shadow: var(--_isActive, var(--bxsh-10));
+		border-radius: calc(var(--bdrs--20) - 2px); /* 親の bdrs - 親のpadding / 2 */
+		background-color: var(--isSelected_, var(--c--base));
+		box-shadow: var(--isSelected_, var(--bxsh--10));
 	}
 }
 
 .c--preview_code .d--tabs_tab {
-	// font-size: var(--fz-s);
+	// font-size: var(--fz--s);
 	// padding: 0.5em 0.875em;
 }
 

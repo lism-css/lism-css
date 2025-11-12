@@ -3,11 +3,12 @@ import { Frame } from 'lism-css/astro';
 const { dirPath = 'apps/docs', srcPath = '', ...props } = Astro.props;
 
 // : → %3A , / → %2F
-const basePath = 'https://github.com/lism-css/lism-css/blob/main/' + dirPath + '/' + srcPath;
+// 開発環境ではdevブランチ、本番環境ではmainブランチを使用
+const branch = import.meta.env.MODE === 'development' ? 'dev' : 'main';
+const basePath = `https://github.com/lism-css/lism-css/blob/${branch}/` + dirPath + '/' + srcPath;
 const queryMeta = 'style=github-dark&type=code&showLineNumbers=on&showFileMeta=on&showCopy=on';
 ---
 
-<Frame ovy='auto' maxH='25rem'>
-	<script src={`https://emgithub.com/embed-v2.js?target=${encodeURI(basePath)}&${queryMeta}`}
-	></script>
+<Frame ov-y='auto' max-h='25rem'>
+	<script src={`https://emgithub.com/embed-v2.js?target=${encodeURI(basePath)}&${queryMeta}`} loading='lazy'></script>
 </Frame>

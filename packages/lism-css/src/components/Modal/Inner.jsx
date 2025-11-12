@@ -1,10 +1,10 @@
-import { Stack } from '../Stack';
+import { Lism } from '../Lism';
 import { defaultProps } from './getProps';
 
 export default function ModalInner({ children, ...props }) {
 	return (
-		<Stack {...defaultProps.inner} {...props}>
+		<Lism {...defaultProps.inner} {...props}>
 			{children}
-		</Stack>
+		</Lism>
 	);
 }

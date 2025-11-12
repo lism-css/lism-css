@@ -1,0 +1,37 @@
+// コンテナ定義 + 併用クラスで内部のコンテンツ幅を制御する。
+.is--container {
+	container-type: inline-size;
+	// margin-inline: auto;
+	// inline-size: 100%; // gridやflex内での挙動を考慮。（mx:autoにするとcontainer-type:inline-sizeだと横幅つぶれる）
+
+	// is--container ごとにセット。
+	// --sz--outer: 100cqi;
+
+	// コンテナの親にhas--gutterがある場合はその分を加算
+	// :where(.has--gutter) > & {
+	// 	--sz--outer: calc(100cqi + var(--gutter) * 2);
+	// }
+
+	// 子要素の制御
+	> * {
+		--max-sz: var(--contentSz, 100%);
+		max-inline-size: var(--max-sz, 100%);
+		margin-inline: auto;
+	}
+}
+
+// 一番トップレベルのcontainerで outer サイズセット
+.is--container:not(.is--container .is--container) {
+	--sz--outer: 100cqi;
+}
+
+// Memo: それぞれの直下要素( > * ) に対してスタイルをセットした方がネスト時の影響をなくせるが、constrainedのネストが多様されることは少ないので親側の変数管理のみで実装。
+.-container\:s {
+	--contentSz: var(--sz--s);
+}
+.-container\:m {
+	--contentSz: var(--sz--m);
+}
+.-container\:l {
+	--contentSz: var(--sz--l);
+}

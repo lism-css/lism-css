@@ -6,49 +6,17 @@
 // 各html要素のベーススタイル
 @forward './dom';
 
-// Memo: カラー変数込みで変数をセットしてしまうと、--_sh_c がその時点で固定されるので、再セットできる re--sh クラスを用意。
-:root,
-.re--sh {
-	/* ------------------------------------------------------------
-	  shadow
-	------------------------------------------------------------ */
-	--_sh_i: ; // for inset
-	--_sh_hsl: 220 4% 8%;
-	--_sh_a: 5%;
-	--_sh_c: hsl(var(--_sh_hsl) / var(--_sh_a));
+// set--クラス
+@forward './set/shadow';
+@forward './set/hover';
+@forward './set/transition';
+@forward './set/snap';
+@forward './set/mask';
+@forward './set/innerRs';
+@forward './set/plain';
 
-	// x:fibo, y=fibo, blur=x+y*2 のパターン
-	// --_sh_sz-0: var(--_sh_i) 0px 1px 2px 0 var(--_sh_c);
-	--_sh_sz-5: var(--_sh_i) 0px 2px 4px 0 var(--_sh_c);
-	--_sh_sz-10: var(--_sh_i) 1px 3px 6px 0 var(--_sh_c);
-	--_sh_sz-20: var(--_sh_i) 1px 5px 10px 0 var(--_sh_c);
-	--_sh_sz-30: var(--_sh_i) 2px 8px 16px 0 var(--_sh_c);
-	--_sh_sz-40: var(--_sh_i) 3px 13px 26px 0 var(--_sh_c);
-	--_sh_sz-50: var(--_sh_i) 5px 21px 42px 0 var(--_sh_c);
-
-	// --bxsh-5: var(--_sh_sz-0), var(--_sh_sz-5);
-	--bxsh-10: var(--_sh_sz-5), var(--_sh_sz-10);
-	--bxsh-20: var(--_sh_sz-10), var(--_sh_sz-20);
-	--bxsh-30: var(--_sh_sz-20), var(--_sh_sz-30);
-	--bxsh-40: var(--_sh_sz-30), var(--_sh_sz-40);
-	--bxsh-50: var(--_sh_sz-40), var(--_sh_sz-50);
-}
-
-// Note: d--modalに使われる
-@include mixin.maybe_where('.re--style', '') {
-	width: auto;
-	height: auto;
-	color: inherit;
-	background: none;
-	border: none;
-	padding: 0;
-	// margin: 0;
-	font: inherit;
-}
-
-// classを持たない素の ul,ol はブラウザ標準のスタイルを復活させる
-.re--list,
-:is(ul, ol):where(:not([class])) {
-	--list--pis: 1.5em;
+// classを持たない素のリスト、または Prop Class で始まるリストはブラウザ標準のスタイルを復活させる
+:is(ul, ol):where(:not([class]), [class^='-'], .set-revert) {
+	--list-px-s: 1.5em;
 	list-style: revert;
 }

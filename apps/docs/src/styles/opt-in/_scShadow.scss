@@ -1,0 +1,41 @@
+@keyframes scShadowX {
+	0% {
+		box-shadow:
+			inset 0 0 0 var(--scShadow-offset) var(--scShadow-c),
+			inset calc(var(--scShadow-sz) * -1.25) 0 var(--scShadow-spread) var(--scShadow-offset) var(--scShadow-c);
+	}
+	100% {
+		box-shadow:
+			inset calc(var(--scShadow-sz) * 1.25) 0 var(--scShadow-spread) var(--scShadow-offset) var(--scShadow-c),
+			inset 0 0 0 var(--scShadow-offset) var(--scShadow-c);
+	}
+}
+@keyframes scShadowY {
+	0% {
+		box-shadow:
+			inset 0 0 0 var(--scShadow-offset) var(--scShadow-c),
+			inset 0 calc(var(--scShadow-sz) * -1.25) var(--scShadow-spread) var(--scShadow-offset) var(--scShadow-c);
+	}
+	100% {
+		box-shadow:
+			inset 0 calc(var(--scShadow-sz) * 1.25) var(--scShadow-spread) var(--scShadow-offset) var(--scShadow-c),
+			inset 0 0 0 var(--scShadow-offset) var(--scShadow-c);
+	}
+}
+
+.u-scShadow\:x,
+.u-scShadow\:y {
+	--scShadow-c: hsl(0 0% 0% / 50%);
+	--scShadow-sz: 1rem;
+	--scShadow-offset: calc(var(--scShadow-sz) * -1);
+	--scShadow-spread: calc(var(--scShadow-sz) * 1);
+}
+
+.u-scShadow\:x {
+	animation: scShadowX linear; /* 影のアニメーション */
+	animation-timeline: scroll(self x); /* スクロール連動 */
+}
+.u-scShadow\:y {
+	animation: scShadowY linear; /* 影のアニメーション */
+	animation-timeline: scroll(self y); /* スクロール連動 */
+}

@@ -5,15 +5,15 @@ sidebar:
   order: 2
 ---
 
-import { Preview, PreviewArea, PreviewTitle, PreviewCode, Reference, Callout } from "~/components";
-import { Lism, Dummy, Box, Text, Stack, Flex, Columns, Frame, Center, Tabs } from 'lism-css/astro';
+import { Preview, PreviewArea, PreviewTitle, PreviewCode, Reference, Callout, Note } from "~/components";
+import { Dummy, Box, HTML, Stack, Cluster, Columns, Frame, Center, Tabs } from 'lism-css/astro';
 import { FzDemos, SpacingDemos, BoxShadowDemos } from "~/content/token-previews.jsx";
 
 export const ColorBadge = ({color, label}) => {
-	return <span className='-d:f -ai:c -g:10'>
-			<Lism skipState tag='span' w='1.5em' ar='1/1' bgc={color} bdrs='10' bxsh='10' />
+	return <Cluster g='10'>
+			<HTML.span w='1.5em' ar='1/1' bgc={color} bdrs='10' bxsh='10' />
 			<code>{label || color}</code>
-		</span>;
+		</Cluster>;
 }
 
 
@@ -21,14 +21,16 @@ export const ColorBadge = ({color, label}) => {
 
 |トークン名|変数|
 |---|---|
-|<ColorBadge color='base' />|`--c-base`|
-|<ColorBadge color='base-2' />|`--c-base-2`|
-|<ColorBadge color='text' />|`--c-text`|
-|<ColorBadge color='text-2' />|`--c-text-2`|
-|<ColorBadge color='divider' />|`--c-divider`|
-|<ColorBadge color='link' />|`--c-link`|
-|<ColorBadge color='main' />|`--c-main`|
-|<ColorBadge color='accent' />|`--c-accent`|
+|<ColorBadge color='base' />|`--c--base`|
+|<ColorBadge color='base-2' />|`--c--base-2`|
+|<ColorBadge color='text' />|`--c--text`|
+|<ColorBadge color='text-2' />|`--c--text-2`|
+|<ColorBadge color='line' />|`--c--line`|
+|<ColorBadge color='link' />|`--c--link`|
+|<ColorBadge color='main' />|`--c--main`|
+|<ColorBadge color='accent' />|`--c--accent`|
+{/* |<ColorBadge color='accent-2' />|`--c--accent-2`| */}
+
 
 
 モダンCSSでは`color-mix()`があるので、hsl値の中身を変数にすることはしていません。
@@ -69,7 +71,7 @@ export const ColorBadge = ({color, label}) => {
 
 <Preview>
 	<PreviewTitle>Preview</PreviewTitle>
-	<PreviewArea p={20} isFlow='s' resize>
+	<PreviewArea p={20} flow='s' resize>
 		<SpacingDemos spaces={[
 			5, 10, 20, 30, 40, 50, 60, 70, 80
 		]} isValueLabel />
@@ -110,7 +112,7 @@ export const ColorBadge = ({color, label}) => {
 
 <Preview>
 	<PreviewTitle>`1=0.25`で計算</PreviewTitle>
-	<PreviewArea p={20} isFlow='s'>
+	<PreviewArea p={20} flow='s'>
 		<FiboCalcDemos unit={0.25}/>
 	</PreviewArea>
 </Preview>
@@ -124,14 +126,14 @@ export const ColorBadge = ({color, label}) => {
 
 <Preview>
 	<PreviewTitle>比率 `1.62` (≒ 黄金比率) の例</PreviewTitle>
-	<PreviewArea p={20} isFlow='s'>
+	<PreviewArea p={20} flow='s'>
 		<RatioCalcDemos ratio={1.62} />
 	</PreviewArea>
 </Preview>
 
 <Preview>
 	<PreviewTitle>比率 `1.5` (完全五度) の例</PreviewTitle>
-	<PreviewArea p={20} isFlow='s'>
+	<PreviewArea p={20} flow='s'>
 		<RatioCalcDemos ratio={1.5} />
 	</PreviewArea>
 </Preview>
@@ -141,7 +143,7 @@ export const ColorBadge = ({color, label}) => {
 
 <Preview>
 	<PreviewTitle>前半をフィボナッチ数列、後半を完全5度(`1.5`)の等比数列</PreviewTitle>
-	<PreviewArea p={20} isFlow='s'>
+	<PreviewArea p={20} flow='s'>
 		<SpacingDemos spaces={[
 			'0rem',
 			'0.25rem',
@@ -160,7 +162,7 @@ export const ColorBadge = ({color, label}) => {
 
 <Preview>
 	<PreviewTitle>前半50までをフィボナッチ数列 `.125`、後半を完全5度(`1.5`)の等比数列</PreviewTitle>
-	<PreviewArea p={20} isFlow='s'>
+	<PreviewArea p={20} flow='s'>
 		<SpacingDemos spaces={[
 			'0rem',
 			'0.25rem',
@@ -183,15 +185,15 @@ export const ColorBadge = ({color, label}) => {
 
 |トークン値|変数|クラス|初期値|	
 |---|---|---|---|
-|`5`|`--bdrs-5`|`-bdrs:5`|`2px`|
-|`10`|`--bdrs-10`|`-bdrs:10`|`0.25rem`|
-|`20`|`--bdrs-20`|`-bdrs:20`|`0.5rem`|
-|`30`|`--bdrs-30`|`-bdrs:30`|`1rem`|
-|`40`|`--bdrs-40`|`-bdrs:40`|`1.5rem`|
-|`50`|`--bdrs-50`|`-bdrs:50`|`2rem`|
-|`99`|`--bdrs-99`|`-bdrs:99`|`99rem`|
+|`5`|`--bdrs--5`|`-bdrs:5`|`2px`|
+|`10`|`--bdrs--10`|`-bdrs:10`|`0.25rem`|
+|`20`|`--bdrs--20`|`-bdrs:20`|`0.5rem`|
+|`30`|`--bdrs--30`|`-bdrs:30`|`1rem`|
+|`40`|`--bdrs--40`|`-bdrs:40`|`1.5rem`|
+|`50`|`--bdrs--50`|`-bdrs:50`|`2rem`|
+|`99`|`--bdrs--99`|`-bdrs:99`|`99rem`|
 
-{/* |`50`|`--bdrs-50`|`-bdrs:50`|`2rem`| */}
+{/* |`50`|`--bdrs--50`|`-bdrs:50`|`2rem`| */}
 
 
 <Preview>
@@ -230,23 +232,23 @@ box-shadow は少し特殊で、ユーティリティクラス内で複数のsha
 
 |トークン値|変数|クラス|
 |---|---|---|
-|`50`|`--bxsh-50`|`-bxsh:50`|
-|`40`|`--bxsh-40`|`-bxsh:40`|
-|`30`|`--bxsh-30`|`-bxsh:30`|
-|`20`|`--bxsh-20`|`-bxsh:20`|
-|`10`|`--bxsh-10`|`-bxsh:10`|
+|`50`|`--bxsh--50`|`-bxsh:50`|
+|`40`|`--bxsh--40`|`-bxsh:40`|
+|`30`|`--bxsh--30`|`-bxsh:30`|
+|`20`|`--bxsh--20`|`-bxsh:20`|
+|`10`|`--bxsh--10`|`-bxsh:10`|
 
 
-`--bxsh-{token}`の値の中身は、次の変数で構成されます。
+`--bxsh--{token}`の値の中身は、次の変数で構成されます。
 
 
 |構成変数|初期値|
 |---|---|
-|`--_sh_c`|`hsl(var(--_sh_hsl) / var(--_sh_a))`|
-|`--_sh_hsl`|`220 4% 8%`|
-|`--_sh_a`|`5%`|
-|`--_sh_sz-[0~5]`|...|
-|`--_sh_i`|` `(空白)|
+|`--sh-c`|`hsl(var(--sh-hsl) / var(--sh-a))`|
+|`--sh-hsl`|`220 4% 8%`|
+|`--sh-a`|`5%`|
+|`--sh--[0~5]`|...|
+|`--sh-i`|` `(空白)|
 
 
 
@@ -271,29 +273,29 @@ box-shadow は少し特殊で、ユーティリティクラス内で複数のsha
 	</PreviewCode>
 </Preview>
 
-`--_sh_i`に`inset`を指定することで、内向きshadowに変更できます。  
+`--sh-i`に`inset`を指定することで、内向きshadowに変更できます。  
 (当ドキュメントサイトでは、ダークモード時にinsetになっています。)
 
 
-## `TYPO`
+## `TYPE` (Typography)
 
-### TYPO.FF
+### TYPE.FF
 
 `font-family` 用のトークンです。
 
 |トークン|変数|クラス|
 |---|---|---|
-|`base`|<span class='-whs:nw'>`--ff-base`</span>|<span class='-whs:nw'>`-ff:base`</span>|
-|`accent`|<span class='-whs:nw'>`--ff-accent`</span>|<span class='-whs:nw'>`-ff:accent`</span>|
-|`mono`|<span class='-whs:nw'>`--ff-mono`</span>|<span class='-whs:nw'>`-ff:mono`</span>|
+|`base`|<span class='-whitespace:nowrap'>`--ff--base`</span>|<span class='-whitespace:nowrap'>`-ff:base`</span>|
+|`accent`|<span class='-whitespace:nowrap'>`--ff--accent`</span>|<span class='-whitespace:nowrap'>`-ff:accent`</span>|
+|`mono`|<span class='-whitespace:nowrap'>`--ff--mono`</span>|<span class='-whitespace:nowrap'>`-ff:mono`</span>|
 
 
 <Preview>
 	<PreviewTitle>Preview</PreviewTitle>
-	<PreviewArea p={20} isFlow='s'>
-		<Text ff='base' fz='xl'>base: English text, 漢字ひらがな</Text>
-		<Text ff='accent' fz='xl'>accent: English text, 漢字ひらがな</Text>
-		<Text ff='mono' fz='xl'>mono: English text, 漢字ひらがな</Text>
+	<PreviewArea p={20} flow='s'>
+		<HTML.p ff='base' fz='xl'>base: English text, 漢字ひらがな</HTML.p>
+		<HTML.p ff='accent' fz='xl'>accent: English text, 漢字ひらがな</HTML.p>
+		<HTML.p ff='mono' fz='xl'>mono: English text, 漢字ひらがな</HTML.p>
 	</PreviewArea>
 	<PreviewCode>
 	```jsx
@@ -305,26 +307,28 @@ box-shadow は少し特殊で、ユーティリティクラス内で複数のsha
 </Preview>
 
 
-### TYPO.FW 
+### TYPE.FW 
 
 `font-weight` 用のトークンです。
 
 |トークン|変数|クラス|初期値|
 |---|---|---|---|
-|`light`|`--fw-light`|`-fw:light`|`300`|
-|`normal`|`--fw-normal`|`-fw:normal`|`400`|
-|`bold`|`--fw-bold`|`-fw:bold`|`700`|
-{/* |`medium`|`--fw-medium`|`-fw:medium`|`500`| */}
-{/* |`thin`|`--fw-thin`|`-fw:thin`|`100`|
-|`heavy`|`--fw-heavy`|`-fw:heavy`|`900`| */}
+|`thin`|`--fw--thin`|`-fw:thin`|`100`|
+|`light`|`--fw--light`|`-fw:light`|`300`|
+|`normal`|`--fw--normal`|`-fw:normal`|`400`|
+|`medium`|`--fw--medium`|`-fw:medium`|`500`|
+|`bold`|`--fw--bold`|`-fw:bold`|`700`|
+|`black`|`--fw--black`|`-fw:black`|`900`|
 
 
 <Preview>
 	<PreviewTitle>Preview</PreviewTitle>
-	<PreviewArea p='20' isFlow='s'>
+	<PreviewArea p='20' flow='s'>
+		<Dummy length='s' fw='thin' />
 		<Dummy length='s' fw='light' />
 		<Dummy length='s' fw='normal' />
 		<Dummy length='s' fw='bold' />
+		<Dummy length='s' fw='black' />
 	</PreviewArea>
 	<PreviewCode slot='tab' label='HTML'>
 		```html
@@ -335,46 +339,43 @@ box-shadow は少し特殊で、ユーティリティクラス内で複数のsha
 	</PreviewCode>
 	<PreviewCode slot='tab' label='JSX'>
 		```jsx
-		<Text fw='light'>Lorem ipsum ...</Text>
-		<Text fw='normal'>Lorem ipsum ...</Text>
-		<Text fw='bold'>Lorem ipsum ...</Text>
+		<HTML.p fw='light'>Lorem ipsum ...</HTML.p>
+		<HTML.p fw='normal'>Lorem ipsum ...</HTML.p>
+		<HTML.p fw='bold'>Lorem ipsum ...</HTML.p>
 		```
 	</PreviewCode>
 </Preview>
 
 
-### TYPO.FZ
+### TYPE.FZ
 
 `font-size` 用のトークンです。
 
 |トークン|変数|クラス|初期値|
 |---|---|---|---|
-|`2xs`|`--fz-2xs`|`-fz:2xs`|`calc(1em * 8 / 11)`|
-|`xs`|`--fz-xs`|`-fz:xs`|`calc(1em * 8 / 10)`|
-|`s`|`--fz-s`|`-fz:s`|`calc(1em * 8 / 9)`|
-|`m`|`--fz-m`|`-fz:m`|`1em`|
-|`l`|`--fz-l`|`-fz:l`|`calc(1em * 8 / 7)`|
-|`xl`|`--fz-xl`|`-fz:xl`|`calc(1em * 8 / 6)`|
-|`2xl`|`--fz-2xl`|`-fz:2xl`|`calc(1em * 8 / 5)`|
-|`3xl`|`--fz-3xl`|`-fz:3xl`|`calc(1em * 8 / 4)`|
-|`4xl`|`--fz-4xl`|`-fz:4xl`|`calc(1em * 8 / 3)`|
-|`5xl`|`--fz-5xl`|`-fz:5xl`|`calc(1em * 8 / 2)`|
-|`base`|`--fz-base`|`-fz:base`<sup>※1</sup>|`clamp(0.875rem, 0.625rem + 1vw, 1rem)`|
+|`2xs`|`--fz--2xs`|`-fz:2xs`|`1em * 8 / 11`|
+|`xs`|`--fz--xs`|`-fz:xs`|`1em * 8 / 10`|
+|`s`|`--fz--s`|`-fz:s`|`1em * 8 / 9`|
+|`m`|`--fz--m`|`-fz:m`|`1em`|
+|`l`|`--fz--l`|`-fz:l`|`1em * 8 / 7`|
+|`xl`|`--fz--xl`|`-fz:xl`|`1em * 8 / 6`|
+|`2xl`|`--fz--2xl`|`-fz:2xl`|`1em * 8 / 5`|
+|`3xl`|`--fz--3xl`|`-fz:3xl`|`1em * 8 / 4`|
+|`4xl`|`--fz--4xl`|`-fz:4xl`|`1em * 8 / 3`|
+|`5xl`|`--fz--5xl`|`-fz:5xl`|`1em * 8 / 2`|
+|`base`|`--fz--base`|`-fz:base`<sup>※1</sup>|`clamp(0.875rem, 0.625rem + 1vw, 1rem)`|
 
-<sup>※1</sup>: `-fz:base`クラスは、値としては`1rem`をセットします。（`html`で`font-size:var(--fz-base)`をセットしている）
+<sup>※1</sup>: `-fz:base`クラスは、値としては`1rem`をセットします。（`html`で`font-size:var(--fz--base)`をセットしている）
 
 {/* <Callout type="info">
 	Memo:スケーリングは 4xl くらいまでにして、5xlのとこは `here` などのセマンティックトークンにしてもよさそう。2xsとかも?
 </Callout> */}
 
 
-{/* <Dummy lang={lang} length='s' fz={fz} whs='nw' lh='1' /> */}
 <Preview>
 	<PreviewTitle>Preview</PreviewTitle>
-	<PreviewArea p={20} isFlow='s'>
-		<Box ovx='auto'>
-			<FzDemos />
-		</Box>
+	<PreviewArea p='0' flow='s'>
+		<FzDemos />
 	</PreviewArea>
 	<PreviewCode>
 		```html
@@ -407,20 +408,18 @@ Lism では、フォントサイズのスケーリングには数学的に美し
 
 ```scss
 :root{
-	--_fzmol: 8;
-	--fz-4xl: calc(1em * var(--_fzmol) / (var(--_fzmol) - 5));
-	--fz-3xl: calc(1em * var(--_fzmol) / (var(--_fzmol) - 4));
-	--fz-2xl: calc(1em * var(--_fzmol) / (var(--_fzmol) - 3));
-	--fz-xl: calc(1em * var(--_fzmol) / (var(--_fzmol) - 2));
-	--fz-l: calc(1em * var(--_fzmol) / (var(--_fzmol) - 1));
-	--fz-m: 1em;
-	--fz-s: calc(1em * var(--_fzmol) / (var(--_fzmol) + 1));
-	--fz-xs: calc(1em * var(--_fzmol) / (var(--_fzmol) + 2));
-	--fz-2xs: calc(1em * var(--_fzmol) / (var(--_fzmol) + 3));
+	$fzmol: 8;
+	--fz--4xl: calc(1em * $fzmol / ($fzmol - 5));
+	--fz--3xl: calc(1em * $fzmol / ($fzmol - 4));
+	--fz--2xl: calc(1em * $fzmol / ($fzmol - 3));
+	--fz--xl: calc(1em * $fzmol / ($fzmol - 2));
+	--fz--l: calc(1em * $fzmol / ($fzmol - 1));
+	--fz--m: 1em;
+	--fz--s: calc(1em * $fzmol / ($fzmol + 1));
+	--fz--xs: calc(1em * $fzmol / ($fzmol + 2));
+	--fz--2xs: calc(1em * $fzmol / ($fzmol + 3));
 }
 ```
-
-`:root`で指定している `--_fzmol` を上書きすることで、スケーリングの基準（分子）を変更できます。
 
 <Callout type='info'>
 分子は `7`~`9` あたりで選ぶのがおすすめです。
@@ -429,33 +428,34 @@ Lism では、フォントサイズのスケーリングには数学的に美し
 {/* <script src='/typo.js' /> */}
 
 
-#### `--_fzmol`の違い
+#### `fzmol`の違い
+
 
 <Preview>
 <Tabs.Root variant='line' g='30'>
 	<Tabs.Item>
 	<Tabs.Tab>分子7</Tabs.Tab>
-	<Tabs.Panel>
+	<Tabs.Panel ov-x='auto'>
 		<PreviewTitle>`:root{--_fzmol:7}`</PreviewTitle>
-		<PreviewArea p='20' className='fzDemo re--fz' style={{'--_fzmol':7}}>
+		<PreviewArea p='0' className='fzDemo set--fz' style={{'--_fzmol':7}}>
 			<FzDemos />
 		</PreviewArea>
 		</Tabs.Panel>
 	</Tabs.Item>
 	<Tabs.Item>
 	<Tabs.Tab>分子8</Tabs.Tab>
-	<Tabs.Panel>
+	<Tabs.Panel ov-x='auto'>
 		<PreviewTitle>`:root{--_fzmol:8}`</PreviewTitle>
-		<PreviewArea p='20' className='fzDemo re--fz' style={{'--_fzmol':8}}>
+		<PreviewArea p='0' className='fzDemo set--fz' style={{'--_fzmol':8}}>
 			<FzDemos />
 		</PreviewArea>
 		</Tabs.Panel>
 	</Tabs.Item>
 	<Tabs.Item>
 	<Tabs.Tab>分子9</Tabs.Tab>
-	<Tabs.Panel>
+	<Tabs.Panel ov-x='auto'>
 		<PreviewTitle>`:root{--_fzmol:9}`</PreviewTitle>
-		<PreviewArea p='20' className='fzDemo re--fz' style={{'--_fzmol':9}}>
+		<PreviewArea p='0' className='fzDemo set--fz' style={{'--_fzmol':9}}>
 			<FzDemos />
 		</PreviewArea>
 		</Tabs.Panel>
@@ -465,17 +465,17 @@ Lism では、フォントサイズのスケーリングには数学的に美し
 
 
 
-### TYPO.LH
+### TYPE.LH
 
 `line-height` 用のトークンです。
 
 |トークン|変数|クラス|初期値|
 |---|---|---|---|
-|`base`|`--lh-base`|`-lh:base`|`1.75`|
-|`xs`|`--lh-xs`|`-lh:xs`|`calc({base} - 0.25)`|
-|`s`|`--lh-s`|`-lh:s`|`calc({base} - 0.125)`|
-|`l`|`--lh-l`|`-lh:l`|`calc({base} + 0.125)`|
-|`xl`|`--lh-xl`|`-lh:xl`|`calc({base} + 0.25)`|
+|`base`|`--lh--base`|`-lh:base`|`1.75`|
+|`xs`|`--lh--xs`|`-lh:xs`|`calc({base} - 0.25)`|
+|`s`|`--lh--s`|`-lh:s`|`calc({base} - 0.125)`|
+|`l`|`--lh--l`|`-lh:l`|`calc({base} + 0.125)`|
+|`xl`|`--lh--xl`|`-lh:xl`|`calc({base} + 0.25)`|
 
 
 <Callout type='info'>
@@ -484,12 +484,12 @@ base値は 日本語では `1.625`, `1.75`, `1.875` あたりがおすすめで�
 
 <Preview>
 	<PreviewTitle>Preview</PreviewTitle>
-	<PreviewArea p={20} isFlow='s'>
-		<Dummy pre='<code class="-fz:s">xs:</code> ' lh='xs' bd bds='dotted' bdc='divider' />
-		<Dummy pre='<code class="-fz:s">s:</code> ' lh='s' bd bds='dotted' bdc='divider' />
-		<Dummy pre='<code class="-fz:s">base:</code> ' lh='base' bd bds='dotted' bdc='divider' />
-		<Dummy pre='<code class="-fz:s">l:</code> ' lh='l' bd bds='dotted' bdc='divider' />
-		<Dummy pre='<code class="-fz:s">xl:</code> ' lh='xl' bd bds='dotted' bdc='divider' />
+	<PreviewArea p={20} flow='s'>
+		<Dummy pre='<code class="-fz:s">xs:</code> ' lh='xs' bd bds='dotted' bdc='line' />
+		<Dummy pre='<code class="-fz:s">s:</code> ' lh='s' bd bds='dotted' bdc='line' />
+		<Dummy pre='<code class="-fz:s">base:</code> ' lh='base' bd bds='dotted' bdc='line' />
+		<Dummy pre='<code class="-fz:s">l:</code> ' lh='l' bd bds='dotted' bdc='line' />
+		<Dummy pre='<code class="-fz:s">xl:</code> ' lh='xl' bd bds='dotted' bdc='line' />
 	</PreviewArea>
 	<PreviewCode slot='tab' label='HTML'>
 		```html
@@ -502,11 +502,11 @@ base値は 日本語では `1.625`, `1.75`, `1.875` あたりがおすすめで�
 	</PreviewCode>
 	<PreviewCode slot='tab' label='JSX'>
 		```jsx
-		<Text lh='xs'>Lorem ipsum ...</Text>
-		<Text lh='s'>Lorem ipsum ...</Text>
-		<Text lh='base'>Lorem ipsum ...</Text>
-		<Text lh='l'>Lorem ipsum ...</Text>
-		<Text lh='xl'>Lorem ipsum ...</Text>
+		<HTML.p lh='xs'>Lorem ipsum ...</HTML.p>
+		<HTML.p lh='s'>Lorem ipsum ...</HTML.p>
+		<HTML.p lh='base'>Lorem ipsum ...</HTML.p>
+		<HTML.p lh='l'>Lorem ipsum ...</HTML.p>
+		<HTML.p lh='xl'>Lorem ipsum ...</HTML.p>
 		```
 	</PreviewCode>
 </Preview>
@@ -515,7 +515,7 @@ base値は 日本語では `1.625`, `1.75`, `1.875` あたりがおすすめで�
 {/* ### Headings の font-size, line-height について
 <Preview>
 	<PreviewTitle>Headings</PreviewTitle>
-	<PreviewArea p={20} isFlow='s'>
+	<PreviewArea p={20} flow='s'>
 		<div class='l--stack -g:30'>
 			<h1>Heading 1: <Dummy  tag='span' lang='ja' /></h1>
 			<h2>Heading 2: <Dummy  tag='span' lang='ja' /></h2>
@@ -530,20 +530,20 @@ base値は 日本語では `1.625`, `1.75`, `1.875` あたりがおすすめで�
 </Preview> */}
 
 
-### TYPO.LTS
+### TYPE.LTS
 
 `letter-spacing` 用のトークンです。
 
 |トークン|変数|クラス|初期値
 |---|---|---|---|
-|`base`|`--lts-base`|`-lts:base`|`normal`|
-|`s`|`--lts-s`|`-lts:s`|`-0.05em`|
-|`l`|`--lts-l`|`-lts:l`|`0.05em`|
-{/* |`xl`|`--lts-xl`|`-lts:xl`|`0.125em`| */}
+|`base`|`--lts--base`|`-lts:base`|`normal`|
+|`s`|`--lts--s`|`-lts:s`|`-0.05em`|
+|`l`|`--lts--l`|`-lts:l`|`0.05em`|
+{/* |`xl`|`--lts--xl`|`-lts:xl`|`0.125em`| */}
 
 <Preview>
 	<PreviewTitle>Preview</PreviewTitle>
-	<PreviewArea p={20} isFlow='s'>
+	<PreviewArea p={20} flow='s'>
 		<Dummy length='s' pre='<code>s:</code> ' lts='s' />
 		<Dummy length='s' pre='<code>base:</code> ' lts='base' />
 		<Dummy length='s' pre='<code>l:</code> ' lts='l' />
@@ -558,9 +558,9 @@ base値は 日本語では `1.625`, `1.75`, `1.875` あたりがおすすめで�
 	</PreviewCode>
 	<PreviewCode slot='tab' label='JSX'>
 		```jsx
-		<Text lts='s'>Lorem ipsum ...</Text>
-		<Text lts='base'>Lorem ipsum ...</Text>
-		<Text lts='l'>Lorem ipsum ...</Text>
+		<HTML.p lts='s'>Lorem ipsum ...</HTML.p>
+		<HTML.p lts='base'>Lorem ipsum ...</HTML.p>
+		<HTML.p lts='l'>Lorem ipsum ...</HTML.p>
 		```
 	</PreviewCode>
 </Preview>
@@ -590,29 +590,31 @@ base値は 日本語では `1.625`, `1.75`, `1.875` あたりがおすすめで�
 
 |トークン値|変数|クラス|初期値|
 |---|---|---|---|
-|`low`|`--op-low`|`-op:low`|`0.25`|
-|`mid`|`--op-mid`|`-op:mid`|`0.5`|
-|`high`|`--op-high`|`-op:high`|`0.75`|
+|`-10`|`--o--n10`|`-o:-10`|`0.75`|
+|`-20`|`--o--n20`|`-o:-20`|`0.5`|
+|`-30`|`--o--n30`|`-o:-30`|`0.25`|
+
 
 <Preview>
 	<PreviewTitle>Preview</PreviewTitle>
 	<PreviewArea p='50'>
-		<Dummy op='low'/>
-		<Dummy op='mid'/>
-		<Dummy op='high'/>
+		{/* <Dummy pre='1: '/> */}
+		<Dummy o='-10' pre='-10: ' />
+		<Dummy o='-20' pre='-20: ' />
+		<Dummy o='-30' pre='-30: ' />
 	</PreviewArea>
 	<PreviewCode slot='tab' label='HTML'>
 		```jsx
-		<p class="-op:low">Lorem ipsum ...</p>
-		<p class="-op:mid">Lorem ipsum ...</p>
-		<p class="-op:high">Lorem ipsum ...</p>
+		<p class="-o:-10">Lorem ipsum ...</p>
+		<p class="-o:-20">Lorem ipsum ...</p>
+		<p class="-o:-30">Lorem ipsum ...</p>
 		```
 	</PreviewCode>
 	<PreviewCode slot='tab' label='JSX'>
 		```jsx
-		<Text op='low'>Lorem ipsum ...</Text>
-		<Text op='mid'>Lorem ipsum ...</Text>
-		<Text op='high'>Lorem ipsum ...</Text>
+		<HTML.p o='-10'>Lorem ipsum ...</HTML.p>
+		<HTML.p o='-20'>Lorem ipsum ...</HTML.p>
+		<HTML.p o='-30'>Lorem ipsum ...</HTML.p>
 		```
 	</PreviewCode>
 </Preview>
@@ -626,33 +628,36 @@ base値は 日本語では `1.625`, `1.75`, `1.875` あたりがおすすめで�
 
 |トークン値|変数|
 |---|---|
-|`xs`|`--size-xs`|
-|`s`|`--size-s`|
-|`m`|`--size-m`|
-|`l`|`--size-l`|
+|`xs`|`--sz--xs`|
+|`s`|`--sz--s`|
+|`m`|`--sz--m`|
+|`l`|`--sz--l`|
+|`xl`|`--sz--xl`|
 
-[`.is--container`](/css/layout-state/#is--container) 等で使用されています。
+`max-sz`, [`.is--container`](/css/module-class/#is--container) 等で使用できます。
 
 
 
 ## トークンの命名規則について
 
 
-1. **xs, s, m(root), l, xl** などによるサイズ表記
-	- **基本となる中心値があって、それに対して小さいか？大きいか？というのを表すトークン。**
-    - `:root`や`body`にセットされている値に戻すためのものは `base`。そうでないが基本的な中心値となるものは`m`で表現。
-	- sm, md, lg ではない理由は、ブレイクポイント表記と被らないようにするため。
+1. **xs, s, base(m), l, xl** などによるサイズ表記
+	- **基本となる中心値 `base` があって、それに対して小さいか？大きいか？というのを表すトークン。**
+    - `:root(html)`,`body`にセットされている値に戻すためのものは `base`。そうでないが基本的な中心値となるものは`m`で表現。
+	{/* - sm, md, lg ではない理由は、ブレイクポイント表記と被らないようにするため。 */}
 2. 0, (5,) 10, 20, 30,... などの数値による段階表記
-    - **基本となる値がなく、0スタートで段階的なトークン値を持つものを表すトークン。**
-	- 0,1,2,3... という単純な繰り上げではなく数値に間隔を持たせているのは、ユーザーが既存トークンの間に新しいトークンを追加できるようにするため。
-3. それ以外のセマンティックトークン
-    - サイズ表記や段階表記では表現できないものを表すトークン。
+    - **基本となる値がなく、0(`none`)スタートで段階的なトークン値を持つものを表すトークン。**
+	- 0,1,2,3... という単純な繰り上げではなく数値に間隔を持たせているのは、ユーザーが既存トークンの間に新しいトークンを追加できるようにするためです。
+3. その他
+    - それぞれのプロパティに合うように、セマンティックなトークン名を定義します。
 
 
-### カラートークンのバリエーション名について
+<Note type='info' title='カラートークンのバリエーションについて'>
 
-`base-2`, `text-2`などは、よくある表現としては `secondary`, `weak`, `subtle` などがありますが、これといった正解があるわけではなく、命名するのが非常に難しいトークンです。  
-名前を決めてしまうと、ユーザーによっては意味合いとして明確なズレが発生する可能性もあります。
+`base`/`text` に対する `base-2`/`text-2` についての補足です。  
+これらはサイトのカラー設計するときにその都度意味合いが変わり得るものなので、意味付けを避けています。
 
-そのため、単純に数値を後ろにつけることによって意味付けをなくし、バリエーションを表すだけにしました。  
-トークンを追加したい時も、名前に悩む必要はなく`base-3`,`accent-2`のように増やしていけます。
+デフォルトでは`base-2`は`base`より少し濃い色、`text-2`は`text`より少し薄い色となっていますが、これを`dark`/`light`, `strong`/`weak`などの表現をしてしまうと用途が固定されてしまうので、シンプルなバリエーション表現として数値を採用しています。
+
+単純に数値でのバリエーション表現にすることで、サイトによっては`base-3`,`text-3`のように増やしていくこともできるようにしています。
+</Note>

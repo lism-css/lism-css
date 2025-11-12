@@ -21,10 +21,10 @@ export interface LismBaseProps {
 	pr?: ResponsiveValue<string | number>;
 	pt?: ResponsiveValue<string | number>;
 	pb?: ResponsiveValue<string | number>;
-	pis?: ResponsiveValue<string | number>;
-	pie?: ResponsiveValue<string | number>;
-	pbs?: ResponsiveValue<string | number>;
-	pbe?: ResponsiveValue<string | number>;
+	'px-s'?: ResponsiveValue<string | number>;
+	'px-e'?: ResponsiveValue<string | number>;
+	'py-s'?: ResponsiveValue<string | number>;
+	'py-e'?: ResponsiveValue<string | number>;
 
 	m?: ResponsiveValue<string | number>;
 	mx?: ResponsiveValue<string | number>;
@@ -33,18 +33,18 @@ export interface LismBaseProps {
 	mr?: ResponsiveValue<string | number>;
 	mt?: ResponsiveValue<string | number>;
 	mb?: ResponsiveValue<string | number>;
-	mis?: ResponsiveValue<string | number>;
-	mie?: ResponsiveValue<string | number>;
-	mbs?: ResponsiveValue<string | number>;
-	mbe?: ResponsiveValue<string | number>;
+	'mx-s'?: ResponsiveValue<string | number>;
+	'mx-e'?: ResponsiveValue<string | number>;
+	'my-s'?: ResponsiveValue<string | number>;
+	'my-e'?: ResponsiveValue<string | number>;
 
 	// Sizing
 	w?: ResponsiveValue<string | number>;
 	h?: ResponsiveValue<string | number>;
-	minW?: ResponsiveValue<string | number>;
-	minH?: ResponsiveValue<string | number>;
-	maxW?: ResponsiveValue<string | number>;
-	maxH?: ResponsiveValue<string | number>;
+	'min-w'?: ResponsiveValue<string | number>;
+	'min-h'?: ResponsiveValue<string | number>;
+	'max-w'?: ResponsiveValue<string | number>;
+	'max-h'?: ResponsiveValue<string | number>;
 
 	// Display
 	d?: ResponsiveValue<string>;
@@ -59,8 +59,8 @@ export interface LismBaseProps {
 	// Flexbox & Grid
 	gap?: ResponsiveValue<string | number>;
 	g?: ResponsiveValue<string | number>;
-	gx?: ResponsiveValue<string | number>;
-	gy?: ResponsiveValue<string | number>;
+	'g-x'?: ResponsiveValue<string | number>;
+	'g-y'?: ResponsiveValue<string | number>;
 	ai?: ResponsiveValue<string>;
 	jc?: ResponsiveValue<string>;
 	ac?: ResponsiveValue<string>;
@@ -140,19 +140,15 @@ export interface LismBaseProps {
 
 	// Context props
 	css?: Record<string, any>;
-	passVars?: string | string[];
+	// passVars?: string | string[];
 
 	// Utility classes
 	_?: string | string[];
 
 	// State classes
-	skipState?: boolean;
-	isFlow?: boolean | string;
+	flow?: boolean | string;
 	hasGutter?: boolean | string;
 	isContainer?: boolean | string;
-	isOverwide?: boolean;
-	isFullwide?: boolean;
-	isWide?: boolean;
 	isLayer?: boolean;
 	isLinkBox?: boolean;
 
@@ -172,7 +168,6 @@ export interface LismProps extends LismBaseProps {
 	children?: React.ReactNode;
 	variant?: string;
 	lismClass?: string;
-	lismState?: string[];
 	forwardedRef?: React.Ref<any>;
 }
 
@@ -184,9 +179,7 @@ export interface FlexProps extends LismProps {
 	fxd?: ResponsiveValue<string>;
 	fxf?: ResponsiveValue<string>;
 }
-export interface FlexItemProps extends LismProps {
-	layout?: React.ElementType;
-}
+
 export interface StackProps extends LismProps {}
 export interface GridProps extends LismProps {
 	_grid?: string;
@@ -276,7 +269,7 @@ export interface AccordionProps extends LismProps {
 export interface AccordionHeaderProps extends FlexProps {}
 export interface AccordionLabelProps extends LismProps {}
 export interface AccordionBodyProps extends LismProps {
-	isFlow?: boolean | string;
+	flow?: boolean | string;
 	innerProps?: LismProps;
 }
 
@@ -300,7 +293,9 @@ export interface ModalProps extends LismProps {
 
 // Export components
 export const Lism: React.FC<LismProps>;
-export const Box: React.FC<BoxProps>;
+export const HTML: React.FC<LismProps>;
+export const Box: React.FC<LismProps>;
+export const Flow: React.FC<LismProps>;
 export const Flex: React.FC<FlexProps>;
 export const FlexItem: React.FC<FlexItemProps>;
 export const Cluster: React.FC<FlexProps>;
@@ -337,6 +332,7 @@ export const Modal: React.FC<ModalProps>;
 // Re-export all as default
 export default {
 	Lism,
+	HTML,
 	Box,
 	Flex,
 	FlexItem,

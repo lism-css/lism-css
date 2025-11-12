@@ -3,149 +3,8 @@ title: '補足説明'
 description: ...
 ---
 
-import { Box, Flex, Stack, Grid, Center, Layer, Frame, Container, Media, Text, Dummy, Lism, Spacer } from 'lism-css/astro';
+import { Box, Flex, Stack, Grid, Center, Layer, Frame, Container, Media, HTML, Dummy, Lism, Spacer } from 'lism-css/astro';
 import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage, Callout } from "~/components";
-
-
-## is--flow のネスト時の注意点
-
-`--flowM`を直接指定する時、ネストに注意が必要です。
-
-<Preview>
-	<PreviewTitle>`is--flow` > `is--flow.-flow:s`は問題なし</PreviewTitle>
-	<PreviewArea p='30' isFlow={false}>
-		<Box isFlow>
-			<p>Contents...</p>
-			<p>Contents...</p>
-			<Box isFlow='s' bgc='green:10%'>
-				<p>Nested contents...</p>
-				<p>Nested contents...</p>
-			</Box>
-			<p>Contents...</p>
-		</Box>
-	</PreviewArea>
-	<PreviewCode>
-	```jsx
-	<Box isFlow>
-		<p>Contents...</p>
-		<p>Contents...</p>
-		<Box isFlow='s' bgc='green:10%'>
-			<p>Nested contents...</p>
-			<p>Nested contents...</p>
-		</Box>
-		<p>Contents...</p>
-	</Box>
-	```
-	</PreviewCode>
-</Preview>
-
-{/* <Preview>
-	<PreviewTitle>`is--flow.-flow:s` > `is--flow`も問題なし</PreviewTitle>
-	<PreviewArea p='30' isFlow={false}>
-		<Box isFlow='s'>
-			<p>Contents...</p>
-			<p>Contents...</p>
-			<Box isFlow bgc='blue:10%'>
-				<p>Nested contents...</p>
-				<p>Nested contents...</p>
-			</Box>
-			<p>Contents...</p>
-		</Box>
-	</PreviewArea>
-	<PreviewCode>
-	```jsx
-	<Box isFlow='s'>
-		<p>Contents...</p>
-		<p>Contents...</p>
-		<Box isFlow bgc='blue:10%'>
-			<p>Nested contents...</p>
-			<p>Nested contents...</p>
-		</Box>
-		<p>Contents...</p>
-	</Box>
-	```
-	</PreviewCode>
-</Preview> */}
-
-
-`is--flow`は`--flowM`が未定義であれば`--flowM-m`がセットされます。
-しかし、`--flowM`をセットした先祖があればその値を継承します。
-
-ネストされた状態でデフォルト値の`--flowM-m`を再度使用したい場合は、`-flow:m`を併用して明示的に指定してください。
-
-<Preview>
-	<PreviewTitle>`--flowM`をセットした`is--flow`の中でのネスト</PreviewTitle>
-	<PreviewArea p='30' isFlow={false}>
-		<Box isFlow='4px'>
-			<p>`is--flow[--flowM:4px]`</p>
-			<p>Contents...</p>
-			<Box isFlow bgc='red:10%'>
-				<p>`is--flow`</p>
-				<p>Nested contents...</p>
-			</Box>
-			<p>Contents...</p>
-			<p>Contents...</p>
-			<Box isFlow='m' bgc='green:10%'>
-				<p>`is--flow.-flow:m`</p>
-				<p>Nested contents...</p>
-			</Box>
-			<p>Contents...</p>
-			<p>Contents...</p>
-		</Box>
-	</PreviewArea>
-	<PreviewCode>
-	```jsx "isFlow"
-	<Box isFlow='4px'>
-		<p>`is--flow[--flowM:4px]`</p>
-		<p>Contents...</p>
-		<Box isFlow bgc='red:10%'>
-			<p>`is--flow`</p>
-			<p>Nested contents...</p>
-		</Box>
-		<p>Contents...</p>
-		<p>Contents...</p>
-		<Box isFlow='m' bgc='green:10%'>
-			<p>`is--flow.-flow:m`</p>
-			<p>Nested contents...</p>
-		</Box>
-		<p>Contents...</p>
-		<p>Contents...</p>
-	</Box>
-	```
-	</PreviewCode>
-</Preview>
-
-さらに、`is--flow`の直下で`--flowM`を定義すると、自身のmargin-block-startにも影響が出ることに注意してください。
-
-<Preview>
-	<PreviewTitle>`is--flow`の直下で`--flowM`を定義</PreviewTitle>
-	<PreviewArea p='30' isFlow={false}>
-		<Box isFlow>
-			<p>`is--flow`</p>
-			<p>Contents...</p>
-			<Box isFlow='4px' bgc='red:10%'>
-				<p>`isFlow='4px'`</p>
-				<p>Nested contents...</p>
-			</Box>
-			<p>Contents...</p>
-			<p>Contents...</p>
-		</Box>
-	</PreviewArea>
-	<PreviewCode>
-	```jsx
-	<Box isFlow>
-		<p>`is--flow`</p>
-		<p>Contents...</p>
-		<Box isFlow='4px' bgc='red:10%'>
-			<p>`isFlow='4px'`</p>
-			<p>Nested contents...</p>
-		</Box>
-		<p>Contents...</p>
-		<p>Contents...</p>
-	</Box>
-	```
-	</PreviewCode>
-</Preview>
 
 
 
@@ -178,66 +37,63 @@ article > * {
 }
 ```
 
-どちらも一長一短ありますが、とくに理由がなければ①を採用することが多いのではないでしょうか。
 
 <Callout type="point">
-しかし、Lismでは ② の方法を推奨しています。  
+どちらも一長一短ありますが、Lismでは ② の方法を推奨しています。  
 </Callout>
 
-この②のアプローチに対応するためのコンテンツ制御クラスが、`is--container`クラスです。また、②を前提として`is--wide`や`is--fullwide`クラスは設計されています。
+この②のアプローチによるコンテンツ制御クラスが、`is--container`クラスです。  
+また、②を前提として`-max-sz:full`も設計されています。
 
 これはなぜかというと、① のアプローチをベースにした場合、途中で**全幅サイズで表示したいコンテンツ**を作る場合の処理が複雑になってしまうためです。
 
 <Preview>
 <PreviewTitle>こういうやつ</PreviewTitle>
-<PreviewArea>
-	<Container size='30rem' hasGutter py='40' bd='u:guide' bdc='blue'>
-		<Box bd='u:guide' py='10'>コンテンツ...</Box>
-		<Box isFullwide hasGutter bgc='gray:20%' py='20'>全幅コンテンツ</Box>
-		<Box bd='u:guide' py='10'>コンテンツ...</Box>
+<PreviewArea resize>
+	<Container size='s' layout='flow' hasGutter py='40' bd bdc='blue'>
+		<Box bd=':guide' py='10'>コンテンツ...</Box>
+		<Box max-sz='full' hasGutter bgc='rgb(0 100 200 / 20%)' py='20'>全幅コンテンツ</Box>
+		<Box bd=':guide' py='10'>コンテンツ...</Box>
 	</Container>
 </PreviewArea>
+<PreviewCode>
+	```jsx
+	<Container size='s' layout='flow' hasGutter py='40' bd bdc='blue'>
+		<Box bd=':guide' py='10'>コンテンツ...</Box>
+		<Box max-sz='full' hasGutter bgc='rgb(0 100 200 / 20%)' py='20'>全幅コンテンツ</Box>
+		<Box bd=':guide' py='10'>コンテンツ...</Box>
+	</Container>
+	```
+</PreviewCode>
 </Preview>
 
 ②であれば、基本のCSSは`max-width:100%`だけでOKで、少しの例外処理を加えれば済みます。
 
-しかし①では、次のようなCSSになってしまいます。
+しかし①では、`vw`などの単位では**スクロールバーの幅が考慮されない**という問題点があったり、汎用性を考慮するとCSSがどんどん複雑化していきます。  
 
-```css
-.fullwide{
-	max-width: 100vw;
-	left: calc(50% - 50vw);
-}
+ただし、`@property`が有効なブラウザでは`vw`の問題点もほぼ解消されるようになってきました。
 
-/* その他環境を考慮したCSS... */
-```
+そこで、①のアプローチでも実装できるように、Lismでは、`-max-sz:outer` を用意しています。
 
-これだけみるとそこまで複雑ではないように見えますが、`vw`では**スクロールバーの幅が考慮されない**という問題点があったり、汎用性を考慮するとCSSがどんどん複雑化していきます。
-
-ただし、`@property`が有効なブラウザでは①の問題点もほぼ解消されるようになってきました。
-
-そこで、Lismでは、`is--overwide` を用意しています。
-
-①のようなアプローチを採用するには、`is--container`にmax-widthを指定して運用し、全幅コンテンツに対して`is--overwide`クラスを使用てください。
 
 <Preview>
 <PreviewTitle>例</PreviewTitle>
-<PreviewArea>
-<Box hasGutter>
-	<Container maxW='30rem' py='40' bd='u:guide' bdc='blue'>
-		<Box bd='u:guide' py='10'>...コンテンツ...</Box>
-		<Box isOverwide hasGutter bgc='gray:20%' py='20'>全幅コンテンツ</Box>
-		<Box bd='u:guide' py='10'>...コンテンツ...</Box>
+<PreviewArea resize>
+<Box hasGutter bd>
+	<Container layout='flow' max-w='s' mx='auto' py='40' bd bdc='blue'>
+		<Box bd=':guide' py='10'>コンテンツ...</Box>
+		<Box max-sz='outer' hasGutter bgc='rgb(0 100 200 / 20%)' py='20'>全幅コンテンツ</Box>
+		<Box bd=':guide' py='10'>コンテンツ...</Box>
 	</Container>
 </Box>
 </PreviewArea>
 <PreviewCode>
-```jsx "isOverwide"
+```jsx "max-sz='outer'"
 <Box hasGutter>
-	<Container maxW='30rem' py='40' bd='u:guide' bdc='blue'>
-		<Box bd='u:guide' py='10'>...コンテンツ...</Box>
-		<Box isOverwide hasGutter bgc='gray:20%' py='20'>全幅コンテンツ</Box>
-		<Box bd='u:guide' py='10'>...コンテンツ...</Box>
+	<Container layout='flow' max-w='s' py='40' bd=':guide' bdc='blue'>
+		<Box bd=':guide' py='10'>コンテンツ...</Box>
+		<Box max-sz='outer' hasGutter bgc='rgb(0 100 200 / 20%)' py='20'>全幅コンテンツ</Box>
+		<Box bd=':guide' py='10'>コンテンツ...</Box>
 	</Container>
 </Box>
 ```

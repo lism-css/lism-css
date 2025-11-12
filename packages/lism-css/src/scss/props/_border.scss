@@ -1,26 +1,23 @@
 @use '../_mixin' as mixin;
 
-// has--border?
-// bdc だけとかの指定でも -bd:出力？
 /*
 
 	使用される環境（resetCSS）によって挙動が変わりやすいので 各プロパティを変数で管理する。
-	ブラウザのデフォルト挙動では、bds指定でborder出現してくるが、nextraのresetCSSみたいな特殊な環境だとbdwの指定でborderでてきたりする。
+	Memo: ブラウザのデフォルト挙動では、bds指定でborder出現してくるが、nextraのresetCSSみたいな特殊な環境だとbdwの指定でborderでてきたりする。
 
-	borderはLismの中でも特殊な仕様になっている。
-	--bds, --bdw, --bdc で管理できるようにしていて、そのために .-bd: クラスを使う。
+	各方向にそれぞれBP対応しているとCSSが肥大化することもあり、border はLismの中でも特殊な仕様になっている。
+	--bds, --bdw, --bdc で管理できるようにしていて、そのために .-bd, .-bd-{side} クラスを使う。
+
+	--bdw を変化させることで方向を変化させたりできるようになっている。
 */
 
+// Memo: base レイヤーで初期値セット済み
 // bdc, bdw などでカラーや太さを上書きできるように border 自体を変数管理
-// :where(.has--bd),
-@include mixin.maybe_where('.-bd,[class*="-bd:"]', 'base') {
+// .-bd .set--bd
+@include mixin.maybe_where('.-bd,[class*=" -bd-"],[class^="-bd-"]', '@base') {
 	--bds: solid;
 	--bdw: 1px;
 	--bdc: currentColor;
-}
-
-.-bd,
-[class*='-bd:'] {
 	border-width: var(--bdw) #{mixin.$maybe_important};
 	border-color: var(--bdc) #{mixin.$maybe_important};
 }
@@ -31,42 +28,34 @@
 	border-style: var(--bds) #{mixin.$maybe_important};
 }
 
-/* stylelint-disable */
-.-bd\:n {
-	border: none #{mixin.$maybe_important};
-}
-
 // 方向指定
-// .-bd\:all {
-// 	border-style: var(--bds) #{mixin.$maybe_important};
-// }
-.-bd\:l {
-	border-left-style: var(--bds) #{mixin.$maybe_important};
-}
-.-bd\:r {
-	border-right-style: var(--bds) #{mixin.$maybe_important};
-}
-.-bd\:t {
-	border-top-style: var(--bds) #{mixin.$maybe_important};
-}
-.-bd\:b {
-	border-bottom-style: var(--bds) #{mixin.$maybe_important};
-}
-.-bd\:x {
+.-bd-x {
 	border-inline-style: var(--bds) #{mixin.$maybe_important};
 }
-.-bd\:y {
+.-bd-y {
 	border-block-style: var(--bds) #{mixin.$maybe_important};
 }
-.-bd\:is {
+.-bd-x-s {
 	border-inline-start-style: var(--bds) #{mixin.$maybe_important};
 }
-.-bd\:ie {
+.-bd-x-e {
 	border-inline-end-style: var(--bds) #{mixin.$maybe_important};
 }
-.-bd\:bs {
+.-bd-t {
+	border-top-style: var(--bds) #{mixin.$maybe_important};
+}
+.-bd-b {
+	border-bottom-style: var(--bds) #{mixin.$maybe_important};
+}
+.-bd-l {
+	border-left-style: var(--bds) #{mixin.$maybe_important};
+}
+.-bd-r {
+	border-right-style: var(--bds) #{mixin.$maybe_important};
+}
+.-bd-y-s {
 	border-block-start-style: var(--bds) #{mixin.$maybe_important};
 }
-.-bd\:be {
+.-bd-y-e {
 	border-block-end-style: var(--bds) #{mixin.$maybe_important};
 }

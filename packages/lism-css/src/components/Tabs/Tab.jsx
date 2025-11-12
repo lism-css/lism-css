@@ -1,4 +1,4 @@
-import React from 'react';
+// import React from 'react';
 import { Lism } from '../Lism';
 
 export default function Tab({ tabId = 'tab', index = 0, isActive = false, ...props }) {
@@ -8,11 +8,10 @@ export default function Tab({ tabId = 'tab', index = 0, isActive = false, ...pro
 		<Lism
 			tag='button'
 			lismClass='d--tabs_tab'
-			className='re--style'
+			setPlain
 			role='tab'
 			aria-controls={controlId}
 			aria-selected={isActive ? 'true' : 'false'}
-			skipState
 			{...props}
 		/>
 	);

@@ -1,0 +1,13 @@
+@media (any-hover: hover) {
+	.set-hov:hover {
+		--notHov_: ;
+	}
+	.set-hov:not(:hover) {
+		--isHov_: ;
+	}
+}
+@media (any-hover: none) {
+	.set-hov {
+		--isHov_: ;
+	}
+}

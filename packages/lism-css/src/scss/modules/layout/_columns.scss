@@ -1,0 +1,9 @@
+/*
+    memo: グリッドアイテムにはデフォルトでmin-width: autoが適用され、1frだけだとカラムサイズが揃わないことがある.
+      そのため、minmax を使っている。
+*/
+.l--columns {
+	--cols: 2; // 初期値
+	display: grid;
+	grid-template-columns: repeat(var(--cols), minmax(0, 1fr));
+}

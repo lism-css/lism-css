@@ -1,0 +1,18 @@
+---
+title: 1カラムレイアウト
+description: 1カラムレイアウトの実装例を紹介します。
+sidebar:
+  order: 1
+---
+
+import { Lism } from 'lism-css/astro';
+import { Preview, PreviewArea, PreviewTitle, PreviewCode, PreviewFrame, EmbedCode } from "~/components";
+
+Lismで1カラムページの全体レイアウトを組む場合の例を紹介します。
+
+
+<PreviewTitle>プレビュー</PreviewTitle>
+<PreviewFrame url='/page-layout/one-column/' hasSizeSwitch />
+
+<PreviewTitle>コード</PreviewTitle>
+<EmbedCode srcPath={`src/pages/page-layout/one-column/index.astro`} />

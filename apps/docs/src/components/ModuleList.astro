@@ -1,0 +1,50 @@
+---
+import { Lism } from 'lism-css/astro';
+// import { type NavLinkData } from './LibTabs';
+// import { Tabs } from 'lism-css/react';
+
+// import sidebarData from '@/astro-configs/sidebar';
+const { sidebar } = Astro.locals.starlightRoute;
+
+const { langPath = '', moduleType = '', props } = Astro.props;
+
+// Components と Templates のみ表示
+const filteredGroup: any = sidebar.find((entry) => {
+	return entry.type === 'group' && entry.label === moduleType;
+});
+// console.log('filteredGroup', filteredGroup);
+
+const modlueNavs = filteredGroup?.entries
+	.map((entry: any) => {
+		// console.log('entry', entry);
+
+		// if (entry.type !== 'link') return null;
+		if (entry?.href === '/###---') return null;
+
+		// entryのデータを返す
+		return {
+			type: entry?.type,
+			href: `${langPath}${entry?.href}`,
+			label: entry?.label,
+		};
+	})
+	.filter((data: any) => data !== null);
+---
+
+<ul>
+	{
+		modlueNavs.map((nav: any) => {
+			// name が --- で始まる場合は、その行は見出しとして扱う
+			// if (cname.match(/^---/)) {
+			// 	return <Box w='100%'>{cname}</Box>;
+			// }
+			return (
+				<Lism tag='li' key={nav.label}>
+					<a href={nav.href} class='-p:10 -lh:xs -d:block -hov:o'>
+						{nav.label}
+					</a>
+				</Lism>
+			);
+		})
+	}
+</ul>

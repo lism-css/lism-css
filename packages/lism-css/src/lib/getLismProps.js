@@ -1,87 +1,56 @@
-import { PROPS, CONTEXT_PROPS } from '../config';
+// import { PROPS } from '../config';
+import { PROPS, STATES } from '../../config/index.js';
+import getLayoutProps from './getLayoutProps';
 import isPresetValue from './isPresetValue';
 import isTokenValue from './isTokenValue';
-import getMaybeUtilValue from './getMaybeUtilValue';
+import getUtilKey from './getUtilKey';
 import getMaybeCssVar from './getMaybeCssVar';
 import getBpData from './getBpData';
 import atts from './helper/atts';
 import isEmptyObj from './helper/isEmptyObj';
 import filterEmptyObj from './helper/filterEmptyObj';
 import splitWithComma from './helper/splitWithComma';
-// import svg2ImgUrl from './helper/svg2ImgUrl';
 
-const getConverter = (propName) => {
+const getTokenKey = (propName) => {
 	const propData = PROPS[propName];
-	if (!propData) return null;
+	if (!propData) return '';
 
-	const { converter } = propData;
-	return converter || null;
+	return propData?.token || '';
 };
-
-// const PROP_FULL_NAMES = {
-// 	padding: 'p',
-// 	margin: 'm',
-// };
 
 class LismPropsData {
 	// propList = {};
 	className = '';
-	uClasses = []; // props解析処理で追加される
-	attrs = {};
+	uClasses = [];
+	lismState = [];
 	styles = {};
+	attrs = {};
 
 	constructor(allProps) {
 		// 受け取るpropsとそうでないpropsを分ける
-		const {
-			forwardedRef,
-			class: classFromAstro,
-			className,
-			lismClass,
-			lismState = [],
-			variant,
-			passVars,
-			// lismVar,
-			style = {},
-			_propConfig = {},
+		const { forwardedRef, class: classFromAstro, className, lismClass, variant, style = {}, _propConfig = {}, ...others } = allProps;
 
-			// hasBd,
-			...otherProps
-		} = allProps;
+		this.styles = { ...style };
+		this._propConfig = { ..._propConfig };
 
-		this.lismClass = lismClass || '';
-		this.lismState = structuredClone(lismState);
-		this.styles = structuredClone(style);
-		this._propConfig = structuredClone(_propConfig);
-
-		let others = this.getStateProps(otherProps);
-
-		// ここで variant 処理
+		let _lismClass = lismClass || '';
+		// variantがあれば追加処理
 		if (variant && lismClass) {
 			// lismClassをスペースで分割して配列化
 			const lismClassArr = lismClass.split(' ');
 			const baseClass = lismClassArr[0];
 
-			// variantを","で分割して配列化
-			const variantArr = variant
-				.split(',')
-				.map((v) => v.trim())
-				.filter(Boolean);
+			// {baseClass}--{variant} 形式でクラス名を生成
+			const variantClass = `${baseClass}--${variant}`;
 
-			// {baseClass}-{variant} 形式でクラス名を生成
-			const variantClasses = variantArr.map((v) => `${baseClass}-${v}`);
 			// baseClass の後ろにvariantクラスを追加
-			this.lismClass = [baseClass, ...variantClasses, ...lismClassArr.slice(1)].join(' ');
+			_lismClass = [baseClass, variantClass, ...lismClassArr.slice(1)].join(' ');
 		}
-
-		// クラスの結合
-		this.className = atts(this.lismClass, this.lismState, classFromAstro, className);
 
 		// propsの処理
 		if (!isEmptyObj(others)) {
-			this.attrs = others;
-
-			// props処理
-			this.analyzeProps(others);
+			this.attrs = { ...others };
+			this.analyzeProps();
 		}
 
 		// ref
@@ -89,9 +58,10 @@ class LismPropsData {
 			this.attrs.ref = forwardedRef;
 		}
 
-		if (null != passVars && typeof passVars === 'object') {
-			this.setPassProps(passVars);
-		}
+		// pass-get
+		// if (null != passVars && typeof passVars === 'object') {
+		// 	this.setPassProps(passVars);
+		// }
 
 		// if (null != pass) {
 		// 	// , 区切りでユーティリティクラスを複数出力可能
@@ -99,134 +69,92 @@ class LismPropsData {
 		// 		this.addUtil(`-pass:${_propName}`);
 		// 	});
 		// }
-
 		// if (null != get) {
 		// 	// , 区切りでユーティリティクラスを複数出力可能
 		// 	splitWithComma(get).forEach((_propName) => {
 		// 		this.addUtil(`-get:${_propName}`);
 		// 	});
 		// }
+
+		// クラスの結合
+		this.className = atts(className || classFromAstro, _lismClass, this.lismState, this.uClasses);
 	}
 
-	// 特定の条件下で受け取るpropの処理
-	setContextProps(name, values) {
-		// if (typeof values !== 'object') return;
-
-		const contextProps = CONTEXT_PROPS[name];
-		if (!contextProps) return;
-
-		Object.keys(values).forEach((propName) => {
-			const propData = contextProps[propName];
-			if (propData) {
-				const propValue = values[propName];
-
-				// console.log(propName, propValue, propData);
-				this.analyzeProp(propName, propValue, propData);
-			} else if (name === 'css') {
-				// cssオブジェクトに入ってきたが、Lism側で一致するデータがないものはそのままstyleへ流す
-				this.addStyle(propName, values[propName]);
+	analyzeState(statePropData, propVal) {
+		// isContainerなどの特別な処理が必要なレイアウトステート
+		const { className, preset, presetClass, customVar, tokenKey, setStyles } = statePropData;
+		if (propVal === true) {
+			this.lismState.push(className);
+		} else if (preset && isPresetValue(preset, propVal)) {
+			this.lismState.push(`${className} ${presetClass}:${propVal}`);
+		} else if (propVal) {
+			// カスタム値
+			this.lismState.push(className);
+			if (tokenKey) {
+				this.addStyle(customVar, getMaybeCssVar(propVal, tokenKey));
+			} else if (setStyles) {
+				this.addStyles(setStyles(propVal));
 			}
-		});
+		}
 	}
 
 	// prop解析
-	analyzeProps(attrs) {
-		const attrKeys = Object.keys(attrs);
-
-		attrKeys.forEach((propName) => {
-			// 特殊系
-			if (propName === 'hov') {
+	analyzeProps() {
+		Object.keys(this.attrs).forEach((propName) => {
+			// state チェック
+			if (Object.hasOwn(STATES, propName)) {
 				const propVal = this.extractProp(propName);
-				this.setHoverProps(propVal);
-				return;
-			}
-			if (propName === 'bd') {
-				const propVal = this.extractProp(propName);
-				this.setBdProps(propVal);
-				return;
-			}
+				const statePropData = STATES[propName];
 
-			// if (PROP_FULL_NAMES[propName]) propName = PROP_FULL_NAMES[propName];
-
-			// Lism系のプロパティかどうか
-			const isLismProp = Object.hasOwn(PROPS, propName);
-			if (isLismProp) {
+				if (typeof statePropData === 'string') {
+					// そのままクラス化
+					if (propVal) this.lismState.push(statePropData);
+				} else {
+					// isContainerなどの特別な処理が必要なレイアウトステート
+					this.analyzeState(statePropData, propVal);
+				}
+			} else if (Object.hasOwn(PROPS, propName)) {
+				// Lism系のプロパティかどうか
 				// value取得して attrsリストから削除しておく
 				const propVal = this.attrs[propName];
 				delete this.attrs[propName];
 
 				// 解析処理
-				this.analyzeProp(propName, propVal);
-				return;
-			}
-
-			const isContextProp = Object.hasOwn(CONTEXT_PROPS, propName);
-			if (isContextProp) {
-				// value取得して attrsリストから削除しておく
-				const propVal = this.attrs[propName];
-				delete this.attrs[propName];
-
-				// 解析処理
-				this.setContextProps(propName, propVal);
-				return;
+				this.analyzeLismProp(propName, propVal);
+			} else if (propName === 'hov') {
+				const propVal = this.extractProp(propName);
+				this.setHovProps(propVal);
+			} else if (propName === 'css') {
+				// cssオブジェクトに入ってきたものはstyleへ流す
+				const cssVales = this.extractProp('css');
+				this.addStyles(cssVales);
 			}
 		});
 	}
 
-	// prop解析
-	analyzeProp(propName, propVal, propData) {
+	// Lism Prop 解析
+	analyzeLismProp(propName, propVal) {
 		if (null == propVal) return;
 
 		// propデータ取得
-		propData = propData || PROPS[propName] || null;
-		if (null === propData) return; // 一応 nullチェックここでも
+		let propConfig = PROPS[propName] || null;
+		if (null === propConfig) return; // 一応 nullチェックここでも
 
 		// config上書き設定があるかどうか
 		if (this._propConfig[propName]) {
-			propData = Object.assign({}, propData, this._propConfig[propName]);
+			propConfig = Object.assign({}, propConfig, this._propConfig[propName]);
 		}
-
-		const { name, objProcessor, ...options } = propData;
 
 		// ブレイクポイント指定用のオブジェクト{base,sm,md,lg,xl}かどうかをチェック
 		const { base: baseValue, ...bpValues } = getBpData(propVal);
-		propVal = baseValue;
-		// let bpValues = null;
 
-		// if (typeof propVal === 'object') {
-		// }
-		// if (BP) {
-		// 	// 事前にBP指定用の { sm, md, ...} 形式で取り出す
-		// 	const { base: baseValue, ...bpData } = getBpData(propVal);
-		// 	propVal = baseValue;
-		// 	bpValues = bpData;
-		// }
+		// base値の処理
+		this.setAttrs(propName, baseValue, propConfig);
 
-		// BP指定意外で成分プロパティが指定されてきた場合 (例: p={{ l: '20', b='30' }}
-		if (null != propVal && typeof propVal === 'object') {
-			// 各成分の解析メソッドがなければ処理を終了
-			if (!objProcessor) return;
-			Object.keys(propVal).forEach((_key) => {
-				// 指定された成分に対応する prop名 を取得
-				const { prop, context } = objProcessor(_key);
-
-				if (context) {
-					this.setContextProps(propName, { [prop]: propVal[_key] });
-				} else {
-					this.analyzeProp(prop, propVal[_key]);
-				}
-			});
-		} else {
-			// オブジェクト以外の普通の処理
-			this.setAttrs(name || propName, propVal, options);
-		}
-
-		// if (null !== bpValues) {
 		// 各BP成分の処理
 		Object.keys(bpValues).forEach((bp) => {
-			this.setAttrs(name || propName, bpValues[bp], options, bp);
+			this.setAttrs(propName, bpValues[bp], propConfig, bp);
 		});
-		// }
 	}
 
 	addUtil(util) {
@@ -270,131 +198,103 @@ class LismPropsData {
 
 	// utilクラスを追加するか、styleにセットするかの分岐処理 @base
 	// 値が null, undefined, '', false の時はスキップ
-	setAttrs(name, val, options = {}, bp) {
+	setAttrs(propKey, val, propConfig = {}, bpKey = '') {
 		if (null == val || '' === val || false === val) return;
 
-		let styleName = `--${name}`;
-		let utilName = `-${options.utilKey || name}`;
+		let styleName = `--${propKey}`;
+		let utilName = `-${propConfig.utilKey || propKey}`;
 
-		if (bp) {
-			// styleName = `--${bp}-${name}`;
-			// utilName += `@${bp}`;
-			styleName = `--${name}_${bp}`;
-			utilName += `_${bp}`;
+		if (bpKey) {
+			styleName = `--${propKey}_${bpKey}`;
+			utilName += `_${bpKey}`;
 		}
 
-		// "u:"ではじまっている場合、それに続く文字列を取得してユーティリティ化
-		if (typeof val === 'string' && val.startsWith('u:')) {
-			this.addUtil(`${utilName}:${val.replace('u:', '')}`);
+		// ":"ではじまっている場合、それに続く文字列を取得してユーティリティ化
+		if (typeof val === 'string' && val.startsWith(':')) {
+			this.addUtil(`${utilName}:${val.replace(':', '')}`);
 			return;
 		}
 
 		// ユーティリティクラス化できるかどうかをチェック
-		if (!bp) {
-			let { presets, utils } = options;
-			if (presets) {
-				if (1 === presets) presets = name; // 1 は prop名をそのままキーとして取得
-				if (isPresetValue(presets, val)) {
-					this.addUtil(`${utilName}:${val}`);
-					return;
-				}
+		if (!bpKey) {
+			const { presets, tokenClass, utils, shorthands } = propConfig;
+			if (presets && isPresetValue(presets, val)) {
+				this.addUtil(`${utilName}:${val}`);
+				return;
 			}
+			// tokenもそのままクラス化する場合
+			if (tokenClass && isTokenValue(propConfig.token, val)) {
+				this.addUtil(`${utilName}:${val}`);
+				return;
+			}
+
+			let utilKey = '';
 			if (utils) {
-				if (1 === utils) utils = name; // 1 は prop名をそのままキーとして取得
-				const utilVal = getMaybeUtilValue(utils, val);
-				if (utilVal) {
-					this.addUtil(`${utilName}:${utilVal}`);
-					return;
-				}
-			} else {
-				// utilName += ':';
+				utilKey = getUtilKey(utils, val);
+			}
+			if (!utilKey && shorthands) {
+				utilKey = getUtilKey(shorthands, val, true);
+			}
+			if (utilKey) {
+				this.addUtil(`${utilName}:${utilKey}`);
+				return;
 			}
 		}
 
-		// 以下、ユーティリティクラス化できない場合の処理
-		let { style, isVar, converter } = options;
-
 		// .-prop: だけ出力するケース
-		// if ((!style && true === val) || '-' === val) {
 		if (true === val || '-' === val) {
 			this.addUtil(utilName);
 			return;
 		}
 
-		//converter color の時の特殊処理
-		if ((name === 'bgc' || name === 'c' || name === 'bdc') && typeof val === 'string') {
-			// if (val.startsWith('mix:'))
+		// 以下、ユーティリティクラス化できない場合の処理
+		let { prop, isVar, alwaysVar, token, bp } = propConfig;
 
-			// bgc='col1:(colo2:)mix%'
-			// color が ":数値%" で終わるかどうか
-			if (val.endsWith('%')) {
-				this.setMixColor(name, val);
+		//token を持つ場合の処理
+		if (token) {
+			val = getMaybeCssVar(val, token);
+		}
+
+		// baseスタイルの追加処理
+		if (!bpKey) {
+			if (isVar) {
+				this.addStyle(`--${propKey}`, val);
+				return;
+			} else if (!bp && !alwaysVar) {
+				// インラインでスタイル出力するだけ
+				this.addStyle(prop, val);
 				return;
 			}
 		}
 
-		// converter(getMaybe...)があればそれを通す
-		if (converter) {
-			// memo: nameチェックでの変数化が必要なケースは、この時点でユーティリティクラス化されているのでnameの受け渡しをスキップしてもいいかも
-			val = getMaybeCssVar(val, converter, name);
-		}
-
-		// style のみ出力するケース
-		if (isVar) style = `--${name}`;
-		if (!bp && style) {
-			// if (1 === style) style = name; // 1 は prop名をそのままstyleとして使う
-			this.addStyle(style, val);
-			return;
-		}
-
-		// .-prop: & --prop で 出力
+		// .-prop & --prop / .-prop_bp & --prop_bpで 出力
 		this.addUtil(utilName);
 		this.addStyle(styleName, val);
 	}
 
-	setMixColor(name, val) {
-		const mixdata = val.split(':');
-		if (mixdata.length === 3) {
-			const [color1, color2, mixper] = mixdata;
-			this.addStyle(`--_${name}1`, getMaybeCssVar(color1, 'color', name));
-			this.addStyle(`--_${name}2`, getMaybeCssVar(color2, 'color', name));
-			this.addStyle(`--_mixpct-${name}`, mixper);
-		} else if (mixdata.length === 2) {
-			const [color1, mixper] = mixdata;
-			this.addStyle(`--_${name}1`, getMaybeCssVar(color1, 'color', name));
-			this.addStyle(`--_mixpct-${name}`, mixper);
-		}
-		// [color1, mixper]
-		this.addUtil(`-${name}:mix`);
-	}
+	// setPassProps(passVars) {
+	// 	let dataList = [];
+	// 	Object.keys(passVars).forEach((propName) => {
+	// 		// プロバイダーリストに追加
+	// 		dataList.push(propName);
 
-	setPassProps(passVars) {
-		let dataList = [];
-		Object.keys(passVars).forEach((propName) => {
-			// プロバイダーリストに追加
-			dataList.push(propName);
+	// 		// 渡す値
+	// 		let value = passVars[propName];
+	// 		if (null === value) return;
 
-			// 渡す値
-			let value = passVars[propName];
-			if (null === value) return;
+	// 		// トークン値であれば変換
+	// 		value = getMaybeCssVar(value, getTokenKey(propName));
+	// 		this.addStyle(`--pass_${propName}`, value);
+	// 	});
+	// }
 
-			// コンバーター通して取得
-			const converterName = getConverter(propName);
-			if (converterName) {
-				value = getMaybeCssVar(value, converterName, propName);
-			}
-
-			this.addStyle(`--pass_${propName}`, value);
-		});
-	}
-
-	setHoverProps(hoverData) {
+	setHovProps(hoverData) {
 		if (!hoverData) return;
 
 		// 配列のときは中身を再帰処理
 		// if (Array.isArray(hoverData)) {
 		// 	hoverData.forEach((_hov) => {
-		// 		this.setHoverProps(_hov);
+		// 		this.setHovProps(_hov);
 		// 	});
 		// 	return;
 		// }
@@ -422,86 +322,13 @@ class LismPropsData {
 						this.addUtil(`-hov:${cls}`);
 					});
 				} else {
-					// c,bgc などの処理
-					const converter = getConverter(propName);
-					if (converter) hovVal = getMaybeCssVar(hovVal, converter, propName);
+					// トークン値の処理
+					hovVal = getMaybeCssVar(hovVal, getTokenKey(propName));
 
 					this.addUtil(`-hov:${propName}`);
 					this.addStyle(`--hov-${propName}`, hovVal);
 				}
 			});
-		}
-	}
-
-	setBdProps(value) {
-		if (!value) return;
-
-		if (typeof value === 'string') {
-			// , 区切りでユーティリティを複数指定できる（var() や rgba() などがないかチェック）
-			if (value.includes(',') && !value.includes('(')) {
-				splitWithComma(value).forEach((_val) => {
-					const utilVal = getMaybeUtilValue('bd', _val) || _val;
-					if (utilVal) {
-						this.addUtil(`-bd:${utilVal}`);
-					}
-				});
-				return;
-			}
-		}
-
-		this.analyzeProp('bd', value);
-	}
-
-	getStateProps({ skipState, isOverwide, isFullwide, isWide, isFlow, isContainer, hasGutter, isLayer, isLinkBox, ...props }) {
-		if (!skipState) {
-			if (isContainer) {
-				this.setContainerData(isContainer);
-			}
-			if (isFlow) {
-				this.setFlowData(isFlow);
-			}
-
-			isOverwide && this.lismState.push('is--overwide');
-			isFullwide && this.lismState.push('is--fullwide');
-			isWide && this.lismState.push('is--wide');
-			hasGutter && this.lismState.push('has--gutter');
-		}
-
-		// skipStateに関係なくチェック
-		if (isLayer) {
-			this.lismState.push('is--layer');
-		}
-		if (isLinkBox) {
-			this.lismState.push('is--linkBox');
-		}
-
-		return props;
-	}
-
-	setContainerData(value) {
-		if (value === true) {
-			this.lismState.push('is--container');
-		} else if (value) {
-			if (isTokenValue('contentSize', value)) {
-				this.lismState.push(`is--container -container:${value}`);
-			} else {
-				this.lismState.push(`is--container`);
-				this.addStyle(`--contentSize`, getMaybeCssVar(value, 'size'));
-			}
-		}
-	}
-
-	setFlowData(value) {
-		if (value === true) {
-			this.lismState.push('is--flow');
-		} else if (value) {
-			if (isTokenValue('flow', value)) {
-				this.lismState.push(`is--flow -flow:${value}`);
-			} else {
-				// this.lismState.push(`is--flow -flow:`);
-				this.lismState.push(`is--flow`);
-				this.addStyle(`--flowM`, getMaybeCssVar(value, 'space'));
-			}
 		}
 	}
 }
@@ -510,26 +337,18 @@ class LismPropsData {
  * props から styleに変換する要素 と その他 に分離する
  *
  * @param {Object} props
- * @param {Object} options
  * @return {Object} styles & attrs
  */
-
-// styleを生成するための共通処理
-// options:初期値などが渡ってくる
-export default function getLismProps(props, options = {}) {
-	props = Object.assign(options, props);
+export default function getLismProps(props) {
 	if (props.length === 0) {
 		return {};
 	}
 
-	// const beforeMethod = performance.now();
-	const propObj = new LismPropsData(props);
-	// const afterMethod = performance.now();
-	// const theTime = afterMethod - beforeMethod;
-	// if (theTime > 0) console.log('TIME ' + theTime + ' ms');
+	const { layout, ...rest } = props;
+	const propObj = new LismPropsData(getLayoutProps(layout, rest));
 
 	return filterEmptyObj({
-		className: atts(propObj.className, propObj.uClasses),
+		className: propObj.className,
 		style: filterEmptyObj(propObj.styles), //filterEmptyObj(styles), // filterEmptyObj は最後にかける
 		...propObj.attrs, // 処理されずに残っているprops
 	});

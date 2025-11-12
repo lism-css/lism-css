@@ -3,11 +3,14 @@
  */
 
 // export { default as Lism } from './Lism/Lism.astro';
-// export { Lism, Text, Media, Link } from './Lism';
+// export { Lism, HTML, Media, Link } from './Lism';
 export * from './Lism';
+export { default as HTML } from './HTML';
 export * from './Dummy';
 export * from './Box';
+export * from './Flow';
 export * from './Flex';
+export * from './Cluster';
 export * from './Stack';
 export * from './Grid';
 export * from './Columns';
@@ -19,10 +22,11 @@ export * from './Container';
 export * from './Layer';
 export * from './LinkBox';
 
-export * from './Spacer';
 export * from './Decorator';
 export * from './Divider';
 export * from './Icon';
+export * from './Media';
+export * from './Spacer';
 
 export { default as Accordion } from './Accordion';
 export { default as Modal } from './Modal';

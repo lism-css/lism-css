@@ -1,7 +1,7 @@
 ---
-import type { LismProps } from '../types';
+import type { LismProps } from '../../types';
 import { Lism } from '../Lism';
-import { getDividerProps } from '../../../dist/components/Divider/getProps';
+import { getDividerProps } from '../../../dist/components/atomic/Divider/getProps';
 
 // Propsの定義
 interface Props extends LismProps {}
@@ -9,4 +9,4 @@ interface Props extends LismProps {}
 const props = Astro.props || {};
 ---
 
-<Lism skipState {...getDividerProps(props)} />
+<Lism {...getDividerProps(props)} />
