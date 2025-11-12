@@ -1,78 +1,54 @@
 ---
 import DemoPageLayout from '~/layouts/DemoPageLayout.astro';
-import Button from '~/components/ex/Button/index.astro';
 
-import { Container, Frame, Grid, GridItem, Media, Stack, Text, Layer, Center } from 'lism-css/astro';
+import { Container, Frame, Grid, Media, Stack, HTML, Flex } from 'lism-css/astro';
+import Button from '~/components/ex/Button/index.astro';
 import './_style.css';
 ---
 
-<DemoPageLayout title='Feature015'>
-	<Container size='m' bgc='base' py='60' hasGutter>
-		<Grid gtr={['auto 1fr auto', null, 'auto 1fr']} gtc={['1fr', null, '1fr auto']} g='50'>
-			<Text class='u--trimHL' fz='2xl' fw='bold'>この季節だからこそ</Text>
-			<GridItem layout={Grid} gc='1 / -1' gtc={['1fr', null, 'repeat(2, 1fr)']} g='50'>
-				<GridItem layout={Stack} isLinkBox href='#' g='40' hov='set'>
-					<Frame ar='16/9' bdrs='10' pos='r'>
-						<Media src='/img/img-1.jpg' width='960' height='640' />
-						<Layer trs hov='get:show' bgc='rgb(0 0 0 / 30%)' blur='4px'>
-							<Center h='100%' c='white'>
-								<Text tag='span' fz='xl' fs='i' fw='light' lts='l' px='30' py='10'>View More</Text>
-							</Center>
-						</Layer>
+<DemoPageLayout title='Feature016'>
+	<Container size='l' bgc='base' py='60' hasGutter>
+		<Grid gtc={['auto', null, 'minmax(20rem, 1fr) 2fr']} g={['50', '60']} bgc='base-2' p={['60 50', '60']} bdrs='20'>
+			<Stack gr='1' g='50'>
+				<Stack g='40'>
+					<HTML.h lv='2' class='u-trim' fz='3xl' fw='bold' c='gray'>ここにしかない<br />特別な体験のための<br />魅力的なスポット</HTML.h>
+					<HTML.p class='u-trim' fz='m' o='-20'>Feature special spots</HTML.p>
+				</Stack>
+				<HTML.p>
+					あなたの旅をワンランク上の特別な体験へ。
+					私たちは世界中の高級ホテルや隠れ家リゾート、特別な移動手段の手配に特化したプレミアム旅行サービスです。
+					移動から宿泊、食事まで、最高品質のホスピタリティをご用意。喧騒から離れ心から満たされる、あなただけの贅沢な時間をお約束します。
+				</HTML.p>
+				<Flex my-s='auto'>
+					<Button href='#' jc='center' w='stretch' p='20' bdrs='10'>View More</Button>
+				</Flex>
+			</Stack>
+			<Grid gtc='repeat(2, 1fr)' g='40' ac='start'>
+				<Grid gtr='subgrid' gr='span 2' g='30'>
+					<Frame ar='4/3' bdrs='10'>
+						<Media src='https://cdn.lism-css.com/img/random-2510?r=1' alt='' />
 					</Frame>
-					<Stack g='30'>
-						<Text class='u--trimHL' fz='m' fw='bold'>夏のおすすめ</Text>
-						<Text class='u--trimHL' fz='s' op='mid'>Summer recommended products</Text>
-					</Stack>
-				</GridItem>
-				<GridItem layout={Stack} isLinkBox href='#' g='40' hov='set'>
-					<Frame ar='16/9' bdrs='10' pos='r'>
-						<Media src='/img/img-2.jpg' width='960' height='640' />
-						<Layer trs hov='get:show' bgc='rgb(0 0 0 / 30%)' blur='4px'>
-							<Center h='100%' c='white'>
-								<Text tag='span' fz='xl' fs='i' fw='light' lts='l' px='30' py='10'>View More</Text>
-							</Center>
-						</Layer>
+					<HTML.p class='u-trim' fz='s' c='gray'>幻想的で美しい夕景</HTML.p>
+				</Grid>
+				<Grid gtr='subgrid' gr='span 2' g='30'>
+					<Frame ar='4/3' bdrs='10'>
+						<Media src='https://cdn.lism-css.com/img/random-2510?r=2' alt='' />
 					</Frame>
-					<Stack g='30'>
-						<Text class='u--trimHL' fz='m' fw='bold'>登山に使いやすい</Text>
-						<Text class='u--trimHL' fz='s' op='mid'>Mountain special goods</Text>
-					</Stack>
-				</GridItem>
-				<GridItem layout={Stack} isLinkBox href='#' g='40' hov='set'>
-					<Frame ar='16/9' bdrs='10' pos='r'>
-						<Media src='/img/img-4.jpg' width='960' height='640' />
-						<Layer trs hov='get:show' bgc='rgb(0 0 0 / 30%)' blur='4px'>
-							<Center h='100%' c='white'>
-								<Text tag='span' fz='xl' fs='i' fw='light' lts='l' px='30' py='10'>View More</Text>
-							</Center>
-						</Layer>
+					<HTML.p class='u-trim' fz='s' c='gray'>雄大な空を眺める絶景スポット</HTML.p>
+				</Grid>
+				<Grid gtr='subgrid' gr='span 2' g='30'>
+					<Frame ar='4/3' bdrs='10'>
+						<Media src='https://cdn.lism-css.com/img/random-2510?r=3' alt='' />
 					</Frame>
-					<Stack g='30'>
-						<Text class='u--trimHL' fz='m' fw='bold'>秋の気配を感じて</Text>
-						<Text class='u--trimHL' fz='s' op='mid'>Feeling the signs of autumn</Text>
-					</Stack>
-				</GridItem>
-				<GridItem layout={Stack} isLinkBox href='#' g='40' hov='set'>
-					<Frame ar='16/9' bdrs='10' pos='r'>
-						<Media src='/img/img-5.jpg' width='960' height='640' />
-						<Layer trs hov='get:show' bgc='rgb(0 0 0 / 30%)' blur='4px'>
-							<Center h='100%' c='white'>
-								<Text tag='span' fz='xl' fs='i' fw='light' lts='l' px='30' py='10'>View More</Text>
-							</Center>
-						</Layer>
+					<HTML.p class='u-trim' fz='s' c='gray'>心が落ち着く青の世界</HTML.p>
+				</Grid>
+				<Grid gtr='subgrid' gr='span 2' g='30'>
+					<Frame ar='4/3' bdrs='10'>
+						<Media src='https://cdn.lism-css.com/img/random-2510?r=4' alt='' />
 					</Frame>
-					<Stack g='30'>
-						<Text class='u--trimHL' fz='m' fw='bold'>旅をしたくなる季節</Text>
-						<Text class='u--trimHL' fz='s' op='mid'>A season that makes you want to travel</Text>
-					</Stack>
-				</GridItem>
-			</GridItem>
-			<GridItem gr={['3', null, '1']} gc={['1 / -1', null, '2']}>
-				<Button layout={Grid} href='#' gtc='1em 1fr 1em' variant='outline' jc='c' ai='c' minW='8rem' bdrs='10'>
-					<GridItem layout={Text} gc='2'>View All</GridItem>
-				</Button>
-			</GridItem>
+					<HTML.p class='u-trim' fz='s' c='gray'>風を感じる穏やかな時間</HTML.p>
+				</Grid>
+			</Grid>
 		</Grid>
 	</Container>
 </DemoPageLayout>

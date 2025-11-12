@@ -1,98 +1,98 @@
 ---
 import DemoPageLayout from '~/layouts/DemoPageLayout.astro';
 
-import { Container, Frame, Flex, Grid, GridItem, Icon, LinkBox, Media, Stack, Text } from 'lism-css/astro';
+import { Container, Frame, Cluster, Grid, Icon, LinkBox, Media, Stack, HTML } from 'lism-css/astro';
 import './_style.css';
 ---
 
 <DemoPageLayout title='Member006'>
 	<Container size='l' bgc='base-2' py='60' hasGutter>
 		<Stack g='60'>
-			<Text class='u--trimHL' fz='2xl' fw='bold' ta='c'>スタッフ一覧</Text>
-			<Grid gtc={['auto', null, 'repeat(2, 1fr)']} g='50'>
-				<GridItem layout={Grid} gtr='subgrid' gr='span 2' g='40' bgc='white' p='40' bdrs='10'>
+			<HTML.h lv='2' class='u-trim' fz='4xl' fw='medium' c='gray' ta='center' lts='l'>Team</HTML.h>
+			<Grid gt='repeat' cols={['1', null, '2']} g='50'>
+				<Grid gtr='subgrid' gr='span 2' g='40' bgc='white' p='40' bdrs='10'>
 					<Grid gtc='auto 1fr' g='40'>
-						<Frame ar='1/1' w='stretch' maxW='120px' bdrs='10'>
-							<Media src='/img/img-1.jpg' width='960' height='640' />
+						<Frame ar='1/1' w='stretch' max-w='8rem' bdrs='10'>
+							<Media src='https://cdn.lism-css.com/img/random-2510?category=avatar&r=1' width='960' height='640' />
 						</Frame>
-						<Grid gtc='1fr auto' g='40' jc='c'>
-							<Stack g='30' jc='c'>
-								<Text class='u--trimHL' fz='l' fw='bold'>鈴木 太郎</Text>
-								<Text class='u--trimHL' fz='xs' op='high'>代表取締役 / クリエイティブディレクター</Text>
+						<Grid gtc='1fr auto' g='40' jc='center'>
+							<Stack g='30' jc='center'>
+								<HTML.p class='u-trim' fz='l' fw='bold'>鈴木 太郎</HTML.p>
+								<HTML.p class='u-trim' fz='xs' o='-10'>代表取締役 / クリエイティブディレクター</HTML.p>
 							</Stack>
-							<Flex variant='cluster' g='30' op='mid'>
-								<LinkBox href='#' c='text'><Icon icon='logo-x' fz='l' /></LinkBox>
-								<LinkBox href='#' c='text'><Icon icon='logo-instagram' fz='l' /></LinkBox>
-							</Flex>
+							<Cluster g='30'>
+								<LinkBox href='#' c='text' o='-20' hov={{ o: 'inherit' }}><Icon icon='logo-x' fz='l' /></LinkBox>
+								<LinkBox href='#' c='text' o='-20' hov={{ o: 'inherit' }}><Icon icon='logo-instagram' fz='l' /></LinkBox>
+							</Cluster>
 						</Grid>
 					</Grid>
-					<Text class='u--trimHL' fz='s' op='high'>
+					<HTML.p class='u-trim' fz='s' o='-10'>
 						2010年に当社を設立。クリエイティブの力で数々のクライアント課題を解決。
 						プロジェクト全体の品質に目を配り、チームを力強く牽引する。週末のキャンプが何よりの楽しみ。
-					</Text>
-				</GridItem>
-				<GridItem layout={Grid} gtr='subgrid' gr='span 2' g='40' bgc='white' p='40' bdrs='10'>
+					</HTML.p>
+				</Grid>
+				<Grid gtr='subgrid' gr='span 2' g='40' bgc='white' p='40' bdrs='10'>
 					<Grid gtc='auto 1fr' g='40'>
-						<Frame ar='1/1' w='stretch' maxW='120px' bdrs='10'>
-							<Media src='/img/img-5.jpg' width='960' height='640' />
+						<Frame ar='1/1' w='stretch' max-w='8rem' bdrs='10'>
+							<Media src='https://cdn.lism-css.com/img/random-2510?category=avatar&r=2' width='960' height='640' />
 						</Frame>
-						<Grid gtc='1fr auto' g='40' jc='c'>
-							<Stack g='30' jc='c'>
-								<Text class='u--trimHL' fz='l' fw='bold'>佐藤 美咲</Text>
-								<Text class='u--trimHL' fz='xs' op='high'>アートディレクター / UI/UXデザイナー</Text>
+						<Grid gtc='1fr auto' g='40' jc='center'>
+							<Stack g='30' jc='center'>
+								<HTML.p class='u-trim' fz='l' fw='bold'>佐藤 美咲</HTML.p>
+								<HTML.p class='u-trim' fz='xs' o='-10'>アートディレクター / UI/UXデザイナー</HTML.p>
 							</Stack>
-							<Flex variant='cluster' g='30' op='mid'>
-								<LinkBox href='#' c='text'><Icon icon='logo-tiktok' fz='l' /></LinkBox>
-								<LinkBox href='#' c='text'><Icon icon='logo-youtube' fz='l' /></LinkBox>
-							</Flex>
+							<Cluster g='30'>
+								<LinkBox href='#' c='text' o='-20' hov={{ o: 'inherit' }}><Icon icon='logo-tiktok' fz='l' /></LinkBox>
+								<LinkBox href='#' c='text' o='-20' hov={{ o: 'inherit' }}><Icon icon='logo-youtube' fz='l' /></LinkBox>
+							</Cluster>
 						</Grid>
 					</Grid>
-					<Text class='u--trimHL' fz='s' op='high'>
+					<HTML.p class='u-trim' fz='s' o='-10'>
 						人間の心理や行動に基づいた、直感的で美しいUI/UXデザインを得意とする。
 						ユーザーにとって本当に価値のある体験とは何かを常に追求し、ビジュアル全体を統括する。
-					</Text>
-				</GridItem>
-				<GridItem layout={Grid} gtr='subgrid' gr='span 2' g='40' bgc='white' p='40' bdrs='10'>
+					</HTML.p>
+				</Grid>
+				<Grid gtr='subgrid' gr='span 2' g='40' bgc='white' p='40' bdrs='10'>
 					<Grid gtc='auto 1fr' g='40'>
-						<Frame ar='1/1' w='stretch' maxW='120px' bdrs='10'>
-							<Media src='/img/img-3.jpg' width='960' height='640' />
+						<Frame ar='1/1' w='stretch' max-w='8rem' bdrs='10'>
+							<Media src='https://cdn.lism-css.com/img/random-2510?category=avatar&r=3' width='960' height='640' />
 						</Frame>
-						<Grid gtc='1fr auto' g='40' jc='c'>
-							<Stack g='30' jc='c'>
-								<Text class='u--trimHL' fz='l' fw='bold'>高橋 健太</Text>
-								<Text class='u--trimHL' fz='xs' op='high'>テクニカルディレクター / リードエンジニア</Text>
+						<Grid gtc='1fr auto' g='40' jc='center'>
+							<Stack g='30' jc='center'>
+								<HTML.p class='u-trim' fz='l' fw='bold'>高橋 健太</HTML.p>
+								<HTML.p class='u-trim' fz='xs' o='-10'>テクニカルディレクター / リードエンジニア</HTML.p>
 							</Stack>
-							<Flex variant='cluster' g='30' op='mid'>
-								<LinkBox href='#' c='text'><Icon icon='logo-twitter' fz='l' /></LinkBox>
-								<LinkBox href='#' c='text'><Icon icon='logo-github' fz='l' /></LinkBox>
-							</Flex>
+							<Cluster g='30'>
+								<LinkBox href='#' c='text' o='-20' hov={{ o: 'inherit' }}><Icon icon='logo-twitter' fz='l' /></LinkBox>
+								<LinkBox href='#' c='text' o='-20' hov={{ o: 'inherit' }}><Icon icon='logo-github' fz='l' /></LinkBox>
+							</Cluster>
 						</Grid>
 					</Grid>
-					<Text class='u--trimHL' fz='s' op='high'>
+					<HTML.p class='u-trim' fz='s' o='-10'>
 						最新のWeb技術に対する探究心が武器。困難な要件でも、最適な技術選定と実装でプロジェクトを成功に導く。
 						後輩の育成にも情熱を注ぐ、頼れる技術リーダー。
-					</Text>
-				</GridItem>
-				<GridItem layout={Grid} gtr='subgrid' gr='span 2' g='40' bgc='white' p='40' bdrs='10'>
+					</HTML.p>
+				</Grid>
+				<Grid gtr='subgrid' gr='span 2' g='40' bgc='white' p='40' bdrs='10'>
 					<Grid gtc='auto 1fr' g='40'>
-						<Frame ar='1/1' w='stretch' maxW='120px' bdrs='10'>
-							<Media src='/img/img-4.jpg' width='960' height='640' />
+						<Frame ar='1/1' w='stretch' max-w='8rem' bdrs='10'>
+							<Media src='https://cdn.lism-css.com/img/random-2510?category=avatar&r=4' width='960' height='640' />
 						</Frame>
-						<Grid gtc='1fr auto' g='40' jc='c'>
-							<Stack g='30' jc='c'>
-								<Text class='u--trimHL' fz='l' fw='bold'>田中 雄大</Text>
-								<Text class='u--trimHL' fz='xs' op='high'>Webディレクター / プロジェクトマネージャー</Text>
+						<Grid gtc='1fr auto' g='40' jc='center'>
+							<Stack g='30' jc='center'>
+								<HTML.p class='u-trim' fz='l' fw='bold'>田中 雄大</HTML.p>
+								<HTML.p class='u-trim' fz='xs' o='-10'>Webディレクター / プロジェクトマネージャー</HTML.p>
 							</Stack>
-							<Flex variant='cluster' g='30' op='mid'>
-								<LinkBox href='#' c='text'><Icon icon='logo-x' fz='l' /></LinkBox>
-							</Flex>
+							<Cluster g='30'>
+								<LinkBox href='#' c='text' o='-20' hov={{ o: 'inherit' }}><Icon icon='logo-x' fz='l' /></LinkBox>
+							</Cluster>
 						</Grid>
 					</Grid>
-					<Text class='u--trimHL' fz='s' op='high'>
+					<HTML.p class='u-trim' fz='s' o='-10'>
 						クライアントと制作チームの架け橋となり、プロジェクトを円滑に進行させる司令塔。
 						丁寧なコミュニケーションと緻密なスケジュール管理で、お客様からの信頼も厚い。
-					</Text>
-				</GridItem>
+					</HTML.p>
+				</Grid>
 			</Grid>
 		</Stack>
 	</Container>

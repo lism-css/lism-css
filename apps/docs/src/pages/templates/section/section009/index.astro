@@ -1,0 +1,35 @@
+---
+import DemoPageLayout from '~/layouts/DemoPageLayout.astro';
+
+import { Stack, Container, Frame, Grid, Media, HTML, Flex, Icon } from 'lism-css/astro';
+import './_style.css';
+---
+
+<DemoPageLayout title='Section009'>
+	<Container size='l' py='60' hasGutter>
+		<Stack g='60'>
+			<Grid gtc={['auto', null, '1fr 1fr']}>
+				<Stack g='60' jc='center' p={['50', null, '60']}>
+					<Stack tag='hgroup' g='40' ai='flex-s' jc='center'>
+						<HTML.p class='u-trim' fz='4rem' fw='100' lts='l'>Feature</HTML.p>
+						<HTML.h lv='2' class='u-trim' fz='xl' fw='bold' lts='l'>目指す社会は、その先に</HTML.h>
+					</Stack>
+					<HTML.p fz='m' lh='l'>
+						私たちのサービスは、持続可能な未来を目指し、環境への配慮と社会的責任を重視しています。<br />
+						地域社会との連携を深め、多様な価値観を尊重することで、共に成長できるコミュニティを築いています。 革新的な技術とデザインを活用し、ユーザー体験の向上に努めるとともに、
+						透明性の高い情報発信を行い、信頼関係の構築に努めています。 これからも、持続可能な発展と社会貢献を両立させるための取り組みを続けてまいります。
+					</HTML.p>
+					<Flex jc='flex-e'>
+						<Flex isLinkBox href='#' ai='center' g='20' setTransition hov='c'>
+							<HTML.span fz='l' fs='i'>View More</HTML.span>
+							<Icon icon='arrow-right' />
+						</Flex>
+					</Flex>
+				</Stack>
+				<Frame gr={[null, null, '1']} gc={['1', null, '2']} bdrs='10'>
+					<Media src='https://cdn.lism-css.com/img/random-2510' alt='' width='960' height='640' />
+				</Frame>
+			</Grid>
+		</Stack>
+	</Container>
+</DemoPageLayout>

@@ -2,7 +2,6 @@
 title: PriceTable001
 description: 価格表用のテンプレートです。breakpoint「md」以下は1カラムになり、アイテムが縦に並びます。
 tableOfContents: false
-draft: true
 ---
 
 import { Lism, Box } from 'lism-css/astro';
@@ -12,7 +11,7 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, PreviewFrame, EmbedCod
 アイテムの最小幅が設定されており、コンテナ幅に応じてカラム数が変化します。
 
 <PreviewTitle>プレビュー</PreviewTitle>
-<PreviewFrame url='/templates/pricetable/pricetable001/' />
+<PreviewFrame url='/templates/pricetable/pricetable001/' hasSizeSwitch />
 
 <PreviewTitle>コード</PreviewTitle>
 <EmbedCode srcPath={`src/pages/templates/pricetable/pricetable001/index.astro`} />

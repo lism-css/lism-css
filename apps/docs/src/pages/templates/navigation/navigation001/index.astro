@@ -1,60 +1,60 @@
 ---
 import DemoPageLayout from '~/layouts/DemoPageLayout.astro';
 
-import { Container, Flex, Grid, Icon, LinkBox, Stack, Text } from 'lism-css/astro';
+import { Container, Flex, Grid, Icon, LinkBox, Stack, HTML } from 'lism-css/astro';
 import './_style.css';
 ---
 
 <DemoPageLayout title='Navigation001'>
 	<Container size='l' bgc='base' py='60' hasGutter>
 		<Stack g='60'>
-			<Text class='u--trimHL' fz='2xl' fw='bold' ta='c'>製品カテゴリー</Text>
-			<Grid gtc='repeat(auto-fit, minmax(250px, 1fr))' g='0 50'>
-				<LinkBox href='#' layout={Flex} g='40' ai='c' jc='sb' p='40 10' bd='t' bdc='divider'>
-					<Text class='u--trimHL' fz='m' fw='bold'>キッチン家電</Text>
-					<Flex ai='c' jc='c' bgc='black' bdrs='99' p='5'>
+			<HTML.h lv='2' class='u-trim' fz='2xl' fw='bold' ta='center'>製品カテゴリー</HTML.h>
+			<Grid gtc='repeat(auto-fit, minmax(250px, 1fr))' g-x='50' pt='1px'>
+				<LinkBox href='#' layout='flex' g='40' ai='center' jc='between' py='40' px='10' mt='-1px' bd-y bdc='line' setHov>
+					<HTML.p class='u-trim' fz='m' fw='bold' setTransition hov='to:cLink'>キッチン家電</HTML.p>
+					<Flex ai='center' jc='center' bgc='black' bdrs='99' p='5'>
 						<Icon icon='caret-right' fz='xs' c='white' />
 					</Flex>
 				</LinkBox>
-				<LinkBox href='#' layout={Flex} g='40' ai='c' jc='sb' p='40 10' bd='t' bdc='divider'>
-					<Text class='u--trimHL' fz='m' fw='bold'>オーディオ</Text>
-					<Flex ai='c' jc='c' bg='black' bdrs='99' p='5'>
+				<LinkBox href='#' layout='flex' g='40' ai='center' jc='between' py='40' px='10' mt='-1px' bd-y bdc='line' setHov>
+					<HTML.p class='u-trim' fz='m' fw='bold' setTransition hov='to:cLink'>オーディオ</HTML.p>
+					<Flex ai='center' jc='center' bg='black' bdrs='99' p='5'>
 						<Icon icon='caret-right' fz='xs' c='white' />
 					</Flex>
 				</LinkBox>
-				<LinkBox href='#' layout={Flex} g='40' ai='c' jc='sb' p='40 10' bd='t' bdc='divider'>
-					<Text class='u--trimHL' fz='m' fw='bold'>生活家電</Text>
-					<Flex ai='c' jc='c' bg='black' bdrs='99' p='5'>
+				<LinkBox href='#' layout='flex' g='40' ai='center' jc='between' py='40' px='10' mt='-1px' bd-y bdc='line' setHov>
+					<HTML.p class='u-trim' fz='m' fw='bold' setTransition hov='to:cLink'>生活家電</HTML.p>
+					<Flex ai='center' jc='center' bg='black' bdrs='99' p='5'>
 						<Icon icon='caret-right' fz='xs' c='white' />
 					</Flex>
 				</LinkBox>
-				<LinkBox href='#' layout={Flex} g='40' ai='c' jc='sb' p='40 10' bd='t' bdc='divider'>
-					<Text class='u--trimHL' fz='m' fw='bold'>冷蔵庫</Text>
-					<Flex ai='c' jc='c' bg='black' bdrs='99' p='5'>
+				<LinkBox href='#' layout='flex' g='40' ai='center' jc='between' py='40' px='10' mt='-1px' bd-y bdc='line' setHov>
+					<HTML.p class='u-trim' fz='m' fw='bold' setTransition hov='to:cLink'>冷蔵庫</HTML.p>
+					<Flex ai='center' jc='center' bg='black' bdrs='99' p='5'>
 						<Icon icon='caret-right' fz='xs' c='white' />
 					</Flex>
 				</LinkBox>
-				<LinkBox href='#' layout={Flex} g='40' ai='c' jc='sb' p='40 10' bd='t' bdc='divider'>
-					<Text class='u--trimHL' fz='m' fw='bold'>洗濯機・衣類ケア</Text>
-					<Flex ai='c' jc='c' bg='black' bdrs='99' p='5'>
+				<LinkBox href='#' layout='flex' g='40' ai='center' jc='between' py='40' px='10' mt='-1px' bd-y bdc='line' setHov>
+					<HTML.p class='u-trim' fz='m' fw='bold' setTransition hov='to:cLink'>洗濯機・衣類ケア</HTML.p>
+					<Flex ai='center' jc='center' bg='black' bdrs='99' p='5'>
 						<Icon icon='caret-right' fz='xs' c='white' />
 					</Flex>
 				</LinkBox>
-				<LinkBox href='#' layout={Flex} g='40' ai='c' jc='sb' p='40 10' bd='t' bdc='divider'>
-					<Text class='u--trimHL' fz='m' fw='bold'>美容</Text>
-					<Flex ai='c' jc='c' bg='black' bdrs='99' p='5'>
+				<LinkBox href='#' layout='flex' g='40' ai='center' jc='between' py='40' px='10' mt='-1px' bd-y bdc='line' setHov>
+					<HTML.p class='u-trim' fz='m' fw='bold' setTransition hov='to:cLink'>美容</HTML.p>
+					<Flex ai='center' jc='center' bg='black' bdrs='99' p='5'>
 						<Icon icon='caret-right' fz='xs' c='white' />
 					</Flex>
 				</LinkBox>
-				<LinkBox href='#' layout={Flex} g='40' ai='c' jc='sb' p='40 10' bd='t' bdc='divider'>
-					<Text class='u--trimHL' fz='m' fw='bold'>照明器具</Text>
-					<Flex ai='c' jc='c' bg='black' bdrs='99' p='5'>
+				<LinkBox href='#' layout='flex' g='40' ai='center' jc='between' py='40' px='10' mt='-1px' bd-y bdc='line' setHov>
+					<HTML.p class='u-trim' fz='m' fw='bold' setTransition hov='to:cLink'>照明器具</HTML.p>
+					<Flex ai='center' jc='center' bg='black' bdrs='99' p='5'>
 						<Icon icon='caret-right' fz='xs' c='white' />
 					</Flex>
 				</LinkBox>
-				<LinkBox href='#' layout={Flex} g='40' ai='c' jc='sb' p='40 10' bd='t' bdc='divider'>
-					<Text class='u--trimHL' fz='m' fw='bold'>パソコン・周辺機器</Text>
-					<Flex ai='c' jc='c' bg='black' bdrs='99' p='5'>
+				<LinkBox href='#' layout='flex' g='40' ai='center' jc='between' py='40' px='10' mt='-1px' bd-y bdc='line' setHov>
+					<HTML.p class='u-trim' fz='m' fw='bold' setTransition hov='to:cLink'>パソコン・周辺機器</HTML.p>
+					<Flex ai='center' jc='center' bg='black' bdrs='99' p='5'>
 						<Icon icon='caret-right' fz='xs' c='white' />
 					</Flex>
 				</LinkBox>
@@ -62,3 +62,11 @@ import './_style.css';
 		</Stack>
 	</Container>
 </DemoPageLayout>
+
+<style>
+	@media (any-hover: hover) {
+		.-hov\:to\:cLink {
+			color: var(--isHov_, var(--c--link));
+		}
+	}
+</style>

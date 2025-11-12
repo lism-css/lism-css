@@ -1,0 +1,32 @@
+---
+import DemoPageLayout from '~/layouts/DemoPageLayout.astro';
+
+import { Box, Stack, Container, Frame, Layer, Media, HTML } from 'lism-css/astro';
+import './_style.css';
+---
+
+<DemoPageLayout title='Section010'>
+	<Container size='m' py='60' hasGutter>
+		<Stack g='40'>
+			<Frame ar='16/9' pos='rel'>
+				<Media src='https://cdn.lism-css.com/img/random-2510' alt='' width='960' height='640' />
+				<Layer p='40 0'>
+					<Stack jc='center' ai='flex-s' min-h='100%' g='30'>
+						<Box bgc='white' p='20 30'>
+							<HTML.h lv='2' class='u-trim' fz='min(5vw, 1.75rem)' fw='bold' ff='accent' lh='xs'>四季の美しさを感じる</HTML.h>
+						</Box>
+					</Stack>
+					<Box p='30' pos='abs' b='0' r='0'>
+						<HTML.p class='u-trim' fz='s' c='white'>Feel the beauty of each season</HTML.p>
+					</Box>
+				</Layer>
+			</Frame>
+			<HTML.p>
+				自然由来の環境負荷を抑えた製法で、一つひとつ丁寧に手作りしています。
+				大地の恵みを、あなたの毎日へ。私たちの製品は、自然の力を最大限に活かし、持続可能な未来を目指しています。
+				季節ごとに変わる風景とともに、心地よい生活をお届けします。
+				四季折々の美しさを感じながら、豊かな時間を過ごしていただけることを願っています。
+			</HTML.p>
+		</Stack>
+	</Container>
+</DemoPageLayout>

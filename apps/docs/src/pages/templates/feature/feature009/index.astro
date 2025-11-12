@@ -1,78 +1,52 @@
 ---
 import DemoPageLayout from '~/layouts/DemoPageLayout.astro';
 
-import { Container, Frame, Grid, GridItem, Media, Stack, Text, Layer, Center } from 'lism-css/astro';
+import { Stack, Container, Frame, Grid, Media, HTML } from 'lism-css/astro';
 import './_style.css';
 ---
 
-<DemoPageLayout title='Feature008'>
-	<Container size='m' bgc='base' py='60' hasGutter>
-		<Text fz='2xl' fw='bold' ta='c' mb='50'>製品について</Text>
-		<Grid gtc={['auto', null, 'repeat(2, 1fr)']} g='50'>
-			<GridItem isLinkBox href='#' layout={Grid} gtc='1fr 2fr' bxsh='20' trs hov='set,bxsh'>
-				<Frame tag='figure' pos='r'>
-					<Media src='/img/img-1.jpg' alt='' width='960' height='640' />
-					<Layer trs hov='get:show' bgc='rgb(0 0 0 / 30%)' blur='4px'>
-						<Center h='100%' c='white'>
-							<Text tag='span' fz='s' fs='i' fw='light' lts='l' px='30' py='10'>View More</Text>
-						</Center>
-					</Layer>
-				</Frame>
-				<Stack g='40' p='40'>
-					<Text class='u--trimHL' fz='m' fw='bold'>衣類をいたわる</Text>
-					<Text class='u--trimHL' fz='s' op='high'>繊維の奥の汚れを落とし、衣類の傷みを抑えながら、ふんわりと優しく洗い上げます。</Text>
-				</Stack>
-			</GridItem>
-			<GridItem isLinkBox href='#' layout={Grid} gtc='1fr 2fr' bxsh='20' trs hov='set,bxsh'>
-				<Frame tag='figure' pos='r'>
-					<Media src='/img/img-2.jpg' alt='' width='960' height='640' />
-					<Layer trs hov='get:show' bgc='rgb(0 0 0 / 30%)' blur='4px'>
-						<Center h='100%' c='white'>
-							<Text tag='span' fz='s' fs='i' fw='light' lts='l' px='30' py='10'>View More</Text>
-						</Center>
-					</Layer>
-				</Frame>
-				<Stack g='40' p='40'>
-					<Text class='u--trimHL' fz='m' fw='bold'>空気をデザインする</Text>
-					<Text class='u--trimHL' fz='s' op='high'>快適な室温はもちろん、空気清浄機能でウイルスや花粉の活動を抑制します。</Text>
-				</Stack>
-			</GridItem>
-			<GridItem isLinkBox href='#' layout={Grid} gtc='1fr 2fr' bxsh='20' trs hov='set,bxsh'>
-				<Frame tag='figure' pos='r'>
-					<Media src='/img/img-3.jpg' alt='' width='960' height='640' />
-					<Layer trs hov='get:show' bgc='rgb(0 0 0 / 30%)' blur='4px'>
-						<Center h='100%' c='white'>
-							<Text tag='span' fz='s' fs='i' fw='light' lts='l' px='30' py='10'>View More</Text>
-						</Center>
-					</Layer>
-				</Frame>
-				<Stack g='40' p='40'>
-					<Text class='u--trimHL' fz='m' fw='bold'>毎日ごちそうを</Text>
-					<Text class='u--trimHL' fz='s' op='high'>過熱水蒸気の力で、本格的なオーブン料理が誰でも簡単においしく作れます。</Text>
-				</Stack>
-			</GridItem>
-			<GridItem isLinkBox href='#' layout={Grid} gtc='1fr 2fr' bxsh='20' trs hov='set,bxsh'>
-				<Frame tag='figure' pos='r'>
-					<Media src='/img/img-4.jpg' alt='' width='960' height='640' />
-					<Layer trs hov='get:show' bgc='rgb(0 0 0 / 30%)' blur='4px'>
-						<Center h='100%' c='white'>
-							<Text tag='span' fz='s' fs='i' fw='light' lts='l' px='30' py='10'>View More</Text>
-						</Center>
-					</Layer>
-				</Frame>
-				<Stack g='40' p='40'>
-					<Text class='u--trimHL' fz='m' fw='bold'>深呼吸したくなる空間へ</Text>
-					<Text class='u--trimHL' fz='s' op='high'>高性能フィルターが微細な粒子を99%捕集。静かな運転音で寝室にも最適。</Text>
-				</Stack>
-			</GridItem>
-		</Grid>
+<DemoPageLayout title='Feature009'>
+	<Container size='m' py='60' hasGutter>
+		<Stack g='60'>
+			<HTML.h lv='2' class='u-trim' fz='2xl' fw='bold' ta='center'>私たちの取り組み</HTML.h>
+			<Grid gtc='liquid' cols='300px' gtr='auto auto auto' g='50'>
+				<Grid gtr='subgrid' gr='span 3' g='40'>
+					<Frame ar='og' bdrs='10'>
+						<Media src='https://cdn.lism-css.com/img/random-2510?r=1' alt='' width='960' height='640' />
+					</Frame>
+					<HTML.p class='u-trim' fz='m' fw='bold'>自然と共に、生きる</HTML.p>
+					<HTML.p class='u-trim' fz='s' o='-10'>
+						人と自然が豊かに共存する社会を目指して。次世代に美しい地球を残すため、事業のあらゆる場面で環境への配慮を最優先に考えています。
+					</HTML.p>
+				</Grid>
+				<Grid gtr='subgrid' gr='span 3' g='40'>
+					<Frame ar='og' bdrs='10'>
+						<Media src='https://cdn.lism-css.com/img/random-2510?r=2' alt='' width='960' height='640' />
+					</Frame>
+					<HTML.p class='u-trim' fz='m' fw='bold'>大地からの、贈り物</HTML.p>
+					<HTML.p class='u-trim' fz='s' o='-10'>
+						私たちの製品は、自然への敬意から生まれます。農薬を使わずに育てられたオーガニック素材や、持続可能な資源だけを厳選しています。
+					</HTML.p>
+				</Grid>
+				<Grid gtr='subgrid' gr='span 3' g='40'>
+					<Frame ar='og' bdrs='10'>
+						<Media src='https://cdn.lism-css.com/img/random-2510?r=3' alt='' width='960' height='640' />
+					</Frame>
+					<HTML.p class='u-trim' fz='m' fw='bold'>自然に触れる、週末</HTML.p>
+					<HTML.p class='u-trim' fz='s' o='-10'>
+						都会の喧騒を離れ、土や緑に触れる時間を提供します。週末の農業体験や森歩きなど、五感で自然を感じるプログラムをご用意しています。
+					</HTML.p>
+				</Grid>
+				<Grid gtr='subgrid' gr='span 3' g='40'>
+					<Frame ar='og' bdrs='10'>
+						<Media src='https://cdn.lism-css.com/img/random-2510?r=4' alt='' width='960' height='640' />
+					</Frame>
+					<HTML.p class='u-trim' fz='m' fw='bold'>同じ想いを、持つ仲間</HTML.p>
+					<HTML.p class='u-trim' fz='s' o='-10'>
+						このサービスは、同じ価値観を持つ人々のコミュニティです。作り手のストーリーや愛用者の声を発信し、想いの輪を広げています。
+					</HTML.p>
+				</Grid>
+			</Grid>
+		</Stack>
 	</Container>
 </DemoPageLayout>
-
-<style>
-	@media (any-hover: hover) {
-		.-hov\:get\:zoom {
-			scale: var(--_isHov, 1.1);
-		}
-	}
-</style>
