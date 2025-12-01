@@ -130,7 +130,7 @@ $bp_support_list: (); // list
 			@if (meta.type-of($exValue) == map) {
 				.-#{$key}\:#{$exKey} {
 					@each $_p, $_v in $exValue {
-						#{$_p}: #{$_v};
+						#{$_p}: #{$_v} #{get_important_str($important)};
 					}
 				}
 			}
