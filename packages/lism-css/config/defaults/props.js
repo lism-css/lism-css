@@ -242,9 +242,7 @@ export default {
 		presets: ['repeat'],
 		exUtility: {
 			repeat: {
-				'--cols': '1',
-				'--rows': '1',
-				'grid-template': 'repeat(var(--rows), 1fr) / repeat(var(--cols), 1fr)',
+				'grid-template': 'repeat(var(--rows,1), 1fr) / repeat(var(--cols,1), 1fr)',
 			},
 		},
 		bp: 1,
