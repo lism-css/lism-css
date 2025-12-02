@@ -1,33 +1,42 @@
-// dialog,
+/*
+ * dialog で実装.
+ *   Memo: ::backdrop のアニメーションはFirefoxで動かない
+ */
 .d--modal {
 	--my-s: 0; // flow直下にきても影響しないように
-	--offset: 0 0; // アニメーション用
 	--duration: var(--modal-duration, 0.5s);
-	--backdropBg: rgb(0 0 0 / 0.6);
+	width: 100%;
+	height: 100%;
 	max-width: 100%;
 	max-height: 100%;
-	transition-duration: var(--duration, 0.5s);
+	overflow: unset;
+	background: var(--backdrop-bg, rgb(0 0 0 / 0.6));
+	transition-duration: var(--duration);
+	transition-property: opacity;
 
 	&::backdrop {
-		transition: opacity var(--duration, 0.5s);
-		background: var(--backdropBg);
+		background: none;
 	}
+}
+.d--modal[open] {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
 }
 
 .d--modal_inner {
-	max-height: 100%;
+	--translate: 0 0; // アニメーション用
 	background-color: var(--c--base);
+	transition: translate var(--duration);
 }
 
-.d--modal_body {
-	overflow: auto;
-	overscroll-behavior: contain;
-}
+// .d--modal_body {
+// 	overscroll-behavior: contain;
+// }
 
 .d--modal:not([data-is-open]) {
-	translate: var(--offset);
-}
-.d--modal:not([data-is-open]),
-.d--modal:not([data-is-open])::backdrop {
 	opacity: 0;
+}
+.d--modal:not([data-is-open]) > .d--modal_inner {
+	translate: var(--translate);
 }

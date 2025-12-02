@@ -127,11 +127,16 @@ h6 {
 /* ----------------------------------------
     dialog
  ---------------------------------------- */
+/* ダイアログ展開時のガタツキを防ぐ */
+// html:has(:modal[open]) {
+// 	scrollbar-gutter: stable;
+// }
+
 // showModal()にのみ適用するため、 dialog ではなく :modal を使用
 @include mixin.switch_selector('body:has(:modal[open])', 'body:where(:has(:modal[open]))') {
 	overflow: hidden;
 }
 
-@include mixin.switch_selector('dialog:not([open])', 'dialog:where(:not([open]))') {
-	pointer-events: none;
-}
+// @include mixin.switch_selector('dialog:not([open])', 'dialog:where(:not([open]))') {
+// 	pointer-events: none;
+// }
