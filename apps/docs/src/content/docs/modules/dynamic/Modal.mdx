@@ -44,16 +44,20 @@ dialog.d--modal#modalID.set-plain
 
 | プロパティ | 説明 |
 |---|---|
-|`id`| Modal(d--modal)にはid属性が必要です。|
-|`layout`| レイアウト用コンポーネントを指定できます。|
-|`offset`(`--offset`)| Modalの非表示時の位置をずらすためのオフセット値|
-|`data-modal-open`| モーダルを開くトリガー要素にて、モーダルの`id`を指定します。|
-|`data-modal-open`| モーダルを閉じるトリガー要素にて、モーダルの`id`を指定します。|
+|`id`| Modal(`.d--modal`)にはid属性が必要です。|
+|（`<Modal.Inner>`） `layout`| `__inner`のレイアウト用コンポーネントを指定できます。|
+|（`<Modal.Inner>`） `translate`(`--translate`)| `__inner`のの非表示時の位置をずらすためのオフセット値|
+| (`<Modal.OpenBtn>`) `modalId`| `data-modal-open`として出力されます。モーダルを開くトリガー要素にて、モーダルの`id`を指定します。|
+| (`<Modal.CloseBtn>`) `modalId`| `data-modal-close`として出力されます。モーダルを閉じるトリガー要素にて、モーダルの`id`を指定します。|
 
 
 ## Usage
 
-`Modal.Root`をgridレイアウト系にしてしまうと、 `Modal.Inner`(`.d--modal_inner`) の `max-height 100%` が効かなくなるので注意してください。
+
+- Modalは`dialog`を使用しています。自体のdisplay値を変更しないように注意してください。
+- `::backdrop` はアニメーションに問題があるため、dialogをスクリーン幅いっぱいにして背景色をつけて運用する前提で設計しています。
+
+{/* `<Modal.Root>`をgridレイアウト系にしてしまうと、 `<Modal.Inner>`(`.d--modal_inner`) の `max-height 100%` が効かなくなるので注意してください。 */}
 
 {/* モーダルコンテンツを中央に寄せたい場合、l--stack + jc='center' か、 root:l--stack + inner:m='auto' で実現できます。 */}
 
@@ -62,16 +66,13 @@ dialog.d--modal#modalID.set-plain
 	<PreviewArea p='20'>
 		<Modal.OpenBtn modalId='modal-01' className='-bd -px:20 -py:5 -bdrs:10'>Open Modal 01</Modal.OpenBtn>
 
-		<Modal.Root id='modal-01' layout='stack' jc='center' isContainer='m' p='40'>
-			<Modal.Inner pos='relative' p='40' g='30' bdrs='20' bxsh='40'>
-				<Modal.CloseBtn modalId='modal-01' pos='absolute' t='0' r='0' z='1' fz='xl' p='10' m='20' />
-				<Modal.Body layout='flow' flow='s'>
+		<Modal.Root id='modal-01' isContainer='m' p='40'>
+			<Modal.Inner layout='stack' pos='relative' p='40' bdrs='20' bxsh='40'>
+				<Modal.CloseBtn modalId='modal-01' autofocus pos='absolute' t='0' r='0' z='1' fz='xl' p='10' m='20' />
+				<Modal.Body layout='stack' g='40' className='u-trimItems'>
 					<div className='-fz:xl -fw:bold'>Modal Title</div>
 					<Dummy />
 				</Modal.Body>
-				<Flex>
-					<Modal.CloseBtn modalId='modal-01' bgc='base-2' p='20' bdrs='10'>Close Modal</Modal.CloseBtn>
-				</Flex>
 			</Modal.Inner>
 		</Modal.Root>
 	</PreviewArea>
@@ -79,16 +80,13 @@ dialog.d--modal#modalID.set-plain
 		```jsx "'modal-01'"
 		<Modal.OpenBtn modalId='modal-01' className='-bd -px:20 -py:5 -bdrs:10'>Open Modal 01</Modal.OpenBtn>
 
-		<Modal.Root id='modal-01' layout='stack' jc='center' isContainer='m' p='40'>
-			<Modal.Inner pos='relative' p='40' g='30' bdrs='20' bxsh='40'>
-				<Modal.CloseBtn modalId='modal-01' pos='absolute' t='0' r='0' z='1' fz='xl' p='10' m='20' />
-				<Modal.Body layout='flow' flow='s'>
+		<Modal.Root id='modal-01' isContainer='m' p='40'>
+			<Modal.Inner layout='stack' pos='relative' p='40' bdrs='20' bxsh='40'>
+				<Modal.CloseBtn modalId='modal-01' autofocus pos='absolute' t='0' r='0' z='1' fz='xl' p='10' m='20' />
+				<Modal.Body layout='stack' g='40' className='u-trimItems'>
 					<div className='-fz:xl -fw:bold'>Modal Title</div>
 					<Dummy />
 				</Modal.Body>
-				<Flex>
-					<Modal.CloseBtn modalId='modal-01' bgc='base-2' p='20' bdrs='10'>Close Modal</Modal.CloseBtn>
-				</Flex>
 			</Modal.Inner>
 		</Modal.Root>
 		```
@@ -106,13 +104,13 @@ dialog.d--modal#modalID.set-plain
 	<PreviewArea p='20'>
 		<Modal.OpenBtn modalId='modal-02' className='-bd -px:20 -py:5 -bdrs:10'>Open Modal 02</Modal.OpenBtn>
 
-		<Modal.Root id='modal-02' layout='stack' jc='center' isContainer='s' px='40' py='60'>
-			<Modal.Inner bdrs='20' bxsh='40'>
+		<Modal.Root id='modal-02' isContainer='s' px='40' py='60'>
+			<Modal.Inner layout='stack' max-h='100%' bdrs='20' bxsh='40'>
 				<Flex ai='center' jc='between' py='20' bd-b>
 					<HTML.span fz='l' fw='bold' lh='s' mx-s='40'>Modal Header</HTML.span>
-					<Modal.CloseBtn modalId='modal-02' fz='xl' p='20' mx='20'/>
+					<Modal.CloseBtn modalId='modal-02' autofocus fz='xl' p='20' mx='20'/>
 				</Flex>
-				<Modal.Body layout='flow' px='40' py='30'>
+				<Modal.Body layout='flow' px='40' py='30' ov-y='auto'>
 					<Dummy />
 					<Dummy length='xl' offset={1} />
 					<Dummy length='l' />
@@ -130,13 +128,13 @@ dialog.d--modal#modalID.set-plain
 		```jsx "'modal-02'"
 		<Modal.OpenBtn modalId='modal-02' className='-bd -px:20 -py:5 -bdrs:10'>Open Modal 02</Modal.OpenBtn>
 
-		<Modal.Root id='modal-02' layout='stack' jc='center' isContainer='s' px='40' py='60'>
-			<Modal.Inner bdrs='20' bxsh='40'>
+		<Modal.Root id='modal-02' isContainer='s' px='40' py='60'>
+			<Modal.Inner layout='stack' max-h='100%' bdrs='20' bxsh='40'>
 				<Flex ai='center' jc='between' py='20' bd-b>
 					<HTML.span fz='l' fw='bold' lh='s' mx-s='40'>Modal Header</HTML.span>
-					<Modal.CloseBtn modalId='modal-02' fz='xl' p='20' mx='20'/>
+					<Modal.CloseBtn modalId='modal-02' autofocus fz='xl' p='20' mx='20'/>
 				</Flex>
-				<Modal.Body layout='flow' px='40' py='30'>
+				<Modal.Body layout='flow' px='40' py='30' ov-y='auto'>
 					<Dummy />
 					<Dummy length='xl' offset={1} />
 					<Dummy length='l' />
@@ -160,7 +158,7 @@ dialog.d--modal#modalID.set-plain
 
 ### ドロワーメニューの作成例
 
-<IconBadge /> 以下では、追加インポートが必要な[`NavMenu`](/components/navmenu)も併用しています。
+{/* <IconBadge /> 以下では、追加インポートが必要な[`NavMenu`](/components/navmenu)も併用しています。 */}
 
 <Preview>
 	<PreviewTitle>ドロワーメニューの作成例</PreviewTitle>
@@ -169,13 +167,13 @@ dialog.d--modal#modalID.set-plain
 			<Icon icon='menu' fz='xl' /><span>MENU</span>
 		</Modal.OpenBtn>
 
-		<Modal.Root id='modal-03' offset='-100px 0'>
-			<Modal.Inner max-w='24rem' h='100%' bxsh='40'>
+		<Modal.Root id='modal-03'>
+			<Modal.Inner layout='stack' max-w='24rem' h='100%' bxsh='40' translate='-100px 0'>
 				<Flex bd-b ai='center' jc='between' p='30'>
 					<HTML.span fz='l'>MENU</HTML.span>
-					<Modal.CloseBtn modalId='modal-03' fz='xl' p='5'/>
+					<Modal.CloseBtn modalId='modal-03' autofocus fz='xl' p='5'/>
 				</Flex>
-				<Modal.Body>
+				<Modal.Body ov-y='auto'>
 					<Stack className='u-itemDivider' bdc='line' bd-b p='0' ov='clip'>
 						<HTML.a href='#menu-link01' className='set-plain' hov='o' px='30' py='20'>Menu item 1</HTML.a>
 						<HTML.a href='#menu-link02' className='set-plain' hov='o' px='30' py='20'>Menu item 2</HTML.a>
@@ -192,13 +190,13 @@ dialog.d--modal#modalID.set-plain
 			<Icon icon='menu' fz='xl' /><span>MENU</span>
 		</Modal.OpenBtn>
 
-		<Modal.Root id='modal-03' offset='-100px 0'>
-			<Modal.Inner max-w='24rem' h='100%' bxsh='40'>
+		<Modal.Root id='modal-03'>
+			<Modal.Inner layout='stack' max-w='24rem' h='100%' bxsh='40' translate='-100px 0'>
 				<Flex bd-b ai='center' jc='between' p='30'>
 					<HTML.span fz='l'>MENU</HTML.span>
-					<Modal.CloseBtn modalId='modal-03' fz='xl' p='5'/>
+					<Modal.CloseBtn modalId='modal-03' autofocus fz='xl' p='5'/>
 				</Flex>
-				<Modal.Body>
+				<Modal.Body ov-y='auto'>
 					<Stack className='u-itemDivider' bdc='line' bd-b p='0' ov='clip'>
 						<HTML.a href='#menu-link01' className='set-plain' hov='o' px='30' py='20'>Menu item 1</HTML.a>
 						<HTML.a href='#menu-link02' className='set-plain' hov='o' px='30' py='20'>Menu item 2</HTML.a>

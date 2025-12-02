@@ -1,6 +1,6 @@
 ---
 import type { LismProps } from '../../types';
-import { defaultProps } from '../../../dist/components/Modal/getProps';
+import { getInnerProps } from '../../../dist/components/Modal/getProps';
 import { Lism } from '../Lism';
 
 // Propsの定義
@@ -8,6 +8,6 @@ interface Props extends LismProps {}
 const props = Astro.props || {};
 ---
 
-<Lism {...defaultProps.inner} {...props}>
+<Lism {...getInnerProps(props)}>
 	<slot />
 </Lism>
