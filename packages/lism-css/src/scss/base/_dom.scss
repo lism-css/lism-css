@@ -81,6 +81,11 @@ h6 {
 	// text-decoration-thickness: var(--underline-thickness, 1px);
 }
 
+// フォーカス要素
+@include mixin.maybe_where(':focus-visible') {
+	outline-offset: var(--focus-offset, 0px);
+}
+
 /* ----------------------------------------
     table
  ---------------------------------------- */
