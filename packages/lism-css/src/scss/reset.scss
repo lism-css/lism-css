@@ -14,84 +14,99 @@
 	  - padding は ブラウザ標準スタイルのまま
 	  - margin はすべて 0 にリセット
 ------------------------------------------------------------ */
-*,
-::before,
-::after {
-	box-sizing: border-box;
-}
+@layer lism-reset {
+	*,
+	::before,
+	::after {
+		box-sizing: border-box;
+	}
 
-* {
-	margin: 0;
-}
+	* {
+		margin: 0;
+	}
 
-/* ------------------------------------------------------------
+	/* ------------------------------------------------------------
 	Texts
 ------------------------------------------------------------ */
 
-/* テキストのオーバーフローを回避 */
-@include mixin.maybe_where('p, h1, h2, h3, h4, h5, h6') {
-	overflow-wrap: break-word;
-}
+	/* テキストのオーバーフローを回避 */
+	p,
+	h1,
+	h2,
+	h3,
+	h4,
+	h5,
+	h6 {
+		overflow-wrap: break-word;
+	}
 
-/* ルビのサイズ統一 */
-rt {
-	font-size: 50%;
-}
+	/* ルビのサイズ統一 */
+	rt {
+		font-size: 50%;
+	}
 
-/* ------------------------------------------------------------
+	/* ------------------------------------------------------------
 	Medias
 ------------------------------------------------------------ */
 
-/* 親要素をはみ出さないようにする */
-@include mixin.maybe_where('img, video') {
-	max-inline-size: 100%;
-	block-size: auto;
-}
+	/* 親要素をはみ出さないようにする */
+	img,
+	video {
+		max-inline-size: 100%;
+		block-size: auto;
+	}
 
-/* 隙間ができるのを防ぐ。( display はいじらない。) */
-@include mixin.maybe_where('svg, img, video, audio') {
-	vertical-align: middle;
-}
+	/* 隙間ができるのを防ぐ。( display はいじらない。) */
+	svg,
+	img,
+	video,
+	audio {
+		vertical-align: middle;
+	}
 
-/* iframe は display block */
-@include mixin.maybe_where('iframe, embed, object') {
-	display: block;
-	border: none;
-}
+	/* iframe は display block */
+	iframe {
+		display: block;
+		border: none;
+	}
 
-/* ------------------------------------------------------------
+	/* ------------------------------------------------------------
 	Form fields
 	  - 基本要素のフォントとカラーをリセット
 	  - テキストエリアの水平リサイズを無効に
 	  - カーソルのセット
 ------------------------------------------------------------ */
-@include mixin.maybe_where('input, button, textarea, select') {
-	font: inherit;
-	color: inherit;
-	text-transform: none;
-}
+	input,
+	button,
+	textarea,
+	select {
+		font: inherit;
+		color: inherit;
+		text-transform: none;
+	}
 
-/* テキストエリアの水平リサイズを無効に */
-textarea {
-	resize: vertical;
-}
+	/* テキストエリアの水平リサイズを無効に */
+	textarea {
+		resize: vertical;
+	}
 
-/* ------------------------------------------------------------
+	/* ------------------------------------------------------------
 	cursor 初期セット
 ------------------------------------------------------------ */
-// :where([type='button'], [type='reset'], [type='submit'], [type='radio'], [type='checkbox']),
-// :where([t[role='option'], [role='button'], [aria-controls]),
-button,
-label,
-select,
-summary {
-	cursor: pointer;
-}
+	// :where([type='button'], [type='reset'], [type='submit']),
+	// :where([t[role='option'], [role='button'], [aria-controls]),
+	button,
+	label,
+	select,
+	summary,
+	[type='radio'],
+	[type='checkbox'] {
+		cursor: pointer;
+	}
 
-:disabled {
-	cursor: not-allowed;
-}
+	:disabled {
+		cursor: not-allowed;
+	}
 
-[aria-busy='true'] {
-	cursor: progress;
+	// [aria-busy='true'] {cursor: progress;}
 }
