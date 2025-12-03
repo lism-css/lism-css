@@ -1,19 +1,15 @@
-/*
-  Memo:
-	- > * + * を使えば :first-child への my-s の打ち消しは不要になるが、 my-e 0 を :first-child にも効かせたいので、 > * で書いている。
-*/
 .l--flow {
 	display: flow-root;
 	// --flow: var(--flow--base);
 
-	> * {
+	> * + * {
 		--flow: var(--flow--base);
 		--my-s: var(--flow);
-		margin-block: var(--my-s) 0;
+		margin-block-start: var(--my-s);
 	}
 
 	// flow 直下のメディア要素は block に初期リセット
-	> :where(img, video, audio) {
+	> :where(img, video) {
 		display: block;
 	}
 }
@@ -36,7 +32,6 @@
 
 // Note: 打ち消しを最後に書く
 // .l--flow > :where(.-max-sz\:full + .-max-sz\:full),
-.l--flow > :first-child,
 .is--skipFlow + * {
 	--my-s: 0px;
 }
