@@ -15,12 +15,12 @@ import { Container, HTML, Flex, Stack, Center, Icon, Modal } from 'lism-css/astr
 		</Center>
 	</Flex>
 	<Modal.Root id='modal-01' isContainer='s' p='40' style={{ '--offset': '0 100px' }}>
-		<Modal.Inner pos='rel' p='40' g='30' bdrs='20' bxsh='40'>
-			<Modal.CloseBtn modalId='modal-01' pos='abs' t='0' r='0' z='1' fz='xl' p='20' />
+		<Modal.Inner layout='stack' w='100%' pos='rel' p='40' g='30' bdrs='20' bxsh='40'>
+			<Modal.CloseBtn modalId='modal-01' autofocus pos='abs' t='0' r='0' z='1' fz='xl' p='20' />
 			<HTML.div>
 				<HTML.span fz='l' fw='bold'>Menu</HTML.span>
 			</HTML.div>
-			<Modal.Body my-s='20'>
+			<Modal.Body my-s='20' style={{ '--focus-offset': '-1px' }}>
 				<Stack bd-y bdc='line' className='u-itemDivider' bdc='line' bd-b p='0'>
 					<HTML.a href='###' p='10' py='20' className='set-plain'>Menu 1</HTML.a>
 					<HTML.a href='###' p='10' py='20' className='set-plain'>Menu 2</HTML.a>
