@@ -4,15 +4,17 @@
 @use 'sass:meta';
 
 // 最初に順序定義
-@layer lism.reset, lism.base, lism.modules, lism.custom, lism.utility;
+// @layer lism-reset, lism;
 
-@layer lism.reset {
-	@include meta.load-css('reset');
-}
+// resetは中で layer定義済み
+@include meta.load-css('reset');
+
+// baese
 @layer lism.base {
 	@include meta.load-css('base');
 }
 
+// modules
 @layer lism.modules {
 	@layer state {
 		@include meta.load-css('modules/state');

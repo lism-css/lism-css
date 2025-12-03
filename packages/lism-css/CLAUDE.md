@@ -69,9 +69,9 @@ All components extend the base `Lism` component and use `getLismProps()` for pro
 
 The styling system uses CSS `@layer` for predictable specificity:
 
-- `lism.reset` → `lism.base` → `lism.modules` → `lism.custom` → `lism.utility`
+- `lism-reset` → `lism.base` → `lism.modules` → `lism.utility`
 
-Note: utilityクラスとpropsクラスは`@layer`を付けません。ただし、ユーザーが利用できるように `lism.utility` のlayerも用意だけはしています。
+Note: propsクラスは`@layer`を付けません。
 
 Two CSS outputs are generated:
 
