@@ -205,7 +205,7 @@ export default {
 	'mx-s': { prop: 'marginInlineStart', presets: ['auto'], token: 'space', bp: 1 },
 	'mx-e': { prop: 'marginInlineEnd', presets: ['auto'], token: 'space', bp: 1 },
 	'my-s': { prop: 'marginBlockStart', token: 'space', bp: 1, presets: ['auto', '0'], tokenClass: 1 },
-	'my-e': { prop: 'marginInlineEnd', presets: ['auto'], token: 'space', bp: 1 },
+	'my-e': { prop: 'marginBlockEnd', presets: ['auto'], token: 'space', bp: 1 },
 	ml: { prop: 'marginLeft', token: 'space', bp: 1 },
 	mr: { prop: 'marginRight', token: 'space', bp: 1 },
 	mt: { prop: 'marginTop', token: 'space', bp: 1 },
