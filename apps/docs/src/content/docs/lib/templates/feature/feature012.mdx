@@ -1,6 +1,6 @@
 ---
 title: Feature012
-description: 特徴・注目コンテンツ用のテンプレートです。breakpoint「md」以下はレイアウトが変わり、アイテムの並びが変更されます。
+description: 特徴・注目コンテンツ用のテンプレートです。breakpoint「md」以下は2カラム、「sm」以下は1カラムで表示されます。
 tableOfContents: false
 ---
 
@@ -8,10 +8,10 @@ import { Lism, Box } from 'lism-css/astro';
 import { Preview, PreviewArea, PreviewTitle, PreviewCode, PreviewFrame, EmbedCode } from "~/components";
 
 特徴・注目コンテンツ用のテンプレートです。  
-breakpoint「md」以下はレイアウトが変わり、アイテムの並びが変更されます。
+breakpoint「md」以下は2カラム、「sm」以下は1カラムで表示されます。
 
 <PreviewTitle>プレビュー</PreviewTitle>
-<PreviewFrame url='/templates/feature/feature012/' />
+<PreviewFrame url='/templates/feature/feature012/' hasSizeSwitch />
 
 <PreviewTitle>コード</PreviewTitle>
 <EmbedCode srcPath={`src/pages/templates/feature/feature012/index.astro`} />

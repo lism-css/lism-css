@@ -1,57 +1,106 @@
 ---
 import DemoPageLayout from '~/layouts/DemoPageLayout.astro';
 
-import { HTML, Stack, Container, Frame, Grid, Columns, Media, Flex, Layer, Center } from 'lism-css/astro';
-import Button from '~/components/ex/Button/index.astro';
+import { Stack, Container, Frame, Grid, Columns, Media, HTML, Flex, Icon, Layer, Flow } from 'lism-css/astro';
 import './_style.css';
 ---
 
 <DemoPageLayout title='Feature004'>
 	<Container size='l' py='60' hasGutter>
-		<Grid gtc={['1fr', null, 'min(20vw, 20rem) 1fr 1fr']} gtr={['1fr', null, '1fr auto auto 1fr']} g={['50', null, '60']}>
-			<Stack gr={['1', null, '2']} g='50' class='u-trimItems'>
-				<h2>目指す世界の先に</h2>
-				<HTML.p fz='s'>
-					この地に受け継がれてきた伝統や祭りを大切に守り、次世代へと繋いでいきます。 地域の魅力を再発見し育む活動を行っています。
-				</HTML.p>
-			</Stack>
-			<Columns gr={['2', null, '1 / -1']} gc={['1', null, '2 / -1']} cols={['1', '2']} g='50'>
-				<Grid gtr='auto 1fr' isLinkBox tag='a' href='#' bdrs='10' bxsh='20' ov='hidden' setHov>
-					<Frame ar='3/2' pos='rel'>
-						<Media src='/img/img-2.jpg' alt='' width='960' height='640' />
-						<Layer setTransition hov='to:show' bgc='rgb(0 0 0 / 30%)' blur='4px'>
-							<Center h='100%' c='white'>
-								<HTML.span fz='xl' fs='italic' fw='light' lts='l' px='30' py='10'>View More</HTML.span>
-							</Center>
-						</Layer>
+		<Stack g='60'>
+			<HTML.h class='u-trim' lv='2' fz='2xl' ta='center'>未知なる体験</HTML.h>
+			<Columns cols={[1, null, 3]} g='40'>
+				<Stack g='30'>
+					<Frame tag='a' isLinkbox href='#' pos='rel' ar={['4/3', null, '3/4']} bdrs='10' bxsh='30' td='none' setHov>
+						<Media
+							isLayer
+							src='https://cdn.lism-css.com/img/random-2510?category=v&r=1'
+							alt=''
+							width='960'
+							height='640'
+							setTransition
+							hov='to:zoom'
+						/>
+						<Layer bgc='rgb(0 0 0 / 20%)' />
+						<Stack pos='rel' h='100%' jc='flex-e' c='white' p='40' g='30' my-s='auto'>
+							<Grid gtc='1fr auto' ai='end' g='40'>
+								<Stack g='30' class='u-trimItems'>
+									<HTML.p fz='l' fw='bold' lh='s'>革新的な技術力</HTML.p>
+									<HTML.p fz='s' lh='s' o='-10'>Advanced Technology</HTML.p>
+								</Stack>
+								<Flex ai='center' jc='center' bd bdc='white' p='20' bdrs='99' c='white' setTransition hov='to:reverse'>
+									<Icon icon='arrow-right' fz='s' />
+								</Flex>
+							</Grid>
+						</Stack>
 					</Frame>
-					<Stack g='40' p='40' class='u-trimItems'>
-						<HTML.p fz='l' fw='bold'>地域の未来を共に描く</HTML.p>
-						<HTML.p fz='s' o='-10'>住民が主役となり、対話を通じて地域の課題解決を目指すプロジェクトです。</HTML.p>
-					</Stack>
-				</Grid>
-				<Grid gtr='auto 1fr' isLinkBox tag='a' href='#' bdrs='10' bxsh='20' ov='hidden' setHov>
-					<Frame ar='3/2' pos='rel'>
-						<Media src='/img/img-5.jpg' alt='' width='960' height='640' />
-						<Layer setTransition hov='to:show' bgc='rgb(0 0 0 / 30%)' blur='4px'>
-							<Center h='100%' c='white'>
-								<HTML.span fz='xl' fs='italic' fw='light' lts='l' px='30' py='10'>View More</HTML.span>
-							</Center>
-						</Layer>
+					<HTML.p pb='30'>最新のAIとロボット技術を駆使し、高精度なものづくりで未来の産業を支えます。</HTML.p>
+				</Stack>
+				<Stack g='30'>
+					<Frame tag='a' isLinkbox href='#' pos='rel' ar={['4/3', null, '3/4']} bdrs='10' bxsh='30' td='none' setHov>
+						<Media
+							isLayer
+							src='https://cdn.lism-css.com/img/random-2510?category=v&r=2'
+							alt=''
+							width='960'
+							height='640'
+							setTransition
+							hov='to:zoom'
+						/>
+						<Layer bgc='rgb(0 0 0 / 20%)' />
+						<Stack pos='rel' h='100%' jc='flex-e' c='white' p='40' g='30' my-s='auto'>
+							<Grid gtc='1fr auto' ai='end' g='40'>
+								<Stack g='30' class='u-trimItems'>
+									<HTML.p fz='l' fw='bold' lh='s'>徹底した品質管理</HTML.p>
+									<HTML.p fz='s' lh='s' o='-10'>Quality First</HTML.p>
+								</Stack>
+								<Flex ai='center' jc='center' bd bdc='white' p='20' bdrs='99' c='white' setTransition hov='to:reverse'>
+									<Icon icon='arrow-right' fz='s' />
+								</Flex>
+							</Grid>
+						</Stack>
 					</Frame>
-					<Stack g='40' p='40' class='u-trimItems'>
-						<HTML.p fz='l' fw='bold'>伝統文化を次世代へ</HTML.p>
-						<HTML.p fz='s' o='-10'>
-							この地に受け継がれてきた伝統や祭りを大切に守り、地域の魅力を再発見し、未来を育む活動を行っています。
-						</HTML.p>
-					</Stack>
-				</Grid>
+					<HTML.p pb='30'>ミクロン単位の精度を追求し、すべての製品においてお客様に安心と信頼をお届けします。</HTML.p>
+				</Stack>
+				<Stack g='30'>
+					<Frame tag='a' isLinkbox href='#' pos='rel' ar={['4/3', null, '3/4']} bdrs='10' bxsh='30' td='none' setHov>
+						<Media
+							isLayer
+							src='https://cdn.lism-css.com/img/random-2510?category=v&r=3'
+							alt=''
+							width='960'
+							height='640'
+							setTransition
+							hov='to:zoom'
+						/>
+						<Layer bgc='rgb(0 0 0 / 20%)' />
+						<Stack pos='rel' h='100%' jc='flex-e' c='white' p='40' g='30' my-s='auto'>
+							<Grid gtc='1fr auto' ai='end' g='40'>
+								<Stack g='30' class='u-trimItems'>
+									<HTML.p fz='l' fw='bold' lh='s'>グローバル供給体制</HTML.p>
+									<HTML.p fz='s' lh='s' o='-10'>Global Network</HTML.p>
+								</Stack>
+								<Flex ai='center' jc='center' bd bdc='white' p='20' bdrs='99' c='white' setTransition hov='to:reverse'>
+									<Icon icon='arrow-right' fz='s' />
+								</Flex>
+							</Grid>
+						</Stack>
+					</Frame>
+					<HTML.p pb='30'>世界中の拠点を結び、お客様のニーズに迅速かつ柔軟に対応するグローバル供給網です。</HTML.p>
+				</Stack>
 			</Columns>
-			<HTML.div gr='3'>
-				<Flex ai='center' g='20'>
-					<Button href='#' min-w={['100%', null, '150px']} p='20' bdrs='10'>View More</Button>
-				</Flex>
-			</HTML.div>
-		</Grid>
+		</Stack>
 	</Container>
 </DemoPageLayout>
+
+<style>
+	@media (any-hover: hover) {
+		.-hov\:to\:zoom {
+			scale: var(--isHov_, 1.1);
+		}
+		.-hov\:to\:reverse {
+			background-color: var(--isHov_, var(--white));
+			color: var(--isHov_, var(--black));
+		}
+	}
+</style>

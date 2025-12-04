@@ -1,0 +1,130 @@
+---
+import DemoPageLayout from '~/layouts/DemoPageLayout.astro';
+
+import { Container, Flex, Grid, Icon, LinkBox, Stack, HTML } from 'lism-css/astro';
+import './_style.css';
+---
+
+<DemoPageLayout title='Navigation005'>
+	<Container size='l' bgc='base-2' py='60' hasGutter>
+		<Stack g='60'>
+			<HTML.h lv='2' class='u-trim' fz='5xl' fw='bold' ff='accent' c='gray'>Navigation</HTML.h>
+			<Stack g='50'>
+				<Grid gtc='repeat(auto-fit, minmax(200px, 1fr))' g='50 60'>
+					<Grid gtr='subgrid' gr='span 2' g='40'>
+						<Stack g='20'>
+							<HTML.p class='u-trim' fz='l' fw='bold'>製品情報</HTML.p>
+							<HTML.p class='u-trim' fz='xs' o='-20'>PRODUCTS</HTML.p>
+						</Stack>
+						<Stack g='5'>
+							<LinkBox href='#' layout='grid' gtc='1fr auto' ai='center' g='30' py='20' hov='c'>
+								<HTML.span>キッチン</HTML.span>
+								<Icon icon='caret-right' />
+							</LinkBox>
+							<LinkBox href='#' layout='grid' gtc='1fr auto' ai='center' g='30' py='20' hov='c'>
+								<HTML.span>リビング</HTML.span>
+								<Icon icon='caret-right' />
+							</LinkBox>
+							<LinkBox href='#' layout='grid' gtc='1fr auto' ai='center' g='30' py='20' hov='c'>
+								<HTML.span>オーディオ</HTML.span>
+								<Icon icon='caret-right' />
+							</LinkBox>
+							<LinkBox href='#' layout='grid' gtc='1fr auto' ai='center' g='30' py='20' hov='c'>
+								<HTML.span>ライティング</HTML.span>
+								<Icon icon='caret-right' />
+							</LinkBox>
+							<LinkBox href='#' layout='grid' gtc='1fr auto' ai='center' g='30' py='20' hov='c'>
+								<HTML.span>限定モデル</HTML.span>
+								<Icon icon='caret-right' />
+							</LinkBox>
+						</Stack>
+					</Grid>
+					<Grid gtr='subgrid' gr='span 2' g='40'>
+						<Stack g='20'>
+							<HTML.p class='u-trim' fz='l' fw='bold'>企業情報</HTML.p>
+							<HTML.p class='u-trim' fz='xs' o='-20'>COMPANY</HTML.p>
+						</Stack>
+						<Stack g='5'>
+							<LinkBox href='#' layout='grid' gtc='1fr auto' ai='center' g='30' py='20' hov='c'>
+								<HTML.span>会社概要</HTML.span>
+								<Icon icon='caret-right' />
+							</LinkBox>
+							<LinkBox href='#' layout='grid' gtc='1fr auto' ai='center' g='30' py='20' hov='c'>
+								<HTML.span>沿革</HTML.span>
+								<Icon icon='caret-right' />
+							</LinkBox>
+							<LinkBox href='#' layout='grid' gtc='1fr auto' ai='center' g='30' py='20' hov='c'>
+								<HTML.span>ニュースリリース</HTML.span>
+								<Icon icon='caret-right' />
+							</LinkBox>
+							<LinkBox href='#' layout='grid' gtc='1fr auto' ai='center' g='30' py='20' hov='c'>
+								<HTML.span>メディア掲載</HTML.span>
+								<Icon icon='caret-right' />
+							</LinkBox>
+							<LinkBox href='#' layout='grid' gtc='1fr auto' ai='center' g='30' py='20' hov='c'>
+								<HTML.span>IR情報</HTML.span>
+								<Icon icon='caret-right' />
+							</LinkBox>
+						</Stack>
+					</Grid>
+					<Grid gtr='subgrid' gr='span 2' g='40'>
+						<Stack g='20'>
+							<HTML.p class='u-trim' fz='l' fw='bold'>ストーリー</HTML.p>
+							<HTML.p class='u-trim' fz='xs' o='-20'>STORIES</HTML.p>
+						</Stack>
+						<Stack g='5'>
+							<LinkBox href='#' layout='grid' gtc='1fr auto' ai='center' g='30' py='20' hov='c'>
+								<HTML.span>デザイナーインタビュー</HTML.span>
+								<Icon icon='caret-right' />
+							</LinkBox>
+							<LinkBox href='#' layout='grid' gtc='1fr auto' ai='center' g='30' py='20' hov='c'>
+								<HTML.span>開発秘話</HTML.span>
+								<Icon icon='caret-right' />
+							</LinkBox>
+							<LinkBox href='#' layout='grid' gtc='1fr auto' ai='center' g='30' py='20' hov='c'>
+								<HTML.span>ユーザーの声</HTML.span>
+								<Icon icon='caret-right' />
+							</LinkBox>
+							<LinkBox href='#' layout='grid' gtc='1fr auto' ai='center' g='30' py='20' hov='c'>
+								<HTML.span>ブログ</HTML.span>
+								<Icon icon='caret-right' />
+							</LinkBox>
+							<LinkBox href='#' layout='grid' gtc='1fr auto' ai='center' g='30' py='20' hov='c'>
+								<HTML.span>イベント情報</HTML.span>
+								<Icon icon='caret-right' />
+							</LinkBox>
+						</Stack>
+					</Grid>
+					<Grid gtr='subgrid' gr='span 2' g='40'>
+						<Stack g='20'>
+							<HTML.p class='u-trim' fz='l' fw='bold'>採用情報</HTML.p>
+							<HTML.p class='u-trim' fz='xs' o='-20'>CAREERS</HTML.p>
+						</Stack>
+						<Stack g='5'>
+							<LinkBox href='#' layout='grid' gtc='1fr auto' ai='center' g='30' py='20' hov='c'>
+								<HTML.span>私たちの働き方</HTML.span>
+								<Icon icon='caret-right' />
+							</LinkBox>
+							<LinkBox href='#' layout='grid' gtc='1fr auto' ai='center' g='30' py='20' hov='c'>
+								<HTML.span>募集職種一覧</HTML.span>
+								<Icon icon='caret-right' />
+							</LinkBox>
+							<LinkBox href='#' layout='grid' gtc='1fr auto' ai='center' g='30' py='20' hov='c'>
+								<HTML.span>新卒採用</HTML.span>
+								<Icon icon='caret-right' />
+							</LinkBox>
+							<LinkBox href='#' layout='grid' gtc='1fr auto' ai='center' g='30' py='20' hov='c'>
+								<HTML.span>キャリア採用</HTML.span>
+								<Icon icon='caret-right' />
+							</LinkBox>
+							<LinkBox href='#' layout='grid' gtc='1fr auto' ai='center' g='30' py='20' hov='c'>
+								<HTML.span>インターンシップ</HTML.span>
+								<Icon icon='caret-right' />
+							</LinkBox>
+						</Stack>
+					</Grid>
+				</Grid>
+			</Stack>
+		</Stack>
+	</Container>
+</DemoPageLayout>

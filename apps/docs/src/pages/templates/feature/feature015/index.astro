@@ -6,25 +6,58 @@ import './_style.css';
 ---
 
 <DemoPageLayout title='Feature015'>
-	<Container bgc='base' py='60'>
-		<Stack g={['50', null, '60']}>
-			<Stack ai='center' g='30' hasGutter>
-				<HTML.p fz='clamp(1.5rem, 4.5vw, 2rem)' fw='bold' ta='center'>大地の恵みを、あなたの毎日へ</HTML.p>
-				<HTML.p>自然由来の環境負荷を抑えた製法で、一つひとつ丁寧に手作りしています。</HTML.p>
-			</Stack>
-			<Grid gt='repeat' cols={['2', null, '4']} rows={['12', null, '6']} g={['40', '50']}>
-				<Frame gr={['1 / span 5', null, '1 / span 5']} gc={['1', null, '1']}>
-					<Media src='/img/img-1.jpg' width='960' height='640' />
+	<Container size='l' bgc='base' py='60' hasGutter>
+		<Stack g='30' ai='center' mb='50'>
+			<HTML.h lv='2' class='u-trim' fz='2xl' fw='bold'>こだわりの品質</HTML.h>
+			<HTML.p class='u-trim' fz='s' ta='center' o='-20'>Product Features</HTML.p>
+		</Stack>
+		<Stack>
+			<Grid gtc={['auto', null, 'minmax(20vw, 32%) repeat(2, 1fr)']} g='50' py='50' bd-y-e bdc='line'>
+				<Frame ar='16/9' bdrs='10'>
+					<Media src='https://cdn.lism-css.com/img/random-2510?r=1' alt='' />
 				</Frame>
-				<Frame gr={['2 / span 5', null, '2 / span 5']} gc={['2', null, '2']}>
-					<Media src='/img/img-6.jpg' width='960' height='640' />
+				<Stack class='u-trimItems' g='30'>
+					<HTML.p fz='l' fw='bold' lts='l'>朝日のように、目覚める一杯<br />ここにある時間</HTML.p>
+					<HTML.p fz='s' o='-20'>Morning Awakening Blend</HTML.p>
+				</Stack>
+				<Stack class='u-trimItems' g='30'>
+					<p>
+						忙しい朝のためにブレンドされた、爽やかな酸味とすっきりとした後味が特徴のコーヒーです。
+						シトラスのような明るい香りが五感を優しく呼び覚まし、あなたの一日にポジティブな活力を与えます。
+						まずはブラックで、そのクリアな味わいをお楽しみください。
+					</p>
+				</Stack>
+			</Grid>
+			<Grid gtc={['auto', null, 'minmax(20vw, 32%) repeat(2, 1fr)']} g='50' py='50' bd-y-e bdc='line'>
+				<Frame ar='16/9' bdrs='10'>
+					<Media src='https://cdn.lism-css.com/img/random-2510?r=2' alt='' />
 				</Frame>
-				<Frame gr={['6 / span 5', null, '1 / span 5']} gc={['1', null, '3']}>
-					<Media src='/img/img-2.jpg' width='960' height='640' />
+				<Stack class='u-trimItems' g='30'>
+					<HTML.p fz='l' fw='bold' lts='l'>午後のひとときに、深い安らぎ<br />心を満たす一杯</HTML.p>
+					<HTML.p fz='s' o='-20'>Afternoon Comfort Blend</HTML.p>
+				</Stack>
+				<Stack class='u-trimItems' g='30'>
+					<p>
+						読書や休憩のお供に最適な、バランスの取れたマイルドな味わい。
+						ナッツのような香ばしさと、ミルクチョコレートのような優しい甘さが、午後のひとときを穏やかで満ち足りたものに変えてくれます。
+						心と身体を解きほぐす、安らぎの一杯をどうぞ。
+					</p>
+				</Stack>
+			</Grid>
+			<Grid gtc={['auto', null, 'minmax(20vw, 32%) repeat(2, 1fr)']} g='50' py='50'>
+				<Frame ar='16/9' bdrs='10'>
+					<Media src='https://cdn.lism-css.com/img/random-2510?r=3' alt='' />
 				</Frame>
-				<Frame gr={['7 / span 5', null, '2 / span 5']} gc={['2', null, '4']}>
-					<Media src='/img/img-3.jpg' width='960' height='640' />
-				</Frame>
+				<Stack class='u-trimItems' g='30'>
+					<HTML.p fz='l' fw='bold' lts='l'>心解き放つ、夜のためのブレンド<br />眠りへと誘う</HTML.p>
+					<HTML.p fz='s' o='-20'>Midnight Calm Decaf</HTML.p>
+				</Stack>
+				<Stack class='u-trimItems' g='30'>
+					<p>
+						カフェインを99.9%カットした、夜専用のデカフェコーヒーです。 化学薬品を一切使用せず、天然水だけでカフェインを除去。
+						コーヒー本来の豊かなコクと深い香りはそのままに、就寝前のリラックスタイムや、カフェインを控えている方にも安心してお楽しみいただけます。
+					</p>
+				</Stack>
 			</Grid>
 		</Stack>
 	</Container>
