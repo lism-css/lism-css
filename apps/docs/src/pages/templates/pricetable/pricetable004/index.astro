@@ -2,7 +2,7 @@
 import DemoPageLayout from '~/layouts/DemoPageLayout.astro';
 import Button from '~/components/ex/Button/index.astro';
 
-import { Container, Flex, Grid, Icon, Stack, HTML, Box } from 'lism-css/astro';
+import { Container, Flex, Grid, Icon, Stack, HTML, Box, Columns } from 'lism-css/astro';
 import './_style.css';
 ---
 
@@ -10,7 +10,7 @@ import './_style.css';
 	<Container size='l' bgc='base' py='60' hasGutter>
 		<Stack g='60'>
 			<HTML.h lv='2' class='u-trim' fz='2xl' fw='bold' ta='center'>料金プラン</HTML.h>
-			<Grid gtc={['auto', null, 'repeat(3, 1fr)']} g='40'>
+			<Columns cols={['1', null, '3']} g='40'>
 				<Grid gtr='subgrid' gr='span 4' g='40' bgc='white' p='50' bd bdc='blue' bdw='2px' bdrs='20' bxsh='20'>
 					<Stack w='stretch' g='30'>
 						<HTML.span class='u-trim' fz='m' fw='bold' c='blue'>Hobby</HTML.span>
@@ -44,7 +44,7 @@ import './_style.css';
 					</HTML.p>
 					<Stack g='40'>
 						<Box ta='center' bd bdc='blue' bgc='white' bdrs='10'>
-							<HTML.span class='u-trim' fz='s' c='blue' p='20'>Hobbyに以下を追加</HTML.span>
+							<HTML.span class='u-trim' d='block' fz='s' c='blue' p='20'>Hobbyに以下を追加</HTML.span>
 						</Box>
 						<Stack tag='ul' g='10'>
 							<Flex tag='li' g='20' ai='center'
@@ -72,7 +72,7 @@ import './_style.css';
 					</HTML.p>
 					<Stack g='40'>
 						<Box ta='center' bd bdc='blue' bgc='white' bdrs='10'>
-							<HTML.span class='u-trim' fz='s' c='blue' p='20'>Personalに以下を追加</HTML.span>
+							<HTML.span class='u-trim' d='block' fz='s' c='blue' p='20'>Personalに以下を追加</HTML.span>
 						</Box>
 						<Stack tag='ul' g='10'>
 							<Flex tag='li' g='20' ai='center'>
@@ -87,7 +87,7 @@ import './_style.css';
 					</Stack>
 					<Button href='#' p='30' bdrs='10'>このプランを選択</Button>
 				</Grid>
-			</Grid>
+			</Columns>
 		</Stack>
 	</Container>
 </DemoPageLayout>

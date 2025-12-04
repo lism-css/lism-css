@@ -1,52 +1,129 @@
 ---
 import DemoPageLayout from '~/layouts/DemoPageLayout.astro';
-import Button from '~/components/ex/Button/index.astro';
 
-import { Container, Frame, Flex, Grid, Layer, Media, Stack } from 'lism-css/astro';
+import { Container, Grid, Box, HTML, Flex, Center, Icon } from 'lism-css/astro';
+import Button from '~/components/ex/Button/index.astro';
 import './_style.css';
 ---
 
 <DemoPageLayout title='Feature011'>
-	<Container bgc='base'>
-		<Grid gtr={['auto', '100svh']} gtc='auto'>
-			<Grid gr='1 / -1' gc='1 / -1' gtc='1fr 1fr' gtr='1fr 1fr'>
-				<Frame tag='figure' gr='1' gc='1'>
-					<Media src='/img/img-1.jpg' alt='' width='960' height='640' />
-				</Frame>
-				<Frame tag='figure' gr='1' gc='2'>
-					<Media src='/img/img-2.jpg' alt='' width='960' height='640' h='100%' />
-				</Frame>
-				<Frame tag='figure' gr='2' gc='1'>
-					<Media src='/img/img-3.jpg' alt='' width='960' height='640' />
-				</Frame>
-				<Frame tag='figure' gr='2' gc='2'>
-					<Media src='/img/img-4.jpg' alt='' width='960' height='640' />
-				</Frame>
-			</Grid>
-			<Grid pos='rel' gr='1 / -1' gc='1 / -1'>
-				<Layer gr='1 / -1' gc='1 / -1' blur='4px' bgc='black:30%' z='0' />
-				<Grid gr='1 / -1' gc='1 / -1' ai='center' jc='center' p='60 50' z='1'>
-					<Stack g='50' ai='center' w='stretch' max-w='450px' bgc='base' bdrs='10' p={['50', '60']} z='1'>
-						<h2 class='u-trim'>心を整える時間</h2>
-						<Stack g='30'>
-							<p>忙しい毎日の中で、つい自分のことは後回しになりがち。 ほんの数分でも、自分の心と静かに向き合う時間を作りませんか？</p>
-							<p>
-								私たちのサービスは、専門家の監修によるガイド付きの瞑想や、心地よい自然音など、
-								あなたの心を穏やかにするコンテンツを提供します。
-							</p>
-							<p>
-								朝の始まりに、仕事の合間に、おやすみ前に。いつでもどこでも、手軽に心をリセットして、
-								穏やかで前向きな自分を取り戻しましょう。
-							</p>
-						</Stack>
-						<Flex w='stretch' jc='center'>
-							<Button layout='grid' href='#' w='100%' max-w='250px' p='20' bdrs='10'>
-								<span>View More</span>
-							</Button>
+	<Container size='m' bgc='base-2' py='60' hasGutter>
+		<Grid
+			gt={[
+				'"title" "body" "link" / 1fr',
+				null,
+				`"title link"
+				 "body body" / auto 1fr`,
+			]}
+			g='50'
+		>
+			<Box ga='title'>
+				<h2 class='u-trim'>サービスの特徴について</h2>
+			</Box>
+			<Grid ga='body' gtc={['1fr auto', null, 'auto 1fr auto']} g='40'>
+				<Grid
+					isLinkBox
+					href='#'
+					gtc='subgrid'
+					gc='1 / -1'
+					g={['30', '40', '50']}
+					bgc='base'
+					p={['30', '40']}
+					bdrs='10'
+					setTransition
+					setHov
+					ai='center'
+					hov='bxsh'
+				>
+					<Grid gtc='subgrid' g='inherit' gc={['1', null, '1 / span 2']}>
+						<Flex g={['30', null, '40']} ai='center'>
+							<HTML.span layout='center' fxsh='0' fz='xs' lh='xs' c='base' py='10' px={['20', '30']} bgc='text' bdrs='99'
+								>POINT 1</HTML.span
+							>
+							<HTML.p fz='m' fw='bold'>楽しみながら計画的に資産形成</HTML.p>
 						</Flex>
-					</Stack>
+						<Flex ai='center' c='text' td='none' g='40'>
+							<HTML.p>目標金額を設定して貯蓄ができる「目的別預金」が登場。楽しみながら計画的な資産形成が行えます。</HTML.p>
+						</Flex>
+					</Grid>
+					<Center w='fit' bd p='20' bdrs='99' setTransition hov='to:reverse'>
+						<Icon icon='arrow-right' fz='s' />
+					</Center>
+				</Grid>
+				<Grid
+					isLinkBox
+					href='#'
+					gtc='subgrid'
+					gc='1 / -1'
+					g={['30', null, '50']}
+					bgc='base'
+					p={['30', '40']}
+					bdrs='10'
+					setTransition
+					setHov
+					ai='center'
+					hov='bxsh'
+				>
+					<Grid gtc='subgrid' g='inherit' gc={['1', null, '1 / span 2']}>
+						<Flex g={['30', null, '40']} ai='center'>
+							<HTML.span layout='center' fxsh='0' fz='xs' lh='xs' c='base' py='10' px={['20', '30']} bgc='text' bdrs='99'
+								>POINT 2</HTML.span
+							>
+							<HTML.p fz='m' fw='bold'>安心のセキュリティ体制</HTML.p>
+						</Flex>
+						<Flex ai='center' c='text' td='none' g='40'>
+							<HTML.p>通信の暗号化や二段階認証を導入。お客様の大切な資産と個人情報を厳重に保護します。</HTML.p>
+						</Flex>
+					</Grid>
+					<Center w='fit' bd p='20' bdrs='99' setTransition hov='to:reverse'>
+						<Icon icon='arrow-right' fz='s' />
+					</Center>
+				</Grid>
+				<Grid
+					isLinkBox
+					href='#'
+					gtc='subgrid'
+					gc='1 / -1'
+					g={['30', null, '50']}
+					bgc='base'
+					p={['30', '40']}
+					bdrs='10'
+					setTransition
+					setHov
+					ai='center'
+					hov='bxsh'
+				>
+					<Grid gtc='subgrid' g='inherit' gc={['1', null, '1 / span 2']}>
+						<Flex g={['30', null, '40']} ai='center'>
+							<HTML.span layout='center' fxsh='0' fz='xs' lh='xs' c='base' py='10' px={['20', '30']} bgc='text' bdrs='99'
+								>POINT 3</HTML.span
+							>
+							<HTML.p fz='m' fw='bold'>必要なものはスマホだけ！</HTML.p>
+						</Flex>
+						<Flex ai='center' c='text' td='none' g='40'>
+							<HTML.p>口座開設から運用状況の確認までスマホアプリで完結。いつでも手軽に資産をチェックできます。</HTML.p>
+						</Flex>
+					</Grid>
+					<Center w='fit' bd p='20' bdrs='99' setTransition hov='to:reverse'>
+						<Icon icon='arrow-right' fz='s' />
+					</Center>
 				</Grid>
 			</Grid>
+			<Flex ga='link' ai='flex-e' jc='flex-e'>
+				<Button href='#' variant='outline' w={['stretch', null, 'auto']} min-w='8rem' fz='s' bd bdc='text' p='20' bdrs='10'
+					>View Detail</Button
+				>
+			</Flex>
 		</Grid>
 	</Container>
 </DemoPageLayout>
+
+<style is:inline>
+	@media (any-hover: hover) {
+		.-hov\:to\:reverse {
+			background-color: var(--isHov_, var(--c--text));
+			color: var(--isHov_, var(--c--base));
+			border-color: var(--c--text);
+		}
+	}
+</style>
