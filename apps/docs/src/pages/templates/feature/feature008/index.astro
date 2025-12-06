@@ -1,48 +1,104 @@
 ---
 import DemoPageLayout from '~/layouts/DemoPageLayout.astro';
-
-import { Container, Frame, Grid, Media, Stack } from 'lism-css/astro';
 import Button from '~/components/ex/Button/index.astro';
+
+import { Container, HTML, Frame, Columns, Grid, Media, Stack, Layer, Center } from 'lism-css/astro';
 import './_style.css';
 ---
 
 <DemoPageLayout title='Feature008'>
-	<Container bgc='base'>
-		<Grid gt='repeat' cols={['2', null, '4']} rows={['4', null, '2']} g='5'>
-			<Stack
-				gr={['2 / span 2', null, '1 / -1']}
-				gc={['1 / -1', null, '2 / span 2']}
-				g='50'
-				bgc='base-2'
-				ai='center'
-				jc='center'
-				p={['60 50', null, '60']}
-			>
-				<h2>思い出をかたちに</h2>
-				<Stack g='40'>
-					<p>
-						「何か新しいことを始めたい」と思っても、何から手をつければ良いか分からない。
-						そんな時は、私たちにお任せください。あなたの興味関心を分析し、新しい趣味や学びの世界への扉を開きます。
-					</p>
-					<p>
-						オンライン講座から地域のワークショップまで、あなたの可能性を広げるきっかけがここにあります。
-						昨日より成長した自分に出会える毎日があなたを待っています。
-					</p>
+	<Container size='l' bgc='base' py='60' hasGutter>
+		<Grid gtr={['auto 1fr auto', null, 'auto 1fr']} gtc={['1fr', null, '1fr auto']} g='50'>
+			<h2 class='u-trim'>この季節だからこそ</h2>
+			<Columns cols={['1', '2', '3']} gc='1 / -1' g='50'>
+				<Stack tag='a' isLinkBox href='#' g='40' setHov>
+					<Frame ar='16/9' bdrs='10' pos='rel'>
+						<Media src='https://cdn.lism-css.com/img/random-2510?r=1' width='960' height='640' />
+						<Layer setTransition hov='to:show' bgc='rgb(0 0 0 / 30%)' blur='4px'>
+							<Center h='100%' c='white'>
+								<HTML.span fz='xl' fs='italic' fw='light' lts='l' px='30' py='10'>View More</HTML.span>
+							</Center>
+						</Layer>
+					</Frame>
+					<Stack g='30'>
+						<HTML.p class='u-trim' fz='m' fw='bold'>夏のおすすめ</HTML.p>
+						<HTML.p class='u-trim' fz='s' o='-20'>Summer recommended products</HTML.p>
+					</Stack>
 				</Stack>
-				<Button href='#' min-w='250px' p='30' bdrs='10'>View More</Button>
-			</Stack>
-			<Frame tag='figure'>
-				<Media src='/img/img-1.jpg' alt='' width='960' height='640' />
-			</Frame>
-			<Frame tag='figure'>
-				<Media src='/img/img-2.jpg' alt='' width='960' height='640' />
-			</Frame>
-			<Frame tag='figure'>
-				<Media src='/img/img-3.jpg' alt='' width='960' height='640' />
-			</Frame>
-			<Frame tag='figure'>
-				<Media src='/img/img-4.jpg' alt='' width='960' height='640' />
-			</Frame>
+				<Stack tag='a' isLinkBox href='#' g='40' setHov>
+					<Frame ar='16/9' bdrs='10' pos='rel'>
+						<Media src='https://cdn.lism-css.com/img/random-2510?r=2' width='960' height='640' />
+						<Layer setTransition hov='to:show' bgc='rgb(0 0 0 / 30%)' blur='4px'>
+							<Center h='100%' c='white'>
+								<HTML.span fz='xl' fs='italic' fw='light' lts='l' px='30' py='10'>View More</HTML.span>
+							</Center>
+						</Layer>
+					</Frame>
+					<Stack g='30'>
+						<HTML.p class='u-trim' fz='m' fw='bold'>登山に使いやすい</HTML.p>
+						<HTML.p class='u-trim' fz='s' o='-20'>Mountain special goods</HTML.p>
+					</Stack>
+				</Stack>
+				<Stack tag='a' isLinkBox href='#' g='40' setHov>
+					<Frame ar='16/9' bdrs='10' pos='rel'>
+						<Media src='https://cdn.lism-css.com/img/random-2510?r=3' width='960' height='640' />
+						<Layer setTransition hov='to:show' bgc='rgb(0 0 0 / 30%)' blur='4px'>
+							<Center h='100%' c='white'>
+								<HTML.span fz='xl' fs='italic' fw='light' lts='l' px='30' py='10'>View More</HTML.span>
+							</Center>
+						</Layer>
+					</Frame>
+					<Stack g='30'>
+						<HTML.p class='u-trim' fz='m' fw='bold'>秋の気配を感じて</HTML.p>
+						<HTML.p class='u-trim' fz='s' o='-20'>Feeling the signs of autumn</HTML.p>
+					</Stack>
+				</Stack>
+				<Stack tag='a' isLinkBox href='#' g='40' setHov>
+					<Frame ar='16/9' bdrs='10' pos='rel'>
+						<Media src='https://cdn.lism-css.com/img/random-2510?r=4' width='960' height='640' />
+						<Layer setTransition hov='to:show' bgc='rgb(0 0 0 / 30%)' blur='4px'>
+							<Center h='100%' c='white'>
+								<HTML.span fz='xl' fs='italic' fw='light' lts='l' px='30' py='10'>View More</HTML.span>
+							</Center>
+						</Layer>
+					</Frame>
+					<Stack g='30'>
+						<HTML.p class='u-trim' fz='m' fw='bold'>旅をしたくなる季節</HTML.p>
+						<HTML.p class='u-trim' fz='s' o='-20'>A season that makes you want to travel</HTML.p>
+					</Stack>
+				</Stack>
+				<Stack tag='a' isLinkBox href='#' g='40' setHov>
+					<Frame ar='16/9' bdrs='10' pos='rel'>
+						<Media src='https://cdn.lism-css.com/img/random-2510?r=5' width='960' height='640' />
+						<Layer setTransition hov='to:show' bgc='rgb(0 0 0 / 30%)' blur='4px'>
+							<Center h='100%' c='white'>
+								<HTML.span fz='xl' fs='italic' fw='light' lts='l' px='30' py='10'>View More</HTML.span>
+							</Center>
+						</Layer>
+					</Frame>
+					<Stack g='30'>
+						<HTML.p class='u-trim' fz='m' fw='bold'>おだやかな気候</HTML.p>
+						<HTML.p class='u-trim' fz='s' o='-20'>Enjoy the mild weather</HTML.p>
+					</Stack>
+				</Stack>
+				<Stack tag='a' isLinkBox href='#' g='40' setHov>
+					<Frame ar='16/9' bdrs='10' pos='rel'>
+						<Media src='https://cdn.lism-css.com/img/random-2510?r=6' width='960' height='640' />
+						<Layer setTransition hov='to:show' bgc='rgb(0 0 0 / 30%)' blur='4px'>
+							<Center h='100%' c='white'>
+								<HTML.span fz='xl' fs='italic' fw='light' lts='l' px='30' py='10'>View More</HTML.span>
+							</Center>
+						</Layer>
+					</Frame>
+					<Stack g='30'>
+						<HTML.p class='u-trim' fz='m' fw='bold'>森の中のさえずり</HTML.p>
+						<HTML.p class='u-trim' fz='s' o='-20'>Feel the chirping in the forest</HTML.p>
+					</Stack>
+				</Stack>
+			</Columns>
+			<Button href='#' variant='outline' layout='grid' gr={['3', null, '1']} gc={['1 / -1', null, '2']} min-w='8rem' bdrs='10'>
+				<span>View All</span>
+			</Button>
 		</Grid>
 	</Container>
 </DemoPageLayout>

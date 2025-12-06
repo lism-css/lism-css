@@ -1,6 +1,6 @@
 ---
 title: News001
-description: お知らせ用のテンプレートです。breakpoint「md」以下はレイアウトが変わり、アイテムの並びが変更されます。
+description: お知らせ用のテンプレートです。breakpoint「sm」以下はレイアウトが変わり、アイテムの並びが変更されます。
 tableOfContents: false
 ---
 
@@ -8,10 +8,10 @@ import { Lism, Box } from 'lism-css/astro';
 import { Preview, PreviewArea, PreviewTitle, PreviewCode, PreviewFrame, EmbedCode } from "~/components";
 
 お知らせ用のテンプレートです。  
-breakpoint「md」以下はレイアウトが変わり、アイテムの並びが変更されます。
+breakpoint「sm」以下はレイアウトが変わり、アイテムの並びが変更されます。
 
 <PreviewTitle>プレビュー</PreviewTitle>
-<PreviewFrame url='/templates/news/news001/' />
+<PreviewFrame url='/templates/news/news001/' hasSizeSwitch />
 
 <PreviewTitle>コード</PreviewTitle>
 <EmbedCode srcPath={`src/pages/templates/news/news001/index.astro`} />

@@ -2,7 +2,7 @@
 import DemoPageLayout from '~/layouts/DemoPageLayout.astro';
 import Button from '~/components/ex/Button/index.astro';
 
-import { Container, Flex, Grid, Icon, Stack, HTML } from 'lism-css/astro';
+import { Container, Flex, Grid, Icon, Stack, HTML, Columns } from 'lism-css/astro';
 import './_style.css';
 ---
 
@@ -10,7 +10,7 @@ import './_style.css';
 	<Container size='l' bgc='base' py='60' hasGutter>
 		<Stack g='60'>
 			<HTML.h lv='2' class='u-trim' fz='2xl' fw='bold' ta='center'>料金プラン</HTML.h>
-			<Grid gtr={['repeat(2, auto)', null, '1fr']} gtc={['auto', null, 'repeat(2, 1fr)']} g={['50', null, '0']} ai='center'>
+			<Columns cols={['1', null, '2']} g={['50', null, '0']} ai='center'>
 				<Grid g='40' ai='start' bgc='white' p='50' bd bdc='blue' bdw='2px' bdrs='20' bxsh='20' z='1'>
 					<Stack w='stretch' g='30'>
 						<HTML.span class='u-trim' fz='m' fw='bold' c='blue'>Hobby</HTML.span>
@@ -52,7 +52,7 @@ import './_style.css';
 					</Stack>
 					<Button href='#' p='30' bdrs='10'>このプランを選択</Button>
 				</Grid>
-			</Grid>
+			</Columns>
 		</Stack>
 	</Container>
 </DemoPageLayout>
