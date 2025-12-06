@@ -1,0 +1,41 @@
+---
+import DemoPageLayout from '~/layouts/DemoPageLayout.astro';
+
+import { Stack, Container, Frame, Layer, Media, HTML } from 'lism-css/astro';
+import './_style.css';
+---
+
+<DemoPageLayout title='Section011'>
+	<Container>
+		<Stack>
+			<Frame ar='16/9' pos='rel' max-h='32rem'>
+				<Media src='https://cdn.lism-css.com/img/random-2510' alt='' width='960' height='640' />
+				<Layer>
+					<Container size='m' py='50' h='100%' hasGutter>
+						<Stack jc='flex-e' g='40' min-h='100%' c='white'>
+							<HTML.h lv='2' class='u-trim' fz='min(5vw, 2rem)' fw='bold'>まだ見ぬ世界をあなたに</HTML.h>
+							<HTML.p class='u-trim' fz='min(2.5vw, 1rem)'>A world you've never seen before</HTML.p>
+						</Stack>
+					</Container>
+				</Layer>
+			</Frame>
+			<Container size='m' py='50' hasGutter>
+				<Stack g='40'>
+					<HTML.h lv='3' fz='xl' fw='bold'>未知の世界を体感</HTML.h>
+					<HTML.p>
+						自然由来の環境負荷を抑えた製法で、一つひとつ丁寧に手作りしています。
+						大地の恵みを、あなたの毎日へ。私たちの製品は、自然の力を最大限に活かし、持続可能な未来を目指しています。
+						季節ごとに変わる風景とともに、心地よい生活をお届けします。
+						四季折々の美しさを感じながら、豊かな時間を過ごしていただけることを願っています。
+					</HTML.p>
+					<HTML.p>
+						私たちの製品は、自然の恵みを活かし、心地よい生活を提供します。
+						四季の移ろいを感じながら、毎日を大切に過ごしていただけることを願っています。
+						環境に配慮した製法で作られた製品は、持続可能な未来を目指す私たちの使命の一環です。
+						自然の美しさと調和した生活をお楽しみください。
+					</HTML.p>
+				</Stack>
+			</Container>
+		</Stack>
+	</Container>
+</DemoPageLayout>

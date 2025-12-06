@@ -1,78 +1,87 @@
 ---
 import DemoPageLayout from '~/layouts/DemoPageLayout.astro';
 
-import { HTML, Container, Frame, Grid, Media, Stack, Layer, Center } from 'lism-css/astro';
+import { Stack, Container, Frame, Columns, Grid, Media, HTML, Icon, Flex } from 'lism-css/astro';
 import './_style.css';
 ---
 
-<DemoPageLayout title='Feature008'>
-	<Container size='m' bgc='base' py='60' hasGutter>
-		<HTML.h lv='2' ta='center'>特徴を紹介します</HTML.h>
-		<Grid gt='repeat' cols={['1', null, '2']} rows={['1', null, '3']} my-s='50' g={['40', '50']}>
-			<Grid isLinkBox href='#' gr='1 / span 3' gtr='1fr auto' bxsh='20' setTransition setHov hov='bxsh'>
-				<Frame tag='figure' pos='rel'>
-					<Media src='/img/img-5.jpg' alt='' width='960' height='640' setTransition hov='to:zoom' />
-					<Layer setTransition hov='to:show' bgc='rgb(0 0 0 / 30%)' blur='4px'>
-						<Center h='100%' c='white'>
-							<HTML.span fz='xl' fs='italic' fw='light' lts='l' px='30' py='10'>View More</HTML.span>
-						</Center>
-					</Layer>
-				</Frame>
-				<Stack g='40' p='40'>
-					<HTML.p class='u-trim' fz='m' fw='bold'>衣類をいたわる</HTML.p>
-					<HTML.p class='u-trim' fz='s' o='-10'>繊維の奥の汚れを落とし、衣類の傷みを抑えながら、ふんわりと優しく洗い上げます。</HTML.p>
-				</Stack>
-			</Grid>
-			<Grid isLinkBox href='#' gtc='1fr 2fr' bxsh='20' setTransition setHov hov='bxsh'>
-				<Frame tag='figure' pos='rel'>
-					<Media src='/img/img-2.jpg' alt='' width='960' height='640' setTransition hov='to:zoom' />
-					<Layer setTransition hov='to:show' bgc='rgb(0 0 0 / 30%)' blur='4px'>
-						<Center h='100%' c='white'>
-							<HTML.span fz='s' fs='italic' fw='light' lts='l' px='30' py='10'>View More</HTML.span>
-						</Center>
-					</Layer>
-				</Frame>
-				<Stack g='40' p='40'>
-					<HTML.p class='u-trim' fz='m' fw='bold'>空気をデザインする</HTML.p>
-					<HTML.p class='u-trim' fz='s' o='-10'>快適な室温はもちろん、空気清浄機能でウイルスや花粉の活動を抑制します。</HTML.p>
-				</Stack>
-			</Grid>
-			<Grid isLinkBox href='#' gtc='1fr 2fr' bxsh='20' setTransition setHov hov='bxsh'>
-				<Frame tag='figure' pos='rel'>
-					<Media src='/img/img-3.jpg' alt='' width='960' height='640' setTransition hov='to:zoom' />
-					<Layer setTransition hov='to:show' bgc='rgb(0 0 0 / 30%)' blur='4px'>
-						<Center h='100%' c='white'>
-							<HTML.span fz='s' fs='italic' fw='light' lts='l' px='30' py='10'>View More</HTML.span>
-						</Center>
-					</Layer>
-				</Frame>
-				<Stack g='40' p='40'>
-					<HTML.p class='u-trim' fz='m' fw='bold'>毎日ごちそうを</HTML.p>
-					<HTML.p class='u-trim' fz='s' o='-10'>過熱水蒸気の力で、本格的なオーブン料理が誰でも簡単においしく作れます。</HTML.p>
-				</Stack>
-			</Grid>
-			<Grid isLinkBox href='#' gtc='1fr 2fr' bxsh='20' setTransition setHov hov='bxsh'>
-				<Frame tag='figure' pos='rel'>
-					<Media src='/img/img-4.jpg' alt='' width='960' height='640' setTransition hov='to:zoom' />
-					<Layer setTransition hov='to:show' bgc='rgb(0 0 0 / 30%)' blur='4px'>
-						<Center h='100%' c='white'>
-							<HTML.span fz='s' fs='italic' fw='light' lts='l' px='30' py='10'>View More</HTML.span>
-						</Center>
-					</Layer>
-				</Frame>
-				<Stack g='40' p='40'>
-					<HTML.p class='u-trim' fz='m' fw='bold'>深呼吸したくなる空間へ</HTML.p>
-					<HTML.p class='u-trim' fz='s' o='-10'>高性能フィルターが微細な粒子を99%捕集。静かな運転音で寝室にも最適。</HTML.p>
-				</Stack>
-			</Grid>
-		</Grid>
+<DemoPageLayout title='Feature010'>
+	<Container size='l' py='60' hasGutter>
+		<Stack g='60'>
+			<HTML.h lv='2' fz='2xl' fw='bold' ta='center'>厳選された商品</HTML.h>
+			<Columns cols={['1', '2', '4']} gtr='auto auto auto' g='50'>
+				<Grid gtr='subgrid' gr='span 3' g='40' tag='a' isLinkBox href='#' setHov>
+					<Frame ar='1/1' bdrs='10'>
+						<Media src='https://cdn.lism-css.com/img/random-2510?r=1' alt='' width='960' height='640' setTransition hov='to:zoom' />
+					</Frame>
+					<Stack g='inherit'>
+						<HTML.p class='u-trim' fz='l' fw='bold'>ストームシールド</HTML.p>
+						<HTML.p class='u-trim' fz='m' lh='s' o='-20'>
+							突然の雨風にも耐える高い耐久性。初心者でも簡単に設営できる、オールシーズン対応テント。
+						</HTML.p>
+					</Stack>
+					<Flex g='30' ai='center' bd-b px='20' pb='20' setTransition hov='to:cAccent'>
+						<HTML.p fz='m' fx='1' fs='i'>View Detail</HTML.p>
+						<Icon icon='arrow-right' fz='m' />
+					</Flex>
+				</Grid>
+				<Grid gtr='subgrid' gr='span 3' g='40' tag='a' isLinkBox href='#' setHov>
+					<Frame ar='1/1' bdrs='10'>
+						<Media src='https://cdn.lism-css.com/img/random-2510?r=2' alt='' width='960' height='640' setTransition hov='to:zoom' />
+					</Frame>
+					<Stack g='inherit'>
+						<HTML.p class='u-trim' fz='l' fw='bold'>リッジウォーカー</HTML.p>
+						<HTML.p class='u-trim' fz='m' lh='s' o='-20'>
+							背中の蒸れを軽減する背面システムを採用。日帰りから小屋泊まで幅広く対応する人気モデル。
+						</HTML.p>
+					</Stack>
+					<Flex g='30' ai='center' bd-b px='20' pb='20' setTransition hov='to:cAccent'>
+						<HTML.p fz='m' fx='1' fs='i'>View Detail</HTML.p>
+						<Icon icon='arrow-right' fz='m' />
+					</Flex>
+				</Grid>
+				<Grid gtr='subgrid' gr='span 3' g='40' tag='a' isLinkBox href='#' setHov>
+					<Frame ar='1/1' bdrs='10'>
+						<Media src='https://cdn.lism-css.com/img/random-2510?r=3' alt='' width='960' height='640' setTransition hov='to:zoom' />
+					</Frame>
+					<Stack g='inherit'>
+						<HTML.p class='u-trim' fz='l' fw='bold'>オーロラダウン</HTML.p>
+						<HTML.p class='u-trim' fz='m' lh='s' o='-20'>
+							高品質な750フィルパワーのダウンを使用。-5℃まで対応し、秋冬キャンプでも快適な眠りを。
+						</HTML.p>
+					</Stack>
+					<Flex g='30' ai='center' bd-b px='20' pb='20' setTransition hov='to:cAccent'>
+						<HTML.p fz='m' fx='1' fs='i'>View Detail</HTML.p>
+						<Icon icon='arrow-right' fz='m' />
+					</Flex>
+				</Grid>
+				<Grid gtr='subgrid' gr='span 3' g='40' tag='a' isLinkBox href='#' setHov>
+					<Frame ar='1/1' bdrs='10'>
+						<Media src='https://cdn.lism-css.com/img/random-2510?r=4' alt='' width='960' height='640' setTransition hov='to:zoom' />
+					</Frame>
+					<Stack g='inherit'>
+						<HTML.p class='u-trim' fz='l' fw='bold'>フィールドリラックスチェア</HTML.p>
+						<HTML.p class='u-trim' fz='m' lh='s' o='-20'>
+							体を包み込むような快適な座り心地。軽量コンパクト設計で持ち運びも簡単。設営もあっという間です。
+						</HTML.p>
+					</Stack>
+					<Flex g='30' ai='center' bd-b px='20' pb='20' setTransition hov='to:cAccent'>
+						<HTML.p fz='m' fx='1' fs='i'>View Detail</HTML.p>
+						<Icon icon='arrow-right' fz='m' />
+					</Flex>
+				</Grid>
+			</Columns>
+		</Stack>
 	</Container>
 </DemoPageLayout>
 
-<style>
+<style is:inline>
 	@media (any-hover: hover) {
 		.-hov\:to\:zoom {
 			scale: var(--isHov_, 1.1);
+		}
+		.-hov\:to\:cAccent {
+			color: var(--isHov_, var(--c--accent));
 		}
 	}
 </style>

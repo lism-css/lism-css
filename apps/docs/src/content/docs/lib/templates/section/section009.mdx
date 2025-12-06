@@ -1,0 +1,17 @@
+---
+title: Section009
+description: セクション用のテンプレートです。breakpoint「md」以下は1カラムで表示され、アイテムが縦に並びます。
+tableOfContents: false
+---
+
+import { Lism, Box } from 'lism-css/astro';
+import { Preview, PreviewArea, PreviewTitle, PreviewCode, PreviewFrame, EmbedCode } from "~/components";
+
+セクション用のテンプレートです。  
+breakpoint「md」以下は1カラムで表示され、アイテムが縦に並びます。
+
+<PreviewTitle>プレビュー</PreviewTitle>
+<PreviewFrame url='/templates/section/section009/' hasSizeSwitch />
+
+<PreviewTitle>コード</PreviewTitle>
+<EmbedCode srcPath={`src/pages/templates/section/section009/index.astro`} />
