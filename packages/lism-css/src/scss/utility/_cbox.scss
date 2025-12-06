@@ -5,7 +5,7 @@
 	--c: color-mix(in srgb, var(--c--text), var(--keycolor) var(--cbox-cPct, 40%));
 	--bgc: color-mix(in srgb, var(--c--base), var(--keycolor) var(--cbox-bgPct, 5%));
 	--bdc: var(--keycolor);
-	--c--link: var(--keycolor);
+	--link-c: var(--keycolor); // --c--link を上書きすると、keycolorに --c--link が使えなくなる
 	// --link-td: underline;
 	color: var(--c);
 	background-color: var(--bgc);
