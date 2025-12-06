@@ -29,7 +29,7 @@ function deleteDuplicateDir(filePath) {
 
 // ファイルパスは大文字・小文字まで一致しないと Vercel でこけるので注意。
 const entries = {
-	index: resolve(__dirname, 'src/components/index.js'),
+	index: resolve(__dirname, 'src/components/index.ts'),
 	// 'components/Box/index': resolve(__dirname, 'src/components/Box/index.js'),
 	// ↓ scripts.jsのビルドと、setEvent.js もこれでビルドされる.
 	'scripts/tabs': resolve(__dirname, 'src/components/Tabs/script.js'),
