@@ -28,5 +28,5 @@ export function li(props) {
 	return <Lism tag='li' {...props} />;
 }
 export function button(props) {
-	return <Lism tag='button' {...props} />;
+	return <Lism tag='button' setPlain {...props} />;
 }
