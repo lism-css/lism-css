@@ -253,7 +253,7 @@ export default {
 		presets: ['subgrid', 'liquid'],
 		exUtility: {
 			// repeat: { '--cols': '1', '--gtc': 'repeat(var(--cols), 1fr)' },
-			liquid: { '--cols': 'var(--sz--min)', '--gtc': 'repeat(auto-fill, minmax(min(var(--cols), 100%), 1fr))' },
+			liquid: { '--cols': 'var(--sz--min)', '--gtc': 'repeat(auto-fit, minmax(min(var(--cols), 100%), 1fr))' },
 		},
 		bp: 1,
 	},

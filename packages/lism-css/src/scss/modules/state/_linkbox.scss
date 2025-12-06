@@ -10,9 +10,12 @@
 	isolation: isolate; // 内部のz-index順位と外部のz-indexを混同させない。
 }
 
-// リンクを全てクリック可能にしておく
-@include mixin.switch_selector('.is--linkBox > a', 'is--linkBox > :where(a)') {
-	pointer-events: auto; // カードメディア内のタグラベルをクリックできるようにする場合などに必要
-	position: relative; // isolation: isolate;
-	z-index: 1;
+// リンクをクリック可能にするためにz-indexあげる
+.is--linkBox a {
+	z-index: 2; // .u-linkExpand::before + 1
 }
+
+/* これをしてしまうと z-index 関係がややこしくなる。リンク以外のz-indexはデフォのままにする。 */
+// .is--linkBox > * {
+// 	z-index: 0;
+// }
