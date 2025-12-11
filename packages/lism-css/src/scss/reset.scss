@@ -84,14 +84,15 @@
 	/* ------------------------------------------------------------
 	 cursor 初期セット
 	------------------------------------------------------------ */
-	// :where([type='button'], [type='reset'], [type='submit']),
-	// :where([t[role='option'], [role='button'], [aria-controls]),
+	// [role='option'], [role='button'], [aria-controls],
+	// [type='radio'],[type='checkbox'] は labelに囲われていることが多いので、省略
 	button,
 	label,
 	select,
 	summary,
-	[type='radio'],
-	[type='checkbox'] {
+	[type='button'],
+	[type='reset'],
+	[type='submit'] {
 		cursor: pointer;
 	}
 
