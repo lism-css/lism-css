@@ -64,6 +64,12 @@ export default function getProps({
 	// viewBoxがあれば、svg描画として扱う
 	if (props.viewBox) {
 		Component = 'svg';
+		if (!props.width) {
+			exProps.width = '1em';
+		}
+		if (!props.height) {
+			exProps.height = '1em';
+		}
 	} else if (props.src) {
 		Component = 'img';
 	} else if (icon) {
