@@ -1,4 +1,4 @@
-import { Lism } from 'lism-css/react';
+import { Flex } from 'lism-css/react';
 import './style.css';
 
 export default function Button({ layout = 'flex', children, ...props }) {
@@ -9,8 +9,8 @@ export default function Button({ layout = 'flex', children, ...props }) {
 	};
 
 	return (
-		<Lism lismClass='c--button' layout='flex' tag='a' hov='o' _propConfig={_propConfig} {...props}>
+		<Flex lismClass='c--button' tag='a' lh='s' py='20' px='30' hov='o' _propConfig={_propConfig} {...props}>
 			{children}
-		</Lism>
+		</Flex>
 	);
 }

@@ -1,12 +1,5 @@
 ---
-import Button from '~/components/ex/Button/index.astro';
-import { Lism, Grid, Icon } from 'lism-css/astro';
-
-// import { PAGE_TITLE_ID } from '@astrojs/starlight/constants';
-// import LinkButton from '@astrojs/starlight/user-components/LinkButton.astro';
-// import { LinkButton } from '@astrojs/starlight/components/';
-
-// import Orb from './component/Orb';
+import { Lism, Stack, Grid } from 'lism-css/astro';
 
 const PAGE_TITLE_ID = '_id';
 const { data } = Astro.locals.starlightRoute.entry;
@@ -14,35 +7,12 @@ const { title = data.title, tagline = data.description, image, actions = [] } = 
 ---
 
 <Grid class='z--hero' gt='repeat' cols='5' rows='1' min-h='50svh' ai='center'>
-	<Lism class='z--hero_content l--stack -g:50' gc='1 / 5' gr='1' z='1'>
-		<div class='l--stack -g:20 copy'>
+	<Stack class='z--hero_content' gc='1 / 5' gr='1' z='1'>
+		<Stack g='50'>
 			<Lism class='z--hero_h1wrap -bgclip:text -c:trsp -w:fit'>
-				<Lism tag='h1' id={PAGE_TITLE_ID} fz={['3rem', null, '4rem']} data-page-title set:html={title}>
-					<!-- {title} -->
-					<!-- <span>Template Library</span>
-					<br />
-					<span class='-fz:2xs -px:10'>with </span>
-					<span>Lism</span> -->
-				</Lism>
+				<Lism tag='h1' id={PAGE_TITLE_ID} fz={['3rem', null, '4rem']} data-page-title set:html={title} />
 			</Lism>
-			{tagline && <div class='z--hero_tagline -my-s:20' set:html={tagline} />}
-		</div>
-		{
-			actions.length > 0 && (
-				<div class='l--flex -g:30'>
-					{actions.map(({ attrs: { class: className, ...attrs } = {}, icon, link: href, text, variant }) => (
-						<Button {href} {variant} icon={icon?.name} class:list={[className]} g='10' bdrs='99' {...attrs}>
-							<span class='-pos:rel'>{text}</span>
-							{variant === 'primary' && (
-								<Icon lh='1' fz='l'>
-									<Fragment>📖</Fragment>
-								</Icon>
-							)}
-							{variant === 'secondary' && <Icon lh='1' fz='l' icon='logo-github' />}
-						</Button>
-					))}
-				</div>
-			)
-		}
-	</Lism>
+			{tagline && <div class='z--hero_tagline' set:html={tagline} />}
+		</Stack>
+	</Stack>
 </Grid>

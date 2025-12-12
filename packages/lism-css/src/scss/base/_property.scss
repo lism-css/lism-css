@@ -7,22 +7,12 @@
 	inherits: true;
 }
 
-/* ------------------------------------------------------------
-	ハーフレディング
-
-	トリミングした時に詰まりすぎる印象が出てしまうことがあるため、ほんの少し余裕を持たせる。
-
-*/
-@property --HL {
-	syntax: '*';
-	inherits: false;
-	initial-value: calc((1lh - 1em) / 2);
-}
-
-// :lang(en) {
-// 	--HL: calc((1lh - 1cap) / 2);
+// :lang(ja) {
+// 	--hl: calc((1lh - 1em) / 2);
 // }
-
+// :lang(en) {
+// 	--hl: calc((1lh - 1cap) / 2);
+// }
 // lh非サポートブラウザ用のフォールバック
 // @supports not (gap: 1lh) {
 // 	:root {

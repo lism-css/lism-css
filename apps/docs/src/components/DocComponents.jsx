@@ -46,5 +46,5 @@ export const PropBadge = ({ type = '', ...props }) => {
 	} else if (type === 'cssvar') {
 		keycolor = 'purple';
 	}
-	return <Badge variant='prop' fz='xs' ff='mono' lh='xs' m='5' bdrs='5' className='u-cbox -whitespace:nowrap' keycolor={keycolor} {...props} />;
+	return <HTML.span lismClass='c--propBadge' className='u-cbox' fz='2xs' lh='s' ff='mono' bd px='10' bdrs='5' keycolor={keycolor} {...props} />;
 };

@@ -2,22 +2,22 @@
 
 .u-trim {
 	// 詰まりすぎにならないようにほんの少しだけ余裕を持たせる
-	margin-block: calc(0.5px + var(--HL) * -1);
+	// margin-block: calc(0.5px + var(--HL) * -1);
+	margin-block: calc(var(--hl) * -1);
 }
-
-/*
---HL とは別に --trimHL を定義しているのは、トリミング除外要素で 0px に上書きしても --HL 自体の値は無効にしないようにするため。
-	これにより、imgに対してmargin-block-start:var(--HL) を適用して余白を揃えたりできる。
-*/
 
 .u-trimItems {
 	> * {
-		--trimHL: calc(0.5px + var(--HL) * -1);
-		margin-block: var(--trimHL);
+		--my: calc(var(--hl) * -1);
+		margin-block: var(--my);
 	}
 
+	/*
+	 * トリミング除外要素
+	 *   Memo: --hl を 0 にはしないようにする.
+	*/
 	> :where(figure, img, button) {
-		--trimHL: 0px;
+		--my: 0px;
 	}
 }
 

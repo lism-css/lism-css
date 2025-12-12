@@ -2,14 +2,14 @@
 import { Lism, Icon } from 'lism-css/astro';
 import { ArrowDownRight } from '@phosphor-icons/react';
 
-const { resize, nogrid = false, p = '5', ...props } = Astro.props || {};
+const { resize, setCqUnit = true, p = '5', ...props } = Astro.props || {};
 
 let innerClass = 'c--preview_inner';
 if (resize) innerClass += ' is--resize';
 ---
 
 <Lism className='c--preview_area'>
-	<div class='c--preview_area_frame'>
+	<div class={`c--preview_area_frame ${setCqUnit ? 'set-cqUnit' : ''}`}>
 		<Lism className={innerClass} layout='flow' p={p} {...props}>
 			<slot />
 			{

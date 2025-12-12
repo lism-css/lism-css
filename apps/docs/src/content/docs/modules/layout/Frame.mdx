@@ -62,14 +62,14 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage, HelpTex
 	<PreviewArea resize>
 		<Frame tag='figure' ar='16/9' pos='rel'>
 			<img src='https://cdn.lism-css.com/img/a-1.jpg' alt='' width='960' height='640' />
-			<Flex tag='figcaption' pos='abs' z='1' b='0' w='100%' jc='center' c='white' bgc='rgb(0 0 0 / 40%)'>Lorem ipsum text.</Flex>
+			<Flex tag='figcaption' pos='abs' z='1' b='0' w='100%' jc='center' p='10' c='white' bgc='rgb(0 0 0 / 40%)'>Lorem ipsum text.</Flex>
 		</Frame>
 	</PreviewArea>
 	<PreviewCode slot='tab' label='JSX'>
 		```jsx
 		<Frame tag='figure' ar='16/9' pos='rel'>
 			<img src='https://cdn.lism-css.com/img/a-1.jpg' alt='' width='960' height='640' />
-			<Flex tag='figcaption' pos='abs' z='1' b='0' w='100%' jc='center' c='white' bgc='rgb(0 0 0 / 40%)'>Lorem ipsum text.</Flex>
+			<Flex tag='figcaption' pos='abs' z='1' b='0' w='100%' jc='center' p='10' c='white' bgc='rgb(0 0 0 / 40%)'>Lorem ipsum text.</Flex>
 		</Frame>
 		```
 	</PreviewCode>
@@ -77,7 +77,7 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage, HelpTex
 		```html
 		<figure class="l--frame -ar:16/9 -pos:rel">
 			<img src="https://cdn.lism-css.com/img/a-1.jpg" width="960" height="640">
-			<figcaption class="-pos:abs -z:1 -b:0 -w:100% -d:f -jc:center -c -bgc" style="--c:var(--white);--bgc:rgb(0 0 0 / 40%)"> Lorem ipsum text. </figcaption>
+			<figcaption class="-pos:abs -z:1 -b:0 -w:100% -d:f -jc:center -p:10 -c -bgc" style="--c:var(--white);--bgc:rgb(0 0 0 / 40%)"> Lorem ipsum text. </figcaption>
 		</figure>
 		```
 	</PreviewCode>
@@ -141,26 +141,26 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage, HelpTex
 <Preview>
 	<PreviewTitle>Layer系を活用する</PreviewTitle>
 	<PreviewArea resize p={20}>
-		<Frame ar='16/9' pos='rel' c='#fff'>
+		<Frame ar='3/2' pos='rel' c='#fff'>
 			<img src='https://cdn.lism-css.com/img/a-1.jpg' alt='' width='960' height='640' />
 			<Layer blur='4px' bgc='rgb(0 0 0 / 40%)' />
 			<Layer p='40' ov='auto'>
-				<Center min-h='100%' g='10'>
+				<Center min-h='100%' g='20'>
 					<h2>Heading</h2>
-					<Dummy />
+					<Dummy max-w="xs" />
 				</Center>
 			</Layer>
 		</Frame>
 	</PreviewArea>
 	<PreviewCode slot='tab' label='JSX'>
 		```jsx
-		<Frame ar='16/9' pos='rel' c='#fff'>
+		<Frame ar='3/2' pos='rel' c='#fff'>
 			<img src='https://cdn.lism-css.com/img/a-1.jpg' alt='' width='960' height='640' />
 			<Layer blur='4px' bgc='rgb(0 0 0 / 40%)' />
 			<Layer p='40' ov='auto'>
-				<Center min-h='100%' g='10'>
+				<Center min-h='100%' g='20'>
 					<h2>Heading</h2>
-					<p>...</p>
+					<Dummy max-w="xs" />
 				</Center>
 			</Layer>
 		</Frame>
@@ -168,13 +168,13 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage, HelpTex
 	</PreviewCode>
 		<PreviewCode slot='tab' label='HTML'>
 		```jsx
-		<div class="l--frame -ar:16/9 -pos:rel -c" style="--c:#fff">
+		<div class="l--frame -ar:3/2 -pos:rel -c" style="--c:#fff">
 			<img src="https://cdn.lism-css.com/img/a-1.jpg" alt="" width="960" height="640">
 			<div class="is--layer -bgc" style="--bgc:rgb(0 0 0 / 40%);backdrop-filter:blur(4px)"></div>
 			<div class="is--layer -p:40 -ov:auto">
 				<div class="l--center -min-h:100% -g:10">
 					<p class="-fz:2xl -lh:xs -fw:bold">  Heading  </p>
-					<p>  Lorem ipsum dolor sit, amet consectetur adipisicing elit, sed do eiusmod tempor. Non facere laudantium ex eos doloribus aut dolore nisi.  </p>
+					<p class="-max-w:xs" style="--max-w:var(--sz--xs)">Lorem ipsum dolor sit, amet consectetur adipisicing elit, sed do eiusmod tempor. Non facere laudantium ex eos doloribus aut dolore nisi.  </p>
 				</div>
 			</div>
 		</div>
@@ -220,7 +220,7 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage, HelpTex
 	<PreviewArea resize p='20'>
 		<Frame ar={['1/1', '3/2', '16/9']} pos='rel'>
 			<img src='https://cdn.lism-css.com/img/a-1.jpg' alt='' width='960' height='640' />
-			<Box pos='abs' l='0' t='0' bgc='black' c='white' p='10' lh='xs' fz='s' m='20' bdrs='10'>
+			<Box pos='abs' l='0' t='0' bgc='black' c='white' p='10' lh='s' fz='s' m='20' bdrs='10'>
 				{`比率:`}
 				<HTML.span d={['inline', 'none']}>1/1</HTML.span>
 				<HTML.span d={['none', 'inline', 'none']}>3/2</HTML.span>

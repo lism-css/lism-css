@@ -3,10 +3,9 @@
 /* ----------------------------------------
     html, body
  ---------------------------------------- */
-html {
-	// remで使うために html へ指定
-	font-size: var(--fz--base);
 
+html {
+	// font-size: unset;
 	tab-size: 4;
 
 	// iOSで横向きにした時のフォントサイズ自動調節をオフにする.
@@ -17,9 +16,9 @@ html {
 }
 
 body {
-	font-size: 1rem;
+	--hl: var(--hl--base);
+	font-size: var(--fz--base);
 	font-family: var(--ff--base);
-	line-height: var(--lh--base);
 	letter-spacing: var(--lts--base);
 	background-color: var(--c--base);
 	color: var(--c--text);
@@ -28,43 +27,51 @@ body {
 	// container-type: inline-size;
 }
 
+// フォーカス要素
+:focus-visible {
+	outline-offset: var(--focus-offset, 0px);
+}
+
+/* ----------------------------------------
+    line-height
+ ---------------------------------------- */
+* {
+	line-height: calc(1em + var(--hl) * 2);
+}
+
 /* ----------------------------------------
     Heading
  ---------------------------------------- */
-@include mixin.maybe_where('h1, h2, h3, h4, h5, h6') {
+:is(h1, h2, h3, h4, h5, h6) {
 	font-family: var(--heading-ff, inherit);
 	font-weight: var(--heading-fw, bolder);
-	font-size: var(--fz, revert);
-	line-height: var(--lh, inherit);
+	// font-size: var(--fz, revert);
+	// line-height: var(--lh, inherit);
 }
 h1 {
-	--fz: var(--fz--3xl);
-	--lh: var(--lh--xs);
+	font-size: var(--fz--3xl);
 }
 h2 {
-	--fz: var(--fz--2xl);
-	--lh: var(--lh--xs);
+	font-size: var(--fz--2xl);
 }
 h3 {
-	--fz: var(--fz--xl);
-	--lh: var(--lh--s);
+	font-size: var(--fz--xl);
 }
 h4 {
-	--fz: var(--fz--l);
-	--lh: var(--lh--s);
+	font-size: var(--fz--l);
 }
 h5 {
-	--fz: var(--fz--m);
-	// --lh: var(--lh--s);
+	font-size: var(--fz--m);
 }
 h6 {
-	--fz: var(--fz--s);
+	font-size: var(--fz--s);
 }
 
 /* ----------------------------------------
     list
  ---------------------------------------- */
-@include mixin.maybe_where('ul, ol') {
+ul,
+ol {
 	list-style: none;
 	padding: 0;
 	padding-inline-start: var(--list-px-s, 0);
@@ -73,53 +80,68 @@ h6 {
 /* ----------------------------------------
     texts
  ---------------------------------------- */
-// link
-@include mixin.maybe_where('a') {
-	color: var(--link-c, var(--c--link));
-	text-decoration: var(--link-td, underline);
-	// text-underline-offset: var(--underline-offset, auto);
-	// text-decoration-thickness: var(--underline-thickness, 1px);
+small,
+sup,
+sub {
+	--hl: var(--hl--s);
+	font-size: var(--fz--xs);
 }
 
-// フォーカス要素
-@include mixin.maybe_where(':focus-visible') {
-	outline-offset: var(--focus-offset, 0px);
+caption,
+figcaption {
+	font-size: var(--fz--s);
+}
+code,
+kbd {
+	font-family: var(--ff--mono);
+}
+
+a {
+	color: var(--link-c, var(--c--link));
+	text-decoration: var(--link-td, underline);
+
+	// underline調整用
+	text-underline-offset: var(--underline-offset, auto);
+	// text-decoration-thickness: var(--underline-thickness, 1px);
 }
 
 /* ----------------------------------------
     table
  ---------------------------------------- */
-@include mixin.maybe_where('th') {
+table {
+	--hl: var(--hl--s);
+}
+th {
 	color: var(--th--c, inherit);
 	background-color: var(--th--bgc, transparent);
 }
-// @include mixin.maybe_where('td') {
-// 	color: var(--td--c, inherit);
-// 	background-color: var(--td--bgc, transparent);
-// }
-
-@include mixin.maybe_where('td, th') {
+td,
+th {
 	padding: var(--cell-p, 0.375em 0.5em);
-	min-inline-size: var(--cell-minW, initial);
+	min-inline-size: var(--cell-min-w, initial);
 }
 
 /* ----------------------------------------
     others
  ---------------------------------------- */
-@include mixin.maybe_where('hr') {
+hr {
 	border: none;
 	border-block-start: 1px solid;
 	block-size: 0;
 }
 
-@include mixin.maybe_where('blockquote') {
-	border-inline-start: solid 3px currentColor;
-	padding: var(--s20) var(--s30);
+blockquote {
+	background-color: var(--c--base-2);
+	padding: var(--s40);
 }
 
-@include mixin.maybe_where('pre') {
+pre {
 	// 横にスクロールできるように（overflow-inline: auto; ← まだ使えない）
 	overflow-x: auto; // 縦書きモードにしてもこれでいけた
+
+	// :where(code, span) {
+	// 	line-height: inherit;
+	// }
 }
 
 /* ----------------------------------------

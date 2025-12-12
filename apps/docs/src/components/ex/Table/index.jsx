@@ -7,7 +7,7 @@ function getTableProps({ thBgc, thC, bdwX, bdwY, cellMinW, cellP, style = {}, ..
 	if (bdwY) style['--bdw-y'] = bdwY;
 	if (thC) style['--th--c'] = getMaybeCssVar(thC, 'color');
 	if (thBgc) style['--th--bgc'] = getMaybeCssVar(thBgc, 'color');
-	if (cellMinW) style['--cell-minW'] = cellMinW;
+	if (cellMinW) style['--cell-min-w'] = cellMinW;
 	if (cellP) style['--cell-p'] = cellP;
 
 	props.style = style;
