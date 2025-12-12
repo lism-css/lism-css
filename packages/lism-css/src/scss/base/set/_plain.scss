@@ -1,14 +1,12 @@
-@use '../../_mixin' as mixin;
-
-// Note: d--modalに使われる
-@include mixin.maybe_where('.set-plain') {
-	font: inherit;
+// ボタンやリンク、モーダルスタイルをリセットするためのユーティリティクラス
+// Memo: font:inherit は書いていない。→  .-font:inherit がある + フォーム系には reset.css で記述済み + line-height に影響が出るため。
+.set-plain {
 	width: auto;
 	height: auto;
 	color: inherit;
 	background: none;
-	border: none;
-	text-decoration: none;
 	padding: 0;
 	margin: 0;
+	border: none;
+	text-decoration: none;
 }

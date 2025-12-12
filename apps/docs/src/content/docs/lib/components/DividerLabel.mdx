@@ -16,9 +16,9 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportSource } from "~
 	<PreviewTitle>例</PreviewTitle>
 	<PreviewArea p='30' >
 		<Box bgc='base-2' c='text-2' py='50' ta='center'>...Contents...</Box>
-		<Flex ai='center' g='30' lh='1'>
+		<Flex ai='center' g='30' lh='s'>
 			<Divider fx='1' />
-			<span>Label Text</span>
+			<HTML.span fz='s'>Label Text</HTML.span>
 			<Divider fx='1' />
 		</Flex>
 		<Box bgc='base-2' c='text-2' py='50' ta='center'>...Contents...</Box>
@@ -26,9 +26,9 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportSource } from "~
 	<PreviewCode slot='tab' label='JSX'>
 		```jsx {2-6}
 		<Box bgc='base-2' c='text-2' py='50' ta='center'>...Contents...</Box>
-		<Flex ai='center' g='30' lh='1'>
+		<Flex ai='center' g='30' lh='s'>
 			<Divider fx='1' />
-			<span>Label Text</span>
+			<HTML.span fz='s'>Label Text</HTML.span>
 			<Divider fx='1' />
 		</Flex> 
 		<Box bgc='base-2' c='text-2' py='50' ta='center'>...Contents...</Box>
@@ -37,9 +37,9 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportSource } from "~
 	<PreviewCode slot='tab' label='HTML'>
 		```html
 		<div class='l--box -bgc:base-2 -c:text-2 -py:50 -ta:center'>…Contents…</div>
-		<div class='l--flex -ai:center -g:30 -lh:1'>
+		<div class='l--flex -ai:center -g:30 -lh:s'>
 			<div class='a--divider -fx:1' aria-hidden='true'></div>
-			<span>Label Text</span>
+			<span class='-fz:s'>Label Text</span>
 			<div class='a--divider -fx:1' aria-hidden='true'></div>
 		</div>
 		<div class='l--box -bgc:base-2 -c:text-2 -py:50 -ta:center'>…Contents…</div>
@@ -51,28 +51,28 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportSource } from "~
 	<PreviewTitle>例</PreviewTitle>
 	<PreviewArea p='30' >
 		<Box bgc='base-2' c='text-2' py='50' ta='center'>...Contents...</Box>
-		<Flex ai='center' g='30' lh='1'>
-			<span class='-fs:italic'>Label Text</span>
+		<Flex ai='center' g='20' lh='s'>
+			<span class='-fz:s -px:5'>Label Text</span>
 			<Divider fx='1' bdc='currentColor' o='-20' />
 		</Flex> 
 		<Box bgc='base-2' c='text-2' py='50' ta='center'>...Contents...</Box>
-		<Flex ai='center' g='30' lh='1' c='blue'>
+		<Flex ai='center' g='20' lh='s' c='blue'>
 			<Divider fx='1' bdc='currentColor' bds='dotted' bdw='4px' o='-30' />
-			<span class='-fs:italic'>Label Text</span>
+			<span class='-fz:s -px:5'>Label Text</span>
 		</Flex> 
 		<Box bgc='base-2' c='text-2' py='50' ta='center'>...Contents...</Box>
 	</PreviewArea>
 	<PreviewCode slot='tab' label='JSX'>
 		```jsx {2-5} {7-10}
 		<Box bgc='base-2' c='text-2' py='50' ta='center'>...Contents...</Box>
-		<Flex ai='center' g='30' lh='1'>
-			<span class='-fs:italic'>Label Text</span>
+		<Flex ai='center' g='20' lh='s'>
+			<span class='-fz:s -px:5'>Label Text</span>
 			<Divider fx='1' bdc='currentColor' o='-20' />
 		</Flex> 
 		<Box bgc='base-2' c='text-2' py='50' ta='center'>...Contents...</Box>
-		<Flex ai='center' g='30' lh='1' c='blue'>
+		<Flex ai='center' g='20' lh='s' c='blue'>
 			<Divider fx='1' bdc='currentColor' bds='dotted' bdw='4px' o='-30' />
-			<span class='-fs:italic'>Label Text</span>
+			<span class='-fz:s -px:5'>Label Text</span>
 		</Flex> 
 		<Box bgc='base-2' c='text-2' py='50' ta='center'>...Contents...</Box>
 		```
@@ -80,20 +80,19 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportSource } from "~
 	<PreviewCode slot='tab' label='HTML'>
 		```html
 		<div class='l--box -bgc:base-2 -c:text-2 -py:50 -ta:center'>…Contents…</div>
-		<div class='l--flex -ai:center -g:30 -lh:1'>
-			<span class='-fs:italic'>Label Text</span>
+		<div class='l--flex -ai:center -g:20 -lh:s'>
+			<span class='-fz:s -px:5'>Label Text</span>
 			<div class='a--divider -fx:1 -o:soft' style='--bdc:currentColor' aria-hidden='true'></div>
 		</div>
 		<div class='l--box -bgc:base-2 -c:text-2 -py:50 -ta:center'>…Contents…</div>
-		<div class='l--flex -ai:center -g:30 -lh:1 -c' style='--c:var(--blue)'>
+		<div class='l--flex -ai:center -g:20 -lh:s -c' style='--c:var(--blue)'>
 			<div class='a--divider -fx:1 -o:pale' style='--bdc:currentColor;--bds:dotted;--bdw:4px' aria-hidden='true'></div>
-			<span class='-fs:italic'>Label Text</span>
+			<span class='-fz:s -px:5'>Label Text</span>
 		</div>
 		<div class='l--box -bgc:base-2 -c:text-2 -py:50 -ta:center'>…Contents…</div>
 		```
 	</PreviewCode>
 </Preview>
-
 
 
 ### 縦方向
@@ -103,7 +102,7 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportSource } from "~
 	<PreviewArea p='30' layout=''>
 		<Flex ai='center' g='20'>
 			<Box fx='1' bgc='base-2' py='50' ta='center'>Box</Box>
-			<Stack ai='center' g='20' lh='1' fz='s' aslf='stretch'>
+			<Stack ai='center' g='10' lh='s' fz='s' aslf='stretch'>
 				<Divider fx='1' writing='vertical' />
 				<span>Label</span>
 				<Divider fx='1' writing='vertical' />
@@ -115,7 +114,7 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportSource } from "~
 		```jsx "fxd='column'" "writing='vertical'"
 		<Flex ai='center' g='20'>
 			<Box fx='1' bgc='base-2' py='50' ta='center'>Box</Box>
-			<Stack ai='center' g='20' lh='1' fz='s' aslf='stretch'>
+			<Stack ai='center' g='10' lh='s' fz='s' aslf='stretch'>
 				<Divider fx='1' writing='vertical' />
 				<span>Label</span>
 				<Divider fx='1' writing='vertical' />
@@ -128,7 +127,7 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportSource } from "~
 		```html
 		<div class='l--flex -ai:center -g:20'>
 			<div class='l--box -fx:1 -bgc:base-2 -py:50 -ta:center'>Box</div>
-			<div class="l--stack -ai:center -g:20 -lh:1 -fz:s -aslf:stretch">
+			<div class="l--stack -ai:center -g:10 -lh:s -fz:s -aslf:stretch">
 				<div class="a--divider -writing:vertical -fx:1" aria-hidden="true"></div>
 				<span>Label</span>
 				<div class="a--divider -writing:vertical -fx:1" aria-hidden="true"></div>
@@ -144,14 +143,14 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportSource } from "~
 	<PreviewArea resize p='30' layout=''>
 		<Flex ai='stretch' g='20'>
 			<Box fx='1' bgc='base-2' py='50' ta='center'>Box</Box>
-			<Flex writing='vertical' ai='center' g='20' lh='1' fz='xs' aslf='stretch'>
-				<span>Label</span>
+			<Flex writing='vertical' ai='center' g='20' lh='s' fz='xs' aslf='stretch'>
+				<span class="-px:5">Label</span>
 				<Divider fx='1' />
 			</Flex>
 			<Box fx='1' bgc='base-2' py='50' ta='center'>Box</Box>
-			<Flex writing='vertical' ai='center' g='20' lh='1' fz='xs' aslf='stretch'>
+			<Flex writing='vertical' ai='center' g='20' lh='s' fz='xs' aslf='stretch'>
 			<Divider fx='1' />
-				<span>Label</span>
+				<span class="-px:5">Label</span>
 			</Flex>
 			<Box fx='1' bgc='base-2' py='50' ta='center'>Box</Box>
 		</Flex>
@@ -160,14 +159,14 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportSource } from "~
 		```jsx "writing='vertical'"
 		<Flex ai='stretch' g='20'>
 			<Box fx='1' bgc='base-2' py='50' ta='center'>Box</Box>
-			<Flex writing='vertical' ai='center' g='20' lh='1' fz='xs' aslf='stretch'>
-				<span>Label</span>
+			<Flex writing='vertical' ai='center' g='20' lh='s' fz='xs' aslf='stretch'>
+				<span class="-px:5">Label</span>
 				<Divider fx='1' />
 			</Flex>
 			<Box fx='1' bgc='base-2' py='50' ta='center'>Box</Box>
-			<Flex writing='vertical' ai='center' g='20' lh='1' fz='xs' aslf='stretch'>
+			<Flex writing='vertical' ai='center' g='20' lh='s' fz='xs' aslf='stretch'>
 			<Divider fx='1' />
-				<span>Label</span>
+				<span class="-px:5">Label</span>
 			</Flex>
 			<Box fx='1' bgc='base-2' py='50' ta='center'>Box</Box>
 		</Flex>
@@ -177,14 +176,14 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportSource } from "~
 		```html "-writing:vertical"
 		<div class='l--flex -ai:stretch -g:20'>
 			<div class='l--box -fx:1 -bgc:base-2 -py:50 -ta:center'>Box</div>
-			<div class='l--flex is--vertical -writing:vertical -ai:center -g:20 -lh:1 -fz:xs -aslf:stretch'>
-				<span>Label</span>
+			<div class='l--flex is--vertical -writing:vertical -ai:center -g:20 -lh:s -fz:xs -aslf:stretch'>
+				<span class="-px:5">Label</span>
 				<div class='a--divider -fx:1' aria-hidden='true'></div>
 			</div>
 			<div class='l--box -fx:1 -bgc:base-2 -py:50 -ta:center'>Box</div>
-			<div class='l--flex -writing:vertical -ai:center -g:20 -lh:1 -fz:xs -aslf:stretch'>
+			<div class='l--flex -writing:vertical -ai:center -g:20 -lh:s -fz:xs -aslf:stretch'>
 				<div class='a--divider -fx:1' aria-hidden='true'></div>
-				<span>Label</span>
+				<span class="-px:5">Label</span>
 			</div>
 			<div class='l--box -fx:1 -bgc:base-2 -py:50 -ta:center'>Box</div>
 		</div>

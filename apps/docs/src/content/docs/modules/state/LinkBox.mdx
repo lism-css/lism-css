@@ -41,7 +41,7 @@ LinkBox内部に**別のリンク**も配置するには、2 を採用してく�
 <Preview>
 	<PreviewTitle id='linkbox-demo01'>例</PreviewTitle>
 	<PreviewArea p='30'>
-		<LinkBox href='#linkbox-demo01' p='40' bgc='base' bdc='line' bd bdrs='30'>
+		<LinkBox href='#linkbox-demo01' p='40' bgc='base' bdc='line' bd bdrs='30' hov='o'>
 			<HTML.div fz='xl' fw='bold'>Heading text</HTML.div>
 			<Dummy lh='s' my-s='20' />
 			<HTML.div fz='s' c='text-2' ta='right' lh='1' my-s='10'>MORE →</HTML.div>
@@ -49,7 +49,7 @@ LinkBox内部に**別のリンク**も配置するには、2 を採用してく�
 	</PreviewArea>
 	<PreviewCode slot='tab' label='JSX'>
 		```jsx {1} "href="
-		<LinkBox href='#linkbox-demo01' p='40' bgc='base' bdc='line' bd bdrs='30'>
+		<LinkBox href='#linkbox-demo01' p='40' bgc='base' bdc='line' bd bdrs='30' hov='o'>
 			<HTML.div fz='xl' fw='bold'>Heading text</HTML.div>
 			<HTML.p lh='s' my-s='20'>
 				Lorem ipsum dolor sit, amet consectetur adipisicing elit, sed do eiusmod tempor. Non facere laudantium ex eos doloribus aut dolore nisi provident.
@@ -60,7 +60,7 @@ LinkBox内部に**別のリンク**も配置するには、2 を採用してく�
 	</PreviewCode>
 	<PreviewCode slot='tab' label='HTML'>
 		```jsx {1} "<a class=\"is--linkBox"
-		<a class="is--linkBox -hov:o -p:40 -bgc:base -bd -bdc:divider -bdrs:30" href="#linkbox-demo01">
+		<a class="is--linkBox -hov:o -p:40 -bgc:base -bd -bdc:divider -bdrs:30" href="#linkbox-demo01" hov='o'>
 			<p class="-fz:xl -fw:bold">Heading text</p>
 			<p class="-c:text-2 -lh:s -my-s:20">Lorem ipsum dolor sit, amet consectetur adipisicing elit, sed do eiusmod tempor. Non facere laudantium ex eos doloribus aut dolore nisi provident.</p>
 			<p class="-fz:s -c:text-2 -ta:right -lh:1 -my-s:10">MORE →</p>
@@ -81,7 +81,7 @@ LinkBox内部に**別のリンク**も配置するには、2 を採用してく�
 	<PreviewArea p='30'>
 		<LinkBox tag='section' p='40' bgc='base' bdc='line' bd bdrs='30' setTransition hov='bxsh'>
 			<HTML.div fz='xl' fw='bold'>
-				<HTML.a className='u-expandedLink set-plain' href='#linkbox-demo02'>Heading link text</HTML.a>
+				<HTML.a className='u-expandedLink' href='#linkbox-demo02'>Heading link text</HTML.a>
 			</HTML.div>
 			<Dummy c='text-2' lh='s' my-s='20' />
 			<HTML.div id='inner-link02' my-s='10'>
@@ -93,7 +93,7 @@ LinkBox内部に**別のリンク**も配置するには、2 を採用してく�
 		```jsx "className='u-expandedLink'"
 		<LinkBox p='40' bgc='base' bdc='line' bd bdrs='30' setTransition hov='bxsh'>
 			<HTML.div fz='xl' fw='bold'>
-				<HTML.a className='u-expandedLink set-plain' href='#linkbox-demo02'>Heading link text</HTML.a>
+				<HTML.a className='u-expandedLink' href='#linkbox-demo02'>Heading link text</HTML.a>
 			</HTML.div>
 			<Dummy c='text-2' lh='s' my-s='20' />
 			<HTML.div id='inner-link02' my-s='10'>
@@ -122,7 +122,7 @@ LinkBox内部に**別のリンク**も配置するには、2 を採用してく�
 
 ## Opt-in
 
-### Tabキーでフォーカスした時のアウトラインをLinkBox全体に広げ
+### Tabキーでフォーカスした時のアウトラインをLinkBox全体に広げる
 
 `u-expandedLink`でリンクを設置すると、Tabキーでフォーカスした時はアウトラインがボックス全体ではなくリンクテキスト部分のみになります。
 

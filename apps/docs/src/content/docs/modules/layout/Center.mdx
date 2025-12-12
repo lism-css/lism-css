@@ -44,14 +44,14 @@ Centerが**高さを持たない**場合は、コンテンツを水平方向に�
 	<PreviewTitle>
 		高さの設定が特にない時
 	</PreviewTitle>
-	<PreviewArea resize p={10}>
-		<Center p='30'>
+	<PreviewArea resize p='20'>
+		<Center bd p='40'>
 			<HTML.p fz='l'>TEXT</HTML.p>
 		</Center>
 	</PreviewArea>
 	<PreviewCode slot='tab' label='JSX'>
 		```jsx
-		<Center p='30'>
+		<Center bd p='40'>
 			<HTML.p fz='l'>TEXT</HTML.p>
 		</Center>
 		```
@@ -69,8 +69,8 @@ Centerが**高さを持たない**場合は、コンテンツを水平方向に�
 	<PreviewTitle>
 		長いテキストの改行は左寄せになります。テキストの読みやすさを損ないません。
 	</PreviewTitle>
-	<PreviewArea resize p={10}>
-		<Center p='40' g='20'>
+	<PreviewArea resize p='20'>
+		<Center bd p='40' g='20'>
 			<HTML.p fz='l'>TEXT</HTML.p>
 			<Dummy length='xs' lang='ja'/>
 			<Dummy lang='ja'/>
@@ -78,7 +78,7 @@ Centerが**高さを持たない**場合は、コンテンツを水平方向に�
 	</PreviewArea>
 	<PreviewCode slot='tab' label='JSX'>
 		```jsx
-		<Center p='40' g='20'>
+		<Center bd p='40' g='20'>
 			<HTML.p fz='l'>TEXT</HTML.p>
 			<p>...</p>
 			<p>...</p>
@@ -87,7 +87,7 @@ Centerが**高さを持たない**場合は、コンテンツを水平方向に�
 	</PreviewCode>
 	<PreviewCode slot='tab' label='HTML'>
 		```jsx
-		<div class="l--center -p:40 -g:20">
+		<div class="l--center -bd -p:40 -g:20">
 			<p class="-fz:l">TEXT</p>
 			<p>...</p>
 			<p>...</p>
@@ -105,15 +105,15 @@ Centerに**高さやアスペクト比**が設定されている時、垂直方�
 	<PreviewTitle>
 		上下左右中央に配置
 	</PreviewTitle>
-	<PreviewArea>
-		<Center g='10' ar='3/2' lh='xs'>
+	<PreviewArea p='20'>
+		<Center g='10' ar='3/2' bd>
 			<HTML.p fz='l'>TEXT</HTML.p>
 			<HTML.p fz='s'>Lorem ipsum dolor sit amet.</HTML.p>
 		</Center>
 	</PreviewArea>
 	<PreviewCode slot='tab' label='JSX'>
 		```jsx "ar='3/2'"
-		<Center g='10' ar='3/2' lh='xs'>
+		<Center g='10' ar='3/2' bd>
 			<HTML.p fz='l'>TEXT</HTML.p>
 			<HTML.p fz='s'>Lorem ipsum dolor sit amet.</HTML.p>
 		</Center>
@@ -121,7 +121,7 @@ Centerに**高さやアスペクト比**が設定されている時、垂直方�
 	</PreviewCode>
 	<PreviewCode slot='tab' label='HTML'>
 		```html "-ar:3/2"
-		<div class="l--center -g:10 -ar:3/2 -lh:xs">
+		<div class="l--center -bd -g:10 -ar:3/2">
 			<p class="-fz:l">TEXT</p>
 			<p class="-fz:s">ロレム・イプサムの座り雨。</p>
 		</div>

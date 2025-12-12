@@ -1,6 +1,7 @@
 export default {
 	fz: ['root', 'base', '5xl', '4xl', '3xl', '2xl', 'xl', 'l', 'm', 's', 'xs', '2xs'],
-	lh: ['base', 'xs', 's', 'l', 'xl'],
+	lh: ['base', 'xs', 's', 'l'],
+	hl: ['base', 'xs', 's', 'l'],
 	lts: ['base', 's', 'l'],
 	ff: ['base', 'accent', 'mono'],
 	fw: ['thin', 'light', 'normal', 'medium', 'bold', 'black'],

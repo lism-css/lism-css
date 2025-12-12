@@ -29,13 +29,12 @@ export function Item({ children, ...props }) {
 		</Lism>
 	);
 }
-export function Link({ href, tag = 'span', hov, children, ...props }) {
+export function Link({ href, tag = 'span', children, ...props }) {
 	if (href) {
 		tag = 'a';
-		hov = hov || 'o';
 	}
 	return (
-		<Flex lismClass='c--navMenu_link' tag={tag} href={href} hov={hov} c='inherit' {...props}>
+		<Flex lismClass='c--navMenu_link' tag={tag} href={href} c='inherit' {...props}>
 			{children}
 		</Flex>
 	);

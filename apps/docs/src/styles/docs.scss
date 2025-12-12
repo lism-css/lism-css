@@ -122,17 +122,15 @@ a[href='#_top'] {
 	}
 }
 
-.c--badge--prop {
-	padding: 0 0.25em;
+.c--propBadge {
+	display: inline-flex;
+	white-space: nowrap;
 	--bdc: color-mix(in srgb, var(--c--base), var(--keycolor) 25%);
-	> code {
-		padding: 0 !important;
-		font: inherit !important;
-		background-color: transparent;
-	}
 
-	td > &:first-child {
-		margin-inline-start: 0;
+	> code {
+		font: inherit !important;
+		padding: 0 !important;
+		background-color: transparent;
 	}
 }
 

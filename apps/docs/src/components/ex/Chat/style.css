@@ -7,19 +7,25 @@
 		--_deco-t: 0;
 
 		grid:
-			'avatar header' minmax(1.5rem, auto)
+			'avatar name' minmax(1.5rem, auto)
 			'avatar body' / auto 1fr;
 		gap: 0 calc(var(--_deco-size) + 1px);
 	}
 
 	[data-chat-dir='end'] {
 		grid:
-			'header avatar' minmax(1.5rem, auto)
+			'name avatar' minmax(1.5rem, auto)
 			'body avatar' / 1fr auto;
 	}
-
 	.c--chat_avatar {
+		grid-area: avatar;
 		width: var(--_avator-size);
+	}
+	.c--chat_name {
+		grid-area: name;
+	}
+	.c--chat_body {
+		grid-area: body;
 	}
 	.c--chat_content {
 		max-width: var(--sz--s);
@@ -52,15 +58,4 @@
 }
 .c--chat--speak[data-chat-dir='end'] > div > .c--chat_content {
 	border-start-end-radius: 0;
-}
-
-/* ----- 追加 Prop Class ----- */
-.-ga\:header {
-	grid-area: header;
-}
-.-ga\:body {
-	grid-area: body;
-}
-.-ga\:avatar {
-	grid-area: avatar;
 }

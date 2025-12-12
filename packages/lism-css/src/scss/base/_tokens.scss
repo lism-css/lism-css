@@ -1,34 +1,4 @@
-@use '../_setting' as setting;
-@use 'sass:math';
-
-// フォントサイズ計算用の関数
-@function fz-calc($offset) {
-	$fzmol: setting.$fzmol;
-	$fz: math.div($fzmol, ($fzmol - $offset));
-	@return math.div(math.round($fz * 1000), 1000);
-}
-
 :root {
-	/* ------------------------------------------------------------
-	  Spacing
-	------------------------------------------------------------ */
-
-	// フィボナッチ数列 0, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89,
-	// 0 .25rem, .5rem, .75rem, 1.25rem, M:(8):2rem, 3.25rem, 5.25rem, 8.5rem
-
-	// 1=0.125 Fibonacci数列
-	// --s1: 0.125rem;
-	--s5: 0.25rem;
-	--s10: 0.375rem;
-	--s20: 0.625rem;
-	--s30: 1rem;
-	--s40: 1.625rem;
-	--s50: 2.625rem;
-	--s60: 4.25rem;
-	--s70: 6.875rem;
-	--s80: 11.125rem;
-	// --s90: 18rem;
-
 	/* ------------------------------------------------------------
 	  コンテンツサイズ
 	------------------------------------------------------------ */
@@ -39,71 +9,6 @@
 	--sz--xs: 480px; // 80*6
 
 	--sz--min: 18rem; // 最低限維持したいコンテンツサイズの標準値。 withSide等 で使用
-
-	// .l--flow の余白
-	--flow--base: var(--s40);
-	--flow--s: var(--s20);
-	--flow--l: var(--s50);
-	--flow--h: 0.75em;
-
-	/* ------------------------------------------------------------
-	    タイポグラフィ
-	------------------------------------------------------------ */
-
-	// system-ui は　游ゴシックが適用されてしまう。-apple-system: safari, firefox用 / 'BlinkMacSystemFont': Chrome用
-	--ff--base: -apple-system, 'BlinkMacSystemFont', sans-serif, 'Segoe UI Emoji';
-	--ff--accent: 'Garamond', 'Baskerville', 'Times New Roman', serif;
-	--ff--mono: Menlo, Consolas, monaco, monospace;
-
-	// ------------------------------
-	// font-size 変数
-	// ------------------------------
-	// 倍音列での計算値
-	--fz--5xl: #{fz-calc(6)}em;
-	--fz--4xl: #{fz-calc(5)}em;
-	--fz--3xl: #{fz-calc(4)}em;
-	--fz--2xl: #{fz-calc(3)}em;
-	--fz--xl: #{fz-calc(2)}em;
-	--fz--l: #{fz-calc(1)}em;
-	--fz--m: 1em;
-	--fz--s: #{fz-calc(-1)}em;
-	--fz--xs: #{fz-calc(-2)}em;
-	--fz--2xs: #{fz-calc(-3)}em;
-
-	--fz--base: clamp(0.875rem, 0.625rem + 1vw, 1rem); // 画面サイズ 400 - 600 で可変
-
-	// clampでテキストサイズを変化させたい時用
-	// --fz--fluid-s: clamp(0.9rem, 0.75rem + 0.8cqw, 1rem); // 小さい方向のみ. 300: .9rem ~ 500: 1rem
-	// --fz--fluid: clamp(0.9rem, 0.8rem + 0.5cqw, 1.1rem); // 上下両方. 320: .9rem ~ 960: 1.1rem
-	// --fz--fluid-l: clamp(1rem, 0.9rem + 0.25cqw, 1.1rem); // 大きい方向のみ 640: 1rem a~ 960: 1.1rem
-
-	// ------------------------------
-	// font-weight
-	// ------------------------------
-	--fw--thin: 100;
-	--fw--light: 300;
-	--fw--normal: 400;
-	--fw--medium: 500;
-	--fw--bold: 700;
-	--fw--black: 900;
-
-	// ------------------------------
-	// line-height
-	// ------------------------------
-	// tight snug - relaxed loose or shorter short - tall taller ?
-	--lh--base: 1.75;
-	--lh--xs: calc(var(--lh--base) - 0.25);
-	--lh--s: calc(var(--lh--base) - 0.125);
-	--lh--l: calc(var(--lh--base) + 0.125);
-	--lh--xl: calc(var(--lh--base) + 0.25);
-
-	// ------------------------------
-	// letter-spacing
-	// ------------------------------
-	--lts--base: normal;
-	--lts--s: -0.05em;
-	--lts--l: 0.05em;
-	// --lts--xl: 0.125em;
 
 	// ------------------------------------------------------------
 	// カラー
@@ -234,4 +139,38 @@
 		デザイントークンとは別のグローバル設定値
 	---------------------------------------- */
 	--gutter: var(--s40);
+
+	/* ------------------------------------------------------------
+	shadow color, shadow inset, shadow size
+	------------------------------------------------------------ */
+	--sh-i: ; // for inset
+	--shc: hsl(220 4% 8% / 5%);
+
+	// x:fibo, y=fibo, blur=x+y*2
+	--shsz--5: 0px 2px 4px;
+	--shsz--10: 1px 3px 6px;
+	--shsz--20: 1px 5px 10px;
+	--shsz--30: 2px 8px 16px;
+	--shsz--40: 3px 13px 26px;
+	--shsz--50: 5px 21px 42px;
+}
+
+/* ------------------------------------------------------------
+	shadow
+	    Memo: カラー変数込みで変数をセットしてしまうと、--sh-c がその時点で固定されるので、再セットできる set-shadow クラスを用意。
+------------------------------------------------------------ */
+:root,
+.set-shadow {
+	--sh--5: var(--sh-i) var(--shsz--5) var(--shc);
+	--sh--10: var(--sh-i) var(--shsz--10) var(--shc);
+	--sh--20: var(--sh-i) var(--shsz--20) var(--shc);
+	--sh--30: var(--sh-i) var(--shsz--30) var(--shc);
+	--sh--40: var(--sh-i) var(--shsz--40) var(--shc);
+	--sh--50: var(--sh-i) var(--shsz--50) var(--shc);
+
+	--bxsh--10: var(--sh--5), var(--sh--10);
+	--bxsh--20: var(--sh--10), var(--sh--20);
+	--bxsh--30: var(--sh--20), var(--sh--30);
+	--bxsh--40: var(--sh--30), var(--sh--40);
+	--bxsh--50: var(--sh--40), var(--sh--50);
 }

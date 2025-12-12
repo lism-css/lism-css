@@ -90,7 +90,7 @@ export const POINTS = [
 		<Columns cols={[2, 2, 3]} g={[30,40]}>
 			{POINTS.map((point, i) => {
 				return (
-					<Stack key={i} g='20' p='30' bdrs='20' bgc='base' bxsh='30'>
+					<Stack key={i} g='20' p='30' bdrs='20' bgc='base' bxsh='30' lh="s">
 						<HTML.p fw='bold'>
 							{point.title}
 						</HTML.p>
@@ -105,7 +105,7 @@ export const POINTS = [
 	<section class="l--flow">
 		{/* <h2>🎨 Easy to Use</h2> */}
 		<Spacer h='40' />
-		<Columns cols={[1, 2]} g={[40]} lh='xs'>
+		<Columns cols={[1, 2]} g={[40]} lh='s'>
 			<Stack className='set-shadow' style={{'--sh-hsl': '320 78% 56%'}} g='5' py='30' px='50' bdrs='99' bgc='base' bxsh='30' bd bdc='pink:40%'>
 				<HTML.p fz='xl' fw='bold'>Lightweight</HTML.p>
 				<HTML.p c='text-2'>Start from just 30kb~, with responsive design.</HTML.p>

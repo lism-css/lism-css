@@ -18,7 +18,7 @@ function generateUtilities(propConfig, TOKENS) {
 	const utilities = {};
 
 	// tokenをクラス化するのであれば presetsへ追加
-	if (token && tokenClass) {
+	if (token && tokenClass === 1) {
 		const tokenValues = TOKENS[token];
 		if (tokenValues && Array.isArray(tokenValues)) {
 			presets.push(...tokenValues);

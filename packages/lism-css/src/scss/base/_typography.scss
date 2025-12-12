@@ -1,0 +1,118 @@
+@use '../_setting' as setting;
+@use 'sass:math';
+
+// フォントサイズ計算用の関数
+@function fz-calc($offset) {
+	$fzmol: setting.$fzmol;
+	$fz: math.div($fzmol, ($fzmol - $offset));
+	@return math.div(math.round($fz * 1000), 1000);
+}
+
+/* ------------------------------------------------------------
+   タイポグラフィ
+------------------------------------------------------------ */
+/* ハーフレディング */
+@property --hl {
+	syntax: '<length>';
+	inherits: true;
+	initial-value: 0.25rem;
+}
+
+:root {
+	--REM: clamp(0.95rem, 0.915rem + 0.15vw, 1.05rem); /* 変動幅: 360px ~ 1400px */
+	--REM--cq: clamp(0.95rem, 0.9rem + 0.22vw, 1.05rem); /* 変動幅: 360px ~ 1440px */
+
+	// font-size: 倍音列でのスケーリング。単位は em
+	--fz--5xl: #{fz-calc(6)}em;
+	--fz--4xl: #{fz-calc(5)}em;
+	--fz--3xl: #{fz-calc(4)}em;
+	--fz--2xl: #{fz-calc(3)}em;
+	--fz--xl: #{fz-calc(2)}em;
+	--fz--l: #{fz-calc(1)}em;
+	--fz--m: 1em;
+	--fz--s: #{fz-calc(-1)}em;
+	--fz--xs: #{fz-calc(-2)}em;
+	--fz--2xs: #{fz-calc(-3)}em;
+
+	// ------------------------------
+	// font-family
+	// ------------------------------
+	// system-ui は　游ゴシックが適用されてしまう。-apple-system: safari, firefox用 / 'BlinkMacSystemFont': Chrome用
+	--ff--base: -apple-system, 'BlinkMacSystemFont', sans-serif, 'Segoe UI Emoji';
+	--ff--accent: 'Garamond', 'Baskerville', 'Times New Roman', serif;
+	--ff--mono: Menlo, Consolas, monaco, monospace;
+
+	/*
+  * Set a monospace font family referencing Tailwind.
+  * @see https://tailwindcss.com/docs/font-family
+  */
+	//   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+	//     "Liberation Mono", "Courier New", monospace;
+
+	// ------------------------------
+	// font-weight
+	// ------------------------------
+	--fw--thin: 100;
+	--fw--light: 300;
+	--fw--normal: 400;
+	--fw--medium: 500;
+	--fw--bold: 700;
+	--fw--black: 900;
+
+	// ------------------------------
+	// letter-spacing
+	// ------------------------------
+	--lts--base: normal;
+	--lts--s: -0.05em;
+	--lts--l: 0.05em;
+	// --lts--xl: 0.125em;
+
+	// remに相当する単位
+	// --REM: var(--fz--base);
+}
+
+/* ------------------------------------------------------------
+	Spacing
+	フィボナッチ数列 0, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89,
+------------------------------------------------------------ */
+:root,
+.set-cqUnit {
+	--fz--base: var(--REM);
+
+	// ハーフレディング単位
+	--hl-unit: calc(var(--REM) * 0.125); /* ≒ 2px */
+
+	// スペーシング単位
+	--s-unit: calc(var(--REM) * 0.25); /* ≒ 4px */
+
+	// --- ハーフレディング ---
+	// unit の倍数で構成する
+	--hl--xs: var(--hl-unit);
+	--hl--s: calc(var(--hl-unit) * 2);
+	--hl--base: calc(var(--hl-unit) * 3);
+	--hl--l: calc(var(--hl-unit) * 4);
+	// --hl--xl: calc(var(--hl-unit) * 5);
+
+	// --- スペーシング ---
+	--s5: calc(var(--s-unit) / 2); /* さらに小さい余白をつけたいこともあるので、例外として用意 */
+	--s10: var(--s-unit); /* ここからフィボナッチ */
+	--s20: calc(2 * var(--s-unit));
+	--s30: calc(3 * var(--s-unit));
+	--s40: calc(5 * var(--s-unit));
+	--s50: calc(8 * var(--s-unit));
+	--s60: calc(13 * var(--s-unit));
+	--s70: calc(21 * var(--s-unit));
+	--s80: calc(34 * var(--s-unit));
+	// --s90: calc(55 * var(--s-unit));
+
+	// .l--flow のコンテンツ間余白
+	--flow--base: var(--s40);
+	--flow--s: var(--s30);
+	--flow--l: var(--s50);
+	--flow--h: 1.25em;
+}
+
+.set-cqUnit {
+	--REM: var(--REM--cq);
+	font-size: var(--REM--cq);
+}
