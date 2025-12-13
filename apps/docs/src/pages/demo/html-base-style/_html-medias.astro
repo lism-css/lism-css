@@ -1,0 +1,63 @@
+<small>（img, video 自体に display の初期セットはしていませんが、is--container 直下では display:block となります。）</small>
+<h3>Audio</h3>
+<audio controls src='/cat-meow.mp3'></audio>
+<h3>Image</h3>
+<img src='https://cdn.lism-css.com/img/a-2.jpg' alt='img' width='900' height='600' loading='lazy' />
+
+<h3>Figure</h3>
+<figure>
+	<img src='https://cdn.lism-css.com/img/a-3.jpg' alt='' width='900' height='600' loading='lazy' />
+	<figcaption>This is a figure caption.</figcaption>
+</figure>
+
+<h3>Video</h3>
+<video controls width='1280' height='720' preload='lazy'>
+	<source src='/video/video-1.mp4' type='video/mp4' />
+</video>
+
+<h3>SVG</h3>
+<svg width='100px' height='100px'><circle cx='50' cy='50' r='50' fill='blue'></circle></svg>
+
+<h3>Canvas</h3>
+<canvas id='demo-canvas' width='200' height='100'>canvas</canvas>
+<script>
+	const canvas = document.getElementById('demo-canvas') as HTMLCanvasElement | null;
+	const ctx = canvas?.getContext('2d');
+	if (ctx) {
+		ctx.fillStyle = 'green';
+		ctx.fillRect(20, 20, 60, 60);
+		ctx.fillStyle = 'red';
+		ctx.beginPath();
+		ctx.arc(140, 50, 30, 0, Math.PI * 2);
+		ctx.fill();
+	}
+</script>
+
+<h3>iframe</h3>
+<iframe width='600' height='400' src='/demo/simple-texts' title='Simple web page demo' loading='lazy'></iframe>
+
+<h3>YouTube</h3>
+<iframe
+	width='640'
+	height='360'
+	src='https://www.youtube.com/embed/fpwVavmNEbA?si=-Xs9DaZP9bSH6bUM'
+	title='YouTube video player'
+	frameborder='0'
+	allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share'
+	referrerpolicy='strict-origin-when-cross-origin'
+	allowfullscreen></iframe>
+
+<!-- 
+			<blockquote class='twitter-tweet'>
+				<p lang='ja' dir='ltr'>
+					📣【 Lism CSS 】v.0.1 リリースのお知らせ👏<br /><br />日本発、Webサイト向けの軽量でモダンなCSSフレームワークが誕生しました 🎉<br
+					/><br />ビルド・設定ファイル不要。CSSを読み込むだけで素のHTMLサイトにも導入可能！<br /><br />Lismの設計思想に基づいたReact,
+					Astroコンポーネントも配布しています。 <a href='https://t.co/NUAggUnhRR'>pic.twitter.com/NUAggUnhRR</a>
+				</p>&mdash; Lism CSS (@lismcss) <a href='https://twitter.com/lismcss/status/1932722987045986666?ref_src=twsrc%5Etfw'>June 11, 2025</a>
+			</blockquote> -->
+<!-- <script async src='https://platform.twitter.com/widgets.js' charset='utf-8'></script> -->
+
+<h3>object</h3>
+<object data='/sample.pdf' type='application/pdf' width='800' height='800'>
+	<p><b>表示されない時の表示</b>: <a href='pdf.pdf'>PDF をダウンロード</a>.</p>
+</object>

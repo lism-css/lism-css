@@ -1,99 +1,166 @@
 /* ------------------------------------------------------------
-	基本方針: reset.css の段階ではできるだけブラウザの標準スタイルに従う。
+	方針:
+		できるだけブラウザの標準スタイルに従いながら、レイアウト崩れを防止し、最低限のアクセシビリティの確保する。
+		文書構造を壊して読みづらくなるようなスタイルリセットはしない。
 
-	  - box-sizing は 全要素に対して border-box をセット
-	  - padding は ブラウザ標準スタイルのまま
-	  - margin はすべて 0 にリセット
+
+	参考:
+		https://gist.github.com/EllyLoel/4ff8a6472247e6dd2315fd4038926522
+		https://keithjgrant.com/posts/2024/01/my-css-resets/
+		https://www.joshwcomeau.com/css/custom-css-reset/
+		https://piccalil.li/blog/a-modern-css-reset/
+		https://codepen.io/argyleink/pen/KKvRORE
+
 ------------------------------------------------------------ */
+
+/* @layer で 優先度を下げる */
 @layer lism-reset {
+	/* ------------------------------------------------------------
+	 Universal
+	------------------------------------------------------------ */
 	*,
 	::before,
 	::after {
+		/* box-sizing は 全要素に対して border-box で統一 */
 		box-sizing: border-box;
 	}
 
-	* {
+	/* 
+	 - margin は dialog以外 0 にリセット
+	 - padding はそのままにする
+	*/
+	*:not(dialog) {
 		margin: 0;
+	}
+
+	/* ------------------------------------------------------------
+	 Documents
+	------------------------------------------------------------ */
+	html {
+		/* iOSで横向きにした時のフォントサイズ自動調節をオフにする. */
+		-webkit-text-size-adjust: none;
+		text-size-adjust: none;
+
+		/* 文章の折り返し指定 see: https://ics.media/entry/240411/ */
+		word-break: normal; /* 単語の分割はデフォルトに依存 */
+		line-break: strict; /* 禁則処理を厳格に適用 */
+		overflow-wrap: anywhere; /* 収まらない場合に折り返す */
+
+		/* デフォルトの 8 はでかすぎる */
+		tab-size: 4;
+
+		/* 要素はみ出しによる横スクロールの発生を防止. (overflow は 継承プロパティではないので両方記述） */
+		overflow-x: clip;
+
+		/* モーダルが開いている時はコンテンツをスクロールさせない */
+		&:has(:modal[open]) {
+			overflow: hidden;
+		}
+	}
+
+	body {
+		/* htmlから継承する */
+		overflow: inherit;
+
+		/* bodyの高さを最低限確保する (子要素でheight:100%が効くわけではない) */
+		min-height: 100dvh;
 	}
 
 	/* ------------------------------------------------------------
 	 Texts
 	------------------------------------------------------------ */
-
-	/* テキストのオーバーフローを回避 */
-	p,
-	h1,
-	h2,
-	h3,
-	h4,
-	h5,
-	h6 {
-		overflow-wrap: break-word;
+	abbr[title] {
+		/* Safar で アンダーラインが出ないので明示的に指定して統一する */
+		text-decoration: underline;
+		text-decoration-style: dotted;
 	}
 
-	/* ルビサイズのブラウザ差異をなくす */
-	rt {
-		font-size: 50%;
+	pre {
+		/* 水平スクロールできるようにする */
+		overflow-x: auto;
+	}
+
+	/* クラスを持つリストのみスタイルをリセットする。（ブラウザ標準スタイルを利用できる余地を残す） */
+	:is(ul, ol):where([class]) {
+		list-style: none;
+		padding: 0;
 	}
 
 	/* ------------------------------------------------------------
 	 Medias
 	------------------------------------------------------------ */
 
-	/* 親要素をはみ出さないようにする */
-	img,
-	video {
-		max-inline-size: 100%;
-		block-size: auto;
-	}
-
-	/* 隙間ができるのを防ぐ。( display はいじらない。) */
 	svg,
 	img,
-	video,
-	audio {
+	video {
+		/* 親要素をはみ出さないようにする */
+		max-inline-size: 100%;
+		block-size: auto;
+
+		/* 隙間ができるのを防ぐ。( display はいじらない。) */
 		vertical-align: middle;
 	}
 
-	/* iframe は display block */
-	iframe {
+	audio,
+	iframe,
+	object,
+	canvas {
+		/* block化し、親要素を超えないようにする。block-size: auto はサイズが潰れるためつけない */
 		display: block;
-		border: none;
+		max-inline-size: 100%;
 	}
 
 	/* ------------------------------------------------------------
-	 Form fields
-	  - 基本要素のフォントとカラーをリセット
-	  - テキストエリアの水平リサイズを無効に
-	  - カーソルのセット
+	 Form Fields
 	------------------------------------------------------------ */
 	input,
 	button,
 	textarea,
-	select {
+	select,
+	::file-selector-button {
+		/* 基本要素のフォントとカラーを本文から継承 */
 		font: inherit;
 		color: inherit;
-		text-transform: none;
+
+		/* iOSで入力時の拡大を防ぐ. ( button には必要ないが、フォーム全体のフォントサイズを揃えるために一括で適用する ) */
+		font-size: max(16px, 1em);
 	}
 
-	/* テキストエリアの水平リサイズを無効に */
+	fieldset {
+		/* デフォルトの min-content によってコンテンツ( colsの大きい textarea など )がはみ出すのを防ぐ */
+		min-inline-size: 0;
+	}
+
 	textarea {
-		resize: vertical;
+		/* リサイズ方向を制限する. */
+		resize: block;
+		max-inline-size: 100%;
 	}
 
 	/* ------------------------------------------------------------
 	 cursor 初期セット
 	------------------------------------------------------------ */
-	// [role='option'], [role='button'], [aria-controls],
-	// [type='radio'],[type='checkbox'] は labelに囲われていることが多いので、省略
-	button,
-	label,
+
+	label[for],
 	select,
 	summary,
+	[type='radio'],
+	[type='checkbox'] {
+		cursor: pointer;
+	}
+
+	button,
+	[role='tab'],
+	[role='button'],
+	[role='option'],
 	[type='button'],
 	[type='reset'],
-	[type='submit'] {
+	[type='submit'],
+	::file-selector-button {
 		cursor: pointer;
+
+		/* ダブルタップ時のズームアクションを無効化 */
+		touch-action: manipulation;
 	}
 
 	:disabled {

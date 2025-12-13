@@ -1,0 +1,54 @@
+<details>
+	<summary>Details and summary</summary>
+
+	<p>
+		Lorem ipsum dolor sit amet, Nunc iaculis suscipit dui. Nam sit amet sem. Aliquam libero nisi, imperdiet at, tincidunt nec, gravida vehicula,
+		nisl. Praesent mattis, massa quis luctus fermentum.
+	</p>
+</details>
+
+<h3>Dialog</h3>
+<button id='dialog-open'>Dialog Open</button>
+<dialog id='dialog'>
+	<h2>Dialog</h2>
+	<p>This is a dialog.</p>
+	<button id='dialog-close'>Close</button>
+</dialog>
+
+<button id='modal-open'>Modal Open</button>
+<dialog id='modal'>
+	<h2>Modal</h2>
+	<p>This is a modal.</p>
+	<button id='modal-close'>Close</button>
+</dialog>
+<script>
+	const dialog = document.getElementById('dialog') as HTMLDialogElement | null;
+	const dialogOpen = document.getElementById('dialog-open') as HTMLButtonElement | null;
+	const dialogClose = document.getElementById('dialog-close') as HTMLButtonElement | null;
+	const modal = document.getElementById('modal') as HTMLDialogElement | null;
+	const modalOpen = document.getElementById('modal-open') as HTMLButtonElement | null;
+	const modalClose = document.getElementById('modal-close') as HTMLButtonElement | null;
+	if (dialogOpen) {
+		dialogOpen.addEventListener('click', () => {
+			dialog?.show();
+		});
+	}
+	if (dialogClose) {
+		dialogClose.addEventListener('click', () => {
+			dialog?.close();
+		});
+	}
+	if (modalOpen) {
+		modalOpen.addEventListener('click', () => {
+			modal?.showModal();
+		});
+	}
+	if (modalClose) {
+		modalClose.addEventListener('click', () => {
+			modal?.close();
+		});
+	}
+</script>
+
+<h3>Meter</h3>
+<meter value='2' min='0' max='10'>2 out of 10</meter>

@@ -4,21 +4,10 @@ import HtmlText from './_html-text.astro';
 import HtmlList from './_html-list.astro';
 import HtmlTable from './_html-table.astro';
 import HtmlForm from './_html-form.astro';
+
 const { type = '' } = Astro.props;
 ---
 
-{
-	type === 'headings' && (
-		<>
-			<h1>h1: heading</h1>
-			<h2>h2: heading</h2>
-			<h3>h3: heading</h3>
-			<h4>h4: heading</h4>
-			<h5>h5: heading</h5>
-			<h6>h6: heading</h6>
-		</>
-	)
-}
 {type === 'texts' && <HtmlText />}
 {type === 'list' && <HtmlList />}
 {type === 'table' && <HtmlTable />}

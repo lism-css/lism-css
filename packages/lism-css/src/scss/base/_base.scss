@@ -4,17 +4,6 @@
     html, body
  ---------------------------------------- */
 
-html {
-	// font-size: unset;
-	tab-size: 4;
-
-	// iOSで横向きにした時のフォントサイズ自動調節をオフにする.
-	text-size-adjust: none;
-
-	/*  テキストのレンダリングを改善 → font によっては薄くなりすぎるのでナシ */
-	/* -webkit-font-smoothing: antialiased; */
-}
-
 body {
 	--hl: var(--hl--base);
 	font-size: var(--fz--base);
@@ -22,14 +11,6 @@ body {
 	letter-spacing: var(--lts--base);
 	background-color: var(--c--base);
 	color: var(--c--text);
-	overflow-x: clip;
-	// 子孫要素の position:fixed の挙動が変わってしまうので body には使わない
-	// container-type: inline-size;
-}
-
-// フォーカス要素
-:focus-visible {
-	outline-offset: var(--focus-offset, 0px);
 }
 
 /* ----------------------------------------
@@ -60,74 +41,52 @@ h3 {
 h4 {
 	font-size: var(--fz--l);
 }
-h5 {
-	font-size: var(--fz--m);
-}
+h5,
 h6 {
-	font-size: var(--fz--s);
+	font-size: var(--fz--m);
 }
 
 /* ----------------------------------------
     list
  ---------------------------------------- */
-ul,
-ol {
-	list-style: none;
-	padding: 0;
-	padding-inline-start: var(--list-px-s, 0);
+// classを持たない、もしくは Prop Classしかない(≒ Prop Class で始まる) リスト要素はブラウザ標準のスタイルを復活させる。
+:is(ul, ol):not([class]),
+:is(ul, ol)[class^='-'] {
+	list-style: revert;
+	padding-inline-start: var(--s30);
 }
 
 /* ----------------------------------------
     texts
  ---------------------------------------- */
-small,
-sup,
-sub {
+small {
 	--hl: var(--hl--s);
 	font-size: var(--fz--xs);
 }
 
+legend,
 caption,
 figcaption {
 	font-size: var(--fz--s);
 }
+
 code,
-kbd {
+kbd,
+var,
+samp {
 	font-family: var(--ff--mono);
 }
 
 a {
 	color: var(--link-c, var(--c--link));
 	text-decoration: var(--link-td, underline);
-
-	// underline調整用
-	text-underline-offset: var(--underline-offset, auto);
-	// text-decoration-thickness: var(--underline-thickness, 1px);
 }
 
-/* ----------------------------------------
-    table
- ---------------------------------------- */
-table {
-	--hl: var(--hl--s);
+dt {
+	font-weight: var(--fw--bold);
 }
-th {
-	color: var(--th--c, inherit);
-	background-color: var(--th--bgc, transparent);
-}
-td,
-th {
-	padding: var(--cell-p, 0.375em 0.5em);
-	min-inline-size: var(--cell-min-w, initial);
-}
-
-/* ----------------------------------------
-    others
- ---------------------------------------- */
-hr {
-	border: none;
-	border-block-start: 1px solid;
-	block-size: 0;
+dd + dt {
+	margin-block-start: var(--s15);
 }
 
 blockquote {
@@ -135,35 +94,59 @@ blockquote {
 	padding: var(--s40);
 }
 
-pre {
-	// 横にスクロールできるように（overflow-inline: auto; ← まだ使えない）
-	overflow-x: auto; // 縦書きモードにしてもこれでいけた
+hr {
+	border: none;
+	block-size: 0;
+	border-block-start: 1px solid var(--c--line);
+}
 
-	// :where(code, span) {
-	// 	line-height: inherit;
-	// }
+// figure {
+// 	display: grid;
+// 	gap: var(--s5);
+// 	place-items: center;
+// }
+
+/* ----------------------------------------
+    table
+ ---------------------------------------- */
+// table {
+// 	--hl: var(--hl--s);
+// }
+th {
+	color: var(--th--c, inherit);
+	background-color: var(--th--bgc, transparent);
+}
+td,
+th {
+	padding: var(--cell-p, var(--s5) var(--s10));
+	min-inline-size: var(--cell-min-w, initial);
 }
 
 /* ----------------------------------------
     Form fields
  ---------------------------------------- */
-// :where(input[type='text'], textarea, select) {
-// 	padding: var(--s10);
-// }
+input,
+button,
+textarea,
+select,
+::file-selector-button {
+	--hl: var(--hl--s);
+	background-color: var(--c--base-2);
+	border: 1px solid var(--c--line);
+	border-radius: var(--bdrs--10);
+	padding: var(--s5) var(--s10);
+}
 
 /* ----------------------------------------
     dialog
  ---------------------------------------- */
-/* ダイアログ展開時のガタツキを防ぐ */
-// html:has(:modal[open]) {
-// 	scrollbar-gutter: stable;
+// dialog {
+// 	border: solid 1px;
 // }
 
-// showModal()にのみ適用するため、 dialog ではなく :modal を使用
-@include mixin.switch_selector('body:has(:modal[open])', 'body:where(:has(:modal[open]))') {
-	overflow: hidden;
+/* ----------------------------------------
+    フォーカス要素
+ ---------------------------------------- */
+:focus-visible {
+	outline-offset: var(--focus-offset, 0px);
 }
-
-// @include mixin.switch_selector('dialog:not([open])', 'dialog:where(:not([open]))') {
-// 	pointer-events: none;
-// }
