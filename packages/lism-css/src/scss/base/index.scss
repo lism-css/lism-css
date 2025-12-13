@@ -5,19 +5,7 @@
 @forward './typography';
 
 // 各html要素のベーススタイル
-@forward './dom';
+@forward './base';
 
 // set--クラス
-@forward './set/shadow';
-@forward './set/hover';
-@forward './set/transition';
-@forward './set/snap';
-@forward './set/mask';
-@forward './set/innerRs';
-@forward './set/plain';
-
-// classを持たない素のリスト、または Prop Class で始まるリストはブラウザ標準のスタイルを復活させる
-:is(ul, ol):where(:not([class]), [class^='-'], .set-revert) {
-	--list-px-s: 1.5em;
-	list-style: revert;
-}
+@forward './set';

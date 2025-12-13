@@ -2,56 +2,51 @@
 import DemoPageLayout from '~/layouts/DemoPageLayout.astro';
 import RawHTML from './_RawHTML.astro';
 import { Lism, Flow } from 'lism-css/astro';
-
+import HtmlHeadings from './_html-headings.astro';
+import HtmlLongText from './_html-longtext.astro';
+import HtmlTest from './_html-test.astro';
+import HtmlMedias from './_html-medias.astro';
 // import './style.scss';
 ---
 
 <DemoPageLayout title='HTML Base Style'>
-	<Flow hasGutter py='50' isContainer='m'>
+	<Flow hasGutter isContainer='s' py='40'>
+		<HtmlHeadings />
 		<hr />
-		<Flow flow='s'>
-			<RawHTML type='headings' />
-		</Flow>
-		<hr />
+		<h2>- Texts -</h2>
 		<Flow>
 			<RawHTML type='texts' />
 		</Flow>
 		<hr />
+		<h2>- List -</h2>
 		<Flow flow='s'>
 			<RawHTML type='list' />
 		</Flow>
 		<hr />
+		<h2>- Table -</h2>
 		<Flow flow='s'>
 			<RawHTML type='table' />
 		</Flow>
 		<hr />
-		<!-- <Flow flow='s'>
-			<RawHTML type='forms' />
-		</Lism> -->
+		<h2>- Others -</h2>
+		<Flow>
+			<HtmlTest />
+		</Flow>
 		<hr />
-		<h1>Medias</h1>
-		<p>（img, video 自体に display の初期セットはしていませんが、is--container 直下では display:block となります。）</p>
-		<img src='https://cdn.lism-css.com/img/a-1.jpg' alt='img' width='1200' height='675' />
-		<video controls width='1200' height='675'>
-			<source src='/video/video-1.mp4' type='video/mp4' />
-		</video>
-		<audio controls src='/cat-meow.mp3'></audio>
-		<iframe
-			width='800'
-			height='450'
-			src='https://www.youtube.com/embed/4nB34V42-s8?si=YN-CJkuV2ptj_7Ns'
-			title='YouTube video player'
-			frameborder='0'
-			allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share'
-			referrerpolicy='strict-origin-when-cross-origin'
-			allowfullscreen></iframe>
-
-		<!-- <object data='/sample.pdf' type='application/pdf' width='800' height='800'>
-			<p><b>表示されない時の表示</b>: <a href='pdf.pdf'>PDF をダウンロード</a>.</p>
-		</object> -->
-		<!-- <picture>
-			<source srcset='https://cdn.lism-css.com/img/a-3.jpg' width='1200' height='675' />
-			<img src='https://cdn.lism-css.com/img/a-1.jpg' alt='' width='1200' height='675' />
-		</picture> -->
+		<h2>- Long text -</h2>
+		<Flow flow='s'>
+			<HtmlLongText />
+		</Flow>
+		<hr />
+		<h2>- Form fields -</h2>
+		<Flow>
+			<RawHTML type='forms' />
+		</Flow>
+		<hr />
+		<h2>- Medias -</h2>
+		<Flow flow='s'>
+			<HtmlMedias />
+		</Flow>
+		<hr />
 	</Flow>
 </DemoPageLayout>

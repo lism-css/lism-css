@@ -1,38 +1,139 @@
-<div>
-	<input type='text' placeholder='input' />
-</div>
-<div>
-	<textarea placeholder='textarea'></textarea>
-</div>
-<div>
-	<select>
-		<option value='1'>Option 1</option>
-		<option value='2'>Option 2</option>
-		<option value='3'>Option 3</option>
-	</select>
-</div>
-<div>
-	<button>Button</button>
-</div>
-<div>
-	<label class='l--flex -ai:center -g:5'>
-		<input type='checkbox' />
-		<span>Checkbox</span>
-	</label>
-	<label>
-		<input type='checkbox' />
-		<span>Checkbox</span>
-	</label>
-	<label>
-		<input type='radio' name='radio' checked />
-		<span>Radio</span>
-	</label>
-	<label>
-		<input type='radio' name='radio' />
-		<span>Radio</span>
-	</label>
-	<label>
-		<input type='range' min='0' max='100' value='50' />
-		<span>Range</span>
-	</label>
-</div>
+<form
+	id='form'
+	class='l--flow -flow:s'
+	onsubmit='alert("テスト用です。実際には何も送信されません。(This is test form. No data will be submitted. )"); return false'
+>
+	<fieldset id='form__inputs' class='l--flow -flow:s'>
+		<legend class='is--skipFlow'>Input fields</legend>
+		<div>
+			<label for='input-text'>Text:</label>
+			<input type='text' id='input-text' name='text' placeholder='Text Input' autocomplete='off' />
+		</div>
+		<div>
+			<label for='input-email'>Email:</label>
+			<input type='email' id='input-email' name='email' placeholder='email@example.com' autocomplete='off' />
+		</div>
+		<div>
+			<label for='input-tel'> Tel:</label>
+			<input type='tel' id='input-tel' name='tel' placeholder='(999) 999-9999' autocomplete='off' />
+		</div>
+		<div>
+			<label for='input-password'>Password:</label>
+			<input type='password' id='input-password' placeholder='Type your Password' name='password' />
+		</div>
+		<div>
+			<label for='input-search'>Search:</label>
+			<input type='search' id='input-search' placeholder='search' name='search' />
+		</div>
+	</fieldset>
+	<fieldset id='form__select'>
+		<legend>Select menus</legend>
+		<label>
+			<span>Select:</span>
+			<select id='select' name='select'>
+				<option value='1'>Option 1</option>
+				<option value='2'>Option 2</option>
+				<option value='3'>Option 3</option>
+			</select>
+		</label>
+		<br />
+		<div>
+			<label for='select-has-optgroup'>optgroup:</label>
+			<select id='select-has-optgroup'>
+				<optgroup label='Option Group A'>
+					<option>Option A - 1</option>
+					<option>Option A - 2</option>
+					<option>Option A - 3</option>
+				</optgroup>
+				<optgroup label='Option Group B'>
+					<option>Option B - 1</option>
+					<option>Option B - 2</option>
+					<option>Option B - 3</option>
+				</optgroup>
+			</select>
+		</div>
+	</fieldset>
+	<fieldset id='form__checkbox'>
+		<legend>Checkboxes</legend>
+		<label for='checkbox1'><input id='checkbox1' name='checkbox' type='checkbox' checked='checked' /> Choice A</label>
+		<br />
+		<label for='checkbox2'><input id='checkbox2' name='checkbox' type='checkbox' /> Choice B</label>
+	</fieldset>
+
+	<fieldset id='form__radio'>
+		<legend>Radio buttons</legend>
+		<label for='radio1'><input id='radio1' name='radio' type='radio' class='radio' checked='checked' /> Option 1</label>
+		<br />
+		<label for='radio2'><input id='radio2' name='radio' type='radio' class='radio' /> Option 2</label>
+		<br />
+		<label for='radio3'><input id='radio3' name='radio' type='radio' class='radio' /> Option 3</label>
+	</fieldset>
+	<fieldset id='form__textareas'>
+		<legend>Textareas</legend>
+		<div>
+			<label for='textarea'>Textarea:</label>
+			<textarea id='textarea' rows='8' cols='50' placeholder='Enter your message here'></textarea>
+		</div>
+	</fieldset>
+	<fieldset id='form__html5' class='l--flow -flow:s'>
+		<legend class='is--skipFlow'>HTML5 inputs</legend>
+		<div>
+			<label for='input-number'>Number input:</label>
+			<input type='number' id='input-number' min='0' max='10' value='5' />
+		</div>
+		<div>
+			<label for='input-color'>Color input:</label>
+			<input type='color' id='input-color' value='#000000' />
+		</div>
+		<div>
+			<label for='input-file'>File input:</label>
+			<input type='file' id='input-file' />
+		</div>
+		<div>
+			<label for='input-range'>Range input:</label>
+			<input type='range' id='input-range' value='10' />
+		</div>
+		<div>
+			<label>Progress input:</label>
+			<progress></progress>
+			<progress value='.5'></progress>50%
+		</div>
+	</fieldset>
+	<fieldset id='form__date-inputs' class='l--flow -flow:s'>
+		<legend class='is--skipFlow'>Date inputs</legend>
+		<div>
+			<label for='input-date'>Date input:</label>
+			<input type='date' id='input-date' value='2000-01-01' />
+		</div>
+		<div>
+			<label for='input-month'>Month input:</label>
+			<input type='month' id='input-month' value='2000-01' />
+		</div>
+		<div>
+			<label for='input-week'>Week input:</label>
+			<input type='week' id='input-week' value='2000-W01' />
+		</div>
+		<div>
+			<label for='input-datetime-local'>Datetime-local input:</label>
+			<input type='datetime-local' id='input-datetime-local' value='2000-01-01T00:00' />
+		</div>
+	</fieldset>
+	<fieldset id='form__buttons'>
+		<legend>Buttons</legend>
+		<p class='buttons-list'>
+			<button type='button'>button</button>
+			<button type='submit'>submit</button>
+			<button type='reset'>reset</button>
+			<button type='button' disabled=''>disabled</button>
+		</p>
+	</fieldset>
+	<fieldset id='form__input-buttons'>
+		<legend>Input buttons</legend>
+		<p class='buttons-list'>
+			<input type='button' value='type=button' />
+			<input type='submit' value='type=submit' />
+			<input type='reset' value='type=reset' />
+			<input type='submit' value='disabled' disabled='' />
+		</p>
+	</fieldset>
+</form>
