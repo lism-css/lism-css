@@ -29,9 +29,9 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, Note, IconBadge } from
 
 <Preview>
 	<PreviewTitle>`data-lism-pass`の使用例</PreviewTitle>
-	<PreviewArea p='30'>
+	<PreviewArea p='20'>
 		<Flex
-			layout='cluster' g='20' ta='center' 
+			layout='cluster' g='15' ta='center' 
 			data-lism-pass='p min-w'
 			passVars={{p:'20', 'min-w':'8rem'}}
 		>
@@ -54,9 +54,9 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, Note, IconBadge } from
 	<PreviewCode slot="tab" label="HTML">
 	```html "--pass_p" "--pass_min-w" "data-lism-pass"
 	<div
-		class="l--cluster -ta:center -g:20"
+		class="l--cluster -ta:center -g:15"
 		data-lism-pass="p min-w"
-		style="--pass_p:var(--s20);--pass_min-w:8rem"
+		style="--pass_p:var(--s15);--pass_min-w:8rem"
 	>
 		<div class="-bd">Box</div>
 		<div class="-bd">Box</div>
@@ -67,7 +67,7 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, Note, IconBadge } from
 	<PreviewCode label='JSX' slot='tab'>
 		```jsx "passVars" "data-lism-pass"
 		<Flex
-			layout='cluster' g='20' ta='center'
+			layout='cluster' g='15' ta='center'
 			data-lism-pass='p min-w'
 			passVars={{p:'20', 'min-w':'8rem'}}
 		>
@@ -82,10 +82,10 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, Note, IconBadge } from
 
 <Preview>
 	<PreviewTitle>`data-lism-get`の使用例</PreviewTitle>
-	<PreviewArea p='30'>
+	<PreviewArea p='20'>
 		<Stack
 			g='10' ta='center' fz='s'
-			style={{'--pass_p': 'var(--s5) var(--s20)'}}
+			style={{'--pass_p': 'var(--s5) var(--s15)'}}
 		>
 			<Flex layout='cluster' g='10' p='10'>
 				<Lism min-w='4em' ta='left'>COLOR</Lism>
@@ -114,7 +114,7 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, Note, IconBadge } from
 	</PreviewCode>
 	<PreviewCode slot="tab" label="HTML">
 	```html "data-lism-get" "--pass_p" "--pass_min-w"
-	<div class="l--stack -g:10 -ta:center -fz:s" style="--pass_p:var(--s5) var(--s20)">
+	<div class="l--stack -g:10 -ta:center -fz:s" style="--pass_p:var(--s5) var(--s15)">
 		<div class="l--cluster -g:10 -p:10">
 			<div class="-ta:left" style="min-width:4em">COLOR</div>
 			<div class="-bd -c" style="--c:var(--red)" data-lism-get="p">Red</div>
@@ -134,7 +134,7 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, Note, IconBadge } from
 		```jsx "data-lism-get" "--pass_p" "--pass_min-w"
 		<Stack
 			g='10' ta='center' fz='s'
-			style={{'--pass_p': 'var(--s5) var(--s20)'}}
+			style={{'--pass_p': 'var(--s5) var(--s15)'}}
 		>
 			<Flex layout='cluster' g='10' p='10'>
 				<Lism min-w='4em' ta='left'>COLOR</Lism>

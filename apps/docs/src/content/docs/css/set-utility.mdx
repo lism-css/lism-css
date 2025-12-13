@@ -23,14 +23,14 @@ import { Desktop } from '@phosphor-icons/react';
 
 <Preview>
 	<PreviewTitle>`set-plain`を`button`に適用する例</PreviewTitle>
-	<PreviewArea p='30' layout=''>
-		<div class='l--flex -g:30 -ff:mono'>
+	<PreviewArea p='20' layout=''>
+		<div class='l--flex -g:20 -ff:mono'>
 			<button class='set-plain'>button</button>
 		</div>
 	</PreviewArea>
 	<PreviewCode slot='tab' label='HTML'>
 	```html "'set-plain'"
-	<div class='l--flex -g:30 -ff:mono'>
+	<div class='l--flex -g:20 -ff:mono'>
 		<button class='set-plain'>button</button>
 	</div>
 	```
@@ -60,34 +60,34 @@ import { Desktop } from '@phosphor-icons/react';
 
 <Preview>
 	<PreviewTitle>シャドウの上書き例</PreviewTitle>
-	<PreviewArea p='40' nogrid>
-		<Stack g='30'>
+	<PreviewArea p='30' nogrid>
+		<Stack g='20'>
 			<HTML.p> Default: </HTML.p>
-			<Flex className='set-shadow -g:40' px-s='20'>
-				<Box bxsh='20' p='40' bdrs='20'>Box</Box>
-				<Box bxsh='40' p='40' bdrs='20'>Box</Box>
+			<Flex className='set-shadow -g:30' px-s='15'>
+				<Box bxsh='20' p='30' bdrs='20'>Box</Box>
+				<Box bxsh='40' p='30' bdrs='20'>Box</Box>
 			</Flex>
 			<Spacer h='40' />
 			<HTML.p> set-shadow して 変数を上書きした例: </HTML.p>
-			<Flex className='set-shadow -g:40' px-s='20' style={{'--shc': 'hsl(200 50% 50% / 20%)'}}>
-				<Box bxsh='20' p='40' bdrs='20'>Box</Box>
-				<Box bxsh='40' p='40' bdrs='20'>Box</Box>
+			<Flex className='set-shadow -g:30' px-s='15' style={{'--shc': 'hsl(200 50% 50% / 20%)'}}>
+				<Box bxsh='20' p='30' bdrs='20'>Box</Box>
+				<Box bxsh='40' p='30' bdrs='20'>Box</Box>
 			</Flex>
 		</Stack>
 	</PreviewArea>
 		<PreviewCode slot='tab' label='HTML'>
 		```html "set-shadow"
-		<div class="set-shadow l--flex -g:40" style="--shc:hsl(200 50% 50% / 20%)">
-			<div class="l--box -bxsh:20 -p:40 -bdrs:20">Box</div>
-			<div class="l--box -bxsh:40 -p:40 -bdrs:20">Box</div>
+		<div class="set-shadow l--flex -g:30" style="--shc:hsl(200 50% 50% / 20%)">
+			<div class="l--box -bxsh:20 -p:30 -bdrs:20">Box</div>
+			<div class="l--box -bxsh:40 -p:30 -bdrs:20">Box</div>
 		</div>
 		```
 	</PreviewCode>
 	<PreviewCode slot='tab' label='JSX'>
 		```jsx "set-shadow"
-		<Flex className='set-shadow' g='40' style={{'--shc': 'hsl(200 50% 50% / 20%)'}}>
-			<Box bxsh='20' p='40' bdrs='20'>Box</Box>
-			<Box bxsh='40' p='40' bdrs='20'>Box</Box>
+		<Flex className='set-shadow' g='30' style={{'--shc': 'hsl(200 50% 50% / 20%)'}}>
+			<Box bxsh='20' p='30' bdrs='20'>Box</Box>
+			<Box bxsh='40' p='30' bdrs='20'>Box</Box>
 		</Flex>
 		```
 	</PreviewCode>
@@ -134,12 +134,12 @@ import { Desktop } from '@phosphor-icons/react';
 `scroll-snap-`系のプロパティをCSS変数でセットできるようにします。
 
 <Box class='set-snap' ov='auto' ar='16/9' bd>
-	<div className='l--frame -ar:16/9 -p:20'><img src='https://cdn.lism-css.com/img/u-1.jpg' width='960' height='640' loading='lazy' /></div>
-	<div className='l--frame -ar:16/9 -p:20'><img src='https://cdn.lism-css.com/img/u-2.jpg' width='960' height='640' loading='lazy' /></div>
-	<div className='l--frame -ar:16/9 -p:20'><img src='https://cdn.lism-css.com/img/u-3.jpg' width='960' height='640' loading='lazy' /></div>
-	<div className='l--frame -ar:16/9 -p:20'><img src='https://cdn.lism-css.com/img/u-4.jpg' width='960' height='640' loading='lazy' /></div>
-	<div className='l--frame -ar:16/9 -p:20'><img src='https://cdn.lism-css.com/img/u-5.jpg' width='960' height='640' loading='lazy' /></div>
-	<div className='l--frame -ar:16/9 -p:20'><img src='https://cdn.lism-css.com/img/u-6.jpg' width='960' height='640' loading='lazy' /></div>
+	<div className='l--frame -ar:16/9 -p:15'><img src='https://cdn.lism-css.com/img/u-1.jpg' width='960' height='640' loading='lazy' /></div>
+	<div className='l--frame -ar:16/9 -p:15'><img src='https://cdn.lism-css.com/img/u-2.jpg' width='960' height='640' loading='lazy' /></div>
+	<div className='l--frame -ar:16/9 -p:15'><img src='https://cdn.lism-css.com/img/u-3.jpg' width='960' height='640' loading='lazy' /></div>
+	<div className='l--frame -ar:16/9 -p:15'><img src='https://cdn.lism-css.com/img/u-4.jpg' width='960' height='640' loading='lazy' /></div>
+	<div className='l--frame -ar:16/9 -p:15'><img src='https://cdn.lism-css.com/img/u-5.jpg' width='960' height='640' loading='lazy' /></div>
+	<div className='l--frame -ar:16/9 -p:15'><img src='https://cdn.lism-css.com/img/u-6.jpg' width='960' height='640' loading='lazy' /></div>
 </Box>
 
 
@@ -203,8 +203,8 @@ Lismが提供するコンポーネントでは、`setMask`プロパティに指�
 
 <Preview>
 	<PreviewTitle>使用例</PreviewTitle>
-	<PreviewArea p='40'>
-	<Lism className='set-innerRs' p='20' bd bxsh='20' bdrs='50'>
+	<PreviewArea p='30'>
+	<Lism className='set-innerRs' p='15' bd bxsh='20' bdrs='50'>
 		<Frame bdrs='inner' ar='og'>
 			<img src='https://cdn.lism-css.com/img/u-5.jpg' width='1920' height='1280' alt='' />
 		</Frame>
@@ -212,7 +212,7 @@ Lismが提供するコンポーネントでは、`setMask`プロパティに指�
 	</PreviewArea>
 	<PreviewCode label="JSX" slot="tab">
 ```jsx
-<Lism className='set-innerRs' p='20' bd bxsh='20' bdrs='50'>
+<Lism className='set-innerRs' p='15' bd bxsh='20' bdrs='50'>
 	<Frame bdrs='inner' ar='og'>
 		<img src='https://cdn.lism-css.com/img/u-5.jpg' width='1920' height='1280' alt='' />
 	</Frame>
@@ -221,7 +221,7 @@ Lismが提供するコンポーネントでは、`setMask`プロパティに指�
 	</PreviewCode>
 	<PreviewCode label="HTML" slot="tab">
 ```html
-<div class="set-innerRs -p:20 -bd -bxsh:20 -bdrs:50">
+<div class="set-innerRs -p:15 -bd -bxsh:20 -bdrs:50">
 	<div class="l--frame -bdrs:inner -ar:og">
 		<img src="https://cdn.lism-css.com/img/u-5.jpg" width="1920" height="1280" alt="" />
 	</div>
@@ -236,9 +236,9 @@ Lismが提供するコンポーネントでは、`setMask`プロパティに指�
 
 <Preview>
 	<PreviewTitle>使用例</PreviewTitle>
-	<PreviewArea p='30' resize>
+	<PreviewArea p='20' resize>
 	<Lism p={[10, 20, 30]} bd bdw='2px' bdrs={['40',null,'50']} class='set-innerRs'>
-		<Lism bd p='20' bdrs='inner'>
+		<Lism bd p='15' bdrs='inner'>
 			Example
 		</Lism>
 	</Lism>
@@ -248,7 +248,7 @@ Lismが提供するコンポーネントでは、`setMask`プロパティに指�
 	<PreviewCode label="JSX" slot="tab">
 ```jsx
 <Lism p={[10, 20, 30]} bd bdw='2px' bdrs={['40',null,'50']} class='set-innerRs'>
-	<Lism bd p='20' bdrs='inner'>
+	<Lism bd p='15' bdrs='inner'>
 		Example
 	</Lism>
 </Lism>

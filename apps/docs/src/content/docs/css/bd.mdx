@@ -42,11 +42,11 @@ Lismでは、border系の指定が少し特殊になっています。
 
 <Preview>
 	<PreviewTitle>使用例</PreviewTitle>
-	<PreviewArea p='40'>
+	<PreviewArea p='30'>
 		<Box bd bdc='line' p='10'>
 			<Dummy length='s'/>
 		</Box>
-		<Box bd bds='dashed' bdw='4px' bdc='red' p='20'>
+		<Box bd bds='dashed' bdw='4px' bdc='red' p='15'>
 			<Dummy length='s'/>
 		</Box>
 	</PreviewArea>
@@ -55,7 +55,7 @@ Lismでは、border系の指定が少し特殊になっています。
 		<Box bd bdc='line' p='10'>
 			<Dummy length='s'/>
 		</Box>
-		<Box bd bds='dashed' bdw='4px' bdc='red' p='20'>
+		<Box bd bds='dashed' bdw='4px' bdc='red' p='15'>
 			<Dummy length='s'/>
 		</Box>
 		```
@@ -65,7 +65,7 @@ Lismでは、border系の指定が少し特殊になっています。
 		<div class="l--box -bd -bdc:line -p:10">
 			<p> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor. </p>
 		</div>
-		<div class="l--box -bd -bds:dashed -p:20" style="--bdw:4px;--bdc:var(--red)">
+		<div class="l--box -bd -bds:dashed -p:15" style="--bdw:4px;--bdc:var(--red)">
 			<p> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor. </p>
 		</div>
 		```
@@ -84,7 +84,7 @@ Lismでは、border系の指定が少し特殊になっています。
 
 <Preview>
 	<PreviewTitle>4方向の指定</PreviewTitle>
-	<PreviewArea p='40' flow='50'>
+	<PreviewArea p='30' flow='50'>
 		<Box bd-t px='10'>-t: Top</Box>
 		<Box bd-r px='10'>-r: Right</Box>
 		<Box bd-b px='10'>-b: Bottom</Box>
@@ -110,7 +110,7 @@ Lismでは、border系の指定が少し特殊になっています。
 
 <Preview>
 	<PreviewTitle>block, inline方向での指定</PreviewTitle>
-	<PreviewArea p='40' flow='50'>
+	<PreviewArea p='30' flow='50'>
 		<Box bd-x-s bdw='2px' px='10' bgc='base-2'>inline-start</Box>
 		<Box bd-x-e bdw='2px' px='10' bgc='base-2'>inline-end</Box>
 		<Box bd-y-s bdw='2px' px='10' bgc='base-2'>block-start</Box>
@@ -146,21 +146,21 @@ Lismでは、border系の指定が少し特殊になっています。
 
 <Preview>
 	<PreviewTitle>`bdw`,`bds`,`bdc`それぞれの方向指定</PreviewTitle>
-	<PreviewArea resize p='40'>
-		<Box bd bdw='0 0 1px .5em' bds='dashed solid' bdc='var(--purple) var(--blue)' p='20'>
+	<PreviewArea resize p='30'>
+		<Box bd bdw='0 0 1px .5em' bds='dashed solid' bdc='var(--purple) var(--blue)' p='15'>
 			border
 		</Box>
 	</PreviewArea>
 	<PreviewCode label='JSX' slot='tab'>
 		```jsx
-		<Box bd bdw='0 0 1px .5em' bds='dashed solid' bdc='var(--purple) var(--blue)' p='20'>
+		<Box bd bdw='0 0 1px .5em' bds='dashed solid' bdc='var(--purple) var(--blue)' p='15'>
 			border
 		</Box>
 		```
 	</PreviewCode>
 	<PreviewCode label='HTML' slot='tab'>
 		```html
-		<div class="l--box -bd -p:20" style="--bdw:0 0 1px .5em;--bds:dashed solid;--bdc:var(--purple) var(--blue)">
+		<div class="l--box -bd -p:15" style="--bdw:0 0 1px .5em;--bds:dashed solid;--bdc:var(--purple) var(--blue)">
 			border
 		</div>
 		```
@@ -176,17 +176,17 @@ Lismでは、border系の指定が少し特殊になっています。
 
 <Preview>
 	<PreviewTitle>`bd`の例</PreviewTitle>
-	<PreviewArea p='40' resize>
-		<Box bd bdw={['1px','3px','6px']} p='20'>border</Box>
+	<PreviewArea p='30' resize>
+		<Box bd bdw={['1px','3px','6px']} p='15'>border</Box>
 	</PreviewArea>
 	<PreviewCode label='JSX' slot='tab'>
 		```jsx
-		<Box bd bdw={['1px','3px','6px']} p='20'>border</Box>
+		<Box bd bdw={['1px','3px','6px']} p='15'>border</Box>
 		```
 	</PreviewCode>
 	<PreviewCode label='HTML' slot='tab'>
 		```html
-		<div class="l--box -bd -bdw_sm -bdw_md -p:20" style="--bdw:1px;--bdw_sm:3px;--bdw_md:6px">border</div>
+		<div class="l--box -bd -bdw_sm -bdw_md -p:15" style="--bdw:1px;--bdw_sm:3px;--bdw_md:6px">border</div>
 		```
 	</PreviewCode>
 </Preview>
@@ -199,28 +199,28 @@ bdwをブレイクポイントで切り替えることで、ボーダーの方�
 
 <Preview>
 	<PreviewTitle>ボーダーの方向を切り替える</PreviewTitle>
-	<PreviewArea p='40' resize>
+	<PreviewArea p='30' resize>
 		<Flex fxd={['column','row']}>
-			<Box px='20' py='5'>Box</Box>
-			<Box px='20' py='5' bd-x-s bd-y-s bdw={['1px 0', '0 1px']}>Box</Box>
-			<Box px='20' py='5' bd-x-s bd-y-s bdw={['1px 0', '0 1px']}>Box</Box>
+			<Box px='15' py='5'>Box</Box>
+			<Box px='15' py='5' bd-x-s bd-y-s bdw={['1px 0', '0 1px']}>Box</Box>
+			<Box px='15' py='5' bd-x-s bd-y-s bdw={['1px 0', '0 1px']}>Box</Box>
 		</Flex>
 	</PreviewArea>
 	<PreviewCode label='JSX' slot='tab'>
 		```jsx
 		<Flex fxd={['column','row']}>
-			<Box px='20' py='5'>Box</Box>
-			<Box px='20' py='5' bd-x-s bd-y-s bdw={['1px 0', '0 1px']}>Box</Box>
-			<Box px='20' py='5' bd-x-s bd-y-s bdw={['1px 0', '0 1px']}>Box</Box>
+			<Box px='15' py='5'>Box</Box>
+			<Box px='15' py='5' bd-x-s bd-y-s bdw={['1px 0', '0 1px']}>Box</Box>
+			<Box px='15' py='5' bd-x-s bd-y-s bdw={['1px 0', '0 1px']}>Box</Box>
 		</Flex>
 		```
 	</PreviewCode>
 	<PreviewCode label='HTML' slot='tab'>
 		```html
 		<div class='l--flex -fxd:col -fxd_sm' style='--fxd_sm:row'>
-			<div class='l--box -px:20 -py:5'>Box</div>
-			<div class='l--box -px:20 -py:5 -bd-x-s -bd-y-s -bdw_sm' style='--bdw:1px 0;--bdw_sm:0 1px'>Box</div>
-			<div class='l--box -px:20 -py:5 -bd-x-s -bd-y-s -bdw_sm' style='--bdw:1px 0;--bdw_sm:0 1px'>Box</div>
+			<div class='l--box -px:15 -py:5'>Box</div>
+			<div class='l--box -px:15 -py:5 -bd-x-s -bd-y-s -bdw_sm' style='--bdw:1px 0;--bdw_sm:0 1px'>Box</div>
+			<div class='l--box -px:15 -py:5 -bd-x-s -bd-y-s -bdw_sm' style='--bdw:1px 0;--bdw_sm:0 1px'>Box</div>
 		</div>
 		```
 	</PreviewCode>
@@ -235,7 +235,7 @@ bdwをブレイクポイントで切り替えることで、ボーダーの方�
 
 <Preview>
 	<PreviewTitle>`bd`の例</PreviewTitle>
-	<PreviewArea p='40' resize>
+	<PreviewArea p='30' resize>
 		<Box bd='solid 1px #555' p='10'>border</Box>
 	</PreviewArea>
 	<PreviewCode label='JSX' slot='tab'>
@@ -258,7 +258,7 @@ bdwをブレイクポイントで切り替えることで、ボーダーの方�
 
 <Preview> 
 	<PreviewTitle>bdl,bdb</PreviewTitle>
-	<PreviewArea resize p='40'>
+	<PreviewArea resize p='30'>
 		<Box borders={{l:'solid 4px green', b:'solid 1px blue'}} px='10'>left,bottom</Box>
 	</PreviewArea>
 	<PreviewCode label='JSX' slot='tab'>

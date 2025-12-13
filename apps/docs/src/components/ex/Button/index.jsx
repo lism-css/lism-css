@@ -9,7 +9,7 @@ export default function Button({ layout = 'flex', children, ...props }) {
 	};
 
 	return (
-		<Flex lismClass='c--button' tag='a' lh='s' py='20' px='30' hov='o' _propConfig={_propConfig} {...props}>
+		<Flex lismClass='c--button' tag='a' lh='s' py='15' px='20' hov='o' _propConfig={_propConfig} {...props}>
 			{children}
 		</Flex>
 	);

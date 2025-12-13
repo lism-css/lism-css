@@ -48,7 +48,7 @@ import { Box, Stack, Flex, Grid,... } from "lism-css/react";
 ## Main Class Examples
 - Layout State: `is--container`, `l--flow`, `is--layer`, etc.
 - Layout Module: `⁠l--flex⁠`, `⁠l--grid⁠`, `⁠l--center⁠`, `⁠l--columns⁠`, `⁠l--withSide⁠`, etc.
-- Prop Class: `⁠-p:20⁠`, `⁠-bgc:base-2`⁠, `⁠-fz:l⁠`, etc.
+- Prop Class: `⁠-p:20`, `⁠-bgc:base-2`⁠, `⁠-fz:l⁠`, etc.
 - Decoration Utility: `⁠u-cbox⁠`, etc.
 
 
@@ -57,14 +57,14 @@ import { Box, Stack, Flex, Grid,... } from "lism-css/react";
 
 HTML: 
 ```html
-<div class="-p:20 -p_sm -p_md" style="--p_sm:var(--s30);--p_md:var(--s50)">
+<div class="-p:20 -p_sm -p_md" style="--p_sm:var(--s30);--p_md:var(--s40)">
   <p>Example</p>
 </div>
 ```
 
 JSX:
 ```jsx
-<Lism p={[20, 40, 50]}>
+<Lism p={['20', '30', '40']}>
   <p>Example</p>
 </Lism>
 ```

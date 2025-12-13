@@ -32,7 +32,7 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage, EmbedCo
 
 <Preview>
 	<PreviewTitle>`<Flex>`</PreviewTitle>
-	<PreviewArea p={40}>
+	<PreviewArea p='30'>
 		<Flex className='has--itemGuide'>
 			<div>Item</div>
 			<div>Item</div>
@@ -61,8 +61,8 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage, EmbedCo
 
 <Preview>
 	<PreviewTitle>flexプロパティの使用例</PreviewTitle>
-	<PreviewArea resize p={40}>
-		<Flex g='30' fxw='wrap' jc={["baseline", "center"]} className='has--itemGuide'>
+	<PreviewArea resize p='30'>
+		<Flex g='20' fxw='wrap' jc={["baseline", "center"]} className='has--itemGuide'>
 			<div>Flex Content</div>
 			<div>Flex Content</div>
 			<div>Flex Content</div>
@@ -70,7 +70,7 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage, EmbedCo
 	</PreviewArea>
 	<PreviewCode slot='tab' label='JSX'>
 	```jsx
-	<Flex fxw='wrap' jc='center' g='30'>
+	<Flex fxw='wrap' jc='center' g='20'>
 		<div>Flex Content</div>
 		<div>Flex Content</div>
 		<div>Flex Content</div>
@@ -79,7 +79,7 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage, EmbedCo
 	</PreviewCode>
 	<PreviewCode slot='tab' label='HTML'>
 	```html
-	<div class="l--flex -fxw:wrap -g:30 -jc:center">
+	<div class="l--flex -fxw:wrap -g:20 -jc:center">
 		<div>Flex Content</div>
 		<div>Flex Content</div>
 		<div>Flex Content</div>
@@ -91,15 +91,15 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage, EmbedCo
 
 <Preview>
 	<PreviewTitle>子要素のflexプロパティの使用例</PreviewTitle>
-	<PreviewArea resize p={40}>
-		<Flex g='30' className='has--itemGuide'>
+	<PreviewArea resize p='30'>
+		<Flex g='20' className='has--itemGuide'>
 			<Lism fx='1'>Flex Content</Lism>
 			<Lism fxb={['33%', '25%']}>Flex Content</Lism>
 		</Flex>
 	</PreviewArea>
 	<PreviewCode slot='tab' label='JSX'>
 	```jsx
-	<Flex g='30'>
+	<Flex g='20'>
 		<Lism fx='1'>Flex Content</Lism>
 		<Lism fxb={['33%', '25%']}>Flex Content</Lism>
 	</Flex>
@@ -107,7 +107,7 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage, EmbedCo
 	</PreviewCode>
 	<PreviewCode slot='tab' label='HTML'>
 	```html
-	<div class="l--flex -g:30">
+	<div class="l--flex -g:20">
 		<div class="-fx:1">Flex Content</div>
 		<div class="-fxb -fxb_sm" style="--fxb:33%;--fxb_sm:25%">Flex Content</div>
 	</div>

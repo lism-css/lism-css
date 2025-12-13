@@ -68,5 +68,5 @@ export function Title(props) {
 	return <Lism className='c--timeline_title' fw='bold' gr='3' gc='2' {...props} />;
 }
 export function Text(props) {
-	return <Lism className='c--timeline_text' fz='s' my-s='20' gr='4' gc='2' {...props} />;
+	return <Lism className='c--timeline_text' fz='s' my-s='15' gr='4' gc='2' {...props} />;
 }

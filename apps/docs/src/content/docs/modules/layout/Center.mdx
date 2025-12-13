@@ -44,21 +44,21 @@ Centerが**高さを持たない**場合は、コンテンツを水平方向に�
 	<PreviewTitle>
 		高さの設定が特にない時
 	</PreviewTitle>
-	<PreviewArea resize p='20'>
-		<Center bd p='40'>
+	<PreviewArea resize p='15'>
+		<Center bd p='30'>
 			<HTML.p fz='l'>TEXT</HTML.p>
 		</Center>
 	</PreviewArea>
 	<PreviewCode slot='tab' label='JSX'>
 		```jsx
-		<Center bd p='40'>
+		<Center bd p='30'>
 			<HTML.p fz='l'>TEXT</HTML.p>
 		</Center>
 		```
 	</PreviewCode>
 	<PreviewCode slot='tab' label='HTML'>
 		```jsx
-		<div class="l--center -p:30">
+		<div class="l--center -p:20">
 			<p class="-fz:l">TEXT</p>
 		</div>
 		```
@@ -69,8 +69,8 @@ Centerが**高さを持たない**場合は、コンテンツを水平方向に�
 	<PreviewTitle>
 		長いテキストの改行は左寄せになります。テキストの読みやすさを損ないません。
 	</PreviewTitle>
-	<PreviewArea resize p='20'>
-		<Center bd p='40' g='20'>
+	<PreviewArea resize p='15'>
+		<Center bd p='30' g='15'>
 			<HTML.p fz='l'>TEXT</HTML.p>
 			<Dummy length='xs' lang='ja'/>
 			<Dummy lang='ja'/>
@@ -78,7 +78,7 @@ Centerが**高さを持たない**場合は、コンテンツを水平方向に�
 	</PreviewArea>
 	<PreviewCode slot='tab' label='JSX'>
 		```jsx
-		<Center bd p='40' g='20'>
+		<Center bd p='30' g='15'>
 			<HTML.p fz='l'>TEXT</HTML.p>
 			<p>...</p>
 			<p>...</p>
@@ -87,7 +87,7 @@ Centerが**高さを持たない**場合は、コンテンツを水平方向に�
 	</PreviewCode>
 	<PreviewCode slot='tab' label='HTML'>
 		```jsx
-		<div class="l--center -bd -p:40 -g:20">
+		<div class="l--center -bd -p:30 -g:15">
 			<p class="-fz:l">TEXT</p>
 			<p>...</p>
 			<p>...</p>
@@ -105,7 +105,7 @@ Centerに**高さやアスペクト比**が設定されている時、垂直方�
 	<PreviewTitle>
 		上下左右中央に配置
 	</PreviewTitle>
-	<PreviewArea p='20'>
+	<PreviewArea p='15'>
 		<Center g='10' ar='3/2' bd>
 			<HTML.p fz='l'>TEXT</HTML.p>
 			<HTML.p fz='s'>Lorem ipsum dolor sit amet.</HTML.p>

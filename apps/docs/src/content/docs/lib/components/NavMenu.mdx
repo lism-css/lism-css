@@ -41,7 +41,7 @@ TEST
 ### シンプルな例
 <Preview>
 	<PreviewTitle>例</PreviewTitle>
-	<PreviewArea p='30'>
+	<PreviewArea p='20'>
 		<NavMenu.Root>
 			<NavMenu.Item>
 				<NavMenu.Link href='#menu' hov='bgc'>Menu item 1</NavMenu.Link>
@@ -89,7 +89,7 @@ TEST
 	</PreviewCode>
 </Preview>
 
-<Callout type='info' my-s='20'>
+<Callout type='info' my-s='15'>
 `<NavMenu.Item>`に`href`指定すると、内部で`<NavMenu.Link>`が自動生成されるようになっています。  
 </Callout> */}
 
@@ -100,23 +100,23 @@ TEST
 {/* テキストをspanで囲んで -fx:1 でも可 */}
 <Preview>
 	<PreviewTitle>例</PreviewTitle>
-	<PreviewArea p='40'>
+	<PreviewArea p='30'>
 		<NavMenu.Root>
 			<NavMenu.Item>
-				<NavMenu.Link href='#menu1' g='20' ai='center' bgc="text" c="base" hov='neutral'>
+				<NavMenu.Link href='#menu1' g='15' ai='center' bgc="text" c="base" hov='neutral'>
 					<span>Menu item</span>
 					<Lism tag='span' bd px='10' bdrs='10' fz='xs' fw='bold'>New</Lism>
 					<Icon icon='caret-right' mx-s='auto' />
 				</NavMenu.Link>
 			</NavMenu.Item>
 			<NavMenu.Item>
-				<NavMenu.Link href='#menu2' g='20' ai='center' bgc="text" c="base" hov='neutral'>
+				<NavMenu.Link href='#menu2' g='15' ai='center' bgc="text" c="base" hov='neutral'>
 					<span>Menu item</span>
 					<Icon icon='caret-right' mx-s='auto' />
 				</NavMenu.Link>
 			</NavMenu.Item>
 			<NavMenu.Item>
-				<NavMenu.Link href='#menu3' g='20' ai='center' bgc="text" c="base" hov='neutral'>
+				<NavMenu.Link href='#menu3' g='15' ai='center' bgc="text" c="base" hov='neutral'>
 					<span>Menu item</span>
 					<Icon icon='caret-right' mx-s='auto' />
 				</NavMenu.Link>
@@ -127,20 +127,20 @@ TEST
 		```jsx
 		<NavMenu.Root>
 			<NavMenu.Item>
-				<NavMenu.Link href='#menu1' g='20' ai='center' bgc="text" c="base" hov='neutral'>
+				<NavMenu.Link href='#menu1' g='15' ai='center' bgc="text" c="base" hov='neutral'>
 					<span>Menu item</span>
 					<Lism tag='span' bd px='10' bdrs='10' fz='xs' fw='bold'>New</Lism>
 					<Icon icon='caret-right' mx-s='auto' />
 				</NavMenu.Link>
 			</NavMenu.Item>
 			<NavMenu.Item>
-				<NavMenu.Link href='#menu2' g='20' ai='center' bgc="text" c="base" hov='neutral'>
+				<NavMenu.Link href='#menu2' g='15' ai='center' bgc="text" c="base" hov='neutral'>
 					<span>Menu item</span>
 					<Icon icon='caret-right' mx-s='auto' />
 				</NavMenu.Link>
 			</NavMenu.Item>
 			<NavMenu.Item>
-				<NavMenu.Link href='#menu3' g='20' ai='center' bgc="text" c="base" hov='neutral'>
+				<NavMenu.Link href='#menu3' g='15' ai='center' bgc="text" c="base" hov='neutral'>
 					<span>Menu item</span>
 					<Icon icon='caret-right' mx-s='auto' />
 				</NavMenu.Link>
@@ -159,7 +159,7 @@ TEST
 
 <Preview>
 	<PreviewTitle>`itemP`を指定</PreviewTitle>
-	<PreviewArea p='40'>
+	<PreviewArea p='30'>
 		<NavMenu.Root bd bdc='line' itemP='40'>
 			<NavMenu.Item hov='bgc'>
 				<NavMenu.Link href='#menu1'>Menu item</NavMenu.Link>
@@ -197,7 +197,7 @@ TEST
 
 <Preview>
 	<PreviewTitle>メニューのネスト</PreviewTitle>
-	<PreviewArea p='30'>
+	<PreviewArea p='20'>
 		<NavMenu.Root bd-y bdc='line' hovBgc='base-2'>
 			<NavMenu.Item>
 				<NavMenu.Link hov='bgc' href='#menu1'>Menu item 1</NavMenu.Link>
@@ -261,7 +261,7 @@ TEST
 
 <Preview>
 	<PreviewTitle>例</PreviewTitle>
-	<PreviewArea p='30'>
+	<PreviewArea p='20'>
 		<NavMenu.Root bd-y hovBgc='base-2'>
 			<NavMenu.Item>
 				<NavMenu.Link hov='bgc' href='#menu1'>Menu item</NavMenu.Link>
@@ -318,7 +318,7 @@ TEST
 
 <Preview>
 	<PreviewTitle>親メニューのリンクも残してアコーディオンで展開</PreviewTitle>
-	<PreviewArea p='30'>
+	<PreviewArea p='20'>
 		<NavMenu.Root bd-y>
 			<NavMenu.Item>
 				<NavMenu.Link href='#menu1'>Menu item</NavMenu.Link>
@@ -384,7 +384,7 @@ TEST
 
 <Preview>
 	<PreviewTitle>hoverでネストメニューを表示</PreviewTitle>
-	<PreviewArea p='30'>
+	<PreviewArea p='20'>
 		<Box min-h="15rem">
 		<NavMenu.Root fxd='row' lh='s' itemP='20 30'>
 			<NavMenu.Item hov='o'>
@@ -439,7 +439,7 @@ TEST
 
 <Preview>
 	<PreviewTitle>アコーディオンでのメニュー展開</PreviewTitle>
-	<PreviewArea p='30'>
+	<PreviewArea p='20'>
 		<Box min-h="15rem">
 		<NavMenu.Root fxd='row' lh='s' itemP='20 30'>
 			<NavMenu.Item hov='c'>

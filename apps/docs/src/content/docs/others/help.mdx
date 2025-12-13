@@ -21,8 +21,8 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage, Callout
 	<PreviewTitle>
 		画面幅が狭い時に横にはみ出す例(resizeして確認してください)
 	</PreviewTitle>
-	<PreviewArea resize p={40}>
-		<Flex g='20' className='has--itemGuide'>
+	<PreviewArea resize p='30'>
+		<Flex g='15' className='has--itemGuide'>
 			<p>LoooooooooooooooooooooooooongStriiiiiiiiiiinnnnnnnnnnngs!!!!</p>
 			<p>AAA</p>
 			<p>BBB</p>
@@ -32,7 +32,7 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage, Callout
 	
 	<PreviewCode>
 		```jsx
-		<Flex g='20'>
+		<Flex g='15'>
 			<p>LooooooooooooongStrinnnnnnnnnnngs!!!!</p>
 			<p>AAA</p>
 			<p>BBB</p>
@@ -46,8 +46,8 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage, Callout
 	<PreviewTitle>
 		はみ出す原因となるテキストに `-ovw:any` を適用
 	</PreviewTitle>
-	<PreviewArea resize p='20'>
-		<Flex g='20' className='has--itemGuide'>
+	<PreviewArea resize p='15'>
+		<Flex g='15' className='has--itemGuide'>
 			<HTML.p className='-ovw:any'>LooooooooooooongStriiiinnnnnnnnnnngs!!!!</HTML.p>
 			<p>AAA</p>
 			<p>BBB</p>
@@ -56,7 +56,7 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage, Callout
 	</PreviewArea>
 	<PreviewCode slot='tab' label='JSX'>
 	```jsx
-		<Flex g='20'>
+		<Flex g='15'>
 			<HTML.p className='-ovw:any'>LooooooooooooongStriiiinnnnnnnnnnngs!!!!</HTML.p>
 			<HTML.p>AAA</HTML.p>
 			<HTML.p>BBB</HTML.p>
@@ -66,7 +66,7 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage, Callout
 	</PreviewCode>
 	<PreviewCode slot='tab' label='HTML'>
 	```jsx
-	<div class="l--flex -g:20">
+	<div class="l--flex -g:15">
 		<p class="-ovw:any">LooooooooooooongStriiiinnnnnnnnnnngs!!!!</p>
 		<p>AAA</p>
 		<p>BBB</p>
@@ -94,7 +94,7 @@ Heroコンテンツの高さを `min-height` や `aspect-ratio` で指定する�
 	<PreviewTitle>NG例</PreviewTitle>
 	<PreviewArea resize>
 		<Stack max-sz='full' min-h='400px' bgc='base-2'>
-			<Box min-h='50%' my='auto' bgc='base' p='20' px='40' ac='center'>
+			<Box min-h='50%' my='auto' bgc='base' p='15' px='30' ac='center'>
 				<HTML.p fw='bold'>min-h:50%が効かない</HTML.p>
 				<Dummy length='s' />
 			</Box>
@@ -103,7 +103,7 @@ Heroコンテンツの高さを `min-height` や `aspect-ratio` で指定する�
 	<PreviewCode>
 		```jsx "min-h='400px'" "min-h='50%'"
 		<Stack max-sz='full' min-h='400px' bgc='base-2'>
-			<Box min-h='50%' my='auto' bgc='base' p='20' px='40' ac='center'>
+			<Box min-h='50%' my='auto' bgc='base' p='15' px='30' ac='center'>
 				<HTML.p fw='bold'>min-h:50%が効かない</HTML.p>
 				<Dummy length='s' />
 			</Box>
@@ -119,8 +119,8 @@ Heroコンテンツの高さを `min-height` や `aspect-ratio` で指定する�
 	<PreviewTitle>改善例</PreviewTitle>
 	<PreviewArea resize>
 		<Stack max-sz='full' min-h='400px' bgc='base-2'>
-			<Grid fxg='1' ai='center' px='40'>
-				<Center min-h='50%' bgc='base' p='30' bxsh='10'>
+			<Grid fxg='1' ai='center' px='30'>
+				<Center min-h='50%' bgc='base' p='20' bxsh='10'>
 					<HTML.p fw='bold'>OK</HTML.p>
 					<Dummy length='s' />
 				</Center>
@@ -130,8 +130,8 @@ Heroコンテンツの高さを `min-height` や `aspect-ratio` で指定する�
 	<PreviewCode>
 		```jsx "\<Grid" "fxg='1' ai='center'" "min-h='50%'"
 		<Stack max-sz='full' min-h='400px' bgc='base-2'>
-			<Grid fxg='1' ai='center' px='40'>
-				<Center min-h='50%' bgc='base' p='30' bxsh='10'>
+			<Grid fxg='1' ai='center' px='30'>
+				<Center min-h='50%' bgc='base' p='20' bxsh='10'>
 					<HTML.p fw='bold'>OK</HTML.p>
 					<Dummy length='s' />
 				</Center>
@@ -160,7 +160,7 @@ Heroコンテンツの高さを `min-height` や `aspect-ratio` で指定する�
 				<Media src='https://cdn.lism-css.com/img/a-3.jpg' alt='' width='960' height='640'/>
 			</Frame>
 			<Grid pos='rel' fxg='1' ai='center' hasGutter>
-				<Center min-h='50%' p='30' c='white' bgc='black:75%' bdrs='10' g='20'>
+				<Center min-h='50%' p='20' c='white' bgc='black:75%' bdrs='10' g='15'>
 					<HTML.p fw='bold' fz='xl'>min-height 50%</HTML.p>
 					<Dummy length='l' />
 				</Center>
@@ -174,7 +174,7 @@ Heroコンテンツの高さを `min-height` や `aspect-ratio` で指定する�
 				<Media src='https://cdn.lism-css.com/img/a-3.jpg' alt='' width='960' height='640'/>
 			</Frame>
 			<Grid fxg='1' ai='center' hasGutter>
-				<Center min-h='50%' p='30' c='white' bgc='black:75%' bdrs='10' g='20'>
+				<Center min-h='50%' p='20' c='white' bgc='black:75%' bdrs='10' g='15'>
 					<HTML.p fw='bold' fz='xl'>min-height 50%</HTML.p>
 					<Dummy length='l' />
 				</Center>
@@ -195,24 +195,24 @@ Flexの子要素でFrameを使用する場合、 `align-items:stretch;`の影響
 
 <Preview>
 	<PreviewTitle>コンテンツ側の高さと揃っている例</PreviewTitle>
-	<PreviewArea resize p={20}>
-		<Flex g={20}>
+	<PreviewArea resize p='15'>
+		<Flex g='20'>
 			<Frame ar='3/2'>
 				<Media src='https://cdn.lism-css.com/img/a-1.jpg' alt='' width='960' height='640' />
 			</Frame>
 			<Box bgc='base-2'>
-				<Dummy length='l' p='30' />
+				<Dummy length='l' p='20' />
 			</Box>
 		</Flex>
 	</PreviewArea>
 	<PreviewCode slot='tab' label='JSX'>
 		```jsx "3/2" "3/2"
-		<Flex g={20}>
+		<Flex g='20'>
 			<Frame ar='3/2'>
 				<Media src='https://cdn.lism-css.com/img/a-1.jpg' alt='' width='960' height='640' />
 			</Frame>
 			<Box bgc='base-2'>
-				<Dummy length='l' p='30' />
+				<Dummy length='l' p='20' />
 			</Box>
 		</Flex>
 		```
@@ -222,24 +222,24 @@ Flexの子要素でFrameを使用する場合、 `align-items:stretch;`の影響
 {/* 
 <Preview>
 	<PreviewTitle>対処例（親のFlex要素を`align-items:start;`にする）</PreviewTitle>
-	<PreviewArea resize p={20}>
-		<Flex ai='start' g={20} fxw={['wrap', 'nowrap']}>
+	<PreviewArea resize p='15'>
+		<Flex ai='start' g='20' fxw={['wrap', 'nowrap']}>
 			<Frame ar='3/2'>
 				<Media src='https://cdn.lism-css.com/img/a-1.jpg' alt='' width='960' height='640' />
 			</Frame>
 			<Box bgc='base-2'>
-				<Dummy length='xl' p='40' />
+				<Dummy length='xl' p='30' />
 			</Box>
 		</Flex>
 	</PreviewArea>
 	<PreviewCode slot='tab' label='JSX'>
 		```jsx "ai='start'"
-		<Flex ai='start' g={20} fxw={['wrap', 'nowrap']}>
+		<Flex ai='start' g='20' fxw={['wrap', 'nowrap']}>
 			<Frame ar='3/2'>
 				<Media src='https://cdn.lism-css.com/img/a-1.jpg' alt='' width='960' height='640' />
 			</Frame>
 			<Box bgc='base-2'>
-				<Dummy length='xl' p='40' />
+				<Dummy length='xl' p='30' />
 			</Box>
 		</Flex>
 		```
@@ -266,8 +266,8 @@ Lismの`<Center>` は `grid` を使ってるので、この問題が発生しま
 	<PreviewTitle>
 		スクロール時にコンテンツが全て見えない 😱
 	</PreviewTitle>
-	<PreviewArea resize p={10}>
-		<Center px='30' py='50' g='20' h='45vh' ov-y='auto' bd>
+	<PreviewArea resize p='10'>
+		<Center px='20' py='40' g='15' h='45vh' ov-y='auto' bd>
 			<HTML.p fz='l' fw='bold'>DEMO</HTML.p>
 			<Dummy length='l' />
 			<Dummy length='xl' />
@@ -275,7 +275,7 @@ Lismの`<Center>` は `grid` を使ってるので、この問題が発生しま
 	</PreviewArea>
 	<PreviewCode slot='tab' label='JSX'>
 		```jsx "\<Center" "h='45vh' ov-y='auto'"
-		<Center px='30' py='50' g='20' h='45vh' ov-y='auto' bd>
+		<Center px='20' py='40' g='15' h='45vh' ov-y='auto' bd>
 			<HTML.p fz='l' fw='bold'>DEMO</HTML.p>
 			<Dummy length='l' />
 			<Dummy length='xl' />
@@ -299,9 +299,9 @@ Lismの`<Center>` は `grid` を使ってるので、この問題が発生しま
 	<PreviewTitle>
 		スクロール時、正常にコンテンツが見える 😄
 	</PreviewTitle>
-	<PreviewArea resize p={10}>
-		<Box px='30' py='50' h='45vh' ov-y='auto' bd>
-			<Center g='20' min-h='100%'>
+	<PreviewArea resize p='10'>
+		<Box px='20' py='40' h='45vh' ov-y='auto' bd>
+			<Center g='15' min-h='100%'>
 				<HTML.p fz='l' fw='bold'>DEMO</HTML.p>
 				<Dummy length='l' />
 				<Dummy length='xl' />
@@ -310,8 +310,8 @@ Lismの`<Center>` は `grid` を使ってるので、この問題が発生しま
 	</PreviewArea>
 	<PreviewCode slot='tab' label='JSX'>
 		```jsx "Center" "h='45vh'" "ov-y='auto'" "min-h='100%'"
-		<Box px='30' py='50' h='45vh' ov-y='auto' bd>
-			<Center min-h='100%' g='20'>
+		<Box px='20' py='40' h='45vh' ov-y='auto' bd>
+			<Center min-h='100%' g='15'>
 				<HTML.p fz='l' fw='bold'>DEMO</HTML.p>
 				<Dummy length='l' />
 				<Dummy length='xl' />
@@ -325,9 +325,9 @@ Lismの`<Center>` は `grid` を使ってるので、この問題が発生しま
 
 <Preview>
 	<PreviewTitle>OK</PreviewTitle>
-	<PreviewArea resize p={10}>
-		<Frame ar='16/9' ov-y='auto' bd p='30' g='20'>
-			<Center min-h='100%' g='20'>
+	<PreviewArea resize p='10'>
+		<Frame ar='16/9' ov-y='auto' bd p='20' g='15'>
+			<Center min-h='100%' g='15'>
 				<HTML.p fz='l'>TEXT</HTML.p>
 				<Dummy length='xs' lang='ja'/>
 				<Dummy length='xl' lang='ja'/>
@@ -336,8 +336,8 @@ Lismの`<Center>` は `grid` を使ってるので、この問題が発生しま
 	</PreviewArea>
 	<PreviewCode slot='tab' label='JSX'>
 		```jsx "Center" "ar='16/9'" "ov-y='auto'" "min-h='100%'"
-		<Frame ar='16/9' ov-y='auto' bd p='30' g='20'>
-			<Center min-h='100%' g='20'>
+		<Frame ar='16/9' ov-y='auto' bd p='20' g='15'>
+			<Center min-h='100%' g='15'>
 				<HTML.p fz='l'>TEXT</HTML.p>
 				<Dummy length='xs' lang='ja'/>
 				<Dummy length='xl' lang='ja'/>
@@ -349,8 +349,8 @@ Lismの`<Center>` は `grid` を使ってるので、この問題が発生しま
 
 <Preview>
 	<PreviewTitle>NG</PreviewTitle>
-	<PreviewArea resize p={10}>
-		<Center ar='16/9' ov-y='auto' bd p='30' g='20'>
+	<PreviewArea resize p='10'>
+		<Center ar='16/9' ov-y='auto' bd p='20' g='15'>
 			<HTML.p fz='l'>TEXT</HTML.p>
 			<Dummy length='xs' lang='ja'/>
 			<Dummy length='xl' lang='ja'/>
@@ -358,7 +358,7 @@ Lismの`<Center>` は `grid` を使ってるので、この問題が発生しま
 	</PreviewArea>
 	<PreviewCode slot='tab' label='JSX'>
 		```jsx "Center" "ar='16/9'" "ov-y='auto'" "min-h='100%'"
-		<Center ar='16/9' ov-y='auto' bd p='30' g='20'>
+		<Center ar='16/9' ov-y='auto' bd p='20' g='15'>
 			<HTML.p fz='l'>TEXT</HTML.p>
 			<Dummy length='xs' lang='ja'/>
 			<Dummy length='xl' lang='ja'/>

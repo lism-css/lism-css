@@ -52,25 +52,25 @@ div.l--withSide
 
 <Preview>
 	<PreviewTitle>使用例</PreviewTitle>
-	<PreviewArea resize p='30'>
-		<WithSide sideW='12rem' mainW='20rem' g='30'>
-			<Box p='20' bd bdc='blue'>
+	<PreviewArea resize p='20'>
+		<WithSide sideW='12rem' mainW='20rem' g='20'>
+			<Box p='15' bd bdc='blue'>
 				<p>Main Content</p>
 				<Dummy />
 			</Box>
-			<Box isSide p='20' bd bdc='red'>
+			<Box isSide p='15' bd bdc='red'>
 				<p>Side Content</p>
 			</Box>
 		</WithSide>
 	</PreviewArea>
 	<PreviewCode slot='tab' label='JSX'>
 		```jsx "sideW" "isSide"
-		<WithSide sideW='12rem' mainW='20rem' g='30'>
-			<Box p='20' bd bdc='blue'>
+		<WithSide sideW='12rem' mainW='20rem' g='20'>
+			<Box p='15' bd bdc='blue'>
 				<p>Main Content</p>
 				<Dummy />
 			</Box>
-			<Box isSide p='20' bd bdc='red'>
+			<Box isSide p='15' bd bdc='red'>
 				<p>Side Content</p>
 			</Box>
 		</WithSide>
@@ -78,12 +78,12 @@ div.l--withSide
 	</PreviewCode>
 	<PreviewCode slot='tab' label='HTML'>
 		```html "is--side" "--sideW"
-		<div class='l--withSide -g:30' style='--sideW:12rem;--mainW:20rem'>
-			<div class='l--box -p:20 -bd' style='--bdc:var(--blue)'>
+		<div class='l--withSide -g:20' style='--sideW:12rem;--mainW:20rem'>
+			<div class='l--box -p:15 -bd' style='--bdc:var(--blue)'>
 				<p>Main Content</p>
 				<p>Lorem ipsum dolor sit, amet consectetur adipisicing elit, sed do eiusmod tempor. Non facere laudantium ex eos doloribus aut dolore nisi.</p>
 			</div>
-			<div class='l--box is--side -p:20 -bd' style='--bdc:var(--red)'>
+			<div class='l--box is--side -p:15 -bd' style='--bdc:var(--red)'>
 				<p>Side Content</p>
 			</div>
 		</div>
@@ -101,8 +101,8 @@ div.l--withSide
 
 <Preview>
 	<PreviewTitle>例</PreviewTitle>
-	<PreviewArea resize p='30'>
-		<WithSide fxd='row-r' sideW='10rem' mainW='16rem' g='30'>
+	<PreviewArea resize p='20'>
+		<WithSide fxd='row-r' sideW='10rem' mainW='16rem' g='20'>
 			<Box>
 				<Dummy />
 			</Box>
@@ -113,7 +113,7 @@ div.l--withSide
 	</PreviewArea>
 	<PreviewCode slot='tab' label='JSX'>
 		```jsx "fxd='row-r'"
-		<WithSide fxd='row-r' sideW='10rem' mainW='16rem' g='30'>
+		<WithSide fxd='row-r' sideW='10rem' mainW='16rem' g='20'>
 			<Box>
 				<Dummy />
 			</Box>
@@ -123,7 +123,7 @@ div.l--withSide
 	</PreviewCode>
 	<PreviewCode slot='tab' label='HTML'>
 		```html "-fxd:row-r"
-		<div class='l--withSide -fxd:row-r -g:30' style='--sideW:10rem;--mainW:16rem;'>
+		<div class='l--withSide -fxd:row-r -g:20' style='--sideW:10rem;--mainW:16rem;'>
 			<div class='l--box'>
 				<p>Lorem ipsum dolor sit amet, ...</p>
 			</div>
@@ -141,8 +141,8 @@ div.l--withSide
 
 <Preview>
 	<PreviewTitle>`Grid`を使って`WithSide`のようなレイアウトを構築する例</PreviewTitle>
-	<PreviewArea resize p='30'>
-		<Grid gta={[`'.' 'side'`, `'. side'`]} gtc={[null, '1fr 10rem']} g='30'>
+	<PreviewArea resize p='20'>
+		<Grid gta={[`'.' 'side'`, `'. side'`]} gtc={[null, '1fr 10rem']} g='20'>
 			<Box>
 				<Dummy />
 			</Box>
@@ -153,7 +153,7 @@ div.l--withSide
 	</PreviewArea>
 	<PreviewCode slot='tab' label='JSX'>
 		```jsx "gta=" "gtc="
-		<Grid gta={[`'.' 'side'`, `'. side'`]} gtc={[null, '1fr 10rem']} g='30'>
+		<Grid gta={[`'.' 'side'`, `'. side'`]} gtc={[null, '1fr 10rem']} g='20'>
 			<Box>
 				<Dummy />
 			</Box>
@@ -163,7 +163,7 @@ div.l--withSide
 	</PreviewCode>
 	<PreviewCode slot='tab' label='HTML'>
 		```html "-gd -gd_sm" "'. side' / 1fr 10rem" "-ga" "--ga:side"
-		<div class="l--grid -gta -gta_sm -gtc_sm -g:30" style="--gta:'.' 'side';--gta_sm:'. side';--gtc_sm:1fr 10rem">
+		<div class="l--grid -gta -gta_sm -gtc_sm -g:20" style="--gta:'.' 'side';--gta_sm:'. side';--gtc_sm:1fr 10rem">
 			<div class='l--box'>
 				<p>
 					Lorem ipsum dolor sit, amet consectetur adipisicing elit, sed do eiusmod tempor.
@@ -180,8 +180,8 @@ div.l--withSide
 
 <Preview>
 	<PreviewTitle>`side`を左側、ブレイクポイントを`@md`にする例</PreviewTitle>
-	<PreviewArea resize p='30'>
-		<Grid gta={[`'.' 'side'`, null, `'side .'`]} gtc={[null, null, '10rem 1fr']} g='30'>
+	<PreviewArea resize p='20'>
+		<Grid gta={[`'.' 'side'`, null, `'side .'`]} gtc={[null, null, '10rem 1fr']} g='20'>
 			<Box>
 				<Dummy />
 			</Box>
@@ -192,7 +192,7 @@ div.l--withSide
 	</PreviewArea>
 	<PreviewCode slot='tab' label='JSX'>
 		```jsx
-		<Grid gta={[`'.' 'side'`, null, `'side .'`]} gtc={[null, null, '10rem 1fr']} g='30'>
+		<Grid gta={[`'.' 'side'`, null, `'side .'`]} gtc={[null, null, '10rem 1fr']} g='20'>
 			<Box>
 				<Dummy />
 			</Box>
@@ -202,7 +202,7 @@ div.l--withSide
 	</PreviewCode>
 	<PreviewCode slot='tab' label='HTML'>
 		```html
-		<div class="l--grid -gta -gta_md -gtc_md -g:30" style="--gta:'.' 'side';--gta_md:'side .';--gtc_md:10rem 1fr">
+		<div class="l--grid -gta -gta_md -gtc_md -g:20" style="--gta:'.' 'side';--gta_md:'side .';--gtc_md:10rem 1fr">
 			<div class='l--box'>
 				<p>
 					Lorem ipsum dolor sit, amet consectetur adipisicing elit, sed do eiusmod tempor.

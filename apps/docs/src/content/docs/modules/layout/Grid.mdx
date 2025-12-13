@@ -34,28 +34,28 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage, PropBad
 
 <Preview>
 	<PreviewTitle>真ん中にメインコンテンツ</PreviewTitle>
-	<PreviewArea p='20'>
-		<Grid gtc='auto 1fr auto' g='20'>
-			<Center p='30' bgc='base-2'>L</Center>
-			<Center p='30' bd>Center</Center>
-			<Center p='30' bgc='base-2'>R</Center>
+	<PreviewArea p='15'>
+		<Grid gtc='auto 1fr auto' g='15'>
+			<Center p='20' bgc='base-2'>L</Center>
+			<Center p='20' bd>Center</Center>
+			<Center p='20' bgc='base-2'>R</Center>
 		</Grid>
 	</PreviewArea>
 	<PreviewCode slot='tab' label='JSX'>
 		```jsx
-		<Grid gtc='auto 1fr auto' g='20'>
-			<Center p='30' bgc='base-2'>L</Center>
-			<Center p='30' bd>Center</Center>
-			<Center p='30' bgc='base-2'>R</Center>
+		<Grid gtc='auto 1fr auto' g='15'>
+			<Center p='20' bgc='base-2'>L</Center>
+			<Center p='20' bd>Center</Center>
+			<Center p='20' bgc='base-2'>R</Center>
 		</Grid>
 		```
 	</PreviewCode>
 	<PreviewCode slot='tab' label='HTML'>
 		```html
-		<div class="l--grid -g:20 -gtc" style="--gtc:auto 1fr auto">
-			<div class="l--center -p:30 -bgc:base-2">L</div>
-			<div class="l--center -p:30 -bd">Center</div>
-			<div class="l--center -p:30 -bgc:base-2">R</div>
+		<div class="l--grid -g:15 -gtc" style="--gtc:auto 1fr auto">
+			<div class="l--center -p:20 -bgc:base-2">L</div>
+			<div class="l--center -p:20 -bd">Center</div>
+			<div class="l--center -p:20 -bgc:base-2">R</div>
 		</div>
 		```
 	</PreviewCode>
@@ -65,45 +65,45 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage, PropBad
 
 <Preview>
 	<PreviewTitle>ブレイクポイントでエリアを切り替える</PreviewTitle>
-	<PreviewArea resize p='20'>
+	<PreviewArea resize p='15'>
 		<Grid
-			g='20'
+			g='15'
 			gtc={['1fr 1fr', '8em 1fr 8em']}
 			gta={[
 				`'main main' 'left right'`,
 				`'left main right'`
 			]}
 		>
-			<Box ga='left' p='20' bgc='base-2'>Left</Box>
-			<Box ga='main' p='20' bd>Center</Box>
-			<Box ga='right' p='20' bgc='base-2'>Right</Box>
+			<Box ga='left' p='15' bgc='base-2'>Left</Box>
+			<Box ga='main' p='15' bd>Center</Box>
+			<Box ga='right' p='15' bgc='base-2'>Right</Box>
 		</Grid>
 	</PreviewArea>
 	<PreviewCode slot='tab' label='JSX'>
 		```jsx
 		<Grid
-			g='20'
+			g='15'
 			gtc={['1fr 1fr', '8em 1fr 8em']}
 			gta={[
 				`'main main' 'left right'`,
 				`'left main right'`
 			]}
 		>
-			<Box ga='left' p='20' bgc='base-2'>Left</Box>
-			<Box ga='main' p='20' bd>Center</Box>
-			<Box ga='right' p='20' bgc='base-2'>Right</Box>
+			<Box ga='left' p='15' bgc='base-2'>Left</Box>
+			<Box ga='main' p='15' bd>Center</Box>
+			<Box ga='right' p='15' bgc='base-2'>Right</Box>
 		</Grid>
 		```
 	</PreviewCode>
 	<PreviewCode slot='tab' label='HTML'>
 		```html
 		<div
-			class="l--grid -gta -gta_sm -gtc -gtc_sm -g:20"
+			class="l--grid -gta -gta_sm -gtc -gtc_sm -g:15"
 			style="--gta:'main main' 'left right';--gta_sm:'left main right';--gtc:1fr 1fr;--gtc_sm:8em 1fr 8em"
 		>
-			<div class="l--box -p:20 -p:30 -bgc:base-2 -ga" style="--ga:left">Left</div>
-			<div class="l--box -p:20 -p:30 -bd -ga" style="--ga:main">Center</div>
-			<div class="l--box -p:20 -bgc:base-2 -ga" style="--ga:right">Right</div>
+			<div class="l--box -p:15 -p:20 -bgc:base-2 -ga" style="--ga:left">Left</div>
+			<div class="l--box -p:15 -p:20 -bd -ga" style="--ga:main">Center</div>
+			<div class="l--box -p:15 -bgc:base-2 -ga" style="--ga:right">Right</div>
 		</div>
 		```
 	</PreviewCode>
@@ -113,39 +113,39 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage, PropBad
 
 <Preview>
 	<PreviewTitle>`u-itemDivider`を使ってテーブルのような表現にする</PreviewTitle>
-	<PreviewArea resize p='20'>
+	<PreviewArea resize p='15'>
 		<Grid gtc={['2fr 3fr', '1fr 2fr']} className='u-itemDivider' bd bdc='line'>
-			<Box p='20' bgc='base-2'>A</Box>
-			<Box p='20' bgc='base-2'>B</Box>
-			<Box p='20'>Lorem ipsum</Box>
-			<Box p='20'><Dummy /></Box>
-			<Box p='20'>Dolor sit amet</Box>
-			<Box p='20'><Dummy length='l'/></Box>
+			<Box p='15' bgc='base-2'>A</Box>
+			<Box p='15' bgc='base-2'>B</Box>
+			<Box p='15'>Lorem ipsum</Box>
+			<Box p='15'><Dummy /></Box>
+			<Box p='15'>Dolor sit amet</Box>
+			<Box p='15'><Dummy length='l'/></Box>
 		</Grid>
 	</PreviewArea>
 	<PreviewCode slot='tab' label='JSX'>
 		```jsx
 		<Grid gtc={['2fr 3fr', '1fr 2fr']} className='u-itemDivider' bd bdc='line'>
-			<Box p='20' bgc='base-2'>A</Box>
-			<Box p='20' bgc='base-2'>B</Box>
-			<Box p='20'>Lorem ipsum</Box>
-			<Box p='20'><Dummy /></Box>
-			<Box p='20'>Dolor sit amet</Box>
-			<Box p='20'><Dummy length='l'/></Box>
+			<Box p='15' bgc='base-2'>A</Box>
+			<Box p='15' bgc='base-2'>B</Box>
+			<Box p='15'>Lorem ipsum</Box>
+			<Box p='15'><Dummy /></Box>
+			<Box p='15'>Dolor sit amet</Box>
+			<Box p='15'><Dummy length='l'/></Box>
 		</Grid>
 		```
 	</PreviewCode>
 	<PreviewCode slot='tab' label='HTML'>
 		```html
 		<div class='l--grid u-itemDivider -gtc -gtc_sm -bd -bdc:line' style='--gtc:2fr 3fr;--gtc_sm:1fr 2fr'>
-			<div class='l--box -p:20 -bgc:base-2'>A</div>
-			<div class='l--box -p:20 -bgc:base-2'>B</div>
-			<div class='l--box -p:20'>Lorem ipsum</div>
-			<div class='l--box -p:20'>
+			<div class='l--box -p:15 -bgc:base-2'>A</div>
+			<div class='l--box -p:15 -bgc:base-2'>B</div>
+			<div class='l--box -p:15'>Lorem ipsum</div>
+			<div class='l--box -p:15'>
 				<p>Lorem ipsum dolor sit, amet...</p>
 			</div>
-			<div class='l--box -p:20'>Dolor sit amet</div>
-			<div class='l--box -p:20'>
+			<div class='l--box -p:15'>Dolor sit amet</div>
+			<div class='l--box -p:15'>
 				<p>Lorem ipsum dolor sit, amet...</p>
 			</div>
 		</div>
@@ -159,7 +159,7 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage, PropBad
 
 <Preview>
 	<PreviewTitle>Gritの子要素を重ねて表示する</PreviewTitle>
-	<PreviewArea p='20'>
+	<PreviewArea p='15'>
 		<Grid ar='16/9'>
 			<Frame ga='1/1' w='100%' h='100%' pos='rel'>
 				<Media src='https://cdn.lism-css.com/img/a-1.jpg' />
@@ -196,26 +196,26 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage, PropBad
 
 <Preview>
 	<PreviewTitle>新着記事一覧リストの作成例</PreviewTitle>
-	<PreviewArea p='30' resize>
+	<PreviewArea p='20' resize>
 		<Grid gtc={['auto','auto 1fr']} bd-b>
-			<Grid gtc='subgrid' gc='1/-1' g='30' ai='center' bd-t py='40' px='10'>
-				<Grid gtc={['auto auto', '1fr 1fr']} g='30' jc='start' ai='center'>
+			<Grid gtc='subgrid' gc='1/-1' g='20' ai='center' bd-t py='30' px='10'>
+				<Grid gtc={['auto auto', '1fr 1fr']} g='20' jc='start' ai='center'>
 					<Lism fz='s'>2024.05.31</Lism>
-					<Lism d='in-flex' jc='center' bd fz='xs' lh='s' bgc='text' c='base' py='10' px='20' bdrs='5'>NEWS</Lism>
+					<Lism d='in-flex' jc='center' bd fz='xs' lh='s' bgc='text' c='base' py='10' px='15' bdrs='5'>NEWS</Lism>
 				</Grid>
 				<Dummy className='u-trim' lang='ja' tag='a' href='####' hov='o' c='inherit' td='none' lh='s' />
 			</Grid>
-			<Grid gtc='subgrid' gc='1/-1' g='30' ai='center' bd-t py='40' px='10'>
-				<Grid gtc={['auto auto', '1fr 1fr']} g='30' jc='start' ai='center'>
+			<Grid gtc='subgrid' gc='1/-1' g='20' ai='center' bd-t py='30' px='10'>
+				<Grid gtc={['auto auto', '1fr 1fr']} g='20' jc='start' ai='center'>
 					<Lism fz='s'>2024.05.29</Lism>
-					<Lism d='in-flex' jc='center' bd fz='xs' lh='s' bgc='text' c='base' py='10' px='20' bdrs='5'>TIPS</Lism>
+					<Lism d='in-flex' jc='center' bd fz='xs' lh='s' bgc='text' c='base' py='10' px='15' bdrs='5'>TIPS</Lism>
 				</Grid>
 				<Dummy className='u-trim' lang='ja' offset='1' tag='a' href='####' hov='o' c='inherit' td='none' lh='s' length='s' />
 			</Grid>
-			<Grid gtc='subgrid' gc='1/-1' g='30' ai='center' bd-t py='40' px='10'>
-				<Grid gtc={['auto auto', '1fr 1fr']} g='30' jc='start' ai='center'>
+			<Grid gtc='subgrid' gc='1/-1' g='20' ai='center' bd-t py='30' px='10'>
+				<Grid gtc={['auto auto', '1fr 1fr']} g='20' jc='start' ai='center'>
 					<Lism fz='s'>2024.05.18</Lism>
-					<Lism d='in-flex' jc='center' bd fz='xs' lh='s' bgc='text' c='base' py='10' px='20' bdrs='5'>COLUMN</Lism>
+					<Lism d='in-flex' jc='center' bd fz='xs' lh='s' bgc='text' c='base' py='10' px='15' bdrs='5'>COLUMN</Lism>
 				</Grid>
 				<Dummy className='u-trim' lang='ja' offset='2' tag='a' href='####' hov='o' c='inherit' td='none' lh='s' />
 			</Grid>
@@ -224,24 +224,24 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage, PropBad
 	<PreviewCode slot='tab' label='JSX'>
 		```jsx
 		<Grid gtc={['auto','auto 1fr']} bd-b>
-			<Grid gtc='subgrid' gc='1/-1' g='30' ai='center' bd-t py='40' px='10'>
-				<Grid gtc={['auto auto', '1fr 1fr']} g='30' jc='start' ai='center'>
+			<Grid gtc='subgrid' gc='1/-1' g='20' ai='center' bd-t py='30' px='10'>
+				<Grid gtc={['auto auto', '1fr 1fr']} g='20' jc='start' ai='center'>
 					<Lism fz='s'>2024.05.31</Lism>
-					<Lism d='in-flex' jc='center' bd fz='xs' lh='s' bgc='text' c='base' py='10' px='20' bdrs='5'>NEWS</Lism>
+					<Lism d='in-flex' jc='center' bd fz='xs' lh='s' bgc='text' c='base' py='10' px='15' bdrs='5'>NEWS</Lism>
 				</Grid>
 				<Dummy className='u-trim' lang='ja' tag='a' href='####' hov='o' c='inherit' td='none' lh='s' />
 			</Grid>
-			<Grid gtc='subgrid' gc='1/-1' g='30' ai='center' bd-t py='40' px='10'>
-				<Grid gtc={['auto auto', '1fr 1fr']} g='30' jc='start' ai='center'>
+			<Grid gtc='subgrid' gc='1/-1' g='20' ai='center' bd-t py='30' px='10'>
+				<Grid gtc={['auto auto', '1fr 1fr']} g='20' jc='start' ai='center'>
 					<Lism fz='s'>2024.05.29</Lism>
-					<Lism d='in-flex' jc='center' bd fz='xs' lh='s' bgc='text' c='base' py='10' px='20' bdrs='5'>TIPS</Lism>
+					<Lism d='in-flex' jc='center' bd fz='xs' lh='s' bgc='text' c='base' py='10' px='15' bdrs='5'>TIPS</Lism>
 				</Grid>
 				<Dummy className='u-trim' lang='ja' offset='1' tag='a' href='####' hov='o' c='inherit' td='none' lh='s' length='s' />
 			</Grid>
-			<Grid gtc='subgrid' gc='1/-1' g='30' ai='center' bd-t py='40' px='10'>
-				<Grid gtc={['auto auto', '1fr 1fr']} g='30' jc='start' ai='center'>
+			<Grid gtc='subgrid' gc='1/-1' g='20' ai='center' bd-t py='30' px='10'>
+				<Grid gtc={['auto auto', '1fr 1fr']} g='20' jc='start' ai='center'>
 					<Lism fz='s'>2024.05.18</Lism>
-					<Lism d='in-flex' jc='center' bd fz='xs' lh='s' bgc='text' c='base' py='10' px='20' bdrs='5'>COLUMN</Lism>
+					<Lism d='in-flex' jc='center' bd fz='xs' lh='s' bgc='text' c='base' py='10' px='15' bdrs='5'>COLUMN</Lism>
 				</Grid>
 				<Dummy className='u-trim' lang='ja' offset='2' tag='a' href='####' hov='o' c='inherit' td='none' lh='s' />
 			</Grid>
@@ -264,25 +264,25 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage, PropBad
 
 <Preview>
 	<PreviewTitle>デフォルト幅</PreviewTitle>
-	<PreviewArea resize p='20'>
-		<Grid gtc='liquid' g='20'>
-			<Box bxsh='20' p='30'><Dummy/></Box>
-			<Box bxsh='20' p='30'><Dummy/></Box>
-			<Box bxsh='20' p='30'><Dummy offset='1' /></Box>
-			<Box bxsh='20' p='30'><Dummy offset='2' /></Box>
-			<Box bxsh='20' p='30'><Dummy length='s' /></Box>
-			<Box bxsh='20' p='30'><Dummy /></Box>
+	<PreviewArea resize p='15'>
+		<Grid gtc='liquid' g='15'>
+			<Box bxsh='20' p='20'><Dummy/></Box>
+			<Box bxsh='20' p='20'><Dummy/></Box>
+			<Box bxsh='20' p='20'><Dummy offset='1' /></Box>
+			<Box bxsh='20' p='20'><Dummy offset='2' /></Box>
+			<Box bxsh='20' p='20'><Dummy length='s' /></Box>
+			<Box bxsh='20' p='20'><Dummy /></Box>
 		</Grid>
 	</PreviewArea>
 	<PreviewCode>
 		```jsx
-		<Grid gtc='liquid' g='20'>
-			<Box bxsh='20' p='30'><Dummy/></Box>
-			<Box bxsh='20' p='30'><Dummy/></Box>
-			<Box bxsh='20' p='30'><Dummy offset='1' /></Box>
-			<Box bxsh='20' p='30'><Dummy offset='2' /></Box>
-			<Box bxsh='20' p='30'><Dummy length='s' /></Box>
-			<Box bxsh='20' p='30'><Dummy /></Box>
+		<Grid gtc='liquid' g='15'>
+			<Box bxsh='20' p='20'><Dummy/></Box>
+			<Box bxsh='20' p='20'><Dummy/></Box>
+			<Box bxsh='20' p='20'><Dummy offset='1' /></Box>
+			<Box bxsh='20' p='20'><Dummy offset='2' /></Box>
+			<Box bxsh='20' p='20'><Dummy length='s' /></Box>
+			<Box bxsh='20' p='20'><Dummy /></Box>
 		</Grid>
 		```
 	</PreviewCode>
@@ -291,25 +291,25 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage, PropBad
 
 <Preview>
 	<PreviewTitle>`cols=12rem`</PreviewTitle>
-	<PreviewArea resize p='20'>
-		<Grid gtc='liquid' g='20' cols='12rem'>
-			<Box bxsh='20' p='30'><Dummy length='s' /></Box>
-			<Box bxsh='20' p='30'><Dummy length='s' /></Box>
-			<Box bxsh='20' p='30'><Dummy /></Box>
-			<Box bxsh='20' p='30'><Dummy offset='1' /></Box>
-			<Box bxsh='20' p='30'><Dummy offset='2' /></Box>
-			<Box bxsh='20' p='30'><Dummy length='s' /></Box>
+	<PreviewArea resize p='15'>
+		<Grid gtc='liquid' g='15' cols='12rem'>
+			<Box bxsh='20' p='20'><Dummy length='s' /></Box>
+			<Box bxsh='20' p='20'><Dummy length='s' /></Box>
+			<Box bxsh='20' p='20'><Dummy /></Box>
+			<Box bxsh='20' p='20'><Dummy offset='1' /></Box>
+			<Box bxsh='20' p='20'><Dummy offset='2' /></Box>
+			<Box bxsh='20' p='20'><Dummy length='s' /></Box>
 		</Grid>
 	</PreviewArea>
 	<PreviewCode>
 		```jsx
-		<Grid gtc='liquid' g='20' cols='12rem'>
-			<Box bxsh='20' p='30'><Dummy length='s' /></Box>
-			<Box bxsh='20' p='30'><Dummy length='s' /></Box>
-			<Box bxsh='20' p='30'><Dummy /></Box>
-			<Box bxsh='20' p='30'><Dummy offset='1' /></Box>
-			<Box bxsh='20' p='30'><Dummy offset='2' /></Box>
-			<Box bxsh='20' p='30'><Dummy length='s' /></Box>
+		<Grid gtc='liquid' g='15' cols='12rem'>
+			<Box bxsh='20' p='20'><Dummy length='s' /></Box>
+			<Box bxsh='20' p='20'><Dummy length='s' /></Box>
+			<Box bxsh='20' p='20'><Dummy /></Box>
+			<Box bxsh='20' p='20'><Dummy offset='1' /></Box>
+			<Box bxsh='20' p='20'><Dummy offset='2' /></Box>
+			<Box bxsh='20' p='20'><Dummy length='s' /></Box>
 		</Grid>
 		```
 	</PreviewCode>
@@ -325,25 +325,25 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage, PropBad
 
 <Preview>
 	<PreviewTitle>例</PreviewTitle>
-	<PreviewArea resize p='20'>
+	<PreviewArea resize p='15'>
 		<Grid gt='repeat' cols='3' rows='3' g='5' min-h='50svh'>
-			<Box p='30' bgc='base-2'>item1</Box>
-			<Box p='30' bgc='base-2'>item2</Box>
-			<Box p='30' bgc='base-2'>item3</Box>
-			<Box p='30' bgc='base-2'>item4</Box>
-			<Box p='30' bgc='base-2' gc='span 2'>item5</Box>
-			<Center gc='3' gr='1 / -1' p='30' bgc='blue'>item6</Center>
+			<Box p='20' bgc='base-2'>item1</Box>
+			<Box p='20' bgc='base-2'>item2</Box>
+			<Box p='20' bgc='base-2'>item3</Box>
+			<Box p='20' bgc='base-2'>item4</Box>
+			<Box p='20' bgc='base-2' gc='span 2'>item5</Box>
+			<Center gc='3' gr='1 / -1' p='20' bgc='blue'>item6</Center>
 		</Grid>
 	</PreviewArea>
 	<PreviewCode slot='tab' label='JSX'>
 		```jsx " gc=" " gr="
 		<Grid gt='repeat' cols='3' rows='3' g='5' min-h='50svh'>
-			<Box p='30' bgc='base-2'>item1</Box>
-			<Box p='30' bgc='base-2'>item2</Box>
-			<Box p='30' bgc='base-2'>item3</Box>
-			<Box p='30' bgc='base-2'>item4</Box>
-			<Box p='30' bgc='base-2' gc='span 2'>item5</Box>
-			<Center gc='3' gr='1 / -1' p='30' bgc='blue'>item6</Center>
+			<Box p='20' bgc='base-2'>item1</Box>
+			<Box p='20' bgc='base-2'>item2</Box>
+			<Box p='20' bgc='base-2'>item3</Box>
+			<Box p='20' bgc='base-2'>item4</Box>
+			<Box p='20' bgc='base-2' gc='span 2'>item5</Box>
+			<Center gc='3' gr='1 / -1' p='20' bgc='blue'>item6</Center>
 		</Grid>
 		```
 	</PreviewCode>
@@ -354,23 +354,23 @@ cols,rows はそれぞれブレイクポイント指定も可能です。
 
 <Preview>
 	<PreviewTitle>例</PreviewTitle>
-	<PreviewArea resize p='20'>
+	<PreviewArea resize p='15'>
 		<Grid gt='repeat' cols={['2', '3']} rows='4' min-h='50svh' gaf='row dense'>
-			<Box gc={['1 / -1','span 2']} gr={['span 2', '1 / -1']} p='30' bgc='base-2'>A</Box>
-			<Box p='30' bgc='green:20%'>B</Box>
-			<Box p='30' bgc='blue:20%'>C</Box>
-			<Box p='30' bgc='red:20%'>D</Box>
-			<Box p='30' bgc='purple:20%'>E</Box>
+			<Box gc={['1 / -1','span 2']} gr={['span 2', '1 / -1']} p='20' bgc='base-2'>A</Box>
+			<Box p='20' bgc='green:20%'>B</Box>
+			<Box p='20' bgc='blue:20%'>C</Box>
+			<Box p='20' bgc='red:20%'>D</Box>
+			<Box p='20' bgc='purple:20%'>E</Box>
 		</Grid>
 	</PreviewArea>
 	<PreviewCode>
 		```jsx "gt='repeat'"
 		<Grid gt='repeat' cols={['2', '3']} rows='4' min-h='50svh' gaf='row dense'>
-			<Box gc={['1 / -1','span 2']} gr={['span 2', '1 / -1']} p='30' bgc='base-2'>A</Box>
-			<Box p='30' bgc='green:20%'>B</Box>
-			<Box p='30' bgc='blue:20%'>C</Box>
-			<Box p='30' bgc='red:20%'>D</Box>
-			<Box p='30' bgc='purple:20%'>E</Box>
+			<Box gc={['1 / -1','span 2']} gr={['span 2', '1 / -1']} p='20' bgc='base-2'>A</Box>
+			<Box p='20' bgc='green:20%'>B</Box>
+			<Box p='20' bgc='blue:20%'>C</Box>
+			<Box p='20' bgc='red:20%'>D</Box>
+			<Box p='20' bgc='purple:20%'>E</Box>
 		</Grid>
 		```
 	</PreviewCode>
@@ -381,8 +381,8 @@ cols,rows はそれぞれブレイクポイント指定も可能です。
 
 {/* <Preview>
 	<PreviewTitle>1列 → 2列 → 幅200pxで3列かつ、中央よせ</PreviewTitle>
-	<PreviewArea resize p='20'>
-		<Grid gtc={['1fr', 'repeat(2, 1fr)', 'repeat(3, 200px)']} jc='center' g='20' className='has--itemGuide'>
+	<PreviewArea resize p='15'>
+		<Grid gtc={['1fr', 'repeat(2, 1fr)', 'repeat(3, 200px)']} jc='center' g='15' className='has--itemGuide'>
 			<Dummy/>
 			<Dummy/>
 			<Dummy/>
@@ -393,7 +393,7 @@ cols,rows はそれぞれブレイクポイント指定も可能です。
 	</PreviewArea>
 	<PreviewCode>
 	```jsx
-	<Grid gtc={['1fr', 'repeat(2, 1fr)', 'repeat(3, 200px)']} jc='center' g='20'>
+	<Grid gtc={['1fr', 'repeat(2, 1fr)', 'repeat(3, 200px)']} jc='center' g='15'>
 		...
 	</Grid>
 	```

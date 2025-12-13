@@ -31,14 +31,14 @@ Lism では、`.-{prop}_{bp}`形式のクラスと`--{prop}_{bp}`形式の変数
 
 <Preview>
 	<PreviewTitle>レスポンシブ対応の例</PreviewTitle>
-	<PreviewArea resize p='20'>
+	<PreviewArea resize p='15'>
 		<Lism p={[20, 40, 50]} bd>
 			<p>Example</p>
 		</Lism>
 	</PreviewArea>
 	<PreviewCode label="HTML" slot="tab">
 		```html "-p_sm -p_md" "--p_sm" "--p_md"
-		<div class="-p:20 -p_sm -p_md -bd" style="--p_sm:var(--s40);--p_md:var(--s50)">
+		<div class="-p:15 -p_sm -p_md -bd" style="--p_sm:var(--s30);--p_md:var(--s40)">
 			<p>Example</p>
 		</div>
 		```
@@ -79,7 +79,7 @@ CSSプロパティ全てがレスポンシブ対応できるわけではあり�
 }
 ```
 
-<p class='-my-s:20'>常にCSS変数で値を参照できた方が便利だと判断した限られたプロパティ(`p`,`m`,`g`,`fz`,`c`,`bgc`,`bdrs`)のみがこのパターンで実装されています。</p>
+<p class='-my-s:15'>常にCSS変数で値を参照できた方が便利だと判断した限られたプロパティ(`p`,`m`,`g`,`fz`,`c`,`bgc`,`bdrs`)のみがこのパターンで実装されています。</p>
 
 <Spacer h='20'></Spacer>
 

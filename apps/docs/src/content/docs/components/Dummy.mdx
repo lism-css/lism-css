@@ -27,7 +27,7 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage } from "
 
 <Preview>
 	<PreviewTitle>ダミーテキストの言語の違い</PreviewTitle>
-	<PreviewArea p='30'>
+	<PreviewArea p='20'>
 		<Dummy />
 		<Dummy lang='ja' />
 	</PreviewArea>
@@ -41,7 +41,7 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage } from "
 
 <Preview>
 	<PreviewTitle>ダミーテキストの長さの違い</PreviewTitle>
-	<PreviewArea p='30'>
+	<PreviewArea p='20'>
 		<Dummy lang='ja' length='xs' pre='xs: ' />
 		<Dummy lang='ja' length='s' pre='s: ' />
 		<Dummy lang='ja' length='l' pre='l: ' />
@@ -59,7 +59,7 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage } from "
 
 <Preview>
 	<PreviewTitle>`length='codes'`にすると、`<b>`,`<i>`,`<a>`,`<code>`を含んだダミーテキストを出力します。</PreviewTitle>
-	<PreviewArea p='30'>
+	<PreviewArea p='20'>
 		<Dummy lang='ja' length='codes' />
 	</PreviewArea>
 	<PreviewCode>
@@ -72,7 +72,7 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage } from "
 
 <Preview>
 	<PreviewTitle>offsetの例</PreviewTitle>
-	<PreviewArea p='30'>
+	<PreviewArea p='20'>
 		<Dummy lang='ja' length='xs' />
 		<Dummy lang='ja' offset={1} />
 		<Dummy lang='ja' length='l' offset={3} />
@@ -92,7 +92,7 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage } from "
 `tag='ul'` と `tag='ol'` を指定した場合は、リストを出力します。
 <Preview>
 	<PreviewTitle>ダミーリストの例 1</PreviewTitle>
-	<PreviewArea p='30'>
+	<PreviewArea p='20'>
 		<Dummy tag='ul' />
 		<Dummy tag='ol' />
 	</PreviewArea>
@@ -110,7 +110,7 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage } from "
 `tag='img'` を指定した場合は、`https://cdn.lism-css.com/`からダミー画像を出力します。
 <Preview>
 	<PreviewTitle>例</PreviewTitle>
-	<PreviewArea p='30'>
+	<PreviewArea p='20'>
 		<Dummy tag='img' />
 	</PreviewArea>
 	<PreviewCode>

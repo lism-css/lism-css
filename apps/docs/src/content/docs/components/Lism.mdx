@@ -18,17 +18,17 @@ Lismで配布しているほぼ全てのコンポーネントは、この`<Lism>
 
 <Preview>
 	<PreviewTitle>`<Lism>`の出力例</PreviewTitle>
-	<PreviewArea p='30'>
-		<Lism　p='30' fw='bold' c='blue' bgc='base-2' bdrs='20'>Lism content</Lism>
+	<PreviewArea p='20'>
+		<Lism　p='20' fw='bold' c='blue' bgc='base-2' bdrs='20'>Lism content</Lism>
 	</PreviewArea>
 	<PreviewCode slot='tab' label='JSX'>
 		```jsx
-		<Lism　p='30' fw='bold' c='blue' bgc='base-2' bdrs='20'>Lism content</Lism>
+		<Lism　p='20' fw='bold' c='blue' bgc='base-2' bdrs='20'>Lism content</Lism>
 		```
 	</PreviewCode>
 	<PreviewCode slot='tab' label='HTML'>
 		```jsx
-		<div class="-p:30 -fw:bold -c -bgc:base-2 -bdrs:20"> Lism content </div>
+		<div class="-p:20 -fw:bold -c -bgc:base-2 -bdrs:20"> Lism content </div>
 		```
 	</PreviewCode>
 </Preview>
@@ -195,10 +195,10 @@ Lismコンポーネント以外に対しても Lism Props を使いたい時に�
 <PreviewTitle>例</PreviewTitle>
 <PreviewCode>
 ```jsx
-<Lism fz='l' p='20'>contents</Lism>
+<Lism fz='l' p='15'>contents</Lism>
 
 // ↓ 出力されるHTML
-<div class="-fz:l -p:20">contents</div>
+<div class="-fz:l -p:15">contents</div>
 ```
 </PreviewCode>
 </Preview>
@@ -328,7 +328,7 @@ Lismコンポーネント以外に対しても Lism Props を使いたい時に�
 	</PreviewCode>
 	<PreviewCode label='出力されるHTML' slot='tab'>
 		```jsx
-		<div class='-p_md' style='--p_md:var(--s40)'>
+		<div class='-p_md' style='--p_md:var(--s30)'>
 			...
 		</div>
 		```
@@ -395,4 +395,4 @@ CSS側で変数の中身を記述したい場合や、**親と同じ変数を継
     - 例: `fz='l'` の場合は `-fz:l` クラスが出力されます。
 - 対応トークンがあるがクラスとして登録されていない場合、CSS変数がインラインスタイルで出力されます。
     - 例: `c='red'` の場合は `class="-c"`と`style="--c:var(--red)"` が出力されます。
-	{/* - 例: `pb='20'` の場合は `class="-pb"`と`style="--pb:var(--s20)"` が出力されます。 */}
+
