@@ -37,6 +37,6 @@ export default {
 		},
 	},
 	setPlain: 'set-plain',
-	setRevert: 'set-revert',
+	// setRevert: 'set-revert',
 	setInnerRs: 'set-innerRs',
 };
