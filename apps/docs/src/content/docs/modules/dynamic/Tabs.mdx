@@ -77,8 +77,8 @@ d--tabs
 
 <Preview>
 	<PreviewTitle>例</PreviewTitle>
-	<PreviewArea p='30'>
-		<Tabs.Root g='20'>
+	<PreviewArea p='20'>
+		<Tabs.Root g='15'>
 			<Tabs.Item>
 				<Tabs.Tab px='10'>Tab 1</Tabs.Tab>
 				<Tabs.Panel>
@@ -95,7 +95,7 @@ d--tabs
 	</PreviewArea>
 	<PreviewCode slot='tab' label='JSX'>
 		```jsx
-		<Tabs.Root g='20'>
+		<Tabs.Root g='15'>
 			<Tabs.Item>
 				<Tabs.Tab px='10'>Tab 1</Tabs.Tab>
 				<Tabs.Panel>
@@ -122,8 +122,8 @@ d--tabs
 
 <Preview>
 	<PreviewTitle>`listProps`を使う例</PreviewTitle>
-	<PreviewArea p='30'>
-		<Tabs.Root g='20' ji='center' listProps={{bd: '-', bdrs: '99', p: '10', lh:'xs'}}>
+	<PreviewArea p='20'>
+		<Tabs.Root g='15' ji='center' listProps={{bd: '-', bdrs: '99', p: '10', lh:'xs'}}>
 			<Tabs.Item>
 				<Tabs.Tab px='10'>Tab 1</Tabs.Tab>
 				<Tabs.Panel>
@@ -140,7 +140,7 @@ d--tabs
 	</PreviewArea>
 	<PreviewCode slot='tab' label='JSX'>
 		```jsx "listProps"
-		<Tabs.Root g='20' ji='center' listProps={{bd: '-', bdrs: '99', p: '10', lh:'xs'}}>
+		<Tabs.Root g='15' ji='center' listProps={{bd: '-', bdrs: '99', p: '10', lh:'xs'}}>
 			<Tabs.Item>
 				<Tabs.Tab px='10'>Tab 1</Tabs.Tab>
 				<Tabs.Panel>
@@ -169,7 +169,7 @@ d--tabs
 
 <Preview>
 	<PreviewTitle>例</PreviewTitle>
-	<PreviewArea p='30'>
+	<PreviewArea p='20'>
 		<Tabs.Root defaultIndex={2} listProps={{'bd-b': '-'}}>
 			<Tabs.Item>
 				<Tabs.Tab p='10'>Tab 1</Tabs.Tab>
@@ -220,20 +220,20 @@ d--tabs
 
 <Preview>
 	<PreviewTitle>`@sm`サイズより大きい場合、コンテンツを横並びにする例</PreviewTitle>
-	<PreviewArea p={30} resize>
+	<PreviewArea p='20' resize>
 		<Tabs.Root
-			g='20'
+			g='15'
 			gt={[null, '"list panel" auto / auto 1fr']}
 			listProps={{fxd: [null, 'column'], bd: '-', bdw:['0 0 1px 0','0 1px 0 0']}}
 		>
 			<Tabs.Item>
-				<Tabs.Tab px='20' px-s='10' py='10' py-s='5'>Tab 1</Tabs.Tab>
+				<Tabs.Tab px='15' px-s='10' py='10' py-s='5'>Tab 1</Tabs.Tab>
 				<Tabs.Panel p='5'>
 					<Dummy pre='Tab 01: '/>
 				</Tabs.Panel>
 			</Tabs.Item>
 			<Tabs.Item>
-				<Tabs.Tab px='20' px-s='10' py='10' py-s='5'>Tab 2</Tabs.Tab>
+				<Tabs.Tab px='15' px-s='10' py='10' py-s='5'>Tab 2</Tabs.Tab>
 				<Tabs.Panel p='5'>
 					<Dummy length='l' offset={1} pre='Tab 02: ' />
 				</Tabs.Panel>
@@ -243,18 +243,18 @@ d--tabs
 	<PreviewCode>
 		```jsx
 		<Tabs.Root
-			g='20'
+			g='15'
 			gt={[null, '"list panel" auto / auto 1fr']}
 			listProps={{fxd: [null, 'column'], bd: '-', bdw:['0 0 1px 0','0 1px 0 0']}}
 		>
 			<Tabs.Item>
-				<Tabs.Tab px='20' px-s='10' py='10' py-s='5'>Tab 1</Tabs.Tab>
+				<Tabs.Tab px='15' px-s='10' py='10' py-s='5'>Tab 1</Tabs.Tab>
 				<Tabs.Panel p='5'>
 					<Dummy pre='Tab 01: '/>
 				</Tabs.Panel>
 			</Tabs.Item>
 			<Tabs.Item>
-				<Tabs.Tab px='20' px-s='10' py='10' py-s='5'>Tab 2</Tabs.Tab>
+				<Tabs.Tab px='15' px-s='10' py='10' py-s='5'>Tab 2</Tabs.Tab>
 				<Tabs.Panel p='5'>
 					<Dummy length='l' offset={1} pre='Tab 02: ' />
 				</Tabs.Panel>
@@ -277,8 +277,8 @@ d--tabs
 
 <Preview>
 	<PreviewTitle>`variant='line'`</PreviewTitle>
-	<PreviewArea p={30}>
-		<Tabs.Root variant='line' g='20'>
+	<PreviewArea p='20'>
+		<Tabs.Root variant='line' g='15'>
 			<Tabs.Item>
 				<Tabs.Tab>Tab 1</Tabs.Tab>
 				<Tabs.Panel>
@@ -312,7 +312,7 @@ d--tabs
 	</PreviewCode>
 	<PreviewCode slot='tab' label='JSX'>
 		```jsx "variant='line'"
-		<Tabs.Root variant='line' g='20'>
+		<Tabs.Root variant='line' g='15'>
 			<Tabs.Item>
 				<Tabs.Tab>Tab 1</Tabs.Tab>
 				<Tabs.Panel>
@@ -333,8 +333,8 @@ d--tabs
 
 <Preview>
 	<PreviewTitle>`variant='emboss'`</PreviewTitle>
-	<PreviewArea p={30}>
-		<Tabs.Root variant='emboss' g='20' ji='center'>
+	<PreviewArea p='20'>
+		<Tabs.Root variant='emboss' g='15' ji='center'>
 			<Tabs.Item>
 				<Tabs.Tab>Tab 1</Tabs.Tab>
 				<Tabs.Panel>
@@ -369,7 +369,7 @@ d--tabs
 	</PreviewCode>
 	<PreviewCode slot='tab' label='JSX'>
 		```jsx "variant='emboss'"
-		<Tabs.Root variant='emboss' g='20' ji='center'>
+		<Tabs.Root variant='emboss' g='15' ji='center'>
 			<Tabs.Item>
 				<Tabs.Tab>Tab 1</Tabs.Tab>
 				<Tabs.Panel>
@@ -406,8 +406,8 @@ d--tabs
 
 <Preview>
 	<PreviewTitle>例（Tab 2の高さに固定されます）</PreviewTitle>
-	<PreviewArea p='30'>
-		<Tabs.Root data-tabs-keep-height g='20'>
+	<PreviewArea p='20'>
+		<Tabs.Root data-tabs-keep-height g='15'>
 			<Tabs.Item>
 				<Tabs.Tab px='10'>Tab 1</Tabs.Tab>
 				<Tabs.Panel>
@@ -424,7 +424,7 @@ d--tabs
 	</PreviewArea>
 	<PreviewCode>
 		```jsx "data-tabs-keep-height"
-		<Tabs.Root data-tabs-keep-height g='20'>
+		<Tabs.Root data-tabs-keep-height g='15'>
 			<Tabs.Item>
 				<Tabs.Tab px='10'>Tab 1</Tabs.Tab>
 				<Tabs.Panel>

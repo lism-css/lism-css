@@ -96,7 +96,7 @@ Lismでは、主要なCSSプロパティ群に対して、それらで頻繁に�
 
 <Preview>
 	<PreviewTitle>Examples</PreviewTitle>
-	<PreviewArea p='30'>
+	<PreviewArea p='20'>
 		<p class='-fz:xl -fw:bold -lts:l -ta:center'>Example text</p>
 	</PreviewArea>
 	<PreviewCode slot="tab" label="HTML">
@@ -124,7 +124,7 @@ Lismでは、主要なCSSプロパティ群に対して、それらで頻繁に�
 
 <Preview>
 	<PreviewTitle>縦書きにする例</PreviewTitle>
-	<PreviewArea p='20' resize>
+	<PreviewArea p='15' resize>
 		<Box h='20em' w='100%' writing='vertical'>
 			<Flow hasGutter>
 				<Dummy lang='ja' length='s' />
@@ -171,17 +171,17 @@ Lismでは、主要なCSSプロパティ群に対して、それらで頻繁に�
 
 <Preview>
 	<PreviewTitle>Examples</PreviewTitle>
-	<PreviewArea p='30'>
-		<HTML.p c='main' bgc='base-2' bd bdc='line' p='40'>Example text</HTML.p>
+	<PreviewArea p='20'>
+		<HTML.p c='main' bgc='base-2' bd bdc='line' p='30'>Example text</HTML.p>
 	</PreviewArea>
 	<PreviewCode slot="tab" label="HTML">
 	```html
-	<p class='-c:main -bgc:base-2 -bd -bdc:line -p:40'>Example text</p>
+	<p class='-c:main -bgc:base-2 -bd -bdc:line -p:30'>Example text</p>
 	```
 	</PreviewCode>
 	<PreviewCode slot="tab" label="JSX">
 	```jsx
-	<HTML.p c='main' bgc='base-2' bd bdc='line' p='40'>Example text</HTML.p>
+	<HTML.p c='main' bgc='base-2' bd bdc='line' p='30'>Example text</HTML.p>
 	```
 	</PreviewCode>
 </Preview>
@@ -228,25 +228,25 @@ export const LinkSPACE = () => <a href="/css/tokens/#space"><code>SPACE</code></
 
 <Preview>
 	<PreviewTitle>Space Examples</PreviewTitle>
-	<PreviewArea p='30' resize>
-		<Lism p={['20', '30']} bd>
+	<PreviewArea p='20' resize>
+		<Lism p={['15', '20']} bd>
 			<HTML.p>Example text</HTML.p>
-			<HTML.p my-s='20' mx='40'>Example text</HTML.p>
+			<HTML.p my-s='15' mx='20'>Example text</HTML.p>
 		</Lism>
 	</PreviewArea>
 	<PreviewCode slot="tab" label="HTML">
 	```html
-	<div class="-p:20 -p_sm -bd" style="--p_sm:var(--s30)">
+	<div class="-p:15 -p_sm -bd" style="--p_sm:var(--s20)">
 		<p>Example text</p>
-		<p class="-my-s:20 -mx:40">Example text</p>
+		<p class="-my-s:15 -mx:20">Example text</p>
 	</div>
 	```
 	</PreviewCode>
 	<PreviewCode slot="tab" label="JSX">
 	```jsx
-	<Lism p={['20', '30']} bd>
+	<Lism p={['15', '20']} bd>
 		<HTML.p>Example text</HTML.p>
-		<HTML.p my-s='20' mx='40'>Example text</HTML.p>
+		<HTML.p my-s='15' mx='20'>Example text</HTML.p>
 	</Lism>
 	```
 	</PreviewCode>
@@ -314,45 +314,45 @@ export const LinkSPACE = () => <a href="/css/tokens/#space"><code>SPACE</code></
 	</PreviewTitle>
 	<PreviewArea resize p='5'>
 		<Box pos='rel' ar='3/2' lh='1'>
-			<Box pos='abs' l='0' t='0' bd p='20'>A</Box>
-			{/* <Box pos='abs' l='0' t='0' m='40' bd p='20' bgc='base-2'>A'</Box> */}
-			<Box pos='abs' l='50%' t='0' translate='-50X' bd p='20'>B</Box>
-			<Box pos='abs' r='0' t='0' bd p='20'>C</Box>
-			<Box pos='abs' l='0' t='50%' translate='-50Y' bd p='20'>D</Box>
-			<Box pos='abs' l='50%' t='50%' translate='-50XY' bd p='20'>E</Box>
-			<Box pos='abs' r='0' t='50%' translate='-50Y' bd p='20'>F</Box>
-			<Box pos='abs' l='0' b='0' bd p='20'>G</Box>
-			<Box pos='abs' l='50%' b='0' translate='-50X' bd p='20'>H</Box>
-			<Box pos='abs' r='0' b='0' bd p='20'>I</Box>
+			<Box pos='abs' l='0' t='0' bd p='15'>A</Box>
+			{/* <Box pos='abs' l='0' t='0' m='30' bd p='15' bgc='base-2'>A'</Box> */}
+			<Box pos='abs' l='50%' t='0' translate='-50X' bd p='15'>B</Box>
+			<Box pos='abs' r='0' t='0' bd p='15'>C</Box>
+			<Box pos='abs' l='0' t='50%' translate='-50Y' bd p='15'>D</Box>
+			<Box pos='abs' l='50%' t='50%' translate='-50XY' bd p='15'>E</Box>
+			<Box pos='abs' r='0' t='50%' translate='-50Y' bd p='15'>F</Box>
+			<Box pos='abs' l='0' b='0' bd p='15'>G</Box>
+			<Box pos='abs' l='50%' b='0' translate='-50X' bd p='15'>H</Box>
+			<Box pos='abs' r='0' b='0' bd p='15'>I</Box>
 		</Box>
 	</PreviewArea>
 	<PreviewCode slot='tab' label='JSX'>
 		```jsx
 		<Box pos='rel' ar='3/2' lh='1'>
-			<Box pos='abs' l='0' t='0' bd p='20'>A</Box>
-			<Box pos='abs' l='50%' t='0' translate='-50X' bd p='20'>B</Box>
-			<Box pos='abs' r='0' t='0' bd p='20'>C</Box>
-			<Box pos='abs' l='0' t='50%' translate='-50Y' bd p='20'>D</Box>
-			<Box pos='abs' l='50%' t='50%' translate='-50XY' bd p='20'>E</Box>
-			<Box pos='abs' r='0' t='50%' translate='-50Y' bd p='20'>F</Box>
-			<Box pos='abs' l='0' b='0' bd p='20'>G</Box>
-			<Box pos='abs' l='50%' b='0' translate='-50X' bd p='20'>H</Box>
-			<Box pos='abs' r='0' b='0' bd p='20'>I</Box>
+			<Box pos='abs' l='0' t='0' bd p='15'>A</Box>
+			<Box pos='abs' l='50%' t='0' translate='-50X' bd p='15'>B</Box>
+			<Box pos='abs' r='0' t='0' bd p='15'>C</Box>
+			<Box pos='abs' l='0' t='50%' translate='-50Y' bd p='15'>D</Box>
+			<Box pos='abs' l='50%' t='50%' translate='-50XY' bd p='15'>E</Box>
+			<Box pos='abs' r='0' t='50%' translate='-50Y' bd p='15'>F</Box>
+			<Box pos='abs' l='0' b='0' bd p='15'>G</Box>
+			<Box pos='abs' l='50%' b='0' translate='-50X' bd p='15'>H</Box>
+			<Box pos='abs' r='0' b='0' bd p='15'>I</Box>
 		</Box>
 		```
 	</PreviewCode>
 	<PreviewCode slot='tab' label='HTML'>
 		```html
 		<div class="l--box -pos:rel -ar:3/2 -lh:1">
-			<div class="l--box -pos:abs -l:0 -t:0 -bd -p:20">A</div>
-			<div class="l--box -pos:abs -l:50% -t:0 -translate:-50X -bd -p:20">B</div>
-			<div class="l--box -pos:abs -r:0 -t:0 -bd -p:20">C</div>
-			<div class="l--box -pos:abs -l:0 -t:50% -translate:-50Y -bd -p:20">D</div>
-			<div class="l--box -pos:abs -l:50% -t:50% -translate:-50XY -bd -p:20">E</div>
-			<div class="l--box -pos:abs -r:0 -t:50% -translate:-50Y -bd -p:20">F</div>
-			<div class="l--box -pos:abs -l:0 -b:0 -bd -p:20">G</div>
-			<div class="l--box -pos:abs -l:50% -b:0 -translate:-50X -bd -p:20">H</div>
-			<div class="l--box -pos:abs -r:0 -b:0 -bd -p:20">I</div>
+			<div class="l--box -pos:abs -l:0 -t:0 -bd -p:15">A</div>
+			<div class="l--box -pos:abs -l:50% -t:0 -translate:-50X -bd -p:15">B</div>
+			<div class="l--box -pos:abs -r:0 -t:0 -bd -p:15">C</div>
+			<div class="l--box -pos:abs -l:0 -t:50% -translate:-50Y -bd -p:15">D</div>
+			<div class="l--box -pos:abs -l:50% -t:50% -translate:-50XY -bd -p:15">E</div>
+			<div class="l--box -pos:abs -r:0 -t:50% -translate:-50Y -bd -p:15">F</div>
+			<div class="l--box -pos:abs -l:0 -b:0 -bd -p:15">G</div>
+			<div class="l--box -pos:abs -l:50% -b:0 -translate:-50X -bd -p:15">H</div>
+			<div class="l--box -pos:abs -r:0 -b:0 -bd -p:15">I</div>
 		</div>
 		```
 	</PreviewCode>
@@ -509,15 +509,15 @@ borderに関する仕様は少し特殊になっています。詳しくは[bord
 
 <Preview>
 	<PreviewTitle>使用例</PreviewTitle>
-	<PreviewArea p='30' resize>
-		<Columns g='20'>
+	<PreviewArea p='20' resize>
+		<Columns g='15'>
 			<Frame ar='16/9' bg='url(/img/pattern.png) center / 4rem'></Frame>
 			<Frame ar='16/9' bgi='url(/img/pattern.png)' bgp='center' bgsz='4rem' bgblend='difference' bgc='white'></Frame>
 		</Columns>
 	</PreviewArea>
 	<PreviewCode label='JSX' slot='tab'>
 		```jsx
-		<Columns g='20'>
+		<Columns g='15'>
 			<Frame ar='16/9' bg='url(/img/pattern.png) center / 4rem'></Frame>
 			<Frame ar='16/9' bgi='url(/img/pattern.png)' bgp='center' bgsz='4rem' bgblend='difference' bgc='white'></Frame>
 		</Columns>
@@ -525,7 +525,7 @@ borderに関する仕様は少し特殊になっています。詳しくは[bord
 	</PreviewCode>
 	<PreviewCode label='HTML' slot='tab'>
 		```html
-		<div class="l--columns -g:20">
+		<div class="l--columns -g:15">
 			<div class="l--frame -ar:16/9 -bg" style="--bg:url(/img/pattern.png) center / 4rem"></div>
 			<div class="l--frame -ar:16/9 -bgi -bgp:c -bgc" style="--bgi:url(/img/pattern.png);background-size:4rem;background-blend-mode:difference;--bgc:var(--white)"></div>
 		</div>
@@ -536,12 +536,12 @@ borderに関する仕様は少し特殊になっています。詳しくは[bord
 
 <Preview>
 	<PreviewTitle>グラデーション</PreviewTitle>
-	<PreviewArea p='30'>
-		<Frame p='50' bg='linear-gradient(to top, #a8edea 0%, #fed6e3 100%)'>Gradient</Frame>
+	<PreviewArea p='20'>
+		<Frame p='40' bg='linear-gradient(to top, #a8edea 0%, #fed6e3 100%)'>Gradient</Frame>
 	</PreviewArea>
 	<PreviewCode label='JSX' slot='tab'>
 		```jsx
-		<Frame p='50' bg='linear-gradient(to top, #a8edea 0%, #fed6e3 100%)'>Gradient</Frame>
+		<Frame p='40' bg='linear-gradient(to top, #a8edea 0%, #fed6e3 100%)'>Gradient</Frame>
 		```
 	</PreviewCode>
 	<PreviewCode label='HTML' slot='tab'>
@@ -558,7 +558,7 @@ borderに関する仕様は少し特殊になっています。詳しくは[bord
 
 <Preview>
 	<PreviewTitle>テキストで背景をクリッピング</PreviewTitle>
-	<PreviewArea p='30'>
+	<PreviewArea p='20'>
 		<Center>
 			<Box bg='linear-gradient(45deg, var(--blue), var(--pink))' bgclip='text' c='trsp'>
 				<HTML.p fz='5xl' fw='bold' lh='1' lts='l'>TEXT</HTML.p>

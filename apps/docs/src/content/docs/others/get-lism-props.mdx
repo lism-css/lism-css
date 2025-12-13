@@ -15,7 +15,7 @@ Lismで用意しているコンポーネント以外でも[Lism Props](/componen
 
 ```jsx
 // ① Lism コンポーネントを使う
-<Box p='20' bgc='base-2' fz='xl'>text</Box>
+<Box p='15' bgc='base-2' fz='xl'>text</Box>
 
 // ② ただの div タグを使う
 <div {...getLismProps({layout:'box', p:'20', fz:'xl'})}>text</div>
@@ -34,14 +34,14 @@ Lismで用意しているコンポーネント以外でも[Lism Props](/componen
 ```jsx
 import getLismProps from 'lism-css/lib/getLismProps';
 
-const returnProps = getLismProps({className:'foo', fz:'xl', p:['30', '40']});
+const returnProps = getLismProps({className:'foo', fz:'xl', p:['20', '30']});
 ```
 
 <PreviewTitle>返り値</PreviewTitle>
 ```js
 {
-	className: 'foo -fz:l -p:30 -p_sm',
-	style: {'--p_sm':'var(--s40)'},
+	className: 'foo -fz:l -p:20 -p_sm',
+	style: {'--p_sm':'var(--s30)'},
 }
 ```
 

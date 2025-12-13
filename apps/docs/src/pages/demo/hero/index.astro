@@ -12,7 +12,7 @@ import ShapeDivider from '~/components/ex/ShapeDivider/index.astro';
 				<Dummy length='l' lang='ja' />
 			</Flow>
 		</Stack>
-		<Stack max-sz='full' hasGutter pos='rel' min-h='75vh' c='white' g='20'>
+		<Stack max-sz='full' hasGutter pos='rel' min-h='75vh' c='white' g='15'>
 			<ShapeDivider viewBox='0 0 10 10' c='base-2' level='6' scale='-Y' z='1'>
 				<path d='M10,10V0L0,9.5V10L10,10z'></path>
 			</ShapeDivider>
@@ -20,7 +20,7 @@ import ShapeDivider from '~/components/ex/ShapeDivider/index.astro';
 				<Media isLayer src='https://cdn.lism-css.com/img/a-2.jpg' alt='' width='960' height='640' />
 				<Layer blur='4px' bgc='black:50%' />
 			</Frame>
-			<Flow isContainer='m' py='40' my='auto' z='0'>
+			<Flow isContainer='m' py='30' my='auto' z='0'>
 				<HTML.p fw='bold' fz='xl'>ShapDivider & Layers</HTML.p>
 				<Dummy length='l' />
 			</Flow>
@@ -32,19 +32,19 @@ import ShapeDivider from '~/components/ex/ShapeDivider/index.astro';
 
 		<Spacer h='6rem' />
 		<Divider />
-		<Box hasGutter py='50'>
+		<Box hasGutter py='40'>
 			<Dummy lh='s' mb='auto' length='l' />
 		</Box>
 		<Divider />
 		<Spacer h='6rem' />
-		<Stack max-sz='full' min-h='100lvh' g='30' c='white' pos='rel'>
+		<Stack max-sz='full' min-h='100lvh' g='20' c='white' pos='rel'>
 			<Frame isLayer>
 				<Media isLayer src='https://cdn.lism-css.com/img/a-1.jpg' alt='' width='960' height='640' />
 				<Layer blur='4px' bgc='black:50%' />
 			</Frame>
-			<Flex jc='between' p='30' z='0' g='30'>
+			<Flex jc='between' p='20' z='0' g='20'>
 				<Box>Header</Box>
-				<Flex g='30'>
+				<Flex g='20'>
 					<div>XXX</div>
 					<div>XXX</div>
 				</Flex>
@@ -53,19 +53,19 @@ import ShapeDivider from '~/components/ex/ShapeDivider/index.astro';
 				<HTML.p fw='bold' fz='xl'>DEMO 02</HTML.p>
 				<Dummy length='l' />
 			</Flow>
-			<Center p='20' z='0'>Footer</Center>
+			<Center p='15' z='0'>Footer</Center>
 		</Stack>
 
 		<Spacer h='6rem' />
 		<Divider />
-		<Box hasGutter py='50'>
+		<Box hasGutter py='40'>
 			<Dummy lh='s' mb='auto' length='l' />
 		</Box>
 		<Divider />
 		<Spacer h='6rem' />
 		<!-- clamp = min:40px/400px, max:80px/1200px.  -->
 		<Box max-sz='full' style={{ '--slopeH': 'clamp(2.5rem, 1.25rem + 5cqw, 5rem)' }}>
-			<Stack max-sz='full' hasGutter pos='rel' min-h='50vh' c='white' g='20'>
+			<Stack max-sz='full' hasGutter pos='rel' min-h='50vh' c='white' g='15'>
 				<ShapeDivider viewBox='0 0 10 10' h='var(--slopeH)' c='base' scale='-Y' z='1'>
 					<path d='M10,10V0L0,9.5V10L10,10z'></path>
 				</ShapeDivider>
@@ -73,7 +73,7 @@ import ShapeDivider from '~/components/ex/ShapeDivider/index.astro';
 					<Media isLayer src='https://cdn.lism-css.com/img/a-1.jpg' alt='' width='960' height='640' />
 					<Layer bgc='black:50%' />
 				</Frame>
-				<Flow isContainer='m' py='40' pr={['0', '25%', '33%']} my='auto' z='0'>
+				<Flow isContainer='m' py='30' pr={['0', '25%', '33%']} my='auto' z='0'>
 					<HTML.p fw='bold' fz='xl'>ShapDivider & Layers</HTML.p>
 					<Dummy length='l' />
 				</Flow>
@@ -90,7 +90,7 @@ import ShapeDivider from '~/components/ex/ShapeDivider/index.astro';
 					<Layer bgc='black:50%' />
 				</Frame>
 				<Spacer h='var(--slopeH)' />
-				<Flow isContainer='m' py='40' pl={['0', '25%', '33%']} my='auto' z='0'>
+				<Flow isContainer='m' py='30' pl={['0', '25%', '33%']} my='auto' z='0'>
 					<HTML.p fw='bold' fz='xl'>ShapDivider & Layers</HTML.p>
 					<Dummy length='l' />
 				</Flow>

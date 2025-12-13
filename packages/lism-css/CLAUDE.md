@@ -88,7 +88,7 @@ SCSS Setting files:
 
 The framework converts React props to CSS classes and styles:
 
-- Responsive props: `{base: '20', md: '40', lg: '60'}` (can also be written as array: `['20', null, '40', '60']`)
+- Responsive props: `{base: '10', md: '20', lg: '30'}` (can also be written as array: `['10', null, '20', '30']`)
 - Utility(Prop Class) pattern: `-prop:value` (e.g., `-p:20`, `-bgc:base-2`) or `-prop_bp` (e.g., `-p_sm`, `-g_md`)
 - Special props: `hov` (hover), `bd` (borders), `trs` (transition)
 

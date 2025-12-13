@@ -39,7 +39,7 @@ export default function LibTabs({
 	return (
 		<Tabs.Root
 			variant='emboss'
-			g='50'
+			g='40'
 			defaultIndex={defaultIndex}
 			key={defaultIndex} // defaultIndexが変わるたびに再マウント
 		>
@@ -81,7 +81,7 @@ function UIBlockList({ entries }: { entries: NavLinkData[] }) {
 				if (entry.type === 'group') {
 					return (
 						<React.Fragment key={index}>
-							<Lism tag='h3' class='u-trim -fz:l -gc:1/-1' py='30' my-s='30'>
+							<Lism tag='h3' class='u-trim -fz:l -gc:1/-1' py='20' my-s='20'>
 								{entry.label}
 							</Lism>
 							<UIBlockList entries={entry.entries || []} />
@@ -89,7 +89,7 @@ function UIBlockList({ entries }: { entries: NavLinkData[] }) {
 					);
 				}
 				return (
-					<LinkBox key={index} layout='stack' href={entry.href} p='30' g='30' bdc='#D9D9D9'>
+					<LinkBox key={index} layout='stack' href={entry.href} p='20' g='20' bdc='#D9D9D9'>
 						<Frame ar='3/2' bd bdw='1px' bdrs='20' bdc='inherit' bgc='#fff' isContainer>
 							{entry.thumb && <Media src={entry.thumb} alt={entry.label} />}
 							{entry.iframePath && (

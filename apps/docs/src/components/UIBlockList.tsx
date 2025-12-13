@@ -19,7 +19,7 @@ export default function UIBlockList({ entries }: { entries: NavLinkData[] }) {
 				if (entry.type === 'group') {
 					return (
 						<React.Fragment key={index}>
-							<Lism tag='h2' class='u-trim -fz:2xl -gc:1/-1' py='30' my-s='30'>
+							<Lism tag='h2' class='u-trim -fz:2xl -gc:1/-1' py='20' my-s='20'>
 								{entry.label}
 							</Lism>
 							<UIBlockList entries={entry.entries || []} />
@@ -27,7 +27,7 @@ export default function UIBlockList({ entries }: { entries: NavLinkData[] }) {
 					);
 				}
 				return (
-					<LinkBox key={index} layout='stack' href={entry.href} p='30' g='30' bdc='#D9D9D9'>
+					<LinkBox key={index} layout='stack' href={entry.href} p='20' g='20' bdc='#D9D9D9'>
 						<Frame ar='3/2' bd bdw='1px' bdrs='20' bdc='inherit' bgc='#fff' isContainer>
 							{entry.thumb && <Media src={entry.thumb} alt={entry.label} />}
 							{entry.iframePath && (

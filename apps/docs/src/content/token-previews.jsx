@@ -1,7 +1,7 @@
 import { Box, HTML, Stack, Center, Dummy } from 'lism-css/react';
 
 export const FzDemos = ({ lang = 'ja' }) => (
-	<Stack g='30' ar='16/9' ov-y='auto' ov-x='clip' p='20'>
+	<Stack g='20' ar='16/9' ov-y='auto' ov-x='clip' p='15'>
 		{['2xs', 'xs', 's', 'base', 'l', 'xl', '2xl', '3xl', '4xl', '5xl'].map((fz, i) => {
 			return (
 				<Stack key={fz} g='5'>

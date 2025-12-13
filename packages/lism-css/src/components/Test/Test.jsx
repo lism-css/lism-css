@@ -2,7 +2,7 @@
 import { Lism } from '../Lism';
 
 const Test = ({ ...props }) => {
-	return <Lism data-lism='test' p='20' bd {...props} />;
+	return <Lism data-lism='test' p='15' bd {...props} />;
 };
 
 const Item = (props) => {

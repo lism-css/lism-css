@@ -9,10 +9,10 @@ import { Horse, Cat, Smiley, WarningCircle } from "@phosphor-icons/react";
 import {phIcons, logoIcons} from 'lism-css/components/atomic/Icon/presets';
 
 export const PresetIcons = ({icons}) => {
-	return <Grid gtc='liquid' cols='10rem' g='20'>
+	return <Grid gtc='liquid' cols='10rem' g='15'>
 			{Object.keys(icons).map((iconName) => {
 				return (
-					<Stack key={iconName} g='10' ai='center' bgc='base-2' bdrs='10' p='20'>
+					<Stack key={iconName} g='10' ai='center' bgc='base-2' bdrs='10' p='15'>
 						<Icon icon={iconName} fz='xl' />
 						<span class='u-trim -fz:xs -ff:mono -d:b'>{iconName}</span>
 					</Stack>
@@ -64,11 +64,11 @@ Lismコンポーネントの共通プロパティ、`as`&`exProps`を使用し�
 AstroでReact製のアイコンパッケージを利用する場合は、別途Astro側でReactを有効化する必要があることに注意してください。
 </Callout> */}
 
-<Spacer h={10}/>
+<Spacer h='10'/>
 
 <Preview>
 	<PreviewTitle>外部コンポーネントを`as`に指定する</PreviewTitle>
-	<PreviewArea p='30'>
+	<PreviewArea p='20'>
 		<Icon as={Smiley} fz='2rem'/>
 	</PreviewArea>
 	<PreviewCode>
@@ -86,7 +86,7 @@ import { Icon } from 'lism-css/react';
 
 <Preview>
 	<PreviewTitle>`Smiley`用のプロパティを指定する</PreviewTitle>
-	<PreviewArea p='30'>
+	<PreviewArea p='20'>
 		<Icon as={Smiley} exProps={{ weight:'fill', size:'3em' }} c='blue' />
 	</PreviewArea>
 	<PreviewCode>
@@ -101,7 +101,7 @@ import { Icon } from 'lism-css/react';
 現状`weight`,`size`は Lism Propsには存在しないプロパティ名なので、`exProps`を使う必要はないですが、今後のアップデートで同名のプロパティが追加された場合でも影響を受けません。
 </Note> */}
 
-<Spacer h={10}/>
+<Spacer h='10'/>
 
 
 #### as, exProps のを icon にまとめて指定する
@@ -117,7 +117,7 @@ import { Icon } from 'lism-css/react';
 
 <Preview>
 	<PreviewTitle>`icon`に`as`, `exProps`を一括指定する例</PreviewTitle>
-	<PreviewArea p='30'>
+	<PreviewArea p='20'>
 		<Icon icon={{as:Smiley, weight:'fill', size:'3em'}} c='blue' />
 	</PreviewArea>
 		<PreviewCode slot='tab' label='一括'>
@@ -139,7 +139,7 @@ import { Icon } from 'lism-css/react';
 
 {/* <Preview>
 	<PreviewTitle>アイコンを`children`に渡す</PreviewTitle>
-	<PreviewArea p='30'>
+	<PreviewArea p='20'>
 		<Cat className="a--icon" weight="thin" size="3em" />
 	</PreviewArea>
 	<PreviewCode>
@@ -170,15 +170,15 @@ Lismパッケージ（`lism-css`)内にはいくつかsvgアイコンを内包�
 
 <Preview>
 	<PreviewTitle>プリセットアイコン呼び出し例</PreviewTitle>
-	<PreviewArea p='30'>
-		<Cluster g='20'>
+	<PreviewArea p='20'>
+		<Cluster g='15'>
 			<Icon icon='lightbulb' size='40px' />
 			<Icon icon='warning' fz='2xl' c='blue' />
 		</Cluster>
 	</PreviewArea>
 	<PreviewCode>
 		```jsx
-		<Cluster g='20'>
+		<Cluster g='15'>
 			<Icon icon='lightbulb' size='40px' />
 			<Icon icon='warning' fz='2xl' c='blue' />
 		</Cluster>
@@ -195,7 +195,7 @@ Lismパッケージ（`lism-css`)内にはいくつかsvgアイコンを内包�
 
 <Preview>
 	<PreviewTitle>`path`などをそのまま子要素に渡す</PreviewTitle>
-	<PreviewArea p='30'>
+	<PreviewArea p='20'>
 		<Icon viewBox='0 0 256 256' label='Smiley icon' fz='3em' c='blue'>
 			<path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm0,192a88,88,0,1,1,88-88A88.1,88.1,0,0,1,128,216ZM80,108a12,12,0,1,1,12,12A12,12,0,0,1,80,108Zm96,0a12,12,0,1,1-12-12A12,12,0,0,1,176,108Zm-1.07,48c-10.29,17.79-27.4,28-46.93,28s-36.63-10.2-46.92-28a8,8,0,1,1,13.84-8c7.47,12.91,19.21,20,33.08,20s25.61-7.1,33.07-20a8,8,0,0,1,13.86,8Z"></path>
 		</Icon>
@@ -222,7 +222,7 @@ Lismパッケージ（`lism-css`)内にはいくつかsvgアイコンを内包�
 
 <Preview>
 	<PreviewTitle>使用例</PreviewTitle>
-	<PreviewArea p='30'>
+	<PreviewArea p='20'>
 	<Flex g='10' ai='center'>
 		<Icon fz='4xl' src="/img/avatar01.jpg" alt="image" />
 		<span>Img icon.</span>

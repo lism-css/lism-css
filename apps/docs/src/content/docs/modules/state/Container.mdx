@@ -51,8 +51,8 @@ import { Desktop } from '@phosphor-icons/react';
 
 <Preview>
 	<PreviewTitle>例</PreviewTitle>
-	<PreviewArea resize p={20}>
-		<Container size='m' layout='flow' p='40'>
+	<PreviewArea resize p='15'>
+		<Container size='m' layout='flow' p='30'>
 			<p>Content</p>
 			<p>Content</p>
 			<p>...</p>
@@ -60,7 +60,7 @@ import { Desktop } from '@phosphor-icons/react';
 	</PreviewArea>
 	<PreviewCode slot='tab' label='JSX'>
 		```jsx
-		<Container size='m' layout='flow' p='40'>
+		<Container size='m' layout='flow' p='30'>
 			<p>Content</p>
 			<p>Content</p>
 			<p>...</p>
@@ -69,7 +69,7 @@ import { Desktop } from '@phosphor-icons/react';
 	</PreviewCode>
 	<PreviewCode slot='tab' label='HTML'>
 		```html
-		<div class='l--flow is--container -container:m -p:40'>
+		<div class='l--flow is--container -container:m -p:30'>
 			<p>Content</p>
 			<p>Content</p>
 			<p>...</p>
@@ -84,7 +84,7 @@ s, m, l 以外の値をセットしたい場合は、`--contentSz`変数を指�
 
 <Preview>
 	<PreviewTitle>is--container に任意の値をセットする</PreviewTitle>
-	<PreviewArea resize p='20'>
+	<PreviewArea resize p='15'>
 		<Lism isContainer='20rem' className='-bd:guide -hov:itemGuide'>
 			<div>Contents...</div>
 			<div>Contents...</div>

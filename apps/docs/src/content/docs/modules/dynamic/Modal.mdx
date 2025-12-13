@@ -63,13 +63,13 @@ dialog.d--modal#modalID.set-plain
 
 <Preview>
 	<PreviewTitle>`Modal`使用例</PreviewTitle>
-	<PreviewArea p='40'>
-		<Modal.OpenBtn modalId='modal-01' className='-bd -px:20 -py:5 -bdrs:10'>Open Modal 01</Modal.OpenBtn>
+	<PreviewArea p='30'>
+		<Modal.OpenBtn modalId='modal-01' className='-bd -px:15 -py:5 -bdrs:10'>Open Modal 01</Modal.OpenBtn>
 
-		<Modal.Root id='modal-01' isContainer='m' p='40'>
-			<Modal.Inner layout='stack' pos='relative' p='40' bdrs='20' bxsh='40'>
-				<Modal.CloseBtn modalId='modal-01' autofocus pos='absolute' t='0' r='0' z='1' fz='xl' p='10' m='20' />
-				<Modal.Body layout='stack' g='40' className='u-trimItems'>
+		<Modal.Root id='modal-01' isContainer='m' p='30'>
+			<Modal.Inner layout='stack' pos='relative' p='30' bdrs='20' bxsh='40'>
+				<Modal.CloseBtn modalId='modal-01' autofocus pos='absolute' t='0' r='0' z='1' fz='xl' p='10' m='15' />
+				<Modal.Body layout='stack' g='30' className='u-trimItems'>
 					<div className='-fz:xl -fw:bold'>Modal Title</div>
 					<Dummy />
 				</Modal.Body>
@@ -78,12 +78,12 @@ dialog.d--modal#modalID.set-plain
 	</PreviewArea>
 	<PreviewCode slot='tab' label='JSX'>
 		```jsx "'modal-01'"
-		<Modal.OpenBtn modalId='modal-01' className='-bd -px:20 -py:5 -bdrs:10'>Open Modal 01</Modal.OpenBtn>
+		<Modal.OpenBtn modalId='modal-01' className='-bd -px:15 -py:5 -bdrs:10'>Open Modal 01</Modal.OpenBtn>
 
-		<Modal.Root id='modal-01' isContainer='m' p='40'>
-			<Modal.Inner layout='stack' pos='relative' p='40' bdrs='20' bxsh='40'>
-				<Modal.CloseBtn modalId='modal-01' autofocus pos='absolute' t='0' r='0' z='1' fz='xl' p='10' m='20' />
-				<Modal.Body layout='stack' g='40' className='u-trimItems'>
+		<Modal.Root id='modal-01' isContainer='m' p='30'>
+			<Modal.Inner layout='stack' pos='relative' p='30' bdrs='20' bxsh='40'>
+				<Modal.CloseBtn modalId='modal-01' autofocus pos='absolute' t='0' r='0' z='1' fz='xl' p='10' m='15' />
+				<Modal.Body layout='stack' g='30' className='u-trimItems'>
 					<div className='-fz:xl -fw:bold'>Modal Title</div>
 					<Dummy />
 				</Modal.Body>
@@ -101,16 +101,16 @@ dialog.d--modal#modalID.set-plain
 
 <Preview>
 	<PreviewTitle>`Modal`使用例 2</PreviewTitle>
-	<PreviewArea p='40'>
-		<Modal.OpenBtn modalId='modal-02' className='-bd -px:20 -py:5 -bdrs:10'>Open Modal 02</Modal.OpenBtn>
+	<PreviewArea p='30'>
+		<Modal.OpenBtn modalId='modal-02' className='-bd -px:15 -py:5 -bdrs:10'>Open Modal 02</Modal.OpenBtn>
 
-		<Modal.Root id='modal-02' isContainer='s' px='40' py='60'>
+		<Modal.Root id='modal-02' isContainer='s' px='30' py='50'>
 			<Modal.Inner layout='stack' max-h='100%' bdrs='20' bxsh='40'>
-				<Flex ai='center' jc='between' py='20' bd-b>
-					<HTML.span fz='l' fw='bold' lh='s' mx-s='40'>Modal Header</HTML.span>
-					<Modal.CloseBtn modalId='modal-02' autofocus fz='xl' p='20' mx='20'/>
+				<Flex ai='center' jc='between' py='15' bd-b>
+					<HTML.span fz='l' fw='bold' lh='s' mx-s='30'>Modal Header</HTML.span>
+					<Modal.CloseBtn modalId='modal-02' autofocus fz='xl' p='15' mx='15'/>
 				</Flex>
-				<Modal.Body layout='flow' px='40' py='30' ov-y='auto'>
+				<Modal.Body layout='flow' px='30' py='20' ov-y='auto'>
 					<Dummy />
 					<Dummy length='xl' offset={1} />
 					<Dummy length='l' />
@@ -118,23 +118,23 @@ dialog.d--modal#modalID.set-plain
 					<Dummy tag='ul' />
 					<Dummy length='xl' offset={2}/>
 				</Modal.Body>
-				<Flex jc='end' px='40' py='30' bd-t>
-					<Modal.CloseBtn modalId='modal-02' bgc='text' c='base' lh='s' px='20' py='10' bd='none' bdrs='10'>Close</Modal.CloseBtn>
+				<Flex jc='end' px='30' py='20' bd-t>
+					<Modal.CloseBtn modalId='modal-02' bgc='text' c='base' lh='s' px='15' py='10' bd='none' bdrs='10'>Close</Modal.CloseBtn>
 				</Flex>
 			</Modal.Inner>
 		</Modal.Root>
 	</PreviewArea>
 	<PreviewCode slot='tab' label='JSX'>
 		```jsx "'modal-02'"
-		<Modal.OpenBtn modalId='modal-02' className='-bd -px:20 -py:5 -bdrs:10'>Open Modal 02</Modal.OpenBtn>
+		<Modal.OpenBtn modalId='modal-02' className='-bd -px:15 -py:5 -bdrs:10'>Open Modal 02</Modal.OpenBtn>
 
-		<Modal.Root id='modal-02' isContainer='s' px='40' py='60'>
+		<Modal.Root id='modal-02' isContainer='s' px='30' py='50'>
 			<Modal.Inner layout='stack' max-h='100%' bdrs='20' bxsh='40'>
-				<Flex ai='center' jc='between' py='20' bd-b>
-					<HTML.span fz='l' fw='bold' lh='s' mx-s='40'>Modal Header</HTML.span>
-					<Modal.CloseBtn modalId='modal-02' autofocus fz='xl' p='20' mx='20'/>
+				<Flex ai='center' jc='between' py='15' bd-b>
+					<HTML.span fz='l' fw='bold' lh='s' mx-s='30'>Modal Header</HTML.span>
+					<Modal.CloseBtn modalId='modal-02' autofocus fz='xl' p='15' mx='15'/>
 				</Flex>
-				<Modal.Body layout='flow' px='40' py='30' ov-y='auto'>
+				<Modal.Body layout='flow' px='30' py='20' ov-y='auto'>
 					<Dummy />
 					<Dummy length='xl' offset={1} />
 					<Dummy length='l' />
@@ -142,8 +142,8 @@ dialog.d--modal#modalID.set-plain
 					<Dummy tag='ul' />
 					<Dummy length='xl' offset={2}/>
 				</Modal.Body>
-				<Flex jc='end' px='40' py='30' bd-t>
-					<Modal.CloseBtn modalId='modal-02' bgc='text' c='base' lh='s' px='20' py='10' bd='none' bdrs='10'>Close</Modal.CloseBtn>
+				<Flex jc='end' px='30' py='20' bd-t>
+					<Modal.CloseBtn modalId='modal-02' bgc='text' c='base' lh='s' px='15' py='10' bd='none' bdrs='10'>Close</Modal.CloseBtn>
 				</Flex>
 			</Modal.Inner>
 		</Modal.Root>
@@ -162,23 +162,23 @@ dialog.d--modal#modalID.set-plain
 
 <Preview>
 	<PreviewTitle>ドロワーメニューの作成例</PreviewTitle>
-	<PreviewArea p='40'>
+	<PreviewArea p='30'>
 		<Modal.OpenBtn modalId='modal-03' ai='center' g='5'>
 			<Icon icon='menu' fz='l' /><span>MENU</span>
 		</Modal.OpenBtn>
 
 		<Modal.Root id='modal-03'>
 			<Modal.Inner layout='stack' max-w='24rem' h='100%' bxsh='40' translate='-100px 0'>
-				<Flex bd-b ai='center' jc='between' p='30'>
+				<Flex bd-b ai='center' jc='between' p='20'>
 					<HTML.span fz='l'>MENU</HTML.span>
 					<Modal.CloseBtn modalId='modal-03' autofocus fz='xl' p='5'/>
 				</Flex>
 				<Modal.Body ov-y='auto'>
 					<Stack className='u-itemDivider' bdc='line' bd-b p='0' ov='clip'>
-						<HTML.a href='#menu-link01' className='set-plain' hov='o' px='40' py='30'>Menu item 1</HTML.a>
-						<HTML.a href='#menu-link02' className='set-plain' hov='o' px='40' py='30'>Menu item 2</HTML.a>
-						<HTML.a href='#menu-link03' className='set-plain' hov='o' px='40' py='30'>Menu item 3</HTML.a>
-						<HTML.a href='#menu-link04' className='set-plain' hov='o' px='40' py='30'>Menu item 4</HTML.a>
+						<HTML.a href='#menu-link01' className='set-plain' hov='o' px='30' py='20'>Menu item 1</HTML.a>
+						<HTML.a href='#menu-link02' className='set-plain' hov='o' px='30' py='20'>Menu item 2</HTML.a>
+						<HTML.a href='#menu-link03' className='set-plain' hov='o' px='30' py='20'>Menu item 3</HTML.a>
+						<HTML.a href='#menu-link04' className='set-plain' hov='o' px='30' py='20'>Menu item 4</HTML.a>
 					</Stack>
 				</Modal.Body>
 			</Modal.Inner>
@@ -192,16 +192,16 @@ dialog.d--modal#modalID.set-plain
 
 		<Modal.Root id='modal-03'>
 			<Modal.Inner layout='stack' max-w='24rem' h='100%' bxsh='40' translate='-100px 0'>
-				<Flex bd-b ai='center' jc='between' p='30'>
+				<Flex bd-b ai='center' jc='between' p='20'>
 					<HTML.span fz='l'>MENU</HTML.span>
 					<Modal.CloseBtn modalId='modal-03' autofocus fz='xl' p='5'/>
 				</Flex>
 				<Modal.Body ov-y='auto'>
 					<Stack className='u-itemDivider' bdc='line' bd-b p='0' ov='clip'>
-						<HTML.a href='#menu-link01' className='set-plain' hov='o' px='30' py='20'>Menu item 1</HTML.a>
-						<HTML.a href='#menu-link02' className='set-plain' hov='o' px='30' py='20'>Menu item 2</HTML.a>
-						<HTML.a href='#menu-link03' className='set-plain' hov='o' px='30' py='20'>Menu item 3</HTML.a>
-						<HTML.a href='#menu-link04' className='set-plain' hov='o' px='30' py='20'>Menu item 4</HTML.a>
+						<HTML.a href='#menu-link01' className='set-plain' hov='o' px='20' py='15'>Menu item 1</HTML.a>
+						<HTML.a href='#menu-link02' className='set-plain' hov='o' px='20' py='15'>Menu item 2</HTML.a>
+						<HTML.a href='#menu-link03' className='set-plain' hov='o' px='20' py='15'>Menu item 3</HTML.a>
+						<HTML.a href='#menu-link04' className='set-plain' hov='o' px='20' py='15'>Menu item 4</HTML.a>
 					</Stack>
 				</Modal.Body>
 			</Modal.Inner>

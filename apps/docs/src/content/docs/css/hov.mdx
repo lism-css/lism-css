@@ -33,23 +33,23 @@ Lismに内包されているクラスでは、それぞれ初期値を定義し�
 
 <Preview>
 	<PreviewTitle>`.-hov:o`,`.-hov:c`,`.-hov:bxsh`の使用例</PreviewTitle>
-	<PreviewArea p='40'>
-		<LinkBox href='###' hov='o' bgc='base-2' bd p='30'>
+	<PreviewArea p='30'>
+		<LinkBox href='###' hov='o' bgc='base-2' bd p='20'>
 			<p>LinkBox</p>
 			<p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
 		</LinkBox>
-		<LinkBox href='###' hov='c,bxsh' bd p='30'>
+		<LinkBox href='###' hov='c,bxsh' bd p='20'>
 			<p>LinkBox</p>
 			<p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
 		</LinkBox>
 	</PreviewArea>
 	<PreviewCode slot='tab' label='HTML'>
 		```html "-hov:o" "-hov:c" "-hov:bxsh"
-		<a href="###" class="is--linkBox -hov:o -bgc:base-2 -bd -p:30">
+		<a href="###" class="is--linkBox -hov:o -bgc:base-2 -bd -p:20">
 			<p>LinkBox</p>
 			<p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
 		</a>
-		<a href="###" class="is--linkBox -hov:c -hov:bxsh -bd -p:30">
+		<a href="###" class="is--linkBox -hov:c -hov:bxsh -bd -p:20">
 			<p>LinkBox</p>
 			<p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
 		</a>
@@ -57,11 +57,11 @@ Lismに内包されているクラスでは、それぞれ初期値を定義し�
 	</PreviewCode>
 	<PreviewCode slot='tab' label='JSX'>
 		```jsx "hov='o'" "hov='c,bxsh'"
-		<LinkBox href='###' hov='o' bgc='base-2' bd p='30'>
+		<LinkBox href='###' hov='o' bgc='base-2' bd p='20'>
 			<p>LinkBox</p>
 			<p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
 		</LinkBox>
-		<LinkBox href='###' hov='c,bxsh' bd p='30'>
+		<LinkBox href='###' hov='c,bxsh' bd p='20'>
 			<p>LinkBox</p>
 			<p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
 		</LinkBox>
@@ -80,8 +80,8 @@ Lismに内包されているクラスでは、それぞれ初期値を定義し�
 
 <Preview>
 	<PreviewTitle>`bgc`,`c`を変化させる例</PreviewTitle>
-	<PreviewArea p='40'>
-		<LinkBox href='###' bgc='base-2' p='30' hov={{ bgc:'main', c:'white'}}>
+	<PreviewArea p='30'>
+		<LinkBox href='###' bgc='base-2' p='20' hov={{ bgc:'main', c:'white'}}>
 			<p>LinkBox.</p>
 			<p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
 		</LinkBox>
@@ -89,7 +89,7 @@ Lismに内包されているクラスでは、それぞれ初期値を定義し�
 	<PreviewCode slot='tab' label='HTML'>
 	```html "-hov:bgc" "-hov:c" "--hov-bgc" "--hov-c"
 	<a
-		class="is--linkBox -hov:bgc -hov:c -bgc:base-2 -p:30"
+		class="is--linkBox -hov:bgc -hov:c -bgc:base-2 -p:20"
 		style="--hov-bgc:var(--main);--hov-c:var(--white)"
 		href="###"
 	>
@@ -100,7 +100,7 @@ Lismに内包されているクラスでは、それぞれ初期値を定義し�
 	</PreviewCode>
 	<PreviewCode slot='tab' label='JSX'>
 	```jsx "hov="
-		<LinkBox href='###' hov={{ bgc:'main', c:'white'}} bgc='base-2' p='30'>
+		<LinkBox href='###' hov={{ bgc:'main', c:'white'}} bgc='base-2' p='20'>
 			<p>LinkBox.</p>
 			<p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
 		</LinkBox>
@@ -128,8 +128,8 @@ Lismに内包されているクラスでは、それぞれ初期値を定義し�
 {/* hsl(25 50% 50% / 20%),rgb(250 50 50 / 20%)' */}
 <Preview>
 	<PreviewTitle>`set-transition`と組み合わせてbxshの強さを変化させる例</PreviewTitle>
-	<PreviewArea p='40'>
-		<LinkBox href='###' setTransition bxsh='10' hov={{ bxsh: '40'}} bd p='30'>
+	<PreviewArea p='30'>
+		<LinkBox href='###' setTransition bxsh='10' hov={{ bxsh: '40'}} bd p='20'>
 			<p>LinkBox</p>
 			<p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
 		</LinkBox>
@@ -138,7 +138,7 @@ Lismに内包されているクラスでは、それぞれ初期値を定義し�
 		```html "set-transition" "-bxsh:10 -hov:bxsh" "--hov-bxsh:var(--bxsh--40)"
 		<a
 			href="###"
-			class="is--linkBox set-transition -bxsh:10 -hov:bxsh -bd -p:30"
+			class="is--linkBox set-transition -bxsh:10 -hov:bxsh -bd -p:20"
 			style="--hov-bxsh:var(--bxsh--40)"
 		>
 			<p>LinkBox</p>
@@ -148,7 +148,7 @@ Lismに内包されているクラスでは、それぞれ初期値を定義し�
 	</PreviewCode>
 	<PreviewCode slot='tab' label='JSX'>
 	```jsx "setTransition" "bxsh='10' hov=\{\{ bxsh: '40'\}\}"
-		<LinkBox href='###' setTransition bxsh='10' hov={{ bxsh: '40'}} bd p='30'>
+		<LinkBox href='###' setTransition bxsh='10' hov={{ bxsh: '40'}} bd p='20'>
 			<p>LinkBox</p>
 			<p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
 		</LinkBox>
@@ -159,8 +159,8 @@ Lismに内包されているクラスでは、それぞれ初期値を定義し�
 
 <Preview>
 	<PreviewTitle>border-colorをゆっくり変化させる例</PreviewTitle>
-	<PreviewArea p='40'>
-		<LinkBox href='###' setTransition hov={{ bdc:'red' }} bd bdw='3px' bgc='base-2' p='30' style={{'--duration':'1s'}}>
+	<PreviewArea p='30'>
+		<LinkBox href='###' setTransition hov={{ bdc:'red' }} bd bdw='3px' bgc='base-2' p='20' style={{'--duration':'1s'}}>
 			<p>LinkBox</p>
 			<p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
 		</LinkBox>
@@ -168,7 +168,7 @@ Lismに内包されているクラスでは、それぞれ初期値を定義し�
 	<PreviewCode slot='tab' label='HTML'>
 		```html "set-transition" "--duration:1s"
 		<a
-			class="is--linkBox -hov:bdc set-transition -bd -bgc:base-2 -p:30"
+			class="is--linkBox -hov:bdc set-transition -bd -bgc:base-2 -p:20"
 			style="--hov-bdc:var(--red);--duration:1s;--bdw:3px" href="###"
 		>
 			<p>LinkBox</p>
@@ -179,7 +179,7 @@ Lismに内包されているクラスでは、それぞれ初期値を定義し�
 	<PreviewCode slot='tab' label='JSX'>
 		```jsx "setTransition" "--duration"
 		<LinkBox
-			href='###' setTransition hov={{ bdc:'red' }} bd bdw='3px' bgc='base-2' p='30'
+			href='###' setTransition hov={{ bdc:'red' }} bd bdw='3px' bgc='base-2' p='20'
 			style={{'--duration':'1s'}}~
 		>
 			<p>LinkBox</p>
@@ -194,8 +194,8 @@ Lismに内包されているクラスでは、それぞれ初期値を定義し�
 
 <Preview>
 	<PreviewTitle>`.-hov:shadowUp`を追加</PreviewTitle>
-	<PreviewArea p='40'>
-		<LinkBox href='###' setTransition hov='shadowUp' bxsh='10' bd p='30'>
+	<PreviewArea p='30'>
+		<LinkBox href='###' setTransition hov='shadowUp' bxsh='10' bd p='20'>
 			<p>LinkBox</p>
 			<p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
 		</LinkBox>
@@ -213,7 +213,7 @@ Lismに内包されているクラスでは、それぞれ初期値を定義し�
 	</PreviewCode>
 	<PreviewCode slot='tab' label='HTML'>
 		```html "-hov:shadow" "-hov:up"
-		<a href="###" class="is--linkBox set-transition -hov:shadow -hov:up -bd -p:30">
+		<a href="###" class="is--linkBox set-transition -hov:shadow -hov:up -bd -p:20">
 			<p>LinkBox</p>
 			<p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
 		</a>
@@ -221,7 +221,7 @@ Lismに内包されているクラスでは、それぞれ初期値を定義し�
 	</PreviewCode>
 	<PreviewCode slot='tab' label='JSX'>
 		```jsx "hov='shadowUp'"
-		<LinkBox href='###' setTransition hov='shadowUp' bd p='30'>
+		<LinkBox href='###' setTransition hov='shadowUp' bd p='20'>
 			<p>LinkBox</p>
 			<p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
 		</LinkBox>
@@ -262,8 +262,8 @@ Lismに内包されているクラスでは、それぞれ初期値を定義し�
 
 <Preview>
 	<PreviewTitle>`.-hov:test`を追加</PreviewTitle>
-	<PreviewArea p='40'>
-		<div className='-p:40 -bd -fz:l set-hov -hov:test'>BOX</div>
+	<PreviewArea p='30'>
+		<div className='-p:30 -bd -fz:l set-hov -hov:test'>BOX</div>
 	</PreviewArea>
 
 	<PreviewCode slot='tab' label='追加CSS'>
@@ -278,7 +278,7 @@ Lismに内包されているクラスでは、それぞれ初期値を定義し�
 	</PreviewCode>
 	<PreviewCode slot='tab' label='HTML'>
 		```html "set-hov -hov:test"
-		<div className='-p:40 -bd -fz:l set-hov -hov:test'>BOX</div>
+		<div className='-p:30 -bd -fz:l set-hov -hov:test'>BOX</div>
 		```
 	</PreviewCode>
 </Preview>
@@ -313,12 +313,12 @@ Lismに内包されているクラスでは、それぞれ初期値を定義し�
 
 <Preview>
 	<PreviewTitle>`to:show` を使う例</PreviewTitle>
-	<PreviewArea p='30'>
+	<PreviewArea p='20'>
 		<Frame isLinkBox setHov href='#banner-link' ar='16/9' bdrs='30'>
 			<Media isLayer src='https://cdn.lism-css.com/img/a-1.jpg' alt='' width='960' height='640' loading='lazy' />
 			<Layer setTransition hov='to:show' bgc='rgb(0 0 0 / 40%)' blur='6px'>
 				<Center h='100%' c='#fff'>
-					<HTML.span fz='2xl' fs='italic' fw='light' lts='l' bdrs='99' px='30' py='10'>View More</HTML.span>
+					<HTML.span fz='2xl' fs='italic' fw='light' lts='l' bdrs='99' px='20' py='10'>View More</HTML.span>
 				</Center>
 			</Layer>
 		</Frame>
@@ -329,7 +329,7 @@ Lismに内包されているクラスでは、それぞれ初期値を定義し�
 			<img class="a--media is--layer" src="https://cdn.lism-css.com/img/a-1.jpg" width="960" height="640" loading="lazy">
 			<div class="is--layer set-transition -hov:to:show -bgc" style="--bgc:rgb(0 0 0 / 10%);backdrop-filter:blur(6px)">
 				<div class="l--center -h:100% -c" style="--c:#fff">
-					<span class="-fz:2xl -fs:italic -fw:light -lts:l -bdrs:99 -px:30 -py:10">View More</span>
+					<span class="-fz:2xl -fs:italic -fw:light -lts:l -bdrs:99 -px:20 -py:10">View More</span>
 				</div>
 			</div>
 		</a>
@@ -341,7 +341,7 @@ Lismに内包されているクラスでは、それぞれ初期値を定義し�
 			<Media isLayer src='https://cdn.lism-css.com/img/a-1.jpg' alt='' width='960' height='640' loading='lazy' />
 			<Layer setTransition hov='to:show' bgc='rgb(0 0 0 / 40%)' blur='6px'>
 				<Center h='100%' c='#fff'>
-					<HTML.span fz='2xl' fs='italic' fw='light' lts='l' bdrs='99' px='30' py='10'>View More</HTML.span>
+					<HTML.span fz='2xl' fs='italic' fw='light' lts='l' bdrs='99' px='20' py='10'>View More</HTML.span>
 				</Center>
 			</Layer>
 		</Frame>
@@ -360,7 +360,7 @@ Lismに内包されているクラスでは、それぞれ初期値を定義し�
 
 <Preview>
 	<PreviewTitle>自作クラスで子要素のホバーアクションを調整する例</PreviewTitle>
-	<PreviewArea p='30'>
+	<PreviewArea p='20'>
 		<LinkBox
 			href='#banner-link'
 			setHov ov='hidden' ar='16/9' bdrs='30'

@@ -13,8 +13,8 @@ const { title = data.title, tagline, image, actions = [] } = data.hero || {};
 ---
 
 <Grid class='z--hero' gt='repeat' cols='5' rows='1' min-h={['50svh', '75vh']} ai='center'>
-	<Stack class='z--hero_content' g='60' gc='1 / 5' gr='1' z='1'>
-		<Stack g='40'>
+	<Stack class='z--hero_content' g='50' gc='1 / 5' gr='1' z='1'>
+		<Stack g='30'>
 			<Lism class='z--hero_h1wrap -bgclip:text -c:trsp -w:fit'>
 				<h1 id={PAGE_TITLE_ID} class='-fz:5xl' data-page-title set:html={title} />
 			</Lism>
@@ -22,7 +22,7 @@ const { title = data.title, tagline, image, actions = [] } = data.hero || {};
 		</Stack>
 		{
 			actions.length > 0 && (
-				<Flex g='30'>
+				<Flex g='20'>
 					{actions.map(({ attrs: { class: className, ...attrs } = {}, icon, link: href, text, variant }) => (
 						<Button {href} {variant} icon={icon?.name} class:list={[className]} g='10' bdrs='99' {...attrs}>
 							<span class='-pos:rel'>{text}</span>
@@ -38,7 +38,7 @@ const { title = data.title, tagline, image, actions = [] } = data.hero || {};
 			)
 		}
 	</Stack>
-	<Lism class='z--hero_image' gc='3 / 6' gr='1' pb='20' z='0'>
+	<Lism class='z--hero_image' gc='3 / 6' gr='1' pb='10' z='0'>
 		<Gradbox />
 	</Lism>
 </Grid>

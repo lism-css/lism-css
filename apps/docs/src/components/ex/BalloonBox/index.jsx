@@ -60,7 +60,7 @@ export default function BalloonBox({ variant = 'left', bdw = '1px', bdc, bgc, ke
 
 	return (
 		<Flex lismClass='c--balloonBox' variant={variant} {...parentProps} {...props}>
-			<Lism pos='rel' bd p='30' w='fit-content' bdw={bdw} bdrs={bdrs} {...colorProps}>
+			<Lism pos='rel' bd p='20' w='fit-content' bdw={bdw} bdrs={bdrs} {...colorProps}>
 				{children}
 				<Decorator pos='abs' size='0.875em' bd='inherit' bgc='inherit' boxSizing='content-box' {...decoProps} />
 			</Lism>

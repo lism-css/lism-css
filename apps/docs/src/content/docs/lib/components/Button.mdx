@@ -17,8 +17,8 @@ import Button from '~/components/ex/Button/index.astro';
 
 <Preview>
 	<PreviewTitle>Preview</PreviewTitle>
-	<PreviewArea p='30' bg=':stripe' layout=''>
-		<Flex layout='cluster' g='20'>
+	<PreviewArea p='20' bg=':stripe' layout=''>
+		<Flex layout='cluster' g='15'>
 			<Button href='###' variant='fill'>Button</Button>
 			<Button href='###' variant='outline'>Outline</Button>
 			<Button href='###' variant='outline' bdrs='99' c='#d13d5e'><Icon icon='cart' />Outline</Button>
@@ -32,23 +32,23 @@ import Button from '~/components/ex/Button/index.astro';
 **コンポーネントを作らずにボタンを作るコード例も紹介しておきます。**
 <Preview>
 	<PreviewTitle>Preview</PreviewTitle>
-	<PreviewArea p='30' bg=':stripe' flow='s'>
-		<Flex g='20'>
-			<HTML.a href='###' d='in-flex' w='fit' td='none' c='base' bgc='text' lh='s' py='20' px='30' bdrs='20' hov='o'>Button</HTML.a>
-			<HTML.a href='###' d='in-flex' w='fit' td='none' c='inherit' bd lh='s' py='20' px='30' bdrs='20' hov='o'>Button</HTML.a>
+	<PreviewArea p='20' bg=':stripe' flow='s'>
+		<Flex g='15'>
+			<HTML.a href='###' d='in-flex' w='fit' td='none' c='base' bgc='text' lh='s' py='15' px='20' bdrs='20' hov='o'>Button</HTML.a>
+			<HTML.a href='###' d='in-flex' w='fit' td='none' c='inherit' bd lh='s' py='15' px='20' bdrs='20' hov='o'>Button</HTML.a>
 		</Flex>
-		<Grid tag='a' href='###' gtc='1em 1fr 1em' ji='center' ai='center' px='30' py='20' g='40' w='16rem' td='none' bgc='text' c='base' bdrs='20'>
+		<Grid tag='a' href='###' gtc='1em 1fr 1em' ji='center' ai='center' px='20' py='15' g='30' w='16rem' td='none' bgc='text' c='base' bdrs='20'>
 			<Lism tag='span' gc='2'>Button</Lism>
 			<Icon icon={ArrowRightIcon}/>
 		</Grid>
 	</PreviewArea>
 	<PreviewCode slot='tab' label='JSX'>
 		```jsx
-		<Flex g='20'>
-			<HTML.a href='###' d='in-flex' w='fit' td='none' c='base' bgc='text' lh='s' py='20' px='30' bdrs='20' hov='o'>Button</HTML.a>
-			<HTML.a href='###' d='in-flex' w='fit' td='none' c='inherit' bd lh='s' py='20' px='30' bdrs='20' hov='o'>Button</HTML.a>
+		<Flex g='15'>
+			<HTML.a href='###' d='in-flex' w='fit' td='none' c='base' bgc='text' lh='s' py='15' px='20' bdrs='20' hov='o'>Button</HTML.a>
+			<HTML.a href='###' d='in-flex' w='fit' td='none' c='inherit' bd lh='s' py='15' px='20' bdrs='20' hov='o'>Button</HTML.a>
 		</Flex>
-		<Grid tag='a' href='###' gtc='1em 1fr 1em' ji='center' ai='center' px='30' py='20' g='40' w='16rem' td='none' bgc='text' c='base' bdrs='20'>
+		<Grid tag='a' href='###' gtc='1em 1fr 1em' ji='center' ai='center' px='20' py='15' g='30' w='16rem' td='none' bgc='text' c='base' bdrs='20'>
 			<Lism tag='span' gc='2'>Button</Lism>
 			<Icon icon={ArrowRightIcon}/>
 		</Grid>
@@ -56,11 +56,11 @@ import Button from '~/components/ex/Button/index.astro';
 	</PreviewCode>
 	<PreviewCode slot='tab' label='HTML'>
 		```html
-		<div class='l--flex -g:20'>
-			<a href='###' class='-d:in-flex -w:fit -td:none -c:base -bgc:text -lh:s -py:20 -px:30 -bdrs:20 -hov:o'>Button</a>
-			<a href='###' class='-d:in-flex -w:fit -td:none -c:inherit -bd -lh:s -py:20 -px:30 -bdrs:20 -hov:o'>Button</a>
+		<div class='l--flex -g:15'>
+			<a href='###' class='-d:in-flex -w:fit -td:none -c:base -bgc:text -lh:s -py:15 -px:20 -bdrs:20 -hov:o'>Button</a>
+			<a href='###' class='-d:in-flex -w:fit -td:none -c:inherit -bd -lh:s -py:15 -px:20 -bdrs:20 -hov:o'>Button</a>
 		</div>
-		<a class="l--grid -ji:center -ai:center -px:30 -py:20 -g:40 -w -td:none -bgc:text -c:base -bdrs:20" style="--w:16rem;--gtc:1em 1fr 1em" href="###">
+		<a class="l--grid -ji:center -ai:center -px:20 -py:15 -g:30 -w -td:none -bgc:text -c:base -bdrs:20" style="--w:16rem;--gtc:1em 1fr 1em" href="###">
 			<span class="-gc" style="--gc:2">Button</span>
 			<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 256 256" class="a--icon" aria-hidden="true">
 				<path d="M221.66,133.66l-72,72a8,8,0,0,1-11.32-11.32L196.69,136H40a8,8,0,0,1,0-16H196.69L138.34,61.66a8,8,0,0,1,11.32-11.32l72,72A8,8,0,0,1,221.66,133.66Z"></path>
@@ -98,8 +98,8 @@ import Button from '~/components/ex/Button/index.astro';
 
 <Preview>
 	<PreviewTitle>`Button`の使用例</PreviewTitle>
-	<PreviewArea p='30' bg=':stripe' layout=''>
-		<Flex g='20'>
+	<PreviewArea p='20' bg=':stripe' layout=''>
+		<Flex g='15'>
 			<Button href='###'>Button</Button>
 			<Button href='###' bgc='main' bdrs='20'>Button</Button>
 			<Button href='###' bgc='#d13d5e' bdrs='99'><Icon icon='cart'/>Button</Button>
@@ -108,7 +108,7 @@ import Button from '~/components/ex/Button/index.astro';
 
 	<PreviewCode slot='tab' label='JSX'>
 		```jsx
-		<Flex g='20'>
+		<Flex g='15'>
 			<Button href='###'>Button</Button>
 			<Button href='###' bgc='main' bdrs='20'>Button</Button>
 			<Button href='###' bgc='#d13d5e' bdrs='99'><Icon icon='cart'/>Button</Button>
@@ -117,10 +117,10 @@ import Button from '~/components/ex/Button/index.astro';
 	</PreviewCode>
 	<PreviewCode slot='tab' label='HTML'>
 		```html
-		<div class="l--flex -g:20">
-			<a class="c--button l--flex -lh:s -py:20 -px:30 -hov:o" href="###">Button</a>
-			<a class="c--button l--flex -lh:s -py:20 -px:30 -hov:o -bgc:main -bdrs:20" href="###">Button</a>
-			<a class="c--button l--flex -lh:s -py:20 -px:30 -hov:o -bdrs:99" style="--bgc:#d13d5e" href="###">
+		<div class="l--flex -g:15">
+			<a class="c--button l--flex -lh:s -py:15 -px:20 -hov:o" href="###">Button</a>
+			<a class="c--button l--flex -lh:s -py:15 -px:20 -hov:o -bgc:main -bdrs:20" href="###">Button</a>
+			<a class="c--button l--flex -lh:s -py:15 -px:20 -hov:o -bdrs:99" style="--bgc:#d13d5e" href="###">
 				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="1em" height="1em" fill="currentColor" focusable="false" class="a--icon" aria-hidden="true"><path d="M230.14,58.87A8,8,0,0,0,224,56H62.68L56.6,22.57A8,8,0,0,0,48.73,16H24a8,8,0,0,0,0,16h18L67.56,172.29a24,24,0,0,0,5.33,11.27,28,28,0,1,0,44.4,8.44h45.42A27.75,27.75,0,0,0,160,204a28,28,0,1,0,28-28H91.17a8,8,0,0,1-7.87-6.57L80.13,152h116a24,24,0,0,0,23.61-19.71l12.16-66.86A8,8,0,0,0,230.14,58.87ZM104,204a12,12,0,1,1-12-12A12,12,0,0,1,104,204Zm96,0a12,12,0,1,1-12-12A12,12,0,0,1,200,204Zm4-74.57A8,8,0,0,1,196.1,136H77.22L65.59,72H214.41Z"></path></svg>
 				Button
 			</a>
@@ -132,8 +132,8 @@ import Button from '~/components/ex/Button/index.astro';
 ### variant: outline
 <Preview>
 	<PreviewTitle>`outline`の使用例</PreviewTitle>
-	<PreviewArea p='30' bg=':stripe' layout=''>
-		<Flex g='20'>
+	<PreviewArea p='20' bg=':stripe' layout=''>
+		<Flex g='15'>
 			<Button href='###'>Button</Button>
 			<Button href='###' variant='outline' c='main' bdrs='20'>Button</Button>
 			<Button href='###' variant='outline' c='#d13d5e' bdrs='99'><Icon icon='cart'/>Button</Button>
@@ -142,7 +142,7 @@ import Button from '~/components/ex/Button/index.astro';
 
 	<PreviewCode slot='tab' label='JSX'>
 		```jsx
-		<Flex g='20'>
+		<Flex g='15'>
 			<Button href='###'>Button</Button>
 			<Button href='###' variant='outline' c='main' bdrs='20'>Button</Button>
 			<Button href='###' variant='outline' c='#d13d5e' bdrs='99'><Icon icon='cart'/>Button</Button>
@@ -151,10 +151,10 @@ import Button from '~/components/ex/Button/index.astro';
 	</PreviewCode>
 	<PreviewCode slot='tab' label='HTML'>
 		```html
-		<div class="l--flex -g:20">
-			<a class="c--button c--button--outline l--flex -lh:s -py:20 -px:30 -hov:o" href="###">Button</a>
-			<a class="c--button c--button--outline l--flex -lh:s -py:20 -px:30 -hov:o -c:main -bdrs:20" href="###">Button</a>
-			<a class="c--button c--button--outline l--flex -lh:s -py:20 -px:30 -hov:o -bdrs:99" style="--c:#d13d5e" href="###">
+		<div class="l--flex -g:15">
+			<a class="c--button c--button--outline l--flex -lh:s -py:15 -px:20 -hov:o" href="###">Button</a>
+			<a class="c--button c--button--outline l--flex -lh:s -py:15 -px:20 -hov:o -c:main -bdrs:20" href="###">Button</a>
+			<a class="c--button c--button--outline l--flex -lh:s -py:15 -px:20 -hov:o -bdrs:99" style="--c:#d13d5e" href="###">
 				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="1em" height="1em" fill="currentColor" focusable="false" class="a--icon" aria-hidden="true"><path d="M230.14,58.87A8,8,0,0,0,224,56H62.68L56.6,22.57A8,8,0,0,0,48.73,16H24a8,8,0,0,0,0,16h18L67.56,172.29a24,24,0,0,0,5.33,11.27,28,28,0,1,0,44.4,8.44h45.42A27.75,27.75,0,0,0,160,204a28,28,0,1,0,28-28H91.17a8,8,0,0,1-7.87-6.57L80.13,152h116a24,24,0,0,0,23.61-19.71l12.16-66.86A8,8,0,0,0,230.14,58.87ZM104,204a12,12,0,1,1-12-12A12,12,0,0,1,104,204Zm96,0a12,12,0,1,1-12-12A12,12,0,0,1,200,204Zm4-74.57A8,8,0,0,1,196.1,136H77.22L65.59,72H214.41Z"></path></svg>
 				Button
 			</a>
@@ -166,8 +166,8 @@ import Button from '~/components/ex/Button/index.astro';
 ### アイコンを使う例
 <Preview>
 	<PreviewTitle>アイコンを使う例</PreviewTitle>
-	<PreviewArea p='30' bg=':stripe' layout=''>
-		<Flex g='20'>
+	<PreviewArea p='20' bg=':stripe' layout=''>
+		<Flex g='15'>
 			<Button href='###' g='10' bdrs='5'>
 				<Icon icon='cart' />
 				<span>Button</span>
@@ -176,14 +176,14 @@ import Button from '~/components/ex/Button/index.astro';
 				<span>Button</span>
 				<Icon icon={ArrowRightIcon} translate='20% 0'/>
 			</Button>
-			<Button href='###' w='fit' px='20' py='20' lh='1' bdrs='10'>
+			<Button href='###' w='fit' px='15' py='15' lh='1' bdrs='10'>
 				<Icon icon={{as:ShoppingCartSimpleIcon, weight:'fill'}} fz='l'/>
 			</Button> 
 		</Flex>
 	</PreviewArea>
 	<PreviewCode slot='tab' label='JSX'>
 		```jsx
-		<Flex g='20'>
+		<Flex g='15'>
 			<Button href='###' g='10' bdrs='5'>
 				<Icon icon='cart' />
 				<span>Button</span>
@@ -192,7 +192,7 @@ import Button from '~/components/ex/Button/index.astro';
 				<span>Button</span>
 				<Icon icon={ArrowRightIcon} translate='20% 0'/>
 			</Button>
-			<Button href='###' w='fit' px='20' py='20' lh='1' bdrs='10'>
+			<Button href='###' w='fit' px='15' py='15' lh='1' bdrs='10'>
 				<Icon icon={{as:ShoppingCartSimpleIcon, weight:'fill'}} fz='l'/>
 			</Button> 
 		</Flex>
@@ -208,11 +208,11 @@ import Button from '~/components/ex/Button/index.astro';
 
 <Preview>
 	<PreviewTitle>サイズの調整</PreviewTitle>
-	<PreviewArea p='30' bg=':stripe' flow='s'>
+	<PreviewArea p='20' bg=':stripe' flow='s'>
 		<Button href='###' g='10' w='fit' bdrs='10'>
 			<Fragment>Button</Fragment>
 		</Button>
-		<Button href='###' max-w='20rem' py='20' g='10' fz='l' bdrs='10'>
+		<Button href='###' max-w='20rem' py='15' g='10' fz='l' bdrs='10'>
 			<Fragment>Button</Fragment>
 		</Button>
 	</PreviewArea>
@@ -221,7 +221,7 @@ import Button from '~/components/ex/Button/index.astro';
 		<Button href='###' g='10' w='fit' bdrs='10'>
 			Button
 		</Button>
-		<Button href='###' max-w='20rem' py='30' g='10' fz='l' bdrs='10'>
+		<Button href='###' max-w='20rem' py='20' g='10' fz='l' bdrs='10'>
 			Button
 		</Button>
 		```
@@ -237,7 +237,7 @@ import Button from '~/components/ex/Button/index.astro';
 
 <Preview>
 	<PreviewTitle>Preview</PreviewTitle>
-	<PreviewArea resize p='20' flow='20'>
+	<PreviewArea resize p='15' flow='20'>
 		<Button href='###' layout='grid' max-w='20rem' bdrs='10'>
 			<Icon icon='cart'/>
 			<span>Button</span>
@@ -292,8 +292,8 @@ import Button from '~/components/ex/Button/index.astro';
 
 <Preview>
 	<PreviewTitle>例</PreviewTitle>
-	<PreviewArea p='30' bg=':stripe' layout=''>
-		<Flex g='20'>
+	<PreviewArea p='20' bg=':stripe' layout=''>
+		<Flex g='15'>
 			<Button href='###' hov='reverse' variant='fill'>Button</Button>
 			<Button href='###' hov='reverse' variant='outline'>Button</Button>
 		</Flex>
@@ -321,7 +321,7 @@ import Button from '~/components/ex/Button/index.astro';
 	</PreviewCode>
 	<PreviewCode slot='tab' label='JSX'>
 	```jsx "hov='reverse'"
-	<Flex g='20'>
+	<Flex g='15'>
 		<Button href='###' hov='reverse' variant='fill'>Button</Button>
 		<Button href='###' hov='reverse' variant='outline'>Button</Button>
 	</Flex>
@@ -331,8 +331,8 @@ import Button from '~/components/ex/Button/index.astro';
 
 {/* <Preview>
 	<PreviewTitle>color指定ありでのreverseの動作例</PreviewTitle>
-	<PreviewArea resize p='20' bg=':stripe'>
-		<Flex layout='cluster' g='20'>
+	<PreviewArea resize p='15' bg=':stripe'>
+		<Flex layout='cluster' g='15'>
 			<Button href='###' hov='reverse' variant='fill' bgc='main'>Button</Button>
 			<Button href='###' hov='reverse' variant='outline' c='#64a31c'>Button</Button>
 			<Button href='###' hov='reverse' variant='' bgc='base-2' c='link'>Button</Button>
@@ -340,7 +340,7 @@ import Button from '~/components/ex/Button/index.astro';
 	</PreviewArea>
 	<PreviewCode slot='tab' label='JSX'>
 		```jsx
-		<Flex layout='cluster' g='20'>
+		<Flex layout='cluster' g='15'>
 			<Button href='###' hov='reverse' variant='fill' bgc='main'>Button</Button>
 			<Button href='###' hov='reverse' variant='outline' c='#64a31c'>Button</Button>
 			<Button href='###' hov='reverse' variant='' bgc='base-2' c='link'>Button</Button>
