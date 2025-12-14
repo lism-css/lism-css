@@ -49,8 +49,8 @@ main-frame
 			padding: 0.25rem 0.375rem;
 			border-radius: 0.25rem;
 			font-size: 1rem;
-			background-color: var(--c--text);
-			color: var(--c--base);
+			background-color: var(--text);
+			color: var(--base);
 			order: 1;
 		}
 		&::after {
@@ -60,7 +60,7 @@ main-frame
 			letter-spacing: -0.125em;
 			order: 2;
 			padding: 1px;
-			color: var(--c--main);
+			color: var(--main);
 		}
 	}
 }
@@ -75,16 +75,16 @@ main-frame
 }
 
 :is(.sidebar, .right-sidebar) {
-	// --c--link: var(--c--text);
+	// --link: var(--text);
 	--link-td: none;
 	--hl: var(--hl--s);
 
 	a[aria-current='page'] {
-		color: var(--c--base);
+		color: var(--base);
 	}
 	// 目次
 	a[aria-current='true'] {
-		color: var(--c--base);
+		color: var(--base);
 		background-color: var(--sl-color-text-accent);
 	}
 
@@ -93,7 +93,7 @@ main-frame
 		opacity: 0.8;
 		&:hover {
 			opacity: 1;
-			background-color: var(--c--base-2);
+			background-color: var(--base-2);
 		}
 	}
 
@@ -137,8 +137,8 @@ main-frame
 	}
 	.top-level > li > .large {
 		padding: var(--s15);
-		color: var(--c--text);
-		background-color: var(--c--base);
+		color: var(--text);
+		background-color: var(--base);
 		opacity: 1;
 		border-radius: 6px;
 		display: inline-flex;

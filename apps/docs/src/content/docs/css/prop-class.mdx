@@ -162,9 +162,9 @@ Lismでは、主要なCSSプロパティ群に対して、それらで頻繁に�
 
 |Property|Shorthand|To Class|BP|
 |---|---|---|---|
-|`color`|`c`|`main`,`accent`<br />`text`,`text-2`,<br />`base`,<br />`inherit`<br />`trsp`(`transparent`)|-|
-|`background-color`|`bgc`|`main`,`accent`<br />`base`,`base-2`,<br />`text`,<br />`inherit`<br />`trsp`(`transparent`)|-|
-|`--bdc`|`bdc`|`main`,`accent`<br />`line`,<br />`inherit`,<br />`trsp`(`transparent`)|-|
+|`color`|`c`|`main`,`accent`<br />`text`,`text-2`,<br />`base`,<br />`inherit`<br />`transparent`|-|
+|`background-color`|`bgc`|`main`,`accent`<br />`base`,`base-2`,<br />`text`,<br />`inherit`<br />`transparent`|-|
+|`--bdc`|`bdc`|`main`,`accent`<br />`line`,<br />`inherit`,<br />`transparent`|-|
 {/* |`--keycolor`|`keycolor`|-|-| */}
 
 {/* (`--keycolor`は、[`u-cbox`](/css/utility-class/#u-cbox)クラスと合わせて利用します。) */}
@@ -172,16 +172,16 @@ Lismでは、主要なCSSプロパティ群に対して、それらで頻繁に�
 <Preview>
 	<PreviewTitle>Examples</PreviewTitle>
 	<PreviewArea p='20'>
-		<HTML.p c='main' bgc='base-2' bd bdc='line' p='30'>Example text</HTML.p>
+		<HTML.p c='main' bgc='base-2' bd p='30'>Example text</HTML.p>
 	</PreviewArea>
 	<PreviewCode slot="tab" label="HTML">
 	```html
-	<p class='-c:main -bgc:base-2 -bd -bdc:line -p:30'>Example text</p>
+	<p class='-c:main -bgc:base-2 -bd -p:30'>Example text</p>
 	```
 	</PreviewCode>
 	<PreviewCode slot="tab" label="JSX">
 	```jsx
-	<HTML.p c='main' bgc='base-2' bd bdc='line' p='30'>Example text</HTML.p>
+	<HTML.p c='main' bgc='base-2' bd p='30'>Example text</HTML.p>
 	```
 	</PreviewCode>
 </Preview>
@@ -452,7 +452,7 @@ export const LinkSPACE = () => <a href="/css/tokens/#space"><code>SPACE</code></
 |Prop|Shorthand|To Class|BP|
 |---|---|---|---|
 |`border`|`bd`|`none`|-|
-|`--bdc`|`bdc`|`line`(`--c--line`), `inherit`|-|
+|`--bdc`|`bdc`|`line`(`--border`), `inherit`|-|
 |`--bds`|`bds`|`dashed`,`dotted`,`double`|-|
 |`--bdw`|`bdw`|-|○|
 |`border-top`|`bd-t`|-|-|
@@ -560,7 +560,7 @@ borderに関する仕様は少し特殊になっています。詳しくは[bord
 	<PreviewTitle>テキストで背景をクリッピング</PreviewTitle>
 	<PreviewArea p='20'>
 		<Center>
-			<Box bg='linear-gradient(45deg, var(--blue), var(--pink))' bgclip='text' c='trsp'>
+			<Box bg='linear-gradient(45deg, var(--blue), var(--pink))' bgclip='text' c='transparent'>
 				<HTML.p fz='5xl' fw='bold' lh='1' lts='l'>TEXT</HTML.p>
 			</Box>
 		</Center>
@@ -568,7 +568,7 @@ borderに関する仕様は少し特殊になっています。詳しくは[bord
 	<PreviewCode label='JSX' slot='tab'>
 		```jsx
 		<Center>
-			<Box bg='linear-gradient(45deg, var(--blue), var(--pink))' bgclip='text' c='trsp'>
+			<Box bg='linear-gradient(45deg, var(--blue), var(--pink))' bgclip='text' c='transparent'>
 				<HTML.p fz='5xl' fw='bold' lh='1' lts='l'>TEXT</HTML.p>
 			</Box>
 		</Center>

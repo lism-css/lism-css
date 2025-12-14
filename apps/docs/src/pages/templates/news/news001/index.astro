@@ -13,7 +13,7 @@ import './_style.css';
 				<h2 class='u-trim'>お知らせ</h2>
 			</Box>
 			<Box gr={['2', '2']} gc={['1', '1 / 3']}>
-				<Grid gtc={['auto', 'auto 1fr']} className='u-itemDivider' bd-y bdc='line'>
+				<Grid gtc={['auto', 'auto 1fr']} className='u-itemDivider' bd-y>
 					<Grid tag='a' isLinkBox href='#' gtc='subgrid' gc='1 / -1' g={['20', '30']} py='30' setHov>
 						<Grid gtc={['auto auto', 'auto 1fr']} g='30' jc='start' ai='center'>
 							<HTML.span fz='s'>2025.07.13</HTML.span>
@@ -58,7 +58,7 @@ import './_style.css';
 <style>
 	@media (any-hover: hover) {
 		.-hov\:to\:cLink {
-			color: var(--isHov_, var(--c--link));
+			color: var(--isHov_, var(--link));
 		}
 	}
 </style>

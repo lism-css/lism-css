@@ -43,7 +43,7 @@ const { isInline = false, hasSizeSwitch = false, url, ...props } = Astro.props;
 
 			<Frame id='preview-iframe' class='c--previewFrame' data-preview-url={url} ar bxsh='10' mx='auto' max-w='100%' style={{"--ar":"3/2"}}>
 				<Frame className='u--scalePreview' ar bdrs='20' bd bdw='3px' {...props}>
-					<iframe src={url} width='800' height='600' />
+					<iframe src={url} width='800' height='600' frameborder='0'/>
 				</Frame>
 			</Frame>
 			<Button href={url} variant='fill' target='_blank' bdrs='10' w='fit' mx='auto'>
@@ -60,13 +60,13 @@ const { isInline = false, hasSizeSwitch = false, url, ...props } = Astro.props;
 	.c--previewSizeSwitcher_btn{
 		padding: 8px;
 		border: 1px solid #ccc;
-		background: var(--c--base-2);
+		background: var(--base-2);
 		cursor: pointer;
 	}
 	.c--previewSizeSwitcher_btn._active {
-		background: var(--c--link) !important;
+		background: var(--link) !important;
 		color: white !important;
-		border-color:  var(--c--link) !important;
+		border-color:  var(--link) !important;
 	}
 </style>
 {hasSizeSwitch && (

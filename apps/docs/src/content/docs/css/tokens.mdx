@@ -21,15 +21,15 @@ export const ColorBadge = ({color, label}) => {
 
 |トークン名|変数|
 |---|---|
-|<ColorBadge color='base' />|`--c--base`|
-|<ColorBadge color='base-2' />|`--c--base-2`|
-|<ColorBadge color='text' />|`--c--text`|
-|<ColorBadge color='text-2' />|`--c--text-2`|
-|<ColorBadge color='line' />|`--c--line`|
-|<ColorBadge color='link' />|`--c--link`|
-|<ColorBadge color='main' />|`--c--main`|
-|<ColorBadge color='accent' />|`--c--accent`|
-{/* |<ColorBadge color='accent-2' />|`--c--accent-2`| */}
+|<ColorBadge color='base' />|`--base`|
+|<ColorBadge color='base-2' />|`--base-2`|
+|<ColorBadge color='text' />|`--text`|
+|<ColorBadge color='text-2' />|`--text-2`|
+|<ColorBadge color='border' />|`--border`|
+|<ColorBadge color='link' />|`--link`|
+|<ColorBadge color='main' />|`--main`|
+|<ColorBadge color='accent' />|`--accent`|
+{/* |<ColorBadge color='accent-2' />|`--accent-2`| */}
 
 これらのカラーは、サイトに合わせて調整してご利用ください。
 {/* モダンCSSでは`color-mix()`があるので、hsl値の中身を変数にすることはしていません。 */}
@@ -38,7 +38,7 @@ export const ColorBadge = ({color, label}) => {
 <Preview>
 	<PreviewTitle>Preview</PreviewTitle>
 	<PreviewArea p={['30','40']} py='40'>
-		<Box bd bdc='line' p='30'>
+		<Box bd p='30'>
 			<HTML.p fw='bold' c='main'>Main color example text</HTML.p>
 			<Dummy length='codes' pre='text: ' />
 			<Dummy c='text-2' length='s' pre='text-2: ' />

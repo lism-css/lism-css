@@ -9,7 +9,7 @@ const { title = data.title, tagline = data.description, image, actions = [] } = 
 <Grid class='z--hero' gt='repeat' cols='5' rows='1' min-h='50svh' ai='center'>
 	<Stack class='z--hero_content' gc='1 / 5' gr='1' z='1'>
 		<Stack g='40'>
-			<Lism class='z--hero_h1wrap -bgclip:text -c:trsp -w:fit'>
+			<Lism class='z--hero_h1wrap -bgclip:text -c:transparent -w:fit'>
 				<Lism tag='h1' id={PAGE_TITLE_ID} fz={['3rem', null, '4rem']} data-page-title set:html={title} />
 			</Lism>
 			{tagline && <div class='z--hero_tagline' set:html={tagline} />}

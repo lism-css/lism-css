@@ -160,7 +160,7 @@ TEST
 <Preview>
 	<PreviewTitle>`itemP`を指定</PreviewTitle>
 	<PreviewArea p='30'>
-		<NavMenu.Root bd bdc='line' itemP='30'>
+		<NavMenu.Root bd itemP='30'>
 			<NavMenu.Item hov='bgc'>
 				<NavMenu.Link href='#menu1'>Menu item</NavMenu.Link>
 			</NavMenu.Item>
@@ -173,8 +173,8 @@ TEST
 		</NavMenu.Root>
 	</PreviewArea>
 	<PreviewCode>
-		```jsx "bdc='line'" "itemP='30'"
-		<NavMenu.Root bd bdc='line' itemP='30'>
+		```jsx "bdc='border'" "itemP='30'"
+		<NavMenu.Root bd itemP='30'>
 			<NavMenu.Item hov='bgc'>
 				<NavMenu.Link href='#menu1'>Menu item</NavMenu.Link>
 			</NavMenu.Item>
@@ -198,7 +198,7 @@ TEST
 <Preview>
 	<PreviewTitle>メニューのネスト</PreviewTitle>
 	<PreviewArea p='20'>
-		<NavMenu.Root bd-y bdc='line' hovBgc='base-2'>
+		<NavMenu.Root bd-y hovBgc='base-2'>
 			<NavMenu.Item>
 				<NavMenu.Link hov='bgc' href='#menu1'>Menu item 1</NavMenu.Link>
 			</NavMenu.Item>
@@ -225,7 +225,7 @@ TEST
 	</PreviewArea>
 	<PreviewCode>
 		```jsx "NavMenu.Nest"
-		<NavMenu.Root bd-y bdc='line' hovBgc='base-2'>
+		<NavMenu.Root bd-y hovBgc='base-2'>
 			<NavMenu.Item>
 				<NavMenu.Link hov='bgc' href='#menu1'>Menu item 1</NavMenu.Link>
 			</NavMenu.Item>

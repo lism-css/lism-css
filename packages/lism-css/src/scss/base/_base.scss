@@ -9,8 +9,8 @@ body {
 	font-size: var(--fz--base);
 	font-family: var(--ff--base);
 	letter-spacing: var(--lts--base);
-	background-color: var(--c--base);
-	color: var(--c--text);
+	background-color: var(--base);
+	color: var(--text);
 }
 
 /* ----------------------------------------
@@ -78,7 +78,7 @@ samp {
 }
 
 a {
-	color: var(--link-c, var(--c--link));
+	color: var(--link-c, var(--link));
 	text-decoration: var(--link-td, underline);
 }
 
@@ -90,14 +90,14 @@ dd + dt {
 }
 
 blockquote {
-	background-color: var(--c--base-2);
+	background-color: var(--base-2);
 	padding: var(--s30);
 }
 
 hr {
 	border: none;
 	block-size: 0;
-	border-block-start: 1px solid var(--c--line);
+	border-block-start: 1px solid var(--border);
 }
 
 // figure {
@@ -131,10 +131,17 @@ textarea,
 select,
 ::file-selector-button {
 	--hl: var(--hl--s);
-	// background-color: var(--c--base-2);
+	// background-color: var(--base-2);
 	// border-radius: var(--bdrs--10);
-	border: 1px solid var(--c--line);
+	border: 1px solid var(--border);
 	padding: var(--s5) var(--s10);
+}
+
+/* ----------------------------------------
+    iframe
+ ---------------------------------------- */
+iframe {
+	border: none;
 }
 
 /* ----------------------------------------

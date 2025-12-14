@@ -1,7 +1,7 @@
 @layer lism.modules {
 	.c--button {
-		--c: var(--c--base);
-		--bgc: var(--c--text);
+		--c: var(--base);
+		--bgc: var(--text);
 		--bdc: var(--bgc);
 
 		color: var(--c);
@@ -14,7 +14,7 @@
 		place-items: center;
 	}
 	.c--button--outline {
-		--c: var(--c--text);
+		--c: var(--text);
 		--bgc: transparent;
 		--bdc: var(--c);
 	}
@@ -40,7 +40,7 @@
 	--hov-bgc: transparent;
 }
 .-hov\:reverse:where(.c--button--outline) {
-	--hov-c: var(--c--base);
+	--hov-c: var(--base);
 }
 @media (any-hover: hover) {
 	.-hov\:reverse:hover {
