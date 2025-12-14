@@ -41,7 +41,7 @@ export const SpacingDemos = ({ spaces, isValueLabel }) => {
 								{s}
 							</Box>
 						)}
-						<Box pl={s} bgc='main'>
+						<Box pl={s} bgc='brand'>
 							<Box bgc='base' pl='10' fz='xs'>
 								{label}
 							</Box>

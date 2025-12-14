@@ -81,7 +81,7 @@ Lismに内包されているクラスでは、それぞれ初期値を定義し�
 <Preview>
 	<PreviewTitle>`bgc`,`c`を変化させる例</PreviewTitle>
 	<PreviewArea p='30'>
-		<LinkBox href='###' bgc='base-2' p='20' hov={{ bgc:'main', c:'white'}}>
+		<LinkBox href='###' bgc='base-2' p='20' hov={{ bgc:'brand', c:'white'}}>
 			<p>LinkBox.</p>
 			<p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
 		</LinkBox>
@@ -90,7 +90,7 @@ Lismに内包されているクラスでは、それぞれ初期値を定義し�
 	```html "-hov:bgc" "-hov:c" "--hov-bgc" "--hov-c"
 	<a
 		class="is--linkBox -hov:bgc -hov:c -bgc:base-2 -p:20"
-		style="--hov-bgc:var(--main);--hov-c:var(--white)"
+		style="--hov-bgc:var(--brand);--hov-c:var(--white)"
 		href="###"
 	>
 		<p>LinkBox.</p>
@@ -100,7 +100,7 @@ Lismに内包されているクラスでは、それぞれ初期値を定義し�
 	</PreviewCode>
 	<PreviewCode slot='tab' label='JSX'>
 	```jsx "hov="
-		<LinkBox href='###' hov={{ bgc:'main', c:'white'}} bgc='base-2' p='20'>
+		<LinkBox href='###' hov={{ bgc:'brand', c:'white'}} bgc='base-2' p='20'>
 			<p>LinkBox.</p>
 			<p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
 		</LinkBox>
