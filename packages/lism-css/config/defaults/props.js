@@ -67,7 +67,7 @@ export default {
 
 	// size
 	w: { prop: 'width', utils: { fit: 'fit-content' }, presets: ['100%'], token: 'sz', bp: 1 },
-	h: { prop: 'height', presets: ['100%'], token: 'sz', bp: 1 },
+	h: { prop: 'height', utils: { fit: 'fit-content' }, presets: ['100%'], token: 'sz', bp: 1 },
 	'min-w': { prop: 'minWidth', presets: ['100%'], token: 'sz', bp: 1 },
 	'max-w': { prop: 'maxWidth', presets: ['100%'], token: 'sz', bp: 1 },
 	'min-h': { prop: 'minHeight', presets: ['100%'], token: 'sz', bp: 1 },
@@ -316,6 +316,8 @@ export default {
 		shorthands: PLACE_SHORTHANDS,
 		bp: 1,
 	},
+	pi: { prop: 'placeItems', presets: PLACE_PRESETS },
+	pc: { prop: 'placeContent', presets: PLACE_PRESETS },
 	aslf: {
 		prop: 'alignSelf',
 		presets: [...PLACE_PRESETS, 'stretch'],
@@ -326,40 +328,38 @@ export default {
 		presets: [...PLACE_PRESETS, 'stretch'],
 		shorthands: PLACE_SHORTHANDS,
 	},
-	pi: { prop: 'placeItems' },
-	pc: { prop: 'placeContent' },
-	pslf: { prop: 'placeSelf' },
+	pslf: { prop: 'placeSelf', presets: PLACE_PRESETS },
 	order: { prop: 'order', presets: ['0', '-1', '1'] },
 
 	// transform
-	translate: {
-		prop: 'translate',
-		utils: {
-			'-50X': '-50% 0',
-			'-50Y': '0 -50%',
-			'-50XY': '-50% -50%',
-		},
-	},
-	//rtt
-	rotate: {
-		prop: 'rotate',
-		utils: {
-			[`45`]: '45deg',
-			'-45': '-45deg',
-			[`90`]: '90deg',
-			'-90': '-90deg',
-			// '180': '180deg',
-		},
-	},
-	//scl
-	scale: {
-		prop: 'scale',
-		utils: {
-			'-X': '-1 1',
-			'-Y': '1 -1',
-			'-XY': '-1 -1',
-		},
-	},
+	// translate: {
+	// 	prop: 'translate',
+	// 	utils: {
+	// 		'-50X': '-50% 0',
+	// 		'-50Y': '0 -50%',
+	// 		'-50XY': '-50% -50%',
+	// 	},
+	// },
+
+	// rotate: {
+	// 	prop: 'rotate',
+	// 	utils: {
+	// 		[`45`]: '45deg',
+	// 		'-45': '-45deg',
+	// 		[`90`]: '90deg',
+	// 		'-90': '-90deg',
+	// 		// '180': '180deg',
+	// 	},
+	// },
+
+	// scale: {
+	// 	prop: 'scale',
+	// 	utils: {
+	// 		'-X': '-1 1',
+	// 		'-Y': '1 -1',
+	// 		'-XY': '-1 -1',
+	// 	},
+	// },
 
 	// others
 	// msk: { prop: 'mask', bp: 1 },

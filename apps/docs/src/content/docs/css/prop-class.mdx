@@ -313,46 +313,45 @@ export const LinkSPACE = () => <a href="/css/tokens/#space"><code>SPACE</code></
 		配置の指定例
 	</PreviewTitle>
 	<PreviewArea resize p='5'>
-		<Box pos='rel' ar='3/2' lh='1'>
-			<Box pos='abs' l='0' t='0' bd p='15'>A</Box>
-			{/* <Box pos='abs' l='0' t='0' m='30' bd p='15' bgc='base-2'>A'</Box> */}
-			<Box pos='abs' l='50%' t='0' translate='-50X' bd p='15'>B</Box>
-			<Box pos='abs' r='0' t='0' bd p='15'>C</Box>
-			<Box pos='abs' l='0' t='50%' translate='-50Y' bd p='15'>D</Box>
-			<Box pos='abs' l='50%' t='50%' translate='-50XY' bd p='15'>E</Box>
-			<Box pos='abs' r='0' t='50%' translate='-50Y' bd p='15'>F</Box>
-			<Box pos='abs' l='0' b='0' bd p='15'>G</Box>
-			<Box pos='abs' l='50%' b='0' translate='-50X' bd p='15'>H</Box>
-			<Box pos='abs' r='0' b='0' bd p='15'>I</Box>
+		<Box pos='rel' ar='3/2' lh='1' ff='mono'>
+			<HTML.div pos='abs' l='0' t='0' bgc='base-2' bd p='10'>A</HTML.div>
+			<HTML.div pos='abs' l='0' r='0' w='fit' mx='auto' bgc='base-2' bd p='10'>B</HTML.div>
+			<HTML.div pos='abs' r='0' t='0' bgc='base-2' bd p='10'>C</HTML.div>
+			<HTML.div pos='abs' l='0' t='0' b='0' h='fit' my='auto' bgc='base-2' bd p='10'>D</HTML.div>
+			<HTML.div pos='abs' i='0' m='auto' w='fit' h='fit' bgc='base-2' bd p='10'>E</HTML.div>
+			<HTML.div pos='abs' r='0' t='0' b='0' h='fit' my='auto' bgc='base-2' bd p='10'>F</HTML.div>
+			<HTML.div pos='abs' l='0' b='0' bgc='base-2' bd p='10'>G</HTML.div>
+			<HTML.div pos='abs' l='0' r='0' b='0' w='fit' mx='auto' bgc='base-2' bd p='10'>H</HTML.div>
+			<HTML.div pos='abs' r='0' b='0' bgc='base-2' bd p='10'>I</HTML.div>
 		</Box>
 	</PreviewArea>
 	<PreviewCode slot='tab' label='JSX'>
 		```jsx
-		<Box pos='rel' ar='3/2' lh='1'>
-			<Box pos='abs' l='0' t='0' bd p='15'>A</Box>
-			<Box pos='abs' l='50%' t='0' translate='-50X' bd p='15'>B</Box>
-			<Box pos='abs' r='0' t='0' bd p='15'>C</Box>
-			<Box pos='abs' l='0' t='50%' translate='-50Y' bd p='15'>D</Box>
-			<Box pos='abs' l='50%' t='50%' translate='-50XY' bd p='15'>E</Box>
-			<Box pos='abs' r='0' t='50%' translate='-50Y' bd p='15'>F</Box>
-			<Box pos='abs' l='0' b='0' bd p='15'>G</Box>
-			<Box pos='abs' l='50%' b='0' translate='-50X' bd p='15'>H</Box>
-			<Box pos='abs' r='0' b='0' bd p='15'>I</Box>
+		<Box pos='rel' ar='3/2' lh='1' ff='mono'>
+			<HTML.div pos='abs' l='0' t='0' bgc='base-2' bd p='10'>A</HTML.div>
+			<HTML.div pos='abs' l='0' r='0' w='fit' mx='auto' bgc='base-2' bd p='10'>B</HTML.div>
+			<HTML.div pos='abs' r='0' t='0' bgc='base-2' bd p='10'>C</HTML.div>
+			<HTML.div pos='abs' l='0' t='0' b='0' h='fit' my='auto' bgc='base-2' bd p='10'>D</HTML.div>
+			<HTML.div pos='abs' i='0' m='auto' w='fit' h='fit' bgc='base-2' bd p='10'>E</HTML.div>
+			<HTML.div pos='abs' r='0' t='0' b='0' h='fit' my='auto' bgc='base-2' bd p='10'>F</HTML.div>
+			<HTML.div pos='abs' l='0' b='0' bgc='base-2' bd p='10'>G</HTML.div>
+			<HTML.div pos='abs' l='0' r='0' b='0' w='fit' mx='auto' bgc='base-2' bd p='10'>H</HTML.div>
+			<HTML.div pos='abs' r='0' b='0' bgc='base-2' bd p='10'>I</HTML.div>
 		</Box>
 		```
 	</PreviewCode>
 	<PreviewCode slot='tab' label='HTML'>
 		```html
-		<div class="l--box -pos:rel -ar:3/2 -lh:1">
-			<div class="l--box -pos:abs -l:0 -t:0 -bd -p:15">A</div>
-			<div class="l--box -pos:abs -l:50% -t:0 -translate:-50X -bd -p:15">B</div>
-			<div class="l--box -pos:abs -r:0 -t:0 -bd -p:15">C</div>
-			<div class="l--box -pos:abs -l:0 -t:50% -translate:-50Y -bd -p:15">D</div>
-			<div class="l--box -pos:abs -l:50% -t:50% -translate:-50XY -bd -p:15">E</div>
-			<div class="l--box -pos:abs -r:0 -t:50% -translate:-50Y -bd -p:15">F</div>
-			<div class="l--box -pos:abs -l:0 -b:0 -bd -p:15">G</div>
-			<div class="l--box -pos:abs -l:50% -b:0 -translate:-50X -bd -p:15">H</div>
-			<div class="l--box -pos:abs -r:0 -b:0 -bd -p:15">I</div>
+		<div class='l--box -pos:rel -ar:3/2 -lh:1 -ff:mono'>
+			<div class='-pos:abs -l:0 -t:0 -bgc:base-2 -bd -p:10'>A</div>
+			<div class='-pos:abs -l:0 -r:0 -w:fit -mx:auto -bgc:base-2 -bd -p:10'>B</div>
+			<div class='-pos:abs -r:0 -t:0 -bgc:base-2 -bd -p:10'>C</div>
+			<div class='-pos:abs -l:0 -t:0 -b:0 -h:fit -my:auto -bgc:base-2 -bd -p:10'>D</div>
+			<div class='-pos:abs -i:0 -m:auto -w:fit -h:fit -bgc:base-2 -bd -p:10'>E</div>
+			<div class='-pos:abs -r:0 -t:0 -b:0 -h:fit -my:auto -bgc:base-2 -bd -p:10'>F</div>
+			<div class='-pos:abs -l:0 -b:0 -bgc:base-2 -bd -p:10'>G</div>
+			<div class='-pos:abs -l:0 -r:0 -b:0 -w:fit -mx:auto -bgc:base-2 -bd -p:10'>H</div>
+			<div class='-pos:abs -r:0 -b:0 -bgc:base-2 -bd -p:10'>I</div>
 		</div>
 		```
 	</PreviewCode>
@@ -582,13 +581,14 @@ borderに関する仕様は少し特殊になっています。詳しくは[bord
 </Preview>
 
 
-### Transforms
+{/* ### Transforms
 
 |Prop|Shorthand|To Class|BP|
 |---|---|---|---|
 |`translate`|`translate`|`-50X`,`-50Y`,`-50XY`|-|
 |`rotate`|`rotate`|`45`,`-45`,`90`,`-90`|-|
 |`scale`|`scale`|`-X`,`-Y`,`-XY`|-|
+ */}
 
 
 

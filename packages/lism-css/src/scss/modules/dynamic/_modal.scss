@@ -25,7 +25,7 @@
 }
 
 .d--modal_inner {
-	--translate: 0 0; // アニメーション用
+	--offset: 0 0; // アニメーション用
 	background-color: var(--base);
 	transition: translate var(--duration);
 	max-height: 100%;
@@ -39,5 +39,5 @@
 	opacity: 0;
 }
 .d--modal:not([data-is-open]) > .d--modal_inner {
-	translate: var(--translate);
+	translate: var(--offset);
 }

@@ -46,7 +46,7 @@ dialog.d--modal#modalID.set-plain
 |---|---|
 |`id`| Modal(`.d--modal`)にはid属性が必要です。|
 |（`<Modal.Inner>`） `layout`| `__inner`のレイアウト用コンポーネントを指定できます。|
-|（`<Modal.Inner>`） `translate`(`--translate`)| `__inner`のの非表示時の位置をずらすためのオフセット値|
+|（`<Modal.Inner>`） `offset`(`--offset`)| `__inner`のの非表示時の位置をずらすためのオフセット値|
 | (`<Modal.OpenBtn>`) `modalId`| `data-modal-open`として出力されます。モーダルを開くトリガー要素にて、モーダルの`id`を指定します。|
 | (`<Modal.CloseBtn>`) `modalId`| `data-modal-close`として出力されます。モーダルを閉じるトリガー要素にて、モーダルの`id`を指定します。|
 
@@ -168,17 +168,17 @@ dialog.d--modal#modalID.set-plain
 		</Modal.OpenBtn>
 
 		<Modal.Root id='modal-03'>
-			<Modal.Inner layout='stack' max-w='24rem' h='100%' bxsh='40' translate='-100px 0'>
+			<Modal.Inner layout='stack' max-w='24rem' h='100%' bxsh='40' offset='-100px 0'>
 				<Flex bd-b ai='center' jc='between' p='20'>
 					<HTML.span fz='l'>MENU</HTML.span>
 					<Modal.CloseBtn modalId='modal-03' autofocus fz='xl' p='5'/>
 				</Flex>
 				<Modal.Body ov-y='auto'>
 					<Stack className='u-itemDivider' bd-b p='0' ov='clip'>
-						<HTML.a href='#menu-link01' className='set-plain' hov='o' px='30' py='20'>Menu item 1</HTML.a>
-						<HTML.a href='#menu-link02' className='set-plain' hov='o' px='30' py='20'>Menu item 2</HTML.a>
-						<HTML.a href='#menu-link03' className='set-plain' hov='o' px='30' py='20'>Menu item 3</HTML.a>
-						<HTML.a href='#menu-link04' className='set-plain' hov='o' px='30' py='20'>Menu item 4</HTML.a>
+						<HTML.a href='#menu-link01' c='inherit' hov='neutral' px='20' py='15'>Menu item 1</HTML.a>
+						<HTML.a href='#menu-link02' c='inherit' hov='neutral' px='20' py='15'>Menu item 2</HTML.a>
+						<HTML.a href='#menu-link03' c='inherit' hov='neutral' px='20' py='15'>Menu item 3</HTML.a>
+						<HTML.a href='#menu-link04' c='inherit' hov='neutral' px='20' py='15'>Menu item 4</HTML.a>
 					</Stack>
 				</Modal.Body>
 			</Modal.Inner>
@@ -191,7 +191,7 @@ dialog.d--modal#modalID.set-plain
 		</Modal.OpenBtn>
 
 		<Modal.Root id='modal-03'>
-			<Modal.Inner layout='stack' max-w='24rem' h='100%' bxsh='40' translate='-100px 0'>
+			<Modal.Inner layout='stack' max-w='24rem' h='100%' bxsh='40' offset='-100px 0'>
 				<Flex bd-b ai='center' jc='between' p='20'>
 					<HTML.span fz='l'>MENU</HTML.span>
 					<Modal.CloseBtn modalId='modal-03' autofocus fz='xl' p='5'/>

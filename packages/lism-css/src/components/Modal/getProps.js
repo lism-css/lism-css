@@ -12,9 +12,9 @@ export function getProps({ lismClass = '', duration, style = {}, ...props }) {
 	return { tag: 'dialog', ...theProps, style, ...props };
 }
 
-export function getInnerProps({ lismClass = '', translate, style = {}, ...props }) {
-	if (translate) {
-		style['--translate'] = translate;
+export function getInnerProps({ lismClass = '', offset, style = {}, ...props }) {
+	if (offset) {
+		style['--offset'] = offset;
 	}
 	return {
 		lismClass: atts(lismClass, 'd--modal_inner'),

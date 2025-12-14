@@ -16,7 +16,7 @@ export default {
 	},
 	c: {
 		pre: '--',
-		values: ['base', 'base-2', 'text', 'text-2', 'border', 'link', 'main', 'accent'],
+		values: ['base', 'base-2', 'text', 'text-2', 'border', 'link', 'brand', 'accent'],
 	},
 	palette: {
 		pre: '--',

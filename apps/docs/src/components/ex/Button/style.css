@@ -19,9 +19,13 @@
 		--bdc: var(--c);
 	}
 
+	:where(.c--button) > .a--icon {
+		scale: 1.05;
+	}
+
 	/* l--gridを使用する場合の追加スタイル */
 	.c--button:where(.l--grid) {
-		grid-template-columns: 1em 1fr 1em;
+		grid-template-columns: minmax(1em, auto) 1fr minmax(1em, auto);
 		justify-items: center;
 	}
 	.c--button:where(.l--grid) > :not(.a--icon) {

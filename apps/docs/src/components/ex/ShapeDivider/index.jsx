@@ -1,7 +1,7 @@
 import { Lism } from 'lism-css/react';
 import './style.css';
 
-export default function ShapeDivider({ viewBox, children, isAnimation, isEmpty, level = 5, stretch, offset, style = {}, ...props }) {
+export default function ShapeDivider({ viewBox, children, isAnimation, isEmpty, level = 5, stretch, offset, flip, style = {}, ...props }) {
 	if (level === 0) return null;
 
 	// 変数セット
@@ -10,7 +10,7 @@ export default function ShapeDivider({ viewBox, children, isAnimation, isEmpty, 
 	style['--_inner-stretch'] = stretch || null;
 
 	return (
-		<Lism lismClass='c--shapeDivider' max-sz='full' aria-hidden='true' style={style} {...props}>
+		<Lism lismClass='c--shapeDivider' max-sz='full' data-flip={flip} aria-hidden='true' style={style} {...props}>
 			<div className='c--shapeDivider_inner -h:100%'>
 				{isEmpty ? null : (
 					<svg

@@ -77,9 +77,6 @@
 	// ハーフレディング単位
 	--hl-unit: calc(var(--REM) * 0.125); /* ≒ 2px */
 
-	// スペーシング単位
-	--s-unit: calc(var(--REM) * 0.25); /* ≒ 8px */
-
 	// --- ハーフレディング ---
 	// unit の倍数で構成する
 	--hl--xs: var(--hl-unit);
@@ -92,26 +89,37 @@
 
 	/*
 ```
---s:   5  10  20  30  40 ...              80
-2:  2  4  6   10  16  26  42  68  110  178
-4:        4   8   12  20  32  52  84   136  220
-8:        8   16  24  40  64  104  168  272  440
+--s:   5  10  15  20  30  40  50   ..
+  4:   4   8  12  20  32  52  84   136   220
+  8:   4   8  12  16  24  40  64   104   168  272  440
 ```
 */
 
-	/* 単位は 4px 10 20 30, ... は 8 のフィボナッチ。 */
-	--s5: var(--s-unit); /* さらに小さい余白をつけたいこともあるので、例外として用意 */
-	--s10: calc(2 * var(--s-unit));
-	--s15: calc(3 * var(--s-unit));
-	--s20: calc(4 * var(--s-unit));
-	// --s25: calc(5 * var(--s-unit));
-	--s30: calc(6 * var(--s-unit));
-	--s40: calc(10 * var(--s-unit));
-	--s50: calc(16 * var(--s-unit));
-	--s60: calc(26 * var(--s-unit));
-	--s70: calc(42 * var(--s-unit));
-	--s80: calc(68 * var(--s-unit));
-	// --s90: calc(55 * var(--s-unit));
+	/* スペーシング単位 8 で フィボナッチ*/
+	--s-unit: calc(var(--REM) * 0.5); /* ≒ 8px */
+	--s5: calc(0.5 * var(--s-unit)); /* 例外 */
+	--s10: var(--s-unit);
+	--s15: calc(1.5 * var(--s-unit)); /* 例外 */
+	--s20: calc(2 * var(--s-unit));
+	--s30: calc(3 * var(--s-unit));
+	--s40: calc(5 * var(--s-unit));
+	--s50: calc(8 * var(--s-unit));
+	--s60: calc(13 * var(--s-unit));
+	--s70: calc(21 * var(--s-unit));
+	--s80: calc(34 * var(--s-unit));
+
+	// --s-unit: calc(var(--REM) * 0.25); /* ≒ 4px */
+	// --s5: var(--s-unit);
+	// --s10: calc(2 * var(--s-unit));
+	// --s15: calc(3 * var(--s-unit));
+	// --s20: calc(5 * var(--s-unit));
+	// // --s25: calc(6 * var(--s-unit));
+	// --s30: calc(8 * var(--s-unit));
+	// --s40: calc(13 * var(--s-unit));
+	// --s50: calc(21 * var(--s-unit));
+	// --s60: calc(34 * var(--s-unit));
+	// --s70: calc(55 * var(--s-unit));
+	// --s80: calc(89 * var(--s-unit));
 
 	// .l--flow のコンテンツ間余白
 	--flow--base: var(--s20);
