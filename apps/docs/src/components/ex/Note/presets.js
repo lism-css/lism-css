@@ -12,7 +12,7 @@ export default {
 		color: 'yellow',
 	},
 	check: {
-		icon: 'check',
+		icon: 'check-circle',
 		color: 'green',
 	},
 	help: {
