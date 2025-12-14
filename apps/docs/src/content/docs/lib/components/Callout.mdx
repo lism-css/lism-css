@@ -19,10 +19,10 @@ import Callout from '~/components/ex/Callout/index.astro';
 	<PreviewTitle>Preview</PreviewTitle>
 	<PreviewArea resize p='20'>
 		<Callout>
-			<Dummy lang='ja' length='codes' />
+			<Dummy length='codes' />
 		</Callout>
 		<Callout type='check'>
-			<Dummy lang='ja' />
+			<Dummy lang='ja' length='codes' />
 		</Callout>
 	</PreviewArea>
 </Preview>
@@ -37,7 +37,7 @@ import Callout from '~/components/ex/Callout/index.astro';
 <Preview>
 	<PreviewTitle>Preview</PreviewTitle>
 	<PreviewArea p='20'>
-		<WithSide className='u-cbox' keycolor='red' ai='center' p='20' g='20' bd bdrs='10'>
+		<WithSide className='u-cbox' keycolor='red' ai='center' p='15' g='15' bd bdrs='10'>
 			<Center isSide c='keycolor' fz='xl'>
 				<Icon icon='alert' />
 			</Center>
@@ -48,7 +48,7 @@ import Callout from '~/components/ex/Callout/index.astro';
 	</PreviewArea>
 	<PreviewCode slot='tab' label='JSX'>
 		```jsx
-		<WithSide className='u-cbox' keycolor='red' ai='center' p='20' g='20' bd bdrs='10'>
+		<WithSide className='u-cbox' keycolor='red' ai='center' p='15' g='15' bd bdrs='10'>
 			<Center isSide c='keycolor' fz='xl'>
 				<Icon icon='alert' />
 			</Center>

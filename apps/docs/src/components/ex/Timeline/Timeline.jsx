@@ -62,10 +62,10 @@ export function Item({ isHorizontal, isStart, isEnd, isHighlighted, icon, iconPr
 }
 
 export function Time(props) {
-	return <Lism className='c--timeline_time' fz='xs' c='text-2' gr='2' gc='2' {...props} />;
+	return <Lism className='c--timeline_time' fz='xs' fw='bold' gr='2' gc='2' {...props} />;
 }
 export function Title(props) {
-	return <Lism className='c--timeline_title' fw='bold' gr='3' gc='2' {...props} />;
+	return <Lism className='c--timeline_title' fz='s' fw='bold' gr='3' gc='2' {...props} />;
 }
 export function Text(props) {
 	return <Lism className='c--timeline_text' fz='s' my-s='15' gr='4' gc='2' {...props} />;

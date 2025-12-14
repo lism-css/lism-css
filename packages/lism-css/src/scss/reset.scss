@@ -92,22 +92,26 @@
 
 	svg,
 	img,
-	video {
-		/* 親要素をはみ出さないようにする */
-		max-inline-size: 100%;
-		block-size: auto;
-
-		/* 隙間ができるのを防ぐ。( display はいじらない。) */
-		vertical-align: middle;
-	}
-
+	video,
 	audio,
 	iframe,
 	object,
 	canvas {
-		/* block化し、親要素を超えないようにする。block-size: auto はサイズが潰れるためつけない */
-		display: block;
+		/* 隙間ができるのを防ぐ。( display はいじらない。) */
+		vertical-align: middle;
+
+		/* 親要素をはみ出さないようにする */
 		max-inline-size: 100%;
+	}
+
+	img,
+	video {
+		/* img,video の縦横比を維持。（svg,iframe や audioは 高さがつぶれるので指定しない */
+		block-size: auto;
+	}
+
+	iframe {
+		border: none;
 	}
 
 	/* ------------------------------------------------------------

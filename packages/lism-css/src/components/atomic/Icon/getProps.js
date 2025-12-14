@@ -1,5 +1,6 @@
 import presets from './presets';
 import atts from '../../../lib/helper/atts';
+import setMaybeTransformStyles from '../../setMaybeTransformStyles';
 
 // SVG文字列をパースしてexPropsとコンテンツを生成する関数
 function parseSvgString(svgString) {
@@ -46,31 +47,22 @@ Icon の出力パターン
   - tag=svg で指定された場合 → <svg> で出力し、childrenはそのまま返す。（<path> などを渡して使えるようにする）
   - as が指定された場合 → asで渡される外部コンポーネントを呼び出す
 */
-export default function getProps({
-	lismClass,
-	className = '',
-	style = {},
-	as,
-	tag,
-	icon,
-	label,
-
-	exProps = {},
-	...props
-}) {
+export default function getProps({ lismClass, as, tag, icon, label, exProps = {}, ..._props }) {
 	let Component = tag || 'span';
 	let content = '';
 
+	let { style = {}, className = '', ..._rest } = setMaybeTransformStyles(_props);
+
 	// viewBoxがあれば、svg描画として扱う
-	if (props.viewBox) {
+	if (_rest.viewBox) {
 		Component = 'svg';
-		if (!props.width) {
+		if (!_rest.width) {
 			exProps.width = '1em';
 		}
-		if (!props.height) {
+		if (!_rest.height) {
 			exProps.height = '1em';
 		}
-	} else if (props.src) {
+	} else if (_rest.src) {
 		Component = 'img';
 	} else if (icon) {
 		// icon が 文字列の場合
@@ -115,14 +107,10 @@ export default function getProps({
 		exProps['aria-hidden'] = 'true';
 	}
 
-	// 専用変数
+	_rest.lismClass = atts(lismClass, 'a--icon', className);
+	_rest.style = { ...style };
 
-	// classNameをスペースで分割して重複を防いでマージ
-
-	props.lismClass = atts(lismClass, 'a--icon', className);
-	props.style = { ...style };
-
-	return { Component, lismProps: props, exProps, content };
+	return { Component, lismProps: _rest, exProps, content };
 }
 
 // 子要素に Icon を持つコンポーネントが icon, iconProps で Icon 用の props を生成する処理

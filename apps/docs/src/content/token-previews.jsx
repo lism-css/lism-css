@@ -31,7 +31,7 @@ export const BoxShadowDemos = ({ shadows = [] }) => {
 
 export const SpacingDemos = ({ spaces, isValueLabel }) => {
 	return (
-		<>
+		<Stack g='5' lh='s'>
 			{spaces.map((s, i) => {
 				const label = isValueLabel ? <code>{s}</code> : <code>{i}</code>;
 				return (
@@ -49,6 +49,6 @@ export const SpacingDemos = ({ spaces, isValueLabel }) => {
 					</Stack>
 				);
 			})}
-		</>
+		</Stack>
 	);
 };

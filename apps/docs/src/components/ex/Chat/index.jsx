@@ -1,5 +1,5 @@
 import React from 'react';
-import { Lism, Stack, Grid, Frame, Decorator } from 'lism-css/react';
+import { Lism, Flow, Grid, Frame, Decorator } from 'lism-css/react';
 import './style.css';
 
 export default function Chat({ variant = 'speak', direction = 'start', name, avatar, keycolor = 'gray', flow = 's', children, ...props }) {
@@ -16,10 +16,10 @@ export default function Chat({ variant = 'speak', direction = 'start', name, ava
 				</Lism>
 			)}
 			<Lism lismClass='c--chat_body' pos='rel'>
-				<Decorator lismClass='c--chat_deco' className='u-cbox is--skipFlow' pos='abs' scale={direction === 'start' ? '' : '-X'} />
-				<Stack lismClass='c--chat_content' className='u-cbox u-trimItems' bdrs='30' g='20' p='30' lh='s' flow={flow} jslf={direction}>
+				<Decorator lismClass='c--chat_deco' className='u-cbox is--skipFlow' pos='abs' />
+				<Flow lismClass='c--chat_content' className='u-cbox' bdrs='30' p='20' lh='s' flow={flow} jslf={direction}>
 					{children}
-				</Stack>
+				</Flow>
 			</Lism>
 		</Grid>
 	);

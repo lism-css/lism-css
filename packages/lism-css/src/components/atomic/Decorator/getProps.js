@@ -1,8 +1,10 @@
 import atts from '../../../lib/helper/atts';
 import getFilterProps from '../../getFilterProps';
+import setMaybeTransformStyles from '../../setMaybeTransformStyles';
 
+// translate → rotate → scale
 export default function ({ lismClass, size, clipPath, boxSizing, style = {}, ...props }) {
-	props = getFilterProps(props);
+	props = getFilterProps(setMaybeTransformStyles(props));
 
 	if (clipPath) {
 		style.clipPath = clipPath;

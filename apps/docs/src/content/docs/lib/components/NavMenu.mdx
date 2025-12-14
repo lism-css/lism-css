@@ -386,52 +386,54 @@ TEST
 	<PreviewTitle>hoverでネストメニューを表示</PreviewTitle>
 	<PreviewArea p='20'>
 		<Box min-h="15rem">
-		<NavMenu.Root fxd='row' lh='s' itemP='20 30'>
-			<NavMenu.Item hov='o'>
-				<NavMenu.Link href='#menu1'>Menu item</NavMenu.Link>
-			</NavMenu.Item>
-			<NavMenu.Item setHov pos='rel'>
-				<NavMenu.Link href='#menu3' ai='center'>
-					<Fragment>Hover Menu Item <Icon icon='caret-down' translate='40%' /></Fragment>
-				</NavMenu.Link>
-				<NavMenu.Nest hov='to:show' pos='abs' t='100%' px-s='0' lh='s' bgc='base' bxsh='20' bdrs='5'>
-					<NavMenu.Item hov='bgc'>
-						<NavMenu.Link href='#child-menu1'>Nested item</NavMenu.Link>
-					</NavMenu.Item>
-					<NavMenu.Item hov='bgc'>
-						<NavMenu.Link href='#child-menu2'>Nested Menu item</NavMenu.Link>
-					</NavMenu.Item>
-				</NavMenu.Nest>
-			</NavMenu.Item>
-			<NavMenu.Item hov='o'>
-				<NavMenu.Link href='#menu1'>Menu item</NavMenu.Link>
-			</NavMenu.Item>
-		</NavMenu.Root>
+			<NavMenu.Root fxd='row' lh='s' itemP='10'>
+				<NavMenu.Item hov='o'>
+					<NavMenu.Link href='#menu1'>Menu item</NavMenu.Link>
+				</NavMenu.Item>
+				<NavMenu.Item setHov pos='rel'>
+					<NavMenu.Link href='#menu3' ai='center' g='5'>
+						<Fragment>Hover Menu Item <Icon icon='caret-down' style={{translate: '10%'}} /></Fragment>
+					</NavMenu.Link>
+					<NavMenu.Nest fz='s' hov='to:show' pos='abs' t='100%' px-s='0' lh='s' bgc='base' bxsh='20' bdrs='5'>
+						<NavMenu.Item hov='bgc'>
+							<NavMenu.Link href='#child-menu1'>Nested item</NavMenu.Link>
+						</NavMenu.Item>
+						<NavMenu.Item hov='bgc'>
+							<NavMenu.Link href='#child-menu2'>Nested Menu item</NavMenu.Link>
+						</NavMenu.Item>
+					</NavMenu.Nest>
+				</NavMenu.Item>
+				<NavMenu.Item hov='o'>
+					<NavMenu.Link href='#menu1'>Menu item</NavMenu.Link>
+				</NavMenu.Item>
+			</NavMenu.Root>
 		</Box>
 	</PreviewArea>
 	<PreviewCode>
 		```jsx "fxd='row'"
-		<NavMenu.Root fxd='row' lh='xs' itemP='20 30'>
-			<NavMenu.Item>
-				<NavMenu.Link href='#menu1'>Menu item</NavMenu.Link>
-			</NavMenu.Item>
-			<NavMenu.Item setHov pos='rel'>
-				<NavMenu.Link href='#menu3' ai='center'>
-					<Fragment>Hover Menu Item <Icon icon='caret-down' translate='40%' /></Fragment>
-				</NavMenu.Link>
-				<NavMenu.Nest hov='to:show' pos='abs' t='100%' px-s='0' lh='s' bgc='base' bxsh='20' bdrs='5'>
-					<NavMenu.Item>
-						<NavMenu.Link href='#child-menu1'>Nested item</NavMenu.Link>
-					</NavMenu.Item>
-					<NavMenu.Item>
-						<NavMenu.Link href='#child-menu2'>Nested Menu item</NavMenu.Link>
-					</NavMenu.Item>
-				</NavMenu.Nest>
-			</NavMenu.Item>
-			<NavMenu.Item>
-				<NavMenu.Link href='#menu1'>Menu item</NavMenu.Link>
-			</NavMenu.Item>
-		</NavMenu.Root>
+		<Box min-h="15rem">
+			<NavMenu.Root fxd='row' lh='s' itemP='10'>
+				<NavMenu.Item hov='o'>
+					<NavMenu.Link href='#menu1'>Menu item</NavMenu.Link>
+				</NavMenu.Item>
+				<NavMenu.Item setHov pos='rel'>
+					<NavMenu.Link href='#menu3' ai='center' g='5'>
+						<Fragment>Hover Menu Item <Icon icon='caret-down' style={{translate: '10%'}} /></Fragment>
+					</NavMenu.Link>
+					<NavMenu.Nest fz='s' hov='to:show' pos='abs' t='100%' px-s='0' lh='s' bgc='base' bxsh='20' bdrs='5'>
+						<NavMenu.Item hov='bgc'>
+							<NavMenu.Link href='#child-menu1'>Nested item</NavMenu.Link>
+						</NavMenu.Item>
+						<NavMenu.Item hov='bgc'>
+							<NavMenu.Link href='#child-menu2'>Nested Menu item</NavMenu.Link>
+						</NavMenu.Item>
+					</NavMenu.Nest>
+				</NavMenu.Item>
+				<NavMenu.Item hov='o'>
+					<NavMenu.Link href='#menu1'>Menu item</NavMenu.Link>
+				</NavMenu.Item>
+			</NavMenu.Root>
+		</Box>
 		```
 	</PreviewCode>
 </Preview>
@@ -441,107 +443,107 @@ TEST
 	<PreviewTitle>アコーディオンでのメニュー展開</PreviewTitle>
 	<PreviewArea p='20'>
 		<Box min-h="15rem">
-		<NavMenu.Root fxd='row' lh='s' itemP='20 30'>
-			<NavMenu.Item hov='c'>
-				<NavMenu.Link href='#menu1'>Menu item</NavMenu.Link>
-			</NavMenu.Item>
+			<NavMenu.Root fxd='row' lh='s' itemP='10 10'>
+				<NavMenu.Item hov='c'>
+					<NavMenu.Link href='#menu1'>Menu item</NavMenu.Link>
+				</NavMenu.Item>
 
-			<NavMenu.Item pos='rel'>
-				<Accordion.Root>
-					<Accordion.Header p='var(--_item-p)' hov='o'>
-						<Accordion.Label>Accordion Menu</Accordion.Label>
-						<Accordion.Icon />
-					</Accordion.Header>
-					<Accordion.Body pos='abs' bxsh='20' bgc='base' w='100%'>
-						<NavMenu.Nest px-s='0'>
-							<NavMenu.Item hov='bgc'>
-								<NavMenu.Link href='#child-menu1'>Child item</NavMenu.Link>
-							</NavMenu.Item>
-							<NavMenu.Item hov='bgc'>
-								<NavMenu.Link href='#child-menu2'>Child item</NavMenu.Link>
-							</NavMenu.Item>
-						</NavMenu.Nest>
-					</Accordion.Body>
-				</Accordion.Root>
-			</NavMenu.Item>
+				<NavMenu.Item pos='rel'>
+					<Accordion.Root>
+						<Accordion.Header p='var(--_item-p)' hov='c'>
+							<Accordion.Label>Accordion Menu</Accordion.Label>
+							<Accordion.Icon />
+						</Accordion.Header>
+						<Accordion.Body pos='abs' bxsh='20' bgc='base' w='100%'>
+							<NavMenu.Nest fz='s' px-s='0'>
+								<NavMenu.Item hov='bgc'>
+									<NavMenu.Link href='#child-menu1'>Child item</NavMenu.Link>
+								</NavMenu.Item>
+								<NavMenu.Item hov='bgc'>
+									<NavMenu.Link href='#child-menu2'>Child item</NavMenu.Link>
+								</NavMenu.Item>
+							</NavMenu.Nest>
+						</Accordion.Body>
+					</Accordion.Root>
+				</NavMenu.Item>
 
-			<NavMenu.Item pos='rel'>
-				<Accordion.Root>
-					<Accordion.Header g='0' pr='20'>
-						<Accordion.Label>
-							<NavMenu.Link href='###' pr='20' hov='c'>Icon trigger Menu</NavMenu.Link>
-						</Accordion.Label>
-						<Accordion.Icon isTrigger bd bgc='inherit' p='10' hov='o'/>
-					</Accordion.Header>
-					<Accordion.Body pos='abs' bxsh='20' bgc='base' w='100%'>
-						<NavMenu.Nest px-s='0'>
-							<NavMenu.Item hov='bgc'>
-								<NavMenu.Link href='#child-menu1'>Child item</NavMenu.Link>
-							</NavMenu.Item>
-							<NavMenu.Item hov='bgc'>
-								<NavMenu.Link href='#child-menu2'>Child item</NavMenu.Link>
-							</NavMenu.Item>
-						</NavMenu.Nest>
-					</Accordion.Body>
-				</Accordion.Root>
-			</NavMenu.Item>
-			<NavMenu.Item hov='c'>
-				<NavMenu.Link href='#menu1'>Menu item</NavMenu.Link>
-			</NavMenu.Item>
-		</NavMenu.Root>
+				<NavMenu.Item pos='rel'>
+					<Accordion.Root>
+						<Accordion.Header g='0' pr='10'>
+							<Accordion.Label>
+								<NavMenu.Link href='###' pr='10' hov='c'>Icon trigger Menu</NavMenu.Link>
+							</Accordion.Label>
+							<Accordion.Icon isTrigger bd bdc='cc' bgc='inherit' p='5' bdrs='5' hov='c'/>
+						</Accordion.Header>
+						<Accordion.Body pos='abs' bxsh='20' bgc='base' w='100%'>
+							<NavMenu.Nest fz='s' px-s='0'>
+								<NavMenu.Item hov='bgc'>
+									<NavMenu.Link href='#child-menu1'>Child item</NavMenu.Link>
+								</NavMenu.Item>
+								<NavMenu.Item hov='bgc'>
+									<NavMenu.Link href='#child-menu2'>Child item</NavMenu.Link>
+								</NavMenu.Item>
+							</NavMenu.Nest>
+						</Accordion.Body>
+					</Accordion.Root>
+				</NavMenu.Item>
+				<NavMenu.Item hov='c'>
+					<NavMenu.Link href='#menu1'>Menu item</NavMenu.Link>
+				</NavMenu.Item>
+			</NavMenu.Root>
 		</Box>
 	</PreviewArea>
 	<PreviewCode>
 		```jsx
 		<Box min-h="15rem">
-		<NavMenu.Root fxd='row' lh='s' itemP='20 30'>
-			<NavMenu.Item hov='c'>
-				<NavMenu.Link href='#menu1'>Menu item</NavMenu.Link>
-			</NavMenu.Item>
+			<NavMenu.Root fxd='row' lh='s' itemP='10 10'>
+				<NavMenu.Item hov='c'>
+					<NavMenu.Link href='#menu1'>Menu item</NavMenu.Link>
+				</NavMenu.Item>
 
-			<NavMenu.Item pos='rel'>
-				<Accordion.Root>
-					<Accordion.Header p='var(--_item-p)' hov='o'>
-						<Accordion.Label>Accordion Menu</Accordion.Label>
-						<Accordion.Icon />
-					</Accordion.Header>
-					<Accordion.Body pos='abs' bxsh='20' bgc='base' w='100%'>
-						<NavMenu.Nest px-s='0'>
-							<NavMenu.Item hov='bgc'>
-								<NavMenu.Link href='#child-menu1'>Child item</NavMenu.Link>
-							</NavMenu.Item>
-							<NavMenu.Item hov='bgc'>
-								<NavMenu.Link href='#child-menu2'>Child item</NavMenu.Link>
-							</NavMenu.Item>
-						</NavMenu.Nest>
-					</Accordion.Body>
-				</Accordion.Root>
-			</NavMenu.Item>
+				<NavMenu.Item pos='rel'>
+					<Accordion.Root>
+						<Accordion.Header p='var(--_item-p)' hov='c'>
+							<Accordion.Label>Accordion Menu</Accordion.Label>
+							<Accordion.Icon />
+						</Accordion.Header>
+						<Accordion.Body pos='abs' bxsh='20' bgc='base' w='100%'>
+							<NavMenu.Nest fz='s' px-s='0'>
+								<NavMenu.Item hov='bgc'>
+									<NavMenu.Link href='#child-menu1'>Child item</NavMenu.Link>
+								</NavMenu.Item>
+								<NavMenu.Item hov='bgc'>
+									<NavMenu.Link href='#child-menu2'>Child item</NavMenu.Link>
+								</NavMenu.Item>
+							</NavMenu.Nest>
+						</Accordion.Body>
+					</Accordion.Root>
+				</NavMenu.Item>
 
-			<NavMenu.Item pos='rel'>
-				<Accordion.Root>
-					<Accordion.Header g='0' pr='20'>
-						<Accordion.Label>
-							<NavMenu.Link href='###' pr='20' hov='c'>Icon trigger Menu</NavMenu.Link>
-						</Accordion.Label>
-						<Accordion.Icon isTrigger bd bgc='inherit' p='10' hov='o'/>
-					</Accordion.Header>
-					<Accordion.Body pos='abs' bxsh='20' bgc='base' w='100%'>
-						<NavMenu.Nest px-s='0'>
-							<NavMenu.Item hov='bgc'>
-								<NavMenu.Link href='#child-menu1'>Child item</NavMenu.Link>
-							</NavMenu.Item>
-							<NavMenu.Item hov='bgc'>
-								<NavMenu.Link href='#child-menu2'>Child item</NavMenu.Link>
-							</NavMenu.Item>
-						</NavMenu.Nest>
-					</Accordion.Body>
-				</Accordion.Root>
-			</NavMenu.Item>
-			<NavMenu.Item hov='c'>
-				<NavMenu.Link href='#menu1'>Menu item</NavMenu.Link>
-			</NavMenu.Item>
-		</NavMenu.Root>
+				<NavMenu.Item pos='rel'>
+					<Accordion.Root>
+						<Accordion.Header g='0' pr='10'>
+							<Accordion.Label>
+								<NavMenu.Link href='###' pr='10' hov='c'>Icon trigger Menu</NavMenu.Link>
+							</Accordion.Label>
+							<Accordion.Icon isTrigger bd bdc='cc' bgc='inherit' p='5' bdrs='5' hov='c'/>
+						</Accordion.Header>
+						<Accordion.Body pos='abs' bxsh='20' bgc='base' w='100%'>
+							<NavMenu.Nest fz='s' px-s='0'>
+								<NavMenu.Item hov='bgc'>
+									<NavMenu.Link href='#child-menu1'>Child item</NavMenu.Link>
+								</NavMenu.Item>
+								<NavMenu.Item hov='bgc'>
+									<NavMenu.Link href='#child-menu2'>Child item</NavMenu.Link>
+								</NavMenu.Item>
+							</NavMenu.Nest>
+						</Accordion.Body>
+					</Accordion.Root>
+				</NavMenu.Item>
+				<NavMenu.Item hov='c'>
+					<NavMenu.Link href='#menu1'>Menu item</NavMenu.Link>
+				</NavMenu.Item>
+			</NavMenu.Root>
 		</Box>
 		```
 	</PreviewCode>

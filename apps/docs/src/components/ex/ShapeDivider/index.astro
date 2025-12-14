@@ -2,7 +2,7 @@
 import { Lism } from 'lism-css/astro';
 import './style.css';
 
-const { viewBox, children, isAnimation, isEmpty, level = 5, stretch, offset, style = {}, ...props } = Astro.props;
+const { viewBox, children, isAnimation, isEmpty, level = 5, stretch, offset, flip, style = {}, ...props } = Astro.props;
 
 // 変数セット
 style['--level'] = level || null;
@@ -12,7 +12,7 @@ style['--_inner-stretch'] = stretch || null;
 
 {
 	level && (
-		<Lism lismClass='c--shapeDivider' max-sz='full' aria-hidden='true' style={style} {...props}>
+		<Lism lismClass='c--shapeDivider' max-sz='full' data-flip={flip} aria-hidden='true' style={style} {...props}>
 			<div class='c--shapeDivider_inner -h:100%'>
 				{isEmpty ? null : (
 					<svg
