@@ -42,35 +42,23 @@
 	--pink: oklch(calc(var(--L) + 2%) calc(var(--C) + 0.02) 348);
 	--gray: oklch(calc(var(--L) - 4%) 0.04 256);
 
-	/* Ex. ダークモードは 明度・彩度 を少し上げる */
-	// &[data-theme='dark'] {
-	// 	--L: 72%;
-	// 	--C: 0.22;
-	// }
-
-	// ------------------------------------------------------------
-	// ------------------------------------------------------------
 	// --------------------
-	// キーワードカラー main(brand?), accent, base, ...
+	// キーワードカラー
 	// --------------------
 
 	// Main Color
-	--main: #1e5f8c;
+	--brand: #1e5f8c;
 	--accent: #d94a6a;
-	// --main: #2563eb;
-	// --accent: #ec4899;
-	// --accent-2: #bc3453;
-	// --accent-3: #bc3453;
+	// --accent-2: #000;
+	// --accent-3: #000;
 
 	// base
-	// --hs--base: 224 8%;
 	--base: hsl(224 6% 99%);
-	--base-2: hsl(224 10% 94%); // secondary
+	--base-2: hsl(224 10% 94%);
 
 	// text
-	// --hs--text: 224 4%;
 	--text: hsl(224 4% 8%);
-	--text-2: hsl(224 6% 32%); // secondary
+	--text-2: hsl(224 6% 32%);
 	--link: hsl(224, 90%, 48%);
 
 	--border: hsl(224 4% 80%);
@@ -82,21 +70,6 @@
 	--o--n10: 0.75;
 	--o--n20: 0.5;
 	--o--n30: 0.25;
-
-	// 数値
-	// low mid high
-
-	// 距離
-	// distant → far → mid → near → close
-
-	// 質感
-	// ghost → pale → soft → mild → solid
-
-	// シンプル系 軽さ・厚み
-	// thin → light → mid → bold → (thick)
-
-	// 濃度, 霧
-	// wisp mist haze fog dense
 
 	/* ------------------------------------------------------------
 	  aspect-ratio

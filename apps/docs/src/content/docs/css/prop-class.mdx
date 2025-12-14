@@ -162,9 +162,9 @@ Lismでは、主要なCSSプロパティ群に対して、それらで頻繁に�
 
 |Property|Shorthand|To Class|BP|
 |---|---|---|---|
-|`color`|`c`|`main`,`accent`<br />`text`,`text-2`,<br />`base`,<br />`inherit`<br />`transparent`|-|
-|`background-color`|`bgc`|`main`,`accent`<br />`base`,`base-2`,<br />`text`,<br />`inherit`<br />`transparent`|-|
-|`--bdc`|`bdc`|`main`,`accent`<br />`line`,<br />`inherit`,<br />`transparent`|-|
+|`color`|`c`|`brand`,`accent`<br />`text`,`text-2`,<br />`base`,<br />`inherit`<br />`transparent`|-|
+|`background-color`|`bgc`|`brand`,`accent`<br />`base`,`base-2`,<br />`text`,<br />`inherit`<br />`transparent`|-|
+|`--bdc`|`bdc`|`brand`,`accent`<br />`line`,<br />`inherit`,<br />`transparent`|-|
 {/* |`--keycolor`|`keycolor`|-|-| */}
 
 {/* (`--keycolor`は、[`u-cbox`](/css/utility-class/#u-cbox)クラスと合わせて利用します。) */}
@@ -172,16 +172,16 @@ Lismでは、主要なCSSプロパティ群に対して、それらで頻繁に�
 <Preview>
 	<PreviewTitle>Examples</PreviewTitle>
 	<PreviewArea p='20'>
-		<HTML.p c='main' bgc='base-2' bd p='30'>Example text</HTML.p>
+		<HTML.p c='brand' bgc='base-2' bd p='30'>Example text</HTML.p>
 	</PreviewArea>
 	<PreviewCode slot="tab" label="HTML">
 	```html
-	<p class='-c:main -bgc:base-2 -bd -p:30'>Example text</p>
+	<p class='-c:brand -bgc:base-2 -bd -p:30'>Example text</p>
 	```
 	</PreviewCode>
 	<PreviewCode slot="tab" label="JSX">
 	```jsx
-	<HTML.p c='main' bgc='base-2' bd p='30'>Example text</HTML.p>
+	<HTML.p c='brand' bgc='base-2' bd p='30'>Example text</HTML.p>
 	```
 	</PreviewCode>
 </Preview>
