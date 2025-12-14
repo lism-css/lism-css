@@ -31,10 +31,26 @@ export const ColorBadge = ({color, label}) => {
 |<ColorBadge color='accent' />|`--c--accent`|
 {/* |<ColorBadge color='accent-2' />|`--c--accent-2`| */}
 
+これらのカラーは、サイトに合わせて調整してご利用ください。
+{/* モダンCSSでは`color-mix()`があるので、hsl値の中身を変数にすることはしていません。 */}
 
 
-モダンCSSでは`color-mix()`があるので、hsl値の中身を変数にすることはしていません。
+<Preview>
+	<PreviewTitle>Preview</PreviewTitle>
+	<PreviewArea p={['30','40']} py='40'>
+		<Box bd bdc='line' p='30'>
+			<HTML.p fw='bold' c='main'>Main color example text</HTML.p>
+			<Dummy length='codes' pre='text: ' />
+			<Dummy c='text-2' length='s' pre='text-2: ' />
+		</Box>
 
+		<Box bgc='base-2' p='30'>
+			<HTML.p fw='bold' c='accent'>Accent color example text</HTML.p>
+			<Dummy length='codes' pre='text: ' />
+			<Dummy c='text-2' length='s' pre='text-2: ' />
+			</Box>
+		</PreviewArea>
+	</Preview>
 
 ### PALETTE
 
@@ -51,6 +67,17 @@ export const ColorBadge = ({color, label}) => {
 |<ColorBadge color='black' />|`--black`|
 |<ColorBadge color='white' />|`--white`|
 
+パレットカラーはOKLCHで定義されています。
+
+`--L`が明度、`--C`が彩度の基準値として定義されており、この二つの値を調整するとパレットカラー全体の色味を調整できます。
+
+例えば、以下のようにすることで全体を少し明るくすることができ、ダークモード対応が簡単に実装できます。
+```css
+:root[data-theme='dark'] {
+	--L: 72%;
+	--C: 0.22;
+}
+```
 
 ## `RADIUS`
 
