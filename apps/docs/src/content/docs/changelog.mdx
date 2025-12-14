@@ -27,7 +27,7 @@ v.1.0リリースまでしばらく激しい変更が続く可能性があるた
 ## v.0.7.2
 - is--linkBox, u-expandedLink のCSSを調整しました。
 - `<HTML.button>`にデフォルトで`setPlain`を適用するようにしました。
-- `a`に対する初期`color`を`var(--c--link)`から`var(--link-c, --c--link)`に変更しました。
+- `a`に対する初期`color`を`var(--link)`から`var(--link-c, --link)`に変更しました。
 
 ## v.0.7.3
 - 0.7.2の変更がCSSに反映されていなかった問題を修正しました。
@@ -76,7 +76,7 @@ v.1.0リリースまでしばらく激しい変更が続く可能性があるた
 
 例：
 - `--fz-l` → `--fz--l`
-- `--c-main` → `--c--main`
+- `--c-main` → `--main`
 - `--link--td` → `--link-td`
 
 
@@ -89,7 +89,7 @@ v.1.0リリースまでしばらく激しい変更が続く可能性があるた
 
 | トークン | 変更前 | 変更 |
 | ------ | ------ | ------ |
-| `c` | `divider`<br />(`--c-divider`, `-bdc:divider`) | `line`<br />(`--c--line`, `-bdc:line`) |
+| `c` | `divider`<br />(`--c-divider`, `-bdc:divider`) | `line`<br />(`--line`, `-bdc:line`) |
 | `fw` | `light` `normal` `bold`<br />(`-fw:light\|normal\|bold`) | `thin` `light` `normal` `medium` `bold` `black`<br />(`-fw:thin\|light\|normal\|medium\|bold\|black`) |
 | `op`→`o` | `low` `mid` `high`<br />(`--op-low\|mid\|high`, <br />`-o:low\|mid\|high`) | `-10` `-20` `-30`<br />(`--o--n10\|n20\|n30`, <br />`-o:-10\|-20\|-30`) |
 | `size`→`sz` | `--size-{token}` | `--sz--{token}` |
@@ -198,7 +198,7 @@ opacityが`op` → `o` となったため、 `hov='op'`(`.-hov:op`) も `hov='o'
 | `.-trs`   | `.set-transiton`  |
 | `--trsdu`   | `--duration`  |
 | `--trstf`   | `--ease`  |
-| `--trsp`   | `--property`  |
+| `--transparent`   | `--property`  |
 
 LinkBox のデフォルトで設定されていた　`hov='op'` を削除しました。
 
@@ -251,7 +251,7 @@ LinkBox のデフォルトで設定されていた　`hov='op'` を削除しま�
 | `u--` | `u-` |
 | `u--trimHL` | `u-trim` |
 | `u--trimBox` | `u-trimItems` |
-| `u--clipText` | `-bgclip:text`, `-c:trsp` |
+| `u--clipText` | `-bgclip:text`, `-c:transparent` |
 | `u--innerR`, `u--innerL` | `set-innerR`, `-bdrs:inner` |
 
 

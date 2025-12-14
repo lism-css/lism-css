@@ -104,8 +104,7 @@ export default {
 	},
 	bgc: {
 		prop: 'backgroundColor',
-		presets: ['base', 'base-2', 'text', 'inherit', 'main', 'accent'],
-		utils: { trsp: 'transparent' },
+		presets: ['base', 'base-2', 'text', 'main', 'accent', 'inherit', 'transparent'],
 		token: 'color',
 		exUtility: { inherit: { 'background-color': 'inherit' } },
 		alwaysVar: 1,
@@ -114,9 +113,7 @@ export default {
 	c: {
 		// Note: bg系（bgclip）より後にくるように。
 		prop: 'color',
-		presets: ['base', 'text', 'text-2', 'main', 'accent', 'inherit'],
-		utils: { trsp: 'transparent' },
-		// tt
+		presets: ['base', 'text', 'text-2', 'main', 'accent', 'inherit', 'transparent'],
 		token: 'color',
 		exUtility: {
 			inherit: { color: 'inherit' }, // --c ではなく color で出力したい
@@ -129,8 +126,8 @@ export default {
 	bds: { isVar: 1, presets: ['dashed', 'dotted', 'double'] },
 	bdc: {
 		isVar: 1,
-		presets: ['main', 'accent', 'line', 'inherit'],
-		utils: { trsp: 'transparent' },
+		presets: ['main', 'accent', 'border', 'inherit', 'transparent'],
+		utils: { cc: 'currentColor' },
 		token: 'color',
 	},
 	bdw: { isVar: 1, bp: 1 }, // --bdw のみ

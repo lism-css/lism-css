@@ -52,7 +52,7 @@ button[aria-controls='starlight__sidebar'] {
 // コンテンツにスキップ ボタン
 a[href='#_top'] {
 	color: white;
-	background: var(--c--link);
+	background: var(--link);
 }
 
 /* ----------------------------------------
@@ -95,13 +95,13 @@ a[href='#_top'] {
 			font-size: 0.95em;
 			font-family: var(--ff--mono);
 			line-height: 1;
-			border: solid 1px var(--c--line);
+			border: solid 1px var(--border);
 			border-radius: 0.25em;
-			box-shadow: 0 2px 0 var(--c--line);
+			box-shadow: 0 2px 0 var(--border);
 			translate: 0 -1px;
 
-			// color: var(--c--text);
-			// background-color: var(--c--base);
+			// color: var(--text);
+			// background-color: var(--base);
 		}
 	}
 
@@ -114,7 +114,7 @@ a[href='#_top'] {
 		isolation: isolate;
 
 		:where(td, th) {
-			border-block: 1px solid var(--c--line);
+			border-block: 1px solid var(--border);
 		}
 		thead {
 			border-block-end: solid 2px;
@@ -125,7 +125,7 @@ a[href='#_top'] {
 .c--propBadge {
 	display: inline-flex;
 	white-space: nowrap;
-	--bdc: color-mix(in srgb, var(--c--base), var(--keycolor) 25%);
+	--bdc: color-mix(in srgb, var(--base), var(--keycolor) 25%);
 
 	> code {
 		font: inherit !important;

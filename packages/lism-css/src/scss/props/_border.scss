@@ -1,12 +1,11 @@
 @use '../_mixin' as mixin;
 
 /*
-
-	使用される環境（resetCSS）によって挙動が変わりやすいので 各プロパティを変数で管理する。
+	各プロパティを変数で管理する。
 	Memo: ブラウザのデフォルト挙動では、bds指定でborder出現してくるが、nextraのresetCSSみたいな特殊な環境だとbdwの指定でborderでてきたりする。
 
 	各方向にそれぞれBP対応しているとCSSが肥大化することもあり、border はLismの中でも特殊な仕様になっている。
-	--bds, --bdw, --bdc で管理できるようにしていて、そのために .-bd, .-bd-{side} クラスを使う。
+	--bds, --bdw, --bdc で管理できるようにしていて、そのために .-bd or .-bd-{side} クラスを使う。
 
 	--bdw を変化させることで方向を変化させたりできるようになっている。
 */
@@ -17,7 +16,7 @@
 @include mixin.maybe_where('.-bd,[class*=" -bd-"],[class^="-bd-"]', '@base') {
 	--bds: solid;
 	--bdw: 1px;
-	--bdc: currentColor;
+	--bdc: var(--border);
 	border-width: var(--bdw) #{mixin.$maybe_important};
 	border-color: var(--bdc) #{mixin.$maybe_important};
 }

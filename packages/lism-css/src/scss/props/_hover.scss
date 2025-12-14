@@ -2,13 +2,13 @@
 
 @media (any-hover: hover) {
 	.-hov\:c:hover {
-		color: var(--hov-c, var(--c--link)) #{mixin.$maybe_important};
+		color: var(--hov-c, var(--link)) #{mixin.$maybe_important};
 	}
 	.-hov\:bdc:hover {
-		border-color: var(--hov-bdc, var(--c--link)) #{mixin.$maybe_important};
+		border-color: var(--hov-bdc, currentColor) #{mixin.$maybe_important};
 	}
 	.-hov\:bgc:hover {
-		background-color: var(--hov-bgc, var(--c--base-2)) #{mixin.$maybe_important};
+		background-color: var(--hov-bgc, var(--base-2)) #{mixin.$maybe_important};
 	}
 	.-hov\:o:hover {
 		opacity: var(--hov-o, 0.7) #{mixin.$maybe_important};
@@ -22,7 +22,7 @@
 
 	// 背景色が暗くも明るくても使えるように、ニュートラルグレーを配色。黒からの変化の方がわかりづらいため、グレーの中でも少し明るめを混ぜる。
 	.-hov\:neutral:hover {
-		background-color: color-mix(in srgb, var(--bgc, var(--c--base)), hsl(220, 5%, 75%) 25%) #{mixin.$maybe_important};
+		background-color: color-mix(in srgb, var(--bgc, var(--base)), hsl(220, 5%, 75%) 25%) #{mixin.$maybe_important};
 	}
 }
 

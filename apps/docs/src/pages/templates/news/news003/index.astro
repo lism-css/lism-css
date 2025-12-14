@@ -13,8 +13,8 @@ import './_style.css';
 				<HTML.p class='u-trim' fz='3xl' fw='light' lts='l'>News</HTML.p>
 				<HTML.h lv='2' class='u-trim' fz='s' fw='normal' o='-20'>お知らせ</HTML.h>
 			</Stack>
-			<Grid gr={['2', null, '1 / -1']} gc={['1', null, '2']} gtc={['auto', 'auto 1fr']} bd-y-s bdc='line'>
-				<Grid tag='a' isLinkBox href='#' gtc='subgrid' gc='1 / -1' g={['20', '30']} bd-y-e bdc='line' py='30' setHov>
+			<Grid gr={['2', null, '1 / -1']} gc={['1', null, '2']} gtc={['auto', 'auto 1fr']} bd-y-s>
+				<Grid tag='a' isLinkBox href='#' gtc='subgrid' gc='1 / -1' g={['20', '30']} bd-y-e py='30' setHov>
 					<Grid gtc={['auto auto', 'auto 1fr']} g='30' jc='start' ai='center'>
 						<HTML.p fz='m'>2025.07.13</HTML.p>
 						<HTML.p d='if' jc='center' fz='xs' lh='xs' c='text' bgc='white' bd p='10 20' bdrs='99' ta='center'>新サービス</HTML.p>
@@ -24,7 +24,7 @@ import './_style.css';
 						<Icon icon='caret-right' fz='s' c='text' mx-s='auto' />
 					</Flex>
 				</Grid>
-				<Grid tag='a' isLinkBox href='#' gtc='subgrid' gc='1 / -1' g={['20', '30']} bd-y-e bdc='line' py='30' setHov>
+				<Grid tag='a' isLinkBox href='#' gtc='subgrid' gc='1 / -1' g={['20', '30']} bd-y-e py='30' setHov>
 					<Grid gtc={['auto auto', 'auto 1fr']} g='30' jc='start' ai='center'>
 						<HTML.p fz='m'>2025.07.13</HTML.p>
 						<HTML.p d='if' jc='center' fz='xs' lh='xs' c='text' bgc='white' bd p='10 20' bdrs='99' ta='center'>セキュリティ</HTML.p>
@@ -34,7 +34,7 @@ import './_style.css';
 						<Icon icon='caret-right' fz='s' c='text' mx-s='auto' />
 					</Flex>
 				</Grid>
-				<Grid tag='a' isLinkBox href='#' gtc='subgrid' gc='1 / -1' g={['20', '30']} bd-y-e bdc='line' py='30' setHov>
+				<Grid tag='a' isLinkBox href='#' gtc='subgrid' gc='1 / -1' g={['20', '30']} bd-y-e py='30' setHov>
 					<Grid gtc={['auto auto', 'auto 1fr']} g='30' jc='start' ai='center'>
 						<HTML.p fz='m'>2025.07.13</HTML.p>
 						<HTML.p d='if' jc='center' fz='xs' lh='xs' c='text' bgc='white' bd p='10 20' bdrs='99' ta='center'>重要なお知らせ</HTML.p>
@@ -55,7 +55,7 @@ import './_style.css';
 <style>
 	@media (any-hover: hover) {
 		.-hov\:to\:cLink {
-			color: var(--isHov_, var(--c--link));
+			color: var(--isHov_, var(--link));
 		}
 	}
 </style>

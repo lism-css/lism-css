@@ -15,8 +15,8 @@ export default {
 		values: ['5', '10', '15', '20', '30', '40', '50', '60', '70', '80'],
 	},
 	c: {
-		pre: '--c--',
-		values: ['base', 'base-2', 'text', 'text-2', 'line', 'link', 'main', 'accent'],
+		pre: '--',
+		values: ['base', 'base-2', 'text', 'text-2', 'border', 'link', 'main', 'accent'],
 	},
 	palette: {
 		pre: '--',

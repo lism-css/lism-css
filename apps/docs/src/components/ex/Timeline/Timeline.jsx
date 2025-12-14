@@ -10,7 +10,7 @@ export function Root({ children, isHorizontal, ...props }) {
 }
 
 export function Line(props) {
-	return <Decorator lismClass='c--timeline_line' bgc='line' jslf='center' {...props} />;
+	return <Decorator lismClass='c--timeline_line' bgc='border' jslf='center' {...props} />;
 }
 export function Shape(props) {
 	return <Center lismClass='c--timeline_shape' pos='rel' z='1' c='base' ar='1/1' bdrs='99' jslf='center' {...props} />;

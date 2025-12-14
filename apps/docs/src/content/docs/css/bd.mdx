@@ -43,7 +43,7 @@ Lismでは、border系の指定が少し特殊になっています。
 <Preview>
 	<PreviewTitle>使用例</PreviewTitle>
 	<PreviewArea p='30'>
-		<Box bd bdc='line' p='10'>
+		<Box bd p='10'>
 			<Dummy length='s'/>
 		</Box>
 		<Box bd bds='dashed' bdw='4px' bdc='red' p='15'>
@@ -52,7 +52,7 @@ Lismでは、border系の指定が少し特殊になっています。
 	</PreviewArea>
 	<PreviewCode label='JSX' slot='tab'>
 		```jsx
-		<Box bd bdc='line' p='10'>
+		<Box bd p='10'>
 			<Dummy length='s'/>
 		</Box>
 		<Box bd bds='dashed' bdw='4px' bdc='red' p='15'>
@@ -62,7 +62,7 @@ Lismでは、border系の指定が少し特殊になっています。
 	</PreviewCode>
 	<PreviewCode label='HTML' slot='tab'>
 		```html "-bd" "--bdc" "--bdw" "--bds"
-		<div class="l--box -bd -bdc:line -p:10">
+		<div class="l--box -bd -p:10">
 			<p> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor. </p>
 		</div>
 		<div class="l--box -bd -bds:dashed -p:15" style="--bdw:4px;--bdc:var(--red)">

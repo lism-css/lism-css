@@ -114,7 +114,7 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage, PropBad
 <Preview>
 	<PreviewTitle>`u-itemDivider`を使ってテーブルのような表現にする</PreviewTitle>
 	<PreviewArea resize p='15'>
-		<Grid gtc={['2fr 3fr', '1fr 2fr']} className='u-itemDivider' bd bdc='line'>
+		<Grid gtc={['2fr 3fr', '1fr 2fr']} className='u-itemDivider' bd>
 			<Box p='15' bgc='base-2'>A</Box>
 			<Box p='15' bgc='base-2'>B</Box>
 			<Box p='15'>Lorem ipsum</Box>
@@ -125,7 +125,7 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage, PropBad
 	</PreviewArea>
 	<PreviewCode slot='tab' label='JSX'>
 		```jsx
-		<Grid gtc={['2fr 3fr', '1fr 2fr']} className='u-itemDivider' bd bdc='line'>
+		<Grid gtc={['2fr 3fr', '1fr 2fr']} className='u-itemDivider' bd>
 			<Box p='15' bgc='base-2'>A</Box>
 			<Box p='15' bgc='base-2'>B</Box>
 			<Box p='15'>Lorem ipsum</Box>
@@ -137,7 +137,7 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage, PropBad
 	</PreviewCode>
 	<PreviewCode slot='tab' label='HTML'>
 		```html
-		<div class='l--grid u-itemDivider -gtc -gtc_sm -bd -bdc:line' style='--gtc:2fr 3fr;--gtc_sm:1fr 2fr'>
+		<div class='l--grid u-itemDivider -gtc -gtc_sm -bd' style='--gtc:2fr 3fr;--gtc_sm:1fr 2fr'>
 			<div class='l--box -p:15 -bgc:base-2'>A</div>
 			<div class='l--box -p:15 -bgc:base-2'>B</div>
 			<div class='l--box -p:15'>Lorem ipsum</div>
