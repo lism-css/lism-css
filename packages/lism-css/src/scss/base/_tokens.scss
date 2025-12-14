@@ -12,54 +12,45 @@
 	// サイトコンテンツの左右につける余白
 	--gutter: 1.5rem;
 
-	// ------------------------------------------------------------
-	// カラー
-	// ------------------------------------------------------------
-
-	// --hsl-black: 0 0% 0%;
-	// --hsl-white: 0 0% 100%;
-	// --hsl-gray: 210 8% 40%;
-	// --hsl-red: 4 72% 50%;
-	// --hsl-orange: 28 76% 50%;
-	// --hsl-yellow: 46 76% 48%;
-	// --hsl-green: 145 80% 40%;
-	// --hsl-blue: 205 76% 50%;
-	// --hsl-purple: 258 72% 50%;
-	// --hsl-pink: 325 72% 50%;
-	// --black: hsl(var(--hsl-black));
-	// --white: hsl(var(--hsl-white));
-	// --gray: hsl(var(--hsl-gray));
-	// --red: hsl(var(--hsl-red));
-	// --orange: hsl(var(--hsl-orange));
-	// --yellow: hsl(var(--hsl-yellow));
-	// --green: hsl(var(--hsl-green));
-	// --blue: hsl(var(--hsl-blue));
-	// --purple: hsl(var(--hsl-purple));
-	// --pink: hsl(var(--hsl-pink));
+	/* --------------------------------------------
+		カラーパレット
+		1) 赤を基準として 明度L・彩度C を決める。
+		2) 各色は 色相H を固定セット。 L,C は色によって微調整。
+   * -------------------------------------------- */
 	--black: #000;
 	--white: #fff;
-	--gray: hsl(210 16% 40%);
-	--red: hsl(4 72% 50%);
-	--orange: hsl(26 80% 48%);
-	--yellow: hsl(48 80% 48%);
-	--green: hsl(132 76% 42%);
-	--blue: hsl(204 74% 50%);
-	--purple: hsl(260 72% 50%);
-	--pink: hsl(320 72% 50%);
+	// --gray: hsl(210 16% 40%);
+	// --red: hsl(4 72% 50%);
+	// --orange: hsl(26 80% 48%);
+	// --yellow: hsl(48 80% 48%);
+	// --green: hsl(132 76% 42%);
+	// --blue: hsl(204 74% 50%);
+	// --purple: hsl(260 72% 50%);
+	// --pink: hsl(320 72% 50%);
 
-	// ベースカラーに合わせたカラーを段階的に用意
-	// --b50: hsl(var(--hs--bc) 99%);
-	// --b100: hsl(var(--hs--bc) 96%);
-	// --b200: hsl(var(--hs--bc) 92%);
-	// --b300: hsl(var(--hs--bc) 84%);
-	// --b400: hsl(var(--hs--bc) 72%);
-	// --b500: hsl(var(--hs--bc) 60%);
-	// --b600: hsl(var(--hs--bc) 48%);
-	// --b700: hsl(var(--hs--bc) 36%);
-	// --b800: hsl(var(--hs--bc) 24%); // 淡い文字色 strong背景色
-	// --b900: hsl(var(--hs--bc) 12%); // ほんの少しだけ淡い文字色.
-	// --b950: hsl(var(--hs--bcc) 8%); // 文字色
+	/* 基準の明度と彩度（red)*/
+	--L: 58%;
+	--C: 0.2;
 
+	/* カラートークン（OKLCH） */
+	--red: oklch(var(--L) var(--C) 28);
+	--orange: oklch(calc(var(--L) + 4%) calc(var(--C) - 0.01) 52);
+	--yellow: oklch(calc(var(--L) + 12%) calc(var(--C) - 0.03) 84);
+	--green: oklch(calc(var(--L) + 4%) calc(var(--C) - 0.02) 148);
+	--blue: oklch(calc(var(--L) - 2%) calc(var(--C) + 0.01) 260);
+	--purple: oklch(calc(var(--L) - 4%) calc(var(--C) + 0.03) 292);
+	--pink: oklch(calc(var(--L) + 2%) calc(var(--C) + 0.02) 348);
+	--gray: oklch(calc(var(--L) - 4%) 0.04 256);
+
+	/* Ex. ダークモードは 明度・彩度 を少し上げる */
+
+	&[data-theme='dark'] {
+		--L: 72%;
+		--C: 0.22;
+	}
+
+	// ------------------------------------------------------------
+	// ------------------------------------------------------------
 	// --------------------
 	// キーワードカラー main(brand?), accent, base, ...
 	// --------------------
