@@ -15,7 +15,7 @@
 	// 子要素の制御
 	> * {
 		--max-sz: var(--contentSz, 100%);
-		max-inline-size: var(--max-sz, 100%);
+		max-inline-size: min(100%, var(--max-sz, 100%)); // min ないとimg要素等がはみ出す
 		margin-inline: auto;
 	}
 }
