@@ -1,5 +1,4 @@
 :root {
-	--c--main: #0791d6;
 	// 基本: light用
 	--lsdoc-codeBlock-bgc: hsl(200, 18%, 95%);
 	--lsdoc-preview_resize-bdc: hsl(200, 16%, 60%);
@@ -14,6 +13,9 @@
 }
 
 :root[data-theme='dark'] {
+	--L: 72%;
+	--C: 0.22;
+
 	--lsdoc-codeBlock-bgc: hsl(200, 12%, 12%);
 	--lsdoc-preview_resize-bdc: hsl(200, 16%, 40%);
 	--lsdoc-preview_help-bg: rgba(50, 50, 55, 0.5);
@@ -25,27 +27,22 @@
 	--c--base: hsl(215 8% 8%);
 	--c--base-2: hsl(215 8% 14%);
 
-	// line
-	--c--line: hsl(var(--c--base--hs) 20%);
-
 	// content
 	--c--text: hsl(215 8% 99%);
 	--c--text-2: hsl(215 4% 88%);
 
-	// link
-	--link-c: #50a2ff;
+	// --link-c: #50a2ff;
 
 	// shadow color
 	--shc: hsl(215 50% 80% / 5%);
 	--sh-i: inset;
 
 	// color mix
-	--cbox-cPct: 10%;
-	--cbox-bgPct: 12%;
-
-	.c--chat {
-		--cbox-bgPct: 25%;
-	}
+	--cbox-cPct: 12%;
+	--cbox-bgPct: 8%;
+}
+.c--chat {
+	--cbox-bgPct: 24%;
 }
 
 .z--mdcontent {
