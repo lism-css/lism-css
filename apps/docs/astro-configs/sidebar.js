@@ -124,6 +124,10 @@ export default [
 				link: '/modules/layout/center/',
 			},
 			{
+				label: 'LiquidGrid',
+				link: '/modules/layout/liquidgrid/',
+			},
+			{
 				label: 'Columns',
 				link: '/modules/layout/columns/',
 			},

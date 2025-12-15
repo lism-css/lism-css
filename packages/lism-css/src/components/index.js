@@ -17,6 +17,7 @@ export * from './Flex';
 export * from './Cluster';
 export * from './Stack';
 export * from './Grid';
+export * from './LiquidGrid';
 export * from './WithSide';
 export * from './Center';
 export * from './Columns';

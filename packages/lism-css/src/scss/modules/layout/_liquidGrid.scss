@@ -1,0 +1,9 @@
+/*
+    Memo: オーバーフロー回避のため、 min({cols}, 100%) とする。
+*/
+.l--liquidGrid {
+	--cols: var(--sz--min);
+	--autoMode: auto-fit;
+	display: grid;
+	grid-template-columns: repeat(var(--autoMode), minmax(min(var(--cols), 100%), 1fr));
+}
