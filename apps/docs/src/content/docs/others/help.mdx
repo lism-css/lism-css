@@ -14,7 +14,7 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage, Callout
 
 改行位置がない長い文字列があると、画面幅が狭い時に要素が外側へはみ出してしまうことがあります。
 
-そのような場合は、原因となる要素に`.-ovw:any`（`overflow-wrap: anywhere` のユーティリティクラス）を付けてください。
+そのような場合は、原因となる要素に`.-ovwrap:any`（`overflow-wrap: anywhere` のユーティリティクラス）を付けてください。
 
 
 <Preview>
@@ -44,11 +44,11 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage, Callout
 
 <Preview>
 	<PreviewTitle>
-		はみ出す原因となるテキストに `-ovw:any` を適用
+		はみ出す原因となるテキストに `-ovwrap:any` を適用
 	</PreviewTitle>
 	<PreviewArea resize p='15'>
 		<Flex g='15' className='has--itemGuide'>
-			<HTML.p className='-ovw:any'>LooooooooooooongStriiiinnnnnnnnnnngs!!!!</HTML.p>
+			<HTML.p className='-ovwrap:any'>LooooooooooooongStriiiinnnnnnnnnnngs!!!!</HTML.p>
 			<p>AAA</p>
 			<p>BBB</p>
 			<p>CCC</p>
@@ -57,7 +57,7 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage, Callout
 	<PreviewCode slot='tab' label='JSX'>
 	```jsx
 		<Flex g='15'>
-			<HTML.p className='-ovw:any'>LooooooooooooongStriiiinnnnnnnnnnngs!!!!</HTML.p>
+			<HTML.p className='-ovwrap:any'>LooooooooooooongStriiiinnnnnnnnnnngs!!!!</HTML.p>
 			<HTML.p>AAA</HTML.p>
 			<HTML.p>BBB</HTML.p>
 			<HTML.p>CCC</HTML.p>
@@ -67,7 +67,7 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage, Callout
 	<PreviewCode slot='tab' label='HTML'>
 	```jsx
 	<div class="l--flex -g:15">
-		<p class="-ovw:any">LooooooooooooongStriiiinnnnnnnnnnngs!!!!</p>
+		<p class="-ovwrap:any">LooooooooooooongStriiiinnnnnnnnnnngs!!!!</p>
 		<p>AAA</p>
 		<p>BBB</p>
 		<p>CCC</p>

@@ -362,9 +362,8 @@ export default {
 	// },
 
 	// others
-	// msk: { prop: 'mask', bp: 1 },
-	ovw: { prop: 'overflowWrap', utils: { any: 'anywhere' } },
-	whitespace: { prop: 'whiteSpace', presets: ['nowrap'] },
+	ovwrap: { prop: 'overflowWrap', utils: { any: 'anywhere' } },
+	whspace: { prop: 'whiteSpace', presets: ['nowrap'] },
 	// wordbreak: { prop: 'wordBreak', utils: { keep: 'keep-all', all: 'break-all' } },
 	float: { prop: 'float', presets: ['left', 'right'] },
 	clear: { prop: 'clear', presets: ['both'] },

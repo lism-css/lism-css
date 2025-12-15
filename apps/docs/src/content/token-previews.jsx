@@ -8,7 +8,7 @@ export const FzDemos = ({ lang = 'ja' }) => (
 					<HTML.span className='is--sizeTip u-trim' fz='12px' lh='s'>
 						<code>{fz}</code>
 					</HTML.span>
-					<Dummy lang={lang} length='s' fz={fz} className='-whitespace:nowrap -lh:1' />
+					<Dummy lang={lang} length='s' fz={fz} className='-whspace:nowrap -lh:1' />
 				</Stack>
 			);
 		})}
