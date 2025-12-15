@@ -81,7 +81,8 @@
 	}
 
 	/* クラスを持つリストのみスタイルをリセットする。（ブラウザ標準スタイルを利用できる余地を残す） */
-	:is(ul, ol):where([class]) {
+	menu,
+	:is(ul, ol)[class] {
 		list-style: none;
 		padding: 0;
 	}
