@@ -84,16 +84,36 @@ import { Desktop } from '@phosphor-icons/react';
 </Preview>
 
 
-### `set-transition`
 
-専用の変数を用いて、transitionプロパティをセットします。
+### `set-bp`
 
-<EmbedCode dirPath='packages/lism-css' srcPath='src/scss/base/set/_transition.scss' />
+特定のブレイクポイント以上でのみスタイルを適用させるためのユーティリティクラスです。
+[ブレイクポイント対応](/css/responsive/)していないプロパティを変化させたい時のハック的手段として活用できます。
 
-<Reference>
-活用例は [`hover`の解説ページ](/css/hov#set-transition) を参照してください。
-</Reference>
+<EmbedCode dirPath='packages/lism-css' srcPath='src/scss/base/set/_bp.scss' />
 
+<Preview>
+	<PreviewTitle>smサイズ以上でテキストカラーを赤に変える例</PreviewTitle>
+	<PreviewArea resize>
+		<Box className='set-bp' p='20' style={{'color': 'var(--_is_sm) red;'}}>
+			<p>ロレム・イプサムの座り雨。目まぐるしい文章の流れの中で、それは静かに歩く仮の言葉です。</p>
+		</Box>
+	</PreviewArea>
+	<PreviewCode slot='tab' label='HTML'>
+	```html "set-bp" "var(--_is_sm) red"
+	<div class="set-bp l--box -p:20" style="color:var(--_is_sm) red;">
+		<p>ロレム・イプサムの座り雨。目まぐるしい文章の流れの中で、それは静かに歩く仮の言葉です。</p>
+	</div>
+	```
+	</PreviewCode>
+	<PreviewCode slot='tab' label='JSX'>
+		```jsx "set-bp" "var(--_is_sm) red"
+		<Box className='set-bp' p='20' style={{'color': 'var(--_is_sm) red;'}}>
+			<p>ロレム・イプサムの座り雨。目まぐるしい文章の流れの中で、それは静かに歩く仮の言葉です。</p>
+		</Box>
+		```
+	</PreviewCode>
+</Preview>
 
 ### `set-hov`
 
@@ -103,6 +123,18 @@ import { Desktop } from '@phosphor-icons/react';
 
 <Reference>
 活用例は [`hover`の解説ページ](/css/hov#set-hov) を参照してください。
+</Reference>
+
+
+
+### `set-transition`
+
+専用の変数を用いて、transitionプロパティをセットします。
+
+<EmbedCode dirPath='packages/lism-css' srcPath='src/scss/base/set/_transition.scss' />
+
+<Reference>
+活用例は [`hover`の解説ページ](/css/hov#set-transition) を参照してください。
 </Reference>
 
 

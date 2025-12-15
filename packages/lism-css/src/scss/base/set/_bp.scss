@@ -1,0 +1,17 @@
+@use '../../query' as query;
+
+/* 特定のブレイクポイント以上でのみスタイルを適用させるためのハック変数. @see: .is--vertical */
+:root {
+	--_is_sm: unset;
+	--_is_md: unset;
+}
+@include query.bp-up('sm') {
+	.set-bp {
+		--_is_sm: ;
+	}
+}
+@include query.bp-up('md') {
+	.set-bp {
+		--_is_md: ;
+	}
+}
