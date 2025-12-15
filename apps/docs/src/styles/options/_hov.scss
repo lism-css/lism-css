@@ -14,10 +14,12 @@
 }
 
 .-hov\:to\:zoom {
+	--transProp: scale;
 	scale: var(--isHov_, 1.1);
 }
 .-hov\:to\:letterSpread {
-	letter-spacing: var(--isHov_, 0.125em);
+	--transProp: letter-spacing;
+	letter-spacing: var(--isHov_, 4px);
 }
 .-hov\:to\:slide {
 	opacity: var(--notHov_, 0);
