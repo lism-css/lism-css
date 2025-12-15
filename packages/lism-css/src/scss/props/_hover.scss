@@ -31,10 +31,12 @@
 // ------------------------------------------------------------
 
 .-hov\:to\:hide {
+	--transProp: opacity;
 	opacity: var(--isHov_, 0) #{mixin.$maybe_important};
 }
 
 .-hov\:to\:show {
+	--transProp: opacity, visibility;
 	opacity: var(--notHov_, 0) #{mixin.$maybe_important};
 	visibility: var(--notHov_, hidden) #{mixin.$maybe_important};
 }

@@ -160,7 +160,7 @@ Lismに内包されているクラスでは、それぞれ初期値を定義し�
 <Preview>
 	<PreviewTitle>border-colorをゆっくり変化させる例</PreviewTitle>
 	<PreviewArea p='30'>
-		<LinkBox href='###' setTransition hov={{ bdc:'red' }} bd bdw='3px' bgc='base-2' p='20' style={{'--duration':'1s'}}>
+		<LinkBox href='###' setTransition hov={{ bdc:'red' }} bd bdw='3px' bgc='base-2' p='20' style={{'--duration':'.5s'}}>
 			<p>LinkBox</p>
 			<p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
 		</LinkBox>
@@ -169,7 +169,7 @@ Lismに内包されているクラスでは、それぞれ初期値を定義し�
 		```html "set-transition" "--duration:1s"
 		<a
 			class="is--linkBox -hov:bdc set-transition -bd -bgc:base-2 -p:20"
-			style="--hov-bdc:var(--red);--duration:1s;--bdw:3px" href="###"
+			style="--hov-bdc:var(--red);--duration:.5s;--bdw:3px" href="###"
 		>
 			<p>LinkBox</p>
 			<p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
@@ -180,7 +180,7 @@ Lismに内包されているクラスでは、それぞれ初期値を定義し�
 		```jsx "setTransition" "--duration"
 		<LinkBox
 			href='###' setTransition hov={{ bdc:'red' }} bd bdw='3px' bgc='base-2' p='20'
-			style={{'--duration':'1s'}}~
+			style={{'--duration':'.5s'}}~
 		>
 			<p>LinkBox</p>
 			<p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
@@ -364,12 +364,12 @@ Lismに内包されているクラスでは、それぞれ初期値を定義し�
 		<LinkBox
 			href='#banner-link'
 			setHov ov='hidden' ar='16/9' bdrs='30'
-			style={{'--transition-duration':'.6s'}}
+			style={{'--duration':'.4s'}}
 		>
 			<Frame isLayer>
 				<Media setTransition hov='to:zoom' src='https://cdn.lism-css.com/img/a-2.jpg' alt='' width='960' height='640' loading='lazy'/>
 			</Frame>
-			<Layer setTransition hov='to:hide' grayscale='70%'/>
+			<Layer setTransition hov='to:hide' grayscale='70%' />
 			<Center isLayer c='#fff' bgc='rgb(0 0 0 / 40%)'>
 				<HTML.p setTransition hov='to:letterSpread' fz='2xl'>LinkBox</HTML.p>
 			</Center>
@@ -379,9 +379,11 @@ Lismに内包されているクラスでは、それぞれ初期値を定義し�
 	<PreviewCode slot='tab' label='追加CSS'>
 	```css
 	.-hov\:to\:zoom {
+		--transProp: scale;
 		scale: var(--isHov_, 1.1);
 	}
 	.-hov\:to\:letterSpread {
+		--transProp: letter-spacing;
 		letter-spacing: var(--isHov_, 0.125em);
 	}
 	```
