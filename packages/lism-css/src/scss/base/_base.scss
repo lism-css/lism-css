@@ -11,6 +11,8 @@ body {
 	letter-spacing: var(--lts--base);
 	background-color: var(--base);
 	color: var(--text);
+
+	text-underline-offset: var(--under-offset, 0.125em);
 }
 
 /* ----------------------------------------
@@ -64,6 +66,17 @@ small {
 	font-size: var(--fz--xs);
 }
 
+b,
+strong {
+	font-weight: var(--fw--bold);
+}
+
+sup,
+sub {
+	font-size: 80%;
+	line-height: 1.2;
+}
+
 legend,
 caption,
 figcaption {
@@ -80,6 +93,8 @@ samp {
 a {
 	color: var(--link-c, var(--link));
 	text-decoration: var(--link-td, underline);
+	text-decoration-thickness: var(--link-td-thickness, auto);
+	text-decoration-color: var(--link-td-color, currentColor);
 }
 
 dt {
@@ -97,7 +112,7 @@ blockquote {
 hr {
 	border: none;
 	block-size: 0;
-	border-block-start: 1px solid var(--border);
+	border-block-start: 1px solid var(--divider);
 }
 
 // figure {
@@ -131,9 +146,6 @@ textarea,
 select,
 ::file-selector-button {
 	--hl: var(--hl--s);
-	// background-color: var(--base-2);
-	// border-radius: var(--bdrs--10);
-	border: 1px solid var(--border);
 	padding: var(--s5) var(--s10);
 }
 
