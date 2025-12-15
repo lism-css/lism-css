@@ -13,6 +13,7 @@ export default {
 	isLinkBox: 'is--linkBox',
 	isSide: 'is--side',
 	isSkipFlow: 'is--skipFlow',
+	isVertical: 'is--vertical',
 	hasGutter: 'has--gutter',
 
 	// set class

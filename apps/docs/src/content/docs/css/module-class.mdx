@@ -6,7 +6,7 @@ sidebar:
 ---
 
 
-import { Dummy, Box, HTML, Lism, Stack, Flex, Container, Frame, Center, Spacer, Media } from 'lism-css/astro';
+import { Dummy, Flow, Box, HTML, Lism, Stack, Flex, Container, Frame, Center, Spacer, Media } from 'lism-css/astro';
 import { Preview, PreviewArea, PreviewTitle, PreviewCode, PreviewFrame, Reference, Callout, Note } from '~/components';
 import ModuleList from '~/components/ModuleList.astro';
 
@@ -154,6 +154,7 @@ CSSは以下のようになっており、`inset:0`と`overflow:hidden`も指定
 活用例は [`<WithSide>`](/modules/layout/withside) を参照してください。
 </Reference>
 
+
 ### `is--skipFlow`
 
 `l--flow`の直下で使用すると、次に続く兄弟要素との余白量を打ち消します。
@@ -161,6 +162,46 @@ CSSは以下のようになっており、`inset:0`と`overflow:hidden`も指定
 <Reference>
 活用例は [`<Flow>`](/modules/layout/flow) を参照してください。
 </Reference>
+
+
+
+## `is--vertical`
+
+| クラス名 |
+|---|
+| `is--vertical`|
+| `is--vertical@sm`|
+| `is--vertical@md`|
+
+`is--vertical@[sm|md]`を使うと、そのブレイクポイント以上でのみ、縦書きモードになります。(**`.set-bp`クラスを併用する必要があります。**)
+
+縦書き用の値は、トークン（`--vertical-mode`）で管理しています。 （<span class='-fz:s'>これにより、lang属性に合わせて変数を上書きすることで、`vertical-rl`か`vertical-lr`を切り替えることができるようにもなっています。</span>）
+
+<Preview>
+	<PreviewTitle>smサイズ以上で縦書きにする例</PreviewTitle>
+	<PreviewArea p='0' resize>
+		<Flow hasGutter py='20' w='100%' h='20em' className='is--vertical@sm set-bp'>
+			<Dummy lang='ja' length='s' />
+			<Dummy lang='ja' length='l' offset='3' />
+		</Flow>
+	</PreviewArea>
+	<PreviewCode slot='tab' label='HTML'>
+	```html "is--vertical@sm set-bp"
+	<div class='is--vertical@sm set-bp l--flow has--gutter -py:20 -w:100% -h' style='--h:20em'>
+		<p>ロレム・イプサムの座り雨。目まぐるしい文章の流れの中で、それは静かに歩く仮の言葉です。</p>
+		<p>Elitも穏やかに続いていきますが、積み重ねられてきた「LiberroyとFoogの取り組み」は、決するための答えというより、余白のようなものです。作業が進むにつれて、工夫や考えとともに関心が折り重なりながらも、必要以上に主張せず彼らの作品は私たちに一定の示唆を与えてくれます。</p>
+	</div>
+	```
+	</PreviewCode>
+	<PreviewCode slot='tab' label='JSX'>
+		```jsx "is--vertical@sm set-bp"
+		<Flow hasGutter py='20' w='100%' h='20em' className='is--vertical@sm set-bp'>
+			<Dummy lang='ja' length='s' />
+			<Dummy lang='ja' length='l' offset='3' />
+		</Flow>
+		```
+	</PreviewCode>
+</Preview>
 
 
 ## Layout Modules

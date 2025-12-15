@@ -112,53 +112,7 @@ Lismでは、主要なCSSプロパティ群に対して、それらで頻繁に�
 </Preview>
 
 
-### writing-mode
-
-|Property|Shorthand|To Class|BP|
-|---|---|---|---|
-|`writing-mode`|`writing`|`vertical`|⚪︎|
-
-
-
-縦書き用の値は、トークン（`--writing--vertical`）で管理しています。 （<span class='-fz:s'>これにより、lang属性に合わせて変数を上書きすることで、`vertical-rl`か`vertical-lr`を切り替えることができるようにもなっています。</span>）
-
-<Preview>
-	<PreviewTitle>縦書きにする例</PreviewTitle>
-	<PreviewArea p='15' resize>
-		<Box h='20em' w='100%' writing='vertical'>
-			<Flow hasGutter>
-				<Dummy lang='ja' length='s' />
-				<Dummy lang='ja' length='l' offset='3' />
-			</Flow>
-		</Box>
-	</PreviewArea>
-	<PreviewCode slot='tab' label='HTML'>
-	```html "-writing:vertical"
-	<div class='l--box -h -w:100% -writing:vertical' style='--h:20em'>
-		<div class='l--flow has--gutter'>
-			<p>ロレム・イプサムの座り雨、トマ好き学習だったエリット、しかし時と活力はそのような木々と楽しみ。</p>
-			<p>ブラインド行うにはいくつかの重要な事柄が流れます。長年にわたり、私は学区と長寿であれば、そのような Liberroy,...</p>
-		</div>
-	</div>
-	```
-	</PreviewCode>
-	<PreviewCode slot='tab' label='JSX'>
-	```jsx "writing='vertical'"
-	<Box h='20em' w='100%' writing='vertical'>
-		<Flow hasGutter>
-			<Dummy lang='ja' length='s' />
-			<Dummy lang='ja' length='l' offset='3' />
-		</Flow>
-	</Box>
-	```
-	</PreviewCode>
-</Preview>
-
-
-
 ## Colors
-
-
 
 |Property|Shorthand|To Class|BP|
 |---|---|---|---|
