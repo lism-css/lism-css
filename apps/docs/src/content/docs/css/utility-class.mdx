@@ -197,124 +197,6 @@ import { Dog, Cat, Smiley, WarningCircle } from "@phosphor-icons/react";
 	</PreviewCode>
 </Preview>
 
-## `u-itemDivider`
-
-グリッド・フレックスボックス等の子要素間に区切りとなるようなボーダーを表示します。  
-（実装としてはbox-shadowで表現していますので、少し扱いに注意が必要です。）
-
-<Preview>
-	<PreviewTitle>例</PreviewTitle>
-	<PreviewArea resize p='20'>
-		<Grid gtc='liquid' className='u-itemDivider' cols='12rem'>
-			<Box p='15'><Dummy /></Box>
-			<Box p='15'><Dummy /></Box>
-			<Box p='15'><Dummy /></Box>
-			<Box p='15'><Dummy /></Box>
-			<Box p='15'><Dummy /></Box>
-			<Box p='15'><Dummy /></Box>
-			<Box p='15'><Dummy /></Box>
-		</Grid>
-	</PreviewArea>
-	<PreviewCode>
-		```jsx
-		<Grid gtc='liquid' className='u-itemDivider' cols='12rem'>
-			<Box p='15'><Dummy /></Box>
-			<Box p='15'><Dummy /></Box>
-			<Box p='15'><Dummy /></Box>
-			<Box p='15'><Dummy /></Box>
-			<Box p='15'><Dummy /></Box>
-			<Box p='15'><Dummy /></Box>
-			<Box p='15'><Dummy /></Box>
-		</Grid>
-		```
-	</PreviewCode>
-</Preview>
-
-<Preview>
-	<PreviewTitle>pに`var(--bdw)`をセットすると、clipされた周囲のボーダーも見えるようになります。</PreviewTitle>
-	<PreviewArea resize p='20'>
-		<Grid gtc='liquid' className='u-itemDivider' cols='12rem' p='var(--bdw)'>
-			<Box p='15'><Dummy /></Box>
-			<Box p='15'><Dummy /></Box>
-			<Box p='15'><Dummy /></Box>
-			<Box p='15'><Dummy /></Box>
-			<Box p='15'><Dummy /></Box>
-			<Box p='15'><Dummy /></Box>
-			<Box p='15'><Dummy /></Box>
-		</Grid>
-	</PreviewArea>
-	<PreviewCode>
-		```jsx
-		<Grid gtc='liquid' className='u-itemDivider' cols='12rem'>
-			<Box p='15'><Dummy /></Box>
-			<Box p='15'><Dummy /></Box>
-			<Box p='15'><Dummy /></Box>
-			<Box p='15'><Dummy /></Box>
-			<Box p='15'><Dummy /></Box>
-			<Box p='15'><Dummy /></Box>
-			<Box p='15'><Dummy /></Box>
-		</Grid>
-		```
-	</PreviewCode>
-</Preview>
-
-
-親グリッドに`bd`を指定すると、要素が埋まっていないところだけボーダーを表示しないカレンダーのような表現が可能です。
-
-<Preview>
-	<PreviewTitle>`bd`を指定</PreviewTitle>
-	<PreviewArea resize p='20'>
-		<Grid gtc='liquid' className='u-itemDivider' cols='10rem' ov='clip' p='0' bd bdrs='20'>
-			<Box p='15'><Dummy length='s'/></Box>
-			<Box p='15'><Dummy length='s'/></Box>
-			<Box p='15'><Dummy length='s'/></Box>
-			<Box p='15'><Dummy length='s'/></Box>
-			<Box p='15'><Dummy length='s'/></Box>
-			<Box p='15'><Dummy length='s'/></Box>
-		</Grid>
-	</PreviewArea>
-	<PreviewCode>
-		```jsx
-		<Grid gtc='liquid' className='u-itemDivider' cols='10rem' ov='clip' p='0' bd bdrs='20'>
-			<Box p='15'><Dummy length='s'/></Box>
-			<Box p='15'><Dummy length='s'/></Box>
-			<Box p='15'><Dummy length='s'/></Box>
-			<Box p='15'><Dummy length='s'/></Box>
-			<Box p='15'><Dummy length='s'/></Box>
-			<Box p='15'><Dummy length='s'/></Box>
-		</Grid>
-		```
-	</PreviewCode>
-</Preview>
-
-<br/>
-
-Flexboxで横並び・縦並びが変わるようなレイアウトでも、このユーティリティクラスを活用すれば簡単に要素感のボーダーを表示できます。
-
-<Preview>
-	<PreviewTitle>例</PreviewTitle>
-	<PreviewArea resize p='20'>
-		<Flex fxd={['column','row']} bd className='u-itemDivider'>
-			<Box fx='1' p='15'>Box</Box>
-			<Box fx='1' p='15'>Box</Box>
-			<Box fx='1' p='15'>Box</Box>
-			<Box fx='1' p='15'>Box</Box>
-		</Flex>
-	</PreviewArea>
-	<PreviewCode>
-		```jsx
-		<Flex fxd={['column','row']} bd className='u-itemDivider'>
-			<Box fx='1' p='15'>Box</Box>
-			<Box fx='1' p='15'>Box</Box>
-			<Box fx='1' p='15'>Box</Box>
-			<Box fx='1' p='15'>Box</Box>
-		</Flex>
-		```
-	</PreviewCode>
-</Preview>
-
-
-
 
 ## `u-expandedLink`
 
@@ -346,6 +228,167 @@ Flexboxで横並び・縦並びが変わるようなレイアウトでも、こ�
 	border-width: 0;
 }
 ```
+
+
+## `u-collapseGrid`
+
+
+グリッド・フレックスボックス等の子要素間に区切りとなるようなボーダーを表示します。
+
+実装としてはbox-shadowで表現していますので、少し扱いには注意が必要です。
+
+<Preview>
+	<PreviewTitle>例</PreviewTitle>
+	<PreviewArea resize p='20'>
+		<Grid layout='liquidGrid' className='u-collapseGrid' cols='12rem' bdrs='20'>
+			<Box p='15'>Grid Item</Box>
+			<Box p='15'>Grid Item</Box>
+			<Box p='15'>Grid Item</Box>
+			<Box p='15'>Grid Item</Box>
+			<Box p='15'>Grid Item</Box>
+			<Box p='15'>Grid Item</Box>
+		</Grid>
+	</PreviewArea>
+	<PreviewCode>
+		```jsx
+		<Grid layout='liquidGrid' className='u-collapseGrid' cols='12rem' bdrs='20'>
+			<Box p='15'>Grid Item</Box>
+			<Box p='15'>Grid Item</Box>
+			<Box p='15'>Grid Item</Box>
+			<Box p='15'>Grid Item</Box>
+			<Box p='15'>Grid Item</Box>
+			<Box p='15'>Grid Item</Box>
+		</Grid>
+		```
+	</PreviewCode>
+</Preview>
+
+<Preview>
+	<PreviewTitle>pに`p='0'` `ov='clip'`をセットすると、周囲のボーダーが見えなくなります。</PreviewTitle>
+	<PreviewArea resize p='20'>
+		<Grid layout='liquidGrid' className='u-collapseGrid' cols='12rem' p='0' ov='clip'>
+			<Box p='15'>Grid Item</Box>
+			<Box p='15'>Grid Item</Box>
+			<Box p='15'>Grid Item</Box>
+			<Box p='15'>Grid Item</Box>
+			<Box p='15'>Grid Item</Box>
+			<Box p='15'>Grid Item</Box>
+			<Box p='15'>Grid Item</Box>
+		</Grid>
+	</PreviewArea>
+	<PreviewCode>
+		```jsx
+		<Grid layout='liquidGrid' className='u-collapseGrid' cols='12rem'>
+			<Box p='15'><Dummy /></Box>
+			<Box p='15'><Dummy /></Box>
+			<Box p='15'><Dummy /></Box>
+			<Box p='15'><Dummy /></Box>
+			<Box p='15'><Dummy /></Box>
+			<Box p='15'><Dummy /></Box>
+			<Box p='15'><Dummy /></Box>
+		</Grid>
+		```
+	</PreviewCode>
+</Preview>
+
+
+その状態で親グリッドに`bd`を指定すると、要素が埋まっていないところだけボーダーを表示しないカレンダーのような表現が可能です。
+
+<Preview>
+	<PreviewTitle>`bd`を指定</PreviewTitle>
+	<PreviewArea resize p='20'>
+		<Grid layout='liquidGrid' className='u-collapseGrid' cols='10rem' ov='clip' p='0' bd>
+			<Box p='15'>Grid Item</Box>
+			<Box p='15'>Grid Item</Box>
+			<Box p='15'>Grid Item</Box>
+			<Box p='15'>Grid Item</Box>
+			<Box p='15'>Grid Item</Box>
+			<Box p='15'>Grid Item</Box>
+		</Grid>
+	</PreviewArea>
+	<PreviewCode>
+		```jsx
+		<Grid layout='liquidGrid' className='u-collapseGrid' cols='10rem' ov='clip' p='0' bd>
+			<Box p='15'>Grid Item</Box>
+			<Box p='15'>Grid Item</Box>
+			<Box p='15'>Grid Item</Box>
+			<Box p='15'>Grid Item</Box>
+			<Box p='15'>Grid Item</Box>
+			<Box p='15'>Grid Item</Box>
+		</Grid>
+		```
+	</PreviewCode>
+</Preview>
+
+<br/>
+
+Flexboxで横並び・縦並びが変わるようなレイアウトでも、このユーティリティクラスを活用すれば簡単に要素感のボーダーを表示できます。
+
+<Preview>
+	<PreviewTitle>例</PreviewTitle>
+	<PreviewArea resize p='20'>
+		<Flex fxd={['column','row']} className='u-collapseGrid'>
+			<Box fx='1' p='15'>Box</Box>
+			<Box fx='1' p='15'>Box</Box>
+			<Box fx='1' p='15'>Box</Box>
+			<Box fx='1' p='15'>Box</Box>
+		</Flex>
+	</PreviewArea>
+	<PreviewCode>
+		```jsx
+		<Flex fxd={['column','row']} className='u-collapseGrid'>
+			<Box fx='1' p='15'>Box</Box>
+			<Box fx='1' p='15'>Box</Box>
+			<Box fx='1' p='15'>Box</Box>
+			<Box fx='1' p='15'>Box</Box>
+		</Flex>
+		```
+	</PreviewCode>
+</Preview>
+
+
+Gridを使って table タグのような表現もできるようになります。
+<Preview>
+	<PreviewTitle>`u-collapseGrid`を使ってテーブルのような表現にする</PreviewTitle>
+	<PreviewArea resize p='15'>
+		<Grid gtc={['2fr 3fr', '1fr 2fr']} className='u-collapseGrid'>
+			<Box p='15' bgc='base-2'>A</Box>
+			<Box p='15' bgc='base-2'>B</Box>
+			<Box p='15'>Lorem ipsum</Box>
+			<Box p='15'><Dummy /></Box>
+			<Box p='15'>Dolor sit amet</Box>
+			<Box p='15'><Dummy length='l'/></Box>
+		</Grid>
+	</PreviewArea>
+	<PreviewCode slot='tab' label='JSX'>
+		```jsx
+		<Grid gtc={['2fr 3fr', '1fr 2fr']} className='u-collapseGrid'>
+			<Box p='15' bgc='base-2'>A</Box>
+			<Box p='15' bgc='base-2'>B</Box>
+			<Box p='15'>Lorem ipsum</Box>
+			<Box p='15'><Dummy /></Box>
+			<Box p='15'>Dolor sit amet</Box>
+			<Box p='15'><Dummy length='l'/></Box>
+		</Grid>
+		```
+	</PreviewCode>
+	<PreviewCode slot='tab' label='HTML'>
+		```html
+		<div class='l--grid u-collapseGrid -gtc -gtc_sm -bd' style='--gtc:2fr 3fr;--gtc_sm:1fr 2fr'>
+			<div class='l--box -p:15 -bgc:base-2'>A</div>
+			<div class='l--box -p:15 -bgc:base-2'>B</div>
+			<div class='l--box -p:15'>Lorem ipsum</div>
+			<div class='l--box -p:15'>
+				<p>Lorem ipsum dolor sit, amet...</p>
+			</div>
+			<div class='l--box -p:15'>Dolor sit amet</div>
+			<div class='l--box -p:15'>
+				<p>Lorem ipsum dolor sit, amet...</p>
+			</div>
+		</div>
+		```
+	</PreviewCode>
+</Preview>
 
 
 ## Opt-in
