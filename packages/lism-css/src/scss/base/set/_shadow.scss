@@ -1,0 +1,19 @@
+/* ------------------------------------------------------------
+	shadow
+	    Memo: :root だけで変数をセットしてしまうと--shc がその時点で固定されるので、再セットできる set-shadow クラスを用意。
+------------------------------------------------------------ */
+:root,
+.set-shadow {
+	--sh--5: var(--sh-inset) var(--shsz--5) var(--shc);
+	--sh--10: var(--sh-inset) var(--shsz--10) var(--shc);
+	--sh--20: var(--sh-inset) var(--shsz--20) var(--shc);
+	--sh--30: var(--sh-inset) var(--shsz--30) var(--shc);
+	--sh--40: var(--sh-inset) var(--shsz--40) var(--shc);
+	--sh--50: var(--sh-inset) var(--shsz--50) var(--shc);
+
+	--bxsh--10: var(--sh--5), var(--sh--10);
+	--bxsh--20: var(--sh--10), var(--sh--20);
+	--bxsh--30: var(--sh--20), var(--sh--30);
+	--bxsh--40: var(--sh--30), var(--sh--40);
+	--bxsh--50: var(--sh--40), var(--sh--50);
+}

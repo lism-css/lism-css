@@ -1,6 +1,6 @@
 @layer lism.modules {
 	.c--chat {
-		--cbox-bgPct: 12%;
+		--cbox-bgPct: 8%;
 		--_avator-size: clamp(48px, 32px + 5cqw, 64px); /* @320px:40px ~ @640:64px */
 		--_deco-size: calc(var(--_avator-size) * 0.25 + 0.25rem); /* if simple: 1.25rem; */
 		--_deco-mask: none;
@@ -11,6 +11,10 @@
 			'avatar name' minmax(1.5rem, auto)
 			'avatar body' / auto 1fr;
 		gap: 0 calc(var(--_deco-size) + 1px);
+	}
+
+	[data-theme='dark'] .c--chat {
+		--cbox-bgPct: 16%;
 	}
 
 	[data-chat-dir='end'] {

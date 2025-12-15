@@ -16,7 +16,7 @@
 @include mixin.maybe_where('.-bd,[class*=" -bd-"],[class^="-bd-"]', '@base') {
 	--bds: solid;
 	--bdw: 1px;
-	--bdc: var(--border);
+	--bdc: var(--divider);
 	border-width: var(--bdw) #{mixin.$maybe_important};
 	border-color: var(--bdc) #{mixin.$maybe_important};
 }

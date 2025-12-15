@@ -3,11 +3,15 @@
 		Memo: bgcの mix は transparent にする。半透明だと背景があると可読性が落ちる + chatのように同じ背景色の装飾を重ねても大丈夫なように。
 */
 .u-cbox {
-	--c: color-mix(in srgb, var(--text), var(--keycolor) var(--cbox-cPct, 24%));
+	--c: color-mix(in srgb, var(--text), var(--keycolor) var(--cbox-cPct, 32%));
 	--bgc: color-mix(in srgb, var(--base), var(--keycolor) var(--cbox-bgPct, 4%));
-	--bdc: color-mix(in srgb, transparent, var(--keycolor) var(--cbox-bdPct, 100%));
+	--bdc: color-mix(in srgb, transparent, var(--keycolor) var(--cbox-bdPct, 64%));
 	--link-c: var(--keycolor); // --link を上書きすると、keycolorに --link が使えなくなる
-	// --link-td: underline;
 	color: var(--c);
 	background-color: var(--bgc);
+
+	/* 相対カラー構文をサポートしているブラウザ向け */
+	@supports (color: oklch(from red l c h)) {
+		--shc: oklch(from var(--keycolor) calc(l / 1.5) calc(c / 1.5) h / 0.1);
+	}
 }

@@ -1,6 +1,5 @@
 import { Flow, WithSide, Center, Icon } from 'lism-css/react';
 import PRESETS from './presets';
-import './style.css';
 
 export default function Callout({ type = 'alert', keycolor, icon, flow, children, ...props }) {
 	const presetData = type ? PRESETS[type] : null;

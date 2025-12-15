@@ -126,7 +126,7 @@ export default {
 	bds: { isVar: 1, presets: ['dashed', 'dotted', 'double'] },
 	bdc: {
 		isVar: 1,
-		presets: ['brand', 'accent', 'border', 'inherit', 'transparent'],
+		presets: ['brand', 'accent', 'divider', 'inherit', 'transparent'],
 		utils: { cc: 'currentColor' },
 		token: 'color',
 	},
