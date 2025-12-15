@@ -91,17 +91,17 @@ export default {
 
 	// bg
 	bg: { prop: 'background', bp: 1 },
-	bgi: { prop: 'backgroundImage' },
-	bgr: { prop: 'backgroundRepeat', utils: { no: 'no-repeat' } },
-	bgp: { prop: 'backgroundPosition', presets: ['center'] },
-	bgsz: { prop: 'backgroundSize', presets: ['cover', 'contain'] },
-	bga: { prop: 'backgroundAttachment' }, // fixed
-	bgo: { prop: 'backgroundOrigin' }, // border, padding, content
-	bgblend: { prop: 'backgroundBlendMode' },
-	bgclip: {
-		prop: 'backgroundClip',
-		presets: ['text'],
-	},
+	// bgi: { prop: 'backgroundImage' },
+	// bgr: { prop: 'backgroundRepeat', utils: { no: 'no-repeat' } },
+	// bgp: { prop: 'backgroundPosition', presets: ['center'] },
+	// bgsz: { prop: 'backgroundSize', presets: ['cover', 'contain'] },
+	// bga: { prop: 'backgroundAttachment' }, // fixed
+	// bgo: { prop: 'backgroundOrigin' }, // border, padding, content
+	// bgblend: { prop: 'backgroundBlendMode' },
+	// bgclip: {
+	// 	prop: 'backgroundClip',
+	// 	presets: ['text'],
+	// },
 	bgc: {
 		prop: 'backgroundColor',
 		presets: ['base', 'base-2', 'text', 'brand', 'accent', 'inherit', 'transparent'],
@@ -113,7 +113,7 @@ export default {
 	c: {
 		// Note: bg系（bgclip）より後にくるように。
 		prop: 'color',
-		presets: ['base', 'text', 'text-2', 'brand', 'accent', 'inherit', 'transparent'],
+		presets: ['base', 'text', 'text-2', 'brand', 'accent', 'inherit'],
 		token: 'color',
 		exUtility: {
 			inherit: { color: 'inherit' }, // --c ではなく color で出力したい

@@ -424,12 +424,16 @@ export const LinkSPACE = () => <a href="/css/tokens/#space"><code>SPACE</code></
 
 ## Styling
 
+### Background
+
+|Prop|Shorthand|To Class|BP|
+|---|---|---|---|
+|`background`|`bg`|-|⚪︎|
 
 ### Shadow
 |Prop|Shorthand|To Class|BP|
 |---|---|---|---|
 |`box-shadow`|`bxsh`|[`SHADOW`](/css/tokens/#shadow)|-|
-
 
 
 ### Radius
@@ -492,97 +496,8 @@ borderに関する仕様は少し特殊になっています。詳しくは[bord
 </Reference>
 
 
-### Background
-
-|Prop|Shorthand|To Class|BP|
-|---|---|---|---|
-|`background`|`bg`|-|⚪︎|
-|`background-image`|`bgi`|-|-|
-|`background-position`|`bgp`|`center`|-|
-|`background-size`|`bgsz`|`cover`, `contain`|-|
-|`background-repeat`|`bgr`|`no`(`no-repeat`)|-|
-|`background-attachment`|`bga`|-|-|
-|`background-origin`|`bgo`|-|-|
-|`background-clip`|`bgclip`|`text`|-|
-|`background-blend-mode`|`bgblend`|-|-|
-
-<Preview>
-	<PreviewTitle>使用例</PreviewTitle>
-	<PreviewArea p='20' resize>
-		<Columns g='15'>
-			<Frame ar='16/9' bg='url(/img/pattern.png) center / 4rem'></Frame>
-			<Frame ar='16/9' bgi='url(/img/pattern.png)' bgp='center' bgsz='4rem' bgblend='difference' bgc='white'></Frame>
-		</Columns>
-	</PreviewArea>
-	<PreviewCode label='JSX' slot='tab'>
-		```jsx
-		<Columns g='15'>
-			<Frame ar='16/9' bg='url(/img/pattern.png) center / 4rem'></Frame>
-			<Frame ar='16/9' bgi='url(/img/pattern.png)' bgp='center' bgsz='4rem' bgblend='difference' bgc='white'></Frame>
-		</Columns>
-		```
-	</PreviewCode>
-	<PreviewCode label='HTML' slot='tab'>
-		```html
-		<div class="l--columns -g:15">
-			<div class="l--frame -ar:16/9 -bg" style="--bg:url(/img/pattern.png) center / 4rem"></div>
-			<div class="l--frame -ar:16/9 -bgi -bgp:c -bgc" style="--bgi:url(/img/pattern.png);background-size:4rem;background-blend-mode:difference;--bgc:var(--white)"></div>
-		</div>
-		```
-	</PreviewCode>
-</Preview>
-
-
-<Preview>
-	<PreviewTitle>グラデーション</PreviewTitle>
-	<PreviewArea p='20'>
-		<Frame p='40' bg='linear-gradient(to top, #a8edea 0%, #fed6e3 100%)'>Gradient</Frame>
-	</PreviewArea>
-	<PreviewCode label='JSX' slot='tab'>
-		```jsx
-		<Frame p='40' bg='linear-gradient(to top, #a8edea 0%, #fed6e3 100%)'>Gradient</Frame>
-		```
-	</PreviewCode>
-	<PreviewCode label='HTML' slot='tab'>
-		```html
-		<div class="l--center">
-			<div class="l--box -bg" style="--bg:linear-gradient(45deg, var(--blue), var(--pink))">
-				<p class="-fz:5xl -fw:bold -lh:1 -lts:l">TEXT</p>
-			</div>
-		</div>
-		```
-	</PreviewCode>
-</Preview>
-
-
-<Preview>
-	<PreviewTitle>テキストで背景をクリッピング</PreviewTitle>
-	<PreviewArea p='20'>
-		<Center>
-			<Box bg='linear-gradient(45deg, var(--blue), var(--pink))' bgclip='text' c='transparent'>
-				<HTML.p fz='5xl' fw='bold' lh='1' lts='l'>TEXT</HTML.p>
-			</Box>
-		</Center>
-	</PreviewArea>
-	<PreviewCode label='JSX' slot='tab'>
-		```jsx
-		<Center>
-			<Box bg='linear-gradient(45deg, var(--blue), var(--pink))' bgclip='text' c='transparent'>
-				<HTML.p fz='5xl' fw='bold' lh='1' lts='l'>TEXT</HTML.p>
-			</Box>
-		</Center>
-		```
-	</PreviewCode>
-	<PreviewCode label='HTML' slot='tab'>
-		```html
-		<div class="l--frame -ar:og -bg" style="--bg:linear-gradient(to top, #a8edea 0%, #fed6e3 100%)">  </div>
-		```
-	</PreviewCode>
-</Preview>
-
 
 {/* ### Transforms
-
 |Prop|Shorthand|To Class|BP|
 |---|---|---|---|
 |`translate`|`translate`|`-50X`,`-50Y`,`-50XY`|-|

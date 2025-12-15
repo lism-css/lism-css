@@ -490,3 +490,36 @@ Flexboxで横並び・縦並びが変わるようなレイアウトでも、こ�
 	</PreviewCode> */}
 </Preview>
 
+
+## u-bgclipText
+
+テキストで背景をクリッピングするためのクラスです。
+
+<Preview>
+	<PreviewTitle>テキストで背景をクリッピング</PreviewTitle>
+	<PreviewArea p='20'>
+		<Center>
+			<Box className='u-bgclipText' bg='linear-gradient(45deg, var(--blue), var(--pink))'>
+				<HTML.p fz='5xl' fw='bold' lh='1' lts='l'>TEXT</HTML.p>
+			</Box>
+		</Center>
+	</PreviewArea>
+	<PreviewCode label='JSX' slot='tab'>
+		```jsx
+		<Center>
+			<Box className='u-bgclipText' bg='linear-gradient(45deg, var(--blue), var(--pink))'>
+				<HTML.p fz='5xl' fw='bold' lh='1' lts='l'>TEXT</HTML.p>
+			</Box>
+		</Center>
+		```
+	</PreviewCode>
+	<PreviewCode label='HTML' slot='tab'>
+		```html
+		<div class="l--box u-bgclipText -bg:linear-gradient(to top, #a8edea 0%, #fed6e3 100%)">  </div>
+		```
+	</PreviewCode>
+</Preview>
+
+```css
+...
+```
