@@ -5,7 +5,7 @@ sidebar:
   order: 1
 ---
 import { Lism, Box } from "lism-css/astro";
-import { Preview, PreviewArea, PreviewTitle, PreviewCode, Reference, HelpText, Callout, IconBadge } from "~/components";
+import { Preview, PreviewArea, PreviewTitle, PreviewCode, Reference, HelpText, Callout, Note, IconBadge } from "~/components";
 
 export const WhsNw = ({children}) => {
 	return <span className='-whitespace:nowrap'>{children}</span>
@@ -294,22 +294,58 @@ Lismパッケージに内蔵されているクラスではありませんが、�
 
 変数名の各ブロックはキャメルケースで、`--{varName}`のように表現します。
 
-- トークン値など、一つのプロパティに対するバリエーションを示すものは、`--{prop}-{token}`のようにハイフンを1つ使って表現します。
-	- 例: `--fz--s`, `--fz--l`
-	- ただし、spaceトークンのみ特殊になっており、。`s`はプロパティ名ではなく`space`の省略であること、特に頻出なトークンであることから、`--s{Num}`とします。
-		- 例: `--s10`, `--s40`
-- 特定の要素に対するプロパティで、`:root`で上書き可能な値は`--{target}-{prop}`の形式で表現します。
-	- 例: `--link-td`, `--list-px-s`, `--h-ff`, `--sh-hsl`
-- Propクラスと対応するCSSプロパティの値を表すものは`--{prop}`で表現し、クラス名と同じ省略形で表現します。
-	- 例： `--p`, `--mx`
+#### トークン値
+
+- カラー: `--{color}`。例: `--brand`, `--text`, `--link`, `--red`
+- スペーシング: `--s{Token}` の形式をとります。例: `--s10`, `--s40`
+- その他、特定のプロパティ等に対するバリエーションを示すものは、`--{prop}--{token}`の形式て表現します。
+	- `font-size`: `--fz--s`, `--fz--base`, `--fz--l`
+	- `--hl`: `--hl--s`, `--hl--base`, `--hl--l`
+	- `border-radius`: `--bdrs--10`, `--bdrs--20`
+	- `box-shadow`: `--bxsh--10`, `--bxsh--20`
+	- サイズトークン: `--sz--{size}`。例: `--sz--s`, `--sz--m`, `--sz--l`
+
+
+**トークンのバリエーション表現規則について**
+
+1. `s`, `l`, `xl` などによるサイズ表記
+	- **基本となるベース値（`base`）または中心値 `m` があって、それに対して小さいか？大きいか？というのを表すトークン**はこの表記になります。
+    - `:root(html)`,`body`にセットされている値に戻すためのものは `base`、そうでないが基本的な中心値となるものは`m`で表現します。
+2. `10`, `20`, `30`,... などの数値による段階表記
+    - **`0`(`none`)が基準で、段階的に値を持つトークン**はこの表記になります。
+3. その他
+    - それぞれのプロパティに合うように、セマンティックなトークン名を定義します。
+	- 例: `--ar--og`
+
+
+<Note type='info' title='カラートークンのバリエーションについて'>
+`base`/`text` に対する `base-2`/`text-2` についての補足です。  
+これらはサイトのカラー設計するときにその都度意味合いが変わり得るものなので、意味付けを避けています。
+
+単純に数値でのバリエーション表現にすることで、サイトによっては`base-3`,`text-3`のように増やしていくこともできるようにしています。
+</Note>
+
+
+#### Props Class 用の変数名
+- Propクラスに対応するカスタムプロパティは`--{prop}`で表現し、**クラス名と同じ省略形**で表現します。
+	- 例： `--p`, `--mx`, `--c`, `--bgc`, `--bdrs`
 - Propクラスのブレイクポイント値は`-{prop}_{bp}`で表現します。 
-- 特定のコンポーネント・モジュールの主要機能を担う変数やそれ自身のCSSプロパティに対する変数は、`--{propName}`のように単一ブロックで表現します。
-	- 例: `--gutter`, `--colSize`, `--sideW`
-- 特定のコンポーネント・モジュールの子要素（`c--hoge_item`など）に対するプロパティは`--_{item}-{prop}`の形式で表現します。
+	- 例: `--p_sm`, `--mx_md`
+
+#### 要素に対する変数名
+- `:root`で初期値を上書き可能な特定の要素・クラスに対するプロパティは`--{target}-{prop}`の形式で表現します。
+	- 例: `--link-td`, `--heading-ff`, `--under-offset`, `--hl-unit`, `--ov-bgc`
+- コンポーネント・モジュールクラスの主要機能を担うプロパティに対する変数は、`--{propName}`のように単一ブロックで表現します。
+	- 例:`.l--withSide`の`--sideW`,`--mainW`
+	- ※ Prop Class として定義されているプロパティの場合、同じ変数名を利用して上書き可能にします。
+		- 例: `.c--button`の`--c`,`--bgc`
+- 特定のコンポーネント・モジュールの子要素（`c--hoge_item`など）に対するプロパティは`--_{item}-{propName}`の形式で表現します。
 	- 例: `--_icon-size`
-- スタイルの計算に使われる変数も`--_`で始めます。
-- 特殊な状態管理に使うような変数は、`--{varName}_`のように`_`で終わります。
+- 特殊な状態管理に使うような変数は、`--_{varName}`のように`_`で始まり、キャメルケースで1ブロックにまとめます。
 	- 例: `--isHov_`, `--notHov_`
+
+{/* `.l--columns`の`--cols` */}
+{/* `--gutterPx`? `--gutter-px`? */}
 
 
 ### クラスの命名規則
