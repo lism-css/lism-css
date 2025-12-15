@@ -2,7 +2,7 @@
 title: 'Dummy'
 description: ...
 ---
-import { Lism, HTML, Dummy } from "lism-css/astro";
+import { Lism, HTML, Dummy, Stack } from "lism-css/astro";
 import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage } from "~/components";
 
 ダミーテキストを出力できるLismコンポーネントです。
@@ -42,15 +42,32 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage } from "
 <Preview>
 	<PreviewTitle>ダミーテキストの長さの違い</PreviewTitle>
 	<PreviewArea p='20'>
-		<Dummy lang='ja' length='xs' pre='xs: ' />
+		<Stack g='5'>
+			<Dummy lang='ja' length='xs' pre='xs: ' />
+			<Dummy length='xs' pre='xs: ' />
+		</Stack>
+		<Stack g='5'>
 		<Dummy lang='ja' length='s' pre='s: ' />
-		<Dummy lang='ja' length='l' pre='l: ' />
-		<Dummy lang='ja' length='xl' pre='xl: ' />
+		<Dummy length='s' pre='s: ' />
+		</Stack>
+		<Stack g='5'>
+			<Dummy lang='ja' length='m' pre='m: ' />
+			<Dummy length='m' pre='m: ' />
+		</Stack>
+		<Stack g='5'>
+			<Dummy lang='ja' length='l' pre='l: ' />
+			<Dummy length='l' pre='l: ' />
+		</Stack>
+		<Stack g='5'>
+			<Dummy lang='ja' length='xl' pre='xl: ' />
+			<Dummy length='xl' pre='xl: ' />
+		</Stack>
 	</PreviewArea>
 	<PreviewCode>
 		```jsx
 		<Dummy lang='ja' length='xs' pre='xs: ' />
 		<Dummy lang='ja' length='s' pre='s: ' />
+		<Dummy lang='ja' length='m' pre='m: ' />
 		<Dummy lang='ja' length='l' pre='l: ' />
 		<Dummy lang='ja' length='xl' pre='xl: ' />
 		```
