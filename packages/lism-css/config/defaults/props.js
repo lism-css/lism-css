@@ -370,9 +370,4 @@ export default {
 	float: { prop: 'float', presets: ['left', 'right'] },
 	clear: { prop: 'clear', presets: ['both'] },
 	isolation: { prop: 'isolation', presets: ['isolate'] },
-
-	// transition
-	duration: { isVar: 1 },
-	delay: { isVar: 1 },
-	ease: { isVar: 1 },
 };
