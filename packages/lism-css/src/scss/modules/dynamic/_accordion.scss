@@ -1,10 +1,10 @@
 .d--accordion {
 	--duration: var(--acc-duration, 0.4s);
-	&.js-opened {
-		--notOpened_: ;
+	&[data-opened] {
+		--_notOpen: ;
 	}
-	&:not(.js-opened) {
-		--isOpened_: ;
+	&:not([data-opened]) {
+		--_isOpen: ;
 	}
 }
 
@@ -34,7 +34,7 @@
 }
 
 // 閉じている時
-.d--accordion:not(.js-opened) {
+.d--accordion:not([data-opened]) {
 	> .d--accordion_body {
 		grid: 0fr / auto;
 		padding-block: 0 !important;
@@ -49,6 +49,6 @@
 	// __icon 自体にborderつけたりすると回転が見えてしまうので、 icon自体を回転させる。
 	> .a--icon {
 		transition-duration: var(--duration);
-		rotate: var(--isOpened_, -180deg);
+		rotate: var(--_isOpen, -180deg);
 	}
 }

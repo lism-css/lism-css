@@ -353,10 +353,10 @@ CSSで`:root`の`--acc-duration`を上書きすると、デフォルトの開閉
 ```scss
 .d--accordion_icon {
 	> .a--icon:nth-last-of-type(2) {
-		opacity: var(--isOpened_, 0);
+		opacity: var(--_isOpen, 0);
 	}
 	> .a--icon:nth-of-type(2) {
-		opacity: var(--notOpened_, 0);
+		opacity: var(--_notOpen, 0);
 	}
 }
 ```
@@ -435,10 +435,10 @@ CSSで`:root`の`--acc-duration`を上書きすると、デフォルトの開閉
 
 おおまかな処理ステップは以下の通りです。
 
-- `d--accordion` の`summary`要素、または（`data-role="trigger"`があればその要素）にク対してリックイベント・トグルイベントを登録
-- クリック時、開閉状態に応じて、open属性と`.js-opened`クラスを操作。
+- `d--accordion` の`summary`要素、または（`data-role="trigger"`があればその要素）に対してクリックイベント・トグルイベントを登録
+- クリック時、開閉状態に応じて、open属性と`data-opened`属性を操作。
     - アニメーションの終了を待ってから状態を確定する。
 	- アコーディオンが開く時、親要素に`data-accordion-multiple="disallow"` があるかチェックし、あれば他の兄弟要素を閉じる。
 - トグル時の処理
-    - open属性と`.js-opened`クラスが食い違った場合に修正。
+    - open属性と`data-opened`属性が食い違った場合に修正。
 - イベント解除(コンポーネントのアンマウント時に登録イベントを解除。)

@@ -9,14 +9,14 @@
 }
 .d--tabs_tab {
 	&[aria-selected='true'] {
-		--notSelected_: ;
+		--_notSelected: ;
 	}
 	&[aria-selected='false'] {
-		--isSelected_: ;
+		--_isSelected: ;
 	}
 	// 非アクティブの時、薄いカラーに
 	:where(&) {
-		color: var(--notSelected_, var(--text-2));
+		color: var(--_notSelected, var(--text-2));
 	}
 }
 

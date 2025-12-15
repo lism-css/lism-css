@@ -234,28 +234,28 @@ Lismに内包されているクラスでは、それぞれ初期値を定義し�
 ## `.set-hov` と特殊変数
 
 
-<IconBadge /> Lism では、[`set-hov`](/css/module-class#set-hov)というクラスを定義しており、このクラスでは`--isHov_`変数と`--notHov_`変数を定義しています。
+<IconBadge /> Lism では、[`set-hov`](/css/module-class#set-hov)というクラスを定義しており、このクラスでは`--_isHov`変数と`--_notHov`変数を定義しています。
 
-- `--isHov_`は非hover時にのみ空白定義されています。
-- `--notHov_`は逆に、hover時にのみ空白定義されています。
+- `--_isHov`は非hover時にのみ空白定義されています。
+- `--_notHov`は逆に、hover時にのみ空白定義されています。
 
 ```css
 @media (any-hover: hover) {
 	.-hov\:set:hover {
-		--notHov_: ;
+		--_notHov: ;
 	}
 	.-hov\:set:not(:hover) {
-		--isHov_: ;
+		--_isHov: ;
 	}
 }
 @media (any-hover: none) {
 	.-hov\:set {
-		--isHov_: ;
+		--_isHov: ;
 	}
 }
 ```
 
-例えば `var(--isHov_, value)` とすると、`--isHov_`はhover時は未定義となるため、`value`が適用されます。  
+例えば `var(--_isHov, value)` とすると、`--_isHov`はhover時は未定義となるため、`value`が適用されます。  
 非hover時は空白の定義がされているため、無効な値となり無視されます。（ただし同じ要素の同じプロパティに対してすでにスタイルを適用している場合、それも無効となることに注意が必要です。）
 
 以下に例を示します。
@@ -270,9 +270,9 @@ Lismに内包されているクラスでは、それぞれ初期値を定義し�
 		```scss
 		/* 変数は.set-hov で定義済み */
 		.-hov\:test {
-			color: var(--isHov_, red) var(--notHov_, blue); /* hover時はred, 非hover時はblue*/
-			background-color: var(--notHov_, lightgray); /* 非hover時はlightgray、hover時は無効な値 */
-			box-shadow: var(--isHov_, var(--bxsh--30)); /* hover時はshadowあり、非hover時は無効な値 */
+			color: var(--_isHov, red) var(--_notHov, blue); /* hover時はred, 非hover時はblue*/
+			background-color: var(--_notHov, lightgray); /* 非hover時はlightgray、hover時は無効な値 */
+			box-shadow: var(--_isHov, var(--bxsh--30)); /* hover時はshadowあり、非hover時は無効な値 */
 		}
 		```
 	</PreviewCode>
@@ -291,7 +291,7 @@ Lismに内包されているクラスでは、それぞれ初期値を定義し�
 ### 子要素にホバー状態を渡す
 
 さて、この`set-hov`が便利なのはここからです。
-親要素に`set-hov`を付与してその子要素で`--isHov_`変数と`--notHov_`変数をうまく使うことで、hover時の子要素の挙動をコントロールできるようになります。
+親要素に`set-hov`を付与してその子要素で`--_isHov`変数と`--_notHov`変数をうまく使うことで、hover時の子要素の挙動をコントロールできるようになります。
 
 
 コアパッケージには、そのような子要素向けのクラスを `-hov:to:xxx` として2つだけ標準で用意しています。
@@ -300,13 +300,13 @@ Lismに内包されているクラスでは、それぞれ初期値を定義し�
 
 /* 親の set-hov がhoverされたら非表示にする */
 .-hov\:to\:hide {
-	opacity: var(--isHov_, 0);
+	opacity: var(--_isHov, 0);
 }
 
 /* 親の set-hov がhoverされたら表示する */
 .-hov\:to\:show {
-	opacity: var(--notHov_, 0);
-	visibility: var(--notHov_, hidden);
+	opacity: var(--_notHov, 0);
+	visibility: var(--_notHov, hidden);
 }
 ```
 
@@ -380,11 +380,11 @@ Lismに内包されているクラスでは、それぞれ初期値を定義し�
 	```css
 	.-hov\:to\:zoom {
 		--transProp: scale;
-		scale: var(--isHov_, 1.1);
+		scale: var(--_isHov, 1.1);
 	}
 	.-hov\:to\:letterSpread {
 		--transProp: letter-spacing;
-		letter-spacing: var(--isHov_, 0.125em);
+		letter-spacing: var(--_isHov, 0.125em);
 	}
 	```
 	</PreviewCode>

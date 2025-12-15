@@ -15,15 +15,15 @@
 
 .-hov\:to\:zoom {
 	--transProp: scale;
-	scale: var(--isHov_, 1.1);
+	scale: var(--_isHov, 1.1);
 }
 .-hov\:to\:letterSpread {
 	--transProp: letter-spacing;
-	letter-spacing: var(--isHov_, 4px);
+	letter-spacing: var(--_isHov, 4px);
 }
 .-hov\:to\:slide {
-	opacity: var(--notHov_, 0);
-	grid-template-rows: var(--isHov_, 1fr) var(--notHov_, 0fr);
+	opacity: var(--_notHov, 0);
+	grid-template-rows: var(--_isHov, 1fr) var(--_notHov, 0fr);
 	transition-property: margin-block, padding-block, opacity, grid-template;
 }
 
@@ -38,9 +38,9 @@
 // }
 
 .-hov\:test {
-	color: var(--isHov_, green) var(--notHov_, blue);
-	background-color: var(--notHov_, lightgray);
-	box-shadow: var(--isHov_, var(--bxsh--30));
+	color: var(--_isHov, green) var(--_notHov, blue);
+	background-color: var(--_notHov, lightgray);
+	box-shadow: var(--_isHov, var(--bxsh--30));
 }
 
 // @supports selector(:has(*)) {
