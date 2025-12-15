@@ -260,11 +260,7 @@ export default {
 	gta: { prop: 'gridTemplateAreas', bp: 1 },
 	gtc: {
 		prop: 'gridTemplateColumns',
-		presets: ['subgrid', 'liquid'],
-		exUtility: {
-			// repeat: { '--cols': '1', '--gtc': 'repeat(var(--cols), 1fr)' },
-			liquid: { '--cols': 'var(--sz--min)', '--gtc': 'repeat(auto-fit, minmax(min(var(--cols), 100%), 1fr))' },
-		},
+		presets: ['subgrid'],
 		bp: 1,
 	},
 	gtr: {

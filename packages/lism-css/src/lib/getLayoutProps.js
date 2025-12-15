@@ -22,8 +22,8 @@ export default function getLayoutProps(layout, props) {
 		return geGridProps(rest);
 	} else if (layout === 'withSide') {
 		return getWithSideProps(rest);
-	} else if (layout === 'columns') {
-		return getColumnsProps(rest);
+	} else if (layout === 'liquidGrid') {
+		return getLiquidProps(rest);
 	}
 
 	return rest;
@@ -47,10 +47,8 @@ function getWithSideProps({ sideW, mainW, style = {}, ...props }) {
 	return props;
 }
 
-function getColumnsProps({ colSize, autoType, style = {}, ...props }) {
-	if (colSize) style['--colSize'] = colSize;
-	if (autoType) style['--autoType'] = autoType;
-
+function getLiquidProps({ autoFill, style = {}, ...props }) {
+	if (autoFill) style['--autoMode'] = 'auto-fill';
 	props.style = style;
 	return props;
 }
