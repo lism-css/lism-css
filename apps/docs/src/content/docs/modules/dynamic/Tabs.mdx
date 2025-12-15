@@ -270,8 +270,8 @@ d--tabs
 
 コアではスタイルを特に持ちませんので、サイトごとにスタイルを用意してご利用ください。  
 
-`d--tabs_tab`では`--isSelected_`, `--notSelected_`が使えるようになっています。  
-<IconBadge type='help'/> （[`set-hov`](/css/hov#set-hov)の`--isHov_`,`--notHov_`の解説を参考にしてください。）
+`d--tabs_tab`では`--_isSelected`, `--_notSelected`が使えるようになっています。  
+<IconBadge type='help'/> （[`set-hov`](/css/hov#set-hov)の`--_isHov`,`--_notHov`の解説を参考にしてください。）
 
 ここではいくつかのスタイリング例を紹介します。
 
@@ -305,7 +305,7 @@ d--tabs
 	.d--tabs_tab {
 		font-size: var(--fz--s);
 		padding: 0.5em 0.875em;
-		box-shadow: var(--isSelected_, var(--sh-size) 0 0 currentColor);
+		box-shadow: var(--_isSelected, var(--sh-size) 0 0 currentColor);
 	}
 }
 ```
@@ -361,8 +361,8 @@ d--tabs
 	.d--tabs_tab {
 		padding: 0.25em 0.75em;
 		border-radius: calc(var(--bdrs--20) - 2px); /* 親の bdrs - 親のpadding / 2 */
-		background-color: var(--isSelected_, var(--base));
-		box-shadow: var(--isSelected_, var(--bxsh--10));
+		background-color: var(--_isSelected, var(--base));
+		box-shadow: var(--_isSelected, var(--bxsh--10));
 	}
 }
 ```

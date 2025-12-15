@@ -19,14 +19,14 @@ const clickedEvent = async (details, force = false) => {
 		details.open = true;
 		// 少しだけ遅らせた方が動作が安定する
 		setTimeout(async () => {
-			details.classList.add('js-opened'); // クラスの追加
+			details.setAttribute('data-opened', ''); // クラスの追加
 
 			// アニメーション完了後に dataset を除去。
 			await waitAnimation(body);
 			delete details.dataset.animating;
 		}, DELAY);
 	} else if (details.open) {
-		details.classList.remove('js-opened'); // クラスを削除
+		details.removeAttribute('data-opened'); // クラスを削除
 
 		// アニメーション完了後に open属性 を除去。
 		await waitAnimation(body);
@@ -41,15 +41,15 @@ const toggleEvent = (e, details) => {
 	// console.log('toggleEvent', e.target, e.currentTarget);
 
 	const hasOpen = details.open;
-	const hasOpenedClass = details.classList.contains('js-opened');
+	const hasOpenedClass = details.hasAttribute('data-opened');
 
-	// open はセットされたのに js-opened クラスがついてない時
+	// open はセットされたのに data-opened がついてない時
 	if (hasOpen && !hasOpenedClass) {
-		details.classList.add('js-opened');
+		details.setAttribute('data-opened', '');
 	}
-	// open は削除されたのに js-opened クラスがまだついている時
+	// open は削除されたのに data-opened がまだついている時
 	if (!hasOpen && hasOpenedClass) {
-		details.classList.remove('js-opened');
+		details.removeAttribute('data-opened');
 	}
 };
 
@@ -74,7 +74,7 @@ export const setEvent = (currentRef) => {
 
 		// 複数展開が禁止されている場合、（開く処理の直前で）他の開いているアイテムがあれば閉じる
 		if (!allowMultiple && !details.open) {
-			const openedItem = parent.querySelector(`.js-opened`);
+			const openedItem = parent.querySelector(`[data-opened]`);
 			if (null != openedItem) clickedEvent(openedItem, true);
 		}
 

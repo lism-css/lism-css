@@ -184,14 +184,6 @@ Lism CSS では、`@lism.modules`レイヤーの前後それぞれにユーテ�
 |Style Utility<HelpText>用途が明確な装飾・機能をまとめてセットするユーティリティクラス。<br/>`@lism.utility`で定義されます。</HelpText>|`.u-{style}`|`.u-cbox`,<br />`.u-itemDivider`|
 
 
-### Dynamic State
-
-`d--{module}`と合わせて、Javascriptで動的に付け外しされるようなクラスです。
-
-|分類|形式|例|
-|---|---|---|
-|Dynamic State<HelpText>jsによって動的に付け外しされるようなクラス</HelpText>|`.js-{state}`|`.js-active`,<br />`.js-opened`|
-
 
 ### Prop Class
 
@@ -204,7 +196,7 @@ Prop クラス には以下の3種類の形式があります。
 
 |形式|説明|例|
 |---|---|---|
-|<WhsNw>`.-{prop}:{value}`</WhsNw>| 各プロパティごとの主要な値やトークンの値を利用するためのユーティリティクラス |<WhsNw>`.-fz:l`</WhsNw>,<br/>`.-d:none`|
+|<WhsNw>`.-{prop}:{value}`</WhsNw>| 各プロパティごとの主要な値やトークンの値を利用するためのユーティリティクラス |<WhsNw>`.-fz:l`</WhsNw>,<br/><WhsNw>`.-d:none`</WhsNw>|
 |`.-{prop}`| 変数 `--{prop}` を受け取るためのクラス |`.-p`,<br/>`.-fz`|
 |`.-{prop}_{bp}`| 変数 `--{prop}_{bp}` を受け取るためのクラス |<WhsNw>`.-p_sm`</WhsNw>,<br/>`.-p_md`|
 
@@ -278,7 +270,17 @@ Prop クラス には以下の3種類の形式があります。
 
 ### その他の推奨規則
 
-Lismパッケージに内蔵されているクラスではありませんが、次のような感じで`@lism.modules`に命名すると統一感がでると思います。
+
+#### Dynamic Attributes
+
+Javascriptで動的に付け外しされるような状態管理には、data属性を使用します。
+
+例: `[data-opened]`, `[data-active]`
+
+
+#### ゾーニング、ページタイプを示すクラス名
+
+Lismパッケージに内蔵されているクラスではありませんが、次のような感じで命名すると統一感がでると思います。
 
 |分類|形式|例|
 |---|---|---|
@@ -342,7 +344,7 @@ Lismパッケージに内蔵されているクラスではありませんが、�
 - 特定のコンポーネント・モジュールの子要素（`c--hoge_item`など）に対するプロパティは`--_{item}-{propName}`の形式で表現します。
 	- 例: `--_icon-size`
 - 特殊な状態管理に使うような変数は、`--_{varName}`のように`_`で始まり、キャメルケースで1ブロックにまとめます。
-	- 例: `--isHov_`, `--notHov_`
+	- 例: `--_isHov`, `--_notHov`
 
 {/* `.l--columns`の`--cols` */}
 {/* `--gutterPx`? `--gutter-px`? */}

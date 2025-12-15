@@ -223,7 +223,7 @@ export const ExampleImgCard = (props) => {
 			<Stack fxg='1' g='30' p='30'>
 				<h3 className='u-trim -fz:l'>Card Title</h3>
 				<HTML.p className='u-trim' fz='s' lh='s' o='-10'>ロレム・イプサムの座り雨、トマ好き学習だったエリット、しかし時と活力はそのような木々と楽しみ。ブラインド行うにはいくつかの重要な事柄が流れます。</HTML.p>
-				<HTML.span d='in-flex' mx-s='auto' my-s='auto' c='var(--isHov_, var(--link)) var(--notHov_, inherit)' td='none' bd-b lh='s' p='10'>View More →</HTML.span>
+				<HTML.span d='in-flex' mx-s='auto' my-s='auto' c='var(--_isHov, var(--link)) var(--_notHov, inherit)' td='none' bd-b lh='s' p='10'>View More →</HTML.span>
 			</Stack>
 		</LinkBox>
 	</PreviewArea>
@@ -242,7 +242,7 @@ export const ExampleImgCard = (props) => {
 			<Stack fxg='1' g='30' p='30'>
 				<h3 className='u-trim -fz:l'>Card Title</h3>
 				<HTML.p className='u-trim' fz='s' lh='s' o='-10'>ロレム・イプサムの座り雨、トマ好き学習だったエリット、しかし時と活力はそのような木々と楽しみ。ブラインド行うにはいくつかの重要な事柄が流れます。</HTML.p>
-				<HTML.span d='in-flex' mx-s='auto' my-s='auto' c='var(--isHov_, var(--link)) var(--notHov_, inherit)' td='none' bd-b lh='s' p='10'>View More →</HTML.span>
+				<HTML.span d='in-flex' mx-s='auto' my-s='auto' c='var(--_isHov, var(--link)) var(--_notHov, inherit)' td='none' bd-b lh='s' p='10'>View More →</HTML.span>
 			</Stack>
 		</LinkBox>
 		```
@@ -266,7 +266,7 @@ export const ExampleImgCard = (props) => {
 			hov='bxsh' setHov setTransition
 		>
 			<Frame ga='img' aslf='stretch' ar={['og', '1/1']} max-w='100%' pos='rel' bdrs='20' bxsh='10'>
-				<Media css={{scale: 'var(--isHov_, 1.25)'}} setTransition src='https://cdn.lism-css.com/img/a-1.jpg' alt='' width='960' height='640' />
+				<Media css={{scale: 'var(--_isHov, 1.25)'}} setTransition src='https://cdn.lism-css.com/img/a-1.jpg' alt='' width='960' height='640' />
 			</Frame>
 			<Stack g='20' p='15'>
 				<h3 className='-fz:l'>Card Title</h3>
@@ -286,7 +286,7 @@ export const ExampleImgCard = (props) => {
 			hov='bxsh' setHov setTransition
 		>
 			<Frame ga='img' aslf='stretch' ar={['og', '1/1']} max-w='100%' pos='rel' bdrs='20' bxsh='10'>
-				<Media css={{scale: 'var(--isHov_, 1.25)'}} setTransition src='https://cdn.lism-css.com/img/a-1.jpg' alt='' width='960' height='640' />
+				<Media css={{scale: 'var(--_isHov, 1.25)'}} setTransition src='https://cdn.lism-css.com/img/a-1.jpg' alt='' width='960' height='640' />
 			</Frame>
 			<Stack g='20' p='15'>
 				<h3 className='-fz:l'>Card Title</h3>
@@ -352,8 +352,8 @@ export const ExampleImgCard = (props) => {
 <PreviewCode slot='tab' label='追加CSS'>
 ```css
 .-hov\:to\:slide {
-	opacity: var(--notHov_, 0);
-	grid-template-rows: var(--isHov_, 1fr) var(--notHov_, 0fr);
+	opacity: var(--_notHov, 0);
+	grid-template-rows: var(--_isHov, 1fr) var(--_notHov, 0fr);
 	transition-property: margin-block, padding-block, opacity, grid-template-rows;
 }
 ```
