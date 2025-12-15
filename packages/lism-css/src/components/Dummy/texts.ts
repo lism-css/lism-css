@@ -1,20 +1,37 @@
+const LOREM_IPSUM = {
+	ja: [
+		`ロレム・イプサムの座り雨。`,
+		`目まぐるしい文章の流れの中で、それは静かに歩く仮の言葉です。`,
+		`Elitも穏やかに続いていきますが、積み重ねられてきた「LiberroyとFoogの取り組み」は、決するための答えというより、余白のようなものです。`,
+		`作業が進むにつれて、工夫や考えとともに関心が折り重なりながらも、必要以上に主張せず彼らの作品は私たちに一定の示唆を与えてくれます。`,
+		`内容の違いを比べるためのドラーとして、静かにそこにあります。選ばれた事実や、意味を限定しない言葉の並びは、全体の雰囲気を整える役割を果たします。時間の流れの中で、そうした文章は自然に形を変え、使う人の意図に委ねられていきます。`,
+	],
+	en: [
+		'Lorem ipsum dolor sit amet.',
+		'Consectetur adipiscing elit, sed do eiusmod tempor.',
+		'Incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.',
+		'Nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat',
+		'Non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Sed ut perspiciatis undeomnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.',
+	],
+};
+
 export default {
 	ja: {
-		xs: 'ロレム・イプサムの座り雨。',
-		s: 'ロレム・イプサムの座り雨、トマ好き学習だったエリット、しかし時と活力はそのような木々と楽しみ。',
-		m: 'ロレム・イプサムの座り雨、トマ好き学習だったエリット、しかし時と活力はそのような木々と楽しみ。ブラインド行うにはいくつかの重要な事柄が流れます。',
-		l: 'ロレム・イプサムの座り雨、トマ好き学習だったエリット、しかし時と活力はそのような木々と楽しみ。ブラインド行うにはいくつかの重要な事柄が流れます。長年にわたり、私は学区と長寿であれば、そのような Liberroy, Foo の取り組み、我らのうち、Mulla Sunt の利点を提案したのなら。',
-		xl: 'ロレム・イプサムの座り雨、トマ好き学習だったエリット、しかし時と活力はそのような木々と楽しみ。ブラインド行うにはいくつかの重要な事柄が流れます。長年にわたり、私は学区と長寿であれば、そのような Liberroy, Foo の取り組み、我らのうち、Mulla Sunt の利点を提案したのなら。つまり、彼らはあなたの悩みに一般的な魂を癒しています。困難な必要性に少ないもの、それがコンテンツの比較です。あなたが選択的な彼女の事実、無意味な含有、便利な阻止と甘さ、誰かがもっと腐敗した残り物。提供する時間の生活、それで発明者が賢明です。',
-		codes: `<b>ロレム・イプサム</b>の座り雨、<a href='###'>トマ好き学習だったエリット</a>、しかし<i>時と活力</i>はそのような木々と楽しみ。長年にわたり、私は学区と長寿であれば、そのような<code>Liberroy</code>の取り組み。`,
+		xs: LOREM_IPSUM.ja[0],
+		s: LOREM_IPSUM.ja[0] + LOREM_IPSUM.ja[1],
+		m: LOREM_IPSUM.ja[0] + LOREM_IPSUM.ja[1] + LOREM_IPSUM.ja[2],
+		l: LOREM_IPSUM.ja[0] + LOREM_IPSUM.ja[1] + LOREM_IPSUM.ja[2] + LOREM_IPSUM.ja[3],
+		xl: LOREM_IPSUM.ja[0] + LOREM_IPSUM.ja[1] + LOREM_IPSUM.ja[2] + LOREM_IPSUM.ja[3] + LOREM_IPSUM.ja[4],
+		codes: `ロレム・イプサムの<i>座り雨</i>、それは<a href='###'>静かに歩く仮の言葉</a>です。長いあいだ積み重ねられてきた<code>Liberroy</code>と<code>Foog</code>の取り組み」は、私たちに<b>一定の示唆</b>を与えてくれます。`,
 	},
 
 	en: {
-		xs: 'Lorem ipsum dolor sit amet.',
-		s: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor.',
-		m: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit, sed do eiusmod tempor. Non facere laudantium ex eos doloribus aut dolore nisi.',
-		l: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit, sed do eiusmod tempor. Non facere laudantium ex eos doloribus aut dolore nisi provident libero, eum nulla sunt, porro sed dicta. Impedit ullam eveniet obcaecati minima.',
-		xl: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor. Amet ab commodi rerum voluptas iusto dolores numquam cum ratione, dignissimos quia recusandae assumenda magnam, molestiae necessitatibus quas minus, quod consectetur pariatur. Possimus eligendi ipsam rerum, nihil incidunt, commodi impedit eum blanditiis, quisquam maiores corrupti rem. Provident tempora vitae, quo at inventore est sapiente.',
-		codes: `<b>Lorem ipsum</b> dolor sit amet. <a href='###'>consectetur adipisicing</a> elit, <i>sed do eiusmod</i> tempor. Non facere <code>Laudantium</code> ex eos doloribus aut dolore nisi provident.`,
+		xs: LOREM_IPSUM.en[0],
+		s: LOREM_IPSUM.en[0] + LOREM_IPSUM.en[1],
+		m: LOREM_IPSUM.en[0] + LOREM_IPSUM.en[1] + LOREM_IPSUM.en[2],
+		l: LOREM_IPSUM.en[0] + LOREM_IPSUM.en[1] + LOREM_IPSUM.en[2] + LOREM_IPSUM.en[3],
+		xl: LOREM_IPSUM.en[0] + LOREM_IPSUM.en[1] + LOREM_IPSUM.en[2] + LOREM_IPSUM.en[3] + LOREM_IPSUM.en[4],
+		codes: `Lorem ipsum dolor <i>sit amet</i>. consectetur <a href='###'>adipisicing elit</a>, sed do eiusmod tempor. Non facere <code>Laudantium</code> ex eos <b>doloribus aut dolore</b> nisi provident.`,
 	},
 	ar: {
 		s: 'هذا نص وهمي أنا أكتب جمل ليس لها معنى معين.هذا نص وهمي أنا أكتب جمل ليس لها معنى معين.هذا نص وهمي أنا أكتب جمل ليس لها معنى معين.',
