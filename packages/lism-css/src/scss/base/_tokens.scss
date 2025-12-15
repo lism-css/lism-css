@@ -30,15 +30,15 @@
 
 	/* 基準の明度と彩度（red)*/
 	--L: 60%;
-	--C: 0.2;
+	--C: 0.22;
 
 	/* カラートークン（OKLCH） */
-	--red: oklch(var(--L) var(--C) 28);
+	--red: oklch(var(--L) var(--C) 20);
 	--orange: oklch(calc(var(--L) + 4%) calc(var(--C) - 0.01) 52);
-	--yellow: oklch(calc(var(--L) + 12%) calc(var(--C) - 0.03) 84);
-	--green: oklch(calc(var(--L) + 4%) calc(var(--C) - 0.02) 148);
+	--yellow: oklch(calc(var(--L) + 12%) calc(var(--C) - 0.025) 84);
+	--green: oklch(calc(var(--L) + 4%) calc(var(--C) - 0.02) 152);
 	--blue: oklch(calc(var(--L) - 2%) calc(var(--C) + 0.01) 260);
-	--purple: oklch(calc(var(--L) - 4%) calc(var(--C) + 0.03) 292);
+	--purple: oklch(calc(var(--L) - 4%) calc(var(--C) + 0.02) 292);
 	--pink: oklch(calc(var(--L) + 2%) calc(var(--C) + 0.02) 348);
 	--gray: oklch(calc(var(--L) - 4%) 0.04 256);
 
@@ -59,9 +59,9 @@
 	// text
 	--text: hsl(224 4% 8%);
 	--text-2: hsl(224 6% 32%);
-	--link: hsl(224, 90%, 48%);
+	--link: oklch(50% 0.3 240); //hsl(224, 90%, 48%);
 
-	--border: hsl(224 4% 80%);
+	--divider: hsl(224 4% 80%);
 
 	/* ------------------------------------------------------------
 	  opacity
@@ -96,7 +96,7 @@
 	/* ------------------------------------------------------------
 	shadow color, shadow inset, shadow size
 	------------------------------------------------------------ */
-	--sh-i: ; // for inset
+	--sh-inset: ; // for inset
 	--shc: hsl(220 4% 8% / 5%);
 
 	// x:fibo, y=fibo, blur=x+y*2
@@ -106,24 +106,4 @@
 	--shsz--30: 2px 8px 16px;
 	--shsz--40: 3px 13px 26px;
 	--shsz--50: 5px 21px 42px;
-}
-
-/* ------------------------------------------------------------
-	shadow
-	    Memo: カラー変数込みで変数をセットしてしまうと、--sh-c がその時点で固定されるので、再セットできる set-shadow クラスを用意。
------------------------------------------------------------- */
-:root,
-.set-shadow {
-	--sh--5: var(--sh-i) var(--shsz--5) var(--shc);
-	--sh--10: var(--sh-i) var(--shsz--10) var(--shc);
-	--sh--20: var(--sh-i) var(--shsz--20) var(--shc);
-	--sh--30: var(--sh-i) var(--shsz--30) var(--shc);
-	--sh--40: var(--sh-i) var(--shsz--40) var(--shc);
-	--sh--50: var(--sh-i) var(--shsz--50) var(--shc);
-
-	--bxsh--10: var(--sh--5), var(--sh--10);
-	--bxsh--20: var(--sh--10), var(--sh--20);
-	--bxsh--30: var(--sh--20), var(--sh--30);
-	--bxsh--40: var(--sh--30), var(--sh--40);
-	--bxsh--50: var(--sh--40), var(--sh--50);
 }

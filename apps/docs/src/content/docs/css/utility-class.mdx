@@ -20,14 +20,51 @@ import { Dog, Cat, Smiley, WarningCircle } from "@phosphor-icons/react";
 
 `color`, `background-color` にそれぞれ生成された 変数がセットされますが、`--bdc`は変数定義のみになるため、ボーダーを表示する時は[`-bd`クラス](/css/bd)との併用が必要です。
 
+<EmbedCode dirPath='packages/lism-css' srcPath='src/scss/utility/_cbox.scss' />
 
 <Preview>
 	<PreviewTitle>例</PreviewTitle>
 	<PreviewArea resize p='20'>
+		<Lism className='u-cbox' keycolor='red' p='20'><Dummy length='codes' /></Lism>
+		<Lism className='u-cbox' keycolor='purple' bd bdrs='20' bxsh='20' setShadow p='20'><Dummy length='codes' /></Lism>
+		<Lism className='u-cbox' keycolor='brand' bdc='keycolor' bd-x-s bdw='4px' p='20'><Dummy length='codes' /></Lism>
+	</PreviewArea>
+	<PreviewCode slot="tab" label="HTML">
+		```html
+		<div class='u-cbox -p:20' style='--keycolor:var(--red)'>
+			<p>Lorem ipsum dolor <i>sit amet</i>. consectetur <a href='###'>adipisicing elit</a>, sed do eiusmod tempor. Non facere <code>Laudantium</code> ex eos <b>doloribus aut dolore</b> nisi provident.</p>
+		</div>
+		<div class='u-cbox set-shadow -bd -bdrs:20 -bxsh:20 -p:20' style='--keycolor:var(--purple)'>
+			<p>Lorem ipsum dolor <i>sit amet</i>. consectetur <a href='###'>adipisicing elit</a>, sed do eiusmod tempor. Non facere <code>Laudantium</code> ex eos <b>doloribus aut dolore</b> nisi provident.</p>
+		</div>
+		<div class='u-cbox -bd-x-s -p:20' style='--keycolor:var(--brand);--bdc:var(--keycolor);--bdw:4px'>
+			<p>Lorem ipsum dolor <i>sit amet</i>. consectetur <a href='###'>adipisicing elit</a>, sed do eiusmod tempor. Non facere <code>Laudantium</code> ex eos <b>doloribus aut dolore</b> nisi provident.</p>
+		</div>
+		```
+	</PreviewCode>
+	<PreviewCode slot="tab" label='JSX'>
+		```jsx
 		<Lism className='u-cbox' keycolor='blue' p='20'><Dummy length='codes' /></Lism>
 		<Lism className='u-cbox' keycolor='red' bd p='20'><Dummy length='codes' /></Lism>
 		<Lism className='u-cbox' keycolor='purple' bd bdc='keycolor:base:25%' p='20'><Dummy length='codes' /></Lism>
 		<Lism className='u-cbox' keycolor='#688f04' bd-x-s bdw='4px' p='20'><Dummy length='codes' /></Lism>
+		```
+	</PreviewCode>
+</Preview>
+
+<Preview>
+	<PreviewTitle>バッジで利用する例と、変数によるカスタマイズ例</PreviewTitle>
+	<PreviewArea resize p='20'>
+		<Lism layout='cluster' g='10'>
+			<Lism tag='span' className='u-cbox' keycolor='red' bd fz='s' lh='s' py='5' px='10' bdrs='99'>Badge</Lism>
+			<Lism tag='span' className='u-cbox' keycolor='green' bd fz='s' lh='s' py='5' px='10' bdrs='99'>Badge</Lism>
+			<Lism tag='span' className='u-cbox' keycolor='blue' bd fz='s' lh='s' py='5' px='10' bdrs='99'>Badge</Lism>
+		</Lism>
+		<Lism layout='cluster' g='10' style={{'--cbox-cPct': '76%', '--cbox-bdPct': '20%'}}>
+			<Lism tag='span' className='u-cbox' keycolor='red' bd fz='s' lh='s' py='5' px='10' bdrs='99'>Badge</Lism>
+			<Lism tag='span' className='u-cbox' keycolor='green' bd fz='s' lh='s' py='5' px='10' bdrs='99'>Badge</Lism>
+			<Lism tag='span' className='u-cbox' keycolor='blue' bd fz='s' lh='s' py='5' px='10' bdrs='99'>Badge</Lism>
+		</Lism>
 	</PreviewArea>
 	<PreviewCode slot="tab" label="HTML">
 		```html
@@ -39,17 +76,61 @@ import { Dog, Cat, Smiley, WarningCircle } from "@phosphor-icons/react";
 	</PreviewCode>
 	<PreviewCode slot="tab" label='JSX'>
 		```jsx
-		<Lism className='u-cbox' keycolor='blue' p='20'><Dummy length='codes' /></Lism>
-		<Lism className='u-cbox' keycolor='red' bd p='20'><Dummy length='codes' /></Lism>
-		<Lism className='u-cbox' keycolor='purple' bd bdc='keycolor:base:25%' p='20'><Dummy length='codes' /></Lism>
-		<Lism className='u-cbox' keycolor='#688f04' bd-x-s bdw='4px' p='20'><Dummy length='codes' /></Lism>
+		<Lism layout='cluster' g='10'>
+			<Lism tag='span' className='u-cbox' keycolor='orange' bd fz='s' lh='s' py='5' px='10' bdrs='99'>Badge</Lism>
+			<Lism tag='span' className='u-cbox' keycolor='green' bd fz='s' lh='s' py='5' px='10' bdrs='99'>Badge</Lism>
+			<Lism tag='span' className='u-cbox' keycolor='blue' bd fz='s' lh='s' py='5' px='10' bdrs='99'>Badge</Lism>
+		</Lism>
+		<Lism layout='cluster' g='10' style={{'--cbox-cPct': '76%', '--cbox-bdPct': '20%'}}>
+			<Lism tag='span' className='u-cbox' keycolor='orange' bd fz='s' lh='s' py='5' px='10' bdrs='99'>Badge</Lism>
+			<Lism tag='span' className='u-cbox' keycolor='green' bd fz='s' lh='s' py='5' px='10' bdrs='99'>Badge</Lism>
+			<Lism tag='span' className='u-cbox' keycolor='blue' bd fz='s' lh='s' py='5' px='10' bdrs='99'>Badge</Lism>
+		</Lism>
 		```
-	</PreviewCode>
-	<PreviewCode slot="tab" label='CSS'>
-		<EmbedCode dirPath='packages/lism-css' srcPath='src/scss/utility/_cbox.scss' />
 	</PreviewCode>
 </Preview>
 
+
+<PreviewTitle>パレットカラー一覧</PreviewTitle>
+<PreviewArea p='20' ov-y='auto' max-h='25rem'>
+	<Lism className='u-cbox' keycolor='red' bd bdrs='20' bxsh='20' setShadow p='20'><Dummy length='codes' /></Lism>
+	<Lism className='u-cbox' keycolor='orange' bd bdrs='20' bxsh='20' setShadow p='20'><Dummy length='codes' /></Lism>
+	<Lism className='u-cbox' keycolor='yellow' bd bdrs='20' bxsh='20' setShadow p='20'><Dummy length='codes' /></Lism>
+	<Lism className='u-cbox' keycolor='purple' bd bdrs='20' bxsh='20' setShadow p='20'><Dummy length='codes' /></Lism>
+	<Lism className='u-cbox' keycolor='green' bd bdrs='20' bxsh='20' setShadow p='20'><Dummy length='codes' /></Lism>
+	<Lism className='u-cbox' keycolor='blue' bd bdrs='20' bxsh='20' setShadow p='20'><Dummy length='codes' /></Lism>
+	<Lism className='u-cbox' keycolor='purple' bd bdrs='20' bxsh='20' setShadow p='20'><Dummy length='codes' /></Lism>
+	<Lism className='u-cbox' keycolor='pink' bd bdrs='20' bxsh='20' setShadow p='20'><Dummy length='codes' /></Lism>
+	<Lism className='u-cbox' keycolor='gray' bd bdrs='20' bxsh='20' setShadow p='20'><Dummy length='codes' /></Lism>
+	<hr />
+	<Lism className='u-cbox' keycolor='red' bd-x-s bdc='keycolor' bdw='4px' bxsh='10' setShadow p='20'>
+		<HTML.span c='keycolor' fw='bold'>Title Text</HTML.span><Dummy length='codes' />
+	</Lism>
+	<Lism className='u-cbox' keycolor='orange' bd-x-s bdc='keycolor' bdw='4px' bxsh='10' setShadow p='20'>
+		<HTML.span c='keycolor' fw='bold'>Title Text</HTML.span><Dummy length='codes' />
+	</Lism>
+	<Lism className='u-cbox' keycolor='yellow' bd-x-s bdc='keycolor' bdw='4px' bxsh='10' setShadow p='20'>
+		<HTML.span c='keycolor' fw='bold'>Title Text</HTML.span><Dummy length='codes' />
+	</Lism>
+	<Lism className='u-cbox' keycolor='purple' bd-x-s bdc='keycolor' bdw='4px' bxsh='10' setShadow p='20'>
+		<HTML.span c='keycolor' fw='bold'>Title Text</HTML.span><Dummy length='codes' />
+	</Lism>
+	<Lism className='u-cbox' keycolor='green' bd-x-s bdc='keycolor' bdw='4px' bxsh='10' setShadow p='20'>
+		<HTML.span c='keycolor' fw='bold'>Title Text</HTML.span><Dummy length='codes' />
+	</Lism>
+	<Lism className='u-cbox' keycolor='blue' bd-x-s bdc='keycolor' bdw='4px' bxsh='10' setShadow p='20'>
+		<HTML.span c='keycolor' fw='bold'>Title Text</HTML.span><Dummy length='codes' />
+	</Lism>
+	<Lism className='u-cbox' keycolor='purple' bd-x-s bdc='keycolor' bdw='4px' bxsh='10' setShadow p='20'>
+		<HTML.span c='keycolor' fw='bold'>Title Text</HTML.span><Dummy length='codes' />
+	</Lism>
+	<Lism className='u-cbox' keycolor='pink' bd-x-s bdc='keycolor' bdw='4px' bxsh='10' setShadow p='20'>
+		<HTML.span c='keycolor' fw='bold'>Title Text</HTML.span><Dummy length='codes' />
+	</Lism>
+	<Lism className='u-cbox' keycolor='gray' bd-x-s bdc='keycolor' bdw='4px' bxsh='10' setShadow p='20'>
+		<HTML.span c='keycolor' fw='bold'>Title Text</HTML.span><Dummy length='codes' />
+	</Lism>
+</PreviewArea>
 
 
 ## `u-trim` & `u-trimItems`

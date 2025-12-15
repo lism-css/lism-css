@@ -14,14 +14,19 @@
 
 :root[data-theme='dark'] {
 	--L: 72%;
-	--C: 0.22;
+	--C: 0.24;
 
 	--lsdoc-codeBlock-bgc: hsl(200, 12%, 12%);
 	--lsdoc-preview_resize-bdc: hsl(200, 16%, 40%);
 	--lsdoc-preview_help-bg: rgba(50, 50, 55, 0.5);
 
-	--brand: #3ebefd;
-	--accent: #da3159;
+	--brand: #2b9ce7;
+	--accent: #ff5080;
+
+	@supports (color: oklch(from red l c h)) {
+		--brand: oklch(from #1e5f8c calc(l + 0.2) calc(c + 0.05) h);
+		--accent: oklch(from #d94a6a calc(l + 0.1) calc(c + 0.05) h);
+	}
 
 	// base
 	--base: hsl(215 8% 8%);
@@ -31,19 +36,19 @@
 	--text: hsl(215 8% 99%);
 	--text-2: hsl(215 4% 88%);
 
-	// --link-c: #50a2ff;
+	--link: oklch(72% 0.2 224); //hsl(224, 90%, 56%);
+	// --prose-link-underline-color: var(--color-sky-400);
+	// oklch(74.6% .16 232.661);
+
+	--divider: hsl(224 4% 80%);
 
 	// shadow color
 	--shc: hsl(215 50% 80% / 5%);
-	--sh-i: inset;
+	--sh-inset: inset;
 
 	// color mix
 	--cbox-cPct: 12%;
 	--cbox-bgPct: 8%;
-
-	.c--chat {
-		--cbox-bgPct: 24%;
-	}
 }
 
 .z--mdcontent {
