@@ -8,7 +8,7 @@ import { Lism, Box } from "lism-css/astro";
 import { Preview, PreviewArea, PreviewTitle, PreviewCode, Reference, HelpText, Callout, Note, IconBadge } from "~/components";
 
 export const WhsNw = ({children}) => {
-	return <span className='-whitespace:nowrap'>{children}</span>
+	return <span className='-whspace:nowrap'>{children}</span>
 }
 
 LismがどのようなCSS設計になっているかを説明します。
@@ -61,22 +61,22 @@ LismがどのようなCSS設計になっているかを説明します。
 			クラスもここに入ります。</td>
 		</tr>
 		<tr>
-			<td class='-whitespace:nowrap'>Modules<br/>`@lism.modules`</td>
+			<td class='-whspace:nowrap'>Modules<br/>`@lism.modules`</td>
 			<td>
 				モジュール群を定義するレイヤー。<br />
 				この中でさらにレイヤーが分かれており、 `.is--{state}`, `.l--{layout}`, `.d--{dynamic}` が定義されます。
 			</td>
 		</tr>
 		<tr>
-			<td class='-whitespace:nowrap'>Custom Modules<br/>`@lism.modules`</td>
+			<td class='-whspace:nowrap'>Custom Modules<br/>`@lism.modules`</td>
 			<td>その他、ユーザーが定義する具体的な役割を持つカスタムモジュール・UIコンポーネント群 (`.c--{modules}`) 。</td>
 		</tr>
 		<tr>
-			<td class='-whitespace:nowrap'>Utility<br/>`@lism.utility`</td>
+			<td class='-whspace:nowrap'>Utility<br/>`@lism.utility`</td>
 			<td>その他、機能やスタイルが明確なユーティリティクラス`.u--{name}`を定義するレイヤー。</td>
 		</tr>
 		<tr>
-			<td class='-whitespace:nowrap'>Props<br/>`-`</td>
+			<td class='-whspace:nowrap'>Props<br/>`-`</td>
 			<td>単一のCSSプロパティティに紐づいた Prop Class (`.-{prop}:{val}`) 。レイヤー外で定義します。</td>
 		</tr>
 	</tbody>
@@ -95,25 +95,25 @@ LismがどのようなCSS設計になっているかを説明します。
 	</thead>
 	<tbody>
 		<tr>
-			<td class='-whitespace:nowrap'>State Modules<br/>`@lism.modules.state`</td>
+			<td class='-whspace:nowrap'>State Modules<br/>`@lism.modules.state`</td>
 			<td>
 				レイアウトを構成する役割を持ちつつ、複数のレイアウトモジュールに対してつけ外しできるような汎用性の高いモジュール群。<br />`.is|has--{state}` の形式で定義します。
 			</td>
 		</tr>
 		<tr>
-			<td class='-whitespace:nowrap'>Layout Modules<br/>`@lism.modules.layout`</td>
+			<td class='-whspace:nowrap'>Layout Modules<br/>`@lism.modules.layout`</td>
 			<td>
 				レイアウトの構成単位となるようなモジュール群。<br />`.l--{module}` の形式で定義します。
 			</td>
 		</tr>
 		<tr>
-			<td class='-whitespace:nowrap'>Atomic Modules<br/>`@lism.modules.atomic`</td>
+			<td class='-whspace:nowrap'>Atomic Modules<br/>`@lism.modules.atomic`</td>
 			<td>
 				レイアウトの構成単位としてそれ以上分解できない最小単位のモジュール群。<br />`.a--{module}` の形式で定義します。
 			</td>
 		</tr>
 		<tr>
-			<td class='-whitespace:nowrap'>Dynamic Modules<br/>`@lism.modules.dynamic`</td>
+			<td class='-whspace:nowrap'>Dynamic Modules<br/>`@lism.modules.dynamic`</td>
 			<td>
 				JavaScriptと組み合わせて動的な機能を持つ特殊なモジュール群。<br />`.d--{module}` の形式で定義します。
 			</td>
