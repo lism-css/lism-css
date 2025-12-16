@@ -1,0 +1,7 @@
+---
+import { Lism } from '../Lism';
+
+const { contentSize = true, ...props } = Astro.props || {};
+---
+
+<Lism isWrapper={contentSize} {...props}><slot /></Lism>

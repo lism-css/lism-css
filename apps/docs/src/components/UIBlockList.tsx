@@ -28,7 +28,7 @@ export default function UIBlockList({ entries }: { entries: NavLinkData[] }) {
 				}
 				return (
 					<LinkBox key={index} layout='stack' href={entry.href} p='20' g='20'>
-						<Frame ar='3/2' bd bdrs='20' bgc='base' isContainer>
+						<Frame ar='3/2' bd bdrs='20' bgc='base'>
 							{entry.thumb && <Media src={entry.thumb} alt={entry.label} />}
 							{entry.iframePath && (
 								<Frame className='u--scalePreview' ar='3/2' data-scale-preview-type='list'>

@@ -37,16 +37,17 @@ body {
 	) !important;
 	background-position: center !important;
 }
-:where(.l--box, .l--flow, .is--container):has(> .c--attsLabels) {
+:where(.l--box, .l--flow, .is--container, .is--wrapper):has(> .c--attsLabels) {
 	--guideColor: var(--gray) 40%;
 	border: 2px dashed color-mix(in srgb, transparent, var(--guideColor)) !important;
 }
 .is--container {
+	--guideColor: var(--pink) 40%;
+}
+.is--wrapper {
 	--guideColor: var(--green) 40%;
 }
-[class*='-container:'] {
-	--guideColor: var(--blue) 60%;
-}
+
 // [class*='-container:'] > [class*='-container:'] {
 // 	--guideColor: var(--blue) 60%;
 // }

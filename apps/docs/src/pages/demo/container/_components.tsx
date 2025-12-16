@@ -40,14 +40,14 @@ export function TipCode({
 	children?: React.ReactNode;
 	[key: string]: any;
 }): JSX.Element {
-	// <TipCode text='is--container' color='orange' />
-
 	// text が "container:" を含むかどうかを判定
 	if (!color) {
-		if (text.includes('container:')) {
+		if (text.includes('contentSize:')) {
 			color = 'blue';
-		} else if (text.includes('container')) {
+		} else if (text.includes('wrapper')) {
 			color = 'green';
+		} else if (text.includes('container')) {
+			color = 'pink';
 		} else if (text.includes('flow')) {
 			color = 'orange';
 		} else if (text.includes('gutter') || text.startsWith('-')) {
@@ -88,11 +88,11 @@ export function FullSizeContent(props: any) {
 	);
 }
 
-export function Overwide(props: any) {
+export function ContainerSizeContent(props: any) {
 	const { children, ...atts } = props;
 	return (
-		<Lism max-sz='outer' ta='center' bg=':stripe' bgc='pink:12%' {...atts}>
-			<TipCode text='-max-sz:outer' color='pink' m='5' />
+		<Lism max-sz='container' ta='center' bg=':stripe' bgc='pink:12%' {...atts}>
+			<TipCode text='-max-sz:container' color='pink' m='5' />
 			{children}
 		</Lism>
 	);

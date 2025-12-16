@@ -3,7 +3,7 @@ title: '補足説明'
 description: ...
 ---
 
-import { Box, Flex, Stack, Grid, Center, Layer, Frame, Container, Media, HTML, Dummy, Lism, Spacer } from 'lism-css/astro';
+import { Box, Flex, Stack, Grid, Center, Layer, Frame, Wrapper, Container, Media, HTML, Dummy, Lism, Spacer } from 'lism-css/astro';
 import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage, Callout } from "~/components";
 
 
@@ -42,7 +42,7 @@ article > * {
 どちらも一長一短ありますが、Lismでは ② の方法を推奨しています。  
 </Callout>
 
-この②のアプローチによるコンテンツ制御クラスが、`is--container`クラスです。  
+この②のアプローチによるコンテンツ制御クラスが、`is--wrapper`クラスです。  
 また、②を前提として`-max-sz:full`も設計されています。
 
 これはなぜかというと、① のアプローチをベースにした場合、途中で**全幅サイズで表示したいコンテンツ**を作る場合の処理が複雑になってしまうためです。
@@ -50,19 +50,19 @@ article > * {
 <Preview>
 <PreviewTitle>こういうやつ</PreviewTitle>
 <PreviewArea resize>
-	<Container size='s' layout='flow' hasGutter py='30' bd bdc='blue'>
+	<Wrapper contentSize='s' layout='flow' hasGutter py='30' bd bdc='blue'>
 		<Box bd=':guide' py='10'>コンテンツ...</Box>
 		<Box max-sz='full' hasGutter bgc='rgb(0 100 200 / 20%)' py='15'>全幅コンテンツ</Box>
 		<Box bd=':guide' py='10'>コンテンツ...</Box>
-	</Container>
+	</Wrapper>
 </PreviewArea>
 <PreviewCode>
 	```jsx
-	<Container size='s' layout='flow' hasGutter py='30' bd bdc='blue'>
+	<Wrapper contentSize='s' layout='flow' hasGutter py='30' bd bdc='blue'>
 		<Box bd=':guide' py='10'>コンテンツ...</Box>
 		<Box max-sz='full' hasGutter bgc='rgb(0 100 200 / 20%)' py='15'>全幅コンテンツ</Box>
 		<Box bd=':guide' py='10'>コンテンツ...</Box>
-	</Container>
+	</Wrapper>
 	```
 </PreviewCode>
 </Preview>
@@ -73,28 +73,28 @@ article > * {
 
 ただし、`@property`が有効なブラウザでは`vw`の問題点もほぼ解消されるようになってきました。
 
-そこで、①のアプローチでも実装できるように、Lismでは、`-max-sz:outer` を用意しています。
+そこで、①のアプローチでも実装できるように、Lismでは、`-max-sz:container` を用意しています。
 
 
 <Preview>
 <PreviewTitle>例</PreviewTitle>
 <PreviewArea resize>
-<Box hasGutter bd>
-	<Container layout='flow' max-w='s' mx='auto' py='30' bd bdc='blue'>
+<Box isContainer hasGutter bd>
+	<Lism layout='flow' max-w='s' mx='auto' py='30' bd bdc='blue'>
 		<Box bd=':guide' py='10'>コンテンツ...</Box>
-		<Box max-sz='outer' hasGutter bgc='rgb(0 100 200 / 20%)' py='15'>全幅コンテンツ</Box>
+		<Box max-sz='container' hasGutter bgc='rgb(0 100 200 / 20%)' py='15'>全幅コンテンツ</Box>
 		<Box bd=':guide' py='10'>コンテンツ...</Box>
-	</Container>
+	</Lism>
 </Box>
 </PreviewArea>
 <PreviewCode>
-```jsx "max-sz='outer'"
-<Box hasGutter>
-	<Container layout='flow' max-w='s' py='30' bd=':guide' bdc='blue'>
+```jsx "isContainer" "max-sz='container'"
+<Box isContainer hasGutter bd>
+	<Lism layout='flow' max-w='s' mx='auto' py='30' bd bdc='blue'>
 		<Box bd=':guide' py='10'>コンテンツ...</Box>
-		<Box max-sz='outer' hasGutter bgc='rgb(0 100 200 / 20%)' py='15'>全幅コンテンツ</Box>
+		<Box max-sz='container' hasGutter bgc='rgb(0 100 200 / 20%)' py='15'>全幅コンテンツ</Box>
 		<Box bd=':guide' py='10'>コンテンツ...</Box>
-	</Container>
+	</Lism>
 </Box>
 ```
 </PreviewCode>

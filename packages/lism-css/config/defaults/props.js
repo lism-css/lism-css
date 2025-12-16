@@ -82,7 +82,7 @@ export default {
 		exUtility: {
 			min: '',
 			full: '',
-			outer: '',
+			container: '',
 		},
 	},
 	ysz: { prop: 'blockSize', token: 'sz' },

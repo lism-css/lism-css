@@ -81,7 +81,7 @@ class LismPropsData {
 	}
 
 	analyzeState(statePropData, propVal) {
-		// isContainerなどの特別な処理が必要なレイアウトステート
+		// isWrapper などの特別な処理が必要なレイアウトステート
 		const { className, preset, presetClass, customVar, tokenKey, setStyles } = statePropData;
 		if (propVal === true) {
 			this.lismState.push(className);
@@ -110,7 +110,6 @@ class LismPropsData {
 					// そのままクラス化
 					if (propVal) this.lismState.push(statePropData);
 				} else {
-					// isContainerなどの特別な処理が必要なレイアウトステート
 					this.analyzeState(statePropData, propVal);
 				}
 			} else if (Object.hasOwn(PROPS, propName)) {

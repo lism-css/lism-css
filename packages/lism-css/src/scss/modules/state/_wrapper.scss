@@ -1,0 +1,18 @@
+.is--wrapper {
+	// 子要素の制御
+	--contentSize: var(--sz--m);
+	> * {
+		--max-sz: var(--contentSize, 100%);
+		max-inline-size: min(100%, var(--max-sz, 100%)); // min ないとimg要素等がはみ出す
+		margin-inline: auto;
+	}
+}
+
+// Memo: それぞれの直下要素( > * ) に対してスタイルをセットした方がネスト時の影響をなくせるが、wrapper のネストが多様されることは少ないので親側の変数管理のみで実装。
+.-content\:s {
+	--contentSize: var(--sz--s);
+}
+
+.-content\:l {
+	--contentSize: var(--sz--l);
+}

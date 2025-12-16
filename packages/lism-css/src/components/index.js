@@ -9,6 +9,7 @@ export { default as HTML } from './HTML';
 
 // l--
 export * from './Container';
+export * from './Wrapper';
 export * from './Layer';
 export * from './LinkBox';
 export * from './Box';
