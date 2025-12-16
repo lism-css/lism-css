@@ -7,13 +7,13 @@ import './_style.css';
 ---
 
 <DemoPageLayout title='Navigation006'>
-	<Container size='l' bgc='base-2' py='50' hasGutter>
+	<Container isWrapper='l' bgc='base-2' py='50' hasGutter>
 		<Grid gtr={['auto 1fr auto', null, '1fr auto auto 1fr']} gtc={['auto', null, 'minmax(14rem, auto) 1fr']} ai='center' g='40'>
 			<Stack gr={['1', null, '2']} gc='1' g='20'>
 				<HTML.p class='u-trim' fz='3xl' fw='bold' ff='accent' c='gray'>Navigation</HTML.p>
 				<HTML.h lv='2' class='u-trim' fz='s' fw='normal' o='-20'>ナビゲーション</HTML.h>
 			</Stack>
-			<Grid class='u-trimItems' gr={['2', null, '1 / -1']} gc={['1', null, '2']} gtc='liquid' cols='14rem' g='30 50'>
+			<Grid layout='liquidGrid' class='u-trimItems' gr={['2', null, '1 / -1']} gc={['1', null, '2']} cols='14rem' g='30 40'>
 				<LinkBox href='#' layout='grid' gtc='1fr auto' ai='center' g='20' py='15' hov='c'>
 					<HTML.span>キッチン</HTML.span>
 					<Icon icon='caret-right' />

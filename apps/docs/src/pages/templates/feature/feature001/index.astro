@@ -6,15 +6,15 @@ import './_style.css';
 ---
 
 <DemoPageLayout title='Feature001'>
-	<Container size='l' py='50' hasGutter>
+	<Container isWrapper='l' py='50' hasGutter>
 		<Stack g='40'>
 			<Stack ai='center' g='15'>
 				<h2>新しい挑戦が生まれる</h2>
 				<HTML.p fz='s' my-s='15' o='-10'>誰もが安心して暮らせる環境づくりに力を入れています。</HTML.p>
 			</Stack>
 			<Columns cols={['1', null, '3']} g='40'>
-				<Grid g='0' tag='a' isLinkBox href='#' bdrs='10' bxsh='20' ov='hidden' setHov setTransition hov='bxsh'>
-					<Frame ar='og'>
+				<Grid g='0' tag='a' isLinkBox href='#' gtr='subgrid' gr='span 2' bdrs='10' bxsh='20' ov='hidden' setHov setTransition hov='bxsh'>
+					<Frame tag='figure' ar='og'>
 						<Media src='https://cdn.lism-css.com/img/a-1.jpg' alt='' width='960' height='640' />
 					</Frame>
 					<Stack g='30' p='30' className='u-trimItems'>
@@ -26,8 +26,8 @@ import './_style.css';
 						</Flex>
 					</Stack>
 				</Grid>
-				<Grid g='0' tag='a' isLinkBox href='#' bdrs='10' bxsh='20' ov='hidden' setHov setTransition hov='bxsh'>
-					<Frame ar='og'>
+				<Grid g='0' tag='a' isLinkBox href='#' gtr='subgrid' gr='span 2' bdrs='10' bxsh='20' ov='hidden' setHov setTransition hov='bxsh'>
+					<Frame tag='figure' ar='og'>
 						<Media src='https://cdn.lism-css.com/img/a-2.jpg' alt='' width='960' height='640' />
 					</Frame>
 					<Stack g='30' p='30' className='u-trimItems'>
@@ -39,8 +39,8 @@ import './_style.css';
 						</Flex>
 					</Stack>
 				</Grid>
-				<Grid g='0' tag='a' isLinkBox href='#' bdrs='10' bxsh='20' ov='hidden' setHov setTransition hov='bxsh'>
-					<Frame ar='og'>
+				<Grid g='0' tag='a' isLinkBox href='#' gtr='subgrid' gr='span 2' bdrs='10' bxsh='20' ov='hidden' setHov setTransition hov='bxsh'>
+					<Frame tag='figure' ar='og'>
 						<Media src='https://cdn.lism-css.com/img/a-4.jpg' alt='' width='960' height='640' />
 					</Frame>
 					<Stack g='30' p='30' className='u-trimItems'>
@@ -60,7 +60,7 @@ import './_style.css';
 <style>
 	@media (any-hover: hover) {
 		.-hov\:to\:solid {
-			opacity: var(--notHov_, var(--o--n30));
+			opacity: var(--_notHov, var(--o--n30));
 		}
 	}
 </style>

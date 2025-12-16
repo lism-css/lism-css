@@ -6,7 +6,7 @@ import './_style.css';
 ---
 
 <DemoPageLayout title='Feature005'>
-	<Container size='m' bgc='base' py='50' hasGutter>
+	<Container isWrapper='m' bgc='base' py='50' hasGutter>
 		<HTML.h lv='2' ta='center' mb='40'>製品について</HTML.h>
 		<Columns cols={[1, null, 2]} g={['30', null, '40']}>
 			<Grid tag='a' isLinkBox href='#' gtc='1fr 2fr' bxsh='20' setTransition setHov hov='bxsh'>
@@ -72,7 +72,7 @@ import './_style.css';
 <style>
 	@media (any-hover: hover) {
 		.-hov\:to\:zoom {
-			scale: var(--isHov_, 1.1);
+			scale: var(--_isHov, 1.1);
 		}
 	}
 </style>
