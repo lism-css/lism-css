@@ -61,6 +61,13 @@ h6 {
 /* ----------------------------------------
     texts
  ---------------------------------------- */
+a {
+	color: var(--link-c, var(--link));
+	text-decoration: var(--link-td, underline);
+	text-decoration-thickness: var(--link-td-thickness, auto);
+	text-decoration-color: var(--link-td-color, currentColor);
+}
+
 small {
 	--hl: var(--hl--s);
 	font-size: var(--fz--xs);
@@ -88,13 +95,6 @@ kbd,
 var,
 samp {
 	font-family: var(--ff--mono);
-}
-
-a {
-	color: var(--link-c, var(--link));
-	text-decoration: var(--link-td, underline);
-	text-decoration-thickness: var(--link-td-thickness, auto);
-	text-decoration-color: var(--link-td-color, currentColor);
 }
 
 dt {
