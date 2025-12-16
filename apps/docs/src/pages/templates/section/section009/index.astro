@@ -6,12 +6,12 @@ import './_style.css';
 ---
 
 <DemoPageLayout title='Section009'>
-	<Container size='l' py='50' hasGutter>
+	<Container isWrapper='l' py='50' hasGutter>
 		<Stack g='50'>
 			<Grid gtc={['auto', null, '1fr 1fr']}>
 				<Stack g='50' jc='center' p={['40', null, '50']}>
 					<Stack tag='hgroup' g='30' ai='flex-s' jc='center'>
-						<HTML.p class='u-trim' fz='4rem' fw='100' lts='l'>Feature</HTML.p>
+						<HTML.p class='u-trim' fz='4rem' fw='100' fs='i' lts='l'>Feature</HTML.p>
 						<HTML.h lv='2' class='u-trim' fz='xl' fw='bold' lts='l'>目指す社会は、その先に</HTML.h>
 					</Stack>
 					<HTML.p fz='m' lh='l'>
@@ -26,7 +26,7 @@ import './_style.css';
 						</Flex>
 					</Flex>
 				</Stack>
-				<Frame gr={[null, null, '1']} gc={['1', null, '2']} bdrs='10'>
+				<Frame tag='figure' gr={[null, null, '1']} gc={['1', null, '2']} bdrs='10'>
 					<Media src='https://cdn.lism-css.com/img/random-2510' alt='' width='960' height='640' />
 				</Frame>
 			</Grid>
