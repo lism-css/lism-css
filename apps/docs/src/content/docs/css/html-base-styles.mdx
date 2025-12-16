@@ -1,18 +1,19 @@
 ---
-title: 'Base Styles'
+title: 'HTML Base Styles'
 description: ...
 sidebar:
   order: 3
 ---
 import { Lism, Box, Media, Flex, HTML, Stack, Spacer, Frame } from 'lism-css/astro';
-import { Preview, PreviewArea, PreviewTitle, PreviewCode, PreviewFrame, Reference, Callout, Note } from "~/components";
+import { Preview, PreviewArea, PreviewTitle, PreviewCode, PreviewFrame, EmbedCode, Reference, Callout, Note } from "~/components";
 import Button from '~/components/ex/Button/index.astro';
 import { Desktop } from '@phosphor-icons/react';
 
 
-## HTML Base Styles
+reset.cssを読み込む `lism-reset` レイヤーの次の層（`lism.base`）にて、`:root`で定義したトークンを活用しつつHTMLタグのデフォルトスタイルを定義しています。
 
-HTMLのそれぞれのタグのデフォルトスタイルを紹介します。
+<PreviewTitle>ソースコード</PreviewTitle>
+<EmbedCode dirPath='packages/lism-css' srcPath='src/scss/base/_base.scss' />
 
 ### Demo Page preview
 

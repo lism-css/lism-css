@@ -11,7 +11,8 @@ export const WhsNw = ({children}) => {
 	return <span className='-whspace:nowrap'>{children}</span>
 }
 
-LismがどのようなCSS設計になっているかを説明します。
+このページでは、LismがどのようなCSS設計になっているかを説明します。
+
 
 {/* 重要なポイントは以下の通りです。
 
@@ -74,6 +75,10 @@ LismがどのようなCSS設計になっているかを説明します。
 		<tr>
 			<td class='-whspace:nowrap'>Utility<br/>`@lism.utility`</td>
 			<td>その他、機能やスタイルが明確なユーティリティクラス`.u--{name}`を定義するレイヤー。</td>
+		</tr>
+		<tr>
+			<td class='-whspace:nowrap'>Custom<br/>`@lism.custom`</td>
+			<td>その他、上記レイヤーに分類できず、Prop Classよりも詳細度を下げたいスタイルをユーザーが定義する時用のカスタマイズ用レイヤー。</td>
 		</tr>
 		<tr>
 			<td class='-whspace:nowrap'>Props<br/>`-`</td>
@@ -255,7 +260,7 @@ Prop クラス には以下の3種類の形式があります。
 	</PreviewCode>
 	<PreviewCode label="JSX" slot="tab">
 ```jsx
-<Box p={[20, 40, 50]} bd>
+<Box p={[20, 30, 40]} bd>
 	BOX
 </Box>
 ```
