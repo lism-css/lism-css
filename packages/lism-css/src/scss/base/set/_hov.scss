@@ -2,7 +2,7 @@
 	.set-hov:hover {
 		--_notHov: ;
 	}
-	.set-hov:not(:hover) {
+	.set-hov:not(:is(:hover, :focus-within)) {
 		--_isHov: ;
 	}
 }
@@ -11,6 +11,6 @@
 		--_isHov: ;
 	}
 }
-.set-hov:where(:focus-visible, :focus-within) {
+.set-hov:is(:focus-visible, :focus-within) {
 	--_notHov: ;
 }
