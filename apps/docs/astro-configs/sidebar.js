@@ -67,6 +67,10 @@ export default [
 				link: '/modules/state/container/',
 			},
 			{
+				label: 'Wrapper',
+				link: '/modules/state/wrapper/',
+			},
+			{
 				label: 'Layer',
 				link: '/modules/state/layer/',
 			},

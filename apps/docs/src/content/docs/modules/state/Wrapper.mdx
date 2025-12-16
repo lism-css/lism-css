@@ -1,0 +1,150 @@
+---
+title: 'Wrapper'
+description: ...
+---
+import { Wrapper, Box, HTML, Lism, Spacer } from "lism-css/astro";
+import { Preview, PreviewFrame, PreviewArea, PreviewTitle, PreviewCode, ImportPackage, Callout } from "~/components";
+import { Desktop } from '@phosphor-icons/react';
+
+[`is--wrapper`](/css/module-class/#is--wrapper) クラスをコンポーネントで利用する例を紹介していきます。
+
+`is--wrapper` は基本的に `isWrapper`プロパティで**どのコンポーネントからでも呼び出せるようになっています。**
+
+| プロパティ | 出力 |
+|---|---|
+| `isWrapper`| `.is--wrapper` |
+| `isWrapper='s'` | `.is--wrapper`, `.-content:s` |
+| `isWrapper='l'` | `.is--wrapper`, `.-content:l` |
+| `isWrapper={value}` | `.is--wrapper`, `--contentSize:{value}` |
+
+`<Lism isWrapper>` のエイリアスとして、`<Wrapper>` も用意しています。
+
+ここでは、この専用コンポーネントを紹介していきます。
+
+
+## Props
+
+`<Wrapper>` で使用できるプロパティは次のとおりです。
+
+| プロパティ | 説明 |
+|---|---|
+| `contentSize` | コンテンツサイズを指定します。|
+| `layout` | 展開したい Layoutモジュールを指定できます。|
+| `isContainer` | コンテナタイプをセットでいます。|
+
+<PreviewTitle>下記の ①, ② はそれぞれ同じ結果になります。</PreviewTitle>
+
+```jsx
+// ①
+<Flow isWrapper='s' isContainer>...</Lism>
+
+// ②
+<Wrapper contentSize='s' layout='flow' isContainer>...</Wrapper>
+```
+
+
+## Import
+
+<ImportPackage component='Wrapper' />
+
+
+## Usage
+
+<Preview>
+	<PreviewTitle>例</PreviewTitle>
+	<PreviewArea resize p='15'>
+		<Wrapper layout='flow' p='20' className='-bd:guide -hov:itemGuide'>
+			<p>Content</p>
+			<p>Content</p>
+			<p>...</p>
+		</Wrapper>
+	</PreviewArea>
+	<PreviewCode slot='tab' label='JSX'>
+		```jsx
+		<Wrapper layout='flow' p='20'>
+			<p>Content</p>
+			<p>Content</p>
+			<p>...</p>
+		</Wrapper>
+		```
+	</PreviewCode>
+	<PreviewCode slot='tab' label='HTML'>
+		```html
+		<div class='l--flow is--wrapper -p:30'>
+			<p>Content</p>
+			<p>Content</p>
+			<p>...</p>
+		</div>
+		```
+	</PreviewCode>
+</Preview>
+
+<Preview>
+	<PreviewTitle>`contentSize='s'`を指定</PreviewTitle>
+	<PreviewArea resize p='15'>
+		<Wrapper contentSize='s' layout='flow' p='20' className='-bd:guide -hov:itemGuide'>
+			<p>Content</p>
+			<p>Content</p>
+			<p>...</p>
+		</Wrapper>
+	</PreviewArea>
+	<PreviewCode slot='tab' label='JSX'>
+		```jsx
+		<Wrapper contentSize='s' layout='flow' p='20'>
+			<p>Content</p>
+			<p>Content</p>
+			<p>...</p>
+		</Wrapper>
+		```
+	</PreviewCode>
+	<PreviewCode slot='tab' label='HTML'>
+		```html
+		<div class='l--flow is--wrapper -content:s -p:30'>
+			<p>Content</p>
+			<p>Content</p>
+			<p>...</p>
+		</div>
+		```
+	</PreviewCode>
+</Preview>
+
+### 任意のコンテナサイズをセットする
+
+s, l 以外の値をセットしたい場合は、isWrapper に任意の値をセットすると`--contentSize`変数としてしゅつ力されます。
+
+<Preview>
+	<PreviewTitle>is--wrapper に任意の値をセットする</PreviewTitle>
+	<PreviewArea resize p='15'>
+		<Lism isWrapper='20rem' p='20' className='-bd:guide -hov:itemGuide'>
+			<div>Contents...</div>
+			<div>Contents...</div>
+		</Lism>
+	</PreviewArea>
+	<PreviewCode slot='tab' label='JSX'>
+	```jsx
+	<Lism isWrapper='20rem' p='20'>
+		<div>Contents...</div>
+		<div>Contents...</div>
+	</Lism>
+	```
+	</PreviewCode>
+	<PreviewCode slot='tab' label='HTML'>
+	```html
+	<div class="is--wrapper -p:20" style="--contentSize:20rem">
+		<div>Contents...</div>
+		<div>Contents...</div>
+	</div>
+	```
+	</PreviewCode>
+</Preview>
+
+
+### DEMOページ
+
+<Callout icon={Desktop} keycolor='purple'>
+`is--wrapper`関連の挙動を確認できるデモページを用意しています。  
+ぜひ広い画面でご確認ください。
+</Callout>
+
+<PreviewFrame url='/demo/container' />
+
