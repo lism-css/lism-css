@@ -1,12 +1,12 @@
 ---
 import DemoPageLayout from '~/layouts/DemoPageLayout.astro';
 
-import { Container, Grid, HTML, Frame, Media, Stack, Flow, Layer, Center } from 'lism-css/astro';
+import { Wrapper, Grid, HTML, Frame, Media, Stack, Flow, Layer, Center } from 'lism-css/astro';
 import './_style.css';
 ---
 
 <DemoPageLayout title='Greeting004'>
-	<Container py='50' pos='rel'>
+	<Wrapper contentSize='full' py='50'>
 		<Frame ar='5/2' gc='1 / -1' min-h='300px' max-h='500px' w='stretch' pos='rel'>
 			<Media src='https://cdn.lism-css.com/img/random-2510' alt='' />
 			<Layer bgc='rgb(0 0 0 / 20%)' blur='8px'>
@@ -15,7 +15,7 @@ import './_style.css';
 				</Center>
 			</Layer>
 		</Frame>
-		<Container size='m' py='50' my-s='-8rem' pos='rel' hasGutter>
+		<Wrapper contentSize='m' py='50' my-s='-8rem' pos='rel' hasGutter>
 			<Grid gtc='auto' g='40' bgc='white' p={['40', '50']}>
 				<Stack g='30'>
 					<HTML.h lv='2' class='u-trim' fz='3xl' fw='bold' ff='accent'>地球と共生する、日常を未来へ</HTML.h>
@@ -48,6 +48,6 @@ import './_style.css';
 					</p>
 				</Flow>
 			</Grid>
-		</Container>
-	</Container>
+		</Wrapper>
+	</Wrapper>
 </DemoPageLayout>

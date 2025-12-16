@@ -6,7 +6,7 @@ import './_style.css';
 ---
 
 <DemoPageLayout title='Information002'>
-	<Container size='m' bgc='base' py='50' hasGutter>
+	<Container isWrapper='l' bgc='base' py='50' hasGutter>
 		<Stack g='20' ai='center' mb='40'>
 			<h2 class='u-trim'>会社情報</h2>
 			<HTML.p class='u-trim' fz='s' ta='center' o='-30'>Company Information</HTML.p>
@@ -14,7 +14,7 @@ import './_style.css';
 		<Stack g='30'>
 			<HTML.p fz='l' fw='bold'>概要</HTML.p>
 			<Grid gtc={['auto', null, '1fr 1fr']} g='50 60'>
-				<Grid tag='dl' className='u-collapseGrid' gtr='auto' gtc='auto 1fr' g-x='50' bd-y>
+				<Grid tag='dl' className='u-collapseGrid' ov='clip' p='0' gtr='auto' gtc='auto 1fr' g-x='50' bd-y>
 					<Grid gtc='subgrid' gc='1/-1' p='20'>
 						<dt>会社名</dt>
 						<dd>株式会社リズム</dd>
@@ -60,7 +60,7 @@ import './_style.css';
 		<Stack g='30' my-s='50'>
 			<HTML.p fz='l' fw='bold'>沿革</HTML.p>
 			<Grid gtc={['auto', null, '1fr 1fr']} g='50 60'>
-				<Grid tag='dl' className='u-collapseGrid' gtr='auto' gtc='auto 1fr' g-x='50' bd-y>
+				<Grid tag='dl' className='u-collapseGrid' ov='clip' p='0' gtr='auto' gtc='auto 1fr' g-x='50' bd-y>
 					<Grid gtc='subgrid' gc='1/-1' p='20'>
 						<dt>2020年</dt>
 						<dd>株式会社リズム設立</dd>

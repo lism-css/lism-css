@@ -6,13 +6,13 @@ import './_style.css';
 ---
 
 <DemoPageLayout title='Feature013'>
-	<Container size='l' bgc='base-2' py='50' hasGutter>
+	<Container isWrapper='l' bgc='base-2' py='50' hasGutter>
 		<Stack g='40'>
-			<Stack ai='center'>
+			<Stack ai='center' g='5'>
 				<HTML.h lv='2' fz='2xl' fw='bold'>厳選された商品</HTML.h>
 				<HTML.p fz='m' o='-20'>Pickup Products</HTML.p>
 			</Stack>
-			<Columns cols={['1', '2', '4']} g='40'>
+			<Stack g='40'>
 				<LinkBox
 					href='#'
 					layout='grid'
@@ -40,49 +40,65 @@ import './_style.css';
 						</Flex>
 					</Stack>
 				</LinkBox>
-				<LinkBox layout='stack' setHov g='30' href='#'>
-					<Frame ar='16/9' bdrs='20' pos='rel'>
-						<Media src='/img/img-1.jpg' alt='' width='960' height='640' setTransition hov='to:zoom' />
-					</Frame>
-					<HTML.p class='u-trim' fz='m' fw='bold'>空調・生活家電</HTML.p>
-					<HTML.p class='u-trim' fz='s'>空間に溶け込み、心地よい空気と時間を作り出す。日々の暮らしの質を高めるアイテム。</HTML.p>
-					<Flex my-s='auto' jc='center' bd p='10' bdrs='20' setTransition hov='to:reverse'>
-						<HTML.p fz='m'>View Detail</HTML.p>
-					</Flex>
-				</LinkBox>
-				<LinkBox layout='stack' setHov g='30' href='#'>
-					<Frame ar='16/9' bdrs='20' pos='rel'>
-						<Media src='https://cdn.lism-css.com/img/random-2510?r=2' alt='' width='960' height='640' setTransition hov='to:zoom' />
-					</Frame>
-					<HTML.p class='u-trim' fz='m' fw='bold'>スマートホーム</HTML.p>
-					<HTML.p class='u-trim' fz='s'>
-						家電たちが静かに連携し、暮らしをサポート。テクノロジーを意識させない、未来の日常をつくります。
-					</HTML.p>
-					<Flex my-s='auto' jc='center' bd p='10' bdrs='20' setTransition hov='to:reverse'>
-						<HTML.p fz='m'>View Detail</HTML.p>
-					</Flex>
-				</LinkBox>
-				<LinkBox layout='stack' setHov g='30' href='#'>
-					<Frame ar='16/9' bdrs='20' pos='rel'>
-						<Media src='https://cdn.lism-css.com/img/random-2510?r=3' alt='' width='960' height='640' setTransition hov='to:zoom' />
-					</Frame>
-					<HTML.p class='u-trim' fz='m' fw='bold'>アクセサリ</HTML.p>
-					<HTML.p class='u-trim' fz='s'>製品体験をさらに豊かにする専用アクセサリ。細部にまで、ブランドの美意識を宿します。</HTML.p>
-					<Flex my-s='auto' jc='center' bd p='10' bdrs='20' setTransition hov='to:reverse'>
-						<HTML.p fz='m'>View Detail</HTML.p>
-					</Flex>
-				</LinkBox>
-				<LinkBox layout='stack' setHov g='30' href='#'>
-					<Frame ar='16/9' bdrs='20' pos='rel'>
-						<Media src='https://cdn.lism-css.com/img/random-2510?r=4' alt='' width='960' height='640' setTransition hov='to:zoom' />
-					</Frame>
-					<HTML.p class='u-trim' fz='m' fw='bold'>美容健康</HTML.p>
-					<HTML.p class='u-trim' fz='s'>自分を慈しむ時間を、もっと豊かに。毎日のセルフケアを、心地よい体験へと変える。</HTML.p>
-					<Flex my-s='auto' jc='center' bd p='10' bdrs='20' setTransition hov='to:reverse'>
-						<HTML.p fz='m'>View Detail</HTML.p>
-					</Flex>
-				</LinkBox>
-			</Columns>
+				<Columns cols={['1', '2', '4']} g='40'>
+					<LinkBox layout='grid' gtr='subgrid' gr='span 3' setHov g='30' href='#'>
+						<Frame tag='figure' ar='16/9' bdrs='20' pos='rel'>
+							<Media src='/img/img-1.jpg' alt='' width='960' height='640' setTransition hov='to:zoom' />
+						</Frame>
+						<Stack g='20'>
+							<HTML.p class='u-trim' fz='m' fw='bold'>空調・生活家電</HTML.p>
+							<HTML.p class='u-trim' fz='s' o='-10'
+								>空間に溶け込み、心地よい空気と時間を作り出す。日々の暮らしの質を高めるアイテム。</HTML.p
+							>
+						</Stack>
+						<Flex my-s='auto' jc='center' bd bdc='line' p='10' bdrs='20' setTransition hov='to:reverse'>
+							<HTML.p fz='s'>View Detail</HTML.p>
+						</Flex>
+					</LinkBox>
+					<LinkBox layout='grid' gtr='subgrid' gr='span 3' setHov g='30' href='#'>
+						<Frame tag='figure' ar='16/9' bdrs='20' pos='rel'>
+							<Media src='https://cdn.lism-css.com/img/random-2510?r=2' alt='' width='960' height='640' setTransition hov='to:zoom' />
+						</Frame>
+						<Stack g='20'>
+							<HTML.p class='u-trim' fz='m' fw='bold'>スマートホーム</HTML.p>
+							<HTML.p class='u-trim' fz='s' o='-10'>
+								家電たちが静かに連携し、暮らしをサポート。テクノロジーを意識させない、未来の日常をつくります。
+							</HTML.p>
+						</Stack>
+						<Flex my-s='auto' jc='center' bd bdc='line' p='10' bdrs='20' setTransition hov='to:reverse'>
+							<HTML.p fz='s'>View Detail</HTML.p>
+						</Flex>
+					</LinkBox>
+					<LinkBox layout='grid' gtr='subgrid' gr='span 3' setHov g='30' href='#'>
+						<Frame tag='figure' ar='16/9' bdrs='20' pos='rel'>
+							<Media src='https://cdn.lism-css.com/img/random-2510?r=3' alt='' width='960' height='640' setTransition hov='to:zoom' />
+						</Frame>
+						<Stack g='20'>
+							<HTML.p class='u-trim' fz='m' fw='bold'>アクセサリ</HTML.p>
+							<HTML.p class='u-trim' fz='s' o='-10'
+								>製品体験をさらに豊かにする専用アクセサリ。細部にまで、ブランドの美意識を宿します。</HTML.p
+							>
+						</Stack>
+						<Flex my-s='auto' jc='center' bd bdc='line' p='10' bdrs='20' setTransition hov='to:reverse'>
+							<HTML.p fz='s'>View Detail</HTML.p>
+						</Flex>
+					</LinkBox>
+					<LinkBox layout='grid' gtr='subgrid' gr='span 3' setHov g='30' href='#'>
+						<Frame tag='figure' ar='16/9' bdrs='20' pos='rel'>
+							<Media src='https://cdn.lism-css.com/img/random-2510?r=4' alt='' width='960' height='640' setTransition hov='to:zoom' />
+						</Frame>
+						<Stack g='20'>
+							<HTML.p class='u-trim' fz='m' fw='bold'>美容健康</HTML.p>
+							<HTML.p class='u-trim' fz='s' o='-10'
+								>自分を慈しむ時間を、もっと豊かに。毎日のセルフケアを、心地よい体験へと変える。</HTML.p
+							>
+						</Stack>
+						<Flex my-s='auto' jc='center' bd bdc='line' p='10' bdrs='20' setTransition hov='to:reverse'>
+							<HTML.p fz='s'>View Detail</HTML.p>
+						</Flex>
+					</LinkBox>
+				</Columns>
+			</Stack>
 		</Stack>
 	</Container>
 </DemoPageLayout>
@@ -90,11 +106,11 @@ import './_style.css';
 <style>
 	@media (any-hover: hover) {
 		.-hov\:to\:zoom {
-			scale: var(--isHov_, 1.1);
+			scale: var(--_isHov, 1.1);
 		}
 		.-hov\:to\:reverse {
-			background-color: var(--isHov_, var(--black));
-			color: var(--isHov_, var(--white));
+			background-color: var(--_isHov, var(--black));
+			color: var(--_isHov, var(--white));
 		}
 	}
 </style>

@@ -7,7 +7,7 @@ import './_style.css';
 ---
 
 <DemoPageLayout title='News003'>
-	<Container size='m' py='50' hasGutter>
+	<Container isWrapper='m' py='50' hasGutter>
 		<Grid gtr={['auto', null, 'auto auto 1fr']} gtc={['auto', null, 'auto 1fr']} g='30'>
 			<Stack gr='1' gc='1' g='20' min-w={['auto', null, '12rem']}>
 				<HTML.p class='u-trim' fz='3xl' fw='light' lts='l'>News</HTML.p>
@@ -55,7 +55,7 @@ import './_style.css';
 <style>
 	@media (any-hover: hover) {
 		.-hov\:to\:cLink {
-			color: var(--isHov_, var(--link));
+			color: var(--_isHov, var(--link));
 		}
 	}
 </style>

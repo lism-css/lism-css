@@ -7,7 +7,7 @@ import './_style.css';
 ---
 
 <DemoPageLayout title='News004'>
-	<Container size='m' bgc='base-2' py='50' hasGutter>
+	<Container isWrapper='m' bgc='base-2' py='50' hasGutter>
 		<Grid gtr={['auto', null, 'auto auto 1fr']} gtc={['auto', null, 'auto 1fr']} g='30'>
 			<Stack gr='1' gc='1' g='20' min-w={['auto', null, '12rem']}>
 				<HTML.p class='u-trim' fz='3xl' fw='light' lts='l'>News</HTML.p>
@@ -37,7 +37,7 @@ import './_style.css';
 						<HTML.p setTransition hov='to:cLink'
 							>目標金額を設定して貯蓄ができる「目的別預金」が登場。楽しみながら計画的な資産形成が行えます。</HTML.p
 						>
-						<Flex ai='center' jc='center' p='15' bd bdrs='99' setTransition hov='to:reverse'>
+						<Flex ai='center' jc='center' p='15' bd bdc='text' bdrs='99' setTransition hov='to:reverse'>
 							<Icon icon='caret-right' fz='xs' mx-s='auto' />
 						</Flex>
 					</Flex>
@@ -63,7 +63,7 @@ import './_style.css';
 					</Grid>
 					<Flex ai='center' c='text' td='n' g='30'>
 						<HTML.p setTransition hov='to:cLink'>当行を装った不審なメール（フィッシング詐欺）にご注意ください。</HTML.p>
-						<Flex ai='center' jc='center' p='15' bd bdrs='99' setTransition hov='to:reverse'>
+						<Flex ai='center' jc='center' p='15' bd bdc='text' bdrs='99' setTransition hov='to:reverse'>
 							<Icon icon='caret-right' fz='xs' mx-s='auto' />
 						</Flex>
 					</Flex>
@@ -89,7 +89,7 @@ import './_style.css';
 					</Grid>
 					<Flex ai='center' c='text' td='n' g='30'>
 						<HTML.p setTransition hov='to:cLink'>インターネットバンキングサービス利用規定の一部改定について</HTML.p>
-						<Flex ai='center' jc='center' p='15' bd bdrs='99' setTransition hov='to:reverse'>
+						<Flex ai='center' jc='center' p='15' bd bdc='text' bdrs='99' setTransition hov='to:reverse'>
 							<Icon icon='caret-right' fz='xs' mx-s='auto' />
 						</Flex>
 					</Flex>
@@ -105,11 +105,11 @@ import './_style.css';
 <style>
 	@media (any-hover: hover) {
 		.-hov\:to\:reverse {
-			background-color: var(--isHov_, var(--black));
-			color: var(--isHov_, var(--white));
+			background-color: var(--_isHov, var(--black));
+			color: var(--_isHov, var(--white));
 		}
 		.-hov\:to\:cLink {
-			color: var(--isHov_, var(--link));
+			color: var(--_isHov, var(--link));
 		}
 	}
 </style>

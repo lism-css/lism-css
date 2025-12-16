@@ -6,7 +6,7 @@ import './_style.css';
 ---
 
 <DemoPageLayout title='Feature007'>
-	<Container size='l' bgc='base' py='50' hasGutter>
+	<Container isWrapper='l' bgc='base' py='50' hasGutter>
 		<Grid gt='repeat' cols={['2', '3', '4']} rows={['4', '3']} g='20'>
 			<LinkBox
 				href='#'
@@ -145,11 +145,11 @@ import './_style.css';
 <style>
 	@media (any-hover: hover) {
 		.-hov\:to\:zoom {
-			scale: var(--isHov_, 1.1);
+			scale: var(--_isHov, 1.1);
 		}
 		.-hov\:to\:reverse {
-			background-color: var(--isHov_, var(--white));
-			color: var(--isHov_, var(--black));
+			background-color: var(--_isHov, var(--white));
+			color: var(--_isHov, var(--black));
 		}
 	}
 </style>

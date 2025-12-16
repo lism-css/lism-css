@@ -7,7 +7,7 @@ import './_style.css';
 ---
 
 <DemoPageLayout title='PriceTable003'>
-	<Container size='l' bgc='base' py='50' hasGutter>
+	<Container isWrapper='l' bgc='base' py='50' hasGutter>
 		<Stack g='50'>
 			<HTML.h lv='2' class='u-trim' fz='2xl' fw='bold' ta='center'>料金プラン</HTML.h>
 			<Columns cols={['1', null, '2']} g={['40', null, '0']} ai='center'>
@@ -30,7 +30,7 @@ import './_style.css';
 						<Flex tag='li' g='15' ai='center'><Icon icon='check' c='blue' /><HTML.span fz='s'>チャットサポート</HTML.span></Flex>
 						<Flex tag='li' g='15' ai='center'><Icon icon='check' c='blue' /><HTML.span fz='s'>電話サポート</HTML.span></Flex>
 					</Stack>
-					<Button href='#' bgc='blue' p='20' bdrs='10'>今すぐはじめる</Button>
+					<Button href='#' bgc='blue' py='15' bdrs='10'>今すぐはじめる</Button>
 				</Grid>
 				<Grid g='30' bgc='gray:5%' p='40' bdrs='20' bdrs-ss='0' bdrs-es='0' bxsh='20'>
 					<Stack w='stretch' g='20'>
@@ -50,7 +50,7 @@ import './_style.css';
 						<Flex tag='li' g='15' ai='center'><Icon icon='check' c='blue' /><HTML.span fz='s'>API連携</HTML.span></Flex>
 						<Flex tag='li' g='15' ai='center'><Icon icon='check' c='blue' /><HTML.span fz='s'>請求書郵送代行</HTML.span></Flex>
 					</Stack>
-					<Button href='#' p='20' bdrs='10'>このプランを選択</Button>
+					<Button href='#' py='15' bdrs='10'>このプランを選択</Button>
 				</Grid>
 			</Columns>
 		</Stack>

@@ -6,13 +6,13 @@ import './_style.css';
 ---
 
 <DemoPageLayout title='Navigation007'>
-	<Container size='l' py='50'>
+	<Container isWrapper='l' py='50'>
 		<Stack g='40'>
 			<Stack ai='center' g='20' hasGutter>
 				<HTML.h lv='2' class='u-trim' fz='2xl' fw='bold'>素敵な旅がここに</HTML.h>
 				<HTML.p class='u-trim' tag='span' fz='s' o='-20'>Good experience</HTML.p>
 			</Stack>
-			<Grid gtc='liquid' cols='22rem'>
+			<Grid layout='liquidGrid' cols='22rem'>
 				<LinkBox layout='frame' href='#' pos='rel' ar='4/3' bxsh='30' setHov>
 					<Media
 						isLayer
@@ -159,11 +159,11 @@ import './_style.css';
 <style>
 	@media (any-hover: hover) {
 		.-hov\:to\:zoom {
-			scale: var(--isHov_, 1.1);
+			scale: var(--_isHov, 1.1);
 		}
 		.-hov\:to\:reverse {
-			background-color: var(--isHov_, var(--white));
-			color: var(--isHov_, var(--black));
+			background-color: var(--_isHov, var(--white));
+			color: var(--_isHov, var(--black));
 		}
 	}
 </style>

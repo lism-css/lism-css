@@ -1,12 +1,12 @@
 ---
 import DemoPageLayout from '~/layouts/DemoPageLayout.astro';
 
-import { Container, Grid, Flex, Frame, Media, Stack, HTML, Flow } from 'lism-css/astro';
+import { Wrapper, Grid, Flex, Frame, Media, Stack, HTML, Flow } from 'lism-css/astro';
 import './_style.css';
 ---
 
 <DemoPageLayout title='Greeting002'>
-	<Container size='l' py='50' bgc='base' hasGutter>
+	<Wrapper contentSize='l' py='50' bgc='base' hasGutter>
 		<Stack g='50'>
 			<Stack class='u-trimItems' g='40'>
 				<HTML.span fz='min(22vw, 10rem)' fw='bold' ff='accent' mx-s='-.5rem' c='gray' o='-30' whspace='nowrap'>Greeting</HTML.span>
@@ -27,7 +27,7 @@ import './_style.css';
 			</Flow>
 			<Flex jc='flex-e'>
 				<Grid gtc='6rem auto' g='30' ai='center' px='40'>
-					<Frame ar='1/1' bdrs='99'>
+					<Frame tag='figure' ar='1/1' bdrs='99'>
 						<Media src='https://cdn.lism-css.com/img/random-2510?category=avatar' alt='' width='960' height='640' />
 					</Frame>
 					<Stack g='20' class='u-trimItems' ff='accent'>
@@ -37,5 +37,5 @@ import './_style.css';
 				</Grid>
 			</Flex>
 		</Stack>
-	</Container>
+	</Wrapper>
 </DemoPageLayout>
