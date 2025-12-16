@@ -90,23 +90,23 @@ Lismでは、主要なCSSプロパティ群に対して、それらで頻繁に�
 |`line-height`|`lh`|[`LH`](/css/tokens/#typolh), <br/>`1`|-|
 |`letter-spacing`|`lts`|[`LTS`](/css/tokens/#typolts)|-|
 |`text-align`|`ta`|`center`<br/>`left`<br/>`right`|-|
-|`text-decoration`|`td`|`none`<br/>`under`|-|
-{/* |`text-transform`|`tt`|`upper`<br/>`lower`|-| */}
+|`text-decoration`|`td`|`none`|-|
+|`text-transform`|`tt`|`upper`<br/>`lower`|-|
 
 
 <Preview>
 	<PreviewTitle>Examples</PreviewTitle>
 	<PreviewArea p='20'>
-		<p class='-fz:xl -fw:bold -lts:l -ta:center'>Example text</p>
+		<p class='-fz:xl -fw:bold -lts:l -ta:center -tt:upper'>Example text</p>
 	</PreviewArea>
 	<PreviewCode slot="tab" label="HTML">
 	```html
-	<p class='-fz:xl -fw:bold -lts:l -ta:center'>Example text</p>
+	<p class='-fz:xl -fw:bold -lts:l -ta:center -tt:upper'>Example text</p>
 	```
 	</PreviewCode>
 	<PreviewCode slot="tab" label="JSX">
 	```jsx
-	<HTML.p fz='xl' fw='bold' lts='l' ta='center'>Example text</HTML.p>
+	<HTML.p fz='xl' fw='bold' lts='l' ta='center' tt='upper'>Example text</HTML.p>
 	```
 	</PreviewCode>
 </Preview>
