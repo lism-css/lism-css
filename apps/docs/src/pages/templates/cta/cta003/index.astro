@@ -12,8 +12,8 @@ import './_style.css';
 			<Media isLayer src='https://cdn.lism-css.com/img/random-2510' alt='' width='960' height='640' />
 			<Layer blur='4px' grayscale='100%' bgc='black:50%' />
 		</Frame>
-		<Container size='m' hasGutter py='50' z='1'>
-			<Grid gtc={['auto', null, 'auto 1fr']} ai='center' g='50 70' w='stretch'>
+		<Container isWrapper='l' hasGutter py='50' z='1'>
+			<Grid gtc={['auto', null, 'auto 1fr']} ai='center' g='40 60' w='stretch'>
 				<Stack ai='fs' g='40' py={[0, null, '50']}>
 					<Stack g='40'>
 						<HTML.p class='u-trim' fz='5xl' fw='thin' lts='l' c='white'>Contact</HTML.p>
@@ -52,7 +52,7 @@ import './_style.css';
 						</Button>
 					</Stack>
 				</Stack>
-				<Frame h='100%'>
+				<Frame tag='figure' h='100%'>
 					<Media src='https://cdn.lism-css.com/img/random-2510' alt='' width='960' height='640' bdrs='10' />
 				</Frame>
 			</Grid>

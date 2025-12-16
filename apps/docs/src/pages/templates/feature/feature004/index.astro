@@ -1,12 +1,12 @@
 ---
 import DemoPageLayout from '~/layouts/DemoPageLayout.astro';
 
-import { Stack, Container, Frame, Grid, Columns, Media, HTML, Flex, Icon, Layer, Flow } from 'lism-css/astro';
+import { Stack, Container, Frame, Grid, Columns, Media, HTML, Flex, Icon, Layer } from 'lism-css/astro';
 import './_style.css';
 ---
 
 <DemoPageLayout title='Feature004'>
-	<Container size='l' py='50' hasGutter>
+	<Container isWrapper='l' py='50' hasGutter>
 		<Stack g='50'>
 			<HTML.h class='u-trim' lv='2' fz='2xl' ta='center'>未知なる体験</HTML.h>
 			<Columns cols={[1, null, 3]} g='30'>
@@ -96,11 +96,11 @@ import './_style.css';
 <style>
 	@media (any-hover: hover) {
 		.-hov\:to\:zoom {
-			scale: var(--isHov_, 1.1);
+			scale: var(--_isHov, 1.1);
 		}
 		.-hov\:to\:reverse {
-			background-color: var(--isHov_, var(--white));
-			color: var(--isHov_, var(--black));
+			background-color: var(--_isHov, var(--white));
+			color: var(--_isHov, var(--black));
 		}
 	}
 </style>

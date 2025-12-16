@@ -7,7 +7,7 @@ import './_style.css';
 ---
 
 <DemoPageLayout title='Feature011'>
-	<Container size='m' bgc='base-2' py='50' hasGutter>
+	<Container isWrapper='m' bgc='base-2' py='50' hasGutter>
 		<Grid
 			gt={[
 				'"title" "body" "link" / 1fr',
@@ -110,7 +110,7 @@ import './_style.css';
 				</Grid>
 			</Grid>
 			<Flex ga='link' ai='flex-e' jc='flex-e'>
-				<Button href='#' variant='outline' w={['stretch', null, 'auto']} min-w='8rem' fz='s' bd bdc='text' p='15' bdrs='10'
+				<Button href='#' variant='outline' w={['stretch', null, 'auto']} min-w='8rem' fz='s' bd bdc='text' py='15' bdrs='10'
 					>View Detail</Button
 				>
 			</Flex>
@@ -121,8 +121,8 @@ import './_style.css';
 <style is:inline>
 	@media (any-hover: hover) {
 		.-hov\:to\:reverse {
-			background-color: var(--isHov_, var(--text));
-			color: var(--isHov_, var(--base));
+			background-color: var(--_isHov, var(--text));
+			color: var(--_isHov, var(--base));
 			border-color: var(--text);
 		}
 	}

@@ -1,7 +1,7 @@
 ---
 import DemoPageLayout from '~/layouts/DemoPageLayout.astro';
 
-import { Container, Frame, Grid, Flow, Layer, Media, Stack, HTML, Flex } from 'lism-css/astro';
+import { Container, Frame, Grid, Wrapper, Layer, Media, Stack, HTML, Flex } from 'lism-css/astro';
 import Button from '~/components/ex/Button/index.astro';
 import './_style.css';
 ---
@@ -23,27 +23,29 @@ import './_style.css';
 			</Frame>
 		</Grid>
 		<Layer blur='8px' bgc='black:30%' z='0' />
-		<Flow flow='l' isContainer='s' pos='rel' hasGutter py='60' c='white'>
-			<Stack g='30' ai='center'>
-				<HTML.p class='u-trim' fz='5xl' fw='100' lts='l'>Feature</HTML.p>
-				<HTML.h lv='2' class='u-trim' fz='l' fw='normal' lts='l'>私たちの製品のこと</HTML.h>
+		<Wrapper contentSize='s' hasGutter py='60' c='white' pos='rel'>
+			<Stack g='40'>
+				<Stack g='30' ai='center'>
+					<HTML.p class='u-trim' fz='5xl' fw='100' lts='l'>Feature</HTML.p>
+					<HTML.h lv='2' class='u-trim' fz='l' fw='normal' lts='l'>私たちの製品のこと</HTML.h>
+				</Stack>
+				<Stack g='30'>
+					<p>
+						どんなに美しいデザインも、使い心地が伴わなければ意味がありません。
+						私たちは、触れた瞬間に意図が伝わる、直感的でシームレスな操作性を追求しました。
+					</p>
+					<p>
+						光の点滅や、耳に心地よい操作音、滑らかなダイヤルの感触。五感に訴えかける細やかな設計が、
+						日々の何気ない動作をストレスのない、豊かな体験へと昇華させます。
+						テクノロジーを意識させない、水のような自然な使い心地をお楽しみください。
+					</p>
+				</Stack>
+				<Flex jc='center'>
+					<Button layout='grid' href='#' variant='outline' min-w='14rem' py='15' c='white' bdrs='99'>
+						<span>View More</span>
+					</Button>
+				</Flex>
 			</Stack>
-			<Stack g='30'>
-				<p>
-					どんなに美しいデザインも、使い心地が伴わなければ意味がありません。
-					私たちは、触れた瞬間に意図が伝わる、直感的でシームレスな操作性を追求しました。
-				</p>
-				<p>
-					光の点滅や、耳に心地よい操作音、滑らかなダイヤルの感触。五感に訴えかける細やかな設計が、
-					日々の何気ない動作をストレスのない、豊かな体験へと昇華させます。
-					テクノロジーを意識させない、水のような自然な使い心地をお楽しみください。
-				</p>
-			</Stack>
-			<Flex jc='center'>
-				<Button layout='grid' href='#' variant='outline' min-w='14rem' p='20' c='white' bdrs='99'>
-					<span>View More</span>
-				</Button>
-			</Flex>
-		</Flow>
+		</Wrapper>
 	</Container>
 </DemoPageLayout>

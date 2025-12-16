@@ -8,10 +8,11 @@ import { Lism, Box } from 'lism-css/astro';
 import { Preview, PreviewArea, PreviewTitle, PreviewCode, PreviewFrame, EmbedCode } from "~/components";
 
 情報用のテンプレートです。  
+breakpoint「md」以下は1カラムになり、アイテムが縦に並びます。  
 内容は全てダミーコンテンツです。
 
 <PreviewTitle>プレビュー</PreviewTitle>
-<PreviewFrame url='/templates/information/information002/' />
+<PreviewFrame url='/templates/information/information002/' hasSizeSwitch />
 
 <PreviewTitle>コード</PreviewTitle>
 <EmbedCode srcPath={`src/pages/templates/information/information002/index.astro`} />
