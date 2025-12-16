@@ -65,34 +65,36 @@ Lismでは、次のようなモジュールクラスを使います。
 </Preview>
 
 
-
-
 ### `is--container`
 
-`is--container`はコンテナ要素を定義するためのクラスです。  
-`--contentSz`で直下の子要素サイズを制御でき、`-container:{s|m|l}`でプリセットサイズを指定することもできます。
+`is--container`を使用すると、その要素に <code>contaner-type:inline-size</code> を適用します。
+Lism CSSではコンテナクエリでプロパティを変更できる仕様になっていますので、
+			<b>コンテナクエリの判定基準としたしたいラッパー要素にこのクラスを使用しておく必要があります</b>。
+
+### `is--wrapper`
+
+`is--wrapper`はラッパー要素を定義するためのクラスです。  
+`--contentSize`で直下の子要素サイズを制御でき、`-wrapper:{s|l}`でプリセットサイズを指定することもできます。
 
 <Spacer h='1rem' />
 
-| クラス名 | コンテンツ幅 (`--contentSz`) |
+| クラス名 | コンテンツ幅 (`--contentSize`) |
 |---|---|
-| `is--container`| `100%` |
-| `-container:s` | `--sz--s` |
-| `-container:m` | `--sz--m` |
-| `-container:l` | `--sz--l` |
-
+| `is--wrapper`| `--sz--m` |
+| `-content:s` | `--sz--s` |
+| `-content:l` | `--sz--l` |
 
 <Preview>
 	<PreviewTitle>例</PreviewTitle>
 	<PreviewArea resize p='15'>
-		<Lism isContainer='s' className='-bd:guide -hov:itemGuide'>
+		<Lism isWrapper='s' className='-bd:guide -hov:itemGuide'>
 			<div>Contents...</div>
 			<div>Contents...</div>
 		</Lism>
 	</PreviewArea>
 	<PreviewCode slot='tab' label='HTML'>
 	```html
-	<div class="is--container -container:s">
+	<div class="is--wrapper -content:s">
 		<div>Contents...</div>
 		<div>Contents...</div>
 	</div>
@@ -100,7 +102,7 @@ Lismでは、次のようなモジュールクラスを使います。
 	</PreviewCode>
 	<PreviewCode slot='tab' label='JSX'>
 	```jsx
-	<Lism isContainer='s'>
+	<Lism isWrapper='s'>
 		<div>Contents...</div>
 		<div>Contents...</div>
 	</Lism>
@@ -110,7 +112,7 @@ Lismでは、次のようなモジュールクラスを使います。
 
 
 <Reference>
-活用例は [`<Container>`](/modules/state/container) を参照してください。
+活用例は [`<Wrapper>`](/modules/state/wrapper) を参照してください。
 </Reference>
 
 

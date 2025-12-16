@@ -1,50 +1,53 @@
 ---
-title: 'Container'
+title: 'Wrapper'
 description: ...
 ---
-import { Container, Box, HTML, Lism, Spacer } from "lism-css/astro";
+import { Wrapper, Box, HTML, Lism, Spacer } from "lism-css/astro";
 import { Preview, PreviewFrame, PreviewArea, PreviewTitle, PreviewCode, ImportPackage, Callout } from "~/components";
 import { Desktop } from '@phosphor-icons/react';
 
-[`is--container`](/css/module-class/#is--container) クラスをコンポーネントで利用する例を紹介していきます。
+[`is--wrapper`](/css/module-class/#is--wrapper) クラスをコンポーネントで利用する例を紹介していきます。
 
-`is--container` は基本的に `isContainer`プロパティで**どのコンポーネントからでも呼び出せるようになっています。**
+`is--wrapper` は基本的に `isWrapper`プロパティで**どのコンポーネントからでも呼び出せるようになっています。**
 
 | プロパティ | 出力 |
 |---|---|
-| `isContainer`| `.is--container` |
-| `isContainer='s'` | `.is--container.-container:s` |
-| `isContainer='m'` | `.is--container.-container:m` |
-| `isContainer='l'` | `.is--container.-container:l` |
-| `isContainer={value}` | `.is--container`, `--contentSz:{value}` |
+| `isWrapper`| `.is--wrapper` |
+| `isWrapper='s'` | `.is--wrapper`, `.-content:s` |
+| `isWrapper='l'` | `.is--wrapper`, `.-content:l` |
+| `isWrapper={value}` | `.is--wrapper`, `--contentSize:{value}` |
+
+
+また、`isContainer` (`is--container`)クラスと併用することで、`container-type: inline-size` も適用できます。
 
 
 ## 専用コンポーネント
 
-`<Lism isContainer>` のエイリアスとして、`<Container>` も用意しています。
+`<Lism isWrapper>` のエイリアスとして、`<Wrapper>` も用意しています。
 
 
 ### Props
 | プロパティ | 説明 |
 |---|---|
-| `size` | コンテナサイズを指定します。|
+| `contentSize` | コンテンツサイズを指定します。|
 | `layout` | 展開したい Layoutモジュールを指定できます。|
+| `isContainer` | コンテナタイプをセットでいます。|
 
 <PreviewTitle>下記の ①, ② はそれぞれ同じ結果になります。</PreviewTitle>
 
 ```jsx
 // ①
-<Flow isContainer='m'>...</Lism>
+<Flow isWrapper='s' isContainer>...</Lism>
 
 // ②
-<Container size='m' layout='flow'>...</Container>
+<Wrapper contentSize='s' layout='flow' isContainer>...</Wrapper>
 ```
 
 
 
 ### Import
 
-<ImportPackage component='Container' />
+<ImportPackage component='Wrapper' />
 
 
 ## Usage
@@ -52,24 +55,53 @@ import { Desktop } from '@phosphor-icons/react';
 <Preview>
 	<PreviewTitle>例</PreviewTitle>
 	<PreviewArea resize p='15'>
-		<Container size='m' layout='flow' p='30'>
+		<Wrapper layout='flow' p='20' className='-bd:guide -hov:itemGuide'>
 			<p>Content</p>
 			<p>Content</p>
 			<p>...</p>
-		</Container>
+		</Wrapper>
 	</PreviewArea>
 	<PreviewCode slot='tab' label='JSX'>
 		```jsx
-		<Container size='m' layout='flow' p='30'>
+		<Wrapper layout='flow' p='20'>
 			<p>Content</p>
 			<p>Content</p>
 			<p>...</p>
-		</Container>
+		</Wrapper>
 		```
 	</PreviewCode>
 	<PreviewCode slot='tab' label='HTML'>
 		```html
-		<div class='l--flow is--container -container:m -p:30'>
+		<div class='l--flow is--wrapper -p:30'>
+			<p>Content</p>
+			<p>Content</p>
+			<p>...</p>
+		</div>
+		```
+	</PreviewCode>
+</Preview>
+
+<Preview>
+	<PreviewTitle>`contentSize='s'`を指定</PreviewTitle>
+	<PreviewArea resize p='15'>
+		<Wrapper contentSize='s' layout='flow' p='20' className='-bd:guide -hov:itemGuide'>
+			<p>Content</p>
+			<p>Content</p>
+			<p>...</p>
+		</Wrapper>
+	</PreviewArea>
+	<PreviewCode slot='tab' label='JSX'>
+		```jsx
+		<Wrapper contentSize='s' layout='flow' p='20'>
+			<p>Content</p>
+			<p>Content</p>
+			<p>...</p>
+		</Wrapper>
+		```
+	</PreviewCode>
+	<PreviewCode slot='tab' label='HTML'>
+		```html
+		<div class='l--flow is--wrapper -content:s -p:30'>
 			<p>Content</p>
 			<p>Content</p>
 			<p>...</p>
@@ -80,19 +112,19 @@ import { Desktop } from '@phosphor-icons/react';
 
 ### 任意のコンテナサイズをセットする
 
-s, m, l 以外の値をセットしたい場合は、`--contentSz`変数を指定します。
+s, l 以外の値をセットしたい場合は、isWrapper に任意の値をセットすると`--contentSize`変数としてしゅつ力されます。
 
 <Preview>
-	<PreviewTitle>is--container に任意の値をセットする</PreviewTitle>
+	<PreviewTitle>is--wrapper に任意の値をセットする</PreviewTitle>
 	<PreviewArea resize p='15'>
-		<Lism isContainer='20rem' className='-bd:guide -hov:itemGuide'>
+		<Lism isWrapper='20rem' p='20' className='-bd:guide -hov:itemGuide'>
 			<div>Contents...</div>
 			<div>Contents...</div>
 		</Lism>
 	</PreviewArea>
 	<PreviewCode slot='tab' label='JSX'>
 	```jsx
-	<Lism isContainer='20rem'>
+	<Lism isWrapper='20rem' p='20'>
 		<div>Contents...</div>
 		<div>Contents...</div>
 	</Lism>
@@ -100,7 +132,7 @@ s, m, l 以外の値をセットしたい場合は、`--contentSz`変数を指�
 	</PreviewCode>
 	<PreviewCode slot='tab' label='HTML'>
 	```html
-	<div class="is--container" style="--contentSz:20rem">
+	<div class="is--wrapper -p:20" style="--contentSize:20rem">
 		<div>Contents...</div>
 		<div>Contents...</div>
 	</div>
@@ -112,35 +144,9 @@ s, m, l 以外の値をセットしたい場合は、`--contentSz`変数を指�
 ### DEMOページ
 
 <Callout icon={Desktop} keycolor='purple'>
-`is--container`関連の挙動を確認できるデモページを用意しています。  
+`is--wrapper`関連の挙動を確認できるデモページを用意しています。  
 ぜひ広い画面でご確認ください。
 </Callout>
 
 <PreviewFrame url='/demo/container' />
 
-
-## サイズ制御クラス `-max-sz:{sz}`
-
-Lismには、コンテンツサイズ用のトークンとして`--sz--{sz}`が用意されています、（`{sz}`: `xs` `s` `m`, `l`, `xl`）
-
-`-container:{s|m|l}` クラスを呼び出すと、それぞれ`--sz--s`, `--sz--m`, `--sz--l` が利用されますが、`-max-sz`クラスに対しても、それぞれユーティリティクラスが用意されています。
-
-{/* `is--container`が`max-inline-size`でコンテンツサイズを制御するので、それに合わせて`-max-sz`Propクラスのプリセット値も用意しています。 */}
-
-`-max-sz:{xs~xl}`はそのまま`--sz--{xs~xl}`がセットされるクラスです。
-
-その他、特徴的なクラスがありますのでそれらを紹介しておきます。
-
-| クラス名 | 説明 |
-|---|---|
-| `-max-sz:full` | `.has--gutter`の直下でも、親要素のサイズいっぱいに広がります。 |
-| `-max-sz:outer` | 先祖コンテナ要素が呼び出された位置を基準としたコンテナ幅（`100cqw`）まで広がります。（`@propetry`を使っています。） |
-
-{/* | `-max-sz:wide` | `.-container:{s\|m\|l}`クラス直下では、コンテンツ幅よりも1段階広いサイズになります.  | */}
-
-
-### DEMOページ
-
-これらの`-max-sz`クラスの挙動についても、別ページで確認できますのでぜひご覧ください。
-
-<PreviewFrame url='/demo/content-size' />

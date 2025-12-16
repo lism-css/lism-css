@@ -13,8 +13,8 @@ style['--_inner-stretch'] = stretch || null;
 {
 	level && (
 		<Lism lismClass='c--shapeDivider' max-sz='full' data-flip={flip} aria-hidden='true' style={style} {...props}>
-			<div class='c--shapeDivider_inner -h:100%'>
-				{isEmpty ? null : (
+			{isEmpty ? null : (
+				<div class='c--shapeDivider_inner'>
 					<svg
 						xmlns='http://www.w3.org/2000/svg'
 						class={isAnimation ? '-anim:shapeSlide' : ''}
@@ -27,8 +27,8 @@ style['--_inner-stretch'] = stretch || null;
 					>
 						<slot />
 					</svg>
-				)}
-			</div>
+				</div>
+			)}
 		</Lism>
 	)
 }

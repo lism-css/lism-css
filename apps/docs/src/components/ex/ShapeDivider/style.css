@@ -1,33 +1,37 @@
 @layer lism.modules {
+	/* Memo: scale反転は、__inner に対して行う。shapeDivider自身を反転させると、X方向に隙間ができてしまう。 */
 	.c--shapeDivider {
 		--level: 0;
-		--translate-y: 0.5px;
-		--_inner-offset: 0;
+
+		/* svg配置調整用 */
+		--_inner-offset: 0px;
 		--_inner-stretch: 1;
+
+		/* flip がオンなら -1 にセット */
+		--_flipX: 1;
+		--_flipY: 1;
 
 		/* 600px時点を最小値, 1200px時点を最大値にして、clampで高さを変動させる */
 		--h: clamp(calc(6px * var(--level)), calc(1cqw * var(--level)), calc(12px * var(--level)));
 		height: var(--h);
-		overflow: hidden;
-		translate: 0 var(--translate-y);
+		overflow: clip;
 	}
 
-	.c--shapeDivider[data-flip='XY'] {
-		scale: -1 -1;
-	}
-	.c--shapeDivider[data-flip='X'] {
-		scale: -1 1;
-	}
-	.c--shapeDivider[data-flip='Y'] {
-		scale: 1 -1;
-	}
-	.c--shapeDivider:where([data-flip*='Y']) {
-		--translate-y: -0.5px;
+	.c--shapeDivider:where([data-flip^='X']) {
+		--_flipX: -1;
 	}
 
+	.c--shapeDivider:where([data-flip$='Y']) {
+		--_flipY: -1;
+	}
 	.c--shapeDivider_inner {
-		scale: var(--_inner-stretch) 1;
-		translate: var(--_inner-offset) 0;
+		/* 隙間ができるのを防ぐ */
+		--offsetY: 0.5px;
+		--offsetX: -0.5px;
+		height: 100%;
+		width: calc(100% + 1px);
+		scale: calc(var(--_flipX) * var(--_inner-stretch)) var(--_flipY);
+		translate: calc(var(--offsetX) + var(--_inner-offset)) calc(var(--offsetY) * var(--_flipY));
 	}
 }
 

@@ -5,26 +5,26 @@ import ShapeDivider from '~/components/ex/ShapeDivider/index.astro';
 ---
 
 <DemoPageLayout title='Hero Component'>
-	<Lism hasGutter py={50} isContainer='s' max-sz='full'>
-		<Stack max-sz='full' min-h='50vh' bgc='base-2'>
-			<Flow isContainer='m' hasGutter my='auto'>
+	<Lism hasGutter py={50} isContainer isWrapper max-sz='full'>
+		<!-- Hero -->
+		<Stack isContainer max-sz='full' min-h='50vh' bgc='base-2'>
+			<Flow isWrapper hasGutter my='auto'>
 				<HTML.p fw='bold' fz='xl'>DEMO 01</HTML.p>
 				<Dummy length='l' lang='ja' />
 			</Flow>
 		</Stack>
-		<Stack max-sz='full' hasGutter pos='rel' min-h='75vh' c='white' g='15'>
-			<ShapeDivider viewBox='0 0 10 10' c='base-2' level='6' flip='Y' z='1'>
+		<Stack isContainer max-sz='full' hasGutter pos='rel' min-h='70vh' c='white' g='15'>
+			<ShapeDivider viewBox='0 0 10 10' c='base-2' level='6' flip='XY' z='1'>
 				<path d='M10,10V0L0,9.5V10L10,10z'></path>
 			</ShapeDivider>
 			<Frame isLayer>
 				<Media isLayer src='https://cdn.lism-css.com/img/a-2.jpg' alt='' width='960' height='640' />
 				<Layer blur='4px' bgc='black:50%' />
 			</Frame>
-			<Flow isContainer='m' py='30' my='auto' z='0'>
+			<Flow isWrapper py='30' my='auto' z='0'>
 				<HTML.p fw='bold' fz='xl'>ShapDivider & Layers</HTML.p>
 				<Dummy length='l' />
 			</Flow>
-			<Box z='0' ta='center'>Footer</Box>
 			<ShapeDivider viewBox='0 0 10 10' c='base' level='6' z='1'>
 				<path d='M10,10V0L0,9.5V10L10,10z'></path>
 			</ShapeDivider>
@@ -37,7 +37,7 @@ import ShapeDivider from '~/components/ex/ShapeDivider/index.astro';
 		</Box>
 		<Divider />
 		<Spacer h='6rem' />
-		<Stack max-sz='full' min-h='100lvh' g='20' c='white' pos='rel'>
+		<Stack isContainer max-sz='full' min-h='70vh' g='20' c='white' pos='rel'>
 			<Frame isLayer>
 				<Media isLayer src='https://cdn.lism-css.com/img/a-1.jpg' alt='' width='960' height='640' />
 				<Layer blur='4px' bgc='black:50%' />
@@ -49,7 +49,7 @@ import ShapeDivider from '~/components/ex/ShapeDivider/index.astro';
 					<div>XXX</div>
 				</Flex>
 			</Flex>
-			<Flow isContainer='m' hasGutter my='auto' z='0'>
+			<Flow isWrapper hasGutter my='auto' z='0'>
 				<HTML.p fw='bold' fz='xl'>DEMO 02</HTML.p>
 				<Dummy length='l' />
 			</Flow>
@@ -63,9 +63,8 @@ import ShapeDivider from '~/components/ex/ShapeDivider/index.astro';
 		</Box>
 		<Divider />
 		<Spacer h='6rem' />
-		<!-- clamp = min:40px/400px, max:80px/1200px.  -->
-		<Box max-sz='full' style={{ '--slopeH': 'clamp(2.5rem, 1.25rem + 5cqw, 5rem)' }}>
-			<Stack max-sz='full' hasGutter pos='rel' min-h='50vh' c='white' g='15'>
+		<Box max-sz='full' style={{ '--slopeH': 'clamp(2rem, 4cqw, 4rem)' }}>
+			<Stack isContainer max-sz='full' hasGutter pos='rel' min-h='50vh' c='white' g='15'>
 				<ShapeDivider viewBox='0 0 10 10' h='var(--slopeH)' c='base' flip='Y' z='1'>
 					<path d='M10,10V0L0,9.5V10L10,10z'></path>
 				</ShapeDivider>
@@ -73,13 +72,13 @@ import ShapeDivider from '~/components/ex/ShapeDivider/index.astro';
 					<Media isLayer src='https://cdn.lism-css.com/img/a-1.jpg' alt='' width='960' height='640' />
 					<Layer bgc='black:50%' />
 				</Frame>
-				<Flow isContainer='m' py='30' pr={['0', '25%', '33%']} my='auto' z='0'>
-					<HTML.p fw='bold' fz='xl'>ShapDivider & Layers</HTML.p>
+				<Flow isWrapper py='30' pr={['0', '20%', '25%']} my='auto' z='0'>
+					<HTML.h lv='2' fw='bold' fz='xl'>ShapDivider & Layers</HTML.h>
 					<Dummy length='l' />
 				</Flow>
 				<Spacer h='var(--slopeH)' />
 			</Stack>
-			<Stack max-sz='full' hasGutter pos='rel' min-h='50vh' c='white' my-s='calc(0px - var(--slopeH))'>
+			<Stack isContainer max-sz='full' hasGutter pos='rel' min-h='50vh' c='white' my-s='calc(0px - var(--slopeH))'>
 				<Frame
 					isLayer
 					style={{
@@ -90,8 +89,8 @@ import ShapeDivider from '~/components/ex/ShapeDivider/index.astro';
 					<Layer bgc='black:50%' />
 				</Frame>
 				<Spacer h='var(--slopeH)' />
-				<Flow isContainer='m' py='30' pl={['0', '25%', '33%']} my='auto' z='0'>
-					<HTML.p fw='bold' fz='xl'>ShapDivider & Layers</HTML.p>
+				<Flow isWrapper py='30' pl={['0', '20%', '25%']} ta='right' my='auto' z='0'>
+					<HTML.h lv='2' fw='bold' fz='xl'>ShapDivider & Layers</HTML.h>
 					<Dummy length='l' />
 				</Flow>
 				<ShapeDivider viewBox='0 0 10 10' h='var(--slopeH)' c='base' flip='X' z='1'>

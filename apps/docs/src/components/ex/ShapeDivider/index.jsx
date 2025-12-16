@@ -11,8 +11,8 @@ export default function ShapeDivider({ viewBox, children, isAnimation, isEmpty, 
 
 	return (
 		<Lism lismClass='c--shapeDivider' max-sz='full' data-flip={flip} aria-hidden='true' style={style} {...props}>
-			<div className='c--shapeDivider_inner -h:100%'>
-				{isEmpty ? null : (
+			{isEmpty ? null : (
+				<div className='c--shapeDivider_inner'>
 					<svg
 						xmlns='http://www.w3.org/2000/svg'
 						className={isAnimation ? '-anim:shapeSlide' : ''}
@@ -25,8 +25,8 @@ export default function ShapeDivider({ viewBox, children, isAnimation, isEmpty, 
 					>
 						{children}
 					</svg>
-				)}
-			</div>
+				</div>
+			)}
 		</Lism>
 	);
 }

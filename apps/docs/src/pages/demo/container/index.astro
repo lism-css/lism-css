@@ -9,65 +9,74 @@ import './_style.scss';
 	<Flow id='demo-wrapper' py={50} p='1px'>
 		<h2>is--container</h2>
 		<p>
-			<TipCode text='is--container' />単体では、効果としては主に <code>contaner-type:inline-size</code> が適用されるだけです。
+			<TipCode text='is--container' />を使用すると、その要素に <code>contaner-type:inline-size</code> を適用します。
 		</p>
 		<Container>
 			<AttsLabels atts='is--container' />
 			<LoremContent />
 		</Container>
-		<!-- <p>ただし、<code>margin-inline:auto</code> も適用されているので、自身の横幅がセットされている時は中央寄せされます。</p>
-		<Container max-w='s'>
-			<AttsLabels atts='is--container,-max-w:s' />
-			<LoremContent />
-		</Container> -->
+
+		<p>
+			Lism CSSではコンテナクエリでプロパティを変更できる仕様になっていますので、
+			<b>コンテナクエリの判定基準としたしたいラッパー要素にこのクラスを使用しておく必要があります</b>。
+		</p>
 
 		<Spacer h='1rem' />
 
-		<h2>is--container (-container: あり)</h2>
-		<p><code>.-container:s|m|l</code> クラス、または<code>--contentSz</code>により、内部のコンテンツ幅を制御できます。</p>
-		<!-- </Container> -->
-		<Flow isContainer='s' flow='s' hasGutter>
-			<AttsLabels atts='is--container,-container:s,has--gutter' />
-			<LoremContent />
-			<LoremContent />
-			<GutterGuide />
-		</Flow>
-		<Flow isContainer='m' flow='s' hasGutter>
-			<AttsLabels atts='is--container,-container:m,has--gutter' />
-			<LoremContent />
-			<LoremContent />
-			<GutterGuide />
-		</Flow>
-		<Flow isContainer='l' flow='s' hasGutter>
-			<AttsLabels atts='is--container,-container:l,has--gutter' />
+		<h2>is--wrapper</h2>
+		<p><code>.is--wrapper</code> クラスを使うと、内部のコンテンツ幅を制御できます。</p>
+		<Flow isWrapper flow='s' hasGutter>
+			<AttsLabels atts='is--wrapper, has--gutter' />
 			<LoremContent />
 			<LoremContent />
 			<GutterGuide />
 		</Flow>
 
-		<Flow isContainer='320px' flow='s'>
-			<AttsLabels atts='is--container,--contentSz:320px' />
-			<LoremContent />
-			<LoremContent />
+		<h2>.-contentSize:</h2>
+		<p>
+			<code>.is--wrapper</code> クラスは<code>--contentSize</code>で内部のコンテンツ幅を制御できます。
+			<br />
+			<code>.-contentSize:s|l</code> クラスは、
+			<code>--sz--s</code>,<code>--sz--l</code>をセットできるユーティリティクラスです。
+		</p>
+		<!-- </Container> -->
+		<Flow isWrapper='s' flow='s' hasGutter>
+			<AttsLabels atts='is--wrapper,-contentSize:s,has--gutter' />
+			<LoremContent length='m' />
+			<LoremContent length='m' />
+			<GutterGuide />
+		</Flow>
+
+		<Flow isWrapper='l' flow='s' hasGutter>
+			<AttsLabels atts='is--wrapper,-contentSize:l,has--gutter' />
+			<LoremContent length='m' />
+			<LoremContent length='m' />
+			<GutterGuide />
+		</Flow>
+
+		<Flow isWrapper='320px' flow='s'>
+			<AttsLabels atts='is--wrapper,--contentSize:320px' />
+			<LoremContent length='s' />
+			<LoremContent length='s' />
 			<!-- <GutterGuide /> -->
 		</Flow>
 
 		<Spacer h='1rem' />
 
-		<h2>container要素のネスト</h2>
+		<h2>wrapper要素のネスト</h2>
 
 		<p>
-			<code>is--container</code> は子要素の幅を変数で制御しているため、直下にネストすると子コンテナ自身の幅も（同じ変数名なので）影響を受けます。
+			<code>is--wrapper</code> は子要素の幅を変数で制御しているため、直下にネストすると子ラッパー自身の幅も（同じ変数名なので）影響を受けます。
 		</p>
-		<Flow isContainer='m' flow='s' hasGutter>
-			<AttsLabels atts='is--container,-container:m,has--gutter' />
-			<LoremContent />
-			<LoremContent />
+		<Flow isWrapper flow='s' hasGutter>
+			<AttsLabels atts='is--wrapper, has--gutter' />
+			<LoremContent length='s' />
+			<LoremContent length='m' />
 			<Spacer h='.5rem' />
-			<Flow isContainer='s'>
-				<AttsLabels atts='is--container,-container:s' />
-				<LoremContent />
-				<LoremContent />
+			<Flow isWrapper='s'>
+				<AttsLabels atts='is--wrapper,-contentSize:s' />
+				<LoremContent length='s' />
+				<LoremContent length='s' />
 			</Flow>
 			<Spacer h='.5rem' />
 
@@ -80,82 +89,89 @@ import './_style.scss';
 		<p>
 			<br />
 			コンテナクエリの判定値は<b>直前の親コンテナの幅</b>になりますが、
-			<code>.-container:s|m|l</code> は子要素の幅を制限しているだけで、<b>自身の横幅は100%</b>です。
+			<code>.-contentSize:s|l</code> は子要素の幅を制限しているだけで、<b>自身の横幅は100%</b>です。
 			<br />つまり、コンテナクエリの判定値もこの100%サイズが基準となります。
 		</p>
 		<p>
 			以下の例では、コンテナ直下のdivのサイズは <code>var(--sz--s)</code> ですが、<code>100cqw</code> がそのSサイズになるのではなく、windowサイズと一致します。
 		</p>
 
-		<Flow isContainer='s' flow='s'>
-			<AttsLabels atts='is--container,-container:s' />
+		<Lism isWrapper='s' isContainer>
+			<AttsLabels atts='is--wrapper,is--container,-contentSize:s' />
 			{/* <LoremContent /> */}
 
 			<Flow flow='s'>
 				<AttsLabels atts='div' />
 				<Flow flow='s'>
-					<Lism bd bdc='blue'>
-						<Lism w='75cqw' bgc='blue:20%' bg=':stripe' bd-x-e bdc='blue' whspace='nowrap'>width: 75cqw を適用したBOX</Lism></Lism
+					<Lism bd bdc='green'>
+						<Lism w='75cqw' bgc='green:20%' bg=':stripe' bd-x-e bdc='green' whspace='nowrap'>width: 75cqw を適用したBOX</Lism></Lism
 					>
 					<p class='-fz:s'>
 						↑ コンテナクエリの適用状態 :
-						<HTML.span lh='1' p='5' bd className='u-cbox' keycolor='blue' d={['none', 'inline-block']}>@sm~</HTML.span>
-						<HTML.span lh='1' p='5' bd className='u-cbox' keycolor='blue' d={['none', null, 'inline-block']}>@md~</HTML.span>
-						<HTML.span lh='1' p='5' bd className='u-cbox' keycolor='blue' d={['none', null, null, 'inline-block']}>@lg~</HTML.span>
+						<HTML.span lh='1' p='5' bd className='u-cbox' keycolor='green' d={['none', 'inline-block']}>@sm~</HTML.span>
+						<HTML.span lh='1' p='5' bd className='u-cbox' keycolor='green' d={['none', null, 'inline-block']}>@md~</HTML.span>
+						<HTML.span lh='1' p='5' bd className='u-cbox' keycolor='green' d={['none', null, null, 'inline-block']}>@lg~</HTML.span>
 					</p>
 				</Flow>
 			</Flow>
-		</Flow>
+		</Lism>
 		<p>
-			ここでのコンテナクエリの判定値( cqw )は、外側の<HTML.span bd bds='dashed' bdc='blue'>青色の点線</HTML.span
+			ここでのコンテナクエリの判定値( cqw )は、外側の<HTML.span bd bds='dashed' bdc='green'>緑色の点線</HTML.span
 			>で囲われたコンテナ要素のサイズです。
 		</p>
 		<p>
 			もし、内部の要素のサイズ（ここでは <code>var(--sz--s)</code>) を <code>100cqw</code>
-			となるようにコンテナクエリを内部のdivで使いたい場合は、コンテナ自身のサイズを明示的にSサイズにするか、コンテナをネストします。
+			となるようにコンテナクエリを内部のdivで使いたい場合は、コンテナ自身のサイズを明示的にSサイズにするか、もしくは、is--wrapper の内部にコンテナを配置します。
 		</p>
 
 		<p class='-ta:center'>以下は、コンテナ自体のサイズを明示的に指定した例です。</p>
-		<Container max-w='s' mx='auto'>
+		<Lism isContainer max-w='s' mx='auto'>
 			<AttsLabels atts='is--container,-max-w:s' />
 
 			<Flow flow='s'>
 				<AttsLabels atts='div' />
 				<!-- <p>ここでのコンテナクエリの判定値は、内部でさらに配置している（緑色の点線で囲われた）コンテナ要素のサイズです。</p> -->
 				<Flow flow='s'>
-					<Lism bd bdc='green'>
-						<Lism w='75cqw' bgc='green:20%' bg=':stripe' bd-x-e bdc='green' whspace='nowrap'>width: 75cqw を適用したBOX</Lism></Lism
+					<Lism bd bdc='pink'>
+						<Lism w='75cqw' bgc='pink:20%' bg=':stripe' bd-x-e bdc='pink' whspace='nowrap'>width: 75cqw を適用したBOX</Lism></Lism
 					>
 					<p>
 						コンテナクエリ適用状態 :
-						<HTML.span lh='1' p='5' bd className='u-cbox' keycolor='green' d={['none', 'inline-block']}>@sm~</HTML.span>
-						<HTML.span lh='1' p='5' bd className='u-cbox' keycolor='green' d={['none', null, 'inline-block']}>@md~</HTML.span>
-						<HTML.span lh='1' p='5' bd className='u-cbox' keycolor='green' d={['none', null, null, 'inline-block']}>@lg~</HTML.span>
+						<HTML.span lh='1' p='5' bd className='u-cbox' keycolor='pink' d={['none', 'inline-block']}>@sm~</HTML.span>
+						<HTML.span lh='1' p='5' bd className='u-cbox' keycolor='pink' d={['none', null, 'inline-block']}>@md~</HTML.span>
+						<HTML.span lh='1' p='5' bd className='u-cbox' keycolor='pink' d={['none', null, null, 'inline-block']}>@lg~</HTML.span>
 					</p>
 				</Flow>
 			</Flow>
-		</Container>
+		</Lism>
 
-		<p class='-ta:center'>以下は、コンテナをネストした例です。</p>
-		<Container size='s'>
-			<AttsLabels atts='is--container,-container:s' />
-			<Container>
+		<p class='-ta:center'>以下は、コンテナをwrapper内に配置した例です。</p>
+		<Lism isWrapper='s'>
+			<AttsLabels atts='is--wrapper,-contentSize:s' />
+			<Lism isContainer>
 				<AttsLabels atts='is--container' />
 				<!-- <p>ここでのコンテナクエリの判定値は、内部でさらに配置している（緑色の点線で囲われた）コンテナ要素のサイズです。</p> -->
 				<Flow flow='s'>
-					<Lism bd bdc='green'>
-						<Lism w='75cqw' bgc='green:20%' bg=':stripe' bd-x-e bdc='green' whspace='nowrap'>width: 75cqw を適用したBOX</Lism></Lism
+					<Lism bd bdc='pink'>
+						<Lism w='75cqw' bgc='pink:20%' bg=':stripe' bd-x-e bdc='pink' whspace='nowrap'>width: 75cqw を適用したBOX</Lism></Lism
 					>
 					<p>
 						コンテナクエリ適用状態 :
-						<HTML.span lh='1' p='5' bd className='u-cbox' keycolor='green' d={['none', 'inline-block']}>@sm~</HTML.span>
-						<HTML.span lh='1' p='5' bd className='u-cbox' keycolor='green' d={['none', null, 'inline-block']}>@md~</HTML.span>
-						<HTML.span lh='1' p='5' bd className='u-cbox' keycolor='green' d={['none', null, null, 'inline-block']}>@lg~</HTML.span>
+						<HTML.span lh='1' p='5' bd className='u-cbox' keycolor='pink' d={['none', 'inline-block']}>@sm~</HTML.span>
+						<HTML.span lh='1' p='5' bd className='u-cbox' keycolor='pink' d={['none', null, 'inline-block']}>@md~</HTML.span>
+						<HTML.span lh='1' p='5' bd className='u-cbox' keycolor='pink' d={['none', null, null, 'inline-block']}>@lg~</HTML.span>
 					</p>
 				</Flow>
-			</Container>
-		</Container>
+			</Lism>
+		</Lism>
 
 		<Spacer h='10rem' />
 	</Flow>
 </DemoPageLayout>
+
+<style is:global>
+	#demo-wrapper > :is(p, h2, h3) {
+		max-width: 55rem;
+		margin-inline: auto;
+	}
+</style>

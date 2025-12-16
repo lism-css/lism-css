@@ -20,6 +20,7 @@ export * from './WithSide';
 export * from './Frame';
 
 export * from './Container';
+export * from './Wrapper';
 export * from './Layer';
 export * from './LinkBox';
 

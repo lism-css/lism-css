@@ -46,7 +46,7 @@ import { Box, Stack, Flex, Grid,... } from "lism-css/react";
 
 
 ## Main Class Examples
-- Layout State: `is--container`, `l--flow`, `is--layer`, etc.
+- Layout State: `is--wrapper`, `is--container`, `is--layer`, etc.
 - Layout Module: `⁠l--flex⁠`, `⁠l--grid⁠`, `⁠l--center⁠`, `⁠l--columns⁠`, `⁠l--withSide⁠`, etc.
 - Prop Class: `⁠-p:20`, `⁠-bgc:base-2`⁠, `⁠-fz:l⁠`, etc.
 - Decoration Utility: `⁠u-cbox⁠`, etc.

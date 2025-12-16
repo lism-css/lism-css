@@ -2,11 +2,12 @@ import getSvgUrl from '../helper/getSvgUrl.js';
 // import minifyHtml from '../helper/minifyHtml.js';
 
 export default {
-	isContainer: {
-		className: 'is--container',
-		preset: ['s', 'm', 'l'],
-		presetClass: '-container',
-		customVar: '--contentSz',
+	isContainer: 'is--container',
+	isWrapper: {
+		className: 'is--wrapper',
+		preset: ['s', 'l'],
+		presetClass: '-content',
+		customVar: '--contentSize',
 		tokenKey: 'sz',
 	},
 	isLayer: 'is--layer',
@@ -17,7 +18,6 @@ export default {
 	hasGutter: 'has--gutter',
 
 	// set class
-
 	setShadow: 'set-shadow',
 	setHov: 'set-hov',
 	setTransition: 'set-transition',

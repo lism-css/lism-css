@@ -2,7 +2,7 @@
 import { Container, HTML, Flex, Stack, Center, Icon, Modal } from 'lism-css/astro';
 ---
 
-<Container tag='header' size='m' py='20' hasGutter bxsh='10'>
+<Container tag='header' isWrapper='l' py='20' hasGutter bxsh='10'>
 	<Flex jc='between' ai='center' g='15'>
 		<HTML.div fz='xl' ff='mono'><a href='/'>Lism CSS</a></HTML.div>
 		<Flex mx-s='auto' g='15' d={['none', null, 'flex']}>
@@ -14,21 +14,21 @@ import { Container, HTML, Flex, Stack, Center, Icon, Modal } from 'lism-css/astr
 			<Icon icon='menu' fz='l' />
 		</Center>
 	</Flex>
-	<Modal.Root id='modal-01' isContainer='s' p='30' style={{ '--offset': '0 100px' }}>
+	<Modal.Root id='modal-01' isContainer isWrapper='xs' p='30' style={{ '--offset': '0 100px' }}>
 		<Modal.Inner layout='stack' w='100%' pos='rel' p='30' g='20' bdrs='20' bxsh='40'>
 			<Modal.CloseBtn modalId='modal-01' autofocus pos='abs' t='0' r='0' z='1' fz='xl' p='15' />
 			<HTML.div>
 				<HTML.span fz='l' fw='bold'>Menu</HTML.span>
 			</HTML.div>
 			<Modal.Body my-s='15' style={{ '--focus-offset': '-1px' }}>
-				<Stack bd-y className='u-collapseGrid' bd-b p='0'>
-					<HTML.a href='###' p='10' py='15' className='set-plain'>Menu 1</HTML.a>
-					<HTML.a href='###' p='10' py='15' className='set-plain'>Menu 2</HTML.a>
-					<HTML.a href='###' p='10' py='15' className='set-plain'>Menu 3</HTML.a>
+				<Stack className='u-collapseGrid'>
+					<HTML.a href='###' p='10' c='inherit' py='15'>Menu 1</HTML.a>
+					<HTML.a href='###' p='10' c='inherit' py='15'>Menu 2</HTML.a>
+					<HTML.a href='###' p='10' c='inherit' py='15'>Menu 3</HTML.a>
 				</Stack>
 			</Modal.Body>
 			<Center>
-				<HTML.button data-modal-close='modal-01' bd='none' p='15' lh='xs' bdrs='10'>Close</HTML.button>
+				<HTML.button data-modal-close='modal-01' p='15' lh='xs' bdrs='10'>Close</HTML.button>
 			</Center>
 		</Modal.Inner>
 	</Modal.Root>

@@ -13,6 +13,51 @@ v.1.0リリースまでしばらく激しい変更が続く可能性があるた
 
 {/* <Lism layout='box' bd-t>Lism</Lism> */}
 
+## v.0.8
+
+カラートークン名
+スケーリング変更
+line-heigtの仕様を変更
+--duration, --ease, --delay を --hov-duration, --hov-ease, --hov-delay に変更しました。
+-bd デフォ値を変更 -bdc:cc 追加
+--c--main→ --brand --c--line to --divider
+
+--isHov_ to --_isHov
+
+--gutter → --gutter-size
+
+translate, scale, rotate を Prop Classから削除
+
+set-bp追加
+-writing:vertical → is--vertical
+
+optout u-bgclipText
+
+u-itemDivider to u-collapseGrid
+
+
+-gtc:liquid廃止、l--liquidGrid 追加
+
+### コンテンツサイズ管理クラスの変更点
+
+is--container は container-type のセットだけに。
+コンテンツサイズ管理機能は is--wrapper へ分離しました。
+
+| 変更前 | 変更後 |
+| ------ | ------ |
+| `.-max-sz:outer` | `.-max-sz:container` |
+| `--sz--outer` | `--sz--container` |
+
+
+#### prop部分の変更点
+
+| プロパティ| 変更前    | 変更後   |
+| ------ | --------- | ------- |
+| overflow-wrap | `ovw` | `ovwrap`  |
+| whitespace | `whitespae` | `whspace`  |
+
+
+
 
 ## v.0.7
 - `<Modal>`(`d--modal`)のスタイル・スクリプトを調整しました。
@@ -134,7 +179,7 @@ v.1.0リリースまでしばらく激しい変更が続く可能性があるた
 | ------ | --------- | ------- |
 | opacity | `op`   | `o`  |
 | translate | `trnslt`   | `translate`  |
-| whitespace | `whs` | `whitespace`  |
+| whitespace | `whs` | `whspace`  |
 | float | `fl` | `float`  |
 | clear | `cl` | `clear`  |
 | order | `ord` | `order`  |
