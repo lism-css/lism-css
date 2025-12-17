@@ -10,10 +10,10 @@
 		"lib": [ "DOM", "DOM.Iterable", "ESNext" ],
 		"declaration": true,
 		"declarationMap": true,
+		"declarationDir": "./types",
 		"composite": true,
 		"emitDeclarationOnly": true,
 		"isolatedModules": true,
-
 		"skipDefaultLibCheck": true,
 
 		/* Strict Type-Checking Options */
@@ -22,15 +22,17 @@
 		/* Additional Checks */
 		"noImplicitReturns": true,
 		"noFallthroughCasesInSwitch": true,
-
-		/* Module Resolution Options */
-		"moduleResolution": "node",
-
-		/* This needs to be false so our types are possible to consume without setting this */
-		"esModuleInterop": false,
+		"moduleResolution": "bundler",
+		"esModuleInterop": true,
 		"resolveJsonModule": true,
-
 		"typeRoots": [ "./typings", "./node_modules/@types" ],
 		"types": [],
-	}
+	},
+	"exclude": [
+		"bin",
+		"dist",
+		"config.js",
+		"vite-plugin.mjs",
+		"vite.config.js"
+	]
 }
