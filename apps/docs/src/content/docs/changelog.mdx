@@ -15,49 +15,59 @@ v.1.0リリースまでしばらく激しい変更が続く可能性があるた
 
 ## v.0.8
 
-カラートークン名
-スケーリング変更
-line-heigtの仕様を変更
---duration, --ease, --delay を --hov-duration, --hov-ease, --hov-delay に変更しました。
--bd デフォ値を変更 -bdc:cc 追加
---c--main→ --brand --c--line to --divider
+### line-heightの仕様を変更しました。
 
---isHov_ to --_isHov
+ハーフレディングで管理するシステムへ変更しました。
 
---gutter → --gutter-size
-
-translate, scale, rotate を Prop Classから削除
-
-set-bp追加
--writing:vertical → is--vertical
-
-optout u-bgclipText
-
-u-itemDivider to u-collapseGrid
+詳しくは [タイポグラフィ・スケーリングの説明](/css/typography/) を参照してください。
 
 
--gtc:liquid廃止、l--liquidGrid 追加
+
+### トークン・CSS変数の変更点
+
+| 変更前 | 変更後 | 備考 |
+| ------ | ------ | ---- |
+| `--c--main` | `--brand` | カラートークン名の変更 |
+| `--c--line` | `--divider` | カラートークン名の変更 |
+| `--duration`, `--ease`, `--delay` | `--hov-duration`, `--hov-ease`, `--hov-delay` | hover関連の変数名を明確化 |
+| `--isHov_` | `--_isHov` | 命名規則の変更 |
+| `--gutter` | `--gutter-size` | 変数名の明確化 |
+
+- 余白スケーリングを全体的に変更しました。
+- カラートークンを全体的に調整しました。
+
+### Prop Class の変更点
+
+| 変更前 | 変更後 | 備考 |
+| ------ | ------ | ---- |
+| `ovw` | `ovwrap` | overflow-wrap |
+| `whitespae` | `whspace` | |
+| `-td:under` | 廃止 | |
+| - | `-tt:upper`, `-tt:lower` | 新規追加 |
+
+- `translate`, `scale`, `rotate` を Prop Class から削除しました。
+
+### ユーティリティ・レイアウトクラスの変更点
+
+| 変更前 | 変更後 | 備考 |
+| ------ | ------ | ---- |
+| `-writing:vertical` | `is--vertical` | State Classへ移行 |
+| `u-bgclipText` | 廃止（オプトアウト） | |
+| `u-itemDivider` | `u-collapseGrid` | クラス名変更 |
+| `-gtc:liquid` | `l--liquidGrid` | レイアウトクラスとして独立 |
+| `-bd` | `--bdc` のデフォルト値変更 | `-bdc:cc` を追加 |
+
+- `set-bp` を追加しました。
 
 ### コンテンツサイズ管理クラスの変更点
 
-is--container は container-type のセットだけに。
-コンテンツサイズ管理機能は is--wrapper へ分離しました。
+`is--container` は `container-type` のセットのみを担当するように変更しました。  
+コンテンツサイズ管理機能は `is--wrapper` へ分離しました。
 
 | 変更前 | 変更後 |
 | ------ | ------ |
 | `.-max-sz:outer` | `.-max-sz:container` |
 | `--sz--outer` | `--sz--container` |
-
-
-#### prop部分の変更点
-
-| プロパティ| 変更前    | 変更後   |
-| ------ | --------- | ------- |
-| overflow-wrap | `ovw` | `ovwrap`  |
-| whitespace | `whitespae` | `whspace`  |
-
--td:under廃止
--tt:upper, -tt:lower 追加
 
 
 ## v.0.7
