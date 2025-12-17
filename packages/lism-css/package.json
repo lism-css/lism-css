@@ -35,7 +35,6 @@
 	],
 	"type": "module",
 	"main": "./dist/index.js",
-	"types": "./packages/types/index.d.ts",
 	"exports": {
 		".": "./dist/index.js",
 		"./config.js": "./config.js",
@@ -44,17 +43,19 @@
 		"./vite-plugin": "./vite-plugin.mjs",
 		"./lib/*": "./dist/lib/*",
 		"./react": {
-			"import": "./dist/index.js",
-			"types": "./packages/types/index.d.ts"
+			"import": "./dist/components/index.js",
+			"types": "./dist/components/index.d.ts"
 		},
-		"./react/*": "./dist/components/*",
+		"./react/*": {
+			"import": "./dist/components/*.js",
+			"types": "./dist/components/*.d.ts"
+		},
 		"./next-js/*": "./packages/next-js/*",
 		"./astro": {
 			"import": "./packages/astro/index.js",
 			"types": "./packages/types/index.d.ts"
 		},
 		"./astro/*": "./packages/astro/*",
-		"./types": "./packages/types/index.d.ts",
 		"./scss/*": "./src/scss/*",
 		"./*.css": "./dist/css/*.css"
 	},
