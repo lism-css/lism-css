@@ -1,7 +1,7 @@
 // vite.config.js
 import { resolve } from 'path';
 import { defineConfig } from 'vite';
-import dts from 'unplugin-dts/rollup'
+import dts from 'unplugin-dts/vite'
 // import { nodePolyfills } from 'vite-plugin-node-polyfills';
 
 // import {useRef} from 'react'; とかした時に、React is not defined 言われないように
@@ -44,6 +44,11 @@ export default defineConfig({
 	plugins: [
 		react({ jsxRuntime: 'automatic' }), // React 17以降推奨のautomaticを明示
 		// lismResolver() // lism-css/パッケージ名の解決プラグイン
+		dts({
+			tsconfigPath: './tsconfig.json',
+			outDir: 'dist',
+			entryRoot: 'src',
+		}),
 	],
 	build: {
 		// target: 'es2015',
@@ -66,9 +71,7 @@ export default defineConfig({
 			// },
 		},
 		rollupOptions: {
-			plugins:[
-				dts({ tsconfigPath: './tsconfig.json' })
-			],
+			plugins: [],
 			external: ['react', 'react-dom', 'react/jsx-runtime', 'lism-css/config.js'],
 			output: {
 				dir: 'dist',
