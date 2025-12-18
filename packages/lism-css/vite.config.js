@@ -1,6 +1,7 @@
 // vite.config.js
 import { resolve } from 'path';
 import { defineConfig } from 'vite';
+import dts from 'unplugin-dts/vite'
 // import { nodePolyfills } from 'vite-plugin-node-polyfills';
 
 // import {useRef} from 'react'; とかした時に、React is not defined 言われないように
@@ -29,7 +30,7 @@ function deleteDuplicateDir(filePath) {
 
 // ファイルパスは大文字・小文字まで一致しないと Vercel でこけるので注意。
 const entries = {
-	index: resolve(__dirname, 'src/components/index.js'),
+	'components/index': resolve(__dirname, 'src/components/index.ts'),
 	// 'components/Box/index': resolve(__dirname, 'src/components/Box/index.js'),
 	// ↓ scripts.jsのビルドと、setEvent.js もこれでビルドされる.
 	'scripts/tabs': resolve(__dirname, 'src/components/Tabs/script.js'),
@@ -43,6 +44,11 @@ export default defineConfig({
 	plugins: [
 		react({ jsxRuntime: 'automatic' }), // React 17以降推奨のautomaticを明示
 		// lismResolver() // lism-css/パッケージ名の解決プラグイン
+		dts({
+			tsconfigPath: './tsconfig.json',
+			outDir: 'dist',
+			entryRoot: 'src',
+		}),
 	],
 	build: {
 		// target: 'es2015',
@@ -65,6 +71,7 @@ export default defineConfig({
 			// },
 		},
 		rollupOptions: {
+			plugins: [],
 			external: ['react', 'react-dom', 'react/jsx-runtime', 'lism-css/config.js'],
 			output: {
 				dir: 'dist',
