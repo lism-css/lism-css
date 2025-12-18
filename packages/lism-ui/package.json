@@ -1,0 +1,75 @@
+{
+	"name": "@lism-css/ui",
+	"version": "0.0.0-dev.1",
+	"description": "A layout-first CSS framework for websites.",
+	"author": {
+		"name": "ddryo",
+		"url": "https://github.com/ddryo"
+	},
+	"license": "MIT",
+	"keywords": [
+		"css-framework",
+		"astro-component",
+		"react-component"
+	],
+	"scripts": {
+		"dev": "vite",
+		"build": "vite build && pnpm build:css",
+		"build:vite": "vite build",
+		"build:css": "node bin/script-build-css.js",
+		"lint": "pnpm lint:style",
+		"lint:style": "stylelint '**/*.{css,scss}'",
+		"preview": "vite preview"
+	},
+	"bin": {
+		"lism-css": "./bin/cli.mjs"
+	},
+	"files": [
+		"dist",
+		"src"
+	],
+	"type": "module",
+	"main": "./dist/index.js",
+	"exports": {
+		"./react": {
+			"import": "./src/components/react.js",
+			"types": "./dist/components/index.d.ts"
+		},
+		"./astro": {
+			"import": "./src/components/astro.js",
+			"types": "./dist/components/index.d.ts"
+		},
+		"./*.css": "./dist/css/*.css"
+	},
+	"homepage": "https://www.lism.style",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/lism-css/lism-css/tree/main/packages/lism-css"
+	},
+	"bugs": {
+		"url": "https://github.com/lism-css/lism-css/issues"
+	},
+	"dependencies": {
+		"lism-css": "workspace:*"
+	},
+	"devDependencies": {
+		"@babel/cli": "^7.27.2",
+		"@babel/core": "^7.27.3",
+		"@babel/preset-env": "^7.27.2",
+		"@babel/preset-react": "^7.27.1",
+		"@rollup/plugin-babel": "^6.0.4",
+		"@vitejs/plugin-react-swc": "^3.10.0",
+		"glob": "^11.0.2",
+		"rollup": "^4.41.1",
+		"typescript": "~5.8.3",
+		"unplugin-dts": "1.0.0-beta.6",
+		"vite": "^6.3.5"
+	},
+	"peerDependencies": {
+		"@types/react": "*",
+		"@types/react-dom": "*",
+		"react": "^18 || ^19",
+		"react-dom": "^18 || ^19"
+	},
+	"sideEffects": false
+}

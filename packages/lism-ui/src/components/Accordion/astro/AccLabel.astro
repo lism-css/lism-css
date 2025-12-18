@@ -1,0 +1,11 @@
+---
+// import type { LismProps } from 'lism-css/types';
+import { Lism } from 'lism-css/react';
+import { defaultProps } from '../getProps';
+
+const props = Astro.props || {};
+---
+
+<Lism {...defaultProps.label} {...props}>
+	<slot />
+</Lism>
