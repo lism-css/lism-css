@@ -1,0 +1,21 @@
+---
+// import type { LismProps } from 'lism-css/types';
+import getLismProps from 'lism-css/lib/getLismProps';
+import { getAccProps } from '../getProps';
+
+// Propsの定義
+// interface Props extends LismProps {
+// 	duration?: string | number;
+// }
+const props = Astro.props || {};
+---
+
+<details {...getLismProps(getAccProps(props))}>
+	<slot />
+</details>
+
+<script>
+	// import setEvent from './setEvent';
+	import setAccordion from '../setAccordion';
+	setAccordion();
+</script>

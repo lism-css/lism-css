@@ -1,0 +1,13 @@
+---
+// import type { LismProps } from 'lism-css/types';
+import { Lism } from 'lism-css/react';
+import { defaultProps } from '../getProps';
+
+const { flow, innerProps, ...props } = Astro.props || {};
+---
+
+<Lism {...defaultProps.body} {...props}>
+	<Lism layout='flow' flow={flow} {...defaultProps.inner} {...innerProps}>
+		<slot />
+	</Lism>
+</Lism>

@@ -1,0 +1,18 @@
+---
+import { Lism } from 'lism-css/react';
+import { Icon } from 'lism-css/react';
+import { getAccIconProps } from '../getProps';
+
+// Propsの定義
+// interface Props extends LismProps {
+// 	icon?: string;
+// 	size?: string;
+// 	iconProps?: Object;
+// }
+
+const { viewBox, icon = 'caret-down', ...props } = Astro.props || {};
+---
+
+<Lism {...getAccIconProps(props)}>
+	{Astro.slots.has('default') ? <slot /> : <Icon viewBox={viewBox} icon={icon} />}
+</Lism>
