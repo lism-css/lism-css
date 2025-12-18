@@ -16,12 +16,11 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage, EmbedCo
 
 | クラス名 | 余白量 |
 |---|---|
-| `.l--flow` | `--flow--base` |
+| `.l--flow` | `--flow--base` (`--s30`) |
 | `.l--flow.-flow:s` | `--flow--s` (`--s20`) |
-| `.l--flow.-flow:l` | `--flow--l` (`--s50`) |
 | `.l--flow.-flow:` | `--flow` |
 
-また、見出しタグのみ、`--flow--h` が加算され、余白が少し広くなるようになっています。
+また、見出しタグのみ余白が2倍になるようになっています。
 
 
 <PreviewTitle>CSS</PreviewTitle>
@@ -51,9 +50,10 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage, EmbedCo
 	<PreviewArea p='20' layout=''>
 		<Flow hov='itemGuide'>
 			<Dummy lang='ja' />
-			<h2>Heading</h2>
+			<h2>Heading 2</h2>
 			<Dummy lang='ja' length='s' />
 			<Dummy lang='ja' length='l' />
+			<h3>Heading 3</h3>
 			<ul>
 				<li>Lorem ipsum, LIST content...</li>
 				<li>Lorem ipsum, LIST content...</li>
@@ -93,9 +93,10 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage, EmbedCo
 	<PreviewArea p='20' layout=''>
 		<Flow flow='s' hov='itemGuide'>
 			<Dummy lang='ja' />
-			<h2>Heading</h2>
+			<h2>Heading 2</h2>
 			<Dummy lang='ja' length='s' />
 			<Dummy lang='ja' length='l' />
+			<h3>Heading 3</h3>
 			<ul>
 				<li>Lorem ipsum, LIST content...</li>
 				<li>Lorem ipsum, LIST content...</li>
@@ -206,26 +207,35 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage, EmbedCo
 	<PreviewTitle>`l--flow`の直下の`l--flow`で`--flow`を定義した場合</PreviewTitle>
 	<PreviewArea p='20' layout=''>
 		<Flow hov='itemGuide'>
-		<p>Flow contents...</p>
+			<p>Flow contents...</p>
 			<p>Flow contents...</p>
 			<Flow flow='5px' bgc='orange:10%' hov='itemGuide'>
 				<p>*Nested <code class='-fz:s -bd -p:5 -bdrs:10'>`l--flow`(`--flow:5px`)</code></p>
 				<p>*Nested flow contents...</p>
 			</Flow>
 			<p>Flow contents...</p>
+			<Flow flow='s' bgc='green:10%' hov='itemGuide'>
+				<p>*Nested <code class='-fz:s -bd -p:5 -bdrs:10'>`l--flow`(`--flow:s`)</code></p>
+				<p>*Nested flow contents...</p>
+			</Flow>
 		</Flow>
 	</PreviewArea>
 	<PreviewCode slot='tab' label='JSX'>
-	```jsx "\<Flow " "\<Flow flow='5px'"
-	<Flow hov='itemGuide'>
-		<p>Flow contents...</p>
-		<Flow flow='5px' bgc='orange:10%' hov='itemGuide'>
-			<p>*Nested <code class='-fz:s -bd -p:5 -bdrs:10'>`l--flow`(`--flow:5px`)</code></p>
-			<p>*Nested flow contents...</p>
+		```jsx "\<Flow " "\<Flow flow='5px'"
+		<Flow>
+			<p>Flow contents...</p>
+			<p>Flow contents...</p>
+			<Flow flow='5px' bgc='orange:10%'>
+				<p>*Nested <code class='-fz:s -bd -p:5 -bdrs:10'>`l--flow`(`--flow:5px`)</code></p>
+				<p>*Nested flow contents...</p>
+			</Flow>
+			<p>Flow contents...</p>
+			<Flow flow='s' bgc='green:10%'>
+				<p>*Nested <code class='-fz:s -bd -p:5 -bdrs:10'>`l--flow`(`--flow:s`)</code></p>
+				<p>*Nested flow contents...</p>
+			</Flow>
 		</Flow>
-		<p>Flow contents...</p>
-	</Flow>
-	```
+		```
 	</PreviewCode>
 </Preview>
 

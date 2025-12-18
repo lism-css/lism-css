@@ -1,15 +1,17 @@
 .l--flow {
+	// コンテンツ間の余白バリエーションを定義（--s は set-cqUnit で再セットされるので、:rootではなく .l--flowで定義する）
+	--flow--base: var(--s30);
+	--flow--s: var(--s20);
+
 	display: flow-root;
-	// --flow: var(--flow--base);
 
 	> * + * {
 		--flow: var(--flow--base);
-		--my-s: var(--flow);
-		margin-block-start: var(--my-s);
+		margin-block-start: var(--flow);
 	}
 
 	// flow 直下のメディア要素は block に初期リセット
-	> :where(img, video) {
+	> :where(img, video, iframe) {
 		display: block;
 	}
 }
@@ -17,24 +19,18 @@
 .-flow\:s > * {
 	--flow: var(--flow--s);
 }
-.-flow\:l > * {
-	--flow: var(--flow--l);
-}
+
 .-flow\: > * {
 	--flow: inherit;
 }
 
-// 見出しの上部余白は少しだけ広くする.
+// 倍数
+// 見出しの上部余白は広くする.
 .l--flow > :where(h1, h2, h3, h4, h5, h6) {
-	// --my-s: var(--flow--h);
-	--my-s: calc(var(--flow) + var(--flow--h));
+	margin-block-start: calc(var(--flow) * var(--flow-hScale, 2));
 }
 
-// Note: 打ち消しを最後に書く
-// .l--flow > :where(.-max-sz\:full + .-max-sz\:full),
+// Note: 打ち消しは最後に書く
 .is--skipFlow + * {
-	--my-s: 0px;
+	--flow: 0px;
 }
-
-// is--side
-// is--skipFlow
