@@ -1,4 +1,5 @@
 import { Box, Flex, Container, HTML, Dummy, Divider, Columns } from 'lism-css/react';
+import { Accordion } from '@lism-css/ui/react';
 
 function App() {
 	return (
@@ -11,6 +12,12 @@ function App() {
 				Lorem ipsum dolor sit amet, consectetur adipisicing elit. Repellat itaque et voluptatum, ducimus temporibus accusamus exercitationem
 				dolores id impedit corporis asperiores debitis soluta, nemo iusto optio quae. Ducimus, aperiam tempora!
 			</p>
+			<Accordion.Root p='15' bgc='base-2'>
+				<Accordion.HeaderLabel>Accordion Label</Accordion.HeaderLabel>
+				<Accordion.Body>
+					<p>これはアコーディオンの中身です。@lism-css/ui を使用しています。</p>
+				</Accordion.Body>
+			</Accordion.Root>
 			<Flex g={['10', '15', '20']} p={['10', '15', '20']} bd>
 				<Box lh='1' p='20' bd>
 					1
