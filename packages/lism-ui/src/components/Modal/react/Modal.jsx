@@ -1,7 +1,7 @@
 import React from 'react';
-import { Lism } from '../Lism';
-import { setEvent } from './setModal';
-import { getProps } from './getProps';
+import { Lism } from '../../Lism';
+import { setEvent } from '../setModal';
+import { getProps } from '../getProps';
 
 // duration: [s]
 const Modal = ({ children, ...props }) => {
