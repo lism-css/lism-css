@@ -1,13 +1,13 @@
 ---
-import type { LismProps } from '../../types';
-import { Lism } from '../Lism';
+// import type { LismProps } from 'lism-css/types';
+import { Lism } from 'lism-css/react';
 
-export interface Props extends LismProps {
-	// controlId: string;
-	isActive?: boolean;
-	tabId?: string | number;
-	index?: number;
-}
+// export interface Props extends LismProps {
+// 	// controlId: string;
+// 	isActive?: boolean;
+// 	tabId?: string | number;
+// 	index?: number;
+// }
 const { tabId = 'tab', index = 0, isActive, ...props } = Astro.props;
 const controlId = `${tabId}-${index}`;
 ---

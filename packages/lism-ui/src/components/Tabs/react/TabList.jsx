@@ -1,4 +1,4 @@
-import { Lism } from '../Lism';
+import { Lism } from 'lism-css/react';
 
 export default function TabList(props) {
 	// jc: 's',

@@ -15,10 +15,13 @@ import ModuleList from '~/components/ModuleList.astro';
 
 Lismでは、次のようなモジュールクラスを使います。
 
-- `l--{module}`: レイアウトの構成単位となるようなモジュール群。
-- `d--{module}`: JavaScriptと組み合わせて動的な機能を持つ特殊なモジュール群。
-- `c--{module}`: その他のより具体的な役割を持つコンポーネント群。（他のクラスとの組み合わせを前提にした設計になっているものが多い。）
 - `is|has--{module}`: レイアウトを構成する役割を持ちつつ、複数の種類のモジュールに対してつけ外しできるような汎用性の高いモジュール群。
+- `l--{module}`: レイアウトの構成単位となるようなモジュール群。
+- `a--{module}`: レイアウトの最小単位となるモジュール群。
+- `c--{module}`: その他のより具体的な役割を持つコンポーネント群。（他のクラスとの組み合わせを前提にした設計になっているものが多い。）
+
+
+{/* |Dynamic<HelpText>JSと組み合わせた動きのあるモジュール</HelpText>|`.d--{name}`|`.d--accordion`,<br />`.d--modal`,<br />`.d--tabs`| */}
 
 基本的に、State Modulesを除いた各レイヤーの他モジュールクラスとの複数併用はできません。  
 たとえば、`.l--`と`.c--`は併用できますが、`.l--XXX`と`.l--YYY`、`.c--XXX`と`.c--YYY`は同一属性内では併用しないものとします。
@@ -220,11 +223,9 @@ CSSは以下のようになっており、`inset:0`と`overflow:hidden`も指定
 <ModuleList moduleType='Atomic Modules'/>
 
 
-## Dynamic Modules
-
+{/* ## Dynamic Modules
 `d--accordion`, `d--modal`, `d--tabs`がDynamic Modulesにあたります。
-
-<ModuleList moduleType='Dynamic Modules'/>
+<ModuleList moduleType='Dynamic Modules'/> */}
 
 
 ## Custom Modules

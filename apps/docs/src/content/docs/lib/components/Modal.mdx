@@ -3,8 +3,10 @@ title: 'Modal'
 description: ...
 ---
 
-import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage, EmbedCode, IconBadge } from '~/components';
-import { Modal, HTML, Grid, Dummy, Flex, Stack, Center, Icon } from 'lism-css/astro';
+import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage, EmbedCode, IconBadge, PropBadge } from '~/components';
+import { HTML, Grid, Dummy, Flex, Stack, Center, Icon } from 'lism-css/astro';
+import { Modal } from '@lism-css/ui/astro';
+
 import {
 	ArrowFatDown,
 	ArrowRight,
@@ -45,16 +47,16 @@ dialog.d--modal#modalID.set-plain
 | プロパティ | 説明 |
 |---|---|
 |`id`| Modal(`.d--modal`)にはid属性が必要です。|
-|（`<Modal.Inner>`） `layout`| `__inner`のレイアウト用コンポーネントを指定できます。|
-|（`<Modal.Inner>`） `offset`(`--offset`)| `__inner`のの非表示時の位置をずらすためのオフセット値|
-| (`<Modal.OpenBtn>`) `modalId`| `data-modal-open`として出力されます。モーダルを開くトリガー要素にて、モーダルの`id`を指定します。|
-| (`<Modal.CloseBtn>`) `modalId`| `data-modal-close`として出力されます。モーダルを閉じるトリガー要素にて、モーダルの`id`を指定します。|
+|<PropBadge>`<Modal.Inner>`</PropBadge><br/> `layout`| `__inner`のレイアウト用コンポーネントを指定できます。|
+|<PropBadge>`<Modal.Inner>`</PropBadge><br/> `offset`| `__inner`のの非表示時の位置をずらすためのオフセット値|
+|<PropBadge>`<Modal.OpenBtn>`</PropBadge><br/> `modalId`| `data-modal-open`として出力されます。モーダルを開くトリガー要素にて、モーダルの`id`を指定します。|
+|<PropBadge>`<Modal.CloseBtn>`</PropBadge><br/> `modalId`| `data-modal-close`として出力されます。モーダルを閉じるトリガー要素にて、モーダルの`id`を指定します。|
 
 
 ## Usage
 
 
-- Modalは`dialog`を使用しています。自体のdisplay値を変更しないように注意してください。
+- Modalは`dialog`を使用しています。display値を変更しないように注意してください。
 - `::backdrop` はアニメーションに問題があるため、dialogをスクリーン幅いっぱいにして背景色をつけて運用する前提で設計しています。
 
 {/* `<Modal.Root>`をgridレイアウト系にしてしまうと、 `<Modal.Inner>`(`.d--modal_inner`) の `max-height 100%` が効かなくなるので注意してください。 */}

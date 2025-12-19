@@ -30,8 +30,3 @@ export * from './atomic/Divider';
 export * from './atomic/Icon';
 export * from './atomic/Media';
 export * from './atomic/Spacer';
-
-// d--
-export { default as Accordion } from './Accordion';
-export { default as Tabs } from './Tabs';
-export { default as Modal } from './Modal';

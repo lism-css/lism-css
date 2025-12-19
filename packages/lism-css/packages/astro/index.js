@@ -29,7 +29,3 @@ export * from './Divider';
 export * from './Icon';
 export * from './Media';
 export * from './Spacer';
-
-export { default as Accordion } from './Accordion';
-export { default as Modal } from './Modal';
-export { default as Tabs } from './Tabs';
