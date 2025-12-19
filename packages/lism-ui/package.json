@@ -1,7 +1,7 @@
 {
 	"name": "@lism-css/ui",
-	"version": "0.0.0-dev.1",
-	"description": "A layout-first CSS framework for websites.",
+	"version": "0.0.0-dev.3",
+	"description": "UI components by lism-css.",
 	"author": {
 		"name": "ddryo",
 		"url": "https://github.com/ddryo"
@@ -15,11 +15,7 @@
 	"scripts": {
 		"dev": "vite",
 		"build": "vite build && pnpm build:css",
-		"build:vite": "vite build",
-		"build:css": "node bin/script-build-css.js",
-		"lint": "pnpm lint:style",
-		"lint:style": "stylelint '**/*.{css,scss}'",
-		"preview": "vite preview"
+		"build:css": "node build-css.js"
 	},
 	"bin": {
 		"lism-css": "./bin/cli.mjs"
@@ -39,7 +35,8 @@
 			"import": "./src/components/astro.js",
 			"types": "./dist/components/index.d.ts"
 		},
-		"./*.css": "./dist/css/*.css"
+		"./scripts/*": "./dist/scripts/*.js",
+		"./style.css": "./dist/style.css"
 	},
 	"homepage": "https://www.lism.style",
 	"repository": {

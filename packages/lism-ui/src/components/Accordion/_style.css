@@ -1,0 +1,52 @@
+.d--accordion {
+	--duration: var(--acc-duration, 0.4s);
+}
+.d--accordion[data-opened] {
+	--_notOpen: ;
+}
+.d--accordion:not([data-opened]) {
+	--_isOpen: ;
+}
+
+.d--accordion_header {
+	display: grid;
+	grid: auto / 1fr auto;
+	gap: 0.5em;
+	align-items: center;
+	outline-offset: -1px; /* overflow:clip|hidden; で見えなくなってしまうのを防ぐ */
+
+	/* Safariで表示されるデフォルトの三角形アイコンを消す */
+	&::-webkit-details-marker {
+		display: none;
+	}
+}
+
+.d--accordion_body {
+	display: grid;
+	grid: 1fr / auto;
+	transition-property: margin-block, padding-block, opacity, grid-template;
+	transition-duration: var(--duration);
+}
+
+/* ※ 正常な animation には必須 */
+.d--accordion_inner {
+	overflow: hidden;
+}
+
+/* 閉じている時 */
+.d--accordion:not([data-opened]) > .d--accordion_body {
+	grid: 0fr / auto;
+	padding-block: 0 !important;
+	margin-block: 0 !important;
+}
+
+/* アコーディオンブロックのネスト時、別のアイコンタイプにすると表示が崩れるがそこまでは考慮しない。 */
+.d--accordion_icon {
+	display: grid;
+}
+
+/* .d--accordion_icon 自体にborderつけたりすると回転が見えてしまうので、中にある .a--icon を回転させる。 */
+.d--accordion_icon .a--icon {
+	transition-duration: var(--duration);
+	rotate: var(--_isOpen, -180deg);
+}
