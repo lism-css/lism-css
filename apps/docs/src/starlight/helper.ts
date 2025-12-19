@@ -9,8 +9,10 @@ export function imageExists(imagePath: string): boolean {
 
 export const isLibTabGroup = (entry: any, target: string = '') => {
 	if (entry.type === 'group') {
-		// 最初のリンクurlを調べる
-		const childHref = entry.entries[0].href;
+		// 最初のリンクurlを調べる（存在しない場合は安全にfalseを返す）
+		const firstEntry = entry.entries?.[0];
+		const childHref = firstEntry?.href;
+		if (!childHref) return false;
 		return childHref.includes(`/lib/${target}`);
 	}
 	return false;
