@@ -21,6 +21,11 @@ npm login
 npm publish
 ```
 
+rc版などにはタグ付け必要。
+```
+npm publish --tag rc
+```
+
 ## pnpm-lock.yamlの更新
 
 依存関係を再整理したいときは再インストール。
