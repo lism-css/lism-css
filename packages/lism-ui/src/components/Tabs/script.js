@@ -1,8 +1,8 @@
-import setEvent from './setEvent.js';
+import setTabs from './setTabs.js';
 
 document.addEventListener('DOMContentLoaded', function () {
 	const tabsAll = document.querySelectorAll('.d--tabs');
 	tabsAll.forEach((tabs) => {
-		setEvent(tabs);
+		setTabs(tabs);
 	});
 });

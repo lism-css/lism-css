@@ -12,9 +12,14 @@ import { Minus, Plus, X, Question, CaretDoubleDown, EyeClosed, Eyes } from "@pho
 
 アコーディオン要素を作成できるUIコンポーネントです。
 
+<Note title='実装方法について' type='info'>
+- `details/summary` を採用。
+- `grid` の `1fr` を使ったトランジションを採用。
+</Note>
 
-{/* ## 基本構造 */}
-{/* ```pug
+
+## 基本構造
+```pug
 details.d--accordion
 	summary.d--accordion_header
 		span.d--accordion_label ...Header label...
@@ -22,17 +27,17 @@ details.d--accordion
 			svg.a--icon
 	div.d--accordion_body
 		div.d--accordion_inner.l--flow ...Contents...
-``` */}
-
-<Note title='実装方法について' type='info'>
-- `details/summary` を採用。
-- `grid` の `1fr` を使ったトランジションを採用。
-</Note>
+```
 
 
-{/* ## CSS */}
+## CSS
 
-{/* <EmbedCode dirPath='packages/lism-css' packageName='@lism-css/ui' srcPath='src/scss/modules/dynamic/_accordion.scss' /> */}
+<EmbedCode dirPath='packages/lism-ui' srcPath='src/components/Accordion/_style.css' />
+
+
+## JavaScript
+
+<EmbedCode dirPath='packages/lism-ui' srcPath='src/components/Accordion/setAccordion.js' />
 
 
 `@lism-css/ui` パッケージで提供しています。
