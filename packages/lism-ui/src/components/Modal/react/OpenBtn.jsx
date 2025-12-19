@@ -1,5 +1,6 @@
-import { Lism } from '../Lism';
-import { defaultProps } from './getProps';
+import { Lism } from '../../Lism';
+import { defaultProps } from '../getProps';
+
 // duration: [s]
 export default function OpenBtn({ children, modalId = '', ...props }) {
 	return (

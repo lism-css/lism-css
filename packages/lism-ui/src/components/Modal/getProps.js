@@ -1,4 +1,4 @@
-import atts from '../../lib/helper/atts';
+import atts from 'lism-css/lib/helper/atts';
 
 export function getProps({ lismClass = '', duration, style = {}, ...props }) {
 	const theProps = {
