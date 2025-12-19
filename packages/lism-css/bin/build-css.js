@@ -27,7 +27,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 // scssファイル処理
-async function compileSCSS(src, dist) {
+export async function compileSCSS(src, dist) {
 	let files = [];
 
 	// NOTE: CLI 経由で実行されると cwd がプロジェクト側になるため、
