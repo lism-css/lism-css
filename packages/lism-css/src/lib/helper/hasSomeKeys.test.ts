@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import hasSomeKeys from './hasSomeKeys';
 
-describe('hasKeys', () => {
+describe('hasSomeKeys', () => {
 	it('should return true when object has at least one of the keys', () => {
 		const obj = { a: 1, b: 2, c: 3 };
 		expect(hasSomeKeys(obj, ['a', 'd'])).toBe(true);
