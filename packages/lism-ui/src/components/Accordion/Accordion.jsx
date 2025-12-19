@@ -5,6 +5,8 @@ import { getAccProps, defaultProps } from './getProps';
 import { setEvent } from './setAccordion';
 import AccIcon from './AccIcon';
 
+import './_style.css';
+
 // import { AccContext } from './context';
 
 // duration: [s]
