@@ -1,11 +1,11 @@
 import React from 'react';
 import getLismProps from 'lism-css/lib/getLismProps';
 import { Lism } from 'lism-css/react';
-import { getAccProps, defaultProps } from './getProps';
-import { setEvent } from './setAccordion';
+import { getAccProps, defaultProps } from '../getProps';
+import { setEvent } from '../setAccordion';
 import AccIcon from './AccIcon';
 
-import './_style.css';
+import '../_style.css';
 
 // import { AccContext } from './context';
 
