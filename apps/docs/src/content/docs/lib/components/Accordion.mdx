@@ -10,11 +10,11 @@ import { Minus, Plus, X, Question, CaretDoubleDown, EyeClosed, Eyes } from "@pho
 
 {/* // import { Accordion } from 'lism-css/react'; */}
 
-アコーディオン要素を作成できるコンポーネントです。
+アコーディオン要素を作成できるUIコンポーネントです。
 
 
-## 基本構造
-```pug
+{/* ## 基本構造 */}
+{/* ```pug
 details.d--accordion
 	summary.d--accordion_header
 		span.d--accordion_label ...Header label...
@@ -22,23 +22,24 @@ details.d--accordion
 			svg.a--icon
 	div.d--accordion_body
 		div.d--accordion_inner.l--flow ...Contents...
-```
+``` */}
 
 <Note title='実装方法について' type='info'>
 - `details/summary` を採用。
-- `grid` の `1fr` を使ったトランジションで "height:100% がアニメーションできない問題" を解決。
-	{/* - Note: コンテンツ側のpadding は、`__inner` ではなく `__body` につけるように注意が必要です。 */}
+- `grid` の `1fr` を使ったトランジションを採用。
 </Note>
 
 
-## CSS
+{/* ## CSS */}
 
-<EmbedCode dirPath='packages/lism-css' srcPath='src/scss/modules/dynamic/_accordion.scss' />
+{/* <EmbedCode dirPath='packages/lism-css' packageName='@lism-css/ui' srcPath='src/scss/modules/dynamic/_accordion.scss' /> */}
 
+
+`@lism-css/ui` パッケージで提供しています。
 
 ## Import
 
-<ImportPackage component='Accordion' script='accordion.js'/>
+<ImportPackage component='Accordion' script='accordion.js' packageName='@lism-css/ui' />
 
 以下のコンポーネントが利用できます。
 - `<Accordion.Root>`
