@@ -3,7 +3,7 @@
  *   Memo: ::backdrop のアニメーションはFirefoxで動かない
  */
 .d--modal {
-	--my-s: 0; // flow直下にきても影響しないように
+	--flow: 0; /* flow直下にきても影響しないように */
 	--duration: var(--modal-duration, 0.4s);
 	width: 100%;
 	height: 100%;
@@ -13,10 +13,9 @@
 	background: var(--backdrop-bg, rgb(0 0 0 / 0.6));
 	transition-duration: var(--duration);
 	transition-property: opacity;
-
-	&::backdrop {
-		background: none;
-	}
+}
+.d--modal::backdrop {
+	background: none;
 }
 .d--modal[open] {
 	display: flex;
@@ -25,15 +24,15 @@
 }
 
 .d--modal_inner {
-	--offset: 0 0; // アニメーション用
+	--offset: 0 0; /* アニメーション用 */
 	background-color: var(--base);
 	transition: translate var(--duration);
 	max-height: 100%;
 }
 
-// .d--modal_body {
-// 	overscroll-behavior: contain;
-// }
+/* .d--modal_body {
+	overscroll-behavior: contain;
+} */
 
 .d--modal:not([data-is-open]) {
 	opacity: 0;

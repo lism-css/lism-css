@@ -3,6 +3,8 @@ import { Lism } from '../../Lism';
 import { setEvent } from '../setModal';
 import { getProps } from '../getProps';
 
+import '../_style.css';
+
 // duration: [s]
 const Modal = ({ children, ...props }) => {
 	const ref = React.useRef(null);
