@@ -1,18 +1,18 @@
-import { describe, it, expect } from 'vitest';
+import { describe, test, expect } from 'vitest';
 import isEmptyObj from './isEmptyObj';
 
 describe('isEmptyObj', () => {
-	it('should return true for empty objects', () => {
+	test('空のオブジェクトの場合、trueを返す', () => {
 		expect(isEmptyObj({})).toBe(true);
 	});
 
-	it('should return false for objects with properties', () => {
+	test('プロパティを持つオブジェクトの場合、falseを返す', () => {
 		expect(isEmptyObj({ a: 1 })).toBe(false);
 		expect(isEmptyObj({ a: 1, b: 2 })).toBe(false);
 		expect(isEmptyObj({ key: 'value' })).toBe(false);
 	});
 
-	it('should return false for objects with falsy values', () => {
+	test('falsyな値を持つオブジェクトの場合、falseを返す', () => {
 		expect(isEmptyObj({ a: null })).toBe(false);
 		expect(isEmptyObj({ a: undefined })).toBe(false);
 		expect(isEmptyObj({ a: 0 })).toBe(false);
@@ -20,16 +20,16 @@ describe('isEmptyObj', () => {
 		expect(isEmptyObj({ a: '' })).toBe(false);
 	});
 
-	it('should return true for empty arrays', () => {
+	test('空の配列の場合、trueを返す', () => {
 		expect(isEmptyObj([])).toBe(true);
 	});
 
-	it('should return false for non-empty arrays', () => {
+	test('要素を持つ配列の場合、falseを返す', () => {
 		expect(isEmptyObj([1, 2, 3])).toBe(false);
 		expect(isEmptyObj(['a'])).toBe(false);
 	});
 
-	it('should only check own properties, not inherited ones', () => {
+	test('継承されたプロパティではなく、自身のプロパティのみをチェックする', () => {
 		const proto = { inherited: true };
 		const obj = Object.create(proto);
 		expect(isEmptyObj(obj)).toBe(true);
