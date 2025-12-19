@@ -133,7 +133,7 @@ export default async function buildConfig(CONFIG) {
 	const { tokens: TOKENS, props: PROPS } = CONFIG;
 	console.log('_prop-config.scssを生成中...');
 
-	let scssContent = `// 自動生成されたファイル. 生成日時: ${new Date().toISOString()}\n`;
+	let scssContent = '';
 
 	scssContent += '$props: (\n';
 	// 各プロパティをSCSS形式に変換

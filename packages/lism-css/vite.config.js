@@ -1,7 +1,7 @@
 // vite.config.js
 import { resolve } from 'path';
 import { defineConfig } from 'vite';
-import dts from 'unplugin-dts/vite'
+import dts from 'unplugin-dts/vite';
 // import { nodePolyfills } from 'vite-plugin-node-polyfills';
 
 // import {useRef} from 'react'; とかした時に、React is not defined 言われないように
@@ -32,10 +32,11 @@ function deleteDuplicateDir(filePath) {
 const entries = {
 	'components/index': resolve(__dirname, 'src/components/index.ts'),
 	// 'components/Box/index': resolve(__dirname, 'src/components/Box/index.js'),
+
 	// ↓ scripts.jsのビルドと、setEvent.js もこれでビルドされる.
-	'scripts/tabs': resolve(__dirname, 'src/components/Tabs/script.js'),
-	'scripts/accordion': resolve(__dirname, 'src/components/Accordion/script.js'),
-	'scripts/modal': resolve(__dirname, 'src/components/Modal/script.js'),
+	// 'scripts/tabs': resolve(__dirname, 'src/components/Tabs/script.js'),
+	// 'scripts/accordion': resolve(__dirname, 'src/components/Accordion/script.js'),
+	// 'scripts/modal': resolve(__dirname, 'src/components/Modal/script.js'),
 };
 
 // build.lib を設定すると でライブラリモードになる。
