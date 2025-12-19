@@ -46,7 +46,7 @@ const toggleAriaData = (clickedButton) => {
 	targetBody.setAttribute('aria-hidden', 'false');
 };
 
-function setEvent(tabs) {
+function setTabs(tabs) {
 	const tabBtns = tabs.querySelectorAll('button[role="tab"]');
 	tabBtns.forEach((tabBtn) => {
 		tabBtn.addEventListener('click', function (e) {
@@ -84,4 +84,4 @@ function setEvent(tabs) {
 	}
 }
 
-export default setEvent;
+export default setTabs;

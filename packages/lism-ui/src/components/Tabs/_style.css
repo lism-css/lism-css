@@ -1,30 +1,32 @@
-.d--tabs {
-	display: grid;
-	grid: 'list' 'panel' / 100%;
-}
-.d--tabs_list {
-	grid-area: list;
-	display: flex;
-	overflow-x: auto;
-}
-.d--tabs_tab {
-	&[aria-selected='true'] {
-		--_notSelected: ;
+@layer lism.modules {
+	.d--tabs {
+		display: grid;
+		grid: 'list' 'panel' / 100%;
 	}
-	&[aria-selected='false'] {
-		--_isSelected: ;
+	.d--tabs_list {
+		grid-area: list;
+		display: flex;
+		overflow-x: auto;
 	}
-	/* 非アクティブの時、薄いカラーに */
-	:where(&) {
-		color: var(--_notSelected, var(--text-2));
+	.d--tabs_tab {
+		&[aria-selected='true'] {
+			--_notSelected: ;
+		}
+		&[aria-selected='false'] {
+			--_isSelected: ;
+		}
+		/* 非アクティブの時、薄いカラーに */
+		:where(&) {
+			color: var(--_notSelected, var(--text-2));
+		}
 	}
-}
 
-.d--tabs_panel {
-	grid-area: panel;
-	width: 100%;
+	.d--tabs_panel {
+		grid-area: panel;
+		width: 100%;
 
-	&:where([aria-hidden='true']) {
-		display: none;
+		&:where([aria-hidden='true']) {
+			display: none;
+		}
 	}
 }

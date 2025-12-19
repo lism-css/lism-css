@@ -32,12 +32,22 @@ dialog.d--modal#modalID.set-plain
 
 ## CSS
 
-<EmbedCode dirPath='packages/lism-css' srcPath='src/scss/modules/dynamic/_modal.scss' />
+<EmbedCode dirPath='packages/lism-ui' srcPath='src/components/Modal/_style.css' />
+
+
+## JavaScript
+
+<EmbedCode dirPath='packages/lism-ui' srcPath='src/components/Modal/setModal.ts' />
 
 
 ## Import
 
-<ImportPackage component='Modal' script='modal.js' />
+
+`@lism-css/ui` パッケージで提供しています。
+
+
+<ImportPackage component='Modal' script='modal.js' packageName='@lism-css/ui' />
+
 
 `<Modal.Root>`, `<Modal.Inner>`, `<Modal.Body>`, `<Modal.CloseBtn>`が利用できます。
 
