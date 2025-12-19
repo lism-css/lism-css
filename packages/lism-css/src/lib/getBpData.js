@@ -1,5 +1,5 @@
 import filterEmptyObj from './helper/filterEmptyObj';
-import hasKeys from './helper/hasKeys';
+import hasSomeKeys from './helper/hasSomeKeys.js';
 import { BREAK_POINTS } from '../../config/index.js';
 
 const BREAK_POINTS_ALL = ['base', ...BREAK_POINTS];
@@ -18,7 +18,7 @@ export default function getBpData(propVal) {
 			values[`${BREAK_POINTS_ALL[i]}`] = r;
 		});
 	} else if (typeof propVal === 'object') {
-		if (hasKeys(propVal, BREAK_POINTS_ALL)) {
+		if (hasSomeKeys(propVal, BREAK_POINTS_ALL)) {
 			// 'sm', 'md' などがある場合はｍbp指定のオブジェクトとみなす
 			values = propVal;
 		} else {
