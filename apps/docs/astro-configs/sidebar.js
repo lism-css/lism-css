@@ -167,23 +167,6 @@ export default [
 		],
 	},
 	{
-		label: 'Dynamic Modules',
-		items: [
-			{
-				label: 'Accordion',
-				link: '/modules/dynamic/accordion/',
-			},
-			{
-				label: 'Modal',
-				link: '/modules/dynamic/modal/',
-			},
-			{
-				label: 'Tabs',
-				link: '/modules/dynamic/tabs/',
-			},
-		],
-	},
-	{
 		label: 'Docs',
 		link: '/overview/',
 	},
@@ -206,6 +189,18 @@ export default [
 		// 	collapsed: true,
 		// },
 		items: [
+			{
+				label: 'Accordion',
+				link: '/lib/components/accordion/',
+			},
+			{
+				label: 'Modal',
+				link: '/lib/components/modal/',
+			},
+			{
+				label: 'Tabs',
+				link: '/lib/components/tabs/',
+			},
 			{
 				label: 'Avatar',
 				link: '/lib/components/avatar/',
@@ -230,7 +225,6 @@ export default [
 				label: 'Chat',
 				link: '/lib/components/chat/',
 			},
-
 			{
 				label: 'List',
 				link: '/lib/components/list/',

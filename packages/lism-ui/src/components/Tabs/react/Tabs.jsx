@@ -1,11 +1,13 @@
 import React from 'react';
-import { Lism } from '../Lism';
+import { Lism } from 'lism-css/react';
 import Tab from './Tab';
 import TabItem from './TabItem';
 import TabList from './TabList';
 import TabPanel from './TabPanel';
-import getTabsProps from './getProps';
+import getTabsProps from '../getProps';
 // import { TabContext } from './context';
+
+import '../_style.css';
 
 export default function Tabs({ tabId = '', defaultIndex = 1, listProps = {}, children, ...props }) {
 	const [activeIndex, setActiveIndex] = React.useState(defaultIndex);

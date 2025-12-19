@@ -1,5 +1,5 @@
 // import React from 'react';
-import { Lism } from '../Lism';
+import { Lism } from 'lism-css/react';
 
 export default function Tab({ tabId = 'tab', index = 0, isActive = false, ...props }) {
 	const controlId = `${tabId}-${index}`;

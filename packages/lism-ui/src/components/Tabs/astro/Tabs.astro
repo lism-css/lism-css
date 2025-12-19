@@ -1,21 +1,23 @@
 ---
-import type { LismProps } from '../../types';
-import { Lism } from '../Lism';
+// import type { LismProps } from 'lism-css/types';
+import { Lism } from 'lism-css/react';
 // import Tab from './Tab.astro';
 // import TabPanel from './TabPanel.astro';
 import TabList from './TabList.astro';
-import { uuidv4 } from '../helper.js';
+import { uuidv4 } from './helper.js';
 import transformTabitems from './transformTabitems.js';
-import getTabsProps from '../../../dist/components/Tabs/getProps';
+import getTabsProps from '../getProps';
+
+import '../_style.css';
 
 // import TheTab from './TheTab.astro';}
 // slotsについて: https://docs.astro.build/ja/reference/api-reference/#astroslots
 
 // Propsの定義
-interface Props extends LismProps {
-	uid?: string | number;
-	defaultIndex?: string | number;
-}
+// interface Props extends LismProps {
+// 	uid?: string | number;
+// 	defaultIndex?: string | number;
+// }
 // propsの取得
 const { defaultIndex = 1, tabId = '', listProps = {}, ...props } = Astro.props || {};
 
@@ -47,8 +49,7 @@ const hasItems = btns.length > 0;
 </Lism>
 
 <script>
-	// import setEvent from './setEvent';
-	import setEvent from '../../../dist/components/Tabs/setEvent';
+	import setEvent from '../setEvent';
 	const tabsAll = document.querySelectorAll('.d--tabs');
 	tabsAll.forEach((tabs) => {
 		setEvent(tabs);

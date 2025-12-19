@@ -65,7 +65,7 @@ export const WhsNw = ({children}) => {
 			<td class='-whspace:nowrap'>Modules<br/>`@lism.modules`</td>
 			<td>
 				モジュール群を定義するレイヤー。<br />
-				この中でさらにレイヤーが分かれており、 `.is--{state}`, `.l--{layout}`, `.d--{dynamic}` が定義されます。
+				この中でさらにレイヤーが分かれており、 `.is--{state}`, `.l--{layout}`, `.a--{atomic}` が定義されます。
 			</td>
 		</tr>
 		<tr>
@@ -117,12 +117,12 @@ export const WhsNw = ({children}) => {
 				レイアウトの構成単位としてそれ以上分解できない最小単位のモジュール群。<br />`.a--{module}` の形式で定義します。
 			</td>
 		</tr>
-		<tr>
+		{/* <tr>
 			<td class='-whspace:nowrap'>Dynamic Modules<br/>`@lism.modules.dynamic`</td>
 			<td>
 				JavaScriptと組み合わせて動的な機能を持つ特殊なモジュール群。<br />`.d--{module}` の形式で定義します。
 			</td>
-		</tr>
+		</tr> */}
 	</tbody>
 </table>
 
@@ -158,8 +158,9 @@ Lismでは、レイアウトの構成要素を細分化してモジュールと�
 |Modules State<HelpText>状態として付け外しできるようなレイアウト機能を持つもの</HelpText>|`.is\|has--{stateName}`|`.is--wrapper`,<br />`.has--gutter`|
 |Layout Modules<HelpText>レイアウトの構成単位となるようなモジュール</HelpText>|`.l--{name}`|`.l--grid`,<br />`.l--columns`|
 |Atomic Modules<HelpText>レイアウトの最小単位となるモジュール</HelpText>|`.a--{name}`|`.a--divider`,<br />`.a--icon`|
-|Dynamic<HelpText>JSと組み合わせた動きのあるモジュール</HelpText>|`.d--{name}`|`.d--accordion`,<br />`.d--modal`,<br />`.d--tabs`|
 |Custom Modules<HelpText>その他、より具体的な役割を持つコンポーネント群</HelpText>|`.c--{name}`|`.c--button`,<br />`.c--note`|
+
+{/* |Dynamic<HelpText>JSと組み合わせた動きのあるモジュール</HelpText>|`.d--{name}`|`.d--accordion`,<br />`.d--modal`,<br />`.d--tabs`| */}
 
 
 #### 子要素を持つ場合
