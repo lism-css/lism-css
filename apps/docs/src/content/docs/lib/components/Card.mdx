@@ -3,7 +3,7 @@ title: 'Card'
 description: ...
 ---
 
-import { Dummy, HTML, Box, Flex, Stack, Center, Grid, Frame, LinkBox, Layer, Columns, Media, WithSide } from 'lism-css/astro';
+import { Dummy, HTML, Box, Flex, Stack, Center, Grid, Frame, LinkBox, Layer, Columns, Media, SideMain } from 'lism-css/astro';
 import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportSource, ImportExComponent } from '~/components';
 import Card from '~/components/ex/Card/index.jsx';
 
@@ -13,7 +13,7 @@ import Card from '~/components/ex/Card/index.jsx';
 
 export const ExampleCard = (props) => {
 	return(
-		<WithSide isLinkBox href='###' hov='bxsh' setTransition sideW='50%' bgc='base' bdrs='20' bxsh='10' ov='hidden' {...props}>
+		<SideMain isLinkBox href='###' hov='bxsh' setTransition sideW='50%' bgc='base' bdrs='20' bxsh='10' ov='hidden' {...props}>
 			<Frame isSide ar='16/9' >
 				<Media src='https://cdn.lism-css.com/img/a-1.jpg' alt='' width='960' height='640' />
 			</Frame>
@@ -22,7 +22,7 @@ export const ExampleCard = (props) => {
 				<HTML.p className='u-trim' fz='s' lh='s' o='-10'>ロレム・イプサムの座り雨、トマ好き学習だったエリット、しかし時と活力はそのような木々と楽しみ。</HTML.p>
 				<HTML.span d='in-flex' mx-s='auto' my-s='auto' c='inherit' td='none' bd-b lh='s' p='10'>View More →</HTML.span>
 			</Stack>
-		</WithSide>
+		</SideMain>
 	)
 }
 
@@ -45,14 +45,14 @@ export const ExampleImgCard = (props) => {
 
 ### 縦向き・横向きのレイアウトが自動で切り替わるカードリンク
 
-[`WithSides`](/modules/layout/withside/)を使って構築することで、表示領域が狭くなったら縦向きレイアウトにすることができます。
+[`SideMains`](/modules/layout/sidemain/)を使って構築することで、表示領域が狭くなったら縦向きレイアウトにすることができます。
 
 また、[`is--linkBox`](/css/module-class/#is--linkbox)を適用してカードコンテンツ全体をリンクにしてみます。
 
 <Preview>
 	<PreviewTitle>Preview</PreviewTitle>
 	<PreviewArea bg=':stripe' resize p='30'>
-		<WithSide isLinkBox href='###' hov='bxsh' setTransition sideW='50%' bgc='base' bdrs='20' bxsh='10' ov='hidden'>
+		<SideMain isLinkBox href='###' hov='bxsh' setTransition sideW='50%' bgc='base' bdrs='20' bxsh='10' ov='hidden'>
 			<Frame isSide ar='16/9' >
 				<Media src='https://cdn.lism-css.com/img/a-1.jpg' alt='' width='960' height='640' />
 			</Frame>
@@ -61,11 +61,11 @@ export const ExampleImgCard = (props) => {
 				<HTML.p className='u-trim' fz='s' lh='s' o='-10'>ロレム・イプサムの座り雨、トマ好き学習だったエリット、しかし時と活力はそのような木々と楽しみ。</HTML.p>
 				<HTML.span d='in-flex' mx-s='auto' my-s='auto' c='inherit' td='none' bd-b lh='s' p='10'>View More →</HTML.span>
 			</Stack>
-		</WithSide>
+		</SideMain>
 	</PreviewArea>
 	<PreviewCode slot='tab' label='JSX'>
-		```jsx "WithSide" "tag='a' isLinkBox"
-		<WithSide isLinkBox href='###' hov='bxsh' setTransition sideW='50%' bgc='base' bdrs='20' bxsh='10' ov='hidden'>
+		```jsx "SideMain" "tag='a' isLinkBox"
+		<SideMain isLinkBox href='###' hov='bxsh' setTransition sideW='50%' bgc='base' bdrs='20' bxsh='10' ov='hidden'>
 			<Frame isSide ar='16/9' >
 				<Media src='https://cdn.lism-css.com/img/a-1.jpg' alt='' width='960' height='640' />
 			</Frame>
@@ -74,7 +74,7 @@ export const ExampleImgCard = (props) => {
 				<HTML.p className='u-trim' fz='s' lh='s' o='-10'>ロレム・イプサムの座り雨、トマ好き学習だったエリット、しかし時と活力はそのような木々と楽しみ。</HTML.p>
 				<HTML.span d='in-flex' mx-s='auto' my-s='auto' c='inherit' td='none' bd-b lh='s' p='10'>View More →</HTML.span>
 			</Stack>
-		</WithSide>
+		</SideMain>
 		```
 	</PreviewCode>
 </Preview>
@@ -87,7 +87,7 @@ export const ExampleImgCard = (props) => {
 <Preview>
 	<PreviewTitle>`u-expandedLink`を使う例</PreviewTitle>
 	<PreviewArea bg=':stripe' resize p='30'>
-		<WithSide isLinkBox hov='bxsh' setTransition sideW='50%' bgc='base' bdrs='20' bxsh='10' ov='hidden'>
+		<SideMain isLinkBox hov='bxsh' setTransition sideW='50%' bgc='base' bdrs='20' bxsh='10' ov='hidden'>
 			<Frame isSide ar='16/9' pos='rel'>
 				<Media src='https://cdn.lism-css.com/img/a-1.jpg' alt='' width='960' height='640' />
 				<HTML.a href='#badge-link' pos='abs' t='0' r='0' fz='s' bgc='black' c='white' m='20' px='15' bdrs='99' td='none' hov='neutral'>Category</HTML.a>
@@ -99,11 +99,11 @@ export const ExampleImgCard = (props) => {
 				<HTML.p className='u-trim' fz='s' lh='s' o='-10'>ロレム・イプサムの座り雨、トマ好き学習だったエリット、しかし時と活力はそのような木々と楽しみ。</HTML.p>
 				<HTML.span d='in-flex' mx-s='auto' my-s='auto' c='inherit' td='none' bd-b lh='s' p='10'>View More →</HTML.span>
 			</Stack>
-		</WithSide>
+		</SideMain>
 	</PreviewArea>
 	<PreviewCode slot='tab' label='JSX'>
 		```jsx "isLinkBox" "\<HTML.a " "u-expandedLink"
-		<WithSide isLinkBox hov='bxsh' setTransition sideW='50%' bgc='base' bdrs='20' bxsh='10' ov='hidden'>
+		<SideMain isLinkBox hov='bxsh' setTransition sideW='50%' bgc='base' bdrs='20' bxsh='10' ov='hidden'>
 			<Frame isSide ar='16/9' pos='rel'>
 				<Media src='https://cdn.lism-css.com/img/a-1.jpg' alt='' width='960' height='640' />
 				<HTML.a href='#badge-link' pos='abs' t='0' r='0' fz='s' bgc='black' c='white' m='20' px='15' bdrs='99' td='none' hov='neutral'>Category</HTML.a>
@@ -115,7 +115,7 @@ export const ExampleImgCard = (props) => {
 				<HTML.p className='u-trim' fz='s' lh='s' o='-10'>ロレム・イプサムの座り雨、トマ好き学習だったエリット、しかし時と活力はそのような木々と楽しみ。</HTML.p>
 				<HTML.span d='in-flex' mx-s='auto' my-s='auto' c='inherit' td='none' bd-b lh='s' p='10'>View More →</HTML.span>
 			</Stack>
-		</WithSide>
+		</SideMain>
 		```
 	</PreviewCode>
 </Preview>

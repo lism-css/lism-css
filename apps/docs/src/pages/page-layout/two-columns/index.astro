@@ -3,14 +3,14 @@ import DemoPageLayout from '~/layouts/DemoPageLayout.astro';
 import DemoHeader from '../_DemoHeader.astro';
 import DemoFooter from '../_DemoFooter.astro';
 import DemoContent from '../_DemoContent.astro';
-import { Box, Flow, Stack, Wrapper, Dummy, WithSide } from 'lism-css/astro';
+import { Box, Flow, Stack, Wrapper, Dummy, SideMain } from 'lism-css/astro';
 ---
 
 <DemoPageLayout title='Two Columns Layout'>
 	<Stack id='wrap' min-h='100vh'>
 		<DemoHeader />
 		<Wrapper contentSize='l' hasGutter py='40' fx='1'>
-			<WithSide sideW='300px' mainW='40rem' g='var(--gutter-size)'>
+			<SideMain sideW='300px' mainW='40rem' g='var(--gutter-size)'>
 				<Wrapper tag='main'>
 					<article>
 						<header>
@@ -30,7 +30,7 @@ import { Box, Flow, Stack, Wrapper, Dummy, WithSide } from 'lism-css/astro';
 					<div>Sidebar contents...</div>
 					<Dummy />
 				</Wrapper>
-			</WithSide>
+			</SideMain>
 		</Wrapper>
 		<DemoFooter />
 	</Stack>

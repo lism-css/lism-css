@@ -20,7 +20,7 @@ export * from './Stack';
 export * from './Grid';
 export * from './FluidCols';
 export * from './SwitchCols';
-export * from './WithSide';
+export * from './SideMain';
 export * from './Center';
 export * from './Columns';
 export * from './Frame';

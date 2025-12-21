@@ -1,6 +1,6 @@
 import { Lism } from 'lism-css/react';
 
-export default function Card({ layout = 'withSide', ...props }) {
+export default function Card({ layout = 'sideMain', ...props }) {
 	const defaultProps = {
 		c: 'text',
 		bgc: 'base',
