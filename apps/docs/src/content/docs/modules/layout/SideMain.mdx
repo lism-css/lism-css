@@ -1,9 +1,9 @@
 ---
-title: 'WithSide'
+title: 'SideMain'
 description: ...
 ---
 
-import { WithSide, Grid, Dummy, Box, Stack, Spacer } from 'lism-css/astro';
+import { SideMain, Grid, Dummy, Box, Stack, Spacer } from 'lism-css/astro';
 import {
 	Preview,
 	PreviewArea,
@@ -22,19 +22,19 @@ import {
 ## 基本構造
 
 ```pug
-div.l--withSide
+div.l--sideMain
 	div
 	div.is--side
 ```
 
 ## CSS
 
-<EmbedCode dirPath='packages/lism-css' srcPath='src/scss/modules/layout/_withSide.scss' />
+<EmbedCode dirPath='packages/lism-css' srcPath='src/scss/modules/layout/_sideMain.scss' />
 
 
 ## Import
 
-<ImportPackage component='WithSide' />
+<ImportPackage component='SideMain' />
 
 ## Props
 
@@ -48,12 +48,12 @@ div.l--withSide
 ## Usage
 
 子要素に`.is--side`が必要です。  
-`.is--side`の横幅を`--sideW`で指定した値に固定しつつ、もう一方が`--mainW`で指定した横幅を下回るようになると、自動で1カラムに切り替わるようになっています。
+`.is--side`の横幅を`--sideW`で指定した値に固定しつつ、もう一方のメイン要素が`--mainW`で指定した横幅を下回るようになると、自動で1カラムに切り替わるようになっています。
 
 <Preview>
 	<PreviewTitle>使用例</PreviewTitle>
 	<PreviewArea resize p='20'>
-		<WithSide sideW='12rem' mainW='20rem' g='20'>
+		<SideMain sideW='12rem' mainW='20rem' g='20'>
 			<Box p='15' bd bdc='blue'>
 				<p>Main Content</p>
 				<Dummy />
@@ -61,11 +61,11 @@ div.l--withSide
 			<Box isSide p='15' bd bdc='red'>
 				<p>Side Content</p>
 			</Box>
-		</WithSide>
+		</SideMain>
 	</PreviewArea>
 	<PreviewCode slot='tab' label='JSX'>
 		```jsx "sideW" "isSide"
-		<WithSide sideW='12rem' mainW='20rem' g='20'>
+		<SideMain sideW='12rem' mainW='20rem' g='20'>
 			<Box p='15' bd bdc='blue'>
 				<p>Main Content</p>
 				<Dummy />
@@ -73,12 +73,12 @@ div.l--withSide
 			<Box isSide p='15' bd bdc='red'>
 				<p>Side Content</p>
 			</Box>
-		</WithSide>
+		</SideMain>
 		```
 	</PreviewCode>
 	<PreviewCode slot='tab' label='HTML'>
 		```html "is--side" "--sideW"
-		<div class='l--withSide -g:20' style='--sideW:12rem;--mainW:20rem'>
+		<div class='l--sideMain -g:20' style='--sideW:12rem;--mainW:20rem'>
 			<div class='l--box -p:15 -bd' style='--bdc:var(--blue)'>
 				<p>Main Content</p>
 				<p>Lorem ipsum dolor sit, amet consectetur adipisicing elit, sed do eiusmod tempor. Non facere laudantium ex eos doloribus aut dolore nisi.</p>
@@ -102,28 +102,28 @@ div.l--withSide
 <Preview>
 	<PreviewTitle>例</PreviewTitle>
 	<PreviewArea resize p='20'>
-		<WithSide fxd='row-r' sideW='10rem' mainW='16rem' g='20'>
+		<SideMain fxd='row-r' sideW='10rem' mainW='16rem' g='20'>
 			<Box>
 				<Dummy />
 			</Box>
 			<Box isSide bgc='blue:20%'>
 				Side Content
 			</Box>
-		</WithSide>
+		</SideMain>
 	</PreviewArea>
 	<PreviewCode slot='tab' label='JSX'>
 		```jsx "fxd='row-r'"
-		<WithSide fxd='row-r' sideW='10rem' mainW='16rem' g='20'>
+		<SideMain fxd='row-r' sideW='10rem' mainW='16rem' g='20'>
 			<Box>
 				<Dummy />
 			</Box>
 			<Box isSide>Side Content</Box>
-		</WithSide>
+		</SideMain>
 		```
 	</PreviewCode>
 	<PreviewCode slot='tab' label='HTML'>
 		```html "-fxd:row-r"
-		<div class='l--withSide -fxd:row-r -g:20' style='--sideW:10rem;--mainW:16rem;'>
+		<div class='l--sideMain -fxd:row-r -g:20' style='--sideW:10rem;--mainW:16rem;'>
 			<div class='l--box'>
 				<p>Lorem ipsum dolor sit amet, ...</p>
 			</div>
@@ -137,10 +137,10 @@ div.l--withSide
 
 ## `Grid`を使って似たレイアウトを構成する例
 
-`WithSide`(`.l--withSide`)はブレイクポイントに依存しませんが、[`Grid`](/components/grid)で構成することで、レイアウトの切り替えポイントをブレイクポイントで指定して同じようなレイアウトを構築することもできます。
+`SideMain`(`.l--sideMain`)はブレイクポイントに依存しませんが、[`Grid`](/components/grid)で構成することで、レイアウトの切り替えポイントをブレイクポイントで指定して同じようなレイアウトを構築することもできます。
 
 <Preview>
-	<PreviewTitle>`Grid`を使って`WithSide`のようなレイアウトを構築する例</PreviewTitle>
+	<PreviewTitle>`Grid`を使って`SideMain`のようなレイアウトを構築する例</PreviewTitle>
 	<PreviewArea resize p='20'>
 		<Grid gta={[`'.' 'side'`, `'. side'`]} gtc={[null, '1fr 10rem']} g='20'>
 			<Box>

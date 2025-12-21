@@ -17,7 +17,7 @@ export * from './FluidCols';
 export * from './SwitchCols';
 export * from './Columns';
 export * from './Center';
-export * from './WithSide';
+export * from './SideMain';
 export * from './Frame';
 
 export * from './Container';

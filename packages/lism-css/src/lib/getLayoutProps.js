@@ -20,8 +20,8 @@ export default function getLayoutProps(layout, props) {
 		return getFlowProps(rest);
 	} else if (layout === 'grid') {
 		return geGridProps(rest);
-	} else if (layout === 'withSide') {
-		return getWithSideProps(rest);
+	} else if (layout === 'sideMain') {
+		return getSideMainProps(rest);
 	} else if (layout === 'fluidCols') {
 		return getLiquidProps(rest);
 	} else if (layout === 'switchCols') {
@@ -41,7 +41,7 @@ function geGridProps({ _propConfig = {}, ...props }) {
 	return props;
 }
 
-function getWithSideProps({ sideW, mainW, style = {}, ...props }) {
+function getSideMainProps({ sideW, mainW, style = {}, ...props }) {
 	if (null != sideW) style['--sideW'] = getMaybeCssVar(sideW, 'sz');
 	if (null != mainW) style['--mainW'] = getMaybeCssVar(mainW, 'sz');
 

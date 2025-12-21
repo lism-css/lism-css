@@ -112,12 +112,8 @@ export default [
 				link: '/modules/layout/stack/',
 			},
 			{
-				label: 'SwitchCols',
-				link: '/modules/layout/switchcols/',
-			},
-			{
-				label: 'WithSide',
-				link: '/modules/layout/withside/',
+				label: 'SideMain',
+				link: '/modules/layout/sidemain/',
 			},
 			{
 				label: '---',
@@ -132,12 +128,20 @@ export default [
 				link: '/modules/layout/center/',
 			},
 			{
-				label: 'FluidCols',
-				link: '/modules/layout/fluidcols/',
+				label: '---',
+				link: '###---',
 			},
 			{
 				label: 'Columns',
 				link: '/modules/layout/columns/',
+			},
+			{
+				label: 'FluidCols',
+				link: '/modules/layout/fluidcols/',
+			},
+			{
+				label: 'SwitchCols',
+				link: '/modules/layout/switchcols/',
 			},
 			{
 				label: '---',
