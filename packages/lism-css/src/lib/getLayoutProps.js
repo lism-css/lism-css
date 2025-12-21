@@ -24,6 +24,8 @@ export default function getLayoutProps(layout, props) {
 		return getWithSideProps(rest);
 	} else if (layout === 'liquidGrid') {
 		return getLiquidProps(rest);
+	} else if (layout === 'switchCols') {
+		return getSwitchColsProps(rest);
 	}
 
 	return rest;
@@ -62,5 +64,11 @@ function getFlowProps({ flow, style = {}, ...props }) {
 	}
 	props.style = style;
 
+	return props;
+}
+
+function getSwitchColsProps({ breakSize, style = {}, ...props }) {
+	if (breakSize) style['--breakSize'] = getMaybeCssVar(breakSize, 'sz');
+	props.style = style;
 	return props;
 }

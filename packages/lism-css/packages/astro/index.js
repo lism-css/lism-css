@@ -14,6 +14,7 @@ export * from './Cluster';
 export * from './Stack';
 export * from './Grid';
 export * from './LiquidGrid';
+export * from './SwitchCols';
 export * from './Columns';
 export * from './Center';
 export * from './WithSide';

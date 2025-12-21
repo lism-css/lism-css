@@ -112,6 +112,10 @@ export default [
 				link: '/modules/layout/stack/',
 			},
 			{
+				label: 'SwitchCols',
+				link: '/modules/layout/switchcols/',
+			},
+			{
 				label: 'WithSide',
 				link: '/modules/layout/withside/',
 			},
