@@ -1,9 +1,9 @@
 ---
-title: 'LiquidGrid'
+title: 'FluidCols'
 description: ...
 ---
 
-import { LiquidGrid, Box, Frame, Dummy } from 'lism-css/astro';
+import { FluidCols, Box, Frame, Dummy } from 'lism-css/astro';
 import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage, EmbedCode, PropBadge, Callout } from "~/components";
 
 
@@ -23,11 +23,11 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage, EmbedCo
 
 ## CSS
 
-<EmbedCode dirPath='packages/lism-css' srcPath='src/scss/modules/layout/_liquidGrid.scss' />
+<EmbedCode dirPath='packages/lism-css' srcPath='src/scss/modules/layout/_fluidCols.scss' />
 
 
 ## Import
-<ImportPackage component='LiquidGrid' />
+<ImportPackage component='FluidCols' />
 
 
 ## Usage
@@ -35,25 +35,25 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage, EmbedCo
 <Preview>
 	<PreviewTitle>デフォルト幅で利用する例</PreviewTitle>
 	<PreviewArea resize p='15'>
-		<LiquidGrid g='20'>
+		<FluidCols g='20'>
 			<Box bxsh='20' p='20'><Dummy lang='ja'/></Box>
 			<Box bxsh='20' p='20'><Dummy lang='ja' offset='1' /></Box>
 			<Box bxsh='20' p='20'><Dummy lang='ja'/></Box>
 			<Box bxsh='20' p='20'><Dummy lang='ja' offset='2' /></Box>
 			<Box bxsh='20' p='20'><Dummy lang='ja' length='s' /></Box>
 			<Box bxsh='20' p='20'><Dummy lang='ja' /></Box>
-		</LiquidGrid>
+		</FluidCols>
 	</PreviewArea>
 	<PreviewCode>
 		```jsx
-		<LiquidGrid g='15'>
+		<FluidCols g='15'>
 			<Box bxsh='20' p='20'><Dummy lang='ja'/></Box>
 			<Box bxsh='20' p='20'><Dummy lang='ja' offset='1' /></Box>
 			<Box bxsh='20' p='20'><Dummy lang='ja'/></Box>
 			<Box bxsh='20' p='20'><Dummy lang='ja' offset='2' /></Box>
 			<Box bxsh='20' p='20'><Dummy lang='ja' length='s' /></Box>
 			<Box bxsh='20' p='20'><Dummy lang='ja' /></Box>
-		</LiquidGrid>
+		</FluidCols>
 		```
 	</PreviewCode>
 </Preview>
@@ -62,19 +62,19 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage, EmbedCo
 <Preview>
 	<PreviewTitle>`cols=12em`, `auto-fill`を使う </PreviewTitle>
 	<PreviewArea resize p='15'>
-		<LiquidGrid cols='12em' autoFill g='20' fz='s'>
+		<FluidCols cols='12em' autoFill g='20' fz='s'>
 			<Box bxsh='20' p='20'><Dummy lang='ja' length='s' /></Box>
 			<Box bxsh='20' p='20'><Dummy lang='ja' offset='2' /></Box>
 			<Box bxsh='20' p='20'><Dummy lang='ja' length='s' /></Box>
-		</LiquidGrid>
+		</FluidCols>
 	</PreviewArea>
 	<PreviewCode>
 		```jsx
-		<LiquidGrid cols='12rem' autoFill g='20' fz='s'>
+		<FluidCols cols='12rem' autoFill g='20' fz='s'>
 			<Box bxsh='20' p='20'><Dummy lang='ja' length='s' /></Box>
 			<Box bxsh='20' p='20'><Dummy lang='ja' offset='1' /></Box>
 			<Box bxsh='20' p='20'><Dummy lang='ja' length='s' /></Box>
-		</LiquidGrid>
+		</FluidCols>
 		```
 	</PreviewCode>
 </Preview>
@@ -83,17 +83,17 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage, EmbedCo
 <Preview>
 	<PreviewTitle>2列→1列</PreviewTitle>
 	<PreviewArea resize p='15'>
-		<LiquidGrid cols='320px' g='20'>
+		<FluidCols cols='320px' g='20'>
 			<Frame ar='16/9' ><img src="https://cdn.lism-css.com/img/a-1.jpg" width="600" height="400" /></Frame>
 			<Frame ar='16/9' ><img src="https://cdn.lism-css.com/img/a-3.jpg" width="600" height="400" /></Frame>
-		</LiquidGrid>
+		</FluidCols>
 	</PreviewArea>
 	<PreviewCode>
 		```jsx
-		<LiquidGrid cols='320px' g='20'>
+		<FluidCols cols='320px' g='20'>
 			<Frame ar='16/9' ><img src="https://cdn.lism-css.com/img/a-1.jpg" width="600" height="400" /></Frame>
 			<Frame ar='16/9' ><img src="https://cdn.lism-css.com/img/a-3.jpg" width="600" height="400" /></Frame>
-		</LiquidGrid>
+		</FluidCols>
 		```
 	</PreviewCode>
 </Preview>

@@ -22,7 +22,7 @@ export default function getLayoutProps(layout, props) {
 		return geGridProps(rest);
 	} else if (layout === 'withSide') {
 		return getWithSideProps(rest);
-	} else if (layout === 'liquidGrid') {
+	} else if (layout === 'fluidCols') {
 		return getLiquidProps(rest);
 	} else if (layout === 'switchCols') {
 		return getSwitchColsProps(rest);
