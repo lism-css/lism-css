@@ -13,7 +13,7 @@ export * from './Flex';
 export * from './Cluster';
 export * from './Stack';
 export * from './Grid';
-export * from './LiquidGrid';
+export * from './FluidCols';
 export * from './SwitchCols';
 export * from './Columns';
 export * from './Center';

@@ -9,7 +9,7 @@ import { Horse, Cat, Smiley, WarningCircle } from "@phosphor-icons/react";
 import {phIcons, logoIcons} from 'lism-css/react/atomic/Icon/presets';
 
 export const PresetIcons = ({icons}) => {
-	return <Grid layout='liquidGrid' cols='10rem' g='15'>
+	return <Grid layout='fluidCols' cols='10rem' g='15'>
 			{Object.keys(icons).map((iconName) => {
 				return (
 					<Stack key={iconName} g='10' ai='center' bgc='base-2' bdrs='10' p='15'>

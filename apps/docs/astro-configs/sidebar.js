@@ -132,8 +132,8 @@ export default [
 				link: '/modules/layout/center/',
 			},
 			{
-				label: 'LiquidGrid',
-				link: '/modules/layout/liquidgrid/',
+				label: 'FluidCols',
+				link: '/modules/layout/fluidcols/',
 			},
 			{
 				label: 'Columns',
