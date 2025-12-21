@@ -1,6 +1,8 @@
 import React from 'react';
 // import { useEffect, useState } from 'react';
-import { Tabs, Columns, LinkBox, Frame, Stack, Media, Lism } from 'lism-css/react';
+import { Columns, LinkBox, Frame, Stack, Media, Lism } from 'lism-css/react';
+// import { Tabs } from '@lism-css/ui/react';
+
 // import type { SidebarEntry } from '@/node_modules/@astrojs/starlight/utils/routing/types';
 
 export interface NavLinkData {
