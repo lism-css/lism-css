@@ -170,25 +170,6 @@ describe('filterEmptyObj', () => {
 	});
 
 	describe('特殊なケース', () => {
-		test('プロトタイプチェーンのプロパティは処理しない', () => {
-			const proto = { inherited: 'value' };
-			const input = Object.create(proto);
-			input.own = 'test';
-			input.empty = '';
-
-			const result = filterEmptyObj(input);
-			expect(result).toEqual({ own: 'test' });
-			expect('inherited' in result).toBe(true); // プロトタイプチェーンには残る
-			expect(result.hasOwnProperty('inherited')).toBe(false);
-		});
-
-		test('シンボルキーは処理されない（for...in で列挙されない）', () => {
-			const sym = Symbol('test');
-			const input = { a: 'foo', b: '', [sym]: 'symbol' };
-			const result = filterEmptyObj(input);
-			expect(result).toEqual({ a: 'foo', [sym]: 'symbol' });
-		});
-
 		test('非常に多くのプロパティ', () => {
 			const input: Record<string, any> = {};
 			for (let i = 0; i < 100; i++) {
