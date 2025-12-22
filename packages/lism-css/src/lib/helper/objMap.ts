@@ -3,9 +3,14 @@
 // 1. Object.keys() で keyの配列を取得
 // 2. forEach() で その key に対する値に処理を加える。
 // 3. 処理が加わったオブジェクトを返す
-export default function objMap(obj, callback) {
+export default function objMap<T extends Record<string, any>, U>(
+	obj: T,
+	callback: (value: T[keyof T]) => U
+): Record<keyof T, U> {
+	const result = obj as Record<string, any>;
 	Object.keys(obj).forEach((key) => {
-		obj[key] = callback(obj[key]);
+		result[key] = callback(obj[key]);
 	});
-	return obj;
+	return result as Record<keyof T, U>;
 }
+
