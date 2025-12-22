@@ -110,18 +110,20 @@ describe('filterEmptyObj', () => {
 		});
 	});
 
-	describe('破壊的な変更', () => {
-		test('元のオブジェクトを変更する（破壊的）', () => {
+	describe('非破壊的な動作', () => {
+		test('元のオブジェクトを変更しない（非破壊的）', () => {
 			const input = { a: 'foo', b: '', c: 'bar' };
 			const result = filterEmptyObj(input);
-			expect(result).toBe(input); // 同じ参照
-			expect(input).toEqual({ a: 'foo', c: 'bar' }); // 元のオブジェクトが変更される
+			expect(result).not.toBe(input); // 異なる参照
+			expect(input).toEqual({ a: 'foo', b: '', c: 'bar' }); // 元のオブジェクトは変更されない
+			expect(result).toEqual({ a: 'foo', c: 'bar' }); // 結果は空の値が除外される
 		});
 
-		test('プロパティが削除されることを確認', () => {
+		test('元のオブジェクトのプロパティが保持される', () => {
 			const input = { a: 'foo', b: null };
-			filterEmptyObj(input);
-			expect('b' in input).toBe(false);
+			const result = filterEmptyObj(input);
+			expect('b' in input).toBe(true); // 元のオブジェクトには残る
+			expect('b' in result).toBe(false); // 結果には含まれない
 		});
 	});
 
@@ -163,7 +165,7 @@ describe('filterEmptyObj', () => {
 			const input = {};
 			const result = filterEmptyObj(input);
 			expect(result).toEqual({});
-			expect(result).toBe(input);
+			expect(result).not.toBe(input); // 非破壊的なので異なる参照
 		});
 	});
 
