@@ -27,10 +27,10 @@ export default {
 
 	en: {
 		xs: LOREM_IPSUM.en[0],
-		s: LOREM_IPSUM.en[0] + LOREM_IPSUM.en[1],
-		m: LOREM_IPSUM.en[0] + LOREM_IPSUM.en[1] + LOREM_IPSUM.en[2],
-		l: LOREM_IPSUM.en[0] + LOREM_IPSUM.en[1] + LOREM_IPSUM.en[2] + LOREM_IPSUM.en[3],
-		xl: LOREM_IPSUM.en[0] + LOREM_IPSUM.en[1] + LOREM_IPSUM.en[2] + LOREM_IPSUM.en[3] + LOREM_IPSUM.en[4],
+		s: LOREM_IPSUM.en[0] + ' ' + LOREM_IPSUM.en[1],
+		m: LOREM_IPSUM.en[0] + ' ' + LOREM_IPSUM.en[1] + ' ' + LOREM_IPSUM.en[2],
+		l: LOREM_IPSUM.en[0] + ' ' + LOREM_IPSUM.en[1] + ' ' + LOREM_IPSUM.en[2] + ' ' + LOREM_IPSUM.en[3],
+		xl: LOREM_IPSUM.en[0] + ' ' + LOREM_IPSUM.en[1] + ' ' + LOREM_IPSUM.en[2] + ' ' + LOREM_IPSUM.en[3] + ' ' + LOREM_IPSUM.en[4],
 		codes: `Lorem ipsum dolor <i>sit amet</i>. consectetur <a href='###'>adipisicing elit</a>, sed do eiusmod tempor. Non facere <code>Laudantium</code> ex eos <b>doloribus aut dolore</b> nisi provident.`,
 	},
 	ar: {
