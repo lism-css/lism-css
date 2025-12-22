@@ -1,5 +1,5 @@
 // isEmptyObj;
-import isEmptyObj from './isEmptyObj.ts';
+import isEmptyObj from './isEmptyObj';
 
 /**
  * オブジェクトから空の値を持つプロパティを除外した新しいオブジェクトを返す（非破壊的）
@@ -20,8 +20,8 @@ import isEmptyObj from './isEmptyObj.ts';
  * filterEmptyObj({ a: 'foo', b: '', c: null, d: 0 })
  * // => { a: 'foo', d: 0 }
  */
-export default function filterEmptyObj(obj) {
-	const result = {};
+export default function filterEmptyObj(obj: Record<string, unknown>): Record<string, unknown> {
+	const result: Record<string, unknown> = {};
 	for (const key in obj) {
 		if (obj[key] === '' || null === obj[key] || undefined === obj[key]) {
 			continue;
