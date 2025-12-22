@@ -1,5 +1,5 @@
 // 文字列を , で分割し、各配列の中身に trim() をかける
-export default function splitWithComma(str) {
+export default function splitWithComma(str: unknown): string[] {
 	//すでに配列であればそのまま返す
 	if (Array.isArray(str)) return str;
 
