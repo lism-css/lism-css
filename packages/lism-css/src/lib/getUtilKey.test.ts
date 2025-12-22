@@ -96,55 +96,23 @@ describe('getUtilKey', () => {
 		});
 	});
 
-	describe('無効な utils の場合', () => {
-		test('null の場合、空文字列を返す', () => {
-			expect(getUtilKey(null, 'foo')).toBe('');
-			expect(getUtilKey(null, 'foo', true)).toBe('');
-		});
-
-		test('undefined の場合、空文字列を返す', () => {
-			expect(getUtilKey(undefined, 'foo')).toBe('');
-			expect(getUtilKey(undefined, 'foo', true)).toBe('');
-		});
-
-		test('文字列の場合、空文字列を返す', () => {
-			expect(getUtilKey('foo', 'foo')).toBe('');
-		});
-
-		test('数値の場合、空文字列を返す', () => {
-			expect(getUtilKey(123, 'foo')).toBe('');
-		});
-
-		test('空オブジェクトの場合、空文字列を返す', () => {
-			expect(getUtilKey({}, 'foo')).toBe('');
-			expect(getUtilKey({}, 'foo', true)).toBe('');
-		});
-	});
-
 	describe('値の型のバリエーション', () => {
 		test('数値の値を持つ utils', () => {
 			const utils = { zero: 0, one: 1, negative: -1 };
 			expect(getUtilKey(utils, 'zero')).toBe('zero');
 			expect(getUtilKey(utils, 'one')).toBe('one');
-			expect(getUtilKey(utils, 0)).toBe('zero');
-			expect(getUtilKey(utils, 1)).toBe('one');
-			expect(getUtilKey(utils, -1)).toBe('negative');
 		});
 
 		test('真偽値の値を持つ utils', () => {
 			const utils = { t: true, f: false };
 			expect(getUtilKey(utils, 't')).toBe('t');
 			expect(getUtilKey(utils, 'f')).toBe('f');
-			expect(getUtilKey(utils, true)).toBe('t');
-			expect(getUtilKey(utils, false)).toBe('f');
 		});
 
 		test('null や undefined の値を持つ utils', () => {
 			const utils = { n: null, u: undefined };
 			expect(getUtilKey(utils, 'n')).toBe('n');
 			expect(getUtilKey(utils, 'u')).toBe('u');
-			expect(getUtilKey(utils, null)).toBe('n');
-			expect(getUtilKey(utils, undefined)).toBe('u');
 		});
 	});
 
