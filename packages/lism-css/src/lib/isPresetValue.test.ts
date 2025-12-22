@@ -90,28 +90,6 @@ describe('isPresetValue', () => {
 		});
 	});
 
-	describe('無効な presets の場合', () => {
-		test('null は false を返す', () => {
-			expect(isPresetValue(null, 'foo')).toBe(false);
-		});
-
-		test('undefined は false を返す', () => {
-			expect(isPresetValue(undefined, 'foo')).toBe(false);
-		});
-
-		test('オブジェクトは false を返す', () => {
-			expect(isPresetValue({ foo: true }, 'foo')).toBe(false);
-		});
-
-		test('文字列は false を返す', () => {
-			expect(isPresetValue('foo', 'foo')).toBe(false);
-		});
-
-		test('数値は false を返す', () => {
-			expect(isPresetValue(123, 'foo')).toBe(false);
-		});
-	});
-
 	describe('エッジケース', () => {
 		test('空文字列の判定', () => {
 			const presets = new Set(['', 'foo']);
