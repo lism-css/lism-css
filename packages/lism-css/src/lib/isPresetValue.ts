@@ -1,4 +1,9 @@
-export default function isPresetValue(presets, value) {
+type PresetValue = Set<string> | string[];
+
+export default function isPresetValue(
+	presets: PresetValue,
+	value: string | number
+): boolean {
 	// 数値の時は文字列化してから判定
 	if (typeof value === 'number') {
 		value = `${value}`;
