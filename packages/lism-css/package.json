@@ -14,7 +14,9 @@
 	],
 	"scripts": {
 		"dev": "vite",
-		"test": "vitest run",
+		"test": "pnpm typecheck && pnpm vitest",
+		"vitest": "vitest run",
+		"typecheck": "tsc --noEmit",
 		"build": "vite build && pnpm build:css",
 		"build:vite": "vite build",
 		"build:css": "node bin/script-build-css.js",
