@@ -77,7 +77,7 @@ describe('atts', () => {
 		});
 
 		test('空の Set は無視', () => {
-			const set = new Set();
+			const set = new Set<string>();
 			expect(atts('foo', set, 'bar')).toBe('foo bar');
 		});
 	});
