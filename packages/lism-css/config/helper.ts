@@ -26,15 +26,7 @@ type DeepMergeResult<T, U> = T extends PlainObject
  * @param source - マージするソース（このデータに更新される）
  * @returns マージされたオブジェクト
  */
-export function objDeepMerge<T, U>(origin: T, source: U): DeepMergeResult<T, U> {
-	// originとsourceがオブジェクトかどうかをチェック
-	if (!origin || typeof origin !== 'object' || Array.isArray(origin)) {
-		return source as DeepMergeResult<T, U>;
-	}
-	if (!source || typeof source !== 'object' || Array.isArray(source)) {
-		return origin as DeepMergeResult<T, U>;
-	}
-
+export function objDeepMerge<T extends Record<string, unknown>, U extends Record<string, unknown>>(origin: T, source: U): DeepMergeResult<T, U> {
 	const result = { ...origin } as Record<string, unknown>;
 
 	for (const key in source) {
@@ -58,11 +50,7 @@ export function objDeepMerge<T, U>(origin: T, source: U): DeepMergeResult<T, U> 
 	return result as DeepMergeResult<T, U>;
 }
 
-type DeepArrayToSet<T> = T extends unknown[]
-	? Set<T[number]>
-	: T extends PlainObject
-		? { [K in keyof T]: DeepArrayToSet<T[K]> }
-		: T;
+type DeepArrayToSet<T> = T extends unknown[] ? Set<T[number]> : T extends PlainObject ? { [K in keyof T]: DeepArrayToSet<T[K]> } : T;
 
 /**
  * オブジェクト内の配列を再帰的にSetに変換する関数

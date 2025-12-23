@@ -1,4 +1,4 @@
-import { TOKENS } from '../../config/index.js';
+import { TOKENS } from '../../config/index.ts';
 import isNumStr from './helper/isNumStr';
 import getMaybeTokenValue from './getMaybeTokenValue';
 

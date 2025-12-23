@@ -65,14 +65,6 @@ describe('objDeepMerge', () => {
 		expect(result).toEqual({ a: 2, b: 'world' });
 	});
 
-	test('originが配列の場合、sourceをそのまま返す', () => {
-		expect(objDeepMerge([1, 2, 3], { a: 1 })).toEqual({ a: 1 });
-	});
-
-	test('sourceが配列の場合、originをそのまま返す', () => {
-		expect(objDeepMerge({ a: 1 }, [1, 2, 3])).toEqual({ a: 1 });
-	});
-
 	test('originValueがnullまたはundefinedの場合、sourceValueを追加する', () => {
 		const origin = { a: null, b: undefined };
 		const source = { a: 1, b: 2, c: 3 };
