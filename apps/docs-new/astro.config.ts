@@ -11,7 +11,11 @@ import { expressiveCodeOptions } from './src/lib/expressive-code.config';
 
 // https://astro.build/config
 export default defineConfig({
-	site: 'http://localhost:4322/',
+	site: 'http://localhost:4000/',
+	// 開発サーバーのポート番号
+	server: {
+		port: 4000,
+	},
 	// 開発ツールバーを無効化
 	devToolbar: {
 		enabled: false,
