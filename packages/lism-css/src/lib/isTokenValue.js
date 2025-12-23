@@ -1,4 +1,4 @@
-import { TOKENS } from '../../config/index.js';
+import { TOKENS } from '../../config/index.ts';
 
 export default function isTokenValue(tokenKey, value) {
 	if (typeof tokenKey !== 'string') return false;

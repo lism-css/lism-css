@@ -1,6 +1,11 @@
-import defaultConfig from './default-config.js';
+import defaultConfig from './default-config';
 import userConfig from 'lism-css/config.js'; // ユーザーが上書きできる
-import { objDeepMerge, arrayConvertToSet } from './helper.js';
+import { objDeepMerge, arrayConvertToSet } from './helper';
+
+interface Window {
+	_LISM_CSS_CONFIG_: Partial<typeof defaultConfig>;
+}
+declare var window: Window;
 
 // ビルド時の設定をマージ
 let mergedConfig = objDeepMerge(defaultConfig, userConfig);
@@ -20,4 +25,4 @@ export const PROPS = arrayConvertToSet(structuredClone(props));
 export const STATES = states;
 
 // ブレイクポイント
-export const BREAK_POINTS = ['sm', 'md', 'lg', 'xl'];
+export const BREAK_POINTS = ['sm', 'md', 'lg', 'xl'] as const;
