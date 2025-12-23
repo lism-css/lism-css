@@ -25,7 +25,7 @@ export default {
 	setMask: {
 		// 'set-mask',
 		className: 'set-mask',
-		setStyles: (propVal) => {
+		setStyles: (propVal: string) => {
 			// minify化
 			// propVal = minifyHtml(propVal);
 			let imgUrl = propVal;
@@ -40,4 +40,4 @@ export default {
 	setPlain: 'set-plain',
 	// setRevert: 'set-revert',
 	setInnerRs: 'set-innerRs',
-};
+} as const;

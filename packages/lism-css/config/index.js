@@ -1,4 +1,4 @@
-import defaultConfig from './default-config.js';
+import defaultConfig from './default-config.ts';
 import userConfig from 'lism-css/config.js'; // ユーザーが上書きできる
 import { objDeepMerge, arrayConvertToSet } from './helper.js';
 

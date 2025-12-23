@@ -364,4 +364,4 @@ export default {
 	float: { prop: 'float', presets: ['left', 'right'] },
 	clear: { prop: 'clear', presets: ['both'] },
 	isolation: { prop: 'isolation', presets: ['isolate'] },
-};
+} as const;

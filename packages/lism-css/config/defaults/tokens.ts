@@ -24,4 +24,4 @@ export default {
 	},
 	writing: ['vertical'],
 	flow: ['s', 'l'],
-};
+} as const;
