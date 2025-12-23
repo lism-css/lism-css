@@ -1,0 +1,23 @@
+---
+/**
+ * 記事リストコンポーネント
+ * 記事カードをグリッド表示
+ */
+import { Grid } from 'lism-css/astro';
+import PostCard from './PostCard.astro';
+import type { PostEntry } from '@/lib/content';
+import { getRootLang, type LangCode } from '@/lib/i18n';
+
+// Props の型定義
+interface Props {
+	posts: PostEntry[];
+	lang?: LangCode; // 言語コード（省略時はroot言語）
+}
+
+const { posts, lang = getRootLang() } = Astro.props;
+---
+
+{/* 記事カードグリッド: Columnsで2列レスポンシブ */}
+<Grid layout="fluidCols" cols="18em" g="40" my-s="50">
+	{posts.map((post) => <PostCard post={post} lang={lang} />)}
+</Grid>

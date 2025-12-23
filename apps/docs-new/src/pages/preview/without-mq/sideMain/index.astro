@@ -1,0 +1,11 @@
+---
+import DemoLayout from '@/layouts/DemoLayout.astro';
+import './_src.css';
+
+// HTMLファイルを文字列としてインポート
+import srcHtml from './_src.html?raw';
+---
+
+<DemoLayout title="Media Query Problem" lism="main">
+	<Fragment set:html={srcHtml} />
+</DemoLayout>

@@ -1,0 +1,32 @@
+---
+/**
+ * タグ別記事一覧ページ（非root言語用）
+ */
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { HTML } from 'lism-css/astro';
+import PostList from '@ui/PostList.astro';
+import { getTagPathsForNonRoot } from '@/lib/pageHelpers';
+import type { PostEntry } from '@/lib/content';
+import type { LangCode } from '@/lib/i18n';
+
+// 共通ヘルパーを使用
+export const getStaticPaths = getTagPathsForNonRoot;
+
+interface Props {
+	lang: LangCode;
+	posts: PostEntry[];
+}
+
+const { tag } = Astro.params;
+const { lang, posts } = Astro.props;
+
+// 記事一覧を日付の降順（新しい順）でソート
+const sortedPosts = posts.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+---
+
+<BaseLayout title={`Posts - Tag: ${tag}`} lang={lang} excludeFromSearch>
+	<HTML.h lv="1">
+		<HTML.span fw="normal" fz="xs" style={{ 'vertical-align': 'text-bottom' }}>Search with Tag: </HTML.span><HTML.span>#{tag}</HTML.span>
+	</HTML.h>
+	<PostList posts={sortedPosts} lang={lang} />
+</BaseLayout>

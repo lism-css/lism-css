@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="ja">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>【SCSSで自動化】clamp()関数の計算式を理解し、リキッドタイポグラフィを実現する</title>
+
+		<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
+
+		<style>
+			body {
+				font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+				line-height: 1.6;
+				color: #333;
+				max-width: 900px;
+				margin: 0 auto;
+				padding: 20px;
+				background-color: #f9f9f9;
+			}
+			h1,
+			h2,
+			h3 {
+				color: #2c3e50;
+				border-bottom: 2px solid #3498db;
+				padding-bottom: 5px;
+				margin-top: 30px;
+			}
+			code {
+				background-color: #ecf0f1;
+				padding: 2px 4px;
+				border-radius: 3px;
+			}
+			pre {
+				background-color: #2c3e50;
+				color: #ecf0f1;
+				padding: 15px;
+				border-radius: 5px;
+				overflow-x: auto;
+			}
+			.container {
+				background-color: white;
+				padding: 40px;
+				border-radius: 8px;
+				box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+			}
+			.formula {
+				font-size: 1.1em;
+				text-align: center;
+				margin: 20px 0;
+				background-color: #e8f8f5;
+				padding: 15px;
+				border-left: 5px solid #1abc9c;
+			}
+			.note {
+				background-color: #fff3cd;
+				border-left: 4px solid #ffc107;
+				padding: 15px;
+				margin: 20px 0;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="container">
+			<header>
+				<h1>【SCSSで自動化】`clamp()`関数の計算式を理解し、リキッドタイポグラフィを実現する</h1>
+				<p>CSSの<code>clamp()</code>を使って、画面サイズに応じて滑らかに変化する値を簡単に導入する方法を解説します。手計算は不要です！</p>
+			</header>
+
+			<hr />
+
+			<section>
+				<h2>🤔 `clamp()`関数の基本と問題点</h2>
+				<p>
+					CSSの<code>clamp(最小値, 推奨値, 最大値)</code
+					>は、値を指定した範囲内に収める非常に便利な関数です。リキッドタイポグラフィなどでよく使われます。
+				</p>
+				<p>
+					しかし、中央の**推奨値**には、画面幅に応じて値を変化させる<code>vw</code>（ビューポート幅）を使用した<code>calc()</code>式を書く必要があります。この式を手動で計算するのは非常に面倒です。
+				</p>
+				<pre><code>/* 推奨値は、手動で計算が必要... */
+font-size: clamp(1rem, calc(0.5vw + 1.2rem), 2rem);</code></pre>
+				<p>
+					そこで、<strong>「この画面幅になったらこの値」「別の画面幅になったら別の値」</strong>という2つの条件を指定するだけで、推奨値を自動的に計算する仕組みを構築します。
+				</p>
+			</section>
+
+			<section>
+				<h2>📐 計算のロジック：1次関数（直線）の利用</h2>
+				<p>
+					推奨値の<code>calc()</code>式は、数学の**1次関数**と同じ構造をしています。つまり、画面幅を $x$ 軸、目的の値を $y$
+					軸とする直線の方程式を求めれば良いのです。
+				</p>
+
+				<p>私たちが指定する2つの条件は、この直線上の2点となります。</p>
+				<ul>
+					<li>**点1**: 画面幅 \(W_{\min}\) で値が \(V_{\min}\) になる。</li>
+					<li>**点2**: 画面幅 \(W_{\max}\) で値が \(V_{\max}\) になる。</li>
+				</ul>
+
+				<h3>1. 傾き（$a$）の計算</h3>
+				<p>傾きは「変化の割合」です。値の変化量を画面幅の変化量で割って求めます。</p>
+				<div class="formula">\[ a = \frac{V_{\max} - V_{\min}}{W_{\max} - W_{\min}} \]</div>
+
+				<h3>2. 切片（$b$）の計算</h3>
+				<p>切片は、直線がy軸と交わる点（画面幅が0の時の値）です。最小値の点を使って計算します。</p>
+				<div class="formula">\[ b = V_{\min} - a \cdot W_{\min} \]</div>
+
+				<h3>3. 推奨値の式への変換</h3>
+				<p>計算された1次関数 \(\text{Value} = a \cdot W + b\) をCSSの推奨値の形式に変換します。</p>
+				<p class="note">
+					⚠️ **CSSの<code>vw</code>単位の特殊性**: 1次関数の $W$ には画面幅全体を示す $100\text{vw}$
+					が入ります。CSSの<code>1vw</code>は画面幅の1/100なので、$a \cdot 100\text{vw}$ は **$(\text{傾き} \times 100)\text{vw}$**
+					として記述する必要があります。
+				</p>
+				<div class="formula">\[ \text{推奨値} = \left(\frac{a}{100}\right) \text{vw} + b \]</div>
+				<p>これをそのままCSSの<code>calc()</code>式に当てはめれば、推奨値が完成します。</p>
+			</section>
+
+			<section>
+				<h2>🚀 SCSS関数による自動化</h2>
+				<p>上記のロジックをSCSS関数<code>mixn-clamp()</code>として実装すれば、手計算は一切不要になります。</p>
+
+				<h3>SCSS関数: `mixn-clamp()`</h3>
+				<pre><code>/// 最小/最大画面幅と対応する値からclamp()の推奨値を計算する
+/// @param {Number} $min-width - 最小値に達する画面幅 (例: 480px)
+/// @param {Number} $max-width - 最大値に達する画面幅 (例: 1200px)
+/// @param {Number} $min-value - 最小値 (例: 1.5rem)
+/// @param {Number} $max-value - 最大値 (例: 3rem)
+@function mixn-clamp($min-width, $max-width, $min-value, $max-value) {
+  // 1. 傾き (a) を計算
+  $width-diff: unitless($max-width) - unitless($min-width);
+  $value-diff: unitless($max-value) - unitless($min-value);
+  $slope: $value-diff / $width-diff;
+  
+  // 2. 切片 (b) を計算
+  $y-intercept: unitless($min-value) - ($slope * unitless($min-width));
+  
+  // 3. CSS推奨値の構築: (a * 100)vw + b
+  $unit: unit($min-value);
+  $vw-component: #{$slope * 100}vw;
+  $y-intercept-component: #{$y-intercept}#{$unit};
+
+  $preferred-value: "calc(#{$vw-component} + #{$y-intercept-component})";
+
+  // 4. clamp関数を返却
+  @return clamp(#{$min-value}, #{$preferred-value}, #{$max-value});
+}</code></pre>
+
+				<h3>使用例と結果</h3>
+				<p>「480pxで1.5rem、1200pxで3rem」という条件を指定した場合：</p>
+				<pre><code>/* SCSSの記述 */
+.responsive-title {
+  font-size: mixn-clamp(480px, 1200px, 1.5rem, 3rem);
+}</code></pre>
+				<pre><code>/* コンパイルされたCSS */
+.responsive-title {
+  font-size: clamp(1.5rem, calc(0.20833vw + 0.5rem), 3rem);
+}</code></pre>
+			</section>
+
+			<footer>
+				<p>これで、複雑な計算を意識することなく、モダンで柔軟なCSS設計が可能になります。ぜひ活用してみてください。</p>
+			</footer>
+		</div>
+	</body>
+</html>

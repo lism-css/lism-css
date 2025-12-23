@@ -1,0 +1,12 @@
+---
+import DemoLayout from '@/layouts/DemoLayout.astro';
+import './_src.css';
+// import '../_common.css';
+
+// HTMLファイルを文字列としてインポート
+import srcHtml from './_src.html?raw';
+---
+
+<DemoLayout title="Geometric Modular Scaling">
+	<Fragment set:html={srcHtml} />
+</DemoLayout>

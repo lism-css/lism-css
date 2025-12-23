@@ -1,0 +1,43 @@
+/*
+ * タイポグラフィ
+ */
+ :root {
+	--lh-min: 1.3em; /* 最小値 */
+	--lh-max: 1.9em; /* 最大値 */
+	--lh-slope: 0.35; /* 自動計算用の傾き */
+}
+
+/* line-height計算させるために font-size・line-heightを変数で管理する */
+body {
+	--fz: 1em; /* 計算用に --fz の単位をem化しておく */
+	--lh: 1.5; /* 任意のベース値。 0.125 / 0.25 単位 */
+}
+
+/* 対象要素 */
+:where(:is(h1, h2, h3, h4, h5, h6, p)) {
+	font-size: var(--fz, inherit);
+	line-height: var(--lh, inherit);
+}
+
+
+.u-autoCalcLH, /* 任意の要素に対して自動計算対象にするユーティリティクラス */
+[style*="--fz:"],
+:where(:is(h1, h2, h3, h4, h5, h6, p)):not([style*="font-size"]){
+	
+	--_base-lh: calc(var(--lh) * 1em); /* calc計算のために単位をつけておく */
+
+	// 上限値を var(--_base-lh) にすることで、フォントサイズが大きい場合にのみ計算を適用することも可能
+	line-height: clamp(
+		min(var(--lh-min), var(--_base-lh)),
+		calc((var(--lh-slope) * 1em) + var(--_base-lh) - (var(--lh-slope) * var(--fz))),
+		max(var(--lh-max), var(--_base-lh))
+	);
+	font-size: var(--fz);
+}
+
+// --lh指定されている要素自身はその値で上書き。→ .-lh: 使ってもらう?
+[style*='--lh:'] {
+	line-height: var(--lh);
+}
+
+// ---------------------------------------------------------------------

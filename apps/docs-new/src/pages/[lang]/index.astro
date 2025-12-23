@@ -1,0 +1,64 @@
+---
+/**
+ * トップページ（非root言語用）
+ * 最新の記事一覧を表示
+ */
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PostList from '@ui/PostList.astro';
+import Pagination from '@ui/Pagination.astro';
+import { HTML } from 'lism-css/astro';
+import { siteConfig } from '@/config/site';
+import { getPostsByLang } from '@/lib/content';
+import { isRootLang, isValidLang, type LangCode } from '@/lib/i18n';
+
+export async function getStaticPaths() {
+	const langCodes = Object.keys(siteConfig.langs) as LangCode[];
+	// 非root言語のみ対象
+	const nonRootLangs = langCodes.filter((lang) => !isRootLang(lang));
+
+	return nonRootLangs.map((lang) => ({
+		params: { lang },
+		props: { lang },
+	}));
+}
+
+interface Props {
+	lang: LangCode;
+}
+
+const { lang } = Astro.props;
+
+// 言語が無効な場合は404
+if (!isValidLang(lang)) {
+	return Astro.redirect('/404');
+}
+
+// ページあたりの記事数
+const POSTS_PER_PAGE = siteConfig.pagination.postsPerPage;
+
+// 記事一覧を日付の降順で取得
+const allPosts = (await getPostsByLang(lang)).sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+
+// 総ページ数を計算
+const totalPages = Math.ceil(allPosts.length / POSTS_PER_PAGE);
+
+// 1ページ目の記事を取得
+const posts = allPosts.slice(0, POSTS_PER_PAGE);
+
+// 見出しの翻訳
+const headings = {
+	ja: 'Recent Posts',
+	en: 'Recent Posts',
+};
+const heading = headings[lang] || headings.en;
+---
+
+<BaseLayout isTop title={siteConfig.name} lang={lang}>
+	<HTML.h lv="1">{heading}</HTML.h>
+
+	{/* 記事カードグリッド */}
+	<PostList posts={posts} lang={lang} />
+
+	{/* ページネーション */}
+	<Pagination currentPage={1} totalPages={totalPages} lang={lang} />
+</BaseLayout>

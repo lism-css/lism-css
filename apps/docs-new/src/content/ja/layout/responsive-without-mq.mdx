@@ -1,0 +1,297 @@
+---
+title: "メディアクエリに依存しないレイアウト設計"
+description: "このページでは、メディアクエリに依存しないレイアウトについて紹介します。"
+date: 2025-12-20
+tags: ["レスポンシブ"]
+---
+
+
+WEBにおけるレスポンシブ対応では、これまでメディアクエリが多用されてきました。  
+メディアクエリは便利ですが、画面幅と実際にコンテンツが配置されたエリアの幅の乖離が大きい時、問題が起こりやすくなります。
+
+特に、サイドバーのあるページでは、画面幅は十分広くてもメインエリアが狭いため、カードコンテンツがまだ横並びなのにとても窮屈になっていることがよくあります。
+
+このページでは、そのような問題を回避するためのレイアウト手法をいくつか紹介していきます。
+
+
+## メディアクエリの問題点をおさらい
+
+
+以下の例では 760px を境に横並びへ切り替えていますが、サイドバーがあると「760px以上なのにメインエリアは狭い」という帯域が生まれ、そこで読みづらいレイアウトが発生します。
+
+<Preview src="without-mq/mq-problem" addFiles={['../_layout.css']} resize useLism/>
+
+
+画面幅がブレイクポイントの760px付近になるとサイドバーが影響してメインエリアが窮屈になります。
+
+ 
+この問題をメディアクエリで無理やり改善しようとすると、調整すべきサイズポイントが増えてコードが肥大化していきます。
+
+ 
+## コンテナクエリに置き換えてみる
+
+そこで有効なのがコンテナクエリです。
+コンテナクエリは、画面幅ではなく要素が置かれたコンテナ（親要素）のサイズを基準にスタイルを切り替えられるため、より文脈に即したレスポンシブな設計が可能になります。
+
+ページ全体がどういうレイアウトをしていようと関係ありません。コンポーネント単位で実装が完結するため、再利用性も高まります。
+
+
+先ほどのメディアとテキストのレイアウトを切り替える例をコンテナクエリで実装してみましょう。
+
+<Preview src="without-mq/cq-example" addFiles={['../_layout.css']} useLism/>
+
+コードの変更点は以下の通りです。
+
+```diff lang="css"
++.main{
++	container-type: inline-size;
++}
+
+/* 大きい画面サイズは横並びにする */
+-@media (min-width: 760px) {
++@container (min-width: 600px) {
+	...
+```
+
+### コンテナクエリの注意点
+
+- 先祖要素で `container-type` を設定していないと、コンテナクエリが機能しません。（コンテナ要素自身でコンテナクエリを使用することもできません）
+- コンテナ要素の直下では、flexboxやgridのサイズ感が少し変化します
+- コンテナ要素の内部では、`position:fixed`の挙動が`absolute`になります。（[これは改善の方向に向かっているそう](https://speakerdeck.com/tak_dcxi/an-liu-resuponsibukodeingu-2025?slide=62)ですが、まだモダンブラウザでも対応されたばかりです。）
+
+
+他にも注意点がいくつかありますが、以下のスライドでよくまとまっていましたのでぜひ目を通してみてください。
+
+https://speakerdeck.com/tak_dcxi/an-liu-resuponsibukodeingu-2025?slide=62
+
+
+
+{/* <Preview css={`
+.parent {
+  display: flex;
+  gap: 1em;
+}
+div{padding:1em; border:1px solid #000;}
+.query-container {
+  container-type: inline-size;
+  flex: 1;
+  min-width: 0;
+}`}>
+<div class="parent">
+  <div class="query-container_" style={{width: 'fit-content'}}>Query</div>
+  <div class="query-container">Lorem ipsum dolor sit amet. Consectetur adipiscing elit, sed do eiusmod tempor Incididunt ut. Labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut.</div>
+</div>
+</Preview> */}
+
+## コンテンツ幅を基準にレイアウトを切り替える
+
+コンテナクエリを使えば、ページのレイアウトに影響されてコンテンツが読みづらい範囲が出てきてしまう問題 を回避することができました。
+
+めでたしめでたし。これで一安心です。
+
+...と言いたいところですが、ここで少し考えたいことがあります。  
+親の幅に合わせてレイアウトを切り替えたい場面というのは、一定の表示幅を担保すべきコンテンツがそこにあるということです。
+
+:::point
+つまり本質的に重要なことは、「**どれくらいの幅を最低限維持できていれば、そのコンテンツは見やすいんだろうか**」ということです。
+:::
+
+
+本来は、**メディアクエリもコンテナクエリも使わず**に、その幅を指定しておけば勝手にレイアウトが切り替わるようになっているべきなのです。
+
+
+そこで、ぜひ一度目を通しておきたい書籍が、[Every Layout](https://every-layout.dev/) です。
+
+https://every-layout.dev/
+
+
+[Every Layout](https://every-layout.dev/) は、無理に人間の手でレイアウトを調整しようとするのではなく、つまりメディアクエリを使わず、もっとシンプルにブラウザにレイアウトを任せようという考え方です。  
+
+
+
+
+> If you find yourself wrestling with CSS layout, it’s likely you’re making decisions for browsers they should be making themselves. ( CSSのレイアウトで苦戦しているなら、それはおそらくブラウザ自身が決めるべきことをあなたが代わりに決めようとしているからです。 )
+>
+> --[Every Layout](https://every-layout.dev/) 
+
+{/* > CSSは結果を記述するものではなく、ルールを記述するものです。ある条件においてどのように振る舞うべきか、という宣言をいくつも組み合わせることで、望む結果が得られるようなシステムを形成するものです。
+>
+> [『Every Layout』に到った背景と思想についての私の解釈](https://note.com/shiftbrain/n/n0a01726673e0) */}
+
+
+ここからは、この書籍の内容を参考に、[Lism CSS](https://lism-css.com)にも取り入れている自動切り替えレイアウト手法を紹介していきます。
+
+
+### sideMain - コンテンツ幅を基準に2カラム↔︎1カラムを自動で切り替える方法
+
+引き続き、「サイドバーの有無によってメインエリア内の横並びコンテンツが見づらくなる問題」を題材として、これをコンテナクエリも使わずに解決してみましょう。
+
+:::note
+::title[やるべきこと]
+- 要素が二つある。
+- 表示幅が広ければ横並びにする。
+- 表示幅が狭ければ縦並びにする。
+- 2つの要素のうち、可読性を維持したいテキストコンテンツがあり、そのコンテンツが最低限維持すべき幅を指定したい。
+:::
+
+
+これを解決できるレイアウト手法が、Every Layout の中では**Sidebar**として紹介されています。
+
+ここではそれを元に少しだけ手を加えた[`l--sideMain`](https://www.lism-css.com/modules/layout/withside/) というLism CSSで採用しているクラスを紹介していきます。
+
+
+```css title="css"
+.l--sideMain {
+	/* --sideW, --mainW はあくまで初期値なので、その場その場で適切な値を指定して使います。 */
+	--sideW: auto;
+	--mainW: max(16em, 50%);
+
+	display: flex;
+	flex-wrap: wrap;
+}
+.l--sideMain > .is--side {
+	flex-basis: var(--sideW);
+	flex-grow: 1; /* 0 だと折り返されたときに広がらない */
+}
+.l--sideMain > :not(.is--side) {
+	flex-grow: 9999999; /* できるだけ fix側を 指定値ピッタリに近づけるためにかなり大きな数値を指定 */
+	flex-basis: min(100%, var(--mainW)); /* このサイズが折り返しポイントの基準となる */
+}
+```
+
+これらのCSSにより、「親要素が何px以上なら横並び」と決めなくても、コンテナの幅に応じて自然に横並び／縦並びが切り替わるようになります。
+
+:::point
+::title[CSSのポイント]
+
+- `.l--sideMain`に`flex-wrap`を指定し、横幅が足りなくなったら要素が自動的に折り返せるようにします。
+- `.is--side`には、横並び時の理想的な幅（`--sideW`）を`flex-basis`で指定します。この時、`flex-grow: 1`を指定しておくことで、縦並びになったときには幅いっぱいまで広がるようにしておきます。
+- `:not(.is--side)`の`flex-basis`のサイズを`min(100%, var(--mainW))`として、最低限維持したい横幅(`--mainW`)を指定します。
+- `:not(.is--side)`の`flex-grow`にかなり大きな数値を指定しておくことで、横並び時に`.is--side`側が`--sideW`よりも広がらないようにする
+:::
+
+
+<div class='a--spacer' />
+
+実際に使用してみましょう。
+
+`l--sideMain` では、２つの子要素をside要素とmain要素として分けて考えます。  
+
+- side: サイドバーや画像、アイコンなど、ある程度表示したい幅が決まっている要素
+- main: 最低限維持したい横幅を指定するコンテンツ要素
+
+今回の例では、画像がside要素、テキストとリンクのグループがmain要素となります。
+
+
+<Preview src="without-mq/sideMain" addFiles={['../_layout.css']} useLism />
+
+
+どうでしょうか。  
+メディアクエリもコンテナクエリも使わず、コンテンツの可読性を維持して自動でカラムが切り替わるのは素晴らしいですね。
+
+
+### `fluidCols` - カラム数の自動切り替えを実装する
+
+
+続いて、カラム数が1列→2列→3列…と画面サイズに応じて順に変化する自動段組みレイアウトを紹介します。
+
+こういったレイアウトはWEBでよく見かけますが、「440pxまでは1列、600pxから2列、800pxから3列…」といったようにブレークポイントを増やしがちで、CSSが肥大化する要因の１つとなります。
+
+しかしGridレイアウトをうまく活用すると、**「各カラムサイズで維持したい最低限のサイズ」を決めてあとはブラウザに列数を任せる**ことができます。
+
+Lism CSSでは、このレイアウトを[`l--fluidCols`](https://www.lism-css.com/modules/layout/liquidgrid/) というクラスで提供しています。
+
+
+```css title="CSS"
+.l--fluidCols {
+	--cols: 16rem; /* カラムが最低限維持する幅 */
+	--autoMode: auto-fit; /* auto-fill か auto-fit */
+	display: grid;
+	grid-template-columns: repeat(var(--autoMode), minmax(min(var(--cols), 100%), 1fr));
+}
+```
+
+ポイントは以下の通りです。
+
+- `grid-template-columns` に`repeat()`を使って、同じ幅でカラムを並べるよう指示します。
+- サイズ指定は`minmax(最小サイズ, 1fr))`の形で、各カードが最低限維持したい幅を指定します。
+- さらにこの時、最小サイズの部分は`min(サイズ,100%)`とすることで、コンテナの幅を飛び越えてしまうことを防ぎます。
+- `auto-fit` または `auto-fill` を指定して、カラム数を自動で増減させます。
+
+
+<Preview src="without-mq/liquid-grid" resize ar="2/1" useLism />
+
+
+#### auto-fit と auto-fill の違い
+
+`auto-fill`と`auto-fit`はどちらも「自動的に列を増減する」ためのキーワードですが、**1行あたりの想定列数より要素数が少ない**場合（例：4列可能な幅の時に要素が3つしかない時）の**隙間の埋め方**に違いがでます。
+
+- `auto-fit`: 残りの空きカラムをなくし、要素が親要素いっぱいまで広がる。
+- `auto-fill`: 空きカラムはそのまま「空の列」として残る。
+
+
+実際に両者を比較してみましょう。
+
+<Preview resize title='auto-fill, --cols:160px'>
+<div class='l--fluidCols -g:20' style='--autoMode: auto-fill;--cols:160px'>
+  <div class='-p:20 -bgc:base-2'>auto-fill</div>
+  <div class='-p:20 -bgc:base-2'>auto-fill</div>
+</div>
+</Preview>
+
+<Preview resize title='auto-fill, --cols:160px'>
+<div class='l--fluidCols -g:20' style='--autoMode: auto-fit;--cols:160px'>
+  <div class='-p:20 -bgc:base-2'>auto-fit</div>
+  <div class='-p:20 -bgc:base-2'>auto-fit</div>
+</div>
+</Preview>
+
+
+:::note
+auto-fill が隙間を埋めて広がるのは、1行で収まる時のみです。2列目以降で端数が出た時に広がることはありません。
+:::
+
+
+<Preview resize title='2列目以降の挙動を確認'>
+<div class='l--fluidCols -g:20' style='--autoMode: auto-fit;--cols:160px'>
+  <div class='-p:20 -bgc:base-2'>auto-fit</div>
+  <div class='-p:20 -bgc:base-2'>auto-fit</div>
+  <div class='-p:20 -bgc:base-2'>auto-fit</div>
+  <div class='-p:20 -bgc:base-2'>auto-fit</div>
+  <div class='-p:20 -bgc:base-2'>auto-fit</div>
+</div>
+</Preview>
+
+
+2列目以降も隙間を埋めて広げたい場合は、シンプルに flexboxレイアウトを活用します。
+
+<Preview resize title='子要素: flex-basis:160px, flex-grow:1' css={`div{flex-basis:160px}`}>
+<div class='l--cluster -g:20'>
+  <div class='-p:20 -bgc:base-2 -fxg:1'>Flex item</div>
+  <div class='-p:20 -bgc:base-2 -fxg:1'>Flex item</div>
+  <div class='-p:20 -bgc:base-2 -fxg:1'>Flex item</div>
+  <div class='-p:20 -bgc:base-2 -fxg:1'>Flex item</div>
+  <div class='-p:20 -bgc:base-2 -fxg:1'>Flex item</div>
+</div>
+</Preview>
+
+
+## 複数列以上↔︎1列の切り替えをメディアクエリを使わずに実装する方法
+
+最後に、Every Layoutの[**Switcher**](https://every-layout.dev/layouts/switcher/)を紹介しておきます。
+
+ここまで紹介したレイアウトだとできなかった、3列↔︎1列や4列↔︎1列の切り替えをメディアクエリやコンテナクエリを使わずに実装する方法です。
+
+
+<Preview src="without-mq/switcher" resize useLism/>
+
+
+:::point
+::title[CSSのポイント]
+
+- switcher自身の幅が`--threshhold`より大きな場合、`flex-basis` は**負の値となり、無視されます**。その結果、`flex-grow`だけが有効となり、各要素が等分になります。
+	- この時、flex-growの値に差があれば、その比率に合わせて各要素が引き延ばされます。
+- switcher自身の幅が`--threshhold`より小さい場合、`flex-basis` が大きな正の値となるので、各要素は最大限に引き延ばされます。
+:::
+
+

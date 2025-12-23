@@ -1,0 +1,181 @@
+/* 出典付きblockquote（figure構造） */
+.c--blockquote {
+	margin-block: var(--s40);
+	display: grid;
+	gap: 0.25em;
+
+	> figcaption {
+		font-size: var(--fz--xs);
+		color: var(--text-2);
+		margin-left: auto;
+		font-style: italic;
+		padding-inline: 0.5em;
+
+		/* ダッシュを付ける */
+		&::before {
+			content: ' — ';
+		}
+
+		> a {
+			color: inherit;
+			text-decoration: underline;
+			text-underline-offset: 0.15em;
+
+			&:hover {
+				color: var(--link);
+			}
+		}
+	}
+}
+
+/* -------------------------- */
+/* Custom Prop Class */
+/* -------------------------- */
+.-hov\:under:hover {
+	text-decoration: underline;
+}
+
+/* アンカーリンクでジャンプした際、ヘッダーの高さを考慮 */
+html {
+	scroll-padding-top: calc(var(--header-h) + 1rem);
+}
+
+/* -------------------------- */
+/* 下書き記事のスタイル（開発環境のみ） */
+/* -------------------------- */
+._draft {
+	position: relative;
+}
+.c--postCard._draft > *,
+._draft > .c--navLink {
+	opacity: 0.7;
+}
+/* 🔒 / 🔑 */
+._draft::before {
+	content: '📝';
+	position: absolute;
+	top: 0;
+	right: 0;
+	background-color: var(--base-2);
+	line-height: 1;
+	font-size: 16px;
+	padding: 2px;
+	border-radius: 3px;
+	z-index: 1;
+}
+
+/* -------------------------- */
+/* 見出しデザイン */
+/* -------------------------- */
+.article-title {
+	position: relative;
+	line-height: 1.5;
+	display: flex;
+	align-items: center;
+	min-height: 2.5em;
+
+	/* 3600 ~ 1200 */
+	font-size: clamp(1.5rem, 1.286rem + 0.95cqw, 2rem);
+}
+
+/* .article-meta{} */
+.article-title::before {
+	content: '';
+	width: 1.25em;
+	align-self: stretch;
+	flex-shrink: 0;
+	/* margin-inline-start: -0.5em; */
+	background-image: linear-gradient(105deg, var(--brand) 50%, transparent 0%), linear-gradient(75deg, var(--base-2) 50%, transparent 0%);
+}
+
+/* -------------------------- */
+/* 前後記事ナビゲーション */
+/* -------------------------- */
+.c--postNav {
+	margin-block-start: var(--s40);
+	padding-block-start: var(--s40);
+	border-block-start: 1px solid var(--divider);
+}
+
+.c--postNav__item {
+	flex: 1;
+	min-width: 200px;
+}
+.c--postNav__item.-next {
+	text-align: right;
+}
+
+.c--postNav__link {
+	display: flex;
+	flex-direction: column;
+	gap: 0.25em;
+	padding: var(--s20);
+	border-radius: var(--bdrs--10);
+	text-decoration: none;
+	color: inherit;
+	transition: background-color 0.2s;
+}
+.c--postNav__link:hover {
+	background-color: var(--base-2);
+}
+
+.c--postNav__label {
+	color: var(--text-2);
+}
+
+.c--postNav__title {
+	font-weight: 500;
+	line-height: 1.4;
+}
+
+.c--postNav__empty {
+	display: none;
+}
+
+/* -------------------------- */
+/* ページネーション */
+/* -------------------------- */
+.c--pagination {
+	margin-block-start: var(--s40);
+}
+
+.c--pagination__arrow,
+.c--pagination__page {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	min-width: 2.5em;
+	height: 2.5em;
+	padding: 0.25em 0.5em;
+	border-radius: var(--bdrs--10);
+	text-decoration: none;
+	font-weight: 500;
+	transition:
+		background-color 0.2s,
+		color 0.2s;
+}
+
+a.c--pagination__arrow,
+a.c--pagination__page {
+	color: var(--link);
+}
+a.c--pagination__arrow:hover,
+a.c--pagination__page:hover {
+	background-color: var(--base-2);
+}
+
+.c--pagination__arrow.-disabled {
+	color: var(--text-2);
+	opacity: 0.4;
+	cursor: not-allowed;
+}
+
+.c--pagination__page.-current {
+	background-color: var(--brand);
+	color: white;
+}
+
+.c--pagination__ellipsis {
+	padding: 0 0.25em;
+	color: var(--text-2);
+}

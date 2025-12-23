@@ -1,0 +1,59 @@
+:root {
+	/* ベースとなる流体フォントサイズ */
+	--REM: clamp(0.95rem, 0.915rem + 0.15vw, 1.05rem);
+
+	/* フォントサイズのスケーリング */
+	--fz--xs: calc(1em * (8 / 10));
+	--fz--s: calc(1em * (8 / 9));
+	--fz--base: var(--REM);
+	--fz--l: calc(1em * (8 / 7));
+	--fz--xl: calc(1em * (8 / 6));
+	--fz--2xl: calc(1em * (8 / 5));
+	--fz--3xl: calc(1em * (8 / 4));
+	--fz--4xl: calc(1em * (8 / 3));
+	--fz--5xl: calc(1em * (8 / 2));
+
+	/* ハーフレディング */
+	--hl-unit: calc(var(--REM) * 0.125); /* ≒ 2px */
+	--hl--xs: var(--hl-unit);
+	--hl--s: calc(var(--hl-unit) * 2);
+	--hl--base: calc(var(--hl-unit) * 3);
+	--hl--l: calc(var(--hl-unit) * 4);
+
+	/* 余白のスケーリング */
+	--s-unit: calc(var(--REM) * 0.5); /* ≒ 8px */
+	--s--5: calc(0.5 * var(--s-unit));
+	--s--10: var(--s-unit);
+	--s--15: calc(1.5 * var(--s-unit));
+	--s--20: calc(2 * var(--s-unit));
+	--s--30: calc(3 * var(--s-unit));
+	--s--40: calc(5 * var(--s-unit));
+	--s--50: calc(8 * var(--s-unit));
+	--s--60: calc(13 * var(--s-unit));
+	--s--70: calc(21 * var(--s-unit));
+	--s--80: calc(34 * var(--s-unit));
+}
+
+body {
+	--hl: var(--hl--base);
+	font-size: var(--fz--base);
+}
+
+/* ligh-height をハーフレディングで管理 */
+* {
+	line-height: calc(1em + var(--hl) * 2);
+}
+
+/* 見出しのスケーリング */
+h1 {
+	font-size: var(--fz--3xl);
+}
+h2 {
+	font-size: var(--fz--2xl);
+}
+h3 {
+	font-size: var(--fz--xl);
+}
+h4 {
+	font-size: var(--fz--l);
+}

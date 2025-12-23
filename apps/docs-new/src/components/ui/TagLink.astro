@@ -1,0 +1,25 @@
+---
+import { HTML } from 'lism-css/astro';
+
+const { href, ...props } = Astro.props;
+---
+
+{/* ヘッダー: Flexで横並び、両端揃え */}
+<HTML.a href={href} class="c--tagLink" px="10" py="5" lh="xs" td="none" fz="s" bdrs="10" {...props}>
+	<slot />
+</HTML.a>
+
+<style>
+	.c--tagLink {
+		/* あとで --link におきかえ */
+		/* --keycolor: #0c61e4; */
+		--tag-c: var(--brand);
+		--tag-bgc: var(--base-2);
+		color: var(--tag-c);
+		background-color: var(--tag-bgc);
+	}
+
+	.c--tagLink:hover {
+		box-shadow: inset 0 0 0 1px var(--tag-c);
+	}
+</style>

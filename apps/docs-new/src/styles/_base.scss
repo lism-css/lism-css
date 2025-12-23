@@ -1,0 +1,133 @@
+@layer lism.base {
+	:root {
+		--hov-duration: 0.2s;
+	}
+	html {
+		tab-size: 2;
+		text-spacing-trim: trim-start;
+		/* line-break: strict; */
+	}
+	body {
+		--link-c: currentColor;
+		--link-td-color: var(--link);
+		--link-td-thickness: 0.125em;
+	}
+
+	/* ダイアログ展開時のガタツキを防ぐ */
+	/* html:has(:modal[open]) {
+		scrollbar-gutter: stable;
+	} */
+
+	article :not(pre) > code {
+		display: inline-flex;
+		color: var(--code-c);
+		background-color: var(--code-bgc);
+		font-size: 0.9125em;
+		font-family: var(--ff--mono);
+		line-height: 1;
+		padding: 0.25em 0.3em;
+		margin-inline: 0.125em;
+		border-radius: 0.125em;
+	}
+
+	a > code {
+		text-decoration: inherit;
+	}
+
+	kbd {
+		display: inline-block;
+		padding: 0.375em;
+		font-size: 0.95em;
+		font-family: inherit;
+		line-height: 1;
+		border: solid 1px var(--divider);
+		border-radius: 0.25em;
+		box-shadow: 0 2px 0 var(--divider);
+		translate: 0 -1px;
+	}
+
+	p > small {
+		font-size: var(--fz--s);
+		vertical-align: 0.025em;
+	}
+
+	blockquote {
+		font-style: italic;
+		font-size: var(--fz--s);
+		background-color: var(--base-2);
+		border-inline-start: solid 3px;
+		border-color: var(--text-2);
+		color: var(--text-2);
+	}
+	table {
+		font-size: 0.95em;
+		max-inline-size: 100%;
+		border: none;
+
+		/* memo: oveflow の指定によっては separate にしないとborderが表示されない場合があるので横スクロール時には注意。 */
+		border-collapse: collapse;
+		border-spacing: 0;
+		isolation: isolate;
+
+		:where(td, th) {
+			border-block: 1px solid var(--divider);
+		}
+		thead {
+			border-block-end: solid 2px;
+		}
+	}
+
+	/* モーダル背景 */
+	dialog:modal {
+		backdrop-filter: blur(16px);
+	}
+
+	/* markのプロントスタイル */
+	/* see: https://adrianroselli.com/2025/04/tweaking-text-level-styles-reprised.html#MarkPrint */
+	@media print {
+		mark {
+			border: 1pt dotted;
+		}
+	}
+
+	/* ------------------------------------------------------------
+		text-autospace
+	------------------------------------------------------------ */
+	body {
+		text-autospace: normal;
+	}
+	pre,
+	input,
+	textarea {
+		/*
+		pre では無効化しておく。また、input要素やtextarea要素では、入力中に自動挿入が入ると挙動不審になる恐れがある
+		see: https://hail2u.net/blog/best-value-for-text-autospace-property.html
+	*/
+		text-autospace: no-autospace;
+	}
+
+	/* ------------------------------------------------------------
+		text-decoration
+	------------------------------------------------------------ */
+	ins {
+		/*
+		デフォルトスタイル（普通のアンダーライン）はリンク要素と見間違えやすいので変更する
+		https://adrianroselli.com/2025/04/tweaking-text-level-styles-reprised.html#InsEnhanced
+	*/
+		text-decoration-style: wavy;
+	}
+
+	a:where(:hover, :focus-visible) {
+		color: var(--link);
+		text-decoration-thickness: 0.2em;
+		text-decoration-skip-ink: none;
+		/* --under-offset: 0.01em; */
+	}
+
+	/* ------------------------------------------------------------
+	折り返し制御
+	------------------------------------------------------------ */
+	/* :is(h1, h2, h3, h4, h5, h6) {
+		text-wrap: balance;
+	} */
+}

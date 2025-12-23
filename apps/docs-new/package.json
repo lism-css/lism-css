@@ -1,0 +1,39 @@
+{
+	"name": "lism-docs",
+	"type": "module",
+	"version": "0.0.1",
+	"scripts": {
+		"dev": "astro dev",
+		"build": "astro build && pagefind --site dist",
+		"preview": "npm run build && astro preview",
+		"astro": "astro"
+	},
+	"dependencies": {
+		"@astrojs/mdx": "^4.3.12",
+		"@astrojs/react": "^4.4.2",
+		"@expressive-code/plugin-line-numbers": "^0.41.3",
+		"@lism-css/ui": "workspace:*",
+		"@pagefind/default-ui": "^1.4.0",
+		"astro": "^5.11.1",
+		"astro-expressive-code": "^0.41.3",
+		"lism-css": "workspace:*",
+		"pagefind": "^1.4.0",
+		"react": "^19.2.1",
+		"react-dom": "^19.2.1",
+		"rehype-external-links": "^3.0.0",
+		"remark-directive": "^4.0.0",
+		"satori": "^0.18.3",
+		"sharp": "^0.34.5"
+	},
+	"devDependencies": {
+		"@types/mdast": "^4.0.4",
+		"@types/react": "^19.2.7",
+		"@types/react-dom": "^19.2.3",
+		"autoprefixer": "^10.4.22",
+		"prettier": "^3.7.4",
+		"prettier-plugin-astro": "^0.14.1",
+		"sass-embedded": "^1.93.3",
+		"unist-util-visit": "^5.0.0",
+		"vitest": "^4.0.15"
+	}
+}

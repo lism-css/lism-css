@@ -1,0 +1,113 @@
+---
+/**
+ * サイドバーナビゲーションコンポーネント
+ * 言語対応：現在の言語に応じたリンクとラベルを表示
+ */
+import { Stack, HTML } from 'lism-css/astro';
+import NavLink from '@ui/NavLink.astro';
+import sidebarConfig, { type SidebarItem, getTranslatedLabel } from '../config/sidebar';
+import { getPostsByLang, type PostEntry } from '@/lib/content';
+import { getLangFromUrl, getLocalizedUrl, getPathWithoutLang, type LangCode } from '@/lib/i18n';
+
+// 現在の言語を取得
+const currentLang = getLangFromUrl(Astro.url);
+
+// 現在の言語の記事を取得
+const allPosts = await getPostsByLang(currentLang);
+
+// カテゴリー（slugの最初の部分）でグループ化
+const postsByCategory = allPosts.reduce(
+	(acc, post) => {
+		// 記事URLのslugからカテゴリーを抽出（例: "layout/grid-layout" → "layout"）
+		const hasSlash = post.slug.includes('/');
+		const category = hasSlash ? post.slug.split('/')[0] : '/';
+		if (!acc[category]) {
+			acc[category] = [];
+		}
+		acc[category].push(post);
+		return acc;
+	},
+	{} as Record<string, PostEntry[]>
+);
+
+// 各カテゴリー内をorder順にソート（未指定は999として扱う）
+Object.values(postsByCategory).forEach((posts) => {
+	posts.sort((a, b) => {
+		const orderA = a.data.order ?? 999;
+		const orderB = b.data.order ?? 999;
+		return orderA - orderB;
+	});
+});
+
+// 現在のページパス（言語プレフィックスなし）を取得してアクティブ判定に使用
+const currentPathWithoutLang = getPathWithoutLang(Astro.url);
+
+// サイドバーアイテムがdir指定かどうかをチェックするヘルパー
+function hasDirProperty(item: SidebarItem): item is SidebarItem & { dir: string } {
+	return 'dir' in item;
+}
+---
+
+<Stack tag="nav" class="sidebar-nav set-cqUnit" g="30">
+	{
+		sidebarConfig.map((section) => {
+			// セクションラベルを現在の言語で取得
+			const sectionLabel = getTranslatedLabel(section.label, section.translate, currentLang);
+
+			// dir指定の場合、記事がなければセクション自体を表示しない
+			if (hasDirProperty(section)) {
+				const posts = postsByCategory[section.dir];
+				if (!posts || posts.length === 0) {
+					return null;
+				}
+			}
+
+			return (
+				<Stack g="10">
+					{/* セクションのラベル（見出し） */}
+					<HTML.h lv="3" fz="s" fw="bold" lts="l" o="-10" px="10">
+						{sectionLabel}
+					</HTML.h>
+
+					<Stack tag="ul" g="0">
+						{hasDirProperty(section)
+							? // dir指定の場合：ディレクトリ内の記事を自動取得
+								postsByCategory[section.dir]?.map((post) => {
+									// 言語対応のパスを生成
+									const postPath = getLocalizedUrl(`/${post.slug}/`, currentLang);
+									const pathForCompare = `/${post.slug}/`;
+									const isActive = currentPathWithoutLang === pathForCompare || currentPathWithoutLang === `/${post.slug}`;
+									// 下書き記事には _draft クラスを付与
+									const isDraft = post.data.draft;
+									// navtitleがあればそれを、なければtitleを表示
+									const navLabel = post.data.navtitle ?? post.data.title;
+									return (
+										<HTML.li class={isDraft ? '_draft' : undefined}>
+											<NavLink href={postPath} isActive={isActive}>
+												{navLabel}
+											</NavLink>
+										</HTML.li>
+									);
+								})
+							: // items指定の場合：指定された並びでメニューを表示
+								section.items.map((item) => {
+									// 言語対応のパスを生成
+									const itemPath = getLocalizedUrl(item.link.endsWith('/') ? item.link : `${item.link}/`, currentLang);
+									const pathForCompare = item.link.endsWith('/') ? item.link : `${item.link}/`;
+									const isActive = currentPathWithoutLang === pathForCompare || currentPathWithoutLang === item.link;
+									// アイテムラベルを現在の言語で取得
+									const itemLabel = getTranslatedLabel(item.label, item.translate, currentLang);
+									return (
+										<HTML.li>
+											<NavLink href={itemPath} isActive={isActive}>
+												{itemLabel}
+											</NavLink>
+										</HTML.li>
+									);
+								})}
+					</Stack>
+				</Stack>
+			);
+		})
+	}
+</Stack>

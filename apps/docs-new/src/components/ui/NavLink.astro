@@ -1,0 +1,50 @@
+---
+import { HTML } from 'lism-css/astro';
+
+const { href, isActive, ...props } = Astro.props;
+---
+
+{/* ヘッダー: Flexで横並び、両端揃え */}
+<HTML.a
+	href={href}
+	class:list={['c--navLink', { _active: isActive }]}
+	d="block"
+	c="inherit"
+	td="none"
+	bdrs="10"
+	lh="s"
+	fz="s"
+	hov="bgc"
+	px="10"
+	py="10"
+	{...props}
+>
+	<span>
+		<slot />
+	</span>
+</HTML.a>
+
+<style is:global>
+	.c--navLink {
+	}
+	.c--navLink > span {
+		/* テキストを最大2行に制限し、省略時は ... を表示 */
+		display: -webkit-box;
+		-webkit-line-clamp: 2;
+		-webkit-box-orient: vertical;
+		overflow: hidden;
+	}
+	.c--navLink._active {
+		background-color: var(--base-2);
+		color: var(--brand);
+		font-weight: 600;
+	}
+	/* 現在位置のハイライトスタイル（NavLinkのデフォルトスタイルを上書き） */
+	.z--sidebar .c--navLink {
+		font-size: var(--fz--xs);
+		/* padding-block: var(--s10); */
+	}
+	.c--toc .c--navLink {
+		padding-block: var(--s5);
+	}
+</style>

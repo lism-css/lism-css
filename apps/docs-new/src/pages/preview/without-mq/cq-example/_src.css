@@ -1,0 +1,28 @@
+@import "../_layout.css";
+
+
+/* コンテナの宣言 */
+.main{
+	container-type: inline-size;
+}
+
+/* メディアクエリでレイアウトを切り替えるカード */
+.mediaText {
+	display: flex;
+	flex-direction: column;
+	gap: 1.5rem;
+}
+
+/* 大きい画面サイズは横並びにする */
+@container (min-width: 600px) {
+	.mediaText {
+		flex-direction: row;
+	}
+	.mediaText .mediaText_image {
+		flex-basis: calc(100% * 3/8);
+	}
+	.mediaText .mediaText_content {
+		flex-basis: 60%;
+		align-self: center;
+	}
+}
