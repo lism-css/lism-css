@@ -1,9 +1,8 @@
 .is--wrapper {
 	// 子要素の制御
-	--contentSize: var(--sz--m);
+	--contentSize: var(--sz--m, 100%);
 	> * {
-		--max-sz: var(--contentSize, 100%);
-		max-inline-size: min(100%, var(--max-sz, 100%)); // min ないとimg要素等がはみ出す
+		max-inline-size: min(100%, var(--contentSize)); // min ないとimg要素等がはみ出す
 		margin-inline: auto;
 	}
 }
