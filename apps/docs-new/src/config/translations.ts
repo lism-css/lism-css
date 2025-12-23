@@ -16,7 +16,7 @@ type TranslationKeys = {
 	copyCode: 'copy' | 'copied';
 	postNav: 'prev' | 'next' | 'ariaLabel';
 	translationNotice: 'title' | 'description';
-	preview: 'openNewTab' | 'lismNote';
+	demo: 'openNewTab' | 'lismNote';
 };
 
 /**
@@ -36,7 +36,7 @@ export const translations: Record<LangCode, UITranslations> = {
 			open: '目次を開く',
 		},
 		search: {
-			title: '記事を検索',
+			title: '検索',
 			devMessage: '検索は本番ビルド後に利用可能です。',
 		},
 		header: {
@@ -60,7 +60,7 @@ export const translations: Record<LangCode, UITranslations> = {
 			title: '翻訳準備中',
 			description: 'このページはまだ翻訳されていません。日本語版を表示しています。',
 		},
-		preview: {
+		demo: {
 			openNewTab: '別タブで表示 ↗',
 			lismNote: '※ CSSが書かれていないクラスはLism CSSのものです。',
 		},
@@ -71,7 +71,7 @@ export const translations: Record<LangCode, UITranslations> = {
 			open: 'Open contents',
 		},
 		search: {
-			title: 'Search articles',
+			title: 'Search',
 			devMessage: 'Search is available after production build.',
 		},
 		header: {
@@ -95,7 +95,7 @@ export const translations: Record<LangCode, UITranslations> = {
 			title: 'Translation Not Available',
 			description: 'This page has not been translated yet. You are viewing the Japanese version.',
 		},
-		preview: {
+		demo: {
 			openNewTab: 'Open in new tab ↗',
 			lismNote: '* Classes without CSS are from Lism CSS.',
 		},

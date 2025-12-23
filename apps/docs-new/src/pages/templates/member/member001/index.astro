@@ -1,0 +1,88 @@
+---
+import DemoPageLayout from '@/layouts/DemoPageLayout.astro';
+
+import { Container, Frame, Grid, Media, Stack, HTML } from 'lism-css/astro';
+import './_style.css';
+---
+
+<DemoPageLayout title='Member001'>
+	<Container isWrapper='m' bgc='base' py='50' hasGutter>
+		<Stack g='50'>
+			<HTML.h lv='2' class='u-trim' fz='2xl' fw='bold' ta='center'>スタッフ</HTML.h>
+			<Grid layout='fluidCols' cols='10rem' g={['40', '50']}>
+				<Stack g='30' ai='center'>
+					<Frame tag='figure' ar='1/1' w='stretch' max-w='150px' bdrs='99'>
+						<Media src='https://cdn.lism-css.com/img/random-2510?category=avatar&r=1' width='960' height='640' />
+					</Frame>
+					<Stack g='20' ai='center'>
+						<HTML.p class='u-trim' fz='m' fw='bold'>鈴木 太郎</HTML.p>
+						<HTML.p class='u-trim' fz='xs' o='-10'>代表取締役 / クリエイティブディレクター</HTML.p>
+					</Stack>
+				</Stack>
+				<Stack g='30' ai='center'>
+					<Frame tag='figure' ar='1/1' w='stretch' max-w='150px' bdrs='99'>
+						<Media src='https://cdn.lism-css.com/img/random-2510?category=avatar&r=2' width='960' height='640' />
+					</Frame>
+					<Stack g='20' ai='center'>
+						<HTML.p class='u-trim' fz='m' fw='bold'>佐藤 美咲</HTML.p>
+						<HTML.p class='u-trim' fz='xs' o='-10'>アートディレクター / UI/UXデザイナー</HTML.p>
+					</Stack>
+				</Stack>
+				<Stack g='30' ai='center'>
+					<Frame tag='figure' ar='1/1' w='stretch' max-w='150px' bdrs='99'>
+						<Media src='https://cdn.lism-css.com/img/random-2510?category=avatar&r=3' width='960' height='640' />
+					</Frame>
+					<Stack g='20' ai='center'>
+						<HTML.p class='u-trim' fz='m' fw='bold'>高橋 健太</HTML.p>
+						<HTML.p class='u-trim' fz='xs' o='-10'>テクニカルディレクター / リードエンジニア</HTML.p>
+					</Stack>
+				</Stack>
+				<Stack g='30' ai='center'>
+					<Frame tag='figure' ar='1/1' w='stretch' max-w='150px' bdrs='99'>
+						<Media src='https://cdn.lism-css.com/img/random-2510?category=avatar&r=4' width='960' height='640' />
+					</Frame>
+					<Stack g='20' ai='center'>
+						<HTML.p class='u-trim' fz='m' fw='bold'>田中 雄大</HTML.p>
+						<HTML.p class='u-trim' fz='xs' o='-10'>Webディレクター / プロジェクトマネージャー</HTML.p>
+					</Stack>
+				</Stack>
+				<Stack g='30' ai='center'>
+					<Frame tag='figure' ar='1/1' w='stretch' max-w='150px' bdrs='99'>
+						<Media src='https://cdn.lism-css.com/img/random-2510?category=avatar&r=5' width='960' height='640' />
+					</Frame>
+					<Stack g='20' ai='center'>
+						<HTML.p class='u-trim' fz='m' fw='bold'>伊藤 沙織</HTML.p>
+						<HTML.p class='u-trim' fz='xs' o='-10'>Webデザイナー</HTML.p>
+					</Stack>
+				</Stack>
+				<Stack g='30' ai='center'>
+					<Frame tag='figure' ar='1/1' w='stretch' max-w='150px' bdrs='99'>
+						<Media src='https://cdn.lism-css.com/img/random-2510?category=avatar&r=6' width='960' height='640' />
+					</Frame>
+					<Stack g='20' ai='center'>
+						<HTML.p class='u-trim' fz='m' fw='bold'>渡辺 拓也</HTML.p>
+						<HTML.p class='u-trim' fz='xs' o='-10'>フロントエンドエンジニア</HTML.p>
+					</Stack>
+				</Stack>
+				<Stack g='30' ai='center'>
+					<Frame tag='figure' ar='1/1' w='stretch' max-w='150px' bdrs='99'>
+						<Media src='https://cdn.lism-css.com/img/random-2510?category=avatar&r=7' width='960' height='640' />
+					</Frame>
+					<Stack g='20' ai='center'>
+						<HTML.p class='u-trim' fz='m' fw='bold'>山本 大輔</HTML.p>
+						<HTML.p class='u-trim' fz='xs' o='-10'>バックエンドエンジニア</HTML.p>
+					</Stack>
+				</Stack>
+				<Stack g='30' ai='center'>
+					<Frame tag='figure' ar='1/1' w='stretch' max-w='150px' bdrs='99'>
+						<Media src='https://cdn.lism-css.com/img/random-2510?category=avatar&r=8' width='960' height='640' />
+					</Frame>
+					<Stack g='20' ai='center'>
+						<HTML.p class='u-trim' fz='m' fw='bold'>小林 誠</HTML.p>
+						<HTML.p class='u-trim' fz='xs' o='-10'>アカウントエグゼクティブ / 営業</HTML.p>
+					</Stack>
+				</Stack>
+			</Grid>
+		</Stack>
+	</Container>
+</DemoPageLayout>

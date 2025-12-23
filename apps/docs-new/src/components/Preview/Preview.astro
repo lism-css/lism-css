@@ -1,0 +1,41 @@
+---
+import { Lism } from 'lism-css/astro';
+import { Tabs } from '@lism-css/ui/astro';
+
+// console.log('Astro', Astro.props);
+const slotKeys: string[] = Object.keys(Astro?.slots || {});
+
+let tabs = '';
+for (let index = 0; index < slotKeys.length; index++) {
+	const slotName = slotKeys[index];
+	if (slotName !== 'default') {
+		tabs += await Astro.slots.render(slotName);
+	}
+}
+---
+
+<Lism className="c--preview" {...Astro.props}>
+	<slot />
+	{
+		Astro.slots.has('tab') && (
+			<Tabs.Root className="c--preview_code" variant="line" g="15">
+				<slot name="tab" />
+			</Tabs.Root>
+		)
+	}
+</Lism>
+
+<style is:global>
+	:where(.d--tabs--line) {
+		--sh-size: inset 0 -2px;
+
+		.d--tabs_list {
+			box-shadow: var(--sh-size) 0 var(--divider);
+		}
+		.d--tabs_tab {
+			font-size: var(--fz--s);
+			padding: 0.5em 0.875em;
+			box-shadow: var(--_isSelected, var(--sh-size) 0 0 currentColor);
+		}
+	}
+</style>

@@ -1,0 +1,35 @@
+---
+import DemoPageLayout from '@/layouts/DemoPageLayout.astro';
+
+import { Container, Grid, Box, HTML, Frame, Media, Stack } from 'lism-css/astro';
+import './_style.css';
+---
+
+<DemoPageLayout title='Section014'>
+	<Container isWrapper='l' py='50' hasGutter>
+		<Grid gtc={['auto', null, 'auto 1fr']} g='40 50'>
+			<Box>
+				<HTML.h lv='2' class='u-trim' fz='3xl' fw='bold' hl='l'>最高のユーザー体験を<br />提供する未来のために</HTML.h>
+			</Box>
+			<Box>
+				<HTML.p class='u-trim' fz='m'>
+					私たちのサービスは、ユーザーの皆様に最高の体験を提供することを目指しています。
+					最新の技術を駆使し、使いやすさと安全性を両立させたプラットフォームを構築しました。
+					多様なニーズに対応するため、柔軟なカスタマイズオプションも用意しています。
+				</HTML.p>
+			</Box>
+			<Frame tag='figure' ar='2/1' gc='1 / -1'>
+				<Media src='https://cdn.lism-css.com/img/random-2510' alt='' />
+			</Frame>
+			<Stack gc='1 / -1' jc='flex-e' g='30'>
+				<p>
+					多様なニーズに対応するため、柔軟なカスタマイズオプションも用意しています。
+					また、環境への配慮も忘れず、持続可能な未来を見据えた取り組みを進めています。
+					ユーザーの皆様が安心して利用できるよう、常に改善と革新を追求し続けます。
+					さらに、コミュニティとの連携を強化し、ユーザー同士が交流できる場を提供することで、
+					より豊かな体験を創出しています。私たちは、技術と人間性の融合を図り、 未来志向のサービスを展開していくことをお約束します。
+				</p>
+			</Stack>
+		</Grid>
+	</Container>
+</DemoPageLayout>

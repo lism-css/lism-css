@@ -1,0 +1,116 @@
+---
+import { Frame, Icon, Button } from 'lism-css/astro';
+import { DesktopIcon, DeviceMobileCameraIcon, DeviceTabletCameraIcon } from '@phosphor-icons/react';
+
+
+interface Props {
+	[key: string]: any;
+}
+const { isInline = false, hasSizeSwitch = false, url, ...props } = Astro.props;
+---
+
+{
+	!isInline ? (
+		<>
+			{/* プレビューサイズ切り替えボタン */}
+			{hasSizeSwitch && (
+				<div class='c--previewSizeSwitcher l--flex -g:15 -jc:center' data-preview-url={url}>
+					<button
+						class='c--previewSizeSwitcher_btn l--center -bdrs:10'
+						data-size='360px'
+						data-w-pct='120'
+						data-ar='2/3'
+					>
+						<Icon as={DeviceMobileCameraIcon} fz="xl"/>
+					</button>
+					<button
+						class='c--previewSizeSwitcher_btn l--center -bdrs:10'
+						data-size='600px'
+						data-ar='3/4'
+					>
+						<Icon as={DeviceTabletCameraIcon} fz="xl" scale="1.1"/>
+					</button>
+					<button
+						class='c--previewSizeSwitcher_btn l--center -bdrs:10 _active'
+						data-size='100%'
+						data-ar='3/2'
+					>
+						<Icon as={DesktopIcon} fz="xl" scale="1.1"/>
+					</button>
+				</div>
+			)}
+
+			<Frame id='preview-iframe' class='c--previewFrame' data-preview-url={url} ar bxsh='10' mx='auto' max-w='100%' style={{"--ar":"3/2"}}>
+				<Frame className='u--scalePreview' ar bdrs='20' bd bdw='3px' {...props}>
+					<iframe src={url} width='800' height='600' frameborder='0'/>
+				</Frame>
+			</Frame>
+			<Button href={url} variant='fill' target='_blank' bdrs='10' w='fit' mx='auto'>
+				大きい画面で見る
+			</Button>
+		</>
+	) : (
+		<Frame ar='3/2' {...props}>
+			<iframe src={url} width='800' height='600' />
+		</Frame>
+	)
+}
+<style>
+	.c--previewSizeSwitcher_btn{
+		padding: 8px;
+		border: 1px solid #ccc;
+		background: var(--base-2);
+		cursor: pointer;
+	}
+	.c--previewSizeSwitcher_btn._active {
+		background: var(--link) !important;
+		color: white !important;
+		border-color:  var(--link) !important;
+	}
+</style>
+{hasSizeSwitch && (
+	<>
+		<script define:vars={{ url }}>
+			document.addEventListener('DOMContentLoaded', function () {
+				// 特定のdata-preview-urlを持つプレビューサイズスイッチャーを取得
+				const switcher = document.querySelector(`.c--previewSizeSwitcher[data-preview-url="${url}"]`);
+				
+				if (!switcher) return;
+				
+				const sizeButtons = switcher.querySelectorAll('.c--previewSizeSwitcher_btn');
+				
+				// 同じdata-preview-urlを持つc--previewFrameを探す
+				const prevFrame = document.querySelector(`.c--previewFrame[data-preview-url="${url}"]`);
+				
+				if (!prevFrame) return;
+
+				const prevDiv = prevFrame.querySelector('.u--scalePreview');
+
+				// ボタンクリック時の処理
+				sizeButtons.forEach((button) => {
+					button.addEventListener('click', function () {
+						const size = this.dataset.size;
+						const aspectRatio = this.dataset.ar;
+						const wPct = this.dataset.wPct;
+
+						// prevFrameのサイズとアスペクト比を更新
+						prevFrame.style.width = size;
+						prevFrame.style.setProperty('--ar', aspectRatio);
+						if (wPct) {
+							prevDiv.style.setProperty('--w-pct', wPct);
+						} else {
+							prevDiv.style.removeProperty('--w-pct');
+						}
+
+						// アクティブクラスの切り替え
+						sizeButtons.forEach((btn) => {
+							btn.classList.remove('_active');
+						});
+						this.classList.add('_active');
+					});
+				});
+			});
+		</script>
+	</>
+)}
+

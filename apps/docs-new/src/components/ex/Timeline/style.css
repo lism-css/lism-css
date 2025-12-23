@@ -1,0 +1,58 @@
+@layer lism.modules {
+	.c--timeline {
+		--_shape-size: 1.375rem;
+		--_line-len: 100%;
+		--_line-bold: 1px;
+		--_line-offset: calc(var(--_shape-size) / 2);
+		--_highlight-inset: -3px;
+
+		--edge: var(--s20);
+		--startSpace: var(--edge);
+		--endSpace: var(--edge);
+		--shapeSpace: calc(var(--_shape-size) + var(--_highlight-inset) * -1);
+	}
+
+	.c--timeline_item {
+		grid: var(--startSpace) auto auto auto var(--endSpace) / var(--shapeSpace) 1fr;
+	}
+
+	.c--timeline_line {
+		width: var(--_line-bold);
+		height: var(--_line-len);
+	}
+
+	.c--timeline_shape {
+		font-size: var(--_shape-size);
+		width: 0.5em; /* icon ない時は 縮める */
+	}
+	.c--timeline_shape._hasIcon {
+		width: 1em;
+	}
+	.c--timeline_highlight {
+		inset: var(--_highlight-inset);
+	}
+
+	[data-timeline='start'] {
+		--startSpace: 0;
+		--_line-len: calc(100% - var(--_line-offset));
+	}
+	[data-timeline='end'] {
+		--endSpace: 0;
+		--_line-len: calc(100% - var(--_line-offset));
+	}
+
+	.c--timeline--horizontal {
+		--edge: var(--s15);
+		--_line-offset: calc(50% - var(--edge) / 2);
+		grid-template-rows: var(--shapeSpace) auto auto auto;
+	}
+
+	.c--timeline--horizontal > .c--timeline_item {
+		grid-template-columns: var(--startSpace) auto var(--endSpace);
+	}
+
+	.c--timeline--horizontal .c--timeline_line {
+		width: var(--_line-len);
+		height: var(--_line-bold);
+	}
+}

@@ -7,8 +7,8 @@ const postSchema = z.object({
 	title: z.string(),
 	navtitle: z.string().optional(), // サイドバーナビで表示するタイトル（省略時はtitleを使用）
 	description: z.string(),
-	date: z.date(),
-	tags: z.array(z.string()).default([]),
+	date: z.date().optional(), // 公開日（ドキュメントでは任意）
+	tags: z.array(z.string()).default([]).optional(), // タグ（ドキュメントでは不要）
 	draft: z.boolean().default(false),
 	hero: z.string().optional(),
 	order: z.number().optional(), // サイドバーでの表示順序（小さい順、未指定は999扱い）

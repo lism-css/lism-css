@@ -11,6 +11,9 @@ export { default as YouTubeEmbed } from './YouTubeEmbed.astro';
 export { default as InnerLink } from './InnerLink.astro';
 export { default as CanUse } from './CanUse.astro';
 
+// Preview系コンポーネント（docsから移植）
+export { Preview, PreviewTitle, PreviewArea, PreviewCode, PreviewFrame } from '../Preview';
+
 // NOTE: 他のグローバルコンポーネントを追加する場合はここに追記
 // export { default as Badge } from './Badge.astro';
 // export { default as Alert } from './Alert.astro';

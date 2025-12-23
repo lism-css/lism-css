@@ -1,0 +1,15 @@
+@layer lism.modules {
+	.c--badge {
+		--c: var(--base);
+		--bgc: var(--text);
+		--bdc: transparent;
+		color: var(--c);
+		background-color: var(--bgc);
+		border: solid 1px var(--bdc); /* 異なる variant を並べてもサイズに差が出ないようにborderを常に指定 */
+	}
+	.c--badge--outline {
+		--c: var(--text);
+		--bgc: transparent;
+		--bdc: currentColor;
+	}
+}

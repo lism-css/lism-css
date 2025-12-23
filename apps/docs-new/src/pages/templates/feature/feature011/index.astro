@@ -1,0 +1,129 @@
+---
+import DemoPageLayout from '@/layouts/DemoPageLayout.astro';
+
+import { Container, Grid, Box, HTML, Flex, Center, Icon } from 'lism-css/astro';
+import Button from '@/components/ex/Button/index.astro';
+import './_style.css';
+---
+
+<DemoPageLayout title='Feature011'>
+	<Container isWrapper='m' bgc='base-2' py='50' hasGutter>
+		<Grid
+			gt={[
+				'"title" "body" "link" / 1fr',
+				null,
+				`"title link"
+				 "body body" / auto 1fr`,
+			]}
+			g='40'
+		>
+			<Box ga='title'>
+				<h2 class='u-trim'>サービスの特徴について</h2>
+			</Box>
+			<Grid ga='body' gtc={['1fr auto', null, 'auto 1fr auto']} g='30'>
+				<Grid
+					isLinkBox
+					href='#'
+					gtc='subgrid'
+					gc='1 / -1'
+					g={['20', '30', '40']}
+					bgc='base'
+					p={['20', '30']}
+					bdrs='10'
+					setTransition
+					setHov
+					ai='center'
+					hov='bxsh'
+				>
+					<Grid gtc='subgrid' g='inherit' gc={['1', null, '1 / span 2']}>
+						<Flex g={['20', null, '30']} ai='center'>
+							<HTML.span layout='center' fxsh='0' fz='xs' lh='xs' c='base' py='10' px={['15', '20']} bgc='text' bdrs='99'
+								>POINT 1</HTML.span
+							>
+							<HTML.p fz='m' fw='bold'>楽しみながら計画的に資産形成</HTML.p>
+						</Flex>
+						<Flex ai='center' c='text' td='none' g='30'>
+							<HTML.p>目標金額を設定して貯蓄ができる「目的別預金」が登場。楽しみながら計画的な資産形成が行えます。</HTML.p>
+						</Flex>
+					</Grid>
+					<Center w='fit' bd p='15' bdrs='99' setTransition hov='to:reverse'>
+						<Icon icon='arrow-right' fz='s' />
+					</Center>
+				</Grid>
+				<Grid
+					isLinkBox
+					href='#'
+					gtc='subgrid'
+					gc='1 / -1'
+					g={['20', null, '40']}
+					bgc='base'
+					p={['20', '30']}
+					bdrs='10'
+					setTransition
+					setHov
+					ai='center'
+					hov='bxsh'
+				>
+					<Grid gtc='subgrid' g='inherit' gc={['1', null, '1 / span 2']}>
+						<Flex g={['20', null, '30']} ai='center'>
+							<HTML.span layout='center' fxsh='0' fz='xs' lh='xs' c='base' py='10' px={['15', '20']} bgc='text' bdrs='99'
+								>POINT 2</HTML.span
+							>
+							<HTML.p fz='m' fw='bold'>安心のセキュリティ体制</HTML.p>
+						</Flex>
+						<Flex ai='center' c='text' td='none' g='30'>
+							<HTML.p>通信の暗号化や二段階認証を導入。お客様の大切な資産と個人情報を厳重に保護します。</HTML.p>
+						</Flex>
+					</Grid>
+					<Center w='fit' bd p='15' bdrs='99' setTransition hov='to:reverse'>
+						<Icon icon='arrow-right' fz='s' />
+					</Center>
+				</Grid>
+				<Grid
+					isLinkBox
+					href='#'
+					gtc='subgrid'
+					gc='1 / -1'
+					g={['20', null, '40']}
+					bgc='base'
+					p={['20', '30']}
+					bdrs='10'
+					setTransition
+					setHov
+					ai='center'
+					hov='bxsh'
+				>
+					<Grid gtc='subgrid' g='inherit' gc={['1', null, '1 / span 2']}>
+						<Flex g={['20', null, '30']} ai='center'>
+							<HTML.span layout='center' fxsh='0' fz='xs' lh='xs' c='base' py='10' px={['15', '20']} bgc='text' bdrs='99'
+								>POINT 3</HTML.span
+							>
+							<HTML.p fz='m' fw='bold'>必要なものはスマホだけ！</HTML.p>
+						</Flex>
+						<Flex ai='center' c='text' td='none' g='30'>
+							<HTML.p>口座開設から運用状況の確認までスマホアプリで完結。いつでも手軽に資産をチェックできます。</HTML.p>
+						</Flex>
+					</Grid>
+					<Center w='fit' bd p='15' bdrs='99' setTransition hov='to:reverse'>
+						<Icon icon='arrow-right' fz='s' />
+					</Center>
+				</Grid>
+			</Grid>
+			<Flex ga='link' ai='flex-e' jc='flex-e'>
+				<Button href='#' variant='outline' w={['stretch', null, 'auto']} min-w='8rem' fz='s' bd bdc='text' py='15' bdrs='10'
+					>View Detail</Button
+				>
+			</Flex>
+		</Grid>
+	</Container>
+</DemoPageLayout>
+
+<style is:inline>
+	@media (any-hover: hover) {
+		.-hov\:to\:reverse {
+			background-color: var(--_isHov, var(--text));
+			color: var(--_isHov, var(--base));
+			border-color: var(--text);
+		}
+	}
+</style>

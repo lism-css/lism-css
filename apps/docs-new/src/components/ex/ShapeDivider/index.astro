@@ -1,0 +1,34 @@
+---
+import { Lism } from 'lism-css/astro';
+import './style.css';
+
+const { viewBox, children, isAnimation, isEmpty, level = 5, stretch, offset, flip, style = {}, ...props } = Astro.props;
+
+// 変数セット
+style['--level'] = level || null;
+style['--_inner-offset'] = offset || null;
+style['--_inner-stretch'] = stretch || null;
+---
+
+{
+	level && (
+		<Lism lismClass='c--shapeDivider' max-sz='full' data-flip={flip} aria-hidden='true' style={style} {...props}>
+			{isEmpty ? null : (
+				<div class='c--shapeDivider_inner'>
+					<svg
+						xmlns='http://www.w3.org/2000/svg'
+						class={isAnimation ? '-anim:shapeSlide' : ''}
+						viewBox={viewBox}
+						width='100%'
+						height='100%'
+						fill='currentColor'
+						focusable='false'
+						preserveAspectRatio='none'
+					>
+						<slot />
+					</svg>
+				</div>
+			)}
+		</Lism>
+	)
+}

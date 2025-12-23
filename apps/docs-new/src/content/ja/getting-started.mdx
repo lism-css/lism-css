@@ -1,0 +1,122 @@
+---
+title: 'Getting Started'
+description: 'Lism CSS のインストール方法と基本的な使い方を解説します。'
+order: 2
+---
+
+Lism CSSを利用するための手順を解説します。
+
+
+## インストール
+
+大きく分けて2通りの導入方法ができます。
+
+### CSS設計のみを導入したい場合
+
+シンプルなHTMLサイトの場合など、CSSファイルのみを読み込む場合はCDN経由で利用できます。
+
+
+<PreviewTitle>CDN経由でスタイルシートを読み込む</PreviewTitle>
+```html
+<link href="https://cdn.jsdelivr.net/npm/lism-css/dist/css/main.css" rel="stylesheet" />
+```
+
+もちろん、CSSファイルをダウンロードして読み込んでもOKです。
+
+
+### 専用のコンポーネントを使用したい場合
+
+React(.jsx)、Astro(.astro)形式のコンポーネントを npmパッケージとして 配布しています。
+
+### 1. パッケージのインストール
+
+<Preview>
+	<PreviewTitle>パッケージのインポート</PreviewTitle>
+	<PreviewCode slot='tab' label='npm'>
+	```bash frame="none"
+	npm i lism-css
+	```
+	</PreviewCode>
+	<PreviewCode slot='tab' label='pnpm'>
+	```bash frame="none"
+	pnpm add lism-css
+	```
+	</PreviewCode>
+	<PreviewCode slot='tab' label='yarn'>
+	```bash frame="none"
+	yarn add lism-css
+	```
+	</PreviewCode>
+</Preview>
+
+
+
+
+### 2. CSSの読み込み
+
+<PreviewTitle>グローバルスタイルとして読み込んでください。</PreviewTitle>
+```js
+import 'lism-css/main.css';
+```
+
+例：Next.jsであれば、`_app.js`や`layout.js`でimportしてください。
+
+
+
+### 3. コンポーネントの読み込み
+
+<Preview>
+<PreviewTitle>各コンポーネントのインポート</PreviewTitle>
+<PreviewCode slot='tab' label='.jsx'>
+```jsx
+import { Box, Flex, ... } from 'lism-css/react';
+```
+</PreviewCode>
+<PreviewCode slot='tab' label='.astro'>
+```jsx
+import { Box, Flex, ... } from 'lism-css/astro';
+```
+</PreviewCode>
+</Preview>
+
+
+
+:::warning
+::title[.astroを読み込む場合の注意点]
+
+`.astro`ファイルをnode_modeules内から直接読み込むことができず、追加の設定が必要な場合があります。  
+"**Directory import '...' is not supported resolving ES modules** ..." というエラーが発生した場合、`astro.config.js`の`vite.ssr.noExternal`に`"lism-css"`を追加してください。
+
+<PreviewTitle>`astro.config.js`</PreviewTitle>
+```js
+import { defineConfig } from "astro/config";
+
+export default defineConfig({
+  // ...other settings 
+  vite: {
+    ssr: {
+      noExternal: ["lism-css"],
+    },
+  },
+});
+```
+
+ 
+<small>（パッケージ配布方法の改善で対応できるかどうか調整中です...）</small>
+:::
+
+
+
+## Playgrounds
+
+Vite + React, Astro, HTMX で Lism コンポーネントを試すことができる Playgroundsリポジトリを公開しています。
+
+https://github.com/lism-css/lism-playgrounds
+
+
+
+
+## Template
+
+AstroやNext.js用のサイトテンプレートや、コピペで使えるコンポーネントライブラリを随時公開予定です。
+

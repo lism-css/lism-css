@@ -1,0 +1,29 @@
+---
+import { Lism } from 'lism-css/astro';
+import { Tabs } from '@lism-css/ui/astro';
+
+// Propsの定義
+interface Props {
+	label?: string;
+	[prop: string]: any;
+}
+const { label, ...props } = Astro.props || {};
+---
+
+<>
+	{
+		label ? (
+			<Tabs.Item {...props}>
+				<Tabs.Tab>{label}</Tabs.Tab>
+				<Tabs.Panel>
+					<slot />
+				</Tabs.Panel>
+			</Tabs.Item>
+		) : (
+			<Lism className='c--preview_code' {...props}>
+				<slot />
+			</Lism>
+		)
+	}
+</>
+

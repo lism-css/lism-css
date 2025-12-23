@@ -8,6 +8,8 @@ export const expressiveCodeOptions: AstroExpressiveCodeOptions = {
 	// data-theme属性に連動してテーマを切り替え
 	themeCssSelector: (theme) => `[data-theme='${theme.type}']`,
 
+	useThemedScrollbars: false,
+
 	// https://expressive-code.com/reference/style-overrides/#codefontsize
 	// styleOverrides: {
 	// 	codeFontSize: '0.9rem',

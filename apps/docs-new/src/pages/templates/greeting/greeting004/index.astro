@@ -1,0 +1,53 @@
+---
+import DemoPageLayout from '@/layouts/DemoPageLayout.astro';
+
+import { Wrapper, Grid, HTML, Frame, Media, Stack, Flow, Layer, Center } from 'lism-css/astro';
+import './_style.css';
+---
+
+<DemoPageLayout title='Greeting004'>
+	<Wrapper contentSize='full' py='50'>
+		<Frame ar='5/2' gc='1 / -1' min-h='300px' max-h='500px' w='stretch' pos='rel'>
+			<Media src='https://cdn.lism-css.com/img/random-2510' alt='' />
+			<Layer bgc='rgb(0 0 0 / 20%)' blur='8px'>
+				<Center h='100%' c='white'>
+					<HTML.span class='u-trim' fz='4xl' fw='normal' ff='mono' fs='italic' lts='l' px='20' py='10' my-s='-4rem'>Greeting</HTML.span>
+				</Center>
+			</Layer>
+		</Frame>
+		<Wrapper contentSize='m' py='50' my-s='-8rem' pos='rel' hasGutter>
+			<Grid gtc='auto' g='40' bgc='white' p={['40', '50']}>
+				<Stack g='30'>
+					<HTML.h lv='2' class='u-trim' fz='3xl' fw='bold' ff='accent'>地球と共生する、日常を未来へ</HTML.h>
+					<HTML.p class='u-trim' fz='xl' o='-20'>代表取締役 CEO　岩崎 大地</HTML.p>
+				</Stack>
+				<Flow fz='m'>
+					<p>
+						私たちは今、地球という唯一無二の故郷の未来が問われる、歴史的な岐路に立たされています。
+						この現実を前にして、メーカーとしての、そしてデザイナーとしての私たちの責任は計り知れません。
+						「消費」を前提とした一方通行のものづくりから脱却し、自然の循環の中に、再び私たちの産業を美しく組み込んでいくこと。
+						これこそが、現代における最も重要で、そして最も創造的なデザインの課題であると、私たちは確信しています。
+					</p>
+					<p>
+						私たちが提唱するのは、「サーキュラーデザイン（循環するデザイン）」という考え方です。
+						それは、製品の役目が終わった後のことまでを、設計の初期段階から深く考慮に入れるアプローチです。
+						廃棄される漁網をアップサイクルした美しい新素材、土に還るバイオプラスチック、そして修理や部品交換を容易にするモジュール構造。
+						私たちは、製品がごみになるのではなく、次の製品を生み出すための「資源」となるような、未来志向のエコシステムを構築しようとしています。
+					</p>
+					<p>
+						この取り組みは、単なる環境配慮という言葉だけでは終わりません。そこには、新しい美学が宿ります。
+						自然素材が時間と共に深く、味わいを増していく経年変化の美しさ。
+						限られた資源を最大限に活かすことから生まれる、ミニマルで知的なフォルム。
+						サステナビリティの追求は、私たちデザイナーに新たなインスピレーションを与え、これまでにない価値観を創造する原動力となっているのです。
+					</p>
+					<p>
+						お客様が私たちの製品を手に取るという選択は、単なる購買活動ではありません。
+						それは、地球との共生を目指す、新しい未来への一票です。
+						私たちは、お客様と共に、そして志を同じくするパートナーたちと共に、この大きな変革の波を牽引していきたいと願っています。
+						デザインの力で、持続可能で、真に豊かな社会を実現するために。私たちの挑戦は、まだ始まったばかりです。
+					</p>
+				</Flow>
+			</Grid>
+		</Wrapper>
+	</Wrapper>
+</DemoPageLayout>

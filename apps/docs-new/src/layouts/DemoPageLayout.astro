@@ -1,0 +1,23 @@
+---
+/**
+ * デモページ用レイアウト
+ * - テンプレートプレビューやデモページで使用
+ * - シンプルなLism CSSのみを読み込み、noindexを設定
+ */
+import 'lism-css/main.css';
+
+const { title = '', lang = 'ja' } = Astro.props;
+---
+
+<html lang={lang}>
+	<head>
+		<meta charset='utf-8' />
+		<meta name='viewport' content='width=device-width, initial-scale=1' />
+		<meta name='robots' content='noindex,nofollow' />
+		<title>Lism CSS - {title}</title>
+	</head>
+	<body>
+		<slot />
+	</body>
+</html>
+
