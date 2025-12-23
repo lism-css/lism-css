@@ -33,32 +33,14 @@ if (!isValidLang(lang)) {
 	return Astro.redirect('/404');
 }
 
-// ページあたりの記事数
-const POSTS_PER_PAGE = siteConfig.pagination.postsPerPage;
-
-// 記事一覧を日付の降順で取得
-const allPosts = (await getPostsByLang(lang)).sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
-
-// 総ページ数を計算
-const totalPages = Math.ceil(allPosts.length / POSTS_PER_PAGE);
-
-// 1ページ目の記事を取得
-const posts = allPosts.slice(0, POSTS_PER_PAGE);
-
 // 見出しの翻訳
 const headings = {
-	ja: 'Recent Posts',
-	en: 'Recent Posts',
+	ja: 'とっぷぺーじ',
+	en: 'Top page',
 };
 const heading = headings[lang] || headings.en;
 ---
 
 <BaseLayout isTop title={siteConfig.name} lang={lang}>
 	<HTML.h lv="1">{heading}</HTML.h>
-
-	{/* 記事カードグリッド */}
-	<PostList posts={posts} lang={lang} />
-
-	{/* ページネーション */}
-	<Pagination currentPage={1} totalPages={totalPages} lang={lang} />
 </BaseLayout>

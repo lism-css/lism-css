@@ -45,8 +45,8 @@
 | -------------- | ------------------------------------------ |
 | `Callout`      | 注意書き・補足情報の表示                   |
 | `LinkCard`     | 外部リンクをカード形式で表示（OGP 自動取得）|
-| `Preview`      | CSS デモを iframe でプレビュー表示          |
-| `PreviewCode`  | Preview のコード表示部分                    |
+| `Demo`      | CSS デモを iframe でプレビュー表示          |
+| `DemoCode`  | Demo のコード表示部分                    |
 | `InnerLink`    | 内部リンクカード                            |
 | `YouTubeEmbed` | YouTube 埋め込み                            |
 | `CanUse`       | ブラウザ対応状況の表示                      |
@@ -77,11 +77,11 @@
 
 ---
 
-## Preview コンポーネント
+## Demo コンポーネント
 
 ### 設定ファイル
 
-- `src/components/mdx/Preview/` - Preview 関連コンポーネント
+- `src/components/mdx/Demo/` - Demo 関連コンポーネント
 - `src/layouts/DemoLayout.astro` - プレビューページ用レイアウト
 
 ### ディレクトリ構成

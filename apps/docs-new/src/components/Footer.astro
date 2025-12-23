@@ -1,50 +1,14 @@
 ---
-import { Stack, Cluster, HTML, Lism } from 'lism-css/astro';
+import { Stack, HTML, Lism } from 'lism-css/astro';
 import { siteConfig } from '@/config/site';
-import TagLink from '@ui/TagLink.astro';
-import { getPostsByLang } from '@/lib/content';
-import { getLangFromUrl } from '@/lib/i18n';
-
-// 現在の言語を取得
-const currentLang = getLangFromUrl(Astro.url);
-
-// 現在の言語の記事を取得
-const posts = await getPostsByLang(currentLang);
-const tags = posts.flatMap((post) => post.data.tags);
-const tagCounts = tags.reduce((acc, tag) => {
-	acc.set(tag, (acc.get(tag) || 0) + 1);
-	return acc;
-}, new Map<string, number>());
-
-const sortedTags = Array.from(tagCounts.entries()).sort((a, b) => b[1] - a[1]);
 ---
 
 <Lism tag="footer" class="z--footer" my-s="60" {...Astro.props}>
-	{/* タグセクション: 中央揃えのStack */}
-	<Stack g="40" ai="center">
-		<HTML.h lv="3">Tags</HTML.h>
-		{/* タグ一覧: Clusterで折り返し可能な横並び */}
-		<Cluster g="20" jc="center">
-			{
-				sortedTags.map(([tag, count]) => (
-					<TagLink href={`/tags/${tag}`}>
-						<HTML.span fz="s" o="-10">
-							#
-						</HTML.span>
-						<HTML.span>{tag}</HTML.span>
-						<HTML.span fz="s" o="-10">
-							({count})
-						</HTML.span>
-					</TagLink>
-				))
-			}
-		</Cluster>
-		<Stack my-s="40" g="20">
-			<HTML.p ta="center">
-				Powered by <a href="https://astro.build">Astro</a> and <a href="https://lism-css.com">Lism CSS</a>
-			</HTML.p>
-			{/* コピーライト */}
-			<HTML.p ta="center" o="-10" translate="no"> &copy; {siteConfig.name}. All rights reserved. </HTML.p>
-		</Stack>
+	<Stack my-s="40" g="20">
+		<HTML.p ta="center">
+			Powered by <a href="https://astro.build">Astro</a> and <a href="https://lism-css.com">Lism CSS</a>
+		</HTML.p>
+		{/* コピーライト */}
+		<HTML.p ta="center" o="-10" translate="no"> &copy; {siteConfig.name}. All rights reserved. </HTML.p>
 	</Stack>
 </Lism>

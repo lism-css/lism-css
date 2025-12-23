@@ -8,7 +8,6 @@
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import { generateToc } from '@/lib/generateToc';
 import { Cluster, Stack, Lism, Flow, HTML } from 'lism-css/astro';
-import TagLink from '@ui/TagLink.astro';
 import PostNavigation from '@ui/PostNavigation.astro';
 import TranslationNotice from '@/components/TranslationNotice.astro';
 import { getPostPathsForNonRoot } from '@/lib/pageHelpers';
@@ -48,12 +47,6 @@ const toc = generateToc(headings);
 const eyecatchImage = entry.data.hero || `/${lang}/og/${slug}.png`;
 // OG画像のパス
 const ogImage = `/${lang}/og/${slug}.png`;
-
-// タグページへのリンク（現在の言語に対応）
-const getTagUrl = (tag: string) => getLocalizedUrl(`/tags/${tag}`, lang);
-
-// 日付のフォーマット（言語に応じてロケールを変更）
-const dateLocale = lang === 'ja' ? 'ja-JP' : 'en-US';
 ---
 
 <BaseLayout title={entry.data.title} description={entry.data.description} ogImage={ogImage} toc={toc} lang={lang}>
@@ -70,22 +63,6 @@ const dateLocale = lang === 'ja' ? 'ja-JP' : 'en-US';
 			// 	</Frame>
 			// )
 		}
-		{/* 記事メタ情報: タグと日付を横並び */}
-		<Cluster tag="aside" class="article-meta" g="20" data-pagefind-ignore>
-			<Lism tag="time" fz="s" o="-10" datetime={entry.data.date.toISOString()}>
-				{entry.data.date.toLocaleDateString(dateLocale)}
-			</Lism>
-
-			{
-				entry.data.tags.length > 0 && (
-					<Cluster g="10">
-						{entry.data.tags.map((tag) => (
-							<TagLink href={getTagUrl(tag)}>#{tag}</TagLink>
-						))}
-					</Cluster>
-				)
-			}
-		</Cluster>
 
 		{/* 記事タイトル */}
 		<HTML.h lv="1" class="article-title">{entry.data.title}</HTML.h>

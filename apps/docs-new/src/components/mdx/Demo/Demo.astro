@@ -2,14 +2,14 @@
 /**
  * CSSデモプレビューコンポーネント
  *     指定されたパスのデモページをiframeで表示する
- *     使用例: <Preview src="/preview/example-button" height="200" />
- *     使用例（カスタムCSS）: <Preview css="p{color:red}">...</Preview>
+ *     使用例: <Demo src="/preview/example-button" height="200" />
+ *     使用例（カスタムCSS）: <Demo css="p{color:red}">...</Demo>
  *     装飾のためにコンテンツエリアのネストは深くなっている。
  */
-import PreviewTitle from './PreviewTitle.astro';
-import PreviewSrcCodes from './PreviewSrcCodes.astro';
+import DemoTitle from './DemoTitle.astro';
+import DemoSrcCodes from './DemoSrcCodes.astro';
 import { Frame, HTML } from 'lism-css/astro';
-import PreviewDotLine from './PreviewDotLine.astro';
+import DemoDotLine from './DemoDotLine.astro';
 import { getLangFromUrl, t } from '@/lib/i18n';
 
 interface Props {
@@ -54,7 +54,7 @@ const srcFiles = ['css', 'html', ...addFiles];
 <div class="c--preview" data-has-iframe={src ? 'true' : 'false'}>
 	<div class="c--preview_inner">
 		<div class="c--preview_header l--flex -jc:between">
-			<PreviewTitle title={title} />
+			<DemoTitle title={title} />
 			{
 				src && (
 					<a href={`/preview/${src}`} target="_blank" rel="noopener noreferrer" class="c--preview_link -fz:s">
@@ -69,8 +69,8 @@ const srcFiles = ['css', 'html', ...addFiles];
 				<div class="c--preview_inner">
 					<div class="c--preview_content">
 						<Frame id="preview-iframe" class="c--previewFrame" data-preview={`/preview/${src}`} ar={ar}>
-							<Frame class="c--previewFrame_inner c--scalePreview" ar={ar}>
-								<Frame class="c--scalePreview_inner" data-resize={resize}>
+							<Frame class="c--previewFrame_inner c--scaleDemo" ar={ar}>
+								<Frame class="c--scaleDemo_inner" data-resize={resize}>
 									<iframe src={`/preview/${src}`} title={title} width="100%" height="100%" loading="lazy" />
 								</Frame>
 							</Frame>
@@ -89,12 +89,12 @@ const srcFiles = ['css', 'html', ...addFiles];
 			)
 		}
 	</div>
-	{src && showSrc && <PreviewSrcCodes src={src} srcFiles={srcFiles} showDots={true} />}
+	{src && showSrc && <DemoSrcCodes src={src} srcFiles={srcFiles} showDots={true} />}
 	{
 		Astro.slots.has('code') && (
-			<PreviewSrcCodes showDots={true}>
+			<DemoSrcCodes showDots={true}>
 				<slot name="code" />
-			</PreviewSrcCodes>
+			</DemoSrcCodes>
 		)
 	}
 	{/* カスタムCSSをスコープ付きで展開 */}
@@ -175,7 +175,7 @@ const srcFiles = ['css', 'html', ...addFiles];
 		text-decoration: underline;
 	}
 
-	.c--scalePreview {
+	.c--scaleDemo {
 		--w-pct: 160;
 		max-width: none;
 		width: calc(1% * var(--w-pct));
@@ -186,19 +186,19 @@ const srcFiles = ['css', 'html', ...addFiles];
 		/* height: 100%; */
 		/* height: calc(100% * var(--w-pct) / 100);  */
 	}
-	.c--scalePreview_inner {
+	.c--scaleDemo_inner {
 		width: 100%;
 		height: 100%;
 	}
 
 	@container (min-width: 480px) {
-		.c--scalePreview {
+		.c--scaleDemo {
 			--w-pct: 125;
 		}
 	}
 
 	@container (min-width: 720px) {
-		.c--scalePreview {
+		.c--scaleDemo {
 			--w-pct: 100;
 		}
 		[data-resize] {
@@ -228,7 +228,7 @@ const srcFiles = ['css', 'html', ...addFiles];
 		}
 	}
 
-	/* .u-scalePreview[data-scale-preview-type='list'] {
+	/* .u-scaleDemo[data-scale-preview-type='list'] {
 		width: 250%;
 		transform: scale(0.4);
 		pointer-events: none;

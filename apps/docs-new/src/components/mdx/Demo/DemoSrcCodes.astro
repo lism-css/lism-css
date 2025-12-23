@@ -2,7 +2,7 @@
 import { Icon } from 'lism-css/astro';
 import { Tabs } from '@lism-css/ui/astro';
 import SrcCode from './SrcCode.astro';
-import PreviewDotLine from './PreviewDotLine.astro';
+import DemoDotLine from './DemoDotLine.astro';
 
 interface Props {
 	src?: string;
@@ -24,7 +24,7 @@ function getSrcPath(file: string): string {
 }
 ---
 
-{showDots && <PreviewDotLine />}
+{showDots && <DemoDotLine />}
 
 {/* srcFilesをループしてCodeFileを表示 */}
 <div class="c--previewSrcCodes">
