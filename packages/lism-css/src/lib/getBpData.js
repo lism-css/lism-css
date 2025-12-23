@@ -1,6 +1,6 @@
 import filterEmptyObj from './helper/filterEmptyObj';
 import hasSomeKeys from './helper/hasSomeKeys.ts';
-import { BREAK_POINTS } from '../../config/index.js';
+import { BREAK_POINTS } from '../../config/index.ts';
 
 const BREAK_POINTS_ALL = ['base', ...BREAK_POINTS];
 

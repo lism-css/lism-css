@@ -1,5 +1,5 @@
 // import { PROPS } from '../config';
-import { PROPS, STATES } from '../../config/index.js';
+import { PROPS, STATES } from '../../config/index.ts';
 import getLayoutProps from './getLayoutProps';
 import isPresetValue from './isPresetValue';
 import isTokenValue from './isTokenValue';
