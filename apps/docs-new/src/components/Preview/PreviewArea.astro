@@ -1,0 +1,37 @@
+---
+import { Lism, Icon } from 'lism-css/astro';
+import { ArrowDownRight } from '@phosphor-icons/react';
+
+const { resize, setCqUnit = true, p = '5', ...props } = Astro.props || {};
+
+let innerClass = 'c--preview_inner';
+if (resize) innerClass += ' is--resize';
+---
+
+<Lism className="c--preview_area">
+	<div class={`c--preview_area_frame ${setCqUnit ? 'set-cqUnit' : ''}`}>
+		<Lism className={innerClass} setHov layout="flow" p={p} {...props}>
+			<slot />
+			{
+				resize && (
+					<Lism class="c--preview_help -hov:to:show -pos:abs -b:0 -r:0 -lh:xs -p:5 -bdrs:5">
+						<span>リサイズ可能</span> <Icon as={ArrowDownRight} weight="fill" />
+					</Lism>
+				)
+			}
+		</Lism>
+	</div>
+</Lism>
+
+<style>
+	.c--preview_help {
+		/* // transform: translateY(calc(4px + 100%)); */
+		z-index: 1;
+		margin: 0.875em;
+		font-size: 11px;
+		background-color: color-mix(in srgb, var(--base), transparent 50%);
+		opacity: var(--_isHov, 0.8) var(--_notHov, 0);
+		/* border: 1px solid var(--divider); */
+		/* // backdrop-filter: blur(2px); */
+	}
+</style>

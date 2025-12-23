@@ -1,0 +1,48 @@
+---
+import DemoPageLayout from '@/layouts/DemoPageLayout.astro';
+
+import { Stack, Container, Frame, Grid, Media, HTML, Flex } from 'lism-css/astro';
+import Button from '@/components/ex/Button/index.astro';
+import './_style.css';
+---
+
+<DemoPageLayout title='Section901-2'>
+	<Container class='t--section901' bgc='base-2' py='50'>
+		<Grid gtc={['auto', null, '1fr 1fr']} ji={[null, null, 'start']}>
+			<Stack gr='1' gc={['1', null, '2']} jc='center' pr={[null, null, '30']}>
+				<Stack g='30' pr={['30', null, '0']} pl={['30', null, '50']} py='50'>
+					<HTML.h lv='2' class='u-trim' fz='2xl' fw='bold'>新しい発見が、日常を彩る</HTML.h>
+					<HTML.p class='u-trim'>日常の中に潜む新たな価値を見出すための、さまざまな視点やアプローチを提案します。</HTML.p>
+					<Flex g='15' ai='center'>
+						<Button href='#' p='15' bdrs='10'>View More</Button>
+					</Flex>
+				</Stack>
+			</Stack>
+			<Frame gr={['2', null, '1']} gc={['1', null, '1']} w='stretch' max-h='24rem'>
+				<Media src='/img/img-5.jpg' alt='' width='960' height='640' />
+			</Frame>
+		</Grid>
+	</Container>
+</DemoPageLayout>
+
+<style>
+	@layer lism.component {
+		@property --is-over-md {
+			syntax: '<integer>';
+			inherits: true;
+			initial-value: 0;
+		}
+		.t--section901 {
+			container-type: inline-size;
+			container-name: section901;
+			--size-md: var(--size-m, 960px);
+			--is-over-md: clamp(0, calc((100cqw - var(--size-md)) / 1px) * 1000, 1);
+		}
+		@container section901 style(--is-over-md: 1) {
+			.t--section901 .l--grid > .l--stack {
+				--cont-w: calc(var(--size-m, 100%) / 2);
+				max-inline-size: min(100%, var(--cont-w, 100%));
+			}
+		}
+	}
+</style>

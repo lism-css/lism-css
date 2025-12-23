@@ -35,7 +35,7 @@ const ogImage = `/og/${entry.slug}.png`;
 ---
 
 <BaseLayout title={entry.data.title} description={entry.data.description} ogImage={ogImage} toc={toc} lang={lang}>
-	<Stack tag="article" class="z--article" g="40" class="set-cqUnit" data-pagefind-body>
+	<Lism tag="article" class="z--article set-cqUnit" data-pagefind-body>
 		{/* アイキャッチ画像 */}
 		{
 			// (
@@ -55,5 +55,5 @@ const ogImage = `/og/${entry.slug}.png`;
 
 		{/* 前後記事ナビゲーション */}
 		<PostNavigation currentSlug={entry.slug} lang={lang} />
-	</Stack>
+	</Lism>
 </BaseLayout>

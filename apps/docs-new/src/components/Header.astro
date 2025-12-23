@@ -21,7 +21,7 @@ const headerText = t(currentLang, 'header');
 	{/* 全体のgridレイアウトの切り替えと、ハンバーガーボタンの表示タイミングがずれないように hasGutterは内側につける */}
 	<Flex ai="center" w="100%" g="15" hasGutter>
 		<HTML.div mx-e="auto">
-			<Lism tag="a" href={homeUrl} layout="flex" ai="center" g="5" fw="normal" fz="l" c="inherit" td="none" hov="under">
+			<Lism tag="a" href={homeUrl} class="siteTitle" layout="flex" ai="center" g="5" fw="normal" fz="xl" c="inherit" td="none" hov="under">
 				<!-- <img src="/favicon.svg" alt={siteConfig.name} class="-fx:1" width="32" height="32" /> -->
 				{siteConfig.name}
 			</Lism>
@@ -42,7 +42,7 @@ const headerText = t(currentLang, 'header');
 		>
 			<Icon icon="search" fz={['xl', null, 'l']} />
 			<HTML.span id="search-label" d={['none', null, 'block']} fz="xs" lh="xs" c="text-2">{searchText.title}</HTML.span>
-			<HTML.span tag="kbd" class="c--searchTrigger_shortcut" d={['none', null, 'block']} fz="xs">⌘K</HTML.span>
+			<HTML.span tag="kbd" class="c--searchTrigger_shortcut" d={['none', null, 'block']} p="0" bd="none" fz="xs">⌘K</HTML.span>
 		</HTML.button>
 
 		<SearchModal />
@@ -77,9 +77,34 @@ const headerText = t(currentLang, 'header');
 	</Modal.Root>
 </Container>
 <style>
-	/* ========================================
-     検索トリガーボタン
-     ======================================== */
+	/* logo */
+
+	.siteTitle {
+		font-family: var(--ff--mono);
+		&::before {
+			content: 'β';
+			display: block;
+			line-height: 1;
+			margin-left: 0.25em;
+			padding: 0.25rem 0.375rem;
+			border-radius: 0.25rem;
+			font-size: 1rem;
+			background-color: var(--text);
+			color: var(--base);
+			order: 1;
+		}
+		&::after {
+			content: 'v.0.8';
+			line-height: 1;
+			font-size: 0.9rem;
+			letter-spacing: -0.125em;
+			order: 2;
+			padding: 1px;
+			color: var(--brand);
+		}
+	}
+
+	/* 検索トリガーボタン */
 
 	.c--menuTrigger {
 		padding: 0.5em;
@@ -87,10 +112,6 @@ const headerText = t(currentLang, 'header');
 	.c--searchTrigger {
 		gap: 0.675em;
 		padding: 0.5em;
-		/* color: var(--muted); */
-		/* font-size: 0.875rem; */
-		/* cursor: pointer; */
-		/* transition: all 0.2s ease; */
 	}
 
 	.c--searchTrigger_shortcut {

@@ -8,12 +8,23 @@ astro-code: Astro の <Code>コンポーネント
  */
 
 :root {
-	--codeBlock-bgc: hsl(48, 12%, 96%) !important;
-	--codeBlock-bdrs: var(--bdrs--20);
+	--codeBlock-bgc: hsl(200, 18%, 95%) !important;
+	--codeBlock-bdrs: var(--bdrs--10);
 	--codeBlock-maxH: 32rem;
+
+	/* Preview コンポーネント用 */
+	// --lsdoc-codeBlock-bgc: hsl(200, 18%, 95%);
+	// --lsdoc-codeBlock-radius: 4px;
+	// --lsdoc-preview_resize-bdc: hsl(200, 16%, 60%);
+	// --lsdoc-preview_help-bg: rgba(250, 250, 255, 0.5);
 }
 :root[data-theme='dark'] {
 	--codeBlock-bgc: #24292e !important;
+
+	/* Preview コンポーネント用 */
+	// --lsdoc-codeBlock-bgc: hsl(200, 12%, 12%);
+	// --lsdoc-preview_resize-bdc: hsl(200, 16%, 40%);
+	// --lsdoc-preview_help-bg: rgba(50, 50, 55, 0.5);
 }
 
 pre {
@@ -66,16 +77,7 @@ pre {
 		box-shadow: none;
 		border: none;
 	}
-	.article-content > & {
-		padding: 2px;
 
-		> .frame {
-			box-shadow: 0 0 0 2px var(--base-2);
-			border: solid 2px var(--base);
-			border-radius: calc(var(--codeBlock-bdrs) + 2px);
-			overflow: hidden;
-		}
-	}
 	> .frame > .header {
 		background: var(--codeBlock-bgc);
 		border-bottom: solid 1px var(--base);
@@ -101,7 +103,7 @@ pre {
 /* -------------------------- */
 /* ソースコード表示のタブ
 /* -------------------------- */
-.c--previewSrcCodes {
+.c--demoSrcCodes {
 	padding: 2px;
 	border-radius: var(--codeBlock-bdrs);
 	overflow: hidden;

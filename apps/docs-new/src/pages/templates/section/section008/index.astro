@@ -1,0 +1,31 @@
+---
+import DemoPageLayout from '@/layouts/DemoPageLayout.astro';
+
+import { Container, Frame, Grid, Media, Stack, HTML } from 'lism-css/astro';
+import './_style.css';
+---
+
+<DemoPageLayout title='Section008'>
+	<Container bgc='base' py='50'>
+		<Stack g={['40', null, '50']}>
+			<Stack ai='center' g='30' ff='accent' hasGutter>
+				<HTML.h lv='2' fz='clamp(1.5rem, 4.5vw, 2rem)' fw='bold' ta='center'>大地の恵みを、あなたの毎日へ</HTML.h>
+				<HTML.p>自然由来の環境負荷を抑えた製法で、一つひとつ丁寧に手作りしています。</HTML.p>
+			</Stack>
+			<Grid gt='repeat' cols={['2', null, '4']} rows={['12', null, '6']} g={['30', '40']}>
+				<Frame tag='figure' gr={['1 / span 5', null, '1 / span 5']} gc={['1', null, '1']}>
+					<Media src='https://cdn.lism-css.com/img/random-2510?r=1' width='960' height='640' />
+				</Frame>
+				<Frame tag='figure' gr={['2 / span 5', null, '2 / span 5']} gc={['2', null, '2']}>
+					<Media src='https://cdn.lism-css.com/img/random-2510?r=2' width='960' height='640' />
+				</Frame>
+				<Frame tag='figure' gr={['6 / span 5', null, '1 / span 5']} gc={['1', null, '3']}>
+					<Media src='https://cdn.lism-css.com/img/random-2510?r=3' width='960' height='640' />
+				</Frame>
+				<Frame tag='figure' gr={['7 / span 5', null, '2 / span 5']} gc={['2', null, '4']}>
+					<Media src='https://cdn.lism-css.com/img/random-2510?r=4' width='960' height='640' />
+				</Frame>
+			</Grid>
+		</Stack>
+	</Container>
+</DemoPageLayout>

@@ -39,8 +39,10 @@ Object.values(postsByCategory).forEach((posts) => {
 		const orderA = a.data.order ?? 999;
 		const orderB = b.data.order ?? 999;
 		if (orderA !== orderB) return orderA - orderB;
-		// order が同じ場合は日付順（新しい順）
-		return b.data.date.valueOf() - a.data.date.valueOf();
+		// order が同じ場合は日付順（新しい順）、date がない場合は 0 として扱う
+		const dateA = a.data.date?.valueOf() ?? 0;
+		const dateB = b.data.date?.valueOf() ?? 0;
+		return dateB - dateA;
 	});
 });
 

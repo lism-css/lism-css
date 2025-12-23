@@ -1,0 +1,20 @@
+---
+import 'lism-css/scss/main.scss';
+// import { Box, Lism, Spacer } from 'lism-css/astro';
+import DemoPageLayout from '@/layouts/DemoPageLayout.astro';
+import { Lism, HTML, Flow, Dummy, Box } from 'lism-css/astro';
+import { Accordion } from '@lism-css/ui/astro';
+---
+
+<DemoPageLayout>
+	<Flow hasGutter py='30' isContainer isWrapper>
+		<Dummy />
+
+		<Accordion.Root p='15'>
+			<Accordion.HeaderLabel>Accordion Label</Accordion.HeaderLabel>
+			<Accordion.Body>
+				<p>これはアコーディオンの中身です。Astro コンポーネントは React の children には渡せません。</p>
+			</Accordion.Body>
+		</Accordion.Root>
+	</Flow>
+</DemoPageLayout>

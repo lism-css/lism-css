@@ -48,7 +48,7 @@ const presetData = type && PRESETS[type as keyof typeof PRESETS];
 const _color = keycolor || presetData?.color || 'currentColor';
 ---
 
-<Flow lismClass="c--callout u-cbox" flow="s" setShadow keycolor={_color} ai="center" my="40" p="30" g="30" bd bdrs="10" bxsh="10" {...props}>
+<Flow lismClass="c--callout u-cbox" flow="s" setShadow keycolor={_color} ai="center" fz="s" my="40" p="20" bd bdrs="10" {...props}>
 	<Center lismClass="c--callout__icon" isSkipFlow c="base" lh="1">
 		<Icon icon={presetData?.icon} viewBox={presetData?.viewBox} scale="1">
 			{presetData?.path && <path d={presetData?.path} />}
@@ -61,12 +61,11 @@ const _color = keycolor || presetData?.color || 'currentColor';
 	.c--callout {
 		position: relative;
 		overflow: clip;
-		border-width: 0;
+		border-width: 0px;
 		border-inline-start-width: 2px;
 		border-color: var(--keycolor);
-		font-size: 0.95em;
-		padding-inline-start: 1.5em;
-		--shc: color-mix(in srgb, color-mix(in srgb, var(--keycolor) 70%, rgb(0 0 0)), transparent 92%);
+		padding-inline-start: 1.875em;
+		/* --shc: color-mix(in srgb, color-mix(in srgb, var(--keycolor) 70%, rgb(0 0 0)), transparent 92%); */
 
 		li::marker {
 			color: var(--keycolor);

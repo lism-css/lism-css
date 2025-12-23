@@ -1,0 +1,19 @@
+---
+import { Flow, SideMain, Center, Icon } from 'lism-css/astro';
+import PRESETS from './presets';
+
+const { type = 'alert', keycolor, icon, flow = 's', ...props } = Astro.props;
+
+const presetData = type && PRESETS[type as keyof typeof PRESETS];
+const _icon = icon || presetData?.icon || 'info';
+const _color = keycolor || presetData?.color || 'currentColor';
+---
+
+<SideMain lismClass='c--callout u-cbox' keycolor={_color} ai='center' p='15' g='15' bd bdrs='10' {...props}>
+	<Center isSide c='keycolor' fz='xl'>
+		<Icon icon={_icon} />
+	</Center>
+	<Flow flow={flow}>
+		<slot />
+	</Flow>
+</SideMain>

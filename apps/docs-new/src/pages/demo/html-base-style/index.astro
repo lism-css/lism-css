@@ -1,0 +1,52 @@
+---
+import DemoPageLayout from '@/layouts/DemoPageLayout.astro';
+import RawHTML from './_RawHTML.astro';
+import { Container, Flow } from 'lism-css/astro';
+import HtmlHeadings from './_html-headings.astro';
+import HtmlLongText from './_html-longtext.astro';
+import HtmlTest from './_html-test.astro';
+import HtmlMedias from './_html-medias.astro';
+// import './style.scss';
+---
+
+<DemoPageLayout title='HTML Base Style'>
+	<Flow hasGutter isWrapper='s' py='30'>
+		<HtmlHeadings />
+		<hr />
+		<h2>- Texts -</h2>
+		<Flow>
+			<RawHTML type='texts' />
+		</Flow>
+		<hr />
+		<h2>- List -</h2>
+		<Flow flow='s'>
+			<RawHTML type='list' />
+		</Flow>
+		<hr />
+		<h2>- Table -</h2>
+		<Flow flow='s'>
+			<RawHTML type='table' />
+		</Flow>
+		<hr />
+		<h2>- Others -</h2>
+		<Flow>
+			<HtmlTest />
+		</Flow>
+		<hr />
+		<h2>- Long text -</h2>
+		<Flow flow='s'>
+			<HtmlLongText />
+		</Flow>
+		<hr />
+		<h2>- Form fields -</h2>
+		<Flow>
+			<RawHTML type='forms' />
+		</Flow>
+		<hr />
+		<h2>- Medias -</h2>
+		<Flow flow='s'>
+			<HtmlMedias />
+		</Flow>
+		<hr />
+	</Flow>
+</DemoPageLayout>

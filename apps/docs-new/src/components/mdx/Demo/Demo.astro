@@ -2,7 +2,7 @@
 /**
  * CSSデモプレビューコンポーネント
  *     指定されたパスのデモページをiframeで表示する
- *     使用例: <Demo src="/preview/example-button" height="200" />
+ *     使用例: <Demo src="/demo/example-button" height="200" />
  *     使用例（カスタムCSS）: <Demo css="p{color:red}">...</Demo>
  *     装飾のためにコンテンツエリアのネストは深くなっている。
  */
@@ -13,7 +13,7 @@ import DemoDotLine from './DemoDotLine.astro';
 import { getLangFromUrl, t } from '@/lib/i18n';
 
 interface Props {
-	src?: string; // プレビューページのパス（/preview/ 以降の文字列）
+	src?: string; // プレビューページのパス（/demo/ 以降の文字列）
 	height?: string | number; // iframeの高さ
 	width?: string | number; // iframeの幅
 	ar?: string; // iframeのアスペクト比
@@ -31,10 +31,10 @@ const { src, ar = '3/2', p = '30', title = 'Demo Preview', addFiles = [], css, s
 
 // 翻訳テキスト
 const lang = getLangFromUrl(Astro.url);
-const previewText = t(lang, 'preview');
+const demoText = t(lang, 'demo');
 
 // カスタムCSS用のユニークなスコープIDを生成
-const scopeId = css ? `preview-${Math.random().toString(36).slice(2, 9)}` : '';
+const scopeId = css ? `demo-${Math.random().toString(36).slice(2, 9)}` : '';
 
 // カスタムCSSにスコープを付与（各セレクタの前にスコープIDを追加）
 const scopedCss = css
@@ -51,14 +51,14 @@ const scopedCss = css
 const srcFiles = ['css', 'html', ...addFiles];
 ---
 
-<div class="c--preview" data-has-iframe={src ? 'true' : 'false'}>
-	<div class="c--preview_inner">
-		<div class="c--preview_header l--flex -jc:between">
+<div class="c--demo" data-has-iframe={src ? 'true' : 'false'}>
+	<div class="c--demo_inner">
+		<div class="c--demo_header l--flex -jc:between">
 			<DemoTitle title={title} />
 			{
 				src && (
-					<a href={`/preview/${src}`} target="_blank" rel="noopener noreferrer" class="c--preview_link -fz:s">
-						{previewText.openNewTab}
+					<a href={`/demo/${src}`} target="_blank" rel="noopener noreferrer" class="c--demo_link -fz:s">
+						{demoText.openNewTab}
 					</a>
 				)
 			}
@@ -66,12 +66,12 @@ const srcFiles = ['css', 'html', ...addFiles];
 		{
 			// ファイル読み込んで表示する場合
 			src ? (
-				<div class="c--preview_inner">
-					<div class="c--preview_content">
-						<Frame id="preview-iframe" class="c--previewFrame" data-preview={`/preview/${src}`} ar={ar}>
-							<Frame class="c--previewFrame_inner c--scaleDemo" ar={ar}>
+				<div class="c--demo_inner">
+					<div class="c--demo_content">
+						<Frame id="demo-iframe" class="c--demoFrame" data-demo={`/demo/${src}`} ar={ar}>
+							<Frame class="c--demoFrame_inner c--scaleDemo" ar={ar}>
 								<Frame class="c--scaleDemo_inner" data-resize={resize}>
-									<iframe src={`/preview/${src}`} title={title} width="100%" height="100%" loading="lazy" />
+									<iframe src={`/demo/${src}`} title={title} width="100%" height="100%" loading="lazy" />
 								</Frame>
 							</Frame>
 						</Frame>
@@ -79,9 +79,9 @@ const srcFiles = ['css', 'html', ...addFiles];
 				</div>
 			) : (
 				// // 直接ソースコード記述した場合
-				<div class="c--preview_content">
-					<Frame class="c--previewFrame">
-						<HTML.div class={`c--previewFrame_inner is--container ${scopeId}`} p={p} data-resize={resize}>
+				<div class="c--demo_content">
+					<Frame class="c--demoFrame">
+						<HTML.div class={`c--demoFrame_inner is--container ${scopeId}`} p={p} data-resize={resize}>
 							<slot />
 						</HTML.div>
 					</Frame>
@@ -102,18 +102,18 @@ const srcFiles = ['css', 'html', ...addFiles];
 	{
 		useLism && (
 			<p class="l--flex -jc:end -o:-10">
-				<span class="-fz:xs">{previewText.lismNote}</span>
+				<span class="-fz:xs">{demoText.lismNote}</span>
 			</p>
 		)
 	}
 </div>
 <style>
-	.c--preview {
+	.c--demo {
 		margin-block: var(--s40);
 	}
-	/* .c--preview[data-resize] > .c--preview_inner */
+	/* .c--demo[data-resize] > .c--demo_inner */
 
-	.c--preview_content {
+	.c--demo_content {
 		padding: 2px;
 
 		/* 左上の隙間埋めたいのでここで bgc セットしつつ、border-radiusは内側の frame にもつける */
@@ -123,13 +123,13 @@ const srcFiles = ['css', 'html', ...addFiles];
 
 		/* overflow: hidden; */
 	}
-	.c--preview[data-has-iframe='false'] .c--previewFrame {
+	.c--demo[data-has-iframe='false'] .c--demoFrame {
 		--beforeContent: '';
 		position: relative;
 		background-color: var(--base);
 		z-index: 0;
 	}
-	.c--previewFrame::before {
+	.c--demoFrame::before {
 		content: var(--beforeContent, unset);
 		position: absolute;
 		z-index: -1;
@@ -142,7 +142,7 @@ const srcFiles = ['css', 'html', ...addFiles];
 		mask: linear-gradient(15deg, transparent 25%, black);
 	}
 
-	.c--previewFrame {
+	.c--demoFrame {
 		border: 1px solid color-mix(in srgb, var(--divider), var(--base-2));
 		box-shadow: 0 0 0 2px var(--base-2);
 		border-radius: var(--bdrs--20);
@@ -156,13 +156,13 @@ const srcFiles = ['css', 'html', ...addFiles];
 	} */
 
 	/* iframe 本体 */
-	.c--previewFrame iframe {
+	.c--demoFrame iframe {
 		display: block;
 		border: none;
 	}
 
 	/* リンクボタン */
-	.c--preview_link {
+	.c--demo_link {
 		display: inline-block;
 		font-size: 0.875rem;
 		color: var(--link, #2563eb);
@@ -170,7 +170,7 @@ const srcFiles = ['css', 'html', ...addFiles];
 		transition: opacity 0.2s;
 	}
 
-	.c--preview_link:hover {
+	.c--demo_link:hover {
 		opacity: 0.75;
 		text-decoration: underline;
 	}
@@ -228,7 +228,7 @@ const srcFiles = ['css', 'html', ...addFiles];
 		}
 	}
 
-	/* .u-scaleDemo[data-scale-preview-type='list'] {
+	/* .u-scaleDemo[data-scale-demo-type='list'] {
 		width: 250%;
 		transform: scale(0.4);
 		pointer-events: none;

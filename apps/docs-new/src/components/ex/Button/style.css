@@ -1,0 +1,54 @@
+@layer lism.modules {
+	.c--button {
+		--c: var(--base);
+		--bgc: var(--text);
+		--bdc: var(--bgc);
+
+		color: var(--c);
+		background-color: var(--bgc);
+		border: solid 1px var(--bdc); /* 異なる variant を並べてもサイズに差が出ないようにborderを常に指定 */
+
+		gap: var(--s10);
+		text-decoration: none;
+		place-content: center;
+		place-items: center;
+	}
+	.c--button--outline {
+		--c: var(--text);
+		--bgc: transparent;
+		--bdc: var(--c);
+	}
+
+	:where(.c--button) > .a--icon {
+		scale: 1.05;
+	}
+
+	/* l--gridを使用する場合の追加スタイル */
+	.c--button:where(.l--grid) {
+		grid-template-columns: minmax(1em, auto) 1fr minmax(1em, auto);
+		justify-items: center;
+	}
+	.c--button:where(.l--grid) > :not(.a--icon) {
+		grid-column: 2;
+	}
+}
+
+/* --------------------
+  reverse
+ -------------------- */
+.-hov\:reverse {
+	--hov-c: var(--bgc);
+	--hov-bgc: var(--c);
+}
+.-hov\:reverse:where(.c--button--fill) {
+	--hov-bgc: transparent;
+}
+.-hov\:reverse:where(.c--button--outline) {
+	--hov-c: var(--base);
+}
+@media (any-hover: hover) {
+	.-hov\:reverse:hover {
+		background-color: var(--hov-bgc) !important;
+		color: var(--hov-c) !important;
+	}
+}

@@ -1,0 +1,88 @@
+// Preview コンポーネント用スタイル（docsから移植）
+
+.c--preview {
+	padding-block: 0.5rem;
+}
+
+.c--preview_title {
+	display: flex;
+	align-items: center;
+
+	+ * {
+		margin-top: var(--s10) !important;
+	}
+
+	> .__decorator {
+		width: 1.5em;
+		height: 1.5em;
+		background-color: var(--base-2);
+		border-radius: 2px;
+		box-shadow: var(--sh--5);
+	}
+}
+
+.c--preview_area {
+	--bdc: var(--codeBlock-bgc);
+
+	position: relative;
+	transition: none !important;
+	// container-type: inline-size;
+
+	&:not(:first-child) {
+		margin-top: var(--s40);
+	}
+}
+
+.c--preview_area_frame {
+	// width: 160%;
+	// scale: 62.5%;
+	// width: 125%;
+	// scale: 0.8;
+	// transform-origin: 0 0;
+
+	border: solid 3px var(--bdc);
+	border-radius: 2px;
+}
+
+.c--preview_inner {
+	position: relative;
+	border-radius: 2px;
+	box-shadow: inset var(--shsz--10) var(--shc);
+	container-type: inline-size;
+
+	&.is--resize {
+		min-width: min(100%, 340px);
+		max-width: 100%;
+		margin: 0 auto;
+		overflow-y: auto;
+		resize: horizontal;
+
+		&:after {
+			--bdc: color-mix(in srgb, var(--divider), var(--text) 20%);
+			content: '';
+			position: absolute;
+			right: 0;
+			bottom: 0;
+			display: block;
+			width: 16px;
+			height: 16px;
+			border-top: 1px dotted var(--bdc);
+			border-inline-start: 1px dotted var(--bdc);
+			border-start-start-radius: 12px;
+		}
+	}
+}
+
+.c--preview_code {
+}
+
+.c--preview_area + .c--preview_code {
+	overflow: hidden;
+	background-color: var(--codeBlock-bgc);
+	border-radius: var(--codeBlock-bdrs);
+	margin-block-start: -4px;
+
+	&.d--tabs {
+		gap: 0 !important;
+	}
+}

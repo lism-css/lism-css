@@ -17,17 +17,17 @@ const { src = '', srcFiles = [], showDots = false } = Astro.props;
 function getSrcPath(file: string): string {
 	if (!file.includes('.')) {
 		// 拡張子のみの場合
-		return `src/pages/preview/${src}/_src.${file}`;
+		return `src/pages/demo/${src}/_src.${file}`;
 	}
 	// フルファイル名の場合
-	return `src/pages/preview/${src}/${file}`;
+	return `src/pages/demo/${src}/${file}`;
 }
 ---
 
 {showDots && <DemoDotLine />}
 
 {/* srcFilesをループしてCodeFileを表示 */}
-<div class="c--previewSrcCodes">
+<div class="c--demoSrcCodes">
 	<Tabs.Root className="d--tabs--src">
 		{!src && <slot />}
 		{
