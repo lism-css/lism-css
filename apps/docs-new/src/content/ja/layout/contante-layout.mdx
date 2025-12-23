@@ -5,7 +5,7 @@ date: 2025-12-20
 tags: ["CSS設計"]
 ---
 
-import PreviewSrcCodes from '@/components/mdx/Preview/PreviewSrcCodes.astro';
+import DemoSrcCodes from '@/components/mdx/Demo/DemoSrcCodes.astro';
 
 このページでは、コンテンツエリアのレイアウト方法について紹介します。
 
@@ -36,7 +36,7 @@ import PreviewSrcCodes from '@/components/mdx/Preview/PreviewSrcCodes.astro';
 
 先ほど紹介した関連ページで紹介したタイポグラフィと余白のスケーリングを組み合わせて採用しています。（あえて個別解説はここではしませんので、なぜこれらのスタイルを採用したかは関連ページをご覧ください。）
 
-<PreviewSrcCodes src="content-layout" srcFiles={['_typography.css']} />
+<DemoSrcCodes src="content-layout" srcFiles={['_typography.css']} />
 
 
 ## コンテンツ外側（左右）の余白の管理
@@ -107,7 +107,7 @@ Lism CSS では、これらのコンテンツ間の余白管理を行うクラ�
 ```
 
 
-{/* <Preview src="content-layout/flow" resize _srcFiles={null} /> */}
+{/* <Demo src="content-layout/flow" resize _srcFiles={null} /> */}
 
 
 
@@ -183,13 +183,13 @@ article > * {
 ```
 
 
-{/* <Preview p='0'>
+{/* <Demo p='0'>
 <div class="l--flow is--wrapper -content:s has--gutter -py:30">
 	<div class="l--box -bd -py:10"> コンテンツ… </div>
 	<div class="l--box has--gutter -max-sz:full -bgc -py:15" style="--bgc:rgb(0 100 200 / 20%)">全幅コンテンツ</div>
 	<div class="l--box -bd -py:10"> コンテンツ… </div>
 </div>
-</Preview> */}
+</Demo> */}
 
 ### コンテンツ幅の管理クラスを用意しておく
 
@@ -213,7 +213,7 @@ Lism CSS では、`is--wrapper` として用意しています。
 
 ここまで用意してきたスタイルを駆使して、コンテンツエリアを実装してみましょう。
 
-<Preview src="content-layout/demo" resize />
+<Demo src="content-layout/demo" resize />
 
 
 ## おまけ：`@property`と`cqw`を使った全幅サイズ管理
@@ -222,7 +222,7 @@ Lism CSS では、`is--wrapper` として用意しています。
 
 コンテンツ幅の管理パターンの①で特に有効なテクニックですが、②を採用していても覚えておいて損はありません。
 
-<Preview src="content-layout/fullwide-cqw" resize ar="2/1" title="@propertyとcqwを使った全幅サイズ管理のデモ" />
+<Demo src="content-layout/fullwide-cqw" resize ar="2/1" title="@propertyとcqwを使った全幅サイズ管理のデモ" />
 
 `--fullwide-width`という`@property`で定義した変数を用意しておき、`is--container`でコンテナ定義した要素の直下で`100cqw`をセットしています。
 

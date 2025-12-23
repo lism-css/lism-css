@@ -19,7 +19,7 @@ WEBにおけるレスポンシブ対応では、これまでメディアクエ�
 
 以下の例では 760px を境に横並びへ切り替えていますが、サイドバーがあると「760px以上なのにメインエリアは狭い」という帯域が生まれ、そこで読みづらいレイアウトが発生します。
 
-<Preview src="without-mq/mq-problem" addFiles={['../_layout.css']} resize useLism/>
+<Demo src="without-mq/mq-problem" addFiles={['../_layout.css']} resize useLism/>
 
 
 画面幅がブレイクポイントの760px付近になるとサイドバーが影響してメインエリアが窮屈になります。
@@ -38,7 +38,7 @@ WEBにおけるレスポンシブ対応では、これまでメディアクエ�
 
 先ほどのメディアとテキストのレイアウトを切り替える例をコンテナクエリで実装してみましょう。
 
-<Preview src="without-mq/cq-example" addFiles={['../_layout.css']} useLism/>
+<Demo src="without-mq/cq-example" addFiles={['../_layout.css']} useLism/>
 
 コードの変更点は以下の通りです。
 
@@ -66,7 +66,7 @@ https://speakerdeck.com/tak_dcxi/an-liu-resuponsibukodeingu-2025?slide=62
 
 
 
-{/* <Preview css={`
+{/* <Demo css={`
 .parent {
   display: flex;
   gap: 1em;
@@ -81,7 +81,7 @@ div{padding:1em; border:1px solid #000;}
   <div class="query-container_" style={{width: 'fit-content'}}>Query</div>
   <div class="query-container">Lorem ipsum dolor sit amet. Consectetur adipiscing elit, sed do eiusmod tempor Incididunt ut. Labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut.</div>
 </div>
-</Preview> */}
+</Demo> */}
 
 ## コンテンツ幅を基準にレイアウトを切り替える
 
@@ -183,7 +183,7 @@ https://every-layout.dev/
 今回の例では、画像がside要素、テキストとリンクのグループがmain要素となります。
 
 
-<Preview src="without-mq/sideMain" addFiles={['../_layout.css']} useLism />
+<Demo src="without-mq/sideMain" addFiles={['../_layout.css']} useLism />
 
 
 どうでしょうか。  
@@ -219,7 +219,7 @@ Lism CSSでは、このレイアウトを[`l--fluidCols`](https://www.lism-css.c
 - `auto-fit` または `auto-fill` を指定して、カラム数を自動で増減させます。
 
 
-<Preview src="without-mq/liquid-grid" resize ar="2/1" useLism />
+<Demo src="without-mq/liquid-grid" resize ar="2/1" useLism />
 
 
 #### auto-fit と auto-fill の違い
@@ -232,19 +232,19 @@ Lism CSSでは、このレイアウトを[`l--fluidCols`](https://www.lism-css.c
 
 実際に両者を比較してみましょう。
 
-<Preview resize title='auto-fill, --cols:160px'>
+<Demo resize title='auto-fill, --cols:160px'>
 <div class='l--fluidCols -g:20' style='--autoMode: auto-fill;--cols:160px'>
   <div class='-p:20 -bgc:base-2'>auto-fill</div>
   <div class='-p:20 -bgc:base-2'>auto-fill</div>
 </div>
-</Preview>
+</Demo>
 
-<Preview resize title='auto-fill, --cols:160px'>
+<Demo resize title='auto-fill, --cols:160px'>
 <div class='l--fluidCols -g:20' style='--autoMode: auto-fit;--cols:160px'>
   <div class='-p:20 -bgc:base-2'>auto-fit</div>
   <div class='-p:20 -bgc:base-2'>auto-fit</div>
 </div>
-</Preview>
+</Demo>
 
 
 :::note
@@ -252,7 +252,7 @@ auto-fill が隙間を埋めて広がるのは、1行で収まる時のみです
 :::
 
 
-<Preview resize title='2列目以降の挙動を確認'>
+<Demo resize title='2列目以降の挙動を確認'>
 <div class='l--fluidCols -g:20' style='--autoMode: auto-fit;--cols:160px'>
   <div class='-p:20 -bgc:base-2'>auto-fit</div>
   <div class='-p:20 -bgc:base-2'>auto-fit</div>
@@ -260,12 +260,12 @@ auto-fill が隙間を埋めて広がるのは、1行で収まる時のみです
   <div class='-p:20 -bgc:base-2'>auto-fit</div>
   <div class='-p:20 -bgc:base-2'>auto-fit</div>
 </div>
-</Preview>
+</Demo>
 
 
 2列目以降も隙間を埋めて広げたい場合は、シンプルに flexboxレイアウトを活用します。
 
-<Preview resize title='子要素: flex-basis:160px, flex-grow:1' css={`div{flex-basis:160px}`}>
+<Demo resize title='子要素: flex-basis:160px, flex-grow:1' css={`div{flex-basis:160px}`}>
 <div class='l--cluster -g:20'>
   <div class='-p:20 -bgc:base-2 -fxg:1'>Flex item</div>
   <div class='-p:20 -bgc:base-2 -fxg:1'>Flex item</div>
@@ -273,7 +273,7 @@ auto-fill が隙間を埋めて広がるのは、1行で収まる時のみです
   <div class='-p:20 -bgc:base-2 -fxg:1'>Flex item</div>
   <div class='-p:20 -bgc:base-2 -fxg:1'>Flex item</div>
 </div>
-</Preview>
+</Demo>
 
 
 ## 複数列以上↔︎1列の切り替えをメディアクエリを使わずに実装する方法
@@ -283,7 +283,7 @@ auto-fill が隙間を埋めて広がるのは、1行で収まる時のみです
 ここまで紹介したレイアウトだとできなかった、3列↔︎1列や4列↔︎1列の切り替えをメディアクエリやコンテナクエリを使わずに実装する方法です。
 
 
-<Preview src="without-mq/switcher" resize useLism/>
+<Demo src="without-mq/switcher" resize useLism/>
 
 
 :::point

@@ -67,7 +67,7 @@ src/
 │   │   ├── index.ts              # エクスポート管理
 │   │   ├── Callout.astro         # 注意書き
 │   │   ├── LinkCard.astro        # 外部リンクカード
-│   │   ├── Preview/              # CSSデモプレビュー
+│   │   ├── Demo/              # CSSデモプレビュー
 │   │   ├── InnerLink.astro       # 内部リンクカード
 │   │   ├── YouTubeEmbed.astro    # YouTube埋め込み
 │   │   └── CanUse.astro          # ブラウザ対応状況

@@ -4,8 +4,8 @@
  */
 
 export { default as Callout } from './Callout.astro';
-export { default as Preview } from './Preview/Preview.astro';
-export { default as PreviewCode } from './Preview/PreviewCode.astro';
+export { default as Demo } from './Demo/Demo.astro';
+export { default as DemoCode } from './Demo/DemoCode.astro';
 export { default as LinkCard } from './LinkCard.astro';
 export { default as YouTubeEmbed } from './YouTubeEmbed.astro';
 export { default as InnerLink } from './InnerLink.astro';
