@@ -1,0 +1,7 @@
+.l--fluidCols {
+	--cols: 16rem; /* カラムが最低限維持する幅 */
+	--autoMode: auto-fit; /* auto-fill か auto-fit */
+	display: grid;
+	grid-template-columns: repeat(var(--autoMode), minmax(min(var(--cols), 100%), 1fr));
+}
+

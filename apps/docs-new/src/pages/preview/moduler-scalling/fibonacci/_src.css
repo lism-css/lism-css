@@ -1,0 +1,47 @@
+:root {
+	/* 余白のスケーリング単位 ( 0.5rem = 8px */
+	--s-unit: 0.5rem;
+
+	/* スペーシング単位 8 で フィボナッチ */
+	--s--5: calc(0.5 * var(--s-unit)); /* 例外 */
+	--s--10: var(--s-unit);
+	--s--15: calc(1.5 * var(--s-unit)); /* 例外 */
+	--s--20: calc(2 * var(--s-unit));
+	--s--30: calc(3 * var(--s-unit));
+	--s--40: calc(5 * var(--s-unit));
+	--s--50: calc(8 * var(--s-unit));
+	--s--60: calc(13 * var(--s-unit));
+	--s--70: calc(21 * var(--s-unit));
+	--s--80: calc(34 * var(--s-unit));
+}
+
+.demo-space-scalling > div{
+	position: relative;
+	height: 1.25rem;
+	width: var(--w);
+	margin-block: .75rem;
+	--bdc: color-mix(in srgb, var(--bgc, #005fac), transparent 50%);
+	--bdw: 1px;
+	--interval: 3px;
+
+	border: solid 1px var(--bdc);
+	background-image: repeating-linear-gradient(
+		-60deg,
+		var(--bdc),
+		var(--bdc) var(--bdw),
+		transparent var(--bdw),
+		transparent var(--interval)
+	);
+	background-clip: padding-box;
+}
+
+.demo-space-scalling > div::after{
+	position: absolute;
+	white-space: nowrap;
+	left: 100%;
+	content: attr(data-label);
+	font-size: 11px;
+	line-height: 1rem;
+	margin-left: .5em;
+	opacity: 0.8;
+}

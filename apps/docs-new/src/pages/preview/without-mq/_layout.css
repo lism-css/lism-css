@@ -1,0 +1,29 @@
+/* サイドバーがあるレイアウト */
+.content {
+	display: flex;
+	flex-direction: column;
+	gap: 2rem;
+
+	max-width: 1400px;
+	margin-inline: auto;
+	padding: clamp(1.5rem, 1.25rem + 1vw, 2rem);
+}
+.sidebar {
+	/* デモ用ダミー背景 */
+	background: rgb(181, 194, 207);
+	min-height: 30rem;
+}
+
+/* 大きい画面サイズでのレイアウト */
+@media (min-width: 760px) {
+	.content {
+		flex-direction: row;
+		align-items: start;
+	}
+	.main {
+		flex: 1;
+	}
+	.sidebar {
+		width: 280px;
+	}
+}

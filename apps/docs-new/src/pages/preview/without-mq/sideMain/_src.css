@@ -1,0 +1,29 @@
+/* メインコンテンツ・サイドバーのレイアウト用スタイル */
+@import "../_layout.css";
+
+.l--sideMain {
+	/* --sideW, --mainW はあくまで初期値なので、その場その場で適切な値を指定して使います。 */
+	--sideW: auto;
+	--mainW: max(16em, 50%);
+
+	display: flex;
+	flex-wrap: wrap;
+}
+.l--sideMain > .is--side {
+	flex-basis: var(--sideW);
+	flex-grow: 1; /* 0 だと折り返されたときに広がらない */
+}
+.l--sideMain > :not(.is--side) {
+	flex-grow: 9999999; /* できるだけ fix側を 指定値ピッタリに近づけるためにかなり大きな数値を指定 */
+	flex-basis: min(100%, var(--mainW)); /* このサイズが折り返しポイントの基準となる */
+}
+
+
+/* メディアクエリ・コンテナクエリなしでレイアウトを切り替えるカード */
+.mediaText.l--sideMain {
+	gap: 1.5rem;
+
+	--sideW: calc(100% * 3/8);
+	--mainW: 24em;
+}
+

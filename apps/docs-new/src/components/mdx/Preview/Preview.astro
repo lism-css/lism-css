@@ -1,0 +1,236 @@
+---
+/**
+ * CSSデモプレビューコンポーネント
+ *     指定されたパスのデモページをiframeで表示する
+ *     使用例: <Preview src="/preview/example-button" height="200" />
+ *     使用例（カスタムCSS）: <Preview css="p{color:red}">...</Preview>
+ *     装飾のためにコンテンツエリアのネストは深くなっている。
+ */
+import PreviewTitle from './PreviewTitle.astro';
+import PreviewSrcCodes from './PreviewSrcCodes.astro';
+import { Frame, HTML } from 'lism-css/astro';
+import PreviewDotLine from './PreviewDotLine.astro';
+import { getLangFromUrl, t } from '@/lib/i18n';
+
+interface Props {
+	src?: string; // プレビューページのパス（/preview/ 以降の文字列）
+	height?: string | number; // iframeの高さ
+	width?: string | number; // iframeの幅
+	ar?: string; // iframeのアスペクト比
+	p?: string; // パディング
+	title?: string; // タイトル
+	srcFiles?: string[]; // 表示するソースファイル名の配列
+	addFiles?: string[]; // 追加するソースファイル名の配列
+	css?: string; // カスタムCSS（src未指定時のslot内にのみ適用可能）
+	resize?: boolean; // リサイズ可能かどうか
+	useLism?: boolean; // Lism CSSを使用していることを示すかどうか
+	showSrc?: boolean; // ソースコードを表示するかどうか
+}
+
+const { src, ar = '3/2', p = '30', title = 'Demo Preview', addFiles = [], css, showSrc = true, resize, useLism } = Astro.props;
+
+// 翻訳テキスト
+const lang = getLangFromUrl(Astro.url);
+const previewText = t(lang, 'preview');
+
+// カスタムCSS用のユニークなスコープIDを生成
+const scopeId = css ? `preview-${Math.random().toString(36).slice(2, 9)}` : '';
+
+// カスタムCSSにスコープを付与（各セレクタの前にスコープIDを追加）
+const scopedCss = css
+	? css.replace(/([^{}]+)(\{[^}]*\})/g, (_, selector, rules) => {
+			// セレクタをカンマで分割し、それぞれにスコープを付与
+			const scopedSelectors = selector
+				.split(',')
+				.map((s: string) => `.${scopeId} ${s.trim()}`)
+				.join(', ');
+			return `${scopedSelectors}${rules}`;
+		})
+	: '';
+
+const srcFiles = ['css', 'html', ...addFiles];
+---
+
+<div class="c--preview" data-has-iframe={src ? 'true' : 'false'}>
+	<div class="c--preview_inner">
+		<div class="c--preview_header l--flex -jc:between">
+			<PreviewTitle title={title} />
+			{
+				src && (
+					<a href={`/preview/${src}`} target="_blank" rel="noopener noreferrer" class="c--preview_link -fz:s">
+						{previewText.openNewTab}
+					</a>
+				)
+			}
+		</div>
+		{
+			// ファイル読み込んで表示する場合
+			src ? (
+				<div class="c--preview_inner">
+					<div class="c--preview_content">
+						<Frame id="preview-iframe" class="c--previewFrame" data-preview={`/preview/${src}`} ar={ar}>
+							<Frame class="c--previewFrame_inner c--scalePreview" ar={ar}>
+								<Frame class="c--scalePreview_inner" data-resize={resize}>
+									<iframe src={`/preview/${src}`} title={title} width="100%" height="100%" loading="lazy" />
+								</Frame>
+							</Frame>
+						</Frame>
+					</div>
+				</div>
+			) : (
+				// // 直接ソースコード記述した場合
+				<div class="c--preview_content">
+					<Frame class="c--previewFrame">
+						<HTML.div class={`c--previewFrame_inner is--container ${scopeId}`} p={p} data-resize={resize}>
+							<slot />
+						</HTML.div>
+					</Frame>
+				</div>
+			)
+		}
+	</div>
+	{src && showSrc && <PreviewSrcCodes src={src} srcFiles={srcFiles} showDots={true} />}
+	{
+		Astro.slots.has('code') && (
+			<PreviewSrcCodes showDots={true}>
+				<slot name="code" />
+			</PreviewSrcCodes>
+		)
+	}
+	{/* カスタムCSSをスコープ付きで展開 */}
+	{scopedCss && <style set:html={scopedCss} />}
+	{
+		useLism && (
+			<p class="l--flex -jc:end -o:-10">
+				<span class="-fz:xs">{previewText.lismNote}</span>
+			</p>
+		)
+	}
+</div>
+<style>
+	.c--preview {
+		margin-block: var(--s40);
+	}
+	/* .c--preview[data-resize] > .c--preview_inner */
+
+	.c--preview_content {
+		padding: 2px;
+
+		/* 左上の隙間埋めたいのでここで bgc セットしつつ、border-radiusは内側の frame にもつける */
+		border-radius: calc(var(--bdrs--20) + 2px); /* + padding 分 */
+		background-color: var(--base-2);
+		border-start-start-radius: 0;
+
+		/* overflow: hidden; */
+	}
+	.c--preview[data-has-iframe='false'] .c--previewFrame {
+		--beforeContent: '';
+		position: relative;
+		background-color: var(--base);
+		z-index: 0;
+	}
+	.c--previewFrame::before {
+		content: var(--beforeContent, unset);
+		position: absolute;
+		z-index: -1;
+		inset: 0;
+		background:
+			repeating-linear-gradient(-80deg, #f4f4f4 0px 1px, transparent 1px 2em),
+			repeating-linear-gradient(0deg, #f4f4f4 0px 1px, transparent 1px 2em);
+		background-size: 100% 100%;
+		background-repeat: no-repeat;
+		mask: linear-gradient(15deg, transparent 25%, black);
+	}
+
+	.c--previewFrame {
+		border: 1px solid color-mix(in srgb, var(--divider), var(--base-2));
+		box-shadow: 0 0 0 2px var(--base-2);
+		border-radius: var(--bdrs--20);
+
+		position: relative;
+	}
+
+	/* :global(.d--tabs--src) {
+		border: 2px solid var(--divider);
+		border-radius: var(--bdrs--20);
+	} */
+
+	/* iframe 本体 */
+	.c--previewFrame iframe {
+		display: block;
+		border: none;
+	}
+
+	/* リンクボタン */
+	.c--preview_link {
+		display: inline-block;
+		font-size: 0.875rem;
+		color: var(--link, #2563eb);
+		text-decoration: none;
+		transition: opacity 0.2s;
+	}
+
+	.c--preview_link:hover {
+		opacity: 0.75;
+		text-decoration: underline;
+	}
+
+	.c--scalePreview {
+		--w-pct: 160;
+		max-width: none;
+		width: calc(1% * var(--w-pct));
+		transform: scale(calc(100 / var(--w-pct)));
+		transform-origin: 0 0;
+		/* aspect-ratio: var(--ar); */
+		/* box-sizing: content-box; */
+		/* height: 100%; */
+		/* height: calc(100% * var(--w-pct) / 100);  */
+	}
+	.c--scalePreview_inner {
+		width: 100%;
+		height: 100%;
+	}
+
+	@container (min-width: 480px) {
+		.c--scalePreview {
+			--w-pct: 125;
+		}
+	}
+
+	@container (min-width: 720px) {
+		.c--scalePreview {
+			--w-pct: 100;
+		}
+		[data-resize] {
+			min-width: min(100%, 360px);
+			max-width: 100%;
+			margin: 0 auto;
+			resize: horizontal;
+			overflow-y: auto; /* これないと resizeできない */
+		}
+
+		[data-resize] {
+			position: relative;
+		}
+		[data-resize]:after {
+			position: absolute;
+			right: 0px;
+			bottom: 0px;
+			display: block;
+			width: 16px;
+			height: 16px;
+			border-top: 1.5px dotted color-mix(in srgb, var(--divider), var(--text) 20%);
+			content: '';
+			z-index: 1;
+			border-inline-start: 1.5px dotted color-mix(in srgb, var(--divider), var(--text) 20%);
+			border-start-start-radius: 99rem;
+			pointer-events: none;
+		}
+	}
+
+	/* .u-scalePreview[data-scale-preview-type='list'] {
+		width: 250%;
+		transform: scale(0.4);
+		pointer-events: none;
+	} */
+</style>

@@ -1,0 +1,54 @@
+/* 直前のデモと同じスタイルを読み込む */
+@import '../demo/_src.css';
+
+
+/* スクロールバーを除いたウインドウサイズを保持するためのプロパティ */
+@property --fullwide-width {
+	syntax: '<length-percentage>';
+	initial-value: 100cqw;
+	inherits: true;
+}
+
+/* コンテナ定義 */
+.is--container{
+	container-type: inline-size;
+}
+.is--container > * {
+	/* コンテナサイズをセット */
+	--fullwide-width: 100cqw;
+}
+.is--container.has--gutter > * {
+	/* 左右に余白がある場合はそれを考慮してセット */
+	--fullwide-width: calc(100cqw + var(--gutter-size) * 2);
+}
+
+/* コンテンツエリア自体に幅を指定する */
+article{
+	max-width: 50rem;
+	margin-inline: auto;
+
+	/* デモ用ガイドライン */
+	border: dashed 1px #ccc;
+}
+
+/* 全幅コンテンツ */
+.fullwide{
+	/* 左右に飛び出す */
+	max-width: var(--fullwide-width);
+	margin-inline: calc(50% - calc(var(--fullwide-width) / 2));
+
+	/* デモ用ガイド装飾 */
+	padding: 1.5em;
+	border: solid 2px;
+	background-color: rgba(0, 100, 200, 0.2);
+}
+
+
+/* 以下、デモ用ダミーコンテンツ */
+._dummybox_{
+	background-color: rgb(240, 240, 240);
+	padding: 4em 2em;
+	text-align: center;
+}
+
+

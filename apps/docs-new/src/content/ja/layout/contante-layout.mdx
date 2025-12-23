@@ -1,0 +1,235 @@
+---
+title: "コンテンツエリアのレイアウト設計"
+description: "このページでは、コンテンツエリア全体のレイアウト方法について紹介します。"
+date: 2025-12-20
+tags: ["CSS設計"]
+---
+
+import PreviewSrcCodes from '@/components/mdx/Preview/PreviewSrcCodes.astro';
+
+このページでは、コンテンツエリアのレイアウト方法について紹介します。
+
+
+- タイポグラフィと余白のスケーリング設計
+- コンテンツ外側の余白の管理方法
+- コンテンツ間の余白の管理方法
+- コンテンツ幅の管理方法
+- 内部の全幅コンテンツの管理方法
+{/* - サイドバーありの2カラムレイアウトの組み方 */}
+
+これらについて紹介します。
+
+
+## タイポグラフィと余白のスケーリング設計
+
+まずは、WEBで情報を伝える上で最も重要となるタイポグラフィの基本を抑えておきましょう。
+
+これらについては、すでに別ページで解説していますので、そちらをご覧ください。
+
+<InnerLink path='/layout/fluid-typography' />
+
+<InnerLink path='/layout/typography-scaling' />
+
+調和の取れたスケーリング規則が設計されていれば、それだけで十分コンテンツが読みやすい状態となります。
+
+### このページの解説で採用するスタイル
+
+先ほど紹介した関連ページで紹介したタイポグラフィと余白のスケーリングを組み合わせて採用しています。（あえて個別解説はここではしませんので、なぜこれらのスタイルを採用したかは関連ページをご覧ください。）
+
+<PreviewSrcCodes src="content-layout" srcFiles={['_typography.css']} />
+
+
+## コンテンツ外側（左右）の余白の管理
+
+コンテンツエリアの左右につける余白は、専用のCSS変数で管理するのを個人的にはお勧めします。
+
+用途が明確であることと、後述する全幅コンテンツの管理にも活用できるためです。
+
+例えば Lism CSS では、`has--gutter` というクラスを用意し、そのクラスに対して`--gutter-size`というCSS変数を設定しています。
+
+```css
+:root{
+	--gutter-size: var(--s--30);
+}
+.has--gutter {
+	padding-inline: var(--gutter-size);
+}
+```
+
+このように専用の変数やクラスとして役割を分離しておくと、コンテンツエリアだけでなく、ヘッダーやフッターでも、同じ余白を簡単に設定できます。
+
+
+
+## コンテンツどうしの間（上下）の余白管理
+
+コンテンツエリア内の通常フローの中で、コンテンツとコンテンツの間の余白を管理する方法について考えていきます。
+
+`margin-top`（`margin-block-start`） と `margin-bottom` (`margin-block-end`) のどちらを使って余白を確保するかについて、数年前はよく議論になっていました。
+
+しかし最近では、`top`派が多いように感じます。
+
+
+自分もそうです。  
+なぜかというと、フクロウセレクタ（`* + *`）を使えばとてもシンプルに書けるからです。
+
+```css
+/* コンテンツ間の余白管理の例 */
+article > * + * {
+  margin-block-start: 2rem;
+}
+```
+
+さらに、**見出し要素の上側は余白を多くとる**という対応も簡単にできます。
+
+```css
+/* 見出し要素の上側は余白を多くとる */
+h1, h2, h3, h4 {
+  margin-block-start: 4rem;
+}
+```
+
+
+Lism CSS では、これらのコンテンツ間の余白管理を行うクラスとして次のような`l--flow`を用意しています。
+
+```css
+:root{
+	--flow--base: var(--s--30);
+}
+.l--flow > * + * {
+	--flow: var(--flow--base);
+	margin-block-start: var(--flow);
+}
+
+/* 見出しの上部の余白は広くする. */
+.l--flow > :where(h1, h2, h3, h4, h5, h6) {
+	margin-block-start: calc(var(--flow) * 2);
+}
+```
+
+
+{/* <Preview src="content-layout/flow" resize _srcFiles={null} /> */}
+
+
+
+## コンテンツ幅の管理
+
+次に、コンテンツ幅を管理する方法について考えていきます。
+
+例えば、ページのコンテンツエリアが次のような構造をしているとします。
+
+```html
+<body>
+	<main>
+		<article>
+			...コンテンツ...
+		</article>
+	</main>
+</body>
+```
+
+ここで、例えば`article`内のコンテンツ幅を`50rem`にしたい時を考えてみましょう。
+
+コンテンツ幅を管理する方法は、主に２パターンあります。
+
+```css
+/* ① ラッパー要素(コンテンツの親要素)の幅を制御する */
+article{
+	max-width: 50rem;
+	margin-inline: auto;
+}
+
+/* ② 各コンテンツ（ラッパー直下の要素）の幅を制御する */
+article > * {
+	max-width: 50rem;
+	margin-inline: auto;
+}
+```
+
+どちらも一長一短ありますが、個人的には ② の方法を推奨しています。  
+
+なぜかというと、コンテンツエリアの途中で**全幅サイズのコンテンツ**を作る場合の処理がシンプルになるためです。
+
+
+### 全幅コンテンツの実装方法の違い
+
+①のアプローチを採用した場合、全幅コンテンツのCSSは次のようになります。
+
+```css
+.fullwide{
+	max-width: 100vw;
+	margin-inline: calc(50% - 50vw);
+}
+```
+
+一見シンプルに見えますが、`vw`(`vi`)などの単位では**スクロールバーの幅が考慮されない**という問題点があります。  
+また、サイドバーがある時にも破綻しないようにしようとするとCSSが複雑化していきます。
+
+:::note
+スクロールバーの幅問題については、JSを使って対処するか、もしくはモダンCSSであれば`@property`と`cqw`(`cqi`)を使った変数定義でbodyサイズを記憶させておくというアプローチもあります。(後ほど軽く解説します)
+:::
+
+一方、②であれば、基本のCSSは`max-width:100%`だけでOKで、`has--gutter`直下での例外処理を加えれば済みます。
+
+```css
+.fullwide{
+	max-inline-size: 100%;
+}
+
+/* コンテンツ両端の余白を考慮した全幅コンテンツの実装 */
+:where(.has--gutter) > .fullwide {
+	max-inline-size: calc(100% + var(--gutter-size) * 2);
+	margin-inline: calc(var(--gutter-size) * -1);
+}
+```
+
+
+{/* <Preview p='0'>
+<div class="l--flow is--wrapper -content:s has--gutter -py:30">
+	<div class="l--box -bd -py:10"> コンテンツ… </div>
+	<div class="l--box has--gutter -max-sz:full -bgc -py:15" style="--bgc:rgb(0 100 200 / 20%)">全幅コンテンツ</div>
+	<div class="l--box -bd -py:10"> コンテンツ… </div>
+</div>
+</Preview> */}
+
+### コンテンツ幅の管理クラスを用意しておく
+
+②のアプローチでは、コンテンツ幅の管理クラスを用意しておくと便利です。
+
+Lism CSS では、`is--wrapper` として用意しています。
+
+
+```css
+.is--wrapper {
+	--contentSize: 50rem;
+}
+.is--wrapper > * {
+	--max-sz: var(--contentSize, 100%);
+	max-inline-size: min(100%, var(--contentSize)); /* min ないとimg要素等がはみ出すことがある */
+	margin-inline: auto;
+}
+```
+
+## ここまでのスタイルを組み合わせて完成
+
+ここまで用意してきたスタイルを駆使して、コンテンツエリアを実装してみましょう。
+
+<Preview src="content-layout/demo" resize />
+
+
+## おまけ：`@property`と`cqw`を使った全幅サイズ管理
+
+最後に、途中でちらっと紹介した、全幅サイズのコンテンツを `vw`を使わずに`@property`と`cqw`を使って管理する方法について、補足として実例を紹介します。
+
+コンテンツ幅の管理パターンの①で特に有効なテクニックですが、②を採用していても覚えておいて損はありません。
+
+<Preview src="content-layout/fullwide-cqw" resize ar="2/1" title="@propertyとcqwを使った全幅サイズ管理のデモ" />
+
+`--fullwide-width`という`@property`で定義した変数を用意しておき、`is--container`でコンテナ定義した要素の直下で`100cqw`をセットしています。
+
+今回の例では、`main`タグがコンテナとなりその直下の`article`で、コンテナサイズがセットされる仕組みです。
+
+`is--container`の配置場所に気をつけなくてはいけませんが、こういったテクニックを活用することで、`100vw`でスクロールバーの幅が含まれてしま　う問題を解決できます。
+
+:::warning
+`body`タグに `container-type` を指定するのはお勧めしません。`position:fixed`が使えなくなります。（将来的にはその問題は解決しそうですが...）
+:::

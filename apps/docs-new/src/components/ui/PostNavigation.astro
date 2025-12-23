@@ -1,0 +1,122 @@
+---
+/**
+ * 前後記事ナビゲーションコンポーネント
+ * sidebar.ts の順序に従って前後の記事へのリンクを表示
+ * カテゴリ内に記事がない場合は次のカテゴリを探す
+ */
+import { Flex, Lism, HTML } from 'lism-css/astro';
+import { getPostsByLang, type PostEntry } from '@/lib/content';
+import { getRootLang, getLocalizedUrl, t, type LangCode } from '@/lib/i18n';
+import sidebarConfig, { type SidebarItem } from '@/config/sidebar';
+
+interface Props {
+	currentSlug: string;
+	lang?: LangCode; // 言語コード（省略時はroot言語）
+}
+
+const { currentSlug, lang = getRootLang() } = Astro.props;
+
+// 指定言語の全記事を取得
+const allPosts = await getPostsByLang(lang);
+
+// カテゴリー（slugの最初の部分）でグループ化
+const postsByCategory = allPosts.reduce(
+	(acc, post) => {
+		const hasSlash = post.slug.includes('/');
+		const category = hasSlash ? post.slug.split('/')[0] : '/';
+		if (!acc[category]) {
+			acc[category] = [];
+		}
+		acc[category].push(post);
+		return acc;
+	},
+	{} as Record<string, PostEntry[]>
+);
+
+// 各カテゴリー内を order → date 順にソート
+Object.values(postsByCategory).forEach((posts) => {
+	posts.sort((a, b) => {
+		const orderA = a.data.order ?? 999;
+		const orderB = b.data.order ?? 999;
+		if (orderA !== orderB) return orderA - orderB;
+		// order が同じ場合は日付順（新しい順）
+		return b.data.date.valueOf() - a.data.date.valueOf();
+	});
+});
+
+// サイドバーアイテムがdir指定かどうかをチェックするヘルパー
+function hasDirProperty(item: SidebarItem): item is SidebarItem & { dir: string } {
+	return 'dir' in item;
+}
+
+// sidebar.ts の順序で全記事をフラットに並べる
+const orderedPosts: PostEntry[] = [];
+for (const section of sidebarConfig) {
+	if (hasDirProperty(section)) {
+		// dir指定の場合：カテゴリ内の記事をソート順で追加
+		const posts = postsByCategory[section.dir];
+		if (posts && posts.length > 0) {
+			orderedPosts.push(...posts);
+		}
+	} else {
+		// items指定の場合：指定された順序で記事を追加
+		for (const item of section.items) {
+			// linkからslugを取得（先頭・末尾のスラッシュを除去）
+			const slug = item.link.replace(/^\/|\/$/g, '');
+			const post = allPosts.find((p) => p.slug === slug);
+			if (post) {
+				orderedPosts.push(post);
+			}
+		}
+	}
+}
+
+// 現在の記事のインデックスを取得
+const currentIndex = orderedPosts.findIndex((post) => post.slug === currentSlug);
+
+// 前後の記事を取得
+const prevPost: PostEntry | undefined = currentIndex > 0 ? orderedPosts[currentIndex - 1] : undefined;
+const nextPost: PostEntry | undefined = currentIndex < orderedPosts.length - 1 ? orderedPosts[currentIndex + 1] : undefined;
+
+// 前後の記事がどちらもない場合は何も表示しない
+const hasNavigation = prevPost || nextPost;
+
+// 翻訳テキスト
+const label = t(lang, 'postNav');
+---
+
+{
+	hasNavigation && (
+		<nav class="c--postNav" aria-label={label.ariaLabel}>
+			<Flex fxw="wrap" g="20" jc="space-between">
+				{/* 前の記事 */}
+				<Lism class="c--postNav__item -prev">
+					{prevPost ? (
+						<a href={getLocalizedUrl(`/${prevPost.slug}`, lang)} class="c--postNav__link">
+							<HTML.span class="c--postNav__label" fz="xs" o="-10">
+								{label.prev}
+							</HTML.span>
+							<HTML.span class="c--postNav__title">{prevPost.data.navtitle || prevPost.data.title}</HTML.span>
+						</a>
+					) : (
+						<Lism class="c--postNav__empty" />
+					)}
+				</Lism>
+
+				{/* 次の記事 */}
+				<Lism class="c--postNav__item -next">
+					{nextPost ? (
+						<a href={getLocalizedUrl(`/${nextPost.slug}`, lang)} class="c--postNav__link">
+							<HTML.span class="c--postNav__label" fz="xs" o="-10">
+								{label.next}
+							</HTML.span>
+							<HTML.span class="c--postNav__title">{nextPost.data.navtitle || nextPost.data.title}</HTML.span>
+						</a>
+					) : (
+						<Lism class="c--postNav__empty" />
+					)}
+				</Lism>
+			</Flex>
+		</nav>
+	)
+}

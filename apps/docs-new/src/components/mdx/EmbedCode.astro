@@ -1,0 +1,13 @@
+---
+import { Frame } from 'lism-css/astro';
+const { srcPath = '', repo = 'lism-css/lism-css', branch = 'main', ...props } = Astro.props;
+
+// : → %3A , / → %2F
+// 開発環境ではdevブランチ、本番環境ではmainブランチを使用
+const basePath = `https://github.com/${repo}/blob/${branch}/` + srcPath;
+const queryMeta = 'style=github-dark&type=code&showLineNumbers=on&showFileMeta=on&showCopy=on';
+---
+
+<Frame ov-y="auto" ar="4/3" my="40">
+	<script src={`https://emgithub.com/embed-v2.js?target=${encodeURI(basePath)}&${queryMeta}`} async></script>
+</Frame>

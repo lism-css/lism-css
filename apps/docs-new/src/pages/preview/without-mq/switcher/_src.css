@@ -1,0 +1,11 @@
+
+.switcher {
+	display: flex;
+	flex-wrap: wrap;
+	--threshold: 30rem; /* 横並びを維持する幅（親のサイズで指定する） */
+}
+
+.switcher > * {
+	flex-grow: 1;
+	flex-basis: calc((var(--threshold) - 100%) * 9999);
+}

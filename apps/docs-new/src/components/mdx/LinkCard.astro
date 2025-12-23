@@ -1,0 +1,192 @@
+---
+/**
+ * 外部サイトのOGP情報を取得してカード表示するコンポーネント
+ * ビルド時にOGP情報をフェッチして静的に生成します
+ * キャッシュ機構付き（.cache/ogp/ に保存、7日間有効）
+ */
+import { HTML, LinkBox, Flex, Frame, Stack } from 'lism-css/astro';
+import { getOgpFromCache, saveOgpToCache, type OgpData } from '@/lib/ogpCache';
+
+interface Props {
+	href: string;
+	// 手動でタイトルを指定する場合
+	title?: string;
+	// 手動で説明文を指定する場合
+	description?: string;
+}
+
+const { href, title: manualTitle, description: manualDescription } = Astro.props;
+
+/**
+ * URLからOGP情報を取得する関数（キャッシュ対応）
+ */
+async function fetchOgpData(url: string): Promise<OgpData | null> {
+	// まずキャッシュを確認
+	const cached = getOgpFromCache(url);
+	if (cached) {
+		return cached;
+	}
+
+	// キャッシュがなければフェッチ
+	try {
+		const response = await fetch(url, {
+			headers: {
+				'User-Agent': 'bot',
+			},
+		});
+
+		if (!response.ok) {
+			console.warn(`[OGP] Failed to fetch: ${url} (${response.status})`);
+			return null;
+		}
+
+		const html = await response.text();
+
+		// メタタグからOGP情報を抽出
+		const getMetaContent = (property: string): string => {
+			// og:xxx や twitter:xxx 形式に対応
+			const ogMatch = html.match(new RegExp(`<meta[^>]+property=["']${property}["'][^>]+content=["']([^"']+)["']`, 'i'));
+			if (ogMatch) return ogMatch[1];
+
+			// content が先に来るパターン
+			const ogMatch2 = html.match(new RegExp(`<meta[^>]+content=["']([^"']+)["'][^>]+property=["']${property}["']`, 'i'));
+			if (ogMatch2) return ogMatch2[1];
+
+			// name 属性パターン（twitter:xxx など）
+			const nameMatch = html.match(new RegExp(`<meta[^>]+name=["']${property}["'][^>]+content=["']([^"']+)["']`, 'i'));
+			if (nameMatch) return nameMatch[1];
+
+			const nameMatch2 = html.match(new RegExp(`<meta[^>]+content=["']([^"']+)["'][^>]+name=["']${property}["']`, 'i'));
+			if (nameMatch2) return nameMatch2[1];
+
+			return '';
+		};
+
+		// titleタグからタイトルを取得（OGPがない場合のフォールバック）
+		const getTitleFromTag = (): string => {
+			const titleMatch = html.match(/<title[^>]*>([^<]+)<\/title>/i);
+			return titleMatch ? titleMatch[1].trim() : '';
+		};
+
+		// faviconを取得
+		const getFavicon = (): string => {
+			const urlObj = new URL(url);
+			const origin = urlObj.origin;
+
+			// link rel="icon" を探す
+			const iconMatch = html.match(/<link[^>]+rel=["'](?:shortcut )?icon["'][^>]+href=["']([^"']+)["']/i);
+			if (iconMatch) {
+				const iconHref = iconMatch[1];
+				// 絶対URLか相対URLかを判定
+				if (iconHref.startsWith('http')) return iconHref;
+				if (iconHref.startsWith('//')) return `https:${iconHref}`;
+				if (iconHref.startsWith('/')) return `${origin}${iconHref}`;
+				return `${origin}/${iconHref}`;
+			}
+
+			// デフォルトのfavicon
+			return `${origin}/favicon.ico`;
+		};
+
+		const ogTitle = getMetaContent('og:title') || getMetaContent('twitter:title') || getTitleFromTag();
+		const ogDescription = getMetaContent('og:description') || getMetaContent('twitter:description') || getMetaContent('description');
+		const ogImage = getMetaContent('og:image') || getMetaContent('twitter:image');
+		const ogSiteName = getMetaContent('og:site_name') || new URL(url).hostname;
+
+		const ogpData: OgpData = {
+			title: ogTitle,
+			description: ogDescription,
+			image: ogImage,
+			siteName: ogSiteName,
+			favicon: getFavicon(),
+		};
+
+		// キャッシュに保存
+		saveOgpToCache(url, ogpData);
+
+		return ogpData;
+	} catch (error) {
+		console.warn(`[OGP] Error fetching: ${url}`, error);
+		return null;
+	}
+}
+
+// OGP情報を取得（キャッシュ優先）
+const ogpData = await fetchOgpData(href);
+
+// 表示用データ（手動指定があればそちらを優先）
+const displayTitle = manualTitle || ogpData?.title || href;
+const displayDescription = manualDescription || ogpData?.description || '';
+const displayImage = ogpData?.image || '';
+const displaySiteName = ogpData?.siteName || new URL(href).hostname;
+const displayFavicon = ogpData?.favicon || '';
+---
+
+<LinkBox href={href} target="_blank" rel="noopener noreferrer" class="c--linkCard -my:40" bdrs="20" my="40" p="20" bgc="base" bd>
+	<Flex g="20" ai="stretch" w="100%">
+		<Stack g="10" fx="1" py="5" min-w="0">
+			<HTML.span class="c--linkCard__title" fz="m" fw="bold" lh="s">{displayTitle}</HTML.span>
+			{
+				displayDescription && (
+					<HTML.span class="c--linkCard__desc" fz="s" lh="s" o="-10">
+						{displayDescription}
+					</HTML.span>
+				)
+			}
+			<Flex g="10" ai="center" my-s="auto" py-s="10">
+				{displayFavicon && <img src={displayFavicon} alt="" width="16" height="16" class="c--linkCard__favicon" loading="lazy" />}
+				<HTML.span class="c--linkCard__site" fz="xs" lh="1" o="-10">{displaySiteName}</HTML.span>
+			</Flex>
+		</Stack>
+
+		{
+			displayImage && (
+				<Frame w="120px" ar="1/1" fxsh="0" bdrs="10" class="c--linkCard__thumb">
+					<img src={displayImage} alt="" loading="lazy" />
+				</Frame>
+			)
+		}
+	</Flex>
+</LinkBox>
+
+<style>
+	.c--linkCard {
+		transition:
+			box-shadow 0.2s,
+			border-color 0.2s;
+	}
+	.c--linkCard:hover {
+		border-color: var(--link);
+		box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+	}
+
+	.c--linkCard__title,
+	.c--linkCard__desc {
+		/* テキストを最大2行に制限し、省略時は ... を表示 */
+		display: -webkit-box;
+		-webkit-line-clamp: 2;
+		-webkit-box-orient: vertical;
+		overflow: hidden;
+	}
+
+	.c--linkCard__site {
+		/* テキストを1行に制限し、省略時は ... を表示 */
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+		max-width: 100%;
+	}
+
+	.c--linkCard__favicon {
+		width: 1em;
+		height: 1em;
+		object-fit: contain;
+		flex-shrink: 0;
+	}
+
+	@container (width < 380px) {
+		.c--linkCard__thumb {
+			display: none;
+		}
+	}
+</style>

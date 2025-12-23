@@ -1,0 +1,62 @@
+@layer lism.base {
+	:root {
+		/* Cloud Dancer #f0eee9 */
+		/* Blue fusion #4a6375 */
+		/* Regatta #497ab7 */
+		/* Stretch Limo #2b2c30 */
+		/* Micron #656667 */
+		/* Nimbus Cloud #d5d5d7 */
+
+		/* Lism トークン上書き */
+		--brand: hsl(205, 23%, 37%); /* Blue fusion #4a6375 */
+		--base: hsl(43, 20%, 99%);
+		--base-2: hsl(43, 19%, 93%); /* Cloud Dancer #f0eee9 */
+		--text: hsl(228, 5%, 18%); /* Stretch Limo #2b2c30 */
+		--text-2: hsl(210, 1%, 40%); /* Micron #656667 */
+		--divider: hsl(43, 10%, 88%); /* 43 + 180*/
+
+		/* 新規トークン（ブログ用） */
+		--muted: #666666;
+
+		--code-c: currentColor;
+		// --code-bgc: hsl(210, 10%, 94%);
+		--code-bgc: color-mix(in srgb, var(--divider), transparent 40%);
+	}
+
+	// .u-cbox {
+	// 	--code-bgc: color-mix(in srgb, var(--keycolor), transparent 88%);
+	// }
+
+	:root[data-theme='dark'] {
+		--L: 72%;
+		--C: 0.25;
+
+		--brand: hsl(192, 72%, 56%);
+
+		/* // base */
+		--base: hsl(228, 10%, 8%);
+		--base-2: hsl(228, 8%, 20%);
+		/* #2b2c30 */
+
+		/* // content */
+		--text: hsl(48, 12%, 95%); /* Cloud Dancer */
+		--text-2: hsl(48, 8%, 84%);
+
+		// --code-bgc: hsl(205, 10%, 10%);
+
+		--link: oklch(72% 0.2 224);
+		--divider: hsl(224 4% 24%);
+
+		/* // shadow color */
+		--shc: hsl(215 40% 76% / 5%);
+		/* --sh-inset: inset; */
+
+		/* // color mix */
+		--cbox-cPct: 4%;
+		--cbox-bgPct: 6%;
+
+		.c--callout {
+			--sh-inset: inset;
+		}
+	}
+}

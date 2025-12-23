@@ -1,0 +1,72 @@
+---
+/**
+ * サイト内部のページをカードリンクとして表示するコンポーネント
+ * コンテンツコレクションから記事情報を取得して表示します
+ */
+import { LinkBox, HTML, Flex, Icon } from 'lism-css/astro';
+import { getPostWithFallback } from '@/lib/content';
+import { getLangFromUrl, getLocalizedUrl } from '@/lib/i18n';
+
+interface Props {
+	// 記事のパス（例: '/layout/fluid-typography' または 'layout/fluid-typography'）
+	path: string;
+	// 手動でタイトルを上書きする場合
+	title?: string;
+	// 手動で説明文を上書きする場合
+	description?: string;
+}
+
+const { path, title: manualTitle, description: manualDescription } = Astro.props;
+
+// 現在の言語を取得
+const currentLang = getLangFromUrl(Astro.url);
+
+// パスからスラッグを生成（先頭の '/' を除去）
+const slug = path.startsWith('/') ? path.slice(1) : path;
+
+// コンテンツコレクションから記事を取得（フォールバック対応）
+const { entry } = await getPostWithFallback(currentLang, slug);
+
+// 記事が見つからない場合の警告
+if (!entry) {
+	console.warn(`[InnerLink] 記事が見つかりません: ${slug}`);
+}
+
+// 表示用データ（手動指定があればそちらを優先）
+const displayTitle = manualTitle || entry?.data.title || path;
+// const displayDescription = manualDescription || entry?.data.description || '';
+
+// リンク先URL（言語対応）
+const href = getLocalizedUrl(path.startsWith('/') ? path : `/${path}`, currentLang);
+---
+
+<LinkBox href={href} layout="stack" bdrs="20" my="40" bd bgc="base" hov="bxsh, bdc, bgc" setHov setTransition class="c--innerLink">
+	<Flex class="c--innerLink__icon" c="text-2" p="5" lh="1" pos="abs" setTransition>
+		<Icon icon="link" />
+	</Flex>
+	<HTML.div px-s="40" p="30">
+		<span class="c--innerLink__title -fw:bold">{displayTitle}</span>
+		<HTML.span setTransition> →</HTML.span>
+	</HTML.div>
+</LinkBox>
+
+<style>
+	.c--innerLink {
+		--hov-bdc: var(--divider);
+		--hov-bxsh: var(--bxsh--30);
+		--bdc: var(--base-2);
+		--bdw: 3px;
+		--hov-prop: border-color, box-shadow, background-color, translate;
+	}
+	.c--innerLink__icon {
+		border-radius: calc(var(--bdrs--20) - 3px) 0 var(--bdrs--20) 0;
+		background-color: var(--_isHov, var(--divider)) var(--_notHov, var(--base-2));
+	}
+	/* .c--innerLink__title {
+		text-decoration: var(--_isHov, underline);
+	} */
+	.c--innerLink__title + span {
+		display: inline-flex;
+		translate: var(--_isHov, 3px 0);
+	}
+</style>

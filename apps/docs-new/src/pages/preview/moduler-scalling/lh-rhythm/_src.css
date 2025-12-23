@@ -1,0 +1,58 @@
+
+
+:root {
+	/* 分子8 の ハーモニックモジュラースケーリング */
+	--fz--xs: calc(1rem * (8 / 10));
+	--fz--s: calc(1rem * (8 / 9));
+	--fz--base: 1rem; /* ここを clamp() にしてもOK */
+	--fz--l: calc(1rem * (8 / 7));
+	--fz--xl: calc(1rem * (8 / 6));
+	--fz--2xl: calc(1rem * (8 / 5));
+	--fz--3xl: calc(1rem * (8 / 4));
+	--fz--4xl: calc(1rem * (8 / 3));
+	--fz--5xl: calc(1rem * (8 / 2));
+
+
+	/* ハーフレディング単位 を 0.125rem ≒ 2px とする */
+	--hl-unit: calc(var(--fz--base) * 0.125);
+
+	/* ハーフレディングのスケーリングは unit数値での等差 */
+	--hl--xs: var(--hl-unit);
+	--hl--s: calc(var(--hl-unit) * 2);
+	--hl--base: calc(var(--hl-unit) * 3);
+	--hl--l: calc(var(--hl-unit) * 4);
+}
+
+body{
+	--hl: var(--hl--base);
+	font-size: var(--fz--base);
+}
+
+/* 全て要素のline-heightを、ハーフレディングで管理 */
+* {
+	line-height: calc(1em + var(--hl) * 2);
+}
+
+
+.demo-fz-scalling > p{
+	max-inline-size: 25em;
+}
+
+.is--flow > * + * {
+	margin-block-start: 2rem;
+}
+
+.fz--xs { font-size: var(--fz--xs)}
+.fz--s { font-size: var(--fz--s); }
+.fz--base { font-size: var(--fz--base); }
+.fz--l { font-size: var(--fz--l); }
+.fz--xl { font-size: var(--fz--xl); }
+.fz--2xl { font-size: var(--fz--2xl)}
+.fz--3xl { font-size: var(--fz--3xl); }
+.fz--4xl { font-size: var(--fz--4xl);}
+.fz--5xl { font-size: var(--fz--5xl);}
+
+.hl--xs { --hl: var(--hl--xs) }
+.hl--s { --hl: var(--hl--s) }
+.hl--base { --hl: var(--hl--base) }
+.hl--l { --hl: var(--hl--l) }

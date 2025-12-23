@@ -1,0 +1,72 @@
+---
+/**
+ * デモプレビュー用のシンプルなレイアウト
+ * lism-cssのスタイルのみを読み込み、docs.cssは読み込まない
+ * iframeで埋め込まれることを想定したミニマルな構成
+ */
+
+// サイト設定
+import { siteConfig } from '@/config/site';
+
+interface Props {
+	title?: string;
+	lism?: 'main' | 'reset' | 'none'; // 読み込むlism-cssのスタイル
+}
+
+const { title = 'Demo page', lism = 'reset' } = Astro.props;
+
+// lism プロパティに応じてCDNのURLを決定
+const lismCdnBase = 'https://cdn.jsdelivr.net/npm/lism-css/dist/css';
+const lismCssUrl = lism !== 'none' ? `${lismCdnBase}/${lism}.css` : null;
+---
+
+<html lang="ja">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width" />
+		<title>Demo | {title} - {siteConfig.name}</title>
+		<!-- 検索エンジンにインデックスさせない -->
+		<meta name="robots" content="noindex, nofollow" />
+		{/* lism-css を CDN から読み込み */}
+		{lismCssUrl && <link href={lismCssUrl} rel="stylesheet" />}
+		<style is:global>
+			:root {
+				--brand: hsl(205, 23%, 37%);
+				--base: hsl(43, 20%, 99%);
+				--base-2: hsl(43, 19%, 93%);
+				--text: hsl(228, 5%, 18%);
+				--text-2: #656667;
+				--divider: hsl(43, 10%, 88%);
+			}
+			body {
+				background-color: var(--base);
+				color: var(--text);
+			}
+			body::before {
+				content: '';
+				position: fixed;
+				z-index: -1;
+				inset: 0;
+				min-height: 100svh;
+				background:
+					repeating-linear-gradient(-80deg, #f4f4f4 0px 1px, transparent 1px 2em),
+					repeating-linear-gradient(0deg, #f4f4f4 0px 1px, transparent 1px 2em);
+				background-size: 100% 100%;
+				background-repeat: no-repeat;
+				mask: linear-gradient(15deg, transparent 25%, black);
+			}
+			._demo_ {
+				max-width: 64rem;
+				margin-inline: auto;
+				padding: clamp(1.5rem, 1.25rem + 1vw, 2rem);
+			}
+
+			._demo_._wide_ {
+				max-width: 1400px;
+			}
+		</style>
+	</head>
+	<body>
+		<slot />
+	</body>
+</html>

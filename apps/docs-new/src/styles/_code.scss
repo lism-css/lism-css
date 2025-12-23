@@ -1,0 +1,173 @@
+/* Memo: expressive-code と astro-code を揃える.
+
+expressive-code: ```でのコードブロック
+astro-code: Astro の <Code>コンポーネント
+
+ --ec- 系は、```でのコードブロック展開時に出力されてくることに注意。
+ なければコード動かないので、明示的に定義する。
+ */
+
+:root {
+	--codeBlock-bgc: hsl(48, 12%, 96%) !important;
+	--codeBlock-bdrs: var(--bdrs--20);
+	--codeBlock-maxH: 32rem;
+}
+:root[data-theme='dark'] {
+	--codeBlock-bgc: #24292e !important;
+}
+
+pre {
+	/* デフォのまま */
+	--ec-codeFontFml: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
+	--ec-codePadBlk: 1rem;
+	--ec-codePadInl: 1.35rem;
+	--ec-codeLineHt: 1.65;
+	--ec-codeFontSize: 0.85rem;
+}
+
+.astro-code {
+	font-size: var(--ec-codeFontSize);
+	line-height: var(--ec-codeLineHt);
+	font-family: var(--ec-codeFontFml);
+	background-color: var(--codeBlock-bgc) !important;
+
+	max-height: var(--codeBlock-maxH);
+
+	/* expressive-codeと揃える */
+	padding: var(--ec-codePadBlk) var(--ec-codePadInl);
+
+	&:hover + .c--copyBtn {
+		opacity: 1;
+	}
+
+	> code {
+		font-family: inherit;
+	}
+}
+
+/* .astro-code は --shiki-dark で出力されてるのでそれを拾う */
+[data-theme='dark'] :is(.astro-code, .astro-code span) {
+	color: var(--shiki-dark) !important;
+}
+
+.expressive-code {
+	.article-content > & {
+		margin-block: var(--s40);
+	}
+
+	/* Memo: `.expressive-code pre` より上、`.expressive-code .frame.has-title pre` より下の詳細度 */
+	&.expressive-code pre {
+		border-radius: var(--codeBlock-bdrs);
+	}
+}
+
+.expressive-code:not(#_) {
+	> .frame {
+		box-shadow: none;
+		border: none;
+	}
+	.article-content > & {
+		padding: 2px;
+
+		> .frame {
+			box-shadow: 0 0 0 2px var(--base-2);
+			border: solid 2px var(--base);
+			border-radius: calc(var(--codeBlock-bdrs) + 2px);
+			overflow: hidden;
+		}
+	}
+	> .frame > .header {
+		background: var(--codeBlock-bgc);
+		border-bottom: solid 1px var(--base);
+	}
+	.header::before {
+		content: none;
+	}
+	.header > .title {
+		background: none;
+		font-size: var(--fz--s);
+	}
+	.header > .title::after {
+		border-bottom: none;
+	}
+
+	pre {
+		border: none;
+		background-color: var(--codeBlock-bgc);
+		max-height: var(--codeBlock-maxH);
+	}
+}
+
+/* -------------------------- */
+/* ソースコード表示のタブ
+/* -------------------------- */
+.c--previewSrcCodes {
+	padding: 2px;
+	border-radius: var(--codeBlock-bdrs);
+	overflow: hidden;
+}
+.d--tabs--src {
+	grid-template-columns: 100%;
+
+	box-shadow: 0 0 0 2px var(--base-2);
+	border: solid 2px var(--base);
+	border-radius: calc(var(--codeBlock-bdrs) + 2px);
+	overflow: hidden;
+
+	> .d--tabs_list {
+		background-color: var(--base-2);
+		box-shadow: inset 1px 2px 4px -2px rgb(0 0 0 / 0.1);
+		position: relative;
+		// border-bottom: 1px solid var(--base);
+		// overflow: visible;
+		overflow-y: visible;
+
+		&::after {
+			content: '';
+			position: absolute;
+			inset: 0;
+			border-bottom: 1px solid var(--base);
+			pointer-events: none;
+		}
+	}
+	.d--tabs_tab {
+		background-color: var(--_isSelected, var(--codeBlock-bgc)) var(--_notSelected, transparent);
+		// color: var(--_isSelected, var(--text)) var(--_notSelected, var(--text-2));
+		color: var(--text);
+		border-inline-end: solid 1px var(--base);
+		font-weight: var(--_isSelected, 600);
+		flex-shrink: 0;
+		position: relative;
+
+		opacity: var(--_notSelected, 0.7);
+		&::before {
+			// content: var(--_notSelected, '');
+			position: absolute;
+			inset: 0;
+			box-shadow: inset 1px 2px 4px -1px rgb(0 0 0 / 0.1);
+		}
+		&::after {
+			content: var(--_isSelected, '');
+			position: absolute;
+			inset: 0;
+			z-index: 1;
+			border-bottom: solid 2px var(--codeBlock-bgc);
+		}
+
+		> .a--icon {
+			margin-inline-start: -0.125em;
+		}
+	}
+
+	.c--srcCode__content,
+	.expressive-code pre {
+		border-top-left-radius: 0;
+		border-top-right-radius: 0;
+	}
+}
+
+/* タイトルがある場合 */
+.c--srcCode__title + .c--srcCode__content {
+	border-top-left-radius: 0;
+	border-top-right-radius: 0;
+}

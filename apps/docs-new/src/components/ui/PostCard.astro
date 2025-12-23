@@ -1,0 +1,93 @@
+---
+/**
+ * 記事カードコンポーネント
+ * 言語対応：リンクに言語プレフィックスを追加
+ */
+import { Frame, Cluster, LinkBox, HTML } from 'lism-css/astro';
+import TagLink from '@ui/TagLink.astro';
+import type { PostEntry } from '@/lib/content';
+import { getRootLang, getLocalizedUrl, type LangCode } from '@/lib/i18n';
+
+// Props の型定義
+interface Props {
+	post: PostEntry;
+	lang?: LangCode; // 言語コード（省略時はroot言語）
+}
+
+const { post, lang = getRootLang() } = Astro.props;
+
+// 下書き記事かどうか
+const isDraft = post.data.draft;
+
+// 言語対応のリンク生成
+const postUrl = getLocalizedUrl(`/${post.slug}`, lang);
+const getTagUrl = (tag: string) => getLocalizedUrl(`/tags/${tag}`, lang);
+
+// 日付のフォーマット（言語に応じてロケールを変更）
+const dateLocale = lang === 'ja' ? 'ja-JP' : 'en-US';
+---
+
+{/* ヘッダー: Flexで横並び、両端揃え */}
+<LinkBox
+	tag="article"
+	class:list={['c--postCard', 'u-trimItems', { _draft: isDraft }]}
+	layout="stack"
+	g="30"
+	p="30"
+	bgc="base"
+	bd
+	bdc="base-2"
+	bdw="3px"
+	bdrs="20"
+>
+	{/* サムネイル画像: heroがあればそれを、なければOG画像を使用 */}
+	<!-- <Frame ar="1200/630" bgc="base-3">
+		<img src={post.data.hero || `/og/${post.slug}.png`} alt={post.data.title} loading="lazy" />
+	</Frame> -->
+
+	<HTML.h lv="3" class="c--postCard__title" fz="m" fw="bold" lh="xs" style={{ '--focus-offset': '2px' }}>
+		<HTML.a href={postUrl} class="u-expandedLink">{post.data.title}</HTML.a>
+	</HTML.h>
+	<HTML.p fz="xs" lh="s" o="-10">
+		{post.data.description}
+	</HTML.p>
+	<Cluster g="10" my-s="auto" py-s="20">
+		{
+			post.data.tags.length > 0 && (
+				<Cluster g="5">
+					{post.data.tags.map((tag) => (
+						<TagLink href={getTagUrl(tag)} fz="xs">
+							#{tag}
+						</TagLink>
+					))}
+				</Cluster>
+			)
+		}
+		<HTML.span tag="time" datetime={post.data.date.toISOString()} fz="2xs" o="-10" mx-s="auto">
+			{post.data.date.toLocaleDateString(dateLocale)}
+		</HTML.span>
+	</Cluster>
+</LinkBox>
+
+<style>
+	.c--postCard {
+		transition-property: border-color, box-shadow;
+		transition-duration: 0.2s;
+		box-shadow: inset 0 0 0 1px var(--divider);
+	}
+	@media (any-hover: hover) {
+		.c--postCard:hover {
+			border-color: var(--divider);
+			box-shadow:
+				inset 0 0 0 1px var(--divider),
+				var(--bxsh--30);
+		}
+	}
+	/* .c--postCard::after {
+		content: '';
+		position: absolute;
+		inset: 0;
+		border-radius: inherit;
+		box-shadow: inset 0 0 0 1px var(--divider);
+	} */
+</style>

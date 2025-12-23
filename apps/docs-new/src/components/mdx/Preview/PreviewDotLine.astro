@@ -1,0 +1,24 @@
+---
+import { Center, Icon } from 'lism-css/astro';
+---
+
+<Center class="c--previewDotLine">
+	<Icon
+		setMask={`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="40" height="40" fill="#000000"><circle cx="64" cy="17.5" r="8"></circle><circle cx="64" cy="48.5" r="8"></circle><circle cx="64" cy="79.5" r="8"></circle><circle cx="64" cy="110.5" r="8"></circle></svg>`}
+	/>
+</Center>
+
+<style>
+	.c--previewDotLine {
+		margin-block: -4px;
+	}
+	.c--previewDotLine > .a--icon {
+		--maskPos: 50%;
+		--maskSize: contain;
+		--maskRepeat: no-repeat;
+		mask: var(--maskImg) var(--maskRepeat) var(--maskPos) / var(--maskSize);
+		width: 32px;
+		height: 32px;
+		background: linear-gradient(to bottom, var(--base-2), var(--divider), var(--base-2));
+	}
+</style>
