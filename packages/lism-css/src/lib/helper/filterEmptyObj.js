@@ -1,5 +1,5 @@
 // isEmptyObj;
-import isEmptyObj from './isEmptyObj';
+import isEmptyObj from './isEmptyObj.ts';
 
 // 0 を残すように注意
 export default function filterEmptyObj(obj) {

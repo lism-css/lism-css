@@ -7,7 +7,7 @@ import getUtilKey from './getUtilKey';
 import getMaybeCssVar from './getMaybeCssVar';
 import getBpData from './getBpData';
 import atts from './helper/atts';
-import isEmptyObj from './helper/isEmptyObj';
+import isEmptyObj from './helper/isEmptyObj.ts';
 import filterEmptyObj from './helper/filterEmptyObj';
 import splitWithComma from './helper/splitWithComma';
 
