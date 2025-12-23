@@ -19,7 +19,7 @@
 		"typecheck": "tsc --noEmit",
 		"build": "vite build && pnpm build:css",
 		"build:vite": "vite build",
-		"build:css": "node bin/script-build-css.js",
+		"build:css": "tsx bin/script-build-css.js",
 		"lint": "pnpm lint:style",
 		"lint:style": "stylelint '**/*.{css,scss}'",
 		"preview": "vite preview"
@@ -80,6 +80,7 @@
 		"@vitejs/plugin-react-swc": "^3.10.0",
 		"glob": "^11.0.2",
 		"rollup": "^4.41.1",
+		"tsx": "^4.21.0",
 		"typescript": "~5.8.3",
 		"unplugin-dts": "1.0.0-beta.6",
 		"vite": "^6.3.5",
