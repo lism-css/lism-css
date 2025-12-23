@@ -17,9 +17,14 @@ base_type:
 	3 → BPクラスには変数使わないが、文字数省略のため baseのProp classだけ変数化して *= セレクタ使う
 */
 
+// マップから値を取得し、nullの場合はデフォルト値を返す
 @function map_get_with_default($map, $key, $default) {
 	$value: map.get($map, $key);
-	@return if($value != null, $value, $default);
+	@if $value != null {
+		@return $value;
+	} @else {
+		@return $default;
+	}
 }
 
 @function get_important_str($is_important) {
