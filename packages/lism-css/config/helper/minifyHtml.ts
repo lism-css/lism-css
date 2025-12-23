@@ -1,7 +1,7 @@
 /**
  * html文字列をminify
  */
-const minifyHtml = (html) => {
+const minifyHtml = (html:string) => {
 	if (!html) return '';
 
 	// 改行先に削除
