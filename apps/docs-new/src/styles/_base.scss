@@ -1,16 +1,10 @@
 @layer lism.base {
-	:root {
-		--hov-duration: 0.2s;
-	}
+	// :root {
+	// 	--hov-duration: 0.2s;
+	// }
 	html {
-		tab-size: 2;
-		text-spacing-trim: trim-start;
+		// text-spacing-trim: trim-start;
 		/* line-break: strict; */
-	}
-	body {
-		--link-c: currentColor;
-		--link-td-color: var(--link);
-		--link-td-thickness: 0.125em;
 	}
 
 	/* ダイアログ展開時のガタツキを防ぐ */
@@ -99,29 +93,12 @@
 	pre,
 	input,
 	textarea {
-		/*
-		pre では無効化しておく。また、input要素やtextarea要素では、入力中に自動挿入が入ると挙動不審になる恐れがある
-		see: https://hail2u.net/blog/best-value-for-text-autospace-property.html
-	*/
 		text-autospace: no-autospace;
 	}
 
-	/* ------------------------------------------------------------
-		text-decoration
-	------------------------------------------------------------ */
-	ins {
-		/*
-		デフォルトスタイル（普通のアンダーライン）はリンク要素と見間違えやすいので変更する
-		https://adrianroselli.com/2025/04/tweaking-text-level-styles-reprised.html#InsEnhanced
-	*/
-		text-decoration-style: wavy;
-	}
-
 	a:where(:hover, :focus-visible) {
-		color: var(--link);
 		text-decoration-thickness: 0.2em;
 		text-decoration-skip-ink: none;
-		/* --under-offset: 0.01em; */
 	}
 
 	/* ------------------------------------------------------------

@@ -3,8 +3,8 @@
  * ページネーション対応の記事一覧ページ（2ページ目以降・非root言語用）
  */
 import BaseLayout from '@/layouts/BaseLayout.astro';
-import PostList from '@ui/PostList.astro';
-import Pagination from '@ui/Pagination.astro';
+import PostList from '@parts/PostList.astro';
+import Pagination from '@parts/Pagination.astro';
 import { HTML } from 'lism-css/astro';
 import { siteConfig } from '@/config/site';
 import { getPaginationPathsForNonRoot } from '@/lib/pageHelpers';

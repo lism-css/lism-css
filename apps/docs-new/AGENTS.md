@@ -71,7 +71,7 @@ src/
 │   │   ├── InnerLink.astro       # 内部リンクカード
 │   │   ├── YouTubeEmbed.astro    # YouTube埋め込み
 │   │   └── CanUse.astro          # ブラウザ対応状況
-│   └── ui/                   # 汎用UIコンポーネント
+│   └── parts/                # 汎用UIコンポーネント
 │       ├── PostCard.astro        # 記事カード
 │       ├── PostNavigation.astro  # 前後記事ナビ
 │       ├── Pagination.astro      # ページネーション
@@ -146,7 +146,7 @@ pnpm preview    # ビルド + プレビューサーバー
 
 ```ts
 '@': '/src',
-'@ui': '/src/components/ui',
+'@parts': '/src/components/parts',
 ```
 
 ---
