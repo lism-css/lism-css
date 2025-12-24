@@ -1,0 +1,134 @@
+---
+import DemoLayout from '@/layouts/DemoLayout.astro';
+
+import { Stack, Container, Frame, Grid, Media, HTML, Flex, Layer, Center, Cluster } from 'lism-css/astro';
+import Button from '@/components/ex/Button/index.astro';
+import './_style.css';
+---
+
+<DemoLayout title='Works001'>
+	<Container isWrapper='l' py='50' hasGutter>
+		<Stack g='40'>
+			<Stack g='20'>
+				<HTML.h lv='2' class='u-trim' fz='3xl' fw='bold'>制作実績</HTML.h>
+				<HTML.p class='u-trim' fz='l' o='-20'>Works</HTML.p>
+			</Stack>
+			<Cluster g='15'>
+				<Button href='####' bdrs='10'>すべて</Button>
+				<Button href='####' bgc='base-2' c='text' bdrs='10'>Web</Button>
+				<Button href='####' bgc='base-2' c='text' bdrs='10'>デザイン</Button>
+				<Button href='####' bgc='base-2' c='text' bdrs='10'>動画</Button>
+				<Button href='####' bgc='base-2' c='text' bdrs='10'>ブランディング</Button>
+				<Button href='####' bgc='base-2' c='text' bdrs='10'>音楽</Button>
+			</Cluster>
+			<Grid layout='fluidCols' cols='20rem' g='40' ac='start'>
+				<Grid gtr='subgrid' gr='span 2' g='30' ai='start'>
+					<Stack tag='a' isLinkBox href='#' g='30' setHov>
+						<Frame tag='figure' ar='16/9' bdrs='20' pos='rel'>
+							<Media src='https://cdn.lism-css.com/img/random-2510?r=1' alt='' width='960' height='640' />
+							<Layer setTransition hov='to:show' bgc='rgb(0 0 0 / 30%)' blur='4px'>
+								<Center h='100%' c='white'>
+									<HTML.span fz='xl' fs='i' fw='light' lts='l' px='20' py='10'>View More</HTML.span>
+								</Center>
+							</Layer>
+						</Frame>
+						<HTML.p class='u-trim' fz='l' fw='bold'>毎日の料理を心躍る体験に</HTML.p>
+					</Stack>
+					<Cluster g='15'>
+						<Button href='####' bgc='base-2' fz='s' c='text' bdrs='10'>Web</Button>
+						<Button href='####' bgc='base-2' fz='s' c='text' bdrs='10'>ブランディング</Button>
+						<Button href='####' bgc='base-2' fz='s' c='text' bdrs='10'>動画</Button>
+					</Cluster>
+				</Grid>
+				<Grid gtr='subgrid' gr='span 2' g='30' ai='start' ai='start'>
+					<Stack tag='a' isLinkBox href='#' g='30' setHov>
+						<Frame tag='figure' ar='16/9' bdrs='20' pos='rel'>
+							<Media src='https://cdn.lism-css.com/img/random-2510?r=2' alt='' width='960' height='640' />
+							<Layer setTransition hov='to:show' bgc='rgb(0 0 0 / 30%)' blur='4px'>
+								<Center h='100%' c='white'>
+									<HTML.span fz='xl' fs='i' fw='light' lts='l' px='20' py='10'>View More</HTML.span>
+								</Center>
+							</Layer>
+						</Frame>
+						<HTML.p class='u-trim' fz='l' fw='bold'>日々の暮らしの質を高めるアイテム</HTML.p>
+					</Stack>
+					<Cluster g='15'>
+						<Button href='####' bgc='base-2' fz='s' c='text' bdrs='10'>デザイン</Button>
+						<Button href='####' bgc='base-2' fz='s' c='text' bdrs='10'>動画</Button>
+					</Cluster>
+				</Grid>
+				<Grid gtr='subgrid' gr='span 2' g='30' ai='start'>
+					<Stack tag='a' isLinkBox href='#' g='30' setHov>
+						<Frame tag='figure' ar='16/9' bdrs='20' pos='rel'>
+							<Media src='https://cdn.lism-css.com/img/random-2510?r=3' alt='' width='960' height='640' />
+							<Layer setTransition hov='to:show' bgc='rgb(0 0 0 / 30%)' blur='4px'>
+								<Center h='100%' c='white'>
+									<HTML.span fz='xl' fs='i' fw='light' lts='l' px='20' py='10'>View More</HTML.span>
+								</Center>
+							</Layer>
+						</Frame>
+						<HTML.p class='u-trim' fz='l' fw='bold'>オブジェのような佇まい</HTML.p>
+					</Stack>
+					<Cluster g='15'>
+						<Button href='####' bgc='base-2' fz='s' c='text' bdrs='10'>ブランディング</Button>
+						<Button href='####' bgc='base-2' fz='s' c='text' bdrs='10'>動画</Button>
+						<Button href='####' bgc='base-2' fz='s' c='text' bdrs='10'>音楽</Button>
+					</Cluster>
+				</Grid>
+				<Grid gtr='subgrid' gr='span 2' g='30' ai='start'>
+					<Stack tag='a' isLinkBox href='#' g='30' setHov>
+						<Frame tag='figure' ar='16/9' bdrs='20' pos='rel'>
+							<Media src='https://cdn.lism-css.com/img/random-2510?r=4' alt='' width='960' height='640' />
+							<Layer setTransition hov='to:show' bgc='rgb(0 0 0 / 30%)' blur='4px'>
+								<Center h='100%' c='white'>
+									<HTML.span fz='xl' fs='i' fw='light' lts='l' px='20' py='10'>View More</HTML.span>
+								</Center>
+							</Layer>
+						</Frame>
+						<HTML.p class='u-trim' fz='l' fw='bold'>静かでクリーンなデザイン</HTML.p>
+					</Stack>
+					<Cluster g='15'>
+						<Button href='####' bgc='base-2' fz='s' c='text' bdrs='10'>Web</Button>
+						<Button href='####' bgc='base-2' fz='s' c='text' bdrs='10'>デザイン</Button>
+						<Button href='####' bgc='base-2' fz='s' c='text' bdrs='10'>音楽</Button>
+					</Cluster>
+				</Grid>
+				<Grid gtr='subgrid' gr='span 2' g='30' ai='start'>
+					<Stack tag='a' isLinkBox href='#' g='30' setHov>
+						<Frame tag='figure' ar='16/9' bdrs='20' pos='rel'>
+							<Media src='https://cdn.lism-css.com/img/random-2510?r=5' alt='' width='960' height='640' />
+							<Layer setTransition hov='to:show' bgc='rgb(0 0 0 / 30%)' blur='4px'>
+								<Center h='100%' c='white'>
+									<HTML.span fz='xl' fs='i' fw='light' lts='l' px='20' py='10'>View More</HTML.span>
+								</Center>
+							</Layer>
+						</Frame>
+						<HTML.p class='u-trim' fz='l' fw='bold'>音楽をアートのように空間に飾るオーディオ</HTML.p>
+					</Stack>
+					<Cluster g='15'>
+						<Button href='####' bgc='base-2' fz='s' c='text' bdrs='10'>デザイン</Button>
+						<Button href='####' bgc='base-2' fz='s' c='text' bdrs='10'>ブランディング</Button>
+					</Cluster>
+				</Grid>
+				<Grid gtr='subgrid' gr='span 2' g='30' ai='start'>
+					<Stack tag='a' isLinkBox href='#' g='30' setHov>
+						<Frame tag='figure' ar='16/9' bdrs='20' pos='rel'>
+							<Media src='https://cdn.lism-css.com/img/random-2510?r=6' alt='' width='960' height='640' />
+							<Layer setTransition hov='to:show' bgc='rgb(0 0 0 / 30%)' blur='4px'>
+								<Center h='100%' c='white'>
+									<HTML.span fz='xl' fs='i' fw='light' lts='l' px='20' py='10'>View More</HTML.span>
+								</Center>
+							</Layer>
+						</Frame>
+						<HTML.p class='u-trim' fz='l' fw='bold'>空間をドラマチックに演出</HTML.p>
+					</Stack>
+					<Cluster g='15'>
+						<Button href='####' bgc='base-2' fz='s' c='text' bdrs='10'>デザイン</Button>
+						<Button href='####' bgc='base-2' fz='s' c='text' bdrs='10'>動画</Button>
+						<Button href='####' bgc='base-2' fz='s' c='text' bdrs='10'>音楽</Button>
+					</Cluster>
+				</Grid>
+			</Grid>
+		</Stack>
+	</Container>
+</DemoLayout>

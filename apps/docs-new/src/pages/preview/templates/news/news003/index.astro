@@ -1,0 +1,61 @@
+---
+import DemoLayout from '@/layouts/DemoLayout.astro';
+
+import { Container, Grid, HTML, Flex, Icon, Stack } from 'lism-css/astro';
+import Button from '@/components/ex/Button/index.astro';
+import './_style.css';
+---
+
+<DemoLayout title='News003'>
+	<Container isWrapper='m' py='50' hasGutter>
+		<Grid gtr={['auto', null, 'auto auto 1fr']} gtc={['auto', null, 'auto 1fr']} g='30'>
+			<Stack gr='1' gc='1' g='20' min-w={['auto', null, '12rem']}>
+				<HTML.p class='u-trim' fz='3xl' fw='light' lts='l'>News</HTML.p>
+				<HTML.h lv='2' class='u-trim' fz='s' fw='normal' o='-20'>お知らせ</HTML.h>
+			</Stack>
+			<Grid gr={['2', null, '1 / -1']} gc={['1', null, '2']} gtc={['auto', 'auto 1fr']} bd-y-s>
+				<Grid tag='a' isLinkBox href='#' gtc='subgrid' gc='1 / -1' g={['20', '30']} bd-y-e py='30' setHov>
+					<Grid gtc={['auto auto', 'auto 1fr']} g='30' jc='start' ai='center'>
+						<HTML.p fz='m'>2025.07.13</HTML.p>
+						<HTML.p d='if' jc='center' fz='xs' lh='xs' c='text' bgc='white' bd p='10 20' bdrs='99' ta='center'>新サービス</HTML.p>
+					</Grid>
+					<Flex isLinkBox href='#' ai='center' td='n' g='30' hov='to:cLink'>
+						<HTML.p>目標金額を設定して貯蓄ができる「目的別預金」が登場。楽しみながら計画的な資産形成が行えます。</HTML.p>
+						<Icon icon='caret-right' fz='s' c='text' mx-s='auto' />
+					</Flex>
+				</Grid>
+				<Grid tag='a' isLinkBox href='#' gtc='subgrid' gc='1 / -1' g={['20', '30']} bd-y-e py='30' setHov>
+					<Grid gtc={['auto auto', 'auto 1fr']} g='30' jc='start' ai='center'>
+						<HTML.p fz='m'>2025.07.13</HTML.p>
+						<HTML.p d='if' jc='center' fz='xs' lh='xs' c='text' bgc='white' bd p='10 20' bdrs='99' ta='center'>セキュリティ</HTML.p>
+					</Grid>
+					<Flex isLinkBox href='#' ai='center' td='n' g='30' hov='to:cLink'>
+						<HTML.p>当行を装った不審なメール（フィッシング詐欺）にご注意ください</HTML.p>
+						<Icon icon='caret-right' fz='s' c='text' mx-s='auto' />
+					</Flex>
+				</Grid>
+				<Grid tag='a' isLinkBox href='#' gtc='subgrid' gc='1 / -1' g={['20', '30']} bd-y-e py='30' setHov>
+					<Grid gtc={['auto auto', 'auto 1fr']} g='30' jc='start' ai='center'>
+						<HTML.p fz='m'>2025.07.13</HTML.p>
+						<HTML.p d='if' jc='center' fz='xs' lh='xs' c='text' bgc='white' bd p='10 20' bdrs='99' ta='center'>重要なお知らせ</HTML.p>
+					</Grid>
+					<Flex isLinkBox href='#' ai='center' td='n' g='30' hov='to:cLink'>
+						<HTML.p>インターネットバンキングサービス利用規定の一部改定について</HTML.p>
+						<Icon icon='caret-right' fz='s' c='text' mx-s='auto' />
+					</Flex>
+				</Grid>
+			</Grid>
+			<Flex gr={['3', null, '2']} gc='1'>
+				<Button href='#' jc='center' w={['stretch', null, 'auto']} min-w='10rem' fz='s' p='15' bdrs='99'>View All</Button>
+			</Flex>
+		</Grid>
+	</Container>
+</DemoLayout>
+
+<style>
+	@media (any-hover: hover) {
+		.-hov\:to\:cLink {
+			color: var(--_isHov, var(--link));
+		}
+	}
+</style>
