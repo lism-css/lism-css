@@ -1,0 +1,127 @@
+---
+/**
+ * 共通 <head> コンポーネント
+ * - メタタグ、OGP、Twitter Card、Google Analytics などを管理
+ * - BaseLayout と SimpleLayout で共通使用
+ */
+
+import { siteConfig } from '@/config/site';
+import type { LangCode } from '@/lib/i18n';
+
+interface Props {
+	title: string;
+	description?: string;
+	ogImage?: string;
+	lang: LangCode;
+}
+
+const { title, description, ogImage, lang } = Astro.props;
+
+// 開発環境かどうか
+const isDev = import.meta.env.DEV;
+
+// canonical URL: 開発環境では現在のURLをそのまま使用、本番では Astro.site を使用
+const canonicalUrl = isDev
+	? Astro.url.toString()
+	: Astro.site
+		? new URL(Astro.url.pathname, Astro.site).toString()
+		: Astro.url.toString();
+
+// OG画像URL: 開発環境では相対パス、本番環境では絶対URL
+const getOgImageUrl = (imgPath?: string): string | undefined => {
+	if (!imgPath) return undefined;
+
+	// 開発環境では相対パスをそのまま返す
+	if (isDev) {
+		return imgPath;
+	}
+
+	// 本番環境では Astro.site を使って絶対URLに変換
+	if (Astro.site) {
+		return new URL(imgPath, Astro.site).toString();
+	}
+
+	// Astro.site が未設定の場合は相対パスを返す
+	return imgPath;
+};
+
+const ogImageUrl = getOgImageUrl(ogImage || '/og-default.png');
+
+// タイトルメタテキスト（ページタイトル - サイト名 の形式）
+const titleMetaText = title === siteConfig.name ? title : `${title} - ${siteConfig.name}`;
+
+// 言語に応じた og:locale を生成
+const ogLocaleMap: Record<LangCode, string> = {
+	ja: 'ja_JP',
+	en: 'en_US',
+};
+const ogLocale = ogLocaleMap[lang] || 'ja_JP';
+
+// Google Analytics: 本番環境かつ測定IDが設定されている場合のみ有効化
+const gaMeasurementId = siteConfig.googleAnalytics.measurementId;
+const enableGA = siteConfig.publish && gaMeasurementId;
+---
+
+<head>
+	<meta charset="utf-8" />
+	<script is:inline define:vars={{ defaultTheme: siteConfig.theme.default }}>
+		// ちらつきを防ぐため、 head内でテーマセットする
+		(function () {
+			var stored = localStorage.getItem('theme');
+			var theme;
+			if (stored === 'light' || stored === 'dark') {
+				theme = stored;
+			} else if (defaultTheme === 'light' || defaultTheme === 'dark') {
+				theme = defaultTheme;
+			} else {
+				theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+			}
+			document.documentElement.setAttribute('data-theme', theme);
+		})();
+	</script>
+	<link rel="icon" type="image/svg+xml" href="/favi.svg" />
+	<meta name="viewport" content="width=device-width" />
+	<meta name="generator" content={Astro.generator} />
+
+	{/* 基本メタタグ */}
+	<title>{titleMetaText}</title>
+	{description && <meta name="description" content={description} />}
+	<link rel="canonical" href={canonicalUrl} />
+	{!siteConfig.publish && <meta name="robots" content="noindex, nofollow" />}
+
+	{/* OGP メタタグ */}
+	<meta property="og:type" content="article" />
+	<meta property="og:title" content={titleMetaText} />
+	{description && <meta property="og:description" content={description} />}
+	<meta property="og:url" content={canonicalUrl} />
+	{ogImageUrl && <meta property="og:image" content={ogImageUrl} />}
+	<meta property="og:site_name" content={siteConfig.name} />
+	<meta property="og:locale" content={ogLocale} />
+
+	{/* Twitter Card メタタグ */}
+	<meta name="twitter:card" content="summary_large_image" />
+	<meta name="twitter:title" content={titleMetaText} />
+	{description && <meta name="twitter:description" content={description} />}
+	{ogImageUrl && <meta name="twitter:image" content={ogImageUrl} />}
+
+	{/* Google Analytics */}
+	{
+		enableGA && (
+			<>
+				<script async src={`https://www.googletagmanager.com/gtag/js?id=${gaMeasurementId}`} />
+				<script is:inline define:vars={{ gaMeasurementId }}>
+					window.dataLayer = window.dataLayer || [];
+					function gtag() {
+						dataLayer.push(arguments);
+					}
+					gtag('js', new Date());
+					gtag('config', gaMeasurementId);
+				</script>
+			</>
+		)
+	}
+
+	{/* 追加のhead要素用スロット */}
+	<slot />
+</head>
+

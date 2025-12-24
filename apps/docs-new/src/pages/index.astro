@@ -3,7 +3,7 @@
  * トップページ（root言語用）
  * 最新の記事一覧を表示
  */
-import BaseLayout from '../layouts/BaseLayout.astro';
+import SimpleLayout from '../layouts/SimpleLayout.astro';
 import { HTML } from 'lism-css/astro';
 import { siteConfig } from '@/config/site';
 import { getRootLang } from '@/lib/i18n';
@@ -12,6 +12,6 @@ import { getRootLang } from '@/lib/i18n';
 const currentLang = getRootLang();
 ---
 
-<BaseLayout isTop title={siteConfig.name} lang={currentLang}>
+<SimpleLayout title={siteConfig.name} lang={currentLang}>
 	<HTML.h lv="1">Top page</HTML.h>
-</BaseLayout>
+</SimpleLayout>
