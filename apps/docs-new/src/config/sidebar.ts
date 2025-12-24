@@ -26,13 +26,26 @@ export type LinkItem = {
 // items配列に含められるアイテムの型
 export type SidebarNavItem = LinkItem | SeparatorItem;
 
+// トップレベルの特別なリンクアイテムの型（大きめボタンとして表示）
+export type TopLevelLinkItem = {
+	type: 'toplink'; // 識別子
+	label: string;
+	translate?: TranslateLabels;
+	link: string;
+};
+
 // セパレータかどうかを判定するヘルパー
 export function isSeparator(item: SidebarNavItem): item is SeparatorItem {
 	return 'type' in item && item.type === 'separator';
 }
 
-// サイドバーアイテムの型定義
-export type SidebarItem =
+// トップレベルリンクかどうかを判定するヘルパー
+export function isTopLevelLink(item: SidebarItem | TopLevelLinkItem): item is TopLevelLinkItem {
+	return 'type' in item && item.type === 'toplink';
+}
+
+// サイドバーセクションの型定義（カテゴリ）
+export type SidebarSection =
 	| {
 			label: string;
 			translate?: TranslateLabels; // 他言語用ラベル
@@ -43,6 +56,9 @@ export type SidebarItem =
 			translate?: TranslateLabels; // 他言語用ラベル
 			items: Array<SidebarNavItem>;
 	  };
+
+// サイドバーアイテムの型定義（セクション または トップレベルリンク）
+export type SidebarItem = SidebarSection | TopLevelLinkItem;
 
 /**
  * 言語に応じたラベルを取得するヘルパー関数
@@ -57,6 +73,19 @@ export function getTranslatedLabel(label: string, translate: TranslateLabels | u
 
 // サイドバー設定
 const sidebarConfig: SidebarItem[] = [
+	// トップレベルリンク（大きめボタンとして表示）
+	{
+		type: 'toplink',
+		label: 'Docs',
+		link: '/overview/',
+	},
+	// {
+	// 	type: 'toplink',
+	// 	label: 'Template Library',
+	// 	translate: { en: 'Template Library' },
+	// 	link: '/lib/',
+	// },
+
 	// はじめにカテゴリ：ルートディレクトリ内を自動取得
 	{
 		label: 'はじめに',
