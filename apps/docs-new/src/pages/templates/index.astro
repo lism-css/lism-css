@@ -5,7 +5,7 @@
  * カテゴリ別にテンプレートを一覧表示
  */
 import BaseLayout from '@/layouts/BaseLayout.astro';
-import { Stack, Grid, Text, HTML, Frame } from 'lism-css/astro';
+import { Stack, Grid, Text, HTML, Frame, LinkBox, Media, Lism } from 'lism-css/astro';
 import { templates, categoryIds, type TemplateCategoryId } from '@/config/templates';
 ---
 
@@ -33,34 +33,25 @@ import { templates, categoryIds, type TemplateCategoryId } from '@/config/templa
 							</HTML.h>
 
 							{/* テンプレートカード一覧 */}
-							<Grid gtc="repeat(auto-fill, minmax(240px, 1fr))" g="20">
+							<Grid layout="fluidCols" cols="24rem" g="20">
 								{category.items.map((item) => (
-									<HTML.a
-										href={`/templates/${categoryId}/${item.id}`}
-										setHov
-										class="template-card"
-										d="block"
-										td="none"
-										c="inherit"
-										bdrs="15"
-										ov="hidden"
-										bxsh="10"
-									>
-										{/* サムネイル（プレビューiframe） */}
-										<Frame ar="16/9" bgc="base-2" class="template-card_thumb">
-											<iframe src={`/preview/templates/${categoryId}/${item.id}/`} loading="lazy" title={item.title} />
+									<LinkBox key={item.id} layout="stack" href={`/templates/${categoryId}/${item.id}`} p="20" g="20">
+										<Frame ar="3/2" bd bdw="1px" bdrs="20" bdc="inherit" bgc="#fff">
+											<Frame className="u--scalePreview" ar="3/2" data-scale-preview-type="list">
+												<iframe
+													src={`/preview/templates/${categoryId}/${item.id}/`}
+													title={item.title}
+													width="800"
+													height="600"
+													loading="lazy"
+												/>
+											</Frame>
 										</Frame>
-
-										{/* テンプレート情報 */}
-										<Stack g="5" p="15" bgc="base">
-											<Text fz="s" fw="bold">
-												{item.title}
-											</Text>
-											<Text fz="xs" c="text-2" class="-lh:s u-lineClamp" style="--lineClamp:2">
-												{item.description}
-											</Text>
-										</Stack>
-									</HTML.a>
+										<Lism class="u-trim -ff:mono -fz:s">{item.title}</Lism>
+										{/* <Text fz="xs" c="text-2" class="-lh:s u-lineClamp" style="--lineClamp:2">
+											{item.description}
+										</Text> */}
+									</LinkBox>
 								))}
 							</Grid>
 						</Stack>
