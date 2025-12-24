@@ -77,7 +77,7 @@ const sidebarConfig: SidebarItem[] = [
 	{
 		type: 'toplink',
 		label: 'Docs',
-		link: '/overview/',
+		link: '/docs/overview/',
 	},
 	// {
 	// 	type: 'toplink',
@@ -112,54 +112,54 @@ const sidebarConfig: SidebarItem[] = [
 		items: [
 			{
 				label: 'Box',
-				link: '/modules/layout/box/',
+				link: '/docs/modules/layout/box/',
 			},
 			{
 				label: 'Flow',
-				link: '/modules/layout/flow/',
+				link: '/docs/modules/layout/flow/',
 			},
 			{
 				label: 'Frame',
-				link: '/modules/layout/frame/',
+				link: '/docs/modules/layout/frame/',
 			},
 			{ type: 'separator' },
 			{
 				label: 'Flex',
-				link: '/modules/layout/flex/',
+				link: '/docs/modules/layout/flex/',
 			},
 			{
 				label: 'Cluster',
-				link: '/modules/layout/cluster/',
+				link: '/docs/modules/layout/cluster/',
 			},
 			{
 				label: 'Stack',
-				link: '/modules/layout/stack/',
+				link: '/docs/modules/layout/stack/',
 			},
 			{
 				label: 'SideMain',
-				link: '/modules/layout/sidemain/',
+				link: '/docs/modules/layout/sidemain/',
 			},
 			{ type: 'separator' },
 			{
 				label: 'Grid',
-				link: '/modules/layout/grid/',
+				link: '/docs/modules/layout/grid/',
 			},
 			{
 				label: 'Center',
-				link: '/modules/layout/center/',
+				link: '/docs/modules/layout/center/',
 			},
 			{ type: 'separator' },
 			{
 				label: 'Columns',
-				link: '/modules/layout/columns/',
+				link: '/docs/modules/layout/columns/',
 			},
 			{
 				label: 'FluidCols',
-				link: '/modules/layout/fluidcols/',
+				link: '/docs/modules/layout/fluidcols/',
 			},
 			{
 				label: 'SwitchCols',
-				link: '/modules/layout/switchcols/',
+				link: '/docs/modules/layout/switchcols/',
 			},
 			{ type: 'separator' },
 		],

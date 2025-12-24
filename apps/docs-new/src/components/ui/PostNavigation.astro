@@ -69,8 +69,8 @@ for (const item of sidebarConfig) {
 		for (const navItem of section.items) {
 			// セパレータはスキップ
 			if (isSeparator(navItem)) continue;
-			// linkからslugを取得（先頭・末尾のスラッシュを除去）
-			const slug = navItem.link.replace(/^\/|\/$/g, '');
+			// linkからslugを取得（/docs/ プレフィックスと先頭・末尾のスラッシュを除去）
+			const slug = navItem.link.replace(/^\/docs\//, '/').replace(/^\/|\/$/g, '');
 			const post = allPosts.find((p) => p.slug === slug);
 			if (post) {
 				orderedPosts.push(post);
@@ -100,7 +100,7 @@ const label = t(lang, 'postNav');
 				{/* 前の記事 */}
 				<Lism class="c--postNav__item -prev">
 					{prevPost ? (
-						<a href={getLocalizedUrl(`/${prevPost.slug}`, lang)} class="c--postNav__link">
+						<a href={getLocalizedUrl(`/docs/${prevPost.slug}`, lang)} class="c--postNav__link">
 							<HTML.span class="c--postNav__label" fz="xs" o="-10">
 								{label.prev}
 							</HTML.span>
@@ -114,7 +114,7 @@ const label = t(lang, 'postNav');
 				{/* 次の記事 */}
 				<Lism class="c--postNav__item -next">
 					{nextPost ? (
-						<a href={getLocalizedUrl(`/${nextPost.slug}`, lang)} class="c--postNav__link">
+						<a href={getLocalizedUrl(`/docs/${nextPost.slug}`, lang)} class="c--postNav__link">
 							<HTML.span class="c--postNav__label" fz="xs" o="-10">
 								{label.next}
 							</HTML.span>

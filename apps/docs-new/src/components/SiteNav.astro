@@ -5,13 +5,7 @@
  */
 import { Stack, HTML } from 'lism-css/astro';
 import NavLink from '@ui/NavLink.astro';
-import sidebarConfig, {
-	type SidebarItem,
-	type SidebarSection,
-	getTranslatedLabel,
-	isSeparator,
-	isTopLevelLink,
-} from '../config/sidebar';
+import sidebarConfig, { type SidebarItem, type SidebarSection, getTranslatedLabel, isSeparator, isTopLevelLink } from '../config/sidebar';
 import { getPostsByLang, type PostEntry } from '@/lib/content';
 import { getLangFromUrl, getLocalizedUrl, getPathWithoutLang, type LangCode } from '@/lib/i18n';
 
@@ -36,8 +30,8 @@ sectionItems.forEach((section) => {
 	if ('items' in section) {
 		section.items.forEach((item) => {
 			if (!isSeparator(item)) {
-				// linkからslugを取得（先頭・末尾のスラッシュを除去）
-				const slug = item.link.replace(/^\/|\/$/g, '');
+				// linkからslugを取得（/docs/ プレフィックスと先頭・末尾のスラッシュを除去）
+				const slug = item.link.replace(/^\/docs\//, '/').replace(/^\/|\/$/g, '');
 				itemsReferencedSlugs.add(slug);
 			}
 		});
@@ -99,25 +93,27 @@ const topLevelLinks = sidebarConfig.filter(isTopLevelLink);
 
 <Stack tag="nav" class="sidebar-nav set-cqUnit" g="30">
 	{/* トップレベルリンク（大きめボタンとして表示） */}
-	{topLevelLinks.length > 0 && (
-		<Stack tag="ul" class="c--nav__toplinks" g="5">
-			{topLevelLinks.map((item) => {
-				// 言語対応のパスを生成
-				const itemPath = getLocalizedUrl(item.link.endsWith('/') ? item.link : `${item.link}/`, currentLang);
-				const pathForCompare = item.link.endsWith('/') ? item.link : `${item.link}/`;
-				const isActive = currentPathWithoutLang === pathForCompare || currentPathWithoutLang === item.link;
-				// ラベルを現在の言語で取得
-				const itemLabel = getTranslatedLabel(item.label, item.translate, currentLang);
-				return (
-					<HTML.li>
-						<NavLink href={itemPath} isActive={isActive} class="c--nav__toplink">
-							{itemLabel}
-						</NavLink>
-					</HTML.li>
-				);
-			})}
-		</Stack>
-	)}
+	{
+		topLevelLinks.length > 0 && (
+			<Stack tag="ul" class="c--nav__toplinks" g="5">
+				{topLevelLinks.map((item) => {
+					// 言語対応のパスを生成
+					const itemPath = getLocalizedUrl(item.link.endsWith('/') ? item.link : `${item.link}/`, currentLang);
+					const pathForCompare = item.link.endsWith('/') ? item.link : `${item.link}/`;
+					const isActive = currentPathWithoutLang === pathForCompare || currentPathWithoutLang === item.link;
+					// ラベルを現在の言語で取得
+					const itemLabel = getTranslatedLabel(item.label, item.translate, currentLang);
+					return (
+						<HTML.li>
+							<NavLink href={itemPath} isActive={isActive} class="c--nav__toplink">
+								{itemLabel}
+							</NavLink>
+						</HTML.li>
+					);
+				})}
+			</Stack>
+		)
+	}
 
 	{/* 通常のナビゲーションセクション */}
 	{
@@ -144,10 +140,10 @@ const topLevelLinks = sidebarConfig.filter(isTopLevelLink);
 						{hasDirProperty(section)
 							? // dir指定の場合：ディレクトリ内の記事を自動取得
 								postsByCategory[section.dir]?.map((post) => {
-									// 言語対応のパスを生成
-									const postPath = getLocalizedUrl(`/${post.slug}/`, currentLang);
-									const pathForCompare = `/${post.slug}/`;
-									const isActive = currentPathWithoutLang === pathForCompare || currentPathWithoutLang === `/${post.slug}`;
+									// 言語対応のパスを生成（/docs/ プレフィックスを付ける）
+									const postPath = getLocalizedUrl(`/docs/${post.slug}/`, currentLang);
+									const pathForCompare = `/docs/${post.slug}/`;
+									const isActive = currentPathWithoutLang === pathForCompare || currentPathWithoutLang === `/docs/${post.slug}`;
 									// 下書き記事には _draft クラスを付与
 									const isDraft = post.data.draft;
 									// navtitleがあればそれを、なければtitleを表示
