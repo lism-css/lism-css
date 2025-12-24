@@ -139,6 +139,27 @@ src/pages/preview/{example-name}/
 
 **NOTE**: `dir` と `items` はどちらか一方を指定。`dir` 指定時は `order` フィールドの昇順でソート。
 
+### セパレータ（区切り線）
+
+`items` 配列内で `{ type: 'separator' }` を指定すると、メニュー項目間に区切り線を表示できます。
+
+```typescript
+{
+  label: 'Layout Modules',
+  items: [
+    { label: 'Box', link: '/modules/layout/box/' },
+    { label: 'Flow', link: '/modules/layout/flow/' },
+    { type: 'separator' },  // ← 区切り線
+    { label: 'Flex', link: '/modules/layout/flex/' },
+  ],
+},
+```
+
+| 型               | 説明           |
+| ---------------- | -------------- |
+| `LinkItem`       | 通常のリンク項目（`label`, `link`, `translate?`） |
+| `SeparatorItem`  | 区切り線（`type: 'separator'`）                   |
+
 ---
 
 ## 検索機能（Pagefind）

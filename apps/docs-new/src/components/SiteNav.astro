@@ -5,7 +5,7 @@
  */
 import { Stack, HTML } from 'lism-css/astro';
 import NavLink from '@ui/NavLink.astro';
-import sidebarConfig, { type SidebarItem, getTranslatedLabel } from '../config/sidebar';
+import sidebarConfig, { type SidebarItem, getTranslatedLabel, isSeparator } from '../config/sidebar';
 import { getPostsByLang, type PostEntry } from '@/lib/content';
 import { getLangFromUrl, getLocalizedUrl, getPathWithoutLang, type LangCode } from '@/lib/i18n';
 
@@ -21,9 +21,28 @@ const configuredDirs = sidebarConfig
 	.map((item) => item.dir)
 	.sort((a, b) => b.length - a.length); // 長い（深い）ディレクトリを先にマッチさせる
 
+// items で参照されている記事の slug を取得（これらはルートカテゴリから除外）
+const itemsReferencedSlugs = new Set<string>();
+sidebarConfig.forEach((section) => {
+	if ('items' in section) {
+		section.items.forEach((item) => {
+			if (!isSeparator(item)) {
+				// linkからslugを取得（先頭・末尾のスラッシュを除去）
+				const slug = item.link.replace(/^\/|\/$/g, '');
+				itemsReferencedSlugs.add(slug);
+			}
+		});
+	}
+});
+
 // カテゴリーでグループ化（ネストしたディレクトリにも対応）
 const postsByCategory = allPosts.reduce(
 	(acc, post) => {
+		// items で参照されている記事はルートカテゴリに含めない
+		if (itemsReferencedSlugs.has(post.slug)) {
+			return acc;
+		}
+
 		// sidebarConfigで定義されたdirと記事のslugをマッチング
 		// 例: "modules/state/Container" は "modules/state" にマッチ
 		let category = '/';
@@ -109,6 +128,10 @@ function hasDirProperty(item: SidebarItem): item is SidebarItem & { dir: string 
 								})
 							: // items指定の場合：指定された並びでメニューを表示
 								section.items.map((item) => {
+									// セパレータの場合は区切り線を表示
+									if (isSeparator(item)) {
+										return <HTML.li class="c--nav__separator" role="separator" aria-hidden="true" />;
+									}
 									// 言語対応のパスを生成
 									const itemPath = getLocalizedUrl(item.link.endsWith('/') ? item.link : `${item.link}/`, currentLang);
 									const pathForCompare = item.link.endsWith('/') ? item.link : `${item.link}/`;

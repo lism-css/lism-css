@@ -7,7 +7,7 @@
 import { Flex, Lism, HTML } from 'lism-css/astro';
 import { getPostsByLang, type PostEntry } from '@/lib/content';
 import { getRootLang, getLocalizedUrl, t, type LangCode } from '@/lib/i18n';
-import sidebarConfig, { type SidebarItem } from '@/config/sidebar';
+import sidebarConfig, { type SidebarItem, isSeparator } from '@/config/sidebar';
 
 interface Props {
 	currentSlug: string;
@@ -63,6 +63,8 @@ for (const section of sidebarConfig) {
 	} else {
 		// items指定の場合：指定された順序で記事を追加
 		for (const item of section.items) {
+			// セパレータはスキップ
+			if (isSeparator(item)) continue;
 			// linkからslugを取得（先頭・末尾のスラッシュを除去）
 			const slug = item.link.replace(/^\/|\/$/g, '');
 			const post = allPosts.find((p) => p.slug === slug);
