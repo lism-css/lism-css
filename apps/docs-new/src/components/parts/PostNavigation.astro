@@ -6,8 +6,8 @@
  */
 import { Flex, Lism, HTML } from 'lism-css/astro';
 import { getPostsByLang, type PostEntry } from '@/lib/content';
-import { getRootLang, getLocalizedUrl, t, type LangCode } from '@/lib/i18n';
-import sidebarConfig, { type SidebarItem, type SidebarSection, isSeparator, isTopLevelLink } from '@/config/sidebar';
+import { getRootLang, getLocalizedUrl, t, getPathWithoutLang, type LangCode } from '@/lib/i18n';
+import sidebarConfig, { type SidebarSection, isSeparator, getSiteSection, extractSlugFromUrl } from '@/config/sidebar';
 
 interface Props {
 	currentSlug: string;
@@ -15,6 +15,25 @@ interface Props {
 }
 
 const { currentSlug, lang = getRootLang() } = Astro.props;
+
+// 現在のセクション（docs または ui）を取得
+const currentPathWithoutLang = getPathWithoutLang(Astro.url);
+const currentSection = getSiteSection(currentPathWithoutLang);
+
+// 現在のセクションに対応するサイドバー設定を取得
+const sectionItems = sidebarConfig.sections[currentSection];
+
+/**
+ * slugからURLパスを生成するヘルパー
+ * - ui/xxx → /ui/xxx/
+ * - xxx → /docs/xxx/
+ */
+function getPostUrl(slug: string): string {
+	if (slug.startsWith('ui/')) {
+		return `/${slug}/`;
+	}
+	return `/docs/${slug}/`;
+}
 
 // 指定言語の全記事を取得
 const allPosts = await getPostsByLang(lang);
@@ -53,11 +72,7 @@ function hasDirProperty(item: SidebarSection): item is SidebarSection & { dir: s
 
 // sidebar.ts の順序で全記事をフラットに並べる
 const orderedPosts: PostEntry[] = [];
-for (const item of sidebarConfig) {
-	// トップレベルリンクはスキップ（記事一覧には含めない）
-	if (isTopLevelLink(item)) continue;
-
-	const section = item as SidebarSection;
+for (const section of sectionItems) {
 	if (hasDirProperty(section)) {
 		// dir指定の場合：カテゴリ内の記事をソート順で追加
 		const posts = postsByCategory[section.dir];
@@ -71,8 +86,8 @@ for (const item of sidebarConfig) {
 			if (isSeparator(navItem)) continue;
 			// linkを取得（文字列の場合はそのまま、オブジェクトの場合は.linkプロパティ）
 			const link = typeof navItem === 'string' ? navItem : navItem.link;
-			// linkからslugを取得（/docs/ プレフィックスと先頭・末尾のスラッシュを除去）
-			const slug = link.replace(/^\/docs\//, '/').replace(/^\/|\/$/g, '');
+			// linkからslugを取得
+			const slug = extractSlugFromUrl(link);
 			const post = allPosts.find((p) => p.slug === slug);
 			if (post) {
 				orderedPosts.push(post);
@@ -102,7 +117,7 @@ const label = t(lang, 'postNav');
 				{/* 前の記事 */}
 				<Lism class="c--postNav__item -prev">
 					{prevPost ? (
-						<a href={getLocalizedUrl(`/docs/${prevPost.slug}`, lang)} class="c--postNav__link">
+						<a href={getLocalizedUrl(getPostUrl(prevPost.slug), lang)} class="c--postNav__link">
 							<HTML.span class="c--postNav__label" fz="xs" o="-10">
 								{label.prev}
 							</HTML.span>
@@ -116,7 +131,7 @@ const label = t(lang, 'postNav');
 				{/* 次の記事 */}
 				<Lism class="c--postNav__item -next">
 					{nextPost ? (
-						<a href={getLocalizedUrl(`/docs/${nextPost.slug}`, lang)} class="c--postNav__link">
+						<a href={getLocalizedUrl(getPostUrl(nextPost.slug), lang)} class="c--postNav__link">
 							<HTML.span class="c--postNav__label" fz="xs" o="-10">
 								{label.next}
 							</HTML.span>

@@ -45,7 +45,7 @@ export function isSeparator(item: SidebarNavItem): item is SeparatorItem {
 }
 
 // トップレベルリンクかどうかを判定するヘルパー
-export function isTopLevelLink(item: SidebarItem | TopLevelLinkItem): item is TopLevelLinkItem {
+export function isTopLevelLink(item: SidebarSection | TopLevelLinkItem): item is TopLevelLinkItem {
 	return 'type' in item && item.type === 'toplink';
 }
 
@@ -62,9 +62,6 @@ export type SidebarSection =
 			items: Array<SidebarNavItem>;
 	  };
 
-// サイドバーアイテムの型定義（セクション または トップレベルリンク）
-export type SidebarItem = SidebarSection | TopLevelLinkItem;
-
 /**
  * 言語に応じたラベルを取得するヘルパー関数
  */
@@ -76,9 +73,17 @@ export function getTranslatedLabel(label: string, translate: TranslateLabels | u
 	return translate[lang as Exclude<LangCode, 'ja'>] || label;
 }
 
-// サイドバー設定
-const sidebarConfig: SidebarItem[] = [
-	// トップレベルリンク（大きめボタンとして表示）
+// サイトセクションの識別子（/docs/, /ui/ などの最初のパス部分）
+export type SiteSection = 'docs' | 'ui';
+
+// サイドバー設定の型
+export interface SidebarConfig {
+	topLevelLinks: TopLevelLinkItem[]; // 全セクション共通のトップレベルリンク
+	sections: Record<SiteSection, SidebarSection[]>; // セクションごとのサイドバー設定
+}
+
+// トップレベルリンク（全セクション共通）
+const topLevelLinks: TopLevelLinkItem[] = [
 	{
 		type: 'toplink',
 		label: 'Docs',
@@ -91,19 +96,21 @@ const sidebarConfig: SidebarItem[] = [
 		link: '/ui/',
 		icon: BookOpenTextIcon,
 	},
+];
 
-	// はじめにカテゴリ：ルートディレクトリ内を自動取得
+// /docs/ セクション用のサイドバー設定
+const docsSidebar: SidebarSection[] = [
+	// はじめにカテゴリ
 	{
 		label: 'はじめに',
 		translate: { en: 'Getting Started' },
 		items: ['/docs/overview/', '/docs/installation/', '/docs/changelog/'],
 	},
 
-	// CSSカテゴリ：ディレクトリ内を自動取得
+	// 概要カテゴリ
 	{
 		label: '概要',
 		translate: { en: 'Overview' },
-		// dir: 'css',
 		items: [
 			'/docs/css-methodology/',
 			'/docs/tokens/',
@@ -120,7 +127,7 @@ const sidebarConfig: SidebarItem[] = [
 			'/docs/customize/',
 		],
 	},
-	// Components カテゴリ
+	// コアコンポーネント カテゴリ
 	{
 		label: 'コアコンポーネント',
 		translate: { en: 'Core Components' },
@@ -171,4 +178,53 @@ const sidebarConfig: SidebarItem[] = [
 	},
 ];
 
+// /ui/ セクション用のサイドバー設定
+const uiSidebar: SidebarSection[] = [
+	{
+		label: 'Components',
+		items: ['/ui/test/'],
+	},
+];
+
+// サイドバー設定をエクスポート
+const sidebarConfig: SidebarConfig = {
+	topLevelLinks,
+	sections: {
+		docs: docsSidebar,
+		ui: uiSidebar,
+	},
+};
+
 export default sidebarConfig;
+
+/**
+ * URLからサイトセクションを取得するヘルパー
+ * @param pathname URLのパス部分
+ * @returns サイトセクション（'docs' | 'ui'）、該当なしの場合は 'docs' をデフォルトとして返す
+ */
+export function getSiteSection(pathname: string): SiteSection {
+	// パスから言語プレフィックスを除去してセクションを判定
+	const pathWithoutLang = pathname.replace(/^\/(en|ja)\//, '/');
+	if (pathWithoutLang.startsWith('/ui/') || pathWithoutLang === '/ui') {
+		return 'ui';
+	}
+	return 'docs';
+}
+
+/**
+ * URLからslugを抽出するヘルパー
+ * /docs/xxx/ → xxx（コンテンツは content/ja/xxx.mdx）
+ * /ui/yyy/ → ui/yyy（コンテンツは content/ja/ui/yyy.mdx）
+ */
+export function extractSlugFromUrl(url: string): string {
+	// /docs/ の場合はプレフィックスを除去（コンテンツは content/{lang}/ 直下）
+	if (url.startsWith('/docs/')) {
+		return url.replace(/^\/docs\//, '').replace(/^\/|\/$/g, '');
+	}
+	// /ui/ の場合は ui/ プレフィックスを保持（コンテンツは content/{lang}/ui/ 配下）
+	if (url.startsWith('/ui/')) {
+		return 'ui/' + url.replace(/^\/ui\//, '').replace(/^\/|\/$/g, '');
+	}
+	// その他の場合
+	return url.replace(/^\/|\/$/g, '');
+}
