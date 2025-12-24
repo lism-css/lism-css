@@ -70,27 +70,3 @@
 	background-color: var(--divider);
 	list-style: none;
 }
-
-/* サイドバーナビのトップレベルリンク（大きめボタン） */
-.c--nav__toplinks {
-	padding-inline: var(--s10);
-}
-.c--nav__toplink {
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	padding: var(--s15) var(--s20);
-	border-radius: var(--radius-s);
-	background-color: var(--base-2);
-	font-weight: bold;
-	text-align: center;
-	transition: background-color 0.2s ease;
-
-	&:hover {
-		background-color: var(--base-3);
-	}
-	&[aria-current='page'] {
-		background-color: var(--keycolor);
-		color: var(--keycolor--text, #fff);
-	}
-}

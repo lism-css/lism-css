@@ -7,6 +7,7 @@
  */
 
 import type { LangCode } from '@/config/site';
+import { BookOpenTextIcon } from '@phosphor-icons/react';
 
 // 翻訳オブジェクトの型（root言語以外の翻訳を指定）
 type TranslateLabels = Partial<Record<Exclude<LangCode, 'ja'>, string>>;
@@ -33,6 +34,7 @@ export type TopLevelLinkItem = {
 	label: string;
 	translate?: TranslateLabels;
 	link: string;
+	icon?: React.ElementType; // アイコンコンポーネント
 };
 
 // セパレータかどうかを判定するヘルパー
@@ -80,14 +82,15 @@ const sidebarConfig: SidebarItem[] = [
 	{
 		type: 'toplink',
 		label: 'Docs',
-		link: '/docs/overview/',
+		link: '/docs/',
+		icon: BookOpenTextIcon,
 	},
-	// {
-	// 	type: 'toplink',
-	// 	label: 'Template Library',
-	// 	translate: { en: 'Template Library' },
-	// 	link: '/lib/',
-	// },
+	{
+		type: 'toplink',
+		label: 'UI',
+		link: '/ui/',
+		icon: BookOpenTextIcon,
+	},
 
 	// はじめにカテゴリ：ルートディレクトリ内を自動取得
 	{

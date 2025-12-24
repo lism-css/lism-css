@@ -4,7 +4,8 @@
  * 言語対応：現在の言語に応じたリンクとラベルを表示
  */
 import { Stack, HTML } from 'lism-css/astro';
-import NavLink from '@ui/NavLink.astro';
+import { Icon } from 'lism-css/react';
+import NavLink from '@parts/NavLink.astro';
 import sidebarConfig, { type SidebarItem, type SidebarSection, getTranslatedLabel, isSeparator, isTopLevelLink } from '../config/sidebar';
 import { getPostsByLang, type PostEntry } from '@/lib/content';
 import { getLangFromUrl, getLocalizedUrl, getPathWithoutLang, type LangCode } from '@/lib/i18n';
@@ -108,11 +109,11 @@ function hasDirProperty(item: SidebarSection): item is SidebarSection & { dir: s
 const topLevelLinks = sidebarConfig.filter(isTopLevelLink);
 ---
 
-<Stack tag="nav" class="sidebar-nav set-cqUnit" g="30">
+<Stack tag="nav" class="siteNav set-cqUnit" g="30">
 	{/* トップレベルリンク（大きめボタンとして表示） */}
 	{
 		topLevelLinks.length > 0 && (
-			<Stack tag="ul" class="c--nav__toplinks" g="5">
+			<Stack class="siteNav_toplinks" g="5">
 				{topLevelLinks.map((item) => {
 					// 言語対応のパスを生成
 					const itemPath = getLocalizedUrl(item.link.endsWith('/') ? item.link : `${item.link}/`, currentLang);
@@ -121,11 +122,12 @@ const topLevelLinks = sidebarConfig.filter(isTopLevelLink);
 					// ラベルを現在の言語で取得
 					const itemLabel = getTranslatedLabel(item.label, item.translate, currentLang);
 					return (
-						<HTML.li>
-							<NavLink href={itemPath} isActive={isActive} class="c--nav__toplink">
+						<HTML.a href={itemPath} data-active={isActive} setHov class="siteNav_toplink" td="none" c="inherit" lh="s">
+							<HTML.span layout="flex" g="5" ai="center">
+								<Icon icon={item.icon} fz="l" />
 								{itemLabel}
-							</NavLink>
-						</HTML.li>
+							</HTML.span>
+						</HTML.a>
 					);
 				})}
 			</Stack>
@@ -147,13 +149,13 @@ const topLevelLinks = sidebarConfig.filter(isTopLevelLink);
 			}
 
 			return (
-				<Stack g="10">
+				<Stack class="siteNav_group" g="5">
 					{/* セクションのラベル（見出し） */}
-					<HTML.h lv="3" fz="s" fw="bold" lts="l" o="-10" px="10">
+					<HTML.h class="siteNav_title" lv="3" fz="2xs" fw="normal" py="5" o="-10" tt="upper">
 						{sectionLabel}
 					</HTML.h>
 
-					<Stack tag="ul" g="0">
+					<HTML.ul class="siteNav_list" px-s="10" bd-x-s>
 						{hasDirProperty(section)
 							? // dir指定の場合：ディレクトリ内の記事を自動取得
 								postsByCategory[section.dir]?.map((post) => {
@@ -177,7 +179,7 @@ const topLevelLinks = sidebarConfig.filter(isTopLevelLink);
 								section.items.map((item) => {
 									// セパレータの場合は区切り線を表示
 									if (isSeparator(item)) {
-										return <HTML.li class="c--nav__separator" role="separator" aria-hidden="true" />;
+										return <HTML.li class="c--nav__separator" role="separator" mx="5" aria-hidden="true" />;
 									}
 
 									// 文字列の場合はURLとして扱い、MDXのフロントマターからラベルを取得
@@ -216,9 +218,28 @@ const topLevelLinks = sidebarConfig.filter(isTopLevelLink);
 										</HTML.li>
 									);
 								})}
-					</Stack>
+					</HTML.ul>
 				</Stack>
 			);
 		})
 	}
 </Stack>
+
+<style>
+	/* サイドバーナビのトップレベルリンク（大きめボタン） */
+	.siteNav_toplinks {
+	}
+
+	.siteNav_toplink {
+		background-image: linear-gradient(120deg, var(--grad_01), var(--grad_02));
+		border-radius: var(--bdrs--20);
+	}
+	/* [data-active]{} */
+	.siteNav_toplink > span {
+		padding: var(--s10) var(--s15);
+		margin: 2px;
+		border-radius: calc(var(--bdrs--20) - 2px);
+		background-color: var(--_isHov, color-mix(in srgb, var(--base), transparent 10%)) var(--_notHov, var(--base));
+	}
+	/* .siteNav_toplink > .a--icon {} */
+</style>
