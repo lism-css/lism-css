@@ -53,6 +53,11 @@ const sidebarConfig: SidebarItem[] = [
 		label: 'CSS',
 		dir: 'css',
 	},
+	// Components カテゴリ
+	{
+		label: 'Components',
+		dir: 'components',
+	},
 	{
 		label: 'State Modules',
 		dir: 'modules/state',
