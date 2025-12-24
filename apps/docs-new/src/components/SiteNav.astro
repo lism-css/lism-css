@@ -5,7 +5,13 @@
  */
 import { Stack, HTML } from 'lism-css/astro';
 import NavLink from '@ui/NavLink.astro';
-import sidebarConfig, { type SidebarItem, getTranslatedLabel, isSeparator } from '../config/sidebar';
+import sidebarConfig, {
+	type SidebarItem,
+	type SidebarSection,
+	getTranslatedLabel,
+	isSeparator,
+	isTopLevelLink,
+} from '../config/sidebar';
 import { getPostsByLang, type PostEntry } from '@/lib/content';
 import { getLangFromUrl, getLocalizedUrl, getPathWithoutLang, type LangCode } from '@/lib/i18n';
 
@@ -15,15 +21,18 @@ const currentLang = getLangFromUrl(Astro.url);
 // 現在の言語の記事を取得
 const allPosts = await getPostsByLang(currentLang);
 
+// トップレベルリンクを除外したセクション（カテゴリ）のみをフィルタリング
+const sectionItems = sidebarConfig.filter((item): item is SidebarSection => !isTopLevelLink(item));
+
 // sidebarConfigで定義されているdir値を取得（ネストしたディレクトリも含む）
-const configuredDirs = sidebarConfig
-	.filter((item): item is SidebarItem & { dir: string } => 'dir' in item)
+const configuredDirs = sectionItems
+	.filter((item): item is SidebarSection & { dir: string } => 'dir' in item)
 	.map((item) => item.dir)
 	.sort((a, b) => b.length - a.length); // 長い（深い）ディレクトリを先にマッチさせる
 
 // items で参照されている記事の slug を取得（これらはルートカテゴリから除外）
 const itemsReferencedSlugs = new Set<string>();
-sidebarConfig.forEach((section) => {
+sectionItems.forEach((section) => {
 	if ('items' in section) {
 		section.items.forEach((item) => {
 			if (!isSeparator(item)) {
@@ -79,15 +88,40 @@ Object.values(postsByCategory).forEach((posts) => {
 // 現在のページパス（言語プレフィックスなし）を取得してアクティブ判定に使用
 const currentPathWithoutLang = getPathWithoutLang(Astro.url);
 
-// サイドバーアイテムがdir指定かどうかをチェックするヘルパー
-function hasDirProperty(item: SidebarItem): item is SidebarItem & { dir: string } {
+// サイドバーセクションがdir指定かどうかをチェックするヘルパー
+function hasDirProperty(item: SidebarSection): item is SidebarSection & { dir: string } {
 	return 'dir' in item;
 }
+
+// トップレベルリンクをフィルタリング
+const topLevelLinks = sidebarConfig.filter(isTopLevelLink);
 ---
 
 <Stack tag="nav" class="sidebar-nav set-cqUnit" g="30">
+	{/* トップレベルリンク（大きめボタンとして表示） */}
+	{topLevelLinks.length > 0 && (
+		<Stack tag="ul" class="c--nav__toplinks" g="5">
+			{topLevelLinks.map((item) => {
+				// 言語対応のパスを生成
+				const itemPath = getLocalizedUrl(item.link.endsWith('/') ? item.link : `${item.link}/`, currentLang);
+				const pathForCompare = item.link.endsWith('/') ? item.link : `${item.link}/`;
+				const isActive = currentPathWithoutLang === pathForCompare || currentPathWithoutLang === item.link;
+				// ラベルを現在の言語で取得
+				const itemLabel = getTranslatedLabel(item.label, item.translate, currentLang);
+				return (
+					<HTML.li>
+						<NavLink href={itemPath} isActive={isActive} class="c--nav__toplink">
+							{itemLabel}
+						</NavLink>
+					</HTML.li>
+				);
+			})}
+		</Stack>
+	)}
+
+	{/* 通常のナビゲーションセクション */}
 	{
-		sidebarConfig.map((section) => {
+		sectionItems.map((section) => {
 			// セクションラベルを現在の言語で取得
 			const sectionLabel = getTranslatedLabel(section.label, section.translate, currentLang);
 

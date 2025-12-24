@@ -59,7 +59,7 @@ export const siteConfig = {
 
 	// Google Analytics設定
 	googleAnalytics: {
-		// 測定ID（G-XXXXXXXXXX形式）を入力。
+		// 測定ID（G-XXXXXXXXXX形式）
 		measurementId: '',
 	},
 } as const;

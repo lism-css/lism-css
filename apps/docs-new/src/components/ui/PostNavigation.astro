@@ -7,7 +7,7 @@
 import { Flex, Lism, HTML } from 'lism-css/astro';
 import { getPostsByLang, type PostEntry } from '@/lib/content';
 import { getRootLang, getLocalizedUrl, t, type LangCode } from '@/lib/i18n';
-import sidebarConfig, { type SidebarItem, isSeparator } from '@/config/sidebar';
+import sidebarConfig, { type SidebarItem, type SidebarSection, isSeparator, isTopLevelLink } from '@/config/sidebar';
 
 interface Props {
 	currentSlug: string;
@@ -46,14 +46,18 @@ Object.values(postsByCategory).forEach((posts) => {
 	});
 });
 
-// サイドバーアイテムがdir指定かどうかをチェックするヘルパー
-function hasDirProperty(item: SidebarItem): item is SidebarItem & { dir: string } {
+// サイドバーセクションがdir指定かどうかをチェックするヘルパー
+function hasDirProperty(item: SidebarSection): item is SidebarSection & { dir: string } {
 	return 'dir' in item;
 }
 
 // sidebar.ts の順序で全記事をフラットに並べる
 const orderedPosts: PostEntry[] = [];
-for (const section of sidebarConfig) {
+for (const item of sidebarConfig) {
+	// トップレベルリンクはスキップ（記事一覧には含めない）
+	if (isTopLevelLink(item)) continue;
+
+	const section = item as SidebarSection;
 	if (hasDirProperty(section)) {
 		// dir指定の場合：カテゴリ内の記事をソート順で追加
 		const posts = postsByCategory[section.dir];
@@ -62,11 +66,11 @@ for (const section of sidebarConfig) {
 		}
 	} else {
 		// items指定の場合：指定された順序で記事を追加
-		for (const item of section.items) {
+		for (const navItem of section.items) {
 			// セパレータはスキップ
-			if (isSeparator(item)) continue;
+			if (isSeparator(navItem)) continue;
 			// linkからslugを取得（先頭・末尾のスラッシュを除去）
-			const slug = item.link.replace(/^\/|\/$/g, '');
+			const slug = navItem.link.replace(/^\/|\/$/g, '');
 			const post = allPosts.find((p) => p.slug === slug);
 			if (post) {
 				orderedPosts.push(post);
