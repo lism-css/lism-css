@@ -1,17 +1,160 @@
 ---
 /**
- * トップページ（root言語用）
- * 最新の記事一覧を表示
+ * トップページ
+ * Lism CSSの紹介とドキュメントへの導線
  */
-import SimpleLayout from '@/layouts/SimpleLayout.astro';
-import { HTML } from 'lism-css/astro';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { Container, Stack, Columns, Grid, HTML, Spacer, Icon, Flex, Text, Frame, LinkBox, Lism } from 'lism-css/astro';
+import Button from '@/components/ex/Button/index.astro';
 import { siteConfig } from '@/config/site';
 import { getRootLang } from '@/lib/i18n';
 
 // 現在の言語（root言語）
 const currentLang = getRootLang();
+
+// 特徴ポイント
+const POINTS = [
+	{
+		title: 'reset.css レベルからの設計',
+		desc: 'Lism CSSは、reset.cssからユーティリティクラスまで、サイト全体のCSS設計理論を構築しています。',
+	},
+	{
+		title: 'デザイントークン',
+		desc: '事前にデザイントークンをCSS変数で定義します。それらを流用することでサイト全体の一貫性を保ちます。',
+	},
+	{
+		title: 'レイアウトファースト',
+		desc: 'WEBサイトでよく使われるレイアウト要素を細分化し、基礎となるモジュールを定義しています。',
+	},
+	{
+		title: 'モダン設計',
+		desc: '@layer, Containerクエリなど、モダンなCSSの機能を積極的に活用しています。',
+	},
+	{
+		title: 'レスポンシブ対応',
+		desc: 'ユーティリティ & CSS変数を組み合わせてレスポンシブ対応する独自アプローチを採用しています。',
+	},
+	{
+		title: 'どんなサイトにも使えます',
+		desc: 'Lismはあくまで設計理論。設定・ビルド不要で素のHTMLコーディングにも活用できます。',
+	},
+];
+
+// 特徴カード
+const FEATURES = [
+	{ color: '320 78% 56%', bdColor: 'pink:40%', title: 'Lightweight', desc: 'Start from just 30kb~, with responsive design.' },
+	{ color: '206 85% 60%', bdColor: 'blue:40%', title: 'No Build', desc: 'No config, No build. Just load the CSS to start using.' },
+	{ color: '261 70% 56%', bdColor: 'purple:40%', title: 'Modern CSS', desc: '@layer, Container Query, Grid, CSS Variables' },
+	{ color: '132 80% 60%', bdColor: 'green:40%', title: 'Free', desc: 'Lism CSS is available for free.' },
+];
+
+// ナビゲーションカード
+const NAV_CARDS = [
+	{ href: '/docs/', title: 'Docs', desc: 'Lism CSSの使い方やコンポーネントの詳細' },
+	{ href: '/ui/', title: 'UI Components', desc: 'すぐに使えるUIコンポーネント集' },
+	{ href: '/templates/', title: 'Templates', desc: 'Webサイト用のテンプレート集' },
+];
 ---
 
-<SimpleLayout title={siteConfig.name} lang={currentLang}>
-	<HTML.h lv="1">Top page</HTML.h>
-</SimpleLayout>
+<BaseLayout title={siteConfig.name} description={siteConfig.description} excludeFromSearch>
+	{/* ヒーローセクション */}
+	<Stack tag="section" g="30" py="60" ta="center">
+		<Stack g="20">
+			<HTML.h lv="1" fz="4xl" fw="bold" ff="mono">Lism CSS</HTML.h>
+			<Text fz="l" c="text-2" lh="l">
+				WEBサイト向けのレイアウトファーストなCSSフレームワーク。<br />
+				コーディングを軽やかに。デザインに調和とリズムを。
+			</Text>
+		</Stack>
+
+		<Flex g="20" jc="center" fxw="wrap">
+			<Button href="/docs/overview/" variant="fill" bdrs="99" px="30"> ドキュメント </Button>
+			<Button href="https://github.com/lism-css/lism-css" target="_blank" variant="outline" bdrs="99" px="30"> GitHub </Button>
+		</Flex>
+	</Stack>
+
+	<Spacer h="40" />
+
+	{/* 独自のCSS設計 */}
+	<Stack tag="section" g="30" class="l--flow set-shadow">
+		<HTML.h lv="2" fz="2xl" fw="bold">🎨 独自のCSS設計</HTML.h>
+
+		<Columns cols={[2, 2, 3]} g={[30, 40]}>
+			{
+				POINTS.map((point) => (
+					<Stack g="15" p="20" bdrs="20" bgc="base" bxsh="30" lh="s">
+						<HTML.p fw="bold">{point.title}</HTML.p>
+						<HTML.p fz="s" c="text-2">
+							{point.desc}
+						</HTML.p>
+					</Stack>
+				))
+			}
+		</Columns>
+	</Stack>
+
+	<Spacer h="60" />
+
+	{/* 特徴カード */}
+	<Columns cols={[1, 2]} g={[40]} lh="s">
+		{
+			FEATURES.map((feature) => (
+				<Stack
+					class="set-shadow"
+					style={{ '--sh-hsl': feature.color }}
+					g="5"
+					py="20"
+					px="40"
+					bdrs="99"
+					bgc="base"
+					bxsh="30"
+					bd
+					bdc={feature.bdColor}
+				>
+					<HTML.p fz="xl" fw="bold">
+						{feature.title}
+					</HTML.p>
+					<HTML.p c="text-2">{feature.desc}</HTML.p>
+				</Stack>
+			))
+		}
+	</Columns>
+
+	<Spacer h="60" />
+
+	{/* 専用コンポーネント */}
+	<Stack tag="section" g="20" class="l--flow">
+		<HTML.h lv="2" fz="2xl" fw="bold">🧰 専用コンポーネント</HTML.h>
+		<Text> 上記のような独自のCSS設計を手軽に扱えるように、ReactやAstroで利用できるコンポーネントを無償で提供しています。 </Text>
+	</Stack>
+
+	<Spacer h="60" />
+
+	{/* ナビゲーションカード */}
+	<Grid gtc="repeat(auto-fit, minmax(240px, 1fr))" g="20">
+		{
+			NAV_CARDS.map((card) => (
+				<LinkBox href={card.href} layout="stack" g="10" p="30" bdrs="20" bxsh="20" bgc="base">
+					<HTML.p fz="xl" fw="bold">
+						{card.title}
+					</HTML.p>
+					<HTML.p fz="s" c="text-2">
+						{card.desc}
+					</HTML.p>
+				</LinkBox>
+			))
+		}
+	</Grid>
+
+	<Spacer h="60" />
+
+	{/* CTAボタン */}
+	<Flex jc="center">
+		<Button variant="fill" fz="l" href="/docs/overview/" bdrs="99" g="15" px="40">
+			<span>Getting Started</span>
+			<Icon lh="1" fz="l">🚀</Icon>
+		</Button>
+	</Flex>
+
+	<Spacer h="60" />
+</BaseLayout>
