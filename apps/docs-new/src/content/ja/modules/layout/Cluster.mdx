@@ -1,0 +1,70 @@
+---
+title: 'Cluster'
+description: ...
+---
+
+import { Box, Cluster, HTML, Lism } from 'lism-css/astro';
+import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage, EmbedCode } from "@/components/mdx";
+
+複数の要素を横方向に連続的に並べて配置し、数が多ければ折り返すレイアウトモジュールです。
+
+
+## CSS
+
+<EmbedCode dirPath='packages/lism-css' srcPath='src/scss/modules/layout/_cluster.scss' />
+
+
+## Import
+
+<ImportPackage component='Cluster' />
+
+
+## Usage
+
+<Preview>
+	<PreviewTitle>シンプルな`<Cluster>`の例</PreviewTitle>
+	<PreviewArea resize p='20'>
+		<Cluster g='15'>
+			<Lism bd px='10' bdrs='10'>Lorem</Lism>
+			<Lism bd px='10' bdrs='10'>ipsum</Lism>
+			<Lism bd px='10' bdrs='10'>Dolor</Lism>
+			<Lism bd px='10' bdrs='10'>Sit amet</Lism>
+			<Lism bd px='10' bdrs='10'>Consectetur</Lism>
+			<Lism bd px='10' bdrs='10'>Adipisicing</Lism>
+			<Lism bd px='10' bdrs='10'>Elit</Lism>
+			<Lism bd px='10' bdrs='10'>Quisquam</Lism>
+			<Lism bd px='10' bdrs='10'>Quos</Lism>
+		</Cluster>
+	</PreviewArea>
+	<PreviewCode slot="tab" label="JSX">
+	```jsx "Cluster"
+	<Cluster g='15'>
+		<Lism bd px='10' bdrs='10'>Lorem</Lism>
+		<Lism bd px='10' bdrs='10'>ipsum</Lism>
+		<Lism bd px='10' bdrs='10'>Dolor</Lism>
+		<Lism bd px='10' bdrs='10'>Sit amet</Lism>
+		<Lism bd px='10' bdrs='10'>Consectetur</Lism>
+		<Lism bd px='10' bdrs='10'>Adipisicing</Lism>
+		<Lism bd px='10' bdrs='10'>Elit</Lism>
+		<Lism bd px='10' bdrs='10'>Quisquam</Lism>
+		<Lism bd px='10' bdrs='10'>Quos</Lism>
+	</Cluster>
+	```
+	</PreviewCode>
+	<PreviewCode slot="tab" label="HTML">
+	```html "l--cluster"
+	<div class="l--cluster -g:15">
+		<span class="-bd -px:10 -bdrs:10">Lorem</span>
+		<span class="-bd -px:10 -bdrs:10">ipsum</span>
+		<span class="-bd -px:10 -bdrs:10">Dolor</span>
+		<span class="-bd -px:10 -bdrs:10">Sit amet</span>
+		<span class="-bd -px:10 -bdrs:10">Consectetur</span>
+		<span class="-bd -px:10 -bdrs:10">Adipisicing</span>
+		<span class="-bd -px:10 -bdrs:10">Elit</span>
+		<span class="-bd -px:10 -bdrs:10">Quisquam</span>
+		<span class="-bd -px:10 -bdrs:10">Quos</span>
+	</div>
+	```
+	</PreviewCode>
+</Preview>
+

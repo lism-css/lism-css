@@ -1,0 +1,217 @@
+---
+title: 'SideMain'
+description: ...
+---
+
+import { SideMain, Grid, Dummy, Box, Stack, Spacer } from 'lism-css/astro';
+import {
+	Preview,
+	PreviewArea,
+	PreviewTitle,
+	PreviewCode,
+	ImportPackage,
+	PropBadge,
+	EmbedCode,
+} from '@/components/mdx';
+
+メディアクエリ・コンテナクエリに依存せず、維持したいコンテンツの長さを基準にして横並びと縦並びの切り替えを行うことができる2カラムレイアウトを作成します。
+
+メインコンテンツとそのサイドコンテンツ、のようなレイアウトに活用できます。
+
+## 基本構造
+
+```pug
+div.l--sideMain
+	div
+	div.is--side
+```
+
+## CSS
+
+<EmbedCode dirPath='packages/lism-css' srcPath='src/scss/modules/layout/_sideMain.scss' />
+
+
+## Import
+
+<ImportPackage component='SideMain' />
+
+## Props
+
+| プロパティ | 出力 | 説明  |
+|---|---|---|
+| `sideW`| <PropBadge type="cssvar">`--sideW`</PropBadge> | side要素の横幅 |
+| `mainW` | <PropBadge type="cssvar">`--mainW`</PropBadge> | main要素で維持したい最小幅 |
+
+{/* その他、[`<Flex>`で使えるProps](/components/flex#props)が使えます。 */}
+
+## Usage
+
+子要素に`.is--side`が必要です。  
+`.is--side`の横幅を`--sideW`で指定した値に固定しつつ、もう一方のメイン要素が`--mainW`で指定した横幅を下回るようになると、自動で1カラムに切り替わるようになっています。
+
+<Preview>
+	<PreviewTitle>使用例</PreviewTitle>
+	<PreviewArea resize p='20'>
+		<SideMain sideW='12rem' mainW='20rem' g='20'>
+			<Box p='15' bd bdc='blue'>
+				<p>Main Content</p>
+				<Dummy />
+			</Box>
+			<Box isSide p='15' bd bdc='red'>
+				<p>Side Content</p>
+			</Box>
+		</SideMain>
+	</PreviewArea>
+	<PreviewCode slot='tab' label='JSX'>
+		```jsx "sideW" "isSide"
+		<SideMain sideW='12rem' mainW='20rem' g='20'>
+			<Box p='15' bd bdc='blue'>
+				<p>Main Content</p>
+				<Dummy />
+			</Box>
+			<Box isSide p='15' bd bdc='red'>
+				<p>Side Content</p>
+			</Box>
+		</SideMain>
+		```
+	</PreviewCode>
+	<PreviewCode slot='tab' label='HTML'>
+		```html "is--side" "--sideW"
+		<div class='l--sideMain -g:20' style='--sideW:12rem;--mainW:20rem'>
+			<div class='l--box -p:15 -bd' style='--bdc:var(--blue)'>
+				<p>Main Content</p>
+				<p>Lorem ipsum dolor sit, amet consectetur adipisicing elit, sed do eiusmod tempor. Non facere laudantium ex eos doloribus aut dolore nisi.</p>
+			</div>
+			<div class='l--box is--side -p:15 -bd' style='--bdc:var(--red)'>
+				<p>Side Content</p>
+			</div>
+		</div>
+		```
+	</PreviewCode>
+</Preview>
+
+#### 反転
+
+`-fxd:row-r`クラス（`flex-direction:row-reverse`）を併用することで、横並びの時の順番だけを反転させることができます。
+
+:::check
+これにより、横並びの時は左側、縦並びの時は下側にside要素を配置できます。
+:::
+
+<Preview>
+	<PreviewTitle>例</PreviewTitle>
+	<PreviewArea resize p='20'>
+		<SideMain fxd='row-r' sideW='10rem' mainW='16rem' g='20'>
+			<Box>
+				<Dummy />
+			</Box>
+			<Box isSide bgc='blue:20%'>
+				Side Content
+			</Box>
+		</SideMain>
+	</PreviewArea>
+	<PreviewCode slot='tab' label='JSX'>
+		```jsx "fxd='row-r'"
+		<SideMain fxd='row-r' sideW='10rem' mainW='16rem' g='20'>
+			<Box>
+				<Dummy />
+			</Box>
+			<Box isSide>Side Content</Box>
+		</SideMain>
+		```
+	</PreviewCode>
+	<PreviewCode slot='tab' label='HTML'>
+		```html "-fxd:row-r"
+		<div class='l--sideMain -fxd:row-r -g:20' style='--sideW:10rem;--mainW:16rem;'>
+			<div class='l--box'>
+				<p>Lorem ipsum dolor sit amet, ...</p>
+			</div>
+			<div class='l--box is--side'>
+				Side Content
+			</div>
+		</div>
+		```
+	</PreviewCode>
+</Preview>
+
+## `Grid`を使って似たレイアウトを構成する例
+
+`SideMain`(`.l--sideMain`)はブレイクポイントに依存しませんが、[`Grid`](/components/grid)で構成することで、レイアウトの切り替えポイントをブレイクポイントで指定して同じようなレイアウトを構築することもできます。
+
+<Preview>
+	<PreviewTitle>`Grid`を使って`SideMain`のようなレイアウトを構築する例</PreviewTitle>
+	<PreviewArea resize p='20'>
+		<Grid gta={[`'.' 'side'`, `'. side'`]} gtc={[null, '1fr 10rem']} g='20'>
+			<Box>
+				<Dummy />
+			</Box>
+			<Box ga='side' bgc='blue:20%'>
+				Side Content
+			</Box>
+		</Grid>
+	</PreviewArea>
+	<PreviewCode slot='tab' label='JSX'>
+		```jsx "gta=" "gtc="
+		<Grid gta={[`'.' 'side'`, `'. side'`]} gtc={[null, '1fr 10rem']} g='20'>
+			<Box>
+				<Dummy />
+			</Box>
+			<Box ga='side'>Side Content</Box>
+		</Grid>
+		```
+	</PreviewCode>
+	<PreviewCode slot='tab' label='HTML'>
+		```html "-gd -gd_sm" "'. side' / 1fr 10rem" "-ga" "--ga:side"
+		<div class="l--grid -gta -gta_sm -gtc_sm -g:20" style="--gta:'.' 'side';--gta_sm:'. side';--gtc_sm:1fr 10rem">
+			<div class='l--box'>
+				<p>
+					Lorem ipsum dolor sit, amet consectetur adipisicing elit, sed do eiusmod tempor.
+					Non facere laudantium ex eos doloribus aut dolore nisi.
+				</p>
+			</div>
+			<div class='l--box -ga' style='--ga:side'>
+				Side Content
+			</div>
+		</div>
+		```
+	</PreviewCode>
+</Preview>
+
+<Preview>
+	<PreviewTitle>`side`を左側、ブレイクポイントを`@md`にする例</PreviewTitle>
+	<PreviewArea resize p='20'>
+		<Grid gta={[`'.' 'side'`, null, `'side .'`]} gtc={[null, null, '10rem 1fr']} g='20'>
+			<Box>
+				<Dummy />
+			</Box>
+			<Box ga='side' bgc='blue:20%'>
+				Side Content
+			</Box>
+		</Grid>
+	</PreviewArea>
+	<PreviewCode slot='tab' label='JSX'>
+		```jsx
+		<Grid gta={[`'.' 'side'`, null, `'side .'`]} gtc={[null, null, '10rem 1fr']} g='20'>
+			<Box>
+				<Dummy />
+			</Box>
+			<Box ga='side'>Side Content</Box>
+		</Grid>
+		```
+	</PreviewCode>
+	<PreviewCode slot='tab' label='HTML'>
+		```html
+		<div class="l--grid -gta -gta_md -gtc_md -g:20" style="--gta:'.' 'side';--gta_md:'side .';--gtc_md:10rem 1fr">
+			<div class='l--box'>
+				<p>
+					Lorem ipsum dolor sit, amet consectetur adipisicing elit, sed do eiusmod tempor.
+					Non facere laudantium ex eos doloribus aut dolore nisi.
+				</p>
+			</div>
+			<div class='l--box -ga' style='--ga:side'>
+				Side Content
+			</div>
+		</div>
+		```
+	</PreviewCode>
+</Preview>

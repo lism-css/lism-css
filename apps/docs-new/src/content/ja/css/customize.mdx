@@ -1,0 +1,313 @@
+---
+title: 'Customize'
+description: ...
+order: 49
+---
+
+import { Box, Flex } from "lism-css/astro";
+import { Preview, PreviewArea, PreviewTitle, PreviewCode, IconBadge, EmbedCode } from "@/components/mdx";
+
+
+Lism CSS のnpmパッケージ `lism-css` から読み込めるCSSやコンポーネントで受け付けるプロパティに関する設定を上書きしてカスタマイズする方法を紹介します。
+
+
+## `@layer`をオフにする
+
+`lism-css/main.css` ではなく、`lism-css/main_no_layer.css` を読み込むことで、`@layer`をオフにすることができます。
+
+`@layer`をオフにするだけであれば、読み込むCSSファイルを切り替えるだけですみます。
+
+
+
+## SCSS でのカスタマイズ
+
+SCSSの変数を上書きすることで、読み込むCSSのカスタマイズが可能です。
+
+
+### SCSSの設定変数を上書きする
+
+`lism-css/scss/_setting.scss`で定義している変数は上書きすることができるようになっています。
+
+<PreviewTitle>`_setting.scss`</PreviewTitle>
+<EmbedCode dirPath='packages/lism-css' srcPath='src/scss/_setting.scss' />
+
+- `$breakpoints`: ブレイクポイント数値の定義
+- `$common_support_bp`: 主要なProp Classで共通してサポートするブレイクポイント
+- `$is_container_query`: コンテナクエリを使用するかどうか
+- `$fzmol`: フォントサイズの計算に使用する分子の数.（`7`以上の数のみサポート）
+- `$props`: Prop Classの出力設定
+
+これらを`@use`, `with` で上書きすることができるようになっています。
+
+上書き定義をしてから `lism-css/scss/main.scss` を読み込むことで、スタイルをカスタマイズできます。
+
+
+<PreviewTitle>SCSSの設定変数の上書きフォーマット</PreviewTitle>
+```scss
+// 変数の上書きフォーマット
+@use '../path-to/node_modules/lism-css/scss/setting' with (
+	$breakpoints: (
+		...
+	),
+	$common_support_bp: 'sm|md|lg',
+	$is_container_query: 1|0,
+	$fzmol: 7|8|9|10,
+	$props: (
+		...
+	)
+);
+
+// そのあとで、Lism の scss ファイルを読み込む (@layer を使わないようにするなら main ではなく main_no_layer を読み込んでください)
+@use '../path-to/node_modules/lism-css/scss/main';
+// @use '../path-to/node_modules/lism-css/scss/main_no_layer';
+```
+
+<IconBadge /> `@layer` のオン・オフは変数管理ではありません。読み込む`main.scss`を切り替えてください。  
+<IconBadge /> Astro の場合は`../path-to/node_modules/`部分は不要です。
+
+
+
+{/* 例えば、`sm`,`md`サイズのサポートだけで良い場合は、`$common_support_bp`を`md`に設定することで、`lg`以降のブレイクポイントのユーティリティクラスを出力しないようにできます。 */}
+
+
+
+### カスタマイズ例
+
+<PreviewTitle>ブレイクポイントを変更し、コンテナクエリではなくメディアクエリを使用する</PreviewTitle>
+```scss
+// 設定カスタマイズ
+@use '../path-to/node_modules/lism-css/scss/setting' with (
+	$breakpoints: (
+		'sm': '400px', // smサイズを変更する
+	),
+	$common_support_bp: 'lg',  // lgサイズまでのユーティリティクラスを生成する
+	$is_container_query: 0, // media query で出力する
+	$fzmol: 7, // フォントサイズのスケーリングを変更する
+	$default_important: 1, // Prop クラスに対してデフォルトで !important を付与する
+);
+
+@use '../path-to/node_modules/lism-css/scss/main';
+```
+
+
+<PreviewTitle>Prop Classの出力をカスタマイズする</PreviewTitle>
+```scss
+// 設定カスタマイズ
+@use '../path-to/node_modules/lism-css/scss/setting' with (
+	$props: (
+		'fz': (
+			important: 1, // fzのユーティリティクラスに対して !important を出力する
+		),
+		'h': (
+			bp: 0, // 'h'のブレイクポイント対応クラスを出力しないようにする
+		),
+		'p': (
+			bp: 'lg', // 'p'のユーティリティクラスは、 lg サイズまで出力する
+			utilities: ('box': '2em'), //.-p:box{--p:2em} を追加する
+		),
+	)
+);
+
+// lism の scssファイルを読み込む
+@use '../path-to/node_modules/lism-css/scss/main';
+```
+
+
+
+### SCSSのコンパイル処理について
+
+SCSSを直接読み込んで使用する場合、コンパイル時にlism-cssのCSSと読み込み順がずれたりする可能性があることに注意してください。
+
+
+## lism.config.js でのカスタマイズ
+
+プロジェクトのルートディレクトリ直下に `lism.config.js` を用意することで、スタイルではなくコンポーネントの挙動をカスタマイズすることができます。
+
+
+<PreviewTitle>lism.config.js のフォーマット</PreviewTitle>
+```js
+export default {
+	props: {
+		hoge: { ... },
+		foo: { ... },
+		...
+	},
+	tokens: {
+		hoge: [...],
+		foo: [...],
+		...
+	},
+	states: {
+		isHoge: 'is--hoge',
+		setFoo: 'set-foo',
+		...
+	},
+};
+```
+
+<Preview>
+	<PreviewTitle>デフォルト値</PreviewTitle>
+	<PreviewCode slot="tab" label="props">
+	<EmbedCode dirPath='packages/lism-css' srcPath='config/defaults/props.js' />
+	</PreviewCode>
+	<PreviewCode slot="tab" label="tokens">
+	<EmbedCode dirPath='packages/lism-css' srcPath='config/defaults/tokens.js' />
+	</PreviewCode>
+	<PreviewCode slot="tab" label="states">
+	<EmbedCode dirPath='packages/lism-css' srcPath='config/defaults/states.js' />
+	</PreviewCode>
+</Preview>
+
+
+### カスタマイズ例
+
+
+例えば次のような設定ファイルを用意するとします。
+
+<PreviewTitle>lism.config.js でのカスタマイズ例</PreviewTitle>
+```js
+import DEFAULT_CONFIG from 'lism-css/default-config';
+const { props, tokens } = DEFAULT_CONFIG;
+
+export default {
+	props: {
+		// Prop Class の出力を追加
+		d: { presets: [...(props.d.presets || []), 'flex', 'grid'] },
+		p: { utils: { box: '2em' } },
+	},
+	tokens: {
+		// トークン追加
+		o: [...(tokens.o || []), '-5'],
+	},
+	states: {
+		// State Module 出力用のプロパティを追加
+		isHoge: 'is--hoge',
+	},
+};
+```
+
+上記のカスタマイズによって、Lismコンポーネントでは次のような挙動が追加されます。
+
+- `d='flex'` → `-d:flex`,
+- `d='grid'` → `-d:grid` を出力する。
+- `p='box'` → `-p:box` を出力する。
+- `o='-5'` → `-o:-5` を出力する。
+- `isHoge` → `is--hoge` を出力する。
+
+{/* <Box p='box' bd o='-5' isHoge>Box</Box> */}
+
+<Preview>
+	<PreviewCode slot='tab' label='HTML'>
+	```jsx
+	<Box p='box' d='flex' o='-5' isHoge>Box</Box>
+
+	↓　出力結果
+
+	<div class="l--box is--hoge -p:box -d:flex -o:-5">Box</div>
+	```
+	</PreviewCode>
+</Preview>
+
+
+:::warning
+ただし、`lism.config.js` でのカスタマイズは、コンポーネントからのHTML出力が変わるだけです。  
+追加されたユーティリティクラスに対するスタイルは読み込まれません。
+:::
+
+
+### 追加スタイルを読み込ませる方法
+
+そのため、スタイルも追加する必要があります。
+
+
+#### lism-css のCLIコマンドでCSSビルドする
+
+`npx lism-css build` を実行することで、`lism.config.js` でのカスタマイズの一部が反映した状態でlism-cssパッケージ内でスタイルのビルド処理が走ります。
+
+今回の例だと、以下のスタイルがこのコマンドによって `lism-css/main.css` 内に自動で生成されます。
+
+```css
+.-d\:flex{ display: flex; }
+.-d\:grid{ display: grid; }
+.-p\:box { padding: 2em; }
+.-o\:5 { opacity: var(--o--n5); }
+```
+
+ただし、このビルド処理を行なってもトークンは自動生成されないため、手動で追加する必要があります。
+
+ビルド処理はパッケージを更新する度に走らせないといけないため、
+
+また、`is--`クラスのスタイルの内容も手動で定義して読み込んでください。
+
+<PreviewTitle>以下は手動読み込みが必要です。</PreviewTitle>
+```css
+:root{
+	--o--n5: 0.9;
+}
+.is--hoge { /* ... */ }
+```
+
+:::warning
+パッケージのスタイルを再ビルドするコマンドのため、パッケージ更新ごとにビルドが必要です。
+:::
+
+#### 手動で追加する方法
+
+ビルドコマンドを使わず、すべて手動でCSSを書いて読み込ませてももちろんOKです。
+
+
+#### SCSSファイルへの追加上書き
+
+
+lism.config.js にあわせて、SCSS変数を上書きしてから読み込ませてもよいでしょう。
+
+
+<PreviewTitle>lism.config.jsにあわせてSCSSもカスタマイズ</PreviewTitle>
+```scss
+// 設定カスタマイズ
+@use '../path-to/node_modules/lism-css/scss/setting' with (
+	$props: (
+		'd': (
+			utilities: (
+				'flex': 'flex',
+				'grid': 'grid',
+			),
+		),
+		'p': (
+			utilities: (
+				'box': '2em',
+			),
+		),
+		'o': (
+			utilities: (
+				'-5': 'var(--o--n5)',
+			),
+		),
+	)
+);
+
+// lism の scssファイルを読み込む
+@use '../path-to/node_modules/lism-css/scss/main';
+
+// トークン追記
+@layer lism.base {
+	:root {
+		--o--n5: 0.9;
+	}
+}
+```
+
+{/* <Box p='box' d='flex' o='-5' isHoge bd>
+<div>Box</div>
+<div>Box</div>
+</Box> */}
+
+{/* ```
+export default {
+	props: {
+		d: { presets: [...(props.d.presets || []), 'flex', 'grid'] },
+		p: { utils: { box: '2em' } },
+		filter: { utils: { 'blur:s': 'blur(3px)', 'blur:m': 'blur(5px)' } },
+	},
+};
+``` */}

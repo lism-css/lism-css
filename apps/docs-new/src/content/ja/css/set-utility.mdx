@@ -1,0 +1,259 @@
+---
+title: 'Setter Class'
+description: ...
+order: 3
+---
+import { Lism, Box, Media, Flex, HTML, Stack, Spacer, Frame } from 'lism-css/astro';
+import { Preview, PreviewArea, PreviewTitle, PreviewCode, PreviewFrame, Reference, EmbedCode } from "@/components/mdx";
+import Button from '@/components/ex/Button/index.astro';
+import { Desktop } from '@phosphor-icons/react';
+
+
+`lism.base`レイヤーの後半で定義される、トークンを再定義したり、変数セットなどを行うクラス群を `set-{className}` の形式で定義しています。
+
+Lism では、これらを **Setter Class** と呼びます。
+
+### `set-plain`
+
+主要スタイルをリセットするためのクラスです。
+
+<EmbedCode dirPath='packages/lism-css' srcPath='src/scss/base/set/_plain.scss' />
+
+<Preview>
+	<PreviewTitle>`set-plain`を`button`に適用する例</PreviewTitle>
+	<PreviewArea p='20' layout=''>
+		<div class='l--flex -g:20 -ff:mono'>
+			<button class='set-plain'>button</button>
+		</div>
+	</PreviewArea>
+	<PreviewCode slot='tab' label='HTML'>
+	```html "'set-plain'"
+	<div class='l--flex -g:20 -ff:mono'>
+		<button class='set-plain'>button</button>
+	</div>
+	```
+	</PreviewCode>
+</Preview>
+
+
+
+### `set-shadow`
+
+`.set-shadow` クラスを指定した要素では、シャドウを構成する`--bxsh--`変数が再定義されます。  
+
+<EmbedCode dirPath='packages/lism-css' srcPath='src/scss/base/set/_shadow.scss' />
+
+ここで`--shc`変数を上書きすることで、シャドウの色味を調整したりすることが可能です。 
+
+<Preview>
+	<PreviewTitle>シャドウの上書き例</PreviewTitle>
+	<PreviewArea p='30' nogrid>
+		<Stack g='10'>
+			<HTML.p> Default: </HTML.p>
+			<Flex className='set-shadow -g:30' px-s='15'>
+				<Box bxsh='20' p='30' bdrs='20'>Box</Box>
+				<Box bxsh='40' p='30' bdrs='20'>Box</Box>
+			</Flex>
+			<Spacer h='40' />
+			<HTML.p> set-shadow で 変数を上書きした例: </HTML.p>
+			<Flex className='set-shadow -g:30' px-s='15' style={{'--shc': 'hsl(200 50% 50% / 20%)'}}>
+				<Box bxsh='20' p='30' bdrs='20'>Box</Box>
+				<Box bxsh='40' p='30' bdrs='20'>Box</Box>
+			</Flex>
+		</Stack>
+		<div class='a--spacer' />
+	</PreviewArea>
+		<PreviewCode slot='tab' label='HTML'>
+		```html "set-shadow"
+		<div class="set-shadow l--flex -g:30" style="--shc:hsl(200 50% 50% / 20%)">
+			<div class="l--box -bxsh:20 -p:30 -bdrs:20">Box</div>
+			<div class="l--box -bxsh:40 -p:30 -bdrs:20">Box</div>
+		</div>
+		```
+	</PreviewCode>
+	<PreviewCode slot='tab' label='JSX'>
+		```jsx "set-shadow"
+		<Flex className='set-shadow' g='30' style={{'--shc': 'hsl(200 50% 50% / 20%)'}}>
+			<Box bxsh='20' p='30' bdrs='20'>Box</Box>
+			<Box bxsh='40' p='30' bdrs='20'>Box</Box>
+		</Flex>
+		```
+	</PreviewCode>
+</Preview>
+
+
+### `set-bp`
+
+特定のブレイクポイント以上でのみスタイルを適用させるためのユーティリティクラスです。
+[ブレイクポイント対応](/css/responsive/)していないプロパティを変化させたい時のハック的手段として活用できます。
+
+<EmbedCode dirPath='packages/lism-css' srcPath='src/scss/base/set/_bp.scss' />
+
+<Preview>
+	<PreviewTitle>smサイズ以上でテキストカラーを赤に変える例</PreviewTitle>
+	<PreviewArea resize>
+		<Box className='set-bp' p='20' style={{'color': 'var(--_is_sm) red;'}}>
+			<p>ロレム・イプサムの座り雨。目まぐるしい文章の流れの中で、それは静かに歩く仮の言葉です。</p>
+		</Box>
+	</PreviewArea>
+	<PreviewCode slot='tab' label='HTML'>
+	```html "set-bp" "var(--_is_sm) red"
+	<div class="set-bp l--box -p:20" style="color:var(--_is_sm) red;">
+		<p>ロレム・イプサムの座り雨。目まぐるしい文章の流れの中で、それは静かに歩く仮の言葉です。</p>
+	</div>
+	```
+	</PreviewCode>
+	<PreviewCode slot='tab' label='JSX'>
+		```jsx "set-bp" "var(--_is_sm) red"
+		<Box className='set-bp' p='20' style={{'color': 'var(--_is_sm) red;'}}>
+			<p>ロレム・イプサムの座り雨。目まぐるしい文章の流れの中で、それは静かに歩く仮の言葉です。</p>
+		</Box>
+		```
+	</PreviewCode>
+</Preview>
+
+### `set-hov`
+
+ホバースタイル管理用のCSS変数をセットします。主に子要素のホバースタイルを制御するために使用します。
+
+<EmbedCode dirPath='packages/lism-css' srcPath='src/scss/base/set/_hov.scss' />
+
+<Reference>
+活用例は [`hover`の解説ページ](/css/hov#set-hov) を参照してください。
+</Reference>
+
+
+
+### `set-transition`
+
+専用の変数を用いて、transitionプロパティをセットします。
+
+<EmbedCode dirPath='packages/lism-css' srcPath='src/scss/base/set/_transition.scss' />
+
+<Reference>
+活用例は [`hover`の解説ページ](/css/hov#set-transition) を参照してください。
+</Reference>
+
+
+### `set-cqUnit`
+
+`cqw`単位でのスケーリングを行うためのクラスです。
+
+フォントサイズの`clamp()`をvwではなくcqwで再計算し、スペーシングトークン・・ハーフレディングの単位も改めて再定義します。
+
+
+### `set-snap`
+
+`scroll-snap-`系のプロパティをCSS変数でセットできるようにします。
+
+<EmbedCode dirPath='packages/lism-css' srcPath='src/scss/base/set/_snap.scss' />
+
+<Box class='set-snap' ov='auto' ar='16/9' bd>
+	<div className='l--frame -ar:16/9 -p:15'><img src='https://cdn.lism-css.com/img/u-1.jpg' width='960' height='640' loading='lazy' /></div>
+	<div className='l--frame -ar:16/9 -p:15'><img src='https://cdn.lism-css.com/img/u-2.jpg' width='960' height='640' loading='lazy' /></div>
+	<div className='l--frame -ar:16/9 -p:15'><img src='https://cdn.lism-css.com/img/u-3.jpg' width='960' height='640' loading='lazy' /></div>
+	<div className='l--frame -ar:16/9 -p:15'><img src='https://cdn.lism-css.com/img/u-4.jpg' width='960' height='640' loading='lazy' /></div>
+	<div className='l--frame -ar:16/9 -p:15'><img src='https://cdn.lism-css.com/img/u-5.jpg' width='960' height='640' loading='lazy' /></div>
+	<div className='l--frame -ar:16/9 -p:15'><img src='https://cdn.lism-css.com/img/u-6.jpg' width='960' height='640' loading='lazy' /></div>
+</Box>
+
+
+### `set-innerRs`
+
+親要素の角丸とPaddingの値から、内側の要素の角丸(`--bdrs--inner`)を計算するユーティリティクラスです。 
+親要素(`set--innerRs`)の p(`--p`), bdrs(`--bdrs`) を元に計算します。（これらの指定が必須となります。）
+
+計算された`--bdrs--inner`をセットするには、子要素で`-bdrs:inner`を指定します。
+
+<Preview>
+	<PreviewTitle>使用例</PreviewTitle>
+	<PreviewArea p='30'>
+	<Lism className='set-innerRs' p='15' bd bxsh='20' bdrs='50'>
+		<Frame bdrs='inner' ar='og'>
+			<img src='https://cdn.lism-css.com/img/u-5.jpg' width='1920' height='1280' alt='' />
+		</Frame>
+	</Lism>
+	</PreviewArea>
+	<PreviewCode label="JSX" slot="tab">
+```jsx
+<Lism className='set-innerRs' p='15' bd bxsh='20' bdrs='50'>
+	<Frame bdrs='inner' ar='og'>
+		<img src='https://cdn.lism-css.com/img/u-5.jpg' width='1920' height='1280' alt='' />
+	</Frame>
+</Lism>
+```
+	</PreviewCode>
+	<PreviewCode label="HTML" slot="tab">
+```html
+<div class="set-innerRs -p:15 -bd -bxsh:20 -bdrs:50">
+	<div class="l--frame -bdrs:inner -ar:og">
+		<img src="https://cdn.lism-css.com/img/u-5.jpg" width="1920" height="1280" alt="" />
+	</div>
+</div>
+```
+	</PreviewCode>
+</Preview>
+
+<Spacer h='1rem' />
+
+`p`, `bdrs`はブレイクポイントで値を変えても変数管理されているため、`set-innerRs`の角丸もレスポンシブ対応できます。
+
+<Preview>
+	<PreviewTitle>使用例</PreviewTitle>
+	<PreviewArea p='20' resize>
+	<Lism p={[10, 20, 30]} bd bdw='2px' bdrs={['40',null,'50']} class='set-innerRs'>
+		<Lism bd p='15' bdrs='inner'>
+			Example
+		</Lism>
+	</Lism>
+	</PreviewArea>
+	{/* <PreviewCode label="HTML" slot="tab">
+	</PreviewCode> */}
+	<PreviewCode label="JSX" slot="tab">
+```jsx
+<Lism p={[10, 20, 30]} bd bdw='2px' bdrs={['40',null,'50']} class='set-innerRs'>
+	<Lism bd p='15' bdrs='inner'>
+		Example
+	</Lism>
+</Lism>
+```
+	</PreviewCode>
+</Preview>
+
+
+
+{/* 
+### `set-mask`
+
+`--mask`変数と組み合わせて、自身にmaskを適用します。
+
+<EmbedCode dirPath='packages/lism-css' srcPath='src/scss/base/set/_mask.scss' />
+
+Lismが提供するコンポーネントでは、`setMask`プロパティに指定した文字列が`--maskImg`として出力されるようになっています。（この時、`<svg>~</svg>`だけを渡すと、base64へエンコードされます。
+
+<Preview>
+	<PreviewTitle>例</PreviewTitle>
+	<PreviewArea p='10'>
+		<HTML.img
+			src="https://cdn.lism-css.com/img/u-2.jpg" width="960" height="640" loading="lazy" ar='og'
+			setMask={`<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><path fill="#000000" d="M170.4,25.7c16.1,14.2,23.2,38.5,24.8,61.7c1.7,23.3-1.8,45.5-12.9,62.3c-11,16.9-29.3,28.6-48.8,34.5 c-19.4,5.9-40,6.1-59.5,0.4c-19.5-5.6-37.9-17.4-51.7-34.9c-14-17.5-23.2-40.8-18-60.2c5-19.4,24.5-34.7,43.5-48.4 s37.6-25.7,59.5-29.7C129.1,7.3,154.2,11.4,170.4,25.7z" /></svg>`}
+		/>
+	</PreviewArea>
+	<PreviewCode slot='tab' label='JSX'>
+		```jsx
+		<HTML.img
+			src="https://cdn.lism-css.com/img/u-2.jpg" width="960" height="640" loading="lazy" ar='og'
+			setMask={`<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><path fill="#000000" d="M170.4,25.7c16.1,14.2,23.2,38.5,24.8,61.7c1.7,23.3-1.8,45.5-12.9,62.3c-11,16.9-29.3,28.6-48.8,34.5 c-19.4,5.9-40,6.1-59.5,0.4c-19.5-5.6-37.9-17.4-51.7-34.9c-14-17.5-23.2-40.8-18-60.2c5-19.4,24.5-34.7,43.5-48.4 s37.6-25.7,59.5-29.7C129.1,7.3,154.2,11.4,170.4,25.7z" /></svg>`}
+		/>
+		```
+	</PreviewCode>
+	<PreviewCode slot='tab' label='HTML'>
+		```html
+		<img
+			class="set-mask -ar:og" src="https://cdn.lism-css.com/img/u-2.jpg" width="960" height="640" loading="lazy"
+			style="--maskImg:url(data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMjAwIDIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBmaWxsPSIjMDAwMDAwIiBkPSJNMTcwLjQsMjUuN2MxNi4xLDE0LjIsMjMuMiwzOC41LDI0LjgsNjEuN2MxLjcsMjMuMy0xLjgsNDUuNS0xMi45LDYyLjNjLTExLDE2LjktMjkuMywyOC42LTQ4LjgsMzQuNSBjLTE5LjQsNS45LTQwLDYuMS01OS41LDAuNGMtMTkuNS01LjYtMzcuOS0xNy40LTUxLjctMzQuOWMtMTQtMTcuNS0yMy4yLTQwLjgtMTgtNjAuMmM1LTE5LjQsMjQuNS0zNC43LDQzLjUtNDguNCBzMzcuNi0yNS43LDU5LjUtMjkuN0MxMjkuMSw3LjMsMTU0LjIsMTEuNCwxNzAuNCwyNS43eiIgLz48L3N2Zz4=)"
+		>
+		```
+	</PreviewCode>
+</Preview>
+ */}

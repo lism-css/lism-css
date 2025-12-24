@@ -1,0 +1,131 @@
+---
+title: 'Center'
+description: ...
+---
+
+import { Center, Frame, Box, HTML, Spacer, Dummy, Media } from 'lism-css/astro';
+import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage, EmbedCode } from '@/components/mdx';
+
+**要素**を上下左右中央揃えで配置するためのモジュールです。
+
+
+## CSS
+
+<EmbedCode dirPath='packages/lism-css' srcPath='src/scss/modules/layout/_center.scss' />
+
+
+## 主なProps
+
+{/* | プロパティ | 説明 | 有効な値 |
+|---|---|---|
+| `size`| 指定した値によって自動でpropが適用されます。 |`cover` or `content`| */}
+
+[`<Grid>`で使えるprops](/components/grid#props)が使えます。
+
+
+## Import
+
+<ImportPackage component='Center' />
+
+
+## Usage
+
+### 水平方向に中央配置
+
+Centerが**高さを持たない**場合は、コンテンツを水平方向に対して中央揃えで配置するだけとなります。
+
+{/* <Callout type="info">
+水平方向の中央揃えだけでいい場合は、`<Stack ai="center">`でも可能です。
+</Callout> */}
+
+{/* 水平方向に関しては、いわゆる『内在的な』中央揃え（テキスト幅が小さければ左右中央揃え、長ければ普通に左寄せ状態と同じ状態）になります。 */}
+
+<Preview>
+	<PreviewTitle>
+		高さの設定が特にない時
+	</PreviewTitle>
+	<PreviewArea resize p='15'>
+		<Center bd p='30'>
+			<HTML.p fz='l'>TEXT</HTML.p>
+		</Center>
+	</PreviewArea>
+	<PreviewCode slot='tab' label='JSX'>
+		```jsx
+		<Center bd p='30'>
+			<HTML.p fz='l'>TEXT</HTML.p>
+		</Center>
+		```
+	</PreviewCode>
+	<PreviewCode slot='tab' label='HTML'>
+		```jsx
+		<div class="l--center -p:20">
+			<p class="-fz:l">TEXT</p>
+		</div>
+		```
+	</PreviewCode>
+</Preview>
+
+<Preview>
+	<PreviewTitle>
+		長いテキストの改行は左寄せになります。テキストの読みやすさを損ないません。
+	</PreviewTitle>
+	<PreviewArea resize p='15'>
+		<Center bd p='30' g='15'>
+			<HTML.p fz='l'>TEXT</HTML.p>
+			<Dummy length='xs' lang='ja'/>
+			<Dummy lang='ja'/>
+		</Center>
+	</PreviewArea>
+	<PreviewCode slot='tab' label='JSX'>
+		```jsx
+		<Center bd p='30' g='15'>
+			<HTML.p fz='l'>TEXT</HTML.p>
+			<p>...</p>
+			<p>...</p>
+		</Center>
+		```
+	</PreviewCode>
+	<PreviewCode slot='tab' label='HTML'>
+		```jsx
+		<div class="l--center -bd -p:30 -g:15">
+			<p class="-fz:l">TEXT</p>
+			<p>...</p>
+			<p>...</p>
+		</div>
+		```
+	</PreviewCode>
+</Preview>
+
+
+### 上下左右中央に配置する
+
+Centerに**高さやアスペクト比**が設定されている時、垂直方向に対しても中央揃えになります。
+
+<Preview>
+	<PreviewTitle>
+		上下左右中央に配置
+	</PreviewTitle>
+	<PreviewArea p='15'>
+		<Center g='10' ar='3/2' bd>
+			<HTML.p fz='l'>TEXT</HTML.p>
+			<HTML.p fz='s'>Lorem ipsum dolor sit amet.</HTML.p>
+		</Center>
+	</PreviewArea>
+	<PreviewCode slot='tab' label='JSX'>
+		```jsx "ar='3/2'"
+		<Center g='10' ar='3/2' bd>
+			<HTML.p fz='l'>TEXT</HTML.p>
+			<HTML.p fz='s'>Lorem ipsum dolor sit amet.</HTML.p>
+		</Center>
+		```
+	</PreviewCode>
+	<PreviewCode slot='tab' label='HTML'>
+		```html "-ar:3/2"
+		<div class="l--center -bd -g:10 -ar:3/2">
+			<p class="-fz:l">TEXT</p>
+			<p class="-fz:s">ロレム・イプサムの座り雨。</p>
+		</div>
+		```
+	</PreviewCode>
+</Preview>
+

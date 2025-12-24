@@ -1,3 +1,10 @@
+// 設定カスタマイズ
+@use 'lism-css/scss/setting' with (
+	$breakpoints: (
+		'lg': '1200px',
+	)
+);
+
 @use 'lism-css/scss/query' as query;
 
 @include query.bp-up('lg') {

@@ -15,12 +15,30 @@ const currentLang = getLangFromUrl(Astro.url);
 // 現在の言語の記事を取得
 const allPosts = await getPostsByLang(currentLang);
 
-// カテゴリー（slugの最初の部分）でグループ化
+// sidebarConfigで定義されているdir値を取得（ネストしたディレクトリも含む）
+const configuredDirs = sidebarConfig
+	.filter((item): item is SidebarItem & { dir: string } => 'dir' in item)
+	.map((item) => item.dir)
+	.sort((a, b) => b.length - a.length); // 長い（深い）ディレクトリを先にマッチさせる
+
+// カテゴリーでグループ化（ネストしたディレクトリにも対応）
 const postsByCategory = allPosts.reduce(
 	(acc, post) => {
-		// 記事URLのslugからカテゴリーを抽出（例: "layout/grid-layout" → "layout"）
-		const hasSlash = post.slug.includes('/');
-		const category = hasSlash ? post.slug.split('/')[0] : '/';
+		// sidebarConfigで定義されたdirと記事のslugをマッチング
+		// 例: "modules/state/Container" は "modules/state" にマッチ
+		let category = '/';
+		for (const dir of configuredDirs) {
+			if (dir === '/') {
+				// ルートの場合：スラッシュを含まないslugのみマッチ
+				if (!post.slug.includes('/')) {
+					category = '/';
+					break;
+				}
+			} else if (post.slug === dir || post.slug.startsWith(dir + '/')) {
+				category = dir;
+				break;
+			}
+		}
 		if (!acc[category]) {
 			acc[category] = [];
 		}

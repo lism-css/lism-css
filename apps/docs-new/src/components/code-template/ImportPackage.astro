@@ -1,0 +1,38 @@
+---
+// eslint-disable
+import Expressive from './Expressive.astro';
+import { Preview, PreviewCode } from '@/components/mdx';
+
+const { component = '', script = '', packageName = 'lism-css' } = Astro.props;
+const getCode = (name: string) =>
+	`<span style='--0:#F97583;--1:#BF3441'>import</span>` +
+	`<span style='--0:#E1E4E8;--1:#24292E'> { ${component} } </span>` +
+	`<span style='--0:#F97583;--1:#BF3441'>from</span>` +
+	` ` +
+	`<span style='--0:#9ECBFF;--1:#032F62'>'${packageName}${name}'</span>` +
+	`<span style='--0:#E1E4E8;--1:#24292E'>;</span>`;
+
+const getCopyCode = (name: string) => `import { ${component} } from '${packageName}${name}';`;
+
+const scriptCode = `<span style="--0:#E1E4E8;--1:#24292E">&lt;</span><span style="--0:#85E89D;--1:#1E7734">script</span><span style="--0:#E1E4E8;--1:#24292E"> </span><span style="--0:#B392F0;--1:#6F42C1">type</span><span style="--0:#E1E4E8;--1:#24292E">=</span><span style="--0:#9ECBFF;--1:#032F62">"module"</span><span style="--0:#E1E4E8;--1:#24292E"> </span><span style="--0:#B392F0;--1:#6F42C1">src</span><span style="--0:#E1E4E8;--1:#24292E">=</span><span style="--0:#9ECBFF;--1:#032F62">"https://cdn.jsdelivr.net/npm/${packageName}/dist/scripts/${script}"</span><span style="--0:#E1E4E8;--1:#24292E">&gt;&lt;/</span><span style="--0:#85E89D;--1:#1E7734">script</span><span style="--0:#E1E4E8;--1:#24292E">&gt;</span>`;
+
+const scriptCodeToCopy = `<script type=\"module\" src=\"https://cdn.jsdelivr.net/npm/${packageName}/dist/scripts/${script}\"></script>`;
+---
+
+<Preview>
+	<PreviewCode slot='tab' label='React'>
+		<Expressive copyCode={getCopyCode('/react')}><Fragment set:html={getCode('/react')} /></Expressive>
+	</PreviewCode>
+	<PreviewCode slot='tab' label='Astro'>
+		<Expressive copyCode={getCopyCode('/astro')}><Fragment set:html={getCode('/astro')} /></Expressive>
+	</PreviewCode>
+	{
+		script && (
+			<PreviewCode slot='tab' label='HTML'>
+				<Expressive copyCode={scriptCodeToCopy}>
+					<Fragment set:html={scriptCode} />
+				</Expressive>
+			</PreviewCode>
+		)
+	}
+</Preview>
