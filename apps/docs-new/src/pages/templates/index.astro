@@ -1,0 +1,96 @@
+---
+/**
+ * テンプレート一覧ページ
+ *
+ * カテゴリ別にテンプレートを一覧表示
+ */
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { Stack, Grid, Text, HTML, Frame } from 'lism-css/astro';
+import { templates, categoryIds, type TemplateCategoryId } from '@/config/templates';
+---
+
+<BaseLayout title="Templates" description="Lism CSSを使ったWebサイトテンプレート集" excludeFromSearch>
+	<Stack g="40" class="templates-index">
+		{/* ページヘッダー */}
+		<Stack tag="header" g="10">
+			<h1 class="-fz:3xl -fw:bold">Templates</h1>
+			<Text c="text-2">Lism CSSを使ったWebサイトテンプレート集です。</Text>
+		</Stack>
+
+		{/* カテゴリ別テンプレート一覧 */}
+		<Stack g="40">
+			{
+				categoryIds.map((categoryId: TemplateCategoryId) => {
+					const category = templates[categoryId];
+					return (
+						<Stack g="15" tag="section">
+							{/* カテゴリタイトル */}
+							<HTML.h lv="2" fz="xl" fw="bold" bd-b py="10">
+								{category.label}
+								<Text tag="span" fz="s" c="text-2" fw="normal" ml="10">
+									({category.items.length})
+								</Text>
+							</HTML.h>
+
+							{/* テンプレートカード一覧 */}
+							<Grid gtc="repeat(auto-fill, minmax(240px, 1fr))" g="20">
+								{category.items.map((item) => (
+									<HTML.a
+										href={`/templates/${categoryId}/${item.id}`}
+										setHov
+										class="template-card"
+										d="block"
+										td="none"
+										c="inherit"
+										bdrs="15"
+										ov="hidden"
+										bxsh="10"
+									>
+										{/* サムネイル（プレビューiframe） */}
+										<Frame ar="16/9" bgc="base-2" class="template-card_thumb">
+											<iframe src={`/preview/templates/${categoryId}/${item.id}/`} loading="lazy" title={item.title} />
+										</Frame>
+
+										{/* テンプレート情報 */}
+										<Stack g="5" p="15" bgc="base">
+											<Text fz="s" fw="bold">
+												{item.title}
+											</Text>
+											<Text fz="xs" c="text-2" class="-lh:s u-lineClamp" style="--lineClamp:2">
+												{item.description}
+											</Text>
+										</Stack>
+									</HTML.a>
+								))}
+							</Grid>
+						</Stack>
+					);
+				})
+			}
+		</Stack>
+	</Stack>
+</BaseLayout>
+
+<style>
+	.template-card {
+		transition:
+			transform 0.2s ease,
+			box-shadow 0.2s ease;
+	}
+	.template-card:hover {
+		transform: translateY(-4px);
+		box-shadow: var(--bxsh--20);
+	}
+
+	.template-card_thumb {
+		pointer-events: none;
+	}
+
+	/* .template-card_thumb iframe {
+		width: 400%;
+		height: 400%;
+		transform: scale(0.25);
+		transform-origin: top left;
+		border: none;
+	} */
+</style>

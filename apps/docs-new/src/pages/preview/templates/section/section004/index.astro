@@ -1,0 +1,48 @@
+---
+import DemoLayout from '@/layouts/DemoLayout.astro';
+
+import { Container, Frame, Grid, Media, Stack } from 'lism-css/astro';
+import Button from '@/components/ex/Button/index.astro';
+import './_style.css';
+---
+
+<DemoLayout title='Section004'>
+	<Container bgc='base'>
+		<Grid gt='repeat' cols={['2', null, '4']} rows={['4', null, '2']} g='5'>
+			<Stack
+				gr={['2 / span 2', null, '1 / -1']}
+				gc={['1 / -1', null, '2 / span 2']}
+				g='40'
+				bgc='base-2'
+				ai='center'
+				jc='center'
+				p={['60 50', null, '60']}
+			>
+				<h2>思い出をかたちに</h2>
+				<Stack g='30'>
+					<p>
+						「何か新しいことを始めたい」と思っても、何から手をつければ良いか分からない。
+						そんな時は、私たちにお任せください。あなたの興味関心を分析し、新しい趣味や学びの世界への扉を開きます。
+					</p>
+					<p>
+						オンライン講座から地域のワークショップまで、あなたの可能性を広げるきっかけがここにあります。
+						昨日より成長した自分に出会える毎日があなたを待っています。
+					</p>
+				</Stack>
+				<Button href='#' min-w='250px' py='15' bdrs='10'>View More</Button>
+			</Stack>
+			<Frame tag='figure'>
+				<Media src='https://cdn.lism-css.com/img/random-2510?r=1' alt='' width='960' height='640' />
+			</Frame>
+			<Frame tag='figure'>
+				<Media src='https://cdn.lism-css.com/img/random-2510?r=2' alt='' width='960' height='640' />
+			</Frame>
+			<Frame tag='figure'>
+				<Media src='https://cdn.lism-css.com/img/random-2510?r=3' alt='' width='960' height='640' />
+			</Frame>
+			<Frame tag='figure'>
+				<Media src='https://cdn.lism-css.com/img/random-2510?r=4' alt='' width='960' height='640' />
+			</Frame>
+		</Grid>
+	</Container>
+</DemoLayout>

@@ -1,0 +1,60 @@
+---
+import DemoLayout from '@/layouts/DemoLayout.astro';
+
+import { Stack, Container, Frame, Grid, Media, HTML, Layer, Icon } from 'lism-css/astro';
+import Button from '@/components/ex/Button/index.astro';
+import './_style.css';
+---
+
+<DemoLayout title='CTA001'>
+	<Stack pos='rel'>
+		<Frame isLayer>
+			<Media isLayer src='https://cdn.lism-css.com/img/random-2510' alt='' width='960' height='640' />
+			<Layer blur='4px' bgc='black:50%' />
+		</Frame>
+		<Container isWrapper='s' hasGutter py='50' z='1'>
+			<Stack ai='center' g='40'>
+				<Stack ai='center' g='30'>
+					<HTML.h lv='2' class='u-trim' fz='4xl' fw='bold' ff='mono' lts='l' c='white' ta='center'>Contact</HTML.h>
+					<HTML.p class='u-trim' fz='m' c='white' ta='center'
+						>はじめての方もお気軽にご相談ください<br />弊社スタッフが迅速に対応いたします</HTML.p
+					>
+				</Stack>
+				<Grid gt='repeat' cols={['1', null, '2']} ai='center' g='30 40' w='stretch'>
+					<Button
+						href='#'
+						g='15'
+						variant='outline'
+						w='stretch'
+						jc='center'
+						c='white'
+						bdrs='10'
+						py='20'
+						fw='bold'
+						setTransition
+						hov={{ bgc: 'white', c: 'black' }}
+					>
+						<Icon icon='chat' fz='2em' />
+						<span>チャットで相談</span>
+					</Button>
+					<Button
+						href='#'
+						g='15'
+						w='stretch'
+						jc='center'
+						bgc='white'
+						c='black'
+						bdrs='10'
+						py='20'
+						fw='bold'
+						setTransition
+						hov={{ bgc: 'accent', c: 'white' }}
+					>
+						<Icon icon='user' fz='2em' />
+						<span>メールでお問い合わせ</span>
+					</Button>
+				</Grid>
+			</Stack>
+		</Container>
+	</Stack>
+</DemoLayout>

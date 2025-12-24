@@ -1,0 +1,80 @@
+---
+import DemoLayout from '@/layouts/DemoLayout.astro';
+
+import { Container, Frame, Grid, Media, Stack, HTML, Flex } from 'lism-css/astro';
+import Button from '@/components/ex/Button/index.astro';
+import './_style.css';
+---
+
+<DemoLayout title='Information004'>
+	<Container isWrapper='m' bgc='base' py='50' hasGutter>
+		<Stack g='20' ai='center' mb='40'>
+			<HTML.h lv='2' class='u-trim' fz='2xl' fw='bold'>オフィス</HTML.h>
+			<HTML.p class='u-trim' fz='s' ta='center' o='-20'>All Offices</HTML.p>
+		</Stack>
+		<Stack>
+			<Grid gtc={['auto', null, 'minmax(auto, 200px) repeat(2, 1fr)']} g='40' py='40' bd-y-e>
+				<Stack class='u-trimItems' g='15'>
+					<HTML.p fz='l' fw='bold' lts='l'>東京本社</HTML.p>
+					<HTML.p fz='s' o='-20'>Tokyo Office</HTML.p>
+				</Stack>
+				<Stack g='30'>
+					<Stack class='u-trim' fz='s'>
+						<p>〒150-0001 東京都渋谷区神宮前1-1-1-1</p>
+						<p>TEL: 03-1234-5678</p>
+						<p>営業時間: 10:00 - 20:00</p>
+						<p>定休日: 水曜日</p>
+					</Stack>
+					<Flex my-s='auto' g='20'>
+						<Button href='#' fz='s' bdrs='99'>Web Site</Button>
+						<Button variant='outline' href='#' fz='s' bdrs='99'>Google Map</Button>
+					</Flex>
+				</Stack>
+				<Frame tag='figure' ar='gold' bdrs='10'>
+					<Media src='https://cdn.lism-css.com/img/random-2510?category=office&r=1' alt='' />
+				</Frame>
+			</Grid>
+			<Grid gtc={['auto', null, 'minmax(auto, 200px) repeat(2, 1fr)']} g='40' py='40' bd-y-e>
+				<Stack class='u-trimItems' g='15'>
+					<HTML.p fz='l' fw='bold' lts='l'>北海道支店</HTML.p>
+					<HTML.p fz='s' o='-20'>Hokkaido Branch</HTML.p>
+				</Stack>
+				<Stack g='30'>
+					<Stack class='u-trim' fz='s'>
+						<p>〒060-0001 北海道札幌市中央区北1条西1-1-1-1</p>
+						<p>TEL: 011-1234-5678</p>
+						<p>営業時間: 10:00 - 20:00</p>
+						<p>定休日: 水曜日</p>
+					</Stack>
+					<Flex my-s='auto' g='20'>
+						<Button href='#' fz='s' bdrs='99'>Web Site</Button>
+						<Button variant='outline' href='#' fz='s' bdrs='99'>Google Map</Button>
+					</Flex>
+				</Stack>
+				<Frame tag='figure' ar='gold' bdrs='10'>
+					<Media src='https://cdn.lism-css.com/img/random-2510?category=office&r=2' alt='' />
+				</Frame>
+			</Grid>
+			<Grid gtc={['auto', null, 'minmax(auto, 200px) repeat(2, 1fr)']} g='40' py='40' bd-y-e>
+				<Stack class='u-trimItems' g='15'>
+					<HTML.p fz='l' fw='bold' lts='l'>沖縄支店</HTML.p>
+					<HTML.p fz='s' o='-20'>Okinawa Branch</HTML.p>
+				</Stack>
+				<Stack g='30'>
+					<Stack class='u-trim' fz='s'>
+						<p>〒900-0001 沖縄県那覇市久茂地1-1-1-1</p>
+						<p>TEL: 03-1234-5678</p>
+						<p>営業時間: 10:00 - 20:00</p>
+						<p>定休日: 水曜日</p>
+					</Stack>
+					<Flex my-s='auto' g='20'>
+						<Button variant='outline' href='#' fz='s' bdrs='99'>Google Map</Button>
+					</Flex>
+				</Stack>
+				<Frame tag='figure' ar='gold' bdrs='10'>
+					<Media src='https://cdn.lism-css.com/img/random-2510?category=office&r=3' alt='' />
+				</Frame>
+			</Grid>
+		</Stack>
+	</Container>
+</DemoLayout>
