@@ -24,6 +24,22 @@ const configuredDirs = sectionItems
 	.map((item) => item.dir)
 	.sort((a, b) => b.length - a.length); // 長い（深い）ディレクトリを先にマッチさせる
 
+// URLからslugを抽出するヘルパー（/docs/xxx/ → xxx）
+function extractSlugFromUrl(url: string): string {
+	return url.replace(/^\/docs\//, '').replace(/^\/|\/$/g, '');
+}
+
+// アイテムからリンクURLを取得するヘルパー
+function getItemLink(item: string | { link: string }): string {
+	return typeof item === 'string' ? item : item.link;
+}
+
+// slugからMDX記事を取得するマップを作成
+const postsBySlug = new Map<string, PostEntry>();
+allPosts.forEach((post) => {
+	postsBySlug.set(post.slug, post);
+});
+
 // items で参照されている記事の slug を取得（これらはルートカテゴリから除外）
 const itemsReferencedSlugs = new Set<string>();
 sectionItems.forEach((section) => {
@@ -31,7 +47,8 @@ sectionItems.forEach((section) => {
 		section.items.forEach((item) => {
 			if (!isSeparator(item)) {
 				// linkからslugを取得（/docs/ プレフィックスと先頭・末尾のスラッシュを除去）
-				const slug = item.link.replace(/^\/docs\//, '/').replace(/^\/|\/$/g, '');
+				const link = getItemLink(item);
+				const slug = extractSlugFromUrl(link);
 				itemsReferencedSlugs.add(slug);
 			}
 		});
@@ -162,6 +179,29 @@ const topLevelLinks = sidebarConfig.filter(isTopLevelLink);
 									if (isSeparator(item)) {
 										return <HTML.li class="c--nav__separator" role="separator" aria-hidden="true" />;
 									}
+
+									// 文字列の場合はURLとして扱い、MDXのフロントマターからラベルを取得
+									if (typeof item === 'string') {
+										const slug = extractSlugFromUrl(item);
+										const post = postsBySlug.get(slug);
+										// navtitleがあればそれを、なければtitleを表示
+										const navLabel = post?.data?.navtitle ?? post?.data?.title ?? slug;
+										// 言語対応のパスを生成
+										const itemPath = getLocalizedUrl(item.endsWith('/') ? item : `${item}/`, currentLang);
+										const pathForCompare = item.endsWith('/') ? item : `${item}/`;
+										const isActive = currentPathWithoutLang === pathForCompare || currentPathWithoutLang === item;
+										// 下書き記事には _draft クラスを付与
+										const isDraft = post?.data?.draft;
+										return (
+											<HTML.li class={isDraft ? '_draft' : undefined}>
+												<NavLink href={itemPath} isActive={isActive}>
+													{navLabel}
+												</NavLink>
+											</HTML.li>
+										);
+									}
+
+									// オブジェクト形式の場合（従来の { label, link } 形式）
 									// 言語対応のパスを生成
 									const itemPath = getLocalizedUrl(item.link.endsWith('/') ? item.link : `${item.link}/`, currentLang);
 									const pathForCompare = item.link.endsWith('/') ? item.link : `${item.link}/`;

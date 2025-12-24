@@ -69,8 +69,10 @@ for (const item of sidebarConfig) {
 		for (const navItem of section.items) {
 			// セパレータはスキップ
 			if (isSeparator(navItem)) continue;
+			// linkを取得（文字列の場合はそのまま、オブジェクトの場合は.linkプロパティ）
+			const link = typeof navItem === 'string' ? navItem : navItem.link;
 			// linkからslugを取得（/docs/ プレフィックスと先頭・末尾のスラッシュを除去）
-			const slug = navItem.link.replace(/^\/docs\//, '/').replace(/^\/|\/$/g, '');
+			const slug = link.replace(/^\/docs\//, '/').replace(/^\/|\/$/g, '');
 			const post = allPosts.find((p) => p.slug === slug);
 			if (post) {
 				orderedPosts.push(post);
