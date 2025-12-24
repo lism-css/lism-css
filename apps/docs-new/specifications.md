@@ -127,8 +127,39 @@ src/pages/preview/{example-name}/
 
 - `src/config/sidebar.ts` - サイドバー設定
 - `src/components/SiteNav.astro` - サイドバーナビゲーション UI
+- `src/components/parts/PostNavigation.astro` - 前後記事ナビゲーション
 
-### 設定方法
+### セクション分け
+
+サイトは `/docs/` と `/ui/` の2つのセクションに分かれており、URLに応じて異なるナビゲーションを表示します。
+
+| セクション | URL           | コンテンツ配置                | 説明                   |
+| ---------- | ------------- | ----------------------------- | ---------------------- |
+| `docs`     | `/docs/xxx/`  | `content/{lang}/xxx.mdx`      | ドキュメント           |
+| `ui`       | `/ui/xxx/`    | `content/{lang}/ui/xxx.mdx`   | UI コンポーネント      |
+
+### ページファイル構造
+
+| セクション | ページファイル                   |
+| ---------- | -------------------------------- |
+| `docs`     | `src/pages/docs/[...slug].astro` |
+| `ui`       | `src/pages/ui/[...slug].astro`   |
+
+### トップレベルリンク
+
+全セクションで共通表示される大きめのナビゲーションボタンです。
+
+| プロパティ  | 型                  | 説明                                     |
+| ----------- | ------------------- | ---------------------------------------- |
+| `type`      | `'toplink'`         | トップレベルリンクの識別子               |
+| `label`     | `string`            | 表示ラベル                               |
+| `translate` | `TranslateLabels`   | 他言語用ラベル（例: `{ en: 'Docs' }`）   |
+| `link`      | `string`            | リンク先 URL                             |
+| `icon`      | `React.ElementType` | アイコンコンポーネント（任意）           |
+
+### セクション設定
+
+各セクション（`docs`, `ui`）ごとにナビゲーション項目を定義します。
 
 | プロパティ  | 説明                                      |
 | ----------- | ----------------------------------------- |
@@ -139,26 +170,23 @@ src/pages/preview/{example-name}/
 
 **NOTE**: `dir` と `items` はどちらか一方を指定。`dir` 指定時は `order` フィールドの昇順でソート。
 
-### セパレータ（区切り線）
+### items の指定方法
 
-`items` 配列内で `{ type: 'separator' }` を指定すると、メニュー項目間に区切り線を表示できます。
+| 型               | 説明                                                    |
+| ---------------- | ------------------------------------------------------- |
+| `string`         | URL 文字列（MDX の `navtitle` または `title` を表示）   |
+| `LinkItem`       | 通常のリンク項目（`label`, `link`, `translate?`）       |
+| `SeparatorItem`  | 区切り線（`type: 'separator'`）                         |
 
-```typescript
-{
-  label: 'Layout Modules',
-  items: [
-    { label: 'Box', link: '/modules/layout/box/' },
-    { label: 'Flow', link: '/modules/layout/flow/' },
-    { type: 'separator' },  // ← 区切り線
-    { label: 'Flex', link: '/modules/layout/flex/' },
-  ],
-},
-```
+### ヘルパー関数
 
-| 型               | 説明           |
-| ---------------- | -------------- |
-| `LinkItem`       | 通常のリンク項目（`label`, `link`, `translate?`） |
-| `SeparatorItem`  | 区切り線（`type: 'separator'`）                   |
+| 関数                       | 説明                                                        |
+| -------------------------- | ----------------------------------------------------------- |
+| `getSiteSection(pathname)` | URL からセクション（`'docs'` \| `'ui'`）を取得              |
+| `extractSlugFromUrl(url)`  | URL から slug を抽出（`/docs/xxx/` → `xxx`, `/ui/yyy/` → `ui/yyy`） |
+| `getTranslatedLabel()`     | 言語に応じたラベルを取得                                    |
+| `isSeparator(item)`        | セパレータかどうかを判定                                    |
+| `isTopLevelLink(item)`     | トップレベルリンクかどうかを判定                            |
 
 ---
 
@@ -313,14 +341,15 @@ src/pages/
 
 ### 設定ファイル
 
-- `src/components/ui/PostNavigation.astro` - ナビゲーションコンポーネント
+- `src/components/parts/PostNavigation.astro` - ナビゲーションコンポーネント
 
 ### 並び順ロジック
 
-1. 現在の記事のカテゴリ（slug の最初のディレクトリ）を取得
-2. 同じカテゴリの記事をフィルタ
-3. `order` の昇順でソート（未指定は 999）
+1. 現在の URL から セクション（`docs` or `ui`）を判定
+2. 該当セクションの `sidebar.ts` 設定に従って記事を順序付け
+3. `dir` 指定の場合は `order` の昇順でソート（未指定は 999）
 4. `order` が同じ場合は `date` の降順でソート
+5. 現在の記事の前後を取得して表示
 
 ---
 

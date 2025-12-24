@@ -1,0 +1,62 @@
+---
+/**
+ * 記事詳細ページ（/ui/ セクション・root言語用）
+ * - root言語（ja）の /ui/ コンテンツを表示
+ * - URL例: /ui/test, /ui/components/button
+ */
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { generateToc } from '@/lib/generateToc';
+import { Stack, Lism, Flow, HTML } from 'lism-css/astro';
+import PostNavigation from '@parts/PostNavigation.astro';
+import { getRootLang, type LangCode } from '@/lib/i18n';
+import { getPostsByLang, type PostEntry } from '@/lib/content';
+
+// MDXでグローバルに使用するコンポーネント
+import * as mdxComponents from '@/components/mdx';
+
+// /ui/ セクション用のgetStaticPaths
+export async function getStaticPaths() {
+	const rootLang = getRootLang();
+	const allPosts = await getPostsByLang(rootLang);
+
+	// ui/ で始まる slug のみをフィルタリング
+	const uiPosts = allPosts.filter((post) => post.slug.startsWith('ui/'));
+
+	return uiPosts.map((entry) => ({
+		// slug から ui/ プレフィックスを除去
+		params: { slug: entry.slug.replace(/^ui\//, '') },
+		props: { lang: rootLang, entry },
+	}));
+}
+
+interface Props {
+	lang: LangCode;
+	entry: PostEntry;
+}
+
+const { lang, entry } = Astro.props;
+const { Content, headings } = await entry.render();
+
+const toc = generateToc(headings);
+
+// アイキャッチ画像: heroがあればそれを、なければOG画像を使用
+const eyecatchImage = entry.data.hero || `/ui/og/${entry.slug.replace(/^ui\//, '')}.png`;
+// OG画像のパス（常に自動生成画像を使用）
+const ogImage = `/ui/og/${entry.slug.replace(/^ui\//, '')}.png`;
+---
+
+<BaseLayout title={entry.data.title} description={entry.data.description} ogImage={ogImage} toc={toc} lang={lang}>
+	<Lism tag="article" class="z--article set-cqUnit" data-pagefind-body>
+		{/* 記事タイトル */}
+		<HTML.h lv="1" class="article-title">{entry.data.title}</HTML.h>
+
+		{/* 記事本文 */}
+		<Flow class="article-content" my-s="40">
+			<Content components={mdxComponents} />
+		</Flow>
+
+		{/* 前後記事ナビゲーション */}
+		<PostNavigation currentSlug={entry.slug} lang={lang} />
+	</Lism>
+</BaseLayout>
+
