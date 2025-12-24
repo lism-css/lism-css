@@ -24,7 +24,8 @@ export type LinkItem = {
 };
 
 // items配列に含められるアイテムの型
-export type SidebarNavItem = LinkItem | SeparatorItem;
+// 文字列の場合はURLとして扱い、対応するMDXのフロントマターからラベルを取得
+export type SidebarNavItem = LinkItem | SeparatorItem | string;
 
 // トップレベルの特別なリンクアイテムの型（大きめボタンとして表示）
 export type TopLevelLinkItem = {
@@ -36,6 +37,8 @@ export type TopLevelLinkItem = {
 
 // セパレータかどうかを判定するヘルパー
 export function isSeparator(item: SidebarNavItem): item is SeparatorItem {
+	// 文字列の場合はセパレータではない
+	if (typeof item === 'string') return false;
 	return 'type' in item && item.type === 'separator';
 }
 
@@ -90,83 +93,78 @@ const sidebarConfig: SidebarItem[] = [
 	{
 		label: 'はじめに',
 		translate: { en: 'Getting Started' },
-		dir: '/',
+		items: ['/docs/overview/', '/docs/installation/', '/docs/changelog/'],
 	},
 
 	// CSSカテゴリ：ディレクトリ内を自動取得
 	{
-		label: 'CSS',
-		dir: 'css',
+		label: '概要',
+		translate: { en: 'Overview' },
+		// dir: 'css',
+		items: [
+			'/docs/css-methodology/',
+			'/docs/tokens/',
+			'/docs/typography/',
+			{ type: 'separator' },
+			'/docs/reset-css/',
+			'/docs/html-base-styles/',
+			'/docs/set-utility/',
+			'/docs/module-class/',
+			'/docs/utility-class/',
+			'/docs/prop-class/',
+			'/docs/responsive/',
+			{ type: 'separator' },
+			'/docs/customize/',
+		],
 	},
 	// Components カテゴリ
 	{
-		label: 'Components',
-		dir: 'components',
+		label: 'コアコンポーネント',
+		translate: { en: 'Core Components' },
+		dir: 'core-components',
 	},
 	{
 		label: 'State Modules',
-		dir: 'modules/state',
+		items: ['/docs/modules/is--container/', '/docs/modules/is--wrapper/', '/docs/modules/is--layer/', '/docs/modules/is--linkbox/'],
 	},
 	{
 		label: 'Layout Modules',
 		items: [
-			{
-				label: 'Box',
-				link: '/docs/modules/layout/box/',
-			},
-			{
-				label: 'Flow',
-				link: '/docs/modules/layout/flow/',
-			},
-			{
-				label: 'Frame',
-				link: '/docs/modules/layout/frame/',
-			},
+			'/docs/modules/l--box/',
+			'/docs/modules/l--flow/',
+			'/docs/modules/l--frame/',
+
 			{ type: 'separator' },
-			{
-				label: 'Flex',
-				link: '/docs/modules/layout/flex/',
-			},
-			{
-				label: 'Cluster',
-				link: '/docs/modules/layout/cluster/',
-			},
-			{
-				label: 'Stack',
-				link: '/docs/modules/layout/stack/',
-			},
-			{
-				label: 'SideMain',
-				link: '/docs/modules/layout/sidemain/',
-			},
+			'/docs/modules/l--flex/',
+			'/docs/modules/l--cluster/',
+			'/docs/modules/l--stack/',
+			'/docs/modules/l--sidemain/',
+
 			{ type: 'separator' },
-			{
-				label: 'Grid',
-				link: '/docs/modules/layout/grid/',
-			},
-			{
-				label: 'Center',
-				link: '/docs/modules/layout/center/',
-			},
+			'/docs/modules/l--grid/',
+			'/docs/modules/l--center/',
+
 			{ type: 'separator' },
-			{
-				label: 'Columns',
-				link: '/docs/modules/layout/columns/',
-			},
-			{
-				label: 'FluidCols',
-				link: '/docs/modules/layout/fluidcols/',
-			},
-			{
-				label: 'SwitchCols',
-				link: '/docs/modules/layout/switchcols/',
-			},
+			'/docs/modules/l--columns/',
+			'/docs/modules/l--fluidcols/',
+			'/docs/modules/l--switchcols/',
+
 			{ type: 'separator' },
 		],
 	},
 	{
 		label: 'Atomic Modules',
-		dir: 'modules/atomic',
+		items: [
+			'/docs/modules/a--decorator/',
+			'/docs/modules/a--divider/',
+			'/docs/modules/a--icon/',
+			'/docs/modules/a--media/',
+			'/docs/modules/a--spacer/',
+		],
+	},
+	{
+		label: 'Props',
+		dir: 'props',
 	},
 ];
 
