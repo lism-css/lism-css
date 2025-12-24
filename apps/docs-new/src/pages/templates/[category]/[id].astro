@@ -8,7 +8,7 @@
  * プレビューiframeは /templates/{category}/{id}/preview/ を参照
  */
 import BaseLayout from '@/layouts/BaseLayout.astro';
-import { Stack, Frame, Text } from 'lism-css/astro';
+import { Stack, Flow, Frame, Text } from 'lism-css/astro';
 import { PreviewFrame, PreviewTitle } from '@/components/Preview';
 import { templates, getAllTemplatePaths, getTemplate, type TemplateCategoryId } from '@/config/templates';
 
@@ -43,7 +43,7 @@ const queryMeta = 'style=github-dark&type=code&showLineNumbers=on&showFileMeta=o
 ---
 
 <BaseLayout title={`${template.title} - Templates`} description={template.description} excludeFromSearch>
-	<Stack g="30" class="template-detail">
+	<Flow g="30" class="templatePage">
 		{/* タイトルと説明 */}
 		<Stack tag="header" g="10">
 			<Text fz="xs" c="text-2" tt="uppercase" lts="l">
@@ -54,23 +54,23 @@ const queryMeta = 'style=github-dark&type=code&showLineNumbers=on&showFileMeta=o
 		</Stack>
 
 		{/* プレビュー */}
-		<Stack g="15">
+		<Flow>
 			<PreviewTitle>プレビュー</PreviewTitle>
 			<PreviewFrame url={previewUrl} hasSizeSwitch />
-		</Stack>
+		</Flow>
 
-		{/* コード */}
+		{/* ソースコード */}
 		<Stack g="15">
 			<PreviewTitle>コード</PreviewTitle>
 			<Frame ov-y="auto" max-h="25rem" class="code-embed">
 				<script src={`https://emgithub.com/embed-v2.js?target=${encodeURI(githubBasePath)}&${queryMeta}`} loading="lazy"></script>
 			</Frame>
 		</Stack>
-	</Stack>
+	</Flow>
 </BaseLayout>
 
 <style>
-	.template-detail {
+	.templatePage {
 		/* 詳細ページ固有のスタイル */
 	}
 
