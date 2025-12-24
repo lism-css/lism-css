@@ -11,6 +11,26 @@ import type { LangCode } from '@/config/site';
 // 翻訳オブジェクトの型（root言語以外の翻訳を指定）
 type TranslateLabels = Partial<Record<Exclude<LangCode, 'ja'>, string>>;
 
+// セパレータアイテムの型（区切り線）
+export type SeparatorItem = {
+	type: 'separator';
+};
+
+// 通常のリンクアイテムの型
+export type LinkItem = {
+	label: string;
+	translate?: TranslateLabels; // アイテムごとの翻訳
+	link: string;
+};
+
+// items配列に含められるアイテムの型
+export type SidebarNavItem = LinkItem | SeparatorItem;
+
+// セパレータかどうかを判定するヘルパー
+export function isSeparator(item: SidebarNavItem): item is SeparatorItem {
+	return 'type' in item && item.type === 'separator';
+}
+
 // サイドバーアイテムの型定義
 export type SidebarItem =
 	| {
@@ -21,11 +41,7 @@ export type SidebarItem =
 	| {
 			label: string;
 			translate?: TranslateLabels; // 他言語用ラベル
-			items: Array<{
-				label: string;
-				translate?: TranslateLabels; // アイテムごとの翻訳
-				link: string;
-			}>;
+			items: Array<SidebarNavItem>;
 	  };
 
 /**
@@ -64,7 +80,60 @@ const sidebarConfig: SidebarItem[] = [
 	},
 	{
 		label: 'Layout Modules',
-		dir: 'modules/layout',
+		items: [
+			{
+				label: 'Box',
+				link: '/modules/layout/box/',
+			},
+			{
+				label: 'Flow',
+				link: '/modules/layout/flow/',
+			},
+			{
+				label: 'Frame',
+				link: '/modules/layout/frame/',
+			},
+			{ type: 'separator' },
+			{
+				label: 'Flex',
+				link: '/modules/layout/flex/',
+			},
+			{
+				label: 'Cluster',
+				link: '/modules/layout/cluster/',
+			},
+			{
+				label: 'Stack',
+				link: '/modules/layout/stack/',
+			},
+			{
+				label: 'SideMain',
+				link: '/modules/layout/sidemain/',
+			},
+			{ type: 'separator' },
+			{
+				label: 'Grid',
+				link: '/modules/layout/grid/',
+			},
+			{
+				label: 'Center',
+				link: '/modules/layout/center/',
+			},
+			{ type: 'separator' },
+			{
+				label: 'Columns',
+				link: '/modules/layout/columns/',
+			},
+			{
+				label: 'FluidCols',
+				link: '/modules/layout/fluidcols/',
+			},
+			{
+				label: 'SwitchCols',
+				link: '/modules/layout/switchcols/',
+			},
+			{ type: 'separator' },
+		],
 	},
 	{
 		label: 'Atomic Modules',
