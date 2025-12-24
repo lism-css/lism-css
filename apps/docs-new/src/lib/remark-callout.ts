@@ -29,7 +29,7 @@ import { visit } from 'unist-util-visit';
 import type { Root } from 'mdast';
 
 // Calloutで使用可能なtype一覧
-const CALLOUT_TYPES = ['alert', 'point', 'warning', 'check', 'help', 'note'];
+const CALLOUT_TYPES = ['alert', 'point', 'warning', 'check', 'help', 'note', 'info'];
 
 export function remarkCallout() {
 	return (tree: Root) => {

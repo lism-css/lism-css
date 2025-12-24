@@ -1,0 +1,115 @@
+---
+title: 'SwitchCols'
+description: ...
+---
+
+import { SwitchCols, Box, Frame, Dummy } from 'lism-css/astro';
+import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage, EmbedCode, PropBadge } from "@/components/mdx";
+
+
+**複数列以上↔︎1列への切り替えをメディアクエリを使わずに実装する**レイアウトです。
+
+
+## Props
+
+| プロパティ | 説明 |
+|---|---|
+| `breakSize` <PropBadge type="cssvar">`--breakSize`</PropBadge> | 横並びを維持するのに必要な幅（親のサイズ）を指定できます。[szトークン](/css/tokens/#size)の指定ができます。|
+
+
+## CSS
+
+<EmbedCode dirPath='packages/lism-css' srcPath='src/scss/modules/layout/_switchCols.scss' />
+
+
+## Import
+<ImportPackage component='SwitchCols' />
+
+
+## Usage
+
+<Preview>
+	<PreviewTitle>デフォルト幅で利用する例</PreviewTitle>
+	<PreviewArea resize p='15'>
+		<SwitchCols g='20'>
+			<div class="-bgc:base-2 -p:20">Box</div>
+			<div class="-bgc:base-2 -p:20">Box</div>
+			<div class="-bgc:base-2 -p:20">Box</div>
+		</SwitchCols>
+	</PreviewArea>
+	<PreviewCode slot='tab' label='JSX'>
+		```jsx
+		<SwitchCols g='20'>
+			<div class="-bgc:base-2 -p:20">Box</div>
+			<div class="-bgc:base-2 -p:20">Box</div>
+			<div class="-bgc:base-2 -p:20">Box</div>
+		</SwitchCols>
+		```
+	</PreviewCode>
+	<PreviewCode slot='tab' label='HTML'>
+		```html
+		<div class="l--switchCols -g:20">
+			<div class="-bgc:base-2 -p:20">Box</div>
+			<div class="-bgc:base-2 -p:20">Box</div>
+			<div class="-bgc:base-2 -p:20">Box</div>
+		</div>
+		```
+	</PreviewCode>
+</Preview>
+
+
+<Preview>
+	<PreviewTitle>breakSizeを指定して利用する例</PreviewTitle>
+	<PreviewArea resize p='15'>
+		<SwitchCols breakSize='s' g='20'>
+			<div class="-bgc:base-2 -p:20">Box</div>
+			<div class="-bgc:base-2 -p:20">Box</div>
+			<div class="-bgc:base-2 -p:20">Box</div>
+		</SwitchCols>
+	</PreviewArea>
+	<PreviewCode slot='tab' label='JSX'>
+		```jsx
+		<SwitchCols breakSize='s' g='20'>
+			<div class="-bgc:base-2 -p:20">Box</div>
+			<div class="-bgc:base-2 -p:20">Box</div>
+			<div class="-bgc:base-2 -p:20">Box</div>
+		</SwitchCols>
+		```
+	</PreviewCode>
+	<PreviewCode slot='tab' label='HTML'>
+		```html
+		<div class="l--switchCols -g:20" style="--breakSize:var(--sz--s)">
+			<div class="-bgc:base-2 -p:20">Box</div>
+			<div class="-bgc:base-2 -p:20">Box</div>
+			<div class="-bgc:base-2 -p:20">Box</div>
+		</div>
+		```
+	</PreviewCode>
+</Preview>
+
+
+<Preview>
+	<PreviewTitle>子要素にflex-growを指定して比率を調整する例</PreviewTitle>
+	<PreviewArea resize p='15'>
+		<SwitchCols breakSize='s' g='20'>
+			<div class="-bgc:base-2 -p:20">Box</div>
+			<div class="-bgc:base-2 -p:20" style={{flexGrow: 2}}>Box</div>
+		</SwitchCols>
+	</PreviewArea>
+	<PreviewCode slot='tab' label='JSX'>
+		```jsx
+		<SwitchCols breakSize='s' g='20'>
+			<div class="-bgc:base-2 -p:20">Box</div>
+			<div class="-bgc:base-2 -p:20" style={{flexGrow: 2}}>Box</div>
+		</SwitchCols>
+		```
+	</PreviewCode>
+	<PreviewCode slot='tab' label='HTML'>
+		```html
+		<div class="l--switchCols -g:20" style="--breakSize:var(--sz--s)">
+			<div class="-bgc:base-2 -p:20">Box</div>
+			<div class="-bgc:base-2 -p:20" style="flex-grow: 2">Box</div>
+		</div>
+		```
+	</PreviewCode>
+</Preview>

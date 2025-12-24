@@ -48,52 +48,22 @@ const sidebarConfig: SidebarItem[] = [
 		dir: '/',
 	},
 
-	// Layoutカテゴリ：並びを直接指定
-	// {
-	// 	label: 'Layout',
-	// 	items: [
-	// 		{
-	// 			label: 'Flexboxの基本',
-	// 			translate: { en: 'Flexbox Basics' },
-	// 			link: '/layout/flexbox-basics',
-	// 		},
-	// 		{
-	// 			label: 'Gridで作るカラムレイアウト',
-	// 			translate: { en: 'Grid Layout' },
-	// 			link: '/layout/grid-layout',
-	// 		},
-	// 	],
-	// },
-
-	// Layoutカテゴリ：ディレクトリ内を自動取得
+	// CSSカテゴリ：ディレクトリ内を自動取得
 	{
-		label: 'Layout',
-		dir: 'layout',
+		label: 'CSS',
+		dir: 'css',
 	},
-
-	// Designカテゴリ：ディレクトリ内を自動取得
-	// {
-	// 	label: 'Design',
-	// 	dir: 'design',
-	// },
-
-	// UIカテゴリ：ディレクトリ内を自動取得
 	{
-		label: 'UI',
-		dir: 'ui',
+		label: 'State Modules',
+		dir: 'modules/state',
 	},
-
-	// Tipsカテゴリ：ディレクトリ内を自動取得
 	{
-		label: 'Tips',
-		dir: 'tips',
+		label: 'Layout Modules',
+		dir: 'modules/layout',
 	},
-
-	// 基礎知識カテゴリ：ディレクトリ内を自動取得
 	{
-		label: '基礎知識',
-		translate: { en: 'Basics' },
-		dir: 'basics',
+		label: 'Atomic Modules',
+		dir: 'modules/atomic',
 	},
 ];
 

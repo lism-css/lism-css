@@ -1,0 +1,37 @@
+---
+title: 'Reset CSS'
+description: ...
+order: 2
+---
+
+
+import { Dummy, Box, HTML, Lism, Stack, Flex, Container, Frame, Center, Spacer, Media } from 'lism-css/astro';
+import { Preview, PreviewArea, PreviewTitle, PreviewCode, PreviewFrame, EmbedCode, Reference } from '@/components/mdx';
+
+{/* import { Desktop } from '@phosphor-icons/react'; */}
+
+
+Lism CSS の Reset CSS を紹介します。
+
+<PreviewTitle>ソースコード</PreviewTitle>
+<EmbedCode dirPath='packages/lism-css' srcPath='src/scss/reset.scss' />
+
+
+基本方針として、reset.css ではできるだけブラウザの標準スタイルに従うようにしています。
+
+非常にシンプルで、必要最低限な内容になっています。
+
+## Lism の reset.css だけを読み込む方法
+
+
+<PreviewTitle>importで読み込む</PreviewTitle>
+```js
+import 'lism-css/reset.css';
+```
+
+または
+
+<PreviewTitle>CDN経由でスタイルシートを読み込む</PreviewTitle>
+```html
+<link href="https://cdn.jsdelivr.net/npm/lism-css/dist/css/reset.css" rel="stylesheet" />
+```

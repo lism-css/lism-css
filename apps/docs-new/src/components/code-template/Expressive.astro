@@ -1,0 +1,15 @@
+---
+const { copyCode = '', ...props } = Astro.props;
+---
+
+<div class='expressive-code'>
+	<figure class='frame not-content'>
+		<!-- <figcaption class='header'></figcaption> -->
+		<pre tabindex='0' dir='ltr'><code><div class="ec-line"><div class="code"><slot /></div></div></code></pre>
+		<div class='copy'>
+			<button title='Copy to clipboard' data-copied='Copied!' data-code={copyCode}>
+				<div></div>
+			</button>
+		</div>
+	</figure>
+</div>

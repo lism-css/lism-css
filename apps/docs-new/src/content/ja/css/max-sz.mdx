@@ -1,0 +1,35 @@
+---
+title: 'サイズ制御クラス -max-sz:'
+description: ...
+order: 50
+---
+
+import { Flex, HTML, Media, Layer, Spacer, Box, Center, Stack, Frame, LinkBox } from 'lism-css/react';
+import { Preview, PreviewArea, PreviewTitle, PreviewCode, EmbedCode, IconBadge, PreviewFrame } from '@/components/mdx';
+
+
+Lismには、コンテンツサイズ用のトークンとして`--sz--{sz}`が用意されています、（`{sz}` = `xs`, `s`, `m`, `l`, `xl`）
+
+コンテンツの最大幅（`max-inline-size`)指定用の `-max-sz`クラスに対して、それぞれユーティリティクラスが用意されています。
+
+{/* `is--wrapper`が`max-inline-size`でコンテンツサイズを制御するので、それに合わせて`-max-sz`Propクラスのプリセット値も用意しています。 */}
+
+`-max-sz:{xs~xl}`はそのまま`--sz--{xs~xl}`がセットされるクラスです。
+
+
+## -max-sz:full, -max-sz:container
+
+さらに、以下のような特徴的なクラスがありますのでそれらを紹介しておきます。
+
+| クラス名 | 説明 |
+|---|---|
+| `-max-sz:100%` | 単純に、100%幅が最大値となります。 |
+| `-max-sz:full` | `.has--gutter`の直下であれば、`100%`サイズに**その余白を追加**して、**親要素のサイズいっぱいに広がります。** |
+| `-max-sz:container` | **コンテナ要素を基準**としたサイズまで広がります。`.is-container`クラスごとに、値が更新されます。（`@propetry`を使っています。） |
+
+
+## DEMOページ
+
+これらの`-max-sz`クラスの挙動について、別ページで確認できますのでぜひご覧ください。
+
+<PreviewFrame url='/demo/content-size' />

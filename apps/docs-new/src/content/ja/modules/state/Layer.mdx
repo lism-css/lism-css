@@ -1,0 +1,175 @@
+---
+title: 'Layer'
+description: ...
+---
+
+
+import { Media, Layer, Stack, Flex, HTML, Box, Columns, Center, Frame, Dummy } from 'lism-css/astro';
+import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage, Reference } from "@/components/mdx";
+
+
+
+[`.is--layer`](/css/module-class/#is--layer)をデフォルトで出力するコンポーネント(`<Lism isLayer>`のエイリアス）です。
+
+
+
+{/* <Reference>
+要素を単純に`position:absolute`で配置したいだけの場合は、`-pos:abs`クラスなどを使用することもできます。
+参考：[absoluteで配置する方法](/components/props/others/absolute)
+</Reference> */}
+
+
+## Props
+
+| プロパティ | 説明 |
+|---|---|
+| `blur`,`contrast`,`brightness`,`grayscale`,`hueRotate`,`invert`,`saturate`,`sepia` | これらをまとめて連結し、 `style.backdropFilter` に受け渡します。|
+
+
+
+## Import
+
+<ImportPackage component='Layer' />
+
+## Usage
+
+<Preview>
+	<PreviewTitle>使用例</PreviewTitle>
+	<PreviewArea p='15'>
+		<Box pos='rel' py='40'>
+			<HTML.p fz='2xl' fw='bold' ta='center' lts='l' o='-30'>BACKGROUND</HTML.p>
+			<Layer p='15' bgc='purple:10%'>
+				<p>Layer Contents...</p>
+			</Layer>
+		</Box>
+	</PreviewArea>
+	<PreviewCode slot='tab' label='JSX'>
+		```jsx
+		<Box pos='rel' py='40'>
+			<HTML.p fz='2xl' fw='bold' ta='center' lts='l' o='-30'>BACKGROUND</HTML.p>
+			<Layer p='15' bd bds='dashed' bgc='purple:10%'>
+				<p>Layer Contents...</p>
+			</Layer>
+		</Box>
+		```
+	</PreviewCode>
+	<PreviewCode slot='tab' label='HTML'>
+		```html
+		<div class='l--box -pos:rel -py:40'>
+			<p class='-fz:2xl -fw:bold -ta:center -lts:l -o:-30'>BACKGROUND</p>
+			<div
+				class='is--layer -p:15 -bgc'
+				style='--bgc:color-mix(in srgb, var(--purple) 10%, transparent)'
+			>
+				<p>Layer Contents…</p>
+			</div>
+		</div>
+		```
+	</PreviewCode>
+</Preview>
+
+
+### backdrop-filterの活用
+
+`<Layer>`コンポーネントでは、`backdrop-filter`で使用できる`blur`などの主要成分を個別に指定できるように追加調整されています。
+
+<Preview>
+	<PreviewTitle>背景にブラーをかける</PreviewTitle>
+	<PreviewArea p='15'>
+		<Box pos='rel' p='40'>
+			<HTML.p fz='2xl' fw='bold' ta='center'>BACKGROUND</HTML.p>
+			<Layer blur='3px' />
+		</Box>
+	</PreviewArea>
+	<PreviewCode slot='tab' label='JSX'>
+		```jsx {3}
+		<Box pos='rel' p='40'>
+			<HTML.p fz='2xl' fw='bold' ta='center'>BACKGROUND</HTML.p>
+			<Layer blur='3px' />
+		</Box>
+		```
+	</PreviewCode>
+	<PreviewCode slot='tab' label='HTML'>
+		```html {3}
+		<div class="l--box -pos:rel -p:40">
+			<p class="-fz:2xl -fw:bold -ta:center">BACKGROUND</p>
+			<div class="is--layer" style="backdrop-filter:blur(3px)"></div>
+		</div>
+		```
+	</PreviewCode>
+</Preview>
+
+
+
+
+<Preview>
+	<PreviewTitle>背景の色味を変える</PreviewTitle>
+	<PreviewArea p='15'>
+		<Frame ar='2/1' pos='rel'>
+			<img src='https://cdn.lism-css.com/img/a-1.jpg' alt='' width='960' height='640' />
+			<Layer contrast='1.1' sepia='0.4' grayscale='0.4'/>
+			<HTML.p pos='abs' b='0' r='0' p='20' lh='1' c='white' fz='xs' o='-10'>Photo by xxxxxx</HTML.p>
+		</Frame>
+	</PreviewArea>
+	<PreviewCode>
+		```jsx {3,8,12}
+		<Frame ar='2/1' pos='rel'>
+			<img src='https://cdn.lism-css.com/img/a-1.jpg' alt='' width='960' height='640' />
+			<Layer contrast='1.1' sepia='0.4' grayscale='0.4'/>
+			<HTML.p pos='abs' b='0' r='0' p='20' lh='1' c='white' fz='xs' o='-10'>Photo by xxxxxx</HTML.p>
+		</Frame>
+		```
+	</PreviewCode>
+</Preview>
+
+
+### メディアレイヤー
+
+`.is--layer`を使ってコンテンツの背景に画像を配置するレイアウトを組んでみます。
+
+<Preview>
+	<PreviewTitle>例</PreviewTitle>
+	<PreviewArea p='15'>
+		<Box pos='rel' py='50' px='40'>
+			<Frame isLayer>
+				<Media src="https://cdn.lism-css.com/img/a-2.jpg" alt="" width='960' height='640' loading='lazy' decoding='async' />
+			</Frame>
+			<Layer bgc='black:50%' />
+			<Stack pos='rel' g='30' c='white'>
+				<Dummy length='s' />
+				<Dummy length='l' />
+			</Stack>
+		</Box>
+	</PreviewArea>
+	<PreviewCode slot='tab' label='JSX'>
+		```jsx {2-4} "\<Frame isLayer"
+		<Box pos='rel' py='50' px='40'>
+			<Frame isLayer>
+				<Media src="https://cdn.lism-css.com/img/a-2.jpg" alt="" width='960' height='640' loading='lazy' decoding='async' />
+			</Frame>
+			<Layer bgc='black:50%' />
+			<Stack pos='rel' g='30' c='white'>
+				<Dummy length='s' />
+				<Dummy length='l' />
+			</Stack>
+		</Box>
+		```
+	</PreviewCode>
+	<PreviewCode slot='tab' label='HTML'>
+		```html {2-4}
+		<div class='l--box -pos:rel -py:50 -px:40'>
+			<div class='l--frame is--layer'>
+				<img class='a--media' src='https://cdn.lism-css.com/img/a-2.jpg' width='960' height='640' loading='lazy' decoding='async' />
+			</div>
+			<div class='is--layer -bgc' style='--bgc:color-mix(in srgb, var(--black) 50%, transparent)'></div>
+			<div
+				class='l--stack -pos:rel -g:30 -c'
+				style='--c:var(--white)'
+			>
+				<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor.</p>
+				<p>Lorem ipsum dolor sit, amet consectetur adipisicing elit, sed do eiusmod tempor. Non facere laudantium ex eos doloribus aut dolore nisi provident libero, eum nulla sunt, porro sed dicta. Impedit ullam eveniet obcaecati minima.</p>
+			</div>
+		</div>
+		```
+	</PreviewCode>
+</Preview>

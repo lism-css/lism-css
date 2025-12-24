@@ -1,0 +1,59 @@
+---
+/**
+ * モジュール一覧を表示するコンポーネント
+ * moduleType に応じて対応するディレクトリの記事一覧を表示
+ */
+import { Lism } from 'lism-css/astro';
+import { getPostsByLang } from '@/lib/content';
+import { getLangFromUrl, getLocalizedUrl } from '@/lib/i18n';
+
+interface Props {
+	moduleType: string; // 'Layout Modules' | 'Atomic Modules' | 'State Modules' など
+}
+
+const { moduleType } = Astro.props;
+
+// moduleType からディレクトリを判定するマッピング
+const moduleTypeToDir: Record<string, string> = {
+	'Layout Modules': 'modules/layout',
+	'Atomic Modules': 'modules/atomic',
+	'State Modules': 'modules/state',
+	'Dynamic Modules': 'modules/dynamic',
+};
+
+const targetDir = moduleTypeToDir[moduleType];
+
+// 現在の言語を取得
+const currentLang = getLangFromUrl(Astro.url);
+
+// 対象ディレクトリの記事を取得
+const allPosts = await getPostsByLang(currentLang);
+const modulePosts = allPosts
+	.filter((post) => post.slug.startsWith(targetDir + '/') || post.slug === targetDir)
+	.sort((a, b) => {
+		// order順にソート（未指定は999として扱う）
+		const orderA = a.data.order ?? 999;
+		const orderB = b.data.order ?? 999;
+		return orderA - orderB;
+	});
+---
+
+{
+	modulePosts.length > 0 ? (
+		<ul>
+			{modulePosts.map((post) => {
+				const postPath = getLocalizedUrl(`/${post.slug}/`, currentLang);
+				const navLabel = post.data.navtitle ?? post.data.title;
+				return (
+					<Lism tag="li" key={post.slug}>
+						<a href={postPath} class="-p:10 -lh:xs -d:block -hov:o">
+							{navLabel}
+						</a>
+					</Lism>
+				);
+			})}
+		</ul>
+	) : (
+		<p>（記事がありません）</p>
+	)
+}

@@ -14,6 +14,15 @@ export { default as CanUse } from './CanUse.astro';
 // Preview系コンポーネント（docsから移植）
 export { Preview, PreviewTitle, PreviewArea, PreviewCode, PreviewFrame } from '../Preview';
 
+// DocComponents（docsから移植）
+export { HelpText, IconBadge, Reference, MemoBadge, PropBadge } from '../DocComponents.jsx';
+
+// code-template系コンポーネント（docsから移植）
+export { default as ImportPackage } from '../code-template/ImportPackage.astro';
+export { default as EmbedCode } from '../code-template/EmbedCode.astro';
+export { default as ImportSource } from '../code-template/ImportSource.astro';
+export { default as ImportExComponent } from '../code-template/ImportExComponent.astro';
+
 // NOTE: 他のグローバルコンポーネントを追加する場合はここに追記
 // export { default as Badge } from './Badge.astro';
 // export { default as Alert } from './Alert.astro';
