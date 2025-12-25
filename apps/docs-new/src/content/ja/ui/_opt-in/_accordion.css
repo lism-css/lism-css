@@ -1,0 +1,26 @@
+/* // --------------------
+// Accordion
+// -------------------- */
+.d--accordion_icon {
+	> .a--icon {
+		grid-area: 1 / 1;
+	}
+	> .a--icon:nth-last-of-type(2) {
+		opacity: var(--_isOpen, 0);
+	}
+	> .a--icon:nth-of-type(2) {
+		opacity: var(--_notOpen, 0);
+	}
+}
+
+/* // --------------------
+// data-role='trigger' だけをクリッカブルにする
+// -------------------- */
+.d--accordion_header:has(> [data-role='trigger']) {
+	pointer-events: none;
+}
+
+.d--accordion_label > a,
+.d--accordion_icon {
+	pointer-events: auto;
+}

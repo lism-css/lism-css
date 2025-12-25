@@ -71,6 +71,10 @@
 		}
 	}
 
+	// セル内のコードで、かつそれが唯一な要素であればは折り返さない
+	td > code {
+		white-space: nowrap;
+	}
 	/* モーダル背景 */
 	dialog:modal {
 		backdrop-filter: blur(16px);

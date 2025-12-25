@@ -6,7 +6,7 @@ description: ...
 import { Divider, Stack, HTML, Center, Flex, Icon, Dummy } from 'lism-css/astro';
 import { Accordion } from '@lism-css/ui/astro';
 import { Minus, Plus, X, Question, CaretDoubleDown, EyeClosed, Eyes } from "@phosphor-icons/react";
-
+import './_opt-in/_accordion.css';
 
 アコーディオン要素を作成できるUIコンポーネントです。
 
@@ -377,7 +377,9 @@ CSSで`:root`の`--acc-duration`を上書きすると、デフォルトの開閉
 `<Accordion.Icon>` に `isTrigger` を指定すると、`button`タグでの出力となり`[data-role="trigger"]`が付与されます。  
 この時、アコーディオンを開閉するための`click`イベントは `summary`（アコーディオンヘッダー）全体ではなくアイコン部分に対して登録されます。
 
-<IconBadge type='point' /> これにより、**アコーディオンヘッダー内部のテキストリンクをクリックできる**ようになり、さらに以下に示すような追加CSSを適用することで、アイコン部分だけをクリックできるように制限することもできます。
+:::check
+これにより、**アコーディオンヘッダー内部のテキストリンクをクリックできる**ようになります。
+:::
 
 <Preview>
 	<PreviewTitle>Preview</PreviewTitle>
@@ -432,8 +434,9 @@ CSSで`:root`の`--acc-duration`を上書きすると、デフォルトの開閉
 	</PreviewCode>
 </Preview>
 
+上記の追加CSSを適用することで、アイコン部分だけをクリックできるように制限することもできます。
 
-<IconBadge type='warning' /> 上記の追加CSSを適用しても、Tabキーでのカーソル操作時における`summary`タグ全体の選択を回避することはできません。
+<HelpText icon='info'>上記の追加CSSを適用しても、Tabキーでのカーソル操作時における`summary`タグ全体の選択を回避することはできません。</HelpText>
 
 
 

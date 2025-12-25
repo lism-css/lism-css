@@ -1,0 +1,22 @@
+---
+import { HTML, Icon } from 'lism-css/astro';
+const { icon = '', ...props } = Astro.props;
+---
+
+<HTML.p class="c--helpText" fz="s" c="text-2" lh="s" {...props}>
+	{icon && <Icon icon={icon} c="blue" class="u-inlineCenter" />}
+	<slot />
+</HTML.p>
+
+<style>
+	.u-inlineCenter {
+		/* 基準をmiddleにセット */
+		vertical-align: middle;
+
+		/* middleの計算式を元に追加で調整。（0.5cap - 0.5ex が英文では理想。） */
+		translate: 0 calc(-1 * (0.35em - 0.5ex));
+	}
+	.c--helpText > .a--icon {
+		margin-inline-end: 0.25em;
+	}
+</style>

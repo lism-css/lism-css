@@ -12,6 +12,10 @@ astro-code: Astro の <Code>コンポーネント
 	--codeBlock-bdrs: var(--bdrs--10);
 	--codeBlock-maxH: 32rem;
 
+	--codeBlock-mark-c: rgba(138, 145, 150, 0.1);
+	--codeBlock-mark-bgc: rrgba(147, 153, 155, 0.15);
+	--codeBlock-mark-bdc: hsla(207, 43%, 47%, 0.8);
+
 	/* Preview コンポーネント用 */
 	// --lsdoc-codeBlock-bgc: hsl(200, 18%, 95%);
 	// --lsdoc-codeBlock-radius: 4px;
@@ -98,6 +102,22 @@ pre {
 		background-color: var(--codeBlock-bgc);
 		max-height: var(--codeBlock-maxH);
 	}
+
+	// 部分ハイライト
+	.ec-line mark {
+		--tmInlineBgCol: color-mix(in srgb, var(--codeBlock-bgc), var(--brand) 10%);
+		--tmInlineBrdCol: color-mix(in srgb, var(--codeBlock-bgc), var(--brand) 50%);
+		--ec-tm-inlMarkerBrdWd: 1px;
+
+		&::before {
+			inset: 0 -1px;
+		}
+	}
+
+	// 行ハイライト
+	.ec-line.mark.mark {
+		--tmLineBgCol: color-mix(in srgb, var(--codeBlock-bgc), var(--brand) 15%);
+	}
 }
 
 /* -------------------------- */
@@ -172,4 +192,21 @@ pre {
 .c--srcCode__title + .c--srcCode__content {
 	border-top-left-radius: 0;
 	border-top-right-radius: 0;
+}
+
+/* 埋め込みコード */
+.emgithub-file {
+	margin-block-end: 0 !important;
+	.emgithub-container:first-of-type > & {
+		margin-block-start: 0;
+	}
+
+	.code-area > pre {
+		tab-size: 4 !important;
+	}
+
+	// with ❤ 消す
+	.hide-in-phone {
+		display: none;
+	}
 }

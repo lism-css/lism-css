@@ -48,7 +48,7 @@ const ogImage = `/ui/og/${entry.slug.replace(/^ui\//, '')}.png`;
 <BaseLayout title={entry.data.title} description={entry.data.description} ogImage={ogImage} toc={toc} lang={lang}>
 	<Lism tag="article" class="z--article set-cqUnit" data-pagefind-body>
 		{/* 記事タイトル */}
-		<HTML.h lv="1" class="article-title">{entry.data.title}</HTML.h>
+		<HTML.h lv="1" class="articleTitle">{entry.data.title}</HTML.h>
 
 		{/* 記事本文 */}
 		<Flow class="article-content" my-s="40">
@@ -59,4 +59,3 @@ const ogImage = `/ui/og/${entry.slug.replace(/^ui\//, '')}.png`;
 		<PostNavigation currentSlug={entry.slug} lang={lang} />
 	</Lism>
 </BaseLayout>
-

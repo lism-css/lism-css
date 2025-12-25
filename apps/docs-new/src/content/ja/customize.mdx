@@ -5,7 +5,6 @@ order: 49
 ---
 
 import { Box, Flex } from "lism-css/astro";
-import { Preview, PreviewArea, PreviewTitle, PreviewCode, IconBadge, EmbedCode } from "@/components/mdx";
 
 
 Lism CSS のnpmパッケージ `lism-css` から読み込めるCSSやコンポーネントで受け付けるプロパティに関する設定を上書きしてカスタマイズする方法を紹介します。
@@ -62,8 +61,8 @@ SCSSの変数を上書きすることで、読み込むCSSのカスタマイズ�
 // @use '../path-to/node_modules/lism-css/scss/main_no_layer';
 ```
 
-<IconBadge /> `@layer` のオン・オフは変数管理ではありません。読み込む`main.scss`を切り替えてください。  
-<IconBadge /> Astro の場合は`../path-to/node_modules/`部分は不要です。
+<HelpText icon="info">`@layer` のオン・オフは変数管理ではありません。読み込む`main.scss`を切り替えてください。</HelpText>
+<HelpText icon="info">また、Astro の場合は`../path-to/node_modules/`部分は不要です。</HelpText>
 
 
 

@@ -4,7 +4,6 @@ description: ...
 ---
 
 import { Container, Columns, Grid, Stack, Flex, Spacer, Cluster, Icon, Center } from 'lism-css/astro';
-import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportPackage, PropBadge, EmbedCode } from "@/components/mdx";
 import { Horse, Cat, Smiley, WarningCircle } from "@phosphor-icons/react";
 import {phIcons, logoIcons} from 'lism-css/react/atomic/Icon/presets';
 
@@ -42,7 +41,7 @@ svg.a--icon
 |---|---|
 | `icon` | アイコンを指定できます。指定した内容によって出力処理が変わります。 |
 | `size` | プリセットアイコンを呼び出す場合に有効。`width`, `height`として出力されます。|
-| `label` <PropBadge type="attr">aria-label</PropBadge>| `aria-label`として出力します。指定があれば`role="img"`が同時に出力され、指定がない場合は`aria-hidden="true"`が出力されます。 |
+| `label` | `aria-label`として出力します。指定があれば`role="img"`が同時に出力され、指定がない場合は`aria-hidden="true"`が出力されます。 |
 
 
 

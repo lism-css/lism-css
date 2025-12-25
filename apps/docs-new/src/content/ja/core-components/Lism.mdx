@@ -63,8 +63,8 @@ import { Lism } from 'lism-css/astro';
 {/* |種別|説明|
 |---|---|
 |**Common Props**|基本的な共通プロパティ|
-|**State Props**|[State Modules](/css/module-class/#state-modules) に分類されるクラスを出力するためのプロパティ|
-|**CSS Props**|[Prop Class](/css/prop-class/) に分類されるクラスを出力するためのプロパティ| */}
+|**State Props**|[State Modules](/docs/css-methodology//#state-modules) に分類されるクラスを出力するためのプロパティ|
+|**CSS Props**|[Prop Class](/docs/prop-class/) に分類されるクラスを出力するためのプロパティ| */}
 
 
 ### `tag`
@@ -166,7 +166,7 @@ Lismコンポーネント以外に対しても Lism Props を使いたい時に�
 
 ### State Props
 
-[State Modules](/css/module-class/) クラスに対応するプロパティ群です。
+[State Modules](/docs/css-methodology//) クラスに対応するプロパティ群です。
 
 
 | Prop | 出力されるクラス |
@@ -177,7 +177,7 @@ Lismコンポーネント以外に対しても Lism Props を使いたい時に�
 | `hasGutter` | `.has--gutter` |
 
 <Reference>
-[State Modules クラスについての解説と使用例はこちら](/css/module-class/)
+[State Modules クラスについての解説と使用例はこちら](/docs/css-methodology//)
 </Reference>
 
 
@@ -186,7 +186,7 @@ Lismコンポーネント以外に対しても Lism Props を使いたい時に�
 主要なCSSプロパティに対して、それぞれ省略記法でコンポーネントに指定できるようになっています。  
 例えば、`font-size` は `fz`、`padding` は `p` で指定できます。
 
-この時、[Prop Class](/css/prop-class/) に対応する値が指定されれば、下記のようにLismで用意しているユーティリティクラスが出力されるようになっています。
+この時、[Prop Class](/docs/prop-class/) に対応する値が指定されれば、下記のようにLismで用意しているユーティリティクラスが出力されるようになっています。
 
 <Preview>
 <PreviewTitle>例</PreviewTitle>
@@ -202,7 +202,7 @@ Lismコンポーネント以外に対しても Lism Props を使いたい時に�
 
 
 <Reference>
-[指定可能な Props 一覧はこちら](/css/prop-class/)
+[指定可能な Props 一覧はこちら](/docs/prop-class/)
 </Reference>
 
 <Spacer h='20'/>
@@ -277,7 +277,7 @@ Lismコンポーネント以外に対しても Lism Props を使いたい時に�
 
 ### レスポンジブ指定の方法
 
-`Lism` で使用できる CSS Propsは、[レスポンシブに対応した形式](/css/responsive)で出力できるようになっています。
+`Lism` で使用できる CSS Propsは、[レスポンシブに対応した形式](/docs/responsive)で出力できるようになっています。
 
 
 
@@ -334,11 +334,11 @@ Lismコンポーネント以外に対しても Lism Props を使いたい時に�
 
 :::warning
 実際に値が切り替わるかどうかは、そのプロパティがレスポンシブ対応している必要があります。
-どのプロパティが対応してるかは[Prop Class](/css/prop-class) の **BP**（
+どのプロパティが対応してるかは[Prop Class](/docs/prop-class) の **BP**（
 <small>ブレイクポイントの略</small>） の欄をチェックしてください。
 :::
 
-デフォルトでレスポンシブ対応されていない（CSSが用意されていない）プロパティに関しては、[SCSSによるカスタマイズ](/css/customize/)を行うことで対応できます。
+デフォルトでレスポンシブ対応されていない（CSSが用意されていない）プロパティに関しては、[SCSSによるカスタマイズ](/docs/customize/)を行うことで対応できます。
 
 
 <div id='output-utility'></div>

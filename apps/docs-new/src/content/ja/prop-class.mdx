@@ -4,7 +4,6 @@ description: ...
 order: 7
 ---
 import { Lism, Flow, Container, HTML, Frame, Layer, Media, Dummy, Box, Flex, Grid, Center, Columns, Spacer } from "lism-css/astro";
-import { Preview, PreviewArea, PreviewTitle, PreviewCode, EmbedCode, Reference, IconBadge } from "@/components/mdx";
 
 
 
@@ -45,13 +44,13 @@ export const PropTable = ({data={}, ...props}) => {
 Lismでは、主要なCSSプロパティ群に対して、それらで頻繁に使用される値やトークンを手軽にセットできるようなユーティリティクラスを用意しています。  
 さらに、その中でも特に重要なCSSプロパティについてはブレイクポイント指定用クラスも用意しています。
 
-それらを [Prop Class](/css/methodology/#prop-class) と呼んでおり、`-{prop}(:{value})`, `-{prop}_{bp}` という形式で定義しています。
+それらを [Prop Class](/docs/css-methodology/#prop-class) と呼んでおり、`-{prop}(:{value})`, `-{prop}_{bp}` という形式で定義しています。
 
 このページでは、その Prop Classの一覧を紹介します。
 
 
 :::info
-[SCSSでカスタマイズ](/css/customize/)することで、出力するクラスの種類は変更できます。
+[SCSSでカスタマイズ](/docs/customize/)することで、出力するクラスの種類は変更できます。
 :::
 
 
@@ -79,12 +78,12 @@ Lismでは、主要なCSSプロパティ群に対して、それらで頻繁に�
 |Property|Shorthand|To Class|BP|
 |---|---|---|---|
 |`font`|`f`|`inherit`|-|
-|`font-size`|`fz`|[`FZ`](/css/tokens/#typofz)|○|
-|`font-family`|`ff`|[`FF`](/css/tokens/#typoff)|-|
-|`font-weight`|`fw`|[`FW`](/css/tokens/#typofw)|-|
+|`font-size`|`fz`|[`FZ`](/docs/tokens/#typofz)|○|
+|`font-family`|`ff`|[`FF`](/docs/tokens/#typoff)|-|
+|`font-weight`|`fw`|[`FW`](/docs/tokens/#typofw)|-|
 |`font-style`|`fs`|`italic`|-|
-|`line-height`|`lh`|[`LH`](/css/tokens/#typolh), <br/>`1`|-|
-|`letter-spacing`|`lts`|[`LTS`](/css/tokens/#typolts)|-|
+|`line-height`|`lh`|[`LH`](/docs/tokens/#typolh), <br/>`1`|-|
+|`letter-spacing`|`lts`|[`LTS`](/docs/tokens/#typolts)|-|
 |`text-align`|`ta`|`center`<br/>`left`<br/>`right`|-|
 |`text-decoration`|`td`|`none`|-|
 |`text-transform`|`tt`|`upper`<br/>`lower`|-|
@@ -117,7 +116,6 @@ Lismでは、主要なCSSプロパティ群に対して、それらで頻繁に�
 |`--bdc`|`bdc`|`brand`,`accent`<br />`line`,<br />`inherit`,<br />`transparent`|-|
 {/* |`--keycolor`|`keycolor`|-|-| */}
 
-{/* (`--keycolor`は、[`u-cbox`](/css/utility-class/#u-cbox)クラスと合わせて利用します。) */}
 
 <Preview>
 	<PreviewTitle>Examples</PreviewTitle>
@@ -137,11 +135,11 @@ Lismでは、主要なCSSプロパティ群に対して、それらで頻繁に�
 </Preview>
 
 
-関連トークン: <a href="/css/tokens/#color"><code>COLOR</code></a>
+関連トークン: <a href="/docs/tokens/#color"><code>COLOR</code></a>
 
 ## Spacing
 
-export const LinkSPACE = () => <a href="/css/tokens/#space"><code>SPACE</code></a>;
+export const LinkSPACE = () => <a href="/docs/tokens/#space"><code>SPACE</code></a>;
 
 ### Padding
 |Property|Shorthand|To Class|BP|
@@ -221,7 +219,7 @@ export const LinkSPACE = () => <a href="/css/tokens/#space"><code>SPACE</code></
 |`min-block-size`|`min-ysz`|-|-|
 
 
-関連トークン: <a href="/css/tokens/#size"><code>SIZE</code></a>
+関連トークン: <a href="/docs/tokens/#size"><code>SIZE</code></a>
 
 
 
@@ -230,7 +228,7 @@ export const LinkSPACE = () => <a href="/css/tokens/#space"><code>SPACE</code></
 |---|---|---|---|
 |`display`|`d`|`none`,<br />`block`,<br />`in-flex`(`inline-flex`)|○|
 |`visibility`|`v`|`hidden`|-|
-|`opacity`|`op`|[`OPACITY`](/css/tokens/#opacity), `0`|-|
+|`opacity`|`op`|[`OPACITY`](/docs/tokens/#opacity), `0`|-|
 |`overflow`|`ov`| `auto`, `clip`, `hidden`|-|
 |`overflow-x`|`ovx`|`auto`, `clip`, `scroll`|-|
 |`overflow-y`|`ovy`|`auto`, `clip`, `scroll`|-|
@@ -383,14 +381,14 @@ export const LinkSPACE = () => <a href="/css/tokens/#space"><code>SPACE</code></
 ### Shadow
 |Prop|Shorthand|To Class|BP|
 |---|---|---|---|
-|`box-shadow`|`bxsh`|[`SHADOW`](/css/tokens/#shadow)|-|
+|`box-shadow`|`bxsh`|[`SHADOW`](/docs/tokens/#shadow)|-|
 
 
 ### Radius
 
 |Prop|Shorthand|To Class|BP|
 |---|---|---|---|
-|`border-radius`|`bdrs`|[`RADIUS`](/css/tokens/#radius)|○|
+|`border-radius`|`bdrs`|[`RADIUS`](/docs/tokens/#radius)|○|
 {/* |`border-top-left-radius`|`(bdrs_.)bdtlrs`|-|-|
 |`border-top-right-radius`|`(bdrs_.)bdtrrs`|-|-|
 |`border-bottom-left-radius`|`(bdrs_.)bdblrs`|-|-|
@@ -442,7 +440,7 @@ export const LinkSPACE = () => <a href="/css/tokens/#space"><code>SPACE</code></
 
 
 <Reference>
-borderに関する仕様は少し特殊になっています。詳しくは[borderページ](/css/bd/)をご覧ください。
+borderに関する仕様は少し特殊になっています。詳しくは[borderページ](/docs/props/bd/)をご覧ください。
 </Reference>
 
 

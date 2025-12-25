@@ -5,6 +5,7 @@ description: ...
 
 import { Dummy, Icon } from 'lism-css/astro';
 import { Tabs } from '@lism-css/ui/astro';
+import './_opt-in/_tabs.css'
 
 
 タブ要素を作成できるコンポーネントです。  
@@ -277,10 +278,10 @@ d--tabs
 
 ## スタイルバリエーションの作成例
 
-コアではスタイルを特に持ちませんので、サイトごとにスタイルを用意してご利用ください。  
+コアではスタイルを特に持ちませんので、サイトごとにスタイルを用意してご利用ください。
 
-`d--tabs_tab`では`--_isSelected`, `--_notSelected`が使えるようになっています。  
-<IconBadge type='help'/> （[`set-hov`](/css/hov#set-hov)の`--_isHov`,`--_notHov`の解説を参考にしてください。）
+`d--tabs_tab`では`--_isSelected`, `--_notSelected`が使えるようになっていますので、活用していただくと便利です。
+<HelpText icon='info' >（[`set-hov`](/docs/props/hov#set-hov)の`--_isHov`,`--_notHov`と同じようにして使用できます。）</HelpText>
 
 ここではいくつかのスタイリング例を紹介します。
 

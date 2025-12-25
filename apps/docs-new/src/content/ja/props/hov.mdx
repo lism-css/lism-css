@@ -4,7 +4,6 @@ description: ...
 ---
 
 import { Flex, HTML, Media, Layer, Spacer, Box, Center, Stack, Frame, LinkBox } from 'lism-css/react';
-import { Preview, PreviewArea, PreviewTitle, PreviewCode, EmbedCode, IconBadge } from '@/components/mdx';
 
 
 hover時の挙動をコントロールするためのCSS設計について紹介します。
@@ -116,7 +115,7 @@ Lismに内包されているクラスでは、それぞれ初期値を定義し�
 <div class='u-hidden' id='set-transition'></div>
 ### トランジションを設定する方法
 
-[`set-transition`](/css/module-class#set-transition)クラスを用意しています。
+[`set-transition`](/docs/css-methodology/#set-transition)クラスを用意しています。
 
 
 
@@ -190,7 +189,13 @@ Lismに内包されているクラスでは、それぞれ初期値を定義し�
 
 ### `-hov`クラスを自作する例
 
-<Preview>
+<Preview css={`
+@media (any-hover: hover) {
+	.-hov\\:shadowUp:hover {
+		box-shadow: var(--bxsh--40);
+		translate: 0 -3px;
+	}
+}`}>
 	<PreviewTitle>`.-hov:shadowUp`を追加</PreviewTitle>
 	<PreviewArea p='30'>
 		<LinkBox href='###' setTransition hov='shadowUp' bxsh='10' bd p='20'>
@@ -232,7 +237,7 @@ Lismに内包されているクラスでは、それぞれ初期値を定義し�
 ## `.set-hov` と特殊変数
 
 
-<IconBadge /> Lism では、[`set-hov`](/css/module-class#set-hov)というクラスを定義しており、このクラスでは`--_isHov`変数と`--_notHov`変数を定義しています。
+Lism では、[`set-hov`](/docs/css-methodology/#set-hov)というクラスを定義しており、このクラスでは`--_isHov`変数と`--_notHov`変数を定義しています。
 
 - `--_isHov`は非hover時にのみ空白定義されています。
 - `--_notHov`は逆に、hover時にのみ空白定義されています。
@@ -258,14 +263,20 @@ Lismに内包されているクラスでは、それぞれ初期値を定義し�
 
 以下に例を示します。
 
-<Preview>
+<Preview css={`
+.-hov\\:test {
+	color: var(--_isHov, green) var(--_notHov, blue);
+	background-color: var(--_notHov, lightgray);
+	box-shadow: var(--_isHov, var(--bxsh--30));
+}
+`}>
 	<PreviewTitle>`.-hov:test`を追加</PreviewTitle>
 	<PreviewArea p='30'>
 		<div className='-p:30 -bd -fz:l set-hov -hov:test'>BOX</div>
 	</PreviewArea>
 
 	<PreviewCode slot='tab' label='追加CSS'>
-		```scss
+		```css
 		/* 変数は.set-hov で定義済み */
 		.-hov\:test {
 			color: var(--_isHov, red) var(--_notHov, blue); /* hover時はred, 非hover時はblue*/
@@ -292,7 +303,7 @@ Lismに内包されているクラスでは、それぞれ初期値を定義し�
 親要素に`set-hov`を付与してその子要素で`--_isHov`変数と`--_notHov`変数をうまく使うことで、hover時の子要素の挙動をコントロールできるようになります。
 
 
-コアパッケージには、そのような子要素向けのクラスを `-hov:to:xxx` として2つだけ標準で用意しています。
+コアパッケージには、そのような子要素向けのクラスを `-hov:to:xxx` として少しだけ標準で用意しています。
 
 ```css
 
@@ -305,6 +316,11 @@ Lismに内包されているクラスでは、それぞれ初期値を定義し�
 .-hov\:to\:show {
 	opacity: var(--_notHov, 0);
 	visibility: var(--_notHov, hidden);
+}
+
+.-hov\:to\:zoom {
+	--transProp: scale;
+	scale: var(--_isHov, 1.1);
 }
 ```
 
@@ -356,7 +372,11 @@ Lismに内包されているクラスでは、それぞれ初期値を定義し�
 
 さらに、親要素で`--hov-duration`を上書きして子要素のトランジション時間を一括で変更してみましょう。
 
-<Preview>
+<Preview css={`
+.-hov\\:to\\:letterSpread {
+	--transProp: letter-spacing;
+	letter-spacing: var(--_isHov, 4px);
+}`}>
 	<PreviewTitle>自作クラスで子要素のホバーアクションを調整する例</PreviewTitle>
 	<PreviewArea p='20'>
 		<LinkBox
@@ -376,10 +396,6 @@ Lismに内包されているクラスでは、それぞれ初期値を定義し�
 
 	<PreviewCode slot='tab' label='追加CSS'>
 	```css
-	.-hov\:to\:zoom {
-		--transProp: scale;
-		scale: var(--_isHov, 1.1);
-	}
 	.-hov\:to\:letterSpread {
 		--transProp: letter-spacing;
 		letter-spacing: var(--_isHov, 0.125em);

@@ -196,7 +196,14 @@ Lismのパッケージ内で用意しているクラスはありませんが、�
 </Preview>
 
 
-<Preview>
+<Preview css={`
+:root {
+	--grad--lime: #abecd6 0%, #fbed96 100%;
+	--grad--denseWater: #3ab5b0 0%, #3d99be 31%, #56317a 100%;
+}
+.-bg\\:sunset {
+	background: linear-gradient(to top, #ddb672 5%, #e67a44 60%, #d16834 95%);
+}`}>
 	<PreviewTitle>`bg=':sunset'`</PreviewTitle>
 	<PreviewArea resize p='15'>
 		<Frame ar='16/9' bg=':sunset'/>

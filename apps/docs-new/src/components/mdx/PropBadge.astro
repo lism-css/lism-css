@@ -1,0 +1,28 @@
+---
+import { HTML } from 'lism-css/astro';
+const { type = '', ...props } = Astro.props;
+
+let keycolor = 'blue';
+if (type === 'attr') {
+	keycolor = 'green';
+} else if (type === 'cssvar') {
+	keycolor = 'purple';
+}
+---
+
+<HTML.span lismClass="c--propBadge" className="u-cbox" fz="2xs" lh="s" ff="mono" bd px="5" bdrs="5" keycolor={keycolor} {...props}>
+	<slot />
+</HTML.span>
+<style>
+	.c--propBadge {
+		display: inline-flex;
+		white-space: nowrap;
+		--bdc: color-mix(in srgb, var(--base), var(--keycolor) 25%);
+
+		> code {
+			font: inherit !important;
+			padding: 0 !important;
+			background-color: transparent;
+		}
+	}
+</style>
