@@ -87,13 +87,13 @@ export interface SidebarConfig {
 const topLevelLinks: TopLevelLinkItem[] = [
 	{
 		type: 'toplink',
-		label: 'Docs',
+		label: 'CSS Docs',
 		link: '/docs/',
 		icon: BookOpenTextIcon,
 	},
 	{
 		type: 'toplink',
-		label: 'UI',
+		label: 'Lism UI',
 		link: '/ui/',
 		icon: SquaresFourIcon,
 	},
