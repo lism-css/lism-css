@@ -17,7 +17,7 @@ export const siteConfig = {
 	name: 'Lism CSS',
 
 	// サイトの短い説明
-	description: 'Lism CSS の公式サイト。',
+	description: 'Lism CSS の公式ドキュメントサイトです。',
 
 	// 多言語設定
 	// root: true の言語はURLにプレフィックスが付かない（例: /introduction）
@@ -55,7 +55,7 @@ export const siteConfig = {
 	// Google Analytics設定
 	googleAnalytics: {
 		// 測定ID（G-XXXXXXXXXX形式）
-		measurementId: '',
+		measurementId: 'G-WHLSPPNEKZ',
 	},
 } as const;
 
