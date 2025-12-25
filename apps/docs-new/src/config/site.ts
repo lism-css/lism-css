@@ -37,6 +37,7 @@ export const siteConfig = {
 		name: 'ddryo',
 		github: 'https://github.com/lism-css/lism-css',
 		twitter: 'https://x.com/lismcss',
+		discord: 'https://discord.gg/6PMcFHvc4h',
 	},
 
 	// ページネーション設定
