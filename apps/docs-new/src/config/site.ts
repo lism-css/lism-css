@@ -39,12 +39,6 @@ export const siteConfig = {
 		twitter: 'https://x.com/lismcss',
 	},
 
-	// 関連リンク
-	links: {
-		// LISM CSS 本体サイト
-		lismCss: 'https://lism-css.com/',
-	},
-
 	// ページネーション設定
 	pagination: {
 		// 1ページあたりの記事数

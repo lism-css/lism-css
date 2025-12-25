@@ -118,6 +118,19 @@ pre {
 	.ec-line.mark.mark {
 		--tmLineBgCol: color-mix(in srgb, var(--codeBlock-bgc), var(--brand) 15%);
 	}
+
+	// カラーボックスの中
+	.u-cbox & {
+		> .frame {
+			background: color-mix(in srgb, var(--code-background), transparent 20%);
+			box-shadow:
+				inset var(--shsz--5) var(--shc),
+				inset var(--shsz--10) var(--shc);
+		}
+		> .frame > pre {
+			background: none;
+		}
+	}
 }
 
 /* -------------------------- */

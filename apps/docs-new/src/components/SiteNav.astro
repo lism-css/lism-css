@@ -124,7 +124,7 @@ function getPostUrl(slug: string): string {
 	{/* トップレベルリンク（大きめボタンとして表示） */}
 	{
 		topLevelLinks.length > 0 && (
-			<Stack class="siteNav_toplinks" g="5">
+			<Stack class="siteNav_toplinks" g="10">
 				{topLevelLinks.map((item) => {
 					// 言語対応のパスを生成
 					const itemPath = getLocalizedUrl(item.link.endsWith('/') ? item.link : `${item.link}/`, currentLang);
@@ -245,6 +245,9 @@ function getPostUrl(slug: string): string {
 	.siteNav_toplink {
 		background-image: linear-gradient(120deg, var(--grad_01), var(--grad_02));
 		border-radius: var(--bdrs--20);
+	}
+	.siteNav_toplink[data-active='true'] > span {
+		background-color: color-mix(in srgb, var(--base), transparent 10%);
 	}
 	/* [data-active]{} */
 	.siteNav_toplink > span {
