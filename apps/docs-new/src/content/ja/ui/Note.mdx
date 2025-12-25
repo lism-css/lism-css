@@ -1,0 +1,191 @@
+---
+title: 'Note'
+description: ...
+---
+import { Icon, Box, Dummy, Flex, Center, Lism, Stack } from 'lism-css/astro';
+import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportSource, ImportExComponent, HelpText } from "@/components/mdx";
+import Note from '@/components/ex/Note/index.jsx';
+
+
+ブログ記事などで、重要なポイントを示すためのコンポーネントです。
+
+
+<Preview>
+	<PreviewTitle>Preview</PreviewTitle>
+	<PreviewArea resize p='20'>
+		<Note title='Note Title'>
+			<Dummy lang='ja' />
+		</Note>
+	</PreviewArea>
+</Preview>
+
+
+## Only Core
+
+コンポーネントを作らずにLismのコア要素だけで構築する例も紹介しておきます。
+
+<Preview>
+	<PreviewTitle>Preview</PreviewTitle>
+	<PreviewArea resize p='20'>
+		<Stack className='u-cbox set-shadow' keycolor='gray' p='20' g='10' bdc='keycolor' bd-x-s bdw='4px' bxsh='10' bdrs='5'>
+			<Flex c='keycolor' fw='bold' ai='center' g='10'>
+				<Center className='c--note_icon' fz='xl'>
+					<Icon icon='note' />
+				</Center>
+				<span>Note</span>
+			</Flex>
+			<Lism>
+				<Dummy lang='ja' />
+			</Lism>
+		</Stack>
+	</PreviewArea>
+	<PreviewCode slot='tab' label='JSX'>
+		```jsx
+		<Stack className='u-cbox set-shadow' keycolor='gray' p='20' g='10' bdc='keycolor' bd-x-s bdw='4px' bxsh='10' bdrs='5'>
+			<Flex c='keycolor' fw='bold' ai='center' g='10'>
+				<Center className='c--note_icon' fz='xl'>
+					<Icon icon='note' />
+				</Center>
+				<span>Note</span>
+			</Flex>
+			<Lism>
+				<Dummy lang='ja' />
+			</Lism>
+		</Stack>
+		```
+	</PreviewCode>
+	<PreviewCode slot='tab' label='HTML'>
+	```html
+	<div class='u-cbox set-shadow l--stack -p:20 -g:10 -bd-x-s -bxsh:10 -bdrs:5' style='--keycolor:var(--gray);--bdc:var(--keycolor);--bdw:4px'>
+		<div class='l--flex -fw:bold -ai:center -g:10'>
+			<div class='l--flex -c -fw:bold -ai:center -g:10' style='--c:var(--keycolor)'>
+				<svg xmlns='http://www.w3.org/2000/svg' class='a--icon' viewBox='0 0 256 256' width='1em' height='1em' fill='currentColor' focusable='false' aria-hidden='true'>
+					<path
+						d='M229.66,58.34l-32-32a8,8,0,0,0-11.32,0l-96,96A8,8,0,0,0,88,128v32a8,8,0,0,0,8,8h32a8,8,0,0,0,5.66-2.34l96-96A8,8,0,0,0,229.66,58.34ZM124.69,152H104V131.31l64-64L188.69,88ZM200,76.69,179.31,56,192,43.31,212.69,64ZM224,120v88a16,16,0,0,1-16,16H48a16,16,0,0,1-16-16V48A16,16,0,0,1,48,32h88a8,8,0,0,1,0,16H48V208H208V120a8,8,0,0,1,16,0Z'
+					></path>
+				</svg>
+			</div>
+			<span>Note</span>
+		</div>
+		<div>
+			<p>ロレム・イプサムの座り雨、トマ好き学習だったエリット、しかし時と活力はそのような木々と楽しみ。ブラインド行うにはいくつかの重要な事柄が流れます。</p>
+		</div>
+	</div>
+	```
+	</PreviewCode>
+</Preview>
+
+
+## Create Component
+
+ここからは`Callout`(`.c--callout`)というコンポーネントを作って利用する例を紹介していきます。
+
+### Source Code
+
+<ImportSource name='Note' react others={['presets.js']}/>
+
+### Import
+<ImportExComponent name='Note' react />
+
+
+### Props
+
+| プロパティ | 説明 |
+|---|---|
+|`keycolor`| 表示カラーを指定します。|
+|`icon`| アイコンを指定できます。|
+|`type`|`keycolor`と`icon`の組み合わせのプリセット値を指定できます。初期値:`"note"`|
+|`title`|タイトルテキストを指定します。|
+|`flow`|`_body`に渡されます|
+{/* - `variant`: `'fill'` | `'outline'` ? */}
+
+
+## Usage
+
+{/* <Preview>
+	<PreviewTitle>
+		Astroで`slot`を利用する例
+	</PreviewTitle>
+	<PreviewArea p='20'>
+		<Note keycolor='purple'>
+			<Fragment slot='title'>Haeding Title</Fragment>
+			<Icon tag='svg' slot='icon' viewBox="0 0 256 256">
+				<path d="M208,24H72A32,32,0,0,0,40,56V224a8,8,0,0,0,8,8H192a8,8,0,0,0,0-16H56a16,16,0,0,1,16-16H208a8,8,0,0,0,8-8V32A8,8,0,0,0,208,24Zm-8,160H72a31.82,31.82,0,0,0-16,4.29V56A16,16,0,0,1,72,40H200Z"></path>
+			</Icon>
+			<Dummy lang='ja'/>
+		</Note>
+	</PreviewArea>
+	<PreviewCode>
+		```jsx
+		<Note keycolor='purple'>
+			<Fragment slot='title'>Haeding Title</Fragment>
+			<Icon tag='svg' slot='icon' viewBox="0 0 256 256">
+				<path d="M208,24H72A32,32,0,0,0,40,56V224a8,8,0,0,0,8,8H192a8,8,0,0,0,0-16H56a16,16,0,0,1,16-16H208a8,8,0,0,0,8-8V32A8,8,0,0,0,208,24Zm-8,160H72a31.82,31.82,0,0,0-16,4.29V56A16,16,0,0,1,72,40H200Z"></path>
+			</Icon>
+			<Dummy lang='ja'/>
+		</Note>
+		```
+	</PreviewCode>
+</Preview> */}
+
+
+<Preview>
+	<PreviewTitle>typeの指定</PreviewTitle>
+	<PreviewArea p='20'>
+		<Stack g='30' p='10'>
+			<Note title='Note: type="note"' type='note'>
+				<Dummy length='codes' lang='ja'/>
+			</Note>
+			<Note title='Note: type="alert"' type='alert'>
+				<Dummy length='codes' lang='ja'/>
+			</Note>
+			<Note title='Note: type="warning"' type='warning'>
+				<Dummy length='codes' lang='ja'/>
+			</Note>
+			<Note title='Note: type="point"' type='point'>
+				<Dummy length='codes' lang='ja'/>
+			</Note>
+			<Note title='Note: type="check"' type='check'>
+				<Dummy length='codes' lang='ja'/>
+			</Note>
+			<Note title='Note: type="info"' type='info'>
+				<Dummy length='codes' lang='ja'/>
+			</Note>
+			<Note title='Note: type="help"' type='help'>
+				<Dummy length='codes' lang='ja'/>
+			</Note>
+		</Stack>
+	</PreviewArea>
+	<PreviewCode slot='tab' label='JSX'>
+		```jsx
+		<Note title='Note: type="note"' type='note'>
+			<Dummy length='codes' lang='ja'/>
+		</Note>
+		<Note title='Note: type="alert"' type='alert'>...</Note>
+		<Note title='Note: type="warning"' type='warning'>...</Note>
+		<Note title='Note: type="point"' type='point'>...</Note>
+		<Note title='Note: type="check"' type='check'>...</Note>
+		<Note title='Note: type="info"' type='info'>...</Note>
+		<Note title='Note: type="help"' type='help'>...</Note>
+		```
+	</PreviewCode>
+</Preview>
+
+
+<Preview>
+	<PreviewTitle>`icon`、`keycolor`を指定</PreviewTitle>
+	<PreviewArea p='20'>
+		<Note title='Heading text...' icon='cart' keycolor='blue'>
+			<Dummy lang='ja'/>
+		</Note>
+	</PreviewArea>
+	<PreviewCode slot='tab' label='JSX'>
+		```jsx
+		<Note title='Heading text...' icon='cart' keycolor='blue'>
+			<Dummy lang='ja'/>
+		</Note>
+		```
+	</PreviewCode>
+</Preview>
+
+<HelpText>※ アイコンは、`title` の指定がある時のみ表示されます。</HelpText>

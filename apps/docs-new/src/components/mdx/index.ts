@@ -17,9 +17,10 @@ export { Preview, PreviewTitle, PreviewArea, PreviewCode, PreviewFrame } from '.
 // DocComponents（docsから移植）
 export { HelpText, IconBadge, Reference, MemoBadge, PropBadge } from '../DocComponents.jsx';
 
+export { default as EmbedCode } from './EmbedCode.astro';
+export { default as ImportPackage } from './ImportPackage.astro';
+
 // code-template系コンポーネント（docsから移植）
-export { default as ImportPackage } from '../code-template/ImportPackage.astro';
-export { default as EmbedCode } from '../code-template/EmbedCode.astro';
 export { default as ImportSource } from '../code-template/ImportSource.astro';
 export { default as ImportExComponent } from '../code-template/ImportExComponent.astro';
 

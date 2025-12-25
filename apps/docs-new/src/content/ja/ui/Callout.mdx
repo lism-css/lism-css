@@ -1,0 +1,158 @@
+---
+title: 'Callout'
+description: ...
+---
+import { Box, Flow, Icon, Layer, Dummy, Center, Lism, SideMain } from 'lism-css/astro';
+import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportSource, ImportExComponent } from '@/components/mdx';
+import { Book } from '@phosphor-icons/react';
+
+import Callout from '@/components/ex/Callout/index.astro';
+
+{/* // import Callout from '@/components/ex/Callout/index.astro'; */}
+
+
+
+短い文言を目立たせて強調表示したい時に使えるコンポーネントの作成例を紹介します。
+
+
+<Preview>
+	<PreviewTitle>Preview</PreviewTitle>
+	<PreviewArea resize p='20'>
+		<Callout>
+			<Dummy lang='ja' length='codes' />
+		</Callout>
+	</PreviewArea>
+</Preview>
+
+内部で`<SideMain>`を使用しており、コンテンツ側の横幅が一定値を下回ると自動で縦並びになります。
+
+
+## Only Core
+
+コンポーネントを作らずにLismのコア要素だけで構築する例も紹介しておきます。
+
+<Preview>
+	<PreviewTitle>Preview</PreviewTitle>
+	<PreviewArea p='20'>
+		<SideMain className='u-cbox' keycolor='red' ai='center' p='15' g='15' bd bdrs='10'>
+			<Center isSide c='keycolor' fz='xl'>
+				<Icon icon='alert' />
+			</Center>
+			<Flow>
+				<p>ロレム・イプサムの座り雨、トマ好き学習だったエリット、しかし時と活力はそのような木々と楽しみ。ブラインド行うにはいくつかの重要な事柄が流れます。</p>
+			</Flow>
+		</SideMain>
+	</PreviewArea>
+	<PreviewCode slot='tab' label='JSX'>
+		```jsx
+		<SideMain className='u-cbox' keycolor='red' ai='center' p='15' g='15' bd bdrs='10'>
+			<Center isSide c='keycolor' fz='xl'>
+				<Icon icon='alert' />
+			</Center>
+			<Flow>
+				<p>ロレム・イプサムの座り雨、トマ好き学習だったエリット、しかし時と活力はそのような木々と楽しみ。ブラインド行うにはいくつかの重要な事柄が流れます。</p>
+			</Flow>
+		</SideMain>
+		```
+	</PreviewCode>
+	<PreviewCode slot='tab' label='HTML'>
+		```html
+		<div class='l--sideMain is--side u-cbox -ai:center -p:20 -g:20 -bd -bdrs:10' style='--keycolor:var(--red)'>
+			<div class='l--center -c -fz:xl' style='--c:var(--keycolor)'>
+				<svg xmlns='http://www.w3.org/2000/svg' class='a--icon' viewBox='0 0 256 256' width='1em' height='1em' fill='currentColor' focusable='false' aria-hidden='true'>
+					<path d='M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm0,192a88,88,0,1,1,88-88A88.1,88.1,0,0,1,128,216Zm-8-80V80a8,8,0,0,1,16,0v56a8,8,0,0,1-16,0Zm20,36a12,12,0,1,1-12-12A12,12,0,0,1,140,172Z'></path>
+				</svg>
+			</div>
+			<div class='l--flow'>
+				<p>ロレム・イプサムの座り雨、トマ好き学習だったエリット、しかし時と活力はそのような木々と楽しみ。ブラインド行うにはいくつかの重要な事柄が流れます。</p>
+			</div>
+		</div>
+		```
+	</PreviewCode>
+</Preview>
+
+
+## Create Component
+
+ここからは`Callout`(`.c--callout`)というコンポーネントを作って利用する例を紹介していきます。
+
+### Source Code
+
+<ImportSource name='Callout' react astro others={['presets.js']}/>
+
+### Import
+<ImportExComponent name='Callout' react astro />
+
+
+### Props
+
+| プロパティ | 説明 |
+|---|---|
+|`type`|`keycolor`と`icon`の組み合わせを呼び出すキーワードを指定できます。初期値:`"alert"`|
+|`icon`| [`Icon`](/modules/atomic/icon)コンポーネントに渡すアイコンを指定できます。デフォルトは `"alert"`です。|
+|`keycolor`| キーカラーを指定します。|
+|`flow`|コンテンツを囲むdiv要素に渡されます|
+{/* | `iconProps` | アイコン（`<Icon>`）に渡すpropsを指定できます。| */}
+{/* - `variant`: `'fill'` | `'outline'` ? */}
+
+
+## Usage
+
+<Preview>
+	<PreviewTitle>typeの指定</PreviewTitle>
+	<PreviewArea p='20' resize>
+		<Callout type='alert' bdrs='10'>
+			<Dummy lang='ja' length='codes' />
+		</Callout>
+		<Callout type='point' bdrs='10'>
+			<Dummy lang='ja' length='codes' />
+		</Callout>
+		<Callout type='warning' bdrs='10'>
+			<Dummy lang='ja' length='codes' />
+		</Callout>
+		<Callout type='check' bdrs='10'>
+			<Dummy lang='ja' length='codes' />
+		</Callout>
+		<Callout type='info' bdrs='10'>
+			<Dummy lang='ja' length='codes' />
+		</Callout>
+		<Callout type='help' bdrs='10'>
+			<Dummy lang='ja' length='codes' />
+		</Callout>
+		<Callout type='note' bdrs='10'>
+			<Dummy lang='ja' length='codes' />
+		</Callout>
+		{/* <Callout icon={Book}>
+			Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo sunt deserunt
+		</Callout> */}
+	</PreviewArea>
+	<PreviewCode slot='tab' label='JSX'>
+	```jsx
+	<Callout type='alert' bdrs='10'>...</Callout>
+	<Callout type='point' bdrs='10'>...</Callout>
+	<Callout type='warning' bdrs='10'>...</Callout>
+	<Callout type='check' bdrs='10'>...</Callout>
+	<Callout type='info' bdrs='10'>...</Callout>
+	<Callout type='help' bdrs='10'>...</Callout>
+	<Callout type='note' bdrs='10'>...</Callout>
+	```
+	</PreviewCode>
+</Preview>
+
+
+<Preview>
+	<PreviewTitle>
+		カラーとアイコンを指定する例
+	</PreviewTitle>
+	<PreviewArea p='20'>
+		<Callout icon='good' keycolor='pink'>
+			<Dummy lang='ja' length='codes' />
+		</Callout>
+	</PreviewArea>
+	<PreviewCode slot='tab' label='JSX'>
+	```jsx
+	<Callout icon='good' keycolor='pink'>...</Callout>
+	```
+	</PreviewCode>
+</Preview>
+

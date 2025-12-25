@@ -13,7 +13,7 @@ import { Code } from 'astro:components';
 import { readFileSync, existsSync } from 'node:fs';
 import { resolve, basename } from 'node:path';
 import { Icon, HTML } from 'lism-css/astro';
-import CopyBtn from './CopyBtn.astro';
+import AstroCode from '../AstroCode.astro';
 
 interface Props {
 	/**
@@ -103,23 +103,14 @@ function detectLanguage(filePath: string): string {
 		error ? (
 			<div class="c--srcCode__error -p:30">{error}</div>
 		) : (
-			<div class="c--srcCode__content -pos:rel">
-				<Code code={fileContent} lang={detectedLang as any} themes={{ light: 'github-light', dark: 'github-dark' }} />
-				<CopyBtn fileContent={fileContent} />
+			<div class="c--srcCode__content">
+				<AstroCode code={fileContent} lang={detectedLang} />
 			</div>
 		)
 	}
 </div>
 
 <style>
-	.c--copyBtn {
-		opacity: 0;
-		transition: opacity 0.3s;
-
-		&:hover {
-			opacity: 1;
-		}
-	}
 	.c--srcCode {
 		max-width: 100%;
 	}

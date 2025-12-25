@@ -1,0 +1,99 @@
+---
+title: 'Avatar'
+description: ...
+---
+import { Flex,  Frame } from 'lism-css/astro';
+import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportSource, ImportExComponent } from "@/components/mdx";
+import Avatar from '@/components/ex/Avatar/index.astro';
+
+アバター画像用のコンポーネントの作成例を紹介します。
+
+<Preview>
+	<PreviewTitle>Preview</PreviewTitle>
+	<PreviewArea p='20' bg=':stripe'>
+		<Flex layout='cluster' g='20'>
+			<Avatar size='4rem' src='https://cdn.lism-css.com/img/avatar/a-01.jpg' alt='Avatar of xxxx'/>
+			<Avatar size='5rem' src='https://cdn.lism-css.com/img/avatar/a-02.jpg' alt='Avatar of xxxx' bd bdw='2px' bdc='base' bxsh='20'/>
+		</Flex>
+	</PreviewArea>
+
+</Preview>
+
+## Only Core
+
+コンポーネントを作らずにアバターを作るコード例も紹介しておきます。
+
+<Preview>
+	<PreviewTitle>Preview</PreviewTitle>
+	<PreviewArea p='20' bg=':stripe'>
+		<Frame ar='1/1' w='4em' bdrs='99'>
+			<img src='https://cdn.lism-css.com/img/avatar/a-01.jpg' alt='Avatar of xxxx' width='100%' height='100%' decoding='async' />
+		</Frame>
+	</PreviewArea>
+	<PreviewCode slot='tab' label='JSX'>
+		```jsx
+		<Frame ar='1/1' w='4em' bdrs='99'>
+			<img src='https://cdn.lism-css.com/img/avatar/a-01.jpg' alt='Avatar of xxxx' width='100%' height='100%' decoding='async' />
+		</Frame>　
+		```
+	</PreviewCode>
+	<PreviewCode slot='tab' label='HTML'>
+		```html
+		<div class="l--frame -ar:1/1 -w -bdrs:99" style="--w:4rem">
+			<img src="https://cdn.lism-css.com/img/avatar/a-01.jpg" alt="Avatar of xxxx" width="100%" height="100%" decoding="async">
+		</div>	
+		```
+	</PreviewCode>
+</Preview>
+
+## Create Component
+
+ここからは`Avatar`(`.c--avatar`)というコンポーネントを作って利用する例を紹介していきます。
+
+### Source Code
+<ImportSource name='Avatar' react astro />
+
+### Import
+<ImportExComponent name='Avatar' react astro />
+
+
+
+### Props
+
+| プロパティ | 説明 |
+|---|---|
+|`size`| アバターのサイズを指定します。|
+|`src`| アバター画像のパス |
+|`alt`| altテキスト |
+
+
+{/* |`mediaProps`| 上記以外にメディア側に対してプロパティを指定したい場合はこのプロパティにオブジェクト形式で指定できます。| */}
+
+
+## Usage
+
+<Preview>
+	<PreviewTitle>`Avatar`の使用例</PreviewTitle>
+	<PreviewArea p='20' bg=':stripe'>
+		<Flex layout='cluster' g='20'>
+			<Avatar size='4rem' src='https://cdn.lism-css.com/img/avatar/a-01.jpg' alt='Avatar of xxxx'/>
+			<Avatar size='5rem' src='https://cdn.lism-css.com/img/avatar/a-02.jpg' alt='Avatar of xxxx' bd bdw='2px' bdc='base' bxsh='20'/>
+		</Flex>
+	</PreviewArea>
+	<PreviewCode slot='tab' label='JSX'>
+		```jsx
+		<Avatar size='4rem' src='https://cdn.lism-css.com/img/avatar/a-01.jpg' alt='Avatar of xxxx'/>
+		<Avatar size='5rem' src='https://cdn.lism-css.com/img/avatar/a-02.jpg' alt='Avatar of xxxx' bd bdw='2px' bdc='base' bxsh='20'/>
+		```
+	</PreviewCode>
+	<PreviewCode slot='tab' label='HTML'>
+		```html
+		<div class='c--avatar l--frame -ar:1/1 -w -bdrs:99' style='--w:4rem'>
+			<img src='https://cdn.lism-css.com/img/avatar/a-01.jpg' alt='Avatar of xxxx' width='100%' height='100%' decoding='async' />
+		</div>
+		<div class='c--avatar l--frame -ar:1/1 -w -bdrs:99 -bd -bxsh:20' style='--w:5rem;--bdw:2px;--bdc:var(--base)'>
+			<img src='https://cdn.lism-css.com/img/avatar/a-02.jpg' alt='Avatar of xxxx' width='100%' height='100%' decoding='async' />
+		</div>
+		```
+	</PreviewCode>
+</Preview>

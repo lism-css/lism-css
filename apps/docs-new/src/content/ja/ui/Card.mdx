@@ -1,0 +1,362 @@
+---
+title: 'Card'
+description: ...
+---
+
+import { Dummy, HTML, Box, Flex, Stack, Center, Grid, Frame, LinkBox, Layer, Columns, Media, SideMain } from 'lism-css/astro';
+import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportSource, ImportExComponent } from '@/components/mdx';
+import Card from '@/components/ex/Card/index.jsx';
+
+
+カード型コンテンツの作成例を紹介します。
+
+
+export const ExampleCard = (props) => {
+	return(
+		<SideMain isLinkBox href='###' hov='bxsh' setTransition sideW='50%' bgc='base' bdrs='20' bxsh='10' ov='hidden' {...props}>
+			<Frame isSide ar='16/9' >
+				<Media src='https://cdn.lism-css.com/img/a-1.jpg' alt='' width='960' height='640' />
+			</Frame>
+			<Stack g='30' p='30'>
+				<h3 className='u-trim -fz:l'>Card Title</h3>
+				<HTML.p className='u-trim' fz='s' lh='s' o='-10'>ロレム・イプサムの座り雨、トマ好き学習だったエリット、しかし時と活力はそのような木々と楽しみ。</HTML.p>
+				<HTML.span d='in-flex' mx-s='auto' my-s='auto' c='inherit' td='none' bd-b lh='s' p='10'>View More →</HTML.span>
+			</Stack>
+		</SideMain>
+	)
+}
+
+export const ExampleImgCard = (props) => {
+	return(
+		<Frame pos='rel' ar='3/4' bdrs='30' bxsh='30' {...props}>
+			<Media src='https://cdn.lism-css.com/img/a-1.jpg' alt='' width='960' height='640' />
+			<Layer bgc='rgb(0 0 0 / 20%)'/>
+			<Layer layout='stack' c='white' p='30' g='30'>
+				<h3 className='u-trim -fz:l -my-s:auto'>Card Title</h3>
+				<HTML.p className='u-trim' fz='s' lh='s' o='-10'>ロレム・イプサムの座り雨、トマ好き学習だったエリット、しかし時と活力はそのような木々と楽しみ。</HTML.p>
+				<Center tag='a' href='#' c='black' bgc='white' td='none' lh='s' p='15' bdrs='99' hov='neutral'>Link Text</Center>
+			</Layer>
+		</Frame>
+	)
+}
+
+
+## Examples
+
+### 縦向き・横向きのレイアウトが自動で切り替わるカードリンク
+
+[`SideMains`](/modules/layout/sidemain/)を使って構築することで、表示領域が狭くなったら縦向きレイアウトにすることができます。
+
+また、[`is--linkBox`](/css/module-class/#is--linkbox)を適用してカードコンテンツ全体をリンクにしてみます。
+
+<Preview>
+	<PreviewTitle>Preview</PreviewTitle>
+	<PreviewArea bg=':stripe' resize p='30'>
+		<SideMain isLinkBox href='###' hov='bxsh' setTransition sideW='50%' bgc='base' bdrs='20' bxsh='10' ov='hidden'>
+			<Frame isSide ar='16/9' >
+				<Media src='https://cdn.lism-css.com/img/a-1.jpg' alt='' width='960' height='640' />
+			</Frame>
+			<Stack g='30' p='30'>
+				<h3 className='u-trim -fz:l'>Card Title</h3>
+				<HTML.p className='u-trim' fz='s' lh='s' o='-10'>ロレム・イプサムの座り雨、トマ好き学習だったエリット、しかし時と活力はそのような木々と楽しみ。</HTML.p>
+				<HTML.span d='in-flex' mx-s='auto' my-s='auto' c='inherit' td='none' bd-b lh='s' p='10'>View More →</HTML.span>
+			</Stack>
+		</SideMain>
+	</PreviewArea>
+	<PreviewCode slot='tab' label='JSX'>
+		```jsx "SideMain" "tag='a' isLinkBox"
+		<SideMain isLinkBox href='###' hov='bxsh' setTransition sideW='50%' bgc='base' bdrs='20' bxsh='10' ov='hidden'>
+			<Frame isSide ar='16/9' >
+				<Media src='https://cdn.lism-css.com/img/a-1.jpg' alt='' width='960' height='640' />
+			</Frame>
+			<Stack g='30' p='30'>
+				<h3 className='u-trim -fz:l'>Card Title</h3>
+				<HTML.p className='u-trim' fz='s' lh='s' o='-10'>ロレム・イプサムの座り雨、トマ好き学習だったエリット、しかし時と活力はそのような木々と楽しみ。</HTML.p>
+				<HTML.span d='in-flex' mx-s='auto' my-s='auto' c='inherit' td='none' bd-b lh='s' p='10'>View More →</HTML.span>
+			</Stack>
+		</SideMain>
+		```
+	</PreviewCode>
+</Preview>
+
+
+### カード内に別のリンクを配置する例
+
+カード全体をリンクにしつつ、別のリンクを含めたい場合、 [`u-expandedLink`](/css/utility-class/#u-expandedlink) を使用します。
+
+<Preview>
+	<PreviewTitle>`u-expandedLink`を使う例</PreviewTitle>
+	<PreviewArea bg=':stripe' resize p='30'>
+		<SideMain isLinkBox hov='bxsh' setTransition sideW='50%' bgc='base' bdrs='20' bxsh='10' ov='hidden'>
+			<Frame isSide ar='16/9' pos='rel'>
+				<Media src='https://cdn.lism-css.com/img/a-1.jpg' alt='' width='960' height='640' />
+				<HTML.a href='#badge-link' pos='abs' t='0' r='0' fz='s' bgc='black' c='white' m='20' px='15' bdrs='99' td='none' hov='neutral'>Category</HTML.a>
+			</Frame>
+			<Stack g='30' p='30'>
+				<h3 className='u-trim -fz:l'>
+					<HTML.a className='u-expandedLink' href='#card-link'>Card with .u-expandedLink</HTML.a>
+				</h3>
+				<HTML.p className='u-trim' fz='s' lh='s' o='-10'>ロレム・イプサムの座り雨、トマ好き学習だったエリット、しかし時と活力はそのような木々と楽しみ。</HTML.p>
+				<HTML.span d='in-flex' mx-s='auto' my-s='auto' c='inherit' td='none' bd-b lh='s' p='10'>View More →</HTML.span>
+			</Stack>
+		</SideMain>
+	</PreviewArea>
+	<PreviewCode slot='tab' label='JSX'>
+		```jsx "isLinkBox" "\<HTML.a " "u-expandedLink"
+		<SideMain isLinkBox hov='bxsh' setTransition sideW='50%' bgc='base' bdrs='20' bxsh='10' ov='hidden'>
+			<Frame isSide ar='16/9' pos='rel'>
+				<Media src='https://cdn.lism-css.com/img/a-1.jpg' alt='' width='960' height='640' />
+				<HTML.a href='#badge-link' pos='abs' t='0' r='0' fz='s' bgc='black' c='white' m='20' px='15' bdrs='99' td='none' hov='neutral'>Category</HTML.a>
+			</Frame>
+			<Stack g='30' p='30'>
+				<h3 className='u-trim -fz:l'>
+					<HTML.a className='u-expandedLink' href='#card-link'>Card with .u-expandedLink</HTML.a>
+				</h3>
+				<HTML.p className='u-trim' fz='s' lh='s' o='-10'>ロレム・イプサムの座り雨、トマ好き学習だったエリット、しかし時と活力はそのような木々と楽しみ。</HTML.p>
+				<HTML.span d='in-flex' mx-s='auto' my-s='auto' c='inherit' td='none' bd-b lh='s' p='10'>View More →</HTML.span>
+			</Stack>
+		</SideMain>
+		```
+	</PreviewCode>
+</Preview>
+
+
+### 画像の上にコンテンツを配置するカードの例
+
+<Preview>
+	<PreviewTitle>Preview</PreviewTitle>
+	<PreviewArea bg=':stripe' p='20'>
+		<ExampleImgCard max-w='24em'/>
+	</PreviewArea>
+	<PreviewCode slot='tab' label='JSX'>
+		```jsx
+		<Frame pos='rel' ar='3/4' bdrs='30' bxsh='30' max-w='24em'>
+			<Media src='https://cdn.lism-css.com/img/a-1.jpg' alt='' width='960' height='640' />
+			<Layer bgc='rgb(0 0 0 / 20%)'/>
+			<Layer layout='stack' c='white' p='30' g='30'>
+				<h3 className='u-trim -fz:l -my-s:auto'>Card Title</h3>
+				<HTML.p className='u-trim' fz='s' lh='s' o='-10'>ロレム・イプサムの座り雨、トマ好き学習だったエリット、しかし時と活力はそのような木々と楽しみ。</HTML.p>
+				<Center tag='a' href='#' c='black' bgc='white' td='none' lh='s' p='15' bdrs='99' hov='neutral'>Link Text</Center>
+			</Layer>
+		</Frame>
+		```
+	</PreviewCode>
+	<PreviewCode slot='tab' label='HTML'>
+		```html
+		<div class='l--frame -pos:rel -ar -bdrs:30 -bxsh:30 -mx:auto -max-w' style='--ar:3/4;--max-w:var(--sz--xs)'>
+			<img class='a--media' src='https://cdn.lism-css.com/img/a-1.jpg' width='960' height='640' />
+			<div class='is--layer -bgc' style='--bgc:rgb(0 0 0 / 50%)'></div>
+			<div class='l--stack is--layer -c -p:20 -g:20' style='--c:var(--white)'>
+				<h3 class='u-trim -fz:l -my-s:auto'>Card Title</h3>
+				<p class='u-trim -fz:s -lh:s -o:mild'>ロレム・イプサムの座り雨、トマ好き学習だったエリット、しかし時と活力はそのような木々と楽しみ。</p>
+				<a class='l--center -c -bgc -td:none -lh:1 -p:15 -bdrs:99 -hov:o' style='--c:var(--black);--bgc:var(--white)' href='#'>Link Text</a>
+			</div>
+		</div>
+		```
+	</PreviewCode>
+</Preview>
+
+
+
+### set-innerRs のカードへの活用例
+
+<Preview>
+	<PreviewTitle>Preview</PreviewTitle>
+	<PreviewArea bg=':stripe' resize p='20'>
+		<Stack p='15' g='20' c='text' bgc='base' bdrs='30' bxsh='30' className='set-innerRs' max-w='xs' mx='auto'>
+			<Frame isSide ar='16/9' >
+				<Media src='https://cdn.lism-css.com/img/a-1.jpg' alt='' width='960' height='640' bdrs='inner'/>
+			</Frame>
+			<Stack g='30' p='15'>
+				<h3 className='u-trim -fz:l'>Card Title</h3>
+				<HTML.p className='u-trim' fz='s' lh='s' o='-10'>ロレム・イプサムの座り雨、トマ好き学習だったエリット、しかし時と活力はそのような木々と楽しみ。</HTML.p>
+				<HTML.a href='#' d='in-flex' mx-s='auto' c='base' bgc='text' td='none' lh='s' py='15' px='20' jc='center' hov='neutral' bdrs='inner'>View More →</HTML.a>
+			</Stack>
+		</Stack>
+	</PreviewArea>
+	<PreviewCode slot='tab' label='JSX'>
+		```jsx
+		<Stack p='15' g='20' c='text' bgc='base' bdrs='30' bxsh='30' className='set-innerRs' max-w='xs' mx='auto'>
+			<Frame isSide ar='16/9' >
+				<Media src='https://cdn.lism-css.com/img/a-1.jpg' alt='' width='960' height='640' bdrs='inner'/>
+			</Frame>
+			<Stack g='30' p='15'>
+				<h3 className='u-trim -fz:l'>Card Title</h3>
+				<HTML.p className='u-trim' fz='s' lh='s' o='-10'>ロレム・イプサムの座り雨、トマ好き学習だったエリット、しかし時と活力はそのような木々と楽しみ。</HTML.p>
+				<HTML.a href='#' d='in-flex' mx-s='auto' c='base' bgc='text' td='none' lh='s' py='15' px='20' jc='center' hov='neutral' bdrs='inner'>View More →</HTML.a>
+			</Stack>
+		</Stack>
+		```
+	</PreviewCode>
+	<PreviewCode slot='tab' label='HTML'>
+		```html
+		<div class='l--stack set-innerRs -p:10 -g:15 -c:text -bgc:base -bdrs:30 -bxsh:30 -mx:auto -max-w' style='--max-w:var(--sz--xs)'>
+			<div class='l--frame is--side -ar:16/9'>
+				<img class='a--media -bdrs:inner' src='https://cdn.lism-css.com/img/a-1.jpg' width='960' height='640' />
+			</div>
+			<div class='l--stack -g:20 -p:10'>
+				<h3 class='u-trim -fz:l'>Card Title</h3>
+				<p class='u-trim -fz:s -lh:s -o:mild'>ロレム・イプサムの座り雨、トマ好き学習だったエリット、しかし時と活力はそのような木々と楽しみ。</p>
+				<a class='-bdrs:inner -d:in-flex -mx-s:auto -c:base -bgc:text -td:none -bd-be -lh:1 -py:15 -px:20 -jc:center -hov:o' href='#'>Link Text</a>
+			</div>
+		</div>
+		```
+	</PreviewCode>
+</Preview>
+
+
+### 画像比率を指定しながらコンテンツに合わせる
+
+<Preview>
+	<PreviewTitle>Flex時にメディア側のアスペクト比を指定すると、コンテンツ側の高さが低い場合にその比率で固定されます。</PreviewTitle>
+	<PreviewArea bg=':stripe' resize p='20'>
+		<LinkBox
+			href='#_' 
+			layout='flex'
+			p='15' c='text' bgc='base' bd bdw='2px' bdc='base-2' bdrs='20'
+			hov='bxsh' setHov setTransition
+		>
+			<Frame w={['25%','30%']} ar='1/1' fxsh='0' bdrs='10'
+			>
+				<Media src='https://cdn.lism-css.com/img/a-1.jpg' alt='' width='960' height='640' />
+			</Frame>
+			<Stack fxg='1' g='30' p='30'>
+				<h3 className='u-trim -fz:l'>Card Title</h3>
+				<HTML.p className='u-trim' fz='s' lh='s' o='-10'>ロレム・イプサムの座り雨、トマ好き学習だったエリット、しかし時と活力はそのような木々と楽しみ。ブラインド行うにはいくつかの重要な事柄が流れます。</HTML.p>
+				<HTML.span d='in-flex' mx-s='auto' my-s='auto' c='var(--_isHov, var(--link)) var(--_notHov, inherit)' td='none' bd-b lh='s' p='10'>View More →</HTML.span>
+			</Stack>
+		</LinkBox>
+	</PreviewArea>
+	<PreviewCode slot='tab' label='JSX'>
+		```jsx "ar='1/1'"
+		<LinkBox
+			href='#_' 
+			layout='flex'
+			p='15' c='text' bgc='base' bd bdw='2px' bdc='base-2' bdrs='20'
+			hov='bxsh' setHov setTransition
+		>
+			<Frame w={['25%','30%']} ar='1/1' fxsh='0' bdrs='10'
+			>
+				<Media src='https://cdn.lism-css.com/img/a-1.jpg' alt='' width='960' height='640' />
+			</Frame>
+			<Stack fxg='1' g='30' p='30'>
+				<h3 className='u-trim -fz:l'>Card Title</h3>
+				<HTML.p className='u-trim' fz='s' lh='s' o='-10'>ロレム・イプサムの座り雨、トマ好き学習だったエリット、しかし時と活力はそのような木々と楽しみ。ブラインド行うにはいくつかの重要な事柄が流れます。</HTML.p>
+				<HTML.span d='in-flex' mx-s='auto' my-s='auto' c='var(--_isHov, var(--link)) var(--_notHov, inherit)' td='none' bd-b lh='s' p='10'>View More →</HTML.span>
+			</Stack>
+		</LinkBox>
+		```
+	</PreviewCode>
+</Preview>
+
+
+### 横並びと縦並びをブレイクポイントで切り替え、メディア比率も変更する
+
+`Grid`でブレイクポイント指定で横並びと縦並びを切り替え、メディア比率も変更する例です。
+
+<Preview>
+	<PreviewTitle>ブレイクポイントで切り替える場合</PreviewTitle>
+	<PreviewArea bg=':stripe' resize p='20'>
+		<LinkBox
+			href='#_'
+			layout='grid'
+			gt={[`'img' '.'`, `'img .' / 200px 1fr`]}
+			ai="center"
+			g='15' p='15' bgc='base' bd bdw='2px' bdc='base-2' bdrs='20' bxsh='10'
+			hov='bxsh' setHov setTransition
+		>
+			<Frame ga='img' aslf='stretch' ar={['og', '1/1']} max-w='100%' pos='rel' bdrs='20' bxsh='10'>
+				<Media css={{scale: 'var(--_isHov, 1.25)'}} setTransition src='https://cdn.lism-css.com/img/a-1.jpg' alt='' width='960' height='640' />
+			</Frame>
+			<Stack g='20' p='15'>
+				<h3 className='-fz:l'>Card Title</h3>
+				<HTML.p className='u-trim' fz='s' lh='s' o='-10'>ロレム・イプサムの座り雨、トマ好き学習だったエリット、しかし時と活力はそのような木々と楽しみ。ブラインド行うにはいくつかの重要な事柄が流れます。</HTML.p>
+				<HTML.span d='in-flex' mx-s='auto' my-s='20' c='inherit' td='none' bd-b lh='1' p='10'>View More →</HTML.span>
+			</Stack>
+		</LinkBox>
+	</PreviewArea>
+	<PreviewCode slot='tab' label='JSX'>
+		```jsx
+		<LinkBox
+			href='#_'
+			layout='grid'
+			gt={[`'img' '.'`, `'img .' / 200px 1fr`]}
+			ai="center"
+			g='15' p='15' bgc='base' bd bdw='2px' bdc='base-2' bdrs='20' bxsh='10'
+			hov='bxsh' setHov setTransition
+		>
+			<Frame ga='img' aslf='stretch' ar={['og', '1/1']} max-w='100%' pos='rel' bdrs='20' bxsh='10'>
+				<Media css={{scale: 'var(--_isHov, 1.25)'}} setTransition src='https://cdn.lism-css.com/img/a-1.jpg' alt='' width='960' height='640' />
+			</Frame>
+			<Stack g='20' p='15'>
+				<h3 className='-fz:l'>Card Title</h3>
+				<HTML.p className='u-trim' fz='s' lh='s' o='-10'>ロレム・イプサムの座り雨、トマ好き学習だったエリット、しかし時と活力はそのような木々と楽しみ。ブラインド行うにはいくつかの重要な事柄が流れます。</HTML.p>
+				<HTML.span d='in-flex' mx-s='auto' my-s='20' c='inherit' td='none' bd-b lh='1' p='10'>View More →</HTML.span>
+			</Stack>
+		</LinkBox>
+		```
+	</PreviewCode>
+</Preview>
+
+
+
+### ホバーでテキストを出現させる例
+
+以下の例では、`.-hov\:to\:slide`クラスを別途用意する必要があります。
+
+{/* Note: PreviewAreaにresize つけると Filterの挙動変わることに注意。 */}
+<Preview>
+	<PreviewTitle>Preview</PreviewTitle>
+	<PreviewArea bg=':stripe' p='20'>
+		<LinkBox href='#card-a' pos='rel' bdrs='20' bxsh='20' ov='hidden' setHov max-w='xs' mx='auto'>
+			<Frame ar='1/1'>
+				<img src='https://cdn.lism-css.com/img/a-1.jpg' alt='' width='960' height='640' />
+			</Frame>
+			<Layer bgc='rgba(0 0 0 / 10%)'/>
+			<Stack pos='abs' b='0' w='100%' p='30' bgc='rgb(255 255 255 / 20%)'>
+				<Layer blur='6px' brightness='1.1'/>
+				<Box pos='rel' z='1' c='white' lh='s'>
+					<h3 className='u-trim -fz:l'>Card Title</h3>
+					<Grid setTransition hov='to:slide' my='15'>
+						<Box ov='hidden'>
+							<Dummy py='5' fz='s' lh='xs'/>
+						</Box>
+					</Grid>
+					<HTML.div className='u-trim' fz='xs' o='-10'>2000.01.01 / Author</HTML.div>
+				</Box>
+			</Stack>
+		</LinkBox>
+	</PreviewArea>
+	<PreviewCode slot='tab' label='JSX'>
+	```jsx "setHov" "hov='to:slide'"
+	<LinkBox href='#card-a' pos='rel' bdrs='20' bxsh='20' ov='hidden' setHov max-w='xs' mx='auto'>
+		<Frame ar='1/1'>
+			<img src='https://cdn.lism-css.com/img/a-1.jpg' alt='' width='960' height='640' />
+		</Frame>
+		<Layer bgc='rgba(0 0 0 / 10%)'/>
+		<Stack pos='abs' b='0' w='100%' p='30' bgc='rgb(255 255 255 / 20%)'>
+			<Layer blur='6px' brightness='1.1'/>
+			<Box pos='rel' z='1' c='white' lh='s'>
+				<h3 className='u-trim -fz:l'>Card Title</h3>
+				<Grid setTransition hov='to:slide' my='15'>
+					<Box ov='hidden'>
+						<Dummy py='5' fz='s' lh='xs'/>
+					</Box>
+				</Grid>
+				<HTML.div className='u-trim' fz='xs' o='-10'>2000.01.01 / Author</HTML.div>
+			</Box>
+		</Stack>
+	</LinkBox>
+	```
+	</PreviewCode>
+<PreviewCode slot='tab' label='追加CSS'>
+```css
+.-hov\:to\:slide {
+	opacity: var(--_notHov, 0);
+	grid-template-rows: var(--_isHov, 1fr) var(--_notHov, 0fr);
+	transition-property: margin-block, padding-block, opacity, grid-template-rows;
+}
+```
+</PreviewCode>
+</Preview>
+

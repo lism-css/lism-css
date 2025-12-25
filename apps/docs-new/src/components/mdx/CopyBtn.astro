@@ -10,7 +10,8 @@ const copyText = t(lang, 'copyCode');
 ---
 
 <HTML.button
-	class="c--copyBtn"
+	class="c--copyBtn -hov:to:show"
+	setTransition
 	data-code={fileContent}
 	aria-labelledby="label--copy-code"
 	layout="grid"
