@@ -3,22 +3,78 @@ import { Lism, Icon } from 'lism-css/astro';
 import { ArrowDownRight } from '@phosphor-icons/react';
 
 const { resize, setCqUnit = true, p = '5', ...props } = Astro.props || {};
-
-let innerClass = 'c--preview_inner';
-if (resize) innerClass += ' is--resize';
 ---
 
-<Lism className='c--preview_area'>
+<Lism className="c--preview_area">
 	<div class={`c--preview_area_frame ${setCqUnit ? 'set-cqUnit' : ''}`}>
-		<Lism className={innerClass} layout='flow' p={p} {...props}>
+		<Lism class:list={['c--preview_inner', resize ? 'is--resize' : '']} setHov layout="flow" p={p} {...props}>
 			<slot />
 			{
 				resize && (
-					<div class='c--preview_help -pos:abs -b:0 -r:0 -d:in-f -lh:1 -p:10 -g:5 -bdrs:5'>
-						リサイズ可能 <Icon as={ArrowDownRight} weight='fill' />
-					</div>
+					<Lism class="c--preview_help -hov:to:show -pos:abs -b:0 -r:0 -lh:xs -p:5 -bdrs:5">
+						<span>リサイズ可能</span> <Icon as={ArrowDownRight} weight="fill" />
+					</Lism>
 				)
 			}
 		</Lism>
 	</div>
 </Lism>
+
+<style>
+	.c--preview_help {
+		/* // transform: translateY(calc(4px + 100%)); */
+		z-index: 1;
+		margin: 0.875em;
+		font-size: 11px;
+		background-color: color-mix(in srgb, var(--base), transparent 50%);
+		opacity: var(--_isHov, 0.8) var(--_notHov, 0);
+		/* border: 1px solid var(--divider); */
+		/* // backdrop-filter: blur(2px); */
+	}
+
+	/* .c--preview_inner {
+		--stripe-bdc: color-mix(in srgb, currentColor, transparent 95%);
+		--stripe-bdw: 1px;
+		--stripe-deg: -40deg;
+		--stripe-interval: 0.5rem;
+		background-image: repeating-linear-gradient(
+			var(--stripe-deg),
+			var(--stripe-bdc),
+			var(--stripe-bdc) var(--stripe-bdw),
+			transparent var(--stripe-bdw),
+			transparent var(--stripe-interval)
+		);
+
+		background-position: center;
+	} */
+	.c--preview_inner::before {
+		/* content: ''; */
+		position: absolute;
+		z-index: -1;
+		inset: 0;
+		/* background:
+			repeating-linear-gradient(-60deg, color-mix(in srgb, var(--divider), transparent 70%) 0px 1px, transparent 1px 1em),
+			repeating-linear-gradient(0deg, color-mix(in srgb, var(--divider), transparent 70%) 0px 1px, transparent 1px 1em);
+		background-repeat: no-repeat;
+		background-position: 0 0;
+		background-attachment: fixed; */
+
+		/* dot */
+		background-image: radial-gradient(color-mix(in srgb, var(--divider), transparent 50%) 1px, transparent 0);
+		background-size: 10px 10px;
+
+		/* --stripe-bdc: color-mix(in srgb, currentColor, transparent 95%);
+		--stripe-bdw: 1px;
+		--stripe-deg: -40deg;
+		--stripe-interval: 0.5rem;
+		background-image: repeating-linear-gradient(
+			var(--stripe-deg),
+			var(--stripe-bdc),
+			var(--stripe-bdc) var(--stripe-bdw),
+			transparent var(--stripe-bdw),
+			transparent var(--stripe-interval)
+		); */
+
+		/* mask: linear-gradient(15deg, transparent 25%, black); */
+	}
+</style>

@@ -1,0 +1,145 @@
+---
+import { Icon, HTML } from 'lism-css/astro';
+import { getLangFromUrl, t } from '@/lib/i18n';
+
+const { fileContent, ...props } = Astro.props;
+const lang = getLangFromUrl(Astro.url);
+const copyText = t(lang, 'copyCode');
+
+// icons: ionicons
+---
+
+<HTML.button
+	class="c--copyBtn -hov:to:show"
+	setTransition
+	data-code={fileContent}
+	aria-labelledby="label--copy-code"
+	layout="grid"
+	pos="abs"
+	t="0"
+	r="0"
+	ai="center"
+	g="5"
+	bdrs="10"
+	{...props}
+>
+	<svg class="c--copyBtn__icon a--icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="1em" height="1em" aria-hidden="true">
+		<rect x="128" y="128" width="336" height="336" rx="57" ry="57" fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="32"
+		></rect>
+		<path
+			d="M383.5 128l.5-24a56.16 56.16 0 00-56-56H112a64.19 64.19 0 00-64 64v216a56.16 56.16 0 0056 56h24"
+			fill="none"
+			stroke="currentColor"
+			stroke-linecap="round"
+			stroke-linejoin="round"
+			stroke-width="32"></path>
+	</svg>
+
+	<svg
+		class="c--copyBtn__icon a--icon _checked"
+		xmlns="http://www.w3.org/2000/svg"
+		viewBox="0 0 512 512"
+		width="1em"
+		height="1em"
+		aria-hidden="true"
+	>
+		<path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32" d="M416 128L192 384l-96-96"></path>
+	</svg>
+
+	<span class="c--copyBtn__text -d:none" id="label--copy-code">{copyText.copy}</span>
+	<span class="c--copyBtn__text -d:none" id="label--copy-code-done">{copyText.copied}</span>
+</HTML.button>
+
+<style>
+	.c--copyBtn {
+		margin: 0.5em;
+		padding: 0.375em;
+		background: var(--codeBlock-bgc);
+		border: 1px solid color-mix(in srgb, currentColor, transparent 50%);
+		z-index: 1;
+	}
+
+	.c--copyBtn:hover {
+		background: color-mix(in srgb, var(--codeBlock-bgc), var(--text) 20%);
+	}
+
+	.c--copyBtn__icon {
+		grid-area: 1 / 1;
+		stroke: currentColor;
+		scale: 1.2;
+
+		&._checked {
+			opacity: 0;
+		}
+	}
+
+	/* コピー成功時のスタイル */
+	.c--copyBtn._copied {
+		color: white;
+		background: #0a9d6c;
+		border-color: #16c288;
+
+		> ._checked {
+			opacity: 1;
+		}
+		> :not(._checked) {
+			opacity: 0;
+		}
+	}
+	.c--copyBtn._error {
+		background: #cf2a2a;
+		border-color: #ff4444;
+	}
+</style>
+
+<script>
+	// コピーボタンの動作を設定
+	function initCopyBtns() {
+		const copyBtns = document.querySelectorAll('.c--copyBtn');
+
+		copyBtns.forEach((button) => {
+			// 既にイベントリスナーが登録されている場合はスキップ
+			if (button.hasAttribute('data-initialized')) return;
+			button.setAttribute('data-initialized', 'true');
+
+			button.addEventListener('click', async () => {
+				const codeContent = button.getAttribute('data-code');
+				// const buttonText = button.querySelector('.c--copyBtn__text');
+
+				if (!codeContent) return;
+
+				try {
+					// クリップボードにコピー
+					await navigator.clipboard.writeText(codeContent);
+
+					// ボタンの表示を変更（成功フィードバック）
+					button.classList.add('_copied');
+					button.setAttribute('aria-labelledby', 'label--copy-code-done');
+
+					// 2秒後に元に戻す
+					setTimeout(() => {
+						button.classList.remove('_copied');
+						button.setAttribute('aria-labelledby', 'label--copy-code');
+					}, 2000);
+				} catch (err) {
+					console.error('コピーに失敗しました:', err);
+					button.classList.add('_error');
+
+					setTimeout(() => {
+						button.classList.remove('_error');
+					}, 2000);
+				}
+			});
+		});
+	}
+
+	// 初回ページ読み込み時
+	if (document.readyState === 'loading') {
+		document.addEventListener('DOMContentLoaded', initCopyBtns);
+	} else {
+		initCopyBtns();
+	}
+
+	// Astroのビュー遷移時（ビュー遷移が有効な場合）
+	document.addEventListener('astro:page-load', initCopyBtns);
+</script>

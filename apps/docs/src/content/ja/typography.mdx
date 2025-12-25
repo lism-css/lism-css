@@ -1,0 +1,373 @@
+---
+title: 'Typography & Spacing'
+description: ...
+order: 1
+---
+
+import { Dummy, Box, HTML, Stack, Cluster, Columns, Frame, Center } from 'lism-css/astro';
+import { FzDemos, SpacingDemos, BoxShadowDemos } from "@/content/token-previews.jsx";
+
+
+
+## Typography
+
+### FF: font-family
+
+`font-family` 用のトークンです。
+
+|トークン|変数|クラス|
+|---|---|---|
+|`base`|<span class='-whspace:nowrap'>`--ff--base`</span>|<span class='-whspace:nowrap'>`-ff:base`</span>|
+|`accent`|<span class='-whspace:nowrap'>`--ff--accent`</span>|<span class='-whspace:nowrap'>`-ff:accent`</span>|
+|`mono`|<span class='-whspace:nowrap'>`--ff--mono`</span>|<span class='-whspace:nowrap'>`-ff:mono`</span>|
+
+
+<Preview>
+	<PreviewTitle>Preview</PreviewTitle>
+	<PreviewArea p='20' flow='s'>
+		<HTML.p ff='base' fz='xl'>base: English text, 漢字ひらがな</HTML.p>
+		<HTML.p ff='accent' fz='xl'>accent: English text, 漢字ひらがな</HTML.p>
+		<HTML.p ff='mono' fz='xl'>mono: English text, 漢字ひらがな</HTML.p>
+	</PreviewArea>
+	<PreviewCode>
+	```jsx
+	<p class="-ff:base -fz:xl">Lorem ipsum ...</p>
+	<p class="-ff:accent -fz:xl">Lorem ipsum ...</p>
+	<p class="-ff:mono -fz:xl">Lorem ipsum ...</p>
+	```
+	</PreviewCode>
+</Preview>
+
+
+### FW : font-weight
+
+`font-weight` 用のトークンです。
+
+|トークン|変数|クラス|初期値|
+|---|---|---|---|
+|`thin`|`--fw--thin`|`-fw:thin`|`100`|
+|`light`|`--fw--light`|`-fw:light`|`300`|
+|`normal`|`--fw--normal`|`-fw:normal`|`400`|
+|`medium`|`--fw--medium`|`-fw:medium`|`500`|
+|`bold`|`--fw--bold`|`-fw:bold`|`700`|
+|`black`|`--fw--black`|`-fw:black`|`900`|
+
+
+<Preview>
+	<PreviewTitle>Preview</PreviewTitle>
+	<PreviewArea p='20' flow='s'>
+		<Dummy length='s' fw='thin' />
+		<Dummy length='s' fw='light' />
+		<Dummy length='s' fw='normal' />
+		<Dummy length='s' fw='bold' />
+		<Dummy length='s' fw='black' />
+	</PreviewArea>
+	<PreviewCode slot='tab' label='HTML'>
+		```html
+		<p class="-fw:light">Lorem ipsum ...</p>
+		<p class="-fw:normal">Lorem ipsum ...</p>
+		<p class="-fw:bold">Lorem ipsum ...</p>
+		```
+	</PreviewCode>
+	<PreviewCode slot='tab' label='JSX'>
+		```jsx
+		<HTML.p fw='light'>Lorem ipsum ...</HTML.p>
+		<HTML.p fw='normal'>Lorem ipsum ...</HTML.p>
+		<HTML.p fw='bold'>Lorem ipsum ...</HTML.p>
+		```
+	</PreviewCode>
+</Preview>
+
+
+### FZ: font-size
+
+`font-size` 用のトークンです。
+
+|トークン|変数|クラス|初期値|
+|---|---|---|---|
+|`base`|`--fz--base`|`-fz:base`|`--REM`|
+|`2xs`|`--fz--2xs`|`-fz:2xs`|`1em * 8 / 11`|
+|`xs`|`--fz--xs`|`-fz:xs`|`1em * 8 / 10`|
+|`s`|`--fz--s`|`-fz:s`|`1em * 8 / 9`|
+|`m`|`--fz--m`|`-fz:m`|`1em`|
+|`l`|`--fz--l`|`-fz:l`|`1em * 8 / 7`|
+|`xl`|`--fz--xl`|`-fz:xl`|`1em * 8 / 6`|
+|`2xl`|`--fz--2xl`|`-fz:2xl`|`1em * 8 / 5`|
+|`3xl`|`--fz--3xl`|`-fz:3xl`|`1em * 8 / 4`|
+|`4xl`|`--fz--4xl`|`-fz:4xl`|`1em * 8 / 3`|
+|`5xl`|`--fz--5xl`|`-fz:5xl`|`1em * 8 / 2`|
+
+
+
+
+<Preview>
+	<PreviewTitle>Preview</PreviewTitle>
+	<PreviewArea p='0' flow='s'>
+		<FzDemos />
+	</PreviewArea>
+	<PreviewCode>
+		```html
+		<p class='-fz:2xs'>Lorem ipsum ...</p>
+		<p class='-fz:xs'>Lorem ipsum ...</p>
+		<p class='-fz:s'>Lorem ipsum ...</p>
+		<p class='-fz:m'>Lorem ipsum ...</p>
+		<p class='-fz:base'>Lorem ipsum ...</p>
+		<p class='-fz:l'>Lorem ipsum ...</p>
+		<p class='-fz:xl'>Lorem ipsum ...</p>
+		<p class='-fz:2xl'>Lorem ipsum ...</p>
+		<p class='-fz:3xl'>Lorem ipsum ...</p>
+		<p class='-fz:4xl'>Lorem ipsum ...</p>
+		```
+	</PreviewCode>
+</Preview>
+
+
+#### フォントサイズのスケーリング規則
+
+Lism では、フォントサイズのスケーリングには数学的に美しいとされるスケーリング規則に基づいて定義しています。
+
+<Reference>
+参考: [音楽、数学、タイポグラフィ](https://standard.shiftbrain.com/blog/music-math-typography)
+</Reference>
+
+
+デフォルトでは、**分子8の調和数列**ベースに設定しています。
+
+```scss
+:root{
+	$fzmol: 8;
+	--fz--4xl: calc(1em * $fzmol / ($fzmol - 5));
+	--fz--3xl: calc(1em * $fzmol / ($fzmol - 4));
+	--fz--2xl: calc(1em * $fzmol / ($fzmol - 3));
+	--fz--xl: calc(1em * $fzmol / ($fzmol - 2));
+	--fz--l: calc(1em * $fzmol / ($fzmol - 1));
+	--fz--m: 1em;
+	--fz--s: calc(1em * $fzmol / ($fzmol + 1));
+	--fz--xs: calc(1em * $fzmol / ($fzmol + 2));
+	--fz--2xs: calc(1em * $fzmol / ($fzmol + 3));
+}
+```
+
+
+
+### LH: line-height
+
+Lism CSSでは、`line-height` の扱いが独特となっており、**ハーフレディングの値でline-heigthを管理する**仕組みになっています。
+
+ハーフレディングとは、`line-height`から文字サイズを除いた上下の余白部分のことです。
+
+Lism では、全要素に対し、以下のスタイルが適用されています。
+
+```css
+body * {
+	line-height: calc(1em + var(--hl, var(--hl--base)) * 2);
+}
+```
+
+これにより、`line-height`の値は、`--hl` というハーフレディングを指定するための変数に依存する仕組みになっており、
+**どんな文字サイズのテキストに対しても同じ余白量**でレイアウトを組んでいくことが可能です。
+
+トークンも、 `--hl--`で用意しています。
+
+|トークン|変数|初期値
+|---|---|---|
+|`xs`|`--hl--xs`|`var(--hl-unit)`|
+|`s`|`--hl--s`|`calc(var(--hl-unit) * 2)`|
+|`base`|`--hl--base`|`calc(var(--hl-unit) * 3)`|
+|`xl`|`--hl--xl`|`calc(var(--hl-unit) * 4)`|
+
+上記の`--hl-unit`は次のように定義されています。
+
+```css
+:root{
+	--hl-unit: calc(var(--REM) * 0.125); /* ≒ 2px */
+}
+```
+
+（`--REM ≒ 1rem` になっているため、`--hl-unit` は `2px`前後の値となる想定です。）
+
+
+
+そして、`lh`クラスの内部でこれらの変数を扱うようにしています。
+
+```css
+.-lh\:base {
+	--hl: var(--hl--base);
+}
+.-lh\:xs {
+	--hl: var(--hl--xs);
+}
+.-lh\:s {
+	--hl: var(--hl--s);
+}
+.-lh\:l {
+	--hl: var(--hl--l);
+}
+```
+
+<Preview>
+	<PreviewTitle>Preview</PreviewTitle>
+	<PreviewArea p='20' flow='s' style={{'--halfLead':'1em'}}>
+	<Dummy pre='<code class="-fz:s">1:</code> ' lh='1' />
+		<Dummy pre='<code class="-fz:s">xs:</code> ' lh='xs' />
+		<Dummy pre='<code class="-fz:s">s:</code> ' lh='s' />
+		<Dummy pre='<code class="-fz:s">base:</code> ' lh='base' />
+		<Dummy pre='<code class="-fz:s">l:</code> ' lh='l' />
+	</PreviewArea>
+	<PreviewCode slot='tab' label='HTML'>
+		```html
+		<p class="-lh:xs">Lorem ipsum ...</p>
+		<p class="-lh:s">Lorem ipsum ...</p>
+		<p class="-lh:base">Lorem ipsum ...</p>
+		<p class="-lh:l">Lorem ipsum ...</p>
+		<p class="-lh:xl">Lorem ipsum ...</p>
+		```
+	</PreviewCode>
+	<PreviewCode slot='tab' label='JSX'>
+		```jsx
+		<HTML.p lh='xs'>Lorem ipsum ...</HTML.p>
+		<HTML.p lh='s'>Lorem ipsum ...</HTML.p>
+		<HTML.p lh='base'>Lorem ipsum ...</HTML.p>
+		<HTML.p lh='l'>Lorem ipsum ...</HTML.p>
+		<HTML.p lh='xl'>Lorem ipsum ...</HTML.p>
+		```
+	</PreviewCode>
+</Preview>
+
+
+#### ハーフレディング管理のメリット
+
+line-heigtを`1.6`などの一般的な値でセットした場合、フォントサイズが大きくなるにつれて、line-heightの値も大きくなってしまいます。
+
+ベースサイズ付近のテキストであればそれでいいのですが、見出しなどになるとこれでは大きすぎて読みづらいという問題が発生してきます。
+
+行間のハーフレディングを、固定値で管理することで、フォントサイズが大きくなってもテキスト間の距離が一定に保たれます。
+
+<Preview>
+	<PreviewTitle>Preview</PreviewTitle>
+	<PreviewArea p='20' flow='s'>
+		<Dummy tag='h1' pre='H1: ' max-w="s" lang="ja"/>
+		<Dummy tag='h2' pre='H2: ' max-w="s" lang="ja"/>
+		<Dummy tag='h3' pre='H3: ' max-w="s" lang="ja"/>
+		<Dummy tag='h4' pre='H4: ' max-w="s" lang="ja"/>
+		<Dummy tag='h5' pre='H5: ' max-w="s" lang="ja"/>
+		<Dummy tag='p' pre='p : ' max-w="s" lang="ja"/>
+		<Dummy tag='p' fz="s" pre='s: ' max-w="s" lang="ja"/>
+		{/* <Dummy tag='p' fz="xs" pre='xs: ' max-w="s" lang="ja"/>
+		<Dummy tag='p' fz="2xs" pre='2xs: ' max-w="s" lang="ja"/> */}
+	</PreviewArea>
+</Preview>
+
+
+さらに、ハーフレディング除去も簡単になります。
+
+<Reference>
+参考: [ハーフレディング除去クラス](/docs/utility-class/#u-trim--u-trimitems)
+</Reference>
+
+{/* ### Headings の font-size, line-height について
+<Preview>
+	<PreviewTitle>Headings</PreviewTitle>
+	<PreviewArea p='20' flow='s'>
+		<div class='l--stack -g:20'>
+			<h1>Heading 1: <Dummy  tag='span' lang='ja' /></h1>
+			<h2>Heading 2: <Dummy  tag='span' lang='ja' /></h2>
+			<h3>Heading 3: <Dummy  tag='span' lang='ja' /></h3>
+			<h4>Heading 4: <Dummy  tag='span' lang='ja' /></h4>
+			<p>Heading 5: <Dummy  tag='span' lang='ja' /></h5>
+			<h6>Heading 6: <Dummy  tag='span' lang='ja' /></h6>
+			<hr />
+			<p>Paragraph: <Dummy  tag='span' lang='ja' /></p>
+		</div>
+	</PreviewArea>
+</Preview> */}
+
+
+### LTS: letter-spacing
+
+`letter-spacing` 用のトークンです。
+
+|トークン|変数|クラス|初期値
+|---|---|---|---|
+|`base`|`--lts--base`|`-lts:base`|`normal`|
+|`s`|`--lts--s`|`-lts:s`|`-0.05em`|
+|`l`|`--lts--l`|`-lts:l`|`0.05em`|
+{/* |`xl`|`--lts--xl`|`-lts:xl`|`0.125em`| */}
+
+<Preview>
+	<PreviewTitle>Preview</PreviewTitle>
+	<PreviewArea p='20' flow='s'>
+		<Dummy length='s' pre='<code>s:</code> ' lts='s' />
+		<Dummy length='s' pre='<code>base:</code> ' lts='base' />
+		<Dummy length='s' pre='<code>l:</code> ' lts='l' />
+		{/* <Dummy length='s' pre='<code>xl:</code> ' lts='xl' /> */}
+	</PreviewArea>
+	<PreviewCode slot='tab' label='HTML'>
+		```html
+		<p class="-lts:s">Lorem ipsum ...</p>
+		<p class="-lts:base">Lorem ipsum ...</p>
+		<p class="-lts:l">Lorem ipsum ...</p>
+		```
+	</PreviewCode>
+	<PreviewCode slot='tab' label='JSX'>
+		```jsx
+		<HTML.p lts='s'>Lorem ipsum ...</HTML.p>
+		<HTML.p lts='base'>Lorem ipsum ...</HTML.p>
+		<HTML.p lts='l'>Lorem ipsum ...</HTML.p>
+		```
+	</PreviewCode>
+</Preview>
+
+
+
+## `SPACE`: 余白のスケーリング
+
+スペーシングに対しては、フィボナッチ数列 ((0, 1,) 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, ...) に基づいたスケーリングを採用しています。
+
+デフォルトでは`0.5rem　≒ 8px` をスケーリングの単位としてトークン値`10`, `20`, `30`, ... `80` を用意しています。  
+ただし、それだけだと少し間隔が広いので、例外として前半には微調整用の `5`, `15` を用意しています。
+```css
+:root{
+	/* スペーシング単位 8 で フィボナッチ*/
+	--s-unit: calc(var(--REM) * 0.5); /* ≒ 8px */
+	--s5: calc(0.5 * var(--s-unit)); /* 例外 */
+	--s10: var(--s-unit);
+	--s15: calc(1.5 * var(--s-unit)); /* 例外 */
+	--s20: calc(2 * var(--s-unit));
+	--s30: calc(3 * var(--s-unit));
+	--s40: calc(5 * var(--s-unit));
+	--s50: calc(8 * var(--s-unit));
+	--s60: calc(13 * var(--s-unit));
+	--s70: calc(21 * var(--s-unit));
+	--s80: calc(34 * var(--s-unit));
+}
+```
+
+
+<Preview>
+	<PreviewTitle>Preview</PreviewTitle>
+	<PreviewArea p='20' flow='s' resize>
+		<SpacingDemos spaces={[
+			5, 10, 15, 20, 30, 40, 50, 60, 70, 80
+		]} isValueLabel />
+	</PreviewArea>
+</Preview>
+
+
+
+
+{/* - ~~`1 = 0.25`, `2 = 0.5` として計算~~
+	- 1=s10, 2=s20, 3=s30, 5=s40, 8=s50, 13=s60,...
+	- 5, 15, 25, ...など、`5`の倍数は前後の値の中間値となるように計算 */}
+
+
+{/* ## cq単位のスケーリング
+
+`.set-cqUnit`クラスを使用することで、`vw` ではなく `cqw`単位でのスケーリングが可能になります。
+
+```css
+.set-cqUnit {
+	--REM: clamp(0.95rem, 0.9rem + 0.22cqw, 1.1rem);
+	font-size: var(--REM);
+}
+``` */}

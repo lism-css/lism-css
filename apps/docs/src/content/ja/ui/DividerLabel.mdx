@@ -1,0 +1,191 @@
+---
+title: 'DividerLabel'
+description: ...
+---
+
+import { Divider, Flex, Box, Stack, HTML } from 'lism-css/astro';
+
+
+区切り線をラベルテキスト付きで描画するコンポーネントの作成例です。
+
+
+## Examples
+
+<Preview>
+	<PreviewTitle>例</PreviewTitle>
+	<PreviewArea p='20' >
+		<Box bgc='base-2' c='text-2' py='40' ta='center'>...Contents...</Box>
+		<Flex ai='center' g='20' lh='s'>
+			<Divider fx='1' />
+			<HTML.span fz='s'>Label Text</HTML.span>
+			<Divider fx='1' />
+		</Flex>
+		<Box bgc='base-2' c='text-2' py='40' ta='center'>...Contents...</Box>
+	</PreviewArea>
+	<PreviewCode slot='tab' label='JSX'>
+		```jsx {2-6}
+		<Box bgc='base-2' c='text-2' py='40' ta='center'>...Contents...</Box>
+		<Flex ai='center' g='20' lh='s'>
+			<Divider fx='1' />
+			<HTML.span fz='s'>Label Text</HTML.span>
+			<Divider fx='1' />
+		</Flex> 
+		<Box bgc='base-2' c='text-2' py='40' ta='center'>...Contents...</Box>
+		```
+	</PreviewCode>
+	<PreviewCode slot='tab' label='HTML'>
+		```html
+		<div class='l--box -bgc:base-2 -c:text-2 -py:40 -ta:center'>…Contents…</div>
+		<div class='l--flex -ai:center -g:20 -lh:s'>
+			<div class='a--divider -fx:1' aria-hidden='true'></div>
+			<span class='-fz:s'>Label Text</span>
+			<div class='a--divider -fx:1' aria-hidden='true'></div>
+		</div>
+		<div class='l--box -bgc:base-2 -c:text-2 -py:40 -ta:center'>…Contents…</div>
+		```
+	</PreviewCode>
+</Preview>
+
+<Preview>
+	<PreviewTitle>例</PreviewTitle>
+	<PreviewArea p='20' >
+		<Box bgc='base-2' c='text-2' py='40' ta='center'>...Contents...</Box>
+		<Flex ai='center' g='15' lh='s'>
+			<span class='-fz:s -px:5'>Label Text</span>
+			<Divider fx='1' bdc='currentColor' o='-20' />
+		</Flex> 
+		<Box bgc='base-2' c='text-2' py='40' ta='center'>...Contents...</Box>
+		<Flex ai='center' g='15' lh='s' c='blue'>
+			<Divider fx='1' bdc='currentColor' bds='dotted' bdw='4px' o='-30' />
+			<span class='-fz:s -px:5'>Label Text</span>
+		</Flex> 
+		<Box bgc='base-2' c='text-2' py='40' ta='center'>...Contents...</Box>
+	</PreviewArea>
+	<PreviewCode slot='tab' label='JSX'>
+		```jsx {2-5} {7-10}
+		<Box bgc='base-2' c='text-2' py='40' ta='center'>...Contents...</Box>
+		<Flex ai='center' g='15' lh='s'>
+			<span class='-fz:s -px:5'>Label Text</span>
+			<Divider fx='1' bdc='currentColor' o='-20' />
+		</Flex> 
+		<Box bgc='base-2' c='text-2' py='40' ta='center'>...Contents...</Box>
+		<Flex ai='center' g='15' lh='s' c='blue'>
+			<Divider fx='1' bdc='currentColor' bds='dotted' bdw='4px' o='-30' />
+			<span class='-fz:s -px:5'>Label Text</span>
+		</Flex> 
+		<Box bgc='base-2' c='text-2' py='40' ta='center'>...Contents...</Box>
+		```
+	</PreviewCode>
+	<PreviewCode slot='tab' label='HTML'>
+		```html
+		<div class='l--box -bgc:base-2 -c:text-2 -py:40 -ta:center'>…Contents…</div>
+		<div class='l--flex -ai:center -g:15 -lh:s'>
+			<span class='-fz:s -px:5'>Label Text</span>
+			<div class='a--divider -fx:1 -o:soft' style='--bdc:currentColor' aria-hidden='true'></div>
+		</div>
+		<div class='l--box -bgc:base-2 -c:text-2 -py:40 -ta:center'>…Contents…</div>
+		<div class='l--flex -ai:center -g:15 -lh:s -c' style='--c:var(--blue)'>
+			<div class='a--divider -fx:1 -o:pale' style='--bdc:currentColor;--bds:dotted;--bdw:4px' aria-hidden='true'></div>
+			<span class='-fz:s -px:5'>Label Text</span>
+		</div>
+		<div class='l--box -bgc:base-2 -c:text-2 -py:40 -ta:center'>…Contents…</div>
+		```
+	</PreviewCode>
+</Preview>
+
+
+### 縦方向
+
+<Preview>
+	<PreviewTitle>`flex-direction`を変更する</PreviewTitle>
+	<PreviewArea p='20' layout=''>
+		<Flex ai='center' g='15'>
+			<Box fx='1' bgc='base-2' py='40' ta='center'>Box</Box>
+			<Stack ai='center' g='10' lh='s' fz='s' aslf='stretch'>
+				<Divider fx='1' isVertical />
+				<span>Label</span>
+				<Divider fx='1' isVertical />
+			</Stack>
+			<Box fx='1' bgc='base-2' py='40' ta='center'>Box</Box>
+		</Flex>
+	</PreviewArea>
+	<PreviewCode slot='tab' label='JSX'>
+		```jsx "fxd='column'" "isVertical"
+		<Flex ai='center' g='15'>
+			<Box fx='1' bgc='base-2' py='40' ta='center'>Box</Box>
+			<Stack ai='center' g='10' lh='s' fz='s' aslf='stretch'>
+				<Divider fx='1' isVertical />
+				<span>Label</span>
+				<Divider fx='1' isVertical />
+			</Stack>
+			<Box fx='1' bgc='base-2' py='40' ta='center'>Box</Box>
+		</Flex>
+		```
+	</PreviewCode>
+	<PreviewCode slot='tab' label='HTML'>
+		```html
+		<div class='l--flex -ai:center -g:15'>
+			<div class='l--box -fx:1 -bgc:base-2 -py:40 -ta:center'>Box</div>
+			<div class="l--stack -ai:center -g:10 -lh:s -fz:s -aslf:stretch">
+				<div class="a--divider is--vertical -fx:1" aria-hidden="true"></div>
+				<span>Label</span>
+				<div class="a--divider is--vertical -fx:1" aria-hidden="true"></div>
+			</div>
+			<div class='l--box -fx:1 -bgc:base-2 -py:40 -ta:center'>Box</div>
+		</div>
+		```
+	</PreviewCode>
+</Preview>
+
+<Preview>
+	<PreviewTitle>labelも縦書き</PreviewTitle>
+	<PreviewArea resize p='20' layout=''>
+		<Flex ai='stretch' g='15'>
+			<Box fx='1' bgc='base-2' py='40' ta='center'>Box</Box>
+			<Flex isVertical ai='center' g='15' lh='s' fz='xs' aslf='stretch'>
+				<span class="-px:5">Label</span>
+				<Divider fx='1' />
+			</Flex>
+			<Box fx='1' bgc='base-2' py='40' ta='center'>Box</Box>
+			<Flex isVertical ai='center' g='15' lh='s' fz='xs' aslf='stretch'>
+			<Divider fx='1' />
+				<span class="-px:5">Label</span>
+			</Flex>
+			<Box fx='1' bgc='base-2' py='40' ta='center'>Box</Box>
+		</Flex>
+	</PreviewArea>
+	<PreviewCode slot='tab' label='JSX'>
+		```jsx "isVertical"
+		<Flex ai='stretch' g='15'>
+			<Box fx='1' bgc='base-2' py='40' ta='center'>Box</Box>
+			<Flex isVertical ai='center' g='15' lh='s' fz='xs' aslf='stretch'>
+				<span class="-px:5">Label</span>
+				<Divider fx='1' />
+			</Flex>
+			<Box fx='1' bgc='base-2' py='40' ta='center'>Box</Box>
+			<Flex isVertical ai='center' g='15' lh='s' fz='xs' aslf='stretch'>
+			<Divider fx='1' />
+				<span class="-px:5">Label</span>
+			</Flex>
+			<Box fx='1' bgc='base-2' py='40' ta='center'>Box</Box>
+		</Flex>
+		```
+	</PreviewCode>
+	<PreviewCode slot='tab' label='HTML'>
+		```html "is--vertical"
+		<div class='l--flex -ai:stretch -g:15'>
+			<div class='l--box -fx:1 -bgc:base-2 -py:40 -ta:center'>Box</div>
+			<div class='l--flex is--vertical -ai:center -g:15 -lh:s -fz:xs -aslf:stretch'>
+				<span class="-px:5">Label</span>
+				<div class='a--divider -fx:1' aria-hidden='true'></div>
+			</div>
+			<div class='l--box -fx:1 -bgc:base-2 -py:40 -ta:center'>Box</div>
+			<div class='l--flex is--vertical -ai:center -g:15 -lh:s -fz:xs -aslf:stretch'>
+				<div class='a--divider -fx:1' aria-hidden='true'></div>
+				<span class="-px:5">Label</span>
+			</div>
+			<div class='l--box -fx:1 -bgc:base-2 -py:40 -ta:center'>Box</div>
+		</div>
+		```
+	</PreviewCode>
+</Preview>

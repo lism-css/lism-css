@@ -1,0 +1,22 @@
+---
+title: 'HTML.xxx'
+description: 'HTMLの主要なタグに<Lism>と同じプロパティを指定できるようにするためのコンポーネントです。'
+order: 2
+---
+import { Lism, HTML, Dummy, Link } from "lism-css/astro";
+import LismExDemo from '../_demo/LismExDemo.mdx';
+
+
+`<HTML.{tag}>`は、HTMLの主要なタグに`<Lism>`と同じプロパティを指定できるようにするための`<Lism>`コンポーネントです。
+
+例えば、`<HTML.p>` は `<Lism tag='p'>` と同じように動作します。
+
+- HTML.div
+- HTML.p
+- HTML.span
+- HTML.a
+- HTML.h (`lv` で`1`~`6`を指定できます。デフォルトは`1`です。)
+{/* - HTML.img */}
+
+<LismExDemo />
+

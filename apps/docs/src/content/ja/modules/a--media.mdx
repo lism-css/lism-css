@@ -1,0 +1,117 @@
+---
+title: 'Media'
+description: ...
+---
+import { Lism, HTML, Dummy, Media, Frame } from "lism-css/astro";
+
+
+`a--media`クラスは、メディアに対して付与できる汎用クラスです。
+それ単体でのスタイルは`display:block`のみです。
+
+専用コンポーネント`<Media>`を用意しており、 デフォルトで`<img>`タグが出力されます。
+
+## Props
+
+| プロパティ | 説明 |
+|---|---|
+| `objectPosition` | メディア要素の`object-position`を指定できます。|
+| `objectFit` | メディア要素の`object-fit`を指定できます。|
+| `blur`,`contrast`,`brightness`,`grayscale`,`hueRotate`,`invert`,`saturate`,`sepia` | これらをまとめて連結し、 `style.filter` に受け渡します。|
+
+
+## Import
+
+<ImportPackage component='Media' />
+
+<Preview>
+	<PreviewTitle>
+		例
+	</PreviewTitle>
+	<PreviewArea>
+		<Media src='https://cdn.lism-css.com/img/a-1.jpg' width='960' height='640' alt='Dummy Image' />
+	</PreviewArea>
+	<PreviewCode slot='tab' label='JSX'>
+		```jsx
+		<Media src='https://cdn.lism-css.com/img/a-1.jpg' width='960' height='640' alt='Dummy Image' />
+		```
+	</PreviewCode>
+	<PreviewCode slot='tab' label='HTML'>
+		```jsx
+		<img class="a--media" src='https://cdn.lism-css.com/img/a-1.jpg' width='960' height='640' alt='Dummy Image' />
+		```
+	</PreviewCode>
+</Preview>
+
+<Preview>
+	<PreviewTitle>filter系のプロパティの指定</PreviewTitle>
+	<PreviewArea>
+		<Frame tag='figure' ar='2/1' pos='rel'>
+			<Media contrast={1.1} saturate={0.2} src='https://cdn.lism-css.com/img/a-1.jpg' width='960' height='640' alt='Dummy Image' />
+			<Lism tag='figcaption' pos='abs' z='1' b='0' p='5' w='100%' c='white' ta='center' lts='l'>Lorem ipsum text.</Lism>
+		</Frame>
+	</PreviewArea>
+	<PreviewCode slot='tab' label='JSX'>
+		```jsx "contrast={1.1} saturate={0.2}"
+		<Frame tag='figure' ar='2/1' pos='rel'>
+			<Media contrast={1.1} saturate={0.2} src='https://cdn.lism-css.com/img/a-1.jpg' width='960' height='640' alt='Dummy Image' />
+			<Lism tag='figcaption' pos='abs' z='1' b='0' p='5' w='100%' c='white' ta='center' lts='l'>Lorem ipsum text.</Lism>
+		</Frame>
+		```
+	</PreviewCode>
+</Preview>
+
+
+<Preview>
+	<PreviewTitle>`objectPosition`の使用</PreviewTitle>
+	<PreviewArea resize>
+		<Frame tag='figure' ar='16/9'>
+			<Media src='https://cdn.lism-css.com/img/a-1.jpg' objectPosition='50% 0%' alt='' width='960' height='640' />
+		</Frame>
+	</PreviewArea>
+	<PreviewCode slot='tab' label='JSX'>
+		```jsx
+		<Frame tag='figure' ar='16/9'>
+			<Media src='https://cdn.lism-css.com/img/a-1.jpg' objectPosition='50% 0%' alt='' width='960' height='640' />
+		</Frame>
+		```
+	</PreviewCode>
+	<PreviewCode slot='tab' label='HTML'>
+		```html
+		<figure class="l--frame -ar:16/9">
+			<img class="a--media" style="object-position:50% 0%" src="https://cdn.lism-css.com/img/a-1.jpg" width="960" height="640">
+		</figure>
+		```
+	</PreviewCode>
+</Preview>
+
+
+
+#### Next.js の`<Image>`を使う方法
+
+Next.jsの`Image`などは、`as`プロパティに渡すことができます。
+
+<PreviewTitle>`as`を活用してでNext.jsの`Image`を渡す</PreviewTitle>
+```jsx "as={Image}"
+import { Media } from 'lism-css/react';
+import Image from 'next/image';
+
+<Media as={Image} src="/img.jpg" alt="" width='960' height='640' alt='Dummy Image' />
+```
+
+#### Astro の`<Image>`を使う方法
+
+Astroの`<Image>`は、`as`に渡すことができません。  
+Astro(TypeScript?)のチェックに引っかかり、「Image missing required "alt" property.」エラーが出てしまいます。
+
+
+そのため、`lism-css/astro`から読み込んだ`<Media>`では、以下のように`as`に`'AstroImage'`という文字列を指定することで内部で`<Image>`が呼び出されるようにしています。
+
+
+<PreviewTitle>Astroの`<Image>`を使用する例</PreviewTitle>
+```jsx "as='AstroImage'"
+import { Media } from 'lism-css/astro';
+import Image from 'next/image';
+
+<Media as='AstroImage' src="/img.jpg" alt="" width='960' height='640' alt='Dummy Image' />
+```
+

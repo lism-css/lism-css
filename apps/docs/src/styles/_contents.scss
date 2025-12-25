@@ -1,0 +1,55 @@
+/* mdx 自動変換後の blockquote（figure構造） */
+.c--blockquote {
+	margin-block: var(--s40);
+	display: grid;
+	gap: 0.25em;
+
+	> figcaption {
+		font-size: var(--fz--xs);
+		color: var(--text-2);
+		margin-left: auto;
+		font-style: italic;
+		padding-inline: 0.5em;
+
+		/* ダッシュを付ける */
+		&::before {
+			content: ' — ';
+		}
+
+		> a {
+			color: inherit;
+			text-decoration: underline;
+			text-underline-offset: 0.15em;
+
+			&:hover {
+				color: var(--link);
+			}
+		}
+	}
+}
+
+/* -------------------------- */
+/* 見出しデザイン */
+/* -------------------------- */
+// .articleTitle {}
+
+:is(.h2, .articleContent > h2) {
+	position: relative;
+	padding-left: var(--gutter-size);
+	&::after {
+		content: '';
+		display: block;
+		position: absolute;
+		top: calc(50% - 0.5lh);
+		margin-block: auto;
+		// left: calc(0px - var(--gutter-size));
+		left: 0;
+		width: 12px;
+		height: 1lh;
+		background: linear-gradient(150deg in oklch, var(--green), var(--blue), var(--purple), var(--pink));
+		filter: brightness(120%);
+		clip-path: polygon(0 0, 0% 100%, calc(100% - 6px) 100%, 100% 50%, calc(100% - 6px) 0);
+		z-index: 1;
+		opacity: 0.6;
+	}
+}

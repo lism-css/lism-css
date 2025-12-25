@@ -1,0 +1,71 @@
+---
+title: 'Container'
+description: ...
+---
+import { Container, Wrapper, Box, HTML, Lism, Spacer } from "lism-css/astro";
+import { Desktop } from '@phosphor-icons/react';
+
+`container-type`をセットできる[`is--container`](/docs/css-methodology//#is--container) クラスをコンポーネントから利用する例を紹介していきます。
+
+`is--container` は基本的に `isContainer`プロパティで**どのコンポーネントからでも呼び出せるようになっています。**
+
+| プロパティ | 出力 |
+|---|---|
+| `isContainer`| `.is--container` |
+
+`<Lism isContainer>` のエイリアスとして、`<Container>` も用意しています。
+
+ここでは、この専用コンポーネントを紹介していきます。
+
+
+## Props
+
+`<Container>` で使用できるプロパティは次のとおりです。
+
+
+| プロパティ | 説明 |
+|---|---|
+| `layout` | 展開したい Layoutモジュールを指定できます。|
+
+<PreviewTitle>下記の ①, ② はそれぞれ同じ結果になります。</PreviewTitle>
+
+```jsx
+// ①
+<Flow isContainer>...</Lism>
+
+// ②
+<Container layout='flow'>...</Container>
+```
+
+
+## Import
+
+<ImportPackage component='Container' />
+
+
+## Usage
+
+`isContainer`をLismコンポーネントにセットするか、または`<Container>`コンポーネントを使用して`is--container`が付与され要素の内部では、コンテナクエリが有効になります。
+
+<Preview>
+	<PreviewTitle>例</PreviewTitle>
+	<PreviewArea resize p='15'>
+		<Container isWrapper='s' p='20'>
+			<Box bd p={['10','30']}>このBOXは、paddingが切り替わります。</Box>
+		</Container>
+	</PreviewArea>
+	<PreviewCode slot='tab' label='JSX'>
+		```jsx
+		<Container isWrapper='s' p='20'>
+			<Box bd p={['10','30']}>このBOXは、paddingが切り替わります。</Box>
+		</Container>
+		```
+	</PreviewCode>
+	<PreviewCode slot='tab' label='HTML'>
+		```html
+		<div class="is--container is--wrapper -content:s -p:20">
+			<div class="l--box -bd -p:10 -p_sm" style="--p_sm:var(--s30)">このBOXは、paddingが切り替わります。</div>
+		</div>
+		```
+	</PreviewCode>
+</Preview>

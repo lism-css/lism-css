@@ -1,0 +1,155 @@
+---
+import DemoLayout from '@/layouts/DemoLayout.astro';
+
+import { Container, HTML, Flex, Frame, Grid, Icon, Layer, LinkBox, Media, Stack } from 'lism-css/astro';
+import './_style.css';
+---
+
+<DemoLayout title='Feature007'>
+	<Container isWrapper='l' bgc='base' py='50' hasGutter>
+		<Grid gt='repeat' cols={['2', '3', '4']} rows={['4', '3']} g='20'>
+			<LinkBox
+				href='#'
+				gr={['1 / span 2', null, '1 / span 3']}
+				gc={['1 / -1', '1 / span 2']}
+				pos='rel'
+				ov='hidden'
+				bdrs='30'
+				bxsh='20'
+				setTransition
+				setHov
+			>
+				<Frame isLayer>
+					<Media
+						src='https://cdn.lism-css.com/img/random-2510?category=v&r=1'
+						alt=''
+						width='960'
+						height='640'
+						setTransition
+						hov='to:zoom'
+					/>
+				</Frame>
+				<Layer bgc='black:20%' />
+				<Grid gtr='auto auto' gtc='auto' p='30' h='100%' pos='rel'>
+					<Stack pos='rel' g='20' c='white' py-s='15' pb='40'>
+						<HTML.p class='u-trim' fz='2xl' fw='bold'>黄昏の刻</HTML.p>
+						<HTML.p class='u-trim' fz='s' o='-10'>豆本来の豊かな香りを、最大限に引き出す。</HTML.p>
+					</Stack>
+					<Flex ai='center' jc='flex-e' c='white' my-s='auto' g='20'>
+						<HTML.span fs='i'>View More</HTML.span>
+						<Stack p='15' bd bdrs='99' setTransition hov='to:reverse'>
+							<Icon icon='arrow-right' fz='m' />
+						</Stack>
+					</Flex>
+				</Grid>
+			</LinkBox>
+			<LinkBox
+				href='#'
+				gr={['3', '1 / span 2', '1 / span 3']}
+				gc={['1 / -1', '3']}
+				pos='rel'
+				ov='hidden'
+				bdrs='30'
+				bxsh='20'
+				setTransition
+				setHov
+			>
+				<Frame isLayer>
+					<Media
+						src='https://cdn.lism-css.com/img/random-2510?category=v&r=2'
+						alt=''
+						width='960'
+						height='640'
+						setTransition
+						hov='to:zoom'
+					/>
+				</Frame>
+				<Layer bgc='black:20%' />
+				<Grid gtr='auto auto' gtc='auto' p='30' h='100%' pos='rel'>
+					<Stack pos='rel' g='20' c='white' py-s='15' pb='40'>
+						<HTML.p class='u-trim' fz='2xl' fw='bold'>静寂の朝</HTML.p>
+						<HTML.p class='u-trim' fz='s' o='-10'>究極の食感を生み出す、スチームテクノロジー。</HTML.p>
+					</Stack>
+					<Flex ai='center' jc='flex-e' c='white' my-s='auto' g='20'>
+						<HTML.span fs='i'>View More</HTML.span>
+						<Stack p='15' bd bdrs='99' setTransition hov='to:reverse'>
+							<Icon icon='arrow-right' fz='m' />
+						</Stack>
+					</Flex>
+				</Grid>
+			</LinkBox>
+			<LinkBox href='#' gr={['4', '3', '1 / span 1']} gc={['1', null, '4']} pos='rel' ov='hidden' bdrs='30' bxsh='20' setTransition setHov>
+				<Frame isLayer>
+					<Media
+						src='https://cdn.lism-css.com/img/random-2510?category=v&r=3'
+						alt=''
+						width='960'
+						height='640'
+						setTransition
+						hov='to:zoom'
+					/>
+				</Frame>
+				<Layer bgc='black:20%' />
+				<Grid gtr='auto auto' gtc='auto' p='30' h='100%' pos='rel'>
+					<Stack pos='rel' g='20' c='white' py-s='15' pb='40'>
+						<HTML.p class='u-trim' fz='2xl' fw='bold'>一滴の雫</HTML.p>
+						<HTML.p class='u-trim' fz='s' o='-10'>思い通りの湯量を注げる、計算された注ぎ口。</HTML.p>
+					</Stack>
+					<Flex ai='center' jc='flex-e' c='white' my-s='auto' g='20'>
+						<HTML.span fs='i'>View More</HTML.span>
+						<Stack p='15' bd bdrs='99' setTransition hov='to:reverse'>
+							<Icon icon='arrow-right' fz='m' />
+						</Stack>
+					</Flex>
+				</Grid>
+			</LinkBox>
+			<LinkBox
+				href='#'
+				gr={['4', '3', '2 / span 2']}
+				gc={['2', '2 / span 2', '4']}
+				pos='rel'
+				ov='hidden'
+				bdrs='30'
+				bxsh='20'
+				setTransition
+				setHov
+			>
+				<Frame isLayer>
+					<Media
+						src='https://cdn.lism-css.com/img/random-2510?category=v&r=4'
+						alt=''
+						width='960'
+						height='640'
+						setTransition
+						hov='to:zoom'
+					/>
+				</Frame>
+				<Layer bgc='black:20%' />
+				<Grid gtr='auto auto' gtc='auto' p='30' h='100%' pos='rel'>
+					<Stack pos='rel' g='20' c='white' py-s='15' pb='40'>
+						<HTML.p class='u-trim' fz='2xl' fw='bold'>森の吐息</HTML.p>
+						<HTML.p class='u-trim' fz='s' o='-10'>部屋の隅々まで、きれいな空気を静かに届ける。</HTML.p>
+					</Stack>
+					<Flex ai='center' jc='flex-e' c='white' my-s='auto' g='20'>
+						<HTML.span fs='i'>View More</HTML.span>
+						<Stack p='15' bd bdrs='99' setTransition hov='to:reverse'>
+							<Icon icon='arrow-right' fz='m' />
+						</Stack>
+					</Flex>
+				</Grid>
+			</LinkBox>
+		</Grid>
+	</Container>
+</DemoLayout>
+
+<style>
+	@media (any-hover: hover) {
+		.-hov\:to\:zoom {
+			scale: var(--_isHov, 1.1);
+		}
+		.-hov\:to\:reverse {
+			background-color: var(--_isHov, var(--white));
+			color: var(--_isHov, var(--black));
+		}
+	}
+</style>

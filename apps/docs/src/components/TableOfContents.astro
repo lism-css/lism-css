@@ -1,0 +1,105 @@
+---
+import type { TocItem } from '../lib/generateToc';
+import TocItemComponent from './TocItem.astro';
+import { Stack, HTML } from 'lism-css/astro';
+import { getLangFromUrl, t } from '@/lib/i18n';
+// import type { ResponsiveValue } from 'lism-css/astro';
+
+interface Props {
+	toc: TocItem[];
+	px?: ResponsiveValue<string | number>;
+}
+
+const { toc, px } = Astro.props;
+const lang = getLangFromUrl(Astro.url);
+const tocText = t(lang, 'toc');
+---
+
+<Stack fx="1" class="c--toc set-cqUnit" g="20" ov-y="auto" px={px}>
+	<HTML.h lv="3" fz="l">{tocText.title}</HTML.h>
+	<Stack tag="ul" class="c--toc_list" g="0">
+		{toc.map((item) => <TocItemComponent item={item} />)}
+	</Stack>
+</Stack>
+
+<style is:global>
+	.z--toc :is(.c--toc, .c--shareBtns) {
+		padding-inline-start: 0;
+	}
+	.c--toc_list ul {
+		padding-inline-start: 1em;
+	}
+	.c--toc_list ul a {
+		font-size: var(--fz--xs);
+	}
+</style>
+
+<script>
+	// スクロール位置に応じて目次のアクティブ状態を更新する
+	function initTocHighlight() {
+		const tocLinks = document.querySelectorAll<HTMLAnchorElement>('[data-toc-link]');
+		if (tocLinks.length === 0) return;
+
+		// 見出し要素を取得（data-toc-link の値と一致する id を持つ要素）
+		const headings: HTMLElement[] = [];
+		tocLinks.forEach((link) => {
+			const slug = link.dataset.tocLink;
+			if (slug) {
+				const heading = document.getElementById(slug);
+				if (heading) headings.push(heading);
+			}
+		});
+
+		if (headings.length === 0) return;
+
+		// 現在アクティブな目次リンクを更新
+		function setActiveLink(slug: string) {
+			tocLinks.forEach((link) => {
+				if (link.dataset.tocLink === slug) {
+					link.classList.add('_active');
+				} else {
+					link.classList.remove('_active');
+				}
+			});
+		}
+
+		// IntersectionObserver で見出しの可視性を監視
+		const observer = new IntersectionObserver(
+			(entries) => {
+				// 画面に入った見出しのうち、最も上にあるものをアクティブにする
+				const visibleEntries = entries.filter((entry) => entry.isIntersecting);
+
+				if (visibleEntries.length > 0) {
+					// 複数の見出しが見えている場合、最も上にあるものを選択
+					const topEntry = visibleEntries.reduce((prev, curr) => {
+						return prev.boundingClientRect.top < curr.boundingClientRect.top ? prev : curr;
+					});
+					setActiveLink(topEntry.target.id);
+				}
+			},
+			{
+				// ビューポート上端を 80px 内側にずらす（ヘッダーの高さ分を除外）
+				// ビューポート下端を 70%内側にずらす（上部30%のエリアだけを判定領域にする）
+				rootMargin: '-80px 0px -70% 0px',
+				threshold: 0,
+			}
+		);
+
+		// 全ての見出しを監視
+		headings.forEach((heading) => observer.observe(heading));
+
+		// スクロールが一番上の場合、最初の見出しをアクティブに
+		function checkTopScroll() {
+			if (window.scrollY < 100 && headings.length > 0) {
+				setActiveLink(headings[0].id);
+			}
+		}
+		checkTopScroll();
+		window.addEventListener('scroll', checkTopScroll, { passive: true });
+	}
+
+	// DOMContentLoaded で初期化
+	document.addEventListener('DOMContentLoaded', initTocHighlight);
+	// Astro のページ遷移後にも再初期化（View Transitions 対応）
+	document.addEventListener('astro:page-load', initTocHighlight);
+</script>

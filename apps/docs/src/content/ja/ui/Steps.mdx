@@ -1,0 +1,161 @@
+---
+title: 'Steps'
+description: ...
+---
+import { HTML, Lism, Dummy, Flow, Flex, Stack, Icon, Center } from 'lism-css/react';
+import { ArrowFatLinesDownIcon } from '@phosphor-icons/react';
+
+
+手順を示すレイアウトの構築例を紹介します。
+
+
+## Examples
+
+<Preview>
+	<PreviewTitle>例</PreviewTitle>
+	<PreviewArea resize p='30'>
+		<Stack g='40'>
+			<Stack g='20'>
+				<Stack g='15' ai='center' fxd={[null, 'row']}>
+					<Lism d='in-flex' lh='1' g='5' px='15' py='10' ai='center' c='base' bgc='text' fs='italic' bdrs='99'>
+						<span className='-fz:xs'>Step.</span>
+						<span className='-fz:l'>1</span>
+					</Lism>
+					<Lism tag='h3' fz='l'>
+						<Fragment>手順1のタイトル</Fragment>
+					</Lism>
+				</Stack>
+				<Flow flow='s' px='15'>
+					<Dummy lang='ja' length='s' />
+				</Flow>
+			</Stack>
+
+			<Stack g='20'>
+				<Stack g='15' ai='center' fxd={[null, 'row']}>
+					<Lism d='in-flex' lh='1' g='5' px='15' py='10' ai='center' c='base' bgc='text' fs='italic' bdrs='99'>
+						<span className='-fz:xs'>Step.</span>
+						<span className='-fz:l'>2</span>
+					</Lism>
+					<Lism tag='h3' fz='l'>
+						<Fragment>手順2のタイトル</Fragment>
+					</Lism>
+				</Stack>
+				<Flow flow='s' px='15'>
+					<Dummy lang='ja' length='s' />
+					<Dummy lang='ja' length='codes' />
+				</Flow>
+			</Stack>
+
+			<Stack g='20'>
+				<Stack g='15' ai='center' fxd={[null, 'row']}>
+					<Lism d='in-flex' lh='1' g='5' px='15' py='10' ai='center' c='base' bgc='text' fs='italic' bdrs='99'>
+						<span className='-fz:xs'>Step.</span>
+						<span className='-fz:l'>3</span>
+					</Lism>
+					<Lism tag='h3' fz='l'>
+						<Fragment>手順3のタイトル</Fragment>
+					</Lism>
+				</Stack>
+				<Flow flow='s' px='15'>
+					<Dummy lang='ja' length='l' />
+				</Flow>
+			</Stack>
+		</Stack>
+	</PreviewArea>
+	<PreviewCode slot='tab' label='JSX'>
+		```jsx
+		<Stack g='40'>
+			<Stack g='20'>
+				<Stack g='15' ai='center' fxd={[null, 'row']}>
+					<Lism d='in-flex' lh='1' g='5' px='15' py='10' ai='center' c='base' bgc='text' fs='italic' bdrs='99'>
+						<span className='-fz:xs'>Step.</span>
+						<span className='-fz:l'>1</span>
+					</Lism>
+					<Lism tag='h3' fz='l'>
+						<Fragment>手順1のタイトル</Fragment>
+					</Lism>
+				</Stack>
+				<Flow flow='s' px='15'>
+					<Dummy lang='ja' length='s' />
+				</Flow>
+			</Stack>
+
+			<Stack g='20'>
+				<Stack g='15' ai='center' fxd={[null, 'row']}>
+					<Lism d='in-flex' lh='1' g='5' px='15' py='10' ai='center' c='base' bgc='text' fs='italic' bdrs='99'>
+						<span className='-fz:xs'>Step.</span>
+						<span className='-fz:l'>2</span>
+					</Lism>
+					<Lism tag='h3' fz='l'>
+						<Fragment>手順2のタイトル</Fragment>
+					</Lism>
+				</Stack>
+				<Flow flow='s' px='15'>
+					<Dummy lang='ja' length='s' />
+					<Dummy lang='ja' length='codes' />
+				</Flow>
+			</Stack>
+
+			<Stack g='20'>
+				<Stack g='15' ai='center' fxd={[null, 'row']}>
+					<Lism d='in-flex' lh='1' g='5' px='15' py='10' ai='center' c='base' bgc='text' fs='italic' bdrs='99'>
+						<span className='-fz:xs'>Step.</span>
+						<span className='-fz:l'>3</span>
+					</Lism>
+					<Lism tag='h3' fz='l'>
+						<Fragment>手順3のタイトル</Fragment>
+					</Lism>
+				</Stack>
+				<Flow flow='s' px='15'>
+					<Dummy lang='ja' length='l' />
+				</Flow>
+			</Stack>
+		</Stack>
+		```
+	</PreviewCode>
+	<PreviewCode slot='tab' label='HTML'>
+		```html
+		<div class='l--stack -g:40'>
+			<div class='l--stack -g:20'>
+				<div class='l--stack -g:15 -ai:center -fxd_sm' style='--fxd_sm:row'>
+					<div class='-d:in-flex -lh:1 -g:5 -px:15 -py:10 -ai:center -c:base -bgc:text -fs:italic -bdrs:99'>
+						<span class='-fz:xs'>Step.</span>
+						<span class='-fz:l'>1</span>
+					</div>
+					<h3 class='-fz:l'>手順1のタイトル</h3>
+				</div>
+				<div class='l--flow -flow:s -px:15'>
+					<p>ロレム・イプサムの座り雨、トマ好き学習だったエリット、しかし時と活力はそのような木々と楽しみ。</p>
+				</div>
+			</div>
+			<div class='l--stack -g:20'>
+				<div class='l--stack -g:15 -ai:center -fxd_sm' style='--fxd_sm:row'>
+					<div class='-d:in-flex -lh:1 -g:5 -px:15 -py:10 -ai:center -c:base -bgc:text -fs:italic -bdrs:99'>
+						<span class='-fz:xs'>Step.</span>
+						<span class='-fz:l'>2</span>
+					</div>
+					<h3 class='-fz:l'>手順2のタイトル</h3>
+				</div>
+				<div class='l--flow -flow:s -px:15'>
+					<p>ロレム・イプサムの座り雨、トマ好き学習だったエリット、しかし時と活力はそのような木々と楽しみ。</p><p>
+						<b>ロレム・イプサム</b>の座り雨、<a href='###'>トマ好き学習だったエリット</a>、しかし<i>時と活力</i
+						>はそのような木々と楽しみ。長年にわたり、私は学区と長寿であれば、そのような<code>Liberroy</code>の取り組み。
+					</p>
+				</div>
+			</div>
+			<div class='l--stack -g:20'>
+				<div class='l--stack -g:15 -ai:center -fxd_sm' style='--fxd_sm:row'>
+					<div class='-d:in-flex -lh:1 -g:5 -px:15 -py:10 -ai:center -c:base -bgc:text -fs:italic -bdrs:99'>
+						<span class='-fz:xs'>Step.</span>
+						<span class='-fz:l'>3</span>
+					</div>
+					<h3 class='-fz:l'>手順3のタイトル</h3>
+				</div>
+				<div class='l--flow -flow:s -px:15'>
+					<p>ロレム・イプサムの座り雨、トマ好き学習だったエリット、しかし時と活力はそのような木々と楽しみ。ブラインド行うにはいくつかの重要な事柄が流れます。長年にわたり、私は学区と長寿であれば、そのような Liberroy, Foo の取り組み、我らのうち、Mulla Sunt の利点を提案したのなら。</p>
+				</div>
+			</div>
+		</div>
+		```
+	</PreviewCode>
+</Preview>

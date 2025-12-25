@@ -1,0 +1,368 @@
+---
+title: 'Reel'
+description: ...
+---
+import { Lism, Grid, Frame, Box, Flex, Dummy, Spacer, Icon } from 'lism-css/astro';
+import { HandSwipeLeftIcon, MouseScrollIcon } from '@phosphor-icons/react';
+
+export const SwipeHelp = ({icon}) => <span> ( <Icon icon={icon || HandSwipeLeftIcon} /> <small>スクロールして確認してください</small> )</span>;
+
+export const ReelImages = ({ length=6, hasID, isV, ...props }) => {
+	return (
+		<>
+			{Array.from({length}, (v, i) => i).map((i) => {
+				let imgNum = i + 1; //(i + 1) % 3 || 3;
+				const src = 'https://cdn.lism-css.com/img/u-' + imgNum + '.jpg';
+				return <Frame id={hasID ? `image-${i+1}` : ''} ar='16/9' key={i} {...props}>
+					<img src={src} alt='' loading='lazy' width='960' height='640' />
+				</Frame>
+			})}
+		</>
+	);
+}
+
+コンテンツを横スクロールで表示するリールコンポーネントの作成例を紹介します。
+
+{/* --pとscroll-paddingを一致させるような処理を入れています。 */}
+
+
+
+## Flex で実装する例
+
+<Preview>
+	<PreviewTitle>Flex で実装する例<SwipeHelp /></PreviewTitle>
+	<PreviewArea p='10'>
+		<Flex className='set-snap' ov='auto' g='20' bdrs='20'>
+			<ReelImages ar='16/9' fxsh='0' w='100%' bdrs='20' />
+		</Flex>
+	</PreviewArea>
+	<PreviewCode slot='tab' label='JSX'>
+		```jsx
+		<Flex className='set-snap' ov='auto' g='20' bdrs='20'>
+			<ReelImages ar='16/9' fxsh='0' w='100%' bdrs='20' />
+		</Flex>
+		```
+	</PreviewCode>
+	<PreviewCode slot='tab' label='HTML'>
+	```html
+	```
+	</PreviewCode>
+</Preview>
+
+<Preview>
+	<PreviewTitle>リールの余白に合わせてスナップ位置を調整する例<SwipeHelp /></PreviewTitle>
+	<PreviewArea resize p='10'>
+		<Flex className='set-snap' ov='auto' bgc='black' p='20' g='20' bdrs='30' style={{ 'scroll-padding': 'var(--p)' }}>
+			<Frame ar='16/9' bdrs='20' fxsh='0' w='90%'>
+				<img src='https://cdn.lism-css.com/img/u-1.jpg' alt='' />
+			</Frame>
+			<Frame ar='16/9' bdrs='20' fxsh='0' w='90%'>
+				<img src='https://cdn.lism-css.com/img/u-2.jpg' alt='' />
+			</Frame>
+			<Frame ar='16/9' bdrs='20' fxsh='0' w='90%'>
+				<img src='https://cdn.lism-css.com/img/u-3.jpg' alt='' />
+			</Frame>
+			<Frame ar='16/9' bdrs='20' fxsh='0' w='90%'>
+				<img src='https://cdn.lism-css.com/img/u-4.jpg' alt='' />
+			</Frame>
+			<Frame ar='16/9' bdrs='20' fxsh='0' w='90%'>
+				<img src='https://cdn.lism-css.com/img/u-5.jpg' alt='' />
+			</Frame>
+		</Flex>
+	</PreviewArea>
+	<PreviewCode slot='tab' label='JSX'>
+		```jsx
+		<Flex className='set-snap' ov='auto' bgc='black' p='20' g='20' bdrs='30' style={{ 'scroll-padding': 'var(--p)' }}>
+			<Frame ar='16/9' bdrs='20' fxsh='0' w='90%'>
+				<img src='https://cdn.lism-css.com/img/u-1.jpg' alt='' />
+			</Frame>
+			<Frame ar='16/9' bdrs='20' fxsh='0' w='90%'>
+				<img src='https://cdn.lism-css.com/img/u-2.jpg' alt='' />
+			</Frame>
+			<Frame ar='16/9' bdrs='20' fxsh='0' w='90%'>
+				<img src='https://cdn.lism-css.com/img/u-3.jpg' alt='' />
+			</Frame>
+			<Frame ar='16/9' bdrs='20' fxsh='0' w='90%'>
+				<img src='https://cdn.lism-css.com/img/u-4.jpg' alt='' />
+			</Frame>
+			<Frame ar='16/9' bdrs='20' fxsh='0' w='90%'>
+				<img src='https://cdn.lism-css.com/img/u-5.jpg' alt='' />
+			</Frame>
+		</Flex>
+		```
+	</PreviewCode>
+	<PreviewCode slot='tab' label='HTML'>
+	```html
+	```
+	</PreviewCode>
+</Preview>
+
+<Preview>
+	<PreviewTitle>snap-align centerにして要素のサイズをレスポンシブに調整する例<SwipeHelp /></PreviewTitle>
+	<PreviewArea resize p='10'>
+		<Flex className='set-snap' ov='auto' g='20' p='15' bgc='black' bdrs='20' style={{ '--snapAlign': 'center' }}>
+			<Frame ar='16/9' fxsh='0' w={['80%', '60%']} mx-s={['10%', '20%']} bdrs='20'>
+				<img src='https://cdn.lism-css.com/img/u-1.jpg' alt='' />
+			</Frame>
+			<Frame ar='16/9' fxsh='0' w={['80%', '60%']} bdrs='20'>
+				<img src='https://cdn.lism-css.com/img/u-2.jpg' alt='' />
+			</Frame>
+			<Frame ar='16/9' fxsh='0' w={['80%', '60%']} bdrs='20'>
+				<img src='https://cdn.lism-css.com/img/u-3.jpg' alt='' />
+			</Frame>
+			<Frame ar='16/9' fxsh='0' w={['80%', '60%']} bdrs='20'>
+				<img src='https://cdn.lism-css.com/img/u-4.jpg' alt='' />
+			</Frame>
+			<Frame ar='16/9' fxsh='0' w={['80%', '60%']} mx-e={['10%', '20%']} bdrs='20'>
+				<img src='https://cdn.lism-css.com/img/u-5.jpg' alt='' />
+			</Frame>
+		</Flex>
+	</PreviewArea>
+	<PreviewCode slot='tab' label='JSX'>
+		```jsx
+		<Flex className='set-snap' ov='auto' g='20' p='15' bgc='black' bdrs='20' style={{ '--snapAlign': 'center' }}>
+			<Frame ar='16/9' fxsh='0' w={['80%', '60%']} mx-s={['10%', '20%']} bdrs='20'>
+				<img src='https://cdn.lism-css.com/img/u-1.jpg' alt='' />
+			</Frame>
+			<Frame ar='16/9' fxsh='0' w={['80%', '60%']} bdrs='20'>
+				<img src='https://cdn.lism-css.com/img/u-2.jpg' alt='' />
+			</Frame>
+			<Frame ar='16/9' fxsh='0' w={['80%', '60%']} bdrs='20'>
+				<img src='https://cdn.lism-css.com/img/u-3.jpg' alt='' />
+			</Frame>
+			<Frame ar='16/9' fxsh='0' w={['80%', '60%']} bdrs='20'>
+				<img src='https://cdn.lism-css.com/img/u-4.jpg' alt='' />
+			</Frame>
+			<Frame ar='16/9' fxsh='0' w={['80%', '60%']} mx-e={['10%', '20%']} bdrs='20'>
+				<img src='https://cdn.lism-css.com/img/u-5.jpg' alt='' />
+			</Frame>
+		</Flex>
+		```
+	</PreviewCode>
+	<PreviewCode slot='tab' label='HTML'>
+	```html
+	```
+	</PreviewCode>
+</Preview>
+
+
+
+## Gridで実装する例
+
+<Preview>
+	<PreviewTitle>Preview<SwipeHelp /></PreviewTitle>
+	<PreviewArea resize p='10'>
+		<Grid className='set-snap' ov='auto' gaf='column' gac='100%' g='20' bdrs='20' tabIndex='0'>
+			<ReelImages ar='16/9' bdrs='20' />
+		</Grid>
+	</PreviewArea>
+	<PreviewCode slot='tab' label='JSX'>
+		```jsx
+		<Grid className='set-snap' ov='auto' gaf='column' gac='100%' g='20' bdrs='20' tabIndex='0'>
+			<ReelImages ar='16/9' bdrs='20' />
+		</Grid>
+		```
+	</PreviewCode>
+	<PreviewCode slot='tab' label='HTML'>
+	```html
+	```
+	</PreviewCode>
+</Preview>
+
+
+gridでリールの子要素のサイズをレスポンシブに調整する場合、あれば `gac`(`grid-auto-columns`) に `--cols`を指定してください。  
+(`gac`は標準状態ではレスポンシブ対応がありません。)
+
+<Preview>
+	<PreviewTitle>Preview<SwipeHelp /></PreviewTitle>
+	<PreviewArea resize p='10'>
+		<Grid className='set-snap' ov='auto' gaf='column' gac='var(--cols)' cols={['70%', '40%']} g='15' bdrs='20' tabIndex='0'>
+			<Frame ar='16/9' bdrs='20'>
+				<img src='https://cdn.lism-css.com/img/u-1.jpg' alt='' />
+			</Frame>
+			<Frame ar='16/9' bdrs='20'>
+				<img src='https://cdn.lism-css.com/img/u-2.jpg' alt='' />
+			</Frame>
+			<Frame ar='16/9' bdrs='20'>
+				<img src='https://cdn.lism-css.com/img/u-3.jpg' alt='' />
+			</Frame>
+			<Frame ar='16/9' bdrs='20'>
+				<img src='https://cdn.lism-css.com/img/u-4.jpg' alt='' />
+			</Frame>
+			<Frame ar='16/9' bdrs='20'>
+				<img src='https://cdn.lism-css.com/img/u-5.jpg' alt='' />
+			</Frame>
+		</Grid>
+	</PreviewArea>
+	<PreviewCode slot='tab' label='JSX'>
+		```jsx
+		<Grid className='set-snap' ov='auto' gaf='column' gac='var(--cols)' cols={['70%', '40%']} g='15' bdrs='20' tabIndex='0'>
+			<Frame ar='16/9' bdrs='20'>
+				<img src='https://cdn.lism-css.com/img/u-1.jpg' alt='' />
+			</Frame>
+			<Frame ar='16/9' bdrs='20'>
+				<img src='https://cdn.lism-css.com/img/u-2.jpg' alt='' />
+			</Frame>
+			<Frame ar='16/9' bdrs='20'>
+				<img src='https://cdn.lism-css.com/img/u-3.jpg' alt='' />
+			</Frame>
+			<Frame ar='16/9' bdrs='20'>
+				<img src='https://cdn.lism-css.com/img/u-4.jpg' alt='' />
+			</Frame>
+			<Frame ar='16/9' bdrs='20'>
+				<img src='https://cdn.lism-css.com/img/u-5.jpg' alt='' />
+			</Frame>
+		</Grid>
+		```
+	</PreviewCode>
+	<PreviewCode slot='tab' label='HTML'>
+	```html
+	```
+	</PreviewCode>
+</Preview>
+
+
+{/* ## Usage
+
+<Preview>
+	<PreviewTitle>
+		`gac`(`grid-auto-columns`)で子要素の横幅を指定する
+	</PreviewTitle>
+	<PreviewArea resize p='10'>
+		<Grid className='set-snap' gaf='column' gac='24rem' g='20'>
+			<Box bgc='base-2' p='30'>
+				<Dummy />
+			</Box>
+			<Box bgc='text' c='base' p='30'>
+				<Dummy length='s'/>
+			</Box>
+			<Box bgc='base-2' p='30'>
+				<Dummy length='xs' />
+			</Box>
+			<Box bgc='text' c='base' p='30'>
+				<Dummy />
+			</Box>
+		</Grid>
+	</PreviewArea>
+	<PreviewCode slot='tab' label='JSX'>
+		```jsx "gac='20rem'"
+		```
+	</PreviewCode>
+	<PreviewCode slot='tab' label='HTML'>
+		```jsx
+		```
+	</PreviewCode>
+</Preview> */}
+
+
+## ナビゲーションをつける
+
+reel要素にidを付けてアンカーリンク用意すると、ナビゲーションになります。
+
+<Preview>
+	<PreviewTitle>ボタンナビゲーションをつける</PreviewTitle>
+	<PreviewArea p='30 20' layout=''>
+		<Grid className='set-snap' ov='auto' gaf='column' gac='75%' g='15' bdrs='20' style={{ '--snapAlign': 'center', 'scroll-behavior': 'smooth' }}>
+			<Frame id='image-1' ar='16/9' bdrs='20'><img src='https://cdn.lism-css.com/img/u-1.jpg' alt='' /></Frame>
+			<Frame id='image-2' ar='16/9' bdrs='20'><img src='https://cdn.lism-css.com/img/u-2.jpg' alt='' /></Frame>
+			<Frame id='image-3' ar='16/9' bdrs='20'><img src='https://cdn.lism-css.com/img/u-3.jpg' alt='' /></Frame>
+			<Frame id='image-4' ar='16/9' bdrs='20'><img src='https://cdn.lism-css.com/img/u-4.jpg' alt='' /></Frame>
+			<Frame id='image-5' ar='16/9' bdrs='20'><img src='https://cdn.lism-css.com/img/u-5.jpg' alt='' /></Frame>
+		</Grid>
+		<Flex g='15' jc='center' lh='1' my-s='15'>
+			<Lism tag='a' href='#image-1' c='inherit' bgc='base-2' w='2em' h='2em' ta='center' ac='center' bdrs='10' td='none' hov='o'>1</Lism>
+			<Lism tag='a' href='#image-2' c='inherit' bgc='base-2' w='2em' h='2em' ta='center' ac='center' bdrs='10' td='none' hov='o'>2</Lism>
+			<Lism tag='a' href='#image-3' c='inherit' bgc='base-2' w='2em' h='2em' ta='center' ac='center' bdrs='10' td='none' hov='o'>3</Lism>
+			<Lism tag='a' href='#image-4' c='inherit' bgc='base-2' w='2em' h='2em' ta='center' ac='center' bdrs='10' td='none' hov='o'>4</Lism>
+			<Lism tag='a' href='#image-5' c='inherit' bgc='base-2' w='2em' h='2em' ta='center' ac='center' bdrs='10' td='none' hov='o'>5</Lism>
+		</Flex>
+	</PreviewArea>
+	<PreviewCode>
+		```jsx "id=" "href="
+		<Grid className='set-snap' ov='auto' gaf='column' gac='75%' g='15' bdrs='20' style={{ '--snapAlign': 'center', 'scroll-behavior': 'smooth' }}>
+			<Frame id='image-1' ar='16/9' bdrs='20'><img src='https://cdn.lism-css.com/img/u-1.jpg' alt='' /></Frame>
+			<Frame id='image-2' ar='16/9' bdrs='20'><img src='https://cdn.lism-css.com/img/u-2.jpg' alt='' /></Frame>
+			<Frame id='image-3' ar='16/9' bdrs='20'><img src='https://cdn.lism-css.com/img/u-3.jpg' alt='' /></Frame>
+			<Frame id='image-4' ar='16/9' bdrs='20'><img src='https://cdn.lism-css.com/img/u-4.jpg' alt='' /></Frame>
+			<Frame id='image-5' ar='16/9' bdrs='20'><img src='https://cdn.lism-css.com/img/u-5.jpg' alt='' /></Frame>
+		</Grid>
+		<Flex g='15' jc='center' lh='1' my-s='15'>
+			<Lism tag='a' href='#image-1' c='inherit' bgc='base-2' w='2em' h='2em' ta='center' ac='center' bdrs='10' td='none' hov='o'>1</Lism>
+			<Lism tag='a' href='#image-2' c='inherit' bgc='base-2' w='2em' h='2em' ta='center' ac='center' bdrs='10' td='none' hov='o'>2</Lism>
+			<Lism tag='a' href='#image-3' c='inherit' bgc='base-2' w='2em' h='2em' ta='center' ac='center' bdrs='10' td='none' hov='o'>3</Lism>
+			<Lism tag='a' href='#image-4' c='inherit' bgc='base-2' w='2em' h='2em' ta='center' ac='center' bdrs='10' td='none' hov='o'>4</Lism>
+			<Lism tag='a' href='#image-5' c='inherit' bgc='base-2' w='2em' h='2em' ta='center' ac='center' bdrs='10' td='none' hov='o'>5</Lism>
+		</Flex>
+		```
+	</PreviewCode>
+</Preview>
+
+
+
+## 大きい画面サイズでReelを解除する
+
+小さい画面サイズでのみリールで表示したい場合は、`gaf`(`grid-auto-flow`) を`row`に戻します。  
+`gaf`(`grid-auto-flow`) を`row`に戻したタイミングで、`gtc`(`grid-template-columns`)を`repeat(2, 1fr)`にして２カラム表示に切り替える例を紹介します。
+
+<Preview>
+	<PreviewTitle>`~@md`でのみリール表示するを解除する例<SwipeHelp /></PreviewTitle>
+	<PreviewArea resize p='10'>
+		<Grid className='set-snap' ov='auto' g='15' gaf={['column', null, 'row']} gac='75%' gtc={[null, null, 'repeat(2, 1fr)']}>
+			<ReelImages />
+		</Grid>
+	</PreviewArea>
+	<PreviewCode>
+		```jsx "gaf" "gtc"
+		<Reel g='15' gaf={['column', null, 'row']} gac='75%' gtc={[null, null, 'repeat(2, 1fr)']}>
+			...
+		</Reel>
+		```
+	</PreviewCode>
+</Preview>
+
+
+## 縦向きのリール
+
+<Preview>
+	<PreviewTitle>Preview<SwipeHelp icon={MouseScrollIcon} /></PreviewTitle>
+	<PreviewArea resize p='10'>
+		<Box max-w='24rem' mx='auto'>
+			<Box class='set-snap' ov='auto' ar='3/4' bdrs='20' bgc='black'>
+				<Frame ar='3/4'>
+					<img src='https://cdn.lism-css.com/img/v/u-1.jpg' alt=''/>
+				</Frame>
+				<Frame ar='3/4'>
+					<img src='https://cdn.lism-css.com/img/v/u-2.jpg' alt=''/>
+				</Frame>
+				<Frame ar='3/4'>
+					<img src='https://cdn.lism-css.com/img/v/u-3.jpg' alt=''/>
+				</Frame>
+				<Frame ar='3/4'>
+					<img src='https://cdn.lism-css.com/img/v/u-4.jpg' alt=''/>
+				</Frame>
+			</Box> 
+		</Box>
+	</PreviewArea>
+	<PreviewCode>
+		```jsx
+			<Box max-w='24rem' mx='auto'>
+				<Box class='set-snap' ov='auto' ar='3/4' bdrs='20' bgc='black'>
+					<Frame ar='3/4'>
+						<img src='https://cdn.lism-css.com/img/v/u-1.jpg' alt=''/>
+					</Frame>
+					<Frame ar='3/4'>
+						<img src='https://cdn.lism-css.com/img/v/u-2.jpg' alt=''/>
+					</Frame>
+					<Frame ar='3/4'>
+						<img src='https://cdn.lism-css.com/img/v/u-3.jpg' alt=''/>
+					</Frame>
+					<Frame ar='3/4'>
+						<img src='https://cdn.lism-css.com/img/v/u-4.jpg' alt=''/>
+					</Frame>
+				</Box> 
+			</Box>
+		```
+	</PreviewCode>
+</Preview>
+
+

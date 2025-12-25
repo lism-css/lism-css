@@ -1,0 +1,471 @@
+---
+title: 'Utilitiy Class'
+description: ...
+order: 5
+---
+import { Lism, Flow, HTML, Grid, Stack, Center, Box, Dummy, Media, Frame, Flex, Layer, Spacer, Icon, Divider } from "lism-css/astro";
+import { Dog, Cat, Smiley, WarningCircle } from "@phosphor-icons/react";
+
+ユーティリティクラスを紹介します。
+
+スタイル・装飾をまとめてセットするようなクラスを分類しています。
+
+
+
+## `u-cbox`
+
+`--keycolor`変数をベースに、`--c`, `--bgc`, `--bdc` を `color-mix()` で生成します。
+
+`color`, `background-color` にそれぞれ生成された 変数がセットされますが、`--bdc`は変数定義のみになるため、ボーダーを表示する時は[`-bd`クラス](/css/bd)との併用が必要です。
+
+<EmbedCode dirPath='packages/lism-css' srcPath='src/scss/utility/_cbox.scss' />
+
+<Preview>
+	<PreviewTitle>例</PreviewTitle>
+	<PreviewArea resize p='20'>
+		<Lism className='u-cbox' keycolor='red' p='20'><Dummy length='codes' /></Lism>
+		<Lism className='u-cbox' keycolor='purple' bd bdrs='20' bxsh='20' setShadow p='20'><Dummy length='codes' /></Lism>
+		<Lism className='u-cbox' keycolor='brand' bdc='keycolor' bd-x-s bdw='4px' p='20'><Dummy length='codes' /></Lism>
+	</PreviewArea>
+	<PreviewCode slot="tab" label="HTML">
+		```html
+		<div class='u-cbox -p:20' style='--keycolor:var(--red)'>
+			<p>Lorem ipsum dolor <i>sit amet</i>. consectetur <a href='###'>adipisicing elit</a>, sed do eiusmod tempor. Non facere <code>Laudantium</code> ex eos <b>doloribus aut dolore</b> nisi provident.</p>
+		</div>
+		<div class='u-cbox set-shadow -bd -bdrs:20 -bxsh:20 -p:20' style='--keycolor:var(--purple)'>
+			<p>Lorem ipsum dolor <i>sit amet</i>. consectetur <a href='###'>adipisicing elit</a>, sed do eiusmod tempor. Non facere <code>Laudantium</code> ex eos <b>doloribus aut dolore</b> nisi provident.</p>
+		</div>
+		<div class='u-cbox -bd-x-s -p:20' style='--keycolor:var(--brand);--bdc:var(--keycolor);--bdw:4px'>
+			<p>Lorem ipsum dolor <i>sit amet</i>. consectetur <a href='###'>adipisicing elit</a>, sed do eiusmod tempor. Non facere <code>Laudantium</code> ex eos <b>doloribus aut dolore</b> nisi provident.</p>
+		</div>
+		```
+	</PreviewCode>
+	<PreviewCode slot="tab" label='JSX'>
+		```jsx
+		<Lism className='u-cbox' keycolor='blue' p='20'><Dummy length='codes' /></Lism>
+		<Lism className='u-cbox' keycolor='red' bd p='20'><Dummy length='codes' /></Lism>
+		<Lism className='u-cbox' keycolor='purple' bd bdc='keycolor:base:25%' p='20'><Dummy length='codes' /></Lism>
+		<Lism className='u-cbox' keycolor='#688f04' bd-x-s bdw='4px' p='20'><Dummy length='codes' /></Lism>
+		```
+	</PreviewCode>
+</Preview>
+
+<Preview>
+	<PreviewTitle>バッジで利用する例と、変数によるカスタマイズ例</PreviewTitle>
+	<PreviewArea resize p='20'>
+		<Lism layout='cluster' g='10'>
+			<Lism tag='span' className='u-cbox' keycolor='red' bd fz='s' lh='s' py='5' px='10' bdrs='99'>Badge</Lism>
+			<Lism tag='span' className='u-cbox' keycolor='green' bd fz='s' lh='s' py='5' px='10' bdrs='99'>Badge</Lism>
+			<Lism tag='span' className='u-cbox' keycolor='blue' bd fz='s' lh='s' py='5' px='10' bdrs='99'>Badge</Lism>
+		</Lism>
+		<Lism layout='cluster' g='10' style={{'--cbox-cPct': '76%', '--cbox-bdPct': '20%'}}>
+			<Lism tag='span' className='u-cbox' keycolor='red' bd fz='s' lh='s' py='5' px='10' bdrs='99'>Badge</Lism>
+			<Lism tag='span' className='u-cbox' keycolor='green' bd fz='s' lh='s' py='5' px='10' bdrs='99'>Badge</Lism>
+			<Lism tag='span' className='u-cbox' keycolor='blue' bd fz='s' lh='s' py='5' px='10' bdrs='99'>Badge</Lism>
+		</Lism>
+	</PreviewArea>
+	<PreviewCode slot="tab" label="HTML">
+		```html
+		<div class='u-cbox -p:20' style='--keycolor:var(--blue)'>...</div>
+		<div class='u-cbox -bd -p:20' style='--keycolor:var(--red)'>...</div>
+		<div class="u-cbox -bd -p:20" style="--keycolor:var(--purple);--bdc:color-mix(in srgb, var(--keycolor) 25%, var(--base))">...</div>
+		<div class='u-cbox -bd-x-s -p:20' style='--keycolor:#688f04;--bdw:4px;'>...</div>
+		```
+	</PreviewCode>
+	<PreviewCode slot="tab" label='JSX'>
+		```jsx
+		<Lism layout='cluster' g='10'>
+			<Lism tag='span' className='u-cbox' keycolor='orange' bd fz='s' lh='s' py='5' px='10' bdrs='99'>Badge</Lism>
+			<Lism tag='span' className='u-cbox' keycolor='green' bd fz='s' lh='s' py='5' px='10' bdrs='99'>Badge</Lism>
+			<Lism tag='span' className='u-cbox' keycolor='blue' bd fz='s' lh='s' py='5' px='10' bdrs='99'>Badge</Lism>
+		</Lism>
+		<Lism layout='cluster' g='10' style={{'--cbox-cPct': '76%', '--cbox-bdPct': '20%'}}>
+			<Lism tag='span' className='u-cbox' keycolor='orange' bd fz='s' lh='s' py='5' px='10' bdrs='99'>Badge</Lism>
+			<Lism tag='span' className='u-cbox' keycolor='green' bd fz='s' lh='s' py='5' px='10' bdrs='99'>Badge</Lism>
+			<Lism tag='span' className='u-cbox' keycolor='blue' bd fz='s' lh='s' py='5' px='10' bdrs='99'>Badge</Lism>
+		</Lism>
+		```
+	</PreviewCode>
+</Preview>
+
+
+<PreviewTitle>パレットカラー一覧</PreviewTitle>
+<PreviewArea p='20' ov-y='auto' max-h='25rem'>
+	<Lism className='u-cbox' keycolor='red' bd bdrs='20' bxsh='20' setShadow p='20'><Dummy length='codes' /></Lism>
+	<Lism className='u-cbox' keycolor='orange' bd bdrs='20' bxsh='20' setShadow p='20'><Dummy length='codes' /></Lism>
+	<Lism className='u-cbox' keycolor='yellow' bd bdrs='20' bxsh='20' setShadow p='20'><Dummy length='codes' /></Lism>
+	<Lism className='u-cbox' keycolor='purple' bd bdrs='20' bxsh='20' setShadow p='20'><Dummy length='codes' /></Lism>
+	<Lism className='u-cbox' keycolor='green' bd bdrs='20' bxsh='20' setShadow p='20'><Dummy length='codes' /></Lism>
+	<Lism className='u-cbox' keycolor='blue' bd bdrs='20' bxsh='20' setShadow p='20'><Dummy length='codes' /></Lism>
+	<Lism className='u-cbox' keycolor='purple' bd bdrs='20' bxsh='20' setShadow p='20'><Dummy length='codes' /></Lism>
+	<Lism className='u-cbox' keycolor='pink' bd bdrs='20' bxsh='20' setShadow p='20'><Dummy length='codes' /></Lism>
+	<Lism className='u-cbox' keycolor='gray' bd bdrs='20' bxsh='20' setShadow p='20'><Dummy length='codes' /></Lism>
+	<hr />
+	<Lism className='u-cbox' keycolor='red' bd-x-s bdc='keycolor' bdw='4px' bxsh='10' setShadow p='20'>
+		<HTML.span c='keycolor' fw='bold'>Title Text</HTML.span><Dummy length='codes' />
+	</Lism>
+	<Lism className='u-cbox' keycolor='orange' bd-x-s bdc='keycolor' bdw='4px' bxsh='10' setShadow p='20'>
+		<HTML.span c='keycolor' fw='bold'>Title Text</HTML.span><Dummy length='codes' />
+	</Lism>
+	<Lism className='u-cbox' keycolor='yellow' bd-x-s bdc='keycolor' bdw='4px' bxsh='10' setShadow p='20'>
+		<HTML.span c='keycolor' fw='bold'>Title Text</HTML.span><Dummy length='codes' />
+	</Lism>
+	<Lism className='u-cbox' keycolor='purple' bd-x-s bdc='keycolor' bdw='4px' bxsh='10' setShadow p='20'>
+		<HTML.span c='keycolor' fw='bold'>Title Text</HTML.span><Dummy length='codes' />
+	</Lism>
+	<Lism className='u-cbox' keycolor='green' bd-x-s bdc='keycolor' bdw='4px' bxsh='10' setShadow p='20'>
+		<HTML.span c='keycolor' fw='bold'>Title Text</HTML.span><Dummy length='codes' />
+	</Lism>
+	<Lism className='u-cbox' keycolor='blue' bd-x-s bdc='keycolor' bdw='4px' bxsh='10' setShadow p='20'>
+		<HTML.span c='keycolor' fw='bold'>Title Text</HTML.span><Dummy length='codes' />
+	</Lism>
+	<Lism className='u-cbox' keycolor='purple' bd-x-s bdc='keycolor' bdw='4px' bxsh='10' setShadow p='20'>
+		<HTML.span c='keycolor' fw='bold'>Title Text</HTML.span><Dummy length='codes' />
+	</Lism>
+	<Lism className='u-cbox' keycolor='pink' bd-x-s bdc='keycolor' bdw='4px' bxsh='10' setShadow p='20'>
+		<HTML.span c='keycolor' fw='bold'>Title Text</HTML.span><Dummy length='codes' />
+	</Lism>
+	<Lism className='u-cbox' keycolor='gray' bd-x-s bdc='keycolor' bdw='4px' bxsh='10' setShadow p='20'>
+		<HTML.span c='keycolor' fw='bold'>Title Text</HTML.span><Dummy length='codes' />
+	</Lism>
+</PreviewArea>
+
+
+## `u-trim` & `u-trimItems`
+
+テキストのハーフレディング分の余白を調整するためのクラスです。
+
+自身のmargin-blockを調整するだけの`u-trim`と、子要素全ての上下マージンを調整するための`u-trimItems`があります。
+
+<Preview>
+	<PreviewTitle>`u-trim`</PreviewTitle>
+	<PreviewArea resize p='20'>
+		<Box bd bds='dashed'>
+			<Dummy className='u-trim' length='s'/>
+		</Box>
+	</PreviewArea>
+	<PreviewCode slot="tab" label="HTML">
+		```html "u-trim"
+		<div class="l--box -bd" style="--bds:dashed">
+			<p class="u-trim">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor.</p>
+		</div>
+		```
+	</PreviewCode>
+	<PreviewCode slot="tab" label='JSX'>
+		```jsx "u-trim"
+		<Box bd bds='dashed'>
+			<Dummy className='u-trim' length='s'/>
+		</Box>
+		```
+	</PreviewCode>
+	<PreviewCode slot="tab" label='CSS'>
+		<EmbedCode dirPath='packages/lism-css' srcPath='src/scss/utility/_trimHL.scss' />
+	</PreviewCode>
+</Preview>
+
+
+`u-trimItems`内の`img`, `figure`, `table`に対してはマージンの調節を無効化しています。
+
+<Preview>
+	<PreviewTitle>`u-trimItems`</PreviewTitle>
+	<PreviewArea resize p='20'>
+		<Stack className='u-trimItems' bd g='30' p='30' bdrs='10' max-sz='s'>
+			<Media ar='og' src='https://cdn.lism-css.com/img/a-1.jpg'/>
+			<Dummy lang='ja' length='s' fw='bold' fz='l' />
+			<Dummy lang='ja' length='l' o='-10' fz='s'/>
+		</Stack>
+	</PreviewArea>
+	<PreviewCode slot="tab" label="HTML">
+		```html
+		<div class='u-trimItems l--stack -bd -g:30 -p:30 -bdrs:10'>
+			<img class='a--media -ar:og' src='https://cdn.lism-css.com/img/a-1.jpg' />
+			<p>ロレム・イプサムの座り雨、トマ好き学習だったエリット、しかし時と活力はそのような木々と楽しみ。</p>
+			<p>ロレム・イプサムの座り雨、トマ好き学習だったエリット、しかし時と活力はそのような木々と楽しみ。ブラインド行うにはいくつかの重要な事柄が流れます...。</p>
+		</div>
+		```
+	</PreviewCode>
+	<PreviewCode slot="tab" label='JSX'>
+		```jsx
+		<Stack className='u-trimItems' bd g='30' p='30' bdrs='10'>
+			<Media ar='og' src='https://cdn.lism-css.com/img/a-1.jpg'/>
+			<Dummy lang='ja' length='s' />
+			<Dummy lang='ja'  />
+		</Stack>
+		```
+	</PreviewCode>
+</Preview>
+
+
+## `u-expandedLink`
+
+クリック範囲を親要素に広げるためのクラスです。
+
+主に`is--linkBox`と併用して、内部のリンクをボックス全体に広げるために使用します。
+
+<Reference>
+活用例は [`<LinkBox>`](/modules/state/linkbox) を参照してください。
+</Reference>
+
+
+
+## `u-hidden`
+
+要素を視覚的に隠すことができるクラスです。  
+スクリーンリーダー用のテキストなどに利用してください。
+
+```css
+.u-hidden {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	padding: 0;
+	margin: -1px;
+	overflow: hidden;
+	clip: rect(0, 0, 0, 0);
+	white-space: nowrap;
+	border-width: 0;
+}
+```
+
+
+## `u-collapseGrid`
+
+
+グリッド・フレックスボックス等の子要素間に区切りとなるようなボーダーを表示します。
+
+実装としてはbox-shadowで表現していますので、少し扱いには注意が必要です。
+
+<Preview>
+	<PreviewTitle>例</PreviewTitle>
+	<PreviewArea resize p='20'>
+		<Grid layout='fluidCols' className='u-collapseGrid' cols='12rem' bdrs='20'>
+			<Box p='15'>Grid Item</Box>
+			<Box p='15'>Grid Item</Box>
+			<Box p='15'>Grid Item</Box>
+			<Box p='15'>Grid Item</Box>
+			<Box p='15'>Grid Item</Box>
+			<Box p='15'>Grid Item</Box>
+		</Grid>
+	</PreviewArea>
+	<PreviewCode>
+		```jsx
+		<Grid layout='fluidCols' className='u-collapseGrid' cols='12rem' bdrs='20'>
+			<Box p='15'>Grid Item</Box>
+			<Box p='15'>Grid Item</Box>
+			<Box p='15'>Grid Item</Box>
+			<Box p='15'>Grid Item</Box>
+			<Box p='15'>Grid Item</Box>
+			<Box p='15'>Grid Item</Box>
+		</Grid>
+		```
+	</PreviewCode>
+</Preview>
+
+<Preview>
+	<PreviewTitle>pに`p='0'` `ov='clip'`をセットすると、周囲のボーダーが見えなくなります。</PreviewTitle>
+	<PreviewArea resize p='20'>
+		<Grid layout='fluidCols' className='u-collapseGrid' cols='12rem' p='0' ov='clip'>
+			<Box p='15'>Grid Item</Box>
+			<Box p='15'>Grid Item</Box>
+			<Box p='15'>Grid Item</Box>
+			<Box p='15'>Grid Item</Box>
+			<Box p='15'>Grid Item</Box>
+			<Box p='15'>Grid Item</Box>
+			<Box p='15'>Grid Item</Box>
+		</Grid>
+	</PreviewArea>
+	<PreviewCode>
+		```jsx
+		<Grid layout='fluidCols' className='u-collapseGrid' cols='12rem'>
+			<Box p='15'><Dummy /></Box>
+			<Box p='15'><Dummy /></Box>
+			<Box p='15'><Dummy /></Box>
+			<Box p='15'><Dummy /></Box>
+			<Box p='15'><Dummy /></Box>
+			<Box p='15'><Dummy /></Box>
+			<Box p='15'><Dummy /></Box>
+		</Grid>
+		```
+	</PreviewCode>
+</Preview>
+
+
+その状態で親グリッドに`bd`を指定すると、要素が埋まっていないところだけボーダーを表示しないカレンダーのような表現が可能です。
+
+<Preview>
+	<PreviewTitle>`bd`を指定</PreviewTitle>
+	<PreviewArea resize p='20'>
+		<Grid layout='fluidCols' className='u-collapseGrid' cols='10rem' ov='clip' p='0' bd>
+			<Box p='15'>Grid Item</Box>
+			<Box p='15'>Grid Item</Box>
+			<Box p='15'>Grid Item</Box>
+			<Box p='15'>Grid Item</Box>
+			<Box p='15'>Grid Item</Box>
+			<Box p='15'>Grid Item</Box>
+		</Grid>
+	</PreviewArea>
+	<PreviewCode>
+		```jsx
+		<Grid layout='fluidCols' className='u-collapseGrid' cols='10rem' ov='clip' p='0' bd>
+			<Box p='15'>Grid Item</Box>
+			<Box p='15'>Grid Item</Box>
+			<Box p='15'>Grid Item</Box>
+			<Box p='15'>Grid Item</Box>
+			<Box p='15'>Grid Item</Box>
+			<Box p='15'>Grid Item</Box>
+		</Grid>
+		```
+	</PreviewCode>
+</Preview>
+
+<br/>
+
+Flexboxで横並び・縦並びが変わるようなレイアウトでも、このユーティリティクラスを活用すれば簡単に要素感のボーダーを表示できます。
+
+<Preview>
+	<PreviewTitle>例</PreviewTitle>
+	<PreviewArea resize p='20'>
+		<Flex fxd={['column','row']} className='u-collapseGrid'>
+			<Box fx='1' p='15'>Box</Box>
+			<Box fx='1' p='15'>Box</Box>
+			<Box fx='1' p='15'>Box</Box>
+			<Box fx='1' p='15'>Box</Box>
+		</Flex>
+	</PreviewArea>
+	<PreviewCode>
+		```jsx
+		<Flex fxd={['column','row']} className='u-collapseGrid'>
+			<Box fx='1' p='15'>Box</Box>
+			<Box fx='1' p='15'>Box</Box>
+			<Box fx='1' p='15'>Box</Box>
+			<Box fx='1' p='15'>Box</Box>
+		</Flex>
+		```
+	</PreviewCode>
+</Preview>
+
+
+Gridを使って table タグのような表現もできるようになります。
+<Preview>
+	<PreviewTitle>`u-collapseGrid`を使ってテーブルのような表現にする</PreviewTitle>
+	<PreviewArea resize p='15'>
+		<Grid gtc={['2fr 3fr', '1fr 2fr']} className='u-collapseGrid'>
+			<Box p='15' bgc='base-2'>A</Box>
+			<Box p='15' bgc='base-2'>B</Box>
+			<Box p='15'>Lorem ipsum</Box>
+			<Box p='15'><Dummy /></Box>
+			<Box p='15'>Dolor sit amet</Box>
+			<Box p='15'><Dummy length='l'/></Box>
+		</Grid>
+	</PreviewArea>
+	<PreviewCode slot='tab' label='JSX'>
+		```jsx
+		<Grid gtc={['2fr 3fr', '1fr 2fr']} className='u-collapseGrid'>
+			<Box p='15' bgc='base-2'>A</Box>
+			<Box p='15' bgc='base-2'>B</Box>
+			<Box p='15'>Lorem ipsum</Box>
+			<Box p='15'><Dummy /></Box>
+			<Box p='15'>Dolor sit amet</Box>
+			<Box p='15'><Dummy length='l'/></Box>
+		</Grid>
+		```
+	</PreviewCode>
+	<PreviewCode slot='tab' label='HTML'>
+		```html
+		<div class='l--grid u-collapseGrid -gtc -gtc_sm -bd' style='--gtc:2fr 3fr;--gtc_sm:1fr 2fr'>
+			<div class='l--box -p:15 -bgc:base-2'>A</div>
+			<div class='l--box -p:15 -bgc:base-2'>B</div>
+			<div class='l--box -p:15'>Lorem ipsum</div>
+			<div class='l--box -p:15'>
+				<p>Lorem ipsum dolor sit, amet...</p>
+			</div>
+			<div class='l--box -p:15'>Dolor sit amet</div>
+			<div class='l--box -p:15'>
+				<p>Lorem ipsum dolor sit, amet...</p>
+			</div>
+		</div>
+		```
+	</PreviewCode>
+</Preview>
+
+
+## Opt-in
+
+ここからは、Lism CSS のコアCSSファイルには含まれていないが便利なユーティリティクラスの作成例をいくつか紹介します。
+
+### `u-inlineCenter`
+
+絵文字やインラインアイコンをテキストのセンター位置に合わせて配置するためのクラスです。
+`vertical-align: middle;`だけではずれが発生するため、追加で`translate`で調整を加えています。
+
+
+<Preview css={`
+.u-inlineCenter {
+	vertical-align: middle;
+	translate: 0 calc(-1 * (0.35em - 0.5ex));
+}`}>
+	<PreviewTitle>使用例</PreviewTitle>
+	<PreviewArea p='20'>
+		<p><Icon className='u-inlineCenter' icon='alert' c='red' fz='xl' /> Lorem ipsum dolor sit amet.</p>
+		<p><Icon className='u-inlineCenter' as={Dog} fz='l' />Dog, and <Icon className='u-inlineCenter' as={Cat} fz='l'/>Cat.</p>
+		<p><span class='u-inlineCenter -fz:xl'>🚀</span> Emoji.</p>
+		<p><Icon fz='2xl' className='u-inlineCenter' src="https://emojix.s3.ap-northeast-1.amazonaws.com/g3/svg/1f916.svg" alt="image" /> Inline img icon.</p>
+	</PreviewArea>
+	<PreviewCode slot='tab' label='JSX'>
+		```jsx "u-inlineCenter"
+		<p><Icon className='u-inlineCenter' icon='alert' c='red' fz='xl' /> Lorem ipsum dolor sit amet.</p>
+		<p><Icon className='u-inlineCenter' as={Dog} fz='l' />Dog, and <Icon className='u-inlineCenter' as={Cat} fz='l'/>Cat.</p>
+		<p><span class='u-inlineCenter -fz:xl'>🚀</span> Emoji.</p>
+		<p><Icon fz='2xl' className='u-inlineCenter' src="https://emojix.s3.ap-northeast-1.amazonaws.com/g3/svg/1f916.svg" alt="image" /> Inline img icon.</p>
+		```
+	</PreviewCode>
+
+	<PreviewCode slot='tab' label='**追加CSS**'>
+	```css
+	.u-inlineCenter {
+		vertical-align: middle; /* 基準をmiddleにセット */
+		translate: 0 calc(-1 * (0.35em - 0.5ex)); /* middleの計算式を元に追加で調整。（0.5cap - 0.5ex が英文では理想。）*/
+	}
+	```
+	</PreviewCode>
+</Preview>
+
+
+
+### u-bgclipText
+
+テキストで背景をクリッピングするためのクラスです。
+
+<Preview css={`
+.u-bgclipText {
+	-webkit-background-clip: text;
+	background-clip: text;
+	color: transparent;
+}`}>
+	<PreviewTitle>テキストで背景をクリッピング</PreviewTitle>
+	<PreviewArea p='20'>
+		<Center>
+			<Box className='u-bgclipText' bg='linear-gradient(45deg, var(--blue), var(--pink))'>
+				<HTML.p fz='5xl' fw='bold' lh='1' lts='l'>TEXT</HTML.p>
+			</Box>
+		</Center>
+	</PreviewArea>
+	<PreviewCode label='JSX' slot='tab'>
+		```jsx
+		<Center>
+			<Box className='u-bgclipText' bg='linear-gradient(45deg, var(--blue), var(--pink))'>
+				<HTML.p fz='5xl' fw='bold' lh='1' lts='l'>TEXT</HTML.p>
+			</Box>
+		</Center>
+		```
+	</PreviewCode>
+	<PreviewCode label='HTML' slot='tab'>
+		```html
+		<div class="l--box u-bgclipText -bg:linear-gradient(to top, #a8edea 0%, #fed6e3 100%)">  </div>
+		```
+	</PreviewCode>
+</Preview>
+
+```css
+...
+```

@@ -1,0 +1,49 @@
+@layer lism.base {
+	:root {
+		--divider: hsl(224, 20%, 92%);
+
+		--code-c: currentColor;
+		// --code-bgc: hsl(210, 10%, 94%);
+		--code-bgc: color-mix(in srgb, var(--divider), transparent 40%);
+
+		--grad_01: rgb(61, 204, 240);
+		--grad_02: rgb(136, 103, 255);
+	}
+
+	// .u-cbox {
+	// 	--code-bgc: color-mix(in srgb, var(--keycolor), transparent 88%);
+	// }
+
+	:root[data-theme='dark'] {
+		--L: 72%;
+		--C: 0.25;
+
+		--brand: hsl(192, 72%, 56%);
+		--accent: #ff5080;
+		/* // base */
+		--base: hsl(228, 10%, 8%);
+		--base-2: hsl(228, 8%, 20%);
+		/* #2b2c30 */
+
+		/* // content */
+		--text: hsl(48, 12%, 95%); /* Cloud Dancer */
+		--text-2: hsl(48, 8%, 84%);
+
+		// --code-bgc: hsl(205, 10%, 10%);
+
+		--link: oklch(72% 0.2 224);
+		--divider: hsl(224 4% 24%);
+
+		/* // shadow color */
+		--shc: hsl(215 40% 76% / 5%);
+		// --sh-inset: inset;
+
+		/* // color mix */
+		--cbox-cPct: 4%;
+		--cbox-bgPct: 6%;
+
+		.c--callout {
+			--sh-inset: inset;
+		}
+	}
+}

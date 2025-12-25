@@ -1,0 +1,57 @@
+---
+/**
+ * 記事詳細ページ（root言語用）
+ * - root言語（ja）の記事を表示
+ * - URL例: /docs/introduction, /docs/layout/grid-layout
+ */
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { generateToc } from '@/lib/generateToc';
+import { Frame, Lism, Flow, HTML } from 'lism-css/astro';
+import PostNavigation from '@parts/PostNavigation.astro';
+import { getPostPathsForRoot } from '@/lib/pageHelpers';
+import { getLocalizedUrl, type LangCode } from '@/lib/i18n';
+import type { PostEntry } from '@/lib/content';
+
+// MDXでグローバルに使用するコンポーネント
+import * as mdxComponents from '@/components/mdx';
+
+// 共通ヘルパーを使用
+export const getStaticPaths = getPostPathsForRoot;
+
+interface Props {
+	lang: LangCode;
+	entry: PostEntry;
+}
+
+const { lang, entry } = Astro.props;
+const { Content, headings } = await entry.render();
+
+const toc = generateToc(headings);
+
+// OG画像のパス
+const ogImage = `/docs/og/${entry.slug}.png`;
+---
+
+<BaseLayout title={entry.data.title} description={entry.data.description} ogImage={ogImage} toc={toc} lang={lang}>
+	<Lism tag="article" class="z--article set-cqUnit" data-pagefind-body>
+		{/* アイキャッチ画像 */}
+		{
+			// (
+			// 	<Frame ar="1200/630" bdrs="20" ov="hidden" bxsh="2">
+			// 		<img src={ogImage} alt={entry.data.title} />
+			// 	</Frame>
+			// )
+		}
+
+		{/* 記事タイトル */}
+		<HTML.h lv="1" class="articleTitle">{entry.data.title}</HTML.h>
+
+		{/* 記事本文 */}
+		<Flow class="articleContent" my-s="40">
+			<Content components={mdxComponents} />
+		</Flow>
+
+		{/* 前後記事ナビゲーション */}
+		<PostNavigation currentSlug={entry.slug} lang={lang} />
+	</Lism>
+</BaseLayout>

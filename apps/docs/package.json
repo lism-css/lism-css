@@ -1,31 +1,46 @@
 {
-	"name": "test",
+	"name": "lism-docs",
 	"type": "module",
 	"version": "0.0.1",
 	"scripts": {
-		"dev": "pnpm --filter lism-css build && astro dev",
-		"start": "astro dev",
-		"build": "astro build",
+		"dev": "astro dev",
+		"build": "astro build && pagefind --site dist",
+		"build:astro": "astro build",
+		"build:full": "npm run build && npm run screenshot",
 		"preview": "astro preview",
-		"lint:style": "stylelint '**/*.{css,scss}'",
 		"astro": "astro",
-		"clean": "rm -rf .astro .turbo dist node_modules/.astro node_modules/.vite"
+		"screenshot": "npx tsx scripts/generate-screenshots.ts",
+		"screenshot:force": "npx tsx scripts/generate-screenshots.ts --force"
 	},
 	"dependencies": {
-		"@astrojs/react": "^4.3.0",
-		"@astrojs/starlight": "^0.34.7",
-		"@phosphor-icons/react": "^2.0.10",
-		"astro": "^5.11.1",
-		"astro-purgecss": "^5.2.2",
-		"lism-css": "workspace:*",
+		"@astrojs/mdx": "^4.3.12",
+		"@astrojs/react": "^4.4.2",
+		"@expressive-code/plugin-line-numbers": "^0.41.3",
 		"@lism-css/ui": "workspace:*",
-		"ogl": "^1.0.11",
-		"purgecss": "^7.0.0",
-		"react": "^18.2.0",
-		"react-dom": "^18.2.0"
+		"@phosphor-icons/react": "^2.0.10",
+		"@pagefind/default-ui": "^1.4.0",
+		"astro": "^5.11.1",
+		"astro-expressive-code": "^0.41.3",
+		"lism-css": "workspace:*",
+		"pagefind": "^1.4.0",
+		"react": "^19.2.1",
+		"react-dom": "^19.2.1",
+		"rehype-external-links": "^3.0.0",
+		"remark-directive": "^4.0.0",
+		"satori": "^0.18.3",
+		"sharp": "^0.34.5"
 	},
 	"devDependencies": {
-		"@types/react": "^18.3.1",
-		"@types/react-dom": "^18.3.1"
+		"@types/mdast": "^4.0.4",
+		"@types/react": "^19.2.7",
+		"@types/react-dom": "^19.2.3",
+		"autoprefixer": "^10.4.22",
+		"playwright": "^1.49.0",
+		"prettier": "^3.7.4",
+		"prettier-plugin-astro": "^0.14.1",
+		"sass-embedded": "^1.93.3",
+		"tsx": "^4.19.0",
+		"unist-util-visit": "^5.0.0",
+		"vitest": "^4.0.15"
 	}
 }

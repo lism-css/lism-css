@@ -1,0 +1,159 @@
+---
+title: '概要'
+description: 'Lism CSS の概要と特徴について解説します。'
+order: 1
+---
+import { Box, HTML, Center, Flex, Frame, Icon, Spacer } from "lism-css/astro";
+import LismExDemo from './_demo/LismExDemo.mdx';
+
+"**Lism CSS**" は、**WEBサイトの骨組みをテンポ良くサクっと作るための**軽量なCSSフレームワークです。  
+デザインには自然と心地よいリズムがうまれるように、**CSS設計もゼロから構築**しています。
+
+
+- **レイアウトファースト**なモジュール設計。
+- CSS変数を組み合わせた**レスポンシブなユーティリティ**設計。
+- ビルドや設定は不要。CSSを読み込むだけでも使えます。
+
+<Spacer h='10' />
+
+Lism CSS ではレイアウト全体の構築をサポートしますが、全てをHTML側にクラスを書けばよいというものではありません。細かい作り込みや装飾はピュアCSSで自由に書くことを前提としています。
+
+[Every Layout](https://every-layout.dev/) + [Bootstrap](https://getbootstrap.com/) + [Tailwind CSS](https://tailwindcss.com/) を 混ぜ合わせたような設計になっています。  
+
+
+
+
+## React/Astro で使える Lism コンポーネント
+
+Lism CSSを簡単に扱えるようにした専用のコンポーネントをReact,Astro形式でnpmパッケージとして配布しています。
+
+[Chakra UI](https://chakra-ui.com/) や [MUI](https://mui.com/) のような使い心地で、Lism CSSの設計思想に則ったコンポーネントを手軽に扱えるようになります。
+
+<PreviewTitle>専用のコンポーネントはこんな感じで使います</PreviewTitle>
+
+<LismExDemo />
+
+
+
+## Lism CSS の特徴
+
+
+### ゼロビルドでどんな環境でも使えるフレームワーク
+
+あくまでも**HTMLとCSSの設計理論が主体**になっており、特殊なビルド処理は必須ではありません。
+
+{/* 最近流行りのゼロランタイムと逆行する、ゼロビルドです。 */}
+
+:::check
+CSSを読み込むだけでも導入でき、**素のHTMLサイトでも利用できる**ものになっています。
+:::
+
+{/* <HTML.p c="text-2" my-s="10" fz="s">（一部、アコーディオンやタブの動作に関するJavaScriptが付属しています。）</HTML.p> */}
+
+
+ただし、React, Astroで**専用コンポーネント**を使った方が便利です。
+
+
+### reset.css レベルからサイト全体のレイヤー階層を設計
+
+Lism CSS では、モジュールクラスやユーティリティクラス、トークン設計を提供するだけではありません。
+
+**CSSのレイヤー階層も定義**しており、`reset.css` レベルからサイト全体のCSS設計を担います。
+
+そのため、他のフレームワークとの共存は考慮されていません。
+
+
+### レイアウトファースト
+
+Lism CSS では、WEBサイトで一般的によく使われるレイアウト要素を細分化して汎用的に使い回せる設計になっています。
+
+これは、[Every Layout](https://every-layout.dev/) での**レイアウトプリミティブ**という思想を参考にしたものです。
+
+
+
+
+### CSS変数を組み合わたレスポンシブなユーティリティ設計
+
+LismではCSS変数とクラスを組み合わせる設計が多くなっていますが、その特徴が一番現れるのが**レスポンシブ対応**が可能なユーティリティクラスの設計です。
+
+
+
+:::check
+主要なプロパティに関して、**簡単にブレイクポイントでの切り替えができる**ようになっています。
+:::
+
+<Preview>
+	<PreviewTitle>実際の活用例</PreviewTitle>
+	<PreviewArea resize p='15'>
+		<div class="-p:15 -p_sm -p_md -bd" style="--p_sm:var(--s30);--p_md:var(--s40);">
+			BOX
+		</div>
+	</PreviewArea>
+	<PreviewCode label="HTML" slot="tab">
+```html
+<div class="-p:15 -p_sm -p_md -bd" style="--p_sm:var(--s30);--p_md:var(--s40);">
+	BOX
+</div>
+```
+	</PreviewCode>
+	<PreviewCode label="JSX" slot="tab">
+```jsx
+<Box p={[20, 40, 50]} bd>
+	BOX
+</Box>
+```
+	</PreviewCode>
+</Preview>
+
+
+
+### メディアクエリに依存しないレイアウト設計
+
+Lism CSS では、メディアクエリではなく**コンテナクエリをデフォルトで採用**しています。
+
+さらに、Lism CSSには、**メディアクエリやコンテナクエリに依存しないレイアウトモジュール**もいくつか用意されています。
+
+
+:::warning
+コンテナ要素の中では position: fixed の挙動が変わったり、サイズ関係の挙動が少し変わったりすることがあるため注意が必要となっています。
+:::
+
+
+
+
+{/* #### Purge(Tree shaking)しやすいCSSの設計
+
+ユーティリティクラスの活用に少し癖がありますが、PurgeCSS などを使って超軽量にできるようにもなっています。
+`.-prop@bp`の形式で個別のプロパティごとに各ブレイクポイントに対応したクラスが1つずつあるのも、パージしやすくするためでもあります。 */}
+
+
+{/* #### ダークモードの実装も簡単
+
+ダークモードの実装など、カラーテーマの切り替えも、ルートのトークンを切り替える(CSS変数の上書きする)だけで実装できます。 */}
+
+{/* ### WordPressフレンドリー
+
+Lism は、WordPressにも導入しやすいように設計されており、Lism設計に基づいたブロックテーマも開発予定です。
+
+- 軽量
+- WordPress側のクラス名と衝突しない命名規則
+- Tokenを活用する点が、`theme.json` 関連機能との親和性が高い。
+- コンテンツ幅の制御手法などもWordPressに合わせた設計が可能。
+- Reactベースのコンポーネントがあるため、ブロック化しやすい。
+- Lismベースのブロックでコンテンツを管理すれば、WordPressをヘッドレスCMSとして使いやすくなる。(サイト全体のCSSとコンテンツに必要なCSSがLismに集約されるため) */}
+
+
+
+---
+
+## Inspirations
+
+- [Every Layout](https://every-layout.dev/) : "**レイアウトプリミティブ**"という考え方をLismでもベースに取り入れています。
+- [ITCSS](https://itcss.io/) : レイヤーの概念を参考にしています。
+- [daisyUI](https://daisyui.com/) : カラートークンの設計やコンポーネントの豊富さが非常に参考になりました。
+- [SmartHR Design System](https://smarthr.design/products/design-tokens/) : デザイントークン設計が非常に参考になりました。
+- [Chakra UI](https://chakra-ui.com/),  [MUI](https://mui.com/) : コンポーネントの使用感が非常に参考になりました。
+- [Tailwind CSS](https://tailwindcss.com/) : CSSプロパティと値のセットで細かくクラス化するという考え方が非常に参考になりました。
+
+{/* Chakra, Tailwind, Bootstrap, などのフレームワークも参考にしています。 */}
+

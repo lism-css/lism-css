@@ -1,0 +1,60 @@
+---
+title: 'BalloonBox'
+description: ...
+---
+
+import { Grid, Stack, Flex, Decorator, Box, Spacer, Dummy } from 'lism-css/astro';
+import BalloonBox from '@/components/ex/BalloonBox/index.jsx';
+
+ふきだし風装飾ボックスの作成例を紹介します。
+
+
+## Import
+<ImportSource name='BalloonBox' react />
+{/* <ImportSource css='Badge/style.scss' react='Badge/index.jsx' astro='Badge/index.astro' /> */}
+
+## Props
+
+| プロパティ | 説明 |
+|---|---|
+|`variant`| ふきだしの方向を指定できます。`c--balloonBox--{variant}` クラスが出力されます。|
+|`keycolor`| ふきだしの色を指定できます。`u-cbox`も出力されます。|
+
+
+## Usage
+
+
+<Preview>
+	<PreviewTitle>BalloonBox</PreviewTitle>
+	<PreviewArea resize p='20'>
+		<BalloonBox variant='left'>
+			<Dummy />
+		</BalloonBox>
+		<BalloonBox variant='right' keycolor='blue'>
+			<Dummy />
+		</BalloonBox>
+		<BalloonBox variant='top' bdw='2px' keycolor='red'>
+			<Dummy />
+		</BalloonBox>
+		<BalloonBox variant='bottom' bgc='text' c='base'>
+			<Dummy />
+		</BalloonBox>
+	</PreviewArea>
+	<PreviewCode>
+	```jsx
+		<BalloonBox variant='left'>
+			<Dummy />
+		</BalloonBox>
+		<BalloonBox variant='right' keycolor='blue'>
+			<Dummy />
+		</BalloonBox>
+		<BalloonBox variant='top' bdw='2px' keycolor='red'>
+			<Dummy />
+		</BalloonBox>
+		<BalloonBox variant='bottom' bgc='text' c='base'>
+			<Dummy />
+		</BalloonBox>
+	```
+	</PreviewCode>
+</Preview>
+
