@@ -19,10 +19,10 @@ export { HelpText, IconBadge, Reference, MemoBadge, PropBadge } from '../DocComp
 
 export { default as EmbedCode } from './EmbedCode.astro';
 export { default as ImportPackage } from './ImportPackage.astro';
+export { default as SrcCode } from './SrcCode.astro';
 
 // code-template系コンポーネント（docsから移植）
-export { default as ImportSource } from '../code-template/ImportSource.astro';
-export { default as ImportExComponent } from '../code-template/ImportExComponent.astro';
+export { default as ImportSource } from './ImportSource.astro';
 
 // NOTE: 他のグローバルコンポーネントを追加する場合はここに追記
 // export { default as Badge } from './Badge.astro';

@@ -9,14 +9,14 @@ const { name = '', hasRoot = false, react, astro, css, others = [], ...props } =
 <Preview>
 	{
 		hasRoot && (
-			<PreviewCode slot='tab' label='index.js'>
+			<PreviewCode slot="tab" label="index.js">
 				<EmbedCode srcPath={`src/components/ex/${name}/index.js`} />
 			</PreviewCode>
 		)
 	}
 	{
 		react && (
-			<PreviewCode slot='tab' label='React (.jsx)'>
+			<PreviewCode slot="tab" label="React (.jsx)">
 				<EmbedCode srcPath={`src/components/ex/${name}/${hasRoot ? `${name}.jsx` : 'index.jsx'}`} />
 				{/* <Frame ov-y='auto' max-h='25rem'>
 					<script
@@ -28,14 +28,14 @@ const { name = '', hasRoot = false, react, astro, css, others = [], ...props } =
 	}
 	{
 		astro && (
-			<PreviewCode slot='tab' label='Astro(.astro)'>
+			<PreviewCode slot="tab" label="Astro(.astro)">
 				<EmbedCode srcPath={`src/components/ex/${name}/index.astro`} />
 			</PreviewCode>
 		)
 	}
 	{
 		css && (
-			<PreviewCode slot='tab' label='CSS'>
+			<PreviewCode slot="tab" label="CSS">
 				<EmbedCode srcPath={`src/components/ex/${name}/style.css`} />
 			</PreviewCode>
 		)
@@ -44,7 +44,7 @@ const { name = '', hasRoot = false, react, astro, css, others = [], ...props } =
 		others.map((path) => {
 			// pathの例: /apps/docs/src/components/ex/ 以降を渡して使う
 			return (
-				<PreviewCode slot='tab' label={path} key={path}>
+				<PreviewCode slot="tab" label={path} key={path}>
 					<EmbedCode srcPath={`src/components/ex/${name}/${path}`} />
 				</PreviewCode>
 			);
@@ -54,9 +54,6 @@ const { name = '', hasRoot = false, react, astro, css, others = [], ...props } =
 
 <!-- <ImportPackage component='' /> -->
 
-<Flex ai='center' my-s='10' fz='s'>
-	<Icon variant='inline' icon='note' c='blue' /> ソースコードを手動でコピー&ペーストしてご利用ください。
+<Flex ai="center" my-s="10" fz="s">
+	<Icon variant="inline" icon="note" c="blue" /> ソースコードを手動でコピー&ペーストしてご利用ください。
 </Flex>
-
-<!-- <h2>Import</h2>
-<ImportExComponent name={name} react={react} astro={astro} hasRoot={hasRoot} /> -->
