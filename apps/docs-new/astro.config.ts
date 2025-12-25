@@ -39,6 +39,18 @@ export default defineConfig({
 				'@ui': '/src/components/ui',
 			},
 		},
+		// __で始まるディレクトリ/ファイルをビルドから除外するプラグイン
+		plugins: [
+			{
+				name: 'ignore-underscore-prefix',
+				resolveId(id, importer) {
+					// __ で始まるディレクトリのファイルをexternalとして扱う
+					if (id.includes('/__') || (importer && importer.includes('/__'))) {
+						return { id, external: true };
+					}
+				},
+			},
+		],
 	},
 	integrations: [
 		expressiveCode(expressiveCodeOptions),
