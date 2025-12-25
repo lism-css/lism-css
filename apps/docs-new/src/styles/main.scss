@@ -9,3 +9,20 @@
 // .u-cbox {
 // 	--code-bgc: color-mix(in srgb, #22a4d40e, currentColor 4%);
 // }
+
+// 追加ユーティリティ
+
+.u-onlyLightMode {
+	display: block;
+}
+.u-onlyDarkMode {
+	display: none;
+}
+[data-theme='dark'] {
+	.u-onlyLightMode {
+		display: none;
+	}
+	.u-onlyDarkMode {
+		display: block;
+	}
+}
