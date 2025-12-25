@@ -12,6 +12,8 @@ type TranslationKeys = {
 	toc: 'title' | 'open';
 	search: 'title' | 'devMessage';
 	header: 'openMenu';
+	themeSwitch: 'ariaLabel';
+	langSelect: 'ariaLabel' | 'menuAriaLabel';
 	share: 'share' | 'copy' | 'copied';
 	copyCode: 'copy' | 'copied';
 	postNav: 'prev' | 'next' | 'ariaLabel';
@@ -41,6 +43,13 @@ export const translations: Record<LangCode, UITranslations> = {
 		},
 		header: {
 			openMenu: 'メニューを開く',
+		},
+		themeSwitch: {
+			ariaLabel: 'カラーテーマを切り替える',
+		},
+		langSelect: {
+			ariaLabel: '言語を選択',
+			menuAriaLabel: '利用可能な言語',
 		},
 		share: {
 			share: 'シェア',
@@ -76,6 +85,13 @@ export const translations: Record<LangCode, UITranslations> = {
 		},
 		header: {
 			openMenu: 'Open menu',
+		},
+		themeSwitch: {
+			ariaLabel: 'Toggle color theme',
+		},
+		langSelect: {
+			ariaLabel: 'Select language',
+			menuAriaLabel: 'Available languages',
 		},
 		share: {
 			share: 'Share',

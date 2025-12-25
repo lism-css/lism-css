@@ -1,12 +1,16 @@
 ---
-import { Stack } from 'lism-css/astro';
+import { Flex, Stack } from 'lism-css/astro';
 import SiteNav from './SiteNav.astro';
-import MenuFooter from './MenuFooter.astro';
+import ThemeSwitch from './ThemeSwitch.astro';
+import LanguageSelect from './LanguageSelect.astro';
 ---
 
 <Stack tag="aside" class="z--sidebar" isContainer py="20" g="20" {...Astro.props}>
 	<Stack ov-y="auto" fx="1" px="15">
 		<SiteNav />
 	</Stack>
-	<MenuFooter />
+	<Flex jc="between" g="5" bd-t px="15" py-s="20">
+		<LanguageSelect />
+		<ThemeSwitch />
+	</Flex>
 </Stack>
