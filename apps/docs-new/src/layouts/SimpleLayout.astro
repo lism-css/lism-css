@@ -31,12 +31,12 @@ interface Props {
 	excludeFromSearch?: boolean; // 検索対象から除外するかどうか
 }
 
-const { title = siteConfig.name, description, ogImage, lang = getRootLang(), excludeFromSearch = false } = Astro.props;
+const { title = siteConfig.name, description, ogImage, lang = getRootLang() } = Astro.props;
 ---
 
 <html lang={lang}>
 	<Head title={title || siteConfig.name} description={description} ogImage={ogImage} lang={lang} />
-	<body {...excludeFromSearch && { 'data-pagefind-ignore': 'all' }}>
+	<body data-pagefind-ignore>
 		<div class="is--container">
 			<Header />
 			<Container tag="main" isWrapper="l" hasGutter py="50" min-h="100svh">

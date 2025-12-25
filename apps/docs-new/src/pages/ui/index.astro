@@ -4,7 +4,7 @@
  * content/ja/ui/ 配下のMDXを一覧表示
  */
 import BaseLayout from '@/layouts/BaseLayout.astro';
-import { Stack, Grid, Text, HTML, LinkBox, Frame, Lism, Media } from 'lism-css/astro';
+import { Stack, Grid, HTML, LinkBox, Frame, Lism, Media } from 'lism-css/astro';
 import { getPostsByLang, type PostEntry } from '@/lib/content';
 import { getRootLang } from '@/lib/i18n';
 import fs from 'node:fs';
@@ -40,38 +40,28 @@ function getThumbPath(title: string): string {
 ---
 
 <BaseLayout title="UI Components" description="Lism CSSを使ったUIコンポーネント集" excludeFromSearch>
-	<Stack g="40" class="ui-index">
-		{/* ページヘッダー */}
-		<Stack tag="header" g="10">
-			<h1 class="-fz:3xl -fw:bold">UI Components</h1>
-			<Text c="text-2">Lism CSSを使ったUIコンポーネント集です。</Text>
+	<Lism class="uiComponents">
+		<Stack tag="header" g="20">
+			<h1>Lism UI Components</h1>
+			<p class="-c:text-2">Lism CSSを使ったUIコンポーネント集です。</p>
 		</Stack>
-
-		{/* コンポーネント一覧 */}
-		{
-			uiPosts.length > 0 ? (
-				<Grid layout="fluidCols" cols="240px" g="20">
-					{uiPosts.map((post) => {
+		<Lism my-s="50">
+			<Grid layout="fluidCols" cols="240px" g="30">
+				{
+					uiPosts.map((post) => {
 						const postUrl = `/ui/${post.slug.replace('ui/', '')}/`;
 						const thumbPath = getThumbPath(post.data.title);
 						return (
-							<LinkBox key={post.slug} layout="stack" href={postUrl} p="20" g="20">
-								<Frame ar="3/2" bd bdrs="20" bgc="base-2" ov="hidden">
+							<LinkBox key={post.slug} layout="stack" href={postUrl} p="5" g="5" bdrs="20" hov="neutral">
+								<Frame ar="3/2" bd bdrs="20" bgc="base">
 									<Media src={thumbPath} alt={post.data.title} width="360" height="240" loading="lazy" />
 								</Frame>
-								<Lism class="u-trim -ff:mono -fz:s">{post.data.title}</Lism>
+								<Lism class="u-trim -ff:mono -fz:s -p:10">{post.data.title}</Lism>
 							</LinkBox>
 						);
-					})}
-				</Grid>
-			) : (
-				<Stack g="20" ai="center" py="60">
-					<Text fz="l" c="text-2">
-						UIコンポーネントは準備中です
-					</Text>
-					<Text c="text-2">content/ja/ui/ にMDXファイルを追加すると、ここに表示されます。</Text>
-				</Stack>
-			)
-		}
-	</Stack>
+					})
+				}
+			</Grid>
+		</Lism>
+	</Lism>
 </BaseLayout>

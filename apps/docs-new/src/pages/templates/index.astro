@@ -5,45 +5,50 @@
  * カテゴリ別にテンプレートを一覧表示
  */
 import BaseLayout from '@/layouts/BaseLayout.astro';
-import { Stack, Grid, Text, HTML, Frame, LinkBox, Media, Lism } from 'lism-css/astro';
+import { Stack, Grid, Text, HTML, Frame, LinkBox, Box, Lism } from 'lism-css/astro';
 import { templates, categoryIds, type TemplateCategoryId } from '@/config/templates';
 ---
 
 <BaseLayout title="Templates" description="Lism CSSを使ったWebサイトテンプレート集" excludeFromSearch>
-	<Stack g="40" class="templates-index">
-		{/* ページヘッダー */}
-		<Stack tag="header" g="10">
-			<h1 class="-fz:3xl -fw:bold">Templates</h1>
-			<Text c="text-2">Lism CSSを使ったWebサイトテンプレート集です。</Text>
+	<Stack g="40" class="templates">
+		<Stack tag="header" g="20">
+			<h1>Web Templates</h1>
+			<Text c="text-2">コピペで簡単に利用できる、Lism CSSを使ったWebサイトテンプレート集です。</Text>
 		</Stack>
 
-		{/* カテゴリ別テンプレート一覧 */}
 		<Stack g="40">
 			{
 				categoryIds.map((categoryId: TemplateCategoryId) => {
 					const category = templates[categoryId];
 					return (
-						<Stack g="15" tag="section">
-							{/* カテゴリタイトル */}
-							<HTML.h lv="2" fz="xl" fw="bold" bd-b py="10">
-								{category.label}
-								<Text tag="span" fz="s" c="text-2" fw="normal" ml="10">
+						<Box tag="section">
+							<HTML.h lv="2" layout="flex" ai="center" g="10" fz="xl" bd-b py="10" px="5">
+								<span>{category.label}</span>
+								<Text tag="span" fz="xs" c="text-2" fw="normal">
 									({category.items.length})
 								</Text>
 							</HTML.h>
 
-							{/* テンプレートカード一覧 */}
-							<Grid layout="fluidCols" cols="24rem" g="20">
+							<Grid layout="fluidCols" cols="24rem" g="20" my-s="20" class="templateList">
 								{category.items.map((item) => (
-									<LinkBox key={item.id} layout="stack" href={`/templates/${categoryId}/${item.id}`} p="20" g="20">
-										<Frame ar="3/2" bd bdw="1px" bdrs="20" bdc="inherit" bgc="#fff">
-											<Frame className="u--scalePreview" ar="3/2" data-scale-preview-type="list">
+									<LinkBox
+										key={item.id}
+										class="templateList_link"
+										layout="stack"
+										href={`/templates/${categoryId}/${item.id}`}
+										p="10"
+										g="20"
+										setHov
+									>
+										<Frame ar="3/2" bd bdrs="20">
+											<Frame className="u--scalePreview" ar="3/2">
 												<iframe
 													src={`/preview/templates/${categoryId}/${item.id}/`}
 													title={item.title}
 													width="800"
 													height="600"
 													loading="lazy"
+													class="-hov:to:zoom set-transition"
 												/>
 											</Frame>
 										</Frame>
@@ -54,7 +59,7 @@ import { templates, categoryIds, type TemplateCategoryId } from '@/config/templa
 									</LinkBox>
 								))}
 							</Grid>
-						</Stack>
+						</Box>
 					);
 				})
 			}
@@ -63,17 +68,15 @@ import { templates, categoryIds, type TemplateCategoryId } from '@/config/templa
 </BaseLayout>
 
 <style>
-	.template-card {
-		transition:
-			transform 0.2s ease,
-			box-shadow 0.2s ease;
-	}
-	.template-card:hover {
-		transform: translateY(-4px);
-		box-shadow: var(--bxsh--20);
+	.templateList_link > .l--frame {
+		--bdw: 2px;
+		transition: box-shadow 0.2s;
+		box-shadow: var(--_isHov, var(--bxsh--30)) var(--_notHov, var(--bxsh--10));
 	}
 
-	.template-card_thumb {
+	.templateList_link .u--scalePreview {
+		width: 250%;
+		transform: scale(0.4);
 		pointer-events: none;
 	}
 
