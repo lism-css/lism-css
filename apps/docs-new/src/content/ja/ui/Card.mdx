@@ -46,7 +46,7 @@ export const ExampleImgCard = (props) => {
 
 [`SideMains`](/modules/layout/sidemain/)を使って構築することで、表示領域が狭くなったら縦向きレイアウトにすることができます。
 
-また、[`is--linkBox`](/css/module-class/#is--linkbox)を適用してカードコンテンツ全体をリンクにしてみます。
+また、[`is--linkBox`](/docs/css-methodology//#is--linkbox)を適用してカードコンテンツ全体をリンクにしてみます。
 
 <Preview>
 	<PreviewTitle>Preview</PreviewTitle>
@@ -81,7 +81,7 @@ export const ExampleImgCard = (props) => {
 
 ### カード内に別のリンクを配置する例
 
-カード全体をリンクにしつつ、別のリンクを含めたい場合、 [`u-expandedLink`](/css/utility-class/#u-expandedlink) を使用します。
+カード全体をリンクにしつつ、別のリンクを含めたい場合、 [`u-expandedLink`](/docs/utility-class/#u-expandedlink) を使用します。
 
 <Preview>
 	<PreviewTitle>`u-expandedLink`を使う例</PreviewTitle>
@@ -304,7 +304,12 @@ export const ExampleImgCard = (props) => {
 以下の例では、`.-hov\:to\:slide`クラスを別途用意する必要があります。
 
 {/* Note: PreviewAreaにresize つけると Filterの挙動変わることに注意。 */}
-<Preview>
+<Preview css={`
+.-hov\\:to\\:slide {
+	opacity: var(--_notHov, 0);
+	grid-template-rows: var(--_isHov, 1fr) var(--_notHov, 0fr);
+	transition-property: margin-block, padding-block, opacity, grid-template;
+}`}>
 	<PreviewTitle>Preview</PreviewTitle>
 	<PreviewArea bg=':stripe' p='20'>
 		<LinkBox href='#card-a' pos='rel' bdrs='20' bxsh='20' ov='hidden' setHov max-w='xs' mx='auto'>

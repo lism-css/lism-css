@@ -4,7 +4,6 @@ description: ...
 order: 8
 ---
 import { Lism, Box, Spacer } from "lism-css/astro";
-import { Preview, PreviewArea, PreviewTitle, PreviewCode, Reference, HelpText, IconBadge } from "@/components/mdx";
 
 
 ## レスポンシブ対応
@@ -53,10 +52,10 @@ Lism では、`.-{prop}_{bp}`形式のクラスと`--{prop}_{bp}`形式の変数
 
 :::warning
 CSSプロパティ全てがレスポンシブ対応できるわけではありません。  
-どのプロパティが標準でブレイクポイント切り替えに対応しているかについては、[Prop Class 一覧ページ](/css/prop-class)を参照してください。
+どのプロパティが標準でブレイクポイント切り替えに対応しているかについては、[Prop Class 一覧ページ](/docs/prop-class)を参照してください。
 :::
 
-[SCSSファイルからカスタマイズを行う](/css/customize/)ことで、プロパティごとにレスポンジブ対応を切り替えることもできます。
+[SCSSファイルからカスタマイズを行う](/docs/customize/)ことで、プロパティごとにレスポンジブ対応を切り替えることもできます。
 
 ### プロパティによってCSS実装が少し異なります
 
@@ -105,7 +104,7 @@ Lismでは、デフォルトで**コンテナクエリ**を採用しています
 
 <p class='-my-s:10'>（Lism でコンテナ要素を定義するには、`.is--container`が便利です。）</p>
 
-また、[SCSSファイルからカスタマイズを行う](/css/customize/)ことで、コンテナクエリではなくメディアクエリに切り替えることもできます。
+また、[SCSSファイルからカスタマイズを行う](/docs/customize/)ことで、コンテナクエリではなくメディアクエリに切り替えることもできます。
 
 
 ## ブレイクポイント
@@ -121,7 +120,7 @@ Lismでは、デフォルトで**コンテナクエリ**を採用しています
 |(`xl`)|`width >= 1200px`|
 
 :::info
-標準でサポートされているのは`sm`,`md`までです。`lg`サイズ以降のサポートは別途[SCSSの設定ファイルのカスタマイズ](/css/customize/)が必要です。
+標準でサポートされているのは`sm`,`md`までです。`lg`サイズ以降のサポートは別途[SCSSの設定ファイルのカスタマイズ](/docs/customize/)が必要です。
 :::
 
 

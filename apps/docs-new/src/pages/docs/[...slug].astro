@@ -46,7 +46,7 @@ const ogImage = `/docs/og/${entry.slug}.png`;
 		}
 
 		{/* 記事タイトル */}
-		<HTML.h lv="1" class="article-title">{entry.data.title}</HTML.h>
+		<HTML.h lv="1" class="articleTitle">{entry.data.title}</HTML.h>
 
 		{/* 記事本文 */}
 		<Flow class="article-content" my-s="40">
@@ -57,4 +57,3 @@ const ogImage = `/docs/og/${entry.slug}.png`;
 		<PostNavigation currentSlug={entry.slug} lang={lang} />
 	</Lism>
 </BaseLayout>
-

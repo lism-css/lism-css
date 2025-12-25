@@ -4,7 +4,6 @@ description: ...
 order: 3
 ---
 import { Lism, Box, Media, Flex, HTML, Stack, Spacer, Frame } from 'lism-css/astro';
-import { Preview, PreviewArea, PreviewTitle, PreviewCode, PreviewFrame, Reference, EmbedCode } from "@/components/mdx";
 import Button from '@/components/ex/Button/index.astro';
 import { Desktop } from '@phosphor-icons/react';
 
@@ -85,7 +84,7 @@ Lism では、これらを **Setter Class** と呼びます。
 ### `set-bp`
 
 特定のブレイクポイント以上でのみスタイルを適用させるためのユーティリティクラスです。
-[ブレイクポイント対応](/css/responsive/)していないプロパティを変化させたい時のハック的手段として活用できます。
+[ブレイクポイント対応](/docs/responsive/)していないプロパティを変化させたい時のハック的手段として活用できます。
 
 <EmbedCode dirPath='packages/lism-css' srcPath='src/scss/base/set/_bp.scss' />
 
@@ -119,7 +118,7 @@ Lism では、これらを **Setter Class** と呼びます。
 <EmbedCode dirPath='packages/lism-css' srcPath='src/scss/base/set/_hov.scss' />
 
 <Reference>
-活用例は [`hover`の解説ページ](/css/hov#set-hov) を参照してください。
+活用例は [`hover`の解説ページ](/docs/props/hov#set-hov) を参照してください。
 </Reference>
 
 
@@ -131,7 +130,7 @@ Lism では、これらを **Setter Class** と呼びます。
 <EmbedCode dirPath='packages/lism-css' srcPath='src/scss/base/set/_transition.scss' />
 
 <Reference>
-活用例は [`hover`の解説ページ](/css/hov#set-transition) を参照してください。
+活用例は [`hover`の解説ページ](/docs/props/hov#set-transition) を参照してください。
 </Reference>
 
 

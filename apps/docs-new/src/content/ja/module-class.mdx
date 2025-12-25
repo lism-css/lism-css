@@ -6,7 +6,6 @@ order: 4
 
 
 import { Dummy, Flow, Box, HTML, Lism, Stack, Flex, Container, Frame, Center, Spacer, Media } from 'lism-css/astro';
-import { Preview, PreviewArea, PreviewTitle, PreviewCode, PreviewFrame, Reference } from '@/components/mdx';
 import ModuleList from '@/components/ModuleList.astro';
 
 {/* import { Desktop } from '@phosphor-icons/react'; */}
@@ -19,8 +18,6 @@ Lismでは、次のようなモジュールクラスを使います。
 - `a--{module}`: レイアウトの最小単位となるモジュール群。
 - `c--{module}`: その他のより具体的な役割を持つコンポーネント群。（他のクラスとの組み合わせを前提にした設計になっているものが多い。）
 
-
-{/* |Dynamic<HelpText>JSと組み合わせた動きのあるモジュール</HelpText>|`.d--{name}`|`.d--accordion`,<br />`.d--modal`,<br />`.d--tabs`| */}
 
 基本的に、State Modulesを除いた各レイヤーの他モジュールクラスとの複数併用はできません。  
 たとえば、`.l--`と`.c--`は併用できますが、`.l--XXX`と`.l--YYY`、`.c--XXX`と`.c--YYY`は同一属性内では併用しないものとします。

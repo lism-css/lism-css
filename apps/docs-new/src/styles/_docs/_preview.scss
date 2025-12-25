@@ -1,0 +1,223 @@
+.c--preview {
+	padding-block: 0.5rem;
+}
+
+.c--preview_title {
+	display: flex;
+	align-items: center;
+
+	+ * {
+		margin-top: var(--s10) !important;
+	}
+
+	> .__decorator {
+		width: 1.5em;
+		height: 1.5em;
+		background-color: var(--base-2);
+		border-radius: 2px;
+		box-shadow: var(--sh--5);
+	}
+}
+
+.c--preview_area {
+	--bdc: var(--lsdoc-codeBlock-bgc);
+
+	position: relative;
+	transition: none !important;
+	// container-type: inline-size;
+
+	&:not(:first-child) {
+		margin-top: var(--s40);
+	}
+}
+
+.c--preview_area_frame {
+	// width: 160%;
+	// scale: 62.5%;
+	// width: 125%;
+	// scale: 0.8;
+	// transform-origin: 0 0;
+
+	border: solid 3px var(--bdc);
+	border-radius: 2px;
+}
+
+.c--preview_inner {
+	position: relative;
+	border-radius: 2px;
+	box-shadow: inset var(--shsz--10) var(--shc);
+	container-type: inline-size;
+
+	&.is--resize {
+		min-width: min(100%, 340px);
+		max-width: 100%;
+		margin: 0 auto;
+		overflow-y: auto;
+		resize: horizontal;
+		// box-shadow: inset 0 0 8px -2px var(--lsdoc-preview_resize-bdc);
+
+		&:after {
+			position: absolute;
+			right: 0;
+			bottom: 0;
+			display: block;
+			width: 14px;
+			height: 14px;
+			border-top: 1px dotted var(--lsdoc-preview_resize-bdc);
+			content: '';
+			border-inline-start: 1px dotted var(--lsdoc-preview_resize-bdc);
+			border-start-start-radius: 12px;
+		}
+	}
+}
+
+.c--preview_help {
+	// transform: translateY(calc(4px + 100%));
+	z-index: 1;
+	margin: 0.875em;
+	font-size: 11px;
+	background-color: var(--lsdoc-preview_help-bg);
+	border: 1px solid var(--lsdoc-preview_resize-bdc);
+	visibility: hidden;
+	opacity: 0;
+	backdrop-filter: blur(2px);
+
+	.c--preview_inner:hover & {
+		visibility: visible;
+		opacity: 1;
+	}
+}
+.c--preview_code {
+	.d--tabs_panel {
+		overflow-x: auto;
+	}
+
+	.expressive-code {
+		position: relative;
+	}
+	.expressive-code > .frame {
+		position: static !important; // copyボタンの位置基準をもう一つ上にする
+		overflow-y: auto;
+		max-height: 25rem;
+	}
+	.copy {
+		z-index: 1;
+	}
+	pre {
+		border-radius: 0;
+	}
+}
+
+.c--preview_area + .c--preview_code {
+	overflow: hidden;
+	background-color: var(--lsdoc-codeBlock-bgc);
+	border-radius: var(--lsdoc-codeBlock-radius);
+	margin-block-start: -4px;
+
+	&.d--tabs {
+		gap: 0 !important;
+	}
+}
+.set--fz {
+	--fz--5xl: min(50em, calc(1em * var(--_fzmol) / (var(--_fzmol) - 6)));
+	--fz--4xl: min(40em, calc(1em * var(--_fzmol) / (var(--_fzmol) - 5)));
+	--fz--3xl: calc(1em * var(--_fzmol) / (var(--_fzmol) - 4));
+	--fz--2xl: calc(1em * var(--_fzmol) / (var(--_fzmol) - 3));
+	--fz--xl: calc(1em * var(--_fzmol) / (var(--_fzmol) - 2));
+	--fz--l: calc(1em * var(--_fzmol) / (var(--_fzmol) - 1));
+	--fz--m: 1em;
+	--fz--s: calc(1em * var(--_fzmol) / (var(--_fzmol) + 1));
+	--fz--xs: calc(1em * var(--_fzmol) / (var(--_fzmol) + 2));
+	--fz--2xs: calc(1em * var(--_fzmol) / (var(--_fzmol) + 3));
+}
+
+// .typo-1\.25 {
+// 	--fzRatio: 1.25; // https://typescale.com/
+// 	--fz--2xs: calc(var(--fz--xs) / var(--fzRatio));
+// 	--fz--xs: calc(var(--fz--s) / var(--fzRatio));
+// 	--fz--s: calc(var(--fz--m) / var(--fzRatio));
+// 	--fz--m: 1em;
+// 	--fz--l: calc(var(--fz--m) * var(--fzRatio));
+// 	--fz--xl: calc(var(--fz--l) * var(--fzRatio));
+// 	--fz--2xl: calc(var(--fz--xl) * var(--fzRatio));
+// 	--fz--3xl: calc(var(--fz--2xl) * var(--fzRatio));
+// 	--fz--4xl: calc(var(--fz--3xl) * var(--fzRatio));
+// 	--fz--5xl: calc(var(--fz--4xl) * var(--fzRatio));
+// }
+// .typo-1\.2 {
+// 	--fzRatio: 1.2; // https://typescale.com/
+// 	--fz--2xs: calc(var(--fz--xs) / var(--fzRatio));
+// 	--fz--xs: calc(var(--fz--s) / var(--fzRatio));
+// 	--fz--s: calc(var(--fz--m) / var(--fzRatio));
+// 	--fz--m: 1em;
+// 	--fz--l: calc(var(--fz--m) * var(--fzRatio));
+// 	--fz--xl: calc(var(--fz--l) * var(--fzRatio));
+// 	--fz--2xl: calc(var(--fz--xl) * var(--fzRatio));
+// 	--fz--3xl: calc(var(--fz--2xl) * var(--fzRatio));
+// 	--fz--4xl: calc(var(--fz--3xl) * var(--fzRatio));
+// 	--fz--5xl: calc(var(--fz--4xl) * var(--fzRatio));
+// }
+
+// .typo-6 {
+// 	// 分子6. 最後はでかくなりすぎるので手動調整。（12分数ででてくる値から選別）
+// 	--fz--5xl: 5em;
+// 	--fz--4xl: 4em;
+// 	--fz--3xl: calc(1em * 6 / 2); // 3em
+// 	--fz--2xl: calc(1em * 6 / 3);
+// 	--fz--xl: calc(1em * 6 / 4);
+// 	--fz--l: calc(1em * 6 / 5);
+// 	--fz--s: calc(1em * 6 / 7);
+// 	--fz--xs: calc(1em * 6 / 8);
+// 	--fz--2xs: calc(1em * 6 / 9);
+// }
+
+// .typo-8 {
+// 	--fz--5xl: calc(1em * 8 / 2);
+// 	--fz--4xl: calc(1em * 8 / 3);
+// 	--fz--3xl: calc(1em * 8 / 4);
+// 	--fz--2xl: calc(1em * 8 / 5);
+// 	--fz--xl: calc(1em * 8 / 6);
+// 	--fz--l: calc(1em * 8 / 7);
+// 	--fz--s: calc(1em * 8 / 9);
+// 	--fz--xs: calc(1em * 8 / 10);
+// 	--fz--2xs: calc(1em * 8 / 11);
+// }
+// .typo-9 {
+// 	--fz--5xl: calc(1em * 9 / 3); // 3
+// 	--fz--4xl: calc(1em * 9 / 4);
+// 	--fz--3xl: calc(1em * 9 / 5);
+// 	--fz--2xl: calc(1em * 9 / 6);
+// 	--fz--xl: calc(1em * 9 / 7);
+// 	--fz--l: calc(1em * 9 / 8);
+// 	--fz--s: calc(1em * 9 / 10);
+// 	--fz--xs: calc(1em * 9 / 11);
+// 	--fz--2xs: calc(1em * 9 / 12);
+// }
+
+// .typo-7 {
+// 	// 5xl は 7emででかすぎるので手動調整
+// 	--fz--5xl: calc(1em * 7 / 1);
+// 	--fz--4xl: calc(1em * 7 / 2);
+// 	--fz--3xl: calc(1em * 7 / 3);
+// 	--fz--2xl: calc(1em * 7 / 4);
+// 	--fz--xl: calc(1em * 7 / 5);
+// 	--fz--l: calc(1em * 7 / 6);
+// 	// --fz--m: calc(1em * 7 / 7);
+// 	--fz--s: calc(1em * 7 / 8);
+// 	--fz--xs: calc(1em * 7 / 9);
+// 	--fz--2xs: calc(1em * 7 / 10);
+// }
+
+// .typo-12 {
+// 	// 分子6. だとでかくなりすぎるので12で計算して選別するパターン
+// 	--fz--5xl: calc(1em * 12 / 3); // 3
+// 	--fz--4xl: calc(1em * 12 / 4);
+// 	--fz--3xl: calc(1em * 12 / 6);
+// 	--fz--2xl: calc(1em * 12 / 8);
+// 	--fz--xl: calc(1em * 12 / 9);
+// 	--fz--l: calc(1em * 12 / 10);
+// 	// --fz--m: calc(1em * 12 / 12);
+// 	--fz--s: calc(1em * 12 / 14);
+// 	--fz--xs: calc(1em * 12 / 15);
+// 	--fz--2xs: calc(1em * 12 / 16);
+// }

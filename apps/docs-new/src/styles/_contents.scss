@@ -1,0 +1,34 @@
+/* mdx 自動変換後の blockquote（figure構造） */
+.c--blockquote {
+	margin-block: var(--s40);
+	display: grid;
+	gap: 0.25em;
+
+	> figcaption {
+		font-size: var(--fz--xs);
+		color: var(--text-2);
+		margin-left: auto;
+		font-style: italic;
+		padding-inline: 0.5em;
+
+		/* ダッシュを付ける */
+		&::before {
+			content: ' — ';
+		}
+
+		> a {
+			color: inherit;
+			text-decoration: underline;
+			text-underline-offset: 0.15em;
+
+			&:hover {
+				color: var(--link);
+			}
+		}
+	}
+}
+
+/* -------------------------- */
+/* 見出しデザイン */
+/* -------------------------- */
+// .articleTitle {}

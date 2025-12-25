@@ -5,9 +5,6 @@
 
 export { default as Callout } from './Callout.astro';
 export { default as LinkCard } from './LinkCard.astro';
-export { default as YouTubeEmbed } from './YouTubeEmbed.astro';
-export { default as InnerLink } from './InnerLink.astro';
-export { default as CanUse } from './CanUse.astro';
 
 // export { default as Demo } from './Demo/Demo.astro';
 // export { default as DemoCode } from './Demo/DemoCode.astro';
@@ -16,7 +13,9 @@ export { default as CanUse } from './CanUse.astro';
 export { Preview, PreviewTitle, PreviewArea, PreviewCode, PreviewFrame } from '../Preview';
 
 // DocComponents（docsから移植）
-export { HelpText, IconBadge, Reference, MemoBadge, PropBadge } from '../DocComponents.jsx';
+export { default as Reference } from './Reference.astro';
+export { default as HelpText } from './HelpText.astro';
+export { default as PropBadge } from './PropBadge.astro';
 
 export { default as EmbedCode } from './EmbedCode.astro';
 export { default as ImportPackage } from './ImportPackage.astro';

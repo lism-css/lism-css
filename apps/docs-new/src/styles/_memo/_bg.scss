@@ -1,0 +1,31 @@
+:where(.-bg\:glass) {
+	// --bxsh初期値セット（ ユーティリティと共存できるように、--bxsh を受け取るようにしている。）
+	--bxsh: 0 0 0 transparent;
+	--blur: 16px;
+}
+
+.-bg\:glass {
+	backdrop-filter: brightness(1.2) blur(var(--blur));
+
+	// 白の1pxボーダーは、透過白背景をグラデーションにするとバグるので、borderではなくshadowで表現している。
+	// shadowユーティリティに負けないように important.
+	box-shadow:
+		inset 0 0 0 1px rgb(255 255 255 / 0.2),
+		inset 10px 20px 40px -20px rgb(255 255 255 / 0.2),
+		var(--bxsh) !important;
+	// background-color: transparent;
+	// background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), transparent);
+}
+
+// 罫線 : Ruled paper, lined paper, rulied lines
+// 方眼 : graph paper, grid paper, squared paper
+.-bg\:grid {
+	--grid-bdc: color-mix(in srgb, currentColor, transparent 95%);
+	--grid-size: 1rem;
+	--grid-offset: calc(var(--grid-size) / 2);
+	background-image:
+		linear-gradient(transparent calc(100% - 1px), var(--grid-bdc) 50%, var(--grid-bdc)),
+		linear-gradient(90deg, transparent calc(100% - 1px), var(--grid-bdc) 50%, var(--grid-bdc));
+	background-position: var(--grid-offset) var(--grid-offset);
+	background-size: var(--grid-size) var(--grid-size);
+}

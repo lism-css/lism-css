@@ -47,9 +47,6 @@
 | `LinkCard`     | 外部リンクをカード形式で表示（OGP 自動取得）|
 | `Demo`      | CSS デモを iframe でプレビュー表示          |
 | `DemoCode`  | Demo のコード表示部分                    |
-| `InnerLink`    | 内部リンクカード                            |
-| `YouTubeEmbed` | YouTube 埋め込み                            |
-| `CanUse`       | ブラウザ対応状況の表示                      |
 
 ---
 

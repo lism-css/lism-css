@@ -6,6 +6,10 @@
 	--sidebar-w: 240px;
 	--toc-w: 240px;
 }
+/* アンカーリンクでジャンプした際、ヘッダーの高さを考慮 */
+html {
+	scroll-padding-top: calc(var(--header-h) + 1rem);
+}
 
 .z--wrapper {
 	--wrapper-gta: 'header' 'main';

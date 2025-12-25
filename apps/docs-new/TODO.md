@@ -58,7 +58,7 @@ draft: false                 # 任意（下書きフラグ）
 以下のコンポーネントは mdx 内で import 不要で使用可能:
 
 - `Preview`, `PreviewArea`, `PreviewTitle`, `PreviewCode`, `PreviewFrame`
-- `HelpText`, `IconBadge`, `Reference`, `MemoBadge`, `PropBadge`
+- `HelpText`, `Reference`, `PropBadge`
 - `ImportPackage`, `EmbedCode`, `ImportSource`
 - `Callout`, `LinkCard`, `InnerLink`
 

@@ -4,7 +4,6 @@ description: ...
 order: 5
 ---
 import { Lism, Flow, HTML, Grid, Stack, Center, Box, Dummy, Media, Frame, Flex, Layer, Spacer, Icon, Divider } from "lism-css/astro";
-import { Preview, PreviewArea, PreviewTitle, PreviewCode, EmbedCode, Reference } from "@/components/mdx";
 import { Dog, Cat, Smiley, WarningCircle } from "@phosphor-icons/react";
 
 ユーティリティクラスを紹介します。
@@ -400,7 +399,11 @@ Gridを使って table タグのような表現もできるようになります
 `vertical-align: middle;`だけではずれが発生するため、追加で`translate`で調整を加えています。
 
 
-<Preview>
+<Preview css={`
+.u-inlineCenter {
+	vertical-align: middle;
+	translate: 0 calc(-1 * (0.35em - 0.5ex));
+}`}>
 	<PreviewTitle>使用例</PreviewTitle>
 	<PreviewArea p='20'>
 		<p><Icon className='u-inlineCenter' icon='alert' c='red' fz='xl' /> Lorem ipsum dolor sit amet.</p>
@@ -418,126 +421,27 @@ Gridを使って table タグのような表現もできるようになります
 	</PreviewCode>
 
 	<PreviewCode slot='tab' label='**追加CSS**'>
-	```scss
+	```css
 	.u-inlineCenter {
-		vertical-align: middle; // 基準をmiddleにセット
-		translate: 0 calc(-1 * (0.35em - 0.5ex)); // middleの計算式を元に追加で調整。（0.5cap - 0.5ex が英文では理想。）
+		vertical-align: middle; /* 基準をmiddleにセット */
+		translate: 0 calc(-1 * (0.35em - 0.5ex)); /* middleの計算式を元に追加で調整。（0.5cap - 0.5ex が英文では理想。）*/
 	}
 	```
 	</PreviewCode>
 </Preview>
 
 
-### `u-scFade`
 
-スクロール可能な方向を示すためにコンテンツをフェードさせるためのクラスです。
-
-<Preview>
-	<PreviewTitle>例</PreviewTitle>
-	<PreviewArea p='30'>
-		<Flow p='30' ar='2/1' bgc='base-2' ov='auto' className='u-scFade:y'>
-			<Dummy />
-			<Dummy length='l' />
-			<Dummy tag='img' />
-			<Dummy length='xl' />
-			<Dummy length='l' />
-		</Flow>
-		<Divider my='40'/>
-		<Flex className='u-scFade:x set-snap' ov='auto' g='20'>
-			<Frame ar='16/9' fxsh='0' w='40%'>
-				<img src='https://cdn.lism-css.com/img/a-1.jpg' alt='' />
-			</Frame>
-			<Frame ar='16/9' fxsh='0' w='40%'>
-				<img src='https://cdn.lism-css.com/img/a-2.jpg' alt='' />
-			</Frame>
-			<Frame ar='16/9' fxsh='0' w='40%'>
-				<img src='https://cdn.lism-css.com/img/a-3.jpg' alt='' />
-			</Frame>
-			<Frame ar='16/9' fxsh='0' w='40%'>
-				<img src='https://cdn.lism-css.com/img/a-4.jpg' alt='' />
-			</Frame>
-			<Frame ar='16/9' fxsh='0' w='40%'>
-				<img src='https://cdn.lism-css.com/img/a-5.jpg' alt='' />
-			</Frame>
-		</Flex>
-	</PreviewArea>
-	<PreviewCode slot="tab" label='JSX'>
-		```jsx
-		<Flow p='30' ar='2/1' bgc='base-2' ov='auto' className='u-scFade:y'>
-			<Dummy />
-			<Dummy length='l' />
-			<Dummy tag='img' />
-			<Dummy length='xl' />
-		</Flow>
-		<Divider />
-		<Flex className='u-scFade:x set-snap' ov='auto' g='20'>
-			<Frame ar='16/9' fxsh='0' w='40%'>
-				<img src='https://cdn.lism-css.com/img/a-1.jpg' alt='' />
-			</Frame>
-			<Frame ar='16/9' fxsh='0' w='40%'>
-				<img src='https://cdn.lism-css.com/img/a-2.jpg' alt='' />
-			</Frame>
-			<Frame ar='16/9' fxsh='0' w='40%'>
-				<img src='https://cdn.lism-css.com/img/a-3.jpg' alt='' />
-			</Frame>
-			<Frame ar='16/9' fxsh='0' w='40%'>
-				<img src='https://cdn.lism-css.com/img/a-4.jpg' alt='' />
-			</Frame>
-			<Frame ar='16/9' fxsh='0' w='40%'>
-				<img src='https://cdn.lism-css.com/img/a-5.jpg' alt='' />
-			</Frame>
-		</Flex>
-		```
-	</PreviewCode>
-	{/* <PreviewCode slot="tab" label='CSS'>
-		<EmbedCode dirPath='packages/lism-css' srcPath='src/scss/utility/_scFade.scss' />
-	</PreviewCode> */}
-</Preview>
-
-
-
-### `u-scShadow`
-
-スクロール可能な方向を示すためにshadowを内側に表示させるためのクラスです。  
-(`inset`なシャドウでスクロールヒントを表現しているため、内側コンテンツに背景色がついていたり、画像の場合は影が隠れてしまうことには注意が必要です。)
-
-<Preview>
-	<PreviewTitle>例</PreviewTitle>
-	<PreviewArea p='30'>
-		<Flow className='u-scShadow:y' p='20' ar='2/1' ov='auto' max-sz='s' bgc='base-2'>
-			<Dummy />
-			<Dummy length='l' />
-			<Dummy tag='img' />
-			<Dummy length='xl' />
-		</Flow>
-		<Frame className='u-scShadow:x' p='20' ov='auto' max-sz='s' bgc='base-2'>
-			<Dummy whspace='nowrap' />
-		</Frame>
-	</PreviewArea>
-	<PreviewCode slot="tab" label='JSX'>
-		```jsx
-		<Flow className='u-scShadow:y' p='20' ar='2/1' ov='auto' max-sz='s' bgc='base-2'>
-			<Dummy />
-			<Dummy length='l' />
-			<Dummy tag='img' />
-			<Dummy length='xl' />
-		</Flow>
-		<Frame className='u-scShadow:x' p='20' ov='auto' max-sz='s' bgc='base-2'>
-			<Dummy whspace='nowrap' />
-		</Frame>
-		```
-	</PreviewCode>
-	{/* <PreviewCode slot="tab" label='CSS'>
-		<EmbedCode dirPath='packages/lism-css' srcPath='src/scss/utility/_scFade.scss' />
-	</PreviewCode> */}
-</Preview>
-
-
-## u-bgclipText
+### u-bgclipText
 
 テキストで背景をクリッピングするためのクラスです。
 
-<Preview>
+<Preview css={`
+.u-bgclipText {
+	-webkit-background-clip: text;
+	background-clip: text;
+	color: transparent;
+}`}>
 	<PreviewTitle>テキストで背景をクリッピング</PreviewTitle>
 	<PreviewArea p='20'>
 		<Center>

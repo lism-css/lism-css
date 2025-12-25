@@ -1,7 +1,8 @@
 @use './theme.scss';
 @use './base.scss';
 @use './layout.scss';
-@use './docs.scss';
+@use './contents.scss';
+@use './parts.scss';
 @use './code.scss';
 @use './preview.scss';
 @use './lg.scss';
@@ -24,5 +25,37 @@
 	}
 	.u-onlyDarkMode {
 		display: block;
+	}
+}
+
+/* -------------------------- */
+/* Custom Prop Class */
+// .-hov\:under:hover {
+// 	text-decoration: underline;
+// }
+
+/* ----------------------------------------
+    guide
+ ---------------------------------------- */
+
+.-bd\:guide {
+	border: 1px dashed rgba(160, 160, 160, 0.5);
+}
+
+:where(.has--itemGuide > *) {
+	padding: 0 4px;
+	border: 1px dashed hsla(0, 0%, 63%, 0.4);
+}
+.-hov\:itemGuide {
+	> * {
+		position: relative;
+	}
+	&:hover > *:before {
+		position: absolute;
+		display: block;
+		border: 1px dashed rgba(150, 150, 160, 0.4);
+		content: '';
+		inset: 0;
+		// box-sizing: border-box;
 	}
 }

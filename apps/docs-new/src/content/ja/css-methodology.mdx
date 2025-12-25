@@ -4,7 +4,6 @@ description: ...
 order: 1
 ---
 import { Lism, Box } from "lism-css/astro";
-import { Preview, PreviewArea, PreviewTitle, PreviewCode, Reference, HelpText, IconBadge } from "@/components/mdx";
 
 export const WhsNw = ({children}) => {
 	return <span className='-whspace:nowrap'>{children}</span>
@@ -86,7 +85,7 @@ export const WhsNw = ({children}) => {
 	</tbody>
 </table>
 
-<IconBadge /> Prop Class は、レイヤーから外すことで外部CSSとある程度共存できるようにします.
+<HelpText icon="info"> Prop Class はレイヤーを外して詳細度を高くしつつ、ある程度外部CSSとも共存できるようにしています。</HelpText>
 
 ### Modules レイヤーでのさらなる階層構造
 
@@ -140,8 +139,9 @@ export const WhsNw = ({children}) => {
 トークンを流用することでデザインに**一貫性**が生まれ、使用しているプロパティの**意図**も読み取りやすくなります。また、あとからサイト全体を微調整する必要が出てきてもトークンの値を変更するだけでよくなり、**メンテナンス性**も高まります。
 
 <Reference>
-詳しくは[トークン解説ページ](/css/tokens/)を参照してください。
+詳しくは[トークン解説ページ](/docs/tokens/)を参照してください。
 </Reference>
+
 
 
 ## CSSのクラス設計
@@ -154,10 +154,10 @@ Lismでは、レイアウトの構成要素を細分化してモジュールと�
 
 |分類|形式|例|
 |---|---|---|
-|Modules State<HelpText>状態として付け外しできるようなレイアウト機能を持つもの</HelpText>|`.is\|has--{stateName}`|`.is--wrapper`,<br />`.has--gutter`|
-|Layout Modules<HelpText>レイアウトの構成単位となるようなモジュール</HelpText>|`.l--{name}`|`.l--grid`,<br />`.l--columns`|
-|Atomic Modules<HelpText>レイアウトの最小単位となるモジュール</HelpText>|`.a--{name}`|`.a--divider`,<br />`.a--icon`|
-|Custom Modules<HelpText>その他、より具体的な役割を持つコンポーネント群</HelpText>|`.c--{name}`|`.c--button`,<br />`.c--note`|
+|Modules State<HelpText fz="xs">状態として付け外しできるようなレイアウト機能を持つもの</HelpText>|`.is\|has--{stateName}`|`.is--wrapper`,<br />`.has--gutter`|
+|Layout Modules<HelpText fz="xs">レイアウトの構成単位となるようなモジュール</HelpText>|`.l--{name}`|`.l--grid`,<br />`.l--columns`|
+|Atomic Modules<HelpText fz="xs">レイアウトの最小単位となるモジュール</HelpText>|`.a--{name}`|`.a--divider`,<br />`.a--icon`|
+|Custom Modules<HelpText fz="xs">その他、より具体的な役割を持つコンポーネント群</HelpText>|`.c--{name}`|`.c--button`,<br />`.c--note`|
 
 {/* |Dynamic<HelpText>JSと組み合わせた動きのあるモジュール</HelpText>|`.d--{name}`|`.d--accordion`,<br />`.d--modal`,<br />`.d--tabs`| */}
 
@@ -234,7 +234,7 @@ Prop クラス には以下の3種類の形式があります。
 
 
 <Reference>
-詳しくは[Prop Class 一覧ページ](/css/prop-class)を参照してください。
+詳しくは[Prop Class 一覧ページ](/docs/prop-class)を参照してください。
 </Reference>
 
 
@@ -266,7 +266,7 @@ Prop クラス には以下の3種類の形式があります。
 </Preview>
 
 <Reference>
-詳しくは[レスポンシブ対応解説ページ](/css/responsive/)を参照してください。
+詳しくは[レスポンシブ対応解説ページ](/docs/responsive/)を参照してください。
 </Reference>
 
 

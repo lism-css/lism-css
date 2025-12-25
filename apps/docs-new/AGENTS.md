@@ -67,10 +67,6 @@ src/
 │   │   ├── index.ts              # エクスポート管理
 │   │   ├── Callout.astro         # 注意書き
 │   │   ├── LinkCard.astro        # 外部リンクカード
-│   │   ├── Demo/              # CSSデモプレビュー
-│   │   ├── InnerLink.astro       # 内部リンクカード
-│   │   ├── YouTubeEmbed.astro    # YouTube埋め込み
-│   │   └── CanUse.astro          # ブラウザ対応状況
 │   └── parts/                # 汎用UIコンポーネント
 │       ├── PostCard.astro        # 記事カード
 │       ├── PostNavigation.astro  # 前後記事ナビ
