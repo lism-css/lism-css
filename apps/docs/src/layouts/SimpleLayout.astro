@@ -21,7 +21,7 @@ import { getRootLang, type LangCode } from '@/lib/i18n';
 import Head from '../components/Head.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
-import { Container } from 'lism-css/astro';
+import { Lism } from 'lism-css/astro';
 
 interface Props {
 	title: string;
@@ -37,12 +37,12 @@ const { title = siteConfig.name, description, ogImage, lang = getRootLang() } = 
 <html lang={lang}>
 	<Head title={title || siteConfig.name} description={description} ogImage={ogImage} lang={lang} />
 	<body data-pagefind-ignore>
-		<div class="is--container">
+		<Lism layout="stack" class="is--container" min-h="100svh">
 			<Header />
-			<Container tag="main" isWrapper="l" hasGutter py="50" min-h="100svh">
+			<Lism tag="main" isWrapper="l" hasGutter py="50">
 				<slot />
-			</Container>
+			</Lism>
 			<Footer />
-		</div>
+		</Lism>
 	</body>
 </html>
