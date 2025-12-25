@@ -29,7 +29,8 @@
 	margin-block-start: calc(var(--flow) * var(--flow-hScale, 2));
 }
 
-// Note: 打ち消しは最後に書く
-.is--skipFlow + * {
+// 打ち消し
+.is--skipFlow + *,
+.l--flow > :first-child {
 	--flow: 0px;
 }
