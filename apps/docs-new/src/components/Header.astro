@@ -1,11 +1,13 @@
 ---
-import { Flex, Lism, Container, HTML, Icon } from 'lism-css/astro';
+import { Flex, Cluster, Container, HTML, Icon } from 'lism-css/astro';
 import { Modal } from '@lism-css/ui/astro';
 import { siteConfig } from '@/config/site';
 import SearchModal from './SearchModal.astro';
 import SiteNav from './SiteNav.astro';
 import MenuFooter from './MenuFooter.astro';
+import SNSLinks from './SNSLinks.astro';
 import LanguageSelect from './LanguageSelect.astro';
+import ThemeSwitch from './ThemeSwitch.astro';
 import { getLangFromUrl, getLocalizedUrl, t } from '@/lib/i18n';
 
 // 現在の言語を取得
@@ -28,8 +30,7 @@ const headerText = t(currentLang, 'header');
 			</HTML.a>
 		</HTML.div>
 
-		<!-- 言語セレクト -->
-		<LanguageSelect />
+		<SNSLinks d={['none', 'flex']} />
 
 		<!-- 検索トリガーボタン -->
 		<HTML.button
@@ -73,7 +74,11 @@ const headerText = t(currentLang, 'header');
 			<Modal.Body layout="stack" g="40" px="30" py-s="40" ov-y="auto" z="0">
 				<SiteNav />
 			</Modal.Body>
-			<MenuFooter fz="l" px="30" />
+			<Cluster g="10" fz="l" bd-t py-s="20" px="30">
+				<SNSLinks />
+				<LanguageSelect />
+				<ThemeSwitch />
+			</Cluster>
 		</Modal.Inner>
 	</Modal.Root>
 </Container>
