@@ -11,7 +11,8 @@ import BaseLayout from '@/layouts/BaseLayout.astro';
 import { Stack, Flow, Frame, Text } from 'lism-css/astro';
 import { PreviewFrame, PreviewTitle } from '@/components/Preview';
 import SrcCode from '@/components/mdx/SrcCode.astro';
-import { templates, getAllTemplatePaths, getTemplate, type TemplateCategoryId } from '@/config/templates';
+import { templates, type TemplateCategoryId } from '@/config/templates';
+import { getAllTemplatePaths, getTemplate } from '@/lib/templates';
 
 // 静的パス生成
 export function getStaticPaths() {
