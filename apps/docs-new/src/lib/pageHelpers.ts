@@ -216,8 +216,10 @@ const CACHE_DIR = '.cache/og';
 /**
  * タイトルとタグからハッシュを生成
  */
-function generateCacheKey(title: string, tags: string[], lang: string): string {
-	const content = JSON.stringify({ title, tags: [...tags].sort(), lang });
+function generateCacheKey(title: string, tags: string[] | undefined, lang: string): string {
+	// tagsが未定義の場合は空配列として扱う
+	const safeTags = Array.isArray(tags) ? tags : [];
+	const content = JSON.stringify({ title, tags: [...safeTags].sort(), lang });
 	return createHash('md5').update(content).digest('hex');
 }
 
@@ -283,7 +285,8 @@ export async function generateOgImage(lang: LangCode, slug: string): Promise<Res
 	}
 
 	const title = post.data.title;
-	const tags = post.data.tags;
+	// tagsが未定義の場合は空配列として扱う
+	const tags = post.data.tags ?? [];
 
 	// キャッシュキー（ハッシュ）を生成（言語も含める）
 	const cacheKey = generateCacheKey(title, tags, lang);
