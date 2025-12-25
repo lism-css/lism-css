@@ -10,6 +10,7 @@
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import { Stack, Flow, Frame, Text } from 'lism-css/astro';
 import { PreviewFrame, PreviewTitle } from '@/components/Preview';
+import SrcCode from '@/components/mdx/SrcCode.astro';
 import { templates, getAllTemplatePaths, getTemplate, type TemplateCategoryId } from '@/config/templates';
 
 // 静的パス生成
@@ -34,11 +35,11 @@ const categoryData = templates[category as TemplateCategoryId];
 
 // プレビューURLとコード埋め込み用のパス
 const previewUrl = `/preview/templates/${category}/${id}/`;
-const codePath = `src/pages/preview/templates/${category}/${id}/index.astro`;
+const templatePath = `src/pages/preview/templates/${category}/${id}`;
 
 // GitHub埋め込み用URL（旧docsと同じ形式）
 const branch = import.meta.env.MODE === 'development' ? 'dev' : 'main';
-const githubBasePath = `https://github.com/lism-css/lism-css/blob/${branch}/apps/docs-new/${codePath}`;
+const githubBasePath = `https://github.com/lism-css/lism-css/blob/${branch}/apps/docs-new/${templatePath}/index.astro`;
 const queryMeta = 'style=github-dark&type=code&showLineNumbers=on&showFileMeta=on&showCopy=on';
 ---
 
@@ -62,9 +63,11 @@ const queryMeta = 'style=github-dark&type=code&showLineNumbers=on&showFileMeta=o
 		{/* ソースコード */}
 		<Stack g="15">
 			<PreviewTitle>コード</PreviewTitle>
-			<Frame ov-y="auto" max-h="25rem" class="code-embed">
+			<SrcCode dir="docs" path={templatePath + '/index.astro'} title="index.astro" />
+			<SrcCode dir="docs" path={templatePath + '/_style.css'} title="style.css" />
+			<!-- <Frame ov-y="auto" max-h="25rem" class="code-embed">
 				<script src={`https://emgithub.com/embed-v2.js?target=${encodeURI(githubBasePath)}&${queryMeta}`} loading="lazy"></script>
-			</Frame>
+			</Frame> -->
 		</Stack>
 	</Flow>
 </BaseLayout>
