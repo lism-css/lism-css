@@ -22,7 +22,7 @@ const { path, lang, title, dir = 'lism-css' } = Astro.props;
 
 // プロジェクトルート( docs ) からの絶対パスを解決
 const projectRoot = resolve(process.cwd());
-const packageRoot = resolve(projectRoot, '../../packages/' + dir);
+const packageRoot = dir === 'docs' ? projectRoot : resolve(projectRoot, '../../packages/' + dir);
 
 // fileパス
 const filePath = path.startsWith('/') ? path : resolve(packageRoot, path);
