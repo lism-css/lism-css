@@ -59,7 +59,7 @@ draft: false                 # 任意（下書きフラグ）
 
 - `Preview`, `PreviewArea`, `PreviewTitle`, `PreviewCode`, `PreviewFrame`
 - `HelpText`, `IconBadge`, `Reference`, `MemoBadge`, `PropBadge`
-- `ImportPackage`, `EmbedCode`, `ImportSource`, `ImportExComponent`
+- `ImportPackage`, `EmbedCode`, `ImportSource`
 - `Callout`, `LinkCard`, `InnerLink`
 
 ---

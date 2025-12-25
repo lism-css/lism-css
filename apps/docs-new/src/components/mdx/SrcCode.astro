@@ -5,40 +5,27 @@
  * 使用例:
  * <CodeFile path="src/styles/base.css" />
  * <CodeFile path="src/styles/base.css" title="ベーススタイル" />
- *
- * NOTE: 行番号表示などの高度な機能が必要な場合は、
- * ファイル内容を直接MDXに記述してExpressive Codeを使用してください
  */
-import { Code } from 'astro:components';
 import { readFileSync, existsSync } from 'node:fs';
-import { resolve, basename } from 'node:path';
+import { resolve } from 'node:path';
 import { Icon, HTML } from 'lism-css/astro';
-import AstroCode from '../AstroCode.astro';
+import AstroCode from './AstroCode.astro';
 
 interface Props {
-	/**
-	 * ファイルパス（プロジェクトルートからの相対パスまたは絶対パス）
-	 */
 	path: string;
-
-	/**
-	 * シンタックスハイライトの言語
-	 * 指定しない場合は拡張子から自動判定
-	 */
 	lang?: string;
-
-	/**
-	 * コードブロックのタイトル（任意）
-	 * 指定した場合はコードブロックの上部に表示
-	 */
 	title?: string;
+	dir?: string;
 }
 
-const { path, lang, title } = Astro.props;
+const { path, lang, title, dir = 'lism-css' } = Astro.props;
 
-// プロジェクトルートからの絶対パスを解決
+// プロジェクトルート( docs ) からの絶対パスを解決
 const projectRoot = resolve(process.cwd());
-const filePath = path.startsWith('/') ? path : resolve(projectRoot, path);
+const packageRoot = resolve(projectRoot, '../../packages/' + dir);
+
+// fileパス
+const filePath = path.startsWith('/') ? path : resolve(packageRoot, path);
 
 // ファイルの読み込み
 let fileContent: string = '';
