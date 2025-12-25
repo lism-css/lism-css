@@ -1,17 +1,77 @@
 ---
 /**
- * トップページ（root言語用）
- * 最新の記事一覧を表示
+ * UIコンポーネント一覧ページ
+ * content/ja/ui/ 配下のMDXを一覧表示
  */
-import SimpleLayout from '@/layouts/SimpleLayout.astro';
-import { HTML } from 'lism-css/astro';
-import { siteConfig } from '@/config/site';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { Stack, Grid, Text, HTML, LinkBox, Frame, Lism, Media } from 'lism-css/astro';
+import { getPostsByLang, type PostEntry } from '@/lib/content';
 import { getRootLang } from '@/lib/i18n';
+import fs from 'node:fs';
+import path from 'node:path';
 
-// 現在の言語（root言語）
+// 現在の言語の記事を取得
 const currentLang = getRootLang();
+const allPosts = await getPostsByLang(currentLang);
+
+// ui/ 配下の記事のみフィルタリング
+const uiPosts = allPosts
+	.filter((post) => post.slug.startsWith('ui/'))
+	.sort((a, b) => {
+		// order順にソート（未指定は999）
+		const orderA = a.data.order ?? 999;
+		const orderB = b.data.order ?? 999;
+		return orderA - orderB;
+	});
+
+// サムネイル画像が存在するかチェックするヘルパー
+function getThumbPath(title: string): string {
+	// タイトルからサムネイルパスを生成（例: Accordion → /thumb/components/Accordion.png）
+	const thumbPath = `/thumb/components/${title}.png`;
+	const fullPath = path.join(process.cwd(), 'public', thumbPath);
+
+	// ファイルが存在するかチェック
+	if (fs.existsSync(fullPath)) {
+		return thumbPath;
+	}
+	// 存在しない場合はEmptyを返す
+	return '/thumb/components/Empty.png';
+}
 ---
 
-<SimpleLayout title={siteConfig.name} lang={currentLang}>
-	<HTML.h lv="1">UI Components page</HTML.h>
-</SimpleLayout>
+<BaseLayout title="UI Components" description="Lism CSSを使ったUIコンポーネント集" excludeFromSearch>
+	<Stack g="40" class="ui-index">
+		{/* ページヘッダー */}
+		<Stack tag="header" g="10">
+			<h1 class="-fz:3xl -fw:bold">UI Components</h1>
+			<Text c="text-2">Lism CSSを使ったUIコンポーネント集です。</Text>
+		</Stack>
+
+		{/* コンポーネント一覧 */}
+		{
+			uiPosts.length > 0 ? (
+				<Grid layout="fluidCols" cols="240px" g="20">
+					{uiPosts.map((post) => {
+						const postUrl = `/ui/${post.slug.replace('ui/', '')}/`;
+						const thumbPath = getThumbPath(post.data.title);
+						return (
+							<LinkBox key={post.slug} layout="stack" href={postUrl} p="20" g="20">
+								<Frame ar="3/2" bd bdrs="20" bgc="base-2" ov="hidden">
+									<Media src={thumbPath} alt={post.data.title} width="360" height="240" loading="lazy" />
+								</Frame>
+								<Lism class="u-trim -ff:mono -fz:s">{post.data.title}</Lism>
+							</LinkBox>
+						);
+					})}
+				</Grid>
+			) : (
+				<Stack g="20" ai="center" py="60">
+					<Text fz="l" c="text-2">
+						UIコンポーネントは準備中です
+					</Text>
+					<Text c="text-2">content/ja/ui/ にMDXファイルを追加すると、ここに表示されます。</Text>
+				</Stack>
+			)
+		}
+	</Stack>
+</BaseLayout>

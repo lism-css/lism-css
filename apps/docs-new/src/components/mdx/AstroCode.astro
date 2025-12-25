@@ -1,0 +1,29 @@
+---
+/**
+ * コードを .astro-code で表示するコンポーネント
+ *
+ * NOTE: 行番号表示などの高度な機能が必要な場合は、
+ * ファイル内容を直接MDXに記述してExpressive Codeを使用してください
+ */
+import { Code } from 'astro:components';
+import CopyBtn from './CopyBtn.astro';
+
+interface Props {
+	code: string;
+	lang?: string;
+}
+
+const { code, lang } = Astro.props;
+---
+
+<div class="c--codeBlock set-hov -pos:rel">
+	<Code code={code} lang={lang as any} themes={{ light: 'github-light', dark: 'github-dark' }} />
+	<CopyBtn fileContent={code} />
+</div>
+
+<style>
+	.c--codeBlock {
+		overflow-x: auto;
+		max-width: 100%;
+	}
+</style>

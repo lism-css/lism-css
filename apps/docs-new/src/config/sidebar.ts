@@ -189,7 +189,7 @@ const docsSidebar: SidebarSection[] = [
 const uiSidebar: SidebarSection[] = [
 	{
 		label: 'Components',
-		items: ['/ui/test/'],
+		dir: 'ui', // content/ja/ui/ 配下のMDXを自動取得
 	},
 ];
 

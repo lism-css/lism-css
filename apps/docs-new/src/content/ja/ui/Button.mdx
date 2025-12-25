@@ -1,0 +1,353 @@
+---
+title: 'Button'
+description: ...
+---
+
+import { Preview, PreviewArea, PreviewTitle, PreviewCode, ImportSource, ImportExComponent } from '@/components/mdx';
+import { Box, Flex, Grid, Lism, Frame, HTML, Media, Icon, Spacer, Center, Layer, Dummy, Cluster, Stack } from 'lism-css/astro';
+import {
+	ArrowRightIcon,
+	ShoppingCartSimpleIcon,
+} from "@phosphor-icons/react";
+
+import Button from '@/components/ex/Button/index.astro';
+
+ボタンコンポーネントの作成例を紹介します。
+
+
+<Preview>
+	<PreviewTitle>Preview</PreviewTitle>
+	<PreviewArea p='20' bg=':stripe' layout=''>
+		<Flex layout='cluster' g='15'>
+			<Button href='###' variant='fill'>Button</Button>
+			<Button href='###' variant='outline'>Outline</Button>
+			<Button href='###' variant='outline' bdrs='99' c='#d13d5e'><Icon icon='cart' />Outline</Button>
+		</Flex>
+	</PreviewArea>
+</Preview>
+
+
+## Only Core
+
+**コンポーネントを作らずにボタンを作るコード例も紹介しておきます。**
+<Preview>
+	<PreviewTitle>Preview</PreviewTitle>
+	<PreviewArea p='20' bg=':stripe' flow='s'>
+		<Flex g='15'>
+			<HTML.a href='###' d='in-flex' w='fit' td='none' c='base' bgc='text' lh='s' py='10' px='20' bdrs='20' hov='o'>Button</HTML.a>
+			<HTML.a href='###' d='in-flex' w='fit' td='none' c='inherit' bd lh='s' py='10' px='20' bdrs='20' hov='o'>Button</HTML.a>
+		</Flex>
+		<Grid tag='a' href='###' gtc='1em 1fr 1em' ji='center' ai='center' px='15' py='10' g='30' w='16rem' td='none' bgc='text' c='base' bdrs='20' hov='neutral'>
+			<Lism tag='span' gc='2'>Button</Lism>
+			<Icon icon={ArrowRightIcon}/>
+		</Grid>
+	</PreviewArea>
+	<PreviewCode slot='tab' label='JSX'>
+		```jsx
+		<Flex g='15'>
+			<HTML.a href='###' d='in-flex' w='fit' td='none' c='base' bgc='text' lh='s' py='10' px='20' bdrs='20' hov='o'>Button</HTML.a>
+			<HTML.a href='###' d='in-flex' w='fit' td='none' c='inherit' bd lh='s' py='10' px='20' bdrs='20' hov='o'>Button</HTML.a>
+		</Flex>
+		<Grid tag='a' href='###' gtc='1em 1fr 1em' ji='center' ai='center' px='15' py='10' g='30' w='16rem' td='none' bgc='text' c='base' bdrs='20' hov='neutral'>
+			<Lism tag='span' gc='2'>Button</Lism>
+			<Icon icon={ArrowRightIcon}/>
+		</Grid>
+		```
+	</PreviewCode>
+	<PreviewCode slot='tab' label='HTML'>
+		```html
+		<div class='l--flex -g:15'>
+			<a href='###' class='-d:in-flex -w:fit -td:none -c:base -bgc:text -lh:s -py:10 -px:15 -bdrs:20 -hov:o'>Button</a>
+			<a href='###' class='-d:in-flex -w:fit -td:none -c:inherit -bd -lh:s -py:10 -px:15 -bdrs:20 -hov:o'>Button</a>
+		</div>
+		<a class="l--grid -ji:center -ai:center -px:15 -py:10 -g:30 -w -td:none -bgc:text -c:base -bdrs:20 -hov:neutral" style="--w:16rem;--gtc:1em 1fr 1em" href="###">
+			<span class="-gc" style="--gc:2">Button</span>
+			<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 256 256" class="a--icon" aria-hidden="true">
+				<path d="M221.66,133.66l-72,72a8,8,0,0,1-11.32-11.32L196.69,136H40a8,8,0,0,1,0-16H196.69L138.34,61.66a8,8,0,0,1,11.32-11.32l72,72A8,8,0,0,1,221.66,133.66Z"></path>
+			</svg>
+		</a>
+		```
+	</PreviewCode>
+</Preview>
+
+
+
+## Create Component
+
+ここからは`Button`(`.c--button`)というコンポーネントを作って利用する例を紹介していきます。
+
+### Source Code
+<ImportSource name='Button' css　react astro />
+
+### Import
+<ImportExComponent name='Button' css　react astro />
+
+### Props
+
+| プロパティ | 説明 |
+|---|---|
+|`variant`<small>(必須)</small>| `c--button--{variant}` クラスを出力します。`fill`,`outline`の2種類のスタイルをこの例では用意しています。|
+{/* |`layout`| Buttonを構成するレイアウト用コンポーネントを指定できます。デフォルトは`Lism`です。| */}
+{/* |`icon`, `endIcon` | ボタンテキストの左右に表示するアイコンを指定できます。| */}
+{/* |`hover`| デフォルトは`op`が指定されています。| */}
+
+
+
+
+## Usage
+
+<Preview>
+	<PreviewTitle>`Button`の使用例</PreviewTitle>
+	<PreviewArea p='20' bg=':stripe' layout=''>
+		<Flex g='15'>
+			<Button href='###'>Button</Button>
+			<Button href='###' bgc='brand' bdrs='10'>Button</Button>
+			<Button href='###' bgc='#d13d5e' bdrs='99'><Icon icon='cart'/>Button</Button>
+		</Flex>
+	</PreviewArea>
+
+	<PreviewCode slot='tab' label='JSX'>
+		```jsx
+		<Flex g='15'>
+			<Button href='###'>Button</Button>
+			<Button href='###' bgc='brand' bdrs='10'>Button</Button>
+			<Button href='###' bgc='#d13d5e' bdrs='99'><Icon icon='cart'/>Button</Button>
+		</Flex>
+		```
+	</PreviewCode>
+	<PreviewCode slot='tab' label='HTML'>
+		```html
+		<div class="l--flex -g:15">
+			<a class="c--button l--flex -lh:s -py:10 -px:15 -hov:o" href="###">Button</a>
+			<a class="c--button l--flex -lh:s -py:10 -px:15 -hov:o -bgc:brand -bdrs:10" href="###">Button</a>
+			<a class="c--button l--flex -lh:s -py:10 -px:15 -hov:o -bdrs:99" style="--bgc:#d13d5e" href="###">
+				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="1em" height="1em" fill="currentColor" focusable="false" class="a--icon" aria-hidden="true"><path d="M230.14,58.87A8,8,0,0,0,224,56H62.68L56.6,22.57A8,8,0,0,0,48.73,16H24a8,8,0,0,0,0,16h18L67.56,172.29a24,24,0,0,0,5.33,11.27,28,28,0,1,0,44.4,8.44h45.42A27.75,27.75,0,0,0,160,204a28,28,0,1,0,28-28H91.17a8,8,0,0,1-7.87-6.57L80.13,152h116a24,24,0,0,0,23.61-19.71l12.16-66.86A8,8,0,0,0,230.14,58.87ZM104,204a12,12,0,1,1-12-12A12,12,0,0,1,104,204Zm96,0a12,12,0,1,1-12-12A12,12,0,0,1,200,204Zm4-74.57A8,8,0,0,1,196.1,136H77.22L65.59,72H214.41Z"></path></svg>
+				Button
+			</a>
+		</div>
+		```
+	</PreviewCode>
+</Preview>
+
+### variant: outline
+<Preview>
+	<PreviewTitle>`outline`の使用例</PreviewTitle>
+	<PreviewArea p='20' bg=':stripe' layout=''>
+		<Flex g='15'>
+			<Button href='###'>Button</Button>
+			<Button href='###' variant='outline' c='brand' bdrs='10'>Button</Button>
+			<Button href='###' variant='outline' c='#d13d5e' bdrs='99'><Icon icon='cart'/>Button</Button>
+		</Flex>
+	</PreviewArea>
+
+	<PreviewCode slot='tab' label='JSX'>
+		```jsx
+		<Flex g='15'>
+			<Button href='###'>Button</Button>
+			<Button href='###' variant='outline' c='brand' bdrs='10'>Button</Button>
+			<Button href='###' variant='outline' c='#d13d5e' bdrs='99'><Icon icon='cart'/>Button</Button>
+		</Flex>
+		```
+	</PreviewCode>
+	<PreviewCode slot='tab' label='HTML'>
+		```html
+		<div class="l--flex -g:15">
+			<a class="c--button c--button--outline l--flex -lh:s -py:10 -px:15 -hov:o" href="###">Button</a>
+			<a class="c--button c--button--outline l--flex -lh:s -py:10 -px:15 -hov:o -c:brand -bdrs:10" href="###">Button</a>
+			<a class="c--button c--button--outline l--flex -lh:s -py:10 -px:15 -hov:o -bdrs:99" style="--c:#d13d5e" href="###">
+				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="1em" height="1em" fill="currentColor" focusable="false" class="a--icon" aria-hidden="true"><path d="M230.14,58.87A8,8,0,0,0,224,56H62.68L56.6,22.57A8,8,0,0,0,48.73,16H24a8,8,0,0,0,0,16h18L67.56,172.29a24,24,0,0,0,5.33,11.27,28,28,0,1,0,44.4,8.44h45.42A27.75,27.75,0,0,0,160,204a28,28,0,1,0,28-28H91.17a8,8,0,0,1-7.87-6.57L80.13,152h116a24,24,0,0,0,23.61-19.71l12.16-66.86A8,8,0,0,0,230.14,58.87ZM104,204a12,12,0,1,1-12-12A12,12,0,0,1,104,204Zm96,0a12,12,0,1,1-12-12A12,12,0,0,1,200,204Zm4-74.57A8,8,0,0,1,196.1,136H77.22L65.59,72H214.41Z"></path></svg>
+				Button
+			</a>
+		</div>
+		```
+	</PreviewCode>
+</Preview>
+
+### アイコンを使う例
+<Preview>
+	<PreviewTitle>アイコンを使う例</PreviewTitle>
+	<PreviewArea p='20' bg=':stripe' layout=''>
+		<Cluster g='15'>
+			<Button href='###' g='5' bdrs='5'>
+				<Icon icon='cart' style={{translate:'-25% 0'}} />
+				<span>Button</span>
+			</Button>
+			<Button href='###' variant='outline' g='5' bdrs='5'>
+				<span>Button</span>
+				<Icon icon={ArrowRightIcon} style={{translate:'25% 0'}} />
+			</Button>
+			<Button href='###' w='fit' px='10' py='10' lh='1' bdrs='10'>
+				<Icon icon={{as:ShoppingCartSimpleIcon, weight:'fill'}} fz='l'/>
+			</Button> 
+		</Cluster>
+	</PreviewArea>
+	<PreviewCode slot='tab' label='JSX'>
+		```jsx
+		<Cluster g='15'>
+			<Button href='###' g='5' bdrs='5'>
+				<Icon icon='cart' style={{translate:'-25% 0'}} />
+				<span>Button</span>
+			</Button>
+			<Button href='###' variant='outline' g='5' bdrs='5'>
+				<span>Button</span>
+				<Icon icon={ArrowRightIcon} style={{translate:'25% 0'}} />
+			</Button>
+			<Button href='###' w='fit' px='10' py='10' lh='1' bdrs='10'>
+				<Icon icon={{as:ShoppingCartSimpleIcon, weight:'fill'}} fz='l'/>
+			</Button> 
+		</Cluster>
+		```
+	</PreviewCode>
+</Preview>
+
+
+{/* p, fz, w などの基本Propで調整できます。   */}
+{/* (data-btn-size=s,l, など専用のPropを作るか検討中。) */}
+
+### サイズの調整
+
+<Preview>
+	<PreviewTitle>サイズの調整</PreviewTitle>
+	<PreviewArea p='20' bg=':stripe' flow='s'>
+		<Button href='###' w='fit' bdrs='10'>
+			<Fragment>Button</Fragment>
+		</Button>
+		<Button href='###' max-w='12em' py='15' fz='l' bdrs='10'>
+			<Fragment>Button</Fragment>
+		</Button>
+	</PreviewArea>
+	<PreviewCode slot='tab' label='JSX'>
+		```jsx "w='fit'" "max-w='12em'" "py='15'"
+		<Button href='###' w='fit' bdrs='10'>
+			Button
+		</Button>
+		<Button href='###' max-w='12em' py='15' fz='l' bdrs='10'>
+			Button
+		</Button>
+		```
+	</PreviewCode>
+</Preview>
+
+
+
+### `Grid`でアイコンを端に寄せる
+
+`layout='grid'`を指定すると gridレイアウト（`.l--grid`クラス）に切り替えることができます。  
+これにより、アイコンを端に寄せるレイアウトを組むこともできます。
+
+<Preview>
+	<PreviewTitle>Preview</PreviewTitle>
+	<PreviewArea p='20' flow='20'>
+		<Stack max-w='20em' g='15'>
+			<Button href='###' layout='grid' py='15' bdrs='10' hov='neutral'>
+				<Icon icon='cart' />
+				<span>Button</span>
+			</Button>
+			<Button href='###' layout='grid' py='15' bdrs='10' hov='neutral'>
+				<span>Button</span>
+				<Icon icon={ArrowRightIcon} />
+			</Button>
+			<Button href='###' layout='grid' py='15' bdrs='10' hov='neutral'>
+				<Icon icon='cart' />
+				<span>Button</span>
+				<Icon icon={ArrowRightIcon} />
+			</Button>
+		</Stack>
+	</PreviewArea>
+	<PreviewCode slot='tab' label='JSX'>
+		```jsx "layout='grid'"
+		<Button href='###' layout='grid' max-w='20em' py='15' bdrs='10' hov='neutral'>
+			<Icon icon='cart' />
+			<span>Button</span>
+		</Button>
+		<Button href='###' layout='grid' max-w='20em' py='15' bdrs='10' hov='neutral'>
+			<span>Button</span>
+			<Icon icon={ArrowRightIcon} />
+		</Button>
+		<Button href='###' layout='grid' max-w='20em' py='15' bdrs='10' hov='neutral'>
+			<Icon icon='cart' />
+			<span>Button</span>
+			<Icon icon={ArrowRightIcon} />
+		</Button>
+		```
+	</PreviewCode>
+
+	<PreviewCode slot='tab' label='CSS'>
+	```css
+	.c--button:where(.l--grid) {
+		grid-template-columns: minmax(1em, auto) 1fr minmax(1em, auto);
+		justify-items: center;
+	}
+	.c--button:where(.l--grid) > :not(.a--icon) {
+		grid-column: 2;
+	}
+	```
+	</PreviewCode>
+</Preview>
+
+
+## Opt-in
+
+### `hov="reverse"`
+
+ホバー時に、fill,outlineが入れ替わるような [`-hov`クラス](/css/hov)を追加する例を紹介します。
+
+<Preview>
+	<PreviewTitle>例</PreviewTitle>
+	<PreviewArea p='20' bg=':stripe' layout=''>
+		<Flex g='15'>
+			<Button href='###' hov='reverse' variant='fill'>Button</Button>
+			<Button href='###' hov='reverse' variant='outline'>Button</Button>
+		</Flex>
+	</PreviewArea>
+
+	<PreviewCode slot='tab' label='追加CSS'>
+	```scss
+	.-hov\:reverse {
+		--hov-c: var(--bgc);
+		--hov-bgc: var(--c);
+		&:where(.c--button--fill) {
+			--hov-bgc: transparent;
+		}
+		&:where(.c--button--outline) {
+			--hov-c: var(--base);
+		}
+		@media (any-hover: hover) {
+			&:hover {
+				background-color: var(--hov-bgc) !important;
+				color: var(--hov-c) !important;
+			}
+		}
+	}
+	```
+	</PreviewCode>
+	<PreviewCode slot='tab' label='JSX'>
+	```jsx "hov='reverse'"
+	<Flex g='15'>
+		<Button href='###' hov='reverse' variant='fill'>Button</Button>
+		<Button href='###' hov='reverse' variant='outline'>Button</Button>
+	</Flex>
+	```
+	</PreviewCode>
+</Preview>
+
+{/* <Preview>
+	<PreviewTitle>color指定ありでのreverseの動作例</PreviewTitle>
+	<PreviewArea resize p='20' bg=':stripe'>
+		<Flex layout='cluster' g='15'>
+			<Button href='###' hov='reverse' variant='fill' bgc='brand'>Button</Button>
+			<Button href='###' hov='reverse' variant='outline' c='#64a31c'>Button</Button>
+			<Button href='###' hov='reverse' variant='' bgc='base-2' c='link'>Button</Button>
+		</Flex>
+	</PreviewArea>
+	<PreviewCode slot='tab' label='JSX'>
+		```jsx
+		<Flex layout='cluster' g='15'>
+			<Button href='###' hov='reverse' variant='fill' bgc='brand'>Button</Button>
+			<Button href='###' hov='reverse' variant='outline' c='#64a31c'>Button</Button>
+			<Button href='###' hov='reverse' variant='' bgc='base-2' c='link'>Button</Button>
+		</Flex>
+		```
+	</PreviewCode>
+</Preview> */}
+

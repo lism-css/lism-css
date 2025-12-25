@@ -1,0 +1,441 @@
+---
+title: 'NavMenu'
+description: ...
+---
+import { Flex } from 'lism-css/react';
+import { Lism, Icon, Spacer, Box } from 'lism-css/astro'
+import { Accordion } from '@lism-css/ui/astro'
+import { Preview, PreviewArea, PreviewTitle, PreviewCode, PropBadge, Reference, ImportSource, ImportExComponent } from "@/components/mdx";
+import { FolderSimpleIcon } from "@phosphor-icons/react";
+import NavMenu from '@/components/ex/NavMenu';
+
+
+ナビメニューリストを設置できるコンポーネントの作成例を紹介します。
+
+<div class="test">
+TEST
+</div>
+
+
+## Create Component
+`NavMenu`(`.c--navMenu`)というコンポーネントを作って利用する例を紹介していきます。
+
+### Source Code
+<ImportSource name='NavMenu' hasRoot css react />
+
+### Import
+<ImportExComponent name='NavMenu' hasRoot css　react />
+
+### Props
+
+| プロパティ | 説明 |
+|---|---|
+| <PropBadge>`<NavMenu.Root>`</PropBadge><br/>`hovBgc` | `--hov-bgc`を出力します。（`.c--navMenu_link`に`.-hov:bgc`を付けた時用）|
+| <PropBadge>`<NavMenu.Root>`</PropBadge><br/>`hovC` | `--hov-c`を出力します。 （`.c--navMenu_link`に`.-hov:c`を付けた時用）|
+| <PropBadge>`<NavMenu.Link>`</PropBadge><br/>`hov` | hover時のスタイルを指定できます。デフォルトは`op`が指定されています。 |
+{/* | <PropBadge>`<NavMenu.Root>`</PropBadge><br/>`nestLevel` | ネストの深さを指定します。`[data-nest-level]`に値を出力します。<br />ただし、トップレベルでは指定しないでください。（`:not([data-nest-level])`で変数の初期値をセットするため）| */}
+
+
+## Usage
+
+
+### シンプルな例
+<Preview>
+	<PreviewTitle>例</PreviewTitle>
+	<PreviewArea p='20'>
+		<NavMenu.Root>
+			<NavMenu.Item>
+				<NavMenu.Link href='#menu' hov='bgc'>Menu item 1</NavMenu.Link>
+			</NavMenu.Item>
+			<NavMenu.Item>
+				<NavMenu.Link href='#menu' hov='bgc'>Menu item 2</NavMenu.Link>
+			</NavMenu.Item>
+			<NavMenu.Item>
+				<NavMenu.Link href='#menu' hov='bgc'>Menu item 3</NavMenu.Link>
+			</NavMenu.Item>
+		</NavMenu.Root>
+	</PreviewArea>
+	<PreviewCode>
+		```jsx
+		<NavMenu.Root>
+			<NavMenu.Item>
+				<NavMenu.Link href='#menu' hov='bgc'>Menu item 1</NavMenu.Link>
+			</NavMenu.Item>
+			<NavMenu.Item>
+				<NavMenu.Link href='#menu' hov='bgc'>Menu item 2</NavMenu.Link>
+			</NavMenu.Item>
+			<NavMenu.Item>
+				<NavMenu.Link href='#menu' hov='bgc'>Menu item 3</NavMenu.Link>
+			</NavMenu.Item>
+		</NavMenu.Root>
+		```
+	</PreviewCode>
+</Preview>
+
+
+{/* <Spacer h='10' />
+
+メニューの内容が複雑でない場合は、次のように`<NavMenu.Link>`の記述を省略できます。
+
+<Preview>
+	<PreviewTitle>シンプルなテキストメニュー</PreviewTitle>
+	<PreviewCode>
+		```jsx
+		<NavMenu.Root>
+			<NavMenu.Item href='#menu'>Menu item 1</NavMenu.Item>
+			<NavMenu.Item href='#menu'>Menu item 2</NavMenu.Item>
+			...
+		</NavMenu.Root>
+		```
+	</PreviewCode>
+</Preview>
+
+<Callout type='info' my-s='15'>
+`<NavMenu.Item>`に`href`指定すると、内部で`<NavMenu.Link>`が自動生成されるようになっています。  
+</Callout> */}
+
+<Spacer h='10' />
+
+
+### アイコンやバッジを表示する例
+{/* テキストをspanで囲んで -fx:1 でも可 */}
+<Preview>
+	<PreviewTitle>例</PreviewTitle>
+	<PreviewArea p='30'>
+		<NavMenu.Root>
+			<NavMenu.Item>
+				<NavMenu.Link href='#menu1' g='15' ai='center' bgc="text" c="base" hov='neutral'>
+					<span>Menu item</span>
+					<Lism tag='span' bd px='10' bdrs='10' fz='xs' fw='bold'>New</Lism>
+					<Icon icon='caret-right' mx-s='auto' />
+				</NavMenu.Link>
+			</NavMenu.Item>
+			<NavMenu.Item>
+				<NavMenu.Link href='#menu2' g='15' ai='center' bgc="text" c="base" hov='neutral'>
+					<span>Menu item</span>
+					<Icon icon='caret-right' mx-s='auto' />
+				</NavMenu.Link>
+			</NavMenu.Item>
+			<NavMenu.Item>
+				<NavMenu.Link href='#menu3' g='15' ai='center' bgc="text" c="base" hov='neutral'>
+					<span>Menu item</span>
+					<Icon icon='caret-right' mx-s='auto' />
+				</NavMenu.Link>
+			</NavMenu.Item>
+		</NavMenu.Root>
+	</PreviewArea>
+	<PreviewCode>
+		```jsx
+		<NavMenu.Root>
+			<NavMenu.Item>
+				<NavMenu.Link href='#menu1' g='15' ai='center' bgc="text" c="base" hov='neutral'>
+					<span>Menu item</span>
+					<Lism tag='span' bd px='10' bdrs='10' fz='xs' fw='bold'>New</Lism>
+					<Icon icon='caret-right' mx-s='auto' />
+				</NavMenu.Link>
+			</NavMenu.Item>
+			<NavMenu.Item>
+				<NavMenu.Link href='#menu2' g='15' ai='center' bgc="text" c="base" hov='neutral'>
+					<span>Menu item</span>
+					<Icon icon='caret-right' mx-s='auto' />
+				</NavMenu.Link>
+			</NavMenu.Item>
+			<NavMenu.Item>
+				<NavMenu.Link href='#menu3' g='15' ai='center' bgc="text" c="base" hov='neutral'>
+					<span>Menu item</span>
+					<Icon icon='caret-right' mx-s='auto' />
+				</NavMenu.Link>
+			</NavMenu.Item>
+		</NavMenu.Root>
+		```
+	</PreviewCode>
+</Preview>
+
+
+### 各リストのpaddingを一括で調整する方法
+
+`itemP`を指定すると`--_item-p`変数をセットできるようになっています。
+
+ただし、ブレイクポイントで値を変更させたい場合は、`<NavMenu.Link>`それぞれに`p`を指定してください。
+
+<Preview>
+	<PreviewTitle>`itemP`を指定</PreviewTitle>
+	<PreviewArea p='30'>
+		<NavMenu.Root bd itemP='30'>
+			<NavMenu.Item hov='bgc'>
+				<NavMenu.Link href='#menu1'>Menu item</NavMenu.Link>
+			</NavMenu.Item>
+			<NavMenu.Item hov='bgc' bd-t>
+				<NavMenu.Link href='#menu2'>Menu item</NavMenu.Link>
+			</NavMenu.Item>
+			<NavMenu.Item hov='bgc' bd-t>
+				<NavMenu.Link href='#menu3'>Menu item</NavMenu.Link>
+			</NavMenu.Item>
+		</NavMenu.Root>
+	</PreviewArea>
+	<PreviewCode>
+		```jsx "bdc='border'" "itemP='30'"
+		<NavMenu.Root bd itemP='30'>
+			<NavMenu.Item hov='bgc'>
+				<NavMenu.Link href='#menu1'>Menu item</NavMenu.Link>
+			</NavMenu.Item>
+			<NavMenu.Item hov='bgc' bd-t>
+				<NavMenu.Link href='#menu2'>Menu item</NavMenu.Link>
+			</NavMenu.Item>
+			<NavMenu.Item hov='bgc' bd-t>
+				<NavMenu.Link href='#menu3'>Menu item</NavMenu.Link>
+			</NavMenu.Item>
+		</NavMenu.Root>
+		```
+	</PreviewCode>
+</Preview>
+
+
+
+### メニューのネスト
+
+{/* `<NavMenu.Item>`内に`<NavMenu.Root>`をネストする場合、ネストの深さに応じて`nestLevel`を指定してください。 */}
+
+<Preview>
+	<PreviewTitle>メニューのネスト</PreviewTitle>
+	<PreviewArea p='20'>
+		<NavMenu.Root bd-y hovBgc='base-2'>
+			<NavMenu.Item>
+				<NavMenu.Link hov='bgc' href='#menu1'>Menu item 1</NavMenu.Link>
+			</NavMenu.Item>
+			<NavMenu.Item bd-t>
+				<NavMenu.Link hov='bgc' href='#menu2'>Menu item 2</NavMenu.Link>
+				<NavMenu.Nest bd-t>
+					<NavMenu.Item>
+						<NavMenu.Link hov='bgc' href='#child-menu1'>Nested item</NavMenu.Link>
+					</NavMenu.Item>
+					<NavMenu.Item bd-t>
+						<NavMenu.Link hov='bgc' href='#child-menu3'>Nested item</NavMenu.Link>
+						<NavMenu.Nest bd-t>
+							<NavMenu.Item>
+								<NavMenu.Link hov='bgc' href='#child-menu4'>Nested level 2 item</NavMenu.Link>
+							</NavMenu.Item>
+							<NavMenu.Item bd-t>
+								<NavMenu.Link hov='bgc' href='#child-menu5'>Nested level 2 item</NavMenu.Link>
+							</NavMenu.Item>
+						</NavMenu.Nest>
+					</NavMenu.Item>
+				</NavMenu.Nest>
+			</NavMenu.Item>
+		</NavMenu.Root>
+	</PreviewArea>
+	<PreviewCode>
+		```jsx "NavMenu.Nest"
+		<NavMenu.Root bd-y hovBgc='base-2'>
+			<NavMenu.Item>
+				<NavMenu.Link hov='bgc' href='#menu1'>Menu item 1</NavMenu.Link>
+			</NavMenu.Item>
+			<NavMenu.Item bd-t>
+				<NavMenu.Link hov='bgc' href='#menu2'>Menu item 2</NavMenu.Link>
+				<NavMenu.Nest bd-t>
+					<NavMenu.Item>
+						<NavMenu.Link hov='bgc' href='#child-menu1'>Nested item</NavMenu.Link>
+					</NavMenu.Item>
+					<NavMenu.Item bd-t>
+						<NavMenu.Link hov='bgc' href='#child-menu3'>Nested item</NavMenu.Link>
+						<NavMenu.Nest bd-t>
+							<NavMenu.Item>
+								<NavMenu.Link hov='bgc' href='#child-menu4'>Nested level 2 item</NavMenu.Link>
+							</NavMenu.Item>
+							<NavMenu.Item bd-t>
+								<NavMenu.Link hov='bgc' href='#child-menu5'>Nested level 2 item</NavMenu.Link>
+							</NavMenu.Item>
+						</NavMenu.Nest>
+					</NavMenu.Item>
+				</NavMenu.Nest>
+			</NavMenu.Item>
+		</NavMenu.Root>
+		```
+	</PreviewCode>
+</Preview>
+
+
+
+### ネストしたメニューをアコーディオンで展開する
+
+リンクのpaddingは`--_item-p`で管理されているため、アコーディオン化した時に `var(--_item-p)`を使えば同じ量のpaddingを受け取れます。  
+
+<Preview>
+	<PreviewTitle>例</PreviewTitle>
+	<PreviewArea p='20'>
+		<NavMenu.Root bd-y hovBgc='base-2'>
+			<NavMenu.Item>
+				<NavMenu.Link hov='bgc' href='#menu1'>Menu item</NavMenu.Link>
+			</NavMenu.Item>
+			<NavMenu.Item>
+				<Accordion.Root>
+					<Accordion.Header hov='bgc' p='var(--_item-p)'>
+						<Accordion.Label>Menu item (Accordion)</Accordion.Label>
+						<Accordion.Icon />
+					</Accordion.Header>
+					<Accordion.Body>
+						<NavMenu.Nest>
+							<NavMenu.Item>
+								<NavMenu.Link hov='bgc' href='#child-menu1'>Nested item</NavMenu.Link>
+							</NavMenu.Item>
+							<NavMenu.Item>
+								<NavMenu.Link hov='bgc' href='#child-menu2'>Nested item</NavMenu.Link>
+							</NavMenu.Item>
+						</NavMenu.Nest>
+					</Accordion.Body>
+				</Accordion.Root>
+			</NavMenu.Item>
+		</NavMenu.Root>
+	</PreviewArea>
+	<PreviewCode>
+		```jsx "Accordion.Root" "NavMenu.Nest"
+		<NavMenu.Root bd-y hovBgc='base-2'>
+			<NavMenu.Item>
+				<NavMenu.Link hov='bgc' href='#menu1'>Menu item</NavMenu.Link>
+			</NavMenu.Item>
+			<NavMenu.Item>
+				<Accordion.Root>
+					<Accordion.Header hov='bgc' p='var(--_item-p)'>
+						<Accordion.Label>Menu item (Accordion)</Accordion.Label>
+						<Accordion.Icon />
+					</Accordion.Header>
+					<Accordion.Body>
+						<NavMenu.Nest>
+							<NavMenu.Item>
+								<NavMenu.Link hov='bgc' href='#child-menu1'>Nested item</NavMenu.Link>
+							</NavMenu.Item>
+							<NavMenu.Item>
+								<NavMenu.Link hov='bgc' href='#child-menu2'>Nested item</NavMenu.Link>
+							</NavMenu.Item>
+						</NavMenu.Nest>
+					</Accordion.Body>
+				</Accordion.Root>
+			</NavMenu.Item>
+		</NavMenu.Root>
+		```
+	</PreviewCode>
+</Preview>
+
+
+<Preview>
+	<PreviewTitle>親メニューのリンクも残してアコーディオンで展開</PreviewTitle>
+	<PreviewArea p='20'>
+		<NavMenu.Root bd-y>
+			<NavMenu.Item>
+				<NavMenu.Link href='#menu1'>Menu item</NavMenu.Link>
+			</NavMenu.Item>
+			<NavMenu.Item>
+				<Accordion.Root>
+					<Accordion.Header pr='10'>
+						<Accordion.Label>
+							<NavMenu.Link href='#menu2'>Menu item (Accordion)</NavMenu.Link>
+						</Accordion.Label>
+						<Accordion.Icon isTrigger bd bgc='inherit' p='10' />
+					</Accordion.Header>
+					<Accordion.Body>
+						<NavMenu.Nest>
+							<NavMenu.Item>
+								<NavMenu.Link href='#child-menu1'>Nested item</NavMenu.Link>
+							</NavMenu.Item>
+							<NavMenu.Item>
+								<NavMenu.Link href='#child-menu2'>Nested item</NavMenu.Link>
+							</NavMenu.Item>
+						</NavMenu.Nest>
+					</Accordion.Body>
+				</Accordion.Root>
+			</NavMenu.Item>
+		</NavMenu.Root>
+	</PreviewArea>
+	<PreviewCode>
+		```jsx "Accordion.Root" "NavMenu.Nest" "Accordion.Icon isTrigger"
+		<NavMenu.Root bd-y>
+			<NavMenu.Item>
+				<NavMenu.Link href='#menu1'>Menu item</NavMenu.Link>
+			</NavMenu.Item>
+			<NavMenu.Item>
+				<Accordion.Root>
+					<Accordion.Header pr='10'>
+						<Accordion.Label>
+							<NavMenu.Link href='#menu2'>Menu item (Accordion)</NavMenu.Link>
+						</Accordion.Label>
+						<Accordion.Icon isTrigger bd bgc='inherit' p='10' />
+					</Accordion.Header>
+					<Accordion.Body>
+						<NavMenu.Nest>
+							<NavMenu.Item>
+								<NavMenu.Link href='#child-menu1'>Nested item</NavMenu.Link>
+							</NavMenu.Item>
+							<NavMenu.Item>
+								<NavMenu.Link href='#child-menu2'>Nested item</NavMenu.Link>
+							</NavMenu.Item>
+						</NavMenu.Nest>
+					</Accordion.Body>
+				</Accordion.Root>
+			</NavMenu.Item>
+		</NavMenu.Root>
+		```
+	</PreviewCode>
+</Preview>
+
+
+
+### 横並びメニュー
+
+`<NavMenu.Root>`に`fxd='row'`を指定し、横並びにする例を紹介します。
+
+<Preview>
+	<PreviewTitle>hoverでネストメニューを表示</PreviewTitle>
+	<PreviewArea p='20'>
+		<Box min-h="15rem">
+			<NavMenu.Root fxd='row' lh='s' itemP='10'>
+				<NavMenu.Item hov='o'>
+					<NavMenu.Link href='#menu1'>Menu item</NavMenu.Link>
+				</NavMenu.Item>
+				<NavMenu.Item setHov pos='rel'>
+					<NavMenu.Link href='#menu3' ai='center' g='5'>
+						<Fragment>Hover Menu Item <Icon icon='caret-down' style={{translate: '10%'}} /></Fragment>
+					</NavMenu.Link>
+					<NavMenu.Nest fz='s' hov='to:show' pos='abs' t='100%' px-s='0' lh='s' bgc='base' bxsh='20' bdrs='5'>
+						<NavMenu.Item hov='bgc'>
+							<NavMenu.Link href='#child-menu1'>Nested item</NavMenu.Link>
+						</NavMenu.Item>
+						<NavMenu.Item hov='bgc'>
+							<NavMenu.Link href='#child-menu2'>Nested Menu item</NavMenu.Link>
+						</NavMenu.Item>
+					</NavMenu.Nest>
+				</NavMenu.Item>
+				<NavMenu.Item hov='o'>
+					<NavMenu.Link href='#menu1'>Menu item</NavMenu.Link>
+				</NavMenu.Item>
+			</NavMenu.Root>
+		</Box>
+	</PreviewArea>
+	<PreviewCode>
+		```jsx "fxd='row'"
+		<Box min-h="15rem">
+			<NavMenu.Root fxd='row' lh='s' itemP='10'>
+				<NavMenu.Item hov='o'>
+					<NavMenu.Link href='#menu1'>Menu item</NavMenu.Link>
+				</NavMenu.Item>
+				<NavMenu.Item setHov pos='rel'>
+					<NavMenu.Link href='#menu3' ai='center' g='5'>
+						<Fragment>Hover Menu Item <Icon icon='caret-down' style={{translate: '10%'}} /></Fragment>
+					</NavMenu.Link>
+					<NavMenu.Nest fz='s' hov='to:show' pos='abs' t='100%' px-s='0' lh='s' bgc='base' bxsh='20' bdrs='5'>
+						<NavMenu.Item hov='bgc'>
+							<NavMenu.Link href='#child-menu1'>Nested item</NavMenu.Link>
+						</NavMenu.Item>
+						<NavMenu.Item hov='bgc'>
+							<NavMenu.Link href='#child-menu2'>Nested Menu item</NavMenu.Link>
+						</NavMenu.Item>
+					</NavMenu.Nest>
+				</NavMenu.Item>
+				<NavMenu.Item hov='o'>
+					<NavMenu.Link href='#menu1'>Menu item</NavMenu.Link>
+				</NavMenu.Item>
+			</NavMenu.Root>
+		</Box>
+		```
+	</PreviewCode>
+</Preview>
+
