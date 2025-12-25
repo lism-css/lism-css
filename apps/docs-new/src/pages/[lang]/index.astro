@@ -4,11 +4,8 @@
  * 最新の記事一覧を表示
  */
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import PostList from '@parts/PostList.astro';
-import Pagination from '@parts/Pagination.astro';
 import { HTML } from 'lism-css/astro';
 import { siteConfig } from '@/config/site';
-import { getPostsByLang } from '@/lib/content';
 import { isRootLang, isValidLang, type LangCode } from '@/lib/i18n';
 
 export async function getStaticPaths() {
@@ -35,12 +32,12 @@ if (!isValidLang(lang)) {
 
 // 見出しの翻訳
 const headings = {
-	ja: 'とっぷぺーじ',
+	ja: 'トップページ',
 	en: 'Top page',
 };
 const heading = headings[lang] || headings.en;
 ---
 
-<BaseLayout isTop title={siteConfig.name} lang={lang}>
+<BaseLayout title={siteConfig.name} lang={lang}>
 	<HTML.h lv="1">{heading}</HTML.h>
 </BaseLayout>
