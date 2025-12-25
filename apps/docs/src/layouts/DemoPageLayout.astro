@@ -1,6 +1,11 @@
 ---
-import 'lism-css/scss/main.scss';
-// import 'lism-css/main.css';
+/**
+ * デモページ用レイアウト
+ * - テンプレートプレビューやデモページで使用
+ * - シンプルなLism CSSのみを読み込み、noindexを設定
+ */
+import 'lism-css/main.css';
+
 const { title = '', lang = 'ja' } = Astro.props;
 ---
 
@@ -15,3 +20,4 @@ const { title = '', lang = 'ja' } = Astro.props;
 		<slot />
 	</body>
 </html>
+

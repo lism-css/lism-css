@@ -1,0 +1,109 @@
+---
+import DemoLayout from '@/layouts/DemoLayout.astro';
+
+import { Stack, Container, Frame, Grid, Media, HTML, Layer, Icon, LinkBox, Flex, Center } from 'lism-css/astro';
+import Button from '@/components/ex/Button/index.astro';
+import './_style.css';
+---
+
+<DemoLayout title='CTA004'>
+	<Stack pos='rel'>
+		<Frame isLayer>
+			<Media isLayer src='https://cdn.lism-css.com/img/random-2510?r=1' alt='' width='960' height='640' />
+			<Layer blur='4px' grayscale='100%' bgc='black:30%' />
+		</Frame>
+		<Container isWrapper='m' hasGutter py='50' z='1'>
+			<Stack g='40'>
+				<Stack ai='center' g='30'>
+					<HTML.p class='u-trim' fz='5xl' fw='light' lts='l' c='white' ta='center'>Contact</HTML.p>
+					<HTML.p class='u-trim' fz='m' c='white' ta='center'>お問い合わせはこちら</HTML.p>
+				</Stack>
+				<Stack g='30'>
+					<Grid gt='repeat' cols={['1', null, '2']} ai='center' g='30' w='stretch'>
+						<Button
+							href='#'
+							g='15'
+							variant='outline'
+							w='stretch'
+							c='white'
+							bdrs='10'
+							py='15'
+							fw='bold'
+							setTransition
+							hov={{ bgc: 'white', c: 'black' }}
+						>
+							<Icon icon='book' fz='2em' />
+							<span>資料を請求する</span>
+						</Button>
+						<Button
+							href='#'
+							g='15'
+							variant='outline'
+							w='stretch'
+							c='white'
+							bdrs='10'
+							py='15'
+							fw='bold'
+							setTransition
+							hov={{ bgc: 'white', c: 'black' }}
+						>
+							<Icon icon='user' fz='2em' />
+							<span>メールで相談する</span>
+						</Button>
+						<LinkBox
+							layout='grid'
+							href='#'
+							gc='1 / -1'
+							gtc={['1fr auto', null, '1fr 2fr auto']}
+							ai='center'
+							bgc='white'
+							bdrs='10'
+							ov='h'
+							setHov
+						>
+							<Frame tag='figure' ar={['16/9', null, 'inherit']} gc={['1 / -1', null, '1']} pos='rel' h='100%' ov='h'>
+								<Media
+									src='https://cdn.lism-css.com/img/random-2510?r=2'
+									alt=''
+									width='960'
+									height='540'
+									setTransition
+									hov='to:zoom'
+								/>
+								<Layer setTransition hov='to:show' bgc='rgb(0 0 0 / 30%)' blur='4px'>
+									<Center h='100%' c='white'>
+										<HTML.span fz='xl' fs='i' fw='light' lts='l' px='20' py='10'>View More</HTML.span>
+									</Center>
+								</Layer>
+							</Frame>
+							<Stack jc='center' g='30' p='40'>
+								<HTML.p class='u-trim' fz='l' fw='bold'>訪問面談をご希望の方はこちら</HTML.p>
+								<HTML.p class='u-trim' fz='s' o='-20'>
+									お客様のご都合に合わせて専門スタッフが訪問面談いたします。ご相談方法やご依頼後の流れについてはまずはこちらをご覧ください。
+								</HTML.p>
+							</Stack>
+							<Flex ai='center' jc='center' p='15' bd bdrs='99' mx='30' setTransition hov='to:reverse'>
+								<Icon icon='arrow-right' fz='120%' setTransition />
+							</Flex>
+						</LinkBox>
+					</Grid>
+					<Stack ai='center' g='40' w='100%'>
+						<HTML.p class='u-trim' fz='s' c='white' ta='center'>お気軽にご相談ください。スタッフが迅速に対応いたします</HTML.p>
+					</Stack>
+				</Stack>
+			</Stack>
+		</Container>
+	</Stack>
+</DemoLayout>
+
+<style>
+	@media (any-hover: hover) {
+		.-hov\:to\:zoom {
+			scale: var(--_isHov, 1.1);
+		}
+		.-hov\:to\:reverse {
+			background-color: var(--_isHov, var(--black));
+			color: var(--_isHov, var(--white));
+		}
+	}
+</style>

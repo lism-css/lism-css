@@ -1,0 +1,90 @@
+:root {
+	--sz--m: 55rem;
+
+	// レイアウト
+	--header-h: 60px;
+	--sidebar-w: 240px;
+	--toc-w: 240px;
+}
+/* アンカーリンクでジャンプした際、ヘッダーの高さを考慮 */
+html {
+	scroll-padding-top: calc(var(--header-h) + 1rem);
+}
+
+.z--wrapper {
+	--wrapper-gta: 'header' 'main';
+	--wrapper-gtc: 1fr;
+	--wrapper-gtc_md: var(--sidebar-w) 1fr minmax(0px, auto);
+	--wrapper-gta_md: 'sidebar main toc';
+	column-gap: var(--s20);
+}
+
+.z--wrapper.no-toc {
+	--wrapper-gtc_md: var(--sidebar-w) 1fr;
+	--wrapper-gta_md: 'sidebar main';
+}
+
+.z--header {
+	/* grid-area: header; */
+	position: sticky;
+	top: 0;
+	z-index: 100;
+	border-bottom: 1px solid var(--divider);
+	min-height: var(--header-h);
+	background-color: color-mix(in srgb, var(--base) 25%, transparent);
+	backdrop-filter: blur(16px);
+}
+
+.z--main {
+	grid-area: main;
+	position: relative;
+}
+.z--footer {
+	/* Main内に配置されるためgrid-areaは不要 */
+}
+
+.z--sidebar {
+	background-color: var(--base);
+	grid-area: sidebar;
+	position: sticky;
+	top: var(--header-h);
+	height: calc(100vh - var(--header-h));
+	border-inline-end: 1px solid var(--divider);
+}
+
+.z--toc {
+	grid-area: toc;
+	position: sticky;
+	top: var(--header-h);
+	height: calc(100vh - var(--header-h));
+	overflow-y: auto;
+	width: var(--toc-w);
+	padding-inline-start: 0;
+	/* border-inline-start: 1px solid var(--divider);
+	background-color: var(--base); */
+}
+.no-toc .z--toc {
+	display: none !important;
+}
+
+/* サイドバーナビのセパレータ（区切り線） */
+.c--nav__separator {
+	height: 1px;
+	margin-block: var(--s10);
+	background-color: var(--divider);
+	list-style: none;
+}
+
+/* .hero {} */
+.hero_content {
+	min-width: 20rem;
+}
+
+.hero_heading {
+	background-clip: text;
+	color: transparent;
+	background-image: linear-gradient(120deg in oklch, var(--grad_01), var(--grad_02));
+}
+.hero h1 {
+	letter-spacing: 0.025em;
+}

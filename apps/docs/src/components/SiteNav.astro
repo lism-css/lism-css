@@ -1,0 +1,260 @@
+---
+/**
+ * サイドバーナビゲーションコンポーネント
+ * 言語対応：現在の言語に応じたリンクとラベルを表示
+ * セクション対応：/docs/ と /ui/ で異なるナビゲーションを表示
+ */
+import { Stack, HTML } from 'lism-css/astro';
+import { Icon } from 'lism-css/react';
+import NavLink from '@parts/NavLink.astro';
+import sidebarConfig, { type SidebarSection, getTranslatedLabel, isSeparator, getSiteSection, extractSlugFromUrl } from '../config/sidebar';
+import { getPostsByLang, type PostEntry } from '@/lib/content';
+import { getLangFromUrl, getLocalizedUrl, getPathWithoutLang, type LangCode } from '@/lib/i18n';
+
+// 現在の言語を取得
+const currentLang = getLangFromUrl(Astro.url);
+
+// 現在のページパス（言語プレフィックスなし）を取得してアクティブ判定に使用
+const currentPathWithoutLang = getPathWithoutLang(Astro.url);
+
+// 現在のセクション（docs または ui）を取得
+const currentSection = getSiteSection(currentPathWithoutLang);
+
+// 現在の言語の記事を取得
+const allPosts = await getPostsByLang(currentLang);
+
+// トップレベルリンクを取得（全セクション共通）
+const topLevelLinks = sidebarConfig.topLevelLinks;
+
+// 現在のセクションに対応するサイドバー設定を取得
+const sectionItems = sidebarConfig.sections[currentSection];
+
+// sidebarConfigで定義されているdir値を取得（ネストしたディレクトリも含む）
+const configuredDirs = sectionItems
+	.filter((item): item is SidebarSection & { dir: string } => 'dir' in item)
+	.map((item) => item.dir)
+	.sort((a, b) => b.length - a.length); // 長い（深い）ディレクトリを先にマッチさせる
+
+// アイテムからリンクURLを取得するヘルパー
+function getItemLink(item: string | { link: string }): string {
+	return typeof item === 'string' ? item : item.link;
+}
+
+// slugからMDX記事を取得するマップを作成
+const postsBySlug = new Map<string, PostEntry>();
+allPosts.forEach((post) => {
+	postsBySlug.set(post.slug, post);
+});
+
+// items で参照されている記事の slug を取得（これらはルートカテゴリから除外）
+const itemsReferencedSlugs = new Set<string>();
+sectionItems.forEach((section) => {
+	if ('items' in section) {
+		section.items.forEach((item) => {
+			if (!isSeparator(item)) {
+				// linkからslugを取得
+				const link = getItemLink(item);
+				const slug = extractSlugFromUrl(link);
+				itemsReferencedSlugs.add(slug);
+			}
+		});
+	}
+});
+
+// カテゴリーでグループ化（ネストしたディレクトリにも対応）
+const postsByCategory = allPosts.reduce(
+	(acc, post) => {
+		// items で参照されている記事はルートカテゴリに含めない
+		if (itemsReferencedSlugs.has(post.slug)) {
+			return acc;
+		}
+
+		// sidebarConfigで定義されたdirと記事のslugをマッチング
+		// 例: "modules/state/Container" は "modules/state" にマッチ
+		let category = '/';
+		for (const dir of configuredDirs) {
+			if (dir === '/') {
+				// ルートの場合：スラッシュを含まないslugのみマッチ
+				if (!post.slug.includes('/')) {
+					category = '/';
+					break;
+				}
+			} else if (post.slug === dir || post.slug.startsWith(dir + '/')) {
+				category = dir;
+				break;
+			}
+		}
+		if (!acc[category]) {
+			acc[category] = [];
+		}
+		acc[category].push(post);
+		return acc;
+	},
+	{} as Record<string, PostEntry[]>
+);
+
+// 各カテゴリー内をorder順にソート（未指定は999として扱う）
+Object.values(postsByCategory).forEach((posts) => {
+	posts.sort((a, b) => {
+		const orderA = a.data.order ?? 999;
+		const orderB = b.data.order ?? 999;
+		return orderA - orderB;
+	});
+});
+
+// サイドバーセクションがdir指定かどうかをチェックするヘルパー
+function hasDirProperty(item: SidebarSection): item is SidebarSection & { dir: string } {
+	return 'dir' in item;
+}
+
+/**
+ * slugからURLパスを生成するヘルパー
+ * - ui/xxx → /ui/xxx/
+ * - xxx → /docs/xxx/
+ */
+function getPostUrl(slug: string): string {
+	if (slug.startsWith('ui/')) {
+		return `/${slug}/`;
+	}
+	return `/docs/${slug}/`;
+}
+---
+
+<Stack tag="nav" class="siteNav set-cqUnit" g="30">
+	{/* トップレベルリンク（大きめボタンとして表示） */}
+	{
+		topLevelLinks.length > 0 && (
+			<Stack class="siteNav_toplinks" g="10">
+				{topLevelLinks.map((item) => {
+					// 言語対応のパスを生成
+					const itemPath = getLocalizedUrl(item.link.endsWith('/') ? item.link : `${item.link}/`, currentLang);
+					const pathForCompare = item.link.endsWith('/') ? item.link : `${item.link}/`;
+					// 現在のセクションとマッチするかでアクティブ判定
+					const isActive = currentPathWithoutLang.startsWith(pathForCompare) || currentPathWithoutLang === item.link.replace(/\/$/, '');
+					// ラベルを現在の言語で取得
+					const itemLabel = getTranslatedLabel(item.label, item.translate, currentLang);
+					return (
+						<HTML.a href={itemPath} data-active={isActive} setHov class="siteNav_toplink" td="none" c="inherit" lh="s">
+							<HTML.span layout="flex" g="5" ai="center">
+								{item.icon && <Icon icon={item.icon} />}
+								{itemLabel}
+							</HTML.span>
+						</HTML.a>
+					);
+				})}
+			</Stack>
+		)
+	}
+
+	{/* 通常のナビゲーションセクション */}
+	{
+		sectionItems.map((section) => {
+			// セクションラベルを現在の言語で取得
+			const sectionLabel = getTranslatedLabel(section.label, section.translate, currentLang);
+
+			// dir指定の場合、記事がなければセクション自体を表示しない
+			if (hasDirProperty(section)) {
+				const posts = postsByCategory[section.dir];
+				if (!posts || posts.length === 0) {
+					return null;
+				}
+			}
+
+			return (
+				<Stack class="siteNav_group" g="5">
+					{/* セクションのラベル（見出し） */}
+					<HTML.h class="siteNav_title" lv="3" fz="2xs" fw="normal" py="5" o="-10" tt="upper">
+						{sectionLabel}
+					</HTML.h>
+
+					<HTML.ul class="siteNav_list" px-s="10" bd-x-s>
+						{hasDirProperty(section)
+							? // dir指定の場合：ディレクトリ内の記事を自動取得
+								postsByCategory[section.dir]?.map((post) => {
+									// 言語対応のパスを生成（slugからURLを生成）
+									const postUrl = getPostUrl(post.slug);
+									const postPath = getLocalizedUrl(postUrl, currentLang);
+									const isActive = currentPathWithoutLang === postUrl || currentPathWithoutLang === postUrl.replace(/\/$/, '');
+									// 下書き記事には _draft クラスを付与
+									const isDraft = post.data.draft;
+									// navtitleがあればそれを、なければtitleを表示
+									const navLabel = post.data.navtitle ?? post.data.title;
+									return (
+										<HTML.li class={isDraft ? '_draft' : undefined}>
+											<NavLink href={postPath} isActive={isActive}>
+												{navLabel}
+											</NavLink>
+										</HTML.li>
+									);
+								})
+							: // items指定の場合：指定された並びでメニューを表示
+								section.items.map((item) => {
+									// セパレータの場合は区切り線を表示
+									if (isSeparator(item)) {
+										return <HTML.li class="c--nav__separator" role="separator" mx="5" aria-hidden="true" />;
+									}
+
+									// 文字列の場合はURLとして扱い、MDXのフロントマターからラベルを取得
+									if (typeof item === 'string') {
+										const slug = extractSlugFromUrl(item);
+										const post = postsBySlug.get(slug);
+										// navtitleがあればそれを、なければtitleを表示
+										const navLabel = post?.data?.navtitle ?? post?.data?.title ?? slug;
+										// 言語対応のパスを生成
+										const itemPath = getLocalizedUrl(item.endsWith('/') ? item : `${item}/`, currentLang);
+										const pathForCompare = item.endsWith('/') ? item : `${item}/`;
+										const isActive = currentPathWithoutLang === pathForCompare || currentPathWithoutLang === item;
+										// 下書き記事には _draft クラスを付与
+										const isDraft = post?.data?.draft;
+										return (
+											<HTML.li class={isDraft ? '_draft' : undefined}>
+												<NavLink href={itemPath} isActive={isActive}>
+													{navLabel}
+												</NavLink>
+											</HTML.li>
+										);
+									}
+
+									// オブジェクト形式の場合（従来の { label, link } 形式）
+									// 言語対応のパスを生成
+									const itemPath = getLocalizedUrl(item.link.endsWith('/') ? item.link : `${item.link}/`, currentLang);
+									const pathForCompare = item.link.endsWith('/') ? item.link : `${item.link}/`;
+									const isActive = currentPathWithoutLang === pathForCompare || currentPathWithoutLang === item.link;
+									// アイテムラベルを現在の言語で取得
+									const itemLabel = getTranslatedLabel(item.label, item.translate, currentLang);
+									return (
+										<HTML.li>
+											<NavLink href={itemPath} isActive={isActive}>
+												{itemLabel}
+											</NavLink>
+										</HTML.li>
+									);
+								})}
+					</HTML.ul>
+				</Stack>
+			);
+		})
+	}
+</Stack>
+
+<style>
+	/* サイドバーナビのトップレベルリンク（大きめボタン） */
+	.siteNav_toplinks {
+	}
+
+	.siteNav_toplink {
+		background-image: linear-gradient(120deg, var(--grad_01), var(--grad_02));
+		border-radius: var(--bdrs--20);
+	}
+	.siteNav_toplink[data-active='true'] > span {
+		background-color: color-mix(in srgb, var(--base), transparent 10%);
+	}
+	/* [data-active]{} */
+	.siteNav_toplink > span {
+		padding: var(--s10) var(--s15);
+		margin: 2px;
+		border-radius: calc(var(--bdrs--20) - 2px);
+		background-color: var(--_isHov, color-mix(in srgb, var(--base), transparent 10%)) var(--_notHov, var(--base));
+	}
+	/* .siteNav_toplink > .a--icon {} */
+</style>

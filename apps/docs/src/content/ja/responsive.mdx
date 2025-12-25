@@ -1,0 +1,141 @@
+---
+title: 'Prop Responsive'
+description: ...
+order: 8
+---
+import { Lism, Box, Spacer } from "lism-css/astro";
+
+
+## レスポンシブ対応
+
+Lism では、`.-{prop}_{bp}`形式のクラスと`--{prop}_{bp}`形式の変数の組み合わせによって、レスポンシブ対応を行います。
+
+
+<PreviewTitle>例</PreviewTitle>
+```css
+.-p{ padding: var(--p); }
+
+/* @sm ~ */
+@container (min-width: 480px) {
+  .-p_sm{ padding: var(--p_sm); }
+}
+
+/* @md ~ */
+@container (min-width: 720px) {
+  .-p_md{ padding: var(--p_md); }
+}
+```
+
+
+<Preview>
+	<PreviewTitle>レスポンシブ対応の例</PreviewTitle>
+	<PreviewArea resize p='15'>
+		<Lism p={[20, 40, 50]} bd>
+			<p>Example</p>
+		</Lism>
+	</PreviewArea>
+	<PreviewCode label="HTML" slot="tab">
+		```html "-p_sm -p_md" "--p_sm" "--p_md"
+		<div class="-p:15 -p_sm -p_md -bd" style="--p_sm:var(--s30);--p_md:var(--s40)">
+			<p>Example</p>
+		</div>
+		```
+	</PreviewCode>
+	<PreviewCode label="JSX" slot="tab">
+		```jsx
+		<Lism p={[20, 40, 50]} bd>
+			<p>Example</p>
+		</Lism>
+		```
+	</PreviewCode>
+</Preview>
+
+:::warning
+CSSプロパティ全てがレスポンシブ対応できるわけではありません。  
+どのプロパティが標準でブレイクポイント切り替えに対応しているかについては、[Prop Class 一覧ページ](/docs/prop-class)を参照してください。
+:::
+
+[SCSSファイルからカスタマイズを行う](/docs/customize/)ことで、プロパティごとにレスポンジブ対応を切り替えることもできます。
+
+### プロパティによってCSS実装が少し異なります
+
+以下の２パターンがあります。
+
+1. 常に`-{prop}`変数で値が参照できるようになっているプロパティ
+2. ブレイクポイントごとに単純に上書きされているプロパティ
+
+
+<PreviewTitle>前者 1 の実装例</PreviewTitle>
+```css
+.-p{ padding: var(--p) }
+
+@container (min-width: 480px) {
+	.-p_sm {
+		--p: var(--p_sm) !important;
+		padding: var(--p_sm);
+	}
+}
+```
+
+<p class='-my-s:15'>常にCSS変数で値を参照できた方が便利だと判断した限られたプロパティ(`p`,`m`,`g`,`fz`,`c`,`bgc`,`bdrs`)のみがこのパターンで実装されています。</p>
+
+<Spacer h='20'></Spacer>
+
+<PreviewTitle>後者 2 の実装例</PreviewTitle>
+```css
+.-d { display: var(--d) }
+
+@container (min-width: 480px) {
+	.-d_sm { display: var(--d_sm) }
+}
+```
+
+
+
+
+
+## コンテナクエリ・メディアクエリ
+
+Lismでは、デフォルトで**コンテナクエリ**を採用しています。
+
+:::warning
+コンテナクエリでは、ブレイクポイントで値を切り替えるには先祖要素で**コンテナ要素**を定義しておく必要があることに注意してください。
+:::
+
+<p class='-my-s:10'>（Lism でコンテナ要素を定義するには、`.is--container`が便利です。）</p>
+
+また、[SCSSファイルからカスタマイズを行う](/docs/customize/)ことで、コンテナクエリではなくメディアクエリに切り替えることもできます。
+
+
+## ブレイクポイント
+
+ブレイクポイントは**モバイルファースト**で定義しており、数値としては480px~1200pxまでの240px刻みで設定しています。  
+（**特定のデバイスサイズに依存した数値は採用していません。**）
+
+|サイズ表記|デフォルトの設定値|
+|---|---|
+|`sm`|`width >= 480px`|
+|`md`|`width >= 720px`|
+|(`lg`)|`width >= 960px`|
+|(`xl`)|`width >= 1200px`|
+
+:::info
+標準でサポートされているのは`sm`,`md`までです。`lg`サイズ以降のサポートは別途[SCSSの設定ファイルのカスタマイズ](/docs/customize/)が必要です。
+:::
+
+
+<Spacer h='20'></Spacer>
+
+これらのブレイクポイントを自身のプロジェクトで使用する場合、`.scss`であれば次のようにして利用できます。
+
+```scss
+@use '../path/to/node_modules/lism-css/scss/query' as query;
+
+@include query.cq('sm') {
+	// Your styles for sm sizes(width >= 480px) ...
+}
+@include query.cq('md') {
+	// Your styles for md sizes(width >= 720px) ...
+}
+```
+

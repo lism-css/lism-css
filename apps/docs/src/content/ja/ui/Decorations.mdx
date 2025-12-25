@@ -1,0 +1,315 @@
+---
+title: 'Decorations'
+description: ...
+---
+
+import { Grid, Stack, Flex, Decorator, Box, Spacer, Dummy } from 'lism-css/astro';
+
+import './_opt-in/_decorations.css';
+
+装飾ボックスの作成例を紹介します。
+
+<Callout type='alert'>
+このページは準備中です...
+</Callout>
+
+
+## Examples
+
+
+### Call
+
+
+`mr:auto` は rtl言語でも同じ方向になるように、left,rightの方向指定を使ってます。
+
+<Preview>
+	<PreviewTitle>Call</PreviewTitle>
+	<PreviewArea resize p='20'>
+		<Grid ta='left'>
+			<Decorator
+				size='1.25em'
+				bd-l
+				bdc='cc'
+				rotate='45deg'
+				mr='auto'
+				style={{'transformOrigin':'left bottom'}}
+			/>
+			<Box p='20' mr='auto'>
+				<Dummy length='s'/>
+			</Box>
+			<Decorator
+				size='1.25em'
+				bd-l
+				bdc='cc'
+				rotate='-45deg'
+				mr='auto'
+				style={{'transformOrigin':'left top'}}
+			/>
+		</Grid>
+		<Grid as={Grid}>
+			<Decorator
+				size='1.25em'
+				bd-r
+				bdc='cc'
+				rotate='-45deg'
+				ml='auto'
+				style={{'transformOrigin':'right bottom'}}
+			/>
+			<Box p='20' ml='auto'>
+				<Dummy length='xs' />
+			</Box>
+			<Decorator
+				size='1.25em'
+				bd-r
+				bdc='cc'
+				rotate='45deg'
+				ml='auto'
+				style={{'transformOrigin':'right top'}}
+			/>
+		</Grid>
+		<Spacer h='10' />
+		<Flex variant='ltr' jc='center' ta='center'>
+			<Decorator
+				fxsh='0'
+				size='1.25em'
+				bd-t
+				bdc='cc'
+				rotate='-45deg'
+				style={{'transformOrigin':'right top'}}
+			/>
+			
+			<Box px='15' py='5'>
+				<Dummy length='xs' />
+			</Box>
+			<Decorator
+				fxsh='0'
+				size='1.25em'
+				bd-t
+				bdc='cc'
+				rotate='45deg'
+				style={{'transformOrigin':'left top'}}
+			/>
+		</Flex>
+		<Spacer h='10' />
+		<Flex
+			variant='ltr'
+			jc='center'
+			ai='flex-e'
+			ta='center'
+		>
+			<Decorator
+				fxsh='0'
+				size='1.25em'
+				bd-b
+				bdc='cc'
+				rotate='45deg'
+				style={{'transformOrigin':'right bottom'}}
+			/>
+			<Box px='15' py='5' fxg=''>
+				<Dummy length='s' />
+			</Box>
+			<Decorator
+				fxsh='0'
+				size='1.25em'
+				bd-b
+				bdc='cc'
+				rotate='-45deg'
+				style={{'transformOrigin':'left bottom'}}
+			/>
+		</Flex>
+	</PreviewArea>
+	<PreviewCode>
+		```jsx
+		<Grid ta='left'>
+			<Decorator
+				size='1.25em'
+				bd-l
+				bdc='cc'
+				rotate='45deg'
+				mr='auto'
+				style={{'transformOrigin':'left bottom'}}
+			/>
+			<Box p='20' mr='auto'>
+				<Dummy length='s'/>
+			</Box>
+			<Decorator
+				size='1.25em'
+				bd-l
+				bdc='cc'
+				rotate='-45deg'
+				mr='auto'
+				style={{'transformOrigin':'left top'}}
+			/>
+		</Grid>
+		<Grid as={Grid}>
+			<Decorator
+				size='1.25em'
+				bd-r
+				bdc='cc'
+				rotate='-45deg'
+				ml='auto'
+				style={{'transformOrigin':'right bottom'}}
+			/>
+			<Box p='20' ml='auto'>
+				<Dummy length='xs' />
+			</Box>
+			<Decorator
+				size='1.25em'
+				bd-r
+				bdc='cc'
+				rotate='45deg'
+				ml='auto'
+				style={{'transformOrigin':'right top'}}
+			/>
+		</Grid>
+		<Spacer h='10' />
+		<Flex variant='ltr' jc='center' ta='center'>
+			<Decorator
+				fxsh='0'
+				size='1.25em'
+				bd-t
+				bdc='cc'
+				rotate='-45deg'
+				style={{'transformOrigin':'right top'}}
+			/>
+			<Box px='15' py='5'>
+				<Dummy length='xs' />
+			</Box>
+			<Decorator
+				fxsh='0'
+				size='1.25em'
+				bd-t
+				bdc='cc'
+				rotate='45deg'
+				style={{'transformOrigin':'left top'}}
+			/>
+		</Flex>
+		<Spacer h='10' />
+		<Flex
+			variant='ltr'
+			jc='center'
+		 	ai='flex-e'
+			ta='center'
+		>
+			<Decorator
+				fxsh='0'
+				size='1.25em'
+				bd-b
+				bdc='cc'
+				rotate='45deg'
+				style={{'transformOrigin':'right bottom'}}
+			/>
+			
+			<Box px='15' py='5' fxg=''>
+				<Dummy length='s' />
+			</Box>
+			<Decorator
+				fxsh='0'
+				size='1.25em'
+				bd-b
+				bdc='cc'
+				rotate='-45deg'
+				style={{'transformOrigin':'left bottom'}}
+			/>
+		</Flex>
+		```
+	</PreviewCode>
+</Preview>
+
+
+
+### Kakko
+
+<Preview>
+	<PreviewTitle>Kakko</PreviewTitle>
+	<PreviewArea resize p='20'>
+		<Box p='30' pos='rel'>
+			<Dummy />
+			<Decorator size='1.25em' pos='abs' t='0' l='0' bdc='cc' bd-l bd-t />
+			<Decorator size='1.25em' pos='abs' r='0' b='0' bdc='cc' bd-r bd-b />
+		</Box>
+		<Box p='30' pos='rel'>
+			<Dummy />
+			<Decorator pos='abs' t='0' l='0' w='1em' h='100%' bdc='cc' bd-l bd-y />
+			<Decorator pos='abs' t='0' r='0' w='1em' h='100%' bdc='cc' bd-r bd-y />
+		</Box>
+	</PreviewArea>
+	<PreviewCode>
+	```jsx
+	<Box p='30' pos='rel'>
+		<Dummy />
+		<Decorator size='1.25em' pos='abs' t='0' l='0' bdc='cc' bd-l bd-t />
+		<Decorator size='1.25em' pos='abs' r='0' b='0' bdc='cc' bd-r bd-b />
+	</Box>
+	<Box p='30' pos='rel'>
+		<Dummy />
+		<Decorator pos='abs' t='0' l='0' w='1em' h='100%' bdc='cc' bd-l bd-y />
+		<Decorator pos='abs' t='0' r='0' w='1em' h='100%' bdc='cc' bd-r bd-y />
+	</Box>
+	```
+	</PreviewCode>
+</Preview>
+
+
+### Sticky
+
+<Preview>
+	<PreviewTitle>Sticky</PreviewTitle>
+	<PreviewArea resize p='20'>
+		<Grid gt='"content ." / auto 1fr'>
+			<Box
+				ga='content'
+				min-w='8em'
+				max-w='30em'
+				bgc='base-2'
+				p='20'
+				w='fit-content'
+				bd-x-e
+				bdc='cc'
+				bdw='.5em'
+			>
+				<Dummy />
+			</Box>
+			<Decorator
+				ga='content'
+				w='50%'
+				max-w='12em'
+				h='1rem'
+				pslf='end'
+				z='-1'
+				bgc='rgb(0 0 0 / 0.2)'
+				style={{ filter:'blur(4px)',rotate:'4deg', transformOrigin: 'left bottom', translate: '-4px -4px' }}
+			 />
+		</Grid>
+	</PreviewArea>
+	<PreviewCode>
+		```jsx
+		<Grid gt='"content ." / auto 1fr'>
+			<Box
+				ga='content'
+				min-w='8em'
+				max-w='30em'
+				bgc='base-2'
+				p='20'
+				w='fit-content'
+				bd-x-e
+				bdc='cc'
+				bdw='.5em'
+			>
+				<Dummy />
+			</Box>
+			<Decorator
+				ga='content'
+				w='50%'
+				max-w='12em'
+				h='1rem'
+				ml='auto'
+				mt='auto'
+				z='-1'
+				bgc='hsl(var(--sh-hsl) / 0.25)'
+				style={{ filter:'blur(4px)',rotate:'4deg', transformOrigin: 'left bottom', translate: '-4px -4px' }}
+			/>
+		</Grid>
+		```
+	</PreviewCode>
+</Preview>

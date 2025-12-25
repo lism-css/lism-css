@@ -1,0 +1,48 @@
+---
+/**
+ * シンプルなワンカラムレイアウト
+ * - トップページや特殊ページで使用
+ * - サイドバー・目次なしのシンプルな構成
+ */
+
+// Lism CSS のスタイルシート読み込み
+import 'lism-css/main.css';
+
+// プロジェクト固有のスタイル
+import '../styles/main.scss';
+
+// サイト設定
+import { siteConfig } from '@/config/site';
+
+// 多言語対応
+import { getRootLang, type LangCode } from '@/lib/i18n';
+
+// コンポーネント
+import Head from '../components/Head.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { Container } from 'lism-css/astro';
+
+interface Props {
+	title: string;
+	description?: string;
+	ogImage?: string;
+	lang?: LangCode; // 言語コード（省略時はroot言語）
+	excludeFromSearch?: boolean; // 検索対象から除外するかどうか
+}
+
+const { title = siteConfig.name, description, ogImage, lang = getRootLang() } = Astro.props;
+---
+
+<html lang={lang}>
+	<Head title={title || siteConfig.name} description={description} ogImage={ogImage} lang={lang} />
+	<body data-pagefind-ignore>
+		<div class="is--container">
+			<Header />
+			<Container tag="main" isWrapper="l" hasGutter py="50" min-h="100svh">
+				<slot />
+			</Container>
+			<Footer />
+		</div>
+	</body>
+</html>

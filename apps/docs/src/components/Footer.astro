@@ -1,0 +1,14 @@
+---
+import { Stack, HTML, Lism } from 'lism-css/astro';
+import { siteConfig } from '@/config/site';
+---
+
+<Lism tag="footer" class="z--footer" my-s="60" {...Astro.props}>
+	<Stack my-s="40" g="20">
+		<HTML.p ta="center">
+			Powered by <a href="https://astro.build">Astro</a> and <a href="https://lism-css.com">Lism CSS</a>
+		</HTML.p>
+		{/* コピーライト */}
+		<HTML.p ta="center" o="-10" translate="no"> &copy; {siteConfig.name}. All rights reserved. </HTML.p>
+	</Stack>
+</Lism>

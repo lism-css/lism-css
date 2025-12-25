@@ -1,0 +1,44 @@
+/*
+ * タイポグラフィオート計算でを * に対して指定するケース
+ * 親要素の --lh の引き継ぎに問題が発生する。
+ 	→ 下限・上限を超える値がセットされている時、その値を継承できない。
+ */
+:root {
+	--lh-min: 1.3em;
+	--lh-max: 1.9em;
+}
+// ---------------------------------------------------------------------
+
+// 全要素で --fz, --lh を受け取れるように
+:where(body *) {
+	font-size: var(--fz, inherit);
+	line-height: var(--lh, inherit);
+}
+
+// [style*="--fz:"]{
+// 	font-size: var(--fz);
+// }
+
+// :not([style*="font-size"]) にしてても、* によって親要素側で計算されはじめたりするので、多少影響は受ける
+*:not([style*="font-size"]),
+[style*="--fz:"], // --fzでフォントサイズ指定されているもの
+[class*="-fz\:"], {
+	--slope: 0.35; // 自動計算用の傾き
+	--base: calc(var(--lh, var(--root--lh)) * 1em); // 計算ように単位をつけておく
+
+	// 上限値を var(--base) にすることで、フォントサイズが大きい場合にのみ計算を適用することも可能
+	line-height: clamp(
+		min(var(--lh-min), var(--base)),
+		calc((var(--slope) * 1em) + var(--base) - (var(--slope) * var(--fz, 1em))),
+		max(var(--lh-max), var(--base))
+	);
+}
+
+// .-fz:などに対して--lh指定されてあった場合に上書きできる位置で
+// [style*="--lh:"]{
+// 	line-height: var(--lh);
+// 	--lh-min: min(var(--lh-min), var(--base));
+// 	--lh-max: max(var(--lh-min), var(--base));
+// }
+
+// ---------------------------------------------------------------------

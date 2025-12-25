@@ -1,0 +1,202 @@
+---
+title: 'Badge'
+description: ...
+---
+import { Lism, Cluster, Flex, Icon, Spacer } from 'lism-css/astro';
+import { BookIcon } from '@phosphor-icons/react';
+import Badge from '@/components/ex/Badge/index.astro';
+
+バッジを表示する`<Badge>`コンポーネントの作成例を紹介します。
+
+
+<Preview>
+	<PreviewTitle>Preview</PreviewTitle>
+	<PreviewArea p='20' bg=':stripe'>
+		<Cluster g='15'>
+			<Badge>Badge</Badge>
+			<Badge variant='outline'>Badge</Badge>
+			<Badge className='u-cbox' keycolor='blue' bdrs='99'>Badge</Badge>
+		</Cluster>
+	</PreviewArea>
+</Preview>
+
+
+## Only Core
+
+コンポーネントを作らずにバッジを作るコード例も紹介しておきます。
+
+<Preview>
+	<PreviewTitle>Example</PreviewTitle>
+	<PreviewArea p='20' bg=':stripe'>
+		<Cluster g='15'>
+			<Lism tag='span' fz='xs' lh='xs' py='5' px='10' bgc='text' c='base' bdrs='10'>Badge</Lism>
+			<Lism tag='span' fz='xs' lh='xs' py='5' px='10' bd bdc='cc' bdrs='10'>Badge</Lism>
+			<Lism tag='span' className='u-cbox' keycolor='blue' bd bdc='keycolor:base:25%' fz='xs' lh='xs' py='5' px='10' bdrs='99'>Badge</Lism>
+		</Cluster>
+	</PreviewArea>
+	<PreviewCode slot='tab' label='JSX'>
+		```jsx
+		<Cluster g='15'>
+			<Lism tag='span' fz='xs' lh='xs' py='5' px='10' bgc='text' c='base' bdrs='10'>Badge</Lism>
+			<Lism tag='span' fz='xs' lh='xs' py='5' px='10' bd bdc='cc' bdrs='10'>Badge</Lism>
+			<Lism tag='span' className='u-cbox' keycolor='blue' bd bdc='keycolor:base:25%' fz='xs' lh='xs' py='5' px='10' bdrs='99'>Badge</Lism>
+		</Cluster>
+		```
+	</PreviewCode>
+	<PreviewCode slot='tab' label='HTML'>
+		```html
+		<div class="l--cluster -g:15">
+			<span class="-py:5 -px:15 -lh:s -fz:s -bgc:text -c:base -bdrs:10">Badge</span>
+			<span class="-py:5 -px:15 -lh:s -fz:s -bd -bdrs:10">Badge</span>
+			<span class="u-cbox -bd -py:5 -px:15 -lh:s -fz:s -bdrs:99" style="--keycolor:var(--blue);--bdc:color-mix(in srgb, var(--keycolor) 25%, var(--base))">Badge</span>
+		</div>
+		```
+	</PreviewCode>
+</Preview>
+
+
+## Create Component
+
+ここからは`Badge`(`.c--badge`)というコンポーネントを作って利用する例を紹介していきます。
+
+### Source Code
+<ImportSource name='Badge' css react astro />
+
+### Import
+<ImportPackage component='Badge' packageName='@lism-css/ui' />
+
+
+
+## Usage
+
+<Preview>
+	<PreviewTitle>`<Badge>`の使用例</PreviewTitle>
+	<PreviewArea p='20' bg=':stripe'>
+		<Cluster g='15'>
+			<Badge>Badge</Badge>
+			<Badge bgc='red'>Badge</Badge>
+			<Badge bgc='orange'>Badge</Badge>
+			<Badge bgc='yellow'>Badge</Badge>
+			<Badge bgc='green'>Badge</Badge>
+			<Badge bgc='blue' bdrs='99'>Badge</Badge>
+			<Badge bgc='purple' bdrs='99'>Badge</Badge>
+			<Badge bgc='pink' bdrs='99'>Badge</Badge>
+			<Badge bgc='gray' bdrs='99'>Badge</Badge>
+		</Cluster>
+	</PreviewArea>
+	<PreviewCode slot='tab' label='JSX'>
+		```jsx
+		<Cluster g='15'>
+			<Badge>Badge</Badge>
+			<Badge bgc='red'>Badge</Badge>
+			<Badge bgc='orange'>Badge</Badge>
+			<Badge bgc='yellow'>Badge</Badge>
+			<Badge bgc='green'>Badge</Badge>
+			<Badge bgc='blue' bdrs='99'>Badge</Badge>
+			<Badge bgc='purple' bdrs='99'>Badge</Badge>
+			<Badge bgc='pink' bdrs='99'>Badge</Badge>
+			<Badge bgc='gray' bdrs='99'>Badge</Badge>
+		</Cluster>
+		```
+	</PreviewCode>
+	<PreviewCode slot='tab' label='HTML'>
+		```html
+		<div class='l--cluster -g:15'>
+			<span class='c--badge -fz:xs -lh:xd -py:5 -px:10 -bdrs:10'>Badge</span>
+			<span class='c--badge -fz:xs -lh:xd -py:5 -px:10 -bdrs:10' style='--bgc:var(--red)'>Badge</span>
+			...
+			...
+		</div>
+		```
+	</PreviewCode>
+</Preview>
+
+
+### variant: outline
+
+`outline`スタイルを標準で用意しています。
+
+<Preview>
+	<PreviewTitle>`variant='outline'`</PreviewTitle>
+	<PreviewArea p='20' bg=':stripe'>
+		<Cluster g='15'>
+			<Badge variant='outline'>Badge</Badge>
+			<Badge variant='outline' c='red'>Badge</Badge>
+			<Badge variant='outline' c='orange'>Badge</Badge>
+			<Badge variant='outline' c='yellow'>Badge</Badge>
+			<Badge variant='outline' c='green'>Badge</Badge>
+			<Badge variant='outline' c='blue' fz='xs' bdrs='99'>Badge</Badge>
+			<Badge variant='outline' c='purple' fz='xs' bdrs='99'>Badge</Badge>
+			<Badge variant='outline' c='pink' fz='xs' bdrs='99'>Badge</Badge>
+			<Badge variant='outline' c='gray' fz='xs' bdrs='99'>Badge</Badge>
+		</Cluster>
+	</PreviewArea>
+	<PreviewCode slot='tab' label='JSX'>
+		```jsx
+		<Cluster g='15'>
+			<Badge variant='outline'>Badge</Badge>
+			<Badge variant='outline' c='red'>Badge</Badge>
+			<Badge variant='outline' c='orange'>Badge</Badge>
+			...
+			<Badge variant='outline' c='blue' fz='xs' bdrs='99'>Badge</Badge>
+			<Badge variant='outline' c='purple' fz='xs' bdrs='99'>Badge</Badge>
+			...
+		</Cluster>
+		```
+	</PreviewCode>
+</Preview>
+
+### `u-cbox` との併用
+
+<Preview>
+	<PreviewTitle>[`u-cbox`](/docs/utility-class/#u-cbox)クラスを使ったスタイリングの例</PreviewTitle>
+	<PreviewArea p='20' bg=':stripe'>
+		<Cluster g='15'>
+			<Badge className='u-cbox' keycolor='red'>Red</Badge>
+			<Badge className='u-cbox' keycolor='orange'>Orange</Badge>
+			<Badge className='u-cbox' keycolor='yellow'>Yellow</Badge>
+			<Badge className='u-cbox' keycolor='green'>Green</Badge>
+			<Badge className='u-cbox' keycolor='blue'>Blue</Badge>
+			<Badge className='u-cbox' keycolor='purple'>Purple</Badge>
+			<Badge className='u-cbox' keycolor='pink'>Pink</Badge>
+			<Badge className='u-cbox' keycolor='gray'>Gray</Badge>
+		</Cluster>
+	</PreviewArea>
+	<PreviewCode slot='tab' label='JSX'>
+		```jsx
+		<Cluster g='15'>
+			<Badge className='u-cbox' keycolor='red'>Red</Badge>
+			<Badge className='u-cbox' keycolor='orange'>Orange</Badge>
+			<Badge className='u-cbox' keycolor='yellow'>Yellow</Badge>
+			...
+		</Cluster>
+		```
+	</PreviewCode>
+
+</Preview>
+
+
+### アイコンを使用する例
+
+{/* <PreviewTitle>外部パッケージのインポート</PreviewTitle>
+```js
+import { BookIcon } from '@phosphor-icons/react';
+``` */}
+
+<Preview>
+	<PreviewTitle>例</PreviewTitle>
+	<PreviewArea p='20' bg=':stripe'>
+		<Cluster g='15' ai='center'>
+			<Badge d='in-flex' g='5' px-s='10' ai='center'><Icon icon='star-fill' style={{translate: '-10% 0'}} />Badge</Badge>
+			<Badge variant='outline' d='in-flex' g='5' px-s='10' ai='center' bdrs='5'><Icon icon='tag' style={{translate: '-10% 0'}} />Badge</Badge>
+		</Cluster>
+	</PreviewArea>
+	<PreviewCode slot='tab' label='JSX'>
+		```jsx
+		<Cluster g='15' ai='center'>
+			<Badge d='in-flex' g='5' px-s='10' ai='center'><Icon icon='star-fill' style={{translate: '-10% 0'}} />Badge</Badge>
+			<Badge variant='outline' d='in-flex' g='5' px-s='10' ai='center' bdrs='5'><Icon icon='tag' style={{translate: '-10% 0'}} />Badge</Badge>
+		</Cluster>
+		```
+	</PreviewCode>
+</Preview>

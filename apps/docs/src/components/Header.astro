@@ -1,0 +1,122 @@
+---
+import { Flex, Cluster, Container, HTML, Icon } from 'lism-css/astro';
+import { Modal } from '@lism-css/ui/astro';
+import { siteConfig } from '@/config/site';
+import SearchModal from './SearchModal.astro';
+import SiteNav from './SiteNav.astro';
+import MenuFooter from './MenuFooter.astro';
+import SNSLinks from './SNSLinks.astro';
+import LanguageSelect from './LanguageSelect.astro';
+import ThemeSwitch from './ThemeSwitch.astro';
+import { getLangFromUrl, getLocalizedUrl, t } from '@/lib/i18n';
+
+// 現在の言語を取得
+const currentLang = getLangFromUrl(Astro.url);
+// サイトトップへのリンク（言語対応）
+const homeUrl = getLocalizedUrl('/', currentLang);
+// 翻訳テキスト
+const searchText = t(currentLang, 'search');
+const headerText = t(currentLang, 'header');
+---
+
+<Container tag="header" class="z--header" layout="flex" ai="center">
+	{/* 全体のgridレイアウトの切り替えと、ハンバーガーボタンの表示タイミングがずれないように hasGutterは内側につける */}
+	<Flex ai="center" w="100%" g="15" hasGutter>
+		<HTML.div mx-e="auto">
+			<HTML.a href={homeUrl} class="siteTitle" layout="flex" ai="center" g="5" fw="normal" c="inherit" td="none" hov="under">
+				<img class="u-onlyLightMode" src="/logo-black.svg" alt="" aria-labelledby="site-logo-label" width="300" height="62" />
+				<img class="u-onlyDarkMode" src="/logo-white.svg" alt="" aria-labelledby="site-logo-label" width="300" height="62" />
+				<span id="site-logo-label" class="u-hidden" translate="no">{siteConfig.name}</span>
+			</HTML.a>
+		</HTML.div>
+
+		<SNSLinks d={['none', 'flex']} />
+
+		<!-- 検索トリガーボタン -->
+		<HTML.button
+			type="button"
+			class="c--searchTrigger l--flex -ai:center"
+			bgc="base"
+			bdrs="10"
+			hov={{ bgc: 'base-2' }}
+			aria-labelledby="search-label"
+			data-modal-open="search-modal"
+		>
+			<Icon icon="search" fz={['xl', null, 'l']} />
+			<HTML.span id="search-label" d={['none', null, 'block']} fz="xs" lh="xs" c="text-2">{searchText.title}</HTML.span>
+			<HTML.span tag="kbd" class="c--searchTrigger_shortcut" d={['none', null, 'block']} p="0" bd="none" fz="xs">⌘K</HTML.span>
+		</HTML.button>
+
+		<SearchModal />
+
+		{/* ハンバーガーメニューボタン（モバイルのみ表示） */}
+		<Modal.OpenBtn
+			modalId="site-nav"
+			class="c--menuTrigger l--center set-plain -bd -bdrs:10"
+			d={['grid', null, 'none']}
+			bgc="base"
+			bdrs="10"
+			hov={{ bgc: 'base-2' }}
+			aria-labelledby="menu-open-label"
+		>
+			<Icon icon="menu" fz={['xl', null, 'l']} viewBox="0 0 256 256">
+				<path
+					d="M112,60a16,16,0,1,1,16,16A16,16,0,0,1,112,60Zm16,52a16,16,0,1,0,16,16A16,16,0,0,0,128,112Zm0,68a16,16,0,1,0,16,16A16,16,0,0,0,128,180Z"
+				></path>
+			</Icon>
+			<HTML.span d="none" id="menu-open-label">{headerText.openMenu}</HTML.span>
+		</Modal.OpenBtn>
+	</Flex>
+
+	<Modal.Root id="site-nav" isContainer isWrapper="s" py="40" px="30">
+		<Modal.Inner layout="stack" g="20" w="100%" max-h="100%" pos="relative" py="20" py-s="30" bdrs="20" bxsh="40">
+			<Modal.CloseBtn modalId="site-nav" autofocus pos="absolute" t="0" r="0" z="1" fz="xl" p="10" m="15" bxsh="10" bdrs="10" bgc="base-2" />
+			<Modal.Body layout="stack" g="40" px="30" py-s="40" ov-y="auto" z="0">
+				<SiteNav />
+			</Modal.Body>
+			<Cluster g="10" fz="l" bd-t py-s="20" px="30">
+				<SNSLinks />
+				<LanguageSelect />
+				<ThemeSwitch />
+			</Cluster>
+		</Modal.Inner>
+	</Modal.Root>
+</Container>
+<style>
+	/* logo */
+
+	.siteTitle {
+		font-family: var(--ff--mono);
+
+		&::after {
+			content: 'β v.0.8';
+			margin-inline-start: 0.5em;
+			line-height: 1;
+			font-size: var(--fz--s);
+			letter-spacing: -0.125em;
+			order: 2;
+			padding: 1px;
+			color: var(--brand);
+		}
+	}
+	.siteTitle > img {
+		width: min(25vw, 10rem);
+		height: auto;
+	}
+
+	/* 検索トリガーボタン */
+
+	.c--menuTrigger {
+		padding: 0.5em;
+	}
+	.c--searchTrigger {
+		gap: 0.675em;
+		padding: 0.5em;
+	}
+
+	.c--searchTrigger_shortcut {
+		box-shadow: none;
+		translate: unset;
+		margin-inline-end: 2px;
+	}
+</style>

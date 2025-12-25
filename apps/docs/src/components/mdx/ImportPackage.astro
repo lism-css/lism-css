@@ -1,0 +1,27 @@
+---
+// eslint-disable
+import AstroCode from './AstroCode.astro';
+import { Preview, PreviewCode } from '@/components/mdx';
+
+const { component = '', script = '', packageName = 'lism-css' } = Astro.props;
+
+const getCopyCode = (name: string) => `import { ${component} } from '${packageName}${name}';`;
+
+const scriptCodeToCopy = `<script type=\"module\" src=\"https://cdn.jsdelivr.net/npm/${packageName}/dist/scripts/${script}\"></script>`;
+---
+
+<Preview>
+	<PreviewCode slot="tab" label="React">
+		<AstroCode code={getCopyCode('/react')} lang="js" />
+	</PreviewCode>
+	<PreviewCode slot="tab" label="Astro">
+		<AstroCode code={getCopyCode('/astro')} lang="js" />
+	</PreviewCode>
+	{
+		script && (
+			<PreviewCode slot="tab" label="HTML">
+				<AstroCode code={scriptCodeToCopy} lang="html" />
+			</PreviewCode>
+		)
+	}
+</Preview>

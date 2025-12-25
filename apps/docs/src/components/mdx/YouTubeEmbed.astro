@@ -1,0 +1,36 @@
+---
+/**
+ * YouTube動画を埋め込み表示するコンポーネント
+ * URLから動画IDを自動抽出し、レスポンシブ対応のiframeで表示
+ */
+import { Frame } from 'lism-css/astro';
+
+interface Props {
+	url: string;
+	// タイトル（アクセシビリティ用）
+	title?: string;
+}
+
+const { url, title = 'YouTube video' } = Astro.props;
+---
+
+<div class="c--youtubeEmbed -my:40 -bdrs:10 -ov:hidden">
+	<Frame ar="16/9" class="c--youtubeEmbed__frame">
+		<iframe
+			width="560"
+			height="315"
+			src={url}
+			title={title}
+			frameborder="0"
+			allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+			referrerpolicy="strict-origin-when-cross-origin"
+			allowfullscreen></iframe>
+	</Frame>
+</div>
+
+<style>
+	.c--youtubeEmbed {
+		background-color: var(--base-2);
+		border: 6px solid #000;
+	}
+</style>

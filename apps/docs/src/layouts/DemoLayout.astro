@@ -1,0 +1,31 @@
+---
+/**
+ * デモプレビュー用のシンプルなレイアウト
+ * lism-cssのスタイルのみを読み込む。
+ * iframeで埋め込まれることを想定したミニマルな構成
+ */
+
+// サイト設定
+import { siteConfig } from '@/config/site';
+
+import 'lism-css/scss/main.scss';
+
+interface Props {
+	title?: string;
+}
+
+const { title = 'Demo page' } = Astro.props;
+---
+
+<html lang="ja">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width" />
+		<title>Demo | {title} - {siteConfig.name}</title>
+		<!-- 検索エンジンにインデックスさせない -->
+		<meta name="robots" content="noindex, nofollow" />
+	</head>
+	<body>
+		<slot />
+	</body>
+</html>

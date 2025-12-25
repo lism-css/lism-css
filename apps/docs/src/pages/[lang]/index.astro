@@ -1,0 +1,43 @@
+---
+/**
+ * トップページ（非root言語用）
+ * 最新の記事一覧を表示
+ */
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { HTML } from 'lism-css/astro';
+import { siteConfig } from '@/config/site';
+import { isRootLang, isValidLang, type LangCode } from '@/lib/i18n';
+
+export async function getStaticPaths() {
+	const langCodes = Object.keys(siteConfig.langs) as LangCode[];
+	// 非root言語のみ対象
+	const nonRootLangs = langCodes.filter((lang) => !isRootLang(lang));
+
+	return nonRootLangs.map((lang) => ({
+		params: { lang },
+		props: { lang },
+	}));
+}
+
+interface Props {
+	lang: LangCode;
+}
+
+const { lang } = Astro.props;
+
+// 言語が無効な場合は404
+if (!isValidLang(lang)) {
+	return Astro.redirect('/404');
+}
+
+// 見出しの翻訳
+const headings = {
+	ja: 'トップページ',
+	en: 'Top page',
+};
+const heading = headings[lang] || headings.en;
+---
+
+<BaseLayout title={siteConfig.name} lang={lang}>
+	<HTML.h lv="1">{heading}</HTML.h>
+</BaseLayout>

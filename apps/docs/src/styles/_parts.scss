@@ -1,0 +1,113 @@
+/* -------------------------- */
+/* 下書き記事のスタイル（開発環境のみ） */
+/* -------------------------- */
+._draft {
+	position: relative;
+	> * {
+		opacity: 0.7;
+	}
+	*::before {
+		content: '✍️';
+		position: absolute;
+		top: 0;
+		right: 0;
+		background-color: var(--base-2);
+		line-height: 1;
+		font-size: 16px;
+		padding: 2px;
+		border-radius: 3px;
+		z-index: 1;
+	}
+}
+
+/* -------------------------- */
+/* 前後記事ナビゲーション */
+/* -------------------------- */
+.c--postNav {
+	margin-block-start: var(--s40);
+	padding-block-start: var(--s40);
+	border-block-start: 1px solid var(--divider);
+}
+
+.c--postNav__item {
+	flex: 1;
+	min-width: 200px;
+}
+.c--postNav__item.-next {
+	text-align: right;
+}
+
+.c--postNav__link {
+	display: flex;
+	flex-direction: column;
+	gap: 0.25em;
+	padding: var(--s20);
+	border-radius: var(--bdrs--10);
+	text-decoration: none;
+	color: inherit;
+	transition: background-color 0.2s;
+}
+.c--postNav__link:hover {
+	background-color: var(--base-2);
+}
+
+.c--postNav__label {
+	color: var(--text-2);
+}
+
+.c--postNav__title {
+	font-weight: 500;
+	line-height: 1.4;
+}
+
+.c--postNav__empty {
+	display: none;
+}
+
+/* -------------------------- */
+/* ページネーション */
+/* -------------------------- */
+.c--pagination {
+	margin-block-start: var(--s40);
+}
+
+.c--pagination__arrow,
+.c--pagination__page {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	min-width: 2.5em;
+	height: 2.5em;
+	padding: 0.25em 0.5em;
+	border-radius: var(--bdrs--10);
+	text-decoration: none;
+	font-weight: 500;
+	transition:
+		background-color 0.2s,
+		color 0.2s;
+}
+
+a.c--pagination__arrow,
+a.c--pagination__page {
+	color: var(--link);
+}
+a.c--pagination__arrow:hover,
+a.c--pagination__page:hover {
+	background-color: var(--base-2);
+}
+
+.c--pagination__arrow.-disabled {
+	color: var(--text-2);
+	opacity: 0.4;
+	cursor: not-allowed;
+}
+
+.c--pagination__page.-current {
+	background-color: var(--brand);
+	color: white;
+}
+
+.c--pagination__ellipsis {
+	padding: 0 0.25em;
+	color: var(--text-2);
+}

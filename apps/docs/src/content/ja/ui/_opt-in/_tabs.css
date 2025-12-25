@@ -1,0 +1,39 @@
+/* Memo: ov-x='auto' の時に margin がネガティブだとアウトなので、borderではなくbox-shadowで表現する。 */
+:where(.d--tabs--line) {
+	--sh-size: inset 0 -2px;
+
+	.d--tabs_list {
+		box-shadow: var(--sh-size) 0 var(--divider);
+	}
+	.d--tabs_tab {
+		font-size: var(--fz--s);
+		padding: 0.5em 0.875em;
+		box-shadow: var(--_isSelected, var(--sh-size) 0 0 currentColor);
+	}
+}
+
+:where(.d--tabs--emboss) {
+	.d--tabs_list {
+		padding: 4px;
+		font-size: var(--fz--s);
+		background-color: var(--base-2);
+		border-radius: var(--bdrs--20);
+	}
+	.d--tabs_tab {
+		padding: 0.25em 0.75em;
+		border-radius: calc(var(--bdrs--20) - 2px); /* 親の bdrs - 親のpadding / 2 */
+		background-color: var(--_isSelected, var(--base));
+		box-shadow: var(--_isSelected, var(--bxsh--10));
+	}
+}
+
+/* // Opt-in */
+[data-tabs-keep-height] > [aria-hidden='true'] {
+	display: block;
+	visibility: hidden;
+	opacity: 0;
+
+	/* さらに、アニメーションつけるなら */
+	/* transform: translateY(8px);
+	transition-duration: 0s; */
+}

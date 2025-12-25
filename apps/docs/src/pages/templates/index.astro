@@ -1,0 +1,89 @@
+---
+/**
+ * テンプレート一覧ページ
+ *
+ * カテゴリ別にテンプレートを一覧表示
+ */
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { Stack, Grid, Text, HTML, Frame, LinkBox, Box, Lism } from 'lism-css/astro';
+import { templates, categoryIds, type TemplateCategoryId } from '@/config/templates';
+---
+
+<BaseLayout title="Templates" description="Lism CSSを使ったWebサイトテンプレート集" excludeFromSearch>
+	<Stack g="40" class="templates">
+		<Stack tag="header" g="20">
+			<h1>Web Templates</h1>
+			<Text c="text-2">コピペで簡単に利用できる、Lism CSSを使ったWebサイトテンプレート集です。</Text>
+		</Stack>
+
+		<Stack g="40">
+			{
+				categoryIds.map((categoryId: TemplateCategoryId) => {
+					const category = templates[categoryId];
+					return (
+						<Box tag="section">
+							<HTML.h lv="2" layout="flex" ai="center" g="10" fz="xl" bd-b py="10" px="5">
+								<span>{category.label}</span>
+								<Text tag="span" fz="xs" c="text-2" fw="normal">
+									({category.items.length})
+								</Text>
+							</HTML.h>
+
+							<Grid layout="fluidCols" autoFill cols="24rem" g="20" my-s="20" class="templateList">
+								{category.items.map((item) => (
+									<LinkBox
+										key={item.id}
+										class="templateList_link"
+										layout="stack"
+										href={`/templates/${categoryId}/${item.id}`}
+										p="10"
+										g="20"
+										setHov
+									>
+										{/* スクリーンショット画像をサムネイルとして表示 */}
+										<Frame ar="3/2" bd bdrs="20" ov="hidden">
+											<img
+												src={`/screenshots/templates/${categoryId}/${item.id}.png`}
+												alt={item.title}
+												loading="lazy"
+												decoding="async"
+												class="templateList_thumb"
+											/>
+										</Frame>
+										<Lism class="u-trim -ff:mono -fz:s">{item.title}</Lism>
+										{/* <Text fz="xs" c="text-2" class="-lh:s u-lineClamp" style="--lineClamp:2">
+											{item.description}
+										</Text> */}
+									</LinkBox>
+								))}
+							</Grid>
+						</Box>
+					);
+				})
+			}
+		</Stack>
+	</Stack>
+</BaseLayout>
+
+<style>
+	/* サムネイルカードのスタイル */
+	.templateList_link > .l--frame {
+		--bdw: 2px;
+		transition: box-shadow 0.2s;
+		box-shadow: var(--_isHov, var(--bxsh--30)) var(--_notHov, var(--bxsh--10));
+	}
+
+	/* サムネイル画像のスタイル */
+	.templateList_thumb {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		object-position: top;
+		transition: transform 0.3s ease;
+	}
+
+	/* ホバー時のズーム効果 */
+	.templateList_link:hover .templateList_thumb {
+		transform: scale(1.02);
+	}
+</style>

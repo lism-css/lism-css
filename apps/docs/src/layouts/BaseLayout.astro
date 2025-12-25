@@ -1,0 +1,79 @@
+---
+// Lism CSS のスタイルシート読み込み
+import 'lism-css/main.css';
+
+// プロジェクト固有のスタイル
+import '../styles/main.scss';
+
+// サイト設定
+import { siteConfig } from '@/config/site';
+
+// 多言語対応
+import { getRootLang, type LangCode } from '@/lib/i18n';
+
+// コンポーネント
+import Head from '../components/Head.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import Sidebar from '../components/Sidebar.astro';
+import TableOfContents from '../components/TableOfContents.astro';
+import FixedToc from '../components/FixedToc.astro';
+import ShareBtns from '../components/ShareBtns.astro';
+import type { TocItem } from '../lib/generateToc';
+import { Grid, Stack, Container } from 'lism-css/astro';
+
+interface Props {
+	title: string;
+	description?: string;
+	ogImage?: string;
+	toc?: TocItem[];
+	lang?: LangCode; // 言語コード（省略時はroot言語）
+	excludeFromSearch?: boolean; // 検索対象から除外するかどうか
+}
+
+const { title = siteConfig.name, description, ogImage, toc, lang = getRootLang(), excludeFromSearch = false } = Astro.props;
+
+// 開発環境かどうか（ShareBtns用のURL生成に使用）
+const isDev = import.meta.env.DEV;
+
+// canonical URL（ShareBtns用）
+const canonicalUrl = isDev ? Astro.url.toString() : Astro.site ? new URL(Astro.url.pathname, Astro.site).toString() : Astro.url.toString();
+---
+
+<html lang={lang}>
+	<Head title={title} description={description} ogImage={ogImage} lang={lang} />
+	<body {...excludeFromSearch && { 'data-pagefind-ignore': 'all' }}>
+		<div class="is--container">
+			<Header />
+			<Grid
+				class={`z--wrapper l--grid ${toc ? 'has-toc' : 'no-toc'}`}
+				gtc={['var(--wrapper-gtc)', null, 'var(--wrapper-gtc_md)']}
+				gta={[`var(--wrapper-gta)`, null, 'var(--wrapper-gta_md)']}
+				min-h="100svh"
+			>
+				<Sidebar d={['none', null, 'flex']} layout="stack" />
+				<Container isWrapper={toc ? true : 'l'} hasGutter py="40" tag="main" class="z--main">
+					<span class="u-hidden" id="_top" aria-hidden="true"></span>
+					<slot />
+					<Footer />
+				</Container>
+				{
+					toc && (
+						<Stack tag="aside" class="z--toc" isContainer g="15" py="20" d={['none', null, null, 'flex']}>
+							<TableOfContents toc={toc} px="15" />
+							<ShareBtns url={canonicalUrl} title={title} px="15" />
+						</Stack>
+					)
+				}
+			</Grid>
+		</div>
+		{
+			toc && (
+				<FixedToc>
+					<TableOfContents toc={toc} px="30" />
+					<ShareBtns url={canonicalUrl} title={title} px="30" />
+				</FixedToc>
+			)
+		}
+	</body>
+</html>

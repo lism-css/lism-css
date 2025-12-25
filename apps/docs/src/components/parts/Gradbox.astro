@@ -1,0 +1,179 @@
+---
+import { Lism, Grid, Icon } from 'lism-css/astro';
+---
+
+<Lism class="grad-box -pos:rel">
+	<!-- <div class='orb-outer' style={{ width: '100%', height: '100%', position: 'absolute' }}>
+			<Orb client:load hue={0} />
+		</div> -->
+	<div class="gradient-frame-outer -mx-s:auto">
+		<div class="gradient-frame -w:100% -h:100% -bdrs:99">
+			<div class="gradient-frame-inner -w:100% -h:100% -bdrs:99 -pos:rel">
+				<div class="gradient-shape shape3">
+					<div></div>
+				</div>
+				<div class="gradient-shape shape3-2"><div></div></div>
+				<div class="gradient-shape shape2"><div></div></div>
+				<div class="gradient-shape shape2-2"><div></div></div>
+				<div class="gradient-shape shape1"><div></div></div>
+				<div class="gradient-shape shape1-2"><div></div></div>
+			</div>
+		</div>
+	</div>
+	{/* <div class="original-gradient"></div> */}
+</Lism>
+
+<style>
+	@keyframes rotate-shape {
+		0% {
+			transform: rotate(0deg);
+		}
+		100% {
+			transform: rotate(360deg);
+		}
+	}
+	@keyframes yurayura {
+		0% {
+			/* filter: blur(20px); */
+			inset: -10px;
+		}
+		100% {
+			/* filter: blur(40px); */
+			inset: -4px;
+		}
+	}
+	@keyframes transform-shape {
+		0% {
+			scale: 1 0.98;
+			translate: 0% -4%;
+		}
+		50% {
+			scale: 0.95 1;
+			translate: 5% 0;
+		}
+		100% {
+			scale: 1.02 0.98;
+			translate: 1% 4%;
+		}
+	}
+
+	.gradient-frame-outer {
+		max-width: 100%;
+		width: 480px;
+		aspect-ratio: 1/1;
+		position: relative;
+		isolation: isolate;
+		animation: rotate-shape 60s linear infinite reverse;
+		border-radius: 50%;
+		/* overflow: hidden; */
+
+		/* // gradient-frameに微妙な隙間ができるのを埋める
+	// &::before{
+	// 	position: absolute;
+	// 	inset: -1px;
+	// 	content: "";
+	// 	border-radius: 50%;
+	// 	border: solid 2px var(--base);
+	// 	z-index: 1;
+	// 	// filter: blur(50px);
+	// } */
+	}
+	.gradient-frame {
+		position: relative;
+		z-index: 0;
+		/* overflow: hidden;
+		width: 100%;
+		height: 100%;
+		border-radius: 50%; */
+		/* padding: 100px; */
+
+		filter: blur(2px);
+		animation: transform-shape 5s linear infinite alternate;
+	}
+	.gradient-frame-inner {
+		overflow: hidden;
+		/* filter: blur(2px); */
+	}
+
+	.gradient-shape {
+		position: absolute;
+		inset: 0;
+		border-radius: 50%;
+		overflow: hidden;
+	}
+	.gradient-shape > div {
+		border-radius: inherit;
+		width: 100%;
+		height: 100%;
+		border-radius: inherit;
+	}
+
+	.shape1 {
+		inset: -20px -20px -4px;
+		opacity: 0.75;
+		mix-blend-mode: screen;
+		/* animation: rotate-shape 30s linear infinite reverse; */
+	}
+	.shape1 > div {
+		border-radius: 46%;
+		filter: blur(16px);
+		border: solid 16px var(--white);
+	}
+	.shape1-2 {
+		animation: yurayura 3s linear infinite alternate;
+	}
+	.shape1-2 > div {
+		position: absolute;
+		width: 100%;
+		height: 100%;
+		box-shadow: inset 0 0 20px -4px var(--white);
+		/* animation: yurayura 3s linear infinite alternate; */
+		/* filter: blur(10px); */
+	}
+
+	.shape2 {
+		padding: 4px;
+		opacity: 0.8;
+	}
+	.shape2 > div {
+		border: solid 4px color-mix(in srgb, var(--purple), var(--white) 70%);
+		filter: blur(12px);
+	}
+	.shape2-2 {
+		padding: 2px;
+		opacity: 0.8;
+	}
+	.shape2-2 > div {
+		border: solid 8px color-mix(in srgb, var(--blue), var(--white) 70%);
+		filter: blur(24px);
+	}
+
+	.shape3 {
+		animation: rotate-shape 10s linear infinite;
+		opacity: 0.6;
+		padding: 8px;
+	}
+	.shape3 > div {
+		background-image: conic-gradient(from 120deg in oklch, var(--blue), var(--purple), var(--green), var(--blue));
+		filter: blur(100px) saturate(90%);
+	}
+	.shape3-2 {
+		/* inset: 0; */
+		opacity: 0.6;
+		padding: 10%;
+		/* mix-blend-mode: soft-light; */
+	}
+	.shape3-2 > div {
+		background-image: conic-gradient(var(--base), color-mix(in srgb, var(--base), transparent 50%), var(--base));
+		filter: blur(40px);
+	}
+</style>
+
+<!-- <style is:global>
+	.orb-container {
+		position: relative;
+		z-index: 2;
+		width: 100%;
+		height: 100%;
+	}
+</style> -->

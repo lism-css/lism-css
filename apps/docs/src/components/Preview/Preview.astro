@@ -1,26 +1,50 @@
 ---
 import { Lism } from 'lism-css/astro';
 import { Tabs } from '@lism-css/ui/astro';
-
-// console.log('Astro', Astro.props);
-const slotKeys: string[] = Object.keys(Astro?.slots || {});
-
-let tabs = '';
-for (let index = 0; index < slotKeys.length; index++) {
-	const slotName = slotKeys[index];
-	if (slotName !== 'default') {
-		tabs += await Astro.slots.render(slotName);
-	}
+interface Props {
+	css?: string; // カスタムCSS（src未指定時のslot内にのみ適用可能）
 }
+const { css, ...props } = Astro.props;
+
+// const slotKeys: string[] = Object.keys(Astro?.slots || {});
+// let tabs = '';
+// for (let index = 0; index < slotKeys.length; index++) {
+// 	const slotName = slotKeys[index];
+// 	if (slotName !== 'default') {
+// 		tabs += await Astro.slots.render(slotName);
+// 	}
+// }
+
+// カスタムCSS用のユニークなスコープIDを生成
+const scopeId = css ? `demo-${Math.random().toString(36).slice(2, 9)}` : '';
+
+// カスタムCSSにスコープを付与（各セレクタの前にスコープIDを追加）
+const scopedCss = `.${scopeId}{ ${css} }`;
 ---
 
-<Lism className='c--preview' {...Astro.props}>
+<Lism class:list={['c--preview', scopeId]} {...props}>
 	<slot />
 	{
 		Astro.slots.has('tab') && (
-			<Tabs.Root className='c--preview_code' variant='line' g='15'>
-				<slot name='tab' />
+			<Tabs.Root class="c--preview_code" variant="line" g="15">
+				<slot name="tab" />
 			</Tabs.Root>
 		)
 	}
 </Lism>
+{scopedCss && <style set:html={scopedCss} />}
+
+<style is:global>
+	:where(.d--tabs--line) {
+		--sh-size: inset 0 -2px;
+
+		.d--tabs_list {
+			box-shadow: var(--sh-size) 0 var(--divider);
+		}
+		.d--tabs_tab {
+			font-size: var(--fz--s);
+			padding: 0.5em 0.875em;
+			box-shadow: var(--_isSelected, var(--sh-size) 0 0 currentColor);
+		}
+	}
+</style>
