@@ -5,8 +5,12 @@
 	"scripts": {
 		"dev": "astro dev",
 		"build": "astro build && pagefind --site dist",
-		"preview": "npm run build && astro preview",
-		"astro": "astro"
+		"build:astro": "astro build",
+		"build:full": "npm run build && npm run screenshot",
+		"preview": "astro preview",
+		"astro": "astro",
+		"screenshot": "npx tsx scripts/generate-screenshots.ts",
+		"screenshot:force": "npx tsx scripts/generate-screenshots.ts --force"
 	},
 	"dependencies": {
 		"@astrojs/mdx": "^4.3.12",
@@ -31,9 +35,11 @@
 		"@types/react": "^19.2.7",
 		"@types/react-dom": "^19.2.3",
 		"autoprefixer": "^10.4.22",
+		"playwright": "^1.49.0",
 		"prettier": "^3.7.4",
 		"prettier-plugin-astro": "^0.14.1",
 		"sass-embedded": "^1.93.3",
+		"tsx": "^4.19.0",
 		"unist-util-visit": "^5.0.0",
 		"vitest": "^4.0.15"
 	}
