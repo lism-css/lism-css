@@ -6,7 +6,7 @@
  */
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import { generateToc } from '@/lib/generateToc';
-import { Stack, Lism, Flow, HTML } from 'lism-css/astro';
+import { Frame, Lism, Flow, HTML } from 'lism-css/astro';
 import PostNavigation from '@parts/PostNavigation.astro';
 import { getPostPathsForRoot } from '@/lib/pageHelpers';
 import { getLocalizedUrl, type LangCode } from '@/lib/i18n';
@@ -28,9 +28,7 @@ const { Content, headings } = await entry.render();
 
 const toc = generateToc(headings);
 
-// アイキャッチ画像: heroがあればそれを、なければOG画像を使用
-const eyecatchImage = entry.data.hero || `/docs/og/${entry.slug}.png`;
-// OG画像のパス（常に自動生成画像を使用）
+// OG画像のパス
 const ogImage = `/docs/og/${entry.slug}.png`;
 ---
 
@@ -40,7 +38,7 @@ const ogImage = `/docs/og/${entry.slug}.png`;
 		{
 			// (
 			// 	<Frame ar="1200/630" bdrs="20" ov="hidden" bxsh="2">
-			// 		<img src={eyecatchImage} alt={entry.data.title} />
+			// 		<img src={ogImage} alt={entry.data.title} />
 			// 	</Frame>
 			// )
 		}
