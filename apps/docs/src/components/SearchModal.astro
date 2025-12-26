@@ -50,6 +50,15 @@ const searchText = t(lang, 'search');
 			});
 		}
 	});
+
+	// ⌘K (Mac) / Ctrl+K (Windows) で検索モーダルを開く
+	document.addEventListener('keydown', (e) => {
+		if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+			e.preventDefault(); // ブラウザのデフォルト動作を防止
+			const openBtn = document.querySelector<HTMLElement>('[data-modal-open="search-modal"]');
+			openBtn?.click();
+		}
+	});
 </script>
 
 <style is:global>
