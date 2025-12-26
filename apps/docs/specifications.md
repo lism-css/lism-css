@@ -227,6 +227,15 @@ src/pages/preview/{example-name}/
 | 保存場所   | `.cache/og/{lang}/{slug}/{hash}.png` |
 | キャッシュキー | タイトル + タグ + 言語の MD5 ハッシュ |
 
+### Vercel CDN キャッシュ
+
+`vercel.json` で OG 画像の CDN キャッシュを設定。
+
+| キャッシュ | 期間 |
+| ---------- | ---- |
+| CDN        | 1年（再デプロイでパージ） |
+| ブラウザ   | 1日 |
+
 ---
 
 ## コードブロック（Expressive Code）
