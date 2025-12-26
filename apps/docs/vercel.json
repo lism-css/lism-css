@@ -1,0 +1,14 @@
+{
+	"$schema": "https://openapi.vercel.sh/vercel.json",
+	"headers": [
+		{
+			"source": "/:path*/og/:slug*.png",
+			"headers": [
+				{
+					"key": "Cache-Control",
+					"value": "public, s-maxage=31536000, max-age=86400, must-revalidate"
+				}
+			]
+		}
+	]
+}
