@@ -7,6 +7,7 @@
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import { Stack, Grid, Text, HTML, Frame, LinkBox, Box, Lism } from 'lism-css/astro';
 import { templates, categoryIds, type TemplateCategoryId } from '@/config/templates';
+import { filterDraftItems } from '@/lib/templates';
 ---
 
 <BaseLayout title="Templates" description="Lism CSSを使ったWebサイトテンプレート集" excludeFromSearch>
@@ -20,17 +21,19 @@ import { templates, categoryIds, type TemplateCategoryId } from '@/config/templa
 			{
 				categoryIds.map((categoryId: TemplateCategoryId) => {
 					const category = templates[categoryId];
+					// 本番環境ではdraft:trueのアイテムを除外
+					const items = filterDraftItems(category.items);
 					return (
 						<Box tag="section">
 							<HTML.h lv="2" layout="flex" ai="center" g="10" fz="xl" bd-b py="10" px="5">
 								<span>{category.label}</span>
 								<Text tag="span" fz="xs" c="text-2" fw="normal">
-									({category.items.length})
+									({items.length})
 								</Text>
 							</HTML.h>
 
 							<Grid layout="fluidCols" autoFill cols="24rem" g="20" my-s="20" class="templateList">
-								{category.items.map((item) => (
+								{items.map((item) => (
 									<LinkBox
 										key={item.id}
 										class="templateList_link"
@@ -50,7 +53,9 @@ import { templates, categoryIds, type TemplateCategoryId } from '@/config/templa
 												class="templateList_thumb"
 											/>
 										</Frame>
-										<Lism class="u-trim -ff:mono -fz:s">{item.title}</Lism>
+										<Lism layout="cluster" g="10" class="u-trim -ff:mono -fz:s">
+											{item.title}
+										</Lism>
 										{/* <Text fz="xs" c="text-2" class="-lh:s u-lineClamp" style="--lineClamp:2">
 											{item.description}
 										</Text> */}

@@ -10,6 +10,7 @@ export interface TemplateItem {
 	id: string; // テンプレートID（例: cta001）
 	title: string; // タイトル（例: CTA001）
 	description: string; // 説明文
+	draft?: boolean; // 下書きフラグ（本番環境では非公開）
 }
 
 // カテゴリ情報の型
@@ -397,21 +398,25 @@ const templates = {
 				id: 'section901',
 				title: '調整中：Section901',
 				description: 'セクション用のテンプレートです。breakpoint「md」以下は1カラムで表示され、アイテムが縦に並びます。',
+				draft: true,
 			},
 			{
 				id: 'section901-2',
 				title: '調整中：Section901-2',
 				description: 'セクション用のテンプレートです。breakpoint「md」以下は1カラムで表示され、アイテムが縦に並びます。',
+				draft: true,
 			},
 			{
 				id: 'section902',
 				title: '調整中：Section902',
 				description: 'セクション用のテンプレートです。breakpoint「md」以下は1カラムで表示され、アイテムが縦に並びます。',
+				draft: true,
 			},
 			{
 				id: 'section902-2',
 				title: '調整中：Section902-2',
 				description: 'セクション用のテンプレートです。breakpoint「md」以下は1カラムで表示され、アイテムが縦に並びます。',
+				draft: true,
 			},
 		],
 	},

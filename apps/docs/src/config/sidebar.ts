@@ -8,7 +8,7 @@
 
 import type { LangCode } from '@/config/site';
 import { BookOpenTextIcon, SquaresFourIcon, LayoutIcon } from '@phosphor-icons/react';
-import { templates, categoryIds, type TemplateCategoryId } from './templates';
+import { templates, categoryIds, type TemplateCategoryId, type TemplateItem } from './templates';
 
 // 翻訳オブジェクトの型（root言語以外の翻訳を指定）
 type TranslateLabels = Partial<Record<Exclude<LangCode, 'ja'>, string>>;
@@ -193,12 +193,17 @@ const uiSidebar: SidebarSection[] = [
 	},
 ];
 
+// 本番環境かどうか（draft:trueのアイテムをフィルタリングするために使用）
+const isProd = import.meta.env.PROD;
+
 // /templates/ セクション用のサイドバー設定（templates.tsから動的生成）
 const templatesSidebar: SidebarSection[] = categoryIds.map((categoryId: TemplateCategoryId) => {
 	const category = templates[categoryId];
+	// 本番環境ではdraft:trueのアイテムを除外
+	const items = isProd ? (category.items as TemplateItem[]).filter((item) => !item.draft) : category.items;
 	return {
 		label: category.label,
-		items: category.items.map((item) => ({
+		items: items.map((item) => ({
 			label: item.title,
 			link: `/templates/${categoryId}/${item.id}`,
 		})),
