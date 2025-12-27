@@ -8,7 +8,7 @@
  * プレビューiframeは /templates/{category}/{id}/preview/ を参照
  */
 import BaseLayout from '@/layouts/BaseLayout.astro';
-import { Stack, Flow, Frame, Text } from 'lism-css/astro';
+import { Stack, Flow, Frame, Text, HTML } from 'lism-css/astro';
 import { PreviewFrame, PreviewTitle } from '@/components/Preview';
 import SrcCode from '@/components/mdx/SrcCode.astro';
 import { templates, type TemplateCategoryId } from '@/config/templates';
@@ -46,7 +46,6 @@ const queryMeta = 'style=github-dark&type=code&showLineNumbers=on&showFileMeta=o
 
 <BaseLayout title={`${template.title} - Templates`} description={template.description} excludeFromSearch>
 	<Flow g="30" class="templatePage">
-		{/* タイトルと説明 */}
 		<Stack tag="header" g="10">
 			<Text fz="xs" c="text-2" tt="uppercase" lts="l">
 				{categoryData.label}
@@ -54,12 +53,18 @@ const queryMeta = 'style=github-dark&type=code&showLineNumbers=on&showFileMeta=o
 			<h1 class="-fz:3xl -fw:bold">{template.title}</h1>
 			<Text c="text-2">{template.description}</Text>
 		</Stack>
-
+		{
+			template.draft && (
+				<HTML.div class="draftBadge" fz="xs" w="fit" bgc="red" c="base" bdrs="10" px="10">
+					DRAFT
+				</HTML.div>
+			)
+		}
 		{/* プレビュー */}
-		<Flow>
-			<PreviewTitle>プレビュー</PreviewTitle>
+		<HTML.div layout="flow" my-s="50">
+			<!-- <PreviewTitle>プレビュー</PreviewTitle> -->
 			<PreviewFrame url={previewUrl} hasSizeSwitch />
-		</Flow>
+		</HTML.div>
 
 		{/* ソースコード */}
 		<Stack g="15">
