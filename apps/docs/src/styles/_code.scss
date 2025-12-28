@@ -11,6 +11,7 @@ astro-code: Astro の <Code>コンポーネント
 	--codeBlock-bgc: hsl(200, 18%, 95%) !important;
 	--codeBlock-bdrs: var(--bdrs--10);
 	--codeBlock-maxH: 32rem;
+	--codeBlockCopy-bgc: color-mix(in srgb, var(--codeBlock-bgc), var(--text) 20%);
 
 	--codeBlock-mark-c: rgba(138, 145, 150, 0.1);
 	--codeBlock-mark-bgc: rrgba(147, 153, 155, 0.15);
@@ -136,6 +137,15 @@ pre {
 /* -------------------------- */
 /* ソースコード表示のタブ
 /* -------------------------- */
+
+.d--tabs--src,
+.d--tabs--line {
+	> .d--tabs_list,
+	pre {
+		--focus-offset: -3px;
+	}
+}
+
 .c--demoSrcCodes {
 	padding: 2px;
 	border-radius: var(--codeBlock-bdrs);
@@ -221,5 +231,23 @@ pre {
 	// with ❤ 消す
 	.hide-in-phone {
 		display: none;
+	}
+}
+
+/* .expressive-code の copy ボタン. Memo: before, div, afterでスタイルわかれてる */
+.expressive-code:not(#_) {
+	.copy button {
+		width: 2rem;
+		height: 2rem;
+		background: var(--codeBlock-bgc);
+		border-radius: var(--bdrs--10);
+		--ec-brdWd: 1px;
+		--ec-frm-inlBtnBgHoverOrFocusOpa: 0.5;
+		--ec-frm-inlBtnBg: var(--codeBlockCopy-bgc);
+		--ec-frm-copyIcon: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512' width='1em' height='1em' aria-hidden='true'><rect x='128' y='128' width='336' height='336' rx='57' ry='57' fill='none' stroke='currentColor' stroke-linejoin='round' stroke-width='32'></rect><path d='M383.5 128l.5-24a56.16 56.16 0 00-56-56H112a64.19 64.19 0 00-64 64v216a56.16 56.16 0 0056 56h24' fill='none' stroke='currentColor' stroke-linecap='round' stroke-linejoin='round' stroke-width='32'></path></svg>");
+	}
+	.copy button::after {
+		margin: 0.375em;
+		mask-size: 100% 100%;
 	}
 }
