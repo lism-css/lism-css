@@ -73,14 +73,15 @@
 	}
 }
 
-.c--preview_code {
-}
+// .c--preview_code {}
 
 .c--preview_area + .c--preview_code {
 	overflow: hidden;
 	background-color: var(--codeBlock-bgc);
 	border-radius: var(--codeBlock-bdrs);
-	margin-block-start: -4px;
+	margin-block-start: -2px;
+	border-start-start-radius: 0;
+	border-start-end-radius: 0;
 
 	&.d--tabs {
 		gap: 0 !important;
