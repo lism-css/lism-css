@@ -1,99 +1,112 @@
-// open 属性付与からクラスの付与まで、ほんの少しだけ遅らせた方が動作が安定する
-const DELAY = 5;
+// アニメーションが完了するのを待つ
+const waitAnimation = (details) => {
+	// アニメーション対象の要素を直接取得.（getAnimations({subtree: true}) は iOS Safari で動作しない場合があるので __body を直接監視）
+	const body = details.querySelector('.d--accordion_body');
+	const animations = body ? body.getAnimations() : [];
 
-// モーダルのアニメーションが完了するのを待つ.
-const waitAnimation = (element) => {
-	return Promise.all(element.getAnimations().map((a) => a.finished));
+	// allSettled を使うことで、キャンセル時も reject せずに完了する
+	return Promise.allSettled(animations.map((a) => a.finished));
 };
 
 // animationTime: [ms]
-const clickedEvent = async (details, force = false) => {
-	// アニメーション中かどうか
-	if (details.dataset.animating && !force) return;
-	details.dataset.animating = '1';
+const open = async (details) => {
+	// すでに開いている場合は何もしない
+	if (details.open && details.hasAttribute('data-opened')) return;
 
-	const body = details.querySelector('.d--accordion_body');
+	// open属性をセット
+	details.open = true;
 
-	// オープン / クローズ 処理
+	// 次フレームで data-opened 属性を付与（CSS側でフェードインアニメーション開始）
+	requestAnimationFrame(() => {
+		details.setAttribute('data-opened', ''); // 属性の追加
+	});
+};
+
+const close = async (details) => {
+	// すでに閉じている場合は何もしない
+	if (!details.open && !details.hasAttribute('data-opened')) return;
+
+	details.removeAttribute('data-opened'); // 属性を削除
+
+	// アニメーションを待つ
+	await waitAnimation(details);
+
+	// アニメーション完了後にopen属性 を除去。
+	details.open = false;
+};
+
+// 複数展開を許可するかどうかを、親要素の [data-multiple] でチェック.
+const getAllowMultiple = (details) => {
+	let allowMultiple = false;
+	const parent = details.parentNode;
+	if (null != parent) {
+		const dataMultiple = parent.dataset.multiple;
+		allowMultiple = 'disallow' !== dataMultiple;
+	}
+	return allowMultiple;
+};
+
+const onClick = (details, allowMultiple) => {
 	if (!details.open) {
-		details.open = true;
-		// 少しだけ遅らせた方が動作が安定する
-		setTimeout(async () => {
-			details.setAttribute('data-opened', ''); // クラスの追加
+		if (!allowMultiple) {
+			// （複数展開が禁止されている場合）他の開いているアイテムがあるかどうかを先に探して閉じる
+			const parent = details.parentNode;
+			const openedItem = parent.querySelector(`[data-opened]`);
+			requestAnimationFrame(() => {
+				// 1フレーム待機（safariでは requestAnimationFrame() がないと動かなかった）
+				if (null != openedItem) close(openedItem);
+			});
+		}
 
-			// アニメーション完了後に dataset を除去。
-			await waitAnimation(body);
-			delete details.dataset.animating;
-		}, DELAY);
+		// 開く処理
+		open(details);
 	} else if (details.open) {
-		details.removeAttribute('data-opened'); // クラスを削除
-
-		// アニメーション完了後に open属性 を除去。
-		await waitAnimation(body);
-
-		delete details.dataset.animating;
-		details.open = false;
+		// 閉じる処理
+		close(details);
 	}
 };
 
-const toggleEvent = (e, details) => {
-	// e.preventDefault();
-	// console.log('toggleEvent', e.target, e.currentTarget);
-
+const onToggle = (details) => {
 	const hasOpen = details.open;
-	const hasOpenedClass = details.hasAttribute('data-opened');
+	const hasDataOpen = details.hasAttribute('data-opened');
 
-	// open はセットされたのに data-opened がついてない時
-	if (hasOpen && !hasOpenedClass) {
+	// open はセットされたのに data-opened 属性がついてない時
+	if (hasOpen && !hasDataOpen) {
 		details.setAttribute('data-opened', '');
 	}
-	// open は削除されたのに data-opened がまだついている時
-	if (!hasOpen && hasOpenedClass) {
+	// open は削除されたのに data-opened 属性がまだついている時
+	if (!hasOpen && hasDataOpen) {
 		details.removeAttribute('data-opened');
 	}
 };
 
-export const setEvent = (currentRef) => {
-	const details = currentRef;
-	// トリガーが明示的に指定されていない場合は、<summary> 要素をトリガーとする
-	const clickBtn = details.querySelector(`[data-role="trigger"]`) || details.querySelector('summary');
+export const setEvent = (details) => {
+	// 複数展開を制限するかどうか
+	const allowMultiple = getAllowMultiple(details);
 
-	if (!clickBtn) return;
+	// <summary> 要素をトリガーとする
+	const summary = details.querySelector('summary');
+	if (!summary) return;
 
-	// 複数展開を許可するかどうかを、親要素の [data-accordion-multiple] でチェック.
-	let allowMultiple = false;
-	const parent = details.parentNode;
-	if (null != parent) {
-		const dataMultiple = parent.dataset.accordionMultiple;
-		allowMultiple = 'disallow' !== dataMultiple;
-	}
-
-	const _clickedEvent = (e) => {
+	const _clickEvent = (e) => {
 		// すぐに open 属性が切り替わらないようにする
 		e.preventDefault();
-
-		// 複数展開が禁止されている場合、（開く処理の直前で）他の開いているアイテムがあれば閉じる
-		if (!allowMultiple && !details.open) {
-			const openedItem = parent.querySelector(`[data-opened]`);
-			if (null != openedItem) clickedEvent(openedItem, true);
-		}
-
-		// 自身のクリック処理
-		clickedEvent(details);
+		onClick(details, allowMultiple);
 	};
-	const _toggleEvent = (e) => {
-		toggleEvent(e, details);
+	const _toggleEvent = () => {
+		onToggle(details);
 	};
 
 	// <summary> 'click' イベント
-	clickBtn.addEventListener('click', _clickedEvent);
+	summary.addEventListener('click', _clickEvent);
 
 	// <details> の'toggle' イベントで、ページ内検索時にも開閉されるようにする
 	details.addEventListener('toggle', _toggleEvent);
 
-	// useEffectでアンマウントされた時にremoveEventListenerしないと2重でイベントが登録してしまう。
+	// react用
 	return () => {
-		clickBtn.removeEventListener('click', _clickedEvent);
+		// useEffect でアンマウントされた時にremoveEventListenerしないと2重でイベントが登録してしまう。
+		summary.removeEventListener('click', _clickEvent);
 		details.removeEventListener('toggle', _toggleEvent);
 	};
 };
