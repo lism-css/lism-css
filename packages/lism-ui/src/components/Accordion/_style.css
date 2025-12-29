@@ -1,6 +1,6 @@
 @layer lism.modules {
 	.d--accordion {
-		--duration: var(--acc-duration, 0.4s);
+		--duration: var(--acc-duration, 0.25s);
 	}
 	.d--accordion[data-opened] {
 		--_notOpen: ;
@@ -14,7 +14,7 @@
 		grid: auto / 1fr auto;
 		gap: 0.5em;
 		align-items: center;
-		outline-offset: -1px; /* overflow:clip|hidden; で見えなくなってしまうのを防ぐ */
+		--focus-offset: -1px; /* overflow:hidden; で見えなくなってしまいがちなので内側に寄せておく */
 
 		/* Safariで表示されるデフォルトの三角形アイコンを消す */
 		&::-webkit-details-marker {
@@ -47,8 +47,8 @@
 	}
 
 	/* .d--accordion_icon 自体にborderつけたりすると回転が見えてしまうので、中にある .a--icon を回転させる。 */
-	.d--accordion_icon .a--icon {
-		transition-duration: var(--duration);
-		rotate: var(--_isOpen, -180deg);
+	.d--accordion_icon > .a--icon {
+		transition: transform var(--duration);
+		transform: var(--_isOpen, scaleY(-1));
 	}
 }

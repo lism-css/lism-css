@@ -7,9 +7,6 @@ import AccIcon from './AccIcon';
 
 import '../_style.css';
 
-// import { AccContext } from './context';
-
-// duration: [s]
 export function Accordion({ children, ...props }) {
 	const ref = React.useRef(null);
 
@@ -22,12 +19,10 @@ export function Accordion({ children, ...props }) {
 
 	return (
 		<details ref={ref} {...lismProps}>
-			{/* <AccContext.Provider value={deliverState}>{children}</AccContext.Provider> */}
 			{children}
 		</details>
 	);
 }
-
 export function Header({ children, ...props }) {
 	return (
 		<Lism tag='summary' {...defaultProps.header} {...props}>
@@ -42,7 +37,6 @@ export function Label({ children, ...props }) {
 		</Lism>
 	);
 }
-
 export function Body({ children, flow, innerProps, ...props }) {
 	return (
 		<Lism {...defaultProps.body} {...props}>
