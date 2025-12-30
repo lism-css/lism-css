@@ -58,8 +58,9 @@ const ogLocaleMap: Record<LangCode, string> = {
 const ogLocale = ogLocaleMap[lang] || 'ja_JP';
 
 // Google Analytics: 本番環境かつ測定IDが設定されている場合のみ有効化
+// 開発環境・プレビュー環境では計測しない
 const gaMeasurementId = siteConfig.googleAnalytics.measurementId;
-const enableGA = siteConfig.publish && gaMeasurementId;
+const enableGA = !isDev && siteConfig.publish && gaMeasurementId;
 ---
 
 <head>
