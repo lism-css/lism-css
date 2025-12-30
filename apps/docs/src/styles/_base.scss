@@ -12,73 +12,75 @@
 		scrollbar-gutter: stable;
 	} */
 
-	article :not(pre) > code {
-		display: inline-flex;
-		color: var(--code-c);
-		background-color: var(--code-bgc);
-		font-size: 0.9em;
-		font-family: var(--ff--mono);
-		line-height: 1;
-		padding: 0.25em 0.3em;
-		margin-inline: 0.125em;
-		border-radius: 0.125em;
-	}
-
-	a > code {
-		text-decoration: inherit;
-	}
-
-	:where(p, li, td) > a {
-		--focus-offset: 4px;
-	}
-
-	kbd {
-		display: inline-block;
-		padding: 0.375em;
-		font-size: 0.95em;
-		font-family: inherit;
-		line-height: 1;
-		border: solid 1px var(--divider);
-		border-radius: 0.25em;
-		box-shadow: 0 2px 0 var(--divider);
-		translate: 0 -1px;
-	}
-
-	p > small {
-		font-size: var(--fz--s);
-		vertical-align: 0.025em;
-	}
-
-	blockquote {
-		font-style: italic;
-		font-size: var(--fz--s);
-		background-color: var(--base-2);
-		border-inline-start: solid 3px;
-		border-color: var(--text-2);
-		color: var(--text-2);
-	}
-	table {
-		font-size: 0.95em;
-		max-inline-size: 100%;
-		border: none;
-
-		/* memo: oveflow の指定によっては separate にしないとborderが表示されない場合があるので横スクロール時には注意。 */
-		border-collapse: collapse;
-		border-spacing: 0;
-		isolation: isolate;
-
-		:where(td, th) {
-			border-block: 1px solid var(--divider);
+	.z--article :not(.c--preview *) {
+		:not(pre) > code:is(&) {
+			display: inline-flex;
+			color: var(--code-c);
+			background-color: var(--code-bgc);
+			font-size: 0.9em;
+			font-family: var(--ff--mono);
+			line-height: 1;
+			padding: 0.25em 0.3em;
+			margin-inline: 0.125em;
+			border-radius: 0.125em;
 		}
-		thead {
-			border-block-end: solid 2px;
+		a > code:is(&) {
+			text-decoration: inherit;
+		}
+
+		:where(p, li, td) > a:is(&) {
+			--focus-offset: 4px;
+		}
+
+		kbd:is(&) {
+			display: inline-block;
+			padding: 0.375em;
+			font-size: 0.95em;
+			font-family: inherit;
+			line-height: 1;
+			border: solid 1px var(--divider);
+			border-radius: 0.25em;
+			box-shadow: 0 2px 0 var(--divider);
+			translate: 0 -1px;
+		}
+
+		p > small:is(&) {
+			font-size: var(--fz--s);
+			vertical-align: 0.025em;
+		}
+		blockquote:is(&) {
+			font-style: italic;
+			font-size: var(--fz--s);
+			background-color: var(--base-2);
+			border-inline-start: solid 3px;
+			border-color: var(--text-2);
+			color: var(--text-2);
+		}
+
+		table:is(&) {
+			font-size: 0.95em;
+			max-inline-size: 100%;
+			border: none;
+
+			/* memo: oveflow の指定によっては separate にしないとborderが表示されない場合があるので横スクロール時には注意。 */
+			border-collapse: collapse;
+			border-spacing: 0;
+			isolation: isolate;
+
+			:where(td, th) {
+				border-block: 1px solid var(--divider);
+			}
+			thead {
+				border-block-end: solid 2px;
+			}
 		}
 	}
 
 	// セル内のコードで、かつそれが唯一な要素であればは折り返さない
-	td > code {
-		white-space: nowrap;
-	}
+	// td > code:only-child {
+	// 	white-space: nowrap;
+	// }
+
 	/* モーダル背景 */
 	dialog:modal {
 		backdrop-filter: blur(16px);
