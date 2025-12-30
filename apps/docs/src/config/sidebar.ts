@@ -191,6 +191,10 @@ const uiSidebar: SidebarSection[] = [
 		label: 'Components',
 		dir: 'ui', // content/ja/ui/ 配下のMDXを自動取得
 	},
+	{
+		label: 'Examples',
+		dir: 'ui/examples', // content/ja/ui/ 配下のMDXを自動取得
+	},
 ];
 
 // 本番環境かどうか（draft:trueのアイテムをフィルタリングするために使用）
