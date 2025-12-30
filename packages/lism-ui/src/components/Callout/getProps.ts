@@ -11,7 +11,7 @@ export type CalloutProps = {
 
 export default function getCalloutProps({ type = 'note', keycolor, icon, title, flow = 's', ...props }: CalloutProps) {
 	const presetData = type ? PRESETS[type] : null;
-	const _icon = icon || presetData?.icon || null;
+	const _icon = icon || presetData?.icon || 'note';
 	const _keycolor = keycolor || presetData?.color || null;
 
 	return {
