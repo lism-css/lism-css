@@ -62,7 +62,7 @@ import { Alert } from '@lism-css/ui/astro';
 		```html
 		<div class="c--alert u-cbox l--flex -ai:center -p:15 -g:15 -bd -bdrs:10" style="--keycolor:var(--red)">
 			<div class="l--center -c -fz:xl -fxsh:0" style="--c:var(--keycolor)">
-				<svg>...</svg>
+				<svg class="a--icon">...</svg>
 			</div>
 			<div class="l--flow -flow:s">
 				...CONTENT...
@@ -129,37 +129,33 @@ import { Alert } from '@lism-css/ui/astro';
 <Preview>
 	<PreviewTitle>typeの指定</PreviewTitle>
 	<PreviewArea p='20' resize>
-		<Alert type='alert' bdrs='10'>
+		<Alert type='alert'>
 			<Dummy lang='ja' length='codes' />
 		</Alert>
-		<Alert type='point' bdrs='10'>
+		<Alert type='point'>
 			<Dummy lang='ja' length='codes' />
 		</Alert>
-		<Alert type='warning' bdrs='10'>
+		<Alert type='warning'>
 			<Dummy lang='ja' length='codes' />
 		</Alert>
-		<Alert type='check' bdrs='10'>
+		<Alert type='check'>
 			<Dummy lang='ja' length='codes' />
 		</Alert>
-		<Alert type='info' bdrs='10'>
+		<Alert type='info'>
 			<Dummy lang='ja' length='codes' />
 		</Alert>
-		<Alert type='help' bdrs='10'>
-			<Dummy lang='ja' length='codes' />
-		</Alert>
-		<Alert type='note' bdrs='10'>
+		<Alert type='help'>
 			<Dummy lang='ja' length='codes' />
 		</Alert>
 	</PreviewArea>
 	<PreviewCode slot='tab' label='JSX'>
 	```jsx
-	<Alert type='alert' bdrs='10'>...</Alert>
-	<Alert type='point' bdrs='10'>...</Alert>
-	<Alert type='warning' bdrs='10'>...</Alert>
-	<Alert type='check' bdrs='10'>...</Alert>
-	<Alert type='info' bdrs='10'>...</Alert>
-	<Alert type='help' bdrs='10'>...</Alert>
-	<Alert type='note' bdrs='10'>...</Alert>
+	<Alert type='alert'>...</Alert>
+	<Alert type='point'>...</Alert>
+	<Alert type='warning'>...</Alert>
+	<Alert type='check'>...</Alert>
+	<Alert type='info'>...</Alert>
+	<Alert type='help'>...</Alert>
 	```
 	</PreviewCode>
 </Preview>
