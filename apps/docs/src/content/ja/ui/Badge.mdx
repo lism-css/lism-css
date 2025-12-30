@@ -1,12 +1,12 @@
 ---
 title: 'Badge'
-description: ...
+description: '@lism-css/ui で提供する Badge コンポーネントについて解説します。'
 ---
 import { Lism, Cluster, Flex, Icon, Spacer } from 'lism-css/astro';
+import { Badge } from '@lism-css/ui/astro';
 import { BookIcon } from '@phosphor-icons/react';
-import Badge from '@/components/ex/Badge/index.astro';
 
-バッジを表示する`<Badge>`コンポーネントの作成例を紹介します。
+バッジを表示できるコンポーネントです。
 
 
 <Preview>
@@ -18,56 +18,74 @@ import Badge from '@/components/ex/Badge/index.astro';
 			<Badge className='u-cbox' keycolor='blue' bdrs='99'>Badge</Badge>
 		</Cluster>
 	</PreviewArea>
-</Preview>
-
-
-## Only Core
-
-コンポーネントを作らずにバッジを作るコード例も紹介しておきます。
-
-<Preview>
-	<PreviewTitle>Example</PreviewTitle>
-	<PreviewArea p='20' bg=':stripe'>
-		<Cluster g='15'>
-			<Lism tag='span' fz='xs' lh='xs' py='5' px='10' bgc='text' c='base' bdrs='10'>Badge</Lism>
-			<Lism tag='span' fz='xs' lh='xs' py='5' px='10' bd bdc='cc' bdrs='10'>Badge</Lism>
-			<Lism tag='span' className='u-cbox' keycolor='blue' bd bdc='keycolor:base:25%' fz='xs' lh='xs' py='5' px='10' bdrs='99'>Badge</Lism>
-		</Cluster>
-	</PreviewArea>
-	<PreviewCode slot='tab' label='JSX'>
+	<PreviewCode slot='tab' label='React, Astro'>
 		```jsx
 		<Cluster g='15'>
-			<Lism tag='span' fz='xs' lh='xs' py='5' px='10' bgc='text' c='base' bdrs='10'>Badge</Lism>
-			<Lism tag='span' fz='xs' lh='xs' py='5' px='10' bd bdc='cc' bdrs='10'>Badge</Lism>
-			<Lism tag='span' className='u-cbox' keycolor='blue' bd bdc='keycolor:base:25%' fz='xs' lh='xs' py='5' px='10' bdrs='99'>Badge</Lism>
+			<Badge>Badge</Badge>
+			<Badge variant='outline'>Badge</Badge>
+			<Badge className='u-cbox' keycolor='blue' bdrs='99'>Badge</Badge>
 		</Cluster>
 		```
 	</PreviewCode>
 	<PreviewCode slot='tab' label='HTML'>
-		```html
-		<div class="l--cluster -g:15">
-			<span class="-py:5 -px:15 -lh:s -fz:s -bgc:text -c:base -bdrs:10">Badge</span>
-			<span class="-py:5 -px:15 -lh:s -fz:s -bd -bdrs:10">Badge</span>
-			<span class="u-cbox -bd -py:5 -px:15 -lh:s -fz:s -bdrs:99" style="--keycolor:var(--blue);--bdc:color-mix(in srgb, var(--keycolor) 25%, var(--base))">Badge</span>
+		```jsx
+		<div class='l--cluster -g:15'>
+			<span class='c--badge -d:in-flex -fz:xs -lh:xs -py:5 -px:10 -bdrs:10'>Badge</span>
+			<span class='c--badge c--badge--outline -d:in-flex -fz:xs -lh:xs -py:5 -px:10 -bdrs:10'>Badge</span>
+			<span class='u-cbox c--badge -d:in-flex -fz:xs -lh:xs -py:5 -px:10 -bdrs:99' style='--keycolor:var(--blue)'>Badge</span>
 		</div>
 		```
 	</PreviewCode>
 </Preview>
 
 
-## Create Component
 
-ここからは`Badge`(`.c--badge`)というコンポーネントを作って利用する例を紹介していきます。
+## How to use
 
-### Source Code
-<ImportSource name='Badge' css react astro />
+`@lism-css/ui` パッケージで`Badge`として提供しています。
+
 
 ### Import
-<ImportPackage component='Badge' packageName='@lism-css/ui' />
+<ImportPackage component='Badge' packageName='@lism-css/ui' css='style.css' />
 
 
+### 基本構造
 
-## Usage
+<Preview>
+	<PreviewCode slot='tab' label='React, Astro'>
+		```jsx
+		<Badge>...</Badge>
+		```
+	</PreviewCode>
+	<PreviewCode slot='tab' label='HTML'>
+		```html
+		<span class='c--badge -d:in-flex -fz:xs -lh:xs -py:5 -px:10 -bdrs:10'>...</span>
+		```
+	</PreviewCode>
+</Preview>
+
+### Props
+
+| プロパティ | 説明 |
+|---|---|
+|`variant`<small>(必須)</small>| `c--badge--{variant}` クラスを出力します。`outline`を用意しています。|
+
+
+### Source Code
+<Preview>
+	<PreviewCode slot='tab' label='_style.css'>
+		<SrcCode dir='lism-ui' path='src/components/Badge/_style.css' />
+	</PreviewCode>
+	<PreviewCode slot='tab' label='Badge.jsx'>
+		<SrcCode dir='lism-ui' path='src/components/Badge/react/Badge.jsx' />
+	</PreviewCode>
+	<PreviewCode slot='tab' label='Badge.astro'>
+		<SrcCode dir='lism-ui' path='src/components/Badge/astro/Badge.astro' />
+	</PreviewCode>
+</Preview>
+
+
+## Examples
 
 <Preview>
 	<PreviewTitle>`<Badge>`の使用例</PreviewTitle>
@@ -197,6 +215,43 @@ import { BookIcon } from '@phosphor-icons/react';
 			<Badge d='in-flex' g='5' px-s='10' ai='center'><Icon icon='star-fill' style={{translate: '-10% 0'}} />Badge</Badge>
 			<Badge variant='outline' d='in-flex' g='5' px-s='10' ai='center' bdrs='5'><Icon icon='tag' style={{translate: '-10% 0'}} />Badge</Badge>
 		</Cluster>
+		```
+	</PreviewCode>
+</Preview>
+
+
+## Only lism-css
+
+@lism-css/uiを使用せずに、lism-css のみで Badge を構築するコード例を紹介します。
+
+<Preview>
+	<PreviewTitle>Example</PreviewTitle>
+	<PreviewArea p='20' bg=':stripe'>
+		<Cluster g='15'>
+			<Lism tag='span' fz='xs' lh='xs' py='5' px='10' bgc='text' c='base' bdrs='10'>Badge</Lism>
+			<Lism tag='span' fz='xs' lh='xs' py='5' px='10' bd bdc='cc' bdrs='10'>Badge</Lism>
+			<Lism tag='span' className='u-cbox' keycolor='blue' bd bdc='keycolor:base:40%' fz='xs' lh='xs' py='5' px='10' bdrs='99'>Badge</Lism>
+		</Cluster>
+	</PreviewArea>
+	<PreviewCode slot='tab' label='JSX'>
+		```jsx
+		<Cluster g='15'>
+			<Lism tag='span' fz='xs' lh='xs' py='5' px='10' bgc='text' c='base' bdrs='10'>Badge</Lism>
+			<Lism tag='span' fz='xs' lh='xs' py='5' px='10' bd bdc='cc' bdrs='10'>Badge</Lism>
+			<Lism tag='span' className='u-cbox' keycolor='blue' bd bdc='keycolor:base:40%' fz='xs' lh='xs' py='5' px='10' bdrs='99'>Badge</Lism>
+		</Cluster>
+		```
+	</PreviewCode>
+	<PreviewCode slot='tab' label='HTML'>
+		```html
+		<div class='l--cluster -g:15'>
+			<span class='-fz:xs -lh:xs -py:5 -px:10 -bgc:text -c:base -bdrs:10'>Badge</span>
+			<span class='-fz:xs -lh:xs -py:5 -px:10 -bd -bdc:cc -bdrs:10'>Badge</span>
+			<span
+				class='u-cbox -bd -fz:xs -lh:xs -py:5 -px:10 -bdrs:99'
+				style='--keycolor:var(--blue);--bdc:color-mix(in srgb, var(--keycolor) 40%, var(--base))'
+			>Badge</span>
+		</div>
 		```
 	</PreviewCode>
 </Preview>

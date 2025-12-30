@@ -2,23 +2,23 @@
 import DemoLayout from '@/layouts/DemoLayout.astro';
 
 import { Wrapper, Flex, Frame, Media, Stack, HTML } from 'lism-css/astro';
-import Button from '@/components/ex/Button/index.astro';
+import { Button } from '@lism-css/ui/astro';
 import './_style.css';
 ---
 
-<DemoLayout title='Section001'>
-	<Wrapper contentSize='s' py='50' bgc='base' hasGutter>
-		<Stack ai='center' g='40'>
-			<h2 class='u-trim'>人と緑が共に育つ街</h2>
-			<Frame tag='figure' class='set-innerRs' tag='figure' ar='16/9' pos='rel' bdrs='20' bxsh='20' bgc='white' p='10'>
-				<Media class='-bdrs:inner' src='https://cdn.lism-css.com/img/u-5.jpg' alt='' width='960' height='640' />
+<DemoLayout title="Section001">
+	<Wrapper contentSize="s" py="50" bgc="base" hasGutter>
+		<Stack ai="center" g="40">
+			<h2 class="u-trim">人と緑が共に育つ街</h2>
+			<Frame tag="figure" class="set-innerRs" tag="figure" ar="16/9" pos="rel" bdrs="20" bxsh="20" bgc="white" p="10">
+				<Media class="-bdrs:inner" src="https://cdn.lism-css.com/img/u-5.jpg" alt="" width="960" height="640" />
 			</Frame>
-			<HTML.p class='u-trim' fz='m'>
+			<HTML.p class="u-trim" fz="m">
 				豊かな自然環境を次世代に引き継ぎながら、 都市と自然が調和した空間づくりを推進しています。
 				持続可能な社会の実現に貢献することを目指しています。 未来に向けて持続可能な社会を築いていきます。
 			</HTML.p>
-			<Flex g='30' ai='center' jc='center'>
-				<Button href='#' min-w='250px' py='15' bdrs='10'>View More</Button>
+			<Flex g="30" ai="center" jc="center">
+				<Button href="#" min-w="250px" py="15" bdrs="10">View More</Button>
 			</Flex>
 		</Stack>
 	</Wrapper>

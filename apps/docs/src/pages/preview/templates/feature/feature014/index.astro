@@ -2,123 +2,123 @@
 import DemoLayout from '@/layouts/DemoLayout.astro';
 
 import { Stack, Container, Frame, Grid, Media, HTML, Flex, Icon } from 'lism-css/astro';
-import Button from '@/components/ex/Button/index.astro';
+import { Button } from '@lism-css/ui/astro';
 import './_style.css';
 ---
 
-<DemoLayout title='Feature014'>
-	<Container isWrapper='l' bgc='base-2' py='50' hasGutter>
-		<Stack g='50'>
-			<Stack ai='center' g='30'>
-				<HTML.p class='u-trim' fz='4xl' fw='light' lts='l'>Feature</HTML.p>
-				<HTML.h lv='2' class='u-trim' fz='m' fw='normal' o='-20'>鉱石の概要と効能</HTML.h>
+<DemoLayout title="Feature014">
+	<Container isWrapper="l" bgc="base-2" py="50" hasGutter>
+		<Stack g="50">
+			<Stack ai="center" g="30">
+				<HTML.p class="u-trim" fz="4xl" fw="light" lts="l">Feature</HTML.p>
+				<HTML.h lv="2" class="u-trim" fz="m" fw="normal" o="-20">鉱石の概要と効能</HTML.h>
 			</Stack>
-			<Grid gt='repeat' cols={['1', null, '3']}>
-				<Grid gtr='subgrid' gr='span 3' ji='c' g='30' p={['40', null, '0 40']}>
-					<Frame tag='figure' ar='1/1' w='10rem' bdrs='99'>
+			<Grid gt="repeat" cols={['1', null, '3']}>
+				<Grid gtr="subgrid" gr="span 3" ji="c" g="30" p={['40', null, '0 40']}>
+					<Frame tag="figure" ar="1/1" w="10rem" bdrs="99">
 						<Media
-							src='https://cdn.lism-css.com/img/random-2510?category=v&r=1'
-							alt=''
-							width='960'
-							height='640'
+							src="https://cdn.lism-css.com/img/random-2510?category=v&r=1"
+							alt=""
+							width="960"
+							height="640"
 							setTransition
-							hov='to:zoom'
+							hov="to:zoom"
 						/>
 					</Frame>
-					<Stack g='30'>
-						<HTML.p class='u-trim' fz='l' fw='bold' ta='center'>アクアマリン</HTML.p>
-						<HTML.p class='u-trim' fz='s' o='-20'>
+					<Stack g="30">
+						<HTML.p class="u-trim" fz="l" fw="bold" ta="center">アクアマリン</HTML.p>
+						<HTML.p class="u-trim" fz="s" o="-20">
 							海のように穏やかで、清らかなエネルギーを持つ石。コミュニケーションを円滑にし、幸せな未来へと導きます。
 						</HTML.p>
 					</Stack>
-					<Flex w='stretch'>
+					<Flex w="stretch">
 						<Button
-							layout='grid'
-							gtc='1em 1fr 1em'
-							g='15'
-							variant='outline'
-							href='#'
-							jc='center'
-							w='stretch'
-							p='20 30'
-							bdrs='99'
+							layout="grid"
+							gtc="1em 1fr 1em"
+							g="15"
+							variant="outline"
+							href="#"
+							jc="center"
+							w="stretch"
+							p="20 30"
+							bdrs="99"
 							setTransition
-							hov='reverse'
+							hov="reverse"
 						>
-							<HTML.span gc='2'>View More</HTML.span>
-							<Icon icon='arrow-right' gc='3' />
+							<HTML.span gc="2">View More</HTML.span>
+							<Icon icon="arrow-right" gc="3" />
 						</Button>
 					</Flex>
 				</Grid>
-				<Grid gtr='subgrid' gr='span 3' ji='c' g='30' p={['40', null, '0 40']} bd bdw={['1px 0 0 0', null, '0 0 0 1px']} bdc='white'>
-					<Frame tag='figure' ar='1/1' w='10rem' bdrs='99'>
+				<Grid gtr="subgrid" gr="span 3" ji="c" g="30" p={['40', null, '0 40']} bd bdw={['1px 0 0 0', null, '0 0 0 1px']} bdc="white">
+					<Frame tag="figure" ar="1/1" w="10rem" bdrs="99">
 						<Media
-							src='https://cdn.lism-css.com/img/random-2510?category=v&r=2'
-							alt=''
-							width='960'
-							height='640'
+							src="https://cdn.lism-css.com/img/random-2510?category=v&r=2"
+							alt=""
+							width="960"
+							height="640"
 							setTransition
-							hov='to:zoom'
+							hov="to:zoom"
 						/>
 					</Frame>
-					<Stack g='30'>
-						<HTML.p class='u-trim' fz='l' fw='bold' ta='center'>ローズクォーツ</HTML.p>
-						<HTML.p class='u-trim' fz='s' o='-20'>
+					<Stack g="30">
+						<HTML.p class="u-trim" fz="l" fw="bold" ta="center">ローズクォーツ</HTML.p>
+						<HTML.p class="u-trim" fz="s" o="-20">
 							愛と美を象徴する石。持ち主の内なる輝きを引き出し、優しさと思いやりの心を育むと伝えられています。
 						</HTML.p>
 					</Stack>
-					<Flex w='stretch'>
+					<Flex w="stretch">
 						<Button
-							layout='grid'
-							gtc='1em 1fr 1em'
-							g='15'
-							variant='outline'
-							href='#'
-							jc='center'
-							w='stretch'
-							p='20 30'
-							bdrs='99'
+							layout="grid"
+							gtc="1em 1fr 1em"
+							g="15"
+							variant="outline"
+							href="#"
+							jc="center"
+							w="stretch"
+							p="20 30"
+							bdrs="99"
 							setTransition
-							hov='reverse'
+							hov="reverse"
 						>
-							<HTML.span gc='2'>View More</HTML.span>
-							<Icon icon='arrow-right' gc='3' />
+							<HTML.span gc="2">View More</HTML.span>
+							<Icon icon="arrow-right" gc="3" />
 						</Button>
 					</Flex>
 				</Grid>
-				<Grid gtr='subgrid' gr='span 3' ji='c' g='30' p={['40', null, '0 40']} bd bdw={['1px 0 0 0', null, '0 0 0 1px']} bdc='white'>
-					<Frame tag='figure' ar='1/1' w='10rem' bdrs='99'>
+				<Grid gtr="subgrid" gr="span 3" ji="c" g="30" p={['40', null, '0 40']} bd bdw={['1px 0 0 0', null, '0 0 0 1px']} bdc="white">
+					<Frame tag="figure" ar="1/1" w="10rem" bdrs="99">
 						<Media
-							src='https://cdn.lism-css.com/img/random-2510?category=v&r=3'
-							alt=''
-							width='960'
-							height='640'
+							src="https://cdn.lism-css.com/img/random-2510?category=v&r=3"
+							alt=""
+							width="960"
+							height="640"
 							setTransition
-							hov='to:zoom'
+							hov="to:zoom"
 						/>
 					</Frame>
-					<Stack g='30'>
-						<HTML.p class='u-trim' fz='l' fw='bold' ta='center'>ムーンストーン</HTML.p>
-						<HTML.p class='u-trim' fz='s' o='-20'>
+					<Stack g="30">
+						<HTML.p class="u-trim" fz="l" fw="bold" ta="center">ムーンストーン</HTML.p>
+						<HTML.p class="u-trim" fz="s" o="-20">
 							月のエネルギーを宿す神秘の石。感受性を豊かにし、愛を育み、持ち主の魅力を高めてくれるとされます。
 						</HTML.p>
 					</Stack>
-					<Flex w='stretch'>
+					<Flex w="stretch">
 						<Button
-							layout='grid'
-							gtc='1em 1fr 1em'
-							g='15'
-							variant='outline'
-							href='#'
-							jc='center'
-							w='stretch'
-							p='20 30'
-							bdrs='99'
+							layout="grid"
+							gtc="1em 1fr 1em"
+							g="15"
+							variant="outline"
+							href="#"
+							jc="center"
+							w="stretch"
+							p="20 30"
+							bdrs="99"
 							setTransition
-							hov='reverse'
+							hov="reverse"
 						>
-							<HTML.span gc='2'>View More</HTML.span>
-							<Icon icon='arrow-right' gc='3' />
+							<HTML.span gc="2">View More</HTML.span>
+							<Icon icon="arrow-right" gc="3" />
 						</Button>
 					</Flex>
 				</Grid>

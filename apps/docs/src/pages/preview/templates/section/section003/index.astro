@@ -2,16 +2,16 @@
 import DemoLayout from '@/layouts/DemoLayout.astro';
 
 import { Container, Frame, Media, Stack, Columns } from 'lism-css/astro';
-import Button from '@/components/ex/Button/index.astro';
+import { Button } from '@lism-css/ui/astro';
 import './_style.css';
 ---
 
-<DemoLayout title='Section003'>
-	<Container bgc='base'>
-		<Columns cols={['1', null, '2']} g='5'>
-			<Stack g='40' gr={[null, null, '1']} bgc='base-2' ai='center' jc='center' p='60 50'>
+<DemoLayout title="Section003">
+	<Container bgc="base">
+		<Columns cols={['1', null, '2']} g="5">
+			<Stack g="40" gr={[null, null, '1']} bgc="base-2" ai="center" jc="center" p="60 50">
 				<h2>感動をその手に</h2>
-				<Stack g='30'>
+				<Stack g="30">
 					<p>
 						あなたが住む街には、まだ知らない素敵な場所や物語が隠されています。
 						私たちのサービスは、地元の人だけが知る隠れ家カフェや、週末に楽しめる小さなイベントなど、
@@ -19,20 +19,20 @@ import './_style.css';
 					</p>
 					<p>いつもの帰り道が、新しい発見に満ちた冒険の道に変わる。そんな体験を、私たちと一緒に始めましょう。</p>
 				</Stack>
-				<Button href='#' min-w='250px' py='15' bdrs='10'>View More</Button>
+				<Button href="#" min-w="250px" py="15" bdrs="10">View More</Button>
 			</Stack>
-			<Columns cols='2' gc={[null, null, '2']} g='5'>
-				<Frame tag='figure'>
-					<Media src='https://cdn.lism-css.com/img/random-2510?r=1' alt='' width='960' height='640' />
+			<Columns cols="2" gc={[null, null, '2']} g="5">
+				<Frame tag="figure">
+					<Media src="https://cdn.lism-css.com/img/random-2510?r=1" alt="" width="960" height="640" />
 				</Frame>
-				<Frame tag='figure'>
-					<Media src='https://cdn.lism-css.com/img/random-2510?r=2' alt='' width='960' height='640' />
+				<Frame tag="figure">
+					<Media src="https://cdn.lism-css.com/img/random-2510?r=2" alt="" width="960" height="640" />
 				</Frame>
-				<Frame tag='figure'>
-					<Media src='https://cdn.lism-css.com/img/random-2510?r=3' alt='' width='960' height='640' />
+				<Frame tag="figure">
+					<Media src="https://cdn.lism-css.com/img/random-2510?r=3" alt="" width="960" height="640" />
 				</Frame>
-				<Frame tag='figure'>
-					<Media src='https://cdn.lism-css.com/img/random-2510?r=4' alt='' width='960' height='640' />
+				<Frame tag="figure">
+					<Media src="https://cdn.lism-css.com/img/random-2510?r=4" alt="" width="960" height="640" />
 				</Frame>
 			</Columns>
 		</Columns>
