@@ -14,9 +14,19 @@ import path from 'node:path';
 const currentLang = getRootLang();
 const allPosts = await getPostsByLang(currentLang);
 
-// ui/ 配下の記事のみフィルタリング
+// ui/ 配下の記事のみフィルタリング（examples配下は除く）
 const uiPosts = allPosts
-	.filter((post) => post.slug.startsWith('ui/'))
+	.filter((post) => post.slug.startsWith('ui/') && !post.slug.startsWith('ui/examples/'))
+	.sort((a, b) => {
+		// order順にソート（未指定は999）
+		const orderA = a.data.order ?? 999;
+		const orderB = b.data.order ?? 999;
+		return orderA - orderB;
+	});
+
+// ui/examples/ 配下の記事を別途フィルタリング
+const examplePosts = allPosts
+	.filter((post) => post.slug.startsWith('ui/examples/'))
 	.sort((a, b) => {
 		// order順にソート（未指定は999）
 		const orderA = a.data.order ?? 999;
@@ -39,14 +49,20 @@ function getThumbPath(title: string): string {
 }
 ---
 
-<BaseLayout title="UI Components" description="Lism CSSを使ったUIコンポーネント集" excludeFromSearch>
+<BaseLayout title="Lism　UI" description="Lism CSSをベースにしたUIパッケージ、@lism-css/ui のコンポーネント一覧" excludeFromSearch>
 	<Lism class="uiComponents">
 		<Stack tag="header" g="20">
-			<h1>Lism UI Components</h1>
-			<p class="-c:text-2">Lism CSSを使ったUIコンポーネント集です。</p>
+			<h1>Lism UI</h1>
+			<p class="-c:text-2">
+				Lism CSSをベースにしたUIパッケージ（<code>@lism-css/ui</code>） のコンポーネント一覧と、実装例・サンプル集を紹介します。
+			</p>
 		</Stack>
-		<Lism my-s="50">
-			<Grid layout="fluidCols" cols="240px" g="30">
+		<Lism tag="section" my-s="50">
+			<Stack tag="header" g="20">
+				<h2>Components</h2>
+				<p class="-c:text-2"><code>@lism-css/ui</code>からインポートできるコンポーネント一覧です。</p>
+			</Stack>
+			<Grid layout="fluidCols" cols="240px" g="30" my-s="40">
 				{
 					uiPosts.map((post) => {
 						const postUrl = `/ui/${post.slug.replace('ui/', '')}/`;
@@ -72,5 +88,38 @@ function getThumbPath(title: string): string {
 				}
 			</Grid>
 		</Lism>
+		{
+			examplePosts.length > 0 && (
+				<Lism my-s="50">
+					<Stack tag="header" g="20">
+						<h2>Examples</h2>
+						<p class="-c:text-2">Lism CSS, Lism UIをベースにした、その他の実装例・サンプル集です。</p>
+					</Stack>
+					<Grid layout="fluidCols" cols="240px" g="30" my-s="40">
+						{examplePosts.map((post) => {
+							const postUrl = `/ui/${post.slug.replace('ui/', '')}/`;
+							const thumbPath = getThumbPath(post.data.title);
+							return (
+								<LinkBox
+									key={post.slug}
+									layout="stack"
+									href={postUrl}
+									p="5"
+									g="5"
+									bdrs="20"
+									hov="neutral"
+									class={post.data.draft ? '_draft' : ''}
+								>
+									<Frame ar="3/2" bd bdrs="20" bgc="base">
+										<Media src={thumbPath} alt={post.data.title} width="360" height="240" loading="lazy" />
+									</Frame>
+									<Lism class="u-trim -ff:mono -fz:s -p:10">{post.data.title}</Lism>
+								</LinkBox>
+							);
+						})}
+					</Grid>
+				</Lism>
+			)
+		}
 	</Lism>
 </BaseLayout>
