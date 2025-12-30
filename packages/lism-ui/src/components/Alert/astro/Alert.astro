@@ -1,0 +1,17 @@
+---
+import { Flow, Lism, Center, Icon } from 'lism-css/astro';
+import getAlertProps, { type AlertProps } from '../getProps';
+
+type Props = AlertProps;
+
+const { icon, layout, flow, ...alertProps } = getAlertProps(Astro.props);
+---
+
+<Lism layout={layout} {...alertProps}>
+	<Center isSide={layout === 'sideMain'} c='keycolor' fz='xl' fxsh='0'>
+		<Icon icon={icon} />
+	</Center>
+	<Flow flow={flow}>
+		<slot />
+	</Flow>
+</Lism>
