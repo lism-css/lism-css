@@ -1,61 +1,70 @@
 ---
 title: 'Avatar'
-description: ...
+description: '@lism-css/ui で提供する Avatar コンポーネントについて解説します。'
 ---
-import { Flex,  Frame } from 'lism-css/astro';
-import Avatar from '@/components/ex/Avatar/index.astro';
+import { Flex, Center, Frame } from 'lism-css/astro';
+import { Avatar } from '@lism-css/ui/astro';
 
-アバター画像用のコンポーネントの作成例を紹介します。
-
-<Preview>
-	<PreviewTitle>Preview</PreviewTitle>
-	<PreviewArea p='20' bg=':stripe'>
-		<Flex layout='cluster' g='20'>
-			<Avatar size='4rem' src='https://cdn.lism-css.com/img/avatar/a-01.jpg' alt='Avatar of xxxx'/>
-			<Avatar size='5rem' src='https://cdn.lism-css.com/img/avatar/a-02.jpg' alt='Avatar of xxxx' bd bdw='2px' bdc='base' bxsh='20'/>
-		</Flex>
-	</PreviewArea>
-
-</Preview>
-
-## Only Core
-
-コンポーネントを作らずにアバターを作るコード例も紹介しておきます。
+アバター画像用のコンポーネントです。
 
 <Preview>
 	<PreviewTitle>Preview</PreviewTitle>
 	<PreviewArea p='20' bg=':stripe'>
-		<Frame ar='1/1' w='4em' bdrs='99'>
-			<img src='https://cdn.lism-css.com/img/avatar/a-01.jpg' alt='Avatar of xxxx' width='100%' height='100%' decoding='async' />
-		</Frame>
+		<Avatar size='4rem' src='https://cdn.lism-css.com/img/avatar/a-01.jpg' alt='Avatar of xxxx'/>
 	</PreviewArea>
-	<PreviewCode slot='tab' label='JSX'>
+	<PreviewCode slot='tab' label='@lism-css/ui'>
+		```jsx
+		<Avatar size='4rem' src='https://cdn.lism-css.com/img/avatar/a-01.jpg' alt='Avatar of xxxx'/>
+		```
+	</PreviewCode>
+	<PreviewCode slot='tab' label='Only Core'>
 		```jsx
 		<Frame ar='1/1' w='4em' bdrs='99'>
 			<img src='https://cdn.lism-css.com/img/avatar/a-01.jpg' alt='Avatar of xxxx' width='100%' height='100%' decoding='async' />
-		</Frame>　
+		</Frame>
 		```
 	</PreviewCode>
 	<PreviewCode slot='tab' label='HTML'>
-		```html
+		```jsx
 		<div class="l--frame -ar:1/1 -w -bdrs:99" style="--w:4rem">
 			<img src="https://cdn.lism-css.com/img/avatar/a-01.jpg" alt="Avatar of xxxx" width="100%" height="100%" decoding="async">
-		</div>	
+		</div>
 		```
 	</PreviewCode>
 </Preview>
 
-## Create Component
 
-ここからは`Avatar`(`.c--avatar`)というコンポーネントを作って利用する例を紹介していきます。
+## How to use
 
-### Source Code
-<ImportSource name='Avatar' react astro />
+`@lism-css/ui` パッケージで`Avatar`として提供しています。
 
-### Import
+### 基本構造
 
-<ImportPackage component='Avatar' packageName='@lism-css/ui' />
+<Preview>
+	<PreviewCode slot='tab' label='React'>
+```jsx
+import { Avatar } from '@lism-css/ui/react';
 
+<Avatar src="" alt=" />
+```
+	</PreviewCode>
+	<PreviewCode slot='tab' label='Astro'>
+```astro
+---
+import { Avatar } from '@lism-css/ui/astro';
+---
+
+<Avatar src="" alt=""　 />
+```
+	</PreviewCode>
+	<PreviewCode slot='tab' label='HTML'>
+```html
+<div class="c--avatar l--frame -ar:1/1 -bdrs:99">
+	<img src="" alt="" />
+</div>
+```
+	</PreviewCode>
+</Preview>
 
 
 ### Props
@@ -70,7 +79,19 @@ import Avatar from '@/components/ex/Avatar/index.astro';
 {/* |`mediaProps`| 上記以外にメディア側に対してプロパティを指定したい場合はこのプロパティにオブジェクト形式で指定できます。| */}
 
 
-## Usage
+### Source Code
+
+<Preview>
+	<PreviewCode slot='tab' label='Avatar.jsx'>
+		<SrcCode dir='lism-ui' path='src/components/Avatar/react/Avatar.jsx' />
+	</PreviewCode>
+	<PreviewCode slot='tab' label='Avatar.astro'>
+		<SrcCode dir='lism-ui' path='src/components/Avatar/astro/Avatar.astro' />
+	</PreviewCode>
+</Preview>
+
+
+## Examples
 
 <Preview>
 	<PreviewTitle>`Avatar`の使用例</PreviewTitle>
@@ -93,6 +114,34 @@ import Avatar from '@/components/ex/Avatar/index.astro';
 		</div>
 		<div class='c--avatar l--frame -ar:1/1 -w -bdrs:99 -bd -bxsh:20' style='--w:5rem;--bdw:2px;--bdc:var(--base)'>
 			<img src='https://cdn.lism-css.com/img/avatar/a-02.jpg' alt='Avatar of xxxx' width='100%' height='100%' decoding='async' />
+		</div>
+		```
+	</PreviewCode>
+</Preview>
+
+
+## Only lism-css
+
+@lism-css/uiを使用せずに、lism-css のみで Avatar を構築するコード例を紹介します。
+
+<Preview>
+	<PreviewTitle>Example</PreviewTitle>
+	<PreviewArea p='20' bg=':stripe'>
+		<Frame ar='1/1' w='4em' bdrs='99'>
+			<img src='https://cdn.lism-css.com/img/avatar/a-01.jpg' alt='Avatar of xxxx' width='100%' height='100%' decoding='async' />
+		</Frame>
+	</PreviewArea>
+	<PreviewCode slot='tab' label='JSX'>
+		```jsx
+		<Frame ar='1/1' w='4em' bdrs='99'>
+			<img src='https://cdn.lism-css.com/img/avatar/a-01.jpg' alt='Avatar of xxxx' width='100%' height='100%' decoding='async' />
+		</Frame>
+		```
+	</PreviewCode>
+	<PreviewCode slot='tab' label='HTML'>
+		```jsx
+		<div class="l--frame -ar:1/1 -w -bdrs:99" style="--w:4rem">
+			<img src="https://cdn.lism-css.com/img/avatar/a-01.jpg" alt="Avatar of xxxx" width="100%" height="100%" decoding="async">
 		</div>
 		```
 	</PreviewCode>

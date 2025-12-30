@@ -2,31 +2,31 @@
 import DemoLayout from '@/layouts/DemoLayout.astro';
 
 import { Stack, Container, Frame, Grid, Media, HTML, Flex } from 'lism-css/astro';
-import Button from '@/components/ex/Button/index.astro';
+import { Button } from '@lism-css/ui/astro';
 import './_style.css';
 ---
 
-<DemoLayout title='Section015'>
+<DemoLayout title="Section015">
 	<Container>
-		<Stack g='50'>
+		<Stack g="50">
 			<Grid gtc={['auto', null, '1fr 1fr']}>
-				<Stack g='40' jc='center' bgc='base-2' p={['50 40', null, '50']} minH='50svw'>
-					<Stack tag='hgroup' g='30' ai='fs' jc='center'>
-						<HTML.h lv='2' class='u-trim' fz='4rem' fw='100' lts='l'>Product</HTML.h>
-						<HTML.p class='u-trim' fz='l' fw='bold' lts='l'>いつもの朝が、特別な朝に</HTML.p>
+				<Stack g="40" jc="center" bgc="base-2" p={['50 40', null, '50']} minH="50svw">
+					<Stack tag="hgroup" g="30" ai="fs" jc="center">
+						<HTML.h lv="2" class="u-trim" fz="4rem" fw="100" lts="l">Product</HTML.h>
+						<HTML.p class="u-trim" fz="l" fw="bold" lts="l">いつもの朝が、特別な朝に</HTML.p>
 					</Stack>
-					<HTML.p fz='m' lh='l'>
+					<HTML.p fz="m" lh="l">
 						完璧な一枚のトーストが、忙しい朝を、心豊かな時間に変えてくれます。
 						独自のスチームテクノロジーと秒単位の温度制御で、パンの種類に合わせた最高の焼き加減を実現。
 						外はさっくり、中はもっちりとした、誰もが感動する究極の食感を生み出します。
 						パン本来のおいしさを最大限に引き出す、毎朝の小さな贅沢をお楽しみください。
 					</HTML.p>
 					<Flex>
-						<Button href='#' jc='center' p='15' bdrs='10' min-w='10rem'>View More</Button>
+						<Button href="#" jc="center" p="15" bdrs="10" min-w="10rem">View More</Button>
 					</Flex>
 				</Stack>
-				<Frame tag='figure' gr={[null, null, '1']} gc={['1', null, '2']}>
-					<Media src='https://cdn.lism-css.com/img/random-2510' alt='' width='960' height='640' />
+				<Frame tag="figure" gr={[null, null, '1']} gc={['1', null, '2']}>
+					<Media src="https://cdn.lism-css.com/img/random-2510" alt="" width="960" height="640" />
 				</Frame>
 			</Grid>
 		</Stack>

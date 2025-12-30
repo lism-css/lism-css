@@ -3,11 +3,13 @@
 import AstroCode from './AstroCode.astro';
 import { Preview, PreviewCode } from '@/components/mdx';
 
-const { component = '', script = '', packageName = 'lism-css' } = Astro.props;
+const { component = '', script = '', packageName = 'lism-css', css = '' } = Astro.props;
 
 const getCopyCode = (name: string) => `import { ${component} } from '${packageName}${name}';`;
 
-const scriptCodeToCopy = `<script type=\"module\" src=\"https://cdn.jsdelivr.net/npm/${packageName}/dist/scripts/${script}\"></script>`;
+const jsImportCode = `<script type=\"module\" src=\"https://cdn.jsdelivr.net/npm/${packageName}/dist/scripts/${script}\"></script>`;
+
+const cssImportCode = `<link href="https://cdn.jsdelivr.net/npm/${packageName}/dist/${css}" rel="stylesheet" />`;
 ---
 
 <Preview>
@@ -18,9 +20,10 @@ const scriptCodeToCopy = `<script type=\"module\" src=\"https://cdn.jsdelivr.net
 		<AstroCode code={getCopyCode('/astro')} lang="js" />
 	</PreviewCode>
 	{
-		script && (
+		(script || css) && (
 			<PreviewCode slot="tab" label="HTML">
-				<AstroCode code={scriptCodeToCopy} lang="html" />
+				{css && <AstroCode code={cssImportCode} lang="html" />}
+				{script && <AstroCode code={jsImportCode} lang="html" />}
 			</PreviewCode>
 		)
 	}

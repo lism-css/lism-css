@@ -1,18 +1,14 @@
 ---
 title: 'Button'
-description: ...
+description: '@lism-css/ui で提供する Button コンポーネントについて解説します。'
 ---
 
 import { Box, Flex, Grid, Lism, Frame, HTML, Media, Icon, Spacer, Center, Layer, Dummy, Cluster, Stack } from 'lism-css/astro';
-import {
-	ArrowRightIcon,
-	ShoppingCartSimpleIcon,
-} from "@phosphor-icons/react";
+import { Button } from '@lism-css/ui/astro';
+import { ArrowRightIcon, ShoppingCartSimpleIcon } from "@phosphor-icons/react";
 
-import Button from '@/components/ex/Button/index.astro';
 
-ボタンコンポーネントの作成例を紹介します。
-
+ボタン型リンクを表示できるコンポーネントです。
 
 <Preview>
 	<PreviewTitle>Preview</PreviewTitle>
@@ -20,66 +16,56 @@ import Button from '@/components/ex/Button/index.astro';
 		<Flex layout='cluster' g='15'>
 			<Button href='###' variant='fill'>Button</Button>
 			<Button href='###' variant='outline'>Outline</Button>
-			<Button href='###' variant='outline' bdrs='99' c='#d13d5e'><Icon icon='cart' />Outline</Button>
 		</Flex>
 	</PreviewArea>
+	<PreviewCode slot='tab' label='React, Astro'>
+		```jsx
+		<Flex layout='cluster' g='15'>
+			<Button href='###' variant='fill'>Button</Button>
+			<Button href='###' variant='outline'>Outline</Button>
+		</Flex>
+		```
+	</PreviewCode>
+	<PreviewCode slot='tab' label='HTML'>
+		```jsx
+		<div class="l--cluster -g:15">
+			<a class="c--button c--button--fill l--flex -lh:s -py:10 -px:20 -hov:o" href="###"> Button </a>
+			<a class="c--button c--button--outline l--flex -lh:s -py:10 -px:20 -hov:o" href="###">Outline</a>
+		</div>
+		```
+	</PreviewCode>
+	
 </Preview>
 
 
-## Only Core
 
-**コンポーネントを作らずにボタンを作るコード例も紹介しておきます。**
+## How to use
+
+`@lism-css/ui` パッケージで`Button`として提供しています。
+
+
+### Import
+<ImportPackage component='Button' packageName='@lism-css/ui' css='style.css' />
+
+
+### 基本構造
+
 <Preview>
-	<PreviewTitle>Preview</PreviewTitle>
-	<PreviewArea p='20' bg=':stripe' flow='s'>
-		<Flex g='15'>
-			<HTML.a href='###' d='in-flex' w='fit' td='none' c='base' bgc='text' lh='s' py='10' px='20' bdrs='20' hov='o'>Button</HTML.a>
-			<HTML.a href='###' d='in-flex' w='fit' td='none' c='inherit' bd lh='s' py='10' px='20' bdrs='20' hov='o'>Button</HTML.a>
-		</Flex>
-		<Grid tag='a' href='###' gtc='1em 1fr 1em' ji='center' ai='center' px='15' py='10' g='30' w='16rem' td='none' bgc='text' c='base' bdrs='20' hov='neutral'>
-			<Lism tag='span' gc='2'>Button</Lism>
-			<Icon icon={ArrowRightIcon}/>
-		</Grid>
-	</PreviewArea>
-	<PreviewCode slot='tab' label='JSX'>
+	<PreviewCode slot='tab' label='React, Astro'>
 		```jsx
-		<Flex g='15'>
-			<HTML.a href='###' d='in-flex' w='fit' td='none' c='base' bgc='text' lh='s' py='10' px='20' bdrs='20' hov='o'>Button</HTML.a>
-			<HTML.a href='###' d='in-flex' w='fit' td='none' c='inherit' bd lh='s' py='10' px='20' bdrs='20' hov='o'>Button</HTML.a>
-		</Flex>
-		<Grid tag='a' href='###' gtc='1em 1fr 1em' ji='center' ai='center' px='15' py='10' g='30' w='16rem' td='none' bgc='text' c='base' bdrs='20' hov='neutral'>
-			<Lism tag='span' gc='2'>Button</Lism>
-			<Icon icon={ArrowRightIcon}/>
-		</Grid>
+		<Button href="">
+			(<Icon />)TEXT(<Icon />)
+		</Button>
 		```
 	</PreviewCode>
 	<PreviewCode slot='tab' label='HTML'>
 		```html
-		<div class='l--flex -g:15'>
-			<a href='###' class='-d:in-flex -w:fit -td:none -c:base -bgc:text -lh:s -py:10 -px:15 -bdrs:20 -hov:o'>Button</a>
-			<a href='###' class='-d:in-flex -w:fit -td:none -c:inherit -bd -lh:s -py:10 -px:15 -bdrs:20 -hov:o'>Button</a>
-		</div>
-		<a class="l--grid -ji:center -ai:center -px:15 -py:10 -g:30 -w -td:none -bgc:text -c:base -bdrs:20 -hov:neutral" style="--w:16rem;--gtc:1em 1fr 1em" href="###">
-			<span class="-gc" style="--gc:2">Button</span>
-			<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 256 256" class="a--icon" aria-hidden="true">
-				<path d="M221.66,133.66l-72,72a8,8,0,0,1-11.32-11.32L196.69,136H40a8,8,0,0,1,0-16H196.69L138.34,61.66a8,8,0,0,1,11.32-11.32l72,72A8,8,0,0,1,221.66,133.66Z"></path>
-			</svg>
+		<a class="c--button c--button--fill|outline l--flex -lh:s -py:10 -px:20 -hov:o" href="">
+			(<svg class="a--icon"></svg>)TEXT(<svg class="a--icon"></svg>)
 		</a>
 		```
 	</PreviewCode>
 </Preview>
-
-
-
-## Create Component
-
-ここからは`Button`(`.c--button`)というコンポーネントを作って利用する例を紹介していきます。
-
-### Source Code
-<ImportSource name='Button' css　react astro />
-
-### Import
-<ImportPackage component='Button' packageName='@lism-css/ui' />
 
 ### Props
 
@@ -90,10 +76,22 @@ import Button from '@/components/ex/Button/index.astro';
 {/* |`icon`, `endIcon` | ボタンテキストの左右に表示するアイコンを指定できます。| */}
 {/* |`hover`| デフォルトは`op`が指定されています。| */}
 
+### Source Code
+
+<Preview>
+	<PreviewCode slot='tab' label='_style.css'>
+		<SrcCode dir='lism-ui' path='src/components/Button/_style.css' />
+	</PreviewCode>
+	<PreviewCode slot='tab' label='Button.jsx'>
+		<SrcCode dir='lism-ui' path='src/components/Button/react/Button.jsx' />
+	</PreviewCode>
+	<PreviewCode slot='tab' label='Button.astro'>
+		<SrcCode dir='lism-ui' path='src/components/Button/astro/Button.astro' />
+	</PreviewCode>
+</Preview>
 
 
-
-## Usage
+## Examples
 
 <Preview>
 	<PreviewTitle>`Button`の使用例</PreviewTitle>
@@ -291,7 +289,23 @@ import Button from '@/components/ex/Button/index.astro';
 
 ホバー時に、fill,outlineが入れ替わるような [`-hov`クラス](/docs/props/hov)を追加する例を紹介します。
 
-<Preview>
+<Preview css={`
+.-hov\\:reverse {
+	--hov-c: var(--bgc);
+	--hov-bgc: var(--c);
+}
+.-hov\\:reverse:where(.c--button--fill) {
+	--hov-bgc: transparent;
+}
+.-hov\\:reverse:where(.c--button--outline) {
+	--hov-c: var(--base);
+}
+@media (any-hover: hover) {
+	.-hov\\:reverse:hover {
+		background-color: var(--hov-bgc) !important;
+		color: var(--hov-c) !important;
+	}
+}`}>
 	<PreviewTitle>例</PreviewTitle>
 	<PreviewArea p='20' bg=':stripe' layout=''>
 		<Flex g='15'>
@@ -349,4 +363,50 @@ import Button from '@/components/ex/Button/index.astro';
 		```
 	</PreviewCode>
 </Preview> */}
+
+## Only lism-css
+
+@lism-css/uiを使用せずに、lism-css のみで Button を構築するコード例を紹介します。
+
+
+<Preview>
+	<PreviewTitle>Preview</PreviewTitle>
+	<PreviewArea p='20' bg=':stripe' flow='s'>
+		<Flex g='15'>
+			<HTML.a href='###' d='in-flex' w='fit' td='none' c='base' bgc='text' lh='s' py='10' px='20' bdrs='20' hov='o'>Button</HTML.a>
+			<HTML.a href='###' d='in-flex' w='fit' td='none' c='inherit' bd lh='s' py='10' px='20' bdrs='20' hov='o'>Button</HTML.a>
+		</Flex>
+		<Grid tag='a' href='###' gtc='1em 1fr 1em' ji='center' ai='center' px='15' py='10' g='30' w='16rem' td='none' bgc='text' c='base' bdrs='20' hov='neutral'>
+			<Lism tag='span' gc='2'>Button</Lism>
+			<Icon icon={ArrowRightIcon}/>
+		</Grid>
+	</PreviewArea>
+	<PreviewCode slot='tab' label='JSX'>
+		```jsx
+		<Flex g='15'>
+			<HTML.a href='###' d='in-flex' w='fit' td='none' c='base' bgc='text' lh='s' py='10' px='20' bdrs='20' hov='o'>Button</HTML.a>
+			<HTML.a href='###' d='in-flex' w='fit' td='none' c='inherit' bd lh='s' py='10' px='20' bdrs='20' hov='o'>Button</HTML.a>
+		</Flex>
+		<Grid tag='a' href='###' gtc='1em 1fr 1em' ji='center' ai='center' px='15' py='10' g='30' w='16rem' td='none' bgc='text' c='base' bdrs='20' hov='neutral'>
+			<Lism tag='span' gc='2'>Button</Lism>
+			<Icon icon={ArrowRightIcon}/>
+		</Grid>
+		```
+	</PreviewCode>
+	<PreviewCode slot='tab' label='HTML'>
+		```html
+		<div class='l--flex -g:15'>
+			<a href='###' class='-d:in-flex -w:fit -td:none -c:base -bgc:text -lh:s -py:10 -px:15 -bdrs:20 -hov:o'>Button</a>
+			<a href='###' class='-d:in-flex -w:fit -td:none -c:inherit -bd -lh:s -py:10 -px:15 -bdrs:20 -hov:o'>Button</a>
+		</div>
+		<a class="l--grid -ji:center -ai:center -px:15 -py:10 -g:30 -w -td:none -bgc:text -c:base -bdrs:20 -hov:neutral" style="--w:16rem;--gtc:1em 1fr 1em" href="###">
+			<span class="-gc" style="--gc:2">Button</span>
+			<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 256 256" class="a--icon" aria-hidden="true">
+				<path d="M221.66,133.66l-72,72a8,8,0,0,1-11.32-11.32L196.69,136H40a8,8,0,0,1,0-16H196.69L138.34,61.66a8,8,0,0,1,11.32-11.32l72,72A8,8,0,0,1,221.66,133.66Z"></path>
+			</svg>
+		</a>
+		```
+	</PreviewCode>
+</Preview>
+
 

@@ -2,34 +2,34 @@
 import DemoLayout from '@/layouts/DemoLayout.astro';
 
 import { Container, Frame, Grid, Wrapper, Layer, Media, Stack, HTML, Flex } from 'lism-css/astro';
-import Button from '@/components/ex/Button/index.astro';
+import { Button } from '@lism-css/ui/astro';
 import './_style.css';
 ---
 
-<DemoLayout title='Section007'>
-	<Container pos='rel'>
-		<Grid isLayer gt='repeat' cols={['2', null, '4']} rows={['2', null, '1']} g='0'>
-			<Frame tag='figure' gr={['1', null, '1']} gc={['1', null, '1']} g='15'>
-				<Media src='https://cdn.lism-css.com/img/random-2510?category=v&r=1' alt='' width='960' height='640' />
+<DemoLayout title="Section007">
+	<Container pos="rel">
+		<Grid isLayer gt="repeat" cols={['2', null, '4']} rows={['2', null, '1']} g="0">
+			<Frame tag="figure" gr={['1', null, '1']} gc={['1', null, '1']} g="15">
+				<Media src="https://cdn.lism-css.com/img/random-2510?category=v&r=1" alt="" width="960" height="640" />
 			</Frame>
-			<Frame tag='figure' gr={['1', null, '1']} gc={['2', null, '2']} g='15'>
-				<Media src='https://cdn.lism-css.com/img/random-2510?category=v&r=2' alt='' width='960' height='640' />
+			<Frame tag="figure" gr={['1', null, '1']} gc={['2', null, '2']} g="15">
+				<Media src="https://cdn.lism-css.com/img/random-2510?category=v&r=2" alt="" width="960" height="640" />
 			</Frame>
-			<Frame tag='figure' gr={['2', null, '1']} gc={['1', null, '3']} g='15'>
-				<Media src='https://cdn.lism-css.com/img/random-2510?category=v&r=3' alt='' width='960' height='640' />
+			<Frame tag="figure" gr={['2', null, '1']} gc={['1', null, '3']} g="15">
+				<Media src="https://cdn.lism-css.com/img/random-2510?category=v&r=3" alt="" width="960" height="640" />
 			</Frame>
-			<Frame tag='figure' gr={['2', null, '1']} gc={['2', null, '4']} g='15'>
-				<Media src='https://cdn.lism-css.com/img/random-2510?category=v&r=4' alt='' width='960' height='640' />
+			<Frame tag="figure" gr={['2', null, '1']} gc={['2', null, '4']} g="15">
+				<Media src="https://cdn.lism-css.com/img/random-2510?category=v&r=4" alt="" width="960" height="640" />
 			</Frame>
 		</Grid>
-		<Layer blur='8px' bgc='black:30%' z='0' />
-		<Wrapper contentSize='s' hasGutter py='60' c='white' pos='rel'>
-			<Stack g='40'>
-				<Stack g='30' ai='center'>
-					<HTML.p class='u-trim' fz='5xl' fw='100' lts='l'>Feature</HTML.p>
-					<HTML.h lv='2' class='u-trim' fz='l' fw='normal' lts='l'>私たちの製品のこと</HTML.h>
+		<Layer blur="8px" bgc="black:30%" z="0" />
+		<Wrapper contentSize="s" hasGutter py="60" c="white" pos="rel">
+			<Stack g="40">
+				<Stack g="30" ai="center">
+					<HTML.p class="u-trim" fz="5xl" fw="100" lts="l">Feature</HTML.p>
+					<HTML.h lv="2" class="u-trim" fz="l" fw="normal" lts="l">私たちの製品のこと</HTML.h>
 				</Stack>
-				<Stack g='30'>
+				<Stack g="30">
 					<p>
 						どんなに美しいデザインも、使い心地が伴わなければ意味がありません。
 						私たちは、触れた瞬間に意図が伝わる、直感的でシームレスな操作性を追求しました。
@@ -40,8 +40,8 @@ import './_style.css';
 						テクノロジーを意識させない、水のような自然な使い心地をお楽しみください。
 					</p>
 				</Stack>
-				<Flex jc='center'>
-					<Button layout='grid' href='#' variant='outline' min-w='14rem' py='15' c='white' bdrs='99'>
+				<Flex jc="center">
+					<Button layout="grid" href="#" variant="outline" min-w="14rem" py="15" c="white" bdrs="99">
 						<span>View More</span>
 					</Button>
 				</Flex>
