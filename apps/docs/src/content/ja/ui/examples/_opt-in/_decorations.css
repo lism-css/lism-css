@@ -1,0 +1,16 @@
+.l--flex--ltr {
+	flex-direction: row;
+}
+.l--flex--rtl {
+	flex-direction: row-reverse;
+}
+
+/* // rtlで左右を反転させないようにする */
+:where([dir='rtl']) {
+	.l--flex--ltr {
+		flex-direction: row-reverse;
+	}
+	.l--flex--rtl {
+		flex-direction: row;
+	}
+}
