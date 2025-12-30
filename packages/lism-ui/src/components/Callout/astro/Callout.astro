@@ -1,28 +1,23 @@
 ---
 import { Flow, Flex, Stack, Icon, Center } from 'lism-css/astro';
-import PRESETS from '../presets.js';
+import getCalloutProps, { type CalloutProps } from '../getProps';
 
-const { type = 'note', keycolor, icon, title, flow = 's', ...props } = Astro.props;
+type Props = CalloutProps;
 
-const presets = type ? PRESETS[type] : null;
-let _keycolor = keycolor;
-let _icon = icon;
-
-if (presets) {
-	_keycolor = keycolor || presets?.color || null;
-	_icon = icon || presets?.icon || null;
-}
+const { icon, title, flow, ...calloutProps } = getCalloutProps(Astro.props);
 ---
 
-<Stack lismClass='c--callout u-cbox set-shadow' keycolor={_keycolor} p='20' g='10' bdc='keycolor' bd-x-s bdw='4px' bxsh='10' bdrs='5' {...props}>
-	{title && (
-		<Flex class='c--callout_head' c='keycolor' fw='bold' ai='center' g='10'>
-			<Center class='c--callout_icon' fz='xl'>
-				<Icon icon={_icon} />
-			</Center>
-			<span class='c--callout_title'>{title}</span>
-		</Flex>
-	)}
+<Stack {...calloutProps}>
+	{
+		title && (
+			<Flex class='c--callout_head' c='keycolor' fw='bold' ai='center' g='10'>
+				<Center class='c--callout_icon' fz='xl'>
+					<Icon icon={icon} />
+				</Center>
+				<span class='c--callout_title'>{title}</span>
+			</Flex>
+		)
+	}
 	<Flow class='c--callout_body' flow={flow}>
 		<slot />
 	</Flow>

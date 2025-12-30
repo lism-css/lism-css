@@ -1,4 +1,9 @@
-export default {
+type PresetData = {
+	icon: string;
+	color: string;
+};
+
+const PRESETS: Record<string, PresetData> = {
 	alert: {
 		icon: 'alert',
 		color: 'red',
@@ -19,12 +24,10 @@ export default {
 		icon: 'question',
 		color: 'purple',
 	},
-	info: {
-		icon: 'info',
-		color: 'blue',
-	},
 	note: {
 		icon: 'note',
-		color: 'gray',
+		color: 'blue',
 	},
 };
+
+export default PRESETS;

@@ -28,10 +28,6 @@ const PRESETS: Record<string, PresetData> = {
 		icon: 'info',
 		color: 'blue',
 	},
-	note: {
-		icon: 'note',
-		color: 'gray',
-	},
 };
 
 export default PRESETS;
