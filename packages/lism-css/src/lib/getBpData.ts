@@ -30,6 +30,9 @@ export type BpDataInput =
 export default function getBpData(propVal: BpDataInput): BpData {
 	if (true === propVal) return { base: true };
 
+	// 0 の場合も base: 0 として扱う
+	if (propVal !== 0 && !propVal) return {};
+
 	if (typeof propVal === 'string' || typeof propVal === 'number') {
 		return { base: propVal };
 	}
