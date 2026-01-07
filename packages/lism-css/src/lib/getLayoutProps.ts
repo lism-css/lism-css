@@ -1,8 +1,47 @@
 import atts from '../lib/helper/atts';
 import isTokenValue from '../lib/isTokenValue';
 import getMaybeCssVar from '../lib/getMaybeCssVar';
+import { type CSSProperties } from 'react';
 
-export default function getLayoutProps(layout, props) {
+type CssValue = string | number;
+
+// CSS Custom Properties を含むスタイル型
+type StyleWithCustomProps = CSSProperties & Record<`--${string}`, string | number | undefined>;
+
+interface PropConfig {
+	isVar?: number;
+	[key: string]: unknown;
+}
+
+interface BaseProps {
+	lismClass?: string;
+	style?: StyleWithCustomProps;
+	_propConfig?: Record<string, PropConfig>;
+	[key: string]: unknown;
+}
+
+interface GridProps extends BaseProps {
+	_propConfig?: Record<string, PropConfig>;
+}
+
+interface SideMainProps extends BaseProps {
+	sideW?: CssValue;
+	mainW?: CssValue;
+}
+
+interface FluidColsProps extends BaseProps {
+	autoFill?: boolean;
+}
+
+interface FlowProps extends BaseProps {
+	flow?: CssValue;
+}
+
+interface SwitchColsProps extends BaseProps {
+	breakSize?: CssValue;
+}
+
+export default function getLayoutProps(layout: unknown | 'flow' | 'grid' | 'sideMain' | 'fluidCols' | 'switchCols', props: BaseProps): BaseProps {
 	if (!layout || typeof layout !== 'string') return props;
 
 	const {
@@ -31,7 +70,7 @@ export default function getLayoutProps(layout, props) {
 	return rest;
 }
 
-function geGridProps({ _propConfig = {}, ...props }) {
+function geGridProps({ _propConfig = {}, ...props }: GridProps): BaseProps {
 	// gt系のベース値は l--grid は 変数のみでいい
 	_propConfig.gta = { isVar: 1 };
 	_propConfig.gtc = { isVar: 1 };
@@ -41,7 +80,7 @@ function geGridProps({ _propConfig = {}, ...props }) {
 	return props;
 }
 
-function getSideMainProps({ sideW, mainW, style = {}, ...props }) {
+function getSideMainProps({ sideW, mainW, style = {}, ...props }: SideMainProps): BaseProps {
 	if (null != sideW) style['--sideW'] = getMaybeCssVar(sideW, 'sz');
 	if (null != mainW) style['--mainW'] = getMaybeCssVar(mainW, 'sz');
 
@@ -49,13 +88,13 @@ function getSideMainProps({ sideW, mainW, style = {}, ...props }) {
 	return props;
 }
 
-function getLiquidProps({ autoFill, style = {}, ...props }) {
+function getLiquidProps({ autoFill, style = {}, ...props }: FluidColsProps): BaseProps {
 	if (autoFill) style['--autoMode'] = 'auto-fill';
 	props.style = style;
 	return props;
 }
 
-function getFlowProps({ flow, style = {}, ...props }) {
+function getFlowProps({ flow, style = {}, ...props }: FlowProps): BaseProps {
 	if (isTokenValue('flow', flow)) {
 		props.lismClass = atts(props.lismClass, `-flow:${flow}`);
 	} else if (flow) {
@@ -67,7 +106,7 @@ function getFlowProps({ flow, style = {}, ...props }) {
 	return props;
 }
 
-function getSwitchColsProps({ breakSize, style = {}, ...props }) {
+function getSwitchColsProps({ breakSize, style = {}, ...props }: SwitchColsProps): BaseProps {
 	if (breakSize) style['--breakSize'] = getMaybeCssVar(breakSize, 'sz');
 	props.style = style;
 	return props;
