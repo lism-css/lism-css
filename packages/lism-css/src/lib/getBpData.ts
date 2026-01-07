@@ -6,11 +6,17 @@ const BREAK_POINTS_ALL = ['base', ...BREAK_POINTS] as const;
 
 type BpValue = string | number | boolean | object | null | undefined;
 
+// ブレイクポイントのキー型
+type BpKey = (typeof BREAK_POINTS_ALL)[number];
+
+// getBpData の戻り値型
+export type BpData = {
+	base?: BpValue;
+} & Partial<Record<BpKey, BpValue>>;
+
 // BP指定に必要な規格化した形式のオブジェクトを返す.
 //     ( string, array, obj → {_, sm, md, ...} の型のobjectに変換する. )
-export default function getBpData(
-	propVal: string | number | boolean | BpValue[] | Record<string, BpValue> | null | undefined
-): Record<string, unknown> {
+export default function getBpData(propVal: unknown): BpData {
 	let values: Record<string, BpValue> = {};
 
 	if (true === propVal) return { base: true };
@@ -19,12 +25,12 @@ export default function getBpData(
 		values.base = propVal;
 	} else if (Array.isArray(propVal)) {
 		propVal.forEach((r, i) => {
-			values[`${BREAK_POINTS_ALL[i]}`] = r;
+			values[`${BREAK_POINTS_ALL[i]}`] = r as BpValue;
 		});
 	} else if (propVal && typeof propVal === 'object') {
 		if (hasSomeKeys(propVal, BREAK_POINTS_ALL)) {
 			// 'sm', 'md' などがある場合はｍbp指定のオブジェクトとみなす
-			values = propVal;
+			values = propVal as Record<string, BpValue>;
 		} else {
 			values.base = propVal; // 方向ブジェクト(sides props)の場合
 		}
