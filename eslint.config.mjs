@@ -11,6 +11,7 @@ export default defineConfig(
 	},
 	eslintConfigPrettier,
 	eslint.configs.recommended,
+	// JavaScriptファイルには通常のrecommendedを適用
 	tseslint.configs.recommended,
 	{
 		languageOptions: {
@@ -21,6 +22,17 @@ export default defineConfig(
 
 			ecmaVersion: 'latest',
 			sourceType: 'module',
+		},
+	},
+	// TypeScriptファイルには型チェック付きのrecommendedを適用
+	{
+		files: ['**/*.ts', '**/*.tsx'],
+		extends: [tseslint.configs.recommendedTypeChecked],
+		languageOptions: {
+			parserOptions: {
+				projectService: true,
+				tsconfigRootDir: import.meta.dirname,
+			},
 		},
 	},
 	{
@@ -59,6 +71,11 @@ export default defineConfig(
 		files: ['**/*.test.ts', '**/*.test.tsx'],
 		rules: {
 			'@typescript-eslint/no-explicit-any': 'off',
+			'@typescript-eslint/no-unsafe-assignment': 'off',
+			'@typescript-eslint/no-unsafe-member-access': 'off',
+			'@typescript-eslint/no-unsafe-argument': 'off',
+			'@typescript-eslint/no-unsafe-return': 'off',
+			'@typescript-eslint/no-unsafe-call': 'off',
 		},
 	},
 );

@@ -5,7 +5,7 @@ import { objDeepMerge, arrayConvertToSet } from './helper';
 interface Window {
 	_LISM_CSS_CONFIG_: Partial<typeof defaultConfig>;
 }
-declare var window: Window;
+declare const window: Window;
 
 // ビルド時の設定をマージ
 let mergedConfig = objDeepMerge(defaultConfig, userConfig);
