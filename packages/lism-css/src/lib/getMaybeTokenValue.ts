@@ -1,14 +1,14 @@
 type TokenValue = string | number;
 
-type TokenValues =
-	| Set<string>
-	| string[]
-	| {
-			pre?: string;
-			values?: Set<string> | string[];
-	  };
+type TokenConfigValues = Set<string> | string[] | readonly string[];
+type TokenConfigValuesObj = {
+	pre?: string;
+	values?: TokenConfigValues;
+};
 
-type TokensConfig = Record<string, TokenValues>;
+type TokenConfigProp = TokenConfigValues | TokenConfigValuesObj;
+
+type TokensConfig = Record<string, TokenConfigProp>;
 
 /**
  * Note: コンポーネント使用時だけでなく、CSSビルド時にも呼び出される。そのため、TOKENSを引数で受け取る必要がある。
@@ -49,8 +49,9 @@ export default function getMaybeTokenValue(tokenKey: unknown, value: TokenValue,
 			}
 			return `var(--${tokenKey}--${stringValue})`;
 		}
-	} else if (typeof tokenValues === 'object') {
-		const { pre = '', values = [] } = tokenValues || {};
+	} else if ('pre' in tokenValues || 'values' in tokenValues) {
+		// ここに到達した時点で tokenValues は Set でも配列でもないので、オブジェクト形式
+		const { pre = '', values = [] } = tokenValues as TokenConfigValuesObj;
 
 		if (values instanceof Set && values.has(stringValue)) {
 			return `var(${pre}${stringValue})`;
