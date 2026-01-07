@@ -1,11 +1,17 @@
+import { defineConfig } from 'eslint/config';
 import react from 'eslint-plugin-react';
 import eslintConfigPrettier from 'eslint-config-prettier/flat';
 import globals from 'globals';
-import js from '@eslint/js';
+import eslint from '@eslint/js';
+import tseslint from 'typescript-eslint';
 
-export default [
+export default defineConfig(
+	{
+		ignores: ['**/dist/**', '**/node_modules/**', '**/.turbo/**'],
+	},
 	eslintConfigPrettier,
-	js.configs.recommended,
+	eslint.configs.recommended,
+	tseslint.configs.recommended,
 	{
 		languageOptions: {
 			globals: {
@@ -37,6 +43,22 @@ export default [
 					ignore: ['jsx', 'global'],
 				},
 			],
+
+			// TypeScript ESLint rules
+			'@typescript-eslint/no-explicit-any': 'warn',
+			'@typescript-eslint/no-unused-vars': [
+				'warn',
+				{
+					argsIgnorePattern: '^_',
+					varsIgnorePattern: '^_',
+				},
+			],
 		},
 	},
-];
+	{
+		files: ['**/*.test.ts', '**/*.test.tsx'],
+		rules: {
+			'@typescript-eslint/no-explicit-any': 'off',
+		},
+	},
+);
