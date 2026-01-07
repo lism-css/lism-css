@@ -8,6 +8,20 @@ type CssValue = string | number;
 // CSS Custom Properties を含むスタイル型
 type StyleWithCustomProps = CSSProperties & Record<`--${string}`, string | number | undefined>;
 
+// レイアウト名の型 - src/scss/modules/layout のファイル名から `l--` を取り除いたもの
+export type LayoutType =
+	| 'center'
+	| 'cluster'
+	| 'columns'
+	| 'flex'
+	| 'flow'
+	| 'fluidCols'
+	| 'frame'
+	| 'grid'
+	| 'sideMain'
+	| 'stack'
+	| 'switchCols';
+
 interface PropConfig {
 	isVar?: number;
 	[key: string]: unknown;
@@ -41,8 +55,8 @@ interface SwitchColsProps extends BaseProps {
 	breakSize?: CssValue;
 }
 
-export default function getLayoutProps(layout: unknown, props: BaseProps): BaseProps {
-	if (!layout || typeof layout !== 'string') return props;
+export default function getLayoutProps(layout: LayoutType | undefined, props: BaseProps): BaseProps {
+	if (!layout) return props;
 
 	const {
 		lismClass,
