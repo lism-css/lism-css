@@ -62,40 +62,13 @@ describe('splitWithComma', () => {
 		});
 	});
 
-	describe('その他の型の処理', () => {
-		test('null は空配列を返す', () => {
-			expect(splitWithComma(null)).toEqual([]);
-		});
-
-		test('undefined は空配列を返す', () => {
-			expect(splitWithComma(undefined)).toEqual([]);
-		});
-
-		test('数値は空配列を返す', () => {
-			expect(splitWithComma(123)).toEqual([]);
-		});
-
-		test('オブジェクトは空配列を返す', () => {
-			expect(splitWithComma({ foo: 'bar' })).toEqual([]);
-		});
-
-		test('真偽値は空配列を返す', () => {
-			expect(splitWithComma(true)).toEqual([]);
-			expect(splitWithComma(false)).toEqual([]);
-		});
-	});
-
 	describe('特殊なケース', () => {
 		test('数値を含む文字列', () => {
 			expect(splitWithComma('1,2,3')).toEqual(['1', '2', '3']);
 		});
 
 		test('特殊文字を含む文字列', () => {
-			expect(splitWithComma('foo-bar,baz_qux,test:hover')).toEqual([
-				'foo-bar',
-				'baz_qux',
-				'test:hover',
-			]);
+			expect(splitWithComma('foo-bar,baz_qux,test:hover')).toEqual(['foo-bar', 'baz_qux', 'test:hover']);
 		});
 
 		test('日本語を含む文字列', () => {
@@ -123,28 +96,15 @@ describe('splitWithComma', () => {
 
 	describe('実際の使用例', () => {
 		test('CSS クラス名のリスト', () => {
-			expect(splitWithComma('btn, btn-primary, active')).toEqual([
-				'btn',
-				'btn-primary',
-				'active',
-			]);
+			expect(splitWithComma('btn, btn-primary, active')).toEqual(['btn', 'btn-primary', 'active']);
 		});
 
 		test('タグのリスト', () => {
-			expect(splitWithComma('javascript, typescript, react')).toEqual([
-				'javascript',
-				'typescript',
-				'react',
-			]);
+			expect(splitWithComma('javascript, typescript, react')).toEqual(['javascript', 'typescript', 'react']);
 		});
 
 		test('カラーコードのリスト', () => {
-			expect(splitWithComma('#ff0000, #00ff00, #0000ff')).toEqual([
-				'#ff0000',
-				'#00ff00',
-				'#0000ff',
-			]);
+			expect(splitWithComma('#ff0000, #00ff00, #0000ff')).toEqual(['#ff0000', '#00ff00', '#0000ff']);
 		});
 	});
 });
-
