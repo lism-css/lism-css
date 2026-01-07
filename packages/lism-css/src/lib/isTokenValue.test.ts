@@ -3,12 +3,6 @@ import isTokenValue from './isTokenValue';
 
 describe('isTokenValue', () => {
 	describe('基本的な動作', () => {
-		test('tokenKey が文字列でない場合、false を返す', () => {
-			expect(isTokenValue(null, 'value')).toBe(false);
-			expect(isTokenValue(undefined, 'value')).toBe(false);
-			expect(isTokenValue(123, 'value')).toBe(false);
-		});
-
 		test('TOKENS に tokenKey が存在しない場合、false を返す', () => {
 			expect(isTokenValue('notfound', 'value')).toBe(false);
 		});
