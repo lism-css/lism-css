@@ -5,14 +5,14 @@
  * 2. forEach() で その key に対する値に処理を加える。
  * 3. 処理が加わったオブジェクトを返す
  */
-export default function objMap<T extends Record<string, any>, U>(
+export default function objMap<T extends Record<string, unknown>, U>(
 	obj: T,
 	callback: (value: T[keyof T]) => U
 ): Record<keyof T, U> {
-	const result = obj as Record<string, any>;
-	Object.keys(obj).forEach((key) => {
+	const result = {} as Record<keyof T, U>;
+	(Object.keys(obj) as Array<keyof T>).forEach((key) => {
 		result[key] = callback(obj[key]);
 	});
-	return result as Record<keyof T, U>;
+	return result;
 }
 

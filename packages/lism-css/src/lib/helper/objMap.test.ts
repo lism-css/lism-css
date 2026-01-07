@@ -20,13 +20,6 @@ describe('objMap', () => {
 		expect(result).toEqual({});
 	});
 
-	test('元のオブジェクトを変更する（破壊的）', () => {
-		const input = { x: 10, y: 20 };
-		const result = objMap(input, (val: number) => val + 5);
-		expect(result).toBe(input); // 同じ参照
-		expect(input).toEqual({ x: 15, y: 25 }); // 元のオブジェクトが変更される
-	});
-
 	test('複雑な値の変換', () => {
 		const input = { a: [1, 2], b: [3, 4] };
 		const result = objMap(input, (val: number[]) => val.length);
@@ -53,4 +46,3 @@ describe('objMap', () => {
 		expect(result).toEqual({ a: 'default', b: 'default', c: 0 });
 	});
 });
-
