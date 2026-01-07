@@ -18,7 +18,7 @@ const getTokenKey = (propName) => {
 	return propData?.token || '';
 };
 
-class LismPropsData {
+export class LismPropsData {
 	// propList = {};
 	className = '';
 	uClasses = [];
