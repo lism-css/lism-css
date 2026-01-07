@@ -1,5 +1,4 @@
 // import { PROPS } from '../config';
-import type { CSSProperties } from 'react';
 import { PROPS, STATES } from '../../config/index';
 import getLayoutProps, { type LayoutType } from './getLayoutProps';
 import isPresetValue from './isPresetValue';
@@ -11,10 +10,7 @@ import atts from './helper/atts';
 import isEmptyObj from './helper/isEmptyObj';
 import filterEmptyObj from './helper/filterEmptyObj';
 import splitWithComma from './helper/splitWithComma';
-
-// CSS Custom Properties を含むスタイル型
-export type StyleWithCustomProps = CSSProperties &
-	Record<`--${string}`, string | number | undefined>;
+import { type StyleWithCustomProps } from './types';
 
 // PropConfig interface based on config/defaults/props.ts
 export interface PropConfig {

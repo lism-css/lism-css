@@ -1,12 +1,9 @@
 import atts from '../lib/helper/atts';
 import isTokenValue from '../lib/isTokenValue';
 import getMaybeCssVar from '../lib/getMaybeCssVar';
-import { type CSSProperties } from 'react';
+import { type StyleWithCustomProps } from './types';
 
 type CssValue = string | number;
-
-// CSS Custom Properties を含むスタイル型
-type StyleWithCustomProps = CSSProperties & Record<`--${string}`, string | number | undefined>;
 
 // レイアウト名の型 - src/scss/modules/layout のファイル名から `l--` を取り除いたもの
 export type LayoutType =
