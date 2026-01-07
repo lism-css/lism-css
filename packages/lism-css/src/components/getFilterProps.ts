@@ -1,4 +1,4 @@
-import type { CSSProperties } from 'react';
+import type { StyleWithCustomProps } from '../lib/types';
 
 // フィルター名の型
 type FilterName = 'blur' | 'contrast' | 'brightness' | 'dropShadow' | 'grayscale' | 'hueRotate' | 'invert' | 'saturate' | 'sepia';
@@ -12,13 +12,13 @@ type FilterProps = {
 
 // 入力プロップスの型
 interface InputProps extends FilterProps {
-	style?: CSSProperties;
+	style?: StyleWithCustomProps;
 	[key: string]: unknown;
 }
 
 // 戻り値の型（style は常に存在する）
 export interface OutputProps {
-	style: CSSProperties;
+	style: StyleWithCustomProps;
 	[key: string]: unknown;
 }
 
@@ -38,7 +38,7 @@ export default function getFilterProps(props: InputProps, filterType: string = '
 
 	// filter生成があれば style にセット
 	if (filterValues.length > 0) {
-		style[filterType as keyof CSSProperties] = filterValues.join(' ') as never;
+		(style as Record<string, string>)[filterType] = filterValues.join(' ');
 	}
 
 	return {
