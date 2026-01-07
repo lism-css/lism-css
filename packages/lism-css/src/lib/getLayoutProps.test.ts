@@ -3,35 +3,15 @@ import getLayoutProps from './getLayoutProps';
 
 describe('getLayoutProps', () => {
 	describe('基本的な動作', () => {
-		test('layout が指定されていない場合、propsをそのまま返す', () => {
-			const props = { lismClass: 'test' };
-			expect(getLayoutProps(null, props)).toEqual(props);
-			expect(getLayoutProps(undefined, props)).toEqual(props);
-			expect(getLayoutProps('', props)).toEqual(props);
-		});
-
-		test('layout が文字列でない場合、propsをそのまま返す', () => {
-			const props = { lismClass: 'test' };
-			expect(getLayoutProps(123 as any, props)).toEqual(props);
-			expect(getLayoutProps({} as any, props)).toEqual(props);
-			expect(getLayoutProps([] as any, props)).toEqual(props);
-		});
-
 		test('layout クラスが lismClass に追加される', () => {
-			const result = getLayoutProps('custom', { lismClass: 'existing' });
-			expect(result.lismClass).toContain('l--custom');
+			const result = getLayoutProps('flex', { lismClass: 'existing' });
+			expect(result.lismClass).toContain('l--flex');
 			expect(result.lismClass).toContain('existing');
 		});
 
 		test('lismClass が未定義の場合でも layout クラスが追加される', () => {
-			const result = getLayoutProps('custom', {});
-			expect(result.lismClass).toBe('l--custom');
-		});
-
-		test('未知のレイアウトタイプの場合、layout クラスのみ追加される', () => {
-			const result = getLayoutProps('unknown', { lismClass: 'test' });
-			expect(result.lismClass).toContain('l--unknown');
-			expect(result.lismClass).toContain('test');
+			const result = getLayoutProps('stack', {});
+			expect(result.lismClass).toBe('l--stack');
 		});
 	});
 

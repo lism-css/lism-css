@@ -1,7 +1,7 @@
 // import { PROPS } from '../config';
 import type { CSSProperties } from 'react';
 import { PROPS, STATES } from '../../config/index';
-import getLayoutProps from './getLayoutProps';
+import getLayoutProps, { type LayoutType } from './getLayoutProps';
 import isPresetValue from './isPresetValue';
 import isTokenValue from './isTokenValue';
 import getUtilKey from './getUtilKey';
@@ -54,6 +54,7 @@ export type StatePropData = string | StatePropDataObject;
 export interface LismPropsDataInput {
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	forwardedRef?: React.Ref<any>;
+	layout?: LayoutType;
 	class?: string;
 	className?: string;
 	lismClass?: string;
