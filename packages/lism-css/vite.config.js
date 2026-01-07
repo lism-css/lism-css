@@ -51,6 +51,11 @@ export default defineConfig({
 			entryRoot: 'src',
 		}),
 	],
+	test: {
+		typecheck: {
+			enabled: true,
+		},
+	},
 	build: {
 		// target: 'es2015',
 		lib: {
