@@ -2,6 +2,7 @@ import { TOKENS } from '../../config/index';
 import isNumStr from './helper/isNumStr';
 import getMaybeTokenValue from './getMaybeTokenValue';
 
+
 type CssValue = string | number;
 
 // 対応するCSS変数があれば返す
