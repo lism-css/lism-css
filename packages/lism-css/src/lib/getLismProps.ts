@@ -164,8 +164,8 @@ export class LismPropsData {
 			this.lismState.push(className);
 			if (tokenKey && customVar) {
 				this.addStyle(customVar, getMaybeCssVar(propVal as string | number, tokenKey));
-			} else if (setStyles) {
-				this.addStyles(setStyles(propVal as string));
+			} else if (setStyles && typeof propVal === 'string') {
+				this.addStyles(setStyles(propVal));
 			}
 		}
 	}
