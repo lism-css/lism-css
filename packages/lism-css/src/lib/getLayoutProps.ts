@@ -41,7 +41,7 @@ interface SwitchColsProps extends BaseProps {
 	breakSize?: CssValue;
 }
 
-export default function getLayoutProps(layout: unknown | 'flow' | 'grid' | 'sideMain' | 'fluidCols' | 'switchCols', props: BaseProps): BaseProps {
+export default function getLayoutProps(layout: unknown, props: BaseProps): BaseProps {
 	if (!layout || typeof layout !== 'string') return props;
 
 	const {

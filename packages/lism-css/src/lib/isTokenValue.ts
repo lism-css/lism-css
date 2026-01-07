@@ -24,8 +24,10 @@ export default function isTokenValue(tokenKey: unknown, value: TokenValue): bool
 		return tokenValues.has(stringValue);
 	} else if (Array.isArray(tokenValues)) {
 		return tokenValues.includes(stringValue);
-	} else if (typeof tokenValues === 'object' && tokenValues !== null) {
-		const values = tokenValues.values || new Set<string>();
+	} else if ('values' in tokenValues) {
+		// { pre?: string, values: Set | Array } 形式のオブジェクト
+		// ブラケット記法を使用して、Set/Map の values() メソッドとの名前衝突を回避
+		const values = tokenValues['values'];
 		if (values instanceof Set) {
 			return values.has(stringValue);
 		} else if (Array.isArray(values)) {
