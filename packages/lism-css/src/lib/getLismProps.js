@@ -336,7 +336,6 @@ class LismPropsData {
  * props から styleに変換する要素 と その他 に分離する
  *
  * @param {Object} props
- * @return {Object} styles & attrs
  */
 export default function getLismProps(props) {
 	if (props.length === 0) {
