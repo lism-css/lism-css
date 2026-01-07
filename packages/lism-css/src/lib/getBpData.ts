@@ -45,11 +45,6 @@ export default function getBpData(propVal: BpDataInput): BpData {
 		return filterEmptyObj(values);
 	}
 
-	// オブジェクト以外（null, undefined など）の場合
-	if (!propVal) {
-		return {};
-	}
-
 	// オブジェクトの場合: BP指定オブジェクトか方向オブジェクトかを判定
 	if (hasSomeKeys(propVal, BREAK_POINTS_ALL)) {
 		// 'sm', 'md' などがある場合はbp指定のオブジェクトとみなす
