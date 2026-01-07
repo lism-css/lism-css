@@ -1,10 +1,10 @@
-import defaultConfig from '../../../config/default-config';
+import type { STATES } from '../../../config/index';
 
 /**
- * config/default-config.ts から STATES の型を取得
- * states.ts の as const により literal types が保持される
+ * config/index.ts から STATES の型を取得
+ * objDeepMerge の DeepMergeResult 型により literal types が保持される
  */
-type StatesConfig = typeof defaultConfig.states;
+type StatesConfig = typeof STATES;
 
 /**
  * ステート値の型を抽出するユーティリティ型

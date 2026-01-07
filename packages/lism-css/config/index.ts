@@ -22,6 +22,8 @@ const { tokens, props, states } = CONFIG;
 // 配列を Set化.
 export const TOKENS = arrayConvertToSet(structuredClone(tokens));
 export const PROPS = arrayConvertToSet(structuredClone(props));
+
+// STATES は objDeepMerge の型推論により literal types が保持される
 export const STATES = states;
 
 // ブレイクポイント
