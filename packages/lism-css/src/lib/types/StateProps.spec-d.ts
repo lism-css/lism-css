@@ -1,7 +1,29 @@
 import { assertType, describe, it } from 'vitest';
 import type { StateProps } from './StateProps';
+import type { STATES } from '../../../config/index';
 
 describe('StateProps', () => {
+	describe('config/index.ts からの型生成が動作する', () => {
+		it('STATES が正しく型推論される', () => {
+			// STATES の型チェック
+			type StatesType = typeof STATES;
+			const _test: StatesType = {} as StatesType;
+			assertType<StatesType>(_test);
+		});
+
+		it('StateProps が STATES から生成されている', () => {
+			// StateProps の型は STATES から生成される
+			type IsWrapperType = StateProps['isWrapper'];
+			// isWrapper は "s" | "l" | undefined であることを確認
+			const wrapper1: IsWrapperType = 's';
+			const wrapper2: IsWrapperType = 'l';
+			const wrapper3: IsWrapperType = undefined;
+			assertType<IsWrapperType>(wrapper1);
+			assertType<IsWrapperType>(wrapper2);
+			assertType<IsWrapperType>(wrapper3);
+		});
+	});
+
 	describe('文字列形式のステートは boolean を受け入れる', () => {
 		it('isContainer', () => {
 			assertType<StateProps>({ isContainer: true });
