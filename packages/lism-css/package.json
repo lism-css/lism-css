@@ -20,7 +20,8 @@
 		"build": "vite build && pnpm build:css",
 		"build:vite": "vite build",
 		"build:css": "tsx bin/script-build-css.js",
-		"lint": "pnpm lint:style",
+		"lint": "pnpm lint:eslint && pnpm lint:style",
+		"lint:eslint": "eslint '**/*.{js,mjs,ts,tsx}'",
 		"lint:style": "stylelint '**/*.{css,scss}'",
 		"preview": "vite preview"
 	},
