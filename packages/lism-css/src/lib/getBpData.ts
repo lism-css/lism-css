@@ -24,7 +24,7 @@ export default function getBpData(
 	} else if (propVal && typeof propVal === 'object') {
 		if (hasSomeKeys(propVal, BREAK_POINTS_ALL)) {
 			// 'sm', 'md' などがある場合はｍbp指定のオブジェクトとみなす
-			values = propVal as Record<string, BpValue>;
+			values = propVal;
 		} else {
 			values.base = propVal; // 方向ブジェクト(sides props)の場合
 		}
