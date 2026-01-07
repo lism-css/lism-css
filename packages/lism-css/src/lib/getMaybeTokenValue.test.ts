@@ -3,13 +3,6 @@ import getMaybeTokenValue from './getMaybeTokenValue';
 
 describe('getMaybeTokenValue', () => {
 	describe('基本的な動作', () => {
-		test('tokenKey が文字列でない場合、値をそのまま返す', () => {
-			const TOKENS = {};
-			expect(getMaybeTokenValue(null, 'value', TOKENS)).toBe('value');
-			expect(getMaybeTokenValue(undefined, 'value', TOKENS)).toBe('value');
-			expect(getMaybeTokenValue(123, 'value', TOKENS)).toBe('value');
-		});
-
 		test('TOKENS に tokenKey が存在しない場合、値をそのまま返す', () => {
 			const TOKENS = { foo: new Set(['bar']) };
 			expect(getMaybeTokenValue('notfound', 'value', TOKENS)).toBe('value');
@@ -167,9 +160,7 @@ describe('getMaybeTokenValue', () => {
 				palette: new Set(['primary', 'secondary']),
 			};
 			expect(getMaybeTokenValue('color', 'primary', TOKENS)).toBe('var(--palette--primary)');
-			expect(getMaybeTokenValue('color', 'secondary', TOKENS)).toBe(
-				'var(--palette--secondary)'
-			);
+			expect(getMaybeTokenValue('color', 'secondary', TOKENS)).toBe('var(--palette--secondary)');
 		});
 
 		test('c が優先される', () => {
@@ -201,15 +192,9 @@ describe('getMaybeTokenValue', () => {
 			const TOKENS_SET = { space: new Set(values) };
 			const TOKENS_ARRAY = { space: values };
 
-			expect(getMaybeTokenValue('space', '10', TOKENS_SET)).toBe(
-				getMaybeTokenValue('space', '10', TOKENS_ARRAY)
-			);
-			expect(getMaybeTokenValue('space', '20', TOKENS_SET)).toBe(
-				getMaybeTokenValue('space', '20', TOKENS_ARRAY)
-			);
-			expect(getMaybeTokenValue('space', '40', TOKENS_SET)).toBe(
-				getMaybeTokenValue('space', '40', TOKENS_ARRAY)
-			);
+			expect(getMaybeTokenValue('space', '10', TOKENS_SET)).toBe(getMaybeTokenValue('space', '10', TOKENS_ARRAY));
+			expect(getMaybeTokenValue('space', '20', TOKENS_SET)).toBe(getMaybeTokenValue('space', '20', TOKENS_ARRAY));
+			expect(getMaybeTokenValue('space', '40', TOKENS_SET)).toBe(getMaybeTokenValue('space', '40', TOKENS_ARRAY));
 		});
 	});
 
@@ -249,9 +234,7 @@ describe('getMaybeTokenValue', () => {
 			const TOKENS = {
 				custom: new Set(['-webkit-fill-available']),
 			};
-			expect(getMaybeTokenValue('custom', '-webkit-fill-available', TOKENS)).toBe(
-				'var(--custom--nwebkit-fill-available)'
-			);
+			expect(getMaybeTokenValue('custom', '-webkit-fill-available', TOKENS)).toBe('var(--custom--nwebkit-fill-available)');
 		});
 
 		test('空の TOKENS オブジェクト', () => {

@@ -13,9 +13,7 @@ type TokensConfig = Record<string, TokenConfigProp>;
 /**
  * Note: コンポーネント使用時だけでなく、CSSビルド時にも呼び出される。そのため、TOKENSを引数で受け取る必要がある。
  */
-export default function getMaybeTokenValue(tokenKey: unknown, value: TokenValue, TOKENS: TokensConfig): string {
-	if (typeof tokenKey !== 'string') return String(value); // FIXME: tokenKey を string 型に限定するべきか検討
-
+export default function getMaybeTokenValue(tokenKey: string, value: TokenValue, TOKENS: TokensConfig): string {
 	// color トークンの場合は c と palette での変換を試行
 	if (tokenKey === 'color') {
 		let result = getMaybeTokenValue('c', value, TOKENS);
