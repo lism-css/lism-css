@@ -1,5 +1,6 @@
 // import { PROPS } from '../config';
-import { PROPS, STATES } from '../../config/index.ts';
+import type { CSSProperties } from 'react';
+import { PROPS, STATES } from '../../config/index';
 import getLayoutProps from './getLayoutProps';
 import isPresetValue from './isPresetValue';
 import isTokenValue from './isTokenValue';
@@ -7,28 +8,99 @@ import getUtilKey from './getUtilKey';
 import getMaybeCssVar from './getMaybeCssVar';
 import getBpData from './getBpData';
 import atts from './helper/atts';
-import isEmptyObj from './helper/isEmptyObj.ts';
+import isEmptyObj from './helper/isEmptyObj';
 import filterEmptyObj from './helper/filterEmptyObj';
 import splitWithComma from './helper/splitWithComma';
 
-const getTokenKey = (propName) => {
-	const propData = PROPS[propName];
+// CSS Custom Properties を含むスタイル型
+export type StyleWithCustomProps = CSSProperties &
+	Record<`--${string}`, string | number | undefined>;
+
+// PropConfig interface based on config/defaults/props.ts
+export interface PropConfig {
+	prop?: string;
+	token?: string | null | undefined | false;
+	tokenClass?: 0 | 1 | 2;
+	presets?: Set<string> | string[] | readonly string[];
+	presetClass?: string;
+	utils?: Record<string, string>;
+	shorthands?: Record<string, string>;
+	isVar?: number;
+	bp?: 0 | 1;
+	alwaysVar?: number;
+	overwriteBaseVar?: number;
+	important?: number;
+	exUtility?: Record<string, unknown>;
+	customVar?: string;
+	setStyles?: (val: unknown) => Record<string, unknown>;
+	className?: string;
+	utilKey?: string;
+	[key: string]: unknown;
+}
+
+// StatePropData based on config/defaults/states.ts
+export type StatePropDataObject = {
+	className: string;
+	preset?: string[] | readonly string[];
+	presetClass?: string;
+	customVar?: string;
+	tokenKey?: string;
+	setStyles?: (propVal: string) => Record<string, unknown>;
+};
+
+export type StatePropData = string | StatePropDataObject;
+
+// LismPropsData constructor input
+export interface LismPropsDataInput {
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	forwardedRef?: React.Ref<any>;
+	class?: string;
+	className?: string;
+	lismClass?: string;
+	variant?: string;
+	style?: StyleWithCustomProps;
+	_propConfig?: Record<string, PropConfig>;
+	hov?: boolean | string | Record<string, unknown>;
+	css?: Record<string, unknown>;
+	[key: string]: unknown;
+}
+
+// Return type of getLismProps
+export interface LismPropsResult extends Record<string, unknown> {
+	className?: string;
+	style?: StyleWithCustomProps;
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	ref?: React.Ref<any>;
+}
+
+const getTokenKey = (propName: string): string => {
+	const propData = (PROPS as Record<string, PropConfig>)[propName];
 	if (!propData) return '';
 
-	return propData?.token || '';
+	return (propData?.token as string) || '';
 };
 
 export class LismPropsData {
 	// propList = {};
-	className = '';
-	uClasses = [];
-	lismState = [];
-	styles = {};
-	attrs = {};
+	className: string = '';
+	uClasses: string[] = [];
+	lismState: string[] = [];
+	styles: StyleWithCustomProps = {};
+	attrs: Record<string, unknown> = {};
+	_propConfig?: Record<string, PropConfig>;
 
-	constructor(allProps) {
+	constructor(allProps: LismPropsDataInput) {
 		// 受け取るpropsとそうでないpropsを分ける
-		const { forwardedRef, class: classFromAstro, className, lismClass, variant, style = {}, _propConfig = {}, ...others } = allProps;
+		const {
+			forwardedRef,
+			class: classFromAstro,
+			className,
+			lismClass,
+			variant,
+			style = {},
+			_propConfig = {},
+			...others
+		} = allProps;
 
 		this.styles = { ...style };
 		this._propConfig = { ..._propConfig };
@@ -80,31 +152,31 @@ export class LismPropsData {
 		this.className = atts(className || classFromAstro, _lismClass, this.lismState, this.uClasses);
 	}
 
-	analyzeState(statePropData, propVal) {
+	analyzeState(statePropData: StatePropDataObject, propVal: unknown): void {
 		// isWrapper などの特別な処理が必要なレイアウトステート
 		const { className, preset, presetClass, customVar, tokenKey, setStyles } = statePropData;
 		if (propVal === true) {
 			this.lismState.push(className);
 		} else if (preset && isPresetValue(preset, propVal)) {
-			this.lismState.push(`${className} ${presetClass}:${propVal}`);
+			this.lismState.push(`${className} ${presetClass}:${String(propVal)}`);
 		} else if (propVal) {
 			// カスタム値
 			this.lismState.push(className);
-			if (tokenKey) {
-				this.addStyle(customVar, getMaybeCssVar(propVal, tokenKey));
+			if (tokenKey && customVar) {
+				this.addStyle(customVar, getMaybeCssVar(propVal as string | number, tokenKey));
 			} else if (setStyles) {
-				this.addStyles(setStyles(propVal));
+				this.addStyles(setStyles(propVal as string));
 			}
 		}
 	}
 
 	// prop解析
-	analyzeProps() {
+	analyzeProps(): void {
 		Object.keys(this.attrs).forEach((propName) => {
 			// state チェック
 			if (Object.hasOwn(STATES, propName)) {
 				const propVal = this.extractProp(propName);
-				const statePropData = STATES[propName];
+				const statePropData = (STATES as Record<string, StatePropData>)[propName];
 
 				if (typeof statePropData === 'string') {
 					// そのままクラス化
@@ -122,25 +194,25 @@ export class LismPropsData {
 				this.analyzeLismProp(propName, propVal);
 			} else if (propName === 'hov') {
 				const propVal = this.extractProp(propName);
-				this.setHovProps(propVal);
+				this.setHovProps(propVal as boolean | string | Record<string, unknown> | null);
 			} else if (propName === 'css') {
 				// cssオブジェクトに入ってきたものはstyleへ流す
 				const cssVales = this.extractProp('css');
-				this.addStyles(cssVales);
+				this.addStyles(cssVales as Record<string, unknown>);
 			}
 		});
 	}
 
 	// Lism Prop 解析
-	analyzeLismProp(propName, propVal) {
+	analyzeLismProp(propName: string, propVal: unknown): void {
 		if (null == propVal) return;
 
 		// propデータ取得
-		let propConfig = PROPS[propName] || null;
+		let propConfig: PropConfig | null = (PROPS as Record<string, PropConfig>)[propName] || null;
 		if (null === propConfig) return; // 一応 nullチェックここでも
 
 		// config上書き設定があるかどうか
-		if (this._propConfig[propName]) {
+		if (this._propConfig?.[propName]) {
 			propConfig = Object.assign({}, propConfig, this._propConfig[propName]);
 		}
 
@@ -152,31 +224,34 @@ export class LismPropsData {
 
 		// 各BP成分の処理
 		Object.keys(bpValues).forEach((bp) => {
-			this.setAttrs(propName, bpValues[bp], propConfig, bp);
+			if (propConfig) {
+				this.setAttrs(propName, bpValues[bp as keyof typeof bpValues], propConfig, bp);
+			}
 		});
 	}
 
-	addUtil(util) {
+	addUtil(util: string): void {
 		this.uClasses.push(util);
 	}
-	addUtils(utils) {
+	addUtils(utils: string[]): void {
 		this.uClasses.push(...utils);
 	}
 	// addState(state) {
 	// 	this.stateClasses.push(state);
 	// }
-	addStyle(name, val) {
-		this.styles[name] = val;
+	addStyle(name: string, val: string | number): void {
+		// CSS custom properties can accept string or number
+		(this.styles as Record<string, string | number>)[name] = val;
 	}
-	addStyles(styles) {
+	addStyles(styles: Record<string, unknown>): void {
 		this.styles = { ...this.styles, ...styles };
 	}
-	addAttrs(data) {
+	addAttrs(data: { styles?: Record<string, unknown>; utils?: string[] }): void {
 		this.addStyles(data.styles || {});
 		this.addUtils(data.utils || []);
 	}
-	extractProp(propName) {
-		let data = this.attrs[propName];
+	extractProp(propName: string): unknown {
+		const data = this.attrs[propName];
 		if (undefined === this.attrs[propName]) {
 			return null;
 		}
@@ -184,8 +259,8 @@ export class LismPropsData {
 		delete this.attrs[propName];
 		return data;
 	}
-	extractProps(propNames) {
-		const data = {};
+	extractProps(propNames: string[]): Record<string, unknown> {
+		const data: Record<string, unknown> = {};
 		propNames.forEach((propName) => {
 			if (undefined !== this.attrs[propName]) {
 				data[propName] = this.attrs[propName];
@@ -197,11 +272,11 @@ export class LismPropsData {
 
 	// utilクラスを追加するか、styleにセットするかの分岐処理 @base
 	// 値が null, undefined, '', false の時はスキップ
-	setAttrs(propKey, val, propConfig = {}, bpKey = '') {
+	setAttrs(propKey: string, val: unknown, propConfig: PropConfig = {}, bpKey: string = ''): void {
 		if (null == val || '' === val || false === val) return;
 
 		let styleName = `--${propKey}`;
-		let utilName = `-${propConfig.utilKey || propKey}`;
+		let utilName = `-${String(propConfig.utilKey || propKey)}`;
 
 		if (bpKey) {
 			styleName = `--${propKey}_${bpKey}`;
@@ -218,20 +293,22 @@ export class LismPropsData {
 		if (!bpKey) {
 			const { presets, tokenClass, utils, shorthands } = propConfig;
 			if (presets && isPresetValue(presets, val)) {
-				this.addUtil(`${utilName}:${val}`);
+				const valStr = typeof val === 'string' || typeof val === 'number' ? String(val) : '';
+				if (valStr) this.addUtil(`${utilName}:${valStr}`);
 				return;
 			}
 			// tokenもそのままクラス化する場合
-			if (tokenClass && isTokenValue(propConfig.token, val)) {
-				this.addUtil(`${utilName}:${val}`);
+			if (tokenClass && propConfig.token && isTokenValue(propConfig.token, val)) {
+				const valStr = typeof val === 'string' || typeof val === 'number' ? String(val) : '';
+				if (valStr) this.addUtil(`${utilName}:${valStr}`);
 				return;
 			}
 
 			let utilKey = '';
-			if (utils) {
+			if (utils && typeof val === 'string') {
 				utilKey = getUtilKey(utils, val);
 			}
-			if (!utilKey && shorthands) {
+			if (!utilKey && shorthands && typeof val === 'string') {
 				utilKey = getUtilKey(shorthands, val, true);
 			}
 			if (utilKey) {
@@ -247,28 +324,34 @@ export class LismPropsData {
 		}
 
 		// 以下、ユーティリティクラス化できない場合の処理
-		let { prop, isVar, alwaysVar, token, bp } = propConfig;
+		const { prop, isVar, alwaysVar, token, bp } = propConfig;
 
 		//token を持つ場合の処理
-		if (token) {
-			val = getMaybeCssVar(val, token);
+		let finalVal: string | number;
+		if (token && (typeof val === 'string' || typeof val === 'number')) {
+			finalVal = getMaybeCssVar(val, token);
+		} else if (typeof val === 'string' || typeof val === 'number') {
+			finalVal = val;
+		} else {
+			// オブジェクトや他の型の場合は文字列化 (通常は到達しないはず)
+			finalVal = JSON.stringify(val);
 		}
 
 		// baseスタイルの追加処理
 		if (!bpKey) {
 			if (isVar) {
-				this.addStyle(`--${propKey}`, val);
+				this.addStyle(`--${propKey}`, finalVal);
 				return;
 			} else if (!bp && !alwaysVar) {
 				// インラインでスタイル出力するだけ
-				this.addStyle(prop, val);
+				this.addStyle(prop as string, finalVal);
 				return;
 			}
 		}
 
 		// .-prop & --prop / .-prop_bp & --prop_bpで 出力
 		this.addUtil(utilName);
-		this.addStyle(styleName, val);
+		this.addStyle(styleName, finalVal);
 	}
 
 	// setPassProps(passVars) {
@@ -287,7 +370,7 @@ export class LismPropsData {
 	// 	});
 	// }
 
-	setHovProps(hoverData) {
+	setHovProps(hoverData: boolean | string | Record<string, unknown> | null): void {
 		if (!hoverData) return;
 
 		// 配列のときは中身を再帰処理
@@ -309,7 +392,7 @@ export class LismPropsData {
 			// hover={{c:'red', 'bgc': 'blue'}} みたいな指定の時
 
 			Object.keys(hoverData).forEach((propName) => {
-				let hovVal = hoverData[propName];
+				const hovVal = hoverData[propName];
 				if (null == hovVal || '' === hovVal || false === hovVal) return;
 
 				// '-' の時は クラスのみ出力
@@ -317,15 +400,15 @@ export class LismPropsData {
 					this.addUtil(`-hov:${propName}`);
 				} else if (propName === 'class') {
 					// propNameが'class'の場合は文字列として-hov:{class}クラスを追加.(カンマ区切りで複数指定可能)
-					splitWithComma(hovVal).forEach((cls) => {
+					splitWithComma(hovVal as string).forEach((cls) => {
 						this.addUtil(`-hov:${cls}`);
 					});
-				} else {
+				} else if (typeof hovVal === 'string' || typeof hovVal === 'number') {
 					// トークン値の処理
-					hovVal = getMaybeCssVar(hovVal, getTokenKey(propName));
+					const finalHovVal = getMaybeCssVar(hovVal, getTokenKey(propName));
 
 					this.addUtil(`-hov:${propName}`);
-					this.addStyle(`--hov-${propName}`, hovVal);
+					this.addStyle(`--hov-${propName}`, finalHovVal);
 				}
 			});
 		}
@@ -337,8 +420,9 @@ export class LismPropsData {
  *
  * @param {Object} props
  */
-export default function getLismProps(props) {
-	if (props.length === 0) {
+export default function getLismProps(props: LismPropsDataInput): LismPropsResult {
+	// Fix: オブジェクトに .length は存在しないため、適切な空チェックに修正
+	if (Object.keys(props).length === 0) {
 		return {};
 	}
 
@@ -347,7 +431,7 @@ export default function getLismProps(props) {
 
 	return filterEmptyObj({
 		className: propObj.className,
-		style: filterEmptyObj(propObj.styles), //filterEmptyObj(styles), // filterEmptyObj は最後にかける
+		style: filterEmptyObj(propObj.styles as Record<string, unknown>), //filterEmptyObj(styles), // filterEmptyObj は最後にかける
 		...propObj.attrs, // 処理されずに残っているprops
-	});
+	}) as LismPropsResult;
 }

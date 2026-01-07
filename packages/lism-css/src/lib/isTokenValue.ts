@@ -1,8 +1,6 @@
 import { TOKENS } from '../../config/index';
 
-type TokenValue = string | number | null | undefined;
-
-export default function isTokenValue(tokenKey: unknown, value: TokenValue): boolean {
+export default function isTokenValue(tokenKey: unknown, value: unknown): boolean {
 	if (typeof tokenKey !== 'string') return false;
 
 	// 数値の時は文字列化してから判定
