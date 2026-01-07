@@ -1,8 +1,6 @@
 import { TOKENS } from '../../config/index';
 
-export default function isTokenValue(tokenKey: unknown, value: unknown): boolean {
-	if (typeof tokenKey !== 'string') return false;
-
+export default function isTokenValue(tokenKey: string, value: unknown): boolean {
 	// 数値の時は文字列化してから判定
 	let stringValue: string;
 	if (typeof value === 'number') {
