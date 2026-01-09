@@ -18,7 +18,7 @@ import { BookIcon } from '@phosphor-icons/react';
 			<Badge className='u-cbox' keycolor='blue' bdrs='99'>Badge</Badge>
 		</Cluster>
 	</PreviewArea>
-	<PreviewCode slot='tab' label='React, Astro'>
+	<PreviewCode slot='tab' label='React / Astro'>
 		```jsx
 		<Cluster g='15'>
 			<Badge>Badge</Badge>
@@ -42,17 +42,23 @@ import { BookIcon } from '@phosphor-icons/react';
 
 ## How to use
 
-`@lism-css/ui` パッケージで`Badge`として提供しています。
+`@lism-css/ui` パッケージで`Badge`(`.c--badge`)として提供しています。
 
 
 ### Import
 <ImportPackage component='Badge' packageName='@lism-css/ui' css='style.css' />
 
 
+### Props
+
+| プロパティ | 説明 |
+|---|---|
+|`variant`<small>(必須)</small>| `c--badge--{variant}` クラスを出力します。`outline`を用意しています。|
+
 ### 基本構造
 
 <Preview>
-	<PreviewCode slot='tab' label='React, Astro'>
+	<PreviewCode slot='tab' label='React / Astro'>
 		```jsx
 		<Badge>...</Badge>
 		```
@@ -63,12 +69,6 @@ import { BookIcon } from '@phosphor-icons/react';
 		```
 	</PreviewCode>
 </Preview>
-
-### Props
-
-| プロパティ | 説明 |
-|---|---|
-|`variant`<small>(必須)</small>| `c--badge--{variant}` クラスを出力します。`outline`を用意しています。|
 
 
 ### Source Code

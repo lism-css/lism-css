@@ -1,5 +1,4 @@
 import { Frame } from 'lism-css/react';
-// import '../_style.css';
 
 export default function Avatar({ size = '1.5em', src = '', alt = '', ...props }) {
 	return (

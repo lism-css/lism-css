@@ -1,0 +1,8 @@
+---
+import { Lism } from 'lism-css/astro';
+import { getItemProps } from '../getProps';
+---
+
+<Lism {...getItemProps(Astro.props)}>
+	<slot />
+</Lism>

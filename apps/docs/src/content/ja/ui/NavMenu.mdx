@@ -4,26 +4,22 @@ description: ...
 ---
 import { Flex } from 'lism-css/react';
 import { Lism, Icon, Spacer, Box } from 'lism-css/astro'
-import { Accordion } from '@lism-css/ui/astro'
+import { Accordion, NavMenu } from '@lism-css/ui/astro'
 import { FolderSimpleIcon } from "@phosphor-icons/react";
-import NavMenu from '@/components/ex/NavMenu';
 
 
-ナビメニューリストを設置できるコンポーネントの作成例を紹介します。
-
-<div class="test">
-TEST
-</div>
+ナビゲーションメニュー用のリストを作成できるコンポーネントです。
 
 
-## Create Component
-`NavMenu`(`.c--navMenu`)というコンポーネントを作って利用する例を紹介していきます。
+## How to use
 
-### Source Code
-<ImportSource name='NavMenu' hasRoot css react />
+`@lism-css/ui` パッケージで`NavMenu`(`.c--navMenu`)として提供しています。
+
 
 ### Import
-<ImportPackage component='NavMenu' packageName='@lism-css/ui' />
+
+<ImportPackage component='NavMenu' packageName='@lism-css/ui' css='style.css' />
+
 
 ### Props
 
@@ -34,9 +30,26 @@ TEST
 | <PropBadge>`<NavMenu.Link>`</PropBadge><br/>`hov` | hover時のスタイルを指定できます。デフォルトは`op`が指定されています。 |
 {/* | <PropBadge>`<NavMenu.Root>`</PropBadge><br/>`nestLevel` | ネストの深さを指定します。`[data-nest-level]`に値を出力します。<br />ただし、トップレベルでは指定しないでください。（`:not([data-nest-level])`で変数の初期値をセットするため）| */}
 
+### Source Code
 
-## Usage
+<Preview>
+	<PreviewCode slot='tab' label='_style.css'>
+		<SrcCode dir='lism-ui' path='src/components/NavMenu/_style.css' />
+	</PreviewCode>
+	<PreviewCode slot='tab' label='NavMenu.jsx'>
+		<SrcCode dir='lism-ui' path='src/components/NavMenu/react/NavMenu.jsx' />
+	</PreviewCode>
+	{/* <PreviewCode slot='tab' label='Root.astro'>
+		<SrcCode dir='lism-ui' path='src/components/NavMenu/astro/Root.astro' />
+	</PreviewCode> */}
+	<PreviewCode slot='tab' label='getProps.js'>
+		<SrcCode dir='lism-ui' path='src/components/NavMenu/getProps.js' />
+	</PreviewCode>
+	
+</Preview>
 
+
+## Examples
 
 ### シンプルな例
 <Preview>
@@ -316,69 +329,8 @@ TEST
 </Preview>
 
 
-<Preview>
-	<PreviewTitle>親メニューのリンクも残してアコーディオンで展開</PreviewTitle>
-	<PreviewArea p='20'>
-		<NavMenu.Root bd-y>
-			<NavMenu.Item>
-				<NavMenu.Link href='#menu1'>Menu item</NavMenu.Link>
-			</NavMenu.Item>
-			<NavMenu.Item>
-				<Accordion.Root>
-					<Accordion.Header pr='10'>
-						<Accordion.Label>
-							<NavMenu.Link href='#menu2'>Menu item (Accordion)</NavMenu.Link>
-						</Accordion.Label>
-						<Accordion.Icon isTrigger bd bgc='inherit' p='10' />
-					</Accordion.Header>
-					<Accordion.Body>
-						<NavMenu.Nest>
-							<NavMenu.Item>
-								<NavMenu.Link href='#child-menu1'>Nested item</NavMenu.Link>
-							</NavMenu.Item>
-							<NavMenu.Item>
-								<NavMenu.Link href='#child-menu2'>Nested item</NavMenu.Link>
-							</NavMenu.Item>
-						</NavMenu.Nest>
-					</Accordion.Body>
-				</Accordion.Root>
-			</NavMenu.Item>
-		</NavMenu.Root>
-	</PreviewArea>
-	<PreviewCode>
-		```jsx "Accordion.Root" "NavMenu.Nest" "Accordion.Icon isTrigger"
-		<NavMenu.Root bd-y>
-			<NavMenu.Item>
-				<NavMenu.Link href='#menu1'>Menu item</NavMenu.Link>
-			</NavMenu.Item>
-			<NavMenu.Item>
-				<Accordion.Root>
-					<Accordion.Header pr='10'>
-						<Accordion.Label>
-							<NavMenu.Link href='#menu2'>Menu item (Accordion)</NavMenu.Link>
-						</Accordion.Label>
-						<Accordion.Icon isTrigger bd bgc='inherit' p='10' />
-					</Accordion.Header>
-					<Accordion.Body>
-						<NavMenu.Nest>
-							<NavMenu.Item>
-								<NavMenu.Link href='#child-menu1'>Nested item</NavMenu.Link>
-							</NavMenu.Item>
-							<NavMenu.Item>
-								<NavMenu.Link href='#child-menu2'>Nested item</NavMenu.Link>
-							</NavMenu.Item>
-						</NavMenu.Nest>
-					</Accordion.Body>
-				</Accordion.Root>
-			</NavMenu.Item>
-		</NavMenu.Root>
-		```
-	</PreviewCode>
-</Preview>
 
-
-
-### 横並びメニュー
+### 横並びメニューでホバー時に子メニューを表示する例
 
 `<NavMenu.Root>`に`fxd='row'`を指定し、横並びにする例を紹介します。
 

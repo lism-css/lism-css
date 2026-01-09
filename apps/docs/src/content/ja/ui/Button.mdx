@@ -18,7 +18,7 @@ import { ArrowRightIcon, ShoppingCartSimpleIcon } from "@phosphor-icons/react";
 			<Button href='###' variant='outline'>Outline</Button>
 		</Flex>
 	</PreviewArea>
-	<PreviewCode slot='tab' label='React, Astro'>
+	<PreviewCode slot='tab' label='React / Astro'>
 		```jsx
 		<Flex layout='cluster' g='15'>
 			<Button href='###' variant='fill'>Button</Button>
@@ -41,17 +41,28 @@ import { ArrowRightIcon, ShoppingCartSimpleIcon } from "@phosphor-icons/react";
 
 ## How to use
 
-`@lism-css/ui` パッケージで`Button`として提供しています。
+`@lism-css/ui` パッケージで`Button`(`.c--button`)として提供しています。
 
 
 ### Import
+
 <ImportPackage component='Button' packageName='@lism-css/ui' css='style.css' />
+
+
+### Props
+
+| プロパティ | 説明 |
+|---|---|
+|`variant`<small>(必須)</small>| `c--button--{variant}` クラスを出力します。`fill`,`outline`の2種類のスタイルをこの例では用意しています。|
+{/* |`layout`| Buttonを構成するレイアウト用コンポーネントを指定できます。デフォルトは`Lism`です。| */}
+{/* |`icon`, `endIcon` | ボタンテキストの左右に表示するアイコンを指定できます。| */}
+{/* |`hover`| デフォルトは`op`が指定されています。| */}
 
 
 ### 基本構造
 
 <Preview>
-	<PreviewCode slot='tab' label='React, Astro'>
+	<PreviewCode slot='tab' label='React / Astro'>
 		```jsx
 		<Button href="">
 			(<Icon />)TEXT(<Icon />)
@@ -67,14 +78,6 @@ import { ArrowRightIcon, ShoppingCartSimpleIcon } from "@phosphor-icons/react";
 	</PreviewCode>
 </Preview>
 
-### Props
-
-| プロパティ | 説明 |
-|---|---|
-|`variant`<small>(必須)</small>| `c--button--{variant}` クラスを出力します。`fill`,`outline`の2種類のスタイルをこの例では用意しています。|
-{/* |`layout`| Buttonを構成するレイアウト用コンポーネントを指定できます。デフォルトは`Lism`です。| */}
-{/* |`icon`, `endIcon` | ボタンテキストの左右に表示するアイコンを指定できます。| */}
-{/* |`hover`| デフォルトは`op`が指定されています。| */}
 
 ### Source Code
 

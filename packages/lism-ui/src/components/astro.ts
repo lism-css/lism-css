@@ -6,4 +6,5 @@ export { default as Button } from './Button/astro';
 export { default as Callout } from './Callout/astro';
 export { default as Chat } from './Chat/astro';
 export { default as Modal } from './Modal/astro';
+export { default as NavMenu } from './NavMenu/astro';
 export { default as Tabs } from './Tabs/astro';

@@ -7,7 +7,7 @@ const { resize, setCqUnit = true, p = '5', ...props } = Astro.props || {};
 
 <Lism className="c--preview_area">
 	<div class={`c--preview_area_frame ${setCqUnit ? 'set-cqUnit' : ''}`}>
-		<Lism class:list={['c--preview_inner', resize ? 'is--resize' : '']} setHov layout="flow" p={p} {...props}>
+		<Lism class:list={['c--preview_inner', resize ? 'is--resize set-hov' : '']} layout="flow" p={p} {...props}>
 			<slot />
 			{
 				resize && (
