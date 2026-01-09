@@ -1,5 +1,4 @@
-import { Lism } from '../../Lism';
-import { Icon } from '../../atomic/Icon';
+import { Lism, Icon } from 'lism-css/react';
 import { defaultProps } from '../getProps';
 
 // duration: [s]

@@ -15,10 +15,41 @@ import {
 import NavMenu from '@/components/ex/NavMenu';
 
 
-`dialog` タグでモーダルを表示するコンポーネントです。
+`dialog`要素でモーダルを表示するコンポーネントです。
 
 
-## 構造
+
+## How to use
+
+`@lism-css/ui` パッケージで`Modal`として提供しています。
+
+
+### Import
+
+`@lism-css/ui` パッケージで提供しています。
+
+<ImportPackage component='Modal' script='modal.js' packageName='@lism-css/ui' />
+
+`<Modal.Root>`, `<Modal.Inner>`, `<Modal.Body>`, `<Modal.CloseBtn>`が利用できます。
+
+
+### ソースコード
+
+<Preview>
+	<PreviewCode slot='tab' label='React'>
+		<SrcCode dir='lism-ui' path='src/components/Modal/react/Modal.jsx' title='Modal.jsx'/>
+	</PreviewCode>
+	<PreviewCode slot='tab' label='CSS'>
+		<SrcCode dir='lism-ui' path='src/components/Modal/_style.css' title='_style.css'/>
+	</PreviewCode>
+	<PreviewCode slot='tab' label='JS'>
+		<SrcCode dir='lism-ui' path='src/components/Modal/setModal.ts' title='setModal.ts'/>
+	</PreviewCode>
+</Preview>
+
+
+### 基本構造
+
 ```pug
 button[data-modal-open='modalID']
 dialog.d--modal#modalID.set-plain
@@ -29,26 +60,6 @@ dialog.d--modal#modalID.set-plain
 
 `.d--modal`に`id`をつけ、`<button>`に`data-modal-open`属性と`data-modal-close`属性をつけることでそのモーダルの開閉ボタンになります。
 
-## CSS
-
-<EmbedCode dirPath='packages/lism-ui' srcPath='src/components/Modal/_style.css' />
-
-
-## JavaScript
-
-<EmbedCode dirPath='packages/lism-ui' srcPath='src/components/Modal/setModal.ts' />
-
-
-## Import
-
-
-`@lism-css/ui` パッケージで提供しています。
-
-
-<ImportPackage component='Modal' script='modal.js' packageName='@lism-css/ui' />
-
-
-`<Modal.Root>`, `<Modal.Inner>`, `<Modal.Body>`, `<Modal.CloseBtn>`が利用できます。
 
 
 ## Props
@@ -60,6 +71,8 @@ dialog.d--modal#modalID.set-plain
 |<PropBadge>`<Modal.Inner>`</PropBadge><br/> `offset`| `__inner`のの非表示時の位置をずらすためのオフセット値|
 |<PropBadge>`<Modal.OpenBtn>`</PropBadge><br/> `modalId`| `data-modal-open`として出力されます。モーダルを開くトリガー要素にて、モーダルの`id`を指定します。|
 |<PropBadge>`<Modal.CloseBtn>`</PropBadge><br/> `modalId`| `data-modal-close`として出力されます。モーダルを閉じるトリガー要素にて、モーダルの`id`を指定します。|
+
+
 
 
 ## Usage
