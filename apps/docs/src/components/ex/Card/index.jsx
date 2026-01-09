@@ -15,5 +15,5 @@ export default function Card({ layout = 'sideMain', ...props }) {
 		defaultProps.isLinkBox = true;
 	}
 
-	return <Lism lismClass='c--card' {...defaultProps} {...props} />;
+	return <Lism lismClass="c--card" {...defaultProps} {...props} />;
 }
