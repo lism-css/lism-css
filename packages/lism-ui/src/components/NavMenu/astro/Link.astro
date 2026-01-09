@@ -1,0 +1,8 @@
+---
+import { Flex } from 'lism-css/astro';
+import { getLinkProps } from '../getProps';
+---
+
+<Flex {...getLinkProps(Astro.props)}>
+	<slot />
+</Flex>

@@ -6,4 +6,5 @@ export { default as Button } from './Button/react';
 export { default as Callout } from './Callout/react';
 export { default as Chat } from './Chat/react';
 export { default as Modal } from './Modal/react';
+export { default as NavMenu } from './NavMenu/react';
 export { default as Tabs } from './Tabs/react';

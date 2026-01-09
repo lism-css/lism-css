@@ -1,0 +1,9 @@
+---
+import { Stack } from 'lism-css/astro';
+import { getRootProps } from '../getProps';
+import '../_style.css';
+---
+
+<Stack {...getRootProps(Astro.props)}>
+	<slot />
+</Stack>

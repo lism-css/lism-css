@@ -12,16 +12,9 @@ import { Avatar } from '@lism-css/ui/astro';
 	<PreviewArea p='20' bg=':stripe'>
 		<Avatar size='4rem' src='https://cdn.lism-css.com/img/avatar/a-01.jpg' alt='Avatar of xxxx'/>
 	</PreviewArea>
-	<PreviewCode slot='tab' label='@lism-css/ui'>
+	<PreviewCode slot='tab' label='React / Astro'>
 		```jsx
 		<Avatar size='4rem' src='https://cdn.lism-css.com/img/avatar/a-01.jpg' alt='Avatar of xxxx'/>
-		```
-	</PreviewCode>
-	<PreviewCode slot='tab' label='Only Core'>
-		```jsx
-		<Frame ar='1/1' w='4em' bdrs='99'>
-			<img src='https://cdn.lism-css.com/img/avatar/a-01.jpg' alt='Avatar of xxxx' width='100%' height='100%' decoding='async' />
-		</Frame>
 		```
 	</PreviewCode>
 	<PreviewCode slot='tab' label='HTML'>
@@ -36,25 +29,28 @@ import { Avatar } from '@lism-css/ui/astro';
 
 ## How to use
 
-`@lism-css/ui` パッケージで`Avatar`として提供しています。
+`@lism-css/ui` パッケージで`Avatar`(`.c--avatar`)として提供しています。
+
+### Import
+
+<ImportPackage component='Avatar' packageName='@lism-css/ui' />
+
+
+### Props
+
+| プロパティ | 説明 |
+|---|---|
+|`size`| アバターのサイズを指定します。|
+|`src`| アバター画像のパス |
+|`alt`| altテキスト |
+
 
 ### 基本構造
 
 <Preview>
-	<PreviewCode slot='tab' label='React'>
+	<PreviewCode slot='tab' label='React / Astro'>
 ```jsx
-import { Avatar } from '@lism-css/ui/react';
-
 <Avatar src="" alt=" />
-```
-	</PreviewCode>
-	<PreviewCode slot='tab' label='Astro'>
-```astro
----
-import { Avatar } from '@lism-css/ui/astro';
----
-
-<Avatar src="" alt=""　 />
 ```
 	</PreviewCode>
 	<PreviewCode slot='tab' label='HTML'>
@@ -65,15 +61,6 @@ import { Avatar } from '@lism-css/ui/astro';
 ```
 	</PreviewCode>
 </Preview>
-
-
-### Props
-
-| プロパティ | 説明 |
-|---|---|
-|`size`| アバターのサイズを指定します。|
-|`src`| アバター画像のパス |
-|`alt`| altテキスト |
 
 
 {/* |`mediaProps`| 上記以外にメディア側に対してプロパティを指定したい場合はこのプロパティにオブジェクト形式で指定できます。| */}
@@ -146,3 +133,5 @@ import { Avatar } from '@lism-css/ui/astro';
 		```
 	</PreviewCode>
 </Preview>
+
+
