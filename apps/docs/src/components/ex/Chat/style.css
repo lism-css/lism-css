@@ -2,7 +2,7 @@
 	.c--chat {
 		--cbox-bgPct: 8%;
 		--_avator-size: clamp(48px, 32px + 5cqw, 64px); /* @320px:40px ~ @640:64px */
-		--_deco-size: calc(var(--_avator-size) * 0.25 + 0.25rem); /* if simple: 1.25rem; */
+		--_deco-size: calc(min(var(--_avator-size), 80px) / 4 + 0.25rem);
 		--_deco-mask: none;
 		--_deco-t: 0;
 		--_deco-scale: 1;
@@ -46,10 +46,6 @@
 	}
 	.c--chat--speak {
 		--_deco-mask: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="8" height="8"><path d="M8,8L8,8C7.4,4.8,5.4,2,2.6,0.4L2,0h6V8z"/></svg>');
-	}
-	.c--chat--think {
-		--_deco-t: 0.75rem;
-		--_deco-mask: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="8" height="8"><circle cx="1.5" cy="1.7" r="1.5"/><circle cx="4.5" cy="5.2" r="2.5"/></svg>');
 	}
 }
 

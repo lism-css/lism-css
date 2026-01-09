@@ -68,17 +68,30 @@ import Chat from '@/components/ex/Chat';
 </Preview>
 
 
-<Preview>
+## Opt-in
+
+### variant='think'
+
+発言ではなく心の中で思っていることを表現する場合に使用できるようなスタイルを追加する例です。
+
+<Preview css={`
+@layer lism.modules {
+	.c--chat--think {
+		--_deco-t: min(calc(var(--_avator-size) / 3), 1.5rem);
+		--_deco-mask: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="8" height="8"><circle cx="1.5" cy="1.7" r="1.5"/><circle cx="4.5" cy="5.2" r="2.5"/></svg>');
+	}
+}
+`}>
 	<PreviewTitle>`variant='think'`</PreviewTitle>
 	<PreviewArea resize p='20' _dir='rtl'>
 		<Chat variant='think' name='Name B' avatar='https://cdn.lism-css.com/img/avatar/a-01.jpg' keycolor='blue'>
-			<Dummy length='s' />
+			<Dummy length='xs' />
 		</Chat>
 		<Chat variant='think' direction='end' name='Name B' avatar='https://cdn.lism-css.com/img/avatar/a-02.jpg' keycolor='purple'>
 			<Dummy length='codes' />
 		</Chat>
 	</PreviewArea>
-	<PreviewCode>
+	<PreviewCode slot='tab' label='JSX'>
 		```jsx
 		<Chat variant='think' name='Name B' avatar='https://cdn.lism-css.com/img/avatar/a-01.jpg' keycolor='blue'>
 			<Dummy length='s' />
@@ -86,6 +99,16 @@ import Chat from '@/components/ex/Chat';
 		<Chat variant='think' direction='end' name='Name B' avatar='https://cdn.lism-css.com/img/avatar/a-02.jpg' keycolor='purple'>
 			<Dummy length='codes' />
 		</Chat>
+		```
+	</PreviewCode>
+	<PreviewCode slot='tab' label='CSS'>
+		```css
+		@layer lism.modules {
+			.c--chat--think {
+				--_deco-t: min(calc(var(--_avator-size) / 3), 1.5rem);
+				--_deco-mask: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="8" height="8"><circle cx="1.5" cy="1.7" r="1.5"/><circle cx="4.5" cy="5.2" r="2.5"/></svg>');
+			}
+		}
 		```
 	</PreviewCode>
 </Preview>
