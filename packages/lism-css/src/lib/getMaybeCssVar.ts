@@ -1,12 +1,13 @@
-import { TOKENS } from '../../config/index.js';
+import { TOKENS } from '../../config/index';
 import isNumStr from './helper/isNumStr';
 import getMaybeTokenValue from './getMaybeTokenValue';
 
-// 対応するCSS変数があれば返す
-export default function getMaybeCssVar(value, tokenKey) {
-	if (!tokenKey) return value;
+type CssValue = string | number;
 
-	// if (typeof tokenKey === 'string') {
+// 対応するCSS変数があれば返す
+export default function getMaybeCssVar(value: CssValue, tokenKey: string | null | undefined | false): string {
+	if (!tokenKey) return String(value);
+
 	switch (tokenKey) {
 		case 'space':
 			return getMaybeSpaceVar(value);
@@ -22,7 +23,7 @@ export default function getMaybeCssVar(value, tokenKey) {
 	}
 }
 
-export function getMaybeSpaceVar(value) {
+export function getMaybeSpaceVar(value: CssValue): string {
 	if (0 === value || '0' === value) return '0';
 
 	// spaceが 整数 or 整数を示す文字列 の場合
@@ -45,10 +46,10 @@ export function getMaybeSpaceVar(value) {
 	}
 
 	// それ以外はそのまま返す
-	return value;
+	return String(value);
 }
 
-export function getMaybeColorVar(value) {
+export function getMaybeColorVar(value: CssValue): string {
 	// COLOR:数値% で指定された場合
 	if (typeof value === 'string' && value.endsWith('%')) {
 		const mixColors = value.split(':');
