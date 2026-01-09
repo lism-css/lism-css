@@ -8,17 +8,7 @@
  * @param {string} [props.offset] - 水平方向のオフセット
  * @param {string} [props.flip] - X/Y/XY で反転方向を指定
  */
-export default function getProps({
-	viewBox,
-	isAnimation,
-	isEmpty,
-	level = 5,
-	stretch,
-	offset,
-	flip,
-	style = {},
-	...props
-}) {
+export default function getProps({ viewBox, isAnimation, isEmpty, level = 5, stretch, offset, flip, style = {}, ...restProps }) {
 	// level が 0 の場合は非表示
 	if (level === 0) return null;
 
@@ -28,17 +18,23 @@ export default function getProps({
 	computedStyle['--_inner-offset'] = offset || null;
 	computedStyle['--_inner-stretch'] = stretch || null;
 
-	return {
+	const _props = {
 		lismClass: 'c--shapeDivider',
 		'max-sz': 'full',
-		'data-flip': flip || null,
 		'aria-hidden': 'true',
+	};
+	if (flip) _props['data-flip'] = flip;
+	if (isAnimation) _props['data-has-animation'] = 'true';
+
+	return {
+		..._props,
 		style: computedStyle,
+
 		// SVG用のprops
 		viewBox,
-		isAnimation,
 		isEmpty,
+
 		// その他のprops
-		...props,
+		...restProps,
 	};
 }
