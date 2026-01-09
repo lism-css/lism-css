@@ -1,9 +1,7 @@
-// import minifyHtml from './minifyHtml.js';
-
 /**
  * svgをcssの image url に変換
  */
-const getSvgUrl = (svg, encode = '') => {
+const getSvgUrl = (svg: string, encode = '') => {
 	if (!svg) return '';
 
 	// minify化
