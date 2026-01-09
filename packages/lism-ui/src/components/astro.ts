@@ -4,5 +4,6 @@ export { default as Avatar } from './Avatar/astro';
 export { default as Badge } from './Badge/astro';
 export { default as Button } from './Button/astro';
 export { default as Callout } from './Callout/astro';
+export { default as Chat } from './Chat/astro';
 export { default as Modal } from './Modal/astro';
 export { default as Tabs } from './Tabs/astro';
