@@ -1,5 +1,5 @@
+/* Note: scale 反転は、__inner に対して行う。shapeDivider自身を反転させると、X方向に隙間ができてしまう。 */
 @layer lism.modules {
-	/* Memo: scale反転は、__inner に対して行う。shapeDivider自身を反転させると、X方向に隙間ができてしまう。 */
 	.c--shapeDivider {
 		--level: 0;
 
@@ -11,10 +11,9 @@
 		--_flipX: 1;
 		--_flipY: 1;
 
-		/* 600px時点を最小値, 1200px時点を最大値にして、clampで高さを変動させる */
-		--h: clamp(calc(6px * var(--level)), calc(1cqw * var(--level)), calc(12px * var(--level)));
-		height: var(--h);
-		overflow: clip;
+		/* 500px時点を最小値, 1200px時点を最大値にして、clampで高さを変動させる */
+		height: clamp(calc(5px * var(--level)), calc(1cqw * var(--level)), calc(12px * var(--level)));
+		overflow: visible;
 	}
 
 	.c--shapeDivider:where([data-flip^='X']) {
@@ -33,15 +32,21 @@
 		scale: calc(var(--_flipX) * var(--_inner-stretch)) var(--_flipY);
 		translate: calc(var(--offsetX) + var(--_inner-offset)) calc(var(--offsetY) * var(--_flipY));
 	}
+
+	.c--shapeDivider_svg {
+		/* 位置ずれ防止 */
+		display: block;
+	}
+
+	/* 左右にスライドするアニメーション */
+	:where([data-has-animation='true']) .c--shapeDivider_svg {
+		/* ↓ X 100% にしてるのは translateXのcalc計算で * -1 をしなくていいように。*/
+		transform-origin: 100% 0;
+		animation: lism--slideShape 12s infinite alternate linear;
+	}
 }
 
-/* 左右にスライドするアニメーション */
-.-anim\:shapeSlide {
-	/* ↓ X 100% にしてるのは translateXのcalc計算で * -1 をしなくていいように。*/
-	transform-origin: 100% 0;
-	animation: LismShapeSlide 12s infinite alternate linear;
-}
-@keyframes LismShapeSlide {
+@keyframes lism--slideShape {
 	0% {
 		transform: scaleX(4);
 	}

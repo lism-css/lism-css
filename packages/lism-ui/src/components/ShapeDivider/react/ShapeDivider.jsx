@@ -16,7 +16,7 @@ export default function ShapeDivider({ children, ...props }) {
 				<div className='c--shapeDivider_inner'>
 					<svg
 						xmlns='http://www.w3.org/2000/svg'
-						className={isAnimation ? '-anim:shapeSlide' : ''}
+						className='c--shapeDivider_svg'
 						viewBox={viewBox}
 						width='100%'
 						height='100%'
