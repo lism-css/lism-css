@@ -4,7 +4,7 @@ description: ...
 ---
 
 import { Box, Dummy, Wrapper, Container, Divider, Frame, Spacer, Layer, Media, Stack } from 'lism-css/astro';
-import ShapeDivider from '@/components/ex/ShapeDivider/index.astro';
+import { ShapeDivider } from '@lism-css/ui/astro';
 
 
 svgで境界線を描画するコンポーネントです。
@@ -23,14 +23,13 @@ svgで境界線を描画するコンポーネントです。
 </Preview>
 
 
-## Create Component
-`ShapeDivider`(`.c--shapeDivider`)というコンポーネントを作って利用する例を紹介していきます。
+## How to use
 
-### Source Code
-<ImportSource name='ShapeDivider' css react astro />
+`@lism-css/ui` パッケージで`ShapeDivider`(`.c--shapeDivider`)として提供しています。
 
 ### Import
-<ImportPackage component='ShapeDivider' packageName='@lism-css/ui' />
+
+<ImportPackage component='ShapeDivider' packageName='@lism-css/ui' css='style.css' />
 
 
 ### Props
@@ -43,9 +42,22 @@ svgで境界線を描画するコンポーネントです。
 | `stretch` | シェイプを水平方向に引き伸ばして表示するための変数を出力します。|
 | `isEmpty` | シェイプを表示せず、Spacerのように使用することができます。|
 
+### Source Code
+
+<Preview>
+	<PreviewCode slot='tab' label='_style.css'>
+		<SrcCode dir='lism-ui' path='src/components/ShapeDivider/_style.css' />
+	</PreviewCode>
+	<PreviewCode slot='tab' label='ShapeDivider.jsx'>
+		<SrcCode dir='lism-ui' path='src/components/ShapeDivider/react/ShapeDivider.jsx' />
+	</PreviewCode>
+	<PreviewCode slot='tab' label='getProps.js'>
+		<SrcCode dir='lism-ui' path='src/components/ShapeDivider/getProps.js' />
+	</PreviewCode>
+</Preview>
 
 
-## Usage
+## Examples
 
 
 ### Example 1
