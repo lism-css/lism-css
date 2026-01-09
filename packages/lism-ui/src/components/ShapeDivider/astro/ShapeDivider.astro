@@ -1,18 +1,15 @@
 ---
 import { Lism } from 'lism-css/astro';
-import './style.css';
+import getProps from '../getProps';
+import '../_style.css';
 
-const { viewBox, children, isAnimation, isEmpty, level = 5, stretch, offset, flip, style = {}, ...props } = Astro.props;
-
-// 変数セット
-style['--level'] = level || null;
-style['--_inner-offset'] = offset || null;
-style['--_inner-stretch'] = stretch || null;
+const componentProps = getProps(Astro.props);
+const { viewBox, isAnimation, isEmpty, ...lismProps } = componentProps || {};
 ---
 
 {
-	level && (
-		<Lism lismClass='c--shapeDivider' max-sz='full' data-flip={flip} aria-hidden='true' style={style} {...props}>
+	componentProps && (
+		<Lism {...lismProps}>
 			{isEmpty ? null : (
 				<div class='c--shapeDivider_inner'>
 					<svg
