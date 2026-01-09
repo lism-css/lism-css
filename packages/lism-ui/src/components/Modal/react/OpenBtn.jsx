@@ -1,4 +1,4 @@
-import { Lism } from '../../Lism';
+import { Lism } from 'lism-css/react';
 import { defaultProps } from '../getProps';
 
 // duration: [s]

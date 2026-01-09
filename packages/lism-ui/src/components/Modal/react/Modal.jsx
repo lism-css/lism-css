@@ -1,5 +1,5 @@
 import React from 'react';
-import { Lism } from '../../Lism';
+import { Lism } from 'lism-css/react';
 import { setEvent } from '../setModal';
 import { getProps } from '../getProps';
 
