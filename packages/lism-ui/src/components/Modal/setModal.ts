@@ -98,7 +98,7 @@ export function setEvent(modal: HTMLDialogElement): void {
 }
 
 const setModal = () => {
-	const modals = document.querySelectorAll('.d--modal');
+	const modals = document.querySelectorAll('.c--modal');
 
 	modals?.forEach((target) => {
 		setEvent(target as HTMLDialogElement);

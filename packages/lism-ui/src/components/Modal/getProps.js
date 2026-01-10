@@ -2,7 +2,7 @@ import atts from 'lism-css/lib/helper/atts';
 
 export function getProps({ lismClass = '', duration, style = {}, ...props }) {
 	const theProps = {
-		lismClass: atts(lismClass, 'd--modal'),
+		lismClass: atts(lismClass, 'c--modal'),
 		setPlain: true,
 	};
 	if (duration) {
@@ -17,14 +17,14 @@ export function getInnerProps({ lismClass = '', offset, style = {}, ...props }) 
 		style['--offset'] = offset;
 	}
 	return {
-		lismClass: atts(lismClass, 'd--modal_inner'),
+		lismClass: atts(lismClass, 'c--modal_inner'),
 		style,
 		...props,
 	};
 }
 
 export const defaultProps = {
-	body: { lismClass: 'd--modal_body' },
+	body: { lismClass: 'c--modal_body' },
 	closeBtn: { tag: 'button', setPlain: true, hov: 'o', d: 'in-flex' },
 	openBtn: { tag: 'button', setPlain: true, hov: 'o', d: 'in-flex' },
 };

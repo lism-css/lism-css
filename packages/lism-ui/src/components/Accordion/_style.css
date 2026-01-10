@@ -1,15 +1,15 @@
 @layer lism.modules {
-	.d--accordion {
+	.c--accordion {
 		--duration: var(--acc-duration, 0.25s);
 	}
-	.d--accordion[data-opened] {
+	.c--accordion[data-opened] {
 		--_notOpen: ;
 	}
-	.d--accordion:not([data-opened]) {
+	.c--accordion:not([data-opened]) {
 		--_isOpen: ;
 	}
 
-	.d--accordion_header {
+	.c--accordion_header {
 		display: grid;
 		grid: auto / 1fr auto;
 		gap: 0.5em;
@@ -22,7 +22,7 @@
 		}
 	}
 
-	.d--accordion_body {
+	.c--accordion_body {
 		display: grid;
 		grid: 1fr / auto;
 		transition-property: margin-block, padding-block, opacity, grid-template;
@@ -30,24 +30,24 @@
 	}
 
 	/* ※ 正常な animation には必須 */
-	.d--accordion_inner {
+	.c--accordion_inner {
 		overflow: hidden;
 	}
 
 	/* 閉じている時 */
-	.d--accordion:not([data-opened]) > .d--accordion_body {
+	.c--accordion:not([data-opened]) > .c--accordion_body {
 		grid: 0fr / auto;
 		padding-block: 0 !important;
 		margin-block: 0 !important;
 	}
 
 	/* アコーディオンブロックのネスト時、別のアイコンタイプにすると表示が崩れるがそこまでは考慮しない。 */
-	.d--accordion_icon {
+	.c--accordion_icon {
 		display: grid;
 	}
 
-	/* .d--accordion_icon 自体にborderつけたりすると回転が見えてしまうので、中にある .a--icon を回転させる。 */
-	.d--accordion_icon > .a--icon {
+	/* .c--accordion_icon 自体にborderつけたりすると回転が見えてしまうので、中にある .a--icon を回転させる。 */
+	.c--accordion_icon > .a--icon {
 		transition: transform var(--duration);
 		transform: var(--_isOpen, scaleY(-1));
 	}

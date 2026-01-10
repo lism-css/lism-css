@@ -35,13 +35,13 @@ const scopedCss = `.${scopeId}{ ${css} }`;
 {scopedCss && <style set:html={scopedCss} />}
 
 <style is:global>
-	:where(.d--tabs--line) {
+	:where(.c--tabs--line) {
 		--sh-size: inset 0 -2px;
 
-		.d--tabs_list {
+		.c--tabs_list {
 			box-shadow: var(--sh-size) 0 var(--divider);
 		}
-		.d--tabs_tab {
+		.c--tabs_tab {
 			font-size: var(--fz--s);
 			padding: 0.5em 0.875em;
 			box-shadow: var(--_isSelected, var(--sh-size) 0 0 currentColor);

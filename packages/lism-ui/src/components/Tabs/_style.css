@@ -1,14 +1,14 @@
 @layer lism.modules {
-	.d--tabs {
+	.c--tabs {
 		display: grid;
 		grid: 'list' 'panel' / 100%;
 	}
-	.d--tabs_list {
+	.c--tabs_list {
 		grid-area: list;
 		display: flex;
 		overflow-x: auto;
 	}
-	.d--tabs_tab {
+	.c--tabs_tab {
 		&[aria-selected='true'] {
 			--_notSelected: ;
 		}
@@ -21,7 +21,7 @@
 		}
 	}
 
-	.d--tabs_panel {
+	.c--tabs_panel {
 		grid-area: panel;
 		width: 100%;
 

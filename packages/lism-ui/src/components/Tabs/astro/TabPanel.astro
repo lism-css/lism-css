@@ -11,6 +11,6 @@ const { tabId = 'tab', index = 0, isActive = false, ...props } = Astro.props;
 const controlId = `${tabId}-${index}`;
 ---
 
-<Lism id={controlId} role='tabpanel' aria-hidden={isActive ? 'false' : 'true'} lismClass='d--tabs_panel' {...props}>
+<Lism id={controlId} role='tabpanel' aria-hidden={isActive ? 'false' : 'true'} lismClass='c--tabs_panel' {...props}>
 	<slot />
 </Lism>
