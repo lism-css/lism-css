@@ -144,9 +144,9 @@ pre {
 /* ソースコード表示のタブ
 /* -------------------------- */
 
-.d--tabs--src,
-.d--tabs--line {
-	> .d--tabs_list,
+.c--tabs--src,
+.c--tabs--line {
+	> .c--tabs_list,
 	pre {
 		--focus-offset: -3px;
 	}
@@ -157,7 +157,7 @@ pre {
 	border-radius: var(--codeBlock-bdrs);
 	overflow: hidden;
 }
-.d--tabs--src {
+.c--tabs--src {
 	grid-template-columns: 100%;
 
 	box-shadow: 0 0 0 2px var(--base-2);
@@ -165,7 +165,7 @@ pre {
 	border-radius: calc(var(--codeBlock-bdrs) + 2px);
 	overflow: hidden;
 
-	> .d--tabs_list {
+	> .c--tabs_list {
 		background-color: var(--base-2);
 		box-shadow: inset 1px 2px 4px -2px rgb(0 0 0 / 0.1);
 		position: relative;
@@ -181,7 +181,7 @@ pre {
 			pointer-events: none;
 		}
 	}
-	.d--tabs_tab {
+	.c--tabs_tab {
 		background-color: var(--_isSelected, var(--codeBlock-bgc)) var(--_notSelected, transparent);
 		// color: var(--_isSelected, var(--text)) var(--_notSelected, var(--text-2));
 		color: var(--text);

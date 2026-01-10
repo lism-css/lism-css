@@ -1,7 +1,7 @@
 // アニメーションが完了するのを待つ
 const waitAnimation = (details) => {
 	// アニメーション対象の要素を直接取得.（getAnimations({subtree: true}) は iOS Safari で動作しない場合があるので __body を直接監視）
-	const body = details.querySelector('.d--accordion_body');
+	const body = details.querySelector('.c--accordion_body');
 	const animations = body ? body.getAnimations() : [];
 
 	// allSettled を使うことで、キャンセル時も reject せずに完了する
@@ -112,7 +112,7 @@ export const setEvent = (details) => {
 };
 
 const setAccordion = () => {
-	const detailsAll = document.querySelectorAll('.d--accordion');
+	const detailsAll = document.querySelectorAll('.c--accordion');
 	detailsAll.forEach((details) => {
 		setEvent(details);
 	});

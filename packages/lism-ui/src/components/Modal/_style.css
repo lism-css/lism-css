@@ -3,7 +3,7 @@
  *   Memo: ::backdrop のアニメーションはFirefoxで動かない
  */
 @layer lism.modules {
-	.d--modal {
+	.c--modal {
 		--flow: 0; /* flow直下にきても影響しないように */
 		--duration: var(--modal-duration, 0.4s);
 		width: 100%;
@@ -15,30 +15,30 @@
 		transition-duration: var(--duration);
 		transition-property: opacity;
 	}
-	.d--modal::backdrop {
+	.c--modal::backdrop {
 		background: none;
 	}
-	.d--modal[open] {
+	.c--modal[open] {
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
 	}
 
-	.d--modal_inner {
+	.c--modal_inner {
 		--offset: 0 0; /* アニメーション用 */
 		background-color: var(--base);
 		transition: translate var(--duration);
 		max-height: 100%;
 	}
 
-	/* .d--modal_body {
+	/* .c--modal_body {
 	overscroll-behavior: contain;
 } */
 
-	.d--modal:not([data-is-open]) {
+	.c--modal:not([data-is-open]) {
 		opacity: 0;
 	}
-	.d--modal:not([data-is-open]) > .d--modal_inner {
+	.c--modal:not([data-is-open]) > .c--modal_inner {
 		translate: var(--offset);
 	}
 }

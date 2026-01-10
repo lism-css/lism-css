@@ -2,13 +2,13 @@ import atts from 'lism-css/lib/helper/atts';
 
 // duration: [s]
 export function getAccProps({ lismClass, ...props }) {
-	props.lismClass = atts(lismClass, 'd--accordion');
+	props.lismClass = atts(lismClass, 'c--accordion');
 	return props;
 }
 
 export function getAccIconProps({ isTrigger, ...props }) {
 	const defaultProps = {
-		lismClass: 'd--accordion_icon',
+		lismClass: 'c--accordion_icon',
 		tag: 'span',
 	};
 	// isTrigger なら、buttun にする
@@ -21,12 +21,12 @@ export function getAccIconProps({ isTrigger, ...props }) {
 }
 
 export const defaultProps = {
-	header: { lismClass: 'd--accordion_header' },
-	label: { lismClass: 'd--accordion_label', tag: 'span' },
+	header: { lismClass: 'c--accordion_header' },
+	label: { lismClass: 'c--accordion_label', tag: 'span' },
 	body: {
-		lismClass: 'd--accordion_body',
+		lismClass: 'c--accordion_body',
 	},
 	inner: {
-		lismClass: 'd--accordion_inner',
+		lismClass: 'c--accordion_inner',
 	},
 };
