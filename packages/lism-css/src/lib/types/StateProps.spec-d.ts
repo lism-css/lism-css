@@ -46,18 +46,23 @@ describe('StateProps', () => {
 		});
 	});
 
-	describe('プリセット値を持つステートは、プリセット値のみを受け入れる', () => {
+	describe('プリセット値を持つステートは、プリセット値・string・boolean を受け入れる', () => {
 		it('isWrapper - プリセット値を受け入れる', () => {
 			assertType<StateProps>({ isWrapper: 's' });
 			assertType<StateProps>({ isWrapper: 'l' });
 		});
 
-		it('isWrapper - プリセット値以外は受け入れない', () => {
-			// @ts-expect-error - プリセット値以外は受け入れない
+		it('isWrapper - string を受け入れる', () => {
 			assertType<StateProps>({ isWrapper: 'custom' });
-			// @ts-expect-error - プリセット値以外は受け入れない
 			assertType<StateProps>({ isWrapper: '800px' });
-			// @ts-expect-error - プリセット値以外は受け入れない
+		});
+
+		it('isWrapper - boolean を受け入れる', () => {
+			assertType<StateProps>({ isWrapper: true });
+		});
+
+		it('isWrapper - number は受け入れない', () => {
+			// @ts-expect-error - number は受け入れない
 			assertType<StateProps>({ isWrapper: 100 });
 		});
 	});
