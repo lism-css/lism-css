@@ -45,7 +45,10 @@
 		"./config": "./config/index.js",
 		"./default-config": "./config/default-config.js",
 		"./vite-plugin": "./vite-plugin.mjs",
-		"./lib/*": "./dist/lib/*",
+		"./lib/*": {
+			"import": "./dist/lib/*",
+			"types": "./dist/lib/*.d.ts"
+		},
 		"./bin/*": "./bin/*",
 		"./react": {
 			"import": "./dist/components/index.js",
