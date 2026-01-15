@@ -60,7 +60,7 @@ export interface LismPropsDataInput extends StateProps {
 	_propConfig?: Record<string, PropConfig>;
 	hov?: boolean | string | Record<string, unknown>;
 	css?: Record<string, unknown>;
-	[key: string]: unknown;
+	[key: string]: unknown; //TODO: Props の型定義が完了したら削除。
 }
 
 // Return type of getLismProps
@@ -89,16 +89,7 @@ export class LismPropsData {
 
 	constructor(allProps: LismPropsDataInput) {
 		// 受け取るpropsとそうでないpropsを分ける
-		const {
-			forwardedRef,
-			class: classFromAstro,
-			className,
-			lismClass,
-			variant,
-			style = {},
-			_propConfig = {},
-			...others
-		} = allProps;
+		const { forwardedRef, class: classFromAstro, className, lismClass, variant, style = {}, _propConfig = {}, ...others } = allProps;
 
 		this.styles = { ...style };
 		this._propConfig = { ..._propConfig };
