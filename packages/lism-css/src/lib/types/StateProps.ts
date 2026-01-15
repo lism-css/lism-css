@@ -57,8 +57,8 @@ type ExtractStateValue<T> =
 				? CustomStyleStateValue
 				: never;
 /**
- * states.ts から自動生成される State Props の型
- * states.ts に新しいステートを追加すると自動的に反映される
+ * config/index.ts の STATES から自動生成される State Props の型
+ * config/index.ts の STATES に新しいステートを追加すると自動的に反映される
  */
 export type StateProps = {
 	[K in keyof StatesConfig]?: ExtractStateValue<StatesConfig[K]>;
