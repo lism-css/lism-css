@@ -60,7 +60,7 @@ export interface LismPropsDataInput extends StateProps {
 	_propConfig?: Record<string, PropConfig>;
 	hov?: boolean | string | Record<string, unknown>;
 	css?: Record<string, unknown>;
-	[key: string]: unknown; //TODO: Props の型定義が完了したら削除。
+	[key: string]: unknown; //TODO(#41): Props の型定義が完了したら削除。
 }
 
 // Return type of getLismProps
