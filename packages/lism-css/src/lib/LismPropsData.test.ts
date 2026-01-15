@@ -1,5 +1,5 @@
 import { describe, test, expect } from 'vitest';
-import { LismPropsData } from '../getLismProps';
+import { LismPropsData } from './getLismProps';
 
 describe('LismPropsData', () => {
 	describe('基本動作', () => {
