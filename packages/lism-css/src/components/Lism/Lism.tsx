@@ -11,7 +11,7 @@ export type LismProps<T extends ElementType = 'div'> = LismPropsDataInput &
 		/** レンダリングするコンポーネントまたは要素 */
 		as?: T;
 		/** レンダリングするHTML要素のタグ名（文字列のみ）*/
-		tag?: T extends keyof JSX.IntrinsicElements ? T : keyof JSX.IntrinsicElements;
+		tag?: keyof JSX.IntrinsicElements;
 		/** 子要素 */
 		children?: ReactNode;
 		/** getLismProps を経由せずに直接渡す追加の props */
@@ -28,5 +28,22 @@ export default function Lism<T extends ElementType = 'div'>({ children, as, tag,
 		<Component {...getLismProps(props)} {...exProps}>
 			{children}
 		</Component>
+	);
+}
+
+function Test() {
+	return (
+		<>
+			<Lism isContainer isWrapper="assss" />
+
+			{/* OK: a 要素なので href が使える */}
+			<Lism tag='a' href='' m='16px' p='8px' bg='lightgray' is>
+				This is a link.
+			</Lism>
+			{/* Error: span 要素に href は存在しない */}
+			<Lism as='span' href='' m='16px' p='8px' bg='lightgray'>
+				This is a span.
+			</Lism>
+		</>
 	);
 }
