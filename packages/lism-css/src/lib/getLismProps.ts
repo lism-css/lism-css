@@ -11,6 +11,7 @@ import isEmptyObj from './helper/isEmptyObj';
 import filterEmptyObj from './helper/filterEmptyObj';
 import splitWithComma from './helper/splitWithComma';
 import { type StyleWithCustomProps } from './types';
+import { StateProps } from './types/StateProps';
 
 // PropConfig interface based on config/defaults/props.ts
 export interface PropConfig {
@@ -47,7 +48,7 @@ export type StatePropDataObject = {
 export type StatePropData = string | StatePropDataObject;
 
 // LismPropsData constructor input
-export interface LismPropsDataInput {
+export interface LismPropsDataInput extends StateProps {
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	forwardedRef?: React.Ref<any>;
 	layout?: LayoutType;

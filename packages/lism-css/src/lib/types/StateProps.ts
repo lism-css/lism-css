@@ -9,19 +9,18 @@ type StatesConfig = typeof STATES;
 /**
  * ステート値の型を抽出するユーティリティ型
  * - 文字列形式 → boolean
- * - プリセット値あり → プリセットリテラル（厳密）
+ * - プリセット値あり → プリセットリテラル | string | boolean（プリセット以外も許可）
  * - 関数処理 → string
+ *
+ * Note: `readonly (infer P)[]` は `as const` で定義された配列と通常の配列の両方にマッチする
  */
-type ExtractStateValue<T> =
-	T extends string
-		? boolean
-		: T extends { preset: readonly (infer P)[] }
-			? P
-			: T extends { preset: (infer P)[] }
-				? P
-				: T extends { setStyles: unknown }
-					? string
-					: never;
+type ExtractStateValue<T> = T extends string
+	? boolean
+	: T extends { preset: readonly (infer P)[] }
+		? P | string | boolean
+		: T extends { setStyles: unknown }
+			? string
+			: never;
 
 /**
  * states.ts から自動生成される State Props の型
