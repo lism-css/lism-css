@@ -12,16 +12,14 @@ type StatesConfig = typeof STATES;
  * - プリセット値あり → プリセットリテラル | string | boolean（プリセット以外も許可）
  * - 関数処理 → string
  *
- * Note: `readonly (infer P)[]` は `as const` で定義された配列と通常の配列の両方にマッチする
  */
 type ExtractStateValue<T> = T extends string
 	? boolean
 	: T extends { preset: readonly (infer P)[] }
-		? P | string | boolean
+		? P | (string & {}) | boolean // `string & {}` により任意の文字列を許可しつつ P のサジェストを維持
 		: T extends { setStyles: unknown }
 			? string
 			: never;
-
 /**
  * states.ts から自動生成される State Props の型
  * states.ts に新しいステートを追加すると自動的に反映される
