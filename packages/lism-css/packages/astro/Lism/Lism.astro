@@ -3,9 +3,11 @@ import getLismProps from '../../../src/lib/getLismProps';
 import { type LismComponentProps } from '../../../src/components/Lism';
 
 // Propsの定義
-interface Props extends LismComponentProps {}
+interface Props extends LismComponentProps {
+	a: string;
+}
 
-const { as, tag, exProps, ...props } = Astro.props || {};
+const { as, tag, exProps, ...props } = Astro.props;
 const JSX = as || tag || 'div';
 ---
 

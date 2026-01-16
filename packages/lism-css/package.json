@@ -60,8 +60,7 @@
 		},
 		"./next-js/*": "./packages/next-js/*",
 		"./astro": {
-			"import": "./packages/astro/index.js",
-			"types": "./packages/types/index.d.ts"
+			"import": "./packages/astro/index.ts"
 		},
 		"./astro/*": "./packages/astro/*",
 		"./scss/*": "./src/scss/*",
@@ -76,6 +75,7 @@
 		"url": "https://github.com/lism-css/lism-css/issues"
 	},
 	"devDependencies": {
+		"astro": "^5.9.0",
 		"@babel/cli": "^7.27.2",
 		"@babel/core": "^7.27.3",
 		"@babel/preset-env": "^7.27.2",
@@ -97,8 +97,26 @@
 	"peerDependencies": {
 		"@types/react": "*",
 		"@types/react-dom": "*",
+		"astro": "^4 || ^5",
 		"react": "^18 || ^19",
 		"react-dom": "^18 || ^19"
+	},
+	"peerDependenciesMeta": {
+		"@types/react": {
+			"optional": true
+		},
+		"@types/react-dom": {
+			"optional": true
+		},
+		"astro": {
+			"optional": true
+		},
+		"react": {
+			"optional": true
+		},
+		"react-dom": {
+			"optional": true
+		}
 	},
 	"sideEffects": false
 }
