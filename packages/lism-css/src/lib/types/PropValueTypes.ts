@@ -1,47 +1,57 @@
-import type PROPS from '../../../config/defaults/props';
-import type { WithArbitraryString } from './utils';
+import { TOKENS, PROPS } from '../../../config/index';
+import type { WithArbitraryString, ExtractArrayValues, ExtractObjectKeys } from './utils';
 
 /**
  * config/defaults/props.ts から PROPS の型を取得
  */
 type PropsConfig = typeof PROPS;
 
+/**
+ * config/defaults/tokens.ts から TOKENS の型を取得
+ */
+type TokensConfig = typeof TOKENS;
+
 // ============================================================
-// Props 設定からプリセット値・ユーティリティ値の型を生成
+// Props 設定からプリセット値・ユーティリティ値・トークン値の型を生成
 // ============================================================
 //
 // presets: readonly ['italic'] → 'italic'
 // utils: { none: 'none' } → 'none' (キーを取得)
+// token: 'fz' → TOKENS['fz'] の値を取得
 //
 // 例:
 //   fs: { presets: ['italic'] } → fs?: 'italic' | (string & {})
-//   mx: { presets: ['auto', '0'] } → mx?: 'auto' | '0' | (string & {})
-//   td: { utils: { none: 'none' } } → td?: 'none' | (string & {})
-//   d: { presets: ['none', 'block'], utils: { 'in-flex': 'inline-flex' } }
-//      → d?: 'none' | 'block' | 'in-flex' | (string & {})
+//   mx: { presets: ['auto', '0'], token: 'space' } → mx?: 'auto' | '0' | '5' | '10' | ... | (string & {})
+//   fz: { token: 'fz' } → fz?: 'root' | 'base' | '5xl' | ... | (string & {})
 //
 // ============================================================
 
 /**
- * presets 配列から要素の型を抽出
- * presets が存在しない場合は never を返す
+ * token プロパティから対応する TOKENS の値を抽出
+ * - 配列形式: TOKENS[key] が配列の場合、その要素の型
+ * - オブジェクト形式: TOKENS[key].values が配列の場合、その要素の型
  */
-type ExtractPresets<T> = T extends { presets: readonly (infer E)[] } ? E : never;
-
-/**
- * utils オブジェクトからキーの型を抽出
- * utils が存在しない場合は never を返す
- */
-type ExtractUtilsKeys<T> = T extends { utils: infer U } ? (U extends object ? keyof U : never) : never;
+type ExtractTokenValues<T> = T extends { token: infer K }
+	? K extends keyof TokensConfig
+		? TokensConfig[K] extends readonly (infer E)[]
+			? E
+			: TokensConfig[K] extends { values: readonly (infer V)[] }
+				? V
+				: never
+		: never
+	: never;
 
 /**
  * プロパティの設定から利用可能な値の型を抽出
- * presets の値 + utils のキー
+ * presets の値 + utils のキー + token の値
  */
-type ExtractPropValues<T> = ExtractPresets<T> | ExtractUtilsKeys<T>;
+type ExtractPropValues<T> =
+	| ExtractArrayValues<T, 'presets'>
+	| ExtractObjectKeys<T, 'utils'>
+	| ExtractTokenValues<T>;
 
 /**
- * presets, utils のいずれかを持つキーを抽出
+ * presets, utils, token のいずれかを持つキーを抽出
  */
 type PropsWithValues = {
 	[K in keyof PropsConfig]: ExtractPropValues<PropsConfig[K]> extends never ? never : K;
@@ -49,14 +59,14 @@ type PropsWithValues = {
 
 /**
  * PROPS 設定から生成される Props 型
- * 各プロパティは presets の値 + utils のキー を受け付ける
+ * 各プロパティは presets の値 + utils のキー + token の値 を受け付ける
  *
  * @example
  * ```ts
  * type Example = {
  *   fs?: 'italic' | (string & {});
- *   mx?: 'auto' | '0' | (string & {});
- *   d?: 'none' | 'block' | 'in-flex' | (string & {});
+ *   mx?: 'auto' | '0' | '5' | '10' | '20' | ... | (string & {});
+ *   fz?: 'root' | 'base' | '5xl' | ... | (string & {});
  *   // ...
  * }
  * ```
