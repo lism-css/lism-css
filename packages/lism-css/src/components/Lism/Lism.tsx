@@ -30,4 +30,3 @@ export default function Lism<T extends ElementType = 'div'>({ children, as, tag,
 		</Component>
 	);
 }
-
