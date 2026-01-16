@@ -31,15 +31,3 @@ export default function Lism<T extends ElementType = 'div'>({ children, as, tag,
 	);
 }
 
-function Test() {
-	return (
-		<>
-			<Lism fz="m" color="red">
-				Test
-			</Lism>
-			<Lism as="section" fw={ [ 'bold', 'normal', "medium", "black", "black" , "aa" ] } c="brand">
-				Section Test
-			</Lism>
-		</>
-	);
-}

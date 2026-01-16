@@ -49,7 +49,6 @@ type StatePropDataObject = {
 
 type StatePropData = string | StatePropDataObject;
 
-
 // getLismProps の入力となる Props 型
 export interface LismProps extends StateProps, MakeResponsive<TokenProps> {
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -63,7 +62,7 @@ export interface LismProps extends StateProps, MakeResponsive<TokenProps> {
 	_propConfig?: Record<string, PropConfig>;
 	hov?: boolean | string | Record<string, unknown>;
 	css?: Record<string, unknown>;
-	//[key: string]: unknown; //TODO(#41): Props の型定義が完了したら削除。
+	[key: string]: unknown; //TODO(#41): Props の型定義が完了したら削除。
 }
 
 const getTokenKey = (propName: string): string => {
