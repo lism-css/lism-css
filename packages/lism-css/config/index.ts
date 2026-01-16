@@ -19,8 +19,13 @@ export const CONFIG = mergedConfig;
 
 const { tokens, props, states } = CONFIG;
 
+const tokensWithColor = {
+	color: [...tokens.c.values, ...tokens.palette.values],
+	...tokens,
+} as const;
+
 // 配列を Set化.
-export const TOKENS = arrayConvertToSet(structuredClone(tokens));
+export const TOKENS = arrayConvertToSet(structuredClone(tokensWithColor));
 export const PROPS = arrayConvertToSet(structuredClone(props));
 
 // STATES は objDeepMerge の型推論により literal types が保持される
