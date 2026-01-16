@@ -398,11 +398,12 @@ export class LismPropsData {
 	}
 }
 
-export interface LismOutputProps {
-	className?: string;
+export interface LismOutputProps extends React.HTMLAttributes<HTMLElement> {
 	style?: StyleWithCustomProps;
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	ref?: React.Ref<any>;
+	// data-*, aria-* などの任意の属性を受け入れる
+	[key: string]: unknown;
 }
 
 /**
