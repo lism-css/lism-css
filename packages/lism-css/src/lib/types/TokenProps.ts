@@ -1,4 +1,5 @@
 import type TOKENS from '../../../config/defaults/tokens';
+import type { WithArbitraryString, ArrayElement, ObjectValuesElement } from './utils';
 
 /**
  * config/defaults/tokens.ts から TOKENS の型を取得
@@ -16,24 +17,6 @@ type TokensConfig = typeof TOKENS;
 //    例: space: { pre: '--s', values: readonly ['5', '10', ...] }
 //
 // ============================================================
-
-// ------------------------------------------------------------
-// ユーティリティ型
-// ------------------------------------------------------------
-
-/**
- * プリセット値 | 任意文字列
- *
- * `string & {}` はリテラル型が string に吸収されるのを防ぎ、
- * エディタでプリセット値のサジェストを維持しつつ任意の文字列も受け付ける
- */
-type TokenValue<T> = T | (string & {});
-
-/** 配列から要素の型を抽出 */
-type ArrayElement<T> = T extends readonly (infer E)[] ? E : never;
-
-/** オブジェクトの values プロパティから要素の型を抽出 */
-type ObjectValuesElement<T> = T extends { values: readonly (infer E)[] } ? E : never;
 
 // ------------------------------------------------------------
 // TokenProps（配列形式のトークン）
@@ -57,7 +40,7 @@ type ArrayTokenKeys = {
  * ```
  */
 export type TokenProps = {
-	[K in ArrayTokenKeys]?: TokenValue<ArrayElement<TokensConfig[K]>>;
+	[K in ArrayTokenKeys]?: WithArbitraryString<ArrayElement<TokensConfig[K]>>;
 };
 
 // ------------------------------------------------------------
@@ -83,5 +66,5 @@ type ObjectTokenKeys = {
  * ```
  */
 export type InternalTokenProps = {
-	[K in ObjectTokenKeys]?: TokenValue<ObjectValuesElement<TokensConfig[K]>>;
+	[K in ObjectTokenKeys]?: WithArbitraryString<ObjectValuesElement<TokensConfig[K]>>;
 };

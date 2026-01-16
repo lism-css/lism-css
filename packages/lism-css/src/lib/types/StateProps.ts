@@ -1,4 +1,5 @@
 import type { STATES } from '../../../config/index';
+import type { WithArbitraryString, ArrayElement } from './utils';
 
 /**
  * config/index.ts から STATES の型を取得
@@ -24,38 +25,20 @@ type StatesConfig = typeof STATES;
 //
 // ============================================================
 
-/**
- * 文字列形式の State → boolean のみ
- * 例: isContainer: 'is--container' → isContainer?: boolean
- */
-type SimpleStateValue = boolean;
-
-/**
- * preset を持つ State → プリセット値 | 任意文字列 | boolean
- *
- * `string & {}` は TypeScript のテクニックで、リテラル型（P）が string に
- * 吸収されるのを防ぎ、エディタでプリセット値のサジェストを維持しつつ
- * 任意の文字列も受け付けられるようにする
- */
-type PresetStateValue<P> = P | (string & {}) | boolean;
-
-/**
- * setStyles を持つ State → 文字列のみ
- * 例: setMask: { setStyles: fn } → setMask?: string
- */
-type CustomStyleStateValue = string;
+/** preset を持つ State の値の型を抽出 */
+type PresetElement<T> = T extends { preset: readonly unknown[] } ? ArrayElement<T['preset']> : never;
 
 /**
  * State 設定から Props の値の型を抽出するユーティリティ型
  */
-type ExtractStateValue<T> =
-	T extends string
-		? SimpleStateValue
-		: T extends { preset: readonly (infer P)[] }
-			? PresetStateValue<P>
-			: T extends { setStyles: unknown }
-				? CustomStyleStateValue
-				: never;
+type ExtractStateValue<T> = T extends string
+	? boolean // 文字列形式 → boolean のみ
+	: T extends { preset: readonly unknown[] }
+		? WithArbitraryString<PresetElement<T>> | boolean // preset あり → プリセット値 | 任意文字列 | boolean
+		: T extends { setStyles: unknown }
+			? string // setStyles あり → 文字列のみ
+			: never;
+
 /**
  * config/index.ts の STATES から自動生成される State Props の型
  * config/index.ts の STATES に新しいステートを追加すると自動的に反映される
