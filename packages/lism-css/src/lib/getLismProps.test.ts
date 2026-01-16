@@ -182,9 +182,9 @@ describe('getLismProps', () => {
 
 	describe('Lism Props処理 - true/- 値', () => {
 		test('true値はユーティリティクラスのみ出力される', () => {
-			const result = getLismProps({ w: true });
-			expect(result.className).toContain('-w');
-			expect(result.style?.width).toBeUndefined();
+			const result = getLismProps({ bd: true });
+			expect(result.className).toContain('-bd');
+			expect(result.style?.borderStyle).toBeUndefined();
 		});
 
 		test('- 値はユーティリティクラスのみ出力される', () => {
@@ -401,7 +401,7 @@ describe('getLismProps', () => {
 		test('空の値は除外される', () => {
 			const result = getLismProps({
 				fz: '',
-				c: null,
+				c: null as unknown as undefined,
 				w: undefined,
 				p: '20',
 			});
@@ -420,7 +420,7 @@ describe('getLismProps', () => {
 	describe('エッジケース', () => {
 		test('null/undefined の propは無視される', () => {
 			const result = getLismProps({
-				fz: null as unknown as string,
+				fz: null as unknown as undefined,
 				w: undefined,
 			});
 			expect(result).toEqual({});

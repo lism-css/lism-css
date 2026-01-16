@@ -11,24 +11,22 @@
  * // 結果: [string] | [string, string] | [string, string, string]
  * ```
  */
-export type LimitedArray<T, N extends number, R extends T[] = [T]> = R['length'] extends N
-	? R
-	: R | LimitedArray<T, N, [...R, T]>;
+export type LimitedArray<T, N extends number, R extends T[] = [T]> = R['length'] extends N ? R : R | LimitedArray<T, N, [...R, T]>;
 
 /**
  * プリセット値 | 任意文字列
  *
  * `string & {}` はリテラル型が string に吸収されるのを防ぎ、
- * エディタでプリセット値のサジェストを維持しつつ任意の文字列も受け付ける
+ * エディタでプリセット値のサジェストを維持しつつ任意の値も受け付ける
  *
  * @example
  * ```ts
- * type Size = WithArbitraryString<'s' | 'm' | 'l'>;
+ * type Size = WithArbitraryValue<'s' | 'm' | 'l'>;
  * // 結果: 's' | 'm' | 'l' | (string & {})
- * // → 's', 'm', 'l' がサジェストされつつ、'custom' などの任意文字列も受け付ける
+ * // → 's', 'm', 'l' がサジェストされつつ、'custom' などの任意の値も受け付ける
  * ```
  */
-export type WithArbitraryString<T> = T | (string & {});
+export type WithArbitraryValue<T> = T | (string & {}) | (number & {}) | (boolean & {});
 
 /**
  * 配列から要素の型を抽出
@@ -40,17 +38,6 @@ export type WithArbitraryString<T> = T | (string & {});
  * ```
  */
 export type ArrayElement<T> = T extends readonly (infer E)[] ? E : never;
-
-/**
- * オブジェクトの values プロパティから要素の型を抽出
- *
- * @example
- * ```ts
- * type Values = ObjectValuesElement<{ values: readonly ['a', 'b'] }>;
- * // 結果: 'a' | 'b'
- * ```
- */
-export type ObjectValuesElement<T> = T extends { values: readonly (infer E)[] } ? E : never;
 
 /**
  * オブジェクトから指定したキーの配列要素の型を抽出
@@ -77,8 +64,19 @@ export type ExtractArrayValues<T, K extends string> = T extends { [P in K]: read
  * // 結果: 'a' | 'b'
  * ```
  */
-export type ExtractObjectKeys<T, K extends string> = T extends { [P in K]: infer U }
-	? U extends object
-		? keyof U
-		: never
-	: never;
+export type ExtractObjectKeys<T, K extends string> = T extends { [P in K]: infer U } ? (U extends object ? keyof U : never) : never;
+
+/**
+ * オブジェクトから指定したキーのプロパティ値を抽出
+ * 指定したキーが存在しない場合は never を返す
+ *
+ * @example
+ * ```ts
+ * type TokenKey = ExtractPropertyValue<{ token: 'fz' }, 'token'>;
+ * // 結果: 'fz'
+ *
+ * type PropName = ExtractPropertyValue<{ prop: 'fontSize' }, 'prop'>;
+ * // 結果: 'fontSize'
+ * ```
+ */
+export type ExtractPropertyValue<T, K extends string> = T extends { [P in K]: infer V } ? V : never;

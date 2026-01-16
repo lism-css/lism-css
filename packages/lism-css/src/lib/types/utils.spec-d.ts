@@ -1,5 +1,5 @@
 import { describe, expectTypeOf, it } from 'vitest';
-import type { LimitedArray, WithArbitraryString, ArrayElement, ObjectValuesElement } from './utils';
+import type { LimitedArray, WithArbitraryValue, ArrayElement } from './utils';
 
 describe('LimitedArray', () => {
 	it('最大3要素の配列型を生成できる', () => {
@@ -45,9 +45,9 @@ describe('LimitedArray', () => {
 	});
 });
 
-describe('WithArbitraryString', () => {
+describe('WithArbitraryValue', () => {
 	it('リテラル型を維持しつつ任意の文字列も受け付ける', () => {
-		type Size = WithArbitraryString<'s' | 'm' | 'l'>;
+		type Size = WithArbitraryValue<'s' | 'm' | 'l'>;
 
 		const preset: Size = 's';
 		const custom: Size = 'custom-value';
@@ -57,7 +57,7 @@ describe('WithArbitraryString', () => {
 	});
 
 	it('リテラル型がサジェストされる（型チェック）', () => {
-		type Size = WithArbitraryString<'s' | 'm' | 'l'>;
+		type Size = WithArbitraryValue<'s' | 'm' | 'l'>;
 
 		// 's' | 'm' | 'l' | (string & {}) になる
 		expectTypeOf<Size>().toExtend<'s' | 'm' | 'l' | (string & {})>();
@@ -78,22 +78,5 @@ describe('ArrayElement', () => {
 	it('配列でない型は never になる', () => {
 		type NotArray = ArrayElement<string>;
 		expectTypeOf<NotArray>().toEqualTypeOf<never>();
-	});
-});
-
-describe('ObjectValuesElement', () => {
-	it('values プロパティから要素の型を抽出できる', () => {
-		type Element = ObjectValuesElement<{ values: readonly ['a', 'b', 'c'] }>;
-		expectTypeOf<Element>().toEqualTypeOf<'a' | 'b' | 'c'>();
-	});
-
-	it('values プロパティがないオブジェクトは never になる', () => {
-		type NoValues = ObjectValuesElement<{ other: string }>;
-		expectTypeOf<NoValues>().toEqualTypeOf<never>();
-	});
-
-	it('他のプロパティがあっても values から抽出できる', () => {
-		type Element = ObjectValuesElement<{ pre: string; values: readonly ['x', 'y'] }>;
-		expectTypeOf<Element>().toEqualTypeOf<'x' | 'y'>();
 	});
 });

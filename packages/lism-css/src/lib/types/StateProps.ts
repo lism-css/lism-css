@@ -1,5 +1,5 @@
 import type { STATES } from '../../../config/index';
-import type { WithArbitraryString, ArrayElement } from './utils';
+import type { WithArbitraryValue, ArrayElement } from './utils';
 
 /**
  * config/index.ts から STATES の型を取得
@@ -34,7 +34,7 @@ type PresetElement<T> = T extends { preset: readonly unknown[] } ? ArrayElement<
 type ExtractStateValue<T> = T extends string
 	? boolean // 文字列形式 → boolean のみ
 	: T extends { preset: readonly unknown[] }
-		? WithArbitraryString<PresetElement<T>> | boolean // preset あり → プリセット値 | 任意文字列 | boolean
+		? WithArbitraryValue<PresetElement<T>> | boolean // preset あり → プリセット値 | 任意文字列 | boolean
 		: T extends { setStyles: unknown }
 			? string // setStyles あり → 文字列のみ
 			: never;
