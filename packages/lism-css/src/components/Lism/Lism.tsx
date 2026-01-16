@@ -1,13 +1,13 @@
 import type { ComponentPropsWithoutRef, ElementType, ReactNode } from 'react';
-import getLismProps, { type LismPropsDataInput } from '../../lib/getLismProps';
+import getLismProps, { type LismProps } from '../../lib/getLismProps';
 
 /**
  * Lism コンポーネントの Props 型
  * @template T - レンダリングする要素の型（デフォルトは 'div'）
  *
  */
-export type LismProps<T extends ElementType = 'div'> = LismPropsDataInput &
-	Omit<ComponentPropsWithoutRef<T>, keyof LismPropsDataInput> & {
+export type LismComponentProps<T extends ElementType = 'div'> = LismProps &
+	Omit<ComponentPropsWithoutRef<T>, keyof LismProps> & {
 		/** レンダリングするコンポーネントまたは要素 */
 		as?: T;
 		/** レンダリングするHTML要素のタグ名（文字列のみ）*/
@@ -21,7 +21,7 @@ export type LismProps<T extends ElementType = 'div'> = LismPropsDataInput &
 /**
  * Lism Propsを処理できるだけのコンポーネント
  */
-export default function Lism<T extends ElementType = 'div'>({ children, as, tag, exProps, ...props }: LismProps<T>) {
+export default function Lism<T extends ElementType = 'div'>({ children, as, tag, exProps, ...props }: LismComponentProps<T>) {
 	const Component = (as || tag || 'div') as ElementType;
 
 	return (
