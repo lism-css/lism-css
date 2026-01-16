@@ -9,9 +9,9 @@ describe('LimitedArray', () => {
 		const two: Max3 = ['a', 'b'];
 		const three: Max3 = ['a', 'b', 'c'];
 
-		expectTypeOf(one).toMatchTypeOf<Max3>();
-		expectTypeOf(two).toMatchTypeOf<Max3>();
-		expectTypeOf(three).toMatchTypeOf<Max3>();
+		expectTypeOf(one).toExtend<Max3>();
+		expectTypeOf(two).toExtend<Max3>();
+		expectTypeOf(three).toExtend<Max3>();
 	});
 
 	it('上限を超える配列は型エラーになる', () => {
@@ -19,7 +19,7 @@ describe('LimitedArray', () => {
 
 		// @ts-expect-error 4要素以上は許可されない
 		const four: Max3 = ['a', 'b', 'c', 'd'];
-		expectTypeOf(four).toMatchTypeOf<Max3>();
+		expectTypeOf(four).toExtend<Max3>();
 	});
 
 	it('number 型でも動作する', () => {
@@ -28,8 +28,8 @@ describe('LimitedArray', () => {
 		const one: Max2Numbers = [1];
 		const two: Max2Numbers = [1, 2];
 
-		expectTypeOf(one).toMatchTypeOf<Max2Numbers>();
-		expectTypeOf(two).toMatchTypeOf<Max2Numbers>();
+		expectTypeOf(one).toExtend<Max2Numbers>();
+		expectTypeOf(two).toExtend<Max2Numbers>();
 	});
 
 	it('union 型でも動作する', () => {
@@ -39,9 +39,9 @@ describe('LimitedArray', () => {
 		const two: Max2Union = ['a', 'b'];
 		const mixed: Max2Union = ['a', 'c'];
 
-		expectTypeOf(one).toMatchTypeOf<Max2Union>();
-		expectTypeOf(two).toMatchTypeOf<Max2Union>();
-		expectTypeOf(mixed).toMatchTypeOf<Max2Union>();
+		expectTypeOf(one).toExtend<Max2Union>();
+		expectTypeOf(two).toExtend<Max2Union>();
+		expectTypeOf(mixed).toExtend<Max2Union>();
 	});
 });
 
@@ -52,15 +52,15 @@ describe('WithArbitraryString', () => {
 		const preset: Size = 's';
 		const custom: Size = 'custom-value';
 
-		expectTypeOf(preset).toMatchTypeOf<Size>();
-		expectTypeOf(custom).toMatchTypeOf<Size>();
+		expectTypeOf(preset).toExtend<Size>();
+		expectTypeOf(custom).toExtend<Size>();
 	});
 
 	it('リテラル型がサジェストされる（型チェック）', () => {
 		type Size = WithArbitraryString<'s' | 'm' | 'l'>;
 
 		// 's' | 'm' | 'l' | (string & {}) になる
-		expectTypeOf<Size>().toMatchTypeOf<'s' | 'm' | 'l' | (string & {})>();
+		expectTypeOf<Size>().toExtend<'s' | 'm' | 'l' | (string & {})>();
 	});
 });
 
