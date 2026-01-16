@@ -39,7 +39,7 @@ describe('TokenProps', () => {
 			lh: '1.5',
 			bdrs: '100px',
 		};
-		expectTypeOf(props).toMatchTypeOf<TokenProps>();
+		expectTypeOf(props).toExtend<TokenProps>();
 	});
 
 	it('トークン値を設定できる', () => {
@@ -50,7 +50,7 @@ describe('TokenProps', () => {
 			fw: 'bold',
 			ff: 'mono',
 		};
-		expectTypeOf(props).toMatchTypeOf<TokenProps>();
+		expectTypeOf(props).toExtend<TokenProps>();
 	});
 });
 
@@ -96,7 +96,7 @@ describe('InternalTokenProps', () => {
 			c: 'text',
 			palette: 'blue',
 		};
-		expectTypeOf(props).toMatchTypeOf<InternalTokenProps>();
+		expectTypeOf(props).toExtend<InternalTokenProps>();
 	});
 
 	it('任意の文字列値を設定できる', () => {
@@ -105,6 +105,6 @@ describe('InternalTokenProps', () => {
 			c: 'custom-color',
 			palette: 'custom-palette',
 		};
-		expectTypeOf(props).toMatchTypeOf<InternalTokenProps>();
+		expectTypeOf(props).toExtend<InternalTokenProps>();
 	});
 });
