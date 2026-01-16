@@ -3,13 +3,13 @@ import type { PropValueTypes, PropKeys, AllPropTypes } from './PropValueTypes';
 
 describe('PropValueTypes', () => {
 	it('fs には presets の値を設定できる', () => {
-		expectTypeOf<PropValueTypes['fs']>().toEqualTypeOf<'italic' | (string & {}) | undefined>();
+		expectTypeOf<PropValueTypes['fs']>().toEqualTypeOf<'italic' | (string & {}) | number | boolean | undefined>();
 	});
 
 	it('fz には token の値（TOKENS.fz）を設定できる', () => {
 		// token: 'fz' → TOKENS.fz の値
 		expectTypeOf<PropValueTypes['fz']>().toEqualTypeOf<
-			'root' | 'base' | '5xl' | '4xl' | '3xl' | '2xl' | 'xl' | 'l' | 'm' | 's' | 'xs' | '2xs' | (string & {}) | undefined
+			'root' | 'base' | '5xl' | '4xl' | '3xl' | '2xl' | 'xl' | 'l' | 'm' | 's' | 'xs' | '2xs' | (string & {}) | number | boolean | undefined
 		>();
 	});
 
@@ -17,29 +17,27 @@ describe('PropValueTypes', () => {
 		// presets: ['auto', '0']
 		// token: 'space' → TOKENS.space.values の値
 		expectTypeOf<PropValueTypes['mx']>().toEqualTypeOf<
-			'auto' | '0' | '5' | '10' | '15' | '20' | '30' | '40' | '50' | '60' | '70' | '80' | (string & {}) | undefined
+			'auto' | '0' | '5' | '10' | '15' | '20' | '30' | '40' | '50' | '60' | '70' | '80' | (string & {}) | number | boolean | undefined
 		>();
 	});
 
 	it('m には presets と token（space）の値を設定できる', () => {
 		expectTypeOf<PropValueTypes['m']>().toEqualTypeOf<
-			'auto' | '0' | '5' | '10' | '15' | '20' | '30' | '40' | '50' | '60' | '70' | '80' | (string & {}) | undefined
+			'auto' | '0' | '5' | '10' | '15' | '20' | '30' | '40' | '50' | '60' | '70' | '80' | (string & {}) | number | boolean | undefined
 		>();
 	});
 
 	it('d には presets と utils の値を設定できる', () => {
-		expectTypeOf<PropValueTypes['d']>().toEqualTypeOf<
-			'none' | 'block' | 'in-flex' | (string & {}) | undefined
-		>();
+		expectTypeOf<PropValueTypes['d']>().toEqualTypeOf<'none' | 'block' | 'in-flex' | (string & {}) | number | boolean | undefined>();
 	});
 
 	it('td には utils のキーを設定できる', () => {
-		expectTypeOf<PropValueTypes['td']>().toEqualTypeOf<'none' | (string & {}) | undefined>();
+		expectTypeOf<PropValueTypes['td']>().toEqualTypeOf<'none' | (string & {}) | number | boolean | undefined>();
 	});
 
 	it('pos には presets と utils の値を設定できる', () => {
 		expectTypeOf<PropValueTypes['pos']>().toEqualTypeOf<
-			'static' | 'fixed' | 'sticky' | 'rel' | 'abs' | (string & {}) | undefined
+			'static' | 'fixed' | 'sticky' | 'rel' | 'abs' | (string & {}) | number | boolean | undefined
 		>();
 	});
 
@@ -47,7 +45,7 @@ describe('PropValueTypes', () => {
 		// presets: [...PLACE_PRESETS, 'stretch'] → 'start' | 'center' | 'end' | 'stretch'
 		// utils: { 'flex-s': 'flex-start', 'flex-e': 'flex-end' }
 		expectTypeOf<PropValueTypes['ai']>().toEqualTypeOf<
-			'start' | 'center' | 'end' | 'stretch' | 'flex-s' | 'flex-e' | (string & {}) | undefined
+			'start' | 'center' | 'end' | 'stretch' | 'flex-s' | 'flex-e' | (string & {}) | number | boolean | undefined
 		>();
 	});
 
@@ -55,7 +53,7 @@ describe('PropValueTypes', () => {
 		// presets: ['0']
 		// token: 'bdrs' → TOKENS.bdrs の値
 		expectTypeOf<PropValueTypes['bdrs']>().toEqualTypeOf<
-			'0' | '5' | '10' | '20' | '30' | '40' | '50' | '99' | 'inner' | (string & {}) | undefined
+			'0' | '5' | '10' | '20' | '30' | '40' | '50' | '99' | 'inner' | (string & {}) | number | boolean | undefined
 		>();
 	});
 

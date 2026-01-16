@@ -1,5 +1,5 @@
 import { describe, expectTypeOf, it } from 'vitest';
-import type { LimitedArray, WithArbitraryValue, ArrayElement } from './utils';
+import type { LimitedArray, WithArbitraryString, ArrayElement } from './utils';
 
 describe('LimitedArray', () => {
 	it('最大3要素の配列型を生成できる', () => {
@@ -45,9 +45,9 @@ describe('LimitedArray', () => {
 	});
 });
 
-describe('WithArbitraryValue', () => {
+describe('WithArbitraryString', () => {
 	it('リテラル型を維持しつつ任意の文字列も受け付ける', () => {
-		type Size = WithArbitraryValue<'s' | 'm' | 'l'>;
+		type Size = WithArbitraryString<'s' | 'm' | 'l'>;
 
 		const preset: Size = 's';
 		const custom: Size = 'custom-value';
@@ -57,7 +57,7 @@ describe('WithArbitraryValue', () => {
 	});
 
 	it('リテラル型がサジェストされる（型チェック）', () => {
-		type Size = WithArbitraryValue<'s' | 'm' | 'l'>;
+		type Size = WithArbitraryString<'s' | 'm' | 'l'>;
 
 		// 's' | 'm' | 'l' | (string & {}) になる
 		expectTypeOf<Size>().toExtend<'s' | 'm' | 'l' | (string & {})>();

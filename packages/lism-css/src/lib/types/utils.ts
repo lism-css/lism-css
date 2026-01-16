@@ -17,16 +17,16 @@ export type LimitedArray<T, N extends number, R extends T[] = [T]> = R['length']
  * プリセット値 | 任意文字列
  *
  * `string & {}` はリテラル型が string に吸収されるのを防ぎ、
- * エディタでプリセット値のサジェストを維持しつつ任意の値も受け付ける
+ * エディタでプリセット値のサジェストを維持しつつ任意の文字列も受け付ける
  *
  * @example
  * ```ts
- * type Size = WithArbitraryValue<'s' | 'm' | 'l'>;
+ * type Size = WithArbitraryString<'s' | 'm' | 'l'>;
  * // 結果: 's' | 'm' | 'l' | (string & {})
- * // → 's', 'm', 'l' がサジェストされつつ、'custom' などの任意の値も受け付ける
+ * // → 's', 'm', 'l' がサジェストされつつ、'custom' などの任意の文字列も受け付ける
  * ```
  */
-export type WithArbitraryValue<T> = T | (string & {}) | (number & {}) | (boolean & {});
+export type WithArbitraryString<T> = T | (string & {});
 
 /**
  * 配列から要素の型を抽出

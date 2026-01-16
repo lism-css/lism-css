@@ -1,5 +1,5 @@
 import { TOKENS, PROPS } from '../../../config/index';
-import type { WithArbitraryValue, ArrayElement, ExtractArrayValues, ExtractObjectKeys, ExtractPropertyValue } from './utils';
+import type { WithArbitraryString, ArrayElement, ExtractArrayValues, ExtractObjectKeys, ExtractPropertyValue } from './utils';
 
 /**
  * config/defaults/props.ts から PROPS の型を取得
@@ -82,7 +82,7 @@ type PropsWithValues = {
  * ```
  */
 export type PropValueTypes = {
-	[K in PropsWithValues]?: WithArbitraryValue<ExtractPropValues<PropsConfig[K]>>;
+	[K in PropsWithValues]?: WithArbitraryString<ExtractPropValues<PropsConfig[K]>> | number | boolean;
 };
 
 // ============================================================
