@@ -1,9 +1,9 @@
 ---
-import type { LismProps } from '../../types';
+import { type LismComponentProps } from '../../../src/components/Lism';
 import { Lism } from '../Lism';
 import getOverlayLinkProps from '../../../dist/components/OverlayLink/getProps';
 
-interface Props extends LismProps {}
+interface Props extends LismComponentProps {}
 const props = Astro.props || {};
 ---
 

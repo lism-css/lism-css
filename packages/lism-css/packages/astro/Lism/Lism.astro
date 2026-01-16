@@ -1,9 +1,9 @@
 ---
-import type { LismProps } from '../../types';
-import getLismProps from '../../../dist/lib/getLismProps';
+import getLismProps from '../../../src/lib/getLismProps';
+import { type LismComponentProps } from '../../../src/components/Lism';
 
 // Propsの定義
-interface Props extends LismProps {}
+interface Props extends LismComponentProps {}
 
 const { as, tag, exProps, ...props } = Astro.props || {};
 const JSX = as || tag || 'div';

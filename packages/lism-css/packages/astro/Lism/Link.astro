@@ -1,8 +1,8 @@
 ---
-import type { LismProps } from '../../types';
+import { type LismComponentProps } from '../../../src/components/Lism';
 import Lism from './Lism.astro';
 
-interface Props extends LismProps {}
+interface Props extends LismComponentProps {}
 ---
 
 <Lism tag='a' {...Astro.props || {}}>

@@ -1,10 +1,10 @@
 ---
-import type { LismProps } from '../../types';
+import { type LismComponentProps } from '../../../src/components/Lism';
 import { Lism } from '../Lism';
 import getProps from '../../../dist/components/atomic/Spacer/getProps';
 
 // Propsの定義
-interface Props extends LismProps {}
+interface Props extends LismComponentProps {}
 const props = Astro.props || {};
 ---
 
