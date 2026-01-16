@@ -28,3 +28,4 @@ export const STATES = states;
 
 // ブレイクポイント
 export const BREAK_POINTS = ['sm', 'md', 'lg', 'xl'] as const;
+export const BREAK_POINTS_ALL = ['base', ...BREAK_POINTS] as const;
