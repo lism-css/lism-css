@@ -50,7 +50,7 @@ type StatePropDataObject = {
 type StatePropData = string | StatePropDataObject;
 
 // getLismProps の入力となる Props 型
-export interface LismProps extends StateProps, MakeResponsive<PropValueTypes> {
+export interface LismProps extends StateProps, MakeResponsive<PropValueTypes>, React.HTMLAttributes<HTMLElement> {
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	forwardedRef?: React.Ref<any>;
 	layout?: LayoutType;
@@ -62,6 +62,7 @@ export interface LismProps extends StateProps, MakeResponsive<PropValueTypes> {
 	_propConfig?: Record<string, PropConfig>;
 	hov?: boolean | string | Record<string, unknown>;
 	css?: Record<string, unknown>;
+	[key: string]: unknown;
 }
 
 const getTokenKey = (propName: string): string => {

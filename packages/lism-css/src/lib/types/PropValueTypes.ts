@@ -1,5 +1,5 @@
 import { TOKENS, PROPS } from '../../../config/index';
-import type { WithArbitraryString, ExtractArrayValues, ExtractObjectKeys } from './utils';
+import type { WithArbitraryValue, ArrayElement, ExtractArrayValues, ExtractObjectKeys, ExtractPropertyValue } from './utils';
 
 /**
  * config/defaults/props.ts から PROPS の型を取得
@@ -27,28 +27,38 @@ type TokensConfig = typeof TOKENS;
 // ============================================================
 
 /**
- * token プロパティから対応する TOKENS の値を抽出
- * - 配列形式: TOKENS[key] が配列の場合、その要素の型
- * - オブジェクト形式: TOKENS[key].values が配列の場合、その要素の型
+ * TOKENS のキーから対応する値の型を取得
+ * - 配列形式: TOKENS[K] が配列の場合、その要素の型
+ * - オブジェクト形式: TOKENS[K].values が配列の場合、その要素の型
+ *
+ * @example
+ * ```ts
+ * type FzValues = TokenConfigValues<'fz'>;
+ * // 結果: 'root' | 'base' | '5xl' | ...
+ *
+ * type SpaceValues = TokenConfigValues<'space'>;
+ * // 結果: '5' | '10' | '15' | ...
+ * ```
  */
-type ExtractTokenValues<T> = T extends { token: infer K }
-	? K extends keyof TokensConfig
-		? TokensConfig[K] extends readonly (infer E)[]
-			? E
-			: TokensConfig[K] extends { values: readonly (infer V)[] }
-				? V
-				: never
-		: never
-	: never;
+type TokenConfigValues<K extends keyof TokensConfig> = TokensConfig[K] extends readonly unknown[]
+	? ArrayElement<TokensConfig[K]>
+	: ExtractArrayValues<TokensConfig[K], 'values'>;
+
+/**
+ * token プロパティから対応する TOKENS の値を抽出
+ */
+type ExtractTokenValues<T> =
+	ExtractPropertyValue<T, 'token'> extends never
+		? never
+		: ExtractPropertyValue<T, 'token'> extends keyof TokensConfig
+			? TokenConfigValues<ExtractPropertyValue<T, 'token'>>
+			: never;
 
 /**
  * プロパティの設定から利用可能な値の型を抽出
  * presets の値 + utils のキー + token の値
  */
-type ExtractPropValues<T> =
-	| ExtractArrayValues<T, 'presets'>
-	| ExtractObjectKeys<T, 'utils'>
-	| ExtractTokenValues<T>;
+type ExtractPropValues<T> = ExtractArrayValues<T, 'presets'> | ExtractObjectKeys<T, 'utils'> | ExtractTokenValues<T>;
 
 /**
  * presets, utils, token のいずれかを持つキーを抽出
@@ -72,7 +82,7 @@ type PropsWithValues = {
  * ```
  */
 export type PropValueTypes = {
-	[K in PropsWithValues]?: WithArbitraryString<ExtractPropValues<PropsConfig[K]>>;
+	[K in PropsWithValues]?: WithArbitraryValue<ExtractPropValues<PropsConfig[K]>>;
 };
 
 // ============================================================
