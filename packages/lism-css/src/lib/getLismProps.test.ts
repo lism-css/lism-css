@@ -420,7 +420,7 @@ describe('getLismProps', () => {
 	describe('エッジケース', () => {
 		test('null/undefined の propは無視される', () => {
 			const result = getLismProps({
-				fz: null,
+				fz: null as unknown as string,
 				w: undefined,
 			});
 			expect(result).toEqual({});
