@@ -51,3 +51,34 @@ export type ArrayElement<T> = T extends readonly (infer E)[] ? E : never;
  * ```
  */
 export type ObjectValuesElement<T> = T extends { values: readonly (infer E)[] } ? E : never;
+
+/**
+ * オブジェクトから指定したキーの配列要素の型を抽出
+ * 指定したキーが存在しない場合は never を返す
+ *
+ * @example
+ * ```ts
+ * type Presets = ExtractArrayValues<{ presets: readonly ['a', 'b'] }, 'presets'>;
+ * // 結果: 'a' | 'b'
+ *
+ * type Values = ExtractArrayValues<{ values: readonly [1, 2, 3] }, 'values'>;
+ * // 結果: 1 | 2 | 3
+ * ```
+ */
+export type ExtractArrayValues<T, K extends string> = T extends { [P in K]: readonly (infer E)[] } ? E : never;
+
+/**
+ * オブジェクトから指定したキーのオブジェクトのキーを抽出
+ * 指定したキーが存在しない場合は never を返す
+ *
+ * @example
+ * ```ts
+ * type Keys = ExtractObjectKeys<{ utils: { a: 'x', b: 'y' } }, 'utils'>;
+ * // 結果: 'a' | 'b'
+ * ```
+ */
+export type ExtractObjectKeys<T, K extends string> = T extends { [P in K]: infer U }
+	? U extends object
+		? keyof U
+		: never
+	: never;
