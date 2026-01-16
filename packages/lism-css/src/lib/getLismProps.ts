@@ -14,7 +14,7 @@ import { type StyleWithCustomProps } from './types';
 import { StateProps } from './types/StateProps';
 
 // PropConfig interface based on config/defaults/props.ts
-export interface PropConfig {
+interface PropConfig {
 	prop?: string;
 	token?: string | null | undefined | false;
 	tokenClass?: 0 | 1 | 2;
@@ -36,7 +36,7 @@ export interface PropConfig {
 }
 
 // StatePropData based on config/defaults/states.ts
-export type StatePropDataObject = {
+type StatePropDataObject = {
 	className: string;
 	preset?: string[] | readonly string[];
 	presetClass?: string;
@@ -45,7 +45,7 @@ export type StatePropDataObject = {
 	setStyles?: (propVal: string) => Record<string, unknown>;
 };
 
-export type StatePropData = string | StatePropDataObject;
+type StatePropData = string | StatePropDataObject;
 
 // getLismProps の入力となる Props 型
 export interface LismProps extends StateProps {
