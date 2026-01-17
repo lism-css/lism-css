@@ -101,4 +101,100 @@ describe('Lism', () => {
 			expect(element).toHaveClass('-content:s');
 		});
 	});
+
+	describe('レスポンシブ対応', () => {
+		test('配列形式でレスポンシブ値を指定できる', () => {
+			render(
+				<Lism fz={['s', 'm', 'l']} data-testid="lism">
+					test
+				</Lism>
+			);
+			const element = screen.getByTestId('lism');
+			expect(element).toBeInTheDocument();
+			// 配列形式の場合、ベース値とブレイクポイント用クラスが設定される
+			expect(element).toHaveClass('-fz:s');
+			expect(element).toHaveClass('-fz_sm');
+			expect(element).toHaveClass('-fz_md');
+		});
+
+		test('オブジェクト形式でレスポンシブ値を指定できる', () => {
+			render(
+				<Lism fz={{ base: 's', md: 'l' }} data-testid="lism">
+					test
+				</Lism>
+			);
+			const element = screen.getByTestId('lism');
+			expect(element).toBeInTheDocument();
+			expect(element).toHaveClass('-fz:s');
+			expect(element).toHaveClass('-fz_md');
+		});
+
+		test('単一値を指定できる', () => {
+			render(
+				<Lism fz="l" data-testid="lism">
+					test
+				</Lism>
+			);
+			const element = screen.getByTestId('lism');
+			expect(element).toHaveClass('-fz:l');
+		});
+
+		test('p にレスポンシブ配列を指定できる', () => {
+			render(
+				<Lism p={['10', '20', '30']} data-testid="lism">
+					test
+				</Lism>
+			);
+			const element = screen.getByTestId('lism');
+			expect(element).toBeInTheDocument();
+			expect(element).toHaveClass('-p:10');
+			expect(element).toHaveClass('-p_sm');
+			expect(element).toHaveClass('-p_md');
+		});
+
+		test('m にオブジェクト形式を指定できる', () => {
+			render(
+				<Lism m={{ base: '10', sm: '20', md: '30' }} data-testid="lism">
+					test
+				</Lism>
+			);
+			const element = screen.getByTestId('lism');
+			expect(element).toBeInTheDocument();
+			expect(element).toHaveClass('-m:10');
+			expect(element).toHaveClass('-m_sm');
+			expect(element).toHaveClass('-m_md');
+		});
+
+		test('g（gap）にレスポンシブ値を指定できる', () => {
+			render(
+				<Lism g={['10', '20']} data-testid="lism">
+					test
+				</Lism>
+			);
+			const element = screen.getByTestId('lism');
+			expect(element).toBeInTheDocument();
+		});
+	});
+
+	describe('数値・真偽値の処理', () => {
+		test('数値を指定できる', () => {
+			render(
+				<Lism p={20} data-testid="lism">
+					test
+				</Lism>
+			);
+			const element = screen.getByTestId('lism');
+			expect(element).toBeInTheDocument();
+		});
+
+		test('真偽値を指定できる', () => {
+			render(
+				<Lism w={true} data-testid="lism">
+					test
+				</Lism>
+			);
+			const element = screen.getByTestId('lism');
+			expect(element).toBeInTheDocument();
+		});
+	});
 });
