@@ -9,14 +9,14 @@ afterEach(() => {
 describe('Lism', () => {
 	describe('基本動作', () => {
 		test('デフォルトでdiv要素としてレンダリングされる', () => {
-			render(<Lism data-testid="lism">test</Lism>);
+			render(<Lism data-testid='lism'>test</Lism>);
 			const element = screen.getByTestId('lism');
 			expect(element.tagName).toBe('DIV');
 		});
 
 		test('as propで要素を変更できる', () => {
 			render(
-				<Lism as="span" data-testid="lism">
+				<Lism as='span' data-testid='lism'>
 					test
 				</Lism>
 			);
@@ -26,7 +26,7 @@ describe('Lism', () => {
 
 		test('tag propで要素を変更できる', () => {
 			render(
-				<Lism tag="section" data-testid="lism">
+				<Lism tag='section' data-testid='lism'>
 					test
 				</Lism>
 			);
@@ -36,7 +36,7 @@ describe('Lism', () => {
 
 		test('asがtagより優先される', () => {
 			render(
-				<Lism as="article" tag="section" data-testid="lism">
+				<Lism as='article' tag='section' data-testid='lism'>
 					test
 				</Lism>
 			);
@@ -48,7 +48,7 @@ describe('Lism', () => {
 	describe('HTML属性', () => {
 		test('as="a"の場合、href属性を受け取れる', () => {
 			render(
-				<Lism as="a" href="/path" data-testid="lism">
+				<Lism as='a' href='/path' data-testid='lism'>
 					link
 				</Lism>
 			);
@@ -60,19 +60,297 @@ describe('Lism', () => {
 	describe('LismProps', () => {
 		test('Lism固有のpropsがclassNameやstyleに変換される', () => {
 			render(
-				<Lism m="16px" p="8px" data-testid="lism">
+				<Lism m='16px' p='8px' data-testid='lism'>
 					test
 				</Lism>
 			);
 			const element = screen.getByTestId('lism');
 			expect(element).toBeInTheDocument();
 		});
+
+		describe('Typography', () => {
+			test('fz（font-size）トークン値を指定できる', () => {
+				render(
+					<Lism fz='xl' data-testid='lism'>
+						test
+					</Lism>
+				);
+				const element = screen.getByTestId('lism');
+				expect(element).toHaveClass('-fz:xl');
+			});
+
+			test('fw（font-weight）トークン値を指定できる', () => {
+				render(
+					<Lism fw='bold' data-testid='lism'>
+						test
+					</Lism>
+				);
+				const element = screen.getByTestId('lism');
+				expect(element).toHaveClass('-fw:bold');
+			});
+
+			test('ff（font-family）トークン値を指定できる', () => {
+				render(
+					<Lism ff='mono' data-testid='lism'>
+						test
+					</Lism>
+				);
+				const element = screen.getByTestId('lism');
+				expect(element).toHaveClass('-ff:mono');
+			});
+
+			test('lh（line-height）トークン値を指定できる', () => {
+				render(
+					<Lism lh='s' data-testid='lism'>
+						test
+					</Lism>
+				);
+				const element = screen.getByTestId('lism');
+				expect(element).toHaveClass('-lh:s');
+			});
+
+			test('ta（text-align）を指定できる', () => {
+				render(
+					<Lism ta='center' data-testid='lism'>
+						test
+					</Lism>
+				);
+				const element = screen.getByTestId('lism');
+				expect(element).toHaveClass('-ta:center');
+			});
+
+			test('fs（font-style）を指定できる', () => {
+				render(
+					<Lism fs='italic' data-testid='lism'>
+						test
+					</Lism>
+				);
+				const element = screen.getByTestId('lism');
+				expect(element).toHaveClass('-fs:italic');
+			});
+		});
+
+		describe('Spacing', () => {
+			test('p（padding）トークン値を指定できる', () => {
+				render(
+					<Lism p='20' data-testid='lism'>
+						test
+					</Lism>
+				);
+				const element = screen.getByTestId('lism');
+				expect(element).toHaveClass('-p:20');
+			});
+
+			test('px, py を指定できる', () => {
+				render(
+					<Lism px='20' py='10' data-testid='lism'>
+						test
+					</Lism>
+				);
+				const element = screen.getByTestId('lism');
+				expect(element).toHaveClass('-px:20');
+				expect(element).toHaveClass('-py:10');
+			});
+
+			test('m（margin）トークン値を指定できる', () => {
+				render(
+					<Lism m='30' data-testid='lism'>
+						test
+					</Lism>
+				);
+				const element = screen.getByTestId('lism');
+				expect(element).toHaveClass('-m:30');
+			});
+
+			test('mx="auto" を指定できる', () => {
+				render(
+					<Lism mx='auto' data-testid='lism'>
+						test
+					</Lism>
+				);
+				const element = screen.getByTestId('lism');
+				expect(element).toHaveClass('-mx:auto');
+			});
+
+			test('g（gap）トークン値を指定できる', () => {
+				render(
+					<Lism g='20' data-testid='lism'>
+						test
+					</Lism>
+				);
+				const element = screen.getByTestId('lism');
+				expect(element).toHaveClass('-g:20');
+			});
+		});
+
+		test('d="none" を指定できる', () => {
+			render(
+				<Lism d='none' data-testid='lism'>
+					test
+				</Lism>
+			);
+			const element = screen.getByTestId('lism');
+			expect(element).toHaveClass('-d:none');
+		});
+
+		test('pos（position）を指定できる', () => {
+			render(
+				<Lism pos='relative' data-testid='lism'>
+					test
+				</Lism>
+			);
+			const element = screen.getByTestId('lism');
+			expect(element).toHaveClass('-pos:rel');
+		});
+
+		test('ai, jc（flexbox alignment）を指定できる', () => {
+			render(
+				<Lism d='flex' ai='center' jc='center' data-testid='lism'>
+					test
+				</Lism>
+			);
+			const element = screen.getByTestId('lism');
+			expect(element).toHaveClass('-ai:center');
+			expect(element).toHaveClass('-jc:center');
+		});
+
+		test('fxw（flex-wrap）を指定できる', () => {
+			render(
+				<Lism d='flex' fxw='wrap' data-testid='lism'>
+					test
+				</Lism>
+			);
+			const element = screen.getByTestId('lism');
+			expect(element).toHaveClass('-fxw:wrap');
+		});
+
+		describe('Sizing', () => {
+			test('w（width）を指定できる', () => {
+				render(
+					<Lism w='100%' data-testid='lism'>
+						test
+					</Lism>
+				);
+				const element = screen.getByTestId('lism');
+				expect(element).toHaveClass('-w:100%');
+			});
+
+			test('h（height）を指定できる', () => {
+				render(
+					<Lism h='100%' data-testid='lism'>
+						test
+					</Lism>
+				);
+				const element = screen.getByTestId('lism');
+				expect(element).toHaveClass('-h:100%');
+			});
+
+			test('w="fit" ユーティリティを指定できる', () => {
+				render(
+					<Lism w='fit' data-testid='lism'>
+						test
+					</Lism>
+				);
+				const element = screen.getByTestId('lism');
+				expect(element).toHaveClass('-w:fit');
+			});
+
+			test('aspect（aspect-ratio）を指定できる', () => {
+				render(
+					<Lism aspect='16/9' data-testid='lism'>
+						test
+					</Lism>
+				);
+				const element = screen.getByTestId('lism');
+				expect(element).toBeInTheDocument();
+			});
+		});
+
+		describe('Decoration', () => {
+			test('bdrs（border-radius）トークン値を指定できる', () => {
+				render(
+					<Lism bdrs='20' data-testid='lism'>
+						test
+					</Lism>
+				);
+				const element = screen.getByTestId('lism');
+				expect(element).toHaveClass('-bdrs:20');
+			});
+
+			test('bxsh（box-shadow）トークン値を指定できる', () => {
+				render(
+					<Lism bxsh='20' data-testid='lism'>
+						test
+					</Lism>
+				);
+				const element = screen.getByTestId('lism');
+				expect(element).toHaveClass('-bxsh:20');
+			});
+
+			test('ov（overflow）を指定できる', () => {
+				render(
+					<Lism ov='hidden' data-testid='lism'>
+						test
+					</Lism>
+				);
+				const element = screen.getByTestId('lism');
+				expect(element).toHaveClass('-ov:hidden');
+			});
+
+			test('o（opacity）トークン値を指定できる', () => {
+				render(
+					<Lism o='-20' data-testid='lism'>
+						test
+					</Lism>
+				);
+				const element = screen.getByTestId('lism');
+				expect(element).toHaveClass('-o:-20');
+			});
+		});
+
+		describe('Color', () => {
+			test('c（color）プリセット値を指定できる', () => {
+				render(
+					<Lism c='text' data-testid='lism'>
+						test
+					</Lism>
+				);
+				const element = screen.getByTestId('lism');
+				expect(element).toHaveClass('-c:text');
+			});
+
+			test('bgc（background-color）を指定できる', () => {
+				render(
+					<Lism bgc='base' data-testid='lism'>
+						test
+					</Lism>
+				);
+				const element = screen.getByTestId('lism');
+				expect(element).toHaveClass('-bgc:base');
+			});
+		});
+
+		describe('複合プロパティ', () => {
+			test('複数のプロパティを同時に指定できる', () => {
+				render(
+					<Lism fz='l' fw='bold' p='20' m='10' bdrs='10' data-testid='lism'>
+						test
+					</Lism>
+				);
+				const element = screen.getByTestId('lism');
+				expect(element).toHaveClass('-fz:l');
+				expect(element).toHaveClass('-fw:bold');
+				expect(element).toHaveClass('-p:20');
+				expect(element).toHaveClass('-m:10');
+				expect(element).toHaveClass('-bdrs:10');
+			});
+		});
 	});
 
 	describe('StateProps', () => {
 		test('isContainerがクラス名に変換される', () => {
 			render(
-				<Lism isContainer data-testid="lism">
+				<Lism isContainer data-testid='lism'>
 					test
 				</Lism>
 			);
@@ -82,7 +360,7 @@ describe('Lism', () => {
 
 		test('isWrapperがクラス名に変換される', () => {
 			render(
-				<Lism isWrapper data-testid="lism">
+				<Lism isWrapper data-testid='lism'>
 					test
 				</Lism>
 			);
@@ -92,7 +370,7 @@ describe('Lism', () => {
 
 		test('isWrapper="s"がクラス名に変換される', () => {
 			render(
-				<Lism isWrapper="s" data-testid="lism">
+				<Lism isWrapper='s' data-testid='lism'>
 					test
 				</Lism>
 			);
@@ -105,7 +383,7 @@ describe('Lism', () => {
 	describe('レスポンシブ対応', () => {
 		test('配列形式でレスポンシブ値を指定できる', () => {
 			render(
-				<Lism fz={['s', 'm', 'l']} data-testid="lism">
+				<Lism fz={['s', 'm', 'l']} data-testid='lism'>
 					test
 				</Lism>
 			);
@@ -119,7 +397,7 @@ describe('Lism', () => {
 
 		test('オブジェクト形式でレスポンシブ値を指定できる', () => {
 			render(
-				<Lism fz={{ base: 's', md: 'l' }} data-testid="lism">
+				<Lism fz={{ base: 's', md: 'l' }} data-testid='lism'>
 					test
 				</Lism>
 			);
@@ -131,7 +409,7 @@ describe('Lism', () => {
 
 		test('単一値を指定できる', () => {
 			render(
-				<Lism fz="l" data-testid="lism">
+				<Lism fz='l' data-testid='lism'>
 					test
 				</Lism>
 			);
@@ -141,7 +419,7 @@ describe('Lism', () => {
 
 		test('p にレスポンシブ配列を指定できる', () => {
 			render(
-				<Lism p={['10', '20', '30']} data-testid="lism">
+				<Lism p={['10', '20', '30']} data-testid='lism'>
 					test
 				</Lism>
 			);
@@ -154,7 +432,7 @@ describe('Lism', () => {
 
 		test('m にオブジェクト形式を指定できる', () => {
 			render(
-				<Lism m={{ base: '10', sm: '20', md: '30' }} data-testid="lism">
+				<Lism m={{ base: '10', sm: '20', md: '30' }} data-testid='lism'>
 					test
 				</Lism>
 			);
@@ -167,7 +445,7 @@ describe('Lism', () => {
 
 		test('g（gap）にレスポンシブ値を指定できる', () => {
 			render(
-				<Lism g={['10', '20']} data-testid="lism">
+				<Lism g={['10', '20']} data-testid='lism'>
 					test
 				</Lism>
 			);
@@ -179,7 +457,7 @@ describe('Lism', () => {
 	describe('数値・真偽値の処理', () => {
 		test('数値を指定できる', () => {
 			render(
-				<Lism p={20} data-testid="lism">
+				<Lism p={20} data-testid='lism'>
 					test
 				</Lism>
 			);
@@ -189,7 +467,7 @@ describe('Lism', () => {
 
 		test('真偽値を指定できる', () => {
 			render(
-				<Lism w={true} data-testid="lism">
+				<Lism w={true} data-testid='lism'>
 					test
 				</Lism>
 			);
