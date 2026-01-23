@@ -7,7 +7,7 @@ import tseslint from 'typescript-eslint';
 
 export default defineConfig(
 	{
-		ignores: ['**/dist/**', '**/node_modules/**', '**/.turbo/**', 'apps/playgrounds/**'],
+		ignores: ['**/dist/**', '**/node_modules/**', '**/.turbo/**', 'apps/playgrounds/**', 'eslint.config.mjs'],
 	},
 	eslintConfigPrettier,
 	eslint.configs.recommended,
@@ -22,6 +22,10 @@ export default defineConfig(
 
 			ecmaVersion: 'latest',
 			sourceType: 'module',
+			parserOptions: {
+				projectService: true,
+				tsconfigRootDir: import.meta.dirname,
+			},
 		},
 	},
 	// TypeScriptファイルには型チェック付きのrecommendedを適用
