@@ -1,4 +1,4 @@
-import { Box, Flex, Container, HTML, Dummy, Divider, Columns } from 'lism-css/react';
+import { Box, Flex, Container, HTML, Dummy, Divider, Columns , Lism } from 'lism-css/react';
 import { Accordion } from '@lism-css/ui/react';
 
 function App() {
@@ -8,6 +8,7 @@ function App() {
 				<img src='vite.svg' />
 				<h1>Vite + Lism UI</h1>
 			</Flex>
+			<Lism />
 			<p>
 				Lorem ipsum dolor sit amet, consectetur adipisicing elit. Repellat itaque et voluptatum, ducimus temporibus accusamus exercitationem
 				dolores id impedit corporis asperiores debitis soluta, nemo iusto optio quae. Ducimus, aperiam tempora!
