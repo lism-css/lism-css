@@ -1,6 +1,6 @@
 {
 	"name": "@lism-css/ui",
-	"version": "0.2.2",
+	"version": "0.2.3",
 	"description": "UI components by lism-css.",
 	"author": {
 		"name": "ddryo",
@@ -15,7 +15,8 @@
 	"scripts": {
 		"dev": "vite",
 		"build": "vite build && pnpm build:css",
-		"build:css": "node build-css.js"
+		"build:css": "node build-css.js",
+		"prepack": "case \"$npm_execpath\" in *pnpm*) ;; *) echo 'Error: Use pnpm publish' && exit 1;; esac"
 	},
 	"files": [
 		"dist",

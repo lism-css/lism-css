@@ -23,7 +23,8 @@
 		"lint": "pnpm lint:eslint && pnpm lint:style",
 		"lint:eslint": "eslint '**/*.{js,mjs,ts,tsx}'",
 		"lint:style": "stylelint '**/*.{css,scss}'",
-		"preview": "vite preview"
+		"preview": "vite preview",
+		"prepack": "case \"$npm_execpath\" in *pnpm*) ;; *) echo 'Error: Use pnpm publish' && exit 1;; esac"
 	},
 	"bin": {
 		"lism-css": "./bin/cli.mjs"
