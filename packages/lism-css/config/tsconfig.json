@@ -1,0 +1,18 @@
+{
+	"extends": "../tsconfig.json",
+	"compilerOptions": {
+		"declaration": true,
+		"declarationMap": false,
+		"declarationDir": "../dist/config",
+		"emitDeclarationOnly": true,
+		"outDir": "../dist/config",
+		"rootDir": ".",
+		"composite": false,
+		"baseUrl": "..",
+		"paths": {
+			"lism-css/config.js": ["./config.js"]
+		}
+	},
+	"include": ["./**/*.ts"],
+	"exclude": ["**/*.test.ts"]
+}

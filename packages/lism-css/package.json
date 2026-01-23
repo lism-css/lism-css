@@ -18,7 +18,7 @@
 		"vitest": "vitest run",
 		"typecheck": "tsc --noEmit",
 		"build": "vite build && pnpm build:css",
-		"build:vite": "vite build",
+		"build:vite": "vite build && pnpm exec tsc -p config/tsconfig.json",
 		"build:css": "tsx bin/script-build-css.js",
 		"lint": "pnpm lint:eslint && pnpm lint:style",
 		"lint:eslint": "eslint '**/*.{js,mjs,ts,tsx}'",
@@ -42,8 +42,14 @@
 	"exports": {
 		".": "./dist/index.js",
 		"./config.js": "./config.js",
-		"./config": "./config/index.js",
-		"./default-config": "./config/default-config.js",
+		"./config": {
+			"import": "./config/index.js",
+			"types": "./dist/config/index.d.ts"
+		},
+		"./default-config": {
+			"import": "./config/default-config.js",
+			"types": "./dist/config/default-config.d.ts"
+		},
 		"./vite-plugin": "./vite-plugin.mjs",
 		"./lib/*": {
 			"import": "./dist/lib/*",
