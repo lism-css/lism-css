@@ -20,7 +20,7 @@ base_type:
 // マップから値を取得し、nullの場合はデフォルト値を返す
 @function map_get_with_default($map, $key, $default) {
 	$value: map.get($map, $key);
-	@if $value != null {
+	@if $value {
 		@return $value;
 	} @else {
 		@return $default;
@@ -59,6 +59,7 @@ base_type:
 
 		// valueが(prop:val)で詳細に明示されている場合
 		@if (meta.type-of($value) == map) {
+			// マップ形式の場合は何もしない（将来の拡張用）
 		} @else if $base_type == 2 {
 			// important は [class*=] についてるので不要
 			#{$selector} {
