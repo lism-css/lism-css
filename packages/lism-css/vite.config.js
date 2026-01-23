@@ -51,6 +51,13 @@ export default defineConfig({
 			entryRoot: 'src',
 		}),
 	],
+	test: {
+		environment: 'jsdom',
+		setupFiles: ['./vitest.setup.ts'],
+		typecheck: {
+			enabled: true,
+		},
+	},
 	build: {
 		// target: 'es2015',
 		lib: {
