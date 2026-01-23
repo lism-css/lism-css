@@ -7,7 +7,7 @@ import tseslint from 'typescript-eslint';
 
 export default defineConfig(
 	{
-		ignores: ['**/dist/**', '**/node_modules/**', '**/.turbo/**'],
+		ignores: ['**/dist/**', '**/node_modules/**', '**/.turbo/**', 'apps/playgrounds/**'],
 	},
 	eslintConfigPrettier,
 	eslint.configs.recommended,
