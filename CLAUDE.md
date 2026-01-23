@@ -6,7 +6,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 Lism CSS は軽量なCSSフレームワークで、ReactコンポーネントとAstroコンポーネントをnpmパッケージとして公開しています。
 
-pnpm workspacesとTurboを使用したモノレポ構造で構築されており、以下の構成になっています。
+**pnpm workspacesとTurboを使用したモノレポ構造**で構築されており、以下の構成になっています。
 
 - `packages/lism-css/`: コアライブラリ（npm公開）- 詳細は[packages/lism-css/CLAUDE.md](packages/lism-css/CLAUDE.md)を参照
 - `apps/docs/`: Astro + Starlightのドキュメントサイト - 詳細は[apps/docs/CLAUDE.md](apps/docs/CLAUDE.md)を参照
