@@ -37,6 +37,6 @@ src/content/
 ## 翻訳チェック
 
 翻訳後は以下を確認：
-- Frontmatter の必須フィールド（title, description, date）
+- Frontmatter の必須フィールド（title, description）
 - リンク先が正しいか（言語プレフィックス）
 - コードブロックが崩れていないか
