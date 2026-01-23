@@ -11,6 +11,7 @@ import isEmptyObj from './helper/isEmptyObj';
 import filterEmptyObj from './helper/filterEmptyObj';
 import splitWithComma from './helper/splitWithComma';
 import { type StyleWithCustomProps } from './types';
+import { StateProps } from './types/StateProps';
 
 // PropConfig interface based on config/defaults/props.ts
 export interface PropConfig {
@@ -47,7 +48,7 @@ export type StatePropDataObject = {
 export type StatePropData = string | StatePropDataObject;
 
 // LismPropsData constructor input
-export interface LismPropsDataInput {
+export interface LismPropsDataInput extends StateProps {
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	forwardedRef?: React.Ref<any>;
 	layout?: LayoutType;
@@ -59,7 +60,7 @@ export interface LismPropsDataInput {
 	_propConfig?: Record<string, PropConfig>;
 	hov?: boolean | string | Record<string, unknown>;
 	css?: Record<string, unknown>;
-	[key: string]: unknown;
+	[key: string]: unknown; //TODO(#41): Props の型定義が完了したら削除。
 }
 
 // Return type of getLismProps
@@ -88,16 +89,7 @@ export class LismPropsData {
 
 	constructor(allProps: LismPropsDataInput) {
 		// 受け取るpropsとそうでないpropsを分ける
-		const {
-			forwardedRef,
-			class: classFromAstro,
-			className,
-			lismClass,
-			variant,
-			style = {},
-			_propConfig = {},
-			...others
-		} = allProps;
+		const { forwardedRef, class: classFromAstro, className, lismClass, variant, style = {}, _propConfig = {}, ...others } = allProps;
 
 		this.styles = { ...style };
 		this._propConfig = { ..._propConfig };

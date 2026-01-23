@@ -18,7 +18,7 @@
 		"vitest": "vitest run",
 		"typecheck": "tsc --noEmit",
 		"build": "vite build && pnpm build:css",
-		"build:vite": "vite build",
+		"build:vite": "vite build && pnpm exec tsc -p config/tsconfig.json",
 		"build:css": "tsx bin/script-build-css.js",
 		"lint": "pnpm lint:eslint && pnpm lint:style",
 		"lint:eslint": "eslint '**/*.{js,mjs,ts,tsx}'",
@@ -42,10 +42,19 @@
 	"exports": {
 		".": "./dist/index.js",
 		"./config.js": "./config.js",
-		"./config": "./config/index.js",
-		"./default-config": "./config/default-config.js",
+		"./config": {
+			"import": "./config/index.js",
+			"types": "./dist/config/index.d.ts"
+		},
+		"./default-config": {
+			"import": "./config/default-config.js",
+			"types": "./dist/config/default-config.d.ts"
+		},
 		"./vite-plugin": "./vite-plugin.mjs",
-		"./lib/*": "./dist/lib/*",
+		"./lib/*": {
+			"import": "./dist/lib/*",
+			"types": "./dist/lib/*.d.ts"
+		},
 		"./bin/*": "./bin/*",
 		"./react": {
 			"import": "./dist/components/index.js",
@@ -78,9 +87,12 @@
 		"@babel/preset-env": "^7.27.2",
 		"@babel/preset-react": "^7.27.1",
 		"@rollup/plugin-babel": "^6.0.4",
+		"@testing-library/jest-dom": "^6.9.1",
+		"@testing-library/react": "^16.3.1",
 		"@types/node": "^25.0.3",
 		"@vitejs/plugin-react-swc": "^3.10.0",
 		"glob": "^11.0.2",
+		"jsdom": "^27.4.0",
 		"rollup": "^4.41.1",
 		"tsx": "^4.21.0",
 		"typescript": "~5.8.3",
