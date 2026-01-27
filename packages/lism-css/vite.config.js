@@ -60,6 +60,7 @@ export default defineConfig({
 	},
 	build: {
 		// target: 'es2015',
+		emptyOutDir: false, // build:config で先にビルドした dist/config を保持する
 		lib: {
 			// 複数のエントリーポイントのディクショナリや配列にもできます
 			entry: entries,
