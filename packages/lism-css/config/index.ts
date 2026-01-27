@@ -8,8 +8,7 @@ interface Window {
 declare const window: Window;
 
 // ビルド時の設定をマージ
-// eslint-disable-next-line @typescript-eslint/no-empty-object-type, @typescript-eslint/no-unnecessary-type-assertion
-let mergedConfig = objDeepMerge(defaultConfig, userConfig as {});
+let mergedConfig = objDeepMerge(defaultConfig, userConfig);
 
 // ブラウザ環境で window._LISM_CSS_CONFIG_ があればランタイムでマージ
 if (typeof window !== 'undefined' && window._LISM_CSS_CONFIG_) {
