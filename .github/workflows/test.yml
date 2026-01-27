@@ -26,8 +26,8 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
-      - name: Run build
-        run: pnpm build
+      - name: Build lism-css package
+        run: npm run build -- --filter="./packages/lism-css"
 
       - name: Run tests
         run: pnpm test
