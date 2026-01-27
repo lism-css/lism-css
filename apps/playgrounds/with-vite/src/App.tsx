@@ -1,4 +1,4 @@
-import { Box, Flex, Container, HTML, Dummy, Divider, Columns , Lism } from 'lism-css/react';
+import { Box, Flex, Container, HTML, Dummy, Divider, Columns, Lism } from 'lism-css/react';
 import { Accordion } from '@lism-css/ui/react';
 
 function App() {
