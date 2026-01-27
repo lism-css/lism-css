@@ -1,4 +1,4 @@
-import { TOKENS } from '../../config/index';
+import { TOKENS } from 'lism-css/config';
 import isNumStr from './helper/isNumStr';
 import getMaybeTokenValue from './getMaybeTokenValue';
 

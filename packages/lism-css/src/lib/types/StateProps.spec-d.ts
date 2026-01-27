@@ -1,6 +1,6 @@
 import { assertType, describe, it } from 'vitest';
 import type { StateProps } from './StateProps';
-import type { STATES } from '../../../config/index';
+import type { STATES } from 'lism-css/config';
 
 describe('StateProps', () => {
 	describe('config/index.ts からの型生成が動作する', () => {
