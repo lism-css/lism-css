@@ -7,7 +7,15 @@ import tseslint from 'typescript-eslint';
 
 export default defineConfig(
 	{
-		ignores: ['**/dist/**', '**/node_modules/**', '**/.turbo/**', 'apps/playgrounds/**', 'eslint.config.mjs'],
+		ignores: [
+			'**/dist/**',
+			'**/node_modules/**',
+			'**/.turbo/**',
+			'apps/playgrounds/**',
+			'eslint.config.mjs',
+			'packages/lism-css/config.d.ts',
+			'.prettierrc.cjs'
+		],
 	},
 	eslintConfigPrettier,
 	eslint.configs.recommended,
