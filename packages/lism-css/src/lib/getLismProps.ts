@@ -1,5 +1,5 @@
 // import { PROPS } from '../config';
-import { PROPS, STATES } from '../../config/index';
+import { PROPS, STATES } from 'lism-css/config';
 import getLayoutProps, { type LayoutType } from './getLayoutProps';
 import isPresetValue from './isPresetValue';
 import isTokenValue from './isTokenValue';

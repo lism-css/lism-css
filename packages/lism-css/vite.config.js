@@ -80,7 +80,7 @@ export default defineConfig({
 		},
 		rollupOptions: {
 			plugins: [],
-			external: ['react', 'react-dom', 'react/jsx-runtime', 'lism-css/config.js'],
+			external: ['react', 'react-dom', 'react/jsx-runtime', 'lism-css/config.js', 'lism-css/config'],
 			output: {
 				dir: 'dist',
 				// exports: 'named',

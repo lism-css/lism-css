@@ -1,4 +1,4 @@
-import { TOKENS } from '../../config/index';
+import { TOKENS } from 'lism-css/config';
 
 export default function isTokenValue(tokenKey: string, value: unknown): boolean {
 	// 数値の時は文字列化してから判定

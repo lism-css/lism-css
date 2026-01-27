@@ -1,4 +1,4 @@
-import type { STATES } from '../../../config/index';
+import type { STATES } from 'lism-css/config';
 
 /**
  * config/index.ts から STATES の型を取得
