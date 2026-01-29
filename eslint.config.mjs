@@ -13,8 +13,9 @@ export default defineConfig(
 			'**/.turbo/**',
 			'apps/playgrounds/**',
 			'eslint.config.mjs',
+			'lint-staged.config.mjs',
 			'packages/lism-css/config.d.ts',
-			'.prettierrc.cjs'
+			'.prettierrc.cjs',
 		],
 	},
 	eslintConfigPrettier,
@@ -89,5 +90,5 @@ export default defineConfig(
 			'@typescript-eslint/no-unsafe-return': 'off',
 			'@typescript-eslint/no-unsafe-call': 'off',
 		},
-	},
+	}
 );
