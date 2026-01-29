@@ -1,2 +1,2 @@
 // ユーザーのプロジェクトファイルから上書きできる設定
-export default {};
+export default /** @type {const} */ ({});
