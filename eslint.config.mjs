@@ -7,7 +7,7 @@ import tseslint from 'typescript-eslint';
 
 export default defineConfig(
 	{
-		ignores: ['**/dist/**', '**/node_modules/**', '**/.turbo/**', 'apps/playgrounds/**', 'eslint.config.mjs'],
+		ignores: ['**/dist/**', '**/node_modules/**', '**/.turbo/**', 'apps/playgrounds/**', 'eslint.config.mjs', 'lint-staged.config.mjs'],
 	},
 	eslintConfigPrettier,
 	eslint.configs.recommended,
@@ -81,5 +81,5 @@ export default defineConfig(
 			'@typescript-eslint/no-unsafe-return': 'off',
 			'@typescript-eslint/no-unsafe-call': 'off',
 		},
-	},
+	}
 );
