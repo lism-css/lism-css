@@ -1,0 +1,17 @@
+---
+/**
+ * Content - コンテンツコンポーネント
+ * details要素の開閉されるコンテンツ部分のラッパー
+ * grid-template-rows: 0fr → 1fr のアニメーションに必要
+ */
+import { Lism } from 'lism-css/astro';
+import { defaultProps } from '../getProps';
+
+const props = Astro.props || {};
+---
+
+<Lism {...defaultProps.body}>
+	<Lism {...defaultProps.content} {...props}>
+		<slot />
+	</Lism>
+</Lism>

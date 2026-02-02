@@ -1,0 +1,18 @@
+---
+/**
+ * Details - ルートコンポーネント
+ * details要素をレンダリングし、CSSのみでアニメーションを実装
+ * スクリプト不要で::details-contentを使用
+ */
+import getLismProps from 'lism-css/lib/getLismProps';
+import { getDetailsProps } from '../getProps';
+
+// スタイルのインポート
+import '../_style.css';
+
+const props = Astro.props || {};
+---
+
+<details {...getLismProps(getDetailsProps(props))}>
+	<slot />
+</details>
