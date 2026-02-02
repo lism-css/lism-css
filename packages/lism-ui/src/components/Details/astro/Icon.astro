@@ -1,0 +1,14 @@
+---
+/**
+ * Icon - アイコンコンポーネント
+ * 開閉状態を示すアイコン（開いた時に回転）
+ */
+import { Lism } from 'lism-css/astro';
+import { defaultProps } from '../getProps';
+
+const props = Astro.props || {};
+---
+
+<Lism {...defaultProps.icon} {...props}>
+	<slot />
+</Lism>

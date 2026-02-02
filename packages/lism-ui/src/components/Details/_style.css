@@ -1,0 +1,50 @@
+/* Details コンポーネント用スタイル */
+/* ::details-content と grid-template-rows: 0fr → 1fr のトランジションでアニメーション */
+@layer lism.modules {
+	.c--details {
+		--duration: var(--acc-duration, 0.25s); /* transition時間 */
+		--_icon-scale: 1.1;
+		--_icon-transform: rotate(0deg); /* icon操作用 */
+		--_content-gtr: 0fr; /* 開閉操作用 */
+	}
+	.c--details[open] {
+		--_icon-transform: scaleY(-1);
+		--_content-gtr: 1fr;
+	}
+
+	/* Safariで表示されるデフォルトの三角形アイコンを削除 */
+	.c--details_summary::-webkit-details-marker {
+		display: none;
+	}
+
+	/* 見出しタグでもフォントを揃える */
+	.c--details_title {
+		font: inherit;
+	}
+
+	/* アイコン */
+	.c--details_icon {
+		--svg: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="1em" height="1em" fill="currentColor"><path d="M216.49,104.49l-80,80a12,12,0,0,1-17,0l-80-80a12,12,0,0,1,17-17L128,159l71.51-71.52a12,12,0,0,1,17,17Z"></path></svg>');
+		display: inline-grid;
+		background-color: currentColor;
+		mask: var(--svg) no-repeat center center / contain;
+		scale: var(--_icon-scale);
+
+		transition: transform var(--duration);
+		transform: var(--_icon-transform);
+	}
+
+	/* ::details-content 擬似要素を使ったアニメーション */
+	.c--details::details-content {
+		display: grid;
+		grid-template-rows: var(--_content-gtr);
+		transition-duration: var(--duration);
+		transition-property: content-visibility, grid-template;
+		transition-behavior: allow-discrete;
+	}
+
+	/* コンテンツ内部のラッパー（grid-template-rows: 0frのアニメーションに必須） */
+	.c--details_body {
+		overflow: hidden;
+	}
+}

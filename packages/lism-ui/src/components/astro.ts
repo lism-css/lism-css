@@ -5,6 +5,7 @@ export { default as Badge } from './Badge/astro';
 export { default as Button } from './Button/astro';
 export { default as Callout } from './Callout/astro';
 export { default as Chat } from './Chat/astro';
+export { default as Details } from './Details/astro';
 export { default as Modal } from './Modal/astro';
 export { default as NavMenu } from './NavMenu/astro';
 export { default as ShapeDivider } from './ShapeDivider/astro';
