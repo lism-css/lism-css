@@ -596,6 +596,77 @@ describe('Lism', () => {
 				const element = screen.getByTestId('lism');
 				expect(element).toHaveClass('-i:0');
 			});
+
+			test('i に token 値を指定すると inline style として処理される', () => {
+				render(
+					<Lism i='10' data-testid='lism'>
+						test
+					</Lism>
+				);
+				const element = screen.getByTestId('lism');
+				// token 値の場合、inline style として処理される
+				expect(element.getAttribute('style')).toContain('inset: var(--s10)');
+			});
+
+			test('i-x（insetInline）を指定すると inline style として処理される', () => {
+				render(
+					<Lism i-x='10' data-testid='lism'>
+						test
+					</Lism>
+				);
+				const element = screen.getByTestId('lism');
+				expect(element.getAttribute('style')).toContain('inset-inline: var(--s10)');
+			});
+
+			test('i-y（insetBlock）を指定すると inline style として処理される', () => {
+				render(
+					<Lism i-y='20' data-testid='lism'>
+						test
+					</Lism>
+				);
+				const element = screen.getByTestId('lism');
+				expect(element.getAttribute('style')).toContain('inset-block: var(--s20)');
+			});
+
+			test('i-x-s（insetInlineStart）を指定すると inline style として処理される', () => {
+				render(
+					<Lism i-x-s='30' data-testid='lism'>
+						test
+					</Lism>
+				);
+				const element = screen.getByTestId('lism');
+				expect(element.getAttribute('style')).toContain('inset-inline-start: var(--s30)');
+			});
+
+			test('i-x-e（insetInlineEnd）を指定すると inline style として処理される', () => {
+				render(
+					<Lism i-x-e='40' data-testid='lism'>
+						test
+					</Lism>
+				);
+				const element = screen.getByTestId('lism');
+				expect(element.getAttribute('style')).toContain('inset-inline-end: var(--s40)');
+			});
+
+			test('i-y-s（insetBlockStart）を指定すると inline style として処理される', () => {
+				render(
+					<Lism i-y-s='50' data-testid='lism'>
+						test
+					</Lism>
+				);
+				const element = screen.getByTestId('lism');
+				expect(element.getAttribute('style')).toContain('inset-block-start: var(--s50)');
+			});
+
+			test('i-y-e（insetBlockEnd）を指定すると inline style として処理される', () => {
+				render(
+					<Lism i-y-e='60' data-testid='lism'>
+						test
+					</Lism>
+				);
+				const element = screen.getByTestId('lism');
+				expect(element.getAttribute('style')).toContain('inset-block-end: var(--s60)');
+			});
 		});
 
 		describe('Layouts', () => {
