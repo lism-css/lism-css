@@ -920,36 +920,197 @@ describe('Lism', () => {
 		});
 	});
 
-	describe('StateProps', () => {
-		test('isContainerがクラス名に変換される', () => {
-			render(
-				<Lism isContainer data-testid='lism'>
-					test
-				</Lism>
-			);
-			const element = screen.getByTestId('lism');
-			expect(element).toHaveClass('is--container');
+	describe('State Class', () => {
+		describe('is-- States', () => {
+			test('isContainer を指定できる', () => {
+				render(
+					<Lism isContainer data-testid='lism'>
+						test
+					</Lism>
+				);
+				const element = screen.getByTestId('lism');
+				expect(element).toHaveClass('is--container');
+			});
+
+			test('isWrapper を指定できる', () => {
+				render(
+					<Lism isWrapper data-testid='lism'>
+						test
+					</Lism>
+				);
+				const element = screen.getByTestId('lism');
+				expect(element).toHaveClass('is--wrapper');
+			});
+
+			test('isWrapper にプリセット値を指定できる', () => {
+				render(
+					<Lism isWrapper='s' data-testid='lism'>
+						test
+					</Lism>
+				);
+				const element = screen.getByTestId('lism');
+				expect(element).toHaveClass('is--wrapper');
+				expect(element).toHaveClass('-content:s');
+			});
+
+			test('isWrapper="l" を指定できる', () => {
+				render(
+					<Lism isWrapper='l' data-testid='lism'>
+						test
+					</Lism>
+				);
+				const element = screen.getByTestId('lism');
+				expect(element).toHaveClass('is--wrapper');
+				expect(element).toHaveClass('-content:l');
+			});
+
+			test('isLayer を指定できる', () => {
+				render(
+					<Lism isLayer data-testid='lism'>
+						test
+					</Lism>
+				);
+				const element = screen.getByTestId('lism');
+				expect(element).toHaveClass('is--layer');
+			});
+
+			test('isLinkBox を指定できる', () => {
+				render(
+					<Lism isLinkBox data-testid='lism'>
+						test
+					</Lism>
+				);
+				const element = screen.getByTestId('lism');
+				expect(element).toHaveClass('is--linkBox');
+			});
+
+			test('isSide を指定できる', () => {
+				render(
+					<Lism isSide data-testid='lism'>
+						test
+					</Lism>
+				);
+				const element = screen.getByTestId('lism');
+				expect(element).toHaveClass('is--side');
+			});
+
+			test('isSkipFlow を指定できる', () => {
+				render(
+					<Lism isSkipFlow data-testid='lism'>
+						test
+					</Lism>
+				);
+				const element = screen.getByTestId('lism');
+				expect(element).toHaveClass('is--skipFlow');
+			});
+
+			test('isVertical を指定できる', () => {
+				render(
+					<Lism isVertical data-testid='lism'>
+						test
+					</Lism>
+				);
+				const element = screen.getByTestId('lism');
+				expect(element).toHaveClass('is--vertical');
+			});
 		});
 
-		test('isWrapperがクラス名に変換される', () => {
-			render(
-				<Lism isWrapper data-testid='lism'>
-					test
-				</Lism>
-			);
-			const element = screen.getByTestId('lism');
-			expect(element).toHaveClass('is--wrapper');
+		describe('has-- States', () => {
+			test('hasGutter を指定できる', () => {
+				render(
+					<Lism hasGutter data-testid='lism'>
+						test
+					</Lism>
+				);
+				const element = screen.getByTestId('lism');
+				expect(element).toHaveClass('has--gutter');
+			});
 		});
 
-		test('isWrapper="s"がクラス名に変換される', () => {
-			render(
-				<Lism isWrapper='s' data-testid='lism'>
-					test
-				</Lism>
-			);
-			const element = screen.getByTestId('lism');
-			expect(element).toHaveClass('is--wrapper');
-			expect(element).toHaveClass('-content:s');
+		describe('set- States', () => {
+			test('setShadow を指定できる', () => {
+				render(
+					<Lism setShadow data-testid='lism'>
+						test
+					</Lism>
+				);
+				const element = screen.getByTestId('lism');
+				expect(element).toHaveClass('set-shadow');
+			});
+
+			test('setHov を指定できる', () => {
+				render(
+					<Lism setHov data-testid='lism'>
+						test
+					</Lism>
+				);
+				const element = screen.getByTestId('lism');
+				expect(element).toHaveClass('set-hov');
+			});
+
+			test('setTransition を指定できる', () => {
+				render(
+					<Lism setTransition data-testid='lism'>
+						test
+					</Lism>
+				);
+				const element = screen.getByTestId('lism');
+				expect(element).toHaveClass('set-transition');
+			});
+
+			test('setSnap を指定できる', () => {
+				render(
+					<Lism setSnap data-testid='lism'>
+						test
+					</Lism>
+				);
+				const element = screen.getByTestId('lism');
+				expect(element).toHaveClass('set-snap');
+			});
+
+			test('setPlain を指定できる', () => {
+				render(
+					<Lism setPlain data-testid='lism'>
+						test
+					</Lism>
+				);
+				const element = screen.getByTestId('lism');
+				expect(element).toHaveClass('set-plain');
+			});
+
+			test('setInnerRs を指定できる', () => {
+				render(
+					<Lism setInnerRs data-testid='lism'>
+						test
+					</Lism>
+				);
+				const element = screen.getByTestId('lism');
+				expect(element).toHaveClass('set-innerRs');
+			});
+
+			test('setMask を指定できる', () => {
+				render(
+					<Lism setMask='url(/path/to/mask.svg)' data-testid='lism'>
+						test
+					</Lism>
+				);
+				const element = screen.getByTestId('lism');
+				expect(element).toHaveClass('set-mask');
+			});
+		});
+
+		describe('複数のState Classを同時に指定', () => {
+			test('複数のState Classを同時に指定できる', () => {
+				render(
+					<Lism isContainer isLayer setShadow data-testid='lism'>
+						test
+					</Lism>
+				);
+				const element = screen.getByTestId('lism');
+				expect(element).toHaveClass('is--container');
+				expect(element).toHaveClass('is--layer');
+				expect(element).toHaveClass('set-shadow');
+			});
 		});
 	});
 
