@@ -12,7 +12,6 @@ import filterEmptyObj from './helper/filterEmptyObj';
 import splitWithComma from './helper/splitWithComma';
 import { type StyleWithCustomProps } from './types';
 import { StateProps } from './types/StateProps';
-import { MakeResponsive } from './types/ResponsiveProps';
 import { PropValueTypes } from './types/PropValueTypes';
 
 // PropConfig interface based on config/defaults/props.ts
@@ -50,7 +49,7 @@ type StatePropDataObject = {
 type StatePropData = string | StatePropDataObject;
 
 // getLismProps の入力となる Props 型
-export interface LismProps extends StateProps, MakeResponsive<PropValueTypes>, React.HTMLAttributes<HTMLElement> {
+export interface LismProps extends StateProps, PropValueTypes, React.HTMLAttributes<HTMLElement> {
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	forwardedRef?: React.Ref<any>;
 	layout?: LayoutType;

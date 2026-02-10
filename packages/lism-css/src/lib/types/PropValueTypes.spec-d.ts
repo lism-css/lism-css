@@ -1,34 +1,45 @@
 import { describe, expectTypeOf, it } from 'vitest';
-import type { PropValueTypes, PropKeys, AllPropTypes } from './PropValueTypes';
+import type { PropValueTypes, PropKeys, AllPropTypes, ResponsivePropValueTypes, NonResponsivePropValueTypes } from './PropValueTypes';
+import type { Responsive } from './ResponsiveProps';
 
 describe('PropValueTypes', () => {
 	it('fs には presets の値を設定できる', () => {
 		expectTypeOf<PropValueTypes['fs']>().toEqualTypeOf<'italic' | (string & {}) | number | boolean | undefined>();
 	});
 
-	it('fz には token の値（TOKENS.fz）を設定できる', () => {
+	it('fz には token の値（TOKENS.fz）を設定できる（レスポンシブ対応）', () => {
 		// token: 'fz' → TOKENS.fz の値
+		// bp: 1 なので Responsive でラップされる
 		expectTypeOf<PropValueTypes['fz']>().toEqualTypeOf<
-			'root' | 'base' | '5xl' | '4xl' | '3xl' | '2xl' | 'xl' | 'l' | 'm' | 's' | 'xs' | '2xs' | (string & {}) | number | boolean | undefined
+			Responsive<
+				'root' | 'base' | '5xl' | '4xl' | '3xl' | '2xl' | 'xl' | 'l' | 'm' | 's' | 'xs' | '2xs' | (string & {}) | number | boolean | undefined
+			>
 		>();
 	});
 
-	it('mx には presets と token（space）の値を設定できる', () => {
+	it('mx には presets と token（space）の値を設定できる（レスポンシブ対応）', () => {
 		// presets: ['auto', '0']
 		// token: 'space' → TOKENS.space.values の値
+		// bp: 1 なので Responsive でラップされる
 		expectTypeOf<PropValueTypes['mx']>().toEqualTypeOf<
-			'auto' | '0' | '5' | '10' | '15' | '20' | '30' | '40' | '50' | '60' | '70' | '80' | (string & {}) | number | boolean | undefined
+			Responsive<
+				'auto' | '0' | '5' | '10' | '15' | '20' | '30' | '40' | '50' | '60' | '70' | '80' | (string & {}) | number | boolean | undefined
+			>
 		>();
 	});
 
-	it('m には presets と token（space）の値を設定できる', () => {
+	it('m には presets と token（space）の値を設定できる（レスポンシブ対応）', () => {
+		// bp: 1 なので Responsive でラップされる
 		expectTypeOf<PropValueTypes['m']>().toEqualTypeOf<
-			'auto' | '0' | '5' | '10' | '15' | '20' | '30' | '40' | '50' | '60' | '70' | '80' | (string & {}) | number | boolean | undefined
+			Responsive<
+				'auto' | '0' | '5' | '10' | '15' | '20' | '30' | '40' | '50' | '60' | '70' | '80' | (string & {}) | number | boolean | undefined
+			>
 		>();
 	});
 
-	it('d には presets と utils の値を設定できる', () => {
-		expectTypeOf<PropValueTypes['d']>().toEqualTypeOf<'none' | 'block' | 'in-flex' | (string & {}) | number | boolean | undefined>();
+	it('d には presets と utils の値を設定できる（レスポンシブ対応）', () => {
+		// bp: 1 なので Responsive でラップされる
+		expectTypeOf<PropValueTypes['d']>().toEqualTypeOf<Responsive<'none' | 'block' | 'in-flex' | (string & {}) | number | boolean | undefined>>();
 	});
 
 	it('td には utils のキーを設定できる', () => {
@@ -41,19 +52,21 @@ describe('PropValueTypes', () => {
 		>();
 	});
 
-	it('ai には presets と utils の値を設定できる', () => {
+	it('ai には presets と utils の値を設定できる（レスポンシブ対応）', () => {
 		// presets: [...PLACE_PRESETS, 'stretch'] → 'start' | 'center' | 'end' | 'stretch'
 		// utils: { 'flex-s': 'flex-start', 'flex-e': 'flex-end' }
+		// bp: 1 なので Responsive でラップされる
 		expectTypeOf<PropValueTypes['ai']>().toEqualTypeOf<
-			'start' | 'center' | 'end' | 'stretch' | 'flex-s' | 'flex-e' | (string & {}) | number | boolean | undefined
+			Responsive<'start' | 'center' | 'end' | 'stretch' | 'flex-s' | 'flex-e' | (string & {}) | number | boolean | undefined>
 		>();
 	});
 
-	it('bdrs には presets と token（bdrs）の値を設定できる', () => {
+	it('bdrs には presets と token（bdrs）の値を設定できる（レスポンシブ対応）', () => {
 		// presets: ['0']
 		// token: 'bdrs' → TOKENS.bdrs の値
+		// bp: 1 なので Responsive でラップされる
 		expectTypeOf<PropValueTypes['bdrs']>().toEqualTypeOf<
-			'0' | '5' | '10' | '20' | '30' | '40' | '50' | '99' | 'inner' | (string & {}) | number | boolean | undefined
+			Responsive<'0' | '5' | '10' | '20' | '30' | '40' | '50' | '99' | 'inner' | (string & {}) | number | boolean | undefined>
 		>();
 	});
 
@@ -109,5 +122,96 @@ describe('AllPropTypes', () => {
 			p: '10px',
 		};
 		expectTypeOf(props).toExtend<AllPropTypes>();
+	});
+});
+
+describe('ResponsivePropValueTypes', () => {
+	it('bp: 1 が設定されているプロパティのみが含まれる', () => {
+		type Props = ResponsivePropValueTypes;
+
+		// bp: 1 が設定されているプロパティ（レスポンシブ対応）
+		type FzExists = 'fz' extends keyof Props ? true : false;
+		type DExists = 'd' extends keyof Props ? true : false;
+		type WExists = 'w' extends keyof Props ? true : false;
+		type HExists = 'h' extends keyof Props ? true : false;
+		type ArExists = 'ar' extends keyof Props ? true : false;
+
+		expectTypeOf<FzExists>().toEqualTypeOf<true>();
+		expectTypeOf<DExists>().toEqualTypeOf<true>();
+		expectTypeOf<WExists>().toEqualTypeOf<true>();
+		expectTypeOf<HExists>().toEqualTypeOf<true>();
+		expectTypeOf<ArExists>().toEqualTypeOf<true>();
+
+		// bp: 1 が設定されていないプロパティ（含まれないはず）
+		type FwExists = 'fw' extends keyof Props ? true : false;
+		type FfExists = 'ff' extends keyof Props ? true : false;
+		type FsExists = 'fs' extends keyof Props ? true : false;
+		type TaExists = 'ta' extends keyof Props ? true : false;
+
+		expectTypeOf<FwExists>().toEqualTypeOf<false>();
+		expectTypeOf<FfExists>().toEqualTypeOf<false>();
+		expectTypeOf<FsExists>().toEqualTypeOf<false>();
+		expectTypeOf<TaExists>().toEqualTypeOf<false>();
+	});
+
+	it('fz プロパティの値の型を検証', () => {
+		type Props = ResponsivePropValueTypes;
+		type FzProp = Props['fz'];
+
+		// fz は bp: 1 なので ResponsivePropValueTypes に含まれる
+		// ResponsivePropValueTypes 自体は単一値のみを受け付ける
+		expectTypeOf<FzProp>().toEqualTypeOf<
+			'root' | 'base' | '5xl' | '4xl' | '3xl' | '2xl' | 'xl' | 'l' | 'm' | 's' | 'xs' | '2xs' | (string & {}) | number | boolean | undefined
+		>();
+	});
+
+	it('d プロパティの値の型を検証', () => {
+		type Props = ResponsivePropValueTypes;
+		type DProp = Props['d'];
+
+		expectTypeOf<DProp>().toEqualTypeOf<'none' | 'block' | 'in-flex' | (string & {}) | number | boolean | undefined>();
+	});
+});
+
+describe('NonResponsivePropValueTypes', () => {
+	it('bp: 1 が設定されていないプロパティのみが含まれる', () => {
+		type Props = NonResponsivePropValueTypes;
+
+		// bp: 1 が設定されていないプロパティ（レスポンシブ非対応）
+		type FwExists = 'fw' extends keyof Props ? true : false;
+		type FfExists = 'ff' extends keyof Props ? true : false;
+		type FsExists = 'fs' extends keyof Props ? true : false;
+		type TaExists = 'ta' extends keyof Props ? true : false;
+
+		expectTypeOf<FwExists>().toEqualTypeOf<true>();
+		expectTypeOf<FfExists>().toEqualTypeOf<true>();
+		expectTypeOf<FsExists>().toEqualTypeOf<true>();
+		expectTypeOf<TaExists>().toEqualTypeOf<true>();
+
+		// bp: 1 が設定されているプロパティ（含まれないはず）
+		type FzExists = 'fz' extends keyof Props ? true : false;
+		type DExists = 'd' extends keyof Props ? true : false;
+		type WExists = 'w' extends keyof Props ? true : false;
+		type HExists = 'h' extends keyof Props ? true : false;
+		type ArExists = 'ar' extends keyof Props ? true : false;
+
+		expectTypeOf<FzExists>().toEqualTypeOf<false>();
+		expectTypeOf<DExists>().toEqualTypeOf<false>();
+		expectTypeOf<WExists>().toEqualTypeOf<false>();
+		expectTypeOf<HExists>().toEqualTypeOf<false>();
+		expectTypeOf<ArExists>().toEqualTypeOf<false>();
+	});
+
+	it('fw プロパティの値の型を検証', () => {
+		// fw は bp未設定なので NonResponsivePropValueTypes に含まれる
+		// fw のtoken値は TOKENS.fw = ['thin', 'light', 'normal', 'medium', 'bold', 'black']
+		expectTypeOf<NonResponsivePropValueTypes['fw']>().toEqualTypeOf<
+			'thin' | 'light' | 'normal' | 'medium' | 'bold' | 'black' | (string & {}) | number | boolean | undefined
+		>();
+	});
+
+	it('fs プロパティの値の型を検証', () => {
+		// fs は bp未設定なので NonResponsivePropValueTypes に含まれる
+		expectTypeOf<NonResponsivePropValueTypes['fs']>().toEqualTypeOf<'italic' | (string & {}) | number | boolean | undefined>();
 	});
 });
