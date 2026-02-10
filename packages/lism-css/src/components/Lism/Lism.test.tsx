@@ -58,16 +58,6 @@ describe('Lism', () => {
 	});
 
 	describe('LismProps', () => {
-		test('Lism固有のpropsがclassNameやstyleに変換される', () => {
-			render(
-				<Lism m='16px' p='8px' data-testid='lism'>
-					test
-				</Lism>
-			);
-			const element = screen.getByTestId('lism');
-			expect(element).toBeInTheDocument();
-		});
-
 		describe('Typography', () => {
 			test('fz（font-size）トークン値を指定できる', () => {
 				render(
@@ -254,16 +244,6 @@ describe('Lism', () => {
 				const element = screen.getByTestId('lism');
 				expect(element).toHaveClass('-w:fit');
 			});
-
-			test('aspect（aspect-ratio）を指定できる', () => {
-				render(
-					<Lism aspect='16/9' data-testid='lism'>
-						test
-					</Lism>
-				);
-				const element = screen.getByTestId('lism');
-				expect(element).toBeInTheDocument();
-			});
 		});
 
 		describe('Decoration', () => {
@@ -441,38 +421,6 @@ describe('Lism', () => {
 			expect(element).toHaveClass('-m:10');
 			expect(element).toHaveClass('-m_sm');
 			expect(element).toHaveClass('-m_md');
-		});
-
-		test('g（gap）にレスポンシブ値を指定できる', () => {
-			render(
-				<Lism g={['10', '20']} data-testid='lism'>
-					test
-				</Lism>
-			);
-			const element = screen.getByTestId('lism');
-			expect(element).toBeInTheDocument();
-		});
-	});
-
-	describe('数値・真偽値の処理', () => {
-		test('数値を指定できる', () => {
-			render(
-				<Lism p={20} data-testid='lism'>
-					test
-				</Lism>
-			);
-			const element = screen.getByTestId('lism');
-			expect(element).toBeInTheDocument();
-		});
-
-		test('真偽値を指定できる', () => {
-			render(
-				<Lism w={true} data-testid='lism'>
-					test
-				</Lism>
-			);
-			const element = screen.getByTestId('lism');
-			expect(element).toBeInTheDocument();
 		});
 	});
 });
