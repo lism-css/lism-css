@@ -57,7 +57,7 @@ describe('Lism', () => {
 		});
 	});
 
-	describe('LismProps', () => {
+	describe('Prop Class', () => {
 		describe('Typography', () => {
 			test('fz（font-size）トークン値を指定できる', () => {
 				render(
@@ -167,6 +167,88 @@ describe('Lism', () => {
 				);
 				const element = screen.getByTestId('lism');
 				expect(element).toHaveClass('-tt:upper');
+			});
+		});
+
+		describe('Colors', () => {
+			test('c（color）プリセット値を指定できる', () => {
+				render(
+					<Lism c='text' data-testid='lism'>
+						test
+					</Lism>
+				);
+				const element = screen.getByTestId('lism');
+				expect(element).toHaveClass('-c:text');
+			});
+
+			test('c="brand" を指定できる', () => {
+				render(
+					<Lism c='brand' data-testid='lism'>
+						test
+					</Lism>
+				);
+				const element = screen.getByTestId('lism');
+				expect(element).toHaveClass('-c:brand');
+			});
+
+			test('c="accent" を指定できる', () => {
+				render(
+					<Lism c='accent' data-testid='lism'>
+						test
+					</Lism>
+				);
+				const element = screen.getByTestId('lism');
+				expect(element).toHaveClass('-c:accent');
+			});
+
+			test('c="inherit" を指定できる', () => {
+				render(
+					<Lism c='inherit' data-testid='lism'>
+						test
+					</Lism>
+				);
+				const element = screen.getByTestId('lism');
+				expect(element).toHaveClass('-c:inherit');
+			});
+
+			test('bgc（background-color）を指定できる', () => {
+				render(
+					<Lism bgc='base' data-testid='lism'>
+						test
+					</Lism>
+				);
+				const element = screen.getByTestId('lism');
+				expect(element).toHaveClass('-bgc:base');
+			});
+
+			test('bgc="base-2" を指定できる', () => {
+				render(
+					<Lism bgc='base-2' data-testid='lism'>
+						test
+					</Lism>
+				);
+				const element = screen.getByTestId('lism');
+				expect(element).toHaveClass('-bgc:base-2');
+			});
+
+			test('bgc="transparent" を指定できる', () => {
+				render(
+					<Lism bgc='transparent' data-testid='lism'>
+						test
+					</Lism>
+				);
+				const element = screen.getByTestId('lism');
+				expect(element).toHaveClass('-bgc:transparent');
+			});
+
+			test('bdc（border-color）を指定できる', () => {
+				render(
+					<Lism bdc='brand' data-testid='lism'>
+						test
+					</Lism>
+				);
+				const element = screen.getByTestId('lism');
+				expect(element).toHaveClass('-bdc:brand');
 			});
 		});
 
@@ -297,7 +379,79 @@ describe('Lism', () => {
 			});
 		});
 
-		describe('Display', () => {
+		describe('Width & Height', () => {
+			test('w（width）を指定できる', () => {
+				render(
+					<Lism w='100%' data-testid='lism'>
+						test
+					</Lism>
+				);
+				const element = screen.getByTestId('lism');
+				expect(element).toHaveClass('-w:100%');
+			});
+
+			test('w="fit" ユーティリティを指定できる', () => {
+				render(
+					<Lism w='fit' data-testid='lism'>
+						test
+					</Lism>
+				);
+				const element = screen.getByTestId('lism');
+				expect(element).toHaveClass('-w:fit');
+			});
+
+			test('h（height）を指定できる', () => {
+				render(
+					<Lism h='100%' data-testid='lism'>
+						test
+					</Lism>
+				);
+				const element = screen.getByTestId('lism');
+				expect(element).toHaveClass('-h:100%');
+			});
+
+			test('max-w（max-width）を指定できる', () => {
+				render(
+					<Lism max-w='100%' data-testid='lism'>
+						test
+					</Lism>
+				);
+				const element = screen.getByTestId('lism');
+				expect(element).toHaveClass('-max-w:100%');
+			});
+
+			test('max-h（max-height）を指定できる', () => {
+				render(
+					<Lism max-h='100%' data-testid='lism'>
+						test
+					</Lism>
+				);
+				const element = screen.getByTestId('lism');
+				expect(element).toHaveClass('-max-h:100%');
+			});
+
+			test('min-w（min-width）を指定できる', () => {
+				render(
+					<Lism min-w='100%' data-testid='lism'>
+						test
+					</Lism>
+				);
+				const element = screen.getByTestId('lism');
+				expect(element).toHaveClass('-min-w:100%');
+			});
+
+			test('min-h（min-height）を指定できる', () => {
+				render(
+					<Lism min-h='100%' data-testid='lism'>
+						test
+					</Lism>
+				);
+				const element = screen.getByTestId('lism');
+				expect(element).toHaveClass('-min-h:100%');
+			});
+		});
+
+		describe('Displays', () => {
 			test('d="none" を指定できる', () => {
 				render(
 					<Lism d='none' data-testid='lism'>
@@ -359,7 +513,7 @@ describe('Lism', () => {
 			});
 		});
 
-		describe('Position', () => {
+		describe('Positions', () => {
 			test('pos="relative" を指定できる', () => {
 				render(
 					<Lism pos='relative' data-testid='lism'>
@@ -444,426 +598,276 @@ describe('Lism', () => {
 			});
 		});
 
-		describe('Flexbox', () => {
-			test('ai, jc（flexbox alignment）を指定できる', () => {
-				render(
-					<Lism d='flex' ai='center' jc='center' data-testid='lism'>
-						test
-					</Lism>
-				);
-				const element = screen.getByTestId('lism');
-				expect(element).toHaveClass('-ai:center');
-				expect(element).toHaveClass('-jc:center');
+		describe('Layouts', () => {
+			describe('Flexbox', () => {
+				test('ai, jc（flexbox alignment）を指定できる', () => {
+					render(
+						<Lism d='flex' ai='center' jc='center' data-testid='lism'>
+							test
+						</Lism>
+					);
+					const element = screen.getByTestId('lism');
+					expect(element).toHaveClass('-ai:center');
+					expect(element).toHaveClass('-jc:center');
+				});
+
+				test('ai="start" を指定できる', () => {
+					render(
+						<Lism ai='start' data-testid='lism'>
+							test
+						</Lism>
+					);
+					const element = screen.getByTestId('lism');
+					expect(element).toHaveClass('-ai:start');
+				});
+
+				test('jc="between" を指定できる', () => {
+					render(
+						<Lism jc='between' data-testid='lism'>
+							test
+						</Lism>
+					);
+					const element = screen.getByTestId('lism');
+					expect(element).toHaveClass('-jc:between');
+				});
+
+				test('fxw（flex-wrap）を指定できる', () => {
+					render(
+						<Lism d='flex' fxw='wrap' data-testid='lism'>
+							test
+						</Lism>
+					);
+					const element = screen.getByTestId('lism');
+					expect(element).toHaveClass('-fxw:wrap');
+				});
+
+				test('fxd（flex-direction）を指定できる', () => {
+					render(
+						<Lism fxd='col' data-testid='lism'>
+							test
+						</Lism>
+					);
+					const element = screen.getByTestId('lism');
+					expect(element).toHaveClass('-fxd:col');
+				});
+
+				test('fxd="row-r" を指定できる', () => {
+					render(
+						<Lism fxd='row-r' data-testid='lism'>
+							test
+						</Lism>
+					);
+					const element = screen.getByTestId('lism');
+					expect(element).toHaveClass('-fxd:row-r');
+				});
+
+				test('fx（flex）を指定できる', () => {
+					render(
+						<Lism fx='1' data-testid='lism'>
+							test
+						</Lism>
+					);
+					const element = screen.getByTestId('lism');
+					expect(element).toHaveClass('-fx:1');
+				});
+
+				test('fxsh（flex-shrink）を指定できる', () => {
+					render(
+						<Lism fxsh='0' data-testid='lism'>
+							test
+						</Lism>
+					);
+					const element = screen.getByTestId('lism');
+					expect(element).toHaveClass('-fxsh:0');
+				});
+
+				test('fxg（flex-grow）を指定できる', () => {
+					render(
+						<Lism fxg='1' data-testid='lism'>
+							test
+						</Lism>
+					);
+					const element = screen.getByTestId('lism');
+					expect(element).toHaveClass('-fxg:1');
+				});
+
+				test('aslf（align-self）を指定できる', () => {
+					render(
+						<Lism aslf='center' data-testid='lism'>
+							test
+						</Lism>
+					);
+					const element = screen.getByTestId('lism');
+					expect(element).toHaveClass('-aslf:center');
+				});
+
+				test('jslf（justify-self）を指定できる', () => {
+					render(
+						<Lism jslf='center' data-testid='lism'>
+							test
+						</Lism>
+					);
+					const element = screen.getByTestId('lism');
+					expect(element).toHaveClass('-jslf:center');
+				});
 			});
 
-			test('ai="start" を指定できる', () => {
-				render(
-					<Lism ai='start' data-testid='lism'>
-						test
-					</Lism>
-				);
-				const element = screen.getByTestId('lism');
-				expect(element).toHaveClass('-ai:start');
-			});
+			describe('Grid', () => {
+				test('gtc（grid-template-columns）を指定できる', () => {
+					render(
+						<Lism gtc='subgrid' data-testid='lism'>
+							test
+						</Lism>
+					);
+					const element = screen.getByTestId('lism');
+					expect(element).toHaveClass('-gtc:subgrid');
+				});
 
-			test('jc="between" を指定できる', () => {
-				render(
-					<Lism jc='between' data-testid='lism'>
-						test
-					</Lism>
-				);
-				const element = screen.getByTestId('lism');
-				expect(element).toHaveClass('-jc:between');
-			});
+				test('gtr（grid-template-rows）を指定できる', () => {
+					render(
+						<Lism gtr='subgrid' data-testid='lism'>
+							test
+						</Lism>
+					);
+					const element = screen.getByTestId('lism');
+					expect(element).toHaveClass('-gtr:subgrid');
+				});
 
-			test('fxw（flex-wrap）を指定できる', () => {
-				render(
-					<Lism d='flex' fxw='wrap' data-testid='lism'>
-						test
-					</Lism>
-				);
-				const element = screen.getByTestId('lism');
-				expect(element).toHaveClass('-fxw:wrap');
-			});
+				test('gaf（grid-auto-flow）を指定できる', () => {
+					render(
+						<Lism gaf='col' data-testid='lism'>
+							test
+						</Lism>
+					);
+					const element = screen.getByTestId('lism');
+					expect(element).toHaveClass('-gaf:col');
+				});
 
-			test('fxd（flex-direction）を指定できる', () => {
-				render(
-					<Lism fxd='col' data-testid='lism'>
-						test
-					</Lism>
-				);
-				const element = screen.getByTestId('lism');
-				expect(element).toHaveClass('-fxd:col');
-			});
+				test('ga（grid-area）を指定できる', () => {
+					render(
+						<Lism ga='1/1' data-testid='lism'>
+							test
+						</Lism>
+					);
+					const element = screen.getByTestId('lism');
+					expect(element).toHaveClass('-ga:1/1');
+				});
 
-			test('fxd="row-r" を指定できる', () => {
-				render(
-					<Lism fxd='row-r' data-testid='lism'>
-						test
-					</Lism>
-				);
-				const element = screen.getByTestId('lism');
-				expect(element).toHaveClass('-fxd:row-r');
-			});
+				test('gc（grid-column）を指定できる', () => {
+					render(
+						<Lism gc='1/-1' data-testid='lism'>
+							test
+						</Lism>
+					);
+					const element = screen.getByTestId('lism');
+					expect(element).toHaveClass('-gc:1/-1');
+				});
 
-			test('fx（flex）を指定できる', () => {
-				render(
-					<Lism fx='1' data-testid='lism'>
-						test
-					</Lism>
-				);
-				const element = screen.getByTestId('lism');
-				expect(element).toHaveClass('-fx:1');
-			});
-
-			test('fxsh（flex-shrink）を指定できる', () => {
-				render(
-					<Lism fxsh='0' data-testid='lism'>
-						test
-					</Lism>
-				);
-				const element = screen.getByTestId('lism');
-				expect(element).toHaveClass('-fxsh:0');
-			});
-
-			test('fxg（flex-grow）を指定できる', () => {
-				render(
-					<Lism fxg='1' data-testid='lism'>
-						test
-					</Lism>
-				);
-				const element = screen.getByTestId('lism');
-				expect(element).toHaveClass('-fxg:1');
-			});
-
-			test('aslf（align-self）を指定できる', () => {
-				render(
-					<Lism aslf='center' data-testid='lism'>
-						test
-					</Lism>
-				);
-				const element = screen.getByTestId('lism');
-				expect(element).toHaveClass('-aslf:center');
-			});
-
-			test('jslf（justify-self）を指定できる', () => {
-				render(
-					<Lism jslf='center' data-testid='lism'>
-						test
-					</Lism>
-				);
-				const element = screen.getByTestId('lism');
-				expect(element).toHaveClass('-jslf:center');
-			});
-		});
-
-		describe('Grid', () => {
-			test('gtc（grid-template-columns）を指定できる', () => {
-				render(
-					<Lism gtc='subgrid' data-testid='lism'>
-						test
-					</Lism>
-				);
-				const element = screen.getByTestId('lism');
-				expect(element).toHaveClass('-gtc:subgrid');
-			});
-
-			test('gtr（grid-template-rows）を指定できる', () => {
-				render(
-					<Lism gtr='subgrid' data-testid='lism'>
-						test
-					</Lism>
-				);
-				const element = screen.getByTestId('lism');
-				expect(element).toHaveClass('-gtr:subgrid');
-			});
-
-			test('gaf（grid-auto-flow）を指定できる', () => {
-				render(
-					<Lism gaf='col' data-testid='lism'>
-						test
-					</Lism>
-				);
-				const element = screen.getByTestId('lism');
-				expect(element).toHaveClass('-gaf:col');
-			});
-
-			test('ga（grid-area）を指定できる', () => {
-				render(
-					<Lism ga='1/1' data-testid='lism'>
-						test
-					</Lism>
-				);
-				const element = screen.getByTestId('lism');
-				expect(element).toHaveClass('-ga:1/1');
-			});
-
-			test('gc（grid-column）を指定できる', () => {
-				render(
-					<Lism gc='1/-1' data-testid='lism'>
-						test
-					</Lism>
-				);
-				const element = screen.getByTestId('lism');
-				expect(element).toHaveClass('-gc:1/-1');
-			});
-
-			test('gr（grid-row）を指定できる', () => {
-				render(
-					<Lism gr='1/-1' data-testid='lism'>
-						test
-					</Lism>
-				);
-				const element = screen.getByTestId('lism');
-				expect(element).toHaveClass('-gr:1/-1');
-			});
-		});
-
-		describe('Sizing', () => {
-			test('w（width）を指定できる', () => {
-				render(
-					<Lism w='100%' data-testid='lism'>
-						test
-					</Lism>
-				);
-				const element = screen.getByTestId('lism');
-				expect(element).toHaveClass('-w:100%');
-			});
-
-			test('w="fit" ユーティリティを指定できる', () => {
-				render(
-					<Lism w='fit' data-testid='lism'>
-						test
-					</Lism>
-				);
-				const element = screen.getByTestId('lism');
-				expect(element).toHaveClass('-w:fit');
-			});
-
-			test('h（height）を指定できる', () => {
-				render(
-					<Lism h='100%' data-testid='lism'>
-						test
-					</Lism>
-				);
-				const element = screen.getByTestId('lism');
-				expect(element).toHaveClass('-h:100%');
-			});
-
-			test('max-w（max-width）を指定できる', () => {
-				render(
-					<Lism max-w='100%' data-testid='lism'>
-						test
-					</Lism>
-				);
-				const element = screen.getByTestId('lism');
-				expect(element).toHaveClass('-max-w:100%');
-			});
-
-			test('max-h（max-height）を指定できる', () => {
-				render(
-					<Lism max-h='100%' data-testid='lism'>
-						test
-					</Lism>
-				);
-				const element = screen.getByTestId('lism');
-				expect(element).toHaveClass('-max-h:100%');
-			});
-
-			test('min-w（min-width）を指定できる', () => {
-				render(
-					<Lism min-w='100%' data-testid='lism'>
-						test
-					</Lism>
-				);
-				const element = screen.getByTestId('lism');
-				expect(element).toHaveClass('-min-w:100%');
-			});
-
-			test('min-h（min-height）を指定できる', () => {
-				render(
-					<Lism min-h='100%' data-testid='lism'>
-						test
-					</Lism>
-				);
-				const element = screen.getByTestId('lism');
-				expect(element).toHaveClass('-min-h:100%');
+				test('gr（grid-row）を指定できる', () => {
+					render(
+						<Lism gr='1/-1' data-testid='lism'>
+							test
+						</Lism>
+					);
+					const element = screen.getByTestId('lism');
+					expect(element).toHaveClass('-gr:1/-1');
+				});
 			});
 		});
 
-		describe('Decoration', () => {
-			test('bdrs（border-radius）トークン値を指定できる', () => {
-				render(
-					<Lism bdrs='20' data-testid='lism'>
-						test
-					</Lism>
-				);
-				const element = screen.getByTestId('lism');
-				expect(element).toHaveClass('-bdrs:20');
+		describe('Styling', () => {
+			describe('Decoration', () => {
+				test('bdrs（border-radius）トークン値を指定できる', () => {
+					render(
+						<Lism bdrs='20' data-testid='lism'>
+							test
+						</Lism>
+					);
+					const element = screen.getByTestId('lism');
+					expect(element).toHaveClass('-bdrs:20');
+				});
+
+				test('bxsh（box-shadow）トークン値を指定できる', () => {
+					render(
+						<Lism bxsh='20' data-testid='lism'>
+							test
+						</Lism>
+					);
+					const element = screen.getByTestId('lism');
+					expect(element).toHaveClass('-bxsh:20');
+				});
+
+				test('ov（overflow）を指定できる', () => {
+					render(
+						<Lism ov='hidden' data-testid='lism'>
+							test
+						</Lism>
+					);
+					const element = screen.getByTestId('lism');
+					expect(element).toHaveClass('-ov:hidden');
+				});
+
+				test('ov="auto" を指定できる', () => {
+					render(
+						<Lism ov='auto' data-testid='lism'>
+							test
+						</Lism>
+					);
+					const element = screen.getByTestId('lism');
+					expect(element).toHaveClass('-ov:auto');
+				});
+
+				test('ov-x（overflow-x）を指定できる', () => {
+					render(
+						<Lism ov-x='scroll' data-testid='lism'>
+							test
+						</Lism>
+					);
+					const element = screen.getByTestId('lism');
+					expect(element).toHaveClass('-ov-x:scroll');
+				});
+
+				test('ov-y（overflow-y）を指定できる', () => {
+					render(
+						<Lism ov-y='clip' data-testid='lism'>
+							test
+						</Lism>
+					);
+					const element = screen.getByTestId('lism');
+					expect(element).toHaveClass('-ov-y:clip');
+				});
 			});
 
-			test('bxsh（box-shadow）トークン値を指定できる', () => {
-				render(
-					<Lism bxsh='20' data-testid='lism'>
-						test
-					</Lism>
-				);
-				const element = screen.getByTestId('lism');
-				expect(element).toHaveClass('-bxsh:20');
-			});
+			describe('Border', () => {
+				test('bd（border）を指定できる', () => {
+					render(
+						<Lism bd data-testid='lism'>
+							test
+						</Lism>
+					);
+					const element = screen.getByTestId('lism');
+					expect(element).toHaveClass('-bd');
+				});
 
-			test('ov（overflow）を指定できる', () => {
-				render(
-					<Lism ov='hidden' data-testid='lism'>
-						test
-					</Lism>
-				);
-				const element = screen.getByTestId('lism');
-				expect(element).toHaveClass('-ov:hidden');
-			});
+				test('bd="none" を指定できる', () => {
+					render(
+						<Lism bd='none' data-testid='lism'>
+							test
+						</Lism>
+					);
+					const element = screen.getByTestId('lism');
+					expect(element).toHaveClass('-bd:none');
+				});
 
-			test('ov="auto" を指定できる', () => {
-				render(
-					<Lism ov='auto' data-testid='lism'>
-						test
-					</Lism>
-				);
-				const element = screen.getByTestId('lism');
-				expect(element).toHaveClass('-ov:auto');
-			});
-
-			test('ov-x（overflow-x）を指定できる', () => {
-				render(
-					<Lism ov-x='scroll' data-testid='lism'>
-						test
-					</Lism>
-				);
-				const element = screen.getByTestId('lism');
-				expect(element).toHaveClass('-ov-x:scroll');
-			});
-
-			test('ov-y（overflow-y）を指定できる', () => {
-				render(
-					<Lism ov-y='clip' data-testid='lism'>
-						test
-					</Lism>
-				);
-				const element = screen.getByTestId('lism');
-				expect(element).toHaveClass('-ov-y:clip');
-			});
-		});
-
-		describe('Color', () => {
-			test('c（color）プリセット値を指定できる', () => {
-				render(
-					<Lism c='text' data-testid='lism'>
-						test
-					</Lism>
-				);
-				const element = screen.getByTestId('lism');
-				expect(element).toHaveClass('-c:text');
-			});
-
-			test('c="brand" を指定できる', () => {
-				render(
-					<Lism c='brand' data-testid='lism'>
-						test
-					</Lism>
-				);
-				const element = screen.getByTestId('lism');
-				expect(element).toHaveClass('-c:brand');
-			});
-
-			test('c="accent" を指定できる', () => {
-				render(
-					<Lism c='accent' data-testid='lism'>
-						test
-					</Lism>
-				);
-				const element = screen.getByTestId('lism');
-				expect(element).toHaveClass('-c:accent');
-			});
-
-			test('c="inherit" を指定できる', () => {
-				render(
-					<Lism c='inherit' data-testid='lism'>
-						test
-					</Lism>
-				);
-				const element = screen.getByTestId('lism');
-				expect(element).toHaveClass('-c:inherit');
-			});
-
-			test('bgc（background-color）を指定できる', () => {
-				render(
-					<Lism bgc='base' data-testid='lism'>
-						test
-					</Lism>
-				);
-				const element = screen.getByTestId('lism');
-				expect(element).toHaveClass('-bgc:base');
-			});
-
-			test('bgc="base-2" を指定できる', () => {
-				render(
-					<Lism bgc='base-2' data-testid='lism'>
-						test
-					</Lism>
-				);
-				const element = screen.getByTestId('lism');
-				expect(element).toHaveClass('-bgc:base-2');
-			});
-
-			test('bgc="transparent" を指定できる', () => {
-				render(
-					<Lism bgc='transparent' data-testid='lism'>
-						test
-					</Lism>
-				);
-				const element = screen.getByTestId('lism');
-				expect(element).toHaveClass('-bgc:transparent');
-			});
-
-			test('bdc（border-color）を指定できる', () => {
-				render(
-					<Lism bdc='brand' data-testid='lism'>
-						test
-					</Lism>
-				);
-				const element = screen.getByTestId('lism');
-				expect(element).toHaveClass('-bdc:brand');
-			});
-		});
-
-		describe('Border', () => {
-			test('bd（border）を指定できる', () => {
-				render(
-					<Lism bd data-testid='lism'>
-						test
-					</Lism>
-				);
-				const element = screen.getByTestId('lism');
-				expect(element).toHaveClass('-bd');
-			});
-
-			test('bd="none" を指定できる', () => {
-				render(
-					<Lism bd='none' data-testid='lism'>
-						test
-					</Lism>
-				);
-				const element = screen.getByTestId('lism');
-				expect(element).toHaveClass('-bd:none');
-			});
-
-			test('bds（border-style）を指定できる', () => {
-				render(
-					<Lism bds='dashed' data-testid='lism'>
-						test
-					</Lism>
-				);
-				const element = screen.getByTestId('lism');
-				expect(element).toHaveClass('-bds:dashed');
+				test('bds（border-style）を指定できる', () => {
+					render(
+						<Lism bds='dashed' data-testid='lism'>
+							test
+						</Lism>
+					);
+					const element = screen.getByTestId('lism');
+					expect(element).toHaveClass('-bds:dashed');
+				});
 			});
 		});
 
