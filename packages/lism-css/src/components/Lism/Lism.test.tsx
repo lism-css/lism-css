@@ -25,22 +25,31 @@ describe('Lism', () => {
 		});
 
 		test('as propで別のコンポーネントを変更できる', () => {
-			const CustomComponent = ({ children, ...rest }: { children: React.ReactNode }) => <div {...rest}>{children}</div>;
+			const CustomComponent = ({ foo, children, ...rest }: { foo: 'bar' | 'baz'; children: React.ReactNode }) => (
+				<div {...rest} data-foo={foo}>
+					{children}
+				</div>
+			);
 
 			render(
-				<Lism as={CustomComponent} p='20' isWrapper='l' data-testid='lism'>
+				<Lism as={CustomComponent} foo='bar' p='20' isWrapper='l' data-testid='lism'>
 					test
 				</Lism>
 			);
 			const element = screen.getByTestId('lism');
 			expect(element.tagName).toBe('DIV');
+			expect(element).toHaveAttribute('data-foo', 'bar');
 		});
 
 		test('as で渡したカスタムコンポーネントに Lism の処理済みクラスが適用される', () => {
-			const CustomComponent = ({ children, ...rest }: { children: React.ReactNode }) => <div {...rest}>{children}</div>;
+			const CustomComponent = ({ foo, children, ...rest }: { foo: 'bar' | 'baz'; children: React.ReactNode }) => (
+				<div {...rest} data-foo={foo}>
+					{children}
+				</div>
+			);
 
 			render(
-				<Lism as={CustomComponent} p='20' isWrapper='l' data-testid='lism'>
+				<Lism as={CustomComponent} foo='bar' p='20' isWrapper='l' data-testid='lism'>
 					test
 				</Lism>
 			);
