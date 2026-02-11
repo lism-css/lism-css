@@ -105,14 +105,14 @@ type PropsWithoutBreakpoint = Exclude<PropsWithValues, PropsWithBreakpoint>;
  * bp: 1 が設定されているプロパティの型（レスポンシブ対応あり）
  */
 export type ResponsivePropValueTypes = {
-	[K in PropsWithBreakpoint]?: WithArbitraryString<ExtractPropValues<PropsConfig[K]>> | number | boolean;
+	[K in PropsWithBreakpoint]?: WithArbitraryString<ExtractPropValues<PropsConfig[K]>> | number | boolean | null;
 };
 
 /**
  * bp: 1 が設定されていないプロパティの型（レスポンシブ対応なし）
  */
 export type NonResponsivePropValueTypes = {
-	[K in PropsWithoutBreakpoint]?: WithArbitraryString<ExtractPropValues<PropsConfig[K]>> | number | boolean;
+	[K in PropsWithoutBreakpoint]?: WithArbitraryString<ExtractPropValues<PropsConfig[K]>> | number | boolean | null;
 };
 
 /**
