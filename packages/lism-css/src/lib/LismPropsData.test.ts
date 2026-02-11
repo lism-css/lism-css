@@ -343,11 +343,11 @@ describe('LismPropsData', () => {
 
 	describe('extractProp', () => {
 		test('プロパティを取得して削除する', () => {
-			const instance = new LismPropsData({ customProp: 'value' });
-			instance.attrs.customProp = 'value';
-			const value = instance.extractProp('customProp');
+			const instance = new LismPropsData({ 'data-custom': 'value' });
+			instance.attrs['data-custom'] = 'value';
+			const value = instance.extractProp('data-custom');
 			expect(value).toBe('value');
-			expect(instance.attrs.customProp).toBeUndefined();
+			expect(instance.attrs['data-custom']).toBeUndefined();
 		});
 
 		test('存在しないプロパティはnullを返す', () => {
