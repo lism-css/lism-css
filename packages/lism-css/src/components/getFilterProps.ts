@@ -3,26 +3,27 @@ import type { StyleWithCustomProps } from '../lib/types';
 // フィルター名の型
 type FilterName = 'blur' | 'contrast' | 'brightness' | 'dropShadow' | 'grayscale' | 'hueRotate' | 'invert' | 'saturate' | 'sepia';
 
-const FILTERS: readonly FilterName[] = ['blur', 'contrast', 'brightness', 'dropShadow', 'grayscale', 'hueRotate', 'invert', 'saturate', 'sepia'] as const;
+const FILTERS: readonly FilterName[] = [
+	'blur',
+	'contrast',
+	'brightness',
+	'dropShadow',
+	'grayscale',
+	'hueRotate',
+	'invert',
+	'saturate',
+	'sepia',
+] as const;
 
 // フィルタープロップスの型
-type FilterProps = {
+export type FilterProps = {
 	[K in FilterName]?: string | number;
 };
 
-// 入力プロップスの型
-interface InputProps extends FilterProps {
-	style?: StyleWithCustomProps;
-	[key: string]: unknown;
-}
-
-// 戻り値の型（style は常に存在する）
-export interface OutputProps {
-	style: StyleWithCustomProps;
-	[key: string]: unknown;
-}
-
-export default function getFilterProps(props: InputProps, filterType: string = 'filter'): OutputProps {
+export default function getFilterProps<T>(
+	props: T & FilterProps & { style?: StyleWithCustomProps },
+	filterType: string = 'filter'
+): Omit<T, FilterName | 'style'> & { style: StyleWithCustomProps } {
 	const filterValues: string[] = [];
 
 	const { style = {}, ...rest } = props;
@@ -41,8 +42,6 @@ export default function getFilterProps(props: InputProps, filterType: string = '
 		(style as Record<string, string>)[filterType] = filterValues.join(' ');
 	}
 
-	return {
-		...rest,
-		style,
-	};
+	// delete によるフィルターキー除去は TypeScript が追跡できないため assertion が必要
+	return { ...rest, style } as unknown as Omit<T, FilterName | 'style'> & { style: StyleWithCustomProps };
 }
