@@ -399,7 +399,7 @@ describe('LismPropsData', () => {
 		test('null/undefined/空文字/falseの値は無視される', () => {
 			const instance = new LismPropsData({
 				fz: '',
-				c: null as unknown as undefined,
+				c: null,
 				w: undefined,
 				h: false,
 				p: '20',

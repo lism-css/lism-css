@@ -401,7 +401,7 @@ describe('getLismProps', () => {
 		test('空の値は除外される', () => {
 			const result = getLismProps({
 				fz: '',
-				c: null as unknown as undefined,
+				c: null,
 				w: undefined,
 				p: '20',
 			});
@@ -420,7 +420,7 @@ describe('getLismProps', () => {
 	describe('エッジケース', () => {
 		test('null/undefined の propは無視される', () => {
 			const result = getLismProps({
-				fz: null as unknown as undefined,
+				fz: null,
 				w: undefined,
 			});
 			expect(result).toEqual({});
