@@ -36,4 +36,17 @@ describe('Layer', () => {
 		const element = screen.getByTestId('layer');
 		expect(element).toHaveClass('-p:20');
 	});
+
+	test('as で要素を変更できる', () => {
+		render(<Layer as='section' data-testid='layer' />);
+		const element = screen.getByTestId('layer');
+		expect(element.tagName).toBe('SECTION');
+	});
+
+	test('as="a" で href を受け取れる', () => {
+		render(<Layer as='a' href='https://example.com' data-testid='layer' />);
+		const element = screen.getByTestId('layer');
+		expect(element.tagName).toBe('A');
+		expect(element.getAttribute('href')).toBe('https://example.com');
+	});
 });
