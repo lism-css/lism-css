@@ -24,6 +24,54 @@ describe('Lism', () => {
 			expect(element.tagName).toBe('SPAN');
 		});
 
+		test('as propで別のコンポーネントを変更できる', () => {
+			const CustomComponent = ({ children, ...rest }: { children: React.ReactNode }) => <div {...rest}>{children}</div>;
+
+			render(
+				<Lism as={CustomComponent} p='20' isWrapper='l' data-testid='lism'>
+					test
+				</Lism>
+			);
+			const element = screen.getByTestId('lism');
+			expect(element.tagName).toBe('DIV');
+		});
+
+		test('as で渡したカスタムコンポーネントに Lism の処理済みクラスが適用される', () => {
+			const CustomComponent = ({ children, ...rest }: { children: React.ReactNode }) => <div {...rest}>{children}</div>;
+
+			render(
+				<Lism as={CustomComponent} p='20' isWrapper='l' data-testid='lism'>
+					test
+				</Lism>
+			);
+			const element = screen.getByTestId('lism');
+			expect(element).toHaveClass('-p:20');
+			expect(element).toHaveClass('is--wrapper');
+			expect(element).toHaveClass('-content:l');
+		});
+
+		test('exProps が getLismProps を経由せず直接渡される', () => {
+			render(
+				<Lism exProps={{ 'aria-label': 'test label' }} data-testid='lism'>
+					test
+				</Lism>
+			);
+			const element = screen.getByTestId('lism');
+			expect(element).toHaveAttribute('aria-label', 'test label');
+		});
+
+		test('children が正しくレンダリングされる', () => {
+			render(
+				<Lism data-testid='lism'>
+					<span data-testid='child'>child content</span>
+				</Lism>
+			);
+			const element = screen.getByTestId('lism');
+			const child = screen.getByTestId('child');
+			expect(element).toContainElement(child);
+			expect(child.textContent).toBe('child content');
+		});
+
 		test('tag propで要素を変更できる', () => {
 			render(
 				<Lism tag='section' data-testid='lism'>
