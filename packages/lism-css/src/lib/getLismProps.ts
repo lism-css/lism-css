@@ -11,8 +11,8 @@ import isEmptyObj from './helper/isEmptyObj';
 import filterEmptyObj from './helper/filterEmptyObj';
 import splitWithComma from './helper/splitWithComma';
 import { type StyleWithCustomProps } from './types';
-import { StateProps } from './types/StateProps';
-import { PropValueTypes } from './types/PropValueTypes';
+import { type StateProps } from './types/StateProps';
+import { type PropValueTypes } from './types/PropValueTypes';
 
 // PropConfig interface based on config/defaults/props.ts
 interface PropConfig {
@@ -61,7 +61,7 @@ export interface LismProps extends StateProps, PropValueTypes, React.HTMLAttribu
 	_propConfig?: Record<string, PropConfig>;
 	hov?: boolean | string | Record<string, unknown>;
 	css?: Record<string, unknown>;
-	[key: string]: unknown;
+	[key: `data-${string}`]: unknown;
 }
 
 const getTokenKey = (propName: string): string => {
@@ -401,8 +401,7 @@ export interface LismOutputProps extends React.HTMLAttributes<HTMLElement> {
 	style?: StyleWithCustomProps;
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	ref?: React.Ref<any>;
-	// data-*, aria-* などの任意の属性を受け入れる
-	[key: string]: unknown;
+	[key: `data-${string}`]: unknown;
 }
 
 /**
