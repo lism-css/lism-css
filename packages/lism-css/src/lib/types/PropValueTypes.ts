@@ -2,18 +2,7 @@ import { TOKENS, PROPS } from '../../../config/index';
 import type { WithArbitraryString, ArrayElement, ExtractArrayValues, ExtractObjectKeys, ExtractPropertyValue } from './utils';
 import type { MakeResponsive } from './ResponsiveProps';
 
-/**
- * config/defaults/props.ts から PROPS の型を取得
- * NOTE: config/index.ts からインポートすると structuredClone や objDeepMerge で型が widening されるため、
- * 型定義には defaults から直接インポートする
- */
 type PropsConfig = typeof PROPS;
-
-/**
- * config/defaults/tokens.ts から TOKENS の型を取得
- * NOTE: config/index.ts からインポートすると structuredClone や objDeepMerge で型が widening されるため、
- * 型定義には defaults から直接インポートする
- */
 type TokensConfig = typeof TOKENS;
 
 // ============================================================
