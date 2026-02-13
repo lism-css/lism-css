@@ -6,27 +6,40 @@ export function getAccProps({ lismClass, ...props }) {
 	return props;
 }
 
-export function getAccIconProps({ isTrigger, ...props }) {
+export function getHeadingProps(props) {
 	const defaultProps = {
-		lismClass: 'c--accordion_icon',
-		tag: 'span',
+		lismClass: 'c--accordion_heading',
+		tag: 'div',
 	};
-	// isTrigger なら、buttun にする
-	if (isTrigger) {
-		defaultProps.tag = 'button';
-		props['data-role'] = 'trigger';
-	}
 
-	return { ...defaultProps, ...props };
+	const returnProps = { ...defaultProps, ...props };
+
+	// div の時は role 付与
+	if (returnProps.tag === 'div') {
+		returnProps.role = 'heading';
+	}
+	return returnProps;
 }
 
 export const defaultProps = {
-	header: { lismClass: 'c--accordion_header' },
-	label: { lismClass: 'c--accordion_label', tag: 'span' },
-	body: {
-		lismClass: 'c--accordion_body',
+	// header: { lismClass: 'c--accordion_header' },
+	button: {
+		lismClass: 'c--accordion_button',
+		tag: 'button',
+		layout: 'flex',
+		setPlain: 1,
+		g: '10',
+		ai: 'center',
 	},
-	inner: {
-		lismClass: 'c--accordion_inner',
+	icon: {
+		lismClass: 'c--accordion_icon a--icon',
+		tag: 'span',
+		'aria-hidden': 'true',
+	},
+	panel: {
+		lismClass: 'c--accordion_panel',
+	},
+	content: {
+		lismClass: 'c--accordion_content',
 	},
 };

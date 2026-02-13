@@ -1,0 +1,10 @@
+---
+import { Lism } from 'lism-css/astro';
+import { getHeadingProps } from '../getProps';
+
+// interface Props extends LismProps {}
+---
+
+<Lism {...getHeadingProps(Astro.props || {})}>
+	<slot />
+</Lism>

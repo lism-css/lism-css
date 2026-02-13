@@ -1,0 +1,13 @@
+---
+import { Lism } from 'lism-css/astro';
+import Icon from './Icon.astro';
+import { defaultProps } from '../getProps';
+
+// interface Props extends LismProps {}
+const { isOpen = false, accID = '__LISM_ACC_ID__', ...props } = Astro.props || {};
+---
+
+<Lism {...defaultProps.button} {...props} aria-controls={accID} aria-expanded={isOpen ? 'true' : 'false'}>
+	<slot />
+	<Icon />
+</Lism>
