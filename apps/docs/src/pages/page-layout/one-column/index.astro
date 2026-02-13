@@ -6,21 +6,21 @@ import DemoContent from '../_DemoContent.astro';
 import { Wrapper, Box, Stack } from 'lism-css/astro';
 ---
 
-<DemoPageLayout title='One Column Layout'>
-	<Stack id='wrap' min-h='100vh'>
+<DemoPageLayout title="One Column Layout">
+	<Stack id="wrap" min-h="100vh">
 		<DemoHeader />
-		<Box tag='main' py='50' fx='1' isContainer>
-			<Box tag='article'>
-				<Wrapper tag='header' hasGutter>
+		<Box as="main" py="50" fx="1" isContainer>
+			<Box as="article">
+				<Wrapper as="header" hasGutter>
 					<h1>Page Title</h1>
 				</Wrapper>
 
-				<Wrapper hasGutter layout='flow' my-s='50'>
+				<Wrapper hasGutter layout="flow" my-s="50">
 					<DemoContent />
 				</Wrapper>
 
-				<Wrapper tag='aside' hasGutter my-s='50'>
-					<Box bgc='base-2' p='40'>
+				<Wrapper as="aside" hasGutter my-s="50">
+					<Box bgc="base-2" p="40">
 						<div>Comment area, etc...</div>
 					</Box>
 				</Wrapper>

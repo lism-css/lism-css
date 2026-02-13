@@ -16,7 +16,7 @@ const shareText = t(lang, 'share');
 const xShareUrl = `https://twitter.com/intent/tweet?url=${encodeURIComponent(url)}&text=${encodeURIComponent(title)}`;
 ---
 
-<Flex tag="aside" class="c--shareBtns" g="15" p="5" px={px}>
+<Flex as="aside" class="c--shareBtns" g="15" p="5" px={px}>
 	{/* Xシェアボタン */}
 	<HTML.a
 		href={xShareUrl}

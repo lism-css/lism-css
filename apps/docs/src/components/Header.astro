@@ -19,7 +19,7 @@ const searchText = t(currentLang, 'search');
 const headerText = t(currentLang, 'header');
 ---
 
-<Container tag="header" class="z--header" layout="flex" ai="center">
+<Container as="header" class="z--header" layout="flex" ai="center">
 	{/* 全体のgridレイアウトの切り替えと、ハンバーガーボタンの表示タイミングがずれないように hasGutterは内側につける */}
 	<Flex ai="center" w="100%" g="15" hasGutter>
 		<HTML.div mx-e="auto">
@@ -44,7 +44,7 @@ const headerText = t(currentLang, 'header');
 		>
 			<Icon icon="search" fz={['xl', null, 'l']} />
 			<HTML.span id="search-label" d={['none', null, 'block']} fz="xs" lh="xs" c="text-2">{searchText.title}</HTML.span>
-			<HTML.span tag="kbd" class="c--searchTrigger_shortcut" d={['none', null, 'block']} p="0" bd="none" fz="xs">⌘K</HTML.span>
+			<HTML.span as="kbd" class="c--searchTrigger_shortcut" d={['none', null, 'block']} p="0" bd="none" fz="xs">⌘K</HTML.span>
 		</HTML.button>
 
 		<SearchModal />
