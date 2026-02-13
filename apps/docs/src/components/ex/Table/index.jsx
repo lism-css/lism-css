@@ -17,7 +17,7 @@ function getTableProps({ thBgc, thC, bdwX, bdwY, cellMinW, cellP, style = {}, ..
 
 export default function Table({ children, ...props }) {
 	return (
-		<Lism tag='table' lismClass='c--table' {...getTableProps(props)}>
+		<Lism as="table" lismClass="c--table" {...getTableProps(props)}>
 			{children}
 		</Lism>
 	);

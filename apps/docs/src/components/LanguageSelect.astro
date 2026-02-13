@@ -41,7 +41,7 @@ const langSelectText = t(currentLang, 'langSelect');
 		<Icon icon="caret-down" fz="xs" class="c--langSelect__arrow" />
 	</HTML.button>
 
-	<Lism tag="ul" class="c--langSelect__menu" bgc="base" bdrs="10" bxsh="10" role="listbox" aria-label={langSelectText.menuAriaLabel}>
+	<Lism as="ul" class="c--langSelect__menu" bgc="base" bdrs="10" bxsh="10" role="listbox" aria-label={langSelectText.menuAriaLabel}>
 		{
 			alternateUrls.map(({ lang, url }) => (
 				<HTML.li role="option" aria-selected={lang === currentLang}>
