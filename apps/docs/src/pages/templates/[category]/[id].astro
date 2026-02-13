@@ -47,11 +47,11 @@ const queryMeta = 'style=github-dark&type=code&showLineNumbers=on&showFileMeta=o
 <BaseLayout title={`${template.title} - Templates`} description={template.description} excludeFromSearch>
 	<Flow g="30" class="templatePage">
 		<Stack tag="header" g="10">
-			<Text fz="xs" c="text-2" tt="uppercase" lts="l">
+			<HTML.p fz="xs" c="text-2" tt="uppercase" lts="l">
 				{categoryData.label}
-			</Text>
+			</HTML.p>
 			<h1 class="-fz:3xl -fw:bold">{template.title}</h1>
-			<Text c="text-2">{template.description}</Text>
+			<HTML.p c="text-2">{template.description}</HTML.p>
 		</Stack>
 		{
 			template.draft && (
