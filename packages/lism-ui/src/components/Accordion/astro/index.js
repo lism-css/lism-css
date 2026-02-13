@@ -1,8 +1,11 @@
 import Root from './Accordion.astro';
-import Header from './AccHeader.astro';
-import Label from './AccLabel.astro';
-import Icon from './AccIcon.astro';
-import Body from './AccBody.astro';
-import HeaderLabel from './AccHeaderLabel.astro';
+import Header from './Header.astro';
+import Heading from './Heading.astro';
+import Button from './Button.astro';
+import Icon from './Icon.astro';
+import Panel from './Panel.astro';
+// import HeaderLabel from './HeaderLabel.astro';
 
-export default { Root, Header, HeaderLabel, Body, Icon, Label };
+// Header: Heading, Button, Iconのセット
+
+export default { Root, Header, Heading, Panel, Icon, Button };

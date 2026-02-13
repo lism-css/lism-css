@@ -1,0 +1,12 @@
+---
+import AccHeader from './Header.astro';
+import AccLabel from './Label.astro';
+import AccIcon from './Icon.astro';
+---
+
+<AccHeader {...Astro.props || {}}>
+	<AccLabel>
+		<slot />
+	</AccLabel>
+	<AccIcon />
+</AccHeader>

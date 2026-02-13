@@ -1,9 +1,12 @@
 ---
-// import type { LismProps } from 'lism-css/types';
+// scriptを使うので ref の関係で <Lism> ではなく getLismProps() を使う
 import getLismProps from 'lism-css/lib/getLismProps';
 import { getAccProps } from '../getProps';
+import uuid from '../../../helper/uuid.js';
 
 import '../_style.css';
+
+// const accID = tabId ? tabId : uuid();
 
 // Propsの定義
 // interface Props extends LismProps {
@@ -12,9 +15,9 @@ import '../_style.css';
 const props = Astro.props || {};
 ---
 
-<details {...getLismProps(getAccProps(props))}>
+<div {...getLismProps(getAccProps(props))}>
 	<slot />
-</details>
+</div>
 
 <script>
 	import setAccordion from '../setAccordion';

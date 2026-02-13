@@ -1,4 +1,7 @@
-import { Accordion as Root, Header, Label, Body, HeaderLabel } from './Accordion';
-import { default as Icon } from './AccIcon';
+import { AccordionRoot as Root, Heading, Button, Panel } from './Accordion';
+import Icon from './AccIcon';
 
-export default { Root, Header, Label, Icon, Body, HeaderLabel };
+// Header は Heading のエイリアス
+const Header = Heading;
+
+export default { Root, Header, Heading, Panel, Icon, Button };

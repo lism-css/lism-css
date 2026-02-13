@@ -1,0 +1,15 @@
+---
+import { Lism } from 'lism-css/astro';
+import { defaultProps } from '../getProps';
+
+// Propsの定義
+// interface Props extends LismProps {
+// 	icon?: string;
+// 	size?: string;
+// 	iconProps?: Object;
+// }
+
+const props = Astro.props || {};
+---
+
+<Lism {...defaultProps.icon} {...props} />

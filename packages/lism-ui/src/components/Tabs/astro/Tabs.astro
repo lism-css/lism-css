@@ -4,7 +4,8 @@ import { Lism } from 'lism-css/astro';
 // import Tab from './Tab.astro';
 // import TabPanel from './TabPanel.astro';
 import TabList from './TabList.astro';
-import { uuidv4 } from './helper.js';
+import uuid from '../../../helper/uuid.js';
+
 import transformTabitems from './transformTabitems.js';
 import getTabsProps from '../getProps';
 
@@ -22,7 +23,7 @@ import '../_style.css';
 const { defaultIndex = 1, tabId = '', listProps = {}, ...props } = Astro.props || {};
 
 // tabID生成
-const theTabID = tabId ? tabId : uuidv4();
+const theTabID = tabId ? tabId : uuid();
 
 // 子要素の方から順番に処理されていくので、文字列処理でデータを抽出
 const { btns, panels } = transformTabitems(await Astro.slots.render('default'), theTabID, defaultIndex);

@@ -1,6 +1,7 @@
-import { Lism, Icon } from 'lism-css/react';
-import { getAccIconProps } from '../getProps';
+import { Lism } from 'lism-css/react';
+import { defaultProps } from '../getProps';
 
-export default function AccIcon({ icon = 'caret-down', viewBox, children = null, ...props }) {
-	return <Lism {...getAccIconProps(props)}>{children || <Icon viewBox={viewBox} icon={icon} />}</Lism>;
+// CSS疑似要素（::before / ::after）でアイコンを描画するコンポーネント
+export default function AccIcon(props) {
+	return <Lism {...defaultProps.icon} {...props} />;
 }
