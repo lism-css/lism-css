@@ -17,7 +17,7 @@ const { item } = Astro.props;
 	</NavLink>
 	{
 		item.children.length > 0 && (
-			<Stack tag="ul" g="inherit">
+			<Stack as="ul" g="inherit">
 				{item.children.map((child) => (
 					<Astro.self item={child} />
 				))}

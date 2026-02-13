@@ -51,14 +51,14 @@ function getThumbPath(title: string): string {
 
 <BaseLayout title="Lism　UI" description="Lism CSSをベースにしたUIパッケージ、@lism-css/ui のコンポーネント一覧" excludeFromSearch>
 	<Lism class="uiComponents">
-		<Stack tag="header" g="20">
+		<Stack as="header" g="20">
 			<h1>Lism UI</h1>
 			<p class="-c:text-2">
 				Lism CSSをベースにしたUIパッケージ（<code>@lism-css/ui</code>） のコンポーネント一覧と、実装例・サンプル集を紹介します。
 			</p>
 		</Stack>
 		<Lism as="section" my-s="50">
-			<Stack tag="header" g="20">
+			<Stack as="header" g="20">
 				<h2>Components</h2>
 				<p class="-c:text-2"><code>@lism-css/ui</code>からインポートできるコンポーネント一覧です。</p>
 			</Stack>
@@ -91,7 +91,7 @@ function getThumbPath(title: string): string {
 		{
 			examplePosts.length > 0 && (
 				<Lism my-s="50">
-					<Stack tag="header" g="20">
+					<Stack as="header" g="20">
 						<h2>Examples</h2>
 						<p class="-c:text-2">Lism CSS, Lism UIをベースにした、その他の実装例・サンプル集です。</p>
 					</Stack>
