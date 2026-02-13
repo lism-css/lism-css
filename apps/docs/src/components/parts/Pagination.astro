@@ -64,7 +64,7 @@ if (endPage < totalPages) {
 						←
 					</a>
 				) : (
-					<Lism tag="span" class="c--pagination__arrow -prev -disabled" aria-hidden="true">
+					<Lism as="span" class="c--pagination__arrow -prev -disabled" aria-hidden="true">
 						←
 					</Lism>
 				)}
@@ -72,11 +72,11 @@ if (endPage < totalPages) {
 				{/* ページ番号 */}
 				{pageNumbers.map((page) =>
 					page === 'ellipsis' ? (
-						<Lism tag="span" class="c--pagination__ellipsis" aria-hidden="true">
+						<Lism as="span" class="c--pagination__ellipsis" aria-hidden="true">
 							…
 						</Lism>
 					) : page === currentPage ? (
-						<Lism tag="span" class="c--pagination__page -current" aria-current="page">
+						<Lism as="span" class="c--pagination__page -current" aria-current="page">
 							{page}
 						</Lism>
 					) : (
@@ -92,7 +92,7 @@ if (endPage < totalPages) {
 						→
 					</a>
 				) : (
-					<Lism tag="span" class="c--pagination__arrow -next -disabled" aria-hidden="true">
+					<Lism as="span" class="c--pagination__arrow -next -disabled" aria-hidden="true">
 						→
 					</Lism>
 				)}
