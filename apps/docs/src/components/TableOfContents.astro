@@ -3,7 +3,7 @@ import type { TocItem } from '../lib/generateToc';
 import TocItemComponent from './TocItem.astro';
 import { Stack, HTML } from 'lism-css/astro';
 import { getLangFromUrl, t } from '@/lib/i18n';
-// import type { ResponsiveValue } from 'lism-css/astro';
+import type { ResponsiveValue } from 'lism-css/astro';
 
 interface Props {
 	toc: TocItem[];
@@ -17,7 +17,7 @@ const tocText = t(lang, 'toc');
 
 <Stack fx="1" class="c--toc set-cqUnit" g="20" ov-y="auto" px={px}>
 	<HTML.h lv="3" fz="l">{tocText.title}</HTML.h>
-	<Stack tag="ul" class="c--toc_list" g="0">
+	<Stack as="ul" class="c--toc_list" g="0">
 		{toc.map((item) => <TocItemComponent item={item} />)}
 	</Stack>
 </Stack>
