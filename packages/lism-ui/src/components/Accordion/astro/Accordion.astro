@@ -6,18 +6,34 @@ import uuid from '../../../helper/uuid.js';
 
 import '../_style.css';
 
-// const accID = tabId ? tabId : uuid();
-
 // Propsの定義
 // interface Props extends LismProps {
 // 	duration?: string | number;
+// 	accID?: string;
 // }
-const props = Astro.props || {};
+const { accID: _accID, ...restProps } = Astro.props || {};
+
+// aria-controls / id 紐付け用のIDを生成（カスタム指定があればそれを使用、なければ自動生成）
+const accID = _accID || uuid();
+
+const lismProps = getLismProps(getAccProps(restProps));
+
+// 子要素のHTMLを取得し、プレースホルダーの有無で出力方法を切り替え
+// - プレースホルダーあり → 置換して set:html で出力
+// - プレースホルダーなし → 通常の slot 出力（Button/Panel に直接 accID を指定しているケース）
+const rendered = await Astro.slots.render('default');
+const slotHtml = rendered.includes('__LISM_ACC_ID__') ? rendered.replaceAll('__LISM_ACC_ID__', accID) : null;
 ---
 
-<div {...getLismProps(getAccProps(props))}>
-	<slot />
-</div>
+{
+	slotHtml !== null ? (
+		<div {...lismProps} set:html={slotHtml} />
+	) : (
+		<div {...lismProps}>
+			<slot />
+		</div>
+	)
+}
 
 <script>
 	import setAccordion from '../setAccordion';
