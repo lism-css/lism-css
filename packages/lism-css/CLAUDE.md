@@ -2,7 +2,6 @@
 
 このファイルは Claude Code および サブエージェント向けのガイドです。
 
----
 
 ## パッケージ概要
 
@@ -12,21 +11,19 @@
 |------|------|
 | ソース | `/src` |
 | 出力 | `/dist`（編集禁止） |
-| ビルド | Vite（React） + scss-builder（CSS） |
+| ビルド | Vite（React） + tsx カスタムスクリプト（CSS） |
 
----
 
 ## 開発コマンド
 
 ```bash
 pnpm dev         # 開発サーバー
 pnpm build       # フルビルド（React + CSS）
-pnpm build:vite  # React のみ
+pnpm build:js    # React のみ（Vite + tsc）
 pnpm build:css   # CSS のみ
 pnpm lint:style  # SCSS/CSS リント
 ```
 
----
 
 ## 主要ディレクトリ
 
@@ -34,10 +31,9 @@ pnpm lint:style  # SCSS/CSS リント
 |------|------|
 | `src/components/` | React コンポーネント |
 | `src/scss/` | SCSS ソース |
-| `src/config/` | 設定・トークン定義 |
+| `config/` | 設定・トークン定義（パッケージルート直下） |
 | `src/lib/` | ユーティリティ関数 |
 
----
 
 ## コンポーネント構造
 
@@ -46,15 +42,15 @@ pnpm lint:style  # SCSS/CSS リント
 ```
 components/ComponentName/
 ├── ComponentName.jsx  # メインコンポーネント
-├── getProps.js        # Props 処理ロジック
+├── getProps.js        # Props 処理ロジック（一部コンポーネントのみ）
 ├── index.js           # エクスポート
-├── style.scss         # スタイル（任意）
-└── script.js          # クライアントJS（任意）
+└── script.js          # クライアントJS（LinkBox のみ）
 ```
 
-`Icon`など一部を覗き、全コンポーネントは基本的に `Lism` を継承し、`getLismProps()` で Props を処理。
+- `atomic/` サブディレクトリに `Icon`, `Divider`, `Spacer`, `Media`, `Decorator` がある
+- `Lism` コアコンポーネントは `.tsx` / `.ts` で実装されている
+- `Icon` など一部を除き、全コンポーネントは基本的に `Lism` を継承し、`getLismProps()` で Props を処理
 
----
 
 ## Props システム
 
@@ -67,7 +63,6 @@ React の props を CSS クラス・スタイルに変換：
 | ブレークポイント | `-p_sm`, `-g_md` |
 | 処理が特殊な props | `hov`（hover）, `bd`（border） |
 
----
 
 ## SCSS アーキテクチャ
 
@@ -90,23 +85,16 @@ lism-reset → lism.base → lism.modules → lism.utility
 
 | ファイル | 説明 |
 |----------|------|
-| `_props.scss` | Prop Class の定義 |
+| `_prop-config.scss` | Prop Class の定義 |
 | `_query.scss` | ブレークポイント定義 |
 | `_auto_output.scss` | 自動出力処理 |
 
----
 
 ## 主要ファイル
 
 | ファイル | 説明 |
 |----------|------|
-| `src/lib/getLismProps.js` | Props → CSS 変換のコアロジック |
+| `src/lib/getLismProps.ts` | Props → CSS 変換のコアロジック |
 | `src/scss/base/_tokens.scss` | デザイントークン（SCSS） |
-| `src/config/tokens.js` | デザイントークン（JS） |
+| `config/defaults/tokens.ts` | デザイントークン（JS/TS） |
 
----
-
-## 注意事項
-
-- `dist/` ディレクトリは編集禁止（ビルド生成物）
-- lint 設定はモノレポルートに配置
