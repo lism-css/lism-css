@@ -1,22 +1,17 @@
 ---
 // scriptを使うので ref の関係で <Lism> ではなく getLismProps() を使う
 import getLismProps from 'lism-css/lib/getLismProps';
-import { getAccProps } from '../getProps';
+import { getItemProps } from '../getProps';
 import uuid from '../../../helper/uuid.js';
 
 import '../_style.css';
 
-// Propsの定義
-// interface Props extends LismProps {
-// 	duration?: string | number;
-// 	accID?: string;
-// }
 const { accID: _accID, ...restProps } = Astro.props || {};
 
 // aria-controls / id 紐付け用のIDを生成（カスタム指定があればそれを使用、なければ自動生成）
 const accID = _accID || uuid();
 
-const lismProps = getLismProps(getAccProps(restProps));
+const lismProps = getLismProps(getItemProps(restProps));
 
 // 子要素のHTMLを取得し、プレースホルダーの有無で出力方法を切り替え
 // - プレースホルダーあり → 置換して set:html で出力

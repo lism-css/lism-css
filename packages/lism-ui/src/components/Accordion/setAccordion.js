@@ -158,7 +158,7 @@ export const setEvent = (accordion) => {
  * ページ内の全アコーディオンにイベントをセット（Astro用）
  */
 const setAccordion = () => {
-	const accordionAll = document.querySelectorAll('.c--accordion');
+	const accordionAll = document.querySelectorAll('.c--accordion_item');
 	accordionAll.forEach((accordion) => {
 		setEvent(accordion);
 	});

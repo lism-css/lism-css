@@ -1,30 +1,17 @@
 @layer lism.modules {
 	.c--accordion {
 		--duration: var(--acc-duration, 0.25s);
-		--icon-transform: rotate(0deg); /* icon 変化用の変数 */
+	}
+	.c--accordion_item {
+		--_icon-transform: rotate(0deg); /* icon 変化用の変数 */
 	}
 
-	/* （装飾） */
-	.c--accordions {
-		--bdc: hsl(210, 16%, 80%);
-		--bdrs: 8px;
-
-		overflow: clip;
-		border-radius: var(--bdrs);
-		border: solid 1px var(--bdc);
-	}
-
-	/* （装飾）2つ目以降のアコーディオンには上部にボーダーを追加 */
-	.c--accordion + .c--accordion {
-		border-top: solid 1px var(--bdc);
-	}
 	/* 開いている時 */
-	.c--accordion[data-opened] {
-		--icon-transform: rotate(90deg);
+	.c--accordion_item[data-opened] {
+		--_icon-transform: rotate(90deg);
 	}
 
 	.c--accordion_heading {
-		font: inherit; /* 見出しタグのフォントを打ち消す */
 		background-color: color-mix(in srgb, var(--bdc), transparent 80%);
 	}
 
@@ -37,11 +24,12 @@
 		gap: var(--s20);
 
 		/* button のスタイルリセット */
-		height: auto;
+		/* height: auto;
 		border: none;
-		font-size: inherit;
+		font: inherit;
+		line-height: inherit;
 		color: inherit;
-		text-align: inherit;
+		text-align: inherit; */
 		cursor: pointer;
 	}
 
@@ -91,7 +79,7 @@
 			width: 0.1em;
 			height: 100%;
 			transition: transform var(--duration);
-			transform: var(--icon-transform);
+			transform: var(--_icon-transform);
 		}
 		&::after {
 			height: 0.1em;
@@ -118,18 +106,18 @@
 	}
 
 	/* --- (任意) フォーカスリングの角丸調整 --- */
-	.c--accordion:first-child .c--accordion_button {
+	.c--accordion_item:first-child .c--accordion_button {
 		border-top-left-radius: var(--bdrs);
 		border-top-right-radius: var(--bdrs);
 	}
-	.c--accordion:last-child:not([data-opened]) .c--accordion_button {
+	.c--accordion_item:last-child:not([data-opened]) .c--accordion_button {
 		border-bottom-left-radius: var(--bdrs);
 		border-bottom-right-radius: var(--bdrs);
 	}
 
 	/* --- 「視差効果を減らす」設定を考慮 --- */
 	@media (prefers-reduced-motion: reduce) {
-		.c--accordion {
+		.c--accordion_item {
 			--duration: 0s;
 		}
 	}
