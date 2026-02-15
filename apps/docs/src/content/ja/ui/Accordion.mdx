@@ -15,49 +15,61 @@ import { Accordion } from '@lism-css/ui/astro';
 <Preview>
 	<PreviewTitle>Preview</PreviewTitle>
 	<PreviewArea p='20'>
-		<Stack bd>
-			<Accordion.Root>
+		<Accordion.Root bd>
+			<Accordion.Item>
 				<Accordion.Heading>
 					<Accordion.Button p='20'>Accordion Example 1</Accordion.Button>
 				</Accordion.Heading>
 				<Accordion.Panel>
 					<Dummy length='l' />
 				</Accordion.Panel>
-			</Accordion.Root>
-			<Accordion.Root bd-t>
+			</Accordion.Item>
+			<Accordion.Item bd-t>
 				<Accordion.Heading>
 					<Accordion.Button p='20'>Accordion Example 2</Accordion.Button>
 				</Accordion.Heading>
 				<Accordion.Panel>
 					<Dummy length='l' />
 				</Accordion.Panel>
-			</Accordion.Root>
-		</Stack>
+			</Accordion.Item>
+		</Accordion.Root>
 	</PreviewArea>
 	<PreviewCode slot='tab' label='JSX'>
 		```jsx
 		<Accordion.Root>
-			<Accordion.Heading>
-				<Accordion.Button p='20'>Accordion Example</Accordion.Button>
-			</Accordion.Heading>
-			<Accordion.Panel>
-				<Dummy length='l' />
-			</Accordion.Panel>
+			<Accordion.Item>
+				<Accordion.Heading>
+					<Accordion.Button p='20'>Accordion Example</Accordion.Button>
+				</Accordion.Heading>
+				<Accordion.Panel>
+					<Dummy length='l' />
+				</Accordion.Panel>
+			</Accordion.Item>
+			<Accordion.Item bd-t>
+				<Accordion.Heading>
+					<Accordion.Button p='20'>Accordion Example 2</Accordion.Button>
+				</Accordion.Heading>
+				<Accordion.Panel>
+					<Dummy length='l' />
+				</Accordion.Panel>
+			</Accordion.Item>
 		</Accordion.Root>
 		```
 	</PreviewCode>
 	<PreviewCode slot='tab' label='HTML'>
 ```html
-<div class="c--accordion">
-	<div class="c--accordion_heading" role="heading">
-		<button class="c--accordion_button" aria-controls="{id}" aria-expanded="false">
-			Accordion Example
-			<span class="c--accordion_icon a--icon" aria-hidden="true"></span>
-		</button>
-	</div>
-	<div class="c--accordion_panel" id="{id}" hidden="until-found">
-		<div class="c--accordion_content">
-			<p>Lorem ipsum...</p>
+<div class="l--stack c--accordion">
+	<div class="c--accordion_item">
+		<div class="c--accordion_heading" role="heading">
+			<button class="c--accordion_button" aria-controls="{id}" aria-expanded="false">
+				Accordion Example
+				<span class="c--accordion_icon a--icon" aria-hidden="true"></span>
+			</button>
+		</div>
+		<div class="c--accordion_panel" id="{id}" hidden="until-found">
+			<div class="c--accordion_content">
+				<p>Lorem ipsum...</p>
+			</div>
 		</div>
 	</div>
 </div>
@@ -71,31 +83,34 @@ import { Accordion } from '@lism-css/ui/astro';
 <Preview>
 	<PreviewCode slot='tab' label='HTML'>
 		```pug
-		div.c--accordion
-			div.c--accordion_heading[role="heading"]
-				button.c--accordion_button[aria-controls="{id}"][aria-expanded="false"]
-					Accordion Label
-					span.c--accordion_icon.a--icon[aria-hidden="true"]
-			div.c--accordion_panel#id[hidden="until-found"]
-				div.c--accordion_content(.l--flow) ...Contents...
+		div.l--stack.c--accordion
+			div.c--accordion_item
+				div.c--accordion_heading[role="heading"]
+					button.c--accordion_button[aria-controls="{id}"][aria-expanded="false"]
+						Accordion Label
+						span.c--accordion_icon.a--icon[aria-hidden="true"]
+				div.c--accordion_panel#id[hidden="until-found"]
+					div.c--accordion_content(.l--flow) ...Contents...
 		```
 	</PreviewCode>
 	<PreviewCode slot='tab' label='JSX'>
 		```jsx
 		<Accordion.Root>
-			<Accordion.Heading>
-				<Accordion.Button>Accordion Label</Accordion.Button>
-			</Accordion.Heading>
-			<Accordion.Panel>
-				...Contents...
-			</Accordion.Panel>
+			<Accordion.Item>
+				<Accordion.Heading>
+					<Accordion.Button>Accordion Label</Accordion.Button>
+				</Accordion.Heading>
+				<Accordion.Panel>
+					...Contents...
+				</Accordion.Panel>
+			</Accordion.Item>
 		</Accordion.Root>
 		```
 	</PreviewCode>
 </Preview>
 
 :::note
-`<Accordion.Button>` には、末尾に `<Accordion.Icon>` が自動的に配置されます。  
+`<Accordion.Button>` には、末尾に `<Accordion.Icon>` が自動的に配置されます。
 アイコンはCSSの疑似要素（`::before` / `::after`）で描画されるため、SVGの指定は不要です。
 :::
 
@@ -125,7 +140,8 @@ import { Accordion } from '@lism-css/ui/astro';
 
 以下のコンポーネントが利用できます。
 
-- `<Accordion.Root>`: アコーディオンのルート要素
+- `<Accordion.Root>`: 複数のアコーディオンアイテムをラップするルート要素（`Stack` ベース）
+- `<Accordion.Item>`: 個別のアコーディオン要素
 - `<Accordion.Heading>`: 見出しエリアのラッパー（デフォルトは `<div role="heading">`）
 - `<Accordion.Button>`: 開閉トリガーのボタン（末尾に `<Accordion.Icon>` を自動で含みます）
 - `<Accordion.Icon>`: 開閉状態を示すアイコン（CSS疑似要素で描画）
@@ -136,6 +152,7 @@ import { Accordion } from '@lism-css/ui/astro';
 
 | プロパティ | 説明 |
 |---|---|
+| <PropBadge>`<Accordion.Root>`</PropBadge><br/>`allowMultiple` | 複数のアコーディオンを同時に展開できるようにします。デフォルトでは一つしか展開できません。 |
 | <PropBadge>`<Accordion.Heading>`</PropBadge><br/>`tag` | 見出しのHTMLタグを指定します。デフォルトは `div`（`role="heading"` が自動付与されます）。`h2`〜`h6` を指定すると `role` は付与されません。 |
 | <PropBadge>`<Accordion.Panel>`</PropBadge><br/>`flow` | パネル内のコンテンツ領域（`__content`）に渡すフローレイアウトの設定。 |
 
@@ -149,57 +166,59 @@ import { Accordion } from '@lism-css/ui/astro';
 <Preview>
 	<PreviewTitle>例</PreviewTitle>
 	<PreviewArea p='20'>
-		<Stack bd>
-			<Accordion.Root>
+		<Accordion.Root bd>
+			<Accordion.Item>
 				<Accordion.Heading tag='h3'>
-					<Accordion.Button p='20' fw='bold'>Accordion Label</Accordion.Button>
+					<Accordion.Button p='20'>Accordion Label</Accordion.Button>
 				</Accordion.Heading>
 				<Accordion.Panel>
 					<Dummy length='l' />
 				</Accordion.Panel>
-			</Accordion.Root>
-			<Accordion.Root bd-t>
+			</Accordion.Item>
+			<Accordion.Item bd-t>
 				<Accordion.Heading tag='h3'>
-					<Accordion.Button p='20' fw='bold'>Accordion Label</Accordion.Button>
+					<Accordion.Button p='20'>Accordion Label</Accordion.Button>
 				</Accordion.Heading>
 				<Accordion.Panel>
 					<Dummy length='l' />
 				</Accordion.Panel>
-			</Accordion.Root>
-		</Stack>
+			</Accordion.Item>
+		</Accordion.Root>
 	</PreviewArea>
 	<PreviewCode slot='tab' label='JSX'>
 		```jsx "tag='h3'"
-		<Stack bd>
-			<Accordion.Root>
+		<Accordion.Root bd>
+			<Accordion.Item>
 				<Accordion.Heading tag='h3'>
-					<Accordion.Button p='20' fw='bold'>Accordion Label</Accordion.Button>
+					<Accordion.Button p='20'>Accordion Label</Accordion.Button>
 				</Accordion.Heading>
 				<Accordion.Panel>
 					<Dummy length='l' />
 				</Accordion.Panel>
-			</Accordion.Root>
-			<Accordion.Root bd-t>
+			</Accordion.Item>
+			<Accordion.Item bd-t>
 				<Accordion.Heading tag='h3'>
-					<Accordion.Button p='20' fw='bold'>Accordion Label</Accordion.Button>
+					<Accordion.Button p='20'>Accordion Label</Accordion.Button>
 				</Accordion.Heading>
 				<Accordion.Panel>
 					<Dummy length='l' />
 				</Accordion.Panel>
-			</Accordion.Root>
-		</Stack>
+			</Accordion.Item>
+		</Accordion.Root>
 		```
 	</PreviewCode>
 	<PreviewCode slot='tab' label='HTML'>
 	```html "h3"
-	<div class="c--accordion">
-		<h3 class="c--accordion_heading">
-			<button class="c--accordion_button" aria-controls="{id}" aria-expanded="false">
-				Accordion Label
-				<span class="c--accordion_icon a--icon" aria-hidden="true"></span>
-			</button>
-		</h3>
-		...
+	<div class="l--stack c--accordion">
+		<div class="c--accordion_item">
+			<h3 class="c--accordion_heading">
+				<button class="c--accordion_button" aria-controls="{id}" aria-expanded="false">
+					Accordion Label
+					<span class="c--accordion_icon a--icon" aria-hidden="true"></span>
+				</button>
+			</h3>
+			...
+		</div>
 	</div>
 	```
 	</PreviewCode>
@@ -211,70 +230,70 @@ import { Accordion } from '@lism-css/ui/astro';
 アコーディオンの開閉アニメーションの速度は `--duration` 変数で管理されており、デフォルトは `0.25s` です。
 
 :::note
-デフォルトでは、同じ親要素内で一つのアコーディオンしか同時に展開できません。  
-親要素に `data-allow-multiple` 属性を指定することで、複数を同時に展開できるようになります。
+デフォルトでは、同じ `<Accordion.Root>` 内で一つのアコーディオンしか同時に展開できません。
+`allowMultiple` を指定することで、複数を同時に展開できるようになります。
 :::
 
 
 <Preview>
 	<PreviewTitle>Preview</PreviewTitle>
 	<PreviewArea p='20'>
-		<Stack g='1px' data-allow-multiple>
-			<Accordion.Root style={{'--duration': '.15s'}}>
+		<Accordion.Root g='1px' allowMultiple>
+			<Accordion.Item style={{'--duration': '.15s'}}>
 				<Accordion.Heading>
 					<Accordion.Button p='20'>Accordion Label 1</Accordion.Button>
 				</Accordion.Heading>
 				<Accordion.Panel>
 					<Dummy length='l' />
 				</Accordion.Panel>
-			</Accordion.Root>
-			<Accordion.Root style={{'--duration': '.15s'}}>
+			</Accordion.Item>
+			<Accordion.Item style={{'--duration': '.15s'}}>
 				<Accordion.Heading>
 					<Accordion.Button p='20'>Accordion Label 2</Accordion.Button>
 				</Accordion.Heading>
 				<Accordion.Panel>
 					<Dummy length='xl' />
 				</Accordion.Panel>
-			</Accordion.Root>
-			<Accordion.Root style={{'--duration': '.15s'}}>
+			</Accordion.Item>
+			<Accordion.Item style={{'--duration': '.15s'}}>
 				<Accordion.Heading>
 					<Accordion.Button p='20'>Accordion Label 3</Accordion.Button>
 				</Accordion.Heading>
 				<Accordion.Panel>
 					<Dummy length='l' />
 				</Accordion.Panel>
-			</Accordion.Root>
-		</Stack>
+			</Accordion.Item>
+		</Accordion.Root>
 	</PreviewArea>
 	<PreviewCode slot='tab' label='JSX'>
-```jsx "data-allow-multiple" "--duration"
-<Stack g='1px' data-allow-multiple>
-	<Accordion.Root style={{'--duration': '.15s'}}>
+```jsx "allowMultiple" "--duration"
+<Accordion.Root g='1px' allowMultiple>
+	<Accordion.Item style={{'--duration': '.15s'}}>
 		<Accordion.Heading>
 			<Accordion.Button p='20'>Accordion Label 1</Accordion.Button>
 		</Accordion.Heading>
 		<Accordion.Panel>
 			...
 		</Accordion.Panel>
-	</Accordion.Root>
-	<Accordion.Root style={{'--duration': '.15s'}}>
+	</Accordion.Item>
+	<Accordion.Item style={{'--duration': '.15s'}}>
 		<Accordion.Heading>
 			<Accordion.Button p='20'>Accordion Label 2</Accordion.Button>
 		</Accordion.Heading>
 		<Accordion.Panel>
 			...
 		</Accordion.Panel>
-	</Accordion.Root>
+	</Accordion.Item>
 	...
-</Stack>
+</Accordion.Root>
 ```
 	</PreviewCode>
 	<PreviewCode slot='tab' label='HTML'>
 ```html "data-allow-multiple" "--duration"
-<div class="l--stack" data-allow-multiple>
-	<div class="c--accordion" style="--duration: .15s">...</div>
-	<div class="c--accordion" style="--duration: .15s">...</div>
-	<div class="c--accordion" style="--duration: .15s">...</div>
+<div class="l--stack c--accordion" data-allow-multiple>
+	<div class="c--accordion_item" style="--duration: .15s">...</div>
+	<div class="c--accordion_item" style="--duration: .15s">...</div>
+	<div class="c--accordion_item" style="--duration: .15s">...</div>
 </div>
 ```
 	</PreviewCode>
@@ -285,7 +304,7 @@ import { Accordion } from '@lism-css/ui/astro';
 
 おおまかな処理ステップは以下の通りです。
 
-- `.c--accordion` 内の `button` 要素に対して `click` イベントを登録
+- `.c--accordion_item` 内の `button` 要素に対して `click` イベントを登録
 - `.c--accordion_panel` に対して `beforematch` イベントを登録（ブラウザのページ内検索時に自動展開）
 - クリック時、開閉状態に応じて `data-opened` 属性と `aria-expanded` 属性を操作
     - `--height--opened` 変数で高さを制御し、アニメーションの終了を待ってから状態を確定

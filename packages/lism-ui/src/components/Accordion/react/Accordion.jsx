@@ -1,20 +1,28 @@
 import React from 'react';
 import getLismProps from 'lism-css/lib/getLismProps';
-import { Lism } from 'lism-css/react';
-import { getAccProps, getHeadingProps, defaultProps } from '../getProps';
+import { Lism, Stack } from 'lism-css/react';
+import { getRootProps, getItemProps, getHeadingProps, defaultProps } from '../getProps';
 import { setEvent } from '../setAccordion';
 import AccIcon from './AccIcon';
 
 import '../_style.css';
 
-// Context: 純粋なReact環境で AccordionRoot → Button / Panel へ accID を共有
+// Context: 純粋なReact環境で AccordionItem → Button / Panel へ accID を共有
 // Astro 環境では Context が使えないため null がフォールバック
 const AccordionContext = React.createContext(null);
 
 /**
- * ルート要素（<div> ベース、setEvent で開閉イベントを登録）
+ * 複数の AccordionItem をラップするルート要素
  */
 export function AccordionRoot({ children, ...props }) {
+	const rootProps = getLismProps(getRootProps(props));
+	return <Stack {...rootProps}>{children}</Stack>;
+}
+
+/**
+ * 個別のアコーディオンアイテム（<div> ベース、setEvent で開閉イベントを登録）
+ */
+export function AccordionItem({ children, ...props }) {
 	const ref = React.useRef(null);
 
 	// コンポーネント単位でユニークIDを生成
@@ -26,7 +34,7 @@ export function AccordionRoot({ children, ...props }) {
 		return setEvent(ref.current);
 	}, []);
 
-	const lismProps = getLismProps(getAccProps(props));
+	const lismProps = getLismProps(getItemProps(props));
 
 	return (
 		<AccordionContext.Provider value={{ accID }}>

@@ -1,8 +1,14 @@
 import atts from 'lism-css/lib/helper/atts';
 
-// duration: [s]
-export function getAccProps({ lismClass, ...props }) {
+export function getRootProps({ lismClass, allowMultiple, ...props }) {
 	props.lismClass = atts(lismClass, 'c--accordion');
+	if (allowMultiple) props['data-allow-multiple'] = '';
+	return props;
+}
+
+// duration: [s]
+export function getItemProps({ lismClass, ...props }) {
+	props.lismClass = atts(lismClass, 'c--accordion_item');
 	return props;
 }
 
@@ -10,6 +16,7 @@ export function getHeadingProps(props) {
 	const defaultProps = {
 		lismClass: 'c--accordion_heading',
 		tag: 'div',
+		setPlain: 1,
 	};
 
 	const returnProps = { ...defaultProps, ...props };
