@@ -299,14 +299,3 @@ import { Accordion } from '@lism-css/ui/astro';
 	</PreviewCode>
 </Preview>
 
-
-{/* ## スクリプトの処理の内容について
-
-おおまかな処理ステップは以下の通りです。
-
-- `.c--accordion_item` 内の `button` 要素に対して `click` イベントを登録
-- `.c--accordion_panel` に対して `beforematch` イベントを登録（ブラウザのページ内検索時に自動展開）
-- クリック時、開閉状態に応じて `data-opened` 属性と `aria-expanded` 属性を操作
-    - `--height--opened` 変数で高さを制御し、アニメーションの終了を待ってから状態を確定
-	- アコーディオンが開く時、親要素に `data-allow-multiple` がなければ、他の兄弟アコーディオンを閉じる
-- アニメーション完了後、閉じた場合は `hidden="until-found"` を再付与 */}
