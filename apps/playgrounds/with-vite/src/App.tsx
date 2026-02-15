@@ -1,9 +1,9 @@
-import { Box, Flex, Container, HTML, Dummy, Divider, Columns , Lism } from 'lism-css/react';
+import { Box, Flex, Container, HTML, Dummy, Divider, Columns, Lism } from 'lism-css/react';
 import { Accordion } from '@lism-css/ui/react';
 
 function App() {
 	return (
-		<Container isWrapper hasGutter layout='flow'>
+		<Container size='s' hasGutter layout='flow'>
 			<Flex g='15' py='15'>
 				<img src='vite.svg' />
 				<h1>Vite + Lism UI</h1>
@@ -13,12 +13,15 @@ function App() {
 				Lorem ipsum dolor sit amet, consectetur adipisicing elit. Repellat itaque et voluptatum, ducimus temporibus accusamus exercitationem
 				dolores id impedit corporis asperiores debitis soluta, nemo iusto optio quae. Ducimus, aperiam tempora!
 			</p>
-			<Accordion.Root p='15' bgc='base-2'>
-				<Accordion.HeaderLabel>Accordion Label</Accordion.HeaderLabel>
-				<Accordion.Body>
+			<Accordion.Root>
+				<Accordion.Heading>
+					<Accordion.Button p='20'>Accordion Example 1</Accordion.Button>
+				</Accordion.Heading>
+				<Accordion.Panel>
 					<p>これはアコーディオンの中身です。@lism-css/ui を使用しています。</p>
-				</Accordion.Body>
+				</Accordion.Panel>
 			</Accordion.Root>
+
 			<Flex g={['10', '15', '20']} p={['10', '15', '20']} bd>
 				<Box lh='1' p='20' bd>
 					1

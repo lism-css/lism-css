@@ -56,8 +56,9 @@
 		--height--opened: auto;
 	}
 
-	/* 開いている時 */
-	[data-opened] > .c--accordion_panel {
+	/* 開いている時 ( Astro で client:load を使ってReactコンポーネントを使うと、間に astro-slot が挟まることを考慮) */
+	[data-opened] > .c--accordion_panel,
+	[data-opened] > * > .c--accordion_panel {
 		height: var(--height--opened);
 	}
 
