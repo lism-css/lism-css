@@ -7,8 +7,9 @@ import AccIcon from './AccIcon';
 
 import '../_style.css';
 
-// Context: AccordionRoot から Button / Panel へ accID を共有
-const AccordionContext = React.createContext({ accID: '' });
+// Context: 純粋なReact環境で AccordionRoot → Button / Panel へ accID を共有
+// Astro 環境では Context が使えないため null がフォールバック
+const AccordionContext = React.createContext(null);
 
 /**
  * ルート要素（<div> ベース、setEvent で開閉イベントを登録）
@@ -46,10 +47,11 @@ export function Heading({ children, ...props }) {
 
 /**
  * 開閉トリガーボタン（末尾に AccIcon を自動配置）
- * aria-controls / aria-expanded は Context 経由の accID で自動設定
+ * accID: Context から取得できればそれを優先、なければ props / プレースホルダー
  */
-export function Button({ children, ...props }) {
-	const { accID } = React.useContext(AccordionContext);
+export function Button({ children, accID: _accID = '__LISM_ACC_ID__', ...props }) {
+	const ctx = React.useContext(AccordionContext);
+	const accID = ctx?.accID || _accID;
 
 	return (
 		<Lism {...defaultProps.button} {...props} aria-controls={accID} aria-expanded='false'>
@@ -62,9 +64,11 @@ export function Button({ children, ...props }) {
 /**
  * 開閉パネル（hidden="until-found" でブラウザ検索対応）
  * flow: 内部コンテンツ（__content）に渡すフローレイアウト設定
+ * accID: Context から取得できればそれを優先、なければ props / プレースホルダー
  */
-export function Panel({ children, flow, ...props }) {
-	const { accID } = React.useContext(AccordionContext);
+export function Panel({ children, flow = undefined, accID: _accID = '__LISM_ACC_ID__', ...props }) {
+	const ctx = React.useContext(AccordionContext);
+	const accID = ctx?.accID || _accID;
 
 	return (
 		<Lism {...defaultProps.panel} id={accID} hidden='until-found'>
