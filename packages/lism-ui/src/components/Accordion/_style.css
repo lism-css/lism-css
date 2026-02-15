@@ -3,16 +3,14 @@
 		--duration: var(--acc-duration, 0.25s);
 	}
 	.c--accordion_item {
-		--_icon-transform: rotate(0deg); /* icon 変化用の変数 */
+		--_panel-h: 0px;
+		--_icon-transform: rotate(0deg);
 	}
 
 	/* 開いている時 */
 	.c--accordion_item[data-opened] {
 		--_icon-transform: rotate(90deg);
-	}
-
-	.c--accordion_heading {
-		background-color: color-mix(in srgb, var(--bdc), transparent 80%);
+		--_panel-h: auto; /* Note: アニメーション時、jsでセットされる */
 	}
 
 	.c--accordion_button {
@@ -21,33 +19,14 @@
 		align-items: center;
 		justify-content: space-between;
 		width: 100%;
-		gap: var(--s20);
-
-		/* button のスタイルリセット */
-		/* height: auto;
-		border: none;
-		font: inherit;
-		line-height: inherit;
-		color: inherit;
-		text-align: inherit; */
 		cursor: pointer;
 	}
 
 	.c--accordion_panel {
 		position: relative;
 		overflow: hidden;
-
-		height: 0px;
+		height: var(--_panel-h);
 		transition: height var(--duration);
-
-		/* jsで変数にセットする */
-		--height--opened: auto;
-	}
-
-	/* 開いている時 ( Astro で client:load を使ってReactコンポーネントを使うと、間に astro-slot が挟まることを考慮) */
-	[data-opened] > .c--accordion_panel,
-	[data-opened] > * > .c--accordion_panel {
-		height: var(--height--opened);
 	}
 
 	/* コンテンツの paddingは __panel ではなくこっちにつける */
@@ -87,32 +66,11 @@
 		}
 	}
 
-	/* タイトルホバー時、背景色を少し濃くする */
-	@media (any-hover: hover) {
-		.c--accordion_title:hover {
-			background-color: color-mix(in srgb, var(--bdc), transparent 60%);
-		}
-	}
-	/* Tabキーでのフォーカス時も同じスタイリング */
-	.c--accordion_title:has(> :focus-visible) {
-		background-color: color-mix(in srgb, var(--bdc), transparent 60%);
-	}
-
 	/* フォーカス時のアウトラインを少し内側に寄せる( overflow:hidden によって途切れてしまうので)  */
 	.c--accordion_button:focus-visible {
 		outline: solid 2px currentColor;
 		outline-color: revert;
 		outline-offset: -3px; /* offset 調整だけだとブラウザ間の差が大きい */
-	}
-
-	/* --- (任意) フォーカスリングの角丸調整 --- */
-	.c--accordion_item:first-child .c--accordion_button {
-		border-top-left-radius: var(--bdrs);
-		border-top-right-radius: var(--bdrs);
-	}
-	.c--accordion_item:last-child:not([data-opened]) .c--accordion_button {
-		border-bottom-left-radius: var(--bdrs);
-		border-bottom-right-radius: var(--bdrs);
 	}
 
 	/* --- 「視差効果を減らす」設定を考慮 --- */
