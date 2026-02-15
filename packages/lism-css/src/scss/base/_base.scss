@@ -14,7 +14,8 @@ body {
 /* ----------------------------------------
     line-height
  ---------------------------------------- */
-* {
+*,
+.set-plain {
 	line-height: calc(1em + var(--hl) * 2);
 }
 
@@ -139,7 +140,6 @@ button,
 textarea,
 select,
 ::file-selector-button {
-	--hl: var(--hl--s);
 	padding: var(--s5) var(--s10);
 
 	// 最低限揃えておく
