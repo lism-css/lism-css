@@ -15,9 +15,9 @@
  * important: 1 → !important を付けて最終的に出力する
  */
 
-const PLACE_PRESETS = ['start', 'center', 'end'];
-const PLACE_UTILS = { 'flex-s': 'flex-start', 'flex-e': 'flex-end' };
-const PLACE_SHORTHANDS = { s: 'start', e: 'end', c: 'center', fs: 'flex-s', fe: 'flex-e' };
+const PLACE_PRESETS = ['start', 'center', 'end'] as const;
+const PLACE_UTILS = { 'flex-s': 'flex-start', 'flex-e': 'flex-end' } as const;
+const PLACE_SHORTHANDS = { s: 'start', e: 'end', c: 'center', fs: 'flex-s', fe: 'flex-e' } as const;
 
 export default {
 	f: { prop: 'font', presets: ['inherit'] },

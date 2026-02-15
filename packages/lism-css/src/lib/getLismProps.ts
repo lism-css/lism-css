@@ -11,10 +11,11 @@ import isEmptyObj from './helper/isEmptyObj';
 import filterEmptyObj from './helper/filterEmptyObj';
 import splitWithComma from './helper/splitWithComma';
 import { type StyleWithCustomProps } from './types';
-import { StateProps } from './types/StateProps';
+import { type StateProps } from './types/StateProps';
+import { type PropValueTypes } from './types/PropValueTypes';
 
 // PropConfig interface based on config/defaults/props.ts
-export interface PropConfig {
+interface PropConfig {
 	prop?: string;
 	token?: string | null | undefined | false;
 	tokenClass?: 0 | 1 | 2;
@@ -36,7 +37,7 @@ export interface PropConfig {
 }
 
 // StatePropData based on config/defaults/states.ts
-export type StatePropDataObject = {
+type StatePropDataObject = {
 	className: string;
 	preset?: string[] | readonly string[];
 	presetClass?: string;
@@ -45,10 +46,10 @@ export type StatePropDataObject = {
 	setStyles?: (propVal: string) => Record<string, unknown>;
 };
 
-export type StatePropData = string | StatePropDataObject;
+type StatePropData = string | StatePropDataObject;
 
-// LismPropsData constructor input
-export interface LismPropsDataInput extends StateProps {
+// getLismProps の入力となる Props 型
+export interface LismProps extends StateProps, PropValueTypes, React.HTMLAttributes<HTMLElement> {
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	forwardedRef?: React.Ref<any>;
 	layout?: LayoutType;
@@ -60,15 +61,7 @@ export interface LismPropsDataInput extends StateProps {
 	_propConfig?: Record<string, PropConfig>;
 	hov?: boolean | string | Record<string, unknown>;
 	css?: Record<string, unknown>;
-	[key: string]: unknown; //TODO(#41): Props の型定義が完了したら削除。
-}
-
-// Return type of getLismProps
-export interface LismPropsResult extends Record<string, unknown> {
-	className?: string;
-	style?: StyleWithCustomProps;
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	ref?: React.Ref<any>;
+	[key: `data-${string}`]: unknown;
 }
 
 const getTokenKey = (propName: string): string => {
@@ -87,7 +80,7 @@ export class LismPropsData {
 	attrs: Record<string, unknown> = {};
 	_propConfig?: Record<string, PropConfig>;
 
-	constructor(allProps: LismPropsDataInput) {
+	constructor(allProps: LismProps) {
 		// 受け取るpropsとそうでないpropsを分ける
 		const { forwardedRef, class: classFromAstro, className, lismClass, variant, style = {}, _propConfig = {}, ...others } = allProps;
 
@@ -404,12 +397,19 @@ export class LismPropsData {
 	}
 }
 
+export interface LismOutputProps extends React.HTMLAttributes<HTMLElement> {
+	style?: StyleWithCustomProps;
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	ref?: React.Ref<any>;
+	[key: `data-${string}`]: unknown;
+}
+
 /**
  * props から styleに変換する要素 と その他 に分離する
  *
  * @param {Object} props
  */
-export default function getLismProps(props: LismPropsDataInput): LismPropsResult {
+export default function getLismProps(props: LismProps): LismOutputProps {
 	// Fix: オブジェクトに .length は存在しないため、適切な空チェックに修正
 	if (Object.keys(props).length === 0) {
 		return {};
@@ -422,5 +422,5 @@ export default function getLismProps(props: LismPropsDataInput): LismPropsResult
 		className: propObj.className,
 		style: filterEmptyObj(propObj.styles as Record<string, unknown>), //filterEmptyObj(styles), // filterEmptyObj は最後にかける
 		...propObj.attrs, // 処理されずに残っているprops
-	}) as LismPropsResult;
+	}) as LismOutputProps;
 }
