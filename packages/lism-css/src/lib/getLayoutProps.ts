@@ -7,6 +7,7 @@ type CssValue = string | number;
 
 // レイアウト名の型 - src/scss/modules/layout のファイル名から `l--` を取り除いたもの
 export type LayoutType =
+	| 'box'
 	| 'center'
 	| 'cluster'
 	| 'columns'
