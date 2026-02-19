@@ -1,3 +1,4 @@
+import type { LismProps } from '../lib/getLismProps';
 import type { StyleWithCustomProps } from '../lib/types';
 
 // フィルター名の型
@@ -20,10 +21,7 @@ export type FilterProps = {
 	[K in FilterName]?: string | number;
 };
 
-export default function getFilterProps<T>(
-	props: T & FilterProps & { style?: StyleWithCustomProps },
-	filterType: string = 'filter'
-): Omit<T, FilterName | 'style'> & { style: StyleWithCustomProps } {
+export default function getFilterProps(props: LismProps & FilterProps, filterType: string = 'filter'): LismProps & { style: StyleWithCustomProps } {
 	const filterValues: string[] = [];
 
 	const { style = {}, ...rest } = props;
@@ -33,7 +31,7 @@ export default function getFilterProps<T>(
 			// filterName を filter-name に変換（キャメルケースをケバブケースに変換）
 			const filterNameKebab = filterName.replace(/([A-Z])/g, '-$1').toLowerCase();
 			filterValues.push(`${filterNameKebab}(${rest[filterName]})`);
-			delete rest[filterName];
+			delete (rest as FilterProps)[filterName];
 		}
 	});
 
@@ -42,6 +40,5 @@ export default function getFilterProps<T>(
 		(style as Record<string, string>)[filterType] = filterValues.join(' ');
 	}
 
-	// delete によるフィルターキー除去は TypeScript が追跡できないため assertion が必要
-	return { ...rest, style } as unknown as Omit<T, FilterName | 'style'> & { style: StyleWithCustomProps };
+	return { ...rest, style };
 }

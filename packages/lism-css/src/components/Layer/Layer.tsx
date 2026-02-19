@@ -5,5 +5,5 @@ import getFilterProps, { type FilterProps } from '../getFilterProps';
 type LayerProps<T extends ElementType = 'div'> = LismComponentProps<T> & FilterProps;
 
 export default function Layer<T extends ElementType = 'div'>(props: LayerProps<T>) {
-	return <Lism isLayer {...getFilterProps(props as LayerProps, 'backdropFilter')} />;
+	return <Lism isLayer {...getFilterProps(props, 'backdropFilter')} />;
 }

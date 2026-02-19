@@ -1,12 +1,13 @@
 import type { ComponentPropsWithoutRef, ElementType, ReactNode, JSX } from 'react';
 import getLismProps, { type LismProps } from '../../lib/getLismProps';
+import { type LayoutSpecificProps } from '../../lib/types/LayoutProps';
 
 /**
  * Lism コンポーネントの Props 型
  * @template T - レンダリングする要素の型（デフォルトは 'div'）
  *
  */
-export type LismComponentProps<T extends ElementType = 'div'> = LismProps &
+export type LismComponentProps<T extends ElementType = 'div'> = (LismProps & LayoutSpecificProps) &
 	Omit<ComponentPropsWithoutRef<T>, keyof LismProps> & {
 		/** レンダリングするコンポーネントまたは要素 */
 		as?: T;
@@ -28,5 +29,13 @@ export default function Lism<T extends ElementType = 'div'>({ children, as, tag,
 		<Component {...getLismProps(props)} {...exProps}>
 			{children}
 		</Component>
+	);
+}
+
+function Test() {
+	return (
+		<Lism p={'10px'} layout='grid' gar='10px' as='section'>
+			<div>Test</div>
+		</Lism>
 	);
 }
