@@ -1,6 +1,6 @@
 // import { PROPS } from '../config';
 import { PROPS, STATES } from '../../config/index';
-import getLayoutProps, { type LayoutType } from './getLayoutProps';
+import getLayoutProps from './getLayoutProps';
 import isPresetValue from './isPresetValue';
 import isTokenValue from './isTokenValue';
 import getUtilKey from './getUtilKey';
@@ -13,6 +13,8 @@ import splitWithComma from './helper/splitWithComma';
 import { type StyleWithCustomProps } from './types';
 import { type StateProps } from './types/StateProps';
 import { type PropValueTypes } from './types/PropValueTypes';
+import { type LayoutType, type LayoutProps } from './types/LayoutProps';
+export { type LayoutType };
 
 // PropConfig interface based on config/defaults/props.ts
 interface PropConfig {
@@ -49,10 +51,9 @@ type StatePropDataObject = {
 type StatePropData = string | StatePropDataObject;
 
 // getLismProps の入力となる Props 型
-export interface LismProps extends StateProps, PropValueTypes, React.HTMLAttributes<HTMLElement> {
+export interface LismProps extends StateProps, PropValueTypes, LayoutProps, React.HTMLAttributes<HTMLElement> {
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	forwardedRef?: React.Ref<any>;
-	layout?: LayoutType;
 	class?: string;
 	className?: string;
 	lismClass?: string;
