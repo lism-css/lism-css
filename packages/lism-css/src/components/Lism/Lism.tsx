@@ -31,11 +31,3 @@ export default function Lism<T extends ElementType = 'div'>({ children, as, tag,
 		</Component>
 	);
 }
-
-function Test() {
-	return (
-		<Lism p={'10px'} layout='grid' gar='10px' as='section'>
-			<div>Test</div>
-		</Lism>
-	);
-}
