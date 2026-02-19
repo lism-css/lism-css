@@ -1,6 +1,7 @@
 import type { ElementType } from 'react';
-import { Lism, type LismComponentProps } from '../Lism';
+import { Lism, type LayoutComponentProps } from '../Lism';
+import type { FrameProps } from '../../lib/types/LayoutProps';
 
-export default function Frame<T extends ElementType = 'div'>(props: LismComponentProps<T>) {
-	return <Lism layout='frame' {...(props as LismComponentProps)} />;
+export default function Frame<T extends ElementType = 'div'>(props: LayoutComponentProps<T, FrameProps>) {
+	return <Lism layout='frame' {...props} />;
 }

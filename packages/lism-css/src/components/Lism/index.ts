@@ -1,1 +1,1 @@
-export { default as Lism, type LismComponentProps } from './Lism';
+export { default as Lism, type LismComponentProps, type LayoutComponentProps } from './Lism';
