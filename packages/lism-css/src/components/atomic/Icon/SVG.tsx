@@ -1,4 +1,12 @@
-export default function SVG({ size = '1em', fill = 'currentColor', viewBox = '0 0 24 24', path, children, __html, ...props }) {
+import type { SVGProps } from 'react';
+
+type SVGComponentProps = SVGProps<SVGSVGElement> & {
+	size?: string;
+	path?: string;
+	__html?: string;
+};
+
+export default function SVG({ size = '1em', fill = 'currentColor', viewBox = '0 0 24 24', path, children, __html, ...props }: SVGComponentProps) {
 	// const iconData = data[name] || {};
 	// const { viewBox = '0 0 256 256', path = '' } = iconData;
 
