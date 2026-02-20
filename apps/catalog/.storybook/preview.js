@@ -9,10 +9,16 @@ const preview = {
 	},
 	parameters: {
 		controls: {
+			sort: 'alpha',
 			matchers: {
 				color: /(background|color)$/i,
 				date: /Date$/i,
 			},
+		},
+
+		docs: {
+			argTypes: { sort: 'alpha' },
+			controls: { sort: 'alpha' },
 		},
 
 		a11y: {
