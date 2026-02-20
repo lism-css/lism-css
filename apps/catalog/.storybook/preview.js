@@ -1,5 +1,12 @@
+import 'lism-css/main.css';
+
 /** @type { import('@storybook/react-vite').Preview } */
 const preview = {
+	argTypes: {
+		forwardedRef: { table: { disable: true } },
+		_propConfig: { table: { disable: true } },
+		tag: { table: { disable: true } },
+	},
 	parameters: {
 		controls: {
 			matchers: {
