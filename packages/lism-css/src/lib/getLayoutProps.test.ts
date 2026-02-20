@@ -1,5 +1,5 @@
 import { describe, test, expect } from 'vitest';
-import getLayoutProps, { type BaseProps } from './getLayoutProps';
+import getLayoutProps from './getLayoutProps';
 
 describe('getLayoutProps', () => {
 	describe('基本的な動作', () => {
@@ -91,10 +91,10 @@ describe('getLayoutProps', () => {
 				sideW: '200px',
 				mainW: '800px',
 				otherProp: 'value',
-			} as BaseProps & { otherProp: string });
-			expect((result as Record<string, unknown>).otherProp).toBe('value');
-			expect((result as Record<string, unknown>).sideW).toBeUndefined();
-			expect((result as Record<string, unknown>).mainW).toBeUndefined();
+			});
+			expect(result.otherProp).toBe('value');
+			expect((result as unknown as Record<string, unknown>).sideW).toBeUndefined();
+			expect((result as unknown as Record<string, unknown>).mainW).toBeUndefined();
 		});
 	});
 
@@ -128,9 +128,9 @@ describe('getLayoutProps', () => {
 			const result = getLayoutProps('fluidCols', {
 				autoFill: true,
 				otherProp: 'value',
-			} as BaseProps & { otherProp: string });
-			expect((result as Record<string, unknown>).otherProp).toBe('value');
-			expect((result as Record<string, unknown>).autoFill).toBeUndefined();
+			});
+			expect(result.otherProp).toBe('value');
+			expect((result as unknown as Record<string, unknown>).autoFill).toBeUndefined();
 		});
 	});
 
@@ -188,9 +188,9 @@ describe('getLayoutProps', () => {
 			const result = getLayoutProps('flow', {
 				flow: 's',
 				otherProp: 'value',
-			} as BaseProps & { otherProp: string });
-			expect((result as Record<string, unknown>).otherProp).toBe('value');
-			expect((result as Record<string, unknown>).flow).toBeUndefined();
+			});
+			expect(result.otherProp).toBe('value');
+			expect((result as unknown as Record<string, unknown>).flow).toBeUndefined();
 		});
 	});
 
@@ -234,9 +234,9 @@ describe('getLayoutProps', () => {
 			const result = getLayoutProps('switchCols', {
 				breakSize: '600px',
 				otherProp: 'value',
-			} as BaseProps & { otherProp: string });
-			expect((result as Record<string, unknown>).otherProp).toBe('value');
-			expect((result as Record<string, unknown>).breakSize).toBeUndefined();
+			});
+			expect(result.otherProp).toBe('value');
+			expect((result as unknown as Record<string, unknown>).breakSize).toBeUndefined();
 		});
 	});
 
@@ -259,11 +259,11 @@ describe('getLayoutProps', () => {
 				lismClass: 'test',
 				otherProp1: 'value1',
 				otherProp2: 'value2',
-			} as BaseProps & { otherProp1: string; otherProp2: string });
-			expect((result as Record<string, unknown>).flow).toBeUndefined();
+			});
+			expect((result as unknown as Record<string, unknown>).flow).toBeUndefined();
 			expect(result.lismClass).toBeDefined();
-			expect((result as Record<string, unknown>).otherProp1).toBe('value1');
-			expect((result as Record<string, unknown>).otherProp2).toBe('value2');
+			expect(result.otherProp1).toBe('value1');
+			expect(result.otherProp2).toBe('value2');
 		});
 	});
 });
