@@ -7,6 +7,7 @@ const meta = {
 	tags: ['autodocs'],
 	argTypes: {
 		// --- Common Props ---
+		as: { control: 'text', table: { category: 'Common' } },
 		lismClass: { control: 'text', table: { category: 'Common' } },
 		variant: { control: 'text', table: { category: 'Common' } },
 		layout: {
