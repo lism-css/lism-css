@@ -1,10 +1,33 @@
 import presets from './presets';
 import atts from '../../../lib/helper/atts';
 import setMaybeTransformStyles from '../../setMaybeTransformStyles';
+import type { LismComponentProps } from '../../Lism/Lism';
+import type { TransformStyleProps } from '../../setMaybeTransformStyles';
+import type { ElementType, CSSProperties } from 'react';
+
+type IconObject = {
+	as: ElementType;
+	[key: string]: unknown;
+};
+
+type IconProp = ElementType | IconObject;
+
+type IconOwnProps = {
+	icon?: IconProp;
+	label?: string;
+	exProps?: Record<string, unknown>;
+};
+
+export type IconProps = LismComponentProps & TransformStyleProps & IconOwnProps;
+
+type ParsedSvg = {
+	svgProps: Record<string, unknown>;
+	svgContent: string;
+};
 
 // SVG文字列をパースしてexPropsとコンテンツを生成する関数
-function parseSvgString(svgString) {
-	const svgProps = {};
+function parseSvgString(svgString: string): Partial<ParsedSvg> {
+	const svgProps: Record<string, unknown> = {};
 
 	// SVGの属性とコンテンツを一回のmatchで取得
 	const match = svgString.match(/<svg([^>]*?)>([\s\S]*?)<\/svg>/i);
@@ -19,7 +42,7 @@ function parseSvgString(svgString) {
 
 			// style属性の場合はオブジェクトに分割
 			if (attrName === 'style') {
-				const styleObj = {};
+				const styleObj: Record<string, string> = {};
 				attrValue.split(';').forEach((rule) => {
 					const [property, value] = rule.split(':').map((str) => str.trim());
 					if (property && value) {
@@ -47,11 +70,19 @@ Icon の出力パターン
   - tag=svg で指定された場合 → <svg> で出力し、childrenはそのまま返す。（<path> などを渡して使えるようにする）
   - as が指定された場合 → asで渡される外部コンポーネントを呼び出す
 */
-export default function getProps({ lismClass, as, tag, icon, label, exProps = {}, ..._props }) {
-	let Component = tag || 'span';
+export default function getProps({ lismClass, as, tag, icon, label, exProps = {}, ..._props }: IconProps) {
+	// '_SVG_' は内部センチネル値として使用し、Icon.tsx で SVG コンポーネントに置換される
+	let Component: ElementType | '_SVG_' = tag || 'span';
 	let content = '';
 
-	let { style = {}, className = '', ..._rest } = setMaybeTransformStyles(_props);
+	// rest の型が複雑な union になり TS2590 が発生するため、object にキャストしてから渡す
+	const {
+		style: _style = {},
+		className: _className = '',
+		..._rest
+	} = setMaybeTransformStyles(_props as object) as unknown as { style: CSSProperties; className: string; [key: string]: unknown };
+	let style = _style;
+	let className = _className;
 
 	// viewBoxがあれば、svg描画として扱う
 	if (_rest.viewBox) {
@@ -74,15 +105,15 @@ export default function getProps({ lismClass, as, tag, icon, label, exProps = {}
 
 				// class, styleは切り分ける. fill は除去（<SVG> で currentColorセット
 				const { class: svgClass, style: svgStyle, ...svgAttrs } = svgProps;
-				className = atts(className, svgClass);
-				style = { ...style, ...svgStyle };
+				className = atts(className, svgClass as string | undefined);
+				style = { ...style, ...(svgStyle as CSSProperties) };
 
 				// 属性とコンテンツ
 				exProps = { ...exProps, ...svgAttrs, fill: 'currentColor' };
 				content = svgContent;
 			} else {
 				// プリセットアイコンを呼び出す
-				const presetIconData = presets[icon] || null;
+				const presetIconData = presets[icon as keyof typeof presets] || null;
 				if (null != presetIconData) {
 					Component = '_SVG_';
 					exProps = { ...exProps, ...presetIconData };
@@ -93,7 +124,7 @@ export default function getProps({ lismClass, as, tag, icon, label, exProps = {}
 			Component = _as;
 			exProps = { ...exProps, ..._exProps };
 		} else {
-			Component = icon;
+			Component = icon as ElementType;
 		}
 	} else if (as) {
 		Component = as;
