@@ -421,7 +421,7 @@ export default function getLismProps(props: LismProps): LismOutputProps {
 	}
 
 	const { layout, ...rest } = props;
-	const propObj = new LismPropsData(getLayoutProps(layout, rest) as LismPropsBase);
+	const propObj = new LismPropsData(getLayoutProps(layout, rest));
 
 	return filterEmptyObj({
 		className: propObj.className,
