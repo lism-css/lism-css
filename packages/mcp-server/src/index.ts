@@ -1,5 +1,6 @@
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js';
+import { preloadAll } from './lib/load-data.js';
 import { registerGetOverview } from './tools/get-overview.js';
 import { registerGetTokens } from './tools/get-tokens.js';
 import { registerGetPropsSystem } from './tools/get-props-system.js';
@@ -7,6 +8,8 @@ import { registerGetComponent } from './tools/get-component.js';
 import { registerSearchDocs } from './tools/search-docs.js';
 
 async function main() {
+	preloadAll();
+
 	const server = new McpServer({
 		name: 'lism-css',
 		version: '0.1.0',
