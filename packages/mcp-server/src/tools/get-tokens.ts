@@ -1,7 +1,7 @@
 import { z } from 'zod';
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { loadJSON } from '../lib/load-data.js';
-import { meta } from '../data/meta.js';
+import { success } from '../lib/response.js';
 import type { TokenCategory } from '../lib/types.js';
 
 const TOKEN_CATEGORIES = ['all', 'color', 'spacing', 'fontSize', 'shadow', 'radius', 'lineHeight', 'letterSpacing', 'fontFamily', 'zIndex'] as const;
@@ -16,15 +16,7 @@ export function registerGetTokens(server: McpServer): void {
 		({ category }) => {
 			const data = loadJSON<TokenCategory[]>('tokens.json');
 			const filtered = category === 'all' ? data : data.filter((c) => c.category === category);
-
-			return {
-				content: [
-					{
-						type: 'text' as const,
-						text: JSON.stringify({ meta, tokens: filtered }, null, 2),
-					},
-				],
-			};
+			return success({ tokens: filtered });
 		}
 	);
 }
