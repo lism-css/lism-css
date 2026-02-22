@@ -1,7 +1,7 @@
 import { z } from 'zod';
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { loadJSON } from '../lib/load-data.js';
-import { success } from '../lib/response.js';
+import { success, error } from '../lib/response.js';
 import type { TokenCategory } from '../lib/types.js';
 
 const TOKEN_CATEGORIES = ['all', 'color', 'spacing', 'fontSize', 'shadow', 'radius', 'lineHeight', 'letterSpacing', 'fontFamily', 'zIndex'] as const;
@@ -14,9 +14,13 @@ export function registerGetTokens(server: McpServer): void {
 			category: z.enum(TOKEN_CATEGORIES).default('all').describe('Token category to retrieve. Use "all" to get all categories.'),
 		},
 		({ category }) => {
-			const data = loadJSON<TokenCategory[]>('tokens.json');
-			const filtered = category === 'all' ? data : data.filter((c) => c.category === category);
-			return success({ tokens: filtered });
+			try {
+				const data = loadJSON<TokenCategory[]>('tokens.json');
+				const filtered = category === 'all' ? data : data.filter((c) => c.category === category);
+				return success({ tokens: filtered });
+			} catch (e) {
+				return error(`Failed to load tokens data: ${e instanceof Error ? e.message : String(e)}`);
+			}
 		}
 	);
 }
