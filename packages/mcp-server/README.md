@@ -1,6 +1,6 @@
 # @lism-css/mcp-server
 
-[Lism CSS](https://lism-ui.com) の [MCP (Model Context Protocol)](https://modelcontextprotocol.io/) サーバーです。
+[Lism CSS](https://lism-css.com) の [MCP (Model Context Protocol)](https://modelcontextprotocol.io/) サーバーです。
 AI ツール（Claude Code, Cursor 等）が Lism CSS の最新ドキュメント・API を正確に参照できるようにします。
 
 ## できること
