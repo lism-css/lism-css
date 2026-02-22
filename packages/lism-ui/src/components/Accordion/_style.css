@@ -13,26 +13,14 @@
 		--_panel-h: auto; /* Note: アニメーション時、jsでセットされる */
 	}
 
-	.c--accordion_button {
-		display: flex;
-		background: none;
-		align-items: center;
-		justify-content: space-between;
-		width: 100%;
-		cursor: pointer;
-	}
-
+	/* .c--accordion_button {} */
 	.c--accordion_panel {
-		position: relative;
-		overflow: hidden;
 		height: var(--_panel-h);
 		transition: height var(--duration);
 	}
 
 	/* コンテンツの paddingは __panel ではなくこっちにつける */
-	.c--accordion_content {
-		padding: 1.25rem 1rem;
-	}
+	/* .c--accordion_content {} */
 
 	/* パネルが完全に閉じている時にabsoluteで飛ばしておくと、Chromeでも検索時に正常にハイライトされるようになる（なぜかは不明） */
 	[hidden] > .c--accordion_content {
@@ -44,8 +32,6 @@
 		display: grid;
 		width: 1em;
 		height: 1em;
-		place-items: center;
-		flex-shrink: 0;
 
 		&::before,
 		&::after {
