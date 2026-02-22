@@ -1,0 +1,27 @@
+{
+	"name": "@lism-css/mcp-server",
+	"version": "0.1.0",
+	"description": "MCP server for lism-css documentation and API reference.",
+	"type": "module",
+	"bin": {
+		"lism-mcp": "./bin/lism-mcp.mjs"
+	},
+	"main": "./dist/index.js",
+	"files": [
+		"dist",
+		"bin"
+	],
+	"scripts": {
+		"build": "tsc && cp src/data/*.json dist/data/",
+		"dev": "tsc --watch"
+	},
+	"dependencies": {
+		"@modelcontextprotocol/sdk": "^1.18.1",
+		"zod": "^3.24.0"
+	},
+	"devDependencies": {
+		"@types/node": "^22.0.0",
+		"typescript": "~5.8.3"
+	},
+	"license": "MIT"
+}

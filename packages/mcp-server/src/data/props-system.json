@@ -1,0 +1,596 @@
+{
+	"description": "Lism CSS の Props システム。React/Astro コンポーネントの props を CSS クラス (Prop Class) やインラインスタイルに変換する仕組み。レスポンシブ対応は配列記法 p={[20, 30, 40]} で sm, md ブレークポイントの値を指定可能。",
+	"categories": [
+		{
+			"category": "typography",
+			"description": "テキスト関連のプロパティ",
+			"props": [
+				{
+					"prop": "fz",
+					"cssProperty": "font-size",
+					"type": "string | number | array",
+					"responsive": true,
+					"description": "フォントサイズ。トークン値 (xs, s, m, l, xl, 2xl, 3xl, 4xl, 5xl) またはカスタム値。",
+					"values": ["root", "base", "5xl", "4xl", "3xl", "2xl", "xl", "l", "m", "s", "xs", "2xs"]
+				},
+				{
+					"prop": "fw",
+					"cssProperty": "font-weight",
+					"type": "string",
+					"responsive": false,
+					"description": "フォントウェイト。",
+					"values": ["thin", "light", "normal", "medium", "bold", "black"]
+				},
+				{
+					"prop": "ff",
+					"cssProperty": "font-family",
+					"type": "string",
+					"responsive": false,
+					"description": "フォントファミリー。",
+					"values": ["base", "accent", "mono"]
+				},
+				{
+					"prop": "fs",
+					"cssProperty": "font-style",
+					"type": "string",
+					"responsive": false,
+					"description": "フォントスタイル。",
+					"values": ["italic"]
+				},
+				{
+					"prop": "lh",
+					"cssProperty": "line-height",
+					"type": "string | number",
+					"responsive": false,
+					"description": "行間。トークン値またはカスタム値。",
+					"values": ["1"]
+				},
+				{
+					"prop": "hl",
+					"cssProperty": "--hl (CSS変数)",
+					"type": "string",
+					"responsive": true,
+					"description": "見出し用の行間を制御するCSS変数。",
+					"values": ["base", "xs", "s", "l"]
+				},
+				{
+					"prop": "lts",
+					"cssProperty": "letter-spacing",
+					"type": "string",
+					"responsive": false,
+					"description": "文字間隔。",
+					"values": ["base", "s", "l"]
+				},
+				{
+					"prop": "ta",
+					"cssProperty": "text-align",
+					"type": "string",
+					"responsive": false,
+					"description": "テキスト整列。",
+					"values": ["center", "left", "right"]
+				},
+				{
+					"prop": "td",
+					"cssProperty": "text-decoration",
+					"type": "string",
+					"responsive": false,
+					"description": "テキスト装飾。",
+					"values": ["none"]
+				},
+				{
+					"prop": "tt",
+					"cssProperty": "text-transform",
+					"type": "string",
+					"responsive": false,
+					"description": "テキスト変換。",
+					"values": ["upper", "lower"]
+				}
+			]
+		},
+		{
+			"category": "display",
+			"description": "表示・可視性関連のプロパティ",
+			"props": [
+				{
+					"prop": "d",
+					"cssProperty": "display",
+					"type": "string | array",
+					"responsive": true,
+					"description": "表示モード。",
+					"values": ["none", "block", "in-flex"]
+				},
+				{
+					"prop": "o",
+					"cssProperty": "opacity",
+					"type": "string | number",
+					"responsive": false,
+					"description": "透明度。",
+					"values": ["0", "-10", "-20", "-30"]
+				},
+				{ "prop": "v", "cssProperty": "visibility", "type": "string", "responsive": false, "description": "可視性。", "values": ["hidden"] },
+				{
+					"prop": "ov",
+					"cssProperty": "overflow",
+					"type": "string",
+					"responsive": false,
+					"description": "オーバーフロー。",
+					"values": ["hidden", "auto", "clip"]
+				},
+				{
+					"prop": "ar",
+					"cssProperty": "aspect-ratio",
+					"type": "string | array",
+					"responsive": true,
+					"description": "アスペクト比。",
+					"values": ["21/9", "16/9", "3/2", "1/1", "og"]
+				}
+			]
+		},
+		{
+			"category": "size",
+			"description": "幅・高さ関連のプロパティ",
+			"props": [
+				{
+					"prop": "w",
+					"cssProperty": "width",
+					"type": "string | array",
+					"responsive": true,
+					"description": "幅。",
+					"values": ["100%", "fit"]
+				},
+				{
+					"prop": "h",
+					"cssProperty": "height",
+					"type": "string | array",
+					"responsive": true,
+					"description": "高さ。",
+					"values": ["100%", "fit"]
+				},
+				{ "prop": "min-w", "cssProperty": "min-width", "type": "string | array", "responsive": true, "description": "最小幅。" },
+				{ "prop": "max-w", "cssProperty": "max-width", "type": "string | array", "responsive": true, "description": "最大幅。" },
+				{ "prop": "min-h", "cssProperty": "min-height", "type": "string | array", "responsive": true, "description": "最小高さ。" },
+				{ "prop": "max-h", "cssProperty": "max-height", "type": "string | array", "responsive": true, "description": "最大高さ。" },
+				{
+					"prop": "sz",
+					"cssProperty": "inline-size",
+					"type": "string",
+					"responsive": false,
+					"description": "インラインサイズ。",
+					"values": ["xs", "s", "m", "l", "xl", "min", "full", "container"]
+				},
+				{
+					"prop": "max-sz",
+					"cssProperty": "max-inline-size",
+					"type": "string",
+					"responsive": false,
+					"description": "最大インラインサイズ。",
+					"values": ["xs", "s", "m", "l", "xl", "min", "full", "container"]
+				}
+			]
+		},
+		{
+			"category": "spacing",
+			"description": "余白関連のプロパティ。スペーシングトークン (5, 10, 15, 20, 30, 40, 50, 60, 70, 80) を値として使用可能。",
+			"props": [
+				{
+					"prop": "p",
+					"cssProperty": "padding",
+					"type": "string | number | array",
+					"responsive": true,
+					"description": "全方向パディング。",
+					"values": ["0", "5", "10", "15", "20", "30", "40", "50", "60", "70", "80"]
+				},
+				{
+					"prop": "px",
+					"cssProperty": "padding-inline",
+					"type": "string | number | array",
+					"responsive": true,
+					"description": "左右 (inline) パディング。"
+				},
+				{
+					"prop": "py",
+					"cssProperty": "padding-block",
+					"type": "string | number | array",
+					"responsive": true,
+					"description": "上下 (block) パディング。"
+				},
+				{
+					"prop": "m",
+					"cssProperty": "margin",
+					"type": "string | number | array",
+					"responsive": true,
+					"description": "全方向マージン。",
+					"values": ["auto", "0", "5", "10", "15", "20", "30", "40", "50", "60", "70", "80"]
+				},
+				{
+					"prop": "mx",
+					"cssProperty": "margin-inline",
+					"type": "string | number | array",
+					"responsive": true,
+					"description": "左右 (inline) マージン。"
+				},
+				{
+					"prop": "my",
+					"cssProperty": "margin-block",
+					"type": "string | number | array",
+					"responsive": true,
+					"description": "上下 (block) マージン。"
+				},
+				{
+					"prop": "g",
+					"cssProperty": "gap",
+					"type": "string | number | array",
+					"responsive": true,
+					"description": "ギャップ (Flex/Grid の子要素間の余白)。",
+					"values": ["0", "inherit", "5", "10", "15", "20", "30", "40", "50", "60", "70", "80"]
+				},
+				{
+					"prop": "g-x",
+					"cssProperty": "column-gap",
+					"type": "string | number | array",
+					"responsive": true,
+					"description": "カラム方向のギャップ。"
+				},
+				{
+					"prop": "g-y",
+					"cssProperty": "row-gap",
+					"type": "string | number | array",
+					"responsive": true,
+					"description": "行方向のギャップ。"
+				}
+			]
+		},
+		{
+			"category": "color",
+			"description": "カラー関連のプロパティ",
+			"props": [
+				{
+					"prop": "c",
+					"cssProperty": "color",
+					"type": "string",
+					"responsive": false,
+					"description": "テキストカラー。",
+					"values": ["base", "text", "text-2", "brand", "accent", "inherit"]
+				},
+				{
+					"prop": "bgc",
+					"cssProperty": "background-color",
+					"type": "string",
+					"responsive": false,
+					"description": "背景色。",
+					"values": ["base", "base-2", "text", "brand", "accent", "inherit", "transparent"]
+				},
+				{
+					"prop": "keycolor",
+					"cssProperty": "--keycolor (CSS変数)",
+					"type": "string",
+					"responsive": false,
+					"description": "コンポーネントのキーカラーを設定するCSS変数。"
+				}
+			]
+		},
+		{
+			"category": "border",
+			"description": "ボーダー関連のプロパティ",
+			"props": [
+				{
+					"prop": "bd",
+					"cssProperty": "border",
+					"type": "string | boolean",
+					"responsive": false,
+					"description": "ボーダー。true でデフォルトのボーダーが付く。",
+					"values": ["none"]
+				},
+				{
+					"prop": "bds",
+					"cssProperty": "--bds (CSS変数)",
+					"type": "string",
+					"responsive": false,
+					"description": "ボーダースタイル。",
+					"values": ["dashed", "dotted", "double"]
+				},
+				{
+					"prop": "bdc",
+					"cssProperty": "--bdc (CSS変数)",
+					"type": "string",
+					"responsive": false,
+					"description": "ボーダーカラー。",
+					"values": ["brand", "accent", "divider", "inherit", "transparent", "cc"]
+				},
+				{
+					"prop": "bdw",
+					"cssProperty": "--bdw (CSS変数)",
+					"type": "string | number | array",
+					"responsive": true,
+					"description": "ボーダー幅。"
+				},
+				{
+					"prop": "bdrs",
+					"cssProperty": "border-radius",
+					"type": "string | number | array",
+					"responsive": true,
+					"description": "角丸。",
+					"values": ["0", "5", "10", "20", "30", "40", "50", "99", "inner"]
+				},
+				{
+					"prop": "bxsh",
+					"cssProperty": "box-shadow",
+					"type": "string | number | array",
+					"responsive": true,
+					"description": "ボックスシャドウ。",
+					"values": ["0", "5", "10", "20", "30", "40", "50"]
+				}
+			]
+		},
+		{
+			"category": "position",
+			"description": "ポジション関連のプロパティ",
+			"props": [
+				{
+					"prop": "pos",
+					"cssProperty": "position",
+					"type": "string",
+					"responsive": false,
+					"description": "位置指定方法。",
+					"values": ["static", "fixed", "sticky", "rel", "abs"]
+				},
+				{
+					"prop": "z",
+					"cssProperty": "z-index",
+					"type": "string | number",
+					"responsive": false,
+					"description": "重ね順。",
+					"values": ["-1", "0", "1", "99"]
+				},
+				{ "prop": "t", "cssProperty": "top", "type": "string", "responsive": false, "description": "上端の位置。" },
+				{ "prop": "l", "cssProperty": "left", "type": "string", "responsive": false, "description": "左端の位置。" },
+				{ "prop": "r", "cssProperty": "right", "type": "string", "responsive": false, "description": "右端の位置。" },
+				{ "prop": "b", "cssProperty": "bottom", "type": "string", "responsive": false, "description": "下端の位置。" },
+				{ "prop": "i", "cssProperty": "inset", "type": "string", "responsive": false, "description": "全方向の位置。" }
+			]
+		},
+		{
+			"category": "flex",
+			"description": "Flexbox 関連のプロパティ",
+			"props": [
+				{
+					"prop": "fxw",
+					"cssProperty": "flex-wrap",
+					"type": "string | array",
+					"responsive": true,
+					"description": "フレックス折り返し。",
+					"values": ["wrap"]
+				},
+				{
+					"prop": "fxd",
+					"cssProperty": "flex-direction",
+					"type": "string | array",
+					"responsive": true,
+					"description": "フレックス方向。",
+					"values": ["col", "col-r", "row-r"]
+				},
+				{
+					"prop": "fx",
+					"cssProperty": "flex",
+					"type": "string | array",
+					"responsive": true,
+					"description": "フレックス値。",
+					"values": ["1"]
+				},
+				{
+					"prop": "fxg",
+					"cssProperty": "flex-grow",
+					"type": "string | number",
+					"responsive": false,
+					"description": "フレックス拡大。",
+					"values": ["1"]
+				},
+				{
+					"prop": "fxsh",
+					"cssProperty": "flex-shrink",
+					"type": "string | number",
+					"responsive": false,
+					"description": "フレックス縮小。",
+					"values": ["0"]
+				},
+				{ "prop": "fxb", "cssProperty": "flex-basis", "type": "string | array", "responsive": true, "description": "フレックス基準サイズ。" }
+			]
+		},
+		{
+			"category": "grid",
+			"description": "Grid レイアウト関連のプロパティ",
+			"props": [
+				{
+					"prop": "gt",
+					"cssProperty": "grid-template",
+					"type": "string | array",
+					"responsive": true,
+					"description": "グリッドテンプレート。",
+					"values": ["repeat"]
+				},
+				{
+					"prop": "gta",
+					"cssProperty": "grid-template-areas",
+					"type": "string | array",
+					"responsive": true,
+					"description": "グリッドテンプレートエリア。"
+				},
+				{
+					"prop": "gtc",
+					"cssProperty": "grid-template-columns",
+					"type": "string | array",
+					"responsive": true,
+					"description": "グリッド列テンプレート。",
+					"values": ["subgrid"]
+				},
+				{
+					"prop": "gtr",
+					"cssProperty": "grid-template-rows",
+					"type": "string | array",
+					"responsive": true,
+					"description": "グリッド行テンプレート。",
+					"values": ["subgrid"]
+				},
+				{
+					"prop": "gaf",
+					"cssProperty": "grid-auto-flow",
+					"type": "string | array",
+					"responsive": true,
+					"description": "グリッド自動配置方向。",
+					"values": ["row", "col"]
+				},
+				{ "prop": "ga", "cssProperty": "grid-area", "type": "string | array", "responsive": true, "description": "グリッドエリア。" },
+				{
+					"prop": "gc",
+					"cssProperty": "grid-column",
+					"type": "string | array",
+					"responsive": true,
+					"description": "グリッドカラム位置。",
+					"values": ["1/-1"]
+				},
+				{
+					"prop": "gr",
+					"cssProperty": "grid-row",
+					"type": "string | array",
+					"responsive": true,
+					"description": "グリッド行位置。",
+					"values": ["1/-1"]
+				},
+				{
+					"prop": "cols",
+					"cssProperty": "--cols (CSS変数)",
+					"type": "string | number | array",
+					"responsive": true,
+					"description": "列数を指定するCSS変数。"
+				},
+				{
+					"prop": "rows",
+					"cssProperty": "--rows (CSS変数)",
+					"type": "string | number | array",
+					"responsive": true,
+					"description": "行数を指定するCSS変数。"
+				}
+			]
+		},
+		{
+			"category": "alignment",
+			"description": "配置関連のプロパティ",
+			"props": [
+				{
+					"prop": "ai",
+					"cssProperty": "align-items",
+					"type": "string | array",
+					"responsive": true,
+					"description": "交差軸のアイテム配置。",
+					"values": ["start", "center", "end", "stretch"]
+				},
+				{
+					"prop": "ac",
+					"cssProperty": "align-content",
+					"type": "string | array",
+					"responsive": true,
+					"description": "交差軸のコンテンツ配置。",
+					"values": ["start", "center", "end", "between"]
+				},
+				{
+					"prop": "ji",
+					"cssProperty": "justify-items",
+					"type": "string | array",
+					"responsive": true,
+					"description": "主軸のアイテム配置。",
+					"values": ["start", "center", "end", "stretch"]
+				},
+				{
+					"prop": "jc",
+					"cssProperty": "justify-content",
+					"type": "string | array",
+					"responsive": true,
+					"description": "主軸のコンテンツ配置。",
+					"values": ["start", "center", "end", "between"]
+				},
+				{
+					"prop": "pi",
+					"cssProperty": "place-items",
+					"type": "string",
+					"responsive": false,
+					"description": "両軸のアイテム配置。",
+					"values": ["start", "center", "end"]
+				},
+				{
+					"prop": "pc",
+					"cssProperty": "place-content",
+					"type": "string",
+					"responsive": false,
+					"description": "両軸のコンテンツ配置。",
+					"values": ["start", "center", "end"]
+				},
+				{
+					"prop": "aslf",
+					"cssProperty": "align-self",
+					"type": "string",
+					"responsive": false,
+					"description": "個別の交差軸配置。",
+					"values": ["start", "center", "end", "stretch"]
+				},
+				{
+					"prop": "jslf",
+					"cssProperty": "justify-self",
+					"type": "string",
+					"responsive": false,
+					"description": "個別の主軸配置。",
+					"values": ["start", "center", "end", "stretch"]
+				},
+				{
+					"prop": "order",
+					"cssProperty": "order",
+					"type": "string | number",
+					"responsive": false,
+					"description": "表示順序。",
+					"values": ["0", "-1", "1"]
+				}
+			]
+		},
+		{
+			"category": "state",
+			"description": "状態・機能クラスを付与するための props（コンポーネント専用）",
+			"props": [
+				{
+					"prop": "isContainer",
+					"cssProperty": "(class: is--container)",
+					"type": "boolean",
+					"responsive": false,
+					"description": "コンテナクエリの基準要素にする。"
+				},
+				{
+					"prop": "isWrapper",
+					"cssProperty": "(class: is--wrapper)",
+					"type": "boolean | string",
+					"responsive": false,
+					"description": "コンテンツ幅を制御するラッパーにする。",
+					"values": ["s", "l"]
+				},
+				{
+					"prop": "isLayer",
+					"cssProperty": "(class: is--layer)",
+					"type": "boolean",
+					"responsive": false,
+					"description": "レイヤー（position:absolute で親要素に重なる）にする。"
+				},
+				{
+					"prop": "isLinkBox",
+					"cssProperty": "(class: is--linkBox)",
+					"type": "boolean",
+					"responsive": false,
+					"description": "ボックス全体をリンク領域にする。"
+				},
+				{
+					"prop": "hasGutter",
+					"cssProperty": "(class: has--gutter)",
+					"type": "boolean",
+					"responsive": false,
+					"description": "左右にガター（余白）を付ける。"
+				}
+			]
+		}
+	]
+}
