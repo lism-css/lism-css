@@ -1,7 +1,7 @@
 import { z } from 'zod';
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { loadJSON } from '../lib/load-data.js';
-import { success, error } from '../lib/response.js';
+import { success, error, READ_ONLY_ANNOTATIONS } from '../lib/response.js';
 import type { ComponentInfo } from '../lib/types.js';
 
 export function registerGetComponent(server: McpServer): void {
@@ -15,6 +15,7 @@ export function registerGetComponent(server: McpServer): void {
 				.optional()
 				.describe('Filter by package. "lism-css" for core components, "@lism-css/ui" for UI components.'),
 		},
+		READ_ONLY_ANNOTATIONS,
 		({ name, package: pkg }) => {
 			try {
 				const data = loadJSON<ComponentInfo[]>('components.json');
