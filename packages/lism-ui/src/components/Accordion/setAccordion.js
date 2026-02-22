@@ -1,26 +1,4 @@
-// 1フレーム待機
-export const waitFrame = () => new Promise((resolve) => requestAnimationFrame(resolve));
-
-// パネルのアニメーションが完了するのを待つ（アニメーションステータスを文字列で返す）
-export const waitAnimation = async (panel) => {
-	const animations = panel.getAnimations();
-
-	// アニメーションがなければ 'finished' を返す
-	if (animations.length === 0) return 'none';
-
-	// allSettled を使うことで、キャンセル時も例外にならずに結果を取得できる
-	const results = await Promise.allSettled(animations.map((a) => a.finished));
-
-	// （ pause()で止めた時用 ）rejected があれば 'canceled'
-	return results.every((r) => r.status === 'fulfilled') ? 'finished' : 'canceled';
-};
-
-// 実行中のアニメーションがあれば一旦停止させる
-export const maybePauseAnimation = (panel) => {
-	const animations = panel.getAnimations();
-	if (animations.length === 0) return;
-	animations.forEach((a) => a.pause());
-};
+import { waitFrame, waitAnimation, maybePauseAnimation } from '../../helper/animation';
 
 // hidden を付け外しする時の値
 let ACCORDION_HIDDEN_VALUE = 'until-found';
