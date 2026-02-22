@@ -18,9 +18,11 @@
 		"name": "HTML",
 		"package": "lism-css",
 		"category": "core",
-		"description": "任意のHTML要素をLism Propsシステムで扱えるようにするコンポーネント。Lismとほぼ同じだが、モジュールクラスを付与しない。",
-		"props": [{ "name": "tag", "type": "string", "default": "div", "description": "レンダリングするHTML要素を指定。" }],
-		"usage": "<HTML tag='p' fz='l' c='text-2'>Text</HTML>"
+		"description": "HTMLの主要なタグに<Lism>と同じプロパティを指定できるようにするためのコンポーネント。HTML.div, HTML.p, HTML.span, HTML.a, HTML.h, HTML.ul, HTML.ol, HTML.li, HTML.button が利用可能。例えば <HTML.p> は <Lism tag='p'> と同じように動作する。",
+		"props": [
+			{ "name": "lv", "type": "'1' | '2' | '3' | '4' | '5' | '6'", "default": "1", "description": "HTML.h で使用。見出しレベルを指定する。" }
+		],
+		"usage": "<HTML.p fz='l' c='text-2'>Text</HTML.p>"
 	},
 	{
 		"name": "Dummy",
