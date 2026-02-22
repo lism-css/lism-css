@@ -1,4 +1,12 @@
+import type { ToolAnnotations } from '@modelcontextprotocol/sdk/types.js';
 import { meta } from '../data/meta.js';
+
+export const READ_ONLY_ANNOTATIONS: ToolAnnotations = {
+	readOnlyHint: true,
+	destructiveHint: false,
+	idempotentHint: true,
+	openWorldHint: false,
+};
 
 type ToolResult = {
 	content: { type: 'text'; text: string }[];
