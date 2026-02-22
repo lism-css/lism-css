@@ -1,8 +1,8 @@
 import { z } from 'zod';
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { loadJSON } from '../lib/load-data.js';
+import { ComponentInfoSchema } from '../lib/schemas.js';
 import { success, error, READ_ONLY_ANNOTATIONS } from '../lib/response.js';
-import type { ComponentInfo } from '../lib/types.js';
 
 export function registerGetComponent(server: McpServer): void {
 	server.tool(
@@ -18,7 +18,7 @@ export function registerGetComponent(server: McpServer): void {
 		READ_ONLY_ANNOTATIONS,
 		({ name, package: pkg }) => {
 			try {
-				const data = loadJSON<ComponentInfo[]>('components.json');
+				const data = loadJSON('components.json', z.array(ComponentInfoSchema));
 
 				let candidates = data;
 				if (pkg) {
