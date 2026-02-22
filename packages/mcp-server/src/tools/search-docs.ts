@@ -2,7 +2,7 @@ import { z } from 'zod';
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { loadJSON } from '../lib/load-data.js';
 import { searchDocs } from '../lib/search.js';
-import { success } from '../lib/response.js';
+import { success, error } from '../lib/response.js';
 import type { DocsEntry } from '../lib/types.js';
 
 const DOC_CATEGORIES = ['all', 'core-components', 'modules', 'props', 'ui', 'guide'] as const;
@@ -17,9 +17,13 @@ export function registerSearchDocs(server: McpServer): void {
 			limit: z.number().int().min(1).max(20).default(10).describe('Maximum number of results to return.'),
 		},
 		({ query, category, limit }) => {
-			const entries = loadJSON<DocsEntry[]>('docs-index.json');
-			const results = searchDocs(entries, query, category, limit);
-			return success({ query, results });
+			try {
+				const entries = loadJSON<DocsEntry[]>('docs-index.json');
+				const results = searchDocs(entries, query, category, limit);
+				return success({ query, results });
+			} catch (e) {
+				return error(`Failed to search docs: ${e instanceof Error ? e.message : String(e)}`);
+			}
 		}
 	);
 }

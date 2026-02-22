@@ -12,28 +12,32 @@ export function registerGetPropsSystem(server: McpServer): void {
 			prop: z.string().optional().describe('Specific prop name to look up (e.g. "p", "fz", "bgc"). Omit to get the full system overview.'),
 		},
 		({ prop }) => {
-			const data = loadJSON<PropsSystemData>('props-system.json');
+			try {
+				const data = loadJSON<PropsSystemData>('props-system.json');
 
-			if (!prop) {
-				return success(data as unknown as Record<string, unknown>);
-			}
-
-			const propLower = prop.toLowerCase();
-			const matched: PropCategory[] = [];
-
-			for (const cat of data.categories) {
-				const found = cat.props.filter((p) => p.prop.toLowerCase() === propLower);
-				if (found.length > 0) {
-					matched.push({ ...cat, props: found });
+				if (!prop) {
+					return success(data as unknown as Record<string, unknown>);
 				}
-			}
 
-			if (matched.length === 0) {
-				const allProps = data.categories.flatMap((c) => c.props.map((p) => p.prop));
-				return error(`Prop "${prop}" not found.`, { availableProps: allProps });
-			}
+				const propLower = prop.toLowerCase();
+				const matched: PropCategory[] = [];
 
-			return success({ description: data.description, categories: matched });
+				for (const cat of data.categories) {
+					const found = cat.props.filter((p) => p.prop.toLowerCase() === propLower);
+					if (found.length > 0) {
+						matched.push({ ...cat, props: found });
+					}
+				}
+
+				if (matched.length === 0) {
+					const allProps = data.categories.flatMap((c) => c.props.map((p) => p.prop));
+					return error(`Prop "${prop}" not found.`, { availableProps: allProps });
+				}
+
+				return success({ description: data.description, categories: matched });
+			} catch (e) {
+				return error(`Failed to load props system data: ${e instanceof Error ? e.message : String(e)}`);
+			}
 		}
 	);
 }

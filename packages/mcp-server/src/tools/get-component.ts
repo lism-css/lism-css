@@ -16,28 +16,34 @@ export function registerGetComponent(server: McpServer): void {
 				.describe('Filter by package. "lism-css" for core components, "@lism-css/ui" for UI components.'),
 		},
 		({ name, package: pkg }) => {
-			const data = loadJSON<ComponentInfo[]>('components.json');
+			try {
+				const data = loadJSON<ComponentInfo[]>('components.json');
 
-			let candidates = data;
-			if (pkg) {
-				candidates = data.filter((c) => c.package === pkg);
+				let candidates = data;
+				if (pkg) {
+					candidates = data.filter((c) => c.package === pkg);
+				}
+
+				const nameLower = name.toLowerCase();
+				const exact = candidates.find((c) => c.name.toLowerCase() === nameLower);
+
+				if (exact) {
+					return success({ component: exact });
+				}
+
+				const suggestions = candidates
+					.filter((c) => c.name.toLowerCase().includes(nameLower))
+					.map((c) => ({ name: c.name, package: c.package }));
+
+				if (suggestions.length > 0) {
+					return error(`Component "${name}" not found. Did you mean one of these?`, { suggestions });
+				}
+
+				const available = candidates.map((c) => ({ name: c.name, package: c.package }));
+				return error(`Component "${name}" not found.`, { availableComponents: available });
+			} catch (e) {
+				return error(`Failed to load component data: ${e instanceof Error ? e.message : String(e)}`);
 			}
-
-			const nameLower = name.toLowerCase();
-			const exact = candidates.find((c) => c.name.toLowerCase() === nameLower);
-
-			if (exact) {
-				return success({ component: exact });
-			}
-
-			const suggestions = candidates.filter((c) => c.name.toLowerCase().includes(nameLower)).map((c) => ({ name: c.name, package: c.package }));
-
-			if (suggestions.length > 0) {
-				return error(`Component "${name}" not found. Did you mean one of these?`, { suggestions });
-			}
-
-			const available = candidates.map((c) => ({ name: c.name, package: c.package }));
-			return error(`Component "${name}" not found.`, { availableComponents: available });
 		}
 	);
 }
