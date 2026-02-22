@@ -1,7 +1,7 @@
 import { z } from 'zod';
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { loadJSON } from '../lib/load-data.js';
-import { meta } from '../data/meta.js';
+import { success, error } from '../lib/response.js';
 import type { ComponentInfo } from '../lib/types.js';
 
 export function registerGetComponent(server: McpServer): void {
@@ -23,64 +23,21 @@ export function registerGetComponent(server: McpServer): void {
 				candidates = data.filter((c) => c.package === pkg);
 			}
 
-			// Exact match (case-insensitive)
 			const nameLower = name.toLowerCase();
 			const exact = candidates.find((c) => c.name.toLowerCase() === nameLower);
 
 			if (exact) {
-				return {
-					content: [
-						{
-							type: 'text' as const,
-							text: JSON.stringify({ meta, component: exact }, null, 2),
-						},
-					],
-				};
+				return success({ component: exact });
 			}
 
-			// Partial match for suggestions
 			const suggestions = candidates.filter((c) => c.name.toLowerCase().includes(nameLower)).map((c) => ({ name: c.name, package: c.package }));
 
 			if (suggestions.length > 0) {
-				return {
-					content: [
-						{
-							type: 'text' as const,
-							text: JSON.stringify(
-								{
-									meta,
-									error: `Component "${name}" not found. Did you mean one of these?`,
-									suggestions,
-								},
-								null,
-								2
-							),
-						},
-					],
-				};
+				return error(`Component "${name}" not found. Did you mean one of these?`, { suggestions });
 			}
 
-			// No match at all — list all available
-			const available = candidates.map((c) => ({
-				name: c.name,
-				package: c.package,
-			}));
-			return {
-				content: [
-					{
-						type: 'text' as const,
-						text: JSON.stringify(
-							{
-								meta,
-								error: `Component "${name}" not found.`,
-								availableComponents: available,
-							},
-							null,
-							2
-						),
-					},
-				],
-			};
+			const available = candidates.map((c) => ({ name: c.name, package: c.package }));
+			return error(`Component "${name}" not found.`, { availableComponents: available });
 		}
 	);
 }

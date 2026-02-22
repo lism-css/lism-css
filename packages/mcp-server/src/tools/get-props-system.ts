@@ -1,7 +1,7 @@
 import { z } from 'zod';
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { loadJSON } from '../lib/load-data.js';
-import { meta } from '../data/meta.js';
+import { success, error } from '../lib/response.js';
 import type { PropsSystemData, PropCategory } from '../lib/types.js';
 
 export function registerGetPropsSystem(server: McpServer): void {
@@ -15,14 +15,7 @@ export function registerGetPropsSystem(server: McpServer): void {
 			const data = loadJSON<PropsSystemData>('props-system.json');
 
 			if (!prop) {
-				return {
-					content: [
-						{
-							type: 'text' as const,
-							text: JSON.stringify({ meta, ...data }, null, 2),
-						},
-					],
-				};
+				return success(data as unknown as Record<string, unknown>);
 			}
 
 			const propLower = prop.toLowerCase();
@@ -36,42 +29,11 @@ export function registerGetPropsSystem(server: McpServer): void {
 			}
 
 			if (matched.length === 0) {
-				// Show all available prop names as suggestions
 				const allProps = data.categories.flatMap((c) => c.props.map((p) => p.prop));
-				return {
-					content: [
-						{
-							type: 'text' as const,
-							text: JSON.stringify(
-								{
-									meta,
-									error: `Prop "${prop}" not found.`,
-									availableProps: allProps,
-								},
-								null,
-								2
-							),
-						},
-					],
-				};
+				return error(`Prop "${prop}" not found.`, { availableProps: allProps });
 			}
 
-			return {
-				content: [
-					{
-						type: 'text' as const,
-						text: JSON.stringify(
-							{
-								meta,
-								description: data.description,
-								categories: matched,
-							},
-							null,
-							2
-						),
-					},
-				],
-			};
+			return success({ description: data.description, categories: matched });
 		}
 	);
 }

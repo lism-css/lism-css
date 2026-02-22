@@ -1,6 +1,6 @@
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { loadJSON } from '../lib/load-data.js';
-import { meta } from '../data/meta.js';
+import { success } from '../lib/response.js';
 import type { OverviewData } from '../lib/types.js';
 
 export function registerGetOverview(server: McpServer): void {
@@ -10,14 +10,7 @@ export function registerGetOverview(server: McpServer): void {
 		{},
 		() => {
 			const data = loadJSON<OverviewData>('overview.json');
-			return {
-				content: [
-					{
-						type: 'text' as const,
-						text: JSON.stringify({ meta, ...data }, null, 2),
-					},
-				],
-			};
+			return success(data as unknown as Record<string, unknown>);
 		}
 	);
 }
