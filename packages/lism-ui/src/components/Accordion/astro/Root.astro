@@ -1,11 +1,10 @@
 ---
 import { Stack } from 'lism-css/astro';
-import getLismProps from 'lism-css/lib/getLismProps';
 import { getRootProps } from '../getProps';
 
 import '../_style.css';
 
-const rootProps = getLismProps(getRootProps(Astro.props || {}));
+const rootProps = getRootProps(Astro.props || {});
 ---
 
 <Stack {...rootProps}>

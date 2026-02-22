@@ -1,15 +1,14 @@
 ---
 // import type { LismProps } from 'lism-css/types';
 import { Lism } from 'lism-css/astro';
-import { defaultProps } from '../getProps';
+import { getPanelProps } from '../getProps';
 
 // interface Props extends LismProps {}
-const { flow, isOpen = false, accID = '__LISM_ACC_ID__', ...props } = Astro.props || {};
+const { panelProps, contentProps } = getPanelProps(Astro.props || {});
 ---
 
-<Lism {...defaultProps.panel} id={accID} hidden={isOpen ? undefined : 'until-found'}>
-	<div hidden='until-found'>hoge</div>
-	<Lism layout='flow' flow={flow} {...defaultProps.content} {...props}>
+<Lism {...panelProps}>
+	<Lism {...contentProps}>
 		<slot />
 	</Lism>
 </Lism>
