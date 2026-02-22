@@ -1,8 +1,9 @@
 import { z } from 'zod';
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { loadJSON } from '../lib/load-data.js';
+import { PropsSystemDataSchema } from '../lib/schemas.js';
 import { success, error, READ_ONLY_ANNOTATIONS } from '../lib/response.js';
-import type { PropsSystemData, PropCategory } from '../lib/types.js';
+import type { PropCategory } from '../lib/types.js';
 
 export function registerGetPropsSystem(server: McpServer): void {
 	server.tool(
@@ -14,7 +15,7 @@ export function registerGetPropsSystem(server: McpServer): void {
 		READ_ONLY_ANNOTATIONS,
 		({ prop }) => {
 			try {
-				const data = loadJSON<PropsSystemData>('props-system.json');
+				const data = loadJSON('props-system.json', PropsSystemDataSchema);
 
 				if (!prop) {
 					return success(data as unknown as Record<string, unknown>);
