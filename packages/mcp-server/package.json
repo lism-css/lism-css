@@ -12,8 +12,9 @@
 		"bin"
 	],
 	"scripts": {
-		"build": "tsc && cp src/data/*.json dist/data/",
-		"dev": "tsc --watch"
+		"build": "tsc -p tsconfig.build.json && cp src/data/*.json dist/data/",
+		"dev": "tsc --watch",
+		"test": "vitest run"
 	},
 	"dependencies": {
 		"@modelcontextprotocol/sdk": "^1.18.1",
@@ -21,7 +22,8 @@
 	},
 	"devDependencies": {
 		"@types/node": "^22.0.0",
-		"typescript": "~5.8.3"
+		"typescript": "~5.8.3",
+		"vitest": "^4.0.18"
 	},
 	"license": "MIT"
 }
