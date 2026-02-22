@@ -1,13 +1,4 @@
-/**
- * 要素がアニメーション中の場合、完了まで待機する
- */
-async function waitAnimation(el: HTMLElement): Promise<void> {
-	const animations = el.getAnimations();
-	if (animations.length > 0) {
-		// allSettled を使うことで、キャンセルされた場合もrejectせずに完了扱いになる
-		await Promise.allSettled(animations.map((a) => a.finished));
-	}
-}
+import { waitAnimation } from '../../helper/animation';
 
 /**
  * モーダルの開閉イベントを設定する
