@@ -49,8 +49,11 @@ export function searchDocs(entries: DocsEntry[], query: string, category?: strin
 		.sort((a, b) => b.score - a.score)
 		.slice(0, limit);
 
+	const DOCS_BASE_URL = 'https://lism-css.com/ja/docs';
+
 	return scored.map(({ entry, score }) => ({
 		sourcePath: entry.sourcePath,
+		url: `${DOCS_BASE_URL}/${entry.sourcePath.replace(/\.mdx$/, '')}/`,
 		heading: entry.title,
 		snippet: entry.snippet,
 		score,

@@ -6,6 +6,7 @@ export interface MetaInfo {
 
 export interface SearchResult {
 	sourcePath: string;
+	url: string;
 	heading: string;
 	snippet: string;
 	score: number;
