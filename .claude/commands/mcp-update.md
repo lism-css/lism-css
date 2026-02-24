@@ -10,6 +10,7 @@
 ### 1. `overview.json`
 - **参照先**: `packages/lism-css/package.json`, `packages/lism-ui/package.json`, `apps/docs/src/content/docs/ja/overview.mdx`, `apps/docs/src/content/docs/ja/installation.mdx`, `apps/docs/src/content/docs/ja/css-methodology.mdx`
 - **更新内容**: description, packages（バージョン含む）, architecture, installation, cssLayers, classNaming, propAbbreviations
+- **注意**: get_overview のレスポンスは Markdown 形式に変換されるため、各フィールドのテキストはそのまま読みやすい形で記述すること（特に installation フィールドは Markdown 記法で記述）
 
 ### 2. `tokens.json`
 - **参照先**: `packages/lism-css/src/scss/token/` 配下の SCSS ファイル, `apps/docs/src/content/docs/ja/tokens.mdx`
@@ -38,7 +39,7 @@
 
 ## 注意事項
 
-- JSON のスキーマ（フィールド名・型の構造）は変更しないこと
+- JSON のスキーマ（フィールド名・型の構造）は変更しないこと。スキーマ定義は `packages/mcp-server/src/lib/schemas.ts` を参照
 - ソースに存在しない情報を推測で追加しないこと
 - description 等のテキストは日本語で記述すること
 - 1ファイルずつ順番に処理し、各ファイルの更新内容を簡潔に報告すること
