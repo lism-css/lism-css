@@ -19,9 +19,21 @@ export function success(data: Record<string, unknown>): ToolResult {
 	};
 }
 
+export function notFound(message: string, extra?: Record<string, unknown>): ToolResult {
+	return {
+		content: [{ type: 'text' as const, text: JSON.stringify({ meta, error: message, ...extra }, null, 2) }],
+	};
+}
+
 export function error(message: string, extra?: Record<string, unknown>): ToolResult {
 	return {
 		content: [{ type: 'text' as const, text: JSON.stringify({ meta, error: message, ...extra }, null, 2) }],
 		isError: true,
+	};
+}
+
+export function markdownResponse(text: string): ToolResult {
+	return {
+		content: [{ type: 'text' as const, text }],
 	};
 }

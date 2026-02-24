@@ -2,12 +2,12 @@ import { z } from 'zod';
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { loadJSON } from '../lib/load-data.js';
 import { ComponentInfoSchema } from '../lib/schemas.js';
-import { success, error, READ_ONLY_ANNOTATIONS } from '../lib/response.js';
+import { success, error, notFound, READ_ONLY_ANNOTATIONS } from '../lib/response.js';
 
 export function registerGetComponent(server: McpServer): void {
 	server.tool(
 		'get_component',
-		'Get detailed information about a specific lism-css component: props, usage examples, and category.',
+		'Get detailed information about a specific lism-css component: props, usage examples, and category. If not found, try search_docs with a broader query.',
 		{
 			name: z.string().describe('Component name to look up (e.g. "Box", "Flex", "Accordion").'),
 			package: z
@@ -37,13 +37,17 @@ export function registerGetComponent(server: McpServer): void {
 					.map((c) => ({ name: c.name, package: c.package }));
 
 				if (suggestions.length > 0) {
-					return error(`Component "${name}" not found. Did you mean one of these?`, { suggestions });
+					return notFound(`Component "${name}" not found. Did you mean one of these? Or try search_docs with a broader query.`, {
+						suggestions,
+					});
 				}
 
 				const available = candidates.map((c) => ({ name: c.name, package: c.package }));
-				return error(`Component "${name}" not found.`, { availableComponents: available });
+				return notFound(`Component "${name}" not found. Try search_docs to find related pages.`, { availableComponents: available });
 			} catch (e) {
-				return error(`Failed to load component data: ${e instanceof Error ? e.message : String(e)}`);
+				return error(
+					`Failed to load component data: ${e instanceof Error ? e.message : String(e)}. The data files may not be built yet. Ensure the server was installed correctly.`
+				);
 			}
 		}
 	);

@@ -26,16 +26,17 @@ async function createTestClient() {
 }
 
 describe('MCP Tools (integration)', () => {
-	it('get_overview が正常にデータを返す', async () => {
+	it('get_overview が正常にMarkdownデータを返す', async () => {
 		const client = await createTestClient();
 		const result = await client.callTool({ name: 'get_overview', arguments: {} });
 		expect(result.content).toBeDefined();
 		expect(result.isError).toBeFalsy();
 
 		const text = (result.content as { type: string; text: string }[])[0].text;
-		const data = JSON.parse(text);
-		expect(data.description).toBeDefined();
-		expect(data.meta).toBeDefined();
+		expect(text).toContain('# lism-css Overview');
+		expect(text).toContain('## Description');
+		expect(text).toContain('## Architecture');
+		expect(text).toContain('## Packages');
 	});
 
 	it('get_tokens が正常にデータを返す', async () => {
@@ -58,24 +59,27 @@ describe('MCP Tools (integration)', () => {
 		expect(data.categories).toBeDefined();
 	});
 
-	it('get_props_system で存在しないpropを検索するとisError=trueを返す', async () => {
+	it('get_props_system で存在しないpropを検索すると代替提案付きの正常レスポンスを返す', async () => {
 		const client = await createTestClient();
 		const result = await client.callTool({ name: 'get_props_system', arguments: { prop: 'nonexistent_prop_xyz' } });
-		expect(result.isError).toBe(true);
+		expect(result.isError).toBeFalsy();
 
 		const text = (result.content as { type: string; text: string }[])[0].text;
 		const data = JSON.parse(text);
 		expect(data.error).toContain('not found');
+		expect(data.error).toContain('search_docs');
+		expect(data.availableProps).toBeDefined();
 	});
 
-	it('get_component で存在しないコンポーネントを検索するとisError=trueを返す', async () => {
+	it('get_component で存在しないコンポーネントを検索すると代替提案付きの正常レスポンスを返す', async () => {
 		const client = await createTestClient();
 		const result = await client.callTool({ name: 'get_component', arguments: { name: 'NonExistentComponent999' } });
-		expect(result.isError).toBe(true);
+		expect(result.isError).toBeFalsy();
 
 		const text = (result.content as { type: string; text: string }[])[0].text;
 		const data = JSON.parse(text);
 		expect(data.error).toContain('not found');
+		expect(data.error).toContain('search_docs');
 	});
 
 	it('search_docs が正常にデータを返す', async () => {

@@ -10,7 +10,7 @@ const DOC_CATEGORIES = ['all', 'core-components', 'modules', 'props', 'ui', 'gui
 export function registerSearchDocs(server: McpServer): void {
 	server.tool(
 		'search_docs',
-		'Search lism-css documentation by keyword. Returns matching pages with relevance scores.',
+		"Search lism-css documentation by keyword. Returns matching pages with relevance scores. Use this when other tools don't return the information you need, or to discover available components and features.",
 		{
 			query: z.string().describe('Search query (keywords separated by spaces).'),
 			category: z.enum(DOC_CATEGORIES).default('all').describe('Filter by documentation category.'),
@@ -23,7 +23,9 @@ export function registerSearchDocs(server: McpServer): void {
 				const results = searchDocs(entries, query, category, limit);
 				return success({ query, results });
 			} catch (e) {
-				return error(`Failed to search docs: ${e instanceof Error ? e.message : String(e)}`);
+				return error(
+					`Failed to search docs: ${e instanceof Error ? e.message : String(e)}. The data files may not be built yet. Ensure the server was installed correctly.`
+				);
 			}
 		}
 	);
