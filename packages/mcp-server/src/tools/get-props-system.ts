@@ -6,13 +6,16 @@ import { success, error, notFound, READ_ONLY_ANNOTATIONS } from '../lib/response
 import type { PropCategory } from '../lib/types.js';
 
 export function registerGetPropsSystem(server: McpServer): void {
-	server.tool(
+	server.registerTool(
 		'get_props_system',
-		'Get the lism-css Props system reference: how React props map to CSS classes and styles. Optionally filter by a specific prop name. Related: use get_component to see how props are used in specific components.',
 		{
-			prop: z.string().optional().describe('Specific prop name to look up (e.g. "p", "fz", "bgc"). Omit to get the full system overview.'),
+			description:
+				'Get the lism-css Props system reference: how React props map to CSS classes and styles. Optionally filter by a specific prop name. Related: use get_component to see how props are used in specific components.',
+			inputSchema: {
+				prop: z.string().optional().describe('Specific prop name to look up (e.g. "p", "fz", "bgc"). Omit to get the full system overview.'),
+			},
+			annotations: READ_ONLY_ANNOTATIONS,
 		},
-		READ_ONLY_ANNOTATIONS,
 		({ prop }) => {
 			try {
 				const data = loadJSON('props-system.json', PropsSystemDataSchema);

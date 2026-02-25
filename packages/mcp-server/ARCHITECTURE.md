@@ -279,25 +279,29 @@ Lism CSS は...
 
 ## ツール登録の仕組み
 
-各ツールは `server.tool()` で登録します。これは MCP SDK が提供するメソッドで、以下の4つを指定します。
+各ツールは `server.registerTool()` で登録します。これは MCP SDK が提供するメソッドで、ツール名・設定オブジェクト・ハンドラの3引数を指定します。
 
 ```typescript
-server.tool(
-    'get_tokens',                      // (1) ツール名
-    'Get design tokens...',            // (2) ツールの説明（AI が選択判断に使う）
-    { category: z.enum([...]) },       // (3) 入力パラメータの Zod スキーマ
-    READ_ONLY_ANNOTATIONS,             // (4) アノテーション（読み取り専用等）
-    ({ category }) => { ... }          // (5) ハンドラ関数
+server.registerTool(
+    'get_tokens',                          // (1) ツール名
+    {
+        description: 'Get design tokens...', // (2) ツールの説明（AI が選択判断に使う）
+        inputSchema: {                       // (3) 入力パラメータの Zod スキーマ
+            category: z.enum([...]),
+        },
+        annotations: READ_ONLY_ANNOTATIONS,  // (4) アノテーション（読み取り専用等）
+    },
+    ({ category }) => { ... }              // (5) ハンドラ関数
 );
 ```
 
 | 引数 | 役割 |
 |------|------|
 | ツール名 | クライアントがツールを指定する際の識別子 |
-| 説明文 | AI がどのツールを使うか判断するための説明。**ここの記述が重要** |
-| 入力スキーマ | パラメータの型を Zod で定義。バリデーションも自動で行われる |
-| アノテーション | ツールの性質をクライアントに伝える（読み取り専用、冪等性など） |
+| 設定オブジェクト | `description`（説明文）、`inputSchema`（Zodスキーマ）、`annotations`（読み取り専用等）をまとめて指定 |
 | ハンドラ | 実際の処理ロジック |
+
+> **Note:** SDK v1.26.0 以前は `server.tool()` で個別の引数として渡す旧 API が使われていましたが、現在は非推奨です。
 
 
 ## データの管理
