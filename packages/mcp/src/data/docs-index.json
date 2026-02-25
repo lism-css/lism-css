@@ -72,7 +72,7 @@
 		"title": "トークン",
 		"description": "Lism CSS のデザイントークン一覧と使い方。",
 		"category": "guide",
-		"headings": ["トークン一覧", "カラー", "スペーシング", "フォントサイズ", "シャドウ", "角丸"],
+		"headings": ["COLOR", "RADIUS", "SHADOW", "OPACITY", "SIZE"],
 		"keywords": ["token", "トークン", "design token", "カラー", "スペーシング", "spacing", "color", "font-size", "shadow", "radius"],
 		"snippet": "タイポグラフィ、余白、カラー、シャドウなどの主要なプロパティに対してデザイントークンを定義。CSS変数で管理し、一貫性のあるデザインを実現。"
 	},
@@ -81,7 +81,18 @@
 		"title": "Prop Class",
 		"description": "Lism CSS の Prop Class (CSSプロパティに対応するユーティリティクラス) の一覧。",
 		"category": "props",
-		"headings": [],
+		"headings": [
+			"このページの表の見方",
+			"Typography",
+			"Colors",
+			"Spacing",
+			"Width & Height",
+			"Displays",
+			"Positions",
+			"Layouts",
+			"Styling",
+			"Other CSS"
+		],
 		"keywords": ["prop class", "utility", "ユーティリティ", "クラス", "CSS property"],
 		"snippet": "単一のCSSプロパティに対応するユーティリティクラス。.-{prop}:{value} の形式。レスポンシブ対応の .-{prop}_{bp} 形式もサポート。"
 	},
@@ -90,7 +101,7 @@
 		"title": "レスポンシブ",
 		"description": "Lism CSS のレスポンシブ対応について解説します。",
 		"category": "guide",
-		"headings": [],
+		"headings": ["レスポンシブ対応", "コンテナクエリ・メディアクエリ", "ブレイクポイント"],
 		"keywords": ["responsive", "レスポンシブ", "ブレークポイント", "breakpoint", "コンテナクエリ", "container query", "sm", "md"],
 		"snippet": "CSS変数とクラスを組み合わせたレスポンシブ対応。コンテナクエリをデフォルトで採用。p={[20, 30, 40]} のような配列記法で sm, md ブレークポイントの値を指定。"
 	},
@@ -99,7 +110,7 @@
 		"title": "タイポグラフィ",
 		"description": "Lism CSS のタイポグラフィ設計について解説します。",
 		"category": "guide",
-		"headings": [],
+		"headings": ["Typography", "SPACE: 余白のスケーリング"],
 		"keywords": ["typography", "タイポグラフィ", "font", "文字", "テキスト", "heading"],
 		"snippet": "フォントサイズ、行間、文字間隔などのタイポグラフィ設計について解説。"
 	},
@@ -108,7 +119,7 @@
 		"title": "リセットCSS",
 		"description": "Lism CSS に含まれるリセットCSS について。",
 		"category": "guide",
-		"headings": [],
+		"headings": ["Lism の reset.css だけを読み込む方法"],
 		"keywords": ["reset", "リセット", "normalize", "reset css"],
 		"snippet": "Lism CSS に組み込まれたリセットCSS。reset.css レベルからサイト全体のCSS設計を担う。"
 	},
@@ -117,7 +128,7 @@
 		"title": "カスタマイズ",
 		"description": "Lism CSS のカスタマイズ方法。",
 		"category": "guide",
-		"headings": [],
+		"headings": ["@layerをオフにする", "SCSS でのカスタマイズ", "lism.config.js でのカスタマイズ"],
 		"keywords": ["customize", "カスタマイズ", "設定", "config", "テーマ", "theme"],
 		"snippet": "Lism CSS のトークンやスタイルのカスタマイズ方法について解説。"
 	},
@@ -126,7 +137,7 @@
 		"title": "ユーティリティクラス",
 		"description": "Lism CSS のユーティリティクラス一覧。",
 		"category": "guide",
-		"headings": [],
+		"headings": ["u-cbox", "u-trim & u-trimItems", "u-expandedLink", "u-hidden", "u-collapseGrid", "Opt-in"],
 		"keywords": ["utility", "ユーティリティ", "class", "クラス"],
 		"snippet": "用途が明確な装飾・機能をまとめてセットするユーティリティクラス (.u--{style}) の一覧。"
 	},
@@ -144,7 +155,7 @@
 		"title": "モジュールクラス",
 		"description": "Lism CSS のモジュールクラスの解説。",
 		"category": "guide",
-		"headings": [],
+		"headings": ["State Module", "is--vertical", "Layout Modules", "Atomic Modules", "Custom Modules"],
 		"keywords": ["module", "モジュール", "layout", "レイアウト", "class", "BEM"],
 		"snippet": "レイアウトの構成要素を細分化してモジュールとして定義。.l--{name}, .a--{name}, .c--{name} 等の命名規則。"
 	},
@@ -198,7 +209,7 @@
 		"title": "Lism",
 		"description": "Lism コアコンポーネントの解説。",
 		"category": "core-components",
-		"headings": [],
+		"headings": ["Import", "Lism Props", "補足"],
 		"keywords": ["Lism", "core", "コア", "基盤", "コンポーネント"],
 		"snippet": "全コンポーネントの基盤。Props システムによる CSS クラス・スタイルの自動変換を提供。tag prop で出力要素を変更可能。"
 	},
@@ -216,7 +227,7 @@
 		"title": "Dummy",
 		"description": "Dummy コンポーネントの解説。",
 		"category": "core-components",
-		"headings": [],
+		"headings": ["Props", "Import", "ダミーテキストの例", "ダミーリスト", "ダミー画像"],
 		"keywords": ["Dummy", "ダミー", "テスト", "プレビュー"],
 		"snippet": "ダミーテキストを生成するコンポーネント。プレビューやテスト用に使用。"
 	},
