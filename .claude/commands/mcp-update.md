@@ -27,6 +27,7 @@
 ### 5. `docs-index.json`
 - **参照先**: `apps/docs/src/content/docs/ja/` 配下の全 MDX ファイル
 - **更新内容**: 各ページの sourcePath, title, description, category, headings, keywords, snippet
+- **title ルール**: modules カテゴリのエントリは、title に JSX コンポーネント名と CSS クラス名を `コンポーネント名 / クラス名` の形式で併記すること（例: `"Flex / l--flex"`, `"Container / is--container"`, `"Icon / a--icon"`）。クラス名は sourcePath のファイル名部分から取得できる。
 
 ## 作業手順
 
