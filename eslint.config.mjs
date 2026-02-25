@@ -14,6 +14,7 @@ export default defineConfig(
 			'apps/playgrounds/**',
 			'eslint.config.mjs',
 			'lint-staged.config.mjs',
+			'**/bin/**/*.mjs',
 			'packages/lism-css/config.d.ts',
 			'.prettierrc.cjs',
 		],
