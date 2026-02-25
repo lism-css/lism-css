@@ -5,17 +5,20 @@ import { ComponentInfoSchema } from '../lib/schemas.js';
 import { success, error, notFound, READ_ONLY_ANNOTATIONS } from '../lib/response.js';
 
 export function registerGetComponent(server: McpServer): void {
-	server.tool(
+	server.registerTool(
 		'get_component',
-		'Get detailed information about a specific lism-css component: props, usage examples, and category. If not found, try search_docs with a broader query.',
 		{
-			name: z.string().describe('Component name to look up (e.g. "Box", "Flex", "Accordion").'),
-			package: z
-				.enum(['lism-css', '@lism-css/ui'])
-				.optional()
-				.describe('Filter by package. "lism-css" for core components, "@lism-css/ui" for UI components.'),
+			description:
+				'特定のlism-cssコンポーネントに関する詳細情報（プロパティ、使用例、カテゴリー）を取得します。該当するものが見つからない場合は、より広範なキーワードで search_docs を実行してください。',
+			inputSchema: {
+				name: z.string().describe('Component name to look up (e.g. "Box", "Flex", "Accordion").'),
+				package: z
+					.enum(['lism-css', '@lism-css/ui'])
+					.optional()
+					.describe('Filter by package. "lism-css" for core components, "@lism-css/ui" for UI components.'),
+			},
+			annotations: READ_ONLY_ANNOTATIONS,
 		},
-		READ_ONLY_ANNOTATIONS,
 		({ name, package: pkg }) => {
 			try {
 				const data = loadJSON('components.json', z.array(ComponentInfoSchema));

@@ -8,15 +8,18 @@ import { success, error, READ_ONLY_ANNOTATIONS } from '../lib/response.js';
 const DOC_CATEGORIES = ['all', 'core-components', 'modules', 'props', 'ui', 'guide'] as const;
 
 export function registerSearchDocs(server: McpServer): void {
-	server.tool(
+	server.registerTool(
 		'search_docs',
-		"Search lism-css documentation by keyword. Returns matching pages with relevance scores. Use this when other tools don't return the information you need, or to discover available components and features.",
 		{
-			query: z.string().describe('Search query (keywords separated by spaces).'),
-			category: z.enum(DOC_CATEGORIES).default('all').describe('Filter by documentation category.'),
-			limit: z.number().int().min(1).max(20).default(10).describe('Maximum number of results to return.'),
+			description:
+				"Search lism-css documentation by keyword. Returns matching pages with relevance scores. Use this when other tools don't return the information you need, or to discover available components and features.",
+			inputSchema: {
+				query: z.string().describe('Search query (keywords separated by spaces).'),
+				category: z.enum(DOC_CATEGORIES).default('all').describe('Filter by documentation category.'),
+				limit: z.number().int().min(1).max(20).default(10).describe('Maximum number of results to return.'),
+			},
+			annotations: READ_ONLY_ANNOTATIONS,
 		},
-		READ_ONLY_ANNOTATIONS,
 		({ query, category, limit }) => {
 			try {
 				const entries = loadJSON('docs-index.json', z.array(DocsEntrySchema));

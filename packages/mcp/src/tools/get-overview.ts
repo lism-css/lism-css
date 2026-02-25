@@ -44,11 +44,13 @@ function toMarkdown(data: z.infer<typeof OverviewDataSchema>): string {
 }
 
 export function registerGetOverview(server: McpServer): void {
-	server.tool(
+	server.registerTool(
 		'get_overview',
-		'Get an overview of the lism-css framework: architecture, design philosophy, packages, breakpoints, installation guide, and CSS layers. Start here to understand the framework before using other tools.',
-		{},
-		READ_ONLY_ANNOTATIONS,
+		{
+			description:
+				'Get an overview of the lism-css framework: architecture, design philosophy, packages, breakpoints, installation guide, and CSS layers. Start here to understand the framework before using other tools.',
+			annotations: READ_ONLY_ANNOTATIONS,
+		},
 		() => {
 			try {
 				const data = loadJSON('overview.json', OverviewDataSchema);
