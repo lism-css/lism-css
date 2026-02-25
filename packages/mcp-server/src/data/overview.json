@@ -17,8 +17,8 @@
 	],
 	"breakpoints": {
 		"sm": "480px (container query)",
-		"md": "720px (container query)",
-		"lg": "960px (container query)"
+		"md": "800px (container query)",
+		"lg": "1120px (container query)"
 	},
 	"installation": "## CSSのみ (CDN)\n```html\n<link href=\"https://cdn.jsdelivr.net/npm/lism-css/dist/css/main.css\" rel=\"stylesheet\" />\n```\n\n## npm パッケージ\n```bash\nnpm i lism-css\n# UI コンポーネントも使う場合\nnpm i @lism-css/ui\n```\n\n## CSS読み込み\n```js\nimport 'lism-css/main.css';\n// UI コンポーネントのCSS\nimport '@lism-css/ui/style.css';\n```\n\n## コンポーネント読み込み\n```jsx\n// React\nimport { Box, Flex, Stack } from 'lism-css/react';\nimport { Accordion, Modal } from '@lism-css/ui/react';\n\n// Astro\nimport { Box, Flex, Stack } from 'lism-css/astro';\nimport { Accordion, Modal } from '@lism-css/ui/astro';\n```",
 	"cssLayers": "@layer lism-reset, lism.base, lism.modules.state, lism.modules.layout, lism.modules.atomic, lism.modules, lism.utility, lism.custom; (Prop Class はレイヤー外)",
