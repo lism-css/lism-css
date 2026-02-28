@@ -1,7 +1,7 @@
 import React from 'react';
 import getLismProps from 'lism-css/lib/getLismProps';
 import { Lism, Stack } from 'lism-css/react';
-import { getRootProps, getItemProps, getHeadingProps, defaultProps } from '../getProps';
+import { getRootProps, getItemProps, getHeadingProps, getPanelProps, defaultProps } from '../getProps';
 import { setEvent } from '../setAccordion';
 import AccIcon from './AccIcon';
 
@@ -15,7 +15,7 @@ const AccordionContext = React.createContext(null);
  * 複数の AccordionItem をラップするルート要素
  */
 export function AccordionRoot({ children, ...props }) {
-	const rootProps = getLismProps(getRootProps(props));
+	const rootProps = getRootProps(props);
 	return <Stack {...rootProps}>{children}</Stack>;
 }
 
@@ -54,7 +54,7 @@ export function Heading({ children, ...props }) {
 }
 
 /**
- * 開閉トリガーボタン（末尾に AccIcon を自動配置）
+ * 開閉トリガーボタン
  * accID: Context から取得できればそれを優先、なければ props / プレースホルダー
  */
 export function Button({ children, accID: _accID = '__LISM_ACC_ID__', ...props }) {
@@ -70,19 +70,15 @@ export function Button({ children, accID: _accID = '__LISM_ACC_ID__', ...props }
 }
 
 /**
- * 開閉パネル（hidden="until-found" でブラウザ検索対応）
- * flow: 内部コンテンツ（__content）に渡すフローレイアウト設定
- * accID: Context から取得できればそれを優先、なければ props / プレースホルダー
+ * パネル
  */
-export function Panel({ children, flow = undefined, accID: _accID = '__LISM_ACC_ID__', ...props }) {
+export function Panel({ children, ...props }) {
 	const ctx = React.useContext(AccordionContext);
-	const accID = ctx?.accID || _accID;
+	const { panelProps, contentProps } = getPanelProps({ _contextID: ctx?.accID, ...props });
 
 	return (
-		<Lism {...defaultProps.panel} id={accID} hidden='until-found'>
-			<Lism layout='flow' flow={flow} {...defaultProps.content} {...props}>
-				{children}
-			</Lism>
+		<Lism {...panelProps}>
+			<Lism {...contentProps}>{children}</Lism>
 		</Lism>
 	);
 }

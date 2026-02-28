@@ -54,7 +54,7 @@
 
 		/* モーダルが開いている時はコンテンツをスクロールさせない */
 		&:has(:modal[open]) {
-			overflow: hidden;
+			overflow: clip; /* sticky 要素がくずれないように clip */
 		}
 	}
 

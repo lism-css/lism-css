@@ -1,0 +1,80 @@
+{
+	"description": "Lism CSS は、WEBサイトの骨組みをテンポ良くサクっと作るための軽量なCSSフレームワークです。レイアウトファーストなモジュール設計と、CSS変数を組み合わせたレスポンシブなユーティリティ設計が特徴です。ビルドや設定は不要で、CSSを読み込むだけでも使えます。Every Layout + Bootstrap + Tailwind CSS を混ぜ合わせたような設計です。",
+	"architecture": "CSS Layers による詳細度管理を採用。@layer lism.reset → lism.base → lism.modules → lism.utility の順で読み込まれます。Prop Class はレイヤー外で定義され、詳細度が高くなります。モジュールはさらに state → layout → atomic のサブレイヤーに分かれています。コンテナクエリをデフォルトで採用し、メディアクエリに依存しないレイアウト設計が可能です。",
+	"packages": [
+		{
+			"name": "lism-css",
+			"npmName": "lism-css",
+			"description": "コアCSSフレームワーク。レイアウトモジュール、デザイントークン、Prop Class、React/Astroコンポーネントを提供。",
+			"version": "0.8.3"
+		},
+		{
+			"name": "lism-ui",
+			"npmName": "@lism-css/ui",
+			"description": "lism-css の上に構築されたインタラクティブな UI コンポーネントライブラリ。Accordion, Modal, Tabs 等を React/Astro で提供。",
+			"version": "0.2.3"
+		}
+	],
+	"breakpoints": {
+		"sm": "480px (container query)",
+		"md": "720px (container query)",
+		"lg": "960px (container query)"
+	},
+	"installation": "## CSSのみ (CDN)\n```html\n<link href=\"https://cdn.jsdelivr.net/npm/lism-css/dist/css/main.css\" rel=\"stylesheet\" />\n```\n\n## npm パッケージ\n```bash\nnpm i lism-css\n# UI コンポーネントも使う場合\nnpm i @lism-css/ui\n```\n\n## CSS読み込み\n```js\nimport 'lism-css/main.css';\n// UI コンポーネントのCSS\nimport '@lism-css/ui/style.css';\n```\n\n## コンポーネント読み込み\n```jsx\n// React\nimport { Box, Flex, Stack } from 'lism-css/react';\nimport { Accordion, Modal } from '@lism-css/ui/react';\n\n// Astro\nimport { Box, Flex, Stack } from 'lism-css/astro';\nimport { Accordion, Modal } from '@lism-css/ui/astro';\n```",
+	"cssLayers": "@layer lism-reset, lism.base, lism.modules.state, lism.modules.layout, lism.modules.atomic, lism.modules, lism.utility, lism.custom; (Prop Class はレイヤー外)",
+	"classNaming": {
+		"moduleClass": {
+			"stateModules": ".is|has--{stateName} (例: .is--wrapper, .has--gutter)",
+			"layoutModules": ".l--{name} (例: .l--grid, .l--columns)",
+			"atomicModules": ".a--{name} (例: .a--divider, .a--icon)",
+			"customModules": ".c--{name} (例: .c--button, .c--note)"
+		},
+		"propClass": ".-{prop}:{value} (例: .-fz:l, .-p:20, .-d:none)",
+		"propClassVariable": ".-{prop} + --{prop} (例: .-p + --p)",
+		"propClassBreakpoint": ".-{prop}_{bp} + --{prop}_{bp} (例: .-p_sm + --p_sm)",
+		"utilityClass": {
+			"baseUtility": ".set-{style} (例: .set-plain, .set-transition)",
+			"styleUtility": ".u-{style} (例: .u-cbox)"
+		}
+	},
+	"propAbbreviations": {
+		"fz": "font-size",
+		"fw": "font-weight",
+		"ff": "font-family",
+		"fs": "font-style",
+		"lh": "line-height",
+		"lts": "letter-spacing",
+		"ta": "text-align",
+		"td": "text-decoration",
+		"d": "display",
+		"o": "opacity",
+		"ov": "overflow",
+		"ar": "aspect-ratio",
+		"w": "width",
+		"h": "height",
+		"p": "padding",
+		"px": "padding-inline",
+		"py": "padding-block",
+		"m": "margin",
+		"mx": "margin-inline",
+		"my": "margin-block",
+		"g": "gap",
+		"bd": "border",
+		"bdrs": "border-radius",
+		"bxsh": "box-shadow",
+		"bgc": "background-color",
+		"c": "color",
+		"pos": "position",
+		"z": "z-index",
+		"fx": "flex",
+		"fxd": "flex-direction",
+		"fxw": "flex-wrap",
+		"gt": "grid-template",
+		"gtc": "grid-template-columns",
+		"gtr": "grid-template-rows",
+		"ai": "align-items",
+		"jc": "justify-content",
+		"gc": "grid-column",
+		"gr": "grid-row"
+	}
+}

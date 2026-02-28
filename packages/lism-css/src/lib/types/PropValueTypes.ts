@@ -17,6 +17,7 @@ type TokensConfig = typeof TOKENS;
 //   fs: { presets: ['italic'] } → fs?: 'italic' | (string & {})
 //   mx: { presets: ['auto', '0'], token: 'space' } → mx?: 'auto' | '0' | '5' | '10' | ... | (string & {})
 //   fz: { token: 'fz' } → fz?: 'root' | 'base' | '5xl' | ... | (string & {})
+//   bg: { prop: 'background', bp: 1 } → bg?: string | number  (フォールバック)
 //
 // ============================================================
 
@@ -54,30 +55,16 @@ type ExtractTokenValues<T> =
  */
 type ExtractPropValues<T> = ExtractArrayValues<T, 'presets'> | ExtractObjectKeys<T, 'utils'> | ExtractTokenValues<T>;
 
-/**
- * presets, utils, token のいずれかを持つキーを抽出
- */
-type PropsWithValues = {
-	[K in keyof PropsConfig]: ExtractPropValues<PropsConfig[K]> extends never ? never : K;
-}[keyof PropsConfig];
-
-// 旧 PropValueTypes は廃止: レスポンシブ対応を含む新しい PropValueTypes を使用してください
-
 // ============================================================
-// すべてのプロパティキーの型（値の制約なし）
+// プロパティ値の型決定
 // ============================================================
 
 /**
- * PROPS に定義されているすべてのプロパティキー
+ * プロパティの設定から値の型を決定
+ * - presets/utils/token がある場合: 具体的な値 + 任意文字列 + number | boolean | null
+ * - ない場合: string | number（フォールバック）
  */
-export type PropKeys = keyof PropsConfig;
-
-/**
- * PROPS に定義されているすべてのプロパティを任意の文字列値で受け付ける型
- */
-export type AllPropTypes = {
-	[K in PropKeys]?: string;
-};
+type PropValueType<T> = ExtractPropValues<T> extends never ? string | number : WithArbitraryString<ExtractPropValues<T>> | number | boolean | null;
 
 // ============================================================
 // ブレイクポイント対応の判定
@@ -89,36 +76,39 @@ export type AllPropTypes = {
  */
 type HasBreakpointSupport<T> = [ExtractPropertyValue<T, 'bp'>] extends [never] ? false : ExtractPropertyValue<T, 'bp'> extends 1 ? true : false;
 
-/**
- * bp: 1 が設定されており、かつ値を持つプロパティのキーを抽出
- */
-type PropsWithBreakpoint = {
-	[K in PropsWithValues]: HasBreakpointSupport<PropsConfig[K]> extends true ? K : never;
-}[PropsWithValues];
+type AllPropKeys = keyof PropsConfig;
 
 /**
- * bp: 1 が設定されておらず、かつ値を持つプロパティのキーを抽出
+ * bp: 1 が設定されているプロパティのキーを抽出
  */
-type PropsWithoutBreakpoint = Exclude<PropsWithValues, PropsWithBreakpoint>;
+type PropsWithBreakpoint = {
+	[K in AllPropKeys]: HasBreakpointSupport<PropsConfig[K]> extends true ? K : never;
+}[AllPropKeys];
+
+/**
+ * bp: 1 が設定されていないプロパティのキーを抽出
+ */
+type PropsWithoutBreakpoint = Exclude<AllPropKeys, PropsWithBreakpoint>;
 
 /**
  * bp: 1 が設定されているプロパティの型（レスポンシブ対応あり）
  */
 export type ResponsivePropValueTypes = {
-	[K in PropsWithBreakpoint]?: WithArbitraryString<ExtractPropValues<PropsConfig[K]>> | number | boolean | null;
+	[K in PropsWithBreakpoint]?: PropValueType<PropsConfig[K]>;
 };
 
 /**
  * bp: 1 が設定されていないプロパティの型（レスポンシブ対応なし）
  */
 export type NonResponsivePropValueTypes = {
-	[K in PropsWithoutBreakpoint]?: WithArbitraryString<ExtractPropValues<PropsConfig[K]>> | number | boolean | null;
+	[K in PropsWithoutBreakpoint]?: PropValueType<PropsConfig[K]>;
 };
 
 /**
  * PROPS 設定から生成される Props 型（レスポンシブ対応含む）
  * - bp: 1 のプロパティ: レスポンシブ対応（配列・オブジェクト形式可）
  * - bp なしのプロパティ: 単一値のみ
+ * - presets/utils/token なしのプロパティ: string | number（フォールバック）
  *
  * @example
  * ```ts
@@ -127,6 +117,9 @@ export type NonResponsivePropValueTypes = {
  *
  * // bp なしのプロパティ（fw など）
  * fw?: 'thin' | 'light' | 'normal' | ...
+ *
+ * // presets/utils/token なしのプロパティ（bg など）
+ * bg?: Responsive<string | number>
  * ```
  */
 export type PropValueTypes = MakeResponsive<ResponsivePropValueTypes> & NonResponsivePropValueTypes;

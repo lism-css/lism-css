@@ -20,7 +20,7 @@ import { Accordion } from '@lism-css/ui/astro';
 				<Accordion.Heading>
 					<Accordion.Button p='20'>Accordion Example 1</Accordion.Button>
 				</Accordion.Heading>
-				<Accordion.Panel>
+				<Accordion.Panel p='20' pt='5'>
 					<Dummy length='l' />
 				</Accordion.Panel>
 			</Accordion.Item>
@@ -28,7 +28,7 @@ import { Accordion } from '@lism-css/ui/astro';
 				<Accordion.Heading>
 					<Accordion.Button p='20'>Accordion Example 2</Accordion.Button>
 				</Accordion.Heading>
-				<Accordion.Panel>
+				<Accordion.Panel p='20' pt='5'>
 					<Dummy length='l' />
 				</Accordion.Panel>
 			</Accordion.Item>
@@ -41,7 +41,7 @@ import { Accordion } from '@lism-css/ui/astro';
 				<Accordion.Heading>
 					<Accordion.Button p='20'>Accordion Example</Accordion.Button>
 				</Accordion.Heading>
-				<Accordion.Panel>
+				<Accordion.Panel p='20' pt='5'>
 					<Dummy length='l' />
 				</Accordion.Panel>
 			</Accordion.Item>
@@ -49,7 +49,7 @@ import { Accordion } from '@lism-css/ui/astro';
 				<Accordion.Heading>
 					<Accordion.Button p='20'>Accordion Example 2</Accordion.Button>
 				</Accordion.Heading>
-				<Accordion.Panel>
+				<Accordion.Panel p='20' pt='5'>
 					<Dummy length='l' />
 				</Accordion.Panel>
 			</Accordion.Item>
@@ -58,21 +58,6 @@ import { Accordion } from '@lism-css/ui/astro';
 	</PreviewCode>
 	<PreviewCode slot='tab' label='HTML'>
 ```html
-<div class="l--stack c--accordion">
-	<div class="c--accordion_item">
-		<div class="c--accordion_heading" role="heading">
-			<button class="c--accordion_button" aria-controls="{id}" aria-expanded="false">
-				Accordion Example
-				<span class="c--accordion_icon a--icon" aria-hidden="true"></span>
-			</button>
-		</div>
-		<div class="c--accordion_panel" id="{id}" hidden="until-found">
-			<div class="c--accordion_content">
-				<p>Lorem ipsum...</p>
-			</div>
-		</div>
-	</div>
-</div>
 ```
 	</PreviewCode>
 </Preview>
@@ -100,7 +85,7 @@ import { Accordion } from '@lism-css/ui/astro';
 				<Accordion.Heading>
 					<Accordion.Button>Accordion Label</Accordion.Button>
 				</Accordion.Heading>
-				<Accordion.Panel>
+				<Accordion.Panel p='20' pt='5'>
 					...Contents...
 				</Accordion.Panel>
 			</Accordion.Item>
@@ -171,7 +156,7 @@ import { Accordion } from '@lism-css/ui/astro';
 				<Accordion.Heading tag='h3'>
 					<Accordion.Button p='20'>Accordion Label</Accordion.Button>
 				</Accordion.Heading>
-				<Accordion.Panel>
+				<Accordion.Panel p='20' pt='5'>
 					<Dummy length='l' />
 				</Accordion.Panel>
 			</Accordion.Item>
@@ -179,7 +164,7 @@ import { Accordion } from '@lism-css/ui/astro';
 				<Accordion.Heading tag='h3'>
 					<Accordion.Button p='20'>Accordion Label</Accordion.Button>
 				</Accordion.Heading>
-				<Accordion.Panel>
+				<Accordion.Panel p='20' pt='5'>
 					<Dummy length='l' />
 				</Accordion.Panel>
 			</Accordion.Item>
@@ -192,7 +177,7 @@ import { Accordion } from '@lism-css/ui/astro';
 				<Accordion.Heading tag='h3'>
 					<Accordion.Button p='20'>Accordion Label</Accordion.Button>
 				</Accordion.Heading>
-				<Accordion.Panel>
+				<Accordion.Panel p='20' pt='5'>
 					<Dummy length='l' />
 				</Accordion.Panel>
 			</Accordion.Item>
@@ -200,7 +185,7 @@ import { Accordion } from '@lism-css/ui/astro';
 				<Accordion.Heading tag='h3'>
 					<Accordion.Button p='20'>Accordion Label</Accordion.Button>
 				</Accordion.Heading>
-				<Accordion.Panel>
+				<Accordion.Panel p='20' pt='5'>
 					<Dummy length='l' />
 				</Accordion.Panel>
 			</Accordion.Item>
@@ -209,7 +194,7 @@ import { Accordion } from '@lism-css/ui/astro';
 	</PreviewCode>
 	<PreviewCode slot='tab' label='HTML'>
 	```html "h3"
-	<div class="l--stack c--accordion">
+	<div class="c--accordion l--stack">
 		<div class="c--accordion_item">
 			<h3 class="c--accordion_heading">
 				<button class="c--accordion_button" aria-controls="{id}" aria-expanded="false">
@@ -238,28 +223,28 @@ import { Accordion } from '@lism-css/ui/astro';
 <Preview>
 	<PreviewTitle>Preview</PreviewTitle>
 	<PreviewArea p='20'>
-		<Accordion.Root g='1px' allowMultiple>
-			<Accordion.Item style={{'--duration': '.15s'}}>
+		<Accordion.Root allowMultiple bd style={{'--duration': '.15s'}}>
+			<Accordion.Item>
 				<Accordion.Heading>
 					<Accordion.Button p='20'>Accordion Label 1</Accordion.Button>
 				</Accordion.Heading>
-				<Accordion.Panel>
+				<Accordion.Panel p='20' pt='5'>
 					<Dummy length='l' />
 				</Accordion.Panel>
 			</Accordion.Item>
-			<Accordion.Item style={{'--duration': '.15s'}}>
+			<Accordion.Item bd-t>
 				<Accordion.Heading>
 					<Accordion.Button p='20'>Accordion Label 2</Accordion.Button>
 				</Accordion.Heading>
-				<Accordion.Panel>
+				<Accordion.Panel p='20' pt='5'>
 					<Dummy length='xl' />
 				</Accordion.Panel>
 			</Accordion.Item>
-			<Accordion.Item style={{'--duration': '.15s'}}>
+			<Accordion.Item bd-t>
 				<Accordion.Heading>
 					<Accordion.Button p='20'>Accordion Label 3</Accordion.Button>
 				</Accordion.Heading>
-				<Accordion.Panel>
+				<Accordion.Panel p='20' pt='5'>
 					<Dummy length='l' />
 				</Accordion.Panel>
 			</Accordion.Item>
@@ -272,7 +257,7 @@ import { Accordion } from '@lism-css/ui/astro';
 		<Accordion.Heading>
 			<Accordion.Button p='20'>Accordion Label 1</Accordion.Button>
 		</Accordion.Heading>
-		<Accordion.Panel>
+		<Accordion.Panel p='20' pt='5'>
 			...
 		</Accordion.Panel>
 	</Accordion.Item>
@@ -280,7 +265,7 @@ import { Accordion } from '@lism-css/ui/astro';
 		<Accordion.Heading>
 			<Accordion.Button p='20'>Accordion Label 2</Accordion.Button>
 		</Accordion.Heading>
-		<Accordion.Panel>
+		<Accordion.Panel p='20' pt='5'>
 			...
 		</Accordion.Panel>
 	</Accordion.Item>
@@ -290,7 +275,7 @@ import { Accordion } from '@lism-css/ui/astro';
 	</PreviewCode>
 	<PreviewCode slot='tab' label='HTML'>
 ```html "data-allow-multiple" "--duration"
-<div class="l--stack c--accordion" data-allow-multiple>
+<div class="c--accordion l--stack" data-allow-multiple>
 	<div class="c--accordion_item" style="--duration: .15s">...</div>
 	<div class="c--accordion_item" style="--duration: .15s">...</div>
 	<div class="c--accordion_item" style="--duration: .15s">...</div>
