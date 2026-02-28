@@ -7,28 +7,28 @@ describe('setMaybeTransformStyles', () => {
 			const props = { translate: '10px 20px' };
 			const result = setMaybeTransformStyles(props);
 			expect(result.style.translate).toBe('10px 20px');
-			expect(result.translate).toBeUndefined();
+			expect((result as Record<string, unknown>).translate).toBeUndefined();
 		});
 
 		test('rotate を style に追加する', () => {
 			const props = { rotate: '45deg' };
 			const result = setMaybeTransformStyles(props);
 			expect(result.style.rotate).toBe('45deg');
-			expect(result.rotate).toBeUndefined();
+			expect((result as Record<string, unknown>).rotate).toBeUndefined();
 		});
 
 		test('scale を style に追加する', () => {
 			const props = { scale: '1.5' };
 			const result = setMaybeTransformStyles(props);
 			expect(result.style.scale).toBe('1.5');
-			expect(result.scale).toBeUndefined();
+			expect((result as Record<string, unknown>).scale).toBeUndefined();
 		});
 
 		test('transform を style に追加する', () => {
 			const props = { transform: 'skew(10deg)' };
 			const result = setMaybeTransformStyles(props);
 			expect(result.style.transform).toBe('skew(10deg)');
-			expect(result.transform).toBeUndefined();
+			expect((result as Record<string, unknown>).transform).toBeUndefined();
 		});
 	});
 
@@ -41,8 +41,8 @@ describe('setMaybeTransformStyles', () => {
 			const result = setMaybeTransformStyles(props);
 			expect(result.style.translate).toBe('10px 20px');
 			expect(result.style.rotate).toBe('45deg');
-			expect(result.translate).toBeUndefined();
-			expect(result.rotate).toBeUndefined();
+			expect((result as Record<string, unknown>).translate).toBeUndefined();
+			expect((result as Record<string, unknown>).rotate).toBeUndefined();
 		});
 
 		test('translate, rotate, scale を同時に設定する', () => {

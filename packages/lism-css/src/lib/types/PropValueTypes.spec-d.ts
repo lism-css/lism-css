@@ -1,5 +1,5 @@
 import { describe, expectTypeOf, it } from 'vitest';
-import type { PropValueTypes, PropKeys, AllPropTypes, ResponsivePropValueTypes, NonResponsivePropValueTypes } from './PropValueTypes';
+import type { PropValueTypes, ResponsivePropValueTypes, NonResponsivePropValueTypes } from './PropValueTypes';
 import type { Responsive } from './ResponsiveProps';
 
 describe('PropValueTypes', () => {
@@ -120,10 +120,10 @@ describe('PropValueTypes', () => {
 		>();
 	});
 
-	it('presets も utils も token もないプロパティは含まれない', () => {
-		// bg は presets/utils/token がないので PropValueTypes に含まれない
-		// @ts-expect-error bg は PropValueTypes に存在しない
-		type _BgType = PropValueTypes['bg'];
+	it('presets も utils も token もないプロパティは string | number 型で含まれる', () => {
+		// bg は presets/utils/token がないが、PropValueTypes に含まれる（string | number フォールバック）
+		// bg は bp: 1 なので Responsive でラップされる
+		expectTypeOf<PropValueTypes['bg']>().toEqualTypeOf<Responsive<string | number | undefined>>();
 	});
 
 	it('プリセット値を設定できる', () => {
@@ -151,27 +151,6 @@ describe('PropValueTypes', () => {
 			d: 'grid',
 		};
 		expectTypeOf(props).toExtend<PropValueTypes>();
-	});
-});
-
-describe('PropKeys', () => {
-	it('PROPS のすべてのキーが含まれる', () => {
-		// いくつかのキーをチェック
-		type ShouldInclude = 'fs' | 'mx' | 'd' | 'bg' | 'p' | 'm' | 'g' | 'ai' | 'jc';
-		expectTypeOf<ShouldInclude>().toExtend<PropKeys>();
-	});
-});
-
-describe('AllPropTypes', () => {
-	it('PROPS のすべてのプロパティを持つ', () => {
-		const props: AllPropTypes = {
-			fs: 'italic',
-			mx: '20px',
-			d: 'flex',
-			bg: 'red',
-			p: '10px',
-		};
-		expectTypeOf(props).toExtend<AllPropTypes>();
 	});
 });
 

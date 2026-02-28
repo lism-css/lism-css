@@ -63,7 +63,7 @@ describe('getLayoutProps', () => {
 		});
 
 		test('sideW が null の場合、--sideW は設定されない', () => {
-			const result = getLayoutProps('sideMain', { sideW: null });
+			const result = getLayoutProps('sideMain', { sideW: undefined });
 			expect(result.style?.['--sideW']).toBeUndefined();
 		});
 
@@ -93,8 +93,8 @@ describe('getLayoutProps', () => {
 				otherProp: 'value',
 			});
 			expect(result.otherProp).toBe('value');
-			expect(result.sideW).toBeUndefined();
-			expect(result.mainW).toBeUndefined();
+			expect((result as unknown as Record<string, unknown>).sideW).toBeUndefined();
+			expect((result as unknown as Record<string, unknown>).mainW).toBeUndefined();
 		});
 	});
 
@@ -130,7 +130,7 @@ describe('getLayoutProps', () => {
 				otherProp: 'value',
 			});
 			expect(result.otherProp).toBe('value');
-			expect(result.autoFill).toBeUndefined();
+			expect((result as unknown as Record<string, unknown>).autoFill).toBeUndefined();
 		});
 	});
 
@@ -156,13 +156,13 @@ describe('getLayoutProps', () => {
 		test('flow が未定義の場合、何も追加されない', () => {
 			const result = getLayoutProps('flow', {});
 			expect(result.lismClass).toBe('l--flow');
-			expect(result.style).toEqual({});
+			expect(result.style).toBeUndefined();
 		});
 
 		test('flow が 0 の場合、何も変換されない', () => {
 			const result = getLayoutProps('flow', { flow: 0 });
 			expect(result.lismClass).toBe('l--flow');
-			expect(result.style).toEqual({});
+			expect(result.style).toBeUndefined();
 		});
 
 		test('既存の lismClass がある場合、マージされる', () => {
@@ -190,7 +190,7 @@ describe('getLayoutProps', () => {
 				otherProp: 'value',
 			});
 			expect(result.otherProp).toBe('value');
-			expect(result.flow).toBeUndefined();
+			expect((result as unknown as Record<string, unknown>).flow).toBeUndefined();
 		});
 	});
 
@@ -236,7 +236,7 @@ describe('getLayoutProps', () => {
 				otherProp: 'value',
 			});
 			expect(result.otherProp).toBe('value');
-			expect(result.breakSize).toBeUndefined();
+			expect((result as unknown as Record<string, unknown>).breakSize).toBeUndefined();
 		});
 	});
 
@@ -260,7 +260,7 @@ describe('getLayoutProps', () => {
 				otherProp1: 'value1',
 				otherProp2: 'value2',
 			});
-			expect(result.flow).toBeUndefined();
+			expect((result as unknown as Record<string, unknown>).flow).toBeUndefined();
 			expect(result.lismClass).toBeDefined();
 			expect(result.otherProp1).toBe('value1');
 			expect(result.otherProp2).toBe('value2');
