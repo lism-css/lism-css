@@ -2,124 +2,94 @@ import atts from '../lib/helper/atts';
 import isTokenValue from '../lib/isTokenValue';
 import getMaybeCssVar from '../lib/getMaybeCssVar';
 import { type StyleWithCustomProps } from './types';
+import { type LayoutType, type CssValue } from './types/LayoutProps';
 
-type CssValue = string | number;
-
-// レイアウト名の型 - src/scss/modules/layout のファイル名から `l--` を取り除いたもの
-export type LayoutType =
-	| 'box'
-	| 'center'
-	| 'cluster'
-	| 'columns'
-	| 'flex'
-	| 'flow'
-	| 'fluidCols'
-	| 'frame'
-	| 'grid'
-	| 'sideMain'
-	| 'stack'
-	| 'switchCols';
+export type { LayoutType };
 
 interface PropConfig {
 	isVar?: number;
 	[key: string]: unknown;
 }
 
-interface BaseProps {
+// Layout固有 props（消費して除去される）
+type LayoutOwnProps = {
+	flow?: CssValue;
+	autoFill?: boolean;
+	sideW?: CssValue;
+	mainW?: CssValue;
+	breakSize?: CssValue;
+};
+
+type LayoutSpecificKeys = keyof LayoutOwnProps;
+
+export interface BaseProps {
 	lismClass?: string;
 	style?: StyleWithCustomProps;
 	_propConfig?: Record<string, PropConfig>;
-	[key: string]: unknown;
 }
 
-interface GridProps extends BaseProps {
-	_propConfig?: Record<string, PropConfig>;
-}
+type InputProps = BaseProps & LayoutOwnProps;
 
-interface SideMainProps extends BaseProps {
-	sideW?: CssValue;
-	mainW?: CssValue;
-}
-
-interface FluidColsProps extends BaseProps {
-	autoFill?: boolean;
-}
-
-interface FlowProps extends BaseProps {
-	flow?: CssValue;
-}
-
-interface SwitchColsProps extends BaseProps {
-	breakSize?: CssValue;
-}
-
-export default function getLayoutProps(layout: LayoutType | undefined, props: BaseProps): BaseProps {
+export default function getLayoutProps<P extends InputProps>(layout: LayoutType | undefined, props: P): Omit<P, LayoutSpecificKeys> & BaseProps {
 	if (!layout) return props;
 
-	const {
-		lismClass,
-		//[layout]: variant,
-		...rest
-	} = props;
-	rest.lismClass = atts(lismClass, `l--${layout}`);
+	const rest: InputProps = {
+		...props,
+		lismClass: atts(props.lismClass, `l--${layout}`),
+	};
 
 	// if (variant) {
 	// 	rest.lismClass = atts(rest.lismClass, `${layout}:${variant}`);
 	// }
 
 	if (layout === 'flow') {
-		return getFlowProps(rest);
+		return geFlowProps(rest) as Omit<P, LayoutSpecificKeys> & BaseProps;
 	} else if (layout === 'grid') {
-		return geGridProps(rest);
+		return geGridProps(rest) as Omit<P, LayoutSpecificKeys> & BaseProps;
 	} else if (layout === 'sideMain') {
-		return getSideMainProps(rest);
+		return getSideMainProps(rest) as Omit<P, LayoutSpecificKeys> & BaseProps;
 	} else if (layout === 'fluidCols') {
-		return getLiquidProps(rest);
+		return getLiquidProps(rest) as Omit<P, LayoutSpecificKeys> & BaseProps;
 	} else if (layout === 'switchCols') {
-		return getSwitchColsProps(rest);
+		return getSwitchColsProps(rest) as Omit<P, LayoutSpecificKeys> & BaseProps;
 	}
 
-	return rest;
+	return rest as Omit<P, LayoutSpecificKeys> & BaseProps;
 }
 
-function geGridProps({ _propConfig = {}, ...props }: GridProps): BaseProps {
+function geGridProps({ _propConfig = {}, ...props }: InputProps): BaseProps {
 	// gt系のベース値は l--grid は 変数のみでいい
 	_propConfig.gta = { isVar: 1 };
 	_propConfig.gtc = { isVar: 1 };
 	_propConfig.gtr = { isVar: 1 };
 
-	props._propConfig = _propConfig;
-	return props;
+	return { ...props, _propConfig };
 }
 
-function getSideMainProps({ sideW, mainW, style = {}, ...props }: SideMainProps): BaseProps {
-	if (null != sideW) style['--sideW'] = getMaybeCssVar(sideW, 'sz');
-	if (null != mainW) style['--mainW'] = getMaybeCssVar(mainW, 'sz');
+function getSideMainProps({ sideW, mainW, style, ...props }: InputProps): BaseProps {
+	const newStyle: StyleWithCustomProps = { ...style } as StyleWithCustomProps;
+	if (null != sideW) newStyle['--sideW'] = getMaybeCssVar(sideW, 'sz');
+	if (null != mainW) newStyle['--mainW'] = getMaybeCssVar(mainW, 'sz');
 
-	props.style = style;
-	return props;
+	return { ...props, style: newStyle };
 }
 
-function getLiquidProps({ autoFill, style = {}, ...props }: FluidColsProps): BaseProps {
-	if (autoFill) style['--autoMode'] = 'auto-fill';
-	props.style = style;
-	return props;
+function getLiquidProps({ autoFill, style, ...props }: InputProps): BaseProps {
+	if (autoFill) return { ...props, style: { ...style, '--autoMode': 'auto-fill' } as StyleWithCustomProps };
+	return { ...props, style };
 }
 
-function getFlowProps({ flow, style = {}, ...props }: FlowProps): BaseProps {
+function geFlowProps({ flow, style, ...props }: InputProps): BaseProps {
 	if (isTokenValue('flow', flow)) {
 		props.lismClass = atts(props.lismClass, `-flow:${flow}`);
 	} else if (flow) {
 		props.lismClass = atts(props.lismClass, `-flow:`);
-		style['--flow'] = getMaybeCssVar(flow, 'space');
+		style = { ...style, '--flow': getMaybeCssVar(flow, 'space') } as StyleWithCustomProps;
 	}
-	props.style = style;
-
-	return props;
+	return { ...props, style };
 }
 
-function getSwitchColsProps({ breakSize, style = {}, ...props }: SwitchColsProps): BaseProps {
-	if (breakSize) style['--breakSize'] = getMaybeCssVar(breakSize, 'sz');
-	props.style = style;
-	return props;
+function getSwitchColsProps({ breakSize, style, ...props }: InputProps): BaseProps {
+	if (breakSize) return { ...props, style: { ...style, '--breakSize': getMaybeCssVar(breakSize, 'sz') } as StyleWithCustomProps };
+	return { ...props, style };
 }
