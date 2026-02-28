@@ -67,18 +67,6 @@ import { Lism } from 'lism-css/astro';
 |**CSS Props**|[Prop Class](/docs/prop-class/) に分類されるクラスを出力するためのプロパティ| */}
 
 
-### `tag`
-
-出力する HTMLタグを指定できます。デフォルトは`div`です。
-
-<PreviewTitle>例</PreviewTitle>
-```jsx "tag='p'"
-<Lism tag='p' fz='l'>Lorem ipsum texts...</Lism>
-
-↓
-
-<p class="-fz:l">Lorem ipsum texts...</p>
-```
 
 ### `lismClass`
 
@@ -125,9 +113,20 @@ import { Lism } from 'lism-css/astro';
 ```
 
 
-### as , exProps
+### `as` , `exProps`
 
-`as` に外部コンポーネントを指定すると、`<Lism>`を最終的に**別の外部コンポーネントとして展開する**ことができます。
+`as` には出力するHTMLタグや外部コンポーネントを指定できます。デフォルトは`div`です。
+
+<PreviewTitle>HTMLタグの指定例</PreviewTitle>
+```jsx "as='p'"
+<Lism as='p' fz='l'>Lorem ipsum texts...</Lism>
+
+↓
+
+<p class="-fz:l">Lorem ipsum texts...</p>
+```
+
+外部コンポーネントを指定すると、`<Lism>`を最終的に**別の外部コンポーネントとして展開する**ことができます。
 
 <Preview>
 	<PreviewTitle>例、Lismの`<Media>`コンポーネントをNext.jsの`<Image>`で展開する</PreviewTitle>
@@ -140,7 +139,7 @@ import Image from 'next/image';
 	</PreviewCode>
 </Preview>
 
-先に Lism Props を解析して `class`, `style` を生成してから、`as`で指定したコンポーネントに渡します。  
+先に Lism Props を解析して `class`, `style` を生成してから、`as`で指定したコンポーネントに渡します。
 Lismコンポーネント以外に対しても Lism Props を使いたい時に活用してください。
 
 
