@@ -13,14 +13,6 @@ function App() {
 				Lorem ipsum dolor sit amet, consectetur adipisicing elit. Repellat itaque et voluptatum, ducimus temporibus accusamus exercitationem
 				dolores id impedit corporis asperiores debitis soluta, nemo iusto optio quae. Ducimus, aperiam tempora!
 			</p>
-			<Accordion.Root>
-				<Accordion.Heading>
-					<Accordion.Button p='20'>Accordion Example 1</Accordion.Button>
-				</Accordion.Heading>
-				<Accordion.Panel>
-					<p>これはアコーディオンの中身です。@lism-css/ui を使用しています。</p>
-				</Accordion.Panel>
-			</Accordion.Root>
 
 			<Flex g={['10', '15', '20']} p={['10', '15', '20']} bd>
 				<Box lh='1' p='20' bd>
@@ -54,6 +46,16 @@ function App() {
 				</HTML.a>
 			</Flex>
 			<Divider />
+			<Accordion.Root>
+				<Accordion.Item bd>
+					<Accordion.Heading>
+						<Accordion.Button p='20'>アコーディオン Example 1</Accordion.Button>
+					</Accordion.Heading>
+					<Accordion.Panel p='20' pt='5'>
+						<p>これはアコーディオンの中身です。@lism-css/ui を使用しています。</p>
+					</Accordion.Panel>
+				</Accordion.Item>
+			</Accordion.Root>
 		</Container>
 	);
 }

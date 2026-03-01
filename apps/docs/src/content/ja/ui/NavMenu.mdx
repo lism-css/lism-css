@@ -281,20 +281,21 @@ import { FolderSimpleIcon } from "@phosphor-icons/react";
 			</NavMenu.Item>
 			<NavMenu.Item>
 				<Accordion.Root>
-					<Accordion.Header hov='bgc' p='var(--_item-p)'>
-						<Accordion.Label>Menu item (Accordion)</Accordion.Label>
-						<Accordion.Icon />
-					</Accordion.Header>
-					<Accordion.Body>
-						<NavMenu.Nest>
-							<NavMenu.Item>
-								<NavMenu.Link hov='bgc' href='#child-menu1'>Nested item</NavMenu.Link>
-							</NavMenu.Item>
-							<NavMenu.Item>
-								<NavMenu.Link hov='bgc' href='#child-menu2'>Nested item</NavMenu.Link>
-							</NavMenu.Item>
-						</NavMenu.Nest>
-					</Accordion.Body>
+					<Accordion.Item>
+						<Accordion.Heading>
+							<Accordion.Button hov='bgc' p='var(--_item-p)'>Menu item (Accordion)</Accordion.Button>
+						</Accordion.Heading>
+						<Accordion.Panel>
+							<NavMenu.Nest>
+								<NavMenu.Item>
+									<NavMenu.Link hov='bgc' href='#child-menu1'>Nested item</NavMenu.Link>
+								</NavMenu.Item>
+								<NavMenu.Item>
+									<NavMenu.Link hov='bgc' href='#child-menu2'>Nested item</NavMenu.Link>
+								</NavMenu.Item>
+							</NavMenu.Nest>
+						</Accordion.Panel>
+					</Accordion.Item>
 				</Accordion.Root>
 			</NavMenu.Item>
 		</NavMenu.Root>
@@ -307,20 +308,21 @@ import { FolderSimpleIcon } from "@phosphor-icons/react";
 			</NavMenu.Item>
 			<NavMenu.Item>
 				<Accordion.Root>
-					<Accordion.Header hov='bgc' p='var(--_item-p)'>
-						<Accordion.Label>Menu item (Accordion)</Accordion.Label>
-						<Accordion.Icon />
-					</Accordion.Header>
-					<Accordion.Body>
-						<NavMenu.Nest>
-							<NavMenu.Item>
-								<NavMenu.Link hov='bgc' href='#child-menu1'>Nested item</NavMenu.Link>
-							</NavMenu.Item>
-							<NavMenu.Item>
-								<NavMenu.Link hov='bgc' href='#child-menu2'>Nested item</NavMenu.Link>
-							</NavMenu.Item>
-						</NavMenu.Nest>
-					</Accordion.Body>
+					<Accordion.Item>
+						<Accordion.Heading>
+							<Accordion.Button hov='bgc' p='var(--_item-p)'>Menu item (Accordion)</Accordion.Button>
+						</Accordion.Heading>
+						<Accordion.Panel>
+							<NavMenu.Nest>
+								<NavMenu.Item>
+									<NavMenu.Link hov='bgc' href='#child-menu1'>Nested item</NavMenu.Link>
+								</NavMenu.Item>
+								<NavMenu.Item>
+									<NavMenu.Link hov='bgc' href='#child-menu2'>Nested item</NavMenu.Link>
+								</NavMenu.Item>
+							</NavMenu.Nest>
+						</Accordion.Panel>
+					</Accordion.Item>
 				</Accordion.Root>
 			</NavMenu.Item>
 		</NavMenu.Root>
