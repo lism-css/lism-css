@@ -43,9 +43,9 @@ export default function getLayoutProps<P extends InputProps>(layout: LayoutType 
 	// }
 
 	if (layout === 'flow') {
-		return geFlowProps(rest) as Omit<P, LayoutSpecificKeys> & BaseProps;
+		return getFlowProps(rest) as Omit<P, LayoutSpecificKeys> & BaseProps;
 	} else if (layout === 'grid') {
-		return geGridProps(rest) as Omit<P, LayoutSpecificKeys> & BaseProps;
+		return getGridProps(rest) as Omit<P, LayoutSpecificKeys> & BaseProps;
 	} else if (layout === 'sideMain') {
 		return getSideMainProps(rest) as Omit<P, LayoutSpecificKeys> & BaseProps;
 	} else if (layout === 'fluidCols') {
@@ -57,7 +57,7 @@ export default function getLayoutProps<P extends InputProps>(layout: LayoutType 
 	return rest as Omit<P, LayoutSpecificKeys> & BaseProps;
 }
 
-function geGridProps({ _propConfig = {}, ...props }: InputProps): BaseProps {
+function getGridProps({ _propConfig = {}, ...props }: InputProps): BaseProps {
 	// gt系のベース値は l--grid は 変数のみでいい
 	_propConfig.gta = { isVar: 1 };
 	_propConfig.gtc = { isVar: 1 };
@@ -79,7 +79,7 @@ function getLiquidProps({ autoFill, style, ...props }: InputProps): BaseProps {
 	return { ...props, style };
 }
 
-function geFlowProps({ flow, style, ...props }: InputProps): BaseProps {
+function getFlowProps({ flow, style, ...props }: InputProps): BaseProps {
 	if (isTokenValue('flow', flow)) {
 		props.lismClass = atts(props.lismClass, `-flow:${flow}`);
 	} else if (flow) {
