@@ -38,7 +38,7 @@ export default function mynpm(opts = {}) {
 		},
 
 		// ★ これがポイント：config フックで alias を注入して最優先で差し替える
-		config(_, env) {
+		config(_, _env) {
 			userPath = resolveUserConfig();
 			const cfg = {
 				optimizeDeps: {

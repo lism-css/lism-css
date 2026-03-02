@@ -1,8 +1,10 @@
+/**
+ * altKey押下時の処理 テスト用
+ */
 export default function enableSelectTextWithAltKeyAtLinkBox() {
 	const boxes = document.querySelectorAll('.is--linkBox');
 
 	boxes.forEach((box) => {
-		let isHovering = false;
 		let isAltPressed = false;
 		let dragging = false;
 
@@ -52,7 +54,7 @@ export default function enableSelectTextWithAltKeyAtLinkBox() {
 		// pointerenter: ホバー開始時に他のイベントを登録
 		box.addEventListener('pointerenter', (e) => {
 			console.log('pointerenter');
-			isHovering = true;
+
 			window.addEventListener('keydown', onKeyDown);
 			window.addEventListener('keyup', onKeyUp);
 
@@ -66,7 +68,7 @@ export default function enableSelectTextWithAltKeyAtLinkBox() {
 		// pointerleave: ホバー終了
 		box.addEventListener('pointerleave', () => {
 			console.log('pointerleave');
-			isHovering = false;
+
 			window.removeEventListener('keydown', onKeyDown);
 			window.removeEventListener('keyup', onKeyUp);
 			cleanup();

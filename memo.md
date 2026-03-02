@@ -3,7 +3,7 @@
 ## publish
 
 ```
-npm publish --access=public
+pnpm publish
 ```
 
 ## 開発時のキャッシュ削除
@@ -20,6 +20,7 @@ next.js
 rm -rf .next/cache
 ```
 
+node_modules 入れ直し
 ```
 rm -rf node_modules pnpm-lock.yaml
 rm -rf apps/docs/node_modules
@@ -33,7 +34,7 @@ rm -rf packages/*/node_modules
 
 - コード整形は prettier が担当。
 - eslint にエラー表示をしてもらう
-- stylelintの自動整形はvscodeプラグインのコメント解析不具合により断念。フォーマットはprettierに任せ、Taskでlintを動かす。
+- stylelint の自動整形はvscodeプラグインのコメント解析不具合により断念。フォーマットはprettierに任せ、Taskでlintを動かす。
 
 ## 必要な VSCode の拡張機能
 
