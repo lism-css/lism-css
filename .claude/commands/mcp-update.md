@@ -1,6 +1,6 @@
 # MCP Server データ更新
 
-`packages/mcp-server/src/data/` 配下の JSON ファイルを、リポジトリの最新ソースから再生成してください。
+`packages/mcp/src/data/` 配下の JSON ファイルを、リポジトリの最新ソースから再生成してください。
 
 ## 対象ファイルとデータソース
 
@@ -34,12 +34,12 @@
 2. 上記の参照先ソースを読み取る
 3. 新しい情報があれば追加、古い情報があれば更新・削除する
 4. 各 JSON ファイルを書き出す
-5. `packages/mcp-server/src/data/meta.ts` の `generatedAt` を今日の日付に、`sourceCommit` を現在の HEAD コミットハッシュに更新する
+5. `packages/mcp/src/data/meta.ts` の `generatedAt` を今日の日付に、`sourceCommit` を現在の HEAD コミットハッシュに更新する
 6. 最後に差分のサマリーを報告する
 
 ## 注意事項
 
-- JSON のスキーマ（フィールド名・型の構造）は変更しないこと。スキーマ定義は `packages/mcp-server/src/lib/schemas.ts` を参照
+- JSON のスキーマ（フィールド名・型の構造）は変更しないこと。スキーマ定義は `packages/mcp/src/lib/schemas.ts` を参照
 - ソースに存在しない情報を推測で追加しないこと
 - description 等のテキストは日本語で記述すること
 - 1ファイルずつ順番に処理し、各ファイルの更新内容を簡潔に報告すること
