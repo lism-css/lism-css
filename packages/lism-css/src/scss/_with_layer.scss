@@ -3,22 +3,22 @@
 */
 @use 'sass:meta';
 
-// 最初に順序定義
-// @layer lism-reset, lism;
-
 // resetは中で layer定義済み
 @include meta.load-css('reset');
 
-// baese
 @layer lism.base {
 	@include meta.load-css('base');
 }
 
-// modules
+@layer lism.state.base {
+	@include meta.load-css('base/set');
+}
+
+@layer lism.state.module {
+	@include meta.load-css('modules/state');
+}
+
 @layer lism.modules {
-	@layer state {
-		@include meta.load-css('modules/state');
-	}
 	@layer layout {
 		@include meta.load-css('modules/layout');
 	}
@@ -31,6 +31,6 @@
 	@include meta.load-css('utility');
 }
 
+/* stylelint-disable-next-line block-no-empty -- ユーザーカスタム用レイヤー */
 @layer lism.custom {
-	/* ユーザーカスタム用レイヤー */
 }

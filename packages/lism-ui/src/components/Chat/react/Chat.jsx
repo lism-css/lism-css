@@ -14,8 +14,8 @@ export default function Chat({ name, avatar, flow = 's', children, ...props }) {
 			)}
 			{name && <Lism {...defaultProps.name}>{name}</Lism>}
 			<Lism {...defaultProps.body}>
-				<Decorator {...defaultProps.deco} className='u-cbox is--skipFlow' />
-				<Flow {...defaultProps.content} className='u-cbox' flow={flow} jslf={direction}>
+				<Decorator {...defaultProps.deco} className='u--cbox is--skipFlow' />
+				<Flow {...defaultProps.content} className='u--cbox' flow={flow} jslf={direction}>
 					{children}
 				</Flow>
 			</Lism>

@@ -2,7 +2,7 @@
 		Note: c,bgc,bdc Prop Class より優先度を下げること。
 		Memo: bgcの mix は transparent にする。半透明だと背景があると可読性が落ちる + chatのように同じ背景色の装飾を重ねても大丈夫なように。
 */
-.u-cbox {
+.u--cbox {
 	--c: color-mix(in srgb, var(--text), var(--keycolor) var(--cbox-cPct, 32%));
 	--bgc: color-mix(in srgb, var(--base), var(--keycolor) var(--cbox-bgPct, 4%));
 	--bdc: color-mix(in srgb, transparent, var(--keycolor) var(--cbox-bdPct, 64%));

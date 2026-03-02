@@ -20,13 +20,13 @@ const headerText = t(currentLang, 'header');
 ---
 
 <Container tag="header" class="z--header" layout="flex" ai="center">
-	{/* 全体のgridレイアウトの切り替えと、ハンバーガーボタンの表示タイミングがずれないように hasGutterは内側につける */}
-	<Flex ai="center" w="100%" g="15" hasGutter>
+	{/* 全体のgridレイアウトの切り替えと、ハンバーガーボタンの表示タイミングがずれないように setGutterは内側につける */}
+	<Flex ai="center" w="100%" g="15" setGutter>
 		<HTML.div mx-e="auto">
 			<HTML.a href={homeUrl} class="siteTitle" layout="flex" ai="center" g="5" fw="normal" c="inherit" td="none" hov="under">
 				<img class="u-onlyLightMode" src="/logo-black.svg" alt="" aria-labelledby="site-logo-label" width="300" height="62" />
 				<img class="u-onlyDarkMode" src="/logo-white.svg" alt="" aria-labelledby="site-logo-label" width="300" height="62" />
-				<span id="site-logo-label" class="u-hidden" translate="no">{siteConfig.name}</span>
+				<span id="site-logo-label" class="u--srOnly" translate="no">{siteConfig.name}</span>
 			</HTML.a>
 		</HTML.div>
 
@@ -52,7 +52,7 @@ const headerText = t(currentLang, 'header');
 		{/* ハンバーガーメニューボタン（モバイルのみ表示） */}
 		<Modal.OpenBtn
 			modalId="site-nav"
-			class="c--menuTrigger l--center set-plain -bd -bdrs:10"
+			class="c--menuTrigger l--center set--plain -bd -bdrs:10"
 			d={['grid', null, 'none']}
 			bgc="base"
 			bdrs="10"
