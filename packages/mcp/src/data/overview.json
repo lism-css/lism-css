@@ -1,6 +1,6 @@
 {
 	"description": "Lism CSS は、WEBサイトの骨組みをテンポ良くサクっと作るための軽量なCSSフレームワークです。レイアウトファーストなモジュール設計と、CSS変数を組み合わせたレスポンシブなユーティリティ設計が特徴です。ビルドや設定は不要で、CSSを読み込むだけでも使えます。Every Layout + Bootstrap + Tailwind CSS を混ぜ合わせたような設計です。",
-	"architecture": "CSS Layers による詳細度管理を採用。@layer lism.reset → lism.base → lism.modules → lism.utility の順で読み込まれます。Prop Class はレイヤー外で定義され、詳細度が高くなります。モジュールはさらに state → layout → atomic のサブレイヤーに分かれています。コンテナクエリをデフォルトで採用し、メディアクエリに依存しないレイアウト設計が可能です。",
+	"architecture": "CSS Layers による詳細度管理を採用。@layer lism-reset → lism.base → lism.state.base → lism.state.module → lism.modules(layout, atomic) → lism.utility → lism.custom の順で読み込まれます。Prop Class はレイヤー外で定義され、詳細度が高くなります。コンテナクエリをデフォルトで採用し、メディアクエリに依存しないレイアウト設計が可能です。",
 	"packages": [
 		{
 			"name": "lism-css",
@@ -21,10 +21,10 @@
 		"lg": "960px (container query)"
 	},
 	"installation": "## CSSのみ (CDN)\n```html\n<link href=\"https://cdn.jsdelivr.net/npm/lism-css/dist/css/main.css\" rel=\"stylesheet\" />\n```\n\n## npm パッケージ\n```bash\nnpm i lism-css\n# UI コンポーネントも使う場合\nnpm i @lism-css/ui\n```\n\n## CSS読み込み\n```js\nimport 'lism-css/main.css';\n// UI コンポーネントのCSS\nimport '@lism-css/ui/style.css';\n```\n\n## コンポーネント読み込み\n```jsx\n// React\nimport { Box, Flex, Stack } from 'lism-css/react';\nimport { Accordion, Modal } from '@lism-css/ui/react';\n\n// Astro\nimport { Box, Flex, Stack } from 'lism-css/astro';\nimport { Accordion, Modal } from '@lism-css/ui/astro';\n```",
-	"cssLayers": "@layer lism-reset, lism.base, lism.modules.state, lism.modules.layout, lism.modules.atomic, lism.modules, lism.utility, lism.custom; (Prop Class はレイヤー外)",
+	"cssLayers": "@layer lism-reset, lism.base, lism.state.base, lism.state.module, lism.modules.layout, lism.modules.atomic, lism.modules, lism.utility, lism.custom; (Prop Class はレイヤー外)",
 	"classNaming": {
 		"moduleClass": {
-			"stateModules": ".is|has--{stateName} (例: .is--wrapper, .has--gutter)",
+			"stateModules": ".is|set--{stateName} (例: .is--wrapper, .set--gutter)",
 			"layoutModules": ".l--{name} (例: .l--grid, .l--columns)",
 			"atomicModules": ".a--{name} (例: .a--divider, .a--icon)",
 			"customModules": ".c--{name} (例: .c--button, .c--note)"
@@ -33,8 +33,8 @@
 		"propClassVariable": ".-{prop} + --{prop} (例: .-p + --p)",
 		"propClassBreakpoint": ".-{prop}_{bp} + --{prop}_{bp} (例: .-p_sm + --p_sm)",
 		"utilityClass": {
-			"baseUtility": ".set-{style} (例: .set-plain, .set-transition)",
-			"styleUtility": ".u-{style} (例: .u-cbox)"
+			"baseUtility": ".set--{style} (例: .set--plain, .set--transition)",
+			"styleUtility": ".u--{style} (例: .u--cbox)"
 		}
 	},
 	"propAbbreviations": {
