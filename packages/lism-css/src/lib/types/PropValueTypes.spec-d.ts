@@ -123,7 +123,7 @@ describe('PropValueTypes', () => {
 	it('presets も utils も token もないプロパティは string | number 型で含まれる', () => {
 		// bg は presets/utils/token がないが、PropValueTypes に含まれる（string | number フォールバック）
 		// bg は bp: 1 なので Responsive でラップされる
-		expectTypeOf<PropValueTypes['bg']>().toEqualTypeOf<Responsive<string | number | undefined>>();
+		expectTypeOf<PropValueTypes['bg']>().toEqualTypeOf<Responsive<string | number | boolean | undefined>>();
 	});
 
 	it('プリセット値を設定できる', () => {

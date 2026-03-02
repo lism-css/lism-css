@@ -64,7 +64,8 @@ type ExtractPropValues<T> = ExtractArrayValues<T, 'presets'> | ExtractObjectKeys
  * - presets/utils/token がある場合: 具体的な値 + 任意文字列 + number | boolean | null
  * - ない場合: string | number（フォールバック）
  */
-type PropValueType<T> = ExtractPropValues<T> extends never ? string | number : WithArbitraryString<ExtractPropValues<T>> | number | boolean | null;
+type PropValueType<T> =
+	ExtractPropValues<T> extends never ? string | number | boolean : WithArbitraryString<ExtractPropValues<T>> | number | boolean | null;
 
 // ============================================================
 // ブレイクポイント対応の判定
