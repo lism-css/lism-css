@@ -120,10 +120,10 @@ describe('PropValueTypes', () => {
 		>();
 	});
 
-	it('presets も utils も token もないプロパティは string | number 型で含まれる', () => {
-		// bg は presets/utils/token がないが、PropValueTypes に含まれる（string | number フォールバック）
+	it('presets も utils も token もないプロパティは string | number | boolean 型で含まれる', () => {
+		// bg は presets/utils/token がないが、PropValueTypes に含まれる（string | number | boolean フォールバック）
 		// bg は bp: 1 なので Responsive でラップされる
-		expectTypeOf<PropValueTypes['bg']>().toEqualTypeOf<Responsive<string | number | undefined>>();
+		expectTypeOf<PropValueTypes['bg']>().toEqualTypeOf<Responsive<string | number | boolean | undefined>>();
 	});
 
 	it('プリセット値を設定できる', () => {
@@ -131,6 +131,15 @@ describe('PropValueTypes', () => {
 			fs: 'italic',
 			mx: 'auto',
 			d: 'none',
+		};
+		expectTypeOf(props).toExtend<PropValueTypes>();
+	});
+
+	it('boolean 値（true）を設定できる（ユーティリティクラスのみ付与）', () => {
+		const props: PropValueTypes = {
+			bg: true,
+			fs: true,
+			d: true,
 		};
 		expectTypeOf(props).toExtend<PropValueTypes>();
 	});
