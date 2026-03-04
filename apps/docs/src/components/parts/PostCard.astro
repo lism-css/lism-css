@@ -30,7 +30,7 @@ const dateLocale = lang === 'ja' ? 'ja-JP' : 'en-US';
 {/* ヘッダー: Flexで横並び、両端揃え */}
 <LinkBox
 	tag="article"
-	class:list={['c--postCard', 'u-trimItems', { _draft: isDraft }]}
+	class:list={['c--postCard', 'u--trimItems', { _draft: isDraft }]}
 	layout="stack"
 	g="30"
 	p="30"
@@ -46,7 +46,7 @@ const dateLocale = lang === 'ja' ? 'ja-JP' : 'en-US';
 	</Frame> -->
 
 	<HTML.h lv="3" class="c--postCard__title" fz="m" fw="bold" lh="xs" style={{ '--focus-offset': '2px' }}>
-		<HTML.a href={postUrl} class="u-expandedLink">{post.data.title}</HTML.a>
+		<HTML.a href={postUrl} class="u--expandedLink">{post.data.title}</HTML.a>
 	</HTML.h>
 	<HTML.p fz="xs" lh="s" o="-10">
 		{post.data.description}

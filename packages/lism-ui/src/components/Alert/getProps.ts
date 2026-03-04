@@ -9,14 +9,7 @@ export type AlertProps = {
 	[key: string]: unknown;
 };
 
-export default function getAlertProps({
-	type = 'alert',
-	keycolor,
-	layout = 'flex',
-	icon,
-	flow = 's',
-	...props
-}: AlertProps) {
+export default function getAlertProps({ type = 'alert', keycolor, layout = 'flex', icon, flow = 's', ...props }: AlertProps) {
 	const presetData = type ? PRESETS[type] : null;
 	const _icon = icon || presetData?.icon || 'info';
 	const _color = keycolor || presetData?.color || 'currentColor';
@@ -25,7 +18,7 @@ export default function getAlertProps({
 		icon: _icon,
 		layout,
 		flow,
-		lismClass: 'c--alert u-cbox',
+		lismClass: 'c--alert u--cbox',
 		keycolor: _color,
 		ai: 'center',
 		p: '15',

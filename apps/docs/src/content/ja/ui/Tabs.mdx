@@ -15,7 +15,7 @@ import './_opt-in/_tabs.css'
 ```pug
 c--tabs
 	div.c--tabs_list[role="tablist"]
-		button.c--tabs_tab.set-plain[role="tab"][aria-controls="{tabID}"][aria-selected="true"]
+		button.c--tabs_tab.set--plain[role="tab"][aria-controls="{tabID}"][aria-selected="true"]
 		...button
 
 	div.c--tabs_panel[id="{tabID}"][role="tabpanel"][aria-hidden="false"]
@@ -281,7 +281,7 @@ c--tabs
 コアではスタイルを特に持ちませんので、サイトごとにスタイルを用意してご利用ください。
 
 `c--tabs_tab`では`--_isSelected`, `--_notSelected`が使えるようになっていますので、活用していただくと便利です。
-<HelpText icon='info' >（[`set-hov`](/docs/props/hov#set-hov)の`--_isHov`,`--_notHov`と同じようにして使用できます。）</HelpText>
+<HelpText icon='info' >（[`set--hov`](/docs/props/hov#set--hov)の`--_isHov`,`--_notHov`と同じようにして使用できます。）</HelpText>
 
 ここではいくつかのスタイリング例を紹介します。
 

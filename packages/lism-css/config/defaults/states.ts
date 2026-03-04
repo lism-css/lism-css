@@ -15,16 +15,16 @@ export default {
 	isSide: 'is--side',
 	isSkipFlow: 'is--skipFlow',
 	isVertical: 'is--vertical',
-	hasGutter: 'has--gutter',
+	setGutter: 'set--gutter',
 
 	// set class
-	setShadow: 'set-shadow',
-	setHov: 'set-hov',
-	setTransition: 'set-transition',
-	setSnap: 'set-snap',
+	setShadow: 'set--shadow',
+	setHov: 'set--hov',
+	setTransition: 'set--transition',
+	setSnap: 'set--snap',
 	setMask: {
-		// 'set-mask',
-		className: 'set-mask',
+		// 'set--mask',
+		className: 'set--mask',
 		setStyles: (propVal: string) => {
 			// minify化
 			// propVal = minifyHtml(propVal);
@@ -37,7 +37,7 @@ export default {
 			};
 		},
 	},
-	setPlain: 'set-plain',
-	// setRevert: 'set-revert',
-	setInnerRs: 'set-innerRs',
+	setPlain: 'set--plain',
+	// setRevert: 'set--revert',
+	setInnerRs: 'set--innerRs',
 } as const;

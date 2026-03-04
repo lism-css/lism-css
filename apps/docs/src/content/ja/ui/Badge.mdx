@@ -15,7 +15,7 @@ import { BookIcon } from '@phosphor-icons/react';
 		<Cluster g='15'>
 			<Badge>Badge</Badge>
 			<Badge variant='outline'>Badge</Badge>
-			<Badge className='u-cbox' keycolor='blue' bdrs='99'>Badge</Badge>
+			<Badge className='u--cbox' keycolor='blue' bdrs='99'>Badge</Badge>
 		</Cluster>
 	</PreviewArea>
 	<PreviewCode slot='tab' label='React / Astro'>
@@ -23,7 +23,7 @@ import { BookIcon } from '@phosphor-icons/react';
 		<Cluster g='15'>
 			<Badge>Badge</Badge>
 			<Badge variant='outline'>Badge</Badge>
-			<Badge className='u-cbox' keycolor='blue' bdrs='99'>Badge</Badge>
+			<Badge className='u--cbox' keycolor='blue' bdrs='99'>Badge</Badge>
 		</Cluster>
 		```
 	</PreviewCode>
@@ -32,7 +32,7 @@ import { BookIcon } from '@phosphor-icons/react';
 		<div class='l--cluster -g:15'>
 			<span class='c--badge -d:in-flex -fz:xs -lh:xs -py:5 -px:10 -bdrs:10'>Badge</span>
 			<span class='c--badge c--badge--outline -d:in-flex -fz:xs -lh:xs -py:5 -px:10 -bdrs:10'>Badge</span>
-			<span class='u-cbox c--badge -d:in-flex -fz:xs -lh:xs -py:5 -px:10 -bdrs:99' style='--keycolor:var(--blue)'>Badge</span>
+			<span class='u--cbox c--badge -d:in-flex -fz:xs -lh:xs -py:5 -px:10 -bdrs:99' style='--keycolor:var(--blue)'>Badge</span>
 		</div>
 		```
 	</PreviewCode>
@@ -165,28 +165,28 @@ import { BookIcon } from '@phosphor-icons/react';
 	</PreviewCode>
 </Preview>
 
-### `u-cbox` との併用
+### `u--cbox` との併用
 
 <Preview>
-	<PreviewTitle>[`u-cbox`](/docs/utility-class/#u-cbox)クラスを使ったスタイリングの例</PreviewTitle>
+	<PreviewTitle>[`u--cbox`](/docs/utility-class/#u--cbox)クラスを使ったスタイリングの例</PreviewTitle>
 	<PreviewArea p='20' bg=':stripe'>
 		<Cluster g='15'>
-			<Badge className='u-cbox' keycolor='red'>Red</Badge>
-			<Badge className='u-cbox' keycolor='orange'>Orange</Badge>
-			<Badge className='u-cbox' keycolor='yellow'>Yellow</Badge>
-			<Badge className='u-cbox' keycolor='green'>Green</Badge>
-			<Badge className='u-cbox' keycolor='blue'>Blue</Badge>
-			<Badge className='u-cbox' keycolor='purple'>Purple</Badge>
-			<Badge className='u-cbox' keycolor='pink'>Pink</Badge>
-			<Badge className='u-cbox' keycolor='gray'>Gray</Badge>
+			<Badge className='u--cbox' keycolor='red'>Red</Badge>
+			<Badge className='u--cbox' keycolor='orange'>Orange</Badge>
+			<Badge className='u--cbox' keycolor='yellow'>Yellow</Badge>
+			<Badge className='u--cbox' keycolor='green'>Green</Badge>
+			<Badge className='u--cbox' keycolor='blue'>Blue</Badge>
+			<Badge className='u--cbox' keycolor='purple'>Purple</Badge>
+			<Badge className='u--cbox' keycolor='pink'>Pink</Badge>
+			<Badge className='u--cbox' keycolor='gray'>Gray</Badge>
 		</Cluster>
 	</PreviewArea>
 	<PreviewCode slot='tab' label='JSX'>
 		```jsx
 		<Cluster g='15'>
-			<Badge className='u-cbox' keycolor='red'>Red</Badge>
-			<Badge className='u-cbox' keycolor='orange'>Orange</Badge>
-			<Badge className='u-cbox' keycolor='yellow'>Yellow</Badge>
+			<Badge className='u--cbox' keycolor='red'>Red</Badge>
+			<Badge className='u--cbox' keycolor='orange'>Orange</Badge>
+			<Badge className='u--cbox' keycolor='yellow'>Yellow</Badge>
 			...
 		</Cluster>
 		```
@@ -231,7 +231,7 @@ import { BookIcon } from '@phosphor-icons/react';
 		<Cluster g='15'>
 			<Lism tag='span' fz='xs' lh='xs' py='5' px='10' bgc='text' c='base' bdrs='10'>Badge</Lism>
 			<Lism tag='span' fz='xs' lh='xs' py='5' px='10' bd bdc='cc' bdrs='10'>Badge</Lism>
-			<Lism tag='span' className='u-cbox' keycolor='blue' bd bdc='keycolor:base:40%' fz='xs' lh='xs' py='5' px='10' bdrs='99'>Badge</Lism>
+			<Lism tag='span' className='u--cbox' keycolor='blue' bd bdc='keycolor:base:40%' fz='xs' lh='xs' py='5' px='10' bdrs='99'>Badge</Lism>
 		</Cluster>
 	</PreviewArea>
 	<PreviewCode slot='tab' label='JSX'>
@@ -239,7 +239,7 @@ import { BookIcon } from '@phosphor-icons/react';
 		<Cluster g='15'>
 			<Lism tag='span' fz='xs' lh='xs' py='5' px='10' bgc='text' c='base' bdrs='10'>Badge</Lism>
 			<Lism tag='span' fz='xs' lh='xs' py='5' px='10' bd bdc='cc' bdrs='10'>Badge</Lism>
-			<Lism tag='span' className='u-cbox' keycolor='blue' bd bdc='keycolor:base:40%' fz='xs' lh='xs' py='5' px='10' bdrs='99'>Badge</Lism>
+			<Lism tag='span' className='u--cbox' keycolor='blue' bd bdc='keycolor:base:40%' fz='xs' lh='xs' py='5' px='10' bdrs='99'>Badge</Lism>
 		</Cluster>
 		```
 	</PreviewCode>
@@ -249,7 +249,7 @@ import { BookIcon } from '@phosphor-icons/react';
 			<span class='-fz:xs -lh:xs -py:5 -px:10 -bgc:text -c:base -bdrs:10'>Badge</span>
 			<span class='-fz:xs -lh:xs -py:5 -px:10 -bd -bdc:cc -bdrs:10'>Badge</span>
 			<span
-				class='u-cbox -bd -fz:xs -lh:xs -py:5 -px:10 -bdrs:99'
+				class='u--cbox -bd -fz:xs -lh:xs -py:5 -px:10 -bdrs:99'
 				style='--keycolor:var(--blue);--bdc:color-mix(in srgb, var(--keycolor) 40%, var(--base))'
 			>Badge</span>
 		</div>

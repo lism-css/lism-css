@@ -1143,19 +1143,19 @@ describe('Lism', () => {
 			});
 		});
 
-		describe('has-- States', () => {
-			test('hasGutter を指定できる', () => {
+		describe('set-- States (gutter)', () => {
+			test('setGutter を指定できる', () => {
 				render(
-					<Lism hasGutter data-testid='lism'>
+					<Lism setGutter data-testid='lism'>
 						test
 					</Lism>
 				);
 				const element = screen.getByTestId('lism');
-				expect(element).toHaveClass('has--gutter');
+				expect(element).toHaveClass('set--gutter');
 			});
 		});
 
-		describe('set- States', () => {
+		describe('set-- States', () => {
 			test('setShadow を指定できる', () => {
 				render(
 					<Lism setShadow data-testid='lism'>
@@ -1163,7 +1163,7 @@ describe('Lism', () => {
 					</Lism>
 				);
 				const element = screen.getByTestId('lism');
-				expect(element).toHaveClass('set-shadow');
+				expect(element).toHaveClass('set--shadow');
 			});
 
 			test('setHov を指定できる', () => {
@@ -1173,7 +1173,7 @@ describe('Lism', () => {
 					</Lism>
 				);
 				const element = screen.getByTestId('lism');
-				expect(element).toHaveClass('set-hov');
+				expect(element).toHaveClass('set--hov');
 			});
 
 			test('setTransition を指定できる', () => {
@@ -1183,7 +1183,7 @@ describe('Lism', () => {
 					</Lism>
 				);
 				const element = screen.getByTestId('lism');
-				expect(element).toHaveClass('set-transition');
+				expect(element).toHaveClass('set--transition');
 			});
 
 			test('setSnap を指定できる', () => {
@@ -1193,7 +1193,7 @@ describe('Lism', () => {
 					</Lism>
 				);
 				const element = screen.getByTestId('lism');
-				expect(element).toHaveClass('set-snap');
+				expect(element).toHaveClass('set--snap');
 			});
 
 			test('setPlain を指定できる', () => {
@@ -1203,7 +1203,7 @@ describe('Lism', () => {
 					</Lism>
 				);
 				const element = screen.getByTestId('lism');
-				expect(element).toHaveClass('set-plain');
+				expect(element).toHaveClass('set--plain');
 			});
 
 			test('setInnerRs を指定できる', () => {
@@ -1213,7 +1213,7 @@ describe('Lism', () => {
 					</Lism>
 				);
 				const element = screen.getByTestId('lism');
-				expect(element).toHaveClass('set-innerRs');
+				expect(element).toHaveClass('set--innerRs');
 			});
 
 			test('setMask を指定できる', () => {
@@ -1223,7 +1223,7 @@ describe('Lism', () => {
 					</Lism>
 				);
 				const element = screen.getByTestId('lism');
-				expect(element).toHaveClass('set-mask');
+				expect(element).toHaveClass('set--mask');
 			});
 		});
 
@@ -1237,7 +1237,7 @@ describe('Lism', () => {
 				const element = screen.getByTestId('lism');
 				expect(element).toHaveClass('is--container');
 				expect(element).toHaveClass('is--layer');
-				expect(element).toHaveClass('set-shadow');
+				expect(element).toHaveClass('set--shadow');
 			});
 		});
 	});
