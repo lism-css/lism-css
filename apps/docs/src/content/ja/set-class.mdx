@@ -1,16 +1,14 @@
 ---
-title: 'Setter Class'
+title: 'Set Class'
 description: ...
-order: 3
 ---
 import { Lism, Box, Media, Flex, HTML, Stack, Spacer, Frame } from 'lism-css/astro';
 import { Button } from '@lism-css/ui/astro';
 import { Desktop } from '@phosphor-icons/react';
 
 
-`lism.base`レイヤーの後半で定義される、トークンを再定義したり、変数セットなどを行うクラス群を `set-{className}` の形式で定義しています。
+`@lism-base`層の中で定義される、ベーススタイルの上書きやトークンの再定義、機能的なプロパティを初期セットするためのユーティリティクラスを`set--{className}`の形式で定義しています。
 
-Lism では、これらを **Setter Class** と呼びます。
 
 ### `set--plain`
 
@@ -111,6 +109,13 @@ Lism では、これらを **Setter Class** と呼びます。
 	</PreviewCode>
 </Preview>
 
+### `set--cqUnit`
+
+`cqw`単位でのスケーリングを行うためのクラスです。
+
+フォントサイズの`clamp()`をvwではなくcqwで再計算し、スペーシング・ハーフレディングのトークン単位などを改めて再定義します。
+
+
 ### `set--hov`
 
 ホバースタイル管理用のCSS変数をセットします。主に子要素のホバースタイルを制御するために使用します。
@@ -132,13 +137,6 @@ Lism では、これらを **Setter Class** と呼びます。
 <Reference>
 活用例は [`hover`の解説ページ](/docs/props/hov#set--transition) を参照してください。
 </Reference>
-
-
-### `set--cqUnit`
-
-`cqw`単位でのスケーリングを行うためのクラスです。
-
-フォントサイズの`clamp()`をvwではなくcqwで再計算し、スペーシングトークン・・ハーフレディングの単位も改めて再定義します。
 
 
 ### `set--snap`
@@ -218,6 +216,46 @@ Lism では、これらを **Setter Class** と呼びます。
 ```
 	</PreviewCode>
 </Preview>
+
+
+### `set--gutter`
+
+コンテンツの左右にあらかじめ定義済みの余白をつけることができるクラスです。  
+サイト全体で統一した余白量を左右に確保するためのものとして、padding系のユーティリティとは別のクラスとして用意しています。
+
+| クラス名 | 余白量 |初期値 |
+|---|---|---|
+| `set--gutter` | `--gutter-size` | `1.5rem` |
+
+<Preview>
+	<PreviewTitle>例</PreviewTitle>
+	<PreviewArea resize p='15'>
+		<Lism setGutter>
+			<p>Lorem ipsum content...</p>
+			<p>Lorem ipsum content...</p>
+			<p>Lorem ipsum content...</p>
+		</Lism>
+	</PreviewArea>
+	<PreviewCode slot='tab' label='HTML'>
+	```html
+	<div class="set--gutter">
+		<p>Lorem ipsum content...</p>
+		<p>Lorem ipsum content...</p>
+		<p>Lorem ipsum content...</p>
+	</div>
+	```
+	</PreviewCode>
+	<PreviewCode slot='tab' label='JSX'>
+	```jsx
+	<Lism setGutter>
+		<p>Lorem ipsum content...</p>
+		<p>Lorem ipsum content...</p>
+		<p>Lorem ipsum content...</p>
+	</Lism>
+	```
+	</PreviewCode>
+</Preview>
+
 
 
 

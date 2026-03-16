@@ -14,8 +14,7 @@ body {
 /* ----------------------------------------
     line-height
  ---------------------------------------- */
-*,
-.set--plain {
+* {
 	line-height: calc(1em + var(--hl) * 2);
 }
 
@@ -47,8 +46,8 @@ h6 {
     list
  ---------------------------------------- */
 // classを持たない、もしくは Prop Classしかない(≒ Prop Class で始まる) リスト要素はブラウザ標準のスタイルを復活させる。
-:is(ul, ol):not([class]),
-:is(ul, ol)[class^='-'] {
+:is(ul, ol):where(:not([class])),
+:is(ul, ol):where([class^='-']) {
 	list-style: revert;
 	padding-inline-start: var(--s30);
 }

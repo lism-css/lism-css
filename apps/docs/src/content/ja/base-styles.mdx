@@ -1,0 +1,61 @@
+---
+title: 'Base Styles'
+description: ...
+---
+import { Dummy, Box, HTML, Lism, Stack, Flex, Container, Frame, Center, Spacer, Media } from 'lism-css/astro';
+import { Button } from '@lism-css/ui/astro';
+import { Desktop } from '@phosphor-icons/react';
+
+
+`@lism-base`レイヤーで定義されるベーススタイルを紹介します。
+
+
+## Reset CSS
+
+Reset CSS を`@lism-base.reset` レイヤーとして定義しています。
+
+<PreviewTitle>ソースコード</PreviewTitle>
+<EmbedCode dirPath='packages/lism-css' srcPath='src/scss/reset.scss' />
+
+
+reset.css ではできるだけブラウザの標準スタイルに従うようにしています。
+
+非常にシンプルで、必要最低限な内容になっています。
+
+### Lism CSS の reset.css だけを読み込む方法
+
+
+<PreviewTitle>importで読み込む</PreviewTitle>
+```js
+import 'lism-css/reset.css';
+```
+
+または
+
+<PreviewTitle>CDN経由でスタイルシートを読み込む</PreviewTitle>
+```html
+<link href="https://cdn.jsdelivr.net/npm/lism-css/dist/css/reset.css" rel="stylesheet" />
+```
+
+
+
+## Base styles
+
+Reset CSS のほか、`@lism-base`レイヤーでは、`:root`で定義したトークンを活用しつつHTMLタグのデフォルトベーススタイルを定義しています。
+
+<PreviewTitle>ソースコード</PreviewTitle>
+<EmbedCode dirPath='packages/lism-css' srcPath='src/scss/base/_html.scss' />
+
+### HTML基本スタイルのプレビュー
+
+`@lism-base`が適用されただけのHTML基本スタイルのプレビューです。
+
+<PreviewTitle>Preview</PreviewTitle>
+<PreviewArea>
+	<PreviewFrame ar='1/1' isInline url='/demo/html-base-style' />
+</PreviewArea>
+<Button href='/demo/html-base-style' variant='fill' target='_blank' bdrs='10' w='fit' mx='auto'>
+	大きい画面で見る
+</Button>
+
+

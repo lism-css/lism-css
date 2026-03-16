@@ -13,7 +13,7 @@ import ModuleList from '@/components/ModuleList.astro';
 
 Lismでは、次のようなモジュールクラスを使います。
 
-- `is|has--{module}`: レイアウトを構成する役割を持ちつつ、複数の種類のモジュールに対してつけ外しできるような汎用性の高いモジュール群。
+- `is--{module}`: 複数の種類のモジュールに対してつけ外しできるような汎用性の高い状態モジュール群。
 - `l--{module}`: レイアウトの構成単位となるようなモジュール群。
 - `a--{module}`: レイアウトの最小単位となるモジュール群。
 - `c--{module}`: その他のより具体的な役割を持つコンポーネント群。（他のクラスとの組み合わせを前提にした設計になっているものが多い。）
@@ -24,45 +24,6 @@ Lismでは、次のようなモジュールクラスを使います。
 
 
 ## State Module
-
-### `set--gutter`
-
-コンテンツの左右にあらかじめ定義済みの余白をつけることができるクラスです。  
-サイト全体で統一した余白量を左右に確保するためのものとして、padding系のユーティリティとは別のクラスとして用意しています。
-
-| クラス名 | 余白量 |初期値 |
-|---|---|---|
-| `set--gutter` | `--gutter-size` | `1.5rem` |
-
-<Preview>
-	<PreviewTitle>例</PreviewTitle>
-	<PreviewArea resize p='15'>
-		<Lism setGutter>
-			<p>Lorem ipsum content...</p>
-			<p>Lorem ipsum content...</p>
-			<p>Lorem ipsum content...</p>
-		</Lism>
-	</PreviewArea>
-	<PreviewCode slot='tab' label='HTML'>
-	```html
-	<div class="set--gutter">
-		<p>Lorem ipsum content...</p>
-		<p>Lorem ipsum content...</p>
-		<p>Lorem ipsum content...</p>
-	</div>
-	```
-	</PreviewCode>
-	<PreviewCode slot='tab' label='JSX'>
-	```jsx
-	<Lism setGutter>
-		<p>Lorem ipsum content...</p>
-		<p>Lorem ipsum content...</p>
-		<p>Lorem ipsum content...</p>
-	</Lism>
-	```
-	</PreviewCode>
-</Preview>
-
 
 ### `is--container`
 
@@ -147,26 +108,7 @@ CSSは以下のようになっており、`inset:0`と`overflow:hidden`も指定
 <Spacer h='1rem' />
 
 
-### `is--side`
-
-`l--sideMain`のside要素に付与するクラスです。
-
-<Reference>
-活用例は [`<SideMain>`](/modules/layout/sidemain) を参照してください。
-</Reference>
-
-
-### `is--skipFlow`
-
-`l--flow`の直下で使用すると、次に続く兄弟要素との余白量を打ち消します。
-
-<Reference>
-活用例は [`<Flow>`](/modules/layout/flow) を参照してください。
-</Reference>
-
-
-
-## `is--vertical`
+### `is--vertical`
 
 | クラス名 |
 |---|
@@ -203,6 +145,26 @@ CSSは以下のようになっており、`inset:0`と`overflow:hidden`も指定
 		```
 	</PreviewCode>
 </Preview>
+
+
+### `is--side`
+
+`l--sideMain`のside要素に付与するクラスです。
+
+<Reference>
+活用例は [`<SideMain>`](/modules/layout/sidemain) を参照してください。
+</Reference>
+
+
+### `is--skipFlow`
+
+`l--flow`の直下で使用すると、次に続く兄弟要素との余白量を打ち消します。
+
+<Reference>
+活用例は [`<Flow>`](/modules/layout/flow) を参照してください。
+</Reference>
+
+
 
 
 ## Layout Modules
