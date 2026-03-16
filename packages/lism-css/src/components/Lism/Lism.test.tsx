@@ -1186,16 +1186,6 @@ describe('Lism', () => {
 				expect(element).toHaveClass('set--transition');
 			});
 
-			test('setSnap を指定できる', () => {
-				render(
-					<Lism setSnap data-testid='lism'>
-						test
-					</Lism>
-				);
-				const element = screen.getByTestId('lism');
-				expect(element).toHaveClass('set--snap');
-			});
-
 			test('setPlain を指定できる', () => {
 				render(
 					<Lism setPlain data-testid='lism'>

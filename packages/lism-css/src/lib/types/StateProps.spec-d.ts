@@ -40,7 +40,6 @@ describe('StateProps', () => {
 			assertType<StateProps>({ setShadow: true });
 			assertType<StateProps>({ setHov: true });
 			assertType<StateProps>({ setTransition: true });
-			assertType<StateProps>({ setSnap: true });
 			assertType<StateProps>({ setPlain: true });
 			assertType<StateProps>({ setInnerRs: true });
 		});

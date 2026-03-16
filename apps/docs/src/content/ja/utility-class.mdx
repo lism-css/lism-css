@@ -389,63 +389,31 @@ Gridを使って table タグのような表現もできるようになります
 </Preview>
 
 
-## Opt-in
+## `u--snap`
 
-ここからは、Lism CSS のコアCSSファイルには含まれていないが便利なユーティリティクラスの作成例をいくつか紹介します。
+`scroll-snap-`系のプロパティをCSS変数でセットできるようにします。
 
-### `u-inlineCenter`
+<EmbedCode dirPath='packages/lism-css' srcPath='src/scss/utility/_snap.scss' />
 
-絵文字やインラインアイコンをテキストのセンター位置に合わせて配置するためのクラスです。
-`vertical-align: middle;`だけではずれが発生するため、追加で`translate`で調整を加えています。
-
-
-<Preview css={`
-.u-inlineCenter {
-	vertical-align: middle;
-	translate: 0 calc(-1 * (0.35em - 0.5ex));
-}`}>
-	<PreviewTitle>使用例</PreviewTitle>
-	<PreviewArea p='20'>
-		<p><Icon className='u-inlineCenter' icon='alert' c='red' fz='xl' /> Lorem ipsum dolor sit amet.</p>
-		<p><Icon className='u-inlineCenter' as={Dog} fz='l' />Dog, and <Icon className='u-inlineCenter' as={Cat} fz='l'/>Cat.</p>
-		<p><span class='u-inlineCenter -fz:xl'>🚀</span> Emoji.</p>
-		<p><Icon fz='2xl' className='u-inlineCenter' src="https://emojix.s3.ap-northeast-1.amazonaws.com/g3/svg/1f916.svg" alt="image" /> Inline img icon.</p>
-	</PreviewArea>
-	<PreviewCode slot='tab' label='JSX'>
-		```jsx "u-inlineCenter"
-		<p><Icon className='u-inlineCenter' icon='alert' c='red' fz='xl' /> Lorem ipsum dolor sit amet.</p>
-		<p><Icon className='u-inlineCenter' as={Dog} fz='l' />Dog, and <Icon className='u-inlineCenter' as={Cat} fz='l'/>Cat.</p>
-		<p><span class='u-inlineCenter -fz:xl'>🚀</span> Emoji.</p>
-		<p><Icon fz='2xl' className='u-inlineCenter' src="https://emojix.s3.ap-northeast-1.amazonaws.com/g3/svg/1f916.svg" alt="image" /> Inline img icon.</p>
-		```
-	</PreviewCode>
-
-	<PreviewCode slot='tab' label='**追加CSS**'>
-	```css
-	.u-inlineCenter {
-		vertical-align: middle; /* 基準をmiddleにセット */
-		translate: 0 calc(-1 * (0.35em - 0.5ex)); /* middleの計算式を元に追加で調整。（0.5cap - 0.5ex が英文では理想。）*/
-	}
-	```
-	</PreviewCode>
-</Preview>
+<Box class='u--snap' ov='auto' ar='16/9' bd>
+	<div className='l--frame -ar:16/9 -p:15'><img src='https://cdn.lism-css.com/img/u-1.jpg' width='960' height='640' loading='lazy' /></div>
+	<div className='l--frame -ar:16/9 -p:15'><img src='https://cdn.lism-css.com/img/u-2.jpg' width='960' height='640' loading='lazy' /></div>
+	<div className='l--frame -ar:16/9 -p:15'><img src='https://cdn.lism-css.com/img/u-3.jpg' width='960' height='640' loading='lazy' /></div>
+	<div className='l--frame -ar:16/9 -p:15'><img src='https://cdn.lism-css.com/img/u-4.jpg' width='960' height='640' loading='lazy' /></div>
+	<div className='l--frame -ar:16/9 -p:15'><img src='https://cdn.lism-css.com/img/u-5.jpg' width='960' height='640' loading='lazy' /></div>
+	<div className='l--frame -ar:16/9 -p:15'><img src='https://cdn.lism-css.com/img/u-6.jpg' width='960' height='640' loading='lazy' /></div>
+</Box>
 
 
-
-### u-bgclipText
+## `u--clipText`
 
 テキストで背景をクリッピングするためのクラスです。
 
-<Preview css={`
-.u-bgclipText {
-	-webkit-background-clip: text;
-	background-clip: text;
-	color: transparent;
-}`}>
+<Preview>
 	<PreviewTitle>テキストで背景をクリッピング</PreviewTitle>
 	<PreviewArea p='20'>
 		<Center>
-			<Box className='u-bgclipText' bg='linear-gradient(45deg, var(--blue), var(--pink))'>
+			<Box className='u--clipText' bgr="no-repeat" bgi='linear-gradient(45deg, var(--blue), var(--pink))'>
 				<HTML.p fz='5xl' fw='bold' lh='1' lts='l'>TEXT</HTML.p>
 			</Box>
 		</Center>
@@ -453,7 +421,7 @@ Gridを使って table タグのような表現もできるようになります
 	<PreviewCode label='JSX' slot='tab'>
 		```jsx
 		<Center>
-			<Box className='u-bgclipText' bg='linear-gradient(45deg, var(--blue), var(--pink))'>
+			<Box className='u--clipText' bgi='linear-gradient(45deg, var(--blue), var(--pink))'>
 				<HTML.p fz='5xl' fw='bold' lh='1' lts='l'>TEXT</HTML.p>
 			</Box>
 		</Center>
@@ -461,7 +429,7 @@ Gridを使って table タグのような表現もできるようになります
 	</PreviewCode>
 	<PreviewCode label='HTML' slot='tab'>
 		```html
-		<div class="l--box u-bgclipText -bg:linear-gradient(to top, #a8edea 0%, #fed6e3 100%)">  </div>
+		<div class="l--box u--clipText -bgi:linear-gradient(to top, #a8edea 0%, #fed6e3 100%)">  </div>
 		```
 	</PreviewCode>
 </Preview>
@@ -469,3 +437,47 @@ Gridを使って table タグのような表現もできるようになります
 ```css
 ...
 ```
+
+
+
+## Opt-in
+
+ここからは、Lism CSS のコアCSSファイルには含まれていないが便利なユーティリティクラスの作成例をいくつか紹介します。
+
+### `u--inlineCenter`
+
+絵文字やインラインアイコンをテキストのセンター位置に合わせて配置するためのクラスです。
+`vertical-align: middle;`だけではずれが発生するため、追加で`translate`で調整を加えています。
+
+
+<Preview css={`
+.u--inlineCenter {
+	vertical-align: middle;
+	translate: 0 calc(-1 * (0.35em - 0.5ex));
+}`}>
+	<PreviewTitle>使用例</PreviewTitle>
+	<PreviewArea p='20'>
+		<p><Icon className='u--inlineCenter' icon='alert' c='red' fz='xl' /> Lorem ipsum dolor sit amet.</p>
+		<p><Icon className='u--inlineCenter' as={Dog} fz='l' />Dog, and <Icon className='u--inlineCenter' as={Cat} fz='l'/>Cat.</p>
+		<p><span class='u--inlineCenter -fz:xl'>🚀</span> Emoji.</p>
+		<p><Icon fz='2xl' className='u--inlineCenter' src="https://emojix.s3.ap-northeast-1.amazonaws.com/g3/svg/1f916.svg" alt="image" /> Inline img icon.</p>
+	</PreviewArea>
+	<PreviewCode slot='tab' label='JSX'>
+		```jsx "u--inlineCenter"
+		<p><Icon className='u--inlineCenter' icon='alert' c='red' fz='xl' /> Lorem ipsum dolor sit amet.</p>
+		<p><Icon className='u--inlineCenter' as={Dog} fz='l' />Dog, and <Icon className='u--inlineCenter' as={Cat} fz='l'/>Cat.</p>
+		<p><span class='u--inlineCenter -fz:xl'>🚀</span> Emoji.</p>
+		<p><Icon fz='2xl' className='u--inlineCenter' src="https://emojix.s3.ap-northeast-1.amazonaws.com/g3/svg/1f916.svg" alt="image" /> Inline img icon.</p>
+		```
+	</PreviewCode>
+
+	<PreviewCode slot='tab' label='**追加CSS**'>
+	```css
+	.u--inlineCenter {
+		vertical-align: middle; /* 基準をmiddleにセット */
+		translate: 0 calc(-1 * (0.35em - 0.5ex)); /* middleの計算式を元に追加で調整。（0.5cap - 0.5ex が英文では理想。）*/
+	}
+	```
+	</PreviewCode>
+</Preview>
+

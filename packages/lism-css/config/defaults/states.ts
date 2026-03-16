@@ -21,7 +21,6 @@ export default {
 	setShadow: 'set--shadow',
 	setHov: 'set--hov',
 	setTransition: 'set--transition',
-	setSnap: 'set--snap',
 	setMask: {
 		// 'set--mask',
 		className: 'set--mask',
