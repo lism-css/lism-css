@@ -52,7 +52,7 @@ import { NavMenu } from '@lism-css/ui/react';
 
 ```pug
 button[data-modal-open='modalID']
-dialog.c--modal#modalID.set-plain
+dialog.c--modal#modalID.set--plain
     .c--modal_inner
         .c--modal_body ...Contents...
     button[data-modal-close='modalID']
@@ -93,7 +93,7 @@ dialog.c--modal#modalID.set-plain
 		<Modal.Root id='modal-01' isWrapper isContainer p='30'>
 			<Modal.Inner layout='stack' pos='relative' p='30' bdrs='20' bxsh='40'>
 				<Modal.CloseBtn modalId='modal-01' autofocus pos='absolute' t='0' r='0' z='1' fz='xl' p='10' m='15' />
-				<Modal.Body layout='stack' g='30' className='u-trimItems'>
+				<Modal.Body layout='stack' g='30' className='u--trimItems'>
 					<div className='-fz:xl -fw:bold'>Modal Title</div>
 					<Dummy />
 				</Modal.Body>
@@ -107,7 +107,7 @@ dialog.c--modal#modalID.set-plain
 		<Modal.Root id='modal-01' isWrapper isContainer p='30'>
 			<Modal.Inner layout='stack' pos='relative' p='30' bdrs='20' bxsh='40'>
 				<Modal.CloseBtn modalId='modal-01' autofocus pos='absolute' t='0' r='0' z='1' fz='xl' p='10' m='15' />
-				<Modal.Body layout='stack' g='30' className='u-trimItems'>
+				<Modal.Body layout='stack' g='30' className='u--trimItems'>
 					<div className='-fz:xl -fw:bold'>Modal Title</div>
 					<Dummy />
 				</Modal.Body>
@@ -197,7 +197,7 @@ dialog.c--modal#modalID.set-plain
 					<Modal.CloseBtn modalId='modal-03' autofocus fz='xl' p='5'/>
 				</Flex>
 				<Modal.Body ov-y='auto'>
-					<Stack className='u-collapseGrid' bd-b p='0' ov='clip'>
+					<Stack className='u--collapseGrid' bd-b p='0' ov='clip'>
 						<HTML.a href='#menu-link01' c='inherit' hov='neutral' px='20' py='15'>Menu item 1</HTML.a>
 						<HTML.a href='#menu-link02' c='inherit' hov='neutral' px='20' py='15'>Menu item 2</HTML.a>
 						<HTML.a href='#menu-link03' c='inherit' hov='neutral' px='20' py='15'>Menu item 3</HTML.a>
@@ -220,11 +220,11 @@ dialog.c--modal#modalID.set-plain
 					<Modal.CloseBtn modalId='modal-03' autofocus fz='xl' p='5'/>
 				</Flex>
 				<Modal.Body ov-y='auto'>
-					<Stack className='u-collapseGrid' bd-b p='0' ov='clip'>
-						<HTML.a href='#menu-link01' className='set-plain' hov='o' px='20' py='15'>Menu item 1</HTML.a>
-						<HTML.a href='#menu-link02' className='set-plain' hov='o' px='20' py='15'>Menu item 2</HTML.a>
-						<HTML.a href='#menu-link03' className='set-plain' hov='o' px='20' py='15'>Menu item 3</HTML.a>
-						<HTML.a href='#menu-link04' className='set-plain' hov='o' px='20' py='15'>Menu item 4</HTML.a>
+					<Stack className='u--collapseGrid' bd-b p='0' ov='clip'>
+						<HTML.a href='#menu-link01' className='set--plain' hov='o' px='20' py='15'>Menu item 1</HTML.a>
+						<HTML.a href='#menu-link02' className='set--plain' hov='o' px='20' py='15'>Menu item 2</HTML.a>
+						<HTML.a href='#menu-link03' className='set--plain' hov='o' px='20' py='15'>Menu item 3</HTML.a>
+						<HTML.a href='#menu-link04' className='set--plain' hov='o' px='20' py='15'>Menu item 4</HTML.a>
 					</Stack>
 				</Modal.Body>
 			</Modal.Inner>

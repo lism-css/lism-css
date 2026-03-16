@@ -1,0 +1,31 @@
+/* ------------------------------------------------------------
+	cqUnit: コンテナクエリ単位の再セット
+------------------------------------------------------------ */
+.set--cqUnit {
+	--REM: var(--REM--cq);
+	font-size: var(--REM--cq);
+
+	--fz--base: var(--REM);
+
+	// ハーフレディング単位
+	--hl-unit: calc(var(--REM) * 0.125); /* ≒ 2px */
+
+	// --- ハーフレディング ---
+	--hl--xs: var(--hl-unit);
+	--hl--s: calc(var(--hl-unit) * 2);
+	--hl--base: calc(var(--hl-unit) * 3);
+	--hl--l: calc(var(--hl-unit) * 4);
+
+	// --- スペーシング ---
+	--s-unit: calc(var(--REM) * 0.5); /* ≒ 8px */
+	--s5: calc(0.5 * var(--s-unit));
+	--s10: var(--s-unit);
+	--s15: calc(1.5 * var(--s-unit));
+	--s20: calc(2 * var(--s-unit));
+	--s30: calc(3 * var(--s-unit));
+	--s40: calc(5 * var(--s-unit));
+	--s50: calc(8 * var(--s-unit));
+	--s60: calc(13 * var(--s-unit));
+	--s70: calc(21 * var(--s-unit));
+	--s80: calc(34 * var(--s-unit));
+}

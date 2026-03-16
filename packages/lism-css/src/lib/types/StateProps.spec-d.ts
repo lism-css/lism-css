@@ -36,11 +36,10 @@ describe('StateProps', () => {
 			assertType<StateProps>({ isSide: true });
 			assertType<StateProps>({ isSkipFlow: true });
 			assertType<StateProps>({ isVertical: true });
-			assertType<StateProps>({ hasGutter: true });
+			assertType<StateProps>({ setGutter: true });
 			assertType<StateProps>({ setShadow: true });
 			assertType<StateProps>({ setHov: true });
 			assertType<StateProps>({ setTransition: true });
-			assertType<StateProps>({ setSnap: true });
 			assertType<StateProps>({ setPlain: true });
 			assertType<StateProps>({ setInnerRs: true });
 		});

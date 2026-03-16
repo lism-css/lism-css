@@ -91,10 +91,10 @@ export default {
 
 	// bg
 	bg: { prop: 'background', bp: 1 },
-	// bgi: { prop: 'backgroundImage' },
-	// bgr: { prop: 'backgroundRepeat', utils: { no: 'no-repeat' } },
-	// bgp: { prop: 'backgroundPosition', presets: ['center'] },
-	// bgsz: { prop: 'backgroundSize', presets: ['cover', 'contain'] },
+	bgi: { prop: 'backgroundImage' },
+	bgr: { prop: 'backgroundRepeat', presets: ['no-repeat'] },
+	bgp: { prop: 'backgroundPosition', presets: ['center'] },
+	bgsz: { prop: 'backgroundSize', presets: ['cover', 'contain'] },
 	// bga: { prop: 'backgroundAttachment' }, // fixed
 	// bgo: { prop: 'backgroundOrigin' }, // border, padding, content
 	// bgblend: { prop: 'backgroundBlendMode' },

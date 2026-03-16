@@ -1,12 +1,12 @@
 // そのうち text-box-trim が使える
 
-.u-trim {
+.u--trim {
 	// 詰まりすぎにならないようにほんの少しだけ余裕を持たせる
 	// margin-block: calc(0.5px + var(--HL) * -1);
 	margin-block: calc(var(--hl) * -1);
 }
 
-.u-trimItems {
+.u--trimItems {
 	> * {
 		--my: calc(var(--hl) * -1);
 		margin-block: var(--my);
@@ -21,7 +21,7 @@
 	}
 }
 
-// .u-trimBox {
+// .u--trimBox {
 // 	:where(&) > * {
 // 		--trimHL: calc(0.5px + var(--HL) * -1);
 // 	}

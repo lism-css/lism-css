@@ -263,7 +263,7 @@ rmdir apps/docs/src/components/ex/ComponentName
 2. **スタイル調整**: 元のスタイルは既に `@layer lism.modules` を使用しているため、大きな変更は不要
 3. **data 属性**: `data-chat-dir` はそのまま維持
 4. **variant**: `speak`, `think` の2種類のバリアントあり
-5. **keycolor**: カラーボックス (`u-cbox`) を使用した色管理
+5. **keycolor**: カラーボックス (`u--cbox`) を使用した色管理
 
 ### プロパティ一覧
 

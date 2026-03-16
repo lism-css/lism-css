@@ -1,4 +1,4 @@
-@use '../_setting' as setting;
+@use '../../_setting' as setting;
 @use 'sass:math';
 
 // フォントサイズ計算用の関数
@@ -70,8 +70,7 @@
 	Spacing
 	フィボナッチ数列 0, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89,
 ------------------------------------------------------------ */
-:root,
-.set-cqUnit {
+:root {
 	--fz--base: var(--REM);
 
 	// ハーフレディング単位
@@ -107,9 +106,4 @@
 	--s60: calc(13 * var(--s-unit));
 	--s70: calc(21 * var(--s-unit));
 	--s80: calc(34 * var(--s-unit));
-}
-
-.set-cqUnit {
-	--REM: var(--REM--cq);
-	font-size: var(--REM--cq);
 }

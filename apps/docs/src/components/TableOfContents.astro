@@ -15,7 +15,7 @@ const lang = getLangFromUrl(Astro.url);
 const tocText = t(lang, 'toc');
 ---
 
-<Stack fx="1" class="c--toc set-cqUnit" g="20" ov-y="auto" px={px}>
+<Stack fx="1" class="c--toc set--cqUnit" g="20" ov-y="auto" px={px}>
 	<HTML.h lv="3" fz="l">{tocText.title}</HTML.h>
 	<Stack tag="ul" class="c--toc_list" g="0">
 		{toc.map((item) => <TocItemComponent item={item} />)}
