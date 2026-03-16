@@ -13,23 +13,26 @@ interface Props {
 
 const { moduleType } = Astro.props;
 
-// moduleType からディレクトリを判定するマッピング
-const moduleTypeToDir: Record<string, string> = {
-	'Layout Modules': 'modules/layout',
-	'Atomic Modules': 'modules/atomic',
-	'State Modules': 'modules/state',
-	'Dynamic Modules': 'modules/dynamic',
+// moduleType からslugプレフィックスを判定するマッピング
+const moduleTypeToPrefix: Record<string, string> = {
+	'Layout Modules': 'l--',
+	'Atomic Modules': 'a--',
+	'State Modules': 'is--',
+	'Dynamic Modules': 'c--',
 };
 
-const targetDir = moduleTypeToDir[moduleType];
+const prefix = moduleTypeToPrefix[moduleType];
 
 // 現在の言語を取得
 const currentLang = getLangFromUrl(Astro.url);
 
-// 対象ディレクトリの記事を取得
+// 対象プレフィックスの記事を取得（modules/ 配下のファイル名で判定）
 const allPosts = await getPostsByLang(currentLang);
 const modulePosts = allPosts
-	.filter((post) => post.slug.startsWith(targetDir + '/') || post.slug === targetDir)
+	.filter((post) => {
+		const fileName = post.slug.split('/').pop() ?? '';
+		return post.slug.startsWith('modules/') && fileName.startsWith(prefix);
+	})
 	.sort((a, b) => {
 		// order順にソート（未指定は999として扱う）
 		const orderA = a.data.order ?? 999;
@@ -42,7 +45,7 @@ const modulePosts = allPosts
 	modulePosts.length > 0 ? (
 		<ul>
 			{modulePosts.map((post) => {
-				const postPath = getLocalizedUrl(`/${post.slug}/`, currentLang);
+				const postPath = getLocalizedUrl(`/docs/${post.slug}/`, currentLang);
 				const navLabel = post.data.navtitle ?? post.data.title;
 				return (
 					<Lism tag="li" key={post.slug}>
