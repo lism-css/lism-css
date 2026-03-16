@@ -119,7 +119,6 @@ export class LismPropsData {
 		// if (null != passVars && typeof passVars === 'object') {
 		// 	this.setPassProps(passVars);
 		// }
-
 		// if (null != pass) {
 		// 	// , 区切りでユーティリティクラスを複数出力可能
 		// 	splitWithComma(pass).forEach((_propName) => {
@@ -422,10 +421,11 @@ export default function getLismProps(props: LismProps): LismOutputProps {
 
 	const { layout, ...rest } = props;
 	const propObj = new LismPropsData(getLayoutProps(layout, rest));
-
-	return filterEmptyObj({
-		className: propObj.className,
-		style: filterEmptyObj(propObj.styles as Record<string, unknown>), //filterEmptyObj(styles), // filterEmptyObj は最後にかける
-		...propObj.attrs, // 処理されずに残っているprops
-	}) as LismOutputProps;
+	return {
+		...filterEmptyObj({
+			className: propObj.className,
+			style: filterEmptyObj(propObj.styles as Record<string, unknown>),
+		}),
+		...propObj.attrs, // data-* などHTMLの標準属性はそのまま渡す
+	} as LismOutputProps;
 }

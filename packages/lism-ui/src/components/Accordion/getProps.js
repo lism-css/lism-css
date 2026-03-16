@@ -2,7 +2,7 @@ import atts from 'lism-css/lib/helper/atts';
 
 export function getRootProps({ lismClass, allowMultiple, ...props }) {
 	props.lismClass = atts(lismClass, 'c--accordion');
-	if (allowMultiple) props['data-allow-multiple'] = 'true';
+	if (allowMultiple) props['data-allow-multiple'] = '';
 	return props;
 }
 
