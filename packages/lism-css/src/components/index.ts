@@ -1,11 +1,6 @@
-// import { createHooks } from '../hooks';
-// export const lismHooks = createHooks();
-
 export * from './Lism';
 export * from './Dummy';
 export { default as HTML } from './HTML';
-
-//is--
 
 // l--
 export * from './Container';

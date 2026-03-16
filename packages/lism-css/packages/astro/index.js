@@ -2,8 +2,6 @@
  * .astro でLismコンポーネントを配布
  */
 
-// export { default as Lism } from './Lism/Lism.astro';
-// export { Lism, HTML, Media, Link } from './Lism';
 export * from './Lism';
 export { default as HTML } from './HTML';
 export * from './Dummy';
