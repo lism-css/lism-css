@@ -67,7 +67,7 @@ describe('searchDocs', () => {
 
 	it('URLが正しく生成される', () => {
 		const results = searchDocs(entries, 'Box');
-		expect(results[0].url).toBe('https://lism-css.com/ja/docs/box/');
+		expect(results[0].url).toBe('https://lism-css.com/docs/box/');
 	});
 
 	it('マッチしない場合は空配列を返す', () => {

@@ -144,7 +144,7 @@ export function searchDocs(entries: DocsEntry[], query: string, options?: Search
 		.sort((a, b) => b.score - a.score)
 		.slice(0, limit);
 
-	const DOCS_BASE_URL = 'https://lism-css.com/ja/docs';
+	const DOCS_BASE_URL = 'https://lism-css.com/docs';
 
 	return scored.map(({ entry, score }) => ({
 		sourcePath: entry.sourcePath,
