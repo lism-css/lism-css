@@ -4,8 +4,6 @@ import path from 'node:path';
 
 // OG画像用のSVGを生成する
 export async function renderOgSvg(title: string, tags: string[]) {
-	const fontUrl600 = 'https://cdn.jsdelivr.net/npm/@fontsource/noto-sans-jp@5.0.19/files/noto-sans-jp-japanese-600-normal.woff';
-
 	// publicディレクトリのパスを取得
 	const publicDir = path.resolve(process.cwd(), 'public');
 
@@ -20,11 +18,9 @@ export async function renderOgSvg(title: string, tags: string[]) {
 	const logoBase64 = fs.readFileSync(logoPath).toString('base64');
 	const logoDataUrl = `data:image/png;base64,${logoBase64}`;
 
-	// フォントを取得
-	const fontData600 = await fetch(fontUrl600).then((res) => {
-		if (!res.ok) throw new Error(`Failed to fetch font 600: ${res.statusText}`);
-		return res.arrayBuffer();
-	});
+	// フォントをローカルファイルから読み込み
+	const fontPath = path.join(publicDir, 'fonts/noto-sans-jp-600.woff');
+	const fontData600 = fs.readFileSync(fontPath);
 
 	return satori(
 		<div
