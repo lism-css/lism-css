@@ -2,45 +2,82 @@
 
 `packages/mcp/src/data/` 配下の JSON ファイルを、リポジトリの最新ソースから再生成してください。
 
-## 対象ファイルとデータソース
 
-以下の 5 つの JSON を、指定されたソースを読み取って最新化してください。
-既存の JSON の構造（スキーマ）は変更せず、内容だけを更新すること。
+## 情報の優先順位
 
-### 1. `overview.json`
-- **参照先**: `packages/lism-css/package.json`, `packages/lism-ui/package.json`, `apps/docs/src/content/docs/ja/overview.mdx`, `apps/docs/src/content/docs/ja/installation.mdx`, `apps/docs/src/content/docs/ja/css-methodology.mdx`
-- **更新内容**: description, packages（バージョン含む）, architecture, installation, cssLayers, classNaming, propAbbreviations
+1. **パッケージソース（絶対基軸）**: `packages/lism-css/` と `packages/lism-ui/` のソースコードが常に正とする
+2. **ドキュメント（補足）**: `apps/docs/` の MDX は解説・説明文の参考として使うが、ソースと矛盾する場合はソースを優先する
+
+
+## 対象ファイルとグループ分け
+
+5 つの JSON を 3 グループに分けて `lism-mcp-editor` サブエージェント（sonnet）で並列更新する。
+既存の JSON のスキーマ（フィールド名・型の構造）は変更せず、内容だけを更新すること。
+
+### グループ A: `overview.json` + `tokens.json`
+
+#### overview.json
+- **ソース**: `packages/lism-css/package.json`, `packages/lism-ui/package.json`
+- **補足 docs**: `apps/docs/src/content/ja/overview.mdx`, `apps/docs/src/content/ja/installation.mdx`, `apps/docs/src/content/ja/css-methodology.mdx`
+- **更新内容**: description, packages（バージョン含む）, architecture, installation, cssLayers
 - **注意**: get_overview のレスポンスは Markdown 形式に変換されるため、各フィールドのテキストはそのまま読みやすい形で記述すること（特に installation フィールドは Markdown 記法で記述）
 
-### 2. `tokens.json`
-- **参照先**: `packages/lism-css/src/scss/token/` 配下の SCSS ファイル, `apps/docs/src/content/docs/ja/tokens.mdx`
+#### tokens.json
+- **ソース**: `packages/lism-css/src/scss/token/` 配下の SCSS ファイル
+- **補足 docs**: `apps/docs/src/content/ja/tokens.mdx`
 - **更新内容**: 各カテゴリ（color, spacing, fontSize, lineHeight, letterSpacing, fontFamily, radius, shadow, zIndex）のトークン一覧
 
-### 3. `props-system.json`
-- **参照先**: `packages/lism-css/src/config/` 配下の設定ファイル, `apps/docs/src/content/docs/ja/props/` 配下の MDX ファイル
+### グループ B: `props-system.json` + `components.json`
+
+#### props-system.json
+- **ソース**: `packages/lism-css/src/config/` 配下の設定ファイル
+- **補足 docs**: `apps/docs/src/content/ja/props/` 配下の MDX ファイル
 - **更新内容**: 各カテゴリの prop 一覧（prop名, cssProperty, type, responsive, values）
 
-### 4. `components.json`
-- **参照先**: `packages/lism-css/src/components/` と `packages/lism-ui/src/components/` 配下のコンポーネントソース, `apps/docs/src/content/docs/ja/modules/` と `apps/docs/src/content/docs/ja/ui/` 配下の MDX
-- **更新内容**: 全コンポーネントの name, package, category, description, props, usage
+#### components.json
+- **ソース**: `packages/lism-css/src/components/`, `packages/lism-ui/src/components/`, `packages/lism-css/config/defaults/`
+- **補足 docs**: `apps/docs/src/content/ja/modules/` と `apps/docs/src/content/ja/ui/` 配下の MDX
+- **更新内容**: 全コンポーネントの name, package, category, description, aliases, props, usage
+- **aliases ルール**: ユーザーが自然言語で検索しそうなキーワードを含める
 
-### 5. `docs-index.json`
-- **参照先**: `apps/docs/src/content/docs/ja/` 配下の全 MDX ファイル
+### グループ C: `docs-index.json`
+
+#### docs-index.json
+- **ソース**: `apps/docs/src/content/ja/` 配下の全 MDX ファイル
 - **更新内容**: 各ページの sourcePath, title, description, category, headings, keywords, snippet
 - **title ルール**: modules カテゴリのエントリは、title に JSX コンポーネント名と CSS クラス名を `コンポーネント名 / クラス名` の形式で併記すること（例: `"Flex / l--flex"`, `"Container / is--container"`, `"Icon / a--icon"`）。クラス名は sourcePath のファイル名部分から取得できる。
 
+
 ## 作業手順
 
-1. 既存の各 JSON ファイルを読み、現在の構造（スキーマ）を把握する
-2. 上記の参照先ソースを読み取る
-3. 新しい情報があれば追加、古い情報があれば更新・削除する
-4. 各 JSON ファイルを書き出す
-5. `packages/mcp/src/data/meta.ts` の `generatedAt` を今日の日付に、`sourceCommit` を現在の HEAD コミットハッシュに更新する
-6. 最後に差分のサマリーを報告する
+### 1. 事前情報の取得
+
+親エージェントは以下だけ取得する（ソースの詳細読み取りはサブエージェントに任せる）：
+
+- `packages/lism-css/package.json`, `packages/lism-ui/package.json` からバージョン情報を取得
+- `git rev-parse --short HEAD` で現在のコミットハッシュを取得
+
+### 2. サブエージェント 3 並列起動
+
+`lism-mcp-editor` サブエージェント（sonnet）をグループ A / B / C で 3 並列に起動する。
+
+各サブエージェントには以下を伝える：
+- 担当する JSON ファイル名とグループ
+- 参照すべきソースファイルのパス一覧（内容はサブエージェント自身が読み取る）
+- バージョン情報（事前取得した値）
+- スキーマは変更不可であること
+
+### 3. meta.ts の更新
+
+全サブエージェントの完了後、`packages/mcp/src/data/meta.ts` の `generatedAt` を今日の日付に、`sourceCommit` を現在の HEAD コミットハッシュに更新する。
+
+### 4. 差分サマリーの報告
+
+各サブエージェントの結果をまとめて、変更点のサマリーをユーザーに報告する。
+
 
 ## 注意事項
 
 - JSON のスキーマ（フィールド名・型の構造）は変更しないこと。スキーマ定義は `packages/mcp/src/lib/schemas.ts` を参照
 - ソースに存在しない情報を推測で追加しないこと
 - description 等のテキストは日本語で記述すること
-- 1ファイルずつ順番に処理し、各ファイルの更新内容を簡潔に報告すること
