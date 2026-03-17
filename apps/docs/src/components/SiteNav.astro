@@ -23,6 +23,15 @@ const currentSection = getSiteSection(currentPathWithoutLang);
 // 現在の言語の記事を取得
 const allPosts = await getPostsByLang(currentLang);
 
+// ルート言語以外の場合、ラベルのフォールバック用にルート言語の記事も取得
+const fallbackPostsBySlug = new Map<string, PostEntry>();
+if (currentLang !== 'ja') {
+	const fallbackPosts = await getPostsByLang('ja');
+	fallbackPosts.forEach((post) => {
+		fallbackPostsBySlug.set(post.slug, post);
+	});
+}
+
 // トップレベルリンクを取得（全セクション共通）
 const topLevelLinks = sidebarConfig.topLevelLinks;
 
@@ -198,8 +207,14 @@ function getPostUrl(slug: string): string {
 									if (typeof item === 'string') {
 										const slug = extractSlugFromUrl(item);
 										const post = postsBySlug.get(slug);
-										// navtitleがあればそれを、なければtitleを表示
-										const navLabel = post?.data?.navtitle ?? post?.data?.title ?? slug;
+										// navtitleがあればそれを、なければtitleを表示（見つからない場合はルート言語にフォールバック）
+										const fallbackPost = fallbackPostsBySlug.get(slug);
+										const navLabel =
+											post?.data?.navtitle ??
+											post?.data?.title ??
+											fallbackPost?.data?.navtitle ??
+											fallbackPost?.data?.title ??
+											slug;
 										// 言語対応のパスを生成
 										const itemPath = getLocalizedUrl(item.endsWith('/') ? item : `${item}/`, currentLang);
 										const pathForCompare = item.endsWith('/') ? item : `${item}/`;
