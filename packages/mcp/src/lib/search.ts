@@ -7,7 +7,35 @@ function tokenize(text: string): string[] {
 		.filter((t) => t.length > 0);
 }
 
-function scoreEntry(entry: DocsEntry, queryTokens: string[]): number {
+/**
+ * コンポーネント名 → aliases (lowercase) のマップを構築。
+ * ComponentInfo に限らず { name, aliases? } を持つ任意の配列から生成できる。
+ */
+export function buildAliasMap(items: Array<{ name: string; aliases?: string[] }>): Map<string, string[]> {
+	const map = new Map<string, string[]>();
+	for (const item of items) {
+		if (item.aliases && item.aliases.length > 0) {
+			map.set(
+				item.name.toLowerCase(),
+				item.aliases.map((a) => a.toLowerCase())
+			);
+		}
+	}
+	return map;
+}
+
+// docs entry のタイトルに含まれるコンポーネント名から aliases を取得
+function getEntryAliases(entry: DocsEntry, aliasMap: Map<string, string[]>): string[] {
+	const titleLower = entry.title.toLowerCase();
+	for (const [name, aliases] of aliasMap) {
+		if (titleLower.includes(name)) {
+			return aliases;
+		}
+	}
+	return [];
+}
+
+function scoreEntry(entry: DocsEntry, queryTokens: string[], aliasMap?: Map<string, string[]>): number {
 	let score = 0;
 	const titleLower = entry.title.toLowerCase();
 	const descLower = entry.description.toLowerCase();
@@ -28,10 +56,28 @@ function scoreEntry(entry: DocsEntry, queryTokens: string[]): number {
 		if (snippetLower.includes(token)) score += 1;
 	}
 
+	// コンポーネントの aliases によるブースト
+	if (aliasMap) {
+		const aliases = getEntryAliases(entry, aliasMap);
+		if (aliases.length > 0) {
+			const aliasesStr = aliases.join(' ');
+			for (const token of queryTokens) {
+				if (aliasesStr.includes(token)) score += 5;
+			}
+		}
+	}
+
 	return score;
 }
 
-export function searchDocs(entries: DocsEntry[], query: string, category?: string, limit: number = 10): SearchResult[] {
+export interface SearchDocsOptions {
+	category?: string;
+	limit?: number;
+	aliasMap?: Map<string, string[]>;
+}
+
+export function searchDocs(entries: DocsEntry[], query: string, options?: SearchDocsOptions): SearchResult[] {
+	const { category, limit = 10, aliasMap } = options ?? {};
 	const queryTokens = tokenize(query);
 	if (queryTokens.length === 0) return [];
 
@@ -42,7 +88,7 @@ export function searchDocs(entries: DocsEntry[], query: string, category?: strin
 
 	const scored = filtered
 		.map((entry) => {
-			const score = scoreEntry(entry, queryTokens);
+			const score = scoreEntry(entry, queryTokens, aliasMap);
 			return { entry, score };
 		})
 		.filter(({ score }) => score > 0)

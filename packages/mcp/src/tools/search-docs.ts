@@ -1,8 +1,8 @@
 import { z } from 'zod';
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { loadJSON } from '../lib/load-data.js';
-import { DocsEntrySchema } from '../lib/schemas.js';
-import { searchDocs } from '../lib/search.js';
+import { DocsEntrySchema, ComponentInfoSchema } from '../lib/schemas.js';
+import { buildAliasMap, searchDocs } from '../lib/search.js';
 import { success, error, READ_ONLY_ANNOTATIONS } from '../lib/response.js';
 
 const DOC_CATEGORIES = ['all', 'core-components', 'modules', 'props', 'ui', 'guide'] as const;
@@ -23,7 +23,9 @@ export function registerSearchDocs(server: McpServer): void {
 		({ query, category, limit }) => {
 			try {
 				const entries = loadJSON('docs-index.json', z.array(DocsEntrySchema));
-				const results = searchDocs(entries, query, category, limit);
+				const components = loadJSON('components.json', z.array(ComponentInfoSchema));
+				const aliasMap = buildAliasMap(components);
+				const results = searchDocs(entries, query, { category, limit, aliasMap });
 				return success({ query, results });
 			} catch (e) {
 				return error(

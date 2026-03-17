@@ -29,12 +29,31 @@ export function registerGetComponent(server: McpServer): void {
 				}
 
 				const nameLower = name.toLowerCase();
-				const exact = candidates.find((c) => c.name.toLowerCase() === nameLower);
 
+				// Step 1: 名前の完全一致
+				const exact = candidates.find((c) => c.name.toLowerCase() === nameLower);
 				if (exact) {
 					return success({ component: exact });
 				}
 
+				// Step 2: aliases マッチ（用途ベースの検索、完全一致）
+				const aliasMatches = candidates.filter((c) => c.aliases?.some((a) => a.toLowerCase() === nameLower));
+				if (aliasMatches.length === 1) {
+					return success({ component: aliasMatches[0], matchedBy: 'alias' });
+				}
+				if (aliasMatches.length > 1) {
+					const suggestions = aliasMatches.map((c) => ({
+						name: c.name,
+						package: c.package,
+						description: c.description,
+					}));
+					return notFound(
+						`Component "${name}" not found by name, but ${aliasMatches.length} components matched by alias. Did you mean one of these?`,
+						{ suggestions }
+					);
+				}
+
+				// Step 3: 名前の部分一致
 				const suggestions = candidates
 					.filter((c) => c.name.toLowerCase().includes(nameLower))
 					.map((c) => ({ name: c.name, package: c.package }));

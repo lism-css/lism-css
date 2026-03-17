@@ -22,6 +22,7 @@ export const ComponentInfoSchema = z.object({
 	package: z.enum(['lism-css', '@lism-css/ui']),
 	category: z.string(),
 	description: z.string(),
+	aliases: z.array(z.string()).optional(),
 	props: z.array(ComponentPropSchema),
 	usage: z.string(),
 });

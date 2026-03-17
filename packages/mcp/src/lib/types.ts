@@ -27,6 +27,7 @@ export interface ComponentInfo {
 	package: 'lism-css' | '@lism-css/ui';
 	category: string;
 	description: string;
+	aliases?: string[];
 	props: ComponentProp[];
 	usage: string;
 }
