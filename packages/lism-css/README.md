@@ -1,8 +1,11 @@
+# lism-css
+
+A lightweight, layout-first CSS framework for websites.
+Provides CSS utilities, design tokens, and React / Astro layout components.
+
+For details, see [Documentation](https://lism-css.com/).
+
 ## Installation
-
-For details, see [Docs](https://lism-css.com/)
-
-### 1. Installation
 
 ```bash
 npm i lism-css
@@ -14,39 +17,58 @@ or
 pnpm add lism-css
 ```
 
-### 2. Loading CSS
+## Setup
 
-Please import CSS as a global style.
+Import CSS as a global style.
 
 ```js
 import 'lism-css/main.css';
 ```
 
-(For example, if it is Next.js, load it with `_app.js` or `layout.js`.)
+For Next.js, load it in `layout.js` (App Router) or `_app.js` (Pages Router).
 
-For HTML sites, you can also load CSS via CDN.
+For HTML sites, you can load CSS via CDN:
 
 ```html
 <link href="https://cdn.jsdelivr.net/npm/lism-css/dist/css/main.css" rel="stylesheet" />
 ```
 
-### 3. Using Components
+## Usage
+
+### React
 
 ```jsx
-import { Box, HTML, ... } from 'lism-css/react';
+import { Box, Flex, Stack, HTML } from 'lism-css/react';
 
-// ...
-<Box p='15' bgc="base-2">
-	<HTML.p fz="l">Lorem ipsum text...</HTML.p>
-</Box>
-// ...
+<Stack g="20">
+  <Box p="20" bgc="base-2">
+    <HTML.p fz="l">Lorem ipsum text...</HTML.p>
+  </Box>
+</Stack>
 ```
 
+### Astro
+
+```astro
+---
+import { Box, Flex, Stack, HTML } from 'lism-css/astro';
 ---
 
-## include package
+<Stack g="20">
+  <Box p="20" bgc="base-2">
+    <HTML.p fz="l">Lorem ipsum text...</HTML.p>
+  </Box>
+</Stack>
+```
 
-© Phosphor Icons
-Website: https://phosphoricons.com/
-Source: https://github.com/phosphor-icons
-License: MIT License, https://opensource.org/licenses/MIT
+## UI Components
+
+For interactive UI components (Accordion, Modal, Tabs, etc.), see [@lism-css/ui](https://www.npmjs.com/package/@lism-css/ui).
+
+## Credits
+
+- [Phosphor Icons](https://phosphoricons.com/) — MIT License ([source](https://github.com/phosphor-icons))
+
+## License
+
+MIT
