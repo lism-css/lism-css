@@ -14,12 +14,10 @@ Lismでは、border系の指定が少し特殊になっています。
 
 <PreviewTitle>css</PreviewTitle>
 ```scss
-:where(.-bd,[class*='-bd-']) {
+:where(.-bd,[class*=" -bd-"],[class^="-bd-"]) {
 	--bds: solid;
 	--bdw: 1px;
-	--bdc: currentColor;
-}
-:where(.-bd,[class*='-bd-']) {
+	--bdc: var(--divider);
 	border-width: var(--bdw);
 	border-color: var(--bdc);
 }
@@ -30,6 +28,10 @@ Lismでは、border系の指定が少し特殊になっています。
 .-bd-x-e { border-inline-end-style: var(--bds) }
 .-bd-y-s { border-block-start-style: var(--bds) }
 .-bd-y-e { border-block-end-style: var(--bds) }
+.-bd-t { border-top-style: var(--bds) }
+.-bd-b { border-bottom-style: var(--bds) }
+.-bd-l { border-left-style: var(--bds) }
+.-bd-r { border-right-style: var(--bds) }
 ```
 
 

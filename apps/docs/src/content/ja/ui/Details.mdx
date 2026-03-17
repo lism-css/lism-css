@@ -84,16 +84,16 @@ import { Minus, Plus, X, Question, CaretDoubleDown, EyeClosed, Eyes } from "@pho
 				<Details.Title>Details Title</Details.Title>
 				<Details.Icon/>
 			</Details.Summary>
-			<Details.Body>
+			<Details.Content>
 				...Contents...
-			</Details.Body>
+			</Details.Content>
 		</Details.Root>
 		```
 	</PreviewCode>
 	<PreviewCode slot='tab' label='HTML'>
 		```pug
 		details.c--details
-			summary.c--details_header.l--flex.-ai:center
+			summary.c--details_summary.l--flex.-g:10.-ai:center
 				span.c--details_title.-fx:1
 				span.c--details_icon.a--icon[aria-hidden="true"]
 			div.c--details_body
@@ -136,7 +136,7 @@ import { Minus, Plus, X, Question, CaretDoubleDown, EyeClosed, Eyes } from "@pho
 
 ### タイトルのHTMLタグを変更し、複数同時展開を制限する例
 
-`<Details.Title>`はデフォルトではspnaタグで出力されますが、`tag`でHTMLタグを指定できます。
+`<Details.Title>`はデフォルトではspanタグで出力されますが、`tag`でHTMLタグを指定できます。
 
 また、details/summaryの基本的な機能として、`name`属性を指定すると同じグループ内で同時に展開可能な要素が一つのみとなります。
 
@@ -200,7 +200,7 @@ import { Minus, Plus, X, Question, CaretDoubleDown, EyeClosed, Eyes } from "@pho
 
 ### アニメーション時間を変更する例
 
-`<Ddetails>`の開閉アニメーションの時間は`--duration`変数で管理しており、初期値は、`<Accordion>`と同じ`--acc-duration`になっています。
+`<Details>`の開閉アニメーションの時間は`--duration`変数で管理しており、初期値は、`<Accordion>`と同じ`--acc-duration`になっています。
 
 局所的な調整には `--duration`変数を調整し、全体的な調整には`:root`で`--acc-duration`を上書きしてください。
 
