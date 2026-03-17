@@ -1,6 +1,6 @@
 # MCP サーバー アーキテクチャガイド
 
-このドキュメントでは、`@lism-css/mcp-server` パッケージの全体像と処理の流れを、MCPサーバー構築の初心者にも分かるように解説します。
+このドキュメントでは、`@lism-css/mcp` パッケージの全体像と処理の流れを、MCPサーバー構築の初心者にも分かるように解説します。
 
 
 ## MCP とは
@@ -364,7 +364,7 @@ server.registerTool(
   "mcpServers": {
     "lism-css": {
       "command": "npx",
-      "args": ["@lism-css/mcp-server"]
+      "args": ["@lism-css/mcp"]
     }
   }
 }
