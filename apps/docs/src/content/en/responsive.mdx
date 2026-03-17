@@ -1,0 +1,138 @@
+---
+title: 'Prop Responsive'
+description: ...
+---
+import { Lism, Box, Spacer } from "lism-css/astro";
+
+
+## Responsive Support
+
+In Lism, responsive support is implemented by combining classes in the `.-{prop}_{bp}` format with variables in the `--{prop}_{bp}` format.
+
+
+<PreviewTitle>Example</PreviewTitle>
+```css
+.-p{ padding: var(--p); }
+
+/* @sm ~ */
+@container (min-width: 480px) {
+  .-p_sm{ padding: var(--p_sm); }
+}
+
+/* @md ~ */
+@container (min-width: 720px) {
+  .-p_md{ padding: var(--p_md); }
+}
+```
+
+
+<Preview>
+	<PreviewTitle>Responsive example</PreviewTitle>
+	<PreviewArea resize p='15'>
+		<Lism p={[20, 40, 50]} bd>
+			<p>Example</p>
+		</Lism>
+	</PreviewArea>
+	<PreviewCode label="HTML" slot="tab">
+		```html "-p_sm -p_md" "--p_sm" "--p_md"
+		<div class="-p:15 -p_sm -p_md -bd" style="--p_sm:var(--s30);--p_md:var(--s40)">
+			<p>Example</p>
+		</div>
+		```
+	</PreviewCode>
+	<PreviewCode label="JSX" slot="tab">
+		```jsx
+		<Lism p={[20, 40, 50]} bd>
+			<p>Example</p>
+		</Lism>
+		```
+	</PreviewCode>
+</Preview>
+
+:::warning
+Not all CSS properties support responsive switching.
+For details on which properties support breakpoint switching by default, refer to the [Prop Class list page](/docs/prop-class).
+:::
+
+You can also toggle responsive support per property by [customizing via SCSS files](/docs/customize/).
+
+### The CSS implementation differs slightly depending on the property
+
+There are two patterns:
+
+1. Properties where the value is always accessible via the `-{prop}` variable
+2. Properties that are simply overridden at each breakpoint
+
+
+<PreviewTitle>Implementation example for pattern 1</PreviewTitle>
+```css
+.-p{ padding: var(--p) }
+
+@container (min-width: 480px) {
+	.-p_sm {
+		--p: var(--p_sm) !important;
+		padding: var(--p_sm);
+	}
+}
+```
+
+<p class='-my-s:15'>Only a limited set of properties (`p`, `m`, `g`, `fz`, `c`, `bgc`, `bdrs`) — those where having the value always accessible via a CSS variable is considered useful — use this pattern.</p>
+
+<Spacer h='20'></Spacer>
+
+<PreviewTitle>Implementation example for pattern 2</PreviewTitle>
+```css
+.-d { display: var(--d) }
+
+@container (min-width: 480px) {
+	.-d_sm { display: var(--d_sm) }
+}
+```
+
+
+
+
+## Container Queries and Media Queries
+
+Lism adopts **container queries** by default.
+
+:::warning
+Note that with container queries, a **container element** must be defined on an ancestor element in order to switch values at breakpoints.
+:::
+
+<p class='-my-s:10'>(To define a container element in Lism, `.is--container` is the convenient way to do so.)</p>
+
+You can also switch from container queries to media queries by [customizing via SCSS files](/docs/customize/).
+
+
+## Breakpoints
+
+Breakpoints are defined **mobile-first**, using the values 480px, 800px, and 1120px.
+(**No device-specific sizes are used.**)
+
+| Size notation | Default value |
+|---|---|
+|`sm`|`width >= 480px`|
+|`md`|`width >= 800px`|
+|(`lg`)|`width >= 1120px`|
+
+:::info
+Standard support covers `sm` and `md` only. Support for `lg` and beyond requires additional [SCSS configuration customization](/docs/customize/).
+:::
+
+
+<Spacer h='20'></Spacer>
+
+To use these breakpoints in your own project with `.scss`, you can do so as follows:
+
+```scss
+@use '../path/to/node_modules/lism-css/scss/query' as query;
+
+@include query.cq('sm') {
+	// Your styles for sm sizes(width >= 480px) ...
+}
+@include query.cq('md') {
+	// Your styles for md sizes(width >= 720px) ...
+}
+```
+

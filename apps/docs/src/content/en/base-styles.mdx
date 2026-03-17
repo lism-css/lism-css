@@ -1,0 +1,58 @@
+---
+title: 'Base Styles'
+description: ...
+---
+import { Dummy, Box, HTML, Lism, Stack, Flex, Container, Frame, Center, Spacer, Media } from 'lism-css/astro';
+import { Button } from '@lism-css/ui/astro';
+
+
+This page introduces the base styles defined in the `@lism-base` layer.
+
+
+## Reset CSS
+
+The Reset CSS is defined as the `@lism-base.reset` layer.
+
+<PreviewTitle>Source code</PreviewTitle>
+<EmbedCode dirPath='packages/lism-css' srcPath='src/scss/reset.scss' />
+
+
+The reset.css is designed to follow browser default styles as closely as possible.
+
+It is intentionally minimal, containing only what is strictly necessary.
+
+### Loading only the Lism CSS reset.css
+
+
+<PreviewTitle>Import via JavaScript</PreviewTitle>
+```js
+import 'lism-css/reset.css';
+```
+
+Or alternatively:
+
+<PreviewTitle>Load via CDN</PreviewTitle>
+```html
+<link href="https://cdn.jsdelivr.net/npm/lism-css/dist/css/reset.css" rel="stylesheet" />
+```
+
+
+
+## Base styles
+
+In addition to the Reset CSS, the `@lism-base` layer defines default base styles for HTML elements, making use of tokens defined on `:root`.
+
+<PreviewTitle>Source code</PreviewTitle>
+<EmbedCode dirPath='packages/lism-css' srcPath='src/scss/base/_html.scss' />
+
+### Preview of basic HTML styles
+
+The following is a preview of the basic HTML styles with only `@lism-base` applied.
+
+<PreviewTitle>Preview</PreviewTitle>
+<PreviewArea>
+	<PreviewFrame ar='1/1' isInline url='/demo/html-base-style' />
+</PreviewArea>
+<Button href='/demo/html-base-style' variant='fill' target='_blank' bdrs='10' w='fit' mx='auto'>
+	View in full screen
+</Button>

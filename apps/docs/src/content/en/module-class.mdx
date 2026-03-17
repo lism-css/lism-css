@@ -1,0 +1,189 @@
+---
+title: 'Module Class'
+description: ...
+---
+
+
+import { Dummy, Flow, Box, HTML, Lism, Stack, Flex, Container, Frame, Center, Spacer, Media } from 'lism-css/astro';
+import ModuleList from '@/components/ModuleList.astro';
+
+{/* import { Desktop } from '@phosphor-icons/react'; */}
+
+
+Lism uses the following module classes.
+
+- `is--{module}`: Versatile state modules that can be applied or removed across multiple types of elements.
+- `l--{module}`: Modules that serve as the building blocks of layouts.
+- `a--{module}`: Modules that represent the smallest units of a layout.
+- `c--{module}`: Components with more specific roles. (Many are designed to be used in combination with other classes.)
+
+
+In general, multiple module classes from different layers cannot be combined, except for State Modules.
+For example, `.l--` and `.c--` can be used together, but `.l--XXX` and `.l--YYY`, or `.c--XXX` and `.c--YYY`, should not be combined within the same element.
+
+
+## State Module
+
+### `is--container`
+
+Applying `is--container` sets <code>container-type: inline-size</code> on the element.
+Since Lism CSS supports property switching via container queries,
+			<b>this class must be applied to any wrapper element you want to use as the container query reference.</b>
+
+### `is--wrapper`
+
+`is--wrapper` is a class for defining wrapper elements.
+You can control the width of direct child elements using `--contentSize`, and preset sizes can be specified with `-content:{s|l}`.
+
+<Spacer h='1rem' />
+
+| Class name | Content width (`--contentSize`) |
+|---|---|
+| `is--wrapper`| `--sz--m` |
+| `-content:s` | `--sz--s` |
+| `-content:l` | `--sz--l` |
+
+<Preview>
+	<PreviewTitle>Example</PreviewTitle>
+	<PreviewArea resize p='15'>
+		<Lism isWrapper='s' className='-bd:guide -hov:itemGuide'>
+			<div>Contents...</div>
+			<div>Contents...</div>
+		</Lism>
+	</PreviewArea>
+	<PreviewCode slot='tab' label='HTML'>
+	```html
+	<div class="is--wrapper -content:s">
+		<div>Contents...</div>
+		<div>Contents...</div>
+	</div>
+	```
+	</PreviewCode>
+	<PreviewCode slot='tab' label='JSX'>
+	```jsx
+	<Lism isWrapper='s'>
+		<div>Contents...</div>
+		<div>Contents...</div>
+	</Lism>
+	```
+	</PreviewCode>
+</Preview>
+
+
+<Reference>
+See [`<Wrapper>`](/modules/state/wrapper) for usage examples.
+</Reference>
+
+
+
+
+### `is--layer`
+
+Positions an element to match the size of its parent using `position: absolute`.
+
+The CSS is as follows — the element is positioned with both `inset: 0` and `overflow: hidden` applied.
+
+```css
+.is--layer {
+	position: absolute;
+	inset: 0;
+	overflow: hidden;
+}
+```
+
+<Reference>
+See [`<Layer>`](/modules/state/layer) for usage examples.
+</Reference>
+
+
+### `is--linkBox`
+
+A class for making an entire box into a clickable link.
+
+<Reference>
+See [`<LinkBox>`](/modules/state/linkbox) for usage examples.
+</Reference>
+
+<Spacer h='1rem' />
+
+
+### `is--vertical`
+
+| Class name |
+|---|
+| `is--vertical`|
+| `is--vertical@sm`|
+| `is--vertical@md`|
+
+Using `is--vertical@[sm|md]` enables vertical writing mode only at that breakpoint and above. (**The `.set--bp` class must also be applied.**)
+
+The value for vertical writing is managed via a token (`--vertical-mode`). (<span class='-fz:s'>This allows switching between `vertical-rl` and `vertical-lr` by overriding the variable according to the `lang` attribute.</span>)
+
+<Preview>
+	<PreviewTitle>Example: vertical writing at sm size and above</PreviewTitle>
+	<PreviewArea p='0' resize>
+		<Flow setGutter py='20' w='100%' h='20em' className='is--vertical@sm set--bp'>
+			<Dummy lang='ja' length='s' />
+			<Dummy lang='ja' length='l' offset='3' />
+		</Flow>
+	</PreviewArea>
+	<PreviewCode slot='tab' label='HTML'>
+	```html "is--vertical@sm set--bp"
+	<div class='is--vertical@sm set--bp l--flow set--gutter -py:20 -w:100% -h' style='--h:20em'>
+		<p>ロレム・イプサムの座り雨。目まぐるしい文章の流れの中で、それは静かに歩く仮の言葉です。</p>
+		<p>Elitも穏やかに続いていきますが、積み重ねられてきた「LiberroyとFoogの取り組み」は、決するための答えというより、余白のようなものです。作業が進むにつれて、工夫や考えとともに関心が折り重なりながらも、必要以上に主張せず彼らの作品は私たちに一定の示唆を与えてくれます。</p>
+	</div>
+	```
+	</PreviewCode>
+	<PreviewCode slot='tab' label='JSX'>
+		```jsx "is--vertical@sm set--bp"
+		<Flow setGutter py='20' w='100%' h='20em' className='is--vertical@sm set--bp'>
+			<Dummy lang='ja' length='s' />
+			<Dummy lang='ja' length='l' offset='3' />
+		</Flow>
+		```
+	</PreviewCode>
+</Preview>
+
+
+### `is--side`
+
+A class applied to the side element of `l--sideMain`.
+
+<Reference>
+See [`<SideMain>`](/modules/layout/sidemain) for usage examples.
+</Reference>
+
+
+### `is--skipFlow`
+
+When used as a direct child of `l--flow`, this cancels the spacing between the element and the following sibling.
+
+<Reference>
+See [`<Flow>`](/modules/layout/flow) for usage examples.
+</Reference>
+
+
+
+
+## Layout Modules
+
+`l--flex`, `l--grid`, `l--center`, and similar classes fall under Layout Modules.
+
+<ModuleList moduleType='Layout Modules'/>
+
+
+## Atomic Modules
+
+`a--divider`, `a--spacer`, `a--decorator`, and `a--icon` fall under Atomic Modules.
+
+<ModuleList moduleType='Atomic Modules'/>
+
+
+{/* ## Dynamic Modules
+`c--accordion`, `c--modal`, `c--tabs` fall under Dynamic Modules.
+<ModuleList moduleType='Dynamic Modules'/> */}
+
+
+## Custom Modules
+`c--button` and `c--card` fall under Custom Modules.

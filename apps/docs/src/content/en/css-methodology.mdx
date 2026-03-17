@@ -1,0 +1,405 @@
+---
+title: 'CSS Methodology'
+description: ...
+---
+import { Lism, Box } from "lism-css/astro";
+
+export const WhsNw = ({children}) => {
+	return <span className='-whspace:nowrap'>{children}</span>
+}
+
+This page explains the CSS design principles behind Lism.
+
+
+{/* Key points are as follows.
+
+- Predefined CSS layer structure (prevents specificity conflicts)
+- Reusable design tokens (improves maintainability and consistency)
+- Granular, purpose-specific classes (improves readability and reusability) */}
+{/* - Inlining rarely used CSS is acceptable */}
+
+
+
+## Lism CSS Layer Structure
+
+To address the common problem of CSS specificity becoming overly complex, Lism defines a clear layer structure.
+
+{/*
+|Layer|Role|Max Specificity|
+|---|---|---|
+|Settings|SASS configuration variables, mixins, etc. — nothing that outputs styles directly.||
+|Base|Token definitions, Reset CSS, and base styles for HTML elements.|0-0-1|
+|State|Highly versatile classes that can be toggled across many modules.|0-1-0|
+|Layout|Classes that serve as layout building blocks.|0-1-0|
+|Element|Classes with the smallest role as a design element.|0-1-0|
+|Component|Other components with more specific roles.|0-1-0|
+|Props|Classes tied to individual CSS properties.|0-1-0 !|
+|Utility|Other exceptional utility classes.|| */}
+
+<table className="l--table">
+	<thead>
+		<tr>
+			<th>Layer</th>
+			<th>Role</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>Settings</td>
+			<td>SASS configuration variables, mixins, and other constructs that do not directly output styles.</td>
+		</tr>
+		<tr>
+			<td>Base<br/>`@lism-base`</td>
+			<td>The layer for Reset CSS, token definitions, variable sets, and initial element styles.<br/>`.set--{state}` classes are also defined here.</td>
+		</tr>
+		<tr>
+			<td class='-whspace:nowrap'>Modules<br/>`@lism-modules`</td>
+			<td>
+				The layer that defines the collection of modules.<br />
+				It is further subdivided into sub-layers where `.is--{state}`, `.l--{layout}`, `.a--{atomic}`, and `.c--{custom}` are defined.
+			</td>
+		</tr>
+		{/* <tr>
+			<td class='-whspace:nowrap'>Custom Modules<br/>`@lism-modules`</td>
+			<td>Other user-defined custom modules and UI components with specific roles (`.c--{modules}`).</td>
+		</tr> */}
+		<tr>
+			<td class='-whspace:nowrap'>Utility<br/>`@lism-utility`</td>
+			<td>The layer for utility classes with a clear purpose or style (`.u--{name}`).</td>
+		</tr>
+		<tr>
+			<td class='-whspace:nowrap'>Custom<br/>`@lism-custom`</td>
+			<td>A customization layer for defining styles that should take priority over the layers above while remaining lower specificity than Prop Classes.</td>
+		</tr>
+		<tr>
+			<td class='-whspace:nowrap'>Props<br/>`-`</td>
+			<td>**Prop Classes** (`.-{prop}:{val}`) tied to individual CSS properties.<br />This group is the only one placed outside of layers, giving it higher specificity while still allowing reasonable coexistence with external CSS.</td>
+		</tr>
+	</tbody>
+</table>
+
+
+{/*
+In general, selectors are written within their maximum specificity limits and loaded in this order.
+<Callout type='info'>In exceptional cases, selectors may intentionally exceed the "maximum specificity."</Callout> */}
+
+{/* By defining and loading each with cascade layers (`@layer`), you can write styles without worrying too much about specificity. */}
+
+## Design Tokens
+
+CSS custom properties are defined for major CSS properties — typography, spacing, color, shadows, and more — using stepped preset values and semantic keywords.
+
+Using tokens brings **consistency** to the design, makes the **intent** behind property usage more readable, and improves **maintainability** by allowing site-wide adjustments to be made simply by updating token values.
+
+<Reference>
+See the [Tokens reference page](/docs/tokens/) for details.
+</Reference>
+
+
+
+## CSS Class Design
+
+This section explains the design philosophy behind the core class groups in Lism CSS.
+
+### Set Class
+
+**Set Classes** are utility classes defined within the `@lism-base` layer. They are used to override base styles, redefine tokens, or set up functional properties as initial defaults.
+
+| Category | Format | Example |
+|---|---|---|
+|Set Class|`.set--{style}`|`.set--plain`,<br />`.set--transition`|
+
+### Module Class
+
+Layout building blocks are broken down and defined as **Module Classes**.
+
+These are further categorized into several types:
+
+| Category | Format | Example |
+|---|---|---|
+|State Modules<HelpText fz="xs">Classes with layout functionality that can be toggled on or off as a state</HelpText>|`.is--{stateName}`|`.is--wrapper`,<br />`.is--container`|
+|Layout Modules<HelpText fz="xs">Modules that serve as layout building blocks</HelpText>|`.l--{name}`|`.l--grid`,<br />`.l--columns`|
+|Atomic Modules<HelpText fz="xs">The smallest layout unit modules</HelpText>|`.a--{name}`|`.a--divider`,<br />`.a--icon`|
+|Custom Modules<HelpText fz="xs">Other component groups with more specific roles</HelpText>|`.c--{name}`|`.c--button`,<br />`.c--accordion`|
+
+{/* |Dynamic<HelpText>Modules with behavior combined with JavaScript</HelpText>|`.d--{name}`|`.c--accordion`,<br />`.c--modal`,<br />`.c--tabs`| */}
+
+#### Defining style variations
+
+When defining variants of a module, create a class by appending a BEM-style Modifier to the base class name. Always include the base module class alongside the modifier class to avoid duplicating CSS.
+
+- Format: `.{pre}--{name}--{variant}`
+- Example: `.c--button.c--button--outline`
+
+
+#### Class names for child elements
+
+For modules that function as a unit including child elements, append a BEM-style Element string to the class name.
+
+- Format: `.{pre}--{componentName}_{elementName}`
+- Example: `.c--hoge_item`
+
+
+
+### Utility Class
+
+Utility classes with a clear decorative or functional purpose are defined as follows:
+
+| Category | Format | Example |
+|---|---|---|
+|Utility Class|`.u--{style}`|`.u--cbox`,<br/>`.u--trim`|
+
+
+
+### Prop Class
+
+In Lism CSS, utility classes that correspond to a single CSS property are defined as **Prop Classes**.
+
+Utility classes are provided for major properties, covering commonly used values and dedicated token values, with responsive support built in.
+
+
+Prop Classes come in three formats:
+
+| Format | Description | Example |
+|---|---|---|
+|<WhsNw>`.-{prop}:{value}`</WhsNw>| Utility classes for applying the primary values or token values for each property |<WhsNw>`.-fz:l`</WhsNw>,<br/><WhsNw>`.-d:none`</WhsNw>|
+|`.-{prop}`| A class that receives the `--{prop}` variable |`.-p`,<br/>`.-fz`|
+|`.-{prop}_{bp}`| A class that receives the `--{prop}_{bp}` variable |<WhsNw>`.-p_sm`</WhsNw>,<br/>`.-p_md`|
+
+
+:::warning
+\* Classes for all CSS properties are not available by default.
+\* Breakpoint-responsive classes are also only available by default for a select subset of major properties.
+:::
+
+
+
+<PreviewTitle>Some examples include the following:</PreviewTitle>
+
+```css
+.-ta\:c { text-align: center; }
+.-ta\:l { text-align: left; }
+.-fz\:l { font-size: var(--fz--l); }
+.-fz\:3xl { font-size: var(--fz--3xl); }
+
+.-p{ padding: var(--p); }
+@container (min-width: 480px) {
+	.-p_sm{ padding: var(--p_sm); }
+}
+@container (min-width: 720px) {
+	.-p_md{ padding: var(--p_md); }
+}
+```
+
+<HelpText>(The actual implementation may differ slightly, but this gives you the general idea.)</HelpText>
+
+
+<Reference>
+See the [Prop Class reference page](/docs/prop-class) for the full list.
+</Reference>
+
+
+### Responsive Prop Classes
+
+The `.-{prop}_{bp}` class format combined with the `--{prop}_{bp}` variable format enables responsive styling.
+
+<Preview>
+	<PreviewTitle>Here is a practical usage example:</PreviewTitle>
+	<PreviewArea resize>
+		<Lism p={[20, 40, 50]} bd>
+			BOX
+		</Lism>
+	</PreviewArea>
+	<PreviewCode label="HTML" slot="tab">
+```html "-p_sm" "-p_md" "--p_sm" "--p_md"
+<div class="-p:15 -p_sm -p_md -bd" style="--p_sm:var(--s30);--p_md:var(--s40);">
+	BOX
+</div>
+```
+	</PreviewCode>
+	<PreviewCode label="JSX" slot="tab">
+```jsx
+<Box p={[20, 30, 40]} bd>
+	BOX
+</Box>
+```
+	</PreviewCode>
+</Preview>
+
+<Reference>
+See the [Responsive styling guide](/docs/responsive/) for details.
+</Reference>
+
+
+
+### Other Recommended Conventions
+
+
+#### Dynamic Attributes
+
+For state management that is dynamically toggled by JavaScript, use data attributes.
+
+Example: `[data-opened]`, `[data-active]`
+
+
+#### Naming custom classes
+
+There are no strict rules for classes that are not part of the built-in Lism package.
+
+The recommended approach is either to use a Lism-like prefix for visual consistency, or to use no prefix at all to make it clear that the class is custom.
+(Custom component classes are recommended to be defined as `c--` within `@lism-modules`.)
+
+
+| Category Example | Format | Example |
+|---|---|---|
+|Zoning|`.z--{zoneName}` or `{zoneName}` |`.z--header`,<br />`.header`|
+|Page classification|`.p--{type}-{id\|slug}` or `{slug}Page`, etc. |`.p--front`,<br />`.p--page--{slug}`, <br />`.frontPage`,<br />`.page--{slug}`|
+
+
+
+## Naming Conventions
+
+
+### CSS Variable Naming
+
+Each block of a variable name uses camelCase, expressed as `--{varName}`.
+
+#### Token values
+
+- Color: `--{color}`. Examples: `--brand`, `--text`, `--link`, `--red`
+- Spacing: Uses the format `--s{Token}`. Examples: `--s10`, `--s40`
+- Other variations for specific properties or categories use the format `--{prop}--{token}`:
+	- `font-size`: `--fz--s`, `--fz--base`, `--fz--l`
+	- `--hl`: `--hl--s`, `--hl--base`, `--hl--l`
+	- `border-radius`: `--bdrs--10`, `--bdrs--20`
+	- `box-shadow`: `--bxsh--10`, `--bxsh--20`
+	- Size tokens: `--sz--{size}`. Examples: `--sz--s`, `--sz--m`, `--sz--l`
+
+
+**Rules for expressing token variations**
+
+1. Size notation using `s`, `l`, `xl`, etc.
+	- This notation is used for **tokens that represent whether a value is smaller or larger relative to a defined base value (`base`) or center value (`m`)**.
+    - `base` is used for values that reset to the value set on `:root (html)` or `body`; `m` is used for a primary center value that is not necessarily the base.
+2. Stepped numeric notation using `10`, `20`, `30`, ...
+    - This notation is used for **tokens where `0` (`none`) is the baseline and values increase in steps**.
+3. Other
+    - Semantic token names are defined to match the semantics of each property.
+	- Example: `--ar--og`
+
+
+:::info
+::title[About color token variations]
+A note on `base-2` / `text-2` as variants of `base` / `text`.
+Since the meaning of these values can vary depending on the site's color design, we intentionally avoid assigning specific semantic meaning to them.
+
+By using simple numeric variations, you can expand them to `base-3`, `text-3`, and so on depending on the needs of your project.
+:::
+
+
+#### Variable names for Prop Classes
+- Custom properties corresponding to Prop Classes use `--{prop}`, expressed with the **same abbreviation as the class name**.
+	- Examples: `--p`, `--mx`, `--c`, `--bgc`, `--bdrs`
+- Breakpoint values for Prop Classes use `--{prop}_{bp}`.
+	- Examples: `--p_sm`, `--mx_md`
+
+#### Variable names for elements
+- Properties that are **overridable from `:root`** and are specific to a particular element or class use the format `--{target}-{prop}`.
+	- Examples: `--link-td`, `--heading-ff`, `--gutter-size`, `--under-offset`, `--hl-unit`, `--ov-bgc`
+- Variables for the primary functionality of a component or module class are expressed as a single block, like `--{propName}`.
+	- Examples: `--sideW`, `--mainW` for `.l--sideMain`
+	- Note: When the property is also defined as a Prop Class, the same variable name can be used to allow overriding.
+		- Example: `--c`, `--bgc` on `.c--button`
+- Properties for child elements of specific components or modules (e.g., `c--hoge_item`) use the format `--_{item}-{propName}`.
+	- Example: `--_icon-size`
+- Variables used for special state management start with `_` and are written as a single camelCase block: `--_{varName}`.
+	- Examples: `--_isHov`, `--_notHov`
+
+
+
+### Class Naming Conventions
+
+About prefixes:
+
+- Prefixes connected with double hyphens (`--`), such as `l--` and `a--`, indicate that only one class from the same layer can be applied to the same element.
+- Prefixes starting with a single hyphen, such as `set-`, `is-`, and `u-`, indicate that multiple classes from the same layer can be applied to the same element.
+
+
+
+For the `{value}` part of `-{prop}:{value}`:
+
+- Decimal values — use `.` as-is. (The CSS side requires escaping with `\`.)
+	- Example: `.-prop:1.5`
+- Negative values — use the minus sign as-is.
+	- Example: `.-prop:-1`
+
+
+
+## Abbreviation Rules
+
+This section explains the abbreviation rules for both the `{prop}` and `{value}` parts of Prop Classes (`-{prop}:{value}`), as well as the corresponding CSS variable names and component prop keys.
+
+### The `{prop}` part
+
+For layout-, typography-, and color-related major properties, extreme abbreviations of 1–3 characters are used, similar to [Emmet](https://docs.emmet.io/cheat-sheet/).
+
+- `font-size` → `fz`
+- `background-color` → `bgc`
+- `padding` → `p`
+- `flex` → `fx`
+- `grid-template-columns` → `gtc`
+
+Other properties are either left as-is or abbreviated to a degree where the original property is still easily inferred.
+However, **hyphens (`-`) in the original property name are generally omitted entirely**, with a few exceptions.
+
+- `clear` → `clear`
+- `white-space` → `whspace`
+- `writing-mode` → `writing`
+
+
+`max-` and `min-` properties retain their hyphens:
+
+- `max-width` → `max-w`
+- `min-width` → `min-w`
+- `max-height` → `max-h`
+- `min-height` → `min-h`
+
+
+
+#### Directional properties
+
+Directional properties follow the `{prop}-{side}` naming convention, connected with a hyphen `-`.
+However, `p` and `m` omit the first hyphen (e.g., `pt`, `px`) since those forms are already widely used.
+
+| Target property         | Abbreviation |
+| ---------------------- | ------ |
+| `gap`                  | `g`  |
+| `column-gap`           | `g-x`  |
+| `row-gap`              | `g-y`  |
+| `overflow`             | `ov`  |
+| `overflow-x`           | `ov-x`  |
+| `border`               | `bd`  |
+| `border-left`          | `bd-l`  |
+| `border-inline`        | `bd-x`  |
+| `border-inline-start`  | `bd-x-s`  |
+| `padding`              | `p` |
+| `padding-inline`       | `px` |
+| `padding-inline-start` | `px-s` |
+| `margin`               | `m` |
+| `margin-top`           | `mt` |
+| `margin-block`         | `my` |
+| `margin-block-start`   | `my-s` |
+
+
+
+### The `{value}` part
+
+The `{value}` part is generally not abbreviated excessively. Even when the `{prop}` part is heavily abbreviated, the combination of the two should make it easy to infer which CSS property is being referenced.
+
+
+Only long keyword values are shortened to the extent their meaning remains clear:
+
+- Class for `display:none` → `.-d:none`
+- Class for `display:inline-flex` → `.-d:in-flex`
+- Class for `position:relative` → `.-pos:rel`
+- Class for `text-align:center` → `.-ta:center`
