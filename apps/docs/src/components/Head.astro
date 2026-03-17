@@ -6,6 +6,7 @@
  */
 
 import { siteConfig } from '@/config/site';
+import { getAlternateUrls, getRootLang, getLocalizedUrl, getPathWithoutLang } from '@/lib/i18n';
 import type { LangCode } from '@/lib/i18n';
 
 interface Props {
@@ -21,11 +22,7 @@ const { title, description, ogImage, lang } = Astro.props;
 const isDev = import.meta.env.DEV;
 
 // canonical URL: 開発環境では現在のURLをそのまま使用、本番では Astro.site を使用
-const canonicalUrl = isDev
-	? Astro.url.toString()
-	: Astro.site
-		? new URL(Astro.url.pathname, Astro.site).toString()
-		: Astro.url.toString();
+const canonicalUrl = isDev ? Astro.url.toString() : Astro.site ? new URL(Astro.url.pathname, Astro.site).toString() : Astro.url.toString();
 
 // OG画像URL: 開発環境では相対パス、本番環境では絶対URL
 const getOgImageUrl = (imgPath?: string): string | undefined => {
@@ -56,6 +53,19 @@ const ogLocaleMap: Record<LangCode, string> = {
 	en: 'en_US',
 };
 const ogLocale = ogLocaleMap[lang] || 'ja_JP';
+
+// 多言語 hreflang 用の代替URL一覧
+const alternateUrls = getAlternateUrls(Astro.url);
+const rootLang = getRootLang();
+const rootPath = getLocalizedUrl(getPathWithoutLang(Astro.url), rootLang);
+
+// パスを絶対URLに変換（canonical と一致するよう末尾スラッシュを保証）
+const toAbsoluteUrl = (path: string): string => {
+	const normalized = path.endsWith('/') ? path : `${path}/`;
+	if (isDev) return normalized;
+	if (Astro.site) return new URL(normalized, Astro.site).toString();
+	return normalized;
+};
 
 // Google Analytics: 本番環境かつ測定IDが設定されている場合のみ有効化
 // 開発環境・プレビュー環境では計測しない
@@ -90,6 +100,10 @@ const enableGA = !isDev && siteConfig.publish && gaMeasurementId;
 	<link rel="canonical" href={canonicalUrl} />
 	{!siteConfig.publish && <meta name="robots" content="noindex, nofollow" />}
 
+	{/* 多言語 hreflang: 検索エンジンに各言語版の存在を通知 */}
+	{alternateUrls.map(({ lang: altLang, url }) => <link rel="alternate" hreflang={altLang} href={toAbsoluteUrl(url)} />)}
+	<link rel="alternate" hreflang="x-default" href={toAbsoluteUrl(rootPath)} />
+
 	{/* OGP メタタグ */}
 	<meta property="og:type" content="article" />
 	<meta property="og:title" content={titleMetaText} />
@@ -98,6 +112,12 @@ const enableGA = !isDev && siteConfig.publish && gaMeasurementId;
 	{ogImageUrl && <meta property="og:image" content={ogImageUrl} />}
 	<meta property="og:site_name" content={siteConfig.name} />
 	<meta property="og:locale" content={ogLocale} />
+	{/* 他言語版の og:locale を通知 */}
+	{
+		alternateUrls
+			.filter(({ lang: altLang }) => altLang !== lang)
+			.map(({ lang: altLang }) => <meta property="og:locale:alternate" content={ogLocaleMap[altLang]} />)
+	}
 
 	{/* Twitter Card メタタグ */}
 	<meta name="twitter:card" content="summary_large_image" />
@@ -105,24 +125,31 @@ const enableGA = !isDev && siteConfig.publish && gaMeasurementId;
 	{description && <meta name="twitter:description" content={description} />}
 	{ogImageUrl && <meta name="twitter:image" content={ogImageUrl} />}
 
-	{/* Google Analytics */}
 	{
-		enableGA && (
-			<>
-				<script async src={`https://www.googletagmanager.com/gtag/js?id=${gaMeasurementId}`} />
-				<script is:inline define:vars={{ gaMeasurementId }}>
-					window.dataLayer = window.dataLayer || [];
-					function gtag() {
-						dataLayer.push(arguments);
-					}
-					gtag('js', new Date());
-					gtag('config', gaMeasurementId);
-				</script>
-			</>
-		)
+		/*
+		Google Analytics
+		memo: 条件レンダリング内の <script> は prettier-plugin-astro のパースバグを踏むため、
+		<script> を条件外に置き、data-* 属性の有無でJS側から初期化を判断している
+	*/
 	}
+	{enableGA && <meta id="ga-config" data-id={gaMeasurementId} />}
+	<script>
+		var gaEl = document.getElementById('ga-config');
+		if (gaEl) {
+			var s = document.createElement('script');
+			s.async = true;
+			s.src = 'https://www.googletagmanager.com/gtag/js?id=' + gaEl.dataset.id;
+			document.head.appendChild(s);
+
+			window.dataLayer = window.dataLayer || [];
+			function gtag() {
+				dataLayer.push(arguments);
+			}
+			gtag('js', new Date());
+			gtag('config', gaEl.dataset.id);
+		}
+	</script>
 
 	{/* 追加のhead要素用スロット */}
 	<slot />
 </head>
-
