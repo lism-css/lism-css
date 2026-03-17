@@ -132,21 +132,21 @@ const enableGA = !isDev && siteConfig.publish && gaMeasurementId;
 		<script> を条件外に置き、data-* 属性の有無でJS側から初期化を判断している
 	*/
 	}
-	{enableGA && <meta id="ga-config" data-id={gaMeasurementId} />}
+	{enableGA && <meta id="ga-config" data-ga-id={gaMeasurementId} />}
 	<script>
 		var gaEl = document.getElementById('ga-config');
 		if (gaEl) {
 			var s = document.createElement('script');
 			s.async = true;
-			s.src = 'https://www.googletagmanager.com/gtag/js?id=' + gaEl.dataset.id;
+			s.src = 'https://www.googletagmanager.com/gtag/js?id=' + gaEl.dataset.gaId;
 			document.head.appendChild(s);
 
 			window.dataLayer = window.dataLayer || [];
-			function gtag() {
-				dataLayer.push(arguments);
+			function gtag(...args: any[]) {
+				window.dataLayer.push(args);
 			}
 			gtag('js', new Date());
-			gtag('config', gaEl.dataset.id);
+			gtag('config', gaEl.dataset.gaId);
 		}
 	</script>
 
