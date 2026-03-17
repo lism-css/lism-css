@@ -253,7 +253,7 @@ describe('getLismProps', () => {
 		test('isWrapper: プリセット値の場合、プリセットクラスが追加される', () => {
 			const result = getLismProps({ isWrapper: 's' });
 			expect(result.className).toContain('is--wrapper');
-			expect(result.className).toContain('-content:s');
+			expect(result.className).toContain('-contentSize:s');
 		});
 
 		test('isWrapper: カスタム値の場合、変数が設定される', () => {

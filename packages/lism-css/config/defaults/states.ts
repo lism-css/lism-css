@@ -6,7 +6,7 @@ export default {
 	isWrapper: {
 		className: 'is--wrapper',
 		preset: ['s', 'l'],
-		presetClass: '-content',
+		presetClass: '-contentSize',
 		customVar: '--contentSize',
 		tokenKey: 'sz',
 	},

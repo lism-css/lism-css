@@ -186,7 +186,7 @@ describe('LismPropsData', () => {
 
 		test('isWrapper: プリセット値でステートとプリセットクラスが追加される', () => {
 			const instance = new LismPropsData({ isWrapper: 's' });
-			expect(instance.lismState).toContain('is--wrapper -content:s');
+			expect(instance.lismState).toContain('is--wrapper -contentSize:s');
 		});
 
 		test('isWrapper: カスタム値でステートクラスと変数が追加される', () => {

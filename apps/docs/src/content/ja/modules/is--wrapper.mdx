@@ -12,8 +12,8 @@ import { Desktop } from '@phosphor-icons/react';
 | プロパティ | 出力 |
 |---|---|
 | `isWrapper`| `.is--wrapper` |
-| `isWrapper='s'` | `.is--wrapper`, `.-content:s` |
-| `isWrapper='l'` | `.is--wrapper`, `.-content:l` |
+| `isWrapper='s'` | `.is--wrapper`, `.-contentSize:s` |
+| `isWrapper='l'` | `.is--wrapper`, `.-contentSize:l` |
 | `isWrapper={value}` | `.is--wrapper`, `--contentSize:{value}` |
 
 `<Lism isWrapper>` のエイリアスとして、`<Wrapper>` も用意しています。
@@ -98,7 +98,7 @@ import { Desktop } from '@phosphor-icons/react';
 	</PreviewCode>
 	<PreviewCode slot='tab' label='HTML'>
 		```html
-		<div class='l--flow is--wrapper -content:s -p:20'>
+		<div class='l--flow is--wrapper -contentSize:s -p:20'>
 			<p>Content</p>
 			<p>Content</p>
 			<p>...</p>

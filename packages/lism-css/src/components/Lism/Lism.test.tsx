@@ -56,7 +56,7 @@ describe('Lism', () => {
 			const element = screen.getByTestId('lism');
 			expect(element).toHaveClass('-p:20');
 			expect(element).toHaveClass('is--wrapper');
-			expect(element).toHaveClass('-content:l');
+			expect(element).toHaveClass('-contentSize:l');
 		});
 
 		test('exProps が getLismProps を経由せず直接渡される', () => {
@@ -1078,7 +1078,7 @@ describe('Lism', () => {
 				);
 				const element = screen.getByTestId('lism');
 				expect(element).toHaveClass('is--wrapper');
-				expect(element).toHaveClass('-content:s');
+				expect(element).toHaveClass('-contentSize:s');
 			});
 
 			test('isWrapper="l" を指定できる', () => {
@@ -1089,7 +1089,7 @@ describe('Lism', () => {
 				);
 				const element = screen.getByTestId('lism');
 				expect(element).toHaveClass('is--wrapper');
-				expect(element).toHaveClass('-content:l');
+				expect(element).toHaveClass('-contentSize:l');
 			});
 
 			test('isLayer を指定できる', () => {
