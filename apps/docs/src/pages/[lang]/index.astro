@@ -1,12 +1,15 @@
 ---
 /**
  * トップページ（非root言語用）
- * 最新の記事一覧を表示
+ * 日本語トップページの翻訳版
  */
-import BaseLayout from '../../layouts/BaseLayout.astro';
-import { HTML } from 'lism-css/astro';
+import SimpleLayout from '@/layouts/SimpleLayout.astro';
+import { Container, Stack, Columns, Grid, HTML, Spacer, Icon, Flex, Text, Frame, LinkBox, Lism } from 'lism-css/astro';
+import { Button } from '@lism-css/ui/astro';
+import Gradbox from '@/components/parts/Gradbox.astro';
 import { siteConfig } from '@/config/site';
 import { isRootLang, isValidLang, type LangCode } from '@/lib/i18n';
+import LismExDemo from '@/content/ja/_demo/LismExDemo.mdx';
 
 export async function getStaticPaths() {
 	const langCodes = Object.keys(siteConfig.langs) as LangCode[];
@@ -30,14 +33,131 @@ if (!isValidLang(lang)) {
 	return Astro.redirect('/404');
 }
 
-// 見出しの翻訳
-const headings = {
-	ja: 'トップページ',
-	en: 'Top page',
-};
-const heading = headings[lang] || headings.en;
+// 特徴ポイント
+const POINTS = [
+	{
+		title: 'Designed from reset.css Level',
+		desc: 'Lism CSS builds a comprehensive CSS design theory from reset.css to utility classes for your entire site.',
+	},
+	{
+		title: 'Design Tokens',
+		desc: 'Pre-defined design tokens as CSS variables ensure consistency across your entire site.',
+	},
+	{
+		title: 'Layout First',
+		desc: 'Common layout elements for websites are broken down into fine-grained, foundational modules.',
+	},
+	{
+		title: 'Modern Design',
+		desc: 'Actively leverages modern CSS features like @layer, Container Queries, and more.',
+	},
+	{
+		title: 'Responsive Ready',
+		desc: 'A unique approach to responsive design that combines utility classes with CSS variables.',
+	},
+	{
+		title: 'Works with Any Site',
+		desc: 'Lism is a design theory. No config or build step needed — it works with plain HTML coding.',
+	},
+];
+
+// 特徴カード
+const FEATURES = [
+	{ keycolor: 'pink', title: 'Lightweight', desc: 'Start from just 30kb~, with responsive design.' },
+	{ keycolor: 'blue', title: 'No Build Required', desc: 'No config, No build. Just load the CSS to start using.' },
+	{ keycolor: 'purple', title: 'Modern CSS', desc: '@layer, Container Query, Grid, CSS Variables' },
+	{ keycolor: 'green', title: 'Free', desc: 'Lism CSS is available for free.' },
+];
+
+// ナビゲーションカード
+const NAV_CARDS = [
+	{ href: `/${lang}/docs/`, title: 'Docs', desc: 'Learn how to use Lism CSS and its components' },
+	{ href: `/${lang}/ui/`, title: 'UI Components', desc: 'Ready-to-use UI component collection' },
+	{ href: `/${lang}/templates/`, title: 'Templates', desc: 'Website templates collection' },
+];
 ---
 
-<BaseLayout title={siteConfig.name} lang={lang}>
-	<HTML.h lv="1">{heading}</HTML.h>
-</BaseLayout>
+<SimpleLayout title={siteConfig.name} description="The official documentation site for Lism CSS." lang={lang} excludeFromSearch>
+	<Grid class="hero" gt="repeat" cols="5" rows="1" min-h={['50svh', '75vh']} ai="center">
+		<Stack class="hero_content" g="40" gc="1 / 5" gr="1" z="1">
+			<Stack g="30">
+				<Lism class="hero_heading -w:fit">
+					<HTML.h lv="1" fz="4xl" fw="bold" ff="mono">Lism CSS</HTML.h>
+				</Lism>
+				<HTML.p class="hero_tagline" fz="m" c="text-2">
+					A layout-first CSS framework for websites.<br />
+					Code with ease. Bring harmony and rhythm to your design.
+				</HTML.p>
+			</Stack>
+			<Flex>
+				<HTML.a href={`/${lang}/docs/overview/`} bgc="text" c="base" td="none" bdrs="99" py="10" px="20" hov="neutral">Documentation →</HTML.a
+				>
+			</Flex>
+		</Stack>
+		<Lism class="hero_image" gc="3 / 6" gr="1" pb="10" z="0">
+			<Gradbox />
+		</Lism>
+	</Grid>
+
+	<Lism layout="columns" cols={[2]} g={['30', null, '40']} my-s="50">
+		{
+			FEATURES.map((feature) => (
+				<Stack
+					class="u--cbox set--shadow"
+					keycolor={feature.keycolor}
+					g="5"
+					py={['20', null, '30']}
+					px={['20', null, '30']}
+					bdrs="20"
+					bgc="base"
+					bxsh="20"
+					bd
+				>
+					<HTML.h lv="2" fz={['m', 'l']} c="text">
+						{feature.title}
+					</HTML.h>
+					<HTML.p c="text-2" fz={['s', 'm']} lh="s">
+						{feature.desc}
+					</HTML.p>
+				</Stack>
+			))
+		}
+	</Lism>
+
+	<Lism layout="flow" tag="section" my-s="50">
+		<HTML.h lv="2" class="h2">Unique CSS Architecture</HTML.h>
+
+		<Lism layout="fluidCols" cols="20rem" g="40">
+			{
+				POINTS.map((point) => (
+					<Stack g="20" p="30" bdrs="20" bgc="base" bxsh="30" lh="s">
+						<HTML.h lv="3" fz="m" fw="bold">
+							{point.title}
+						</HTML.h>
+						<HTML.p fz="s" c="text-2">
+							{point.desc}
+						</HTML.p>
+					</Stack>
+				))
+			}
+		</Lism>
+	</Lism>
+
+	{/* コンポーネントセクション */}
+	<Lism tag="section" layout="flow" g="20" my-s="50">
+		<HTML.h lv="2" class="h2">Components for Astro/React</HTML.h>
+		<HTML.p>We provide free components for React and Astro to make working with Lism CSS easy.</HTML.p>
+
+		<Lism max-w="m" mx="auto">
+			<LismExDemo />
+		</Lism>
+	</Lism>
+
+	{/* CTAボタン */}
+	<Flex jc="center" my-s="60">
+		<Button variant="fill" fz="l" href={`/${lang}/docs/overview/`} bdrs="99" g="15" py="10" px="30">
+			<span>Getting Started</span>
+			<Icon lh="1" fz="l">🚀</Icon>
+		</Button>
+	</Flex>
+</SimpleLayout>
