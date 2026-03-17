@@ -5,12 +5,15 @@
  * 各テンプレートページのスクリーンショットを撮影して保存します。
  *
  * 使い方:
- *   npx tsx scripts/generate-screenshots.ts         # 新規のみ生成
- *   npx tsx scripts/generate-screenshots.ts --force # 全て再生成
+ *   npx tsx scripts/generate-screenshots.ts                # 新規のみ生成
+ *   npx tsx scripts/generate-screenshots.ts --force        # 全て再生成
+ *   npx tsx scripts/generate-screenshots.ts cta            # カテゴリ指定
+ *   npx tsx scripts/generate-screenshots.ts cta/cta001     # テンプレート指定
+ *   npx tsx scripts/generate-screenshots.ts cta section    # 複数指定
  */
 
 import { chromium, type Browser, type Page } from 'playwright';
-import { existsSync, mkdirSync, readdirSync } from 'node:fs';
+import { existsSync, mkdirSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { spawn, type ChildProcess } from 'node:child_process';
@@ -35,14 +38,41 @@ const CONFIG = {
 // コマンドライン引数をパース
 const args = process.argv.slice(2);
 const forceRegenerate = args.includes('--force');
+// --force 以外の引数をフィルタとして使用（例: "cta", "cta/cta001"）
+const filters = args.filter((a) => !a.startsWith('--'));
 
 /**
- * テンプレート設定からパス一覧を動的に取得
+ * テンプレート設定からパス一覧を取得（draft除外）
  */
 async function getTemplatePaths(): Promise<Array<{ category: string; id: string }>> {
-	// templates.ts から動的にインポート
-	const templatesModule = await import('../src/config/templates.ts');
-	return templatesModule.getAllTemplatePaths();
+	const { templates } = await import('../src/config/templates.ts');
+	const paths: Array<{ category: string; id: string }> = [];
+	for (const [categoryId, category] of Object.entries(templates)) {
+		for (const item of category.items) {
+			if (!item.draft) {
+				paths.push({ category: categoryId, id: item.id });
+			}
+		}
+	}
+	return paths;
+}
+
+/**
+ * フィルタ引数でテンプレートを絞り込む
+ * "cta" → カテゴリ全体, "cta/cta001" → 特定テンプレート
+ */
+function filterTemplatePaths(paths: Array<{ category: string; id: string }>): Array<{ category: string; id: string }> {
+	if (filters.length === 0) return paths;
+	return paths.filter(({ category, id }) =>
+		filters.some((f) => {
+			if (f.includes('/')) {
+				// "cta/cta001" 形式: 完全一致
+				return `${category}/${id}` === f;
+			}
+			// "cta" 形式: カテゴリ一致
+			return category === f;
+		})
+	);
 }
 
 /**
@@ -74,6 +104,7 @@ function startPreviewServer(): Promise<ChildProcess> {
 			cwd: ROOT_DIR,
 			stdio: ['ignore', 'pipe', 'pipe'],
 			shell: true,
+			detached: true,
 		});
 
 		let started = false;
@@ -84,7 +115,7 @@ function startPreviewServer(): Promise<ChildProcess> {
 			if (output.includes('localhost') && !started) {
 				started = true;
 				// サーバーが本当に応答可能になるまで待機
-				waitForServer(`http://localhost:${CONFIG.port}/`).then((ready) => {
+				void waitForServer(`http://localhost:${CONFIG.port}/`).then((ready) => {
 					if (ready) {
 						console.log(`✅ プレビューサーバー起動完了 (port: ${CONFIG.port})`);
 						resolve(server);
@@ -101,7 +132,7 @@ function startPreviewServer(): Promise<ChildProcess> {
 			// エラーではなく情報メッセージの場合もあるので、起動検出に使う
 			if (output.includes('localhost') && !started) {
 				started = true;
-				waitForServer(`http://localhost:${CONFIG.port}/`).then((ready) => {
+				void waitForServer(`http://localhost:${CONFIG.port}/`).then((ready) => {
 					if (ready) {
 						console.log(`✅ プレビューサーバー起動完了 (port: ${CONFIG.port})`);
 						resolve(server);
@@ -182,8 +213,12 @@ async function main() {
 		process.exit(1);
 	}
 
-	// テンプレートパスを取得
-	const templatePaths = await getTemplatePaths();
+	// テンプレートパスを取得・フィルタ
+	const allPaths = await getTemplatePaths();
+	const templatePaths = filterTemplatePaths(allPaths);
+	if (filters.length > 0) {
+		console.log(`   フィルタ: ${filters.join(', ')}`);
+	}
 	console.log(`📋 対象テンプレート数: ${templatePaths.length}`);
 	console.log('');
 
@@ -243,9 +278,11 @@ async function main() {
 			console.log('🌐 ブラウザを終了');
 		}
 		if (server) {
-			server.kill();
+			if (server.pid) process.kill(-server.pid, 'SIGTERM');
+			else server.kill();
 			console.log('📡 プレビューサーバーを停止');
 		}
+		process.exit(0);
 	}
 }
 

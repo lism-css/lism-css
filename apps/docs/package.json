@@ -10,7 +10,9 @@
 		"preview": "astro preview",
 		"astro": "astro",
 		"screenshot": "npx tsx scripts/generate-screenshots.ts",
-		"screenshot:force": "npx tsx scripts/generate-screenshots.ts --force"
+		"screenshot:force": "npx tsx scripts/generate-screenshots.ts --force",
+		"screenshot:compare": "npx tsx scripts/compare-screenshots.ts",
+		"screenshot:update": "npx tsx scripts/compare-screenshots.ts --update"
 	},
 	"dependencies": {
 		"@astrojs/mdx": "^4.3.14",
@@ -32,10 +34,13 @@
 	},
 	"devDependencies": {
 		"@types/mdast": "^4.0.4",
+		"@types/pngjs": "^6.0.5",
 		"@types/react": "^19.2.14",
 		"@types/react-dom": "^19.2.3",
 		"autoprefixer": "^10.4.27",
+		"pixelmatch": "^7.1.0",
 		"playwright": "^1.58.2",
+		"pngjs": "^7.0.0",
 		"prettier": "^3.8.1",
 		"prettier-plugin-astro": "^0.14.1",
 		"sass-embedded": "^1.98.0",
