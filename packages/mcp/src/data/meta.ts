@@ -1,7 +1,7 @@
 import type { MetaInfo } from '../lib/types.js';
 
 export const meta: MetaInfo = {
-	generatedAt: '2026-02-25',
-	sourceCommit: 'c482377a',
+	generatedAt: '2026-03-17',
+	sourceCommit: '49fff967',
 	docsVersion: '0.1.0',
 };

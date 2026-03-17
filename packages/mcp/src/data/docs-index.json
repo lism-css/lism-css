@@ -4,16 +4,7 @@
 		"title": "概要",
 		"description": "Lism CSS の概要と特徴について解説します。",
 		"category": "guide",
-		"headings": [
-			"React/Astro で使える Lism コンポーネント",
-			"Lism CSS の特徴",
-			"ゼロビルドでどんな環境でも使えるフレームワーク",
-			"reset.css レベルからサイト全体のレイヤー階層を設計",
-			"レイアウトファースト",
-			"CSS変数を組み合わたレスポンシブなユーティリティ設計",
-			"メディアクエリに依存しないレイアウト設計",
-			"Inspirations"
-		],
+		"headings": ["Lism CSS の特徴", "Inspirations"],
 		"keywords": ["overview", "概要", "特徴", "レイアウトファースト", "ゼロビルド", "コンテナクエリ", "Every Layout", "framework"],
 		"snippet": "Lism CSS は、WEBサイトの骨組みをテンポ良くサクっと作るための軽量なCSSフレームワークです。レイアウトファーストなモジュール設計とCSS変数を組み合わせたレスポンシブなユーティリティ設計が特徴です。"
 	},
@@ -22,13 +13,7 @@
 		"title": "インストール",
 		"description": "Lism CSS のインストール方法と基本的な使い方を解説します。",
 		"category": "guide",
-		"headings": [
-			"CSS設計のみを導入したい場合",
-			"専用のコンポーネントを使用したい場合",
-			"パッケージのインストール",
-			"CSSの読み込み",
-			"コンポーネントの読み込み"
-		],
+		"headings": ["CSS設計のみを導入したい場合", "専用のコンポーネントを使用したい場合"],
 		"keywords": ["install", "インストール", "CDN", "npm", "setup", "セットアップ", "導入"],
 		"snippet": "CSSを読み込むだけでも導入でき、CDN経由でも利用可能。npm パッケージとしてインストールし、lism-css/react や lism-css/astro からコンポーネントをインポートして使用。"
 	},
@@ -37,20 +22,7 @@
 		"title": "CSS設計",
 		"description": "Lism CSS の CSS 設計思想と命名規則について解説します。",
 		"category": "guide",
-		"headings": [
-			"Lism CSSの階層構造",
-			"Modules レイヤーでのさらなる階層構造",
-			"デザイントークン",
-			"CSSのクラス設計",
-			"Module Class",
-			"Utility Class",
-			"Prop Class",
-			"レスポンシブ対応の Prop Class",
-			"命名規則について",
-			"CSS変数の命名規則",
-			"クラスの命名規則",
-			"単語の省略について"
-		],
+		"headings": ["Lism CSSの階層構造", "デザイントークン", "CSSのクラス設計", "命名規則について", "単語の省略について"],
 		"keywords": [
 			"CSS設計",
 			"methodology",
@@ -61,11 +33,12 @@
 			"BEM",
 			"Prop Class",
 			"Module Class",
+			"Set Class",
 			"Utility Class",
 			"省略",
 			"Emmet"
 		],
-		"snippet": "CSSの階層構造を明確に定義。@layer lism.reset → lism.base → lism.modules → lism.utility の順。Module Class (.l--name, .a--name 等)、Prop Class (.-prop:value) の命名規則を説明。"
+		"snippet": "CSSの階層構造を明確に定義。@layer lism.reset → lism.base → lism.modules → lism.utility の順。Module Class (.l--name, .a--name 等)、Prop Class (.-prop:value)、Set Class (.set--name) の命名規則を説明。"
 	},
 	{
 		"sourcePath": "tokens.mdx",
@@ -111,15 +84,15 @@
 		"description": "Lism CSS のタイポグラフィ設計について解説します。",
 		"category": "guide",
 		"headings": ["Typography", "SPACE: 余白のスケーリング"],
-		"keywords": ["typography", "タイポグラフィ", "font", "文字", "テキスト", "heading"],
-		"snippet": "フォントサイズ、行間、文字間隔などのタイポグラフィ設計について解説。"
+		"keywords": ["typography", "タイポグラフィ", "font", "文字", "テキスト", "heading", "spacing", "余白", "スペーシング", "フィボナッチ"],
+		"snippet": "フォントサイズ、行間、文字間隔などのタイポグラフィ設計と、フィボナッチ数列に基づいた余白のスケーリングについて解説。ハーフレディングによるline-height管理の仕組みを紹介。"
 	},
 	{
 		"sourcePath": "reset-css.mdx",
 		"title": "リセットCSS",
 		"description": "Lism CSS に含まれるリセットCSS について。",
 		"category": "guide",
-		"headings": ["Lism の reset.css だけを読み込む方法"],
+		"headings": [],
 		"keywords": ["reset", "リセット", "normalize", "reset css"],
 		"snippet": "Lism CSS に組み込まれたリセットCSS。reset.css レベルからサイト全体のCSS設計を担う。"
 	},
@@ -129,51 +102,74 @@
 		"description": "Lism CSS のカスタマイズ方法。",
 		"category": "guide",
 		"headings": ["@layerをオフにする", "SCSS でのカスタマイズ", "lism.config.js でのカスタマイズ"],
-		"keywords": ["customize", "カスタマイズ", "設定", "config", "テーマ", "theme"],
-		"snippet": "Lism CSS のトークンやスタイルのカスタマイズ方法について解説。"
+		"keywords": ["customize", "カスタマイズ", "設定", "config", "テーマ", "theme", "SCSS"],
+		"snippet": "Lism CSS のトークンやスタイルのカスタマイズ方法について解説。SCSSの変数上書きやlism.config.jsでのコンポーネント挙動のカスタマイズが可能。"
 	},
 	{
 		"sourcePath": "utility-class.mdx",
 		"title": "ユーティリティクラス",
 		"description": "Lism CSS のユーティリティクラス一覧。",
 		"category": "guide",
-		"headings": ["u-cbox", "u-trim & u-trimItems", "u-expandedLink", "u-hidden", "u-collapseGrid", "Opt-in"],
-		"keywords": ["utility", "ユーティリティ", "class", "クラス"],
-		"snippet": "用途が明確な装飾・機能をまとめてセットするユーティリティクラス (.u--{style}) の一覧。"
+		"headings": ["u--cbox", "u--trim & u--trimChildren", "u--expandedLink", "u--srOnly", "u--collapseGrid", "u--snap", "u--clipText", "Opt-in"],
+		"keywords": [
+			"utility",
+			"ユーティリティ",
+			"class",
+			"クラス",
+			"u--cbox",
+			"u--trim",
+			"u--expandedLink",
+			"u--srOnly",
+			"u--collapseGrid",
+			"u--snap",
+			"u--clipText"
+		],
+		"snippet": "用途が明確な装飾・機能をまとめてセットするユーティリティクラス (.u--{style}) の一覧。u--cbox, u--trim, u--expandedLink, u--collapseGrid 等を解説。"
 	},
 	{
-		"sourcePath": "set-utility.mdx",
-		"title": "Set Utility",
-		"description": "Lism CSS の Base Utility (.set--{style}) クラスについて。",
+		"sourcePath": "set-class.mdx",
+		"title": "Set Class",
+		"description": "Lism CSS の Set Class (.set--{style}) クラスについて。",
 		"category": "guide",
 		"headings": [],
-		"keywords": ["set", "utility", "set--plain", "set--transition", "set--hov"],
-		"snippet": "ベーススタイルの上書きや機能的なプロパティを初期セットするためのユーティリティクラス (.set--{style})。"
+		"keywords": [
+			"set",
+			"set class",
+			"set--plain",
+			"set--shadow",
+			"set--transition",
+			"set--hov",
+			"set--bp",
+			"set--cqUnit",
+			"set--innerRs",
+			"set--gutter"
+		],
+		"snippet": "ベーススタイルの上書きやトークンの再定義、機能的なプロパティを初期セットするためのクラス (.set--{style})。set--plain, set--shadow, set--transition, set--hov, set--bp, set--innerRs, set--gutter を解説。"
 	},
 	{
 		"sourcePath": "module-class.mdx",
 		"title": "モジュールクラス",
 		"description": "Lism CSS のモジュールクラスの解説。",
 		"category": "guide",
-		"headings": ["State Module", "is--vertical", "Layout Modules", "Atomic Modules", "Custom Modules"],
-		"keywords": ["module", "モジュール", "layout", "レイアウト", "class", "BEM"],
-		"snippet": "レイアウトの構成要素を細分化してモジュールとして定義。.l--{name}, .a--{name}, .c--{name} 等の命名規則。"
+		"headings": ["State Module", "Layout Modules", "Atomic Modules", "Custom Modules"],
+		"keywords": ["module", "モジュール", "layout", "レイアウト", "class", "BEM", "is--vertical"],
+		"snippet": "レイアウトの構成要素を細分化してモジュールとして定義。.l--{name}, .a--{name}, .c--{name} 等の命名規則。State Module (is--container, is--wrapper, is--layer, is--linkBox, is--vertical) も解説。"
 	},
 	{
 		"sourcePath": "base-styles.mdx",
 		"title": "HTMLベーススタイル",
 		"description": "Lism CSS が適用するHTML要素のベーススタイルについて。",
 		"category": "guide",
-		"headings": [],
-		"keywords": ["html", "base", "ベース", "スタイル", "要素"],
-		"snippet": "Lism CSS がHTML要素に対して適用するベーススタイルについて解説。"
+		"headings": ["Reset CSS", "Base styles"],
+		"keywords": ["html", "base", "ベース", "スタイル", "要素", "reset"],
+		"snippet": "Lism CSS がHTML要素に対して適用するベーススタイルについて解説。Reset CSSと@lism-baseレイヤーで定義されるベーススタイルを紹介。"
 	},
 	{
 		"sourcePath": "changelog.mdx",
 		"title": "変更履歴",
 		"description": "Lism CSS の変更履歴。",
 		"category": "guide",
-		"headings": [],
+		"headings": ["2026.03.02 - v.0.8.4", "v.0.8.3", "v.0.8.2", "v.0.8 (大幅な変更)", "v.0.7", "v.0.6", "v.0.5（大幅な変更）", "~ v.0.3"],
 		"keywords": ["changelog", "変更履歴", "更新", "バージョン"],
 		"snippet": "Lism CSS の各バージョンにおける変更内容を記載。"
 	},
@@ -182,106 +178,106 @@
 		"title": "ボーダー (bd)",
 		"description": "ボーダー関連の Prop の解説。",
 		"category": "props",
-		"headings": [],
+		"headings": ["方向指定", "bdwをブレイクポイントで切り替える"],
 		"keywords": ["border", "ボーダー", "bd", "bdc", "bdw", "bds", "bdrs", "枠線"],
-		"snippet": "ボーダー関連のProp。bd, bdc, bdw, bds, bdrs を使ったボーダースタイルの設定方法。"
+		"snippet": "ボーダー関連のProp。bd, bdc, bdw, bds, bdrs を使ったボーダースタイルの設定方法。方向指定やブレイクポイントでの切り替えも解説。"
 	},
 	{
 		"sourcePath": "props/hov.mdx",
 		"title": "ホバー (hov)",
 		"description": "ホバー関連の Prop の解説。",
 		"category": "props",
-		"headings": [],
-		"keywords": ["hover", "ホバー", "hov", "インタラクション", "animation"],
-		"snippet": "ホバー関連のProp。hov を使ったホバーエフェクトの設定方法。"
+		"headings": ["基本的な使い方", ".set--hov と特殊変数"],
+		"keywords": ["hover", "ホバー", "hov", "インタラクション", "animation", "set--hov", "set--transition", "transition"],
+		"snippet": "ホバー関連のProp。hov を使ったホバーエフェクトの設定方法。set--hovとset--transitionの活用、子要素へのホバー状態伝播を解説。"
 	},
 	{
 		"sourcePath": "props/max-sz.mdx",
 		"title": "最大サイズ (max-sz)",
 		"description": "最大サイズ関連の Prop の解説。",
 		"category": "props",
-		"headings": [],
-		"keywords": ["max-sz", "max-inline-size", "最大サイズ", "幅"],
-		"snippet": "max-sz (max-inline-size) の Prop。xs, s, m, l, xl のサイズトークンで最大幅を指定。"
+		"headings": ["-max-sz:full, -max-sz:container", "DEMOページ"],
+		"keywords": ["max-sz", "max-inline-size", "最大サイズ", "幅", "full", "container"],
+		"snippet": "max-sz (max-inline-size) の Prop。xs, s, m, l, xl のサイズトークンで最大幅を指定。-max-sz:full, -max-sz:container の特殊クラスも解説。"
 	},
 	{
 		"sourcePath": "core-components/Lism.mdx",
 		"title": "Lism",
-		"description": "Lism コアコンポーネントの解説。",
+		"description": "LismのCSS設計に対応した様々なプロパティを受け取ることができる汎用的なコンポーネントです。",
 		"category": "core-components",
 		"headings": ["Import", "Lism Props", "補足"],
-		"keywords": ["Lism", "core", "コア", "基盤", "コンポーネント"],
-		"snippet": "全コンポーネントの基盤。Props システムによる CSS クラス・スタイルの自動変換を提供。tag prop で出力要素を変更可能。"
+		"keywords": ["Lism", "core", "コア", "基盤", "コンポーネント", "lismClass", "variant", "layout", "as", "exProps"],
+		"snippet": "全コンポーネントの基盤。Props システムによる CSS クラス・スタイルの自動変換を提供。tag prop で出力要素を変更可能。レスポンシブ指定は配列またはオブジェクト形式で対応。"
 	},
 	{
 		"sourcePath": "core-components/HTML.mdx",
 		"title": "HTML",
-		"description": "HTML コンポーネントの解説。",
+		"description": "HTMLの主要なタグに<Lism>と同じプロパティを指定できるようにするためのコンポーネントです。",
 		"category": "core-components",
 		"headings": [],
 		"keywords": ["HTML", "要素", "element", "tag", "HTML.div", "HTML.p", "HTML.span", "HTML.a", "HTML.h"],
-		"snippet": "HTMLの主要なタグに<Lism>と同じプロパティを指定できるようにするコンポーネント。HTML.div, HTML.p, HTML.span 等が利用可能。"
+		"snippet": "HTMLの主要なタグに<Lism>と同じプロパティを指定できるようにするコンポーネント。HTML.div, HTML.p, HTML.span, HTML.a, HTML.h 等が利用可能。"
 	},
 	{
 		"sourcePath": "core-components/Dummy.mdx",
 		"title": "Dummy",
-		"description": "Dummy コンポーネントの解説。",
+		"description": "ダミーテキストを出力できるLismコンポーネントです。",
 		"category": "core-components",
 		"headings": ["Props", "Import", "ダミーテキストの例", "ダミーリスト", "ダミー画像"],
 		"keywords": ["Dummy", "ダミー", "テスト", "プレビュー"],
-		"snippet": "ダミーテキストを生成するコンポーネント。プレビューやテスト用に使用。"
+		"snippet": "ダミーテキストを生成するコンポーネント。プレビューやテスト用に使用。lang, length, tag, offset 等のプロパティで出力を制御。"
 	},
 	{
 		"sourcePath": "modules/l--box.mdx",
 		"title": "Box / l--box",
 		"description": "Box レイアウトモジュールの解説。",
 		"category": "modules",
-		"headings": [],
+		"headings": ["対応コンポーネント", "Usage"],
 		"keywords": ["Box", "ボックス", "layout", "レイアウト", "l--box"],
-		"snippet": "最も基本的なレイアウトモジュール。汎用的なボックス要素。l--box クラスが付与される。"
+		"snippet": "最も基本的なレイアウトモジュール。コンテンツをグループ化するだけのシンプルな汎用ボックス要素。l--box クラスが付与される。"
 	},
 	{
 		"sourcePath": "modules/l--flex.mdx",
 		"title": "Flex / l--flex",
 		"description": "Flex レイアウトモジュールの解説。",
 		"category": "modules",
-		"headings": [],
+		"headings": ["CSS", "Import", "Props", "Usage"],
 		"keywords": ["Flex", "flexbox", "フレックス", "layout", "l--flex", "横並び"],
-		"snippet": "Flexboxレイアウトを構成。display: flex が適用される。g, ai, jc 等で配置を制御。"
+		"snippet": "Flexboxレイアウトを構成。display: flex が適用される。g, ai, jc, fxw, fxd 等で配置を制御。"
 	},
 	{
 		"sourcePath": "modules/l--stack.mdx",
 		"title": "Stack / l--stack",
 		"description": "Stack レイアウトモジュールの解説。",
 		"category": "modules",
-		"headings": [],
+		"headings": ["CSS", "Import", "Props", "Usage"],
 		"keywords": ["Stack", "スタック", "縦並び", "vertical", "l--stack"],
-		"snippet": "縦方向に要素を積み重ねるFlexレイアウト。flex-direction: column のFlex。"
+		"snippet": "縦方向に要素を積み重ねるFlexレイアウト。flex-direction: column のFlex。ai='center'で内在的な中央寄せも可能。"
 	},
 	{
 		"sourcePath": "modules/l--grid.mdx",
 		"title": "Grid / l--grid",
 		"description": "Grid レイアウトモジュールの解説。",
 		"category": "modules",
-		"headings": [],
-		"keywords": ["Grid", "グリッド", "layout", "l--grid", "CSS Grid"],
-		"snippet": "CSS Gridレイアウトを構成。gtc, gtr, cols, rows 等で列・行を制御。"
+		"headings": ["Import", "Props", "Usage"],
+		"keywords": ["Grid", "グリッド", "layout", "l--grid", "CSS Grid", "subgrid"],
+		"snippet": "CSS Gridレイアウトを構成。gtc, gtr, gta, cols, rows 等で列・行を制御。subgridや-gt:repeatもサポート。"
 	},
 	{
 		"sourcePath": "modules/l--center.mdx",
 		"title": "Center / l--center",
 		"description": "Center レイアウトモジュールの解説。",
 		"category": "modules",
-		"headings": [],
+		"headings": ["CSS", "主なProps", "Import", "Usage"],
 		"keywords": ["Center", "中央揃え", "center", "layout", "l--center"],
-		"snippet": "子要素を中央揃えにするレイアウト。place-items: center の Grid。"
+		"snippet": "子要素を中央揃えにするレイアウト。place-items: center の Grid。高さがあれば上下左右中央揃え。"
 	},
 	{
 		"sourcePath": "modules/l--cluster.mdx",
 		"title": "Cluster / l--cluster",
 		"description": "Cluster レイアウトモジュールの解説。",
 		"category": "modules",
-		"headings": [],
+		"headings": ["CSS", "Import", "Usage"],
 		"keywords": ["Cluster", "クラスター", "横並び", "wrap", "l--cluster", "タグ"],
 		"snippet": "横方向に要素を並べ、自動的に折り返すFlexレイアウト。タグやバッジの並びに適している。"
 	},
@@ -290,250 +286,250 @@
 		"title": "Columns / l--columns",
 		"description": "Columns レイアウトモジュールの解説。",
 		"category": "modules",
-		"headings": [],
-		"keywords": ["Columns", "カラム", "列", "multi-column", "l--columns"],
-		"snippet": "均等幅のカラムレイアウト。cols で列数を指定する Grid。レスポンシブ対応可能。"
+		"headings": ["Props", "CSS", "Import", "Usage"],
+		"keywords": ["Columns", "カラム", "列", "multi-column", "l--columns", "subgrid"],
+		"snippet": "均等幅のカラムレイアウト。cols で列数を指定する Grid。レスポンシブ対応可能。subgridも活用可能。"
 	},
 	{
 		"sourcePath": "modules/l--flow.mdx",
 		"title": "Flow / l--flow",
 		"description": "Flow レイアウトモジュールの解説。",
 		"category": "modules",
-		"headings": [],
-		"keywords": ["Flow", "フロー", "コンテンツ", "記事", "l--flow", "本文"],
-		"snippet": "コンテンツフロー用のレイアウト。子要素間に一定の余白を設ける。記事本文に適している。"
+		"headings": ["対応コンポーネント", "Usage", "l--flow を入れ子にする時の注意点"],
+		"keywords": ["Flow", "フロー", "コンテンツ", "記事", "l--flow", "本文", "is--skipFlow"],
+		"snippet": "コンテンツフロー用のレイアウト。display: flow-root で子要素間の余白を管理。見出しタグは余白が2倍。is--skipFlowで余白打ち消しも可能。"
 	},
 	{
 		"sourcePath": "modules/l--fluidcols.mdx",
 		"title": "FluidCols / l--fluidCols",
 		"description": "FluidCols レイアウトモジュールの解説。",
 		"category": "modules",
-		"headings": [],
+		"headings": ["Props", "CSS", "Import", "Usage"],
 		"keywords": ["FluidCols", "流動カラム", "auto-fill", "fluid", "l--fluidCols"],
-		"snippet": "子要素が最小幅に達すると自動的に折り返すグリッドレイアウト。メディアクエリに依存しない。"
+		"snippet": "子要素が最小幅に達すると自動的に折り返すグリッドレイアウト。メディアクエリに依存しない。cols で最小幅を指定。"
 	},
 	{
 		"sourcePath": "modules/l--frame.mdx",
 		"title": "Frame / l--frame",
 		"description": "Frame レイアウトモジュールの解説。",
 		"category": "modules",
-		"headings": [],
-		"keywords": ["Frame", "フレーム", "aspect-ratio", "アスペクト比", "l--frame", "画像"],
-		"snippet": "アスペクト比を維持するフレーム要素。画像や動画のコンテナとして使用。"
+		"headings": ["対応コンポーネント", "Usage"],
+		"keywords": ["Frame", "フレーム", "aspect-ratio", "アスペクト比", "l--frame", "画像", "video", "iframe"],
+		"snippet": "直下のメディア要素（img, video, iframe）を自身のサイズに合わせて表示するレイアウトモジュール。arでアスペクト比を指定。"
 	},
 	{
 		"sourcePath": "modules/l--switchcols.mdx",
 		"title": "SwitchCols / l--switchCols",
 		"description": "SwitchCols レイアウトモジュールの解説。",
 		"category": "modules",
-		"headings": [],
+		"headings": ["Props", "CSS", "Import", "Usage"],
 		"keywords": ["SwitchCols", "切り替え", "switch", "カラム", "l--switchCols"],
-		"snippet": "一定の幅で自動的に1カラムと複数カラムを切り替えるレイアウト。メディアクエリに依存しない。"
+		"snippet": "複数列以上と1列への切り替えをメディアクエリを使わずに実装するレイアウト。breakSizeで切り替えポイントを指定。"
 	},
 	{
 		"sourcePath": "modules/l--sidemain.mdx",
 		"title": "SideMain / l--sideMain",
 		"description": "SideMain レイアウトモジュールの解説。",
 		"category": "modules",
-		"headings": [],
-		"keywords": ["SideMain", "サイドバー", "sidebar", "メイン", "l--sideMain", "2カラム"],
-		"snippet": "サイドバー + メインコンテンツの2カラムレイアウト。メイン側が可変幅。"
+		"headings": ["基本構造", "CSS", "Import", "Props", "Usage", "Gridを使って似たレイアウトを構成する例"],
+		"keywords": ["SideMain", "サイドバー", "sidebar", "メイン", "l--sideMain", "2カラム", "is--side"],
+		"snippet": "サイドバー + メインコンテンツの2カラムレイアウト。メイン側が可変幅。sideW, mainWで幅を制御。fxd='row-r'で反転も可能。"
 	},
 	{
 		"sourcePath": "modules/is--container.mdx",
 		"title": "Container / is--container",
 		"description": "Container (is--container) の解説。",
 		"category": "modules",
-		"headings": [],
-		"keywords": ["Container", "コンテナ", "container query", "is--container"],
-		"snippet": "コンテナクエリの基準要素。子要素のレスポンシブ対応の基準となる。"
+		"headings": ["Props", "Import", "Usage"],
+		"keywords": ["Container", "コンテナ", "container query", "is--container", "isContainer"],
+		"snippet": "コンテナクエリの基準要素。container-typeをセットし、子要素のレスポンシブ対応の基準となる。isContainerプロパティでどのコンポーネントからでも呼び出し可能。"
 	},
 	{
 		"sourcePath": "modules/is--layer.mdx",
 		"title": "Layer / is--layer",
 		"description": "Layer (is--layer) の解説。",
 		"category": "modules",
-		"headings": [],
-		"keywords": ["Layer", "レイヤー", "overlay", "オーバーレイ", "is--layer", "absolute"],
-		"snippet": "親要素に対して絶対配置で重なるレイヤー要素。オーバーレイや背景装飾に使用。"
+		"headings": ["Props", "Import", "Usage"],
+		"keywords": ["Layer", "レイヤー", "overlay", "オーバーレイ", "is--layer", "absolute", "backdrop-filter", "blur"],
+		"snippet": "親要素に対して絶対配置で重なるレイヤー要素。オーバーレイや背景装飾に使用。blur等のbackdrop-filterプロパティも個別に指定可能。"
 	},
 	{
 		"sourcePath": "modules/is--linkBox.mdx",
 		"title": "LinkBox / is--linkBox",
 		"description": "LinkBox (is--linkBox) の解説。",
 		"category": "modules",
-		"headings": [],
-		"keywords": ["LinkBox", "リンク", "clickable", "カード", "is--linkBox"],
-		"snippet": "ボックス全体をリンク領域にする。カード全体をクリッカブルにする場合等に使用。"
+		"headings": ["Import", "Props", "Usage", "Opt-in"],
+		"keywords": ["LinkBox", "リンク", "clickable", "カード", "is--linkBox", "u--expandedLink"],
+		"snippet": "ボックス全体をリンク領域にする。hrefを指定してaタグにする方法と、内部にu--expandedLinkを配置する方法の2通りがある。"
 	},
 	{
 		"sourcePath": "modules/is--wrapper.mdx",
 		"title": "Wrapper / is--wrapper",
 		"description": "Wrapper (is--wrapper) の解説。",
 		"category": "modules",
-		"headings": [],
-		"keywords": ["Wrapper", "ラッパー", "コンテンツ幅", "max-width", "is--wrapper"],
-		"snippet": "コンテンツ幅を制限するラッパー要素。サイドバーなどと組み合わせて使用。"
+		"headings": ["Props", "Import", "Usage"],
+		"keywords": ["Wrapper", "ラッパー", "コンテンツ幅", "max-width", "is--wrapper", "contentSize"],
+		"snippet": "コンテンツ幅を制限するラッパー要素。contentSizeで幅を指定。s, lのプリセットサイズや任意値も設定可能。"
 	},
 	{
 		"sourcePath": "modules/a--icon.mdx",
 		"title": "Icon / a--icon",
 		"description": "Icon コンポーネントの解説。",
 		"category": "modules",
-		"headings": [],
-		"keywords": ["Icon", "アイコン", "SVG", "a--icon"],
-		"snippet": "アイコンを表示するコンポーネント。SVGアイコンやアイコンコンポーネントを統一的に扱える。"
+		"headings": ["構造", "CSS", "Props", "Import", "Usage"],
+		"keywords": ["Icon", "アイコン", "SVG", "a--icon", "phosphor-icons"],
+		"snippet": "アイコンを表示するコンポーネント。外部パッケージ(react-icons, phosphor-icons等)のアイコン、プリセットアイコン、SVG直接記述、img指定に対応。"
 	},
 	{
 		"sourcePath": "modules/a--divider.mdx",
 		"title": "Divider / a--divider",
 		"description": "Divider コンポーネントの解説。",
 		"category": "modules",
-		"headings": [],
+		"headings": ["構造", "CSS", "Props", "Import", "Usage"],
 		"keywords": ["Divider", "区切り線", "hr", "a--divider", "セパレーター"],
-		"snippet": "区切り線を表示するコンポーネント。水平・垂直の区切りを表現。"
+		"snippet": "区切り線を表示するコンポーネント。水平・垂直の区切りを表現。bds, bdw, bdc でスタイルをカスタマイズ可能。"
 	},
 	{
 		"sourcePath": "modules/a--media.mdx",
 		"title": "Media / a--media",
 		"description": "Media コンポーネントの解説。",
 		"category": "modules",
-		"headings": [],
-		"keywords": ["Media", "メディア", "img", "video", "iframe", "a--media", "画像"],
-		"snippet": "img, video, iframe 等のメディア要素を統一的に扱うコンポーネント。"
+		"headings": ["Props", "Import"],
+		"keywords": ["Media", "メディア", "img", "video", "iframe", "a--media", "画像", "filter"],
+		"snippet": "img, video, iframe 等のメディア要素を統一的に扱うコンポーネント。objectPosition, filter系プロパティに対応。Next.js/AstroのImageコンポーネントとの連携も可能。"
 	},
 	{
 		"sourcePath": "modules/a--spacer.mdx",
 		"title": "Spacer / a--spacer",
 		"description": "Spacer コンポーネントの解説。",
 		"category": "modules",
-		"headings": [],
+		"headings": ["構造", "Props", "Import", "Usage"],
 		"keywords": ["Spacer", "スペーサー", "余白", "空白", "a--spacer"],
-		"snippet": "空白を挿入するコンポーネント。要素間に任意の余白を追加。"
+		"snippet": "空白を挿入するコンポーネント。w, h で幅・高さを指定。SPACEトークンの値も使用可能。"
 	},
 	{
 		"sourcePath": "modules/a--decorator.mdx",
 		"title": "Decorator / a--decorator",
 		"description": "Decorator コンポーネントの解説。",
 		"category": "modules",
-		"headings": [],
+		"headings": ["構造", "Props", "Import", "Usage"],
 		"keywords": ["Decorator", "デコレーター", "装飾", "a--decorator"],
-		"snippet": "装飾用のコンポーネント。視覚的な装飾要素を追加するために使用。"
+		"snippet": "装飾用の空要素を出力するコンポーネント。size, filter系プロパティ, clipPathに対応。aria-hidden='true'がデフォルトで付与される。"
 	},
 	{
 		"sourcePath": "ui/Accordion.mdx",
 		"title": "Accordion",
-		"description": "Accordion UIコンポーネントの解説。",
+		"description": "@lism-css/ui で提供する Accordion コンポーネントについて解説します。",
 		"category": "ui",
-		"headings": [],
+		"headings": ["基本構造", "ソースコード", "Import", "Props", "Examples"],
 		"keywords": ["Accordion", "アコーディオン", "開閉", "toggle", "FAQ"],
-		"snippet": "クリックでコンテンツの開閉を切り替えるアコーディオンUI。JavaScriptが付属。"
+		"snippet": "クリックでコンテンツの開閉を切り替えるアコーディオンUI。@lism-css/uiパッケージで提供。"
 	},
 	{
 		"sourcePath": "ui/Modal.mdx",
 		"title": "Modal",
 		"description": "Modal UIコンポーネントの解説。",
 		"category": "ui",
-		"headings": [],
+		"headings": ["How to use", "Props", "Usage"],
 		"keywords": ["Modal", "モーダル", "dialog", "ダイアログ", "ポップアップ"],
-		"snippet": "モーダルダイアログUI。dialog要素を使用。JavaScriptが付属。"
+		"snippet": "モーダルダイアログUI。dialog要素を使用。@lism-css/uiパッケージで提供。"
 	},
 	{
 		"sourcePath": "ui/Tabs.mdx",
 		"title": "Tabs",
 		"description": "Tabs UIコンポーネントの解説。",
 		"category": "ui",
-		"headings": [],
+		"headings": ["基本構造", "CSS", "JavaScript", "Import", "Props", "Usage", "スタイルバリエーションの作成例", "Opt-in"],
 		"keywords": ["Tabs", "タブ", "切り替え", "panel"],
-		"snippet": "タブ切り替えUI。タブをクリックしてコンテンツパネルを切り替える。"
+		"snippet": "タブ切り替えUI。タブをクリックしてコンテンツパネルを切り替える。@lism-css/uiパッケージで提供。"
 	},
 	{
 		"sourcePath": "ui/Details.mdx",
 		"title": "Details",
-		"description": "Details UIコンポーネントの解説。",
+		"description": "@lism-css/ui で提供する Details コンポーネントについて解説します。",
 		"category": "ui",
-		"headings": [],
+		"headings": ["How to use", "Examples"],
 		"keywords": ["Details", "details", "summary", "開閉"],
-		"snippet": "HTMLのdetails/summary要素をラップ。ネイティブのHTML要素を使用したアコーディオン。"
+		"snippet": "HTMLのdetails/summary要素をラップ。ネイティブのHTML要素を使用したアコーディオン。@lism-css/uiパッケージで提供。"
 	},
 	{
 		"sourcePath": "ui/Alert.mdx",
 		"title": "Alert",
-		"description": "Alert UIコンポーネントの解説。",
+		"description": "@lism-css/ui で提供する Alert コンポーネントについて解説します。",
 		"category": "ui",
-		"headings": [],
+		"headings": ["How to use", "Examples", "Only lism-css"],
 		"keywords": ["Alert", "アラート", "注意", "notice", "warning", "info"],
-		"snippet": "注意書きやお知らせを目立たせるアラートボックス。アイコンとキーカラーでバリエーション。"
+		"snippet": "短めの文言を目立たせて強調表示したい時に使えるコンポーネント。アイコンとキーカラーでバリエーション。"
 	},
 	{
 		"sourcePath": "ui/Callout.mdx",
 		"title": "Callout",
-		"description": "Callout UIコンポーネントの解説。",
+		"description": "@lism-css/ui で提供する Callout コンポーネントについて解説します。",
 		"category": "ui",
-		"headings": [],
+		"headings": ["How to use", "Examples", "Only lism-css", "Only Core"],
 		"keywords": ["Callout", "コールアウト", "補足", "note", "注意書き"],
-		"snippet": "コールアウト (補足情報) ボックス。Alertと似ているが、より強調度の高いデザイン。"
+		"snippet": "記事の中で重要なポイントを示すためのコンポーネント。@lism-css/uiパッケージで提供。"
 	},
 	{
 		"sourcePath": "ui/Button.mdx",
 		"title": "Button",
-		"description": "Button UIコンポーネントの解説。",
+		"description": "@lism-css/ui で提供する Button コンポーネントについて解説します。",
 		"category": "ui",
-		"headings": [],
+		"headings": ["How to use", "Examples", "Opt-in", "Only lism-css"],
 		"keywords": ["Button", "ボタン", "クリック", "outline", "action"],
-		"snippet": "ボタンコンポーネント。variant (outline 等) と keycolor でバリエーションを表現。"
+		"snippet": "ボタンコンポーネント。variant (outline 等) と keycolor でバリエーションを表現。@lism-css/uiパッケージで提供。"
 	},
 	{
 		"sourcePath": "ui/Badge.mdx",
 		"title": "Badge",
-		"description": "Badge UIコンポーネントの解説。",
+		"description": "@lism-css/ui で提供する Badge コンポーネントについて解説します。",
 		"category": "ui",
-		"headings": [],
+		"headings": ["How to use", "Examples", "Only lism-css"],
 		"keywords": ["Badge", "バッジ", "ラベル", "タグ", "status"],
-		"snippet": "バッジ (ラベル) コンポーネント。カテゴリやステータスの表示に使用。"
+		"snippet": "バッジ (ラベル) コンポーネント。カテゴリやステータスの表示に使用。@lism-css/uiパッケージで提供。"
 	},
 	{
 		"sourcePath": "ui/Avatar.mdx",
 		"title": "Avatar",
-		"description": "Avatar UIコンポーネントの解説。",
+		"description": "@lism-css/ui で提供する Avatar コンポーネントについて解説します。",
 		"category": "ui",
-		"headings": [],
+		"headings": ["How to use", "Examples", "Only lism-css"],
 		"keywords": ["Avatar", "アバター", "プロフィール", "画像", "丸"],
-		"snippet": "プロフィール画像コンポーネント。円形の画像表示に使用。"
+		"snippet": "アバター画像用のコンポーネント。円形の画像表示に使用。@lism-css/uiパッケージで提供。"
 	},
 	{
 		"sourcePath": "ui/Chat.mdx",
 		"title": "Chat",
 		"description": "Chat UIコンポーネントの解説。",
 		"category": "ui",
-		"headings": [],
+		"headings": ["How to use", "Examples", "Opt-in"],
 		"keywords": ["Chat", "チャット", "吹き出し", "会話", "balloon"],
-		"snippet": "チャット風の吹き出しコンポーネント。会話形式のUI表現に使用。"
+		"snippet": "チャット風の吹き出しコンポーネント。会話形式のUI表現に使用。@lism-css/uiパッケージで提供。"
 	},
 	{
 		"sourcePath": "ui/NavMenu.mdx",
 		"title": "NavMenu",
 		"description": "NavMenu UIコンポーネントの解説。",
 		"category": "ui",
-		"headings": [],
+		"headings": ["How to use", "Examples"],
 		"keywords": ["NavMenu", "ナビ", "メニュー", "navigation", "リンク"],
-		"snippet": "ナビゲーションメニュー。リンクリストの表示に使用。"
+		"snippet": "ナビゲーションメニュー。リンクリストの表示に使用。@lism-css/uiパッケージで提供。"
 	},
 	{
 		"sourcePath": "ui/ShapeDivider.mdx",
 		"title": "ShapeDivider",
 		"description": "ShapeDivider UIコンポーネントの解説。",
 		"category": "ui",
-		"headings": [],
+		"headings": ["How to use", "Examples"],
 		"keywords": ["ShapeDivider", "波", "wave", "区切り", "SVG", "セクション"],
-		"snippet": "セクション間の波型などの装飾的な区切り要素。SVGベースの形状で区切りを表現。"
+		"snippet": "セクション間の波型などの装飾的な区切り要素。SVGベースの形状で区切りを表現。@lism-css/uiパッケージで提供。"
 	},
 	{
 		"sourcePath": "ui/examples/Card.mdx",
 		"title": "Card",
 		"description": "Card の実装例。",
 		"category": "ui",
-		"headings": [],
+		"headings": ["Examples"],
 		"keywords": ["Card", "カード", "example", "実装例"],
 		"snippet": "Lism CSS を使ったカードレイアウトの実装例。"
 	},
@@ -542,7 +538,7 @@
 		"title": "BalloonBox",
 		"description": "BalloonBox の実装例。",
 		"category": "ui",
-		"headings": [],
+		"headings": ["Import", "Props", "Usage"],
 		"keywords": ["BalloonBox", "吹き出し", "balloon", "example"],
 		"snippet": "吹き出しボックスの実装例。"
 	},
@@ -551,7 +547,7 @@
 		"title": "Banner",
 		"description": "Banner の実装例。",
 		"category": "ui",
-		"headings": [],
+		"headings": ["Examples"],
 		"keywords": ["Banner", "バナー", "example", "hero"],
 		"snippet": "バナーの実装例。"
 	},
@@ -560,7 +556,7 @@
 		"title": "Hero",
 		"description": "Hero セクションの実装例。",
 		"category": "ui",
-		"headings": [],
+		"headings": ["Examples", "別ページで確認する"],
 		"keywords": ["Hero", "ヒーロー", "メインビジュアル", "example"],
 		"snippet": "ヒーローセクション（メインビジュアル）の実装例。"
 	},
@@ -569,7 +565,7 @@
 		"title": "FAQ",
 		"description": "FAQ の実装例。",
 		"category": "ui",
-		"headings": [],
+		"headings": ["Examples"],
 		"keywords": ["FAQ", "よくある質問", "example", "accordion"],
 		"snippet": "FAQ（よくある質問）セクションの実装例。"
 	},
@@ -578,7 +574,7 @@
 		"title": "Steps",
 		"description": "Steps の実装例。",
 		"category": "ui",
-		"headings": [],
+		"headings": ["Examples"],
 		"keywords": ["Steps", "ステップ", "手順", "example"],
 		"snippet": "ステップ（手順）表示の実装例。"
 	},
@@ -587,7 +583,7 @@
 		"title": "Timeline",
 		"description": "Timeline の実装例。",
 		"category": "ui",
-		"headings": [],
+		"headings": ["Create Component", "Usage"],
 		"keywords": ["Timeline", "タイムライン", "年表", "example"],
 		"snippet": "タイムライン表示の実装例。"
 	},
@@ -596,7 +592,7 @@
 		"title": "Table",
 		"description": "Table の実装例。",
 		"category": "ui",
-		"headings": [],
+		"headings": ["Create Component", "Usage"],
 		"keywords": ["Table", "テーブル", "表", "example"],
 		"snippet": "テーブル（表）の実装例。"
 	},
@@ -605,7 +601,7 @@
 		"title": "List",
 		"description": "List の実装例。",
 		"category": "ui",
-		"headings": [],
+		"headings": ["Create Component", "Usage"],
 		"keywords": ["List", "リスト", "一覧", "example"],
 		"snippet": "リスト表示の実装例。"
 	},
@@ -614,7 +610,7 @@
 		"title": "Decorations",
 		"description": "装飾の実装例。",
 		"category": "ui",
-		"headings": [],
+		"headings": ["Examples"],
 		"keywords": ["Decorations", "装飾", "デコレーション", "example"],
 		"snippet": "様々な装飾パターンの実装例。"
 	},
@@ -623,7 +619,7 @@
 		"title": "Breadcrumb",
 		"description": "Breadcrumb の実装例。",
 		"category": "ui",
-		"headings": [],
+		"headings": ["Examples"],
 		"keywords": ["Breadcrumb", "パンくず", "ナビゲーション", "example"],
 		"snippet": "パンくずリストの実装例。"
 	},
@@ -632,7 +628,7 @@
 		"title": "DividerLabel",
 		"description": "DividerLabel の実装例。",
 		"category": "ui",
-		"headings": [],
+		"headings": ["Examples"],
 		"keywords": ["DividerLabel", "区切り", "ラベル", "example"],
 		"snippet": "ラベル付き区切り線の実装例。"
 	},
@@ -641,16 +637,16 @@
 		"title": "Reel",
 		"description": "Reel (横スクロール) の実装例。",
 		"category": "ui",
-		"headings": [],
+		"headings": ["Flex で実装する例", "Gridで実装する例", "ナビゲーションをつける", "大きい画面サイズでReelを解除する", "縦向きのリール"],
 		"keywords": ["Reel", "横スクロール", "scroll", "carousel", "example"],
-		"snippet": "横スクロール（リール）レイアウトの実装例。"
+		"snippet": "横スクロール（リール）レイアウトの実装例。Flex/Grid両方の実装パターンを紹介。"
 	},
 	{
 		"sourcePath": "ui/examples/Others.mdx",
 		"title": "その他の実装例",
 		"description": "その他のUI実装例。",
 		"category": "ui",
-		"headings": [],
+		"headings": ["独自ユーティリティクラスの作成例"],
 		"keywords": ["others", "その他", "example", "実装例"],
 		"snippet": "その他のUI実装パターンの例。"
 	}
