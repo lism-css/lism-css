@@ -110,3 +110,45 @@ Vite + React, Astro, HTMX で Lism コンポーネントを試すことができ
 
 https://github.com/lism-css/lism-playgrounds
  */}
+
+
+## AIツール連携 (MCP)
+
+AIコーディングツールで Lism CSS のドキュメント・APIを参照できるMCPサーバーを提供しています。
+
+<Preview>
+	<PreviewCode slot='tab' label='Claude Code'>
+	```bash frame="none"
+	claude mcp add lism-css -- npx -y @lism-css/mcp
+	```
+	</PreviewCode>
+	<PreviewCode slot='tab' label='Cursor'>
+	```json frame="none"
+	// .cursor/mcp.json
+	{
+	  "mcpServers": {
+	    "lism-css": {
+	      "command": "npx",
+	      "args": ["-y", "@lism-css/mcp"]
+	    }
+	  }
+	}
+	```
+	</PreviewCode>
+	<PreviewCode slot='tab' label='VS Code'>
+	```json frame="none"
+	// .vscode/mcp.json
+	{
+	  "servers": {
+	    "lism-css": {
+	      "type": "stdio",
+	      "command": "npx",
+	      "args": ["-y", "@lism-css/mcp"]
+	    }
+	  }
+	}
+	```
+	</PreviewCode>
+</Preview>
+
+詳細は [GitHub - @lism-css/mcp](https://github.com/lism-css/lism-css/tree/main/packages/mcp) をご覧ください。
