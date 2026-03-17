@@ -6,7 +6,7 @@ export default function Tab({ tabId = 'tab', index = 0, isActive = false, ...pro
 
 	return (
 		<Lism
-			tag='button'
+			as='button'
 			lismClass='c--tabs_tab'
 			setPlain
 			role='tab'

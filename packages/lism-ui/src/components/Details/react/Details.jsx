@@ -24,7 +24,7 @@ export function Details({ children, ...props }) {
  */
 export function Summary({ children, ...props }) {
 	return (
-		<Lism tag='summary' {...defaultProps.summary} {...props}>
+		<Lism as='summary' {...defaultProps.summary} {...props}>
 			{children}
 		</Lism>
 	);

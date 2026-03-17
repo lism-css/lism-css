@@ -67,12 +67,12 @@ Icon の出力パターン
   - icon = 文字列の場合→preset で登録されたsvgアイコンを呼び出す
 ( 廃止 ) - icon = 1に該当しない、かつ文字列の場合→ data-lism-icon 属性にアイコン名が出力される。（CSSでアイコンを描画できるようになっている）
   - icon = それ以外の場合、extends として振る舞う
-  - tag=svg で指定された場合 → <svg> で出力し、childrenはそのまま返す。（<path> などを渡して使えるようにする）
-  - as が指定された場合 → asで渡される外部コンポーネントを呼び出す
+  - as=svg で指定された場合 → <svg> で出力し、childrenはそのまま返す。（<path> などを渡して使えるようにする）
+  - as が指定された場合 → asで渡されるコンポーネントまたは要素を呼び出す
 */
-export default function getProps({ lismClass, as, tag, icon, label, exProps = {}, ..._props }: IconProps) {
+export default function getProps({ lismClass, as, icon, label, exProps = {}, ..._props }: IconProps) {
 	// '_SVG_' は内部センチネル値として使用し、Icon.tsx で SVG コンポーネントに置換される
-	let Component: ElementType | '_SVG_' = tag || 'span';
+	let Component: ElementType | '_SVG_' = as || 'span';
 	let content = '';
 
 	// rest の型が複雑な union になり TS2590 が発生するため、object にキャストしてから渡す
@@ -126,8 +126,6 @@ export default function getProps({ lismClass, as, tag, icon, label, exProps = {}
 		} else {
 			Component = icon as ElementType;
 		}
-	} else if (as) {
-		Component = as;
 	}
 
 	// label の有無でaria属性を変える

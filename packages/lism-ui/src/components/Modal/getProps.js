@@ -9,7 +9,7 @@ export function getProps({ lismClass = '', duration, style = {}, ...props }) {
 		style['--duration'] = duration;
 	}
 
-	return { tag: 'dialog', ...theProps, style, ...props };
+	return { as: 'dialog', ...theProps, style, ...props };
 }
 
 export function getInnerProps({ lismClass = '', offset, style = {}, ...props }) {
@@ -25,6 +25,6 @@ export function getInnerProps({ lismClass = '', offset, style = {}, ...props }) 
 
 export const defaultProps = {
 	body: { lismClass: 'c--modal_body' },
-	closeBtn: { tag: 'button', setPlain: true, hov: 'o', d: 'in-flex' },
-	openBtn: { tag: 'button', setPlain: true, hov: 'o', d: 'in-flex' },
+	closeBtn: { as: 'button', setPlain: true, hov: 'o', d: 'in-flex' },
+	openBtn: { as: 'button', setPlain: true, hov: 'o', d: 'in-flex' },
 };

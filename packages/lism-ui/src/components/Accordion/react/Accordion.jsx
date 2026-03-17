@@ -47,7 +47,7 @@ export function AccordionItem({ children, ...props }) {
 
 /**
  * 見出しエリアのラッパー（デフォルトは <div role="heading">）
- * tag に h2〜h6 を指定すると role は付与されない
+ * as に h2〜h6 を指定すると role は付与されない
  */
 export function Heading({ children, ...props }) {
 	return <Lism {...getHeadingProps(props)}>{children}</Lism>;
