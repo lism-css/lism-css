@@ -577,6 +577,50 @@
 					"description": "角丸。",
 					"values": ["0", "5", "10", "20", "30", "40", "50", "99", "inner"]
 				},
+				{ "prop": "bdrs-tl", "cssProperty": "border-top-left-radius", "type": "string", "responsive": false, "description": "左上の角丸。" },
+				{ "prop": "bdrs-tr", "cssProperty": "border-top-right-radius", "type": "string", "responsive": false, "description": "右上の角丸。" },
+				{
+					"prop": "bdrs-br",
+					"cssProperty": "border-bottom-right-radius",
+					"type": "string",
+					"responsive": false,
+					"description": "右下の角丸。"
+				},
+				{
+					"prop": "bdrs-bl",
+					"cssProperty": "border-bottom-left-radius",
+					"type": "string",
+					"responsive": false,
+					"description": "左下の角丸。"
+				},
+				{
+					"prop": "bdrs-ss",
+					"cssProperty": "border-start-start-radius",
+					"type": "string",
+					"responsive": false,
+					"description": "インライン開始・ブロック開始方向の角丸。"
+				},
+				{
+					"prop": "bdrs-se",
+					"cssProperty": "border-start-end-radius",
+					"type": "string",
+					"responsive": false,
+					"description": "インライン終了・ブロック開始方向の角丸。"
+				},
+				{
+					"prop": "bdrs-es",
+					"cssProperty": "border-end-start-radius",
+					"type": "string",
+					"responsive": false,
+					"description": "インライン開始・ブロック終了方向の角丸。"
+				},
+				{
+					"prop": "bdrs-ee",
+					"cssProperty": "border-end-end-radius",
+					"type": "string",
+					"responsive": false,
+					"description": "インライン終了・ブロック終了方向の角丸。"
+				},
 				{
 					"prop": "bxsh",
 					"cssProperty": "box-shadow",
@@ -1021,6 +1065,66 @@
 					"type": "boolean",
 					"responsive": false,
 					"description": "内側の角丸を設定するセットクラスを付与する。"
+				},
+				{
+					"prop": "setBp",
+					"cssProperty": "(class: set--bp)",
+					"type": "boolean",
+					"responsive": false,
+					"description": "ブレイクポイント制御用のセットクラスを付与する。"
+				},
+				{
+					"prop": "setCqUnit",
+					"cssProperty": "(class: set--cqUnit)",
+					"type": "boolean",
+					"responsive": false,
+					"description": "コンテナクエリ単位（cqi）を有効にするセットクラスを付与する。"
+				}
+			]
+		},
+		{
+			"category": "others",
+			"description": "その他のCSSプロパティ",
+			"props": [
+				{
+					"prop": "ovwrap",
+					"cssProperty": "overflow-wrap",
+					"type": "string",
+					"responsive": false,
+					"description": "オーバーフローラップ。",
+					"values": ["any"]
+				},
+				{
+					"prop": "whspace",
+					"cssProperty": "white-space",
+					"type": "string",
+					"responsive": false,
+					"description": "ホワイトスペース。",
+					"values": ["nowrap"]
+				},
+				{
+					"prop": "float",
+					"cssProperty": "float",
+					"type": "string",
+					"responsive": false,
+					"description": "フロート。",
+					"values": ["left", "right"]
+				},
+				{
+					"prop": "clear",
+					"cssProperty": "clear",
+					"type": "string",
+					"responsive": false,
+					"description": "クリア。",
+					"values": ["both"]
+				},
+				{
+					"prop": "isolation",
+					"cssProperty": "isolation",
+					"type": "string",
+					"responsive": false,
+					"description": "スタッキングコンテキストの分離。",
+					"values": ["isolate"]
 				}
 			]
 		}
