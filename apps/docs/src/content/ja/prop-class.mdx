@@ -9,7 +9,7 @@ import { Lism, Flow, Container, HTML, Frame, Layer, Media, Dummy, Box, Flex, Gri
 export const PropTable = ({data={}, ...props}) => {
 	const dataKyes = Object.keys(data);
 	return (
-		<Lism tag='table' {...props}>
+		<Lism as='table' {...props}>
 			{/* <thead className='-ta:left'>
 				<tr>
 					<th>Class</th>

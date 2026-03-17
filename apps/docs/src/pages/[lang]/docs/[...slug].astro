@@ -51,7 +51,7 @@ const ogImage = `/${lang}/docs/og/${slug}.png`;
 
 <BaseLayout title={entry.data.title} description={entry.data.description} ogImage={ogImage} toc={toc} lang={lang}>
 	{/* フォールバック（未翻訳）ページは検索対象から除外 */}
-	<Stack tag="article" class="z--article" g="40" class="set--cqUnit" {...!isFallback && { 'data-pagefind-body': true }}>
+	<Stack as="article" class="z--article" g="40" class="set--cqUnit" {...!isFallback && { 'data-pagefind-body': true }}>
 		{/* 未翻訳の注意書き */}
 		{isFallback && <TranslationNotice lang={lang} />}
 

@@ -12,7 +12,7 @@ import { filterDraftItems } from '@/lib/templates';
 
 <BaseLayout title="Templates" description="Lism CSSを使ったWebサイトテンプレート集" excludeFromSearch>
 	<Stack g="40" class="templates">
-		<Stack tag="header" g="20">
+		<Stack as="header" g="20">
 			<h1>Web Templates</h1>
 			<HTML.p c="text-2">コピペで簡単に利用できる、Lism CSSを使ったWebサイトテンプレート集です。</HTML.p>
 		</Stack>
@@ -24,7 +24,7 @@ import { filterDraftItems } from '@/lib/templates';
 					// 本番環境ではdraft:trueのアイテムを除外
 					const items = filterDraftItems(category.items);
 					return (
-						<Box tag="section">
+						<Box as="section">
 							<HTML.h lv="2" layout="flex" ai="center" g="10" fz="xl" bd-b py="10" px="5">
 								<span>{category.label}</span>
 								<HTML.span fz="xs" c="text-2" fw="normal">

@@ -14,7 +14,7 @@ import { Cluster, Icon, Spacer, HTML, Decorator } from 'lism-css/astro';
 <Preview>
 	<PreviewTitle>実装例-1: with slash</PreviewTitle>
 	<PreviewArea p='20'>
-		<Cluster tag='ol' g='15'>
+		<Cluster as='ol' g='15'>
 			<HTML.li d='in-flex' ai='center' g='15'>
 				<HTML.a href='#menu-1' c='20' >Menu item 1</HTML.a>
 			</HTML.li>
@@ -30,7 +30,7 @@ import { Cluster, Icon, Spacer, HTML, Decorator } from 'lism-css/astro';
 	</PreviewArea>
 	<PreviewCode slot='tab' label='JSX'>
 		```jsx
-		<Cluster tag='ol' g='15'>
+		<Cluster as='ol' g='15'>
 			<HTML.li d='in-flex' ai='center' g='15'>
 				<HTML.a href='#menu-1' c='20' >Menu item 1</HTML.a>
 			</HTML.li>
@@ -67,7 +67,7 @@ import { Cluster, Icon, Spacer, HTML, Decorator } from 'lism-css/astro';
 <Preview>
 	<PreviewTitle>例-2: with Icon</PreviewTitle>
 	<PreviewArea p='20'>
-		<Cluster tag='ol' g='15'>
+		<Cluster as='ol' g='15'>
 			<HTML.li d='in-flex' ai='center' g='15'>
 				<a class='set--plain' href='#menu-1'>Menu item 1</a>
 			</HTML.li>
@@ -83,7 +83,7 @@ import { Cluster, Icon, Spacer, HTML, Decorator } from 'lism-css/astro';
 	</PreviewArea>
 	<PreviewCode slot='tab' label='JSX'>
 		```jsx
-		<Cluster tag='ol' g='15'>
+		<Cluster as='ol' g='15'>
 			<HTML.li d='in-flex' ai='center' g='15'>
 				<a class='set--plain' href='#menu-1'>Menu item 1</a>
 			</HTML.li>

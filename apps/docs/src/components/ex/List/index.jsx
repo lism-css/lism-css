@@ -5,7 +5,7 @@ export default function List({ tag = 'ul', iconC, iconImg, children, style = {},
 	if (iconC) style['--_icon-c'] = iconC;
 	if (iconImg) style['--_icon-img'] = iconImg;
 	return (
-		<Lism tag={tag} lismClass='c--list' style={style} {...props}>
+		<Lism as={tag} lismClass="c--list" style={style} {...props}>
 			{children}
 		</Lism>
 	);

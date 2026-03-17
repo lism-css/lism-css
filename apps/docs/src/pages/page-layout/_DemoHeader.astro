@@ -3,7 +3,7 @@ import { Container, HTML, Flex, Stack, Center, Icon } from 'lism-css/astro';
 import { Modal } from '@lism-css/ui/astro';
 ---
 
-<Container tag="header" isWrapper="l" py="20" setGutter bxsh="10">
+<Container as="header" isWrapper="l" py="20" setGutter bxsh="10">
 	<Flex jc="between" ai="center" g="15">
 		<HTML.div fz="xl" ff="mono"><a href="/">Lism CSS</a></HTML.div>
 		<Flex mx-s="auto" g="15" d={['none', null, 'flex']}>
@@ -11,7 +11,7 @@ import { Modal } from '@lism-css/ui/astro';
 			<HTML.a href="###" hov="o" px="5" c="inherit" td="none">Menu 2</HTML.a>
 			<HTML.a href="###" hov="o" px="5" c="inherit" td="none">Menu 3</HTML.a>
 		</Flex>
-		<Center d={['grid', null, 'none']} tag="button" fz="xl" className="set--plain" data-modal-open="modal-01">
+		<Center d={['grid', null, 'none']} as="button" fz="xl" className="set--plain" data-modal-open="modal-01">
 			<Icon icon="menu" fz="l" />
 		</Center>
 	</Flex>

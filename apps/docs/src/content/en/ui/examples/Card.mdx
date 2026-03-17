@@ -33,7 +33,7 @@ export const ExampleImgCard = (props) => {
 			<Layer layout='stack' c='white' p='30' g='30'>
 				<h3 className='u--trim -fz:l -my-s:auto'>Card Title</h3>
 				<HTML.p className='u--trim' fz='s' lh='s' o='-10'>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</HTML.p>
-				<Center tag='a' href='#' c='black' bgc='white' td='none' lh='s' p='15' bdrs='99' hov='neutral'>Link Text</Center>
+				<Center as='a' href='#' c='black' bgc='white' td='none' lh='s' p='15' bdrs='99' hov='neutral'>Link Text</Center>
 			</Layer>
 		</Frame>
 	)
@@ -63,7 +63,7 @@ Additionally, [`is--linkBox`](/docs/modules/is--linkBox/) is applied to make the
 		</SideMain>
 	</PreviewArea>
 	<PreviewCode slot='tab' label='JSX'>
-		```jsx "SideMain" "tag='a' isLinkBox"
+		```jsx "SideMain" "as='a' isLinkBox"
 		<SideMain isLinkBox href='###' hov='bxsh' setTransition sideW='50%' bgc='base' bdrs='20' bxsh='10' ov='hidden'>
 			<Frame isSide ar='16/9' >
 				<Media src='https://cdn.lism-css.com/img/a-1.jpg' alt='' width='960' height='640' />
@@ -135,7 +135,7 @@ When you want to make the entire card a link while also including a separate lin
 			<Layer layout='stack' c='white' p='30' g='30'>
 				<h3 className='u--trim -fz:l -my-s:auto'>Card Title</h3>
 				<HTML.p className='u--trim' fz='s' lh='s' o='-10'>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</HTML.p>
-				<Center tag='a' href='#' c='black' bgc='white' td='none' lh='s' p='15' bdrs='99' hov='neutral'>Link Text</Center>
+				<Center as='a' href='#' c='black' bgc='white' td='none' lh='s' p='15' bdrs='99' hov='neutral'>Link Text</Center>
 			</Layer>
 		</Frame>
 		```

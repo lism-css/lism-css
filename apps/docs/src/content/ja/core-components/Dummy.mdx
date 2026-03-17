@@ -105,17 +105,17 @@ import { Lism, HTML, Dummy, Stack } from "lism-css/astro";
 
 ## ダミーリスト
 
-`tag='ul'` と `tag='ol'` を指定した場合は、リストを出力します。
+`as='ul'` と `as='ol'` を指定した場合は、リストを出力します。
 <Preview>
 	<PreviewTitle>ダミーリストの例 1</PreviewTitle>
 	<PreviewArea p='20'>
-		<Dummy tag='ul' />
-		<Dummy tag='ol' />
+		<Dummy as='ul' />
+		<Dummy as='ol' />
 	</PreviewArea>
 	<PreviewCode>
 		```jsx
-		<Dummy tag='ul' />
-		<Dummy tag='ol' />
+		<Dummy as='ul' />
+		<Dummy as='ol' />
 		```
 	</PreviewCode>
 </Preview>
@@ -123,15 +123,15 @@ import { Lism, HTML, Dummy, Stack } from "lism-css/astro";
 
 ## ダミー画像
 
-`tag='img'` を指定した場合は、`https://cdn.lism-css.com/`からダミー画像を出力します。
+`as='img'` を指定した場合は、`https://cdn.lism-css.com/`からダミー画像を出力します。
 <Preview>
 	<PreviewTitle>例</PreviewTitle>
 	<PreviewArea p='20'>
-		<Dummy tag='img' />
+		<Dummy as='img' />
 	</PreviewArea>
 	<PreviewCode>
 		```jsx
-		<Dummy tag='img' />
+		<Dummy as='img' />
 		```
 	</PreviewCode>
 </Preview>
