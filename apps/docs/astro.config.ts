@@ -27,10 +27,8 @@ export default defineConfig({
 	// リダイレクト設定（一箇所で管理）
 	redirects: {
 		// /docs/ → /docs/overview/ へリダイレクト
-		'/docs': '/docs/overview/',
 		'/docs/': '/docs/overview/',
 		// 非root言語用のリダイレクト
-		'/en/docs': '/en/docs/overview/',
 		'/en/docs/': '/en/docs/overview/',
 	},
 
