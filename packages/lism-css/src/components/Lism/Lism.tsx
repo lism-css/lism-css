@@ -1,4 +1,4 @@
-import type { ComponentPropsWithoutRef, ElementType, ReactNode, JSX } from 'react';
+import type { ComponentPropsWithoutRef, ElementType, ReactNode } from 'react';
 import getLismProps, { type LismProps } from '../../lib/getLismProps';
 import { type LayoutSpecificProps } from '../../lib/types/LayoutProps';
 
