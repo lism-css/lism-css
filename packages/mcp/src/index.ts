@@ -6,6 +6,7 @@ import { registerGetTokens } from './tools/get-tokens.js';
 import { registerGetPropsSystem } from './tools/get-props-system.js';
 import { registerGetComponent } from './tools/get-component.js';
 import { registerSearchDocs } from './tools/search-docs.js';
+import { registerConvertCss } from './tools/convert-css.js';
 
 async function main() {
 	preloadAll();
@@ -20,6 +21,7 @@ async function main() {
 	registerGetPropsSystem(server);
 	registerGetComponent(server);
 	registerSearchDocs(server);
+	registerConvertCss(server);
 
 	const transport = new StdioServerTransport();
 	await server.connect(transport);

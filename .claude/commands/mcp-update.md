@@ -38,7 +38,9 @@
 - **ソース**: `packages/lism-css/src/components/`, `packages/lism-ui/src/components/`, `packages/lism-css/config/defaults/`
 - **補足 docs**: `apps/docs/src/content/ja/modules/` と `apps/docs/src/content/ja/ui/` 配下の MDX
 - **更新内容**: 全コンポーネントの name, package, category, description, aliases, props, usage
-- **aliases ルール**: ユーザーが自然言語で検索しそうなキーワードを含める
+- **aliases ルール**:
+  - ユーザーが自然言語で検索しそうなキーワードを含める
+  - **CSS 逆引き用**: そのコンポーネントが暗黙的に付与する CSS パターンも aliases に含める（例: Flex → `"display: flex"`, Stack → `"display: flex", "flex-direction: column"`, Grid → `"display: grid"`, Center → `"place-items: center"` 等）。これにより CSS コードからの逆引きでコンポーネントを発見しやすくなる
 
 ### グループ C: `docs-index.json`
 
@@ -46,6 +48,7 @@
 - **ソース**: `apps/docs/src/content/ja/` 配下の全 MDX ファイル
 - **更新内容**: 各ページの sourcePath, title, description, category, headings, keywords, snippet
 - **title ルール**: modules カテゴリのエントリは、title に JSX コンポーネント名と CSS クラス名を `コンポーネント名 / クラス名` の形式で併記すること（例: `"Flex / l--flex"`, `"Container / is--container"`, `"Icon / a--icon"`）。クラス名は sourcePath のファイル名部分から取得できる。
+- **keywords ルール（CSS 逆引き用）**: props カテゴリや modules カテゴリのエントリには、関連する CSS プロパティ名を keywords に含める（例: Flex のドキュメントに `"display", "flex", "flex-direction"` を追加、ボーダー props のドキュメントに `"border", "border-radius"` を追加）。これにより CSS プロパティ名での検索精度が向上する
 
 
 ## 作業手順

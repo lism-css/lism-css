@@ -1,4 +1,4 @@
-import type { DocsEntry, SearchResult } from './types.js';
+import type { DocsEntry, PropCategory, SearchResult } from './types.js';
 
 function tokenize(text: string): string[] {
 	return text
@@ -22,6 +22,51 @@ export function buildAliasMap(items: Array<{ name: string; aliases?: string[] }>
 		}
 	}
 	return map;
+}
+
+/**
+ * CSSプロパティ名 → Lism prop名のマップを構築。
+ * 検索クエリにCSSプロパティ名が含まれていた場合に、対応するLism prop名で展開するために使用。
+ */
+export function buildCssPropertyMap(categories: PropCategory[]): Map<string, string[]> {
+	const map = new Map<string, string[]>();
+	for (const cat of categories) {
+		for (const p of cat.props) {
+			// "(class: ...)" はスキップ
+			if (p.cssProperty.startsWith('(class:')) continue;
+
+			// "--hl (CSS変数)" → "--hl"
+			const normalized = p.cssProperty
+				.replace(/\s*\(.*\)$/, '')
+				.trim()
+				.toLowerCase();
+			if (!normalized) continue;
+
+			const existing = map.get(normalized) ?? [];
+			existing.push(p.prop.toLowerCase());
+			map.set(normalized, existing);
+		}
+	}
+	return map;
+}
+
+/**
+ * 検索クエリをCSSプロパティ名で展開する。
+ * 例: "font-size" → "font-size fz", "padding" → "padding p"
+ */
+function expandQueryWithCssProps(query: string, cssPropertyMap?: Map<string, string[]>): string {
+	if (!cssPropertyMap) return query;
+
+	const queryLower = query.toLowerCase();
+	const additions: string[] = [];
+
+	for (const [cssProp, lismProps] of cssPropertyMap) {
+		if (queryLower.includes(cssProp)) {
+			additions.push(...lismProps);
+		}
+	}
+
+	return additions.length > 0 ? `${query} ${additions.join(' ')}` : query;
 }
 
 // docs entry のタイトルに含まれるコンポーネント名から aliases を取得
@@ -74,11 +119,15 @@ export interface SearchDocsOptions {
 	category?: string;
 	limit?: number;
 	aliasMap?: Map<string, string[]>;
+	cssPropertyMap?: Map<string, string[]>;
 }
 
 export function searchDocs(entries: DocsEntry[], query: string, options?: SearchDocsOptions): SearchResult[] {
-	const { category, limit = 10, aliasMap } = options ?? {};
-	const queryTokens = tokenize(query);
+	const { category, limit = 10, aliasMap, cssPropertyMap } = options ?? {};
+
+	// CSSプロパティ名をLism prop名に展開してからトークナイズ
+	const expandedQuery = expandQueryWithCssProps(query, cssPropertyMap);
+	const queryTokens = tokenize(expandedQuery);
 	if (queryTokens.length === 0) return [];
 
 	let filtered = entries;

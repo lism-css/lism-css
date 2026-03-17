@@ -59,7 +59,7 @@
 		"package": "lism-css",
 		"category": "layout",
 		"description": "Flexboxレイアウトを構成するコンポーネント。display: flex が適用される。",
-		"aliases": ["flexbox", "横並び", "フレックス", "inline layout"],
+		"aliases": ["flexbox", "横並び", "フレックス", "inline layout", "display: flex"],
 		"props": [
 			{ "name": "fxf", "type": "string | array", "description": "flex-flow の値。" },
 			{ "name": "fxw", "type": "string | array", "description": "flex-wrap の値。" },
@@ -72,7 +72,7 @@
 		"package": "lism-css",
 		"category": "layout",
 		"description": "縦方向に要素を積み重ねるFlexレイアウト。flex-direction: column のFlex。Flexで使えるPropsが使える。",
-		"aliases": ["縦並び", "vertical layout", "縦積み", "column direction"],
+		"aliases": ["縦並び", "vertical layout", "縦積み", "column direction", "display: flex", "flex-direction: column"],
 		"props": [],
 		"usage": "<Stack g='20'>...</Stack>"
 	},
@@ -81,7 +81,7 @@
 		"package": "lism-css",
 		"category": "layout",
 		"description": "CSS Gridレイアウトを構成するコンポーネント。display: grid が適用される。",
-		"aliases": ["CSS Grid", "グリッド", "grid layout", "格子"],
+		"aliases": ["CSS Grid", "グリッド", "grid layout", "格子", "display: grid"],
 		"props": [
 			{ "name": "gd", "type": "string | array", "description": "grid の値。" },
 			{ "name": "gt", "type": "string | array", "description": "grid-template の値。" },
@@ -99,7 +99,7 @@
 		"package": "lism-css",
 		"category": "layout",
 		"description": "子要素を中央揃えにするレイアウトコンポーネント。place-items: center の Grid。Gridで使えるpropsが使える。",
-		"aliases": ["中央揃え", "centering", "中央配置", "center align"],
+		"aliases": ["中央揃え", "centering", "中央配置", "center align", "place-items: center", "place-content: center", "display: grid"],
 		"props": [],
 		"usage": "<Center p='40' h='200px'>Centered Content</Center>"
 	},
@@ -108,7 +108,7 @@
 		"package": "lism-css",
 		"category": "layout",
 		"description": "横方向に要素を並べ、自動的に折り返すFlexレイアウト。タグやバッジの並びに適している。",
-		"aliases": ["横並び折り返し", "inline wrap", "タグ並び", "badge list", "flex wrap"],
+		"aliases": ["横並び折り返し", "inline wrap", "タグ並び", "badge list", "flex wrap", "display: flex", "flex-wrap: wrap"],
 		"props": [],
 		"usage": "<Cluster g='10'>...</Cluster>"
 	},
@@ -256,13 +256,12 @@
 		"props": [
 			{
 				"name": "icon",
-				"type": "ReactNode | string | object",
+				"type": "ElementType | string | { as: ElementType, [key: string]: unknown }",
 				"description": "アイコン要素。プリセット名の文字列、SVG文字列、外部コンポーネント、{as, ...props}オブジェクトを指定可能。"
 			},
-			{ "name": "size", "type": "string", "description": "プリセットアイコンのwidth, heightとして出力。" },
 			{ "name": "label", "type": "string", "description": "aria-labelとして出力。指定ありでrole='img'、なしでaria-hidden='true'が付与される。" }
 		],
-		"usage": "<Icon icon={SomeIcon} size='1.5em' />"
+		"usage": "<Icon icon={SomeIcon} w='1.5em' />"
 	},
 	{
 		"name": "Divider",

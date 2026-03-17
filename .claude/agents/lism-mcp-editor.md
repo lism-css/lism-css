@@ -82,11 +82,14 @@ description, architecture, packages[{name, npmName, description, version}], brea
 ### components.json
 - **ソース**: `packages/lism-css/src/components/`, `packages/lism-ui/src/components/`, `packages/lism-css/config/defaults/`
 - **補足 docs**: `apps/docs/src/content/ja/modules/` と `apps/docs/src/content/ja/ui/` 配下の MDX
-- **aliases ルール**: ユーザーが自然言語で検索しそうなキーワードを含める
+- **aliases ルール**:
+  - ユーザーが自然言語で検索しそうなキーワードを含める
+  - **CSS 逆引き用**: コンポーネントが暗黙的に付与する CSS パターンも aliases に含める（例: Flex → `"display: flex"`, Stack → `"display: flex", "flex-direction: column"`, Grid → `"display: grid"`, Center → `"place-items: center"` 等）
 
 ### docs-index.json
 - **ソース**: `apps/docs/src/content/ja/` 配下の全 MDX ファイル
 - **title ルール**: modules カテゴリは `コンポーネント名 / クラス名` 形式で併記（例: `"Flex / l--flex"`）
+- **keywords ルール（CSS 逆引き用）**: props・modules カテゴリのエントリには、関連する CSS プロパティ名を keywords に含める（例: Flex → `"display", "flex-direction"`, ボーダー → `"border", "border-radius"` 等）
 
 
 ## 作業ルール

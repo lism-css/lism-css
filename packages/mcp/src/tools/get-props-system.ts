@@ -5,14 +5,32 @@ import { PropsSystemDataSchema } from '../lib/schemas.js';
 import { success, error, notFound, READ_ONLY_ANNOTATIONS } from '../lib/response.js';
 import type { PropCategory } from '../lib/types.js';
 
+/** cssProperty フィールドからコア名を抽出（例: "--hl (CSS変数)" → "--hl"） */
+function normalizeCssProperty(raw: string): string {
+	// "(class: is--container)" → "is--container"
+	const classMatch = raw.match(/\(class:\s*(.+?)\)/);
+	if (classMatch) return classMatch[1].trim().toLowerCase();
+
+	// "--hl (CSS変数)" → "--hl"
+	return raw
+		.replace(/\s*\(.*\)$/, '')
+		.trim()
+		.toLowerCase();
+}
+
 export function registerGetPropsSystem(server: McpServer): void {
 	server.registerTool(
 		'get_props_system',
 		{
 			description:
-				'Get the lism-css Props system reference: how React props map to CSS classes and styles. Optionally filter by a specific prop name. Related: use get_component to see how props are used in specific components.',
+				'Get the lism-css Props system reference: how React/Astro props map to CSS classes and styles. Supports lookup by lism prop name (e.g. "p", "fz") OR by CSS property name (e.g. "padding", "font-size"). Use this for CSS-to-lism reverse lookup. Related: use convert_css for bulk CSS conversion, get_component to see how props are used in components.',
 			inputSchema: {
-				prop: z.string().optional().describe('Specific prop name to look up (e.g. "p", "fz", "bgc"). Omit to get the full system overview.'),
+				prop: z
+					.string()
+					.optional()
+					.describe(
+						'Prop name or CSS property name to look up. Accepts lism prop names (e.g. "p", "fz", "bgc") and standard CSS property names (e.g. "padding", "font-size", "background-color"). Omit to get the full system overview.'
+					),
 			},
 			annotations: READ_ONLY_ANNOTATIONS,
 		},
@@ -24,19 +42,32 @@ export function registerGetPropsSystem(server: McpServer): void {
 					return success(data as unknown as Record<string, unknown>);
 				}
 
-				const propLower = prop.toLowerCase();
+				const queryLower = prop.toLowerCase();
 				const matched: PropCategory[] = [];
 
 				for (const cat of data.categories) {
-					const found = cat.props.filter((p) => p.prop.toLowerCase() === propLower);
+					const found = cat.props.filter((p) => {
+						// Lism prop 名で一致
+						if (p.prop.toLowerCase() === queryLower) return true;
+
+						// CSS プロパティ名で一致（逆引き）
+						const normalizedCss = normalizeCssProperty(p.cssProperty);
+						if (normalizedCss === queryLower) return true;
+
+						return false;
+					});
+
 					if (found.length > 0) {
 						matched.push({ ...cat, props: found });
 					}
 				}
 
 				if (matched.length === 0) {
-					const allProps = data.categories.flatMap((c) => c.props.map((p) => p.prop));
-					return notFound(`Prop "${prop}" not found. Try search_docs to find related documentation.`, { availableProps: allProps });
+					const allProps = data.categories.flatMap((c) => c.props.map((p) => `${p.prop} (${p.cssProperty})`));
+					return notFound(
+						`"${prop}" に一致する Prop が見つかりません。Lism prop 名 (例: "p", "fz") または CSS プロパティ名 (例: "padding", "font-size") で検索できます。`,
+						{ availableProps: allProps }
+					);
 				}
 
 				return success({ description: data.description, categories: matched });
