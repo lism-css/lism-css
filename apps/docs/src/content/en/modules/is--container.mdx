@@ -1,0 +1,70 @@
+---
+title: 'Container'
+description: ...
+---
+import { Container, Wrapper, Box, HTML, Lism, Spacer } from "lism-css/astro";
+
+This page demonstrates how to use the [`is--container`](/docs/css-methodology//#is--container) class — which sets `container-type` — through components.
+
+`is--container` can be applied via the `isContainer` property on **any component**.
+
+| Property | Output |
+|---|---|
+| `isContainer`| `.is--container` |
+
+A dedicated `<Container>` component is also available as an alias for `<Lism isContainer>`.
+
+This section introduces that dedicated component.
+
+
+## Props
+
+The following props are available on `<Container>`.
+
+
+| Property | Description |
+|---|---|
+| `layout` | Specifies the Layout module to expand into. |
+
+<PreviewTitle>The examples ① and ② below produce the same result.</PreviewTitle>
+
+```jsx
+// ①
+<Flow isContainer>...</Flow>
+
+// ②
+<Container layout='flow'>...</Container>
+```
+
+
+## Import
+
+<ImportPackage component='Container' />
+
+
+## Usage
+
+When `isContainer` is set on a Lism component, or when the `<Container>` component is used, the `is--container` class is applied and container queries become active inside the element.
+
+<Preview>
+	<PreviewTitle>Example</PreviewTitle>
+	<PreviewArea resize p='15'>
+		<Container isWrapper='s' p='20'>
+			<Box bd p={['10','30']}>This Box switches its padding based on the container size.</Box>
+		</Container>
+	</PreviewArea>
+	<PreviewCode slot='tab' label='JSX'>
+		```jsx
+		<Container isWrapper='s' p='20'>
+			<Box bd p={['10','30']}>This Box switches its padding based on the container size.</Box>
+		</Container>
+		```
+	</PreviewCode>
+	<PreviewCode slot='tab' label='HTML'>
+		```html
+		<div class="is--container is--wrapper -content:s -p:20">
+			<div class="l--box -bd -p:10 -p_sm" style="--p_sm:var(--s30)">This Box switches its padding based on the container size.</div>
+		</div>
+		```
+	</PreviewCode>
+</Preview>

@@ -1,0 +1,60 @@
+---
+title: 'BalloonBox'
+description: ...
+draft: true
+---
+
+import { Grid, Stack, Flex, Decorator, Box, Spacer, Dummy } from 'lism-css/astro';
+import BalloonBox from '@/components/ex/BalloonBox/index.jsx';
+
+Examples of creating a speech-bubble style decorative box.
+
+
+## Import
+<ImportSource name='BalloonBox' react />
+{/* <ImportSource css='Badge/style.scss' react='Badge/index.jsx' astro='Badge/index.astro' /> */}
+
+## Props
+
+| Property | Description |
+|---|---|
+|`variant`| Specifies the direction of the balloon. Outputs the `c--balloonBox--{variant}` class.|
+|`keycolor`| Specifies the color of the balloon. Also outputs `u--cbox`.|
+
+
+## Usage
+
+
+<Preview>
+	<PreviewTitle>BalloonBox</PreviewTitle>
+	<PreviewArea resize p='20'>
+		<BalloonBox variant='left'>
+			<Dummy />
+		</BalloonBox>
+		<BalloonBox variant='right' keycolor='blue'>
+			<Dummy />
+		</BalloonBox>
+		<BalloonBox variant='top' bdw='2px' keycolor='red'>
+			<Dummy />
+		</BalloonBox>
+		<BalloonBox variant='bottom' bgc='text' c='base'>
+			<Dummy />
+		</BalloonBox>
+	</PreviewArea>
+	<PreviewCode>
+	```jsx
+		<BalloonBox variant='left'>
+			<Dummy />
+		</BalloonBox>
+		<BalloonBox variant='right' keycolor='blue'>
+			<Dummy />
+		</BalloonBox>
+		<BalloonBox variant='top' bdw='2px' keycolor='red'>
+			<Dummy />
+		</BalloonBox>
+		<BalloonBox variant='bottom' bgc='text' c='base'>
+			<Dummy />
+		</BalloonBox>
+	```
+	</PreviewCode>
+</Preview>

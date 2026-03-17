@@ -1,0 +1,264 @@
+---
+title: 'Timeline'
+description: ...
+---
+
+import { Lism, Dummy, HTML, Stack, Grid, Decorator } from 'lism-css/react';
+import Timeline from '@/components/ex/Timeline';
+import { MegaphoneSimpleIcon } from '@phosphor-icons/react';
+
+Examples of building timeline layouts.
+
+
+## Create Component
+An example of creating and using a component called `Timeline` (`.c--timeline`).
+
+### Source Code
+<ImportSource name='Timeline' css react hasRoot />
+
+### Import
+<ImportPackage component='Timeline' packageName='@lism-css/ui' />
+
+
+## Usage
+
+
+<Preview>
+	<PreviewTitle>Usage example</PreviewTitle>
+	<PreviewArea p='20'>
+		<Timeline.Root>
+			<Timeline.Item>
+				<Timeline.Time>Month dd, 20yy</Timeline.Time>
+				<Timeline.Title>Lism x.y.z released.</Timeline.Title>
+				<Timeline.Text>
+					<Dummy lang='ja'/>
+				</Timeline.Text>
+			</Timeline.Item>
+			<Timeline.Item>
+				<Timeline.Time>Month dd, 20yy</Timeline.Time>
+				<Timeline.Title>Lism x.y.z released.</Timeline.Title>
+				<Timeline.Text>
+					<Dummy lang='ja'/>
+				</Timeline.Text>
+			</Timeline.Item>
+			<Timeline.Item>
+				<Timeline.Time>Month dd, 20yy</Timeline.Time>
+				<Timeline.Title>Lism x.y.z released.</Timeline.Title>
+				<Timeline.Text>
+					<Dummy lang='ja'/>
+				</Timeline.Text>
+			</Timeline.Item>
+		</Timeline.Root>
+	</PreviewArea>
+	<PreviewCode>
+```jsx
+<Timeline.Root>
+	<Timeline.Item>
+		<Timeline.Time>Month dd, 20yy</Timeline.Time>
+		<Timeline.Text>
+			<HTML.p>Lism x.y.z released.</HTML.p>
+			<Dummy lang='ja'/>
+		</Timeline.Text>
+	</Timeline.Item>
+	<Timeline.Item>
+		<Timeline.Time>Month dd, 20yy</Timeline.Time>
+		<Timeline.Text>
+			<HTML.p>Lism x.y.z released.</HTML.p>
+			<Dummy lang='ja'/>
+		</Timeline.Text>
+	</Timeline.Item>
+	<Timeline.Item>
+		<Timeline.Time>Month dd, 20yy</Timeline.Time>
+		<Timeline.Text>
+			<HTML.p>Lism x.y.z released.</HTML.p>
+			<Dummy lang='ja'/>
+		</Timeline.Text>
+	</Timeline.Item>
+</Timeline.Root>
+```
+	</PreviewCode>
+</Preview>
+
+
+
+### Specifying Start and End, highlighting shapes
+
+Adding `isStart` to the first item and `isEnd` to the last item removes the overflowing line at the top and bottom respectively.
+Additionally, `isHighlighted` enables highlighted display, and `shapeColor` specifies the shape color.
+
+
+<Preview>
+	<PreviewTitle>Usage example</PreviewTitle>
+	<PreviewArea p='20'>
+		<Timeline.Root>
+			<Timeline.Item isStart>
+				<Timeline.Time>Month dd, 20yy</Timeline.Time>
+				<Timeline.Text>
+					<HTML.p>Lism x.y.z released.</HTML.p>
+					<Dummy lang='ja'/>
+				</Timeline.Text>
+			</Timeline.Item>
+			<Timeline.Item>
+				<Timeline.Time>Month dd, 20yy</Timeline.Time>
+				<Timeline.Text>
+					<HTML.p>Lism x.y.z released.</HTML.p>
+					<Dummy lang='ja'/>
+				</Timeline.Text>
+			</Timeline.Item>
+			<Timeline.Item isEnd isHighlighted shapeColor='red'>
+				<Timeline.Time>Month dd, 20yy</Timeline.Time>
+				<Timeline.Text>
+					<HTML.p>Lism x.y.z released.</HTML.p>
+					<Dummy lang='ja'/>
+				</Timeline.Text>
+			</Timeline.Item>
+		</Timeline.Root>
+	</PreviewArea>
+	<PreviewCode>
+```jsx "isStart" "isEnd" "isHighlighted" "shapeColor"
+<Timeline.Root>
+	<Timeline.Item isStart>
+		<Timeline.Time>Month dd, 20yy</Timeline.Time>
+		<Timeline.Text>
+			<HTML.p>Lism x.y.z released.</HTML.p>
+			<Dummy lang='ja'/>
+		</Timeline.Text>
+	</Timeline.Item>
+	<Timeline.Item>
+		<Timeline.Time>Month dd, 20yy</Timeline.Time>
+		<Timeline.Text>
+			<HTML.p>Lism x.y.z released.</HTML.p>
+			<Dummy lang='ja'/>
+		</Timeline.Text>
+	</Timeline.Item>
+	<Timeline.Item isEnd isHighlighted shapeColor='red'>
+		<Timeline.Time>Month dd, 20yy</Timeline.Time>
+		<Timeline.Text>
+			<HTML.p>Lism x.y.z released.</HTML.p>
+			<Dummy lang='ja'/>
+		</Timeline.Text>
+	</Timeline.Item>
+</Timeline.Root>
+```
+	</PreviewCode>
+</Preview>
+
+
+
+
+### Using icons
+
+<Preview>
+	<PreviewTitle>Usage example</PreviewTitle>
+	<PreviewArea p='20'>
+		<Timeline.Root>
+			<Timeline.Item icon={{as:MegaphoneSimpleIcon, weight:'fill'}}>
+				<Timeline.Time>Month dd, 20yy</Timeline.Time>
+				<Timeline.Text>
+					<HTML.p>Lism x.y.z released.</HTML.p>
+					<Dummy lang='ja'/>
+				</Timeline.Text>
+			</Timeline.Item>
+			<Timeline.Item>
+				<Timeline.Time>Month dd, 20yy</Timeline.Time>
+				<Timeline.Text>
+					<HTML.p>Lism x.y.z released.</HTML.p>
+					<Dummy lang='ja'/>
+				</Timeline.Text>
+			</Timeline.Item>
+			<Timeline.Item icon='check' isHighlighted shapeColor='red'>
+				<Timeline.Time>Month dd, 20yy</Timeline.Time>
+				<Timeline.Text>
+					<HTML.p>Lism x.y.z released.</HTML.p>
+					<Dummy lang='ja'/>
+				</Timeline.Text>
+			</Timeline.Item>
+		</Timeline.Root>
+	</PreviewArea>
+	<PreviewCode>
+	```jsx "icon="
+		<Timeline.Root>
+			<Timeline.Item icon={{as:MegaphoneSimpleIcon, weight:'fill'}}>
+				<Timeline.Time>Month dd, 20yy</Timeline.Time>
+				<Timeline.Text>
+					<HTML.p>Lism x.y.z released.</HTML.p>
+					<Dummy lang='ja'/>
+				</Timeline.Text>
+			</Timeline.Item>
+			<Timeline.Item>
+				<Timeline.Time>Month dd, 20yy</Timeline.Time>
+				<Timeline.Text>
+					<HTML.p>Lism x.y.z released.</HTML.p>
+					<Dummy lang='ja'/>
+				</Timeline.Text>
+			</Timeline.Item>
+			<Timeline.Item icon='check' isHighlighted shapeColor='red'>
+				<Timeline.Time>Month dd, 20yy</Timeline.Time>
+				<Timeline.Text>
+					<HTML.p>Lism x.y.z released.</HTML.p>
+					<Dummy lang='ja'/>
+				</Timeline.Text>
+			</Timeline.Item>
+		</Timeline.Root>
+	```
+	</PreviewCode>
+</Preview>
+
+
+### Horizontal layout
+
+<Preview>
+	<PreviewTitle>Usage example</PreviewTitle>
+	<PreviewArea p='20'>
+		<Timeline.Root isHorizontal>
+				<Timeline.Item isHorizontal isStart>
+					<Timeline.Time>Month dd, 20yy</Timeline.Time>
+					<Timeline.Title>Lism x.y.z released.</Timeline.Title>
+					<Timeline.Text>
+						<Dummy lang='ja' />
+					</Timeline.Text>
+				</Timeline.Item>
+				<Timeline.Item isHorizontal>
+					<Timeline.Time>Month dd, 20yy</Timeline.Time>
+					<Timeline.Title>Lism x.y.z released. Lism x.y.z released.</Timeline.Title>
+					<Timeline.Text>
+						<Dummy lang='ja' />
+					</Timeline.Text>
+				</Timeline.Item>
+				<Timeline.Item isHorizontal isEnd isHighlighted>
+					<Timeline.Time>Month dd, 20yy</Timeline.Time>
+					<Timeline.Title>Lism x.y.z released.</Timeline.Title>
+					<Timeline.Text>
+						<Dummy lang='ja' />
+					</Timeline.Text>
+				</Timeline.Item>
+			</Timeline.Root>
+	</PreviewArea>
+	<PreviewCode>
+	```jsx "horizontal" "isHorizontal"
+		<Timeline.Root isHorizontal>
+			<Timeline.Item isHorizontal isStart>
+				<Timeline.Time>Month dd, 20yy</Timeline.Time>
+				<Timeline.Title>Lism x.y.z released.</Timeline.Title>
+				<Timeline.Text>
+					<Dummy lang='ja' />
+				</Timeline.Text>
+			</Timeline.Item>
+			<Timeline.Item isHorizontal>
+				<Timeline.Time>Month dd, 20yy</Timeline.Time>
+				<Timeline.Title>Lism x.y.z released. Lism x.y.z released.</Timeline.Title>
+				<Timeline.Text>
+					<Dummy lang='ja' />
+				</Timeline.Text>
+			</Timeline.Item>
+			<Timeline.Item isHorizontal isEnd isHighlighted>
+				<Timeline.Time>Month dd, 20yy</Timeline.Time>
+				<Timeline.Title>Lism x.y.z released.</Timeline.Title>
+				<Timeline.Text>
+					<Dummy lang='ja' />
+				</Timeline.Text>
+			</Timeline.Item>
+		</Timeline.Root>
+	```
+	</PreviewCode>
+</Preview>

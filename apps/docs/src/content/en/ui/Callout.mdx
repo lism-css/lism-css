@@ -1,0 +1,227 @@
+---
+title: 'Callout'
+description: 'Documentation for the Callout component provided by @lism-css/ui.'
+---
+import { Icon, Box, Dummy, Flex, Center, Lism, Stack } from 'lism-css/astro';
+import { Callout } from '@lism-css/ui/astro';
+
+
+A component for highlighting important points within an article.
+
+
+<Preview>
+	<PreviewTitle>Preview</PreviewTitle>
+	<PreviewArea resize p='20'>
+		<Callout title='Callout Title'>
+			<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.</p>
+		</Callout>
+	</PreviewArea>
+		<PreviewCode slot='tab' label='React / Astro'>
+		```jsx
+		<Callout title='Callout Title'>
+			<p>Lorem ipsum dolor sit amet...</p>
+		</Callout>
+		```
+	</PreviewCode>
+	<PreviewCode slot='tab' label='HTML'>
+		```jsx
+		<div class="c--callout u--cbox l--stack -p:20 -g:10 -bd-x-s -bxsh:10 -bdrs:5"
+			style="--keycolor:var(--blue);--bdc:var(--keycolor);--bdw:4px"
+		>
+			<div class="c--callout_head l--flex -c -fw:bold -ai:center -g:10" style="--c:var(--keycolor)">
+				<div class="c--callout_icon l--center -fz:xl">
+					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="1em" height="1em" fill="currentColor" focusable="false" class="a--icon" aria-hidden="true">
+						<path d="M229.66,58.34l-32-32a8,8,0,0,0-11.32,0l-96,96A8,8,0,0,0,88,128v32a8,8,0,0,0,8,8h32a8,8,0,0,0,5.66-2.34l96-96A8,8,0,0,0,229.66,58.34ZM124.69,152H104V131.31l64-64L188.69,88ZM200,76.69,179.31,56,192,43.31,212.69,64ZM224,120v88a16,16,0,0,1-16,16H48a16,16,0,0,1-16-16V48A16,16,0,0,1,48,32h88a8,8,0,0,1,0,16H48V208H208V120a8,8,0,0,1,16,0Z"></path>
+					</svg>
+				</div>
+				<span class="c--callout_title">Callout Title</span>
+			</div>
+			<div class="c--callout_body l--flow -flow:s">
+				<p>Lorem ipsum dolor sit amet...</p>
+			</div>
+		</div>
+		```
+	</PreviewCode>
+</Preview>
+
+
+
+## How to use
+
+Provided as `Callout` from the `@lism-css/ui` package.
+
+
+### Import
+<ImportPackage component='Callout' packageName='@lism-css/ui' />
+
+
+### Anatomy
+
+<Preview>
+	<PreviewCode slot='tab' label='React / Astro'>
+		```jsx
+		<Callout type="" title="">...CONTENT...</Callout>
+		```
+	</PreviewCode>
+	<PreviewCode slot='tab' label='HTML'>
+		```html
+		<div class="c--callout u--cbox l--stack -p:20 -g:10 -bd-x-s -bxsh:10 -bdrs:5"
+			style="--keycolor:var(--blue);--bdc:var(--keycolor);--bdw:4px"
+		>
+			<div class="c--callout_head l--flex -c -fw:bold -ai:center -g:10" style="--c:var(--keycolor)">
+				<div class="c--callout_icon l--center -fz:xl">
+					<svg class="a--icon">...</svg>
+				</div>
+				<span class="c--callout_title">TITLE</span>
+			</div>
+			<div class="c--callout_body l--flow -flow:s">
+				...CONTENT...
+			</div>
+		</div>
+		```
+	</PreviewCode>
+</Preview>
+
+
+### Props
+
+| Property | Description |
+|---|---|
+|`keycolor`| Specifies the display color. |
+|`icon`| Specifies the icon. |
+|`type`| Specifies a preset value combining `keycolor` and `icon`. Default: `"note"` |
+|`title`| Specifies the title text. |
+|`flow`| Passed to `_body`. |
+
+### Source Code
+
+<Preview>
+	<PreviewCode slot='tab' label='Callout.tsx'>
+		<SrcCode dir='lism-ui' path='src/components/Callout/react/Callout.tsx' />
+	</PreviewCode>
+	<PreviewCode slot='tab' label='Callout.astro'>
+		<SrcCode dir='lism-ui' path='src/components/Callout/astro/Callout.astro' />
+	</PreviewCode>
+	<PreviewCode slot='tab' label='getProps.ts'>
+		<SrcCode dir='lism-ui' path='src/components/Callout/getProps.ts' />
+	</PreviewCode>
+</Preview>
+
+
+
+## Examples
+
+### Available types
+<Preview>
+	<PreviewTitle>Specifying type</PreviewTitle>
+	<PreviewArea p='20'>
+		<Stack g='30' p='10'>
+			<Callout title='Callout: type="note"' type='note'>
+				<Dummy length='codes' lang='ja'/>
+			</Callout>
+			<Callout title='Callout: type="alert"' type='alert'>
+				<Dummy length='codes' lang='ja'/>
+			</Callout>
+			<Callout title='Callout: type="warning"' type='warning'>
+				<Dummy length='codes' lang='ja'/>
+			</Callout>
+			<Callout title='Callout: type="point"' type='point'>
+				<Dummy length='codes' lang='ja'/>
+			</Callout>
+			<Callout title='Callout: type="check"' type='check'>
+				<Dummy length='codes' lang='ja'/>
+			</Callout>
+			<Callout title='Callout: type="help"' type='help'>
+				<Dummy length='codes' lang='ja'/>
+			</Callout>
+		</Stack>
+	</PreviewArea>
+	<PreviewCode slot='tab' label='JSX'>
+		```jsx
+		<Callout title='Callout: type="note"' type='note'>
+			<Dummy length='codes' lang='ja'/>
+		</Callout>
+		<Callout title='Callout: type="alert"' type='alert'>...</Callout>
+		<Callout title='Callout: type="warning"' type='warning'>...</Callout>
+		<Callout title='Callout: type="point"' type='point'>...</Callout>
+		<Callout title='Callout: type="check"' type='check'>...</Callout>
+		<Callout title='Callout: type="help"' type='help'>...</Callout>
+		```
+	</PreviewCode>
+</Preview>
+
+## Only lism-css
+
+An example using only lism-css, without `@lism-css/ui`.
+
+<Preview>
+	<PreviewTitle>Specifying `icon` and `keycolor`</PreviewTitle>
+	<PreviewArea p='20'>
+		<Callout title='Heading text...' icon='cart' keycolor='pink'>
+			<Dummy lang='ja'/>
+		</Callout>
+	</PreviewArea>
+	<PreviewCode slot='tab' label='JSX'>
+		```jsx
+		<Callout title='Heading text...' icon='cart' keycolor='pink'>
+			<Dummy lang='ja'/>
+		</Callout>
+		```
+	</PreviewCode>
+</Preview>
+
+<HelpText>Note: The icon is only displayed when a `title` is specified.</HelpText>
+
+
+## Only Core
+
+An example of building the component using only Lism core elements, without a dedicated component.
+
+<Preview>
+	<PreviewTitle>Preview</PreviewTitle>
+	<PreviewArea resize p='20'>
+		<Stack className='u--cbox' keycolor='blue' p='20' g='10' bdc='keycolor' bd-x-s bdw='4px' bxsh='10' bdrs='5'>
+			<Flex c='keycolor' fw='bold' ai='center' g='10'>
+				<Center className='c--note_icon' fz='xl'>
+					<Icon icon='note' />
+				</Center>
+				<span>Callout</span>
+			</Flex>
+			<Lism>
+				<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+			</Lism>
+		</Stack>
+	</PreviewArea>
+	<PreviewCode slot='tab' label='JSX'>
+		```jsx
+		<Stack className='u--cbox' keycolor='blue' p='20' g='10' bdc='keycolor' bd-x-s bdw='4px' bxsh='10' bdrs='5'>
+			<Flex c='keycolor' fw='bold' ai='center' g='10'>
+				<Center className='c--note_icon' fz='xl'>
+					<Icon icon='note' />
+				</Center>
+				<span>Callout</span>
+			</Flex>
+			<Lism>
+				<p>Lorem ipsum dolor sit amet...</p>
+			</Lism>
+		</Stack>
+		```
+	</PreviewCode>
+	<PreviewCode slot='tab' label='HTML'>
+	```html
+	<div class='u--cbox l--stack -p:20 -g:10 -bd-x-s -bxsh:10 -bdrs:5' style='--keycolor:var(--blue);--bdc:var(--keycolor);--bdw:4px'>
+		<div class='l--flex -fw:bold -ai:center -g:10'>
+			<div class='l--flex -c -fw:bold -ai:center -g:10' style='--c:var(--keycolor)'>
+				<svg xmlns='http://www.w3.org/2000/svg' class='a--icon' viewBox='0 0 256 256' width='1em' height='1em' fill='currentColor' focusable='false' aria-hidden='true'>
+					<path d='M229.66,58.34l-32-32a8,8,0,0,0-11.32,0l-96,96A8,8,0,0,0,88,128v32a8,8,0,0,0,8,8h32a8,8,0,0,0,5.66-2.34l96-96A8,8,0,0,0,229.66,58.34ZM124.69,152H104V131.31l64-64L188.69,88ZM200,76.69,179.31,56,192,43.31,212.69,64ZM224,120v88a16,16,0,0,1-16,16H48a16,16,0,0,1-16-16V48A16,16,0,0,1,48,32h88a8,8,0,0,1,0,16H48V208H208V120a8,8,0,0,1,16,0Z'></path>
+				</svg>
+			</div>
+			<span>Callout</span>
+		</div>
+		<div>
+			<p>Lorem ipsum dolor sit amet...</p>
+		</div>
+	</div>
+	```
+	</PreviewCode>
+</Preview>

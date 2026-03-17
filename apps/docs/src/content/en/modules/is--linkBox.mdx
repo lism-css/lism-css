@@ -1,0 +1,152 @@
+---
+title: 'LinkBox'
+description: ...
+---
+import { LinkBox, HTML, Spacer, Dummy } from 'lism-css/astro';
+
+A `<Lism>` component that outputs the `is--linkBox` class, which makes an entire box clickable as a link.
+
+By default, it is an alias for `<Lism isLinkBox>` with additional handling tailored to its props.
+
+## Import
+
+<ImportPackage component='LinkBox, Link' />
+
+
+## Props
+
+| Prop | Description |
+|---|---|
+|`href`| Specifies the link destination. When `href` is provided, the element renders as an `<a>` tag; otherwise it renders as a `<div>`.|
+
+
+
+## Usage
+
+`<LinkBox>` (`.is--linkBox`) can be used in two main ways:
+
+1. Render `<LinkBox>` (`.is--linkBox`) as an `<a>` tag to use it directly as a link.
+2. Render `<LinkBox>` (`.is--linkBox`) as a `<div>` and place an `a.u--expandedLink` inside it.
+
+:::info
+To include **additional links** inside a LinkBox, use approach 2.
+:::
+
+
+### 1. Using `<LinkBox>` as an `<a>` tag
+
+When `href` is provided to `<LinkBox>`, the component itself renders as an `<a>` tag.
+
+<Preview>
+	<PreviewTitle id='linkbox-demo01'>Example</PreviewTitle>
+	<PreviewArea p='20'>
+		<LinkBox href='#linkbox-demo01' p='30' bgc='base' bd bdrs='30' hov='o'>
+			<HTML.div fz='xl' fw='bold'>Heading text</HTML.div>
+			<Dummy lh='s' my-s='15' />
+			<HTML.div fz='s' c='text-2' ta='right' lh='1' my-s='10'>MORE →</HTML.div>
+		</LinkBox>
+	</PreviewArea>
+	<PreviewCode slot='tab' label='JSX'>
+		```jsx {1} "href="
+		<LinkBox href='#linkbox-demo01' p='30' bgc='base' bd bdrs='30' hov='o'>
+			<HTML.div fz='xl' fw='bold'>Heading text</HTML.div>
+			<HTML.p lh='s' my-s='15'>
+				Lorem ipsum dolor sit, amet consectetur adipisicing elit, sed do eiusmod tempor. Non facere laudantium ex eos doloribus aut dolore nisi provident.
+			</HTML.p>
+			<HTML.div fz='s' c='text-2' ta='right' lh='1' my-s='10'>MORE →</HTML.div>
+		</LinkBox>
+		```
+	</PreviewCode>
+	<PreviewCode slot='tab' label='HTML'>
+		```jsx {1} "<a class=\"is--linkBox"
+		<a class="is--linkBox -hov:o -p:30 -bgc:base -bd -bdrs:30" href="#linkbox-demo01">
+			<p class="-fz:xl -fw:bold">Heading text</p>
+			<p class="-c:text-2 -lh:s -my-s:15">Lorem ipsum dolor sit, amet consectetur adipisicing elit, sed do eiusmod tempor. Non facere laudantium ex eos doloribus aut dolore nisi provident.</p>
+			<p class="-fz:s -c:text-2 -ta:right -lh:1 -my-s:10">MORE →</p>
+		</a>
+		```
+	</PreviewCode>
+</Preview>
+
+
+### 2. Placing `u--expandedLink` inside
+
+You can also make the entire box clickable by using `.u--expandedLink` on an anchor element inside the LinkBox.
+
+This approach also allows you to place additional links inside the LinkBox.
+
+<Preview>
+	<PreviewTitle id='linkbox-demo02'>Example</PreviewTitle>
+	<PreviewArea p='20'>
+		<LinkBox tag='section' p='30' bgc='base' bd bdrs='30' setTransition hov='bxsh'>
+			<HTML.div fz='xl' fw='bold'>
+				<HTML.a className='u--expandedLink' href='#linkbox-demo02'>Heading link text</HTML.a>
+			</HTML.div>
+			<Dummy c='text-2' lh='s' my-s='15' />
+			<HTML.div id='inner-link02' my-s='10'>
+				<a href='#inner-link02' className='-hov:o'>Inner Link</a>
+			</HTML.div>
+		</LinkBox>
+	</PreviewArea>
+	<PreviewCode slot='tab' label='JSX'>
+		```jsx "className='u--expandedLink'"
+		<LinkBox p='30' bgc='base' bd bdrs='30' setTransition hov='bxsh'>
+			<HTML.div fz='xl' fw='bold'>
+				<HTML.a className='u--expandedLink' href='#linkbox-demo02'>Heading link text</HTML.a>
+			</HTML.div>
+			<Dummy c='text-2' lh='s' my-s='15' />
+			<HTML.div id='inner-link02' my-s='10'>
+				<a href='#inner-link02' className='-hov:o'>Inner Link</a>
+			</HTML.div>
+		</LinkBox>
+		```
+	</PreviewCode>
+	<PreviewCode slot='tab' label='HTML'>
+		```jsx "u--expandedLink"
+		<div class="is--linkBox -hov:bxsh -p:30 -bgc:base -bd -bdrs:30 set--transition">
+			<div class="-fz:xl -fw:bold">
+				<a class="u--expandedLink" href="#linkbox-demo02">Heading Link</a>
+			</div>
+			<p class="-c:text-2 -lh:s -my-s:15">
+				Lorem ipsum dolor sit, amet consectetur adipisicing elit, sed do eiusmod tempor. Non facere laudantium ex eos doloribus aut dolore nisi provident.
+			</p>
+			<div id="inner-link02" class="-my-s:10" >
+				<a href='#inner-link02' class="-hov:o">Inner Link</a>
+			</div>
+		</div>
+		```
+	</PreviewCode>
+</Preview>
+
+
+## Opt-in
+
+### Extending the focus outline to the entire LinkBox on Tab key focus
+
+When a link is placed using `u--expandedLink`, pressing the Tab key to focus will show the outline only around the link text, not the entire box.
+
+If you want to extend the outline to cover the entire box, add the following CSS.
+
+```css
+@supports selector(:has(*)) {
+	.is--linkBox:has(.u--expandedLink:focus-visible) {
+		outline: auto 1px;
+		outline: auto 1px -webkit-focus-ring-color;
+	}
+	.u--expandedLink:focus {
+		outline: 0;
+	}
+}
+```
+
+{/* ### Enabling text selection while holding Alt key
+
+As background, there are various discussions about approaches to making an entire box clickable.
+
+- When `<LinkBox>` itself is rendered as an `<a>` tag, screen readers may read the content verbosely, and it is not possible to place additional links inside the box.
+- The technique of expanding the pseudo-element of a link element to make the whole box clickable (as with `u--expandedLink`) has the drawback that text selection within the box while holding the Alt key is not possible.
+
+There are other approaches as well, each with their own trade-offs. In general, choosing between the two above based on the situation is recommended, but if the latter issue is a concern, the following script can enable text selection while holding the Alt key.
+
+```js
+``` */}

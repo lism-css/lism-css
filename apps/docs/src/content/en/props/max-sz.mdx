@@ -1,0 +1,33 @@
+---
+title: 'Size Control Class -max-sz:'
+description: ...
+---
+
+import { Flex, HTML, Media, Layer, Spacer, Box, Center, Stack, Frame, LinkBox } from 'lism-css/react';
+
+
+Lism provides content size tokens in the form `--sz--{sz}` (where `{sz}` = `xs`, `s`, `m`, `l`, `xl`).
+
+A set of utility classes using `-max-sz` is available for specifying the maximum inline size (`max-inline-size`) of content.
+
+{/* `is--wrapper` controls the content size via `max-inline-size`, so preset values for the `-max-sz` Prop class are provided to match. */}
+
+`-max-sz:{xs~xl}` directly maps to the corresponding `--sz--{xs~xl}` token.
+
+
+## -max-sz:full, -max-sz:container
+
+The following notable classes are also available:
+
+| Class | Description |
+|---|---|
+| `-max-sz:100%` | Simply sets the maximum width to 100%. |
+| `-max-sz:full` | When inside a `.set--gutter` element, **expands to fill the parent** by adding the gutter spacing on top of `100%`. |
+| `-max-sz:container` | Expands to the size of the **nearest container element**. The value is updated for each `.is-container` class. (Uses `@property`.) |
+
+
+## Demo Page
+
+You can see these `-max-sz` classes in action on a separate demo page.
+
+<PreviewFrame url='/demo/content-size' />

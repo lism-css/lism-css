@@ -1,0 +1,60 @@
+---
+title: 'Decorator'
+description: ...
+---
+
+import { Decorator, Box, Flex, Grid, Spacer, Dummy } from 'lism-css/astro';
+
+A component that outputs an empty element for decorating content.
+Rendered with `aria-hidden="true"` by default.
+
+## Structure
+
+```pug
+div.a--decorator[aria-hidden="true"]
+```
+
+## Props
+
+|Prop|Description|
+|---|---|
+| `size` | Sets the decorator's size (width and height) at once.<br/>When specified, the value is passed to `w` (`width`) and `ar='1/1'` (`aspect-ratio:1/1`) is applied automatically. |
+| `blur`,`contrast`,`brightness`,`grayscale`,`hueRotate`,`invert`,`saturate`,`sepia` | These are concatenated together and passed to `style.filter`. |
+| `clipPath`,`boxSizing` | Passed to `style.clipPath` and `style.boxSizing` respectively. |
+
+## Import
+
+<ImportPackage component='Decorator' />
+
+## Usage
+
+Here are some decoration examples using `<Decorator>`.
+
+<Preview>
+	<PreviewTitle>Example</PreviewTitle>
+	<PreviewArea p='20'>
+		<Box p='30' pos='rel'>
+			<Dummy />
+			<Decorator size='1.25em' pos='abs' t='0' l='0' bd-x-s bd-y-s />
+			<Decorator size='1.25em' pos='abs' r='0' b='0' bd-x-e bd-y-e />
+		</Box>
+	</PreviewArea>
+	<PreviewCode slot='tab' label='JSX'>
+		```jsx
+		<Box p='30' pos='rel'>
+			<Dummy />
+			<Decorator size='1.25em' pos='abs' t='0' l='0' bd-x-s bd-y-s />
+			<Decorator size='1.25em' pos='abs' r='0' b='0' bd-x-e bd-y-e />
+		</Box>
+		```
+	</PreviewCode>
+	<PreviewCode slot='tab' label='HTML'>
+		```jsx
+		<div class='l--box -p:30 -pos:rel'>
+			<p>Lorem ipsum dolor sit, amet consectetur adipisicing elit, sed do eiusmod tempor. Non facere laudantium ex eos doloribus aut dolore nisi.</p>
+			<div class='a--decorator -pos:abs -t:0 -l:0 -bd-x-s -bd-y-s -ar:1/1 -w' style='--w:1.25em' aria-hidden='true'></div>
+			<div class='a--decorator -pos:abs -r:0 -b:0 -bd-x-e -bd-y-e -ar:1/1 -w' style='--w:1.25em' aria-hidden='true'></div>
+		</div>
+		```
+	</PreviewCode>
+</Preview>

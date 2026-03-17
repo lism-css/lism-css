@@ -1,0 +1,98 @@
+---
+title: 'FluidCols'
+description: ...
+---
+
+import { FluidCols, Box, Frame, Dummy } from 'lism-css/astro';
+
+
+Creates a **breakpoint-independent multi-column layout** where columns automatically wrap before they shrink below the specified minimum width.
+
+
+## Props
+
+| Property | Description |
+|---|---|
+| `cols` <PropBadge type="cssvar">`--cols`</PropBadge> | Specifies the minimum width each column should maintain.
+| `autoFill` <PropBadge type="cssvar">`--autoMode`</PropBadge> | Switches the auto-wrap mode to `auto-fill`.
+
+{/* - `cols`: Specifies the number of columns. Breakpoint-based values are also supported. */}
+You can also use any [props available on `<Grid>`](/components/grid#props).
+
+
+## CSS
+
+<EmbedCode dirPath='packages/lism-css' srcPath='src/scss/modules/layout/_fluidCols.scss' />
+
+
+## Import
+<ImportPackage component='FluidCols' />
+
+
+## Usage
+
+<Preview>
+	<PreviewTitle>Using the default column width</PreviewTitle>
+	<PreviewArea resize p='15'>
+		<FluidCols g='20'>
+			<Box bxsh='20' p='20'><Dummy lang='ja'/></Box>
+			<Box bxsh='20' p='20'><Dummy lang='ja' offset='1' /></Box>
+			<Box bxsh='20' p='20'><Dummy lang='ja'/></Box>
+			<Box bxsh='20' p='20'><Dummy lang='ja' offset='2' /></Box>
+			<Box bxsh='20' p='20'><Dummy lang='ja' length='s' /></Box>
+			<Box bxsh='20' p='20'><Dummy lang='ja' /></Box>
+		</FluidCols>
+	</PreviewArea>
+	<PreviewCode>
+		```jsx
+		<FluidCols g='15'>
+			<Box bxsh='20' p='20'><Dummy lang='ja'/></Box>
+			<Box bxsh='20' p='20'><Dummy lang='ja' offset='1' /></Box>
+			<Box bxsh='20' p='20'><Dummy lang='ja'/></Box>
+			<Box bxsh='20' p='20'><Dummy lang='ja' offset='2' /></Box>
+			<Box bxsh='20' p='20'><Dummy lang='ja' length='s' /></Box>
+			<Box bxsh='20' p='20'><Dummy lang='ja' /></Box>
+		</FluidCols>
+		```
+	</PreviewCode>
+</Preview>
+
+
+<Preview>
+	<PreviewTitle>Using `cols=12em` with `auto-fill`</PreviewTitle>
+	<PreviewArea resize p='15'>
+		<FluidCols cols='12em' autoFill g='20' fz='s'>
+			<Box bxsh='20' p='20'><Dummy lang='ja' length='s' /></Box>
+			<Box bxsh='20' p='20'><Dummy lang='ja' offset='2' /></Box>
+			<Box bxsh='20' p='20'><Dummy lang='ja' length='s' /></Box>
+		</FluidCols>
+	</PreviewArea>
+	<PreviewCode>
+		```jsx
+		<FluidCols cols='12rem' autoFill g='20' fz='s'>
+			<Box bxsh='20' p='20'><Dummy lang='ja' length='s' /></Box>
+			<Box bxsh='20' p='20'><Dummy lang='ja' offset='1' /></Box>
+			<Box bxsh='20' p='20'><Dummy lang='ja' length='s' /></Box>
+		</FluidCols>
+		```
+	</PreviewCode>
+</Preview>
+
+
+<Preview>
+	<PreviewTitle>2 columns → 1 column</PreviewTitle>
+	<PreviewArea resize p='15'>
+		<FluidCols cols='320px' g='20'>
+			<Frame ar='16/9' ><img src="https://cdn.lism-css.com/img/a-1.jpg" width="600" height="400" /></Frame>
+			<Frame ar='16/9' ><img src="https://cdn.lism-css.com/img/a-3.jpg" width="600" height="400" /></Frame>
+		</FluidCols>
+	</PreviewArea>
+	<PreviewCode>
+		```jsx
+		<FluidCols cols='320px' g='20'>
+			<Frame ar='16/9' ><img src="https://cdn.lism-css.com/img/a-1.jpg" width="600" height="400" /></Frame>
+			<Frame ar='16/9' ><img src="https://cdn.lism-css.com/img/a-3.jpg" width="600" height="400" /></Frame>
+		</FluidCols>
+		```
+	</PreviewCode>
+</Preview>

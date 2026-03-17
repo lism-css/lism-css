@@ -1,0 +1,233 @@
+---
+title: 'Details'
+description: 'Documentation for the Details component provided by @lism-css/ui.'
+---
+
+import { Divider, Stack, HTML, Center, Flex, Icon, Dummy } from 'lism-css/astro';
+import { Accordion, Details } from '@lism-css/ui/astro';
+
+A UI component for creating collapsible accordion-style content using the `details`/`summary` elements.
+
+Unlike [`Accordion`](/ui/accordion), this component is implemented with CSS only — no JavaScript required.
+
+<Preview>
+	<PreviewTitle>Preview</PreviewTitle>
+	<PreviewArea p='20'>
+		<Details.Root bd>
+			<Details.Summary p='20' bgc='base-2' hov='neutral'>
+				<Details.Title>Details Title</Details.Title>
+				<Details.Icon />
+			</Details.Summary>
+			<Details.Content p='20'>
+				<p>Content goes here.</p>
+			</Details.Content>
+		</Details.Root>
+	</PreviewArea>
+	<PreviewCode slot='tab' label='JSX'>
+		```jsx
+		<Details.Root bd>
+			<Details.Summary p='20' bgc='base-2' hov='neutral'>
+				<Details.Title>Details Title</Details.Title>
+				<Details.Icon />
+			</Details.Summary>
+			<Details.Content p='20'>
+				<p>Content goes here.</p>
+			</Details.Content>
+		</Details.Root>
+		```
+	</PreviewCode>
+	<PreviewCode slot='tab' label='HTML'>
+		```html
+		<details class='c--details -bd'>
+			<summary class='c--details_summary l--flex -g:10 -ai:center -p:20 -bgc:base-2 -hov:neutral'>
+				<span class='c--details_title -fx:1'>Details Title</span>
+				<span class='c--details_icon a--icon' aria-hidden='true'></span>
+			</summary>
+			<div class='c--details_body'>
+				<div class='c--details_content l--flow -flow:s -p:20'>
+					<p>Content goes here.</p>
+				</div>
+			</div>
+		</details>
+		```
+	</PreviewCode>
+</Preview>
+
+
+## How to use
+
+Provided as `Details` (`.c--details`) from the `@lism-css/ui` package.
+
+
+### Import
+
+<ImportPackage component='Details' packageName='@lism-css/ui' css='style.css' />
+
+
+The following components are available:
+
+- `<Details.Root>`
+- `<Details.Summary>`
+- `<Details.Title>`
+- `<Details.Icon>`
+- `<Details.Content>`
+
+
+### Structure
+
+<Preview>
+	<PreviewCode slot='tab' label='JSX'>
+		```jsx
+		<Details.Root>
+			<Details.Summary>
+				<Details.Title>Details Title</Details.Title>
+				<Details.Icon/>
+			</Details.Summary>
+			<Details.Content>
+				...Contents...
+			</Details.Content>
+		</Details.Root>
+		```
+	</PreviewCode>
+	<PreviewCode slot='tab' label='HTML'>
+		```pug
+		details.c--details
+			summary.c--details_summary.l--flex.-g:10.-ai:center
+				span.c--details_title.-fx:1
+				span.c--details_icon.a--icon[aria-hidden="true"]
+			div.c--details_body
+				div.c--details_content.l--flow
+		```
+	</PreviewCode>
+</Preview>
+
+
+### Props
+
+
+| Property | Description |
+|---|---|
+| <PropBadge>`<Details.Root>`</PropBadge><br/>`--duration` | Duration of the expand/collapse animation. |
+| <PropBadge>`<Details.Title>`</PropBadge><br/>`tag` | The HTML tag used to render the title inside the summary element. |
+
+
+### Source Code
+
+Here is the actual source code.
+
+<Preview>
+	<PreviewCode slot='tab' label='React'>
+		<SrcCode dir='lism-ui' path='src/components/Details/react/Details.jsx' title='Details.jsx' />
+	</PreviewCode>
+	<PreviewCode slot='tab' label='Astro'>
+		<SrcCode dir='lism-ui' path='src/components/Details/astro/Details.astro' title='Details.astro'/>
+		<Divider my='5' />
+		<SrcCode dir='lism-ui' path='src/components/Details/astro/Summary.astro' title='Summary.astro' />
+	</PreviewCode>
+	<PreviewCode slot='tab' label='_style.css'>
+		<SrcCode dir='lism-ui' path='src/components/Details/_style.css' />
+	</PreviewCode>
+</Preview>
+
+
+
+## Examples
+
+### Changing the title tag and restricting simultaneous expansion
+
+`<Details.Title>` renders as a `span` by default, but you can specify an HTML tag via `tag`.
+
+Additionally, as a native feature of `details`/`summary`, specifying a `name` attribute limits the number of simultaneously expanded elements within the same group to one.
+
+<Preview>
+	<PreviewTitle>Example</PreviewTitle>
+	<PreviewArea p='20'>
+		<Stack g='10'>
+			<Details.Root bd name="details-group-01">
+				<Details.Summary p='20' bgc='base-2' hov='neutral'>
+					<Details.Title tag='h3'>Details Title</Details.Title>
+					<Details.Icon />
+				</Details.Summary>
+				<Details.Content p='20'>
+					<p>Content goes here.</p>
+				</Details.Content>
+			</Details.Root>
+			<Details.Root bd name="details-group-01">
+				<Details.Summary p='20' bgc='base-2' hov='neutral'>
+					<Details.Title tag='h3'>Details Title</Details.Title>
+					<Details.Icon />
+				</Details.Summary>
+				<Details.Content p='20'>
+					<p>Content goes here.</p>
+				</Details.Content>
+			</Details.Root>
+		</Stack>
+	</PreviewArea>
+	<PreviewCode slot='tab' label='JSX'>
+		```jsx "tag='h3'" "name="details-group-01""
+		<Stack g='10'>
+			<Details.Root bd name="details-group-01">
+				<Details.Summary p='20' bgc='base-2' hov='neutral'>
+					<Details.Title tag='h3'>Details Title</Details.Title>
+					<Details.Icon />
+				</Details.Summary>
+				<Details.Content p='20'>
+					<p>Content goes here.</p>
+				</Details.Content>
+			</Details.Root>
+			<Details.Root bd name="details-group-01">
+				<Details.Summary p='20' bgc='base-2' hov='neutral'>
+					<Details.Title tag='h3'>Details Title</Details.Title>
+					<Details.Icon />
+				</Details.Summary>
+				<Details.Content p='20'>
+					<p>Content goes here.</p>
+				</Details.Content>
+			</Details.Root>
+		</Stack>
+		```
+	</PreviewCode>
+</Preview>
+
+:::warning
+::title[Heading elements inside summary]
+There was a known issue where screen readers could not detect the role of heading elements placed inside `summary`, but as of 2026, this has been largely resolved in modern browsers.
+:::
+
+
+### Changing the animation duration
+
+The duration of the `<Details>` open/close animation is controlled by the `--duration` variable, which defaults to the same value as `<Accordion>` — `--acc-duration`.
+
+For local adjustments, override the `--duration` variable. For global adjustments, override `--acc-duration` on `:root`.
+
+
+
+<Preview>
+	<PreviewTitle>Example</PreviewTitle>
+	<PreviewArea p='20'>
+		<Details.Root bd style={{'--duration': '.4s'}}>
+			<Details.Summary p='20' bgc='base-2' hov='neutral'>
+				<Details.Icon />
+				<Details.Title tag='h3'>Details Title</Details.Title>
+
+			</Details.Summary>
+			<Details.Content p='20'>
+				<p>Content goes here.</p>
+			</Details.Content>
+		</Details.Root>
+	</PreviewArea>
+	<PreviewCode slot='tab' label='JSX'>
+		```jsx "--duration"
+		<Details.Root bd style={{'--duration': '.4s'}}>
+			<Details.Summary p='20' bgc='base-2' hov='neutral'>
+				<Details.Title tag='h3'>Details Title</Details.Title>
+				<Details.Icon />
+			</Details.Summary>
+			<Details.Content p='20'>
+				<p>Content goes here.</p>
+			</Details.Content>
+		</Details.Root>
+		```
+	</PreviewCode>
+</Preview>

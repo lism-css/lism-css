@@ -1,0 +1,41 @@
+---
+title: 'Box'
+description: ...
+---
+
+import { Box } from 'lism-css/astro';
+
+`l--box` is a simple layout module that groups content without applying any particular layout behavior.
+
+
+## Component
+
+`lism-css` provides a `<Box>` component.
+
+### Import
+<ImportPackage component='Box' />
+
+## Usage
+
+<Preview>
+	<PreviewTitle>Box example</PreviewTitle>
+	<PreviewArea p='20'>
+		<Box p='30' bgc='base-2' bxsh='10' bdrs='10'>
+			<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit fugit, numquamdicta repellat ipsa autem eos iure ducimus.</p>
+		</Box>
+	</PreviewArea>
+	<PreviewCode slot='tab' label='JSX'>
+		```jsx
+		<Box p='30' bgc='base-2' bxsh='10' bdrs='10'>
+			<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit fugit, numquamdicta repellat ipsa autem eos iure ducimus.</p>
+		</Box>
+		```
+	</PreviewCode>
+	<PreviewCode slot='tab' label='HTML'>
+		```jsx
+		<div class="l--box -p:30 -bgc:base-2 -bxsh:10 -bdrs:10">
+			<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit fugit, numquamdicta repellat ipsa autem eos iure ducimus.</p>
+		</div>
+		```
+	</PreviewCode>
+</Preview>
