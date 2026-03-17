@@ -66,8 +66,7 @@ describe('MCP Tools (integration)', () => {
 
 		const text = (result.content as { type: string; text: string }[])[0].text;
 		const data = JSON.parse(text);
-		expect(data.error).toContain('not found');
-		expect(data.error).toContain('search_docs');
+		expect(data.error).toContain('見つかりません');
 		expect(data.availableProps).toBeDefined();
 	});
 
