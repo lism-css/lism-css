@@ -42,6 +42,8 @@ describe('StateProps', () => {
 			assertType<StateProps>({ setTransition: true });
 			assertType<StateProps>({ setPlain: true });
 			assertType<StateProps>({ setInnerRs: true });
+			assertType<StateProps>({ setBp: true });
+			assertType<StateProps>({ setCqUnit: true });
 		});
 	});
 
