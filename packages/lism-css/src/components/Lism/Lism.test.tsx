@@ -81,24 +81,14 @@ describe('Lism', () => {
 			expect(child.textContent).toBe('child content');
 		});
 
-		test('tag propで要素を変更できる', () => {
+		test('as propでHTML要素名（文字列）も指定できる', () => {
 			render(
-				<Lism tag='section' data-testid='lism'>
+				<Lism as='section' data-testid='lism'>
 					test
 				</Lism>
 			);
 			const element = screen.getByTestId('lism');
 			expect(element.tagName).toBe('SECTION');
-		});
-
-		test('asがtagより優先される', () => {
-			render(
-				<Lism as='article' tag='section' data-testid='lism'>
-					test
-				</Lism>
-			);
-			const element = screen.getByTestId('lism');
-			expect(element.tagName).toBe('ARTICLE');
 		});
 	});
 

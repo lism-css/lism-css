@@ -48,7 +48,7 @@ const modulePosts = allPosts
 				const postPath = getLocalizedUrl(`/docs/${post.slug}/`, currentLang);
 				const navLabel = post.data.navtitle ?? post.data.title;
 				return (
-					<Lism tag="li" key={post.slug}>
+					<Lism as="li" key={post.slug}>
 						<a href={postPath} class="-p:10 -lh:xs -d:block -hov:o">
 							{navLabel}
 						</a>

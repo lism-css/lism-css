@@ -11,7 +11,7 @@ import { Box, Flow, Stack, Wrapper, Dummy, SideMain } from 'lism-css/astro';
 		<DemoHeader />
 		<Wrapper contentSize="l" setGutter py="40" fx="1">
 			<SideMain sideW="300px" mainW="40rem" g="var(--gutter-size)">
-				<Wrapper tag="main">
+				<Wrapper as="main">
 					<article>
 						<header>
 							<h1>Page Title</h1>
@@ -19,14 +19,14 @@ import { Box, Flow, Stack, Wrapper, Dummy, SideMain } from 'lism-css/astro';
 						<Flow my-s="50">
 							<DemoContent />
 						</Flow>
-						<Box tag="aside" my-s="50">
+						<Box as="aside" my-s="50">
 							<Box bgc="base-2" p="40">
 								<div>Comment area, etc...</div>
 							</Box>
 						</Box>
 					</article>
 				</Wrapper>
-				<Wrapper tag="aside" isSide layout="flow" bgc="base-2" p="20">
+				<Wrapper as="aside" isSide layout="flow" bgc="base-2" p="20">
 					<div>Sidebar contents...</div>
 					<Dummy />
 				</Wrapper>

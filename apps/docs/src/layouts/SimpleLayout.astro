@@ -39,7 +39,7 @@ const { title = siteConfig.name, description, ogImage, lang = getRootLang() } = 
 	<body data-pagefind-ignore>
 		<Lism layout="stack" class="is--container" min-h="100svh">
 			<Header />
-			<Lism tag="main" isWrapper="l" setGutter py="50">
+			<Lism as="main" isWrapper="l" setGutter py="50">
 				<slot />
 			</Lism>
 			<Footer />

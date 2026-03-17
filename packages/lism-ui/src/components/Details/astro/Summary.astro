@@ -5,6 +5,6 @@ import { defaultProps } from '../getProps';
 const props = Astro.props || {};
 ---
 
-<Lism tag='summary' {...defaultProps.summary} {...props}>
+<Lism as='summary' {...defaultProps.summary} {...props}>
 	<slot />
 </Lism>

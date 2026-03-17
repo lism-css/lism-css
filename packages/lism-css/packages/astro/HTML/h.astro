@@ -3,4 +3,4 @@ import Lism from '../Lism/Lism.astro';
 const { lv = '1', ...props } = Astro.props;
 ---
 
-<Lism tag={`h${lv}`} {...props}><slot /></Lism>
+<Lism as={`h${lv}`} {...props}><slot /></Lism>

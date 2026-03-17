@@ -15,14 +15,14 @@ export function getItemProps({ lismClass, ...props }) {
 export function getHeadingProps(props) {
 	const defaultProps = {
 		lismClass: 'c--accordion_heading',
-		tag: 'div',
+		as: 'div',
 		setPlain: 1,
 	};
 
 	const returnProps = { ...defaultProps, ...props };
 
 	// div の時は role 付与
-	if (returnProps.tag === 'div') {
+	if (returnProps.as === 'div') {
 		returnProps.role = 'heading';
 	}
 	return returnProps;
@@ -58,7 +58,7 @@ export const defaultProps = {
 	// header: { lismClass: 'c--accordion_header' },
 	button: {
 		lismClass: 'c--accordion_button',
-		tag: 'button',
+		as: 'button',
 		layout: 'flex',
 		setPlain: 1,
 		g: '10',
@@ -68,7 +68,7 @@ export const defaultProps = {
 	},
 	icon: {
 		lismClass: 'c--accordion_icon a--icon',
-		tag: 'span',
+		as: 'span',
 		// d: 'grid',
 		pi: 'center',
 		fxsh: '0',

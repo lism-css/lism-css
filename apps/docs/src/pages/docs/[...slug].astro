@@ -33,7 +33,7 @@ const ogImage = `/docs/og/${entry.slug}.png`;
 ---
 
 <BaseLayout title={entry.data.title} description={entry.data.description} ogImage={ogImage} toc={toc} lang={lang}>
-	<Lism tag="article" class="z--article set--cqUnit" data-pagefind-body>
+	<Lism as="article" class="z--article set--cqUnit" data-pagefind-body>
 		{/* アイキャッチ画像 */}
 		{
 			// (

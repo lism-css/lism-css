@@ -138,7 +138,7 @@ import { Accordion } from '@lism-css/ui/astro';
 | プロパティ | 説明 |
 |---|---|
 | <PropBadge>`<Accordion.Root>`</PropBadge><br/>`allowMultiple` | 複数のアコーディオンを同時に展開できるようにします。デフォルトでは一つしか展開できません。 |
-| <PropBadge>`<Accordion.Heading>`</PropBadge><br/>`tag` | 見出しのHTMLタグを指定します。デフォルトは `div`（`role="heading"` が自動付与されます）。`h2`〜`h6` を指定すると `role` は付与されません。 |
+| <PropBadge>`<Accordion.Heading>`</PropBadge><br/>`as` | 見出しのHTMLタグを指定します。デフォルトは `div`（`role="heading"` が自動付与されます）。`h2`〜`h6` を指定すると `role` は付与されません。 |
 | <PropBadge>`<Accordion.Panel>`</PropBadge><br/>`flow` | パネル内のコンテンツ領域（`__content`）に渡すフローレイアウトの設定。 |
 
 
@@ -146,14 +146,14 @@ import { Accordion } from '@lism-css/ui/astro';
 
 ### 見出しタグを変更する
 
-`<Accordion.Heading>` はデフォルトでは `<div role="heading">` として出力されますが、`tag` に `h3` などの見出しタグを指定することで、実際の見出し要素として出力できます。
+`<Accordion.Heading>` はデフォルトでは `<div role="heading">` として出力されますが、`as` に `h3` などの見出しタグを指定することで、実際の見出し要素として出力できます。
 
 <Preview>
 	<PreviewTitle>例</PreviewTitle>
 	<PreviewArea p='20'>
 		<Accordion.Root bd>
 			<Accordion.Item>
-				<Accordion.Heading tag='h3'>
+				<Accordion.Heading as='h3'>
 					<Accordion.Button p='20'>Accordion Label</Accordion.Button>
 				</Accordion.Heading>
 				<Accordion.Panel p='20' pt='5'>
@@ -161,7 +161,7 @@ import { Accordion } from '@lism-css/ui/astro';
 				</Accordion.Panel>
 			</Accordion.Item>
 			<Accordion.Item bd-t>
-				<Accordion.Heading tag='h3'>
+				<Accordion.Heading as='h3'>
 					<Accordion.Button p='20'>Accordion Label</Accordion.Button>
 				</Accordion.Heading>
 				<Accordion.Panel p='20' pt='5'>
@@ -171,10 +171,10 @@ import { Accordion } from '@lism-css/ui/astro';
 		</Accordion.Root>
 	</PreviewArea>
 	<PreviewCode slot='tab' label='JSX'>
-		```jsx "tag='h3'"
+		```jsx "as='h3'"
 		<Accordion.Root bd>
 			<Accordion.Item>
-				<Accordion.Heading tag='h3'>
+				<Accordion.Heading as='h3'>
 					<Accordion.Button p='20'>Accordion Label</Accordion.Button>
 				</Accordion.Heading>
 				<Accordion.Panel p='20' pt='5'>
@@ -182,7 +182,7 @@ import { Accordion } from '@lism-css/ui/astro';
 				</Accordion.Panel>
 			</Accordion.Item>
 			<Accordion.Item bd-t>
-				<Accordion.Heading tag='h3'>
+				<Accordion.Heading as='h3'>
 					<Accordion.Button p='20'>Accordion Label</Accordion.Button>
 				</Accordion.Heading>
 				<Accordion.Panel p='20' pt='5'>

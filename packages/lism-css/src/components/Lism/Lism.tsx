@@ -1,4 +1,4 @@
-import type { ComponentPropsWithoutRef, ElementType, ReactNode, JSX } from 'react';
+import type { ComponentPropsWithoutRef, ElementType, ReactNode } from 'react';
 import getLismProps, { type LismProps } from '../../lib/getLismProps';
 import { type LayoutSpecificProps } from '../../lib/types/LayoutProps';
 
@@ -6,8 +6,6 @@ import { type LayoutSpecificProps } from '../../lib/types/LayoutProps';
 type LismBaseProps<T extends ElementType> = Omit<ComponentPropsWithoutRef<T>, keyof LismProps> & {
 	/** レンダリングするコンポーネントまたは要素 */
 	as?: T;
-	/** レンダリングするHTML要素のタグ名（文字列のみ）*/
-	tag?: keyof JSX.IntrinsicElements;
 	/** 子要素 */
 	children?: ReactNode;
 	/** getLismProps を経由せずに直接渡す追加の props */
@@ -31,8 +29,8 @@ export type LayoutComponentProps<T extends ElementType = 'div', L = object> = Om
 /**
  * Lism Propsを処理できるだけのコンポーネント
  */
-export default function Lism<T extends ElementType = 'div'>({ children, as, tag, exProps, ...props }: LismComponentProps<T>) {
-	const Component = (as || tag || 'div') as ElementType;
+export default function Lism<T extends ElementType = 'div'>({ children, as, exProps, ...props }: LismComponentProps<T>) {
+	const Component = as || 'div';
 
 	return (
 		<Component {...getLismProps(props)} {...exProps}>

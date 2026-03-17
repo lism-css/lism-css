@@ -10,6 +10,6 @@ const hasHref = !!props.href;
 const tag = hasHref ? 'a' : 'div';
 ---
 
-<Lism isLinkBox tag={tag} {...props}>
+<Lism isLinkBox as={tag} {...props}>
 	<slot />
 </Lism>

@@ -8,7 +8,5 @@ export default function Badge(props) {
 		bgc: { isVar: 1 },
 	};
 
-	return (
-		<Lism lismClass='c--badge' tag='span' d='inline-flex' fz='xs' lh='xs' py='5' px='10' bdrs='10' _propConfig={_propConfig} {...props} />
-	);
+	return <Lism lismClass='c--badge' as='span' d='inline-flex' fz='xs' lh='xs' py='5' px='10' bdrs='10' _propConfig={_propConfig} {...props} />;
 }

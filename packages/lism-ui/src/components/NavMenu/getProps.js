@@ -20,7 +20,7 @@ export function getRootProps({ hovC, hovBgc, itemP, style = {}, ...props }) {
 
 	return {
 		lismClass: 'c--navMenu',
-		tag: 'ul',
+		as: 'ul',
 		style: computedStyle,
 		...props,
 	};
@@ -32,7 +32,7 @@ export function getRootProps({ hovC, hovBgc, itemP, style = {}, ...props }) {
 export function getNestProps(props) {
 	return {
 		lismClass: 'c--navMenu_nest',
-		tag: 'ul',
+		as: 'ul',
 		'px-s': '20',
 		...props,
 	};
@@ -44,7 +44,7 @@ export function getNestProps(props) {
 export function getItemProps(props) {
 	return {
 		lismClass: 'c--navMenu_item',
-		tag: 'li',
+		as: 'li',
 		...props,
 	};
 }
@@ -52,12 +52,12 @@ export function getItemProps(props) {
 /**
  * NavMenu.Link のプロパティを処理
  * @param {string} [props.href] - リンク先URL。指定時は a タグになる
- * @param {string} [props.tag='span'] - HTML タグ
+ * @param {string} [props.as='span'] - HTML タグ
  */
-export function getLinkProps({ href, tag = 'span', ...props }) {
+export function getLinkProps({ href, as = 'span', ...props }) {
 	return {
 		lismClass: 'c--navMenu_link',
-		tag: href ? 'a' : tag,
+		as: href ? 'a' : as,
 		href,
 		c: 'inherit',
 		...props,

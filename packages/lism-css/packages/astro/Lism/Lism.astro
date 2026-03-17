@@ -5,8 +5,8 @@ import getLismProps from '../../../dist/lib/getLismProps';
 // Propsの定義
 interface Props extends LismProps {}
 
-const { as, tag, exProps, ...props } = Astro.props || {};
-const JSX = as || tag || 'div';
+const { as, exProps, ...props } = Astro.props || {};
+const JSX = as || 'div';
 ---
 
 <JSX {...getLismProps(props)} {...exProps}>

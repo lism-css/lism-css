@@ -108,7 +108,7 @@ import { Accordion, Details } from '@lism-css/ui/astro';
 | プロパティ | 説明 | 
 |---|---|
 | <PropBadge>`<Details.Root>`</PropBadge><br/>`--duration` | 展開アニメーションの秒数 |
-| <PropBadge>`<Details.Title>`</PropBadge><br/>`tag` | summary要素内のタイトルを出力するHTMLタグの種類|
+| <PropBadge>`<Details.Title>`</PropBadge><br/>`as` | summary要素内のタイトルを出力するHTMLタグの種類|
 
 
 ### ソースコード
@@ -135,7 +135,7 @@ import { Accordion, Details } from '@lism-css/ui/astro';
 
 ### タイトルのHTMLタグを変更し、複数同時展開を制限する例
 
-`<Details.Title>`はデフォルトではspanタグで出力されますが、`tag`でHTMLタグを指定できます。
+`<Details.Title>`はデフォルトではspanタグで出力されますが、`as`でHTMLタグを指定できます。
 
 また、details/summaryの基本的な機能として、`name`属性を指定すると同じグループ内で同時に展開可能な要素が一つのみとなります。
 
@@ -145,7 +145,7 @@ import { Accordion, Details } from '@lism-css/ui/astro';
 		<Stack g='10'>
 			<Details.Root bd name="details-group-01">
 				<Details.Summary p='20' bgc='base-2' hov='neutral'>
-					<Details.Title tag='h3'>Details Title</Details.Title>
+					<Details.Title as='h3'>Details Title</Details.Title>
 					<Details.Icon />
 				</Details.Summary>
 				<Details.Content p='20'>
@@ -154,7 +154,7 @@ import { Accordion, Details } from '@lism-css/ui/astro';
 			</Details.Root>
 			<Details.Root bd name="details-group-01">
 				<Details.Summary p='20' bgc='base-2' hov='neutral'>
-					<Details.Title tag='h3'>Details Title</Details.Title>
+					<Details.Title as='h3'>Details Title</Details.Title>
 					<Details.Icon />
 				</Details.Summary>
 				<Details.Content p='20'>
@@ -164,11 +164,11 @@ import { Accordion, Details } from '@lism-css/ui/astro';
 		</Stack>
 	</PreviewArea>
 	<PreviewCode slot='tab' label='JSX'>
-		```jsx "tag='h3'" "name="details-group-01""
+		```jsx "as='h3'" "name="details-group-01""
 		<Stack g='10'>
 			<Details.Root bd name="details-group-01">
 				<Details.Summary p='20' bgc='base-2' hov='neutral'>
-					<Details.Title tag='h3'>Details Title</Details.Title>
+					<Details.Title as='h3'>Details Title</Details.Title>
 					<Details.Icon />
 				</Details.Summary>
 				<Details.Content p='20'>
@@ -177,7 +177,7 @@ import { Accordion, Details } from '@lism-css/ui/astro';
 			</Details.Root>
 			<Details.Root bd name="details-group-01">
 				<Details.Summary p='20' bgc='base-2' hov='neutral'>
-					<Details.Title tag='h3'>Details Title</Details.Title>
+					<Details.Title as='h3'>Details Title</Details.Title>
 					<Details.Icon />
 				</Details.Summary>
 				<Details.Content p='20'>
@@ -211,7 +211,7 @@ import { Accordion, Details } from '@lism-css/ui/astro';
 		<Details.Root bd style={{'--duration': '.4s'}}>
 			<Details.Summary p='20' bgc='base-2' hov='neutral'>
 				<Details.Icon />
-				<Details.Title tag='h3'>Details Title</Details.Title>
+				<Details.Title as='h3'>Details Title</Details.Title>
 				
 			</Details.Summary>
 			<Details.Content p='20'>
@@ -223,7 +223,7 @@ import { Accordion, Details } from '@lism-css/ui/astro';
 		```jsx "--duration"
 		<Details.Root bd style={{'--duration': '.4s'}}>
 			<Details.Summary p='20' bgc='base-2' hov='neutral'>
-				<Details.Title tag='h3'>Details Title</Details.Title>
+				<Details.Title as='h3'>Details Title</Details.Title>
 				<Details.Icon />
 			</Details.Summary>
 			<Details.Content p='20'>

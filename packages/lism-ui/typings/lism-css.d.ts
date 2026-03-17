@@ -2,7 +2,7 @@
  * lism-css/react および lism-css/astro の型定義オーバーライド（暫定対策）
  *
  * 現状、lism-css のコンポーネント（JSX）から自動生成される型定義では、
- * children, as, tag, exProps などのプロパティが必須として推論されてしまう。
+ * children, as, exProps などのプロパティが必須として推論されてしまう。
  * これにより lism-ui 側で型エラー（TS2739, TS2741）が発生する。
  *
  * lism-css 本体のTypeScript化が完了したら、このファイルは削除すること。
@@ -16,7 +16,6 @@ declare module 'lism-css/react' {
 		[x: string]: unknown;
 		children?: ReactNode;
 		as?: unknown;
-		tag?: string;
 		exProps?: Record<string, unknown>;
 		layout?: string;
 		lismClass?: string;
@@ -59,7 +58,6 @@ declare module 'lism-css/astro' {
 	interface LismProps {
 		[x: string]: unknown;
 		as?: unknown;
-		tag?: string;
 		exProps?: Record<string, unknown>;
 		layout?: string;
 		lismClass?: string;

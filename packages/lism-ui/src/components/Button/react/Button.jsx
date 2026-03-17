@@ -8,7 +8,5 @@ export default function Button(props) {
 		bgc: { isVar: 1 },
 	};
 
-	return (
-		<Flex lismClass='c--button' tag='a' lh='s' py='10' px='20' hov='o' _propConfig={_propConfig} {...props} />
-	);
+	return <Flex lismClass='c--button' as='a' lh='s' py='10' px='20' hov='o' _propConfig={_propConfig} {...props} />;
 }
