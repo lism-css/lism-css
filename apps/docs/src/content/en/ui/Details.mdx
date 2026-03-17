@@ -108,7 +108,7 @@ The following components are available:
 | Property | Description |
 |---|---|
 | <PropBadge>`<Details.Root>`</PropBadge><br/>`--duration` | Duration of the expand/collapse animation. |
-| <PropBadge>`<Details.Title>`</PropBadge><br/>`tag` | The HTML tag used to render the title inside the summary element. |
+| <PropBadge>`<Details.Title>`</PropBadge><br/>`as` | The HTML tag used to render the title inside the summary element. |
 
 
 ### Source Code
@@ -135,7 +135,7 @@ Here is the actual source code.
 
 ### Changing the title tag and restricting simultaneous expansion
 
-`<Details.Title>` renders as a `span` by default, but you can specify an HTML tag via `tag`.
+`<Details.Title>` renders as a `span` by default, but you can specify an HTML tag via `as`.
 
 Additionally, as a native feature of `details`/`summary`, specifying a `name` attribute limits the number of simultaneously expanded elements within the same group to one.
 

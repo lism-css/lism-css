@@ -138,7 +138,7 @@ The following components are available:
 | Property | Description |
 |---|---|
 | <PropBadge>`<Accordion.Root>`</PropBadge><br/>`allowMultiple` | Allows multiple accordions to be expanded simultaneously. By default, only one can be open at a time. |
-| <PropBadge>`<Accordion.Heading>`</PropBadge><br/>`tag` | Specifies the HTML tag for the heading. Defaults to `div` (with `role="heading"` added automatically). If `h2`–`h6` is specified, `role` is not added. |
+| <PropBadge>`<Accordion.Heading>`</PropBadge><br/>`as` | Specifies the HTML tag for the heading. Defaults to `div` (with `role="heading"` added automatically). If `h2`–`h6` is specified, `role` is not added. |
 | <PropBadge>`<Accordion.Panel>`</PropBadge><br/>`flow` | Flow layout setting passed to the content area (`__content`) inside the panel. |
 
 
@@ -146,7 +146,7 @@ The following components are available:
 
 ### Changing the heading tag
 
-`<Accordion.Heading>` outputs a `<div role="heading">` by default, but you can specify a heading tag like `h3` via the `tag` prop to render it as an actual heading element.
+`<Accordion.Heading>` outputs a `<div role="heading">` by default, but you can specify a heading tag like `h3` via the `as` prop to render it as an actual heading element.
 
 <Preview>
 	<PreviewTitle>Example</PreviewTitle>
