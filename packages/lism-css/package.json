@@ -16,7 +16,7 @@
 		"dev": "vite",
 		"test": "pnpm typecheck && pnpm vitest",
 		"vitest": "vitest run",
-		"typecheck": "tsc --noEmit",
+		"typecheck": "tsc --noEmit && astro check --tsconfig packages/astro/tsconfig.json",
 		"build": "pnpm build:js && pnpm build:css",
 		"build:js": "vite build && pnpm exec tsc -p config/tsconfig.json",
 		"build:css": "tsx bin/script-build-css.js",
