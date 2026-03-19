@@ -67,6 +67,33 @@ describe('Responsive', () => {
 		const six: Responsive<string> = ['a', 'b', 'c', 'd', 'e', 'f'];
 		expectTypeOf(six).toExtend<Responsive<string>>();
 	});
+
+	it('配列形式で null を含めてブレークポイントをスキップできる', () => {
+		const value: Responsive<string> = ['a', null, 'c'];
+		expectTypeOf(value).toExtend<Responsive<string>>();
+	});
+
+	it('配列形式で null のみでも受け付ける', () => {
+		const value: Responsive<string> = [null, null, 'c'];
+		expectTypeOf(value).toExtend<Responsive<string>>();
+	});
+
+	it('配列形式で number 型と null を混在できる', () => {
+		const value: Responsive<number> = [1, null, 3];
+		expectTypeOf(value).toExtend<Responsive<number>>();
+	});
+
+	it('単一値として null は受け付けない', () => {
+		// @ts-expect-error 単一値での null は許可されない
+		const value: Responsive<string> = null;
+		expectTypeOf(value).toExtend<Responsive<string>>();
+	});
+
+	it('オブジェクト形式で null は受け付けない', () => {
+		// @ts-expect-error オブジェクト形式での null は許可されない
+		const value: Responsive<string> = { base: 'a', md: null };
+		expectTypeOf(value).toExtend<Responsive<string>>();
+	});
 });
 
 describe('MakeResponsive', () => {
