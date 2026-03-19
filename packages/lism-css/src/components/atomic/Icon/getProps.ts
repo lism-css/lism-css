@@ -18,6 +18,8 @@ type IconOwnProps = {
 	icon?: IconProp;
 	label?: string;
 	exProps?: Record<string, unknown>;
+	viewBox?: string;
+	src?: string;
 };
 
 export type IconProps = LismComponentProps & TransformStyleProps & IconOwnProps;
