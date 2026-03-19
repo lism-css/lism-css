@@ -1,6 +1,6 @@
 {
 	"name": "@lism-css/cli",
-	"version": "0.1.2",
+	"version": "0.1.3",
 	"description": "CLI for adding Lism UI components to your project",
 	"type": "module",
 	"bin": {
@@ -12,7 +12,8 @@
 	],
 	"scripts": {
 		"build": "tsup",
-		"dev": "tsup --watch"
+		"dev": "tsup --watch",
+		"prepublishOnly": "tsup"
 	},
 	"dependencies": {
 		"@inquirer/prompts": "^7.0.0",
