@@ -1,0 +1,31 @@
+{
+	"name": "@lism-css/cli",
+	"version": "0.1.1",
+	"description": "CLI for adding Lism UI components to your project",
+	"type": "module",
+	"bin": {
+		"lism-ui": "./bin/cli.mjs"
+	},
+	"files": [
+		"dist",
+		"bin"
+	],
+	"scripts": {
+		"build": "tsup",
+		"dev": "tsup --watch"
+	},
+	"dependencies": {
+		"@inquirer/prompts": "^7.0.0",
+		"commander": "^13.0.0",
+		"picocolors": "^1.1.0"
+	},
+	"devDependencies": {
+		"@types/node": "^25.5.0",
+		"tsup": "^8.0.0",
+		"typescript": "^5.7.0"
+	},
+	"engines": {
+		"node": ">=18.0.0"
+	},
+	"license": "MIT"
+}

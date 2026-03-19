@@ -1,0 +1,16 @@
+{
+	"name": "lism-cli-registry",
+	"private": true,
+	"type": "module",
+	"scripts": {
+		"generate": "tsx scripts/generate-registry.ts",
+		"build": "pnpm generate",
+		"deploy:pages": "pnpm generate && wrangler pages deploy public --branch main",
+		"preview": "pnpm generate && wrangler pages dev public"
+	},
+	"devDependencies": {
+		"@types/node": "^25.5.0",
+		"tsx": "^4.21.0",
+		"wrangler": "^4.0.0"
+	}
+}
