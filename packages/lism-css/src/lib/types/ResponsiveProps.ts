@@ -12,7 +12,7 @@ type BreakpointKey = (typeof BREAK_POINTS_ALL)[number];
 type BreakpointCount = (typeof BREAK_POINTS_ALL)['length'];
 
 /** ブレイクポイント数を上限とする配列型（1〜5要素） */
-type ResponsiveArray<T> = LimitedArray<T, BreakpointCount>;
+type ResponsiveArray<T> = LimitedArray<T | null, BreakpointCount>;
 
 /**
  * プロパティ値をレスポンシブ対応の型に変換するユーティリティ型
