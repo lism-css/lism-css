@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Icon } from './index';
 
-const meta = {
+const meta: Meta = {
 	title: 'Atomic/Icon',
 	component: Icon,
 	tags: ['autodocs'],
@@ -16,14 +16,14 @@ const meta = {
 			description: 'アクセシブルラベル。指定するとaria-labelが設定される',
 		},
 	},
-} satisfies Meta<typeof Icon>;
+};
 
 export default meta;
-type Story = StoryObj<typeof meta>;
+type Story = StoryObj;
 
 export const Default: Story = {
 	args: {
-		icon: 'star' as never,
+		icon: 'star',
 		fz: '2rem',
 	},
 };
@@ -31,7 +31,7 @@ export const Default: Story = {
 export const WithLabel: Story = {
 	name: 'label 指定（アクセシブル）',
 	args: {
-		icon: 'info' as never,
+		icon: 'info',
 		label: 'Information',
 		fz: '2rem',
 	},
@@ -40,7 +40,7 @@ export const WithLabel: Story = {
 export const LogoIcon: Story = {
 	name: 'ロゴアイコン',
 	args: {
-		icon: 'logo-github' as never,
+		icon: 'logo-github',
 		fz: '2rem',
 	},
 };
@@ -48,7 +48,7 @@ export const LogoIcon: Story = {
 export const CheckCircle: Story = {
 	name: 'check-circle',
 	args: {
-		icon: 'check-circle' as never,
+		icon: 'check-circle',
 		fz: '2rem',
 		c: 'green',
 	},
@@ -57,7 +57,7 @@ export const CheckCircle: Story = {
 export const WarningIcon: Story = {
 	name: 'warning',
 	args: {
-		icon: 'warning' as never,
+		icon: 'warning',
 		fz: '2rem',
 		c: 'orange',
 	},
