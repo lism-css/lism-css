@@ -1,10 +1,9 @@
 ---
-import type { ElementType } from 'react';
-import type { LismComponentProps } from '../../../src/components/Lism/Lism';
+import type { DecoratorProps } from '../../../src/components/atomic/Decorator/getProps';
 import { Lism } from '../Lism';
 import getProps from '../../../src/components/atomic/Decorator/getProps';
 
-type Props = LismComponentProps<ElementType>;
+type Props = DecoratorProps;
 const props = Astro.props || {};
 ---
 

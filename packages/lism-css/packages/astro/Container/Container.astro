@@ -3,7 +3,9 @@ import type { ElementType } from 'react';
 import type { LismComponentProps } from '../../../src/components/Lism/Lism';
 import { Lism } from '../Lism';
 
-type Props = LismComponentProps<ElementType>;
+type Props = LismComponentProps<ElementType> & {
+	size?: string;
+};
 
 const { size, ...props } = Astro.props || {};
 ---

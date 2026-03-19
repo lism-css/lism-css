@@ -1,17 +1,10 @@
 ---
-import type { ElementType } from 'react';
-import type { LismComponentProps } from '../../../src/components/Lism/Lism';
-import type { LismProps } from '../../../src/lib/getLismProps';
+import type { IconProps } from '../../../src/components/atomic/Icon/getProps';
 import getLismProps from '../../../src/lib/getLismProps';
 import getProps from '../../../src/components/atomic/Icon/getProps';
 import SVG from './SVG.astro';
 
-type Props = LismComponentProps<ElementType> & {
-	Component?: any;
-	lismProps?: LismProps;
-	exProps?: any;
-	content?: string;
-};
+type Props = IconProps;
 
 const props = Astro.props || {};
 
@@ -19,7 +12,7 @@ const props = Astro.props || {};
 // let { IconTag, iconProps, otherProps } = getProps(props, hasChildren);
 // if (IconTag === '_SVG_') IconTag = SVG;
 
-let { Component, lismProps, exProps = {}, content }: Props = getProps(props);
+let { Component, lismProps, exProps = {}, content } = getProps(props);
 
 if (Component === '_SVG_') {
 	Component = SVG;
