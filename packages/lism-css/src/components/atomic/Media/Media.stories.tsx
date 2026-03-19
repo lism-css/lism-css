@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Media } from './index';
 
-const meta = {
+const meta: Meta = {
 	title: 'Atomic/Media',
 	component: Media,
 	tags: ['autodocs'],
@@ -16,17 +16,17 @@ const meta = {
 			description: 'CSS object-position',
 		},
 	},
-} satisfies Meta<typeof Media>;
+};
 
 export default meta;
-type Story = StoryObj<typeof meta>;
+type Story = StoryObj;
 
 export const Default: Story = {
 	args: {
 		src: 'https://picsum.photos/600/400',
 		alt: 'Sample image',
 		w: '300px',
-	} as Story['args'],
+	},
 };
 
 export const WithObjectFitCover: Story = {
@@ -37,7 +37,7 @@ export const WithObjectFitCover: Story = {
 		w: '200px',
 		h: '200px',
 		objectFit: 'cover',
-	} as Story['args'],
+	},
 };
 
 export const WithObjectFitContain: Story = {
@@ -49,7 +49,7 @@ export const WithObjectFitContain: Story = {
 		h: '200px',
 		objectFit: 'contain',
 		bgc: 'base-2',
-	} as Story['args'],
+	},
 };
 
 export const WithObjectPosition: Story = {
@@ -61,5 +61,5 @@ export const WithObjectPosition: Story = {
 		h: '200px',
 		objectFit: 'cover',
 		objectPosition: 'top left',
-	} as Story['args'],
+	},
 };
