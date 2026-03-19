@@ -19,7 +19,7 @@ const meta: Meta = {
 };
 
 export default meta;
-type Story = StoryObj;
+type Story = StoryObj<typeof Media>;
 
 export const Default: Story = {
 	args: {
