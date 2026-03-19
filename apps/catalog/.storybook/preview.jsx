@@ -1,7 +1,15 @@
 import 'lism-css/main.css';
+import Container from '../../../packages/lism-css/src/components/Container/Container';
 
 /** @type { import('@storybook/react-vite').Preview } */
 const preview = {
+	decorators: [
+		(Story) => (
+			<Container>
+				<Story />
+			</Container>
+		),
+	],
 	argTypes: {
 		forwardedRef: { table: { disable: true } },
 		_propConfig: { table: { disable: true } },

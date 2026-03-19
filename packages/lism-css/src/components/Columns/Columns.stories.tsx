@@ -42,7 +42,7 @@ export const ResponsiveColumns: Story = {
 	args: {
 		g: '20',
 		// TODO: null を許容するようにする
-		cols: ['1', '3'],
+		cols: ['2', '3'],
 		children: <DemoItems />,
 	},
 };
