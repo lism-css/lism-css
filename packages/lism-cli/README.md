@@ -110,28 +110,26 @@ src/components/ui/
 | `componentsDir` | コンポーネントの出力先ディレクトリ |
 | `helperDir` | helper ファイルの出力先ディレクトリ |
 
-## npx で実行できない場合
+## パッケージが見つからないエラーが出る場合
 
-npm v11 以降では Safe Supply Chain 機能により、公開から間もないパッケージが `npx` でブロックされる場合があります。
+npm / pnpm の Safe Supply Chain 機能により、公開から間もないパッケージがブロックされる場合があります。
 
 ```
-npm error code ENOVERSIONS
-npm error No versions available for @lism-css/cli
+No versions available for @lism-css/cli
 ℹ Safe-chain: Some package versions were suppressed due to minimum age requirement.
 ```
 
-以下のいずれかで回避できます。
+`--safe-chain-skip-minimum-package-age` フラグで回避できます。
 
 ```bash
-# チェックをスキップ
+# npx の場合
 npx --safe-chain-skip-minimum-package-age @lism-css/cli add accordion
 
-# pnpm dlx を使う（この制限なし）
-pnpm dlx @lism-css/cli add accordion
-
-# @antfu/ni の nlx を使う
-nlx @lism-css/cli add accordion
+# pnpm dlx の場合
+pnpm --safe-chain-skip-minimum-package-age dlx @lism-css/cli add accordion
 ```
+
+この制限はパッケージ公開から一定期間が経過すると自動的に解除されます。
 
 ## License
 
