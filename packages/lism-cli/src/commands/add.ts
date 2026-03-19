@@ -6,7 +6,7 @@ import { fetchCatalog, fetchComponent, fetchHelper } from '../registry.js';
 import { resolveHelperPlaceholder } from '../transform.js';
 import { logger } from '../logger.js';
 import type { LismConfig } from '../config.js';
-import type { RegistryFile } from '../registry.js';
+import type { RegistryComponent } from '../registry.js';
 
 interface AddOptions {
 	overwrite: boolean;
@@ -33,32 +33,37 @@ export async function addCommand(names: string[], options: AddOptions): Promise<
 		process.exit(1);
 	}
 
-	// 追加済み helper を追跡（重複 fetch を防ぐ）
+	// 全コンポーネントを並列 fetch し、書き込みは逐次で実行
+	const results = await Promise.allSettled(names.map((name) => fetchComponent(name)));
+
 	const installedHelpers = new Set<string>();
 
-	for (const name of names) {
-		await addComponent(name, config, options.overwrite, installedHelpers);
+	for (let i = 0; i < names.length; i++) {
+		const result = results[i];
+		if (result.status === 'rejected') {
+			logger.error(`"${names[i]}" の取得に失敗しました: ${String(result.reason)}`);
+			continue;
+		}
+		await writeComponent(result.value, config, options.overwrite, installedHelpers);
 	}
 
 	logger.success('完了しました。');
 }
 
-async function addComponent(name: string, config: LismConfig, overwrite: boolean, installedHelpers: Set<string>): Promise<void> {
-	logger.info(`${name} を取得中...`);
+/** ファイルを指定パスに書き込む（ディレクトリ自動作成 + ログ出力） */
+function writeFile(filePath: string, content: string): void {
+	fs.mkdirSync(path.dirname(filePath), { recursive: true });
+	fs.writeFileSync(filePath, content);
+	logger.log(`  作成: ${path.relative(process.cwd(), filePath)}`);
+}
 
-	let component;
-	try {
-		component = await fetchComponent(name);
-	} catch {
-		logger.error(`コンポーネント "${name}" が見つかりません。`);
-		return;
-	}
+async function writeComponent(component: RegistryComponent, config: LismConfig, overwrite: boolean, installedHelpers: Set<string>): Promise<void> {
+	logger.info(`${component.name} を展開中...`);
 
-	// framework に応じて書き込むファイルを選定
-	const filesToWrite: RegistryFile[] = [...component.files.shared, ...component.files[config.framework]];
+	const filesToWrite = [...component.files.shared, ...component.files[config.framework]];
 
 	// コンポーネント名を PascalCase に（先頭大文字）
-	const componentDirName = name.charAt(0).toUpperCase() + name.slice(1);
+	const componentDirName = component.name.charAt(0).toUpperCase() + component.name.slice(1);
 	const componentDir = path.resolve(process.cwd(), config.componentsDir, componentDirName);
 	const helperDir = path.resolve(process.cwd(), config.helperDir);
 
@@ -79,35 +84,40 @@ async function addComponent(name: string, config: LismConfig, overwrite: boolean
 
 		// {{HELPER}} プレースホルダーを実際のパスに置換
 		const content = resolveHelperPlaceholder(file.content, file.path, componentDir, helperDir);
-
-		fs.mkdirSync(path.dirname(filePath), { recursive: true });
-		fs.writeFileSync(filePath, content);
-		logger.log(`  作成: ${path.relative(process.cwd(), filePath)}`);
+		writeFile(filePath, content);
 	}
 
-	// helper 依存の解決
-	for (const helperName of component.helpers) {
-		if (installedHelpers.has(helperName)) continue;
-		installedHelpers.add(helperName);
-		await installHelper(helperName, helperDir);
-	}
-}
+	// helper 依存を並列 fetch
+	const helpersToInstall = component.helpers.filter((h) => !installedHelpers.has(h));
+	for (const h of helpersToInstall) installedHelpers.add(h);
 
-async function installHelper(name: string, helperDir: string): Promise<void> {
-	logger.info(`  helper "${name}" を取得中...`);
+	if (helpersToInstall.length > 0) {
+		const helperResults = await Promise.allSettled(helpersToInstall.map((h) => fetchHelper(h)));
 
-	let helper;
-	try {
-		helper = await fetchHelper(name);
-	} catch {
-		logger.error(`  helper "${name}" が見つかりません。`);
-		return;
-	}
+		for (let i = 0; i < helpersToInstall.length; i++) {
+			const result = helperResults[i];
+			if (result.status === 'rejected') {
+				logger.error(`  helper "${helpersToInstall[i]}" の取得に失敗しました: ${String(result.reason)}`);
+				continue;
+			}
 
-	for (const file of helper.files) {
-		const filePath = path.join(helperDir, file.path);
-		fs.mkdirSync(path.dirname(filePath), { recursive: true });
-		fs.writeFileSync(filePath, file.content);
-		logger.log(`  作成: ${path.relative(process.cwd(), filePath)}`);
+			for (const file of result.value.files) {
+				const filePath = path.join(helperDir, file.path);
+
+				// helper も上書き確認（コンポーネントファイルと同じ挙動）
+				if (fs.existsSync(filePath) && !overwrite) {
+					const shouldOverwrite = await confirm({
+						message: `${path.relative(process.cwd(), filePath)} は既に存在します。上書きしますか？`,
+						default: false,
+					});
+					if (!shouldOverwrite) {
+						logger.log(`  スキップ: ${file.path}`);
+						continue;
+					}
+				}
+
+				writeFile(filePath, file.content);
+			}
+		}
 	}
 }
