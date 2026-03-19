@@ -9,7 +9,7 @@ type MediaOwnProps = {
 	objectFit?: CSSProperties['objectFit'];
 };
 
-export type MediaProps = LismComponentProps & MediaOwnProps;
+export type MediaProps = LismComponentProps<'img'> & MediaOwnProps;
 
 export default function getMediaProps({ objectPosition, objectFit, lismClass, style = {}, ...rest }: MediaProps): LismComponentProps {
 	if (objectPosition) style.objectPosition = objectPosition;

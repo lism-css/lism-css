@@ -5,12 +5,14 @@ import type { LismComponentProps } from '../../Lism/Lism';
 import type { TransformStyleProps } from '../../setMaybeTransformStyles';
 import type { ElementType, CSSProperties } from 'react';
 
+export type PresetIconName = keyof typeof presets;
+
 type IconObject = {
 	as: ElementType;
 	[key: string]: unknown;
 };
 
-type IconProp = ElementType | IconObject;
+type IconProp = PresetIconName | ElementType | IconObject;
 
 type IconOwnProps = {
 	icon?: IconProp;
