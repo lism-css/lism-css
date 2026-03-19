@@ -1,9 +1,8 @@
 ---
-import type { LismProps } from '../../types';
+import type { LismComponentProps } from '../../../dist/components/Lism/Lism';
 import { Lism } from '../Lism';
-// import getProps from '../../../dist/components/LinkBox/getProps';
 
-interface Props extends LismProps {}
+type Props = LismComponentProps;
 const props = Astro.props || {};
 
 const hasHref = !!props.href;

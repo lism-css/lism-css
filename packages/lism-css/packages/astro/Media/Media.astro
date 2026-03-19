@@ -1,7 +1,10 @@
 ---
+import type { LismComponentProps } from '../../../dist/components/Lism/Lism';
 import getLismProps from '../../../dist/lib/getLismProps';
 import getMediaProps from '../../../dist/components/atomic/Media/getProps';
 import { Image } from 'astro:assets';
+
+type Props = LismComponentProps;
 
 const { as, exProps, ...props } = Astro.props || {};
 

@@ -1,5 +1,8 @@
 ---
+import type { LismComponentProps } from '../../../dist/components/Lism/Lism';
 import { Lism } from '../Lism';
+
+type Props = LismComponentProps;
 ---
 
 <Lism layout='cluster' {...Astro.props}><slot /></Lism>
