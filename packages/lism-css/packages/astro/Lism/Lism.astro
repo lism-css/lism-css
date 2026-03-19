@@ -1,8 +1,9 @@
 ---
-import type { LismComponentProps } from '../../../dist/components/Lism/Lism';
-import getLismProps from '../../../dist/lib/getLismProps';
+import type { ElementType } from 'react';
+import type { LismComponentProps } from '../../../src/components/Lism/Lism';
+import getLismProps from '../../../src/lib/getLismProps';
 
-type Props = LismComponentProps;
+type Props = LismComponentProps<ElementType>;
 
 const { as, exProps, ...props } = Astro.props || {};
 const JSX = as || 'div';

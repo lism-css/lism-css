@@ -1,14 +1,15 @@
 ---
-import type { LismComponentProps } from '../../../dist/components/Lism/Lism';
-import getLismProps from '../../../dist/lib/getLismProps';
-import getMediaProps from '../../../dist/components/atomic/Media/getProps';
+import type { ElementType } from 'react';
+import type { MediaProps } from '../../../src/components/atomic/Media/getProps';
+import getLismProps from '../../../src/lib/getLismProps';
+import getMediaProps from '../../../src/components/atomic/Media/getProps';
 import { Image } from 'astro:assets';
 
-type Props = LismComponentProps;
+type Props = MediaProps & astroHTML.JSX.ImgHTMLAttributes & { as?: ElementType };
 
 const { as, exProps, ...props } = Astro.props || {};
 
-let JSX = as || 'img';
+let JSX: any = as || 'img';
 if (JSX === 'AstroImage') {
 	JSX = Image;
 }

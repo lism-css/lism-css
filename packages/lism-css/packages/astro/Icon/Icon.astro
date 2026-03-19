@@ -1,11 +1,12 @@
 ---
-import type { LismComponentProps } from '../../../dist/components/Lism/Lism';
-import type { LismProps } from '../../../dist/lib/getLismProps';
-import getLismProps from '../../../dist/lib/getLismProps';
-import getProps from '../../../dist/components/atomic/Icon/getProps';
+import type { ElementType } from 'react';
+import type { LismComponentProps } from '../../../src/components/Lism/Lism';
+import type { LismProps } from '../../../src/lib/getLismProps';
+import getLismProps from '../../../src/lib/getLismProps';
+import getProps from '../../../src/components/atomic/Icon/getProps';
 import SVG from './SVG.astro';
 
-type Props = LismComponentProps & {
+type Props = LismComponentProps<ElementType> & {
 	Component?: any;
 	lismProps?: LismProps;
 	exProps?: any;
