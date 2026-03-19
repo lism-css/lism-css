@@ -1,11 +1,10 @@
 ---
-import type { ElementType } from 'react';
 import type { MediaProps } from '../../../src/components/atomic/Media/getProps';
 import getLismProps from '../../../src/lib/getLismProps';
 import getMediaProps from '../../../src/components/atomic/Media/getProps';
 import { Image } from 'astro:assets';
 
-type Props = MediaProps & astroHTML.JSX.ImgHTMLAttributes & { as?: ElementType };
+type Props = MediaProps;
 
 const { as, exProps, ...props } = Astro.props || {};
 
