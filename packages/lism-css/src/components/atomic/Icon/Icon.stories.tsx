@@ -1,5 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Icon } from './index';
+import presets from './presets';
+import type { PresetIconName } from './getProps';
+
+const presetIconNames = Object.keys(presets) as PresetIconName[];
 
 const meta: Meta = {
 	title: 'Atomic/Icon',
@@ -8,7 +12,8 @@ const meta: Meta = {
 	argTypes: {
 		children: { control: false },
 		icon: {
-			control: 'text',
+			control: 'select',
+			options: presetIconNames,
 			description: 'プリセットアイコン名、コンポーネント、またはSVG文字列',
 		},
 		label: {
@@ -19,7 +24,7 @@ const meta: Meta = {
 };
 
 export default meta;
-type Story = StoryObj;
+type Story = StoryObj<typeof Icon>;
 
 export const Default: Story = {
 	args: {
