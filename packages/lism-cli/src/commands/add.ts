@@ -4,6 +4,7 @@ import { confirm } from '@inquirer/prompts';
 import { configExists, readConfig } from '../config.js';
 import { fetchCatalog, fetchComponent, fetchHelper } from '../registry.js';
 import { resolveHelperPlaceholder } from '../transform.js';
+import { runInit } from './init.js';
 import { logger } from '../logger.js';
 import type { LismConfig } from '../config.js';
 import type { RegistryComponent } from '../registry.js';
@@ -14,12 +15,15 @@ interface AddOptions {
 }
 
 export async function addCommand(names: string[], options: AddOptions): Promise<void> {
-	if (!configExists()) {
-		logger.error('lism-ui.json が見つかりません。先に `lism-ui init` を実行してください。');
-		process.exit(1);
-	}
+	let config: LismConfig;
 
-	const config = readConfig();
+	if (configExists()) {
+		config = readConfig();
+	} else {
+		logger.info('lism-ui.json が見つかりません。セットアップを開始します...\n');
+		config = await runInit();
+		console.log();
+	}
 
 	// --all: カタログから全コンポーネント名を取得
 	if (options.all) {

@@ -3,12 +3,8 @@ import { configExists, writeConfig, getConfigPath } from '../config.js';
 import { logger } from '../logger.js';
 import type { LismConfig } from '../config.js';
 
-export async function initCommand(): Promise<void> {
-	if (configExists()) {
-		logger.warn(`${getConfigPath()} は既に存在します。上書きする場合は削除してから再実行してください。`);
-		return;
-	}
-
+/** 対話式で設定を作成し lism-ui.json に書き込む。作成した config を返す。 */
+export async function runInit(): Promise<LismConfig> {
 	const framework = await select<LismConfig['framework']>({
 		message: 'フレームワークを選択してください:',
 		choices: [
@@ -29,6 +25,16 @@ export async function initCommand(): Promise<void> {
 
 	const config: LismConfig = { framework, componentsDir, helperDir };
 	writeConfig(config);
-
 	logger.success(`${getConfigPath()} を作成しました。`);
+
+	return config;
+}
+
+export async function initCommand(): Promise<void> {
+	if (configExists()) {
+		logger.warn(`${getConfigPath()} は既に存在します。上書きする場合は削除してから再実行してください。`);
+		return;
+	}
+
+	await runInit();
 }
