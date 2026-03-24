@@ -147,7 +147,7 @@ const preview = {
 		isWrapper: { control: 'object', table: { category: 'State' } },
 		isLayer: { control: 'boolean', table: { category: 'State' } },
 		isLinkBox: { control: 'boolean', table: { category: 'State' } },
-		hasGutter: { control: 'boolean', table: { category: 'State' } },
+		setGutter: { control: 'boolean', table: { category: 'State' } },
 		isVertical: { control: 'boolean', table: { category: 'State' } },
 	},
 	parameters: {
