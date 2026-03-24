@@ -103,7 +103,7 @@ importers:
                 version: 10.2.19(react-dom@19.2.4)(react@19.2.4)(storybook@10.2.19)(typescript@5.8.3)
             '@storybook/react-vite':
                 specifier: ^10.2.19
-                version: 10.2.19(react-dom@19.2.4)(react@19.2.4)(rollup@4.59.0)(storybook@10.2.19)(typescript@5.8.3)(vite@6.4.1)
+                version: 10.2.19(react-dom@19.2.4)(react@19.2.4)(storybook@10.2.19)(typescript@5.8.3)(vite@6.4.1)
             '@vitejs/plugin-react':
                 specifier: ^4.7.0
                 version: 4.7.0(vite@6.4.1)
@@ -288,7 +288,7 @@ importers:
                 version: 8.57.0(eslint@9.39.4)(typescript@5.8.3)
             vite:
                 specifier: ^6.4.1
-                version: 6.4.1(@types/node@25.5.0)(sass@1.98.0)(tsx@4.21.0)
+                version: 6.4.1(sass-embedded@1.98.0)(sass@1.98.0)(tsx@4.21.0)
 
     packages/lism-cli:
         dependencies:
@@ -350,7 +350,7 @@ importers:
                 version: 6.9.1
             '@testing-library/react':
                 specifier: ^16.3.2
-                version: 16.3.2(@testing-library/dom@10.4.1)(@types/react-dom@19.2.3)(@types/react@19.2.14)(react-dom@19.2.4)(react@19.2.4)
+                version: 16.3.2(@testing-library/dom@10.4.1)(react-dom@19.2.4)(react@19.2.4)
             '@types/node':
                 specifier: ^25.5.0
                 version: 25.5.0
@@ -363,6 +363,9 @@ importers:
             jsdom:
                 specifier: ^27.4.0
                 version: 27.4.0
+            lucide-react:
+                specifier: ^0.577.0
+                version: 0.577.0(react@19.2.4)
             rollup:
                 specifier: ^4.59.0
                 version: 4.59.0
@@ -3943,7 +3946,7 @@ packages:
             storybook: ^10.2.19
         dependencies:
             '@mdx-js/react': 3.1.1(@types/react@19.2.14)(react@19.2.4)
-            '@storybook/csf-plugin': 10.2.19(rollup@4.59.0)(storybook@10.2.19)(vite@6.4.1)
+            '@storybook/csf-plugin': 10.2.19(storybook@10.2.19)(vite@6.4.1)
             '@storybook/icons': 2.0.1(react-dom@19.2.4)(react@19.2.4)
             '@storybook/react-dom-shim': 10.2.19(react-dom@19.2.4)(react@19.2.4)(storybook@10.2.19)
             react: 19.2.4
@@ -4024,6 +4027,22 @@ packages:
             - webpack
         dev: true
 
+    /@storybook/builder-vite@10.2.19(storybook@10.2.19)(vite@6.4.1):
+        resolution: { integrity: sha512-a59xALzM9GeYh6p+wzAeBbDyIe+qyrC4nxS3QNzb5i2ZOhrq1iIpvnDaOWe80NC8mV3IlqUEGY8Uawkf//1Rmg== }
+        peerDependencies:
+            storybook: ^10.2.19
+            vite: ^5.0.0 || ^6.0.0 || ^7.0.0 || ^8.0.0
+        dependencies:
+            '@storybook/csf-plugin': 10.2.19(storybook@10.2.19)(vite@6.4.1)
+            storybook: 10.2.19(@testing-library/dom@10.4.1)(prettier@3.8.1)(react-dom@19.2.4)(react@19.2.4)
+            ts-dedent: 2.2.0
+            vite: 6.4.1(sass-embedded@1.98.0)(sass@1.98.0)(tsx@4.21.0)
+        transitivePeerDependencies:
+            - esbuild
+            - rollup
+            - webpack
+        dev: true
+
     /@storybook/csf-plugin@10.2.19(rollup@4.59.0)(storybook@10.2.19)(vite@6.4.1):
         resolution: { integrity: sha512-BpjYIOdyQn/Rm6MjUAc5Gl8HlARZrskD/OhUNShiOh2fznb523dHjiE5mbU1kKM/+L1uvRlEqqih40rTx+xCrg== }
         peerDependencies:
@@ -4046,6 +4065,29 @@ packages:
             storybook: 10.2.19(@testing-library/dom@10.4.1)(prettier@3.8.1)(react-dom@19.2.4)(react@19.2.4)
             unplugin: 2.3.11
             vite: 6.4.1(@types/node@25.5.0)(sass@1.98.0)(tsx@4.21.0)
+        dev: true
+
+    /@storybook/csf-plugin@10.2.19(storybook@10.2.19)(vite@6.4.1):
+        resolution: { integrity: sha512-BpjYIOdyQn/Rm6MjUAc5Gl8HlARZrskD/OhUNShiOh2fznb523dHjiE5mbU1kKM/+L1uvRlEqqih40rTx+xCrg== }
+        peerDependencies:
+            esbuild: '*'
+            rollup: '*'
+            storybook: ^10.2.19
+            vite: '*'
+            webpack: '*'
+        peerDependenciesMeta:
+            esbuild:
+                optional: true
+            rollup:
+                optional: true
+            vite:
+                optional: true
+            webpack:
+                optional: true
+        dependencies:
+            storybook: 10.2.19(@testing-library/dom@10.4.1)(prettier@3.8.1)(react-dom@19.2.4)(react@19.2.4)
+            unplugin: 2.3.11
+            vite: 6.4.1(sass-embedded@1.98.0)(sass@1.98.0)(tsx@4.21.0)
         dev: true
 
     /@storybook/global@5.0.0:
@@ -4095,6 +4137,35 @@ packages:
             storybook: 10.2.19(@testing-library/dom@10.4.1)(prettier@3.8.1)(react-dom@19.2.4)(react@19.2.4)
             tsconfig-paths: 4.2.0
             vite: 6.4.1(@types/node@25.5.0)(sass@1.98.0)(tsx@4.21.0)
+        transitivePeerDependencies:
+            - esbuild
+            - rollup
+            - supports-color
+            - typescript
+            - webpack
+        dev: true
+
+    /@storybook/react-vite@10.2.19(react-dom@19.2.4)(react@19.2.4)(storybook@10.2.19)(typescript@5.8.3)(vite@6.4.1):
+        resolution: { integrity: sha512-2/yMKrK4IqMIZicRpPMoIg+foBuWnkaEWt0R4V4hjErDj/SC3D9ov+GUqhjKJ81TegijhKzNpwnSD7Nf87haKw== }
+        peerDependencies:
+            react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
+            react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
+            storybook: ^10.2.19
+            vite: ^5.0.0 || ^6.0.0 || ^7.0.0 || ^8.0.0
+        dependencies:
+            '@joshwooding/vite-plugin-react-docgen-typescript': 0.6.4(typescript@5.8.3)(vite@6.4.1)
+            '@rollup/pluginutils': 5.3.0(rollup@4.59.0)
+            '@storybook/builder-vite': 10.2.19(storybook@10.2.19)(vite@6.4.1)
+            '@storybook/react': 10.2.19(react-dom@19.2.4)(react@19.2.4)(storybook@10.2.19)(typescript@5.8.3)
+            empathic: 2.0.0
+            magic-string: 0.30.21
+            react: 19.2.4
+            react-docgen: 8.0.3
+            react-dom: 19.2.4(react@19.2.4)
+            resolve: 1.22.11
+            storybook: 10.2.19(@testing-library/dom@10.4.1)(prettier@3.8.1)(react-dom@19.2.4)(react@19.2.4)
+            tsconfig-paths: 4.2.0
+            vite: 6.4.1(sass-embedded@1.98.0)(sass@1.98.0)(tsx@4.21.0)
         transitivePeerDependencies:
             - esbuild
             - rollup
@@ -4280,7 +4351,7 @@ packages:
             redent: 3.0.0
         dev: true
 
-    /@testing-library/react@16.3.2(@testing-library/dom@10.4.1)(@types/react-dom@19.2.3)(@types/react@19.2.14)(react-dom@19.2.4)(react@19.2.4):
+    /@testing-library/react@16.3.2(@testing-library/dom@10.4.1)(react-dom@19.2.4)(react@19.2.4):
         resolution: { integrity: sha512-XU5/SytQM+ykqMnAnvB2umaJNIOsLF3PVv//1Ew4CTcpz0/BRyy/af40qqrt7SjKpDdT1saBMc42CUok5gaw+g== }
         engines: { node: '>=18' }
         peerDependencies:
@@ -4297,8 +4368,6 @@ packages:
         dependencies:
             '@babel/runtime': 7.28.6
             '@testing-library/dom': 10.4.1
-            '@types/react': 19.2.14
-            '@types/react-dom': 19.2.3(@types/react@19.2.14)
             react: 19.2.4
             react-dom: 19.2.4(react@19.2.4)
         dev: true
@@ -4626,7 +4695,7 @@ packages:
             '@rolldown/pluginutils': 1.0.0-beta.27
             '@types/babel__core': 7.20.5
             react-refresh: 0.17.0
-            vite: 6.4.1(@types/node@25.5.0)(sass@1.98.0)(tsx@4.21.0)
+            vite: 6.4.1(sass-embedded@1.98.0)(sass@1.98.0)(tsx@4.21.0)
         transitivePeerDependencies:
             - supports-color
 
@@ -8013,6 +8082,14 @@ packages:
         resolution: { integrity: sha512-KpNARQA3Iwv+jTA0utUVVbrh+Jlrr1Fv0e56GGzAFOXN7dk/FviaDW8LHmK52DlcH4WP2n6gI8vN1aesBFgo9w== }
         dependencies:
             yallist: 3.1.1
+
+    /lucide-react@0.577.0(react@19.2.4):
+        resolution: { integrity: sha512-4LjoFv2eEPwYDPg/CUdBJQSDfPyzXCRrVW1X7jrx/trgxnxkHFjnVZINbzvzxjN70dxychOfg+FTYwBiS3pQ5A== }
+        peerDependencies:
+            react: ^16.5.1 || ^17.0.0 || ^18.0.0 || ^19.0.0
+        dependencies:
+            react: 19.2.4
+        dev: true
 
     /lz-string@1.5.0:
         resolution: { integrity: sha512-h5bgJWpxJNswbU7qCrV0tIKQCaS3blPDrqKWx+QxzuzL1zGUzij9XCWLrSLsJPu5t+eWA/ycetzYAO5IOMcWAQ== }
@@ -11920,6 +11997,7 @@ packages:
             tsx: 4.21.0
         optionalDependencies:
             fsevents: 2.3.3
+        dev: true
 
     /vite@6.4.1(sass-embedded@1.98.0)(sass@1.98.0)(tsx@4.21.0):
         resolution: { integrity: sha512-+Oxm7q9hDoLMyJOYfUYBuHQo+dkAloi33apOPP56pzj+vsdJDzr+j1NISE5pyaAuKL4A3UD34qd0lx5+kfKp2g== }
@@ -11972,7 +12050,6 @@ packages:
             tsx: 4.21.0
         optionalDependencies:
             fsevents: 2.3.3
-        dev: false
 
     /vitefu@1.1.2(vite@6.4.1):
         resolution: { integrity: sha512-zpKATdUbzbsycPFBN71nS2uzBUQiVnFoOrr2rvqv34S1lcAgMKKkjWleLGeiJlZ8lwCXvtWaRn7R3ZC16SYRuw== }
@@ -12160,7 +12237,7 @@ packages:
             tinyexec: 1.0.4
             tinyglobby: 0.2.15
             tinyrainbow: 3.1.0
-            vite: 6.4.1(@types/node@25.5.0)(sass@1.98.0)(tsx@4.21.0)
+            vite: 6.4.1(sass-embedded@1.98.0)(sass@1.98.0)(tsx@4.21.0)
             why-is-node-running: 2.3.0
         transitivePeerDependencies:
             - msw
