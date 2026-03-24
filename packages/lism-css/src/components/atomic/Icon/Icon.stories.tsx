@@ -102,6 +102,14 @@ export const ExternalComponentWithExProps: Story = {
 	},
 };
 
+export const WithSize: Story = {
+	name: 'size 指定',
+	args: {
+		icon: 'lightbulb',
+		size: '40px',
+	},
+};
+
 export const IconObject: Story = {
 	name: 'icon オブジェクト（as + props）',
 	args: {

@@ -17,7 +17,7 @@ type IconProp = PresetIconName | ElementType | IconObject;
 type IconOwnProps = {
 	icon?: IconProp;
 	label?: string;
-	exProps?: Record<string, unknown>;
+	size?: string;
 };
 
 type IconElementProps = SVGAttributes<SVGSVGElement> & ImgHTMLAttributes<HTMLImageElement>;
