@@ -1,4 +1,5 @@
-import React from 'react';
+'use client';
+import { createContext, useRef, useId, useEffect, useContext } from 'react';
 import getLismProps from 'lism-css/lib/getLismProps';
 import { Lism, Stack } from 'lism-css/react';
 import { getRootProps, getItemProps, getHeadingProps, getPanelProps, defaultProps } from '../getProps';
@@ -9,7 +10,7 @@ import '../_style.css';
 
 // Context: 純粋なReact環境で AccordionItem → Button / Panel へ accID を共有
 // Astro 環境では Context が使えないため null がフォールバック
-const AccordionContext = React.createContext(null);
+const AccordionContext = createContext(null);
 
 /**
  * 複数の AccordionItem をラップするルート要素
@@ -23,13 +24,13 @@ export function AccordionRoot({ children, ...props }) {
  * 個別のアコーディオンアイテム（<div> ベース、setEvent で開閉イベントを登録）
  */
 export function AccordionItem({ children, ...props }) {
-	const ref = React.useRef(null);
+	const ref = useRef(null);
 
 	// コンポーネント単位でユニークIDを生成
-	const accID = React.useId();
+	const accID = useId();
 
 	// マウント時に開閉イベントを登録（アンマウント時にクリーンアップ）
-	React.useEffect(() => {
+	useEffect(() => {
 		if (!ref.current) return;
 		return setEvent(ref.current);
 	}, []);
@@ -58,7 +59,7 @@ export function Heading({ children, ...props }) {
  * accID: Context から取得できればそれを優先、なければ props / プレースホルダー
  */
 export function Button({ children, accID: _accID = '__LISM_ACC_ID__', ...props }) {
-	const ctx = React.useContext(AccordionContext);
+	const ctx = useContext(AccordionContext);
 	const accID = ctx?.accID || _accID;
 
 	return (
@@ -73,7 +74,7 @@ export function Button({ children, accID: _accID = '__LISM_ACC_ID__', ...props }
  * パネル
  */
 export function Panel({ children, ...props }) {
-	const ctx = React.useContext(AccordionContext);
+	const ctx = useContext(AccordionContext);
 	const { panelProps, contentProps } = getPanelProps({ _contextID: ctx?.accID, ...props });
 
 	return (

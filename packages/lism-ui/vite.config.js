@@ -2,6 +2,7 @@
 import { resolve } from 'path';
 import { defineConfig } from 'vite';
 import dts from 'unplugin-dts/vite';
+import preserveDirectives from 'rollup-plugin-preserve-directives';
 // import { nodePolyfills } from 'vite-plugin-node-polyfills';
 
 // import {useRef} from 'react'; とかした時に、React is not defined 言われないように
@@ -71,7 +72,7 @@ export default defineConfig({
 			// },
 		},
 		rollupOptions: {
-			plugins: [],
+			plugins: [preserveDirectives()],
 			external: ['react', 'react-dom', 'react/jsx-runtime', 'lism-css/config.js'],
 			output: {
 				dir: 'dist',

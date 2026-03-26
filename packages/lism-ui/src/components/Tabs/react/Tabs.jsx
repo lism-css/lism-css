@@ -1,4 +1,5 @@
-import React from 'react';
+'use client';
+import { useState, useId, Children, isValidElement } from 'react';
 import { Lism } from 'lism-css/react';
 import Tab from './Tab';
 import TabItem from './TabItem';
@@ -10,19 +11,19 @@ import getTabsProps from '../getProps';
 import '../_style.css';
 
 export default function Tabs({ tabId = '', defaultIndex = 1, listProps = {}, children, ...props }) {
-	const [activeIndex, setActiveIndex] = React.useState(defaultIndex);
-	const theTabId = tabId || React.useId();
+	const [activeIndex, setActiveIndex] = useState(defaultIndex);
+	const theTabId = tabId || useId();
 	const btns = [];
 	const panels = [];
 
 	// Tabs.Item の処理
-	React.Children.forEach(children, (child, index) => {
+	Children.forEach(children, (child, index) => {
 		const tabIndex = index + 1; // 1 はじまり
-		// console.log('child.type', React.isValidElement(child), child.type);
+		// console.log('child.type', isValidElement(child), child.type);
 
-		if (React.isValidElement(child) && child.type === TabItem) {
-			React.Children.forEach(child.props.children, (nestedChild) => {
-				if (React.isValidElement(nestedChild)) {
+		if (isValidElement(child) && child.type === TabItem) {
+			Children.forEach(child.props.children, (nestedChild) => {
+				if (isValidElement(nestedChild)) {
 					if (nestedChild.type === Tab) {
 						const tabProps = nestedChild.props;
 						btns.push(
