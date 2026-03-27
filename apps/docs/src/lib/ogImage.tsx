@@ -3,7 +3,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 
 // OG画像用のSVGを生成する
-export async function renderOgSvg(title: string, tags: string[]) {
+export async function renderOgSvg(title: string, _tags: string[]) {
 	// publicディレクトリのパスを取得
 	const publicDir = path.resolve(process.cwd(), 'public');
 
