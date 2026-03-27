@@ -10,8 +10,8 @@
  * @see https://github.com/withastro/roadmap/discussions/398
  */
 import type { HTMLTag } from 'astro/types';
-import type { LismProps } from '../../src/lib/getLismProps';
-import type { LayoutType, CssValue } from '../../src/lib/types/LayoutProps';
+import type { LismProps } from 'lism-css/lib/getLismProps';
+import type { LayoutType, CssValue } from 'lism-css/lib/types/LayoutProps';
 
 type AstroHTMLAttributesRaw = astroHTML.JSX.HTMLAttributes &
 	astroHTML.JSX.AnchorHTMLAttributes &
