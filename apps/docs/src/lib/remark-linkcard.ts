@@ -9,7 +9,7 @@
  *   <LinkCard href="https://example.com" />
  */
 import { visit } from 'unist-util-visit';
-import type { Root, Paragraph, Text, Link } from 'mdast';
+import type { Root, Paragraph, RootContent } from 'mdast';
 
 // URLパターン（http/https で始まる文字列）
 const URL_PATTERN = /^https?:\/\/[^\s]+$/;
@@ -27,7 +27,7 @@ export function remarkLinkCard() {
 
 			// ケース1: テキストノードでURLのみ
 			if (child.type === 'text') {
-				const text = (child as Text).value.trim();
+				const text = child.value.trim();
 				if (URL_PATTERN.test(text)) {
 					url = text;
 				}
@@ -35,10 +35,9 @@ export function remarkLinkCard() {
 
 			// ケース2: リンクノードでURLと同じテキスト（autolink形式）
 			if (child.type === 'link') {
-				const link = child as Link;
 				// リンクの子要素がテキスト1つで、URLと同じ場合
-				if (link.children.length === 1 && link.children[0].type === 'text' && (link.children[0] as Text).value === link.url) {
-					url = link.url;
+				if (child.children.length === 1 && child.children[0].type === 'text' && child.children[0].value === child.url) {
+					url = child.url;
 				}
 			}
 
@@ -56,7 +55,7 @@ export function remarkLinkCard() {
 						},
 					],
 					children: [],
-				} as any;
+				} as unknown as RootContent;
 			}
 		});
 	};
