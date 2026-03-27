@@ -1,9 +1,9 @@
 ---
 import { Icon, Flex } from 'lism-css/astro';
-import { Preview, PreviewCode, PreviewTitle } from '@/components/mdx';
+import { Preview, PreviewCode } from '@/components/mdx';
 import EmbedCode from './EmbedCode.astro';
 
-const { name = '', hasRoot = false, react, astro, css, others = [], ...props } = Astro.props;
+const { name = '', hasRoot = false, react, astro, css, others = [] } = Astro.props;
 ---
 
 <Preview>

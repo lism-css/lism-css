@@ -4,7 +4,7 @@
  * 日本語トップページの翻訳版
  */
 import SimpleLayout from '@/layouts/SimpleLayout.astro';
-import { Container, Stack, Columns, Grid, HTML, Spacer, Icon, Flex, Text, Frame, LinkBox, Lism } from 'lism-css/astro';
+import { Stack, Grid, HTML, Icon, Flex, Lism } from 'lism-css/astro';
 import { Button } from '@lism-css/ui/astro';
 import Gradbox from '@/components/parts/Gradbox.astro';
 import { siteConfig } from '@/config/site';
@@ -67,13 +67,6 @@ const FEATURES = [
 	{ keycolor: 'blue', title: 'No Build Required', desc: 'No config, No build. Just load the CSS to start using.' },
 	{ keycolor: 'purple', title: 'Modern CSS', desc: '@layer, Container Query, Grid, CSS Variables' },
 	{ keycolor: 'green', title: 'Free', desc: 'Lism CSS is available for free.' },
-];
-
-// ナビゲーションカード
-const NAV_CARDS = [
-	{ href: `/${lang}/docs/`, title: 'Docs', desc: 'Learn how to use Lism CSS and its components' },
-	{ href: `/${lang}/ui/`, title: 'UI Components', desc: 'Ready-to-use UI component collection' },
-	{ href: `/${lang}/templates/`, title: 'Templates', desc: 'Website templates collection' },
 ];
 ---
 

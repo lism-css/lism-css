@@ -9,7 +9,7 @@ import { Icon } from 'lism-css/react';
 import NavLink from '@parts/NavLink.astro';
 import sidebarConfig, { type SidebarSection, getTranslatedLabel, isSeparator, getSiteSection, extractSlugFromUrl } from '../config/sidebar';
 import { getPostsByLang, type PostEntry } from '@/lib/content';
-import { getLangFromUrl, getLocalizedUrl, getPathWithoutLang, type LangCode } from '@/lib/i18n';
+import { getLangFromUrl, getLocalizedUrl, getPathWithoutLang } from '@/lib/i18n';
 
 // 現在の言語を取得
 const currentLang = getLangFromUrl(Astro.url);

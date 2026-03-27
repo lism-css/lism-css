@@ -30,18 +30,11 @@ export async function getStaticPaths() {
 	}));
 }
 
-interface Props {
-	lang: LangCode;
-	entry: PostEntry;
-}
-
-const { lang, entry } = Astro.props;
+const { lang, entry } = Astro.props as { lang: LangCode; entry: PostEntry };
 const { Content, headings } = await render(entry);
 
 const toc = generateToc(headings);
 
-// アイキャッチ画像: heroがあればそれを、なければOG画像を使用
-const eyecatchImage = entry.data.hero || `/ui/og/${entry.id.replace(/^ui\//, '')}.png`;
 // OG画像のパス（常に自動生成画像を使用）
 const ogImage = `/ui/og/${entry.id.replace(/^ui\//, '')}.png`;
 ---

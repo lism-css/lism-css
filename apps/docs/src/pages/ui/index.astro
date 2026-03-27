@@ -4,8 +4,8 @@
  * content/ja/ui/ 配下のMDXを一覧表示
  */
 import BaseLayout from '@/layouts/BaseLayout.astro';
-import { Stack, Grid, HTML, LinkBox, Frame, Lism, Media } from 'lism-css/astro';
-import { getPostsByLang, type PostEntry } from '@/lib/content';
+import { Stack, Grid, LinkBox, Frame, Lism, Media } from 'lism-css/astro';
+import { getPostsByLang } from '@/lib/content';
 import { getRootLang } from '@/lib/i18n';
 import fs from 'node:fs';
 import path from 'node:path';
