@@ -1,9 +1,8 @@
 ---
-import type { ElementType } from 'react';
 import type { LismComponentProps } from '../../../src/components/Lism/Lism';
 import Lism from '../Lism/Lism.astro';
 
-type Props = LismComponentProps<ElementType>;
+type Props = LismComponentProps;
 ---
 
 <Lism as='ol' {...Astro.props}><slot /></Lism>

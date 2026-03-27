@@ -1,10 +1,9 @@
 ---
-import type { ElementType } from 'react';
 import type { LismComponentProps } from '../../../src/components/Lism/Lism';
 import { Lism } from '../Lism';
 import getContent from '../../../src/components/Dummy/getContent';
 
-type Props = LismComponentProps<ElementType> & {
+type Props = LismComponentProps & {
 	pre?: string;
 	length?: string;
 	lang?: 'ja' | 'en' | 'ar';
