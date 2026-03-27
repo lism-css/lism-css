@@ -13,6 +13,7 @@ import TranslationNotice from '@/components/TranslationNotice.astro';
 import { getPostPathsForNonRoot } from '@/lib/pageHelpers';
 import { getPostWithFallback } from '@/lib/content';
 import { isValidLang, getLocalizedUrl, type LangCode } from '@/lib/i18n';
+import { render } from 'astro:content';
 
 // MDXでグローバルに使用するコンポーネント
 import * as mdxComponents from '@/components/mdx';
@@ -40,7 +41,7 @@ if (!entry) {
 	return Astro.redirect('/404');
 }
 
-const { Content, headings } = await entry.render();
+const { Content, headings } = await render(entry);
 const toc = generateToc(headings);
 
 // アイキャッチ画像: heroがあればそれを、なければOG画像を使用

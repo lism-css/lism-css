@@ -28,7 +28,7 @@ const fallbackPostsBySlug = new Map<string, PostEntry>();
 if (currentLang !== 'ja') {
 	const fallbackPosts = await getPostsByLang('ja');
 	fallbackPosts.forEach((post) => {
-		fallbackPostsBySlug.set(post.slug, post);
+		fallbackPostsBySlug.set(post.id, post);
 	});
 }
 
@@ -52,7 +52,7 @@ function getItemLink(item: string | { link: string }): string {
 // slugからMDX記事を取得するマップを作成
 const postsBySlug = new Map<string, PostEntry>();
 allPosts.forEach((post) => {
-	postsBySlug.set(post.slug, post);
+	postsBySlug.set(post.id, post);
 });
 
 // items で参照されている記事の slug を取得（これらはルートカテゴリから除外）
@@ -74,7 +74,7 @@ sectionItems.forEach((section) => {
 const postsByCategory = allPosts.reduce(
 	(acc, post) => {
 		// items で参照されている記事はルートカテゴリに含めない
-		if (itemsReferencedSlugs.has(post.slug)) {
+		if (itemsReferencedSlugs.has(post.id)) {
 			return acc;
 		}
 
@@ -84,11 +84,11 @@ const postsByCategory = allPosts.reduce(
 		for (const dir of configuredDirs) {
 			if (dir === '/') {
 				// ルートの場合：スラッシュを含まないslugのみマッチ
-				if (!post.slug.includes('/')) {
+				if (!post.id.includes('/')) {
 					category = '/';
 					break;
 				}
-			} else if (post.slug === dir || post.slug.startsWith(dir + '/')) {
+			} else if (post.id === dir || post.id.startsWith(dir + '/')) {
 				category = dir;
 				break;
 			}
@@ -181,7 +181,7 @@ function getPostUrl(slug: string): string {
 							? // dir指定の場合：ディレクトリ内の記事を自動取得
 								postsByCategory[section.dir]?.map((post) => {
 									// 言語対応のパスを生成（slugからURLを生成）
-									const postUrl = getPostUrl(post.slug);
+									const postUrl = getPostUrl(post.id);
 									const postPath = getLocalizedUrl(postUrl, currentLang);
 									const isActive = currentPathWithoutLang === postUrl || currentPathWithoutLang === postUrl.replace(/\/$/, '');
 									// 下書き記事には _draft クラスを付与

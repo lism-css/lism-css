@@ -20,7 +20,7 @@ const { post, lang = getRootLang() } = Astro.props;
 const isDraft = post.data.draft;
 
 // 言語対応のリンク生成
-const postUrl = getLocalizedUrl(`/${post.slug}`, lang);
+const postUrl = getLocalizedUrl(`/${post.id}`, lang);
 const getTagUrl = (tag: string) => getLocalizedUrl(`/tags/${tag}`, lang);
 
 // 日付のフォーマット（言語に応じてロケールを変更）
@@ -42,7 +42,7 @@ const dateLocale = lang === 'ja' ? 'ja-JP' : 'en-US';
 >
 	{/* サムネイル画像: heroがあればそれを、なければOG画像を使用 */}
 	<!-- <Frame ar="1200/630" bgc="base-3">
-		<img src={post.data.hero || `/og/${post.slug}.png`} alt={post.data.title} loading="lazy" />
+		<img src={post.data.hero || `/og/${post.id}.png`} alt={post.data.title} loading="lazy" />
 	</Frame> -->
 
 	<HTML.h lv="3" class="c--postCard__title" fz="m" fw="bold" lh="xs" style={{ '--focus-offset': '2px' }}>

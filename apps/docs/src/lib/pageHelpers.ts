@@ -36,7 +36,7 @@ export async function getPostPathsForRoot(): Promise<PostPath[]> {
 	const posts = await getPostsByLang(rootLang);
 
 	return posts.map((entry) => ({
-		params: { slug: entry.slug },
+		params: { slug: entry.id },
 		props: { lang: rootLang, entry },
 	}));
 }
@@ -243,8 +243,8 @@ export async function getOgPathsForRoot(): Promise<OgPath[]> {
 	const posts = await getPostsByLang(rootLang);
 
 	return posts.map((post) => ({
-		params: { slug: post.slug },
-		props: { lang: rootLang, slug: post.slug },
+		params: { slug: post.id },
+		props: { lang: rootLang, slug: post.id },
 	}));
 }
 
@@ -257,7 +257,7 @@ export async function getOgPathsForNonRoot(): Promise<OgPath[]> {
 
 	// root言語の全記事を取得してslugリストを作成
 	const rootPosts = await getPostsByLang(rootLang);
-	const rootSlugs = rootPosts.map((post) => post.slug);
+	const rootSlugs = rootPosts.map((post) => post.id);
 
 	const paths: OgPath[] = [];
 
