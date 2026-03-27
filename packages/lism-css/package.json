@@ -21,7 +21,7 @@
 		"build:js": "vite build && pnpm exec tsc -p config/tsconfig.json",
 		"build:css": "tsx bin/script-build-css.js",
 		"lint": "pnpm lint:eslint && pnpm lint:style",
-		"lint:eslint": "eslint '**/*.{js,mjs,ts,tsx}'",
+		"lint:eslint": "eslint '**/*.{js,mjs,ts,tsx,astro}'",
 		"lint:style": "stylelint '**/*.{css,scss}'",
 		"preview": "vite preview",
 		"prepack": "case \"$npm_execpath\" in *pnpm*) ;; *) echo 'Error: Use pnpm publish' && exit 1;; esac"
