@@ -21,7 +21,7 @@ export function filterDraftItems(items: TemplateItem[]): TemplateItem[] {
 export function getTemplate(categoryId: string, templateId: string): TemplateItem | undefined {
 	const category = templates[categoryId as TemplateCategoryId];
 	if (!category) return undefined;
-	const item = category.items.find((item) => item.id === templateId);
+	const item: TemplateItem | undefined = category.items.find((item) => item.id === templateId);
 	// 本番環境でdraft:trueの場合はundefinedを返す
 	if (isProd && item?.draft) return undefined;
 	return item;
@@ -41,4 +41,3 @@ export function getAllTemplatePaths(): Array<{ category: string; id: string }> {
 	}
 	return paths;
 }
-

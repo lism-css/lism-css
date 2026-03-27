@@ -84,7 +84,7 @@ export async function getPaginationPathsForRoot(): Promise<PaginationPath[]> {
 	const allPosts = await getPostsByLang(rootLang);
 
 	// 日付の降順でソート
-	const sortedPosts = allPosts.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+	const sortedPosts = allPosts.sort((a, b) => (b.data.date?.valueOf() ?? 0) - (a.data.date?.valueOf() ?? 0));
 
 	// 総ページ数を計算
 	const totalPages = Math.ceil(sortedPosts.length / postsPerPage);
@@ -121,7 +121,7 @@ export async function getPaginationPathsForNonRoot(): Promise<PaginationPath[]> 
 		const allPosts = await getPostsByLang(lang);
 
 		// 日付の降順でソート
-		const sortedPosts = allPosts.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+		const sortedPosts = allPosts.sort((a, b) => (b.data.date?.valueOf() ?? 0) - (a.data.date?.valueOf() ?? 0));
 
 		// 総ページ数を計算
 		const totalPages = Math.ceil(sortedPosts.length / postsPerPage);
@@ -162,10 +162,10 @@ export interface TagPath {
 export async function getTagPathsForRoot(): Promise<TagPath[]> {
 	const rootLang = getRootLang();
 	const posts = await getPostsByLang(rootLang);
-	const tags = [...new Set(posts.flatMap((post) => post.data.tags))];
+	const tags = [...new Set(posts.flatMap((post) => post.data.tags ?? []))].filter((tag): tag is string => tag != null);
 
 	return tags.map((tag) => {
-		const filteredPosts = posts.filter((post) => post.data.tags.includes(tag));
+		const filteredPosts = posts.filter((post) => (post.data.tags ?? []).includes(tag));
 		return {
 			params: { tag },
 			props: { lang: rootLang, posts: filteredPosts },
@@ -192,10 +192,10 @@ export async function getTagPathsForNonRoot(): Promise<TagPath[]> {
 			tagsSource = await getPostsByLang(rootLang);
 		}
 
-		const tags = [...new Set(tagsSource.flatMap((post) => post.data.tags))];
+		const tags = [...new Set(tagsSource.flatMap((post) => post.data.tags ?? []))].filter((tag): tag is string => tag != null);
 
 		for (const tag of tags) {
-			const filteredPosts = posts.filter((post) => post.data.tags.includes(tag));
+			const filteredPosts = posts.filter((post) => (post.data.tags ?? []).includes(tag));
 			paths.push({
 				params: { lang, tag },
 				props: { lang, posts: filteredPosts },

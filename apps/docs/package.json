@@ -9,6 +9,7 @@
 		"build:full": "npm run build && npm run screenshot",
 		"preview": "astro preview",
 		"astro": "astro",
+		"typecheck": "tsc --noEmit && astro check --tsconfig ./tsconfig.json",
 		"screenshot": "npx tsx scripts/generate-screenshots.ts",
 		"screenshot:force": "npx tsx scripts/generate-screenshots.ts --force",
 		"screenshot:compare": "npx tsx scripts/compare-screenshots.ts",

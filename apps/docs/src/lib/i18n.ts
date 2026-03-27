@@ -1,14 +1,14 @@
 /**
  * 多言語化（i18n）ユーティリティ関数
  */
-import { siteConfig, type LangCode } from '@/config/site';
+import { siteConfig, type LangCode, type LangConfig } from '@/config/site';
 import { translations, type UITranslations } from '@/config/translations';
 
 // 型を再エクスポート
 export type { LangCode } from '@/config/site';
 
-// 言語設定を取得
-const { langs } = siteConfig;
+// 言語設定を取得（as const satisfies による narrow 型を LangConfig に戻す）
+const langs: Record<LangCode, LangConfig> = siteConfig.langs;
 
 // 全言語コードのリスト
 const langCodes = Object.keys(langs) as LangCode[];
