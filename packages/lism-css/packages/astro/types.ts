@@ -11,9 +11,9 @@
  */
 import type { HTMLTag } from 'astro/types';
 import type { LismProps } from '../../src/lib/getLismProps';
-import type { LayoutSpecificProps } from '../../src/lib/types/LayoutProps';
+import type { LayoutType, CssValue } from '../../src/lib/types/LayoutProps';
 
-type AstroHTMLAttributes = astroHTML.JSX.HTMLAttributes &
+type AstroHTMLAttributesRaw = astroHTML.JSX.HTMLAttributes &
 	astroHTML.JSX.AnchorHTMLAttributes &
 	astroHTML.JSX.ImgHTMLAttributes &
 	astroHTML.JSX.ButtonHTMLAttributes &
@@ -22,8 +22,24 @@ type AstroHTMLAttributes = astroHTML.JSX.HTMLAttributes &
 	astroHTML.JSX.SelectHTMLAttributes &
 	astroHTML.JSX.TextareaHTMLAttributes;
 
+/** LismProps と同名のキーを除外し、Lism 側の型を優先させる */
+type AstroHTMLAttributes = Omit<AstroHTMLAttributesRaw, keyof LismProps | keyof AstroLayoutProps>;
+
+/**
+ * LayoutSpecificProps（判別可能ユニオン）はレスポンシブ配列型と交差すると
+ * 型解決が破綻するため、Astro 用にはフラットな型を使用する。
+ */
+type AstroLayoutProps = {
+	layout?: LayoutType;
+	flow?: CssValue;
+	autoFill?: boolean;
+	sideW?: CssValue;
+	mainW?: CssValue;
+	breakSize?: CssValue;
+};
+
 export type AstroLismProps = LismProps &
-	LayoutSpecificProps &
+	AstroLayoutProps &
 	AstroHTMLAttributes & {
 		as?: HTMLTag;
 		exProps?: Record<string, unknown>;
