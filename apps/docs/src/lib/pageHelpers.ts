@@ -296,7 +296,7 @@ export async function generateOgImage(lang: LangCode, slug: string): Promise<Res
 	if (existsSync(cachePath)) {
 		console.log(`[OG] Cache hit: ${lang}/${slug}`);
 		const cachedPng = readFileSync(cachePath);
-		return new Response(cachedPng as any, {
+		return new Response(new Uint8Array(cachedPng), {
 			headers: { 'Content-Type': 'image/png' },
 		});
 	}
@@ -313,7 +313,7 @@ export async function generateOgImage(lang: LangCode, slug: string): Promise<Res
 	}
 	writeFileSync(cachePath, png);
 
-	return new Response(png as any, {
+	return new Response(new Uint8Array(png), {
 		headers: { 'Content-Type': 'image/png' },
 	});
 }
