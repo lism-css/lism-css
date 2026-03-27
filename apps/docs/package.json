@@ -12,7 +12,10 @@
 		"screenshot": "npx tsx scripts/generate-screenshots.ts",
 		"screenshot:force": "npx tsx scripts/generate-screenshots.ts --force",
 		"screenshot:compare": "npx tsx scripts/compare-screenshots.ts",
-		"screenshot:update": "npx tsx scripts/compare-screenshots.ts --update"
+		"screenshot:update": "npx tsx scripts/compare-screenshots.ts --update",
+		"lint": "pnpm lint:eslint && pnpm lint:style",
+		"lint:eslint": "eslint '**/*.{js,mjs,ts,tsx}'",
+		"lint:style": "stylelint '**/*.{css,scss}'"
 	},
 	"dependencies": {
 		"@astrojs/mdx": "^4.3.14",
@@ -39,12 +42,14 @@
 		"@types/react": "^19.2.14",
 		"@types/react-dom": "^19.2.3",
 		"autoprefixer": "^10.4.27",
+		"eslint": "^9.39.4",
 		"pixelmatch": "^7.1.0",
 		"playwright": "^1.58.2",
 		"pngjs": "^7.0.0",
 		"prettier": "^3.8.1",
 		"prettier-plugin-astro": "^0.14.1",
 		"sass-embedded": "^1.98.0",
+		"stylelint": "^17.4.0",
 		"tsx": "^4.21.0",
 		"unist-util-visit": "^5.1.0",
 		"vitest": "^4.1.0"
