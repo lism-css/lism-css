@@ -41,7 +41,7 @@ const { name = '', hasRoot = false, react, astro, css, others = [] } = Astro.pro
 		)
 	}
 	{
-		others.map((path) => {
+		others.map((path: string) => {
 			// pathの例: /apps/docs/src/components/ex/ 以降を渡して使う
 			return (
 				<PreviewCode slot="tab" label={path} key={path}>
