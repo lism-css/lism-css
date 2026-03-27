@@ -53,9 +53,9 @@ const dateLocale = lang === 'ja' ? 'ja-JP' : 'en-US';
 	</HTML.p>
 	<Cluster g="10" my-s="auto" py-s="20">
 		{
-			post.data.tags.length > 0 && (
+			(post.data.tags ?? []).length > 0 && (
 				<Cluster g="5">
-					{post.data.tags.map((tag) => (
+					{(post.data.tags ?? []).map((tag) => (
 						<TagLink href={getTagUrl(tag)} fz="xs">
 							#{tag}
 						</TagLink>
@@ -63,9 +63,13 @@ const dateLocale = lang === 'ja' ? 'ja-JP' : 'en-US';
 				</Cluster>
 			)
 		}
-		<HTML.span as="time" datetime={post.data.date.toISOString()} fz="2xs" o="-10" mx-s="auto">
-			{post.data.date.toLocaleDateString(dateLocale)}
-		</HTML.span>
+		{
+			post.data.date && (
+				<HTML.span as="time" datetime={post.data.date.toISOString()} fz="2xs" o="-10" mx-s="auto">
+					{post.data.date.toLocaleDateString(dateLocale)}
+				</HTML.span>
+			)
+		}
 	</Cluster>
 </LinkBox>
 
