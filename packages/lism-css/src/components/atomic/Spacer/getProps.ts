@@ -1,10 +1,10 @@
 import atts from '../../../lib/helper/atts';
 import getBpData from '../../../lib/getBpData';
 import getMaybeCssVar from '../../../lib/getMaybeCssVar';
-import type { LismComponentProps } from '../../Lism/Lism';
+import type { LismProps } from '../../../lib/getLismProps';
 
-export default function getSpacerProps({ lismClass, ...props }: LismComponentProps): LismComponentProps {
-	const defaultProps: LismComponentProps = {
+export default function getSpacerProps({ lismClass, ...props }: LismProps): LismProps {
+	const defaultProps: LismProps = {
 		lismClass: atts(lismClass, `a--spacer`),
 		'aria-hidden': 'true',
 	};
@@ -21,7 +21,7 @@ export default function getSpacerProps({ lismClass, ...props }: LismComponentPro
 			},
 			{} as typeof hObj
 		);
-		props.h = hObj as LismComponentProps['h'];
+		props.h = hObj as LismProps['h'];
 	}
 	if (null != props.w) {
 		let wObj = getBpData(props.w);
@@ -35,7 +35,7 @@ export default function getSpacerProps({ lismClass, ...props }: LismComponentPro
 			},
 			{} as typeof wObj
 		);
-		props.w = wObj as LismComponentProps['w'];
+		props.w = wObj as LismProps['w'];
 	}
 
 	return { ...defaultProps, ...props };

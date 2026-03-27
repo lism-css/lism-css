@@ -1,7 +1,7 @@
 import atts from '../../../lib/helper/atts';
-import type { LismComponentProps } from '../../Lism/Lism';
+import type { LismProps } from '../../../lib/getLismProps';
 
-export function getDividerProps({ lismClass, ...props }: LismComponentProps): LismComponentProps {
+export function getDividerProps({ lismClass, ...props }: LismProps): LismProps {
 	return {
 		lismClass: atts(lismClass, 'a--divider'),
 		'aria-hidden': 'true',

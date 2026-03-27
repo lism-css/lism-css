@@ -3,7 +3,7 @@ import type { AstroLismProps } from '../types';
 import { Lism } from '../Lism';
 
 type Props = AstroLismProps & {
-	contentSize?: boolean;
+	contentSize?: AstroLismProps['isWrapper'];
 };
 
 const { contentSize = true, ...props } = Astro.props || {};

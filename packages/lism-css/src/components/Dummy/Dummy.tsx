@@ -10,7 +10,7 @@ type DummyProps<T extends ElementType = 'p'> = LismComponentProps<T> & {
 };
 
 export default function Dummy<T extends ElementType = 'p'>({ pre = '', length = 'm', lang = 'en', offset = 0, ...props }: DummyProps<T>) {
-	const tagName: ElementType = props.as || 'p';
+	const tagName = (props.as || 'p') as string;
 
 	if (tagName === 'img') {
 		return (
