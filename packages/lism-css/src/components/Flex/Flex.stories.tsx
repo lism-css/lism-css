@@ -45,3 +45,22 @@ export const WithAlign: Story = {
 		children: <DemoItems />,
 	},
 };
+
+// fxw='wrap' で折り返し + jc を組み合わせ
+export const WithWrap: Story = {
+	name: 'fxw: wrap',
+	args: {
+		g: '20',
+		fxw: 'wrap',
+		children: (
+			<>
+				<div>Flex Item 1</div>
+				<div>Flex Item 2</div>
+				<div>Flex Item 3</div>
+				<div>Flex Item 4</div>
+				<div>Flex Item 5</div>
+				<div>Flex Item 6</div>
+			</>
+		),
+	},
+};

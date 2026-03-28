@@ -22,7 +22,9 @@ const DemoContent = () => (
 	<>
 		<p>Paragraph 1</p>
 		<p>Paragraph 2</p>
+		<h2>Heading</h2>
 		<p>Paragraph 3</p>
+		<p>Paragraph 4</p>
 	</>
 );
 
@@ -37,5 +39,29 @@ export const WithFlowValue: Story = {
 	args: {
 		flow: '40',
 		children: <DemoContent />,
+	},
+};
+
+// flow='s' でコンパクトな余白
+export const SmallFlow: Story = {
+	name: 'flow:s',
+	args: {
+		flow: 's',
+		children: <DemoContent />,
+	},
+};
+
+// is--skipFlow で先頭要素の余白を打ち消す
+export const WithSkipFlow: Story = {
+	name: 'is--skipFlow',
+	args: {
+		children: (
+			<>
+				<div className='is--skipFlow'>Skip flow...</div>
+				<p>Lorem ipsum, Example content...</p>
+				<p>Lorem ipsum, Example content...</p>
+				<p>Lorem ipsum, Example content...</p>
+			</>
+		),
 	},
 };
