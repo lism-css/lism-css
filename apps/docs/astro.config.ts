@@ -11,9 +11,6 @@ import { expressiveCodeOptions } from './src/lib/expressive-code.config';
 
 // https://astro.build/config
 export default defineConfig({
-	legacy: {
-		collections: true,
-	},
 	site: 'https://www.lism-css.com/',
 	// 開発サーバーのポート番号
 	server: {
