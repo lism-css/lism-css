@@ -15,17 +15,18 @@ type Story = StoryObj<typeof Frame>;
 
 export const Default: Story = {
 	args: {
-		aspect: '16/9',
+		ar: '16/9',
 		bgc: 'base-2',
 		children: <p>Frame content (16:9)</p>,
 	},
 };
 
-export const Square: Story = {
-	name: 'aspect: 1/1',
+// ar をブレイクポイントごとに変更
+export const ResponsiveAspect: Story = {
+	name: 'ar: レスポンシブ',
 	args: {
-		aspect: '1/1',
+		ar: ['1/1', '3/2', '16/9'],
 		bgc: 'base-2',
-		children: <p>Square frame</p>,
+		children: <p>Responsive aspect ratio</p>,
 	},
 };
