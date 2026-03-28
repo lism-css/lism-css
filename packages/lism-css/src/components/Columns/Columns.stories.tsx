@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Columns } from './index';
+import { Box } from '../Box';
 
 const meta: Meta<typeof Columns> = {
 	title: 'Core/Columns',
@@ -15,9 +16,15 @@ type Story = StoryObj<typeof Columns>;
 
 const DemoItems = () => (
 	<>
-		<div>Column 1</div>
-		<div>Column 2</div>
-		<div>Column 3</div>
+		<Box bgc='base-2' p='20'>
+			Column 1
+		</Box>
+		<Box bgc='base-2' p='20'>
+			Column 2
+		</Box>
+		<Box bgc='base-2' p='20'>
+			Column 3
+		</Box>
 	</>
 );
 

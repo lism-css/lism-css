@@ -35,3 +35,20 @@ export const WithLargeGap: Story = {
 		children: <DemoItems />,
 	},
 };
+
+// ai='center' で内在的な中央寄せ（コンテンツが短い時だけ中央寄せ）
+export const IntrinsicCenter: Story = {
+	name: 'ai: center',
+	args: {
+		ai: 'center',
+		g: '10',
+		p: '40',
+		bgc: 'base-2',
+		children: (
+			<>
+				<p>短いテキストは中央寄せ</p>
+				<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+			</>
+		),
+	},
+};

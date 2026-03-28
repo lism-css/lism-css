@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Grid } from './index';
+import { Box } from '../Box';
 
 const meta: Meta<typeof Grid> = {
 	title: 'Core/Grid',
@@ -35,5 +36,30 @@ export const WithGtc: Story = {
 		g: '20',
 		gtc: '1fr 1fr 1fr',
 		children: <DemoItems />,
+	},
+};
+
+// gta でエリア名を指定し、ブレイクポイントでレイアウトを切り替える
+export const WithGridAreas: Story = {
+	name: 'gta でエリアレイアウト',
+	args: {
+		g: '15',
+
+		gtc: ['1fr 1fr', '8em 1fr 8em'],
+
+		gta: [`'main main' 'left right'`, `'left main right'`],
+		children: (
+			<>
+				<Box ga='left' p='15' bgc='base-2'>
+					Left
+				</Box>
+				<Box ga='main' p='15' bd>
+					Center
+				</Box>
+				<Box ga='right' p='15' bgc='base-2'>
+					Right
+				</Box>
+			</>
+		),
 	},
 };

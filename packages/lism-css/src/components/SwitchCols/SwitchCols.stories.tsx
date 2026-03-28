@@ -40,3 +40,33 @@ export const WithBreakSize: Story = {
 		children: <DemoItems />,
 	},
 };
+
+// 子要素が3つのパターン
+export const ThreeColumns: Story = {
+	name: '3カラム',
+	args: {
+		g: '20',
+		children: (
+			<>
+				<div>Column 1</div>
+				<div>Column 2</div>
+				<div>Column 3</div>
+			</>
+		),
+	},
+};
+
+// 子要素の flex-grow で特定カラムを拡大
+export const WithFlexGrow: Story = {
+	name: '子要素の flex-grow',
+	args: {
+		breakSize: 's',
+		g: '20',
+		children: (
+			<>
+				<div style={{ flexGrow: 2 }}>Column 1（flexGrow: 2）</div>
+				<div>Column 2</div>
+			</>
+		),
+	},
+};
