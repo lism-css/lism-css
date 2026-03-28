@@ -1,5 +1,6 @@
-import { Box, Flex, Container, HTML, Dummy, Divider, Columns, Lism } from 'lism-css/react';
+import { Box, Flex, Container, HTML, Dummy, Divider, Columns, Icon, Cluster, Lism } from 'lism-css/react';
 import { Accordion } from '@lism-css/ui/react';
+import { Lightbulb } from 'lucide-react';
 
 function App() {
 	return (
@@ -38,6 +39,12 @@ function App() {
 			</Columns>
 
 			<Dummy length='s' />
+			<Cluster g='10'>
+				<span>Icons:</span>
+				<Icon icon='lightbulb' size='1.5em' />
+				<Icon as={Lightbulb} size='1.5em' />
+				<Icon icon={{ as: Lightbulb, strokeWidth: '3' }} c='orange' size='1.5em' />
+			</Cluster>
 			<Dummy length='l' />
 
 			<Flex jc='center'>
