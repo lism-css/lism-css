@@ -18,9 +18,9 @@ const meta: Meta<typeof Layer> = {
 	],
 	argTypes: {
 		children: { control: false },
-		blur: { control: 'text', description: 'backdrop-filter: blur()', table: { category: 'Filter' } },
-		brightness: { control: 'text', description: 'backdrop-filter: brightness()', table: { category: 'Filter' } },
-		grayscale: { control: 'text', description: 'backdrop-filter: grayscale()', table: { category: 'Filter' } },
+		blur: { control: 'text', description: 'backdrop-filter: blur()' },
+		brightness: { control: 'text', description: 'backdrop-filter: brightness()' },
+		grayscale: { control: 'text', description: 'backdrop-filter: grayscale()' },
 	},
 };
 

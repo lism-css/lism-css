@@ -10,7 +10,6 @@ const meta: Meta<typeof Flow> = {
 		flow: {
 			control: 'text',
 			description: 'フロー方向の余白量',
-			table: { category: 'Flow' },
 		},
 	},
 };

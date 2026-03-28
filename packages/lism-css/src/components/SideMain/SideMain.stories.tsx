@@ -11,12 +11,10 @@ const meta: Meta<typeof SideMain> = {
 		sideW: {
 			control: 'text',
 			description: 'サイドバーの幅',
-			table: { category: 'SideMain' },
 		},
 		mainW: {
 			control: 'text',
 			description: 'メインエリアの最小幅',
-			table: { category: 'SideMain' },
 		},
 	},
 };

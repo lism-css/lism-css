@@ -7,7 +7,7 @@ const meta: Meta<typeof LinkBox> = {
 	tags: ['autodocs'],
 	argTypes: {
 		children: { control: false },
-		href: { control: 'text', description: 'リンク先URL', table: { category: 'LinkBox' } },
+		href: { control: 'text', description: 'リンク先URL' },
 	},
 };
 
