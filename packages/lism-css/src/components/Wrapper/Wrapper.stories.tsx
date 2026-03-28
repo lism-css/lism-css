@@ -10,7 +10,6 @@ const meta: Meta<typeof Wrapper> = {
 		contentSize: {
 			control: 'text',
 			description: 'コンテンツの最大幅。プリセット値 ("s", "l") や任意のCSS値を指定可能。',
-			table: { category: 'Wrapper' },
 		},
 	},
 };

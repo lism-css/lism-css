@@ -10,7 +10,6 @@ const meta: Meta<typeof Container> = {
 		size: {
 			control: 'text',
 			description: 'コンテンツの最大幅サイズ。プリセット値 ("s", "l") や任意のCSS値を指定可能。',
-			table: { category: 'Container' },
 		},
 	},
 };

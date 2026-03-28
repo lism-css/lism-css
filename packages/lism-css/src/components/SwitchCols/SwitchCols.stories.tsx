@@ -10,7 +10,6 @@ const meta: Meta<typeof SwitchCols> = {
 		breakSize: {
 			control: 'text',
 			description: 'カラム切り替えのブレークポイント',
-			table: { category: 'SwitchCols' },
 		},
 	},
 };

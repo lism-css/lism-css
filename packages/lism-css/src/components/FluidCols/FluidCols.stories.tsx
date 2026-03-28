@@ -10,7 +10,6 @@ const meta: Meta<typeof FluidCols> = {
 		autoFill: {
 			control: 'boolean',
 			description: 'auto-fill を使用するかどうか',
-			table: { category: 'FluidCols' },
 		},
 	},
 };

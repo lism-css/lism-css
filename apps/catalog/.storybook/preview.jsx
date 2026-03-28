@@ -15,12 +15,14 @@ const preview = {
 		_propConfig: { table: { disable: true } },
 		tag: { table: { disable: true } },
 		// --- Common Props ---
-		as: { control: 'text' },
-		lismClass: { control: 'text' },
-		variant: { control: 'text' },
+		as: { control: 'text', table: { category: 'Common Props' } },
+		exProps: { control: 'object', table: { category: 'Common Props' } },
+		lismClass: { control: 'text', table: { category: 'Common Props' } },
+		variant: { control: 'text', table: { category: 'Common Props' } },
 		layout: {
 			control: 'select',
 			options: ['box', 'center', 'cluster', 'columns', 'flex', 'flow', 'frame', 'grid', 'stack', 'fluidCols', 'switchCols', 'sideMain'],
+			table: { category: 'Common Props' },
 		},
 
 		// --- Prop Class / Typography ---
