@@ -27,10 +27,14 @@ type AstroHTMLAttributes = Omit<AstroHTMLAttributesRaw, keyof LismProps | keyof 
 
 /**
  * React では LayoutSpecificProps（判別可能ユニオン・12メンバー）を使用しているが、
- * Astro ではジェネリクスが使えず AstroHTMLAttributes（8つの HTML 属性型の intersection）が
+ * Astro ではいまとのところジェネリクスを用いていないので AstroHTMLAttributes（8つの HTML 属性型の intersection）が
  * 常に全体に交差されるため、12パターン × 巨大な型で TS2590 が発生する。
  * React では ComponentPropsWithoutRef<T> の T が具体的な1要素に確定するため問題にならない。
  * Astro 用にはフラットな型を使用して回避する。
+ *
+ * NOTE: 将来的に Astro の Polymorphic 型を導入すれば、as の値から具体的な1要素に
+ * 確定できるため、AstroHTMLAttributesRaw の巨大な intersection が不要になり、
+ * LayoutSpecificProps も直接使用できる可能性がある。
  */
 type AstroLayoutProps = {
 	layout?: LayoutType;
