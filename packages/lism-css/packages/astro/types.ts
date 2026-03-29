@@ -26,8 +26,11 @@ type AstroHTMLAttributesRaw = astroHTML.JSX.HTMLAttributes &
 type AstroHTMLAttributes = Omit<AstroHTMLAttributesRaw, keyof LismProps | keyof AstroLayoutProps>;
 
 /**
- * LayoutSpecificProps（判別可能ユニオン）はレスポンシブ配列型と交差すると
- * 型解決が破綻するため、Astro 用にはフラットな型を使用する。
+ * React では LayoutSpecificProps（判別可能ユニオン・12メンバー）を使用しているが、
+ * Astro ではジェネリクスが使えず AstroHTMLAttributes（8つの HTML 属性型の intersection）が
+ * 常に全体に交差されるため、12パターン × 巨大な型で TS2590 が発生する。
+ * React では ComponentPropsWithoutRef<T> の T が具体的な1要素に確定するため問題にならない。
+ * Astro 用にはフラットな型を使用して回避する。
  */
 type AstroLayoutProps = {
 	layout?: LayoutType;
