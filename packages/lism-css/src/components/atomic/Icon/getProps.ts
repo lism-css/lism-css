@@ -7,8 +7,6 @@ import type { ElementType, CSSProperties, SVGAttributes, ImgHTMLAttributes } fro
 
 export type PresetIconName = keyof typeof presets;
 
-export type PresetIconName = keyof typeof presets;
-
 type IconObject = {
 	as: ElementType;
 	[key: string]: unknown;
