@@ -3,7 +3,7 @@ import atts from '../../../lib/helper/atts';
 import setMaybeTransformStyles from '../../setMaybeTransformStyles';
 import type { LismProps } from '../../../lib/getLismProps';
 import type { TransformStyleProps } from '../../setMaybeTransformStyles';
-import type { ElementType, CSSProperties, SVGAttributes, ImgHTMLAttributes } from 'react';
+import type { ElementType, CSSProperties } from 'react';
 
 export type PresetIconName = keyof typeof presets;
 
@@ -22,9 +22,7 @@ export type IconOwnProps = {
 	exProps?: Record<string, unknown>;
 };
 
-export type IconElementProps = SVGAttributes<SVGSVGElement> & ImgHTMLAttributes<HTMLImageElement>;
-
-export type IconProps = LismProps & TransformStyleProps & IconOwnProps & IconElementProps;
+export type IconProps = LismProps & TransformStyleProps & IconOwnProps;
 
 type ParsedSvg = {
 	svgProps: Record<string, unknown>;
