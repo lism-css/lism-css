@@ -2,9 +2,9 @@
 import type { AstroLismProps } from '../types';
 import getLismProps from 'lism-css/lib/getLismProps';
 
-type Props = AstroLismProps;
+interface Props extends AstroLismProps {}
 
-const { as, exProps, ...props } = Astro.props || {};
+const { as, exProps, ...props } = Astro.props;
 const JSX = as || 'div';
 ---
 

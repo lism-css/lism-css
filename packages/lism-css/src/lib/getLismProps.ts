@@ -401,11 +401,12 @@ export class LismPropsData {
 
 export interface LismProps extends LismPropsBase, LayoutProps {}
 
-export interface LismOutputProps extends React.HTMLAttributes<HTMLElement> {
+export interface LismOutputProps {
+	className?: string;
 	style?: StyleWithCustomProps;
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	ref?: React.Ref<any>;
-	[key: `data-${string}`]: unknown;
+	[key: string]: unknown;
 }
 
 /**
