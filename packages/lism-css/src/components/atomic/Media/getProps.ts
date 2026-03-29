@@ -1,20 +1,19 @@
 import atts from '../../../lib/helper/atts';
 import getFilterProps from '../../getFilterProps';
-import type { LismComponentProps } from '../../Lism/Lism';
 import type { LismProps } from '../../../lib/getLismProps';
 import type { CSSProperties } from 'react';
 
-type MediaOwnProps = {
+export type MediaOwnProps = {
+	// StyleWithCustomProp が、CSSPropertiesに依存しているため。
 	objectPosition?: CSSProperties['objectPosition'];
 	objectFit?: CSSProperties['objectFit'];
 };
 
-export type MediaProps = LismComponentProps<'img'> & MediaOwnProps;
+export type MediaProps = LismProps & MediaOwnProps;
 
-export default function getMediaProps({ objectPosition, objectFit, lismClass, style = {}, ...rest }: MediaProps): LismComponentProps {
+export default function getMediaProps({ objectPosition, objectFit, lismClass, style = {}, ...rest }: MediaProps): LismProps {
 	if (objectPosition) style.objectPosition = objectPosition;
 	if (objectFit) style.objectFit = objectFit;
 
-	// Omit<MediaProps, ...> のスプレッド結果は TypeScript が LismProps と推論できないためキャスト
-	return getFilterProps({ ...rest, lismClass: atts(lismClass, `a--media`), style } as LismProps);
+	return getFilterProps({ ...rest, lismClass: atts(lismClass, `a--media`), style });
 }
