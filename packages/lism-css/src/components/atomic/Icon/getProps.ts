@@ -1,7 +1,7 @@
 import presets from './presets';
 import atts from '../../../lib/helper/atts';
 import setMaybeTransformStyles from '../../setMaybeTransformStyles';
-import type { LismComponentProps } from '../../Lism/Lism';
+import type { LismProps } from '../../../lib/getLismProps';
 import type { TransformStyleProps } from '../../setMaybeTransformStyles';
 import type { ElementType, CSSProperties, SVGAttributes, ImgHTMLAttributes } from 'react';
 
@@ -14,15 +14,17 @@ type IconObject = {
 
 type IconProp = PresetIconName | ElementType | IconObject;
 
-type IconOwnProps = {
+export type IconOwnProps = {
+	as?: ElementType;
 	icon?: IconProp;
 	label?: string;
 	size?: string;
+	exProps?: Record<string, unknown>;
 };
 
-type IconElementProps = SVGAttributes<SVGSVGElement> & ImgHTMLAttributes<HTMLImageElement>;
+export type IconElementProps = SVGAttributes<SVGSVGElement> & ImgHTMLAttributes<HTMLImageElement>;
 
-export type IconProps = LismComponentProps<ElementType> & TransformStyleProps & IconOwnProps & IconElementProps;
+export type IconProps = LismProps & TransformStyleProps & IconOwnProps & IconElementProps;
 
 type ParsedSvg = {
 	svgProps: Record<string, unknown>;
