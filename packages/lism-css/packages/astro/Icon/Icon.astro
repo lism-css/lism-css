@@ -5,10 +5,13 @@ import getLismProps from 'lism-css/lib/getLismProps';
 import getProps from 'lism-css/react/atomic/Icon/getProps';
 import SVG from './SVG.astro';
 
-type Props = AstroLismProps & {
-	icon?: PresetIconName | string | { as: string; [key: string]: unknown };
-	label?: string;
-};
+type IconElementProps = astroHTML.JSX.SVGAttributes & astroHTML.JSX.ImgHTMLAttributes;
+
+type Props = AstroLismProps &
+	Omit<IconElementProps, keyof AstroLismProps> & {
+		icon?: PresetIconName | string | { as: string; [key: string]: unknown };
+		label?: string;
+	};
 
 const props = Astro.props || {};
 
