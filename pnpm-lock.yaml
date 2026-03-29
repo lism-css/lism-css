@@ -427,6 +427,9 @@ importers:
             rollup:
                 specifier: ^4.59.0
                 version: 4.59.0
+            rollup-plugin-preserve-directives:
+                specifier: ^0.4.0
+                version: 0.4.0(rollup@4.59.0)
             typescript:
                 specifier: ~5.8.3
                 version: 5.8.3
@@ -10117,6 +10120,16 @@ packages:
 
     /rfdc@1.4.1:
         resolution: { integrity: sha512-q1b3N5QkRUWUl7iyylaaj3kOpIT0N2i9MqIEQXP73GVsN9cw3fdx8X63cEmWhJGi2PPCF23Ijp7ktmd39rawIA== }
+        dev: true
+
+    /rollup-plugin-preserve-directives@0.4.0(rollup@4.59.0):
+        resolution: { integrity: sha512-gx4nBxYm5BysmEQS+e2tAMrtFxrGvk+Pe5ppafRibQi0zlW7VYAbEGk6IKDw9sJGPdFWgVTE0o4BU4cdG0Fylg== }
+        peerDependencies:
+            rollup: 2.x || 3.x || 4.x
+        dependencies:
+            '@rollup/pluginutils': 5.3.0(rollup@4.59.0)
+            magic-string: 0.30.21
+            rollup: 4.59.0
         dev: true
 
     /rollup@4.59.0:
