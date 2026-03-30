@@ -100,7 +100,7 @@ importers:
                 version: 10.3.3(@vitest/browser-playwright@4.1.0)(react-dom@19.2.4)(react@19.2.4)(storybook@10.3.3)(vitest@4.1.0)
             '@storybook/react-vite':
                 specifier: ^10.3.3
-                version: 10.3.3(react-dom@19.2.4)(react@19.2.4)(storybook@10.3.3)(typescript@5.8.3)(vite@6.4.1)
+                version: 10.3.3(react-dom@19.2.4)(react@19.2.4)(rollup@4.59.0)(storybook@10.3.3)(typescript@5.8.3)(vite@6.4.1)
             '@vitejs/plugin-react':
                 specifier: ^4.7.0
                 version: 4.7.0(vite@6.4.1)
@@ -146,9 +146,6 @@ importers:
 
     apps/docs:
         dependencies:
-            '@astrojs/check':
-                specifier: ^0.9.8
-                version: 0.9.8(prettier-plugin-astro@0.14.1)(prettier@3.8.1)(typescript@6.0.2)
             '@astrojs/mdx':
                 specifier: ^4.3.14
                 version: 4.3.14(astro@5.18.1)
@@ -197,10 +194,10 @@ importers:
             sharp:
                 specifier: ^0.34.5
                 version: 0.34.5
-            typescript:
-                specifier: ^6.0.2
-                version: 6.0.2
         devDependencies:
+            '@astrojs/check':
+                specifier: ^0.9.8
+                version: 0.9.8(prettier-plugin-astro@0.14.1)(prettier@3.8.1)(typescript@6.0.2)
             '@types/hast':
                 specifier: ^3.0.4
                 version: 3.0.4
@@ -249,6 +246,9 @@ importers:
             tsx:
                 specifier: ^4.21.0
                 version: 4.21.0
+            typescript:
+                specifier: ^6.0.2
+                version: 6.0.2
             unist-util-visit:
                 specifier: ^5.1.0
                 version: 5.1.0
@@ -306,7 +306,7 @@ importers:
                 version: 8.57.0(eslint@9.39.4)(typescript@5.8.3)
             vite:
                 specifier: ^6.4.1
-                version: 6.4.1(sass-embedded@1.98.0)(sass@1.98.0)(tsx@4.21.0)
+                version: 6.4.1(@types/node@25.5.0)(sass@1.98.0)(tsx@4.21.0)
 
     packages/lism-cli:
         dependencies:
@@ -338,6 +338,9 @@ importers:
             '@types/react-dom':
                 specifier: '*'
                 version: 19.2.3(@types/react@19.2.14)
+            csstype:
+                specifier: ^3.2.3
+                version: 3.2.3
             react:
                 specifier: ^18 || ^19
                 version: 19.2.4
@@ -368,7 +371,7 @@ importers:
                 version: 6.9.1
             '@testing-library/react':
                 specifier: ^16.3.2
-                version: 16.3.2(@testing-library/dom@10.4.1)(react-dom@19.2.4)(react@19.2.4)
+                version: 16.3.2(@testing-library/dom@10.4.1)(@types/react-dom@19.2.3)(@types/react@19.2.14)(react-dom@19.2.4)(react@19.2.4)
             '@types/node':
                 specifier: ^25.5.0
                 version: 25.5.0
@@ -378,9 +381,6 @@ importers:
             astro:
                 specifier: ^5.18.1
                 version: 5.18.1(@types/node@25.5.0)(rollup@4.59.0)(sass@1.98.0)(tsx@4.21.0)(typescript@5.8.3)
-            csstype:
-                specifier: ^3.2.3
-                version: 3.2.3
             eslint:
                 specifier: ^9.39.4
                 version: 9.39.4
@@ -539,7 +539,7 @@ packages:
         transitivePeerDependencies:
             - prettier
             - prettier-plugin-astro
-        dev: false
+        dev: true
 
     /@astrojs/compiler@2.13.1:
         resolution: { integrity: sha512-f3FN83d2G/v32ipNClRKgYv30onQlMZX1vCeZMjPsMMPl1mDpmbl0+N5BYo4S/ofzqJyS5hvwacEo0CCVDn/Qg== }
@@ -581,7 +581,7 @@ packages:
             vscode-uri: 3.1.0
         transitivePeerDependencies:
             - typescript
-        dev: false
+        dev: true
 
     /@astrojs/markdown-remark@6.3.11:
         resolution: { integrity: sha512-hcaxX/5aC6lQgHeGh1i+aauvSwIT6cfyFjKWvExYSxUhZZBBdvCliOtu06gbQyhbe0pGJNoNmqNlQZ5zYUuIyQ== }
@@ -689,7 +689,7 @@ packages:
         resolution: { integrity: sha512-PJzRmgQzUxI2uwpdX2lXSHtP4G8ocp24/t+bZyf5Fy0SZLSF9f9KXZoMlFM/XCGue+B0nH/2IZ7FpBYQATBsCg== }
         dependencies:
             yaml: 2.8.2
-        dev: false
+        dev: true
 
     /@babel/cli@7.28.6(@babel/core@7.29.0):
         resolution: { integrity: sha512-6EUNcuBbNkj08Oj4gAZ+BUU8yLCgKzgVX4gaTh09Ya2C8ICM4P+G30g4m3akRxSYAp3A/gnWchrNst7px4/nUQ== }
@@ -2060,38 +2060,38 @@ packages:
         resolution: { integrity: sha512-mgv58UrU3rh4YgbE/TzgLQwJ3pFsHHhCLqY20aJq+9comytTXUDNGG/SMtSeMJdkpxgXSXunBGLD8Boka3JyVA== }
         dependencies:
             '@emmetio/scanner': 1.0.4
-        dev: false
+        dev: true
 
     /@emmetio/css-abbreviation@2.1.8:
         resolution: { integrity: sha512-s9yjhJ6saOO/uk1V74eifykk2CBYi01STTK3WlXWGOepyKa23ymJ053+DNQjpFcy1ingpaO7AxCcwLvHFY9tuw== }
         dependencies:
             '@emmetio/scanner': 1.0.4
-        dev: false
+        dev: true
 
     /@emmetio/css-parser@0.4.1:
         resolution: { integrity: sha512-2bC6m0MV/voF4CTZiAbG5MWKbq5EBmDPKu9Sb7s7nVcEzNQlrZP6mFFFlIaISM8X6514H9shWMme1fCm8cWAfQ== }
         dependencies:
             '@emmetio/stream-reader': 2.2.0
             '@emmetio/stream-reader-utils': 0.1.0
-        dev: false
+        dev: true
 
     /@emmetio/html-matcher@1.3.0:
         resolution: { integrity: sha512-NTbsvppE5eVyBMuyGfVu2CRrLvo7J4YHb6t9sBFLyY03WYhXET37qA4zOYUjBWFCRHO7pS1B9khERtY0f5JXPQ== }
         dependencies:
             '@emmetio/scanner': 1.0.4
-        dev: false
+        dev: true
 
     /@emmetio/scanner@1.0.4:
         resolution: { integrity: sha512-IqRuJtQff7YHHBk4G8YZ45uB9BaAGcwQeVzgj/zj8/UdOhtQpEIupUhSk8dys6spFIWVZVeK20CzGEnqR5SbqA== }
-        dev: false
+        dev: true
 
     /@emmetio/stream-reader-utils@0.1.0:
         resolution: { integrity: sha512-ZsZ2I9Vzso3Ho/pjZFsmmZ++FWeEd/txqybHTm4OgaZzdS8V9V/YYWQwg5TC38Z7uLWUV1vavpLLbjJtKubR1A== }
-        dev: false
+        dev: true
 
     /@emmetio/stream-reader@2.2.0:
         resolution: { integrity: sha512-fXVXEyFA5Yv3M3n8sUGT7+fvecGrZP4k6FnWWMSZVQf69kAq0LLpaBQLGcPR30m3zMmKYhECP4k/ZkzvhEW5kw== }
-        dev: false
+        dev: true
 
     /@emnapi/runtime@1.9.0:
         resolution: { integrity: sha512-QN75eB0IH2ywSpRpNddCRfQIhmJYBCJ1x5Lb3IscKAL8bMnVAKnRg8dCoXbHzVLLH7P38N2Z3mtulB7W0J0FKw== }
@@ -4058,7 +4058,7 @@ packages:
             storybook: ^10.3.3
         dependencies:
             '@mdx-js/react': 3.1.1(@types/react@19.2.14)(react@19.2.4)
-            '@storybook/csf-plugin': 10.3.3(storybook@10.3.3)(vite@6.4.1)
+            '@storybook/csf-plugin': 10.3.3(rollup@4.59.0)(storybook@10.3.3)(vite@6.4.1)
             '@storybook/icons': 2.0.1(react-dom@19.2.4)(react@19.2.4)
             '@storybook/react-dom-shim': 10.3.3(react-dom@19.2.4)(react@19.2.4)(storybook@10.3.3)
             react: 19.2.4
@@ -4139,22 +4139,6 @@ packages:
             - webpack
         dev: true
 
-    /@storybook/builder-vite@10.3.3(storybook@10.3.3)(vite@6.4.1):
-        resolution: { integrity: sha512-awspKCTZvXyeV3KabL0id62mFbxR5u/5yyGQultwCiSb2/yVgBfip2MAqLyS850pvTiB6QFVM9deOyd2/G/bEA== }
-        peerDependencies:
-            storybook: ^10.3.3
-            vite: ^5.0.0 || ^6.0.0 || ^7.0.0 || ^8.0.0
-        dependencies:
-            '@storybook/csf-plugin': 10.3.3(storybook@10.3.3)(vite@6.4.1)
-            storybook: 10.3.3(@testing-library/dom@10.4.1)(prettier@3.8.1)(react-dom@19.2.4)(react@19.2.4)
-            ts-dedent: 2.2.0
-            vite: 6.4.1(sass-embedded@1.98.0)(sass@1.98.0)(tsx@4.21.0)
-        transitivePeerDependencies:
-            - esbuild
-            - rollup
-            - webpack
-        dev: true
-
     /@storybook/csf-plugin@10.3.3(rollup@4.59.0)(storybook@10.3.3)(vite@6.4.1):
         resolution: { integrity: sha512-Utlh7zubm+4iOzBBfzLW4F4vD99UBtl2Do4edlzK2F7krQIcFvR2ontjAE8S1FQVLZAC3WHalCOS+Ch8zf3knA== }
         peerDependencies:
@@ -4177,29 +4161,6 @@ packages:
             storybook: 10.3.3(@testing-library/dom@10.4.1)(prettier@3.8.1)(react-dom@19.2.4)(react@19.2.4)
             unplugin: 2.3.11
             vite: 6.4.1(@types/node@25.5.0)(sass@1.98.0)(tsx@4.21.0)
-        dev: true
-
-    /@storybook/csf-plugin@10.3.3(storybook@10.3.3)(vite@6.4.1):
-        resolution: { integrity: sha512-Utlh7zubm+4iOzBBfzLW4F4vD99UBtl2Do4edlzK2F7krQIcFvR2ontjAE8S1FQVLZAC3WHalCOS+Ch8zf3knA== }
-        peerDependencies:
-            esbuild: '*'
-            rollup: '*'
-            storybook: ^10.3.3
-            vite: '*'
-            webpack: '*'
-        peerDependenciesMeta:
-            esbuild:
-                optional: true
-            rollup:
-                optional: true
-            vite:
-                optional: true
-            webpack:
-                optional: true
-        dependencies:
-            storybook: 10.3.3(@testing-library/dom@10.4.1)(prettier@3.8.1)(react-dom@19.2.4)(react@19.2.4)
-            unplugin: 2.3.11
-            vite: 6.4.1(sass-embedded@1.98.0)(sass@1.98.0)(tsx@4.21.0)
         dev: true
 
     /@storybook/global@5.0.0:
@@ -4249,35 +4210,6 @@ packages:
             storybook: 10.3.3(@testing-library/dom@10.4.1)(prettier@3.8.1)(react-dom@19.2.4)(react@19.2.4)
             tsconfig-paths: 4.2.0
             vite: 6.4.1(@types/node@25.5.0)(sass@1.98.0)(tsx@4.21.0)
-        transitivePeerDependencies:
-            - esbuild
-            - rollup
-            - supports-color
-            - typescript
-            - webpack
-        dev: true
-
-    /@storybook/react-vite@10.3.3(react-dom@19.2.4)(react@19.2.4)(storybook@10.3.3)(typescript@5.8.3)(vite@6.4.1):
-        resolution: { integrity: sha512-qHdlBe1hjqFAGXa8JL7bWTLbP/gDqXbWDm+SYCB646NHh5yvVDkZLwigP5Y+UL7M2ASfqFtosnroUK9tcCM2dw== }
-        peerDependencies:
-            react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
-            react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
-            storybook: ^10.3.3
-            vite: ^5.0.0 || ^6.0.0 || ^7.0.0 || ^8.0.0
-        dependencies:
-            '@joshwooding/vite-plugin-react-docgen-typescript': 0.6.4(typescript@5.8.3)(vite@6.4.1)
-            '@rollup/pluginutils': 5.3.0(rollup@4.59.0)
-            '@storybook/builder-vite': 10.3.3(storybook@10.3.3)(vite@6.4.1)
-            '@storybook/react': 10.3.3(react-dom@19.2.4)(react@19.2.4)(storybook@10.3.3)(typescript@5.8.3)
-            empathic: 2.0.0
-            magic-string: 0.30.21
-            react: 19.2.4
-            react-docgen: 8.0.3
-            react-dom: 19.2.4(react@19.2.4)
-            resolve: 1.22.11
-            storybook: 10.3.3(@testing-library/dom@10.4.1)(prettier@3.8.1)(react-dom@19.2.4)(react@19.2.4)
-            tsconfig-paths: 4.2.0
-            vite: 6.4.1(sass-embedded@1.98.0)(sass@1.98.0)(tsx@4.21.0)
         transitivePeerDependencies:
             - esbuild
             - rollup
@@ -4464,7 +4396,7 @@ packages:
             redent: 3.0.0
         dev: true
 
-    /@testing-library/react@16.3.2(@testing-library/dom@10.4.1)(react-dom@19.2.4)(react@19.2.4):
+    /@testing-library/react@16.3.2(@testing-library/dom@10.4.1)(@types/react-dom@19.2.3)(@types/react@19.2.14)(react-dom@19.2.4)(react@19.2.4):
         resolution: { integrity: sha512-XU5/SytQM+ykqMnAnvB2umaJNIOsLF3PVv//1Ew4CTcpz0/BRyy/af40qqrt7SjKpDdT1saBMc42CUok5gaw+g== }
         engines: { node: '>=18' }
         peerDependencies:
@@ -4481,6 +4413,8 @@ packages:
         dependencies:
             '@babel/runtime': 7.28.6
             '@testing-library/dom': 10.4.1
+            '@types/react': 19.2.14
+            '@types/react-dom': 19.2.3(@types/react@19.2.14)
             react: 19.2.4
             react-dom: 19.2.4(react@19.2.4)
         dev: true
@@ -4802,7 +4736,7 @@ packages:
             '@rolldown/pluginutils': 1.0.0-beta.27
             '@types/babel__core': 7.20.5
             react-refresh: 0.17.0
-            vite: 6.4.1(sass-embedded@1.98.0)(sass@1.98.0)(tsx@4.21.0)
+            vite: 6.4.1(@types/node@25.5.0)(sass@1.98.0)(tsx@4.21.0)
         transitivePeerDependencies:
             - supports-color
 
@@ -4940,12 +4874,13 @@ packages:
             typescript: 6.0.2
             vscode-languageserver-textdocument: 1.0.12
             vscode-uri: 3.1.0
-        dev: false
+        dev: true
 
     /@volar/language-core@2.4.28:
         resolution: { integrity: sha512-w4qhIJ8ZSitgLAkVay6AbcnC7gP3glYM3fYwKV3srj8m494E3xtrCv6E+bWviiK/8hs6e6t1ij1s2Endql7vzQ== }
         dependencies:
             '@volar/source-map': 2.4.28
+        dev: true
 
     /@volar/language-server@2.4.28:
         resolution: { integrity: sha512-NqcLnE5gERKuS4PUFwlhMxf6vqYo7hXtbMFbViXcbVkbZ905AIVWhnSo0ZNBC2V127H1/2zP7RvVOVnyITFfBw== }
@@ -4959,7 +4894,7 @@ packages:
             vscode-languageserver-protocol: 3.17.5
             vscode-languageserver-textdocument: 1.0.12
             vscode-uri: 3.1.0
-        dev: false
+        dev: true
 
     /@volar/language-service@2.4.28:
         resolution: { integrity: sha512-Rh/wYCZJrI5vCwMk9xyw/Z+MsWxlJY1rmMZPsxUoJKfzIRjS/NF1NmnuEcrMbEVGja00aVpCsInJfixQTMdvLw== }
@@ -4968,10 +4903,11 @@ packages:
             vscode-languageserver-protocol: 3.17.5
             vscode-languageserver-textdocument: 1.0.12
             vscode-uri: 3.1.0
-        dev: false
+        dev: true
 
     /@volar/source-map@2.4.28:
         resolution: { integrity: sha512-yX2BDBqJkRXfKw8my8VarTyjv48QwxdJtvRgUpNE5erCsgEUdI2DsLbpa+rOQVAJYshY99szEcRDmyHbF10ggQ== }
+        dev: true
 
     /@volar/typescript@2.4.28:
         resolution: { integrity: sha512-Ja6yvWrbis2QtN4ClAKreeUZPVYMARDYZl9LMEv1iQ1QdepB6wn0jTRxA9MftYmYa4DQ4k/DaSZpFPUfxl8giw== }
@@ -4979,6 +4915,7 @@ packages:
             '@volar/language-core': 2.4.28
             path-browserify: 1.0.1
             vscode-uri: 3.1.0
+        dev: true
 
     /@vscode/emmet-helper@2.11.0:
         resolution: { integrity: sha512-QLxjQR3imPZPQltfbWRnHU6JecWTF1QSWhx3GAKQpslx7y3Dp6sIIXhKjiUJ/BR9FX8PVthjr9PD6pNwOJfAzw== }
@@ -4988,11 +4925,11 @@ packages:
             vscode-languageserver-textdocument: 1.0.12
             vscode-languageserver-types: 3.17.5
             vscode-uri: 3.1.0
-        dev: false
+        dev: true
 
     /@vscode/l10n@0.0.18:
         resolution: { integrity: sha512-KYSIHVmslkaCDyw013pphY+d7x1qV8IZupYfeIfzNA+nsaWHbn5uPuQRvdRFsa9zFzGeudPuoGoZ1Op4jrJXIQ== }
-        dev: false
+        dev: true
 
     /accepts@2.0.0:
         resolution: { integrity: sha512-5cvg6CtKwfgdmVqY1WIiXKc3Q1bkRqGLi+2W/6ao+6Y7gu/RCwRuAhGEzh5B4KlszSuTLgZYuqFqo5bImjNKng== }
@@ -5028,7 +4965,7 @@ packages:
                 optional: true
         dependencies:
             ajv: 8.18.0
-        dev: false
+        dev: true
 
     /ajv-formats@3.0.1(ajv@8.18.0):
         resolution: { integrity: sha512-8iUql50EUR+uUcdRQ3HDqa6EVyo3docL8g5WJ3FNcWmu62IbkGUue/pEyLBW8VGKKucTPgqeks4fIU1DA4yowQ== }
@@ -5831,7 +5768,7 @@ packages:
             string-width: 4.2.3
             strip-ansi: 6.0.1
             wrap-ansi: 7.0.0
-        dev: false
+        dev: true
 
     /clsx@2.1.1:
         resolution: { integrity: sha512-eYm0QWBtUrBWZWG0d386OGAw16Z995PiOVo2B7bjWSbHedGl5e0ZWaq65kOGgUSNesEIDkB9ISbTg/JK9dhCZA== }
@@ -6377,7 +6314,7 @@ packages:
         dependencies:
             '@emmetio/abbreviation': 2.3.3
             '@emmetio/css-abbreviation': 2.1.8
-        dev: false
+        dev: true
 
     /emoji-regex-xs@2.0.1:
         resolution: { integrity: sha512-1QFuh8l7LqUcKe24LsPUNzjrzJQ7pgRwp1QMcZ5MX6mFplk2zQ08NVCM84++1cveaUUYtcCYHmeFEuNg16sU4g== }
@@ -7226,7 +7163,7 @@ packages:
     /get-caller-file@2.0.5:
         resolution: { integrity: sha512-DyFP3BM/3YHTQOCUL/w0OZHR0lpKeGrxotcHWcqNEdnltqFwXVfhEBQ94eIo34AfQpo0rGki4cyIiftY06h2Fg== }
         engines: { node: 6.* || 8.* || >= 10.* }
-        dev: false
+        dev: true
 
     /get-east-asian-width@1.5.0:
         resolution: { integrity: sha512-CQ+bEO+Tva/qlmw24dCejulK5pMzVnUOFOijVogd3KQs07HnRIgp8TGipvCCRT06xeYEbpbgwaCxglFyiuIcmA== }
@@ -8163,11 +8100,11 @@ packages:
 
     /jsonc-parser@2.3.1:
         resolution: { integrity: sha512-H8jvkz1O50L3dMZCsLqiuB2tA7muqbSg1AtGEkN0leAqGjsUzDJir3Zwr02BhqdcITPg3ei3mZ+HjMocAknhhg== }
-        dev: false
+        dev: true
 
     /jsonc-parser@3.3.1:
         resolution: { integrity: sha512-HUgH65KyejrUFPvHFPbqOY0rsFip3Bo5wb4ngvdi1EpCYWUQDC5V+Y7mZws+DLkr4M//zQJoanu1SP+87Dv1oQ== }
-        dev: false
+        dev: true
 
     /jsonfile@6.2.0:
         resolution: { integrity: sha512-FGuPw30AdOIUTRMC2OMRtQV+jkVj2cfPqSeWXv1NEAJ1qZ5zb1X6z1mFhbfOB/iy3ssJCD+3KuZ8r8C3uVFlAg== }
@@ -8211,6 +8148,7 @@ packages:
     /kleur@4.1.5:
         resolution: { integrity: sha512-o+NO+8WrRiQEE4/7nwRJhN1HWpVmJm511pBHUxPLtp0BUISzlBplORYSmTclCnJvQq2tKu/sgl3xVpkc7ZWuQQ== }
         engines: { node: '>=6' }
+        dev: true
 
     /known-css-properties@0.37.0:
         resolution: { integrity: sha512-JCDrsP4Z1Sb9JwG0aJ8Eo2r7k4Ou5MwmThS/6lcIe1ICyb7UBJKGRIUUdqc2ASdE/42lgz6zFUnzAIhtXnBVrQ== }
@@ -9038,7 +8976,7 @@ packages:
 
     /muggle-string@0.4.1:
         resolution: { integrity: sha512-VNTrAak/KhO2i8dqqnqnAHOa3cYBwXEZe9h+D5h/1ZqFSTEFHdM65lR7RoIqq3tBBYavsOXV84NoHXZ0AkPyqQ== }
-        dev: false
+        dev: true
 
     /mute-stream@2.0.0:
         resolution: { integrity: sha512-WWdIxpyjEn+FhQJQQv9aQAYlHoNVdzIzUySNV1gHUPDSdZJ3yZn7pAAbQcV7B56Mvu881q9FZV+0Vx2xC44VWA== }
@@ -9357,6 +9295,7 @@ packages:
 
     /path-browserify@1.0.1:
         resolution: { integrity: sha512-b7uo2UCUOYZcnF/3ID0lulOJi/bafxa1xPe7ZPsammBSpjSWQkjNxlt635YGS2MiR9GjvuXCtz2emr3jbsz98g== }
+        dev: true
 
     /path-exists@4.0.0:
         resolution: { integrity: sha512-ak9Qy5Q7jYb2Wwcey5Fpvg2KoAc/ZIhLSLOSBmRmygPsGwkVVt0fZa0qrtMz+m6tJTAHfZQ8FnmB4MG4LWy7/w== }
@@ -9862,11 +9801,13 @@ packages:
             '@astrojs/compiler': 2.13.1
             prettier: 3.8.1
             sass-formatter: 0.7.9
+        dev: true
 
     /prettier@3.8.1:
         resolution: { integrity: sha512-UOnG6LftzbdaHZcKoPFtOcCKztrQ57WkHDeRD9t/PTQtmT0NHSeWWepj6pS0z/N7+08BHFDQVUrfmfMRcZwbMg== }
         engines: { node: '>=14' }
         hasBin: true
+        dev: true
 
     /pretty-format@27.5.1:
         resolution: { integrity: sha512-Qb1gy5OrP5+zDf2Bvnzdl3jsTf1qXVMazbvCoKhtKqVs4/YK4ozX4gKQJJVyNe+cajNPn0KoC0MC3FUmaHWEmQ== }
@@ -10300,16 +10241,16 @@ packages:
 
     /request-light@0.5.8:
         resolution: { integrity: sha512-3Zjgh+8b5fhRJBQZoy+zbVKpAQGLyka0MPgW3zruTF4dFFJ8Fqcfu9YsAvi/rvdcaTeWG3MkbZv4WKxAn/84Lg== }
-        dev: false
+        dev: true
 
     /request-light@0.7.0:
         resolution: { integrity: sha512-lMbBMrDoxgsyO+yB3sDcrDuX85yYt7sS8BfQd11jtbW/z5ZWgLZRcEGLsLoYw7I0WSUGQBs8CC8ScIxkTX1+6Q== }
-        dev: false
+        dev: true
 
     /require-directory@2.1.1:
         resolution: { integrity: sha512-fGxEI7+wsG9xrvdjsrlmL22OMTTiHRwAMroiEeMgq8gzoLC/PQr7RsRDSTLUg/bZAZtF+TVIkHc6/4RIKrui+Q== }
         engines: { node: '>=0.10.0' }
-        dev: false
+        dev: true
 
     /require-from-string@2.0.2:
         resolution: { integrity: sha512-Xf0nWe6RseziFMu+Ap9biiUbmplq6S9/p+7w7YXP/JBHhrUDDUhwa+vANyubuqfZWTveU//DYVGsDG7RKL/vEw== }
@@ -10472,6 +10413,7 @@ packages:
 
     /s.color@0.0.15:
         resolution: { integrity: sha512-AUNrbEUHeKY8XsYr/DYpl+qk5+aM+DChopnWOPEzn8YKzOhv4l2zH6LzZms3tOZP3wwdOyc0RmTciyi46HLIuA== }
+        dev: true
 
     /safe-array-concat@1.1.3:
         resolution: { integrity: sha512-AURm5f0jYEOydBj7VQlVvDrjeFgthDdEF5H1dP+6mNpoXOMo1quQqJ4wvJDyRZ9+pO3kGWoOdmV08cSv2aJV6Q== }
@@ -10693,6 +10635,7 @@ packages:
         resolution: { integrity: sha512-CWZ8XiSim+fJVG0cFLStwDvft1VI7uvXdCNJYXhDvowiv+DsbD1nXLiQ4zrE5UBvj5DWZJ93cwN0NX5PMsr1Pw== }
         dependencies:
             suf-log: 2.5.3
+        dev: true
 
     /sass@1.98.0:
         resolution: { integrity: sha512-+4N/u9dZ4PrgzGgPlKnaaRQx64RO0JBKs9sDhQ2pLgN6JQZ25uPQZKQYaBJU48Kd5BxgXoJ4e09Dq7nMcOUW3A== }
@@ -11361,6 +11304,7 @@ packages:
         resolution: { integrity: sha512-KvC8OPjzdNOe+xQ4XWJV2whQA0aM1kGVczMQ8+dStAO6KfEB140JEVQ9dE76ONZ0/Ylf67ni4tILPJB41U0eow== }
         dependencies:
             s.color: 0.0.15
+        dev: true
 
     /supports-color@10.2.2:
         resolution: { integrity: sha512-SS+jx45GF1QjgEXQx4NJZV9ImqmO2NPz5FNsIHrsDjh2YsHnawpan7SNQ1o8NuhrbHZy9AZhIoCUiCeaW/C80g== }
@@ -11770,13 +11714,13 @@ packages:
 
     /typesafe-path@0.2.2:
         resolution: { integrity: sha512-OJabfkAg1WLZSqJAJ0Z6Sdt3utnbzr/jh+NAHoyWHJe8CMSy79Gm085094M9nvTPy22KzTVn5Zq5mbapCI/hPA== }
-        dev: false
+        dev: true
 
     /typescript-auto-import-cache@0.3.6:
         resolution: { integrity: sha512-RpuHXrknHdVdK7wv/8ug3Fr0WNsNi5l5aB8MYYuXhq2UH5lnEB1htJ1smhtD5VeCsGr2p8mUDtd83LCQDFVgjQ== }
         dependencies:
             semver: 7.7.4
-        dev: false
+        dev: true
 
     /typescript-eslint@8.57.0(eslint@9.39.4)(typescript@5.8.3):
         resolution: { integrity: sha512-W8GcigEMEeB07xEZol8oJ26rigm3+bfPHxHvwbYUlu1fUDsGuQ7Hiskx5xGW/xM4USc9Ephe3jtv7ZYPQntHeA== }
@@ -12306,7 +12250,7 @@ packages:
             vite:
                 optional: true
         dependencies:
-            vite: 6.4.1(@types/node@25.5.0)(sass@1.98.0)(tsx@4.21.0)
+            vite: 6.4.1(sass-embedded@1.98.0)(sass@1.98.0)(tsx@4.21.0)
 
     /vitest@4.1.0(@types/node@22.19.15)(vite@6.4.1):
         resolution: { integrity: sha512-YbDrMF9jM2Lqc++2530UourxZHmkKLxrs4+mYhEwqWS97WJ7wOYEkcr+QfRgJ3PW9wz3odRijLZjHEaRLTNbqw== }
@@ -12483,7 +12427,7 @@ packages:
             tinyexec: 1.0.4
             tinyglobby: 0.2.15
             tinyrainbow: 3.1.0
-            vite: 6.4.1(sass-embedded@1.98.0)(sass@1.98.0)(tsx@4.21.0)
+            vite: 6.4.1(@types/node@25.5.0)(sass@1.98.0)(tsx@4.21.0)
             why-is-node-running: 2.3.0
         transitivePeerDependencies:
             - msw
@@ -12501,7 +12445,7 @@ packages:
             vscode-css-languageservice: 6.3.10
             vscode-languageserver-textdocument: 1.0.12
             vscode-uri: 3.1.0
-        dev: false
+        dev: true
 
     /volar-service-emmet@0.0.70(@volar/language-service@2.4.28):
         resolution: { integrity: sha512-xi5bC4m/VyE3zy/n2CXspKeDZs3qA41tHLTw275/7dNWM/RqE2z3BnDICQybHIVp/6G1iOQj5c1qXMgQC08TNg== }
@@ -12516,7 +12460,7 @@ packages:
             '@volar/language-service': 2.4.28
             '@vscode/emmet-helper': 2.11.0
             vscode-uri: 3.1.0
-        dev: false
+        dev: true
 
     /volar-service-html@0.0.70(@volar/language-service@2.4.28):
         resolution: { integrity: sha512-eR6vCgMdmYAo4n+gcT7DSyBQbwB8S3HZZvSagTf0sxNaD4WppMCFfpqWnkrlGStPKMZvMiejRRVmqsX9dYcTvQ== }
@@ -12530,7 +12474,7 @@ packages:
             vscode-html-languageservice: 5.6.2
             vscode-languageserver-textdocument: 1.0.12
             vscode-uri: 3.1.0
-        dev: false
+        dev: true
 
     /volar-service-prettier@0.0.70(@volar/language-service@2.4.28)(prettier@3.8.1):
         resolution: { integrity: sha512-Z6BCFSpGVCd8BPAsZ785Kce1BGlWd5ODqmqZGVuB14MJvrR4+CYz6cDy4F+igmE1gMifqfvMhdgT8Aud4M5ngg== }
@@ -12546,7 +12490,7 @@ packages:
             '@volar/language-service': 2.4.28
             prettier: 3.8.1
             vscode-uri: 3.1.0
-        dev: false
+        dev: true
 
     /volar-service-typescript-twoslash-queries@0.0.70(@volar/language-service@2.4.28):
         resolution: { integrity: sha512-IdD13Z9N2Bu8EM6CM0fDV1E69olEYGHDU25X51YXmq8Y0CmJ2LNj6gOiBJgpS5JGUqFzECVhMNBW7R0sPdRTMQ== }
@@ -12558,7 +12502,7 @@ packages:
         dependencies:
             '@volar/language-service': 2.4.28
             vscode-uri: 3.1.0
-        dev: false
+        dev: true
 
     /volar-service-typescript@0.0.70(@volar/language-service@2.4.28):
         resolution: { integrity: sha512-l46Bx4cokkUedTd74ojO5H/zqHZJ8SUuyZ0IB8JN4jfRqUM3bQFBHoOwlZCyZmOeO0A3RQNkMnFclxO4c++gsg== }
@@ -12575,7 +12519,7 @@ packages:
             vscode-languageserver-textdocument: 1.0.12
             vscode-nls: 5.2.0
             vscode-uri: 3.1.0
-        dev: false
+        dev: true
 
     /volar-service-yaml@0.0.70(@volar/language-service@2.4.28):
         resolution: { integrity: sha512-0c8bXDBeoATF9F6iPIlOuYTuZAC4c+yi0siQo920u7eiBJk8oQmUmg9cDUbR4+Gl++bvGP4plj3fErbJuPqdcQ== }
@@ -12588,7 +12532,7 @@ packages:
             '@volar/language-service': 2.4.28
             vscode-uri: 3.1.0
             yaml-language-server: 1.20.0
-        dev: false
+        dev: true
 
     /vscode-css-languageservice@6.3.10:
         resolution: { integrity: sha512-eq5N9Er3fC4vA9zd9EFhyBG90wtCCuXgRSpAndaOgXMh1Wgep5lBgRIeDgjZBW9pa+332yC9+49cZMW8jcL3MA== }
@@ -12597,7 +12541,7 @@ packages:
             vscode-languageserver-textdocument: 1.0.12
             vscode-languageserver-types: 3.17.5
             vscode-uri: 3.1.0
-        dev: false
+        dev: true
 
     /vscode-html-languageservice@5.6.2:
         resolution: { integrity: sha512-ulCrSnFnfQ16YzvwnYUgEbUEl/ZG7u2eV27YhvLObSHKkb8fw1Z9cgsnUwjTEeDIdJDoTDTDpxuhQwoenoLNMg== }
@@ -12606,7 +12550,7 @@ packages:
             vscode-languageserver-textdocument: 1.0.12
             vscode-languageserver-types: 3.17.5
             vscode-uri: 3.1.0
-        dev: false
+        dev: true
 
     /vscode-json-languageservice@4.1.8:
         resolution: { integrity: sha512-0vSpg6Xd9hfV+eZAaYN63xVVMOTmJ4GgHxXnkLCh+9RsQBkWKIghzLhW2B9ebfG+LQQg8uLtsQ2aUKjTgE+QOg== }
@@ -12617,41 +12561,42 @@ packages:
             vscode-languageserver-types: 3.17.5
             vscode-nls: 5.2.0
             vscode-uri: 3.1.0
-        dev: false
+        dev: true
 
     /vscode-jsonrpc@8.2.0:
         resolution: { integrity: sha512-C+r0eKJUIfiDIfwJhria30+TYWPtuHJXHtI7J0YlOmKAo7ogxP20T0zxB7HZQIFhIyvoBPwWskjxrvAtfjyZfA== }
         engines: { node: '>=14.0.0' }
-        dev: false
+        dev: true
 
     /vscode-languageserver-protocol@3.17.5:
         resolution: { integrity: sha512-mb1bvRJN8SVznADSGWM9u/b07H7Ecg0I3OgXDuLdn307rl/J3A9YD6/eYOssqhecL27hK1IPZAsaqh00i/Jljg== }
         dependencies:
             vscode-jsonrpc: 8.2.0
             vscode-languageserver-types: 3.17.5
-        dev: false
+        dev: true
 
     /vscode-languageserver-textdocument@1.0.12:
         resolution: { integrity: sha512-cxWNPesCnQCcMPeenjKKsOCKQZ/L6Tv19DTRIGuLWe32lyzWhihGVJ/rcckZXJxfdKCFvRLS3fpBIsV/ZGX4zA== }
-        dev: false
+        dev: true
 
     /vscode-languageserver-types@3.17.5:
         resolution: { integrity: sha512-Ld1VelNuX9pdF39h2Hgaeb5hEZM2Z3jUrrMgWQAu82jMtZp7p3vJT3BzToKtZI7NgQssZje5o0zryOrhQvzQAg== }
-        dev: false
+        dev: true
 
     /vscode-languageserver@9.0.1:
         resolution: { integrity: sha512-woByF3PDpkHFUreUa7Hos7+pUWdeWMXRd26+ZX2A8cFx6v/JPTtd4/uN0/jB6XQHYaOlHbio03NTHCqrgG5n7g== }
         hasBin: true
         dependencies:
             vscode-languageserver-protocol: 3.17.5
-        dev: false
+        dev: true
 
     /vscode-nls@5.2.0:
         resolution: { integrity: sha512-RAaHx7B14ZU04EU31pT+rKz2/zSl7xMsfIZuo8pd+KZO6PXtQmpevpq3vxvWNcrGbdmhM/rr5Uw5Mz+NBfhVng== }
-        dev: false
+        dev: true
 
     /vscode-uri@3.1.0:
         resolution: { integrity: sha512-/BpdSx+yCQGnCvecbyXdxHDkuk55/G3xwnC0GqY4gmQ3j+A+g8kzzgB4Nk/SINjqn6+waqw3EgbVF2QKExkRxQ== }
+        dev: true
 
     /w3c-xmlserializer@5.0.0:
         resolution: { integrity: sha512-o8qghlI8NZHU1lLPrpi2+Uq7abh4GGPpYANlalzWxyWteJOCsr/P+oPBA49TOLu5FTZO4d3F9MnWJfiMo4BkmA== }
@@ -12835,7 +12780,7 @@ packages:
             ansi-styles: 4.3.0
             string-width: 4.2.3
             strip-ansi: 6.0.1
-        dev: false
+        dev: true
 
     /wrap-ansi@9.0.2:
         resolution: { integrity: sha512-42AtmgqjV+X1VpdOfyTGOYRi0/zsoLqtXQckTmqTeybT+BDIbM/Guxo7x3pE2vtpr1ok6xRqM9OpBe+Jyoqyww== }
@@ -12903,7 +12848,7 @@ packages:
     /y18n@5.0.8:
         resolution: { integrity: sha512-0pfFzegeDWJHJIAmTLRP2DwHjdF5s7jo9tuztdQxAhINCdvS+3nGINqPd00AphqJR/0LhANUS6/+7SCb98YOfA== }
         engines: { node: '>=10' }
-        dev: false
+        dev: true
 
     /yallist@3.1.1:
         resolution: { integrity: sha512-a4UGQaWPH59mOXUYnAG2ewncQS4i4F43Tv3JoAM+s2VDAmS9NsK8GpDMLrCHPksFT7h3K6TOoUNn2pb7RoXx4g== }
@@ -12923,18 +12868,19 @@ packages:
             vscode-languageserver-types: 3.17.5
             vscode-uri: 3.1.0
             yaml: 2.7.1
-        dev: false
+        dev: true
 
     /yaml@2.7.1:
         resolution: { integrity: sha512-10ULxpnOCQXxJvBgxsn9ptjq6uviG/htZKk9veJGhlqn3w/DxQ631zFF+nlQXLwmImeS5amR2dl2U8sg6U9jsQ== }
         engines: { node: '>= 14' }
         hasBin: true
-        dev: false
+        dev: true
 
     /yaml@2.8.2:
         resolution: { integrity: sha512-mplynKqc1C2hTVYxd0PU2xQAc22TI1vShAYGksCCfxbn/dFwnHTNi1bvYsBTkhdUNtGIf5xNOg938rrSSYvS9A== }
         engines: { node: '>= 14.6' }
         hasBin: true
+        dev: true
 
     /yargs-parser@21.1.1:
         resolution: { integrity: sha512-tVpsJW7DdjecAiFpbIB1e3qxIQsE6NoPc5/eTdrbbIC4h0LVsWhnoa3g+m2HclBIujHzsxZ4VJVA+GUuc2/LBw== }
@@ -12951,7 +12897,7 @@ packages:
             string-width: 4.2.3
             y18n: 5.0.8
             yargs-parser: 21.1.1
-        dev: false
+        dev: true
 
     /yocto-queue@0.1.0:
         resolution: { integrity: sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q== }
