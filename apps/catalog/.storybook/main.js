@@ -13,8 +13,6 @@ function getAbsolutePath(value) {
 /** @type { import('@storybook/react-vite').StorybookConfig } */
 const config = {
 	stories: [
-		'../stories/**/*.mdx',
-		'../stories/**/*.stories.@(js|jsx|mjs|ts|tsx)',
 		'../../../packages/lism-css/src/components/**/*.stories.@(js|jsx|mjs|ts|tsx)',
 		'../../../packages/lism-ui/src/components/**/*.stories.@(js|jsx|mjs|ts|tsx)',
 	],
