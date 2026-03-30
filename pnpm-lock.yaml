@@ -155,6 +155,9 @@ importers:
             '@astrojs/react':
                 specifier: ^4.4.2
                 version: 4.4.2(@types/react-dom@19.2.3)(@types/react@19.2.14)(react-dom@19.2.4)(react@19.2.4)(sass-embedded@1.98.0)(sass@1.98.0)(tsx@4.21.0)
+            '@astrojs/sitemap':
+                specifier: ^3.7.2
+                version: 3.7.2
             '@expressive-code/plugin-line-numbers':
                 specifier: ^0.41.7
                 version: 0.41.7
@@ -201,6 +204,9 @@ importers:
             '@astrojs/check':
                 specifier: ^0.9.8
                 version: 0.9.8(prettier-plugin-astro@0.14.1)(prettier@3.8.1)(typescript@5.8.3)
+            '@types/hast':
+                specifier: ^3.0.4
+                version: 3.0.4
             '@types/mdast':
                 specifier: ^4.0.4
                 version: 4.0.4
@@ -216,6 +222,12 @@ importers:
             autoprefixer:
                 specifier: ^10.4.27
                 version: 10.4.27(postcss@8.5.8)
+            eslint:
+                specifier: ^9.39.4
+                version: 9.39.4
+            mdast-util-directive:
+                specifier: ^3.1.0
+                version: 3.1.0
             pixelmatch:
                 specifier: ^7.1.0
                 version: 7.1.0
@@ -234,6 +246,9 @@ importers:
             sass-embedded:
                 specifier: ^1.98.0
                 version: 1.98.0
+            stylelint:
+                specifier: ^17.4.0
+                version: 17.4.0(typescript@5.8.3)
             tsx:
                 specifier: ^4.21.0
                 version: 4.21.0
@@ -329,6 +344,9 @@ importers:
             '@types/react-dom':
                 specifier: '*'
                 version: 19.2.3(@types/react@19.2.14)
+            csstype:
+                specifier: ^3.2.3
+                version: 3.2.3
             react:
                 specifier: ^18 || ^19
                 version: 19.2.4
@@ -369,6 +387,9 @@ importers:
             astro:
                 specifier: ^5.18.1
                 version: 5.18.1(@types/node@25.5.0)(rollup@4.59.0)(sass@1.98.0)(tsx@4.21.0)(typescript@5.8.3)
+            eslint:
+                specifier: ^9.39.4
+                version: 9.39.4
             glob:
                 specifier: ^13.0.6
                 version: 13.0.6
@@ -381,6 +402,9 @@ importers:
             rollup:
                 specifier: ^4.59.0
                 version: 4.59.0
+            stylelint:
+                specifier: ^17.4.0
+                version: 17.4.0(typescript@5.8.3)
             tsx:
                 specifier: ^4.21.0
                 version: 4.21.0
@@ -651,6 +675,14 @@ packages:
             - terser
             - tsx
             - yaml
+        dev: false
+
+    /@astrojs/sitemap@3.7.2:
+        resolution: { integrity: sha512-PqkzkcZTb5ICiyIR8VoKbIAP/laNRXi5tw616N1Ckk+40oNB8Can1AzVV56lrbC5GKSZFCyJYUVYqVivMisvpA== }
+        dependencies:
+            sitemap: 9.0.1
+            stream-replace-string: 2.0.0
+            zod: 4.3.6
         dev: false
 
     /@astrojs/telemetry@3.3.0:
@@ -4493,6 +4525,12 @@ packages:
         dependencies:
             '@types/unist': 3.0.3
 
+    /@types/node@24.12.0:
+        resolution: { integrity: sha512-GYDxsZi3ChgmckRT9HPU0WEhKLP08ev/Yfcq2AstjrDASOYCSXeyjDsHg4v5t4jOj7cyDX3vmprafKlWIG9MXQ== }
+        dependencies:
+            undici-types: 7.16.0
+        dev: false
+
     /@types/node@25.5.0:
         resolution: { integrity: sha512-jp2P3tQMSxWugkCUKLRPVUpGaL5MVFwF8RDuSRztfwgN1wmqJeMSbKlnEtQqU8UrhTmzEmZdu2I6v2dpp7XIxw== }
         dependencies:
@@ -4539,9 +4577,14 @@ packages:
         resolution: { integrity: sha512-A4STmOXPhMUtHH+S6ymgE2GiBSMqf4oTvcQZMcHzokuTLVYzXTB8ttjcgxOVaAp2lGwEdzZ0J+cRbbeevQj1UQ== }
         dev: true
 
+    /@types/sax@1.2.7:
+        resolution: { integrity: sha512-rO73L89PJxeYM3s3pPPjiPgVVcymqU490g0YO5n5By0k2Erzj6tay/4lr1CHAAU4JyOWd1rpQ8bCf6cZfHU96A== }
+        dependencies:
+            '@types/node': 25.5.0
+        dev: false
+
     /@types/unist@2.0.11:
         resolution: { integrity: sha512-CmBKiL6NNo/OqgmMn95Fk9Whlp2mtvIv+KNpQKN2F4SjvrEesubTRWGYSg+BnWZOnlCaSTU1sMpsBOzgbYhnsA== }
-        dev: false
 
     /@types/unist@3.0.3:
         resolution: { integrity: sha512-ko/gIFJRv177XgZsZcBwnqJN5x/Gien8qNOn0D5bQU/zAzVf9Zt3BlcUiLqhV9y4ARk0GbT3tnUiPNgnTXzc/Q== }
@@ -5034,6 +5077,10 @@ packages:
         dependencies:
             normalize-path: 3.0.0
             picomatch: 2.3.1
+
+    /arg@5.0.2:
+        resolution: { integrity: sha512-PYjyFOLKQ9y57JvQ6QLo8dAgNqswh8M1RMJYdQduT6xbWSgK36P/Z/v+p888pM69jMMfS8Xd8F6I1kQ/I9HUGg== }
+        dev: false
 
     /argparse@2.0.1:
         resolution: { integrity: sha512-8+9WqebbFzpX9OR+Wa6O29asIogeRMzcGtAINdpMHHyAg10f05aSFVBbcEqGf/PXw1EjAZ+q2/bEBg3DvurK3Q== }
@@ -5680,7 +5727,6 @@ packages:
 
     /character-reference-invalid@2.0.1:
         resolution: { integrity: sha512-iBZ4F4wRbyORVsu0jPV7gXkOsGYjGHPmAyv+HiHG8gi5PtC9KI2j1+v8/tlibRvjoWX027ypmG/n0HtO5t7unw== }
-        dev: false
 
     /chardet@2.1.1:
         resolution: { integrity: sha512-PsezH1rqdV9VvyNhxxOW32/d75r01NY7TQCmOqomRo15ZSOKbpTFVsfjghxo6JloQUCGnH4k1LGu0R4yCLlWQQ== }
@@ -7687,14 +7733,12 @@ packages:
 
     /is-alphabetical@2.0.1:
         resolution: { integrity: sha512-FWyyY60MeTNyeSRpkM2Iry0G9hpr7/9kD40mD/cGQEuilcZYS4okz8SN2Q6rLCJ8gbCt6fN+rC+6tMGS99LaxQ== }
-        dev: false
 
     /is-alphanumerical@2.0.1:
         resolution: { integrity: sha512-hmbYhX/9MUMF5uh7tOXyK/n0ZvWpad5caBA17GsC6vyuCqaWliRG5K1qS9inmUhEMaOBIW7/whAnSwveW/LtZw== }
         dependencies:
             is-alphabetical: 2.0.1
             is-decimal: 2.0.1
-        dev: false
 
     /is-array-buffer@3.0.5:
         resolution: { integrity: sha512-DDfANUiiG2wC1qawP66qlTugJeL5HyzMpfr8lLK+jMQirGzNod0B12cFB/9q838Ru27sBwfw78/rdoU7RERz6A== }
@@ -7775,7 +7819,6 @@ packages:
 
     /is-decimal@2.0.1:
         resolution: { integrity: sha512-AAB9hiomQs5DXWcRB1rqsxGUstbRroFOPPVAomNk/3XHR5JyEZChOyTWe2oayKnsSsr/kcGqF+z6yuH6HHpN0A== }
-        dev: false
 
     /is-docker@3.0.0:
         resolution: { integrity: sha512-eljcgEDlEns/7AXFosB5K/2nCM4P7FQPkGc/DWLy5rmFEWvZayGrik1d9/QIY5nJ4f9YsVvBkA6kJpHn9rISdQ== }
@@ -7823,7 +7866,6 @@ packages:
 
     /is-hexadecimal@2.0.1:
         resolution: { integrity: sha512-DgZQp241c8oO6cA1SbTEWiXeoxV42vlcJxgH+B3hi1AiqqKruZR3ZGF8In3fj4+/y/7rHvlOZLZtgJ/4ttYGZg== }
-        dev: false
 
     /is-inside-container@1.0.0:
         resolution: { integrity: sha512-KIYLCCJghfHZxqjYBE7rEy0OBuTd5xCHS7tHVgvCLkx7StIoaxwNW3hCALgEUjFfeRk+MG/Qxmp/vtETEF3tRA== }
@@ -8345,7 +8387,6 @@ packages:
             unist-util-visit-parents: 6.0.2
         transitivePeerDependencies:
             - supports-color
-        dev: false
 
     /mdast-util-find-and-replace@3.0.2:
         resolution: { integrity: sha512-Tmd1Vg/m3Xz43afeNxDIhWRtFZgM2VLyaf4vSTYwudTyeuTneoL3qtWMA5jeLyz/O1vDJmmV4QuScFCA2tBPwg== }
@@ -9240,7 +9281,6 @@ packages:
             is-alphanumerical: 2.0.1
             is-decimal: 2.0.1
             is-hexadecimal: 2.0.1
-        dev: false
 
     /parse-json@5.2.0:
         resolution: { integrity: sha512-ayCKvm/phCGxOkYRSCM82iDwct8/EonSEgCSxWxD7ve6jHggsFl4fZVQBPRNgQoKiuV/odhFrGzQXZwbifC8Rg== }
@@ -10862,6 +10902,17 @@ packages:
     /sisteransi@1.0.5:
         resolution: { integrity: sha512-bLGGlR1QxBcynn2d5YmDX4MGjlZvy2MRBDRNHLJ8VI6l6+9FUiyTFNJ0IveOSP0bcXgVDPRcfGqA0pjaqUpfVg== }
 
+    /sitemap@9.0.1:
+        resolution: { integrity: sha512-S6hzjGJSG3d6if0YoF5kTyeRJvia6FSTBroE5fQ0bu1QNxyJqhhinfUsXi9fH3MgtXODWvwo2BDyQSnhPQ88uQ== }
+        engines: { node: '>=20.19.5', npm: '>=10.8.2' }
+        hasBin: true
+        dependencies:
+            '@types/node': 24.12.0
+            '@types/sax': 1.2.7
+            arg: 5.0.2
+            sax: 1.5.0
+        dev: false
+
     /slash@2.0.0:
         resolution: { integrity: sha512-ZYKh3Wh2z1PpEXWr0MpSBZ0V6mZHAQfYevttO11c51CaWjGTaadiKZ+wVt1PbMlDV5qhMFslpZCemhwOK7C89A== }
         engines: { node: '>=6' }
@@ -10967,6 +11018,10 @@ packages:
             - react-dom
             - utf-8-validate
         dev: true
+
+    /stream-replace-string@2.0.0:
+        resolution: { integrity: sha512-TlnjJ1C0QrmxRNrON00JvaFFlNh5TTG00APw23j74ET7gkQpTASi6/L2fuiav8pzK715HXtUeClpBTw2NPSn6w== }
+        dev: false
 
     /string-argv@0.3.2:
         resolution: { integrity: sha512-aqD2Q0144Z+/RqG52NeHEkZauTAUWJO8c6yTftGJKO3Tja5tUgIfmIl6kExvhtxSDP7fXB6DvzkfMpCd/F3G+Q== }
@@ -11686,6 +11741,10 @@ packages:
 
     /uncrypto@0.1.3:
         resolution: { integrity: sha512-Ql87qFHB3s/De2ClA9e0gsnS6zXG27SkTiSJwjCc9MebbfapQfuPzumMIUMi38ezPZVNFcHI9sUIepeQfw8J8Q== }
+
+    /undici-types@7.16.0:
+        resolution: { integrity: sha512-Zz+aZWSj8LE6zoxD+xrjh4VfkIG8Ya6LvYkZqtUQGJPZjYl53ypCaUwWqo7eI0x66KBGeRo+mlBEkMSeSZ38Nw== }
+        dev: false
 
     /undici-types@7.18.2:
         resolution: { integrity: sha512-AsuCzffGHJybSaRrmr5eHr81mwJU3kjw6M+uprWvCXiNeN9SOGwQ3Jn8jb8m3Z6izVgknn1R0FTCEAP2QrLY/w== }
@@ -12817,6 +12876,10 @@ packages:
 
     /zod@3.25.76:
         resolution: { integrity: sha512-gzUt/qt81nXsFGKIFcC3YnfEAx5NkunCfnDlvuBSSFS02bcXu4Lmea0AFIUwbLWxWPx3d9p8S5QoaujKcNQxcQ== }
+
+    /zod@4.3.6:
+        resolution: { integrity: sha512-rftlrkhHZOcjDwkGlnUtZZkvaPHCsDATp4pGpuOOMDaTdDDXF91wuVDJoWoPsKX/3YPQ5fHuF3STjcYyKr+Qhg== }
+        dev: false
 
     /zwitch@2.0.4:
         resolution: { integrity: sha512-bXE4cR/kVZhKZX/RjPEflHaKVhUVl85noU3v6b8apfQEc1x4A+zBxjZ4lN8LqGd6WZ3dl98pY4o717VFmoPp+A== }
