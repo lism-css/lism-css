@@ -17,7 +17,7 @@ export default function getDecoratorProps({ lismClass, size, clipPath, boxSizing
 	const style: StyleWithCustomProps = outerStyle ?? {};
 
 	// rest の型が複雑な union になり TS2590 が発生するため、object にキャストしてから渡す
-	const props = getFilterProps(setMaybeTransformStyles(rest as object) as unknown as LismProps & FilterProps);
+	const props = getFilterProps(setMaybeTransformStyles(rest as object) as unknown as LismProps & FilterProps & Record<string, unknown>);
 
 	if (clipPath) {
 		style.clipPath = clipPath;
