@@ -3,6 +3,7 @@ import type { AstroLismProps } from '../types';
 import Lism from '../Lism/Lism.astro';
 
 type Props = AstroLismProps;
+const props = Astro.props || {};
 ---
 
-<Lism as='ul' {...Astro.props}><slot /></Lism>
+<Lism as='ul' {...props}><slot /></Lism>
