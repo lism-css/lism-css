@@ -36,7 +36,7 @@ type AstroHTMLAttributes = Omit<AstroHTMLAttributesRaw, keyof LismProps | keyof 
  * 確定できるため、AstroHTMLAttributesRaw の巨大な intersection が不要になり、
  * LayoutSpecificProps も直接使用できる可能性がある。
  */
-interface AstroLayoutProps {
+export interface AstroLayoutProps {
 	layout?: LayoutType;
 	flow?: CssValue;
 	autoFill?: boolean;
