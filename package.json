@@ -15,6 +15,7 @@
 		"build": "turbo run build",
 		"build:core": "turbo run build --filter=./packages/lism-css",
 		"build:css": "turbo run build:css --filter=./packages/lism-css",
+		"check:docs": "pnpm --filter lism-docs exec astro check",
 		"build:ui": "turbo run build --filter=./packages/lism-ui",
 		"merge:dev": "git checkout main && git merge dev",
 		"merge:m2d": "git checkout dev && git merge main",
