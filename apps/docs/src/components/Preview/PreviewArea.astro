@@ -1,6 +1,6 @@
 ---
 import { Lism, Icon } from 'lism-css/astro';
-import { ArrowDownRight } from '@phosphor-icons/react';
+import { ArrowDownRightIcon } from '@phosphor-icons/react';
 
 const { resize, setCqUnit = true, p = '5', ...props } = Astro.props || {};
 ---
@@ -12,7 +12,7 @@ const { resize, setCqUnit = true, p = '5', ...props } = Astro.props || {};
 			{
 				resize && (
 					<Lism class="c--preview_help -hov:to:show -pos:abs -b:0 -r:0 -lh:xs -p:5 -bdrs:5">
-						<span>リサイズ可能</span> <Icon as={ArrowDownRight} weight="fill" />
+						<span>リサイズ可能</span> <Icon as={ArrowDownRightIcon} />
 					</Lism>
 				)
 			}

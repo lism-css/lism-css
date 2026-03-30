@@ -26,11 +26,9 @@ const mdMdxWithUnderscoreExcludes = ['**/*.{md,mdx}', '!**/_*/**'] as const;
  * memo: Astro 5 の Content Layer では各コレクションに loader が必須（legacy.collections 併用だと同期がスキップされる）
  */
 const ja = defineCollection({
-	// `_legacy: true` でストアに legacyId を載せ、getCollection 結果に `slug` が付く（無いとサイト内が undefined で落ちる）
 	loader: glob({
 		base: './src/content/ja',
 		pattern: [...mdMdxWithUnderscoreExcludes],
-		_legacy: true,
 	}),
 	schema: postSchema,
 });
@@ -39,7 +37,6 @@ const en = defineCollection({
 	loader: glob({
 		base: './src/content/en',
 		pattern: [...mdMdxWithUnderscoreExcludes],
-		_legacy: true,
 	}),
 	schema: postSchema,
 });
