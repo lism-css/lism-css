@@ -1,5 +1,4 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import type { ElementType } from 'react';
 import { Loader2, Play } from 'lucide-react';
 
 import { Icon } from './index';
@@ -89,7 +88,7 @@ export const WithViewBox: Story = {
 export const ExternalComponent: Story = {
 	name: '外部コンポーネント（as）',
 	args: {
-		as: Play as ElementType,
+		as: Play,
 		fz: '2rem',
 	},
 };
@@ -97,7 +96,7 @@ export const ExternalComponent: Story = {
 export const ExternalComponentWithExProps: Story = {
 	name: '外部コンポーネント（as + exProps）',
 	args: {
-		as: Loader2 as ElementType,
+		as: Loader2,
 		exProps: { strokeWidth: 3, size: '3em' },
 		c: 'blue',
 	},
@@ -114,7 +113,7 @@ export const WithSize: Story = {
 export const IconObject: Story = {
 	name: 'icon オブジェクト（as + props）',
 	args: {
-		icon: { as: Play as ElementType, fill: 'currentColor' },
+		icon: { as: Play, fill: 'currentColor' },
 		fz: '2rem',
 		c: 'green',
 	},
