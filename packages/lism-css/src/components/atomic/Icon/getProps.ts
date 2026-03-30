@@ -7,27 +7,27 @@ import type { ElementType, CSSProperties } from 'react';
 
 export type PresetIconName = keyof typeof presets;
 
-type IconObject = {
+interface IconObject {
 	as: ElementType;
 	[key: string]: unknown;
-};
+}
 
 type IconProp = PresetIconName | ElementType | IconObject;
 
-export type IconOwnProps = {
+export interface IconOwnProps {
 	as?: ElementType;
 	icon?: IconProp;
 	label?: string;
 	size?: string;
 	exProps?: Record<string, unknown>;
-};
+}
 
 export type IconProps = LismProps & TransformStyleProps & IconOwnProps;
 
-type ParsedSvg = {
+interface ParsedSvg {
 	svgProps: Record<string, unknown>;
 	svgContent: string;
-};
+}
 
 // SVG文字列をパースしてexPropsとコンテンツを生成する関数
 function parseSvgString(svgString: string): Partial<ParsedSvg> {
