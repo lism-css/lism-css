@@ -39,14 +39,14 @@ interface PropConfig {
 }
 
 // StatePropData based on config/defaults/states.ts
-type StatePropDataObject = {
+interface StatePropDataObject {
 	className: string;
 	preset?: string[] | readonly string[];
 	presetClass?: string;
 	customVar?: string;
 	tokenKey?: string;
 	setStyles?: (propVal: string) => Record<string, string | number | undefined>;
-};
+}
 
 type StatePropData = string | StatePropDataObject;
 

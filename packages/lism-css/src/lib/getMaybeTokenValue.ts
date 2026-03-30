@@ -1,10 +1,10 @@
 type TokenValue = string | number;
 
 type TokenConfigValues = Set<string> | string[] | readonly string[];
-type TokenConfigValuesObj = {
+interface TokenConfigValuesObj {
 	pre?: string;
 	values?: TokenConfigValues;
-};
+}
 
 type TokenConfigProp = TokenConfigValues | TokenConfigValuesObj;
 

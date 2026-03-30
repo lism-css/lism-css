@@ -12,13 +12,13 @@ interface PropConfig {
 }
 
 // Layout固有 props（消費して除去される）
-type LayoutOwnProps = {
+interface LayoutOwnProps {
 	flow?: CssValue;
 	autoFill?: boolean;
 	sideW?: CssValue;
 	mainW?: CssValue;
 	breakSize?: CssValue;
-};
+}
 
 type LayoutSpecificKeys = keyof LayoutOwnProps;
 
@@ -28,7 +28,7 @@ export interface BaseProps {
 	_propConfig?: Record<string, PropConfig>;
 }
 
-type InputProps = BaseProps & LayoutOwnProps;
+interface InputProps extends BaseProps, LayoutOwnProps {}
 
 export default function getLayoutProps<P extends InputProps>(layout: LayoutType | undefined, props: P): Omit<P, LayoutSpecificKeys> & BaseProps {
 	if (!layout) return props;
