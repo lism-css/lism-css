@@ -3,9 +3,11 @@ import type { AstroLismProps } from '../types';
 import { Lism } from '../Lism';
 import getFilterProps, { type FilterProps } from 'lism-css/react/getFilterProps';
 
-type Props = AstroLismProps & FilterProps;
+interface Props extends AstroLismProps, FilterProps {}
+
+const props = Astro.props;
 ---
 
-<Lism isLayer {...getFilterProps(Astro.props, 'backdropFilter')}>
+<Lism isLayer {...getFilterProps(props, 'backdropFilter')}>
 	<slot />
 </Lism>

@@ -415,7 +415,7 @@ export interface LismOutputProps {
  *
  * @param {Object} props
  */
-export default function getLismProps(props: LismProps & Record<string, unknown>): LismOutputProps {
+export default function getLismProps(props: LismProps): LismOutputProps {
 	// Fix: オブジェクトに .length は存在しないため、適切な空チェックに修正
 	if (Object.keys(props).length === 0) {
 		return {};

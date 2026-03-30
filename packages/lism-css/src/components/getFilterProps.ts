@@ -22,7 +22,7 @@ export type FilterProps = {
 };
 
 export default function getFilterProps(
-	props: LismProps & FilterProps & Record<string, unknown>,
+	props: LismProps & FilterProps,
 	filterType: string = 'filter'
 ): LismProps & Record<string, unknown> & { style: StyleWithCustomProps } {
 	const filterValues: string[] = [];
