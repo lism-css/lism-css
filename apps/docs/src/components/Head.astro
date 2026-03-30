@@ -128,8 +128,8 @@ const enableGA = !isDev && siteConfig.publish && gaMeasurementId;
 	{
 		/*
 		Google Analytics
-		memo: 条件レンダリング内の <script> は prettier-plugin-astro のパースバグを踏むため、
-		<script> を条件外に置き、data-* 属性の有無でJS側から初期化を判断している
+		memo: 条件レンダリング内の script タグは prettier-plugin-astro のパースバグを踏むため、
+		script を条件外に置き、data-* 属性の有無でJS側から初期化を判断している
 	*/
 	}
 	{enableGA && <meta id="ga-config" data-ga-id={gaMeasurementId} />}
