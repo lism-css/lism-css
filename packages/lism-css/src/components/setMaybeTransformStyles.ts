@@ -1,11 +1,11 @@
 import type { StyleWithCustomProps } from '../lib/types';
 
-export type TransformStyleProps = {
+export interface TransformStyleProps {
 	translate?: string;
 	rotate?: string;
 	scale?: string;
 	transform?: string;
-};
+}
 
 type TransformKeys = keyof TransformStyleProps;
 

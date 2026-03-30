@@ -4,11 +4,11 @@ import setMaybeTransformStyles, { type TransformStyleProps } from '../../setMayb
 import type { LismProps } from '../../../lib/getLismProps';
 import type { StyleWithCustomProps } from '../../../lib/types';
 
-export type DecoratorOwnProps = {
+export interface DecoratorOwnProps {
 	size?: string;
 	clipPath?: string;
 	boxSizing?: string;
-};
+}
 
 export type DecoratorProps = LismProps & TransformStyleProps & FilterProps & DecoratorOwnProps;
 

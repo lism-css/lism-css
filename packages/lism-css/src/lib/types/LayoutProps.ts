@@ -5,24 +5,55 @@
 export type CssValue = string | number;
 
 // layout なし
-export type NoLayoutProps = { layout?: undefined };
+export interface NoLayoutProps {
+	layout?: undefined;
+}
 
 // 固有 props なし（個別エクスポート用）
-export type BoxProps = { layout: 'box' };
-export type CenterProps = { layout: 'center' };
-export type ClusterProps = { layout: 'cluster' };
-export type FlexProps = { layout: 'flex' };
-export type FrameProps = { layout: 'frame' };
-export type GridLayoutProps = { layout: 'grid' };
-export type StackProps = { layout: 'stack' };
-export type ColumnsProps = { layout: 'columns' };
+export interface BoxProps {
+	layout: 'box';
+}
+export interface CenterProps {
+	layout: 'center';
+}
+export interface ClusterProps {
+	layout: 'cluster';
+}
+export interface FlexProps {
+	layout: 'flex';
+}
+export interface FrameProps {
+	layout: 'frame';
+}
+export interface GridLayoutProps {
+	layout: 'grid';
+}
+export interface StackProps {
+	layout: 'stack';
+}
+export interface ColumnsProps {
+	layout: 'columns';
+}
 
 // layout 固有の extra props を持つ型
-export type FlowLayoutProps = { layout: 'flow'; flow?: CssValue };
-export type FluidColsProps = { layout: 'fluidCols'; autoFill?: boolean };
+export interface FlowLayoutProps {
+	layout: 'flow';
+	flow?: CssValue;
+}
+export interface FluidColsProps {
+	layout: 'fluidCols';
+	autoFill?: boolean;
+}
 
-export type SideMainProps = { layout: 'sideMain'; sideW?: CssValue; mainW?: CssValue };
-export type SwitchColsProps = { layout: 'switchCols'; breakSize?: CssValue };
+export interface SideMainProps {
+	layout: 'sideMain';
+	sideW?: CssValue;
+	mainW?: CssValue;
+}
+export interface SwitchColsProps {
+	layout: 'switchCols';
+	breakSize?: CssValue;
+}
 
 // 判別可能ユニオン
 export type LayoutSpecificProps =
