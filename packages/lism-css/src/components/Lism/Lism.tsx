@@ -1,8 +1,6 @@
 import type { ComponentPropsWithoutRef, CSSProperties, ElementType, ReactNode } from 'react';
 import getLismProps, { type LismProps } from '../../lib/getLismProps';
 import { type LayoutSpecificProps } from '../../lib/types/LayoutProps';
-import type { StyleWithCustomProps } from '../../lib/types';
-
 // React では kebab-case スタイルは実行時に無視されるため camelCase のみ許容する
 type ReactStyleWithCustomProps = CSSProperties & Record<`--${string}`, string | number | undefined>;
 
@@ -33,9 +31,6 @@ export type LismComponentProps<T extends ElementType = 'div'> = Omit<LismProps, 
 export type LayoutComponentProps<T extends ElementType = 'div', L = object> = Omit<LismProps, 'layout' | 'style'> &
 	Omit<L, 'layout'> &
 	LismBaseProps<T>;
-
-// Astro 向けに StyleWithCustomProps を re-export（kebab-case も含む）
-export type { StyleWithCustomProps };
 
 /**
  * Lism Propsを処理できるだけのコンポーネント
