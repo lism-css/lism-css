@@ -1,6 +1,9 @@
 ---
+import type { AstroLismProps } from '../types';
 import { Lism } from '../Lism';
-import getFilterProps from '../../../dist/components/getFilterProps';
+import getFilterProps, { type FilterProps } from 'lism-css/react/getFilterProps';
+
+type Props = AstroLismProps & FilterProps;
 ---
 
 <Lism isLayer {...getFilterProps(Astro.props, 'backdropFilter')}>

@@ -1,10 +1,9 @@
 ---
-import type { LismProps } from '../../types';
+import type { DecoratorProps } from 'lism-css/react/atomic/Decorator/getProps';
 import { Lism } from '../Lism';
-import getProps from '../../../dist/components/atomic/Decorator/getProps';
+import getProps from 'lism-css/react/atomic/Decorator/getProps';
 
-// Propsの定義
-interface Props extends LismProps {}
+type Props = DecoratorProps;
 const props = Astro.props || {};
 ---
 

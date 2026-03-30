@@ -32,7 +32,7 @@ interface PropConfig {
 	important?: number;
 	exUtility?: Record<string, unknown>;
 	customVar?: string;
-	setStyles?: (val: unknown) => Record<string, unknown>;
+	setStyles?: (val: unknown) => Record<string, string | number | undefined>;
 	className?: string;
 	utilKey?: string;
 	[key: string]: unknown;
@@ -45,7 +45,7 @@ type StatePropDataObject = {
 	presetClass?: string;
 	customVar?: string;
 	tokenKey?: string;
-	setStyles?: (propVal: string) => Record<string, unknown>;
+	setStyles?: (propVal: string) => Record<string, string | number | undefined>;
 };
 
 type StatePropData = string | StatePropDataObject;
@@ -61,7 +61,7 @@ export interface LismPropsBase extends StateProps, PropValueTypes, React.HTMLAtt
 	style?: StyleWithCustomProps;
 	_propConfig?: Record<string, PropConfig>;
 	hov?: boolean | string | Record<string, unknown>;
-	css?: Record<string, unknown>;
+	css?: Record<string, string | number | undefined>;
 	[key: `data-${string}`]: unknown;
 }
 
@@ -182,7 +182,7 @@ export class LismPropsData {
 			} else if (propName === 'css') {
 				// cssオブジェクトに入ってきたものはstyleへ流す
 				const cssVales = this.extractProp('css');
-				this.addStyles(cssVales as Record<string, unknown>);
+				this.addStyles(cssVales as Record<string, string | number | undefined>);
 			}
 		});
 	}
@@ -227,10 +227,10 @@ export class LismPropsData {
 		// CSS custom properties can accept string or number
 		(this.styles as Record<string, string | number>)[name] = val;
 	}
-	addStyles(styles: Record<string, unknown>): void {
+	addStyles(styles: Record<string, string | number | undefined>): void {
 		this.styles = { ...this.styles, ...styles };
 	}
-	addAttrs(data: { styles?: Record<string, unknown>; utils?: string[] }): void {
+	addAttrs(data: { styles?: Record<string, string | number | undefined>; utils?: string[] }): void {
 		this.addStyles(data.styles || {});
 		this.addUtils(data.utils || []);
 	}
@@ -401,11 +401,12 @@ export class LismPropsData {
 
 export interface LismProps extends LismPropsBase, LayoutProps {}
 
-export interface LismOutputProps extends React.HTMLAttributes<HTMLElement> {
+export interface LismOutputProps {
+	className?: string;
 	style?: StyleWithCustomProps;
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	ref?: React.Ref<any>;
-	[key: `data-${string}`]: unknown;
+	[key: string]: unknown;
 }
 
 /**

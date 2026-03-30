@@ -1,4 +1,3 @@
-import type { ElementType } from 'react';
 import TEXTS from './texts';
 
 type Lang = keyof typeof TEXTS;
@@ -24,7 +23,7 @@ const splitByPunctuation = (content: string): string[] => {
 };
 
 interface GetContentOptions {
-	tag?: ElementType;
+	tag?: string;
 	pre?: string;
 	length?: Length;
 	lang?: Lang;

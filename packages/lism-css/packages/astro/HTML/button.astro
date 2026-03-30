@@ -1,5 +1,8 @@
 ---
+import type { AstroLismProps } from '../types';
 import Lism from '../Lism/Lism.astro';
+
+type Props = AstroLismProps;
 ---
 
 <Lism as='button' {...Astro.props}><slot /></Lism>

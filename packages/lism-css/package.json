@@ -16,12 +16,12 @@
 		"dev": "vite",
 		"test": "pnpm typecheck && pnpm vitest",
 		"vitest": "vitest run",
-		"typecheck": "tsc --noEmit",
+		"typecheck": "tsc --noEmit && astro check --tsconfig packages/astro/tsconfig.json",
 		"build": "pnpm build:js && pnpm build:css",
 		"build:js": "vite build && pnpm exec tsc -p config/tsconfig.json",
 		"build:css": "tsx bin/script-build-css.js",
 		"lint": "pnpm lint:eslint && pnpm lint:style",
-		"lint:eslint": "eslint '**/*.{js,mjs,ts,tsx}'",
+		"lint:eslint": "eslint '**/*.{js,mjs,ts,tsx,astro}'",
 		"lint:style": "stylelint '**/*.{css,scss}'",
 		"preview": "vite preview",
 		"prepack": "case \"$npm_execpath\" in *pnpm*) ;; *) echo 'Error: Use pnpm publish' && exit 1;; esac"
@@ -68,8 +68,7 @@
 		},
 		"./next-js/*": "./packages/next-js/*",
 		"./astro": {
-			"import": "./packages/astro/index.js",
-			"types": "./packages/types/index.d.ts"
+			"import": "./packages/astro/index.ts"
 		},
 		"./astro/*": "./packages/astro/*",
 		"./scss/*": "./src/scss/*",
@@ -94,6 +93,7 @@
 		"@testing-library/react": "^16.3.2",
 		"@types/node": "^25.5.0",
 		"@vitejs/plugin-react-swc": "^3.11.0",
+		"astro": "^5.18.1",
 		"glob": "^13.0.6",
 		"jsdom": "^27.4.0",
 		"lucide-react": "^0.577.0",

@@ -1,20 +1,19 @@
 import atts from '../../../lib/helper/atts';
 import getFilterProps, { type FilterProps } from '../../getFilterProps';
 import setMaybeTransformStyles, { type TransformStyleProps } from '../../setMaybeTransformStyles';
-import type { LismComponentProps } from '../../Lism/Lism';
 import type { LismProps } from '../../../lib/getLismProps';
 import type { StyleWithCustomProps } from '../../../lib/types';
 
-type DecoratorOwnProps = {
+export type DecoratorOwnProps = {
 	size?: string;
 	clipPath?: string;
 	boxSizing?: string;
 };
 
-export type DecoratorProps = LismComponentProps & TransformStyleProps & FilterProps & DecoratorOwnProps;
+export type DecoratorProps = LismProps & TransformStyleProps & FilterProps & DecoratorOwnProps;
 
 // translate → rotate → scale
-export default function getDecoratorProps({ lismClass, size, clipPath, boxSizing, style: outerStyle, ...rest }: DecoratorProps): LismComponentProps {
+export default function getDecoratorProps({ lismClass, size, clipPath, boxSizing, style: outerStyle, ...rest }: DecoratorProps): LismProps {
 	const style: StyleWithCustomProps = outerStyle ?? {};
 
 	// rest の型が複雑な union になり TS2590 が発生するため、object にキャストしてから渡す
@@ -35,7 +34,7 @@ export default function getDecoratorProps({ lismClass, size, clipPath, boxSizing
 
 	props.style = style;
 
-	const defaultProps: LismComponentProps = {
+	const defaultProps: LismProps = {
 		lismClass: atts(lismClass, `a--decorator`),
 		'aria-hidden': 'true',
 	};
