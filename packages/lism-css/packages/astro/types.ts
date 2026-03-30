@@ -20,8 +20,7 @@ type AstroHTMLAttributesRaw = astroHTML.JSX.HTMLAttributes &
 	astroHTML.JSX.FormHTMLAttributes &
 	astroHTML.JSX.InputHTMLAttributes &
 	astroHTML.JSX.SelectHTMLAttributes &
-	astroHTML.JSX.TextareaHTMLAttributes &
-	astroHTML.JSX.TimeHTMLAttributes;
+	astroHTML.JSX.TextareaHTMLAttributes;
 
 /** LismProps と同名のキーを除外し、Lism 側の型を優先させる */
 type AstroHTMLAttributes = Omit<AstroHTMLAttributesRaw, keyof LismProps | keyof AstroLayoutProps>;
