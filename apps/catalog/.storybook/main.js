@@ -26,6 +26,9 @@ const config = {
 		getAbsolutePath('@storybook/addon-onboarding'),
 	],
 	framework: getAbsolutePath('@storybook/react-vite'),
+	core: {
+		builder: getAbsolutePath('@storybook/builder-vite'),
+	},
 	viteFinal: (config) => {
 		config.plugins = config.plugins || [];
 		config.plugins.push(react());
