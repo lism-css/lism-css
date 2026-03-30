@@ -1,10 +1,11 @@
 ---
+import type { AstroLismProps } from '../types';
 import type { MediaProps } from 'lism-css/react/atomic/Media/getProps';
 import getLismProps from 'lism-css/lib/getLismProps';
 import getMediaProps from 'lism-css/react/atomic/Media/getProps';
 import { Image } from 'astro:assets';
 
-type Props = MediaProps;
+interface Props extends AstroLismProps, MediaProps {}
 
 const { as, exProps, ...props } = Astro.props || {};
 
