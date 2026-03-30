@@ -27,7 +27,7 @@ const config = {
 	],
 	framework: getAbsolutePath('@storybook/react-vite'),
 	core: {
-		builder: getAbsolutePath('@storybook/builder-vite'),
+		builder: '@storybook/builder-vite',
 	},
 	viteFinal: (config) => {
 		config.plugins = config.plugins || [];
