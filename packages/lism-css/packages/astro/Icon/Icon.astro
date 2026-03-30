@@ -13,7 +13,7 @@ type Props = Omit<AstroLismProps, 'as'> & IconProps & AstroIconElementProps;
 // let { IconTag, iconProps, otherProps } = getProps(props, hasChildren);
 // if (IconTag === '_SVG_') IconTag = SVG;
 
-let { Component, lismProps, exProps = {}, content } = getProps(Astro.props as IconProps);
+let { Component, lismProps, exProps = {}, content } = getProps(Astro.props);
 
 if (Component === '_SVG_') {
 	Component = SVG;
