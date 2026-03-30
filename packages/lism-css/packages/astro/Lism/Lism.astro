@@ -8,6 +8,6 @@ const { as, exProps, ...props } = Astro.props;
 const JSX = as || 'div';
 ---
 
-<JSX {...getLismProps(props) as Record<string, unknown>} {...exProps}>
+<JSX {...getLismProps(props)} {...exProps}>
 	<slot />
 </JSX>
