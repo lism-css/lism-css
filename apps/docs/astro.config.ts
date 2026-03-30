@@ -1,4 +1,5 @@
 import { defineConfig } from 'astro/config';
+import sitemap from '@astrojs/sitemap';
 import react from '@astrojs/react';
 import mdx from '@astrojs/mdx';
 import expressiveCode from 'astro-expressive-code';
@@ -56,6 +57,7 @@ export default defineConfig({
 		mdx({
 			optimize: true,
 		}),
+		sitemap(),
 	],
 	// CodeFileコンポーネント用のシンタックスハイライト設定
 	markdown: {
