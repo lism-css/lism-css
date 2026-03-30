@@ -8,7 +8,7 @@
  * プレビューiframeは /templates/{category}/{id}/preview/ を参照
  */
 import BaseLayout from '@/layouts/BaseLayout.astro';
-import { Stack, Flow, Frame, Text, HTML } from 'lism-css/astro';
+import { Stack, Flow, HTML } from 'lism-css/astro';
 import { PreviewFrame, PreviewTitle } from '@/components/Preview';
 import SrcCode from '@/components/mdx/SrcCode.astro';
 import { templates, type TemplateCategoryId } from '@/config/templates';
@@ -37,11 +37,6 @@ const categoryData = templates[category as TemplateCategoryId];
 // プレビューURLとコード埋め込み用のパス
 const previewUrl = `/preview/templates/${category}/${id}/`;
 const templatePath = `src/pages/preview/templates/${category}/${id}`;
-
-// GitHub埋め込み用URL（旧docsと同じ形式）
-const branch = import.meta.env.MODE === 'development' ? 'dev' : 'main';
-const githubBasePath = `https://github.com/lism-css/lism-css/blob/${branch}/apps/docs-new/${templatePath}/index.astro`;
-const queryMeta = 'style=github-dark&type=code&showLineNumbers=on&showFileMeta=on&showCopy=on';
 ---
 
 <BaseLayout title={`${template.title} - Templates`} description={template.description} excludeFromSearch>

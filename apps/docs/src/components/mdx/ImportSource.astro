@@ -1,9 +1,9 @@
 ---
 import { Icon, Flex } from 'lism-css/astro';
-import { Preview, PreviewCode, PreviewTitle } from '@/components/mdx';
+import { Preview, PreviewCode } from '@/components/mdx';
 import EmbedCode from './EmbedCode.astro';
 
-const { name = '', hasRoot = false, react, astro, css, others = [], ...props } = Astro.props;
+const { name = '', hasRoot = false, react, astro, css, others = [] } = Astro.props;
 ---
 
 <Preview>
@@ -41,10 +41,10 @@ const { name = '', hasRoot = false, react, astro, css, others = [], ...props } =
 		)
 	}
 	{
-		others.map((path) => {
+		others.map((path: string) => {
 			// pathの例: /apps/docs/src/components/ex/ 以降を渡して使う
 			return (
-				<PreviewCode slot="tab" label={path} key={path}>
+				<PreviewCode slot="tab" label={path}>
 					<EmbedCode srcPath={`src/components/ex/${name}/${path}`} />
 				</PreviewCode>
 			);

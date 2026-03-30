@@ -1,5 +1,4 @@
 name: Test
-
 on:
   push:
     branches:
@@ -20,11 +19,17 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '22'
-          cache: 'pnpm'
+          node-version: "22"
+          cache: "pnpm"
 
       - name: Install dependencies
         run: pnpm install
+
+      - name: Run typecheck
+        run: pnpm typecheck
+
+      - name: Run lint
+        run: pnpm lint
 
       - name: Run tests
         run: pnpm test

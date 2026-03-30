@@ -48,7 +48,7 @@ async function getTemplatePaths(): Promise<Array<{ category: string; id: string 
 	const { templates } = await import('../src/config/templates.ts');
 	const paths: Array<{ category: string; id: string }> = [];
 	for (const [categoryId, category] of Object.entries(templates)) {
-		for (const item of category.items) {
+		for (const item of category.items as Array<{ id: string; draft?: boolean }>) {
 			if (!item.draft) {
 				paths.push({ category: categoryId, id: item.id });
 			}

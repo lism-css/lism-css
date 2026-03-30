@@ -39,7 +39,7 @@ export function TipCode({
 	color?: string;
 	children?: React.ReactNode;
 	[key: string]: any;
-}): JSX.Element {
+}): React.JSX.Element {
 	// text が "container:" を含むかどうかを判定
 	if (!color) {
 		if (text.includes('contentSize:')) {
@@ -64,7 +64,7 @@ export function TipCode({
 	);
 }
 
-export function GutterGuide(props?: any) {
+export function GutterGuide() {
 	return <Layer className="set--gutterGuide" my-s="0" />;
 }
 

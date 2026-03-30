@@ -4,15 +4,11 @@
  * Lism CSSの紹介とドキュメントへの導線
  */
 import SimpleLayout from '@/layouts/SimpleLayout.astro';
-import { Container, Stack, Columns, Grid, HTML, Spacer, Icon, Flex, Text, Frame, LinkBox, Lism } from 'lism-css/astro';
+import { Stack, Grid, HTML, Icon, Flex, Lism } from 'lism-css/astro';
 import { Button } from '@lism-css/ui/astro';
 import Gradbox from '@/components/parts/Gradbox.astro';
 import { siteConfig } from '@/config/site';
-import { getRootLang } from '@/lib/i18n';
 import LismExDemo from '@/content/ja/_demo/LismExDemo.mdx';
-
-// 現在の言語（root言語）
-const currentLang = getRootLang();
 
 // 特徴ポイント
 const POINTS = [
@@ -48,13 +44,6 @@ const FEATURES = [
 	{ keycolor: 'blue', title: 'ビルド不要', desc: 'No config, No build. Just load the CSS to start using.' },
 	{ keycolor: 'purple', title: 'モダンCSS', desc: '@layer, Container Query, Grid, CSS Variables' },
 	{ keycolor: 'green', title: '無料', desc: 'Lism CSS is available for free.' },
-];
-
-// ナビゲーションカード
-const NAV_CARDS = [
-	{ href: '/docs/', title: 'Docs', desc: 'Lism CSSの使い方やコンポーネントの詳細' },
-	{ href: '/ui/', title: 'UI Components', desc: 'すぐに使えるUIコンポーネント集' },
-	{ href: '/templates/', title: 'Templates', desc: 'Webサイト用のテンプレート集' },
 ];
 ---
 

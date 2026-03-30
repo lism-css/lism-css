@@ -14,7 +14,7 @@
 	],
 	"scripts": {
 		"dev": "vite",
-		"test": "pnpm typecheck && pnpm vitest",
+		"test": "pnpm vitest",
 		"vitest": "vitest run",
 		"typecheck": "tsc --noEmit && astro check --tsconfig packages/astro/tsconfig.json",
 		"build": "pnpm build:js && pnpm build:css",
@@ -94,15 +94,20 @@
 		"@types/node": "^25.5.0",
 		"@vitejs/plugin-react-swc": "^3.11.0",
 		"astro": "^5.18.1",
+		"eslint": "^9.39.4",
 		"glob": "^13.0.6",
 		"jsdom": "^27.4.0",
 		"lucide-react": "^0.577.0",
 		"rollup": "^4.59.0",
+		"stylelint": "^17.4.0",
 		"tsx": "^4.21.0",
 		"typescript": "~5.8.3",
 		"unplugin-dts": "1.0.0-beta.6",
 		"vite": "^6.4.1",
 		"vitest": "^4.1.0"
+	},
+	"dependencies": {
+		"csstype": "^3.2.3"
 	},
 	"peerDependencies": {
 		"@types/react": "*",

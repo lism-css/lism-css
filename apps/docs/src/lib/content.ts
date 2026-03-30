@@ -31,7 +31,7 @@ export async function getPostsByLang(lang: LangCode, includeDraft = import.meta.
  */
 export async function getPostBySlug(lang: LangCode, slug: string, includeDraft = import.meta.env.DEV): Promise<PostEntry | undefined> {
 	const posts = await getPostsByLang(lang, includeDraft);
-	return posts.find((post) => post.slug === slug);
+	return posts.find((post) => post.id === slug);
 }
 
 /**
@@ -87,5 +87,5 @@ export async function getAllPosts(includeDraft = import.meta.env.DEV): Promise<
 export async function getRootLangSlugs(includeDraft = import.meta.env.DEV): Promise<string[]> {
 	const rootLang = getRootLang();
 	const posts = await getPostsByLang(rootLang, includeDraft);
-	return posts.map((post) => post.slug);
+	return posts.map((post) => post.id);
 }

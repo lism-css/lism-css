@@ -16,7 +16,7 @@ interface Props {
 	description?: string;
 }
 
-const { path, title: manualTitle, description: manualDescription } = Astro.props;
+const { path, title: manualTitle } = Astro.props;
 
 // 現在の言語を取得
 const currentLang = getLangFromUrl(Astro.url);

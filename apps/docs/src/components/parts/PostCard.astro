@@ -3,7 +3,7 @@
  * 記事カードコンポーネント
  * 言語対応：リンクに言語プレフィックスを追加
  */
-import { Frame, Cluster, LinkBox, HTML } from 'lism-css/astro';
+import { Cluster, LinkBox, HTML } from 'lism-css/astro';
 import TagLink from '@parts/TagLink.astro';
 import type { PostEntry } from '@/lib/content';
 import { getRootLang, getLocalizedUrl, type LangCode } from '@/lib/i18n';
@@ -20,7 +20,7 @@ const { post, lang = getRootLang() } = Astro.props;
 const isDraft = post.data.draft;
 
 // 言語対応のリンク生成
-const postUrl = getLocalizedUrl(`/${post.slug}`, lang);
+const postUrl = getLocalizedUrl(`/${post.id}`, lang);
 const getTagUrl = (tag: string) => getLocalizedUrl(`/tags/${tag}`, lang);
 
 // 日付のフォーマット（言語に応じてロケールを変更）
@@ -42,7 +42,7 @@ const dateLocale = lang === 'ja' ? 'ja-JP' : 'en-US';
 >
 	{/* サムネイル画像: heroがあればそれを、なければOG画像を使用 */}
 	<!-- <Frame ar="1200/630" bgc="base-3">
-		<img src={post.data.hero || `/og/${post.slug}.png`} alt={post.data.title} loading="lazy" />
+		<img src={post.data.hero || `/og/${post.id}.png`} alt={post.data.title} loading="lazy" />
 	</Frame> -->
 
 	<HTML.h lv="3" class="c--postCard__title" fz="m" fw="bold" lh="xs" style={{ '--focus-offset': '2px' }}>
@@ -53,9 +53,9 @@ const dateLocale = lang === 'ja' ? 'ja-JP' : 'en-US';
 	</HTML.p>
 	<Cluster g="10" my-s="auto" py-s="20">
 		{
-			post.data.tags.length > 0 && (
+			(post.data.tags ?? []).length > 0 && (
 				<Cluster g="5">
-					{post.data.tags.map((tag) => (
+					{(post.data.tags ?? []).map((tag) => (
 						<TagLink href={getTagUrl(tag)} fz="xs">
 							#{tag}
 						</TagLink>
@@ -63,9 +63,13 @@ const dateLocale = lang === 'ja' ? 'ja-JP' : 'en-US';
 				</Cluster>
 			)
 		}
-		<HTML.span as="time" datetime={post.data.date.toISOString()} fz="2xs" o="-10" mx-s="auto">
-			{post.data.date.toLocaleDateString(dateLocale)}
-		</HTML.span>
+		{
+			post.data.date && (
+				<HTML.span as="time" datetime={post.data.date.toISOString()} fz="2xs" o="-10" mx-s="auto">
+					{post.data.date.toLocaleDateString(dateLocale)}
+				</HTML.span>
+			)
+		}
 	</Cluster>
 </LinkBox>
 

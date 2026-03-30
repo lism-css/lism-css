@@ -4,8 +4,8 @@
  * content/ja/ui/ 配下のMDXを一覧表示
  */
 import BaseLayout from '@/layouts/BaseLayout.astro';
-import { Stack, Grid, HTML, LinkBox, Frame, Lism, Media } from 'lism-css/astro';
-import { getPostsByLang, type PostEntry } from '@/lib/content';
+import { Stack, Grid, LinkBox, Frame, Lism, Media } from 'lism-css/astro';
+import { getPostsByLang } from '@/lib/content';
 import { getRootLang } from '@/lib/i18n';
 import fs from 'node:fs';
 import path from 'node:path';
@@ -16,7 +16,7 @@ const allPosts = await getPostsByLang(currentLang);
 
 // ui/ 配下の記事のみフィルタリング（examples配下は除く）
 const uiPosts = allPosts
-	.filter((post) => post.slug.startsWith('ui/') && !post.slug.startsWith('ui/examples/'))
+	.filter((post) => post.id.startsWith('ui/') && !post.id.startsWith('ui/examples/'))
 	.sort((a, b) => {
 		// order順にソート（未指定は999）
 		const orderA = a.data.order ?? 999;
@@ -26,7 +26,7 @@ const uiPosts = allPosts
 
 // ui/examples/ 配下の記事を別途フィルタリング
 const examplePosts = allPosts
-	.filter((post) => post.slug.startsWith('ui/examples/'))
+	.filter((post) => post.id.startsWith('ui/examples/'))
 	.sort((a, b) => {
 		// order順にソート（未指定は999）
 		const orderA = a.data.order ?? 999;
@@ -65,19 +65,10 @@ function getThumbPath(title: string): string {
 			<Grid layout="fluidCols" cols="240px" g="30" my-s="40">
 				{
 					uiPosts.map((post) => {
-						const postUrl = `/ui/${post.slug.replace('ui/', '')}/`;
+						const postUrl = `/ui/${post.id.replace('ui/', '')}/`;
 						const thumbPath = getThumbPath(post.data.title);
 						return (
-							<LinkBox
-								key={post.slug}
-								layout="stack"
-								href={postUrl}
-								p="5"
-								g="5"
-								bdrs="20"
-								hov="neutral"
-								class={post.data.draft ? '_draft' : ''}
-							>
+							<LinkBox layout="stack" href={postUrl} p="5" g="5" bdrs="20" hov="neutral" class={post.data.draft ? '_draft' : ''}>
 								<Frame ar="3/2" bd bdrs="20" bgc="base">
 									<Media src={thumbPath} alt={post.data.title} width="360" height="240" loading="lazy" />
 								</Frame>
@@ -97,19 +88,10 @@ function getThumbPath(title: string): string {
 					</Stack>
 					<Grid layout="fluidCols" cols="240px" g="30" my-s="40">
 						{examplePosts.map((post) => {
-							const postUrl = `/ui/${post.slug.replace('ui/', '')}/`;
+							const postUrl = `/ui/${post.id.replace('ui/', '')}/`;
 							const thumbPath = getThumbPath(post.data.title);
 							return (
-								<LinkBox
-									key={post.slug}
-									layout="stack"
-									href={postUrl}
-									p="5"
-									g="5"
-									bdrs="20"
-									hov="neutral"
-									class={post.data.draft ? '_draft' : ''}
-								>
+								<LinkBox layout="stack" href={postUrl} p="5" g="5" bdrs="20" hov="neutral" class={post.data.draft ? '_draft' : ''}>
 									<Frame ar="3/2" bd bdrs="20" bgc="base">
 										<Media src={thumbPath} alt={post.data.title} width="360" height="240" loading="lazy" />
 									</Frame>

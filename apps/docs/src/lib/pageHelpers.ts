@@ -36,7 +36,7 @@ export async function getPostPathsForRoot(): Promise<PostPath[]> {
 	const posts = await getPostsByLang(rootLang);
 
 	return posts.map((entry) => ({
-		params: { slug: entry.slug },
+		params: { slug: entry.id },
 		props: { lang: rootLang, entry },
 	}));
 }
@@ -84,7 +84,7 @@ export async function getPaginationPathsForRoot(): Promise<PaginationPath[]> {
 	const allPosts = await getPostsByLang(rootLang);
 
 	// 日付の降順でソート
-	const sortedPosts = allPosts.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+	const sortedPosts = allPosts.sort((a, b) => (b.data.date?.valueOf() ?? 0) - (a.data.date?.valueOf() ?? 0));
 
 	// 総ページ数を計算
 	const totalPages = Math.ceil(sortedPosts.length / postsPerPage);
@@ -121,7 +121,7 @@ export async function getPaginationPathsForNonRoot(): Promise<PaginationPath[]> 
 		const allPosts = await getPostsByLang(lang);
 
 		// 日付の降順でソート
-		const sortedPosts = allPosts.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+		const sortedPosts = allPosts.sort((a, b) => (b.data.date?.valueOf() ?? 0) - (a.data.date?.valueOf() ?? 0));
 
 		// 総ページ数を計算
 		const totalPages = Math.ceil(sortedPosts.length / postsPerPage);
@@ -162,10 +162,10 @@ export interface TagPath {
 export async function getTagPathsForRoot(): Promise<TagPath[]> {
 	const rootLang = getRootLang();
 	const posts = await getPostsByLang(rootLang);
-	const tags = [...new Set(posts.flatMap((post) => post.data.tags))];
+	const tags = [...new Set(posts.flatMap((post) => post.data.tags ?? []))].filter((tag): tag is string => tag != null);
 
 	return tags.map((tag) => {
-		const filteredPosts = posts.filter((post) => post.data.tags.includes(tag));
+		const filteredPosts = posts.filter((post) => (post.data.tags ?? []).includes(tag));
 		return {
 			params: { tag },
 			props: { lang: rootLang, posts: filteredPosts },
@@ -192,10 +192,10 @@ export async function getTagPathsForNonRoot(): Promise<TagPath[]> {
 			tagsSource = await getPostsByLang(rootLang);
 		}
 
-		const tags = [...new Set(tagsSource.flatMap((post) => post.data.tags))];
+		const tags = [...new Set(tagsSource.flatMap((post) => post.data.tags ?? []))].filter((tag): tag is string => tag != null);
 
 		for (const tag of tags) {
-			const filteredPosts = posts.filter((post) => post.data.tags.includes(tag));
+			const filteredPosts = posts.filter((post) => (post.data.tags ?? []).includes(tag));
 			paths.push({
 				params: { lang, tag },
 				props: { lang, posts: filteredPosts },
@@ -243,8 +243,8 @@ export async function getOgPathsForRoot(): Promise<OgPath[]> {
 	const posts = await getPostsByLang(rootLang);
 
 	return posts.map((post) => ({
-		params: { slug: post.slug },
-		props: { lang: rootLang, slug: post.slug },
+		params: { slug: post.id },
+		props: { lang: rootLang, slug: post.id },
 	}));
 }
 
@@ -257,7 +257,7 @@ export async function getOgPathsForNonRoot(): Promise<OgPath[]> {
 
 	// root言語の全記事を取得してslugリストを作成
 	const rootPosts = await getPostsByLang(rootLang);
-	const rootSlugs = rootPosts.map((post) => post.slug);
+	const rootSlugs = rootPosts.map((post) => post.id);
 
 	const paths: OgPath[] = [];
 
@@ -296,7 +296,7 @@ export async function generateOgImage(lang: LangCode, slug: string): Promise<Res
 	if (existsSync(cachePath)) {
 		console.log(`[OG] Cache hit: ${lang}/${slug}`);
 		const cachedPng = readFileSync(cachePath);
-		return new Response(cachedPng as any, {
+		return new Response(new Uint8Array(cachedPng), {
 			headers: { 'Content-Type': 'image/png' },
 		});
 	}
@@ -313,7 +313,7 @@ export async function generateOgImage(lang: LangCode, slug: string): Promise<Res
 	}
 	writeFileSync(cachePath, png);
 
-	return new Response(png as any, {
+	return new Response(new Uint8Array(png), {
 		headers: { 'Content-Type': 'image/png' },
 	});
 }

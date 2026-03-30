@@ -13,6 +13,7 @@ export default defineConfig(
 		ignores: [
 			'**/dist/**',
 			'**/node_modules/**',
+			'**/.astro/**',
 			'**/.turbo/**',
 			'apps/playgrounds/**',
 			'apps/catalog/.storybook/**',

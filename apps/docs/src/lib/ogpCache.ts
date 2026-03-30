@@ -34,6 +34,20 @@ interface CacheEntry {
 }
 
 /**
+ * パースした値が CacheEntry かどうかを検証する型ガード
+ */
+function isCacheEntry(value: unknown): value is CacheEntry {
+	return (
+		typeof value === 'object' &&
+		value !== null &&
+		'data' in value &&
+		'fetchedAt' in value &&
+		typeof (value as CacheEntry).fetchedAt === 'number' &&
+		'url' in value
+	);
+}
+
+/**
  * URLからキャッシュキー（ハッシュ）を生成
  */
 function generateCacheKey(url: string): string {
@@ -61,7 +75,14 @@ export function getOgpFromCache(url: string): OgpData | null {
 
 	try {
 		const cacheContent = readFileSync(cachePath, 'utf-8');
-		const cacheEntry: CacheEntry = JSON.parse(cacheContent);
+		const parsed: unknown = JSON.parse(cacheContent);
+
+		if (!isCacheEntry(parsed)) {
+			console.warn(`[OGP] Invalid cache format for ${url}`);
+			return null;
+		}
+
+		const cacheEntry = parsed;
 
 		// 有効期限をチェック
 		const now = Date.now();

@@ -41,8 +41,8 @@ const allPosts = await getPostsByLang(lang);
 // カテゴリー（slugの最初の部分）でグループ化
 const postsByCategory = allPosts.reduce(
 	(acc, post) => {
-		const hasSlash = post.slug.includes('/');
-		const category = hasSlash ? post.slug.split('/')[0] : '/';
+		const hasSlash = post.id.includes('/');
+		const category = hasSlash ? post.id.split('/')[0] : '/';
 		if (!acc[category]) {
 			acc[category] = [];
 		}
@@ -88,7 +88,7 @@ for (const section of sectionItems) {
 			const link = typeof navItem === 'string' ? navItem : navItem.link;
 			// linkからslugを取得
 			const slug = extractSlugFromUrl(link);
-			const post = allPosts.find((p) => p.slug === slug);
+			const post = allPosts.find((p) => p.id === slug);
 			if (post) {
 				orderedPosts.push(post);
 			}
@@ -97,7 +97,7 @@ for (const section of sectionItems) {
 }
 
 // 現在の記事のインデックスを取得
-const currentIndex = orderedPosts.findIndex((post) => post.slug === currentSlug);
+const currentIndex = orderedPosts.findIndex((post) => post.id === currentSlug);
 
 // 前後の記事を取得
 const prevPost: PostEntry | undefined = currentIndex > 0 ? orderedPosts[currentIndex - 1] : undefined;
@@ -117,7 +117,7 @@ const label = t(lang, 'postNav');
 				{/* 前の記事 */}
 				<Lism class="c--postNav__item -prev">
 					{prevPost ? (
-						<a href={getLocalizedUrl(getPostUrl(prevPost.slug), lang)} class="c--postNav__link">
+						<a href={getLocalizedUrl(getPostUrl(prevPost.id), lang)} class="c--postNav__link">
 							<HTML.span class="c--postNav__label" fz="xs" o="-10">
 								{label.prev}
 							</HTML.span>
@@ -131,7 +131,7 @@ const label = t(lang, 'postNav');
 				{/* 次の記事 */}
 				<Lism class="c--postNav__item -next">
 					{nextPost ? (
-						<a href={getLocalizedUrl(getPostUrl(nextPost.slug), lang)} class="c--postNav__link">
+						<a href={getLocalizedUrl(getPostUrl(nextPost.id), lang)} class="c--postNav__link">
 							<HTML.span class="c--postNav__label" fz="xs" o="-10">
 								{label.next}
 							</HTML.span>
