@@ -25,8 +25,14 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
-      - name: Run typecheck
-        run: pnpm typecheck
+      - name: Build
+        run: pnpm build
+
+      - name: Typecheck lism-css
+        run: pnpm --filter lism-css run typecheck
+
+      - name: Typecheck docs
+        run: pnpm --filter lism-docs run typecheck
 
       - name: Run lint
         run: pnpm lint
