@@ -74,9 +74,9 @@ describe('getMaybeSpaceVar', () => {
 			expect(getMaybeSpaceVar(100)).toBe('var(--s100)');
 		});
 
-		test('負の数値も変換される', () => {
-			expect(getMaybeSpaceVar(-10)).toBe('var(--s-10)');
-			expect(getMaybeSpaceVar(-20)).toBe('var(--s-20)');
+		test('負の数値は calc(-1 * var(--s{abs})) に変換される', () => {
+			expect(getMaybeSpaceVar(-10)).toBe('calc(-1 * var(--s10))');
+			expect(getMaybeSpaceVar(-20)).toBe('calc(-1 * var(--s20))');
 		});
 	});
 
@@ -87,9 +87,9 @@ describe('getMaybeSpaceVar', () => {
 			expect(getMaybeSpaceVar('100')).toBe('var(--s100)');
 		});
 
-		test('負の数値文字列も変換される', () => {
-			expect(getMaybeSpaceVar('-10')).toBe('var(--s-10)');
-			expect(getMaybeSpaceVar('-20')).toBe('var(--s-20)');
+		test('負の数値文字列も calc(-1 * var(--s{abs})) に変換される', () => {
+			expect(getMaybeSpaceVar('-10')).toBe('calc(-1 * var(--s10))');
+			expect(getMaybeSpaceVar('-20')).toBe('calc(-1 * var(--s20))');
 		});
 	});
 
@@ -98,6 +98,11 @@ describe('getMaybeSpaceVar', () => {
 			expect(getMaybeSpaceVar('10 20')).toBe('var(--s10) var(--s20)');
 			expect(getMaybeSpaceVar('10 20 30')).toBe('var(--s10) var(--s20) var(--s30)');
 			expect(getMaybeSpaceVar('0 10 20 30')).toBe('0 var(--s10) var(--s20) var(--s30)');
+		});
+
+		test('スペース区切りに負の値が混在する場合も処理される', () => {
+			expect(getMaybeSpaceVar('-20 30')).toBe('calc(-1 * var(--s20)) var(--s30)');
+			expect(getMaybeSpaceVar('10 -20')).toBe('var(--s10) calc(-1 * var(--s20))');
 		});
 
 		test('スペース区切りに数値以外が混在する場合も処理される', () => {
