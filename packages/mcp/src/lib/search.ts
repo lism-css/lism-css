@@ -51,18 +51,47 @@ export function buildCssPropertyMap(categories: PropCategory[]): Map<string, str
 }
 
 /**
- * 検索クエリをCSSプロパティ名で展開する。
- * 例: "font-size" → "font-size fz", "padding" → "padding p"
+ * Prop Class 記法（例: "-g:5", ".-p:20"）からprop名を抽出する。
+ * マッチしなければ null を返す。
  */
-function expandQueryWithCssProps(query: string, cssPropertyMap?: Map<string, string[]>): string {
-	if (!cssPropertyMap) return query;
+function parsePropClassNotation(token: string): { prop: string; value: string } | null {
+	// ".-g:5" or "-g:5" → prop="g", value="5"
+	const match = token.match(/^\.?-([a-z][a-z0-9-]*):(.+)$/i);
+	if (!match) return null;
+	return { prop: match[1].toLowerCase(), value: match[2] };
+}
 
-	const queryLower = query.toLowerCase();
+/**
+ * 検索クエリをCSSプロパティ名やProp Class記法で展開する。
+ * 例: "font-size" → "font-size fz"
+ * 例: "-g:5" → "-g:5 g gap prop class"
+ */
+function expandQuery(query: string, cssPropertyMap?: Map<string, string[]>): string {
 	const additions: string[] = [];
 
-	for (const [cssProp, lismProps] of cssPropertyMap) {
-		if (queryLower.includes(cssProp)) {
-			additions.push(...lismProps);
+	// Prop Class 記法の展開（例: "-g:5" → "g", "gap"）
+	const queryLower = query.toLowerCase();
+	const parsed = parsePropClassNotation(queryLower.trim());
+	if (parsed) {
+		additions.push(parsed.prop);
+		// prop名から逆引きでCSSプロパティ名も追加
+		if (cssPropertyMap) {
+			for (const [cssProp, lismProps] of cssPropertyMap) {
+				if (lismProps.includes(parsed.prop)) {
+					additions.push(cssProp);
+				}
+			}
+		}
+		// Prop Class 関連のキーワードを追加してページヒット率を上げる
+		additions.push('prop class');
+	}
+
+	// CSSプロパティ名の展開
+	if (cssPropertyMap) {
+		for (const [cssProp, lismProps] of cssPropertyMap) {
+			if (queryLower.includes(cssProp)) {
+				additions.push(...lismProps);
+			}
 		}
 	}
 
@@ -125,8 +154,8 @@ export interface SearchDocsOptions {
 export function searchDocs(entries: DocsEntry[], query: string, options?: SearchDocsOptions): SearchResult[] {
 	const { category, limit = 10, aliasMap, cssPropertyMap } = options ?? {};
 
-	// CSSプロパティ名をLism prop名に展開してからトークナイズ
-	const expandedQuery = expandQueryWithCssProps(query, cssPropertyMap);
+	// CSSプロパティ名・Prop Class記法をLism prop名に展開してからトークナイズ
+	const expandedQuery = expandQuery(query, cssPropertyMap);
 	const queryTokens = tokenize(expandedQuery);
 	if (queryTokens.length === 0) return [];
 

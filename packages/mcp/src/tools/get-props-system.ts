@@ -42,7 +42,9 @@ export function registerGetPropsSystem(server: McpServer): void {
 					return success(data as unknown as Record<string, unknown>);
 				}
 
-				const queryLower = prop.toLowerCase();
+				// Prop Class 記法（例: "-g:5", ".-p:20"）を prop 名に正規化
+				const propClassMatch = prop.match(/^\.?-([a-z][a-z0-9-]*)(:.+)?$/i);
+				const queryLower = propClassMatch ? propClassMatch[1].toLowerCase() : prop.toLowerCase();
 				const matched: PropCategory[] = [];
 
 				for (const cat of data.categories) {
