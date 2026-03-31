@@ -1,6 +1,9 @@
 
-## 更新
-`/docs-update`コマンドを使う
+## package 更新を反映
+`/docs-update` コマンドを使う
+
+### cdn読み込みの紹介部分のバージョン番号を更新する処理
+`nr sync:cdn-versions` を実行する
 
 ## 翻訳
 

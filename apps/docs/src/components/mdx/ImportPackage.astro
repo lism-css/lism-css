@@ -1,15 +1,27 @@
 ---
 // eslint-disable
+import { readFileSync } from 'node:fs';
+import { resolve } from 'node:path';
 import AstroCode from './AstroCode.astro';
 import { Preview, PreviewCode } from '@/components/mdx';
 
 const { component = '', script = '', packageName = 'lism-css', css = '' } = Astro.props;
 
+// パッケージのバージョンを取得（SrcCode.astro と同じパターン）
+const PKG_DIR_MAP: Record<string, string> = {
+	'lism-css': 'lism-css',
+	'@lism-css/ui': 'lism-ui',
+};
+const pkgDir = PKG_DIR_MAP[packageName] || packageName;
+const { version: pkgVersion } = JSON.parse(
+	readFileSync(resolve(process.cwd(), '../../packages', pkgDir, 'package.json'), 'utf-8')
+);
+
 const getCopyCode = (name: string) => `import { ${component} } from '${packageName}${name}';`;
 
-const jsImportCode = `<script type=\"module\" src=\"https://cdn.jsdelivr.net/npm/${packageName}/dist/scripts/${script}\"></script>`;
+const jsImportCode = `<script type=\"module\" src=\"https://cdn.jsdelivr.net/npm/${packageName}@${pkgVersion}/dist/scripts/${script}\"></script>`;
 
-const cssImportCode = `<link href="https://cdn.jsdelivr.net/npm/${packageName}/dist/${css}" rel="stylesheet" />`;
+const cssImportCode = `<link href="https://cdn.jsdelivr.net/npm/${packageName}@${pkgVersion}/dist/${css}" rel="stylesheet" />`;
 ---
 
 <Preview>
