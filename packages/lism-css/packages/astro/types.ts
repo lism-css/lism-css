@@ -49,3 +49,9 @@ export interface AstroLismProps extends LismProps, AstroLayoutProps, AstroHTMLAt
 	as?: HTMLTag;
 	exProps?: Record<string, unknown>;
 }
+
+/** Polymorphic 型と組み合わせて使う共通ベース型 */
+export type AstroLismBaseProps = LismProps &
+	AstroLayoutProps & {
+		exProps?: Record<string, unknown>;
+	};

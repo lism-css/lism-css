@@ -1,14 +1,12 @@
 ---
 import type { HTMLTag, Polymorphic } from 'astro/types';
+import type { AstroLismBaseProps } from '../types';
 import type { LismProps } from 'lism-css/lib/getLismProps';
-import type { AstroLayoutProps } from '../types';
 import { Lism } from '../Lism';
 
 type Props<Tag extends HTMLTag = 'div'> = Polymorphic<{ as: Tag }> &
-	LismProps &
-	AstroLayoutProps & {
+	AstroLismBaseProps & {
 		contentSize?: LismProps['isWrapper'];
-		exProps?: Record<string, unknown>;
 	};
 
 const { contentSize = true, ...props } = Astro.props;
