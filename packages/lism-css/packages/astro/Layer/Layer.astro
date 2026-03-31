@@ -6,9 +6,9 @@ import getFilterProps, { type FilterProps } from 'lism-css/react/getFilterProps'
 
 type Props<Tag extends HTMLTag = 'div'> = Polymorphic<{ as: Tag }> & AstroLismBaseProps & FilterProps;
 
-const props = Astro.props;
+const { as: Tag = 'div', exProps, ...props } = Astro.props;
 ---
 
-<Lism isLayer {...getFilterProps(props, 'backdropFilter')}>
+<Lism isLayer as={Tag} {...getFilterProps(props, 'backdropFilter')} {...exProps}>
 	<slot />
 </Lism>
