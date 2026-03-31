@@ -9,21 +9,8 @@
  * @see https://github.com/withastro/roadmap/discussions/601
  * @see https://github.com/withastro/roadmap/discussions/398
  */
-import type { HTMLTag } from 'astro/types';
 import type { LismProps } from 'lism-css/lib/getLismProps';
 import type { LayoutType, CssValue } from 'lism-css/lib/types/LayoutProps';
-
-type AstroHTMLAttributesRaw = astroHTML.JSX.HTMLAttributes &
-	astroHTML.JSX.AnchorHTMLAttributes &
-	astroHTML.JSX.ImgHTMLAttributes &
-	astroHTML.JSX.ButtonHTMLAttributes &
-	astroHTML.JSX.FormHTMLAttributes &
-	astroHTML.JSX.InputHTMLAttributes &
-	astroHTML.JSX.SelectHTMLAttributes &
-	astroHTML.JSX.TextareaHTMLAttributes;
-
-/** LismProps と同名のキーを除外し、Lism 側の型を優先させる */
-type AstroHTMLAttributes = Omit<AstroHTMLAttributesRaw, keyof LismProps | keyof AstroLayoutProps>;
 
 /**
  * React では LayoutSpecificProps（判別可能ユニオン・12メンバー）を使用しているが、
@@ -43,11 +30,6 @@ export interface AstroLayoutProps {
 	sideW?: CssValue;
 	mainW?: CssValue;
 	breakSize?: CssValue;
-}
-
-export interface AstroLismProps extends LismProps, AstroLayoutProps, AstroHTMLAttributes {
-	as?: HTMLTag;
-	exProps?: Record<string, unknown>;
 }
 
 /** Polymorphic 型と組み合わせて使う共通ベース型 */
