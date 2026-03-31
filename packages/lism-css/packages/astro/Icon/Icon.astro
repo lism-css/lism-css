@@ -6,7 +6,7 @@ import getLismProps from 'lism-css/lib/getLismProps';
 import getProps from 'lism-css/react/atomic/Icon/getProps';
 import SVG from './SVG.astro';
 
-type Props<Tag extends HTMLTag = 'span'> = Polymorphic<{ as: Tag }> & AstroLismBaseProps & Omit<IconOwnProps, 'as' | keyof AstroLismBaseProps>;
+type Props<Tag extends HTMLTag = 'svg'> = Polymorphic<{ as: Tag }> & AstroLismBaseProps & Omit<IconOwnProps, 'as' | keyof AstroLismBaseProps>;
 
 // const hasChildren = Astro.slots.has('default');
 // let { IconTag, iconProps, otherProps } = getProps(props, hasChildren);
