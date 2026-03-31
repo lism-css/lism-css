@@ -59,6 +59,31 @@ describe('MCP Tools (integration)', () => {
 		expect(data.categories).toBeDefined();
 	});
 
+	it('get_props_system で Prop Class 記法 "-g:5" を渡すと g prop が返る', async () => {
+		const client = await createTestClient();
+		const result = await client.callTool({ name: 'get_props_system', arguments: { prop: '-g:5' } });
+		expect(result.isError).toBeFalsy();
+
+		const text = (result.content as { type: string; text: string }[])[0].text;
+		const data = JSON.parse(text);
+		expect(data.categories).toBeDefined();
+		const gProp = data.categories.flatMap((c: { props: { prop: string }[] }) => c.props).find((p: { prop: string }) => p.prop === 'g');
+		expect(gProp).toBeDefined();
+		expect(gProp.cssProperty).toBe('gap');
+	});
+
+	it('get_props_system で ".-p:20" を渡すと p prop が返る', async () => {
+		const client = await createTestClient();
+		const result = await client.callTool({ name: 'get_props_system', arguments: { prop: '.-p:20' } });
+		expect(result.isError).toBeFalsy();
+
+		const text = (result.content as { type: string; text: string }[])[0].text;
+		const data = JSON.parse(text);
+		const pProp = data.categories.flatMap((c: { props: { prop: string }[] }) => c.props).find((p: { prop: string }) => p.prop === 'p');
+		expect(pProp).toBeDefined();
+		expect(pProp.cssProperty).toBe('padding');
+	});
+
 	it('get_props_system で存在しないpropを検索すると代替提案付きの正常レスポンスを返す', async () => {
 		const client = await createTestClient();
 		const result = await client.callTool({ name: 'get_props_system', arguments: { prop: 'nonexistent_prop_xyz' } });

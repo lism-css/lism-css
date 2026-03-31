@@ -54,8 +54,17 @@ const PropCategorySchema = z.object({
 	props: z.array(PropEntrySchema),
 });
 
+const ClassNamingSchema = z.object({
+	propClass: z.string(),
+	propClassWithVariable: z.string(),
+	responsive: z.string(),
+	note: z.string(),
+	examples: z.array(z.string()),
+});
+
 export const PropsSystemDataSchema = z.object({
 	description: z.string(),
+	classNaming: ClassNamingSchema.optional(),
 	categories: z.array(PropCategorySchema),
 });
 

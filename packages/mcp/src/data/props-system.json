@@ -1,5 +1,12 @@
 {
-	"description": "Lism CSS の Props システム。React/Astro コンポーネントの props を CSS クラス (Prop Class) やインラインスタイルに変換する仕組み。レスポンシブ対応は配列記法 p={[20, 30, 40]} で sm, md ブレークポイントの値を指定可能。",
+	"description": "Lism CSS の Props システム。React/Astro コンポーネントの props を CSS クラス (Prop Class) やインラインスタイルに変換する仕組み。レスポンシブ対応は配列記法 p={[20, 30, 40]} で sm, md ブレークポイントの値を指定可能。各 prop の values に列挙された値は Prop Class としてCSSクラスが生成され、HTML の class 属性で直接使用できる。",
+	"classNaming": {
+		"propClass": "-{prop}:{value}",
+		"propClassWithVariable": "-{prop} + style=\"--{prop}: {任意値}\"",
+		"responsive": "-{prop}_{bp} + style=\"--{prop}_{bp}: {値}\"",
+		"note": "例: gapに spacing token 5 を指定: g=\"5\" → class=\"-g:5\"、paddingに20を指定: p=\"20\" → class=\"-p:20\"、font-sizeにトークン値 l を指定: fz=\"l\" → class=\"-fz:l\"。",
+		"examples": ["-g:5", "-g:20", "-p:20", "-p:40", "-fz:l", "-fz:2xl", "-d:flex", "-d:grid", "-ta:center", "-ai:center"]
+	},
 	"categories": [
 		{
 			"category": "typography",

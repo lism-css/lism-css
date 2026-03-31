@@ -60,8 +60,17 @@ export interface PropEntry {
 	values?: string[];
 }
 
+export interface ClassNaming {
+	propClass: string;
+	propClassWithVariable: string;
+	responsive: string;
+	note: string;
+	examples: string[];
+}
+
 export interface PropsSystemData {
 	description: string;
+	classNaming?: ClassNaming;
 	categories: PropCategory[];
 }
 

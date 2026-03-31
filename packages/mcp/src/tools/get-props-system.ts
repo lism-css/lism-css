@@ -2,6 +2,7 @@ import { z } from 'zod';
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { loadJSON } from '../lib/load-data.js';
 import { PropsSystemDataSchema } from '../lib/schemas.js';
+import { parsePropClassName } from '../lib/search.js';
 import { success, error, notFound, READ_ONLY_ANNOTATIONS } from '../lib/response.js';
 import type { PropCategory } from '../lib/types.js';
 
@@ -42,7 +43,7 @@ export function registerGetPropsSystem(server: McpServer): void {
 					return success(data as unknown as Record<string, unknown>);
 				}
 
-				const queryLower = prop.toLowerCase();
+				const queryLower = parsePropClassName(prop) ?? prop.toLowerCase();
 				const matched: PropCategory[] = [];
 
 				for (const cat of data.categories) {

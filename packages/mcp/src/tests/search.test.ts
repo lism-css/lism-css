@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
-import { buildAliasMap, searchDocs } from '../lib/search.js';
-import type { DocsEntry } from '../lib/types.js';
+import { buildAliasMap, buildCssPropertyMap, searchDocs } from '../lib/search.js';
+import type { DocsEntry, PropCategory } from '../lib/types.js';
 
 function entry(overrides: Partial<DocsEntry> = {}): DocsEntry {
 	return {
@@ -134,5 +134,66 @@ describe('searchDocs with aliases', () => {
 		const scoreWithout = withoutAliases.find((r) => r.heading.includes('FluidCols'))?.score ?? 0;
 
 		expect(scoreWith).toBeGreaterThan(scoreWithout);
+	});
+});
+
+describe('searchDocs with Prop Class notation', () => {
+	const propClassEntries: DocsEntry[] = [
+		entry({
+			sourcePath: 'prop-class.mdx',
+			title: 'Prop Class',
+			keywords: ['prop class', '-g:', '-g:5', '-p:', '-p:20', 'gap', 'padding'],
+			snippet: '-{prop}:{value} の形式（例: -g:5, -p:20, -fz:l）。',
+			category: 'props',
+		}),
+		entry({
+			sourcePath: 'modules/l--grid.mdx',
+			title: 'Grid / l--grid',
+			keywords: ['Grid', 'グリッド'],
+			snippet: 'CSS Gridレイアウト。',
+			category: 'modules',
+		}),
+		entry({
+			sourcePath: 'tokens.mdx',
+			title: 'Design Tokens',
+			keywords: ['spacing', 'gap'],
+			category: 'guide',
+		}),
+	];
+
+	const cssPropertyMap = buildCssPropertyMap([
+		{
+			category: 'spacing',
+			description: '',
+			props: [
+				{ prop: 'g', cssProperty: 'gap', type: 'string', responsive: true, description: '', values: ['5', '10', '20'] },
+				{ prop: 'p', cssProperty: 'padding', type: 'string', responsive: true, description: '', values: ['20', '30'] },
+			],
+		},
+	] satisfies PropCategory[]);
+
+	it('"-g:5" で Prop Class ページがヒットする', () => {
+		const results = searchDocs(propClassEntries, '-g:5', { cssPropertyMap });
+		expect(results.length).toBeGreaterThan(0);
+		expect(results[0].heading).toBe('Prop Class');
+	});
+
+	it('".-p:20" で Prop Class ページがヒットする', () => {
+		const results = searchDocs(propClassEntries, '.-p:20', { cssPropertyMap });
+		expect(results.length).toBeGreaterThan(0);
+		const propClassResult = results.find((r) => r.heading === 'Prop Class');
+		expect(propClassResult).toBeDefined();
+	});
+
+	it('"gap" で Prop Class ページと Tokens ページがヒットする', () => {
+		const results = searchDocs(propClassEntries, 'gap', { cssPropertyMap });
+		expect(results.length).toBeGreaterThanOrEqual(2);
+		const titles = results.map((r) => r.heading);
+		expect(titles).toContain('Prop Class');
+	});
+
+	it('Prop Class 記法でないクエリには影響しない', () => {
+		const results = searchDocs(propClassEntries, 'Grid', { cssPropertyMap });
+		expect(results[0].heading).toBe('Grid / l--grid');
 	});
 });
