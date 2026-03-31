@@ -1,12 +1,15 @@
 ---
-import type { AstroLismProps } from '../types';
+import type { HTMLTag, Polymorphic } from 'astro/types';
+import type { LismProps } from 'lism-css/lib/getLismProps';
 import { Lism } from '../Lism';
 
-type Props = AstroLismProps & {
-	size?: string;
-};
+type Props<Tag extends HTMLTag = 'div'> = Polymorphic<{ as: Tag }> &
+	Omit<LismProps, 'layout'> & {
+		size?: string;
+		exProps?: Record<string, unknown>;
+	};
 
-const { size, ...props } = Astro.props || {};
+const { size, ...props } = Astro.props;
 ---
 
 <Lism isContainer isWrapper={size} {...props}><slot /></Lism>
