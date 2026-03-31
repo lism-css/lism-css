@@ -50,15 +50,16 @@ export function buildCssPropertyMap(categories: PropCategory[]): Map<string, str
 	return map;
 }
 
+// ".-g:5" or "-g:5" → prop="g", value="5" / "-p" → prop="p"
+const PROP_CLASS_RE = /^\.?-([a-z][a-z0-9-]*)(:.+)?$/i;
+
 /**
- * Prop Class 記法（例: "-g:5", ".-p:20"）からprop名を抽出する。
- * マッチしなければ null を返す。
+ * Prop Class 記法（例: "-g:5", ".-p:20", "-fz"）から prop 名を抽出する。
+ * get-props-system.ts からも利用される共通ユーティリティ。
  */
-function parsePropClassNotation(token: string): { prop: string; value: string } | null {
-	// ".-g:5" or "-g:5" → prop="g", value="5"
-	const match = token.match(/^\.?-([a-z][a-z0-9-]*):(.+)$/i);
-	if (!match) return null;
-	return { prop: match[1].toLowerCase(), value: match[2] };
+export function parsePropClassName(input: string): string | null {
+	const m = input.match(PROP_CLASS_RE);
+	return m ? m[1].toLowerCase() : null;
 }
 
 /**
@@ -68,31 +69,24 @@ function parsePropClassNotation(token: string): { prop: string; value: string } 
  */
 function expandQuery(query: string, cssPropertyMap?: Map<string, string[]>): string {
 	const additions: string[] = [];
-
-	// Prop Class 記法の展開（例: "-g:5" → "g", "gap"）
 	const queryLower = query.toLowerCase();
-	const parsed = parsePropClassNotation(queryLower.trim());
-	if (parsed) {
-		additions.push(parsed.prop);
-		// prop名から逆引きでCSSプロパティ名も追加
-		if (cssPropertyMap) {
-			for (const [cssProp, lismProps] of cssPropertyMap) {
-				if (lismProps.includes(parsed.prop)) {
-					additions.push(cssProp);
-				}
-			}
-		}
-		// Prop Class 関連のキーワードを追加してページヒット率を上げる
-		additions.push('prop class');
-	}
+	const parsedProp = parsePropClassName(queryLower.trim());
 
-	// CSSプロパティ名の展開
 	if (cssPropertyMap) {
 		for (const [cssProp, lismProps] of cssPropertyMap) {
+			// Prop Class 記法の逆引き（例: "-g:5" の "g" → "gap"）
+			if (parsedProp && lismProps.includes(parsedProp)) {
+				additions.push(cssProp);
+			}
+			// CSSプロパティ名の展開（例: "font-size" → "fz"）
 			if (queryLower.includes(cssProp)) {
 				additions.push(...lismProps);
 			}
 		}
+	}
+
+	if (parsedProp) {
+		additions.push(parsedProp, 'prop class');
 	}
 
 	return additions.length > 0 ? `${query} ${additions.join(' ')}` : query;
