@@ -1,7 +1,7 @@
 {
 	"name": "lism-css-projects",
 	"version": "0.0.1",
-	"packageManager": "pnpm@8.15.8",
+	"packageManager": "pnpm@10.33.0",
 	"description": "",
 	"main": "dist/index.js",
 	"module": "dist/index.js",
@@ -29,11 +29,6 @@
 		"sync:cdn-versions": "node scripts/sync-cdn-versions.mjs",
 		"prepare": "husky"
 	},
-	"workspaces": [
-		"packages/*",
-		"apps/docs",
-		"apps/playgrounds/*"
-	],
 	"keywords": [],
 	"private": true,
 	"author": {
@@ -42,12 +37,6 @@
 	},
 	"homepage": "https://...",
 	"license": "MIT",
-	"pnpm": {
-		"overrides": {
-			"@vitest/expect": "$vitest",
-			"@vitest/spy": "$vitest"
-		}
-	},
 	"devDependencies": {
 		"autoprefixer": "^10.4.27",
 		"cross-env": "^7.0.3",
