@@ -1,16 +1,15 @@
 ---
-import type { AstroLismProps } from '../types';
+import type { AstroLismBaseProps } from '../types';
 import { Lism } from '../Lism';
 
-type Props = AstroLismProps & {
-	href?: string;
-};
-const props = Astro.props || {};
+type Props = astroHTML.JSX.AnchorHTMLAttributes & AstroLismBaseProps;
+
+const { exProps, ...props } = Astro.props;
 
 const hasHref = !!props.href;
 const tag = hasHref ? 'a' : 'div';
 ---
 
-<Lism isLinkBox as={tag} {...props}>
+<Lism isLinkBox as={tag} {...props} {...exProps}>
 	<slot />
 </Lism>
