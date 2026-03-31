@@ -1,16 +1,18 @@
 ---
-import type { AstroLismProps } from '../types';
+import type { HTMLTag, Polymorphic } from 'astro/types';
+import type { AstroLismBaseProps } from '../types';
 import { Lism } from '../Lism';
 
-type Props = AstroLismProps & {
-	href?: string;
-};
-const props = Astro.props || {};
+type Props<Tag extends HTMLTag = 'a'> = Polymorphic<{ as: Tag }> & AstroLismBaseProps;
+
+const { as, exProps, ...props } = Astro.props;
 
 const hasHref = !!props.href;
-const tag = hasHref ? 'a' : 'div';
+// LinkBoxは基本的にリンク要素（aタグ）として機能するため、
+// hrefがないかつ、aタグとしてレンダリングする場合はdivタグに置き換える
+const tag: HTMLTag = !hasHref && (as ?? 'a') === 'a' ? 'div' : (as ?? 'a');
 ---
 
-<Lism isLinkBox as={tag} {...props}>
+<Lism isLinkBox as={tag} {...props} {...exProps}>
 	<slot />
 </Lism>

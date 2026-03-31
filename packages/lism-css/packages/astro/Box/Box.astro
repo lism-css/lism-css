@@ -1,9 +1,11 @@
 ---
-import type { AstroLismProps } from '../types';
+import type { HTMLTag, Polymorphic } from 'astro/types';
+import type { AstroLismFixedLayoutProps } from '../types';
 import { Lism } from '../Lism';
 
-type Props = AstroLismProps;
-const props = Astro.props || {};
+type Props<Tag extends HTMLTag = 'div'> = Polymorphic<{ as: Tag }> & AstroLismFixedLayoutProps;
+
+const { as: Tag = 'div', exProps, ...props } = Astro.props;
 ---
 
-<Lism layout='box' {...props}><slot /></Lism>
+<Lism layout='box' as={Tag} {...props} {...exProps}><slot /></Lism>

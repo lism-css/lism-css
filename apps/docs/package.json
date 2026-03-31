@@ -14,7 +14,7 @@
 		"screenshot:force": "npx tsx scripts/generate-screenshots.ts --force",
 		"screenshot:compare": "npx tsx scripts/compare-screenshots.ts",
 		"screenshot:update": "npx tsx scripts/compare-screenshots.ts --update",
-		"lint": "pnpm lint:eslint",
+		"lint": "astro sync && pnpm lint:eslint",
 		"lint:eslint": "eslint '**/*.{js,mjs,ts,tsx,astro,mdx}'",
 		"test": "pnpm run typecheck"
 	},

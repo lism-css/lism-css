@@ -21,7 +21,10 @@ export type FilterProps = {
 	[K in FilterName]?: string | number;
 };
 
-export default function getFilterProps(props: LismProps & FilterProps, filterType: string = 'filter'): LismProps & { style: StyleWithCustomProps } {
+export default function getFilterProps(
+	props: LismProps & FilterProps,
+	filterType: string = 'filter'
+): LismProps & Record<string, unknown> & { style: StyleWithCustomProps } {
 	const filterValues: string[] = [];
 
 	const { style = {}, ...rest } = props;

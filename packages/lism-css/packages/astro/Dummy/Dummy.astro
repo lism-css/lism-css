@@ -1,17 +1,21 @@
 ---
-import type { AstroLismProps } from '../types';
+import type { HTMLTag, Polymorphic } from 'astro/types';
+import type { AstroLismBaseProps } from '../types';
 import { Lism } from '../Lism';
 import getContent from 'lism-css/react/Dummy/getContent';
 
-type Props = AstroLismProps & {
-	pre?: string;
-	length?: string;
-	lang?: 'ja' | 'en' | 'ar';
-	offset?: number;
-};
-const { as: tagName = 'p', pre = '', length = 'm', lang = 'en', offset = 0, ...props } = Astro.props || {};
-const content = getContent({ tag: tagName, pre, lang, length, offset });
+type Props<Tag extends HTMLTag = 'p'> = Polymorphic<{ as: Tag }> &
+	AstroLismBaseProps & {
+		pre?: string;
+		length?: string;
+		lang?: 'ja' | 'en' | 'ar';
+		offset?: number;
+	};
+
+const { as: tagName = 'p', pre = '', length = 'm', lang = 'en', offset = 0, ...props } = Astro.props;
+const tag = tagName as HTMLTag;
+const content = getContent({ tag, pre, lang, length, offset });
 ---
 
-{tagName === 'img' && <Lism as='img' src='https://cdn.lism-css.com/dummy-image.jpg' width='600' height='400' alt='' {...props} />}
-{tagName !== 'img' && <Lism as={tagName} {...props} set:html={content} />}
+{tag === 'img' && <Lism as='img' src='https://cdn.lism-css.com/dummy-image.jpg' width='600' height='400' alt='' {...props} />}
+{tag !== 'img' && <Lism as={tag} {...props} set:html={content} />}

@@ -1,11 +1,12 @@
 ---
-import type { AstroLismProps } from '../types';
+import type { HTMLTag, Polymorphic } from 'astro/types';
+import type { AstroLismBaseProps } from '../types';
 import { Lism } from '../Lism';
 import { getDividerProps } from 'lism-css/react/atomic/Divider/getProps';
 
-type Props = AstroLismProps;
+type Props<Tag extends HTMLTag = 'div'> = Polymorphic<{ as: Tag }> & AstroLismBaseProps;
 
-const props = Astro.props || {};
+const { as: Tag = 'div', exProps, ...props } = Astro.props;
 ---
 
-<Lism {...getDividerProps(props)} />
+<Lism as={Tag} {...getDividerProps(props)} {...exProps} />

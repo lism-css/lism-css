@@ -1,11 +1,14 @@
 ---
-import type { AstroLismProps } from '../types';
+import type { HTMLTag, Polymorphic } from 'astro/types';
+import type { AstroLismBaseProps } from '../types';
 import { Lism } from '../Lism';
 import getFilterProps, { type FilterProps } from 'lism-css/react/getFilterProps';
 
-type Props = AstroLismProps & FilterProps;
+type Props<Tag extends HTMLTag = 'div'> = Polymorphic<{ as: Tag }> & AstroLismBaseProps & FilterProps;
+
+const { as: Tag = 'div', exProps, ...props } = Astro.props;
 ---
 
-<Lism isLayer {...getFilterProps(Astro.props, 'backdropFilter')}>
+<Lism isLayer as={Tag} {...getFilterProps(props, 'backdropFilter')} {...exProps}>
 	<slot />
 </Lism>

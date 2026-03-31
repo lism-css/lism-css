@@ -5,9 +5,6 @@ const meta: Meta<typeof Decorator> = {
 	title: 'Atomic/Decorator',
 	component: Decorator,
 	tags: ['autodocs'],
-	argTypes: {
-		children: { control: false },
-	},
 };
 
 export default meta;

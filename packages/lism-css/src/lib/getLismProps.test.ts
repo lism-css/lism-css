@@ -1,5 +1,5 @@
 import { describe, test, expect } from 'vitest';
-import getLismProps from './getLismProps';
+import getLismProps, { type LismProps } from './getLismProps';
 
 describe('getLismProps', () => {
 	describe('基本動作', () => {
@@ -348,7 +348,7 @@ describe('getLismProps', () => {
 				id: 'test-id',
 				'data-test': 'value',
 				'aria-label': 'test',
-			});
+			} as LismProps & Record<string, unknown>);
 			expect(result.id).toBe('test-id');
 			expect(result['data-test']).toBe('value');
 			expect(result['aria-label']).toBe('test');
@@ -356,7 +356,7 @@ describe('getLismProps', () => {
 
 		test('onClick などのイベントハンドラーが渡される', () => {
 			const onClick = () => {};
-			const result = getLismProps({ onClick });
+			const result = getLismProps({ onClick } as LismProps & Record<string, unknown>);
 			expect(result.onClick).toBe(onClick);
 		});
 	});

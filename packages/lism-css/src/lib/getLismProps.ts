@@ -51,7 +51,7 @@ interface StatePropDataObject {
 type StatePropData = string | StatePropDataObject;
 
 // LismPropsData が受け取る型（layout 処理済み）
-export interface LismPropsBase extends StateProps, PropValueTypes, React.HTMLAttributes<HTMLElement> {
+export interface LismPropsBase extends StateProps, PropValueTypes {
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	forwardedRef?: React.Ref<any>;
 	class?: string;
@@ -62,6 +62,7 @@ export interface LismPropsBase extends StateProps, PropValueTypes, React.HTMLAtt
 	_propConfig?: Record<string, PropConfig>;
 	hov?: boolean | string | Record<string, unknown>;
 	css?: Record<string, string | number | undefined>;
+	[key: `aria-${string}`]: unknown;
 	[key: `data-${string}`]: unknown;
 }
 
@@ -83,7 +84,7 @@ export class LismPropsData {
 	attrs: Record<string, unknown> = {};
 	_propConfig?: Record<string, PropConfig>;
 
-	constructor(allProps: LismPropsBase) {
+	constructor(allProps: LismPropsBase & Record<string, unknown>) {
 		// 受け取るpropsとそうでないpropsを分ける
 		const { forwardedRef, class: classFromAstro, className, lismClass, variant, style = {}, _propConfig = {}, ...others } = allProps;
 
@@ -421,7 +422,7 @@ export default function getLismProps(props: LismProps): LismOutputProps {
 	}
 
 	const { layout, ...rest } = props;
-	const propObj = new LismPropsData(getLayoutProps(layout, rest));
+	const propObj = new LismPropsData(getLayoutProps(layout, rest) as LismPropsBase & Record<string, unknown>);
 	return {
 		...filterEmptyObj({
 			className: propObj.className,
