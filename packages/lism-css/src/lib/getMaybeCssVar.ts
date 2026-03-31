@@ -28,6 +28,13 @@ export function getMaybeSpaceVar(value: CssValue): string {
 
 	// spaceが 整数 or 整数を示す文字列 の場合
 	if (typeof value === 'number' || isNumStr(value)) {
+		const numValue = typeof value === 'number' ? value : Number(value);
+
+		// 負の値: calc(-1 * var(--s{absValue})) に変換
+		if (numValue < 0) {
+			return `calc(-1 * var(--s${Math.abs(numValue)}))`;
+		}
+
 		return `var(--s${value})`;
 	}
 
