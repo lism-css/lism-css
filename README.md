@@ -30,7 +30,7 @@ For full documentation, visit [lism-css.com](https://lism-css.com).
 CDN:
 
 ```html
-<link href="https://cdn.jsdelivr.net/npm/lism-css/dist/css/main.css" rel="stylesheet" />
+<link href="https://cdn.jsdelivr.net/npm/lism-css@0.9.4/dist/css/main.css" rel="stylesheet" />
 ```
 
 

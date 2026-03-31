@@ -30,7 +30,7 @@ For Next.js, load it in `layout.js` (App Router) or `_app.js` (Pages Router).
 For HTML sites, you can load CSS via CDN:
 
 ```html
-<link href="https://cdn.jsdelivr.net/npm/lism-css/dist/css/main.css" rel="stylesheet" />
+<link href="https://cdn.jsdelivr.net/npm/lism-css@0.9.4/dist/css/main.css" rel="stylesheet" />
 ```
 
 ## Usage
