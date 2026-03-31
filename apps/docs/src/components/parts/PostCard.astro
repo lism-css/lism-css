@@ -65,7 +65,7 @@ const dateLocale = lang === 'ja' ? 'ja-JP' : 'en-US';
 		}
 		{
 			post.data.date && (
-				<Lism as="time" exProps={{ datetime: post.data.date.toISOString() }} fz="2xs" o="-10" mx-s="auto">
+				<Lism as="time" datetime={post.data.date.toISOString()} fz="2xs" o="-10" mx-s="auto">
 					{post.data.date.toLocaleDateString(dateLocale)}
 				</Lism>
 			)

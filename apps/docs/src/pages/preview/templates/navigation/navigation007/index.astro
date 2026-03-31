@@ -1,7 +1,7 @@
 ---
 import DemoLayout from '@/layouts/DemoLayout.astro';
 
-import { Stack, Container, Grid, Media, HTML, Flex, Icon, Layer, LinkBox } from 'lism-css/astro';
+import { Stack, Container, Grid, FluidCols, Media, HTML, Flex, Icon, Layer, LinkBox } from 'lism-css/astro';
 import './_style.css';
 ---
 
@@ -10,9 +10,9 @@ import './_style.css';
 		<Stack g="40">
 			<Stack ai="center" g="20" setGutter>
 				<HTML.h lv="2" class="u--trim" fz="2xl" fw="bold">素敵な旅がここに</HTML.h>
-				<HTML.p class="u--trim" as="span" fz="s" o="-20">Good experience</HTML.p>
+				<HTML.span class="u--trim" fz="s" o="-20">Good experience</HTML.span>
 			</Stack>
-			<Grid layout="fluidCols" cols="22rem">
+			<FluidCols cols="22rem">
 				<LinkBox layout="frame" href="#" pos="rel" ar="4/3" bxsh="30" setHov>
 					<Media
 						isLayer
@@ -151,7 +151,7 @@ import './_style.css';
 						</Grid>
 					</Stack>
 				</LinkBox>
-			</Grid>
+			</FluidCols>
 		</Stack>
 	</Container>
 </DemoLayout>

@@ -1,5 +1,5 @@
 ---
-import { Flex, Cluster, Container, HTML, Icon } from 'lism-css/astro';
+import { Flex, Cluster, Container, HTML, Icon, Lism } from 'lism-css/astro';
 import { Modal } from '@lism-css/ui/astro';
 import { siteConfig } from '@/config/site';
 import SearchModal from './SearchModal.astro';
@@ -43,7 +43,7 @@ const headerText = t(currentLang, 'header');
 		>
 			<Icon icon="search" fz={['xl', null, 'l']} />
 			<HTML.span id="search-label" d={['none', null, 'block']} fz="xs" lh="xs" c="text-2">{searchText.title}</HTML.span>
-			<HTML.span as="kbd" class="c--searchTrigger_shortcut" d={['none', null, 'block']} p="0" bd="none" fz="xs">⌘K</HTML.span>
+			<Lism as="kbd" class="c--searchTrigger_shortcut" d={['none', null, 'block']} p="0" bd="none" fz="xs">⌘K</Lism>
 		</HTML.button>
 
 		<SearchModal />
