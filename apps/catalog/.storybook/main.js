@@ -13,8 +13,6 @@ function getAbsolutePath(value) {
 /** @type { import('@storybook/react-vite').StorybookConfig } */
 const config = {
 	stories: [
-		'../stories/**/*.mdx',
-		'../stories/**/*.stories.@(js|jsx|mjs|ts|tsx)',
 		'../../../packages/lism-css/src/components/**/*.stories.@(js|jsx|mjs|ts|tsx)',
 		'../../../packages/lism-ui/src/components/**/*.stories.@(js|jsx|mjs|ts|tsx)',
 	],
@@ -26,6 +24,9 @@ const config = {
 		getAbsolutePath('@storybook/addon-onboarding'),
 	],
 	framework: getAbsolutePath('@storybook/react-vite'),
+	core: {
+		builder: '@storybook/builder-vite',
+	},
 	viteFinal: (config) => {
 		config.plugins = config.plugins || [];
 		config.plugins.push(react());
