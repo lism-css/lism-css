@@ -2,9 +2,9 @@
 import type { AstroLismBaseProps } from '../types';
 import Lism from '../Lism/Lism.astro';
 
-type Props = AstroLismBaseProps & {
+interface Props extends AstroLismBaseProps {
 	lv?: '1' | '2' | '3' | '4' | '5' | '6';
-};
+}
 
 const { lv = '1', ...props } = Astro.props;
 ---

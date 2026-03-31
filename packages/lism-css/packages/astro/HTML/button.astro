@@ -1,9 +1,10 @@
 ---
-import type { Polymorphic } from 'astro/types';
 import type { AstroLismBaseProps } from '../types';
 import Lism from '../Lism/Lism.astro';
 
-type Props = Polymorphic<{ as: 'button' }> & AstroLismBaseProps;
+type ButtonAttrs = Omit<astroHTML.JSX.ButtonHTMLAttributes, keyof AstroLismBaseProps>;
+interface Props extends AstroLismBaseProps, ButtonAttrs {}
+
 const props = Astro.props;
 ---
 
