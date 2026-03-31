@@ -1,9 +1,10 @@
 ---
-import type { AstroLismProps } from '../types';
+import type { Polymorphic } from 'astro/types';
+import type { AstroLismBaseProps } from '../types';
 import Lism from '../Lism/Lism.astro';
 
-type Props = AstroLismProps;
-const props = Astro.props || {};
+type Props = Polymorphic<{ as: 'li' }> & AstroLismBaseProps;
+const props = Astro.props;
 ---
 
 <Lism as='li' {...props}><slot /></Lism>
