@@ -1,11 +1,11 @@
 ---
-import type { AstroLismProps } from '../types';
+import type { LismProps } from 'lism-css/lib/getLismProps';
 import { Lism } from '../Lism';
 import { getDividerProps } from 'lism-css/react/atomic/Divider/getProps';
 
-type Props = AstroLismProps;
+type Props = LismProps;
 
-const props = Astro.props || {};
+const props = Astro.props;
 ---
 
 <Lism {...getDividerProps(props)} />

@@ -1,10 +1,11 @@
 ---
-import type { AstroLismProps } from '../types';
+import type { LismProps } from 'lism-css/lib/getLismProps';
 import { Lism } from '../Lism';
 import getProps from 'lism-css/react/atomic/Spacer/getProps';
 
-type Props = AstroLismProps;
-const props = Astro.props || {};
+type Props = LismProps;
+
+const props = Astro.props;
 ---
 
 <Lism {...getProps(props)} />
