@@ -1,6 +1,6 @@
 ---
 import '@pagefind/default-ui/css/ui.css';
-import { HTML, Flex, Stack } from 'lism-css/astro';
+import { HTML, Flex, Stack, Lism } from 'lism-css/astro';
 import { Modal } from '@lism-css/ui/astro';
 import { getLangFromUrl, t } from '@/lib/i18n';
 
@@ -27,9 +27,9 @@ const searchText = t(lang, 'search');
 							🔍
 						</HTML.span>
 						<HTML.span>{searchText.devMessage}</HTML.span>
-						<HTML.span as="code" ff="mono" bgc="base-2" bd bdrs="10" fz="s" px="10">
+						<Lism as="code" ff="mono" bgc="base-2" bd bdrs="10" fz="s" px="10">
 							$ pnpm build && pnpm preview
-						</HTML.span>
+						</Lism>
 						<div class="a--spacer" aria-hidden="true" />
 					</Stack>
 				) : (
