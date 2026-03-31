@@ -1,15 +1,19 @@
 ---
-import type { AstroLismProps } from '../types';
+import type { HTMLTag } from 'astro/types';
+import type { AstroLismBaseProps } from '../types';
 import { Lism } from '../Lism';
 import getContent from 'lism-css/react/Dummy/getContent';
 
-type Props = AstroLismProps & {
+type DummyAttrs = Omit<astroHTML.JSX.HTMLAttributes, keyof AstroLismBaseProps>;
+interface Props extends AstroLismBaseProps, DummyAttrs {
+	as?: HTMLTag;
 	pre?: string;
 	length?: string;
 	lang?: 'ja' | 'en' | 'ar';
 	offset?: number;
-};
-const { as: tagName = 'p', pre = '', length = 'm', lang = 'en', offset = 0, ...props } = Astro.props || {};
+}
+
+const { as: tagName = 'p', pre = '', length = 'm', lang = 'en', offset = 0, ...props } = Astro.props;
 const content = getContent({ tag: tagName, pre, lang, length, offset });
 ---
 
