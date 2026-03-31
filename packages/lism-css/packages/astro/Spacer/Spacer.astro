@@ -1,11 +1,17 @@
 ---
+import type { HTMLTag, Polymorphic } from 'astro/types';
 import type { LismProps } from 'lism-css/lib/getLismProps';
+import type { AstroLayoutProps } from '../types';
 import { Lism } from '../Lism';
 import getProps from 'lism-css/react/atomic/Spacer/getProps';
 
-type Props = LismProps;
+type Props<Tag extends HTMLTag = 'div'> = Polymorphic<{ as: Tag }> &
+	LismProps &
+	AstroLayoutProps & {
+		exProps?: Record<string, unknown>;
+	};
 
-const props = Astro.props;
+const { as: Tag = 'div', exProps, ...props } = Astro.props;
 ---
 
-<Lism {...getProps(props)} />
+<Lism as={Tag} {...getProps(props)} {...exProps} />
