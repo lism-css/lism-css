@@ -2,8 +2,7 @@
 import type { AstroLismBaseProps } from '../types';
 import Lism from '../Lism/Lism.astro';
 
-type SpanAttrs = Omit<astroHTML.JSX.HTMLAttributes, keyof AstroLismBaseProps>;
-interface Props extends AstroLismBaseProps, SpanAttrs {}
+type Props = AstroLismBaseProps & Omit<astroHTML.JSX.HTMLAttributes, keyof AstroLismBaseProps>;
 
 const props = Astro.props;
 ---
