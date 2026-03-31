@@ -55,3 +55,8 @@ export type AstroLismBaseProps = LismProps &
 	AstroLayoutProps & {
 		exProps?: Record<string, unknown>;
 	};
+
+/** layout が固定されたレイアウトコンポーネント向けベース型 */
+export type AstroLismFixedLayoutProps = Omit<LismProps, 'layout'> & {
+	exProps?: Record<string, unknown>;
+};
