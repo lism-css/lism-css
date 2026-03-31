@@ -32,7 +32,10 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: dist
-          path: packages/*/dist
+          path: |
+            packages/*/dist
+            packages/*/.astro
+            apps/*/.astro
 
   typecheck-lism-css:
     needs: build
@@ -57,7 +60,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: dist
-          path: packages
+          path: .
 
       - name: Typecheck lism-css
         run: pnpm --filter lism-css run typecheck
@@ -85,7 +88,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: dist
-          path: packages
+          path: .
 
       - name: Typecheck docs
         run: pnpm --filter lism-docs run typecheck
@@ -109,6 +112,12 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
+      - name: Download build artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: .
+
       - name: Run lint
         run: pnpm lint
 
@@ -130,6 +139,12 @@ jobs:
 
       - name: Install dependencies
         run: pnpm install
+
+      - name: Download build artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: .
 
       - name: Run tests
         run: pnpm test
