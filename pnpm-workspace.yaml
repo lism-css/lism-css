@@ -2,3 +2,21 @@ packages:
     - 'packages/*'
     - 'apps/*'
     - 'apps/playgrounds/*'
+
+overrides:
+    '@vitest/expect': $vitest
+    '@vitest/spy': $vitest
+
+# ビルドスクリプトの実行を許可するパッケージ (pnpm 10 で必要になった)
+onlyBuiltDependencies:
+    - '@parcel/watcher'
+    - '@swc/core'
+    - esbuild
+    - sharp
+    - workerd
+
+# サプライチェーン攻撃対策: パッケージの信頼レベルが以前のリリースより低下した場合、インストールを失敗させる
+trustPolicy: no-downgrade
+trustPolicyIgnoreAfter: 525600 # 1年以上前に公開されたパッケージは除外
+trustPolicyExclude:
+    - 'vite@6.4.1' # publish方法変更による検出（trusted publisher → provenance）
