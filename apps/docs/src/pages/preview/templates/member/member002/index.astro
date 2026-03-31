@@ -1,7 +1,7 @@
 ---
 import DemoLayout from '@/layouts/DemoLayout.astro';
 
-import { Container, Flex, Frame, Grid, Media, Stack, HTML } from 'lism-css/astro';
+import { Container, Flex, Frame, FluidCols, Grid, Media, Stack, HTML } from 'lism-css/astro';
 import './_style.css';
 ---
 
@@ -9,7 +9,7 @@ import './_style.css';
 	<Container isWrapper="l" bgc="base" py="50" setGutter>
 		<Stack g="50">
 			<HTML.h lv="2" class="u--trim" fz="2xl" fw="bold" ta="center">社員一覧</HTML.h>
-			<Grid layout="fluidCols" cols="14rem" g="40">
+			<FluidCols cols="14rem" g="40">
 				<Flex g="30" ai="center">
 					<Frame as="figure" ar="1/1" w="stretch" max-w="100px" bdrs="99">
 						<Media src="https://cdn.lism-css.com/img/random-2510?category=avatar&r=1" width="960" height="640" />
@@ -82,7 +82,7 @@ import './_style.css';
 						<HTML.p class="u--trim" fz="xs" o="-10">アカウントエグゼクティブ / 営業</HTML.p>
 					</Stack>
 				</Flex>
-			</Grid>
+			</FluidCols>
 		</Stack>
 	</Container>
 </DemoLayout>

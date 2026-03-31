@@ -3,7 +3,7 @@
  * 記事リストコンポーネント
  * 記事カードをグリッド表示
  */
-import { Grid } from 'lism-css/astro';
+import { FluidCols } from 'lism-css/astro';
 import PostCard from './PostCard.astro';
 import type { PostEntry } from '@/lib/content';
 import { getRootLang, type LangCode } from '@/lib/i18n';
@@ -18,6 +18,6 @@ const { posts, lang = getRootLang() } = Astro.props;
 ---
 
 {/* 記事カードグリッド: Columnsで2列レスポンシブ */}
-<Grid layout="fluidCols" cols="18em" g="40" my-s="50">
+<FluidCols cols="18em" g="40" my-s="50">
 	{posts.map((post) => <PostCard post={post} lang={lang} />)}
-</Grid>
+</FluidCols>

@@ -1,7 +1,7 @@
 ---
 import DemoLayout from '@/layouts/DemoLayout.astro';
 
-import { Container, Flex, Grid, Icon, LinkBox, Stack, HTML } from 'lism-css/astro';
+import { Container, Flex, Grid, FluidCols, Icon, LinkBox, Stack, HTML } from 'lism-css/astro';
 import './_style.css';
 ---
 
@@ -10,7 +10,7 @@ import './_style.css';
 		<Stack g="50">
 			<HTML.h lv="2" class="u--trim" fz="2xl" fw="bold" ta="center">製品カテゴリー</HTML.h>
 			<Stack g="50">
-				<Grid layout="fluidCols" cols="18rem" g="30">
+				<FluidCols cols="18rem" g="30">
 					<LinkBox
 						href="#"
 						layout="flex"
@@ -163,7 +163,7 @@ import './_style.css';
 							<Icon icon="arrow-right" fz="2xs" c="white" />
 						</Flex>
 					</LinkBox>
-				</Grid>
+				</FluidCols>
 				<Flex jc="flex-e">
 					<LinkBox href="#" layout="flex" ai="center" g="10" setTransition hov={{ c: 'link' }}>
 						<HTML.p class="u--trim">全てのカテゴリーを見る</HTML.p>
