@@ -290,7 +290,7 @@ Lism では、[`set--hov`](/docs/css-methodology/#set--hov)というクラスを
 	</PreviewCode>
 	<PreviewCode slot='tab' label='HTML'>
 		```html "set--hov -hov:test"
-		<div className='-p:30 -bd -fz:l set--hov -hov:test'>BOX</div>
+		<div class='-p:30 -bd -fz:l set--hov -hov:test'>BOX</div>
 		```
 	</PreviewCode>
 </Preview>
@@ -312,11 +312,13 @@ Lism では、[`set--hov`](/docs/css-methodology/#set--hov)というクラスを
 
 /* 親の set--hov がhoverされたら非表示にする */
 .-hov\:to\:hide {
+	--transProp: opacity;
 	opacity: var(--_isHov, 0);
 }
 
 /* 親の set--hov がhoverされたら表示する */
 .-hov\:to\:show {
+	--transProp: opacity, visibility;
 	opacity: var(--_notHov, 0);
 	visibility: var(--_notHov, hidden);
 }
@@ -410,7 +412,7 @@ Lism では、[`set--hov`](/docs/css-methodology/#set--hov)というクラスを
 		<a
 			href="#banner-link"
 			class="is--linkBox set--hov -ar:16/9 -ov:hidden -bdrs:30"
-			style="--hov-duration:.6s"
+			style="--hov-duration:.4s"
 		>
 			<div class="l--frame is--layer">
 				<img class="a--media is--layer set--transition -hov:to:zoom" src="https://cdn.lism-css.com/img/a-2.jpg" width="960" height="640" loading="lazy" />
@@ -426,7 +428,7 @@ Lism では、[`set--hov`](/docs/css-methodology/#set--hov)というクラスを
 		<LinkBox
 			href='#banner-link'
 			setHov ov='hidden' ar='16/9' bdrs='30'
-			style={{'--hov-duration':'.6s'}}
+			style={{'--hov-duration':'.4s'}}
 		>
 			<Frame isLayer>
 				<Media setTransition hov='to:zoom' src='https://cdn.lism-css.com/img/a-2.jpg' alt='' width='960' height='640' loading='lazy'/>

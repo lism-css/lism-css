@@ -24,6 +24,7 @@ import { Container, Wrapper, Box, HTML, Lism, Spacer } from "lism-css/astro";
 
 | プロパティ | 説明 |
 |---|---|
+| `size` | `isWrapper` に渡すコンテンツサイズを指定します。プリセット値 (`'s'`, `'l'`) や任意の CSS 値を指定できます。|
 | `layout` | 展開したい Layoutモジュールを指定できます。|
 
 <PreviewTitle>下記の ①, ② はそれぞれ同じ結果になります。</PreviewTitle>
@@ -49,20 +50,20 @@ import { Container, Wrapper, Box, HTML, Lism, Spacer } from "lism-css/astro";
 <Preview>
 	<PreviewTitle>例</PreviewTitle>
 	<PreviewArea resize p='15'>
-		<Container isWrapper='s' p='20'>
+		<Container size='s' p='20'>
 			<Box bd p={['10','30']}>このBOXは、paddingが切り替わります。</Box>
 		</Container>
 	</PreviewArea>
 	<PreviewCode slot='tab' label='JSX'>
 		```jsx
-		<Container isWrapper='s' p='20'>
+		<Container size='s' p='20'>
 			<Box bd p={['10','30']}>このBOXは、paddingが切り替わります。</Box>
 		</Container>
 		```
 	</PreviewCode>
 	<PreviewCode slot='tab' label='HTML'>
 		```html
-		<div class="is--container is--wrapper -content:s -p:20">
+		<div class="is--container is--wrapper -contentSize:s -p:20">
 			<div class="l--box -bd -p:10 -p_sm" style="--p_sm:var(--s30)">このBOXは、paddingが切り替わります。</div>
 		</div>
 		```

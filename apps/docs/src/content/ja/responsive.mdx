@@ -35,7 +35,7 @@ Lism では、`.-{prop}_{bp}`形式のクラスと`--{prop}_{bp}`形式の変数
 	</PreviewArea>
 	<PreviewCode label="HTML" slot="tab">
 		```html "-p_sm -p_md" "--p_sm" "--p_md"
-		<div class="-p:15 -p_sm -p_md -bd" style="--p_sm:var(--s30);--p_md:var(--s40)">
+		<div class="-p:20 -p_sm -p_md -bd" style="--p_sm:var(--s40);--p_md:var(--s50)">
 			<p>Example</p>
 		</div>
 		```
@@ -129,11 +129,11 @@ Lismでは、デフォルトで**コンテナクエリ**を採用しています
 ```scss
 @use '../path/to/node_modules/lism-css/scss/query' as query;
 
-@include query.cq('sm') {
+@include query.bp-up('sm') {
 	// Your styles for sm sizes(width >= 480px) ...
 }
-@include query.cq('md') {
-	// Your styles for md sizes(width >= 720px) ...
+@include query.bp-up('md') {
+	// Your styles for md sizes(width >= 800px) ...
 }
 ```
 

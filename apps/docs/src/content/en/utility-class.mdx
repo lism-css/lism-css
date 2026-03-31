@@ -213,16 +213,16 @@ A class for visually hiding an element.
 Use it for screen reader text and similar content.
 
 ```css
-.u--srOnly {
+.u--srOnly.u--srOnly {
 	position: absolute;
 	width: 1px;
 	height: 1px;
 	padding: 0;
 	margin: -1px;
 	overflow: hidden;
-	clip: rect(0, 0, 0, 0);
+	clip-path: inset(50%);
 	white-space: nowrap;
-	border-width: 0;
+	border: 0;
 }
 ```
 
