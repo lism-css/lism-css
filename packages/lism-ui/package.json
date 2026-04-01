@@ -1,72 +1,73 @@
 {
-	"name": "@lism-css/ui",
-	"version": "0.9.3",
-	"description": "UI components by lism-css.",
-	"author": {
-		"name": "ddryo",
-		"url": "https://github.com/ddryo"
-	},
-	"license": "MIT",
-	"keywords": [
-		"css-framework",
-		"astro-component",
-		"react-component"
-	],
-	"scripts": {
-		"dev": "vite",
-		"build": "vite build && pnpm build:css",
-		"build:css": "node build-css.js",
-		"prepack": "case \"$npm_execpath\" in *pnpm*) ;; *) echo 'Error: Use pnpm publish' && exit 1;; esac"
-	},
-	"files": [
-		"dist",
-		"src"
-	],
-	"type": "module",
-	"main": "./dist/index.js",
-	"exports": {
-		"./react": {
-			"import": "./dist/components/react.js",
-			"types": "./dist/components/index.d.ts"
-		},
-		"./astro": {
-			"import": "./src/components/astro.js",
-			"types": "./dist/components/index.d.ts"
-		},
-		"./scripts/*": "./dist/scripts/*.js",
-		"./style.css": "./dist/style.css"
-	},
-	"homepage": "https://www.lism.style",
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/lism-css/lism-css/tree/main/packages/lism-css"
-	},
-	"bugs": {
-		"url": "https://github.com/lism-css/lism-css/issues"
-	},
-	"dependencies": {
-		"lism-css": "workspace:*"
-	},
-	"devDependencies": {
-		"@babel/cli": "^7.28.6",
-		"@babel/core": "^7.29.0",
-		"@babel/preset-env": "^7.29.0",
-		"@babel/preset-react": "^7.28.5",
-		"@rollup/plugin-babel": "^6.1.0",
-		"@types/node": "^25.5.0",
-		"@vitejs/plugin-react-swc": "^3.11.0",
-		"glob": "^13.0.6",
-		"rollup": "^4.59.0",
-		"rollup-plugin-preserve-directives": "^0.4.0",
-		"typescript": "^5.8.3",
-		"unplugin-dts": "1.0.0-beta.6",
-		"vite": "^7.3.1"
-	},
-	"peerDependencies": {
-		"@types/react": "*",
-		"@types/react-dom": "*",
-		"react": "^18 || ^19",
-		"react-dom": "^18 || ^19"
-	},
-	"sideEffects": false
+  "name": "@lism-css/ui",
+  "version": "0.9.3",
+  "description": "UI components by lism-css.",
+  "author": {
+    "name": "ddryo",
+    "url": "https://github.com/ddryo"
+  },
+  "license": "MIT",
+  "keywords": [
+    "css-framework",
+    "astro-component",
+    "react-component"
+  ],
+  "scripts": {
+    "format": "prettier --write .",
+    "dev": "vite",
+    "build": "vite build && pnpm build:css",
+    "build:css": "node build-css.js",
+    "prepack": "case \"$npm_execpath\" in *pnpm*) ;; *) echo 'Error: Use pnpm publish' && exit 1;; esac"
+  },
+  "files": [
+    "dist",
+    "src"
+  ],
+  "type": "module",
+  "main": "./dist/index.js",
+  "exports": {
+    "./react": {
+      "import": "./dist/components/react.js",
+      "types": "./dist/components/index.d.ts"
+    },
+    "./astro": {
+      "import": "./src/components/astro.js",
+      "types": "./dist/components/index.d.ts"
+    },
+    "./scripts/*": "./dist/scripts/*.js",
+    "./style.css": "./dist/style.css"
+  },
+  "homepage": "https://www.lism.style",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lism-css/lism-css/tree/main/packages/lism-css"
+  },
+  "bugs": {
+    "url": "https://github.com/lism-css/lism-css/issues"
+  },
+  "dependencies": {
+    "lism-css": "workspace:*"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.28.6",
+    "@babel/core": "^7.29.0",
+    "@babel/preset-env": "^7.29.0",
+    "@babel/preset-react": "^7.28.5",
+    "@rollup/plugin-babel": "^6.1.0",
+    "@types/node": "^25.5.0",
+    "@vitejs/plugin-react-swc": "^3.11.0",
+    "glob": "^13.0.6",
+    "rollup": "^4.59.0",
+    "rollup-plugin-preserve-directives": "^0.4.0",
+    "typescript": "^5.8.3",
+    "unplugin-dts": "1.0.0-beta.6",
+    "vite": "^7.3.1"
+  },
+  "peerDependencies": {
+    "@types/react": "*",
+    "@types/react-dom": "*",
+    "react": "^18 || ^19",
+    "react-dom": "^18 || ^19"
+  },
+  "sideEffects": false
 }

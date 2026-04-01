@@ -1,47 +1,50 @@
 {
-	"$schema": "https://turbo.build/schema.json",
-	"tasks": {
-		"build": {
-			"dependsOn": ["^build"],
-			"outputs": [".next/**", "!.next/cache/**", "dist/**"]
-		},
-		"build:css": {
-			"outputs": ["dist/css/**"]
-		},
-		"test": {
-			"dependsOn": ["^build"],
-			"outputs": []
-		},
-		"lint": {
-			"outputs": []
-		},
-		"typecheck": {
-			"dependsOn": ["^build"],
-			"outputs": []
-		},
-		"dev": {
-			"cache": false
-		},
-		"start": {
-			"cache": false
-		},
-		"clean": {
-			"cache": false
-		},
-		"build:registry": {
-			"dependsOn": ["^build"],
-			"outputs": ["public/r/**"],
-			"inputs": ["scripts/**", "../lism-ui/src/components/**", "../lism-ui/src/helper/**", "../lism-ui/package.json"]
-		},
-		"build:mcp-data": {
-			"dependsOn": ["^build"],
-			"outputs": ["packages/mcp/src/data/*.json"],
-			"inputs": [
-				"apps/docs/src/content/ja/**/*.mdx",
-				"packages/lism-css/config/defaults/tokens.ts",
-				"packages/lism-css/config/defaults/props.ts",
-				"packages/lism-css/src/scss/_prop-config.scss"
-			]
-		}
-	}
+  "$schema": "https://turbo.build/schema.json",
+  "tasks": {
+    "build": {
+      "dependsOn": ["^build"],
+      "outputs": [".next/**", "!.next/cache/**", "dist/**"]
+    },
+    "build:css": {
+      "outputs": ["dist/css/**"]
+    },
+    "test": {
+      "dependsOn": ["^build"],
+      "outputs": []
+    },
+    "lint": {
+      "outputs": []
+    },
+    "typecheck": {
+      "dependsOn": ["^build"],
+      "outputs": []
+    },
+    "format": {
+      "cache": false
+    },
+    "dev": {
+      "cache": false
+    },
+    "start": {
+      "cache": false
+    },
+    "clean": {
+      "cache": false
+    },
+    "build:registry": {
+      "dependsOn": ["^build"],
+      "outputs": ["public/r/**"],
+      "inputs": ["scripts/**", "../lism-ui/src/components/**", "../lism-ui/src/helper/**", "../lism-ui/package.json"]
+    },
+    "build:mcp-data": {
+      "dependsOn": ["^build"],
+      "outputs": ["packages/mcp/src/data/*.json"],
+      "inputs": [
+        "apps/docs/src/content/ja/**/*.mdx",
+        "packages/lism-css/config/defaults/tokens.ts",
+        "packages/lism-css/config/defaults/props.ts",
+        "packages/lism-css/src/scss/_prop-config.scss"
+      ]
+    }
+  }
 }
