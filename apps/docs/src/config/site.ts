@@ -51,12 +51,6 @@ export const siteConfig = {
 		// デフォルトテーマ: 'system' | 'light' | 'dark'
 		default: 'light' as 'system' | 'light' | 'dark',
 	},
-
-	// Google Analytics設定
-	googleAnalytics: {
-		// 測定ID（G-XXXXXXXXXX形式）
-		measurementId: 'G-WHLSPPNEKZ',
-	},
 } as const;
 
 // 型をエクスポート（必要に応じて使用）

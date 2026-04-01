@@ -67,10 +67,8 @@ const toAbsoluteUrl = (path: string): string => {
 	return normalized;
 };
 
-// Google Analytics: 本番環境かつ測定IDが設定されている場合のみ有効化
-// 開発環境・プレビュー環境では計測しない
-const gaMeasurementId = siteConfig.googleAnalytics.measurementId;
-const enableGA = !isDev && siteConfig.publish && gaMeasurementId;
+// Google Analytics: 本番環境のみ有効化
+const enableGA = !isDev && siteConfig.publish;
 ---
 
 <head>
@@ -125,28 +123,16 @@ const enableGA = !isDev && siteConfig.publish && gaMeasurementId;
 	{description && <meta name="twitter:description" content={description} />}
 	{ogImageUrl && <meta name="twitter:image" content={ogImageUrl} />}
 
-	{
-		/*
-		Google Analytics
-		memo: 条件レンダリング内の script タグは prettier-plugin-astro のパースバグを踏むため、
-		script を条件外に置き、data-* 属性の有無でJS側から初期化を判断している
-	*/
-	}
-	{enableGA && <meta id="ga-config" data-ga-id={gaMeasurementId} />}
-	<script>
-		var gaEl = document.getElementById('ga-config');
-		if (gaEl) {
-			var s = document.createElement('script');
-			s.async = true;
-			s.src = 'https://www.googletagmanager.com/gtag/js?id=' + gaEl.dataset.gaId;
-			document.head.appendChild(s);
-
+	{/* Google Analytics: 条件レンダリング内の script は prettier-plugin-astro のパースバグを踏むため、define:vars で外に出す */}
+	{enableGA && <script is:inline async src="https://www.googletagmanager.com/gtag/js?id=G-NMXBW9GRL1" />}
+	<script define:vars={{ enableGA }} is:inline>
+		if (enableGA) {
 			window.dataLayer = window.dataLayer || [];
-			function gtag(...args: any[]) {
-				window.dataLayer.push(args);
+			function gtag() {
+				dataLayer.push(arguments);
 			}
 			gtag('js', new Date());
-			gtag('config', gaEl.dataset.gaId);
+			gtag('config', 'G-NMXBW9GRL1');
 		}
 	</script>
 
