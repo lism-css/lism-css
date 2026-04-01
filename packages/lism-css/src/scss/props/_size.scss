@@ -1,15 +1,15 @@
 .-max-sz\:full {
-	max-inline-size: 100%;
+  max-inline-size: 100%;
 
-	:where(.set--gutter) > & {
-		max-inline-size: calc(100% + var(--gutter-size) * 2);
-		margin-inline: calc(var(--gutter-size) * -1);
-	}
+  :where(.set--gutter) > & {
+    max-inline-size: calc(100% + var(--gutter-size) * 2);
+    margin-inline: calc(var(--gutter-size) * -1);
+  }
 }
 
 .-max-sz\:container {
-	max-inline-size: var(--sz--container, 100cqi);
-	margin-inline: calc(50% - var(--sz--container) / 2);
+  max-inline-size: var(--sz--container, 100cqi);
+  margin-inline: calc(50% - var(--sz--container) / 2);
 }
 
 // .-max-sz\:wide {

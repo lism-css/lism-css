@@ -15,167 +15,167 @@
 
 /* @layer で 優先度を下げる */
 @layer reset {
-	/* ------------------------------------------------------------
+  /* ------------------------------------------------------------
 	 Universal
 	------------------------------------------------------------ */
-	*,
-	::before,
-	::after {
-		/* box-sizing は 全要素に対して border-box で統一 */
-		box-sizing: border-box;
-	}
+  *,
+  ::before,
+  ::after {
+    /* box-sizing は 全要素に対して border-box で統一 */
+    box-sizing: border-box;
+  }
 
-	/* 
+  /* 
 	 - margin は dialog以外 0 にリセット
 	 - padding はそのままにする
 	*/
-	*:not(dialog) {
-		margin: 0;
-	}
+  *:not(dialog) {
+    margin: 0;
+  }
 
-	/* ------------------------------------------------------------
+  /* ------------------------------------------------------------
 	 Documents
 	------------------------------------------------------------ */
-	html {
-		/* iOSで横向きにした時のフォントサイズ自動調節をオフにする. */
-		-webkit-text-size-adjust: none;
-		text-size-adjust: none;
+  html {
+    /* iOSで横向きにした時のフォントサイズ自動調節をオフにする. */
+    -webkit-text-size-adjust: none;
+    text-size-adjust: none;
 
-		/* 文章の折り返し指定 see: https://ics.media/entry/240411/ */
-		word-break: normal; /* 単語の分割はデフォルトに依存 */
-		line-break: strict; /* 禁則処理を厳格に適用 */
-		overflow-wrap: anywhere; /* 収まらない場合に折り返す */
+    /* 文章の折り返し指定 see: https://ics.media/entry/240411/ */
+    word-break: normal; /* 単語の分割はデフォルトに依存 */
+    line-break: strict; /* 禁則処理を厳格に適用 */
+    overflow-wrap: anywhere; /* 収まらない場合に折り返す */
 
-		/* デフォルトの 8 はでかすぎる */
-		tab-size: 4;
+    /* デフォルトの 8 はでかすぎる */
+    tab-size: 4;
 
-		/* 要素はみ出しによる横スクロールの発生を防止. (overflow は 継承プロパティではないので両方記述） */
-		overflow-x: clip;
+    /* 要素はみ出しによる横スクロールの発生を防止. (overflow は 継承プロパティではないので両方記述） */
+    overflow-x: clip;
 
-		/* モーダルが開いている時はコンテンツをスクロールさせない */
-		&:has(:modal[open]) {
-			overflow: clip; /* sticky 要素がくずれないように clip */
-		}
-	}
+    /* モーダルが開いている時はコンテンツをスクロールさせない */
+    &:has(:modal[open]) {
+      overflow: clip; /* sticky 要素がくずれないように clip */
+    }
+  }
 
-	body {
-		/* htmlから継承する */
-		overflow: inherit;
+  body {
+    /* htmlから継承する */
+    overflow: inherit;
 
-		/* bodyの高さを最低限確保する (子要素でheight:100%が効くわけではない) */
-		min-height: 100dvh;
-	}
+    /* bodyの高さを最低限確保する (子要素でheight:100%が効くわけではない) */
+    min-height: 100dvh;
+  }
 
-	/* ------------------------------------------------------------
+  /* ------------------------------------------------------------
 	 Texts
 	------------------------------------------------------------ */
-	abbr[title] {
-		/* Safar で アンダーラインが出ないので明示的に指定して統一する */
-		text-decoration: underline;
-		text-decoration-style: dotted;
-	}
+  abbr[title] {
+    /* Safar で アンダーラインが出ないので明示的に指定して統一する */
+    text-decoration: underline;
+    text-decoration-style: dotted;
+  }
 
-	pre {
-		/* 水平スクロールできるようにする */
-		overflow-x: auto;
-	}
+  pre {
+    /* 水平スクロールできるようにする */
+    overflow-x: auto;
+  }
 
-	/* クラスを持つリストのみスタイルをリセットする。（ブラウザ標準スタイルを利用できる余地を残す） */
-	menu,
-	:is(ul, ol)[class] {
-		list-style: none;
-		padding: 0;
-	}
+  /* クラスを持つリストのみスタイルをリセットする。（ブラウザ標準スタイルを利用できる余地を残す） */
+  menu,
+  :is(ul, ol)[class] {
+    list-style: none;
+    padding: 0;
+  }
 
-	/* ------------------------------------------------------------
+  /* ------------------------------------------------------------
 	 Medias
 	------------------------------------------------------------ */
 
-	svg,
-	img,
-	video,
-	audio,
-	iframe,
-	object,
-	canvas {
-		/* 隙間ができるのを防ぐ。( display はいじらない。) */
-		vertical-align: middle;
+  svg,
+  img,
+  video,
+  audio,
+  iframe,
+  object,
+  canvas {
+    /* 隙間ができるのを防ぐ。( display はいじらない。) */
+    vertical-align: middle;
 
-		/* 親要素をはみ出さないようにする */
-		max-inline-size: 100%;
-	}
+    /* 親要素をはみ出さないようにする */
+    max-inline-size: 100%;
+  }
 
-	img,
-	video {
-		/* img,video の縦横比を維持。（svg,iframe や audioは 高さがつぶれるので指定しない */
-		block-size: auto;
-	}
+  img,
+  video {
+    /* img,video の縦横比を維持。（svg,iframe や audioは 高さがつぶれるので指定しない */
+    block-size: auto;
+  }
 
-	iframe {
-		border: none;
-	}
+  iframe {
+    border: none;
+  }
 
-	/* ------------------------------------------------------------
+  /* ------------------------------------------------------------
 	 Form Fields
 	------------------------------------------------------------ */
-	input,
-	button,
-	textarea,
-	select,
-	::file-selector-button {
-		/* 基本要素のフォントとカラーを本文から継承 */
-		font: inherit;
-		color: inherit;
+  input,
+  button,
+  textarea,
+  select,
+  ::file-selector-button {
+    /* 基本要素のフォントとカラーを本文から継承 */
+    font: inherit;
+    color: inherit;
 
-		/* iOSで入力時の拡大を防ぐ. ( button には必要ないが、フォーム全体のフォントサイズを揃えるために一括で適用する ) */
-		font-size: max(16px, 1em);
-	}
+    /* iOSで入力時の拡大を防ぐ. ( button には必要ないが、フォーム全体のフォントサイズを揃えるために一括で適用する ) */
+    font-size: max(16px, 1em);
+  }
 
-	fieldset {
-		/* デフォルトの min-content によってコンテンツ( colsの大きい textarea など )がはみ出すのを防ぐ */
-		min-inline-size: 0;
-	}
+  fieldset {
+    /* デフォルトの min-content によってコンテンツ( colsの大きい textarea など )がはみ出すのを防ぐ */
+    min-inline-size: 0;
+  }
 
-	textarea {
-		/* リサイズ方向を制限する. */
-		resize: block;
-		max-inline-size: 100%;
-	}
+  textarea {
+    /* リサイズ方向を制限する. */
+    resize: block;
+    max-inline-size: 100%;
+  }
 
-	/* ------------------------------------------------------------
+  /* ------------------------------------------------------------
 	 cursor 初期セット
 	------------------------------------------------------------ */
-	label[for],
-	select,
-	summary,
-	[type='radio'],
-	[type='checkbox'] {
-		cursor: pointer;
-	}
+  label[for],
+  select,
+  summary,
+  [type='radio'],
+  [type='checkbox'] {
+    cursor: pointer;
+  }
 
-	button,
-	[role='tab'],
-	[role='button'],
-	[role='option'],
-	[type='button'],
-	[type='reset'],
-	[type='submit'],
-	::file-selector-button {
-		cursor: pointer;
+  button,
+  [role='tab'],
+  [role='button'],
+  [role='option'],
+  [type='button'],
+  [type='reset'],
+  [type='submit'],
+  ::file-selector-button {
+    cursor: pointer;
 
-		/* ダブルタップ時のズームアクションを無効化 */
-		touch-action: manipulation;
-	}
+    /* ダブルタップ時のズームアクションを無効化 */
+    touch-action: manipulation;
+  }
 
-	:disabled {
-		cursor: not-allowed;
-	}
+  :disabled {
+    cursor: not-allowed;
+  }
 
-	/* ------------------------------------------------------------
+  /* ------------------------------------------------------------
 	 その他
 	------------------------------------------------------------ */
-	[hidden='until-found'] {
-		/* 意図せず他の要素の上にかぶってしまうのを防ぐ (until-found は stacking context を生成する) */
-		z-index: -1;
-	}
+  [hidden='until-found'] {
+    /* 意図せず他の要素の上にかぶってしまうのを防ぐ (until-found は stacking context を生成する) */
+    z-index: -1;
+  }
 }

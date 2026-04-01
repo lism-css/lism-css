@@ -32,17 +32,17 @@ type PresetElement<T> = T extends { preset: readonly unknown[] } ? ArrayElement<
  * State 設定から Props の値の型を抽出するユーティリティ型
  */
 type ExtractStateValue<T> = T extends string
-	? boolean // 文字列形式 → boolean のみ
-	: T extends { preset: readonly unknown[] }
-		? WithArbitraryString<PresetElement<T>> | boolean // preset あり → プリセット値 | 任意文字列 | boolean
-		: T extends { setStyles: unknown }
-			? string // setStyles あり → 文字列のみ
-			: never;
+  ? boolean // 文字列形式 → boolean のみ
+  : T extends { preset: readonly unknown[] }
+    ? WithArbitraryString<PresetElement<T>> | boolean // preset あり → プリセット値 | 任意文字列 | boolean
+    : T extends { setStyles: unknown }
+      ? string // setStyles あり → 文字列のみ
+      : never;
 
 /**
  * config/index.ts の STATES から自動生成される State Props の型
  * config/index.ts の STATES に新しいステートを追加すると自動的に反映される
  */
 export type StateProps = {
-	[K in keyof StatesConfig]?: ExtractStateValue<StatesConfig[K]>;
+  [K in keyof StatesConfig]?: ExtractStateValue<StatesConfig[K]>;
 };

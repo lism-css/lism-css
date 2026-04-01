@@ -24,12 +24,12 @@ import type { TocItem } from '../lib/generateToc';
 import { Grid, Stack, Container } from 'lism-css/astro';
 
 interface Props {
-	title: string;
-	description?: string;
-	ogImage?: string;
-	toc?: TocItem[];
-	lang?: LangCode; // 言語コード（省略時はroot言語）
-	excludeFromSearch?: boolean; // 検索対象から除外するかどうか
+  title: string;
+  description?: string;
+  ogImage?: string;
+  toc?: TocItem[];
+  lang?: LangCode; // 言語コード（省略時はroot言語）
+  excludeFromSearch?: boolean; // 検索対象から除外するかどうか
 }
 
 const { title = siteConfig.name, description, ogImage, toc, lang = getRootLang(), excludeFromSearch = false } = Astro.props;
@@ -42,39 +42,39 @@ const canonicalUrl = isDev ? Astro.url.toString() : Astro.site ? new URL(Astro.u
 ---
 
 <html lang={lang}>
-	<Head title={title} description={description} ogImage={ogImage} lang={lang} />
-	<body {...excludeFromSearch && { 'data-pagefind-ignore': 'all' }}>
-		<div class="is--container">
-			<Header />
-			<Grid
-				class={`z--wrapper l--grid ${toc ? 'has-toc' : 'no-toc'}`}
-				gtc={['var(--wrapper-gtc)', null, 'var(--wrapper-gtc_md)']}
-				gta={[`var(--wrapper-gta)`, null, 'var(--wrapper-gta_md)']}
-				min-h="100svh"
-			>
-				<Sidebar d={['none', null, 'flex']} layout="stack" />
-				<Container isWrapper={toc ? true : 'l'} setGutter py="40" as="main" class="z--main">
-					<span class="u--srOnly" id="_top" aria-hidden="true"></span>
-					<slot />
-					<Footer />
-				</Container>
-				{
-					toc && (
-						<Stack as="aside" class="z--toc" isContainer g="15" py="20" d={['none', null, null, 'flex']}>
-							<TableOfContents toc={toc} px="15" />
-							<ShareBtns url={canonicalUrl} title={title} px="15" />
-						</Stack>
-					)
-				}
-			</Grid>
-		</div>
-		{
-			toc && (
-				<FixedToc>
-					<TableOfContents toc={toc} px="30" />
-					<ShareBtns url={canonicalUrl} title={title} px="30" />
-				</FixedToc>
-			)
-		}
-	</body>
+  <Head title={title} description={description} ogImage={ogImage} lang={lang} />
+  <body {...excludeFromSearch && { 'data-pagefind-ignore': 'all' }}>
+    <div class="is--container">
+      <Header />
+      <Grid
+        class={`z--wrapper l--grid ${toc ? 'has-toc' : 'no-toc'}`}
+        gtc={['var(--wrapper-gtc)', null, 'var(--wrapper-gtc_md)']}
+        gta={[`var(--wrapper-gta)`, null, 'var(--wrapper-gta_md)']}
+        min-h="100svh"
+      >
+        <Sidebar d={['none', null, 'flex']} layout="stack" />
+        <Container isWrapper={toc ? true : 'l'} setGutter py="40" as="main" class="z--main">
+          <span class="u--srOnly" id="_top" aria-hidden="true"></span>
+          <slot />
+          <Footer />
+        </Container>
+        {
+          toc && (
+            <Stack as="aside" class="z--toc" isContainer g="15" py="20" d={['none', null, null, 'flex']}>
+              <TableOfContents toc={toc} px="15" />
+              <ShareBtns url={canonicalUrl} title={title} px="15" />
+            </Stack>
+          )
+        }
+      </Grid>
+    </div>
+    {
+      toc && (
+        <FixedToc>
+          <TableOfContents toc={toc} px="30" />
+          <ShareBtns url={canonicalUrl} title={title} px="30" />
+        </FixedToc>
+      )
+    }
+  </body>
 </html>

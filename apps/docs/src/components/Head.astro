@@ -10,10 +10,10 @@ import { getAlternateUrls, getRootLang, getLocalizedUrl, getPathWithoutLang } fr
 import type { LangCode } from '@/lib/i18n';
 
 interface Props {
-	title: string;
-	description?: string;
-	ogImage?: string;
-	lang: LangCode;
+  title: string;
+  description?: string;
+  ogImage?: string;
+  lang: LangCode;
 }
 
 const { title, description, ogImage, lang } = Astro.props;
@@ -26,20 +26,20 @@ const canonicalUrl = isDev ? Astro.url.toString() : Astro.site ? new URL(Astro.u
 
 // OG画像URL: 開発環境では相対パス、本番環境では絶対URL
 const getOgImageUrl = (imgPath?: string): string | undefined => {
-	if (!imgPath) return undefined;
+  if (!imgPath) return undefined;
 
-	// 開発環境では相対パスをそのまま返す
-	if (isDev) {
-		return imgPath;
-	}
+  // 開発環境では相対パスをそのまま返す
+  if (isDev) {
+    return imgPath;
+  }
 
-	// 本番環境では Astro.site を使って絶対URLに変換
-	if (Astro.site) {
-		return new URL(imgPath, Astro.site).toString();
-	}
+  // 本番環境では Astro.site を使って絶対URLに変換
+  if (Astro.site) {
+    return new URL(imgPath, Astro.site).toString();
+  }
 
-	// Astro.site が未設定の場合は相対パスを返す
-	return imgPath;
+  // Astro.site が未設定の場合は相対パスを返す
+  return imgPath;
 };
 
 const ogImageUrl = getOgImageUrl(ogImage || '/og-default.jpg');
@@ -49,8 +49,8 @@ const titleMetaText = title === siteConfig.name ? title : `${title} - ${siteConf
 
 // 言語に応じた og:locale を生成
 const ogLocaleMap: Record<LangCode, string> = {
-	ja: 'ja_JP',
-	en: 'en_US',
+  ja: 'ja_JP',
+  en: 'en_US',
 };
 const ogLocale = ogLocaleMap[lang] || 'ja_JP';
 
@@ -61,10 +61,10 @@ const rootPath = getLocalizedUrl(getPathWithoutLang(Astro.url), rootLang);
 
 // パスを絶対URLに変換（canonical と一致するよう末尾スラッシュを保証）
 const toAbsoluteUrl = (path: string): string => {
-	const normalized = path.endsWith('/') ? path : `${path}/`;
-	if (isDev) return normalized;
-	if (Astro.site) return new URL(normalized, Astro.site).toString();
-	return normalized;
+  const normalized = path.endsWith('/') ? path : `${path}/`;
+  if (isDev) return normalized;
+  if (Astro.site) return new URL(normalized, Astro.site).toString();
+  return normalized;
 };
 
 // Google Analytics: 本番環境のみ有効化
@@ -72,70 +72,70 @@ const enableGA = !isDev && siteConfig.publish;
 ---
 
 <head>
-	<meta charset="utf-8" />
-	<script is:inline define:vars={{ defaultTheme: siteConfig.theme.default }}>
-		// ちらつきを防ぐため、 head内でテーマセットする
-		(function () {
-			var stored = localStorage.getItem('theme');
-			var theme;
-			if (stored === 'light' || stored === 'dark') {
-				theme = stored;
-			} else if (defaultTheme === 'light' || defaultTheme === 'dark') {
-				theme = defaultTheme;
-			} else {
-				theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-			}
-			document.documentElement.setAttribute('data-theme', theme);
-		})();
-	</script>
-	<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-	<meta name="viewport" content="width=device-width" />
-	<meta name="generator" content={Astro.generator} />
+  <meta charset="utf-8" />
+  <script is:inline define:vars={{ defaultTheme: siteConfig.theme.default }}>
+    // ちらつきを防ぐため、 head内でテーマセットする
+    (function () {
+      var stored = localStorage.getItem('theme');
+      var theme;
+      if (stored === 'light' || stored === 'dark') {
+        theme = stored;
+      } else if (defaultTheme === 'light' || defaultTheme === 'dark') {
+        theme = defaultTheme;
+      } else {
+        theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      }
+      document.documentElement.setAttribute('data-theme', theme);
+    })();
+  </script>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <meta name="viewport" content="width=device-width" />
+  <meta name="generator" content={Astro.generator} />
 
-	{/* 基本メタタグ */}
-	<title>{titleMetaText}</title>
-	{description && <meta name="description" content={description} />}
-	<link rel="canonical" href={canonicalUrl} />
-	{!siteConfig.publish && <meta name="robots" content="noindex, nofollow" />}
+  {/* 基本メタタグ */}
+  <title>{titleMetaText}</title>
+  {description && <meta name="description" content={description} />}
+  <link rel="canonical" href={canonicalUrl} />
+  {!siteConfig.publish && <meta name="robots" content="noindex, nofollow" />}
 
-	{/* 多言語 hreflang: 検索エンジンに各言語版の存在を通知 */}
-	{alternateUrls.map(({ lang: altLang, url }) => <link rel="alternate" hreflang={altLang} href={toAbsoluteUrl(url)} />)}
-	<link rel="alternate" hreflang="x-default" href={toAbsoluteUrl(rootPath)} />
+  {/* 多言語 hreflang: 検索エンジンに各言語版の存在を通知 */}
+  {alternateUrls.map(({ lang: altLang, url }) => <link rel="alternate" hreflang={altLang} href={toAbsoluteUrl(url)} />)}
+  <link rel="alternate" hreflang="x-default" href={toAbsoluteUrl(rootPath)} />
 
-	{/* OGP メタタグ */}
-	<meta property="og:type" content="article" />
-	<meta property="og:title" content={titleMetaText} />
-	{description && <meta property="og:description" content={description} />}
-	<meta property="og:url" content={canonicalUrl} />
-	{ogImageUrl && <meta property="og:image" content={ogImageUrl} />}
-	<meta property="og:site_name" content={siteConfig.name} />
-	<meta property="og:locale" content={ogLocale} />
-	{/* 他言語版の og:locale を通知 */}
-	{
-		alternateUrls
-			.filter(({ lang: altLang }) => altLang !== lang)
-			.map(({ lang: altLang }) => <meta property="og:locale:alternate" content={ogLocaleMap[altLang]} />)
-	}
+  {/* OGP メタタグ */}
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content={titleMetaText} />
+  {description && <meta property="og:description" content={description} />}
+  <meta property="og:url" content={canonicalUrl} />
+  {ogImageUrl && <meta property="og:image" content={ogImageUrl} />}
+  <meta property="og:site_name" content={siteConfig.name} />
+  <meta property="og:locale" content={ogLocale} />
+  {/* 他言語版の og:locale を通知 */}
+  {
+    alternateUrls
+      .filter(({ lang: altLang }) => altLang !== lang)
+      .map(({ lang: altLang }) => <meta property="og:locale:alternate" content={ogLocaleMap[altLang]} />)
+  }
 
-	{/* Twitter Card メタタグ */}
-	<meta name="twitter:card" content="summary_large_image" />
-	<meta name="twitter:title" content={titleMetaText} />
-	{description && <meta name="twitter:description" content={description} />}
-	{ogImageUrl && <meta name="twitter:image" content={ogImageUrl} />}
+  {/* Twitter Card メタタグ */}
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content={titleMetaText} />
+  {description && <meta name="twitter:description" content={description} />}
+  {ogImageUrl && <meta name="twitter:image" content={ogImageUrl} />}
 
-	{/* Google Analytics: 条件レンダリング内の script は prettier-plugin-astro のパースバグを踏むため、define:vars で外に出す */}
-	{enableGA && <script is:inline async src="https://www.googletagmanager.com/gtag/js?id=G-NMXBW9GRL1" />}
-	<script define:vars={{ enableGA }} is:inline>
-		if (enableGA) {
-			window.dataLayer = window.dataLayer || [];
-			function gtag() {
-				dataLayer.push(arguments);
-			}
-			gtag('js', new Date());
-			gtag('config', 'G-NMXBW9GRL1');
-		}
-	</script>
+  {/* Google Analytics: 条件レンダリング内の script は prettier-plugin-astro のパースバグを踏むため、define:vars で外に出す */}
+  {enableGA && <script is:inline async src="https://www.googletagmanager.com/gtag/js?id=G-NMXBW9GRL1" />}
+  <script define:vars={{ enableGA }} is:inline>
+    if (enableGA) {
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag('js', new Date());
+      gtag('config', 'G-NMXBW9GRL1');
+    }
+  </script>
 
-	{/* 追加のhead要素用スロット */}
-	<slot />
+  {/* 追加のhead要素用スロット */}
+  <slot />
 </head>

@@ -1,64 +1,64 @@
 @layer lism.modules {
-	.c--chat {
-		--cbox-bgPct: 8%;
-		--gta: 'avatar name' 'avatar body';
-		--gtc: auto 1fr;
-		--gtr: minmax(1.5rem, auto) auto;
-		--_avator-size: clamp(48px, 32px + 5cqw, 64px); /* @320px:40px ~ @640:64px */
-		--_deco-size: calc(min(var(--_avator-size), 80px) / 4 + 0.25rem);
-		--_deco-mask: none;
-		--_deco-t: 0;
-		--_deco-scale: 1;
-		--_deco-inset-x: 0;
+  .c--chat {
+    --cbox-bgPct: 8%;
+    --gta: 'avatar name' 'avatar body';
+    --gtc: auto 1fr;
+    --gtr: minmax(1.5rem, auto) auto;
+    --_avator-size: clamp(48px, 32px + 5cqw, 64px); /* @320px:40px ~ @640:64px */
+    --_deco-size: calc(min(var(--_avator-size), 80px) / 4 + 0.25rem);
+    --_deco-mask: none;
+    --_deco-t: 0;
+    --_deco-scale: 1;
+    --_deco-inset-x: 0;
 
-		gap: 0 calc(var(--_deco-size) + 1px);
-	}
+    gap: 0 calc(var(--_deco-size) + 1px);
+  }
 
-	.c--chat_avatar {
-		grid-area: avatar;
-		width: var(--_avator-size);
-	}
-	.c--chat_name {
-		grid-area: name;
-	}
-	.c--chat_body {
-		grid-area: body;
-	}
-	.c--chat_content {
-		max-width: var(--sz--s);
-	}
+  .c--chat_avatar {
+    grid-area: avatar;
+    width: var(--_avator-size);
+  }
+  .c--chat_name {
+    grid-area: name;
+  }
+  .c--chat_body {
+    grid-area: body;
+  }
+  .c--chat_content {
+    max-width: var(--sz--s);
+  }
 
-	.c--chat_deco {
-		top: var(--_deco-t);
-		inset-inline: var(--_deco-inset-x);
-		width: var(--_deco-size);
-		height: var(--_deco-size);
-		scale: var(--_deco-scale);
-		mask: var(--_deco-mask) center / contain no-repeat;
-	}
-	.c--chat--speak {
-		--_deco-mask: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="8" height="8"><path d="M8,8L8,8C7.4,4.8,5.4,2,2.6,0.4L2,0h6V8z"/></svg>');
-	}
+  .c--chat_deco {
+    top: var(--_deco-t);
+    inset-inline: var(--_deco-inset-x);
+    width: var(--_deco-size);
+    height: var(--_deco-size);
+    scale: var(--_deco-scale);
+    mask: var(--_deco-mask) center / contain no-repeat;
+  }
+  .c--chat--speak {
+    --_deco-mask: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="8" height="8"><path d="M8,8L8,8C7.4,4.8,5.4,2,2.6,0.4L2,0h6V8z"/></svg>');
+  }
 
-	[data-chat-dir='start'] {
-		--_deco-inset-x: auto calc(100% - 1px);
-	}
-	[data-chat-dir='end'] {
-		--_deco-scale: -1 1;
-		--_deco-inset-x: calc(100% - 1px) auto;
-		--gta: 'name avatar' 'body avatar';
-		--gtc: 1fr auto;
-	}
+  [data-chat-dir='start'] {
+    --_deco-inset-x: auto calc(100% - 1px);
+  }
+  [data-chat-dir='end'] {
+    --_deco-scale: -1 1;
+    --_deco-inset-x: calc(100% - 1px) auto;
+    --gta: 'name avatar' 'body avatar';
+    --gtc: 1fr auto;
+  }
 }
 
 /* NOTE: 以下は @layer 外に配置（セレクタの詳細度を確保するため） */
 
 /* speak バリアントの角丸調整: 左側 */
 .c--chat--speak[data-chat-dir='start'] > div > .c--chat_content {
-	border-start-start-radius: 0;
+  border-start-start-radius: 0;
 }
 
 /* speak バリアントの角丸調整: 右側 */
 .c--chat--speak[data-chat-dir='end'] > div > .c--chat_content {
-	border-start-end-radius: 0;
+  border-start-end-radius: 0;
 }

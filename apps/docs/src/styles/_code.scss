@@ -8,136 +8,136 @@ astro-code: Astro の <Code>コンポーネント
  */
 
 :root {
-	--codeBlock-bgc: hsl(200, 18%, 95%) !important;
-	--codeBlock-bdrs: var(--bdrs--10);
-	--codeBlock-maxH: 32rem;
-	--codeBlockCopy-bgc: color-mix(in srgb, var(--codeBlock-bgc), var(--text) 20%);
+  --codeBlock-bgc: hsl(200, 18%, 95%) !important;
+  --codeBlock-bdrs: var(--bdrs--10);
+  --codeBlock-maxH: 32rem;
+  --codeBlockCopy-bgc: color-mix(in srgb, var(--codeBlock-bgc), var(--text) 20%);
 
-	--codeBlock-mark-c: rgba(138, 145, 150, 0.1);
-	--codeBlock-mark-bgc: rrgba(147, 153, 155, 0.15);
-	--codeBlock-mark-bdc: hsla(207, 43%, 47%, 0.8);
+  --codeBlock-mark-c: rgba(138, 145, 150, 0.1);
+  --codeBlock-mark-bgc: rrgba(147, 153, 155, 0.15);
+  --codeBlock-mark-bdc: hsla(207, 43%, 47%, 0.8);
 
-	/* Preview コンポーネント用 */
-	// --lsdoc-codeBlock-bgc: hsl(200, 18%, 95%);
-	// --lsdoc-codeBlock-radius: 4px;
-	// --lsdoc-preview_resize-bdc: hsl(200, 16%, 60%);
-	// --lsdoc-preview_help-bg: rgba(250, 250, 255, 0.5);
+  /* Preview コンポーネント用 */
+  // --lsdoc-codeBlock-bgc: hsl(200, 18%, 95%);
+  // --lsdoc-codeBlock-radius: 4px;
+  // --lsdoc-preview_resize-bdc: hsl(200, 16%, 60%);
+  // --lsdoc-preview_help-bg: rgba(250, 250, 255, 0.5);
 }
 :root[data-theme='dark'] {
-	--codeBlock-bgc: #24292e !important;
+  --codeBlock-bgc: #24292e !important;
 
-	/* Preview コンポーネント用 */
-	// --lsdoc-codeBlock-bgc: hsl(200, 12%, 12%);
-	// --lsdoc-preview_resize-bdc: hsl(200, 16%, 40%);
-	// --lsdoc-preview_help-bg: rgba(50, 50, 55, 0.5);
+  /* Preview コンポーネント用 */
+  // --lsdoc-codeBlock-bgc: hsl(200, 12%, 12%);
+  // --lsdoc-preview_resize-bdc: hsl(200, 16%, 40%);
+  // --lsdoc-preview_help-bg: rgba(50, 50, 55, 0.5);
 }
 
 pre {
-	/* デフォのまま */
-	--ec-codeFontFml: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
-	--ec-codePadBlk: 1rem;
-	--ec-codePadInl: 1.35rem;
-	--ec-codeLineHt: 1.65;
-	--ec-codeFontSize: 0.85rem;
+  /* デフォのまま */
+  --ec-codeFontFml: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
+  --ec-codePadBlk: 1rem;
+  --ec-codePadInl: 1.35rem;
+  --ec-codeLineHt: 1.65;
+  --ec-codeFontSize: 0.85rem;
 }
 
 :is(.astro-code, .expressive-code) {
-	pre {
-		tab-size: 2;
-	}
+  pre {
+    tab-size: 2;
+  }
 }
 
 .astro-code {
-	font-size: var(--ec-codeFontSize);
-	line-height: var(--ec-codeLineHt);
-	font-family: var(--ec-codeFontFml);
-	background-color: var(--codeBlock-bgc) !important;
-	max-height: var(--codeBlock-maxH);
-	border-radius: var(--codeBlock-bdrs);
+  font-size: var(--ec-codeFontSize);
+  line-height: var(--ec-codeLineHt);
+  font-family: var(--ec-codeFontFml);
+  background-color: var(--codeBlock-bgc) !important;
+  max-height: var(--codeBlock-maxH);
+  border-radius: var(--codeBlock-bdrs);
 
-	/* expressive-codeと揃える */
-	padding: var(--ec-codePadBlk) var(--ec-codePadInl);
+  /* expressive-codeと揃える */
+  padding: var(--ec-codePadBlk) var(--ec-codePadInl);
 
-	&:hover + .c--copyBtn {
-		opacity: 1;
-	}
+  &:hover + .c--copyBtn {
+    opacity: 1;
+  }
 
-	> code {
-		font-family: inherit;
-	}
+  > code {
+    font-family: inherit;
+  }
 }
 
 /* .astro-code は --shiki-dark で出力されてるのでそれを拾う */
 [data-theme='dark'] :is(.astro-code, .astro-code span) {
-	color: var(--shiki-dark) !important;
+  color: var(--shiki-dark) !important;
 }
 
 .expressive-code {
-	.articleContent > & {
-		margin-block: var(--s40);
-	}
+  .articleContent > & {
+    margin-block: var(--s40);
+  }
 
-	/* Memo: `.expressive-code pre` より上、`.expressive-code .frame.has-title pre` より下の詳細度 */
-	&.expressive-code pre {
-		border-radius: var(--codeBlock-bdrs);
-	}
+  /* Memo: `.expressive-code pre` より上、`.expressive-code .frame.has-title pre` より下の詳細度 */
+  &.expressive-code pre {
+    border-radius: var(--codeBlock-bdrs);
+  }
 }
 
 .expressive-code:not(#_) {
-	> .frame {
-		box-shadow: none;
-		border: none;
-	}
+  > .frame {
+    box-shadow: none;
+    border: none;
+  }
 
-	> .frame > .header {
-		background: var(--codeBlock-bgc);
-		border-bottom: solid 1px var(--base);
-	}
-	.header::before {
-		content: none;
-	}
-	.header > .title {
-		background: none;
-		font-size: var(--fz--s);
-	}
-	.header > .title::after {
-		border-bottom: none;
-	}
+  > .frame > .header {
+    background: var(--codeBlock-bgc);
+    border-bottom: solid 1px var(--base);
+  }
+  .header::before {
+    content: none;
+  }
+  .header > .title {
+    background: none;
+    font-size: var(--fz--s);
+  }
+  .header > .title::after {
+    border-bottom: none;
+  }
 
-	pre {
-		border: none;
-		background-color: var(--codeBlock-bgc);
-		max-height: var(--codeBlock-maxH);
-	}
+  pre {
+    border: none;
+    background-color: var(--codeBlock-bgc);
+    max-height: var(--codeBlock-maxH);
+  }
 
-	// 部分ハイライト
-	.ec-line mark {
-		--tmInlineBgCol: color-mix(in srgb, var(--codeBlock-bgc), var(--brand) 10%);
-		--tmInlineBrdCol: color-mix(in srgb, var(--codeBlock-bgc), var(--brand) 50%);
-		--ec-tm-inlMarkerBrdWd: 1px;
+  // 部分ハイライト
+  .ec-line mark {
+    --tmInlineBgCol: color-mix(in srgb, var(--codeBlock-bgc), var(--brand) 10%);
+    --tmInlineBrdCol: color-mix(in srgb, var(--codeBlock-bgc), var(--brand) 50%);
+    --ec-tm-inlMarkerBrdWd: 1px;
 
-		&::before {
-			inset: 0 -1px;
-		}
-	}
+    &::before {
+      inset: 0 -1px;
+    }
+  }
 
-	// 行ハイライト
-	.ec-line.mark.mark {
-		--tmLineBgCol: color-mix(in srgb, var(--codeBlock-bgc), var(--brand) 15%);
-	}
+  // 行ハイライト
+  .ec-line.mark.mark {
+    --tmLineBgCol: color-mix(in srgb, var(--codeBlock-bgc), var(--brand) 15%);
+  }
 
-	// カラーボックスの中
-	.u--cbox & {
-		> .frame {
-			background: color-mix(in srgb, var(--code-background), transparent 20%);
-			box-shadow:
-				inset var(--shsz--5) var(--shc),
-				inset var(--shsz--10) var(--shc);
-		}
-		> .frame > pre {
-			background: none;
-		}
-	}
+  // カラーボックスの中
+  .u--cbox & {
+    > .frame {
+      background: color-mix(in srgb, var(--code-background), transparent 20%);
+      box-shadow:
+        inset var(--shsz--5) var(--shc),
+        inset var(--shsz--10) var(--shc);
+    }
+    > .frame > pre {
+      background: none;
+    }
+  }
 }
 
 /* -------------------------- */
@@ -146,114 +146,114 @@ pre {
 
 .c--tabs--src,
 .c--tabs--line {
-	> .c--tabs_list,
-	pre {
-		--focus-offset: -3px;
-	}
+  > .c--tabs_list,
+  pre {
+    --focus-offset: -3px;
+  }
 }
 
 .c--demoSrcCodes {
-	padding: 2px;
-	border-radius: var(--codeBlock-bdrs);
-	overflow: hidden;
+  padding: 2px;
+  border-radius: var(--codeBlock-bdrs);
+  overflow: hidden;
 }
 .c--tabs--src {
-	grid-template-columns: 100%;
+  grid-template-columns: 100%;
 
-	box-shadow: 0 0 0 2px var(--base-2);
-	border: solid 2px var(--base);
-	border-radius: calc(var(--codeBlock-bdrs) + 2px);
-	overflow: hidden;
+  box-shadow: 0 0 0 2px var(--base-2);
+  border: solid 2px var(--base);
+  border-radius: calc(var(--codeBlock-bdrs) + 2px);
+  overflow: hidden;
 
-	> .c--tabs_list {
-		background-color: var(--base-2);
-		box-shadow: inset 1px 2px 4px -2px rgb(0 0 0 / 0.1);
-		position: relative;
-		// border-bottom: 1px solid var(--base);
-		// overflow: visible;
-		overflow-y: visible;
+  > .c--tabs_list {
+    background-color: var(--base-2);
+    box-shadow: inset 1px 2px 4px -2px rgb(0 0 0 / 0.1);
+    position: relative;
+    // border-bottom: 1px solid var(--base);
+    // overflow: visible;
+    overflow-y: visible;
 
-		&::after {
-			content: '';
-			position: absolute;
-			inset: 0;
-			border-bottom: 1px solid var(--base);
-			pointer-events: none;
-		}
-	}
-	.c--tabs_tab {
-		background-color: var(--_isSelected, var(--codeBlock-bgc)) var(--_notSelected, transparent);
-		// color: var(--_isSelected, var(--text)) var(--_notSelected, var(--text-2));
-		color: var(--text);
-		border-inline-end: solid 1px var(--base);
-		font-weight: var(--_isSelected, 600);
-		flex-shrink: 0;
-		position: relative;
+    &::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-bottom: 1px solid var(--base);
+      pointer-events: none;
+    }
+  }
+  .c--tabs_tab {
+    background-color: var(--_isSelected, var(--codeBlock-bgc)) var(--_notSelected, transparent);
+    // color: var(--_isSelected, var(--text)) var(--_notSelected, var(--text-2));
+    color: var(--text);
+    border-inline-end: solid 1px var(--base);
+    font-weight: var(--_isSelected, 600);
+    flex-shrink: 0;
+    position: relative;
 
-		opacity: var(--_notSelected, 0.7);
-		&::before {
-			// content: var(--_notSelected, '');
-			position: absolute;
-			inset: 0;
-			box-shadow: inset 1px 2px 4px -1px rgb(0 0 0 / 0.1);
-		}
-		&::after {
-			content: var(--_isSelected, '');
-			position: absolute;
-			inset: 0;
-			z-index: 1;
-			border-bottom: solid 2px var(--codeBlock-bgc);
-		}
+    opacity: var(--_notSelected, 0.7);
+    &::before {
+      // content: var(--_notSelected, '');
+      position: absolute;
+      inset: 0;
+      box-shadow: inset 1px 2px 4px -1px rgb(0 0 0 / 0.1);
+    }
+    &::after {
+      content: var(--_isSelected, '');
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      border-bottom: solid 2px var(--codeBlock-bgc);
+    }
 
-		> .a--icon {
-			margin-inline-start: -0.125em;
-		}
-	}
+    > .a--icon {
+      margin-inline-start: -0.125em;
+    }
+  }
 
-	.c--srcCode__content,
-	.expressive-code pre {
-		border-top-left-radius: 0;
-		border-top-right-radius: 0;
-	}
+  .c--srcCode__content,
+  .expressive-code pre {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+  }
 }
 
 /* タイトルがある場合 */
 .c--srcCode__title + .c--srcCode__content {
-	border-top-left-radius: 0;
-	border-top-right-radius: 0;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
 }
 
 /* 埋め込みコード */
 .emgithub-file {
-	margin-block-end: 0 !important;
-	.emgithub-container:first-of-type > & {
-		margin-block-start: 0;
-	}
+  margin-block-end: 0 !important;
+  .emgithub-container:first-of-type > & {
+    margin-block-start: 0;
+  }
 
-	.code-area > pre {
-		tab-size: 4 !important;
-	}
+  .code-area > pre {
+    tab-size: 4 !important;
+  }
 
-	// with ❤ 消す
-	.hide-in-phone {
-		display: none;
-	}
+  // with ❤ 消す
+  .hide-in-phone {
+    display: none;
+  }
 }
 
 /* .expressive-code の copy ボタン. Memo: before, div, afterでスタイルわかれてる */
 .expressive-code:not(#_) {
-	.copy button {
-		width: 2rem;
-		height: 2rem;
-		background: var(--codeBlock-bgc);
-		border-radius: var(--bdrs--10);
-		--ec-brdWd: 1px;
-		--ec-frm-inlBtnBgHoverOrFocusOpa: 0.5;
-		--ec-frm-inlBtnBg: var(--codeBlockCopy-bgc);
-		--ec-frm-copyIcon: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512' width='1em' height='1em' aria-hidden='true'><rect x='128' y='128' width='336' height='336' rx='57' ry='57' fill='none' stroke='currentColor' stroke-linejoin='round' stroke-width='32'></rect><path d='M383.5 128l.5-24a56.16 56.16 0 00-56-56H112a64.19 64.19 0 00-64 64v216a56.16 56.16 0 0056 56h24' fill='none' stroke='currentColor' stroke-linecap='round' stroke-linejoin='round' stroke-width='32'></path></svg>");
-	}
-	.copy button::after {
-		margin: 0.375em;
-		mask-size: 100% 100%;
-	}
+  .copy button {
+    width: 2rem;
+    height: 2rem;
+    background: var(--codeBlock-bgc);
+    border-radius: var(--bdrs--10);
+    --ec-brdWd: 1px;
+    --ec-frm-inlBtnBgHoverOrFocusOpa: 0.5;
+    --ec-frm-inlBtnBg: var(--codeBlockCopy-bgc);
+    --ec-frm-copyIcon: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512' width='1em' height='1em' aria-hidden='true'><rect x='128' y='128' width='336' height='336' rx='57' ry='57' fill='none' stroke='currentColor' stroke-linejoin='round' stroke-width='32'></rect><path d='M383.5 128l.5-24a56.16 56.16 0 00-56-56H112a64.19 64.19 0 00-64 64v216a56.16 56.16 0 0056 56h24' fill='none' stroke='currentColor' stroke-linecap='round' stroke-linejoin='round' stroke-width='32'></path></svg>");
+  }
+  .copy button::after {
+    margin: 0.375em;
+    mask-size: 100% 100%;
+  }
 }

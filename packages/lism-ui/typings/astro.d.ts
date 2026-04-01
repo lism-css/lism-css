@@ -9,6 +9,6 @@
  * デフォルトエクスポートとしてコンポーネントを持つことをTypeScriptに伝える。
  */
 declare module '*.astro' {
-	const Component: (props: Record<string, unknown>) => unknown;
-	export default Component;
+  const Component: (props: Record<string, unknown>) => unknown;
+  export default Component;
 }

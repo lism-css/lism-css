@@ -12,41 +12,47 @@ In Lism, responsive support is implemented by combining classes in the `.-{prop}
 
 <PreviewTitle>Example</PreviewTitle>
 ```css
-.-p{ padding: var(--p); }
+.-p {
+  padding: var(--p);
+}
 
 /* @sm ~ */
 @container (min-width: 480px) {
-  .-p_sm{ padding: var(--p_sm); }
+  .-p_sm {
+    padding: var(--p_sm);
+  }
 }
 
 /* @md ~ */
 @container (min-width: 720px) {
-  .-p_md{ padding: var(--p_md); }
+  .-p_md {
+    padding: var(--p_md);
+  }
 }
 ```
 
 
 <Preview>
-	<PreviewTitle>Responsive example</PreviewTitle>
-	<PreviewArea resize p='15'>
-		<Lism p={[20, 40, 50]} bd>
-			<p>Example</p>
-		</Lism>
-	</PreviewArea>
-	<PreviewCode label="HTML" slot="tab">
-		```html "-p_sm -p_md" "--p_sm" "--p_md"
-		<div class="-p:20 -p_sm -p_md -bd" style="--p_sm:var(--s40);--p_md:var(--s50)">
-			<p>Example</p>
-		</div>
-		```
-	</PreviewCode>
-	<PreviewCode label="JSX" slot="tab">
-		```jsx
-		<Lism p={[20, 40, 50]} bd>
-			<p>Example</p>
-		</Lism>
-		```
-	</PreviewCode>
+  <PreviewTitle>Responsive example</PreviewTitle>
+  <PreviewArea resize p='15'>
+    <Lism p={[20, 40, 50]} bd>
+      <p>Example</p>
+    </Lism>
+  </PreviewArea>
+  <PreviewCode label="HTML" slot="tab">
+    ```html "-p_sm -p_md" "--p_sm" "--p_md"
+    <div class="-p:20 -p_sm -p_md -bd" style="--p_sm: var(--s40); --p_md: var(--s50)">
+      <p>Example</p>
+    </div>
+    ```
+  </PreviewCode>
+  <PreviewCode label="JSX" slot="tab">
+    ```jsx
+    <Lism p={[20, 40, 50]} bd>
+      <p>Example</p>
+    </Lism>;
+    ```
+  </PreviewCode>
 </Preview>
 
 :::warning
@@ -66,13 +72,15 @@ There are two patterns:
 
 <PreviewTitle>Implementation example for pattern 1</PreviewTitle>
 ```css
-.-p{ padding: var(--p) }
+.-p {
+  padding: var(--p);
+}
 
 @container (min-width: 480px) {
-	.-p_sm {
-		--p: var(--p_sm) !important;
-		padding: var(--p_sm);
-	}
+  .-p_sm {
+    --p: var(--p_sm) !important;
+    padding: var(--p_sm);
+  }
 }
 ```
 
@@ -82,10 +90,14 @@ There are two patterns:
 
 <PreviewTitle>Implementation example for pattern 2</PreviewTitle>
 ```css
-.-d { display: var(--d) }
+.-d {
+  display: var(--d);
+}
 
 @container (min-width: 480px) {
-	.-d_sm { display: var(--d_sm) }
+  .-d_sm {
+    display: var(--d_sm);
+  }
 }
 ```
 
@@ -129,10 +141,10 @@ To use these breakpoints in your own project with `.scss`, you can do so as foll
 @use '../path/to/node_modules/lism-css/scss/query' as query;
 
 @include query.bp-up('sm') {
-	// Your styles for sm sizes(width >= 480px) ...
+  // Your styles for sm sizes(width >= 480px) ...
 }
 @include query.bp-up('md') {
-	// Your styles for md sizes(width >= 800px) ...
+  // Your styles for md sizes(width >= 800px) ...
 }
 ```
 

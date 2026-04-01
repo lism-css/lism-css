@@ -22,19 +22,25 @@ Tokens for `font-family`.
 
 
 <Preview>
-	<PreviewTitle>Preview</PreviewTitle>
-	<PreviewArea p='20' flow='s'>
-		<HTML.p ff='base' fz='xl'>base: English text, 漢字ひらがな</HTML.p>
-		<HTML.p ff='accent' fz='xl'>accent: English text, 漢字ひらがな</HTML.p>
-		<HTML.p ff='mono' fz='xl'>mono: English text, 漢字ひらがな</HTML.p>
-	</PreviewArea>
-	<PreviewCode>
-	```jsx
-	<p class="-ff:base -fz:xl">Lorem ipsum ...</p>
-	<p class="-ff:accent -fz:xl">Lorem ipsum ...</p>
-	<p class="-ff:mono -fz:xl">Lorem ipsum ...</p>
-	```
-	</PreviewCode>
+  <PreviewTitle>Preview</PreviewTitle>
+  <PreviewArea p='20' flow='s'>
+    <HTML.p ff="base" fz="xl">
+      base: English text, 漢字ひらがな
+    </HTML.p>
+    <HTML.p ff="accent" fz="xl">
+      accent: English text, 漢字ひらがな
+    </HTML.p>
+    <HTML.p ff="mono" fz="xl">
+      mono: English text, 漢字ひらがな
+    </HTML.p>
+  </PreviewArea>
+  <PreviewCode>
+  ```jsx
+  <p class="-ff:base -fz:xl">Lorem ipsum ...</p>
+  <p class="-ff:accent -fz:xl">Lorem ipsum ...</p>
+  <p class="-ff:mono -fz:xl">Lorem ipsum ...</p>
+  ```
+  </PreviewCode>
 </Preview>
 
 
@@ -53,28 +59,28 @@ Tokens for `font-weight`.
 
 
 <Preview>
-	<PreviewTitle>Preview</PreviewTitle>
-	<PreviewArea p='20' flow='s'>
-		<Dummy length='s' fw='thin' />
-		<Dummy length='s' fw='light' />
-		<Dummy length='s' fw='normal' />
-		<Dummy length='s' fw='bold' />
-		<Dummy length='s' fw='black' />
-	</PreviewArea>
-	<PreviewCode slot='tab' label='HTML'>
-		```html
-		<p class="-fw:light">Lorem ipsum ...</p>
-		<p class="-fw:normal">Lorem ipsum ...</p>
-		<p class="-fw:bold">Lorem ipsum ...</p>
-		```
-	</PreviewCode>
-	<PreviewCode slot='tab' label='JSX'>
-		```jsx
-		<HTML.p fw='light'>Lorem ipsum ...</HTML.p>
-		<HTML.p fw='normal'>Lorem ipsum ...</HTML.p>
-		<HTML.p fw='bold'>Lorem ipsum ...</HTML.p>
-		```
-	</PreviewCode>
+  <PreviewTitle>Preview</PreviewTitle>
+  <PreviewArea p='20' flow='s'>
+    <Dummy length="s" fw="thin" />
+    <Dummy length="s" fw="light" />
+    <Dummy length="s" fw="normal" />
+    <Dummy length="s" fw="bold" />
+    <Dummy length="s" fw="black" />
+  </PreviewArea>
+  <PreviewCode slot='tab' label='HTML'>
+    ```html
+    <p class="-fw:light">Lorem ipsum ...</p>
+    <p class="-fw:normal">Lorem ipsum ...</p>
+    <p class="-fw:bold">Lorem ipsum ...</p>
+    ```
+  </PreviewCode>
+  <PreviewCode slot='tab' label='JSX'>
+    ```jsx
+    <HTML.p fw='light'>Lorem ipsum ...</HTML.p>
+    <HTML.p fw='normal'>Lorem ipsum ...</HTML.p>
+    <HTML.p fw='bold'>Lorem ipsum ...</HTML.p>
+    ```
+  </PreviewCode>
 </Preview>
 
 
@@ -100,24 +106,24 @@ Tokens for `font-size`.
 
 
 <Preview>
-	<PreviewTitle>Preview</PreviewTitle>
-	<PreviewArea p='0' flow='s'>
-		<FzDemos />
-	</PreviewArea>
-	<PreviewCode>
-		```html
-		<p class='-fz:2xs'>Lorem ipsum ...</p>
-		<p class='-fz:xs'>Lorem ipsum ...</p>
-		<p class='-fz:s'>Lorem ipsum ...</p>
-		<p class='-fz:m'>Lorem ipsum ...</p>
-		<p class='-fz:base'>Lorem ipsum ...</p>
-		<p class='-fz:l'>Lorem ipsum ...</p>
-		<p class='-fz:xl'>Lorem ipsum ...</p>
-		<p class='-fz:2xl'>Lorem ipsum ...</p>
-		<p class='-fz:3xl'>Lorem ipsum ...</p>
-		<p class='-fz:4xl'>Lorem ipsum ...</p>
-		```
-	</PreviewCode>
+  <PreviewTitle>Preview</PreviewTitle>
+  <PreviewArea p='0' flow='s'>
+    <FzDemos />
+  </PreviewArea>
+  <PreviewCode>
+    ```html
+    <p class="-fz:2xs">Lorem ipsum ...</p>
+    <p class="-fz:xs">Lorem ipsum ...</p>
+    <p class="-fz:s">Lorem ipsum ...</p>
+    <p class="-fz:m">Lorem ipsum ...</p>
+    <p class="-fz:base">Lorem ipsum ...</p>
+    <p class="-fz:l">Lorem ipsum ...</p>
+    <p class="-fz:xl">Lorem ipsum ...</p>
+    <p class="-fz:2xl">Lorem ipsum ...</p>
+    <p class="-fz:3xl">Lorem ipsum ...</p>
+    <p class="-fz:4xl">Lorem ipsum ...</p>
+    ```
+  </PreviewCode>
 </Preview>
 
 
@@ -133,17 +139,17 @@ Reference: [Music, Mathematics, and Typography](https://standard.shiftbrain.com/
 By default, the scaling is based on the **harmonic series with numerator 8**.
 
 ```scss
-:root{
-	$fzmol: 8;
-	--fz--4xl: calc(1em * $fzmol / ($fzmol - 5));
-	--fz--3xl: calc(1em * $fzmol / ($fzmol - 4));
-	--fz--2xl: calc(1em * $fzmol / ($fzmol - 3));
-	--fz--xl: calc(1em * $fzmol / ($fzmol - 2));
-	--fz--l: calc(1em * $fzmol / ($fzmol - 1));
-	--fz--m: 1em;
-	--fz--s: calc(1em * $fzmol / ($fzmol + 1));
-	--fz--xs: calc(1em * $fzmol / ($fzmol + 2));
-	--fz--2xs: calc(1em * $fzmol / ($fzmol + 3));
+:root {
+  $fzmol: 8;
+  --fz--4xl: calc(1em * $fzmol / ($fzmol - 5));
+  --fz--3xl: calc(1em * $fzmol / ($fzmol - 4));
+  --fz--2xl: calc(1em * $fzmol / ($fzmol - 3));
+  --fz--xl: calc(1em * $fzmol / ($fzmol - 2));
+  --fz--l: calc(1em * $fzmol / ($fzmol - 1));
+  --fz--m: 1em;
+  --fz--s: calc(1em * $fzmol / ($fzmol + 1));
+  --fz--xs: calc(1em * $fzmol / ($fzmol + 2));
+  --fz--2xs: calc(1em * $fzmol / ($fzmol + 3));
 }
 ```
 
@@ -159,7 +165,7 @@ In Lism, the following style is applied to all elements:
 
 ```css
 body * {
-	line-height: calc(1em + var(--hl, var(--hl--base)) * 2);
+  line-height: calc(1em + var(--hl, var(--hl--base)) * 2);
 }
 ```
 
@@ -177,8 +183,8 @@ Tokens are also provided under `--hl--`.
 The `--hl-unit` above is defined as follows:
 
 ```css
-:root{
-	--hl-unit: calc(var(--REM) * 0.125); /* ≒ 2px */
+:root {
+  --hl-unit: calc(var(--REM) * 0.125); /* ≒ 2px */
 }
 ```
 
@@ -190,44 +196,44 @@ The `lh` class uses these variables internally:
 
 ```css
 .-lh\:base {
-	--hl: var(--hl--base);
+  --hl: var(--hl--base);
 }
 .-lh\:xs {
-	--hl: var(--hl--xs);
+  --hl: var(--hl--xs);
 }
 .-lh\:s {
-	--hl: var(--hl--s);
+  --hl: var(--hl--s);
 }
 .-lh\:l {
-	--hl: var(--hl--l);
+  --hl: var(--hl--l);
 }
 ```
 
 <Preview>
-	<PreviewTitle>Preview</PreviewTitle>
-	<PreviewArea p='20' flow='s' style={{'--halfLead':'1em'}}>
-	<Dummy pre='<code class="-fz:s">1:</code> ' lh='1' />
-		<Dummy pre='<code class="-fz:s">xs:</code> ' lh='xs' />
-		<Dummy pre='<code class="-fz:s">s:</code> ' lh='s' />
-		<Dummy pre='<code class="-fz:s">base:</code> ' lh='base' />
-		<Dummy pre='<code class="-fz:s">l:</code> ' lh='l' />
-	</PreviewArea>
-	<PreviewCode slot='tab' label='HTML'>
-		```html
-		<p class="-lh:xs">Lorem ipsum ...</p>
-		<p class="-lh:s">Lorem ipsum ...</p>
-		<p class="-lh:base">Lorem ipsum ...</p>
-		<p class="-lh:l">Lorem ipsum ...</p>
-		```
-	</PreviewCode>
-	<PreviewCode slot='tab' label='JSX'>
-		```jsx
-		<HTML.p lh='xs'>Lorem ipsum ...</HTML.p>
-		<HTML.p lh='s'>Lorem ipsum ...</HTML.p>
-		<HTML.p lh='base'>Lorem ipsum ...</HTML.p>
-		<HTML.p lh='l'>Lorem ipsum ...</HTML.p>
-		```
-	</PreviewCode>
+  <PreviewTitle>Preview</PreviewTitle>
+  <PreviewArea p='20' flow='s' style={{'--halfLead':'1em'}}>
+    <Dummy pre='<code class="-fz:s">1:</code> ' lh="1" />
+    <Dummy pre='<code class="-fz:s">xs:</code> ' lh="xs" />
+    <Dummy pre='<code class="-fz:s">s:</code> ' lh="s" />
+    <Dummy pre='<code class="-fz:s">base:</code> ' lh="base" />
+    <Dummy pre='<code class="-fz:s">l:</code> ' lh="l" />
+  </PreviewArea>
+  <PreviewCode slot='tab' label='HTML'>
+    ```html
+    <p class="-lh:xs">Lorem ipsum ...</p>
+    <p class="-lh:s">Lorem ipsum ...</p>
+    <p class="-lh:base">Lorem ipsum ...</p>
+    <p class="-lh:l">Lorem ipsum ...</p>
+    ```
+  </PreviewCode>
+  <PreviewCode slot='tab' label='JSX'>
+    ```jsx
+    <HTML.p lh='xs'>Lorem ipsum ...</HTML.p>
+    <HTML.p lh='s'>Lorem ipsum ...</HTML.p>
+    <HTML.p lh='base'>Lorem ipsum ...</HTML.p>
+    <HTML.p lh='l'>Lorem ipsum ...</HTML.p>
+    ```
+  </PreviewCode>
 </Preview>
 
 
@@ -240,18 +246,18 @@ This works fine for body-sized text, but for headings it becomes too large and d
 By fixing the half-leading to a constant value, the distance between lines stays the same regardless of font size.
 
 <Preview>
-	<PreviewTitle>Preview</PreviewTitle>
-	<PreviewArea p='20' flow='s'>
-		<Dummy as='h1' pre='H1: ' max-w="s" lang="ja"/>
-		<Dummy as='h2' pre='H2: ' max-w="s" lang="ja"/>
-		<Dummy as='h3' pre='H3: ' max-w="s" lang="ja"/>
-		<Dummy as='h4' pre='H4: ' max-w="s" lang="ja"/>
-		<Dummy as='h5' pre='H5: ' max-w="s" lang="ja"/>
-		<Dummy as='p' pre='p : ' max-w="s" lang="ja"/>
-		<Dummy as='p' fz="s" pre='s: ' max-w="s" lang="ja"/>
-		{/* <Dummy as='p' fz="xs" pre='xs: ' max-w="s" lang="ja"/>
-		<Dummy as='p' fz="2xs" pre='2xs: ' max-w="s" lang="ja"/> */}
-	</PreviewArea>
+  <PreviewTitle>Preview</PreviewTitle>
+  <PreviewArea p='20' flow='s'>
+    <Dummy as="h1" pre="H1: " max-w="s" lang="ja" />
+    <Dummy as="h2" pre="H2: " max-w="s" lang="ja" />
+    <Dummy as="h3" pre="H3: " max-w="s" lang="ja" />
+    <Dummy as="h4" pre="H4: " max-w="s" lang="ja" />
+    <Dummy as="h5" pre="H5: " max-w="s" lang="ja" />
+    <Dummy as="p" pre="p : " max-w="s" lang="ja" />
+    <Dummy as="p" fz="s" pre="s: " max-w="s" lang="ja" />
+    {/* <Dummy as='p' fz="xs" pre='xs: ' max-w="s" lang="ja"/>
+    <Dummy as='p' fz="2xs" pre='2xs: ' max-w="s" lang="ja"/> */}
+  </PreviewArea>
 </Preview>
 
 
@@ -263,19 +269,19 @@ Reference: [Half-leading trim class](/docs/utility-class/#u--trim--u--trimitems)
 
 {/* ### Headings の font-size, line-height について
 <Preview>
-	<PreviewTitle>Headings</PreviewTitle>
-	<PreviewArea p='20' flow='s'>
-		<div class='l--stack -g:20'>
-			<h1>Heading 1: <Dummy  as='span' lang='ja' /></h1>
-			<h2>Heading 2: <Dummy  as='span' lang='ja' /></h2>
-			<h3>Heading 3: <Dummy  as='span' lang='ja' /></h3>
-			<h4>Heading 4: <Dummy  as='span' lang='ja' /></h4>
-			<p>Heading 5: <Dummy  as='span' lang='ja' /></h5>
-			<h6>Heading 6: <Dummy  as='span' lang='ja' /></h6>
-			<hr />
-			<p>Paragraph: <Dummy  as='span' lang='ja' /></p>
-		</div>
-	</PreviewArea>
+  <PreviewTitle>Headings</PreviewTitle>
+  <PreviewArea p='20' flow='s'>
+    <div class='l--stack -g:20'>
+      <h1>Heading 1: <Dummy  as='span' lang='ja' /></h1>
+      <h2>Heading 2: <Dummy  as='span' lang='ja' /></h2>
+      <h3>Heading 3: <Dummy  as='span' lang='ja' /></h3>
+      <h4>Heading 4: <Dummy  as='span' lang='ja' /></h4>
+      <p>Heading 5: <Dummy  as='span' lang='ja' /></h5>
+      <h6>Heading 6: <Dummy  as='span' lang='ja' /></h6>
+      <hr />
+      <p>Paragraph: <Dummy  as='span' lang='ja' /></p>
+    </div>
+  </PreviewArea>
 </Preview> */}
 
 
@@ -291,27 +297,27 @@ Tokens for `letter-spacing`.
 {/* |`xl`|`--lts--xl`|`-lts:xl`|`0.125em`| */}
 
 <Preview>
-	<PreviewTitle>Preview</PreviewTitle>
-	<PreviewArea p='20' flow='s'>
-		<Dummy length='s' pre='<code>s:</code> ' lts='s' />
-		<Dummy length='s' pre='<code>base:</code> ' lts='base' />
-		<Dummy length='s' pre='<code>l:</code> ' lts='l' />
-		{/* <Dummy length='s' pre='<code>xl:</code> ' lts='xl' /> */}
-	</PreviewArea>
-	<PreviewCode slot='tab' label='HTML'>
-		```html
-		<p class="-lts:s">Lorem ipsum ...</p>
-		<p class="-lts:base">Lorem ipsum ...</p>
-		<p class="-lts:l">Lorem ipsum ...</p>
-		```
-	</PreviewCode>
-	<PreviewCode slot='tab' label='JSX'>
-		```jsx
-		<HTML.p lts='s'>Lorem ipsum ...</HTML.p>
-		<HTML.p lts='base'>Lorem ipsum ...</HTML.p>
-		<HTML.p lts='l'>Lorem ipsum ...</HTML.p>
-		```
-	</PreviewCode>
+  <PreviewTitle>Preview</PreviewTitle>
+  <PreviewArea p='20' flow='s'>
+    <Dummy length="s" pre="<code>s:</code> " lts="s" />
+    <Dummy length="s" pre="<code>base:</code> " lts="base" />
+    <Dummy length="s" pre="<code>l:</code> " lts="l" />
+    {/* <Dummy length='s' pre='<code>xl:</code> ' lts='xl' /> */}
+  </PreviewArea>
+  <PreviewCode slot='tab' label='HTML'>
+    ```html
+    <p class="-lts:s">Lorem ipsum ...</p>
+    <p class="-lts:base">Lorem ipsum ...</p>
+    <p class="-lts:l">Lorem ipsum ...</p>
+    ```
+  </PreviewCode>
+  <PreviewCode slot='tab' label='JSX'>
+    ```jsx
+    <HTML.p lts='s'>Lorem ipsum ...</HTML.p>
+    <HTML.p lts='base'>Lorem ipsum ...</HTML.p>
+    <HTML.p lts='l'>Lorem ipsum ...</HTML.p>
+    ```
+  </PreviewCode>
 </Preview>
 
 
@@ -323,38 +329,36 @@ Spacing uses a scaling system based on the Fibonacci sequence ((0, 1,) 1, 2, 3, 
 By default, `0.5rem ≈ 8px` is used as the scaling unit, with token values `10`, `20`, `30`, ... `80` defined accordingly.
 However, since those intervals can feel too large in practice, `5` and `15` are included as fine-tuning exceptions for the lower end of the scale.
 ```css
-:root{
-	/* Fibonacci scale with spacing unit of 8 */
-	--s-unit: calc(var(--REM) * 0.5); /* ≒ 8px */
-	--s5: calc(0.5 * var(--s-unit)); /* exception */
-	--s10: var(--s-unit);
-	--s15: calc(1.5 * var(--s-unit)); /* exception */
-	--s20: calc(2 * var(--s-unit));
-	--s30: calc(3 * var(--s-unit));
-	--s40: calc(5 * var(--s-unit));
-	--s50: calc(8 * var(--s-unit));
-	--s60: calc(13 * var(--s-unit));
-	--s70: calc(21 * var(--s-unit));
-	--s80: calc(34 * var(--s-unit));
+:root {
+  /* Fibonacci scale with spacing unit of 8 */
+  --s-unit: calc(var(--REM) * 0.5); /* ≒ 8px */
+  --s5: calc(0.5 * var(--s-unit)); /* exception */
+  --s10: var(--s-unit);
+  --s15: calc(1.5 * var(--s-unit)); /* exception */
+  --s20: calc(2 * var(--s-unit));
+  --s30: calc(3 * var(--s-unit));
+  --s40: calc(5 * var(--s-unit));
+  --s50: calc(8 * var(--s-unit));
+  --s60: calc(13 * var(--s-unit));
+  --s70: calc(21 * var(--s-unit));
+  --s80: calc(34 * var(--s-unit));
 }
 ```
 
 
 <Preview>
-	<PreviewTitle>Preview</PreviewTitle>
-	<PreviewArea p='20' flow='s' resize>
-		<SpacingDemos spaces={[
-			5, 10, 15, 20, 30, 40, 50, 60, 70, 80
-		]} isValueLabel />
-	</PreviewArea>
+  <PreviewTitle>Preview</PreviewTitle>
+  <PreviewArea p='20' flow='s' resize>
+    <SpacingDemos spaces={[5, 10, 15, 20, 30, 40, 50, 60, 70, 80]} isValueLabel />
+  </PreviewArea>
 </Preview>
 
 
 
 
 {/* - ~~`1 = 0.25`, `2 = 0.5` として計算~~
-	- 1=s10, 2=s20, 3=s30, 5=s40, 8=s50, 13=s60,...
-	- 5, 15, 25, ...など、`5`の倍数は前後の値の中間値となるように計算 */}
+  - 1=s10, 2=s20, 3=s30, 5=s40, 8=s50, 13=s60,...
+  - 5, 15, 25, ...など、`5`の倍数は前後の値の中間値となるように計算 */}
 
 
 {/* ## cq単位のスケーリング
@@ -363,7 +367,7 @@ However, since those intervals can feel too large in practice, `5` and `15` are 
 
 ```css
 .set--cqUnit {
-	--REM: clamp(0.95rem, 0.9rem + 0.22cqw, 1.1rem);
-	font-size: var(--REM);
+  --REM: clamp(0.95rem, 0.9rem + 0.22cqw, 1.1rem);
+  font-size: var(--REM);
 }
 ``` */}

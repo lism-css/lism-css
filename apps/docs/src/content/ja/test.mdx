@@ -46,41 +46,40 @@ draft: true
 
 
 ```html
-<html lang={siteConfig.lang}>
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-	</head>
-	<body>
-		<slot />
-	</body>
+<html lang="{siteConfig.lang}">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width" />
+  </head>
+  <body>
+    <slot />
+  </body>
 </html>
 ```
 
 ```css title="CSS"
 :root {
-	/* 基準となるフォントサイズをclamp() で定義 */
-	--fz--base: clamp(1rem, 0.654rem + 1.54vw, 2rem); /* わかりやすく大袈裟に変化させています */
+  /* 基準となるフォントサイズをclamp() で定義 */
+  --fz--base: clamp(1rem, 0.654rem + 1.54vw, 2rem); /* わかりやすく大袈裟に変化させています */
 
-	/* --fz-base を元にスケーリングさせる */
-	--fz--xs: calc(var(--fz--base) * (8 / 10));
-	--fz--s: calc(var(--fz--base) * (8 / 9));
-	--fz--l: calc(var(--fz--base) * (8 / 7));
-	--fz--xl: calc(var(--fz--base) * (8 / 6));
+  /* --fz-base を元にスケーリングさせる */
+  --fz--xs: calc(var(--fz--base) * (8 / 10));
+  --fz--s: calc(var(--fz--base) * (8 / 9));
+  --fz--l: calc(var(--fz--base) * (8 / 7));
+  --fz--xl: calc(var(--fz--base) * (8 / 6));
 }
 
 /* ユーティリティクラス */
 .fz--base {
-	font-size: var(--fz--base);
+  font-size: var(--fz--base);
 }
 .fz--xs {
-	font-size: var(--fz--xs);
+  font-size: var(--fz--xs);
 }
 .fz--s {
-	font-size: var(--fz--s);
+  font-size: var(--fz--s);
 }
-
 ```
 
 
@@ -90,17 +89,19 @@ draft: true
 .l--stack > *{line-height: 1.8}
 `}>
 <div class="l--stack -bd -p:30 -g:30 -bdrs:10">
-	<h2 class="-fz:l">タイトル文字列</h2>
-	<p>ロレム・イプサムの座り雨。目まぐるしい文章の流れの中で、それは静かに歩く仮の言葉です。Elitも穏やかに続いていきますが、積み重ねられてきた「LiberroyとFoogの取り組み」は、余白のようなものです。</p>
-	<p class="-fz:s">フッターテキスト</p>
+  <h2 class="-fz:l">タイトル文字列</h2>
+  <p>ロレム・イプサムの座り雨。目まぐるしい文章の流れの中で、それは静かに歩く仮の言葉です。Elitも穏やかに続いていきますが、積み重ねられてきた「LiberroyとFoogの取り組み」は、余白のようなものです。</p>
+  <p class="-fz:s">フッターテキスト</p>
 </div>
 
 <PreviewCode slot="code" label="HTML">
 ```html
 <div class="l--stack -bd -p:30 -g:30 -bdrs:10">
-	<h2 class="-fz:l">タイトル文字列</h2>
-	<p>ロレム・イプサムの座り雨。目まぐるしい文章の流れの中で、それは静かに歩く仮の言葉です。Elitも穏やかに続いていきますが、積み重ねられてきた「LiberroyとFoogの取り組み」は、余白のようなものです。</p>
-	<p class="-fz:s">フッターテキスト</p>
+  <h2 class="-fz:l">タイトル文字列</h2>
+  <p>
+    ロレム・イプサムの座り雨。目まぐるしい文章の流れの中で、それは静かに歩く仮の言葉です。Elitも穏やかに続いていきますが、積み重ねられてきた「LiberroyとFoogの取り組み」は、余白のようなものです。
+  </p>
+  <p class="-fz:s">フッターテキスト</p>
 </div>
 ```
 </PreviewCode>

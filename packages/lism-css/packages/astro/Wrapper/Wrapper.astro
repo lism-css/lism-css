@@ -5,9 +5,9 @@ import type { LismProps } from 'lism-css/lib/getLismProps';
 import { Lism } from '../Lism';
 
 type Props<Tag extends HTMLTag = 'div'> = Polymorphic<{ as: Tag }> &
-	AstroLismBaseProps & {
-		contentSize?: LismProps['isWrapper'];
-	};
+  AstroLismBaseProps & {
+    contentSize?: LismProps['isWrapper'];
+  };
 
 const { contentSize = true, ...props } = Astro.props;
 ---

@@ -1,36 +1,36 @@
 .l--flow {
-	// コンテンツ間の余白バリエーションを定義（--s は set--cqUnit で再セットされるので、:rootではなく .l--flowで定義する）
-	--flow--base: var(--s30);
-	--flow--s: var(--s20);
+  // コンテンツ間の余白バリエーションを定義（--s は set--cqUnit で再セットされるので、:rootではなく .l--flowで定義する）
+  --flow--base: var(--s30);
+  --flow--s: var(--s20);
 
-	display: flow-root;
+  display: flow-root;
 
-	> * + * {
-		--flow: var(--flow--base);
-		margin-block-start: var(--flow);
-	}
+  > * + * {
+    --flow: var(--flow--base);
+    margin-block-start: var(--flow);
+  }
 
-	// flow 直下のメディア要素は block に初期リセット
-	> :where(img, video, iframe) {
-		display: block;
-	}
+  // flow 直下のメディア要素は block に初期リセット
+  > :where(img, video, iframe) {
+    display: block;
+  }
 }
 
 .-flow\:s > * {
-	--flow: var(--flow--s);
+  --flow: var(--flow--s);
 }
 
 .-flow\: > * {
-	--flow: inherit;
+  --flow: inherit;
 }
 
 // 見出しの上部の余白は広くする.
 .l--flow > :where(h1, h2, h3, h4, h5, h6) {
-	margin-block-start: calc(var(--flow) * var(--flow-hScale, 2));
+  margin-block-start: calc(var(--flow) * var(--flow-hScale, 2));
 }
 
 // 打ち消し
 .is--skipFlow + *,
 .l--flow > :first-child {
-	--flow: 0px;
+  --flow: 0px;
 }

@@ -14,23 +14,23 @@ export const waitFrame = (): Promise<number> => new Promise((resolve) => request
  *   - 'canceled': pause() 等でキャンセルされたアニメーションがあった
  */
 export const waitAnimation = async (el: HTMLElement): Promise<AnimationStatus> => {
-	const animations = el.getAnimations();
+  const animations = el.getAnimations();
 
-	// アニメーションがなければ 'none' を返す
-	if (animations.length === 0) return 'none';
+  // アニメーションがなければ 'none' を返す
+  if (animations.length === 0) return 'none';
 
-	// allSettled を使うことで、キャンセル時も例外にならずに結果を取得できる
-	const results = await Promise.allSettled(animations.map((a) => a.finished));
+  // allSettled を使うことで、キャンセル時も例外にならずに結果を取得できる
+  const results = await Promise.allSettled(animations.map((a) => a.finished));
 
-	// （ pause()で止めた時用 ）rejected があれば 'canceled'
-	return results.every((r) => r.status === 'fulfilled') ? 'finished' : 'canceled';
+  // （ pause()で止めた時用 ）rejected があれば 'canceled'
+  return results.every((r) => r.status === 'fulfilled') ? 'finished' : 'canceled';
 };
 
 /**
  * 実行中のアニメーションがあれば一旦停止させる
  */
 export const maybePauseAnimation = (el: HTMLElement): void => {
-	const animations = el.getAnimations();
-	if (animations.length === 0) return;
-	animations.forEach((a) => a.pause());
+  const animations = el.getAnimations();
+  if (animations.length === 0) return;
+  animations.forEach((a) => a.pause());
 };

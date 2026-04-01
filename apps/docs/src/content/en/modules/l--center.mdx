@@ -40,59 +40,59 @@ For horizontal centering only, `<Stack ai="center">` also works.
 {/* For horizontal alignment, this achieves what is known as "intrinsic" centering — if the text is short, it is centered; if it is long, it behaves like normal left-aligned text. */}
 
 <Preview>
-	<PreviewTitle>
-		When no height is set
-	</PreviewTitle>
-	<PreviewArea resize p='15'>
-		<Center bd p='30'>
-			<HTML.p fz='l'>TEXT</HTML.p>
-		</Center>
-	</PreviewArea>
-	<PreviewCode slot='tab' label='JSX'>
-		```jsx
-		<Center bd p='30'>
-			<HTML.p fz='l'>TEXT</HTML.p>
-		</Center>
-		```
-	</PreviewCode>
-	<PreviewCode slot='tab' label='HTML'>
-		```jsx
-		<div class="l--center -bd -p:30">
-			<p class="-fz:l">TEXT</p>
-		</div>
-		```
-	</PreviewCode>
+  <PreviewTitle>
+    When no height is set
+  </PreviewTitle>
+  <PreviewArea resize p='15'>
+    <Center bd p="30">
+      <HTML.p fz="l">TEXT</HTML.p>
+    </Center>
+  </PreviewArea>
+  <PreviewCode slot='tab' label='JSX'>
+    ```jsx
+    <Center bd p="30">
+      <HTML.p fz="l">TEXT</HTML.p>
+    </Center>;
+    ```
+  </PreviewCode>
+  <PreviewCode slot='tab' label='HTML'>
+    ```jsx
+    <div class="l--center -bd -p:30">
+      <p class="-fz:l">TEXT</p>
+    </div>;
+    ```
+  </PreviewCode>
 </Preview>
 
 <Preview>
-	<PreviewTitle>
-		Long text wraps left-aligned, preserving readability.
-	</PreviewTitle>
-	<PreviewArea resize p='15'>
-		<Center bd p='30' g='15'>
-			<HTML.p fz='l'>TEXT</HTML.p>
-			<Dummy length='xs' lang='ja'/>
-			<Dummy lang='ja'/>
-		</Center>
-	</PreviewArea>
-	<PreviewCode slot='tab' label='JSX'>
-		```jsx
-		<Center bd p='30' g='15'>
-			<HTML.p fz='l'>TEXT</HTML.p>
-			<p>...</p>
-			<p>...</p>
-		</Center>
-		```
-	</PreviewCode>
-	<PreviewCode slot='tab' label='HTML'>
-		```jsx
-		<div class="l--center -bd -p:30 -g:15">
-			<p class="-fz:l">TEXT</p>
-			<p>...</p>
-			<p>...</p>
-		</div>
-		```
-	</PreviewCode>
+  <PreviewTitle>
+    Long text wraps left-aligned, preserving readability.
+  </PreviewTitle>
+  <PreviewArea resize p='15'>
+    <Center bd p="30" g="15">
+      <HTML.p fz="l">TEXT</HTML.p>
+      <Dummy length="xs" lang="ja" />
+      <Dummy lang="ja" />
+    </Center>
+  </PreviewArea>
+  <PreviewCode slot='tab' label='JSX'>
+    ```jsx
+    <Center bd p="30" g="15">
+      <HTML.p fz="l">TEXT</HTML.p>
+      <p>...</p>
+      <p>...</p>
+    </Center>;
+    ```
+  </PreviewCode>
+  <PreviewCode slot='tab' label='HTML'>
+    ```jsx
+    <div class="l--center -bd -p:30 -g:15">
+      <p class="-fz:l">TEXT</p>
+      <p>...</p>
+      <p>...</p>
+    </div>;
+    ```
+  </PreviewCode>
 </Preview>
 
 
@@ -101,29 +101,29 @@ For horizontal centering only, `<Stack ai="center">` also works.
 When Center has a **height or aspect ratio** set, content is also centered vertically.
 
 <Preview>
-	<PreviewTitle>
-		Centered both horizontally and vertically
-	</PreviewTitle>
-	<PreviewArea p='15'>
-		<Center g='10' ar='3/2' bd>
-			<HTML.p fz='l'>TEXT</HTML.p>
-			<HTML.p fz='s'>Lorem ipsum dolor sit amet.</HTML.p>
-		</Center>
-	</PreviewArea>
-	<PreviewCode slot='tab' label='JSX'>
-		```jsx "ar='3/2'"
-		<Center g='10' ar='3/2' bd>
-			<HTML.p fz='l'>TEXT</HTML.p>
-			<HTML.p fz='s'>Lorem ipsum dolor sit amet.</HTML.p>
-		</Center>
-		```
-	</PreviewCode>
-	<PreviewCode slot='tab' label='HTML'>
-		```html "-ar:3/2"
-		<div class="l--center -bd -g:10 -ar:3/2">
-			<p class="-fz:l">TEXT</p>
-			<p class="-fz:s">ロレム・イプサムの座り雨。</p>
-		</div>
-		```
-	</PreviewCode>
+  <PreviewTitle>
+    Centered both horizontally and vertically
+  </PreviewTitle>
+  <PreviewArea p='15'>
+    <Center g="10" ar="3/2" bd>
+      <HTML.p fz="l">TEXT</HTML.p>
+      <HTML.p fz="s">Lorem ipsum dolor sit amet.</HTML.p>
+    </Center>
+  </PreviewArea>
+  <PreviewCode slot='tab' label='JSX'>
+    ```jsx "ar='3/2'"
+    <Center g="10" ar="3/2" bd>
+      <HTML.p fz="l">TEXT</HTML.p>
+      <HTML.p fz="s">Lorem ipsum dolor sit amet.</HTML.p>
+    </Center>;
+    ```
+  </PreviewCode>
+  <PreviewCode slot='tab' label='HTML'>
+    ```html "-ar:3/2"
+    <div class="l--center -bd -g:10 -ar:3/2">
+      <p class="-fz:l">TEXT</p>
+      <p class="-fz:s">ロレム・イプサムの座り雨。</p>
+    </div>
+    ```
+  </PreviewCode>
 </Preview>

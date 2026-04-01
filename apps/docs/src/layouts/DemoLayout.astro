@@ -11,21 +11,21 @@ import { siteConfig } from '@/config/site';
 import 'lism-css/scss/main.scss';
 
 interface Props {
-	title?: string;
+  title?: string;
 }
 
 const { title = 'Demo page' } = Astro.props;
 ---
 
 <html lang="ja">
-	<head>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width" />
-		<title>Demo | {title} - {siteConfig.name}</title>
-		<!-- 検索エンジンにインデックスさせない -->
-		<meta name="robots" content="noindex, nofollow" />
-	</head>
-	<body>
-		<slot />
-	</body>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Demo | {title} - {siteConfig.name}</title>
+    <!-- 検索エンジンにインデックスさせない -->
+    <meta name="robots" content="noindex, nofollow" />
+  </head>
+  <body>
+    <slot />
+  </body>
 </html>

@@ -45,16 +45,16 @@ After defining your overrides, import `lism-css/scss/main.scss` to apply the cus
 ```scss
 // Variable override format
 @use '../path-to/node_modules/lism-css/scss/setting' with (
-	$breakpoints: (
-		...
-	),
-	$common_support_bp: 'sm|md|lg',
-	$is_container_query: 1|0,
-	$default_important: 0|1,
-	$fzmol: 7|8|9|10,
-	$props: (
-		...
-	)
+  $breakpoints: (
+    ...,
+  ),
+  $common_support_bp: 'sm|md|lg',
+  $is_container_query: 1|0,
+  $default_important: 0|1,
+  $fzmol: 7|8|9|10,
+  $props: (
+    ...,
+  )
 );
 
 // Then load the Lism SCSS file (use main_no_layer instead of main if you want to disable @layer)
@@ -77,13 +77,17 @@ After defining your overrides, import `lism-css/scss/main.scss` to apply the cus
 ```scss
 // Configuration overrides
 @use '../path-to/node_modules/lism-css/scss/setting' with (
-	$breakpoints: (
-		'sm': '400px', // Change the sm breakpoint
-	),
-	$common_support_bp: 'lg',  // Generate utility classes up to lg size
-	$is_container_query: 0, // Output using media queries
-	$fzmol: 7, // Change font-size scaling
-	$default_important: 1, // Add !important to Prop Classes by default
+  $breakpoints: (
+    'sm': '400px',
+    // Change the sm breakpoint
+  ),
+  $common_support_bp: 'lg',
+  // Generate utility classes up to lg size
+  $is_container_query: 0,
+  // Output using media queries
+  $fzmol: 7,
+  // Change font-size scaling
+  $default_important: 1 // Add !important to Prop Classes by default
 );
 
 @use '../path-to/node_modules/lism-css/scss/main';
@@ -94,18 +98,24 @@ After defining your overrides, import `lism-css/scss/main.scss` to apply the cus
 ```scss
 // Configuration overrides
 @use '../path-to/node_modules/lism-css/scss/setting' with (
-	$props: (
-		'fz': (
-			important: 1, // Output !important for fz utility classes
-		),
-		'h': (
-			bp: 0, // Disable breakpoint-responsive classes for 'h'
-		),
-		'p': (
-			bp: 'lg', // Output utility classes for 'p' up to lg size
-			utilities: ('box': '2em'), // Add .-p:box{--p:2em}
-		),
-	)
+  $props: (
+    'fz': (
+      important: 1,
+      // Output !important for fz utility classes
+    ),
+    'h': (
+      bp: 0,
+      // Disable breakpoint-responsive classes for 'h'
+    ),
+    'p': (
+      bp: 'lg',
+      // Output utility classes for 'p' up to lg size
+      utilities: (
+          'box': '2em',
+        ),
+      // Add .-p:box{--p:2em}
+    ),
+  )
 );
 
 // Load the Lism SCSS file
@@ -127,35 +137,35 @@ By placing a `lism.config.js` file in the root of your project, you can customiz
 <PreviewTitle>lism.config.js format</PreviewTitle>
 ```js
 export default {
-	props: {
-		hoge: { ... },
-		foo: { ... },
-		...
-	},
-	tokens: {
-		hoge: [...],
-		foo: [...],
-		...
-	},
-	states: {
-		isHoge: 'is--hoge',
-		setFoo: 'set-foo',
-		...
-	},
+  props: {
+    hoge: { ... },
+    foo: { ... },
+    ...
+  },
+  tokens: {
+    hoge: [...],
+    foo: [...],
+    ...
+  },
+  states: {
+    isHoge: 'is--hoge',
+    setFoo: 'set-foo',
+    ...
+  },
 };
 ```
 
 <Preview>
-	<PreviewTitle>Default values</PreviewTitle>
-	<PreviewCode slot="tab" label="props">
-	<EmbedCode dirPath='packages/lism-css' srcPath='config/defaults/props.ts' />
-	</PreviewCode>
-	<PreviewCode slot="tab" label="tokens">
-	<EmbedCode dirPath='packages/lism-css' srcPath='config/defaults/tokens.ts' />
-	</PreviewCode>
-	<PreviewCode slot="tab" label="states">
-	<EmbedCode dirPath='packages/lism-css' srcPath='config/defaults/states.ts' />
-	</PreviewCode>
+  <PreviewTitle>Default values</PreviewTitle>
+  <PreviewCode slot="tab" label="props">
+  <EmbedCode dirPath='packages/lism-css' srcPath='config/defaults/props.ts' />
+  </PreviewCode>
+  <PreviewCode slot="tab" label="tokens">
+  <EmbedCode dirPath='packages/lism-css' srcPath='config/defaults/tokens.ts' />
+  </PreviewCode>
+  <PreviewCode slot="tab" label="states">
+  <EmbedCode dirPath='packages/lism-css' srcPath='config/defaults/states.ts' />
+  </PreviewCode>
 </Preview>
 
 
@@ -170,19 +180,19 @@ import DEFAULT_CONFIG from 'lism-css/default-config';
 const { props, tokens } = DEFAULT_CONFIG;
 
 export default {
-	props: {
-		// Add Prop Class output
-		d: { presets: [...(props.d.presets || []), 'flex', 'grid'] },
-		p: { utils: { box: '2em' } },
-	},
-	tokens: {
-		// Add tokens
-		o: [...(tokens.o || []), '-5'],
-	},
-	states: {
-		// Add props for State Module output
-		isHoge: 'is--hoge',
-	},
+  props: {
+    // Add Prop Class output
+    d: { presets: [...(props.d.presets || []), 'flex', 'grid'] },
+    p: { utils: { box: '2em' } },
+  },
+  tokens: {
+    // Add tokens
+    o: [...(tokens.o || []), '-5'],
+  },
+  states: {
+    // Add props for State Module output
+    isHoge: 'is--hoge',
+  },
 };
 ```
 
@@ -197,15 +207,15 @@ With the above customization, the following behavior is added to Lism components
 {/* <Box p='box' bd o='-5' isHoge>Box</Box> */}
 
 <Preview>
-	<PreviewCode slot='tab' label='HTML'>
-	```jsx
-	<Box p='box' d='flex' o='-5' isHoge>Box</Box>
+  <PreviewCode slot='tab' label='HTML'>
+  ```jsx
+  <Box p='box' d='flex' o='-5' isHoge>Box</Box>
 
-	↓　Output
+  ↓　Output
 
-	<div class="l--box is--hoge -p:box -d:flex -o:-5">Box</div>
-	```
-	</PreviewCode>
+  <div class="l--box is--hoge -p:box -d:flex -o:-5">Box</div>
+  ```
+  </PreviewCode>
 </Preview>
 
 
@@ -227,10 +237,18 @@ Running `npx lism-css build` will trigger a style build inside the lism-css pack
 In this example, the following styles would be automatically generated into `lism-css/main.css` by this command:
 
 ```css
-.-d\:flex{ display: flex; }
-.-d\:grid{ display: grid; }
-.-p\:box { padding: 2em; }
-.-o\:5 { opacity: var(--o--n5); }
+.-d\:flex {
+  display: flex;
+}
+.-d\:grid {
+  display: grid;
+}
+.-p\:box {
+  padding: 2em;
+}
+.-o\:5 {
+  opacity: var(--o--n5);
+}
 ```
 
 However, tokens are not auto-generated by this build process and must be added manually.
@@ -241,10 +259,12 @@ Also, the styles for `is--` classes must be manually defined and loaded.
 
 <PreviewTitle>The following must be loaded manually:</PreviewTitle>
 ```css
-:root{
-	--o--n5: 0.9;
+:root {
+  --o--n5: 0.9;
 }
-.is--hoge { /* ... */ }
+.is--hoge {
+  /* ... */
+}
 ```
 
 :::warning
@@ -266,24 +286,24 @@ You can also override SCSS variables in line with your `lism.config.js` configur
 ```scss
 // Configuration overrides
 @use '../path-to/node_modules/lism-css/scss/setting' with (
-	$props: (
-		'd': (
-			utilities: (
-				'flex': 'flex',
-				'grid': 'grid',
-			),
-		),
-		'p': (
-			utilities: (
-				'box': '2em',
-			),
-		),
-		'o': (
-			utilities: (
-				'-5': 'var(--o--n5)',
-			),
-		),
-	)
+  $props: (
+    'd': (
+      utilities: (
+        'flex': 'flex',
+        'grid': 'grid',
+      ),
+    ),
+    'p': (
+      utilities: (
+        'box': '2em',
+      ),
+    ),
+    'o': (
+      utilities: (
+        '-5': 'var(--o--n5)',
+      ),
+    ),
+  )
 );
 
 // Load the Lism SCSS file
@@ -291,9 +311,9 @@ You can also override SCSS variables in line with your `lism.config.js` configur
 
 // Append token definitions
 @layer lism-base {
-	:root {
-		--o--n5: 0.9;
-	}
+  :root {
+    --o--n5: 0.9;
+  }
 }
 ```
 
@@ -304,10 +324,10 @@ You can also override SCSS variables in line with your `lism.config.js` configur
 
 {/* ```
 export default {
-	props: {
-		d: { presets: [...(props.d.presets || []), 'flex', 'grid'] },
-		p: { utils: { box: '2em' } },
-		filter: { utils: { 'blur:s': 'blur(3px)', 'blur:m': 'blur(5px)' } },
-	},
+  props: {
+    d: { presets: [...(props.d.presets || []), 'flex', 'grid'] },
+    p: { utils: { box: '2em' } },
+    filter: { utils: { 'blur:s': 'blur(3px)', 'blur:m': 'blur(5px)' } },
+  },
 };
 ``` */}

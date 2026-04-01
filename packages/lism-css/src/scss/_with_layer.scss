@@ -4,26 +4,26 @@
 @use 'sass:meta';
 
 @layer lism-base {
-	// resetは中でも layer定義済み。 lism-base.reset となる
-	@include meta.load-css('reset');
+  // resetは中でも layer定義済み。 lism-base.reset となる
+  @include meta.load-css('reset');
 
-	@include meta.load-css('base');
+  @include meta.load-css('base');
 }
 
 @layer lism-modules {
-	@layer state {
-		@include meta.load-css('modules/state');
-	}
-	@layer layout {
-		@include meta.load-css('modules/layout');
-	}
-	@layer atomic {
-		@include meta.load-css('modules/atomic');
-	}
+  @layer state {
+    @include meta.load-css('modules/state');
+  }
+  @layer layout {
+    @include meta.load-css('modules/layout');
+  }
+  @layer atomic {
+    @include meta.load-css('modules/atomic');
+  }
 }
 
 @layer lism-utility {
-	@include meta.load-css('utility');
+  @include meta.load-css('utility');
 }
 
 /* stylelint-disable-next-line block-no-empty -- ユーザーカスタム用レイヤー */

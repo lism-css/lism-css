@@ -7,35 +7,35 @@ import { Lism, Flow, Container, HTML, Frame, Layer, Media, Dummy, Box, Flex, Gri
 
 
 export const PropTable = ({data={}, ...props}) => {
-	const dataKyes = Object.keys(data);
-	return (
-		<Lism as='table' {...props}>
-			{/* <thead className='-ta:left'>
-				<tr>
-					<th>Class</th>
-					<th>Value</th>
-				</tr>
-			</thead> */}
-			<tbody>
-			{dataKyes.map((_propName) => {
-				const utils = data[_propName];
-				const utilsKeys = Object.keys(utils);
-				return (
-					<>
-						{utilsKeys.map((utilKey) => {
-							return (
-								<tr>
-									<td><code>{`.-${_propName}:${utilKey}`}</code></td>
-									<td><code>{`${utils[utilKey]}`}</code></td>
-								</tr>
-							);
-						})}
-					</>
-				)
-			})}
-			</tbody>
-		</Lism>
-	);
+  const dataKyes = Object.keys(data);
+  return (
+    <Lism as='table' {...props}>
+      {/* <thead className='-ta:left'>
+        <tr>
+          <th>Class</th>
+          <th>Value</th>
+        </tr>
+      </thead> */}
+      <tbody>
+      {dataKyes.map((_propName) => {
+        const utils = data[_propName];
+        const utilsKeys = Object.keys(utils);
+        return (
+          <>
+            {utilsKeys.map((utilKey) => {
+              return (
+                <tr>
+                  <td><code>{`.-${_propName}:${utilKey}`}</code></td>
+                  <td><code>{`${utils[utilKey]}`}</code></td>
+                </tr>
+              );
+            })}
+          </>
+        )
+      })}
+      </tbody>
+    </Lism>
+  );
 
 }
 
@@ -89,20 +89,22 @@ The shorthand string is output as a class name. It is also the property name use
 
 
 <Preview>
-	<PreviewTitle>Examples</PreviewTitle>
-	<PreviewArea p='20'>
-		<p class='-fz:xl -fw:bold -lts:l -ta:center -tt:upper'>Example text</p>
-	</PreviewArea>
-	<PreviewCode slot="tab" label="HTML">
-	```html
-	<p class='-fz:xl -fw:bold -lts:l -ta:center -tt:upper'>Example text</p>
-	```
-	</PreviewCode>
-	<PreviewCode slot="tab" label="JSX">
-	```jsx
-	<HTML.p fz='xl' fw='bold' lts='l' ta='center' tt='upper'>Example text</HTML.p>
-	```
-	</PreviewCode>
+  <PreviewTitle>Examples</PreviewTitle>
+  <PreviewArea p='20'>
+    <p class="-fz:xl -fw:bold -lts:l -ta:center -tt:upper">Example text</p>
+  </PreviewArea>
+  <PreviewCode slot="tab" label="HTML">
+  ```html
+  <p class="-fz:xl -fw:bold -lts:l -ta:center -tt:upper">Example text</p>
+  ```
+  </PreviewCode>
+  <PreviewCode slot="tab" label="JSX">
+  ```jsx
+  <HTML.p fz="xl" fw="bold" lts="l" ta="center" tt="upper">
+    Example text
+  </HTML.p>;
+  ```
+  </PreviewCode>
 </Preview>
 
 
@@ -121,20 +123,24 @@ The shorthand string is output as a class name. It is also the property name use
 
 
 <Preview>
-	<PreviewTitle>Examples</PreviewTitle>
-	<PreviewArea p='20'>
-		<HTML.p c='brand' bgc='base-2' bd p='30'>Example text</HTML.p>
-	</PreviewArea>
-	<PreviewCode slot="tab" label="HTML">
-	```html
-	<p class='-c:brand -bgc:base-2 -bd -p:30'>Example text</p>
-	```
-	</PreviewCode>
-	<PreviewCode slot="tab" label="JSX">
-	```jsx
-	<HTML.p c='brand' bgc='base-2' bd p='30'>Example text</HTML.p>
-	```
-	</PreviewCode>
+  <PreviewTitle>Examples</PreviewTitle>
+  <PreviewArea p='20'>
+    <HTML.p c="brand" bgc="base-2" bd p="30">
+      Example text
+    </HTML.p>
+  </PreviewArea>
+  <PreviewCode slot="tab" label="HTML">
+  ```html
+  <p class="-c:brand -bgc:base-2 -bd -p:30">Example text</p>
+  ```
+  </PreviewCode>
+  <PreviewCode slot="tab" label="JSX">
+  ```jsx
+  <HTML.p c="brand" bgc="base-2" bd p="30">
+    Example text
+  </HTML.p>;
+  ```
+  </PreviewCode>
 </Preview>
 
 
@@ -178,29 +184,33 @@ export const LinkSPACE = () => <a href="/docs/tokens/#space"><code>SPACE</code><
 <Spacer h='1rem' />
 
 <Preview>
-	<PreviewTitle>Space Examples</PreviewTitle>
-	<PreviewArea p='20' resize>
-		<Lism p={['15', '20']} bd>
-			<HTML.p>Example text</HTML.p>
-			<HTML.p my-s='15' mx='20'>Example text</HTML.p>
-		</Lism>
-	</PreviewArea>
-	<PreviewCode slot="tab" label="HTML">
-	```html
-	<div class="-p:15 -p_sm -bd" style="--p_sm:var(--s20)">
-		<p>Example text</p>
-		<p class="-my-s:15 -mx:20">Example text</p>
-	</div>
-	```
-	</PreviewCode>
-	<PreviewCode slot="tab" label="JSX">
-	```jsx
-	<Lism p={['15', '20']} bd>
-		<HTML.p>Example text</HTML.p>
-		<HTML.p my-s='15' mx='20'>Example text</HTML.p>
-	</Lism>
-	```
-	</PreviewCode>
+  <PreviewTitle>Space Examples</PreviewTitle>
+  <PreviewArea p='20' resize>
+    <Lism p={['15', '20']} bd>
+      <HTML.p>Example text</HTML.p>
+      <HTML.p my-s="15" mx="20">
+        Example text
+      </HTML.p>
+    </Lism>
+  </PreviewArea>
+  <PreviewCode slot="tab" label="HTML">
+  ```html
+  <div class="-p:15 -p_sm -bd" style="--p_sm: var(--s20)">
+    <p>Example text</p>
+    <p class="-my-s:15 -mx:20">Example text</p>
+  </div>
+  ```
+  </PreviewCode>
+  <PreviewCode slot="tab" label="JSX">
+  ```jsx
+  <Lism p={['15', '20']} bd>
+    <HTML.p>Example text</HTML.p>
+    <HTML.p my-s="15" mx="20">
+      Example text
+    </HTML.p>
+  </Lism>;
+  ```
+  </PreviewCode>
 </Preview>
 
 
@@ -260,52 +270,88 @@ Here are some examples of positioning elements with `position: absolute`.
 
 
 <Preview>
-	<PreviewTitle>
-		Positioning examples
-	</PreviewTitle>
-	<PreviewArea resize p='5'>
-		<Box pos='rel' ar='3/2' lh='1' ff='mono'>
-			<HTML.div pos='abs' l='0' t='0' bgc='base-2' bd p='10'>A</HTML.div>
-			<HTML.div pos='abs' l='0' r='0' w='fit' mx='auto' bgc='base-2' bd p='10'>B</HTML.div>
-			<HTML.div pos='abs' r='0' t='0' bgc='base-2' bd p='10'>C</HTML.div>
-			<HTML.div pos='abs' l='0' t='0' b='0' h='fit' my='auto' bgc='base-2' bd p='10'>D</HTML.div>
-			<HTML.div pos='abs' i='0' m='auto' w='fit' h='fit' bgc='base-2' bd p='10'>E</HTML.div>
-			<HTML.div pos='abs' r='0' t='0' b='0' h='fit' my='auto' bgc='base-2' bd p='10'>F</HTML.div>
-			<HTML.div pos='abs' l='0' b='0' bgc='base-2' bd p='10'>G</HTML.div>
-			<HTML.div pos='abs' l='0' r='0' b='0' w='fit' mx='auto' bgc='base-2' bd p='10'>H</HTML.div>
-			<HTML.div pos='abs' r='0' b='0' bgc='base-2' bd p='10'>I</HTML.div>
-		</Box>
-	</PreviewArea>
-	<PreviewCode slot='tab' label='JSX'>
-		```jsx
-		<Box pos='rel' ar='3/2' lh='1' ff='mono'>
-			<HTML.div pos='abs' l='0' t='0' bgc='base-2' bd p='10'>A</HTML.div>
-			<HTML.div pos='abs' l='0' r='0' w='fit' mx='auto' bgc='base-2' bd p='10'>B</HTML.div>
-			<HTML.div pos='abs' r='0' t='0' bgc='base-2' bd p='10'>C</HTML.div>
-			<HTML.div pos='abs' l='0' t='0' b='0' h='fit' my='auto' bgc='base-2' bd p='10'>D</HTML.div>
-			<HTML.div pos='abs' i='0' m='auto' w='fit' h='fit' bgc='base-2' bd p='10'>E</HTML.div>
-			<HTML.div pos='abs' r='0' t='0' b='0' h='fit' my='auto' bgc='base-2' bd p='10'>F</HTML.div>
-			<HTML.div pos='abs' l='0' b='0' bgc='base-2' bd p='10'>G</HTML.div>
-			<HTML.div pos='abs' l='0' r='0' b='0' w='fit' mx='auto' bgc='base-2' bd p='10'>H</HTML.div>
-			<HTML.div pos='abs' r='0' b='0' bgc='base-2' bd p='10'>I</HTML.div>
-		</Box>
-		```
-	</PreviewCode>
-	<PreviewCode slot='tab' label='HTML'>
-		```html
-		<div class='l--box -pos:rel -ar:3/2 -lh:1 -ff:mono'>
-			<div class='-pos:abs -l:0 -t:0 -bgc:base-2 -bd -p:10'>A</div>
-			<div class='-pos:abs -l:0 -r:0 -w:fit -mx:auto -bgc:base-2 -bd -p:10'>B</div>
-			<div class='-pos:abs -r:0 -t:0 -bgc:base-2 -bd -p:10'>C</div>
-			<div class='-pos:abs -l:0 -t:0 -b:0 -h:fit -my:auto -bgc:base-2 -bd -p:10'>D</div>
-			<div class='-pos:abs -i:0 -m:auto -w:fit -h:fit -bgc:base-2 -bd -p:10'>E</div>
-			<div class='-pos:abs -r:0 -t:0 -b:0 -h:fit -my:auto -bgc:base-2 -bd -p:10'>F</div>
-			<div class='-pos:abs -l:0 -b:0 -bgc:base-2 -bd -p:10'>G</div>
-			<div class='-pos:abs -l:0 -r:0 -b:0 -w:fit -mx:auto -bgc:base-2 -bd -p:10'>H</div>
-			<div class='-pos:abs -r:0 -b:0 -bgc:base-2 -bd -p:10'>I</div>
-		</div>
-		```
-	</PreviewCode>
+  <PreviewTitle>
+    Positioning examples
+  </PreviewTitle>
+  <PreviewArea resize p='5'>
+    <Box pos="rel" ar="3/2" lh="1" ff="mono">
+      <HTML.div pos="abs" l="0" t="0" bgc="base-2" bd p="10">
+        A
+      </HTML.div>
+      <HTML.div pos="abs" l="0" r="0" w="fit" mx="auto" bgc="base-2" bd p="10">
+        B
+      </HTML.div>
+      <HTML.div pos="abs" r="0" t="0" bgc="base-2" bd p="10">
+        C
+      </HTML.div>
+      <HTML.div pos="abs" l="0" t="0" b="0" h="fit" my="auto" bgc="base-2" bd p="10">
+        D
+      </HTML.div>
+      <HTML.div pos="abs" i="0" m="auto" w="fit" h="fit" bgc="base-2" bd p="10">
+        E
+      </HTML.div>
+      <HTML.div pos="abs" r="0" t="0" b="0" h="fit" my="auto" bgc="base-2" bd p="10">
+        F
+      </HTML.div>
+      <HTML.div pos="abs" l="0" b="0" bgc="base-2" bd p="10">
+        G
+      </HTML.div>
+      <HTML.div pos="abs" l="0" r="0" b="0" w="fit" mx="auto" bgc="base-2" bd p="10">
+        H
+      </HTML.div>
+      <HTML.div pos="abs" r="0" b="0" bgc="base-2" bd p="10">
+        I
+      </HTML.div>
+    </Box>
+  </PreviewArea>
+  <PreviewCode slot='tab' label='JSX'>
+    ```jsx
+    <Box pos="rel" ar="3/2" lh="1" ff="mono">
+      <HTML.div pos="abs" l="0" t="0" bgc="base-2" bd p="10">
+        A
+      </HTML.div>
+      <HTML.div pos="abs" l="0" r="0" w="fit" mx="auto" bgc="base-2" bd p="10">
+        B
+      </HTML.div>
+      <HTML.div pos="abs" r="0" t="0" bgc="base-2" bd p="10">
+        C
+      </HTML.div>
+      <HTML.div pos="abs" l="0" t="0" b="0" h="fit" my="auto" bgc="base-2" bd p="10">
+        D
+      </HTML.div>
+      <HTML.div pos="abs" i="0" m="auto" w="fit" h="fit" bgc="base-2" bd p="10">
+        E
+      </HTML.div>
+      <HTML.div pos="abs" r="0" t="0" b="0" h="fit" my="auto" bgc="base-2" bd p="10">
+        F
+      </HTML.div>
+      <HTML.div pos="abs" l="0" b="0" bgc="base-2" bd p="10">
+        G
+      </HTML.div>
+      <HTML.div pos="abs" l="0" r="0" b="0" w="fit" mx="auto" bgc="base-2" bd p="10">
+        H
+      </HTML.div>
+      <HTML.div pos="abs" r="0" b="0" bgc="base-2" bd p="10">
+        I
+      </HTML.div>
+    </Box>;
+    ```
+  </PreviewCode>
+  <PreviewCode slot='tab' label='HTML'>
+    ```html
+    <div class="l--box -pos:rel -ar:3/2 -lh:1 -ff:mono">
+      <div class="-pos:abs -l:0 -t:0 -bgc:base-2 -bd -p:10">A</div>
+      <div class="-pos:abs -l:0 -r:0 -w:fit -mx:auto -bgc:base-2 -bd -p:10">B</div>
+      <div class="-pos:abs -r:0 -t:0 -bgc:base-2 -bd -p:10">C</div>
+      <div class="-pos:abs -l:0 -t:0 -b:0 -h:fit -my:auto -bgc:base-2 -bd -p:10">D</div>
+      <div class="-pos:abs -i:0 -m:auto -w:fit -h:fit -bgc:base-2 -bd -p:10">E</div>
+      <div class="-pos:abs -r:0 -t:0 -b:0 -h:fit -my:auto -bgc:base-2 -bd -p:10">F</div>
+      <div class="-pos:abs -l:0 -b:0 -bgc:base-2 -bd -p:10">G</div>
+      <div class="-pos:abs -l:0 -r:0 -b:0 -w:fit -mx:auto -bgc:base-2 -bd -p:10">H</div>
+      <div class="-pos:abs -r:0 -b:0 -bgc:base-2 -bd -p:10">I</div>
+    </div>
+    ```
+  </PreviewCode>
 </Preview>
 
 

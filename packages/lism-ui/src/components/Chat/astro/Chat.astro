@@ -4,19 +4,19 @@ import getChatProps, { defaultProps } from '../getProps';
 import '../_style.css';
 
 interface Props {
-	/** 吹き出しスタイル */
-	variant?: 'speak' | 'think';
-	/** 吹き出しの方向 */
-	direction?: 'start' | 'end';
-	/** 発言者名 */
-	name?: string;
-	/** アバター画像URL */
-	avatar?: string;
-	/** キーカラー */
-	keycolor?: string;
-	/** コンテンツのフロー間隔 */
-	flow?: string;
-	[key: string]: unknown;
+  /** 吹き出しスタイル */
+  variant?: 'speak' | 'think';
+  /** 吹き出しの方向 */
+  direction?: 'start' | 'end';
+  /** 発言者名 */
+  name?: string;
+  /** アバター画像URL */
+  avatar?: string;
+  /** キーカラー */
+  keycolor?: string;
+  /** コンテンツのフロー間隔 */
+  flow?: string;
+  [key: string]: unknown;
 }
 
 const { name, avatar, flow = 's', ...inputProps } = Astro.props;
@@ -24,18 +24,18 @@ const { 'data-chat-dir': direction, ...chatProps } = getChatProps(inputProps);
 ---
 
 <Grid data-chat-dir={direction} {...chatProps}>
-	{
-		avatar && (
-			<Frame {...defaultProps.avatar} src={avatar} alt=''>
-				<img src={avatar} alt='' width='60' height='60' decoding='async' />
-			</Frame>
-		)
-	}
-	{name && <Lism {...defaultProps.name}>{name}</Lism>}
-	<Lism {...defaultProps.body}>
-		<Decorator {...defaultProps.deco} class='u--cbox is--skipFlow' />
-		<Flow {...defaultProps.content} class='u--cbox' flow={flow} jslf={direction}>
-			<slot />
-		</Flow>
-	</Lism>
+  {
+    avatar && (
+      <Frame {...defaultProps.avatar} src={avatar} alt="">
+        <img src={avatar} alt="" width="60" height="60" decoding="async" />
+      </Frame>
+    )
+  }
+  {name && <Lism {...defaultProps.name}>{name}</Lism>}
+  <Lism {...defaultProps.body}>
+    <Decorator {...defaultProps.deco} class="u--cbox is--skipFlow" />
+    <Flow {...defaultProps.content} class="u--cbox" flow={flow} jslf={direction}>
+      <slot />
+    </Flow>
+  </Lism>
 </Grid>

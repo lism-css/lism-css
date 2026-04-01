@@ -28,22 +28,22 @@ React (.jsx) and Astro (.astro) components are distributed as an npm package.
 ### 1. Install the package
 
 <Preview>
-	<PreviewTitle>Install the package</PreviewTitle>
-	<PreviewCode slot='tab' label='npm'>
-	```bash frame="none"
-	npm i lism-css
-	```
-	</PreviewCode>
-	<PreviewCode slot='tab' label='pnpm'>
-	```bash frame="none"
-	pnpm add lism-css
-	```
-	</PreviewCode>
-	<PreviewCode slot='tab' label='yarn'>
-	```bash frame="none"
-	yarn add lism-css
-	```
-	</PreviewCode>
+  <PreviewTitle>Install the package</PreviewTitle>
+  <PreviewCode slot='tab' label='npm'>
+  ```bash frame="none"
+  npm i lism-css
+  ```
+  </PreviewCode>
+  <PreviewCode slot='tab' label='pnpm'>
+  ```bash frame="none"
+  pnpm add lism-css
+  ```
+  </PreviewCode>
+  <PreviewCode slot='tab' label='yarn'>
+  ```bash frame="none"
+  yarn add lism-css
+  ```
+  </PreviewCode>
 </Preview>
 
 
@@ -86,13 +86,13 @@ If you encounter a "**Directory import '...' is not supported resolving ES modul
 
 <PreviewTitle>`astro.config.js`</PreviewTitle>
 ```js
-import { defineConfig } from "astro/config";
+import { defineConfig } from 'astro/config';
 
 export default defineConfig({
   // ...other settings
   vite: {
     ssr: {
-      noExternal: ["lism-css"],
+      noExternal: ['lism-css'],
     },
   },
 });
@@ -117,38 +117,38 @@ https://github.com/lism-css/lism-playgrounds
 An MCP server is available that allows AI coding tools to reference the Lism CSS documentation and API.
 
 <Preview>
-	<PreviewCode slot='tab' label='Claude Code'>
-	```bash frame="none"
-	claude mcp add lism-css -- npx -y @lism-css/mcp
-	```
-	</PreviewCode>
-	<PreviewCode slot='tab' label='Cursor'>
-	```json frame="none"
-	// .cursor/mcp.json
-	{
-	  "mcpServers": {
-	    "lism-css": {
-	      "command": "npx",
-	      "args": ["-y", "@lism-css/mcp"]
-	    }
-	  }
-	}
-	```
-	</PreviewCode>
-	<PreviewCode slot='tab' label='VS Code'>
-	```json frame="none"
-	// .vscode/mcp.json
-	{
-	  "servers": {
-	    "lism-css": {
-	      "type": "stdio",
-	      "command": "npx",
-	      "args": ["-y", "@lism-css/mcp"]
-	    }
-	  }
-	}
-	```
-	</PreviewCode>
+  <PreviewCode slot='tab' label='Claude Code'>
+  ```bash frame="none"
+  claude mcp add lism-css -- npx -y @lism-css/mcp
+  ```
+  </PreviewCode>
+  <PreviewCode slot='tab' label='Cursor'>
+  ```json frame="none"
+  // .cursor/mcp.json
+  {
+    "mcpServers": {
+      "lism-css": {
+        "command": "npx",
+        "args": ["-y", "@lism-css/mcp"]
+      }
+    }
+  }
+  ```
+  </PreviewCode>
+  <PreviewCode slot='tab' label='VS Code'>
+  ```json frame="none"
+  // .vscode/mcp.json
+  {
+    "servers": {
+      "lism-css": {
+        "type": "stdio",
+        "command": "npx",
+        "args": ["-y", "@lism-css/mcp"]
+      }
+    }
+  }
+  ```
+  </PreviewCode>
 </Preview>
 
 For details, see [GitHub - @lism-css/mcp](https://github.com/lism-css/lism-css/tree/main/packages/mcp).

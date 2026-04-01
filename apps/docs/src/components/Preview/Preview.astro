@@ -2,7 +2,7 @@
 import { Lism } from 'lism-css/astro';
 import { Tabs } from '@lism-css/ui/astro';
 interface Props {
-	css?: string; // カスタムCSS（src未指定時のslot内にのみ適用可能）
+  css?: string; // カスタムCSS（src未指定時のslot内にのみ適用可能）
 }
 const { css, ...props } = Astro.props;
 
@@ -23,28 +23,28 @@ const scopedCss = `.${scopeId}{ ${css} }`;
 ---
 
 <Lism class:list={['c--preview', scopeId]} {...props}>
-	<slot />
-	{
-		Astro.slots.has('tab') && (
-			<Tabs.Root class="c--preview_code" variant="line" g="15">
-				<slot name="tab" />
-			</Tabs.Root>
-		)
-	}
+  <slot />
+  {
+    Astro.slots.has('tab') && (
+      <Tabs.Root class="c--preview_code" variant="line" g="15">
+        <slot name="tab" />
+      </Tabs.Root>
+    )
+  }
 </Lism>
 {scopedCss && <style set:html={scopedCss} />}
 
 <style is:global>
-	:where(.c--tabs--line) {
-		--sh-size: inset 0 -2px;
+  :where(.c--tabs--line) {
+    --sh-size: inset 0 -2px;
 
-		.c--tabs_list {
-			box-shadow: var(--sh-size) 0 var(--divider);
-		}
-		.c--tabs_tab {
-			font-size: var(--fz--s);
-			padding: 0.5em 0.875em;
-			box-shadow: var(--_isSelected, var(--sh-size) 0 0 currentColor);
-		}
-	}
+    .c--tabs_list {
+      box-shadow: var(--sh-size) 0 var(--divider);
+    }
+    .c--tabs_tab {
+      font-size: var(--fz--s);
+      padding: 0.5em 0.875em;
+      box-shadow: var(--_isSelected, var(--sh-size) 0 0 currentColor);
+    }
+  }
 </style>

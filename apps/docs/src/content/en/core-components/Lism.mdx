@@ -15,20 +15,27 @@ Nearly all components distributed by Lism are based on this `<Lism>` component.
 <Spacer />
 
 <Preview>
-	<PreviewTitle>Output example of `<Lism>`</PreviewTitle>
-	<PreviewArea p='20'>
-		<Lism　p='20' fw='bold' c='blue' bgc='base-2' bdrs='20'>Lism content</Lism>
-	</PreviewArea>
-	<PreviewCode slot='tab' label='JSX'>
-		```jsx
-		<Lism　p='20' fw='bold' c='blue' bgc='base-2' bdrs='20'>Lism content</Lism>
-		```
-	</PreviewCode>
-	<PreviewCode slot='tab' label='HTML'>
-		```jsx
-		<div class="-p:20 -fw:bold -c -bgc:base-2 -bdrs:20" style="--c:var(--blue)"> Lism content </div>
-		```
-	</PreviewCode>
+  <PreviewTitle>Output example of `<Lism>`</PreviewTitle>
+  <PreviewArea p='20'>
+    <Lism p="20" fw="bold" c="blue" bgc="base-2" bdrs="20">
+      Lism content
+    </Lism>
+  </PreviewArea>
+  <PreviewCode slot='tab' label='JSX'>
+    ```jsx
+    <Lism p="20" fw="bold" c="blue" bgc="base-2" bdrs="20">
+      Lism content
+    </Lism>;
+    ```
+  </PreviewCode>
+  <PreviewCode slot='tab' label='HTML'>
+    ```jsx
+    <div class="-p:20 -fw:bold -c -bgc:base-2 -bdrs:20" style="--c:var(--blue)">
+      {' '}
+      Lism content{' '}
+    </div>;
+    ```
+  </PreviewCode>
 </Preview>
 
 
@@ -36,16 +43,16 @@ Nearly all components distributed by Lism are based on this `<Lism>` component.
 ## Import
 
 <Preview>
-	<PreviewCode slot='tab' label='React'>
+  <PreviewCode slot='tab' label='React'>
 ```jsx
 import { Lism } from 'lism-css/react';
 ```
-	</PreviewCode>
-	<PreviewCode slot='tab' label='Astro'>
+  </PreviewCode>
+  <PreviewCode slot='tab' label='Astro'>
 ```jsx
 import { Lism } from 'lism-css/astro';
 ```
-	</PreviewCode>
+  </PreviewCode>
 </Preview>
 
 
@@ -129,14 +136,14 @@ Specifies a layout module. For example, setting `layout='flow'` outputs the `.l-
 By specifying an external component, you can have `<Lism>` **render as a different external component**.
 
 <Preview>
-	<PreviewTitle>Example: rendering Lism's `<Media>` component using Next.js's `<Image>`</PreviewTitle>
-	<PreviewCode>
+  <PreviewTitle>Example: rendering Lism's `<Media>` component using Next.js's `<Image>`</PreviewTitle>
+  <PreviewCode>
 ```jsx
 import Image from 'next/image';
 
-<Media as={Image} src='...' bxsh='20' bdrs='20' />
+<Media as={Image} src="..." bxsh="20" bdrs="20" />;
 ```
-	</PreviewCode>
+  </PreviewCode>
 </Preview>
 
 Lism props are first processed to generate `class` and `style`, which are then passed to the component specified by `as`.
@@ -150,12 +157,14 @@ This is handy when a prop name of the external component specified via `as` conf
 
 
 <Preview>
-	<PreviewTitle>Example</PreviewTitle>
-	<PreviewCode>
+  <PreviewTitle>Example</PreviewTitle>
+  <PreviewCode>
 ```jsx
-<Icon as={Hoge} exProps={{size:'1em'}} p='10' fz='l'>...</Icon>
+<Icon as={Hoge} exProps={{ size: '1em' }} p="10" fz="l">
+  ...
+</Icon>;
 ```
-	</PreviewCode>
+  </PreviewCode>
 </Preview>
 
 By doing this, the Lism `Icon` component processes `p` and `fz`, while the external component `Hoge` reliably receives `size`.
@@ -288,47 +297,47 @@ There are two ways to write this:
 Both produce the same HTML output: a pair of utility class and CSS variable (`-{prop}_{bp}` & `--{prop}_{bp}`).
 
 <Preview>
-	<PreviewTitle>Example 1</PreviewTitle>
-	<PreviewCode label='Array syntax' slot='tab'>
-		```jsx
-		<Lism p={['20', '30', '5rem']}>...</Lism>
-		```
-	</PreviewCode>
-	<PreviewCode label='Object syntax' slot='tab'>
-		```jsx
-		<Lism p={{ base: '20', sm: '30', md: '5rem' }}>...</Lism>
-		```
-	</PreviewCode>
-	<PreviewCode label='Output HTML' slot='tab'>
-		```jsx
-		<div class='-p:20 -p_sm -p_md' style='--p_sm:var(--s40);--p_md:5rem'>
-			...
-		</div>
-		```
-	</PreviewCode>
+  <PreviewTitle>Example 1</PreviewTitle>
+  <PreviewCode label='Array syntax' slot='tab'>
+    ```jsx
+    <Lism p={['20', '30', '5rem']}>...</Lism>;
+    ```
+  </PreviewCode>
+  <PreviewCode label='Object syntax' slot='tab'>
+    ```jsx
+    <Lism p={{ base: '20', sm: '30', md: '5rem' }}>...</Lism>;
+    ```
+  </PreviewCode>
+  <PreviewCode label='Output HTML' slot='tab'>
+    ```jsx
+    <div class="-p:20 -p_sm -p_md" style="--p_sm:var(--s40);--p_md:5rem">
+      ...
+    </div>;
+    ```
+  </PreviewCode>
 </Preview>
 
 To skip intermediate breakpoints, write it as follows:
 
 <Preview>
-	<PreviewTitle>Example 2: specifying only the `@md` value</PreviewTitle>
-	<PreviewCode label='Array syntax' slot='tab'>
-		```jsx
-		<Lism p={[null, null, '40']}>...</Lism>
-		```
-	</PreviewCode>
-	<PreviewCode label='Object syntax' slot='tab'>
-		```jsx
-		<Lism p={{ md: '40' }}>...</Lism>
-		```
-	</PreviewCode>
-	<PreviewCode label='Output HTML' slot='tab'>
-		```jsx
-		<div class='-p_md' style='--p_md:var(--s30)'>
-			...
-		</div>
-		```
-	</PreviewCode>
+  <PreviewTitle>Example 2: specifying only the `@md` value</PreviewTitle>
+  <PreviewCode label='Array syntax' slot='tab'>
+    ```jsx
+    <Lism p={[null, null, '40']}>...</Lism>;
+    ```
+  </PreviewCode>
+  <PreviewCode label='Object syntax' slot='tab'>
+    ```jsx
+    <Lism p={{ md: '40' }}>...</Lism>;
+    ```
+  </PreviewCode>
+  <PreviewCode label='Output HTML' slot='tab'>
+    ```jsx
+    <div class="-p_md" style="--p_md:var(--s30)">
+      ...
+    </div>;
+    ```
+  </PreviewCode>
 </Preview>
 
 :::warning
@@ -354,8 +363,8 @@ Even if no corresponding Prop Class exists, prefixing a value with `:` will outp
 Add a custom utility class in your CSS and use it as needed.
 
 ```css
-.-p\:hoge{
-	/* ... your styles ... */
+.-p\:hoge {
+  /* ... your styles ... */
 }
 ```
 

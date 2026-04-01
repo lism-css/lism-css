@@ -9,32 +9,32 @@
  * @param {string} [props.flip] - X/Y/XY で反転方向を指定
  */
 export default function getProps({ viewBox, isAnimation, isEmpty, level = 5, stretch, offset, flip, style = {}, ...restProps }) {
-	// level が 0 の場合は非表示
-	if (level === 0) return null;
+  // level が 0 の場合は非表示
+  if (level === 0) return null;
 
-	// CSS変数をセット
-	const computedStyle = { ...style };
-	computedStyle['--level'] = level || null;
-	computedStyle['--_inner-offset'] = offset || null;
-	computedStyle['--_inner-stretch'] = stretch || null;
+  // CSS変数をセット
+  const computedStyle = { ...style };
+  computedStyle['--level'] = level || null;
+  computedStyle['--_inner-offset'] = offset || null;
+  computedStyle['--_inner-stretch'] = stretch || null;
 
-	const _props = {
-		lismClass: 'c--shapeDivider',
-		'max-sz': 'full',
-		'aria-hidden': 'true',
-	};
-	if (flip) _props['data-flip'] = flip;
-	if (isAnimation) _props['data-has-animation'] = 'true';
+  const _props = {
+    lismClass: 'c--shapeDivider',
+    'max-sz': 'full',
+    'aria-hidden': 'true',
+  };
+  if (flip) _props['data-flip'] = flip;
+  if (isAnimation) _props['data-has-animation'] = 'true';
 
-	return {
-		..._props,
-		style: computedStyle,
+  return {
+    ..._props,
+    style: computedStyle,
 
-		// SVG用のprops
-		viewBox,
-		isEmpty,
+    // SVG用のprops
+    viewBox,
+    isEmpty,
 
-		// その他のprops
-		...restProps,
-	};
+    // その他のprops
+    ...restProps,
+  };
 }

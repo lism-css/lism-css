@@ -12,41 +12,41 @@ import getMaybeCssVar from 'lism-css/lib/getMaybeCssVar';
  * @param {object} [props.style] - スタイルオブジェクト
  */
 export function getRootProps({ hovC, hovBgc, itemP, style = {}, ...props }) {
-	const computedStyle = { ...style };
+  const computedStyle = { ...style };
 
-	if (hovBgc) computedStyle['--hov-bgc'] = getMaybeCssVar(hovBgc, 'color');
-	if (hovC) computedStyle['--hov-c'] = getMaybeCssVar(hovC, 'color');
-	if (itemP) computedStyle['--_item-p'] = getMaybeCssVar(itemP, 'space');
+  if (hovBgc) computedStyle['--hov-bgc'] = getMaybeCssVar(hovBgc, 'color');
+  if (hovC) computedStyle['--hov-c'] = getMaybeCssVar(hovC, 'color');
+  if (itemP) computedStyle['--_item-p'] = getMaybeCssVar(itemP, 'space');
 
-	return {
-		lismClass: 'c--navMenu',
-		as: 'ul',
-		style: computedStyle,
-		...props,
-	};
+  return {
+    lismClass: 'c--navMenu',
+    as: 'ul',
+    style: computedStyle,
+    ...props,
+  };
 }
 
 /**
  * NavMenu.Nest のプロパティを処理
  */
 export function getNestProps(props) {
-	return {
-		lismClass: 'c--navMenu_nest',
-		as: 'ul',
-		'px-s': '20',
-		...props,
-	};
+  return {
+    lismClass: 'c--navMenu_nest',
+    as: 'ul',
+    'px-s': '20',
+    ...props,
+  };
 }
 
 /**
  * NavMenu.Item のプロパティを処理
  */
 export function getItemProps(props) {
-	return {
-		lismClass: 'c--navMenu_item',
-		as: 'li',
-		...props,
-	};
+  return {
+    lismClass: 'c--navMenu_item',
+    as: 'li',
+    ...props,
+  };
 }
 
 /**
@@ -55,11 +55,11 @@ export function getItemProps(props) {
  * @param {string} [props.as='span'] - HTML タグ
  */
 export function getLinkProps({ href, as = 'span', ...props }) {
-	return {
-		lismClass: 'c--navMenu_link',
-		as: href ? 'a' : as,
-		href,
-		c: 'inherit',
-		...props,
-	};
+  return {
+    lismClass: 'c--navMenu_link',
+    as: href ? 'a' : as,
+    href,
+    c: 'inherit',
+    ...props,
+  };
 }

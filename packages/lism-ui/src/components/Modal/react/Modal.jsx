@@ -8,16 +8,16 @@ import '../_style.css';
 
 // duration: [s]
 const Modal = ({ children, ...props }) => {
-	const ref = useRef(null);
-	useEffect(() => {
-		if (!ref?.current) return;
-		return setEvent(ref?.current);
-	}, [ref]);
+  const ref = useRef(null);
+  useEffect(() => {
+    if (!ref?.current) return;
+    return setEvent(ref?.current);
+  }, [ref]);
 
-	return (
-		<Lism forwardedRef={ref} {...getProps(props)}>
-			{children}
-		</Lism>
-	);
+  return (
+    <Lism forwardedRef={ref} {...getProps(props)}>
+      {children}
+    </Lism>
+  );
 };
 export default Modal;

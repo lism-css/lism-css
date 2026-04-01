@@ -1,5 +1,5 @@
 export default {
-	// props: {
-	// 	d: { bp: 'lg' },
-	// },
+  // props: {
+  // 	d: { bp: 'lg' },
+  // },
 };

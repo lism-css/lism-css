@@ -25,81 +25,81 @@ import { Lism, HTML, Dummy, Stack } from "lism-css/astro";
 ## ダミーテキストの例
 
 <Preview>
-	<PreviewTitle>ダミーテキストの言語の違い</PreviewTitle>
-	<PreviewArea p='20'>
-		<Dummy />
-		<Dummy lang='ja' />
-	</PreviewArea>
-	<PreviewCode>
-		```jsx
-		<Dummy />
-		<Dummy lang='ja' />
-		```
-	</PreviewCode>
+  <PreviewTitle>ダミーテキストの言語の違い</PreviewTitle>
+  <PreviewArea p='20'>
+    <Dummy />
+    <Dummy lang="ja" />
+  </PreviewArea>
+  <PreviewCode>
+    ```jsx
+    <Dummy />
+    <Dummy lang='ja' />
+    ```
+  </PreviewCode>
 </Preview>
 
 <Preview>
-	<PreviewTitle>ダミーテキストの長さの違い</PreviewTitle>
-	<PreviewArea p='20'>
-		<Stack g='5'>
-			<Dummy lang='ja' length='xs' pre='xs: ' />
-			<Dummy length='xs' pre='xs: ' />
-		</Stack>
-		<Stack g='5'>
-		<Dummy lang='ja' length='s' pre='s: ' />
-		<Dummy length='s' pre='s: ' />
-		</Stack>
-		<Stack g='5'>
-			<Dummy lang='ja' length='m' pre='m: ' />
-			<Dummy length='m' pre='m: ' />
-		</Stack>
-		<Stack g='5'>
-			<Dummy lang='ja' length='l' pre='l: ' />
-			<Dummy length='l' pre='l: ' />
-		</Stack>
-		<Stack g='5'>
-			<Dummy lang='ja' length='xl' pre='xl: ' />
-			<Dummy length='xl' pre='xl: ' />
-		</Stack>
-	</PreviewArea>
-	<PreviewCode>
-		```jsx
-		<Dummy lang='ja' length='xs' pre='xs: ' />
-		<Dummy lang='ja' length='s' pre='s: ' />
-		<Dummy lang='ja' length='m' pre='m: ' />
-		<Dummy lang='ja' length='l' pre='l: ' />
-		<Dummy lang='ja' length='xl' pre='xl: ' />
-		```
-	</PreviewCode>
+  <PreviewTitle>ダミーテキストの長さの違い</PreviewTitle>
+  <PreviewArea p='20'>
+    <Stack g="5">
+      <Dummy lang="ja" length="xs" pre="xs: " />
+      <Dummy length="xs" pre="xs: " />
+    </Stack>
+    <Stack g="5">
+      <Dummy lang="ja" length="s" pre="s: " />
+      <Dummy length="s" pre="s: " />
+    </Stack>
+    <Stack g="5">
+      <Dummy lang="ja" length="m" pre="m: " />
+      <Dummy length="m" pre="m: " />
+    </Stack>
+    <Stack g="5">
+      <Dummy lang="ja" length="l" pre="l: " />
+      <Dummy length="l" pre="l: " />
+    </Stack>
+    <Stack g="5">
+      <Dummy lang="ja" length="xl" pre="xl: " />
+      <Dummy length="xl" pre="xl: " />
+    </Stack>
+  </PreviewArea>
+  <PreviewCode>
+    ```jsx
+    <Dummy lang='ja' length='xs' pre='xs: ' />
+    <Dummy lang='ja' length='s' pre='s: ' />
+    <Dummy lang='ja' length='m' pre='m: ' />
+    <Dummy lang='ja' length='l' pre='l: ' />
+    <Dummy lang='ja' length='xl' pre='xl: ' />
+    ```
+  </PreviewCode>
 </Preview>
 
 <Preview>
-	<PreviewTitle>`length='codes'`にすると、`<b>`,`<i>`,`<a>`,`<code>`を含んだダミーテキストを出力します。</PreviewTitle>
-	<PreviewArea p='20'>
-		<Dummy lang='ja' length='codes' />
-	</PreviewArea>
-	<PreviewCode>
-		```jsx
-		<Dummy lang='ja' length='codes' />
-		```
-	</PreviewCode>
+  <PreviewTitle>`length='codes'`にすると、`<b>`,`<i>`,`<a>`,`<code>`を含んだダミーテキストを出力します。</PreviewTitle>
+  <PreviewArea p='20'>
+    <Dummy lang="ja" length="codes" />
+  </PreviewArea>
+  <PreviewCode>
+    ```jsx
+    <Dummy lang="ja" length="codes" />;
+    ```
+  </PreviewCode>
 </Preview>
 
 
 <Preview>
-	<PreviewTitle>offsetの例</PreviewTitle>
-	<PreviewArea p='20'>
-		<Dummy lang='ja' length='xs' />
-		<Dummy lang='ja' offset={1} />
-		<Dummy lang='ja' length='l' offset={3} />
-	</PreviewArea>
-	<PreviewCode>
-		```jsx
-		<Dummy lang='ja' length='xs' />
-		<Dummy lang='ja' offset={1} />
-		<Dummy lang='ja' length='l' offset={3} />
-		```
-	</PreviewCode>
+  <PreviewTitle>offsetの例</PreviewTitle>
+  <PreviewArea p='20'>
+    <Dummy lang="ja" length="xs" />
+    <Dummy lang="ja" offset={1} />
+    <Dummy lang="ja" length="l" offset={3} />
+  </PreviewArea>
+  <PreviewCode>
+    ```jsx
+    <Dummy lang='ja' length='xs' />
+    <Dummy lang='ja' offset={1} />
+    <Dummy lang='ja' length='l' offset={3} />
+    ```
+  </PreviewCode>
 </Preview>
 
 
@@ -107,17 +107,17 @@ import { Lism, HTML, Dummy, Stack } from "lism-css/astro";
 
 `as='ul'` と `as='ol'` を指定した場合は、リストを出力します。
 <Preview>
-	<PreviewTitle>ダミーリストの例 1</PreviewTitle>
-	<PreviewArea p='20'>
-		<Dummy as='ul' />
-		<Dummy as='ol' />
-	</PreviewArea>
-	<PreviewCode>
-		```jsx
-		<Dummy as='ul' />
-		<Dummy as='ol' />
-		```
-	</PreviewCode>
+  <PreviewTitle>ダミーリストの例 1</PreviewTitle>
+  <PreviewArea p='20'>
+    <Dummy as="ul" />
+    <Dummy as="ol" />
+  </PreviewArea>
+  <PreviewCode>
+    ```jsx
+    <Dummy as='ul' />
+    <Dummy as='ol' />
+    ```
+  </PreviewCode>
 </Preview>
 
 
@@ -125,14 +125,14 @@ import { Lism, HTML, Dummy, Stack } from "lism-css/astro";
 
 `as='img'` を指定した場合は、`https://cdn.lism-css.com/`からダミー画像を出力します。
 <Preview>
-	<PreviewTitle>例</PreviewTitle>
-	<PreviewArea p='20'>
-		<Dummy as='img' />
-	</PreviewArea>
-	<PreviewCode>
-		```jsx
-		<Dummy as='img' />
-		```
-	</PreviewCode>
+  <PreviewTitle>例</PreviewTitle>
+  <PreviewArea p='20'>
+    <Dummy as="img" />
+  </PreviewArea>
+  <PreviewCode>
+    ```jsx
+    <Dummy as="img" />;
+    ```
+  </PreviewCode>
 </Preview>
 

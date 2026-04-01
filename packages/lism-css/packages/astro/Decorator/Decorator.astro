@@ -5,13 +5,13 @@ import { Lism } from '../Lism';
 import getProps from 'lism-css/react/atomic/Decorator/getProps';
 
 type Props<Tag extends HTMLTag = 'div'> = Polymorphic<{ as: Tag }> &
-	DecoratorProps & {
-		exProps?: Record<string, unknown>;
-	};
+  DecoratorProps & {
+    exProps?: Record<string, unknown>;
+  };
 
 const { as: Tag = 'div', exProps, ...props } = Astro.props;
 ---
 
 <Lism as={Tag} {...getProps(props)} {...exProps}>
-	<slot />
+  <slot />
 </Lism>

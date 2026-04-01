@@ -9,13 +9,11 @@ const { component = '', script = '', packageName = 'lism-css', css = '' } = Astr
 
 // パッケージのバージョンを取得（SrcCode.astro と同じパターン）
 const PKG_DIR_MAP: Record<string, string> = {
-	'lism-css': 'lism-css',
-	'@lism-css/ui': 'lism-ui',
+  'lism-css': 'lism-css',
+  '@lism-css/ui': 'lism-ui',
 };
 const pkgDir = PKG_DIR_MAP[packageName] || packageName;
-const { version: pkgVersion } = JSON.parse(
-	readFileSync(resolve(process.cwd(), '../../packages', pkgDir, 'package.json'), 'utf-8')
-);
+const { version: pkgVersion } = JSON.parse(readFileSync(resolve(process.cwd(), '../../packages', pkgDir, 'package.json'), 'utf-8'));
 
 const getCopyCode = (name: string) => `import { ${component} } from '${packageName}${name}';`;
 
@@ -25,18 +23,18 @@ const cssImportCode = `<link href="https://cdn.jsdelivr.net/npm/${packageName}@$
 ---
 
 <Preview>
-	<PreviewCode slot="tab" label="React">
-		<AstroCode code={getCopyCode('/react')} lang="js" />
-	</PreviewCode>
-	<PreviewCode slot="tab" label="Astro">
-		<AstroCode code={getCopyCode('/astro')} lang="js" />
-	</PreviewCode>
-	{
-		(script || css) && (
-			<PreviewCode slot="tab" label="HTML">
-				{css && <AstroCode code={cssImportCode} lang="html" />}
-				{script && <AstroCode code={jsImportCode} lang="html" />}
-			</PreviewCode>
-		)
-	}
+  <PreviewCode slot="tab" label="React">
+    <AstroCode code={getCopyCode('/react')} lang="js" />
+  </PreviewCode>
+  <PreviewCode slot="tab" label="Astro">
+    <AstroCode code={getCopyCode('/astro')} lang="js" />
+  </PreviewCode>
+  {
+    (script || css) && (
+      <PreviewCode slot="tab" label="HTML">
+        {css && <AstroCode code={cssImportCode} lang="html" />}
+        {script && <AstroCode code={jsImportCode} lang="html" />}
+      </PreviewCode>
+    )
+  }
 </Preview>

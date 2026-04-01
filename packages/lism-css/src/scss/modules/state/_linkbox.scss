@@ -1,19 +1,19 @@
 @use '../../_mixin' as mixin;
 
 .is--linkBox {
-	position: relative;
-	display: block;
-	color: inherit;
-	pointer-events: auto;
-	text-decoration: none;
-	cursor: pointer;
-	isolation: isolate; // 内部のz-index順位と外部のz-indexを混同させない。
+  position: relative;
+  display: block;
+  color: inherit;
+  pointer-events: auto;
+  text-decoration: none;
+  cursor: pointer;
+  isolation: isolate; // 内部のz-index順位と外部のz-indexを混同させない。
 }
 
 // リンクをクリック可能にするためにz-indexあげる
 .is--linkBox a {
-	position: relative;
-	z-index: 2; // .u-linkExpand::before + 1
+  position: relative;
+  z-index: 2; // .u-linkExpand::before + 1
 }
 
 /* これをしてしまうと z-index 関係がややこしくなる。リンク以外のz-indexはデフォのままにする。 */

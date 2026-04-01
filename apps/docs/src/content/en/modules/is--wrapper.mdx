@@ -49,61 +49,61 @@ The following props are available on `<Wrapper>`.
 ## Usage
 
 <Preview>
-	<PreviewTitle>Example</PreviewTitle>
-	<PreviewArea resize p='15'>
-		<Wrapper layout='flow' p='20' className='-bd:guide -hov:itemGuide'>
-			<p>Content</p>
-			<p>Content</p>
-			<p>...</p>
-		</Wrapper>
-	</PreviewArea>
-	<PreviewCode slot='tab' label='JSX'>
-		```jsx
-		<Wrapper layout='flow' p='20'>
-			<p>Content</p>
-			<p>Content</p>
-			<p>...</p>
-		</Wrapper>
-		```
-	</PreviewCode>
-	<PreviewCode slot='tab' label='HTML'>
-		```html
-		<div class='l--flow is--wrapper -p:20'>
-			<p>Content</p>
-			<p>Content</p>
-			<p>...</p>
-		</div>
-		```
-	</PreviewCode>
+  <PreviewTitle>Example</PreviewTitle>
+  <PreviewArea resize p='15'>
+    <Wrapper layout="flow" p="20" className="-bd:guide -hov:itemGuide">
+      <p>Content</p>
+      <p>Content</p>
+      <p>...</p>
+    </Wrapper>
+  </PreviewArea>
+  <PreviewCode slot='tab' label='JSX'>
+    ```jsx
+    <Wrapper layout="flow" p="20">
+      <p>Content</p>
+      <p>Content</p>
+      <p>...</p>
+    </Wrapper>;
+    ```
+  </PreviewCode>
+  <PreviewCode slot='tab' label='HTML'>
+    ```html
+    <div class="l--flow is--wrapper -p:20">
+      <p>Content</p>
+      <p>Content</p>
+      <p>...</p>
+    </div>
+    ```
+  </PreviewCode>
 </Preview>
 
 <Preview>
-	<PreviewTitle>With `contentSize='s'`</PreviewTitle>
-	<PreviewArea resize p='15'>
-		<Wrapper contentSize='s' layout='flow' p='20' className='-bd:guide -hov:itemGuide'>
-			<p>Content</p>
-			<p>Content</p>
-			<p>...</p>
-		</Wrapper>
-	</PreviewArea>
-	<PreviewCode slot='tab' label='JSX'>
-		```jsx
-		<Wrapper contentSize='s' layout='flow' p='20'>
-			<p>Content</p>
-			<p>Content</p>
-			<p>...</p>
-		</Wrapper>
-		```
-	</PreviewCode>
-	<PreviewCode slot='tab' label='HTML'>
-		```html
-		<div class='l--flow is--wrapper -contentSize:s -p:20'>
-			<p>Content</p>
-			<p>Content</p>
-			<p>...</p>
-		</div>
-		```
-	</PreviewCode>
+  <PreviewTitle>With `contentSize='s'`</PreviewTitle>
+  <PreviewArea resize p='15'>
+    <Wrapper contentSize="s" layout="flow" p="20" className="-bd:guide -hov:itemGuide">
+      <p>Content</p>
+      <p>Content</p>
+      <p>...</p>
+    </Wrapper>
+  </PreviewArea>
+  <PreviewCode slot='tab' label='JSX'>
+    ```jsx
+    <Wrapper contentSize="s" layout="flow" p="20">
+      <p>Content</p>
+      <p>Content</p>
+      <p>...</p>
+    </Wrapper>;
+    ```
+  </PreviewCode>
+  <PreviewCode slot='tab' label='HTML'>
+    ```html
+    <div class="l--flow is--wrapper -contentSize:s -p:20">
+      <p>Content</p>
+      <p>Content</p>
+      <p>...</p>
+    </div>
+    ```
+  </PreviewCode>
 </Preview>
 
 ### Setting a custom container size
@@ -111,29 +111,29 @@ The following props are available on `<Wrapper>`.
 To use a value other than `s` or `l`, pass any value to `isWrapper` and it will be output as the `--contentSize` CSS variable.
 
 <Preview>
-	<PreviewTitle>Setting a custom value on is--wrapper</PreviewTitle>
-	<PreviewArea resize p='15'>
-		<Lism isWrapper='20rem' p='20' className='-bd:guide -hov:itemGuide'>
-			<div>Contents...</div>
-			<div>Contents...</div>
-		</Lism>
-	</PreviewArea>
-	<PreviewCode slot='tab' label='JSX'>
-	```jsx
-	<Lism isWrapper='20rem' p='20'>
-		<div>Contents...</div>
-		<div>Contents...</div>
-	</Lism>
-	```
-	</PreviewCode>
-	<PreviewCode slot='tab' label='HTML'>
-	```html
-	<div class="is--wrapper -p:20" style="--contentSize:20rem">
-		<div>Contents...</div>
-		<div>Contents...</div>
-	</div>
-	```
-	</PreviewCode>
+  <PreviewTitle>Setting a custom value on is--wrapper</PreviewTitle>
+  <PreviewArea resize p='15'>
+    <Lism isWrapper="20rem" p="20" className="-bd:guide -hov:itemGuide">
+      <div>Contents...</div>
+      <div>Contents...</div>
+    </Lism>
+  </PreviewArea>
+  <PreviewCode slot='tab' label='JSX'>
+  ```jsx
+  <Lism isWrapper="20rem" p="20">
+    <div>Contents...</div>
+    <div>Contents...</div>
+  </Lism>;
+  ```
+  </PreviewCode>
+  <PreviewCode slot='tab' label='HTML'>
+  ```html
+  <div class="is--wrapper -p:20" style="--contentSize: 20rem">
+    <div>Contents...</div>
+    <div>Contents...</div>
+  </div>
+  ```
+  </PreviewCode>
 </Preview>
 
 

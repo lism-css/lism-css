@@ -14,13 +14,13 @@ It provides minimal styling — only the interaction behavior is included. Visua
 ## Structure
 ```pug
 c--tabs
-	div.c--tabs_list[role="tablist"]
-		button.c--tabs_tab.set--plain[role="tab"][aria-controls="{tabID}"][aria-selected="true"]
-		...button
+  div.c--tabs_list[role="tablist"]
+    button.c--tabs_tab.set--plain[role="tab"][aria-controls="{tabID}"][aria-selected="true"]
+    ...button
 
-	div.c--tabs_panel[id="{tabID}"][role="tabpanel"][aria-hidden="false"]
-		...Contents...
-	...div.c--tabs_panel
+  div.c--tabs_panel[id="{tabID}"][role="tabpanel"][aria-hidden="false"]
+    ...Contents...
+  ...div.c--tabs_panel
 ```
 
 
@@ -61,86 +61,86 @@ Only `<Tabs.Tab>` and `<Tabs.Panel>` are recognized as children of `<Tabs.Item>`
 
 
 <Preview>
-	<PreviewTitle>Example</PreviewTitle>
-	<PreviewArea p='20'>
-		<Tabs.Root g='15'>
-			<Tabs.Item>
-				<Tabs.Tab px='10'>Tab 1</Tabs.Tab>
-				<Tabs.Panel>
-					<Dummy pre='Tab 01: '/>
-				</Tabs.Panel>
-			</Tabs.Item>
-			<Tabs.Item>
-				<Tabs.Tab px='10'>Tab 2</Tabs.Tab>
-				<Tabs.Panel>
-					<Dummy length='l' offset={1} pre='Tab 02: ' />
-				</Tabs.Panel>
-			</Tabs.Item>
-		</Tabs.Root>
-	</PreviewArea>
-	<PreviewCode slot='tab' label='JSX'>
-		```jsx
-		<Tabs.Root g='15'>
-			<Tabs.Item>
-				<Tabs.Tab px='10'>Tab 1</Tabs.Tab>
-				<Tabs.Panel>
-					<Dummy pre='Tab 01: '/>
-				</Tabs.Panel>
-			</Tabs.Item>
-			<Tabs.Item>
-				<Tabs.Tab px='10'>Tab 2</Tabs.Tab>
-				<Tabs.Panel>
-					<Dummy length='l' offset={1} pre='Tab 02: ' />
-				</Tabs.Panel>
-			</Tabs.Item>
-		</Tabs.Root>
-		```
-	</PreviewCode>
-	<PreviewCode slot='tab' label='HTML'>
-		```html
-		```
-	</PreviewCode>
+  <PreviewTitle>Example</PreviewTitle>
+  <PreviewArea p='20'>
+    <Tabs.Root g="15">
+      <Tabs.Item>
+        <Tabs.Tab px="10">Tab 1</Tabs.Tab>
+        <Tabs.Panel>
+          <Dummy pre="Tab 01: " />
+        </Tabs.Panel>
+      </Tabs.Item>
+      <Tabs.Item>
+        <Tabs.Tab px="10">Tab 2</Tabs.Tab>
+        <Tabs.Panel>
+          <Dummy length="l" offset={1} pre="Tab 02: " />
+        </Tabs.Panel>
+      </Tabs.Item>
+    </Tabs.Root>
+  </PreviewArea>
+  <PreviewCode slot='tab' label='JSX'>
+    ```jsx
+    <Tabs.Root g="15">
+      <Tabs.Item>
+        <Tabs.Tab px="10">Tab 1</Tabs.Tab>
+        <Tabs.Panel>
+          <Dummy pre="Tab 01: " />
+        </Tabs.Panel>
+      </Tabs.Item>
+      <Tabs.Item>
+        <Tabs.Tab px="10">Tab 2</Tabs.Tab>
+        <Tabs.Panel>
+          <Dummy length="l" offset={1} pre="Tab 02: " />
+        </Tabs.Panel>
+      </Tabs.Item>
+    </Tabs.Root>;
+    ```
+  </PreviewCode>
+  <PreviewCode slot='tab' label='HTML'>
+    ```html
+    ```
+  </PreviewCode>
 </Preview>
 
 
 You can pass props to `.c--tabs_list` using `listProps`.
 
 <Preview>
-	<PreviewTitle>Example using `listProps`</PreviewTitle>
-	<PreviewArea p='20'>
-		<Tabs.Root g='15' ji='center' listProps={{bd: '-', bdrs: '99', p: '10', lh:'xs'}}>
-			<Tabs.Item>
-				<Tabs.Tab px='10'>Tab 1</Tabs.Tab>
-				<Tabs.Panel>
-					<Dummy pre='Tab 01: '/>
-				</Tabs.Panel>
-			</Tabs.Item>
-			<Tabs.Item>
-				<Tabs.Tab px='10'>Tab 2</Tabs.Tab>
-				<Tabs.Panel>
-					<Dummy length='l' offset={1} pre='Tab 02: ' />
-				</Tabs.Panel>
-			</Tabs.Item>
-		</Tabs.Root>
-	</PreviewArea>
-	<PreviewCode slot='tab' label='JSX'>
-		```jsx "listProps"
-		<Tabs.Root g='15' ji='center' listProps={{bd: '-', bdrs: '99', p: '10', lh:'xs'}}>
-			<Tabs.Item>
-				<Tabs.Tab px='10'>Tab 1</Tabs.Tab>
-				<Tabs.Panel>
-					<Dummy pre='Tab 01: '/>
-				</Tabs.Panel>
-			</Tabs.Item>
-			<Tabs.Item>
-				<Tabs.Tab px='10'>Tab 2</Tabs.Tab>
-				<Tabs.Panel>
-					<Dummy length='l' offset={1} pre='Tab 02: ' />
-				</Tabs.Panel>
-			</Tabs.Item>
-		</Tabs.Root>
-		```
-	</PreviewCode>
+  <PreviewTitle>Example using `listProps`</PreviewTitle>
+  <PreviewArea p='20'>
+    <Tabs.Root g="15" ji="center" listProps={{ bd: '-', bdrs: '99', p: '10', lh: 'xs' }}>
+      <Tabs.Item>
+        <Tabs.Tab px="10">Tab 1</Tabs.Tab>
+        <Tabs.Panel>
+          <Dummy pre="Tab 01: " />
+        </Tabs.Panel>
+      </Tabs.Item>
+      <Tabs.Item>
+        <Tabs.Tab px="10">Tab 2</Tabs.Tab>
+        <Tabs.Panel>
+          <Dummy length="l" offset={1} pre="Tab 02: " />
+        </Tabs.Panel>
+      </Tabs.Item>
+    </Tabs.Root>
+  </PreviewArea>
+  <PreviewCode slot='tab' label='JSX'>
+    ```jsx "listProps"
+    <Tabs.Root g="15" ji="center" listProps={{ bd: '-', bdrs: '99', p: '10', lh: 'xs' }}>
+      <Tabs.Item>
+        <Tabs.Tab px="10">Tab 1</Tabs.Tab>
+        <Tabs.Panel>
+          <Dummy pre="Tab 01: " />
+        </Tabs.Panel>
+      </Tabs.Item>
+      <Tabs.Item>
+        <Tabs.Tab px="10">Tab 2</Tabs.Tab>
+        <Tabs.Panel>
+          <Dummy length="l" offset={1} pre="Tab 02: " />
+        </Tabs.Panel>
+      </Tabs.Item>
+    </Tabs.Root>;
+    ```
+  </PreviewCode>
 </Preview>
 
 
@@ -150,41 +150,41 @@ Use `defaultIndex` on `<Tabs.Root>` to specify which tab is open by default.
 (Index numbers start from `1`.)
 
 <Preview>
-	<PreviewTitle>Example</PreviewTitle>
-	<PreviewArea p='20'>
-		<Tabs.Root defaultIndex={2} listProps={{'bd-b': '-'}}>
-			<Tabs.Item>
-				<Tabs.Tab p='10'>Tab 1</Tabs.Tab>
-				<Tabs.Panel p='10'>
-					<Dummy pre='Tab 01: '/>
-				</Tabs.Panel>
-			</Tabs.Item>
-			<Tabs.Item>
-				<Tabs.Tab p='10'>Tab 2</Tabs.Tab>
-				<Tabs.Panel p='10'>
-					<Dummy length='l' offset={1} pre='Tab 02: ' />
-				</Tabs.Panel>
-			</Tabs.Item>
-		</Tabs.Root>
-	</PreviewArea>
-	<PreviewCode slot='tab' label='JSX'>
-		```jsx "defaultIndex=\{2\}"
-		<Tabs.Root defaultIndex={2} listProps={{'bd-b': '-'}}>
-			<Tabs.Item>
-				<Tabs.Tab p='10'>Tab 1</Tabs.Tab>
-				<Tabs.Panel p='10'>
-					<Dummy pre='Tab 01: '/>
-				</Tabs.Panel>
-			</Tabs.Item>
-			<Tabs.Item>
-				<Tabs.Tab p='10'>Tab 2</Tabs.Tab>
-				<Tabs.Panel p='10'>
-					<Dummy length='l' offset={1} pre='Tab 02: ' />
-				</Tabs.Panel>
-			</Tabs.Item>
-		</Tabs.Root>
-		```
-	</PreviewCode>
+  <PreviewTitle>Example</PreviewTitle>
+  <PreviewArea p='20'>
+    <Tabs.Root defaultIndex={2} listProps={{ 'bd-b': '-' }}>
+      <Tabs.Item>
+        <Tabs.Tab p="10">Tab 1</Tabs.Tab>
+        <Tabs.Panel p="10">
+          <Dummy pre="Tab 01: " />
+        </Tabs.Panel>
+      </Tabs.Item>
+      <Tabs.Item>
+        <Tabs.Tab p="10">Tab 2</Tabs.Tab>
+        <Tabs.Panel p="10">
+          <Dummy length="l" offset={1} pre="Tab 02: " />
+        </Tabs.Panel>
+      </Tabs.Item>
+    </Tabs.Root>
+  </PreviewArea>
+  <PreviewCode slot='tab' label='JSX'>
+    ```jsx "defaultIndex=\{2\}"
+    <Tabs.Root defaultIndex={2} listProps={{ 'bd-b': '-' }}>
+      <Tabs.Item>
+        <Tabs.Tab p="10">Tab 1</Tabs.Tab>
+        <Tabs.Panel p="10">
+          <Dummy pre="Tab 01: " />
+        </Tabs.Panel>
+      </Tabs.Item>
+      <Tabs.Item>
+        <Tabs.Tab p="10">Tab 2</Tabs.Tab>
+        <Tabs.Panel p="10">
+          <Dummy length="l" offset={1} pre="Tab 02: " />
+        </Tabs.Panel>
+      </Tabs.Item>
+    </Tabs.Root>;
+    ```
+  </PreviewCode>
 </Preview>
 
 
@@ -195,49 +195,49 @@ Setting `grid-template: 'list panel' auto / auto 1fr;` on `<Tabs.Root>` (`.c--ta
 At the same time, changing the tab list (`.c--tabs_list`) buttons to stack vertically (`flex-direction: column;`) achieves the following layout.
 
 <Preview>
-	<PreviewTitle>Example: side-by-side layout on `@sm` and above</PreviewTitle>
-	<PreviewArea p='20' resize>
-		<Tabs.Root
-			g='15'
-			gt={[null, '"list panel" auto / auto 1fr']}
-			listProps={{fxd: [null, 'column'], bd: '-', bdw:['0 0 1px 0','0 1px 0 0']}}
-		>
-			<Tabs.Item>
-				<Tabs.Tab px='15' px-s='10' py='10' py-s='5'>Tab 1</Tabs.Tab>
-				<Tabs.Panel p='5'>
-					<Dummy pre='Tab 01: '/>
-				</Tabs.Panel>
-			</Tabs.Item>
-			<Tabs.Item>
-				<Tabs.Tab px='15' px-s='10' py='10' py-s='5'>Tab 2</Tabs.Tab>
-				<Tabs.Panel p='5'>
-					<Dummy length='l' offset={1} pre='Tab 02: ' />
-				</Tabs.Panel>
-			</Tabs.Item>
-		</Tabs.Root>
-	</PreviewArea>
-	<PreviewCode>
-		```jsx
-		<Tabs.Root
-			g='15'
-			gt={[null, '"list panel" auto / auto 1fr']}
-			listProps={{fxd: [null, 'column'], bd: '-', bdw:['0 0 1px 0','0 1px 0 0']}}
-		>
-			<Tabs.Item>
-				<Tabs.Tab px='15' px-s='10' py='10' py-s='5'>Tab 1</Tabs.Tab>
-				<Tabs.Panel p='5'>
-					<Dummy pre='Tab 01: '/>
-				</Tabs.Panel>
-			</Tabs.Item>
-			<Tabs.Item>
-				<Tabs.Tab px='15' px-s='10' py='10' py-s='5'>Tab 2</Tabs.Tab>
-				<Tabs.Panel p='5'>
-					<Dummy length='l' offset={1} pre='Tab 02: ' />
-				</Tabs.Panel>
-			</Tabs.Item>
-		</Tabs.Root>
-		```
-	</PreviewCode>
+  <PreviewTitle>Example: side-by-side layout on `@sm` and above</PreviewTitle>
+  <PreviewArea p='20' resize>
+    <Tabs.Root g="15" gt={[null, '"list panel" auto / auto 1fr']} listProps={{ fxd: [null, 'column'], bd: '-', bdw: ['0 0 1px 0', '0 1px 0 0'] }}>
+      <Tabs.Item>
+        <Tabs.Tab px="15" px-s="10" py="10" py-s="5">
+          Tab 1
+        </Tabs.Tab>
+        <Tabs.Panel p="5">
+          <Dummy pre="Tab 01: " />
+        </Tabs.Panel>
+      </Tabs.Item>
+      <Tabs.Item>
+        <Tabs.Tab px="15" px-s="10" py="10" py-s="5">
+          Tab 2
+        </Tabs.Tab>
+        <Tabs.Panel p="5">
+          <Dummy length="l" offset={1} pre="Tab 02: " />
+        </Tabs.Panel>
+      </Tabs.Item>
+    </Tabs.Root>
+  </PreviewArea>
+  <PreviewCode>
+    ```jsx
+    <Tabs.Root g="15" gt={[null, '"list panel" auto / auto 1fr']} listProps={{ fxd: [null, 'column'], bd: '-', bdw: ['0 0 1px 0', '0 1px 0 0'] }}>
+      <Tabs.Item>
+        <Tabs.Tab px="15" px-s="10" py="10" py-s="5">
+          Tab 1
+        </Tabs.Tab>
+        <Tabs.Panel p="5">
+          <Dummy pre="Tab 01: " />
+        </Tabs.Panel>
+      </Tabs.Item>
+      <Tabs.Item>
+        <Tabs.Tab px="15" px-s="10" py="10" py-s="5">
+          Tab 2
+        </Tabs.Tab>
+        <Tabs.Panel p="5">
+          <Dummy length="l" offset={1} pre="Tab 02: " />
+        </Tabs.Panel>
+      </Tabs.Item>
+    </Tabs.Root>;
+    ```
+  </PreviewCode>
 </Preview>
 
 
@@ -251,115 +251,115 @@ The core component provides no visual styling, so add your own styles per projec
 Here are a few styling examples.
 
 <Preview>
-	<PreviewTitle>`variant='line'`</PreviewTitle>
-	<PreviewArea p='20'>
-		<Tabs.Root variant='line' g='15'>
-			<Tabs.Item>
-				<Tabs.Tab>Tab 1</Tabs.Tab>
-				<Tabs.Panel>
-					<Dummy pre='Tab 01: '/>
-				</Tabs.Panel>
-			</Tabs.Item>
-			<Tabs.Item>
-				<Tabs.Tab>Tab 2</Tabs.Tab>
-				<Tabs.Panel>
-					<Dummy length='l' offset={1} pre='Tab 02: ' />
-				</Tabs.Panel>
-			</Tabs.Item>
-		</Tabs.Root>
-	</PreviewArea>
-	<PreviewCode slot='tab' label='Additional CSS'>
+  <PreviewTitle>`variant='line'`</PreviewTitle>
+  <PreviewArea p='20'>
+    <Tabs.Root variant="line" g="15">
+      <Tabs.Item>
+        <Tabs.Tab>Tab 1</Tabs.Tab>
+        <Tabs.Panel>
+          <Dummy pre="Tab 01: " />
+        </Tabs.Panel>
+      </Tabs.Item>
+      <Tabs.Item>
+        <Tabs.Tab>Tab 2</Tabs.Tab>
+        <Tabs.Panel>
+          <Dummy length="l" offset={1} pre="Tab 02: " />
+        </Tabs.Panel>
+      </Tabs.Item>
+    </Tabs.Root>
+  </PreviewArea>
+  <PreviewCode slot='tab' label='Additional CSS'>
 ```scss
 /* Memo: Use box-shadow instead of border to avoid margin issues with ov-x='auto'. */
 :where(.c--tabs--line) {
-	--sh-size: inset 0 -2px;
+  --sh-size: inset 0 -2px;
 
-	.c--tabs_list {
-		box-shadow: var(--sh-size) 0 var(--divider);
-	}
-	.c--tabs_tab {
-		font-size: var(--fz--s);
-		padding: 0.5em 0.875em;
-		box-shadow: var(--_isSelected, var(--sh-size) 0 0 currentColor);
-	}
+  .c--tabs_list {
+    box-shadow: var(--sh-size) 0 var(--divider);
+  }
+  .c--tabs_tab {
+    font-size: var(--fz--s);
+    padding: 0.5em 0.875em;
+    box-shadow: var(--_isSelected, var(--sh-size) 0 0 currentColor);
+  }
 }
 ```
-	</PreviewCode>
-	<PreviewCode slot='tab' label='JSX'>
-		```jsx "variant='line'"
-		<Tabs.Root variant='line' g='15'>
-			<Tabs.Item>
-				<Tabs.Tab>Tab 1</Tabs.Tab>
-				<Tabs.Panel>
-					<Dummy pre='Tab 01: '/>
-				</Tabs.Panel>
-			</Tabs.Item>
-			<Tabs.Item>
-				<Tabs.Tab>Tab 2</Tabs.Tab>
-				<Tabs.Panel>
-					<Dummy length='l' offset={1} pre='Tab 02: ' />
-				</Tabs.Panel>
-			</Tabs.Item>
-		</Tabs.Root>
-		```
-	</PreviewCode>
+  </PreviewCode>
+  <PreviewCode slot='tab' label='JSX'>
+    ```jsx "variant='line'"
+    <Tabs.Root variant="line" g="15">
+      <Tabs.Item>
+        <Tabs.Tab>Tab 1</Tabs.Tab>
+        <Tabs.Panel>
+          <Dummy pre="Tab 01: " />
+        </Tabs.Panel>
+      </Tabs.Item>
+      <Tabs.Item>
+        <Tabs.Tab>Tab 2</Tabs.Tab>
+        <Tabs.Panel>
+          <Dummy length="l" offset={1} pre="Tab 02: " />
+        </Tabs.Panel>
+      </Tabs.Item>
+    </Tabs.Root>;
+    ```
+  </PreviewCode>
 </Preview>
 
 
 <Preview>
-	<PreviewTitle>`variant='emboss'`</PreviewTitle>
-	<PreviewArea p='20'>
-		<Tabs.Root variant='emboss' g='15' ji='center'>
-			<Tabs.Item>
-				<Tabs.Tab>Tab 1</Tabs.Tab>
-				<Tabs.Panel>
-					<Dummy pre='Tab 01: '/>
-				</Tabs.Panel>
-			</Tabs.Item>
-			<Tabs.Item>
-				<Tabs.Tab>Tab 2</Tabs.Tab>
-				<Tabs.Panel>
-					<Dummy length='l' offset={1} pre='Tab 02: ' />
-				</Tabs.Panel>
-			</Tabs.Item>
-		</Tabs.Root>
-	</PreviewArea>
-	<PreviewCode slot='tab' label='Additional CSS'>
+  <PreviewTitle>`variant='emboss'`</PreviewTitle>
+  <PreviewArea p='20'>
+    <Tabs.Root variant="emboss" g="15" ji="center">
+      <Tabs.Item>
+        <Tabs.Tab>Tab 1</Tabs.Tab>
+        <Tabs.Panel>
+          <Dummy pre="Tab 01: " />
+        </Tabs.Panel>
+      </Tabs.Item>
+      <Tabs.Item>
+        <Tabs.Tab>Tab 2</Tabs.Tab>
+        <Tabs.Panel>
+          <Dummy length="l" offset={1} pre="Tab 02: " />
+        </Tabs.Panel>
+      </Tabs.Item>
+    </Tabs.Root>
+  </PreviewArea>
+  <PreviewCode slot='tab' label='Additional CSS'>
 ```scss
 :where(.c--tabs--emboss) {
-	.c--tabs_list {
-		padding: 4px;
-		font-size: var(--fz--s);
-		background-color: var(--base-2);
-		border-radius: var(--bdrs--20);
-	}
-	.c--tabs_tab {
-		padding: 0.25em 0.75em;
-		border-radius: calc(var(--bdrs--20) - 2px); /* parent bdrs - parent padding / 2 */
-		background-color: var(--_isSelected, var(--base));
-		box-shadow: var(--_isSelected, var(--bxsh--10));
-	}
+  .c--tabs_list {
+    padding: 4px;
+    font-size: var(--fz--s);
+    background-color: var(--base-2);
+    border-radius: var(--bdrs--20);
+  }
+  .c--tabs_tab {
+    padding: 0.25em 0.75em;
+    border-radius: calc(var(--bdrs--20) - 2px); /* parent bdrs - parent padding / 2 */
+    background-color: var(--_isSelected, var(--base));
+    box-shadow: var(--_isSelected, var(--bxsh--10));
+  }
 }
 ```
-	</PreviewCode>
-	<PreviewCode slot='tab' label='JSX'>
-		```jsx "variant='emboss'"
-		<Tabs.Root variant='emboss' g='15' ji='center'>
-			<Tabs.Item>
-				<Tabs.Tab>Tab 1</Tabs.Tab>
-				<Tabs.Panel>
-					<Dummy pre='Tab 01: '/>
-				</Tabs.Panel>
-			</Tabs.Item>
-			<Tabs.Item>
-				<Tabs.Tab>Tab 2</Tabs.Tab>
-				<Tabs.Panel>
-					<Dummy length='l' offset={1} pre='Tab 02: ' />
-				</Tabs.Panel>
-			</Tabs.Item>
-		</Tabs.Root>
-		```
-	</PreviewCode>
+  </PreviewCode>
+  <PreviewCode slot='tab' label='JSX'>
+    ```jsx "variant='emboss'"
+    <Tabs.Root variant="emboss" g="15" ji="center">
+      <Tabs.Item>
+        <Tabs.Tab>Tab 1</Tabs.Tab>
+        <Tabs.Panel>
+          <Dummy pre="Tab 01: " />
+        </Tabs.Panel>
+      </Tabs.Item>
+      <Tabs.Item>
+        <Tabs.Tab>Tab 2</Tabs.Tab>
+        <Tabs.Panel>
+          <Dummy length="l" offset={1} pre="Tab 02: " />
+        </Tabs.Panel>
+      </Tabs.Item>
+    </Tabs.Root>;
+    ```
+  </PreviewCode>
 </Preview>
 
 
@@ -373,46 +373,46 @@ An example of how to fix the overall tabs height to match the tallest content pa
 <PreviewTitle>Required additional CSS</PreviewTitle>
 ```scss
 [data-tabs-keep-height] > [aria-hidden='true'] {
-	display: block;
-	visibility: hidden;
-	opacity: 0;
+  display: block;
+  visibility: hidden;
+  opacity: 0;
 }
 ```
 
 <Preview>
-	<PreviewTitle>Example (height is fixed to Tab 2)</PreviewTitle>
-	<PreviewArea p='20'>
-		<Tabs.Root data-tabs-keep-height g='15'>
-			<Tabs.Item>
-				<Tabs.Tab px='10'>Tab 1</Tabs.Tab>
-				<Tabs.Panel>
-					<Dummy pre='Tab 01: '/>
-				</Tabs.Panel>
-			</Tabs.Item>
-			<Tabs.Item>
-				<Tabs.Tab px='10'>Tab 2</Tabs.Tab>
-				<Tabs.Panel>
-					<Dummy length='xl' offset={1} pre='Tab 02: ' />
-				</Tabs.Panel>
-			</Tabs.Item>
-		</Tabs.Root>
-	</PreviewArea>
-	<PreviewCode>
-		```jsx "data-tabs-keep-height"
-		<Tabs.Root data-tabs-keep-height g='15'>
-			<Tabs.Item>
-				<Tabs.Tab px='10'>Tab 1</Tabs.Tab>
-				<Tabs.Panel>
-					<Dummy pre='Tab 01: '/>
-				</Tabs.Panel>
-			</Tabs.Item>
-			<Tabs.Item>
-				<Tabs.Tab px='10'>Tab 2</Tabs.Tab>
-				<Tabs.Panel>
-					<Dummy length='xl' offset={1} pre='Tab 02: ' />
-				</Tabs.Panel>
-			</Tabs.Item>
-		</Tabs.Root>
-		```
-	</PreviewCode>
+  <PreviewTitle>Example (height is fixed to Tab 2)</PreviewTitle>
+  <PreviewArea p='20'>
+    <Tabs.Root data-tabs-keep-height g="15">
+      <Tabs.Item>
+        <Tabs.Tab px="10">Tab 1</Tabs.Tab>
+        <Tabs.Panel>
+          <Dummy pre="Tab 01: " />
+        </Tabs.Panel>
+      </Tabs.Item>
+      <Tabs.Item>
+        <Tabs.Tab px="10">Tab 2</Tabs.Tab>
+        <Tabs.Panel>
+          <Dummy length="xl" offset={1} pre="Tab 02: " />
+        </Tabs.Panel>
+      </Tabs.Item>
+    </Tabs.Root>
+  </PreviewArea>
+  <PreviewCode>
+    ```jsx "data-tabs-keep-height"
+    <Tabs.Root data-tabs-keep-height g="15">
+      <Tabs.Item>
+        <Tabs.Tab px="10">Tab 1</Tabs.Tab>
+        <Tabs.Panel>
+          <Dummy pre="Tab 01: " />
+        </Tabs.Panel>
+      </Tabs.Item>
+      <Tabs.Item>
+        <Tabs.Tab px="10">Tab 2</Tabs.Tab>
+        <Tabs.Panel>
+          <Dummy length="xl" offset={1} pre="Tab 02: " />
+        </Tabs.Panel>
+      </Tabs.Item>
+    </Tabs.Root>;
+    ```
+  </PreviewCode>
 </Preview>

@@ -16,10 +16,10 @@ import { getAllTemplatePaths, getTemplate } from '@/lib/templates';
 
 // 静的パス生成
 export function getStaticPaths() {
-	const paths = getAllTemplatePaths();
-	return paths.map(({ category, id }) => ({
-		params: { category, id },
-	}));
+  const paths = getAllTemplatePaths();
+  return paths.map(({ category, id }) => ({
+    params: { category, id },
+  }));
 }
 
 // Params取得
@@ -28,7 +28,7 @@ const template = getTemplate(category!, id!);
 
 // テンプレートが見つからない場合は404
 if (!template) {
-	return Astro.redirect('/404');
+  return Astro.redirect('/404');
 }
 
 // カテゴリ情報
@@ -40,46 +40,46 @@ const templatePath = `src/pages/preview/templates/${category}/${id}`;
 ---
 
 <BaseLayout title={`${template.title} - Templates`} description={template.description} excludeFromSearch>
-	<Flow g="30" class="templatePage">
-		<Stack as="header" g="10">
-			<HTML.p fz="xs" c="text-2" tt="uppercase" lts="l">
-				{categoryData.label}
-			</HTML.p>
-			<h1 class="-fz:3xl -fw:bold">{template.title}</h1>
-			<HTML.p c="text-2">{template.description}</HTML.p>
-		</Stack>
-		{
-			template.draft && (
-				<HTML.div class="draftBadge" fz="xs" w="fit" bgc="red" c="base" bdrs="10" px="10">
-					DRAFT
-				</HTML.div>
-			)
-		}
-		{/* プレビュー */}
-		<HTML.div layout="flow" my-s="50">
-			<!-- <PreviewTitle>プレビュー</PreviewTitle> -->
-			<PreviewFrame url={previewUrl} hasSizeSwitch />
-		</HTML.div>
+  <Flow g="30" class="templatePage">
+    <Stack as="header" g="10">
+      <HTML.p fz="xs" c="text-2" tt="uppercase" lts="l">
+        {categoryData.label}
+      </HTML.p>
+      <h1 class="-fz:3xl -fw:bold">{template.title}</h1>
+      <HTML.p c="text-2">{template.description}</HTML.p>
+    </Stack>
+    {
+      template.draft && (
+        <HTML.div class="draftBadge" fz="xs" w="fit" bgc="red" c="base" bdrs="10" px="10">
+          DRAFT
+        </HTML.div>
+      )
+    }
+    {/* プレビュー */}
+    <HTML.div layout="flow" my-s="50">
+      <!-- <PreviewTitle>プレビュー</PreviewTitle> -->
+      <PreviewFrame url={previewUrl} hasSizeSwitch />
+    </HTML.div>
 
-		{/* ソースコード */}
-		<Stack g="15">
-			<PreviewTitle>コード</PreviewTitle>
-			<SrcCode dir="docs" path={templatePath + '/index.astro'} title="index.astro" />
-			<SrcCode dir="docs" path={templatePath + '/_style.css'} title="style.css" />
-			<!-- <Frame ov-y="auto" max-h="25rem" class="code-embed">
+    {/* ソースコード */}
+    <Stack g="15">
+      <PreviewTitle>コード</PreviewTitle>
+      <SrcCode dir="docs" path={templatePath + '/index.astro'} title="index.astro" />
+      <SrcCode dir="docs" path={templatePath + '/_style.css'} title="style.css" />
+      <!-- <Frame ov-y="auto" max-h="25rem" class="code-embed">
 				<script src={`https://emgithub.com/embed-v2.js?target=${encodeURI(githubBasePath)}&${queryMeta}`} loading="lazy"></script>
 			</Frame> -->
-		</Stack>
-	</Flow>
+    </Stack>
+  </Flow>
 </BaseLayout>
 
 <style>
-	.templatePage {
-		/* 詳細ページ固有のスタイル */
-	}
+  .templatePage {
+    /* 詳細ページ固有のスタイル */
+  }
 
-	.code-embed {
-		border-radius: var(--bdrs--15);
-		overflow: hidden;
-	}
+  .code-embed {
+    border-radius: var(--bdrs--15);
+    overflow: hidden;
+  }
 </style>

@@ -7,7 +7,7 @@ import { Lism, Icon } from 'lism-css/astro';
 import { t, type LangCode } from '@/lib/i18n';
 
 interface Props {
-	lang: LangCode;
+  lang: LangCode;
 }
 
 const { lang } = Astro.props;
@@ -15,11 +15,11 @@ const message = t(lang, 'translationNotice');
 ---
 
 <Lism class="c--translationNotice u--cbox" keycolor="yellow" p="20" bdrs="10" bd>
-	<Lism layout="flex" ai="center" g="10" fw="bold">
-		<Icon icon="warning" fz="l" c="keycolor" />
-		{message.title}
-	</Lism>
-	<Lism fz="s" my-s="5">
-		{message.description}
-	</Lism>
+  <Lism layout="flex" ai="center" g="10" fw="bold">
+    <Icon icon="warning" fz="l" c="keycolor" />
+    {message.title}
+  </Lism>
+  <Lism fz="s" my-s="5">
+    {message.description}
+  </Lism>
 </Lism>

@@ -13,24 +13,24 @@
 
 // 画像のプリロードが自動挿入される時にflowのマージンがずれるので調整
 link:first-child + * {
-	--flow: 0px;
+  --flow: 0px;
 }
 
 // 追加ユーティリティ
 
 .u-onlyLightMode {
-	display: block;
+  display: block;
 }
 .u-onlyDarkMode {
-	display: none;
+  display: none;
 }
 [data-theme='dark'] {
-	.u-onlyLightMode {
-		display: none;
-	}
-	.u-onlyDarkMode {
-		display: block;
-	}
+  .u-onlyLightMode {
+    display: none;
+  }
+  .u-onlyDarkMode {
+    display: block;
+  }
 }
 
 /* -------------------------- */
@@ -44,23 +44,23 @@ link:first-child + * {
  ---------------------------------------- */
 
 .-bd\:guide {
-	border: 1px dashed rgba(160, 160, 160, 0.5);
+  border: 1px dashed rgba(160, 160, 160, 0.5);
 }
 
 :where(.has--itemGuide > *) {
-	padding: 0 4px;
-	border: 1px dashed hsla(0, 0%, 63%, 0.4);
+  padding: 0 4px;
+  border: 1px dashed hsla(0, 0%, 63%, 0.4);
 }
 .-hov\:itemGuide {
-	> * {
-		position: relative;
-	}
-	&:hover > *:before {
-		position: absolute;
-		display: block;
-		border: 1px dashed rgba(150, 150, 160, 0.4);
-		content: '';
-		inset: 0;
-		// box-sizing: border-box;
-	}
+  > * {
+    position: relative;
+  }
+  &:hover > *:before {
+    position: absolute;
+    display: block;
+    border: 1px dashed rgba(150, 150, 160, 0.4);
+    content: '';
+    inset: 0;
+    // box-sizing: border-box;
+  }
 }

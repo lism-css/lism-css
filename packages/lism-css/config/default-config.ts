@@ -3,7 +3,7 @@ import PROPS from './defaults/props';
 import STATES from './defaults/states';
 
 export default {
-	tokens: TOKENS,
-	props: PROPS,
-	states: STATES,
+  tokens: TOKENS,
+  props: PROPS,
+  states: STATES,
 } as const;
