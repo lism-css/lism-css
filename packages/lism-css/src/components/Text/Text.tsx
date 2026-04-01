@@ -1,5 +1,7 @@
 import { Lism, type LismComponentProps } from '../Lism';
 
-export default function Text(props: LismComponentProps<'p'>) {
-  return <Lism as="p" {...props} />;
+type TextAllowedTag = 'p' | 'div' | 'blockquote' | 'address';
+
+export default function Text({ as = 'p', ...props }: LismComponentProps<'p', TextAllowedTag>) {
+  return <Lism as={as} {...props} />;
 }
