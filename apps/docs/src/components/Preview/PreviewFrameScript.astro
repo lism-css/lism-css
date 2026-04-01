@@ -1,0 +1,45 @@
+---
+const { url } = Astro.props;
+---
+
+<script define:vars={{ url }}>
+	document.addEventListener('DOMContentLoaded', function () {
+		// 特定のdata-preview-urlを持つプレビューサイズスイッチャーを取得
+		const switcher = document.querySelector('.c--previewSizeSwitcher[data-preview-url="' + url + '"]');
+
+		if (!switcher) return;
+
+		const sizeButtons = switcher.querySelectorAll('.c--previewSizeSwitcher_btn');
+
+		// 同じdata-preview-urlを持つc--previewFrameを探す
+		const prevFrame = document.querySelector('.c--previewFrame[data-preview-url="' + url + '"]');
+
+		if (!prevFrame) return;
+
+		const prevDiv = prevFrame.querySelector('.u--scalePreview');
+
+		// ボタンクリック時の処理
+		sizeButtons.forEach((button) => {
+			button.addEventListener('click', function () {
+				const size = this.dataset.size;
+				const aspectRatio = this.dataset.ar;
+				const wPct = this.dataset.wPct;
+
+				// prevFrameのサイズとアスペクト比を更新
+				prevFrame.style.width = size;
+				prevFrame.style.setProperty('--ar', aspectRatio);
+				if (wPct) {
+					prevDiv.style.setProperty('--w-pct', wPct);
+				} else {
+					prevDiv.style.removeProperty('--w-pct');
+				}
+
+				// アクティブクラスの切り替え
+				sizeButtons.forEach((btn) => {
+					btn.classList.remove('_active');
+				});
+				this.classList.add('_active');
+			});
+		});
+	});
+</script>
