@@ -20,7 +20,7 @@
     "build": "pnpm build:js && pnpm build:css",
     "build:js": "vite build && pnpm exec tsc -p config/tsconfig.json",
     "build:css": "tsx bin/script-build-css.js",
-    "format": "prettier --write .",
+    "format": "prettier --write . --ignore-path ../../.prettierignore",
     "lint": "pnpm lint:eslint && pnpm lint:style",
     "lint:eslint": "eslint '**/*.{js,mjs,ts,tsx,astro}'",
     "lint:style": "stylelint '**/*.{css,scss}'",
