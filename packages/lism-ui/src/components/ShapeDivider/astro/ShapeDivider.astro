@@ -8,24 +8,24 @@ const { viewBox, isAnimation, isEmpty, ...lismProps } = componentProps || {};
 ---
 
 {
-	componentProps && (
-		<Lism {...lismProps}>
-			{isEmpty ? null : (
-				<div class='c--shapeDivider_inner'>
-					<svg
-						xmlns='http://www.w3.org/2000/svg'
-						class='c--shapeDivider_svg'
-						viewBox={viewBox}
-						width='100%'
-						height='100%'
-						fill='currentColor'
-						focusable='false'
-						preserveAspectRatio='none'
-					>
-						<slot />
-					</svg>
-				</div>
-			)}
-		</Lism>
-	)
+  componentProps && (
+    <Lism {...lismProps}>
+      {isEmpty ? null : (
+        <div class="c--shapeDivider_inner">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="c--shapeDivider_svg"
+            viewBox={viewBox}
+            width="100%"
+            height="100%"
+            fill="currentColor"
+            focusable="false"
+            preserveAspectRatio="none"
+          >
+            <slot />
+          </svg>
+        </div>
+      )}
+    </Lism>
+  )
 }

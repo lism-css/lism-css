@@ -10,14 +10,14 @@ const btnProps = { ...defaultProps.closeBtn, ...props };
 ---
 
 {
-	Astro.slots.has('default') ? (
-		<Lism data-modal-close={modalId} {...btnProps}>
-			<slot />
-		</Lism>
-	) : (
-		<Lism data-modal-close={modalId} {...btnProps}>
-			<Icon icon={icon || 'x'} />
-			<span class='u--srOnly'>{srText || 'Close'}</span>
-		</Lism>
-	)
+  Astro.slots.has('default') ? (
+    <Lism data-modal-close={modalId} {...btnProps}>
+      <slot />
+    </Lism>
+  ) : (
+    <Lism data-modal-close={modalId} {...btnProps}>
+      <Icon icon={icon || 'x'} />
+      <span class="u--srOnly">{srText || 'Close'}</span>
+    </Lism>
+  )
 }

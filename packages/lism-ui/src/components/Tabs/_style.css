@@ -1,32 +1,32 @@
 @layer lism.modules {
-	.c--tabs {
-		display: grid;
-		grid: 'list' 'panel' / 100%;
-	}
-	.c--tabs_list {
-		grid-area: list;
-		display: flex;
-		overflow-x: auto;
-	}
-	.c--tabs_tab {
-		&[aria-selected='true'] {
-			--_notSelected: ;
-		}
-		&[aria-selected='false'] {
-			--_isSelected: ;
-		}
-		/* 非アクティブの時、薄いカラーに */
-		:where(&) {
-			color: var(--_notSelected, var(--text-2));
-		}
-	}
+  .c--tabs {
+    display: grid;
+    grid: 'list' 'panel' / 100%;
+  }
+  .c--tabs_list {
+    grid-area: list;
+    display: flex;
+    overflow-x: auto;
+  }
+  .c--tabs_tab {
+    &[aria-selected='true'] {
+      --_notSelected: ;
+    }
+    &[aria-selected='false'] {
+      --_isSelected: ;
+    }
+    /* 非アクティブの時、薄いカラーに */
+    :where(&) {
+      color: var(--_notSelected, var(--text-2));
+    }
+  }
 
-	.c--tabs_panel {
-		grid-area: panel;
-		width: 100%;
+  .c--tabs_panel {
+    grid-area: panel;
+    width: 100%;
 
-		&:where([aria-hidden='true']) {
-			display: none;
-		}
-	}
+    &:where([aria-hidden='true']) {
+      display: none;
+    }
+  }
 }

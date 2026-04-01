@@ -21,11 +21,11 @@ const slotHtml = rendered.includes('__LISM_ACC_ID__') ? rendered.replaceAll('__L
 ---
 
 {
-	slotHtml !== null ? (
-		<div {...lismProps} set:html={slotHtml} />
-	) : (
-		<div {...lismProps}>
-			<slot />
-		</div>
-	)
+  slotHtml !== null ? (
+    <div {...lismProps} set:html={slotHtml} />
+  ) : (
+    <div {...lismProps}>
+      <slot />
+    </div>
+  )
 }

@@ -32,27 +32,27 @@ const hasItems = btns.length > 0;
 ---
 
 <Lism {...getTabsProps(props)}>
-	{
-		btns && (
-			<TabList {...listProps}>
-				{btns.map((btn, index) => {
-					return <Fragment key={index} set:html={btn} />;
-				})}
-			</TabList>
-		)
-	}
-	{
-		panels.map((panel, index) => {
-			return <Fragment key={index} set:html={panel} />;
-		})
-	}
-	{!hasItems && <slot />}
+  {
+    btns && (
+      <TabList {...listProps}>
+        {btns.map((btn, index) => {
+          return <Fragment key={index} set:html={btn} />;
+        })}
+      </TabList>
+    )
+  }
+  {
+    panels.map((panel, index) => {
+      return <Fragment key={index} set:html={panel} />;
+    })
+  }
+  {!hasItems && <slot />}
 </Lism>
 
 <script>
-	import setTabs from '../setTabs';
-	const tabsAll = document.querySelectorAll('.c--tabs');
-	tabsAll.forEach((tabs) => {
-		setTabs(tabs);
-	});
+  import setTabs from '../setTabs';
+  const tabsAll = document.querySelectorAll('.c--tabs');
+  tabsAll.forEach((tabs) => {
+    setTabs(tabs);
+  });
 </script>

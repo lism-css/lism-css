@@ -1,33 +1,33 @@
 type PresetData = {
-	icon: string;
-	color: string;
+  icon: string;
+  color: string;
 };
 
 const PRESETS: Record<string, PresetData> = {
-	alert: {
-		icon: 'alert',
-		color: 'red',
-	},
-	point: {
-		icon: 'lightbulb',
-		color: 'orange',
-	},
-	warning: {
-		icon: 'warning',
-		color: 'yellow',
-	},
-	check: {
-		icon: 'check-circle',
-		color: 'green',
-	},
-	help: {
-		icon: 'question',
-		color: 'purple',
-	},
-	note: {
-		icon: 'note',
-		color: 'blue',
-	},
+  alert: {
+    icon: 'alert',
+    color: 'red',
+  },
+  point: {
+    icon: 'lightbulb',
+    color: 'orange',
+  },
+  warning: {
+    icon: 'warning',
+    color: 'yellow',
+  },
+  check: {
+    icon: 'check-circle',
+    color: 'green',
+  },
+  help: {
+    icon: 'question',
+    color: 'purple',
+  },
+  note: {
+    icon: 'note',
+    color: 'blue',
+  },
 };
 
 export default PRESETS;

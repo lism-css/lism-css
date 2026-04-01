@@ -3,18 +3,18 @@ import { defaultProps } from '../getProps';
 
 // duration: [s]
 export default function CloseBtn({ children, modalId = '', icon, srText = 'Close', ...props }) {
-	// const lismProps = getLismProps(getAccProps(props));
+  // const lismProps = getLismProps(getAccProps(props));
 
-	return (
-		<Lism data-modal-close={modalId} {...defaultProps.closeBtn} {...props}>
-			{children ? (
-				children
-			) : (
-				<>
-					<Icon icon={icon || 'x'} />
-					<span className='u--srOnly'>{srText || 'Close'}</span>
-				</>
-			)}
-		</Lism>
-	);
+  return (
+    <Lism data-modal-close={modalId} {...defaultProps.closeBtn} {...props}>
+      {children ? (
+        children
+      ) : (
+        <>
+          <Icon icon={icon || 'x'} />
+          <span className="u--srOnly">{srText || 'Close'}</span>
+        </>
+      )}
+    </Lism>
+  );
 }

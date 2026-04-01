@@ -3,42 +3,42 @@
  *   Memo: ::backdrop のアニメーションはFirefoxで動かない
  */
 @layer lism.modules {
-	.c--modal {
-		--flow: 0; /* flow直下にきても影響しないように */
-		--duration: var(--modal-duration, 0.4s);
-		width: 100%;
-		height: 100%;
-		max-width: 100%;
-		max-height: 100%;
-		overflow: unset;
-		background: var(--backdrop-bg, rgb(0 0 0 / 0.6));
-		transition-duration: var(--duration);
-		transition-property: opacity;
-	}
-	.c--modal::backdrop {
-		background: none;
-	}
-	.c--modal[open] {
-		display: flex;
-		flex-direction: column;
-		justify-content: center;
-	}
+  .c--modal {
+    --flow: 0; /* flow直下にきても影響しないように */
+    --duration: var(--modal-duration, 0.4s);
+    width: 100%;
+    height: 100%;
+    max-width: 100%;
+    max-height: 100%;
+    overflow: unset;
+    background: var(--backdrop-bg, rgb(0 0 0 / 0.6));
+    transition-duration: var(--duration);
+    transition-property: opacity;
+  }
+  .c--modal::backdrop {
+    background: none;
+  }
+  .c--modal[open] {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
 
-	.c--modal_inner {
-		--offset: 0 0; /* アニメーション用 */
-		background-color: var(--base);
-		transition: translate var(--duration);
-		max-height: 100%;
-	}
+  .c--modal_inner {
+    --offset: 0 0; /* アニメーション用 */
+    background-color: var(--base);
+    transition: translate var(--duration);
+    max-height: 100%;
+  }
 
-	/* .c--modal_body {
+  /* .c--modal_body {
 	overscroll-behavior: contain;
 } */
 
-	.c--modal:not([data-is-open]) {
-		opacity: 0;
-	}
-	.c--modal:not([data-is-open]) > .c--modal_inner {
-		translate: var(--offset);
-	}
+  .c--modal:not([data-is-open]) {
+    opacity: 0;
+  }
+  .c--modal:not([data-is-open]) > .c--modal_inner {
+    translate: var(--offset);
+  }
 }

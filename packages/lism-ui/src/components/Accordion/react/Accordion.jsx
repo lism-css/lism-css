@@ -16,34 +16,34 @@ const AccordionContext = createContext(null);
  * 複数の AccordionItem をラップするルート要素
  */
 export function AccordionRoot({ children, ...props }) {
-	const rootProps = getRootProps(props);
-	return <Stack {...rootProps}>{children}</Stack>;
+  const rootProps = getRootProps(props);
+  return <Stack {...rootProps}>{children}</Stack>;
 }
 
 /**
  * 個別のアコーディオンアイテム（<div> ベース、setEvent で開閉イベントを登録）
  */
 export function AccordionItem({ children, ...props }) {
-	const ref = useRef(null);
+  const ref = useRef(null);
 
-	// コンポーネント単位でユニークIDを生成
-	const accID = useId();
+  // コンポーネント単位でユニークIDを生成
+  const accID = useId();
 
-	// マウント時に開閉イベントを登録（アンマウント時にクリーンアップ）
-	useEffect(() => {
-		if (!ref.current) return;
-		return setEvent(ref.current);
-	}, []);
+  // マウント時に開閉イベントを登録（アンマウント時にクリーンアップ）
+  useEffect(() => {
+    if (!ref.current) return;
+    return setEvent(ref.current);
+  }, []);
 
-	const lismProps = getLismProps(getItemProps(props));
+  const lismProps = getLismProps(getItemProps(props));
 
-	return (
-		<AccordionContext.Provider value={{ accID }}>
-			<div ref={ref} {...lismProps}>
-				{children}
-			</div>
-		</AccordionContext.Provider>
-	);
+  return (
+    <AccordionContext.Provider value={{ accID }}>
+      <div ref={ref} {...lismProps}>
+        {children}
+      </div>
+    </AccordionContext.Provider>
+  );
 }
 
 /**
@@ -51,7 +51,7 @@ export function AccordionItem({ children, ...props }) {
  * as に h2〜h6 を指定すると role は付与されない
  */
 export function Heading({ children, ...props }) {
-	return <Lism {...getHeadingProps(props)}>{children}</Lism>;
+  return <Lism {...getHeadingProps(props)}>{children}</Lism>;
 }
 
 /**
@@ -59,27 +59,27 @@ export function Heading({ children, ...props }) {
  * accID: Context から取得できればそれを優先、なければ props / プレースホルダー
  */
 export function Button({ children, accID: _accID = '__LISM_ACC_ID__', ...props }) {
-	const ctx = useContext(AccordionContext);
-	const accID = ctx?.accID || _accID;
+  const ctx = useContext(AccordionContext);
+  const accID = ctx?.accID || _accID;
 
-	return (
-		<Lism {...defaultProps.button} {...props} aria-controls={accID} aria-expanded='false'>
-			{children}
-			<AccIcon />
-		</Lism>
-	);
+  return (
+    <Lism {...defaultProps.button} {...props} aria-controls={accID} aria-expanded="false">
+      {children}
+      <AccIcon />
+    </Lism>
+  );
 }
 
 /**
  * パネル
  */
 export function Panel({ children, ...props }) {
-	const ctx = useContext(AccordionContext);
-	const { panelProps, contentProps } = getPanelProps({ _contextID: ctx?.accID, ...props });
+  const ctx = useContext(AccordionContext);
+  const { panelProps, contentProps } = getPanelProps({ _contextID: ctx?.accID, ...props });
 
-	return (
-		<Lism {...panelProps}>
-			<Lism {...contentProps}>{children}</Lism>
-		</Lism>
-	);
+  return (
+    <Lism {...panelProps}>
+      <Lism {...contentProps}>{children}</Lism>
+    </Lism>
+  );
 }
