@@ -1,25 +1,25 @@
 ---
 interface Props {
-	title?: string;
+  title?: string;
 }
 
 const { title = 'Demo' } = Astro.props;
 ---
 
 <div class="preview__title l--flex -ai:center -g:10">
-	<span class="l--center -fz:s -lh:1">↓</span>
-	<span class="-fz:xs -lh:xs">{title}</span>
+  <span class="l--center -fz:s -lh:1">↓</span>
+  <span class="-fz:xs -lh:xs">{title}</span>
 </div>
 
 <style>
-	.preview__title {
-		/* width: fit-content; */
-		margin-bottom: -2px;
-	}
-	.preview__title > .l--center {
-		width: 2em;
-		height: 2em;
-		background-color: var(--base-2);
-		border-radius: 2px 2px 0 0;
-	}
+  .preview__title {
+    /* width: fit-content; */
+    margin-bottom: -2px;
+  }
+  .preview__title > .l--center {
+    width: 2em;
+    height: 2em;
+    background-color: var(--base-2);
+    border-radius: 2px 2px 0 0;
+  }
 </style>

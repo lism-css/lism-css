@@ -12,122 +12,122 @@ import LismExDemo from '@/content/ja/_demo/LismExDemo.mdx';
 
 // 特徴ポイント
 const POINTS = [
-	{
-		title: 'reset.css レベルからの設計',
-		desc: 'Lism CSSは、reset.cssからユーティリティクラスまで、サイト全体のCSS設計理論を構築しています。',
-	},
-	{
-		title: 'デザイントークン',
-		desc: '事前にデザイントークンをCSS変数で定義します。それらを流用することでサイト全体の一貫性を保ちます。',
-	},
-	{
-		title: 'レイアウトファースト',
-		desc: 'WEBサイトでよく使われるレイアウト要素を細分化し、基礎となるモジュールを定義しています。',
-	},
-	{
-		title: 'モダン設計',
-		desc: '@layer, Containerクエリなど、モダンなCSSの機能を積極的に活用しています。',
-	},
-	{
-		title: 'レスポンシブ対応',
-		desc: 'ユーティリティ & CSS変数を組み合わせてレスポンシブ対応する独自アプローチを採用しています。',
-	},
-	{
-		title: 'どんなサイトにも使えます',
-		desc: 'Lismはあくまで設計理論。設定・ビルド不要で素のHTMLコーディングにも活用できます。',
-	},
+  {
+    title: 'reset.css レベルからの設計',
+    desc: 'Lism CSSは、reset.cssからユーティリティクラスまで、サイト全体のCSS設計理論を構築しています。',
+  },
+  {
+    title: 'デザイントークン',
+    desc: '事前にデザイントークンをCSS変数で定義します。それらを流用することでサイト全体の一貫性を保ちます。',
+  },
+  {
+    title: 'レイアウトファースト',
+    desc: 'WEBサイトでよく使われるレイアウト要素を細分化し、基礎となるモジュールを定義しています。',
+  },
+  {
+    title: 'モダン設計',
+    desc: '@layer, Containerクエリなど、モダンなCSSの機能を積極的に活用しています。',
+  },
+  {
+    title: 'レスポンシブ対応',
+    desc: 'ユーティリティ & CSS変数を組み合わせてレスポンシブ対応する独自アプローチを採用しています。',
+  },
+  {
+    title: 'どんなサイトにも使えます',
+    desc: 'Lismはあくまで設計理論。設定・ビルド不要で素のHTMLコーディングにも活用できます。',
+  },
 ];
 
 // 特徴カード
 const FEATURES = [
-	{ keycolor: 'pink', title: '軽量', desc: 'Start from just 30kb~, with responsive design.' },
-	{ keycolor: 'blue', title: 'ビルド不要', desc: 'No config, No build. Just load the CSS to start using.' },
-	{ keycolor: 'purple', title: 'モダンCSS', desc: '@layer, Container Query, Grid, CSS Variables' },
-	{ keycolor: 'green', title: '無料', desc: 'Lism CSS is available for free.' },
+  { keycolor: 'pink', title: '軽量', desc: 'Start from just 30kb~, with responsive design.' },
+  { keycolor: 'blue', title: 'ビルド不要', desc: 'No config, No build. Just load the CSS to start using.' },
+  { keycolor: 'purple', title: 'モダンCSS', desc: '@layer, Container Query, Grid, CSS Variables' },
+  { keycolor: 'green', title: '無料', desc: 'Lism CSS is available for free.' },
 ];
 ---
 
 <SimpleLayout title={siteConfig.name} description={siteConfig.description} excludeFromSearch>
-	<Grid class="hero" gt="repeat" cols="5" rows="1" min-h={['50svh', '75vh']} ai="center">
-		<Stack class="hero_content" g="40" gc="1 / 5" gr="1" z="1">
-			<Stack g="30">
-				<Lism class="hero_heading -w:fit">
-					<HTML.h lv="1" fz="4xl" fw="bold" ff="mono">Lism CSS</HTML.h>
-				</Lism>
-				<HTML.p class="hero_tagline" fz="m" c="text-2">
-					WEBサイト向けのレイアウトファーストなCSSフレームワーク。<br />
-					コーディングを軽やかに。デザインに調和とリズムを。
-				</HTML.p>
-			</Stack>
-			<Flex>
-				<HTML.a href="/docs/overview/" bgc="text" c="base" td="none" bdrs="99" py="10" px="20" hov="neutral">ドキュメント →</HTML.a>
-			</Flex>
-		</Stack>
-		<Lism class="hero_image" gc="3 / 6" gr="1" pb="10" z="0">
-			<Gradbox />
-		</Lism>
-	</Grid>
+  <Grid class="hero" gt="repeat" cols="5" rows="1" min-h={['50svh', '75vh']} ai="center">
+    <Stack class="hero_content" g="40" gc="1 / 5" gr="1" z="1">
+      <Stack g="30">
+        <Lism class="hero_heading -w:fit">
+          <HTML.h lv="1" fz="4xl" fw="bold" ff="mono">Lism CSS</HTML.h>
+        </Lism>
+        <HTML.p class="hero_tagline" fz="m" c="text-2">
+          WEBサイト向けのレイアウトファーストなCSSフレームワーク。<br />
+          コーディングを軽やかに。デザインに調和とリズムを。
+        </HTML.p>
+      </Stack>
+      <Flex>
+        <HTML.a href="/docs/overview/" bgc="text" c="base" td="none" bdrs="99" py="10" px="20" hov="neutral">ドキュメント →</HTML.a>
+      </Flex>
+    </Stack>
+    <Lism class="hero_image" gc="3 / 6" gr="1" pb="10" z="0">
+      <Gradbox />
+    </Lism>
+  </Grid>
 
-	<Lism layout="columns" cols={[2]} g={['30', null, '40']} my-s="50">
-		{
-			FEATURES.map((feature) => (
-				<Stack
-					class="u--cbox set--shadow"
-					keycolor={feature.keycolor}
-					g="5"
-					py={['20', null, '30']}
-					px={['20', null, '30']}
-					bdrs="20"
-					bgc="base"
-					bxsh="20"
-					bd
-				>
-					<HTML.h lv="2" fz={['m', 'l']} c="text">
-						{feature.title}
-					</HTML.h>
-					<HTML.p c="text-2" fz={['s', 'm']} lh="s">
-						{feature.desc}
-					</HTML.p>
-				</Stack>
-			))
-		}
-	</Lism>
-	<!-- <Spacer h="40" /> -->
+  <Lism layout="columns" cols={[2]} g={['30', null, '40']} my-s="50">
+    {
+      FEATURES.map((feature) => (
+        <Stack
+          class="u--cbox set--shadow"
+          keycolor={feature.keycolor}
+          g="5"
+          py={['20', null, '30']}
+          px={['20', null, '30']}
+          bdrs="20"
+          bgc="base"
+          bxsh="20"
+          bd
+        >
+          <HTML.h lv="2" fz={['m', 'l']} c="text">
+            {feature.title}
+          </HTML.h>
+          <HTML.p c="text-2" fz={['s', 'm']} lh="s">
+            {feature.desc}
+          </HTML.p>
+        </Stack>
+      ))
+    }
+  </Lism>
+  <!-- <Spacer h="40" /> -->
 
-	<Lism layout="flow" as="section" my-s="50">
-		<HTML.h lv="2" class="h2">独自のCSS設計</HTML.h>
+  <Lism layout="flow" as="section" my-s="50">
+    <HTML.h lv="2" class="h2">独自のCSS設計</HTML.h>
 
-		<Lism layout="fluidCols" cols="20rem" g="40">
-			{
-				POINTS.map((point) => (
-					<Stack g="20" p="30" bdrs="20" bgc="base" bxsh="30" lh="s">
-						<HTML.h lv="3" fz="m" fw="bold">
-							{point.title}
-						</HTML.h>
-						<HTML.p fz="s" c="text-2">
-							{point.desc}
-						</HTML.p>
-					</Stack>
-				))
-			}
-		</Lism>
-	</Lism>
+    <Lism layout="fluidCols" cols="20rem" g="40">
+      {
+        POINTS.map((point) => (
+          <Stack g="20" p="30" bdrs="20" bgc="base" bxsh="30" lh="s">
+            <HTML.h lv="3" fz="m" fw="bold">
+              {point.title}
+            </HTML.h>
+            <HTML.p fz="s" c="text-2">
+              {point.desc}
+            </HTML.p>
+          </Stack>
+        ))
+      }
+    </Lism>
+  </Lism>
 
-	{/* 専用コンポーネント */}
-	<Lism as="section" layout="flow" g="20" my-s="50">
-		<HTML.h lv="2" class="h2">Astro/React用のコンポーネント</HTML.h>
-		<HTML.p>Lism CSSを手軽に扱えるように、ReactやAstroで利用できるコンポーネントを無償で提供しています。</HTML.p>
+  {/* 専用コンポーネント */}
+  <Lism as="section" layout="flow" g="20" my-s="50">
+    <HTML.h lv="2" class="h2">Astro/React用のコンポーネント</HTML.h>
+    <HTML.p>Lism CSSを手軽に扱えるように、ReactやAstroで利用できるコンポーネントを無償で提供しています。</HTML.p>
 
-		<Lism max-w="m" mx="auto">
-			<LismExDemo />
-		</Lism>
-	</Lism>
+    <Lism max-w="m" mx="auto">
+      <LismExDemo />
+    </Lism>
+  </Lism>
 
-	{/* CTAボタン */}
-	<Flex jc="center" my-s="60">
-		<Button variant="fill" fz="l" href="/docs/overview/" bdrs="99" g="15" py="10" px="30">
-			<span>Getting Started</span>
-			<Icon lh="1" fz="l">🚀</Icon>
-		</Button>
-	</Flex>
+  {/* CTAボタン */}
+  <Flex jc="center" my-s="60">
+    <Button variant="fill" fz="l" href="/docs/overview/" bdrs="99" g="15" py="10" px="30">
+      <span>Getting Started</span>
+      <Icon lh="1" fz="l">🚀</Icon>
+    </Button>
+  </Flex>
 </SimpleLayout>

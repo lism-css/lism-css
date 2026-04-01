@@ -4,15 +4,15 @@
  	→ 下限・上限を超える値がセットされている時、その値を継承できない。
  */
 :root {
-	--lh-min: 1.3em;
-	--lh-max: 1.9em;
+  --lh-min: 1.3em;
+  --lh-max: 1.9em;
 }
 // ---------------------------------------------------------------------
 
 // 全要素で --fz, --lh を受け取れるように
 :where(body *) {
-	font-size: var(--fz, inherit);
-	line-height: var(--lh, inherit);
+  font-size: var(--fz, inherit);
+  line-height: var(--lh, inherit);
 }
 
 // [style*="--fz:"]{
@@ -23,15 +23,15 @@
 *:not([style*="font-size"]),
 [style*="--fz:"], // --fzでフォントサイズ指定されているもの
 [class*="-fz\:"], {
-	--slope: 0.35; // 自動計算用の傾き
-	--base: calc(var(--lh, var(--root--lh)) * 1em); // 計算ように単位をつけておく
+  --slope: 0.35; // 自動計算用の傾き
+  --base: calc(var(--lh, var(--root--lh)) * 1em); // 計算ように単位をつけておく
 
-	// 上限値を var(--base) にすることで、フォントサイズが大きい場合にのみ計算を適用することも可能
-	line-height: clamp(
-		min(var(--lh-min), var(--base)),
-		calc((var(--slope) * 1em) + var(--base) - (var(--slope) * var(--fz, 1em))),
-		max(var(--lh-max), var(--base))
-	);
+  // 上限値を var(--base) にすることで、フォントサイズが大きい場合にのみ計算を適用することも可能
+  line-height: clamp(
+    min(var(--lh-min), var(--base)),
+    calc((var(--slope) * 1em) + var(--base) - (var(--slope) * var(--fz, 1em))),
+    max(var(--lh-max), var(--base))
+  );
 }
 
 // .-fz:などに対して--lh指定されてあった場合に上書きできる位置で

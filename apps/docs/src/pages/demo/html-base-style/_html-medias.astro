@@ -6,13 +6,13 @@
 
 <h3>Figure</h3>
 <figure>
-	<img src="https://cdn.lism-css.com/img/a-3.jpg" alt="" width="900" height="600" loading="lazy" />
-	<figcaption>This is a figure caption.</figcaption>
+  <img src="https://cdn.lism-css.com/img/a-3.jpg" alt="" width="900" height="600" loading="lazy" />
+  <figcaption>This is a figure caption.</figcaption>
 </figure>
 
 <h3>Video</h3>
 <video controls width="1280" height="720" preload="lazy">
-	<source src="/video/video-1.mp4" type="video/mp4" />
+  <source src="/video/video-1.mp4" type="video/mp4" />
 </video>
 
 <h3>SVG</h3>
@@ -21,16 +21,16 @@
 <h3>Canvas</h3>
 <canvas id="demo-canvas" width="200" height="100">canvas</canvas>
 <script>
-	const canvas = document.getElementById('demo-canvas') as HTMLCanvasElement | null;
-	const ctx = canvas?.getContext('2d');
-	if (ctx) {
-		ctx.fillStyle = 'green';
-		ctx.fillRect(20, 20, 60, 60);
-		ctx.fillStyle = 'red';
-		ctx.beginPath();
-		ctx.arc(140, 50, 30, 0, Math.PI * 2);
-		ctx.fill();
-	}
+  const canvas = document.getElementById('demo-canvas') as HTMLCanvasElement | null;
+  const ctx = canvas?.getContext('2d');
+  if (ctx) {
+    ctx.fillStyle = 'green';
+    ctx.fillRect(20, 20, 60, 60);
+    ctx.fillStyle = 'red';
+    ctx.beginPath();
+    ctx.arc(140, 50, 30, 0, Math.PI * 2);
+    ctx.fill();
+  }
 </script>
 
 <h3>iframe</h3>
@@ -38,14 +38,14 @@
 
 <h3>YouTube</h3>
 <iframe
-	width="640"
-	height="360"
-	src="https://www.youtube.com/embed/fpwVavmNEbA?si=-Xs9DaZP9bSH6bUM"
-	title="YouTube video player"
-	style="border:0"
-	allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-	referrerpolicy="strict-origin-when-cross-origin"
-	allowfullscreen></iframe>
+  width="640"
+  height="360"
+  src="https://www.youtube.com/embed/fpwVavmNEbA?si=-Xs9DaZP9bSH6bUM"
+  title="YouTube video player"
+  style="border:0"
+  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+  referrerpolicy="strict-origin-when-cross-origin"
+  allowfullscreen></iframe>
 
 <!-- 
 			<blockquote class='twitter-tweet'>
@@ -59,5 +59,5 @@
 
 <h3>object</h3>
 <object data="/sample.pdf" type="application/pdf" width="800" height="800">
-	<p><b>表示されない時の表示</b>: <a href="pdf.pdf">PDF をダウンロード</a>.</p>
+  <p><b>表示されない時の表示</b>: <a href="pdf.pdf">PDF をダウンロード</a>.</p>
 </object>

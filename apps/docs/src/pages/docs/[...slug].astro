@@ -20,8 +20,8 @@ import * as mdxComponents from '@/components/mdx';
 export const getStaticPaths = getPostPathsForRoot;
 
 interface Props {
-	lang: LangCode;
-	entry: PostEntry;
+  lang: LangCode;
+  entry: PostEntry;
 }
 
 const { lang, entry } = Astro.props;
@@ -34,25 +34,25 @@ const ogImage = `/docs/og/${entry.id}.png`;
 ---
 
 <BaseLayout title={entry.data.title} description={entry.data.description} ogImage={ogImage} toc={toc} lang={lang}>
-	<Lism as="article" class="z--article set--cqUnit" data-pagefind-body>
-		{/* アイキャッチ画像 */}
-		{
-			// (
-			// 	<Frame ar="1200/630" bdrs="20" ov="hidden" bxsh="2">
-			// 		<img src={ogImage} alt={entry.data.title} />
-			// 	</Frame>
-			// )
-		}
+  <Lism as="article" class="z--article set--cqUnit" data-pagefind-body>
+    {/* アイキャッチ画像 */}
+    {
+      // (
+      // 	<Frame ar="1200/630" bdrs="20" ov="hidden" bxsh="2">
+      // 		<img src={ogImage} alt={entry.data.title} />
+      // 	</Frame>
+      // )
+    }
 
-		{/* 記事タイトル */}
-		<HTML.h lv="1" class="articleTitle">{entry.data.title}</HTML.h>
+    {/* 記事タイトル */}
+    <HTML.h lv="1" class="articleTitle">{entry.data.title}</HTML.h>
 
-		{/* 記事本文 */}
-		<Flow class="articleContent" my-s="40">
-			<Content components={mdxComponents} />
-		</Flow>
+    {/* 記事本文 */}
+    <Flow class="articleContent" my-s="40">
+      <Content components={mdxComponents} />
+    </Flow>
 
-		{/* 前後記事ナビゲーション */}
-		<PostNavigation currentSlug={entry.id} lang={lang} />
-	</Lism>
+    {/* 前後記事ナビゲーション */}
+    <PostNavigation currentSlug={entry.id} lang={lang} />
+  </Lism>
 </BaseLayout>

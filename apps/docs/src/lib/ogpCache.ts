@@ -17,48 +17,48 @@ const CACHE_TTL = 7 * 24 * 60 * 60 * 1000;
  * OGPデータの型定義
  */
 export interface OgpData {
-	title: string;
-	description: string;
-	image: string;
-	siteName: string;
-	favicon: string;
+  title: string;
+  description: string;
+  image: string;
+  siteName: string;
+  favicon: string;
 }
 
 /**
  * キャッシュデータの型定義（メタデータ含む）
  */
 interface CacheEntry {
-	data: OgpData;
-	fetchedAt: number; // キャッシュ作成時のタイムスタンプ
-	url: string;
+  data: OgpData;
+  fetchedAt: number; // キャッシュ作成時のタイムスタンプ
+  url: string;
 }
 
 /**
  * パースした値が CacheEntry かどうかを検証する型ガード
  */
 function isCacheEntry(value: unknown): value is CacheEntry {
-	return (
-		typeof value === 'object' &&
-		value !== null &&
-		'data' in value &&
-		'fetchedAt' in value &&
-		typeof (value as CacheEntry).fetchedAt === 'number' &&
-		'url' in value
-	);
+  return (
+    typeof value === 'object' &&
+    value !== null &&
+    'data' in value &&
+    'fetchedAt' in value &&
+    typeof (value as CacheEntry).fetchedAt === 'number' &&
+    'url' in value
+  );
 }
 
 /**
  * URLからキャッシュキー（ハッシュ）を生成
  */
 function generateCacheKey(url: string): string {
-	return createHash('md5').update(url).digest('hex');
+  return createHash('md5').update(url).digest('hex');
 }
 
 /**
  * キャッシュファイルのパスを取得
  */
 function getCachePath(cacheKey: string): string {
-	return join(CACHE_DIR, `${cacheKey}.json`);
+  return join(CACHE_DIR, `${cacheKey}.json`);
 }
 
 /**
@@ -66,62 +66,62 @@ function getCachePath(cacheKey: string): string {
  * @returns キャッシュが有効であればOGPデータ、なければnull
  */
 export function getOgpFromCache(url: string): OgpData | null {
-	const cacheKey = generateCacheKey(url);
-	const cachePath = getCachePath(cacheKey);
+  const cacheKey = generateCacheKey(url);
+  const cachePath = getCachePath(cacheKey);
 
-	if (!existsSync(cachePath)) {
-		return null;
-	}
+  if (!existsSync(cachePath)) {
+    return null;
+  }
 
-	try {
-		const cacheContent = readFileSync(cachePath, 'utf-8');
-		const parsed: unknown = JSON.parse(cacheContent);
+  try {
+    const cacheContent = readFileSync(cachePath, 'utf-8');
+    const parsed: unknown = JSON.parse(cacheContent);
 
-		if (!isCacheEntry(parsed)) {
-			console.warn(`[OGP] Invalid cache format for ${url}`);
-			return null;
-		}
+    if (!isCacheEntry(parsed)) {
+      console.warn(`[OGP] Invalid cache format for ${url}`);
+      return null;
+    }
 
-		const cacheEntry = parsed;
+    const cacheEntry = parsed;
 
-		// 有効期限をチェック
-		const now = Date.now();
-		if (now - cacheEntry.fetchedAt > CACHE_TTL) {
-			console.log(`[OGP] Cache expired: ${url}`);
-			return null;
-		}
+    // 有効期限をチェック
+    const now = Date.now();
+    if (now - cacheEntry.fetchedAt > CACHE_TTL) {
+      console.log(`[OGP] Cache expired: ${url}`);
+      return null;
+    }
 
-		console.log(`[OGP] Cache hit: ${url}`);
-		return cacheEntry.data;
-	} catch (error) {
-		console.warn(`[OGP] Failed to read cache for ${url}:`, error);
-		return null;
-	}
+    console.log(`[OGP] Cache hit: ${url}`);
+    return cacheEntry.data;
+  } catch (error) {
+    console.warn(`[OGP] Failed to read cache for ${url}:`, error);
+    return null;
+  }
 }
 
 /**
  * OGPデータをキャッシュに保存
  */
 export function saveOgpToCache(url: string, data: OgpData): void {
-	const cacheKey = generateCacheKey(url);
-	const cachePath = getCachePath(cacheKey);
+  const cacheKey = generateCacheKey(url);
+  const cachePath = getCachePath(cacheKey);
 
-	const cacheEntry: CacheEntry = {
-		data,
-		fetchedAt: Date.now(),
-		url,
-	};
+  const cacheEntry: CacheEntry = {
+    data,
+    fetchedAt: Date.now(),
+    url,
+  };
 
-	try {
-		// キャッシュディレクトリを作成
-		const cacheDir = dirname(cachePath);
-		if (!existsSync(cacheDir)) {
-			mkdirSync(cacheDir, { recursive: true });
-		}
+  try {
+    // キャッシュディレクトリを作成
+    const cacheDir = dirname(cachePath);
+    if (!existsSync(cacheDir)) {
+      mkdirSync(cacheDir, { recursive: true });
+    }
 
-		writeFileSync(cachePath, JSON.stringify(cacheEntry, null, 2));
-		console.log(`[OGP] Cached: ${url}`);
-	} catch (error) {
-		console.warn(`[OGP] Failed to save cache for ${url}:`, error);
-	}
+    writeFileSync(cachePath, JSON.stringify(cacheEntry, null, 2));
+    console.log(`[OGP] Cached: ${url}`);
+  } catch (error) {
+    console.warn(`[OGP] Failed to save cache for ${url}:`, error);
+  }
 }
