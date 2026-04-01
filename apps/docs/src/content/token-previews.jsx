@@ -1,13 +1,13 @@
-import { Box, HTML, Stack, Center, Dummy } from 'lism-css/react';
+import { Box, Inline, Stack, Center, Dummy } from 'lism-css/react';
 
 export const FzDemos = ({ lang = 'ja' }) => (
   <Stack g="20" ar="16/9" ov-y="auto" ov-x="clip" p="15">
     {['2xs', 'xs', 's', 'base', 'l', 'xl', '2xl', '3xl', '4xl', '5xl'].map((fz, _i) => {
       return (
         <Stack key={fz} g="5">
-          <HTML.span className="is--sizeTip u--trim" fz="12px" lh="s">
+          <Inline className="is--sizeTip u--trim" fz="12px" lh="s">
             <code>{fz}</code>
-          </HTML.span>
+          </Inline>
           <Dummy lang={lang} length="s" fz={fz} className="-whspace:nowrap -lh:1" />
         </Stack>
       );
