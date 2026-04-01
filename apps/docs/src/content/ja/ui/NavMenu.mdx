@@ -55,30 +55,42 @@ import { Accordion, NavMenu } from '@lism-css/ui/astro'
 	<PreviewTitle>例</PreviewTitle>
 	<PreviewArea p='20'>
 		<NavMenu.Root>
-			<NavMenu.Item>
-				<NavMenu.Link href='#menu' hov='bgc'>Menu item 1</NavMenu.Link>
-			</NavMenu.Item>
-			<NavMenu.Item>
-				<NavMenu.Link href='#menu' hov='bgc'>Menu item 2</NavMenu.Link>
-			</NavMenu.Item>
-			<NavMenu.Item>
-				<NavMenu.Link href='#menu' hov='bgc'>Menu item 3</NavMenu.Link>
-			</NavMenu.Item>
+		  <NavMenu.Item>
+		    <NavMenu.Link href="#menu" hov="bgc">
+		      Menu item 1
+		    </NavMenu.Link>
+		  </NavMenu.Item>
+		  <NavMenu.Item>
+		    <NavMenu.Link href="#menu" hov="bgc">
+		      Menu item 2
+		    </NavMenu.Link>
+		  </NavMenu.Item>
+		  <NavMenu.Item>
+		    <NavMenu.Link href="#menu" hov="bgc">
+		      Menu item 3
+		    </NavMenu.Link>
+		  </NavMenu.Item>
 		</NavMenu.Root>
 	</PreviewArea>
 	<PreviewCode>
 		```jsx
 		<NavMenu.Root>
-			<NavMenu.Item>
-				<NavMenu.Link href='#menu' hov='bgc'>Menu item 1</NavMenu.Link>
-			</NavMenu.Item>
-			<NavMenu.Item>
-				<NavMenu.Link href='#menu' hov='bgc'>Menu item 2</NavMenu.Link>
-			</NavMenu.Item>
-			<NavMenu.Item>
-				<NavMenu.Link href='#menu' hov='bgc'>Menu item 3</NavMenu.Link>
-			</NavMenu.Item>
-		</NavMenu.Root>
+		  <NavMenu.Item>
+		    <NavMenu.Link href="#menu" hov="bgc">
+		      Menu item 1
+		    </NavMenu.Link>
+		  </NavMenu.Item>
+		  <NavMenu.Item>
+		    <NavMenu.Link href="#menu" hov="bgc">
+		      Menu item 2
+		    </NavMenu.Link>
+		  </NavMenu.Item>
+		  <NavMenu.Item>
+		    <NavMenu.Link href="#menu" hov="bgc">
+		      Menu item 3
+		    </NavMenu.Link>
+		  </NavMenu.Item>
+		</NavMenu.Root>;
 		```
 	</PreviewCode>
 </Preview>
@@ -93,10 +105,10 @@ import { Accordion, NavMenu } from '@lism-css/ui/astro'
 	<PreviewCode>
 		```jsx
 		<NavMenu.Root>
-			<NavMenu.Item href='#menu'>Menu item 1</NavMenu.Item>
-			<NavMenu.Item href='#menu'>Menu item 2</NavMenu.Item>
-			...
-		</NavMenu.Root>
+		  <NavMenu.Item href="#menu">Menu item 1</NavMenu.Item>
+		  <NavMenu.Item href="#menu">Menu item 2</NavMenu.Item>
+		  ...
+		</NavMenu.Root>;
 		```
 	</PreviewCode>
 </Preview>
@@ -114,50 +126,54 @@ import { Accordion, NavMenu } from '@lism-css/ui/astro'
 	<PreviewTitle>例</PreviewTitle>
 	<PreviewArea p='30'>
 		<NavMenu.Root>
-			<NavMenu.Item>
-				<NavMenu.Link href='#menu1' g='15' ai='center' bgc="text" c="base" hov='neutral'>
-					<span>Menu item</span>
-					<Lism as='span' bd px='10' bdrs='10' fz='xs' fw='bold'>New</Lism>
-					<Icon icon='caret-right' mx-s='auto' />
-				</NavMenu.Link>
-			</NavMenu.Item>
-			<NavMenu.Item>
-				<NavMenu.Link href='#menu2' g='15' ai='center' bgc="text" c="base" hov='neutral'>
-					<span>Menu item</span>
-					<Icon icon='caret-right' mx-s='auto' />
-				</NavMenu.Link>
-			</NavMenu.Item>
-			<NavMenu.Item>
-				<NavMenu.Link href='#menu3' g='15' ai='center' bgc="text" c="base" hov='neutral'>
-					<span>Menu item</span>
-					<Icon icon='caret-right' mx-s='auto' />
-				</NavMenu.Link>
-			</NavMenu.Item>
+		  <NavMenu.Item>
+		    <NavMenu.Link href="#menu1" g="15" ai="center" bgc="text" c="base" hov="neutral">
+		      <span>Menu item</span>
+		      <Lism as="span" bd px="10" bdrs="10" fz="xs" fw="bold">
+		        New
+		      </Lism>
+		      <Icon icon="caret-right" mx-s="auto" />
+		    </NavMenu.Link>
+		  </NavMenu.Item>
+		  <NavMenu.Item>
+		    <NavMenu.Link href="#menu2" g="15" ai="center" bgc="text" c="base" hov="neutral">
+		      <span>Menu item</span>
+		      <Icon icon="caret-right" mx-s="auto" />
+		    </NavMenu.Link>
+		  </NavMenu.Item>
+		  <NavMenu.Item>
+		    <NavMenu.Link href="#menu3" g="15" ai="center" bgc="text" c="base" hov="neutral">
+		      <span>Menu item</span>
+		      <Icon icon="caret-right" mx-s="auto" />
+		    </NavMenu.Link>
+		  </NavMenu.Item>
 		</NavMenu.Root>
 	</PreviewArea>
 	<PreviewCode>
 		```jsx
 		<NavMenu.Root>
-			<NavMenu.Item>
-				<NavMenu.Link href='#menu1' g='15' ai='center' bgc="text" c="base" hov='neutral'>
-					<span>Menu item</span>
-					<Lism as='span' bd px='10' bdrs='10' fz='xs' fw='bold'>New</Lism>
-					<Icon icon='caret-right' mx-s='auto' />
-				</NavMenu.Link>
-			</NavMenu.Item>
-			<NavMenu.Item>
-				<NavMenu.Link href='#menu2' g='15' ai='center' bgc="text" c="base" hov='neutral'>
-					<span>Menu item</span>
-					<Icon icon='caret-right' mx-s='auto' />
-				</NavMenu.Link>
-			</NavMenu.Item>
-			<NavMenu.Item>
-				<NavMenu.Link href='#menu3' g='15' ai='center' bgc="text" c="base" hov='neutral'>
-					<span>Menu item</span>
-					<Icon icon='caret-right' mx-s='auto' />
-				</NavMenu.Link>
-			</NavMenu.Item>
-		</NavMenu.Root>
+		  <NavMenu.Item>
+		    <NavMenu.Link href="#menu1" g="15" ai="center" bgc="text" c="base" hov="neutral">
+		      <span>Menu item</span>
+		      <Lism as="span" bd px="10" bdrs="10" fz="xs" fw="bold">
+		        New
+		      </Lism>
+		      <Icon icon="caret-right" mx-s="auto" />
+		    </NavMenu.Link>
+		  </NavMenu.Item>
+		  <NavMenu.Item>
+		    <NavMenu.Link href="#menu2" g="15" ai="center" bgc="text" c="base" hov="neutral">
+		      <span>Menu item</span>
+		      <Icon icon="caret-right" mx-s="auto" />
+		    </NavMenu.Link>
+		  </NavMenu.Item>
+		  <NavMenu.Item>
+		    <NavMenu.Link href="#menu3" g="15" ai="center" bgc="text" c="base" hov="neutral">
+		      <span>Menu item</span>
+		      <Icon icon="caret-right" mx-s="auto" />
+		    </NavMenu.Link>
+		  </NavMenu.Item>
+		</NavMenu.Root>;
 		```
 	</PreviewCode>
 </Preview>
@@ -172,31 +188,31 @@ import { Accordion, NavMenu } from '@lism-css/ui/astro'
 <Preview>
 	<PreviewTitle>`itemP`を指定</PreviewTitle>
 	<PreviewArea p='30'>
-		<NavMenu.Root bd itemP='30'>
-			<NavMenu.Item hov='bgc'>
-				<NavMenu.Link href='#menu1'>Menu item</NavMenu.Link>
-			</NavMenu.Item>
-			<NavMenu.Item hov='bgc' bd-t>
-				<NavMenu.Link href='#menu2'>Menu item</NavMenu.Link>
-			</NavMenu.Item>
-			<NavMenu.Item hov='bgc' bd-t>
-				<NavMenu.Link href='#menu3'>Menu item</NavMenu.Link>
-			</NavMenu.Item>
+		<NavMenu.Root bd itemP="30">
+		  <NavMenu.Item hov="bgc">
+		    <NavMenu.Link href="#menu1">Menu item</NavMenu.Link>
+		  </NavMenu.Item>
+		  <NavMenu.Item hov="bgc" bd-t>
+		    <NavMenu.Link href="#menu2">Menu item</NavMenu.Link>
+		  </NavMenu.Item>
+		  <NavMenu.Item hov="bgc" bd-t>
+		    <NavMenu.Link href="#menu3">Menu item</NavMenu.Link>
+		  </NavMenu.Item>
 		</NavMenu.Root>
 	</PreviewArea>
 	<PreviewCode>
 		```jsx "bdc='border'" "itemP='30'"
-		<NavMenu.Root bd itemP='30'>
-			<NavMenu.Item hov='bgc'>
-				<NavMenu.Link href='#menu1'>Menu item</NavMenu.Link>
-			</NavMenu.Item>
-			<NavMenu.Item hov='bgc' bd-t>
-				<NavMenu.Link href='#menu2'>Menu item</NavMenu.Link>
-			</NavMenu.Item>
-			<NavMenu.Item hov='bgc' bd-t>
-				<NavMenu.Link href='#menu3'>Menu item</NavMenu.Link>
-			</NavMenu.Item>
-		</NavMenu.Root>
+		<NavMenu.Root bd itemP="30">
+		  <NavMenu.Item hov="bgc">
+		    <NavMenu.Link href="#menu1">Menu item</NavMenu.Link>
+		  </NavMenu.Item>
+		  <NavMenu.Item hov="bgc" bd-t>
+		    <NavMenu.Link href="#menu2">Menu item</NavMenu.Link>
+		  </NavMenu.Item>
+		  <NavMenu.Item hov="bgc" bd-t>
+		    <NavMenu.Link href="#menu3">Menu item</NavMenu.Link>
+		  </NavMenu.Item>
+		</NavMenu.Root>;
 		```
 	</PreviewCode>
 </Preview>
@@ -210,57 +226,81 @@ import { Accordion, NavMenu } from '@lism-css/ui/astro'
 <Preview>
 	<PreviewTitle>メニューのネスト</PreviewTitle>
 	<PreviewArea p='20'>
-		<NavMenu.Root bd-y hovBgc='base-2'>
-			<NavMenu.Item>
-				<NavMenu.Link hov='bgc' href='#menu1'>Menu item 1</NavMenu.Link>
-			</NavMenu.Item>
-			<NavMenu.Item bd-t>
-				<NavMenu.Link hov='bgc' href='#menu2'>Menu item 2</NavMenu.Link>
-				<NavMenu.Nest bd-t>
-					<NavMenu.Item>
-						<NavMenu.Link hov='bgc' href='#child-menu1'>Nested item</NavMenu.Link>
-					</NavMenu.Item>
-					<NavMenu.Item bd-t>
-						<NavMenu.Link hov='bgc' href='#child-menu3'>Nested item</NavMenu.Link>
-						<NavMenu.Nest bd-t>
-							<NavMenu.Item>
-								<NavMenu.Link hov='bgc' href='#child-menu4'>Nested level 2 item</NavMenu.Link>
-							</NavMenu.Item>
-							<NavMenu.Item bd-t>
-								<NavMenu.Link hov='bgc' href='#child-menu5'>Nested level 2 item</NavMenu.Link>
-							</NavMenu.Item>
-						</NavMenu.Nest>
-					</NavMenu.Item>
-				</NavMenu.Nest>
-			</NavMenu.Item>
+		<NavMenu.Root bd-y hovBgc="base-2">
+		  <NavMenu.Item>
+		    <NavMenu.Link hov="bgc" href="#menu1">
+		      Menu item 1
+		    </NavMenu.Link>
+		  </NavMenu.Item>
+		  <NavMenu.Item bd-t>
+		    <NavMenu.Link hov="bgc" href="#menu2">
+		      Menu item 2
+		    </NavMenu.Link>
+		    <NavMenu.Nest bd-t>
+		      <NavMenu.Item>
+		        <NavMenu.Link hov="bgc" href="#child-menu1">
+		          Nested item
+		        </NavMenu.Link>
+		      </NavMenu.Item>
+		      <NavMenu.Item bd-t>
+		        <NavMenu.Link hov="bgc" href="#child-menu3">
+		          Nested item
+		        </NavMenu.Link>
+		        <NavMenu.Nest bd-t>
+		          <NavMenu.Item>
+		            <NavMenu.Link hov="bgc" href="#child-menu4">
+		              Nested level 2 item
+		            </NavMenu.Link>
+		          </NavMenu.Item>
+		          <NavMenu.Item bd-t>
+		            <NavMenu.Link hov="bgc" href="#child-menu5">
+		              Nested level 2 item
+		            </NavMenu.Link>
+		          </NavMenu.Item>
+		        </NavMenu.Nest>
+		      </NavMenu.Item>
+		    </NavMenu.Nest>
+		  </NavMenu.Item>
 		</NavMenu.Root>
 	</PreviewArea>
 	<PreviewCode>
 		```jsx "NavMenu.Nest"
-		<NavMenu.Root bd-y hovBgc='base-2'>
-			<NavMenu.Item>
-				<NavMenu.Link hov='bgc' href='#menu1'>Menu item 1</NavMenu.Link>
-			</NavMenu.Item>
-			<NavMenu.Item bd-t>
-				<NavMenu.Link hov='bgc' href='#menu2'>Menu item 2</NavMenu.Link>
-				<NavMenu.Nest bd-t>
-					<NavMenu.Item>
-						<NavMenu.Link hov='bgc' href='#child-menu1'>Nested item</NavMenu.Link>
-					</NavMenu.Item>
-					<NavMenu.Item bd-t>
-						<NavMenu.Link hov='bgc' href='#child-menu3'>Nested item</NavMenu.Link>
-						<NavMenu.Nest bd-t>
-							<NavMenu.Item>
-								<NavMenu.Link hov='bgc' href='#child-menu4'>Nested level 2 item</NavMenu.Link>
-							</NavMenu.Item>
-							<NavMenu.Item bd-t>
-								<NavMenu.Link hov='bgc' href='#child-menu5'>Nested level 2 item</NavMenu.Link>
-							</NavMenu.Item>
-						</NavMenu.Nest>
-					</NavMenu.Item>
-				</NavMenu.Nest>
-			</NavMenu.Item>
-		</NavMenu.Root>
+		<NavMenu.Root bd-y hovBgc="base-2">
+		  <NavMenu.Item>
+		    <NavMenu.Link hov="bgc" href="#menu1">
+		      Menu item 1
+		    </NavMenu.Link>
+		  </NavMenu.Item>
+		  <NavMenu.Item bd-t>
+		    <NavMenu.Link hov="bgc" href="#menu2">
+		      Menu item 2
+		    </NavMenu.Link>
+		    <NavMenu.Nest bd-t>
+		      <NavMenu.Item>
+		        <NavMenu.Link hov="bgc" href="#child-menu1">
+		          Nested item
+		        </NavMenu.Link>
+		      </NavMenu.Item>
+		      <NavMenu.Item bd-t>
+		        <NavMenu.Link hov="bgc" href="#child-menu3">
+		          Nested item
+		        </NavMenu.Link>
+		        <NavMenu.Nest bd-t>
+		          <NavMenu.Item>
+		            <NavMenu.Link hov="bgc" href="#child-menu4">
+		              Nested level 2 item
+		            </NavMenu.Link>
+		          </NavMenu.Item>
+		          <NavMenu.Item bd-t>
+		            <NavMenu.Link hov="bgc" href="#child-menu5">
+		              Nested level 2 item
+		            </NavMenu.Link>
+		          </NavMenu.Item>
+		        </NavMenu.Nest>
+		      </NavMenu.Item>
+		    </NavMenu.Nest>
+		  </NavMenu.Item>
+		</NavMenu.Root>;
 		```
 	</PreviewCode>
 </Preview>
@@ -274,57 +314,73 @@ import { Accordion, NavMenu } from '@lism-css/ui/astro'
 <Preview>
 	<PreviewTitle>例</PreviewTitle>
 	<PreviewArea p='20'>
-		<NavMenu.Root bd-y hovBgc='base-2'>
-			<NavMenu.Item>
-				<NavMenu.Link hov='bgc' href='#menu1'>Menu item</NavMenu.Link>
-			</NavMenu.Item>
-			<NavMenu.Item>
-				<Accordion.Root>
-					<Accordion.Item>
-						<Accordion.Heading>
-							<Accordion.Button hov='bgc' p='var(--_item-p)'>Menu item (Accordion)</Accordion.Button>
-						</Accordion.Heading>
-						<Accordion.Panel>
-							<NavMenu.Nest>
-								<NavMenu.Item>
-									<NavMenu.Link hov='bgc' href='#child-menu1'>Nested item</NavMenu.Link>
-								</NavMenu.Item>
-								<NavMenu.Item>
-									<NavMenu.Link hov='bgc' href='#child-menu2'>Nested item</NavMenu.Link>
-								</NavMenu.Item>
-							</NavMenu.Nest>
-						</Accordion.Panel>
-					</Accordion.Item>
-				</Accordion.Root>
-			</NavMenu.Item>
+		<NavMenu.Root bd-y hovBgc="base-2">
+		  <NavMenu.Item>
+		    <NavMenu.Link hov="bgc" href="#menu1">
+		      Menu item
+		    </NavMenu.Link>
+		  </NavMenu.Item>
+		  <NavMenu.Item>
+		    <Accordion.Root>
+		      <Accordion.Item>
+		        <Accordion.Heading>
+		          <Accordion.Button hov="bgc" p="var(--_item-p)">
+		            Menu item (Accordion)
+		          </Accordion.Button>
+		        </Accordion.Heading>
+		        <Accordion.Panel>
+		          <NavMenu.Nest>
+		            <NavMenu.Item>
+		              <NavMenu.Link hov="bgc" href="#child-menu1">
+		                Nested item
+		              </NavMenu.Link>
+		            </NavMenu.Item>
+		            <NavMenu.Item>
+		              <NavMenu.Link hov="bgc" href="#child-menu2">
+		                Nested item
+		              </NavMenu.Link>
+		            </NavMenu.Item>
+		          </NavMenu.Nest>
+		        </Accordion.Panel>
+		      </Accordion.Item>
+		    </Accordion.Root>
+		  </NavMenu.Item>
 		</NavMenu.Root>
 	</PreviewArea>
 	<PreviewCode>
 		```jsx "Accordion.Root" "NavMenu.Nest"
-		<NavMenu.Root bd-y hovBgc='base-2'>
-			<NavMenu.Item>
-				<NavMenu.Link hov='bgc' href='#menu1'>Menu item</NavMenu.Link>
-			</NavMenu.Item>
-			<NavMenu.Item>
-				<Accordion.Root>
-					<Accordion.Item>
-						<Accordion.Heading>
-							<Accordion.Button hov='bgc' p='var(--_item-p)'>Menu item (Accordion)</Accordion.Button>
-						</Accordion.Heading>
-						<Accordion.Panel>
-							<NavMenu.Nest>
-								<NavMenu.Item>
-									<NavMenu.Link hov='bgc' href='#child-menu1'>Nested item</NavMenu.Link>
-								</NavMenu.Item>
-								<NavMenu.Item>
-									<NavMenu.Link hov='bgc' href='#child-menu2'>Nested item</NavMenu.Link>
-								</NavMenu.Item>
-							</NavMenu.Nest>
-						</Accordion.Panel>
-					</Accordion.Item>
-				</Accordion.Root>
-			</NavMenu.Item>
-		</NavMenu.Root>
+		<NavMenu.Root bd-y hovBgc="base-2">
+		  <NavMenu.Item>
+		    <NavMenu.Link hov="bgc" href="#menu1">
+		      Menu item
+		    </NavMenu.Link>
+		  </NavMenu.Item>
+		  <NavMenu.Item>
+		    <Accordion.Root>
+		      <Accordion.Item>
+		        <Accordion.Heading>
+		          <Accordion.Button hov="bgc" p="var(--_item-p)">
+		            Menu item (Accordion)
+		          </Accordion.Button>
+		        </Accordion.Heading>
+		        <Accordion.Panel>
+		          <NavMenu.Nest>
+		            <NavMenu.Item>
+		              <NavMenu.Link hov="bgc" href="#child-menu1">
+		                Nested item
+		              </NavMenu.Link>
+		            </NavMenu.Item>
+		            <NavMenu.Item>
+		              <NavMenu.Link hov="bgc" href="#child-menu2">
+		                Nested item
+		              </NavMenu.Link>
+		            </NavMenu.Item>
+		          </NavMenu.Nest>
+		        </Accordion.Panel>
+		      </Accordion.Item>
+		    </Accordion.Root>
+		  </NavMenu.Item>
+		</NavMenu.Root>;
 		```
 	</PreviewCode>
 </Preview>
@@ -339,54 +395,58 @@ import { Accordion, NavMenu } from '@lism-css/ui/astro'
 	<PreviewTitle>hoverでネストメニューを表示</PreviewTitle>
 	<PreviewArea p='20'>
 		<Box min-h="15rem">
-			<NavMenu.Root fxd='row' lh='s' itemP='10'>
-				<NavMenu.Item hov='o'>
-					<NavMenu.Link href='#menu1'>Menu item</NavMenu.Link>
-				</NavMenu.Item>
-				<NavMenu.Item setHov pos='rel'>
-					<NavMenu.Link href='#menu3' ai='center' g='5'>
-						<Fragment>Hover Menu Item <Icon icon='caret-down' style={{translate: '10%'}} /></Fragment>
-					</NavMenu.Link>
-					<NavMenu.Nest fz='s' hov='to:show' pos='abs' t='100%' px-s='0' lh='s' bgc='base' bxsh='20' bdrs='5'>
-						<NavMenu.Item hov='bgc'>
-							<NavMenu.Link href='#child-menu1'>Nested item</NavMenu.Link>
-						</NavMenu.Item>
-						<NavMenu.Item hov='bgc'>
-							<NavMenu.Link href='#child-menu2'>Nested Menu item</NavMenu.Link>
-						</NavMenu.Item>
-					</NavMenu.Nest>
-				</NavMenu.Item>
-				<NavMenu.Item hov='o'>
-					<NavMenu.Link href='#menu1'>Menu item</NavMenu.Link>
-				</NavMenu.Item>
-			</NavMenu.Root>
+		  <NavMenu.Root fxd="row" lh="s" itemP="10">
+		    <NavMenu.Item hov="o">
+		      <NavMenu.Link href="#menu1">Menu item</NavMenu.Link>
+		    </NavMenu.Item>
+		    <NavMenu.Item setHov pos="rel">
+		      <NavMenu.Link href="#menu3" ai="center" g="5">
+		        <Fragment>
+		          Hover Menu Item <Icon icon="caret-down" style={{ translate: '10%' }} />
+		        </Fragment>
+		      </NavMenu.Link>
+		      <NavMenu.Nest fz="s" hov="to:show" pos="abs" t="100%" px-s="0" lh="s" bgc="base" bxsh="20" bdrs="5">
+		        <NavMenu.Item hov="bgc">
+		          <NavMenu.Link href="#child-menu1">Nested item</NavMenu.Link>
+		        </NavMenu.Item>
+		        <NavMenu.Item hov="bgc">
+		          <NavMenu.Link href="#child-menu2">Nested Menu item</NavMenu.Link>
+		        </NavMenu.Item>
+		      </NavMenu.Nest>
+		    </NavMenu.Item>
+		    <NavMenu.Item hov="o">
+		      <NavMenu.Link href="#menu1">Menu item</NavMenu.Link>
+		    </NavMenu.Item>
+		  </NavMenu.Root>
 		</Box>
 	</PreviewArea>
 	<PreviewCode>
 		```jsx "fxd='row'"
 		<Box min-h="15rem">
-			<NavMenu.Root fxd='row' lh='s' itemP='10'>
-				<NavMenu.Item hov='o'>
-					<NavMenu.Link href='#menu1'>Menu item</NavMenu.Link>
-				</NavMenu.Item>
-				<NavMenu.Item setHov pos='rel'>
-					<NavMenu.Link href='#menu3' ai='center' g='5'>
-						<Fragment>Hover Menu Item <Icon icon='caret-down' style={{translate: '10%'}} /></Fragment>
-					</NavMenu.Link>
-					<NavMenu.Nest fz='s' hov='to:show' pos='abs' t='100%' px-s='0' lh='s' bgc='base' bxsh='20' bdrs='5'>
-						<NavMenu.Item hov='bgc'>
-							<NavMenu.Link href='#child-menu1'>Nested item</NavMenu.Link>
-						</NavMenu.Item>
-						<NavMenu.Item hov='bgc'>
-							<NavMenu.Link href='#child-menu2'>Nested Menu item</NavMenu.Link>
-						</NavMenu.Item>
-					</NavMenu.Nest>
-				</NavMenu.Item>
-				<NavMenu.Item hov='o'>
-					<NavMenu.Link href='#menu1'>Menu item</NavMenu.Link>
-				</NavMenu.Item>
-			</NavMenu.Root>
-		</Box>
+		  <NavMenu.Root fxd="row" lh="s" itemP="10">
+		    <NavMenu.Item hov="o">
+		      <NavMenu.Link href="#menu1">Menu item</NavMenu.Link>
+		    </NavMenu.Item>
+		    <NavMenu.Item setHov pos="rel">
+		      <NavMenu.Link href="#menu3" ai="center" g="5">
+		        <Fragment>
+		          Hover Menu Item <Icon icon="caret-down" style={{ translate: '10%' }} />
+		        </Fragment>
+		      </NavMenu.Link>
+		      <NavMenu.Nest fz="s" hov="to:show" pos="abs" t="100%" px-s="0" lh="s" bgc="base" bxsh="20" bdrs="5">
+		        <NavMenu.Item hov="bgc">
+		          <NavMenu.Link href="#child-menu1">Nested item</NavMenu.Link>
+		        </NavMenu.Item>
+		        <NavMenu.Item hov="bgc">
+		          <NavMenu.Link href="#child-menu2">Nested Menu item</NavMenu.Link>
+		        </NavMenu.Item>
+		      </NavMenu.Nest>
+		    </NavMenu.Item>
+		    <NavMenu.Item hov="o">
+		      <NavMenu.Link href="#menu1">Menu item</NavMenu.Link>
+		    </NavMenu.Item>
+		  </NavMenu.Root>
+		</Box>;
 		```
 	</PreviewCode>
 </Preview>

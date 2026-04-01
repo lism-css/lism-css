@@ -13,147 +13,151 @@ Examples of building step-by-step procedural layouts.
 <Preview>
 	<PreviewTitle>Example</PreviewTitle>
 	<PreviewArea resize p='30'>
-		<Stack g='40'>
-			<Stack g='20'>
-				<Stack g='15' ai='center' fxd={[null, 'row']}>
-					<Lism d='in-flex' lh='1' g='5' px='15' py='10' ai='center' c='base' bgc='text' fs='italic' bdrs='99'>
-						<span className='-fz:xs'>Step.</span>
-						<span className='-fz:l'>1</span>
-					</Lism>
-					<Lism as='h3' fz='l'>
-						<Fragment>Step 1 Title</Fragment>
-					</Lism>
-				</Stack>
-				<Flow flow='s' px='15'>
-					<Dummy lang='ja' length='s' />
-				</Flow>
-			</Stack>
+		<Stack g="40">
+		  <Stack g="20">
+		    <Stack g="15" ai="center" fxd={[null, 'row']}>
+		      <Lism d="in-flex" lh="1" g="5" px="15" py="10" ai="center" c="base" bgc="text" fs="italic" bdrs="99">
+		        <span className="-fz:xs">Step.</span>
+		        <span className="-fz:l">1</span>
+		      </Lism>
+		      <Lism as="h3" fz="l">
+		        <Fragment>Step 1 Title</Fragment>
+		      </Lism>
+		    </Stack>
+		    <Flow flow="s" px="15">
+		      <Dummy lang="ja" length="s" />
+		    </Flow>
+		  </Stack>
 
-			<Stack g='20'>
-				<Stack g='15' ai='center' fxd={[null, 'row']}>
-					<Lism d='in-flex' lh='1' g='5' px='15' py='10' ai='center' c='base' bgc='text' fs='italic' bdrs='99'>
-						<span className='-fz:xs'>Step.</span>
-						<span className='-fz:l'>2</span>
-					</Lism>
-					<Lism as='h3' fz='l'>
-						<Fragment>Step 2 Title</Fragment>
-					</Lism>
-				</Stack>
-				<Flow flow='s' px='15'>
-					<Dummy lang='ja' length='s' />
-					<Dummy lang='ja' length='codes' />
-				</Flow>
-			</Stack>
+		  <Stack g="20">
+		    <Stack g="15" ai="center" fxd={[null, 'row']}>
+		      <Lism d="in-flex" lh="1" g="5" px="15" py="10" ai="center" c="base" bgc="text" fs="italic" bdrs="99">
+		        <span className="-fz:xs">Step.</span>
+		        <span className="-fz:l">2</span>
+		      </Lism>
+		      <Lism as="h3" fz="l">
+		        <Fragment>Step 2 Title</Fragment>
+		      </Lism>
+		    </Stack>
+		    <Flow flow="s" px="15">
+		      <Dummy lang="ja" length="s" />
+		      <Dummy lang="ja" length="codes" />
+		    </Flow>
+		  </Stack>
 
-			<Stack g='20'>
-				<Stack g='15' ai='center' fxd={[null, 'row']}>
-					<Lism d='in-flex' lh='1' g='5' px='15' py='10' ai='center' c='base' bgc='text' fs='italic' bdrs='99'>
-						<span className='-fz:xs'>Step.</span>
-						<span className='-fz:l'>3</span>
-					</Lism>
-					<Lism as='h3' fz='l'>
-						<Fragment>Step 3 Title</Fragment>
-					</Lism>
-				</Stack>
-				<Flow flow='s' px='15'>
-					<Dummy lang='ja' length='l' />
-				</Flow>
-			</Stack>
+		  <Stack g="20">
+		    <Stack g="15" ai="center" fxd={[null, 'row']}>
+		      <Lism d="in-flex" lh="1" g="5" px="15" py="10" ai="center" c="base" bgc="text" fs="italic" bdrs="99">
+		        <span className="-fz:xs">Step.</span>
+		        <span className="-fz:l">3</span>
+		      </Lism>
+		      <Lism as="h3" fz="l">
+		        <Fragment>Step 3 Title</Fragment>
+		      </Lism>
+		    </Stack>
+		    <Flow flow="s" px="15">
+		      <Dummy lang="ja" length="l" />
+		    </Flow>
+		  </Stack>
 		</Stack>
 	</PreviewArea>
 	<PreviewCode slot='tab' label='JSX'>
 		```jsx
-		<Stack g='40'>
-			<Stack g='20'>
-				<Stack g='15' ai='center' fxd={[null, 'row']}>
-					<Lism d='in-flex' lh='1' g='5' px='15' py='10' ai='center' c='base' bgc='text' fs='italic' bdrs='99'>
-						<span className='-fz:xs'>Step.</span>
-						<span className='-fz:l'>1</span>
-					</Lism>
-					<Lism as='h3' fz='l'>
-						<Fragment>Step 1 Title</Fragment>
-					</Lism>
-				</Stack>
-				<Flow flow='s' px='15'>
-					<Dummy lang='ja' length='s' />
-				</Flow>
-			</Stack>
+		<Stack g="40">
+		  <Stack g="20">
+		    <Stack g="15" ai="center" fxd={[null, 'row']}>
+		      <Lism d="in-flex" lh="1" g="5" px="15" py="10" ai="center" c="base" bgc="text" fs="italic" bdrs="99">
+		        <span className="-fz:xs">Step.</span>
+		        <span className="-fz:l">1</span>
+		      </Lism>
+		      <Lism as="h3" fz="l">
+		        <Fragment>Step 1 Title</Fragment>
+		      </Lism>
+		    </Stack>
+		    <Flow flow="s" px="15">
+		      <Dummy lang="ja" length="s" />
+		    </Flow>
+		  </Stack>
 
-			<Stack g='20'>
-				<Stack g='15' ai='center' fxd={[null, 'row']}>
-					<Lism d='in-flex' lh='1' g='5' px='15' py='10' ai='center' c='base' bgc='text' fs='italic' bdrs='99'>
-						<span className='-fz:xs'>Step.</span>
-						<span className='-fz:l'>2</span>
-					</Lism>
-					<Lism as='h3' fz='l'>
-						<Fragment>Step 2 Title</Fragment>
-					</Lism>
-				</Stack>
-				<Flow flow='s' px='15'>
-					<Dummy lang='ja' length='s' />
-					<Dummy lang='ja' length='codes' />
-				</Flow>
-			</Stack>
+		  <Stack g="20">
+		    <Stack g="15" ai="center" fxd={[null, 'row']}>
+		      <Lism d="in-flex" lh="1" g="5" px="15" py="10" ai="center" c="base" bgc="text" fs="italic" bdrs="99">
+		        <span className="-fz:xs">Step.</span>
+		        <span className="-fz:l">2</span>
+		      </Lism>
+		      <Lism as="h3" fz="l">
+		        <Fragment>Step 2 Title</Fragment>
+		      </Lism>
+		    </Stack>
+		    <Flow flow="s" px="15">
+		      <Dummy lang="ja" length="s" />
+		      <Dummy lang="ja" length="codes" />
+		    </Flow>
+		  </Stack>
 
-			<Stack g='20'>
-				<Stack g='15' ai='center' fxd={[null, 'row']}>
-					<Lism d='in-flex' lh='1' g='5' px='15' py='10' ai='center' c='base' bgc='text' fs='italic' bdrs='99'>
-						<span className='-fz:xs'>Step.</span>
-						<span className='-fz:l'>3</span>
-					</Lism>
-					<Lism as='h3' fz='l'>
-						<Fragment>Step 3 Title</Fragment>
-					</Lism>
-				</Stack>
-				<Flow flow='s' px='15'>
-					<Dummy lang='ja' length='l' />
-				</Flow>
-			</Stack>
-		</Stack>
+		  <Stack g="20">
+		    <Stack g="15" ai="center" fxd={[null, 'row']}>
+		      <Lism d="in-flex" lh="1" g="5" px="15" py="10" ai="center" c="base" bgc="text" fs="italic" bdrs="99">
+		        <span className="-fz:xs">Step.</span>
+		        <span className="-fz:l">3</span>
+		      </Lism>
+		      <Lism as="h3" fz="l">
+		        <Fragment>Step 3 Title</Fragment>
+		      </Lism>
+		    </Stack>
+		    <Flow flow="s" px="15">
+		      <Dummy lang="ja" length="l" />
+		    </Flow>
+		  </Stack>
+		</Stack>;
 		```
 	</PreviewCode>
 	<PreviewCode slot='tab' label='HTML'>
 		```html
-		<div class='l--stack -g:40'>
-			<div class='l--stack -g:20'>
-				<div class='l--stack -g:15 -ai:center -fxd_sm' style='--fxd_sm:row'>
-					<div class='-d:in-flex -lh:1 -g:5 -px:15 -py:10 -ai:center -c:base -bgc:text -fs:italic -bdrs:99'>
-						<span class='-fz:xs'>Step.</span>
-						<span class='-fz:l'>1</span>
-					</div>
-					<h3 class='-fz:l'>Step 1 Title</h3>
-				</div>
-				<div class='l--flow -flow:s -px:15'>
-					<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-				</div>
-			</div>
-			<div class='l--stack -g:20'>
-				<div class='l--stack -g:15 -ai:center -fxd_sm' style='--fxd_sm:row'>
-					<div class='-d:in-flex -lh:1 -g:5 -px:15 -py:10 -ai:center -c:base -bgc:text -fs:italic -bdrs:99'>
-						<span class='-fz:xs'>Step.</span>
-						<span class='-fz:l'>2</span>
-					</div>
-					<h3 class='-fz:l'>Step 2 Title</h3>
-				</div>
-				<div class='l--flow -flow:s -px:15'>
-					<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p><p>
-						<b>Lorem ipsum</b> dolor sit amet, <a href='###'>consectetur adipiscing elit</a>, sed do <i>eiusmod tempor</i
-						> incididunt ut labore et dolore magna aliqua. For years, I have been working on <code>Liberroy</code>.
-					</p>
-				</div>
-			</div>
-			<div class='l--stack -g:20'>
-				<div class='l--stack -g:15 -ai:center -fxd_sm' style='--fxd_sm:row'>
-					<div class='-d:in-flex -lh:1 -g:5 -px:15 -py:10 -ai:center -c:base -bgc:text -fs:italic -bdrs:99'>
-						<span class='-fz:xs'>Step.</span>
-						<span class='-fz:l'>3</span>
-					</div>
-					<h3 class='-fz:l'>Step 3 Title</h3>
-				</div>
-				<div class='l--flow -flow:s -px:15'>
-					<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Several important matters flow through this. For years, if I were to propose the advantages of our Liberroy, Foo, and Mulla Sunt initiatives.</p>
-				</div>
-			</div>
+		<div class="l--stack -g:40">
+		  <div class="l--stack -g:20">
+		    <div class="l--stack -g:15 -ai:center -fxd_sm" style="--fxd_sm: row">
+		      <div class="-d:in-flex -lh:1 -g:5 -px:15 -py:10 -ai:center -c:base -bgc:text -fs:italic -bdrs:99">
+		        <span class="-fz:xs">Step.</span>
+		        <span class="-fz:l">1</span>
+		      </div>
+		      <h3 class="-fz:l">Step 1 Title</h3>
+		    </div>
+		    <div class="l--flow -flow:s -px:15">
+		      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+		    </div>
+		  </div>
+		  <div class="l--stack -g:20">
+		    <div class="l--stack -g:15 -ai:center -fxd_sm" style="--fxd_sm: row">
+		      <div class="-d:in-flex -lh:1 -g:5 -px:15 -py:10 -ai:center -c:base -bgc:text -fs:italic -bdrs:99">
+		        <span class="-fz:xs">Step.</span>
+		        <span class="-fz:l">2</span>
+		      </div>
+		      <h3 class="-fz:l">Step 2 Title</h3>
+		    </div>
+		    <div class="l--flow -flow:s -px:15">
+		      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+		      <p>
+		        <b>Lorem ipsum</b> dolor sit amet, <a href="###">consectetur adipiscing elit</a>, sed do <i>eiusmod tempor</i> incididunt ut labore et dolore
+		        magna aliqua. For years, I have been working on <code>Liberroy</code>.
+		      </p>
+		    </div>
+		  </div>
+		  <div class="l--stack -g:20">
+		    <div class="l--stack -g:15 -ai:center -fxd_sm" style="--fxd_sm: row">
+		      <div class="-d:in-flex -lh:1 -g:5 -px:15 -py:10 -ai:center -c:base -bgc:text -fs:italic -bdrs:99">
+		        <span class="-fz:xs">Step.</span>
+		        <span class="-fz:l">3</span>
+		      </div>
+		      <h3 class="-fz:l">Step 3 Title</h3>
+		    </div>
+		    <div class="l--flow -flow:s -px:15">
+		      <p>
+		        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Several important
+		        matters flow through this. For years, if I were to propose the advantages of our Liberroy, Foo, and Mulla Sunt initiatives.
+		      </p>
+		    </div>
+		  </div>
 		</div>
 		```
 	</PreviewCode>

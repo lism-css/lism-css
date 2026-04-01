@@ -28,16 +28,16 @@ import { Lism, HTML, Dummy, Media, Frame } from "lism-css/astro";
 		例
 	</PreviewTitle>
 	<PreviewArea>
-		<Media src='https://cdn.lism-css.com/img/a-1.jpg' width='960' height='640' alt='Dummy Image' />
+		<Media src="https://cdn.lism-css.com/img/a-1.jpg" width="960" height="640" alt="Dummy Image" />
 	</PreviewArea>
 	<PreviewCode slot='tab' label='JSX'>
 		```jsx
-		<Media src='https://cdn.lism-css.com/img/a-1.jpg' width='960' height='640' alt='Dummy Image' />
+		<Media src="https://cdn.lism-css.com/img/a-1.jpg" width="960" height="640" alt="Dummy Image" />;
 		```
 	</PreviewCode>
 	<PreviewCode slot='tab' label='HTML'>
 		```jsx
-		<img class="a--media" src='https://cdn.lism-css.com/img/a-1.jpg' width='960' height='640' alt='Dummy Image' />
+		<img class="a--media" src="https://cdn.lism-css.com/img/a-1.jpg" width="960" height="640" alt="Dummy Image" />;
 		```
 	</PreviewCode>
 </Preview>
@@ -45,17 +45,21 @@ import { Lism, HTML, Dummy, Media, Frame } from "lism-css/astro";
 <Preview>
 	<PreviewTitle>filter系のプロパティの指定</PreviewTitle>
 	<PreviewArea>
-		<Frame as='figure' ar='2/1' pos='rel'>
-			<Media contrast={1.1} saturate={0.2} src='https://cdn.lism-css.com/img/a-1.jpg' width='960' height='640' alt='Dummy Image' />
-			<Lism as='figcaption' pos='abs' z='1' b='0' p='5' w='100%' c='white' ta='center' lts='l'>Lorem ipsum text.</Lism>
+		<Frame as="figure" ar="2/1" pos="rel">
+		  <Media contrast={1.1} saturate={0.2} src="https://cdn.lism-css.com/img/a-1.jpg" width="960" height="640" alt="Dummy Image" />
+		  <Lism as="figcaption" pos="abs" z="1" b="0" p="5" w="100%" c="white" ta="center" lts="l">
+		    Lorem ipsum text.
+		  </Lism>
 		</Frame>
 	</PreviewArea>
 	<PreviewCode slot='tab' label='JSX'>
 		```jsx "contrast={1.1} saturate={0.2}"
-		<Frame as='figure' ar='2/1' pos='rel'>
-			<Media contrast={1.1} saturate={0.2} src='https://cdn.lism-css.com/img/a-1.jpg' width='960' height='640' alt='Dummy Image' />
-			<Lism as='figcaption' pos='abs' z='1' b='0' p='5' w='100%' c='white' ta='center' lts='l'>Lorem ipsum text.</Lism>
-		</Frame>
+		<Frame as="figure" ar="2/1" pos="rel">
+		  <Media contrast={1.1} saturate={0.2} src="https://cdn.lism-css.com/img/a-1.jpg" width="960" height="640" alt="Dummy Image" />
+		  <Lism as="figcaption" pos="abs" z="1" b="0" p="5" w="100%" c="white" ta="center" lts="l">
+		    Lorem ipsum text.
+		  </Lism>
+		</Frame>;
 		```
 	</PreviewCode>
 </Preview>
@@ -64,21 +68,21 @@ import { Lism, HTML, Dummy, Media, Frame } from "lism-css/astro";
 <Preview>
 	<PreviewTitle>`objectPosition`の使用</PreviewTitle>
 	<PreviewArea resize>
-		<Frame as='figure' ar='16/9'>
-			<Media src='https://cdn.lism-css.com/img/a-1.jpg' objectPosition='50% 0%' alt='' width='960' height='640' />
+		<Frame as="figure" ar="16/9">
+		  <Media src="https://cdn.lism-css.com/img/a-1.jpg" objectPosition="50% 0%" alt="" width="960" height="640" />
 		</Frame>
 	</PreviewArea>
 	<PreviewCode slot='tab' label='JSX'>
 		```jsx
-		<Frame as='figure' ar='16/9'>
-			<Media src='https://cdn.lism-css.com/img/a-1.jpg' objectPosition='50% 0%' alt='' width='960' height='640' />
-		</Frame>
+		<Frame as="figure" ar="16/9">
+		  <Media src="https://cdn.lism-css.com/img/a-1.jpg" objectPosition="50% 0%" alt="" width="960" height="640" />
+		</Frame>;
 		```
 	</PreviewCode>
 	<PreviewCode slot='tab' label='HTML'>
 		```html
 		<figure class="l--frame -ar:16/9">
-			<img class="a--media" style="object-position:50% 0%" src="https://cdn.lism-css.com/img/a-1.jpg" width="960" height="640">
+		  <img class="a--media" style="object-position: 50% 0%" src="https://cdn.lism-css.com/img/a-1.jpg" width="960" height="640" />
 		</figure>
 		```
 	</PreviewCode>
@@ -95,7 +99,7 @@ Next.jsの`Image`などは、`as`プロパティに渡すことができます�
 import { Media } from 'lism-css/react';
 import Image from 'next/image';
 
-<Media as={Image} src="/img.jpg" alt="" width='960' height='640' alt='Dummy Image' />
+<Media as={Image} src="/img.jpg" alt="" width="960" height="640" alt="Dummy Image" />;
 ```
 
 #### Astro の`<Image>`を使う方法
@@ -111,6 +115,6 @@ Astro(TypeScript?)のチェックに引っかかり、「Image missing required 
 ```jsx "as='AstroImage'"
 import { Media } from 'lism-css/astro';
 
-<Media as='AstroImage' src="/img.jpg" alt="Dummy Image" width='960' height='640' />
+<Media as="AstroImage" src="/img.jpg" alt="Dummy Image" width="960" height="640" />;
 ```
 

@@ -46,41 +46,40 @@ For the scrollbar width issue, you can either handle it with JavaScript, or in m
 
 
 ```html
-<html lang={siteConfig.lang}>
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-	</head>
-	<body>
-		<slot />
-	</body>
+<html lang="{siteConfig.lang}">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width" />
+  </head>
+  <body>
+    <slot />
+  </body>
 </html>
 ```
 
 ```css title="CSS"
 :root {
-	/* Define the base font size with clamp() */
-	--fz--base: clamp(1rem, 0.654rem + 1.54vw, 2rem); /* Exaggerated for clarity */
+  /* Define the base font size with clamp() */
+  --fz--base: clamp(1rem, 0.654rem + 1.54vw, 2rem); /* Exaggerated for clarity */
 
-	/* Scale relative to --fz-base */
-	--fz--xs: calc(var(--fz--base) * (8 / 10));
-	--fz--s: calc(var(--fz--base) * (8 / 9));
-	--fz--l: calc(var(--fz--base) * (8 / 7));
-	--fz--xl: calc(var(--fz--base) * (8 / 6));
+  /* Scale relative to --fz-base */
+  --fz--xs: calc(var(--fz--base) * (8 / 10));
+  --fz--s: calc(var(--fz--base) * (8 / 9));
+  --fz--l: calc(var(--fz--base) * (8 / 7));
+  --fz--xl: calc(var(--fz--base) * (8 / 6));
 }
 
 /* Utility classes */
 .fz--base {
-	font-size: var(--fz--base);
+  font-size: var(--fz--base);
 }
 .fz--xs {
-	font-size: var(--fz--xs);
+  font-size: var(--fz--xs);
 }
 .fz--s {
-	font-size: var(--fz--s);
+  font-size: var(--fz--s);
 }
-
 ```
 
 
@@ -98,9 +97,12 @@ For the scrollbar width issue, you can either handle it with JavaScript, or in m
 <PreviewCode slot="code" label="HTML">
 ```html
 <div class="l--stack -bd -p:30 -g:30 -bdrs:10">
-	<h2 class="-fz:l">Title Text</h2>
-	<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p>
-	<p class="-fz:s">Footer text</p>
+  <h2 class="-fz:l">Title Text</h2>
+  <p>
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
+    veniam.
+  </p>
+  <p class="-fz:s">Footer text</p>
 </div>
 ```
 </PreviewCode>

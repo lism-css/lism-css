@@ -28,35 +28,41 @@ import List from '@/components/ex/List/index.jsx';
 	<PreviewTitle>Preview</PreviewTitle>
 	<PreviewArea p='20'>
 		<List>
-			<li>List item 1</li>
-			<li>List item 2</li>
-			<li>
-				<Fragment>List item 3</Fragment>
-				<ul>
-					<li>Nested item</li>
-					<li>Nested item</li>
-				</ul>
-			</li>
+		  <li>List item 1</li>
+		  <li>List item 2</li>
+		  <li>
+		    <Fragment>List item 3</Fragment>
+		    <ul>
+		      <li>Nested item</li>
+		      <li>Nested item</li>
+		    </ul>
+		  </li>
 		</List>
-		<List variant='check'>
-			<li class='-bd-be -bdc:divider' style='--bds:dashed'>List item 1</li>
-			<li class='-bd-be -bdc:divider' style='--bds:dashed'>List item 2</li>
-			<li class='-bd-be -bdc:divider' style='--bds:dashed'>
-				<Fragment>List item 3</Fragment>
-				<ul>
-					<li>Nested item</li>
-					<li>Nested item</li>
-				</ul>
-			</li>
-			<li class='-bd-be -bdc:divider' style='--bds:dashed'>List item 3</li>
+		<List variant="check">
+		  <li class="-bd-be -bdc:divider" style="--bds:dashed">
+		    List item 1
+		  </li>
+		  <li class="-bd-be -bdc:divider" style="--bds:dashed">
+		    List item 2
+		  </li>
+		  <li class="-bd-be -bdc:divider" style="--bds:dashed">
+		    <Fragment>List item 3</Fragment>
+		    <ul>
+		      <li>Nested item</li>
+		      <li>Nested item</li>
+		    </ul>
+		  </li>
+		  <li class="-bd-be -bdc:divider" style="--bds:dashed">
+		    List item 3
+		  </li>
 		</List>
 		<List
-			iconC='var(--purple)'
-			iconImg={`url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><path d="M184.49,136.49l-80,80a12,12,0,0,1-17-17L159,128,87.51,56.49a12,12,0,1,1,17-17l80,80A12,12,0,0,1,184.49,136.49Z"/></svg>')`}
+		  iconC="var(--purple)"
+		  iconImg={`url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><path d="M184.49,136.49l-80,80a12,12,0,0,1-17-17L159,128,87.51,56.49a12,12,0,1,1,17-17l80,80A12,12,0,0,1,184.49,136.49Z"/></svg>')`}
 		>
-			<li>List item 1</li>
-			<li>List item 2</li>
-			<li>List item 3</li>
+		  <li>List item 1</li>
+		  <li>List item 2</li>
+		  <li>List item 3</li>
 		</List>
 	</PreviewArea>
 	<PreviewCode slot='tab' label='JSX'>
@@ -96,34 +102,37 @@ import List from '@/components/ex/List/index.jsx';
 	<PreviewCode slot='tab' label='HTML'>
 		```html
 		<ul class="c--list">
-			<li>List item 1</li>
-			<li>List item 2</li>
-			<li>
-				List item 3
-				<ul>
-					<li>Nested item</li>
-					<li>Nested item</li>
-				</ul>
-			</li>
+		  <li>List item 1</li>
+		  <li>List item 2</li>
+		  <li>
+		    List item 3
+		    <ul>
+		      <li>Nested item</li>
+		      <li>Nested item</li>
+		    </ul>
+		  </li>
 		</ul>
 		<ul class="c--list c--list--check">
-			<li class='-bd-be -bdc:divider' style='--bds:dashed'>List item 1</li>
-			<li class='-bd-be -bdc:divider' style='--bds:dashed'>List item 2</li>
-			<li class='-bd-be -bdc:divider' style='--bds:dashed'>
-				List item 3
-				<ul>
-					<li>Nested item</li>
-					<li>Nested item</li>
-				</ul>
-			</li>
+		  <li class="-bd-be -bdc:divider" style="--bds: dashed">List item 1</li>
+		  <li class="-bd-be -bdc:divider" style="--bds: dashed">List item 2</li>
+		  <li class="-bd-be -bdc:divider" style="--bds: dashed">
+		    List item 3
+		    <ul>
+		      <li>Nested item</li>
+		      <li>Nested item</li>
+		    </ul>
+		  </li>
 		</ul>
 		<ul
-			class="c--list"
-			style="--_icon-c:var(--purple);--_icon-img:url('data:image/svg+xml;utf8,<svg xmlns=&quot;http://www.w3.org/2000/svg&quot; viewBox=&quot;0 0 256 256&quot;><path d=&quot;M184.49,136.49l-80,80a12,12,0,0,1-17-17L159,128,87.51,56.49a12,12,0,1,1,17-17l80,80A12,12,0,0,1,184.49,136.49Z&quot;/></svg>')"
+		  class="c--list"
+		  style="
+		    --_icon-c: var(--purple);
+		    --_icon-img: url('data:image/svg+xml;utf8,<svg xmlns=&quot;http://www.w3.org/2000/svg&quot; viewBox=&quot;0 0 256 256&quot;><path d=&quot;M184.49,136.49l-80,80a12,12,0,0,1-17-17L159,128,87.51,56.49a12,12,0,1,1,17-17l80,80A12,12,0,0,1,184.49,136.49Z&quot;/></svg>');
+		  "
 		>
-			<li>List item 1</li>
-			<li>List item 2</li>
-			<li>List item 3</li>
+		  <li>List item 1</li>
+		  <li>List item 2</li>
+		  <li>List item 3</li>
 		</ul>
 		```
 	</PreviewCode>

@@ -42,39 +42,39 @@ The side element's width is fixed to the value set by `--sideW`. When the main e
 <Preview>
 	<PreviewTitle>Usage example</PreviewTitle>
 	<PreviewArea resize p='20'>
-		<SideMain sideW='12rem' mainW='20rem' g='20'>
-			<Box p='15' bd bdc='blue'>
-				<p>Main Content</p>
-				<Dummy />
-			</Box>
-			<Box isSide p='15' bd bdc='red'>
-				<p>Side Content</p>
-			</Box>
+		<SideMain sideW="12rem" mainW="20rem" g="20">
+		  <Box p="15" bd bdc="blue">
+		    <p>Main Content</p>
+		    <Dummy />
+		  </Box>
+		  <Box isSide p="15" bd bdc="red">
+		    <p>Side Content</p>
+		  </Box>
 		</SideMain>
 	</PreviewArea>
 	<PreviewCode slot='tab' label='JSX'>
 		```jsx "sideW" "isSide"
-		<SideMain sideW='12rem' mainW='20rem' g='20'>
-			<Box p='15' bd bdc='blue'>
-				<p>Main Content</p>
-				<Dummy />
-			</Box>
-			<Box isSide p='15' bd bdc='red'>
-				<p>Side Content</p>
-			</Box>
-		</SideMain>
+		<SideMain sideW="12rem" mainW="20rem" g="20">
+		  <Box p="15" bd bdc="blue">
+		    <p>Main Content</p>
+		    <Dummy />
+		  </Box>
+		  <Box isSide p="15" bd bdc="red">
+		    <p>Side Content</p>
+		  </Box>
+		</SideMain>;
 		```
 	</PreviewCode>
 	<PreviewCode slot='tab' label='HTML'>
 		```html "is--side" "--sideW"
-		<div class='l--sideMain -g:20' style='--sideW:12rem;--mainW:20rem'>
-			<div class='l--box -p:15 -bd' style='--bdc:var(--blue)'>
-				<p>Main Content</p>
-				<p>Lorem ipsum dolor sit, amet consectetur adipisicing elit, sed do eiusmod tempor. Non facere laudantium ex eos doloribus aut dolore nisi.</p>
-			</div>
-			<div class='l--box is--side -p:15 -bd' style='--bdc:var(--red)'>
-				<p>Side Content</p>
-			</div>
+		<div class="l--sideMain -g:20" style="--sideW: 12rem; --mainW: 20rem">
+		  <div class="l--box -p:15 -bd" style="--bdc: var(--blue)">
+		    <p>Main Content</p>
+		    <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit, sed do eiusmod tempor. Non facere laudantium ex eos doloribus aut dolore nisi.</p>
+		  </div>
+		  <div class="l--box is--side -p:15 -bd" style="--bdc: var(--red)">
+		    <p>Side Content</p>
+		  </div>
 		</div>
 		```
 	</PreviewCode>
@@ -91,34 +91,32 @@ This places the side element on the left when horizontal, and at the bottom when
 <Preview>
 	<PreviewTitle>Example</PreviewTitle>
 	<PreviewArea resize p='20'>
-		<SideMain fxd='row-r' sideW='10rem' mainW='16rem' g='20'>
-			<Box>
-				<Dummy />
-			</Box>
-			<Box isSide bgc='blue:20%'>
-				Side Content
-			</Box>
+		<SideMain fxd="row-r" sideW="10rem" mainW="16rem" g="20">
+		  <Box>
+		    <Dummy />
+		  </Box>
+		  <Box isSide bgc="blue:20%">
+		    Side Content
+		  </Box>
 		</SideMain>
 	</PreviewArea>
 	<PreviewCode slot='tab' label='JSX'>
 		```jsx "fxd='row-r'"
-		<SideMain fxd='row-r' sideW='10rem' mainW='16rem' g='20'>
-			<Box>
-				<Dummy />
-			</Box>
-			<Box isSide>Side Content</Box>
-		</SideMain>
+		<SideMain fxd="row-r" sideW="10rem" mainW="16rem" g="20">
+		  <Box>
+		    <Dummy />
+		  </Box>
+		  <Box isSide>Side Content</Box>
+		</SideMain>;
 		```
 	</PreviewCode>
 	<PreviewCode slot='tab' label='HTML'>
 		```html "-fxd:row-r"
-		<div class='l--sideMain -fxd:row-r -g:20' style='--sideW:10rem;--mainW:16rem;'>
-			<div class='l--box'>
-				<p>Lorem ipsum dolor sit amet, ...</p>
-			</div>
-			<div class='l--box is--side'>
-				Side Content
-			</div>
+		<div class="l--sideMain -fxd:row-r -g:20" style="--sideW: 10rem; --mainW: 16rem">
+		  <div class="l--box">
+		    <p>Lorem ipsum dolor sit amet, ...</p>
+		  </div>
+		  <div class="l--box is--side">Side Content</div>
 		</div>
 		```
 	</PreviewCode>
@@ -131,37 +129,32 @@ This places the side element on the left when horizontal, and at the bottom when
 <Preview>
 	<PreviewTitle>Building a SideMain-like layout using `Grid`</PreviewTitle>
 	<PreviewArea resize p='20'>
-		<Grid gta={[`'.' 'side'`, `'. side'`]} gtc={[null, '1fr 10rem']} g='20'>
-			<Box>
-				<Dummy />
-			</Box>
-			<Box ga='side' bgc='blue:20%'>
-				Side Content
-			</Box>
+		<Grid gta={[`'.' 'side'`, `'. side'`]} gtc={[null, '1fr 10rem']} g="20">
+		  <Box>
+		    <Dummy />
+		  </Box>
+		  <Box ga="side" bgc="blue:20%">
+		    Side Content
+		  </Box>
 		</Grid>
 	</PreviewArea>
 	<PreviewCode slot='tab' label='JSX'>
 		```jsx "gta=" "gtc="
-		<Grid gta={[`'.' 'side'`, `'. side'`]} gtc={[null, '1fr 10rem']} g='20'>
-			<Box>
-				<Dummy />
-			</Box>
-			<Box ga='side'>Side Content</Box>
-		</Grid>
+		<Grid gta={[`'.' 'side'`, `'. side'`]} gtc={[null, '1fr 10rem']} g="20">
+		  <Box>
+		    <Dummy />
+		  </Box>
+		  <Box ga="side">Side Content</Box>
+		</Grid>;
 		```
 	</PreviewCode>
 	<PreviewCode slot='tab' label='HTML'>
 		```html "-gd -gd_sm" "'. side' / 1fr 10rem" "-ga" "--ga:side"
-		<div class="l--grid -gta -gta_sm -gtc_sm -g:20" style="--gta:'.' 'side';--gta_sm:'. side';--gtc_sm:1fr 10rem">
-			<div class='l--box'>
-				<p>
-					Lorem ipsum dolor sit, amet consectetur adipisicing elit, sed do eiusmod tempor.
-					Non facere laudantium ex eos doloribus aut dolore nisi.
-				</p>
-			</div>
-			<div class='l--box -ga' style='--ga:side'>
-				Side Content
-			</div>
+		<div class="l--grid -gta -gta_sm -gtc_sm -g:20" style="--gta: '.' 'side'; --gta_sm: '. side'; --gtc_sm: 1fr 10rem">
+		  <div class="l--box">
+		    <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit, sed do eiusmod tempor. Non facere laudantium ex eos doloribus aut dolore nisi.</p>
+		  </div>
+		  <div class="l--box -ga" style="--ga: side">Side Content</div>
 		</div>
 		```
 	</PreviewCode>
@@ -170,37 +163,32 @@ This places the side element on the left when horizontal, and at the bottom when
 <Preview>
 	<PreviewTitle>Example: `side` on the left, switching at `@md`</PreviewTitle>
 	<PreviewArea resize p='20'>
-		<Grid gta={[`'.' 'side'`, null, `'side .'`]} gtc={[null, null, '10rem 1fr']} g='20'>
-			<Box>
-				<Dummy />
-			</Box>
-			<Box ga='side' bgc='blue:20%'>
-				Side Content
-			</Box>
+		<Grid gta={[`'.' 'side'`, null, `'side .'`]} gtc={[null, null, '10rem 1fr']} g="20">
+		  <Box>
+		    <Dummy />
+		  </Box>
+		  <Box ga="side" bgc="blue:20%">
+		    Side Content
+		  </Box>
 		</Grid>
 	</PreviewArea>
 	<PreviewCode slot='tab' label='JSX'>
 		```jsx
-		<Grid gta={[`'.' 'side'`, null, `'side .'`]} gtc={[null, null, '10rem 1fr']} g='20'>
-			<Box>
-				<Dummy />
-			</Box>
-			<Box ga='side'>Side Content</Box>
-		</Grid>
+		<Grid gta={[`'.' 'side'`, null, `'side .'`]} gtc={[null, null, '10rem 1fr']} g="20">
+		  <Box>
+		    <Dummy />
+		  </Box>
+		  <Box ga="side">Side Content</Box>
+		</Grid>;
 		```
 	</PreviewCode>
 	<PreviewCode slot='tab' label='HTML'>
 		```html
-		<div class="l--grid -gta -gta_md -gtc_md -g:20" style="--gta:'.' 'side';--gta_md:'side .';--gtc_md:10rem 1fr">
-			<div class='l--box'>
-				<p>
-					Lorem ipsum dolor sit, amet consectetur adipisicing elit, sed do eiusmod tempor.
-					Non facere laudantium ex eos doloribus aut dolore nisi.
-				</p>
-			</div>
-			<div class='l--box -ga' style='--ga:side'>
-				Side Content
-			</div>
+		<div class="l--grid -gta -gta_md -gtc_md -g:20" style="--gta: '.' 'side'; --gta_md: 'side .'; --gtc_md: 10rem 1fr">
+		  <div class="l--box">
+		    <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit, sed do eiusmod tempor. Non facere laudantium ex eos doloribus aut dolore nisi.</p>
+		  </div>
+		  <div class="l--box -ga" style="--ga: side">Side Content</div>
 		</div>
 		```
 	</PreviewCode>

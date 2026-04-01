@@ -27,54 +27,54 @@ An example of creating and using a component called `Timeline` (`.c--timeline`).
 	<PreviewTitle>Usage example</PreviewTitle>
 	<PreviewArea p='20'>
 		<Timeline.Root>
-			<Timeline.Item>
-				<Timeline.Time>Month dd, 20yy</Timeline.Time>
-				<Timeline.Title>Lism x.y.z released.</Timeline.Title>
-				<Timeline.Text>
-					<Dummy lang='ja'/>
-				</Timeline.Text>
-			</Timeline.Item>
-			<Timeline.Item>
-				<Timeline.Time>Month dd, 20yy</Timeline.Time>
-				<Timeline.Title>Lism x.y.z released.</Timeline.Title>
-				<Timeline.Text>
-					<Dummy lang='ja'/>
-				</Timeline.Text>
-			</Timeline.Item>
-			<Timeline.Item>
-				<Timeline.Time>Month dd, 20yy</Timeline.Time>
-				<Timeline.Title>Lism x.y.z released.</Timeline.Title>
-				<Timeline.Text>
-					<Dummy lang='ja'/>
-				</Timeline.Text>
-			</Timeline.Item>
+		  <Timeline.Item>
+		    <Timeline.Time>Month dd, 20yy</Timeline.Time>
+		    <Timeline.Title>Lism x.y.z released.</Timeline.Title>
+		    <Timeline.Text>
+		      <Dummy lang="ja" />
+		    </Timeline.Text>
+		  </Timeline.Item>
+		  <Timeline.Item>
+		    <Timeline.Time>Month dd, 20yy</Timeline.Time>
+		    <Timeline.Title>Lism x.y.z released.</Timeline.Title>
+		    <Timeline.Text>
+		      <Dummy lang="ja" />
+		    </Timeline.Text>
+		  </Timeline.Item>
+		  <Timeline.Item>
+		    <Timeline.Time>Month dd, 20yy</Timeline.Time>
+		    <Timeline.Title>Lism x.y.z released.</Timeline.Title>
+		    <Timeline.Text>
+		      <Dummy lang="ja" />
+		    </Timeline.Text>
+		  </Timeline.Item>
 		</Timeline.Root>
 	</PreviewArea>
 	<PreviewCode>
 ```jsx
 <Timeline.Root>
-	<Timeline.Item>
-		<Timeline.Time>Month dd, 20yy</Timeline.Time>
-		<Timeline.Title>Lism x.y.z released.</Timeline.Title>
-		<Timeline.Text>
-			<Dummy lang='ja'/>
-		</Timeline.Text>
-	</Timeline.Item>
-	<Timeline.Item>
-		<Timeline.Time>Month dd, 20yy</Timeline.Time>
-		<Timeline.Title>Lism x.y.z released.</Timeline.Title>
-		<Timeline.Text>
-			<Dummy lang='ja'/>
-		</Timeline.Text>
-	</Timeline.Item>
-	<Timeline.Item>
-		<Timeline.Time>Month dd, 20yy</Timeline.Time>
-		<Timeline.Title>Lism x.y.z released.</Timeline.Title>
-		<Timeline.Text>
-			<Dummy lang='ja'/>
-		</Timeline.Text>
-	</Timeline.Item>
-</Timeline.Root>
+  <Timeline.Item>
+    <Timeline.Time>Month dd, 20yy</Timeline.Time>
+    <Timeline.Title>Lism x.y.z released.</Timeline.Title>
+    <Timeline.Text>
+      <Dummy lang="ja" />
+    </Timeline.Text>
+  </Timeline.Item>
+  <Timeline.Item>
+    <Timeline.Time>Month dd, 20yy</Timeline.Time>
+    <Timeline.Title>Lism x.y.z released.</Timeline.Title>
+    <Timeline.Text>
+      <Dummy lang="ja" />
+    </Timeline.Text>
+  </Timeline.Item>
+  <Timeline.Item>
+    <Timeline.Time>Month dd, 20yy</Timeline.Time>
+    <Timeline.Title>Lism x.y.z released.</Timeline.Title>
+    <Timeline.Text>
+      <Dummy lang="ja" />
+    </Timeline.Text>
+  </Timeline.Item>
+</Timeline.Root>;
 ```
 	</PreviewCode>
 </Preview>
@@ -91,54 +91,54 @@ Additionally, `isHighlighted` enables highlighted display, and `shapeColor` spec
 	<PreviewTitle>Usage example</PreviewTitle>
 	<PreviewArea p='20'>
 		<Timeline.Root>
-			<Timeline.Item isStart>
-				<Timeline.Time>Month dd, 20yy</Timeline.Time>
-				<Timeline.Text>
-					<HTML.p>Lism x.y.z released.</HTML.p>
-					<Dummy lang='ja'/>
-				</Timeline.Text>
-			</Timeline.Item>
-			<Timeline.Item>
-				<Timeline.Time>Month dd, 20yy</Timeline.Time>
-				<Timeline.Text>
-					<HTML.p>Lism x.y.z released.</HTML.p>
-					<Dummy lang='ja'/>
-				</Timeline.Text>
-			</Timeline.Item>
-			<Timeline.Item isEnd isHighlighted shapeColor='red'>
-				<Timeline.Time>Month dd, 20yy</Timeline.Time>
-				<Timeline.Text>
-					<HTML.p>Lism x.y.z released.</HTML.p>
-					<Dummy lang='ja'/>
-				</Timeline.Text>
-			</Timeline.Item>
+		  <Timeline.Item isStart>
+		    <Timeline.Time>Month dd, 20yy</Timeline.Time>
+		    <Timeline.Text>
+		      <HTML.p>Lism x.y.z released.</HTML.p>
+		      <Dummy lang="ja" />
+		    </Timeline.Text>
+		  </Timeline.Item>
+		  <Timeline.Item>
+		    <Timeline.Time>Month dd, 20yy</Timeline.Time>
+		    <Timeline.Text>
+		      <HTML.p>Lism x.y.z released.</HTML.p>
+		      <Dummy lang="ja" />
+		    </Timeline.Text>
+		  </Timeline.Item>
+		  <Timeline.Item isEnd isHighlighted shapeColor="red">
+		    <Timeline.Time>Month dd, 20yy</Timeline.Time>
+		    <Timeline.Text>
+		      <HTML.p>Lism x.y.z released.</HTML.p>
+		      <Dummy lang="ja" />
+		    </Timeline.Text>
+		  </Timeline.Item>
 		</Timeline.Root>
 	</PreviewArea>
 	<PreviewCode>
 ```jsx "isStart" "isEnd" "isHighlighted" "shapeColor"
 <Timeline.Root>
-	<Timeline.Item isStart>
-		<Timeline.Time>Month dd, 20yy</Timeline.Time>
-		<Timeline.Title>Lism x.y.z released.</Timeline.Title>
-		<Timeline.Text>
-			<Dummy lang='ja'/>
-		</Timeline.Text>
-	</Timeline.Item>
-	<Timeline.Item>
-		<Timeline.Time>Month dd, 20yy</Timeline.Time>
-		<Timeline.Title>Lism x.y.z released.</Timeline.Title>
-		<Timeline.Text>
-			<Dummy lang='ja'/>
-		</Timeline.Text>
-	</Timeline.Item>
-	<Timeline.Item isEnd isHighlighted shapeColor='red'>
-		<Timeline.Time>Month dd, 20yy</Timeline.Time>
-		<Timeline.Title>Lism x.y.z released.</Timeline.Title>
-		<Timeline.Text>
-			<Dummy lang='ja'/>
-		</Timeline.Text>
-	</Timeline.Item>
-</Timeline.Root>
+  <Timeline.Item isStart>
+    <Timeline.Time>Month dd, 20yy</Timeline.Time>
+    <Timeline.Title>Lism x.y.z released.</Timeline.Title>
+    <Timeline.Text>
+      <Dummy lang="ja" />
+    </Timeline.Text>
+  </Timeline.Item>
+  <Timeline.Item>
+    <Timeline.Time>Month dd, 20yy</Timeline.Time>
+    <Timeline.Title>Lism x.y.z released.</Timeline.Title>
+    <Timeline.Text>
+      <Dummy lang="ja" />
+    </Timeline.Text>
+  </Timeline.Item>
+  <Timeline.Item isEnd isHighlighted shapeColor="red">
+    <Timeline.Time>Month dd, 20yy</Timeline.Time>
+    <Timeline.Title>Lism x.y.z released.</Timeline.Title>
+    <Timeline.Text>
+      <Dummy lang="ja" />
+    </Timeline.Text>
+  </Timeline.Item>
+</Timeline.Root>;
 ```
 	</PreviewCode>
 </Preview>
@@ -152,54 +152,54 @@ Additionally, `isHighlighted` enables highlighted display, and `shapeColor` spec
 	<PreviewTitle>Usage example</PreviewTitle>
 	<PreviewArea p='20'>
 		<Timeline.Root>
-			<Timeline.Item icon={{as:MegaphoneSimpleIcon, weight:'fill'}}>
-				<Timeline.Time>Month dd, 20yy</Timeline.Time>
-				<Timeline.Text>
-					<HTML.p>Lism x.y.z released.</HTML.p>
-					<Dummy lang='ja'/>
-				</Timeline.Text>
-			</Timeline.Item>
-			<Timeline.Item>
-				<Timeline.Time>Month dd, 20yy</Timeline.Time>
-				<Timeline.Text>
-					<HTML.p>Lism x.y.z released.</HTML.p>
-					<Dummy lang='ja'/>
-				</Timeline.Text>
-			</Timeline.Item>
-			<Timeline.Item icon='check' isHighlighted shapeColor='red'>
-				<Timeline.Time>Month dd, 20yy</Timeline.Time>
-				<Timeline.Text>
-					<HTML.p>Lism x.y.z released.</HTML.p>
-					<Dummy lang='ja'/>
-				</Timeline.Text>
-			</Timeline.Item>
+		  <Timeline.Item icon={{ as: MegaphoneSimpleIcon, weight: 'fill' }}>
+		    <Timeline.Time>Month dd, 20yy</Timeline.Time>
+		    <Timeline.Text>
+		      <HTML.p>Lism x.y.z released.</HTML.p>
+		      <Dummy lang="ja" />
+		    </Timeline.Text>
+		  </Timeline.Item>
+		  <Timeline.Item>
+		    <Timeline.Time>Month dd, 20yy</Timeline.Time>
+		    <Timeline.Text>
+		      <HTML.p>Lism x.y.z released.</HTML.p>
+		      <Dummy lang="ja" />
+		    </Timeline.Text>
+		  </Timeline.Item>
+		  <Timeline.Item icon="check" isHighlighted shapeColor="red">
+		    <Timeline.Time>Month dd, 20yy</Timeline.Time>
+		    <Timeline.Text>
+		      <HTML.p>Lism x.y.z released.</HTML.p>
+		      <Dummy lang="ja" />
+		    </Timeline.Text>
+		  </Timeline.Item>
 		</Timeline.Root>
 	</PreviewArea>
 	<PreviewCode>
 	```jsx "icon="
-		<Timeline.Root>
-			<Timeline.Item icon={{as:MegaphoneSimpleIcon, weight:'fill'}}>
-				<Timeline.Time>Month dd, 20yy</Timeline.Time>
-				<Timeline.Title>Lism x.y.z released.</Timeline.Title>
-				<Timeline.Text>
-					<Dummy lang='ja'/>
-				</Timeline.Text>
-			</Timeline.Item>
-			<Timeline.Item>
-				<Timeline.Time>Month dd, 20yy</Timeline.Time>
-				<Timeline.Title>Lism x.y.z released.</Timeline.Title>
-				<Timeline.Text>
-					<Dummy lang='ja'/>
-				</Timeline.Text>
-			</Timeline.Item>
-			<Timeline.Item icon='check' isHighlighted shapeColor='red'>
-				<Timeline.Time>Month dd, 20yy</Timeline.Time>
-				<Timeline.Title>Lism x.y.z released.</Timeline.Title>
-				<Timeline.Text>
-					<Dummy lang='ja'/>
-				</Timeline.Text>
-			</Timeline.Item>
-		</Timeline.Root>
+	<Timeline.Root>
+	  <Timeline.Item icon={{ as: MegaphoneSimpleIcon, weight: 'fill' }}>
+	    <Timeline.Time>Month dd, 20yy</Timeline.Time>
+	    <Timeline.Title>Lism x.y.z released.</Timeline.Title>
+	    <Timeline.Text>
+	      <Dummy lang="ja" />
+	    </Timeline.Text>
+	  </Timeline.Item>
+	  <Timeline.Item>
+	    <Timeline.Time>Month dd, 20yy</Timeline.Time>
+	    <Timeline.Title>Lism x.y.z released.</Timeline.Title>
+	    <Timeline.Text>
+	      <Dummy lang="ja" />
+	    </Timeline.Text>
+	  </Timeline.Item>
+	  <Timeline.Item icon="check" isHighlighted shapeColor="red">
+	    <Timeline.Time>Month dd, 20yy</Timeline.Time>
+	    <Timeline.Title>Lism x.y.z released.</Timeline.Title>
+	    <Timeline.Text>
+	      <Dummy lang="ja" />
+	    </Timeline.Text>
+	  </Timeline.Item>
+	</Timeline.Root>;
 	```
 	</PreviewCode>
 </Preview>
@@ -211,54 +211,54 @@ Additionally, `isHighlighted` enables highlighted display, and `shapeColor` spec
 	<PreviewTitle>Usage example</PreviewTitle>
 	<PreviewArea p='20'>
 		<Timeline.Root isHorizontal>
-				<Timeline.Item isHorizontal isStart>
-					<Timeline.Time>Month dd, 20yy</Timeline.Time>
-					<Timeline.Title>Lism x.y.z released.</Timeline.Title>
-					<Timeline.Text>
-						<Dummy lang='ja' />
-					</Timeline.Text>
-				</Timeline.Item>
-				<Timeline.Item isHorizontal>
-					<Timeline.Time>Month dd, 20yy</Timeline.Time>
-					<Timeline.Title>Lism x.y.z released. Lism x.y.z released.</Timeline.Title>
-					<Timeline.Text>
-						<Dummy lang='ja' />
-					</Timeline.Text>
-				</Timeline.Item>
-				<Timeline.Item isHorizontal isEnd isHighlighted>
-					<Timeline.Time>Month dd, 20yy</Timeline.Time>
-					<Timeline.Title>Lism x.y.z released.</Timeline.Title>
-					<Timeline.Text>
-						<Dummy lang='ja' />
-					</Timeline.Text>
-				</Timeline.Item>
-			</Timeline.Root>
+		  <Timeline.Item isHorizontal isStart>
+		    <Timeline.Time>Month dd, 20yy</Timeline.Time>
+		    <Timeline.Title>Lism x.y.z released.</Timeline.Title>
+		    <Timeline.Text>
+		      <Dummy lang="ja" />
+		    </Timeline.Text>
+		  </Timeline.Item>
+		  <Timeline.Item isHorizontal>
+		    <Timeline.Time>Month dd, 20yy</Timeline.Time>
+		    <Timeline.Title>Lism x.y.z released. Lism x.y.z released.</Timeline.Title>
+		    <Timeline.Text>
+		      <Dummy lang="ja" />
+		    </Timeline.Text>
+		  </Timeline.Item>
+		  <Timeline.Item isHorizontal isEnd isHighlighted>
+		    <Timeline.Time>Month dd, 20yy</Timeline.Time>
+		    <Timeline.Title>Lism x.y.z released.</Timeline.Title>
+		    <Timeline.Text>
+		      <Dummy lang="ja" />
+		    </Timeline.Text>
+		  </Timeline.Item>
+		</Timeline.Root>
 	</PreviewArea>
 	<PreviewCode>
 	```jsx "horizontal" "isHorizontal"
-		<Timeline.Root isHorizontal>
-			<Timeline.Item isHorizontal isStart>
-				<Timeline.Time>Month dd, 20yy</Timeline.Time>
-				<Timeline.Title>Lism x.y.z released.</Timeline.Title>
-				<Timeline.Text>
-					<Dummy lang='ja' />
-				</Timeline.Text>
-			</Timeline.Item>
-			<Timeline.Item isHorizontal>
-				<Timeline.Time>Month dd, 20yy</Timeline.Time>
-				<Timeline.Title>Lism x.y.z released. Lism x.y.z released.</Timeline.Title>
-				<Timeline.Text>
-					<Dummy lang='ja' />
-				</Timeline.Text>
-			</Timeline.Item>
-			<Timeline.Item isHorizontal isEnd isHighlighted>
-				<Timeline.Time>Month dd, 20yy</Timeline.Time>
-				<Timeline.Title>Lism x.y.z released.</Timeline.Title>
-				<Timeline.Text>
-					<Dummy lang='ja' />
-				</Timeline.Text>
-			</Timeline.Item>
-		</Timeline.Root>
+	<Timeline.Root isHorizontal>
+	  <Timeline.Item isHorizontal isStart>
+	    <Timeline.Time>Month dd, 20yy</Timeline.Time>
+	    <Timeline.Title>Lism x.y.z released.</Timeline.Title>
+	    <Timeline.Text>
+	      <Dummy lang="ja" />
+	    </Timeline.Text>
+	  </Timeline.Item>
+	  <Timeline.Item isHorizontal>
+	    <Timeline.Time>Month dd, 20yy</Timeline.Time>
+	    <Timeline.Title>Lism x.y.z released. Lism x.y.z released.</Timeline.Title>
+	    <Timeline.Text>
+	      <Dummy lang="ja" />
+	    </Timeline.Text>
+	  </Timeline.Item>
+	  <Timeline.Item isHorizontal isEnd isHighlighted>
+	    <Timeline.Time>Month dd, 20yy</Timeline.Time>
+	    <Timeline.Title>Lism x.y.z released.</Timeline.Title>
+	    <Timeline.Text>
+	      <Dummy lang="ja" />
+	    </Timeline.Text>
+	  </Timeline.Item>
+	</Timeline.Root>;
 	```
 	</PreviewCode>
 </Preview>

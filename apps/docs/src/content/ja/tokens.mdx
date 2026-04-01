@@ -71,8 +71,8 @@ export const ColorBadge = ({color, label}) => {
 例えば、以下のようにすることで全体を少し明るくすることができ、ダークモード対応が簡単に実装できます。
 ```css
 :root[data-theme='dark'] {
-	--L: 72%;
-	--C: 0.22;
+  --L: 72%;
+  --C: 0.22;
 }
 ```
 
@@ -153,8 +153,8 @@ box-shadow は少し特殊で、ユーティリティクラス内で複数のsha
 <Preview>
 	<PreviewTitle>Preview</PreviewTitle>
 	<PreviewArea p={['30','40']} py='40'>
-		<Columns cols={[3, 4, 5]} g={['30','40']}>
-			<BoxShadowDemos shadows={[ '5','10', '20', '30', '40', '50' ]}/>
+		<Columns cols={[3, 4, 5]} g={['30', '40']}>
+		  <BoxShadowDemos shadows={['5', '10', '20', '30', '40', '50']} />
 		</Columns>
 	</PreviewArea>
 	<PreviewCode slot='tab' label='HTML'>
@@ -183,9 +183,9 @@ box-shadow は少し特殊で、ユーティリティクラス内で複数のsha
 	<PreviewTitle>Preview</PreviewTitle>
 	<PreviewArea p='40'>
 		{/* <Dummy pre='1: '/> */}
-		<Dummy o='-10' pre='-10: ' />
-		<Dummy o='-20' pre='-20: ' />
-		<Dummy o='-30' pre='-30: ' />
+		<Dummy o="-10" pre="-10: " />
+		<Dummy o="-20" pre="-20: " />
+		<Dummy o="-30" pre="-30: " />
 	</PreviewArea>
 	<PreviewCode slot='tab' label='HTML'>
 		```jsx

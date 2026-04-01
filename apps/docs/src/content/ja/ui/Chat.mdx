@@ -12,30 +12,36 @@ import { Chat } from '@lism-css/ui/react';
 <Preview>
 	<PreviewTitle>Preview</PreviewTitle>
 	<PreviewArea resize p='30' _dir='rtl'>
-		<Chat name='Taro' avatar='https://cdn.lism-css.com/img/avatar/a-01.jpg'>
-			<p>ロレム・イプサムの座り雨。目まぐるしい文章の流れの中で、それは静かに歩く仮の言葉です。Elitも穏やかに続いていきますが、積み重ねられてきた「LiberroyとFoogの取り組み」は、余白のようなものです。</p>
+		<Chat name="Taro" avatar="https://cdn.lism-css.com/img/avatar/a-01.jpg">
+		  <p>
+		    ロレム・イプサムの座り雨。目まぐるしい文章の流れの中で、それは静かに歩く仮の言葉です。Elitも穏やかに続いていきますが、積み重ねられてきた「LiberroyとFoogの取り組み」は、余白のようなものです。
+		  </p>
 		</Chat>
 	</PreviewArea>
 	<PreviewCode slot='tab' label='React / Astro'>
 		```jsx
-		<Chat name='Taro' avatar='https://cdn.lism-css.com/img/avatar/a-01.jpg'>
-			<p>ロレム・イプサムの座り雨。目まぐるしい文章の流れの中で、それは静かに歩く仮の言葉です。Elitも穏やかに続いていきますが、積み重ねられてきた「LiberroyとFoogの取り組み」は、余白のようなものです。</p>
-		</Chat>
+		<Chat name="Taro" avatar="https://cdn.lism-css.com/img/avatar/a-01.jpg">
+		  <p>
+		    ロレム・イプサムの座り雨。目まぐるしい文章の流れの中で、それは静かに歩く仮の言葉です。Elitも穏やかに続いていきますが、積み重ねられてきた「LiberroyとFoogの取り組み」は、余白のようなものです。
+		  </p>
+		</Chat>;
 		```
 	</PreviewCode>
 	<PreviewCode slot='tab' label='HTML'>
 		```html
-		<div class='c--chat c--chat--speak l--grid -ji:start' style='--keycolor:var(--gray)' data-chat-dir='start'>
-			<div class='c--chat_avatar l--frame -bgc:base -ar:1/1 -bdrs:99' src='https://cdn.lism-css.com/img/avatar/a-01.jpg' aria-hidden='true'>
-				<img src='https://cdn.lism-css.com/img/avatar/a-01.jpg' alt='' width='60' height='60' decoding='async' />
-			</div>
-			<div class='c--chat_name -c:text-2 -fs:italic -fz:2xs -lh:1 -py:5 -px:10 -aslf:end'>Taro</div>
-			<div class='c--chat_body -pos:rel'>
-				<div class='u--cbox is--skipFlow c--chat_deco a--decorator -pos:abs' aria-hidden='true'></div>
-				<div class='u--cbox c--chat_content l--flow -flow:s -bdrs:30 -p:20 -lh:s -jslf:start'>
-					<p>ロレム・イプサムの座り雨。目まぐるしい文章の流れの中で、それは静かに歩く仮の言葉です。Elitも穏やかに続いていきますが、積み重ねられてきた「LiberroyとFoogの取り組み」は、余白のようなものです。</p>
-				</div>
-			</div>
+		<div class="c--chat c--chat--speak l--grid -ji:start" style="--keycolor: var(--gray)" data-chat-dir="start">
+		  <div class="c--chat_avatar l--frame -bgc:base -ar:1/1 -bdrs:99" src="https://cdn.lism-css.com/img/avatar/a-01.jpg" aria-hidden="true">
+		    <img src="https://cdn.lism-css.com/img/avatar/a-01.jpg" alt="" width="60" height="60" decoding="async" />
+		  </div>
+		  <div class="c--chat_name -c:text-2 -fs:italic -fz:2xs -lh:1 -py:5 -px:10 -aslf:end">Taro</div>
+		  <div class="c--chat_body -pos:rel">
+		    <div class="u--cbox is--skipFlow c--chat_deco a--decorator -pos:abs" aria-hidden="true"></div>
+		    <div class="u--cbox c--chat_content l--flow -flow:s -bdrs:30 -p:20 -lh:s -jslf:start">
+		      <p>
+		        ロレム・イプサムの座り雨。目まぐるしい文章の流れの中で、それは静かに歩く仮の言葉です。Elitも穏やかに続いていきますが、積み重ねられてきた「LiberroyとFoogの取り組み」は、余白のようなものです。
+		      </p>
+		    </div>
+		  </div>
 		</div>
 		```
 	</PreviewCode>
@@ -84,12 +90,12 @@ import { Chat } from '@lism-css/ui/react';
 <Preview>
 	<PreviewTitle>`<Chat>`の使用例</PreviewTitle>
 	<PreviewArea resize p='20' _dir='rtl'>
-		<Chat name='Taro' avatar='https://cdn.lism-css.com/img/avatar/a-01.jpg'>
-			<Dummy lang='ja' />
+		<Chat name="Taro" avatar="https://cdn.lism-css.com/img/avatar/a-01.jpg">
+		  <Dummy lang="ja" />
 		</Chat>
-		<Chat direction='end' name='Hanako' avatar='https://cdn.lism-css.com/img/avatar/a-02.jpg' keycolor='green'>
-			<Dummy lang='ja' length='codes' />
-			<Dummy lang='ja' />
+		<Chat direction="end" name="Hanako" avatar="https://cdn.lism-css.com/img/avatar/a-02.jpg" keycolor="green">
+		  <Dummy lang="ja" length="codes" />
+		  <Dummy lang="ja" />
 		</Chat>
 	</PreviewArea>
 	<PreviewCode>
@@ -121,11 +127,11 @@ import { Chat } from '@lism-css/ui/react';
 `}>
 	<PreviewTitle>`variant='think'`</PreviewTitle>
 	<PreviewArea resize p='20' _dir='rtl'>
-		<Chat variant='think' name='Name B' avatar='https://cdn.lism-css.com/img/avatar/a-01.jpg' keycolor='blue'>
-			<Dummy length='xs' />
+		<Chat variant="think" name="Name B" avatar="https://cdn.lism-css.com/img/avatar/a-01.jpg" keycolor="blue">
+		  <Dummy length="xs" />
 		</Chat>
-		<Chat variant='think' direction='end' name='Name B' avatar='https://cdn.lism-css.com/img/avatar/a-02.jpg' keycolor='purple'>
-			<Dummy length='codes' />
+		<Chat variant="think" direction="end" name="Name B" avatar="https://cdn.lism-css.com/img/avatar/a-02.jpg" keycolor="purple">
+		  <Dummy length="codes" />
 		</Chat>
 	</PreviewArea>
 	<PreviewCode slot='tab' label='JSX'>
@@ -141,10 +147,10 @@ import { Chat } from '@lism-css/ui/react';
 	<PreviewCode slot='tab' label='CSS'>
 		```css
 		@layer lism.modules {
-			.c--chat--think {
-				--_deco-t: min(calc(var(--_avator-size) / 3), 1.5rem);
-				--_deco-mask: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="8" height="8"><circle cx="1.5" cy="1.7" r="1.5"/><circle cx="4.5" cy="5.2" r="2.5"/></svg>');
-			}
+		  .c--chat--think {
+		    --_deco-t: min(calc(var(--_avator-size) / 3), 1.5rem);
+		    --_deco-mask: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="8" height="8"><circle cx="1.5" cy="1.7" r="1.5"/><circle cx="4.5" cy="5.2" r="2.5"/></svg>');
+		  }
 		}
 		```
 	</PreviewCode>
@@ -158,19 +164,23 @@ Astroでは、name,footerをslotで指定することが可能です。
 <Preview>
 	<PreviewTitle>`slot`の使用例</PreviewTitle>
 	<PreviewArea resize p='20'>
-		<Chat name='Name A' avatar='https://cdn.lism-css.com/img/avatar/a-01.jpg' keycolor='green'>
-			<b slot='name'>Taro</b>
-			<Dummy length='codes' />
-			<Fragment slot='footer'>time:<b>20:10</b></Fragment>
+		<Chat name="Name A" avatar="https://cdn.lism-css.com/img/avatar/a-01.jpg" keycolor="green">
+		  <b slot="name">Taro</b>
+		  <Dummy length="codes" />
+		  <Fragment slot="footer">
+		    time:<b>20:10</b>
+		  </Fragment>
 		</Chat>
 	</PreviewArea>
 	<PreviewCode>
 		```jsx "slot='name'" "slot='footer'"
-		<Chat name='Name A' avatar='https://cdn.lism-css.com/img/avatar/a-01.jpg' keycolor='green'>
-			<b slot='name'>Taro</b>
-			<p>Lorem ipsum...</p>
-			<Fragment slot='footer'>time:<b>20:10</b></Fragment>
-		</Chat>
+		<Chat name="Name A" avatar="https://cdn.lism-css.com/img/avatar/a-01.jpg" keycolor="green">
+		  <b slot="name">Taro</b>
+		  <p>Lorem ipsum...</p>
+		  <Fragment slot="footer">
+		    time:<b>20:10</b>
+		  </Fragment>
+		</Chat>;
 		```
 	</PreviewCode>
 </Preview>

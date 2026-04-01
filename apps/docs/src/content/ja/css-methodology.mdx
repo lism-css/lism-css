@@ -178,17 +178,31 @@ Prop クラス には以下の3種類の形式があります。
 <PreviewTitle>例えば以下のようなものがあります。</PreviewTitle>
 
 ```css
-.-ta\:c { text-align: center; }
-.-ta\:l { text-align: left; }
-.-fz\:l { font-size: var(--fz--l); }
-.-fz\:3xl { font-size: var(--fz--3xl); }
+.-ta\:c {
+  text-align: center;
+}
+.-ta\:l {
+  text-align: left;
+}
+.-fz\:l {
+  font-size: var(--fz--l);
+}
+.-fz\:3xl {
+  font-size: var(--fz--3xl);
+}
 
-.-p{ padding: var(--p); }
+.-p {
+  padding: var(--p);
+}
 @container (min-width: 480px) {
-	.-p_sm{ padding: var(--p_sm); }
+  .-p_sm {
+    padding: var(--p_sm);
+  }
 }
 @container (min-width: 720px) {
-	.-p_md{ padding: var(--p_md); }
+  .-p_md {
+    padding: var(--p_md);
+  }
 }
 ```
 
@@ -208,21 +222,19 @@ Prop クラス には以下の3種類の形式があります。
 	<PreviewTitle>実際の活用例は次の通りです。</PreviewTitle>
 	<PreviewArea resize>
 		<Lism p={[20, 40, 50]} bd>
-			BOX
+		  BOX
 		</Lism>
 	</PreviewArea>
 	<PreviewCode label="HTML" slot="tab">
 ```html "-p_sm" "-p_md" "--p_sm" "--p_md"
-<div class="-p:20 -p_sm -p_md -bd" style="--p_sm:var(--s40);--p_md:var(--s50);">
-	BOX
-</div>
+<div class="-p:20 -p_sm -p_md -bd" style="--p_sm: var(--s40); --p_md: var(--s50)">BOX</div>
 ```
 	</PreviewCode>
 	<PreviewCode label="JSX" slot="tab">
 ```jsx
 <Box p={[20, 40, 50]} bd>
-	BOX
-</Box>
+  BOX
+</Box>;
 ```
 	</PreviewCode>
 </Preview>

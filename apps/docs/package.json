@@ -3,7 +3,7 @@
   "type": "module",
   "version": "0.0.1",
   "scripts": {
-    "format": "prettier --write . --ignore-path ../../.prettierignore",
+    "format": "prettier --write . --ignore-path ../../.prettierignore && tsx scripts/format-mdx-codeblocks.ts",
     "dev": "astro dev",
     "build": "astro build && pagefind --site dist",
     "build:astro": "astro build",

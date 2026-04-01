@@ -51,27 +51,27 @@ import { Wrapper, Box, HTML, Lism, Spacer } from "lism-css/astro";
 <Preview>
 	<PreviewTitle>例</PreviewTitle>
 	<PreviewArea resize p='15'>
-		<Wrapper layout='flow' p='20' className='-bd:guide -hov:itemGuide'>
-			<p>Content</p>
-			<p>Content</p>
-			<p>...</p>
+		<Wrapper layout="flow" p="20" className="-bd:guide -hov:itemGuide">
+		  <p>Content</p>
+		  <p>Content</p>
+		  <p>...</p>
 		</Wrapper>
 	</PreviewArea>
 	<PreviewCode slot='tab' label='JSX'>
 		```jsx
-		<Wrapper layout='flow' p='20'>
-			<p>Content</p>
-			<p>Content</p>
-			<p>...</p>
-		</Wrapper>
+		<Wrapper layout="flow" p="20">
+		  <p>Content</p>
+		  <p>Content</p>
+		  <p>...</p>
+		</Wrapper>;
 		```
 	</PreviewCode>
 	<PreviewCode slot='tab' label='HTML'>
 		```html
-		<div class='l--flow is--wrapper -p:20'>
-			<p>Content</p>
-			<p>Content</p>
-			<p>...</p>
+		<div class="l--flow is--wrapper -p:20">
+		  <p>Content</p>
+		  <p>Content</p>
+		  <p>...</p>
 		</div>
 		```
 	</PreviewCode>
@@ -80,27 +80,27 @@ import { Wrapper, Box, HTML, Lism, Spacer } from "lism-css/astro";
 <Preview>
 	<PreviewTitle>`contentSize='s'`を指定</PreviewTitle>
 	<PreviewArea resize p='15'>
-		<Wrapper contentSize='s' layout='flow' p='20' className='-bd:guide -hov:itemGuide'>
-			<p>Content</p>
-			<p>Content</p>
-			<p>...</p>
+		<Wrapper contentSize="s" layout="flow" p="20" className="-bd:guide -hov:itemGuide">
+		  <p>Content</p>
+		  <p>Content</p>
+		  <p>...</p>
 		</Wrapper>
 	</PreviewArea>
 	<PreviewCode slot='tab' label='JSX'>
 		```jsx
-		<Wrapper contentSize='s' layout='flow' p='20'>
-			<p>Content</p>
-			<p>Content</p>
-			<p>...</p>
-		</Wrapper>
+		<Wrapper contentSize="s" layout="flow" p="20">
+		  <p>Content</p>
+		  <p>Content</p>
+		  <p>...</p>
+		</Wrapper>;
 		```
 	</PreviewCode>
 	<PreviewCode slot='tab' label='HTML'>
 		```html
-		<div class='l--flow is--wrapper -contentSize:s -p:20'>
-			<p>Content</p>
-			<p>Content</p>
-			<p>...</p>
+		<div class="l--flow is--wrapper -contentSize:s -p:20">
+		  <p>Content</p>
+		  <p>Content</p>
+		  <p>...</p>
 		</div>
 		```
 	</PreviewCode>
@@ -113,24 +113,24 @@ s, l 以外の値をセットしたい場合は、isWrapper に任意の値を�
 <Preview>
 	<PreviewTitle>is--wrapper に任意の値をセットする</PreviewTitle>
 	<PreviewArea resize p='15'>
-		<Lism isWrapper='20rem' p='20' className='-bd:guide -hov:itemGuide'>
-			<div>Contents...</div>
-			<div>Contents...</div>
+		<Lism isWrapper="20rem" p="20" className="-bd:guide -hov:itemGuide">
+		  <div>Contents...</div>
+		  <div>Contents...</div>
 		</Lism>
 	</PreviewArea>
 	<PreviewCode slot='tab' label='JSX'>
 	```jsx
-	<Lism isWrapper='20rem' p='20'>
-		<div>Contents...</div>
-		<div>Contents...</div>
-	</Lism>
+	<Lism isWrapper="20rem" p="20">
+	  <div>Contents...</div>
+	  <div>Contents...</div>
+	</Lism>;
 	```
 	</PreviewCode>
 	<PreviewCode slot='tab' label='HTML'>
 	```html
-	<div class="is--wrapper -p:20" style="--contentSize:20rem">
-		<div>Contents...</div>
-		<div>Contents...</div>
+	<div class="is--wrapper -p:20" style="--contentSize: 20rem">
+	  <div>Contents...</div>
+	  <div>Contents...</div>
 	</div>
 	```
 	</PreviewCode>

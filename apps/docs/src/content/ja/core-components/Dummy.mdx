@@ -28,7 +28,7 @@ import { Lism, HTML, Dummy, Stack } from "lism-css/astro";
 	<PreviewTitle>ダミーテキストの言語の違い</PreviewTitle>
 	<PreviewArea p='20'>
 		<Dummy />
-		<Dummy lang='ja' />
+		<Dummy lang="ja" />
 	</PreviewArea>
 	<PreviewCode>
 		```jsx
@@ -41,25 +41,25 @@ import { Lism, HTML, Dummy, Stack } from "lism-css/astro";
 <Preview>
 	<PreviewTitle>ダミーテキストの長さの違い</PreviewTitle>
 	<PreviewArea p='20'>
-		<Stack g='5'>
-			<Dummy lang='ja' length='xs' pre='xs: ' />
-			<Dummy length='xs' pre='xs: ' />
+		<Stack g="5">
+		  <Dummy lang="ja" length="xs" pre="xs: " />
+		  <Dummy length="xs" pre="xs: " />
 		</Stack>
-		<Stack g='5'>
-		<Dummy lang='ja' length='s' pre='s: ' />
-		<Dummy length='s' pre='s: ' />
+		<Stack g="5">
+		  <Dummy lang="ja" length="s" pre="s: " />
+		  <Dummy length="s" pre="s: " />
 		</Stack>
-		<Stack g='5'>
-			<Dummy lang='ja' length='m' pre='m: ' />
-			<Dummy length='m' pre='m: ' />
+		<Stack g="5">
+		  <Dummy lang="ja" length="m" pre="m: " />
+		  <Dummy length="m" pre="m: " />
 		</Stack>
-		<Stack g='5'>
-			<Dummy lang='ja' length='l' pre='l: ' />
-			<Dummy length='l' pre='l: ' />
+		<Stack g="5">
+		  <Dummy lang="ja" length="l" pre="l: " />
+		  <Dummy length="l" pre="l: " />
 		</Stack>
-		<Stack g='5'>
-			<Dummy lang='ja' length='xl' pre='xl: ' />
-			<Dummy length='xl' pre='xl: ' />
+		<Stack g="5">
+		  <Dummy lang="ja" length="xl" pre="xl: " />
+		  <Dummy length="xl" pre="xl: " />
 		</Stack>
 	</PreviewArea>
 	<PreviewCode>
@@ -76,11 +76,11 @@ import { Lism, HTML, Dummy, Stack } from "lism-css/astro";
 <Preview>
 	<PreviewTitle>`length='codes'`にすると、`<b>`,`<i>`,`<a>`,`<code>`を含んだダミーテキストを出力します。</PreviewTitle>
 	<PreviewArea p='20'>
-		<Dummy lang='ja' length='codes' />
+		<Dummy lang="ja" length="codes" />
 	</PreviewArea>
 	<PreviewCode>
 		```jsx
-		<Dummy lang='ja' length='codes' />
+		<Dummy lang="ja" length="codes" />;
 		```
 	</PreviewCode>
 </Preview>
@@ -89,9 +89,9 @@ import { Lism, HTML, Dummy, Stack } from "lism-css/astro";
 <Preview>
 	<PreviewTitle>offsetの例</PreviewTitle>
 	<PreviewArea p='20'>
-		<Dummy lang='ja' length='xs' />
-		<Dummy lang='ja' offset={1} />
-		<Dummy lang='ja' length='l' offset={3} />
+		<Dummy lang="ja" length="xs" />
+		<Dummy lang="ja" offset={1} />
+		<Dummy lang="ja" length="l" offset={3} />
 	</PreviewArea>
 	<PreviewCode>
 		```jsx
@@ -109,8 +109,8 @@ import { Lism, HTML, Dummy, Stack } from "lism-css/astro";
 <Preview>
 	<PreviewTitle>ダミーリストの例 1</PreviewTitle>
 	<PreviewArea p='20'>
-		<Dummy as='ul' />
-		<Dummy as='ol' />
+		<Dummy as="ul" />
+		<Dummy as="ol" />
 	</PreviewArea>
 	<PreviewCode>
 		```jsx
@@ -127,11 +127,11 @@ import { Lism, HTML, Dummy, Stack } from "lism-css/astro";
 <Preview>
 	<PreviewTitle>例</PreviewTitle>
 	<PreviewArea p='20'>
-		<Dummy as='img' />
+		<Dummy as="img" />
 	</PreviewArea>
 	<PreviewCode>
 		```jsx
-		<Dummy as='img' />
+		<Dummy as="img" />;
 		```
 	</PreviewCode>
 </Preview>

@@ -30,27 +30,27 @@ A layout that **switches between multi-column and single-column without using me
 <Preview>
 	<PreviewTitle>Using with the default width</PreviewTitle>
 	<PreviewArea resize p='15'>
-		<SwitchCols g='20'>
-			<div class="-bgc:base-2 -p:20">Box</div>
-			<div class="-bgc:base-2 -p:20">Box</div>
-			<div class="-bgc:base-2 -p:20">Box</div>
+		<SwitchCols g="20">
+		  <div class="-bgc:base-2 -p:20">Box</div>
+		  <div class="-bgc:base-2 -p:20">Box</div>
+		  <div class="-bgc:base-2 -p:20">Box</div>
 		</SwitchCols>
 	</PreviewArea>
 	<PreviewCode slot='tab' label='JSX'>
 		```jsx
-		<SwitchCols g='20'>
-			<div class="-bgc:base-2 -p:20">Box</div>
-			<div class="-bgc:base-2 -p:20">Box</div>
-			<div class="-bgc:base-2 -p:20">Box</div>
-		</SwitchCols>
+		<SwitchCols g="20">
+		  <div class="-bgc:base-2 -p:20">Box</div>
+		  <div class="-bgc:base-2 -p:20">Box</div>
+		  <div class="-bgc:base-2 -p:20">Box</div>
+		</SwitchCols>;
 		```
 	</PreviewCode>
 	<PreviewCode slot='tab' label='HTML'>
 		```html
 		<div class="l--switchCols -g:20">
-			<div class="-bgc:base-2 -p:20">Box</div>
-			<div class="-bgc:base-2 -p:20">Box</div>
-			<div class="-bgc:base-2 -p:20">Box</div>
+		  <div class="-bgc:base-2 -p:20">Box</div>
+		  <div class="-bgc:base-2 -p:20">Box</div>
+		  <div class="-bgc:base-2 -p:20">Box</div>
 		</div>
 		```
 	</PreviewCode>
@@ -60,27 +60,27 @@ A layout that **switches between multi-column and single-column without using me
 <Preview>
 	<PreviewTitle>Using with a specified `breakSize`</PreviewTitle>
 	<PreviewArea resize p='15'>
-		<SwitchCols breakSize='s' g='20'>
-			<div class="-bgc:base-2 -p:20">Box</div>
-			<div class="-bgc:base-2 -p:20">Box</div>
-			<div class="-bgc:base-2 -p:20">Box</div>
+		<SwitchCols breakSize="s" g="20">
+		  <div class="-bgc:base-2 -p:20">Box</div>
+		  <div class="-bgc:base-2 -p:20">Box</div>
+		  <div class="-bgc:base-2 -p:20">Box</div>
 		</SwitchCols>
 	</PreviewArea>
 	<PreviewCode slot='tab' label='JSX'>
 		```jsx
-		<SwitchCols breakSize='s' g='20'>
-			<div class="-bgc:base-2 -p:20">Box</div>
-			<div class="-bgc:base-2 -p:20">Box</div>
-			<div class="-bgc:base-2 -p:20">Box</div>
-		</SwitchCols>
+		<SwitchCols breakSize="s" g="20">
+		  <div class="-bgc:base-2 -p:20">Box</div>
+		  <div class="-bgc:base-2 -p:20">Box</div>
+		  <div class="-bgc:base-2 -p:20">Box</div>
+		</SwitchCols>;
 		```
 	</PreviewCode>
 	<PreviewCode slot='tab' label='HTML'>
 		```html
-		<div class="l--switchCols -g:20" style="--breakSize:var(--sz--s)">
-			<div class="-bgc:base-2 -p:20">Box</div>
-			<div class="-bgc:base-2 -p:20">Box</div>
-			<div class="-bgc:base-2 -p:20">Box</div>
+		<div class="l--switchCols -g:20" style="--breakSize: var(--sz--s)">
+		  <div class="-bgc:base-2 -p:20">Box</div>
+		  <div class="-bgc:base-2 -p:20">Box</div>
+		  <div class="-bgc:base-2 -p:20">Box</div>
 		</div>
 		```
 	</PreviewCode>
@@ -90,24 +90,28 @@ A layout that **switches between multi-column and single-column without using me
 <Preview>
 	<PreviewTitle>Adjusting proportions by specifying `flex-grow` on child elements</PreviewTitle>
 	<PreviewArea resize p='15'>
-		<SwitchCols breakSize='s' g='20'>
-			<div class="-bgc:base-2 -p:20">Box</div>
-			<div class="-bgc:base-2 -p:20" style={{flexGrow: 2}}>Box</div>
+		<SwitchCols breakSize="s" g="20">
+		  <div class="-bgc:base-2 -p:20">Box</div>
+		  <div class="-bgc:base-2 -p:20" style={{ flexGrow: 2 }}>
+		    Box
+		  </div>
 		</SwitchCols>
 	</PreviewArea>
 	<PreviewCode slot='tab' label='JSX'>
 		```jsx
-		<SwitchCols breakSize='s' g='20'>
-			<div class="-bgc:base-2 -p:20">Box</div>
-			<div class="-bgc:base-2 -p:20" style={{flexGrow: 2}}>Box</div>
-		</SwitchCols>
+		<SwitchCols breakSize="s" g="20">
+		  <div class="-bgc:base-2 -p:20">Box</div>
+		  <div class="-bgc:base-2 -p:20" style={{ flexGrow: 2 }}>
+		    Box
+		  </div>
+		</SwitchCols>;
 		```
 	</PreviewCode>
 	<PreviewCode slot='tab' label='HTML'>
 		```html
-		<div class="l--switchCols -g:20" style="--breakSize:var(--sz--s)">
-			<div class="-bgc:base-2 -p:20">Box</div>
-			<div class="-bgc:base-2 -p:20" style="flex-grow: 2">Box</div>
+		<div class="l--switchCols -g:20" style="--breakSize: var(--sz--s)">
+		  <div class="-bgc:base-2 -p:20">Box</div>
+		  <div class="-bgc:base-2 -p:20" style="flex-grow: 2">Box</div>
 		</div>
 		```
 	</PreviewCode>
