@@ -28,7 +28,7 @@ For example, `.l--` and `.c--` can be used together, but `.l--XXX` and `.l--YYY`
 
 Applying `is--container` sets <code>container-type: inline-size</code> on the element.
 Since Lism CSS supports property switching via container queries,
-			<b>this class must be applied to any wrapper element you want to use as the container query reference.</b>
+      <b>this class must be applied to any wrapper element you want to use as the container query reference.</b>
 
 ### `is--wrapper`
 
@@ -44,29 +44,29 @@ You can control the width of direct child elements using `--contentSize`, and pr
 | `-contentSize:l` | `--sz--l` |
 
 <Preview>
-	<PreviewTitle>Example</PreviewTitle>
-	<PreviewArea resize p='15'>
-		<Lism isWrapper="s" className="-bd:guide -hov:itemGuide">
-		  <div>Contents...</div>
-		  <div>Contents...</div>
-		</Lism>
-	</PreviewArea>
-	<PreviewCode slot='tab' label='HTML'>
-	```html
-	<div class="is--wrapper -contentSize:s">
-	  <div>Contents...</div>
-	  <div>Contents...</div>
-	</div>
-	```
-	</PreviewCode>
-	<PreviewCode slot='tab' label='JSX'>
-	```jsx
-	<Lism isWrapper="s">
-	  <div>Contents...</div>
-	  <div>Contents...</div>
-	</Lism>;
-	```
-	</PreviewCode>
+  <PreviewTitle>Example</PreviewTitle>
+  <PreviewArea resize p='15'>
+    <Lism isWrapper="s" className="-bd:guide -hov:itemGuide">
+      <div>Contents...</div>
+      <div>Contents...</div>
+    </Lism>
+  </PreviewArea>
+  <PreviewCode slot='tab' label='HTML'>
+  ```html
+  <div class="is--wrapper -contentSize:s">
+    <div>Contents...</div>
+    <div>Contents...</div>
+  </div>
+  ```
+  </PreviewCode>
+  <PreviewCode slot='tab' label='JSX'>
+  ```jsx
+  <Lism isWrapper="s">
+    <div>Contents...</div>
+    <div>Contents...</div>
+  </Lism>;
+  ```
+  </PreviewCode>
 </Preview>
 
 
@@ -120,31 +120,31 @@ Using `is--vertical@[sm|md]` enables vertical writing mode only at that breakpoi
 The value for vertical writing is managed via a token (`--vertical-mode`). (<span class='-fz:s'>This allows switching between `vertical-rl` and `vertical-lr` by overriding the variable according to the `lang` attribute.</span>)
 
 <Preview>
-	<PreviewTitle>Example: vertical writing at sm size and above</PreviewTitle>
-	<PreviewArea p='0' resize>
-		<Flow setGutter py="20" w="100%" h="20em" className="is--vertical@sm set--bp">
-		  <Dummy lang="ja" length="s" />
-		  <Dummy lang="ja" length="l" offset="3" />
-		</Flow>
-	</PreviewArea>
-	<PreviewCode slot='tab' label='HTML'>
-	```html "is--vertical@sm set--bp"
-	<div class="is--vertical@sm set--bp l--flow set--gutter -py:20 -w:100% -h" style="--h: 20em">
-	  <p>ロレム・イプサムの座り雨。目まぐるしい文章の流れの中で、それは静かに歩く仮の言葉です。</p>
-	  <p>
-	    Elitも穏やかに続いていきますが、積み重ねられてきた「LiberroyとFoogの取り組み」は、決するための答えというより、余白のようなものです。作業が進むにつれて、工夫や考えとともに関心が折り重なりながらも、必要以上に主張せず彼らの作品は私たちに一定の示唆を与えてくれます。
-	  </p>
-	</div>
-	```
-	</PreviewCode>
-	<PreviewCode slot='tab' label='JSX'>
-		```jsx "is--vertical@sm set--bp"
-		<Flow setGutter py="20" w="100%" h="20em" className="is--vertical@sm set--bp">
-		  <Dummy lang="ja" length="s" />
-		  <Dummy lang="ja" length="l" offset="3" />
-		</Flow>;
-		```
-	</PreviewCode>
+  <PreviewTitle>Example: vertical writing at sm size and above</PreviewTitle>
+  <PreviewArea p='0' resize>
+    <Flow setGutter py="20" w="100%" h="20em" className="is--vertical@sm set--bp">
+      <Dummy lang="ja" length="s" />
+      <Dummy lang="ja" length="l" offset="3" />
+    </Flow>
+  </PreviewArea>
+  <PreviewCode slot='tab' label='HTML'>
+  ```html "is--vertical@sm set--bp"
+  <div class="is--vertical@sm set--bp l--flow set--gutter -py:20 -w:100% -h" style="--h: 20em">
+    <p>ロレム・イプサムの座り雨。目まぐるしい文章の流れの中で、それは静かに歩く仮の言葉です。</p>
+    <p>
+      Elitも穏やかに続いていきますが、積み重ねられてきた「LiberroyとFoogの取り組み」は、決するための答えというより、余白のようなものです。作業が進むにつれて、工夫や考えとともに関心が折り重なりながらも、必要以上に主張せず彼らの作品は私たちに一定の示唆を与えてくれます。
+    </p>
+  </div>
+  ```
+  </PreviewCode>
+  <PreviewCode slot='tab' label='JSX'>
+    ```jsx "is--vertical@sm set--bp"
+    <Flow setGutter py="20" w="100%" h="20em" className="is--vertical@sm set--bp">
+      <Dummy lang="ja" length="s" />
+      <Dummy lang="ja" length="l" offset="3" />
+    </Flow>;
+    ```
+  </PreviewCode>
 </Preview>
 
 

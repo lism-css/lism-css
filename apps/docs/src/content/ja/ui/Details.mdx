@@ -11,46 +11,46 @@ import { Accordion, Details } from '@lism-css/ui/astro';
 [`Accordion`](/ui/accordion)とは違い、jsを使わずCSSだけでの実装となっています。
 
 <Preview>
-	<PreviewTitle>Preview</PreviewTitle>
-	<PreviewArea p='20'>
-		<Details.Root bd>
-		  <Details.Summary p="20" bgc="base-2" hov="neutral">
-		    <Details.Title>Details Title</Details.Title>
-		    <Details.Icon />
-		  </Details.Summary>
-		  <Details.Content p="20">
-		    <p>ここにコンテンツが入ります。</p>
-		  </Details.Content>
-		</Details.Root>
-	</PreviewArea>
-	<PreviewCode slot='tab' label='JSX'>
-		```jsx
-		<Details.Root bd>
-		  <Details.Summary p="20" bgc="base-2" hov="neutral">
-		    <Details.Title>Details Title</Details.Title>
-		    <Details.Icon />
-		  </Details.Summary>
-		  <Details.Content p="20">
-		    <p>ここにコンテンツが入ります。</p>
-		  </Details.Content>
-		</Details.Root>;
-		```
-	</PreviewCode>
-	<PreviewCode slot='tab' label='HTML'>
-		```html
-		<details class="c--details -bd">
-		  <summary class="c--details_summary l--flex -g:10 -ai:center -p:20 -bgc:base-2 -hov:neutral">
-		    <span class="c--details_title -fx:1">Details Title</span>
-		    <span class="c--details_icon a--icon" aria-hidden="true"></span>
-		  </summary>
-		  <div class="c--details_body">
-		    <div class="c--details_content l--flow -flow:s -p:20">
-		      <p>ここにコンテンツが入ります。</p>
-		    </div>
-		  </div>
-		</details>
-		```
-	</PreviewCode>
+  <PreviewTitle>Preview</PreviewTitle>
+  <PreviewArea p='20'>
+    <Details.Root bd>
+      <Details.Summary p="20" bgc="base-2" hov="neutral">
+        <Details.Title>Details Title</Details.Title>
+        <Details.Icon />
+      </Details.Summary>
+      <Details.Content p="20">
+        <p>ここにコンテンツが入ります。</p>
+      </Details.Content>
+    </Details.Root>
+  </PreviewArea>
+  <PreviewCode slot='tab' label='JSX'>
+    ```jsx
+    <Details.Root bd>
+      <Details.Summary p="20" bgc="base-2" hov="neutral">
+        <Details.Title>Details Title</Details.Title>
+        <Details.Icon />
+      </Details.Summary>
+      <Details.Content p="20">
+        <p>ここにコンテンツが入ります。</p>
+      </Details.Content>
+    </Details.Root>;
+    ```
+  </PreviewCode>
+  <PreviewCode slot='tab' label='HTML'>
+    ```html
+    <details class="c--details -bd">
+      <summary class="c--details_summary l--flex -g:10 -ai:center -p:20 -bgc:base-2 -hov:neutral">
+        <span class="c--details_title -fx:1">Details Title</span>
+        <span class="c--details_icon a--icon" aria-hidden="true"></span>
+      </summary>
+      <div class="c--details_body">
+        <div class="c--details_content l--flow -flow:s -p:20">
+          <p>ここにコンテンツが入ります。</p>
+        </div>
+      </div>
+    </details>
+    ```
+  </PreviewCode>
 </Preview>
 
 
@@ -76,27 +76,27 @@ import { Accordion, Details } from '@lism-css/ui/astro';
 ### 基本構造
 
 <Preview>
-	<PreviewCode slot='tab' label='JSX'>
-		```jsx
-		<Details.Root>
-		  <Details.Summary>
-		    <Details.Title>Details Title</Details.Title>
-		    <Details.Icon />
-		  </Details.Summary>
-		  <Details.Content>...Contents...</Details.Content>
-		</Details.Root>;
-		```
-	</PreviewCode>
-	<PreviewCode slot='tab' label='HTML'>
-		```pug
-		details.c--details
-			summary.c--details_summary.l--flex.-g:10.-ai:center
-				span.c--details_title.-fx:1
-				span.c--details_icon.a--icon[aria-hidden="true"]
-			div.c--details_body
-				div.c--details_content.l--flow
-		```
-	</PreviewCode>
+  <PreviewCode slot='tab' label='JSX'>
+    ```jsx
+    <Details.Root>
+      <Details.Summary>
+        <Details.Title>Details Title</Details.Title>
+        <Details.Icon />
+      </Details.Summary>
+      <Details.Content>...Contents...</Details.Content>
+    </Details.Root>;
+    ```
+  </PreviewCode>
+  <PreviewCode slot='tab' label='HTML'>
+    ```pug
+    details.c--details
+      summary.c--details_summary.l--flex.-g:10.-ai:center
+        span.c--details_title.-fx:1
+        span.c--details_icon.a--icon[aria-hidden="true"]
+      div.c--details_body
+        div.c--details_content.l--flow
+    ```
+  </PreviewCode>
 </Preview>
 
 
@@ -114,17 +114,17 @@ import { Accordion, Details } from '@lism-css/ui/astro';
 実際のソースコードは以下の通りです。
 
 <Preview>
-	<PreviewCode slot='tab' label='React'>
-		<SrcCode dir='lism-ui' path='src/components/Details/react/Details.jsx' title='Details.jsx' />
-	</PreviewCode>
-	<PreviewCode slot='tab' label='Astro'>
-		<SrcCode dir='lism-ui' path='src/components/Details/astro/Details.astro' title='Details.astro'/>
-		<Divider my='5' />
-		<SrcCode dir='lism-ui' path='src/components/Details/astro/Summary.astro' title='Summary.astro' />
-	</PreviewCode>
-	<PreviewCode slot='tab' label='_style.css'>
-		<SrcCode dir='lism-ui' path='src/components/Details/_style.css' />
-	</PreviewCode>
+  <PreviewCode slot='tab' label='React'>
+    <SrcCode dir='lism-ui' path='src/components/Details/react/Details.jsx' title='Details.jsx' />
+  </PreviewCode>
+  <PreviewCode slot='tab' label='Astro'>
+    <SrcCode dir='lism-ui' path='src/components/Details/astro/Details.astro' title='Details.astro'/>
+    <Divider my='5' />
+    <SrcCode dir='lism-ui' path='src/components/Details/astro/Summary.astro' title='Summary.astro' />
+  </PreviewCode>
+  <PreviewCode slot='tab' label='_style.css'>
+    <SrcCode dir='lism-ui' path='src/components/Details/_style.css' />
+  </PreviewCode>
 </Preview>
 
 
@@ -138,55 +138,55 @@ import { Accordion, Details } from '@lism-css/ui/astro';
 また、details/summaryの基本的な機能として、`name`属性を指定すると同じグループ内で同時に展開可能な要素が一つのみとなります。
 
 <Preview>
-	<PreviewTitle>例</PreviewTitle>
-	<PreviewArea p='20'>
-		<Stack g="10">
-		  <Details.Root bd name="details-group-01">
-		    <Details.Summary p="20" bgc="base-2" hov="neutral">
-		      <Details.Title as="h3">Details Title</Details.Title>
-		      <Details.Icon />
-		    </Details.Summary>
-		    <Details.Content p="20">
-		      <p>ここにコンテンツが入ります。</p>
-		    </Details.Content>
-		  </Details.Root>
-		  <Details.Root bd name="details-group-01">
-		    <Details.Summary p="20" bgc="base-2" hov="neutral">
-		      <Details.Title as="h3">Details Title</Details.Title>
-		      <Details.Icon />
-		    </Details.Summary>
-		    <Details.Content p="20">
-		      <p>ここにコンテンツが入ります。</p>
-		    </Details.Content>
-		  </Details.Root>
-		</Stack>
-	</PreviewArea>
-	<PreviewCode slot='tab' label='JSX'>
-		```jsx "as='h3'" "name="details-group-01""
-		<Stack g="10">
-		  <Details.Root bd name="details-group-01">
-		    <Details.Summary p="20" bgc="base-2" hov="neutral">
-		      <Details.Title as="h3">Details Title</Details.Title>
-		      <Details.Icon />
-		    </Details.Summary>
-		    <Details.Content p="20">
-		      <p>ここにコンテンツが入ります。</p>
-		    </Details.Content>
-		  </Details.Root>
-		  <Details.Root bd name="details-group-01">
-		    <Details.Summary p="20" bgc="base-2" hov="neutral">
-		      <Details.Title as="h3">Details Title</Details.Title>
-		      <Details.Icon />
-		    </Details.Summary>
-		    <Details.Content p="20">
-		      <p>ここにコンテンツが入ります。</p>
-		    </Details.Content>
-		  </Details.Root>
-		</Stack>;
-		```
-	</PreviewCode>
-	{/* <PreviewCode slot='tab' label='HTML'>
-	</PreviewCode> */}
+  <PreviewTitle>例</PreviewTitle>
+  <PreviewArea p='20'>
+    <Stack g="10">
+      <Details.Root bd name="details-group-01">
+        <Details.Summary p="20" bgc="base-2" hov="neutral">
+          <Details.Title as="h3">Details Title</Details.Title>
+          <Details.Icon />
+        </Details.Summary>
+        <Details.Content p="20">
+          <p>ここにコンテンツが入ります。</p>
+        </Details.Content>
+      </Details.Root>
+      <Details.Root bd name="details-group-01">
+        <Details.Summary p="20" bgc="base-2" hov="neutral">
+          <Details.Title as="h3">Details Title</Details.Title>
+          <Details.Icon />
+        </Details.Summary>
+        <Details.Content p="20">
+          <p>ここにコンテンツが入ります。</p>
+        </Details.Content>
+      </Details.Root>
+    </Stack>
+  </PreviewArea>
+  <PreviewCode slot='tab' label='JSX'>
+    ```jsx "as='h3'" "name="details-group-01""
+    <Stack g="10">
+      <Details.Root bd name="details-group-01">
+        <Details.Summary p="20" bgc="base-2" hov="neutral">
+          <Details.Title as="h3">Details Title</Details.Title>
+          <Details.Icon />
+        </Details.Summary>
+        <Details.Content p="20">
+          <p>ここにコンテンツが入ります。</p>
+        </Details.Content>
+      </Details.Root>
+      <Details.Root bd name="details-group-01">
+        <Details.Summary p="20" bgc="base-2" hov="neutral">
+          <Details.Title as="h3">Details Title</Details.Title>
+          <Details.Icon />
+        </Details.Summary>
+        <Details.Content p="20">
+          <p>ここにコンテンツが入ります。</p>
+        </Details.Content>
+      </Details.Root>
+    </Stack>;
+    ```
+  </PreviewCode>
+  {/* <PreviewCode slot='tab' label='HTML'>
+  </PreviewCode> */}
 </Preview>
 
 :::warning
@@ -204,31 +204,31 @@ import { Accordion, Details } from '@lism-css/ui/astro';
 
 
 <Preview>
-	<PreviewTitle>例</PreviewTitle>
-	<PreviewArea p='20'>
-		<Details.Root bd style={{ '--duration': '.4s' }}>
-		  <Details.Summary p="20" bgc="base-2" hov="neutral">
-		    <Details.Icon />
-		    <Details.Title as="h3">Details Title</Details.Title>
-		  </Details.Summary>
-		  <Details.Content p="20">
-		    <p>ここにコンテンツが入ります。</p>
-		  </Details.Content>
-		</Details.Root>
-	</PreviewArea>
-	<PreviewCode slot='tab' label='JSX'>
-		```jsx "--duration"
-		<Details.Root bd style={{ '--duration': '.4s' }}>
-		  <Details.Summary p="20" bgc="base-2" hov="neutral">
-		    <Details.Title as="h3">Details Title</Details.Title>
-		    <Details.Icon />
-		  </Details.Summary>
-		  <Details.Content p="20">
-		    <p>ここにコンテンツが入ります。</p>
-		  </Details.Content>
-		</Details.Root>;
-		```
-	</PreviewCode>
-	{/* <PreviewCode slot='tab' label='HTML'>
-	</PreviewCode> */}
+  <PreviewTitle>例</PreviewTitle>
+  <PreviewArea p='20'>
+    <Details.Root bd style={{ '--duration': '.4s' }}>
+      <Details.Summary p="20" bgc="base-2" hov="neutral">
+        <Details.Icon />
+        <Details.Title as="h3">Details Title</Details.Title>
+      </Details.Summary>
+      <Details.Content p="20">
+        <p>ここにコンテンツが入ります。</p>
+      </Details.Content>
+    </Details.Root>
+  </PreviewArea>
+  <PreviewCode slot='tab' label='JSX'>
+    ```jsx "--duration"
+    <Details.Root bd style={{ '--duration': '.4s' }}>
+      <Details.Summary p="20" bgc="base-2" hov="neutral">
+        <Details.Title as="h3">Details Title</Details.Title>
+        <Details.Icon />
+      </Details.Summary>
+      <Details.Content p="20">
+        <p>ここにコンテンツが入ります。</p>
+      </Details.Content>
+    </Details.Root>;
+    ```
+  </PreviewCode>
+  {/* <PreviewCode slot='tab' label='HTML'>
+  </PreviewCode> */}
 </Preview>

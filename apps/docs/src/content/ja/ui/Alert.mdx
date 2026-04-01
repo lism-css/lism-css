@@ -11,42 +11,42 @@ import { Alert } from '@lism-css/ui/astro';
 
 
 <Preview>
-	<PreviewTitle>Preview</PreviewTitle>
-	<PreviewArea resize p='20'>
-		<Alert>
-		  <p>ロレム・イプサムの座り雨。目まぐるしい文章の流れの中で、それは静かに歩く仮の言葉です。</p>
-		</Alert>
-	</PreviewArea>
-	<PreviewCode slot='tab' label='React / Astro'>
-		```jsx
-		<Alert>
-		  <p>ロレム・イプサムの座り雨。目まぐるしい文章の流れの中で、それは静かに歩く仮の言葉です。</p>
-		</Alert>;
-		```
-	</PreviewCode>
-	<PreviewCode slot='tab' label='HTML'>
-		```jsx
-		<div class="c--alert u--cbox l--flex -ai:center -p:15 -g:15 -bd -bdrs:10" style="--keycolor:var(--red)">
-		  <div class="l--center -c -fz:xl -fxsh:0" style="--c:var(--keycolor)">
-		    <svg
-		      xmlns="http://www.w3.org/2000/svg"
-		      viewBox="0 0 256 256"
-		      width="1em"
-		      height="1em"
-		      fill="currentColor"
-		      focusable="false"
-		      class="a--icon"
-		      aria-hidden="true"
-		    >
-		      <path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm0,192a88,88,0,1,1,88-88A88.1,88.1,0,0,1,128,216Zm-8-80V80a8,8,0,0,1,16,0v56a8,8,0,0,1-16,0Zm20,36a12,12,0,1,1-12-12A12,12,0,0,1,140,172Z"></path>
-		    </svg>
-		  </div>
-		  <div class="l--flow -flow:s">
-		    <p>ロレム・イプサムの座り雨。目まぐるしい文章の流れの中で、それは静かに歩く仮の言葉です。</p>
-		  </div>
-		</div>;
-		```
-	</PreviewCode>
+  <PreviewTitle>Preview</PreviewTitle>
+  <PreviewArea resize p='20'>
+    <Alert>
+      <p>ロレム・イプサムの座り雨。目まぐるしい文章の流れの中で、それは静かに歩く仮の言葉です。</p>
+    </Alert>
+  </PreviewArea>
+  <PreviewCode slot='tab' label='React / Astro'>
+    ```jsx
+    <Alert>
+      <p>ロレム・イプサムの座り雨。目まぐるしい文章の流れの中で、それは静かに歩く仮の言葉です。</p>
+    </Alert>;
+    ```
+  </PreviewCode>
+  <PreviewCode slot='tab' label='HTML'>
+    ```jsx
+    <div class="c--alert u--cbox l--flex -ai:center -p:15 -g:15 -bd -bdrs:10" style="--keycolor:var(--red)">
+      <div class="l--center -c -fz:xl -fxsh:0" style="--c:var(--keycolor)">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 256 256"
+          width="1em"
+          height="1em"
+          fill="currentColor"
+          focusable="false"
+          class="a--icon"
+          aria-hidden="true"
+        >
+          <path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm0,192a88,88,0,1,1,88-88A88.1,88.1,0,0,1,128,216Zm-8-80V80a8,8,0,0,1,16,0v56a8,8,0,0,1-16,0Zm20,36a12,12,0,1,1-12-12A12,12,0,0,1,140,172Z"></path>
+        </svg>
+      </div>
+      <div class="l--flow -flow:s">
+        <p>ロレム・イプサムの座り雨。目まぐるしい文章の流れの中で、それは静かに歩く仮の言葉です。</p>
+      </div>
+    </div>;
+    ```
+  </PreviewCode>
 </Preview>
 
 {/* 内部で`<SideMain>`を使用しており、コンテンツ側の横幅が一定値を下回ると自動で縦並びになります。 */}
@@ -64,21 +64,21 @@ import { Alert } from '@lism-css/ui/astro';
 ### Anatomy
 
 <Preview>
-	<PreviewCode slot='tab' label='React / Astro'>
-		```jsx
-		<Alert type="">...CONTENT...</Alert>;
-		```
-	</PreviewCode>
-	<PreviewCode slot='tab' label='HTML'>
-		```html
-		<div class="c--alert u--cbox l--flex -ai:center -p:15 -g:15 -bd -bdrs:10" style="--keycolor: var(--red)">
-		  <div class="l--center -c -fz:xl -fxsh:0" style="--c: var(--keycolor)">
-		    <svg class="a--icon">...</svg>
-		  </div>
-		  <div class="l--flow -flow:s">...CONTENT...</div>
-		</div>
-		```
-	</PreviewCode>
+  <PreviewCode slot='tab' label='React / Astro'>
+    ```jsx
+    <Alert type="">...CONTENT...</Alert>;
+    ```
+  </PreviewCode>
+  <PreviewCode slot='tab' label='HTML'>
+    ```html
+    <div class="c--alert u--cbox l--flex -ai:center -p:15 -g:15 -bd -bdrs:10" style="--keycolor: var(--red)">
+      <div class="l--center -c -fz:xl -fxsh:0" style="--c: var(--keycolor)">
+        <svg class="a--icon">...</svg>
+      </div>
+      <div class="l--flow -flow:s">...CONTENT...</div>
+    </div>
+    ```
+  </PreviewCode>
 </Preview>
 
 
@@ -99,15 +99,15 @@ import { Alert } from '@lism-css/ui/astro';
 ### Source Code
 
 <Preview>
-	<PreviewCode slot='tab' label='Alert.tsx'>
-		<SrcCode dir='lism-ui' path='src/components/Alert/react/Alert.tsx' />
-	</PreviewCode>
-	<PreviewCode slot='tab' label='Alert.astro'>
-		<SrcCode dir='lism-ui' path='src/components/Alert/astro/Alert.astro' />
-	</PreviewCode>
-	<PreviewCode slot='tab' label='getProps.ts'>
-		<SrcCode dir='lism-ui' path='src/components/Alert/getProps.ts' />
-	</PreviewCode>
+  <PreviewCode slot='tab' label='Alert.tsx'>
+    <SrcCode dir='lism-ui' path='src/components/Alert/react/Alert.tsx' />
+  </PreviewCode>
+  <PreviewCode slot='tab' label='Alert.astro'>
+    <SrcCode dir='lism-ui' path='src/components/Alert/astro/Alert.astro' />
+  </PreviewCode>
+  <PreviewCode slot='tab' label='getProps.ts'>
+    <SrcCode dir='lism-ui' path='src/components/Alert/getProps.ts' />
+  </PreviewCode>
 </Preview>
 
 
@@ -117,77 +117,77 @@ import { Alert } from '@lism-css/ui/astro';
 ### layout を切り替える
 
 <Preview>
-	<PreviewTitle>Preview</PreviewTitle>
-	<PreviewArea resize p='20'>
-		<Alert layout="sideMain">
-		  <p>ロレム・イプサムの座り雨。目まぐるしい文章の流れの中で、それは静かに歩く仮の言葉です。</p>
-		</Alert>
-	</PreviewArea>
-	<PreviewCode slot='tab' label='JSX'>
-		```jsx
-		<Alert layout="sideMain">
-		  <p>ロレム・イプサムの座り雨。目まぐるしい文章の流れの中で、それは静かに歩く仮の言葉です。</p>
-		</Alert>;
-		```
-	</PreviewCode>
+  <PreviewTitle>Preview</PreviewTitle>
+  <PreviewArea resize p='20'>
+    <Alert layout="sideMain">
+      <p>ロレム・イプサムの座り雨。目まぐるしい文章の流れの中で、それは静かに歩く仮の言葉です。</p>
+    </Alert>
+  </PreviewArea>
+  <PreviewCode slot='tab' label='JSX'>
+    ```jsx
+    <Alert layout="sideMain">
+      <p>ロレム・イプサムの座り雨。目まぐるしい文章の流れの中で、それは静かに歩く仮の言葉です。</p>
+    </Alert>;
+    ```
+  </PreviewCode>
 </Preview>
 
 
 ### type一覧
 
 <Preview>
-	<PreviewTitle>typeの指定</PreviewTitle>
-	<PreviewArea p='20' resize>
-		<Alert type="alert">
-		  <Dummy lang="ja" length="codes" />
-		</Alert>
-		<Alert type="point">
-		  <Dummy lang="ja" length="codes" />
-		</Alert>
-		<Alert type="warning">
-		  <Dummy lang="ja" length="codes" />
-		</Alert>
-		<Alert type="check">
-		  <Dummy lang="ja" length="codes" />
-		</Alert>
-		<Alert type="info">
-		  <Dummy lang="ja" length="codes" />
-		</Alert>
-		<Alert type="help">
-		  <Dummy lang="ja" length="codes" />
-		</Alert>
-	</PreviewArea>
-	<PreviewCode slot='tab' label='JSX'>
-	```jsx
-	<Alert type='alert'>...</Alert>
-	<Alert type='point'>...</Alert>
-	<Alert type='warning'>...</Alert>
-	<Alert type='check'>...</Alert>
-	<Alert type='info'>...</Alert>
-	<Alert type='help'>...</Alert>
-	```
-	</PreviewCode>
+  <PreviewTitle>typeの指定</PreviewTitle>
+  <PreviewArea p='20' resize>
+    <Alert type="alert">
+      <Dummy lang="ja" length="codes" />
+    </Alert>
+    <Alert type="point">
+      <Dummy lang="ja" length="codes" />
+    </Alert>
+    <Alert type="warning">
+      <Dummy lang="ja" length="codes" />
+    </Alert>
+    <Alert type="check">
+      <Dummy lang="ja" length="codes" />
+    </Alert>
+    <Alert type="info">
+      <Dummy lang="ja" length="codes" />
+    </Alert>
+    <Alert type="help">
+      <Dummy lang="ja" length="codes" />
+    </Alert>
+  </PreviewArea>
+  <PreviewCode slot='tab' label='JSX'>
+  ```jsx
+  <Alert type='alert'>...</Alert>
+  <Alert type='point'>...</Alert>
+  <Alert type='warning'>...</Alert>
+  <Alert type='check'>...</Alert>
+  <Alert type='info'>...</Alert>
+  <Alert type='help'>...</Alert>
+  ```
+  </PreviewCode>
 </Preview>
 
 
 ### カラーとアイコンを指定する例
 
 <Preview>
-	<PreviewTitle>
-		カラーとアイコンを指定する例
-	</PreviewTitle>
-	<PreviewArea p='20'>
-		<Alert icon="good" keycolor="pink">
-		  <p>ロレム・イプサムの座り雨。目まぐるしい文章の流れの中で、それは静かに歩く仮の言葉です。</p>
-		</Alert>
-	</PreviewArea>
-	<PreviewCode slot='tab' label='JSX'>
-		```jsx
-		<Alert icon="good" keycolor="pink">
-		  <p>ロレム・イプサムの座り雨。目まぐるしい文章の流れの中で、それは静かに歩く仮の言葉です。</p>
-		</Alert>;
-		```
-	</PreviewCode>
+  <PreviewTitle>
+    カラーとアイコンを指定する例
+  </PreviewTitle>
+  <PreviewArea p='20'>
+    <Alert icon="good" keycolor="pink">
+      <p>ロレム・イプサムの座り雨。目まぐるしい文章の流れの中で、それは静かに歩く仮の言葉です。</p>
+    </Alert>
+  </PreviewArea>
+  <PreviewCode slot='tab' label='JSX'>
+    ```jsx
+    <Alert icon="good" keycolor="pink">
+      <p>ロレム・イプサムの座り雨。目まぐるしい文章の流れの中で、それは静かに歩く仮の言葉です。</p>
+    </Alert>;
+    ```
+  </PreviewCode>
 </Preview>
 
 
@@ -198,52 +198,52 @@ import { Alert } from '@lism-css/ui/astro';
 @lism-css/uiを使用せずに、lism-css のみで Alert を構築するコード例を紹介します。
 
 <Preview>
-	<PreviewTitle>Preview</PreviewTitle>
-	<PreviewArea p='20'>
-		<SideMain className="u--cbox" keycolor="red" ai="center" p="15" g="15" bd bdrs="10">
-		  <Center isSide c="keycolor" fz="xl">
-		    <Icon icon="alert" />
-		  </Center>
-		  <Flow flow="s">
-		    <p>ロレム・イプサムの座り雨。目まぐるしい文章の流れの中で、それは静かに歩く仮の言葉です。</p>
-		  </Flow>
-		</SideMain>
-	</PreviewArea>
-	<PreviewCode slot='tab' label='JSX'>
-		```jsx
-		<SideMain className="u--cbox" keycolor="red" ai="center" p="15" g="15" bd bdrs="10">
-		  <Center isSide c="keycolor" fz="xl">
-		    <Icon icon="alert" />
-		  </Center>
-		  <Flow flow="s">
-		    <p>ロレム・イプサムの座り雨。目まぐるしい文章の流れの中で、それは静かに歩く仮の言葉です。</p>
-		  </Flow>
-		</SideMain>;
-		```
-	</PreviewCode>
-	<PreviewCode slot='tab' label='HTML'>
-		```html
-		<div class="l--sideMain u--cbox -ai:center -p:15 -g:15 -bd -bdrs:10" style="--keycolor: var(--red)">
-		  <div class="l--center is--side -c -fz:xl" style="--c: var(--keycolor)">
-		    <svg
-		      xmlns="http://www.w3.org/2000/svg"
-		      class="a--icon"
-		      viewBox="0 0 256 256"
-		      width="1em"
-		      height="1em"
-		      fill="currentColor"
-		      focusable="false"
-		      aria-hidden="true"
-		    >
-		      <path
-		        d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm0,192a88,88,0,1,1,88-88A88.1,88.1,0,0,1,128,216Zm-8-80V80a8,8,0,0,1,16,0v56a8,8,0,0,1-16,0Zm20,36a12,12,0,1,1-12-12A12,12,0,0,1,140,172Z"
-		      ></path>
-		    </svg>
-		  </div>
-		  <div class="l--flow -flow:s">
-		    <p>ロレム・イプサムの座り雨。目まぐるしい文章の流れの中で、それは静かに歩く仮の言葉です。</p>
-		  </div>
-		</div>
-		```
-	</PreviewCode>
+  <PreviewTitle>Preview</PreviewTitle>
+  <PreviewArea p='20'>
+    <SideMain className="u--cbox" keycolor="red" ai="center" p="15" g="15" bd bdrs="10">
+      <Center isSide c="keycolor" fz="xl">
+        <Icon icon="alert" />
+      </Center>
+      <Flow flow="s">
+        <p>ロレム・イプサムの座り雨。目まぐるしい文章の流れの中で、それは静かに歩く仮の言葉です。</p>
+      </Flow>
+    </SideMain>
+  </PreviewArea>
+  <PreviewCode slot='tab' label='JSX'>
+    ```jsx
+    <SideMain className="u--cbox" keycolor="red" ai="center" p="15" g="15" bd bdrs="10">
+      <Center isSide c="keycolor" fz="xl">
+        <Icon icon="alert" />
+      </Center>
+      <Flow flow="s">
+        <p>ロレム・イプサムの座り雨。目まぐるしい文章の流れの中で、それは静かに歩く仮の言葉です。</p>
+      </Flow>
+    </SideMain>;
+    ```
+  </PreviewCode>
+  <PreviewCode slot='tab' label='HTML'>
+    ```html
+    <div class="l--sideMain u--cbox -ai:center -p:15 -g:15 -bd -bdrs:10" style="--keycolor: var(--red)">
+      <div class="l--center is--side -c -fz:xl" style="--c: var(--keycolor)">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="a--icon"
+          viewBox="0 0 256 256"
+          width="1em"
+          height="1em"
+          fill="currentColor"
+          focusable="false"
+          aria-hidden="true"
+        >
+          <path
+            d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm0,192a88,88,0,1,1,88-88A88.1,88.1,0,0,1,128,216Zm-8-80V80a8,8,0,0,1,16,0v56a8,8,0,0,1-16,0Zm20,36a12,12,0,1,1-12-12A12,12,0,0,1,140,172Z"
+          ></path>
+        </svg>
+      </div>
+      <div class="l--flow -flow:s">
+        <p>ロレム・イプサムの座り雨。目まぐるしい文章の流れの中で、それは静かに歩く仮の言葉です。</p>
+      </div>
+    </div>
+    ```
+  </PreviewCode>
 </Preview>

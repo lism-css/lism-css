@@ -16,19 +16,19 @@ A class for resetting primary styles.
 <EmbedCode dirPath='packages/lism-css' srcPath='src/scss/base/set/_plain.scss' />
 
 <Preview>
-	<PreviewTitle>Applying `set--plain` to a `button` element</PreviewTitle>
-	<PreviewArea p='20' layout=''>
-		<div class="l--flex -g:20 -ff:mono">
-		  <button class="set--plain">button</button>
-		</div>
-	</PreviewArea>
-	<PreviewCode slot='tab' label='HTML'>
-	```html "'set--plain'"
-	<div class="l--flex -g:20 -ff:mono">
-	  <button class="set--plain">button</button>
-	</div>
-	```
-	</PreviewCode>
+  <PreviewTitle>Applying `set--plain` to a `button` element</PreviewTitle>
+  <PreviewArea p='20' layout=''>
+    <div class="l--flex -g:20 -ff:mono">
+      <button class="set--plain">button</button>
+    </div>
+  </PreviewArea>
+  <PreviewCode slot='tab' label='HTML'>
+  ```html "'set--plain'"
+  <div class="l--flex -g:20 -ff:mono">
+    <button class="set--plain">button</button>
+  </div>
+  ```
+  </PreviewCode>
 </Preview>
 
 
@@ -42,51 +42,51 @@ Elements with the `.set--shadow` class have the `--bxsh--` variables that compos
 By overriding the `--shc` variable here, you can adjust the color tint of the shadow.
 
 <Preview>
-	<PreviewTitle>Example of overriding shadow color</PreviewTitle>
-	<PreviewArea p='30' nogrid>
-		<Stack g="10">
-		  <HTML.p> Default: </HTML.p>
-		  <Flex className="set--shadow -g:30" px-s="15">
-		    <Box bxsh="20" p="30" bdrs="20">
-		      Box
-		    </Box>
-		    <Box bxsh="40" p="30" bdrs="20">
-		      Box
-		    </Box>
-		  </Flex>
-		  <Spacer h="40" />
-		  <HTML.p> Overriding variables with set--shadow: </HTML.p>
-		  <Flex className="set--shadow -g:30" px-s="15" style={{ '--shc': 'hsl(200 50% 50% / 20%)' }}>
-		    <Box bxsh="20" p="30" bdrs="20">
-		      Box
-		    </Box>
-		    <Box bxsh="40" p="30" bdrs="20">
-		      Box
-		    </Box>
-		  </Flex>
-		</Stack>
-		<div class="a--spacer" />
-	</PreviewArea>
-		<PreviewCode slot='tab' label='HTML'>
-		```html "set--shadow"
-		<div class="set--shadow l--flex -g:30" style="--shc: hsl(200 50% 50% / 20%)">
-		  <div class="l--box -bxsh:20 -p:30 -bdrs:20">Box</div>
-		  <div class="l--box -bxsh:40 -p:30 -bdrs:20">Box</div>
-		</div>
-		```
-	</PreviewCode>
-	<PreviewCode slot='tab' label='JSX'>
-		```jsx "set--shadow"
-		<Flex className="set--shadow" g="30" style={{ '--shc': 'hsl(200 50% 50% / 20%)' }}>
-		  <Box bxsh="20" p="30" bdrs="20">
-		    Box
-		  </Box>
-		  <Box bxsh="40" p="30" bdrs="20">
-		    Box
-		  </Box>
-		</Flex>;
-		```
-	</PreviewCode>
+  <PreviewTitle>Example of overriding shadow color</PreviewTitle>
+  <PreviewArea p='30' nogrid>
+    <Stack g="10">
+      <HTML.p> Default: </HTML.p>
+      <Flex className="set--shadow -g:30" px-s="15">
+        <Box bxsh="20" p="30" bdrs="20">
+          Box
+        </Box>
+        <Box bxsh="40" p="30" bdrs="20">
+          Box
+        </Box>
+      </Flex>
+      <Spacer h="40" />
+      <HTML.p> Overriding variables with set--shadow: </HTML.p>
+      <Flex className="set--shadow -g:30" px-s="15" style={{ '--shc': 'hsl(200 50% 50% / 20%)' }}>
+        <Box bxsh="20" p="30" bdrs="20">
+          Box
+        </Box>
+        <Box bxsh="40" p="30" bdrs="20">
+          Box
+        </Box>
+      </Flex>
+    </Stack>
+    <div class="a--spacer" />
+  </PreviewArea>
+    <PreviewCode slot='tab' label='HTML'>
+    ```html "set--shadow"
+    <div class="set--shadow l--flex -g:30" style="--shc: hsl(200 50% 50% / 20%)">
+      <div class="l--box -bxsh:20 -p:30 -bdrs:20">Box</div>
+      <div class="l--box -bxsh:40 -p:30 -bdrs:20">Box</div>
+    </div>
+    ```
+  </PreviewCode>
+  <PreviewCode slot='tab' label='JSX'>
+    ```jsx "set--shadow"
+    <Flex className="set--shadow" g="30" style={{ '--shc': 'hsl(200 50% 50% / 20%)' }}>
+      <Box bxsh="20" p="30" bdrs="20">
+        Box
+      </Box>
+      <Box bxsh="40" p="30" bdrs="20">
+        Box
+      </Box>
+    </Flex>;
+    ```
+  </PreviewCode>
 </Preview>
 
 
@@ -98,26 +98,26 @@ It can be used as a workaround for properties that do not support [responsive br
 <EmbedCode dirPath='packages/lism-css' srcPath='src/scss/base/set/_bp.scss' />
 
 <Preview>
-	<PreviewTitle>Example: changing text color to red at sm size and above</PreviewTitle>
-	<PreviewArea resize>
-		<Box className="set--bp" p="20" style={{ color: 'var(--_is_sm) red;' }}>
-		  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.</p>
-		</Box>
-	</PreviewArea>
-	<PreviewCode slot='tab' label='HTML'>
-	```html "set--bp" "var(--_is_sm) red"
-	<div class="set--bp l--box -p:20" style="color: var(--_is_sm) red">
-	  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.</p>
-	</div>
-	```
-	</PreviewCode>
-	<PreviewCode slot='tab' label='JSX'>
-		```jsx "set--bp" "var(--_is_sm) red"
-		<Box className="set--bp" p="20" style={{ color: 'var(--_is_sm) red;' }}>
-		  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.</p>
-		</Box>;
-		```
-	</PreviewCode>
+  <PreviewTitle>Example: changing text color to red at sm size and above</PreviewTitle>
+  <PreviewArea resize>
+    <Box className="set--bp" p="20" style={{ color: 'var(--_is_sm) red;' }}>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.</p>
+    </Box>
+  </PreviewArea>
+  <PreviewCode slot='tab' label='HTML'>
+  ```html "set--bp" "var(--_is_sm) red"
+  <div class="set--bp l--box -p:20" style="color: var(--_is_sm) red">
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.</p>
+  </div>
+  ```
+  </PreviewCode>
+  <PreviewCode slot='tab' label='JSX'>
+    ```jsx "set--bp" "var(--_is_sm) red"
+    <Box className="set--bp" p="20" style={{ color: 'var(--_is_sm) red;' }}>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.</p>
+    </Box>;
+    ```
+  </PreviewCode>
 </Preview>
 
 ### `set--cqUnit`
@@ -158,15 +158,15 @@ The calculation is based on the parent element's (`set--innerRs`) `p` (`--p`) an
 To apply the calculated `--bdrs--inner` to a child element, use `-bdrs:inner` on that child.
 
 <Preview>
-	<PreviewTitle>Usage example</PreviewTitle>
-	<PreviewArea p='30'>
-		<Lism className="set--innerRs" p="15" bd bxsh="20" bdrs="50">
-		  <Frame bdrs="inner" ar="og">
-		    <img src="https://cdn.lism-css.com/img/u-5.jpg" width="1920" height="1280" alt="" />
-		  </Frame>
-		</Lism>
-	</PreviewArea>
-	<PreviewCode label="JSX" slot="tab">
+  <PreviewTitle>Usage example</PreviewTitle>
+  <PreviewArea p='30'>
+    <Lism className="set--innerRs" p="15" bd bxsh="20" bdrs="50">
+      <Frame bdrs="inner" ar="og">
+        <img src="https://cdn.lism-css.com/img/u-5.jpg" width="1920" height="1280" alt="" />
+      </Frame>
+    </Lism>
+  </PreviewArea>
+  <PreviewCode label="JSX" slot="tab">
 ```jsx
 <Lism className="set--innerRs" p="15" bd bxsh="20" bdrs="50">
   <Frame bdrs="inner" ar="og">
@@ -174,8 +174,8 @@ To apply the calculated `--bdrs--inner` to a child element, use `-bdrs:inner` on
   </Frame>
 </Lism>;
 ```
-	</PreviewCode>
-	<PreviewCode label="HTML" slot="tab">
+  </PreviewCode>
+  <PreviewCode label="HTML" slot="tab">
 ```html
 <div class="set--innerRs -p:15 -bd -bxsh:20 -bdrs:50">
   <div class="l--frame -bdrs:inner -ar:og">
@@ -183,7 +183,7 @@ To apply the calculated `--bdrs--inner` to a child element, use `-bdrs:inner` on
   </div>
 </div>
 ```
-	</PreviewCode>
+  </PreviewCode>
 </Preview>
 
 <Spacer h='1rem' />
@@ -191,17 +191,17 @@ To apply the calculated `--bdrs--inner` to a child element, use `-bdrs:inner` on
 Since `p` and `bdrs` are managed as variables even when their values change at breakpoints, `set--innerRs` also supports responsive border radius.
 
 <Preview>
-	<PreviewTitle>Usage example</PreviewTitle>
-	<PreviewArea p='20' resize>
-		<Lism p={[10, 20, 30]} bd bdw="2px" bdrs={['40', null, '50']} class="set--innerRs">
-		  <Lism bd p="15" bdrs="inner">
-		    Example
-		  </Lism>
-		</Lism>
-	</PreviewArea>
-	{/* <PreviewCode label="HTML" slot="tab">
-	</PreviewCode> */}
-	<PreviewCode label="JSX" slot="tab">
+  <PreviewTitle>Usage example</PreviewTitle>
+  <PreviewArea p='20' resize>
+    <Lism p={[10, 20, 30]} bd bdw="2px" bdrs={['40', null, '50']} class="set--innerRs">
+      <Lism bd p="15" bdrs="inner">
+        Example
+      </Lism>
+    </Lism>
+  </PreviewArea>
+  {/* <PreviewCode label="HTML" slot="tab">
+  </PreviewCode> */}
+  <PreviewCode label="JSX" slot="tab">
 ```jsx
 <Lism p={[10, 20, 30]} bd bdw="2px" bdrs={['40', null, '50']} class="set--innerRs">
   <Lism bd p="15" bdrs="inner">
@@ -209,7 +209,7 @@ Since `p` and `bdrs` are managed as variables even when their values change at b
   </Lism>
 </Lism>;
 ```
-	</PreviewCode>
+  </PreviewCode>
 </Preview>
 
 
@@ -223,32 +223,32 @@ It is provided as a separate class from padding utilities to reserve a consisten
 | `set--gutter` | `--gutter-size` | `1.5rem` |
 
 <Preview>
-	<PreviewTitle>Example</PreviewTitle>
-	<PreviewArea resize p='15'>
-		<Lism setGutter>
-		  <p>Lorem ipsum content...</p>
-		  <p>Lorem ipsum content...</p>
-		  <p>Lorem ipsum content...</p>
-		</Lism>
-	</PreviewArea>
-	<PreviewCode slot='tab' label='HTML'>
-	```html
-	<div class="set--gutter">
-	  <p>Lorem ipsum content...</p>
-	  <p>Lorem ipsum content...</p>
-	  <p>Lorem ipsum content...</p>
-	</div>
-	```
-	</PreviewCode>
-	<PreviewCode slot='tab' label='JSX'>
-	```jsx
-	<Lism setGutter>
-	  <p>Lorem ipsum content...</p>
-	  <p>Lorem ipsum content...</p>
-	  <p>Lorem ipsum content...</p>
-	</Lism>;
-	```
-	</PreviewCode>
+  <PreviewTitle>Example</PreviewTitle>
+  <PreviewArea resize p='15'>
+    <Lism setGutter>
+      <p>Lorem ipsum content...</p>
+      <p>Lorem ipsum content...</p>
+      <p>Lorem ipsum content...</p>
+    </Lism>
+  </PreviewArea>
+  <PreviewCode slot='tab' label='HTML'>
+  ```html
+  <div class="set--gutter">
+    <p>Lorem ipsum content...</p>
+    <p>Lorem ipsum content...</p>
+    <p>Lorem ipsum content...</p>
+  </div>
+  ```
+  </PreviewCode>
+  <PreviewCode slot='tab' label='JSX'>
+  ```jsx
+  <Lism setGutter>
+    <p>Lorem ipsum content...</p>
+    <p>Lorem ipsum content...</p>
+    <p>Lorem ipsum content...</p>
+  </Lism>;
+  ```
+  </PreviewCode>
 </Preview>
 
 
@@ -264,42 +264,42 @@ It is provided as a separate class from padding utilities to reserve a consisten
 Lismが提供するコンポーネントでは、`setMask`プロパティに指定した文字列が`--maskImg`として出力されるようになっています。（この時、`<svg>~</svg>`だけを渡すと、base64へエンコードされます。
 
 <Preview>
-	<PreviewTitle>例</PreviewTitle>
-	<PreviewArea p='10'>
-		<HTML.img
-		  src="https://cdn.lism-css.com/img/u-2.jpg"
-		  width="960"
-		  height="640"
-		  loading="lazy"
-		  ar="og"
-		  setMask={`<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><path fill="#000000" d="M170.4,25.7c16.1,14.2,23.2,38.5,24.8,61.7c1.7,23.3-1.8,45.5-12.9,62.3c-11,16.9-29.3,28.6-48.8,34.5 c-19.4,5.9-40,6.1-59.5,0.4c-19.5-5.6-37.9-17.4-51.7-34.9c-14-17.5-23.2-40.8-18-60.2c5-19.4,24.5-34.7,43.5-48.4 s37.6-25.7,59.5-29.7C129.1,7.3,154.2,11.4,170.4,25.7z" /></svg>`}
-		/>
-	</PreviewArea>
-	<PreviewCode slot='tab' label='JSX'>
-		```jsx
-		<HTML.img
-		  src="https://cdn.lism-css.com/img/u-2.jpg"
-		  width="960"
-		  height="640"
-		  loading="lazy"
-		  ar="og"
-		  setMask={`<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><path fill="#000000" d="M170.4,25.7c16.1,14.2,23.2,38.5,24.8,61.7c1.7,23.3-1.8,45.5-12.9,62.3c-11,16.9-29.3,28.6-48.8,34.5 c-19.4,5.9-40,6.1-59.5,0.4c-19.5-5.6-37.9-17.4-51.7-34.9c-14-17.5-23.2-40.8-18-60.2c5-19.4,24.5-34.7,43.5-48.4 s37.6-25.7,59.5-29.7C129.1,7.3,154.2,11.4,170.4,25.7z" /></svg>`}
-		/>;
-		```
-	</PreviewCode>
-	<PreviewCode slot='tab' label='HTML'>
-		```html
-		<img
-		  class="set--mask -ar:og"
-		  src="https://cdn.lism-css.com/img/u-2.jpg"
-		  width="960"
-		  height="640"
-		  loading="lazy"
-		  style="
-		    --maskImg: url(data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMjAwIDIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBmaWxsPSIjMDAwMDAwIiBkPSJNMTcwLjQsMjUuN2MxNi4xLDE0LjIsMjMuMiwzOC41LDI0LjgsNjEuN2MxLjcsMjMuMy0xLjgsNDUuNS0xMi45LDYyLjNjLTExLDE2LjktMjkuMywyOC42LTQ4LjgsMzQuNSBjLTE5LjQsNS45LTQwLDYuMS01OS41LDAuNGMtMTkuNS01LjYtMzcuOS0xNy40LTUxLjctMzQuOWMtMTQtMTcuNS0yMy4yLTQwLjgtMTgtNjAuMmM1LTE5LjQsMjQuNS0zNC43LDQzLjUtNDguNCBzMzcuNi0yNS43LDU5LjUtMjkuN0MxMjkuMSw3LjMsMTU0LjIsMTEuNCwxNzAuNCwyNS43eiIgLz48L3N2Zz4=);
-		  "
-		/>
-		```
-	</PreviewCode>
+  <PreviewTitle>例</PreviewTitle>
+  <PreviewArea p='10'>
+    <HTML.img
+      src="https://cdn.lism-css.com/img/u-2.jpg"
+      width="960"
+      height="640"
+      loading="lazy"
+      ar="og"
+      setMask={`<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><path fill="#000000" d="M170.4,25.7c16.1,14.2,23.2,38.5,24.8,61.7c1.7,23.3-1.8,45.5-12.9,62.3c-11,16.9-29.3,28.6-48.8,34.5 c-19.4,5.9-40,6.1-59.5,0.4c-19.5-5.6-37.9-17.4-51.7-34.9c-14-17.5-23.2-40.8-18-60.2c5-19.4,24.5-34.7,43.5-48.4 s37.6-25.7,59.5-29.7C129.1,7.3,154.2,11.4,170.4,25.7z" /></svg>`}
+    />
+  </PreviewArea>
+  <PreviewCode slot='tab' label='JSX'>
+    ```jsx
+    <HTML.img
+      src="https://cdn.lism-css.com/img/u-2.jpg"
+      width="960"
+      height="640"
+      loading="lazy"
+      ar="og"
+      setMask={`<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><path fill="#000000" d="M170.4,25.7c16.1,14.2,23.2,38.5,24.8,61.7c1.7,23.3-1.8,45.5-12.9,62.3c-11,16.9-29.3,28.6-48.8,34.5 c-19.4,5.9-40,6.1-59.5,0.4c-19.5-5.6-37.9-17.4-51.7-34.9c-14-17.5-23.2-40.8-18-60.2c5-19.4,24.5-34.7,43.5-48.4 s37.6-25.7,59.5-29.7C129.1,7.3,154.2,11.4,170.4,25.7z" /></svg>`}
+    />;
+    ```
+  </PreviewCode>
+  <PreviewCode slot='tab' label='HTML'>
+    ```html
+    <img
+      class="set--mask -ar:og"
+      src="https://cdn.lism-css.com/img/u-2.jpg"
+      width="960"
+      height="640"
+      loading="lazy"
+      style="
+        --maskImg: url(data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMjAwIDIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBmaWxsPSIjMDAwMDAwIiBkPSJNMTcwLjQsMjUuN2MxNi4xLDE0LjIsMjMuMiwzOC41LDI0LjgsNjEuN2MxLjcsMjMuMy0xLjgsNDUuNS0xMi45LDYyLjNjLTExLDE2LjktMjkuMywyOC42LTQ4LjgsMzQuNSBjLTE5LjQsNS45LTQwLDYuMS01OS41LDAuNGMtMTkuNS01LjYtMzcuOS0xNy40LTUxLjctMzQuOWMtMTQtMTcuNS0yMy4yLTQwLjgtMTgtNjAuMmM1LTE5LjQsMjQuNS0zNC43LDQzLjUtNDguNCBzMzcuNi0yNS43LDU5LjUtMjkuN0MxMjkuMSw3LjMsMTU0LjIsMTEuNCwxNzAuNCwyNS43eiIgLz48L3N2Zz4=);
+      "
+    />
+    ```
+  </PreviewCode>
 </Preview>
  */}

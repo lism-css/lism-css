@@ -34,179 +34,179 @@ A `<Frame>` component is distributed in `lism-css`.
 ## Usage
 
 <Preview>
-	<PreviewTitle>Specifying `ar='16/9'`</PreviewTitle>
-	<PreviewArea resize>
-		<Frame ar="16/9">
-		  <img src="https://cdn.lism-css.com/img/a-1.jpg" alt="" width="960" height="640" />
-		</Frame>
-	</PreviewArea>
-	<PreviewCode slot='tab' label='JSX'>
-		```jsx
-		<Frame ar="16/9">
-		  <img src="https://cdn.lism-css.com/img/a-1.jpg" alt="" width="960" height="640" />
-		</Frame>;
-		```
-	</PreviewCode>
-	<PreviewCode slot='tab' label='HTML'>
-		```html
-		<div class="l--frame -ar:16/9">
-		  <img src="https://cdn.lism-css.com/img/a-1.jpg" alt="" width="960" height="640" />
-		</div>
-		```
-	</PreviewCode>
+  <PreviewTitle>Specifying `ar='16/9'`</PreviewTitle>
+  <PreviewArea resize>
+    <Frame ar="16/9">
+      <img src="https://cdn.lism-css.com/img/a-1.jpg" alt="" width="960" height="640" />
+    </Frame>
+  </PreviewArea>
+  <PreviewCode slot='tab' label='JSX'>
+    ```jsx
+    <Frame ar="16/9">
+      <img src="https://cdn.lism-css.com/img/a-1.jpg" alt="" width="960" height="640" />
+    </Frame>;
+    ```
+  </PreviewCode>
+  <PreviewCode slot='tab' label='HTML'>
+    ```html
+    <div class="l--frame -ar:16/9">
+      <img src="https://cdn.lism-css.com/img/a-1.jpg" alt="" width="960" height="640" />
+    </div>
+    ```
+  </PreviewCode>
 </Preview>
 
 <Preview>
-	<PreviewTitle>Using `figure` and `figcaption`</PreviewTitle>
-	<PreviewArea resize>
-		<Frame as="figure" ar="16/9" pos="rel">
-		  <img src="https://cdn.lism-css.com/img/a-1.jpg" alt="" width="960" height="640" />
-		  <Flex as="figcaption" pos="abs" z="1" b="0" w="100%" jc="center" p="10" c="white" bgc="rgb(0 0 0 / 40%)">
-		    Lorem ipsum text.
-		  </Flex>
-		</Frame>
-	</PreviewArea>
-	<PreviewCode slot='tab' label='JSX'>
-		```jsx
-		<Frame as="figure" ar="16/9" pos="rel">
-		  <img src="https://cdn.lism-css.com/img/a-1.jpg" alt="" width="960" height="640" />
-		  <Flex as="figcaption" pos="abs" z="1" b="0" w="100%" jc="center" p="10" c="white" bgc="rgb(0 0 0 / 40%)">
-		    Lorem ipsum text.
-		  </Flex>
-		</Frame>;
-		```
-	</PreviewCode>
-	<PreviewCode slot='tab' label='HTML'>
-		```html
-		<figure class="l--frame -ar:16/9 -pos:rel">
-		  <img src="https://cdn.lism-css.com/img/a-1.jpg" width="960" height="640" />
-		  <figcaption class="l--flex -pos:abs -z:1 -b:0 -w:100% -jc:center -p:10 -c -bgc" style="--c: var(--white); --bgc: rgb(0 0 0 / 40%)">
-		    Lorem ipsum text.
-		  </figcaption>
-		</figure>
-		```
-	</PreviewCode>
+  <PreviewTitle>Using `figure` and `figcaption`</PreviewTitle>
+  <PreviewArea resize>
+    <Frame as="figure" ar="16/9" pos="rel">
+      <img src="https://cdn.lism-css.com/img/a-1.jpg" alt="" width="960" height="640" />
+      <Flex as="figcaption" pos="abs" z="1" b="0" w="100%" jc="center" p="10" c="white" bgc="rgb(0 0 0 / 40%)">
+        Lorem ipsum text.
+      </Flex>
+    </Frame>
+  </PreviewArea>
+  <PreviewCode slot='tab' label='JSX'>
+    ```jsx
+    <Frame as="figure" ar="16/9" pos="rel">
+      <img src="https://cdn.lism-css.com/img/a-1.jpg" alt="" width="960" height="640" />
+      <Flex as="figcaption" pos="abs" z="1" b="0" w="100%" jc="center" p="10" c="white" bgc="rgb(0 0 0 / 40%)">
+        Lorem ipsum text.
+      </Flex>
+    </Frame>;
+    ```
+  </PreviewCode>
+  <PreviewCode slot='tab' label='HTML'>
+    ```html
+    <figure class="l--frame -ar:16/9 -pos:rel">
+      <img src="https://cdn.lism-css.com/img/a-1.jpg" width="960" height="640" />
+      <figcaption class="l--flex -pos:abs -z:1 -b:0 -w:100% -jc:center -p:10 -c -bgc" style="--c: var(--white); --bgc: rgb(0 0 0 / 40%)">
+        Lorem ipsum text.
+      </figcaption>
+    </figure>
+    ```
+  </PreviewCode>
 </Preview>
 
 <Preview>
-	<PreviewTitle>Using `video`</PreviewTitle>
-	<PreviewArea resize>
-		<Frame ar="16/9">
-		  <video controls>
-		    <source src="/video/video-1.mp4" type="video/mp4" />
-		  </video>
-		</Frame>
-	</PreviewArea>
-	<PreviewCode slot='tab' label='JSX'>
-		```jsx
-		<Frame ar="16/9">
-		  <video controls>
-		    <source src="/video/video-1.mp4" type="video/mp4" />
-		  </video>
-		</Frame>;
-		```
-	</PreviewCode>
-	<PreviewCode slot='tab' label='HTML'>
-		```html
-		<div class="l--frame -ar:16/9">
-		  <video controls>
-		    <source src="/video/video-1.mp4" type="video/mp4" />
-		  </video>
-		</div>
-		```
-	</PreviewCode>
-</Preview>
-
-
-
-<Preview>
-	<PreviewTitle>Using `iframe`</PreviewTitle>
-	<PreviewArea resize>
-		<Frame ar="16/9">
-		  <iframe
-		    src="https://www.youtube.com/embed/gcgKUcJKxIs?si=uDa6akiLY3QmM8pK"
-		    title="YouTube video player"
-		    frameborder="0"
-		    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-		    referrerpolicy="strict-origin-when-cross-origin"
-		    allowfullscreen
-		  ></iframe>
-		</Frame>
-	</PreviewArea>
-	<PreviewCode slot='tab' label='JSX'>
-		```jsx
-		<Frame ar="16/9">
-		  <iframe
-		    src="https://www.youtube.com/embed/gcgKUcJKxIs?si=uDa6akiLY3QmM8pK"
-		    title="YouTube video player"
-		    frameborder="0"
-		    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-		    referrerpolicy="strict-origin-when-cross-origin"
-		    allowfullscreen
-		  ></iframe>
-		</Frame>;
-		```
-	</PreviewCode>
-	<PreviewCode slot='tab' label='HTML'>
-		```html
-		<div class="l--frame -ar:16/9">
-		  <iframe
-		    src="https://www.youtube.com/embed/gcgKUcJKxIs?si=uDa6akiLY3QmM8pK"
-		    title="YouTube video player"
-		    frameborder="0"
-		    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-		    referrerpolicy="strict-origin-when-cross-origin"
-		    allowfullscreen
-		  ></iframe>
-		</div>
-		```
-	</PreviewCode>
+  <PreviewTitle>Using `video`</PreviewTitle>
+  <PreviewArea resize>
+    <Frame ar="16/9">
+      <video controls>
+        <source src="/video/video-1.mp4" type="video/mp4" />
+      </video>
+    </Frame>
+  </PreviewArea>
+  <PreviewCode slot='tab' label='JSX'>
+    ```jsx
+    <Frame ar="16/9">
+      <video controls>
+        <source src="/video/video-1.mp4" type="video/mp4" />
+      </video>
+    </Frame>;
+    ```
+  </PreviewCode>
+  <PreviewCode slot='tab' label='HTML'>
+    ```html
+    <div class="l--frame -ar:16/9">
+      <video controls>
+        <source src="/video/video-1.mp4" type="video/mp4" />
+      </video>
+    </div>
+    ```
+  </PreviewCode>
 </Preview>
 
 
 
 <Preview>
-	<PreviewTitle>Using Layer components</PreviewTitle>
-	<PreviewArea resize p='15'>
-		<Frame ar="3/2" pos="rel" c="#fff">
-		  <img src="https://cdn.lism-css.com/img/a-1.jpg" alt="" width="960" height="640" />
-		  <Layer blur="4px" bgc="rgb(0 0 0 / 40%)" />
-		  <Layer p="30" ov="auto">
-		    <Center min-h="100%" g="15">
-		      <h2>Heading</h2>
-		      <Dummy max-w="xs" />
-		    </Center>
-		  </Layer>
-		</Frame>
-	</PreviewArea>
-	<PreviewCode slot='tab' label='JSX'>
-		```jsx
-		<Frame ar="3/2" pos="rel" c="#fff">
-		  <img src="https://cdn.lism-css.com/img/a-1.jpg" alt="" width="960" height="640" />
-		  <Layer blur="4px" bgc="rgb(0 0 0 / 40%)" />
-		  <Layer p="30" ov="auto">
-		    <Center min-h="100%" g="15">
-		      <h2>Heading</h2>
-		      <Dummy max-w="xs" />
-		    </Center>
-		  </Layer>
-		</Frame>;
-		```
-	</PreviewCode>
-		<PreviewCode slot='tab' label='HTML'>
-		```jsx
-		<div class="l--frame -ar:3/2 -pos:rel -c" style="--c:#fff">
-			<img src="https://cdn.lism-css.com/img/a-1.jpg" alt="" width="960" height="640">
-			<div class="is--layer -bgc" style="--bgc:rgb(0 0 0 / 40%);backdrop-filter:blur(4px)"></div>
-			<div class="is--layer -p:30 -ov:auto">
-				<div class="l--center -min-h:100% -g:15">
-					<h2>Heading</h2>
-					<p class="-max-w:xs" style="--max-w:var(--sz--xs)">Lorem ipsum dolor sit amet...</p>
-				</div>
-			</div>
-		</div>
-		```
-	</PreviewCode>
+  <PreviewTitle>Using `iframe`</PreviewTitle>
+  <PreviewArea resize>
+    <Frame ar="16/9">
+      <iframe
+        src="https://www.youtube.com/embed/gcgKUcJKxIs?si=uDa6akiLY3QmM8pK"
+        title="YouTube video player"
+        frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        referrerpolicy="strict-origin-when-cross-origin"
+        allowfullscreen
+      ></iframe>
+    </Frame>
+  </PreviewArea>
+  <PreviewCode slot='tab' label='JSX'>
+    ```jsx
+    <Frame ar="16/9">
+      <iframe
+        src="https://www.youtube.com/embed/gcgKUcJKxIs?si=uDa6akiLY3QmM8pK"
+        title="YouTube video player"
+        frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        referrerpolicy="strict-origin-when-cross-origin"
+        allowfullscreen
+      ></iframe>
+    </Frame>;
+    ```
+  </PreviewCode>
+  <PreviewCode slot='tab' label='HTML'>
+    ```html
+    <div class="l--frame -ar:16/9">
+      <iframe
+        src="https://www.youtube.com/embed/gcgKUcJKxIs?si=uDa6akiLY3QmM8pK"
+        title="YouTube video player"
+        frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        referrerpolicy="strict-origin-when-cross-origin"
+        allowfullscreen
+      ></iframe>
+    </div>
+    ```
+  </PreviewCode>
+</Preview>
+
+
+
+<Preview>
+  <PreviewTitle>Using Layer components</PreviewTitle>
+  <PreviewArea resize p='15'>
+    <Frame ar="3/2" pos="rel" c="#fff">
+      <img src="https://cdn.lism-css.com/img/a-1.jpg" alt="" width="960" height="640" />
+      <Layer blur="4px" bgc="rgb(0 0 0 / 40%)" />
+      <Layer p="30" ov="auto">
+        <Center min-h="100%" g="15">
+          <h2>Heading</h2>
+          <Dummy max-w="xs" />
+        </Center>
+      </Layer>
+    </Frame>
+  </PreviewArea>
+  <PreviewCode slot='tab' label='JSX'>
+    ```jsx
+    <Frame ar="3/2" pos="rel" c="#fff">
+      <img src="https://cdn.lism-css.com/img/a-1.jpg" alt="" width="960" height="640" />
+      <Layer blur="4px" bgc="rgb(0 0 0 / 40%)" />
+      <Layer p="30" ov="auto">
+        <Center min-h="100%" g="15">
+          <h2>Heading</h2>
+          <Dummy max-w="xs" />
+        </Center>
+      </Layer>
+    </Frame>;
+    ```
+  </PreviewCode>
+    <PreviewCode slot='tab' label='HTML'>
+    ```jsx
+    <div class="l--frame -ar:3/2 -pos:rel -c" style="--c:#fff">
+      <img src="https://cdn.lism-css.com/img/a-1.jpg" alt="" width="960" height="640">
+      <div class="is--layer -bgc" style="--bgc:rgb(0 0 0 / 40%);backdrop-filter:blur(4px)"></div>
+      <div class="is--layer -p:30 -ov:auto">
+        <div class="l--center -min-h:100% -g:15">
+          <h2>Heading</h2>
+          <p class="-max-w:xs" style="--max-w:var(--sz--xs)">Lorem ipsum dolor sit amet...</p>
+        </div>
+      </div>
+    </div>
+    ```
+  </PreviewCode>
 </Preview>
 
 
@@ -221,51 +221,51 @@ A `<Frame>` component is distributed in `lism-css`.
 
 
 <Preview>
-	<PreviewTitle>Example of specifying `ar` on Flow</PreviewTitle>
-	<PreviewArea resize p='5'>
-		<Flow ar="16/9" ov-y="auto" p="30" bgc="base">
-		  <Dummy />
-		  <Dummy length="l" />
-		  <Frame ar="16/9" max-w="50%">
-		    <Media src="https://cdn.lism-css.com/img/a-1.jpg" alt="" width="960" height="640" />
-		  </Frame>
-		  <Dummy length="xl" />
-		  <Dummy />
-		</Flow>
-	</PreviewArea>
-	<PreviewCode slot='tab' label='JSX'>
-		```jsx "Flow ar='16/9'" "ov-y='auto'"
-		<Flow ar="16/9" ov-y="auto" p="30">
-		  ...
-		</Flow>;
-		```
-	</PreviewCode>
+  <PreviewTitle>Example of specifying `ar` on Flow</PreviewTitle>
+  <PreviewArea resize p='5'>
+    <Flow ar="16/9" ov-y="auto" p="30" bgc="base">
+      <Dummy />
+      <Dummy length="l" />
+      <Frame ar="16/9" max-w="50%">
+        <Media src="https://cdn.lism-css.com/img/a-1.jpg" alt="" width="960" height="640" />
+      </Frame>
+      <Dummy length="xl" />
+      <Dummy />
+    </Flow>
+  </PreviewArea>
+  <PreviewCode slot='tab' label='JSX'>
+    ```jsx "Flow ar='16/9'" "ov-y='auto'"
+    <Flow ar="16/9" ov-y="auto" p="30">
+      ...
+    </Flow>;
+    ```
+  </PreviewCode>
 </Preview>
 
 
 <Preview>
-	<PreviewTitle>`ar` can also be changed at breakpoints.</PreviewTitle>
-	<PreviewArea resize p='15'>
-		<Frame ar={['1/1', '3/2', '16/9']} pos="rel">
-		  <img src="https://cdn.lism-css.com/img/a-1.jpg" alt="" width="960" height="640" />
-		  <Box pos="abs" l="0" t="0" bgc="black" c="white" p="10" lh="s" fz="s" m="15" bdrs="10">
-		    {`Ratio:`}
-		    <HTML.span d={['inline', 'none']}>1/1</HTML.span>
-		    <HTML.span d={['none', 'inline', 'none']}>3/2</HTML.span>
-		    <HTML.span d={['none', null, 'inline']}>16/9</HTML.span>
-		  </Box>
-		</Frame>
-	</PreviewArea>
-	<PreviewCode slot='tab' label='JSX'>
-		```jsx
-		<Frame ar={['1/1', '3/2', '16/9']} pos="rel">
-		  ...
-		</Frame>;
-		```
-	</PreviewCode>
-	<PreviewCode slot='tab' label='HTML'>
-		```html
-		<div class="l--frame -ar:1/1 -pos:rel -ar_sm -ar_md" style="--ar_sm: 3/2; --ar_md: 16/9">...</div>
-		```
-	</PreviewCode>
+  <PreviewTitle>`ar` can also be changed at breakpoints.</PreviewTitle>
+  <PreviewArea resize p='15'>
+    <Frame ar={['1/1', '3/2', '16/9']} pos="rel">
+      <img src="https://cdn.lism-css.com/img/a-1.jpg" alt="" width="960" height="640" />
+      <Box pos="abs" l="0" t="0" bgc="black" c="white" p="10" lh="s" fz="s" m="15" bdrs="10">
+        {`Ratio:`}
+        <HTML.span d={['inline', 'none']}>1/1</HTML.span>
+        <HTML.span d={['none', 'inline', 'none']}>3/2</HTML.span>
+        <HTML.span d={['none', null, 'inline']}>16/9</HTML.span>
+      </Box>
+    </Frame>
+  </PreviewArea>
+  <PreviewCode slot='tab' label='JSX'>
+    ```jsx
+    <Frame ar={['1/1', '3/2', '16/9']} pos="rel">
+      ...
+    </Frame>;
+    ```
+  </PreviewCode>
+  <PreviewCode slot='tab' label='HTML'>
+    ```html
+    <div class="l--frame -ar:1/1 -pos:rel -ar_sm -ar_md" style="--ar_sm: 3/2; --ar_md: 16/9">...</div>
+    ```
+  </PreviewCode>
 </Preview>

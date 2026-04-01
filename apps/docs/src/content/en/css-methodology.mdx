@@ -5,7 +5,7 @@ description: 'An overview of the CSS layer structure and class design methodolog
 import { Lism, Box } from "lism-css/astro";
 
 export const WhsNw = ({children}) => {
-	return <span className='-whspace:nowrap'>{children}</span>
+  return <span className='-whspace:nowrap'>{children}</span>
 }
 
 This page explains the CSS design principles behind Lism.
@@ -37,45 +37,45 @@ To address the common problem of CSS specificity becoming overly complex, Lism d
 |Utility|Other exceptional utility classes.|| */}
 
 <table className="l--table">
-	<thead>
-		<tr>
-			<th>Layer</th>
-			<th>Role</th>
-		</tr>
-	</thead>
-	<tbody>
-		<tr>
-			<td>Settings</td>
-			<td>SASS configuration variables, mixins, and other constructs that do not directly output styles.</td>
-		</tr>
-		<tr>
-			<td>Base<br/>`@lism-base`</td>
-			<td>The layer for Reset CSS, token definitions, variable sets, and initial element styles.<br/>`.set--{state}` classes are also defined here.</td>
-		</tr>
-		<tr>
-			<td class='-whspace:nowrap'>Modules<br/>`@lism-modules`</td>
-			<td>
-				The layer that defines the collection of modules.<br />
-				It is further subdivided into sub-layers where `.is--{state}`, `.l--{layout}`, `.a--{atomic}`, and `.c--{custom}` are defined.
-			</td>
-		</tr>
-		{/* <tr>
-			<td class='-whspace:nowrap'>Custom Modules<br/>`@lism-modules`</td>
-			<td>Other user-defined custom modules and UI components with specific roles (`.c--{modules}`).</td>
-		</tr> */}
-		<tr>
-			<td class='-whspace:nowrap'>Utility<br/>`@lism-utility`</td>
-			<td>The layer for utility classes with a clear purpose or style (`.u--{name}`).</td>
-		</tr>
-		<tr>
-			<td class='-whspace:nowrap'>Custom<br/>`@lism-custom`</td>
-			<td>A customization layer for defining styles that should take priority over the layers above while remaining lower specificity than Prop Classes.</td>
-		</tr>
-		<tr>
-			<td class='-whspace:nowrap'>Props<br/>`-`</td>
-			<td>**Prop Classes** (`.-{prop}:{val}`) tied to individual CSS properties.<br />This group is the only one placed outside of layers, giving it higher specificity while still allowing reasonable coexistence with external CSS.</td>
-		</tr>
-	</tbody>
+  <thead>
+    <tr>
+      <th>Layer</th>
+      <th>Role</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Settings</td>
+      <td>SASS configuration variables, mixins, and other constructs that do not directly output styles.</td>
+    </tr>
+    <tr>
+      <td>Base<br/>`@lism-base`</td>
+      <td>The layer for Reset CSS, token definitions, variable sets, and initial element styles.<br/>`.set--{state}` classes are also defined here.</td>
+    </tr>
+    <tr>
+      <td class='-whspace:nowrap'>Modules<br/>`@lism-modules`</td>
+      <td>
+        The layer that defines the collection of modules.<br />
+        It is further subdivided into sub-layers where `.is--{state}`, `.l--{layout}`, `.a--{atomic}`, and `.c--{custom}` are defined.
+      </td>
+    </tr>
+    {/* <tr>
+      <td class='-whspace:nowrap'>Custom Modules<br/>`@lism-modules`</td>
+      <td>Other user-defined custom modules and UI components with specific roles (`.c--{modules}`).</td>
+    </tr> */}
+    <tr>
+      <td class='-whspace:nowrap'>Utility<br/>`@lism-utility`</td>
+      <td>The layer for utility classes with a clear purpose or style (`.u--{name}`).</td>
+    </tr>
+    <tr>
+      <td class='-whspace:nowrap'>Custom<br/>`@lism-custom`</td>
+      <td>A customization layer for defining styles that should take priority over the layers above while remaining lower specificity than Prop Classes.</td>
+    </tr>
+    <tr>
+      <td class='-whspace:nowrap'>Props<br/>`-`</td>
+      <td>**Prop Classes** (`.-{prop}:{val}`) tied to individual CSS properties.<br />This group is the only one placed outside of layers, giving it higher specificity while still allowing reasonable coexistence with external CSS.</td>
+    </tr>
+  </tbody>
 </table>
 
 
@@ -218,24 +218,24 @@ See the [Prop Class reference page](/docs/prop-class) for the full list.
 The `.-{prop}_{bp}` class format combined with the `--{prop}_{bp}` variable format enables responsive styling.
 
 <Preview>
-	<PreviewTitle>Here is a practical usage example:</PreviewTitle>
-	<PreviewArea resize>
-		<Lism p={[20, 40, 50]} bd>
-		  BOX
-		</Lism>
-	</PreviewArea>
-	<PreviewCode label="HTML" slot="tab">
+  <PreviewTitle>Here is a practical usage example:</PreviewTitle>
+  <PreviewArea resize>
+    <Lism p={[20, 40, 50]} bd>
+      BOX
+    </Lism>
+  </PreviewArea>
+  <PreviewCode label="HTML" slot="tab">
 ```html "-p_sm" "-p_md" "--p_sm" "--p_md"
 <div class="-p:20 -p_sm -p_md -bd" style="--p_sm: var(--s40); --p_md: var(--s50)">BOX</div>
 ```
-	</PreviewCode>
-	<PreviewCode label="JSX" slot="tab">
+  </PreviewCode>
+  <PreviewCode label="JSX" slot="tab">
 ```jsx
 <Box p={[20, 40, 50]} bd>
   BOX
 </Box>;
 ```
-	</PreviewCode>
+  </PreviewCode>
 </Preview>
 
 <Reference>
@@ -281,23 +281,23 @@ Each block of a variable name uses camelCase, expressed as `--{varName}`.
 - Color: `--{color}`. Examples: `--brand`, `--text`, `--link`, `--red`
 - Spacing: Uses the format `--s{Token}`. Examples: `--s10`, `--s40`
 - Other variations for specific properties or categories use the format `--{prop}--{token}`:
-	- `font-size`: `--fz--s`, `--fz--base`, `--fz--l`
-	- `--hl`: `--hl--s`, `--hl--base`, `--hl--l`
-	- `border-radius`: `--bdrs--10`, `--bdrs--20`
-	- `box-shadow`: `--bxsh--10`, `--bxsh--20`
-	- Size tokens: `--sz--{size}`. Examples: `--sz--s`, `--sz--m`, `--sz--l`
+  - `font-size`: `--fz--s`, `--fz--base`, `--fz--l`
+  - `--hl`: `--hl--s`, `--hl--base`, `--hl--l`
+  - `border-radius`: `--bdrs--10`, `--bdrs--20`
+  - `box-shadow`: `--bxsh--10`, `--bxsh--20`
+  - Size tokens: `--sz--{size}`. Examples: `--sz--s`, `--sz--m`, `--sz--l`
 
 
 **Rules for expressing token variations**
 
 1. Size notation using `s`, `l`, `xl`, etc.
-	- This notation is used for **tokens that represent whether a value is smaller or larger relative to a defined base value (`base`) or center value (`m`)**.
+  - This notation is used for **tokens that represent whether a value is smaller or larger relative to a defined base value (`base`) or center value (`m`)**.
     - `base` is used for values that reset to the value set on `:root (html)` or `body`; `m` is used for a primary center value that is not necessarily the base.
 2. Stepped numeric notation using `10`, `20`, `30`, ...
     - This notation is used for **tokens where `0` (`none`) is the baseline and values increase in steps**.
 3. Other
     - Semantic token names are defined to match the semantics of each property.
-	- Example: `--ar--og`
+  - Example: `--ar--og`
 
 
 :::info
@@ -311,21 +311,21 @@ By using simple numeric variations, you can expand them to `base-3`, `text-3`, a
 
 #### Variable names for Prop Classes
 - Custom properties corresponding to Prop Classes use `--{prop}`, expressed with the **same abbreviation as the class name**.
-	- Examples: `--p`, `--mx`, `--c`, `--bgc`, `--bdrs`
+  - Examples: `--p`, `--mx`, `--c`, `--bgc`, `--bdrs`
 - Breakpoint values for Prop Classes use `--{prop}_{bp}`.
-	- Examples: `--p_sm`, `--mx_md`
+  - Examples: `--p_sm`, `--mx_md`
 
 #### Variable names for elements
 - Properties that are **overridable from `:root`** and are specific to a particular element or class use the format `--{target}-{prop}`.
-	- Examples: `--link-td`, `--heading-ff`, `--gutter-size`, `--under-offset`, `--hl-unit`, `--ov-bgc`
+  - Examples: `--link-td`, `--heading-ff`, `--gutter-size`, `--under-offset`, `--hl-unit`, `--ov-bgc`
 - Variables for the primary functionality of a component or module class are expressed as a single block, like `--{propName}`.
-	- Examples: `--sideW`, `--mainW` for `.l--sideMain`
-	- Note: When the property is also defined as a Prop Class, the same variable name can be used to allow overriding.
-		- Example: `--c`, `--bgc` on `.c--button`
+  - Examples: `--sideW`, `--mainW` for `.l--sideMain`
+  - Note: When the property is also defined as a Prop Class, the same variable name can be used to allow overriding.
+    - Example: `--c`, `--bgc` on `.c--button`
 - Properties for child elements of specific components or modules (e.g., `c--hoge_item`) use the format `--_{item}-{propName}`.
-	- Example: `--_icon-size`
+  - Example: `--_icon-size`
 - Variables used for special state management start with `_` and are written as a single camelCase block: `--_{varName}`.
-	- Examples: `--_isHov`, `--_notHov`
+  - Examples: `--_isHov`, `--_notHov`
 
 
 
@@ -341,9 +341,9 @@ About prefixes:
 For the `{value}` part of `-{prop}:{value}`:
 
 - Decimal values — use `.` as-is. (The CSS side requires escaping with `\`.)
-	- Example: `.-prop:1.5`
+  - Example: `.-prop:1.5`
 - Negative values — use the minus sign as-is.
-	- Example: `.-prop:-1`
+  - Example: `.-prop:-1`
 
 
 

@@ -8,16 +8,16 @@ import { Cat, Smiley } from "@phosphor-icons/react";
 import {phIcons, logoIcons} from 'lism-css/react/atomic/Icon/presets';
 
 export const PresetIcons = ({icons}) => {
-	return <Grid layout='fluidCols' cols='10rem' g='15'>
-			{Object.keys(icons).map((iconName) => {
-				return (
-					<Stack key={iconName} g='10' ai='center' bgc='base-2' bdrs='10' p='15'>
-						<Icon icon={iconName} fz='xl' />
-						<span class='u--trim -fz:xs -ff:mono -d:b'>{iconName}</span>
-					</Stack>
-				);
-			})}
-	</Grid>;
+  return <Grid layout='fluidCols' cols='10rem' g='15'>
+      {Object.keys(icons).map((iconName) => {
+        return (
+          <Stack key={iconName} g='10' ai='center' bgc='base-2' bdrs='10' p='15'>
+            <Icon icon={iconName} fz='xl' />
+            <span class='u--trim -fz:xs -ff:mono -d:b'>{iconName}</span>
+          </Stack>
+        );
+      })}
+  </Grid>;
 }
 
 
@@ -66,33 +66,33 @@ Note that when using a React-based icon package in Astro, you need to enable Rea
 <Spacer h='10'/>
 
 <Preview>
-	<PreviewTitle>Specifying an external component via `as`</PreviewTitle>
-	<PreviewArea p='20'>
-		<Icon as={Smiley} fz="2rem" />
-	</PreviewArea>
-	<PreviewCode>
+  <PreviewTitle>Specifying an external component via `as`</PreviewTitle>
+  <PreviewArea p='20'>
+    <Icon as={Smiley} fz="2rem" />
+  </PreviewArea>
+  <PreviewCode>
 ```jsx "icon={Smiley}"
 import { Smiley } from '@phosphor-icons/react';
 import { Icon } from 'lism-css/react';
 
 <Icon as={Smiley} fz="2rem" />;
 ```
-	</PreviewCode>
+  </PreviewCode>
 </Preview>
 
 
 To explicitly pass properties supported by the external component (such as `Smiley`), use `exProps`.
 
 <Preview>
-	<PreviewTitle>Specifying props for `Smiley`</PreviewTitle>
-	<PreviewArea p='20'>
-		<Icon as={Smiley} exProps={{ weight: 'fill', size: '3em' }} c="blue" />
-	</PreviewArea>
-	<PreviewCode>
-		```jsx "as=" "exProps="
-		<Icon as={Smiley} exProps={{ weight: 'fill', size: '3em' }} c="blue" />;
-		```
-	</PreviewCode>
+  <PreviewTitle>Specifying props for `Smiley`</PreviewTitle>
+  <PreviewArea p='20'>
+    <Icon as={Smiley} exProps={{ weight: 'fill', size: '3em' }} c="blue" />
+  </PreviewArea>
+  <PreviewCode>
+    ```jsx "as=" "exProps="
+    <Icon as={Smiley} exProps={{ weight: 'fill', size: '3em' }} c="blue" />;
+    ```
+  </PreviewCode>
 </Preview>
 
 
@@ -113,20 +113,20 @@ In `<Icon>`, you can also pass `as` and `exProps` together in the following form
 
 
 <Preview>
-	<PreviewTitle>Example of specifying `as` and `exProps` together via `icon`</PreviewTitle>
-	<PreviewArea p='20'>
-		<Icon icon={{ as: Smiley, weight: 'fill', size: '3em' }} c="blue" />
-	</PreviewArea>
-		<PreviewCode slot='tab' label='Combined'>
-		```jsx "weight:'fill', size:'3em'" "as:Smiley"
-		<Icon icon={{ as: Smiley, weight: 'fill', size: '3em' }} c="blue" />;
-		```
-	</PreviewCode>
-	<PreviewCode slot='tab' label='Separate'>
-		```jsx "as=" "exProps="
-		<Icon as={Smiley} exProps={{ weight: 'fill', size: '3em' }} c="blue" />;
-		```
-	</PreviewCode>
+  <PreviewTitle>Example of specifying `as` and `exProps` together via `icon`</PreviewTitle>
+  <PreviewArea p='20'>
+    <Icon icon={{ as: Smiley, weight: 'fill', size: '3em' }} c="blue" />
+  </PreviewArea>
+    <PreviewCode slot='tab' label='Combined'>
+    ```jsx "weight:'fill', size:'3em'" "as:Smiley"
+    <Icon icon={{ as: Smiley, weight: 'fill', size: '3em' }} c="blue" />;
+    ```
+  </PreviewCode>
+  <PreviewCode slot='tab' label='Separate'>
+    ```jsx "as=" "exProps="
+    <Icon as={Smiley} exProps={{ weight: 'fill', size: '3em' }} c="blue" />;
+    ```
+  </PreviewCode>
 
 </Preview>
 
@@ -135,15 +135,15 @@ In `<Icon>`, you can also pass `as` and `exProps` together in the following form
 {/* ※ `weight="thin"` is a property available on the `@phosphor-icons` side. */}
 
 {/* <Preview>
-	<PreviewTitle>Passing an icon as `children`</PreviewTitle>
-	<PreviewArea p='20'>
-		<Cat className="a--icon" weight="thin" size="3em" />
-	</PreviewArea>
-	<PreviewCode>
-		```jsx
-		<Cat className="a--icon" weight="thin" size="3em" />;
-		```
-	</PreviewCode>
+  <PreviewTitle>Passing an icon as `children`</PreviewTitle>
+  <PreviewArea p='20'>
+    <Cat className="a--icon" weight="thin" size="3em" />
+  </PreviewArea>
+  <PreviewCode>
+    ```jsx
+    <Cat className="a--icon" weight="thin" size="3em" />;
+    ```
+  </PreviewCode>
 </Preview> */}
 
 
@@ -162,21 +162,21 @@ You can call a preset icon by specifying its name as a string via `icon='icon-na
 <PresetIcons icons={logoIcons} />
 
 <Preview>
-	<PreviewTitle>Example of calling a preset icon</PreviewTitle>
-	<PreviewArea p='20'>
-		<Cluster g="15">
-		  <Icon icon="lightbulb" size="40px" />
-		  <Icon icon="warning" fz="2xl" c="blue" />
-		</Cluster>
-	</PreviewArea>
-	<PreviewCode>
-		```jsx
-		<Cluster g="15">
-		  <Icon icon="lightbulb" size="40px" />
-		  <Icon icon="warning" fz="2xl" c="blue" />
-		</Cluster>;
-		```
-	</PreviewCode>
+  <PreviewTitle>Example of calling a preset icon</PreviewTitle>
+  <PreviewArea p='20'>
+    <Cluster g="15">
+      <Icon icon="lightbulb" size="40px" />
+      <Icon icon="warning" fz="2xl" c="blue" />
+    </Cluster>
+  </PreviewArea>
+  <PreviewCode>
+    ```jsx
+    <Cluster g="15">
+      <Icon icon="lightbulb" size="40px" />
+      <Icon icon="warning" fz="2xl" c="blue" />
+    </Cluster>;
+    ```
+  </PreviewCode>
 </Preview>
 
 
@@ -187,56 +187,56 @@ You can place `path` elements and other SVG content directly as children.
 
 
 <Preview>
-	<PreviewTitle>Passing `path` and other elements directly as children</PreviewTitle>
-	<PreviewArea p='20'>
-		<Icon viewBox="0 0 256 256" label="Smiley icon" fz="4xl" c="blue">
-		  <path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm0,192a88,88,0,1,1,88-88A88.1,88.1,0,0,1,128,216ZM80,108a12,12,0,1,1,12,12A12,12,0,0,1,80,108Zm96,0a12,12,0,1,1-12-12A12,12,0,0,1,176,108Zm-1.07,48c-10.29,17.79-27.4,28-46.93,28s-36.63-10.2-46.92-28a8,8,0,1,1,13.84-8c7.47,12.91,19.21,20,33.08,20s25.61-7.1,33.07-20a8,8,0,0,1,13.86,8Z"></path>
-		</Icon>
-	</PreviewArea>
-	<PreviewCode slot='tab' label='JSX'>
-		```jsx
-		<Icon viewBox="0 0 256 256" label="Smiley icon" fz="4xl" c="blue">
-		  <path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm0,192a88,88,0,1,1,88-88A88.1,88.1,0,0,1,128,216ZM80,108a12,12,0,1,1,12,12A12,12,0,0,1,80,108Zm96,0a12,12,0,1,1-12-12A12,12,0,0,1,176,108Zm-1.07,48c-10.29,17.79-27.4,28-46.93,28s-36.63-10.2-46.92-28a8,8,0,1,1,13.84-8c7.47,12.91,19.21,20,33.08,20s25.61-7.1,33.07-20a8,8,0,0,1,13.86,8Z"></path>
-		</Icon>;
-		```
-	</PreviewCode>
-	<PreviewCode slot='tab' label='HTML'>
-		```jsx "--size:"
-		<svg
-		  xmlns="http://www.w3.org/2000/svg"
-		  viewBox="0 0 256 256"
-		  width="1em"
-		  height="1em"
-		  fill="currentColor"
-		  focusable="false"
-		  aria-label="Smiley icon"
-		  role="img"
-		  class="a--icon -fz:4xl -c"
-		  style="--c:var(--blue)"
-		>
-		  <path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm0,192a88,88,0,1,1,88-88A88.1,88.1,0,0,1,128,216ZM80,108a12,12,0,1,1,12,12A12,12,0,0,1,80,108Zm96,0a12,12,0,1,1-12-12A12,12,0,0,1,176,108Zm-1.07,48c-10.29,17.79-27.4,28-46.93,28s-36.63-10.2-46.92-28a8,8,0,1,1,13.84-8c7.47,12.91,19.21,20,33.08,20s25.61-7.1,33.07-20a8,8,0,0,1,13.86,8Z"></path>
-		</svg>;
-		```
-	</PreviewCode>
+  <PreviewTitle>Passing `path` and other elements directly as children</PreviewTitle>
+  <PreviewArea p='20'>
+    <Icon viewBox="0 0 256 256" label="Smiley icon" fz="4xl" c="blue">
+      <path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm0,192a88,88,0,1,1,88-88A88.1,88.1,0,0,1,128,216ZM80,108a12,12,0,1,1,12,12A12,12,0,0,1,80,108Zm96,0a12,12,0,1,1-12-12A12,12,0,0,1,176,108Zm-1.07,48c-10.29,17.79-27.4,28-46.93,28s-36.63-10.2-46.92-28a8,8,0,1,1,13.84-8c7.47,12.91,19.21,20,33.08,20s25.61-7.1,33.07-20a8,8,0,0,1,13.86,8Z"></path>
+    </Icon>
+  </PreviewArea>
+  <PreviewCode slot='tab' label='JSX'>
+    ```jsx
+    <Icon viewBox="0 0 256 256" label="Smiley icon" fz="4xl" c="blue">
+      <path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm0,192a88,88,0,1,1,88-88A88.1,88.1,0,0,1,128,216ZM80,108a12,12,0,1,1,12,12A12,12,0,0,1,80,108Zm96,0a12,12,0,1,1-12-12A12,12,0,0,1,176,108Zm-1.07,48c-10.29,17.79-27.4,28-46.93,28s-36.63-10.2-46.92-28a8,8,0,1,1,13.84-8c7.47,12.91,19.21,20,33.08,20s25.61-7.1,33.07-20a8,8,0,0,1,13.86,8Z"></path>
+    </Icon>;
+    ```
+  </PreviewCode>
+  <PreviewCode slot='tab' label='HTML'>
+    ```jsx "--size:"
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 256 256"
+      width="1em"
+      height="1em"
+      fill="currentColor"
+      focusable="false"
+      aria-label="Smiley icon"
+      role="img"
+      class="a--icon -fz:4xl -c"
+      style="--c:var(--blue)"
+    >
+      <path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm0,192a88,88,0,1,1,88-88A88.1,88.1,0,0,1,128,216ZM80,108a12,12,0,1,1,12,12A12,12,0,0,1,80,108Zm96,0a12,12,0,1,1-12-12A12,12,0,0,1,176,108Zm-1.07,48c-10.29,17.79-27.4,28-46.93,28s-36.63-10.2-46.92-28a8,8,0,1,1,13.84-8c7.47,12.91,19.21,20,33.08,20s25.61-7.1,33.07-20a8,8,0,0,1,13.86,8Z"></path>
+    </svg>;
+    ```
+  </PreviewCode>
 </Preview>
 
 
 ### Using `src` to specify an image
 
 <Preview>
-	<PreviewTitle>Usage example</PreviewTitle>
-	<PreviewArea p='20'>
-		<Flex g="10" ai="center">
-		  <Icon fz="4xl" src="/img/avatar01.jpg" alt="image" />
-		  <span>Img icon.</span>
-		</Flex>
-	</PreviewArea>
-	<PreviewCode>
-		```jsx
-		<Flex g="10" ai="center">
-		  <Icon fz="4xl" src="/img/avatar01.jpg" alt="image" />
-		  <span>Img icon.</span>
-		</Flex>;
-		```
-	</PreviewCode>
+  <PreviewTitle>Usage example</PreviewTitle>
+  <PreviewArea p='20'>
+    <Flex g="10" ai="center">
+      <Icon fz="4xl" src="/img/avatar01.jpg" alt="image" />
+      <span>Img icon.</span>
+    </Flex>
+  </PreviewArea>
+  <PreviewCode>
+    ```jsx
+    <Flex g="10" ai="center">
+      <Icon fz="4xl" src="/img/avatar01.jpg" alt="image" />
+      <span>Img icon.</span>
+    </Flex>;
+    ```
+  </PreviewCode>
 </Preview>

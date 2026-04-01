@@ -24,68 +24,68 @@ A dedicated `<Media>` component is provided, which outputs an `<img>` tag by def
 <ImportPackage component='Media' />
 
 <Preview>
-	<PreviewTitle>
-		Example
-	</PreviewTitle>
-	<PreviewArea>
-		<Media src="https://cdn.lism-css.com/img/a-1.jpg" width="960" height="640" alt="Dummy Image" />
-	</PreviewArea>
-	<PreviewCode slot='tab' label='JSX'>
-		```jsx
-		<Media src="https://cdn.lism-css.com/img/a-1.jpg" width="960" height="640" alt="Dummy Image" />;
-		```
-	</PreviewCode>
-	<PreviewCode slot='tab' label='HTML'>
-		```jsx
-		<img class="a--media" src="https://cdn.lism-css.com/img/a-1.jpg" width="960" height="640" alt="Dummy Image" />;
-		```
-	</PreviewCode>
+  <PreviewTitle>
+    Example
+  </PreviewTitle>
+  <PreviewArea>
+    <Media src="https://cdn.lism-css.com/img/a-1.jpg" width="960" height="640" alt="Dummy Image" />
+  </PreviewArea>
+  <PreviewCode slot='tab' label='JSX'>
+    ```jsx
+    <Media src="https://cdn.lism-css.com/img/a-1.jpg" width="960" height="640" alt="Dummy Image" />;
+    ```
+  </PreviewCode>
+  <PreviewCode slot='tab' label='HTML'>
+    ```jsx
+    <img class="a--media" src="https://cdn.lism-css.com/img/a-1.jpg" width="960" height="640" alt="Dummy Image" />;
+    ```
+  </PreviewCode>
 </Preview>
 
 <Preview>
-	<PreviewTitle>Specifying filter properties</PreviewTitle>
-	<PreviewArea>
-		<Frame as="figure" ar="2/1" pos="rel">
-		  <Media contrast={1.1} saturate={0.2} src="https://cdn.lism-css.com/img/a-1.jpg" width="960" height="640" alt="Dummy Image" />
-		  <Lism as="figcaption" pos="abs" z="1" b="0" p="5" w="100%" c="white" ta="center" lts="l">
-		    Lorem ipsum text.
-		  </Lism>
-		</Frame>
-	</PreviewArea>
-	<PreviewCode slot='tab' label='JSX'>
-		```jsx "contrast={1.1} saturate={0.2}"
-		<Frame as="figure" ar="2/1" pos="rel">
-		  <Media contrast={1.1} saturate={0.2} src="https://cdn.lism-css.com/img/a-1.jpg" width="960" height="640" alt="Dummy Image" />
-		  <Lism as="figcaption" pos="abs" z="1" b="0" p="5" w="100%" c="white" ta="center" lts="l">
-		    Lorem ipsum text.
-		  </Lism>
-		</Frame>;
-		```
-	</PreviewCode>
+  <PreviewTitle>Specifying filter properties</PreviewTitle>
+  <PreviewArea>
+    <Frame as="figure" ar="2/1" pos="rel">
+      <Media contrast={1.1} saturate={0.2} src="https://cdn.lism-css.com/img/a-1.jpg" width="960" height="640" alt="Dummy Image" />
+      <Lism as="figcaption" pos="abs" z="1" b="0" p="5" w="100%" c="white" ta="center" lts="l">
+        Lorem ipsum text.
+      </Lism>
+    </Frame>
+  </PreviewArea>
+  <PreviewCode slot='tab' label='JSX'>
+    ```jsx "contrast={1.1} saturate={0.2}"
+    <Frame as="figure" ar="2/1" pos="rel">
+      <Media contrast={1.1} saturate={0.2} src="https://cdn.lism-css.com/img/a-1.jpg" width="960" height="640" alt="Dummy Image" />
+      <Lism as="figcaption" pos="abs" z="1" b="0" p="5" w="100%" c="white" ta="center" lts="l">
+        Lorem ipsum text.
+      </Lism>
+    </Frame>;
+    ```
+  </PreviewCode>
 </Preview>
 
 
 <Preview>
-	<PreviewTitle>Using `objectPosition`</PreviewTitle>
-	<PreviewArea resize>
-		<Frame as="figure" ar="16/9">
-		  <Media src="https://cdn.lism-css.com/img/a-1.jpg" objectPosition="50% 0%" alt="" width="960" height="640" />
-		</Frame>
-	</PreviewArea>
-	<PreviewCode slot='tab' label='JSX'>
-		```jsx
-		<Frame as="figure" ar="16/9">
-		  <Media src="https://cdn.lism-css.com/img/a-1.jpg" objectPosition="50% 0%" alt="" width="960" height="640" />
-		</Frame>;
-		```
-	</PreviewCode>
-	<PreviewCode slot='tab' label='HTML'>
-		```html
-		<figure class="l--frame -ar:16/9">
-		  <img class="a--media" style="object-position: 50% 0%" src="https://cdn.lism-css.com/img/a-1.jpg" width="960" height="640" />
-		</figure>
-		```
-	</PreviewCode>
+  <PreviewTitle>Using `objectPosition`</PreviewTitle>
+  <PreviewArea resize>
+    <Frame as="figure" ar="16/9">
+      <Media src="https://cdn.lism-css.com/img/a-1.jpg" objectPosition="50% 0%" alt="" width="960" height="640" />
+    </Frame>
+  </PreviewArea>
+  <PreviewCode slot='tab' label='JSX'>
+    ```jsx
+    <Frame as="figure" ar="16/9">
+      <Media src="https://cdn.lism-css.com/img/a-1.jpg" objectPosition="50% 0%" alt="" width="960" height="640" />
+    </Frame>;
+    ```
+  </PreviewCode>
+  <PreviewCode slot='tab' label='HTML'>
+    ```html
+    <figure class="l--frame -ar:16/9">
+      <img class="a--media" style="object-position: 50% 0%" src="https://cdn.lism-css.com/img/a-1.jpg" width="960" height="640" />
+    </figure>
+    ```
+  </PreviewCode>
 </Preview>
 
 

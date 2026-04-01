@@ -28,7 +28,7 @@ Lismでは、次のようなモジュールクラスを使います。
 
 `is--container`を使用すると、その要素に <code>contaner-type:inline-size</code> を適用します。
 Lism CSSではコンテナクエリでプロパティを変更できる仕様になっていますので、
-			<b>コンテナクエリの判定基準としたしたいラッパー要素にこのクラスを使用しておく必要があります</b>。
+      <b>コンテナクエリの判定基準としたしたいラッパー要素にこのクラスを使用しておく必要があります</b>。
 
 ### `is--wrapper`
 
@@ -44,29 +44,29 @@ Lism CSSではコンテナクエリでプロパティを変更できる仕様に
 | `-contentSize:l` | `--sz--l` |
 
 <Preview>
-	<PreviewTitle>例</PreviewTitle>
-	<PreviewArea resize p='15'>
-		<Lism isWrapper="s" className="-bd:guide -hov:itemGuide">
-		  <div>Contents...</div>
-		  <div>Contents...</div>
-		</Lism>
-	</PreviewArea>
-	<PreviewCode slot='tab' label='HTML'>
-	```html
-	<div class="is--wrapper -contentSize:s">
-	  <div>Contents...</div>
-	  <div>Contents...</div>
-	</div>
-	```
-	</PreviewCode>
-	<PreviewCode slot='tab' label='JSX'>
-	```jsx
-	<Lism isWrapper="s">
-	  <div>Contents...</div>
-	  <div>Contents...</div>
-	</Lism>;
-	```
-	</PreviewCode>
+  <PreviewTitle>例</PreviewTitle>
+  <PreviewArea resize p='15'>
+    <Lism isWrapper="s" className="-bd:guide -hov:itemGuide">
+      <div>Contents...</div>
+      <div>Contents...</div>
+    </Lism>
+  </PreviewArea>
+  <PreviewCode slot='tab' label='HTML'>
+  ```html
+  <div class="is--wrapper -contentSize:s">
+    <div>Contents...</div>
+    <div>Contents...</div>
+  </div>
+  ```
+  </PreviewCode>
+  <PreviewCode slot='tab' label='JSX'>
+  ```jsx
+  <Lism isWrapper="s">
+    <div>Contents...</div>
+    <div>Contents...</div>
+  </Lism>;
+  ```
+  </PreviewCode>
 </Preview>
 
 
@@ -120,31 +120,31 @@ CSSは以下のようになっており、`inset:0`と`overflow:hidden`も指定
 縦書き用の値は、トークン（`--vertical-mode`）で管理しています。 （<span class='-fz:s'>これにより、lang属性に合わせて変数を上書きすることで、`vertical-rl`か`vertical-lr`を切り替えることができるようにもなっています。</span>）
 
 <Preview>
-	<PreviewTitle>smサイズ以上で縦書きにする例</PreviewTitle>
-	<PreviewArea p='0' resize>
-		<Flow setGutter py="20" w="100%" h="20em" className="is--vertical@sm set--bp">
-		  <Dummy lang="ja" length="s" />
-		  <Dummy lang="ja" length="l" offset="3" />
-		</Flow>
-	</PreviewArea>
-	<PreviewCode slot='tab' label='HTML'>
-	```html "is--vertical@sm set--bp"
-	<div class="is--vertical@sm set--bp l--flow set--gutter -py:20 -w:100% -h" style="--h: 20em">
-	  <p>ロレム・イプサムの座り雨。目まぐるしい文章の流れの中で、それは静かに歩く仮の言葉です。</p>
-	  <p>
-	    Elitも穏やかに続いていきますが、積み重ねられてきた「LiberroyとFoogの取り組み」は、決するための答えというより、余白のようなものです。作業が進むにつれて、工夫や考えとともに関心が折り重なりながらも、必要以上に主張せず彼らの作品は私たちに一定の示唆を与えてくれます。
-	  </p>
-	</div>
-	```
-	</PreviewCode>
-	<PreviewCode slot='tab' label='JSX'>
-		```jsx "is--vertical@sm set--bp"
-		<Flow setGutter py="20" w="100%" h="20em" className="is--vertical@sm set--bp">
-		  <Dummy lang="ja" length="s" />
-		  <Dummy lang="ja" length="l" offset="3" />
-		</Flow>;
-		```
-	</PreviewCode>
+  <PreviewTitle>smサイズ以上で縦書きにする例</PreviewTitle>
+  <PreviewArea p='0' resize>
+    <Flow setGutter py="20" w="100%" h="20em" className="is--vertical@sm set--bp">
+      <Dummy lang="ja" length="s" />
+      <Dummy lang="ja" length="l" offset="3" />
+    </Flow>
+  </PreviewArea>
+  <PreviewCode slot='tab' label='HTML'>
+  ```html "is--vertical@sm set--bp"
+  <div class="is--vertical@sm set--bp l--flow set--gutter -py:20 -w:100% -h" style="--h: 20em">
+    <p>ロレム・イプサムの座り雨。目まぐるしい文章の流れの中で、それは静かに歩く仮の言葉です。</p>
+    <p>
+      Elitも穏やかに続いていきますが、積み重ねられてきた「LiberroyとFoogの取り組み」は、決するための答えというより、余白のようなものです。作業が進むにつれて、工夫や考えとともに関心が折り重なりながらも、必要以上に主張せず彼らの作品は私たちに一定の示唆を与えてくれます。
+    </p>
+  </div>
+  ```
+  </PreviewCode>
+  <PreviewCode slot='tab' label='JSX'>
+    ```jsx "is--vertical@sm set--bp"
+    <Flow setGutter py="20" w="100%" h="20em" className="is--vertical@sm set--bp">
+      <Dummy lang="ja" length="s" />
+      <Dummy lang="ja" length="l" offset="3" />
+    </Flow>;
+    ```
+  </PreviewCode>
 </Preview>
 
 

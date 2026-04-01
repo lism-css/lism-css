@@ -136,7 +136,7 @@ async function formatFile(filePath: string, prettierConfig: prettier.Options | n
     for (const m of matches.reverse()) {
       try {
         // PreviewArea 内のインデントは1段深い
-        const innerIndent = m.indent + '\t';
+        const innerIndent = m.indent + '  ';
         const dedented = dedent(m.code, innerIndent);
         const formatted = await formatJsxFragment(dedented, prettierConfig);
 

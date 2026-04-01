@@ -137,35 +137,35 @@ By placing a `lism.config.js` file in the root of your project, you can customiz
 <PreviewTitle>lism.config.js format</PreviewTitle>
 ```js
 export default {
-	props: {
-		hoge: { ... },
-		foo: { ... },
-		...
-	},
-	tokens: {
-		hoge: [...],
-		foo: [...],
-		...
-	},
-	states: {
-		isHoge: 'is--hoge',
-		setFoo: 'set-foo',
-		...
-	},
+  props: {
+    hoge: { ... },
+    foo: { ... },
+    ...
+  },
+  tokens: {
+    hoge: [...],
+    foo: [...],
+    ...
+  },
+  states: {
+    isHoge: 'is--hoge',
+    setFoo: 'set-foo',
+    ...
+  },
 };
 ```
 
 <Preview>
-	<PreviewTitle>Default values</PreviewTitle>
-	<PreviewCode slot="tab" label="props">
-	<EmbedCode dirPath='packages/lism-css' srcPath='config/defaults/props.ts' />
-	</PreviewCode>
-	<PreviewCode slot="tab" label="tokens">
-	<EmbedCode dirPath='packages/lism-css' srcPath='config/defaults/tokens.ts' />
-	</PreviewCode>
-	<PreviewCode slot="tab" label="states">
-	<EmbedCode dirPath='packages/lism-css' srcPath='config/defaults/states.ts' />
-	</PreviewCode>
+  <PreviewTitle>Default values</PreviewTitle>
+  <PreviewCode slot="tab" label="props">
+  <EmbedCode dirPath='packages/lism-css' srcPath='config/defaults/props.ts' />
+  </PreviewCode>
+  <PreviewCode slot="tab" label="tokens">
+  <EmbedCode dirPath='packages/lism-css' srcPath='config/defaults/tokens.ts' />
+  </PreviewCode>
+  <PreviewCode slot="tab" label="states">
+  <EmbedCode dirPath='packages/lism-css' srcPath='config/defaults/states.ts' />
+  </PreviewCode>
 </Preview>
 
 
@@ -207,15 +207,15 @@ With the above customization, the following behavior is added to Lism components
 {/* <Box p='box' bd o='-5' isHoge>Box</Box> */}
 
 <Preview>
-	<PreviewCode slot='tab' label='HTML'>
-	```jsx
-	<Box p='box' d='flex' o='-5' isHoge>Box</Box>
+  <PreviewCode slot='tab' label='HTML'>
+  ```jsx
+  <Box p='box' d='flex' o='-5' isHoge>Box</Box>
 
-	↓　Output
+  ↓　Output
 
-	<div class="l--box is--hoge -p:box -d:flex -o:-5">Box</div>
-	```
-	</PreviewCode>
+  <div class="l--box is--hoge -p:box -d:flex -o:-5">Box</div>
+  ```
+  </PreviewCode>
 </Preview>
 
 
@@ -324,10 +324,10 @@ You can also override SCSS variables in line with your `lism.config.js` configur
 
 {/* ```
 export default {
-	props: {
-		d: { presets: [...(props.d.presets || []), 'flex', 'grid'] },
-		p: { utils: { box: '2em' } },
-		filter: { utils: { 'blur:s': 'blur(3px)', 'blur:m': 'blur(5px)' } },
-	},
+  props: {
+    d: { presets: [...(props.d.presets || []), 'flex', 'grid'] },
+    p: { utils: { box: '2em' } },
+    filter: { utils: { 'blur:s': 'blur(3px)', 'blur:m': 'blur(5px)' } },
+  },
 };
 ``` */}

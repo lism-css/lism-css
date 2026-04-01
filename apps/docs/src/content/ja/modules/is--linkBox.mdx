@@ -38,44 +38,44 @@ LinkBox内部に**別のリンク**も配置するには、2 を採用してく�
 `<LinkBox>`に`href`を指定すると`<LinkBox>`自体が`<a>`タグになります。
 
 <Preview>
-	<PreviewTitle id='linkbox-demo01'>例</PreviewTitle>
-	<PreviewArea p='20'>
-		<LinkBox href="#linkbox-demo01" p="30" bgc="base" bd bdrs="30" hov="o">
-		  <HTML.div fz="xl" fw="bold">
-		    Heading text
-		  </HTML.div>
-		  <Dummy lh="s" my-s="15" />
-		  <HTML.div fz="s" c="text-2" ta="right" lh="1" my-s="10">
-		    MORE →
-		  </HTML.div>
-		</LinkBox>
-	</PreviewArea>
-	<PreviewCode slot='tab' label='JSX'>
-		```jsx {1} "href="
-		<LinkBox href="#linkbox-demo01" p="30" bgc="base" bd bdrs="30" hov="o">
-		  <HTML.div fz="xl" fw="bold">
-		    Heading text
-		  </HTML.div>
-		  <HTML.p lh="s" my-s="15">
-		    Lorem ipsum dolor sit, amet consectetur adipisicing elit, sed do eiusmod tempor. Non facere laudantium ex eos doloribus aut dolore nisi provident.
-		  </HTML.p>
-		  <HTML.div fz="s" c="text-2" ta="right" lh="1" my-s="10">
-		    MORE →
-		  </HTML.div>
-		</LinkBox>;
-		```
-	</PreviewCode>
-	<PreviewCode slot='tab' label='HTML'>
-		```jsx {1} "<a class=\"is--linkBox"
-		<a class="is--linkBox -hov:o -p:30 -bgc:base -bd -bdrs:30" href="#linkbox-demo01">
-		  <p class="-fz:xl -fw:bold">Heading text</p>
-		  <p class="-c:text-2 -lh:s -my-s:15">
-		    Lorem ipsum dolor sit, amet consectetur adipisicing elit, sed do eiusmod tempor. Non facere laudantium ex eos doloribus aut dolore nisi provident.
-		  </p>
-		  <p class="-fz:s -c:text-2 -ta:right -lh:1 -my-s:10">MORE →</p>
-		</a>;
-		```
-	</PreviewCode>
+  <PreviewTitle id='linkbox-demo01'>例</PreviewTitle>
+  <PreviewArea p='20'>
+    <LinkBox href="#linkbox-demo01" p="30" bgc="base" bd bdrs="30" hov="o">
+      <HTML.div fz="xl" fw="bold">
+        Heading text
+      </HTML.div>
+      <Dummy lh="s" my-s="15" />
+      <HTML.div fz="s" c="text-2" ta="right" lh="1" my-s="10">
+        MORE →
+      </HTML.div>
+    </LinkBox>
+  </PreviewArea>
+  <PreviewCode slot='tab' label='JSX'>
+    ```jsx {1} "href="
+    <LinkBox href="#linkbox-demo01" p="30" bgc="base" bd bdrs="30" hov="o">
+      <HTML.div fz="xl" fw="bold">
+        Heading text
+      </HTML.div>
+      <HTML.p lh="s" my-s="15">
+        Lorem ipsum dolor sit, amet consectetur adipisicing elit, sed do eiusmod tempor. Non facere laudantium ex eos doloribus aut dolore nisi provident.
+      </HTML.p>
+      <HTML.div fz="s" c="text-2" ta="right" lh="1" my-s="10">
+        MORE →
+      </HTML.div>
+    </LinkBox>;
+    ```
+  </PreviewCode>
+  <PreviewCode slot='tab' label='HTML'>
+    ```jsx {1} "<a class=\"is--linkBox"
+    <a class="is--linkBox -hov:o -p:30 -bgc:base -bd -bdrs:30" href="#linkbox-demo01">
+      <p class="-fz:xl -fw:bold">Heading text</p>
+      <p class="-c:text-2 -lh:s -my-s:15">
+        Lorem ipsum dolor sit, amet consectetur adipisicing elit, sed do eiusmod tempor. Non facere laudantium ex eos doloribus aut dolore nisi provident.
+      </p>
+      <p class="-fz:s -c:text-2 -ta:right -lh:1 -my-s:10">MORE →</p>
+    </a>;
+    ```
+  </PreviewCode>
 </Preview>
 
 
@@ -86,58 +86,58 @@ LinkBox内部に**別のリンク**も配置するには、2 を採用してく�
 この時、LinkBoxの内部に別のリンクも配置できます。
 
 <Preview>
-	<PreviewTitle id='linkbox-demo02'>例</PreviewTitle>
-	<PreviewArea p='20'>
-		<LinkBox as="section" p="30" bgc="base" bd bdrs="30" setTransition hov="bxsh">
-		  <HTML.div fz="xl" fw="bold">
-		    <HTML.a className="u--expandedLink" href="#linkbox-demo02">
-		      Heading link text
-		    </HTML.a>
-		  </HTML.div>
-		  <Dummy c="text-2" lh="s" my-s="15" />
-		  <HTML.div id="inner-link02" my-s="10">
-		    <a href="#inner-link02" className="-hov:o">
-		      Inner Link
-		    </a>
-		  </HTML.div>
-		</LinkBox>
-	</PreviewArea>
-	<PreviewCode slot='tab' label='JSX'>
-		```jsx "className='u--expandedLink'"
-		<LinkBox p="30" bgc="base" bd bdrs="30" setTransition hov="bxsh">
-		  <HTML.div fz="xl" fw="bold">
-		    <HTML.a className="u--expandedLink" href="#linkbox-demo02">
-		      Heading link text
-		    </HTML.a>
-		  </HTML.div>
-		  <Dummy c="text-2" lh="s" my-s="15" />
-		  <HTML.div id="inner-link02" my-s="10">
-		    <a href="#inner-link02" className="-hov:o">
-		      Inner Link
-		    </a>
-		  </HTML.div>
-		</LinkBox>;
-		```
-	</PreviewCode>
-	<PreviewCode slot='tab' label='HTML'>
-		```jsx "u--expandedLink"
-		<div class="is--linkBox -hov:bxsh -p:30 -bgc:base -bd -bdrs:30 set--transition">
-		  <div class="-fz:xl -fw:bold">
-		    <a class="u--expandedLink" href="#linkbox-demo02">
-		      Heading Link
-		    </a>
-		  </div>
-		  <p class="-c:text-2 -lh:s -my-s:15">
-		    Lorem ipsum dolor sit, amet consectetur adipisicing elit, sed do eiusmod tempor. Non facere laudantium ex eos doloribus aut dolore nisi provident.
-		  </p>
-		  <div id="inner-link02" class="-my-s:10">
-		    <a href="#inner-link02" class="-hov:o">
-		      Inner Link
-		    </a>
-		  </div>
-		</div>;
-		```
-	</PreviewCode>
+  <PreviewTitle id='linkbox-demo02'>例</PreviewTitle>
+  <PreviewArea p='20'>
+    <LinkBox as="section" p="30" bgc="base" bd bdrs="30" setTransition hov="bxsh">
+      <HTML.div fz="xl" fw="bold">
+        <HTML.a className="u--expandedLink" href="#linkbox-demo02">
+          Heading link text
+        </HTML.a>
+      </HTML.div>
+      <Dummy c="text-2" lh="s" my-s="15" />
+      <HTML.div id="inner-link02" my-s="10">
+        <a href="#inner-link02" className="-hov:o">
+          Inner Link
+        </a>
+      </HTML.div>
+    </LinkBox>
+  </PreviewArea>
+  <PreviewCode slot='tab' label='JSX'>
+    ```jsx "className='u--expandedLink'"
+    <LinkBox p="30" bgc="base" bd bdrs="30" setTransition hov="bxsh">
+      <HTML.div fz="xl" fw="bold">
+        <HTML.a className="u--expandedLink" href="#linkbox-demo02">
+          Heading link text
+        </HTML.a>
+      </HTML.div>
+      <Dummy c="text-2" lh="s" my-s="15" />
+      <HTML.div id="inner-link02" my-s="10">
+        <a href="#inner-link02" className="-hov:o">
+          Inner Link
+        </a>
+      </HTML.div>
+    </LinkBox>;
+    ```
+  </PreviewCode>
+  <PreviewCode slot='tab' label='HTML'>
+    ```jsx "u--expandedLink"
+    <div class="is--linkBox -hov:bxsh -p:30 -bgc:base -bd -bdrs:30 set--transition">
+      <div class="-fz:xl -fw:bold">
+        <a class="u--expandedLink" href="#linkbox-demo02">
+          Heading Link
+        </a>
+      </div>
+      <p class="-c:text-2 -lh:s -my-s:15">
+        Lorem ipsum dolor sit, amet consectetur adipisicing elit, sed do eiusmod tempor. Non facere laudantium ex eos doloribus aut dolore nisi provident.
+      </p>
+      <div id="inner-link02" class="-my-s:10">
+        <a href="#inner-link02" class="-hov:o">
+          Inner Link
+        </a>
+      </div>
+    </div>;
+    ```
+  </PreviewCode>
 </Preview>
 
 

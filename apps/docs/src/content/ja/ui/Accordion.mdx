@@ -13,85 +13,85 @@ import { Accordion } from '@lism-css/ui/astro';
 
 
 <Preview>
-	<PreviewTitle>Preview</PreviewTitle>
-	<PreviewArea p='20'>
-		<Accordion.Root bd>
-		  <Accordion.Item>
-		    <Accordion.Heading>
-		      <Accordion.Button p="20">Accordion Example 1</Accordion.Button>
-		    </Accordion.Heading>
-		    <Accordion.Panel p="20" pt="5">
-		      <Dummy length="l" />
-		    </Accordion.Panel>
-		  </Accordion.Item>
-		  <Accordion.Item bd-t>
-		    <Accordion.Heading>
-		      <Accordion.Button p="20">Accordion Example 2</Accordion.Button>
-		    </Accordion.Heading>
-		    <Accordion.Panel p="20" pt="5">
-		      <Dummy length="l" />
-		    </Accordion.Panel>
-		  </Accordion.Item>
-		</Accordion.Root>
-	</PreviewArea>
-	<PreviewCode slot='tab' label='JSX'>
-		```jsx
-		<Accordion.Root>
-		  <Accordion.Item>
-		    <Accordion.Heading>
-		      <Accordion.Button p="20">Accordion Example</Accordion.Button>
-		    </Accordion.Heading>
-		    <Accordion.Panel p="20" pt="5">
-		      <Dummy length="l" />
-		    </Accordion.Panel>
-		  </Accordion.Item>
-		  <Accordion.Item bd-t>
-		    <Accordion.Heading>
-		      <Accordion.Button p="20">Accordion Example 2</Accordion.Button>
-		    </Accordion.Heading>
-		    <Accordion.Panel p="20" pt="5">
-		      <Dummy length="l" />
-		    </Accordion.Panel>
-		  </Accordion.Item>
-		</Accordion.Root>;
-		```
-	</PreviewCode>
-	<PreviewCode slot='tab' label='HTML'>
+  <PreviewTitle>Preview</PreviewTitle>
+  <PreviewArea p='20'>
+    <Accordion.Root bd>
+      <Accordion.Item>
+        <Accordion.Heading>
+          <Accordion.Button p="20">Accordion Example 1</Accordion.Button>
+        </Accordion.Heading>
+        <Accordion.Panel p="20" pt="5">
+          <Dummy length="l" />
+        </Accordion.Panel>
+      </Accordion.Item>
+      <Accordion.Item bd-t>
+        <Accordion.Heading>
+          <Accordion.Button p="20">Accordion Example 2</Accordion.Button>
+        </Accordion.Heading>
+        <Accordion.Panel p="20" pt="5">
+          <Dummy length="l" />
+        </Accordion.Panel>
+      </Accordion.Item>
+    </Accordion.Root>
+  </PreviewArea>
+  <PreviewCode slot='tab' label='JSX'>
+    ```jsx
+    <Accordion.Root>
+      <Accordion.Item>
+        <Accordion.Heading>
+          <Accordion.Button p="20">Accordion Example</Accordion.Button>
+        </Accordion.Heading>
+        <Accordion.Panel p="20" pt="5">
+          <Dummy length="l" />
+        </Accordion.Panel>
+      </Accordion.Item>
+      <Accordion.Item bd-t>
+        <Accordion.Heading>
+          <Accordion.Button p="20">Accordion Example 2</Accordion.Button>
+        </Accordion.Heading>
+        <Accordion.Panel p="20" pt="5">
+          <Dummy length="l" />
+        </Accordion.Panel>
+      </Accordion.Item>
+    </Accordion.Root>;
+    ```
+  </PreviewCode>
+  <PreviewCode slot='tab' label='HTML'>
 ```html
 ```
-	</PreviewCode>
+  </PreviewCode>
 </Preview>
 
 
 ## 基本構造
 
 <Preview>
-	<PreviewCode slot='tab' label='HTML'>
-		```pug
-		div.l--stack.c--accordion
-			div.c--accordion_item
-				div.c--accordion_heading[role="heading"]
-					button.c--accordion_button[aria-controls="{id}"][aria-expanded="false"]
-						Accordion Label
-						span.c--accordion_icon.a--icon[aria-hidden="true"]
-				div.c--accordion_panel#id[hidden="until-found"]
-					div.c--accordion_content(.l--flow) ...Contents...
-		```
-	</PreviewCode>
-	<PreviewCode slot='tab' label='JSX'>
-		```jsx
-		<Accordion.Root>
-		  <Accordion.Item>
-		    <Accordion.Heading>
-		      <Accordion.Button>Accordion Label</Accordion.Button>
-		    </Accordion.Heading>
-		    <Accordion.Panel p="20" pt="5">
-		      ...Contents...
-		    </Accordion.Panel>
-		  </Accordion.Item>
-		</Accordion.Root>;
-		```
-	</PreviewCode>
+  <PreviewCode slot='tab' label='HTML'>
+    ```pug
+    div.l--stack.c--accordion
+      div.c--accordion_item
+        div.c--accordion_heading[role="heading"]
+          button.c--accordion_button[aria-controls="{id}"][aria-expanded="false"]
+            Accordion Label
+            span.c--accordion_icon.a--icon[aria-hidden="true"]
+        div.c--accordion_panel#id[hidden="until-found"]
+          div.c--accordion_content(.l--flow) ...Contents...
+    ```
+  </PreviewCode>
+  <PreviewCode slot='tab' label='JSX'>
+    ```jsx
+    <Accordion.Root>
+      <Accordion.Item>
+        <Accordion.Heading>
+          <Accordion.Button>Accordion Label</Accordion.Button>
+        </Accordion.Heading>
+        <Accordion.Panel p="20" pt="5">
+          ...Contents...
+        </Accordion.Panel>
+      </Accordion.Item>
+    </Accordion.Root>;
+    ```
+  </PreviewCode>
 </Preview>
 
 :::note
@@ -104,15 +104,15 @@ import { Accordion } from '@lism-css/ui/astro';
 ## ソースコード
 
 <Preview>
-	<PreviewCode slot='tab' label='CSS'>
-		<SrcCode dir='lism-ui' path='src/components/Accordion/_style.css' title='_style.css'/>
-	</PreviewCode>
-	<PreviewCode slot='tab' label='JS'>
-		<SrcCode dir='lism-ui' path='src/components/Accordion/setAccordion.js' title='setAccordion.js'/>
-	</PreviewCode>
-	<PreviewCode slot='tab' label='React'>
-		<SrcCode dir='lism-ui' path='src/components/Accordion/react/Accordion.jsx' title='Accordion.jsx'/>
-	</PreviewCode>
+  <PreviewCode slot='tab' label='CSS'>
+    <SrcCode dir='lism-ui' path='src/components/Accordion/_style.css' title='_style.css'/>
+  </PreviewCode>
+  <PreviewCode slot='tab' label='JS'>
+    <SrcCode dir='lism-ui' path='src/components/Accordion/setAccordion.js' title='setAccordion.js'/>
+  </PreviewCode>
+  <PreviewCode slot='tab' label='React'>
+    <SrcCode dir='lism-ui' path='src/components/Accordion/react/Accordion.jsx' title='Accordion.jsx'/>
+  </PreviewCode>
 </Preview>
 
 
@@ -149,64 +149,64 @@ import { Accordion } from '@lism-css/ui/astro';
 `<Accordion.Heading>` はデフォルトでは `<div role="heading">` として出力されますが、`as` に `h3` などの見出しタグを指定することで、実際の見出し要素として出力できます。
 
 <Preview>
-	<PreviewTitle>例</PreviewTitle>
-	<PreviewArea p='20'>
-		<Accordion.Root bd>
-		  <Accordion.Item>
-		    <Accordion.Heading as="h3">
-		      <Accordion.Button p="20">Accordion Label</Accordion.Button>
-		    </Accordion.Heading>
-		    <Accordion.Panel p="20" pt="5">
-		      <Dummy length="l" />
-		    </Accordion.Panel>
-		  </Accordion.Item>
-		  <Accordion.Item bd-t>
-		    <Accordion.Heading as="h3">
-		      <Accordion.Button p="20">Accordion Label</Accordion.Button>
-		    </Accordion.Heading>
-		    <Accordion.Panel p="20" pt="5">
-		      <Dummy length="l" />
-		    </Accordion.Panel>
-		  </Accordion.Item>
-		</Accordion.Root>
-	</PreviewArea>
-	<PreviewCode slot='tab' label='JSX'>
-		```jsx "as='h3'"
-		<Accordion.Root bd>
-		  <Accordion.Item>
-		    <Accordion.Heading as="h3">
-		      <Accordion.Button p="20">Accordion Label</Accordion.Button>
-		    </Accordion.Heading>
-		    <Accordion.Panel p="20" pt="5">
-		      <Dummy length="l" />
-		    </Accordion.Panel>
-		  </Accordion.Item>
-		  <Accordion.Item bd-t>
-		    <Accordion.Heading as="h3">
-		      <Accordion.Button p="20">Accordion Label</Accordion.Button>
-		    </Accordion.Heading>
-		    <Accordion.Panel p="20" pt="5">
-		      <Dummy length="l" />
-		    </Accordion.Panel>
-		  </Accordion.Item>
-		</Accordion.Root>;
-		```
-	</PreviewCode>
-	<PreviewCode slot='tab' label='HTML'>
-	```html "h3"
-	<div class="c--accordion l--stack">
-	  <div class="c--accordion_item">
-	    <h3 class="c--accordion_heading">
-	      <button class="c--accordion_button" aria-controls="{id}" aria-expanded="false">
-	        Accordion Label
-	        <span class="c--accordion_icon a--icon" aria-hidden="true"></span>
-	      </button>
-	    </h3>
-	    ...
-	  </div>
-	</div>
-	```
-	</PreviewCode>
+  <PreviewTitle>例</PreviewTitle>
+  <PreviewArea p='20'>
+    <Accordion.Root bd>
+      <Accordion.Item>
+        <Accordion.Heading as="h3">
+          <Accordion.Button p="20">Accordion Label</Accordion.Button>
+        </Accordion.Heading>
+        <Accordion.Panel p="20" pt="5">
+          <Dummy length="l" />
+        </Accordion.Panel>
+      </Accordion.Item>
+      <Accordion.Item bd-t>
+        <Accordion.Heading as="h3">
+          <Accordion.Button p="20">Accordion Label</Accordion.Button>
+        </Accordion.Heading>
+        <Accordion.Panel p="20" pt="5">
+          <Dummy length="l" />
+        </Accordion.Panel>
+      </Accordion.Item>
+    </Accordion.Root>
+  </PreviewArea>
+  <PreviewCode slot='tab' label='JSX'>
+    ```jsx "as='h3'"
+    <Accordion.Root bd>
+      <Accordion.Item>
+        <Accordion.Heading as="h3">
+          <Accordion.Button p="20">Accordion Label</Accordion.Button>
+        </Accordion.Heading>
+        <Accordion.Panel p="20" pt="5">
+          <Dummy length="l" />
+        </Accordion.Panel>
+      </Accordion.Item>
+      <Accordion.Item bd-t>
+        <Accordion.Heading as="h3">
+          <Accordion.Button p="20">Accordion Label</Accordion.Button>
+        </Accordion.Heading>
+        <Accordion.Panel p="20" pt="5">
+          <Dummy length="l" />
+        </Accordion.Panel>
+      </Accordion.Item>
+    </Accordion.Root>;
+    ```
+  </PreviewCode>
+  <PreviewCode slot='tab' label='HTML'>
+  ```html "h3"
+  <div class="c--accordion l--stack">
+    <div class="c--accordion_item">
+      <h3 class="c--accordion_heading">
+        <button class="c--accordion_button" aria-controls="{id}" aria-expanded="false">
+          Accordion Label
+          <span class="c--accordion_icon a--icon" aria-hidden="true"></span>
+        </button>
+      </h3>
+      ...
+    </div>
+  </div>
+  ```
+  </PreviewCode>
 </Preview>
 
 
@@ -221,36 +221,36 @@ import { Accordion } from '@lism-css/ui/astro';
 
 
 <Preview>
-	<PreviewTitle>Preview</PreviewTitle>
-	<PreviewArea p='20'>
-		<Accordion.Root allowMultiple bd style={{ '--duration': '.15s' }}>
-		  <Accordion.Item>
-		    <Accordion.Heading>
-		      <Accordion.Button p="20">Accordion Label 1</Accordion.Button>
-		    </Accordion.Heading>
-		    <Accordion.Panel p="20" pt="5">
-		      <Dummy length="l" />
-		    </Accordion.Panel>
-		  </Accordion.Item>
-		  <Accordion.Item bd-t>
-		    <Accordion.Heading>
-		      <Accordion.Button p="20">Accordion Label 2</Accordion.Button>
-		    </Accordion.Heading>
-		    <Accordion.Panel p="20" pt="5">
-		      <Dummy length="xl" />
-		    </Accordion.Panel>
-		  </Accordion.Item>
-		  <Accordion.Item bd-t>
-		    <Accordion.Heading>
-		      <Accordion.Button p="20">Accordion Label 3</Accordion.Button>
-		    </Accordion.Heading>
-		    <Accordion.Panel p="20" pt="5">
-		      <Dummy length="l" />
-		    </Accordion.Panel>
-		  </Accordion.Item>
-		</Accordion.Root>
-	</PreviewArea>
-	<PreviewCode slot='tab' label='JSX'>
+  <PreviewTitle>Preview</PreviewTitle>
+  <PreviewArea p='20'>
+    <Accordion.Root allowMultiple bd style={{ '--duration': '.15s' }}>
+      <Accordion.Item>
+        <Accordion.Heading>
+          <Accordion.Button p="20">Accordion Label 1</Accordion.Button>
+        </Accordion.Heading>
+        <Accordion.Panel p="20" pt="5">
+          <Dummy length="l" />
+        </Accordion.Panel>
+      </Accordion.Item>
+      <Accordion.Item bd-t>
+        <Accordion.Heading>
+          <Accordion.Button p="20">Accordion Label 2</Accordion.Button>
+        </Accordion.Heading>
+        <Accordion.Panel p="20" pt="5">
+          <Dummy length="xl" />
+        </Accordion.Panel>
+      </Accordion.Item>
+      <Accordion.Item bd-t>
+        <Accordion.Heading>
+          <Accordion.Button p="20">Accordion Label 3</Accordion.Button>
+        </Accordion.Heading>
+        <Accordion.Panel p="20" pt="5">
+          <Dummy length="l" />
+        </Accordion.Panel>
+      </Accordion.Item>
+    </Accordion.Root>
+  </PreviewArea>
+  <PreviewCode slot='tab' label='JSX'>
 ```jsx "allowMultiple" "--duration"
 <Accordion.Root g="1px" allowMultiple>
   <Accordion.Item style={{ '--duration': '.15s' }}>
@@ -272,8 +272,8 @@ import { Accordion } from '@lism-css/ui/astro';
   ...
 </Accordion.Root>;
 ```
-	</PreviewCode>
-	<PreviewCode slot='tab' label='HTML'>
+  </PreviewCode>
+  <PreviewCode slot='tab' label='HTML'>
 ```html "data-allow-multiple" "--duration"
 <div class="c--accordion l--stack" data-allow-multiple>
   <div class="c--accordion_item" style="--duration: 0.15s">...</div>
@@ -281,6 +281,6 @@ import { Accordion } from '@lism-css/ui/astro';
   <div class="c--accordion_item" style="--duration: 0.15s">...</div>
 </div>
 ```
-	</PreviewCode>
+  </PreviewCode>
 </Preview>
 
