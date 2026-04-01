@@ -64,64 +64,64 @@ function generatePropScss(propKey, propConfig, TOKENS) {
     return '';
   }
 
-  let scss = `\t'${propKey}': (\n`;
+  let scss = `  '${propKey}': (\n`;
   if (isVar) {
-    scss += `\t\tprop: '--${propKey}',\n`;
+    scss += `    prop: '--${propKey}',\n`;
   } else {
     // propName を prop-name に変換（キャメルケースをケバブケースに変換）
-    scss += `\t\tprop: '${prop.replace(/([A-Z])/g, '-$1').toLowerCase()}',\n`;
+    scss += `    prop: '${prop.replace(/([A-Z])/g, '-$1').toLowerCase()}',\n`;
   }
 
   if (hasUtilities) {
     const exs = propConfig.exUtility || null;
 
-    scss += `\t\tutilities: (\n`;
+    scss += `    utilities: (\n`;
     Object.entries(utilities).forEach(([utilKey, value]) => {
       // キーに特殊文字が含まれる場合はエスケープ(/,%, : の前に \\ をつける(最終的にscss側の処理で \ ひとつになるようにここでは \\ ))
       const escapedKey = utilKey.replace(/\//g, '\\\\/').replace(/%/g, '\\\\%').replace(/:/g, '\\\\:');
 
       // exUtility としても定義されている場合はスキップ
       if (undefined === exs?.[utilKey]) {
-        scss += `\t\t\t'${escapedKey}': '${value}',\n`;
+        scss += `      '${escapedKey}': '${value}',\n`;
       }
     });
-    scss += `\t\t),\n`;
+    scss += `    ),\n`;
 
     if (exs) {
-      scss += `\t\texUtility: (\n`;
+      scss += `    exUtility: (\n`;
 
       for (const [exKey, exProps] of Object.entries(exs)) {
         if (typeof exProps === 'object') {
-          scss += `\t\t\t'${exKey}': (\n`;
+          scss += `      '${exKey}': (\n`;
           for (const _prop in exProps) {
             if (exProps[_prop]) {
-              scss += `\t\t\t\t'${_prop}': '${exProps[_prop]}',\n`;
+              scss += `        '${_prop}': '${exProps[_prop]}',\n`;
             }
           }
-          scss += `\t\t\t),\n`;
+          scss += `      ),\n`;
         }
       }
-      scss += `\t\t),\n`;
+      scss += `    ),\n`;
     }
   }
 
   if (bp !== undefined) {
-    scss += `\t\tbp: ${bp},\n`;
+    scss += `    bp: ${bp},\n`;
   }
   if (isVar !== undefined) {
-    scss += `\t\tisVar: ${isVar},\n`;
+    scss += `    isVar: ${isVar},\n`;
   }
   if (alwaysVar !== undefined) {
-    scss += `\t\talwaysVar: ${alwaysVar},\n`;
+    scss += `    alwaysVar: ${alwaysVar},\n`;
   }
   if (overwriteBaseVar !== undefined) {
-    scss += `\t\toverwriteBaseVar: ${overwriteBaseVar},\n`;
+    scss += `    overwriteBaseVar: ${overwriteBaseVar},\n`;
   }
   if (important !== undefined) {
-    scss += `\t\timportant: ${important},\n`;
+    scss += `    important: ${important},\n`;
   }
 
-  scss += `\t),`;
+  scss += `  ),`;
 
   return scss;
 }
