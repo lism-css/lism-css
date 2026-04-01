@@ -2,7 +2,7 @@
 title: 'Changelog'
 description: 'A log of all notable changes and updates across Lism CSS releases.'
 ---
-import { Lism, Divider } from 'lism-css/astro';
+import { Lism, Divider, Text, Inline, Link } from 'lism-css/astro';
 
 
 Breaking changes may continue frequently until the v1.0 release, so all notable changes will be documented here...
@@ -123,7 +123,7 @@ Content size management functionality has been separated into `is--wrapper`.
 
 ## v.0.7.2
 - Adjusted CSS for `is--linkBox` and `u--expandedLink`.
-- Applied `setPlain` to `<HTML.button>` by default.
+- Applied `setPlain` to `<Lism as="button">` by default.
 - Changed the initial `color` for `a` from `var(--link)` to `var(--link-c, --link)`.
 
 ## v.0.7.3
@@ -327,10 +327,10 @@ Components that were aliases for `<Lism as='xxx'>` are now distributed as [`<HTM
 
 | Before | After |
 | ------ | ------ |
-| `<Text>` | `<HTML.p>` |
-| `<Link>` | `<HTML.a>` |
+| `<Text>` | `<Text>` |
+| `<Link>` | `<Link>` |
 
-Additionally, new components such as `<HTML.span>` have been added.
+Additionally, new components such as `<Inline>` have been added.
 
 
 

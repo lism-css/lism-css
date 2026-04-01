@@ -4,7 +4,7 @@
  * Lism CSSの紹介とドキュメントへの導線
  */
 import SimpleLayout from '@/layouts/SimpleLayout.astro';
-import { Stack, Grid, HTML, Icon, Flex, Lism } from 'lism-css/astro';
+import { Stack, Grid, Icon, Flex, Lism, Heading, Text, Link } from 'lism-css/astro';
 import { Button } from '@lism-css/ui/astro';
 import Gradbox from '@/components/parts/Gradbox.astro';
 import { siteConfig } from '@/config/site';
@@ -52,15 +52,15 @@ const FEATURES = [
     <Stack class="hero_content" g="40" gc="1 / 5" gr="1" z="1">
       <Stack g="30">
         <Lism class="hero_heading -w:fit">
-          <HTML.h lv="1" fz="4xl" fw="bold" ff="mono">Lism CSS</HTML.h>
+          <Heading lv="1" fz="4xl" fw="bold" ff="mono">Lism CSS</Heading>
         </Lism>
-        <HTML.p class="hero_tagline" fz="m" c="text-2">
+        <Text class="hero_tagline" fz="m" c="text-2">
           WEBサイト向けのレイアウトファーストなCSSフレームワーク。<br />
           コーディングを軽やかに。デザインに調和とリズムを。
-        </HTML.p>
+        </Text>
       </Stack>
       <Flex>
-        <HTML.a href="/docs/overview/" bgc="text" c="base" td="none" bdrs="99" py="10" px="20" hov="neutral">ドキュメント →</HTML.a>
+        <Link href="/docs/overview/" bgc="text" c="base" td="none" bdrs="99" py="10" px="20" hov="neutral">ドキュメント →</Link>
       </Flex>
     </Stack>
     <Lism class="hero_image" gc="3 / 6" gr="1" pb="10" z="0">
@@ -82,12 +82,12 @@ const FEATURES = [
           bxsh="20"
           bd
         >
-          <HTML.h lv="2" fz={['m', 'l']} c="text">
+          <Heading lv="2" fz={['m', 'l']} c="text">
             {feature.title}
-          </HTML.h>
-          <HTML.p c="text-2" fz={['s', 'm']} lh="s">
+          </Heading>
+          <Text c="text-2" fz={['s', 'm']} lh="s">
             {feature.desc}
-          </HTML.p>
+          </Text>
         </Stack>
       ))
     }
@@ -95,18 +95,18 @@ const FEATURES = [
   <!-- <Spacer h="40" /> -->
 
   <Lism layout="flow" as="section" my-s="50">
-    <HTML.h lv="2" class="h2">独自のCSS設計</HTML.h>
+    <Heading lv="2" class="h2">独自のCSS設計</Heading>
 
     <Lism layout="fluidCols" cols="20rem" g="40">
       {
         POINTS.map((point) => (
           <Stack g="20" p="30" bdrs="20" bgc="base" bxsh="30" lh="s">
-            <HTML.h lv="3" fz="m" fw="bold">
+            <Heading lv="3" fz="m" fw="bold">
               {point.title}
-            </HTML.h>
-            <HTML.p fz="s" c="text-2">
+            </Heading>
+            <Text fz="s" c="text-2">
               {point.desc}
-            </HTML.p>
+            </Text>
           </Stack>
         ))
       }
@@ -115,8 +115,8 @@ const FEATURES = [
 
   {/* 専用コンポーネント */}
   <Lism as="section" layout="flow" g="20" my-s="50">
-    <HTML.h lv="2" class="h2">Astro/React用のコンポーネント</HTML.h>
-    <HTML.p>Lism CSSを手軽に扱えるように、ReactやAstroで利用できるコンポーネントを無償で提供しています。</HTML.p>
+    <Heading lv="2" class="h2">Astro/React用のコンポーネント</Heading>
+    <Text>Lism CSSを手軽に扱えるように、ReactやAstroで利用できるコンポーネントを無償で提供しています。</Text>
 
     <Lism max-w="m" mx="auto">
       <LismExDemo />

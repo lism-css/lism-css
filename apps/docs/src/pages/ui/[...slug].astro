@@ -6,7 +6,7 @@
  */
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import { generateToc } from '@/lib/generateToc';
-import { Icon, Lism, Flow, HTML } from 'lism-css/astro';
+import { Icon, Lism, Flow, Heading } from 'lism-css/astro';
 import PostNavigation from '@parts/PostNavigation.astro';
 import { getRootLang, type LangCode } from '@/lib/i18n';
 import { getPostsByLang, type PostEntry } from '@/lib/content';
@@ -42,7 +42,7 @@ const ogImage = `/ui/og/${entry.id.replace(/^ui\//, '')}.png`;
 <BaseLayout title={entry.data.title} description={entry.data.description} ogImage={ogImage} toc={toc} lang={lang}>
   <Lism as="article" class="z--article set--cqUnit" data-pagefind-body>
     {/* 記事タイトル */}
-    <HTML.h lv="1" class="articleTitle">{entry.data.title}</HTML.h>
+    <Heading lv="1" class="articleTitle">{entry.data.title}</Heading>
 
     <Lism class="u--cbox" keycolor="yellow" p="20" my="40" bdrs="10" bd>
       <Lism layout="flex" ai="center" g="10" fw="bold">

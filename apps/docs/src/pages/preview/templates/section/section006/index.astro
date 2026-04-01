@@ -2,7 +2,7 @@
 import DemoLayout from '@/layouts/DemoLayout.astro';
 import { Button } from '@lism-css/ui/astro';
 
-import { Container, Frame, Flex, Grid, Layer, Media, Stack, HTML } from 'lism-css/astro';
+import { Container, Frame, Flex, Grid, Layer, Media, Stack, Inline } from 'lism-css/astro';
 import './_style.css';
 ---
 
@@ -23,7 +23,7 @@ import './_style.css';
           </Stack>
           <Flex w="100%" jc="center">
             <Button layout="grid" variant="outline" href="#" gtc="1em 1fr 1em" jc="center" c="white" minW={['100%', null, '200px']} p="15" bdrs="10">
-              <HTML.span gc="2">View More</HTML.span>
+              <Inline gc="2">View More</Inline>
             </Button>
           </Flex>
         </Stack>

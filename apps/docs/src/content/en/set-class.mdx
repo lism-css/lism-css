@@ -2,7 +2,7 @@
 title: 'Set Class'
 description: 'Learn about the set-- utility classes for overriding base styles and redefining tokens.'
 ---
-import { Lism, Box, Media, Flex, HTML, Stack, Spacer, Frame } from 'lism-css/astro';
+import { Lism, Box, Media, Flex, Stack, Spacer, Frame, Text } from 'lism-css/astro';
 import { Button } from '@lism-css/ui/astro';
 
 
@@ -45,7 +45,7 @@ By overriding the `--shc` variable here, you can adjust the color tint of the sh
   <PreviewTitle>Example of overriding shadow color</PreviewTitle>
   <PreviewArea p='30' nogrid>
     <Stack g="10">
-      <HTML.p> Default: </HTML.p>
+      <Text> Default: </Text>
       <Flex className="set--shadow -g:30" px-s="15">
         <Box bxsh="20" p="30" bdrs="20">
           Box
@@ -55,7 +55,7 @@ By overriding the `--shc` variable here, you can adjust the color tint of the sh
         </Box>
       </Flex>
       <Spacer h="40" />
-      <HTML.p> Overriding variables with set--shadow: </HTML.p>
+      <Text> Overriding variables with set--shadow: </Text>
       <Flex className="set--shadow -g:30" px-s="15" style={{ '--shc': 'hsl(200 50% 50% / 20%)' }}>
         <Box bxsh="20" p="30" bdrs="20">
           Box
@@ -266,7 +266,7 @@ Lismが提供するコンポーネントでは、`setMask`プロパティに指�
 <Preview>
   <PreviewTitle>例</PreviewTitle>
   <PreviewArea p='10'>
-    <HTML.img
+    <Media
       src="https://cdn.lism-css.com/img/u-2.jpg"
       width="960"
       height="640"
@@ -277,7 +277,7 @@ Lismが提供するコンポーネントでは、`setMask`プロパティに指�
   </PreviewArea>
   <PreviewCode slot='tab' label='JSX'>
     ```jsx
-    <HTML.img
+    <Media
       src="https://cdn.lism-css.com/img/u-2.jpg"
       width="960"
       height="640"

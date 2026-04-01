@@ -3,7 +3,7 @@ title: 'DividerLabel'
 description: 'Example implementation of a labeled divider component using Lism CSS.'
 ---
 
-import { Divider, Flex, Box, Stack, HTML } from 'lism-css/astro';
+import { Divider, Flex, Box, Stack, Inline } from 'lism-css/astro';
 
 
 Examples of creating a divider component with a label text.
@@ -19,7 +19,7 @@ Examples of creating a divider component with a label text.
     </Box>
     <Flex ai="center" g="20" lh="s">
       <Divider fx="1" />
-      <HTML.span fz="s">Label Text</HTML.span>
+      <Inline fz="s">Label Text</Inline>
       <Divider fx="1" />
     </Flex>
     <Box bgc="base-2" c="text-2" py="40" ta="center">
@@ -31,7 +31,7 @@ Examples of creating a divider component with a label text.
     <Box bgc='base-2' c='text-2' py='40' ta='center'>...Contents...</Box>
     <Flex ai='center' g='20' lh='s'>
       <Divider fx='1' />
-      <HTML.span fz='s'>Label Text</HTML.span>
+      <Inline fz='s'>Label Text</Inline>
       <Divider fx='1' />
     </Flex>
     <Box bgc='base-2' c='text-2' py='40' ta='center'>...Contents...</Box>

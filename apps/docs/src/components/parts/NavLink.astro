@@ -1,11 +1,11 @@
 ---
-import { HTML } from 'lism-css/astro';
+import { Link } from 'lism-css/astro';
 
 const { href, isActive, ...props } = Astro.props;
 ---
 
 {/* ヘッダー: Flexで横並び、両端揃え */}
-<HTML.a
+<Link
   href={href}
   class:list={['c--navLink', { _active: isActive }]}
   d="block"
@@ -22,7 +22,7 @@ const { href, isActive, ...props } = Astro.props;
   <span>
     <slot />
   </span>
-</HTML.a>
+</Link>
 
 <style is:global>
   .c--navLink {

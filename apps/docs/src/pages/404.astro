@@ -4,7 +4,7 @@
  * 存在しないページにアクセスした場合に表示
  */
 import SimpleLayout from '@/layouts/SimpleLayout.astro';
-import { Stack, Flex, HTML, Lism, Icon } from 'lism-css/astro';
+import { Stack, Flex, Lism, Icon, Heading, Link } from 'lism-css/astro';
 ---
 
 <SimpleLayout title="404 - Page Not Found" excludeFromSearch>
@@ -12,7 +12,7 @@ import { Stack, Flex, HTML, Lism, Icon } from 'lism-css/astro';
     <Lism fz="5xl" fw="bold" ff="mono" c="text-3" lh="1">404</Lism>
 
     <Stack g="20" ai="center">
-      <HTML.h lv="1" fz="2xl"> ページが見つかりません </HTML.h>
+      <Heading lv="1" fz="2xl"> ページが見つかりません </Heading>
       <Lism fz="m" c="text-2" max-w="40rem">
         お探しのページは存在しないか、移動した可能性があります。<br />
         URLが正しいかご確認ください。
@@ -21,10 +21,10 @@ import { Stack, Flex, HTML, Lism, Icon } from 'lism-css/astro';
 
     {/* ナビゲーション */}
     <Flex g="20" jc="center">
-      <HTML.a href="/docs/" layout="flex" ai="center" bdrs="99" g="10" py="15" px="20" bgc="text" c="base" td="none" hov="neutral">
+      <Link href="/docs/" layout="flex" ai="center" bdrs="99" g="10" py="15" px="20" bgc="text" c="base" td="none" hov="neutral">
         <Icon lh="1" fz="l">📖</Icon>
         <span>Go to Docs</span>
-      </HTML.a>
+      </Link>
     </Flex>
   </Stack>
 </SimpleLayout>

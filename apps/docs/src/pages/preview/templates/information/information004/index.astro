@@ -1,7 +1,7 @@
 ---
 import DemoLayout from '@/layouts/DemoLayout.astro';
 
-import { Container, Frame, Grid, Media, Stack, HTML, Flex } from 'lism-css/astro';
+import { Container, Frame, Grid, Media, Stack, Flex, Text, Heading } from 'lism-css/astro';
 import { Button } from '@lism-css/ui/astro';
 import './_style.css';
 ---
@@ -9,14 +9,14 @@ import './_style.css';
 <DemoLayout title="Information004">
   <Container isWrapper="m" bgc="base" py="50" setGutter>
     <Stack g="20" ai="center" mb="40">
-      <HTML.h lv="2" class="u--trim" fz="2xl" fw="bold">オフィス</HTML.h>
-      <HTML.p class="u--trim" fz="s" ta="center" o="-20">All Offices</HTML.p>
+      <Heading lv="2" class="u--trim" fz="2xl" fw="bold">オフィス</Heading>
+      <Text class="u--trim" fz="s" ta="center" o="-20">All Offices</Text>
     </Stack>
     <Stack>
       <Grid gtc={['auto', null, 'minmax(auto, 200px) repeat(2, 1fr)']} g="40" py="40" bd-y-e>
         <Stack class="u--trimChildren" g="15">
-          <HTML.p fz="l" fw="bold" lts="l">東京本社</HTML.p>
-          <HTML.p fz="s" o="-20">Tokyo Office</HTML.p>
+          <Text fz="l" fw="bold" lts="l">東京本社</Text>
+          <Text fz="s" o="-20">Tokyo Office</Text>
         </Stack>
         <Stack g="30">
           <Stack class="u--trim" fz="s">
@@ -36,8 +36,8 @@ import './_style.css';
       </Grid>
       <Grid gtc={['auto', null, 'minmax(auto, 200px) repeat(2, 1fr)']} g="40" py="40" bd-y-e>
         <Stack class="u--trimChildren" g="15">
-          <HTML.p fz="l" fw="bold" lts="l">北海道支店</HTML.p>
-          <HTML.p fz="s" o="-20">Hokkaido Branch</HTML.p>
+          <Text fz="l" fw="bold" lts="l">北海道支店</Text>
+          <Text fz="s" o="-20">Hokkaido Branch</Text>
         </Stack>
         <Stack g="30">
           <Stack class="u--trim" fz="s">
@@ -57,8 +57,8 @@ import './_style.css';
       </Grid>
       <Grid gtc={['auto', null, 'minmax(auto, 200px) repeat(2, 1fr)']} g="40" py="40" bd-y-e>
         <Stack class="u--trimChildren" g="15">
-          <HTML.p fz="l" fw="bold" lts="l">沖縄支店</HTML.p>
-          <HTML.p fz="s" o="-20">Okinawa Branch</HTML.p>
+          <Text fz="l" fw="bold" lts="l">沖縄支店</Text>
+          <Text fz="s" o="-20">Okinawa Branch</Text>
         </Stack>
         <Stack g="30">
           <Stack class="u--trim" fz="s">

@@ -1,7 +1,7 @@
 ---
 import DemoLayout from '@/layouts/DemoLayout.astro';
 
-import { Container, Frame, Grid, Wrapper, Layer, Media, Stack, HTML, Flex } from 'lism-css/astro';
+import { Container, Frame, Grid, Wrapper, Layer, Media, Stack, Flex, Text, Heading } from 'lism-css/astro';
 import { Button } from '@lism-css/ui/astro';
 import './_style.css';
 ---
@@ -26,8 +26,8 @@ import './_style.css';
     <Wrapper contentSize="s" setGutter py="60" c="white" pos="rel">
       <Stack g="40">
         <Stack g="30" ai="center">
-          <HTML.p class="u--trim" fz="5xl" fw="100" lts="l">Feature</HTML.p>
-          <HTML.h lv="2" class="u--trim" fz="l" fw="normal" lts="l">私たちの製品のこと</HTML.h>
+          <Text class="u--trim" fz="5xl" fw="100" lts="l">Feature</Text>
+          <Heading lv="2" class="u--trim" fz="l" fw="normal" lts="l">私たちの製品のこと</Heading>
         </Stack>
         <Stack g="30">
           <p>

@@ -2,7 +2,7 @@
 title: 'Utility Class'
 description: 'Learn about the utility classes in Lism CSS that apply bundled styles and decorations.'
 ---
-import { Lism, Flow, HTML, Grid, Stack, Center, Box, Dummy, Media, Frame, Flex, Layer, Spacer, Icon, Divider } from "lism-css/astro";
+import { Lism, Flow, Grid, Stack, Center, Box, Dummy, Media, Frame, Flex, Layer, Spacer, Icon, Divider, Text, Inline } from "lism-css/astro";
 import { Dog, Cat } from "@phosphor-icons/react";
 
 This page introduces the utility classes available in Lism CSS.
@@ -146,57 +146,57 @@ Generates `--c`, `--bgc`, and `--bdc` from the `--keycolor` variable using `colo
   </Lism>
   <hr />
   <Lism className="u--cbox" keycolor="red" bd-x-s bdc="keycolor" bdw="4px" bxsh="10" setShadow p="20">
-    <HTML.span c="keycolor" fw="bold">
+    <Inline c="keycolor" fw="bold">
       Title Text
-    </HTML.span>
+    </Inline>
     <Dummy length="codes" />
   </Lism>
   <Lism className="u--cbox" keycolor="orange" bd-x-s bdc="keycolor" bdw="4px" bxsh="10" setShadow p="20">
-    <HTML.span c="keycolor" fw="bold">
+    <Inline c="keycolor" fw="bold">
       Title Text
-    </HTML.span>
+    </Inline>
     <Dummy length="codes" />
   </Lism>
   <Lism className="u--cbox" keycolor="yellow" bd-x-s bdc="keycolor" bdw="4px" bxsh="10" setShadow p="20">
-    <HTML.span c="keycolor" fw="bold">
+    <Inline c="keycolor" fw="bold">
       Title Text
-    </HTML.span>
+    </Inline>
     <Dummy length="codes" />
   </Lism>
   <Lism className="u--cbox" keycolor="purple" bd-x-s bdc="keycolor" bdw="4px" bxsh="10" setShadow p="20">
-    <HTML.span c="keycolor" fw="bold">
+    <Inline c="keycolor" fw="bold">
       Title Text
-    </HTML.span>
+    </Inline>
     <Dummy length="codes" />
   </Lism>
   <Lism className="u--cbox" keycolor="green" bd-x-s bdc="keycolor" bdw="4px" bxsh="10" setShadow p="20">
-    <HTML.span c="keycolor" fw="bold">
+    <Inline c="keycolor" fw="bold">
       Title Text
-    </HTML.span>
+    </Inline>
     <Dummy length="codes" />
   </Lism>
   <Lism className="u--cbox" keycolor="blue" bd-x-s bdc="keycolor" bdw="4px" bxsh="10" setShadow p="20">
-    <HTML.span c="keycolor" fw="bold">
+    <Inline c="keycolor" fw="bold">
       Title Text
-    </HTML.span>
+    </Inline>
     <Dummy length="codes" />
   </Lism>
   <Lism className="u--cbox" keycolor="purple" bd-x-s bdc="keycolor" bdw="4px" bxsh="10" setShadow p="20">
-    <HTML.span c="keycolor" fw="bold">
+    <Inline c="keycolor" fw="bold">
       Title Text
-    </HTML.span>
+    </Inline>
     <Dummy length="codes" />
   </Lism>
   <Lism className="u--cbox" keycolor="pink" bd-x-s bdc="keycolor" bdw="4px" bxsh="10" setShadow p="20">
-    <HTML.span c="keycolor" fw="bold">
+    <Inline c="keycolor" fw="bold">
       Title Text
-    </HTML.span>
+    </Inline>
     <Dummy length="codes" />
   </Lism>
   <Lism className="u--cbox" keycolor="gray" bd-x-s bdc="keycolor" bdw="4px" bxsh="10" setShadow p="20">
-    <HTML.span c="keycolor" fw="bold">
+    <Inline c="keycolor" fw="bold">
       Title Text
-    </HTML.span>
+    </Inline>
     <Dummy length="codes" />
   </Lism>
 </PreviewArea>
@@ -531,9 +531,9 @@ A class for clipping a background with text.
   <PreviewArea p='20'>
     <Center>
       <Box className="u--clipText" bgr="no-repeat" bgi="linear-gradient(45deg, var(--blue), var(--pink))">
-        <HTML.p fz="5xl" fw="bold" lh="1" lts="l">
+        <Text fz="5xl" fw="bold" lh="1" lts="l">
           TEXT
-        </HTML.p>
+        </Text>
       </Box>
     </Center>
   </PreviewArea>
@@ -541,9 +541,9 @@ A class for clipping a background with text.
     ```jsx
     <Center>
       <Box className="u--clipText" bgi="linear-gradient(45deg, var(--blue), var(--pink))">
-        <HTML.p fz="5xl" fw="bold" lh="1" lts="l">
+        <Text fz="5xl" fw="bold" lh="1" lts="l">
           TEXT
-        </HTML.p>
+        </Text>
       </Box>
     </Center>;
     ```

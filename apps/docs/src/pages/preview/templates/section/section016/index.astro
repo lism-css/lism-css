@@ -1,7 +1,7 @@
 ---
 import DemoLayout from '@/layouts/DemoLayout.astro';
 
-import { Container, Grid, HTML, Frame, Media, Stack } from 'lism-css/astro';
+import { Container, Grid, Frame, Media, Stack, Text, Heading } from 'lism-css/astro';
 import './_style.css';
 ---
 
@@ -10,8 +10,8 @@ import './_style.css';
     <Container isWrapper="m" setGutter>
       <Grid gtc={['auto', null, 'auto 1fr']} g="50 60">
         <Stack g="30" min-w="16rem" ff="accent" fs="i" c="gray">
-          <HTML.h lv="2" class="u--trim" fz="5xl" fw="bold">Relaxing</HTML.h>
-          <HTML.p class="u--trim" fz="l">深呼吸したくなる、澄んだ空気</HTML.p>
+          <Heading lv="2" class="u--trim" fz="5xl" fw="bold">Relaxing</Heading>
+          <Text class="u--trim" fz="l">深呼吸したくなる、澄んだ空気</Text>
         </Stack>
         <Stack class="u--trimChildren" g="40">
           <p>

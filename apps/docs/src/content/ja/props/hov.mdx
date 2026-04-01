@@ -3,7 +3,7 @@ title: '-hov'
 description: 'hover時の挙動をコントロールする -hov プロパティクラスの使い方について解説します。'
 ---
 
-import { Flex, HTML, Media, Layer, Spacer, Box, Center, Stack, Frame, LinkBox } from 'lism-css/react';
+import { Flex, Media, Layer, Spacer, Box, Center, Stack, Frame, LinkBox, Inline, Text } from 'lism-css/react';
 
 
 hover時の挙動をコントロールするためのCSS設計について紹介します。
@@ -325,9 +325,9 @@ Lism では、[`set--hov`](/docs/css-methodology/#set--hov)というクラスを
       <Media isLayer src="https://cdn.lism-css.com/img/a-1.jpg" alt="" width="960" height="640" loading="lazy" />
       <Layer setTransition hov="to:show" bgc="rgb(0 0 0 / 40%)" blur="6px">
         <Center h="100%" c="#fff">
-          <HTML.span fz="2xl" fs="italic" fw="light" lts="l" bdrs="99" px="20" py="10">
+          <Inline fz="2xl" fs="italic" fw="light" lts="l" bdrs="99" px="20" py="10">
             View More
-          </HTML.span>
+          </Inline>
         </Center>
       </Layer>
     </Frame>
@@ -350,9 +350,9 @@ Lism では、[`set--hov`](/docs/css-methodology/#set--hov)というクラスを
       <Media isLayer src="https://cdn.lism-css.com/img/a-1.jpg" alt="" width="960" height="640" loading="lazy" />
       <Layer setTransition hov="to:show" bgc="rgb(0 0 0 / 40%)" blur="6px">
         <Center h="100%" c="#fff">
-          <HTML.span fz="2xl" fs="italic" fw="light" lts="l" bdrs="99" px="20" py="10">
+          <Inline fz="2xl" fs="italic" fw="light" lts="l" bdrs="99" px="20" py="10">
             View More
-          </HTML.span>
+          </Inline>
         </Center>
       </Layer>
     </Frame>;
@@ -382,9 +382,9 @@ Lism では、[`set--hov`](/docs/css-methodology/#set--hov)というクラスを
       </Frame>
       <Layer setTransition hov="to:hide" grayscale="70%" />
       <Center isLayer c="#fff" bgc="rgb(0 0 0 / 40%)">
-        <HTML.p setTransition hov="to:letterSpread" fz="2xl">
+        <Text setTransition hov="to:letterSpread" fz="2xl">
           LinkBox
-        </HTML.p>
+        </Text>
       </Center>
     </LinkBox>
   </PreviewArea>
@@ -417,9 +417,9 @@ Lism では、[`set--hov`](/docs/css-methodology/#set--hov)というクラスを
       </Frame>
       <Layer setTransition hov="to:hide" grayscale="70%" />
       <Center isLayer c="#fff" bgc="rgb(0 0 0 / 40%)">
-        <HTML.p setTransition hov="to:letterSpread" fz="2xl">
+        <Text setTransition hov="to:letterSpread" fz="2xl">
           LinkBox
-        </HTML.p>
+        </Text>
       </Center>
     </LinkBox>;
     ```

@@ -1,7 +1,7 @@
 ---
 import type { TocItem } from '../lib/generateToc';
 import TocItemComponent from './TocItem.astro';
-import { Stack, HTML } from 'lism-css/astro';
+import { Stack, Heading } from 'lism-css/astro';
 import { getLangFromUrl, t } from '@/lib/i18n';
 import type { Responsive } from 'lism-css/lib/types/ResponsiveProps';
 
@@ -16,7 +16,7 @@ const tocText = t(lang, 'toc');
 ---
 
 <Stack fx="1" class="c--toc set--cqUnit" g="20" ov-y="auto" px={px}>
-  <HTML.h lv="3" fz="l">{tocText.title}</HTML.h>
+  <Heading lv="3" fz="l">{tocText.title}</Heading>
   <Stack as="ul" class="c--toc_list" g="0">
     {toc.map((item) => <TocItemComponent item={item} />)}
   </Stack>

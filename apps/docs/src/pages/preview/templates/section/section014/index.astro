@@ -1,7 +1,7 @@
 ---
 import DemoLayout from '@/layouts/DemoLayout.astro';
 
-import { Container, Grid, Box, HTML, Frame, Media, Stack } from 'lism-css/astro';
+import { Container, Grid, Box, Frame, Media, Stack, Text, Heading } from 'lism-css/astro';
 import './_style.css';
 ---
 
@@ -9,14 +9,14 @@ import './_style.css';
   <Container isWrapper="l" py="50" setGutter>
     <Grid gtc={['auto', null, 'auto 1fr']} g="40 50">
       <Box>
-        <HTML.h lv="2" class="u--trim" fz="3xl" fw="bold" hl="l">最高のユーザー体験を<br />提供する未来のために</HTML.h>
+        <Heading lv="2" class="u--trim" fz="3xl" fw="bold" hl="l">最高のユーザー体験を<br />提供する未来のために</Heading>
       </Box>
       <Box>
-        <HTML.p class="u--trim" fz="m">
+        <Text class="u--trim" fz="m">
           私たちのサービスは、ユーザーの皆様に最高の体験を提供することを目指しています。
           最新の技術を駆使し、使いやすさと安全性を両立させたプラットフォームを構築しました。
           多様なニーズに対応するため、柔軟なカスタマイズオプションも用意しています。
-        </HTML.p>
+        </Text>
       </Box>
       <Frame as="figure" ar="2/1" gc="1 / -1">
         <Media src="https://cdn.lism-css.com/img/random-2510" alt="" />

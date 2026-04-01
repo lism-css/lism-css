@@ -3,7 +3,7 @@
  * 記事カードコンポーネント
  * 言語対応：リンクに言語プレフィックスを追加
  */
-import { Cluster, LinkBox, HTML, Lism } from 'lism-css/astro';
+import { Cluster, LinkBox, Lism, Heading, Link, Text } from 'lism-css/astro';
 import TagLink from '@parts/TagLink.astro';
 import type { PostEntry } from '@/lib/content';
 import { getRootLang, getLocalizedUrl, type LangCode } from '@/lib/i18n';
@@ -45,12 +45,12 @@ const dateLocale = lang === 'ja' ? 'ja-JP' : 'en-US';
 		<img src={post.data.hero || `/og/${post.id}.png`} alt={post.data.title} loading="lazy" />
 	</Frame> -->
 
-  <HTML.h lv="3" class="c--postCard__title" fz="m" fw="bold" lh="xs" style={{ '--focus-offset': '2px' }}>
-    <HTML.a href={postUrl} class="u--expandedLink">{post.data.title}</HTML.a>
-  </HTML.h>
-  <HTML.p fz="xs" lh="s" o="-10">
+  <Heading lv="3" class="c--postCard__title" fz="m" fw="bold" lh="xs" style={{ '--focus-offset': '2px' }}>
+    <Link href={postUrl} class="u--expandedLink">{post.data.title}</Link>
+  </Heading>
+  <Text fz="xs" lh="s" o="-10">
     {post.data.description}
-  </HTML.p>
+  </Text>
   <Cluster g="10" my-s="auto" py-s="20">
     {
       (post.data.tags ?? []).length > 0 && (

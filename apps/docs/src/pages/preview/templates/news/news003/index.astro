@@ -1,7 +1,7 @@
 ---
 import DemoLayout from '@/layouts/DemoLayout.astro';
 
-import { Container, Grid, HTML, Flex, Icon, Stack } from 'lism-css/astro';
+import { Container, Grid, Flex, Icon, Stack, Text, Heading } from 'lism-css/astro';
 import { Button } from '@lism-css/ui/astro';
 import './_style.css';
 ---
@@ -10,37 +10,37 @@ import './_style.css';
   <Container isWrapper="m" py="50" setGutter>
     <Grid gtr={['auto', null, 'auto auto 1fr']} gtc={['auto', null, 'auto 1fr']} g="30">
       <Stack gr="1" gc="1" g="20" min-w={['auto', null, '12rem']}>
-        <HTML.p class="u--trim" fz="3xl" fw="light" lts="l">News</HTML.p>
-        <HTML.h lv="2" class="u--trim" fz="s" fw="normal" o="-20">お知らせ</HTML.h>
+        <Text class="u--trim" fz="3xl" fw="light" lts="l">News</Text>
+        <Heading lv="2" class="u--trim" fz="s" fw="normal" o="-20">お知らせ</Heading>
       </Stack>
       <Grid gr={['2', null, '1 / -1']} gc={['1', null, '2']} gtc={['auto', 'auto 1fr']} bd-y-s>
         <Grid as="a" isLinkBox href="#" gtc="subgrid" gc="1 / -1" g={['20', '30']} bd-y-e py="30" setHov>
           <Grid gtc={['auto auto', 'auto 1fr']} g="30" jc="start" ai="center">
-            <HTML.p fz="m">2025.07.13</HTML.p>
-            <HTML.p d="if" jc="center" fz="xs" lh="xs" c="text" bgc="white" bd p="10 20" bdrs="99" ta="center">新サービス</HTML.p>
+            <Text fz="m">2025.07.13</Text>
+            <Text d="if" jc="center" fz="xs" lh="xs" c="text" bgc="white" bd p="10 20" bdrs="99" ta="center">新サービス</Text>
           </Grid>
           <Flex as="a" isLinkBox href="#" ai="center" td="n" g="30" hov="to:cLink">
-            <HTML.p>目標金額を設定して貯蓄ができる「目的別預金」が登場。楽しみながら計画的な資産形成が行えます。</HTML.p>
+            <Text>目標金額を設定して貯蓄ができる「目的別預金」が登場。楽しみながら計画的な資産形成が行えます。</Text>
             <Icon icon="caret-right" fz="s" c="text" mx-s="auto" />
           </Flex>
         </Grid>
         <Grid as="a" isLinkBox href="#" gtc="subgrid" gc="1 / -1" g={['20', '30']} bd-y-e py="30" setHov>
           <Grid gtc={['auto auto', 'auto 1fr']} g="30" jc="start" ai="center">
-            <HTML.p fz="m">2025.07.13</HTML.p>
-            <HTML.p d="if" jc="center" fz="xs" lh="xs" c="text" bgc="white" bd p="10 20" bdrs="99" ta="center">セキュリティ</HTML.p>
+            <Text fz="m">2025.07.13</Text>
+            <Text d="if" jc="center" fz="xs" lh="xs" c="text" bgc="white" bd p="10 20" bdrs="99" ta="center">セキュリティ</Text>
           </Grid>
           <Flex as="a" isLinkBox href="#" ai="center" td="n" g="30" hov="to:cLink">
-            <HTML.p>当行を装った不審なメール（フィッシング詐欺）にご注意ください</HTML.p>
+            <Text>当行を装った不審なメール（フィッシング詐欺）にご注意ください</Text>
             <Icon icon="caret-right" fz="s" c="text" mx-s="auto" />
           </Flex>
         </Grid>
         <Grid as="a" isLinkBox href="#" gtc="subgrid" gc="1 / -1" g={['20', '30']} bd-y-e py="30" setHov>
           <Grid gtc={['auto auto', 'auto 1fr']} g="30" jc="start" ai="center">
-            <HTML.p fz="m">2025.07.13</HTML.p>
-            <HTML.p d="if" jc="center" fz="xs" lh="xs" c="text" bgc="white" bd p="10 20" bdrs="99" ta="center">重要なお知らせ</HTML.p>
+            <Text fz="m">2025.07.13</Text>
+            <Text d="if" jc="center" fz="xs" lh="xs" c="text" bgc="white" bd p="10 20" bdrs="99" ta="center">重要なお知らせ</Text>
           </Grid>
           <Flex as="a" isLinkBox href="#" ai="center" td="n" g="30" hov="to:cLink">
-            <HTML.p>インターネットバンキングサービス利用規定の一部改定について</HTML.p>
+            <Text>インターネットバンキングサービス利用規定の一部改定について</Text>
             <Icon icon="caret-right" fz="s" c="text" mx-s="auto" />
           </Flex>
         </Grid>

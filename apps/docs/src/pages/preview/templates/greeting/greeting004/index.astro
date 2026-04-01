@@ -1,7 +1,7 @@
 ---
 import DemoLayout from '@/layouts/DemoLayout.astro';
 
-import { Wrapper, Grid, HTML, Frame, Media, Stack, Flow, Layer, Center } from 'lism-css/astro';
+import { Wrapper, Grid, Frame, Media, Stack, Flow, Layer, Center, Text, Inline, Heading } from 'lism-css/astro';
 import './_style.css';
 ---
 
@@ -11,15 +11,15 @@ import './_style.css';
       <Media src="https://cdn.lism-css.com/img/random-2510" alt="" />
       <Layer bgc="rgb(0 0 0 / 20%)" blur="8px">
         <Center h="100%" c="white">
-          <HTML.span class="u--trim" fz="4xl" fw="normal" ff="mono" fs="italic" lts="l" px="20" py="10" my-s="-4rem">Greeting</HTML.span>
+          <Inline class="u--trim" fz="4xl" fw="normal" ff="mono" fs="italic" lts="l" px="20" py="10" my-s="-4rem">Greeting</Inline>
         </Center>
       </Layer>
     </Frame>
     <Wrapper contentSize="m" py="50" my-s="-8rem" pos="rel" setGutter>
       <Grid gtc="auto" g="40" bgc="white" p={['40', '50']}>
         <Stack g="30">
-          <HTML.h lv="2" class="u--trim" fz="3xl" fw="bold" ff="accent">地球と共生する、日常を未来へ</HTML.h>
-          <HTML.p class="u--trim" fz="xl" o="-20">代表取締役 CEO　岩崎 大地</HTML.p>
+          <Heading lv="2" class="u--trim" fz="3xl" fw="bold" ff="accent">地球と共生する、日常を未来へ</Heading>
+          <Text class="u--trim" fz="xl" o="-20">代表取締役 CEO　岩崎 大地</Text>
         </Stack>
         <Flow fz="m">
           <p>

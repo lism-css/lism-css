@@ -3,7 +3,7 @@ title: 'Timeline'
 description: 'Example implementation of a timeline layout using Lism CSS.'
 ---
 
-import { Lism, Dummy, HTML, Stack, Grid, Decorator } from 'lism-css/react';
+import { Lism, Dummy, Stack, Grid, Decorator, Text } from 'lism-css/react';
 import Timeline from '@/components/ex/Timeline';
 import { MegaphoneSimpleIcon } from '@phosphor-icons/react';
 
@@ -94,21 +94,21 @@ Additionally, `isHighlighted` enables highlighted display, and `shapeColor` spec
       <Timeline.Item isStart>
         <Timeline.Time>Month dd, 20yy</Timeline.Time>
         <Timeline.Text>
-          <HTML.p>Lism x.y.z released.</HTML.p>
+          <Text>Lism x.y.z released.</Text>
           <Dummy lang="ja" />
         </Timeline.Text>
       </Timeline.Item>
       <Timeline.Item>
         <Timeline.Time>Month dd, 20yy</Timeline.Time>
         <Timeline.Text>
-          <HTML.p>Lism x.y.z released.</HTML.p>
+          <Text>Lism x.y.z released.</Text>
           <Dummy lang="ja" />
         </Timeline.Text>
       </Timeline.Item>
       <Timeline.Item isEnd isHighlighted shapeColor="red">
         <Timeline.Time>Month dd, 20yy</Timeline.Time>
         <Timeline.Text>
-          <HTML.p>Lism x.y.z released.</HTML.p>
+          <Text>Lism x.y.z released.</Text>
           <Dummy lang="ja" />
         </Timeline.Text>
       </Timeline.Item>
@@ -155,21 +155,21 @@ Additionally, `isHighlighted` enables highlighted display, and `shapeColor` spec
       <Timeline.Item icon={{ as: MegaphoneSimpleIcon, weight: 'fill' }}>
         <Timeline.Time>Month dd, 20yy</Timeline.Time>
         <Timeline.Text>
-          <HTML.p>Lism x.y.z released.</HTML.p>
+          <Text>Lism x.y.z released.</Text>
           <Dummy lang="ja" />
         </Timeline.Text>
       </Timeline.Item>
       <Timeline.Item>
         <Timeline.Time>Month dd, 20yy</Timeline.Time>
         <Timeline.Text>
-          <HTML.p>Lism x.y.z released.</HTML.p>
+          <Text>Lism x.y.z released.</Text>
           <Dummy lang="ja" />
         </Timeline.Text>
       </Timeline.Item>
       <Timeline.Item icon="check" isHighlighted shapeColor="red">
         <Timeline.Time>Month dd, 20yy</Timeline.Time>
         <Timeline.Text>
-          <HTML.p>Lism x.y.z released.</HTML.p>
+          <Text>Lism x.y.z released.</Text>
           <Dummy lang="ja" />
         </Timeline.Text>
       </Timeline.Item>

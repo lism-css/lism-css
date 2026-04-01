@@ -1,4 +1,3 @@
-import atts from '../../../lib/helper/atts';
 import getFilterProps from '../../getFilterProps';
 import type { LismProps } from '../../../lib/getLismProps';
 import type { CSSProperties } from 'react';
@@ -15,5 +14,5 @@ export default function getMediaProps({ objectPosition, objectFit, lismClass, st
   if (objectPosition) style.objectPosition = objectPosition;
   if (objectFit) style.objectFit = objectFit;
 
-  return getFilterProps({ ...rest, lismClass: atts(lismClass, `a--media`), style });
+  return getFilterProps({ ...rest, lismClass, style });
 }

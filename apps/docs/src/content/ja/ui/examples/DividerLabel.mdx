@@ -3,7 +3,7 @@ title: 'DividerLabel'
 description: 'Lism CSS で実装する、ラベル付き区切り線コンポーネントの実装例です。'
 ---
 
-import { Divider, Flex, Box, Stack, HTML } from 'lism-css/astro';
+import { Divider, Flex, Box, Stack, Inline } from 'lism-css/astro';
 
 
 区切り線をラベルテキスト付きで描画するコンポーネントの作成例です。
@@ -19,7 +19,7 @@ import { Divider, Flex, Box, Stack, HTML } from 'lism-css/astro';
     </Box>
     <Flex ai="center" g="20" lh="s">
       <Divider fx="1" />
-      <HTML.span fz="s">Label Text</HTML.span>
+      <Inline fz="s">Label Text</Inline>
       <Divider fx="1" />
     </Flex>
     <Box bgc="base-2" c="text-2" py="40" ta="center">
@@ -31,7 +31,7 @@ import { Divider, Flex, Box, Stack, HTML } from 'lism-css/astro';
     <Box bgc='base-2' c='text-2' py='40' ta='center'>...Contents...</Box>
     <Flex ai='center' g='20' lh='s'>
       <Divider fx='1' />
-      <HTML.span fz='s'>Label Text</HTML.span>
+      <Inline fz='s'>Label Text</Inline>
       <Divider fx='1' />
     </Flex> 
     <Box bgc='base-2' c='text-2' py='40' ta='center'>...Contents...</Box>

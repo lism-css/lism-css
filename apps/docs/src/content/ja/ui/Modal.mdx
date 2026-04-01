@@ -3,7 +3,7 @@ title: 'Modal'
 description: '@lism-css/ui で提供する Modal コンポーネントについて解説します。'
 ---
 
-import { HTML, Grid, Dummy, Flex, Stack, Center, Icon } from 'lism-css/astro';
+import { Grid, Dummy, Flex, Stack, Center, Icon, Inline, Link } from 'lism-css/astro';
 import { Modal } from '@lism-css/ui/astro';
 import { NavMenu } from '@lism-css/ui/react';
 
@@ -128,9 +128,9 @@ dialog.c--modal#modalID.set--plain
     <Modal.Root id="modal-02" isWrapper="s" isContainer px="30" py="50">
       <Modal.Inner layout="stack" max-h="100%" bdrs="20" bxsh="40">
         <Flex ai="center" jc="between" py="15" bd-b>
-          <HTML.span fz="l" fw="bold" lh="s" mx-s="30">
+          <Inline fz="l" fw="bold" lh="s" mx-s="30">
             Modal Header
-          </HTML.span>
+          </Inline>
           <Modal.CloseBtn modalId="modal-02" autofocus fz="xl" p="15" mx="15" />
         </Flex>
         <Modal.Body layout="flow" px="30" py="20" ov-y="auto">
@@ -156,7 +156,7 @@ dialog.c--modal#modalID.set--plain
     <Modal.Root id='modal-02' isWrapper='s' isContainer px='30' py='50'>
       <Modal.Inner layout='stack' max-h='100%' bdrs='20' bxsh='40'>
         <Flex ai='center' jc='between' py='15' bd-b>
-          <HTML.span fz='l' fw='bold' lh='s' mx-s='30'>Modal Header</HTML.span>
+          <Inline fz='l' fw='bold' lh='s' mx-s='30'>Modal Header</Inline>
           <Modal.CloseBtn modalId='modal-02' autofocus fz='xl' p='15' mx='15'/>
         </Flex>
         <Modal.Body layout='flow' px='30' py='20' ov-y='auto'>
@@ -195,23 +195,23 @@ dialog.c--modal#modalID.set--plain
     <Modal.Root id="modal-03">
       <Modal.Inner layout="stack" max-w="24rem" h="100%" bxsh="40" offset="-100px 0">
         <Flex bd-b ai="center" jc="between" p="20">
-          <HTML.span fz="l">MENU</HTML.span>
+          <Inline fz="l">MENU</Inline>
           <Modal.CloseBtn modalId="modal-03" autofocus fz="xl" p="5" />
         </Flex>
         <Modal.Body ov-y="auto">
           <Stack className="u--collapseGrid" bd-b p="0" ov="clip">
-            <HTML.a href="#menu-link01" c="inherit" hov="neutral" px="20" py="15">
+            <Link href="#menu-link01" c="inherit" hov="neutral" px="20" py="15">
               Menu item 1
-            </HTML.a>
-            <HTML.a href="#menu-link02" c="inherit" hov="neutral" px="20" py="15">
+            </Link>
+            <Link href="#menu-link02" c="inherit" hov="neutral" px="20" py="15">
               Menu item 2
-            </HTML.a>
-            <HTML.a href="#menu-link03" c="inherit" hov="neutral" px="20" py="15">
+            </Link>
+            <Link href="#menu-link03" c="inherit" hov="neutral" px="20" py="15">
               Menu item 3
-            </HTML.a>
-            <HTML.a href="#menu-link04" c="inherit" hov="neutral" px="20" py="15">
+            </Link>
+            <Link href="#menu-link04" c="inherit" hov="neutral" px="20" py="15">
               Menu item 4
-            </HTML.a>
+            </Link>
           </Stack>
         </Modal.Body>
       </Modal.Inner>
@@ -226,15 +226,15 @@ dialog.c--modal#modalID.set--plain
     <Modal.Root id='modal-03'>
       <Modal.Inner layout='stack' max-w='24rem' h='100%' bxsh='40' offset='-100px 0'>
         <Flex bd-b ai='center' jc='between' p='20'>
-          <HTML.span fz='l'>MENU</HTML.span>
+          <Inline fz='l'>MENU</Inline>
           <Modal.CloseBtn modalId='modal-03' autofocus fz='xl' p='5'/>
         </Flex>
         <Modal.Body ov-y='auto'>
           <Stack className='u--collapseGrid' bd-b p='0' ov='clip'>
-            <HTML.a href='#menu-link01' className='set--plain' hov='o' px='20' py='15'>Menu item 1</HTML.a>
-            <HTML.a href='#menu-link02' className='set--plain' hov='o' px='20' py='15'>Menu item 2</HTML.a>
-            <HTML.a href='#menu-link03' className='set--plain' hov='o' px='20' py='15'>Menu item 3</HTML.a>
-            <HTML.a href='#menu-link04' className='set--plain' hov='o' px='20' py='15'>Menu item 4</HTML.a>
+            <Link href='#menu-link01' className='set--plain' hov='o' px='20' py='15'>Menu item 1</Link>
+            <Link href='#menu-link02' className='set--plain' hov='o' px='20' py='15'>Menu item 2</Link>
+            <Link href='#menu-link03' className='set--plain' hov='o' px='20' py='15'>Menu item 3</Link>
+            <Link href='#menu-link04' className='set--plain' hov='o' px='20' py='15'>Menu item 4</Link>
           </Stack>
         </Modal.Body>
       </Modal.Inner>

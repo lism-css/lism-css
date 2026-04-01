@@ -1,6 +1,6 @@
 ---
 import '@pagefind/default-ui/css/ui.css';
-import { HTML, Flex, Stack, Lism } from 'lism-css/astro';
+import { Flex, Stack, Lism, Inline } from 'lism-css/astro';
 import { Modal } from '@lism-css/ui/astro';
 import { getLangFromUrl, t } from '@/lib/i18n';
 
@@ -15,7 +15,7 @@ const searchText = t(lang, 'search');
   <Modal.Inner layout="stack" pos="rel" w="100%" max-h="100%" p="30" g="30" bdrs="20" bxsh="40">
     <Modal.CloseBtn modalId="search-modal" pos="abs" t="0" r="0" z="1" fz="xl" p="10" m="20" />
     <Flex ai="center" jc="between">
-      <HTML.span fz="l" fw="bold" class="u--trim">{searchText.title}</HTML.span>
+      <Inline fz="l" fw="bold" class="u--trim">{searchText.title}</Inline>
     </Flex>
     <Modal.Body layout="stack" g="30" ov-y="auto">
       {
@@ -23,10 +23,10 @@ const searchText = t(lang, 'search');
           // <!-- 開発環境では検索インデックスが存在しないため注意メッセージを表示 -->
 
           <Stack ai="center" g="20">
-            <HTML.span fz="3xl" lh="1">
+            <Inline fz="3xl" lh="1">
               🔍
-            </HTML.span>
-            <HTML.span>{searchText.devMessage}</HTML.span>
+            </Inline>
+            <Inline>{searchText.devMessage}</Inline>
             <Lism as="code" ff="mono" bgc="base-2" bd bdrs="10" fz="s" px="10">
               $ pnpm build && pnpm preview
             </Lism>

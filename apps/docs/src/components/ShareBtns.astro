@@ -1,5 +1,5 @@
 ---
-import { Flex, Icon, HTML } from 'lism-css/astro';
+import { Flex, Icon, Inline, Lism, Link } from 'lism-css/astro';
 import { getLangFromUrl, t } from '@/lib/i18n';
 import type { Responsive } from 'lism-css/lib/types/ResponsiveProps';
 
@@ -19,7 +19,7 @@ const xShareUrl = `https://twitter.com/intent/tweet?url=${encodeURIComponent(url
 
 <Flex as="aside" class="c--shareBtns" g="15" p="5" px={px}>
   {/* Xシェアボタン */}
-  <HTML.a
+  <Link
     href={xShareUrl}
     target="_blank"
     rel="noopener noreferrer"
@@ -39,10 +39,11 @@ const xShareUrl = `https://twitter.com/intent/tweet?url=${encodeURIComponent(url
       ></path>
     </Icon>
     <span class="c--shareBtns__label -fz:2xs">{shareText.share}</span>
-  </HTML.a>
+  </Link>
 
   {/* URLコピーボタン */}
-  <HTML.button
+  <Lism
+    as="button"
     class="c--shareBtn c--urlCopyBtn set--plain"
     fx="1"
     layout="flex"
@@ -55,7 +56,7 @@ const xShareUrl = `https://twitter.com/intent/tweet?url=${encodeURIComponent(url
     data-url={url}
     arria-labelledby="label--url-copy"
   >
-    <HTML.span class="c--urlCopyBtn__icon" layout="center">
+    <Inline class="c--urlCopyBtn__icon" layout="center">
       <svg
         class="a--icon -ga:1/1"
         xmlns="http://www.w3.org/2000/svg"
@@ -86,12 +87,12 @@ const xShareUrl = `https://twitter.com/intent/tweet?url=${encodeURIComponent(url
       >
         <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5"></path>
       </svg>
-    </HTML.span>
+    </Inline>
     <span class="c--shareBtns__label -fz:2xs -lh:xs" id="label--url-copy">
       <span>{shareText.copy}</span>
       <span class="_checked">{shareText.copied}</span>
     </span>
-  </HTML.button>
+  </Lism>
 
   <style>
     /* .c--shareBtns {} */

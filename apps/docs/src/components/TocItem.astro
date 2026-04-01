@@ -1,6 +1,6 @@
 ---
 import type { TocItem as TocItemType } from '../lib/generateToc';
-import { Stack, HTML } from 'lism-css/astro';
+import { Stack, ListItem } from 'lism-css/astro';
 import NavLink from '@parts/NavLink.astro';
 
 interface Props {
@@ -10,7 +10,7 @@ interface Props {
 const { item } = Astro.props;
 ---
 
-<HTML.li>
+<ListItem>
   {/* data-toc-link: スクロール連動でアクティブ状態を制御するための属性 */}
   <NavLink href={`#${item.slug}`} data-toc-link={item.slug}>
     {item.text}
@@ -24,4 +24,4 @@ const { item } = Astro.props;
       </Stack>
     )
   }
-</HTML.li>
+</ListItem>

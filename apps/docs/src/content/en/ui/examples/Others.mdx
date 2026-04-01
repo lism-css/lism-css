@@ -5,7 +5,7 @@ draft: true
 ---
 
 
-import { Grid, HTML, Box, Center, Container, Lism, Flex, Stack, Divider, Decorator, Frame, Layer, Media, Dummy, Spacer } from 'lism-css/react';
+import { Grid, Box, Center, Container, Lism, Flex, Stack, Divider, Decorator, Frame, Layer, Media, Dummy, Spacer, Text, Inline, Group, Link } from 'lism-css/react';
 import { ShapeDivider } from '@lism-css/ui/astro';
 
 <Preview>
@@ -13,21 +13,21 @@ import { ShapeDivider } from '@lism-css/ui/astro';
   <PreviewArea resize p='20' nogrid>
     <Flex className="c--stepNav" g="1.5rem">
       <Flex className="c--stepNav_item" bgc="text" c="base" o="-30" px="20" py="10" pos="rel">
-        <HTML.div className="c--stepNav_body">
-          <HTML.span>Input</HTML.span>
-        </HTML.div>
+        <Group className="c--stepNav_body">
+          <Inline>Input</Inline>
+        </Group>
         <Decorator pos="abs" w="0.75em" h="100%" bgc="inherit" l="100%" t="0" style={{ clipPath: 'polygon(0% 0%, 0% 100%, 100% 50%)' }} />
       </Flex>
       <Flex className="c--stepNav_item" bgc="text" c="base" px="20" py="10" pos="rel">
-        <HTML.div className="c--stepNav_body">
-          <HTML.span>Confirm</HTML.span>
-        </HTML.div>
+        <Group className="c--stepNav_body">
+          <Inline>Confirm</Inline>
+        </Group>
         <Decorator pos="abs" w="0.75em" h="100%" bgc="inherit" l="100%" t="0" style={{ clipPath: 'polygon(0% 0%, 0% 100%, 100% 50%)' }} />
       </Flex>
       <Flex className="c--stepNav_item" bgc="text" c="base" o="-30" px="20" py="10" pos="rel">
-        <HTML.div className="c--stepNav_body">
-          <HTML.span>Complete</HTML.span>
-        </HTML.div>
+        <Group className="c--stepNav_body">
+          <Inline>Complete</Inline>
+        </Group>
       </Flex>
     </Flex>
   </PreviewArea>
@@ -35,21 +35,21 @@ import { ShapeDivider } from '@lism-css/ui/astro';
     ```jsx
     <Flex className="c--stepNav" g="1.5rem">
       <Flex className="c--stepNav_item" bgc="text" c="base" o="-30" px="20" py="10" pos="rel">
-        <HTML.div className="c--stepNav_body">
-          <HTML.span>Input</HTML.span>
-        </HTML.div>
+        <Group className="c--stepNav_body">
+          <Inline>Input</Inline>
+        </Group>
         <Decorator pos="abs" w="0.75em" h="100%" bgc="inherit" l="100%" t="0" style={{ clipPath: 'polygon(0% 0%, 0% 100%, 100% 50%)' }} />
       </Flex>
       <Flex className="c--stepNav_item" bgc="text" c="base" px="20" py="10" pos="rel">
-        <HTML.div className="c--stepNav_body">
-          <HTML.span>Confirm</HTML.span>
-        </HTML.div>
+        <Group className="c--stepNav_body">
+          <Inline>Confirm</Inline>
+        </Group>
         <Decorator pos="abs" w="0.75em" h="100%" bgc="inherit" l="100%" t="0" style={{ clipPath: 'polygon(0% 0%, 0% 100%, 100% 50%)' }} />
       </Flex>
       <Flex className="c--stepNav_item" bgc="text" c="base" o="-30" px="20" py="10" pos="rel">
-        <HTML.div className="c--stepNav_body">
-          <HTML.span>Complete</HTML.span>
-        </HTML.div>
+        <Group className="c--stepNav_body">
+          <Inline>Complete</Inline>
+        </Group>
       </Flex>
     </Flex>;
     ```
@@ -65,12 +65,12 @@ import { ShapeDivider } from '@lism-css/ui/astro';
   <PreviewArea resize p='20' nogrid>
     <Stack className="c--priceMenu" g="20" fz={['s', 'm']} lh="s">
       <Grid gtc="auto 1fr auto" ai="center" g="20">
-        <HTML.p>Spaghetti with very delicious tomato sauce</HTML.p>
+        <Text>Spaghetti with very delicious tomato sauce</Text>
         <Divider min-w="1em" />
         <span className="-whspace:nowrap">$10.00</span>
       </Grid>
       <Grid gtc="auto 1fr auto" ai="center" g="20">
-        <HTML.p>Tasty drink</HTML.p>
+        <Text>Tasty drink</Text>
         <Divider min-w="1em" />
         <span className="-whspace:nowrap">$5.00</span>
       </Grid>
@@ -80,12 +80,12 @@ import { ShapeDivider } from '@lism-css/ui/astro';
     ```jsx
     <Stack className="c--priceMenu" g="20" fz={['s', 'm']} lh="s">
       <Grid gtc="auto 1fr auto" ai="center" g="20">
-        <HTML.p>Spaghetti with very delicious tomato sauce</HTML.p>
+        <Text>Spaghetti with very delicious tomato sauce</Text>
         <Divider min-w="1em" />
         <span className="-whspace:nowrap">$10.00</span>
       </Grid>
       <Grid gtc="auto 1fr auto" ai="center" g="20">
-        <HTML.p>Tasty drink</HTML.p>
+        <Text>Tasty drink</Text>
         <Divider min-w="1em" />
         <span className="-whspace:nowrap">$5.00</span>
       </Grid>
@@ -108,9 +108,9 @@ import { ShapeDivider } from '@lism-css/ui/astro';
         <Stack fx="1" pos="rel" g="15" p="30" z="1" min-h="100%" h="auto" c="white" bgc="black:50%">
           <h3>Card Title</h3>
           <Dummy lh="s" mb="auto" length="l" />
-          <HTML.a href="#button-test" keycolor="white" c="inherit" bdrs="99" aslf="end" px="10" my-s="20">
+          <Link href="#button-test" keycolor="white" c="inherit" bdrs="99" aslf="end" px="10" my-s="20">
             Link Text
-          </HTML.a>
+          </Link>
         </Stack>
       </Flex>
     </Stack>
@@ -125,9 +125,9 @@ import { ShapeDivider } from '@lism-css/ui/astro';
         <Stack fx="1" pos="rel" g="15" p="30" z="1" min-h="100%" h="auto" c="white" bgc="black:50%">
           <h3>Card Title</h3>
           <Dummy lh="s" mb="auto" length="l" />
-          <HTML.a href="#button-test" keycolor="white" c="inherit" bdrs="99" aslf="end" px="10" my-s="20">
+          <Link href="#button-test" keycolor="white" c="inherit" bdrs="99" aslf="end" px="10" my-s="20">
             Link Text
-          </HTML.a>
+          </Link>
         </Stack>
       </Flex>
     </Stack>;

@@ -1,7 +1,7 @@
 ---
 import DemoLayout from '@/layouts/DemoLayout.astro';
 
-import { Stack, Container, Frame, Grid, Media, HTML, Layer, Icon, LinkBox, Flex, Center } from 'lism-css/astro';
+import { Stack, Container, Frame, Grid, Media, Layer, Icon, LinkBox, Flex, Center, Text, Inline } from 'lism-css/astro';
 import { Button } from '@lism-css/ui/astro';
 import './_style.css';
 ---
@@ -15,8 +15,8 @@ import './_style.css';
     <Container isWrapper="m" setGutter py="50" z="1">
       <Stack g="40">
         <Stack ai="center" g="30">
-          <HTML.p class="u--trim" fz="5xl" fw="light" lts="l" c="white" ta="center">Contact</HTML.p>
-          <HTML.p class="u--trim" fz="m" c="white" ta="center">お問い合わせはこちら</HTML.p>
+          <Text class="u--trim" fz="5xl" fw="light" lts="l" c="white" ta="center">Contact</Text>
+          <Text class="u--trim" fz="m" c="white" ta="center">お問い合わせはこちら</Text>
         </Stack>
         <Stack g="30">
           <Grid gt="repeat" cols={['1', null, '2']} ai="center" g="30" w="stretch">
@@ -55,15 +55,15 @@ import './_style.css';
                 <Media src="https://cdn.lism-css.com/img/random-2510?r=2" alt="" width="960" height="540" setTransition hov="to:zoom" />
                 <Layer setTransition hov="to:show" bgc="rgb(0 0 0 / 30%)" blur="4px">
                   <Center h="100%" c="white">
-                    <HTML.span fz="xl" fs="i" fw="light" lts="l" px="20" py="10">View More</HTML.span>
+                    <Inline fz="xl" fs="i" fw="light" lts="l" px="20" py="10">View More</Inline>
                   </Center>
                 </Layer>
               </Frame>
               <Stack jc="center" g="30" p="40">
-                <HTML.p class="u--trim" fz="l" fw="bold">訪問面談をご希望の方はこちら</HTML.p>
-                <HTML.p class="u--trim" fz="s" o="-20">
+                <Text class="u--trim" fz="l" fw="bold">訪問面談をご希望の方はこちら</Text>
+                <Text class="u--trim" fz="s" o="-20">
                   お客様のご都合に合わせて専門スタッフが訪問面談いたします。ご相談方法やご依頼後の流れについてはまずはこちらをご覧ください。
-                </HTML.p>
+                </Text>
               </Stack>
               <Flex ai="center" jc="center" p="15" bd bdrs="99" mx="30" setTransition hov="to:reverse">
                 <Icon icon="arrow-right" fz="120%" setTransition />
@@ -71,7 +71,7 @@ import './_style.css';
             </LinkBox>
           </Grid>
           <Stack ai="center" g="40" w="100%">
-            <HTML.p class="u--trim" fz="s" c="white" ta="center">お気軽にご相談ください。スタッフが迅速に対応いたします</HTML.p>
+            <Text class="u--trim" fz="s" c="white" ta="center">お気軽にご相談ください。スタッフが迅速に対応いたします</Text>
           </Stack>
         </Stack>
       </Stack>

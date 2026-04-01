@@ -1,14 +1,14 @@
 ---
 import DemoLayout from '@/layouts/DemoLayout.astro';
 
-import { Container, Frame, Grid, Media, Stack, HTML, Flow } from 'lism-css/astro';
+import { Container, Frame, Grid, Media, Stack, Flow, Text, Heading } from 'lism-css/astro';
 import './_style.css';
 ---
 
 <DemoLayout title="Greeting001">
   <Container isWrapper="m" py="50" bgc="base" setGutter>
     <Stack g="50">
-      <HTML.h lv="2" fz="3xl" fw="bold" ff="accent" ta="center">代表からご挨拶</HTML.h>
+      <Heading lv="2" fz="3xl" fw="bold" ff="accent" ta="center">代表からご挨拶</Heading>
       <Grid gtc={['auto', null, '1fr 1fr']} g="50">
         <Frame as="figure" ar={['3/2', null, '3/4']} bdrs="20" bxsh="30">
           <Media src="https://cdn.lism-css.com/img/random-2510?category=ceo" alt="" width="960" height="640" />
@@ -23,8 +23,8 @@ import './_style.css';
             </p>
           </Flow>
           <Stack ai="flex-e" g="5" ff="accent">
-            <HTML.p fz="l" o="-20">代表取締役社長</HTML.p>
-            <HTML.p fz="xl" fw="bold">佐藤　流素</HTML.p>
+            <Text fz="l" o="-20">代表取締役社長</Text>
+            <Text fz="xl" fw="bold">佐藤　流素</Text>
           </Stack>
         </Stack>
       </Grid>

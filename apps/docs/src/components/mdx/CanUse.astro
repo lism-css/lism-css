@@ -3,7 +3,7 @@
  * ブラウザサポート状況を横並びで表示するコンポーネント
  */
 
-import { Icon, HTML } from 'lism-css/astro';
+import { Icon, Inline, Group } from 'lism-css/astro';
 
 // ブラウザのバージョンとリリース日のマッピング
 const BROWSER_RELEASES: Record<string, Record<string, string>> = {
@@ -241,30 +241,30 @@ const browsers = [
 ];
 ---
 
-<HTML.div layout="stack" bdrs="10" bgc="base-2" class="c--canuse">
-  <HTML.span layout="flex" ai="center" class="c--canuse__prop" px="15" bdc="base" bd-b aslf="start">
-    <HTML.span c="text-2" py="5" bdc="base" bd-x-e px-e="15" mx-e="15" fz="2xs">Can Use ?</HTML.span>
-    <HTML.span fz="xs" ff="mono">{prop}</HTML.span>
-  </HTML.span>
+<Group layout="stack" bdrs="10" bgc="base-2" class="c--canuse">
+  <Inline layout="flex" ai="center" class="c--canuse__prop" px="15" bdc="base" bd-b aslf="start">
+    <Inline c="text-2" py="5" bdc="base" bd-x-e px-e="15" mx-e="15" fz="2xs">Can Use ?</Inline>
+    <Inline fz="xs" ff="mono">{prop}</Inline>
+  </Inline>
   <!-- {prop && <span class="c--canuse__prop">{prop}</span>} -->
-  <HTML.span layout="cluster" class="c--canuse__browsers" lh="1" z="1" g="10" p="20">
+  <Inline layout="cluster" class="c--canuse__browsers" lh="1" z="1" g="10" p="20">
     {
       browsers.map((browser) => (
-        <HTML.span layout="flex" ai="center" class:list={['c--canuse__browser', browser.supported ? '-supported' : '-unsupported']}>
+        <Inline layout="flex" ai="center" class:list={['c--canuse__browser', browser.supported ? '-supported' : '-unsupported']}>
           <img class="c--canuse__appimg" src={browser.icon} alt={browser.name} width="20" height="20" />
-          <HTML.span class="c--canuse__icon" layout="center">
+          <Inline class="c--canuse__icon" layout="center">
             <Icon icon={browser.supported ? 'check' : 'x'} />
-          </HTML.span>
+          </Inline>
           {browser.supported && (
-            <HTML.span fz="xs" px="5" c="text-2">
+            <Inline fz="xs" px="5" c="text-2">
               {browser.text}~
-            </HTML.span>
+            </Inline>
           )}
-        </HTML.span>
+        </Inline>
       ))
     }
-  </HTML.span>
-</HTML.div>
+  </Inline>
+</Group>
 
 <style>
   .c--canuse {

@@ -1,7 +1,7 @@
 ---
 import DemoLayout from '@/layouts/DemoLayout.astro';
 
-import { Stack, Container, Frame, Grid, Media, HTML, Layer } from 'lism-css/astro';
+import { Stack, Container, Frame, Grid, Media, Layer, Heading } from 'lism-css/astro';
 import './_style.css';
 ---
 
@@ -15,7 +15,7 @@ import './_style.css';
     </Layer>
     <Container isWrapper="m" gr="1" gc="1" setGutter pos="rel" z="1">
       <Grid gtc={['auto', null, 'auto 1fr']} c="white" g="50" py="50">
-        <HTML.h lv="2" class="u--trim" fz="3xl" fw="bold" hl="l">自然素材が生み出す<br />癒やしのひととき</HTML.h>
+        <Heading lv="2" class="u--trim" fz="3xl" fw="bold" hl="l">自然素材が生み出す<br />癒やしのひととき</Heading>
         <Stack class="u--trimChildren" g="40">
           <p>
             目を閉じれば、まるで森の木漏れ日の中にいるかのような、圧倒的な臨場感。

@@ -2,6 +2,14 @@ export * from './Lism';
 export * from './Dummy';
 export { default as HTML } from './HTML';
 
+// semantic wrappers
+export * from './Text';
+export * from './Inline';
+export * from './Group';
+export * from './Heading';
+export * from './Link';
+export * from './List';
+
 // l--
 export * from './Container';
 export * from './Wrapper';

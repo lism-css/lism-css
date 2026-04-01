@@ -1,7 +1,7 @@
 ---
 import DemoLayout from '@/layouts/DemoLayout.astro';
 
-import { HTML, Stack, Container, Frame, Columns, Grid, Media, Flex, Layer, Center } from 'lism-css/astro';
+import { Stack, Container, Frame, Columns, Grid, Media, Flex, Layer, Center, Text, Inline } from 'lism-css/astro';
 import './_style.css';
 ---
 
@@ -10,7 +10,7 @@ import './_style.css';
     <Stack g="40">
       <Flex ai="baseline" g="0 30" fxw="wrap">
         <h2>カテゴリーから探す</h2>
-        <HTML.span fz="m" fw="bold" o="-20">Categories</HTML.span>
+        <Inline fz="m" fw="bold" o="-20">Categories</Inline>
       </Flex>
       <Columns cols={[1, 2, 3]} g="40" g-x="40">
         <Grid g="30" as="a" isLinkBox href="#" setHov>
@@ -18,16 +18,16 @@ import './_style.css';
             <Media src="https://cdn.lism-css.com/img/random-2510?r=1" alt="" width="960" height="640" />
             <Layer setTransition hov="to:show" bgc="rgb(0 0 0 / 30%)" blur="4px">
               <Center h="100%" c="white">
-                <HTML.span fz="xl" fs="italic" fw="light" lts="l" px="20" py="10">View More</HTML.span>
+                <Inline fz="xl" fs="italic" fw="light" lts="l" px="20" py="10">View More</Inline>
               </Center>
             </Layer>
             <Flex pos="abs" t="0" l="0" lh="1" fz="xs" c="white" bgc="black" p="0.625em .875em" m="20" bdrs="99">
-              <HTML.span>KITCHEN</HTML.span>
+              <Inline>KITCHEN</Inline>
             </Flex>
           </Frame>
           <Stack g="20">
-            <HTML.p class="u--trim" fz="l" fw="bold">キッチン</HTML.p>
-            <HTML.p class="u--trim" fz="s">毎日の料理を心躍る体験に。キッチンを美しく彩る、ミニマルなデザインの調理家電。</HTML.p>
+            <Text class="u--trim" fz="l" fw="bold">キッチン</Text>
+            <Text class="u--trim" fz="s">毎日の料理を心躍る体験に。キッチンを美しく彩る、ミニマルなデザインの調理家電。</Text>
           </Stack>
         </Grid>
         <Grid g="30" as="a" isLinkBox href="#" setHov>
@@ -35,16 +35,16 @@ import './_style.css';
             <Media src="https://cdn.lism-css.com/img/random-2510?r=2" alt="" width="960" height="640" />
             <Layer setTransition hov="to:show" bgc="rgb(0 0 0 / 30%)" blur="4px">
               <Center h="100%" c="white">
-                <HTML.span fz="xl" fs="italic" fw="light" lts="l" px="20" py="10">View More</HTML.span>
+                <Inline fz="xl" fs="italic" fw="light" lts="l" px="20" py="10">View More</Inline>
               </Center>
             </Layer>
             <Flex pos="abs" t="0" l="0" lh="1" fz="xs" c="white" bgc="black" p="0.625em .875em" m="20" bdrs="99">
-              <HTML.span>LIVING & AIR</HTML.span>
+              <Inline>LIVING & AIR</Inline>
             </Flex>
           </Frame>
           <Stack g="20">
-            <HTML.p class="u--trim" fz="l" fw="bold">空調・生活家電</HTML.p>
-            <HTML.p class="u--trim" fz="s">空間に溶け込み、心地よい空気と時間を作り出す。日々の暮らしの質を高めるアイテム。</HTML.p>
+            <Text class="u--trim" fz="l" fw="bold">空調・生活家電</Text>
+            <Text class="u--trim" fz="s">空間に溶け込み、心地よい空気と時間を作り出す。日々の暮らしの質を高めるアイテム。</Text>
           </Stack>
         </Grid>
         <Grid g="30" as="a" isLinkBox href="#" setHov>
@@ -52,16 +52,16 @@ import './_style.css';
             <Media src="https://cdn.lism-css.com/img/random-2510?r=3" alt="" width="960" height="640" />
             <Layer setTransition hov="to:show" bgc="rgb(0 0 0 / 30%)" blur="4px">
               <Center h="100%" c="white">
-                <HTML.span fz="xl" fs="italic" fw="light" lts="l" px="20" py="10">View More</HTML.span>
+                <Inline fz="xl" fs="italic" fw="light" lts="l" px="20" py="10">View More</Inline>
               </Center>
             </Layer>
             <Flex pos="abs" t="0" l="0" lh="1" fz="xs" c="white" bgc="black" p="0.625em .875em" m="20" bdrs="99">
-              <HTML.span>CLEANING</HTML.span>
+              <Inline>CLEANING</Inline>
             </Flex>
           </Frame>
           <Stack g="20">
-            <HTML.p class="u--trim" fz="l" fw="bold">掃除機</HTML.p>
-            <HTML.p class="u--trim" fz="s">掃除さえも、美しい時間に変える。パワフルな吸引力と、オブジェのような佇まい。</HTML.p>
+            <Text class="u--trim" fz="l" fw="bold">掃除機</Text>
+            <Text class="u--trim" fz="s">掃除さえも、美しい時間に変える。パワフルな吸引力と、オブジェのような佇まい。</Text>
           </Stack>
         </Grid>
         <Grid g="30" as="a" isLinkBox href="#" setHov>
@@ -69,16 +69,16 @@ import './_style.css';
             <Media src="https://cdn.lism-css.com/img/random-2510?r=4" alt="" width="960" height="640" />
             <Layer setTransition hov="to:show" bgc="rgb(0 0 0 / 30%)" blur="4px">
               <Center h="100%" c="white">
-                <HTML.span fz="xl" fs="italic" fw="light" lts="l" px="20" py="10">View More</HTML.span>
+                <Inline fz="xl" fs="italic" fw="light" lts="l" px="20" py="10">View More</Inline>
               </Center>
             </Layer>
             <Flex pos="abs" t="0" l="0" lh="1" fz="xs" c="white" bgc="black" p="0.625em .875em" m="20" bdrs="99">
-              <HTML.span>LAUNDRY</HTML.span>
+              <Inline>LAUNDRY</Inline>
             </Flex>
           </Frame>
           <Stack g="20">
-            <HTML.p class="u--trim" fz="l" fw="bold">洗濯機・衣類ケア</HTML.p>
-            <HTML.p class="u--trim" fz="s">大切な衣類を、優しく、美しく。静かでクリーンなデザインが、空間を洗練させます。</HTML.p>
+            <Text class="u--trim" fz="l" fw="bold">洗濯機・衣類ケア</Text>
+            <Text class="u--trim" fz="s">大切な衣類を、優しく、美しく。静かでクリーンなデザインが、空間を洗練させます。</Text>
           </Stack>
         </Grid>
         <Grid g="30" as="a" isLinkBox href="#" setHov>
@@ -86,16 +86,16 @@ import './_style.css';
             <Media src="https://cdn.lism-css.com/img/random-2510?r=5" alt="" width="960" height="640" />
             <Layer setTransition hov="to:show" bgc="rgb(0 0 0 / 30%)" blur="4px">
               <Center h="100%" c="white">
-                <HTML.span fz="xl" fs="italic" fw="light" lts="l" px="20" py="10">View More</HTML.span>
+                <Inline fz="xl" fs="italic" fw="light" lts="l" px="20" py="10">View More</Inline>
               </Center>
             </Layer>
             <Flex pos="abs" t="0" l="0" lh="1" fz="xs" c="white" bgc="black" p="0.625em .875em" m="20" bdrs="99">
-              <HTML.span>AUDIO</HTML.span>
+              <Inline>AUDIO</Inline>
             </Flex>
           </Frame>
           <Stack g="20">
-            <HTML.p class="u--trim" fz="l" fw="bold">オーディオ</HTML.p>
-            <HTML.p class="u--trim" fz="s">心を揺さぶる、クリアで立体的なサウンド。音楽をアートのように空間に飾るオーディオ。</HTML.p>
+            <Text class="u--trim" fz="l" fw="bold">オーディオ</Text>
+            <Text class="u--trim" fz="s">心を揺さぶる、クリアで立体的なサウンド。音楽をアートのように空間に飾るオーディオ。</Text>
           </Stack>
         </Grid>
         <Grid g="30" as="a" isLinkBox href="#" setHov>
@@ -103,16 +103,16 @@ import './_style.css';
             <Media src="https://cdn.lism-css.com/img/random-2510?r=6" alt="" width="960" height="640" />
             <Layer setTransition hov="to:show" bgc="rgb(0 0 0 / 30%)" blur="4px">
               <Center h="100%" c="white">
-                <HTML.span fz="xl" fs="italic" fw="light" lts="l" px="20" py="10">View More</HTML.span>
+                <Inline fz="xl" fs="italic" fw="light" lts="l" px="20" py="10">View More</Inline>
               </Center>
             </Layer>
             <Flex pos="abs" t="0" l="0" lh="1" fz="xs" c="white" bgc="black" p="0.625em .875em" m="20" bdrs="99">
-              <HTML.span>LIGHTING</HTML.span>
+              <Inline>LIGHTING</Inline>
             </Flex>
           </Frame>
           <Stack g="20">
-            <HTML.p class="u--trim" fz="l" fw="bold">照明</HTML.p>
-            <HTML.p class="u--trim" fz="s">光と影を操り、空間をドラマチックに演出。シーンに合わせて、心地よい光をデザイン。</HTML.p>
+            <Text class="u--trim" fz="l" fw="bold">照明</Text>
+            <Text class="u--trim" fz="s">光と影を操り、空間をドラマチックに演出。シーンに合わせて、心地よい光をデザイン。</Text>
           </Stack>
         </Grid>
       </Columns>

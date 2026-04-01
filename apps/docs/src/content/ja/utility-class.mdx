@@ -2,7 +2,7 @@
 title: 'Utilitiy Class'
 description: 'スタイルや装飾をまとめて適用できる Lism CSS のユーティリティクラスについて解説します。'
 ---
-import { Lism, Flow, HTML, Grid, Stack, Center, Box, Dummy, Media, Frame, Flex, Layer, Spacer, Icon, Divider } from "lism-css/astro";
+import { Lism, Flow, Grid, Stack, Center, Box, Dummy, Media, Frame, Flex, Layer, Spacer, Icon, Divider, Inline, Text } from "lism-css/astro";
 import { Dog, Cat } from "@phosphor-icons/react";
 
 ユーティリティクラスを紹介します。
@@ -146,57 +146,57 @@ import { Dog, Cat } from "@phosphor-icons/react";
   </Lism>
   <hr />
   <Lism className="u--cbox" keycolor="red" bd-x-s bdc="keycolor" bdw="4px" bxsh="10" setShadow p="20">
-    <HTML.span c="keycolor" fw="bold">
+    <Inline c="keycolor" fw="bold">
       Title Text
-    </HTML.span>
+    </Inline>
     <Dummy length="codes" />
   </Lism>
   <Lism className="u--cbox" keycolor="orange" bd-x-s bdc="keycolor" bdw="4px" bxsh="10" setShadow p="20">
-    <HTML.span c="keycolor" fw="bold">
+    <Inline c="keycolor" fw="bold">
       Title Text
-    </HTML.span>
+    </Inline>
     <Dummy length="codes" />
   </Lism>
   <Lism className="u--cbox" keycolor="yellow" bd-x-s bdc="keycolor" bdw="4px" bxsh="10" setShadow p="20">
-    <HTML.span c="keycolor" fw="bold">
+    <Inline c="keycolor" fw="bold">
       Title Text
-    </HTML.span>
+    </Inline>
     <Dummy length="codes" />
   </Lism>
   <Lism className="u--cbox" keycolor="purple" bd-x-s bdc="keycolor" bdw="4px" bxsh="10" setShadow p="20">
-    <HTML.span c="keycolor" fw="bold">
+    <Inline c="keycolor" fw="bold">
       Title Text
-    </HTML.span>
+    </Inline>
     <Dummy length="codes" />
   </Lism>
   <Lism className="u--cbox" keycolor="green" bd-x-s bdc="keycolor" bdw="4px" bxsh="10" setShadow p="20">
-    <HTML.span c="keycolor" fw="bold">
+    <Inline c="keycolor" fw="bold">
       Title Text
-    </HTML.span>
+    </Inline>
     <Dummy length="codes" />
   </Lism>
   <Lism className="u--cbox" keycolor="blue" bd-x-s bdc="keycolor" bdw="4px" bxsh="10" setShadow p="20">
-    <HTML.span c="keycolor" fw="bold">
+    <Inline c="keycolor" fw="bold">
       Title Text
-    </HTML.span>
+    </Inline>
     <Dummy length="codes" />
   </Lism>
   <Lism className="u--cbox" keycolor="purple" bd-x-s bdc="keycolor" bdw="4px" bxsh="10" setShadow p="20">
-    <HTML.span c="keycolor" fw="bold">
+    <Inline c="keycolor" fw="bold">
       Title Text
-    </HTML.span>
+    </Inline>
     <Dummy length="codes" />
   </Lism>
   <Lism className="u--cbox" keycolor="pink" bd-x-s bdc="keycolor" bdw="4px" bxsh="10" setShadow p="20">
-    <HTML.span c="keycolor" fw="bold">
+    <Inline c="keycolor" fw="bold">
       Title Text
-    </HTML.span>
+    </Inline>
     <Dummy length="codes" />
   </Lism>
   <Lism className="u--cbox" keycolor="gray" bd-x-s bdc="keycolor" bdw="4px" bxsh="10" setShadow p="20">
-    <HTML.span c="keycolor" fw="bold">
+    <Inline c="keycolor" fw="bold">
       Title Text
-    </HTML.span>
+    </Inline>
     <Dummy length="codes" />
   </Lism>
 </PreviewArea>
@@ -533,9 +533,9 @@ Gridを使って table タグのような表現もできるようになります
   <PreviewArea p='20'>
     <Center>
       <Box className="u--clipText" bgr="no-repeat" bgi="linear-gradient(45deg, var(--blue), var(--pink))">
-        <HTML.p fz="5xl" fw="bold" lh="1" lts="l">
+        <Text fz="5xl" fw="bold" lh="1" lts="l">
           TEXT
-        </HTML.p>
+        </Text>
       </Box>
     </Center>
   </PreviewArea>
@@ -543,9 +543,9 @@ Gridを使って table タグのような表現もできるようになります
     ```jsx
     <Center>
       <Box className="u--clipText" bgi="linear-gradient(45deg, var(--blue), var(--pink))">
-        <HTML.p fz="5xl" fw="bold" lh="1" lts="l">
+        <Text fz="5xl" fw="bold" lh="1" lts="l">
           TEXT
-        </HTML.p>
+        </Text>
       </Box>
     </Center>;
     ```

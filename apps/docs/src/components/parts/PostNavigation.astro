@@ -4,7 +4,7 @@
  * sidebar.ts の順序に従って前後の記事へのリンクを表示
  * カテゴリ内に記事がない場合は次のカテゴリを探す
  */
-import { Flex, Lism, HTML } from 'lism-css/astro';
+import { Flex, Lism, Inline } from 'lism-css/astro';
 import { getPostsByLang, type PostEntry } from '@/lib/content';
 import { getRootLang, getLocalizedUrl, t, getPathWithoutLang, type LangCode } from '@/lib/i18n';
 import sidebarConfig, { type SidebarSection, isSeparator, getSiteSection, extractSlugFromUrl } from '@/config/sidebar';
@@ -118,10 +118,10 @@ const label = t(lang, 'postNav');
         <Lism class="c--postNav__item -prev">
           {prevPost ? (
             <a href={getLocalizedUrl(getPostUrl(prevPost.id), lang)} class="c--postNav__link">
-              <HTML.span class="c--postNav__label" fz="xs" o="-10">
+              <Inline class="c--postNav__label" fz="xs" o="-10">
                 {label.prev}
-              </HTML.span>
-              <HTML.span class="c--postNav__title">{prevPost.data.navtitle || prevPost.data.title}</HTML.span>
+              </Inline>
+              <Inline class="c--postNav__title">{prevPost.data.navtitle || prevPost.data.title}</Inline>
             </a>
           ) : (
             <Lism class="c--postNav__empty" />
@@ -132,10 +132,10 @@ const label = t(lang, 'postNav');
         <Lism class="c--postNav__item -next">
           {nextPost ? (
             <a href={getLocalizedUrl(getPostUrl(nextPost.id), lang)} class="c--postNav__link">
-              <HTML.span class="c--postNav__label" fz="xs" o="-10">
+              <Inline class="c--postNav__label" fz="xs" o="-10">
                 {label.next}
-              </HTML.span>
-              <HTML.span class="c--postNav__title">{nextPost.data.navtitle || nextPost.data.title}</HTML.span>
+              </Inline>
+              <Inline class="c--postNav__title">{nextPost.data.navtitle || nextPost.data.title}</Inline>
             </a>
           ) : (
             <Lism class="c--postNav__empty" />

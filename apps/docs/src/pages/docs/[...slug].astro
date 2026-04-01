@@ -6,7 +6,7 @@
  */
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import { generateToc } from '@/lib/generateToc';
-import { Lism, Flow, HTML } from 'lism-css/astro';
+import { Lism, Flow, Heading } from 'lism-css/astro';
 import PostNavigation from '@parts/PostNavigation.astro';
 import { getPostPathsForRoot } from '@/lib/pageHelpers';
 import { type LangCode } from '@/lib/i18n';
@@ -45,7 +45,7 @@ const ogImage = `/docs/og/${entry.id}.png`;
     }
 
     {/* 記事タイトル */}
-    <HTML.h lv="1" class="articleTitle">{entry.data.title}</HTML.h>
+    <Heading lv="1" class="articleTitle">{entry.data.title}</Heading>
 
     {/* 記事本文 */}
     <Flow class="articleContent" my-s="40">

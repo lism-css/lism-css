@@ -1,7 +1,7 @@
 ---
 import DemoLayout from '@/layouts/DemoLayout.astro';
 
-import { Stack, Container, Frame, Grid, Media, HTML, Flex } from 'lism-css/astro';
+import { Stack, Container, Frame, Grid, Media, Flex, Text, Heading } from 'lism-css/astro';
 import { Button } from '@lism-css/ui/astro';
 import './_style.css';
 ---
@@ -11,8 +11,8 @@ import './_style.css';
     <Grid gtc={['auto', null, '1fr 1fr']} ji={[null, null, 'end']}>
       <Stack gr="1" gc="1" jc="center" pl={[null, null, '30']}>
         <Stack g="30" pl={['30', null, '0']} pr={['30', null, '50']} py="50">
-          <HTML.h lv="2" class="u--trim" fz="2xl" fw="bold">新しい発見が、日常を彩る</HTML.h>
-          <HTML.p class="u--trim">日常の中に潜む新たな価値を見出すための、さまざまな視点やアプローチを提案します。</HTML.p>
+          <Heading lv="2" class="u--trim" fz="2xl" fw="bold">新しい発見が、日常を彩る</Heading>
+          <Text class="u--trim">日常の中に潜む新たな価値を見出すための、さまざまな視点やアプローチを提案します。</Text>
           <Flex g="15" ai="center">
             <Button href="#" p="15" bdrs="10">View More</Button>
           </Flex>

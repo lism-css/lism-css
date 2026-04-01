@@ -2,7 +2,7 @@
 title: 'Columns'
 description: 'Documentation for the Columns module in Lism CSS. A column layout that displays content in a specified number of columns per breakpoint.'
 ---
-import { Lism, Box, Frame, Media, HTML, Dummy, Columns, Grid, Divider } from 'lism-css/astro';
+import { Lism, Box, Frame, Media, Dummy, Columns, Grid, Divider, Heading } from 'lism-css/astro';
 
 Creates a column layout that displays content in the specified number of columns at each breakpoint.
 
@@ -253,9 +253,9 @@ Creates a card layout using subgrid within a 1 → 2 → 3 column layout.
     <Columns cols={[1, 2, 3]} g="20">
       <Grid className="u--trimChildren" g="30" p="20" gtr="subgrid" gr="span 4" bgc="base-2" bdrs="10">
         <Media ar="og" bdrs="10" src="https://cdn.lism-css.com/img/a-1.jpg" />
-        <HTML.h lv="2" lh="s" aslf="center" fz="m">
+        <Heading lv="2" lh="s" aslf="center" fz="m">
           Card Title
-        </HTML.h>
+        </Heading>
         <Dummy lh="s" />
         <Lism lh="s" bd-t fz="s" px="10" py="20 10" o="-10">
           Date: 2025-01-01
@@ -263,9 +263,9 @@ Creates a card layout using subgrid within a 1 → 2 → 3 column layout.
       </Grid>
       <Grid className="u--trimChildren" g="30" p="20" gtr="subgrid" gr="span 4" bgc="base-2" bdrs="10">
         <Media ar="og" bdrs="10" src="https://cdn.lism-css.com/img/a-2.jpg" />
-        <HTML.h lv="2" lh="s" aslf="center" fz="m">
+        <Heading lv="2" lh="s" aslf="center" fz="m">
           Card Title Lorem ipsum
-        </HTML.h>
+        </Heading>
         <Dummy lh="s" length="s" />
         <Lism lh="s" bd-t fz="s" px="10" py="20 10" o="-10">
           Date: 2025-01-01
@@ -273,9 +273,9 @@ Creates a card layout using subgrid within a 1 → 2 → 3 column layout.
       </Grid>
       <Grid className="u--trimChildren" g="30" p="20" gtr="subgrid" gr="span 4" bgc="base-2" bdrs="10">
         <Media ar="og" bdrs="10" src="https://cdn.lism-css.com/img/a-3.jpg" />
-        <HTML.h lv="2" lh="s" aslf="center" fz="m">
+        <Heading lv="2" lh="s" aslf="center" fz="m">
           Card Title, long, long, long, very long long looong.
-        </HTML.h>
+        </Heading>
         <Dummy lh="s" />
         <Lism lh="s" bd-t fz="s" px="10" py="20 10" o="-10">
           Date: 2025-01-01
@@ -283,9 +283,9 @@ Creates a card layout using subgrid within a 1 → 2 → 3 column layout.
       </Grid>
       <Grid className="u--trimChildren" g="30" p="20" gtr="subgrid" gr="span 4" bgc="base-2" bdrs="10">
         <Media ar="og" bdrs="10" src="https://cdn.lism-css.com/img/a-4.jpg" />
-        <HTML.h lv="2" lh="s" aslf="center" fz="m">
+        <Heading lv="2" lh="s" aslf="center" fz="m">
           Card Title
-        </HTML.h>
+        </Heading>
         <Dummy lh="s" length="s" />
         <Lism lh="s" bd-t fz="s" px="10" py="20 10" o="-10">
           Date: 2025-01-01
@@ -293,9 +293,9 @@ Creates a card layout using subgrid within a 1 → 2 → 3 column layout.
       </Grid>
       <Grid className="u--trimChildren" g="20" p="20" gtr="subgrid" gr="span 4" bgc="base-2" bdrs="10">
         <Media ar="og" bdrs="10" src="https://cdn.lism-css.com/img/a-5.jpg" />
-        <HTML.h lv="2" lh="s" aslf="center" fz="m">
+        <Heading lv="2" lh="s" aslf="center" fz="m">
           Card Title
-        </HTML.h>
+        </Heading>
         <Dummy lh="s" />
         <Lism lh="s" bd-t fz="s" px="10" py="20 10" o="-10">
           Date: 2025-01-01
@@ -308,9 +308,9 @@ Creates a card layout using subgrid within a 1 → 2 → 3 column layout.
     <Columns cols={[1, 2, 3]} g="15">
       <Grid className="u--trimChildren" g="20" p="20" gtr="subgrid" gr="span 4" bgc="base-2" bdrs="10">
         <Media ar="og" bdrs="10" src="https://cdn.lism-css.com/img/a-1.jpg" />
-        <HTML.h lv="2" aslf="center" fz="m">
+        <Heading lv="2" aslf="center" fz="m">
           Card Title
-        </HTML.h>
+        </Heading>
         <Dummy lh="s" />
         <Divider my="0" />
         <Lism lh="s" fz="s" o="-10">
@@ -319,9 +319,9 @@ Creates a card layout using subgrid within a 1 → 2 → 3 column layout.
       </Grid>
       <Grid className="u--trimChildren" g="20" p="20" gtr="subgrid" gr="span 4" bgc="base-2" bdrs="10">
         <Media ar="og" bdrs="10" src="https://cdn.lism-css.com/img/a-2.jpg" />
-        <HTML.h lv="2" aslf="center" fz="m">
+        <Heading lv="2" aslf="center" fz="m">
           Card Title Lorem ipsum
-        </HTML.h>
+        </Heading>
         <Dummy lh="s" length="s" />
         <Divider my="0" />
         <Lism lh="s" fz="s" o="-10">
@@ -330,9 +330,9 @@ Creates a card layout using subgrid within a 1 → 2 → 3 column layout.
       </Grid>
       <Grid className="u--trimChildren" g="20" p="20" gtr="subgrid" gr="span 4" bgc="base-2" bdrs="10">
         <Media ar="og" bdrs="10" src="https://cdn.lism-css.com/img/a-3.jpg" />
-        <HTML.h lv="2" aslf="center" fz="m">
+        <Heading lv="2" aslf="center" fz="m">
           Card Title, long, long, long, very long long looong.
-        </HTML.h>
+        </Heading>
         <Dummy lh="s" />
         <Divider my="0" />
         <Lism lh="s" fz="s" o="-10">
@@ -341,9 +341,9 @@ Creates a card layout using subgrid within a 1 → 2 → 3 column layout.
       </Grid>
       <Grid className="u--trimChildren" g="20" p="20" gtr="subgrid" gr="span 4" bgc="base-2" bdrs="10">
         <Media ar="og" bdrs="10" src="https://cdn.lism-css.com/img/a-4.jpg" />
-        <HTML.h lv="2" aslf="center" fz="m">
+        <Heading lv="2" aslf="center" fz="m">
           Card Title
-        </HTML.h>
+        </Heading>
         <Dummy lh="s" length="s" />
         <Divider my="0" />
         <Lism lh="s" fz="s" o="-10">
@@ -352,9 +352,9 @@ Creates a card layout using subgrid within a 1 → 2 → 3 column layout.
       </Grid>
       <Grid className="u--trimChildren" g="20" p="20" gtr="subgrid" gr="span 4" bgc="base-2" bdrs="10">
         <Media ar="og" bdrs="10" src="https://cdn.lism-css.com/img/a-5.jpg" />
-        <HTML.h lv="2" aslf="center" fz="m">
+        <Heading lv="2" aslf="center" fz="m">
           Card Title
-        </HTML.h>
+        </Heading>
         <Dummy lh="s" />
         <Divider my="0" />
         <Lism lh="s" fz="s" o="-10">
