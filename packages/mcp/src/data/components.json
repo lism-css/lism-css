@@ -1,539 +1,530 @@
 [
-	{
-		"name": "Lism",
-		"package": "lism-css",
-		"category": "core",
-		"description": "全コンポーネントの基盤となるコアコンポーネント。Props システムによる CSS クラス・スタイルの自動変換を提供する。他の全てのコンポーネントは Lism を継承している。",
-		"aliases": ["base component", "コア", "基盤"],
-		"props": [
-			{ "name": "tag", "type": "string", "default": "div", "description": "レンダリングするHTML要素を指定。" },
-			{ "name": "as", "type": "Component", "description": "外部コンポーネントとしてレンダリング。" },
-			{ "name": "layout", "type": "string", "description": "レイアウトモジュールを適用 (flex, grid 等)。" },
-			{ "name": "lismClass", "type": "string", "description": "メインのコンポーネントクラスを指定。" },
-			{ "name": "variant", "type": "string", "description": "モジュールクラスのバリエーションを指定。" },
-			{ "name": "exProps", "type": "object", "description": "Lism処理をバイパスして直接渡すprops。" }
-		],
-		"usage": "<Lism tag='section' p='20' bgc='base-2'>Content</Lism>"
-	},
-	{
-		"name": "HTML",
-		"package": "lism-css",
-		"category": "core",
-		"description": "HTMLの主要なタグに<Lism>と同じプロパティを指定できるようにするためのコンポーネント。HTML.div, HTML.p, HTML.span, HTML.a, HTML.h, HTML.img, HTML.ul, HTML.ol, HTML.li, HTML.button が利用可能。例えば <HTML.p> は <Lism tag='p'> と同じように動作する。",
-		"aliases": ["HTML要素", "html tags", "セマンティック"],
-		"props": [
-			{ "name": "lv", "type": "'1' | '2' | '3' | '4' | '5' | '6'", "default": "1", "description": "HTML.h で使用。見出しレベルを指定する。" }
-		],
-		"usage": "<HTML.p fz='l' c='text-2'>Text</HTML.p>"
-	},
-	{
-		"name": "Dummy",
-		"package": "lism-css",
-		"category": "core",
-		"description": "ダミーテキストを生成するコンポーネント。プレビューやテスト用に使用。tag='img'でダミー画像、tag='ul'/tag='ol'でダミーリストも出力可能。",
-		"aliases": ["placeholder", "lorem ipsum", "ダミーテキスト", "テスト用"],
-		"props": [
-			{ "name": "lang", "type": "'ja' | 'en' | 'ar'", "default": "en", "description": "ダミーテキストの言語。" },
-			{
-				"name": "length",
-				"type": "'xs' | 's' | 'm' | 'l' | 'xl' | 'codes'",
-				"default": "m",
-				"description": "テキストの長さ。'codes'の場合はb,i,a,code要素を含むテキストを出力。"
-			},
-			{ "name": "pre", "type": "string", "description": "ダミーテキストの前に表示するテキスト。" },
-			{ "name": "offset", "type": "number", "default": "0", "description": "ダミーテキストのオフセット。区切り文字単位で先頭を切り捨てる。" }
-		],
-		"usage": "<Dummy lang='ja' />"
-	},
-	{
-		"name": "Box",
-		"package": "lism-css",
-		"category": "layout",
-		"description": "最も基本的なレイアウトモジュール。汎用的なボックス要素として使用。l--box クラスが付与される。",
-		"aliases": ["ボックス", "汎用ボックス", "基本レイアウト"],
-		"props": [],
-		"usage": "<Box p='20' bgc='base-2'>Content</Box>"
-	},
-	{
-		"name": "Flex",
-		"package": "lism-css",
-		"category": "layout",
-		"description": "Flexboxレイアウトを構成するコンポーネント。display: flex が適用される。",
-		"aliases": ["flexbox", "横並び", "フレックス", "inline layout", "display: flex"],
-		"props": [
-			{ "name": "fxf", "type": "string | array", "description": "flex-flow の値。" },
-			{ "name": "fxw", "type": "string | array", "description": "flex-wrap の値。" },
-			{ "name": "fxd", "type": "string | array", "description": "flex-direction の値。" }
-		],
-		"usage": "<Flex g='20' ai='center' jc='center'>...</Flex>"
-	},
-	{
-		"name": "Stack",
-		"package": "lism-css",
-		"category": "layout",
-		"description": "縦方向に要素を積み重ねるFlexレイアウト。flex-direction: column のFlex。Flexで使えるPropsが使える。",
-		"aliases": ["縦並び", "vertical layout", "縦積み", "column direction", "display: flex", "flex-direction: column"],
-		"props": [],
-		"usage": "<Stack g='20'>...</Stack>"
-	},
-	{
-		"name": "Grid",
-		"package": "lism-css",
-		"category": "layout",
-		"description": "CSS Gridレイアウトを構成するコンポーネント。display: grid が適用される。",
-		"aliases": ["CSS Grid", "グリッド", "grid layout", "格子", "display: grid"],
-		"props": [
-			{ "name": "gt", "type": "string | array", "description": "grid-template の値。" },
-			{ "name": "gta", "type": "string | array", "description": "grid-template-areas の値。" },
-			{ "name": "gtc", "type": "string | array", "description": "grid-template-columns の値。" },
-			{ "name": "gtr", "type": "string | array", "description": "grid-template-rows の値。" },
-			{ "name": "gaf", "type": "string | array", "description": "grid-auto-flow の値。" },
-			{ "name": "gar", "type": "string | array", "description": "grid-auto-rows の値。" },
-			{ "name": "gac", "type": "string | array", "description": "grid-auto-columns の値。" }
-		],
-		"usage": "<Grid gtc='1fr 1fr' g='20'>...</Grid>"
-	},
-	{
-		"name": "Center",
-		"package": "lism-css",
-		"category": "layout",
-		"description": "子要素を中央揃えにするレイアウトコンポーネント。place-items: center の Grid。Gridで使えるpropsが使える。",
-		"aliases": ["中央揃え", "centering", "中央配置", "center align", "place-items: center", "place-content: center", "display: grid"],
-		"props": [],
-		"usage": "<Center p='40' h='200px'>Centered Content</Center>"
-	},
-	{
-		"name": "Cluster",
-		"package": "lism-css",
-		"category": "layout",
-		"description": "横方向に要素を並べ、自動的に折り返すFlexレイアウト。タグやバッジの並びに適している。",
-		"aliases": ["横並び折り返し", "inline wrap", "タグ並び", "badge list", "flex wrap", "display: flex", "flex-wrap: wrap"],
-		"props": [],
-		"usage": "<Cluster g='10'>...</Cluster>"
-	},
-	{
-		"name": "Columns",
-		"package": "lism-css",
-		"category": "layout",
-		"description": "ブレイクポイントごとに指定した列数で表示できるカラムレイアウト。Gridベース。",
-		"aliases": ["等分割", "equal columns", "均等幅カラム", "multi column", "複数列"],
-		"props": [{ "name": "cols", "type": "number | array", "default": "2", "description": "列数。レスポンシブ対応可能。--cols変数として出力。" }],
-		"usage": "<Columns cols={[1, 2, 3]} g='20'>...</Columns>"
-	},
-	{
-		"name": "Flow",
-		"package": "lism-css",
-		"category": "layout",
-		"description": "コンテンツフロー用のレイアウト。display:flow-rootで、子要素間に一定の余白を管理する。記事本文のような縦方向のフローコンテンツに適している。見出しタグは余白が2倍になる。",
-		"aliases": ["content flow", "記事本文", "本文レイアウト", "article body", "縦方向余白"],
-		"props": [{ "name": "flow", "type": "'s' | string", "description": "フロー方向の余白サイズ。's'で小さい余白。" }],
-		"usage": "<Flow flow='s'>...</Flow>"
-	},
-	{
-		"name": "FluidCols",
-		"package": "lism-css",
-		"category": "layout",
-		"description": "子要素が最小幅に達すると自動的に折り返すグリッドレイアウト。メディアクエリに依存しない流動的なカラムレイアウト。",
-		"aliases": [
-			"auto-wrap",
-			"自動折り返し",
-			"responsive grid",
-			"メディアクエリなし",
-			"fluid columns",
-			"auto-fill",
-			"流動カラム",
-			"折り返しグリッド"
-		],
-		"props": [
-			{ "name": "cols", "type": "string", "description": "各カラムが維持する最小幅 (例: '320px')。--cols変数として出力。" },
-			{ "name": "autoFill", "type": "boolean", "description": "自動折り返しのモードをauto-fillに切り替える。--autoMode変数として出力。" }
-		],
-		"usage": "<FluidCols cols='320px' g='20'>...</FluidCols>"
-	},
-	{
-		"name": "Frame",
-		"package": "lism-css",
-		"category": "layout",
-		"description": "直下のメディア要素（img, video, iframe）を自身のサイズに合わせて表示するレイアウトモジュール。アスペクト比の指定も可能。",
-		"aliases": ["aspect-ratio", "アスペクト比", "画像コンテナ", "動画フレーム", "比率維持"],
-		"props": [{ "name": "ar", "type": "string | array", "description": "アスペクト比。(ar自体はどのコンポーネントにも指定できるCSS Props)" }],
-		"usage": "<Frame ar='16/9'>...</Frame>"
-	},
-	{
-		"name": "SwitchCols",
-		"package": "lism-css",
-		"category": "layout",
-		"description": "一定の幅で自動的に1カラムと複数カラムを切り替えるレイアウト。メディアクエリに依存しない。",
-		"aliases": ["カラム切り替え", "responsive columns", "メディアクエリなし", "breakpoint switch", "1カラム切り替え"],
-		"props": [
-			{
-				"name": "breakSize",
-				"type": "string",
-				"description": "横並びを維持するのに必要な幅（親のサイズ）。szトークンの指定が可能。--breakSize変数として出力。"
-			}
-		],
-		"usage": "<SwitchCols breakSize='s' g='20'>...</SwitchCols>"
-	},
-	{
-		"name": "SideMain",
-		"package": "lism-css",
-		"category": "layout",
-		"description": "サイドバー + メインコンテンツの2カラムレイアウト。メイン側が可変幅で、メインの幅が指定値を下回ると自動で1カラムに切り替わる。子要素にisSideが必要。",
-		"aliases": ["sidebar layout", "サイドバー", "2カラム", "two column", "サイドメイン"],
-		"props": [
-			{ "name": "sideW", "type": "string", "description": "サイドバーの幅。--sideW変数として出力。" },
-			{ "name": "mainW", "type": "string", "description": "メインエリアで維持したい最小幅。--mainW変数として出力。" }
-		],
-		"usage": "<SideMain sideW='240px' mainW='20rem'>...</SideMain>"
-	},
-	{
-		"name": "Container",
-		"package": "lism-css",
-		"category": "layout",
-		"description": "コンテナクエリの基準要素。<Lism isContainer>のエイリアスで、is--containerクラスが付与される。sizeを指定するとis--wrapperも同時にセットされる。",
-		"aliases": ["container query", "コンテナクエリ", "レスポンシブ基準"],
-		"props": [
-			{ "name": "size", "type": "boolean | string", "description": "コンテンツサイズ。isWrapperに渡される ('s', 'l' など)。" },
-			{ "name": "layout", "type": "string", "description": "展開したいLayoutモジュールを指定。" }
-		],
-		"usage": "<Container layout='flow'>...</Container>"
-	},
-	{
-		"name": "Layer",
-		"package": "lism-css",
-		"category": "layout",
-		"description": "親要素に対して絶対配置で重なるレイヤー要素。オーバーレイや背景装飾に使用。<Lism isLayer>のエイリアスで、is--layer クラスが付与される。",
-		"aliases": ["overlay", "オーバーレイ", "absolute position", "重ねる", "背景装飾"],
-		"props": [
-			{
-				"name": "blur",
-				"type": "string | number",
-				"description": "backdrop-filterのblur値。他のフィルタープロパティとまとめてstyle.backdropFilterに出力。"
-			},
-			{ "name": "contrast", "type": "string | number", "description": "backdrop-filterのcontrast値。" },
-			{ "name": "brightness", "type": "string | number", "description": "backdrop-filterのbrightness値。" },
-			{ "name": "grayscale", "type": "string | number", "description": "backdrop-filterのgrayscale値。" },
-			{ "name": "hueRotate", "type": "string | number", "description": "backdrop-filterのhue-rotate値。" },
-			{ "name": "invert", "type": "string | number", "description": "backdrop-filterのinvert値。" },
-			{ "name": "saturate", "type": "string | number", "description": "backdrop-filterのsaturate値。" },
-			{ "name": "sepia", "type": "string | number", "description": "backdrop-filterのsepia値。" }
-		],
-		"usage": "<Layer bgc='black' o='-30'>Overlay</Layer>"
-	},
-	{
-		"name": "LinkBox",
-		"package": "lism-css",
-		"category": "layout",
-		"description": "ボックス全体をリンク領域にするコンポーネント。hrefが指定されるとa要素、なければdiv要素として出力。カード全体をクリッカブルにする場合等に使用。",
-		"aliases": ["clickable card", "クリッカブル", "カード全体リンク", "リンクカード"],
-		"props": [{ "name": "href", "type": "string", "description": "リンク先URL。指定ありでa要素、なしでdiv要素として出力。" }],
-		"usage": "<LinkBox href='/path'>Clickable Card</LinkBox>"
-	},
-	{
-		"name": "Wrapper",
-		"package": "lism-css",
-		"category": "layout",
-		"description": "コンテンツ幅を制限するラッパー要素。<Lism isWrapper>のエイリアスで、is--wrapper クラスが付与される。",
-		"aliases": ["max-width", "コンテンツ幅制限", "幅制限", "width limiter"],
-		"props": [
-			{
-				"name": "contentSize",
-				"type": "boolean | string",
-				"description": "コンテンツサイズを指定。's'や'l'などのプリセット値、または任意の値。"
-			},
-			{ "name": "layout", "type": "string", "description": "展開したいLayoutモジュールを指定。" },
-			{ "name": "isContainer", "type": "boolean", "description": "コンテナタイプをセットする。" }
-		],
-		"usage": "<Wrapper contentSize='s' layout='flow'>...</Wrapper>"
-	},
-	{
-		"name": "Icon",
-		"package": "lism-css",
-		"category": "atomic",
-		"description": "アイコンを表示するコンポーネント。SVGアイコンやアイコンコンポーネントを統一的に扱える。a--icon クラスが付与される。プリセットアイコン名の文字列、SVG文字列、外部コンポーネントなど多様な指定方法をサポート。",
-		"aliases": ["SVGアイコン", "アイコン表示", "icon component"],
-		"props": [
-			{
-				"name": "icon",
-				"type": "ElementType | string | { as: ElementType, [key: string]: unknown }",
-				"description": "アイコン要素。プリセット名の文字列、SVG文字列、外部コンポーネント、{as, ...props}オブジェクトを指定可能。"
-			},
-			{ "name": "label", "type": "string", "description": "aria-labelとして出力。指定ありでrole='img'、なしでaria-hidden='true'が付与される。" }
-		],
-		"usage": "<Icon icon={SomeIcon} w='1.5em' />"
-	},
-	{
-		"name": "Divider",
-		"package": "lism-css",
-		"category": "atomic",
-		"description": "区切り線を表示するコンポーネント。a--divider クラスが付与され、aria-hidden='true'がデフォルトで出力される。--bdcがvar(--divider)に初期セット。",
-		"aliases": ["separator", "区切り線", "仕切り", "hr"],
-		"props": [
-			{ "name": "bdw", "type": "string", "description": "区切り線のボーダー幅。" },
-			{ "name": "bds", "type": "string", "description": "区切り線のボーダースタイル。" },
-			{ "name": "bdc", "type": "string", "description": "区切り線のボーダーカラー。" },
-			{ "name": "variant", "type": "string", "description": "区切り線のバリエーション。" }
-		],
-		"usage": "<Divider />"
-	},
-	{
-		"name": "Media",
-		"package": "lism-css",
-		"category": "atomic",
-		"description": "img, video, iframe 等のメディア要素を統一的に扱うコンポーネント。a--media クラスが付与される。デフォルトでimgタグが出力される。",
-		"aliases": ["画像", "動画", "img tag", "video tag", "メディア要素"],
-		"props": [
-			{ "name": "src", "type": "string", "description": "メディアのURL。" },
-			{ "name": "alt", "type": "string", "description": "代替テキスト (img の場合)。" },
-			{ "name": "objectPosition", "type": "string", "description": "メディア要素のobject-positionを指定。" },
-			{ "name": "objectFit", "type": "string", "description": "メディア要素のobject-fitを指定。" },
-			{ "name": "blur", "type": "string | number", "description": "filterのblur値。他のフィルタープロパティとまとめてstyle.filterに出力。" },
-			{ "name": "contrast", "type": "string | number", "description": "filterのcontrast値。" },
-			{ "name": "brightness", "type": "string | number", "description": "filterのbrightness値。" },
-			{ "name": "grayscale", "type": "string | number", "description": "filterのgrayscale値。" },
-			{ "name": "saturate", "type": "string | number", "description": "filterのsaturate値。" },
-			{ "name": "dropShadow", "type": "string | number", "description": "filterのdrop-shadow値。" },
-			{ "name": "hueRotate", "type": "string | number", "description": "filterのhue-rotate値。" },
-			{ "name": "invert", "type": "string | number", "description": "filterのinvert値。" },
-			{ "name": "sepia", "type": "string | number", "description": "filterのsepia値。" }
-		],
-		"usage": "<Media src='/image.jpg' alt='Photo' />"
-	},
-	{
-		"name": "Spacer",
-		"package": "lism-css",
-		"category": "atomic",
-		"description": "空白を挿入するコンポーネント。a--spacer クラスが付与され、aria-hidden='true'がデフォルトで出力される。w,hにはSPACEトークンの値が使える。",
-		"aliases": ["余白", "空白挿入", "スペース", "gap element"],
-		"props": [
-			{ "name": "h", "type": "string | number", "description": "高さ (スペーシングトークン値)。" },
-			{ "name": "w", "type": "string | number", "description": "幅 (スペーシングトークン値)。" }
-		],
-		"usage": "<Spacer h='40' />"
-	},
-	{
-		"name": "Decorator",
-		"package": "lism-css",
-		"category": "atomic",
-		"description": "装飾用のコンポーネント。視覚的な装飾要素を追加するために使用。a--decorator クラスが付与され、aria-hidden='true'がデフォルトで出力される。",
-		"aliases": ["装飾", "visual decoration", "装飾要素"],
-		"props": [
-			{
-				"name": "size",
-				"type": "string",
-				"description": "デコレーターのサイズ（横幅・高さ）を一括指定。wに渡され、ar='1/1'が自動付与される。"
-			},
-			{ "name": "clipPath", "type": "string", "description": "style.clipPathへ渡す。" },
-			{ "name": "boxSizing", "type": "string", "description": "style.boxSizingへ渡す。" },
-			{ "name": "translate", "type": "string", "description": "style.translateへ渡す。CSS translate プロパティ。" },
-			{ "name": "rotate", "type": "string", "description": "style.rotateへ渡す。CSS rotate プロパティ。" },
-			{ "name": "scale", "type": "string", "description": "style.scaleへ渡す。CSS scale プロパティ。" },
-			{ "name": "transform", "type": "string", "description": "style.transformへ渡す。CSS transform プロパティ。" },
-			{ "name": "blur", "type": "string | number", "description": "filterのblur値。他のフィルタープロパティとまとめてstyle.filterに出力。" },
-			{ "name": "contrast", "type": "string | number", "description": "filterのcontrast値。" },
-			{ "name": "brightness", "type": "string | number", "description": "filterのbrightness値。" },
-			{ "name": "grayscale", "type": "string | number", "description": "filterのgrayscale値。" },
-			{ "name": "saturate", "type": "string | number", "description": "filterのsaturate値。" },
-			{ "name": "dropShadow", "type": "string | number", "description": "filterのdrop-shadow値。" },
-			{ "name": "hueRotate", "type": "string | number", "description": "filterのhue-rotate値。" },
-			{ "name": "invert", "type": "string | number", "description": "filterのinvert値。" },
-			{ "name": "sepia", "type": "string | number", "description": "filterのsepia値。" }
-		],
-		"usage": "<Decorator size='1.25em' pos='abs' t='0' l='0' bd-x-s bd-y-s />"
-	},
-	{
-		"name": "Accordion",
-		"package": "@lism-css/ui",
-		"category": "interactive",
-		"description": "アコーディオン UI。クリックでコンテンツの開閉を切り替える。JavaScriptで開閉アニメーションを制御。パネルにhidden='until-found'を使用しブラウザのページ内検索に対応。サブコンポーネント構造: Accordion.Root > Accordion.Item > (Accordion.Heading > Accordion.Button) + Accordion.Panel。Accordion.Iconは自動で含まれる。",
-		"aliases": ["開閉", "折りたたみ", "FAQ", "collapsible", "toggle panel"],
-		"props": [
-			{
-				"name": "allowMultiple",
-				"type": "boolean",
-				"description": "複数のアイテムを同時に開くことを許可 (Root)。デフォルトでは一つしか展開できない。"
-			},
-			{
-				"name": "tag",
-				"type": "string",
-				"description": "見出しのHTMLタグ (Heading)。デフォルトはdiv (role='heading'が自動付与)。h2〜h6を指定するとroleは付与されない。"
-			},
-			{ "name": "flow", "type": "string", "description": "パネル内のコンテンツ領域(__content)に渡すフローレイアウトの設定 (Panel)。" }
-		],
-		"usage": "<Accordion.Root>\n  <Accordion.Item>\n    <Accordion.Heading>\n      <Accordion.Button>Label</Accordion.Button>\n    </Accordion.Heading>\n    <Accordion.Panel>Content</Accordion.Panel>\n  </Accordion.Item>\n</Accordion.Root>"
-	},
-	{
-		"name": "Modal",
-		"package": "@lism-css/ui",
-		"category": "interactive",
-		"description": "モーダルダイアログ UI。dialog 要素を使用。JavaScriptが付属。data-modal-open/data-modal-close属性で開閉を制御。サブコンポーネント構造: Modal.OpenBtn + Modal.Root > Modal.Inner > Modal.Body + Modal.CloseBtn。",
-		"aliases": ["dialog", "popup", "ポップアップ", "ダイアログ", "モーダルウィンドウ"],
-		"props": [
-			{ "name": "id", "type": "string", "description": "モーダルのID (Root, 必須)。" },
-			{
-				"name": "modalId",
-				"type": "string",
-				"description": "対象モーダルのID (OpenBtn/CloseBtn)。data-modal-open/data-modal-closeとして出力。"
-			},
-			{ "name": "duration", "type": "string", "description": "アニメーションの持続時間 (Root)。--duration変数として出力。" },
-			{ "name": "offset", "type": "string", "description": "非表示時の位置をずらすオフセット値 (Inner)。--offset変数として出力。" },
-			{ "name": "layout", "type": "string", "description": "Inner要素のレイアウト用コンポーネントを指定 (Inner)。" }
-		],
-		"usage": "<Modal.OpenBtn modalId='modal-01'>Open</Modal.OpenBtn>\n<Modal.Root id='modal-01'>\n  <Modal.Inner>\n    <Modal.Body>Content</Modal.Body>\n    <Modal.CloseBtn modalId='modal-01' />\n  </Modal.Inner>\n</Modal.Root>"
-	},
-	{
-		"name": "Tabs",
-		"package": "@lism-css/ui",
-		"category": "interactive",
-		"description": "タブ切り替え UI。タブをクリックしてコンテンツパネルを切り替える。JavaScriptが付属。スタイリングはほぼなく動きのみ提供。サブコンポーネント構造: Tabs.Root > Tabs.Item > (Tabs.Tab + Tabs.Panel)。Tabs.Listも利用可能。",
-		"aliases": ["タブ切り替え", "tab panel", "パネル切り替え", "tab navigation"],
-		"props": [
-			{ "name": "tabId", "type": "string", "description": "タブを特定するためのID文字列 (Root)。aria-controlsに使用。" },
-			{ "name": "defaultIndex", "type": "number", "default": "1", "description": "初期アクティブタブ (1始まり) (Root)。" },
-			{ "name": "variant", "type": "string", "description": "スタイルバリエーション (Root)。c--tabs--{variant}クラスが出力。" },
-			{ "name": "listProps", "type": "object", "description": "タブボタンを囲むリスト要素(c--tabs_list)へ渡すprops (Root)。" }
-		],
-		"usage": "<Tabs.Root>\n  <Tabs.Item>\n    <Tabs.Tab>Tab 1</Tabs.Tab>\n    <Tabs.Panel>Content 1</Tabs.Panel>\n  </Tabs.Item>\n  <Tabs.Item>\n    <Tabs.Tab>Tab 2</Tabs.Tab>\n    <Tabs.Panel>Content 2</Tabs.Panel>\n  </Tabs.Item>\n</Tabs.Root>"
-	},
-	{
-		"name": "Details",
-		"package": "@lism-css/ui",
-		"category": "interactive",
-		"description": "HTMLの details/summary 要素をラップしたコンポーネント。Accordionとは違いJSを使わずCSSのみで実装。サブコンポーネント構造: Details.Root > Details.Summary > (Details.Title + Details.Icon) + Details.Content。",
-		"aliases": ["details summary", "disclosure", "ネイティブ開閉", "summary element"],
-		"props": [
-			{ "name": "tag", "type": "string", "description": "Details.Titleで出力するHTMLタグの種類 (Title)。デフォルトはspan。" },
-			{ "name": "--duration", "type": "string", "description": "展開アニメーションの秒数 (Root)。style経由で指定。" }
-		],
-		"usage": "<Details.Root>\n  <Details.Summary>\n    <Details.Title>Title</Details.Title>\n    <Details.Icon />\n  </Details.Summary>\n  <Details.Content>Content</Details.Content>\n</Details.Root>"
-	},
-	{
-		"name": "Alert",
-		"package": "@lism-css/ui",
-		"category": "feedback",
-		"description": "短めの文言を目立たせて強調表示するアラートボックス。アイコンとキーカラーでバリエーションを表現。typeプリセットによりアイコンとカラーが自動設定される。",
-		"aliases": ["notice", "warning box", "注意書き", "お知らせ", "通知"],
-		"props": [
-			{
-				"name": "type",
-				"type": "'alert' | 'point' | 'warning' | 'check' | 'help' | 'info'",
-				"default": "alert",
-				"description": "アラートタイプ。keycolorとiconの組み合わせプリセットを呼び出す。"
-			},
-			{ "name": "keycolor", "type": "string", "description": "アラートのキーカラー。" },
-			{ "name": "icon", "type": "ReactNode | string", "description": "カスタムアイコン。" },
-			{ "name": "layout", "type": "'flex' | 'sideMain'", "default": "flex", "description": "レイアウトモジュール。" },
-			{ "name": "flow", "type": "string", "default": "s", "description": "コンテンツを囲むdiv要素のフロー余白。" }
-		],
-		"usage": "<Alert type='warning'>Warning message</Alert>"
-	},
-	{
-		"name": "Callout",
-		"package": "@lism-css/ui",
-		"category": "feedback",
-		"description": "記事の中で重要なポイントを示すコンポーネント。タイトルとアイコン付きの強調ボックス。typeプリセットによりアイコンとカラーが自動設定される。",
-		"aliases": ["補足情報", "note box", "強調ボックス", "highlight"],
-		"props": [
-			{
-				"name": "type",
-				"type": "'note' | 'alert' | 'point' | 'warning' | 'check' | 'help'",
-				"default": "note",
-				"description": "コールアウトタイプ。keycolorとiconの組み合わせプリセットを呼び出す。"
-			},
-			{ "name": "keycolor", "type": "string", "description": "コールアウトのキーカラー。" },
-			{ "name": "icon", "type": "ReactNode | string", "description": "コールアウトのアイコン。" },
-			{ "name": "title", "type": "string", "description": "コールアウトのタイトルテキスト。" },
-			{ "name": "flow", "type": "string", "default": "s", "description": "コンテンツ部分(_body)のフロー余白。" }
-		],
-		"usage": "<Callout type='note' title='Important' keycolor='blue'>Important note</Callout>"
-	},
-	{
-		"name": "Button",
-		"package": "@lism-css/ui",
-		"category": "action",
-		"description": "ボタン型リンクコンポーネント。c--button クラスが付与される。デフォルトでa要素として出力。バリエーション (fill, outline 等) をサポート。",
-		"aliases": ["CTA", "アクションボタン", "リンクボタン", "submit"],
-		"props": [
-			{
-				"name": "variant",
-				"type": "string",
-				"description": "ボタンのバリエーション ('fill', 'outline' 等)。c--button--{variant}クラスが出力。"
-			},
-			{ "name": "keycolor", "type": "string", "description": "ボタンのキーカラー。" },
-			{ "name": "href", "type": "string", "description": "リンク先URL。" }
-		],
-		"usage": "<Button variant='fill' href='#'>Click me</Button>"
-	},
-	{
-		"name": "Badge",
-		"package": "@lism-css/ui",
-		"category": "display",
-		"description": "バッジ (ラベル) コンポーネント。c--badge クラスが付与される。span要素としてインライン表示。カテゴリやステータスの表示に使用。",
-		"aliases": ["ラベル", "ステータス表示", "tag label", "カテゴリ表示"],
-		"props": [
-			{ "name": "variant", "type": "string", "description": "バッジのバリエーション ('outline' 等)。c--badge--{variant}クラスが出力。" },
-			{ "name": "keycolor", "type": "string", "description": "バッジのキーカラー。" }
-		],
-		"usage": "<Badge keycolor='green'>New</Badge>"
-	},
-	{
-		"name": "Avatar",
-		"package": "@lism-css/ui",
-		"category": "display",
-		"description": "アバター (プロフィール画像) コンポーネント。c--avatar クラスが付与される。Frameベースの円形画像表示。",
-		"aliases": ["プロフィール画像", "user icon", "ユーザーアイコン", "丸画像"],
-		"props": [
-			{ "name": "src", "type": "string", "description": "画像URL。" },
-			{ "name": "alt", "type": "string", "description": "代替テキスト。" },
-			{ "name": "size", "type": "string", "default": "1.5em", "description": "アバターのサイズ。" }
-		],
-		"usage": "<Avatar src='/avatar.jpg' alt='User' size='48px' />"
-	},
-	{
-		"name": "Chat",
-		"package": "@lism-css/ui",
-		"category": "display",
-		"description": "チャット風の吹き出しコンポーネント。c--chat クラスが付与される。Gridベースの会話形式のUI表現に使用。",
-		"aliases": ["吹き出し", "会話UI", "message bubble", "balloon", "speech bubble"],
-		"props": [
-			{ "name": "name", "type": "string", "description": "発言者の名前。" },
-			{ "name": "avatar", "type": "string", "description": "アバター画像のsrc。" },
-			{ "name": "variant", "type": "'speak' | 'think'", "default": "speak", "description": "チャットタイプ。" },
-			{ "name": "direction", "type": "'start' | 'end'", "default": "start", "description": "チャットの表示位置。" },
-			{ "name": "keycolor", "type": "string", "default": "gray", "description": "チャットボックスのキーカラー。" },
-			{ "name": "flow", "type": "string", "default": "s", "description": "コンテンツを囲む要素(c--chat_content)に渡されるフロー余白。" }
-		],
-		"usage": "<Chat name='Alice' avatar='/alice.jpg'>Hello!</Chat>"
-	},
-	{
-		"name": "NavMenu",
-		"package": "@lism-css/ui",
-		"category": "navigation",
-		"description": "ナビゲーションメニューコンポーネント。c--navMenu クラスが付与される。サブコンポーネント構造: NavMenu.Root > NavMenu.Item > NavMenu.Link。NavMenu.Nestでネストも可能。",
-		"aliases": ["ナビゲーション", "メニュー", "navigation links", "リンクリスト"],
-		"props": [
-			{ "name": "hovBgc", "type": "string", "description": "ホバー時の背景カラー (Root)。--hov-bgc変数として出力。" },
-			{ "name": "hovC", "type": "string", "description": "ホバー時のテキストカラー (Root)。--hov-c変数として出力。" },
-			{ "name": "itemP", "type": "string", "description": "各アイテムのパディング (Root)。--_item-p変数として出力。" },
-			{ "name": "href", "type": "string", "description": "リンク先URL (Link)。指定ありでa要素、なしでspan要素。" }
-		],
-		"usage": "<NavMenu.Root>\n  <NavMenu.Item>\n    <NavMenu.Link href='/'>Home</NavMenu.Link>\n  </NavMenu.Item>\n  <NavMenu.Item>\n    <NavMenu.Link href='/about'>About</NavMenu.Link>\n  </NavMenu.Item>\n</NavMenu.Root>"
-	},
-	{
-		"name": "ShapeDivider",
-		"package": "@lism-css/ui",
-		"category": "decoration",
-		"description": "セクション間の波型などの装飾的な区切り要素。SVGベースの形状で区切りを表現。viewBoxとSVGのpath要素を子要素として渡して使用。",
-		"aliases": ["波型", "section separator", "セクション区切り", "wave divider", "装飾区切り"],
-		"props": [
-			{ "name": "viewBox", "type": "string", "description": "出力するSVGのviewBox。" },
-			{ "name": "level", "type": "number", "default": "5", "description": "シェイプの高さレベル。0で非表示。" },
-			{ "name": "flip", "type": "'X' | 'Y' | 'XY'", "description": "X/Y/XYで反転方向を指定。data-flip属性として出力。" },
-			{ "name": "stretch", "type": "string", "description": "水平方向の引き伸ばし量。--_inner-stretch変数として出力。" },
-			{ "name": "offset", "type": "string", "description": "水平方向のオフセット。--_inner-offset変数として出力。" },
-			{ "name": "isEmpty", "type": "boolean", "description": "シェイプを非表示にしてスペーサーとして使用。" },
-			{ "name": "isAnimation", "type": "boolean", "description": "アニメーションを有効にする。data-has-animation属性として出力。" }
-		],
-		"usage": "<ShapeDivider viewBox='0 0 100 10'>\n  <path d='M100 6C89.3 3.3 82.7 9 70 9S48.4 3 38 3 24.5 6 17 6C7.4 6 0 0 0 0v10h100V6z'/>\n</ShapeDivider>"
-	}
+  {
+    "name": "Lism",
+    "package": "lism-css",
+    "category": "core",
+    "description": "全コンポーネントの基盤となるコアコンポーネント。Props システムによる CSS クラス・スタイルの自動変換を提供する。他の全てのコンポーネントは Lism を継承している。",
+    "aliases": ["base component", "コア", "基盤"],
+    "props": [
+      { "name": "tag", "type": "string", "default": "div", "description": "レンダリングするHTML要素を指定。" },
+      { "name": "as", "type": "Component", "description": "外部コンポーネントとしてレンダリング。" },
+      { "name": "layout", "type": "string", "description": "レイアウトモジュールを適用 (flex, grid 等)。" },
+      { "name": "lismClass", "type": "string", "description": "メインのコンポーネントクラスを指定。" },
+      { "name": "variant", "type": "string", "description": "モジュールクラスのバリエーションを指定。" },
+      { "name": "exProps", "type": "object", "description": "Lism処理をバイパスして直接渡すprops。" }
+    ],
+    "usage": "<Lism tag='section' p='20' bgc='base-2'>Content</Lism>"
+  },
+  {
+    "name": "HTML",
+    "package": "lism-css",
+    "category": "core",
+    "description": "HTMLの主要なタグに<Lism>と同じプロパティを指定できるようにするためのコンポーネント。HTML.div, HTML.p, HTML.span, HTML.a, HTML.h, HTML.img, HTML.ul, HTML.ol, HTML.li, HTML.button が利用可能。例えば <HTML.p> は <Lism tag='p'> と同じように動作する。",
+    "aliases": ["HTML要素", "html tags", "セマンティック"],
+    "props": [
+      { "name": "lv", "type": "'1' | '2' | '3' | '4' | '5' | '6'", "default": "1", "description": "HTML.h で使用。見出しレベルを指定する。" }
+    ],
+    "usage": "<HTML.p fz='l' c='text-2'>Text</HTML.p>"
+  },
+  {
+    "name": "Dummy",
+    "package": "lism-css",
+    "category": "core",
+    "description": "ダミーテキストを生成するコンポーネント。プレビューやテスト用に使用。tag='img'でダミー画像、tag='ul'/tag='ol'でダミーリストも出力可能。",
+    "aliases": ["placeholder", "lorem ipsum", "ダミーテキスト", "テスト用"],
+    "props": [
+      { "name": "lang", "type": "'ja' | 'en' | 'ar'", "default": "en", "description": "ダミーテキストの言語。" },
+      {
+        "name": "length",
+        "type": "'xs' | 's' | 'm' | 'l' | 'xl' | 'codes'",
+        "default": "m",
+        "description": "テキストの長さ。'codes'の場合はb,i,a,code要素を含むテキストを出力。"
+      },
+      { "name": "pre", "type": "string", "description": "ダミーテキストの前に表示するテキスト。" },
+      { "name": "offset", "type": "number", "default": "0", "description": "ダミーテキストのオフセット。区切り文字単位で先頭を切り捨てる。" }
+    ],
+    "usage": "<Dummy lang='ja' />"
+  },
+  {
+    "name": "Box",
+    "package": "lism-css",
+    "category": "layout",
+    "description": "最も基本的なレイアウトモジュール。汎用的なボックス要素として使用。l--box クラスが付与される。",
+    "aliases": ["ボックス", "汎用ボックス", "基本レイアウト"],
+    "props": [],
+    "usage": "<Box p='20' bgc='base-2'>Content</Box>"
+  },
+  {
+    "name": "Flex",
+    "package": "lism-css",
+    "category": "layout",
+    "description": "Flexboxレイアウトを構成するコンポーネント。display: flex が適用される。",
+    "aliases": ["flexbox", "横並び", "フレックス", "inline layout", "display: flex"],
+    "props": [
+      { "name": "fxf", "type": "string | array", "description": "flex-flow の値。" },
+      { "name": "fxw", "type": "string | array", "description": "flex-wrap の値。" },
+      { "name": "fxd", "type": "string | array", "description": "flex-direction の値。" }
+    ],
+    "usage": "<Flex g='20' ai='center' jc='center'>...</Flex>"
+  },
+  {
+    "name": "Stack",
+    "package": "lism-css",
+    "category": "layout",
+    "description": "縦方向に要素を積み重ねるFlexレイアウト。flex-direction: column のFlex。Flexで使えるPropsが使える。",
+    "aliases": ["縦並び", "vertical layout", "縦積み", "column direction", "display: flex", "flex-direction: column"],
+    "props": [],
+    "usage": "<Stack g='20'>...</Stack>"
+  },
+  {
+    "name": "Grid",
+    "package": "lism-css",
+    "category": "layout",
+    "description": "CSS Gridレイアウトを構成するコンポーネント。display: grid が適用される。",
+    "aliases": ["CSS Grid", "グリッド", "grid layout", "格子", "display: grid"],
+    "props": [
+      { "name": "gt", "type": "string | array", "description": "grid-template の値。" },
+      { "name": "gta", "type": "string | array", "description": "grid-template-areas の値。" },
+      { "name": "gtc", "type": "string | array", "description": "grid-template-columns の値。" },
+      { "name": "gtr", "type": "string | array", "description": "grid-template-rows の値。" },
+      { "name": "gaf", "type": "string | array", "description": "grid-auto-flow の値。" },
+      { "name": "gar", "type": "string | array", "description": "grid-auto-rows の値。" },
+      { "name": "gac", "type": "string | array", "description": "grid-auto-columns の値。" }
+    ],
+    "usage": "<Grid gtc='1fr 1fr' g='20'>...</Grid>"
+  },
+  {
+    "name": "Center",
+    "package": "lism-css",
+    "category": "layout",
+    "description": "子要素を中央揃えにするレイアウトコンポーネント。place-items: center の Grid。Gridで使えるpropsが使える。",
+    "aliases": ["中央揃え", "centering", "中央配置", "center align", "place-items: center", "place-content: center", "display: grid"],
+    "props": [],
+    "usage": "<Center p='40' h='200px'>Centered Content</Center>"
+  },
+  {
+    "name": "Cluster",
+    "package": "lism-css",
+    "category": "layout",
+    "description": "横方向に要素を並べ、自動的に折り返すFlexレイアウト。タグやバッジの並びに適している。",
+    "aliases": ["横並び折り返し", "inline wrap", "タグ並び", "badge list", "flex wrap", "display: flex", "flex-wrap: wrap"],
+    "props": [],
+    "usage": "<Cluster g='10'>...</Cluster>"
+  },
+  {
+    "name": "Columns",
+    "package": "lism-css",
+    "category": "layout",
+    "description": "ブレイクポイントごとに指定した列数で表示できるカラムレイアウト。Gridベース。",
+    "aliases": ["等分割", "equal columns", "均等幅カラム", "multi column", "複数列"],
+    "props": [{ "name": "cols", "type": "number | array", "default": "2", "description": "列数。レスポンシブ対応可能。--cols変数として出力。" }],
+    "usage": "<Columns cols={[1, 2, 3]} g='20'>...</Columns>"
+  },
+  {
+    "name": "Flow",
+    "package": "lism-css",
+    "category": "layout",
+    "description": "コンテンツフロー用のレイアウト。display:flow-rootで、子要素間に一定の余白を管理する。記事本文のような縦方向のフローコンテンツに適している。見出しタグは余白が2倍になる。",
+    "aliases": ["content flow", "記事本文", "本文レイアウト", "article body", "縦方向余白"],
+    "props": [{ "name": "flow", "type": "'s' | string", "description": "フロー方向の余白サイズ。's'で小さい余白。" }],
+    "usage": "<Flow flow='s'>...</Flow>"
+  },
+  {
+    "name": "FluidCols",
+    "package": "lism-css",
+    "category": "layout",
+    "description": "子要素が最小幅に達すると自動的に折り返すグリッドレイアウト。メディアクエリに依存しない流動的なカラムレイアウト。",
+    "aliases": ["auto-wrap", "自動折り返し", "responsive grid", "メディアクエリなし", "fluid columns", "auto-fill", "流動カラム", "折り返しグリッド"],
+    "props": [
+      { "name": "cols", "type": "string", "description": "各カラムが維持する最小幅 (例: '320px')。--cols変数として出力。" },
+      { "name": "autoFill", "type": "boolean", "description": "自動折り返しのモードをauto-fillに切り替える。--autoMode変数として出力。" }
+    ],
+    "usage": "<FluidCols cols='320px' g='20'>...</FluidCols>"
+  },
+  {
+    "name": "Frame",
+    "package": "lism-css",
+    "category": "layout",
+    "description": "直下のメディア要素（img, video, iframe）を自身のサイズに合わせて表示するレイアウトモジュール。アスペクト比の指定も可能。",
+    "aliases": ["aspect-ratio", "アスペクト比", "画像コンテナ", "動画フレーム", "比率維持"],
+    "props": [{ "name": "ar", "type": "string | array", "description": "アスペクト比。(ar自体はどのコンポーネントにも指定できるCSS Props)" }],
+    "usage": "<Frame ar='16/9'>...</Frame>"
+  },
+  {
+    "name": "SwitchCols",
+    "package": "lism-css",
+    "category": "layout",
+    "description": "一定の幅で自動的に1カラムと複数カラムを切り替えるレイアウト。メディアクエリに依存しない。",
+    "aliases": ["カラム切り替え", "responsive columns", "メディアクエリなし", "breakpoint switch", "1カラム切り替え"],
+    "props": [
+      {
+        "name": "breakSize",
+        "type": "string",
+        "description": "横並びを維持するのに必要な幅（親のサイズ）。szトークンの指定が可能。--breakSize変数として出力。"
+      }
+    ],
+    "usage": "<SwitchCols breakSize='s' g='20'>...</SwitchCols>"
+  },
+  {
+    "name": "SideMain",
+    "package": "lism-css",
+    "category": "layout",
+    "description": "サイドバー + メインコンテンツの2カラムレイアウト。メイン側が可変幅で、メインの幅が指定値を下回ると自動で1カラムに切り替わる。子要素にisSideが必要。",
+    "aliases": ["sidebar layout", "サイドバー", "2カラム", "two column", "サイドメイン"],
+    "props": [
+      { "name": "sideW", "type": "string", "description": "サイドバーの幅。--sideW変数として出力。" },
+      { "name": "mainW", "type": "string", "description": "メインエリアで維持したい最小幅。--mainW変数として出力。" }
+    ],
+    "usage": "<SideMain sideW='240px' mainW='20rem'>...</SideMain>"
+  },
+  {
+    "name": "Container",
+    "package": "lism-css",
+    "category": "layout",
+    "description": "コンテナクエリの基準要素。<Lism isContainer>のエイリアスで、is--containerクラスが付与される。sizeを指定するとis--wrapperも同時にセットされる。",
+    "aliases": ["container query", "コンテナクエリ", "レスポンシブ基準"],
+    "props": [
+      { "name": "size", "type": "boolean | string", "description": "コンテンツサイズ。isWrapperに渡される ('s', 'l' など)。" },
+      { "name": "layout", "type": "string", "description": "展開したいLayoutモジュールを指定。" }
+    ],
+    "usage": "<Container layout='flow'>...</Container>"
+  },
+  {
+    "name": "Layer",
+    "package": "lism-css",
+    "category": "layout",
+    "description": "親要素に対して絶対配置で重なるレイヤー要素。オーバーレイや背景装飾に使用。<Lism isLayer>のエイリアスで、is--layer クラスが付与される。",
+    "aliases": ["overlay", "オーバーレイ", "absolute position", "重ねる", "背景装飾"],
+    "props": [
+      {
+        "name": "blur",
+        "type": "string | number",
+        "description": "backdrop-filterのblur値。他のフィルタープロパティとまとめてstyle.backdropFilterに出力。"
+      },
+      { "name": "contrast", "type": "string | number", "description": "backdrop-filterのcontrast値。" },
+      { "name": "brightness", "type": "string | number", "description": "backdrop-filterのbrightness値。" },
+      { "name": "grayscale", "type": "string | number", "description": "backdrop-filterのgrayscale値。" },
+      { "name": "hueRotate", "type": "string | number", "description": "backdrop-filterのhue-rotate値。" },
+      { "name": "invert", "type": "string | number", "description": "backdrop-filterのinvert値。" },
+      { "name": "saturate", "type": "string | number", "description": "backdrop-filterのsaturate値。" },
+      { "name": "sepia", "type": "string | number", "description": "backdrop-filterのsepia値。" }
+    ],
+    "usage": "<Layer bgc='black' o='-30'>Overlay</Layer>"
+  },
+  {
+    "name": "LinkBox",
+    "package": "lism-css",
+    "category": "layout",
+    "description": "ボックス全体をリンク領域にするコンポーネント。hrefが指定されるとa要素、なければdiv要素として出力。カード全体をクリッカブルにする場合等に使用。",
+    "aliases": ["clickable card", "クリッカブル", "カード全体リンク", "リンクカード"],
+    "props": [{ "name": "href", "type": "string", "description": "リンク先URL。指定ありでa要素、なしでdiv要素として出力。" }],
+    "usage": "<LinkBox href='/path'>Clickable Card</LinkBox>"
+  },
+  {
+    "name": "Wrapper",
+    "package": "lism-css",
+    "category": "layout",
+    "description": "コンテンツ幅を制限するラッパー要素。<Lism isWrapper>のエイリアスで、is--wrapper クラスが付与される。",
+    "aliases": ["max-width", "コンテンツ幅制限", "幅制限", "width limiter"],
+    "props": [
+      {
+        "name": "contentSize",
+        "type": "boolean | string",
+        "description": "コンテンツサイズを指定。's'や'l'などのプリセット値、または任意の値。"
+      },
+      { "name": "layout", "type": "string", "description": "展開したいLayoutモジュールを指定。" },
+      { "name": "isContainer", "type": "boolean", "description": "コンテナタイプをセットする。" }
+    ],
+    "usage": "<Wrapper contentSize='s' layout='flow'>...</Wrapper>"
+  },
+  {
+    "name": "Icon",
+    "package": "lism-css",
+    "category": "atomic",
+    "description": "アイコンを表示するコンポーネント。SVGアイコンやアイコンコンポーネントを統一的に扱える。a--icon クラスが付与される。プリセットアイコン名の文字列、SVG文字列、外部コンポーネントなど多様な指定方法をサポート。",
+    "aliases": ["SVGアイコン", "アイコン表示", "icon component"],
+    "props": [
+      {
+        "name": "icon",
+        "type": "ElementType | string | { as: ElementType, [key: string]: unknown }",
+        "description": "アイコン要素。プリセット名の文字列、SVG文字列、外部コンポーネント、{as, ...props}オブジェクトを指定可能。"
+      },
+      { "name": "label", "type": "string", "description": "aria-labelとして出力。指定ありでrole='img'、なしでaria-hidden='true'が付与される。" }
+    ],
+    "usage": "<Icon icon={SomeIcon} w='1.5em' />"
+  },
+  {
+    "name": "Divider",
+    "package": "lism-css",
+    "category": "atomic",
+    "description": "区切り線を表示するコンポーネント。a--divider クラスが付与され、aria-hidden='true'がデフォルトで出力される。--bdcがvar(--divider)に初期セット。",
+    "aliases": ["separator", "区切り線", "仕切り", "hr"],
+    "props": [
+      { "name": "bdw", "type": "string", "description": "区切り線のボーダー幅。" },
+      { "name": "bds", "type": "string", "description": "区切り線のボーダースタイル。" },
+      { "name": "bdc", "type": "string", "description": "区切り線のボーダーカラー。" },
+      { "name": "variant", "type": "string", "description": "区切り線のバリエーション。" }
+    ],
+    "usage": "<Divider />"
+  },
+  {
+    "name": "Media",
+    "package": "lism-css",
+    "category": "atomic",
+    "description": "img, video, iframe 等のメディア要素を統一的に扱うコンポーネント。a--media クラスが付与される。デフォルトでimgタグが出力される。",
+    "aliases": ["画像", "動画", "img tag", "video tag", "メディア要素"],
+    "props": [
+      { "name": "src", "type": "string", "description": "メディアのURL。" },
+      { "name": "alt", "type": "string", "description": "代替テキスト (img の場合)。" },
+      { "name": "objectPosition", "type": "string", "description": "メディア要素のobject-positionを指定。" },
+      { "name": "objectFit", "type": "string", "description": "メディア要素のobject-fitを指定。" },
+      { "name": "blur", "type": "string | number", "description": "filterのblur値。他のフィルタープロパティとまとめてstyle.filterに出力。" },
+      { "name": "contrast", "type": "string | number", "description": "filterのcontrast値。" },
+      { "name": "brightness", "type": "string | number", "description": "filterのbrightness値。" },
+      { "name": "grayscale", "type": "string | number", "description": "filterのgrayscale値。" },
+      { "name": "saturate", "type": "string | number", "description": "filterのsaturate値。" },
+      { "name": "dropShadow", "type": "string | number", "description": "filterのdrop-shadow値。" },
+      { "name": "hueRotate", "type": "string | number", "description": "filterのhue-rotate値。" },
+      { "name": "invert", "type": "string | number", "description": "filterのinvert値。" },
+      { "name": "sepia", "type": "string | number", "description": "filterのsepia値。" }
+    ],
+    "usage": "<Media src='/image.jpg' alt='Photo' />"
+  },
+  {
+    "name": "Spacer",
+    "package": "lism-css",
+    "category": "atomic",
+    "description": "空白を挿入するコンポーネント。a--spacer クラスが付与され、aria-hidden='true'がデフォルトで出力される。w,hにはSPACEトークンの値が使える。",
+    "aliases": ["余白", "空白挿入", "スペース", "gap element"],
+    "props": [
+      { "name": "h", "type": "string | number", "description": "高さ (スペーシングトークン値)。" },
+      { "name": "w", "type": "string | number", "description": "幅 (スペーシングトークン値)。" }
+    ],
+    "usage": "<Spacer h='40' />"
+  },
+  {
+    "name": "Decorator",
+    "package": "lism-css",
+    "category": "atomic",
+    "description": "装飾用のコンポーネント。視覚的な装飾要素を追加するために使用。a--decorator クラスが付与され、aria-hidden='true'がデフォルトで出力される。",
+    "aliases": ["装飾", "visual decoration", "装飾要素"],
+    "props": [
+      {
+        "name": "size",
+        "type": "string",
+        "description": "デコレーターのサイズ（横幅・高さ）を一括指定。wに渡され、ar='1/1'が自動付与される。"
+      },
+      { "name": "clipPath", "type": "string", "description": "style.clipPathへ渡す。" },
+      { "name": "boxSizing", "type": "string", "description": "style.boxSizingへ渡す。" },
+      { "name": "translate", "type": "string", "description": "style.translateへ渡す。CSS translate プロパティ。" },
+      { "name": "rotate", "type": "string", "description": "style.rotateへ渡す。CSS rotate プロパティ。" },
+      { "name": "scale", "type": "string", "description": "style.scaleへ渡す。CSS scale プロパティ。" },
+      { "name": "transform", "type": "string", "description": "style.transformへ渡す。CSS transform プロパティ。" },
+      { "name": "blur", "type": "string | number", "description": "filterのblur値。他のフィルタープロパティとまとめてstyle.filterに出力。" },
+      { "name": "contrast", "type": "string | number", "description": "filterのcontrast値。" },
+      { "name": "brightness", "type": "string | number", "description": "filterのbrightness値。" },
+      { "name": "grayscale", "type": "string | number", "description": "filterのgrayscale値。" },
+      { "name": "saturate", "type": "string | number", "description": "filterのsaturate値。" },
+      { "name": "dropShadow", "type": "string | number", "description": "filterのdrop-shadow値。" },
+      { "name": "hueRotate", "type": "string | number", "description": "filterのhue-rotate値。" },
+      { "name": "invert", "type": "string | number", "description": "filterのinvert値。" },
+      { "name": "sepia", "type": "string | number", "description": "filterのsepia値。" }
+    ],
+    "usage": "<Decorator size='1.25em' pos='abs' t='0' l='0' bd-x-s bd-y-s />"
+  },
+  {
+    "name": "Accordion",
+    "package": "@lism-css/ui",
+    "category": "interactive",
+    "description": "アコーディオン UI。クリックでコンテンツの開閉を切り替える。JavaScriptで開閉アニメーションを制御。パネルにhidden='until-found'を使用しブラウザのページ内検索に対応。サブコンポーネント構造: Accordion.Root > Accordion.Item > (Accordion.Heading > Accordion.Button) + Accordion.Panel。Accordion.Iconは自動で含まれる。",
+    "aliases": ["開閉", "折りたたみ", "FAQ", "collapsible", "toggle panel"],
+    "props": [
+      {
+        "name": "allowMultiple",
+        "type": "boolean",
+        "description": "複数のアイテムを同時に開くことを許可 (Root)。デフォルトでは一つしか展開できない。"
+      },
+      {
+        "name": "tag",
+        "type": "string",
+        "description": "見出しのHTMLタグ (Heading)。デフォルトはdiv (role='heading'が自動付与)。h2〜h6を指定するとroleは付与されない。"
+      },
+      { "name": "flow", "type": "string", "description": "パネル内のコンテンツ領域(__content)に渡すフローレイアウトの設定 (Panel)。" }
+    ],
+    "usage": "<Accordion.Root>\n  <Accordion.Item>\n    <Accordion.Heading>\n      <Accordion.Button>Label</Accordion.Button>\n    </Accordion.Heading>\n    <Accordion.Panel>Content</Accordion.Panel>\n  </Accordion.Item>\n</Accordion.Root>"
+  },
+  {
+    "name": "Modal",
+    "package": "@lism-css/ui",
+    "category": "interactive",
+    "description": "モーダルダイアログ UI。dialog 要素を使用。JavaScriptが付属。data-modal-open/data-modal-close属性で開閉を制御。サブコンポーネント構造: Modal.OpenBtn + Modal.Root > Modal.Inner > Modal.Body + Modal.CloseBtn。",
+    "aliases": ["dialog", "popup", "ポップアップ", "ダイアログ", "モーダルウィンドウ"],
+    "props": [
+      { "name": "id", "type": "string", "description": "モーダルのID (Root, 必須)。" },
+      {
+        "name": "modalId",
+        "type": "string",
+        "description": "対象モーダルのID (OpenBtn/CloseBtn)。data-modal-open/data-modal-closeとして出力。"
+      },
+      { "name": "duration", "type": "string", "description": "アニメーションの持続時間 (Root)。--duration変数として出力。" },
+      { "name": "offset", "type": "string", "description": "非表示時の位置をずらすオフセット値 (Inner)。--offset変数として出力。" },
+      { "name": "layout", "type": "string", "description": "Inner要素のレイアウト用コンポーネントを指定 (Inner)。" }
+    ],
+    "usage": "<Modal.OpenBtn modalId='modal-01'>Open</Modal.OpenBtn>\n<Modal.Root id='modal-01'>\n  <Modal.Inner>\n    <Modal.Body>Content</Modal.Body>\n    <Modal.CloseBtn modalId='modal-01' />\n  </Modal.Inner>\n</Modal.Root>"
+  },
+  {
+    "name": "Tabs",
+    "package": "@lism-css/ui",
+    "category": "interactive",
+    "description": "タブ切り替え UI。タブをクリックしてコンテンツパネルを切り替える。JavaScriptが付属。スタイリングはほぼなく動きのみ提供。サブコンポーネント構造: Tabs.Root > Tabs.Item > (Tabs.Tab + Tabs.Panel)。Tabs.Listも利用可能。",
+    "aliases": ["タブ切り替え", "tab panel", "パネル切り替え", "tab navigation"],
+    "props": [
+      { "name": "tabId", "type": "string", "description": "タブを特定するためのID文字列 (Root)。aria-controlsに使用。" },
+      { "name": "defaultIndex", "type": "number", "default": "1", "description": "初期アクティブタブ (1始まり) (Root)。" },
+      { "name": "variant", "type": "string", "description": "スタイルバリエーション (Root)。c--tabs--{variant}クラスが出力。" },
+      { "name": "listProps", "type": "object", "description": "タブボタンを囲むリスト要素(c--tabs_list)へ渡すprops (Root)。" }
+    ],
+    "usage": "<Tabs.Root>\n  <Tabs.Item>\n    <Tabs.Tab>Tab 1</Tabs.Tab>\n    <Tabs.Panel>Content 1</Tabs.Panel>\n  </Tabs.Item>\n  <Tabs.Item>\n    <Tabs.Tab>Tab 2</Tabs.Tab>\n    <Tabs.Panel>Content 2</Tabs.Panel>\n  </Tabs.Item>\n</Tabs.Root>"
+  },
+  {
+    "name": "Details",
+    "package": "@lism-css/ui",
+    "category": "interactive",
+    "description": "HTMLの details/summary 要素をラップしたコンポーネント。Accordionとは違いJSを使わずCSSのみで実装。サブコンポーネント構造: Details.Root > Details.Summary > (Details.Title + Details.Icon) + Details.Content。",
+    "aliases": ["details summary", "disclosure", "ネイティブ開閉", "summary element"],
+    "props": [
+      { "name": "tag", "type": "string", "description": "Details.Titleで出力するHTMLタグの種類 (Title)。デフォルトはspan。" },
+      { "name": "--duration", "type": "string", "description": "展開アニメーションの秒数 (Root)。style経由で指定。" }
+    ],
+    "usage": "<Details.Root>\n  <Details.Summary>\n    <Details.Title>Title</Details.Title>\n    <Details.Icon />\n  </Details.Summary>\n  <Details.Content>Content</Details.Content>\n</Details.Root>"
+  },
+  {
+    "name": "Alert",
+    "package": "@lism-css/ui",
+    "category": "feedback",
+    "description": "短めの文言を目立たせて強調表示するアラートボックス。アイコンとキーカラーでバリエーションを表現。typeプリセットによりアイコンとカラーが自動設定される。",
+    "aliases": ["notice", "warning box", "注意書き", "お知らせ", "通知"],
+    "props": [
+      {
+        "name": "type",
+        "type": "'alert' | 'point' | 'warning' | 'check' | 'help' | 'info'",
+        "default": "alert",
+        "description": "アラートタイプ。keycolorとiconの組み合わせプリセットを呼び出す。"
+      },
+      { "name": "keycolor", "type": "string", "description": "アラートのキーカラー。" },
+      { "name": "icon", "type": "ReactNode | string", "description": "カスタムアイコン。" },
+      { "name": "layout", "type": "'flex' | 'sideMain'", "default": "flex", "description": "レイアウトモジュール。" },
+      { "name": "flow", "type": "string", "default": "s", "description": "コンテンツを囲むdiv要素のフロー余白。" }
+    ],
+    "usage": "<Alert type='warning'>Warning message</Alert>"
+  },
+  {
+    "name": "Callout",
+    "package": "@lism-css/ui",
+    "category": "feedback",
+    "description": "記事の中で重要なポイントを示すコンポーネント。タイトルとアイコン付きの強調ボックス。typeプリセットによりアイコンとカラーが自動設定される。",
+    "aliases": ["補足情報", "note box", "強調ボックス", "highlight"],
+    "props": [
+      {
+        "name": "type",
+        "type": "'note' | 'alert' | 'point' | 'warning' | 'check' | 'help'",
+        "default": "note",
+        "description": "コールアウトタイプ。keycolorとiconの組み合わせプリセットを呼び出す。"
+      },
+      { "name": "keycolor", "type": "string", "description": "コールアウトのキーカラー。" },
+      { "name": "icon", "type": "ReactNode | string", "description": "コールアウトのアイコン。" },
+      { "name": "title", "type": "string", "description": "コールアウトのタイトルテキスト。" },
+      { "name": "flow", "type": "string", "default": "s", "description": "コンテンツ部分(_body)のフロー余白。" }
+    ],
+    "usage": "<Callout type='note' title='Important' keycolor='blue'>Important note</Callout>"
+  },
+  {
+    "name": "Button",
+    "package": "@lism-css/ui",
+    "category": "action",
+    "description": "ボタン型リンクコンポーネント。c--button クラスが付与される。デフォルトでa要素として出力。バリエーション (fill, outline 等) をサポート。",
+    "aliases": ["CTA", "アクションボタン", "リンクボタン", "submit"],
+    "props": [
+      {
+        "name": "variant",
+        "type": "string",
+        "description": "ボタンのバリエーション ('fill', 'outline' 等)。c--button--{variant}クラスが出力。"
+      },
+      { "name": "keycolor", "type": "string", "description": "ボタンのキーカラー。" },
+      { "name": "href", "type": "string", "description": "リンク先URL。" }
+    ],
+    "usage": "<Button variant='fill' href='#'>Click me</Button>"
+  },
+  {
+    "name": "Badge",
+    "package": "@lism-css/ui",
+    "category": "display",
+    "description": "バッジ (ラベル) コンポーネント。c--badge クラスが付与される。span要素としてインライン表示。カテゴリやステータスの表示に使用。",
+    "aliases": ["ラベル", "ステータス表示", "tag label", "カテゴリ表示"],
+    "props": [
+      { "name": "variant", "type": "string", "description": "バッジのバリエーション ('outline' 等)。c--badge--{variant}クラスが出力。" },
+      { "name": "keycolor", "type": "string", "description": "バッジのキーカラー。" }
+    ],
+    "usage": "<Badge keycolor='green'>New</Badge>"
+  },
+  {
+    "name": "Avatar",
+    "package": "@lism-css/ui",
+    "category": "display",
+    "description": "アバター (プロフィール画像) コンポーネント。c--avatar クラスが付与される。Frameベースの円形画像表示。",
+    "aliases": ["プロフィール画像", "user icon", "ユーザーアイコン", "丸画像"],
+    "props": [
+      { "name": "src", "type": "string", "description": "画像URL。" },
+      { "name": "alt", "type": "string", "description": "代替テキスト。" },
+      { "name": "size", "type": "string", "default": "1.5em", "description": "アバターのサイズ。" }
+    ],
+    "usage": "<Avatar src='/avatar.jpg' alt='User' size='48px' />"
+  },
+  {
+    "name": "Chat",
+    "package": "@lism-css/ui",
+    "category": "display",
+    "description": "チャット風の吹き出しコンポーネント。c--chat クラスが付与される。Gridベースの会話形式のUI表現に使用。",
+    "aliases": ["吹き出し", "会話UI", "message bubble", "balloon", "speech bubble"],
+    "props": [
+      { "name": "name", "type": "string", "description": "発言者の名前。" },
+      { "name": "avatar", "type": "string", "description": "アバター画像のsrc。" },
+      { "name": "variant", "type": "'speak' | 'think'", "default": "speak", "description": "チャットタイプ。" },
+      { "name": "direction", "type": "'start' | 'end'", "default": "start", "description": "チャットの表示位置。" },
+      { "name": "keycolor", "type": "string", "default": "gray", "description": "チャットボックスのキーカラー。" },
+      { "name": "flow", "type": "string", "default": "s", "description": "コンテンツを囲む要素(c--chat_content)に渡されるフロー余白。" }
+    ],
+    "usage": "<Chat name='Alice' avatar='/alice.jpg'>Hello!</Chat>"
+  },
+  {
+    "name": "NavMenu",
+    "package": "@lism-css/ui",
+    "category": "navigation",
+    "description": "ナビゲーションメニューコンポーネント。c--navMenu クラスが付与される。サブコンポーネント構造: NavMenu.Root > NavMenu.Item > NavMenu.Link。NavMenu.Nestでネストも可能。",
+    "aliases": ["ナビゲーション", "メニュー", "navigation links", "リンクリスト"],
+    "props": [
+      { "name": "hovBgc", "type": "string", "description": "ホバー時の背景カラー (Root)。--hov-bgc変数として出力。" },
+      { "name": "hovC", "type": "string", "description": "ホバー時のテキストカラー (Root)。--hov-c変数として出力。" },
+      { "name": "itemP", "type": "string", "description": "各アイテムのパディング (Root)。--_item-p変数として出力。" },
+      { "name": "href", "type": "string", "description": "リンク先URL (Link)。指定ありでa要素、なしでspan要素。" }
+    ],
+    "usage": "<NavMenu.Root>\n  <NavMenu.Item>\n    <NavMenu.Link href='/'>Home</NavMenu.Link>\n  </NavMenu.Item>\n  <NavMenu.Item>\n    <NavMenu.Link href='/about'>About</NavMenu.Link>\n  </NavMenu.Item>\n</NavMenu.Root>"
+  },
+  {
+    "name": "ShapeDivider",
+    "package": "@lism-css/ui",
+    "category": "decoration",
+    "description": "セクション間の波型などの装飾的な区切り要素。SVGベースの形状で区切りを表現。viewBoxとSVGのpath要素を子要素として渡して使用。",
+    "aliases": ["波型", "section separator", "セクション区切り", "wave divider", "装飾区切り"],
+    "props": [
+      { "name": "viewBox", "type": "string", "description": "出力するSVGのviewBox。" },
+      { "name": "level", "type": "number", "default": "5", "description": "シェイプの高さレベル。0で非表示。" },
+      { "name": "flip", "type": "'X' | 'Y' | 'XY'", "description": "X/Y/XYで反転方向を指定。data-flip属性として出力。" },
+      { "name": "stretch", "type": "string", "description": "水平方向の引き伸ばし量。--_inner-stretch変数として出力。" },
+      { "name": "offset", "type": "string", "description": "水平方向のオフセット。--_inner-offset変数として出力。" },
+      { "name": "isEmpty", "type": "boolean", "description": "シェイプを非表示にしてスペーサーとして使用。" },
+      { "name": "isAnimation", "type": "boolean", "description": "アニメーションを有効にする。data-has-animation属性として出力。" }
+    ],
+    "usage": "<ShapeDivider viewBox='0 0 100 10'>\n  <path d='M100 6C89.3 3.3 82.7 9 70 9S48.4 3 38 3 24.5 6 17 6C7.4 6 0 0 0 0v10h100V6z'/>\n</ShapeDivider>"
+  }
 ]

@@ -9,125 +9,125 @@ import { registerGetComponent } from '../tools/get-component.js';
 import { registerSearchDocs } from '../tools/search-docs.js';
 
 async function createTestClient() {
-	const server = new McpServer({ name: 'test', version: '0.0.1' });
-	registerGetOverview(server);
-	registerGetTokens(server);
-	registerGetPropsSystem(server);
-	registerGetComponent(server);
-	registerSearchDocs(server);
+  const server = new McpServer({ name: 'test', version: '0.0.1' });
+  registerGetOverview(server);
+  registerGetTokens(server);
+  registerGetPropsSystem(server);
+  registerGetComponent(server);
+  registerSearchDocs(server);
 
-	const [clientTransport, serverTransport] = InMemoryTransport.createLinkedPair();
-	await server.connect(serverTransport);
+  const [clientTransport, serverTransport] = InMemoryTransport.createLinkedPair();
+  await server.connect(serverTransport);
 
-	const client = new Client({ name: 'test-client', version: '0.0.1' });
-	await client.connect(clientTransport);
+  const client = new Client({ name: 'test-client', version: '0.0.1' });
+  await client.connect(clientTransport);
 
-	return client;
+  return client;
 }
 
 describe('MCP Tools (integration)', () => {
-	it('get_overview が正常にMarkdownデータを返す', async () => {
-		const client = await createTestClient();
-		const result = await client.callTool({ name: 'get_overview', arguments: {} });
-		expect(result.content).toBeDefined();
-		expect(result.isError).toBeFalsy();
+  it('get_overview が正常にMarkdownデータを返す', async () => {
+    const client = await createTestClient();
+    const result = await client.callTool({ name: 'get_overview', arguments: {} });
+    expect(result.content).toBeDefined();
+    expect(result.isError).toBeFalsy();
 
-		const text = (result.content as { type: string; text: string }[])[0].text;
-		expect(text).toContain('# lism-css Overview');
-		expect(text).toContain('## Description');
-		expect(text).toContain('## Architecture');
-		expect(text).toContain('## Packages');
-	});
+    const text = (result.content as { type: string; text: string }[])[0].text;
+    expect(text).toContain('# lism-css Overview');
+    expect(text).toContain('## Description');
+    expect(text).toContain('## Architecture');
+    expect(text).toContain('## Packages');
+  });
 
-	it('get_tokens が正常にデータを返す', async () => {
-		const client = await createTestClient();
-		const result = await client.callTool({ name: 'get_tokens', arguments: { category: 'color' } });
-		expect(result.isError).toBeFalsy();
+  it('get_tokens が正常にデータを返す', async () => {
+    const client = await createTestClient();
+    const result = await client.callTool({ name: 'get_tokens', arguments: { category: 'color' } });
+    expect(result.isError).toBeFalsy();
 
-		const text = (result.content as { type: string; text: string }[])[0].text;
-		const data = JSON.parse(text);
-		expect(data.tokens).toBeDefined();
-	});
+    const text = (result.content as { type: string; text: string }[])[0].text;
+    const data = JSON.parse(text);
+    expect(data.tokens).toBeDefined();
+  });
 
-	it('get_props_system が正常にデータを返す', async () => {
-		const client = await createTestClient();
-		const result = await client.callTool({ name: 'get_props_system', arguments: {} });
-		expect(result.isError).toBeFalsy();
+  it('get_props_system が正常にデータを返す', async () => {
+    const client = await createTestClient();
+    const result = await client.callTool({ name: 'get_props_system', arguments: {} });
+    expect(result.isError).toBeFalsy();
 
-		const text = (result.content as { type: string; text: string }[])[0].text;
-		const data = JSON.parse(text);
-		expect(data.categories).toBeDefined();
-	});
+    const text = (result.content as { type: string; text: string }[])[0].text;
+    const data = JSON.parse(text);
+    expect(data.categories).toBeDefined();
+  });
 
-	it('get_props_system で Prop Class 記法 "-g:5" を渡すと g prop が返る', async () => {
-		const client = await createTestClient();
-		const result = await client.callTool({ name: 'get_props_system', arguments: { prop: '-g:5' } });
-		expect(result.isError).toBeFalsy();
+  it('get_props_system で Prop Class 記法 "-g:5" を渡すと g prop が返る', async () => {
+    const client = await createTestClient();
+    const result = await client.callTool({ name: 'get_props_system', arguments: { prop: '-g:5' } });
+    expect(result.isError).toBeFalsy();
 
-		const text = (result.content as { type: string; text: string }[])[0].text;
-		const data = JSON.parse(text);
-		expect(data.categories).toBeDefined();
-		const gProp = data.categories.flatMap((c: { props: { prop: string }[] }) => c.props).find((p: { prop: string }) => p.prop === 'g');
-		expect(gProp).toBeDefined();
-		expect(gProp.cssProperty).toBe('gap');
-	});
+    const text = (result.content as { type: string; text: string }[])[0].text;
+    const data = JSON.parse(text);
+    expect(data.categories).toBeDefined();
+    const gProp = data.categories.flatMap((c: { props: { prop: string }[] }) => c.props).find((p: { prop: string }) => p.prop === 'g');
+    expect(gProp).toBeDefined();
+    expect(gProp.cssProperty).toBe('gap');
+  });
 
-	it('get_props_system で ".-p:20" を渡すと p prop が返る', async () => {
-		const client = await createTestClient();
-		const result = await client.callTool({ name: 'get_props_system', arguments: { prop: '.-p:20' } });
-		expect(result.isError).toBeFalsy();
+  it('get_props_system で ".-p:20" を渡すと p prop が返る', async () => {
+    const client = await createTestClient();
+    const result = await client.callTool({ name: 'get_props_system', arguments: { prop: '.-p:20' } });
+    expect(result.isError).toBeFalsy();
 
-		const text = (result.content as { type: string; text: string }[])[0].text;
-		const data = JSON.parse(text);
-		const pProp = data.categories.flatMap((c: { props: { prop: string }[] }) => c.props).find((p: { prop: string }) => p.prop === 'p');
-		expect(pProp).toBeDefined();
-		expect(pProp.cssProperty).toBe('padding');
-	});
+    const text = (result.content as { type: string; text: string }[])[0].text;
+    const data = JSON.parse(text);
+    const pProp = data.categories.flatMap((c: { props: { prop: string }[] }) => c.props).find((p: { prop: string }) => p.prop === 'p');
+    expect(pProp).toBeDefined();
+    expect(pProp.cssProperty).toBe('padding');
+  });
 
-	it('get_props_system で存在しないpropを検索すると代替提案付きの正常レスポンスを返す', async () => {
-		const client = await createTestClient();
-		const result = await client.callTool({ name: 'get_props_system', arguments: { prop: 'nonexistent_prop_xyz' } });
-		expect(result.isError).toBeFalsy();
+  it('get_props_system で存在しないpropを検索すると代替提案付きの正常レスポンスを返す', async () => {
+    const client = await createTestClient();
+    const result = await client.callTool({ name: 'get_props_system', arguments: { prop: 'nonexistent_prop_xyz' } });
+    expect(result.isError).toBeFalsy();
 
-		const text = (result.content as { type: string; text: string }[])[0].text;
-		const data = JSON.parse(text);
-		expect(data.error).toContain('見つかりません');
-		expect(data.availableProps).toBeDefined();
-	});
+    const text = (result.content as { type: string; text: string }[])[0].text;
+    const data = JSON.parse(text);
+    expect(data.error).toContain('見つかりません');
+    expect(data.availableProps).toBeDefined();
+  });
 
-	it('get_component で存在しないコンポーネントを検索すると代替提案付きの正常レスポンスを返す', async () => {
-		const client = await createTestClient();
-		const result = await client.callTool({ name: 'get_component', arguments: { name: 'NonExistentComponent999' } });
-		expect(result.isError).toBeFalsy();
+  it('get_component で存在しないコンポーネントを検索すると代替提案付きの正常レスポンスを返す', async () => {
+    const client = await createTestClient();
+    const result = await client.callTool({ name: 'get_component', arguments: { name: 'NonExistentComponent999' } });
+    expect(result.isError).toBeFalsy();
 
-		const text = (result.content as { type: string; text: string }[])[0].text;
-		const data = JSON.parse(text);
-		expect(data.error).toContain('not found');
-		expect(data.error).toContain('search_docs');
-	});
+    const text = (result.content as { type: string; text: string }[])[0].text;
+    const data = JSON.parse(text);
+    expect(data.error).toContain('not found');
+    expect(data.error).toContain('search_docs');
+  });
 
-	it('search_docs が正常にデータを返す', async () => {
-		const client = await createTestClient();
-		const result = await client.callTool({ name: 'search_docs', arguments: { query: 'Box' } });
-		expect(result.isError).toBeFalsy();
+  it('search_docs が正常にデータを返す', async () => {
+    const client = await createTestClient();
+    const result = await client.callTool({ name: 'search_docs', arguments: { query: 'Box' } });
+    expect(result.isError).toBeFalsy();
 
-		const text = (result.content as { type: string; text: string }[])[0].text;
-		const data = JSON.parse(text);
-		expect(data.query).toBe('Box');
-		expect(data.results).toBeDefined();
-	});
+    const text = (result.content as { type: string; text: string }[])[0].text;
+    const data = JSON.parse(text);
+    expect(data.query).toBe('Box');
+    expect(data.results).toBeDefined();
+  });
 
-	it('ツール一覧が5つ登録されている', async () => {
-		const client = await createTestClient();
-		const tools = await client.listTools();
-		expect(tools.tools.length).toBe(5);
-	});
+  it('ツール一覧が5つ登録されている', async () => {
+    const client = await createTestClient();
+    const tools = await client.listTools();
+    expect(tools.tools.length).toBe(5);
+  });
 
-	it('全ツールにreadOnlyHintアノテーションがある', async () => {
-		const client = await createTestClient();
-		const tools = await client.listTools();
-		for (const tool of tools.tools) {
-			expect(tool.annotations?.readOnlyHint).toBe(true);
-		}
-	});
+  it('全ツールにreadOnlyHintアノテーションがある', async () => {
+    const client = await createTestClient();
+    const tools = await client.listTools();
+    for (const tool of tools.tools) {
+      expect(tool.annotations?.readOnlyHint).toBe(true);
+    }
+  });
 });

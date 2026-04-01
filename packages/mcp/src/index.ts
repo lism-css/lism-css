@@ -9,25 +9,25 @@ import { registerSearchDocs } from './tools/search-docs.js';
 import { registerConvertCss } from './tools/convert-css.js';
 
 async function main() {
-	preloadAll();
+  preloadAll();
 
-	const server = new McpServer({
-		name: 'lism-css',
-		version: '0.1.0',
-	});
+  const server = new McpServer({
+    name: 'lism-css',
+    version: '0.1.0',
+  });
 
-	registerGetOverview(server);
-	registerGetTokens(server);
-	registerGetPropsSystem(server);
-	registerGetComponent(server);
-	registerSearchDocs(server);
-	registerConvertCss(server);
+  registerGetOverview(server);
+  registerGetTokens(server);
+  registerGetPropsSystem(server);
+  registerGetComponent(server);
+  registerSearchDocs(server);
+  registerConvertCss(server);
 
-	const transport = new StdioServerTransport();
-	await server.connect(transport);
+  const transport = new StdioServerTransport();
+  await server.connect(transport);
 }
 
 main().catch((err) => {
-	console.error('MCP server failed to start:', err);
-	process.exit(1);
+  console.error('MCP server failed to start:', err);
+  process.exit(1);
 });

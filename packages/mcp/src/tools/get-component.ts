@@ -5,72 +5,70 @@ import { ComponentInfoSchema } from '../lib/schemas.js';
 import { success, error, notFound, READ_ONLY_ANNOTATIONS } from '../lib/response.js';
 
 export function registerGetComponent(server: McpServer): void {
-	server.registerTool(
-		'get_component',
-		{
-			description:
-				'特定のlism-cssコンポーネントに関する詳細情報（プロパティ、使用例、カテゴリー）を取得します。該当するものが見つからない場合は、より広範なキーワードで search_docs を実行してください。',
-			inputSchema: {
-				name: z.string().describe('Component name to look up (e.g. "Box", "Flex", "Accordion").'),
-				package: z
-					.enum(['lism-css', '@lism-css/ui'])
-					.optional()
-					.describe('Filter by package. "lism-css" for core components, "@lism-css/ui" for UI components.'),
-			},
-			annotations: READ_ONLY_ANNOTATIONS,
-		},
-		({ name, package: pkg }) => {
-			try {
-				const data = loadJSON('components.json', z.array(ComponentInfoSchema));
+  server.registerTool(
+    'get_component',
+    {
+      description:
+        '特定のlism-cssコンポーネントに関する詳細情報（プロパティ、使用例、カテゴリー）を取得します。該当するものが見つからない場合は、より広範なキーワードで search_docs を実行してください。',
+      inputSchema: {
+        name: z.string().describe('Component name to look up (e.g. "Box", "Flex", "Accordion").'),
+        package: z
+          .enum(['lism-css', '@lism-css/ui'])
+          .optional()
+          .describe('Filter by package. "lism-css" for core components, "@lism-css/ui" for UI components.'),
+      },
+      annotations: READ_ONLY_ANNOTATIONS,
+    },
+    ({ name, package: pkg }) => {
+      try {
+        const data = loadJSON('components.json', z.array(ComponentInfoSchema));
 
-				let candidates = data;
-				if (pkg) {
-					candidates = data.filter((c) => c.package === pkg);
-				}
+        let candidates = data;
+        if (pkg) {
+          candidates = data.filter((c) => c.package === pkg);
+        }
 
-				const nameLower = name.toLowerCase();
+        const nameLower = name.toLowerCase();
 
-				// Step 1: 名前の完全一致
-				const exact = candidates.find((c) => c.name.toLowerCase() === nameLower);
-				if (exact) {
-					return success({ component: exact });
-				}
+        // Step 1: 名前の完全一致
+        const exact = candidates.find((c) => c.name.toLowerCase() === nameLower);
+        if (exact) {
+          return success({ component: exact });
+        }
 
-				// Step 2: aliases マッチ（用途ベースの検索、完全一致）
-				const aliasMatches = candidates.filter((c) => c.aliases?.some((a) => a.toLowerCase() === nameLower));
-				if (aliasMatches.length === 1) {
-					return success({ component: aliasMatches[0], matchedBy: 'alias' });
-				}
-				if (aliasMatches.length > 1) {
-					const suggestions = aliasMatches.map((c) => ({
-						name: c.name,
-						package: c.package,
-						description: c.description,
-					}));
-					return notFound(
-						`Component "${name}" not found by name, but ${aliasMatches.length} components matched by alias. Did you mean one of these?`,
-						{ suggestions }
-					);
-				}
+        // Step 2: aliases マッチ（用途ベースの検索、完全一致）
+        const aliasMatches = candidates.filter((c) => c.aliases?.some((a) => a.toLowerCase() === nameLower));
+        if (aliasMatches.length === 1) {
+          return success({ component: aliasMatches[0], matchedBy: 'alias' });
+        }
+        if (aliasMatches.length > 1) {
+          const suggestions = aliasMatches.map((c) => ({
+            name: c.name,
+            package: c.package,
+            description: c.description,
+          }));
+          return notFound(
+            `Component "${name}" not found by name, but ${aliasMatches.length} components matched by alias. Did you mean one of these?`,
+            { suggestions }
+          );
+        }
 
-				// Step 3: 名前の部分一致
-				const suggestions = candidates
-					.filter((c) => c.name.toLowerCase().includes(nameLower))
-					.map((c) => ({ name: c.name, package: c.package }));
+        // Step 3: 名前の部分一致
+        const suggestions = candidates.filter((c) => c.name.toLowerCase().includes(nameLower)).map((c) => ({ name: c.name, package: c.package }));
 
-				if (suggestions.length > 0) {
-					return notFound(`Component "${name}" not found. Did you mean one of these? Or try search_docs with a broader query.`, {
-						suggestions,
-					});
-				}
+        if (suggestions.length > 0) {
+          return notFound(`Component "${name}" not found. Did you mean one of these? Or try search_docs with a broader query.`, {
+            suggestions,
+          });
+        }
 
-				const available = candidates.map((c) => ({ name: c.name, package: c.package }));
-				return notFound(`Component "${name}" not found. Try search_docs to find related pages.`, { availableComponents: available });
-			} catch (e) {
-				return error(
-					`Failed to load component data: ${e instanceof Error ? e.message : String(e)}. The data files may not be built yet. Ensure the server was installed correctly.`
-				);
-			}
-		}
-	);
+        const available = candidates.map((c) => ({ name: c.name, package: c.package }));
+        return notFound(`Component "${name}" not found. Try search_docs to find related pages.`, { availableComponents: available });
+      } catch (e) {
+        return error(
+          `Failed to load component data: ${e instanceof Error ? e.message : String(e)}. The data files may not be built yet. Ensure the server was installed correctly.`
+        );
+      }
+    }
+  );
 }
