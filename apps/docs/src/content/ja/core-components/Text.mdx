@@ -21,9 +21,7 @@ import { Text, Lism, Dummy } from "lism-css/astro";
 <Preview>
   <PreviewTitle>`<Text>`の出力例</PreviewTitle>
   <PreviewArea p='20'>
-    <Text>
-      <Dummy />
-    </Text>
+    <Text><Dummy as="span" /></Text>
   </PreviewArea>
   <PreviewCode slot='tab' label='JSX'>
     ```jsx
@@ -40,9 +38,7 @@ import { Text, Lism, Dummy } from "lism-css/astro";
 <Preview>
   <PreviewTitle>Lism Propsの適用例</PreviewTitle>
   <PreviewArea p='20'>
-    <Text fz="l" lh="l" c="text-2">
-      <Dummy />
-    </Text>
+    <Text fz="l" lh="l" c="text-2"><Dummy as="span" /></Text>
   </PreviewArea>
   <PreviewCode slot='tab' label='JSX'>
     ```jsx
