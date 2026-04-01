@@ -54,5 +54,5 @@ export type Responsive<T> = T | ResponsiveArray<T> | Partial<Record<BreakpointKe
  * ```
  */
 export type MakeResponsive<T> = {
-	[K in keyof T]?: Responsive<T[K]>;
+  [K in keyof T]?: Responsive<T[K]>;
 };

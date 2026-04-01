@@ -2,44 +2,44 @@
     body
  ---------------------------------------- */
 body {
-	--hl: var(--hl--base);
-	font-size: var(--fz--base);
-	font-family: var(--ff--base);
-	letter-spacing: var(--lts--base);
-	background-color: var(--base);
-	color: var(--text);
-	text-underline-offset: var(--under-offset, 0.125em);
+  --hl: var(--hl--base);
+  font-size: var(--fz--base);
+  font-family: var(--ff--base);
+  letter-spacing: var(--lts--base);
+  background-color: var(--base);
+  color: var(--text);
+  text-underline-offset: var(--under-offset, 0.125em);
 }
 
 /* ----------------------------------------
     line-height
  ---------------------------------------- */
 * {
-	line-height: calc(1em + var(--hl) * 2);
+  line-height: calc(1em + var(--hl) * 2);
 }
 
 /* ----------------------------------------
     Heading
  ---------------------------------------- */
 :is(h1, h2, h3, h4, h5, h6) {
-	font-family: var(--heading-ff, inherit);
-	font-weight: var(--heading-fw, bolder);
+  font-family: var(--heading-ff, inherit);
+  font-weight: var(--heading-fw, bolder);
 }
 h1 {
-	font-size: var(--fz--3xl);
+  font-size: var(--fz--3xl);
 }
 h2 {
-	font-size: var(--fz--2xl);
+  font-size: var(--fz--2xl);
 }
 h3 {
-	font-size: var(--fz--xl);
+  font-size: var(--fz--xl);
 }
 h4 {
-	font-size: var(--fz--l);
+  font-size: var(--fz--l);
 }
 h5,
 h6 {
-	font-size: var(--fz--m);
+  font-size: var(--fz--m);
 }
 
 /* ----------------------------------------
@@ -48,65 +48,65 @@ h6 {
 // classを持たない、もしくは Prop Classしかない(≒ Prop Class で始まる) リスト要素はブラウザ標準のスタイルを復活させる。
 :is(ul, ol):where(:not([class])),
 :is(ul, ol):where([class^='-']) {
-	list-style: revert;
-	padding-inline-start: var(--s30);
+  list-style: revert;
+  padding-inline-start: var(--s30);
 }
 
 /* ----------------------------------------
     texts
  ---------------------------------------- */
 a {
-	color: var(--link-c, var(--link));
-	text-decoration: var(--link-td, underline);
-	text-decoration-thickness: var(--link-td-thickness, auto);
-	text-decoration-color: var(--link-td-color, currentColor);
+  color: var(--link-c, var(--link));
+  text-decoration: var(--link-td, underline);
+  text-decoration-thickness: var(--link-td-thickness, auto);
+  text-decoration-color: var(--link-td-color, currentColor);
 }
 
 small {
-	--hl: var(--hl--s);
-	font-size: var(--fz--xs);
+  --hl: var(--hl--s);
+  font-size: var(--fz--xs);
 }
 
 b,
 strong {
-	font-weight: var(--fw--bold);
+  font-weight: var(--fw--bold);
 }
 
 sup,
 sub {
-	font-size: 80%;
-	line-height: 1.2;
+  font-size: 80%;
+  line-height: 1.2;
 }
 
 legend,
 caption,
 figcaption {
-	font-size: var(--fz--s);
+  font-size: var(--fz--s);
 }
 
 code,
 kbd,
 var,
 samp {
-	font-family: var(--ff--mono);
+  font-family: var(--ff--mono);
 }
 
 dt {
-	font-weight: var(--fw--bold);
+  font-weight: var(--fw--bold);
 }
 dd + dt {
-	margin-block-start: var(--s15);
+  margin-block-start: var(--s15);
 }
 
 blockquote {
-	background-color: var(--base-2);
-	padding: var(--s30);
+  background-color: var(--base-2);
+  padding: var(--s30);
 }
 
 hr {
-	border: none;
-	block-size: 0;
-	border-block-start: 1px solid var(--divider);
+  border: none;
+  block-size: 0;
+  border-block-start: 1px solid var(--divider);
 }
 
 // figure {
@@ -122,13 +122,13 @@ hr {
 // 	--hl: var(--hl--s);
 // }
 th {
-	color: var(--th--c, inherit);
-	background-color: var(--th--bgc, transparent);
+  color: var(--th--c, inherit);
+  background-color: var(--th--bgc, transparent);
 }
 td,
 th {
-	padding: var(--cell-p, var(--s5) var(--s10));
-	min-inline-size: var(--cell-min-w, initial);
+  padding: var(--cell-p, var(--s5) var(--s10));
+  min-inline-size: var(--cell-min-w, initial);
 }
 
 /* ----------------------------------------
@@ -139,25 +139,25 @@ button,
 textarea,
 select,
 ::file-selector-button {
-	padding: var(--s5) var(--s10);
+  padding: var(--s5) var(--s10);
 
-	// 最低限揃えておく
-	background-color: var(--base);
-	border: solid 1px var(--divider);
-	border-radius: var(--bdrs--10);
+  // 最低限揃えておく
+  background-color: var(--base);
+  border: solid 1px var(--divider);
+  border-radius: var(--bdrs--10);
 }
 
 button {
-	background-color: var(--base-2);
+  background-color: var(--base-2);
 }
 
 :disabled {
-	opacity: var(--o--n20);
+  opacity: var(--o--n20);
 }
 
 /* ----------------------------------------
     フォーカス要素
  ---------------------------------------- */
 :focus-visible {
-	outline-offset: var(--focus-offset, 0px);
+  outline-offset: var(--focus-offset, 0px);
 }

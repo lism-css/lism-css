@@ -2,31 +2,31 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Frame } from './index';
 
 const meta: Meta<typeof Frame> = {
-	title: 'Core/Frame',
-	component: Frame,
-	tags: ['autodocs'],
-	argTypes: {
-		children: { control: false },
-	},
+  title: 'Core/Frame',
+  component: Frame,
+  tags: ['autodocs'],
+  argTypes: {
+    children: { control: false },
+  },
 };
 
 export default meta;
 type Story = StoryObj<typeof Frame>;
 
 export const Default: Story = {
-	args: {
-		ar: '16/9',
-		bgc: 'base-2',
-		children: <p>Frame content (16:9)</p>,
-	},
+  args: {
+    ar: '16/9',
+    bgc: 'base-2',
+    children: <p>Frame content (16:9)</p>,
+  },
 };
 
 // ar をブレイクポイントごとに変更
 export const ResponsiveAspect: Story = {
-	name: 'ar: レスポンシブ',
-	args: {
-		ar: ['1/1', '3/2', '16/9'],
-		bgc: 'base-2',
-		children: <p>Responsive aspect ratio</p>,
-	},
+  name: 'ar: レスポンシブ',
+  args: {
+    ar: ['1/1', '3/2', '16/9'],
+    bgc: 'base-2',
+    children: <p>Responsive aspect ratio</p>,
+  },
 };

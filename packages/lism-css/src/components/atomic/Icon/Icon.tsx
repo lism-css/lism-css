@@ -9,21 +9,21 @@ type IconElementProps = SVGAttributes<SVGSVGElement> & ImgHTMLAttributes<HTMLIma
 type IconComponentProps<T extends ElementType = 'svg'> = LismComponentProps<T> & IconProps & IconElementProps;
 
 export default function Icon<T extends ElementType = 'svg'>({ children, ...props }: IconComponentProps<T> & { children?: ReactNode }) {
-	const { Component, lismProps, exProps = {}, content } = getProps(props);
+  const { Component, lismProps, exProps = {}, content } = getProps(props);
 
-	let RenderComponent: ElementType;
-	if (Component === '_SVG_') {
-		RenderComponent = SVG;
-		if (content) {
-			exProps.__html = content;
-		}
-	} else {
-		RenderComponent = Component;
-	}
+  let RenderComponent: ElementType;
+  if (Component === '_SVG_') {
+    RenderComponent = SVG;
+    if (content) {
+      exProps.__html = content;
+    }
+  } else {
+    RenderComponent = Component;
+  }
 
-	return (
-		<RenderComponent {...getLismProps(lismProps)} {...exProps}>
-			{children}
-		</RenderComponent>
-	);
+  return (
+    <RenderComponent {...getLismProps(lismProps)} {...exProps}>
+      {children}
+    </RenderComponent>
+  );
 }

@@ -1,25 +1,25 @@
 // Memo: そのうち text-box-trim が使える
 
 .u--trim {
-	// 詰まりすぎにならないようにほんの少しだけ余裕を持たせる
-	// margin-block: calc(0.5px + var(--HL) * -1);
-	margin-block: calc(var(--hl) * -1);
+  // 詰まりすぎにならないようにほんの少しだけ余裕を持たせる
+  // margin-block: calc(0.5px + var(--HL) * -1);
+  margin-block: calc(var(--hl) * -1);
 }
 
 // 子要素の一括トリミング
 .u--trimChildren {
-	> * {
-		--my: calc(var(--hl) * -1);
-		margin-block: var(--my);
-	}
+  > * {
+    --my: calc(var(--hl) * -1);
+    margin-block: var(--my);
+  }
 
-	/*
+  /*
 	 * トリミング除外要素
 	 *   Memo: --hl を 0 にはしないようにする.
 	*/
-	> :where(figure, img, button) {
-		--my: 0px;
-	}
+  > :where(figure, img, button) {
+    --my: 0px;
+  }
 }
 
 // .u--trimBox {

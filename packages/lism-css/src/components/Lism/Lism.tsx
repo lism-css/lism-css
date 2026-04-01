@@ -6,11 +6,11 @@ type ReactStyleWithCustomProps = CSSProperties & Record<`--${string}`, string | 
 
 /** 要素固有の HTML Props + 共通オプション */
 type LismElementProps<T extends ElementType> = Omit<ComponentPropsWithoutRef<T>, 'style'> & {
-	as?: T;
-	children?: ReactNode;
-	exProps?: Record<string, unknown>;
-	/** React では camelCase のみ有効（kebab-case は実行時に無視される） */
-	style?: ReactStyleWithCustomProps;
+  as?: T;
+  children?: ReactNode;
+  exProps?: Record<string, unknown>;
+  /** React では camelCase のみ有効（kebab-case は実行時に無視される） */
+  style?: ReactStyleWithCustomProps;
 };
 
 /** HTML 属性のベースライン（T がジェネリクスのままでも id 等が補完される） */
@@ -21,9 +21,9 @@ type LismHtmlBaseProps = Omit<HTMLAttributes<HTMLElement>, 'style'>;
  * @template T - レンダリングする要素の型（デフォルトは 'div'）
  */
 export type LismComponentProps<T extends ElementType = 'div'> = Omit<LismProps, 'style'> &
-	LismHtmlBaseProps &
-	LayoutSpecificProps &
-	LismElementProps<T>;
+  LismHtmlBaseProps &
+  LayoutSpecificProps &
+  LismElementProps<T>;
 
 /**
  * layout が固定されたレイアウトコンポーネントの Props 型
@@ -32,19 +32,19 @@ export type LismComponentProps<T extends ElementType = 'div'> = Omit<LismProps, 
  * @template L - レイアウト固有の追加 Props 型
  */
 export type LayoutComponentProps<T extends ElementType = 'div', L = object> = Omit<LismProps, 'layout' | 'style'> &
-	LismHtmlBaseProps &
-	Omit<L, 'layout'> &
-	LismElementProps<T>;
+  LismHtmlBaseProps &
+  Omit<L, 'layout'> &
+  LismElementProps<T>;
 
 /**
  * Lism Propsを処理できるだけのコンポーネント
  */
 export default function Lism<T extends ElementType = 'div'>({ children, as, exProps, ...props }: LismComponentProps<T>) {
-	const Component = as || 'div';
+  const Component = as || 'div';
 
-	return (
-		<Component {...getLismProps(props)} {...exProps}>
-			{children}
-		</Component>
-	);
+  return (
+    <Component {...getLismProps(props)} {...exProps}>
+      {children}
+    </Component>
+  );
 }

@@ -36,18 +36,18 @@ type TokensConfig = typeof TOKENS;
  * ```
  */
 type TokenConfigValues<K extends keyof TokensConfig> = TokensConfig[K] extends readonly unknown[]
-	? ArrayElement<TokensConfig[K]>
-	: ExtractArrayValues<TokensConfig[K], 'values'>;
+  ? ArrayElement<TokensConfig[K]>
+  : ExtractArrayValues<TokensConfig[K], 'values'>;
 
 /**
  * token プロパティから対応する TOKENS の値を抽出
  */
 type ExtractTokenValues<T> =
-	ExtractPropertyValue<T, 'token'> extends never
-		? never
-		: ExtractPropertyValue<T, 'token'> extends keyof TokensConfig
-			? TokenConfigValues<ExtractPropertyValue<T, 'token'>>
-			: never;
+  ExtractPropertyValue<T, 'token'> extends never
+    ? never
+    : ExtractPropertyValue<T, 'token'> extends keyof TokensConfig
+      ? TokenConfigValues<ExtractPropertyValue<T, 'token'>>
+      : never;
 
 /**
  * プロパティの設定から利用可能な値の型を抽出
@@ -65,7 +65,7 @@ type ExtractPropValues<T> = ExtractArrayValues<T, 'presets'> | ExtractObjectKeys
  * - ない場合: string | number（フォールバック）
  */
 type PropValueType<T> =
-	ExtractPropValues<T> extends never ? string | number | boolean : WithArbitraryString<ExtractPropValues<T>> | number | boolean | null;
+  ExtractPropValues<T> extends never ? string | number | boolean : WithArbitraryString<ExtractPropValues<T>> | number | boolean | null;
 
 // ============================================================
 // ブレイクポイント対応の判定
@@ -83,7 +83,7 @@ type AllPropKeys = keyof PropsConfig;
  * bp: 1 が設定されているプロパティのキーを抽出
  */
 type PropsWithBreakpoint = {
-	[K in AllPropKeys]: HasBreakpointSupport<PropsConfig[K]> extends true ? K : never;
+  [K in AllPropKeys]: HasBreakpointSupport<PropsConfig[K]> extends true ? K : never;
 }[AllPropKeys];
 
 /**
@@ -95,14 +95,14 @@ type PropsWithoutBreakpoint = Exclude<AllPropKeys, PropsWithBreakpoint>;
  * bp: 1 が設定されているプロパティの型（レスポンシブ対応あり）
  */
 export type ResponsivePropValueTypes = {
-	[K in PropsWithBreakpoint]?: PropValueType<PropsConfig[K]>;
+  [K in PropsWithBreakpoint]?: PropValueType<PropsConfig[K]>;
 };
 
 /**
  * bp: 1 が設定されていないプロパティの型（レスポンシブ対応なし）
  */
 export type NonResponsivePropValueTypes = {
-	[K in PropsWithoutBreakpoint]?: PropValueType<PropsConfig[K]>;
+  [K in PropsWithoutBreakpoint]?: PropValueType<PropsConfig[K]>;
 };
 
 /**

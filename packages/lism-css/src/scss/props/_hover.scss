@@ -1,26 +1,26 @@
 @use '../_mixin' as mixin;
 
 @media (any-hover: hover) {
-	.-hov\:c:hover {
-		color: var(--hov-c, var(--link)) #{mixin.$maybe_important};
-	}
-	.-hov\:bdc:hover {
-		border-color: var(--hov-bdc, currentColor) #{mixin.$maybe_important};
-	}
-	.-hov\:bgc:hover {
-		background-color: var(--hov-bgc, var(--base-2)) #{mixin.$maybe_important};
-	}
-	.-hov\:o:hover {
-		opacity: var(--hov-o, 0.7) #{mixin.$maybe_important};
-	}
-	.-hov\:bxsh:hover {
-		box-shadow: var(--hov-bxsh, var(--bxsh--40)) #{mixin.$maybe_important};
-	}
+  .-hov\:c:hover {
+    color: var(--hov-c, var(--link)) #{mixin.$maybe_important};
+  }
+  .-hov\:bdc:hover {
+    border-color: var(--hov-bdc, currentColor) #{mixin.$maybe_important};
+  }
+  .-hov\:bgc:hover {
+    background-color: var(--hov-bgc, var(--base-2)) #{mixin.$maybe_important};
+  }
+  .-hov\:o:hover {
+    opacity: var(--hov-o, 0.7) #{mixin.$maybe_important};
+  }
+  .-hov\:bxsh:hover {
+    box-shadow: var(--hov-bxsh, var(--bxsh--40)) #{mixin.$maybe_important};
+  }
 
-	// 背景色が暗くも明るくても使えるように、ニュートラルグレーを配色。黒からの変化の方がわかりづらいため、グレーの中でも少し明るめを混ぜる。
-	.-hov\:neutral:hover {
-		background-color: color-mix(in srgb, var(--bgc, var(--base)), hsl(220, 5%, 75%) 25%) #{mixin.$maybe_important};
-	}
+  // 背景色が暗くも明るくても使えるように、ニュートラルグレーを配色。黒からの変化の方がわかりづらいため、グレーの中でも少し明るめを混ぜる。
+  .-hov\:neutral:hover {
+    background-color: color-mix(in srgb, var(--bgc, var(--base)), hsl(220, 5%, 75%) 25%) #{mixin.$maybe_important};
+  }
 }
 
 // ------------------------------------------------------------
@@ -28,17 +28,17 @@
 // ------------------------------------------------------------
 
 .-hov\:to\:hide {
-	--transProp: opacity;
-	opacity: var(--_isHov, 0) #{mixin.$maybe_important};
+  --transProp: opacity;
+  opacity: var(--_isHov, 0) #{mixin.$maybe_important};
 }
 
 .-hov\:to\:show {
-	--transProp: opacity, visibility;
-	opacity: var(--_notHov, 0) #{mixin.$maybe_important};
-	visibility: var(--_notHov, hidden) #{mixin.$maybe_important};
+  --transProp: opacity, visibility;
+  opacity: var(--_notHov, 0) #{mixin.$maybe_important};
+  visibility: var(--_notHov, hidden) #{mixin.$maybe_important};
 }
 
 .-hov\:to\:zoom {
-	--transProp: scale;
-	scale: var(--_isHov, 1.1);
+  --transProp: scale;
+  scale: var(--_isHov, 1.1);
 }

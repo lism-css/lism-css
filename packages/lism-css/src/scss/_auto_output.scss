@@ -19,58 +19,58 @@ base_type:
 
 // マップから値を取得し、nullの場合はデフォルト値を返す
 @function map_get_with_default($map, $key, $default) {
-	$value: map.get($map, $key);
-	@if $value {
-		@return $value;
-	} @else {
-		@return $default;
-	}
+  $value: map.get($map, $key);
+  @if $value {
+    @return $value;
+  } @else {
+    @return $default;
+  }
 }
 
 @function get_important_str($is_important) {
-	@if $is_important == 1 {
-		@return ' !important';
-	}
-	@return '';
+  @if $is_important == 1 {
+    @return ' !important';
+  }
+  @return '';
 }
 
 // 各プロパティのユーティリティクラス
 @mixin echoUtilities($key, $prop, $utilities, $base_type, $important) {
-	@each $ukey, $value in $utilities {
-		$selector: '';
+  @each $ukey, $value in $utilities {
+    $selector: '';
 
-		// ,で複数指定
-		// $has_comma: string.index($ukey, ',');
-		// @if $has_comma {
-		// 	$ukeys: string.split($ukey, ',');
+    // ,で複数指定
+    // $has_comma: string.index($ukey, ',');
+    // @if $has_comma {
+    // 	$ukeys: string.split($ukey, ',');
 
-		// 	@for $i from 1 through list.length($ukeys) {
-		// 		$val_key: list.nth($ukeys, $i);
-		// 		$_selector: '.-#{$key}\\:#{$val_key}';
-		// 		@if $i == 1 {
-		// 			$selector: $_selector;
-		// 		} @else {
-		// 			$selector: $selector + ',' + $_selector;
-		// 		}
-		// 	}
-		// } @else {
-		$selector: '.-#{$key}\\:#{$ukey}';
-		// }
+    // 	@for $i from 1 through list.length($ukeys) {
+    // 		$val_key: list.nth($ukeys, $i);
+    // 		$_selector: '.-#{$key}\\:#{$val_key}';
+    // 		@if $i == 1 {
+    // 			$selector: $_selector;
+    // 		} @else {
+    // 			$selector: $selector + ',' + $_selector;
+    // 		}
+    // 	}
+    // } @else {
+    $selector: '.-#{$key}\\:#{$ukey}';
+    // }
 
-		// valueが(prop:val)で詳細に明示されている場合
-		@if (meta.type-of($value) == map) {
-			// マップ形式の場合は何もしない（将来の拡張用）
-		} @else if $base_type == 2 {
-			// important は [class*=] についてるので不要
-			#{$selector} {
-				--#{$key}: #{$value};
-			}
-		} @else {
-			#{$selector} {
-				#{$prop}: #{$value} #{get_important_str($important)};
-			}
-		}
-	}
+    // valueが(prop:val)で詳細に明示されている場合
+    @if (meta.type-of($value) == map) {
+      // マップ形式の場合は何もしない（将来の拡張用）
+    } @else if $base_type == 2 {
+      // important は [class*=] についてるので不要
+      #{$selector} {
+        --#{$key}: #{$value};
+      }
+    } @else {
+      #{$selector} {
+        #{$prop}: #{$value} #{get_important_str($important)};
+      }
+    }
+  }
 }
 
 /*
@@ -82,74 +82,74 @@ base_type:
  */
 $bp_support_list: (); // list
 @each $key, $data in setting.$props {
-	$prop: map_get_with_default($data, prop, ''); // 対応するCSSプロパティ名
-	$bp_support: map_get_with_default($data, bp, 0);
-	$isVar: map_get_with_default($data, isVar, 0);
-	$alwaysVar: map_get_with_default($data, alwaysVar, 0);
-	$important: map_get_with_default($data, important, setting.$default_important);
+  $prop: map_get_with_default($data, prop, ''); // 対応するCSSプロパティ名
+  $bp_support: map_get_with_default($data, bp, 0);
+  $isVar: map_get_with_default($data, isVar, 0);
+  $alwaysVar: map_get_with_default($data, alwaysVar, 0);
+  $important: map_get_with_default($data, important, setting.$default_important);
 
-	@if $prop == '' {
-		@continue;
-	}
+  @if $prop == '' {
+    @continue;
+  }
 
-	// 基本的なbaseセレクタタイプ: 基本は0, BPサポートオンなら 1.
-	$base_type: 0;
+  // 基本的なbaseセレクタタイプ: 基本は0, BPサポートオンなら 1.
+  $base_type: 0;
 
-	// Memo: == 1 ではないのは、'sm' や 'md' などの指定も入ってくる可能性があるから
-	@if $bp_support != 0 {
-		$base_type: 1;
-	}
+  // Memo: == 1 ではないのは、'sm' や 'md' などの指定も入ってくる可能性があるから
+  @if $bp_support != 0 {
+    $base_type: 1;
+  }
 
-	@if $alwaysVar == 1 {
-		$base_type: 2;
-	}
+  @if $alwaysVar == 1 {
+    $base_type: 2;
+  }
 
-	//  isVar が 1 なら base_type は 0
-	@if $isVar == 1 {
-		$base_type: 0;
-	}
+  //  isVar が 1 なら base_type は 0
+  @if $isVar == 1 {
+    $base_type: 0;
+  }
 
-	@if $base_type == 2 {
-		.-#{$key},
-		[class*='-#{$key}:'] {
-			#{$prop}: var(--#{$key}) #{get_important_str($important)};
-		}
-	} @else if $base_type == 1 {
-		.-#{$key} {
-			#{$prop}: var(--#{$key}) #{get_important_str($important)};
-		}
-	}
+  @if $base_type == 2 {
+    .-#{$key},
+    [class*='-#{$key}:'] {
+      #{$prop}: var(--#{$key}) #{get_important_str($important)};
+    }
+  } @else if $base_type == 1 {
+    .-#{$key} {
+      #{$prop}: var(--#{$key}) #{get_important_str($important)};
+    }
+  }
 
-	// utilityクラスのリストを $data から取得
-	$utilities: map.get($data, utilities);
-	$exUtilities: map.get($data, exUtility);
+  // utilityクラスのリストを $data から取得
+  $utilities: map.get($data, utilities);
+  $exUtilities: map.get($data, exUtility);
 
-	// ユーティリティクラスのリストが取得できていれば出力
-	@if $utilities {
-		@include echoUtilities($key, $prop, $utilities, $base_type, $important);
-	}
+  // ユーティリティクラスのリストが取得できていれば出力
+  @if $utilities {
+    @include echoUtilities($key, $prop, $utilities, $base_type, $important);
+  }
 
-	// exUtilityが存在する場合の処理
-	@if $exUtilities {
-		@each $exKey, $exValue in $exUtilities {
-			// 文字列の場合はそのまま展開
-			@if (meta.type-of($exValue) == map) {
-				.-#{$key}\:#{$exKey} {
-					@each $_p, $_v in $exValue {
-						#{$_p}: #{$_v} #{get_important_str($important)};
-					}
-				}
-			}
-		}
-	}
+  // exUtilityが存在する場合の処理
+  @if $exUtilities {
+    @each $exKey, $exValue in $exUtilities {
+      // 文字列の場合はそのまま展開
+      @if (meta.type-of($exValue) == map) {
+        .-#{$key}\:#{$exKey} {
+          @each $_p, $_v in $exValue {
+            #{$_p}: #{$_v} #{get_important_str($important)};
+          }
+        }
+      }
+    }
+  }
 
-	// BPクラスを出力するプロパティのリストを作成
+  // BPクラスを出力するプロパティのリストを作成
 
-	// $bp_support が 1 または 文字列（'sm','md','lg'などかどうか）
-	// Memo: 文字列がくるのは、ユーザーカスタマイズでプロパティ個別にサポートするブレイクポイントを変更したい時。
-	@if $bp_support == 1 or meta.type-of($bp_support) == string {
-		$bp_support_list: list.append($bp_support_list, $key);
-	}
+  // $bp_support が 1 または 文字列（'sm','md','lg'などかどうか）
+  // Memo: 文字列がくるのは、ユーザーカスタマイズでプロパティ個別にサポートするブレイクポイントを変更したい時。
+  @if $bp_support == 1 or meta.type-of($bp_support) == string {
+    $bp_support_list: list.append($bp_support_list, $key);
+  }
 }
 // @debug $bp_support_list;
 
@@ -161,49 +161,49 @@ $bp_support_list: (); // list
 // setting.$breakpoints のキーだけを抽出したリストを取得
 $bp_names: map.keys(setting.$breakpoints);
 $bp_outputs: (
-	'sm': [],
-	'md': [],
-	'lg': [],
-	'xl': [],
+  'sm': [],
+  'md': [],
+  'lg': [],
+  'xl': [],
 );
 /* __stylelint-disable */
 // BPサポートしてるプロパティのリストをループ
 @each $key in $bp_support_list {
-	$prop_data: map.get(setting.$props, $key);
-	$prop_bp_data: map.get($prop_data, bp);
-	$support_bp: setting.$common_support_bp;
+  $prop_data: map.get(setting.$props, $key);
+  $prop_bp_data: map.get($prop_data, bp);
+  $support_bp: setting.$common_support_bp;
 
-	@if (meta.type-of($prop_bp_data) == string) {
-		// サポートするブレイクポイントの上書き指定があればそれをセット
-		$support_bp: $prop_bp_data;
-	}
-	//  @else if ($prop_bp_data == 0) {
-	// 	// 0 が渡されれば、BPサポートを無効にする
-	// 	$output_bps: 0;
-	// }
+  @if (meta.type-of($prop_bp_data) == string) {
+    // サポートするブレイクポイントの上書き指定があればそれをセット
+    $support_bp: $prop_bp_data;
+  }
+  //  @else if ($prop_bp_data == 0) {
+  // 	// 0 が渡されれば、BPサポートを無効にする
+  // 	$output_bps: 0;
+  // }
 
-	$flag: true;
-	$i: 1;
-	@while $flag {
-		$bp: list.nth($bp_names, $i);
+  $flag: true;
+  $i: 1;
+  @while $flag {
+    $bp: list.nth($bp_names, $i);
 
-		// mapから現在のリストを取得→リスト追加→更新されたリストを再びマージ
-		$_bp_list: map.get($bp_outputs, $bp);
-		$_bp_list: list.join($_bp_list, $key);
-		$bp_outputs: map.merge(
-			$bp_outputs,
-			(
-				$bp: $_bp_list,
-			)
-		);
+    // mapから現在のリストを取得→リスト追加→更新されたリストを再びマージ
+    $_bp_list: map.get($bp_outputs, $bp);
+    $_bp_list: list.join($_bp_list, $key);
+    $bp_outputs: map.merge(
+      $bp_outputs,
+      (
+        $bp: $_bp_list,
+      )
+    );
 
-		// サポートするBPまで辿り着いたら終了
-		@if $bp == $support_bp or $i == list.length($bp_names) {
-			$flag: false;
-		}
+    // サポートするBPまで辿り着いたら終了
+    @if $bp == $support_bp or $i == list.length($bp_names) {
+      $flag: false;
+    }
 
-		$i: $i + 1;
-	}
+    $i: $i + 1;
+  }
 }
 // @debug $bp_outputs;
 
@@ -213,26 +213,26 @@ $bp_outputs: (
   （ @containerの出力数を少なくするために出力は最後にまとめている。)
  */
 @each $bp, $data in $bp_outputs {
-	@include query.bp-up($bp) {
-		@each $key in $data {
-			$prop_data: map.get(setting.$props, $key);
-			$prop_name: map.get($prop_data, prop);
-			$isVar: map_get_with_default($prop_data, isVar, 0);
-			$overwriteBaseVar: map_get_with_default($prop_data, overwriteBaseVar, 0);
-			$important: map_get_with_default($prop_data, important, setting.$default_important);
+  @include query.bp-up($bp) {
+    @each $key in $data {
+      $prop_data: map.get(setting.$props, $key);
+      $prop_name: map.get($prop_data, prop);
+      $isVar: map_get_with_default($prop_data, isVar, 0);
+      $overwriteBaseVar: map_get_with_default($prop_data, overwriteBaseVar, 0);
+      $important: map_get_with_default($prop_data, important, setting.$default_important);
 
-			@if $isVar == 1 {
-				$important: 1;
-			}
+      @if $isVar == 1 {
+        $important: 1;
+      }
 
-			.-#{$key}_#{$bp} {
-				#{$prop_name}: var(--#{$key}_#{$bp}) #{get_important_str($important)};
+      .-#{$key}_#{$bp} {
+        #{$prop_name}: var(--#{$key}_#{$bp}) #{get_important_str($important)};
 
-				// 常に --prop でそのBPの値を取得できるように
-				@if $overwriteBaseVar == 1 {
-					--#{$key}: var(--#{$key}_#{$bp}) !important;
-				}
-			}
-		}
-	}
+        // 常に --prop でそのBPの値を取得できるように
+        @if $overwriteBaseVar == 1 {
+          --#{$key}: var(--#{$key}_#{$bp}) !important;
+        }
+      }
+    }
+  }
 }

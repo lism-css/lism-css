@@ -12,10 +12,10 @@ const { as, exProps, ...props } = Astro.props;
 
 let JSX: any = as || 'img';
 if (JSX === 'AstroImage') {
-	JSX = Image;
+  JSX = Image;
 }
 ---
 
 <JSX {...getLismProps(getMediaProps(props))} {...exProps}>
-	<slot />
+  <slot />
 </JSX>

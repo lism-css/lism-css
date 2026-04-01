@@ -24,46 +24,46 @@ const args = process.argv.slice(2);
 const command = args[0] || '';
 
 async function main() {
-	// 指定がない場合、build-config を実行
-	if (command === 'build') {
-		// default-config を常に読み込む（ESM default export を取得）
-		const defaultConfigModule = await import(pathToFileURL(defaultConfigPath).href);
-		const defaultConfig = defaultConfigModule?.default || {};
+  // 指定がない場合、build-config を実行
+  if (command === 'build') {
+    // default-config を常に読み込む（ESM default export を取得）
+    const defaultConfigModule = await import(pathToFileURL(defaultConfigPath).href);
+    const defaultConfig = defaultConfigModule?.default || {};
 
-		// user の lism.config.js は存在する時のみ読み込む
-		let userConfig = {};
-		if (fs.existsSync(userConfigPath)) {
-			const userConfigModule = await import(pathToFileURL(userConfigPath).href);
-			userConfig = userConfigModule?.default || {};
+    // user の lism.config.js は存在する時のみ読み込む
+    let userConfig = {};
+    if (fs.existsSync(userConfigPath)) {
+      const userConfigModule = await import(pathToFileURL(userConfigPath).href);
+      userConfig = userConfigModule?.default || {};
 
-			console.log('===== 📁 userConfig =====');
-			console.log(userConfig);
-			console.log('==========');
-		}
+      console.log('===== 📁 userConfig =====');
+      console.log(userConfig);
+      console.log('==========');
+    }
 
-		// 設定をディープマージ
-		const CONFIG = objDeepMerge(defaultConfig, userConfig);
+    // 設定をディープマージ
+    const CONFIG = objDeepMerge(defaultConfig, userConfig);
 
-		// 動的インポートで同ディレクトリのスクリプトを実行
-		await buildConfig(CONFIG); // SCSSの設定ファイルを出力
-		await buildCSS();
-		return;
-	}
+    // 動的インポートで同ディレクトリのスクリプトを実行
+    await buildConfig(CONFIG); // SCSSの設定ファイルを出力
+    await buildCSS();
+    return;
+  }
 
-	if (!command) {
-		console.log('Usage: lism-css <command>');
-		console.log('  <command>:');
-		console.log('    - build : Build the CSS');
-		return;
-	}
+  if (!command) {
+    console.log('Usage: lism-css <command>');
+    console.log('  <command>:');
+    console.log('    - build : Build the CSS');
+    return;
+  }
 
-	// 未知のサブコマンドはエラー表示
-	console.error(`Unknown command: ${command}`);
-	process.exit(1);
+  // 未知のサブコマンドはエラー表示
+  console.error(`Unknown command: ${command}`);
+  process.exit(1);
 }
 
 main().catch((error) => {
-	// 例外は標準エラー出力に流して終了コード1で終了
-	console.error(error);
-	process.exit(1);
+  // 例外は標準エラー出力に流して終了コード1で終了
+  console.error(error);
+  process.exit(1);
 });

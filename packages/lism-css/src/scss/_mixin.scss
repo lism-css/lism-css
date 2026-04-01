@@ -4,7 +4,7 @@ $layer_mode: 1 !default;
 
 $maybe_important: '';
 @if setting.$default_important == 1 {
-	$maybe_important: ' !important';
+  $maybe_important: ' !important';
 }
 
 // @function maybe_important() {
@@ -15,38 +15,38 @@ $maybe_important: '';
 // }
 
 @mixin maybe_where($selectors, $mode: '') {
-	// memo: セレクタリストを引数で受け取り、modeで出力方法を切り替える
-	@if $layer_mode == 1 {
-		@if $mode == '' {
-			#{$selectors} {
-				@content;
-			}
-		} @else if $mode == 'is' {
-			:is(#{$selectors}) {
-				@content;
-			}
-		} @else if $mode == '@base' {
-			@layer lism.base {
-				#{$selectors} {
-					@content;
-				}
-			}
-		}
-	} @else {
-		:where(#{$selectors}) {
-			@content;
-		}
-	}
+  // memo: セレクタリストを引数で受け取り、modeで出力方法を切り替える
+  @if $layer_mode == 1 {
+    @if $mode == '' {
+      #{$selectors} {
+        @content;
+      }
+    } @else if $mode == 'is' {
+      :is(#{$selectors}) {
+        @content;
+      }
+    } @else if $mode == '@base' {
+      @layer lism.base {
+        #{$selectors} {
+          @content;
+        }
+      }
+    }
+  } @else {
+    :where(#{$selectors}) {
+      @content;
+    }
+  }
 }
 
 @mixin switch_selector($s_1, $s_2) {
-	@if $layer_mode == 1 {
-		#{$s_1} {
-			@content;
-		}
-	} @else {
-		#{$s_2} {
-			@content;
-		}
-	}
+  @if $layer_mode == 1 {
+    #{$s_1} {
+      @content;
+    }
+  } @else {
+    #{$s_2} {
+      @content;
+    }
+  }
 }
