@@ -1,0 +1,48 @@
+---
+title: 'Group'
+description: 'A Lism component that outputs a <div> tag.'
+order: 4
+---
+import { Group, Lism, Dummy } from "lism-css/astro";
+
+`<Group>` is a Lism component that outputs a `<div>` tag.  
+Use it as a general-purpose container for grouping elements.
+
+:::info
+`<Group>` is an alias for `<Lism as='div'>`. All [Lism Props](/docs/core-components/Lism/) are available.
+:::
+
+:::note[Difference from `<Lism>`]
+`<Lism>` also outputs a `<div>` by default, but using `<Group>` makes the intent — "this is a grouping container" — explicit in your code.
+:::
+
+
+## Import
+
+<ImportPackage component='Group' />
+
+
+## Basic Usage
+
+<Preview>
+  <PreviewTitle>`<Group>` output example</PreviewTitle>
+  <PreviewArea p='20'>
+    <Group p="20" bgc="base-2" bdrs="10">
+      <Dummy />
+    </Group>
+  </PreviewArea>
+  <PreviewCode slot='tab' label='JSX'>
+    ```jsx
+    <Group p="20" bgc="base-2" bdrs="10">
+      Lorem ipsum text...
+    </Group>
+    ```
+  </PreviewCode>
+  <PreviewCode slot='tab' label='HTML'>
+    ```html
+    <div class="-p:20 -bgc:base-2 -bdrs:10">
+      Lorem ipsum text...
+    </div>
+    ```
+  </PreviewCode>
+</Preview>

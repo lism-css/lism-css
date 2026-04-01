@@ -1,0 +1,82 @@
+---
+title: 'List'
+description: 'リストタグ（<ul>, <li>）を出力するLismコンポーネントです。'
+order: 7
+---
+import { List, ListItem, Lism, Dummy } from "lism-css/astro";
+
+`<List>`は`<ul>`タグを、`<ListItem>`は`<li>`タグを出力するLismコンポーネントです。
+
+:::info
+`<List>` は `<Lism as='ul'>` のエイリアス、`<ListItem>` は `<Lism as='li'>` のエイリアスです。全ての [Lism Props](/docs/core-components/Lism/) が使用できます。
+:::
+
+## Import
+
+<ImportPackage component='List, ListItem' />
+
+
+## 基本的な使い方
+
+<Preview>
+  <PreviewTitle>`<List>`の出力例</PreviewTitle>
+  <PreviewArea p='20'>
+    <List>
+      <ListItem>リストアイテム 1</ListItem>
+      <ListItem>リストアイテム 2</ListItem>
+      <ListItem>リストアイテム 3</ListItem>
+    </List>
+  </PreviewArea>
+  <PreviewCode slot='tab' label='JSX'>
+    ```jsx
+    <List>
+      <ListItem>リストアイテム 1</ListItem>
+      <ListItem>リストアイテム 2</ListItem>
+      <ListItem>リストアイテム 3</ListItem>
+    </List>
+    ```
+  </PreviewCode>
+  <PreviewCode slot='tab' label='HTML'>
+    ```html
+    <ul>
+      <li>リストアイテム 1</li>
+      <li>リストアイテム 2</li>
+      <li>リストアイテム 3</li>
+    </ul>
+    ```
+  </PreviewCode>
+</Preview>
+
+
+## 番号付きリスト
+
+`as="ol"` を指定すると、`<ol>`タグとして出力されます。
+
+<Preview>
+  <PreviewTitle>`<List as="ol">`の出力例</PreviewTitle>
+  <PreviewArea p='20'>
+    <List as="ol">
+      <ListItem>リストアイテム 1</ListItem>
+      <ListItem>リストアイテム 2</ListItem>
+      <ListItem>リストアイテム 3</ListItem>
+    </List>
+  </PreviewArea>
+  <PreviewCode slot='tab' label='JSX'>
+    ```jsx
+    <List as="ol">
+      <ListItem>リストアイテム 1</ListItem>
+      <ListItem>リストアイテム 2</ListItem>
+      <ListItem>リストアイテム 3</ListItem>
+    </List>
+    ```
+  </PreviewCode>
+  <PreviewCode slot='tab' label='HTML'>
+    ```html
+    <ol>
+      <li>リストアイテム 1</li>
+      <li>リストアイテム 2</li>
+      <li>リストアイテム 3</li>
+    </ol>
+    ```
+  </PreviewCode>
+</Preview>

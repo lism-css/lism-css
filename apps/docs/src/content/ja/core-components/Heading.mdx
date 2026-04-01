@@ -1,0 +1,77 @@
+---
+title: 'Heading'
+description: '見出しタグ（<h1>〜<h6>）を出力するLismコンポーネントです。'
+order: 5
+---
+import { Heading, Lism, Dummy, Stack } from "lism-css/astro";
+
+`<Heading>`は、見出しタグ（`<h1>`〜`<h6>`）を出力するLismコンポーネントです。  
+`lv` プロパティで見出しレベルを指定できます。
+
+:::info
+`<Heading>` は `<Lism as='h{lv}'>` のエイリアスです。全ての [Lism Props](/docs/core-components/Lism/) が使用できます。
+:::
+
+## Props
+
+| プロパティ | 型 | デフォルト | 説明 |
+|---|---|---|---|
+| `lv` | `'1'\|'2'\|'3'\|'4'\|'5'\|'6'` | `'2'` | 見出しレベルを指定します。 |
+
+
+## Import
+
+<ImportPackage component='Heading' />
+
+
+## 基本的な使い方
+
+<Preview>
+  <PreviewTitle>`<Heading>`の出力例</PreviewTitle>
+  <PreviewArea p='20'>
+    <Heading lv="2">見出しテキスト</Heading>
+  </PreviewArea>
+  <PreviewCode slot='tab' label='JSX'>
+    ```jsx
+    <Heading lv="2">見出しテキスト</Heading>
+    ```
+  </PreviewCode>
+  <PreviewCode slot='tab' label='HTML'>
+    ```html
+    <h2>見出しテキスト</h2>
+    ```
+  </PreviewCode>
+</Preview>
+
+
+## 見出しレベルの指定
+
+`lv` プロパティで `<h1>` 〜 `<h6>` を出し分けることができます。
+
+<Preview>
+  <PreviewTitle>`lv` によるレベルの指定例</PreviewTitle>
+  <PreviewArea p='20'>
+    <Stack g="10">
+      <Heading lv="1" fz="2xl">Heading Level 1</Heading>
+      <Heading lv="2" fz="xl">Heading Level 2</Heading>
+      <Heading lv="3" fz="l">Heading Level 3</Heading>
+      <Heading lv="4" fz="m">Heading Level 4</Heading>
+    </Stack>
+  </PreviewArea>
+  <PreviewCode slot='tab' label='JSX'>
+    ```jsx
+    <Heading lv="1" fz="2xl">Heading Level 1</Heading>
+    <Heading lv="2" fz="xl">Heading Level 2</Heading>
+    <Heading lv="3" fz="l">Heading Level 3</Heading>
+    <Heading lv="4" fz="m">Heading Level 4</Heading>
+    ```
+  </PreviewCode>
+  <PreviewCode slot='tab' label='HTML'>
+    ```html
+    <h1 class="-fz:2xl">Heading Level 1</h1>
+    <h2 class="-fz:xl">Heading Level 2</h2>
+    <h3 class="-fz:l">Heading Level 3</h3>
+    <h4 class="-fz:m">Heading Level 4</h4>
+    ```
+  </PreviewCode>
+</Preview>

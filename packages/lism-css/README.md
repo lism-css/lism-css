@@ -38,11 +38,11 @@ For HTML sites, you can load CSS via CDN:
 ### React
 
 ```jsx
-import { Box, Flex, Stack, HTML } from 'lism-css/react';
+import { Box, Flex, Stack, Text } from 'lism-css/react';
 
 <Stack g="20">
   <Box p="20" bgc="base-2">
-    <HTML.p fz="l">Lorem ipsum text...</HTML.p>
+    <Text fz="l">Lorem ipsum text...</Text>
   </Box>
 </Stack>
 ```
@@ -51,12 +51,12 @@ import { Box, Flex, Stack, HTML } from 'lism-css/react';
 
 ```astro
 ---
-import { Box, Flex, Stack, HTML } from 'lism-css/astro';
+import { Box, Flex, Stack, Text } from 'lism-css/astro';
 ---
 
 <Stack g="20">
   <Box p="20" bgc="base-2">
-    <HTML.p fz="l">Lorem ipsum text...</HTML.p>
+    <Text fz="l">Lorem ipsum text...</Text>
   </Box>
 </Stack>
 ```

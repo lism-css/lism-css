@@ -1,0 +1,48 @@
+---
+title: 'Group'
+description: '<div>タグを出力するLismコンポーネントです。'
+order: 4
+---
+import { Group, Lism, Dummy } from "lism-css/astro";
+
+`<Group>`は、`<div>`タグを出力するLismコンポーネントです。  
+要素をグルーピングするための汎用コンテナとして使用します。
+
+:::info
+`<Group>` は `<Lism as='div'>` のエイリアスです。全ての [Lism Props](/docs/core-components/Lism/) が使用できます。
+:::
+
+:::note[`<Lism>` との違い]
+`<Lism>` もデフォルトで `<div>` を出力しますが、`<Group>` を使うことで「これは要素をグルーピングするコンテナである」という意図がコードから明確になります。
+:::
+
+
+## Import
+
+<ImportPackage component='Group' />
+
+
+## 基本的な使い方
+
+<Preview>
+  <PreviewTitle>`<Group>`の出力例</PreviewTitle>
+  <PreviewArea p='20'>
+    <Group p="20" bgc="base-2" bdrs="10">
+      <Dummy />
+    </Group>
+  </PreviewArea>
+  <PreviewCode slot='tab' label='JSX'>
+    ```jsx
+    <Group p="20" bgc="base-2" bdrs="10">
+      Lorem ipsum text...
+    </Group>
+    ```
+  </PreviewCode>
+  <PreviewCode slot='tab' label='HTML'>
+    ```html
+    <div class="-p:20 -bgc:base-2 -bdrs:10">
+      Lorem ipsum text...
+    </div>
+    ```
+  </PreviewCode>
+</Preview>

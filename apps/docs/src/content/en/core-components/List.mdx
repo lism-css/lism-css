@@ -1,0 +1,82 @@
+---
+title: 'List'
+description: 'Lism components that output list tags (<ul>, <li>).'
+order: 7
+---
+import { List, ListItem, Lism, Dummy } from "lism-css/astro";
+
+`<List>` outputs a `<ul>` tag, and `<ListItem>` outputs a `<li>` tag.
+
+:::info
+`<List>` is an alias for `<Lism as='ul'>`, and `<ListItem>` is an alias for `<Lism as='li'>`. All [Lism Props](/docs/core-components/Lism/) are available.
+:::
+
+## Import
+
+<ImportPackage component='List, ListItem' />
+
+
+## Basic Usage
+
+<Preview>
+  <PreviewTitle>`<List>` output example</PreviewTitle>
+  <PreviewArea p='20'>
+    <List>
+      <ListItem>List item 1</ListItem>
+      <ListItem>List item 2</ListItem>
+      <ListItem>List item 3</ListItem>
+    </List>
+  </PreviewArea>
+  <PreviewCode slot='tab' label='JSX'>
+    ```jsx
+    <List>
+      <ListItem>List item 1</ListItem>
+      <ListItem>List item 2</ListItem>
+      <ListItem>List item 3</ListItem>
+    </List>
+    ```
+  </PreviewCode>
+  <PreviewCode slot='tab' label='HTML'>
+    ```html
+    <ul>
+      <li>List item 1</li>
+      <li>List item 2</li>
+      <li>List item 3</li>
+    </ul>
+    ```
+  </PreviewCode>
+</Preview>
+
+
+## Ordered List
+
+Use `as="ol"` to output an `<ol>` tag.
+
+<Preview>
+  <PreviewTitle>`<List as="ol">` output example</PreviewTitle>
+  <PreviewArea p='20'>
+    <List as="ol">
+      <ListItem>List item 1</ListItem>
+      <ListItem>List item 2</ListItem>
+      <ListItem>List item 3</ListItem>
+    </List>
+  </PreviewArea>
+  <PreviewCode slot='tab' label='JSX'>
+    ```jsx
+    <List as="ol">
+      <ListItem>List item 1</ListItem>
+      <ListItem>List item 2</ListItem>
+      <ListItem>List item 3</ListItem>
+    </List>
+    ```
+  </PreviewCode>
+  <PreviewCode slot='tab' label='HTML'>
+    ```html
+    <ol>
+      <li>List item 1</li>
+      <li>List item 2</li>
+      <li>List item 3</li>
+    </ol>
+    ```
+  </PreviewCode>
+</Preview>
