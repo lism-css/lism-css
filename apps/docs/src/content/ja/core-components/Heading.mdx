@@ -6,17 +6,17 @@ order: 5
 import { Heading, Lism, Dummy, Stack } from "lism-css/astro";
 
 `<Heading>`は、見出しタグ（`<h1>`〜`<h6>`）を出力するLismコンポーネントです。  
-`lv` プロパティで見出しレベルを指定できます。
+`level` プロパティで見出しレベルを指定できます。
 
 :::info
-`<Heading>` は `<Lism as='h{lv}'>` のエイリアスです。全ての [Lism Props](/docs/core-components/Lism/) が使用できます。
+`<Heading>` は `<Lism as='h{level}'>` のエイリアスです。全ての [Lism Props](/docs/core-components/Lism/) が使用できます。
 :::
 
 ## Props
 
 | プロパティ | 型 | デフォルト | 説明 |
 |---|---|---|---|
-| `lv` | `'1'\|'2'\|'3'\|'4'\|'5'\|'6'` | `'2'` | 見出しレベルを指定します。 |
+| `level` | `'1' \| '2' \| '3' \| '4' \| '5' \| '6'` | `'2'` | 見出しレベルを指定します。 |
 
 
 ## Import
@@ -29,11 +29,11 @@ import { Heading, Lism, Dummy, Stack } from "lism-css/astro";
 <Preview>
   <PreviewTitle>`<Heading>`の出力例</PreviewTitle>
   <PreviewArea p='20'>
-    <Heading lv="2">見出しテキスト</Heading>
+    <Heading level="2">見出しテキスト</Heading>
   </PreviewArea>
   <PreviewCode slot='tab' label='JSX'>
     ```jsx
-    <Heading lv="2">見出しテキスト</Heading>
+    <Heading level="2">見出しテキスト</Heading>
     ```
   </PreviewCode>
   <PreviewCode slot='tab' label='HTML'>
@@ -46,24 +46,24 @@ import { Heading, Lism, Dummy, Stack } from "lism-css/astro";
 
 ## 見出しレベルの指定
 
-`lv` プロパティで `<h1>` 〜 `<h6>` を出し分けることができます。
+`level` プロパティで `<h1>` 〜 `<h6>` を出し分けることができます。
 
 <Preview>
-  <PreviewTitle>`lv` によるレベルの指定例</PreviewTitle>
+  <PreviewTitle>`level` によるレベルの指定例</PreviewTitle>
   <PreviewArea p='20'>
     <Stack g="10">
-      <Heading lv="1" fz="2xl">Heading Level 1</Heading>
-      <Heading lv="2" fz="xl">Heading Level 2</Heading>
-      <Heading lv="3" fz="l">Heading Level 3</Heading>
-      <Heading lv="4" fz="m">Heading Level 4</Heading>
+      <Heading level="1" fz="2xl">Heading Level 1</Heading>
+      <Heading level="2" fz="xl">Heading Level 2</Heading>
+      <Heading level="3" fz="l">Heading Level 3</Heading>
+      <Heading level="4" fz="m">Heading Level 4</Heading>
     </Stack>
   </PreviewArea>
   <PreviewCode slot='tab' label='JSX'>
     ```jsx
-    <Heading lv="1" fz="2xl">Heading Level 1</Heading>
-    <Heading lv="2" fz="xl">Heading Level 2</Heading>
-    <Heading lv="3" fz="l">Heading Level 3</Heading>
-    <Heading lv="4" fz="m">Heading Level 4</Heading>
+    <Heading level="1" fz="2xl">Heading Level 1</Heading>
+    <Heading level="2" fz="xl">Heading Level 2</Heading>
+    <Heading level="3" fz="l">Heading Level 3</Heading>
+    <Heading level="4" fz="m">Heading Level 4</Heading>
     ```
   </PreviewCode>
   <PreviewCode slot='tab' label='HTML'>

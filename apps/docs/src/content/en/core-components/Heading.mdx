@@ -6,17 +6,17 @@ order: 5
 import { Heading, Lism, Dummy, Stack } from "lism-css/astro";
 
 `<Heading>` is a Lism component that outputs heading tags (`<h1>` to `<h6>`).  
-Use the `lv` prop to specify the heading level.
+Use the `level` prop to specify the heading level.
 
 :::info
-`<Heading>` is an alias for `<Lism as='h{lv}'>`. All [Lism Props](/docs/core-components/Lism/) are available.
+`<Heading>` is an alias for `<Lism as='h{level}'>`. All [Lism Props](/docs/core-components/Lism/) are available.
 :::
 
 ## Props
 
 | Property | Type | Default | Description |
 |---|---|---|---|
-| `lv` | `'1'\|'2'\|'3'\|'4'\|'5'\|'6'` | `'2'` | Specifies the heading level. |
+| `level` | `'1' \| '2' \| '3' \| '4' \| '5' \| '6'` | `'2'` | Specifies the heading level. |
 
 
 ## Import
@@ -29,11 +29,11 @@ Use the `lv` prop to specify the heading level.
 <Preview>
   <PreviewTitle>`<Heading>` output example</PreviewTitle>
   <PreviewArea p='20'>
-    <Heading lv="2">Heading Text</Heading>
+    <Heading level="2">Heading Text</Heading>
   </PreviewArea>
   <PreviewCode slot='tab' label='JSX'>
     ```jsx
-    <Heading lv="2">Heading Text</Heading>
+    <Heading level="2">Heading Text</Heading>
     ```
   </PreviewCode>
   <PreviewCode slot='tab' label='HTML'>
@@ -46,24 +46,24 @@ Use the `lv` prop to specify the heading level.
 
 ## Specifying Heading Levels
 
-Use the `lv` prop to output `<h1>` through `<h6>`.
+Use the `level` prop to output `<h1>` through `<h6>`.
 
 <Preview>
   <PreviewTitle>Heading level examples</PreviewTitle>
   <PreviewArea p='20'>
     <Stack g="10">
-      <Heading lv="1" fz="2xl">Heading Level 1</Heading>
-      <Heading lv="2" fz="xl">Heading Level 2</Heading>
-      <Heading lv="3" fz="l">Heading Level 3</Heading>
-      <Heading lv="4" fz="m">Heading Level 4</Heading>
+      <Heading level="1" fz="2xl">Heading Level 1</Heading>
+      <Heading level="2" fz="xl">Heading Level 2</Heading>
+      <Heading level="3" fz="l">Heading Level 3</Heading>
+      <Heading level="4" fz="m">Heading Level 4</Heading>
     </Stack>
   </PreviewArea>
   <PreviewCode slot='tab' label='JSX'>
     ```jsx
-    <Heading lv="1" fz="2xl">Heading Level 1</Heading>
-    <Heading lv="2" fz="xl">Heading Level 2</Heading>
-    <Heading lv="3" fz="l">Heading Level 3</Heading>
-    <Heading lv="4" fz="m">Heading Level 4</Heading>
+    <Heading level="1" fz="2xl">Heading Level 1</Heading>
+    <Heading level="2" fz="xl">Heading Level 2</Heading>
+    <Heading level="3" fz="l">Heading Level 3</Heading>
+    <Heading level="4" fz="m">Heading Level 4</Heading>
     ```
   </PreviewCode>
   <PreviewCode slot='tab' label='HTML'>

@@ -52,7 +52,7 @@ const FEATURES = [
     <Stack class="hero_content" g="40" gc="1 / 5" gr="1" z="1">
       <Stack g="30">
         <Lism class="hero_heading -w:fit">
-          <Heading lv="1" fz="4xl" fw="bold" ff="mono">Lism CSS</Heading>
+          <Heading level="1" fz="4xl" fw="bold" ff="mono">Lism CSS</Heading>
         </Lism>
         <Text class="hero_tagline" fz="m" c="text-2">
           WEBサイト向けのレイアウトファーストなCSSフレームワーク。<br />
@@ -82,7 +82,7 @@ const FEATURES = [
           bxsh="20"
           bd
         >
-          <Heading lv="2" fz={['m', 'l']} c="text">
+          <Heading level="2" fz={['m', 'l']} c="text">
             {feature.title}
           </Heading>
           <Text c="text-2" fz={['s', 'm']} lh="s">
@@ -95,13 +95,13 @@ const FEATURES = [
   <!-- <Spacer h="40" /> -->
 
   <Lism layout="flow" as="section" my-s="50">
-    <Heading lv="2" class="h2">独自のCSS設計</Heading>
+    <Heading level="2" class="h2">独自のCSS設計</Heading>
 
     <Lism layout="fluidCols" cols="20rem" g="40">
       {
         POINTS.map((point) => (
           <Stack g="20" p="30" bdrs="20" bgc="base" bxsh="30" lh="s">
-            <Heading lv="3" fz="m" fw="bold">
+            <Heading level="3" fz="m" fw="bold">
               {point.title}
             </Heading>
             <Text fz="s" c="text-2">
@@ -115,7 +115,7 @@ const FEATURES = [
 
   {/* 専用コンポーネント */}
   <Lism as="section" layout="flow" g="20" my-s="50">
-    <Heading lv="2" class="h2">Astro/React用のコンポーネント</Heading>
+    <Heading level="2" class="h2">Astro/React用のコンポーネント</Heading>
     <Text>Lism CSSを手軽に扱えるように、ReactやAstroで利用できるコンポーネントを無償で提供しています。</Text>
 
     <Lism max-w="m" mx="auto">
