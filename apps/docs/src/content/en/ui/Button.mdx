@@ -3,7 +3,7 @@ title: 'Button'
 description: 'Documentation for the Button component provided by @lism-css/ui.'
 ---
 
-import { Box, Flex, Grid, Lism, Frame, HTML, Media, Icon, Spacer, Center, Layer, Dummy, Cluster, Stack } from 'lism-css/astro';
+import { Box, Flex, Grid, Lism, Frame, Media, Icon, Spacer, Center, Layer, Dummy, Cluster, Stack, Link } from 'lism-css/astro';
 import { Button } from '@lism-css/ui/astro';
 import { ArrowRightIcon, ShoppingCartSimpleIcon } from "@phosphor-icons/react";
 
@@ -419,12 +419,12 @@ An example of building a Button using only lism-css, without `@lism-css/ui`.
   <PreviewTitle>Preview</PreviewTitle>
   <PreviewArea p='20' bg=':stripe' flow='s'>
     <Flex g="15">
-      <HTML.a href="###" d="in-flex" w="fit" td="none" c="base" bgc="text" lh="s" py="10" px="20" bdrs="20" hov="o">
+      <Link href="###" d="in-flex" w="fit" td="none" c="base" bgc="text" lh="s" py="10" px="20" bdrs="20" hov="o">
         Button
-      </HTML.a>
-      <HTML.a href="###" d="in-flex" w="fit" td="none" c="inherit" bd lh="s" py="10" px="20" bdrs="20" hov="o">
+      </Link>
+      <Link href="###" d="in-flex" w="fit" td="none" c="inherit" bd lh="s" py="10" px="20" bdrs="20" hov="o">
         Button
-      </HTML.a>
+      </Link>
     </Flex>
     <Grid
       as="a"
@@ -451,8 +451,8 @@ An example of building a Button using only lism-css, without `@lism-css/ui`.
   <PreviewCode slot='tab' label='JSX'>
     ```jsx
     <Flex g='15'>
-      <HTML.a href='###' d='in-flex' w='fit' td='none' c='base' bgc='text' lh='s' py='10' px='20' bdrs='20' hov='o'>Button</HTML.a>
-      <HTML.a href='###' d='in-flex' w='fit' td='none' c='inherit' bd lh='s' py='10' px='20' bdrs='20' hov='o'>Button</HTML.a>
+      <Link href='###' d='in-flex' w='fit' td='none' c='base' bgc='text' lh='s' py='10' px='20' bdrs='20' hov='o'>Button</Link>
+      <Link href='###' d='in-flex' w='fit' td='none' c='inherit' bd lh='s' py='10' px='20' bdrs='20' hov='o'>Button</Link>
     </Flex>
     <Grid as='a' href='###' gtc='1em 1fr 1em' ji='center' ai='center' px='15' py='10' g='30' w='16rem' td='none' bgc='text' c='base' bdrs='20' hov='neutral'>
       <Lism as='span' gc='2'>Button</Lism>

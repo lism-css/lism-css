@@ -1,0 +1,368 @@
+---
+title: 'Semantic Wrappers'
+description: 'Named Lism components corresponding to HTML elements for each use case.'
+order: 2
+---
+import { Text, Inline, Group, Heading, Link, List, ListItem, Lism, Dummy, Stack } from "lism-css/astro";
+
+Semantic Wrappers are named components that function as aliases for `<Lism as='tag'>`.  
+Use them to make the intent of HTML elements explicit in your code.
+
+:::info
+All [Lism Props](/docs/core-components/Lism/) are available on every Semantic Wrapper.
+:::
+
+
+## Import
+
+<ImportPackage component='Text, Inline, Group, Heading, Link, List, ListItem' />
+
+
+## Overview
+
+| Component | Default `as` | Purpose | Available `as` tags |
+|---|---|---|---|
+| `Text` | `p` | Text content block elements | `div` / `blockquote` / `address` / `figcaption` / `pre` |
+| `Inline` | `span` | Phrasing content | `em` / `strong` / `small` / `code` / `time` / `i` / `b` / `mark` / `abbr` / `cite` / `kbd` |
+| `Group` | `div` | Semantic structural wrapper | `section` / `article` / `figure` / `nav` / `aside` / `header` / `footer` / `main` / `fieldset` / `hgroup` |
+| `Heading` | `h2` | Headings (`level` prop for h1–h6) | — |
+| `Link` | `a` | Links | — |
+| `List` | `ul` | Lists | `ol` / `dl` |
+| `ListItem` | `li` | List items | `dt` / `dd` |
+
+
+---
+
+
+## Text
+
+`<Text>` is a Lism component that outputs a `<p>` tag.
+
+<Preview>
+  <PreviewTitle>`<Text>` output example</PreviewTitle>
+  <PreviewArea p='20'>
+    <Text><Dummy as="span" /></Text>
+  </PreviewArea>
+  <PreviewCode slot='tab' label='JSX'>
+    ```jsx
+    <Text>Lorem ipsum text...</Text>
+    ```
+  </PreviewCode>
+  <PreviewCode slot='tab' label='HTML'>
+    ```html
+    <p>Lorem ipsum text...</p>
+    ```
+  </PreviewCode>
+</Preview>
+
+<Preview>
+  <PreviewTitle>Applying Lism Props</PreviewTitle>
+  <PreviewArea p='20'>
+    <Text fz="l" lh="l" c="text-2"><Dummy as="span" /></Text>
+  </PreviewArea>
+  <PreviewCode slot='tab' label='JSX'>
+    ```jsx
+    <Text fz="l" lh="l" c="text-2">Lorem ipsum text...</Text>
+    ```
+  </PreviewCode>
+  <PreviewCode slot='tab' label='HTML'>
+    ```html
+    <p class="-fz:l -lh:l -c" style="--c:var(--text-2)">Lorem ipsum text...</p>
+    ```
+  </PreviewCode>
+</Preview>
+
+
+---
+
+
+## Inline
+
+`<Inline>` is a Lism component that outputs a `<span>` tag.  
+Use it when you want to apply styles to a portion of text.
+
+<Preview>
+  <PreviewTitle>`<Inline>` output example</PreviewTitle>
+  <PreviewArea p='20'>
+    <Text>This is <Inline fw="bold" c="blue">highlighted</Inline> text.</Text>
+  </PreviewArea>
+  <PreviewCode slot='tab' label='JSX'>
+    ```jsx
+    <Text>This is <Inline fw="bold" c="blue">highlighted</Inline> text.</Text>
+    ```
+  </PreviewCode>
+  <PreviewCode slot='tab' label='HTML'>
+    ```html
+    <p>This is <span class="-fw:bold -c" style="--c:var(--blue)">highlighted</span> text.</p>
+    ```
+  </PreviewCode>
+</Preview>
+
+<Preview>
+  <PreviewTitle>Applying Lism Props</PreviewTitle>
+  <PreviewArea p='20'>
+    <Text>
+      <>You can style </>
+      <Inline fz="l" bgc="pale" p="5" bdrs="5">inline elements</Inline>
+      <> within text.</>
+    </Text>
+  </PreviewArea>
+  <PreviewCode slot='tab' label='JSX'>
+    ```jsx
+    <Text>
+      You can style
+      <Inline fz="l" bgc="pale" p="5" bdrs="5">inline elements</Inline>
+      within text.
+    </Text>
+    ```
+  </PreviewCode>
+</Preview>
+
+
+---
+
+
+## Group
+
+`<Group>` is a Lism component that outputs a `<div>` tag.  
+Use it as a general-purpose container for grouping elements.
+
+:::note[Difference from `<Lism>`]
+`<Lism>` also outputs a `<div>` by default, but using `<Group>` makes the intent — "this is a grouping container" — explicit in your code.
+:::
+
+<Preview>
+  <PreviewTitle>`<Group>` output example</PreviewTitle>
+  <PreviewArea p='20'>
+    <Group p="20" bgc="base-2" bdrs="10">
+      <Dummy />
+    </Group>
+  </PreviewArea>
+  <PreviewCode slot='tab' label='JSX'>
+    ```jsx
+    <Group p="20" bgc="base-2" bdrs="10">
+      Lorem ipsum text...
+    </Group>
+    ```
+  </PreviewCode>
+  <PreviewCode slot='tab' label='HTML'>
+    ```html
+    <div class="-p:20 -bgc:base-2 -bdrs:10">
+      Lorem ipsum text...
+    </div>
+    ```
+  </PreviewCode>
+</Preview>
+
+
+---
+
+
+## Heading
+
+`<Heading>` is a Lism component that outputs heading tags (`<h1>` to `<h6>`).  
+Use the `level` prop to specify the heading level.
+
+| Property | Type | Default | Description |
+|---|---|---|---|
+| `level` | `'1' \| '2' \| '3' \| '4' \| '5' \| '6'` | `'2'` | Specifies the heading level. |
+
+<Preview>
+  <PreviewTitle>`<Heading>` output example</PreviewTitle>
+  <PreviewArea p='20'>
+    <Heading level="2">Heading Text</Heading>
+  </PreviewArea>
+  <PreviewCode slot='tab' label='JSX'>
+    ```jsx
+    <Heading level="2">Heading Text</Heading>
+    ```
+  </PreviewCode>
+  <PreviewCode slot='tab' label='HTML'>
+    ```html
+    <h2>Heading Text</h2>
+    ```
+  </PreviewCode>
+</Preview>
+
+
+### Specifying Heading Levels
+
+Use the `level` prop to output `<h1>` through `<h6>`.
+
+<Preview>
+  <PreviewTitle>Heading level examples</PreviewTitle>
+  <PreviewArea p='20'>
+    <Stack g="10">
+      <Heading level="1" fz="2xl">Heading Level 1</Heading>
+      <Heading level="2" fz="xl">Heading Level 2</Heading>
+      <Heading level="3" fz="l">Heading Level 3</Heading>
+      <Heading level="4" fz="m">Heading Level 4</Heading>
+    </Stack>
+  </PreviewArea>
+  <PreviewCode slot='tab' label='JSX'>
+    ```jsx
+    <Heading level="1" fz="2xl">Heading Level 1</Heading>
+    <Heading level="2" fz="xl">Heading Level 2</Heading>
+    <Heading level="3" fz="l">Heading Level 3</Heading>
+    <Heading level="4" fz="m">Heading Level 4</Heading>
+    ```
+  </PreviewCode>
+  <PreviewCode slot='tab' label='HTML'>
+    ```html
+    <h1 class="-fz:2xl">Heading Level 1</h1>
+    <h2 class="-fz:xl">Heading Level 2</h2>
+    <h3 class="-fz:l">Heading Level 3</h3>
+    <h4 class="-fz:m">Heading Level 4</h4>
+    ```
+  </PreviewCode>
+</Preview>
+
+
+---
+
+
+## Link
+
+`<Link>` is a Lism component that outputs an `<a>` tag.
+
+<Preview>
+  <PreviewTitle>`<Link>` output example</PreviewTitle>
+  <PreviewArea p='20'>
+    <Link href="###">Link text</Link>
+  </PreviewArea>
+  <PreviewCode slot='tab' label='JSX'>
+    ```jsx
+    <Link href="###">Link text</Link>
+    ```
+  </PreviewCode>
+  <PreviewCode slot='tab' label='HTML'>
+    ```html
+    <a href="###">Link text</a>
+    ```
+  </PreviewCode>
+</Preview>
+
+<Preview>
+  <PreviewTitle>Applying Lism Props</PreviewTitle>
+  <PreviewArea p='20'>
+    <Link href="###" td="none" c="blue" fw="bold">Styled link</Link>
+  </PreviewArea>
+  <PreviewCode slot='tab' label='JSX'>
+    ```jsx
+    <Link href="###" td="none" c="blue" fw="bold">Styled link</Link>
+    ```
+  </PreviewCode>
+  <PreviewCode slot='tab' label='HTML'>
+    ```html
+    <a href="###" class="-td:none -c -fw:bold" style="--c:var(--blue)">Styled link</a>
+    ```
+  </PreviewCode>
+</Preview>
+
+
+---
+
+
+## List / ListItem
+
+`<List>` outputs a `<ul>` tag, and `<ListItem>` outputs a `<li>` tag.
+
+<Preview>
+  <PreviewTitle>`<List>` output example</PreviewTitle>
+  <PreviewArea p='20'>
+    <List>
+      <ListItem>List item 1</ListItem>
+      <ListItem>List item 2</ListItem>
+      <ListItem>List item 3</ListItem>
+    </List>
+  </PreviewArea>
+  <PreviewCode slot='tab' label='JSX'>
+    ```jsx
+    <List>
+      <ListItem>List item 1</ListItem>
+      <ListItem>List item 2</ListItem>
+      <ListItem>List item 3</ListItem>
+    </List>
+    ```
+  </PreviewCode>
+  <PreviewCode slot='tab' label='HTML'>
+    ```html
+    <ul>
+      <li>List item 1</li>
+      <li>List item 2</li>
+      <li>List item 3</li>
+    </ul>
+    ```
+  </PreviewCode>
+</Preview>
+
+
+### Ordered List
+
+Use `as="ol"` to output an `<ol>` tag.
+
+<Preview>
+  <PreviewTitle>`<List as="ol">` output example</PreviewTitle>
+  <PreviewArea p='20'>
+    <List as="ol">
+      <ListItem>List item 1</ListItem>
+      <ListItem>List item 2</ListItem>
+      <ListItem>List item 3</ListItem>
+    </List>
+  </PreviewArea>
+  <PreviewCode slot='tab' label='JSX'>
+    ```jsx
+    <List as="ol">
+      <ListItem>List item 1</ListItem>
+      <ListItem>List item 2</ListItem>
+      <ListItem>List item 3</ListItem>
+    </List>
+    ```
+  </PreviewCode>
+  <PreviewCode slot='tab' label='HTML'>
+    ```html
+    <ol>
+      <li>List item 1</li>
+      <li>List item 2</li>
+      <li>List item 3</li>
+    </ol>
+    ```
+  </PreviewCode>
+</Preview>
+
+
+### Definition List
+
+Use `<List as="dl">` with `<ListItem as="dt">` and `<ListItem as="dd">` to create a definition list.
+
+<Preview>
+  <PreviewTitle>`<List as="dl">` output example</PreviewTitle>
+  <PreviewArea p='20'>
+    <List as="dl">
+      <ListItem as="dt" fw="bold">Term 1</ListItem>
+      <ListItem as="dd">Description for term 1.</ListItem>
+      <ListItem as="dt" fw="bold">Term 2</ListItem>
+      <ListItem as="dd">Description for term 2.</ListItem>
+    </List>
+  </PreviewArea>
+  <PreviewCode slot='tab' label='JSX'>
+    ```jsx
+    <List as="dl">
+      <ListItem as="dt" fw="bold">Term 1</ListItem>
+      <ListItem as="dd">Description for term 1.</ListItem>
+      <ListItem as="dt" fw="bold">Term 2</ListItem>
+      <ListItem as="dd">Description for term 2.</ListItem>
+    </List>
+    ```
+  </PreviewCode>
+  <PreviewCode slot='tab' label='HTML'>
+    ```html
+    <dl>
+      <dt class="-fw:bold">Term 1</dt>
+      <dd>Description for term 1.</dd>
+      <dt class="-fw:bold">Term 2</dt>
+      <dd>Description for term 2.</dd>
+    </dl>
+    ```
+  </PreviewCode>
+</Preview>

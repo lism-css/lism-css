@@ -1,7 +1,7 @@
 ---
 import DemoLayout from '@/layouts/DemoLayout.astro';
 
-import { Container, Grid, HTML, Flex, Icon, Stack } from 'lism-css/astro';
+import { Container, Grid, Flex, Icon, Stack, Text, Heading } from 'lism-css/astro';
 import { Button } from '@lism-css/ui/astro';
 import './_style.css';
 ---
@@ -10,8 +10,8 @@ import './_style.css';
   <Container isWrapper="m" bgc="base-2" py="50" setGutter>
     <Grid gtr={['auto', null, 'auto auto 1fr']} gtc={['auto', null, 'auto 1fr']} g="30">
       <Stack gr="1" gc="1" g="20" min-w={['auto', null, '12rem']}>
-        <HTML.p class="u--trim" fz="3xl" fw="light" lts="l">News</HTML.p>
-        <HTML.h lv="2" class="u--trim" fz="s" fw="normal" o="-20">お知らせ</HTML.h>
+        <Text class="u--trim" fz="3xl" fw="light" lts="l">News</Text>
+        <Heading level="2" class="u--trim" fz="s" fw="normal" o="-20">お知らせ</Heading>
       </Stack>
       <Grid gr={['2', null, '1 / -1']} gc={['1', null, '2']} gtc={['auto', 'auto 1fr']} g="30">
         <Grid
@@ -30,11 +30,11 @@ import './_style.css';
           hov="bxsh"
         >
           <Grid gtc={['auto auto', 'auto 1fr']} g="30" jc="start" ai="center">
-            <HTML.p fz="m">2025.07.13</HTML.p>
-            <HTML.p d="if" jc="center" fz="xs" lh="xs" c="text" bd p="10 20" bdrs="99" ta="center">新サービス</HTML.p>
+            <Text fz="m">2025.07.13</Text>
+            <Text d="if" jc="center" fz="xs" lh="xs" c="text" bd p="10 20" bdrs="99" ta="center">新サービス</Text>
           </Grid>
           <Flex ai="center" c="text" td="n" g="30">
-            <HTML.p setTransition hov="to:cLink">目標金額を設定して貯蓄ができる「目的別預金」が登場。楽しみながら計画的な資産形成が行えます。</HTML.p>
+            <Text setTransition hov="to:cLink">目標金額を設定して貯蓄ができる「目的別預金」が登場。楽しみながら計画的な資産形成が行えます。</Text>
             <Flex ai="center" jc="center" p="15" bd bdc="text" bdrs="99" setTransition hov="to:reverse">
               <Icon icon="caret-right" fz="xs" mx-s="auto" />
             </Flex>
@@ -56,11 +56,11 @@ import './_style.css';
           hov="bxsh"
         >
           <Grid gtc={['auto auto', 'auto 1fr']} g="30" jc="start" ai="center">
-            <HTML.p fz="m">2025.07.13</HTML.p>
-            <HTML.p d="if" jc="center" fz="xs" lh="xs" c="text" bd p="10 20" bdrs="99" ta="center">セキュリティ</HTML.p>
+            <Text fz="m">2025.07.13</Text>
+            <Text d="if" jc="center" fz="xs" lh="xs" c="text" bd p="10 20" bdrs="99" ta="center">セキュリティ</Text>
           </Grid>
           <Flex ai="center" c="text" td="n" g="30">
-            <HTML.p setTransition hov="to:cLink">当行を装った不審なメール（フィッシング詐欺）にご注意ください。</HTML.p>
+            <Text setTransition hov="to:cLink">当行を装った不審なメール（フィッシング詐欺）にご注意ください。</Text>
             <Flex ai="center" jc="center" p="15" bd bdc="text" bdrs="99" setTransition hov="to:reverse">
               <Icon icon="caret-right" fz="xs" mx-s="auto" />
             </Flex>
@@ -82,11 +82,11 @@ import './_style.css';
           hov="bxsh"
         >
           <Grid gtc={['auto auto', 'auto 1fr']} g="30" jc="start" ai="center">
-            <HTML.p fz="m">2025.07.13</HTML.p>
-            <HTML.p d="if" jc="center" fz="xs" lh="xs" c="text" bd p="10 20" bdrs="99" ta="center">重要なお知らせ</HTML.p>
+            <Text fz="m">2025.07.13</Text>
+            <Text d="if" jc="center" fz="xs" lh="xs" c="text" bd p="10 20" bdrs="99" ta="center">重要なお知らせ</Text>
           </Grid>
           <Flex ai="center" c="text" td="n" g="30">
-            <HTML.p setTransition hov="to:cLink">インターネットバンキングサービス利用規定の一部改定について</HTML.p>
+            <Text setTransition hov="to:cLink">インターネットバンキングサービス利用規定の一部改定について</Text>
             <Flex ai="center" jc="center" p="15" bd bdc="text" bdrs="99" setTransition hov="to:reverse">
               <Icon icon="caret-right" fz="xs" mx-s="auto" />
             </Flex>

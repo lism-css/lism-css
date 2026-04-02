@@ -1,5 +1,5 @@
 ---
-import { Flex, Cluster, Container, HTML, Icon, Lism } from 'lism-css/astro';
+import { Flex, Cluster, Container, Icon, Lism, Inline, Group, Link } from 'lism-css/astro';
 import { Modal } from '@lism-css/ui/astro';
 import { siteConfig } from '@/config/site';
 import SearchModal from './SearchModal.astro';
@@ -21,18 +21,19 @@ const headerText = t(currentLang, 'header');
 <Container as="header" class="z--header" layout="flex" ai="center">
   {/* 全体のgridレイアウトの切り替えと、ハンバーガーボタンの表示タイミングがずれないように setGutterは内側につける */}
   <Flex ai="center" w="100%" g="15" setGutter>
-    <HTML.div mx-e="auto">
-      <HTML.a href={homeUrl} class="siteTitle" layout="flex" ai="center" g="5" fw="normal" c="inherit" td="none" hov="under">
+    <Group mx-e="auto">
+      <Link href={homeUrl} class="siteTitle" layout="flex" ai="center" g="5" fw="normal" c="inherit" td="none" hov="under">
         <img class="u-onlyLightMode" src="/logo-black.svg" alt="" aria-labelledby="site-logo-label" width="300" height="62" />
         <img class="u-onlyDarkMode" src="/logo-white.svg" alt="" aria-labelledby="site-logo-label" width="300" height="62" />
         <span id="site-logo-label" class="u--srOnly" translate="no">{siteConfig.name}</span>
-      </HTML.a>
-    </HTML.div>
+      </Link>
+    </Group>
 
     <SNSLinks d={['none', 'flex']} />
 
     <!-- 検索トリガーボタン -->
-    <HTML.button
+    <Lism
+      as="button"
       type="button"
       class="c--searchTrigger l--flex -ai:center"
       bgc="base"
@@ -42,9 +43,9 @@ const headerText = t(currentLang, 'header');
       data-modal-open="search-modal"
     >
       <Icon icon="search" fz={['xl', null, 'l']} />
-      <HTML.span id="search-label" d={['none', null, 'block']} fz="xs" lh="xs" c="text-2">{searchText.title}</HTML.span>
+      <Inline id="search-label" d={['none', null, 'block']} fz="xs" lh="xs" c="text-2">{searchText.title}</Inline>
       <Lism as="kbd" class="c--searchTrigger_shortcut" d={['none', null, 'block']} p="0" bd="none" fz="xs">⌘K</Lism>
-    </HTML.button>
+    </Lism>
 
     <SearchModal />
 
@@ -63,7 +64,7 @@ const headerText = t(currentLang, 'header');
           d="M112,60a16,16,0,1,1,16,16A16,16,0,0,1,112,60Zm16,52a16,16,0,1,0,16,16A16,16,0,0,0,128,112Zm0,68a16,16,0,1,0,16,16A16,16,0,0,0,128,180Z"
         ></path>
       </Icon>
-      <HTML.span d="none" id="menu-open-label">{headerText.openMenu}</HTML.span>
+      <Inline d="none" id="menu-open-label">{headerText.openMenu}</Inline>
     </Modal.OpenBtn>
   </Flex>
 

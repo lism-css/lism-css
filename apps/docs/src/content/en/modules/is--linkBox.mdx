@@ -2,7 +2,7 @@
 title: 'LinkBox'
 description: 'Documentation for the LinkBox module in Lism CSS. A component that makes an entire box clickable as a link.'
 ---
-import { LinkBox, HTML, Spacer, Dummy } from 'lism-css/astro';
+import { LinkBox, Spacer, Dummy, Text, Group, Link } from 'lism-css/astro';
 
 A `<Lism>` component that outputs the `is--linkBox` class, which makes an entire box clickable as a link.
 
@@ -41,27 +41,27 @@ When `href` is provided to `<LinkBox>`, the component itself renders as an `<a>`
   <PreviewTitle id='linkbox-demo01'>Example</PreviewTitle>
   <PreviewArea p='20'>
     <LinkBox href="#linkbox-demo01" p="30" bgc="base" bd bdrs="30" hov="o">
-      <HTML.div fz="xl" fw="bold">
+      <Group fz="xl" fw="bold">
         Heading text
-      </HTML.div>
+      </Group>
       <Dummy lh="s" my-s="15" />
-      <HTML.div fz="s" c="text-2" ta="right" lh="1" my-s="10">
+      <Group fz="s" c="text-2" ta="right" lh="1" my-s="10">
         MORE →
-      </HTML.div>
+      </Group>
     </LinkBox>
   </PreviewArea>
   <PreviewCode slot='tab' label='JSX'>
     ```jsx {1} "href="
     <LinkBox href="#linkbox-demo01" p="30" bgc="base" bd bdrs="30" hov="o">
-      <HTML.div fz="xl" fw="bold">
+      <Group fz="xl" fw="bold">
         Heading text
-      </HTML.div>
-      <HTML.p lh="s" my-s="15">
+      </Group>
+      <Text lh="s" my-s="15">
         Lorem ipsum dolor sit, amet consectetur adipisicing elit, sed do eiusmod tempor. Non facere laudantium ex eos doloribus aut dolore nisi provident.
-      </HTML.p>
-      <HTML.div fz="s" c="text-2" ta="right" lh="1" my-s="10">
+      </Text>
+      <Group fz="s" c="text-2" ta="right" lh="1" my-s="10">
         MORE →
-      </HTML.div>
+      </Group>
     </LinkBox>;
     ```
   </PreviewCode>
@@ -89,33 +89,33 @@ This approach also allows you to place additional links inside the LinkBox.
   <PreviewTitle id='linkbox-demo02'>Example</PreviewTitle>
   <PreviewArea p='20'>
     <LinkBox as="section" p="30" bgc="base" bd bdrs="30" setTransition hov="bxsh">
-      <HTML.div fz="xl" fw="bold">
-        <HTML.a className="u--expandedLink" href="#linkbox-demo02">
+      <Group fz="xl" fw="bold">
+        <Link className="u--expandedLink" href="#linkbox-demo02">
           Heading link text
-        </HTML.a>
-      </HTML.div>
+        </Link>
+      </Group>
       <Dummy c="text-2" lh="s" my-s="15" />
-      <HTML.div id="inner-link02" my-s="10">
+      <Group id="inner-link02" my-s="10">
         <a href="#inner-link02" className="-hov:o">
           Inner Link
         </a>
-      </HTML.div>
+      </Group>
     </LinkBox>
   </PreviewArea>
   <PreviewCode slot='tab' label='JSX'>
     ```jsx "className='u--expandedLink'"
     <LinkBox p="30" bgc="base" bd bdrs="30" setTransition hov="bxsh">
-      <HTML.div fz="xl" fw="bold">
-        <HTML.a className="u--expandedLink" href="#linkbox-demo02">
+      <Group fz="xl" fw="bold">
+        <Link className="u--expandedLink" href="#linkbox-demo02">
           Heading link text
-        </HTML.a>
-      </HTML.div>
+        </Link>
+      </Group>
       <Dummy c="text-2" lh="s" my-s="15" />
-      <HTML.div id="inner-link02" my-s="10">
+      <Group id="inner-link02" my-s="10">
         <a href="#inner-link02" className="-hov:o">
           Inner Link
         </a>
-      </HTML.div>
+      </Group>
     </LinkBox>;
     ```
   </PreviewCode>

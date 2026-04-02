@@ -1,19 +1,19 @@
 ---
 import DemoLayout from '@/layouts/DemoLayout.astro';
 
-import { Stack, Container, Frame, Grid, Media, HTML, Flow } from 'lism-css/astro';
+import { Stack, Container, Frame, Grid, Media, Flow, Text, Heading } from 'lism-css/astro';
 import './_style.css';
 ---
 
 <DemoLayout title="History002">
   <Container isWrapper="m" bgc="base" py="50" setGutter>
     <Stack g="50">
-      <HTML.h lv="2" class="u--trim" fz="3xl" fw="bold" ff="accent" ta="center">ここに歴史を記す</HTML.h>
+      <Heading level="2" class="u--trim" fz="3xl" fw="bold" ff="accent" ta="center">ここに歴史を記す</Heading>
       <Stack bd-y-s>
         <Grid gtc={['auto', null, '16rem 1fr']} g="50 40" bd-y-e py="40">
-          <HTML.p class="u--trim" fz="2xl" fs="i">2025</HTML.p>
+          <Text class="u--trim" fz="2xl" fs="i">2025</Text>
           <Flow px-s={['30', null, '0']}>
-            <HTML.p fz="l" fw="bold">リズム会社設立</HTML.p>
+            <Text fz="l" fw="bold">リズム会社設立</Text>
             <p>「もっと、一人ひとりの心に寄り添う旅を届けたい」</p>
             <p>
               その一心で、創業者である佐藤と鈴木が、 都内の小さなアパートの一室で「株式会社Journeyful」を設立。
@@ -27,9 +27,9 @@ import './_style.css';
           </Flow>
         </Grid>
         <Grid gtc={['auto', null, '16rem 1fr']} g="50 40" bd-y-e py="40">
-          <HTML.p class="u--trim" fz="2xl" fs="i">2026</HTML.p>
+          <Text class="u--trim" fz="2xl" fs="i">2026</Text>
           <Flow px-s={['30', null, '0']}>
-            <HTML.p fz="l" fw="bold">「Journeyful」ローンチ</HTML.p>
+            <Text fz="l" fw="bold">「Journeyful」ローンチ</Text>
             <p>約1年半の開発期間を経て、旅のWebサービス「Journeyful」を正式にローンチ。</p>
             <p>
               サービス開始当初は、専門のコンシェルジュがオンラインで相談に乗り、
@@ -43,9 +43,9 @@ import './_style.css';
           </Flow>
         </Grid>
         <Grid gtc={['auto', null, '16rem 1fr']} g="50 40" bd-y-e py="40">
-          <HTML.p class="u--trim" fz="2xl" fs="i">2027</HTML.p>
+          <Text class="u--trim" fz="2xl" fs="i">2027</Text>
           <Flow px-s={['30', null, '0']}>
-            <HTML.p fz="l" fw="bold">新ブランド「Journeyful Earth」発足</HTML.p>
+            <Text fz="l" fw="bold">新ブランド「Journeyful Earth」発足</Text>
             <p>
               「旅を通じて、地域社会や環境に貢献する」という理念のもと、 サステナブルツーリズムに特化した新ブランド「Journeyful Earth」を立ち上げた。
             </p>

@@ -4,7 +4,7 @@
  * ビルド時にOGP情報をフェッチして静的に生成します
  * キャッシュ機構付き（.cache/ogp/ に保存、7日間有効）
  */
-import { HTML, LinkBox, Flex, Frame, Stack } from 'lism-css/astro';
+import { LinkBox, Flex, Frame, Stack, Inline } from 'lism-css/astro';
 import { getOgpFromCache, saveOgpToCache, type OgpData } from '@/lib/ogpCache';
 
 interface Props {
@@ -125,17 +125,17 @@ const displayFavicon = ogpData?.favicon || '';
 <LinkBox href={href} target="_blank" rel="noopener noreferrer" class="c--linkCard -my:40" bdrs="20" my="40" p="20" bgc="base" bd>
   <Flex g="20" ai="stretch" w="100%">
     <Stack g="10" fx="1" py="5" min-w="0">
-      <HTML.span class="c--linkCard__title" fz="m" fw="bold" lh="s">{displayTitle}</HTML.span>
+      <Inline class="c--linkCard__title" fz="m" fw="bold" lh="s">{displayTitle}</Inline>
       {
         displayDescription && (
-          <HTML.span class="c--linkCard__desc" fz="s" lh="s" o="-10">
+          <Inline class="c--linkCard__desc" fz="s" lh="s" o="-10">
             {displayDescription}
-          </HTML.span>
+          </Inline>
         )
       }
       <Flex g="10" ai="center" my-s="auto" py-s="10">
         {displayFavicon && <img src={displayFavicon} alt="" width="16" height="16" class="c--linkCard__favicon" loading="lazy" />}
-        <HTML.span class="c--linkCard__site" fz="xs" lh="1" o="-10">{displaySiteName}</HTML.span>
+        <Inline class="c--linkCard__site" fz="xs" lh="1" o="-10">{displaySiteName}</Inline>
       </Flex>
     </Stack>
 

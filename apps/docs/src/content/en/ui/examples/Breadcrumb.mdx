@@ -3,7 +3,7 @@ title: 'Breadcrumb'
 description: 'Example implementation of breadcrumb navigation using Lism CSS.'
 ---
 
-import { Cluster, Icon, Spacer, HTML, Decorator } from 'lism-css/astro';
+import { Cluster, Icon, Spacer, Decorator, Link, ListItem } from 'lism-css/astro';
 
 
 Examples of using Lism to display breadcrumb navigation.
@@ -15,41 +15,41 @@ Examples of using Lism to display breadcrumb navigation.
   <PreviewTitle>Example 1: with slash</PreviewTitle>
   <PreviewArea p='20'>
     <Cluster as="ol" g="15">
-      <HTML.li d="in-flex" ai="center" g="15">
-        <HTML.a href="#menu-1" c="20">
+      <ListItem d="in-flex" ai="center" g="15">
+        <Link href="#menu-1" c="20">
           Menu item 1
-        </HTML.a>
-      </HTML.li>
-      <HTML.li d="in-flex" ai="center" g="15">
+        </Link>
+      </ListItem>
+      <ListItem d="in-flex" ai="center" g="15">
         <Decorator o="-20">/</Decorator>
-        <HTML.a href="#menu-2" c="20">
+        <Link href="#menu-2" c="20">
           Menu item 2
-        </HTML.a>
-      </HTML.li>
-      <HTML.li d="in-flex" ai="center" g="15">
+        </Link>
+      </ListItem>
+      <ListItem d="in-flex" ai="center" g="15">
         <Decorator o="-20">/</Decorator>
         <span>Current page titile...</span>
-      </HTML.li>
+      </ListItem>
     </Cluster>
   </PreviewArea>
   <PreviewCode slot='tab' label='JSX'>
     ```jsx
     <Cluster as="ol" g="15">
-      <HTML.li d="in-flex" ai="center" g="15">
-        <HTML.a href="#menu-1" c="20">
+      <ListItem d="in-flex" ai="center" g="15">
+        <Link href="#menu-1" c="20">
           Menu item 1
-        </HTML.a>
-      </HTML.li>
-      <HTML.li d="in-flex" ai="center" g="15">
+        </Link>
+      </ListItem>
+      <ListItem d="in-flex" ai="center" g="15">
         <Decorator o="-20">/</Decorator>
-        <HTML.a href="#menu-2" c="20">
+        <Link href="#menu-2" c="20">
           Menu item 2
-        </HTML.a>
-      </HTML.li>
-      <HTML.li d="in-flex" ai="center" g="15">
+        </Link>
+      </ListItem>
+      <ListItem d="in-flex" ai="center" g="15">
         <Decorator o="-20">/</Decorator>
         <span>Current page titile...</span>
-      </HTML.li>
+      </ListItem>
     </Cluster>;
     ```
   </PreviewCode>
@@ -76,41 +76,41 @@ Examples of using Lism to display breadcrumb navigation.
   <PreviewTitle>Example 2: with Icon</PreviewTitle>
   <PreviewArea p='20'>
     <Cluster as="ol" g="15">
-      <HTML.li d="in-flex" ai="center" g="15">
+      <ListItem d="in-flex" ai="center" g="15">
         <a class="set--plain" href="#menu-1">
           Menu item 1
         </a>
-      </HTML.li>
-      <HTML.li d="in-flex" ai="center" g="15">
+      </ListItem>
+      <ListItem d="in-flex" ai="center" g="15">
         <Icon icon="caret-right" c="text-2" />
         <a class="set--plain" href="#menu-2">
           Menu item 2
         </a>
-      </HTML.li>
-      <HTML.li d="in-flex" ai="center" g="15">
+      </ListItem>
+      <ListItem d="in-flex" ai="center" g="15">
         <Icon icon="caret-right" c="text-2" />
         <span class="-c:text-2">Current page titile...</span>
-      </HTML.li>
+      </ListItem>
     </Cluster>
   </PreviewArea>
   <PreviewCode slot='tab' label='JSX'>
     ```jsx
     <Cluster as="ol" g="15">
-      <HTML.li d="in-flex" ai="center" g="15">
+      <ListItem d="in-flex" ai="center" g="15">
         <a class="set--plain" href="#menu-1">
           Menu item 1
         </a>
-      </HTML.li>
-      <HTML.li d="in-flex" ai="center" g="15">
+      </ListItem>
+      <ListItem d="in-flex" ai="center" g="15">
         <Icon icon="caret-right" c="text-2" />
         <a class="set--plain" href="#menu-2">
           Menu item 2
         </a>
-      </HTML.li>
-      <HTML.li d="in-flex" ai="center" g="15">
+      </ListItem>
+      <ListItem d="in-flex" ai="center" g="15">
         <Icon icon="caret-right" c="text-2" />
         <span class="-c:text-2">Current page titile...</span>
-      </HTML.li>
+      </ListItem>
     </Cluster>;
     ```
   </PreviewCode>

@@ -3,7 +3,7 @@ title: 'Flow'
 description: 'Documentation for the Flow module in Lism CSS. A flow-root layout module that automatically manages spacing between child elements.'
 ---
 
-import { Flow, Box, Dummy, Lism, HTML } from 'lism-css/astro';
+import { Flow, Box, Dummy, Lism, Text } from 'lism-css/astro';
 
 
 `l--flow` is a layout module with `display: flow-root` that **manages spacing between child elements**.
@@ -136,11 +136,11 @@ When a non-token value is passed to `flow`, it is output as the `-flow:` class a
   <PreviewTitle>Setting a custom value</PreviewTitle>
   <PreviewArea p='20'>
     <Flow flow="10px" hov="itemGuide">
-      <HTML.p>Contents...</HTML.p>
+      <Text>Contents...</Text>
       <h2>Heading</h2>
       <Dummy lang="ja" length="s" />
-      <HTML.p>Contents...</HTML.p>
-      <HTML.p>Contents...</HTML.p>
+      <Text>Contents...</Text>
+      <Text>Contents...</Text>
     </Flow>
   </PreviewArea>
   <PreviewCode slot='tab' label='JSX'>

@@ -3,12 +3,12 @@ title: 'Design Tokens'
 description: 'A reference of all design tokens in Lism CSS, including colors, spacing, and shadows.'
 ---
 
-import { Dummy, Box, HTML, Stack, Cluster, Columns, Frame, Center } from 'lism-css/astro';
+import { Dummy, Box, Stack, Cluster, Columns, Frame, Center, Text, Inline } from 'lism-css/astro';
 import { FzDemos, SpacingDemos, BoxShadowDemos } from "@/content/token-previews.jsx";
 
 export const ColorBadge = ({color, label}) => {
   return <Cluster g='10'>
-      <HTML.span w='1.5em' ar='1/1' bgc={color} bdrs='10' bxsh='10' />
+      <Inline w='1.5em' ar='1/1' bgc={color} bdrs='10' bxsh='10' />
       <code>{label || color}</code>
     </Cluster>;
 }
@@ -36,13 +36,13 @@ Adjust these colors to match your site's design.
   <PreviewTitle>Preview</PreviewTitle>
   <PreviewArea p='30'>
     <Box bd p='30'>
-      <HTML.p fw='bold' c='brand'>Main color example text</HTML.p>
+      <Text fw='bold' c='brand'>Main color example text</Text>
       <Dummy length='codes' pre='text: ' />
       <Dummy c='text-2' length='s' pre='text-2: ' />
     </Box>
 
     <Box bgc='base-2' p='30'>
-      <HTML.p fw='bold' c='accent'>Accent color example text</HTML.p>
+      <Text fw='bold' c='accent'>Accent color example text</Text>
       <Dummy length='codes' pre='text: ' />
       <Dummy c='text-2' length='s' pre='text-2: ' />
       </Box>
@@ -195,9 +195,9 @@ The value of `--bxsh--{token}` is composed of the following variables.
   </PreviewCode>
   <PreviewCode slot='tab' label='JSX'>
     ```jsx
-    <HTML.p o='-10'>Lorem ipsum ...</HTML.p>
-    <HTML.p o='-20'>Lorem ipsum ...</HTML.p>
-    <HTML.p o='-30'>Lorem ipsum ...</HTML.p>
+    <Text o='-10'>Lorem ipsum ...</Text>
+    <Text o='-20'>Lorem ipsum ...</Text>
+    <Text o='-30'>Lorem ipsum ...</Text>
     ```
   </PreviewCode>
 </Preview>

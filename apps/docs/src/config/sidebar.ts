@@ -171,13 +171,7 @@ const docsSidebar: SidebarSection[] = [
   },
   {
     label: 'Atomic Modules',
-    items: [
-      '/docs/modules/a--decorator/',
-      '/docs/modules/a--divider/',
-      '/docs/modules/a--icon/',
-      '/docs/modules/a--media/',
-      '/docs/modules/a--spacer/',
-    ],
+    items: ['/docs/modules/a--decorator/', '/docs/modules/a--divider/', '/docs/modules/a--icon/', '/docs/modules/a--spacer/'],
   },
   {
     label: 'Props',

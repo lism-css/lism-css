@@ -1,22 +1,22 @@
 ---
 import DemoLayout from '@/layouts/DemoLayout.astro';
 
-import { Container, Frame, Grid, Media, Stack, HTML } from 'lism-css/astro';
+import { Container, Frame, Grid, Media, Stack, Text, Heading } from 'lism-css/astro';
 import './_style.css';
 ---
 
 <DemoLayout title="Member003">
   <Container isWrapper="l" bgc="base" py="50" setGutter>
     <Stack g="50">
-      <HTML.h lv="2" class="u--trim" fz="4xl" fw="medium" ff="accent" lts="l" ta="center">Member</HTML.h>
+      <Heading level="2" class="u--trim" fz="4xl" fw="medium" ff="accent" lts="l" ta="center">Member</Heading>
       <Grid gtc="repeat(auto-fit, minmax(10rem, 1fr))" g="40">
         <Stack g="30">
           <Frame as="figure" ar="2/3" w="stretch" bdrs="10">
             <Media src="https://cdn.lism-css.com/img/random-2510?category=staff&r=1" width="960" height="640" />
           </Frame>
           <Stack g="20">
-            <HTML.p class="u--trim" fz="m" fw="bold">鈴木 太郎</HTML.p>
-            <HTML.p class="u--trim" fz="xs" o="-10">代表取締役 / クリエイティブディレクター</HTML.p>
+            <Text class="u--trim" fz="m" fw="bold">鈴木 太郎</Text>
+            <Text class="u--trim" fz="xs" o="-10">代表取締役 / クリエイティブディレクター</Text>
           </Stack>
         </Stack>
         <Stack g="30">
@@ -24,8 +24,8 @@ import './_style.css';
             <Media src="https://cdn.lism-css.com/img/random-2510?category=staff&r=2" width="960" height="640" />
           </Frame>
           <Stack g="20">
-            <HTML.p class="u--trim" fz="m" fw="bold">佐藤 美咲</HTML.p>
-            <HTML.p class="u--trim" fz="xs" o="-10">アートディレクター / UI/UXデザイナー</HTML.p>
+            <Text class="u--trim" fz="m" fw="bold">佐藤 美咲</Text>
+            <Text class="u--trim" fz="xs" o="-10">アートディレクター / UI/UXデザイナー</Text>
           </Stack>
         </Stack>
         <Stack g="30">
@@ -33,8 +33,8 @@ import './_style.css';
             <Media src="https://cdn.lism-css.com/img/random-2510?category=staff&r=3" width="960" height="640" />
           </Frame>
           <Stack g="20">
-            <HTML.p class="u--trim" fz="m" fw="bold">高橋 健太</HTML.p>
-            <HTML.p class="u--trim" fz="xs" o="-10">テクニカルディレクター / リードエンジニア</HTML.p>
+            <Text class="u--trim" fz="m" fw="bold">高橋 健太</Text>
+            <Text class="u--trim" fz="xs" o="-10">テクニカルディレクター / リードエンジニア</Text>
           </Stack>
         </Stack>
         <Stack g="30">
@@ -42,8 +42,8 @@ import './_style.css';
             <Media src="https://cdn.lism-css.com/img/random-2510?category=staff&r=4" width="960" height="640" />
           </Frame>
           <Stack g="20">
-            <HTML.p class="u--trim" fz="m" fw="bold">田中 雄大</HTML.p>
-            <HTML.p class="u--trim" fz="xs" o="-10">Webディレクター / プロジェクトマネージャー</HTML.p>
+            <Text class="u--trim" fz="m" fw="bold">田中 雄大</Text>
+            <Text class="u--trim" fz="xs" o="-10">Webディレクター / プロジェクトマネージャー</Text>
           </Stack>
         </Stack>
       </Grid>

@@ -5,7 +5,7 @@
  * カテゴリ別にテンプレートを一覧表示
  */
 import BaseLayout from '@/layouts/BaseLayout.astro';
-import { Stack, FluidCols, HTML, Frame, LinkBox, Box, Lism } from 'lism-css/astro';
+import { Stack, FluidCols, Frame, LinkBox, Box, Lism, Text, Inline, Heading } from 'lism-css/astro';
 import { templates, categoryIds, type TemplateCategoryId } from '@/config/templates';
 import { filterDraftItems } from '@/lib/templates';
 ---
@@ -14,7 +14,7 @@ import { filterDraftItems } from '@/lib/templates';
   <Stack g="40" class="templates">
     <Stack as="header" g="20">
       <h1>Web Templates</h1>
-      <HTML.p c="text-2">コピペで簡単に利用できる、Lism CSSを使ったWebサイトテンプレート集です。</HTML.p>
+      <Text c="text-2">コピペで簡単に利用できる、Lism CSSを使ったWebサイトテンプレート集です。</Text>
     </Stack>
 
     <Stack g="40">
@@ -25,12 +25,12 @@ import { filterDraftItems } from '@/lib/templates';
           const items = filterDraftItems(category.items);
           return (
             <Box as="section">
-              <HTML.h lv="2" layout="flex" ai="center" g="10" fz="xl" bd-b py="10" px="5">
+              <Heading level="2" layout="flex" ai="center" g="10" fz="xl" bd-b py="10" px="5">
                 <span>{category.label}</span>
-                <HTML.span fz="xs" c="text-2" fw="normal">
+                <Inline fz="xs" c="text-2" fw="normal">
                   ({items.length})
-                </HTML.span>
-              </HTML.h>
+                </Inline>
+              </Heading>
 
               <FluidCols autoFill cols="24rem" g="20" my-s="20" class="templateList">
                 {items.map((item) => (

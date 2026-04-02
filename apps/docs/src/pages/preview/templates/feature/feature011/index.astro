@@ -1,7 +1,7 @@
 ---
 import DemoLayout from '@/layouts/DemoLayout.astro';
 
-import { Container, Grid, Box, HTML, Flex, Center, Icon } from 'lism-css/astro';
+import { Container, Grid, Box, Flex, Center, Icon, Text, Inline } from 'lism-css/astro';
 import { Button } from '@lism-css/ui/astro';
 import './_style.css';
 ---
@@ -38,11 +38,11 @@ import './_style.css';
         >
           <Grid gtc="subgrid" g="inherit" gc={['1', null, '1 / span 2']}>
             <Flex g={['20', null, '30']} ai="center">
-              <HTML.span layout="center" fxsh="0" fz="xs" lh="xs" c="base" py="10" px={['15', '20']} bgc="text" bdrs="99">POINT 1</HTML.span>
-              <HTML.p fz="m" fw="bold">楽しみながら計画的に資産形成</HTML.p>
+              <Inline layout="center" fxsh="0" fz="xs" lh="xs" c="base" py="10" px={['15', '20']} bgc="text" bdrs="99">POINT 1</Inline>
+              <Text fz="m" fw="bold">楽しみながら計画的に資産形成</Text>
             </Flex>
             <Flex ai="center" c="text" td="none" g="30">
-              <HTML.p>目標金額を設定して貯蓄ができる「目的別預金」が登場。楽しみながら計画的な資産形成が行えます。</HTML.p>
+              <Text>目標金額を設定して貯蓄ができる「目的別預金」が登場。楽しみながら計画的な資産形成が行えます。</Text>
             </Flex>
           </Grid>
           <Center w="fit" bd p="15" bdrs="99" setTransition hov="to:reverse">
@@ -66,11 +66,11 @@ import './_style.css';
         >
           <Grid gtc="subgrid" g="inherit" gc={['1', null, '1 / span 2']}>
             <Flex g={['20', null, '30']} ai="center">
-              <HTML.span layout="center" fxsh="0" fz="xs" lh="xs" c="base" py="10" px={['15', '20']} bgc="text" bdrs="99">POINT 2</HTML.span>
-              <HTML.p fz="m" fw="bold">安心のセキュリティ体制</HTML.p>
+              <Inline layout="center" fxsh="0" fz="xs" lh="xs" c="base" py="10" px={['15', '20']} bgc="text" bdrs="99">POINT 2</Inline>
+              <Text fz="m" fw="bold">安心のセキュリティ体制</Text>
             </Flex>
             <Flex ai="center" c="text" td="none" g="30">
-              <HTML.p>通信の暗号化や二段階認証を導入。お客様の大切な資産と個人情報を厳重に保護します。</HTML.p>
+              <Text>通信の暗号化や二段階認証を導入。お客様の大切な資産と個人情報を厳重に保護します。</Text>
             </Flex>
           </Grid>
           <Center w="fit" bd p="15" bdrs="99" setTransition hov="to:reverse">
@@ -94,11 +94,11 @@ import './_style.css';
         >
           <Grid gtc="subgrid" g="inherit" gc={['1', null, '1 / span 2']}>
             <Flex g={['20', null, '30']} ai="center">
-              <HTML.span layout="center" fxsh="0" fz="xs" lh="xs" c="base" py="10" px={['15', '20']} bgc="text" bdrs="99">POINT 3</HTML.span>
-              <HTML.p fz="m" fw="bold">必要なものはスマホだけ！</HTML.p>
+              <Inline layout="center" fxsh="0" fz="xs" lh="xs" c="base" py="10" px={['15', '20']} bgc="text" bdrs="99">POINT 3</Inline>
+              <Text fz="m" fw="bold">必要なものはスマホだけ！</Text>
             </Flex>
             <Flex ai="center" c="text" td="none" g="30">
-              <HTML.p>口座開設から運用状況の確認までスマホアプリで完結。いつでも手軽に資産をチェックできます。</HTML.p>
+              <Text>口座開設から運用状況の確認までスマホアプリで完結。いつでも手軽に資産をチェックできます。</Text>
             </Flex>
           </Grid>
           <Center w="fit" bd p="15" bdrs="99" setTransition hov="to:reverse">

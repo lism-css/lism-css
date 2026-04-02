@@ -1,7 +1,7 @@
 ---
 import DemoLayout from '@/layouts/DemoLayout.astro';
 
-import { Stack, Container, Frame, Grid, Media, HTML, Flex } from 'lism-css/astro';
+import { Stack, Container, Frame, Grid, Media, Flex, Text, Heading } from 'lism-css/astro';
 import { Button } from '@lism-css/ui/astro';
 import './_style.css';
 ---
@@ -12,15 +12,15 @@ import './_style.css';
       <Grid gtc={['auto', null, '1fr 1fr']}>
         <Stack g="40" jc="center" bgc="base-2" p={['50 40', null, '50']} min-h="50svw">
           <Stack as="hgroup" g="30" ai="fs" jc="center">
-            <HTML.h lv="2" class="u--trim" fz="4rem" fw="100" lts="l">Product</HTML.h>
-            <HTML.p class="u--trim" fz="l" fw="bold" lts="l">いつもの朝が、特別な朝に</HTML.p>
+            <Heading level="2" class="u--trim" fz="4rem" fw="100" lts="l">Product</Heading>
+            <Text class="u--trim" fz="l" fw="bold" lts="l">いつもの朝が、特別な朝に</Text>
           </Stack>
-          <HTML.p fz="m" lh="l">
+          <Text fz="m" lh="l">
             完璧な一枚のトーストが、忙しい朝を、心豊かな時間に変えてくれます。
             独自のスチームテクノロジーと秒単位の温度制御で、パンの種類に合わせた最高の焼き加減を実現。
             外はさっくり、中はもっちりとした、誰もが感動する究極の食感を生み出します。
             パン本来のおいしさを最大限に引き出す、毎朝の小さな贅沢をお楽しみください。
-          </HTML.p>
+          </Text>
           <Flex>
             <Button href="#" jc="center" p="15" bdrs="10" min-w="10rem">View More</Button>
           </Flex>

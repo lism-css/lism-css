@@ -3,7 +3,7 @@ title: 'Center'
 description: 'Documentation for the Center module in Lism CSS. A layout module for centering elements both horizontally and vertically.'
 ---
 
-import { Center, Frame, Box, HTML, Spacer, Dummy, Media } from 'lism-css/astro';
+import { Center, Frame, Box, Spacer, Dummy, Media, Text } from 'lism-css/astro';
 
 A module for centering **elements** both horizontally and vertically.
 
@@ -45,13 +45,13 @@ For horizontal centering only, `<Stack ai="center">` also works.
   </PreviewTitle>
   <PreviewArea resize p='15'>
     <Center bd p="30">
-      <HTML.p fz="l">TEXT</HTML.p>
+      <Text fz="l">TEXT</Text>
     </Center>
   </PreviewArea>
   <PreviewCode slot='tab' label='JSX'>
     ```jsx
     <Center bd p="30">
-      <HTML.p fz="l">TEXT</HTML.p>
+      <Text fz="l">TEXT</Text>
     </Center>;
     ```
   </PreviewCode>
@@ -70,7 +70,7 @@ For horizontal centering only, `<Stack ai="center">` also works.
   </PreviewTitle>
   <PreviewArea resize p='15'>
     <Center bd p="30" g="15">
-      <HTML.p fz="l">TEXT</HTML.p>
+      <Text fz="l">TEXT</Text>
       <Dummy length="xs" lang="ja" />
       <Dummy lang="ja" />
     </Center>
@@ -78,7 +78,7 @@ For horizontal centering only, `<Stack ai="center">` also works.
   <PreviewCode slot='tab' label='JSX'>
     ```jsx
     <Center bd p="30" g="15">
-      <HTML.p fz="l">TEXT</HTML.p>
+      <Text fz="l">TEXT</Text>
       <p>...</p>
       <p>...</p>
     </Center>;
@@ -106,15 +106,15 @@ When Center has a **height or aspect ratio** set, content is also centered verti
   </PreviewTitle>
   <PreviewArea p='15'>
     <Center g="10" ar="3/2" bd>
-      <HTML.p fz="l">TEXT</HTML.p>
-      <HTML.p fz="s">Lorem ipsum dolor sit amet.</HTML.p>
+      <Text fz="l">TEXT</Text>
+      <Text fz="s">Lorem ipsum dolor sit amet.</Text>
     </Center>
   </PreviewArea>
   <PreviewCode slot='tab' label='JSX'>
     ```jsx "ar='3/2'"
     <Center g="10" ar="3/2" bd>
-      <HTML.p fz="l">TEXT</HTML.p>
-      <HTML.p fz="s">Lorem ipsum dolor sit amet.</HTML.p>
+      <Text fz="l">TEXT</Text>
+      <Text fz="s">Lorem ipsum dolor sit amet.</Text>
     </Center>;
     ```
   </PreviewCode>

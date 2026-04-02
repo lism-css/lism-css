@@ -3,7 +3,7 @@ title: '-hov'
 description: 'How to use the -hov prop classes for controlling hover behavior and transitions.'
 ---
 
-import { Flex, HTML, Media, Layer, Spacer, Box, Center, Stack, Frame, LinkBox } from 'lism-css/react';
+import { Flex, Media, Layer, Spacer, Box, Center, Stack, Frame, LinkBox, Text, Inline } from 'lism-css/react';
 
 
 This page introduces the CSS design for controlling hover behavior in Lism.
@@ -325,9 +325,9 @@ The core package includes a small set of such child-targeting classes under the 
       <Media isLayer src="https://cdn.lism-css.com/img/a-1.jpg" alt="" width="960" height="640" loading="lazy" />
       <Layer setTransition hov="to:show" bgc="rgb(0 0 0 / 40%)" blur="6px">
         <Center h="100%" c="#fff">
-          <HTML.span fz="2xl" fs="italic" fw="light" lts="l" bdrs="99" px="20" py="10">
+          <Inline fz="2xl" fs="italic" fw="light" lts="l" bdrs="99" px="20" py="10">
             View More
-          </HTML.span>
+          </Inline>
         </Center>
       </Layer>
     </Frame>
@@ -335,7 +335,7 @@ The core package includes a small set of such child-targeting classes under the 
   <PreviewCode slot='tab' label='HTML'>
     ```html "set--hov" "-hov:to:show" "set--transition"
     <a class="l--frame is--linkBox set--hov -ar:16/9 -bdrs:30" href="#banner-link">
-      <img class="a--media is--layer" src="https://cdn.lism-css.com/img/a-1.jpg" width="960" height="640" loading="lazy" />
+      <img class="is--layer" src="https://cdn.lism-css.com/img/a-1.jpg" width="960" height="640" loading="lazy" />
       <div class="is--layer set--transition -hov:to:show -bgc" style="--bgc: rgb(0 0 0 / 10%); backdrop-filter: blur(6px)">
         <div class="l--center -h:100% -c" style="--c: #fff">
           <span class="-fz:2xl -fs:italic -fw:light -lts:l -bdrs:99 -px:20 -py:10">View More</span>
@@ -350,9 +350,9 @@ The core package includes a small set of such child-targeting classes under the 
       <Media isLayer src="https://cdn.lism-css.com/img/a-1.jpg" alt="" width="960" height="640" loading="lazy" />
       <Layer setTransition hov="to:show" bgc="rgb(0 0 0 / 40%)" blur="6px">
         <Center h="100%" c="#fff">
-          <HTML.span fz="2xl" fs="italic" fw="light" lts="l" bdrs="99" px="20" py="10">
+          <Inline fz="2xl" fs="italic" fw="light" lts="l" bdrs="99" px="20" py="10">
             View More
-          </HTML.span>
+          </Inline>
         </Center>
       </Layer>
     </Frame>;
@@ -382,9 +382,9 @@ Additionally, we'll override `--hov-duration` on the parent to change the transi
       </Frame>
       <Layer setTransition hov="to:hide" grayscale="70%" />
       <Center isLayer c="#fff" bgc="rgb(0 0 0 / 40%)">
-        <HTML.p setTransition hov="to:letterSpread" fz="2xl">
+        <Text setTransition hov="to:letterSpread" fz="2xl">
           LinkBox
-        </HTML.p>
+        </Text>
       </Center>
     </LinkBox>
   </PreviewArea>
@@ -401,7 +401,7 @@ Additionally, we'll override `--hov-duration` on the parent to change the transi
     ```html "set--hov" "-hov:to:zoom" "-hov:to:letterSpread" "--hov-duration"
     <a href="#banner-link" class="is--linkBox set--hov -ar:16/9 -ov:hidden -bdrs:30" style="--hov-duration: 0.4s">
       <div class="l--frame is--layer">
-        <img class="a--media is--layer set--transition -hov:to:zoom" src="https://cdn.lism-css.com/img/a-2.jpg" width="960" height="640" loading="lazy" />
+        <img class="is--layer set--transition -hov:to:zoom" src="https://cdn.lism-css.com/img/a-2.jpg" width="960" height="640" loading="lazy" />
       </div>
       <div class="l--center is--layer -c -bgc" style="--c: #fff; --bgc: rgb(0 0 0 / 40%)">
         <span class="-hov:to:letterSpread -fz:2xl">LinkBox</span>
@@ -417,9 +417,9 @@ Additionally, we'll override `--hov-duration` on the parent to change the transi
       </Frame>
       <Layer setTransition hov="to:hide" grayscale="70%" />
       <Center isLayer c="#fff" bgc="rgb(0 0 0 / 40%)">
-        <HTML.p setTransition hov="to:letterSpread" fz="2xl">
+        <Text setTransition hov="to:letterSpread" fz="2xl">
           LinkBox
-        </HTML.p>
+        </Text>
       </Center>
     </LinkBox>;
     ```

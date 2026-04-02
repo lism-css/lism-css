@@ -1,5 +1,5 @@
 ---
-import { HTML } from 'lism-css/astro';
+import { Lism } from 'lism-css/astro';
 import { getLangFromUrl, t } from '@/lib/i18n';
 
 const { fileContent, ...props } = Astro.props;
@@ -9,7 +9,8 @@ const copyText = t(lang, 'copyCode');
 // icons: ionicons
 ---
 
-<HTML.button
+<Lism
+  as="button"
   class="c--copyBtn -hov:to:show"
   setTransition
   data-code={fileContent}
@@ -40,7 +41,7 @@ const copyText = t(lang, 'copyCode');
 
   <span class="c--copyBtn__text -d:none" id="label--copy-code">{copyText.copy}</span>
   <span class="c--copyBtn__text -d:none" id="label--copy-code-done">{copyText.copied}</span>
-</HTML.button>
+</Lism>
 
 <style>
   .c--copyBtn {

@@ -1,7 +1,7 @@
 ---
 import DemoLayout from '@/layouts/DemoLayout.astro';
 
-import { Wrapper, Grid, Flex, Frame, Media, Stack, HTML, Flow } from 'lism-css/astro';
+import { Wrapper, Grid, Flex, Frame, Media, Stack, Flow, Inline, Heading } from 'lism-css/astro';
 import './_style.css';
 ---
 
@@ -9,8 +9,8 @@ import './_style.css';
   <Wrapper contentSize="l" py="50" bgc="base" setGutter>
     <Stack g="50">
       <Stack class="u--trimChildren" g="40">
-        <HTML.span fz="min(22vw, 10rem)" fw="bold" ff="accent" mx-s="-.5rem" c="gray" o="-30" whspace="nowrap">Greeting</HTML.span>
-        <HTML.h lv="2" fz="3xl" fw="bold" ff="accent">代表メッセージ</HTML.h>
+        <Inline fz="min(22vw, 10rem)" fw="bold" ff="accent" mx-s="-.5rem" c="gray" o="-30" whspace="nowrap">Greeting</Inline>
+        <Heading level="2" fz="3xl" fw="bold" ff="accent">代表メッセージ</Heading>
       </Stack>
       <Flow fz="l" lh="l">
         <p>
@@ -31,8 +31,8 @@ import './_style.css';
             <Media src="https://cdn.lism-css.com/img/random-2510?category=ceo" alt="" width="960" height="640" objectPosition="50% 20%" />
           </Frame>
           <Stack g="20" class="u--trimChildren" ff="accent">
-            <HTML.span fz="l">代表取締役社長</HTML.span>
-            <HTML.span fz="xl" fw="bold">田中　誠二</HTML.span>
+            <Inline fz="l">代表取締役社長</Inline>
+            <Inline fz="xl" fw="bold">田中　誠二</Inline>
           </Stack>
         </Grid>
       </Flex>

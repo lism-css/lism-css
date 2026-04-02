@@ -1,14 +1,13 @@
 ---
 title: 'Media'
-description: 'Documentation for the Media module in Lism CSS. A general-purpose class and component for styling media elements like images and videos.'
+description: 'A Lism component for outputting media elements such as images and videos.'
+order: 3
 ---
-import { Lism, HTML, Dummy, Media, Frame } from "lism-css/astro";
+import { Lism, Dummy, Media, Frame } from "lism-css/astro";
 
 
-The `a--media` class is a general-purpose class that can be applied to media elements.
-On its own, it only sets `display:block`.
-
-A dedicated `<Media>` component is provided, which outputs an `<img>` tag by default.
+`<Media>` is a Lism component for outputting media elements such as images and videos.  
+It outputs an `<img>` tag by default.
 
 ## Props
 
@@ -36,8 +35,8 @@ A dedicated `<Media>` component is provided, which outputs an `<img>` tag by def
     ```
   </PreviewCode>
   <PreviewCode slot='tab' label='HTML'>
-    ```jsx
-    <img class="a--media" src="https://cdn.lism-css.com/img/a-1.jpg" width="960" height="640" alt="Dummy Image" />;
+    ```html
+    <img src="https://cdn.lism-css.com/img/a-1.jpg" width="960" height="640" alt="Dummy Image" />
     ```
   </PreviewCode>
 </Preview>
@@ -82,7 +81,7 @@ A dedicated `<Media>` component is provided, which outputs an `<img>` tag by def
   <PreviewCode slot='tab' label='HTML'>
     ```html
     <figure class="l--frame -ar:16/9">
-      <img class="a--media" style="object-position: 50% 0%" src="https://cdn.lism-css.com/img/a-1.jpg" width="960" height="640" />
+      <img style="object-position: 50% 0%" src="https://cdn.lism-css.com/img/a-1.jpg" width="960" height="640" />
     </figure>
     ```
   </PreviewCode>
@@ -99,7 +98,7 @@ Next.js `Image` and similar components can be passed via the `as` property.
 import { Media } from 'lism-css/react';
 import Image from 'next/image';
 
-<Media as={Image} src="/img.jpg" alt="" width="960" height="640" alt="Dummy Image" />;
+<Media as={Image} src="/img.jpg" alt="Dummy Image" width="960" height="640" />;
 ```
 
 #### Using Astro `<Image>`

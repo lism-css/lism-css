@@ -3,7 +3,7 @@ title: 'Card'
 description: 'Example implementation of card-style content layouts using Lism CSS.'
 ---
 
-import { Dummy, HTML, Box, Flex, Stack, Center, Grid, Frame, LinkBox, Layer, Columns, Media, SideMain } from 'lism-css/astro';
+import { Dummy, Box, Flex, Stack, Center, Grid, Frame, LinkBox, Layer, Columns, Media, SideMain, Text, Inline, Group, Link } from 'lism-css/astro';
 import Card from '@/components/ex/Card/index.jsx';
 
 
@@ -18,8 +18,8 @@ export const ExampleCard = (props) => {
       </Frame>
       <Stack g='30' p='30'>
         <h3 className='u--trim -fz:l'>Card Title</h3>
-        <HTML.p className='u--trim' fz='s' lh='s' o='-10'>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</HTML.p>
-        <HTML.span d='in-flex' mx-s='auto' my-s='auto' c='inherit' td='none' bd-b lh='s' p='10'>View More →</HTML.span>
+        <Text className='u--trim' fz='s' lh='s' o='-10'>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</Text>
+        <Inline d='in-flex' mx-s='auto' my-s='auto' c='inherit' td='none' bd-b lh='s' p='10'>View More →</Inline>
       </Stack>
     </SideMain>
   )
@@ -32,7 +32,7 @@ export const ExampleImgCard = (props) => {
       <Layer bgc='rgb(0 0 0 / 20%)'/>
       <Layer layout='stack' c='white' p='30' g='30'>
         <h3 className='u--trim -fz:l -my-s:auto'>Card Title</h3>
-        <HTML.p className='u--trim' fz='s' lh='s' o='-10'>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</HTML.p>
+        <Text className='u--trim' fz='s' lh='s' o='-10'>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</Text>
         <Center as='a' href='#' c='black' bgc='white' td='none' lh='s' p='15' bdrs='99' hov='neutral'>Link Text</Center>
       </Layer>
     </Frame>
@@ -57,12 +57,12 @@ Additionally, [`is--linkBox`](/docs/modules/is--linkBox/) is applied to make the
       </Frame>
       <Stack g="30" p="30">
         <h3 className="u--trim -fz:l">Card Title</h3>
-        <HTML.p className="u--trim" fz="s" lh="s" o="-10">
+        <Text className="u--trim" fz="s" lh="s" o="-10">
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-        </HTML.p>
-        <HTML.span d="in-flex" mx-s="auto" my-s="auto" c="inherit" td="none" bd-b lh="s" p="10">
+        </Text>
+        <Inline d="in-flex" mx-s="auto" my-s="auto" c="inherit" td="none" bd-b lh="s" p="10">
           View More →
-        </HTML.span>
+        </Inline>
       </Stack>
     </SideMain>
   </PreviewArea>
@@ -74,12 +74,12 @@ Additionally, [`is--linkBox`](/docs/modules/is--linkBox/) is applied to make the
       </Frame>
       <Stack g="30" p="30">
         <h3 className="u--trim -fz:l">Card Title</h3>
-        <HTML.p className="u--trim" fz="s" lh="s" o="-10">
+        <Text className="u--trim" fz="s" lh="s" o="-10">
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-        </HTML.p>
-        <HTML.span d="in-flex" mx-s="auto" my-s="auto" c="inherit" td="none" bd-b lh="s" p="10">
+        </Text>
+        <Inline d="in-flex" mx-s="auto" my-s="auto" c="inherit" td="none" bd-b lh="s" p="10">
           View More →
-        </HTML.span>
+        </Inline>
       </Stack>
     </SideMain>;
     ```
@@ -97,46 +97,46 @@ When you want to make the entire card a link while also including a separate lin
     <SideMain isLinkBox hov="bxsh" setTransition sideW="50%" bgc="base" bdrs="20" bxsh="10" ov="hidden">
       <Frame isSide ar="16/9" pos="rel">
         <Media src="https://cdn.lism-css.com/img/a-1.jpg" alt="" width="960" height="640" />
-        <HTML.a href="#badge-link" pos="abs" t="0" r="0" fz="s" bgc="black" c="white" m="20" px="15" bdrs="99" td="none" hov="neutral">
+        <Link href="#badge-link" pos="abs" t="0" r="0" fz="s" bgc="black" c="white" m="20" px="15" bdrs="99" td="none" hov="neutral">
           Category
-        </HTML.a>
+        </Link>
       </Frame>
       <Stack g="30" p="30">
         <h3 className="u--trim -fz:l">
-          <HTML.a className="u--expandedLink" href="#card-link">
+          <Link className="u--expandedLink" href="#card-link">
             Card with .u--expandedLink
-          </HTML.a>
+          </Link>
         </h3>
-        <HTML.p className="u--trim" fz="s" lh="s" o="-10">
+        <Text className="u--trim" fz="s" lh="s" o="-10">
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-        </HTML.p>
-        <HTML.span d="in-flex" mx-s="auto" my-s="auto" c="inherit" td="none" bd-b lh="s" p="10">
+        </Text>
+        <Inline d="in-flex" mx-s="auto" my-s="auto" c="inherit" td="none" bd-b lh="s" p="10">
           View More →
-        </HTML.span>
+        </Inline>
       </Stack>
     </SideMain>
   </PreviewArea>
   <PreviewCode slot='tab' label='JSX'>
-    ```jsx "isLinkBox" "\<HTML.a " "u--expandedLink"
+    ```jsx "isLinkBox" "\<Link " "u--expandedLink"
     <SideMain isLinkBox hov="bxsh" setTransition sideW="50%" bgc="base" bdrs="20" bxsh="10" ov="hidden">
       <Frame isSide ar="16/9" pos="rel">
         <Media src="https://cdn.lism-css.com/img/a-1.jpg" alt="" width="960" height="640" />
-        <HTML.a href="#badge-link" pos="abs" t="0" r="0" fz="s" bgc="black" c="white" m="20" px="15" bdrs="99" td="none" hov="neutral">
+        <Link href="#badge-link" pos="abs" t="0" r="0" fz="s" bgc="black" c="white" m="20" px="15" bdrs="99" td="none" hov="neutral">
           Category
-        </HTML.a>
+        </Link>
       </Frame>
       <Stack g="30" p="30">
         <h3 className="u--trim -fz:l">
-          <HTML.a className="u--expandedLink" href="#card-link">
+          <Link className="u--expandedLink" href="#card-link">
             Card with .u--expandedLink
-          </HTML.a>
+          </Link>
         </h3>
-        <HTML.p className="u--trim" fz="s" lh="s" o="-10">
+        <Text className="u--trim" fz="s" lh="s" o="-10">
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-        </HTML.p>
-        <HTML.span d="in-flex" mx-s="auto" my-s="auto" c="inherit" td="none" bd-b lh="s" p="10">
+        </Text>
+        <Inline d="in-flex" mx-s="auto" my-s="auto" c="inherit" td="none" bd-b lh="s" p="10">
           View More →
-        </HTML.span>
+        </Inline>
       </Stack>
     </SideMain>;
     ```
@@ -158,9 +158,9 @@ When you want to make the entire card a link while also including a separate lin
       <Layer bgc="rgb(0 0 0 / 20%)" />
       <Layer layout="stack" c="white" p="30" g="30">
         <h3 className="u--trim -fz:l -my-s:auto">Card Title</h3>
-        <HTML.p className="u--trim" fz="s" lh="s" o="-10">
+        <Text className="u--trim" fz="s" lh="s" o="-10">
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-        </HTML.p>
+        </Text>
         <Center as="a" href="#" c="black" bgc="white" td="none" lh="s" p="15" bdrs="99" hov="neutral">
           Link Text
         </Center>
@@ -171,7 +171,7 @@ When you want to make the entire card a link while also including a separate lin
   <PreviewCode slot='tab' label='HTML'>
     ```html
     <div class="l--frame -pos:rel -ar -bdrs:30 -bxsh:30 -max-w" style="--ar: 3/4; --max-w: 24em">
-      <img class="a--media" src="https://cdn.lism-css.com/img/a-1.jpg" width="960" height="640" />
+      <img src="https://cdn.lism-css.com/img/a-1.jpg" width="960" height="640" />
       <div class="is--layer -bgc" style="--bgc: rgb(0 0 0 / 20%)"></div>
       <div class="l--stack is--layer -c -p:30 -g:30" style="--c: var(--white)">
         <h3 class="u--trim -fz:l -my-s:auto">Card Title</h3>
@@ -196,12 +196,12 @@ When you want to make the entire card a link while also including a separate lin
       </Frame>
       <Stack g="30" p="15">
         <h3 className="u--trim -fz:l">Card Title</h3>
-        <HTML.p className="u--trim" fz="s" lh="s" o="-10">
+        <Text className="u--trim" fz="s" lh="s" o="-10">
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-        </HTML.p>
-        <HTML.a href="#" d="in-flex" mx-s="auto" c="base" bgc="text" td="none" lh="s" py="15" px="20" jc="center" hov="neutral" bdrs="inner">
+        </Text>
+        <Link href="#" d="in-flex" mx-s="auto" c="base" bgc="text" td="none" lh="s" py="15" px="20" jc="center" hov="neutral" bdrs="inner">
           View More →
-        </HTML.a>
+        </Link>
       </Stack>
     </Stack>
   </PreviewArea>
@@ -213,12 +213,12 @@ When you want to make the entire card a link while also including a separate lin
       </Frame>
       <Stack g="30" p="15">
         <h3 className="u--trim -fz:l">Card Title</h3>
-        <HTML.p className="u--trim" fz="s" lh="s" o="-10">
+        <Text className="u--trim" fz="s" lh="s" o="-10">
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-        </HTML.p>
-        <HTML.a href="#" d="in-flex" mx-s="auto" c="base" bgc="text" td="none" lh="s" py="15" px="20" jc="center" hov="neutral" bdrs="inner">
+        </Text>
+        <Link href="#" d="in-flex" mx-s="auto" c="base" bgc="text" td="none" lh="s" py="15" px="20" jc="center" hov="neutral" bdrs="inner">
           View More →
-        </HTML.a>
+        </Link>
       </Stack>
     </Stack>;
     ```
@@ -227,7 +227,7 @@ When you want to make the entire card a link while also including a separate lin
     ```html
     <div class="l--stack set--innerRs -p:15 -g:20 -c:text -bgc:base -bdrs:30 -bxsh:30 -mx:auto -max-w" style="--max-w: var(--sz--xs)">
       <div class="l--frame is--side -ar:16/9">
-        <img class="a--media -bdrs:inner" src="https://cdn.lism-css.com/img/a-1.jpg" width="960" height="640" />
+        <img class="-bdrs:inner" src="https://cdn.lism-css.com/img/a-1.jpg" width="960" height="640" />
       </div>
       <div class="l--stack -g:30 -p:15">
         <h3 class="u--trim -fz:l">Card Title</h3>
@@ -251,12 +251,12 @@ When you want to make the entire card a link while also including a separate lin
       </Frame>
       <Stack fxg="1" g="30" p="30">
         <h3 className="u--trim -fz:l">Card Title</h3>
-        <HTML.p className="u--trim" fz="s" lh="s" o="-10">
+        <Text className="u--trim" fz="s" lh="s" o="-10">
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-        </HTML.p>
-        <HTML.span d="in-flex" mx-s="auto" my-s="auto" c="var(--_isHov, var(--link)) var(--_notHov, inherit)" td="none" bd-b lh="s" p="10">
+        </Text>
+        <Inline d="in-flex" mx-s="auto" my-s="auto" c="var(--_isHov, var(--link)) var(--_notHov, inherit)" td="none" bd-b lh="s" p="10">
           View More →
-        </HTML.span>
+        </Inline>
       </Stack>
     </LinkBox>
   </PreviewArea>
@@ -268,12 +268,12 @@ When you want to make the entire card a link while also including a separate lin
       </Frame>
       <Stack fxg="1" g="30" p="30">
         <h3 className="u--trim -fz:l">Card Title</h3>
-        <HTML.p className="u--trim" fz="s" lh="s" o="-10">
+        <Text className="u--trim" fz="s" lh="s" o="-10">
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-        </HTML.p>
-        <HTML.span d="in-flex" mx-s="auto" my-s="auto" c="var(--_isHov, var(--link)) var(--_notHov, inherit)" td="none" bd-b lh="s" p="10">
+        </Text>
+        <Inline d="in-flex" mx-s="auto" my-s="auto" c="var(--_isHov, var(--link)) var(--_notHov, inherit)" td="none" bd-b lh="s" p="10">
           View More →
-        </HTML.span>
+        </Inline>
       </Stack>
     </LinkBox>;
     ```
@@ -310,12 +310,12 @@ An example using `Grid` to toggle between horizontal and vertical layouts at a b
       </Frame>
       <Stack g="20" p="15">
         <h3 className="-fz:l">Card Title</h3>
-        <HTML.p className="u--trim" fz="s" lh="s" o="-10">
+        <Text className="u--trim" fz="s" lh="s" o="-10">
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-        </HTML.p>
-        <HTML.span d="in-flex" mx-s="auto" my-s="20" c="inherit" td="none" bd-b lh="1" p="10">
+        </Text>
+        <Inline d="in-flex" mx-s="auto" my-s="20" c="inherit" td="none" bd-b lh="1" p="10">
           View More →
-        </HTML.span>
+        </Inline>
       </Stack>
     </LinkBox>
   </PreviewArea>
@@ -343,12 +343,12 @@ An example using `Grid` to toggle between horizontal and vertical layouts at a b
       </Frame>
       <Stack g="20" p="15">
         <h3 className="-fz:l">Card Title</h3>
-        <HTML.p className="u--trim" fz="s" lh="s" o="-10">
+        <Text className="u--trim" fz="s" lh="s" o="-10">
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-        </HTML.p>
-        <HTML.span d="in-flex" mx-s="auto" my-s="20" c="inherit" td="none" bd-b lh="1" p="10">
+        </Text>
+        <Inline d="in-flex" mx-s="auto" my-s="20" c="inherit" td="none" bd-b lh="1" p="10">
           View More →
-        </HTML.span>
+        </Inline>
       </Stack>
     </LinkBox>;
     ```
@@ -384,9 +384,9 @@ The following example requires a custom `.-hov\:to\:slide` class to be defined s
               <Dummy py="5" fz="s" lh="xs" />
             </Box>
           </Grid>
-          <HTML.div className="u--trim" fz="xs" o="-10">
+          <Group className="u--trim" fz="xs" o="-10">
             2000.01.01 / Author
-          </HTML.div>
+          </Group>
         </Box>
       </Stack>
     </LinkBox>
@@ -407,9 +407,9 @@ The following example requires a custom `.-hov\:to\:slide` class to be defined s
             <Dummy py="5" fz="s" lh="xs" />
           </Box>
         </Grid>
-        <HTML.div className="u--trim" fz="xs" o="-10">
+        <Group className="u--trim" fz="xs" o="-10">
           2000.01.01 / Author
-        </HTML.div>
+        </Group>
       </Box>
     </Stack>
   </LinkBox>;

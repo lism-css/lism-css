@@ -1,14 +1,13 @@
 ---
 title: 'Media'
-description: 'Lism CSS の Media モジュールについて解説します。画像や動画などのメディア要素に適用する汎用クラスとコンポーネントです。'
+description: '画像や動画などのメディア要素を出力するLismコンポーネントです。'
+order: 3
 ---
-import { Lism, HTML, Dummy, Media, Frame } from "lism-css/astro";
+import { Lism, Dummy, Media, Frame } from "lism-css/astro";
 
 
-`a--media`クラスは、メディアに対して付与できる汎用クラスです。
-それ単体でのスタイルは`display:block`のみです。
-
-専用コンポーネント`<Media>`を用意しており、 デフォルトで`<img>`タグが出力されます。
+`<Media>`は、画像や動画などのメディア要素を出力するLismコンポーネントです。  
+デフォルトで`<img>`タグが出力されます。
 
 ## Props
 
@@ -36,8 +35,8 @@ import { Lism, HTML, Dummy, Media, Frame } from "lism-css/astro";
     ```
   </PreviewCode>
   <PreviewCode slot='tab' label='HTML'>
-    ```jsx
-    <img class="a--media" src="https://cdn.lism-css.com/img/a-1.jpg" width="960" height="640" alt="Dummy Image" />;
+    ```html
+    <img src="https://cdn.lism-css.com/img/a-1.jpg" width="960" height="640" alt="Dummy Image" />
     ```
   </PreviewCode>
 </Preview>
@@ -82,7 +81,7 @@ import { Lism, HTML, Dummy, Media, Frame } from "lism-css/astro";
   <PreviewCode slot='tab' label='HTML'>
     ```html
     <figure class="l--frame -ar:16/9">
-      <img class="a--media" style="object-position: 50% 0%" src="https://cdn.lism-css.com/img/a-1.jpg" width="960" height="640" />
+      <img style="object-position: 50% 0%" src="https://cdn.lism-css.com/img/a-1.jpg" width="960" height="640" />
     </figure>
     ```
   </PreviewCode>
@@ -94,12 +93,12 @@ import { Lism, HTML, Dummy, Media, Frame } from "lism-css/astro";
 
 Next.jsの`Image`などは、`as`プロパティに渡すことができます。
 
-<PreviewTitle>`as`を活用してでNext.jsの`Image`を渡す</PreviewTitle>
+<PreviewTitle>`as`を活用してNext.jsの`Image`を渡す</PreviewTitle>
 ```jsx "as={Image}"
 import { Media } from 'lism-css/react';
 import Image from 'next/image';
 
-<Media as={Image} src="/img.jpg" alt="" width="960" height="640" alt="Dummy Image" />;
+<Media as={Image} src="/img.jpg" alt="Dummy Image" width="960" height="640" />;
 ```
 
 #### Astro の`<Image>`を使う方法

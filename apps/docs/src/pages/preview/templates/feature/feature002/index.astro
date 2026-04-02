@@ -1,7 +1,7 @@
 ---
 import DemoLayout from '@/layouts/DemoLayout.astro';
 
-import { Stack, Container, Frame, Columns, Grid, Media, HTML, Flex, Icon, Layer, Center } from 'lism-css/astro';
+import { Stack, Container, Frame, Columns, Grid, Media, Flex, Icon, Layer, Center, Text, Inline } from 'lism-css/astro';
 import './_style.css';
 ---
 
@@ -11,13 +11,13 @@ import './_style.css';
       <Grid gtc={['1fr', null, 'auto 1fr']} g="inherit">
         <Stack class="u--trimChildren" g="20">
           <h2>私たちの取り組み</h2>
-          <HTML.p fz="l" ff="accent" o="-20">Our efforts</HTML.p>
+          <Text fz="l" ff="accent" o="-20">Our efforts</Text>
         </Stack>
         <Flex class="u--trimChildren" jc={['s', null, 'end']}>
-          <HTML.p max-w="32rem" fz="s" o="-10">
+          <Text max-w="32rem" fz="s" o="-10">
             地域の未来を見据え、持続可能な社会の実現に向けた取り組みを進めています。
             環境保護や地域活性化を通じて、次世代に誇れる街づくりを目指します。
-          </HTML.p>
+          </Text>
         </Flex>
       </Grid>
       <Columns cols={[2, null, 4]} g={['30', '40']}>
@@ -26,12 +26,12 @@ import './_style.css';
             <Media src="https://cdn.lism-css.com/img/random-2510?r=1" alt="" width="960" height="640" setTransition hov="to:zoom" />
             <Layer setTransition hov="to:show" bgc="rgb(0 0 0 / 30%)" blur="4px">
               <Center h="100%" c="white">
-                <HTML.span fz="xl" fs="italic" fw="light" lts="l" px="20" py="10">View More</HTML.span>
+                <Inline fz="xl" fs="italic" fw="light" lts="l" px="20" py="10">View More</Inline>
               </Center>
             </Layer>
           </Frame>
           <Flex ai="center" jc="flex-s" g="15" fz="m" lh="s">
-            <HTML.span>地域の未来を共に描く</HTML.span>
+            <Inline>地域の未来を共に描く</Inline>
             <Icon icon="arrow-right" mx-s="auto" setTransition hov="to:solid" />
           </Flex>
         </Grid>
@@ -40,12 +40,12 @@ import './_style.css';
             <Media src="https://cdn.lism-css.com/img/random-2510?r=2" alt="" width="960" height="640" setTransition hov="to:zoom" />
             <Layer setTransition hov="to:show" bgc="rgb(0 0 0 / 30%)" blur="4px">
               <Center h="100%" c="white">
-                <HTML.span fz="xl" fs="italic" fw="light" lts="l" px="20" py="10">View More</HTML.span>
+                <Inline fz="xl" fs="italic" fw="light" lts="l" px="20" py="10">View More</Inline>
               </Center>
             </Layer>
           </Frame>
           <Flex ai="center" jc="flex-s" g="15" fz="m" lh="s">
-            <HTML.span>誰もが集える憩いの場</HTML.span>
+            <Inline>誰もが集える憩いの場</Inline>
             <Icon icon="arrow-right" mx-s="auto" setTransition hov="to:solid" />
           </Flex>
         </Grid>
@@ -54,12 +54,12 @@ import './_style.css';
             <Media src="https://cdn.lism-css.com/img/random-2510?r=3" alt="" width="960" height="640" setTransition hov="to:zoom" />
             <Layer setTransition hov="to:show" bgc="rgb(0 0 0 / 30%)" blur="4px">
               <Center h="100%" c="white">
-                <HTML.span fz="xl" fs="italic" fw="light" lts="l" px="20" py="10">View More</HTML.span>
+                <Inline fz="xl" fs="italic" fw="light" lts="l" px="20" py="10">View More</Inline>
               </Center>
             </Layer>
           </Frame>
           <Flex ai="center" jc="flex-s" g="15" fz="m" lh="s">
-            <HTML.span>地元の恵みを食卓へ</HTML.span>
+            <Inline>地元の恵みを食卓へ</Inline>
             <Icon icon="arrow-right" mx-s="auto" setTransition hov="to:solid" />
           </Flex>
         </Grid>
@@ -68,12 +68,12 @@ import './_style.css';
             <Media src="https://cdn.lism-css.com/img/random-2510?r=4" alt="" width="960" height="640" setTransition hov="to:zoom" />
             <Layer setTransition hov="to:show" bgc="rgb(0 0 0 / 30%)" blur="4px">
               <Center h="100%" c="white">
-                <HTML.span fz="xl" fs="italic" fw="light" lts="l" px="20" py="10">View More</HTML.span>
+                <Inline fz="xl" fs="italic" fw="light" lts="l" px="20" py="10">View More</Inline>
               </Center>
             </Layer>
           </Frame>
           <Flex ai="center" jc="flex-s" g="15" fz="m" lh="s">
-            <HTML.span>緑豊かな景観づくり</HTML.span>
+            <Inline>緑豊かな景観づくり</Inline>
             <Icon icon="arrow-right" mx-s="auto" setTransition hov="to:solid" />
           </Flex>
         </Grid>

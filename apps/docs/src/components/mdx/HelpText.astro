@@ -1,12 +1,12 @@
 ---
-import { HTML, Icon } from 'lism-css/astro';
+import { Text, Icon } from 'lism-css/astro';
 const { icon = '', ...props } = Astro.props;
 ---
 
-<HTML.p class="c--helpText" fz="s" c="text-2" lh="s" {...props}>
+<Text class="c--helpText" fz="s" c="text-2" lh="s" {...props}>
   {icon && <Icon icon={icon} c="blue" class="u-inlineCenter" />}
   <slot />
-</HTML.p>
+</Text>
 
 <style>
   .u-inlineCenter {

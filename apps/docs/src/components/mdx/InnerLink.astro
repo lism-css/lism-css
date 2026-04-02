@@ -3,7 +3,7 @@
  * サイト内部のページをカードリンクとして表示するコンポーネント
  * コンテンツコレクションから記事情報を取得して表示します
  */
-import { LinkBox, HTML, Flex, Icon } from 'lism-css/astro';
+import { LinkBox, Flex, Icon, Group, Inline } from 'lism-css/astro';
 import { getPostWithFallback } from '@/lib/content';
 import { getLangFromUrl, getLocalizedUrl } from '@/lib/i18n';
 
@@ -44,10 +44,10 @@ const href = getLocalizedUrl(path.startsWith('/') ? path : `/${path}`, currentLa
   <Flex class="c--innerLink__icon" c="text-2" p="5" lh="1" pos="abs" setTransition>
     <Icon icon="link" />
   </Flex>
-  <HTML.div px-s="40" p="30">
+  <Group px-s="40" p="30">
     <span class="c--innerLink__title -fw:bold">{displayTitle}</span>
-    <HTML.span setTransition> →</HTML.span>
-  </HTML.div>
+    <Inline setTransition> →</Inline>
+  </Group>
 </LinkBox>
 
 <style>

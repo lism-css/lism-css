@@ -2,7 +2,7 @@
 title: 'Prop Class'
 description: 'CSSプロパティに紐づいた Prop Class の一覧とその使い方について解説します。'
 ---
-import { Lism, Flow, Container, HTML, Frame, Layer, Media, Dummy, Box, Flex, Grid, Center, Columns, Spacer } from "lism-css/astro";
+import { Lism, Flow, Container, Frame, Layer, Media, Dummy, Box, Flex, Grid, Center, Columns, Spacer, Group, Text } from "lism-css/astro";
 
 
 
@@ -100,9 +100,9 @@ Lismでは、主要なCSSプロパティ群に対して、それらで頻繁に�
   </PreviewCode>
   <PreviewCode slot="tab" label="JSX">
   ```jsx
-  <HTML.p fz="xl" fw="bold" lts="l" ta="center" tt="upper">
+  <Text fz="xl" fw="bold" lts="l" ta="center" tt="upper">
     Example text
-  </HTML.p>;
+  </Text>;
   ```
   </PreviewCode>
 </Preview>
@@ -125,9 +125,9 @@ Lismでは、主要なCSSプロパティ群に対して、それらで頻繁に�
 <Preview>
   <PreviewTitle>Examples</PreviewTitle>
   <PreviewArea p='20'>
-    <HTML.p c="brand" bgc="base-2" bd p="30">
+    <Text c="brand" bgc="base-2" bd p="30">
       Example text
-    </HTML.p>
+    </Text>
   </PreviewArea>
   <PreviewCode slot="tab" label="HTML">
   ```html
@@ -136,9 +136,9 @@ Lismでは、主要なCSSプロパティ群に対して、それらで頻繁に�
   </PreviewCode>
   <PreviewCode slot="tab" label="JSX">
   ```jsx
-  <HTML.p c="brand" bgc="base-2" bd p="30">
+  <Text c="brand" bgc="base-2" bd p="30">
     Example text
-  </HTML.p>;
+  </Text>;
   ```
   </PreviewCode>
 </Preview>
@@ -187,10 +187,10 @@ export const LinkSPACE = () => <a href="/docs/tokens/#space"><code>SPACE</code><
   <PreviewTitle>Space Examples</PreviewTitle>
   <PreviewArea p='20' resize>
     <Lism p={['15', '20']} bd>
-      <HTML.p>Example text</HTML.p>
-      <HTML.p my-s="15" mx="20">
+      <Text>Example text</Text>
+      <Text my-s="15" mx="20">
         Example text
-      </HTML.p>
+      </Text>
     </Lism>
   </PreviewArea>
   <PreviewCode slot="tab" label="HTML">
@@ -204,10 +204,10 @@ export const LinkSPACE = () => <a href="/docs/tokens/#space"><code>SPACE</code><
   <PreviewCode slot="tab" label="JSX">
   ```jsx
   <Lism p={['15', '20']} bd>
-    <HTML.p>Example text</HTML.p>
-    <HTML.p my-s="15" mx="20">
+    <Text>Example text</Text>
+    <Text my-s="15" mx="20">
       Example text
-    </HTML.p>
+    </Text>
   </Lism>;
   ```
   </PreviewCode>
@@ -275,65 +275,65 @@ export const LinkSPACE = () => <a href="/docs/tokens/#space"><code>SPACE</code><
   </PreviewTitle>
   <PreviewArea resize p='5'>
     <Box pos="rel" ar="3/2" lh="1" ff="mono">
-      <HTML.div pos="abs" l="0" t="0" bgc="base-2" bd p="10">
+      <Group pos="abs" l="0" t="0" bgc="base-2" bd p="10">
         A
-      </HTML.div>
-      <HTML.div pos="abs" l="0" r="0" w="fit" mx="auto" bgc="base-2" bd p="10">
+      </Group>
+      <Group pos="abs" l="0" r="0" w="fit" mx="auto" bgc="base-2" bd p="10">
         B
-      </HTML.div>
-      <HTML.div pos="abs" r="0" t="0" bgc="base-2" bd p="10">
+      </Group>
+      <Group pos="abs" r="0" t="0" bgc="base-2" bd p="10">
         C
-      </HTML.div>
-      <HTML.div pos="abs" l="0" t="0" b="0" h="fit" my="auto" bgc="base-2" bd p="10">
+      </Group>
+      <Group pos="abs" l="0" t="0" b="0" h="fit" my="auto" bgc="base-2" bd p="10">
         D
-      </HTML.div>
-      <HTML.div pos="abs" i="0" m="auto" w="fit" h="fit" bgc="base-2" bd p="10">
+      </Group>
+      <Group pos="abs" i="0" m="auto" w="fit" h="fit" bgc="base-2" bd p="10">
         E
-      </HTML.div>
-      <HTML.div pos="abs" r="0" t="0" b="0" h="fit" my="auto" bgc="base-2" bd p="10">
+      </Group>
+      <Group pos="abs" r="0" t="0" b="0" h="fit" my="auto" bgc="base-2" bd p="10">
         F
-      </HTML.div>
-      <HTML.div pos="abs" l="0" b="0" bgc="base-2" bd p="10">
+      </Group>
+      <Group pos="abs" l="0" b="0" bgc="base-2" bd p="10">
         G
-      </HTML.div>
-      <HTML.div pos="abs" l="0" r="0" b="0" w="fit" mx="auto" bgc="base-2" bd p="10">
+      </Group>
+      <Group pos="abs" l="0" r="0" b="0" w="fit" mx="auto" bgc="base-2" bd p="10">
         H
-      </HTML.div>
-      <HTML.div pos="abs" r="0" b="0" bgc="base-2" bd p="10">
+      </Group>
+      <Group pos="abs" r="0" b="0" bgc="base-2" bd p="10">
         I
-      </HTML.div>
+      </Group>
     </Box>
   </PreviewArea>
   <PreviewCode slot='tab' label='JSX'>
     ```jsx
     <Box pos="rel" ar="3/2" lh="1" ff="mono">
-      <HTML.div pos="abs" l="0" t="0" bgc="base-2" bd p="10">
+      <Group pos="abs" l="0" t="0" bgc="base-2" bd p="10">
         A
-      </HTML.div>
-      <HTML.div pos="abs" l="0" r="0" w="fit" mx="auto" bgc="base-2" bd p="10">
+      </Group>
+      <Group pos="abs" l="0" r="0" w="fit" mx="auto" bgc="base-2" bd p="10">
         B
-      </HTML.div>
-      <HTML.div pos="abs" r="0" t="0" bgc="base-2" bd p="10">
+      </Group>
+      <Group pos="abs" r="0" t="0" bgc="base-2" bd p="10">
         C
-      </HTML.div>
-      <HTML.div pos="abs" l="0" t="0" b="0" h="fit" my="auto" bgc="base-2" bd p="10">
+      </Group>
+      <Group pos="abs" l="0" t="0" b="0" h="fit" my="auto" bgc="base-2" bd p="10">
         D
-      </HTML.div>
-      <HTML.div pos="abs" i="0" m="auto" w="fit" h="fit" bgc="base-2" bd p="10">
+      </Group>
+      <Group pos="abs" i="0" m="auto" w="fit" h="fit" bgc="base-2" bd p="10">
         E
-      </HTML.div>
-      <HTML.div pos="abs" r="0" t="0" b="0" h="fit" my="auto" bgc="base-2" bd p="10">
+      </Group>
+      <Group pos="abs" r="0" t="0" b="0" h="fit" my="auto" bgc="base-2" bd p="10">
         F
-      </HTML.div>
-      <HTML.div pos="abs" l="0" b="0" bgc="base-2" bd p="10">
+      </Group>
+      <Group pos="abs" l="0" b="0" bgc="base-2" bd p="10">
         G
-      </HTML.div>
-      <HTML.div pos="abs" l="0" r="0" b="0" w="fit" mx="auto" bgc="base-2" bd p="10">
+      </Group>
+      <Group pos="abs" l="0" r="0" b="0" w="fit" mx="auto" bgc="base-2" bd p="10">
         H
-      </HTML.div>
-      <HTML.div pos="abs" r="0" b="0" bgc="base-2" bd p="10">
+      </Group>
+      <Group pos="abs" r="0" b="0" bgc="base-2" bd p="10">
         I
-      </HTML.div>
+      </Group>
     </Box>;
     ```
   </PreviewCode>
@@ -430,7 +430,7 @@ export const LinkSPACE = () => <a href="/docs/tokens/#space"><code>SPACE</code><
 ### Shadow
 |Prop|Shorthand|To Class|BP|
 |---|---|---|---|
-|`box-shadow`|`bxsh`|[`SHADOW`](/docs/tokens/#shadow)|-|
+|`box-shadow`|`bxsh`|[`SHADOW`](/docs/tokens/#shadow)|○|
 
 
 ### Radius

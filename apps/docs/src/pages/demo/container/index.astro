@@ -1,7 +1,7 @@
 ---
 import DemoPageLayout from '@/layouts/DemoPageLayout.astro';
 import { AttsLabels, TipCode, GutterGuide, LoremContent } from './_components.js';
-import { Lism, HTML, Flow, Container, Spacer } from 'lism-css/astro';
+import { Lism, Flow, Container, Spacer, Inline } from 'lism-css/astro';
 import './_style.scss';
 ---
 
@@ -108,15 +108,15 @@ import './_style.scss';
           >
           <p class="-fz:s">
             ↑ コンテナクエリの適用状態 :
-            <HTML.span lh="1" p="5" bd className="u--cbox" keycolor="green" d={['none', 'inline-block']}>@sm~</HTML.span>
-            <HTML.span lh="1" p="5" bd className="u--cbox" keycolor="green" d={['none', null, 'inline-block']}>@md~</HTML.span>
-            <HTML.span lh="1" p="5" bd className="u--cbox" keycolor="green" d={['none', null, null, 'inline-block']}>@lg~</HTML.span>
+            <Inline lh="1" p="5" bd className="u--cbox" keycolor="green" d={['none', 'inline-block']}>@sm~</Inline>
+            <Inline lh="1" p="5" bd className="u--cbox" keycolor="green" d={['none', null, 'inline-block']}>@md~</Inline>
+            <Inline lh="1" p="5" bd className="u--cbox" keycolor="green" d={['none', null, null, 'inline-block']}>@lg~</Inline>
           </p>
         </Flow>
       </Flow>
     </Lism>
     <p>
-      ここでのコンテナクエリの判定値( cqw )は、外側の<HTML.span bd bds="dashed" bdc="green">緑色の点線</HTML.span>で囲われたコンテナ要素のサイズです。
+      ここでのコンテナクエリの判定値( cqw )は、外側の<Inline bd bds="dashed" bdc="green">緑色の点線</Inline>で囲われたコンテナ要素のサイズです。
     </p>
     <p>
       もし、内部の要素のサイズ（ここでは <code>var(--sz--s)</code>) を <code>100cqw</code>
@@ -134,9 +134,9 @@ import './_style.scss';
           <Lism bd bdc="pink"> <Lism w="75cqw" bgc="pink:20%" bg=":stripe" bd-x-e bdc="pink" whspace="nowrap">width: 75cqw を適用したBOX</Lism></Lism>
           <p>
             コンテナクエリ適用状態 :
-            <HTML.span lh="1" p="5" bd className="u--cbox" keycolor="pink" d={['none', 'inline-block']}>@sm~</HTML.span>
-            <HTML.span lh="1" p="5" bd className="u--cbox" keycolor="pink" d={['none', null, 'inline-block']}>@md~</HTML.span>
-            <HTML.span lh="1" p="5" bd className="u--cbox" keycolor="pink" d={['none', null, null, 'inline-block']}>@lg~</HTML.span>
+            <Inline lh="1" p="5" bd className="u--cbox" keycolor="pink" d={['none', 'inline-block']}>@sm~</Inline>
+            <Inline lh="1" p="5" bd className="u--cbox" keycolor="pink" d={['none', null, 'inline-block']}>@md~</Inline>
+            <Inline lh="1" p="5" bd className="u--cbox" keycolor="pink" d={['none', null, null, 'inline-block']}>@lg~</Inline>
           </p>
         </Flow>
       </Flow>
@@ -152,9 +152,9 @@ import './_style.scss';
           <Lism bd bdc="pink"> <Lism w="75cqw" bgc="pink:20%" bg=":stripe" bd-x-e bdc="pink" whspace="nowrap">width: 75cqw を適用したBOX</Lism></Lism>
           <p>
             コンテナクエリ適用状態 :
-            <HTML.span lh="1" p="5" bd className="u--cbox" keycolor="pink" d={['none', 'inline-block']}>@sm~</HTML.span>
-            <HTML.span lh="1" p="5" bd className="u--cbox" keycolor="pink" d={['none', null, 'inline-block']}>@md~</HTML.span>
-            <HTML.span lh="1" p="5" bd className="u--cbox" keycolor="pink" d={['none', null, null, 'inline-block']}>@lg~</HTML.span>
+            <Inline lh="1" p="5" bd className="u--cbox" keycolor="pink" d={['none', 'inline-block']}>@sm~</Inline>
+            <Inline lh="1" p="5" bd className="u--cbox" keycolor="pink" d={['none', null, 'inline-block']}>@md~</Inline>
+            <Inline lh="1" p="5" bd className="u--cbox" keycolor="pink" d={['none', null, null, 'inline-block']}>@lg~</Inline>
           </p>
         </Flow>
       </Lism>

@@ -1,13 +1,13 @@
 ---
-import { HTML } from 'lism-css/astro';
+import { Link } from 'lism-css/astro';
 
 const { href, ...props } = Astro.props;
 ---
 
 {/* ヘッダー: Flexで横並び、両端揃え */}
-<HTML.a href={href} class="c--tagLink" px="10" py="5" lh="xs" td="none" fz="s" bdrs="10" {...props}>
+<Link href={href} class="c--tagLink" px="10" py="5" lh="xs" td="none" fz="s" bdrs="10" {...props}>
   <slot />
-</HTML.a>
+</Link>
 
 <style>
   .c--tagLink {

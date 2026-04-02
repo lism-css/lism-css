@@ -4,7 +4,7 @@
  * 言語対応：現在の言語に応じたリンクとラベルを表示
  * セクション対応：/docs/ と /ui/ で異なるナビゲーションを表示
  */
-import { Stack, HTML } from 'lism-css/astro';
+import { Stack, Inline, Heading, Link, List, ListItem } from 'lism-css/astro';
 import { Icon } from 'lism-css/react';
 import NavLink from '@parts/NavLink.astro';
 import sidebarConfig, { type SidebarSection, getTranslatedLabel, isSeparator, getSiteSection, extractSlugFromUrl } from '../config/sidebar';
@@ -143,12 +143,12 @@ function getPostUrl(slug: string): string {
           // ラベルを現在の言語で取得
           const itemLabel = getTranslatedLabel(item.label, item.translate, currentLang);
           return (
-            <HTML.a href={itemPath} data-active={isActive} setHov class="siteNav_toplink" td="none" c="inherit" lh="s">
-              <HTML.span layout="flex" g="5" ai="center">
+            <Link href={itemPath} data-active={isActive} setHov class="siteNav_toplink" td="none" c="inherit" lh="s">
+              <Inline layout="flex" g="5" ai="center">
                 {item.icon && <Icon icon={item.icon} />}
                 {itemLabel}
-              </HTML.span>
-            </HTML.a>
+              </Inline>
+            </Link>
           );
         })}
       </Stack>
@@ -172,11 +172,11 @@ function getPostUrl(slug: string): string {
       return (
         <Stack class="siteNav_group" g="5">
           {/* セクションのラベル（見出し） */}
-          <HTML.h class="siteNav_title" lv="3" fz="2xs" fw="normal" py="5" o="-10" tt="upper">
+          <Heading class="siteNav_title" level="3" fz="2xs" fw="normal" py="5" o="-10" tt="upper">
             {sectionLabel}
-          </HTML.h>
+          </Heading>
 
-          <HTML.ul class="siteNav_list" px-s="10" bd-x-s>
+          <List class="siteNav_list" px-s="10" bd-x-s>
             {hasDirProperty(section)
               ? // dir指定の場合：ディレクトリ内の記事を自動取得
                 postsByCategory[section.dir]?.map((post) => {
@@ -189,18 +189,18 @@ function getPostUrl(slug: string): string {
                   // navtitleがあればそれを、なければtitleを表示
                   const navLabel = post.data.navtitle ?? post.data.title;
                   return (
-                    <HTML.li class={isDraft ? '_draft' : undefined}>
+                    <ListItem class={isDraft ? '_draft' : undefined}>
                       <NavLink href={postPath} isActive={isActive}>
                         {navLabel}
                       </NavLink>
-                    </HTML.li>
+                    </ListItem>
                   );
                 })
               : // items指定の場合：指定された並びでメニューを表示
                 section.items.map((item) => {
                   // セパレータの場合は区切り線を表示
                   if (isSeparator(item)) {
-                    return <HTML.li class="c--nav__separator" role="separator" mx="5" aria-hidden="true" />;
+                    return <ListItem class="c--nav__separator" role="separator" mx="5" aria-hidden="true" />;
                   }
 
                   // 文字列の場合はURLとして扱い、MDXのフロントマターからラベルを取得
@@ -217,11 +217,11 @@ function getPostUrl(slug: string): string {
                     // 下書き記事には _draft クラスを付与
                     const isDraft = post?.data?.draft;
                     return (
-                      <HTML.li class={isDraft ? '_draft' : undefined}>
+                      <ListItem class={isDraft ? '_draft' : undefined}>
                         <NavLink href={itemPath} isActive={isActive}>
                           {navLabel}
                         </NavLink>
-                      </HTML.li>
+                      </ListItem>
                     );
                   }
 
@@ -233,14 +233,14 @@ function getPostUrl(slug: string): string {
                   // アイテムラベルを現在の言語で取得
                   const itemLabel = getTranslatedLabel(item.label, item.translate, currentLang);
                   return (
-                    <HTML.li>
+                    <ListItem>
                       <NavLink href={itemPath} isActive={isActive}>
                         {itemLabel}
                       </NavLink>
-                    </HTML.li>
+                    </ListItem>
                   );
                 })}
-          </HTML.ul>
+          </List>
         </Stack>
       );
     })

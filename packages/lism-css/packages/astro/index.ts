@@ -5,6 +5,14 @@
 export * from './Lism';
 export { default as HTML } from './HTML';
 export * from './Dummy';
+
+// semantic wrappers
+export * from './Text';
+export * from './Inline';
+export * from './Group';
+export * from './Heading';
+export * from './Link';
+export * from './List';
 export * from './Box';
 export * from './Flow';
 export * from './Flex';

@@ -3,7 +3,7 @@ title: 'Typography & Spacing'
 description: 'An overview of typography and spacing design tokens used in Lism CSS.'
 ---
 
-import { Dummy, Box, HTML, Stack, Cluster, Columns, Frame, Center } from 'lism-css/astro';
+import { Dummy, Box, Stack, Cluster, Columns, Frame, Center, Text } from 'lism-css/astro';
 import { FzDemos, SpacingDemos, BoxShadowDemos } from "@/content/token-previews.jsx";
 
 
@@ -24,15 +24,15 @@ Tokens for `font-family`.
 <Preview>
   <PreviewTitle>Preview</PreviewTitle>
   <PreviewArea p='20' flow='s'>
-    <HTML.p ff="base" fz="xl">
+    <Text ff="base" fz="xl">
       base: English text, 漢字ひらがな
-    </HTML.p>
-    <HTML.p ff="accent" fz="xl">
+    </Text>
+    <Text ff="accent" fz="xl">
       accent: English text, 漢字ひらがな
-    </HTML.p>
-    <HTML.p ff="mono" fz="xl">
+    </Text>
+    <Text ff="mono" fz="xl">
       mono: English text, 漢字ひらがな
-    </HTML.p>
+    </Text>
   </PreviewArea>
   <PreviewCode>
   ```jsx
@@ -76,9 +76,9 @@ Tokens for `font-weight`.
   </PreviewCode>
   <PreviewCode slot='tab' label='JSX'>
     ```jsx
-    <HTML.p fw='light'>Lorem ipsum ...</HTML.p>
-    <HTML.p fw='normal'>Lorem ipsum ...</HTML.p>
-    <HTML.p fw='bold'>Lorem ipsum ...</HTML.p>
+    <Text fw='light'>Lorem ipsum ...</Text>
+    <Text fw='normal'>Lorem ipsum ...</Text>
+    <Text fw='bold'>Lorem ipsum ...</Text>
     ```
   </PreviewCode>
 </Preview>
@@ -228,10 +228,10 @@ The `lh` class uses these variables internally:
   </PreviewCode>
   <PreviewCode slot='tab' label='JSX'>
     ```jsx
-    <HTML.p lh='xs'>Lorem ipsum ...</HTML.p>
-    <HTML.p lh='s'>Lorem ipsum ...</HTML.p>
-    <HTML.p lh='base'>Lorem ipsum ...</HTML.p>
-    <HTML.p lh='l'>Lorem ipsum ...</HTML.p>
+    <Text lh='xs'>Lorem ipsum ...</Text>
+    <Text lh='s'>Lorem ipsum ...</Text>
+    <Text lh='base'>Lorem ipsum ...</Text>
+    <Text lh='l'>Lorem ipsum ...</Text>
     ```
   </PreviewCode>
 </Preview>
@@ -313,9 +313,9 @@ Tokens for `letter-spacing`.
   </PreviewCode>
   <PreviewCode slot='tab' label='JSX'>
     ```jsx
-    <HTML.p lts='s'>Lorem ipsum ...</HTML.p>
-    <HTML.p lts='base'>Lorem ipsum ...</HTML.p>
-    <HTML.p lts='l'>Lorem ipsum ...</HTML.p>
+    <Text lts='s'>Lorem ipsum ...</Text>
+    <Text lts='base'>Lorem ipsum ...</Text>
+    <Text lts='l'>Lorem ipsum ...</Text>
     ```
   </PreviewCode>
 </Preview>

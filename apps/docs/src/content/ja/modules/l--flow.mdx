@@ -3,7 +3,7 @@ title: 'Flow'
 description: 'Lism CSS の Flow モジュールについて解説します。子要素間の余白を自動管理する flow-root レイアウトモジュールです。'
 ---
 
-import { Flow, Box, Dummy, Lism, HTML } from 'lism-css/astro';
+import { Flow, Box, Dummy, Lism, Text } from 'lism-css/astro';
 
 
 `l--flow` は、`display`が`flow-root`で、かつ**子要素間の余白を管理できる**レイアウトモジュールです。
@@ -136,11 +136,11 @@ import { Flow, Box, Dummy, Lism, HTML } from 'lism-css/astro';
   <PreviewTitle>任意の値をセットする</PreviewTitle>
   <PreviewArea p='20'>
     <Flow flow="10px" hov="itemGuide">
-      <HTML.p>Contents...</HTML.p>
+      <Text>Contents...</Text>
       <h2>Heading</h2>
       <Dummy lang="ja" length="s" />
-      <HTML.p>Contents...</HTML.p>
-      <HTML.p>Contents...</HTML.p>
+      <Text>Contents...</Text>
+      <Text>Contents...</Text>
     </Flow>
   </PreviewArea>
   <PreviewCode slot='tab' label='JSX'>
