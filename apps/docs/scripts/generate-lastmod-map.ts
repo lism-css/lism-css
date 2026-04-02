@@ -129,7 +129,7 @@ for (const [filePath, date] of fileToDate) {
 // URLのアルファベット順でソートして書き出し（差分を見やすくする）
 const sorted = Object.fromEntries(Object.entries(urlToDate).sort(([a], [b]) => a.localeCompare(b)));
 
-writeFileSync(OUTPUT_PATH, JSON.stringify(sorted, null, '\t') + '\n', 'utf-8');
+writeFileSync(OUTPUT_PATH, JSON.stringify(sorted, null, 2) + '\n', 'utf-8');
 
 const count = Object.keys(sorted).length;
 console.log(`✔ lastmod-map.json を生成しました（${count} URL）`);
