@@ -8,6 +8,7 @@ import { resolve, dirname } from 'node:path';
 
 const SITE_URL = 'https://lism-css.com';
 const ROOT_LANG = 'ja';
+// NOTE: siteConfig.langs と同期すること（言語追加時に更新が必要）
 const NON_ROOT_LANGS = ['en'];
 
 // git リポジトリのルートディレクトリ（apps/docs/src/lib/ → 4階層上）
