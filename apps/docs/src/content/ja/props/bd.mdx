@@ -2,7 +2,8 @@
 title: '-bd'
 description: 'ボーダーを指定する -bd プロパティクラスと関連するCSS変数の使い方について解説します。'
 ---
-import { Box, Dummy, Flex, Stack, Divider, Spacer } from 'lism-css/astro';
+import { Box, Flex, Stack, Divider, Spacer } from 'lism-css/astro';
+import { DummyText } from '@lism-css/ui/astro';
 
 
 Lismでは、border系の指定が少し特殊になっています。
@@ -65,19 +66,19 @@ Lismでは、border系の指定が少し特殊になっています。
   <PreviewTitle>使用例</PreviewTitle>
   <PreviewArea p='30'>
     <Box bd p="10">
-      <Dummy length="s" />
+      <DummyText length="s" />
     </Box>
     <Box bd bds="dashed" bdw="4px" bdc="red" p="15">
-      <Dummy length="s" />
+      <DummyText length="s" />
     </Box>
   </PreviewArea>
   <PreviewCode label='JSX' slot='tab'>
     ```jsx
     <Box bd p='10'>
-      <Dummy length='s'/>
+      <p>Lorem ipsum dolor sit amet. Consectetur adipiscing elit, sed do eiusmod tempor Incididunt ut.</p>
     </Box>
     <Box bd bds='dashed' bdw='4px' bdc='red' p='15'>
-      <Dummy length='s'/>
+      <p>Lorem ipsum dolor sit amet. Consectetur adipiscing elit, sed do eiusmod tempor Incididunt ut.</p>
     </Box>
     ```
   </PreviewCode>

@@ -3,7 +3,8 @@ title: 'Grid'
 description: 'Lism CSS の Grid モジュールについて解説します。コンテンツを CSS Grid で配置するためのレイアウトモジュールです。'
 ---
 
-import { Grid, Lism, Box, Layer, Center, Decorator, Frame, Media, Dummy } from 'lism-css/astro';
+import { Grid, Lism, Box, Layer, Center, Decorator, Frame, Media } from 'lism-css/astro';
+import { DummyText } from '@lism-css/ui/astro';
 
 
 コンテンツを**Gridレイアウトで配置する**ためのコンポーネントです。
@@ -177,7 +178,7 @@ import { Grid, Lism, Box, Layer, Center, Decorator, Frame, Media, Dummy } from '
             NEWS
           </Lism>
         </Grid>
-        <Dummy className="u--trim" lang="ja" length="s" as="a" href="####" hov="o" c="inherit" td="none" lh="s" />
+        <DummyText className="u--trim" lang="ja" length="s" as="a" href="####" hov="o" c="inherit" td="none" lh="s" />
       </Grid>
       <Grid gtc="subgrid" gc="1/-1" g="20" ai="center" bd-t py="20" px="10">
         <Grid gtc={['auto auto', '1fr 1fr']} g="20" jc="start" ai="center">
@@ -186,7 +187,7 @@ import { Grid, Lism, Box, Layer, Center, Decorator, Frame, Media, Dummy } from '
             TIPS
           </Lism>
         </Grid>
-        <Dummy className="u--trim" lang="ja" offset="2" as="a" href="####" hov="o" c="inherit" td="none" lh="s" />
+        <DummyText className="u--trim" lang="ja" offset="2" as="a" href="####" hov="o" c="inherit" td="none" lh="s" />
       </Grid>
       <Grid gtc="subgrid" gc="1/-1" g="20" ai="center" bd-t py="20" px="10">
         <Grid gtc={['auto auto', '1fr 1fr']} g="20" jc="start" ai="center">
@@ -195,7 +196,7 @@ import { Grid, Lism, Box, Layer, Center, Decorator, Frame, Media, Dummy } from '
             COLUMN
           </Lism>
         </Grid>
-        <Dummy className="u--trim" lang="ja" length="l" offset="6" as="a" href="####" hov="o" c="inherit" td="none" lh="s" />
+        <DummyText className="u--trim" lang="ja" length="l" offset="6" as="a" href="####" hov="o" c="inherit" td="none" lh="s" />
       </Grid>
     </Grid>
   </PreviewArea>
@@ -209,7 +210,7 @@ import { Grid, Lism, Box, Layer, Center, Decorator, Frame, Media, Dummy } from '
             NEWS
           </Lism>
         </Grid>
-        <Dummy className="u--trim" lang="ja" length="s" as="a" href="####" hov="o" c="inherit" td="none" lh="s" />
+        <Text className="u--trim" as="a" href="####" hov="o" c="inherit" td="none" lh="s">ロレム・イプサムの座り雨。目まぐるしい文章の流れの中で、それは静かに歩く仮の言葉です。</Text>
       </Grid>
       <Grid gtc="subgrid" gc="1/-1" g="20" ai="center" bd-t py="20" px="10">
         <Grid gtc={['auto auto', '1fr 1fr']} g="20" jc="start" ai="center">
@@ -218,7 +219,7 @@ import { Grid, Lism, Box, Layer, Center, Decorator, Frame, Media, Dummy } from '
             TIPS
           </Lism>
         </Grid>
-        <Dummy className="u--trim" lang="ja" offset="2" as="a" href="####" hov="o" c="inherit" td="none" lh="s" />
+        <Text className="u--trim" as="a" href="####" hov="o" c="inherit" td="none" lh="s">それは静かに歩く仮の言葉です。Elitも穏やかに続いていきますが、積み重ねられてきた「LiberroyとFoogの取り組み」は、余白のようなものです。</Text>
       </Grid>
       <Grid gtc="subgrid" gc="1/-1" g="20" ai="center" bd-t py="20" px="10">
         <Grid gtc={['auto auto', '1fr 1fr']} g="20" jc="start" ai="center">
@@ -227,7 +228,7 @@ import { Grid, Lism, Box, Layer, Center, Decorator, Frame, Media, Dummy } from '
             COLUMN
           </Lism>
         </Grid>
-        <Dummy className="u--trim" lang="ja" length="l" offset="6" as="a" href="####" hov="o" c="inherit" td="none" lh="s" />
+        <Text className="u--trim" as="a" href="####" hov="o" c="inherit" td="none" lh="s">作業が進むにつれて、工夫や考えとともに関心が折り重なりながらも、必要以上に主張せず彼らの作品は私たちに一定の示唆を与えてくれます。</Text>
       </Grid>
     </Grid>;
     ```
@@ -346,12 +347,12 @@ cols,rows はそれぞれブレイクポイント指定も可能です。
   <PreviewTitle>1列 → 2列 → 幅200pxで3列かつ、中央よせ</PreviewTitle>
   <PreviewArea resize p='15'>
     <Grid gtc={['1fr', 'repeat(2, 1fr)', 'repeat(3, 200px)']} jc="center" g="15" className="has--itemGuide">
-      <Dummy />
-      <Dummy />
-      <Dummy />
-      <Dummy />
-      <Dummy />
-      <Dummy />
+      <DummyText />
+      <DummyText />
+      <DummyText />
+      <DummyText />
+      <DummyText />
+      <DummyText />
     </Grid>
   </PreviewArea>
   <PreviewCode>

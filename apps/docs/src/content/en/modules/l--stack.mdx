@@ -2,7 +2,8 @@
 title: 'Stack'
 description: 'Documentation for the Stack module in Lism CSS. A layout module that arranges elements vertically using Flexbox.'
 ---
-import { Stack, Dummy } from 'lism-css/astro';
+import { Stack } from 'lism-css/astro';
+import { DummyText } from '@lism-css/ui/astro';
 
 A component that arranges multiple elements **vertically** using a Flex layout.
 
@@ -63,8 +64,8 @@ The combination of `<Stack ai="center">` (`.l--stack.-ai:center`) enables what E
   <PreviewArea resize>
     <Stack ai="center" g="20" p="30" className="has--itemGuide">
       <h3 role="presentation">Heading</h3>
-      <Dummy length="s" />
-      <Dummy length="l" />
+      <DummyText length="s" />
+      <DummyText length="l" />
     </Stack>
   </PreviewArea>
   <PreviewCode slot="tab" label="JSX">

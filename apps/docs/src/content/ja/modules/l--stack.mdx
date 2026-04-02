@@ -2,7 +2,8 @@
 title: 'Stack'
 description: 'Lism CSS の Stack モジュールについて解説します。複数の要素を Flex で縦方向に配置するレイアウトモジュールです。'
 ---
-import { Stack, Dummy } from 'lism-css/astro';
+import { Stack } from 'lism-css/astro';
+import { DummyText } from '@lism-css/ui/astro';
 
 複数の要素をFlexレイアウトで**縦並び**に配置するコンポーネントです。
 
@@ -63,8 +64,8 @@ import { Stack, Dummy } from 'lism-css/astro';
   <PreviewArea resize>
     <Stack ai="center" g="20" p="30" className="has--itemGuide">
       <h3 role="presentation">見出し</h3>
-      <Dummy length="s" />
-      <Dummy length="l" />
+      <DummyText length="s" />
+      <DummyText length="l" />
     </Stack>
   </PreviewArea>
   <PreviewCode slot="tab" label="JSX">

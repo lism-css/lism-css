@@ -3,7 +3,8 @@ title: 'Decorator'
 description: 'Lism CSS の Decorator モジュールについて解説します。装飾用の空要素を出力するコンポーネントです。'
 ---
 
-import { Decorator, Box, Flex, Grid, Spacer, Dummy } from 'lism-css/astro';
+import { Decorator, Box, Flex, Grid, Spacer } from 'lism-css/astro';
+import { DummyText } from '@lism-css/ui/astro';
 
 コンテンツを装飾するための空要素を出力するためのコンポーネントです。  
 デフォルトで`aria-hidden="true"`で出力されます。
@@ -34,7 +35,7 @@ div.a--decorator[aria-hidden="true"]
   <PreviewTitle>例</PreviewTitle>
   <PreviewArea p='20'>
     <Box p="30" pos="rel">
-      <Dummy />
+      <DummyText />
       <Decorator size="1.25em" pos="abs" t="0" l="0" bd-x-s bd-y-s />
       <Decorator size="1.25em" pos="abs" r="0" b="0" bd-x-e bd-y-e />
     </Box>
@@ -42,7 +43,7 @@ div.a--decorator[aria-hidden="true"]
   <PreviewCode slot='tab' label='JSX'>
     ```jsx
     <Box p="30" pos="rel">
-      <Dummy />
+      <p>Lorem ipsum dolor sit amet. Consectetur adipiscing elit, sed do eiusmod tempor Incididunt ut. Labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut.</p>
       <Decorator size="1.25em" pos="abs" t="0" l="0" bd-x-s bd-y-s />
       <Decorator size="1.25em" pos="abs" r="0" b="0" bd-x-e bd-y-e />
     </Box>;

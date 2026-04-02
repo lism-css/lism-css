@@ -1,7 +1,8 @@
 /* eslint-disable */
 import React from 'react';
 
-import { Lism, Layer, Flex, Dummy } from 'lism-css/react';
+import { Lism, Layer, Flex } from 'lism-css/react';
+import { DummyText } from '@lism-css/ui/react';
 
 export function AttsLabels({ atts = '', ...props }) {
   // attsを , で分割
@@ -99,5 +100,5 @@ export function ContainerSizeContent(props: any) {
 }
 export function LoremContent(props: any) {
   const { children, length = 'l', ...atts } = props;
-  return <Dummy py="5" px="10" bg=":stripe" bgc="gray:4%" length={length} {...atts} />;
+  return <DummyText py="5" px="10" bg=":stripe" bgc="gray:4%" length={length} {...atts} />;
 }

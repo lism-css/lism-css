@@ -3,8 +3,8 @@ title: 'Tabs'
 description: 'Documentation for the Tabs component provided by @lism-css/ui.'
 ---
 
-import { Dummy, Icon } from 'lism-css/astro';
-import { Tabs } from '@lism-css/ui/astro';
+import { Icon } from 'lism-css/astro';
+import { Tabs, DummyText } from '@lism-css/ui/astro';
 import '../../ja/ui/_opt-in/_tabs.css'
 
 
@@ -67,13 +67,13 @@ Only `<Tabs.Tab>` and `<Tabs.Panel>` are recognized as children of `<Tabs.Item>`
       <Tabs.Item>
         <Tabs.Tab px="10">Tab 1</Tabs.Tab>
         <Tabs.Panel>
-          <Dummy pre="Tab 01: " />
+          <DummyText pre="Tab 01: " />
         </Tabs.Panel>
       </Tabs.Item>
       <Tabs.Item>
         <Tabs.Tab px="10">Tab 2</Tabs.Tab>
         <Tabs.Panel>
-          <Dummy length="l" offset={1} pre="Tab 02: " />
+          <DummyText length="l" offset={1} pre="Tab 02: " />
         </Tabs.Panel>
       </Tabs.Item>
     </Tabs.Root>
@@ -84,13 +84,13 @@ Only `<Tabs.Tab>` and `<Tabs.Panel>` are recognized as children of `<Tabs.Item>`
       <Tabs.Item>
         <Tabs.Tab px="10">Tab 1</Tabs.Tab>
         <Tabs.Panel>
-          <Dummy pre="Tab 01: " />
+          <DummyText pre="Tab 01: " />
         </Tabs.Panel>
       </Tabs.Item>
       <Tabs.Item>
         <Tabs.Tab px="10">Tab 2</Tabs.Tab>
         <Tabs.Panel>
-          <Dummy length="l" offset={1} pre="Tab 02: " />
+          <DummyText length="l" offset={1} pre="Tab 02: " />
         </Tabs.Panel>
       </Tabs.Item>
     </Tabs.Root>;
@@ -112,13 +112,13 @@ You can pass props to `.c--tabs_list` using `listProps`.
       <Tabs.Item>
         <Tabs.Tab px="10">Tab 1</Tabs.Tab>
         <Tabs.Panel>
-          <Dummy pre="Tab 01: " />
+          <DummyText pre="Tab 01: " />
         </Tabs.Panel>
       </Tabs.Item>
       <Tabs.Item>
         <Tabs.Tab px="10">Tab 2</Tabs.Tab>
         <Tabs.Panel>
-          <Dummy length="l" offset={1} pre="Tab 02: " />
+          <DummyText length="l" offset={1} pre="Tab 02: " />
         </Tabs.Panel>
       </Tabs.Item>
     </Tabs.Root>
@@ -129,13 +129,13 @@ You can pass props to `.c--tabs_list` using `listProps`.
       <Tabs.Item>
         <Tabs.Tab px="10">Tab 1</Tabs.Tab>
         <Tabs.Panel>
-          <Dummy pre="Tab 01: " />
+          <DummyText pre="Tab 01: " />
         </Tabs.Panel>
       </Tabs.Item>
       <Tabs.Item>
         <Tabs.Tab px="10">Tab 2</Tabs.Tab>
         <Tabs.Panel>
-          <Dummy length="l" offset={1} pre="Tab 02: " />
+          <DummyText length="l" offset={1} pre="Tab 02: " />
         </Tabs.Panel>
       </Tabs.Item>
     </Tabs.Root>;
@@ -156,13 +156,13 @@ Use `defaultIndex` on `<Tabs.Root>` to specify which tab is open by default.
       <Tabs.Item>
         <Tabs.Tab p="10">Tab 1</Tabs.Tab>
         <Tabs.Panel p="10">
-          <Dummy pre="Tab 01: " />
+          <DummyText pre="Tab 01: " />
         </Tabs.Panel>
       </Tabs.Item>
       <Tabs.Item>
         <Tabs.Tab p="10">Tab 2</Tabs.Tab>
         <Tabs.Panel p="10">
-          <Dummy length="l" offset={1} pre="Tab 02: " />
+          <DummyText length="l" offset={1} pre="Tab 02: " />
         </Tabs.Panel>
       </Tabs.Item>
     </Tabs.Root>
@@ -173,13 +173,13 @@ Use `defaultIndex` on `<Tabs.Root>` to specify which tab is open by default.
       <Tabs.Item>
         <Tabs.Tab p="10">Tab 1</Tabs.Tab>
         <Tabs.Panel p="10">
-          <Dummy pre="Tab 01: " />
+          <DummyText pre="Tab 01: " />
         </Tabs.Panel>
       </Tabs.Item>
       <Tabs.Item>
         <Tabs.Tab p="10">Tab 2</Tabs.Tab>
         <Tabs.Panel p="10">
-          <Dummy length="l" offset={1} pre="Tab 02: " />
+          <DummyText length="l" offset={1} pre="Tab 02: " />
         </Tabs.Panel>
       </Tabs.Item>
     </Tabs.Root>;
@@ -203,7 +203,7 @@ At the same time, changing the tab list (`.c--tabs_list`) buttons to stack verti
           Tab 1
         </Tabs.Tab>
         <Tabs.Panel p="5">
-          <Dummy pre="Tab 01: " />
+          <DummyText pre="Tab 01: " />
         </Tabs.Panel>
       </Tabs.Item>
       <Tabs.Item>
@@ -211,7 +211,7 @@ At the same time, changing the tab list (`.c--tabs_list`) buttons to stack verti
           Tab 2
         </Tabs.Tab>
         <Tabs.Panel p="5">
-          <Dummy length="l" offset={1} pre="Tab 02: " />
+          <DummyText length="l" offset={1} pre="Tab 02: " />
         </Tabs.Panel>
       </Tabs.Item>
     </Tabs.Root>
@@ -224,7 +224,7 @@ At the same time, changing the tab list (`.c--tabs_list`) buttons to stack verti
           Tab 1
         </Tabs.Tab>
         <Tabs.Panel p="5">
-          <Dummy pre="Tab 01: " />
+          <DummyText pre="Tab 01: " />
         </Tabs.Panel>
       </Tabs.Item>
       <Tabs.Item>
@@ -232,7 +232,7 @@ At the same time, changing the tab list (`.c--tabs_list`) buttons to stack verti
           Tab 2
         </Tabs.Tab>
         <Tabs.Panel p="5">
-          <Dummy length="l" offset={1} pre="Tab 02: " />
+          <DummyText length="l" offset={1} pre="Tab 02: " />
         </Tabs.Panel>
       </Tabs.Item>
     </Tabs.Root>;
@@ -257,13 +257,13 @@ Here are a few styling examples.
       <Tabs.Item>
         <Tabs.Tab>Tab 1</Tabs.Tab>
         <Tabs.Panel>
-          <Dummy pre="Tab 01: " />
+          <DummyText pre="Tab 01: " />
         </Tabs.Panel>
       </Tabs.Item>
       <Tabs.Item>
         <Tabs.Tab>Tab 2</Tabs.Tab>
         <Tabs.Panel>
-          <Dummy length="l" offset={1} pre="Tab 02: " />
+          <DummyText length="l" offset={1} pre="Tab 02: " />
         </Tabs.Panel>
       </Tabs.Item>
     </Tabs.Root>
@@ -291,13 +291,13 @@ Here are a few styling examples.
       <Tabs.Item>
         <Tabs.Tab>Tab 1</Tabs.Tab>
         <Tabs.Panel>
-          <Dummy pre="Tab 01: " />
+          <DummyText pre="Tab 01: " />
         </Tabs.Panel>
       </Tabs.Item>
       <Tabs.Item>
         <Tabs.Tab>Tab 2</Tabs.Tab>
         <Tabs.Panel>
-          <Dummy length="l" offset={1} pre="Tab 02: " />
+          <DummyText length="l" offset={1} pre="Tab 02: " />
         </Tabs.Panel>
       </Tabs.Item>
     </Tabs.Root>;
@@ -313,13 +313,13 @@ Here are a few styling examples.
       <Tabs.Item>
         <Tabs.Tab>Tab 1</Tabs.Tab>
         <Tabs.Panel>
-          <Dummy pre="Tab 01: " />
+          <DummyText pre="Tab 01: " />
         </Tabs.Panel>
       </Tabs.Item>
       <Tabs.Item>
         <Tabs.Tab>Tab 2</Tabs.Tab>
         <Tabs.Panel>
-          <Dummy length="l" offset={1} pre="Tab 02: " />
+          <DummyText length="l" offset={1} pre="Tab 02: " />
         </Tabs.Panel>
       </Tabs.Item>
     </Tabs.Root>
@@ -348,13 +348,13 @@ Here are a few styling examples.
       <Tabs.Item>
         <Tabs.Tab>Tab 1</Tabs.Tab>
         <Tabs.Panel>
-          <Dummy pre="Tab 01: " />
+          <DummyText pre="Tab 01: " />
         </Tabs.Panel>
       </Tabs.Item>
       <Tabs.Item>
         <Tabs.Tab>Tab 2</Tabs.Tab>
         <Tabs.Panel>
-          <Dummy length="l" offset={1} pre="Tab 02: " />
+          <DummyText length="l" offset={1} pre="Tab 02: " />
         </Tabs.Panel>
       </Tabs.Item>
     </Tabs.Root>;
@@ -386,13 +386,13 @@ An example of how to fix the overall tabs height to match the tallest content pa
       <Tabs.Item>
         <Tabs.Tab px="10">Tab 1</Tabs.Tab>
         <Tabs.Panel>
-          <Dummy pre="Tab 01: " />
+          <DummyText pre="Tab 01: " />
         </Tabs.Panel>
       </Tabs.Item>
       <Tabs.Item>
         <Tabs.Tab px="10">Tab 2</Tabs.Tab>
         <Tabs.Panel>
-          <Dummy length="xl" offset={1} pre="Tab 02: " />
+          <DummyText length="xl" offset={1} pre="Tab 02: " />
         </Tabs.Panel>
       </Tabs.Item>
     </Tabs.Root>
@@ -403,13 +403,13 @@ An example of how to fix the overall tabs height to match the tallest content pa
       <Tabs.Item>
         <Tabs.Tab px="10">Tab 1</Tabs.Tab>
         <Tabs.Panel>
-          <Dummy pre="Tab 01: " />
+          <DummyText pre="Tab 01: " />
         </Tabs.Panel>
       </Tabs.Item>
       <Tabs.Item>
         <Tabs.Tab px="10">Tab 2</Tabs.Tab>
         <Tabs.Panel>
-          <Dummy length="xl" offset={1} pre="Tab 02: " />
+          <DummyText length="xl" offset={1} pre="Tab 02: " />
         </Tabs.Panel>
       </Tabs.Item>
     </Tabs.Root>;

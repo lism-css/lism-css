@@ -2,8 +2,8 @@
 title: 'Callout'
 description: 'Documentation for the Callout component provided by @lism-css/ui.'
 ---
-import { Icon, Box, Dummy, Flex, Center, Lism, Stack } from 'lism-css/astro';
-import { Callout } from '@lism-css/ui/astro';
+import { Icon, Box, Flex, Center, Lism, Stack } from 'lism-css/astro';
+import { Callout, DummyText } from '@lism-css/ui/astro';
 
 
 A component for highlighting important points within an article.
@@ -125,29 +125,29 @@ Provided as `Callout` from the `@lism-css/ui` package.
   <PreviewArea p='20'>
     <Stack g="30" p="10">
       <Callout title='Callout: type="note"' type="note">
-        <Dummy length="codes" lang="ja" />
+        <DummyText length="codes" lang="ja" />
       </Callout>
       <Callout title='Callout: type="alert"' type="alert">
-        <Dummy length="codes" lang="ja" />
+        <DummyText length="codes" lang="ja" />
       </Callout>
       <Callout title='Callout: type="warning"' type="warning">
-        <Dummy length="codes" lang="ja" />
+        <DummyText length="codes" lang="ja" />
       </Callout>
       <Callout title='Callout: type="point"' type="point">
-        <Dummy length="codes" lang="ja" />
+        <DummyText length="codes" lang="ja" />
       </Callout>
       <Callout title='Callout: type="check"' type="check">
-        <Dummy length="codes" lang="ja" />
+        <DummyText length="codes" lang="ja" />
       </Callout>
       <Callout title='Callout: type="help"' type="help">
-        <Dummy length="codes" lang="ja" />
+        <DummyText length="codes" lang="ja" />
       </Callout>
     </Stack>
   </PreviewArea>
   <PreviewCode slot='tab' label='JSX'>
     ```jsx
     <Callout title='Callout: type="note"' type='note'>
-      <Dummy length='codes' lang='ja'/>
+      <DummyText length='codes' lang='ja'/>
     </Callout>
     <Callout title='Callout: type="alert"' type='alert'>...</Callout>
     <Callout title='Callout: type="warning"' type='warning'>...</Callout>
@@ -166,13 +166,13 @@ An example using only lism-css, without `@lism-css/ui`.
   <PreviewTitle>Specifying `icon` and `keycolor`</PreviewTitle>
   <PreviewArea p='20'>
     <Callout title="Heading text..." icon="cart" keycolor="pink">
-      <Dummy lang="ja" />
+      <DummyText lang="ja" />
     </Callout>
   </PreviewArea>
   <PreviewCode slot='tab' label='JSX'>
     ```jsx
     <Callout title="Heading text..." icon="cart" keycolor="pink">
-      <Dummy lang="ja" />
+      <DummyText lang="ja" />
     </Callout>;
     ```
   </PreviewCode>

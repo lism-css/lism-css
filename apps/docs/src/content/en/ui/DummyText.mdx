@@ -1,0 +1,107 @@
+---
+title: 'DummyText'
+description: 'A component for outputting dummy text for prototyping and design mockups.'
+---
+import { Stack } from "lism-css/astro";
+import { DummyText } from '@lism-css/ui/astro';
+
+Outputs dummy placeholder text. Supports multiple languages and text lengths.
+
+## Props
+
+| Property | Description |
+|---|---|
+| `lang` | Specifies the language. Defaults to `en`. Also supports `ja` and `ar`. |
+| `length` | Specifies the length of the dummy text. Valid values are `xs`, `s`, `m`, `l`, `xl`, `codes`. Defaults to `m`. |
+| `pre` | Specifies text to display before the dummy text. |
+| `as` | Specifies the HTML tag. Defaults to `p`. |
+| `offset` | Specifies an offset for the dummy text. Text is trimmed at `,` and `.` boundaries, so the resulting text will be shorter. |
+
+## Import
+
+```jsx
+import { DummyText } from '@lism-css/ui/astro';
+// or
+import { DummyText } from '@lism-css/ui/react';
+```
+
+
+## Examples
+
+<Preview>
+  <PreviewTitle>Dummy text in different languages</PreviewTitle>
+  <PreviewArea p='20'>
+    <DummyText />
+    <DummyText lang="ja" />
+  </PreviewArea>
+  <PreviewCode>
+    ```jsx
+    <DummyText />
+    <DummyText lang='ja' />
+    ```
+  </PreviewCode>
+</Preview>
+
+<Preview>
+  <PreviewTitle>Dummy text at different lengths</PreviewTitle>
+  <PreviewArea p='20'>
+    <Stack g="5">
+      <DummyText lang="ja" length="xs" pre="xs: " />
+      <DummyText length="xs" pre="xs: " />
+    </Stack>
+    <Stack g="5">
+      <DummyText lang="ja" length="s" pre="s: " />
+      <DummyText length="s" pre="s: " />
+    </Stack>
+    <Stack g="5">
+      <DummyText lang="ja" length="m" pre="m: " />
+      <DummyText length="m" pre="m: " />
+    </Stack>
+    <Stack g="5">
+      <DummyText lang="ja" length="l" pre="l: " />
+      <DummyText length="l" pre="l: " />
+    </Stack>
+    <Stack g="5">
+      <DummyText lang="ja" length="xl" pre="xl: " />
+      <DummyText length="xl" pre="xl: " />
+    </Stack>
+  </PreviewArea>
+  <PreviewCode>
+    ```jsx
+    <DummyText lang='ja' length='xs' pre='xs: ' />
+    <DummyText lang='ja' length='s' pre='s: ' />
+    <DummyText lang='ja' length='m' pre='m: ' />
+    <DummyText lang='ja' length='l' pre='l: ' />
+    <DummyText lang='ja' length='xl' pre='xl: ' />
+    ```
+  </PreviewCode>
+</Preview>
+
+<Preview>
+  <PreviewTitle>Setting `length='codes'` outputs dummy text containing `<b>`, `<i>`, `<a>`, and `<code>` elements.</PreviewTitle>
+  <PreviewArea p='20'>
+    <DummyText lang="ja" length="codes" />
+  </PreviewArea>
+  <PreviewCode>
+    ```jsx
+    <DummyText lang="ja" length="codes" />
+    ```
+  </PreviewCode>
+</Preview>
+
+
+<Preview>
+  <PreviewTitle>Example of offset</PreviewTitle>
+  <PreviewArea p='20'>
+    <DummyText lang="ja" length="xs" />
+    <DummyText lang="ja" offset={1} />
+    <DummyText lang="ja" length="l" offset={3} />
+  </PreviewArea>
+  <PreviewCode>
+    ```jsx
+    <DummyText lang='ja' length='xs' />
+    <DummyText lang='ja' offset={1} />
+    <DummyText lang='ja' length='l' offset={3} />
+    ```
+  </PreviewCode>
+</Preview>

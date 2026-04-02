@@ -34,6 +34,20 @@ model: sonnet
 - **URL・リンクパス**: そのまま維持（言語プレフィックスは付けない。内部リンクも変更しない）
 - **frontmatter の `order`, `date`, `draft` 等のメタフィールド**: そのまま維持
 
+### ダミーテキストの扱い
+
+`<PreviewCode>` 内のコード例では `<DummyText>` / `<DummyImage>` は使用せず、実際のテキストを直接記述する。
+ja版で日本語プレースホルダーテキストが使われている箇所は、en版では対応する英語テキストに置き換える。
+
+テキストの対応は `packages/lism-ui/src/components/DummyText/texts.ts` を参照。
+
+| サイズ | 日本語 | 英語 |
+|--------|--------|------|
+| xs | ロレム・イプサムの座り雨。 | Lorem ipsum dolor sit amet. |
+| s | xs + 目まぐるしい文章の流れの中で、それは静かに歩く仮の言葉です。 | xs + Consectetur adipiscing elit, sed do eiusmod tempor Incididunt ut. |
+| m | s + Elitも穏やかに続いていきますが、積み重ねられてきた「LiberroyとFoogの取り組み」は、余白のようなものです。 | s + Labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut. |
+| l | m + 作業が進むにつれて... | m + Aliquip ex ea commodo consequat... |
+
 ### import パスの調整（重要）
 
 `ja/` 内のファイルが `ja/` 内の別ファイルを相対パスで import している場合、`en/` では `ja/` を経由する正しい相対パスに書き換えること。ファイルの階層深度に応じて `../` の数が変わるため注意。

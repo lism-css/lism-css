@@ -1,6 +1,7 @@
 export * from './Lism';
-export * from './Dummy';
 export { default as HTML } from './HTML';
+/** @deprecated DummyText / DummyImage (@lism-css/ui) を使用してください */
+export * from './Dummy';
 
 // semantic wrappers
 export * from './Text';

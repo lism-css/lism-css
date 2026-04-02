@@ -3,7 +3,8 @@ title: 'Group'
 description: 'A Lism component that outputs a <div> tag.'
 order: 4
 ---
-import { Group, Lism, Dummy } from "lism-css/astro";
+import { Group, Lism } from "lism-css/astro";
+import { DummyText } from '@lism-css/ui/astro';
 
 `<Group>` is a Lism component that outputs a `<div>` tag.  
 Use it as a general-purpose container for grouping elements.
@@ -29,7 +30,7 @@ You can change the output tag with the `as` prop: `div`(default) / `section` / `
   <PreviewTitle>`<Group>` output example</PreviewTitle>
   <PreviewArea p='20'>
     <Group p="20" bgc="base-2" bdrs="20">
-      <Dummy />
+      <DummyText />
     </Group>
   </PreviewArea>
   <PreviewCode slot='tab' label='JSX'>

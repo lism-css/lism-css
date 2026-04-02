@@ -2,7 +2,8 @@
 title: 'Columns'
 description: 'Documentation for the Columns module in Lism CSS. A column layout that displays content in a specified number of columns per breakpoint.'
 ---
-import { Lism, Box, Frame, Media, Dummy, Columns, Grid, Divider, Heading } from 'lism-css/astro';
+import { Lism, Box, Frame, Media, Columns, Grid, Divider, Heading } from 'lism-css/astro';
+import { DummyText, DummyImage } from '@lism-css/ui/astro';
 
 Creates a column layout that displays content in the specified number of columns at each breakpoint.
 
@@ -195,19 +196,19 @@ You can also use any [props available on `<Grid>`](/docs/modules/l--grid#props).
         <img src="https://cdn.lism-css.com/img/a-2.jpg" alt="" />
       </Frame>
       <Frame gc="span 1">
-        <Dummy as="img" />
+        <DummyImage />
       </Frame>
       <Frame gc="span 2">
-        <Dummy as="img" />
+        <DummyImage />
       </Frame>
       <Frame gc="span 2">
-        <Dummy as="img" />
+        <DummyImage />
       </Frame>
       <Frame gc="span 1">
-        <Dummy as="img" />
+        <DummyImage />
       </Frame>
-      {/* <Frame gc='span 3'><Dummy as='img' /></Frame> */}
-      {/* <Frame gc='span 3'><Dummy as='img' /></Frame> */}
+      {/* <Frame gc='span 3'><DummyImage /></Frame> */}
+      {/* <Frame gc='span 3'><DummyImage /></Frame> */}
     </Columns>
   </PreviewArea>
   <PreviewCode>
@@ -226,16 +227,16 @@ You can also use any [props available on `<Grid>`](/docs/modules/l--grid#props).
         <img src="https://cdn.lism-css.com/img/a-2.jpg" alt="" />
       </Frame>
       <Frame gc="span 1">
-        <Dummy as="img" />
+        <img src="https://cdn.lism-css.com/dummy-image.jpg" width="600" height="400" alt="" />
       </Frame>
       <Frame gc="span 2">
-        <Dummy as="img" />
+        <img src="https://cdn.lism-css.com/dummy-image.jpg" width="600" height="400" alt="" />
       </Frame>
       <Frame gc="span 2">
-        <Dummy as="img" />
+        <img src="https://cdn.lism-css.com/dummy-image.jpg" width="600" height="400" alt="" />
       </Frame>
       <Frame gc="span 1">
-        <Dummy as="img" />
+        <img src="https://cdn.lism-css.com/dummy-image.jpg" width="600" height="400" alt="" />
       </Frame>
     </Columns>;
     ```
@@ -256,7 +257,7 @@ Creates a card layout using subgrid within a 1 → 2 → 3 column layout.
         <Heading level="2" lh="s" aslf="center" fz="m">
           Card Title
         </Heading>
-        <Dummy lh="s" />
+        <DummyText lh="s" />
         <Lism lh="s" bd-t fz="s" px="10" py="20 10" o="-10">
           Date: 2025-01-01
         </Lism>
@@ -266,7 +267,7 @@ Creates a card layout using subgrid within a 1 → 2 → 3 column layout.
         <Heading level="2" lh="s" aslf="center" fz="m">
           Card Title Lorem ipsum
         </Heading>
-        <Dummy lh="s" length="s" />
+        <DummyText lh="s" length="s" />
         <Lism lh="s" bd-t fz="s" px="10" py="20 10" o="-10">
           Date: 2025-01-01
         </Lism>
@@ -276,7 +277,7 @@ Creates a card layout using subgrid within a 1 → 2 → 3 column layout.
         <Heading level="2" lh="s" aslf="center" fz="m">
           Card Title, long, long, long, very long long looong.
         </Heading>
-        <Dummy lh="s" />
+        <DummyText lh="s" />
         <Lism lh="s" bd-t fz="s" px="10" py="20 10" o="-10">
           Date: 2025-01-01
         </Lism>
@@ -286,7 +287,7 @@ Creates a card layout using subgrid within a 1 → 2 → 3 column layout.
         <Heading level="2" lh="s" aslf="center" fz="m">
           Card Title
         </Heading>
-        <Dummy lh="s" length="s" />
+        <DummyText lh="s" length="s" />
         <Lism lh="s" bd-t fz="s" px="10" py="20 10" o="-10">
           Date: 2025-01-01
         </Lism>
@@ -296,7 +297,7 @@ Creates a card layout using subgrid within a 1 → 2 → 3 column layout.
         <Heading level="2" lh="s" aslf="center" fz="m">
           Card Title
         </Heading>
-        <Dummy lh="s" />
+        <DummyText lh="s" />
         <Lism lh="s" bd-t fz="s" px="10" py="20 10" o="-10">
           Date: 2025-01-01
         </Lism>
@@ -311,7 +312,7 @@ Creates a card layout using subgrid within a 1 → 2 → 3 column layout.
         <Heading level="2" aslf="center" fz="m">
           Card Title
         </Heading>
-        <Dummy lh="s" />
+        <Text lh="s">Lorem ipsum dolor sit amet. Consectetur adipiscing elit, sed do eiusmod tempor Incididunt ut. Labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut.</Text>
         <Divider my="0" />
         <Lism lh="s" fz="s" o="-10">
           Date: 2025-01-01
@@ -322,7 +323,7 @@ Creates a card layout using subgrid within a 1 → 2 → 3 column layout.
         <Heading level="2" aslf="center" fz="m">
           Card Title Lorem ipsum
         </Heading>
-        <Dummy lh="s" length="s" />
+        <Text lh="s">Lorem ipsum dolor sit amet. Consectetur adipiscing elit, sed do eiusmod tempor Incididunt ut.</Text>
         <Divider my="0" />
         <Lism lh="s" fz="s" o="-10">
           Date: 2025-01-01
@@ -333,7 +334,7 @@ Creates a card layout using subgrid within a 1 → 2 → 3 column layout.
         <Heading level="2" aslf="center" fz="m">
           Card Title, long, long, long, very long long looong.
         </Heading>
-        <Dummy lh="s" />
+        <Text lh="s">Lorem ipsum dolor sit amet. Consectetur adipiscing elit, sed do eiusmod tempor Incididunt ut. Labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut.</Text>
         <Divider my="0" />
         <Lism lh="s" fz="s" o="-10">
           Date: 2025-01-01
@@ -344,7 +345,7 @@ Creates a card layout using subgrid within a 1 → 2 → 3 column layout.
         <Heading level="2" aslf="center" fz="m">
           Card Title
         </Heading>
-        <Dummy lh="s" length="s" />
+        <Text lh="s">Lorem ipsum dolor sit amet. Consectetur adipiscing elit, sed do eiusmod tempor Incididunt ut.</Text>
         <Divider my="0" />
         <Lism lh="s" fz="s" o="-10">
           Date: 2025-01-01
@@ -355,7 +356,7 @@ Creates a card layout using subgrid within a 1 → 2 → 3 column layout.
         <Heading level="2" aslf="center" fz="m">
           Card Title
         </Heading>
-        <Dummy lh="s" />
+        <Text lh="s">Lorem ipsum dolor sit amet. Consectetur adipiscing elit, sed do eiusmod tempor Incididunt ut. Labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut.</Text>
         <Divider my="0" />
         <Lism lh="s" fz="s" o="-10">
           Date: 2025-01-01

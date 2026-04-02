@@ -3,7 +3,8 @@ title: 'Text'
 description: '<p>タグを出力するLismコンポーネントです。'
 order: 2
 ---
-import { Text, Lism, Dummy } from "lism-css/astro";
+import { Text, Lism } from "lism-css/astro";
+import { DummyText } from '@lism-css/ui/astro';
 
 `<Text>`は、`<p>`タグを出力するLismコンポーネントです。
 
@@ -23,7 +24,7 @@ import { Text, Lism, Dummy } from "lism-css/astro";
   <PreviewTitle>`<Text>`の出力例</PreviewTitle>
   <PreviewArea p='20'>
     <Text>
-      <Dummy as="span" />
+      <DummyText as="span" />
     </Text>
   </PreviewArea>
   <PreviewCode slot='tab' label='JSX'>
@@ -42,7 +43,7 @@ import { Text, Lism, Dummy } from "lism-css/astro";
   <PreviewTitle>Lism Propsの適用例</PreviewTitle>
   <PreviewArea p='20'>
     <Text fz="l" lh="s" c="text-2">
-      <Dummy as="span" />
+      <DummyText as="span" />
     </Text>
   </PreviewArea>
   <PreviewCode slot='tab' label='JSX'>
