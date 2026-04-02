@@ -8,6 +8,4 @@ type Props<Tag extends HTMLTag = 'div'> = Polymorphic<{ as: Tag }> & AstroLismBa
 const { as: Tag = 'div', exProps, ...props } = Astro.props;
 ---
 
-<Tag {...getLismProps(props)} {...exProps}>
-  <slot />
-</Tag>
+<Tag {...getLismProps(props)} {...exProps}><slot /></Tag>

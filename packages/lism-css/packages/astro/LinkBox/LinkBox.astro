@@ -13,6 +13,4 @@ const hasHref = !!props.href;
 const tag: HTMLTag = !hasHref && (as ?? 'a') === 'a' ? 'div' : (as ?? 'a');
 ---
 
-<Lism isLinkBox as={tag} {...props} {...exProps}>
-  <slot />
-</Lism>
+<Lism isLinkBox as={tag} {...props} {...exProps}><slot /></Lism>

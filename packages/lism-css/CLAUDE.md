@@ -90,6 +90,21 @@ lism-reset → lism.base → lism.modules → lism.utility
 | `_auto_output.scss` | 自動出力処理 |
 
 
+## Astro コンポーネントの注意点
+
+`packages/astro/` 配下の `.astro` ファイルでは、タグと `<slot />` の間に改行やスペースを入れないこと。Astro はテンプレート内のホワイトスペースをそのまま HTML に出力するため、`<span>` 等のインライン要素で不要なスペースが挿入されてしまう。
+
+```astro
+<!-- NG: スペースが入る -->
+<Tag {...attrs}>
+  <slot />
+</Tag>
+
+<!-- OK -->
+<Tag {...attrs}><slot /></Tag>
+```
+
+
 ## 主要ファイル
 
 | ファイル | 説明 |
