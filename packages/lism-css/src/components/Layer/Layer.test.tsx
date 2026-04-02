@@ -13,22 +13,16 @@ describe('Layer', () => {
     expect(element).toHaveClass('is--layer');
   });
 
-  test('filter props が backdropFilter スタイルに変換される', () => {
-    render(<Layer contrast="1.1" sepia="0.4" grayscale="0.4" data-testid="layer" />);
+  test('style で backdropFilter を直接指定できる', () => {
+    render(<Layer style={{ backdropFilter: 'contrast(1.1) sepia(0.4) grayscale(0.4)' }} data-testid="layer" />);
     const element = screen.getByTestId('layer');
-    expect(element.style.backdropFilter).toBe('contrast(1.1) grayscale(0.4) sepia(0.4)');
+    expect(element.style.backdropFilter).toBe('contrast(1.1) sepia(0.4) grayscale(0.4)');
   });
 
-  test('blur が backdropFilter に変換される', () => {
-    render(<Layer blur="5px" data-testid="layer" />);
+  test('style で blur を backdropFilter として指定できる', () => {
+    render(<Layer style={{ backdropFilter: 'blur(5px)' }} data-testid="layer" />);
     const element = screen.getByTestId('layer');
     expect(element.style.backdropFilter).toBe('blur(5px)');
-  });
-
-  test('filter props が DOM に残らない', () => {
-    render(<Layer blur="5px" data-testid="layer" />);
-    const element = screen.getByTestId('layer');
-    expect(element.getAttribute('blur')).toBeNull();
   });
 
   test('Lism の props も受け取れる', () => {

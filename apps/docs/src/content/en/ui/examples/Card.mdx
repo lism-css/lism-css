@@ -377,7 +377,7 @@ The following example requires a custom `.-hov\:to\:slide` class to be defined s
       </Frame>
       <Layer bgc="rgba(0 0 0 / 10%)" />
       <Stack pos="abs" b="0" w="100%" p="30" bgc="rgb(255 255 255 / 20%)">
-        <Layer blur="6px" brightness="1.1" />
+        <Layer style={{ backdropFilter: 'blur(6px) brightness(1.1)' }} />
         <Box pos="rel" z="1" c="white" lh="s">
           <h3 className="u--trim -fz:l">Card Title</h3>
           <Grid setTransition hov="to:slide" my="15">
@@ -400,7 +400,7 @@ The following example requires a custom `.-hov\:to\:slide` class to be defined s
     </Frame>
     <Layer bgc="rgba(0 0 0 / 10%)" />
     <Stack pos="abs" b="0" w="100%" p="30" bgc="rgb(255 255 255 / 20%)">
-      <Layer blur="6px" brightness="1.1" />
+      <Layer style={{ backdropFilter: 'blur(6px) brightness(1.1)' }} />
       <Box pos="rel" z="1" c="white" lh="s">
         <h3 className="u--trim -fz:l">Card Title</h3>
         <Grid setTransition hov="to:slide" my="15">

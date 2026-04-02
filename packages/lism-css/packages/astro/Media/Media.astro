@@ -1,12 +1,10 @@
 ---
 import type { HTMLTag, Polymorphic } from 'astro/types';
 import type { AstroLismBaseProps } from '../types';
-import type { MediaProps } from 'lism-css/react/atomic/Media/getProps';
 import getLismProps from 'lism-css/lib/getLismProps';
-import getMediaProps from 'lism-css/react/atomic/Media/getProps';
 import { Image } from 'astro:assets';
 
-type Props<Tag extends HTMLTag = 'img'> = Polymorphic<{ as: Tag }> & AstroLismBaseProps & MediaProps;
+type Props<Tag extends HTMLTag = 'img'> = Polymorphic<{ as: Tag }> & AstroLismBaseProps;
 
 const { as, exProps, ...props } = Astro.props;
 
@@ -16,4 +14,4 @@ if (JSX === 'AstroImage') {
 }
 ---
 
-<JSX {...getLismProps(getMediaProps(props))} {...exProps}><slot /></JSX>
+<JSX {...getLismProps(props)} {...exProps}><slot /></JSX>

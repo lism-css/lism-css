@@ -323,7 +323,7 @@ Lism では、[`set--hov`](/docs/css-methodology/#set--hov)というクラスを
   <PreviewArea p='20'>
     <Frame isLinkBox setHov href="#banner-link" ar="16/9" bdrs="30">
       <Media isLayer src="https://cdn.lism-css.com/img/a-1.jpg" alt="" width="960" height="640" loading="lazy" />
-      <Layer setTransition hov="to:show" bgc="rgb(0 0 0 / 40%)" blur="6px">
+      <Layer setTransition hov="to:show" bgc="rgb(0 0 0 / 40%)" style={{ backdropFilter: 'blur(6px)' }}>
         <Center h="100%" c="#fff">
           <Inline fz="2xl" fs="italic" fw="light" lts="l" bdrs="99" px="20" py="10">
             View More
@@ -348,7 +348,7 @@ Lism では、[`set--hov`](/docs/css-methodology/#set--hov)というクラスを
     ```jsx "setHov" "hov='to:show'" "setTransition"
     <Frame isLinkBox setHov href="#banner-link" ar="16/9" bdrs="30">
       <Media isLayer src="https://cdn.lism-css.com/img/a-1.jpg" alt="" width="960" height="640" loading="lazy" />
-      <Layer setTransition hov="to:show" bgc="rgb(0 0 0 / 40%)" blur="6px">
+      <Layer setTransition hov="to:show" bgc="rgb(0 0 0 / 40%)" style={{ backdropFilter: 'blur(6px)' }}>
         <Center h="100%" c="#fff">
           <Inline fz="2xl" fs="italic" fw="light" lts="l" bdrs="99" px="20" py="10">
             View More
@@ -380,7 +380,7 @@ Lism では、[`set--hov`](/docs/css-methodology/#set--hov)というクラスを
       <Frame isLayer>
         <Media setTransition hov="to:zoom" src="https://cdn.lism-css.com/img/a-2.jpg" alt="" width="960" height="640" loading="lazy" />
       </Frame>
-      <Layer setTransition hov="to:hide" grayscale="70%" />
+      <Layer setTransition hov="to:hide" style={{ backdropFilter: 'grayscale(70%)' }} />
       <Center isLayer c="#fff" bgc="rgb(0 0 0 / 40%)">
         <Text setTransition hov="to:letterSpread" fz="2xl">
           LinkBox
@@ -403,6 +403,7 @@ Lism では、[`set--hov`](/docs/css-methodology/#set--hov)というクラスを
       <div class="l--frame is--layer">
         <img class="is--layer set--transition -hov:to:zoom" src="https://cdn.lism-css.com/img/a-2.jpg" width="960" height="640" loading="lazy" />
       </div>
+      <div class="is--layer set--transition -hov:to:hide" style="backdrop-filter: grayscale(70%)"></div>
       <div class="l--center is--layer -c -bgc" style="--c: #fff; --bgc: rgb(0 0 0 / 40%)">
         <span class="-hov:to:letterSpread -fz:2xl">LinkBox</span>
       </div>
@@ -415,7 +416,7 @@ Lism では、[`set--hov`](/docs/css-methodology/#set--hov)というクラスを
       <Frame isLayer>
         <Media setTransition hov="to:zoom" src="https://cdn.lism-css.com/img/a-2.jpg" alt="" width="960" height="640" loading="lazy" />
       </Frame>
-      <Layer setTransition hov="to:hide" grayscale="70%" />
+      <Layer setTransition hov="to:hide" style={{ backdropFilter: 'grayscale(70%)' }} />
       <Center isLayer c="#fff" bgc="rgb(0 0 0 / 40%)">
         <Text setTransition hov="to:letterSpread" fz="2xl">
           LinkBox

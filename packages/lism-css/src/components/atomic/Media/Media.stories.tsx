@@ -5,17 +5,6 @@ const meta: Meta = {
   title: 'Atomic/Media',
   component: Media,
   tags: ['autodocs'],
-  argTypes: {
-    objectFit: {
-      control: 'select',
-      options: ['cover', 'contain', 'fill', 'none', 'scale-down'],
-      description: 'CSS object-fit',
-    },
-    objectPosition: {
-      control: 'text',
-      description: 'CSS object-position',
-    },
-  },
 };
 
 export default meta;
@@ -36,7 +25,7 @@ export const WithObjectFitCover: Story = {
     alt: 'Covered image',
     w: '200px',
     h: '200px',
-    objectFit: 'cover',
+    style: { objectFit: 'cover' },
   },
 };
 
@@ -47,7 +36,7 @@ export const WithObjectFitContain: Story = {
     alt: 'Contained image',
     w: '200px',
     h: '200px',
-    objectFit: 'contain',
+    style: { objectFit: 'contain' },
     bgc: 'base-2',
   },
 };
@@ -59,7 +48,6 @@ export const WithObjectPosition: Story = {
     alt: 'Positioned image',
     w: '200px',
     h: '200px',
-    objectFit: 'cover',
-    objectPosition: 'top left',
+    style: { objectFit: 'cover', objectPosition: 'top left' },
   },
 };

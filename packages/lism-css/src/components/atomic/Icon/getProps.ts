@@ -1,8 +1,6 @@
 import presets from './presets';
 import atts from '../../../lib/helper/atts';
-import setMaybeTransformStyles from '../../setMaybeTransformStyles';
 import type { LismProps } from '../../../lib/getLismProps';
-import type { TransformStyleProps } from '../../setMaybeTransformStyles';
 import type { ElementType, CSSProperties } from 'react';
 
 export type PresetIconName = keyof typeof presets;
@@ -22,7 +20,7 @@ export interface IconOwnProps {
   exProps?: Record<string, unknown>;
 }
 
-export type IconProps = LismProps & TransformStyleProps & IconOwnProps;
+export type IconProps = LismProps & IconOwnProps;
 
 interface ParsedSvg {
   svgProps: Record<string, unknown>;
@@ -79,12 +77,12 @@ export default function getProps({ lismClass, as, icon, label, exProps = {}, ...
   let Component: ElementType | '_SVG_' = as || 'span';
   let content = '';
 
-  // rest の型が複雑な union になり TS2590 が発生するため、object にキャストしてから渡す
+  // rest の型が複雑な union になり TS2590 が発生するため、object にキャストしてから分割代入
   const {
     style: _style = {},
     className: _className = '',
     ..._rest
-  } = setMaybeTransformStyles(_props as object) as unknown as { style: CSSProperties; className: string; [key: string]: unknown };
+  } = _props as unknown as { style: CSSProperties; className: string; [key: string]: unknown };
   let style = _style;
   let className = _className;
 
