@@ -64,6 +64,7 @@
 4. **import パスの正確性**: `lism-css/astro`, `@lism-css/ui/astro` 等のパスが正しいか
 5. **リンク切れ**: 内部リンク（`/docs/...`）の参照先が存在するか
 6. **説明文の正確性**: 機能の説明がソースの実際の挙動と一致しているか
+7. **ダミーコンポーネントの不使用**: `/ui/` 以外の MDX の `<PreviewCode>` 内コードブロックで `<DummyText>` や `<DummyImage>` が使われていないこと。`<PreviewArea>` 内は許容。コード例では実際のテキスト・HTML要素を直接記述する。テキスト内容は `packages/lism-ui/src/components/DummyText/texts.ts` を参照
 
 ### 4. 差分サマリーの報告
 

@@ -36,31 +36,22 @@ import { Dog, Cat } from "@phosphor-icons/react";
   <PreviewCode slot="tab" label="HTML">
     ```html
     <div class="u--cbox -p:20" style="--keycolor: var(--red)">
-      <p>
-        Lorem ipsum dolor <i>sit amet</i>. consectetur <a href="###">adipisicing elit</a>, sed do eiusmod tempor. Non facere <code>Laudantium</code> ex
-        eos <b>doloribus aut dolore</b> nisi provident.
-      </p>
+      <p>Lorem ipsum dolor <i>sit amet</i>. consectetur <a href="###">adipisicing elit</a>, sed do eiusmod tempor. Non facere <code>Laudantium</code> ex eos <b>doloribus aut dolore</b> nisi provident.</p>
     </div>
     <div class="u--cbox set--shadow -bd -bdrs:20 -bxsh:20 -p:20" style="--keycolor: var(--purple)">
-      <p>
-        Lorem ipsum dolor <i>sit amet</i>. consectetur <a href="###">adipisicing elit</a>, sed do eiusmod tempor. Non facere <code>Laudantium</code> ex
-        eos <b>doloribus aut dolore</b> nisi provident.
-      </p>
+      <p>Lorem ipsum dolor <i>sit amet</i>. consectetur <a href="###">adipisicing elit</a>, sed do eiusmod tempor. Non facere <code>Laudantium</code> ex eos <b>doloribus aut dolore</b> nisi provident.</p>
     </div>
     <div class="u--cbox -bd-x-s -p:20" style="--keycolor: var(--brand); --bdc: var(--keycolor); --bdw: 4px">
-      <p>
-        Lorem ipsum dolor <i>sit amet</i>. consectetur <a href="###">adipisicing elit</a>, sed do eiusmod tempor. Non facere <code>Laudantium</code> ex
-        eos <b>doloribus aut dolore</b> nisi provident.
-      </p>
+      <p>Lorem ipsum dolor <i>sit amet</i>. consectetur <a href="###">adipisicing elit</a>, sed do eiusmod tempor. Non facere <code>Laudantium</code> ex eos <b>doloribus aut dolore</b> nisi provident.</p>
     </div>
     ```
   </PreviewCode>
   <PreviewCode slot="tab" label='JSX'>
     ```jsx
-    <Lism className='u--cbox' keycolor='blue' p='20'><DummyText length='codes' /></Lism>
-    <Lism className='u--cbox' keycolor='red' bd p='20'><DummyText length='codes' /></Lism>
-    <Lism className='u--cbox' keycolor='purple' bd bdc='keycolor:base:25%' p='20'><DummyText length='codes' /></Lism>
-    <Lism className='u--cbox' keycolor='#688f04' bd-x-s bdw='4px' p='20'><DummyText length='codes' /></Lism>
+    <Lism className='u--cbox' keycolor='blue' p='20'><p>Lorem ipsum dolor <i>sit amet</i>. consectetur <a href='###'>adipisicing elit</a>, sed do eiusmod tempor. Non facere <code>Laudantium</code> ex eos <b>doloribus aut dolore</b> nisi provident.</p></Lism>
+    <Lism className='u--cbox' keycolor='red' bd p='20'><p>Lorem ipsum dolor <i>sit amet</i>. consectetur <a href='###'>adipisicing elit</a>, sed do eiusmod tempor. Non facere <code>Laudantium</code> ex eos <b>doloribus aut dolore</b> nisi provident.</p></Lism>
+    <Lism className='u--cbox' keycolor='purple' bd bdc='keycolor:base:25%' p='20'><p>Lorem ipsum dolor <i>sit amet</i>. consectetur <a href='###'>adipisicing elit</a>, sed do eiusmod tempor. Non facere <code>Laudantium</code> ex eos <b>doloribus aut dolore</b> nisi provident.</p></Lism>
+    <Lism className='u--cbox' keycolor='#688f04' bd-x-s bdw='4px' p='20'><p>Lorem ipsum dolor <i>sit amet</i>. consectetur <a href='###'>adipisicing elit</a>, sed do eiusmod tempor. Non facere <code>Laudantium</code> ex eos <b>doloribus aut dolore</b> nisi provident.</p></Lism>
     ```
   </PreviewCode>
 </Preview>
@@ -69,26 +60,14 @@ import { Dog, Cat } from "@phosphor-icons/react";
   <PreviewTitle>バッジで利用する例と、変数によるカスタマイズ例</PreviewTitle>
   <PreviewArea resize p='20'>
     <Lism layout="cluster" g="10">
-      <Lism as="span" className="u--cbox" keycolor="red" bd fz="s" lh="s" py="5" px="10" bdrs="99">
-        Badge
-      </Lism>
-      <Lism as="span" className="u--cbox" keycolor="green" bd fz="s" lh="s" py="5" px="10" bdrs="99">
-        Badge
-      </Lism>
-      <Lism as="span" className="u--cbox" keycolor="blue" bd fz="s" lh="s" py="5" px="10" bdrs="99">
-        Badge
-      </Lism>
+      <Lism as="span" className="u--cbox" keycolor="red" bd fz="s" lh="s" py="5" px="10" bdrs="99">Badge</Lism>
+      <Lism as="span" className="u--cbox" keycolor="green" bd fz="s" lh="s" py="5" px="10" bdrs="99">Badge</Lism>
+      <Lism as="span" className="u--cbox" keycolor="blue" bd fz="s" lh="s" py="5" px="10" bdrs="99">Badge</Lism>
     </Lism>
     <Lism layout="cluster" g="10" style={{ '--cbox-cPct': '76%', '--cbox-bdPct': '20%' }}>
-      <Lism as="span" className="u--cbox" keycolor="red" bd fz="s" lh="s" py="5" px="10" bdrs="99">
-        Badge
-      </Lism>
-      <Lism as="span" className="u--cbox" keycolor="green" bd fz="s" lh="s" py="5" px="10" bdrs="99">
-        Badge
-      </Lism>
-      <Lism as="span" className="u--cbox" keycolor="blue" bd fz="s" lh="s" py="5" px="10" bdrs="99">
-        Badge
-      </Lism>
+      <Lism as="span" className="u--cbox" keycolor="red" bd fz="s" lh="s" py="5" px="10" bdrs="99">Badge</Lism>
+      <Lism as="span" className="u--cbox" keycolor="green" bd fz="s" lh="s" py="5" px="10" bdrs="99">Badge</Lism>
+      <Lism as="span" className="u--cbox" keycolor="blue" bd fz="s" lh="s" py="5" px="10" bdrs="99">Badge</Lism>
     </Lism>
   </PreviewArea>
   <PreviewCode slot="tab" label="HTML">
@@ -226,7 +205,7 @@ import { Dog, Cat } from "@phosphor-icons/react";
   <PreviewCode slot="tab" label='JSX'>
     ```jsx "u--trim"
     <Box bd bds="dashed">
-      <DummyText className="u--trim" length="s" />
+      <Text className="u--trim">Lorem ipsum dolor sit amet. Consectetur adipiscing elit, sed do eiusmod tempor Incididunt ut.</Text>
     </Box>;
     ```
   </PreviewCode>
@@ -262,8 +241,8 @@ import { Dog, Cat } from "@phosphor-icons/react";
     ```jsx
     <Stack className="u--trimChildren" bd g="30" p="30" bdrs="10">
       <Media ar="og" src="https://cdn.lism-css.com/img/a-1.jpg" />
-      <DummyText lang="ja" length="s" />
-      <DummyText lang="ja" />
+      <p>ロレム・イプサムの座り雨。目まぐるしい文章の流れの中で、それは静かに歩く仮の言葉です。</p>
+      <p>ロレム・イプサムの座り雨。目まぐるしい文章の流れの中で、それは静かに歩く仮の言葉です。Elitも穏やかに続いていきますが、積み重ねられてきた「LiberroyとFoogの取り組み」は、余白のようなものです。</p>
     </Stack>;
     ```
   </PreviewCode>
@@ -352,25 +331,25 @@ import { Dog, Cat } from "@phosphor-icons/react";
     ```jsx
     <Grid layout="fluidCols" className="u--collapseGrid" cols="12rem">
       <Box p="15">
-        <DummyText />
+        <p>Lorem ipsum dolor sit amet. Consectetur adipiscing elit, sed do eiusmod tempor Incididunt ut. Labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut.</p>
       </Box>
       <Box p="15">
-        <DummyText />
+        <p>Lorem ipsum dolor sit amet. Consectetur adipiscing elit, sed do eiusmod tempor Incididunt ut. Labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut.</p>
       </Box>
       <Box p="15">
-        <DummyText />
+        <p>Lorem ipsum dolor sit amet. Consectetur adipiscing elit, sed do eiusmod tempor Incididunt ut. Labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut.</p>
       </Box>
       <Box p="15">
-        <DummyText />
+        <p>Lorem ipsum dolor sit amet. Consectetur adipiscing elit, sed do eiusmod tempor Incididunt ut. Labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut.</p>
       </Box>
       <Box p="15">
-        <DummyText />
+        <p>Lorem ipsum dolor sit amet. Consectetur adipiscing elit, sed do eiusmod tempor Incididunt ut. Labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut.</p>
       </Box>
       <Box p="15">
-        <DummyText />
+        <p>Lorem ipsum dolor sit amet. Consectetur adipiscing elit, sed do eiusmod tempor Incididunt ut. Labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut.</p>
       </Box>
       <Box p="15">
-        <DummyText />
+        <p>Lorem ipsum dolor sit amet. Consectetur adipiscing elit, sed do eiusmod tempor Incididunt ut. Labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut.</p>
       </Box>
     </Grid>;
     ```
@@ -481,11 +460,11 @@ Gridを使って table タグのような表現もできるようになります
       </Box>
       <Box p="15">Lorem ipsum</Box>
       <Box p="15">
-        <DummyText />
+        <p>Lorem ipsum dolor sit amet. Consectetur adipiscing elit, sed do eiusmod tempor Incididunt ut. Labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut.</p>
       </Box>
       <Box p="15">Dolor sit amet</Box>
       <Box p="15">
-        <DummyText length="l" />
+        <p>Lorem ipsum dolor sit amet. Consectetur adipiscing elit, sed do eiusmod tempor Incididunt ut. Labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut. Aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint.</p>
       </Box>
     </Grid>;
     ```
