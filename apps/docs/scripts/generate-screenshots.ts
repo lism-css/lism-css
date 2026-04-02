@@ -5,8 +5,8 @@
  * 各テンプレートページのスクリーンショットを撮影して保存します。
  *
  * 使い方:
- *   npx tsx scripts/generate-screenshots.ts                # 新規のみ生成
- *   npx tsx scripts/generate-screenshots.ts --force        # 全て再生成
+ *   pnpm screenshot:new                # 新規のみ生成（ビルド後に実行）
+ *   pnpm screenshot:force              # 全て再生成（ビルド後に実行）
  *   npx tsx scripts/generate-screenshots.ts cta            # カテゴリ指定
  *   npx tsx scripts/generate-screenshots.ts cta/cta001     # テンプレート指定
  *   npx tsx scripts/generate-screenshots.ts cta section    # 複数指定

@@ -6,7 +6,6 @@
  *
  * 使い方:
  *   npx tsx scripts/compare-screenshots.ts                    # 比較（初回はベースライン生成）
- *   npx tsx scripts/compare-screenshots.ts --update           # 差分があるベースラインを更新
  *   npx tsx scripts/compare-screenshots.ts --threshold 0.5    # 差分率しきい値を変更（デフォルト: 0.1%）
  *   npx tsx scripts/compare-screenshots.ts cta                # カテゴリ指定
  *   npx tsx scripts/compare-screenshots.ts cta/cta001         # テンプレート指定
@@ -36,11 +35,10 @@ const CONFIG = {
 
 // コマンドライン引数をパース
 const args = process.argv.slice(2);
-const shouldUpdate = args.includes('--update');
 const thresholdIndex = args.indexOf('--threshold');
 // 差分率しきい値（%）: これ以下の差分は無視する
 const threshold = thresholdIndex !== -1 ? parseFloat(args[thresholdIndex + 1]) : 0.1;
-// --force, --update, --threshold とその値を除いた残りをフィルタとして使用
+// --threshold とその値を除いた残りをフィルタとして使用
 const filters = args.filter((a, i) => !a.startsWith('--') && args[i - 1] !== '--threshold');
 
 /**
@@ -263,11 +261,6 @@ async function processTemplate(page: Page, category: string, id: string, isIniti
     return { status: 'unchanged' };
   }
 
-  // --update: ベースラインを更新
-  if (shouldUpdate) {
-    writeFileSync(baselinePath, readFileSync(tempPath));
-  }
-
   return {
     status: 'changed',
     diffPercent: Math.round(diffPercent * 100) / 100,
@@ -278,9 +271,6 @@ async function processTemplate(page: Page, category: string, id: string, isIniti
 async function main() {
   console.log('🔍 テンプレートスクリーンショット比較');
   console.log(`   しきい値: ${threshold}%`);
-  if (shouldUpdate) {
-    console.log('   モード: 差分があるベースラインを更新');
-  }
   console.log('');
 
   // dist ディレクトリの存在確認
@@ -387,10 +377,8 @@ async function main() {
         console.log(`   - ${item.name} (${item.diffPercent}%)`);
         console.log(`     差分画像: ${item.diffPath}`);
       }
-      if (shouldUpdate) {
-        console.log('');
-        console.log('✅ ベースラインを更新しました。');
-      }
+      console.log('');
+      console.log('💡 変更を受け入れるには: pnpm screenshot:update');
     }
 
     // 一時ディレクトリを削除
