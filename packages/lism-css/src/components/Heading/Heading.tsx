@@ -2,7 +2,7 @@ import { Lism, type LismComponentProps } from '../Lism';
 
 type HeadingLevel = '1' | '2' | '3' | '4' | '5' | '6';
 type HeadingTag = `h${HeadingLevel}`;
-type HeadingProps = LismComponentProps<'h1', HeadingTag> & {
+type HeadingProps = LismComponentProps<'h1'> & {
   level?: HeadingLevel;
 };
 

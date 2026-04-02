@@ -1,10 +1,9 @@
 ---
-import type { Polymorphic } from 'astro/types';
+import type { HTMLTag, Polymorphic } from 'astro/types';
 import type { AstroLismBaseProps } from '../types';
 import Lism from '../Lism/Lism.astro';
 
-type ListItemAllowedTag = 'li' | 'dt' | 'dd';
-type Props<Tag extends ListItemAllowedTag = 'li'> = Polymorphic<{ as: Tag }> & AstroLismBaseProps;
+type Props<Tag extends HTMLTag = 'li'> = Polymorphic<{ as: Tag }> & AstroLismBaseProps;
 
 const { as: Tag = 'li', ...props } = Astro.props;
 ---

@@ -1,10 +1,9 @@
 ---
-import type { Polymorphic } from 'astro/types';
+import type { HTMLTag, Polymorphic } from 'astro/types';
 import type { AstroLismBaseProps } from '../types';
 import Lism from '../Lism/Lism.astro';
 
-type InlineAllowedTag = 'span' | 'em' | 'strong' | 'small' | 'code' | 'time' | 'i' | 'b' | 'mark' | 'abbr' | 'cite' | 'kbd';
-type Props<Tag extends InlineAllowedTag = 'span'> = Polymorphic<{ as: Tag }> & AstroLismBaseProps;
+type Props<Tag extends HTMLTag = 'span'> = Polymorphic<{ as: Tag }> & AstroLismBaseProps;
 
 const { as: Tag = 'span', ...props } = Astro.props;
 ---
