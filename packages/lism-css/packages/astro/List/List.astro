@@ -3,7 +3,7 @@ import type { Polymorphic } from 'astro/types';
 import type { AstroLismBaseProps } from '../types';
 import Lism from '../Lism/Lism.astro';
 
-type ListAllowedTag = 'ul' | 'ol';
+type ListAllowedTag = 'ul' | 'ol' | 'dl';
 type Props<Tag extends ListAllowedTag = 'ul'> = Polymorphic<{ as: Tag }> & AstroLismBaseProps;
 
 const { as: Tag = 'ul', ...props } = Astro.props;

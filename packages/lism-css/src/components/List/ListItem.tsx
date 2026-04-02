@@ -1,5 +1,7 @@
 import { Lism, type LismComponentProps } from '../Lism';
 
-export default function ListItem(props: LismComponentProps<'li'>) {
-  return <Lism as="li" {...props} />;
+type ListItemAllowedTag = 'li' | 'dt' | 'dd';
+
+export default function ListItem<T extends ListItemAllowedTag = 'li'>({ as, ...props }: LismComponentProps<T>) {
+  return <Lism as={as ?? 'li'} {...props} />;
 }
