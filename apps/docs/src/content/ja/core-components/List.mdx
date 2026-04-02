@@ -1,0 +1,129 @@
+---
+title: 'List & ListItem'
+description: 'リストタグ（<ul>, <li>）を出力するLismコンポーネントです。'
+order: 7
+---
+import { List, ListItem, Lism, Dummy } from "lism-css/astro";
+
+`<List>`は`<ul>`タグを、`<ListItem>`は`<li>`タグを出力するLismコンポーネントです。
+
+:::info
+`<List>` は `<Lism as="ul">` のエイリアス、`<ListItem>` は `<Lism as="li">` のエイリアスです。全ての [Lism Props](/docs/core-components/Lism/) が使用できます。  
+`<List>` の `as` prop: `ul`(デフォルト) / `ol` / `dl`  
+`<ListItem>` の `as` prop: `li`(デフォルト) / `dt` / `dd`
+:::
+
+## Import
+
+<ImportPackage component='List, ListItem' />
+
+
+## 基本的な使い方
+
+<Preview>
+  <PreviewTitle>`<List>`の出力例</PreviewTitle>
+  <PreviewArea p='20'>
+    <List>
+      <ListItem>リストアイテム 1</ListItem>
+      <ListItem>リストアイテム 2</ListItem>
+      <ListItem>リストアイテム 3</ListItem>
+    </List>
+  </PreviewArea>
+  <PreviewCode slot='tab' label='JSX'>
+    ```jsx
+    <List>
+      <ListItem>リストアイテム 1</ListItem>
+      <ListItem>リストアイテム 2</ListItem>
+      <ListItem>リストアイテム 3</ListItem>
+    </List>
+    ```
+  </PreviewCode>
+  <PreviewCode slot='tab' label='HTML'>
+    ```html
+    <ul>
+      <li>リストアイテム 1</li>
+      <li>リストアイテム 2</li>
+      <li>リストアイテム 3</li>
+    </ul>
+    ```
+  </PreviewCode>
+</Preview>
+
+
+## 番号付きリスト
+
+`as="ol"` を指定すると、`<ol>`タグとして出力されます。
+
+<Preview>
+  <PreviewTitle>`<List as="ol">`の出力例</PreviewTitle>
+  <PreviewArea p='20'>
+    <List as="ol">
+      <ListItem>リストアイテム 1</ListItem>
+      <ListItem>リストアイテム 2</ListItem>
+      <ListItem>リストアイテム 3</ListItem>
+    </List>
+  </PreviewArea>
+  <PreviewCode slot='tab' label='JSX'>
+    ```jsx
+    <List as="ol">
+      <ListItem>リストアイテム 1</ListItem>
+      <ListItem>リストアイテム 2</ListItem>
+      <ListItem>リストアイテム 3</ListItem>
+    </List>
+    ```
+  </PreviewCode>
+  <PreviewCode slot='tab' label='HTML'>
+    ```html
+    <ol>
+      <li>リストアイテム 1</li>
+      <li>リストアイテム 2</li>
+      <li>リストアイテム 3</li>
+    </ol>
+    ```
+  </PreviewCode>
+</Preview>
+
+
+## 定義リスト
+
+`<List as="dl">` と `<ListItem as="dt">`, `<ListItem as="dd">` を組み合わせて、定義リストを作成できます。
+
+<Preview>
+  <PreviewTitle>`<List as="dl">`の出力例</PreviewTitle>
+  <PreviewArea p='20'>
+    <List as="dl">
+      <ListItem as="dt" fw="bold">
+        用語 1
+      </ListItem>
+      <ListItem as="dd">用語 1 の説明文です。</ListItem>
+      <ListItem as="dt" fw="bold">
+        用語 2
+      </ListItem>
+      <ListItem as="dd">用語 2 の説明文です。</ListItem>
+    </List>
+  </PreviewArea>
+  <PreviewCode slot='tab' label='JSX'>
+    ```jsx
+    <List as="dl">
+      <ListItem as="dt" fw="bold">
+        用語 1
+      </ListItem>
+      <ListItem as="dd">用語 1 の説明文です。</ListItem>
+      <ListItem as="dt" fw="bold">
+        用語 2
+      </ListItem>
+      <ListItem as="dd">用語 2 の説明文です。</ListItem>
+    </List>
+    ```
+  </PreviewCode>
+  <PreviewCode slot='tab' label='HTML'>
+    ```html
+    <dl>
+      <dt class="-fw:bold">用語 1</dt>
+      <dd>用語 1 の説明文です。</dd>
+      <dt class="-fw:bold">用語 2</dt>
+      <dd>用語 2 の説明文です。</dd>
+    </dl>
+    ```
+  </PreviewCode>
+</Preview>

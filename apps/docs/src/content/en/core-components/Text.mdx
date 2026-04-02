@@ -1,0 +1,60 @@
+---
+title: 'Text'
+description: 'A Lism component that outputs a <p> tag.'
+order: 2
+---
+import { Text, Lism, Dummy } from "lism-css/astro";
+
+`<Text>` is a Lism component that outputs a `<p>` tag.
+
+:::info
+`<Text>` is an alias for `<Lism as="p">`. All [Lism Props](/docs/core-components/Lism/) are available.  
+You can change the output tag with the `as` prop: `p`(default) / `div` / `blockquote` / `address` / `figcaption` / `pre`
+:::
+
+## Import
+
+<ImportPackage component='Text' />
+
+
+## Basic Usage
+
+<Preview>
+  <PreviewTitle>`<Text>` output example</PreviewTitle>
+  <PreviewArea p='20'>
+    <Text>
+      <Dummy as="span" />
+    </Text>
+  </PreviewArea>
+  <PreviewCode slot='tab' label='JSX'>
+    ```jsx
+    <Text>Lorem ipsum text...</Text>;
+    ```
+  </PreviewCode>
+  <PreviewCode slot='tab' label='HTML'>
+    ```html
+    <p>Lorem ipsum text...</p>
+    ```
+  </PreviewCode>
+</Preview>
+
+<Preview>
+  <PreviewTitle>Applying Lism Props</PreviewTitle>
+  <PreviewArea p='20'>
+    <Text fz="l" lh="s" c="text-2">
+      <Dummy as="span" />
+    </Text>
+  </PreviewArea>
+  <PreviewCode slot='tab' label='JSX'>
+    ```jsx
+    <Text fz="l" lh="s" c="text-2">
+      Lorem ipsum text...
+    </Text>;
+    ```
+  </PreviewCode>
+  <PreviewCode slot='tab' label='HTML'>
+    ```html
+    <p class="-fz:l -lh:l -c" style="--c: var(--text-2)">Lorem ipsum text...</p>
+    ```
+  </PreviewCode>
+</Preview>

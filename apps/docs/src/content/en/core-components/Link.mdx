@@ -1,0 +1,57 @@
+---
+title: 'Link'
+description: 'A Lism component that outputs an <a> tag.'
+order: 6
+---
+import { Link, Text, Lism, Dummy } from "lism-css/astro";
+
+`<Link>` is a Lism component that outputs an `<a>` tag.
+
+:::info
+`<Link>` is an alias for `<Lism as="a">`. All [Lism Props](/docs/core-components/Lism/) are available.
+:::
+
+## Import
+
+<ImportPackage component='Link' />
+
+
+## Basic Usage
+
+<Preview>
+  <PreviewTitle>`<Link>` output example</PreviewTitle>
+  <PreviewArea p='20'>
+    <Link href="###">Link text</Link>
+  </PreviewArea>
+  <PreviewCode slot='tab' label='JSX'>
+    ```jsx
+    <Link href="###">Link text</Link>;
+    ```
+  </PreviewCode>
+  <PreviewCode slot='tab' label='HTML'>
+    ```html
+    <a href="###">Link text</a>
+    ```
+  </PreviewCode>
+</Preview>
+
+<Preview>
+  <PreviewTitle>Applying Lism Props</PreviewTitle>
+  <PreviewArea p='20'>
+    <Link href="###" c="green" fw="bold">
+      Styled link
+    </Link>
+  </PreviewArea>
+  <PreviewCode slot='tab' label='JSX'>
+    ```jsx
+    <Link href="###" c="green" fw="bold">
+      Styled link
+    </Link>;
+    ```
+  </PreviewCode>
+  <PreviewCode slot='tab' label='HTML'>
+    ```html
+    <a href="###" class="-c -fw:bold" style="--c: var(--green)">Styled link</a>
+    ```
+  </PreviewCode>
+</Preview>

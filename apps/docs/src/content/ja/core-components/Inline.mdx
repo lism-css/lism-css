@@ -1,0 +1,75 @@
+---
+title: 'Inline'
+description: '<span>タグを出力するLismコンポーネントです。'
+order: 3
+---
+import { Text, Inline, Lism, Dummy } from "lism-css/astro";
+
+`<Inline>`は、`<span>`タグを出力するLismコンポーネントです。  
+テキストの一部にスタイルを適用したい場合などに使用します。
+
+:::info
+`<Inline>` は `<Lism as="span">` のエイリアスです。全ての [Lism Props](/docs/core-components/Lism/) が使用できます。  
+`as` prop で出力タグを変更できます: `span`(デフォルト) / `em` / `strong` / `small` / `code` / `time` / `i` / `b` / `mark` / `abbr` / `cite` / `kbd`
+:::
+
+## Import
+
+<ImportPackage component='Inline' />
+
+
+## 基本的な使い方
+
+<Preview>
+  <PreviewTitle>`<Inline>`の出力例</PreviewTitle>
+  <PreviewArea p='20'>
+    <Text>
+      <Fragment>テキストの中で</Fragment>
+      <Inline fz="l" fs="italic">
+        インライン要素
+      </Inline>
+      <Fragment>としてスタイルできます。</Fragment>
+    </Text>
+  </PreviewArea>
+  <PreviewCode slot='tab' label='JSX'>
+    ```jsx
+    <Text>
+      テキストの中で
+      <Inline fz="l" fs="italic">
+        インライン要素
+      </Inline>
+      としてスタイルできます。
+    </Text>;
+    ```
+  </PreviewCode>
+</Preview>
+
+
+<Preview>
+  <PreviewTitle>`as="strong"` の例</PreviewTitle>
+  <PreviewArea p='20'>
+    <Text>
+      これは
+      <Inline as="strong" c="red">
+        強調された
+      </Inline>
+      テキストです。
+    </Text>
+  </PreviewArea>
+  <PreviewCode slot='tab' label='JSX'>
+    ```jsx
+    <Text>
+      これは
+      <Inline as="strong" c="red">
+        強調された
+      </Inline>
+      テキストです。
+    </Text>;
+    ```
+  </PreviewCode>
+  <PreviewCode slot='tab' label='HTML'>
+    ```html
+    <p>これは<strong class="-c" style="--c: var(--red)">強調された</strong>テキストです。</p>
+    ```
+  </PreviewCode>
+</Preview>
