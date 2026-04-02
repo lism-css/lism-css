@@ -3,7 +3,8 @@ title: 'Typography & Spacing'
 description: 'An overview of typography and spacing design tokens used in Lism CSS.'
 ---
 
-import { Dummy, Box, Stack, Cluster, Columns, Frame, Center, Text } from 'lism-css/astro';
+import { Box, Stack, Cluster, Columns, Frame, Center, Text } from 'lism-css/astro';
+import { DummyText } from '@lism-css/ui/astro';
 import { FzDemos, SpacingDemos, BoxShadowDemos } from "@/content/token-previews.jsx";
 
 
@@ -61,11 +62,11 @@ Tokens for `font-weight`.
 <Preview>
   <PreviewTitle>Preview</PreviewTitle>
   <PreviewArea p='20' flow='s'>
-    <Dummy length="s" fw="thin" />
-    <Dummy length="s" fw="light" />
-    <Dummy length="s" fw="normal" />
-    <Dummy length="s" fw="bold" />
-    <Dummy length="s" fw="black" />
+    <DummyText length="s" fw="thin" />
+    <DummyText length="s" fw="light" />
+    <DummyText length="s" fw="normal" />
+    <DummyText length="s" fw="bold" />
+    <DummyText length="s" fw="black" />
   </PreviewArea>
   <PreviewCode slot='tab' label='HTML'>
     ```html
@@ -212,11 +213,11 @@ The `lh` class uses these variables internally:
 <Preview>
   <PreviewTitle>Preview</PreviewTitle>
   <PreviewArea p='20' flow='s' style={{'--halfLead':'1em'}}>
-    <Dummy pre='<code class="-fz:s">1:</code> ' lh="1" />
-    <Dummy pre='<code class="-fz:s">xs:</code> ' lh="xs" />
-    <Dummy pre='<code class="-fz:s">s:</code> ' lh="s" />
-    <Dummy pre='<code class="-fz:s">base:</code> ' lh="base" />
-    <Dummy pre='<code class="-fz:s">l:</code> ' lh="l" />
+    <DummyText pre='<code class="-fz:s">1:</code> ' lh="1" />
+    <DummyText pre='<code class="-fz:s">xs:</code> ' lh="xs" />
+    <DummyText pre='<code class="-fz:s">s:</code> ' lh="s" />
+    <DummyText pre='<code class="-fz:s">base:</code> ' lh="base" />
+    <DummyText pre='<code class="-fz:s">l:</code> ' lh="l" />
   </PreviewArea>
   <PreviewCode slot='tab' label='HTML'>
     ```html
@@ -248,15 +249,15 @@ By fixing the half-leading to a constant value, the distance between lines stays
 <Preview>
   <PreviewTitle>Preview</PreviewTitle>
   <PreviewArea p='20' flow='s'>
-    <Dummy as="h1" pre="H1: " max-w="s" lang="ja" />
-    <Dummy as="h2" pre="H2: " max-w="s" lang="ja" />
-    <Dummy as="h3" pre="H3: " max-w="s" lang="ja" />
-    <Dummy as="h4" pre="H4: " max-w="s" lang="ja" />
-    <Dummy as="h5" pre="H5: " max-w="s" lang="ja" />
-    <Dummy as="p" pre="p : " max-w="s" lang="ja" />
-    <Dummy as="p" fz="s" pre="s: " max-w="s" lang="ja" />
-    {/* <Dummy as='p' fz="xs" pre='xs: ' max-w="s" lang="ja"/>
-    <Dummy as='p' fz="2xs" pre='2xs: ' max-w="s" lang="ja"/> */}
+    <DummyText as="h1" pre="H1: " max-w="s" lang="ja" />
+    <DummyText as="h2" pre="H2: " max-w="s" lang="ja" />
+    <DummyText as="h3" pre="H3: " max-w="s" lang="ja" />
+    <DummyText as="h4" pre="H4: " max-w="s" lang="ja" />
+    <DummyText as="h5" pre="H5: " max-w="s" lang="ja" />
+    <DummyText as="p" pre="p : " max-w="s" lang="ja" />
+    <DummyText as="p" fz="s" pre="s: " max-w="s" lang="ja" />
+    {/* <DummyText as='p' fz="xs" pre='xs: ' max-w="s" lang="ja"/>
+    <DummyText as='p' fz="2xs" pre='2xs: ' max-w="s" lang="ja"/> */}
   </PreviewArea>
 </Preview>
 
@@ -272,14 +273,14 @@ Reference: [Half-leading trim class](/docs/utility-class/#u--trim--u--trimitems)
   <PreviewTitle>Headings</PreviewTitle>
   <PreviewArea p='20' flow='s'>
     <div class='l--stack -g:20'>
-      <h1>Heading 1: <Dummy  as='span' lang='ja' /></h1>
-      <h2>Heading 2: <Dummy  as='span' lang='ja' /></h2>
-      <h3>Heading 3: <Dummy  as='span' lang='ja' /></h3>
-      <h4>Heading 4: <Dummy  as='span' lang='ja' /></h4>
-      <p>Heading 5: <Dummy  as='span' lang='ja' /></h5>
-      <h6>Heading 6: <Dummy  as='span' lang='ja' /></h6>
+      <h1>Heading 1: <DummyText  as='span' lang='ja' /></h1>
+      <h2>Heading 2: <DummyText  as='span' lang='ja' /></h2>
+      <h3>Heading 3: <DummyText  as='span' lang='ja' /></h3>
+      <h4>Heading 4: <DummyText  as='span' lang='ja' /></h4>
+      <p>Heading 5: <DummyText  as='span' lang='ja' /></h5>
+      <h6>Heading 6: <DummyText  as='span' lang='ja' /></h6>
       <hr />
-      <p>Paragraph: <Dummy  as='span' lang='ja' /></p>
+      <p>Paragraph: <DummyText  as='span' lang='ja' /></p>
     </div>
   </PreviewArea>
 </Preview> */}
@@ -299,10 +300,10 @@ Tokens for `letter-spacing`.
 <Preview>
   <PreviewTitle>Preview</PreviewTitle>
   <PreviewArea p='20' flow='s'>
-    <Dummy length="s" pre="<code>s:</code> " lts="s" />
-    <Dummy length="s" pre="<code>base:</code> " lts="base" />
-    <Dummy length="s" pre="<code>l:</code> " lts="l" />
-    {/* <Dummy length='s' pre='<code>xl:</code> ' lts='xl' /> */}
+    <DummyText length="s" pre="<code>s:</code> " lts="s" />
+    <DummyText length="s" pre="<code>base:</code> " lts="base" />
+    <DummyText length="s" pre="<code>l:</code> " lts="l" />
+    {/* <DummyText length='s' pre='<code>xl:</code> ' lts='xl' /> */}
   </PreviewArea>
   <PreviewCode slot='tab' label='HTML'>
     ```html

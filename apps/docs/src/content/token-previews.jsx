@@ -1,4 +1,5 @@
-import { Box, Inline, Stack, Center, Dummy } from 'lism-css/react';
+import { Box, Inline, Stack, Center } from 'lism-css/react';
+import { DummyText } from '@lism-css/ui/react';
 
 export const FzDemos = ({ lang = 'ja' }) => (
   <Stack g="20" ar="16/9" ov-y="auto" ov-x="clip" p="15">
@@ -8,7 +9,7 @@ export const FzDemos = ({ lang = 'ja' }) => (
           <Inline className="is--sizeTip u--trim" fz="12px" lh="s">
             <code>{fz}</code>
           </Inline>
-          <Dummy lang={lang} length="s" fz={fz} className="-whspace:nowrap -lh:1" />
+          <DummyText lang={lang} length="s" fz={fz} className="-whspace:nowrap -lh:1" />
         </Stack>
       );
     })}

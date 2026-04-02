@@ -4,7 +4,8 @@ description: 'Lism CSS で実装するふきだし風装飾ボックスの実装
 draft: true
 ---
 
-import { Grid, Stack, Flex, Decorator, Box, Spacer, Dummy } from 'lism-css/astro';
+import { Grid, Stack, Flex, Decorator, Box, Spacer } from 'lism-css/astro';
+import { DummyText } from '@lism-css/ui/astro';
 import BalloonBox from '@/components/ex/BalloonBox/index.jsx';
 
 ふきだし風装飾ボックスの作成例を紹介します。
@@ -29,31 +30,31 @@ import BalloonBox from '@/components/ex/BalloonBox/index.jsx';
   <PreviewTitle>BalloonBox</PreviewTitle>
   <PreviewArea resize p='20'>
     <BalloonBox variant="left">
-      <Dummy />
+      <DummyText />
     </BalloonBox>
     <BalloonBox variant="right" keycolor="blue">
-      <Dummy />
+      <DummyText />
     </BalloonBox>
     <BalloonBox variant="top" bdw="2px" keycolor="red">
-      <Dummy />
+      <DummyText />
     </BalloonBox>
     <BalloonBox variant="bottom" bgc="text" c="base">
-      <Dummy />
+      <DummyText />
     </BalloonBox>
   </PreviewArea>
   <PreviewCode>
   ```jsx
     <BalloonBox variant='left'>
-      <Dummy />
+      <DummyText />
     </BalloonBox>
     <BalloonBox variant='right' keycolor='blue'>
-      <Dummy />
+      <DummyText />
     </BalloonBox>
     <BalloonBox variant='top' bdw='2px' keycolor='red'>
-      <Dummy />
+      <DummyText />
     </BalloonBox>
     <BalloonBox variant='bottom' bgc='text' c='base'>
-      <Dummy />
+      <DummyText />
     </BalloonBox>
   ```
   </PreviewCode>

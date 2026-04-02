@@ -3,7 +3,8 @@ title: 'Grid'
 description: 'Documentation for the Grid module in Lism CSS. A layout module for arranging content using CSS Grid.'
 ---
 
-import { Grid, Lism, Box, Layer, Center, Decorator, Frame, Media, Dummy } from 'lism-css/astro';
+import { Grid, Lism, Box, Layer, Center, Decorator, Frame, Media } from 'lism-css/astro';
+import { DummyText } from '@lism-css/ui/astro';
 
 
 A component for arranging content in a **Grid layout**.
@@ -177,7 +178,7 @@ Here is an example of stacking elements using `grid-area:1/1` (`.-ga:1`) without
             NEWS
           </Lism>
         </Grid>
-        <Dummy className="u--trim" lang="ja" length="s" as="a" href="####" hov="o" c="inherit" td="none" lh="s" />
+        <DummyText className="u--trim" lang="ja" length="s" as="a" href="####" hov="o" c="inherit" td="none" lh="s" />
       </Grid>
       <Grid gtc="subgrid" gc="1/-1" g="20" ai="center" bd-t py="20" px="10">
         <Grid gtc={['auto auto', '1fr 1fr']} g="20" jc="start" ai="center">
@@ -186,7 +187,7 @@ Here is an example of stacking elements using `grid-area:1/1` (`.-ga:1`) without
             TIPS
           </Lism>
         </Grid>
-        <Dummy className="u--trim" lang="ja" offset="2" as="a" href="####" hov="o" c="inherit" td="none" lh="s" />
+        <DummyText className="u--trim" lang="ja" offset="2" as="a" href="####" hov="o" c="inherit" td="none" lh="s" />
       </Grid>
       <Grid gtc="subgrid" gc="1/-1" g="20" ai="center" bd-t py="20" px="10">
         <Grid gtc={['auto auto', '1fr 1fr']} g="20" jc="start" ai="center">
@@ -195,7 +196,7 @@ Here is an example of stacking elements using `grid-area:1/1` (`.-ga:1`) without
             COLUMN
           </Lism>
         </Grid>
-        <Dummy className="u--trim" lang="ja" length="l" offset="6" as="a" href="####" hov="o" c="inherit" td="none" lh="s" />
+        <DummyText className="u--trim" lang="ja" length="l" offset="6" as="a" href="####" hov="o" c="inherit" td="none" lh="s" />
       </Grid>
     </Grid>
   </PreviewArea>
@@ -209,7 +210,7 @@ Here is an example of stacking elements using `grid-area:1/1` (`.-ga:1`) without
             NEWS
           </Lism>
         </Grid>
-        <Dummy className="u--trim" lang="ja" length="s" as="a" href="####" hov="o" c="inherit" td="none" lh="s" />
+        <DummyText className="u--trim" lang="ja" length="s" as="a" href="####" hov="o" c="inherit" td="none" lh="s" />
       </Grid>
       <Grid gtc="subgrid" gc="1/-1" g="20" ai="center" bd-t py="20" px="10">
         <Grid gtc={['auto auto', '1fr 1fr']} g="20" jc="start" ai="center">
@@ -218,7 +219,7 @@ Here is an example of stacking elements using `grid-area:1/1` (`.-ga:1`) without
             TIPS
           </Lism>
         </Grid>
-        <Dummy className="u--trim" lang="ja" offset="2" as="a" href="####" hov="o" c="inherit" td="none" lh="s" />
+        <DummyText className="u--trim" lang="ja" offset="2" as="a" href="####" hov="o" c="inherit" td="none" lh="s" />
       </Grid>
       <Grid gtc="subgrid" gc="1/-1" g="20" ai="center" bd-t py="20" px="10">
         <Grid gtc={['auto auto', '1fr 1fr']} g="20" jc="start" ai="center">
@@ -227,7 +228,7 @@ Here is an example of stacking elements using `grid-area:1/1` (`.-ga:1`) without
             COLUMN
           </Lism>
         </Grid>
-        <Dummy className="u--trim" lang="ja" length="l" offset="6" as="a" href="####" hov="o" c="inherit" td="none" lh="s" />
+        <DummyText className="u--trim" lang="ja" length="l" offset="6" as="a" href="####" hov="o" c="inherit" td="none" lh="s" />
       </Grid>
     </Grid>;
     ```
@@ -346,12 +347,12 @@ Both support breakpoint-specific values and default to `1`.
   <PreviewTitle>1 column → 2 columns → 3 columns at 200px width, centered</PreviewTitle>
   <PreviewArea resize p='15'>
     <Grid gtc={['1fr', 'repeat(2, 1fr)', 'repeat(3, 200px)']} jc="center" g="15" className="has--itemGuide">
-      <Dummy />
-      <Dummy />
-      <Dummy />
-      <Dummy />
-      <Dummy />
-      <Dummy />
+      <DummyText />
+      <DummyText />
+      <DummyText />
+      <DummyText />
+      <DummyText />
+      <DummyText />
     </Grid>
   </PreviewArea>
   <PreviewCode>

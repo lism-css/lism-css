@@ -27,10 +27,10 @@
     "usage": "<HTML.p fz='l' c='text-2'>Text</HTML.p>"
   },
   {
-    "name": "Dummy",
-    "package": "lism-css",
-    "category": "core",
-    "description": "ダミーテキストを生成するコンポーネント。プレビューやテスト用に使用。tag='img'でダミー画像、tag='ul'/tag='ol'でダミーリストも出力可能。",
+    "name": "DummyText",
+    "package": "@lism-css/ui",
+    "category": "ui",
+    "description": "ダミーテキストを生成するコンポーネント。プレビューやテスト用に使用。複数の言語とテキスト長に対応。",
     "aliases": ["placeholder", "lorem ipsum", "ダミーテキスト", "テスト用"],
     "props": [
       { "name": "lang", "type": "'ja' | 'en' | 'ar'", "default": "en", "description": "ダミーテキストの言語。" },
@@ -43,7 +43,16 @@
       { "name": "pre", "type": "string", "description": "ダミーテキストの前に表示するテキスト。" },
       { "name": "offset", "type": "number", "default": "0", "description": "ダミーテキストのオフセット。区切り文字単位で先頭を切り捨てる。" }
     ],
-    "usage": "<Dummy lang='ja' />"
+    "usage": "<DummyText lang='ja' />"
+  },
+  {
+    "name": "DummyImage",
+    "package": "@lism-css/ui",
+    "category": "ui",
+    "description": "ダミーのプレースホルダー画像を出力するコンポーネント。cdn.lism-css.comからダミー画像を取得。",
+    "aliases": ["placeholder image", "ダミー画像", "テスト画像"],
+    "props": [],
+    "usage": "<DummyImage />"
   },
   {
     "name": "Box",

@@ -3,7 +3,7 @@ title: 'Chat'
 description: 'Documentation for the Chat component provided by @lism-css/ui.'
 ---
 
-import { Dummy } from 'lism-css/astro';
+import { DummyText } from '@lism-css/ui/astro';
 import { Chat } from '@lism-css/ui/react';
 
 
@@ -87,20 +87,20 @@ Provided as `Chat` (`.c--chat`) from the `@lism-css/ui` package.
   <PreviewTitle>Usage examples of `<Chat>`</PreviewTitle>
   <PreviewArea resize p='20' _dir='rtl'>
     <Chat name="Taro" avatar="https://cdn.lism-css.com/img/avatar/a-01.jpg">
-      <Dummy lang="ja" />
+      <DummyText lang="ja" />
     </Chat>
     <Chat direction="end" name="Hanako" avatar="https://cdn.lism-css.com/img/avatar/a-02.jpg" keycolor="green">
-      <Dummy lang="ja" length="codes" />
-      <Dummy lang="ja" />
+      <DummyText lang="ja" length="codes" />
+      <DummyText lang="ja" />
     </Chat>
   </PreviewArea>
   <PreviewCode>
     ```jsx
     <Chat name='Taro' avatar='https://cdn.lism-css.com/img/avatar/a-01.jpg'>
-      <Dummy lang='ja' />
+      <DummyText lang='ja' />
     </Chat>
     <Chat direction='end' name='Hanako' avatar='https://cdn.lism-css.com/img/avatar/a-02.jpg' keycolor='green'>
-      <Dummy lang='ja' length='codes' />
+      <DummyText lang='ja' length='codes' />
     </Chat>
     ```
   </PreviewCode>
@@ -124,19 +124,19 @@ An example of adding a style to represent thoughts — something a character is 
   <PreviewTitle>`variant='think'`</PreviewTitle>
   <PreviewArea resize p='20' _dir='rtl'>
     <Chat variant="think" name="Name B" avatar="https://cdn.lism-css.com/img/avatar/a-01.jpg" keycolor="blue">
-      <Dummy length="xs" />
+      <DummyText length="xs" />
     </Chat>
     <Chat variant="think" direction="end" name="Name B" avatar="https://cdn.lism-css.com/img/avatar/a-02.jpg" keycolor="purple">
-      <Dummy length="codes" />
+      <DummyText length="codes" />
     </Chat>
   </PreviewArea>
   <PreviewCode slot='tab' label='JSX'>
     ```jsx
     <Chat variant='think' name='Name B' avatar='https://cdn.lism-css.com/img/avatar/a-01.jpg' keycolor='blue'>
-      <Dummy length='s' />
+      <DummyText length='s' />
     </Chat>
     <Chat variant='think' direction='end' name='Name B' avatar='https://cdn.lism-css.com/img/avatar/a-02.jpg' keycolor='purple'>
-      <Dummy length='codes' />
+      <DummyText length='codes' />
     </Chat>
     ```
   </PreviewCode>

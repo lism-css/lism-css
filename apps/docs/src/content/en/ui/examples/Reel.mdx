@@ -2,7 +2,8 @@
 title: 'Reel'
 description: 'Example implementation of a horizontally scrollable reel component using Lism CSS.'
 ---
-import { Lism, Grid, Frame, Box, Flex, Dummy, Spacer, Icon } from 'lism-css/astro';
+import { Lism, Grid, Frame, Box, Flex, Spacer, Icon } from 'lism-css/astro';
+import { DummyText } from '@lism-css/ui/astro';
 import { HandSwipeLeftIcon, MouseScrollIcon } from '@phosphor-icons/react';
 
 export const SwipeHelp = ({icon}) => <span> ( <Icon icon={icon || HandSwipeLeftIcon} /> <small>Scroll to preview</small> )</span>;
@@ -231,16 +232,16 @@ When responsively adjusting child element sizes in a Grid-based reel, specify `-
   <PreviewArea resize p='10'>
     <Grid className="u--snap" gaf="column" gac="24rem" g="20">
       <Box bgc="base-2" p="30">
-        <Dummy />
+        <DummyText />
       </Box>
       <Box bgc="text" c="base" p="30">
-        <Dummy length="s" />
+        <DummyText length="s" />
       </Box>
       <Box bgc="base-2" p="30">
-        <Dummy length="xs" />
+        <DummyText length="xs" />
       </Box>
       <Box bgc="text" c="base" p="30">
-        <Dummy />
+        <DummyText />
       </Box>
     </Grid>
   </PreviewArea>

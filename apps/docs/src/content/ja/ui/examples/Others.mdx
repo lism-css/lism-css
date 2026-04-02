@@ -5,7 +5,8 @@ draft: true
 ---
 
 
-import { Grid, Box, Center, Container, Lism, Flex, Stack, Divider, Decorator, Frame, Layer, Media, Dummy, Spacer, Group, Inline, Link, Text } from 'lism-css/react';
+import { Grid, Box, Center, Container, Lism, Flex, Stack, Divider, Decorator, Frame, Layer, Media, Spacer, Group, Inline, Link, Text } from 'lism-css/react';
+import { DummyText } from '@lism-css/ui/react';
 import { ShapeDivider } from '@lism-css/ui/astro';
 
 <Preview>
@@ -107,7 +108,7 @@ import { ShapeDivider } from '@lism-css/ui/astro';
       <Flex ar="16/9">
         <Stack fx="1" pos="rel" g="15" p="30" z="1" min-h="100%" h="auto" c="white" bgc="black:50%">
           <h3>Card Title</h3>
-          <Dummy lh="s" mb="auto" length="l" />
+          <DummyText lh="s" mb="auto" length="l" />
           <Link href="#button-test" keycolor="white" c="inherit" bdrs="99" aslf="end" px="10" my-s="20">
             Link Text
           </Link>
@@ -124,7 +125,7 @@ import { ShapeDivider } from '@lism-css/ui/astro';
       <Flex ar="16/9">
         <Stack fx="1" pos="rel" g="15" p="30" z="1" min-h="100%" h="auto" c="white" bgc="black:50%">
           <h3>Card Title</h3>
-          <Dummy lh="s" mb="auto" length="l" />
+          <DummyText lh="s" mb="auto" length="l" />
           <Link href="#button-test" keycolor="white" c="inherit" bdrs="99" aslf="end" px="10" my-s="20">
             Link Text
           </Link>
@@ -150,10 +151,10 @@ Lismのパッケージ内で用意しているクラスはありませんが、�
   <PreviewTitle>stripe</PreviewTitle>
   <PreviewArea resize nogrid p='20'>
     <Box bg=":stripe" p="30">
-      <Dummy />
+      <DummyText />
     </Box>
     <Box bg=":stripe" p="30" className="u--cbox" keycolor="blue">
-      <Dummy />
+      <DummyText />
     </Box>
   </PreviewArea>
   <PreviewCode label='CSS' slot='tab'>
@@ -178,10 +179,10 @@ Lismのパッケージ内で用意しているクラスはありませんが、�
     <PreviewCode label='JSX' slot='tab'>
     ```jsx "bg=':stripe'"
     <Box bg=':stripe' p='30'>
-      <Dummy />
+      <DummyText />
     </Box>
     <Box bg=':stripe' p='30' className='u--cbox' keycolor='blue'>
-      <Dummy />
+      <DummyText />
     </Box>
     ```
   </PreviewCode>

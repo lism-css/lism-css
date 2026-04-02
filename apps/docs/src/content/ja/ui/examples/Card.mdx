@@ -3,7 +3,8 @@ title: 'Card'
 description: 'Lism CSS で実装するカード型コンテンツレイアウトの実装例です。'
 ---
 
-import { Dummy, Box, Flex, Stack, Center, Grid, Frame, LinkBox, Layer, Columns, Media, SideMain, Group, Inline, Link, Text } from 'lism-css/astro';
+import { Box, Flex, Stack, Center, Grid, Frame, LinkBox, Layer, Columns, Media, SideMain, Group, Inline, Link, Text } from 'lism-css/astro';
+import { DummyText } from '@lism-css/ui/astro';
 import Card from '@/components/ex/Card/index.jsx';
 
 
@@ -381,7 +382,7 @@ export const ExampleImgCard = (props) => {
           <h3 className="u--trim -fz:l">Card Title</h3>
           <Grid setTransition hov="to:slide" my="15">
             <Box ov="hidden">
-              <Dummy py="5" fz="s" lh="xs" />
+              <DummyText py="5" fz="s" lh="xs" />
             </Box>
           </Grid>
           <Group className="u--trim" fz="xs" o="-10">
@@ -404,7 +405,7 @@ export const ExampleImgCard = (props) => {
         <h3 className="u--trim -fz:l">Card Title</h3>
         <Grid setTransition hov="to:slide" my="15">
           <Box ov="hidden">
-            <Dummy py="5" fz="s" lh="xs" />
+            <DummyText py="5" fz="s" lh="xs" />
           </Box>
         </Grid>
         <Group className="u--trim" fz="xs" o="-10">

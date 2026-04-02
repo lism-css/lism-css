@@ -4,7 +4,8 @@ description: 'An overview of Lism CSS module classes (is--, l--, a--, c--) and t
 ---
 
 
-import { Dummy, Flow, Box, Lism, Stack, Flex, Container, Frame, Center, Spacer, Media } from 'lism-css/astro';
+import { Flow, Box, Lism, Stack, Flex, Container, Frame, Center, Spacer, Media } from 'lism-css/astro';
+import { DummyText } from '@lism-css/ui/astro';
 import ModuleList from '@/components/ModuleList.astro';
 
 {/* import { Desktop } from '@phosphor-icons/react'; */}
@@ -123,8 +124,8 @@ The value for vertical writing is managed via a token (`--vertical-mode`). (<spa
   <PreviewTitle>Example: vertical writing at sm size and above</PreviewTitle>
   <PreviewArea p='0' resize>
     <Flow setGutter py="20" w="100%" h="20em" className="is--vertical@sm set--bp">
-      <Dummy lang="ja" length="s" />
-      <Dummy lang="ja" length="l" offset="3" />
+      <DummyText lang="ja" length="s" />
+      <DummyText lang="ja" length="l" offset="3" />
     </Flow>
   </PreviewArea>
   <PreviewCode slot='tab' label='HTML'>
@@ -140,8 +141,8 @@ The value for vertical writing is managed via a token (`--vertical-mode`). (<spa
   <PreviewCode slot='tab' label='JSX'>
     ```jsx "is--vertical@sm set--bp"
     <Flow setGutter py="20" w="100%" h="20em" className="is--vertical@sm set--bp">
-      <Dummy lang="ja" length="s" />
-      <Dummy lang="ja" length="l" offset="3" />
+      <DummyText lang="ja" length="s" />
+      <DummyText lang="ja" length="l" offset="3" />
     </Flow>;
     ```
   </PreviewCode>

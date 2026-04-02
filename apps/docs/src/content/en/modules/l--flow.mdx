@@ -3,7 +3,8 @@ title: 'Flow'
 description: 'Documentation for the Flow module in Lism CSS. A flow-root layout module that automatically manages spacing between child elements.'
 ---
 
-import { Flow, Box, Dummy, Lism, Text } from 'lism-css/astro';
+import { Flow, Box, Lism, Text } from 'lism-css/astro';
+import { DummyText } from '@lism-css/ui/astro';
 
 
 `l--flow` is a layout module with `display: flow-root` that **manages spacing between child elements**.
@@ -48,17 +49,17 @@ Heading tags receive double the spacing compared to other elements.
   <PreviewTitle>`l--flow`</PreviewTitle>
   <PreviewArea p='20' layout=''>
     <Flow hov="itemGuide">
-      <Dummy lang="ja" />
+      <DummyText lang="ja" />
       <h2>Heading 2</h2>
-      <Dummy lang="ja" length="s" />
-      <Dummy lang="ja" length="l" />
+      <DummyText lang="ja" length="s" />
+      <DummyText lang="ja" length="l" />
       <h3>Heading 3</h3>
       <ul>
         <li>Lorem ipsum, LIST content...</li>
         <li>Lorem ipsum, LIST content...</li>
         <li>Lorem ipsum, LIST content...</li>
       </ul>
-      <Dummy lang="ja" />
+      <DummyText lang="ja" />
     </Flow>
   </PreviewArea>
   <PreviewCode slot='tab' label='JSX'>
@@ -91,17 +92,17 @@ Heading tags receive double the spacing compared to other elements.
   <PreviewTitle>Using `-flow:s`</PreviewTitle>
   <PreviewArea p='20' layout=''>
     <Flow flow="s" hov="itemGuide">
-      <Dummy lang="ja" />
+      <DummyText lang="ja" />
       <h2>Heading 2</h2>
-      <Dummy lang="ja" length="s" />
-      <Dummy lang="ja" length="l" />
+      <DummyText lang="ja" length="s" />
+      <DummyText lang="ja" length="l" />
       <h3>Heading 3</h3>
       <ul>
         <li>Lorem ipsum, LIST content...</li>
         <li>Lorem ipsum, LIST content...</li>
         <li>Lorem ipsum, LIST content...</li>
       </ul>
-      <Dummy lang="ja" />
+      <DummyText lang="ja" />
     </Flow>
   </PreviewArea>
   <PreviewCode slot='tab' label='JSX'>
@@ -138,7 +139,7 @@ When a non-token value is passed to `flow`, it is output as the `-flow:` class a
     <Flow flow="10px" hov="itemGuide">
       <Text>Contents...</Text>
       <h2>Heading</h2>
-      <Dummy lang="ja" length="s" />
+      <DummyText lang="ja" length="s" />
       <Text>Contents...</Text>
       <Text>Contents...</Text>
     </Flow>

@@ -3,8 +3,8 @@ title: 'Modal'
 description: 'Documentation for the Modal component provided by @lism-css/ui.'
 ---
 
-import { Grid, Dummy, Flex, Stack, Center, Icon, Inline, Link } from 'lism-css/astro';
-import { Modal } from '@lism-css/ui/astro';
+import { Grid, Flex, Stack, Center, Icon, Inline, Link } from 'lism-css/astro';
+import { Modal, DummyText } from '@lism-css/ui/astro';
 import { NavMenu } from '@lism-css/ui/react';
 
 
@@ -86,7 +86,7 @@ Add an `id` to `.c--modal`, and set `data-modal-open` and `data-modal-close` att
         <Modal.CloseBtn modalId="modal-01" autofocus pos="absolute" t="0" r="0" z="1" fz="xl" p="10" m="15" />
         <Modal.Body layout="stack" g="30" className="u--trimChildren">
           <div className="-fz:xl -fw:bold">Modal Title</div>
-          <Dummy />
+          <DummyText />
         </Modal.Body>
       </Modal.Inner>
     </Modal.Root>
@@ -100,7 +100,7 @@ Add an `id` to `.c--modal`, and set `data-modal-open` and `data-modal-close` att
         <Modal.CloseBtn modalId='modal-01' autofocus pos='absolute' t='0' r='0' z='1' fz='xl' p='10' m='15' />
         <Modal.Body layout='stack' g='30' className='u--trimChildren'>
           <div className='-fz:xl -fw:bold'>Modal Title</div>
-          <Dummy />
+          <DummyText />
         </Modal.Body>
       </Modal.Inner>
     </Modal.Root>
@@ -130,12 +130,12 @@ Add an `id` to `.c--modal`, and set `data-modal-open` and `data-modal-close` att
           <Modal.CloseBtn modalId="modal-02" autofocus fz="xl" p="15" mx="15" />
         </Flex>
         <Modal.Body layout="flow" px="30" py="20" ov-y="auto">
-          <Dummy />
-          <Dummy length="xl" offset={1} />
-          <Dummy length="l" />
-          <Dummy length="xl" offset={3} />
-          <Dummy as="ul" />
-          <Dummy length="xl" offset={2} />
+          <DummyText />
+          <DummyText length="xl" offset={1} />
+          <DummyText length="l" />
+          <DummyText length="xl" offset={3} />
+          <ul><li>Lorem ipsum dolor sit amet.</li><li>Consectetur adipiscing elit.</li><li>Labore et dolore magna aliqua.</li></ul>
+          <DummyText length="xl" offset={2} />
         </Modal.Body>
         <Flex jc="end" px="30" py="20" bd-t>
           <Modal.CloseBtn modalId="modal-02" bgc="text" c="base" lh="s" px="15" py="10" bd="none" bdrs="10">
@@ -156,12 +156,12 @@ Add an `id` to `.c--modal`, and set `data-modal-open` and `data-modal-close` att
           <Modal.CloseBtn modalId='modal-02' autofocus fz='xl' p='15' mx='15'/>
         </Flex>
         <Modal.Body layout='flow' px='30' py='20' ov-y='auto'>
-          <Dummy />
-          <Dummy length='xl' offset={1} />
-          <Dummy length='l' />
-          <Dummy length='xl' offset={3} />
-          <Dummy as='ul' />
-          <Dummy length='xl' offset={2}/>
+          <DummyText />
+          <DummyText length='xl' offset={1} />
+          <DummyText length='l' />
+          <DummyText length='xl' offset={3} />
+          <ul><li>Lorem ipsum dolor sit amet.</li><li>Consectetur adipiscing elit.</li><li>Labore et dolore magna aliqua.</li></ul>
+          <DummyText length='xl' offset={2}/>
         </Modal.Body>
         <Flex jc='end' px='30' py='20' bd-t>
           <Modal.CloseBtn modalId='modal-02' bgc='text' c='base' lh='s' px='15' py='10' bd='none' bdrs='10'>Close</Modal.CloseBtn>

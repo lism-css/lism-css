@@ -2,7 +2,8 @@
 title: 'LinkBox'
 description: 'Documentation for the LinkBox module in Lism CSS. A component that makes an entire box clickable as a link.'
 ---
-import { LinkBox, Spacer, Dummy, Text, Group, Link } from 'lism-css/astro';
+import { LinkBox, Spacer, Text, Group, Link } from 'lism-css/astro';
+import { DummyText } from '@lism-css/ui/astro';
 
 A `<Lism>` component that outputs the `is--linkBox` class, which makes an entire box clickable as a link.
 
@@ -44,7 +45,7 @@ When `href` is provided to `<LinkBox>`, the component itself renders as an `<a>`
       <Group fz="xl" fw="bold">
         Heading text
       </Group>
-      <Dummy lh="s" my-s="15" />
+      <DummyText lh="s" my-s="15" />
       <Group fz="s" c="text-2" ta="right" lh="1" my-s="10">
         MORE →
       </Group>
@@ -94,7 +95,7 @@ This approach also allows you to place additional links inside the LinkBox.
           Heading link text
         </Link>
       </Group>
-      <Dummy c="text-2" lh="s" my-s="15" />
+      <DummyText c="text-2" lh="s" my-s="15" />
       <Group id="inner-link02" my-s="10">
         <a href="#inner-link02" className="-hov:o">
           Inner Link
@@ -110,7 +111,7 @@ This approach also allows you to place additional links inside the LinkBox.
           Heading link text
         </Link>
       </Group>
-      <Dummy c="text-2" lh="s" my-s="15" />
+      <DummyText c="text-2" lh="s" my-s="15" />
       <Group id="inner-link02" my-s="10">
         <a href="#inner-link02" className="-hov:o">
           Inner Link

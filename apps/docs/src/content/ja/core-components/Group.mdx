@@ -3,7 +3,8 @@ title: 'Group'
 description: '<div>タグを出力するLismコンポーネントです。'
 order: 4
 ---
-import { Group, Lism, Dummy } from "lism-css/astro";
+import { Group, Lism } from "lism-css/astro";
+import { DummyText } from '@lism-css/ui/astro';
 
 `<Group>`は、`<div>`タグを出力するLismコンポーネントです。  
 要素をグルーピングするための汎用コンテナとして使用します。
@@ -29,7 +30,7 @@ import { Group, Lism, Dummy } from "lism-css/astro";
   <PreviewTitle>`<Group>`の出力例</PreviewTitle>
   <PreviewArea p='20'>
     <Group p="20" bgc="base-2" bdrs="20">
-      <Dummy />
+      <DummyText />
     </Group>
   </PreviewArea>
   <PreviewCode slot='tab' label='JSX'>

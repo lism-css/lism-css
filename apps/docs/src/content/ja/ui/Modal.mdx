@@ -3,8 +3,8 @@ title: 'Modal'
 description: '@lism-css/ui で提供する Modal コンポーネントについて解説します。'
 ---
 
-import { Grid, Dummy, Flex, Stack, Center, Icon, Inline, Link } from 'lism-css/astro';
-import { Modal } from '@lism-css/ui/astro';
+import { Grid, Flex, Stack, Center, Icon, Inline, Link } from 'lism-css/astro';
+import { Modal, DummyText } from '@lism-css/ui/astro';
 
 
 `dialog`要素でモーダルを表示するコンポーネントです。
@@ -89,7 +89,7 @@ dialog.c--modal#modalID.set--plain
         <Modal.CloseBtn modalId="modal-01" autofocus pos="absolute" t="0" r="0" z="1" fz="xl" p="10" m="15" />
         <Modal.Body layout="stack" g="30" className="u--trimChildren">
           <div className="-fz:xl -fw:bold">Modal Title</div>
-          <Dummy />
+          <DummyText />
         </Modal.Body>
       </Modal.Inner>
     </Modal.Root>
@@ -103,7 +103,7 @@ dialog.c--modal#modalID.set--plain
         <Modal.CloseBtn modalId='modal-01' autofocus pos='absolute' t='0' r='0' z='1' fz='xl' p='10' m='15' />
         <Modal.Body layout='stack' g='30' className='u--trimChildren'>
           <div className='-fz:xl -fw:bold'>Modal Title</div>
-          <Dummy />
+          <DummyText />
         </Modal.Body>
       </Modal.Inner>
     </Modal.Root>
@@ -133,12 +133,12 @@ dialog.c--modal#modalID.set--plain
           <Modal.CloseBtn modalId="modal-02" autofocus fz="xl" p="15" mx="15" />
         </Flex>
         <Modal.Body layout="flow" px="30" py="20" ov-y="auto">
-          <Dummy />
-          <Dummy length="xl" offset={1} />
-          <Dummy length="l" />
-          <Dummy length="xl" offset={3} />
-          <Dummy as="ul" />
-          <Dummy length="xl" offset={2} />
+          <DummyText />
+          <DummyText length="xl" offset={1} />
+          <DummyText length="l" />
+          <DummyText length="xl" offset={3} />
+          <ul><li>ロレム・イプサムの座り雨。</li><li>目まぐるしい文章の流れの中で、それは静かに歩く仮の言葉です。</li><li>Elitも穏やかに続いていきますが、積み重ねられてきた「LiberroyとFoogの取り組み」は、余白のようなものです。</li></ul>
+          <DummyText length="xl" offset={2} />
         </Modal.Body>
         <Flex jc="end" px="30" py="20" bd-t>
           <Modal.CloseBtn modalId="modal-02" bgc="text" c="base" lh="s" px="15" py="10" bd="none" bdrs="10">
@@ -159,12 +159,12 @@ dialog.c--modal#modalID.set--plain
           <Modal.CloseBtn modalId='modal-02' autofocus fz='xl' p='15' mx='15'/>
         </Flex>
         <Modal.Body layout='flow' px='30' py='20' ov-y='auto'>
-          <Dummy />
-          <Dummy length='xl' offset={1} />
-          <Dummy length='l' />
-          <Dummy length='xl' offset={3} />
-          <Dummy as='ul' />
-          <Dummy length='xl' offset={2}/>
+          <DummyText />
+          <DummyText length='xl' offset={1} />
+          <DummyText length='l' />
+          <DummyText length='xl' offset={3} />
+          <ul><li>ロレム・イプサムの座り雨。</li><li>目まぐるしい文章の流れの中で、それは静かに歩く仮の言葉です。</li><li>Elitも穏やかに続いていきますが、積み重ねられてきた「LiberroyとFoogの取り組み」は、余白のようなものです。</li></ul>
+          <DummyText length='xl' offset={2}/>
         </Modal.Body>
         <Flex jc='end' px='30' py='20' bd-t>
           <Modal.CloseBtn modalId='modal-02' bgc='text' c='base' lh='s' px='15' py='10' bd='none' bdrs='10'>Close</Modal.CloseBtn>

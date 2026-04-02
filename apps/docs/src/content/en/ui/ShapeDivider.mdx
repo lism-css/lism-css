@@ -3,8 +3,8 @@ title: 'ShapeDivider'
 description: 'Documentation for the ShapeDivider component provided by @lism-css/ui.'
 ---
 
-import { Box, Dummy, Wrapper, Container, Divider, Frame, Spacer, Layer, Media, Stack } from 'lism-css/astro';
-import { ShapeDivider } from '@lism-css/ui/astro';
+import { Box, Wrapper, Container, Divider, Frame, Spacer, Layer, Media, Stack } from 'lism-css/astro';
+import { ShapeDivider, DummyText } from '@lism-css/ui/astro';
 
 
 A component that renders a decorative border using SVG.
@@ -14,7 +14,7 @@ A component that renders a decorative border using SVG.
   <PreviewArea resize layout=''>
     <Stack>
       <ShapeDivider isEmpty level="2" />
-      <Dummy p="30" />
+      <DummyText p="30" />
       <ShapeDivider viewBox="0 0 100 10">
         <path d="M100 6C89.3 3.3 82.7 9 70 9S48.4 3 38 3 24.5 6 17 6C7.4 6 0 0 0 0v10h100V6z" />
       </ShapeDivider>
@@ -67,41 +67,41 @@ By specifying `flip` to mirror the shape, you can use the same SVG path for both
   <PreviewTitle>Preview</PreviewTitle>
   <PreviewArea resize p='0' layout=''>
     <Wrapper setGutter py="40">
-      <Dummy />
+      <DummyText />
     </Wrapper>
     <ShapeDivider viewBox="0 0 10 10" level="4">
       <path d="M10,10V0L0,9.5V10L10,10z"></path>
     </ShapeDivider>
     <Wrapper setGutter bgc="text" c="base">
       <Box py="40">
-        <Dummy length="l" />
+        <DummyText length="l" />
       </Box>
     </Wrapper>
     <ShapeDivider viewBox="0 0 10 10" level="4" flip="XY">
       <path d="M10,10V0L0,9.5V10L10,10z"></path>
     </ShapeDivider>
     <Wrapper setGutter py="40">
-      <Dummy />
+      <DummyText />
     </Wrapper>
   </PreviewArea>
   <PreviewCode slot='tab' label='JSX'>
     ```jsx "\<ShapeDivider" "\/ShapeDivider\>" "flip='XY'"
     <Wrapper setGutter py='40'>
-      <Dummy />
+      <DummyText />
     </Wrapper>
     <ShapeDivider viewBox='0 0 10 10' level='4'>
       <path d='M10,10V0L0,9.5V10L10,10z'></path>
     </ShapeDivider>
     <Wrapper setGutter bgc='text' c='base'>
       <Box py='40'>
-        <Dummy length='l' />
+        <DummyText length='l' />
       </Box>
     </Wrapper>
     <ShapeDivider viewBox='0 0 10 10' level='4' flip='XY'>
       <path d='M10,10V0L0,9.5V10L10,10z'></path>
     </ShapeDivider>
     <Wrapper setGutter py='40'>
-      <Dummy />
+      <DummyText />
     </Wrapper>
     ```
   </PreviewCode>
@@ -120,7 +120,7 @@ Even when empty, `level` still controls the height, making it useful for managin
     <Wrapper setGutter bgc="base">
       <ShapeDivider isEmpty level="5" />
       <Box py="20">
-        <Dummy length="l" />
+        <DummyText length="l" />
       </Box>
       <ShapeDivider viewBox="0 0 10 10" level="5">
         <path d="M10,10V0L0,9.5V10L10,10z"></path>
@@ -128,7 +128,7 @@ Even when empty, `level` still controls the height, making it useful for managin
     </Wrapper>
     <Wrapper setGutter bgc="text" c="base">
       <Box py="40">
-        <Dummy length="l" />
+        <DummyText length="l" />
       </Box>
     </Wrapper>
   </PreviewArea>
@@ -137,7 +137,7 @@ Even when empty, `level` still controls the height, making it useful for managin
     <Wrapper setGutter bgc='base'>
       <ShapeDivider isEmpty level='5' />
       <Box py='20'>
-        <Dummy length='l' />
+        <DummyText length='l' />
       </Box>
       <ShapeDivider viewBox='0 0 10 10' level='5' >
         <path d='M10,10V0L0,9.5V10L10,10z'></path>
@@ -145,7 +145,7 @@ Even when empty, `level` still controls the height, making it useful for managin
     </Wrapper>
     <Wrapper setGutter bgc='text' c='base'>
       <Box py='40'>
-        <Dummy length='l' />
+        <DummyText length='l' />
       </Box>
     </Wrapper>
     ```
@@ -169,7 +169,7 @@ An example with animation enabled using `isAnimation`.
         <Layer bgc="black:50%" />
       </Frame>
       <Wrapper contentSize="s" py="40" c="white">
-        <Dummy length="l" />
+        <DummyText length="l" />
       </Wrapper>
       <ShapeDivider viewBox="0 0 100 10" isAnimation c="base" level="7">
         <path opacity=".3" d="M100,5.5C91.5,3,79.5,7.5,71.5,8C58,9,49,0.5,36,2c-9,1-13.5,3.5-20.5,3.5C8.5,6,0,2,0,2v8h100V5.5z"></path>
@@ -178,7 +178,7 @@ An example with animation enabled using `isAnimation`.
       </ShapeDivider>
     </Container>
     <Container isWrapper="s" setGutter bgc="base" py="40">
-      <Dummy length="l" />
+      <DummyText length="l" />
     </Container>
   </PreviewArea>
   <PreviewCode slot='tab' label='JSX'>
@@ -190,7 +190,7 @@ An example with animation enabled using `isAnimation`.
         <Layer bgc='black:50%' />
       </Frame>
       <Wrapper contentSize='s' setGutter py='40' c='white'>
-        <Dummy length='xl' />
+        <DummyText length='xl' />
       </Wrapper>
       <ShapeDivider viewBox='0 0 100 10' isAnimation c='base' level='7'>
         <path opacity='.3' d='M100,5.5C91.5,3,79.5,7.5,71.5,8C58,9,49,0.5,36,2c-9,1-13.5,3.5-20.5,3.5C8.5,6,0,2,0,2v8h100V5.5z'></path>
@@ -199,7 +199,7 @@ An example with animation enabled using `isAnimation`.
       </ShapeDivider>
     </Container>
     <Container isWrapper='s' setGutter bgc='base' py='40'>
-      <Dummy length='l' />
+      <DummyText length='l' />
     </Container>
     ```
   </PreviewCode>
@@ -217,21 +217,21 @@ In such cases, using `stretch` and `offset` to shift the SVG can produce a more 
   <PreviewArea resize p='0' layout=''>
     <Container isWrapper="s" setGutter bgc="base" py="40">
       <ShapeDivider isEmpty level="4" />
-      <Dummy length="l" />
+      <DummyText length="l" />
     </Container>
     <Container pos="rel" setGutter c="base" bgc="text">
       <ShapeDivider viewBox="0 0 100 10" c="base" flip="Y" level="8" stretch={1.1} offset="-5%">
         <path d="M100 6C89.3 3.3 82.7 9 70 9S48.4 3 38 3 24.5 6 17 6C7.4 6 0 0 0 0v10h100V6z"></path>
       </ShapeDivider>
       <Wrapper contentSize="s" py="40">
-        <Dummy length="xl" />
+        <DummyText length="xl" />
       </Wrapper>
       <ShapeDivider viewBox="0 0 100 10" c="base" level="8" stretch={1.1}>
         <path d="M100 6C89.3 3.3 82.7 9 70 9S48.4 3 38 3 24.5 6 17 6C7.4 6 0 0 0 0v10h100V6z"></path>
       </ShapeDivider>
     </Container>
     <Container isWrapper="s" setGutter bgc="base" py="40">
-      <Dummy length="l" />
+      <DummyText length="l" />
       <ShapeDivider isEmpty level="4" />
     </Container>
   </PreviewArea>
@@ -239,21 +239,21 @@ In such cases, using `stretch` and `offset` to shift the SVG can produce a more 
     ```jsx "stretch=" "offset="
     <Container isWrapper='s' setGutter bgc='base' py='40'>
       <ShapeDivider isEmpty level='4' />
-      <Dummy length='l' />
+      <DummyText length='l' />
     </Container>
     <Container pos='rel' setGutter c='base' bgc='text'>
       <ShapeDivider viewBox='0 0 100 10' c='base' flip='Y' level='8' stretch={1.1} offset='-5%'>
         <path d='M100 6C89.3 3.3 82.7 9 70 9S48.4 3 38 3 24.5 6 17 6C7.4 6 0 0 0 0v10h100V6z'></path>
       </ShapeDivider>
       <Wrapper contentSize='s' py='40'>
-        <Dummy length='xl' />
+        <DummyText length='xl' />
       </Wrapper>
       <ShapeDivider viewBox='0 0 100 10' c='base' level='8' stretch={1.1}>
         <path d='M100 6C89.3 3.3 82.7 9 70 9S48.4 3 38 3 24.5 6 17 6C7.4 6 0 0 0 0v10h100V6z'></path>
       </ShapeDivider>
     </Container>
     <Container isWrapper='s' setGutter bgc='base' py='40'>
-      <Dummy length='l' />
+      <DummyText length='l' />
       <ShapeDivider isEmpty level='4' />
     </Container>
     ```

@@ -4,7 +4,6 @@
 
 export * from './Lism';
 export { default as HTML } from './HTML';
-export * from './Dummy';
 
 // semantic wrappers
 export * from './Text';

@@ -3,8 +3,7 @@ title: 'Chat'
 description: '@lism-css/ui で提供する Chat コンポーネントについて解説します。'
 ---
 
-import { Dummy } from 'lism-css/astro';
-import { Chat } from '@lism-css/ui/astro';
+import { Chat, DummyText } from '@lism-css/ui/astro';
 
 
 チャットの会話のような見た目でコンテンツを表示するコンポーネントです。
@@ -91,20 +90,20 @@ import { Chat } from '@lism-css/ui/astro';
   <PreviewTitle>`<Chat>`の使用例</PreviewTitle>
   <PreviewArea resize p='20' _dir='rtl'>
     <Chat name="Taro" avatar="https://cdn.lism-css.com/img/avatar/a-01.jpg">
-      <Dummy lang="ja" />
+      <DummyText lang="ja" />
     </Chat>
     <Chat direction="end" name="Hanako" avatar="https://cdn.lism-css.com/img/avatar/a-02.jpg" keycolor="green">
-      <Dummy lang="ja" length="codes" />
-      <Dummy lang="ja" />
+      <DummyText lang="ja" length="codes" />
+      <DummyText lang="ja" />
     </Chat>
   </PreviewArea>
   <PreviewCode>
     ```jsx
     <Chat name='Taro' avatar='https://cdn.lism-css.com/img/avatar/a-01.jpg'>
-      <Dummy lang='ja' />
+      <DummyText lang='ja' />
     </Chat>
     <Chat direction='end' name='Hanako' avatar='https://cdn.lism-css.com/img/avatar/a-02.jpg' keycolor='green'>
-      <Dummy lang='ja' length='codes' />
+      <DummyText lang='ja' length='codes' />
     </Chat>
     ```
   </PreviewCode>
@@ -128,19 +127,19 @@ import { Chat } from '@lism-css/ui/astro';
   <PreviewTitle>`variant='think'`</PreviewTitle>
   <PreviewArea resize p='20' _dir='rtl'>
     <Chat variant="think" name="Name B" avatar="https://cdn.lism-css.com/img/avatar/a-01.jpg" keycolor="blue">
-      <Dummy length="xs" />
+      <DummyText length="xs" />
     </Chat>
     <Chat variant="think" direction="end" name="Name B" avatar="https://cdn.lism-css.com/img/avatar/a-02.jpg" keycolor="purple">
-      <Dummy length="codes" />
+      <DummyText length="codes" />
     </Chat>
   </PreviewArea>
   <PreviewCode slot='tab' label='JSX'>
     ```jsx
     <Chat variant='think' name='Name B' avatar='https://cdn.lism-css.com/img/avatar/a-01.jpg' keycolor='blue'>
-      <Dummy length='s' />
+      <DummyText length='s' />
     </Chat>
     <Chat variant='think' direction='end' name='Name B' avatar='https://cdn.lism-css.com/img/avatar/a-02.jpg' keycolor='purple'>
-      <Dummy length='codes' />
+      <DummyText length='codes' />
     </Chat>
     ```
   </PreviewCode>
@@ -166,7 +165,7 @@ Astroでは、name,footerをslotで指定することが可能です。
   <PreviewArea resize p='20'>
     <Chat name="Name A" avatar="https://cdn.lism-css.com/img/avatar/a-01.jpg" keycolor="green">
       <b slot="name">Taro</b>
-      <Dummy length="codes" />
+      <DummyText length="codes" />
       <Fragment slot="footer">
         time:<b>20:10</b>
       </Fragment>

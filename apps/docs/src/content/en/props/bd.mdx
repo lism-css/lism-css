@@ -2,7 +2,8 @@
 title: '-bd'
 description: 'How to use the -bd prop classes and related CSS variables for border styling.'
 ---
-import { Box, Dummy, Flex, Stack, Divider, Spacer } from 'lism-css/astro';
+import { Box, Flex, Stack, Divider, Spacer } from 'lism-css/astro';
+import { DummyText } from '@lism-css/ui/astro';
 
 
 Border-related specifications in Lism follow a slightly unique convention.
@@ -65,19 +66,19 @@ Additionally, `bdw` supports breakpoint specification.
   <PreviewTitle>Usage example</PreviewTitle>
   <PreviewArea p='30'>
     <Box bd p="10">
-      <Dummy length="s" />
+      <DummyText length="s" />
     </Box>
     <Box bd bds="dashed" bdw="4px" bdc="red" p="15">
-      <Dummy length="s" />
+      <DummyText length="s" />
     </Box>
   </PreviewArea>
   <PreviewCode label='JSX' slot='tab'>
     ```jsx
     <Box bd p='10'>
-      <Dummy length='s'/>
+      <DummyText length='s'/>
     </Box>
     <Box bd bds='dashed' bdw='4px' bdc='red' p='15'>
-      <Dummy length='s'/>
+      <DummyText length='s'/>
     </Box>
     ```
   </PreviewCode>

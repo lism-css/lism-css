@@ -3,7 +3,8 @@ title: 'FluidCols'
 description: 'Lism CSS の FluidCols モジュールについて解説します。カラム幅に応じて自動で折り返すブレイクポイント非依存の段組みレイアウトです。'
 ---
 
-import { FluidCols, Box, Frame, Dummy } from 'lism-css/astro';
+import { FluidCols, Box, Frame } from 'lism-css/astro';
+import { DummyText } from '@lism-css/ui/astro';
 
 
 **カラム要素が指定した幅より小さくならないように自動で折り返しされる**、ブレイクポイントに依存しない段組みレイアウトを作成します。
@@ -36,22 +37,22 @@ import { FluidCols, Box, Frame, Dummy } from 'lism-css/astro';
   <PreviewArea resize p='15'>
     <FluidCols g="20">
       <Box bxsh="20" p="20">
-        <Dummy lang="ja" />
+        <DummyText lang="ja" />
       </Box>
       <Box bxsh="20" p="20">
-        <Dummy lang="ja" offset="1" />
+        <DummyText lang="ja" offset="1" />
       </Box>
       <Box bxsh="20" p="20">
-        <Dummy lang="ja" />
+        <DummyText lang="ja" />
       </Box>
       <Box bxsh="20" p="20">
-        <Dummy lang="ja" offset="2" />
+        <DummyText lang="ja" offset="2" />
       </Box>
       <Box bxsh="20" p="20">
-        <Dummy lang="ja" length="s" />
+        <DummyText lang="ja" length="s" />
       </Box>
       <Box bxsh="20" p="20">
-        <Dummy lang="ja" />
+        <DummyText lang="ja" />
       </Box>
     </FluidCols>
   </PreviewArea>
@@ -59,22 +60,22 @@ import { FluidCols, Box, Frame, Dummy } from 'lism-css/astro';
     ```jsx
     <FluidCols g="15">
       <Box bxsh="20" p="20">
-        <Dummy lang="ja" />
+        <DummyText lang="ja" />
       </Box>
       <Box bxsh="20" p="20">
-        <Dummy lang="ja" offset="1" />
+        <DummyText lang="ja" offset="1" />
       </Box>
       <Box bxsh="20" p="20">
-        <Dummy lang="ja" />
+        <DummyText lang="ja" />
       </Box>
       <Box bxsh="20" p="20">
-        <Dummy lang="ja" offset="2" />
+        <DummyText lang="ja" offset="2" />
       </Box>
       <Box bxsh="20" p="20">
-        <Dummy lang="ja" length="s" />
+        <DummyText lang="ja" length="s" />
       </Box>
       <Box bxsh="20" p="20">
-        <Dummy lang="ja" />
+        <DummyText lang="ja" />
       </Box>
     </FluidCols>;
     ```
@@ -87,13 +88,13 @@ import { FluidCols, Box, Frame, Dummy } from 'lism-css/astro';
   <PreviewArea resize p='15'>
     <FluidCols cols="12em" autoFill g="20" fz="s">
       <Box bxsh="20" p="20">
-        <Dummy lang="ja" length="s" />
+        <DummyText lang="ja" length="s" />
       </Box>
       <Box bxsh="20" p="20">
-        <Dummy lang="ja" offset="2" />
+        <DummyText lang="ja" offset="2" />
       </Box>
       <Box bxsh="20" p="20">
-        <Dummy lang="ja" length="s" />
+        <DummyText lang="ja" length="s" />
       </Box>
     </FluidCols>
   </PreviewArea>
@@ -101,13 +102,13 @@ import { FluidCols, Box, Frame, Dummy } from 'lism-css/astro';
     ```jsx
     <FluidCols cols="12rem" autoFill g="20" fz="s">
       <Box bxsh="20" p="20">
-        <Dummy lang="ja" length="s" />
+        <DummyText lang="ja" length="s" />
       </Box>
       <Box bxsh="20" p="20">
-        <Dummy lang="ja" offset="1" />
+        <DummyText lang="ja" offset="1" />
       </Box>
       <Box bxsh="20" p="20">
-        <Dummy lang="ja" length="s" />
+        <DummyText lang="ja" length="s" />
       </Box>
     </FluidCols>;
     ```

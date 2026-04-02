@@ -4,7 +4,8 @@ description: 'Documentation for the Layer module in Lism CSS. A component for cr
 ---
 
 
-import { Media, Layer, Stack, Flex, Box, Columns, Center, Frame, Dummy, Text } from 'lism-css/astro';
+import { Media, Layer, Stack, Flex, Box, Columns, Center, Frame, Text } from 'lism-css/astro';
+import { DummyText } from '@lism-css/ui/astro';
 
 
 
@@ -144,8 +145,8 @@ Here is a layout example using `.is--layer` to place an image as a background be
       </Frame>
       <Layer bgc="black:50%" />
       <Stack pos="rel" g="30" c="white">
-        <Dummy length="s" />
-        <Dummy length="l" />
+        <DummyText length="s" />
+        <DummyText length="l" />
       </Stack>
     </Box>
   </PreviewArea>
@@ -157,8 +158,8 @@ Here is a layout example using `.is--layer` to place an image as a background be
       </Frame>
       <Layer bgc="black:50%" />
       <Stack pos="rel" g="30" c="white">
-        <Dummy length="s" />
-        <Dummy length="l" />
+        <DummyText length="s" />
+        <DummyText length="l" />
       </Stack>
     </Box>;
     ```

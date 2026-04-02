@@ -2,7 +2,8 @@
 title: 'Utilitiy Class'
 description: 'スタイルや装飾をまとめて適用できる Lism CSS のユーティリティクラスについて解説します。'
 ---
-import { Lism, Flow, Grid, Stack, Center, Box, Dummy, Media, Frame, Flex, Layer, Spacer, Icon, Divider, Inline, Text } from "lism-css/astro";
+import { Lism, Flow, Grid, Stack, Center, Box, Media, Frame, Flex, Layer, Spacer, Icon, Divider, Inline, Text } from "lism-css/astro";
+import { DummyText } from '@lism-css/ui/astro';
 import { Dog, Cat } from "@phosphor-icons/react";
 
 ユーティリティクラスを紹介します。
@@ -23,13 +24,13 @@ import { Dog, Cat } from "@phosphor-icons/react";
   <PreviewTitle>例</PreviewTitle>
   <PreviewArea resize p='20'>
     <Lism className="u--cbox" keycolor="red" p="20">
-      <Dummy length="codes" />
+      <DummyText length="codes" />
     </Lism>
     <Lism className="u--cbox" keycolor="purple" bd bdrs="20" bxsh="20" setShadow p="20">
-      <Dummy length="codes" />
+      <DummyText length="codes" />
     </Lism>
     <Lism className="u--cbox" keycolor="brand" bdc="keycolor" bd-x-s bdw="4px" p="20">
-      <Dummy length="codes" />
+      <DummyText length="codes" />
     </Lism>
   </PreviewArea>
   <PreviewCode slot="tab" label="HTML">
@@ -56,10 +57,10 @@ import { Dog, Cat } from "@phosphor-icons/react";
   </PreviewCode>
   <PreviewCode slot="tab" label='JSX'>
     ```jsx
-    <Lism className='u--cbox' keycolor='blue' p='20'><Dummy length='codes' /></Lism>
-    <Lism className='u--cbox' keycolor='red' bd p='20'><Dummy length='codes' /></Lism>
-    <Lism className='u--cbox' keycolor='purple' bd bdc='keycolor:base:25%' p='20'><Dummy length='codes' /></Lism>
-    <Lism className='u--cbox' keycolor='#688f04' bd-x-s bdw='4px' p='20'><Dummy length='codes' /></Lism>
+    <Lism className='u--cbox' keycolor='blue' p='20'><DummyText length='codes' /></Lism>
+    <Lism className='u--cbox' keycolor='red' bd p='20'><DummyText length='codes' /></Lism>
+    <Lism className='u--cbox' keycolor='purple' bd bdc='keycolor:base:25%' p='20'><DummyText length='codes' /></Lism>
+    <Lism className='u--cbox' keycolor='#688f04' bd-x-s bdw='4px' p='20'><DummyText length='codes' /></Lism>
     ```
   </PreviewCode>
 </Preview>
@@ -118,86 +119,86 @@ import { Dog, Cat } from "@phosphor-icons/react";
 <PreviewTitle>パレットカラー一覧</PreviewTitle>
 <PreviewArea p='20' ov-y='auto' max-h='25rem'>
   <Lism className="u--cbox" keycolor="red" bd bdrs="20" bxsh="20" setShadow p="20">
-    <Dummy length="codes" />
+    <DummyText length="codes" />
   </Lism>
   <Lism className="u--cbox" keycolor="orange" bd bdrs="20" bxsh="20" setShadow p="20">
-    <Dummy length="codes" />
+    <DummyText length="codes" />
   </Lism>
   <Lism className="u--cbox" keycolor="yellow" bd bdrs="20" bxsh="20" setShadow p="20">
-    <Dummy length="codes" />
+    <DummyText length="codes" />
   </Lism>
   <Lism className="u--cbox" keycolor="purple" bd bdrs="20" bxsh="20" setShadow p="20">
-    <Dummy length="codes" />
+    <DummyText length="codes" />
   </Lism>
   <Lism className="u--cbox" keycolor="green" bd bdrs="20" bxsh="20" setShadow p="20">
-    <Dummy length="codes" />
+    <DummyText length="codes" />
   </Lism>
   <Lism className="u--cbox" keycolor="blue" bd bdrs="20" bxsh="20" setShadow p="20">
-    <Dummy length="codes" />
+    <DummyText length="codes" />
   </Lism>
   <Lism className="u--cbox" keycolor="purple" bd bdrs="20" bxsh="20" setShadow p="20">
-    <Dummy length="codes" />
+    <DummyText length="codes" />
   </Lism>
   <Lism className="u--cbox" keycolor="pink" bd bdrs="20" bxsh="20" setShadow p="20">
-    <Dummy length="codes" />
+    <DummyText length="codes" />
   </Lism>
   <Lism className="u--cbox" keycolor="gray" bd bdrs="20" bxsh="20" setShadow p="20">
-    <Dummy length="codes" />
+    <DummyText length="codes" />
   </Lism>
   <hr />
   <Lism className="u--cbox" keycolor="red" bd-x-s bdc="keycolor" bdw="4px" bxsh="10" setShadow p="20">
     <Inline c="keycolor" fw="bold">
       Title Text
     </Inline>
-    <Dummy length="codes" />
+    <DummyText length="codes" />
   </Lism>
   <Lism className="u--cbox" keycolor="orange" bd-x-s bdc="keycolor" bdw="4px" bxsh="10" setShadow p="20">
     <Inline c="keycolor" fw="bold">
       Title Text
     </Inline>
-    <Dummy length="codes" />
+    <DummyText length="codes" />
   </Lism>
   <Lism className="u--cbox" keycolor="yellow" bd-x-s bdc="keycolor" bdw="4px" bxsh="10" setShadow p="20">
     <Inline c="keycolor" fw="bold">
       Title Text
     </Inline>
-    <Dummy length="codes" />
+    <DummyText length="codes" />
   </Lism>
   <Lism className="u--cbox" keycolor="purple" bd-x-s bdc="keycolor" bdw="4px" bxsh="10" setShadow p="20">
     <Inline c="keycolor" fw="bold">
       Title Text
     </Inline>
-    <Dummy length="codes" />
+    <DummyText length="codes" />
   </Lism>
   <Lism className="u--cbox" keycolor="green" bd-x-s bdc="keycolor" bdw="4px" bxsh="10" setShadow p="20">
     <Inline c="keycolor" fw="bold">
       Title Text
     </Inline>
-    <Dummy length="codes" />
+    <DummyText length="codes" />
   </Lism>
   <Lism className="u--cbox" keycolor="blue" bd-x-s bdc="keycolor" bdw="4px" bxsh="10" setShadow p="20">
     <Inline c="keycolor" fw="bold">
       Title Text
     </Inline>
-    <Dummy length="codes" />
+    <DummyText length="codes" />
   </Lism>
   <Lism className="u--cbox" keycolor="purple" bd-x-s bdc="keycolor" bdw="4px" bxsh="10" setShadow p="20">
     <Inline c="keycolor" fw="bold">
       Title Text
     </Inline>
-    <Dummy length="codes" />
+    <DummyText length="codes" />
   </Lism>
   <Lism className="u--cbox" keycolor="pink" bd-x-s bdc="keycolor" bdw="4px" bxsh="10" setShadow p="20">
     <Inline c="keycolor" fw="bold">
       Title Text
     </Inline>
-    <Dummy length="codes" />
+    <DummyText length="codes" />
   </Lism>
   <Lism className="u--cbox" keycolor="gray" bd-x-s bdc="keycolor" bdw="4px" bxsh="10" setShadow p="20">
     <Inline c="keycolor" fw="bold">
       Title Text
     </Inline>
-    <Dummy length="codes" />
+    <DummyText length="codes" />
   </Lism>
 </PreviewArea>
 
@@ -212,7 +213,7 @@ import { Dog, Cat } from "@phosphor-icons/react";
   <PreviewTitle>`u--trim`</PreviewTitle>
   <PreviewArea resize p='20'>
     <Box bd bds="dashed">
-      <Dummy className="u--trim" length="s" />
+      <DummyText className="u--trim" length="s" />
     </Box>
   </PreviewArea>
   <PreviewCode slot="tab" label="HTML">
@@ -225,7 +226,7 @@ import { Dog, Cat } from "@phosphor-icons/react";
   <PreviewCode slot="tab" label='JSX'>
     ```jsx "u--trim"
     <Box bd bds="dashed">
-      <Dummy className="u--trim" length="s" />
+      <DummyText className="u--trim" length="s" />
     </Box>;
     ```
   </PreviewCode>
@@ -242,8 +243,8 @@ import { Dog, Cat } from "@phosphor-icons/react";
   <PreviewArea resize p='20'>
     <Stack className="u--trimChildren" bd g="30" p="30" bdrs="10" max-sz="s">
       <Media ar="og" src="https://cdn.lism-css.com/img/a-1.jpg" />
-      <Dummy lang="ja" length="s" fw="bold" fz="l" />
-      <Dummy lang="ja" length="l" o="-10" fz="s" />
+      <DummyText lang="ja" length="s" fw="bold" fz="l" />
+      <DummyText lang="ja" length="l" o="-10" fz="s" />
     </Stack>
   </PreviewArea>
   <PreviewCode slot="tab" label="HTML">
@@ -261,8 +262,8 @@ import { Dog, Cat } from "@phosphor-icons/react";
     ```jsx
     <Stack className="u--trimChildren" bd g="30" p="30" bdrs="10">
       <Media ar="og" src="https://cdn.lism-css.com/img/a-1.jpg" />
-      <Dummy lang="ja" length="s" />
-      <Dummy lang="ja" />
+      <DummyText lang="ja" length="s" />
+      <DummyText lang="ja" />
     </Stack>;
     ```
   </PreviewCode>
@@ -351,25 +352,25 @@ import { Dog, Cat } from "@phosphor-icons/react";
     ```jsx
     <Grid layout="fluidCols" className="u--collapseGrid" cols="12rem">
       <Box p="15">
-        <Dummy />
+        <DummyText />
       </Box>
       <Box p="15">
-        <Dummy />
+        <DummyText />
       </Box>
       <Box p="15">
-        <Dummy />
+        <DummyText />
       </Box>
       <Box p="15">
-        <Dummy />
+        <DummyText />
       </Box>
       <Box p="15">
-        <Dummy />
+        <DummyText />
       </Box>
       <Box p="15">
-        <Dummy />
+        <DummyText />
       </Box>
       <Box p="15">
-        <Dummy />
+        <DummyText />
       </Box>
     </Grid>;
     ```
@@ -461,11 +462,11 @@ Gridを使って table タグのような表現もできるようになります
       </Box>
       <Box p="15">Lorem ipsum</Box>
       <Box p="15">
-        <Dummy />
+        <DummyText />
       </Box>
       <Box p="15">Dolor sit amet</Box>
       <Box p="15">
-        <Dummy length="l" />
+        <DummyText length="l" />
       </Box>
     </Grid>
   </PreviewArea>
@@ -480,11 +481,11 @@ Gridを使って table タグのような表現もできるようになります
       </Box>
       <Box p="15">Lorem ipsum</Box>
       <Box p="15">
-        <Dummy />
+        <DummyText />
       </Box>
       <Box p="15">Dolor sit amet</Box>
       <Box p="15">
-        <Dummy length="l" />
+        <DummyText length="l" />
       </Box>
     </Grid>;
     ```
