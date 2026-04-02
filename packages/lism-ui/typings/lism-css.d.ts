@@ -87,4 +87,6 @@ declare module 'lism-css/astro' {
   export const Icon: AstroComponent<LismProps & { icon?: string }>;
   export const Spacer: AstroComponent<LismProps>;
   export const Divider: AstroComponent<LismProps>;
+  /** @deprecated DummyText / DummyImage (@lism-css/ui) を使用してください */
+  export const Dummy: AstroComponent<LismProps>;
 }
