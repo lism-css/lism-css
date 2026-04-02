@@ -35,8 +35,8 @@ import { Lism, Dummy, Media, Frame } from "lism-css/astro";
     ```
   </PreviewCode>
   <PreviewCode slot='tab' label='HTML'>
-    ```jsx
-    <img src="https://cdn.lism-css.com/img/a-1.jpg" width="960" height="640" alt="Dummy Image" />;
+    ```html
+    <img src="https://cdn.lism-css.com/img/a-1.jpg" width="960" height="640" alt="Dummy Image" />
     ```
   </PreviewCode>
 </Preview>
@@ -93,12 +93,12 @@ import { Lism, Dummy, Media, Frame } from "lism-css/astro";
 
 Next.jsの`Image`などは、`as`プロパティに渡すことができます。
 
-<PreviewTitle>`as`を活用してでNext.jsの`Image`を渡す</PreviewTitle>
+<PreviewTitle>`as`を活用してNext.jsの`Image`を渡す</PreviewTitle>
 ```jsx "as={Image}"
 import { Media } from 'lism-css/react';
 import Image from 'next/image';
 
-<Media as={Image} src="/img.jpg" alt="" width="960" height="640" alt="Dummy Image" />;
+<Media as={Image} src="/img.jpg" alt="Dummy Image" width="960" height="640" />;
 ```
 
 #### Astro の`<Image>`を使う方法

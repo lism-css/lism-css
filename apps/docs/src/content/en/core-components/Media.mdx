@@ -35,8 +35,8 @@ It outputs an `<img>` tag by default.
     ```
   </PreviewCode>
   <PreviewCode slot='tab' label='HTML'>
-    ```jsx
-    <img src="https://cdn.lism-css.com/img/a-1.jpg" width="960" height="640" alt="Dummy Image" />;
+    ```html
+    <img src="https://cdn.lism-css.com/img/a-1.jpg" width="960" height="640" alt="Dummy Image" />
     ```
   </PreviewCode>
 </Preview>
@@ -98,7 +98,7 @@ Next.js `Image` and similar components can be passed via the `as` property.
 import { Media } from 'lism-css/react';
 import Image from 'next/image';
 
-<Media as={Image} src="/img.jpg" alt="" width="960" height="640" alt="Dummy Image" />;
+<Media as={Image} src="/img.jpg" alt="Dummy Image" width="960" height="640" />;
 ```
 
 #### Using Astro `<Image>`
