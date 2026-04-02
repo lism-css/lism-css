@@ -32,7 +32,7 @@ export const WithTransform: Story = {
   args: {
     size: '80px',
     bgc: 'base-2',
-    rotate: '45deg',
+    style: { rotate: '45deg' },
   },
 };
 
@@ -41,7 +41,7 @@ export const WithFilter: Story = {
   args: {
     size: '80px',
     bgc: 'blue',
-    blur: '4px',
+    style: { filter: 'blur(4px)' },
   },
 };
 

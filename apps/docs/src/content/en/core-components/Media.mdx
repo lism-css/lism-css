@@ -10,15 +10,6 @@ import { DummyText } from '@lism-css/ui/astro';
 `<Media>` is a Lism component for outputting media elements such as images and videos.  
 It outputs an `<img>` tag by default.
 
-## Props
-
-| Property | Description |
-|---|---|
-| `objectPosition` | Specifies the `object-position` of the media element. |
-| `objectFit` | Specifies the `object-fit` of the media element. |
-| `blur`,`contrast`,`brightness`,`dropShadow`,`grayscale`,`hueRotate`,`invert`,`saturate`,`sepia` | These are concatenated together and passed to `style.filter`. |
-
-
 ## Import
 
 <ImportPackage component='Media' />
@@ -43,19 +34,19 @@ It outputs an `<img>` tag by default.
 </Preview>
 
 <Preview>
-  <PreviewTitle>Specifying filter properties</PreviewTitle>
+  <PreviewTitle>Specifying filter with style</PreviewTitle>
   <PreviewArea>
     <Frame as="figure" ar="2/1" pos="rel">
-      <Media contrast={1.1} saturate={0.2} src="https://cdn.lism-css.com/img/a-1.jpg" width="960" height="640" alt="Dummy Image" />
+      <Media style={{ filter: 'contrast(1.1) saturate(0.2)' }} src="https://cdn.lism-css.com/img/a-1.jpg" width="960" height="640" alt="Dummy Image" />
       <Lism as="figcaption" pos="abs" z="1" b="0" p="5" w="100%" c="white" ta="center" lts="l">
         Lorem ipsum text.
       </Lism>
     </Frame>
   </PreviewArea>
   <PreviewCode slot='tab' label='JSX'>
-    ```jsx "contrast={1.1} saturate={0.2}"
+    ```jsx "style={{ filter: 'contrast(1.1) saturate(0.2)' }}"
     <Frame as="figure" ar="2/1" pos="rel">
-      <Media contrast={1.1} saturate={0.2} src="https://cdn.lism-css.com/img/a-1.jpg" width="960" height="640" alt="Dummy Image" />
+      <Media style={{ filter: 'contrast(1.1) saturate(0.2)' }} src="https://cdn.lism-css.com/img/a-1.jpg" width="960" height="640" alt="Dummy Image" />
       <Lism as="figcaption" pos="abs" z="1" b="0" p="5" w="100%" c="white" ta="center" lts="l">
         Lorem ipsum text.
       </Lism>
@@ -66,16 +57,16 @@ It outputs an `<img>` tag by default.
 
 
 <Preview>
-  <PreviewTitle>Using `objectPosition`</PreviewTitle>
+  <PreviewTitle>Specifying objectPosition with style</PreviewTitle>
   <PreviewArea resize>
     <Frame as="figure" ar="16/9">
-      <Media src="https://cdn.lism-css.com/img/a-1.jpg" objectPosition="50% 0%" alt="" width="960" height="640" />
+      <Media src="https://cdn.lism-css.com/img/a-1.jpg" style={{ objectPosition: '50% 0%' }} alt="" width="960" height="640" />
     </Frame>
   </PreviewArea>
   <PreviewCode slot='tab' label='JSX'>
     ```jsx
     <Frame as="figure" ar="16/9">
-      <Media src="https://cdn.lism-css.com/img/a-1.jpg" objectPosition="50% 0%" alt="" width="960" height="640" />
+      <Media src="https://cdn.lism-css.com/img/a-1.jpg" style={{ objectPosition: '50% 0%' }} alt="" width="960" height="640" />
     </Frame>;
     ```
   </PreviewCode>

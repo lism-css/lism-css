@@ -323,7 +323,7 @@ Lism では、[`set--hov`](/docs/css-methodology/#set--hov)というクラスを
   <PreviewArea p='20'>
     <Frame isLinkBox setHov href="#banner-link" ar="16/9" bdrs="30">
       <Media isLayer src="https://cdn.lism-css.com/img/a-1.jpg" alt="" width="960" height="640" loading="lazy" />
-      <Layer setTransition hov="to:show" bgc="rgb(0 0 0 / 40%)" blur="6px">
+      <Layer setTransition hov="to:show" bgc="rgb(0 0 0 / 40%)" style={{ backdropFilter: 'blur(6px)' }}>
         <Center h="100%" c="#fff">
           <Inline fz="2xl" fs="italic" fw="light" lts="l" bdrs="99" px="20" py="10">
             View More
@@ -348,7 +348,7 @@ Lism では、[`set--hov`](/docs/css-methodology/#set--hov)というクラスを
     ```jsx "setHov" "hov='to:show'" "setTransition"
     <Frame isLinkBox setHov href="#banner-link" ar="16/9" bdrs="30">
       <Media isLayer src="https://cdn.lism-css.com/img/a-1.jpg" alt="" width="960" height="640" loading="lazy" />
-      <Layer setTransition hov="to:show" bgc="rgb(0 0 0 / 40%)" blur="6px">
+      <Layer setTransition hov="to:show" bgc="rgb(0 0 0 / 40%)" style={{ backdropFilter: 'blur(6px)' }}>
         <Center h="100%" c="#fff">
           <Inline fz="2xl" fs="italic" fw="light" lts="l" bdrs="99" px="20" py="10">
             View More

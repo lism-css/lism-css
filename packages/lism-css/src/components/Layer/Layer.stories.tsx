@@ -16,12 +16,6 @@ const meta: Meta<typeof Layer> = {
       </Lism>
     ),
   ],
-  argTypes: {
-    children: { control: false },
-    blur: { control: 'text', description: 'backdrop-filter: blur()' },
-    brightness: { control: 'text', description: 'backdrop-filter: brightness()' },
-    grayscale: { control: 'text', description: 'backdrop-filter: grayscale()' },
-  },
 };
 
 export default meta;
@@ -36,7 +30,7 @@ export const Default: Story = {
 export const WithBlur: Story = {
   name: 'blur 指定',
   args: {
-    blur: '4px',
+    style: { backdropFilter: 'blur(4px)' },
     children: <p>Blurred layer</p>,
   },
 };

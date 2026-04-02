@@ -204,20 +204,7 @@
     "category": "layout",
     "description": "親要素に対して絶対配置で重なるレイヤー要素。オーバーレイや背景装飾に使用。<Lism isLayer>のエイリアスで、is--layer クラスが付与される。",
     "aliases": ["overlay", "オーバーレイ", "absolute position", "重ねる", "背景装飾"],
-    "props": [
-      {
-        "name": "blur",
-        "type": "string | number",
-        "description": "backdrop-filterのblur値。他のフィルタープロパティとまとめてstyle.backdropFilterに出力。"
-      },
-      { "name": "contrast", "type": "string | number", "description": "backdrop-filterのcontrast値。" },
-      { "name": "brightness", "type": "string | number", "description": "backdrop-filterのbrightness値。" },
-      { "name": "grayscale", "type": "string | number", "description": "backdrop-filterのgrayscale値。" },
-      { "name": "hueRotate", "type": "string | number", "description": "backdrop-filterのhue-rotate値。" },
-      { "name": "invert", "type": "string | number", "description": "backdrop-filterのinvert値。" },
-      { "name": "saturate", "type": "string | number", "description": "backdrop-filterのsaturate値。" },
-      { "name": "sepia", "type": "string | number", "description": "backdrop-filterのsepia値。" }
-    ],
+    "props": [],
     "usage": "<Layer bgc='black' o='-30'>Overlay</Layer>"
   },
   {
@@ -284,18 +271,7 @@
     "aliases": ["画像", "動画", "img tag", "video tag", "メディア要素"],
     "props": [
       { "name": "src", "type": "string", "description": "メディアのURL。" },
-      { "name": "alt", "type": "string", "description": "代替テキスト (img の場合)。" },
-      { "name": "objectPosition", "type": "string", "description": "メディア要素のobject-positionを指定。" },
-      { "name": "objectFit", "type": "string", "description": "メディア要素のobject-fitを指定。" },
-      { "name": "blur", "type": "string | number", "description": "filterのblur値。他のフィルタープロパティとまとめてstyle.filterに出力。" },
-      { "name": "contrast", "type": "string | number", "description": "filterのcontrast値。" },
-      { "name": "brightness", "type": "string | number", "description": "filterのbrightness値。" },
-      { "name": "grayscale", "type": "string | number", "description": "filterのgrayscale値。" },
-      { "name": "saturate", "type": "string | number", "description": "filterのsaturate値。" },
-      { "name": "dropShadow", "type": "string | number", "description": "filterのdrop-shadow値。" },
-      { "name": "hueRotate", "type": "string | number", "description": "filterのhue-rotate値。" },
-      { "name": "invert", "type": "string | number", "description": "filterのinvert値。" },
-      { "name": "sepia", "type": "string | number", "description": "filterのsepia値。" }
+      { "name": "alt", "type": "string", "description": "代替テキスト (img の場合)。" }
     ],
     "usage": "<Media src='/image.jpg' alt='Photo' />"
   },
@@ -324,20 +300,7 @@
         "description": "デコレーターのサイズ（横幅・高さ）を一括指定。wに渡され、ar='1/1'が自動付与される。"
       },
       { "name": "clipPath", "type": "string", "description": "style.clipPathへ渡す。" },
-      { "name": "boxSizing", "type": "string", "description": "style.boxSizingへ渡す。" },
-      { "name": "translate", "type": "string", "description": "style.translateへ渡す。CSS translate プロパティ。" },
-      { "name": "rotate", "type": "string", "description": "style.rotateへ渡す。CSS rotate プロパティ。" },
-      { "name": "scale", "type": "string", "description": "style.scaleへ渡す。CSS scale プロパティ。" },
-      { "name": "transform", "type": "string", "description": "style.transformへ渡す。CSS transform プロパティ。" },
-      { "name": "blur", "type": "string | number", "description": "filterのblur値。他のフィルタープロパティとまとめてstyle.filterに出力。" },
-      { "name": "contrast", "type": "string | number", "description": "filterのcontrast値。" },
-      { "name": "brightness", "type": "string | number", "description": "filterのbrightness値。" },
-      { "name": "grayscale", "type": "string | number", "description": "filterのgrayscale値。" },
-      { "name": "saturate", "type": "string | number", "description": "filterのsaturate値。" },
-      { "name": "dropShadow", "type": "string | number", "description": "filterのdrop-shadow値。" },
-      { "name": "hueRotate", "type": "string | number", "description": "filterのhue-rotate値。" },
-      { "name": "invert", "type": "string | number", "description": "filterのinvert値。" },
-      { "name": "sepia", "type": "string | number", "description": "filterのsepia値。" }
+      { "name": "boxSizing", "type": "string", "description": "style.boxSizingへ渡す。" }
     ],
     "usage": "<Decorator size='1.25em' pos='abs' t='0' l='0' bd-x-s bd-y-s />"
   },
