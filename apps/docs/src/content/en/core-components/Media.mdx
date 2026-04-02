@@ -23,7 +23,7 @@ It outputs an `<img>` tag by default.
   </PreviewArea>
   <PreviewCode slot='tab' label='JSX'>
     ```jsx
-    <Media src="https://cdn.lism-css.com/img/a-1.jpg" width="960" height="640" alt="Dummy Image" />;
+    <Media src="https://cdn.lism-css.com/img/a-1.jpg" width="960" height="640" alt="Dummy Image" />
     ```
   </PreviewCode>
   <PreviewCode slot='tab' label='HTML'>
@@ -50,7 +50,7 @@ It outputs an `<img>` tag by default.
       <Lism as="figcaption" pos="abs" z="1" b="0" p="5" w="100%" c="white" ta="center" lts="l">
         Lorem ipsum text.
       </Lism>
-    </Frame>;
+    </Frame>
     ```
   </PreviewCode>
 </Preview>
@@ -67,7 +67,7 @@ It outputs an `<img>` tag by default.
     ```jsx
     <Frame as="figure" ar="16/9">
       <Media src="https://cdn.lism-css.com/img/a-1.jpg" style={{ objectPosition: '50% 0%' }} alt="" width="960" height="640" />
-    </Frame>;
+    </Frame>
     ```
   </PreviewCode>
   <PreviewCode slot='tab' label='HTML'>
@@ -90,7 +90,7 @@ Next.js `Image` and similar components can be passed via the `as` property.
 import { Media } from 'lism-css/react';
 import Image from 'next/image';
 
-<Media as={Image} src="/img.jpg" alt="Dummy Image" width="960" height="640" />;
+<Media as={Image} src="/img.jpg" alt="Dummy Image" width="960" height="640" />
 ```
 
 #### Using Astro `<Image>`
@@ -105,5 +105,5 @@ Therefore, in `<Media>` imported from `lism-css/astro`, passing the string `'Ast
 ```jsx "as='AstroImage'"
 import { Media } from 'lism-css/astro';
 
-<Media as="AstroImage" src="/img.jpg" alt="Dummy Image" width="960" height="640" />;
+<Media as="AstroImage" src="/img.jpg" alt="Dummy Image" width="960" height="640" />
 ```
