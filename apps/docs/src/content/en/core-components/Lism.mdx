@@ -26,7 +26,7 @@ Nearly all components distributed by Lism are based on this `<Lism>` component.
     ```jsx
     <Lism p="20" fw="bold" c="blue" bgc="base-2" bdrs="20">
       Lism content
-    </Lism>;
+    </Lism>
     ```
   </PreviewCode>
   <PreviewCode slot='tab' label='HTML'>
@@ -34,7 +34,7 @@ Nearly all components distributed by Lism are based on this `<Lism>` component.
     <div class="-p:20 -fw:bold -c -bgc:base-2 -bdrs:20" style="--c:var(--blue)">
       {' '}
       Lism content{' '}
-    </div>;
+    </div>
     ```
   </PreviewCode>
 </Preview>
@@ -142,7 +142,7 @@ By specifying an external component, you can have `<Lism>` **render as a differe
 ```jsx
 import Image from 'next/image';
 
-<Media as={Image} src="..." bxsh="20" bdrs="20" />;
+<Media as={Image} src="..." bxsh="20" bdrs="20" />
 ```
   </PreviewCode>
 </Preview>
@@ -163,7 +163,7 @@ This is handy when a prop name of the external component specified via `as` conf
 ```jsx
 <Icon as={Hoge} exProps={{ size: '1em' }} p="10" fz="l">
   ...
-</Icon>;
+</Icon>
 ```
   </PreviewCode>
 </Preview>
@@ -301,19 +301,19 @@ Both produce the same HTML output: a pair of utility class and CSS variable (`-{
   <PreviewTitle>Example 1</PreviewTitle>
   <PreviewCode label='Array syntax' slot='tab'>
     ```jsx
-    <Lism p={['20', '30', '5rem']}>...</Lism>;
+    <Lism p={['20', '30', '5rem']}>...</Lism>
     ```
   </PreviewCode>
   <PreviewCode label='Object syntax' slot='tab'>
     ```jsx
-    <Lism p={{ base: '20', sm: '30', md: '5rem' }}>...</Lism>;
+    <Lism p={{ base: '20', sm: '30', md: '5rem' }}>...</Lism>
     ```
   </PreviewCode>
   <PreviewCode label='Output HTML' slot='tab'>
     ```jsx
     <div class="-p:20 -p_sm -p_md" style="--p_sm:var(--s40);--p_md:5rem">
       ...
-    </div>;
+    </div>
     ```
   </PreviewCode>
 </Preview>
@@ -324,19 +324,19 @@ To skip intermediate breakpoints, write it as follows:
   <PreviewTitle>Example 2: specifying only the `@md` value</PreviewTitle>
   <PreviewCode label='Array syntax' slot='tab'>
     ```jsx
-    <Lism p={[null, null, '40']}>...</Lism>;
+    <Lism p={[null, null, '40']}>...</Lism>
     ```
   </PreviewCode>
   <PreviewCode label='Object syntax' slot='tab'>
     ```jsx
-    <Lism p={{ md: '40' }}>...</Lism>;
+    <Lism p={{ md: '40' }}>...</Lism>
     ```
   </PreviewCode>
   <PreviewCode label='Output HTML' slot='tab'>
     ```jsx
     <div class="-p_md" style="--p_md:var(--s30)">
       ...
-    </div>;
+    </div>
     ```
   </PreviewCode>
 </Preview>
