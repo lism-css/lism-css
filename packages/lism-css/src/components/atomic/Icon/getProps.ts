@@ -91,11 +91,13 @@ export default function getProps({ lismClass, as, icon, label, exProps = {}, ...
   // viewBoxがあれば、svg描画として扱う
   if (_rest.viewBox) {
     Component = 'svg';
+    const _size = _rest.size as string | undefined;
+    if (_size) delete _rest.size;
     if (!_rest.width) {
-      exProps.width = '1em';
+      exProps.width = _size || '1em';
     }
     if (!_rest.height) {
-      exProps.height = '1em';
+      exProps.height = _size || '1em';
     }
   } else if (_rest.src) {
     Component = 'img';
