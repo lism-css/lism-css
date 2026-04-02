@@ -33,6 +33,9 @@ export default defineConfig({
     '/docs/': '/docs/overview/',
     // 非root言語用のリダイレクト
     '/en/docs/': '/en/docs/overview/',
+    // Dummy → DummyText/DummyImage 分割移動に伴うリダイレクト
+    '/docs/core-components/dummy/': '/docs/ui/DummyText/',
+    '/en/docs/core-components/dummy/': '/en/docs/ui/DummyText/',
   },
 
   // パスエイリアス設定

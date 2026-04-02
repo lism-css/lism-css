@@ -11,7 +11,7 @@
  * Usage: pnpm generate:lastmod
  */
 import { execSync } from 'node:child_process';
-import { writeFileSync } from 'node:fs';
+import { existsSync, writeFileSync } from 'node:fs';
 import { resolve, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -44,7 +44,8 @@ function getGitLastModifiedMap(): Map<string, Date> {
       currentDate = new Date(line.slice('__COMMIT__'.length));
     } else if (line.trim() && currentDate) {
       const trimmed = line.trim();
-      if (!fileToDate.has(trimmed)) {
+      // 削除済みファイルを除外（git log には過去に存在したファイルも含まれるため）
+      if (!fileToDate.has(trimmed) && existsSync(resolve(GIT_ROOT, trimmed))) {
         fileToDate.set(trimmed, currentDate);
       }
     }
