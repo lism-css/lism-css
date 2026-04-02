@@ -8,6 +8,7 @@ import { resolve, dirname } from 'node:path';
 
 const SITE_URL = 'https://lism-css.com';
 const ROOT_LANG = 'ja';
+const NON_ROOT_LANGS = ['en'];
 
 // git リポジトリのルートディレクトリ（apps/docs/src/lib/ → 4階層上）
 const GIT_ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '../../../..');
@@ -98,14 +99,28 @@ function filePathToSiteUrls(filePath: string): string[] {
     return urls;
   }
 
-  // ページファイル（動的ルート [...slug] はコンテンツ由来なのでスキップ）
+  // ページファイル
   const pageMatch = filePath.match(/^apps\/docs\/src\/pages\/(.+)\.astro$/);
   if (pageMatch) {
     const pagePath = pageMatch[1];
-    // 動的ルートはスキップ
+
+    // [lang]/index.astro → 非root言語のトップページ（/en/ 等）
+    if (pagePath === '[lang]/index') {
+      return NON_ROOT_LANGS.map((lang) => `${SITE_URL}/${lang}/`);
+    }
+
+    // その他の動的ルートはコンテンツ由来なのでスキップ
     if (pagePath.includes('[')) return [];
-    // index.astro → ディレクトリURL
-    const urlPath = pagePath.replace(/\/index$/, '') || '';
+
+    // preview/templates/{cat}/{id}/index.astro → 対応するテンプレート詳細ページにもマップ
+    const previewMatch = pagePath.match(/^preview\/templates\/(.+)\/index$/);
+    if (previewMatch) {
+      const templatePath = previewMatch[1];
+      return [`${SITE_URL}/preview/templates/${templatePath}/`, `${SITE_URL}/templates/${templatePath}/`];
+    }
+
+    // index.astro → ディレクトリURL（ルートの index も正しく処理）
+    const urlPath = pagePath.replace(/(^|\/)index$/, '');
     return [`${SITE_URL}/${urlPath}${urlPath ? '/' : ''}`];
   }
 
