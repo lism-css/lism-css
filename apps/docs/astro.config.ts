@@ -9,11 +9,11 @@ import { remarkLinkCard } from './src/lib/remark-linkcard';
 import { remarkDirectiveHandler } from './src/lib/remark-directive';
 import { rehypeBlockquoteCite } from './src/lib/rehype-blockquote-cite';
 import { expressiveCodeOptions } from './src/lib/expressive-code.config';
-import { buildLastmodMap } from './src/lib/sitemap-lastmod';
+import { loadLastmodMap } from './src/lib/sitemap-lastmod';
 
-// ビルド時のみ git の最終コミット日時を取得（dev では不要）
+// ビルド時のみ lastmod-map.json を読み込む（dev では不要）
 const isBuild = process.argv.includes('build');
-const lastmodMap = isBuild ? buildLastmodMap() : new Map<string, Date>();
+const lastmodMap = isBuild ? loadLastmodMap() : new Map<string, string>();
 
 // https://astro.build/config
 export default defineConfig({
@@ -66,7 +66,7 @@ export default defineConfig({
       serialize(item) {
         const lastmod = lastmodMap.get(item.url);
         if (lastmod) {
-          item.lastmod = lastmod.toISOString();
+          item.lastmod = lastmod;
         }
         return item;
       },
