@@ -46,7 +46,7 @@ function getGitLastModifiedMap(): Map<string, Date> {
   const fileToDate = new Map<string, Date>();
 
   // apps/docs/ 配下のコンテンツ・ページファイルの最終コミット日時を一括取得
-  const output = execSync('git log --pretty=format:"__COMMIT__%aI" --name-only -- "apps/docs/src/content" "apps/docs/src/pages"', {
+  const output = execSync("git log --pretty=format:'__COMMIT__%aI' --name-only -- 'apps/docs/src/content' 'apps/docs/src/pages'", {
     encoding: 'utf-8',
     maxBuffer: 50 * 1024 * 1024,
     cwd: GIT_ROOT,
