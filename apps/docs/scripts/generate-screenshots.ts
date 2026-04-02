@@ -225,6 +225,7 @@ async function main() {
   // プレビューサーバーを起動
   let server: ChildProcess | null = null;
   let browser: Browser | null = null;
+  let exitCode = 0;
 
   try {
     server = await startPreviewServer();
@@ -269,7 +270,7 @@ async function main() {
     console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
 
     if (failed > 0) {
-      process.exit(1);
+      exitCode = 1;
     }
   } finally {
     // クリーンアップ
@@ -282,7 +283,7 @@ async function main() {
       else server.kill();
       console.log('📡 プレビューサーバーを停止');
     }
-    process.exit(0);
+    process.exit(exitCode);
   }
 }
 

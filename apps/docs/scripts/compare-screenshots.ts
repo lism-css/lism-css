@@ -305,6 +305,7 @@ async function main() {
 
   let server: ChildProcess | null = null;
   let browser: Browser | null = null;
+  let exitCode = 0;
 
   try {
     server = await startPreviewServer();
@@ -388,7 +389,7 @@ async function main() {
 
     // 比較モードで変更・エラーがあった場合は終了コード1
     if (!isInitialRun && (changed > 0 || errors > 0)) {
-      process.exit(1);
+      exitCode = 1;
     }
   } finally {
     if (browser) {
@@ -401,7 +402,7 @@ async function main() {
       else server.kill();
       console.log('📡 プレビューサーバーを停止');
     }
-    process.exit(0);
+    process.exit(exitCode);
   }
 }
 
