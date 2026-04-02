@@ -105,7 +105,11 @@ async function formatFile(filePath: string, prettierConfig: prettier.Options | n
       try {
         const dedented = dedent(m.code, m.indent);
         const formatted = await prettier.format(dedented, { ...prettierConfig, parser });
-        const trimmed = formatted.trimEnd();
+        let trimmed = formatted.trimEnd();
+        // jsx/tsxコードブロックの末尾セミコロンを除去
+        if ((m.lang === 'jsx' || m.lang === 'tsx') && trimmed.endsWith(';')) {
+          trimmed = trimmed.slice(0, -1);
+        }
         const result = reindent(trimmed, m.indent);
 
         if (result !== m.code.trimEnd()) {
