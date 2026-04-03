@@ -4,7 +4,15 @@ import type { MediaAllowedTag } from 'lism-css/lib/types/allowedTags';
 import getLismProps from 'lism-css/lib/getLismProps';
 import { Image } from 'astro:assets';
 
-type Props = AstroLismBaseProps & astroHTML.JSX.ImgHTMLAttributes & { as?: MediaAllowedTag | 'AstroImage' };
+type MediaProps<Tag extends MediaAllowedTag | 'AstroImage'> = Tag extends 'video'
+  ? astroHTML.JSX.VideoHTMLAttributes
+  : Tag extends 'iframe'
+    ? astroHTML.JSX.IframeHTMLAttributes
+    : Tag extends 'picture'
+      ? astroHTML.JSX.HTMLAttributes
+      : astroHTML.JSX.ImgHTMLAttributes;
+
+type Props<Tag extends MediaAllowedTag | 'AstroImage' = 'img'> = AstroLismBaseProps & MediaProps<Tag> & { as?: Tag };
 
 const { as, exProps, ...props } = Astro.props;
 
