@@ -6,20 +6,19 @@
     "description": "全コンポーネントの基盤となるコアコンポーネント。Props システムによる CSS クラス・スタイルの自動変換を提供する。他の全てのコンポーネントは Lism を継承している。",
     "aliases": ["base component", "コア", "基盤"],
     "props": [
-      { "name": "tag", "type": "string", "default": "div", "description": "レンダリングするHTML要素を指定。" },
-      { "name": "as", "type": "Component", "description": "外部コンポーネントとしてレンダリング。" },
+      { "name": "as", "type": "ElementType | string", "default": "div", "description": "レンダリングするHTML要素または外部コンポーネントを指定。" },
       { "name": "layout", "type": "string", "description": "レイアウトモジュールを適用 (flex, grid 等)。" },
       { "name": "lismClass", "type": "string", "description": "メインのコンポーネントクラスを指定。" },
       { "name": "variant", "type": "string", "description": "モジュールクラスのバリエーションを指定。" },
-      { "name": "exProps", "type": "object", "description": "Lism処理をバイパスして直接渡すprops。" }
+      { "name": "exProps", "type": "object", "description": "as で指定した外部コンポーネントに直接渡すprops。Lism Propsの処理をバイパスする。" }
     ],
-    "usage": "<Lism tag='section' p='20' bgc='base-2'>Content</Lism>"
+    "usage": "<Lism as='section' p='20' bgc='base-2'>Content</Lism>"
   },
   {
     "name": "HTML",
     "package": "lism-css",
     "category": "core",
-    "description": "HTMLの主要なタグに<Lism>と同じプロパティを指定できるようにするためのコンポーネント。HTML.div, HTML.p, HTML.span, HTML.a, HTML.h, HTML.img, HTML.ul, HTML.ol, HTML.li, HTML.button が利用可能。例えば <HTML.p> は <Lism tag='p'> と同じように動作する。",
+    "description": "@deprecated: v0.10.1 で廃止。代替として Text, Inline, Group, Heading, Link, List, ListItem, Media を使用してください。HTMLの主要なタグに<Lism>と同じプロパティを指定できるようにするためのコンポーネント。HTML.div, HTML.p, HTML.span, HTML.a, HTML.h, HTML.img, HTML.ul, HTML.ol, HTML.li, HTML.button が利用可能。例えば <HTML.p> は <Lism as='p'> と同じように動作する。",
     "aliases": ["HTML要素", "html tags", "セマンティック"],
     "props": [
       { "name": "lv", "type": "'1' | '2' | '3' | '4' | '5' | '6'", "default": "1", "description": "HTML.h で使用。見出しレベルを指定する。" }
@@ -31,7 +30,7 @@
     "package": "lism-css",
     "category": "core",
     "description": "<p>タグを出力する Lism コンポーネント。<Lism as='p'> のエイリアス。as prop で p(デフォルト) / div / blockquote / address / figcaption / pre に変更可能。",
-    "aliases": ["paragraph", "テキスト", "段落", "p tag", "テキストブロック"],
+    "aliases": ["paragraph", "テキスト", "段落", "p tag", "テキストブロック", "HTML.p"],
     "props": [],
     "usage": "<Text fz='l' lh='s' c='text-2'>Lorem ipsum text...</Text>"
   },
@@ -40,7 +39,7 @@
     "package": "lism-css",
     "category": "core",
     "description": "<span>タグを出力する Lism コンポーネント。<Lism as='span'> のエイリアス。テキストの一部にスタイルを適用したい場合に使用。as prop で span(デフォルト) / em / strong / small / code / time / i / b / mark / abbr / cite / kbd に変更可能。",
-    "aliases": ["span", "インライン要素", "テキスト装飾", "inline element"],
+    "aliases": ["span", "インライン要素", "テキスト装飾", "inline element", "HTML.span"],
     "props": [],
     "usage": "<Inline fz='l' fs='italic'>インライン要素</Inline>"
   },
@@ -49,7 +48,7 @@
     "package": "lism-css",
     "category": "core",
     "description": "見出しタグ（<h1>〜<h6>）を出力する Lism コンポーネント。level prop で見出しレベルを指定。<Lism as='h{level}'> のエイリアス。",
-    "aliases": ["見出し", "heading tag", "h1", "h2", "h3", "title"],
+    "aliases": ["見出し", "heading tag", "h1", "h2", "h3", "title", "HTML.h"],
     "props": [{ "name": "level", "type": "'1' | '2' | '3' | '4' | '5' | '6'", "default": "2", "description": "見出しレベルを指定する。" }],
     "usage": "<Heading level='2'>見出しテキスト</Heading>"
   },
@@ -58,7 +57,7 @@
     "package": "lism-css",
     "category": "core",
     "description": "<div>タグを出力する Lism コンポーネント。<Lism as='div'> のエイリアス。要素をグルーピングするための汎用コンテナ。as prop で div(デフォルト) / section / article / figure / nav / aside / header / footer / main / fieldset / hgroup に変更可能。",
-    "aliases": ["グループ", "コンテナ", "div tag", "汎用コンテナ", "section", "article"],
+    "aliases": ["グループ", "コンテナ", "div tag", "汎用コンテナ", "section", "article", "HTML.div"],
     "props": [],
     "usage": "<Group p='20' bgc='base-2' bdrs='20'>Content</Group>"
   },
@@ -67,7 +66,7 @@
     "package": "lism-css",
     "category": "core",
     "description": "<a>タグを出力する Lism コンポーネント。<Lism as='a'> のエイリアス。全ての Lism Props が使用可能。",
-    "aliases": ["リンク", "anchor", "a tag", "ハイパーリンク"],
+    "aliases": ["リンク", "anchor", "a tag", "ハイパーリンク", "HTML.a"],
     "props": [],
     "usage": "<Link href='/path' c='brand' fw='bold'>リンクテキスト</Link>"
   },
@@ -76,7 +75,7 @@
     "package": "lism-css",
     "category": "core",
     "description": "リストタグ（<ul>, <ol>, <dl>）を出力する Lism コンポーネント。<Lism as='ul'> のエイリアス。as prop で ul(デフォルト) / ol / dl に変更可能。ListItem と組み合わせて使用する。",
-    "aliases": ["リスト", "ul", "ol", "dl", "list tag", "番号なしリスト", "番号付きリスト"],
+    "aliases": ["リスト", "ul", "ol", "dl", "list tag", "番号なしリスト", "番号付きリスト", "HTML.ul", "HTML.ol"],
     "props": [],
     "usage": "<List>\n  <ListItem>リストアイテム 1</ListItem>\n  <ListItem>リストアイテム 2</ListItem>\n</List>"
   },
@@ -85,7 +84,7 @@
     "package": "lism-css",
     "category": "core",
     "description": "リストアイテムタグ（<li>, <dt>, <dd>）を出力する Lism コンポーネント。<Lism as='li'> のエイリアス。as prop で li(デフォルト) / dt / dd に変更可能。List コンポーネントと組み合わせて使用する。",
-    "aliases": ["リストアイテム", "li", "dt", "dd", "list item"],
+    "aliases": ["リストアイテム", "li", "dt", "dd", "list item", "HTML.li"],
     "props": [],
     "usage": "<ListItem fw='bold'>リストアイテム</ListItem>"
   },
