@@ -1,7 +1,7 @@
 ---
 import DemoLayout from '@/layouts/DemoLayout.astro';
 
-import { Wrapper, Grid, Flex, Frame, Media, Stack, Flow, Inline, Heading } from 'lism-css/astro';
+import { Wrapper, Grid, Flex, Frame, Lism, Stack, Flow, Inline, Heading } from 'lism-css/astro';
 import './_style.css';
 ---
 
@@ -28,7 +28,8 @@ import './_style.css';
       <Flex jc="flex-e">
         <Grid gtc="6rem auto" g="30" ai="center" px="40">
           <Frame as="figure" ar="1/1" bdrs="99">
-            <Media
+            <Lism
+              as="img"
               src="https://cdn.lism-css.com/img/random-2510?category=ceo"
               alt=""
               width="960"

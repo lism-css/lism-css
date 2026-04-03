@@ -1,7 +1,7 @@
 ---
 import DemoLayout from '@/layouts/DemoLayout.astro';
 
-import { Container, Grid, Frame, Media, Stack, Flow, Layer, Center, Text, Inline, Heading } from 'lism-css/astro';
+import { Container, Grid, Frame, Lism, Stack, Flow, Layer, Center, Text, Inline, Heading } from 'lism-css/astro';
 import './_style.css';
 ---
 
@@ -9,7 +9,7 @@ import './_style.css';
   <Container isWrapper="l" py="50" setGutter>
     <Grid gtc={['auto', null, 'auto 1fr']} g="50 60">
       <Frame ar="5/2" gc="1 / -1" pos="rel">
-        <Media src="https://cdn.lism-css.com/img/random-2510" alt="" width="960" height="640" />
+        <Lism as="img" src="https://cdn.lism-css.com/img/random-2510" alt="" width="960" height="640" />
         <Layer bgc="rgb(0 0 0 / 30%)">
           <Center h="100%" c="white">
             <Inline class="u--trim" fz="3xl" fw="light" ff="accent" lts="l" px="20" py="10">代表からご挨拶</Inline>

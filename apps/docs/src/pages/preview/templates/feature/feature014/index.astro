@@ -1,7 +1,7 @@
 ---
 import DemoLayout from '@/layouts/DemoLayout.astro';
 
-import { Stack, Container, Frame, Grid, Media, Flex, Icon, Text, Inline, Heading } from 'lism-css/astro';
+import { Stack, Container, Frame, Grid, Lism, Flex, Icon, Text, Inline, Heading } from 'lism-css/astro';
 import { Button } from '@lism-css/ui/astro';
 import './_style.css';
 ---
@@ -16,7 +16,15 @@ import './_style.css';
       <Grid gt="repeat" cols={['1', null, '3']}>
         <Grid gtr="subgrid" gr="span 3" ji="c" g="30" p={['40', null, '0 40']}>
           <Frame as="figure" ar="1/1" w="10rem" bdrs="99">
-            <Media src="https://cdn.lism-css.com/img/random-2510?category=v&r=1" alt="" width="960" height="640" setTransition hov="to:zoom" />
+            <Lism
+              as="img"
+              src="https://cdn.lism-css.com/img/random-2510?category=v&r=1"
+              alt=""
+              width="960"
+              height="640"
+              setTransition
+              hov="to:zoom"
+            />
           </Frame>
           <Stack g="30">
             <Text class="u--trim" fz="l" fw="bold" ta="center">アクアマリン</Text>
@@ -45,7 +53,15 @@ import './_style.css';
         </Grid>
         <Grid gtr="subgrid" gr="span 3" ji="c" g="30" p={['40', null, '0 40']} bd bdw={['1px 0 0 0', null, '0 0 0 1px']} bdc="white">
           <Frame as="figure" ar="1/1" w="10rem" bdrs="99">
-            <Media src="https://cdn.lism-css.com/img/random-2510?category=v&r=2" alt="" width="960" height="640" setTransition hov="to:zoom" />
+            <Lism
+              as="img"
+              src="https://cdn.lism-css.com/img/random-2510?category=v&r=2"
+              alt=""
+              width="960"
+              height="640"
+              setTransition
+              hov="to:zoom"
+            />
           </Frame>
           <Stack g="30">
             <Text class="u--trim" fz="l" fw="bold" ta="center">ローズクォーツ</Text>
@@ -74,7 +90,15 @@ import './_style.css';
         </Grid>
         <Grid gtr="subgrid" gr="span 3" ji="c" g="30" p={['40', null, '0 40']} bd bdw={['1px 0 0 0', null, '0 0 0 1px']} bdc="white">
           <Frame as="figure" ar="1/1" w="10rem" bdrs="99">
-            <Media src="https://cdn.lism-css.com/img/random-2510?category=v&r=3" alt="" width="960" height="640" setTransition hov="to:zoom" />
+            <Lism
+              as="img"
+              src="https://cdn.lism-css.com/img/random-2510?category=v&r=3"
+              alt=""
+              width="960"
+              height="640"
+              setTransition
+              hov="to:zoom"
+            />
           </Frame>
           <Stack g="30">
             <Text class="u--trim" fz="l" fw="bold" ta="center">ムーンストーン</Text>

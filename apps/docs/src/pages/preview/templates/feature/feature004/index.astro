@@ -1,7 +1,7 @@
 ---
 import DemoLayout from '@/layouts/DemoLayout.astro';
 
-import { Stack, Container, Frame, Grid, Columns, Media, Flex, Icon, Layer, Text, Heading } from 'lism-css/astro';
+import { Lism, Stack, Container, Frame, Grid, Columns, Flex, Icon, Layer, Text, Heading } from 'lism-css/astro';
 import './_style.css';
 ---
 
@@ -12,7 +12,8 @@ import './_style.css';
       <Columns cols={[1, null, 3]} g="30">
         <Stack g="20">
           <Frame as="a" isLinkBox href="#" pos="rel" ar={['4/3', null, '3/4']} bdrs="10" bxsh="30" td="none" setHov>
-            <Media
+            <Lism
+              as="img"
               isLayer
               src="https://cdn.lism-css.com/img/random-2510?category=v&r=1"
               alt=""
@@ -38,7 +39,8 @@ import './_style.css';
         </Stack>
         <Stack g="20">
           <Frame as="a" isLinkBox href="#" pos="rel" ar={['4/3', null, '3/4']} bdrs="10" bxsh="30" td="none" setHov>
-            <Media
+            <Lism
+              as="img"
               isLayer
               src="https://cdn.lism-css.com/img/random-2510?category=v&r=2"
               alt=""
@@ -64,7 +66,8 @@ import './_style.css';
         </Stack>
         <Stack g="20">
           <Frame as="a" isLinkBox href="#" pos="rel" ar={['4/3', null, '3/4']} bdrs="10" bxsh="30" td="none" setHov>
-            <Media
+            <Lism
+              as="img"
               isLayer
               src="https://cdn.lism-css.com/img/random-2510?category=v&r=3"
               alt=""
