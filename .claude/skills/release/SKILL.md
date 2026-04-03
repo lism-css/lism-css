@@ -23,17 +23,32 @@ argument-hint: <package> [version]
 
 ## 現在の状態
 
+- 現在のブランチ: !`git branch --show-current`
 - 既存タグ: !`git tag --list --sort=-version:refname | head -20`
 - lism-css の現在バージョン: !`node -p "require('./packages/lism-css/package.json').version"`
 - lism-ui の現在バージョン: !`node -p "require('./packages/lism-ui/package.json').version"`
 
 ## 手順
 
+### 0. ブランチの確認と切り替え
+
+- 現在のブランチを確認する
+- **main ブランチ以外にいる場合**、ユーザーに「main に切り替えて実行しますか？」と確認する
+- ユーザーが承認したら `git checkout main && git pull origin main` で main の最新状態にする
+- ユーザーが現在のブランチで続行を希望する場合はそのまま進める
+
 ### 1. パッケージとバージョンの特定
 
 - `$0` から対象パッケージを特定する。不明な場合はユーザーに確認する
 - バージョンが未指定（`$1` が空）の場合、対応する package.json の version を使用する
 - タグ名: `{タグプレフィックス}{バージョン}`（例: `lism-css@v0.10.0`）
+
+### 1.5. 最新コミットの検証
+
+- main（または現在のブランチ）の HEAD コミットの変更内容を `git show --stat HEAD` で確認する
+- 対象パッケージの `package.json` が変更に含まれていない場合、ユーザーに警告する:
+  - 「最新コミットに {パッケージ名} の package.json の変更が含まれていません。バージョン更新が済んでいない可能性があります。続行しますか？」
+- ユーザーが中断を選んだ場合、処理を停止する
 
 ### 2. 前回タグの特定
 
