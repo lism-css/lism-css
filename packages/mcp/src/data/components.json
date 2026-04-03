@@ -379,7 +379,7 @@
         "description": "複数のアイテムを同時に開くことを許可 (Root)。デフォルトでは一つしか展開できない。"
       },
       {
-        "name": "tag",
+        "name": "as",
         "type": "string",
         "description": "見出しのHTMLタグ (Heading)。デフォルトはdiv (role='heading'が自動付与)。h2〜h6を指定するとroleは付与されない。"
       },
@@ -427,7 +427,7 @@
     "description": "HTMLの details/summary 要素をラップしたコンポーネント。Accordionとは違いJSを使わずCSSのみで実装。サブコンポーネント構造: Details.Root > Details.Summary > (Details.Title + Details.Icon) + Details.Content。",
     "aliases": ["details summary", "disclosure", "ネイティブ開閉", "summary element"],
     "props": [
-      { "name": "tag", "type": "string", "description": "Details.Titleで出力するHTMLタグの種類 (Title)。デフォルトはspan。" },
+      { "name": "as", "type": "string", "description": "Details.Titleで出力するHTMLタグの種類 (Title)。デフォルトはspan。" },
       { "name": "--duration", "type": "string", "description": "展開アニメーションの秒数 (Root)。style経由で指定。" }
     ],
     "usage": "<Details.Root>\n  <Details.Summary>\n    <Details.Title>Title</Details.Title>\n    <Details.Icon />\n  </Details.Summary>\n  <Details.Content>Content</Details.Content>\n</Details.Root>"
