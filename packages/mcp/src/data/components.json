@@ -27,6 +27,69 @@
     "usage": "<HTML.p fz='l' c='text-2'>Text</HTML.p>"
   },
   {
+    "name": "Text",
+    "package": "lism-css",
+    "category": "core",
+    "description": "<p>タグを出力する Lism コンポーネント。<Lism as='p'> のエイリアス。as prop で p(デフォルト) / div / blockquote / address / figcaption / pre に変更可能。",
+    "aliases": ["paragraph", "テキスト", "段落", "p tag", "テキストブロック"],
+    "props": [],
+    "usage": "<Text fz='l' lh='s' c='text-2'>Lorem ipsum text...</Text>"
+  },
+  {
+    "name": "Inline",
+    "package": "lism-css",
+    "category": "core",
+    "description": "<span>タグを出力する Lism コンポーネント。<Lism as='span'> のエイリアス。テキストの一部にスタイルを適用したい場合に使用。as prop で span(デフォルト) / em / strong / small / code / time / i / b / mark / abbr / cite / kbd に変更可能。",
+    "aliases": ["span", "インライン要素", "テキスト装飾", "inline element"],
+    "props": [],
+    "usage": "<Inline fz='l' fs='italic'>インライン要素</Inline>"
+  },
+  {
+    "name": "Heading",
+    "package": "lism-css",
+    "category": "core",
+    "description": "見出しタグ（<h1>〜<h6>）を出力する Lism コンポーネント。level prop で見出しレベルを指定。<Lism as='h{level}'> のエイリアス。",
+    "aliases": ["見出し", "heading tag", "h1", "h2", "h3", "title"],
+    "props": [{ "name": "level", "type": "'1' | '2' | '3' | '4' | '5' | '6'", "default": "2", "description": "見出しレベルを指定する。" }],
+    "usage": "<Heading level='2'>見出しテキスト</Heading>"
+  },
+  {
+    "name": "Group",
+    "package": "lism-css",
+    "category": "core",
+    "description": "<div>タグを出力する Lism コンポーネント。<Lism as='div'> のエイリアス。要素をグルーピングするための汎用コンテナ。as prop で div(デフォルト) / section / article / figure / nav / aside / header / footer / main / fieldset / hgroup に変更可能。",
+    "aliases": ["グループ", "コンテナ", "div tag", "汎用コンテナ", "section", "article"],
+    "props": [],
+    "usage": "<Group p='20' bgc='base-2' bdrs='20'>Content</Group>"
+  },
+  {
+    "name": "Link",
+    "package": "lism-css",
+    "category": "core",
+    "description": "<a>タグを出力する Lism コンポーネント。<Lism as='a'> のエイリアス。全ての Lism Props が使用可能。",
+    "aliases": ["リンク", "anchor", "a tag", "ハイパーリンク"],
+    "props": [],
+    "usage": "<Link href='/path' c='brand' fw='bold'>リンクテキスト</Link>"
+  },
+  {
+    "name": "List",
+    "package": "lism-css",
+    "category": "core",
+    "description": "リストタグ（<ul>, <ol>, <dl>）を出力する Lism コンポーネント。<Lism as='ul'> のエイリアス。as prop で ul(デフォルト) / ol / dl に変更可能。ListItem と組み合わせて使用する。",
+    "aliases": ["リスト", "ul", "ol", "dl", "list tag", "番号なしリスト", "番号付きリスト"],
+    "props": [],
+    "usage": "<List>\n  <ListItem>リストアイテム 1</ListItem>\n  <ListItem>リストアイテム 2</ListItem>\n</List>"
+  },
+  {
+    "name": "ListItem",
+    "package": "lism-css",
+    "category": "core",
+    "description": "リストアイテムタグ（<li>, <dt>, <dd>）を出力する Lism コンポーネント。<Lism as='li'> のエイリアス。as prop で li(デフォルト) / dt / dd に変更可能。List コンポーネントと組み合わせて使用する。",
+    "aliases": ["リストアイテム", "li", "dt", "dd", "list item"],
+    "props": [],
+    "usage": "<ListItem fw='bold'>リストアイテム</ListItem>"
+  },
+  {
     "name": "DummyText",
     "package": "@lism-css/ui",
     "category": "ui",
