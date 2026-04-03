@@ -9,10 +9,26 @@ v.1.0リリースまでしばらく激しい変更が続く可能性があるた
 
 <Divider bds='dashed' my='40' />
 
+## v.0.10.0 (2026.04.03)
 
-{/* ## `lism-css` v.0.9.5 (2026.04.01)
 - ネガティブマージンをスペーストークンで指定できるようになりました。（例: `my-s="-20"`, `mt="-10"`)
-- 型修正を行いました。 */}
+- `<Layer>`,`<Decorator>`, `<Media>` など一部のコンポーネントでの特殊なpropの扱い（`translate`, `rotate`, `scale`, `transform`, `blur`, `contrast` 等の filter 系、および `objectFit` / `objectPosition` の prop sugar） を廃止しました。
+- `<HTML.xxx>` コンポーネントを廃止し、用途に応じた名前付きコンポーネントに置き換えました。
+- `<Dummy>` コンポーネントを `@lism-css/ui` へ移動し、`DummyText`（テキスト用）と `DummyImage`（画像用）として再実装しました。
+
+
+### `<HTML.xxx>` を廃止し、セマンティックラッパーコンポーネントに置き換え
+
+| コンポーネント | デフォルト `as` | 用途 |
+|---|---|---|
+| `Text` | `p` | テキストコンテンツ系ブロック要素 |
+| `Inline` | `span` | 文中要素 |
+| `Group` | `div` | 構造ラッパー |
+| `Heading` | `h2` | 見出し（`lv` prop で h1〜h6） |
+| `Link` | `a` | リンク |
+| `List` | `ul` | リスト（`as="ol"` で順序付き） |
+| `ListItem` | `li` | リストアイテム |
+
 
 
 ## `lism-css` v.0.9.4 (2026.03.31)
