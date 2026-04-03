@@ -1,10 +1,10 @@
 ---
-import type { HTMLTag, Polymorphic } from 'astro/types';
 import type { AstroLismBaseProps } from '../types';
 import getLismProps from 'lism-css/lib/getLismProps';
 import { Image } from 'astro:assets';
 
-type Props<Tag extends HTMLTag = 'img'> = Polymorphic<{ as: Tag }> & AstroLismBaseProps;
+type MediaAllowedTag = 'img' | 'video' | 'iframe' | 'picture' | 'AstroImage';
+type Props = AstroLismBaseProps & astroHTML.JSX.ImgHTMLAttributes & { as?: MediaAllowedTag };
 
 const { as, exProps, ...props } = Astro.props;
 
