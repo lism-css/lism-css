@@ -4,7 +4,8 @@ import type { ImageOutputFormat } from 'astro';
 import type { MediaAllowedTag } from 'lism-css/lib/types/allowedTags';
 
 // Astro <Image /> / <Picture /> の props
-type ImageProps = LocalImageProps | RemoteImageProps;
+// inferSize は RemoteImageProps にのみ定義されているが、LocalImageProps と合わせて許可するため追加
+type ImageProps = (LocalImageProps | RemoteImageProps) & { inferSize?: boolean };
 
 // Astro <Picture /> 固有の追加 props
 type PictureExtraProps = {
