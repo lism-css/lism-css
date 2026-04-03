@@ -26,9 +26,7 @@ import { DummyText } from '@lism-css/ui/astro';
   <PreviewArea p='20'>
     <Text>
       <Fragment>テキストの中で</Fragment>
-      <Inline fz="l" fs="italic">
-        インライン要素
-      </Inline>
+      <Inline fz="l" fs="italic"><Fragment>インライン要素</Fragment></Inline>
       <Fragment>としてスタイルできます。</Fragment>
     </Text>
   </PreviewArea>
@@ -50,11 +48,9 @@ import { DummyText } from '@lism-css/ui/astro';
   <PreviewTitle>`as="strong"` の例</PreviewTitle>
   <PreviewArea p='20'>
     <Text>
-      これは
-      <Inline as="strong" c="red">
-        強調された
-      </Inline>
-      テキストです。
+      <Fragment>これは</Fragment>
+      <Inline as="strong" c="red"><Fragment>強調された</Fragment></Inline>
+      <Fragment>テキストです。</Fragment>
     </Text>
   </PreviewArea>
   <PreviewCode slot='tab' label='JSX'>
