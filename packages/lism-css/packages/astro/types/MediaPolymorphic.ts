@@ -3,20 +3,21 @@ import type { LocalImageProps, RemoteImageProps } from 'astro:assets';
 import type { ImageOutputFormat } from 'astro';
 import type { MediaAllowedTag } from 'lism-css/lib/types/allowedTags';
 
+// Astro の OmitIndexSignature を再現（インデックスシグネチャを除去して型を具体化する）
+type OmitIndexSignature<T> = {
+  [K in keyof T as object extends Record<K, unknown> ? never : K]: T[K];
+};
+
 // Astro <Image /> / <Picture /> の props
-// inferSize は RemoteImageProps にのみ定義されているが、LocalImageProps と合わせて許可するため追加
-type ImageProps = (LocalImageProps | RemoteImageProps) & { inferSize?: boolean };
+// OmitIndexSignature をユニオン各メンバーに個別適用することで、
+// inferSize (RemoteImageProps のみ) など片方にしかない props も正しく型解決される
+type ImageProps = OmitIndexSignature<LocalImageProps> | OmitIndexSignature<RemoteImageProps>;
 
 // Astro <Picture /> 固有の追加 props
 type PictureExtraProps = {
   formats?: ImageOutputFormat[];
   fallbackFormat?: ImageOutputFormat;
   pictureAttributes?: HTMLAttributes<'picture'>;
-};
-
-// Astro の OmitIndexSignature を再現（インデックスシグネチャを除去して型を具体化する）
-type OmitIndexSignature<T> = {
-  [K in keyof T as object extends Record<K, unknown> ? never : K]: T[K];
 };
 
 // Polymorphic が除外する Astro 固有属性のキー（class:list は Polymorphic の挙動に合わせて残す）
