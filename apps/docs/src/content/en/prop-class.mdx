@@ -2,7 +2,7 @@
 title: 'Prop Class'
 description: 'A complete list of Prop Classes that map to CSS properties, with usage examples.'
 ---
-import { Lism, Flow, Container, Frame, Layer, Media, Box, Flex, Grid, Center, Columns, Spacer, Text, Group } from "lism-css/astro";
+import { Lism, Flow, Container, Frame, Layer, Media, Box, Flex, Grid, Center, Columns, Spacer, Group, Text } from "lism-css/astro";
 import { DummyText } from '@lism-css/ui/astro';
 
 
@@ -103,7 +103,7 @@ The shorthand string is output as a class name. It is also the property name use
   ```jsx
   <Text fz="xl" fw="bold" lts="l" ta="center" tt="upper">
     Example text
-  </Text>;
+  </Text>
   ```
   </PreviewCode>
 </Preview>
@@ -139,7 +139,7 @@ The shorthand string is output as a class name. It is also the property name use
   ```jsx
   <Text c="brand" bgc="base-2" bd p="30">
     Example text
-  </Text>;
+  </Text>
   ```
   </PreviewCode>
 </Preview>
@@ -189,9 +189,7 @@ export const LinkSPACE = () => <a href="/docs/tokens/#space"><code>SPACE</code><
   <PreviewArea p='20' resize>
     <Lism p={['15', '20']} bd>
       <Text>Example text</Text>
-      <Text my-s="15" mx="20">
-        Example text
-      </Text>
+      <Text my-s="15" mx="20"><Fragment>Example text</Fragment></Text>
     </Lism>
   </PreviewArea>
   <PreviewCode slot="tab" label="HTML">
@@ -209,7 +207,7 @@ export const LinkSPACE = () => <a href="/docs/tokens/#space"><code>SPACE</code><
     <Text my-s="15" mx="20">
       Example text
     </Text>
-  </Lism>;
+  </Lism>
   ```
   </PreviewCode>
 </Preview>
@@ -335,7 +333,7 @@ Here are some examples of positioning elements with `position: absolute`.
       <Group pos="abs" r="0" b="0" bgc="base-2" bd p="10">
         I
       </Group>
-    </Box>;
+    </Box>
     ```
   </PreviewCode>
   <PreviewCode slot='tab' label='HTML'>
@@ -431,7 +429,7 @@ Here are some examples of positioning elements with `position: absolute`.
 ### Shadow
 |Prop|Shorthand|To Class|BP|
 |---|---|---|---|
-|`box-shadow`|`bxsh`|[`SHADOW`](/docs/tokens/#shadow)|-|
+|`box-shadow`|`bxsh`|[`SHADOW`](/docs/tokens/#shadow)|○|
 
 
 ### Radius

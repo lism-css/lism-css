@@ -5,10 +5,50 @@ description: 'A log of all notable changes and updates across Lism CSS releases.
 import { Lism, Divider, Text, Inline, Link } from 'lism-css/astro';
 
 
-Breaking changes may continue frequently until the v1.0 release, so all notable changes will be documented here...
+Breaking changes may continue frequently until the v1.0 release, so all notable changes will be documented here.
 
 <Divider bds='dashed' my='40' />
 
+## v.0.10.0 (2026.04.03)
+
+- Negative margins can now be specified using space tokens. (e.g., `my-s="-20"`, `mt="-10"`)
+- Special prop handling in certain components such as `<Layer>`, `<Decorator>`, and `<Media>` has been removed. This includes filter-related props (`translate`, `rotate`, `scale`, `transform`, `blur`, `contrast`, etc.) and prop sugars for `objectFit` / `objectPosition`.
+- The `<HTML.xxx>` components have been removed and replaced with named components suited to their intended use.
+- The `<Dummy>` component has been moved to `@lism-css/ui` and reimplemented as `DummyText` (for text) and `DummyImage` (for images).
+
+
+### Replacing `<HTML.xxx>` with semantic wrapper components
+
+| Component | Default `as` | Purpose |
+|---|---|---|
+| `Text` | `p` | Block-level text content elements |
+| `Inline` | `span` | Inline elements |
+| `Group` | `div` | Structural wrappers |
+| `Heading` | `h2` | Headings (h1–h6 via the `lv` prop) |
+| `Link` | `a` | Links |
+| `List` | `ul` | Lists (`as="ol"` for ordered lists) |
+| `ListItem` | `li` | List items |
+
+
+
+## `lism-css` v.0.9.4 (2026.03.31)
+
+- Fixed an issue where no shadow was applied to the `-bxsh:5` class.
+- Added types to Astro components.
+
+## `@lism-css/ui` v.0.9.3 (2026.03.30)
+
+- Fixed the package to distribute compiled output from `dist` instead of raw source components.
+- Fixed an issue where `"use client"` was being stripped during the build.
+
+
+## v.0.9.2 (2026.03.18)
+
+- Updated `README.md`.
+
+## v.0.9.1 (2026.03.18)
+
+- Removed the `tag` property from the `<Lism>` component and consolidated it into the `as` property.
 
 ## v.0.9.0 (2026.03.17)
 

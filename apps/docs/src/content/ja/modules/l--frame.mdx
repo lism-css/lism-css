@@ -45,7 +45,7 @@ import { DummyText } from '@lism-css/ui/astro';
     ```jsx
     <Frame ar="16/9">
       <img src="https://cdn.lism-css.com/img/a-1.jpg" alt="" width="960" height="640" />
-    </Frame>;
+    </Frame>
     ```
   </PreviewCode>
   <PreviewCode slot='tab' label='HTML'>
@@ -62,9 +62,7 @@ import { DummyText } from '@lism-css/ui/astro';
   <PreviewArea resize>
     <Frame as="figure" ar="16/9" pos="rel">
       <img src="https://cdn.lism-css.com/img/a-1.jpg" alt="" width="960" height="640" />
-      <Flex as="figcaption" pos="abs" z="1" b="0" w="100%" jc="center" p="10" c="white" bgc="rgb(0 0 0 / 40%)">
-        Lorem ipsum text.
-      </Flex>
+      <Flex as="figcaption" pos="abs" z="1" b="0" w="100%" jc="center" p="10" c="white" bgc="rgb(0 0 0 / 40%)">Lorem ipsum text.</Flex>
     </Frame>
   </PreviewArea>
   <PreviewCode slot='tab' label='JSX'>
@@ -74,7 +72,7 @@ import { DummyText } from '@lism-css/ui/astro';
       <Flex as="figcaption" pos="abs" z="1" b="0" w="100%" jc="center" p="10" c="white" bgc="rgb(0 0 0 / 40%)">
         Lorem ipsum text.
       </Flex>
-    </Frame>;
+    </Frame>
     ```
   </PreviewCode>
   <PreviewCode slot='tab' label='HTML'>
@@ -104,7 +102,7 @@ import { DummyText } from '@lism-css/ui/astro';
       <video controls>
         <source src="/video/video-1.mp4" type="video/mp4" />
       </video>
-    </Frame>;
+    </Frame>
     ```
   </PreviewCode>
   <PreviewCode slot='tab' label='HTML'>
@@ -144,7 +142,7 @@ import { DummyText } from '@lism-css/ui/astro';
         referrerpolicy="strict-origin-when-cross-origin"
         allowfullscreen
       ></iframe>
-    </Frame>;
+    </Frame>
     ```
   </PreviewCode>
   <PreviewCode slot='tab' label='HTML'>
@@ -187,10 +185,13 @@ import { DummyText } from '@lism-css/ui/astro';
       <Layer p="30" ov="auto">
         <Center min-h="100%" g="15">
           <h2>Heading</h2>
-          <Text max-w="xs">Lorem ipsum dolor sit amet. Consectetur adipiscing elit, sed do eiusmod tempor Incididunt ut. Labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut.</Text>
+          <Text max-w="xs">
+            Lorem ipsum dolor sit amet. Consectetur adipiscing elit, sed do eiusmod tempor Incididunt ut. Labore et dolore magna aliqua. Ut enim ad minim
+            veniam, quis nostrud exercitation ullamco laboris nisi ut.
+          </Text>
         </Center>
       </Layer>
-    </Frame>;
+    </Frame>
     ```
   </PreviewCode>
     <PreviewCode slot='tab' label='HTML'>
@@ -237,7 +238,7 @@ import { DummyText } from '@lism-css/ui/astro';
     ```jsx "Flow ar='16/9'" "ov-y='auto'"
     <Flow ar="16/9" ov-y="auto" p="30">
       ...
-    </Flow>;
+    </Flow>
     ```
   </PreviewCode>
 </Preview>
@@ -260,7 +261,7 @@ import { DummyText } from '@lism-css/ui/astro';
     ```jsx
     <Frame ar={['1/1', '3/2', '16/9']} pos="rel">
       ...
-    </Frame>;
+    </Frame>
     ```
   </PreviewCode>
   <PreviewCode slot='tab' label='HTML'>

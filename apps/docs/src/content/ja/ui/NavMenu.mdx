@@ -56,17 +56,17 @@ import { Accordion, NavMenu } from '@lism-css/ui/astro'
     <NavMenu.Root>
       <NavMenu.Item>
         <NavMenu.Link href="#menu" hov="bgc">
-          Menu item 1
+          <Fragment>Menu item 1</Fragment>
         </NavMenu.Link>
       </NavMenu.Item>
       <NavMenu.Item>
         <NavMenu.Link href="#menu" hov="bgc">
-          Menu item 2
+          <Fragment>Menu item 2</Fragment>
         </NavMenu.Link>
       </NavMenu.Item>
       <NavMenu.Item>
         <NavMenu.Link href="#menu" hov="bgc">
-          Menu item 3
+          <Fragment>Menu item 3</Fragment>
         </NavMenu.Link>
       </NavMenu.Item>
     </NavMenu.Root>
@@ -89,7 +89,7 @@ import { Accordion, NavMenu } from '@lism-css/ui/astro'
           Menu item 3
         </NavMenu.Link>
       </NavMenu.Item>
-    </NavMenu.Root>;
+    </NavMenu.Root>
     ```
   </PreviewCode>
 </Preview>
@@ -107,7 +107,7 @@ import { Accordion, NavMenu } from '@lism-css/ui/astro'
       <NavMenu.Item href="#menu">Menu item 1</NavMenu.Item>
       <NavMenu.Item href="#menu">Menu item 2</NavMenu.Item>
       ...
-    </NavMenu.Root>;
+    </NavMenu.Root>
     ```
   </PreviewCode>
 </Preview>
@@ -129,7 +129,7 @@ import { Accordion, NavMenu } from '@lism-css/ui/astro'
         <NavMenu.Link href="#menu1" g="15" ai="center" bgc="text" c="base" hov="neutral">
           <span>Menu item</span>
           <Lism as="span" bd px="10" bdrs="10" fz="xs" fw="bold">
-            New
+            <Fragment>New</Fragment>
           </Lism>
           <Icon icon="caret-right" mx-s="auto" />
         </NavMenu.Link>
@@ -172,7 +172,7 @@ import { Accordion, NavMenu } from '@lism-css/ui/astro'
           <Icon icon="caret-right" mx-s="auto" />
         </NavMenu.Link>
       </NavMenu.Item>
-    </NavMenu.Root>;
+    </NavMenu.Root>
     ```
   </PreviewCode>
 </Preview>
@@ -211,7 +211,7 @@ import { Accordion, NavMenu } from '@lism-css/ui/astro'
       <NavMenu.Item hov="bgc" bd-t>
         <NavMenu.Link href="#menu3">Menu item</NavMenu.Link>
       </NavMenu.Item>
-    </NavMenu.Root>;
+    </NavMenu.Root>
     ```
   </PreviewCode>
 </Preview>
@@ -228,32 +228,32 @@ import { Accordion, NavMenu } from '@lism-css/ui/astro'
     <NavMenu.Root bd-y hovBgc="base-2">
       <NavMenu.Item>
         <NavMenu.Link hov="bgc" href="#menu1">
-          Menu item 1
+          <Fragment>Menu item 1</Fragment>
         </NavMenu.Link>
       </NavMenu.Item>
       <NavMenu.Item bd-t>
         <NavMenu.Link hov="bgc" href="#menu2">
-          Menu item 2
+          <Fragment>Menu item 2</Fragment>
         </NavMenu.Link>
         <NavMenu.Nest bd-t>
           <NavMenu.Item>
             <NavMenu.Link hov="bgc" href="#child-menu1">
-              Nested item
+              <Fragment>Nested item</Fragment>
             </NavMenu.Link>
           </NavMenu.Item>
           <NavMenu.Item bd-t>
             <NavMenu.Link hov="bgc" href="#child-menu3">
-              Nested item
+              <Fragment>Nested item</Fragment>
             </NavMenu.Link>
             <NavMenu.Nest bd-t>
               <NavMenu.Item>
                 <NavMenu.Link hov="bgc" href="#child-menu4">
-                  Nested level 2 item
+                  <Fragment>Nested level 2 item</Fragment>
                 </NavMenu.Link>
               </NavMenu.Item>
               <NavMenu.Item bd-t>
                 <NavMenu.Link hov="bgc" href="#child-menu5">
-                  Nested level 2 item
+                  <Fragment>Nested level 2 item</Fragment>
                 </NavMenu.Link>
               </NavMenu.Item>
             </NavMenu.Nest>
@@ -299,7 +299,7 @@ import { Accordion, NavMenu } from '@lism-css/ui/astro'
           </NavMenu.Item>
         </NavMenu.Nest>
       </NavMenu.Item>
-    </NavMenu.Root>;
+    </NavMenu.Root>
     ```
   </PreviewCode>
 </Preview>
@@ -316,7 +316,7 @@ import { Accordion, NavMenu } from '@lism-css/ui/astro'
     <NavMenu.Root bd-y hovBgc="base-2">
       <NavMenu.Item>
         <NavMenu.Link hov="bgc" href="#menu1">
-          Menu item
+          <Fragment>Menu item</Fragment>
         </NavMenu.Link>
       </NavMenu.Item>
       <NavMenu.Item>
@@ -324,19 +324,19 @@ import { Accordion, NavMenu } from '@lism-css/ui/astro'
           <Accordion.Item>
             <Accordion.Heading>
               <Accordion.Button hov="bgc" p="var(--_item-p)">
-                Menu item (Accordion)
+                <Fragment>Menu item (Accordion)</Fragment>
               </Accordion.Button>
             </Accordion.Heading>
             <Accordion.Panel>
               <NavMenu.Nest>
                 <NavMenu.Item>
                   <NavMenu.Link hov="bgc" href="#child-menu1">
-                    Nested item
+                    <Fragment>Nested item</Fragment>
                   </NavMenu.Link>
                 </NavMenu.Item>
                 <NavMenu.Item>
                   <NavMenu.Link hov="bgc" href="#child-menu2">
-                    Nested item
+                    <Fragment>Nested item</Fragment>
                   </NavMenu.Link>
                 </NavMenu.Item>
               </NavMenu.Nest>
@@ -379,7 +379,7 @@ import { Accordion, NavMenu } from '@lism-css/ui/astro'
           </Accordion.Item>
         </Accordion.Root>
       </NavMenu.Item>
-    </NavMenu.Root>;
+    </NavMenu.Root>
     ```
   </PreviewCode>
 </Preview>
@@ -445,7 +445,7 @@ import { Accordion, NavMenu } from '@lism-css/ui/astro'
           <NavMenu.Link href="#menu1">Menu item</NavMenu.Link>
         </NavMenu.Item>
       </NavMenu.Root>
-    </Box>;
+    </Box>
     ```
   </PreviewCode>
 </Preview>

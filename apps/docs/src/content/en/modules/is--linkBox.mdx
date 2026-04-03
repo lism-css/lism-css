@@ -2,7 +2,7 @@
 title: 'LinkBox'
 description: 'Documentation for the LinkBox module in Lism CSS. A component that makes an entire box clickable as a link.'
 ---
-import { LinkBox, Spacer, Text, Group, Link } from 'lism-css/astro';
+import { LinkBox, Spacer, Group, Link, Text } from 'lism-css/astro';
 import { DummyText } from '@lism-css/ui/astro';
 
 A `<Lism>` component that outputs the `is--linkBox` class, which makes an entire box clickable as a link.
@@ -42,13 +42,9 @@ When `href` is provided to `<LinkBox>`, the component itself renders as an `<a>`
   <PreviewTitle id='linkbox-demo01'>Example</PreviewTitle>
   <PreviewArea p='20'>
     <LinkBox href="#linkbox-demo01" p="30" bgc="base" bd bdrs="30" hov="o">
-      <Group fz="xl" fw="bold">
-        Heading text
-      </Group>
+      <Group fz="xl" fw="bold"><Fragment>Heading text</Fragment></Group>
       <DummyText lh="s" my-s="15" />
-      <Group fz="s" c="text-2" ta="right" lh="1" my-s="10">
-        MORE →
-      </Group>
+      <Group fz="s" c="text-2" ta="right" lh="1" my-s="10"><Fragment>MORE →</Fragment></Group>
     </LinkBox>
   </PreviewArea>
   <PreviewCode slot='tab' label='JSX'>
@@ -63,7 +59,7 @@ When `href` is provided to `<LinkBox>`, the component itself renders as an `<a>`
       <Group fz="s" c="text-2" ta="right" lh="1" my-s="10">
         MORE →
       </Group>
-    </LinkBox>;
+    </LinkBox>
     ```
   </PreviewCode>
   <PreviewCode slot='tab' label='HTML'>
@@ -74,7 +70,7 @@ When `href` is provided to `<LinkBox>`, the component itself renders as an `<a>`
         Lorem ipsum dolor sit, amet consectetur adipisicing elit, sed do eiusmod tempor. Non facere laudantium ex eos doloribus aut dolore nisi provident.
       </p>
       <p class="-fz:s -c:text-2 -ta:right -lh:1 -my-s:10">MORE →</p>
-    </a>;
+    </a>
     ```
   </PreviewCode>
 </Preview>
@@ -91,15 +87,11 @@ This approach also allows you to place additional links inside the LinkBox.
   <PreviewArea p='20'>
     <LinkBox as="section" p="30" bgc="base" bd bdrs="30" setTransition hov="bxsh">
       <Group fz="xl" fw="bold">
-        <Link className="u--expandedLink" href="#linkbox-demo02">
-          Heading link text
-        </Link>
+        <Link className="u--expandedLink" href="#linkbox-demo02"><Fragment>Heading link text</Fragment></Link>
       </Group>
       <DummyText c="text-2" lh="s" my-s="15" />
       <Group id="inner-link02" my-s="10">
-        <a href="#inner-link02" className="-hov:o">
-          Inner Link
-        </a>
+        <a href="#inner-link02" className="-hov:o"><Fragment>Inner Link</Fragment></a>
       </Group>
     </LinkBox>
   </PreviewArea>
@@ -111,13 +103,16 @@ This approach also allows you to place additional links inside the LinkBox.
           Heading link text
         </Link>
       </Group>
-      <Text c="text-2" lh="s" my-s="15">Lorem ipsum dolor sit amet. Consectetur adipiscing elit, sed do eiusmod tempor Incididunt ut. Labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut.</Text>
+      <Text c="text-2" lh="s" my-s="15">
+        Lorem ipsum dolor sit amet. Consectetur adipiscing elit, sed do eiusmod tempor Incididunt ut. Labore et dolore magna aliqua. Ut enim ad minim
+        veniam, quis nostrud exercitation ullamco laboris nisi ut.
+      </Text>
       <Group id="inner-link02" my-s="10">
         <a href="#inner-link02" className="-hov:o">
           Inner Link
         </a>
       </Group>
-    </LinkBox>;
+    </LinkBox>
     ```
   </PreviewCode>
   <PreviewCode slot='tab' label='HTML'>
@@ -136,7 +131,7 @@ This approach also allows you to place additional links inside the LinkBox.
           Inner Link
         </a>
       </div>
-    </div>;
+    </div>
     ```
   </PreviewCode>
 </Preview>

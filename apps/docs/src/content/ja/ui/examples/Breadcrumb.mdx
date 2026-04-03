@@ -16,15 +16,11 @@ import { Cluster, Icon, Spacer, Decorator, Link, ListItem } from 'lism-css/astro
   <PreviewArea p='20'>
     <Cluster as="ol" g="15">
       <ListItem d="in-flex" ai="center" g="15">
-        <Link href="#menu-1" c="20">
-          Menu item 1
-        </Link>
+        <Link href="#menu-1" c="20"><Fragment>Menu item 1</Fragment></Link>
       </ListItem>
       <ListItem d="in-flex" ai="center" g="15">
         <Decorator o="-20">/</Decorator>
-        <Link href="#menu-2" c="20">
-          Menu item 2
-        </Link>
+        <Link href="#menu-2" c="20"><Fragment>Menu item 2</Fragment></Link>
       </ListItem>
       <ListItem d="in-flex" ai="center" g="15">
         <Decorator o="-20">/</Decorator>
@@ -50,7 +46,7 @@ import { Cluster, Icon, Spacer, Decorator, Link, ListItem } from 'lism-css/astro
         <Decorator o="-20">/</Decorator>
         <span>Current page titile...</span>
       </ListItem>
-    </Cluster>;
+    </Cluster>
     ```
   </PreviewCode>
   <PreviewCode slot='tab' label='HTML'>
@@ -77,15 +73,11 @@ import { Cluster, Icon, Spacer, Decorator, Link, ListItem } from 'lism-css/astro
   <PreviewArea p='20'>
     <Cluster as="ol" g="15">
       <ListItem d="in-flex" ai="center" g="15">
-        <a class="set--plain" href="#menu-1">
-          Menu item 1
-        </a>
+        <a class="set--plain" href="#menu-1"><Fragment>Menu item 1</Fragment></a>
       </ListItem>
       <ListItem d="in-flex" ai="center" g="15">
         <Icon icon="caret-right" c="text-2" />
-        <a class="set--plain" href="#menu-2">
-          Menu item 2
-        </a>
+        <a class="set--plain" href="#menu-2"><Fragment>Menu item 2</Fragment></a>
       </ListItem>
       <ListItem d="in-flex" ai="center" g="15">
         <Icon icon="caret-right" c="text-2" />
@@ -111,7 +103,7 @@ import { Cluster, Icon, Spacer, Decorator, Link, ListItem } from 'lism-css/astro
         <Icon icon="caret-right" c="text-2" />
         <span class="-c:text-2">Current page titile...</span>
       </ListItem>
-    </Cluster>;
+    </Cluster>
     ```
   </PreviewCode>
   <PreviewCode slot='tab' label='HTML'>

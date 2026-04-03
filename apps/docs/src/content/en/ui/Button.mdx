@@ -15,10 +15,10 @@ A component for displaying button-style links.
   <PreviewArea p='20' bg=':stripe' layout=''>
     <Flex layout="cluster" g="15">
       <Button href="###" variant="fill">
-        Button
+        <Fragment>Button</Fragment>
       </Button>
       <Button href="###" variant="outline">
-        Outline
+        <Fragment>Outline</Fragment>
       </Button>
     </Flex>
   </PreviewArea>
@@ -31,7 +31,7 @@ A component for displaying button-style links.
       <Button href="###" variant="outline">
         Outline
       </Button>
-    </Flex>;
+    </Flex>
     ```
   </PreviewCode>
   <PreviewCode slot='tab' label='HTML'>
@@ -44,7 +44,7 @@ A component for displaying button-style links.
       <a class="c--button c--button--outline l--flex -lh:s -py:10 -px:20 -hov:o" href="###">
         Outline
       </a>
-    </div>;
+    </div>
     ```
   </PreviewCode>
 
@@ -78,7 +78,7 @@ Provided as `Button` (`.c--button`) from the `@lism-css/ui` package.
       (<Icon />
       )TEXT(
       <Icon />)
-    </Button>;
+    </Button>
     ```
   </PreviewCode>
   <PreviewCode slot='tab' label='HTML'>
@@ -134,7 +134,7 @@ Provided as `Button` (`.c--button`) from the `@lism-css/ui` package.
         <Icon icon="cart" />
         Button
       </Button>
-    </Flex>;
+    </Flex>
     ```
   </PreviewCode>
   <PreviewCode slot='tab' label='HTML'>
@@ -191,7 +191,7 @@ Provided as `Button` (`.c--button`) from the `@lism-css/ui` package.
         <Icon icon="cart" />
         Button
       </Button>
-    </Flex>;
+    </Flex>
     ```
   </PreviewCode>
   <PreviewCode slot='tab' label='HTML'>
@@ -253,7 +253,7 @@ Provided as `Button` (`.c--button`) from the `@lism-css/ui` package.
       <Button href="###" w="fit" px="10" py="10" lh="1" bdrs="10">
         <Icon icon={{ as: ShoppingCartSimpleIcon, weight: 'fill' }} fz="l" />
       </Button>
-    </Cluster>;
+    </Cluster>
     ```
   </PreviewCode>
 </Preview>
@@ -368,10 +368,10 @@ An example of adding a [`-hov` class](/docs/props/hov) that swaps the fill and o
   <PreviewArea p='20' bg=':stripe' layout=''>
     <Flex g="15">
       <Button href="###" hov="reverse" variant="fill">
-        Button
+        <Fragment>Button</Fragment>
       </Button>
       <Button href="###" hov="reverse" variant="outline">
-        Button
+        <Fragment>Button</Fragment>
       </Button>
     </Flex>
   </PreviewArea>
@@ -405,7 +405,7 @@ An example of adding a [`-hov` class](/docs/props/hov) that swaps the fill and o
     <Button href="###" hov="reverse" variant="outline">
       Button
     </Button>
-  </Flex>;
+  </Flex>
   ```
   </PreviewCode>
 </Preview>

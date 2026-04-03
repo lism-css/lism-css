@@ -52,7 +52,7 @@ import { ShapeDivider } from '@lism-css/ui/astro';
           <Inline>完了</Inline>
         </Group>
       </Flex>
-    </Flex>;
+    </Flex>
     ```
   </PreviewCode>
 </Preview>
@@ -90,7 +90,7 @@ import { ShapeDivider } from '@lism-css/ui/astro';
         <Divider min-w="1em" />
         <span className="-whspace:nowrap">500円</span>
       </Grid>
-    </Stack>;
+    </Stack>
     ```
   </PreviewCode>
 </Preview>
@@ -109,9 +109,7 @@ import { ShapeDivider } from '@lism-css/ui/astro';
         <Stack fx="1" pos="rel" g="15" p="30" z="1" min-h="100%" h="auto" c="white" bgc="black:50%">
           <h3>Card Title</h3>
           <DummyText lh="s" mb="auto" length="l" />
-          <Link href="#button-test" keycolor="white" c="inherit" bdrs="99" aslf="end" px="10" my-s="20">
-            Link Text
-          </Link>
+          <Link href="#button-test" keycolor="white" c="inherit" bdrs="99" aslf="end" px="10" my-s="20"><Fragment>Link Text</Fragment></Link>
         </Stack>
       </Flex>
     </Stack>
@@ -126,12 +124,10 @@ import { ShapeDivider } from '@lism-css/ui/astro';
         <Stack fx="1" pos="rel" g="15" p="30" z="1" min-h="100%" h="auto" c="white" bgc="black:50%">
           <h3>Card Title</h3>
           <DummyText lh="s" mb="auto" length="l" />
-          <Link href="#button-test" keycolor="white" c="inherit" bdrs="99" aslf="end" px="10" my-s="20">
-            Link Text
-          </Link>
+          <Link href="#button-test" keycolor="white" c="inherit" bdrs="99" aslf="end" px="10" my-s="20"><Fragment>Link Text</Fragment></Link>
         </Stack>
       </Flex>
-    </Stack>;
+    </Stack>
     ```
   </PreviewCode>
 </Preview>
@@ -221,12 +217,12 @@ Lismのパッケージ内で用意しているクラスはありませんが、�
   </PreviewCode>
   <PreviewCode label='JSX' slot='tab'>
     ```jsx "bg=':sunset'"
-    <Frame ar="16/9" bg=":sunset" />;
+    <Frame ar="16/9" bg=":sunset" />
     ```
   </PreviewCode>
   <PreviewCode label='HTML' slot='tab'>
     ```jsx "-bg:sunset"
-    <div class="l--frame -ar:16/9 -bg:sunset"></div>;
+    <div class="l--frame -ar:16/9 -bg:sunset"></div>
     ```
   </PreviewCode>
 </Preview>

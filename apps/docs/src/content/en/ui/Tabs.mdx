@@ -93,7 +93,7 @@ Only `<Tabs.Tab>` and `<Tabs.Panel>` are recognized as children of `<Tabs.Item>`
           <DummyText length="l" offset={1} pre="Tab 02: " />
         </Tabs.Panel>
       </Tabs.Item>
-    </Tabs.Root>;
+    </Tabs.Root>
     ```
   </PreviewCode>
   <PreviewCode slot='tab' label='HTML'>
@@ -138,7 +138,7 @@ You can pass props to `.c--tabs_list` using `listProps`.
           <DummyText length="l" offset={1} pre="Tab 02: " />
         </Tabs.Panel>
       </Tabs.Item>
-    </Tabs.Root>;
+    </Tabs.Root>
     ```
   </PreviewCode>
 </Preview>
@@ -182,7 +182,7 @@ Use `defaultIndex` on `<Tabs.Root>` to specify which tab is open by default.
           <DummyText length="l" offset={1} pre="Tab 02: " />
         </Tabs.Panel>
       </Tabs.Item>
-    </Tabs.Root>;
+    </Tabs.Root>
     ```
   </PreviewCode>
 </Preview>
@@ -200,7 +200,7 @@ At the same time, changing the tab list (`.c--tabs_list`) buttons to stack verti
     <Tabs.Root g="15" gt={[null, '"list panel" auto / auto 1fr']} listProps={{ fxd: [null, 'column'], bd: '-', bdw: ['0 0 1px 0', '0 1px 0 0'] }}>
       <Tabs.Item>
         <Tabs.Tab px="15" px-s="10" py="10" py-s="5">
-          Tab 1
+          <Fragment>Tab 1</Fragment>
         </Tabs.Tab>
         <Tabs.Panel p="5">
           <DummyText pre="Tab 01: " />
@@ -208,7 +208,7 @@ At the same time, changing the tab list (`.c--tabs_list`) buttons to stack verti
       </Tabs.Item>
       <Tabs.Item>
         <Tabs.Tab px="15" px-s="10" py="10" py-s="5">
-          Tab 2
+          <Fragment>Tab 2</Fragment>
         </Tabs.Tab>
         <Tabs.Panel p="5">
           <DummyText length="l" offset={1} pre="Tab 02: " />
@@ -235,7 +235,7 @@ At the same time, changing the tab list (`.c--tabs_list`) buttons to stack verti
           <DummyText length="l" offset={1} pre="Tab 02: " />
         </Tabs.Panel>
       </Tabs.Item>
-    </Tabs.Root>;
+    </Tabs.Root>
     ```
   </PreviewCode>
 </Preview>
@@ -300,7 +300,7 @@ Here are a few styling examples.
           <DummyText length="l" offset={1} pre="Tab 02: " />
         </Tabs.Panel>
       </Tabs.Item>
-    </Tabs.Root>;
+    </Tabs.Root>
     ```
   </PreviewCode>
 </Preview>
@@ -357,7 +357,7 @@ Here are a few styling examples.
           <DummyText length="l" offset={1} pre="Tab 02: " />
         </Tabs.Panel>
       </Tabs.Item>
-    </Tabs.Root>;
+    </Tabs.Root>
     ```
   </PreviewCode>
 </Preview>
@@ -412,7 +412,7 @@ An example of how to fix the overall tabs height to match the tallest content pa
           <DummyText length="xl" offset={1} pre="Tab 02: " />
         </Tabs.Panel>
       </Tabs.Item>
-    </Tabs.Root>;
+    </Tabs.Root>
     ```
   </PreviewCode>
 </Preview>

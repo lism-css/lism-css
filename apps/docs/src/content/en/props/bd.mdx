@@ -107,18 +107,10 @@ To apply a border on only one side, use the `.-bd-{side}` class.
 <Preview>
   <PreviewTitle>Specifying all 4 sides</PreviewTitle>
   <PreviewArea p='30' flow='50'>
-    <Box bd-t px="10">
-      -t: Top
-    </Box>
-    <Box bd-r px="10">
-      -r: Right
-    </Box>
-    <Box bd-b px="10">
-      -b: Bottom
-    </Box>
-    <Box bd-l px="10">
-      -l: Left
-    </Box>
+    <Box bd-t px="10"><Fragment>-t: Top</Fragment></Box>
+    <Box bd-r px="10"><Fragment>-r: Right</Fragment></Box>
+    <Box bd-b px="10"><Fragment>-b: Bottom</Fragment></Box>
+    <Box bd-l px="10"><Fragment>-l: Left</Fragment></Box>
   </PreviewArea>
   <PreviewCode label='JSX' slot='tab'>
     ```jsx "bd-t" "bd-r" "bd-b" "bd-l"
@@ -141,24 +133,12 @@ To apply a border on only one side, use the `.-bd-{side}` class.
 <Preview>
   <PreviewTitle>Specifying block and inline directions</PreviewTitle>
   <PreviewArea p='30' flow='50'>
-    <Box bd-x-s bdw="2px" px="10" bgc="base-2">
-      inline-start
-    </Box>
-    <Box bd-x-e bdw="2px" px="10" bgc="base-2">
-      inline-end
-    </Box>
-    <Box bd-y-s bdw="2px" px="10" bgc="base-2">
-      block-start
-    </Box>
-    <Box bd-y-e bdw="2px" px="10" bgc="base-2">
-      block-end
-    </Box>
-    <Box bd-x bdw="2px" px="10" bgc="base-2">
-      inline
-    </Box>
-    <Box bd-y bdw="2px" px="10" bgc="base-2">
-      block
-    </Box>
+    <Box bd-x-s bdw="2px" px="10" bgc="base-2"><Fragment>inline-start</Fragment></Box>
+    <Box bd-x-e bdw="2px" px="10" bgc="base-2"><Fragment>inline-end</Fragment></Box>
+    <Box bd-y-s bdw="2px" px="10" bgc="base-2"><Fragment>block-start</Fragment></Box>
+    <Box bd-y-e bdw="2px" px="10" bgc="base-2"><Fragment>block-end</Fragment></Box>
+    <Box bd-x bdw="2px" px="10" bgc="base-2"><Fragment>inline</Fragment></Box>
+    <Box bd-y bdw="2px" px="10" bgc="base-2"><Fragment>block</Fragment></Box>
   </PreviewArea>
   <PreviewCode label='JSX' slot='tab'>
     ```jsx "bd-x" "bd-y" "bd-x-s" "bd-x-e" "bd-y-s" "bd-y-e"
@@ -189,15 +169,13 @@ When different styles are needed for each side, you can combine the `.-bd` class
 <Preview>
   <PreviewTitle>Per-side specification of `bdw`, `bds`, `bdc`</PreviewTitle>
   <PreviewArea resize p='30'>
-    <Box bd bdw="0 0 1px .5em" bds="dashed solid" bdc="var(--purple) var(--blue)" p="15">
-      border
-    </Box>
+    <Box bd bdw="0 0 1px .5em" bds="dashed solid" bdc="var(--purple) var(--blue)" p="15"><Fragment>border</Fragment></Box>
   </PreviewArea>
   <PreviewCode label='JSX' slot='tab'>
     ```jsx
     <Box bd bdw="0 0 1px .5em" bds="dashed solid" bdc="var(--purple) var(--blue)" p="15">
       border
-    </Box>;
+    </Box>
     ```
   </PreviewCode>
   <PreviewCode label='HTML' slot='tab'>
@@ -217,15 +195,13 @@ When different styles are needed for each side, you can combine the `.-bd` class
 <Preview>
   <PreviewTitle>Example of `bd`</PreviewTitle>
   <PreviewArea p='30' resize>
-    <Box bd bdw={['1px', '3px', '6px']} p="15">
-      border
-    </Box>
+    <Box bd bdw={['1px', '3px', '6px']} p="15"><Fragment>border</Fragment></Box>
   </PreviewArea>
   <PreviewCode label='JSX' slot='tab'>
     ```jsx
     <Box bd bdw={['1px', '3px', '6px']} p="15">
       border
-    </Box>;
+    </Box>
     ```
   </PreviewCode>
   <PreviewCode label='HTML' slot='tab'>
@@ -245,15 +221,9 @@ By switching `bdw` at breakpoints, you can also change which side the border app
   <PreviewTitle>Switching the border side</PreviewTitle>
   <PreviewArea p='30' resize>
     <Flex fxd={['column', 'row']}>
-      <Box px="15" py="5">
-        Box
-      </Box>
-      <Box px="15" py="5" bd-x-s bd-y-s bdw={['1px 0', '0 1px']}>
-        Box
-      </Box>
-      <Box px="15" py="5" bd-x-s bd-y-s bdw={['1px 0', '0 1px']}>
-        Box
-      </Box>
+      <Box px="15" py="5"><Fragment>Box</Fragment></Box>
+      <Box px="15" py="5" bd-x-s bd-y-s bdw={['1px 0', '0 1px']}><Fragment>Box</Fragment></Box>
+      <Box px="15" py="5" bd-x-s bd-y-s bdw={['1px 0', '0 1px']}><Fragment>Box</Fragment></Box>
     </Flex>
   </PreviewArea>
   <PreviewCode label='JSX' slot='tab'>
@@ -268,7 +238,7 @@ By switching `bdw` at breakpoints, you can also change which side the border app
       <Box px="15" py="5" bd-x-s bd-y-s bdw={['1px 0', '0 1px']}>
         Box
       </Box>
-    </Flex>;
+    </Flex>
     ```
   </PreviewCode>
   <PreviewCode label='HTML' slot='tab'>
@@ -300,7 +270,7 @@ You can also pass a value directly to `bd`.
     ```jsx
     <Box bd="solid 1px #555" p="10">
       border
-    </Box>;
+    </Box>
     ```
   </PreviewCode>
   <PreviewCode label='HTML' slot='tab'>
@@ -327,7 +297,7 @@ These are output simply as inline styles.
     ```jsx
     <Box borders={{ l: 'solid 4px green', b: 'solid 1px blue' }} px="10">
       left,bottom
-    </Box>;
+    </Box>
     ```
   </PreviewCode>
   <PreviewCode label='HTML' slot='tab'>

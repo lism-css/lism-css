@@ -103,7 +103,7 @@ Lismでは、主要なCSSプロパティ群に対して、それらで頻繁に�
   ```jsx
   <Text fz="xl" fw="bold" lts="l" ta="center" tt="upper">
     Example text
-  </Text>;
+  </Text>
   ```
   </PreviewCode>
 </Preview>
@@ -139,7 +139,7 @@ Lismでは、主要なCSSプロパティ群に対して、それらで頻繁に�
   ```jsx
   <Text c="brand" bgc="base-2" bd p="30">
     Example text
-  </Text>;
+  </Text>
   ```
   </PreviewCode>
 </Preview>
@@ -189,9 +189,7 @@ export const LinkSPACE = () => <a href="/docs/tokens/#space"><code>SPACE</code><
   <PreviewArea p='20' resize>
     <Lism p={['15', '20']} bd>
       <Text>Example text</Text>
-      <Text my-s="15" mx="20">
-        Example text
-      </Text>
+      <Text my-s="15" mx="20"><Fragment>Example text</Fragment></Text>
     </Lism>
   </PreviewArea>
   <PreviewCode slot="tab" label="HTML">
@@ -209,7 +207,7 @@ export const LinkSPACE = () => <a href="/docs/tokens/#space"><code>SPACE</code><
     <Text my-s="15" mx="20">
       Example text
     </Text>
-  </Lism>;
+  </Lism>
   ```
   </PreviewCode>
 </Preview>
@@ -276,33 +274,15 @@ export const LinkSPACE = () => <a href="/docs/tokens/#space"><code>SPACE</code><
   </PreviewTitle>
   <PreviewArea resize p='5'>
     <Box pos="rel" ar="3/2" lh="1" ff="mono">
-      <Group pos="abs" l="0" t="0" bgc="base-2" bd p="10">
-        A
-      </Group>
-      <Group pos="abs" l="0" r="0" w="fit" mx="auto" bgc="base-2" bd p="10">
-        B
-      </Group>
-      <Group pos="abs" r="0" t="0" bgc="base-2" bd p="10">
-        C
-      </Group>
-      <Group pos="abs" l="0" t="0" b="0" h="fit" my="auto" bgc="base-2" bd p="10">
-        D
-      </Group>
-      <Group pos="abs" i="0" m="auto" w="fit" h="fit" bgc="base-2" bd p="10">
-        E
-      </Group>
-      <Group pos="abs" r="0" t="0" b="0" h="fit" my="auto" bgc="base-2" bd p="10">
-        F
-      </Group>
-      <Group pos="abs" l="0" b="0" bgc="base-2" bd p="10">
-        G
-      </Group>
-      <Group pos="abs" l="0" r="0" b="0" w="fit" mx="auto" bgc="base-2" bd p="10">
-        H
-      </Group>
-      <Group pos="abs" r="0" b="0" bgc="base-2" bd p="10">
-        I
-      </Group>
+      <Group pos="abs" l="0" t="0" bgc="base-2" bd p="10"><Fragment>A</Fragment></Group>
+      <Group pos="abs" l="0" r="0" w="fit" mx="auto" bgc="base-2" bd p="10"><Fragment>B</Fragment></Group>
+      <Group pos="abs" r="0" t="0" bgc="base-2" bd p="10"><Fragment>C</Fragment></Group>
+      <Group pos="abs" l="0" t="0" b="0" h="fit" my="auto" bgc="base-2" bd p="10"><Fragment>D</Fragment></Group>
+      <Group pos="abs" i="0" m="auto" w="fit" h="fit" bgc="base-2" bd p="10"><Fragment>E</Fragment></Group>
+      <Group pos="abs" r="0" t="0" b="0" h="fit" my="auto" bgc="base-2" bd p="10"><Fragment>F</Fragment></Group>
+      <Group pos="abs" l="0" b="0" bgc="base-2" bd p="10"><Fragment>G</Fragment></Group>
+      <Group pos="abs" l="0" r="0" b="0" w="fit" mx="auto" bgc="base-2" bd p="10"><Fragment>H</Fragment></Group>
+      <Group pos="abs" r="0" b="0" bgc="base-2" bd p="10"><Fragment>I</Fragment></Group>
     </Box>
   </PreviewArea>
   <PreviewCode slot='tab' label='JSX'>
@@ -335,7 +315,7 @@ export const LinkSPACE = () => <a href="/docs/tokens/#space"><code>SPACE</code><
       <Group pos="abs" r="0" b="0" bgc="base-2" bd p="10">
         I
       </Group>
-    </Box>;
+    </Box>
     ```
   </PreviewCode>
   <PreviewCode slot='tab' label='HTML'>
