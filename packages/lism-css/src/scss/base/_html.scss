@@ -43,23 +43,6 @@ h6 {
 }
 
 /* ----------------------------------------
-    list
- ---------------------------------------- */
-// classを持たない、もしくは Prop Classしかない(≒ Prop Class で始まる) リスト要素はブラウザ標準のスタイルを復活させる。
-:is(ul, ol):where(:not([class])),
-:is(ul, ol):where([class^='-']) {
-  list-style: revert;
-  padding-inline-start: var(--s30);
-}
-
-dt {
-  font-weight: var(--fw--bold);
-}
-dd + dt {
-  margin-block-start: var(--s20);
-}
-
-/* ----------------------------------------
     texts
  ---------------------------------------- */
 a {
@@ -109,11 +92,22 @@ hr {
   border-block-start: 1px solid var(--divider);
 }
 
-// figure {
-// 	display: grid;
-// 	gap: var(--s5);
-// 	place-items: center;
-// }
+/* ----------------------------------------
+    list
+ ---------------------------------------- */
+// classを持たない、もしくは Prop Classしかない(≒ Prop Class で始まる) リスト要素はブラウザ標準のスタイルを復活させる。
+:is(ul, ol):where(:not([class])),
+:is(ul, ol):where([class^='-']) {
+  list-style: revert;
+  padding-inline-start: var(--s30);
+}
+
+dt {
+  font-weight: var(--fw--bold);
+}
+dd + dt {
+  margin-block-start: var(--s20);
+}
 
 /* ----------------------------------------
     table
@@ -131,7 +125,7 @@ td {
   min-inline-size: var(--td-min-sz);
 }
 th {
-  // デフォルトはtdと同じスタイル
+  // デフォルト: tdと同じスタイル
   color: var(--th-c, var(--td-c));
   background-color: var(--th-bgc, var(--td-bgc));
   padding: var(--th-p, var(--td-p));
