@@ -1,9 +1,9 @@
 ---
 import type { Polymorphic } from 'astro/types';
 import type { AstroLismBaseProps } from '../types';
+import type { GroupAllowedTag } from 'lism-css/lib/types/allowedTags';
 import Lism from '../Lism/Lism.astro';
 
-type GroupAllowedTag = 'div' | 'section' | 'article' | 'figure' | 'nav' | 'aside' | 'header' | 'footer' | 'main' | 'fieldset' | 'hgroup';
 type Props<Tag extends GroupAllowedTag = 'div'> = Polymorphic<{ as: Tag }> & AstroLismBaseProps;
 
 const { as: Tag = 'div', ...props } = Astro.props;

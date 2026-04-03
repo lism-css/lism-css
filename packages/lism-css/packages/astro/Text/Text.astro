@@ -1,9 +1,9 @@
 ---
 import type { Polymorphic } from 'astro/types';
 import type { AstroLismBaseProps } from '../types';
+import type { TextAllowedTag } from 'lism-css/lib/types/allowedTags';
 import Lism from '../Lism/Lism.astro';
 
-type TextAllowedTag = 'p' | 'div' | 'blockquote' | 'address' | 'figcaption' | 'pre';
 type Props<Tag extends TextAllowedTag = 'p'> = Polymorphic<{ as: Tag }> & AstroLismBaseProps;
 
 const { as: Tag = 'p', ...props } = Astro.props;
