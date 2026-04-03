@@ -101,16 +101,43 @@ In `<Media>` imported from `lism-css/astro`, the component is automatically mapp
 | `"picture"` | Astro `<Picture />` |
 | `"video"` / `"iframe"` etc. | HTML tag as-is |
 
-<PreviewTitle>Example of using Astro's `<Image>` (default)</PreviewTitle>
-```jsx
-import { Media } from 'lism-css/astro';
+Since `<Media>` uses Astro's `<Image />` or `<Picture />` internally, all their props are accepted.
+See the official Astro docs for the full reference:
+[`<Image />`](https://docs.astro.build/en/reference/modules/astro-assets/#image-)&emsp;/&emsp;[`<Picture />`](https://docs.astro.build/en/reference/modules/astro-assets/#picture-)
 
-<Media src="/img.jpg" alt="Dummy Image" width="960" height="640" />
-```
 
-<PreviewTitle>Example of using Astro's `<Picture>`</PreviewTitle>
-```jsx "as='picture'"
-import { Media } from 'lism-css/astro';
+<Preview>
+  <PreviewTitle>Using `quality` and `format` (Astro `<Image>`)</PreviewTitle>
+  <PreviewArea>
+    <Media src="https://cdn.lism-css.com/img/a-1.jpg" width="960" height="640" alt="Dummy Image" quality="high" format="webp" />
+  </PreviewArea>
+  <PreviewCode slot='tab' label='JSX'>
+    ```jsx "quality='high'" "format='webp'"
+    <Media src="https://cdn.lism-css.com/img/a-1.jpg" width="960" height="640" alt="Dummy Image" quality="high" format="webp" />
+    ```
+  </PreviewCode>
+</Preview>
 
-<Media as="picture" src="/img.jpg" alt="Dummy Image" width="960" height="640" />
-```
+<Preview>
+  <PreviewTitle>Remote image with `inferSize`</PreviewTitle>
+  <PreviewArea>
+    <Media src="https://cdn.lism-css.com/img/a-1.jpg" inferSize alt="Dummy Image" />
+  </PreviewArea>
+  <PreviewCode slot='tab' label='JSX'>
+    ```jsx "inferSize"
+    <Media src="https://cdn.lism-css.com/img/a-1.jpg" inferSize alt="Dummy Image" />
+    ```
+  </PreviewCode>
+</Preview>
+
+<Preview>
+  <PreviewTitle>Using Astro `<Picture>` with `formats`</PreviewTitle>
+  <PreviewArea>
+    <Media as="picture" src="https://cdn.lism-css.com/img/a-1.jpg" width="960" height="640" alt="Dummy Image" formats={['avif', 'webp']} />
+  </PreviewArea>
+  <PreviewCode slot='tab' label='JSX'>
+    ```jsx "as='picture'" "formats={['avif', 'webp']}"
+    <Media as="picture" src="https://cdn.lism-css.com/img/a-1.jpg" width="960" height="640" alt="Dummy Image" formats={['avif', 'webp']} />
+    ```
+  </PreviewCode>
+</Preview>
