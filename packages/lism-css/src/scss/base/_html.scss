@@ -118,16 +118,24 @@ hr {
 /* ----------------------------------------
     table
  ---------------------------------------- */
-// table {
-// 	--hl: var(--hl--s);
-// }
-th {
-  color: var(--th-c, inherit);
-  background-color: var(--th-bgc, transparent);
+table {
+  --td-c: inherit;
+  --td-bgc: transparent;
+  --td-p: var(--s5) var(--s10);
+  --td-min-sz: initial;
 }
-td,
+td {
+  color: var(--td-c);
+  background-color: var(--td-bgc);
+  padding: var(--td-p);
+  min-inline-size: var(--td-min-sz);
+}
 th {
-  padding: var(--cell-p, var(--s5) var(--s10));
+  // デフォルトはtdと同じスタイル
+  color: var(--th-c, var(--td-c));
+  background-color: var(--th-bgc, var(--td-bgc));
+  padding: var(--th-p, var(--td-p));
+  min-inline-size: var(--th-min-sz, var(--td-min-sz));
 }
 
 /* ----------------------------------------
