@@ -1,24 +1,31 @@
 @use '../../_setting' as setting;
 @use 'sass:math';
 
-/* フォントサイズ計算用のsass関数 */
+/* --------------------------------------------------
+  フォントサイズ計算用のsass関数
+-------------------------------------------------- */
 @function fz-calc($offset) {
   $fzmol: setting.$fzmol;
   $fz: math.div($fzmol, ($fzmol - $offset));
   @return math.div(math.round($fz * 1000), 1000);
 }
 
-/* ハーフレディング管理変数 */
+/* --------------------------------------------------
+  ハーフレディング管理変数
+-------------------------------------------------- */
 @property --hl {
   syntax: '<length>';
   inherits: true;
   initial-value: 0.25rem;
 }
 
+/* --------------------------------------------------
+  typography・spacing トークンの定義
+-------------------------------------------------- */
 :root {
-  /* ------------------------------------------------------------
-   font-size
-  ------------------------------------------------------------ */
+  /** 
+   * font-size
+   */
   --REM: clamp(0.95rem, 0.915rem + 0.15vw, 1.05rem); /* 変動幅: 360px ~ 1400px */
   --REM--cq: clamp(0.95rem, 0.9rem + 0.22vw, 1.05rem); /* 変動幅: 360px ~ 1440px */
 
@@ -35,25 +42,22 @@
   --fz--xs: #{fz-calc(-2)}em;
   --fz--2xs: #{fz-calc(-3)}em;
 
-  /* ------------------------------------------------------------
-   font-family
-    system-ui は　游ゴシックが適用されてしまう。
-    -apple-system: safari, firefox用
-    'BlinkMacSystemFont': Chrome用
-    'Hiragino Sans': macOS用
-    'Segoe UI Emoji': Windows用
-  ------------------------------------------------------------ */
+  /** 
+   * font-family
+   *   Memo: system-ui は　游ゴシックが適用されてしまう。
+   */
+  // Base font: -apple-system: safari&firefox / 'BlinkMacSystemFont': Chrome / 'Hiragino Sans': Mac / 'Segoe UI Emoji': Windows用
   --ff--base: -apple-system, 'BlinkMacSystemFont', 'Hiragino Sans', sans-serif, 'Segoe UI Emoji';
 
-  /* Mono font - Mac: SFMono Menlo Monaco / Win: Consolas / Linux 'Liberation Mono' */
+  // Mono font: SFMono, Menlo: Mac  / Consolas: Win / Liberation Mono: Linux
   --ff--mono: ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace;
 
-  /* Accent font */
+  // Accent font: This is just one example.
   --ff--accent: 'Garamond', 'Baskerville', 'Times New Roman', serif;
 
-  /* ------------------------------------------------------------
-    font-weight
-  ------------------------------------------------------------ */
+  /** 
+   * font-weight
+   */
   --fw--thin: 100;
   --fw--light: 300;
   --fw--normal: 400;
@@ -61,34 +65,33 @@
   --fw--bold: 700;
   --fw--black: 900;
 
-  /* ------------------------------------------------------------
-    letter-spacing
-  ------------------------------------------------------------ */
+  /** 
+   * letter-spacing
+   */
   --lts--base: normal;
   --lts--s: -0.05em;
   --lts--l: 0.05em;
   // --lts--xl: 0.125em;
 
-  /* ------------------------------------------------------------
-    Spacing
-    フィボナッチ数列 
-  ------------------------------------------------------------ */
+  /** 
+   * ハーフレディング: unit の倍数で構成する
+   */
+  --hl-unit: calc(var(--REM) * 0.125); /* 計算単位 ≒ 2px */
 
-  /* ハーフレディング単位 */
-  --hl-unit: calc(var(--REM) * 0.125); /* ≒ 2px */
-
-  /* ハーフレディング: unit の倍数で構成する */
   --hl--xs: var(--hl-unit);
   --hl--s: calc(var(--hl-unit) * 2);
   --hl--base: calc(var(--hl-unit) * 3);
   --hl--l: calc(var(--hl-unit) * 4);
   // --hl--xl: calc(var(--hl-unit) * 5);
 
-  /* スペーシング単位でのフィボナッチ数列をベースにする */
-  --s-unit: calc(var(--REM) * 0.5); /* ≒ 8px */
-  --s5: calc(0.5 * var(--s-unit)); /* 例外 */
+  /** 
+   * スペーシング: フィボナッチ数列をベースにする
+   */
+  --s-unit: calc(var(--REM) * 0.5); // ≒ 8px
+
+  --s5: calc(0.5 * var(--s-unit)); // 例外
   --s10: var(--s-unit);
-  --s15: calc(1.5 * var(--s-unit)); /* 例外 */
+  --s15: calc(1.5 * var(--s-unit)); // 例外
   --s20: calc(2 * var(--s-unit));
   --s30: calc(3 * var(--s-unit));
   --s40: calc(5 * var(--s-unit));
