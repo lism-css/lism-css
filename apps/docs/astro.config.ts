@@ -18,6 +18,9 @@ const lastmodMap = isBuild ? loadLastmodMap() : new Map<string, string>();
 // https://astro.build/config
 export default defineConfig({
   site: 'https://lism-css.com/',
+  image: {
+    domains: ['cdn.lism-css.com'],
+  },
   // 開発サーバーのポート番号
   server: {
     port: 4000,
