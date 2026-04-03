@@ -1,38 +1,21 @@
 ---
+import type { Polymorphic } from 'astro/types';
 import type { AstroLismBaseProps } from '../types';
 import type { MediaAllowedTag } from 'lism-css/lib/types/allowedTags';
 import getLismProps from 'lism-css/lib/getLismProps';
-import { Image } from 'astro:assets';
+import { Image, Picture } from 'astro:assets';
 
-// Astro の型チェッカーは汎用 Props<Tag> を解決できないため Polymorphic が使えず、
-// AstroImage が非 HTMLTag 文字列のため Polymorphic<{ as: MediaAllowedTag }> も使えない。
-// そのため全タグの属性をインターセクションで列挙する方式を採用している。
-// ts(6196) は Astro が Props を暗黙的に参照する既知の誤検知であり、ビルド・型チェックに影響なし。
-//
-// NOTE: AstroImage を廃止した際は、以下のシンプルな実装に置き換えられる:
-// ---
-// import type { Polymorphic } from 'astro/types';
-// import type { AstroLismBaseProps } from '../types';
-// import type { MediaAllowedTag } from 'lism-css/lib/types/allowedTags';
-// import Lism from '../Lism/Lism.astro';
-//
-// type Props<Tag extends MediaAllowedTag = 'img'> = Polymorphic<{ as: Tag }> & AstroLismBaseProps;
-//
-// const { as: Tag = 'img', ...props } = Astro.props;
-// ---
-// <Lism as={Tag} {...props}><slot /></Lism>
-type Props = AstroLismBaseProps &
-  astroHTML.JSX.ImgHTMLAttributes &
-  astroHTML.JSX.VideoHTMLAttributes &
-  astroHTML.JSX.IframeHTMLAttributes & {
-    as?: MediaAllowedTag | 'AstroImage';
-  };
+type Props<Tag extends MediaAllowedTag = 'img'> = Polymorphic<{ as: Tag }> & AstroLismBaseProps;
 
-const { as, exProps, ...props } = Astro.props;
+const { as: Tag = 'img', exProps, ...props } = Astro.props;
 
-let JSX: any = as || 'img';
-if (JSX === 'AstroImage') {
+// as="img"（デフォルト）→ Astro <Image />, as="picture" → Astro <Picture />
+// as="video" / "iframe" 等はそのまま HTML タグとして出力
+let JSX: any = Tag;
+if (Tag === 'img') {
   JSX = Image;
+} else if (Tag === 'picture') {
+  JSX = Picture;
 }
 ---
 
