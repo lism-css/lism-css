@@ -18,9 +18,7 @@ Nearly all components distributed by Lism are based on this `<Lism>` component.
 <Preview>
   <PreviewTitle>Output example of `<Lism>`</PreviewTitle>
   <PreviewArea p='20'>
-    <Lism p="20" fw="bold" c="blue" bgc="base-2" bdrs="20">
-      Lism content
-    </Lism>
+    <Lism p="20" fw="bold" c="blue" bgc="base-2" bdrs="20"><Fragment>Lism content</Fragment></Lism>
   </PreviewArea>
   <PreviewCode slot='tab' label='JSX'>
     ```jsx
@@ -311,7 +309,7 @@ Both produce the same HTML output: a pair of utility class and CSS variable (`-{
   </PreviewCode>
   <PreviewCode label='Output HTML' slot='tab'>
     ```jsx
-    <div class="-p:20 -p_sm -p_md" style="--p_sm:var(--s40);--p_md:5rem">
+    <div class="-p:20 -p_sm -p_md" style="--p_sm:var(--s30);--p_md:5rem">
       ...
     </div>
     ```
@@ -334,7 +332,7 @@ To skip intermediate breakpoints, write it as follows:
   </PreviewCode>
   <PreviewCode label='Output HTML' slot='tab'>
     ```jsx
-    <div class="-p_md" style="--p_md:var(--s30)">
+    <div class="-p_md" style="--p_md:var(--s40)">
       ...
     </div>
     ```

@@ -3,7 +3,7 @@ title: 'Design Tokens'
 description: 'A reference of all design tokens in Lism CSS, including colors, spacing, and shadows.'
 ---
 
-import { Box, Stack, Cluster, Columns, Frame, Center, Text, Inline } from 'lism-css/astro';
+import { Box, Stack, Cluster, Columns, Frame, Center, Inline, Text } from 'lism-css/astro';
 import { DummyText } from '@lism-css/ui/astro';
 import { FzDemos, SpacingDemos, BoxShadowDemos } from "@/content/token-previews.jsx";
 
@@ -155,11 +155,12 @@ The value of `--bxsh--{token}` is composed of the following variables.
   <PreviewTitle>Preview</PreviewTitle>
   <PreviewArea p={['30','40']} py='40'>
     <Columns cols={[3, 4, 5]} g={['30', '40']}>
-      <BoxShadowDemos shadows={['10', '20', '30', '40', '50']} />
+      <BoxShadowDemos shadows={['5', '10', '20', '30', '40', '50']} />
     </Columns>
   </PreviewArea>
   <PreviewCode slot='tab' label='HTML'>
     ```jsx
+    <div class="-bxsh:5">...</div>
     <div class="-bxsh:10">...</div>
     <div class="-bxsh:20">...</div>
     <div class="-bxsh:30">...</div>
@@ -219,4 +220,4 @@ Tokens for content sizing.
 |`xl`|`--sz--xl`|
 |`min`|`--sz--min`|
 
-Available for use with `max-sz`, [`.is--wrapper`](/docs/css-methodology//#is--wrapper), and similar utilities.
+Available for use with `max-sz`, [`.is--wrapper`](/docs/css-methodology/#is--wrapper), and similar utilities.

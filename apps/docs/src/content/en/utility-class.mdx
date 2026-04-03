@@ -2,7 +2,7 @@
 title: 'Utility Class'
 description: 'Learn about the utility classes in Lism CSS that apply bundled styles and decorations.'
 ---
-import { Lism, Flow, Grid, Stack, Center, Box, Media, Frame, Flex, Layer, Spacer, Icon, Divider, Text, Inline } from "lism-css/astro";
+import { Lism, Flow, Grid, Stack, Center, Box, Media, Frame, Flex, Layer, Spacer, Icon, Divider, Inline, Text } from "lism-css/astro";
 import { DummyText } from '@lism-css/ui/astro';
 import { Dog, Cat } from "@phosphor-icons/react";
 
@@ -69,26 +69,14 @@ Generates `--c`, `--bgc`, and `--bdc` from the `--keycolor` variable using `colo
   <PreviewTitle>Badge usage example and variable customization</PreviewTitle>
   <PreviewArea resize p='20'>
     <Lism layout="cluster" g="10">
-      <Lism as="span" className="u--cbox" keycolor="red" bd fz="s" lh="s" py="5" px="10" bdrs="99">
-        Badge
-      </Lism>
-      <Lism as="span" className="u--cbox" keycolor="green" bd fz="s" lh="s" py="5" px="10" bdrs="99">
-        Badge
-      </Lism>
-      <Lism as="span" className="u--cbox" keycolor="blue" bd fz="s" lh="s" py="5" px="10" bdrs="99">
-        Badge
-      </Lism>
+      <Lism as="span" className="u--cbox" keycolor="red" bd fz="s" lh="s" py="5" px="10" bdrs="99"><Fragment>Badge</Fragment></Lism>
+      <Lism as="span" className="u--cbox" keycolor="green" bd fz="s" lh="s" py="5" px="10" bdrs="99"><Fragment>Badge</Fragment></Lism>
+      <Lism as="span" className="u--cbox" keycolor="blue" bd fz="s" lh="s" py="5" px="10" bdrs="99"><Fragment>Badge</Fragment></Lism>
     </Lism>
     <Lism layout="cluster" g="10" style={{ '--cbox-cPct': '76%', '--cbox-bdPct': '20%' }}>
-      <Lism as="span" className="u--cbox" keycolor="red" bd fz="s" lh="s" py="5" px="10" bdrs="99">
-        Badge
-      </Lism>
-      <Lism as="span" className="u--cbox" keycolor="green" bd fz="s" lh="s" py="5" px="10" bdrs="99">
-        Badge
-      </Lism>
-      <Lism as="span" className="u--cbox" keycolor="blue" bd fz="s" lh="s" py="5" px="10" bdrs="99">
-        Badge
-      </Lism>
+      <Lism as="span" className="u--cbox" keycolor="red" bd fz="s" lh="s" py="5" px="10" bdrs="99"><Fragment>Badge</Fragment></Lism>
+      <Lism as="span" className="u--cbox" keycolor="green" bd fz="s" lh="s" py="5" px="10" bdrs="99"><Fragment>Badge</Fragment></Lism>
+      <Lism as="span" className="u--cbox" keycolor="blue" bd fz="s" lh="s" py="5" px="10" bdrs="99"><Fragment>Badge</Fragment></Lism>
     </Lism>
   </PreviewArea>
   <PreviewCode slot="tab" label="HTML">
@@ -147,57 +135,39 @@ Generates `--c`, `--bgc`, and `--bdc` from the `--keycolor` variable using `colo
   </Lism>
   <hr />
   <Lism className="u--cbox" keycolor="red" bd-x-s bdc="keycolor" bdw="4px" bxsh="10" setShadow p="20">
-    <Inline c="keycolor" fw="bold">
-      Title Text
-    </Inline>
+    <Inline c="keycolor" fw="bold"><Fragment>Title Text</Fragment></Inline>
     <DummyText length="codes" />
   </Lism>
   <Lism className="u--cbox" keycolor="orange" bd-x-s bdc="keycolor" bdw="4px" bxsh="10" setShadow p="20">
-    <Inline c="keycolor" fw="bold">
-      Title Text
-    </Inline>
+    <Inline c="keycolor" fw="bold"><Fragment>Title Text</Fragment></Inline>
     <DummyText length="codes" />
   </Lism>
   <Lism className="u--cbox" keycolor="yellow" bd-x-s bdc="keycolor" bdw="4px" bxsh="10" setShadow p="20">
-    <Inline c="keycolor" fw="bold">
-      Title Text
-    </Inline>
+    <Inline c="keycolor" fw="bold"><Fragment>Title Text</Fragment></Inline>
     <DummyText length="codes" />
   </Lism>
   <Lism className="u--cbox" keycolor="purple" bd-x-s bdc="keycolor" bdw="4px" bxsh="10" setShadow p="20">
-    <Inline c="keycolor" fw="bold">
-      Title Text
-    </Inline>
+    <Inline c="keycolor" fw="bold"><Fragment>Title Text</Fragment></Inline>
     <DummyText length="codes" />
   </Lism>
   <Lism className="u--cbox" keycolor="green" bd-x-s bdc="keycolor" bdw="4px" bxsh="10" setShadow p="20">
-    <Inline c="keycolor" fw="bold">
-      Title Text
-    </Inline>
+    <Inline c="keycolor" fw="bold"><Fragment>Title Text</Fragment></Inline>
     <DummyText length="codes" />
   </Lism>
   <Lism className="u--cbox" keycolor="blue" bd-x-s bdc="keycolor" bdw="4px" bxsh="10" setShadow p="20">
-    <Inline c="keycolor" fw="bold">
-      Title Text
-    </Inline>
+    <Inline c="keycolor" fw="bold"><Fragment>Title Text</Fragment></Inline>
     <DummyText length="codes" />
   </Lism>
   <Lism className="u--cbox" keycolor="purple" bd-x-s bdc="keycolor" bdw="4px" bxsh="10" setShadow p="20">
-    <Inline c="keycolor" fw="bold">
-      Title Text
-    </Inline>
+    <Inline c="keycolor" fw="bold"><Fragment>Title Text</Fragment></Inline>
     <DummyText length="codes" />
   </Lism>
   <Lism className="u--cbox" keycolor="pink" bd-x-s bdc="keycolor" bdw="4px" bxsh="10" setShadow p="20">
-    <Inline c="keycolor" fw="bold">
-      Title Text
-    </Inline>
+    <Inline c="keycolor" fw="bold"><Fragment>Title Text</Fragment></Inline>
     <DummyText length="codes" />
   </Lism>
   <Lism className="u--cbox" keycolor="gray" bd-x-s bdc="keycolor" bdw="4px" bxsh="10" setShadow p="20">
-    <Inline c="keycolor" fw="bold">
-      Title Text
-    </Inline>
+    <Inline c="keycolor" fw="bold"><Fragment>Title Text</Fragment></Inline>
     <DummyText length="codes" />
   </Lism>
 </PreviewArea>
@@ -260,9 +230,9 @@ Margin adjustment is disabled for `img`, `figure`, and `table` elements inside `
     ```jsx
     <Stack className="u--trimChildren" bd g="30" p="30" bdrs="10">
       <Media ar="og" src="https://cdn.lism-css.com/img/a-1.jpg" />
-      <p>ロレム・イプサムの座り雨。目まぐるしい文章の流れの中で、それは静かに歩く仮の言葉です。</p>
+      <p>Lorem ipsum dolor sit amet. Consectetur adipiscing elit, sed do eiusmod tempor Incididunt ut.</p>
       <p>
-        ロレム・イプサムの座り雨。目まぐるしい文章の流れの中で、それは静かに歩く仮の言葉です。Elitも穏やかに続いていきますが、積み重ねられてきた「LiberroyとFoogの取り組み」は、余白のようなものです。
+        Lorem ipsum dolor sit amet. Consectetur adipiscing elit, sed do eiusmod tempor Incididunt ut. Labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut.
       </p>
     </Stack>
     ```
@@ -277,7 +247,7 @@ A class for extending the clickable area to the parent element.
 Primarily used together with `is--linkBox` to expand an inner link to cover the entire box.
 
 <Reference>
-See [`<LinkBox>`](/modules/state/linkbox) for usage examples.
+See [`<LinkBox>`](/modules/is--linkBox) for usage examples.
 </Reference>
 
 
@@ -435,18 +405,10 @@ This utility class also makes it easy to display borders between items in a flex
   <PreviewTitle>Example</PreviewTitle>
   <PreviewArea resize p='20'>
     <Flex fxd={['column', 'row']} className="u--collapseGrid">
-      <Box fx="1" p="15">
-        Box
-      </Box>
-      <Box fx="1" p="15">
-        Box
-      </Box>
-      <Box fx="1" p="15">
-        Box
-      </Box>
-      <Box fx="1" p="15">
-        Box
-      </Box>
+      <Box fx="1" p="15"><Fragment>Box</Fragment></Box>
+      <Box fx="1" p="15"><Fragment>Box</Fragment></Box>
+      <Box fx="1" p="15"><Fragment>Box</Fragment></Box>
+      <Box fx="1" p="15"><Fragment>Box</Fragment></Box>
     </Flex>
   </PreviewArea>
   <PreviewCode>
@@ -475,12 +437,8 @@ You can also achieve a table-like layout using Grid.
   <PreviewTitle>Table-like layout using `u--collapseGrid`</PreviewTitle>
   <PreviewArea resize p='15'>
     <Grid gtc={['2fr 3fr', '1fr 2fr']} className="u--collapseGrid">
-      <Box p="15" bgc="base-2">
-        A
-      </Box>
-      <Box p="15" bgc="base-2">
-        B
-      </Box>
+      <Box p="15" bgc="base-2"><Fragment>A</Fragment></Box>
+      <Box p="15" bgc="base-2"><Fragment>B</Fragment></Box>
       <Box p="15">Lorem ipsum</Box>
       <Box p="15">
         <DummyText />

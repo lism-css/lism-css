@@ -2,7 +2,7 @@
 title: 'Prop Class'
 description: 'A complete list of Prop Classes that map to CSS properties, with usage examples.'
 ---
-import { Lism, Flow, Container, Frame, Layer, Media, Box, Flex, Grid, Center, Columns, Spacer, Text, Group } from "lism-css/astro";
+import { Lism, Flow, Container, Frame, Layer, Media, Box, Flex, Grid, Center, Columns, Spacer, Group, Text } from "lism-css/astro";
 import { DummyText } from '@lism-css/ui/astro';
 
 
@@ -189,9 +189,7 @@ export const LinkSPACE = () => <a href="/docs/tokens/#space"><code>SPACE</code><
   <PreviewArea p='20' resize>
     <Lism p={['15', '20']} bd>
       <Text>Example text</Text>
-      <Text my-s="15" mx="20">
-        Example text
-      </Text>
+      <Text my-s="15" mx="20"><Fragment>Example text</Fragment></Text>
     </Lism>
   </PreviewArea>
   <PreviewCode slot="tab" label="HTML">
@@ -431,7 +429,7 @@ Here are some examples of positioning elements with `position: absolute`.
 ### Shadow
 |Prop|Shorthand|To Class|BP|
 |---|---|---|---|
-|`box-shadow`|`bxsh`|[`SHADOW`](/docs/tokens/#shadow)|-|
+|`box-shadow`|`bxsh`|[`SHADOW`](/docs/tokens/#shadow)|○|
 
 
 ### Radius
