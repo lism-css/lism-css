@@ -8,7 +8,7 @@ import { DummyText } from '@lism-css/ui/astro';
 
 
 `<Media>`は、画像や動画などのメディア要素を出力するLismコンポーネントです。  
-デフォルトで`<img>`タグが出力されます。
+Astro版ではデフォルトで Astro の`<Image>`が使用されます。React版ではデフォルトで`<img>`タグが出力されます。
 
 ## Import
 
@@ -91,19 +91,27 @@ import Image from 'next/image';
 <Media as={Image} src="/img.jpg" alt="Dummy Image" width="960" height="640" />
 ```
 
-#### Astro の`<Image>`を使う方法
+#### Astro版での`<Image>` / `<Picture>`の使い方
 
-Astroの`<Image>`は、`as`に渡すことができません。  
-Astro(TypeScript?)のチェックに引っかかり、「Image missing required "alt" property.」エラーが出てしまいます。
+`lism-css/astro`の`<Media>`では、`as`の値に応じて Astro のコンポーネントに自動マッピングされます。
 
+| `as` | 出力 |
+|------|------|
+| 省略 / `"img"` | Astro `<Image />` |
+| `"picture"` | Astro `<Picture />` |
+| `"video"` / `"iframe"` 等 | そのままHTMLタグ |
 
-そのため、`lism-css/astro`から読み込んだ`<Media>`では、以下のように`as`に`'AstroImage'`という文字列を指定することで内部で`<Image>`が呼び出されるようにしています。
-
-
-<PreviewTitle>Astroの`<Image>`を使用する例</PreviewTitle>
-```jsx "as='AstroImage'"
+<PreviewTitle>Astroの`<Image>`を使用する例（デフォルト）</PreviewTitle>
+```jsx
 import { Media } from 'lism-css/astro';
 
-<Media as="AstroImage" src="/img.jpg" alt="Dummy Image" width="960" height="640" />
+<Media src="/img.jpg" alt="Dummy Image" width="960" height="640" />
+```
+
+<PreviewTitle>Astroの`<Picture>`を使用する例</PreviewTitle>
+```jsx "as='picture'"
+import { Media } from 'lism-css/astro';
+
+<Media as="picture" src="/img.jpg" alt="Dummy Image" width="960" height="640" />
 ```
 
