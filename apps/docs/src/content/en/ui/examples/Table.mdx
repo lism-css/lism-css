@@ -184,7 +184,7 @@ The `[data-table-sticky]` attribute accepts the following values:
   <PreviewTitle>Example of fixing thead and the first column on scroll</PreviewTitle>
   <PreviewArea p='20' _dir='rtl'>
     <Frame ov="auto" max-h="20rem">
-      <Table data-table-sticky="col head" thBgc="base-2" cellMinW="10rem">
+      <Table data-table-sticky="col head" thBgc="base-2" cellMinSz="10rem">
         <thead>
           <tr>
             <th>Header 1</th>
@@ -290,7 +290,7 @@ The `[data-table-sticky]` attribute accepts the following values:
   <PreviewCode slot='tab' label='JSX'>
     ```jsx "fix1st,fixHead"
     <Frame ov="auto" max-h="20rem">
-      <Table data-table-sticky="col head" thBgc="base-2" cellMinW="10rem">
+      <Table data-table-sticky="col head" thBgc="base-2" cellMinSz="10rem">
         <thead>...</thead>
         <tbody>...</tbody>
         <tfoot>...</tfoot>
@@ -301,7 +301,7 @@ The `[data-table-sticky]` attribute accepts the following values:
   <PreviewCode slot='tab' label='HTML'>
     ```html " c--table--fix1st" "c--table--fixHead"
     <div class="l--frame -ov:auto" style="max-height: 20rem">
-      <table class="c--table" data-table-sticky="col head" style="--th-bgc: var(--base-2); --cell_minW: 10rem">
+      <table class="c--table" data-table-sticky="col head" style="--th-bgc: var(--base-2); --cell-min-sz: 10rem">
         <thead>
           ...
         </thead>

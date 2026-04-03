@@ -29,6 +29,10 @@
     border-style: var(--bds);
   }
 
+  .c--table :is(td, th) {
+    min-inline-size: var(--cell-min-sz, auto);
+  }
+
   .c--table > thead {
     border-block-end: var(--_thead-bd-y-e);
   }
