@@ -5,10 +5,14 @@ order: 3
 ---
 import { Lism, Media, Frame } from "lism-css/astro";
 import { DummyText } from '@lism-css/ui/astro';
+import { Image } from 'astro:assets';
+
+{/* For Astro's <Image>: local images must be passed as imported references, not path strings */}
+import myImage from '@/img/img-1.jpg';
 
 
 `<Media>` is a Lism component for outputting media elements such as images and videos.  
-It outputs an `<img>` tag by default.
+In the Astro version, Astro's `<Image>` is used by default. In the React version, it outputs an `<img>` tag by default.
 
 ## Import
 
@@ -79,7 +83,7 @@ It outputs an `<img>` tag by default.
 
 
 
-#### Using Next.js `<Image>`
+### Using Next.js `<Image>`
 
 Next.js `Image` and similar components can be passed via the `as` property.
 
@@ -91,17 +95,62 @@ import Image from 'next/image';
 <Media as={Image} src="/img.jpg" alt="Dummy Image" width="960" height="640" />
 ```
 
-#### Using Astro `<Image>`
+### Using Astro `<Image>` / `<Picture>`
 
-Astro's `<Image>` cannot be passed directly via `as`.
-An Astro (TypeScript?) check throws an "Image missing required 'alt' property." error.
+In `<Media>` imported from `lism-css/astro`, the component is automatically mapped based on the `as` value.
 
-Therefore, in `<Media>` imported from `lism-css/astro`, passing the string `'AstroImage'` to `as` will internally invoke `<Image>`.
+| `as` | Output |
+|------|--------|
+| omitted / `"img"` | Astro `<Image />` |
+| `"picture"` | Astro `<Picture />` |
+| `"video"` / `"iframe"` etc. | HTML tag as-is |
+
+Since `<Media>` uses Astro's `<Image />` or `<Picture />` internally, all their props are accepted.
+See the official Astro docs for the full reference:
+[`<Image />`](https://docs.astro.build/en/reference/modules/astro-assets/#image-)&emsp;/&emsp;[`<Picture />`](https://docs.astro.build/en/reference/modules/astro-assets/#picture-)
 
 
-<PreviewTitle>Example of using Astro's `<Image>`</PreviewTitle>
-```jsx "as='AstroImage'"
-import { Media } from 'lism-css/astro';
+<Preview>
+  <PreviewTitle>Using `quality` and `format` (Astro `<Image>`)</PreviewTitle>
+  <PreviewArea>
+    <Media src={myImage} inferSize alt="Dummy Image" quality="high" format="webp" />
+  </PreviewArea>
+  <PreviewCode slot='tab' label='.astro'>
+    ```jsx "quality='high'" "format='webp'"
+    import myImage from '@/img/img-1.jpg';
 
-<Media as="AstroImage" src="/img.jpg" alt="Dummy Image" width="960" height="640" />
-```
+    <Media src={myImage} inferSize alt="Dummy Image" quality="high" format="webp" />
+    ```
+  </PreviewCode>
+</Preview>
+
+### Remote image example
+
+<Preview>
+  <PreviewTitle>Remote image example</PreviewTitle>
+  <PreviewArea>
+    <Media src="https://cdn.lism-css.com/img/a-1.jpg" inferSize alt="Dummy Image" quality="high" format="webp" />
+  </PreviewArea>
+  <PreviewCode slot='tab' label='.astro'>
+    ```jsx "inferSize"
+    <Media src="https://cdn.lism-css.com/img/a-1.jpg" inferSize alt="Dummy Image" quality="high" format="webp" />
+    ```
+  </PreviewCode>
+</Preview>
+
+<Preview>
+  <PreviewTitle>Using Astro `<Picture>` with `formats`</PreviewTitle>
+  <PreviewArea>
+    <Media as="picture" src="https://cdn.lism-css.com/img/a-2.jpg" width="960" height="640" alt="Dummy Image" formats={['avif', 'webp']} />
+  </PreviewArea>
+  <PreviewCode slot='tab' label='.astro'>
+    ```jsx "as=\"picture\""  "formats={['avif', 'webp']}"
+    <Media as="picture" src="https://cdn.lism-css.com/img/a-2.jpg" width="960" height="640" alt="Dummy Image" formats={['avif', 'webp']} />
+    ```
+  </PreviewCode>
+</Preview>
+
+
+:::info
+When using external images with Astro's `<Image>` or `<Picture>` and properties like `inferSize`, you need to configure `image.domains` (or `image.remotePatterns`) in `astro.config.ts`.
+:::

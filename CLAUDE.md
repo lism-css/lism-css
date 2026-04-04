@@ -49,3 +49,14 @@ pnpm build  # 全ワークスペースを Turbo でビルド
 pnpm lint
 ```
 
+### typescript チェック
+
+```bash
+pnpm typecheck
+``` 
+
+### テスト
+
+```bash
+pnpm test
+```

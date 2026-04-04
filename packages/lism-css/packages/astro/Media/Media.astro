@@ -1,16 +1,21 @@
 ---
-import type { HTMLTag, Polymorphic } from 'astro/types';
 import type { AstroLismBaseProps } from '../types';
+import type { MediaAllowedTag } from 'lism-css/lib/types/allowedTags';
+import type { MediaPolymorphic } from '../types/MediaPolymorphic';
 import getLismProps from 'lism-css/lib/getLismProps';
-import { Image } from 'astro:assets';
+import { Image, Picture } from 'astro:assets';
 
-type Props<Tag extends HTMLTag = 'img'> = Polymorphic<{ as: Tag }> & AstroLismBaseProps;
+type Props<Tag extends MediaAllowedTag = 'img'> = MediaPolymorphic<{ as: Tag }> & AstroLismBaseProps;
 
-const { as, exProps, ...props } = Astro.props;
+const { as: Tag = 'img', exProps, ...props } = Astro.props;
 
-let JSX: any = as || 'img';
-if (JSX === 'AstroImage') {
+// as="img"（デフォルト）→ Astro <Image />, as="picture" → Astro <Picture />
+// as="video" / "iframe" 等はそのまま HTML タグとして出力
+let JSX: any = Tag;
+if (Tag === 'img') {
   JSX = Image;
+} else if (Tag === 'picture') {
+  JSX = Picture;
 }
 ---
 
