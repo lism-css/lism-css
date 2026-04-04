@@ -133,18 +133,19 @@ Lism では、フォントサイズのスケーリングには数学的に美し
 
 デフォルトでは、**分子8の調和数列**ベースに設定しています。
 
-```scss
+```css
 :root {
-  $fzmol: 8;
-  --fz--4xl: calc(1em * $fzmol / ($fzmol - 5));
-  --fz--3xl: calc(1em * $fzmol / ($fzmol - 4));
-  --fz--2xl: calc(1em * $fzmol / ($fzmol - 3));
-  --fz--xl: calc(1em * $fzmol / ($fzmol - 2));
-  --fz--l: calc(1em * $fzmol / ($fzmol - 1));
+  --fz-mol: 8;
+  --fz--5xl: calc(1em * var(--fz-mol) / (var(--fz-mol) - 6));
+  --fz--4xl: calc(1em * var(--fz-mol) / (var(--fz-mol) - 5));
+  --fz--3xl: calc(1em * var(--fz-mol) / (var(--fz-mol) - 4));
+  --fz--2xl: calc(1em * var(--fz-mol) / (var(--fz-mol) - 3));
+  --fz--xl: calc(1em * var(--fz-mol) / (var(--fz-mol) - 2));
+  --fz--l: calc(1em * var(--fz-mol) / (var(--fz-mol) - 1));
   --fz--m: 1em;
-  --fz--s: calc(1em * $fzmol / ($fzmol + 1));
-  --fz--xs: calc(1em * $fzmol / ($fzmol + 2));
-  --fz--2xs: calc(1em * $fzmol / ($fzmol + 3));
+  --fz--s: calc(1em * var(--fz-mol) / (var(--fz-mol) + 1));
+  --fz--xs: calc(1em * var(--fz-mol) / (var(--fz-mol) + 2));
+  --fz--2xs: calc(1em * var(--fz-mol) / (var(--fz-mol) + 3));
 }
 ```
 
