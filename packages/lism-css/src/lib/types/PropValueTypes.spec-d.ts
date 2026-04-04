@@ -194,9 +194,9 @@ describe('NonResponsivePropValueTypes', () => {
 
   it('fw プロパティの値の型を検証', () => {
     // fw は bp未設定なので NonResponsivePropValueTypes に含まれる
-    // fw のtoken値は TOKENS.fw = ['thin', 'light', 'normal', 'medium', 'bold', 'black']
+    // fw のtoken値は TOKENS.fw = ['thin', 'light', 'normal', 'medium', 'semibold', 'bold', 'black']
     expectTypeOf<NonResponsivePropValueTypes['fw']>().toEqualTypeOf<
-      'thin' | 'light' | 'normal' | 'medium' | 'bold' | 'black' | (string & {}) | number | boolean | null | undefined
+      'thin' | 'light' | 'normal' | 'medium' | 'semibold' | 'bold' | 'black' | (string & {}) | number | boolean | null | undefined
     >();
   });
 
