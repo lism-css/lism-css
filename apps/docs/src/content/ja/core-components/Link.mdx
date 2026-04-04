@@ -3,8 +3,7 @@ title: 'Link'
 description: '<a>タグを出力するLismコンポーネントです。'
 order: 6
 ---
-import { Link, Text, Lism } from "lism-css/astro";
-import { DummyText } from '@lism-css/ui/astro';
+import { Link } from "lism-css/astro";
 
 `<Link>`は、`<a>`タグを出力するLismコンポーネントです。
 
@@ -39,9 +38,7 @@ import { DummyText } from '@lism-css/ui/astro';
 <Preview>
   <PreviewTitle>Lism Propsの適用例</PreviewTitle>
   <PreviewArea p='20'>
-    <Link href="###" c="green" fw="bold">
-      スタイル付きリンク
-    </Link>
+    <Link href="###" c="green" fw="bold"><Fragment>スタイル付きリンク</Fragment></Link>
   </PreviewArea>
   <PreviewCode slot='tab' label='JSX'>
     ```jsx
