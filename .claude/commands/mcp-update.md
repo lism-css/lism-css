@@ -26,7 +26,6 @@
 - **ソース**: `packages/lism-css/src/scss/token/` 配下の SCSS ファイル
 - **補足 docs**: `apps/docs/src/content/ja/tokens.mdx`
 - **更新内容**: 各カテゴリ（color, spacing, fontSize, lineHeight, letterSpacing, fontFamily, radius, shadow, zIndex）のトークン一覧
-- **fontSize の value 形式**: SCSS 内で計算済みの em 値ではなく、`calc(var(--REM) * 8 / n)` の形式で記述すること（設計意図が伝わる表記を優先）
 
 ### グループ B: `props-system.json` + `components.json`
 
