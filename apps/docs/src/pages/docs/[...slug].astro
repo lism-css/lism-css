@@ -33,7 +33,15 @@ const toc = generateToc(headings);
 const ogImage = `/docs/og/${entry.id}.png`;
 ---
 
-<BaseLayout title={entry.data.title} description={entry.data.description} ogImage={ogImage} toc={toc} lang={lang} date={entry.data.date}>
+<BaseLayout
+  title={entry.data.title}
+  description={entry.data.description}
+  ogImage={ogImage}
+  toc={toc}
+  lang={lang}
+  schemaType="TechArticle"
+  date={entry.data.date}
+>
   <Lism as="article" class="z--article set--cqUnit" data-pagefind-body>
     {/* アイキャッチ画像 */}
     {

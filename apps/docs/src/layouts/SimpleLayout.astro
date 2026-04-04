@@ -16,6 +16,7 @@ import { siteConfig } from '@/config/site';
 
 // 多言語対応
 import { getRootLang, type LangCode } from '@/lib/i18n';
+import type { SchemaType } from '@/lib/jsonLd';
 
 // コンポーネント
 import Head from '../components/Head.astro';
@@ -29,15 +30,16 @@ interface Props {
   description?: string;
   ogImage?: string;
   lang?: LangCode; // 言語コード（省略時はroot言語）
+  schemaType?: SchemaType; // 指定時のみ JSON-LD を出力
   excludeFromSearch?: boolean; // 検索対象から除外するかどうか
 }
 
-const { title = siteConfig.name, description, ogImage, lang = getRootLang() } = Astro.props;
+const { title = siteConfig.name, description, ogImage, lang = getRootLang(), schemaType } = Astro.props;
 ---
 
 <html lang={lang}>
   <Head title={title || siteConfig.name} description={description} ogImage={ogImage} lang={lang}>
-    <JsonLd schemaType="SoftwareSourceCode" title={title || siteConfig.name} description={description} lang={lang} />
+    {schemaType && <JsonLd schemaType={schemaType} title={title || siteConfig.name} description={description} lang={lang} />}
   </Head>
   <body data-pagefind-ignore>
     <Lism layout="stack" class="is--container" min-h="100svh">
