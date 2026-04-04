@@ -1,28 +1,35 @@
 # @lism-css/mcp
 
-[Lism CSS](https://lism-css.com) の [MCP (Model Context Protocol)](https://modelcontextprotocol.io/) サーバーです。
-AI ツール（Claude Code, Cursor 等）が Lism CSS の最新ドキュメント・API を正確に参照できるようにします。
+[English](./README.md) | [日本語](./README.ja.md)
 
-## できること
+An [MCP (Model Context Protocol)](https://modelcontextprotocol.io/) server for [Lism CSS](https://lism-css.com).
+Enables AI tools (Claude Code, Cursor, etc.) to accurately reference the latest Lism CSS documentation and API.
 
-| ツール | 説明 |
-|--------|------|
-| `get_overview` | フレームワークの全体像（アーキテクチャ、CSS Layers、パッケージ構成、インストール方法） |
-| `get_tokens` | デザイントークン（色、余白、フォントサイズ、影、角丸など）の一覧・カテゴリ絞り込み |
-| `get_props_system` | Props システム対応表（React props → CSS クラス/スタイルの変換ルール）。Prop Class 記法（`-g:5` 等）での逆引きにも対応 |
-| `get_component` | コンポーネント詳細（props、使い方、サブコンポーネント構成） |
-| `search_docs` | ドキュメント全文検索（キーワードによるスコアリング付き）。Prop Class 記法（`-g:5`）や CSS プロパティ名（`font-size`）も自動展開して検索 |
+## Available Tools
 
-## 聞けること（例）
+| Tool | Description |
+|------|-------------|
+| `get_overview` | Framework overview (architecture, design philosophy, packages, breakpoints, installation guide, CSS Layers) |
+| `get_tokens` | List and filter design tokens (colors, spacing, font sizes, shadows, radii, etc.) |
+| `get_props_system` | Props system reference — how React/Astro props map to CSS classes and styles. Supports reverse lookup by CSS property name (e.g. `padding` → `p`) and Prop Class notation (e.g. `-g:5`) |
+| `get_component` | Component details (props, usage examples, sub-component structure). Optionally filter by package (`lism-css` or `@lism-css/ui`) |
+| `search_docs` | Full-text documentation search with relevance scoring. Supports category filtering and CSS property name expansion |
+| `convert_css` | Convert CSS code to lism-css props and component suggestions. Useful for migrating existing CSS to Lism CSS |
 
-- 「Lism CSS の基本的なアーキテクチャを教えて」→ `get_overview`
-- 「spacing トークンの一覧を見せて」→ `get_tokens(category: "spacing")`
-- 「`p` や `fz` などの省略 props は何に対応している？」→ `get_props_system(prop: "p")`
-- 「`-g:5` ってどういうクラス？」→ `get_props_system(prop: "-g:5")`
-- 「Accordion コンポーネントの使い方は？」→ `get_component(name: "Accordion")`
-- 「レスポンシブ対応の方法を調べて」→ `search_docs(query: "レスポンシブ")`
+## Example Queries
 
-## セットアップ
+- "What is the basic architecture of Lism CSS?" → `get_overview`
+- "Show me the spacing tokens" → `get_tokens(category: "spacing")`
+- "What do shorthand props like `p` or `fz` map to?" → `get_props_system(prop: "p")`
+- "What does the class `-g:5` mean?" → `get_props_system(prop: "-g:5")`
+- "What CSS property does `fz` correspond to?" → `get_props_system(prop: "font-size")`
+- "How do I use the Accordion component?" → `get_component(name: "Accordion")`
+- "Show me only UI components" → `get_component(name: "Accordion", package: "@lism-css/ui")`
+- "How does responsive design work?" → `search_docs(query: "responsive")`
+- "Search only guide docs" → `search_docs(query: "responsive", category: "guide")`
+- "Convert `display: flex; gap: 1rem;` to Lism" → `convert_css(css: "display: flex; gap: 1rem;")`
+
+## Setup
 
 ### Claude Code
 
