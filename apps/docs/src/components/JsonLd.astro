@@ -1,0 +1,33 @@
+---
+/**
+ * JSON-LD 構造化データをレンダリングするコンポーネント
+ * - Head.astro の slot として使用
+ */
+
+import { generateJsonLd, type SchemaType } from '@/lib/jsonLd';
+import type { LangCode } from '@/lib/i18n';
+
+interface Props {
+  schemaType: SchemaType;
+  title: string;
+  description?: string;
+  lang: LangCode;
+  date?: Date;
+}
+
+const { schemaType, title, description, lang, date } = Astro.props;
+
+// canonical URL: Head.astro と同じロジック
+const isDev = import.meta.env.DEV;
+const canonicalUrl = isDev ? Astro.url.toString() : Astro.site ? new URL(Astro.url.pathname, Astro.site).toString() : Astro.url.toString();
+
+const jsonLd = generateJsonLd(schemaType, {
+  url: canonicalUrl,
+  title,
+  description,
+  lang,
+  datePublished: date?.toISOString().split('T')[0],
+});
+---
+
+<script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
