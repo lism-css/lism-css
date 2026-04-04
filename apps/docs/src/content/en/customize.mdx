@@ -33,7 +33,6 @@ The variables defined in `lism-css/scss/_setting.scss` can be overridden.
 - `$common_support_bp`: Breakpoints commonly supported across major Prop Classes
 - `$is_container_query`: Whether to use container queries
 - `$default_important`: Whether to add `!important` to Prop Classes by default (`0` | `1`)
-- `$fzmol`: The numerator used in font-size calculations. (Only values of `7` or greater are supported.)
 - `$props`: Output configuration for Prop Classes
 
 These can be overridden using `@use` with `with`.
@@ -51,7 +50,6 @@ After defining your overrides, import `lism-css/scss/main.scss` to apply the cus
   $common_support_bp: 'sm|md|lg',
   $is_container_query: 1|0,
   $default_important: 0|1,
-  $fzmol: 7|8|9|10,
   $props: (
     ...,
   )
@@ -85,8 +83,6 @@ After defining your overrides, import `lism-css/scss/main.scss` to apply the cus
   // Generate utility classes up to lg size
   $is_container_query: 0,
   // Output using media queries
-  $fzmol: 7,
-  // Change font-size scaling
   $default_important: 1 // Add !important to Prop Classes by default
 );
 

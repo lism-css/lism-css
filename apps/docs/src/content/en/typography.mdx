@@ -99,7 +99,7 @@ Tokens for `font-size`.
 <Preview>
   <PreviewTitle>Preview</PreviewTitle>
   <PreviewArea p='0' flow='s'>
-    <FzDemos />
+    <FzDemos lang="en" />
   </PreviewArea>
   <PreviewCode>
     ```html
@@ -129,18 +129,23 @@ Reference: [Music, Mathematics, and Typography](https://standard.shiftbrain.com/
 
 By default, the scaling is based on the **harmonic series with numerator 8**.
 
-```scss
+:::note
+On this documentation site, `--fz-mol` is set to `7` for English pages.
+:::
+
+```css
 :root {
-  $fzmol: 8;
-  --fz--4xl: calc(1em * $fzmol / ($fzmol - 5));
-  --fz--3xl: calc(1em * $fzmol / ($fzmol - 4));
-  --fz--2xl: calc(1em * $fzmol / ($fzmol - 3));
-  --fz--xl: calc(1em * $fzmol / ($fzmol - 2));
-  --fz--l: calc(1em * $fzmol / ($fzmol - 1));
+  --fz-mol: 8;
+  --fz--5xl: calc(1em * var(--fz-mol) / (var(--fz-mol) - 6));
+  --fz--4xl: calc(1em * var(--fz-mol) / (var(--fz-mol) - 5));
+  --fz--3xl: calc(1em * var(--fz-mol) / (var(--fz-mol) - 4));
+  --fz--2xl: calc(1em * var(--fz-mol) / (var(--fz-mol) - 3));
+  --fz--xl: calc(1em * var(--fz-mol) / (var(--fz-mol) - 2));
+  --fz--l: calc(1em * var(--fz-mol) / (var(--fz-mol) - 1));
   --fz--m: 1em;
-  --fz--s: calc(1em * $fzmol / ($fzmol + 1));
-  --fz--xs: calc(1em * $fzmol / ($fzmol + 2));
-  --fz--2xs: calc(1em * $fzmol / ($fzmol + 3));
+  --fz--s: calc(1em * var(--fz-mol) / (var(--fz-mol) + 1));
+  --fz--xs: calc(1em * var(--fz-mol) / (var(--fz-mol) + 2));
+  --fz--2xs: calc(1em * var(--fz-mol) / (var(--fz-mol) + 3));
 }
 ```
 
