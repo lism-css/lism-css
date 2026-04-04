@@ -25,7 +25,9 @@ import { Text, Inline } from "lism-css/astro";
   <PreviewArea p='20'>
     <Text>
       <Fragment>テキストの中で</Fragment>
-      <Inline fz="l" fs="italic"><Fragment>インライン要素</Fragment></Inline>
+      <Inline fz="l" fs="italic">
+        <Fragment>インライン要素</Fragment>
+      </Inline>
       <Fragment>としてスタイルできます。</Fragment>
     </Text>
   </PreviewArea>
@@ -48,7 +50,9 @@ import { Text, Inline } from "lism-css/astro";
   <PreviewArea p='20'>
     <Text>
       <Fragment>これは</Fragment>
-      <Inline as="strong" c="red"><Fragment>強調された</Fragment></Inline>
+      <Inline as="strong" c="red">
+        <Fragment>強調された</Fragment>
+      </Inline>
       <Fragment>テキストです。</Fragment>
     </Text>
   </PreviewArea>

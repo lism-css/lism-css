@@ -164,10 +164,7 @@ Combine this class with CSS variables to configure transition behavior.
   </PreviewCode>
   <PreviewCode slot='tab' label='JSX'>
     ```jsx "setTransition" "--hov-duration"
-    <LinkBox
-      href='###' setTransition hov={{ bdc:'red' }} bd bdw='3px' bgc='base-2' p='20'
-      style={{'--hov-duration':'.5s'}}
-    >
+    <LinkBox href="###" setTransition hov={{ bdc: 'red' }} bd bdw="3px" bgc="base-2" p="20" style={{ '--hov-duration': '.5s' }}>
       <p>LinkBox</p>
       <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
     </LinkBox>
@@ -325,7 +322,9 @@ The core package includes a small set of such child-targeting classes under the 
       <Media isLayer src="https://cdn.lism-css.com/img/a-1.jpg" alt="" width="960" height="640" loading="lazy" />
       <Layer setTransition hov="to:show" bgc="rgb(0 0 0 / 40%)" style={{ backdropFilter: 'blur(6px)' }}>
         <Center h="100%" c="#fff">
-          <Inline fz="2xl" fs="italic" fw="light" lts="l" bdrs="99" px="20" py="10"><Fragment>View More</Fragment></Inline>
+          <Inline fz="2xl" fs="italic" fw="light" lts="l" bdrs="99" px="20" py="10">
+            <Fragment>View More</Fragment>
+          </Inline>
         </Center>
       </Layer>
     </Frame>
@@ -380,7 +379,9 @@ Additionally, we'll override `--hov-duration` on the parent to change the transi
       </Frame>
       <Layer setTransition hov="to:hide" style={{ backdropFilter: 'grayscale(70%)' }} />
       <Center isLayer c="#fff" bgc="rgb(0 0 0 / 40%)">
-        <Text setTransition hov="to:letterSpread" fz="2xl"><Fragment>LinkBox</Fragment></Text>
+        <Text setTransition hov="to:letterSpread" fz="2xl">
+          <Fragment>LinkBox</Fragment>
+        </Text>
       </Center>
     </LinkBox>
   </PreviewArea>

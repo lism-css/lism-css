@@ -42,9 +42,13 @@ When `href` is provided to `<LinkBox>`, the component itself renders as an `<a>`
   <PreviewTitle id='linkbox-demo01'>Example</PreviewTitle>
   <PreviewArea p='20'>
     <LinkBox href="#linkbox-demo01" p="30" bgc="base" bd bdrs="30" hov="o">
-      <Group fz="xl" fw="bold"><Fragment>Heading text</Fragment></Group>
+      <Group fz="xl" fw="bold">
+        <Fragment>Heading text</Fragment>
+      </Group>
       <DummyText lh="s" my-s="15" />
-      <Group fz="s" c="text-2" ta="right" lh="1" my-s="10"><Fragment>MORE →</Fragment></Group>
+      <Group fz="s" c="text-2" ta="right" lh="1" my-s="10">
+        <Fragment>MORE →</Fragment>
+      </Group>
     </LinkBox>
   </PreviewArea>
   <PreviewCode slot='tab' label='JSX'>
@@ -87,11 +91,15 @@ This approach also allows you to place additional links inside the LinkBox.
   <PreviewArea p='20'>
     <LinkBox as="section" p="30" bgc="base" bd bdrs="30" setTransition hov="bxsh">
       <Group fz="xl" fw="bold">
-        <Link className="u--expandedLink" href="#linkbox-demo02"><Fragment>Heading link text</Fragment></Link>
+        <Link className="u--expandedLink" href="#linkbox-demo02">
+          <Fragment>Heading link text</Fragment>
+        </Link>
       </Group>
       <DummyText c="text-2" lh="s" my-s="15" />
       <Group id="inner-link02" my-s="10">
-        <a href="#inner-link02" className="-hov:o"><Fragment>Inner Link</Fragment></a>
+        <a href="#inner-link02" className="-hov:o">
+          <Fragment>Inner Link</Fragment>
+        </a>
       </Group>
     </LinkBox>
   </PreviewArea>

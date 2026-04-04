@@ -47,22 +47,14 @@ By overriding the `--shc` variable here, you can adjust the color tint of the sh
     <Stack g="10">
       <Text> Default: </Text>
       <Flex className="set--shadow -g:30" px-s="15">
-        <Box bxsh="20" p="30" bdrs="20">
-          Box
-        </Box>
-        <Box bxsh="40" p="30" bdrs="20">
-          Box
-        </Box>
+        <Box bxsh="20" p="30" bdrs="20">Box</Box>
+        <Box bxsh="40" p="30" bdrs="20">Box</Box>
       </Flex>
       <Spacer h="40" />
       <Text> Overriding variables with set--shadow: </Text>
       <Flex className="set--shadow -g:30" px-s="15" style={{ '--shc': 'hsl(200 50% 50% / 20%)' }}>
-        <Box bxsh="20" p="30" bdrs="20">
-          Box
-        </Box>
-        <Box bxsh="40" p="30" bdrs="20">
-          Box
-        </Box>
+        <Box bxsh="20" p="30" bdrs="20">Box</Box>
+        <Box bxsh="40" p="30" bdrs="20">Box</Box>
       </Flex>
     </Stack>
     <div class="a--spacer" />
@@ -194,9 +186,7 @@ Since `p` and `bdrs` are managed as variables even when their values change at b
   <PreviewTitle>Usage example</PreviewTitle>
   <PreviewArea p='20' resize>
     <Lism p={[10, 20, 30]} bd bdw="2px" bdrs={['40', null, '50']} class="set--innerRs">
-      <Lism bd p="15" bdrs="inner">
-        Example
-      </Lism>
+      <Lism bd p="15" bdrs="inner">Example</Lism>
     </Lism>
   </PreviewArea>
   {/* <PreviewCode label="HTML" slot="tab">

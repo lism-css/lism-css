@@ -126,9 +126,7 @@ The shorthand string is output as a class name. It is also the property name use
 <Preview>
   <PreviewTitle>Examples</PreviewTitle>
   <PreviewArea p='20'>
-    <Text c="brand" bgc="base-2" bd p="30">
-      Example text
-    </Text>
+    <Text c="brand" bgc="base-2" bd p="30">Example text</Text>
   </PreviewArea>
   <PreviewCode slot="tab" label="HTML">
   ```html
@@ -189,7 +187,9 @@ export const LinkSPACE = () => <a href="/docs/tokens/#space"><code>SPACE</code><
   <PreviewArea p='20' resize>
     <Lism p={['15', '20']} bd>
       <Text>Example text</Text>
-      <Text my-s="15" mx="20"><Fragment>Example text</Fragment></Text>
+      <Text my-s="15" mx="20">
+        <Fragment>Example text</Fragment>
+      </Text>
     </Lism>
   </PreviewArea>
   <PreviewCode slot="tab" label="HTML">
@@ -274,33 +274,15 @@ Here are some examples of positioning elements with `position: absolute`.
   </PreviewTitle>
   <PreviewArea resize p='5'>
     <Box pos="rel" ar="3/2" lh="1" ff="mono">
-      <Group pos="abs" l="0" t="0" bgc="base-2" bd p="10">
-        A
-      </Group>
-      <Group pos="abs" l="0" r="0" w="fit" mx="auto" bgc="base-2" bd p="10">
-        B
-      </Group>
-      <Group pos="abs" r="0" t="0" bgc="base-2" bd p="10">
-        C
-      </Group>
-      <Group pos="abs" l="0" t="0" b="0" h="fit" my="auto" bgc="base-2" bd p="10">
-        D
-      </Group>
-      <Group pos="abs" i="0" m="auto" w="fit" h="fit" bgc="base-2" bd p="10">
-        E
-      </Group>
-      <Group pos="abs" r="0" t="0" b="0" h="fit" my="auto" bgc="base-2" bd p="10">
-        F
-      </Group>
-      <Group pos="abs" l="0" b="0" bgc="base-2" bd p="10">
-        G
-      </Group>
-      <Group pos="abs" l="0" r="0" b="0" w="fit" mx="auto" bgc="base-2" bd p="10">
-        H
-      </Group>
-      <Group pos="abs" r="0" b="0" bgc="base-2" bd p="10">
-        I
-      </Group>
+      <Group pos="abs" l="0" t="0" bgc="base-2" bd p="10">A</Group>
+      <Group pos="abs" l="0" r="0" w="fit" mx="auto" bgc="base-2" bd p="10">B</Group>
+      <Group pos="abs" r="0" t="0" bgc="base-2" bd p="10">C</Group>
+      <Group pos="abs" l="0" t="0" b="0" h="fit" my="auto" bgc="base-2" bd p="10">D</Group>
+      <Group pos="abs" i="0" m="auto" w="fit" h="fit" bgc="base-2" bd p="10">E</Group>
+      <Group pos="abs" r="0" t="0" b="0" h="fit" my="auto" bgc="base-2" bd p="10">F</Group>
+      <Group pos="abs" l="0" b="0" bgc="base-2" bd p="10">G</Group>
+      <Group pos="abs" l="0" r="0" b="0" w="fit" mx="auto" bgc="base-2" bd p="10">H</Group>
+      <Group pos="abs" r="0" b="0" bgc="base-2" bd p="10">I</Group>
     </Box>
   </PreviewArea>
   <PreviewCode slot='tab' label='JSX'>

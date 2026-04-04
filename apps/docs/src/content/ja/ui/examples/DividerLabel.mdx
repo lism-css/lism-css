@@ -14,13 +14,17 @@ import { Divider, Flex, Box, Stack, Inline } from 'lism-css/astro';
 <Preview>
   <PreviewTitle>例</PreviewTitle>
   <PreviewArea p='20' >
-    <Box bgc="base-2" c="text-2" py="40" ta="center"><Fragment>...Contents...</Fragment></Box>
+    <Box bgc="base-2" c="text-2" py="40" ta="center">
+      <Fragment>...Contents...</Fragment>
+    </Box>
     <Flex ai="center" g="20" lh="s">
       <Divider fx="1" />
       <Inline fz="s">Label Text</Inline>
       <Divider fx="1" />
     </Flex>
-    <Box bgc="base-2" c="text-2" py="40" ta="center"><Fragment>...Contents...</Fragment></Box>
+    <Box bgc="base-2" c="text-2" py="40" ta="center">
+      <Fragment>...Contents...</Fragment>
+    </Box>
   </PreviewArea>
   <PreviewCode slot='tab' label='JSX'>
     ```jsx {2-6}
@@ -49,17 +53,23 @@ import { Divider, Flex, Box, Stack, Inline } from 'lism-css/astro';
 <Preview>
   <PreviewTitle>例</PreviewTitle>
   <PreviewArea p='20' >
-    <Box bgc="base-2" c="text-2" py="40" ta="center"><Fragment>...Contents...</Fragment></Box>
+    <Box bgc="base-2" c="text-2" py="40" ta="center">
+      <Fragment>...Contents...</Fragment>
+    </Box>
     <Flex ai="center" g="15" lh="s">
       <span class="-fz:s -px:5">Label Text</span>
       <Divider fx="1" bdc="currentColor" o="-20" />
     </Flex>
-    <Box bgc="base-2" c="text-2" py="40" ta="center"><Fragment>...Contents...</Fragment></Box>
+    <Box bgc="base-2" c="text-2" py="40" ta="center">
+      <Fragment>...Contents...</Fragment>
+    </Box>
     <Flex ai="center" g="15" lh="s" c="blue">
       <Divider fx="1" bdc="currentColor" bds="dotted" bdw="4px" o="-30" />
       <span class="-fz:s -px:5">Label Text</span>
     </Flex>
-    <Box bgc="base-2" c="text-2" py="40" ta="center"><Fragment>...Contents...</Fragment></Box>
+    <Box bgc="base-2" c="text-2" py="40" ta="center">
+      <Fragment>...Contents...</Fragment>
+    </Box>
   </PreviewArea>
   <PreviewCode slot='tab' label='JSX'>
     ```jsx {2-5} {7-10}
@@ -100,13 +110,17 @@ import { Divider, Flex, Box, Stack, Inline } from 'lism-css/astro';
   <PreviewTitle>`flex-direction`を変更する</PreviewTitle>
   <PreviewArea p='20' layout=''>
     <Flex ai="center" g="15">
-      <Box fx="1" bgc="base-2" py="40" ta="center"><Fragment>Box</Fragment></Box>
+      <Box fx="1" bgc="base-2" py="40" ta="center">
+        <Fragment>Box</Fragment>
+      </Box>
       <Stack ai="center" g="10" lh="s" fz="s" aslf="stretch">
         <Divider fx="1" isVertical />
         <span>Label</span>
         <Divider fx="1" isVertical />
       </Stack>
-      <Box fx="1" bgc="base-2" py="40" ta="center"><Fragment>Box</Fragment></Box>
+      <Box fx="1" bgc="base-2" py="40" ta="center">
+        <Fragment>Box</Fragment>
+      </Box>
     </Flex>
   </PreviewArea>
   <PreviewCode slot='tab' label='JSX'>
@@ -145,17 +159,23 @@ import { Divider, Flex, Box, Stack, Inline } from 'lism-css/astro';
   <PreviewTitle>labelも縦書き</PreviewTitle>
   <PreviewArea resize p='20' layout=''>
     <Flex ai="stretch" g="15">
-      <Box fx="1" bgc="base-2" py="40" ta="center"><Fragment>Box</Fragment></Box>
+      <Box fx="1" bgc="base-2" py="40" ta="center">
+        <Fragment>Box</Fragment>
+      </Box>
       <Flex isVertical ai="center" g="15" lh="s" fz="xs" aslf="stretch">
         <span class="-px:5">Label</span>
         <Divider fx="1" />
       </Flex>
-      <Box fx="1" bgc="base-2" py="40" ta="center"><Fragment>Box</Fragment></Box>
+      <Box fx="1" bgc="base-2" py="40" ta="center">
+        <Fragment>Box</Fragment>
+      </Box>
       <Flex isVertical ai="center" g="15" lh="s" fz="xs" aslf="stretch">
         <Divider fx="1" />
         <span class="-px:5">Label</span>
       </Flex>
-      <Box fx="1" bgc="base-2" py="40" ta="center"><Fragment>Box</Fragment></Box>
+      <Box fx="1" bgc="base-2" py="40" ta="center">
+        <Fragment>Box</Fragment>
+      </Box>
     </Flex>
   </PreviewArea>
   <PreviewCode slot='tab' label='JSX'>

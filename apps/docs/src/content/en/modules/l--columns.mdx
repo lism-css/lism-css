@@ -36,18 +36,10 @@ You can also use any [props available on `<Grid>`](/docs/modules/l--grid#props).
   </PreviewTitle>
   <PreviewArea resize p='20'>
     <Columns cols={2} g="20">
-      <Box bgc="base-2" p="20">
-        Box
-      </Box>
-      <Box bgc="base-2" p="20">
-        Box
-      </Box>
-      <Box bgc="base-2" p="20">
-        Box
-      </Box>
-      <Box bgc="base-2" p="20">
-        Box
-      </Box>
+      <Box bgc="base-2" p="20">Box</Box>
+      <Box bgc="base-2" p="20">Box</Box>
+      <Box bgc="base-2" p="20">Box</Box>
+      <Box bgc="base-2" p="20">Box</Box>
     </Columns>
   </PreviewArea>
   <PreviewCode slot='tab' label='JSX'>
@@ -86,24 +78,12 @@ You can also use any [props available on `<Grid>`](/docs/modules/l--grid#props).
   <PreviewTitle>1 col → sm: 2 cols → md: 3 cols</PreviewTitle>
   <PreviewArea resize p='20'>
     <Columns cols={[1, 2, 3]} g="20">
-      <Box bgc="base-2" p="20">
-        Box1
-      </Box>
-      <Box bgc="base-2" p="20">
-        Box2
-      </Box>
-      <Box bgc="base-2" p="20">
-        Box3
-      </Box>
-      <Box bgc="base-2" p="20">
-        Box4
-      </Box>
-      <Box bgc="base-2" p="20">
-        Box5
-      </Box>
-      <Box bgc="base-2" p="20">
-        Box6
-      </Box>
+      <Box bgc="base-2" p="20">Box1</Box>
+      <Box bgc="base-2" p="20">Box2</Box>
+      <Box bgc="base-2" p="20">Box3</Box>
+      <Box bgc="base-2" p="20">Box4</Box>
+      <Box bgc="base-2" p="20">Box5</Box>
+      <Box bgc="base-2" p="20">Box6</Box>
     </Columns>
   </PreviewArea>
   <PreviewCode slot='tab' label='JSX'>
@@ -150,18 +130,10 @@ You can also use any [props available on `<Grid>`](/docs/modules/l--grid#props).
   <PreviewTitle>2 cols → `@md`: 4 cols</PreviewTitle>
   <PreviewArea resize p='15'>
     <Columns cols={[2, null, 4]} g="15">
-      <Box bgc="base-2" p="20">
-        Box
-      </Box>
-      <Box bgc="base-2" p="20">
-        Box
-      </Box>
-      <Box bgc="base-2" p="20">
-        Box
-      </Box>
-      <Box bgc="base-2" p="20">
-        Box
-      </Box>
+      <Box bgc="base-2" p="20">Box</Box>
+      <Box bgc="base-2" p="20">Box</Box>
+      <Box bgc="base-2" p="20">Box</Box>
+      <Box bgc="base-2" p="20">Box</Box>
     </Columns>
   </PreviewArea>
   <PreviewCode slot='tab' label='JSX'>
@@ -254,53 +226,33 @@ Creates a card layout using subgrid within a 1 → 2 → 3 column layout.
     <Columns cols={[1, 2, 3]} g="20">
       <Grid className="u--trimChildren" g="30" p="20" gtr="subgrid" gr="span 4" bgc="base-2" bdrs="10">
         <Media ar="og" bdrs="10" src="https://cdn.lism-css.com/img/a-1.jpg" alt="" inferSize />
-        <Heading level="2" lh="s" aslf="center" fz="m">
-          Card Title
-        </Heading>
+        <Heading level="2" lh="s" aslf="center" fz="m">Card Title</Heading>
         <DummyText lh="s" />
-        <Lism lh="s" bd-t fz="s" px="10" py="20 10" o="-10">
-          Date: 2025-01-01
-        </Lism>
+        <Lism lh="s" bd-t fz="s" px="10" py="20 10" o="-10">Date: 2025-01-01</Lism>
       </Grid>
       <Grid className="u--trimChildren" g="30" p="20" gtr="subgrid" gr="span 4" bgc="base-2" bdrs="10">
         <Media ar="og" bdrs="10" src="https://cdn.lism-css.com/img/a-2.jpg" alt="" inferSize />
-        <Heading level="2" lh="s" aslf="center" fz="m">
-          Card Title Lorem ipsum
-        </Heading>
+        <Heading level="2" lh="s" aslf="center" fz="m">Card Title Lorem ipsum</Heading>
         <DummyText lh="s" length="s" />
-        <Lism lh="s" bd-t fz="s" px="10" py="20 10" o="-10">
-          Date: 2025-01-01
-        </Lism>
+        <Lism lh="s" bd-t fz="s" px="10" py="20 10" o="-10">Date: 2025-01-01</Lism>
       </Grid>
       <Grid className="u--trimChildren" g="30" p="20" gtr="subgrid" gr="span 4" bgc="base-2" bdrs="10">
         <Media ar="og" bdrs="10" src="https://cdn.lism-css.com/img/a-3.jpg" alt="" inferSize />
-        <Heading level="2" lh="s" aslf="center" fz="m">
-          Card Title, long, long, long, very long long looong.
-        </Heading>
+        <Heading level="2" lh="s" aslf="center" fz="m">Card Title, long, long, long, very long long looong.</Heading>
         <DummyText lh="s" />
-        <Lism lh="s" bd-t fz="s" px="10" py="20 10" o="-10">
-          Date: 2025-01-01
-        </Lism>
+        <Lism lh="s" bd-t fz="s" px="10" py="20 10" o="-10">Date: 2025-01-01</Lism>
       </Grid>
       <Grid className="u--trimChildren" g="30" p="20" gtr="subgrid" gr="span 4" bgc="base-2" bdrs="10">
         <Media ar="og" bdrs="10" src="https://cdn.lism-css.com/img/a-4.jpg" alt="" inferSize />
-        <Heading level="2" lh="s" aslf="center" fz="m">
-          Card Title
-        </Heading>
+        <Heading level="2" lh="s" aslf="center" fz="m">Card Title</Heading>
         <DummyText lh="s" length="s" />
-        <Lism lh="s" bd-t fz="s" px="10" py="20 10" o="-10">
-          Date: 2025-01-01
-        </Lism>
+        <Lism lh="s" bd-t fz="s" px="10" py="20 10" o="-10">Date: 2025-01-01</Lism>
       </Grid>
       <Grid className="u--trimChildren" g="20" p="20" gtr="subgrid" gr="span 4" bgc="base-2" bdrs="10">
         <Media ar="og" bdrs="10" src="https://cdn.lism-css.com/img/a-5.jpg" alt="" inferSize />
-        <Heading level="2" lh="s" aslf="center" fz="m">
-          Card Title
-        </Heading>
+        <Heading level="2" lh="s" aslf="center" fz="m">Card Title</Heading>
         <DummyText lh="s" />
-        <Lism lh="s" bd-t fz="s" px="10" py="20 10" o="-10">
-          Date: 2025-01-01
-        </Lism>
+        <Lism lh="s" bd-t fz="s" px="10" py="20 10" o="-10">Date: 2025-01-01</Lism>
       </Grid>
     </Columns>
   </PreviewArea>

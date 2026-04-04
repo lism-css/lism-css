@@ -16,11 +16,15 @@ import { Cluster, Icon, Spacer, Decorator, Link, ListItem } from 'lism-css/astro
   <PreviewArea p='20'>
     <Cluster as="ol" g="15">
       <ListItem d="in-flex" ai="center" g="15">
-        <Link href="#menu-1" c="20"><Fragment>Menu item 1</Fragment></Link>
+        <Link href="#menu-1" c="20">
+          <Fragment>Menu item 1</Fragment>
+        </Link>
       </ListItem>
       <ListItem d="in-flex" ai="center" g="15">
         <Decorator o="-20">/</Decorator>
-        <Link href="#menu-2" c="20"><Fragment>Menu item 2</Fragment></Link>
+        <Link href="#menu-2" c="20">
+          <Fragment>Menu item 2</Fragment>
+        </Link>
       </ListItem>
       <ListItem d="in-flex" ai="center" g="15">
         <Decorator o="-20">/</Decorator>
@@ -73,11 +77,15 @@ import { Cluster, Icon, Spacer, Decorator, Link, ListItem } from 'lism-css/astro
   <PreviewArea p='20'>
     <Cluster as="ol" g="15">
       <ListItem d="in-flex" ai="center" g="15">
-        <a class="set--plain" href="#menu-1"><Fragment>Menu item 1</Fragment></a>
+        <a class="set--plain" href="#menu-1">
+          <Fragment>Menu item 1</Fragment>
+        </a>
       </ListItem>
       <ListItem d="in-flex" ai="center" g="15">
         <Icon icon="caret-right" c="text-2" />
-        <a class="set--plain" href="#menu-2"><Fragment>Menu item 2</Fragment></a>
+        <a class="set--plain" href="#menu-2">
+          <Fragment>Menu item 2</Fragment>
+        </a>
       </ListItem>
       <ListItem d="in-flex" ai="center" g="15">
         <Icon icon="caret-right" c="text-2" />

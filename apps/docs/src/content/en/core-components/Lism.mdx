@@ -17,7 +17,9 @@ Nearly all components distributed by Lism are based on this `<Lism>` component.
 <Preview>
   <PreviewTitle>Output example of `<Lism>`</PreviewTitle>
   <PreviewArea p='20'>
-    <Lism p="20" fw="bold" c="blue" bgc="base-2" bdrs="20"><Fragment>Lism content</Fragment></Lism>
+    <Lism p="20" fw="bold" c="blue" bgc="base-2" bdrs="20">
+      <Fragment>Lism content</Fragment>
+    </Lism>
   </PreviewArea>
   <PreviewCode slot='tab' label='JSX'>
     ```jsx
@@ -28,7 +30,7 @@ Nearly all components distributed by Lism are based on this `<Lism>` component.
   </PreviewCode>
   <PreviewCode slot='tab' label='HTML'>
     ```html
-    <div class="-p:20 -fw:bold -c -bgc:base-2 -bdrs:20" style="--c:var(--blue)">Lism content</div>
+    <div class="-p:20 -fw:bold -c -bgc:base-2 -bdrs:20" style="--c: var(--blue)">Lism content</div>
     ```
   </PreviewCode>
 </Preview>
