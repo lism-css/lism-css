@@ -1,15 +1,3 @@
-@use '../../_setting' as setting;
-@use 'sass:math';
-
-/* --------------------------------------------------
-  フォントサイズ計算用のsass関数
--------------------------------------------------- */
-@function fz-calc($offset) {
-  $fzmol: setting.$fzmol;
-  $fz: math.div($fzmol, ($fzmol - $offset));
-  @return math.div(math.round($fz * 1000), 1000);
-}
-
 /* --------------------------------------------------
   ハーフレディング管理変数
 -------------------------------------------------- */
@@ -31,16 +19,17 @@
 
   // font-size: 倍音列でのスケーリング。単位は em
   --fz--base: var(--REM);
-  --fz--5xl: #{fz-calc(6)}em; // --fz--base *
-  --fz--4xl: #{fz-calc(5)}em;
-  --fz--3xl: #{fz-calc(4)}em;
-  --fz--2xl: #{fz-calc(3)}em;
-  --fz--xl: #{fz-calc(2)}em;
-  --fz--l: #{fz-calc(1)}em;
+  --fz-mol: 8; // 倍音列の分母（7~ に対応）
+  --fz--5xl: calc(1em * var(--fz-mol) / (var(--fz-mol) - 6));
+  --fz--4xl: calc(1em * var(--fz-mol) / (var(--fz-mol) - 5));
+  --fz--3xl: calc(1em * var(--fz-mol) / (var(--fz-mol) - 4));
+  --fz--2xl: calc(1em * var(--fz-mol) / (var(--fz-mol) - 3));
+  --fz--xl: calc(1em * var(--fz-mol) / (var(--fz-mol) - 2));
+  --fz--l: calc(1em * var(--fz-mol) / (var(--fz-mol) - 1));
   --fz--m: 1em;
-  --fz--s: #{fz-calc(-1)}em;
-  --fz--xs: #{fz-calc(-2)}em;
-  --fz--2xs: #{fz-calc(-3)}em;
+  --fz--s: calc(1em * var(--fz-mol) / (var(--fz-mol) + 1));
+  --fz--xs: calc(1em * var(--fz-mol) / (var(--fz-mol) + 2));
+  --fz--2xs: calc(1em * var(--fz-mol) / (var(--fz-mol) + 3));
 
   /** 
    * font-family
