@@ -1,6 +1,6 @@
-/* ----------------------------------------
-    body
- ---------------------------------------- */
+/* --------------------------------------------------
+  body
+-------------------------------------------------- */
 body {
   --hl: var(--hl--base);
   font-size: var(--fz--base);
@@ -11,19 +11,19 @@ body {
   text-underline-offset: var(--under-offset, 0.125em);
 }
 
-/* ----------------------------------------
-    line-height
- ---------------------------------------- */
+/* --------------------------------------------------
+  line-height
+-------------------------------------------------- */
 * {
   line-height: calc(1em + var(--hl) * 2);
 }
 
-/* ----------------------------------------
-    Heading
- ---------------------------------------- */
+/* --------------------------------------------------
+  Heading
+-------------------------------------------------- */
 :is(h1, h2, h3, h4, h5, h6) {
-  font-family: var(--heading-ff, inherit);
-  font-weight: var(--heading-fw, bolder);
+  font-family: var(--headings-ff, inherit);
+  font-weight: var(--headings-fw, bolder);
 }
 h1 {
   font-size: var(--fz--3xl);
@@ -42,19 +42,9 @@ h6 {
   font-size: var(--fz--m);
 }
 
-/* ----------------------------------------
-    list
- ---------------------------------------- */
-// classを持たない、もしくは Prop Classしかない(≒ Prop Class で始まる) リスト要素はブラウザ標準のスタイルを復活させる。
-:is(ul, ol):where(:not([class])),
-:is(ul, ol):where([class^='-']) {
-  list-style: revert;
-  padding-inline-start: var(--s30);
-}
-
-/* ----------------------------------------
-    texts
- ---------------------------------------- */
+/* --------------------------------------------------
+  texts
+-------------------------------------------------- */
 a {
   color: var(--link-c, var(--link));
   text-decoration: var(--link-td, underline);
@@ -74,8 +64,8 @@ strong {
 
 sup,
 sub {
+  --hl: var(--hl--xs);
   font-size: 80%;
-  line-height: 1.2;
 }
 
 legend,
@@ -91,13 +81,6 @@ samp {
   font-family: var(--ff--mono);
 }
 
-dt {
-  font-weight: var(--fw--bold);
-}
-dd + dt {
-  margin-block-start: var(--s15);
-}
-
 blockquote {
   background-color: var(--base-2);
   padding: var(--s30);
@@ -109,55 +92,68 @@ hr {
   border-block-start: 1px solid var(--divider);
 }
 
-// figure {
-// 	display: grid;
-// 	gap: var(--s5);
-// 	place-items: center;
-// }
-
-/* ----------------------------------------
-    table
- ---------------------------------------- */
-// table {
-// 	--hl: var(--hl--s);
-// }
-th {
-  color: var(--th--c, inherit);
-  background-color: var(--th--bgc, transparent);
-}
-td,
-th {
-  padding: var(--cell-p, var(--s5) var(--s10));
-  min-inline-size: var(--cell-min-w, initial);
+/* --------------------------------------------------
+  list
+-------------------------------------------------- */
+// classを持たない、もしくは Prop Classしかない(≒ Prop Class で始まる) リスト要素はブラウザ標準のスタイルを復活させる。
+:is(ul, ol):where(:not([class])),
+:is(ul, ol):where([class^='-']) {
+  list-style: revert;
+  padding-inline-start: var(--s30);
 }
 
-/* ----------------------------------------
-    Form fields
- ---------------------------------------- */
+dt {
+  font-weight: var(--fw--bold);
+}
+dd + dt {
+  margin-block-start: var(--s20);
+}
+
+/* --------------------------------------------------
+  table
+-------------------------------------------------- */
+table {
+  --td-c: inherit;
+  --td-bgc: transparent;
+  --td-p: var(--s5) var(--s10);
+  --td-min-sz: initial;
+}
+td {
+  color: var(--td-c);
+  background-color: var(--td-bgc);
+  padding: var(--td-p);
+  min-inline-size: var(--td-min-sz);
+}
+th {
+  // デフォルト: tdと同じスタイル
+  color: var(--th-c, var(--td-c));
+  background-color: var(--th-bgc, var(--td-bgc));
+  padding: var(--th-p, var(--td-p));
+  min-inline-size: var(--th-min-sz, var(--td-min-sz));
+}
+
+/* --------------------------------------------------
+  Form fields
+-------------------------------------------------- */
 input,
 button,
 textarea,
 select,
 ::file-selector-button {
-  padding: var(--s5) var(--s10);
-
-  // 最低限揃えておく
-  background-color: var(--base);
-  border: solid 1px var(--divider);
-  border-radius: var(--bdrs--10);
-}
-
-button {
-  background-color: var(--base-2);
+  // フォーム系コントロールの最低限の見た目（テーマ差し替えは --controls-*）
+  background-color: var(--controls-bgc, var(--base-2));
+  border: solid 1px var(--controls-bdc, var(--divider));
+  padding: var(--controls-p, var(--s5) var(--s10));
+  border-radius: var(--controls-bdrs, var(--bdrs--10));
 }
 
 :disabled {
   opacity: var(--o--n20);
 }
 
-/* ----------------------------------------
-    フォーカス要素
- ---------------------------------------- */
+/* --------------------------------------------------
+  フォーカス要素
+-------------------------------------------------- */
 :focus-visible {
   outline-offset: var(--focus-offset, 0px);
 }
