@@ -14,6 +14,7 @@ import { getRootLang, type LangCode } from '@/lib/i18n';
 
 // コンポーネント
 import Head from '../components/Head.astro';
+import JsonLd from '../components/JsonLd.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import Sidebar from '../components/Sidebar.astro';
@@ -29,10 +30,11 @@ interface Props {
   ogImage?: string;
   toc?: TocItem[];
   lang?: LangCode; // 言語コード（省略時はroot言語）
+  date?: Date; // 公開日（JSON-LD の datePublished に使用）
   excludeFromSearch?: boolean; // 検索対象から除外するかどうか
 }
 
-const { title = siteConfig.name, description, ogImage, toc, lang = getRootLang(), excludeFromSearch = false } = Astro.props;
+const { title = siteConfig.name, description, ogImage, toc, lang = getRootLang(), date, excludeFromSearch = false } = Astro.props;
 
 // 開発環境かどうか（ShareBtns用のURL生成に使用）
 const isDev = import.meta.env.DEV;
@@ -42,7 +44,9 @@ const canonicalUrl = isDev ? Astro.url.toString() : Astro.site ? new URL(Astro.u
 ---
 
 <html lang={lang}>
-  <Head title={title} description={description} ogImage={ogImage} lang={lang} />
+  <Head title={title} description={description} ogImage={ogImage} lang={lang}>
+    <JsonLd schemaType="TechArticle" title={title} description={description} lang={lang} date={date} />
+  </Head>
   <body {...excludeFromSearch && { 'data-pagefind-ignore': 'all' }}>
     <div class="is--container">
       <Header />

@@ -39,7 +39,7 @@ const toc = generateToc(headings);
 const ogImage = `/ui/og/${entry.id.replace(/^ui\//, '')}.png`;
 ---
 
-<BaseLayout title={entry.data.title} description={entry.data.description} ogImage={ogImage} toc={toc} lang={lang}>
+<BaseLayout title={entry.data.title} description={entry.data.description} ogImage={ogImage} toc={toc} lang={lang} date={entry.data.date}>
   <Lism as="article" class="z--article set--cqUnit" data-pagefind-body>
     {/* 記事タイトル */}
     <Heading level="1" class="articleTitle">{entry.data.title}</Heading>

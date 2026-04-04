@@ -19,6 +19,7 @@ import { getRootLang, type LangCode } from '@/lib/i18n';
 
 // コンポーネント
 import Head from '../components/Head.astro';
+import JsonLd from '../components/JsonLd.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import { Lism } from 'lism-css/astro';
@@ -35,7 +36,9 @@ const { title = siteConfig.name, description, ogImage, lang = getRootLang() } = 
 ---
 
 <html lang={lang}>
-  <Head title={title || siteConfig.name} description={description} ogImage={ogImage} lang={lang} />
+  <Head title={title || siteConfig.name} description={description} ogImage={ogImage} lang={lang}>
+    <JsonLd schemaType="SoftwareSourceCode" title={title || siteConfig.name} description={description} lang={lang} />
+  </Head>
   <body data-pagefind-ignore>
     <Lism layout="stack" class="is--container" min-h="100svh">
       <Header />
