@@ -3,8 +3,7 @@ title: 'Lism'
 description: 'A general-purpose component that accepts a wide variety of props aligned with the Lism CSS design system.'
 order: 1
 ---
-import { Lism, Media, Frame, Spacer } from "lism-css/astro";
-import { DummyText } from '@lism-css/ui/astro';
+import { Lism, Spacer } from "lism-css/astro";
 
 A general-purpose component that accepts a wide variety of props aligned with the Lism CSS design system.
 When no props are specified, it simply renders a `<div>`.
@@ -28,11 +27,8 @@ Nearly all components distributed by Lism are based on this `<Lism>` component.
     ```
   </PreviewCode>
   <PreviewCode slot='tab' label='HTML'>
-    ```jsx
-    <div class="-p:20 -fw:bold -c -bgc:base-2 -bdrs:20" style="--c:var(--blue)">
-      {' '}
-      Lism content{' '}
-    </div>
+    ```html
+    <div class="-p:20 -fw:bold -c -bgc:base-2 -bdrs:20" style="--c:var(--blue)">Lism content</div>
     ```
   </PreviewCode>
 </Preview>

@@ -3,8 +3,7 @@ title: 'Link'
 description: 'A Lism component that outputs an <a> tag.'
 order: 6
 ---
-import { Link, Text, Lism } from "lism-css/astro";
-import { DummyText } from '@lism-css/ui/astro';
+import { Link } from "lism-css/astro";
 
 `<Link>` is a Lism component that outputs an `<a>` tag.
 
@@ -39,9 +38,7 @@ import { DummyText } from '@lism-css/ui/astro';
 <Preview>
   <PreviewTitle>Applying Lism Props</PreviewTitle>
   <PreviewArea p='20'>
-    <Link href="###" c="green" fw="bold">
-      Styled link
-    </Link>
+    <Link href="###" c="green" fw="bold"><Fragment>Styled link</Fragment></Link>
   </PreviewArea>
   <PreviewCode slot='tab' label='JSX'>
     ```jsx

@@ -3,7 +3,7 @@ title: 'Text'
 description: 'A Lism component that outputs a <p> tag.'
 order: 2
 ---
-import { Text, Lism } from "lism-css/astro";
+import { Text } from "lism-css/astro";
 import { DummyText } from '@lism-css/ui/astro';
 
 `<Text>` is a Lism component that outputs a `<p>` tag.
@@ -55,7 +55,7 @@ You can change the output tag with the `as` prop: `p`(default) / `div` / `blockq
   </PreviewCode>
   <PreviewCode slot='tab' label='HTML'>
     ```html
-    <p class="-fz:l -lh:l -c" style="--c: var(--text-2)">Lorem ipsum text...</p>
+    <p class="-fz:l -lh:s -c" style="--c: var(--text-2)">Lorem ipsum text...</p>
     ```
   </PreviewCode>
 </Preview>
