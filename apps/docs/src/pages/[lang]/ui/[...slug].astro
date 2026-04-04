@@ -1,0 +1,100 @@
+---
+/**
+ * UIコンポーネント詳細ページ（非root言語用）
+ * - 翻訳がない場合はroot言語にフォールバック（未翻訳の注意書き付き）
+ * - URL例: /en/ui/Accordion, /en/ui/examples/Card
+ */
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { generateToc } from '@/lib/generateToc';
+import { Icon, Lism, Flow, Heading } from 'lism-css/astro';
+import PostNavigation from '@parts/PostNavigation.astro';
+import TranslationNotice from '@/components/TranslationNotice.astro';
+import { siteConfig } from '@/config/site';
+import { isRootLang, isValidLang, getRootLang, type LangCode } from '@/lib/i18n';
+import { getPostsByLang, getPostWithFallback } from '@/lib/content';
+import { render } from 'astro:content';
+
+// MDXでグローバルに使用するコンポーネント
+import * as mdxComponents from '@/components/mdx';
+
+export async function getStaticPaths() {
+  const langCodes = Object.keys(siteConfig.langs) as LangCode[];
+  const nonRootLangs = langCodes.filter((lang) => !isRootLang(lang));
+  const rootLang = getRootLang();
+  const allPosts = await getPostsByLang(rootLang);
+
+  // ui/ で始まるIDのみフィルタリング
+  const uiPosts = allPosts.filter((post) => post.id.startsWith('ui/'));
+
+  const paths = [];
+  for (const lang of nonRootLangs) {
+    for (const post of uiPosts) {
+      paths.push({
+        // slug から ui/ プレフィックスを除去（URLに ui/ は含まれないため）
+        params: { lang, slug: post.id.replace(/^ui\//, '') },
+        props: { lang, slug: post.id },
+      });
+    }
+  }
+  return paths;
+}
+
+interface Props {
+  lang: LangCode;
+  slug: string;
+}
+
+const { lang, slug } = Astro.props;
+
+if (!isValidLang(lang)) {
+  return Astro.redirect('/404');
+}
+
+// 記事を取得（なければroot言語にフォールバック）
+const { entry, isFallback } = await getPostWithFallback(lang, slug);
+
+if (!entry) {
+  return Astro.redirect('/404');
+}
+
+const { Content, headings } = await render(entry);
+const toc = generateToc(headings);
+
+// OG画像のパス
+const ogImage = `/ui/og/${slug.replace(/^ui\//, '')}.png`;
+---
+
+<BaseLayout
+  title={entry.data.title}
+  description={entry.data.description}
+  ogImage={ogImage}
+  toc={toc}
+  lang={lang}
+  schemaType="TechArticle"
+  date={entry.data.date}
+>
+  {/* フォールバック（未翻訳）ページは検索対象から除外 */}
+  <Lism as="article" class="z--article set--cqUnit" {...!isFallback && { 'data-pagefind-body': true }}>
+    {/* 未翻訳の注意書き */}
+    {isFallback && <TranslationNotice lang={lang} />}
+
+    {/* 記事タイトル */}
+    <Heading level="1" class="articleTitle">{entry.data.title}</Heading>
+
+    <Lism class="u--cbox" keycolor="yellow" p="20" my="40" bdrs="10" bd>
+      <Lism layout="flex" ai="center" g="10" fw="bold">
+        <Icon icon="warning" fz="l" c="keycolor" />
+        This page is currently under construction
+      </Lism>
+      <Lism fz="s" my-s="5">Lism UI (@lism-css/ui) is still in preparation.</Lism>
+    </Lism>
+
+    {/* 記事本文 */}
+    <Flow class="articleContent" my-s="40">
+      <Content components={mdxComponents} />
+    </Flow>
+
+    {/* 前後記事ナビゲーション */}
+    <PostNavigation currentSlug={slug} lang={lang} />
+  </Lism>
+</BaseLayout>
