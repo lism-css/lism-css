@@ -221,23 +221,18 @@
     "description": "Lism CSS の各バージョンにおける変更履歴をまとめています。",
     "category": "guide",
     "headings": [
+      "v.0.10.4 (2026.04.04)",
+      "v.0.10.3 (2026.04.04)",
       "v.0.10.2 (2026.04.04)",
       "v.0.10.1 (2026.04.03)",
-      "lism-css v.0.9.4 (2026.03.31)",
-      "@lism-css/ui v.0.9.3 (2026.03.30)",
+      "`lism-css` v.0.9.4 (2026.03.31)",
+      "`@lism-css/ui` v.0.9.3 (2026.03.30)",
       "v.0.9.2 (2026.03.18)",
       "v.0.9.1 (2026.03.18)",
       "v.0.9.0 (2026.03.17)",
       "v.0.8.3",
       "v.0.8.2",
-      "v.0.8 (大幅な変更)",
-      "v.0.7",
-      "v.0.7.1",
-      "v.0.7.2",
-      "v.0.7.3",
-      "v.0.6",
-      "v.0.5（大幅な変更）",
-      "~ v.0.3"
+      "v.0.8 (大幅な変更)"
     ],
     "keywords": ["changelog", "変更履歴", "更新", "バージョン"],
     "snippet": "Lism CSS の各バージョンにおける変更内容を記載。"
@@ -275,7 +270,7 @@
     "description": "LismのCSS設計に対応した様々なプロパティを受け取ることができる汎用的なコンポーネントです。",
     "category": "core-components",
     "headings": ["Import", "Lism Props", "補足"],
-    "keywords": ["Lism", "core", "コア", "基盤", "コンポーネント", "lismClass", "variant", "layout", "as", "exProps", "HTML.button", "HTML.xxx"],
+    "keywords": ["Lism", "core", "コア", "基盤", "コンポーネント", "lismClass", "variant", "layout", "as", "exProps"],
     "snippet": "全コンポーネントの基盤。Props システムによる CSS クラス・スタイルの自動変換を提供。as prop で出力要素や外部コンポーネントを指定可能。レスポンシブ指定は配列またはオブジェクト形式で対応。"
   },
   {
@@ -284,7 +279,7 @@
     "description": "<p>タグを出力するLismコンポーネントです。",
     "category": "core-components",
     "headings": ["Import", "基本的な使い方"],
-    "keywords": ["Text", "テキスト", "paragraph", "p", "ブロック", "コンポーネント", "HTML.p", "HTML.xxx"],
+    "keywords": ["Text", "テキスト", "paragraph", "p", "ブロック", "コンポーネント"],
     "snippet": "<p>タグを出力するLismコンポーネント。<Lism as=\"p\">のエイリアス。as prop で div / blockquote / address / figcaption / pre に変更可能。"
   },
   {
@@ -293,7 +288,7 @@
     "description": "<span>タグを出力するLismコンポーネントです。",
     "category": "core-components",
     "headings": ["Import", "基本的な使い方"],
-    "keywords": ["Inline", "インライン", "span", "em", "strong", "コンポーネント", "HTML.span", "HTML.xxx"],
+    "keywords": ["Inline", "インライン", "span", "em", "strong", "コンポーネント"],
     "snippet": "<span>タグを出力するLismコンポーネント。<Lism as=\"span\">のエイリアス。テキストの一部にスタイルを適用したい場合に使用。as prop で em / strong / small / code 等に変更可能。"
   },
   {
@@ -302,7 +297,7 @@
     "description": "<div>タグを出力するLismコンポーネントです。",
     "category": "core-components",
     "headings": ["Import", "基本的な使い方"],
-    "keywords": ["Group", "グループ", "div", "コンテナ", "コンポーネント", "HTML.div", "HTML.xxx"],
+    "keywords": ["Group", "グループ", "div", "コンテナ", "コンポーネント"],
     "snippet": "<div>タグを出力するLismコンポーネント。<Lism as=\"div\">のエイリアス。要素をグルーピングするための汎用コンテナ。as prop で section / article / figure / nav / aside 等に変更可能。"
   },
   {
@@ -311,7 +306,7 @@
     "description": "見出しタグ（<h1>〜<h6>）を出力するLismコンポーネントです。",
     "category": "core-components",
     "headings": ["Props", "Import", "基本的な使い方", "見出しレベルの指定"],
-    "keywords": ["Heading", "見出し", "h1", "h2", "h3", "h4", "h5", "h6", "level", "コンポーネント", "HTML.h", "HTML.xxx"],
+    "keywords": ["Heading", "見出し", "h1", "h2", "h3", "h4", "h5", "h6", "level", "コンポーネント"],
     "snippet": "見出しタグを出力するLismコンポーネント。level プロパティで h1〜h6 を指定。デフォルトは h2。"
   },
   {
@@ -320,7 +315,7 @@
     "description": "<a>タグを出力するLismコンポーネントです。",
     "category": "core-components",
     "headings": ["Import", "基本的な使い方"],
-    "keywords": ["Link", "リンク", "a", "アンカー", "href", "コンポーネント", "HTML.a", "HTML.xxx"],
+    "keywords": ["Link", "リンク", "a", "アンカー", "href", "コンポーネント"],
     "snippet": "<a>タグを出力するLismコンポーネント。<Lism as=\"a\">のエイリアス。全ての Lism Props が使用可能。"
   },
   {
@@ -329,7 +324,7 @@
     "description": "リストタグ（<ul>, <li>）を出力するLismコンポーネントです。",
     "category": "core-components",
     "headings": ["Import", "基本的な使い方", "番号付きリスト", "定義リスト"],
-    "keywords": ["List", "ListItem", "リスト", "ul", "ol", "li", "dl", "dt", "dd", "コンポーネント", "HTML.ul", "HTML.ol", "HTML.li", "HTML.xxx"],
+    "keywords": ["List", "ListItem", "リスト", "ul", "ol", "li", "dl", "dt", "dd", "コンポーネント"],
     "snippet": "<ul>タグを出力するListと<li>タグを出力するListItemのLismコンポーネント。as prop で ol / dl や li / dt / dd に変更可能。"
   },
   {
@@ -529,8 +524,8 @@
     "description": "画像や動画などのメディア要素を出力するLismコンポーネントです。",
     "category": "core-components",
     "headings": ["Import"],
-    "keywords": ["Media", "メディア", "img", "video", "iframe", "画像", "filter", "HTML.img", "HTML.xxx"],
-    "snippet": "img, video, iframe 等のメディア要素を統一的に扱うコンポーネント。objectPositionやfilter系はstyleで指定。Next.js/AstroのImageコンポーネントとの連携も可能。"
+    "keywords": ["Media", "メディア", "img", "video", "iframe", "画像", "picture", "Astro Image"],
+    "snippet": "img, video, iframe 等のメディア要素を統一的に扱うコンポーネント。objectPositionやfilter系はstyleで指定。Astro版では as='img' で Astro Image、as='picture' で Astro Picture に自動マッピング。Next.js の Image コンポーネントとの連携も可能。"
   },
   {
     "sourcePath": "modules/a--spacer.mdx",
