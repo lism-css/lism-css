@@ -117,7 +117,7 @@ import { Chat, DummyText } from '@lism-css/ui/astro';
 発言ではなく心の中で思っていることを表現する場合に使用できるようなスタイルを追加する例です。
 
 <Preview css={`
-@layer lism.modules {
+@layer lism-modules {
   .c--chat--think {
     --_deco-t: min(calc(var(--_avator-size) / 3), 1.5rem);
     --_deco-mask: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="8" height="8"><circle cx="1.5" cy="1.7" r="1.5"/><circle cx="4.5" cy="5.2" r="2.5"/></svg>');
@@ -145,7 +145,7 @@ import { Chat, DummyText } from '@lism-css/ui/astro';
   </PreviewCode>
   <PreviewCode slot='tab' label='CSS'>
     ```css
-    @layer lism.modules {
+    @layer lism-modules {
       .c--chat--think {
         --_deco-t: min(calc(var(--_avator-size) / 3), 1.5rem);
         --_deco-mask: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="8" height="8"><circle cx="1.5" cy="1.7" r="1.5"/><circle cx="4.5" cy="5.2" r="2.5"/></svg>');
