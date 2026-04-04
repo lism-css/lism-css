@@ -9,6 +9,17 @@ v.1.0リリースまでしばらく激しい変更が続く可能性があるた
 
 <Divider bds='dashed' my='40' />
 
+## v.0.10.2 (2026.04.04)
+
+- Media.astro で `as="img"` / `as="picture"` 指定時に Astro の Image / Picture コンポーネントへ自動マッピングされるようになりました。
+- Media.astro に MediaPolymorphic 型を導入し、Image / Picture 固有 props の型補完に対応しました。
+- セマンティックラッパー（Group, Text, Inline, List, Heading 等）の `as` prop に AllowedTag 型制約を導入しました（React / Astro 共通）。
+- CSS 変数名 `--heading-` を `--headings-` に改名しました。
+- テーブル要素のスタイルを `--td-` / `--th-` トークンに整理しました。
+- ベースのフォームコントロール初期スタイルを調整しました。
+- OmitIndexSignature の distributive conditional type 対応など型周りの修正を行いました。
+
+
 ## v.0.10.1 (2026.04.03)
 
 - ネガティブマージンをスペーストークンで指定できるようになりました。（例: `my-s="-20"`, `mt="-10"`)

@@ -9,6 +9,17 @@ Breaking changes may continue frequently until the v1.0 release, so all notable 
 
 <Divider bds='dashed' my='40' />
 
+## v.0.10.2 (2026.04.04)
+
+- Media.astro now automatically maps `as="img"` / `as="picture"` to Astro's built-in Image / Picture components.
+- Introduced MediaPolymorphic type for Media.astro, enabling type completion for Image/Picture-specific props.
+- Added AllowedTag type constraints to the `as` prop on semantic wrappers (Group, Text, Inline, List, Heading, etc.) for both React and Astro.
+- Renamed CSS custom properties from `--heading-` to `--headings-` for consistency.
+- Reorganized table element styles using `--td-` / `--th-` tokens.
+- Adjusted base form control initial styles.
+- Fixed type-related issues including distributive conditional type handling for OmitIndexSignature.
+
+
 ## v.0.10.1 (2026.04.03)
 
 - Negative margins can now be specified using space tokens. (e.g., `my-s="-20"`, `mt="-10"`)
