@@ -5,77 +5,173 @@
 </h1>
 
 <p align="center">
-    <a href="https://www.npmjs.com/package/lism-css"><img src="https://img.shields.io/npm/v/lism-css.svg" alt="Latest Release"></a>
-    <a href="https://github.com/lism-css/lism-css/blob/main/LICENSE"><img src="https://img.shields.io/npm/l/lism-css.svg" alt="License"></a>
+  <a href="https://www.npmjs.com/package/lism-css"><img src="https://img.shields.io/npm/v/lism-css.svg" alt="Latest Release"></a>
+  <a href="https://github.com/lism-css/lism-css/blob/main/LICENSE"><img src="https://img.shields.io/npm/l/lism-css.svg" alt="License"></a>
 </p>
 
-Lism CSS is a lightweight and modern CSS framework. Based on a unique CSS Methodologies, it combines layout modules, utility classes, and design tokens to provide flexible and consistent styling.
+<p align="center">
+  <a href="./README.md">English</a> | <a href="./README.ja.md">日本語</a>
+</p>
 
-## Documentation
+## What is Lism CSS?
 
-For full documentation, visit [lism-css.com](https://lism-css.com).
+Lism CSS is a lightweight **CSS design framework** for quickly and beautifully building website layouts.
+
+Inspired by [Every Layout](https://every-layout.dev/)'s layout primitives, [Tailwind CSS](https://tailwindcss.com/)'s utility-first approach, and [ITCSS](https://www.xfive.co/blog/itcss-scalable-maintainable-css-architecture/)'s layering concept, Lism CSS integrates these ideas into a cohesive architecture.
+
+No build step or configuration is required. Simply load the CSS file via CDN or import it from npm to get started. It also provides React and Astro components whose props are converted into CSS classes and custom properties, enabling component-based development without runtime style generation.
 
 ## Features
 
-- Lightweight & Simple: Starts from ~30KB, no build process required. Available via CDN or npm.
-- Clear Layered Structure: Using `@layer`⁠ for maintainability.
-- Layout-First Approach: Build efficiently with layout modules and utility classes.
-- Design Tokens: Centrally manage colors, spacing, typography, etc. with CSS variables.
-- Flexible Utility Classes: `-{prop}:{value}`⁠ syntax.
-- Unique Responsive System: Combine CSS variables, classes, and container queries for parent-based responsiveness.
-- Supports React/Astro: Dedicated components boost development efficiency.
+- **Lightweight** — The entire CSS bundle is approximately 30 KB (~8 KB gzipped).
+- **Zero-Build Framework** — Works with plain HTML via CDN or npm. No build tool or configuration needed.
+- **Layout-First Modules** — Pre-built layout patterns: `l--flex`, `l--stack`, `l--grid`, `l--columns`, `l--center`, `l--sideMain`, etc.
+- **CSS Layer Structure** — `@layer` (lism-reset → lism.base → lism.modules → lism.utility) for clear specificity management. Minimizes specificity conflicts.
+- **Design Tokens** — Colors, spacing, font sizes, shadows as CSS custom properties.
+- **Flexible Prop Classes** — `-{prop}:{value}` syntax (e.g., `-p:20`, `-bgc:base-2`, `-fz:l`).
+- **Responsive System** — Breakpoint classes and CSS variables (e.g., `-p_sm`, `-p_md`) use container queries by default for parent-based responsive design. Switchable to media queries.
+- **React & Astro Components** — Write `<Stack g="20">` instead of `class="l--stack -g:20"`.
 
-## Installation
+## Packages
 
-CDN:
+| Package | Description |
+|---------|-------------|
+| [lism-css](https://www.npmjs.com/package/lism-css) | Core CSS framework + React / Astro layout components |
+| [@lism-css/ui](https://www.npmjs.com/package/@lism-css/ui) | Interactive UI components (Accordion, Modal, Tabs, etc.) |
+| [@lism-css/mcp](https://github.com/lism-css/lism-css/tree/main/packages/mcp) | MCP server for AI coding tools |
+
+## Quick Start
+
+### CDN (no build required)
 
 ```html
-<link href="https://cdn.jsdelivr.net/npm/lism-css@0.9.4/dist/css/main.css" rel="stylesheet" />
+<link href="https://cdn.jsdelivr.net/npm/lism-css@0/dist/css/main.css" rel="stylesheet" />
 ```
 
+### npm
 
-npm:
 ```bash
 npm i lism-css
 ```
 
 ```js
-import "lism-css/main.css";
-import { Box, Stack, Flex, Grid,... } from "lism-css/react";
+import 'lism-css/main.css';
 ```
 
+### React
 
-## Main Class Examples
-- Layout State: `is--wrapper`, `is--container`, `is--layer`, etc.
-- Layout Module: `⁠l--flex⁠`, `⁠l--grid⁠`, `⁠l--center⁠`, `⁠l--columns⁠`, `⁠l--sideMain⁠`, etc.
-- Prop Class: `⁠-p:20`, `⁠-bgc:base-2`⁠, `⁠-fz:l⁠`, etc.
-- Decoration Utility: `⁠u-cbox⁠`, etc.
+```jsx
+import { Box, Flex, Stack, Grid, Text, Heading } from 'lism-css/react';
 
+<Stack g="20">
+  <Heading tag="h2" fz="xl">Welcome</Heading>
+  <Flex g="20" ai="center">
+    <Box p="20" bgc="base-2" bdrs="20">
+      <Text fz="l">Card A</Text>
+    </Box>
+    <Box p="20" bgc="base-2" bdrs="20">
+      <Text fz="l">Card B</Text>
+    </Box>
+  </Flex>
+</Stack>
+```
 
+### Astro
 
-## Responsive Example
+```astro
+---
+import { Box, Flex, Stack, Text, Heading } from 'lism-css/astro';
+---
 
-HTML: 
+<Stack g="20">
+  <Heading tag="h2" fz="xl">Welcome</Heading>
+  <Flex g="20" ai="center">
+    <Box p="20" bgc="base-2" bdrs="20">
+      <Text fz="l">Card A</Text>
+    </Box>
+    <Box p="20" bgc="base-2" bdrs="20">
+      <Text fz="l">Card B</Text>
+    </Box>
+  </Flex>
+</Stack>
+```
+
+### HTML (CSS-only)
+
 ```html
-<div class="-p:20 -p_sm -p_md" style="--p_sm:var(--s30);--p_md:var(--s40)">
-  <p>Example</p>
+<div class="l--stack -g:20">
+  <h2 class="-fz:xl">Welcome</h2>
+  <div class="l--flex -g:20 -ai:center">
+    <div class="-p:20 -bgc:base-2 -bdrs:20">
+      <p class="-fz:l">Card A</p>
+    </div>
+    <div class="-p:20 -bgc:base-2 -bdrs:20">
+      <p class="-fz:l">Card B</p>
+    </div>
+  </div>
 </div>
 ```
 
-JSX:
+## CSS Class Examples
+
+| Type | Examples |
+|------|---------|
+| Layout Module | `l--flex`, `l--grid`, `l--stack`, `l--center`, `l--columns`, `l--sideMain` |
+| State | `is--wrapper`, `is--container`, `is--layer` |
+| Prop Class | `-p:20`, `-bgc:base-2`, `-fz:l`, `-ta:center` |
+| Breakpoint | `-p_sm`, `-g_md`, `-fz_lg` |
+| Utility | `u--cbox` |
+
+## Responsive Example
+
+**HTML:**
+
+```html
+<div class="-p:20 -p_sm -p_md" style="--p_sm:var(--s30);--p_md:var(--s40)">
+  <p>Padding changes at sm (480px) and md (800px) breakpoints</p>
+</div>
+```
+
+**JSX:**
+
 ```jsx
 <Lism p={['20', '30', '40']}>
-  <p>Example</p>
+  <p>Padding changes at sm (480px) and md (800px) breakpoints</p>
 </Lism>
 ```
 
+## AI Tool Integration
 
-## Playgrounds 
+### llms.txt
 
-https://github.com/lism-css/lism-playgrounds
+```
+https://lism-css.com/llms.txt
+```
 
+### MCP Server
+
+```bash
+claude mcp add lism-css -- npx -y @lism-css/mcp
+```
+
+See the [lism-css package README](https://www.npmjs.com/package/lism-css#ai-tool-integration) for Cursor and VS Code setup.
+
+## Documentation
+
+For full documentation, visit [lism-css.com](https://lism-css.com).
+
+## Playgrounds
+
+Try Lism CSS in a sandbox environment: [lism-css/lism-playgrounds](https://github.com/lism-css/lism-playgrounds)
 
 ## Community
 
-For feedback or questions, [Join the Lism CSS Discord Server](https://discord.gg/6PMcFHvc4h)
+For feedback or questions, [join the Lism CSS Discord server](https://discord.gg/6PMcFHvc4h).
 
+## Credits
+
+- [Phosphor Icons](https://phosphoricons.com/) — MIT License ([source](https://github.com/phosphor-icons))
+
+## License
+
+MIT
