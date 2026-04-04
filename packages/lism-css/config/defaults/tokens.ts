@@ -4,7 +4,7 @@ export default {
   hl: ['base', 'xs', 's', 'l'],
   lts: ['base', 's', 'l'],
   ff: ['base', 'accent', 'mono'],
-  fw: ['thin', 'light', 'normal', 'medium', 'bold', 'black'],
+  fw: ['light', 'normal', 'bold'],
   o: ['-10', '-20', '-30'],
   bdrs: ['5', '10', '20', '30', '40', '50', '99', 'inner'],
   bxsh: ['5', '10', '20', '30', '40', '50'],

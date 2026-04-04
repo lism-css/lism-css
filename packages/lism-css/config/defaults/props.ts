@@ -22,7 +22,12 @@ const PLACE_SHORTHANDS = { s: 'start', e: 'end', c: 'center', fs: 'flex-s', fe: 
 export default {
   f: { prop: 'font', presets: ['inherit'] },
   fz: { prop: 'fontSize', token: 'fz', tokenClass: 1, bp: 1, alwaysVar: 1 },
-  fw: { prop: 'fontWeight', token: 'fw', tokenClass: 1 },
+  fw: {
+    prop: 'fontWeight',
+    token: 'fw',
+    tokenClass: 1,
+    presets: ['100', '200', '300', '400', '500', '600', '700', '800', '900'],
+  },
   ff: { prop: 'fontFamily', token: 'ff', tokenClass: 1 },
   fs: { prop: 'fontStyle', presets: ['italic'], shorthands: { i: 'italic' } },
   lh: {
