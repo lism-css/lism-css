@@ -1,7 +1,7 @@
 ---
 import DemoLayout from '@/layouts/DemoLayout.astro';
 
-import { Wrapper, Frame, Grid, Box, Lism, Stack, Inline } from 'lism-css/astro';
+import { Wrapper, Frame, Grid, Box, Media, Stack, Inline } from 'lism-css/astro';
 import './_style.css';
 ---
 
@@ -13,7 +13,7 @@ import './_style.css';
         <Inline class="u--trim" fz="s" ta="center" o="-30">Company Information</Inline>
       </Stack>
       <Frame as="figure" ar="3/1" bdrs="10">
-        <Lism as="img" src="https://cdn.lism-css.com/img/random-2510?category=building" alt="" width="960" height="640" />
+        <Media src="https://cdn.lism-css.com/random/img?category=building" alt="" width="960" height="640" />
       </Frame>
       <Grid as="dl" className="u--collapseGrid" ov="clip" p="0" gtr="auto" gtc="auto 1fr" g-x="50" bd-y>
         <Grid gtc="subgrid" gc="1/-1" p="20">

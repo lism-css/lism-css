@@ -5,6 +5,10 @@ order: 3
 ---
 import { Lism, Media, Frame } from "lism-css/astro";
 import { DummyText } from '@lism-css/ui/astro';
+import { Image } from 'astro:assets';
+
+{/* Astro の <Image> 向け: ローカル画像は import した参照を src に渡す（パス文字列は不可） */}
+import myImage from '@/img/img-1.jpg';
 
 
 `<Media>`は、画像や動画などのメディア要素を出力するLismコンポーネントです。  
@@ -79,7 +83,7 @@ Astro版ではデフォルトで Astro の`<Image>`が使用されます。React
 
 
 
-#### Next.js の`<Image>`を使う方法
+### Next.js の`<Image>`を使う方法
 
 Next.jsの`Image`などは、`as`プロパティに渡すことができます。
 
@@ -91,7 +95,7 @@ import Image from 'next/image';
 <Media as={Image} src="/img.jpg" alt="Dummy Image" width="960" height="640" />
 ```
 
-#### Astro版での`<Image>` / `<Picture>`の使い方
+### Astro版での`<Image>` / `<Picture>`の使い方
 
 `lism-css/astro`の`<Media>`では、`as`の値に応じて Astro のコンポーネントに自動マッピングされます。
 
@@ -102,30 +106,34 @@ import Image from 'next/image';
 | `"video"` / `"iframe"` 等 | そのままHTMLタグ |
 
 `<Media>`は内部で Astro の`<Image />`や`<Picture />`を使用しているため、それらのすべての Props が使用できます。
+
 詳細なリファレンスは Astro 公式ドキュメントをご覧ください：
 [`<Image />`](https://docs.astro.build/ja/reference/modules/astro-assets/#image-)&emsp;/&emsp;[`<Picture />`](https://docs.astro.build/ja/reference/modules/astro-assets/#picture-)
-
 
 <Preview>
   <PreviewTitle>`quality`と`format`を使用する例（Astro `<Image>`）</PreviewTitle>
   <PreviewArea>
-    <Media src="https://cdn.lism-css.com/img/a-1.jpg" width="960" height="640" alt="Dummy Image" quality="high" format="webp" />
+    <Media src={myImage} inferSize alt="Dummy Image" quality="high" format="webp" />
   </PreviewArea>
-  <PreviewCode slot='tab' label='JSX'>
+  <PreviewCode slot='tab' label='.astro'>
     ```jsx "quality='high'" "format='webp'"
-    <Media src="https://cdn.lism-css.com/img/a-1.jpg" width="960" height="640" alt="Dummy Image" quality="high" format="webp" />
+    import myImage from '@/img/img-1.jpg';
+
+    <Media src={myImage} inferSize alt="Dummy Image" quality="high" format="webp" />
     ```
   </PreviewCode>
 </Preview>
 
+### リモート画像で使用する例
+
 <Preview>
-  <PreviewTitle>リモート画像に`inferSize`を使用する例</PreviewTitle>
+  <PreviewTitle>リモート画像で使用する例</PreviewTitle>
   <PreviewArea>
-    <Media src="https://cdn.lism-css.com/img/a-1.jpg" inferSize alt="Dummy Image" />
+    <Media src="https://cdn.lism-css.com/img/a-1.jpg" inferSize alt="Dummy Image" quality="high" format="webp" />
   </PreviewArea>
-  <PreviewCode slot='tab' label='JSX'>
+  <PreviewCode slot='tab' label='.astro'>
     ```jsx "inferSize"
-    <Media src="https://cdn.lism-css.com/img/a-1.jpg" inferSize alt="Dummy Image" />
+    <Media src="https://cdn.lism-css.com/img/a-1.jpg" inferSize alt="Dummy Image" quality="high" format="webp" />
     ```
   </PreviewCode>
 </Preview>
@@ -133,11 +141,17 @@ import Image from 'next/image';
 <Preview>
   <PreviewTitle>Astro `<Picture>`で`formats`を使用する例</PreviewTitle>
   <PreviewArea>
-    <Media as="picture" src="https://cdn.lism-css.com/img/a-1.jpg" width="960" height="640" alt="Dummy Image" formats={['avif', 'webp']} />
+    <Media as="picture" src="https://cdn.lism-css.com/img/a-2.jpg" width="960" height="640" alt="Dummy Image" formats={['avif', 'webp']} />
   </PreviewArea>
-  <PreviewCode slot='tab' label='JSX'>
-    ```jsx "as='picture'" "formats={['avif', 'webp']}"
-    <Media as="picture" src="https://cdn.lism-css.com/img/a-1.jpg" width="960" height="640" alt="Dummy Image" formats={['avif', 'webp']} />
+  <PreviewCode slot='tab' label='.astro'>
+    ```jsx "as=\"picture\""  "formats={['avif', 'webp']}"
+    <Media as="picture" src="https://cdn.lism-css.com/img/a-2.jpg" width="960" height="640" alt="Dummy Image" formats={['avif', 'webp']} />
     ```
   </PreviewCode>
 </Preview>
+
+
+:::info
+外部サイトの画像をAstroの`<Image>`や`<Picture>`で利用して`inferSize`などのプロパティを使用する場合、`astro.config.ts`で`image.domains`（または`image.remotePatterns`）を設定する必要があります。
+:::
+

@@ -1,7 +1,7 @@
 ---
 import DemoLayout from '@/layouts/DemoLayout.astro';
 
-import { Container, Flex, Frame, Grid, Columns, Box, Lism, Stack } from 'lism-css/astro';
+import { Container, Flex, Frame, Grid, Columns, Box, Media, Stack } from 'lism-css/astro';
 import { Button } from '@lism-css/ui/astro';
 import './_style.css';
 ---
@@ -18,10 +18,10 @@ import './_style.css';
       </Stack>
       <Columns cols="2" gr={['2', null, '1 / -1']} gc={['1', null, '1']} g="20" min-h="min(70svw, 30rem)">
         <Frame as="figure" gr="1 / -1">
-          <Lism as="img" src="https://cdn.lism-css.com/img/random-2510?r=1" alt="" width="960" height="640" />
+          <Media src="https://cdn.lism-css.com/random/img?r=1" alt="" width="960" height="640" />
         </Frame>
         <Frame as="figure" gr="1 / -1">
-          <Lism as="img" src="https://cdn.lism-css.com/img/random-2510?r=2" alt="" width="960" height="640" />
+          <Media src="https://cdn.lism-css.com/random/img?r=2" alt="" width="960" height="640" />
         </Frame>
       </Columns>
       <Box gr="3">

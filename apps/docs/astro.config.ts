@@ -19,7 +19,8 @@ const lastmodMap = isBuild ? loadLastmodMap() : new Map<string, string>();
 export default defineConfig({
   site: 'https://lism-css.com/',
   image: {
-    domains: ['cdn.lism-css.com'],
+    // domains: ['cdn.lism-css.com'],
+    remotePatterns: [{ hostname: 'cdn.lism-css.com', pathname: '/img/**' }],
   },
   // 開発サーバーのポート番号
   server: {
