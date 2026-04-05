@@ -1,6 +1,6 @@
 /*
-		Note: c,bgc,bdc Prop Class より優先度を下げること。
-		Memo: bgcの mix は transparent にする。半透明だと背景があると可読性が落ちる + chatのように同じ背景色の装飾を重ねても大丈夫なように。
+  Note: Prop Class より優先度が下で定義すること
+  Memo: bgcの mix は transparent ではなく --base と混ぜている → 背景メディアがあるときも可読性が落ちないように + chat のように同じ背景色の装飾が一部重なっていても大丈夫なように。
 */
 .u--cbox {
   --c: color-mix(in srgb, var(--text), var(--keycolor) var(--cbox-cPct, 32%));
@@ -10,7 +10,7 @@
   color: var(--c);
   background-color: var(--bgc);
 
-  /* 相対カラー構文をサポートしているブラウザ向け */
+  // 相対カラー構文をサポートしているブラウザでは、 shadowのカラーもキーカラーに寄せる
   @supports (color: oklch(from red l c h)) {
     --shc: oklch(from var(--keycolor) calc(l / 1.5) calc(c / 1.5) h / 0.1);
   }
