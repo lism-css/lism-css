@@ -20,7 +20,7 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode } from "@/components/Pr
       </Flex>
     </Center>
   </PreviewArea>
-  <PreviewCode>
+  <PreviewCode label="JSX" slot="tab">
 ```jsx
 <Center p="30" ar="3/2" bgc="base" g="10">
   <Heading level="1" fz={['3xl', '4xl']} ff="accent">
@@ -36,6 +36,18 @@ import { Preview, PreviewArea, PreviewTitle, PreviewCode } from "@/components/Pr
     </Link>
   </Flex>
 </Center>
+```
+  </PreviewCode>
+  <PreviewCode label="HTML" slot="tab">
+```jsx
+<div class="l--center -p:30 -ar:3/2 -bgc:base -g:10">
+  <h1 class="-fz:3xl -fz_sm -ff:accent" style="--fz_sm:var(--fz--4xl)">Lism CSS</h1>
+  <p class="-c:text-2">The some description text is here…</p>
+  <div class="l--flex -g:20 -my-s:30">
+      <a class="-d:in-flex -bdrs:10 -td:none -c:base -bgc:text -py:10 -px:20" href="###">Documents</a>
+      <a class="-d:in-flex -bdrs:10 -td:none -c:text -bd -py:10 -px:20" href="###">Github</a>
+  </div>
+</div>
 ```
   </PreviewCode>
 </Preview>
