@@ -178,16 +178,16 @@ Since `p` and `bdrs` are managed as variables even when their values change at b
 <Preview>
   <PreviewTitle>Usage example</PreviewTitle>
   <PreviewArea p='20' resize>
-    <Lism p={[10, 20, 30]} bd bdw="2px" bdrs={['40', null, '50']} class="set--innerRs">
-      <Lism bd p="15" bdrs="inner">Example</Lism>
+    <Lism p={[10, 15]} bd bdrs={['30', '40']} class="set--innerRs">
+      <Lism bd p="20" bdrs="inner">Example</Lism>
     </Lism>
   </PreviewArea>
   {/* <PreviewCode label="HTML" slot="tab">
   </PreviewCode> */}
   <PreviewCode label="JSX" slot="tab">
 ```jsx
-<Lism p={[10, 20, 30]} bd bdw="2px" bdrs={['40', null, '50']} class="set--innerRs">
-  <Lism bd p="15" bdrs="inner">
+<Lism p={[10, 15]} bd bdrs={['30', '40']} class="set--innerRs">
+  <Lism bd p="20" bdrs="inner">
     Example
   </Lism>
 </Lism>
