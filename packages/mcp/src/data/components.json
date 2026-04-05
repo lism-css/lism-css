@@ -4,7 +4,7 @@
     "package": "lism-css",
     "category": "core",
     "description": "全コンポーネントの基盤となるコアコンポーネント。Props システムによる CSS クラス・スタイルの自動変換を提供する。他の全てのコンポーネントは Lism を継承している。",
-    "aliases": ["base component", "コア", "基盤", "HTML.button"],
+    "aliases": ["component", "base", "core", "React", "Astro", "コア", "ベース", "コンポーネント"],
     "props": [
       { "name": "as", "type": "ElementType | string", "default": "div", "description": "レンダリングするHTML要素または外部コンポーネントを指定。" },
       { "name": "layout", "type": "string", "description": "レイアウトモジュールを適用 (flex, grid 等)。" },
@@ -329,7 +329,7 @@
     "name": "Media",
     "package": "lism-css",
     "category": "atomic",
-    "description": "img, video, iframe, picture 等のメディア要素を統一的に扱うコンポーネント。デフォルトでimgタグが出力される。as prop で img(デフォルト) / video / iframe / picture に変更可能。",
+    "description": "img, video, iframe, picture 等のメディア要素を統一的に扱うコンポーネント。デフォルトでimgタグが出力される。as prop で img(デフォルト) / video / iframe / picture に変更可能。Astro版では as=\"img\" 時に Astro の Image コンポーネント、as=\"picture\" 時に Astro の Picture コンポーネントへ自動マッピングされる。",
     "aliases": ["画像", "動画", "img tag", "video tag", "picture", "メディア要素", "HTML.img"],
     "props": [
       { "name": "src", "type": "string", "description": "メディアのURL。" },

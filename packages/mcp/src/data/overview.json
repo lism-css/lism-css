@@ -1,12 +1,12 @@
 {
   "description": "Lism CSS は、WEBサイトの骨組みをテンポ良くサクっと作るための軽量なCSS設計フレームワークです。デザインに自然と心地よいリズムを生み出すトークン設計、レイアウトファーストなモジュール設計、CSS変数を活かした柔軟でレスポンシブなユーティリティ設計が特徴です。ビルドや設定は不要で、CSSを読み込むだけでも使えます。Every Layout + Bootstrap + Tailwind CSS を混ぜ合わせたような設計です。",
-  "architecture": "CSS Layers による詳細度管理を採用。Settings → Base(@lism-base: Reset CSS・トークン定義・Set Class) → Modules(@lism-modules: .is--/.l--/.a--/.c--モジュール群) → Utility(@lism-utility: .u--クラス) → Custom(@lism-custom: カスタマイズ用) の順で読み込まれます。Prop Class はレイヤー外で定義され、詳細度が高くなります。コンテナクエリをデフォルトで採用し、メディアクエリに依存しないレイアウト設計が可能です。",
+  "architecture": "CSS Layers による詳細度管理を採用。Settings → Base(lism-base: Reset CSS・トークン定義・Set Class) → Modules(lism-modules: .is--/.l--/.a--/.c--モジュール群) → Utility(lism-utility: .u--クラス) → Custom(lism-custom: カスタマイズ用) の順で読み込まれます。Prop Class はレイヤー外で定義され、詳細度が高くなります。コンテナクエリをデフォルトで採用し、メディアクエリに依存しないレイアウト設計が可能です。",
   "packages": [
     {
       "name": "lism-css",
       "npmName": "lism-css",
       "description": "コアCSSフレームワーク。レイアウトモジュール、デザイントークン、Prop Class、React/Astroコンポーネントを提供。",
-      "version": "0.10.4"
+      "version": "0.11.0"
     },
     {
       "name": "lism-ui",
@@ -20,8 +20,8 @@
     "md": "800px (container query)",
     "lg": "1120px (container query, 要カスタマイズ)"
   },
-  "installation": "## CSSのみ (CDN)\n```html\n<link href=\"https://cdn.jsdelivr.net/npm/lism-css@0.10.4/dist/css/main.css\" rel=\"stylesheet\" />\n```\n\n## npm パッケージ\n```bash\nnpm i lism-css\n# UI コンポーネントも使う場合\nnpm i @lism-css/ui\n```\n\n## CSS読み込み\n```js\nimport 'lism-css/main.css';\n// UI コンポーネントのCSS\nimport '@lism-css/ui/style.css';\n```\n\n## コンポーネント読み込み\n```jsx\n// React\nimport { Box, Flex, Stack } from 'lism-css/react';\nimport { Accordion, Modal } from '@lism-css/ui/react';\n\n// Astro\nimport { Box, Flex, Stack } from 'lism-css/astro';\nimport { Accordion, Modal } from '@lism-css/ui/astro';\n```\n\n## Astro での注意\n.astroファイルをnode_modules内から直接読み込めない場合、astro.config.jsのvite.ssr.noExternalに\"lism-css\"を追加してください。",
-  "cssLayers": "Settings → @lism-base → @lism-modules(.is--, .l--, .a--, .c--) → @lism-utility(.u--) → @lism-custom → Prop Class(レイヤー外)。標準でsm,mdまでサポート、lg以降はSCSSカスタマイズが必要。",
+  "installation": "## CSSのみ (CDN)\n```html\n<link href=\"https://cdn.jsdelivr.net/npm/lism-css@0.11.0/dist/css/main.css\" rel=\"stylesheet\" />\n```\n\n## npm パッケージ\n```bash\nnpm i lism-css\n# UI コンポーネントも使う場合\nnpm i @lism-css/ui\n```\n\n## CSS読み込み\n```js\nimport 'lism-css/main.css';\n// UI コンポーネントのCSS\nimport '@lism-css/ui/style.css';\n```\n\n## コンポーネント読み込み\n```jsx\n// React\nimport { Box, Flex, Stack } from 'lism-css/react';\nimport { Accordion, Modal } from '@lism-css/ui/react';\n\n// Astro\nimport { Box, Flex, Stack } from 'lism-css/astro';\nimport { Accordion, Modal } from '@lism-css/ui/astro';\n```\n\n## Astro での注意\n.astroファイルをnode_modules内から直接読み込めない場合、astro.config.jsのvite.ssr.noExternalに\"lism-css\"を追加してください。",
+  "cssLayers": "Settings → lism-base → lism-modules(.is--, .l--, .a--, .c--) → lism-utility(.u--) → lism-custom → Prop Class(レイヤー外)。標準でsm,mdまでサポート、lg以降はSCSSカスタマイズが必要。",
   "classNaming": {
     "setClass": ".set--{style} (例: .set--plain, .set--transition) - @lism-base層で定義されるベーススタイル上書き・トークン再定義用クラス",
     "moduleClass": {
