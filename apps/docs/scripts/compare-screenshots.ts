@@ -37,7 +37,7 @@ const CONFIG = {
 const args = process.argv.slice(2);
 const thresholdIndex = args.indexOf('--threshold');
 // 差分率しきい値（%）: これ以下の差分は無視する
-const threshold = thresholdIndex !== -1 ? parseFloat(args[thresholdIndex + 1]) : 0.1;
+const threshold = thresholdIndex !== -1 ? parseFloat(args[thresholdIndex + 1]) : 0.01;
 // --threshold とその値を除いた残りをフィルタとして使用
 const filters = args.filter((a, i) => !a.startsWith('--') && args[i - 1] !== '--threshold');
 
@@ -211,8 +211,8 @@ function compareImages(baselinePath: string, newPath: string, diffPath: string):
   const totalPixels = width * height;
   const diffPercent = (diffPixels / totalPixels) * 100;
 
-  // 差分画像を保存（差分がある場合のみ）
-  if (diffPercent > 0) {
+  // 差分画像を保存（0.01%以上の差分がある場合のみ）
+  if (diffPercent >= 0.01) {
     const diffDirPath = dirname(diffPath);
     if (!existsSync(diffDirPath)) {
       mkdirSync(diffDirPath, { recursive: true });
