@@ -28,7 +28,7 @@ A component for highlighting important points within an article.
   </PreviewCode>
   <PreviewCode slot='tab' label='HTML'>
     ```jsx
-    <div class="c--callout u--cbox l--stack -p:20 -g:10 -bd-x-s -bxsh:10 -bdrs:10" style="--keycolor:var(--blue);--bdc:var(--keycolor);--bdw:4px">
+    <div class="c--callout u--cbox set--shadow l--stack -p:20 -g:10 -bd-x-s -bxsh:10" style="--keycolor:var(--blue);--bdc:var(--keycolor);--bdw: 3px">
       <div class="c--callout_head l--flex -c -fw:bold -ai:center -g:10" style="--c:var(--keycolor)">
         <div class="c--callout_icon l--center -fz:xl">
           <svg
@@ -77,7 +77,7 @@ Provided as `Callout` from the `@lism-css/ui` package.
   </PreviewCode>
   <PreviewCode slot='tab' label='HTML'>
     ```html
-    <div class="c--callout u--cbox l--stack -p:20 -g:10 -bd-x-s -bxsh:10 -bdrs:10" style="--keycolor: var(--blue); --bdc: var(--keycolor); --bdw: 4px">
+    <div class="c--callout u--cbox set--shadow l--stack -p:20 -g:10 -bd-x-s -bxsh:10" style="--keycolor: var(--blue); --bdc: var(--keycolor); --bdw: 3px">
       <div class="c--callout_head l--flex -c -fw:bold -ai:center -g:10" style="--c: var(--keycolor)">
         <div class="c--callout_icon l--center -fz:xl">
           <svg class="a--icon">...</svg>
@@ -188,7 +188,7 @@ An example of building the component using only Lism core elements, without a de
 <Preview>
   <PreviewTitle>Preview</PreviewTitle>
   <PreviewArea resize p='20'>
-    <Stack className="u--cbox" keycolor="blue" p="20" g="10" bdc="keycolor" bd-x-s bdw="4px" bxsh="10" bdrs="10">
+    <Stack className="u--cbox" keycolor="blue" p="20" g="10" bdc="keycolor" bd-x-s bdw="3px" bxsh="10" bdrs="10">
       <Flex c="keycolor" fw="bold" ai="center" g="10">
         <Center className="c--note_icon" fz="xl">
           <Icon icon="note" />
@@ -202,7 +202,7 @@ An example of building the component using only Lism core elements, without a de
   </PreviewArea>
   <PreviewCode slot='tab' label='JSX'>
     ```jsx
-    <Stack className="u--cbox" keycolor="blue" p="20" g="10" bdc="keycolor" bd-x-s bdw="4px" bxsh="10" bdrs="10">
+    <Stack className="u--cbox" keycolor="blue" p="20" g="10" bdc="keycolor" bd-x-s bdw="3px" bxsh="10" bdrs="10">
       <Flex c="keycolor" fw="bold" ai="center" g="10">
         <Center className="c--note_icon" fz="xl">
           <Icon icon="note" />
@@ -217,7 +217,7 @@ An example of building the component using only Lism core elements, without a de
   </PreviewCode>
   <PreviewCode slot='tab' label='HTML'>
   ```html
-  <div class="u--cbox l--stack -p:20 -g:10 -bd-x-s -bxsh:10 -bdrs:10" style="--keycolor: var(--blue); --bdc: var(--keycolor); --bdw: 4px">
+  <div class="u--cbox l--stack -p:20 -g:10 -bd-x-s -bxsh:10" style="--keycolor: var(--blue); --bdc: var(--keycolor); --bdw: 3px">
     <div class="l--flex -c -fw:bold -ai:center -g:10" style="--c: var(--keycolor)">
       <div class="c--note_icon l--center -fz:xl">
         <svg

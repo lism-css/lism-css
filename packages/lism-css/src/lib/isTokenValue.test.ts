@@ -52,12 +52,12 @@ describe('isTokenValue', () => {
   describe('数値の扱い', () => {
     test('数値は文字列化してから判定される', () => {
       // bdrsトークンは文字列の配列だが、数値でも判定できる
-      expect(isTokenValue('bdrs', 5)).toBe(true);
       expect(isTokenValue('bdrs', 10)).toBe(true);
       expect(isTokenValue('bdrs', 99)).toBe(true);
     });
 
     test('存在しない数値は false を返す', () => {
+      expect(isTokenValue('bdrs', 5)).toBe(false);
       expect(isTokenValue('bdrs', 999)).toBe(false);
       expect(isTokenValue('bdrs', 0)).toBe(false);
     });
