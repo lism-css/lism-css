@@ -81,38 +81,30 @@ export const ColorBadge = ({color, label}) => {
 
 |トークン値|変数|クラス|初期値|  
 |---|---|---|---|
-|`5`|`--bdrs--5`|`-bdrs:5`|`2px`|
 |`10`|`--bdrs--10`|`-bdrs:10`|`0.25rem`|
 |`20`|`--bdrs--20`|`-bdrs:20`|`0.5rem`|
 |`30`|`--bdrs--30`|`-bdrs:30`|`1rem`|
 |`40`|`--bdrs--40`|`-bdrs:40`|`1.5rem`|
-|`50`|`--bdrs--50`|`-bdrs:50`|`2rem`|
 |`99`|`--bdrs--99`|`-bdrs:99`|`99rem`|
-
-{/* |`50`|`--bdrs--50`|`-bdrs:50`|`2rem`| */}
 
 
 <Preview>
   <PreviewTitle>Preview</PreviewTitle>
   <PreviewArea p='30'>
     <Columns cols={[3, 6]} g='30'>
-      <Center ar='1/1' bdrs='5' bd h='100%' ff='mono' fz='xs' c='text-2'>5</Center>
-      <Center ar='1/1' bdrs='10' bd h='100%' ff='mono' fz='xs' c='text-2'>10</Center>
-      <Center ar='1/1' bdrs='20' bd h='100%' ff='mono' fz='xs' c='text-2'>20</Center>
-      <Center ar='1/1' bdrs='30' bd h='100%' ff='mono' fz='xs' c='text-2'>30</Center>
-      <Center ar='1/1' bdrs='40' bd h='100%' ff='mono' fz='xs' c='text-2'>40</Center>
-      <Center ar='1/1' bdrs='50' bd h='100%' ff='mono' fz='xs' c='text-2'>50</Center>
-      <Center ar='1/1' bdrs='99' bd h='100%' ff='mono' fz='xs' c='text-2'>99</Center>
+      <Center ar='2/1' bdrs='10' bd h='100%' ff='mono' fz='xs' c='text-2'>10</Center>
+      <Center ar='2/1' bdrs='20' bd h='100%' ff='mono' fz='xs' c='text-2'>20</Center>
+      <Center ar='2/1' bdrs='30' bd h='100%' ff='mono' fz='xs' c='text-2'>30</Center>
+      <Center ar='2/1' bdrs='40' bd h='100%' ff='mono' fz='xs' c='text-2'>40</Center>
+      <Center ar='2/1' bdrs='99' bd h='100%' ff='mono' fz='xs' c='text-2'>99</Center>
     </Columns>
   </PreviewArea>
   <PreviewCode slot='tab' label='HTML'>
     ```jsx
-    <div class="-bdrs:5">...</div>
     <div class="-bdrs:10">...</div>
     <div class="-bdrs:20">...</div>
     <div class="-bdrs:30">...</div>
     <div class="-bdrs:40">...</div>
-    <div class="-bdrs:50">...</div>
     <div class="-bdrs:99">...</div>
     ```
   </PreviewCode>
@@ -128,24 +120,21 @@ box-shadow は少し特殊で、ユーティリティクラス内で複数のsha
 
 |トークン値|変数|クラス|
 |---|---|---|
-|`5`|`--bxsh--5`|`-bxsh:5`|
 |`10`|`--bxsh--10`|`-bxsh:10`|
 |`20`|`--bxsh--20`|`-bxsh:20`|
 |`30`|`--bxsh--30`|`-bxsh:30`|
 |`40`|`--bxsh--40`|`-bxsh:40`|
-|`50`|`--bxsh--50`|`-bxsh:50`|
 
 `--bxsh--{token}`の値の中身は、次の変数で構成されます。
 
 |構成変数|初期値|
 |---|---|
 |`--shc`|`hsl(220 4% 8% / 5%)`|
-|`--shsz--5`|`0px 2px 4px`|
-|`--shsz--10`|`1px 3px 6px`|
-|`--shsz--20`|`1px 5px 10px`|
-|`--shsz--30`|`2px 8px 16px`|
-|`--shsz--40`|`3px 13px 26px`|
-|`--shsz--50`|`5px 21px 42px`|
+|`--shsz--5`|`0px 1px 3px`|
+|`--shsz--10`|`0px 2px 6px`|
+|`--shsz--20`|`0px 4px 12px`|
+|`--shsz--30`|`0px 8px 24px`|
+|`--shsz--40`|`0px 16px 48px`|
 
 
 
@@ -155,17 +144,21 @@ box-shadow は少し特殊で、ユーティリティクラス内で複数のsha
   <PreviewTitle>Preview</PreviewTitle>
   <PreviewArea p={['30','40']} py='40'>
     <Columns cols={[3, 4, 5]} g={['30', '40']}>
-      <BoxShadowDemos shadows={['5', '10', '20', '30', '40', '50']} />
+      {['10', '20', '30', '40'].map((name) => {
+        return (
+          <Center key={name} h="100%" ar="3/2" bgc="base" bxsh={name} bdrs="10" ff="mono" fz="xs" c="text-2">
+            {name}
+          </Center>
+        );
+      })}
     </Columns>
   </PreviewArea>
   <PreviewCode slot='tab' label='HTML'>
     ```jsx
-    <div class="-bxsh:5">...</div>
     <div class="-bxsh:10">...</div>
     <div class="-bxsh:20">...</div>
     <div class="-bxsh:30">...</div>
     <div class="-bxsh:40">...</div>
-    <div class="-bxsh:50">...</div>
     ```
   </PreviewCode>
 </Preview>

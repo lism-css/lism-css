@@ -6,8 +6,8 @@ export default {
   ff: ['base', 'accent', 'mono'],
   fw: ['light', 'normal', 'bold'],
   o: ['-10', '-20', '-30'],
-  bdrs: ['5', '10', '20', '30', '40', '50', '99', 'inner'],
-  bxsh: ['5', '10', '20', '30', '40', '50'],
+  bdrs: ['10', '20', '30', '40', '99', 'inner'],
+  bxsh: ['10', '20', '30', '40'],
   sz: ['xs', 's', 'm', 'l', 'xl', 'min', 'full', 'container'],
   ar: ['og'],
   space: {

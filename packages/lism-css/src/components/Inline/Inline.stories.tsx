@@ -34,7 +34,7 @@ export const AsCode: Story = {
     as: 'code',
     bgc: 'base-2',
     p: '5',
-    bdrs: '5',
+    bdrs: '10',
     fz: 's',
     children: 'inline code',
   },

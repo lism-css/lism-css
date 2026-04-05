@@ -68,7 +68,7 @@ describe('PropValueTypes', () => {
     // token: 'bdrs' → TOKENS.bdrs の値
     // bp: 1 なので Responsive でラップされる
     expectTypeOf<PropValueTypes['bdrs']>().toEqualTypeOf<
-      Responsive<'0' | '5' | '10' | '20' | '30' | '40' | '50' | '99' | 'inner' | (string & {}) | number | boolean | null | undefined>
+      Responsive<'0' | '10' | '20' | '30' | '40' | '99' | 'inner' | (string & {}) | number | boolean | null | undefined>
     >();
   });
 
