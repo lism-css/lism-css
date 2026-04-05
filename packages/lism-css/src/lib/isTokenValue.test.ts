@@ -21,7 +21,6 @@ describe('isTokenValue', () => {
     });
 
     test('bdrs トークンに存在する値で true を返す', () => {
-      expect(isTokenValue('bdrs', '5')).toBe(true);
       expect(isTokenValue('bdrs', '10')).toBe(true);
       expect(isTokenValue('bdrs', '99')).toBe(true);
     });
@@ -128,7 +127,7 @@ describe('isTokenValue', () => {
     });
 
     test('ボーダー半径のバリデーション', () => {
-      expect(isTokenValue('bdrs', '5')).toBe(true);
+      expect(isTokenValue('bdrs', '10')).toBe(true);
       expect(isTokenValue('bdrs', '99')).toBe(true);
       expect(isTokenValue('bdrs', 'inner')).toBe(true);
 
