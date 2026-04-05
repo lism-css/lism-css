@@ -172,7 +172,7 @@ function getPostUrl(slug: string): string {
       return (
         <Stack class="siteNav_group" g="5">
           {/* セクションのラベル（見出し） */}
-          <Heading class="siteNav_title" level="3" fz="2xs" fw="normal" py="5" o="-10" tt="upper">
+          <Heading class="siteNav_title" level="3" fz="xs" fw="normal" py="5" o="-10" tt="upper">
             {sectionLabel}
           </Heading>
 
@@ -200,7 +200,7 @@ function getPostUrl(slug: string): string {
                 section.items.map((item) => {
                   // セパレータの場合は区切り線を表示
                   if (isSeparator(item)) {
-                    return <ListItem class="c--nav__separator" role="separator" mx="5" aria-hidden="true" />;
+                    return <ListItem class="c--nav_separator" role="separator" mx="5" my="10" aria-hidden="true" />;
                   }
 
                   // 文字列の場合はURLとして扱い、MDXのフロントマターからラベルを取得

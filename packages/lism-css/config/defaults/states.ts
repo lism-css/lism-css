@@ -40,5 +40,4 @@ export default {
   // setRevert: 'set--revert',
   setInnerRs: 'set--innerRs',
   setBp: 'set--bp',
-  setCqUnit: 'set--cqUnit',
 } as const;

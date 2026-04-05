@@ -39,6 +39,30 @@ link:first-child + * {
 // 	text-decoration: underline;
 // }
 
+/* コンテナクエリ単位でのトークン再セット */
+.set--cqUnit {
+  --REM: clamp(0.95rem, 0.915rem + 0.15cqw, 1.05rem); /* lism-css の --REM の cqw 版 */
+  font-size: var(--REM);
+
+  --hl-unit: calc(var(--REM) * 0.125);
+  --hl--xs: var(--hl-unit);
+  --hl--s: calc(var(--hl-unit) * 2);
+  --hl--base: calc(var(--hl-unit) * 3);
+  --hl--l: calc(var(--hl-unit) * 4);
+
+  --s-unit: calc(var(--REM) * 0.5);
+  --s5: calc(0.5 * var(--s-unit));
+  --s10: var(--s-unit);
+  --s15: calc(1.5 * var(--s-unit));
+  --s20: calc(2 * var(--s-unit));
+  --s30: calc(3 * var(--s-unit));
+  --s40: calc(5 * var(--s-unit));
+  --s50: calc(8 * var(--s-unit));
+  --s60: calc(13 * var(--s-unit));
+  --s70: calc(21 * var(--s-unit));
+  --s80: calc(34 * var(--s-unit));
+}
+
 /* ----------------------------------------
     guide
  ---------------------------------------- */

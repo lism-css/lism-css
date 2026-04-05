@@ -34,17 +34,15 @@ const { href, isActive, ...props } = Astro.props;
     -webkit-box-orient: vertical;
     overflow: hidden;
   }
+
+  /* 現在位置のハイライトスタイル（NavLinkのデフォルトスタイルを上書き） */
   .c--navLink._active {
     background-color: var(--base-2);
     color: var(--brand);
     font-weight: 600;
   }
-  /* 現在位置のハイライトスタイル（NavLinkのデフォルトスタイルを上書き） */
-  .z--sidebar .c--navLink {
-    font-size: var(--fz--xs);
-    /* padding-block: var(--s10); */
-  }
-  .c--toc .c--navLink {
+
+  /* .c--toc .c--navLink {
     padding-block: var(--s5);
-  }
+  } */
 </style>

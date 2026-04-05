@@ -76,7 +76,7 @@ export const translations: Record<LangCode, UITranslations> = {
   },
   en: {
     toc: {
-      title: 'Contents',
+      title: 'TOC',
       open: 'Open contents',
     },
     search: {
