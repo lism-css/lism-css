@@ -136,7 +136,7 @@ function createGrayPixelPng(): Buffer {
  * ランダム画像をグレーに差し替えるルートを設定
  */
 async function setupImageInterception(page: Page, grayPng: Buffer): Promise<void> {
-  await page.route('**/cdn.lism-css.com/img/random-*', (route) => {
+  await page.route('**/cdn.lism-css.com/random/img*', (route) => {
     return route.fulfill({
       contentType: 'image/png',
       body: grayPng,
