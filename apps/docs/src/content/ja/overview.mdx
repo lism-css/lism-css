@@ -5,39 +5,22 @@ description: 'Lism CSS の概要と特徴について解説します。'
 import { Box, Center, Flex, Frame, Icon, Spacer, Text } from "lism-css/astro";
 import LismExDemo from './_demo/LismExDemo.mdx';
 
-"**Lism CSS**" は、**WEBサイトの骨組みをテンポ良くサクっと作るための**軽量なCSS設計フレームワークです。  
-ビルドや設定は不要。CSSを読み込むだけでも使えます。
+"**Lism CSS**" は、**WEBサイトの骨組みをテンポ良く美しく作るための**軽量なCSS設計フレームワークです。
 
-[Every Layout](https://every-layout.dev/) のレイアウトプリミティブ、[Tailwind CSS](https://tailwindcss.com/) のユーティリティファーストなアプローチ、[ITCSS](https://www.xfive.co/blog/itcss-scalable-maintainable-css-architecture/) のレイヤー設計を融合した、独自のCSS設計体系です。
+- サイト全体に自然と心地よいリズムを生み出すタイポグラフィ設計。
+- ワイヤーフレーム作成が簡単にできるレイアウトファーストなモジュール設計。
+- 柔軟でレスポンシブにも対応できるCSS変数を活かしたユーティリティ設計。
+
+[Every Layout](https://every-layout.dev/) のレイアウトプリミティブやハーモニックモジュラースケーリング、[Tailwind CSS](https://tailwindcss.com/) のユーティリティファーストなアプローチ、[ITCSS](https://www.xfive.co/blog/itcss-scalable-maintainable-css-architecture/) のレイヤー設計を融合した、独自のCSS設計体系です。
 
 
 ## Why Lism CSS?
 
-### サイト全体のCSS設計を丸ごと引き受ける
+- **自分でCSS設計を考えなくてよい。** — reset.css から `@layer` 階層、トークン、命名規則まで、サイト全体のCSS設計を丸ごと引き受けます。
+- **軽量なCSSで、レスポンシブ。** — CSS変数との組み合わせにより、少ないCSS容量のまま柔軟にブレークポイント対応ができます。
+- **CSSを読み込むだけで使える。** — ビルドや設定は不要です。スタイルシートを一つ読み込むだけですぐに導入できます。
 
-Lism CSS は単なるユーティリティクラス集ではありません。  
-reset.css レベルからの `@layer` 階層、デザイントークン、命名規則まで一貫して定義しており、**CSS設計を一度学べば、以後は自分で設計を考える必要がなくなります**。
-
-### 心地よいリズムを生む余白とタイポグラフィ
-
-余白やフォントサイズのスケーリングにこだわったトークン設計により、意識せずとも**デザインに自然なリズム**が生まれます。
-
-### レイアウトファーストで素早く組める
-
-Every Layout のレイアウトプリミティブをベースに、`l--flex`, `l--columns`, `l--switchCols` など、**汎用的なレイアウトモジュール**を豊富に用意しています。
-
-### 軽量なCSSのまま柔軟にレスポンシブ対応
-
-Tailwind CSS のようなユーティリティクラスがありつつも、全プロパティ×全ブレークポイントのクラスは生成しません。  
-**CSS変数と組み合わせる独自の方式**により、少ないCSS容量のまま柔軟なレスポンシブ設計が可能です。
-
-### CSSを書くことを前提にしたバランスの良い設計
-
-HTMLに全部書く Tailwind CSS とも、JSXにスタイルを閉じ込める CSS-in-JS とも違います。  
-主要なレイアウトや軽い装飾はクラスと変数でサクっと組み、**細部はネイティブCSSで丁寧に整える**前提の設計です。
-
-
-:::info[もっと詳しく]
+:::info
 各特徴の詳細については「[特徴](/docs/features/)」ページで解説しています。
 :::
 
