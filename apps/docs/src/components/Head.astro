@@ -42,7 +42,7 @@ const getOgImageUrl = (imgPath?: string): string | undefined => {
   return imgPath;
 };
 
-const ogImageUrl = getOgImageUrl(ogImage || '/og-default.jpg');
+const ogImageUrl = getOgImageUrl(ogImage || '/ogimg-default.png');
 
 // タイトルメタテキスト（ページタイトル - サイト名 の形式）
 const titleMetaText = title === siteConfig.name ? title : `${title} - ${siteConfig.name}`;
