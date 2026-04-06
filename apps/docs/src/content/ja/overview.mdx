@@ -16,7 +16,7 @@ import LismExDemo from './_demo/LismExDemo.mdx';
 
 ## Why Lism CSS?
 
-- **自分でCSS設計を考えなくてよい。** — reset.css から `@layer` 階層、トークン、命名規則まで、サイト全体のCSS設計を丸ごと引き受けます。
+- **自分でCSS設計を考えなくてよい。** — ベーススタイリング、`@layer` 階層、トークン、命名規則まで、サイト全体のCSS設計を丸ごと引き受けます。
 - **軽量なCSSで、レスポンシブ。** — CSS変数との組み合わせにより、少ないCSS容量のまま柔軟にブレークポイント対応ができます。
 - **CSSを読み込むだけで使える。** — ビルドや設定は不要です。スタイルシートを一つ読み込むだけですぐに導入できます。
 
@@ -25,9 +25,54 @@ import LismExDemo from './_demo/LismExDemo.mdx';
 :::
 
 
-## コンポーネントの使用例
+## ゼロビルドでどんな環境でも使えます。
+
+Lism CSS はあくまでも**CSSの設計理論が主体**になっており、それに沿って作成された**一つのCSSファイル**が本体です。  
+
+:::check
+CSSを読み込むだけで導入できるため、**素のHTMLサイトでも利用できる**ものになっています。
+:::
+
+<PreviewTitle>たった1行のコードで、CDNから読み込むだけでも使い始めることができます。</PreviewTitle>
+```html
+<link href="https://cdn.jsdelivr.net/npm/lism-css@0/dist/css/main.css" rel="stylesheet" />
+```
+
+つまり、Lism CSSの導入に特殊なビルド処理は必須ではありません。
+
+ただし、`lism-css`というnpmパッケージに内包されている React や Astro 向けの**専用コンポーネント**を使えば、さらに快適な開発体験が得られます。
+  
+また、SCSS設定の上書きや、`lism.config.js`の導入でより柔軟にカスタマイズして利用していただくことも可能です。
+
+
+## Lism CSS のエコシステム
+
+Lism CSS はコアのCSSライブラリだけでなく、開発をサポートするパッケージ群をOSSとして提供しています。
+
+| パッケージ | 説明 |
+|---|---|
+| `lism-css` | コアCSS + React / Astro レイアウトコンポーネント |
+| `@lism-css/ui` | アコーディオンやタブ、ボタンリンクなどのUIコンポーネント集 |
+| `@lism-css/cli` | UIコンポーネントをプロジェクトにコピーしてカスタマイズできるCLI |
+| `@lism-css/mcp` | AIコーディングツール向けのMCPサーバー |
+
+すべて無料・オープンソース（MIT）で開発されています。
+
+
+### JSXコンポーネントの使用例
 
 Lism CSS を簡単に扱えるようにした専用のコンポーネントを React, Astro 形式で配布しています。
 
 <LismExDemo />
 
+
+---
+
+## Inspirations
+
+Lism CSS は以下のプロジェクトから多くのインスピレーションを受けています。
+
+- [Every Layout](https://every-layout.dev/) — **レイアウトプリミティブ**と**ハーモニックモジュラースケーリング**の考え方を取り入れています。
+- [ITCSS](https://itcss.io/) — レイヤー階層の定義を参考にしました。
+- [Tailwind CSS](https://tailwindcss.com/) — 単一のCSSプロパティに対応するクラスを用意する設計を参考にしました。
+- [Chakra UI](https://chakra-ui.com/), [MUI](https://mui.com/) — コンポーネントの使用感を参考にしました。

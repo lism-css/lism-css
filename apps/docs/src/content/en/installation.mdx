@@ -104,12 +104,49 @@ export default defineConfig({
 
 
 
-{/* ## Playgrounds
+## Installing Lism UI
 
-A Playgrounds repository is available where you can try out Lism components with Vite + React, Astro, and HTMX.
+**UI components** such as accordions, tabs, and modals are provided as a separate package, `@lism-css/ui`.
 
-https://github.com/lism-css/lism-playgrounds
- */}
+### Use as a package
+
+<Preview>
+  <PreviewCode slot='tab' label='npm'>
+  ```bash frame="none"
+  npm i @lism-css/ui
+  ```
+  </PreviewCode>
+  <PreviewCode slot='tab' label='pnpm'>
+  ```bash frame="none"
+  pnpm add @lism-css/ui
+  ```
+  </PreviewCode>
+</Preview>
+
+
+```js frame="none"
+// Example: importing React components
+import { Accordion, Tabs, Button } from '@lism-css/ui/react';
+
+// Example: importing in .astro
+import { Accordion, Tabs, Button } from '@lism-css/ui/astro';
+```
+
+
+### Copy to your project with the CLI
+
+Using `@lism-css/cli`, you can copy UI component source code directly into your project and customize it freely.
+
+```bash frame="none"
+# Add a component (interactive setup on first run)
+npx @lism-css/cli add accordion
+
+# Add multiple components at once
+npx @lism-css/cli add accordion modal tabs
+
+# Add all components
+npx @lism-css/cli add --all
+```
 
 
 ## AI Tool Integration (MCP)

@@ -69,7 +69,7 @@ React の props を CSS クラス・スタイルに変換：
 CSS Layers による詳細度管理：
 
 ```
-lism-reset → lism-base → lism-modules → lism-utility
+lism-base → lism-modules → lism-utility → lism-custom
 ```
 
 ※ Props クラスは `@layer` を付けない

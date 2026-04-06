@@ -1,0 +1,120 @@
+---
+title: 'Features of Lism CSS'
+description: 'A detailed look at the design philosophy and key features of Lism CSS.'
+---
+import { Box, Center, Flex, Frame, Icon, Spacer, Text } from "lism-css/astro";
+
+
+## Handles the entire CSS architecture of your site
+
+Lism CSS is not just a utility class package.
+
+- Design token definitions
+- Naming conventions for class names and variable names
+- Layer (`@layer`) hierarchy definitions
+
+These are all defined comprehensively, making Lism CSS a framework that **takes full ownership of your site's entire CSS architecture**. (As a trade-off, coexistence with other CSS frameworks is not intended.)
+
+CSS specificity is managed through CSS Layers, organized in the following hierarchy:
+
+```
+lism-base → lism-modules → lism-utility → lism-custom
+```
+
+`lism-base` includes a `reset` sub-layer, and `lism-modules` is further divided into `state`, `layout`, and `atomic` sub-layers.
+
+
+:::check
+While there is a learning curve to understand Lism's design, projects using Lism benefit from a significantly reduced burden of "thinking about CSS architecture."
+:::
+
+
+## Token design that creates a natural rhythm
+
+Carefully crafted design tokens are provided for spacing and font size scaling.
+
+By reusing tokens consistently, your designs will **naturally develop a comfortable rhythm** without any extra effort.  
+This also leads to improved maintainability and consistency.
+
+Reference: [On typography and spacing scaling design](https://css-notes.com/layout/typography-scaling/)
+
+
+## Layout-first module design
+
+Common layout elements used on websites are broken down into reusable, generalized building blocks.
+
+This is inspired by the concept of **layout primitives** from [Every Layout](https://every-layout.dev/).
+
+- `l--flex` — Flexbox-based layout
+- `l--stack` — Vertical stacking layout
+- `l--columns` — Column layout
+- `l--center` — Centered layout
+- `l--switchCols` — Layout that automatically switches between columns and stacked based on container width
+
+and many more layout modules are defined.
+
+
+## Utility design leveraging CSS variables
+
+Like [Tailwind CSS](https://tailwindcss.com/), Lism provides utility classes corresponding to individual CSS properties.  
+However, it does not generate classes for every property × every breakpoint combination.
+
+Through a **unique approach combining CSS custom properties**, you can handle responsive layouts flexibly while keeping the CSS footprint small.
+
+<Preview>
+  <PreviewTitle>Real-world usage example</PreviewTitle>
+  <PreviewArea resize p='15'>
+    <div class="-p:20 -p_sm -p_md -bd" style="--p_sm:var(--s30);--p_md:var(--s40);">BOX</div>
+  </PreviewArea>
+  <PreviewCode label="HTML" slot="tab">
+```html
+<div class="-p:20 -p_sm -p_md -bd" style="--p_sm: var(--s30); --p_md: var(--s40)">BOX</div>
+```
+  </PreviewCode>
+  <PreviewCode label="JSX" slot="tab">
+```jsx
+<Box p={[20, 30, 40]} bd>
+  BOX
+</Box>
+```
+  </PreviewCode>
+</Preview>
+
+For example, a basic token class like `-p:20` is provided, but a breakpoint-prefixed class like `md:p-30` is not.  
+Instead, you combine the `-p_md` class with the `--p_md` variable to achieve the same effect.
+
+:::check
+This allows you to **easily switch values at breakpoints** for all major CSS properties while keeping the CSS size small.
+:::
+
+
+## A design philosophy that embraces writing CSS
+
+Lism CSS takes a different approach from [Tailwind CSS](https://tailwindcss.com/), which puts everything in HTML, and from CSS-in-JS, which encapsulates styles in JSX.
+
+- **Major layouts and light decoration** → Quickly compose with classes and CSS variables
+- **Detailed styling and fine-tuning** → Carefully craft with native CSS
+
+This balance is central to the design.  
+Rather than solving everything with classes, the expectation is that you will write CSS where CSS should be written.
+
+
+## Layouts independent of media queries
+
+Lism CSS, drawing inspiration from [Every Layout](https://every-layout.dev/), includes several **layout modules that automatically adapt to their container's width without relying on queries**.
+
+- `l--fluidCols` — Column count adjusts automatically based on container width
+- `l--switchCols` — Automatically switches between columns and stacked layout based on container width
+
+
+### Container queries adopted by default
+
+Of course, traditional responsive design based on breakpoints is also supported alongside these.  
+However, a distinctive feature is that **container queries are adopted by default** rather than media queries.
+
+:::warning
+Note that if you haven't defined a container somewhere, responsive utility classes and variables may not be applied correctly.
+:::
+
+Beyond that, there are a few behavioral quirks to be aware of — for example, `position: fixed` behaves differently inside a container element.
+However, in return, components can autonomously switch their layout based on the width of their placement, enabling highly reusable designs that work correctly no matter where they are placed.

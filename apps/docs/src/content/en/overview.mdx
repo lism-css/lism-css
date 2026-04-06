@@ -5,162 +5,74 @@ description: 'An overview of Lism CSS and its key features.'
 import { Box, Center, Flex, Frame, Icon, Spacer, Text } from "lism-css/astro";
 import LismExDemo from '../ja/_demo/LismExDemo.mdx';
 
-"**Lism CSS**" is a lightweight CSS design framework for **rapidly building the structural skeleton of websites**.
-No build step or configuration required — it works simply by importing the CSS.
+"**Lism CSS**" is a lightweight CSS design framework for **building the structural skeleton of websites with a smooth, beautiful rhythm**.
+
+- Typography design that naturally brings a comfortable rhythm to your entire site.
+- A layout-first module architecture that makes wireframing straightforward.
+- A flexible, responsive utility design powered by CSS variables.
+
+It is a unique CSS design system that blends the layout primitives and harmonic modular scaling of [Every Layout](https://every-layout.dev/), the utility-first approach of [Tailwind CSS](https://tailwindcss.com/), and the layer architecture of [ITCSS](https://www.xfive.co/blog/itcss-scalable-maintainable-css-architecture/).
 
 
-- Token design that naturally brings a comfortable rhythm to your designs.
-- A **layout-first** module architecture.
-- A **flexible and responsive** utility design powered by CSS variables.
+## Why Lism CSS?
 
+- **No need to design your own CSS architecture.** — From base styling and `@layer` hierarchy to tokens and naming conventions, Lism takes full ownership of your site's entire CSS design.
+- **Lightweight CSS with responsive support.** — By combining CSS variables with utility classes, you can handle breakpoints flexibly while keeping the CSS footprint small.
+- **Works by simply importing the CSS.** — No build step or configuration required. Just import a single stylesheet and you're ready to go.
 
-<Spacer h='10' />
-
-Lism CSS supports building the overall layout of a site, but fine-grained styling and decoration are intended to be written freely with native CSS.
-
-It is not a framework where you only need to add classes to your HTML.
-
-The design is a blend of [Every Layout](https://every-layout.dev/), [Bootstrap](https://getbootstrap.com/), and [Tailwind CSS](https://tailwindcss.com/).
-
-
-
-## Key Features of Lism CSS
-
-
-### A zero-build framework that works in any environment
-
-The core is the **design theory of HTML and CSS itself** — no special build process is required.
-
-{/* Unlike the zero-runtime approach popular these days, this is zero-build. */}
-
-:::check
-It can be introduced simply by importing the CSS, making it usable even with **plain HTML sites**.
+:::info
+For more details on each feature, see the [Features](/docs/features/) page.
 :::
 
-{/* <Text c="text-2" my-s="10" fz="s">（Some JavaScript for accordion and tab behavior is included.）</Text> */}
+
+## Zero-build, works in any environment.
+
+Lism CSS is fundamentally **driven by CSS design theory**, and a **single CSS file** is its core.
+
+:::check
+Since it can be introduced simply by importing the CSS, it works even with **plain HTML sites**.
+:::
+
+<PreviewTitle>You can get started in just one line of code, loaded directly from a CDN.</PreviewTitle>
+```html
+<link href="https://cdn.jsdelivr.net/npm/lism-css@0/dist/css/main.css" rel="stylesheet" />
+```
+
+In other words, no special build process is required to use Lism CSS.
+
+That said, using the dedicated **components** for React and Astro included in the `lism-css` npm package will give you an even more comfortable development experience.
+
+You can also customize Lism more flexibly by overriding SCSS settings or introducing a `lism.config.js` file.
 
 
-(That said, using the dedicated **components** for React and Astro described below will improve the development experience.)
+## The Lism CSS Ecosystem
+
+Lism CSS provides not only the core CSS library, but also a suite of packages to support your development, all as open source.
+
+| Package | Description |
+|---|---|
+| `lism-css` | Core CSS + React / Astro layout components |
+| `@lism-css/ui` | A collection of UI components including accordions, tabs, and button links |
+| `@lism-css/cli` | A CLI tool to copy UI component source code into your project for customization |
+| `@lism-css/mcp` | An MCP server for AI coding tools |
+
+All packages are free and open source (MIT).
 
 
-### Dedicated components for Lism CSS
+### Example usage of JSX components
 
-Dedicated components that make working with Lism CSS simple are distributed as npm packages in both React and Astro formats.
-
-You can work with Lism CSS-compliant components as easily as you would with [Chakra UI](https://chakra-ui.com/) or [MUI](https://mui.com/).
-
-<PreviewTitle>Here's how the dedicated components are used</PreviewTitle>
+Dedicated components that make working with Lism CSS simple are distributed in both React and Astro formats.
 
 <LismExDemo />
-
-
-
-### Responsible for the entire site's CSS architecture
-
-Lism CSS is not a utility class package.
-
-- Design token definitions
-- Naming conventions for class names and variable names
-- A **layer (`@layer`) hierarchy** built from the `reset.css` level up
-
-These are all defined, and the CSS is designed with the expectation that you will build your entire site on a Lism foundation.
-
-As a result, coexistence with other frameworks is not supported.
-
-
-### Layout-first
-
-Lism CSS breaks down the layout elements commonly used in websites into reusable, generalized building blocks.
-
-This is inspired by the concept of **layout primitives** from [Every Layout](https://every-layout.dev/).
-
-Layout module classes such as:
-
-- `l--flex`
-- `l--center`
-- `l--columns`
-
-are defined for this purpose.
-
-
-### Utility design combining CSS variables
-
-Lism makes extensive use of utility classes that leverage CSS variables.
-
-This characteristic is most apparent in **responsive utility classes**.
-
-
-<Preview>
-  <PreviewTitle>Real-world usage example</PreviewTitle>
-  <PreviewArea resize p='15'>
-    <div class="-p:20 -p_sm -p_md -bd" style="--p_sm:var(--s30);--p_md:var(--s40);">BOX</div>
-  </PreviewArea>
-  <PreviewCode label="HTML" slot="tab">
-```html
-<div class="-p:20 -p_sm -p_md -bd" style="--p_sm: var(--s30); --p_md: var(--s40)">BOX</div>
-```
-  </PreviewCode>
-  <PreviewCode label="JSX" slot="tab">
-```jsx
-<Box p={[20, 30, 40]} bd>
-  BOX
-</Box>
-```
-  </PreviewCode>
-</Preview>
-
-
-:::check
-This makes it easy to **switch values at breakpoints** for all major CSS properties.
-:::
-
-
-### Layout design independent of media queries
-
-Lism CSS adopts **container queries by default** rather than media queries.
-
-Additionally, Lism CSS includes several **layout modules that are independent of both media queries and container queries**.
-
-
-:::warning
-Note that within a container element, the behavior of `position: fixed` and some size-related behaviors may change.
-:::
-
-
-
-
-{/* #### CSS designed for easy purging (tree shaking)
-
-The use of utility classes has some quirks, but the design also allows for extremely lightweight output using tools like PurgeCSS.
-Having a single class per CSS property for each breakpoint in the `.-prop@bp` format also makes it easier to purge. */}
-
-
-{/* #### Dark mode is also easy to implement
-
-Implementing dark mode or switching color themes can be done simply by swapping out root tokens (overriding CSS variables). */}
-
-{/* ### WordPress-friendly
-
-Lism is designed to be easy to integrate with WordPress, and a block theme based on Lism is also planned.
-
-- Lightweight
-- Naming conventions that don't conflict with WordPress class names
-- The use of tokens has strong affinity with `theme.json` related features.
-- Content width control approaches can also be designed to align with WordPress.
-- React-based components make it easy to create blocks.
-- Managing content with Lism-based blocks makes it easier to use WordPress as a headless CMS. (Because both site-wide CSS and content CSS are consolidated in Lism.) */}
-
 
 
 ---
 
 ## Inspirations
 
-- [Every Layout](https://every-layout.dev/) : The concept of **layout primitives** is adopted as a foundation in Lism.
-- [ITCSS](https://itcss.io/) : The concept of layering is referenced.
-- [daisyUI](https://daisyui.com/) : A great reference for color token design and the richness of components.
-- [SmartHR Design System](https://smarthr.design/products/design-tokens/) : A great reference for design token architecture.
-- [Chakra UI](https://chakra-ui.com/),  [MUI](https://mui.com/) : A great reference for the developer experience of components.
-- [Tailwind CSS](https://tailwindcss.com/) : A great reference for the idea of creating fine-grained classes from CSS property-value pairs.
+Lism CSS draws heavy inspiration from the following projects.
 
-{/* Chakra, Tailwind, Bootstrap, and other frameworks are also referenced. */}
+- [Every Layout](https://every-layout.dev/) — The concepts of **layout primitives** and **harmonic modular scaling** are incorporated.
+- [ITCSS](https://itcss.io/) — Referenced for layer hierarchy definitions.
+- [Tailwind CSS](https://tailwindcss.com/) — Referenced for the design of providing classes for individual CSS properties.
+- [Chakra UI](https://chakra-ui.com/), [MUI](https://mui.com/) — Referenced for the component developer experience.
