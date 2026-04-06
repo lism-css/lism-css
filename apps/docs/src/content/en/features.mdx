@@ -105,6 +105,7 @@ Lism CSS, drawing inspiration from [Every Layout](https://every-layout.dev/), in
 
 - `l--fluidCols` — Column count adjusts automatically based on container width
 - `l--switchCols` — Automatically switches between columns and stacked layout based on container width
+- `l--sideMain` — Layout automatically switches based on the content length you want to maintain
 
 
 ### Container queries adopted by default
@@ -113,7 +114,8 @@ Of course, traditional responsive design based on breakpoints is also supported 
 However, a distinctive feature is that **container queries are adopted by default** rather than media queries.
 
 :::warning
-Note that if you haven't defined a container somewhere, responsive utility classes and variables may not be applied correctly.
+Note that **an ancestor element must have a container definition** for responsive value switching with container queries to work correctly.
+(In Lism CSS, you simply need to add the `is--container` class to an ancestor element.)
 :::
 
 Beyond that, there are a few behavioral quirks to be aware of — for example, `position: fixed` behaves differently inside a container element.
