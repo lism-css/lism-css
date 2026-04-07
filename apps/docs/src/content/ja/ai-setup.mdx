@@ -99,99 +99,261 @@ AIコーディングツール（Claude Code, Cursor, Codex など）で Lism CSS
 
 各ツールごとに対応するファイル名が異なります。
 
-| ツール | ファイル |
-|--------|----------|
-| Claude Code | `CLAUDE.md` |
-| OpenAI Codex | `AGENTS.md` |
-| Cursor | `.cursor/rules/*.mdc` |
-| GitHub Copilot | `.github/copilot-instructions.md` |
+| ツール | ファイル | 配置方法 |
+|--------|----------|----------|
+| Claude Code | `.claude/skills/lism-css/SKILL.md` | スキルとして自動読み込み |
+| OpenAI Codex | `AGENTS.md` | プロジェクトルートに配置 |
+| Cursor | `.cursor/rules/lism-css.mdc` | ルールファイルとして配置 |
+| GitHub Copilot | `.github/copilot-instructions.md` | プロジェクトルートに配置 |
 
-以下のテンプレートをコピーして、プロジェクトのルールファイルとして配置してください。  
-プロジェクトの構成に合わせて適宜カスタマイズすることをおすすめします。
+以下のテンプレートをコピーして、プロジェクトのルールファイルとして配置してください。
+
+:::note[Claude Code の場合]
+Claude Code では `.claude/skills/lism-css/SKILL.md` として配置すると、`user-invocable: false` の設定により、Lism CSS のファイルを編集する際にAIが自動的にこのスキルを参照します。
+他のツール向けに使う場合は、frontmatter 部分を除いた本文のみをコピーしてください。
+:::
 
 
 ### テンプレート
 
 ````markdown
+---
+name: lism-css
+description: "Lism CSS フレームワークの設計ルール・Props・トークン・命名規則のガイド。Lism CSS を使用するファイルの編集時に参照する。"
+user-invocable: false
+paths:
+  - "**/*.tsx"
+  - "**/*.jsx"
+  - "**/*.astro"
+  - "**/*.scss"
+  - "**/*.css"
+---
+
 # Lism CSS ガイド
 
 このプロジェクトは CSS フレームワーク「Lism CSS」を使用しています。
+
 MCP サーバー (`@lism-css/mcp`) が利用可能な場合は、コンポーネントやPropsの詳細情報をそちらから取得してください。
+
+公式ドキュメント: https://lism-css.com/docs/overview/
+
 
 ## パッケージ構成
 
-- `lism-css` — コアCSS・レイアウトコンポーネント
-- `@lism-css/ui` — UIコンポーネント（Accordion, Modal, Tabs 等）
+| パッケージ | 用途 |
+|-----------|------|
+| `lism-css` | コアCSS・レイアウトコンポーネント |
+| `@lism-css/ui` | UIコンポーネント（Accordion, Modal, Tabs 等） |
 
 ```jsx
 // React
-import { Box, Flex, Stack, Grid } from 'lism-css/react';
-import { Accordion, Tabs } from '@lism-css/ui/react';
+import { Box, Flex, Stack, Grid, Text, Media } from 'lism-css/react';
+import { Accordion, Tabs, Modal, Button } from '@lism-css/ui/react';
 
 // Astro
-import { Box, Flex, Stack, Grid } from 'lism-css/astro';
-import { Accordion, Tabs } from '@lism-css/ui/astro';
+import { Box, Flex, Stack, Grid, Text, Media } from 'lism-css/astro';
+import { Accordion, Tabs, Modal, Button } from '@lism-css/ui/astro';
 ```
+
+
+## CSS Layer 構造
+
+Lism CSS は CSS Layers による詳細度管理を採用しています。
+カスタムCSSを追加する場合は、この順序を意識してください。
+
+```
+Settings（トークン定義）
+  → @layer lism-base（Reset CSS・トークン・.set--クラス）
+  → @layer lism-modules（.is-- / .l-- / .a-- / .c-- モジュール群）
+  → @layer lism-utility（.u-- ユーティリティクラス）
+  → @layer lism-custom（ユーザーカスタマイズ用）
+  → Prop Class（レイヤー外 — 最も詳細度が高い）
+```
+
+詳細: https://lism-css.com/docs/css-methodology/
+
+
+## 命名規則とプレフィックス
+
+クラス名のプレフィックスによって、役割とレイヤーの所属が決まります。
+
+| プレフィックス | レイヤー | 役割 | 例 |
+|--------------|---------|------|-----|
+| `.set--` | lism-base | ベーススタイル上書き・トークン再定義 | `.set--plain`, `.set--transition` |
+| `.is--` | lism-modules | 付け外し可能な状態モジュール | `.is--container`, `.is--wrapper` |
+| `.l--` | lism-modules | レイアウト構成モジュール | `.l--grid`, `.l--flex`, `.l--stack` |
+| `.a--` | lism-modules | レイアウト最小単位モジュール | `.a--icon`, `.a--divider` |
+| `.c--` | lism-modules | 具体的な役割のコンポーネント | `.c--button`, `.c--accordion` |
+| `.u--` | lism-utility | 用途が明確なユーティリティ | `.u--cbox`, `.u--trim` |
+| `.-` | レイヤー外 | 単一プロパティ制御（Prop Class） | `.-fz:l`, `.-p:20`, `.-d:none` |
+
+**併用ルール:**
+- `.l--` と `.c--` は併用OK（例: `<div class="l--flex c--nav">`）
+- 同カテゴリ内の併用は不可（例: `.l--flex` と `.l--grid` は同要素に付けない）
+- バリエーション: `.c--button.c--button--outline`
+- 子要素: `.c--card_header`, `.c--card_body`
+
+詳細: https://lism-css.com/docs/module-class/
+
 
 ## Props の書き方
 
-Lism コンポーネントでは、CSSプロパティを短縮名のpropsとして指定します。
+Lism コンポーネントでは、CSSプロパティを短縮名の props として指定します。
+値にはデザイントークン（後述）を使ってください。
+
+### 主要な Props
 
 | Prop | CSS | 例 |
 |------|-----|----|
-| `p` | `padding` | `p='20'`, `p='box'` |
-| `m` | `margin` | `m='20'`, `m='auto'` |
+| `p`, `px`, `py` | `padding` 系 | `p='20'`, `px='box'` |
+| `m`, `mx`, `my` | `margin` 系 | `m='20'`, `mx='auto'` |
+| `g` | `gap` | `g='20'`, `g='40'` |
 | `fz` | `font-size` | `fz='l'`, `fz='2xl'` |
 | `fw` | `font-weight` | `fw='bold'` |
+| `lh` | `line-height` | `lh='l'` |
+| `ta` | `text-align` | `ta='center'` |
 | `c` | `color` | `c='main'`, `c='accent'` |
 | `bgc` | `background-color` | `bgc='base-2'` |
 | `d` | `display` | `d='flex'`, `d='grid'` |
-| `g` | `gap` | `g='20'`, `g='40'` |
-| `w` | `width` | `w='100%'` |
-| `h` | `height` | `h='100%'` |
-| `bd` | `border` | `bd` |
+| `w`, `h` | `width`, `height` | `w='100%'`, `h='auto'` |
+| `bd` | `border` | `bd` (単独で使用可) |
+| `bdc` | `border-color` | `bdc='main'` |
 | `bdrs` | `border-radius` | `bdrs='l'` |
 | `bxsh` | `box-shadow` | `bxsh='2'` |
-| `ta` | `text-align` | `ta='center'` |
+| `ar` | `aspect-ratio` | `ar='16/9'` |
+| `ov` | `overflow` | `ov='hidden'` |
+| `gt`, `gtc`, `gtr` | `grid-template` 系 | `gtc='1fr 1fr'` |
+| `fx`, `fxd`, `fxw` | `flex` 系 | `fxd='column'` |
 
-### レスポンシブ対応
+全Props一覧: https://lism-css.com/docs/prop-class/
 
-オブジェクト形式でブレークポイントごとの値を指定します。
-
-```jsx
-<Box p={{ _: '20', sm: '30', md: '40' }}>...</Box>
-```
 
 ## デザイントークン
 
-Lism CSS では、数値やキーワードによるデザイントークンをpropsの値に指定します。
+Props の値には、生のCSS値ではなくデザイントークンを優先してください。
 
-- **余白 (SPACE)**: `0`, `5`, `10`, `15`, `20`, `25`, `30`, `40`, `50` （CSS変数 `--s--{n}` に対応）
-- **フォントサイズ (FONT SIZE)**: `2xs`, `xs`, `s`, `m`, `l`, `xl`, `2xl`, `3xl`, ... （CSS変数 `--fz--{key}` に対応）
-- **カラー (COLOR)**: `main`, `accent`, `base`, `base-2`, `base-3`, `content`, `content-2`, `content-3` など
+### 余白 (SPACE)
+`0`, `5`, `10`, `15`, `20`, `25`, `30`, `40`, `50`
+→ CSS変数 `--s--{n}` に対応（例: `--s--20`）
 
-## モジュールクラスの命名規則
+### フォントサイズ (FONT SIZE)
+`2xs`, `xs`, `s`, `m`, `l`, `xl`, `2xl`, `3xl`, `4xl`, `5xl`
+→ CSS変数 `--fz--{key}` に対応（例: `--fz--l`）
 
-- **State**: `.is--{name}` — レイアウト状態 (例: `is--container`, `is--wrapper`)
-- **Layout**: `.l--{name}` — レイアウト構成 (例: `l--grid`, `l--flex`, `l--stack`)
-- **Atomic**: `.a--{name}` — 最小レイアウト単位 (例: `a--icon`, `a--divider`)
-- **Custom**: `.c--{name}` — カスタムコンポーネント (例: `c--button`, `c--accordion`)
+### カラー (COLOR)
+- テーマカラー: `main`, `accent`
+- 背景系: `base`, `base-2`, `base-3`
+- テキスト系: `content`, `content-2`, `content-3`
+
+詳細: https://lism-css.com/docs/tokens/
+
+
+## レスポンシブ対応
+
+Lism CSS はコンテナクエリをデフォルトで採用しています。
+ブレークポイント: `sm: 480px`, `md: 800px`
+
+### コンポーネントの Props で指定する場合（推奨）
+
+配列形式またはオブジェクト形式で指定します。
+
+```jsx
+// 配列形式: [デフォルト, sm, md]
+<Box p={[20, 30, 40]} fz={['s', 'm', 'l']} />
+
+// オブジェクト形式
+<Box p={{ _: '20', sm: '30', md: '40' }} />
+```
+
+### HTML / Prop Class で指定する場合
+
+Prop Class とCSS変数を組み合わせます。
+
+```html
+<div class="-p:20 -p_sm -p_md" style="--p_sm: var(--s--30); --p_md: var(--s--40)">
+  ...
+</div>
+```
+
+詳細: https://lism-css.com/docs/responsive/
+
+
+## カスタムCSS を追加する場合
+
+独自のスタイルを追加する場合は `@layer lism-custom` 内に記述してください。
+これにより、Lism CSS の Layer 構造と整合性を保てます。
+
+```css
+/* Lism の lism-custom レイヤー内に追加 */
+@layer lism-custom {
+  .my-custom-card {
+    border: 1px solid var(--c--main);
+    border-radius: var(--bdrs--m);
+    padding: var(--s--30);
+  }
+}
+```
+
+カスタムCSS内でも、生のCSS値ではなく Lism のCSS変数（トークン）を使ってください。
+
+```css
+/* ✕ 避ける */
+.my-card { padding: 24px; border-radius: 8px; }
+
+/* ○ 推奨 */
+.my-card { padding: var(--s--30); border-radius: var(--bdrs--m); }
+```
+
+詳細: https://lism-css.com/docs/customize/
+
 
 ## 実装ルール
 
-- インラインスタイルではなく、Lism の Props を使う
-- 生のCSS値ではなく、デザイントークンを優先する
-- ページ構造にはレイアウトモジュール（`Stack`, `Flex`, `Grid` 等）を活用する
-- CSSの追加記述が必要な場合は、Lism の CSS Layers 構造に従い `@layer` で記述する
+### Props / クラスで書くもの（Lism に任せる）
+- レイアウト構造（`Stack`, `Flex`, `Grid`, `Columns` 等のレイアウトモジュール）
+- 余白・サイズ・フォントサイズなどのトークン値
+- レスポンシブ切り替え
+- 色・ボーダー・シャドウなどの装飾
+
+### ネイティブ CSS で書くもの（@layer lism-custom 内）
+- アニメーション・トランジション
+- 複雑なセレクタ（`:nth-child`, `::before`, `::after` 等）
+- カスタムプロパティを使った独自の計算
+- Lism のトークンやモジュールでカバーできない特殊なスタイル
+
+### コンポーネント化のルール
+- 同じスタイルの組み合わせが3箇所以上で使われる場合は、コンポーネントとして切り出す
+- コンポーネントは Lism のレイアウトモジュールをベースに構築する
+- カスタムクラスが必要な場合は `.c--{name}` の命名規則に従う
+
+```jsx
+// ✕ 同じ構造をコピーペースト
+<Box bgc="base-2" bdrs="l" p="30">...</Box>
+<Box bgc="base-2" bdrs="l" p="30">...</Box>
+
+// ○ コンポーネント化
+function Card({ children }) {
+  return <Box bgc="base-2" bdrs="l" p="30">{children}</Box>;
+}
+```
 ````
 
-:::note
-::title[カスタマイズのヒント]
+:::note[カスタマイズのヒント]
 
-テンプレートは最小限の内容です。プロジェクトに合わせて以下を追加するとより効果的です。
+テンプレートは汎用的な内容です。プロジェクトに合わせて以下を追加・調整すると、より効果的です。
 
-- 使用するブレークポイント（`sm: 480px`, `md: 800px`）
-- プロジェクト固有のカスタムトークン
+- プロジェクト固有のカスタムトークンやテーマ設定
 - 使用するコンポーネントの具体的なパターン
 - コーディング規約（ファイル構成、命名規則など）
+- `paths` フィールドのglobパターンをプロジェクト構成に合わせて調整
+:::
+
+:::note[Claude Code プラグインとしての配布]
+
+このスキルは将来的に Claude Code プラグインとしても配布予定です。
+プラグインが利用可能になれば、以下のコマンドでインストールできるようになります。
+
+```bash
+claude plugin install lism-css
+```
 :::
