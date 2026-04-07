@@ -10,7 +10,7 @@ There are two main approaches:
 | Method | Description |
 |--------|-------------|
 | **MCP Server** | Allows AI tools to reference component, Props, and token information in real time |
-| **Rule files** | Place a file in your project to communicate design rules to AI agents |
+| **SKILL.md** | Place a file in your project to communicate design rules to AI agents |
 
 Either approach works on its own, but **using both together is more effective**.
 
@@ -62,56 +62,19 @@ Either approach works on its own, but **using both together is more effective**.
   }
   ```
   </PreviewCode>
-  <PreviewCode slot='tab' label='Windsurf'>
-  ```json frame="none"
-  // ~/.windsurf/mcp.json
-  {
-    "mcpServers": {
-      "lism-css": {
-        "command": "npx",
-        "args": ["-y", "@lism-css/mcp"]
-      }
-    }
-  }
-  ```
-  </PreviewCode>
-  <PreviewCode slot='tab' label='Cline'>
-  ```json frame="none"
-  // ~/.cline/mcp_settings.json
-  {
-    "mcpServers": {
-      "lism-css": {
-        "command": "npx",
-        "args": ["-y", "@lism-css/mcp"]
-      }
-    }
-  }
-  ```
-  </PreviewCode>
 </Preview>
 
 For details, see [GitHub - @lism-css/mcp](https://github.com/lism-css/lism-css/tree/main/packages/mcp).
 
 
-## Rule files
+## SKILL.md
 
-By placing a rule file in your project, you can communicate Lism CSS design rules and usage patterns to AI agents.
+By placing the SKILL.md template below in your project, you can communicate Lism CSS design rules and usage patterns to AI agents.
 
-Each tool uses a different file name:
-
-| Tool | File | How to use |
-|------|------|------------|
-| Claude Code | `.claude/skills/lism-css/SKILL.md` | Auto-loaded as a skill |
-| OpenAI Codex | `AGENTS.md` | Place in project root |
-| Cursor | `.cursor/rules/lism-css.mdc` | Place as a rule file |
-| GitHub Copilot | `.github/copilot-instructions.md` | Place in project root |
-
-Copy the template below and place it as a rule file in your project.
-
-:::note[For Claude Code]
-When placed as `.claude/skills/lism-css/SKILL.md`, it is automatically recognized as a skill.
-For other tools (Codex, Cursor, etc.), copy only the body content without the frontmatter section (the part enclosed in `---`).
-:::
+| Tool | Destination | How to copy |
+|------|-------------|-------------|
+| Claude Code | `.claude/skills/lism-css/SKILL.md` | Copy the template as-is |
+| OpenAI Codex | `AGENTS.md` (project root) | Copy without the frontmatter (the `---` delimited header) |
 
 
 ### Template
@@ -128,6 +91,8 @@ user-invocable: false
 This project uses the CSS framework "Lism CSS".
 
 If the MCP server (`@lism-css/mcp`) is available, use it to get detailed component and Props information.
+
+> **Version info:** This guide is based on `lism-css@0.11.0`. Check the version of `lism-css` used in the project, and notify the user if it differs from this guide's version.
 
 Official documentation: https://lism-css.com/en/docs/overview/
 
@@ -195,31 +160,106 @@ Details: https://lism-css.com/en/docs/module-class/
 Lism components accept CSS properties as shorthand props.
 Use design tokens (described below) for values.
 
+> The Props and classes listed here are only representative examples. Refer to the links at the end of each section for full details.
+
+### Prop Class (HTML syntax)
+
+JSX Props are expressed in HTML as **Prop Classes** in the format `.-{prop}:{value}`.
+
+```jsx
+// JSX
+<Box p='20' fz='l' c='brand' />
+
+// Equivalent HTML
+<div class="l--box -p:20 -fz:l -c:brand">...</div>
+```
+
+For arbitrary values that don't match tokens or presets, use a class + CSS variable combination.
+
+```html
+<!-- Arbitrary value: .-{prop} class + --{prop} variable -->
+<div class="-w" style="--w: 200px">...</div>
+```
+
 ### Key Props
 
-| Prop | CSS | Example |
-|------|-----|---------|
-| `p`, `px`, `py` | `padding` family | `p='20'`, `px='box'` |
-| `m`, `mx`, `my` | `margin` family | `m='20'`, `mx='auto'` |
-| `g` | `gap` | `g='20'`, `g='40'` |
-| `fz` | `font-size` | `fz='l'`, `fz='2xl'` |
-| `fw` | `font-weight` | `fw='bold'` |
-| `lh` | `line-height` | `lh='l'` |
-| `ta` | `text-align` | `ta='center'` |
-| `c` | `color` | `c='main'`, `c='accent'` |
-| `bgc` | `background-color` | `bgc='base-2'` |
-| `d` | `display` | `d='flex'`, `d='grid'` |
-| `w`, `h` | `width`, `height` | `w='100%'`, `h='auto'` |
-| `bd` | `border` | `bd` (can be used alone) |
-| `bdc` | `border-color` | `bdc='main'` |
-| `bdrs` | `border-radius` | `bdrs='l'` |
-| `bxsh` | `box-shadow` | `bxsh='2'` |
-| `ar` | `aspect-ratio` | `ar='16/9'` |
-| `ov` | `overflow` | `ov='hidden'` |
-| `gt`, `gtc`, `gtr` | `grid-template` family | `gtc='1fr 1fr'` |
-| `fx`, `fxd`, `fxw` | `flex` family | `fxd='column'` |
+| Prop | CSS | JSX Example | HTML Prop Class |
+|------|-----|-------------|-----------------|
+| `p`, `px`, `py` | `padding` family | `p='20'` | `.-p:20` |
+| `m`, `mx`, `my` | `margin` family | `m='20'`, `mx='auto'` | `.-m:20`, `.-mx:auto` |
+| `g` | `gap` | `g='20'` | `.-g:20` |
+| `fz` | `font-size` | `fz='l'` | `.-fz:l` |
+| `fw` | `font-weight` | `fw='bold'` | `.-fw:bold` |
+| `lh` | `line-height` | `lh='l'` | `.-lh:l` |
+| `ta` | `text-align` | `ta='center'` | `.-ta:center` |
+| `c` | `color` | `c='brand'` | `.-c:brand` |
+| `bgc` | `background-color` | `bgc='base-2'` | `.-bgc:base-2` |
+| `d` | `display` | `d='none'` | `.-d:none` |
+| `w`, `h` | `width`, `height` | `w='100%'` | `.-w:100%` |
+| `bd` | `border` | `bd` | `.-bd` |
+| `bdc` | `border-color` | `bdc='brand'` | `.-bdc:brand` |
+| `bdrs` | `border-radius` | `bdrs='20'` | `.-bdrs:20` |
+| `bxsh` | `box-shadow` | `bxsh='20'` | `.-bxsh:20` |
+| `ar` | `aspect-ratio` | `ar='16/9'` | `.-ar:16/9` |
+| `ov` | `overflow` | `ov='hidden'` | `.-ov:hidden` |
+| `pos` | `position` | `pos='sticky'` | `.-pos:sticky` |
+| `ai`, `jc` | `align-items`, etc. | `ai='center'` | `.-ai:center` |
+| `fxw` | `flex-wrap` | `fxw='wrap'` | `.-fxw:wrap` |
+| `fxd` | `flex-direction` | `fxd='column'` | `.-fxd:col` |
+| `gtc`, `gtr` | `grid-template` family | `gtc='1fr 1fr'` | `.-gtc` + `--gtc: 1fr 1fr` |
+
+Some values are abbreviated in HTML Prop Classes (e.g., `column` → `col`, `relative` → `rel`, `absolute` → `abs`).
 
 Full Props list: https://lism-css.com/en/docs/prop-class/
+
+
+### is-- Props (State modules)
+
+Classes that define structural behavior of elements. Belong to `@layer lism-modules`.
+In HTML, apply the corresponding `is--` class directly.
+
+| JSX Prop | HTML Class | Purpose |
+|----------|-----------|---------|
+| `isContainer` | `is--container` | Enable as container query container |
+| `isWrapper` | `is--wrapper` | Limit content width of children (presets: `s`, `l`) |
+| `isLayer` | `is--layer` | Absolutely positioned layer with `inset: 0` |
+| `isLinkBox` | `is--linkBox` | Make entire box clickable as a link |
+| `isVertical` | `is--vertical` | Vertical writing mode |
+
+```jsx
+// JSX
+<Box isContainer isWrapper='l'>...</Box>
+
+// Equivalent HTML
+<div class="l--box is--container is--wrapper -contentSize:l">...</div>
+```
+
+Details: https://lism-css.com/en/docs/state/
+
+
+### set-- Props (Base setup)
+
+Classes that set up CSS variables and base styles to enable features. Belong to `@layer lism-base`.
+In HTML, apply the corresponding `set--` class directly.
+
+| JSX Prop | HTML Class | Purpose |
+|----------|-----------|---------|
+| `setPlain` | `set--plain` | Reset default styles for buttons, links, etc. |
+| `setShadow` | `set--shadow` | Redefine shadow token variables (use with `bxsh`) |
+| `setHov` | `set--hov` | Set hover state detection variables |
+| `setTransition` | `set--transition` | Set transition CSS variables |
+| `setGutter` | `set--gutter` | Apply horizontal padding (`--gutter-size`) |
+| `setBp` | `set--bp` | Set breakpoint detection variables |
+
+```jsx
+// JSX
+<Box setShadow bxsh='20'>...</Box>
+
+// Equivalent HTML
+<div class="l--box set--shadow -bxsh:20">...</div>
+```
+
+Details: https://lism-css.com/en/docs/set/
 
 
 ## Design tokens
@@ -227,17 +267,32 @@ Full Props list: https://lism-css.com/en/docs/prop-class/
 Prefer design tokens over raw CSS values for prop values.
 
 ### Spacing (SPACE)
-`0`, `5`, `10`, `15`, `20`, `25`, `30`, `40`, `50`
-→ Maps to CSS variable `--s--{n}` (e.g., `--s--20`)
+`5`, `10`, `15`, `20`, `30`, `40`, `50`, `60`, `70`, `80`
+→ Maps to CSS variable `--s{n}` (e.g., `--s20`)
 
 ### Font size (FONT SIZE)
 `2xs`, `xs`, `s`, `m`, `l`, `xl`, `2xl`, `3xl`, `4xl`, `5xl`
 → Maps to CSS variable `--fz--{key}` (e.g., `--fz--l`)
 
-### Colors (COLOR)
-- Theme: `main`, `accent`
-- Background: `base`, `base-2`, `base-3`
-- Text: `content`, `content-2`, `content-3`
+### Border radius (BORDER RADIUS)
+`10`, `20`, `30`, `40`, `99`
+→ Maps to CSS variable `--bdrs--{n}` (e.g., `--bdrs--20`)
+
+### Box shadow (BOX SHADOW)
+`10`, `20`, `30`, `40`
+→ Maps to CSS variable `--bxsh--{n}` (e.g., `--bxsh--20`)
+
+### Semantic colors (COLOR)
+- Theme: `brand`, `accent`
+- Background: `base`, `base-2`
+- Text: `text`, `text-2`
+- Other: `divider`, `link`
+→ Maps to CSS variable `--{name}` (e.g., `--brand`, `--text`)
+
+### Palette colors (PALETTE)
+`red`, `blue`, `green`, `yellow`, `purple`, `orange`, `pink`, `gray`, `white`, `black`, `keycolor`
+→ Maps to CSS variable `--{name}` (e.g., `--red`, `--blue`)
+→ When specified via Props, internally processed as `var(--palette--{name})`
 
 Details: https://lism-css.com/en/docs/tokens/
 
@@ -256,7 +311,7 @@ Specify values per breakpoint using array or object syntax.
 <Box p={[20, 30, 40]} fz={['s', 'm', 'l']} />
 
 // Object
-<Box p={{ _: '20', sm: '30', md: '40' }} />
+<Box p={{ base: '20', sm: '30', md: '40' }} />
 ```
 
 ### Using HTML / Prop Classes
@@ -264,7 +319,7 @@ Specify values per breakpoint using array or object syntax.
 Combine Prop Classes with CSS variables.
 
 ```html
-<div class="-p:20 -p_sm -p_md" style="--p_sm: var(--s--30); --p_md: var(--s--40)">
+<div class="-p:20 -p_sm -p_md" style="--p_sm: var(--s30); --p_md: var(--s40)">
   ...
 </div>
 ```
@@ -274,16 +329,22 @@ Details: https://lism-css.com/en/docs/responsive/
 
 ## Adding custom CSS
 
-When adding custom styles, write them inside `@layer lism-custom`.
-This maintains consistency with Lism CSS's Layer structure.
+When adding custom styles, write them inside the appropriate Lism CSS Layer.
 
 ```css
-/* Add inside Lism's lism-custom layer */
-@layer lism-custom {
-  .my-custom-card {
-    border: 1px solid var(--c--main);
-    border-radius: var(--bdrs--m);
-    padding: var(--s--30);
+/* Custom components → add to lism-modules */
+@layer lism-modules {
+  .c--my-card {
+    border: 1px solid var(--brand);
+    border-radius: var(--bdrs--20);
+    padding: var(--s30);
+  }
+}
+
+/* Base style extensions → add to lism-base */
+@layer lism-base {
+  .set--my-theme {
+    --brand: #c00;
   }
 }
 ```
@@ -292,10 +353,10 @@ Use Lism's CSS variables (tokens) in custom CSS, not raw values.
 
 ```css
 /* ✕ Avoid */
-.my-card { padding: 24px; border-radius: 8px; }
+.c--my-card { padding: 24px; border-radius: 8px; }
 
 /* ○ Recommended */
-.my-card { padding: var(--s--30); border-radius: var(--bdrs--m); }
+.c--my-card { padding: var(--s30); border-radius: var(--bdrs--20); }
 ```
 
 Details: https://lism-css.com/en/docs/customize/
@@ -309,7 +370,7 @@ Details: https://lism-css.com/en/docs/customize/
 - Responsive switching
 - Colors, borders, shadows, and decorations
 
-### Use native CSS for (inside @layer lism-custom)
+### Use native CSS for (inside appropriate @layer)
 - Animations and transitions
 - Complex selectors (`:nth-child`, `::before`, `::after`, etc.)
 - Custom calculations using custom properties
@@ -322,12 +383,12 @@ Details: https://lism-css.com/en/docs/customize/
 
 ```jsx
 // ✕ Copy-pasting the same structure
-<Box bgc="base-2" bdrs="l" p="30">...</Box>
-<Box bgc="base-2" bdrs="l" p="30">...</Box>
+<Box bgc="base-2" bdrs="20" p="30">...</Box>
+<Box bgc="base-2" bdrs="20" p="30">...</Box>
 
 // ○ Extract as a component
 function Card({ children }) {
-  return <Box bgc="base-2" bdrs="l" p="30">{children}</Box>;
+  return <Box bgc="base-2" bdrs="20" p="30">{children}</Box>;
 }
 ```
 ````
