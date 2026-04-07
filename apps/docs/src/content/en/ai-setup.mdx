@@ -109,8 +109,8 @@ Each tool uses a different file name:
 Copy the template below and place it as a rule file in your project.
 
 :::note[For Claude Code]
-When placed as `.claude/skills/lism-css/SKILL.md`, the `user-invocable: false` setting causes the AI to automatically reference this skill when editing Lism CSS files.
-For other tools, copy only the body content without the frontmatter section.
+When placed as `.claude/skills/lism-css/SKILL.md`, it is automatically recognized as a skill.
+For other tools (Codex, Cursor, etc.), copy only the body content without the frontmatter section (the part enclosed in `---`).
 :::
 
 
@@ -121,13 +121,6 @@ For other tools, copy only the body content without the frontmatter section.
 name: lism-css
 description: "Guide for Lism CSS framework design rules, Props, tokens, and naming conventions. Referenced when editing files that use Lism CSS."
 user-invocable: false
-paths:
-  - "**/*.tsx"
-  - "**/*.jsx"
-  - "**/*.astro"
-  - "**/*.html"
-  - "**/*.scss"
-  - "**/*.css"
 ---
 
 # Lism CSS Guide
@@ -346,7 +339,17 @@ This template is generic. You can make it more effective by adding:
 - Project-specific custom tokens and theme settings
 - Specific component patterns used in your project
 - Coding conventions (file structure, naming rules, etc.)
-- Adjust the `paths` glob patterns to match your project structure
+
+**`paths` setting for Claude Code (optional):**  
+Adding a `paths` field to the frontmatter will auto-load the skill when editing files that match the specified glob patterns.
+
+```yaml
+paths:
+  - "src/components/**/*.tsx"
+  - "**/*.astro"
+```
+
+Without `paths`, Claude will automatically decide whether to reference the skill based on the `description`.
 :::
 
 :::note[Distribution as a Claude Code plugin]
