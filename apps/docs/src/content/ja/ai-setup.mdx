@@ -1,0 +1,197 @@
+---
+title: 'AIセットアップ'
+description: 'AIコーディングツールで Lism CSS を効率よく扱うためのセットアップ方法を解説します。'
+---
+
+AIコーディングツール（Claude Code, Cursor, Codex など）で Lism CSS を効率よく扱うためのセットアップ方法を解説します。
+
+大きく分けて、以下の2つの方法があります。
+
+| 方法 | 特徴 |
+|------|------|
+| **MCP Server** | AIツールがコンポーネント・Props・トークンの情報をリアルタイムに参照できる |
+| **ルールファイル** | プロジェクトにファイルを配置し、AIに設計ルールを伝える |
+
+どちらか片方だけでも機能しますが、**併用するとより効果的**です。
+
+
+## MCP Server
+
+`@lism-css/mcp` は、Lism CSS のドキュメント・API情報をAIコーディングツールに提供する MCP (Model Context Protocol) サーバーです。
+
+### できること
+
+- **コンポーネント情報の参照** — 各コンポーネントのProps・使用例・サブコンポーネント構成
+- **Props ↔ CSS マッピング** — `p` → `padding`、`fz` → `font-size` など、省略記法の逆引き
+- **デザイントークンの参照** — 色、余白、フォントサイズなどのトークン値
+- **ドキュメント検索** — キーワードによる全文検索
+- **CSS → Lism 変換** — 既存CSSコードからLism CSSのprops・コンポーネント提案
+
+### セットアップ
+
+<Preview>
+  <PreviewCode slot='tab' label='Claude Code'>
+  ```bash frame="none"
+  claude mcp add lism-css -- npx -y @lism-css/mcp
+  ```
+  </PreviewCode>
+  <PreviewCode slot='tab' label='Cursor'>
+  ```json frame="none"
+  // .cursor/mcp.json
+  {
+    "mcpServers": {
+      "lism-css": {
+        "command": "npx",
+        "args": ["-y", "@lism-css/mcp"]
+      }
+    }
+  }
+  ```
+  </PreviewCode>
+  <PreviewCode slot='tab' label='VS Code (Copilot)'>
+  ```json frame="none"
+  // .vscode/mcp.json
+  {
+    "servers": {
+      "lism-css": {
+        "type": "stdio",
+        "command": "npx",
+        "args": ["-y", "@lism-css/mcp"]
+      }
+    }
+  }
+  ```
+  </PreviewCode>
+  <PreviewCode slot='tab' label='Windsurf'>
+  ```json frame="none"
+  // ~/.windsurf/mcp.json
+  {
+    "mcpServers": {
+      "lism-css": {
+        "command": "npx",
+        "args": ["-y", "@lism-css/mcp"]
+      }
+    }
+  }
+  ```
+  </PreviewCode>
+  <PreviewCode slot='tab' label='Cline'>
+  ```json frame="none"
+  // ~/.cline/mcp_settings.json
+  {
+    "mcpServers": {
+      "lism-css": {
+        "command": "npx",
+        "args": ["-y", "@lism-css/mcp"]
+      }
+    }
+  }
+  ```
+  </PreviewCode>
+</Preview>
+
+詳細は [GitHub - @lism-css/mcp](https://github.com/lism-css/lism-css/tree/main/packages/mcp) をご覧ください。
+
+
+## ルールファイル
+
+プロジェクトのルートにルールファイルを配置することで、AIエージェントに Lism CSS の設計ルールや使い方を伝えることができます。
+
+各ツールごとに対応するファイル名が異なります。
+
+| ツール | ファイル |
+|--------|----------|
+| Claude Code | `CLAUDE.md` |
+| OpenAI Codex | `AGENTS.md` |
+| Cursor | `.cursor/rules/*.mdc` |
+| GitHub Copilot | `.github/copilot-instructions.md` |
+
+以下のテンプレートをコピーして、プロジェクトのルールファイルとして配置してください。  
+プロジェクトの構成に合わせて適宜カスタマイズすることをおすすめします。
+
+
+### テンプレート
+
+````markdown
+# Lism CSS ガイド
+
+このプロジェクトは CSS フレームワーク「Lism CSS」を使用しています。
+MCP サーバー (`@lism-css/mcp`) が利用可能な場合は、コンポーネントやPropsの詳細情報をそちらから取得してください。
+
+## パッケージ構成
+
+- `lism-css` — コアCSS・レイアウトコンポーネント
+- `@lism-css/ui` — UIコンポーネント（Accordion, Modal, Tabs 等）
+
+```jsx
+// React
+import { Box, Flex, Stack, Grid } from 'lism-css/react';
+import { Accordion, Tabs } from '@lism-css/ui/react';
+
+// Astro
+import { Box, Flex, Stack, Grid } from 'lism-css/astro';
+import { Accordion, Tabs } from '@lism-css/ui/astro';
+```
+
+## Props の書き方
+
+Lism コンポーネントでは、CSSプロパティを短縮名のpropsとして指定します。
+
+| Prop | CSS | 例 |
+|------|-----|----|
+| `p` | `padding` | `p='20'`, `p='box'` |
+| `m` | `margin` | `m='20'`, `m='auto'` |
+| `fz` | `font-size` | `fz='l'`, `fz='2xl'` |
+| `fw` | `font-weight` | `fw='bold'` |
+| `c` | `color` | `c='main'`, `c='accent'` |
+| `bgc` | `background-color` | `bgc='base-2'` |
+| `d` | `display` | `d='flex'`, `d='grid'` |
+| `g` | `gap` | `g='20'`, `g='40'` |
+| `w` | `width` | `w='100%'` |
+| `h` | `height` | `h='100%'` |
+| `bd` | `border` | `bd` |
+| `bdrs` | `border-radius` | `bdrs='l'` |
+| `bxsh` | `box-shadow` | `bxsh='2'` |
+| `ta` | `text-align` | `ta='center'` |
+
+### レスポンシブ対応
+
+オブジェクト形式でブレークポイントごとの値を指定します。
+
+```jsx
+<Box p={{ _: '20', sm: '30', md: '40' }}>...</Box>
+```
+
+## デザイントークン
+
+Lism CSS では、数値やキーワードによるデザイントークンをpropsの値に指定します。
+
+- **余白 (SPACE)**: `0`, `5`, `10`, `15`, `20`, `25`, `30`, `40`, `50` （CSS変数 `--s--{n}` に対応）
+- **フォントサイズ (FONT SIZE)**: `2xs`, `xs`, `s`, `m`, `l`, `xl`, `2xl`, `3xl`, ... （CSS変数 `--fz--{key}` に対応）
+- **カラー (COLOR)**: `main`, `accent`, `base`, `base-2`, `base-3`, `content`, `content-2`, `content-3` など
+
+## モジュールクラスの命名規則
+
+- **State**: `.is--{name}` — レイアウト状態 (例: `is--container`, `is--wrapper`)
+- **Layout**: `.l--{name}` — レイアウト構成 (例: `l--grid`, `l--flex`, `l--stack`)
+- **Atomic**: `.a--{name}` — 最小レイアウト単位 (例: `a--icon`, `a--divider`)
+- **Custom**: `.c--{name}` — カスタムコンポーネント (例: `c--button`, `c--accordion`)
+
+## 実装ルール
+
+- インラインスタイルではなく、Lism の Props を使う
+- 生のCSS値ではなく、デザイントークンを優先する
+- ページ構造にはレイアウトモジュール（`Stack`, `Flex`, `Grid` 等）を活用する
+- CSSの追加記述が必要な場合は、Lism の CSS Layers 構造に従い `@layer` で記述する
+````
+
+:::note
+::title[カスタマイズのヒント]
+
+テンプレートは最小限の内容です。プロジェクトに合わせて以下を追加するとより効果的です。
+
+- 使用するブレークポイント（`sm: 480px`, `md: 800px`）
+- プロジェクト固有のカスタムトークン
+- 使用するコンポーネントの具体的なパターン
+- コーディング規約（ファイル構成、命名規則など）
+:::

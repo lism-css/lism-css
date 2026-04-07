@@ -1,0 +1,197 @@
+---
+title: 'AI Setup'
+description: 'Learn how to set up AI coding tools to work effectively with Lism CSS.'
+---
+
+This guide explains how to set up AI coding tools (Claude Code, Cursor, Codex, etc.) to work effectively with Lism CSS.
+
+There are two main approaches:
+
+| Method | Description |
+|--------|-------------|
+| **MCP Server** | Allows AI tools to reference component, Props, and token information in real time |
+| **Rule files** | Place a file in your project to communicate design rules to AI agents |
+
+Either approach works on its own, but **using both together is more effective**.
+
+
+## MCP Server
+
+`@lism-css/mcp` is an MCP (Model Context Protocol) server that provides Lism CSS documentation and API information to AI coding tools.
+
+### What it can do
+
+- **Component reference** — Props, usage examples, and sub-component structure for each component
+- **Props ↔ CSS mapping** — Reverse lookup of abbreviations like `p` → `padding`, `fz` → `font-size`
+- **Design token reference** — Token values for colors, spacing, font sizes, and more
+- **Documentation search** — Full-text search by keywords
+- **CSS → Lism conversion** — Suggests Lism CSS props and components from existing CSS code
+
+### Setup
+
+<Preview>
+  <PreviewCode slot='tab' label='Claude Code'>
+  ```bash frame="none"
+  claude mcp add lism-css -- npx -y @lism-css/mcp
+  ```
+  </PreviewCode>
+  <PreviewCode slot='tab' label='Cursor'>
+  ```json frame="none"
+  // .cursor/mcp.json
+  {
+    "mcpServers": {
+      "lism-css": {
+        "command": "npx",
+        "args": ["-y", "@lism-css/mcp"]
+      }
+    }
+  }
+  ```
+  </PreviewCode>
+  <PreviewCode slot='tab' label='VS Code (Copilot)'>
+  ```json frame="none"
+  // .vscode/mcp.json
+  {
+    "servers": {
+      "lism-css": {
+        "type": "stdio",
+        "command": "npx",
+        "args": ["-y", "@lism-css/mcp"]
+      }
+    }
+  }
+  ```
+  </PreviewCode>
+  <PreviewCode slot='tab' label='Windsurf'>
+  ```json frame="none"
+  // ~/.windsurf/mcp.json
+  {
+    "mcpServers": {
+      "lism-css": {
+        "command": "npx",
+        "args": ["-y", "@lism-css/mcp"]
+      }
+    }
+  }
+  ```
+  </PreviewCode>
+  <PreviewCode slot='tab' label='Cline'>
+  ```json frame="none"
+  // ~/.cline/mcp_settings.json
+  {
+    "mcpServers": {
+      "lism-css": {
+        "command": "npx",
+        "args": ["-y", "@lism-css/mcp"]
+      }
+    }
+  }
+  ```
+  </PreviewCode>
+</Preview>
+
+For details, see [GitHub - @lism-css/mcp](https://github.com/lism-css/lism-css/tree/main/packages/mcp).
+
+
+## Rule files
+
+By placing a rule file in your project root, you can communicate Lism CSS design rules and usage patterns to AI agents.
+
+Each tool uses a different file name:
+
+| Tool | File |
+|------|------|
+| Claude Code | `CLAUDE.md` |
+| OpenAI Codex | `AGENTS.md` |
+| Cursor | `.cursor/rules/*.mdc` |
+| GitHub Copilot | `.github/copilot-instructions.md` |
+
+Copy the template below and place it as a rule file in your project.  
+We recommend customizing it to match your project's setup.
+
+
+### Template
+
+````markdown
+# Lism CSS Guide
+
+This project uses the CSS framework "Lism CSS".
+If the MCP server (`@lism-css/mcp`) is available, use it to get detailed component and Props information.
+
+## Package structure
+
+- `lism-css` — Core CSS and layout components
+- `@lism-css/ui` — UI components (Accordion, Modal, Tabs, etc.)
+
+```jsx
+// React
+import { Box, Flex, Stack, Grid } from 'lism-css/react';
+import { Accordion, Tabs } from '@lism-css/ui/react';
+
+// Astro
+import { Box, Flex, Stack, Grid } from 'lism-css/astro';
+import { Accordion, Tabs } from '@lism-css/ui/astro';
+```
+
+## How to write Props
+
+Lism components accept CSS properties as shorthand props.
+
+| Prop | CSS | Example |
+|------|-----|---------|
+| `p` | `padding` | `p='20'`, `p='box'` |
+| `m` | `margin` | `m='20'`, `m='auto'` |
+| `fz` | `font-size` | `fz='l'`, `fz='2xl'` |
+| `fw` | `font-weight` | `fw='bold'` |
+| `c` | `color` | `c='main'`, `c='accent'` |
+| `bgc` | `background-color` | `bgc='base-2'` |
+| `d` | `display` | `d='flex'`, `d='grid'` |
+| `g` | `gap` | `g='20'`, `g='40'` |
+| `w` | `width` | `w='100%'` |
+| `h` | `height` | `h='100%'` |
+| `bd` | `border` | `bd` |
+| `bdrs` | `border-radius` | `bdrs='l'` |
+| `bxsh` | `box-shadow` | `bxsh='2'` |
+| `ta` | `text-align` | `ta='center'` |
+
+### Responsive
+
+Specify breakpoint values using object syntax.
+
+```jsx
+<Box p={{ _: '20', sm: '30', md: '40' }}>...</Box>
+```
+
+## Design tokens
+
+Lism CSS uses numeric and keyword-based design tokens as prop values.
+
+- **Spacing (SPACE)**: `0`, `5`, `10`, `15`, `20`, `25`, `30`, `40`, `50` (mapped to CSS variable `--s--{n}`)
+- **Font size (FONT SIZE)**: `2xs`, `xs`, `s`, `m`, `l`, `xl`, `2xl`, `3xl`, ... (mapped to CSS variable `--fz--{key}`)
+- **Color (COLOR)**: `main`, `accent`, `base`, `base-2`, `base-3`, `content`, `content-2`, `content-3`, etc.
+
+## Module class naming conventions
+
+- **State**: `.is--{name}` — Layout state (e.g., `is--container`, `is--wrapper`)
+- **Layout**: `.l--{name}` — Layout structure (e.g., `l--grid`, `l--flex`, `l--stack`)
+- **Atomic**: `.a--{name}` — Smallest layout units (e.g., `a--icon`, `a--divider`)
+- **Custom**: `.c--{name}` — Custom components (e.g., `c--button`, `c--accordion`)
+
+## Implementation rules
+
+- Use Lism Props instead of inline styles
+- Prefer design tokens over raw CSS values
+- Use layout modules (`Stack`, `Flex`, `Grid`, etc.) for page structure
+- When writing additional CSS, follow Lism's CSS Layers structure using `@layer`
+````
+
+:::note
+::title[Customization tips]
+
+This template contains minimal content. You can make it more effective by adding:
+
+- Breakpoints used in your project (`sm: 480px`, `md: 800px`)
+- Project-specific custom tokens
+- Specific patterns of components you use
+- Coding conventions (file structure, naming rules, etc.)
+:::
