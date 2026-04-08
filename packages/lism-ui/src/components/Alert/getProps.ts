@@ -1,9 +1,10 @@
 import PRESETS from './presets';
+import type { LayoutType } from 'lism-css/lib/getLismProps';
 
 export type AlertProps = {
   type?: string;
   keycolor?: string;
-  layout?: string;
+  layout?: LayoutType;
   icon?: string;
   flow?: string;
   [key: string]: unknown;
