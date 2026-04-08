@@ -7,7 +7,7 @@ type OpenBtnProps = LismComponentProps & {
 
 export default function OpenBtn({ children, modalId = '', ...props }: OpenBtnProps) {
   return (
-    <Lism data-modal-open={modalId} {...(defaultProps.openBtn as LismComponentProps)} {...props}>
+    <Lism data-modal-open={modalId} {...defaultProps.openBtn} {...props}>
       {children}
     </Lism>
   );

@@ -1,5 +1,6 @@
 'use client';
 import { useRef, useEffect } from 'react';
+import type { ElementType } from 'react';
 import { Lism, type LismComponentProps } from 'lism-css/react';
 import { setEvent } from '../setModal';
 import { getProps, type ModalRootProps } from '../getProps';
@@ -13,8 +14,9 @@ const Modal = ({ children, ...props }: ModalRootProps & LismComponentProps) => {
     return setEvent(ref?.current);
   }, [ref]);
 
+  const { as: modalAs, ...modalProps } = getProps(props);
   return (
-    <Lism forwardedRef={ref} {...getProps(props)}>
+    <Lism as={modalAs as ElementType} forwardedRef={ref} {...modalProps}>
       {children}
     </Lism>
   );

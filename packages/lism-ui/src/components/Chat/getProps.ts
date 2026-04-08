@@ -34,7 +34,7 @@ export const defaultProps = {
     p: '20',
     lh: 's',
   },
-};
+} as const;
 
 export type ChatProps = {
   variant?: string;
@@ -46,7 +46,7 @@ export type ChatProps = {
 /**
  * Chat コンポーネントのルートプロパティを生成
  */
-export default function getChatProps({ variant = 'speak', direction = 'start', keycolor = 'gray', ...props }: ChatProps): Record<string, unknown> {
+export default function getChatProps({ variant = 'speak', direction = 'start', keycolor = 'gray', ...props }: ChatProps) {
   return {
     lismClass: 'c--chat',
     variant,

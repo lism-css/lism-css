@@ -9,7 +9,7 @@ type CloseBtnProps = LismComponentProps & {
 
 export default function CloseBtn({ children, modalId = '', icon = undefined, srText = 'Close', ...props }: CloseBtnProps) {
   return (
-    <Lism data-modal-close={modalId} {...(defaultProps.closeBtn as LismComponentProps)} {...props}>
+    <Lism data-modal-close={modalId} {...defaultProps.closeBtn} {...props}>
       {children ? (
         children
       ) : (

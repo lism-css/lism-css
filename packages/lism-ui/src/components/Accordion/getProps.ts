@@ -26,45 +26,37 @@ export type AccordionPanelProps = {
   [key: string]: unknown;
 };
 
-export function getRootProps({ lismClass, allowMultiple, ...props }: AccordionRootProps): Record<string, unknown> {
+export function getRootProps({ lismClass, allowMultiple, ...props }: AccordionRootProps) {
   props.lismClass = atts(lismClass, 'c--accordion');
   if (allowMultiple) props['data-allow-multiple'] = '';
   return props;
 }
 
-export function getItemProps({ lismClass, ...props }: AccordionItemProps): Record<string, unknown> {
+export function getItemProps({ lismClass, ...props }: AccordionItemProps) {
   props.lismClass = atts(lismClass, 'c--accordion_item');
   return props;
 }
 
-export function getHeadingProps(props: AccordionHeadingProps): Record<string, unknown> {
-  const defaultHeadingProps = {
-    lismClass: 'c--accordion_heading',
-    as: 'div',
-    setPlain: 1,
+export function getHeadingProps({ as = 'div', role, lismClass, ...props }: AccordionHeadingProps) {
+  return {
+    lismClass: atts(lismClass, 'c--accordion_heading'),
+    as,
+    setPlain: true,
+    role: as === 'div' ? 'heading' : role,
+    ...props,
   };
-
-  const returnProps: Record<string, unknown> = { ...defaultHeadingProps, ...props };
-
-  if (returnProps.as === 'div') {
-    returnProps.role = 'heading';
-  }
-  return returnProps;
 }
 
-export function getPanelProps({ lismClass, _contextID, accID = '__LISM_ACC_ID__', isOpen = false, ...props }: AccordionPanelProps): {
-  panelProps: Record<string, unknown>;
-  contentProps: Record<string, unknown>;
-} {
-  const panelProps: Record<string, unknown> = {
+export function getPanelProps({ lismClass, _contextID, accID = '__LISM_ACC_ID__', isOpen = false, ...props }: AccordionPanelProps) {
+  const panelProps = {
     lismClass: atts(lismClass, 'c--accordion_panel'),
     id: _contextID || accID,
-    hidden: isOpen ? undefined : 'until-found',
+    hidden: isOpen ? undefined : ('until-found' as unknown as boolean),
     pos: 'relative',
     ov: 'hidden',
   };
 
-  const contentProps: Record<string, unknown> = { lismClass: 'c--accordion_content', layout: 'flow', ...props };
+  const contentProps = { lismClass: 'c--accordion_content', layout: 'flow' as const, ...props };
 
   return { panelProps, contentProps };
 }
@@ -74,7 +66,7 @@ export const defaultProps = {
     lismClass: 'c--accordion_button',
     as: 'button',
     layout: 'flex',
-    setPlain: 1,
+    setPlain: true,
     g: '10',
     w: '100%',
     ai: 'center',
@@ -87,4 +79,4 @@ export const defaultProps = {
     fxsh: '0',
     'aria-hidden': 'true',
   },
-};
+} as const;

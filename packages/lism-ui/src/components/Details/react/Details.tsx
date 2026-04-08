@@ -30,7 +30,7 @@ export function Details({ children, open, ...props }: DetailsRootProps) {
  */
 export function Summary({ children, ...props }: LismComponentProps) {
   return (
-    <Lism as="summary" {...(defaultProps.summary as unknown as LismComponentProps)} {...props}>
+    <Lism as="summary" {...defaultProps.summary} {...props}>
       {children}
     </Lism>
   );
@@ -41,7 +41,7 @@ export function Summary({ children, ...props }: LismComponentProps) {
  */
 export function Title({ children, ...props }: LismComponentProps) {
   return (
-    <Lism {...(defaultProps.title as unknown as LismComponentProps)} {...props}>
+    <Lism {...defaultProps.title} {...props}>
       {children}
     </Lism>
   );
@@ -52,7 +52,7 @@ export function Title({ children, ...props }: LismComponentProps) {
  */
 export function Icon({ children, ...props }: LismComponentProps) {
   return (
-    <Lism {...(defaultProps.icon as unknown as LismComponentProps)} {...props}>
+    <Lism {...defaultProps.icon} {...props}>
       {children}
     </Lism>
   );
@@ -63,8 +63,8 @@ export function Icon({ children, ...props }: LismComponentProps) {
  */
 export function Content({ children, ...props }: LismComponentProps) {
   return (
-    <Lism {...(defaultProps.body as unknown as LismComponentProps)}>
-      <Lism {...(defaultProps.content as unknown as LismComponentProps)} {...props}>
+    <Lism {...defaultProps.body}>
+      <Lism {...defaultProps.content} {...props}>
         {children}
       </Lism>
     </Lism>

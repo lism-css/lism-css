@@ -17,7 +17,7 @@ export type NavMenuLinkProps = {
   [key: string]: unknown;
 };
 
-export function getRootProps({ hovC, hovBgc, itemP, style = {}, ...props }: NavMenuRootProps): Record<string, unknown> {
+export function getRootProps({ hovC, hovBgc, itemP, style = {}, ...props }: NavMenuRootProps) {
   const computedStyle = { ...style };
 
   if (hovBgc) computedStyle['--hov-bgc'] = getMaybeCssVar(hovBgc, 'color');
@@ -32,7 +32,7 @@ export function getRootProps({ hovC, hovBgc, itemP, style = {}, ...props }: NavM
   };
 }
 
-export function getNestProps(props: Record<string, unknown>): Record<string, unknown> {
+export function getNestProps(props: Record<string, unknown>) {
   return {
     lismClass: 'c--navMenu_nest',
     as: 'ul',
@@ -41,7 +41,7 @@ export function getNestProps(props: Record<string, unknown>): Record<string, unk
   };
 }
 
-export function getItemProps(props: Record<string, unknown>): Record<string, unknown> {
+export function getItemProps(props: Record<string, unknown>) {
   return {
     lismClass: 'c--navMenu_item',
     as: 'li',
@@ -49,7 +49,7 @@ export function getItemProps(props: Record<string, unknown>): Record<string, unk
   };
 }
 
-export function getLinkProps({ href, as = 'span', ...props }: NavMenuLinkProps): Record<string, unknown> {
+export function getLinkProps({ href, as = 'span', ...props }: NavMenuLinkProps) {
   return {
     lismClass: 'c--navMenu_link',
     as: href ? 'a' : as,

@@ -5,7 +5,7 @@ type TabsProps = {
   [key: string]: unknown;
 };
 
-export default function getTabsProps({ lismClass, ...props }: TabsProps): Record<string, unknown> {
+export default function getTabsProps({ lismClass, ...props }: TabsProps) {
   return {
     lismClass: atts(lismClass, 'c--tabs'),
     ...props,

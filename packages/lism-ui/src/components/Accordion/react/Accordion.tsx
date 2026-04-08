@@ -1,5 +1,6 @@
 'use client';
 import { createContext, useRef, useId, useEffect, useContext } from 'react';
+import type { ElementType } from 'react';
 import getLismProps from 'lism-css/lib/getLismProps';
 import { Lism, Stack, type LismComponentProps } from 'lism-css/react';
 import {
@@ -63,7 +64,12 @@ export function AccordionItem({ children, ...props }: AccordionItemProps & LismC
  * as に h2〜h6 を指定すると role は付与されない
  */
 export function Heading({ children, ...props }: AccordionHeadingProps & LismComponentProps) {
-  return <Lism {...getHeadingProps(props)}>{children}</Lism>;
+  const { as: headingAs, ...headingProps } = getHeadingProps(props);
+  return (
+    <Lism as={headingAs as ElementType} {...headingProps}>
+      {children}
+    </Lism>
+  );
 }
 
 type ButtonProps = LismComponentProps & {
@@ -79,7 +85,7 @@ export function Button({ children, accID: _accID = '__LISM_ACC_ID__', ...props }
   const accID = ctx?.accID || _accID;
 
   return (
-    <Lism {...(defaultProps.button as unknown as LismComponentProps)} {...props} aria-controls={accID} aria-expanded="false">
+    <Lism {...defaultProps.button} {...props} aria-controls={accID} aria-expanded="false">
       {children}
       <AccIcon />
     </Lism>

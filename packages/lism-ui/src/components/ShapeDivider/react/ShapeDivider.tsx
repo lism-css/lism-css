@@ -8,7 +8,7 @@ export default function ShapeDivider({ children, ...props }: ShapeDividerProps &
   // level が 0 の場合は非表示
   if (!componentProps) return null;
 
-  const { viewBox, isAnimation: _isAnimation, isEmpty, ...lismProps } = componentProps;
+  const { viewBox, isEmpty, ...lismProps } = componentProps;
 
   return (
     <Lism {...lismProps}>
@@ -17,7 +17,7 @@ export default function ShapeDivider({ children, ...props }: ShapeDividerProps &
           <svg
             xmlns="http://www.w3.org/2000/svg"
             className="c--shapeDivider_svg"
-            viewBox={viewBox as string | undefined}
+            viewBox={viewBox}
             width="100%"
             height="100%"
             fill="currentColor"

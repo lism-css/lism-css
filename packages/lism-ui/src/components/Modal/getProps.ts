@@ -14,7 +14,7 @@ export type ModalInnerProps = {
   [key: string]: unknown;
 };
 
-export function getProps({ lismClass = '', duration, style = {}, ...props }: ModalRootProps): Record<string, unknown> {
+export function getProps({ lismClass = '', duration, style = {}, ...props }: ModalRootProps) {
   const theProps = {
     lismClass: atts(lismClass, 'c--modal'),
     setPlain: true,
@@ -26,7 +26,7 @@ export function getProps({ lismClass = '', duration, style = {}, ...props }: Mod
   return { as: 'dialog', ...theProps, style, ...props };
 }
 
-export function getInnerProps({ lismClass = '', offset, style = {}, ...props }: ModalInnerProps): Record<string, unknown> {
+export function getInnerProps({ lismClass = '', offset, style = {}, ...props }: ModalInnerProps) {
   if (offset) {
     style['--offset'] = offset;
   }
@@ -41,4 +41,4 @@ export const defaultProps = {
   body: { lismClass: 'c--modal_body' },
   closeBtn: { as: 'button', setPlain: true, hov: 'o', d: 'in-flex' },
   openBtn: { as: 'button', setPlain: true, hov: 'o', d: 'in-flex' },
-};
+} as const;

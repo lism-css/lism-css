@@ -10,23 +10,13 @@ export type ShapeDividerProps = {
   [key: string]: unknown;
 };
 
-export default function getProps({
-  viewBox,
-  isAnimation,
-  isEmpty,
-  level = 5,
-  stretch,
-  offset,
-  flip,
-  style = {},
-  ...restProps
-}: ShapeDividerProps): Record<string, unknown> | null {
+export default function getProps({ viewBox, isAnimation, isEmpty, level = 5, stretch, offset, flip, style = {}, ...restProps }: ShapeDividerProps) {
   if (level === 0) return null;
 
-  const computedStyle: Record<string, string | null> = { ...style };
-  computedStyle['--level'] = level != null ? String(level) : null;
-  computedStyle['--_inner-offset'] = offset ?? null;
-  computedStyle['--_inner-stretch'] = stretch ?? null;
+  const computedStyle: Record<string, string | undefined> = { ...style };
+  computedStyle['--level'] = level != null ? String(level) : undefined;
+  computedStyle['--_inner-offset'] = offset ?? undefined;
+  computedStyle['--_inner-stretch'] = stretch ?? undefined;
 
   const _props: Record<string, unknown> = {
     lismClass: 'c--shapeDivider',
