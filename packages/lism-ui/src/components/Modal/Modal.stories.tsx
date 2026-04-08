@@ -27,7 +27,7 @@ export const Default: Story = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
 
-    const dialog = canvasElement.querySelector('dialog') as HTMLDialogElement;
+    const dialog = canvas.getByRole('dialog', { hidden: true });
     const openBtn = canvas.getByRole('button', { name: 'モーダルを開く' });
 
     // 初期状態: モーダルは閉じている

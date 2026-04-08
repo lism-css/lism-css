@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { expect, userEvent } from 'storybook/test';
+import { expect, userEvent, within } from 'storybook/test';
 import Details from './react';
 
 const meta: Meta = {
@@ -23,8 +23,8 @@ export const Default: Story = {
     </Details.Root>
   ),
   play: async ({ canvasElement }) => {
-    const details = canvasElement.querySelector('details') as HTMLDetailsElement;
-    const summary = canvasElement.querySelector('summary') as HTMLElement;
+    const details = within(canvasElement).getByRole('group'); // <details>
+    const summary = details.querySelector('summary') as HTMLElement;
 
     // 初期状態: 閉じている
     await expect(details).not.toHaveAttribute('open');
@@ -53,9 +53,9 @@ export const OpenByDefault: Story = {
     </Details.Root>
   ),
   play: async ({ canvasElement }) => {
-    const details = canvasElement.querySelector('details') as HTMLDetailsElement;
+    const details = within(canvasElement).getByRole('group'); // <details>
 
-    // 初期状態: 開いている
+    // 初期状態: 開いている（open 属性あり）
     await expect(details).toHaveAttribute('open');
   },
 };
