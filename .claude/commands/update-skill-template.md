@@ -1,6 +1,6 @@
 # Skill Template Update
 
-`.claude/skills/lism-css-best-practices/` 配下の 7 ファイルを、リポジトリの最新ソースに合わせて更新してください。
+`.claude/skills/lism-css-guide/` 配下の 7 ファイルを、リポジトリの最新ソースに合わせて更新してください。
 
 
 ## 対象ファイルと更新内容
@@ -78,7 +78,7 @@
 
 ### 1. 現在のテンプレートとバージョン情報の取得
 
-- `.claude/skills/lism-css-best-practices/` 配下の 7 ファイルを読み取る
+- `.claude/skills/lism-css-guide/` 配下の 7 ファイルを読み取る
 - `packages/lism-css/package.json` からバージョンを取得し、`SKILL.md` のバージョン表記と比較する
 
 ### 2. ソースコードの読み取りと照合
