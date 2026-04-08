@@ -31,7 +31,7 @@ import { Lism, Box, Flex, Stack, Grid, Text, Media } from 'lism-css/astro';
 | `style` | インラインスタイル（React: camelCase、CSS変数: `--` プレフィックス） | `style={{ '--my-var': '10px' }}` |
 | `children` | 子要素 | — |
 
-その他、`p`, `m`, `fz`, `c`, `bgc` 等の Lism Props がすべて利用可能です（[props.md](./props.md) 参照）。
+その他、`p`, `m`, `fz`, `c`, `bgc` 等の Lism Props がすべて利用可能です（[prop-class.md](./prop-class.md) 参照）。
 
 ```jsx
 // as で HTML 要素を指定

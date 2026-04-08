@@ -70,8 +70,10 @@ function Card({ children }) {
 
 | ファイル | 内容 |
 |---------|------|
+| [base-styles.md](./base-styles.md) | ベーススタイリング — Reset CSS・HTML要素のベーススタイル・CSS変数（トークン）概要・set--クラス一覧 |
+| [module-class.md](./module-class.md) | モジュールクラス — is--/l--/a--/c--/u-- クラスの一覧と用途 |
+| [prop-class.md](./prop-class.md) | Prop Class — `-{prop}:{value}` 記法・主要Prop一覧・レスポンシブ対応・コンポーネントでの使い方 |
 | [components.md](./components.md) | コンポーネントシステム — コア・セマンティック・レイアウト・ステート・アトミック・UIコンポーネント一覧、getLismProps、CLI |
-| [props.md](./props.md) | Props システム — 主要Props一覧・Prop Class記法・is--/set-- Props・レスポンシブ対応 |
 | [tokens.md](./tokens.md) | デザイントークン — 余白・フォントサイズ・角丸・影・カラー・パレット |
 | [css-rules.md](./css-rules.md) | CSS設計ルール — Layer構造・命名規則・プレフィックス・カスタムCSS追加ルール |
 
