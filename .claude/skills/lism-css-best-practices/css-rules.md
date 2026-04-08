@@ -10,8 +10,8 @@ Lism CSS は CSS Layers による詳細度管理を採用しています。
 Settings（トークン定義）
   → @layer lism-base（Reset CSS・トークン・.set--クラス）
   → @layer lism-modules（.is-- / .l-- / .a-- / .c-- モジュール群）
-  → @layer lism-utility（.u-- ユーティリティクラス）
   → @layer lism-custom（ユーザーカスタマイズ用）
+  → @layer lism-utility（.u-- ユーティリティクラス）
   → Prop Class（レイヤー外 — 最も詳細度が高い）
 ```
 
