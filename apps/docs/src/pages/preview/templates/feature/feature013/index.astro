@@ -6,7 +6,7 @@ import './_style.css';
 ---
 
 <DemoLayout title="Feature013">
-  <Container isWrapper="l" bgc="base-2" py="50" setGutter>
+  <Container isWrapper="l" bgc="base-2" py="50" set="gutter">
     <Stack g="40">
       <Stack ai="center" g="5">
         <Heading level="2" fz="2xl" fw="bold">厳選された商品</Heading>
@@ -17,45 +17,44 @@ import './_style.css';
           href="#"
           layout="grid"
           class="set--innerRs"
-          setHov
+          set={["hov", "transition"]}
           gc="1 / -1"
           gt="repeat"
           cols={['1', null, '2']}
           bgc="white"
           ov="hidden"
           bdrs="20"
-          setTransition
           hov="bxsh"
         >
           <Frame pos="relative" min-h="100%">
-            <Media src="https://cdn.lism-css.com/random/img?r=1" alt="" width="960" height="640" setTransition hov="to:zoom" />
+            <Media src="https://cdn.lism-css.com/random/img?r=1" alt="" width="960" height="640" set="transition" hov="to:zoom" />
           </Frame>
           <Stack g="30" jc="center" p="40">
             <Text class="u--trim" fz="l" fw="bold">期間限定コラボモデル</Text>
             <Text class="u--trim" fz="s">
               ここでしか出会えない特別な一品を。アーティストとのコラボなど、数量限定のモデル。自分を慈しむ時間を、もっと豊かに。毎日のセルフケアを、心地よい体験へと変える。
             </Text>
-            <Flex bdrs="inner" jc="center" bd p="10" setTransition hov="to:reverse">
+            <Flex bdrs="inner" jc="center" bd p="10" set="transition" hov="to:reverse">
               <Text fz="m">View Detail</Text>
             </Flex>
           </Stack>
         </LinkBox>
         <Columns cols={['1', '2', '4']} g="40">
-          <LinkBox layout="grid" gtr="subgrid" gr="span 3" setHov g="30" href="#">
+          <LinkBox layout="grid" gtr="subgrid" gr="span 3" set="hov" g="30" href="#">
             <Frame as="figure" ar="16/9" bdrs="20" pos="relative">
-              <Media src="/img/img-1.jpg" alt="" width="960" height="640" setTransition hov="to:zoom" />
+              <Media src="/img/img-1.jpg" alt="" width="960" height="640" set="transition" hov="to:zoom" />
             </Frame>
             <Stack g="20">
               <Text class="u--trim" fz="m" fw="bold">空調・生活家電</Text>
               <Text class="u--trim" fz="s" o="-10">空間に溶け込み、心地よい空気と時間を作り出す。日々の暮らしの質を高めるアイテム。</Text>
             </Stack>
-            <Flex my-s="auto" jc="center" bd bdc="line" p="10" bdrs="20" setTransition hov="to:reverse">
+            <Flex my-s="auto" jc="center" bd bdc="line" p="10" bdrs="20" set="transition" hov="to:reverse">
               <Text fz="s">View Detail</Text>
             </Flex>
           </LinkBox>
-          <LinkBox layout="grid" gtr="subgrid" gr="span 3" setHov g="30" href="#">
+          <LinkBox layout="grid" gtr="subgrid" gr="span 3" set="hov" g="30" href="#">
             <Frame as="figure" ar="16/9" bdrs="20" pos="relative">
-              <Media src="https://cdn.lism-css.com/random/img?r=2" alt="" width="960" height="640" setTransition hov="to:zoom" />
+              <Media src="https://cdn.lism-css.com/random/img?r=2" alt="" width="960" height="640" set="transition" hov="to:zoom" />
             </Frame>
             <Stack g="20">
               <Text class="u--trim" fz="m" fw="bold">スマートホーム</Text>
@@ -63,31 +62,31 @@ import './_style.css';
                 家電たちが静かに連携し、暮らしをサポート。テクノロジーを意識させない、未来の日常をつくります。
               </Text>
             </Stack>
-            <Flex my-s="auto" jc="center" bd bdc="line" p="10" bdrs="20" setTransition hov="to:reverse">
+            <Flex my-s="auto" jc="center" bd bdc="line" p="10" bdrs="20" set="transition" hov="to:reverse">
               <Text fz="s">View Detail</Text>
             </Flex>
           </LinkBox>
-          <LinkBox layout="grid" gtr="subgrid" gr="span 3" setHov g="30" href="#">
+          <LinkBox layout="grid" gtr="subgrid" gr="span 3" set="hov" g="30" href="#">
             <Frame as="figure" ar="16/9" bdrs="20" pos="relative">
-              <Media src="https://cdn.lism-css.com/random/img?r=3" alt="" width="960" height="640" setTransition hov="to:zoom" />
+              <Media src="https://cdn.lism-css.com/random/img?r=3" alt="" width="960" height="640" set="transition" hov="to:zoom" />
             </Frame>
             <Stack g="20">
               <Text class="u--trim" fz="m" fw="bold">アクセサリ</Text>
               <Text class="u--trim" fz="s" o="-10">製品体験をさらに豊かにする専用アクセサリ。細部にまで、ブランドの美意識を宿します。</Text>
             </Stack>
-            <Flex my-s="auto" jc="center" bd bdc="line" p="10" bdrs="20" setTransition hov="to:reverse">
+            <Flex my-s="auto" jc="center" bd bdc="line" p="10" bdrs="20" set="transition" hov="to:reverse">
               <Text fz="s">View Detail</Text>
             </Flex>
           </LinkBox>
-          <LinkBox layout="grid" gtr="subgrid" gr="span 3" setHov g="30" href="#">
+          <LinkBox layout="grid" gtr="subgrid" gr="span 3" set="hov" g="30" href="#">
             <Frame as="figure" ar="16/9" bdrs="20" pos="relative">
-              <Media src="https://cdn.lism-css.com/random/img?r=4" alt="" width="960" height="640" setTransition hov="to:zoom" />
+              <Media src="https://cdn.lism-css.com/random/img?r=4" alt="" width="960" height="640" set="transition" hov="to:zoom" />
             </Frame>
             <Stack g="20">
               <Text class="u--trim" fz="m" fw="bold">美容健康</Text>
               <Text class="u--trim" fz="s" o="-10">自分を慈しむ時間を、もっと豊かに。毎日のセルフケアを、心地よい体験へと変える。</Text>
             </Stack>
-            <Flex my-s="auto" jc="center" bd bdc="line" p="10" bdrs="20" setTransition hov="to:reverse">
+            <Flex my-s="auto" jc="center" bd bdc="line" p="10" bdrs="20" set="transition" hov="to:reverse">
               <Text fz="s">View Detail</Text>
             </Flex>
           </LinkBox>
