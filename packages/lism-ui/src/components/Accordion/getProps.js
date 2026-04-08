@@ -16,7 +16,7 @@ export function getHeadingProps(props) {
   const defaultProps = {
     lismClass: 'c--accordion_heading',
     as: 'div',
-    setPlain: 1,
+    set: 'plain',
   };
 
   const returnProps = { ...defaultProps, ...props };
@@ -60,7 +60,7 @@ export const defaultProps = {
     lismClass: 'c--accordion_button',
     as: 'button',
     layout: 'flex',
-    setPlain: 1,
+    set: 'plain',
     g: '10',
     w: '100%',
     ai: 'center',
