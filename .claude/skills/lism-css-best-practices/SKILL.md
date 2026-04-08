@@ -68,15 +68,16 @@ function Card({ children }) {
 
 このスキルには以下の詳細ファイルが含まれます。必要に応じて参照してください。
 
-| ファイル | 内容 |
-|---------|------|
-| [tokens.md](./tokens.md) | デザイントークン・CSS変数 — 余白・フォントサイズ・角丸・影・カラー・パレット |
-| [base-styles.md](./base-styles.md) | ベーススタイリング — Reset CSS・HTML要素のベーススタイル・CSS変数（トークン） |
-| [set-class.md](./set-class.md) | `set--` クラス — `set--plain`/`set--shadow`/`set--hov`/`set--transition` 等のセットアップクラス |
-| [module-class.md](./module-class.md) | モジュールクラス — `is--`/`l--`/`a--`/`c--` クラスの一覧と用途 |
-| [utility-class.md](./utility-class.md) | ユーティリティクラス — `u--` クラスの一覧・SCSS ソースリンク・Prop Class との違い |
-| [prop-class.md](./prop-class.md) | Prop Class — `-{prop}:{value}` 記法・主要Prop一覧・レスポンシブ対応・コンポーネントでの使い方 |
-| [components.md](./components.md) | コンポーネントシステム — コア・セマンティック・レイアウト・ステート・アトミック・UIコンポーネント一覧、getLismProps、CLI |
-| [css-rules.md](./css-rules.md) | CSS設計ルール — Layer構造・命名規則・プレフィックス・カスタムCSS追加ルール |
+| ファイル | 内容 | 公式ドキュメント |
+|---------|------|----------------|
+| [tokens.md](./tokens.md) | デザイントークン・CSS変数 — 余白・フォントサイズ・角丸・影・カラー・パレット | [tokens](https://lism-css.com/docs/tokens/) |
+| [base-styles.md](./base-styles.md) | ベーススタイリング — Reset CSS・HTML要素のベーススタイル・CSS変数（トークン） | [base-styles](https://lism-css.com/docs/base-styles/) |
+| [set-class.md](./set-class.md) | `set--` クラス — `set--plain`/`set--shadow`/`set--hov`/`set--transition` 等のセットアップクラス | [set](https://lism-css.com/docs/set/) |
+| [module-class.md](./module-class.md) | モジュールクラス — `is--`/`l--`/`a--`/`c--` クラスの一覧と用途 | [state](https://lism-css.com/docs/state/), [module-class](https://lism-css.com/docs/module-class/) |
+| [utility-class.md](./utility-class.md) | ユーティリティクラス — `u--` クラスの一覧・SCSS ソースリンク・Prop Class との違い | [utility-class](https://lism-css.com/docs/utility-class/) |
+| [prop-class.md](./prop-class.md) | Prop Class — `-{prop}:{value}` 記法・主要Prop一覧・特殊Prop（ボーダー・ホバー）・出力タイプ | [prop-class](https://lism-css.com/docs/prop-class/) |
+| [prop-responsive.md](./prop-responsive.md) | レスポンシブ対応 — ブレークポイント・コンテナクエリ・HTML/コンポーネントでの指定方法 | [responsive](https://lism-css.com/docs/responsive/) |
+| [components.md](./components.md) | コンポーネントシステム — コア・セマンティック・レイアウト・ステート・アトミック・UIコンポーネント一覧、getLismProps、CLI | [components](https://lism-css.com/docs/components/) |
+| [css-rules.md](./css-rules.md) | CSS設計ルール — Layer構造・命名規則・プレフィックス・カスタムCSS追加ルール | [css-methodology](https://lism-css.com/docs/css-methodology/) |
 
-各ファイルのセクション末尾には、公式ドキュメントへのリンクを `詳細: URL` の書式で記載しています。
+各ファイルの冒頭にはTOC（目次）があり、セクションごとの詳細URL・ソースURLがまとめて記載されています。

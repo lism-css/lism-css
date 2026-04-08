@@ -1,5 +1,15 @@
 # CSS 設計ルール
 
+## TOC
+
+- [CSS Layer 構造](#css-layer-構造)
+- [命名規則とプレフィックス](#命名規則とプレフィックス)
+- [カスタムCSS を追加する場合](#カスタムcss-を追加する場合)
+- [CSS の配置場所](#css-の配置場所)
+
+[詳細](https://lism-css.com/docs/css-methodology/)
+
+---
 
 ## CSS Layer 構造
 
@@ -15,10 +25,10 @@ Settings（トークン定義）
   → Prop Class（レイヤー外 — 最も詳細度が高い）
 ```
 
-詳細: https://lism-css.com/docs/css-methodology/
-
 
 ## 命名規則とプレフィックス
+
+[詳細](https://lism-css.com/docs/module-class/)
 
 クラス名のプレフィックスによって、役割とレイヤーの所属が決まります。
 
@@ -38,7 +48,17 @@ Settings（トークン定義）
 - バリエーション: `.c--button.c--button--outline`
 - 子要素: `.c--card_header`, `.c--card_body`
 
-詳細: https://lism-css.com/docs/module-class/
+**記述順序:**
+class 属性にクラスを直接記述する場合、Prop Class（`-` プレフィックス）はモジュールクラスやユーティリティクラスの**後ろ**に書いてください。
+
+```html
+<!-- OK: モジュールクラス → Prop Class -->
+<div class="l--flex c--nav -p:20 -g:20">...</div>
+<div class="l--box u--cbox -bd -p:20">...</div>
+
+<!-- NG: Prop Class が先 -->
+<div class="-p:20 -g:20 l--flex c--nav">...</div>
+```
 
 
 ## カスタムCSS を追加する場合
@@ -74,3 +94,48 @@ Settings（トークン定義）
 ```
 
 ただし、明確にその数値に意図がある場合は、生のCSS値を使用しても構いません。
+
+**レイヤー外に書く場合:**
+`@layer` の外（レイヤーなし）でカスタムCSSを書くのは、**Prop Class（`-{prop}:{value}`）を拡張する場合のみ**としてください。それ以外のカスタムスタイルは必ずいずれかの `@layer` 内に記述します。
+
+```css
+/* OK: Prop Class の拡張はレイヤー外 */
+.-myProp\:myValue { ... }
+
+/* NG: コンポーネントやユーティリティをレイヤー外に書かない */
+.c--my-card { ... }
+```
+
+
+## CSS の配置場所
+
+### グローバル CSS（サイト全体）
+
+Lism のトークン変数のカスタマイズやベーススタイルの上書きは、サイト全体で読み込むグローバル CSS ファイルに記述します。（lism-cssの`main.css`ファイルよりあとで読み込むこと）。
+
+```css
+/* global.css などで適切な @layer で定義すること */
+@layer lism-base {
+  :root {
+    --brand: #c00;
+    --link-c: #0066cc;
+    --fw--bold: 700;
+  }
+}
+```
+
+### コンポーネント CSS
+
+コンポーネント固有のスタイルは、そのコンポーネントを定義しているファイルに紐づけます。
+
+- `.jsx` / `.tsx` ファイル: CSS ファイルを `import` する
+- `.astro` ファイル: `import` するか、コンポーネントファイル内の `<style>` タグに記述
+
+```css
+/* コンポーネント用CSS は lism-modules 内に定義する */
+@layer lism-modules {
+  .c--yourComponent {
+    ...
+  }
+}
+```

@@ -1,6 +1,6 @@
 # コンポーネントシステム
 
-Lism CSS は React / Astro 向けのコンポーネントを提供しています。すべてのコンポーネントは `lism-css` パッケージに含まれており、インポートパスのみ異なります。
+Lism CSS（`lism-css`パッケージ）は React / Astro 向けのコンポーネントを提供しています。
 
 ```jsx
 // React
@@ -10,6 +10,21 @@ import { Lism, Box, Flex, Stack, Grid, Text, Media } from 'lism-css/react';
 import { Lism, Box, Flex, Stack, Grid, Text, Media } from 'lism-css/astro';
 ```
 
+## TOC
+
+- [コアコンポーネント: `<Lism>`](#コアコンポーネント-lism)
+- [Lism Props](#lism-props)
+- [セマンティックコンポーネント](#セマンティックコンポーネント)
+- [レイアウトコンポーネント（Layout Modules）](#レイアウトコンポーネントlayout-modules)
+- [ステートコンポーネント（State Modules）](#ステートコンポーネントstate-modules)
+- [アトミックコンポーネント（Atomic Modules）](#アトミックコンポーネントatomic-modules)
+- [Layout 優先の原則](#layout-優先の原則-layout-isstate-vs-state-layout)
+- [`getLismProps()`](#getlismprops--外部コンポーネントとの連携)
+- [UI コンポーネント（`@lism-css/ui`）](#ui-コンポーネントlism-cssui)
+
+[詳細](https://lism-css.com/docs/components/)
+
+---
 
 ## コアコンポーネント: `<Lism>`
 
@@ -22,6 +37,8 @@ import { Lism, Box, Flex, Stack, Grid, Text, Media } from 'lism-css/astro';
 
 
 ## Lism Props
+
+ソース: [props.ts](https://github.com/lism-css/lism-css/blob/dev/packages/lism-css/config/defaults/props.ts)
 
 `<Lism>` で受け取れる Lism CSS 専用プロパティを **Lism Props** と呼びます。
 
@@ -48,15 +65,15 @@ import { Lism, Box, Flex, Stack, Grid, Text, Media } from 'lism-css/astro';
 // → Image コンポーネントに { className: '-p:20 -bd' } が渡される
 
 // lismClass でコンポーネントクラスを付与
-<Lism lismClass='c--myComponent' p='10'>...</Lism>
+<Lism lismClass="c--myComponent" p="10">...</Lism>
 // → <div class="c--myComponent -p:10">...</div>
 
 // variant でバリエーション
-<Lism lismClass='c--myComponent' variant='secondary'>...</Lism>
+<Lism lismClass="c--myComponent" variant="secondary">...</Lism>
 // → <div class="c--myComponent c--myComponent--secondary">...</div>
 
 // exProps で外部コンポーネント用プロパティを明示的に分離
-<Icon as={HogeIcon} exProps={{ size: '1em' }} p="10" fz="l">...</Icon>
+<Icon as={HogeIcon} exProps={{ size: "1em" }} p="10" fz="l">...</Icon>
 // → p, fz は Lism が処理、size は HogeIcon に直接渡される
 ```
 
@@ -375,5 +392,3 @@ npx lism-ui list
   "helperDir": "src/components/ui/_helper"
 }
 ```
-
-詳細: https://lism-css.com/docs/components/

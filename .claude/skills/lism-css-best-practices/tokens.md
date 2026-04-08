@@ -5,6 +5,13 @@ Lism CSS では、余白・フォントサイズ・カラーなどの主要なCS
 
 CSSコードを書く場合やコンポーネントのPropsに値を指定する際は、明確な意図がない限りは固定値のハードコーディングを避け、デザイントークンの値を優先して使用してください。
 
+## TOC
+
+- [デザイントークンの一覧](#デザイントークンの一覧)
+
+[詳細](https://lism-css.com/docs/tokens/)
+
+---
 
 ## デザイントークンの一覧
 
@@ -27,7 +34,6 @@ CSSコードを書く場合やコンポーネントのPropsに値を指定する
 | セマンティックカラー (c) | `base`, `base-2`, `text`, `text-2`, `divider`, `link`, `brand`, `accent` | `--{name}` | `--brand` |
 | パレットカラー (palette) | `red`, `blue`, `green`, `yellow`, `purple`, `orange`, `pink`, `gray`, `white`, `black`, `keycolor` | `--{name}` | `--red` |
 
-詳細: https://lism-css.com/docs/tokens/
 
 
 ### カラー補足
