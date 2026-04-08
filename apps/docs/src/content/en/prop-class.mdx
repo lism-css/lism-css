@@ -238,7 +238,7 @@ Related tokens: <a href="/docs/tokens/#size"><code>SIZE</code></a>
 ## Displays
 |Prop|Shorthand|To Class|BP|
 |---|---|---|---|
-|`display`|`d`|`none`,<br />`block`,<br />`in-flex`(`inline-flex`)|○|
+|`display`|`d`|`none`,<br />`block`,<br />`inline-flex`|○|
 |`visibility`|`v`|`hidden`|-|
 |`opacity`|`o`|[`OPACITY`](/docs/tokens/#opacity), `0`|-|
 |`overflow`|`ov`| `auto`, `clip`, `hidden`|-|
@@ -251,7 +251,7 @@ Related tokens: <a href="/docs/tokens/#size"><code>SIZE</code></a>
 
 |Prop|Shorthand|To Class|BP|
 |---|---|---|---|
-|`position`|`pos`|`rel`(`relative`),<br />`abs`(`absolute`),<br />`static`,<br />`fixed`,<br />`sticky`|-|
+|`position`|`pos`|`relative`,<br />`absolute`,<br />`static`,<br />`fixed`,<br />`sticky`|-|
 |`top`|`t`|`0`,`50%`,`100%`|-|
 |`left`|`l`|`0`,`50%`,`100%`|-|
 |`right`|`r`|`0`,`50%`,`100%`|-|
@@ -273,46 +273,46 @@ Here are some examples of positioning elements with `position: absolute`.
     Positioning examples
   </PreviewTitle>
   <PreviewArea resize p='5'>
-    <Box pos="rel" ar="3/2" lh="1" ff="mono">
-      <Group pos="abs" l="0" t="0" bgc="base-2" bd p="10">A</Group>
-      <Group pos="abs" l="0" r="0" w="fit" mx="auto" bgc="base-2" bd p="10">B</Group>
-      <Group pos="abs" r="0" t="0" bgc="base-2" bd p="10">C</Group>
-      <Group pos="abs" l="0" t="0" b="0" h="fit" my="auto" bgc="base-2" bd p="10">D</Group>
-      <Group pos="abs" i="0" m="auto" w="fit" h="fit" bgc="base-2" bd p="10">E</Group>
-      <Group pos="abs" r="0" t="0" b="0" h="fit" my="auto" bgc="base-2" bd p="10">F</Group>
-      <Group pos="abs" l="0" b="0" bgc="base-2" bd p="10">G</Group>
-      <Group pos="abs" l="0" r="0" b="0" w="fit" mx="auto" bgc="base-2" bd p="10">H</Group>
-      <Group pos="abs" r="0" b="0" bgc="base-2" bd p="10">I</Group>
+    <Box pos="relative" ar="3/2" lh="1" ff="mono">
+      <Group pos="absolute" l="0" t="0" bgc="base-2" bd p="10">A</Group>
+      <Group pos="absolute" l="0" r="0" w="fit" mx="auto" bgc="base-2" bd p="10">B</Group>
+      <Group pos="absolute" r="0" t="0" bgc="base-2" bd p="10">C</Group>
+      <Group pos="absolute" l="0" t="0" b="0" h="fit" my="auto" bgc="base-2" bd p="10">D</Group>
+      <Group pos="absolute" i="0" m="auto" w="fit" h="fit" bgc="base-2" bd p="10">E</Group>
+      <Group pos="absolute" r="0" t="0" b="0" h="fit" my="auto" bgc="base-2" bd p="10">F</Group>
+      <Group pos="absolute" l="0" b="0" bgc="base-2" bd p="10">G</Group>
+      <Group pos="absolute" l="0" r="0" b="0" w="fit" mx="auto" bgc="base-2" bd p="10">H</Group>
+      <Group pos="absolute" r="0" b="0" bgc="base-2" bd p="10">I</Group>
     </Box>
   </PreviewArea>
   <PreviewCode slot='tab' label='JSX'>
     ```jsx
-    <Box pos="rel" ar="3/2" lh="1" ff="mono">
-      <Group pos="abs" l="0" t="0" bgc="base-2" bd p="10">
+    <Box pos="relative" ar="3/2" lh="1" ff="mono">
+      <Group pos="absolute" l="0" t="0" bgc="base-2" bd p="10">
         A
       </Group>
-      <Group pos="abs" l="0" r="0" w="fit" mx="auto" bgc="base-2" bd p="10">
+      <Group pos="absolute" l="0" r="0" w="fit" mx="auto" bgc="base-2" bd p="10">
         B
       </Group>
-      <Group pos="abs" r="0" t="0" bgc="base-2" bd p="10">
+      <Group pos="absolute" r="0" t="0" bgc="base-2" bd p="10">
         C
       </Group>
-      <Group pos="abs" l="0" t="0" b="0" h="fit" my="auto" bgc="base-2" bd p="10">
+      <Group pos="absolute" l="0" t="0" b="0" h="fit" my="auto" bgc="base-2" bd p="10">
         D
       </Group>
-      <Group pos="abs" i="0" m="auto" w="fit" h="fit" bgc="base-2" bd p="10">
+      <Group pos="absolute" i="0" m="auto" w="fit" h="fit" bgc="base-2" bd p="10">
         E
       </Group>
-      <Group pos="abs" r="0" t="0" b="0" h="fit" my="auto" bgc="base-2" bd p="10">
+      <Group pos="absolute" r="0" t="0" b="0" h="fit" my="auto" bgc="base-2" bd p="10">
         F
       </Group>
-      <Group pos="abs" l="0" b="0" bgc="base-2" bd p="10">
+      <Group pos="absolute" l="0" b="0" bgc="base-2" bd p="10">
         G
       </Group>
-      <Group pos="abs" l="0" r="0" b="0" w="fit" mx="auto" bgc="base-2" bd p="10">
+      <Group pos="absolute" l="0" r="0" b="0" w="fit" mx="auto" bgc="base-2" bd p="10">
         H
       </Group>
-      <Group pos="abs" r="0" b="0" bgc="base-2" bd p="10">
+      <Group pos="absolute" r="0" b="0" bgc="base-2" bd p="10">
         I
       </Group>
     </Box>
@@ -320,16 +320,16 @@ Here are some examples of positioning elements with `position: absolute`.
   </PreviewCode>
   <PreviewCode slot='tab' label='HTML'>
     ```html
-    <div class="l--box -pos:rel -ar:3/2 -lh:1 -ff:mono">
-      <div class="-pos:abs -l:0 -t:0 -bgc:base-2 -bd -p:10">A</div>
-      <div class="-pos:abs -l:0 -r:0 -w:fit -mx:auto -bgc:base-2 -bd -p:10">B</div>
-      <div class="-pos:abs -r:0 -t:0 -bgc:base-2 -bd -p:10">C</div>
-      <div class="-pos:abs -l:0 -t:0 -b:0 -h:fit -my:auto -bgc:base-2 -bd -p:10">D</div>
-      <div class="-pos:abs -i:0 -m:auto -w:fit -h:fit -bgc:base-2 -bd -p:10">E</div>
-      <div class="-pos:abs -r:0 -t:0 -b:0 -h:fit -my:auto -bgc:base-2 -bd -p:10">F</div>
-      <div class="-pos:abs -l:0 -b:0 -bgc:base-2 -bd -p:10">G</div>
-      <div class="-pos:abs -l:0 -r:0 -b:0 -w:fit -mx:auto -bgc:base-2 -bd -p:10">H</div>
-      <div class="-pos:abs -r:0 -b:0 -bgc:base-2 -bd -p:10">I</div>
+    <div class="l--box -pos:relative -ar:3/2 -lh:1 -ff:mono">
+      <div class="-pos:absolute -l:0 -t:0 -bgc:base-2 -bd -p:10">A</div>
+      <div class="-pos:absolute -l:0 -r:0 -w:fit -mx:auto -bgc:base-2 -bd -p:10">B</div>
+      <div class="-pos:absolute -r:0 -t:0 -bgc:base-2 -bd -p:10">C</div>
+      <div class="-pos:absolute -l:0 -t:0 -b:0 -h:fit -my:auto -bgc:base-2 -bd -p:10">D</div>
+      <div class="-pos:absolute -i:0 -m:auto -w:fit -h:fit -bgc:base-2 -bd -p:10">E</div>
+      <div class="-pos:absolute -r:0 -t:0 -b:0 -h:fit -my:auto -bgc:base-2 -bd -p:10">F</div>
+      <div class="-pos:absolute -l:0 -b:0 -bgc:base-2 -bd -p:10">G</div>
+      <div class="-pos:absolute -l:0 -r:0 -b:0 -w:fit -mx:auto -bgc:base-2 -bd -p:10">H</div>
+      <div class="-pos:absolute -r:0 -b:0 -bgc:base-2 -bd -p:10">I</div>
     </div>
     ```
   </PreviewCode>
@@ -354,7 +354,7 @@ Here are some examples of positioning elements with `position: absolute`.
 |Prop|Shorthand|To Class|BP|
 |---|---|---|---|
 |`flex-wrap`|`fxw`|`wrap`|○|
-|`flex-direction`|`fxd`|`col`(`column`),<br /> `col-r`(`column-reverse`),<br /> `row-r`(`row-reverse`)|○|
+|`flex-direction`|`fxd`|`column`,<br /> `column-reverse`,<br /> `row-reverse`|○|
 |`flex`|`fx`|`1`|○|
 |`flex-shrink`|`fxsh`|`0`|-|
 |`flex-grow`|`fxg`|`1`|-|
@@ -369,7 +369,7 @@ Here are some examples of positioning elements with `position: absolute`.
 |`grid-template-areas`|`gta`|-|○|
 |`grid-template-columns`|`gtc`|`subgrid`|○|
 |`grid-template-rows`|`gtr`|`subgrid`|○|
-|`grid-auto-flow`|`gaf`|`col`(`column`),<br />`row`|○|
+|`grid-auto-flow`|`gaf`|`column`,<br />`row`|○|
 |`grid-auto-rows`|`gar`|-|-|
 |`grid-auto-columns`|`gac`|-|-|
 |`grid-area`|`ga`|`1/1`|○|
@@ -385,10 +385,10 @@ Here are some examples of positioning elements with `position: absolute`.
 
 |Prop|Shorthand|To Class|BP|
 |---|---|---|---|
-|`align-items`|`ai`|`center`, `start`, `end`, `flex-s`, `flex-e`, `stretch`|⚪︎|
-|`align-content`|`ac`|`center`, `start`, `end`, `flex-s`, `flex-e`, `between`|⚪︎|
-|`justify-items`|`ji`|`center`, `start`, `end`, `flex-s`, `flex-e`, `stretch`|⚪︎|
-|`justify-content`|`jc`|`center`, `start`, `end`, `flex-s`, `flex-e`, `between`|⚪︎|
+|`align-items`|`ai`|`center`, `start`, `end`, `flex-start`, `flex-end`, `stretch`|⚪︎|
+|`align-content`|`ac`|`center`, `start`, `end`, `flex-start`, `flex-end`, `between`|⚪︎|
+|`justify-items`|`ji`|`center`, `start`, `end`, `flex-start`, `flex-end`, `stretch`|⚪︎|
+|`justify-content`|`jc`|`center`, `start`, `end`, `flex-start`, `flex-end`, `between`|⚪︎|
 |`align-self`|`aslf`|`center`, `start`, `end`, `stretch`|-|
 |`justify-self`|`jslf`|`center`, `start`, `end`, `stretch`|-|
 |`order`|`order`|`-1`, `0`, `1`|-|
@@ -492,7 +492,7 @@ The border specification has some unique behavior. See the [border page](/docs/p
 |`float`|`float`|`left`,`right`|-|
 |`clear`|`clear`|`both`|-|
 |`isolation`|`isolation`|`isolate`|-|
-|`overflow-wrap`|`ovwrap`|`any`(`anywhere`)|-|
+|`overflow-wrap`|`ovwrap`|`anywhere`|-|
 |`white-space`|`whspace`|`nowrap`|-|
 {/* |`word-break`|`wordbreak`|`keep`(`keep-all`),<br />`all`(`break-all`)|-| */}
 {/* |`linebreak`|`linebreak`|`strict`|-| */}

@@ -115,7 +115,7 @@ Here is an example of stacking elements using `grid-area:1/1` (`.-ga:1`) without
   <PreviewTitle>Overlapping Grid child elements</PreviewTitle>
   <PreviewArea p='15'>
     <Grid ar="16/9">
-      <Frame ga="1/1" w="100%" h="100%" pos="rel">
+      <Frame ga="1/1" w="100%" h="100%" pos="relative">
         <Media src="https://cdn.lism-css.com/img/a-1.jpg" alt="" inferSize />
         <Layer style={{ backdropFilter: 'blur(10px)' }} bgc="rgb(0 0 0 / 40%)" />
       </Frame>
@@ -125,7 +125,7 @@ Here is an example of stacking elements using `grid-area:1/1` (`.-ga:1`) without
   <PreviewCode slot='tab' label='JSX'>
     ```jsx "ga='1/1'"
     <Grid ar="16/9">
-      <Frame ga="1/1" w="100%" h="100%" pos="rel">
+      <Frame ga="1/1" w="100%" h="100%" pos="relative">
         <Media src="https://cdn.lism-css.com/img/a-1.jpg" alt="" inferSize />
         <Layer style={{ backdropFilter: 'blur(10px)' }} bgc="rgb(0 0 0 / 40%)" />
       </Frame>
@@ -138,7 +138,7 @@ Here is an example of stacking elements using `grid-area:1/1` (`.-ga:1`) without
   <PreviewCode slot='tab' label='HTML'>
     ```jsx "-ga:1"
     <div class="l--grid -ar:16/9">
-      <div class="l--frame -ga:1/1 -w:100% -h:100% -pos:rel">
+      <div class="l--frame -ga:1/1 -w:100% -h:100% -pos:relative">
         <img src="https://cdn.lism-css.com/img/a-1.jpg" />
         <div class="is--layer -bgc" style="backdrop-filter:blur(10px);--bgc:rgb(0 0 0 / 40%)"></div>
       </div>
@@ -160,21 +160,21 @@ Here is an example of stacking elements using `grid-area:1/1` (`.-ga:1`) without
       <Grid gtc="subgrid" gc="1/-1" g="20" ai="center" bd-t py="20" px="10">
         <Grid gtc={['auto auto', '1fr 1fr']} g="20" jc="start" ai="center">
           <Lism fz="s">2024.05.31</Lism>
-          <Lism d="in-flex" jc="center" fz="xs" lh="s" bgc="text" c="base" py="5" px="10" bdrs="10">NEWS</Lism>
+          <Lism d="inline-flex" jc="center" fz="xs" lh="s" bgc="text" c="base" py="5" px="10" bdrs="10">NEWS</Lism>
         </Grid>
         <DummyText className="u--trim" lang="ja" length="s" as="a" href="####" hov="o" c="inherit" td="none" lh="s" />
       </Grid>
       <Grid gtc="subgrid" gc="1/-1" g="20" ai="center" bd-t py="20" px="10">
         <Grid gtc={['auto auto', '1fr 1fr']} g="20" jc="start" ai="center">
           <Lism fz="s">2024.05.29</Lism>
-          <Lism d="in-flex" jc="center" fz="xs" lh="s" bgc="text" c="base" py="5" px="10" bdrs="10">TIPS</Lism>
+          <Lism d="inline-flex" jc="center" fz="xs" lh="s" bgc="text" c="base" py="5" px="10" bdrs="10">TIPS</Lism>
         </Grid>
         <DummyText className="u--trim" lang="ja" offset="2" as="a" href="####" hov="o" c="inherit" td="none" lh="s" />
       </Grid>
       <Grid gtc="subgrid" gc="1/-1" g="20" ai="center" bd-t py="20" px="10">
         <Grid gtc={['auto auto', '1fr 1fr']} g="20" jc="start" ai="center">
           <Lism fz="s">2024.05.18</Lism>
-          <Lism d="in-flex" jc="center" fz="xs" lh="s" bgc="text" c="base" py="5" px="10" bdrs="10">COLUMN</Lism>
+          <Lism d="inline-flex" jc="center" fz="xs" lh="s" bgc="text" c="base" py="5" px="10" bdrs="10">COLUMN</Lism>
         </Grid>
         <DummyText className="u--trim" lang="ja" length="l" offset="6" as="a" href="####" hov="o" c="inherit" td="none" lh="s" />
       </Grid>
@@ -186,7 +186,7 @@ Here is an example of stacking elements using `grid-area:1/1` (`.-ga:1`) without
       <Grid gtc="subgrid" gc="1/-1" g="20" ai="center" bd-t py="20" px="10">
         <Grid gtc={['auto auto', '1fr 1fr']} g="20" jc="start" ai="center">
           <Lism fz="s">2024.05.31</Lism>
-          <Lism d="in-flex" jc="center" fz="xs" lh="s" bgc="text" c="base" py="5" px="10" bdrs="10">
+          <Lism d="inline-flex" jc="center" fz="xs" lh="s" bgc="text" c="base" py="5" px="10" bdrs="10">
             NEWS
           </Lism>
         </Grid>
@@ -197,7 +197,7 @@ Here is an example of stacking elements using `grid-area:1/1` (`.-ga:1`) without
       <Grid gtc="subgrid" gc="1/-1" g="20" ai="center" bd-t py="20" px="10">
         <Grid gtc={['auto auto', '1fr 1fr']} g="20" jc="start" ai="center">
           <Lism fz="s">2024.05.29</Lism>
-          <Lism d="in-flex" jc="center" fz="xs" lh="s" bgc="text" c="base" py="5" px="10" bdrs="10">
+          <Lism d="inline-flex" jc="center" fz="xs" lh="s" bgc="text" c="base" py="5" px="10" bdrs="10">
             TIPS
           </Lism>
         </Grid>
@@ -208,7 +208,7 @@ Here is an example of stacking elements using `grid-area:1/1` (`.-ga:1`) without
       <Grid gtc="subgrid" gc="1/-1" g="20" ai="center" bd-t py="20" px="10">
         <Grid gtc={['auto auto', '1fr 1fr']} g="20" jc="start" ai="center">
           <Lism fz="s">2024.05.18</Lism>
-          <Lism d="in-flex" jc="center" fz="xs" lh="s" bgc="text" c="base" py="5" px="10" bdrs="10">
+          <Lism d="inline-flex" jc="center" fz="xs" lh="s" bgc="text" c="base" py="5" px="10" bdrs="10">
             COLUMN
           </Lism>
         </Grid>

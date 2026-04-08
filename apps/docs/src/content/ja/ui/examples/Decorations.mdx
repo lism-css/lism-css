@@ -51,7 +51,7 @@ import './_opt-in/_decorations.css';
       <Decorator fxsh="0" size="1.25em" bd-t bdc="cc" style={{ rotate: '45deg', transformOrigin: 'left top' }} />
     </Flex>
     <Spacer h="10" />
-    <Flex variant="ltr" jc="center" ai="flex-e" ta="center">
+    <Flex variant="ltr" jc="center" ai="flex-end" ta="center">
       <Decorator fxsh="0" size="1.25em" bd-b bdc="cc" style={{ rotate: '45deg', transformOrigin: 'right bottom' }} />
       <Box px="15" py="5" fxg="">
         <DummyText length="s" />
@@ -123,7 +123,7 @@ import './_opt-in/_decorations.css';
     <Flex
       variant='ltr'
       jc='center'
-       ai='flex-e'
+       ai='flex-end'
       ta='center'
     >
       <Decorator
@@ -156,28 +156,28 @@ import './_opt-in/_decorations.css';
 <Preview>
   <PreviewTitle>Kakko</PreviewTitle>
   <PreviewArea resize p='20'>
-    <Box p="30" pos="rel">
+    <Box p="30" pos="relative">
       <DummyText />
-      <Decorator size="1.25em" pos="abs" t="0" l="0" bdc="cc" bd-l bd-t />
-      <Decorator size="1.25em" pos="abs" r="0" b="0" bdc="cc" bd-r bd-b />
+      <Decorator size="1.25em" pos="absolute" t="0" l="0" bdc="cc" bd-l bd-t />
+      <Decorator size="1.25em" pos="absolute" r="0" b="0" bdc="cc" bd-r bd-b />
     </Box>
-    <Box p="30" pos="rel">
+    <Box p="30" pos="relative">
       <DummyText />
-      <Decorator pos="abs" t="0" l="0" w="1em" h="100%" bdc="cc" bd-l bd-y />
-      <Decorator pos="abs" t="0" r="0" w="1em" h="100%" bdc="cc" bd-r bd-y />
+      <Decorator pos="absolute" t="0" l="0" w="1em" h="100%" bdc="cc" bd-l bd-y />
+      <Decorator pos="absolute" t="0" r="0" w="1em" h="100%" bdc="cc" bd-r bd-y />
     </Box>
   </PreviewArea>
   <PreviewCode>
   ```jsx
-  <Box p='30' pos='rel'>
+  <Box p='30' pos='relative'>
     <DummyText />
-    <Decorator size='1.25em' pos='abs' t='0' l='0' bdc='cc' bd-l bd-t />
-    <Decorator size='1.25em' pos='abs' r='0' b='0' bdc='cc' bd-r bd-b />
+    <Decorator size='1.25em' pos='absolute' t='0' l='0' bdc='cc' bd-l bd-t />
+    <Decorator size='1.25em' pos='absolute' r='0' b='0' bdc='cc' bd-r bd-b />
   </Box>
-  <Box p='30' pos='rel'>
+  <Box p='30' pos='relative'>
     <DummyText />
-    <Decorator pos='abs' t='0' l='0' w='1em' h='100%' bdc='cc' bd-l bd-y />
-    <Decorator pos='abs' t='0' r='0' w='1em' h='100%' bdc='cc' bd-r bd-y />
+    <Decorator pos='absolute' t='0' l='0' w='1em' h='100%' bdc='cc' bd-l bd-y />
+    <Decorator pos='absolute' t='0' r='0' w='1em' h='100%' bdc='cc' bd-r bd-y />
   </Box>
   ```
   </PreviewCode>

@@ -25,6 +25,6 @@ export function getInnerProps({ lismClass = '', offset, style = {}, ...props }) 
 
 export const defaultProps = {
   body: { lismClass: 'c--modal_body' },
-  closeBtn: { as: 'button', setPlain: true, hov: 'o', d: 'in-flex' },
-  openBtn: { as: 'button', setPlain: true, hov: 'o', d: 'in-flex' },
+  closeBtn: { as: 'button', setPlain: true, hov: 'o', d: 'inline-flex' },
+  openBtn: { as: 'button', setPlain: true, hov: 'o', d: 'inline-flex' },
 };

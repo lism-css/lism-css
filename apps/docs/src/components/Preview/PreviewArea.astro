@@ -11,7 +11,7 @@ const { resize, setCqUnit = true, p = '5', ...props } = Astro.props || {};
       <slot />
       {
         resize && (
-          <Lism class="c--preview_help -hov:to:show -pos:abs -b:0 -r:0 -lh:xs -p:5 -bdrs:10">
+          <Lism class="c--preview_help -hov:to:show -pos:absolute -b:0 -r:0 -lh:xs -p:5 -bdrs:10">
             <span>リサイズ可能</span> <Icon as={ArrowDownRightIcon} />
           </Lism>
         )

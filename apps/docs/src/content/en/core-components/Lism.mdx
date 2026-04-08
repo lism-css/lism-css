@@ -214,15 +214,15 @@ When a value corresponding to a [Prop Class](/docs/prop-class/) is specified, Li
 
 For keyword values that correspond to a CSS property (rather than token values), the class is output regardless of whether the value is abbreviated or not.
 
-Example: the `-pos:rel` class for `position:relative` is output with either of the following:
+Example: the `-pos:relative` class for `position:relative` is output with either of the following:
 
 ```jsx
 <Lism pos='relative'>...</Lism>
-<Lism pos='rel'>...</Lism>
+<Lism pos='relative'>...</Lism>
 
 // ↓ Both produce the following output
 
-<div class="-pos:rel">...</div>
+<div class="-pos:relative">...</div>
 ```
 
 

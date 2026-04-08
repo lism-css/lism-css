@@ -16,8 +16,8 @@
  */
 
 const PLACE_PRESETS = ['start', 'center', 'end'] as const;
-const PLACE_UTILS = { 'flex-s': 'flex-start', 'flex-e': 'flex-end' } as const;
-const PLACE_SHORTHANDS = { s: 'start', e: 'end', c: 'center', fs: 'flex-s', fe: 'flex-e' } as const;
+const PLACE_UTILS = { 'flex-start': 'flex-start', 'flex-end': 'flex-end' } as const;
+const PLACE_SHORTHANDS = { s: 'start', e: 'end', c: 'center', fs: 'flex-start', fe: 'flex-end' } as const;
 
 export default {
   f: { prop: 'font', presets: ['inherit'] },
@@ -53,7 +53,7 @@ export default {
   d: {
     prop: 'display',
     presets: ['none', 'block'],
-    utils: { 'in-flex': 'inline-flex' },
+    utils: { 'inline-flex': 'inline-flex' },
     bp: 1,
   },
   o: { prop: 'opacity', presets: ['0'], token: 'o', tokenClass: 1 },
@@ -171,7 +171,7 @@ export default {
   pos: {
     prop: 'position',
     presets: ['static', 'fixed', 'sticky'],
-    utils: { rel: 'relative', abs: 'absolute' },
+    utils: { relative: 'relative', absolute: 'absolute' },
   },
   z: { prop: 'zIndex', presets: ['-1', '0', '1', '99'] },
   t: { prop: 'top', utils: { 0: '0%' }, presets: ['50%', '100%'], token: 'space' },
@@ -244,7 +244,7 @@ export default {
   // flex
   fxf: { prop: 'flexFlow' },
   fxw: { prop: 'flexWrap', presets: ['wrap'], bp: 1 },
-  fxd: { prop: 'flexDirection', utils: { col: 'column', 'col-r': 'column-reverse', 'row-r': 'row-reverse' }, bp: 1 },
+  fxd: { prop: 'flexDirection', utils: { column: 'column', 'column-reverse': 'column-reverse', 'row-reverse': 'row-reverse' }, bp: 1 },
   fx: { prop: 'flex', presets: ['1'], bp: 1 },
   fxg: { prop: 'flexGrow', presets: ['1'] },
   fxsh: { prop: 'flexShrink', presets: ['0'] },
@@ -274,7 +274,7 @@ export default {
     // exUtility: { repeat: { '--rows': '1', '--gtr': 'repeat(var(--rows), 1fr)' } },
     bp: 1,
   },
-  gaf: { prop: 'gridAutoFlow', utils: { row: 'row', col: 'column' }, bp: 1 }, //dense
+  gaf: { prop: 'gridAutoFlow', utils: { row: 'row', column: 'column' }, bp: 1 }, //dense
   gac: { prop: 'gridAutoColumns' },
   gar: { prop: 'gridAutoRows' },
 
@@ -363,7 +363,7 @@ export default {
   // },
 
   // others
-  ovwrap: { prop: 'overflowWrap', utils: { any: 'anywhere' } },
+  ovwrap: { prop: 'overflowWrap', utils: { anywhere: 'anywhere' } },
   whspace: { prop: 'whiteSpace', presets: ['nowrap'] },
   // wordbreak: { prop: 'wordBreak', utils: { keep: 'keep-all', all: 'break-all' } },
   float: { prop: 'float', presets: ['left', 'right'] },
