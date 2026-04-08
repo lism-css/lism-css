@@ -73,3 +73,5 @@ function Card({ children }) {
 | [props.md](./props.md) | Props システム — 主要Props一覧・Prop Class記法・is--/set-- Props・レスポンシブ対応 |
 | [tokens.md](./tokens.md) | デザイントークン — 余白・フォントサイズ・角丸・影・カラー・パレット |
 | [css-rules.md](./css-rules.md) | CSS設計ルール — Layer構造・命名規則・プレフィックス・カスタムCSS追加ルール |
+
+各ファイルのセクション末尾には、公式ドキュメントへのリンクを `詳細: URL` の書式で記載しています。
