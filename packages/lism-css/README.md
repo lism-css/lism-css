@@ -20,7 +20,7 @@ No build step or configuration is required. Simply load the CSS file via CDN or 
 - **Layout-First Module Architecture** — Pre-built layout modules (`l--flex`, `l--stack`, `l--grid`, `l--columns`, `l--center`, `l--sideMain`, etc.) let you compose common layout patterns without writing custom CSS.
 - **CSS Layer Structure** — Uses `@layer` (lism-reset → lism-base → lism-modules → lism-custom → lism-utility) for clear specificity management. `lism-custom` is the layer for user-defined classes with custom prefixes. Minimizes specificity conflicts.
 - **Design Tokens** — Colors, spacing, font sizes, shadows, and border radii are managed as CSS custom properties. Easy to customize by overriding variables.
-- **Flexible Prop Classes** — A `-{prop}:{value}` naming convention (e.g., `-p:20`, `-bgc:base-2`, `-fz:l`) maps CSS properties to utility classes for quick, readable styling.
+- **Flexible Property Classes** — A `-{prop}:{value}` naming convention (e.g., `-p:20`, `-bgc:base-2`, `-fz:l`) maps CSS properties to utility classes for quick, readable styling.
 - **Responsive System** — Breakpoint-specific classes and CSS variables (e.g., `-p_sm`, `-p_md`) use container queries by default for parent-based responsive design. Switchable to media queries.
 - **React & Astro Components** — Dedicated components for both React and Astro translate props into Lism CSS classes and variables automatically. Write `<Stack g="20">` instead of `class="l--stack -g:20"`.
 
@@ -148,7 +148,7 @@ Lism CSS uses a structured naming convention for CSS classes:
 |------|---------|----------|
 | Layout Module | `l--{name}` | `l--flex`, `l--grid`, `l--stack`, `l--center`, `l--columns`, `l--sideMain` |
 | State Module | `is--{name}` | `is--wrapper`, `is--container`, `is--layer` |
-| Prop Class | `-{prop}:{value}` | `-p:20`, `-m:auto`, `-bgc:base-2`, `-fz:l`, `-ta:center` |
+| Property Class | `-{prop}:{value}` | `-p:20`, `-m:auto`, `-bgc:base-2`, `-fz:l`, `-ta:center` |
 | Breakpoint | `-{prop}_{bp}` | `-p_sm`, `-g_md`, `-fz_lg` |
 | Utility Class | `u--{name}` | `u--cbox` |
 

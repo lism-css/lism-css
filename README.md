@@ -28,7 +28,7 @@ No build step or configuration is required. Simply load the CSS file via CDN or 
 - **Layout-First Modules** — Pre-built layout patterns: `l--flex`, `l--stack`, `l--grid`, `l--columns`, `l--center`, `l--sideMain`, etc.
 - **CSS Layer Structure** — `@layer` (lism-reset → lism-base → lism-modules → lism-custom → lism-utility) for clear specificity management. `lism-custom` is the layer for user-defined classes with custom prefixes. Minimizes specificity conflicts.
 - **Design Tokens** — Colors, spacing, font sizes, shadows as CSS custom properties.
-- **Flexible Prop Classes** — `-{prop}:{value}` syntax (e.g., `-p:20`, `-bgc:base-2`, `-fz:l`).
+- **Flexible Property Classes** — `-{prop}:{value}` syntax (e.g., `-p:20`, `-bgc:base-2`, `-fz:l`).
 - **Responsive System** — Breakpoint classes and CSS variables (e.g., `-p_sm`, `-p_md`) use container queries by default for parent-based responsive design. Switchable to media queries.
 - **React & Astro Components** — Write `<Stack g="20">` instead of `class="l--stack -g:20"`.
 
@@ -118,7 +118,7 @@ import { Box, Flex, Stack, Text, Heading } from 'lism-css/astro';
 |------|---------|
 | Layout Module | `l--flex`, `l--grid`, `l--stack`, `l--center`, `l--columns`, `l--sideMain` |
 | State | `is--wrapper`, `is--container`, `is--layer` |
-| Prop Class | `-p:20`, `-bgc:base-2`, `-fz:l`, `-ta:center` |
+| Property Class | `-p:20`, `-bgc:base-2`, `-fz:l`, `-ta:center` |
 | Breakpoint | `-p_sm`, `-g_md`, `-fz_lg` |
 | Utility | `u--cbox` |
 

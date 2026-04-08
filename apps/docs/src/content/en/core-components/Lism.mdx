@@ -68,7 +68,7 @@ The props specific to Lism CSS that `<Lism>` accepts are called **Lism Props**.
 |---|---|
 |**Common Props**|Basic shared properties|
 |**State Props**|Props for outputting classes classified as [State Modules](/docs/css-methodology//#state-modules)|
-|**CSS Props**|Props for outputting classes classified as [Prop Class](/docs/prop-class/)| */}
+|**CSS Props**|Props for outputting classes classified as [Property Class](/docs/property-class/)| */}
 
 
 
@@ -208,7 +208,7 @@ Major CSS properties can be specified using shorthand notation.
 For example, `font-size` can be written as `fz`, and `padding` as `p`.
 
 <Reference>
-[See the full list of available Props](/docs/prop-class/)
+[See the full list of available Props](/docs/property-class/)
 </Reference>
 
 <Spacer h='10'/>
@@ -225,7 +225,7 @@ The output format is determined by the value (`value`) specified via `prop={valu
 | Other values (variable-only) | `--{prop}` variable only | `bdw='2px'` → `--bdw:2px` |
 
 :::note[Notes]
-- **BP-supported properties**: Properties that can switch values at breakpoints. See the **BP** column in [Prop Class](/docs/prop-class).
+- **BP-supported properties**: Properties that can switch values at breakpoints. See the **BP** column in [Property Class](/docs/property-class).
 - **Variable-only properties**: Properties like `bds`, `bdc`, `bdw`, `keycolor` that always output only CSS variables (`--{prop}`).
 - When a matching token exists but has no dedicated class, the value is output as a CSS variable. (e.g., `c='red'` → `class="-c"` + `style="--c:var(--red)"`)
 :::
@@ -299,7 +299,7 @@ This is useful when you want to define the variable value in CSS, or when you wa
 <div id='output-utility'></div>
 #### Force output as a utility class with `:`
 
-Even if no corresponding Prop Class exists, prefixing a value with `:` will output the string after it as a utility class name.
+Even if no corresponding Property Class exists, prefixing a value with `:` will output the string after it as a utility class name.
 
 ```jsx
 <Lism p=':hoge'>...</Lism>
@@ -359,7 +359,7 @@ BP-supported properties can specify values per breakpoint (`sm`, `md`) using arr
 
 :::warning
 Whether a value actually changes at a breakpoint depends on whether that property supports responsive behavior.
-Check the **BP** (<small>short for breakpoint</small>) column in [Prop Class](/docs/prop-class) to see which properties are supported.
+Check the **BP** (<small>short for breakpoint</small>) column in [Property Class](/docs/property-class) to see which properties are supported.
 :::
 
 For properties that do not support responsive behavior by default (i.e., no CSS is provided), you can add support via [SCSS customization](/docs/customize/).

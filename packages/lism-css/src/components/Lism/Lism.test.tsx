@@ -104,7 +104,7 @@ describe('Lism', () => {
     });
   });
 
-  describe('Prop Class', () => {
+  describe('Property Class', () => {
     describe('Typography', () => {
       test('fz（font-size）トークン値を指定できる', () => {
         render(
