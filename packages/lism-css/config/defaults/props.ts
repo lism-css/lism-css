@@ -132,7 +132,7 @@ export default {
   bdc: {
     isVar: 1,
     presets: ['brand', 'accent', 'divider', 'inherit', 'transparent'],
-    utils: { cc: 'currentColor' },
+    utils: { current: 'currentColor' },
     token: 'color',
   },
   bdw: { isVar: 1, bp: 1 }, // --bdw のみ
