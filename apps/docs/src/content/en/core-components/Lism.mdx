@@ -117,17 +117,17 @@ Specifies a layout module. For example, setting `layout='flow'` outputs the `.l-
 ```
 
 
-### `as` , `exProps`
+### `as`
 
-`as` specifies the HTML tag or external component to render. Defaults to `div`.
+Specifies the HTML tag or external component to render. Defaults to `div`.
 
 <PreviewTitle>Example of specifying an HTML tag</PreviewTitle>
 ```jsx "as='p'"
-<Lism as='p' fz='l'>Lorem ipsum texts...</Lism>
+<Lism as='p'>Lorem ipsum texts...</Lism>
 
 ↓
 
-<p class="-fz:l">Lorem ipsum texts...</p>
+<p>Lorem ipsum texts...</p>
 ```
 
 By specifying an external component, you can have `<Lism>` **render as a different external component**.
@@ -138,20 +138,20 @@ By specifying an external component, you can have `<Lism>` **render as a differe
 ```jsx
 import Image from 'next/image';
 
-<Media as={Image} src="..." bxsh="20" bdrs="20" />
+<Media as={Image} src="..." p="20" bd />
 ```
   </PreviewCode>
 </Preview>
 
-Lism props are first processed to generate `class` and `style`, which are then passed to the component specified by `as`.
+Lism Props (`p` and `bd` in the example above) are first processed to generate `className` and `style`, which are then passed to the component specified by `as`.
 This is useful when you want to use Lism Props on non-Lism components.
 
 
+### `exProps`
 
-Additionally, `exProps` accepts **props that you want to skip Lism Props processing for**.
+Accepts **props that you want to skip Lism Props processing for** as an object.
 
 This is handy when a prop name of the external component specified via `as` conflicts with a Lism Prop name, and you want to explicitly mark it as belonging to the external component.
-
 
 <Preview>
   <PreviewTitle>Example</PreviewTitle>
@@ -171,190 +171,131 @@ By doing this, the Lism `Icon` component processes `p` and `fz`, while the exter
 
 ### State Props
 
-A set of props corresponding to [State Modules](/docs/css-methodology//) classes.
+A set of props corresponding to [State Modules](/docs/css-methodology/) classes.
 
 
-| Prop | Output class |
-|---|---|
-| `isWrapper(='{s\|l}')` | `.is--wrapper`+`(.-contentSize:{s\|l})` |
-| `isLayer` | `.is--layer` |
-| `isLinkBox` | `.is--linkBox` |
-| `setGutter` | `.set--gutter` |
+| Prop | Output class | Purpose |
+|---|---|---|
+| `isWrapper(='{s\|l}')` | `is--wrapper` + `-contentSize:{s\|l}` | Content width restriction |
+| `isLayer` | `is--layer` | Absolute positioned layer (inset:0) |
+| `isLinkBox` | `is--linkBox` | Make entire box clickable |
+| `isContainer` | `is--container` | Container query target |
+| `isSide` | `is--side` | Side element |
+| `isSkipFlow` | `is--skipFlow` | Skip Flow spacing |
+| `isVertical` | `is--vertical` | Vertical writing mode |
+| `setGutter` | `set--gutter` | Horizontal gutter spacing |
+| `setShadow` | `set--shadow` | Apply shadow |
+| `setHov` | `set--hov` | Hover effect |
+| `setTransition` | `set--transition` | Transition |
+| `setPlain` | `set--plain` | Plain state |
 
 <Reference>
-[Learn about State Modules classes and usage examples](/docs/css-methodology//)
+[Learn about State Modules classes and usage examples](/docs/css-methodology/)
 </Reference>
 
 
 ### CSS Props
 
-Major CSS properties can be specified on components using shorthand notation.
+Major CSS properties can be specified using shorthand notation.
 For example, `font-size` can be written as `fz`, and `padding` as `p`.
-
-When a value corresponding to a [Prop Class](/docs/prop-class/) is specified, Lism outputs a utility class as shown below.
-
-<Preview>
-<PreviewTitle>Example</PreviewTitle>
-<PreviewCode>
-```jsx
-<Lism fz='l' p='15'>contents</Lism>
-
-// ↓ Output HTML
-<div class="-fz:l -p:15">contents</div>
-```
-</PreviewCode>
-</Preview>
-
 
 <Reference>
 [See the full list of available Props](/docs/prop-class/)
 </Reference>
 
-<Spacer h='20'/>
+<Spacer h='10'/>
 
-For keyword values that correspond to a CSS property (rather than token values), the class is output regardless of whether the value is abbreviated or not.
+The output format is determined by the value (`value`) specified via `prop={value}`:
 
-Example: the `-pos:relative` class for `position:relative` is output with either of the following:
+| Value | Output format | Example |
+|------|------|-----|
+| Token / preset value | `-{prop}:{value}` class | `fz='l'` → `-fz:l` |
+| `true` / `"-"` | `-{prop}` class only (no variable) | `bd` → `-bd` |
+| Value starting with `:` | Forced utility class | `p=':hoge'` → `-p:hoge` |
+| Other values (BP-supported) | `-{prop}` class + `--{prop}` variable | `fz='20px'` → `-fz` + `--fz:20px` |
+| Other values (BP-unsupported) | Direct `style` attribute output | `o='0.7'` → `opacity:0.7` |
+| Other values (variable-only) | `--{prop}` variable only | `bdw='2px'` → `--bdw:2px` |
 
+:::note[Notes]
+- **BP-supported properties**: Properties that can switch values at breakpoints. See the **BP** column in [Prop Class](/docs/prop-class).
+- **Variable-only properties**: Properties like `bds`, `bdc`, `bdw`, `keycolor` that always output only CSS variables (`--{prop}`).
+- When a matching token exists but has no dedicated class, the value is output as a CSS variable. (e.g., `c='red'` → `class="-c"` + `style="--c:var(--red)"`)
+:::
+
+
+#### Code examples
+
+<Preview>
+<PreviewTitle>Token value → class only</PreviewTitle>
+<PreviewCode>
 ```jsx
-<Lism pos='relative'>...</Lism>
-<Lism pos='relative'>...</Lism>
-
-// ↓ Both produce the following output
-
-<div class="-pos:relative">...</div>
-```
-
-
-
-#### When a value with no corresponding Prop Class is specified
-
-When a value that cannot be converted to a utility class is specified, it is output in one of the following ways:
-
-1. Output directly as an inline `style` attribute.
-2. Output as a combination of `-{prop}` class and `--{prop}` CSS variable.
-3. Output only as `--{prop}` (special case).
-
-<Preview>
-<PreviewTitle>Example 1: simple inline style output</PreviewTitle>
-<PreviewCode>
-```jsx  "op='0.75'" "opacity:0.75"
-<Lism o='0.75'>contents</Lism>
-↓
-<div style="opacity:0.75">contents</div>
+<Lism fz='l' p='20'>...</Lism>
+// → <div class="-fz:l -p:20">...</div>
 ```
 </PreviewCode>
 </Preview>
 
 <Preview>
-<PreviewTitle>Example 2: class and CSS variable combined output</PreviewTitle>
+<PreviewTitle>Color token (no dedicated class) → class + CSS variable</PreviewTitle>
 <PreviewCode>
-```jsx "fz='20px'" "-fz" "--fz:20px"
-<Lism fz='20px'>contents</Lism>
-// ↓ output
-<div class="-fz" style="--fz:20px">contents</div>
+```jsx
+<Lism c='red'>...</Lism>
+// → <div class="-c" style="--c:var(--red)">...</div>
 ```
 </PreviewCode>
 </Preview>
 
-Major properties that support breakpoint switching use this `-{prop}` & `--{prop}` pattern.
-
-{/* <p class='-fz:s -o:mild -my-s:5'>In addition, major properties are also converted to variables for better usability (since managing them as variables is more convenient).</p> */}
-
-
-<Spacer h='10' />
 <Preview>
-<PreviewTitle>Example 3: variable-only output</PreviewTitle>
+<PreviewTitle>`true` / `"-"` → class only (no variable)</PreviewTitle>
+<PreviewCode>
+```jsx "p='-'" "bdrs" "-p" "-bdrs"
+<Lism p='-' bdrs>contents</Lism>
+// → <div class="-p -bdrs">contents</div>
+```
+</PreviewCode>
+</Preview>
+
+This is useful when you want to define the variable value in CSS, or when you want to **inherit the same variable from a parent element**.
+
+<Preview>
+<PreviewTitle>Variable-only property → CSS variable only</PreviewTitle>
 <PreviewCode>
 ```jsx
 <Lism bd bdc="#000" bdw="2px">...</Lism>
+// → <div class="-bd" style="--bdc:#000;--bdw:2px">...</div>
+```
+</PreviewCode>
+</Preview>
 
-// ↓ output
-<div class="-bd" style="--bdc:#000;--bdw:2px">...</div>
+<Preview>
+<PreviewTitle>BP-supported property with custom value → class + CSS variable</PreviewTitle>
+<PreviewCode>
+```jsx "fz='20px'" "-fz" "--fz:20px"
+<Lism fz='20px'>contents</Lism>
+// → <div class="-fz" style="--fz:20px">contents</div>
+```
+</PreviewCode>
+</Preview>
+
+<Preview>
+<PreviewTitle>BP-unsupported property with custom value → direct style output</PreviewTitle>
+<PreviewCode>
+```jsx "o='0.75'" "opacity:0.75"
+<Lism o='0.75'>contents</Lism>
+// → <div style="opacity:0.75">contents</div>
 ```
 </PreviewCode>
 </Preview>
 
 
-## Notes
-
-
-
-### Responsive Syntax
-
-CSS Props available in `Lism` can be output in a [responsive format](/docs/responsive).
-
-
-
-There are two ways to write this:
-
-1. Specify values in order using an array (base → sm → md → ...)
-2. Specify breakpoints directly using an object
-
-Both produce the same HTML output: a pair of utility class and CSS variable (`-{prop}_{bp}` & `--{prop}_{bp}`).
-
-<Preview>
-  <PreviewTitle>Example 1</PreviewTitle>
-  <PreviewCode label='Array syntax' slot='tab'>
-    ```jsx
-    <Lism p={['20', '30', '5rem']}>...</Lism>
-    ```
-  </PreviewCode>
-  <PreviewCode label='Object syntax' slot='tab'>
-    ```jsx
-    <Lism p={{ base: '20', sm: '30', md: '5rem' }}>...</Lism>
-    ```
-  </PreviewCode>
-  <PreviewCode label='Output HTML' slot='tab'>
-    ```jsx
-    <div class="-p:20 -p_sm -p_md" style="--p_sm:var(--s30);--p_md:5rem">
-      ...
-    </div>
-    ```
-  </PreviewCode>
-</Preview>
-
-To skip intermediate breakpoints, write it as follows:
-
-<Preview>
-  <PreviewTitle>Example 2: specifying only the `@md` value</PreviewTitle>
-  <PreviewCode label='Array syntax' slot='tab'>
-    ```jsx
-    <Lism p={[null, null, '40']}>...</Lism>
-    ```
-  </PreviewCode>
-  <PreviewCode label='Object syntax' slot='tab'>
-    ```jsx
-    <Lism p={{ md: '40' }}>...</Lism>
-    ```
-  </PreviewCode>
-  <PreviewCode label='Output HTML' slot='tab'>
-    ```jsx
-    <div class="-p_md" style="--p_md:var(--s40)">
-      ...
-    </div>
-    ```
-  </PreviewCode>
-</Preview>
-
-:::warning
-Whether a value actually changes at a breakpoint depends on whether that property supports responsive behavior.
-Check the **BP** (<small>short for breakpoint</small>) column in [Prop Class](/docs/prop-class) to see which properties are supported.
-:::
-
-For properties that do not support responsive behavior by default (i.e., no CSS is provided), you can add support via [SCSS customization](/docs/customize/).
-
-
 <div id='output-utility'></div>
-### Force output as a utility class with `:`
+#### Force output as a utility class with `:`
 
 Even if no corresponding Prop Class exists, prefixing a value with `:` will output the string after it as a utility class name.
+
 ```jsx
 <Lism p=':hoge'>...</Lism>
-
-↓
-
-<div class="-p:hoge">...</div>
+// → <div class="-p:hoge">...</div>
 ```
 
 Add a custom utility class in your CSS and use it as needed.
@@ -370,29 +311,47 @@ Using `className='-p:hoge'` also works, but passing it as a CSS Prop via `:` ens
 :::
 
 
-### Outputting only the `.-{prop}` class
+#### Responsive syntax
 
-Specifying `"-"` or `true` for a CSS Prop outputs only the `.-{prop}` class without a CSS variable.
+BP-supported properties can specify values per breakpoint (`sm`, `md`) using arrays or objects.
+
+[Learn more about responsive support](/docs/responsive)
 
 <Preview>
-<PreviewTitle>Example</PreviewTitle>
-<PreviewCode>
-```jsx "p='-'" "bdrs" "-p" "-bdrs"
-<Lism p='-' bdrs>contents</Lism>
-↓
-<div class="-p -bdrs">contents</div>
-```
-</PreviewCode>
+  <PreviewTitle>Example 1: array syntax (base → sm → md)</PreviewTitle>
+  <PreviewCode label='JSX' slot='tab'>
+    ```jsx
+    <Lism p={['20', '30', '5rem']}>...</Lism>
+    ```
+  </PreviewCode>
+  <PreviewCode label='Output HTML' slot='tab'>
+    ```html
+    <div class="-p:20 -p_sm -p_md" style="--p_sm:var(--s30);--p_md:5rem">
+      ...
+    </div>
+    ```
+  </PreviewCode>
 </Preview>
 
-This is useful when you want to define the variable value in CSS, or when you want to **inherit the same variable from a parent element**.
+<Preview>
+  <PreviewTitle>Example 2: skip intermediate breakpoints (`@md` only)</PreviewTitle>
+  <PreviewCode label='JSX' slot='tab'>
+    ```jsx
+    <Lism p={[null, null, '40']}>...</Lism>
+    ```
+  </PreviewCode>
+  <PreviewCode label='Output HTML' slot='tab'>
+    ```html
+    <div class="-p_md" style="--p_md:var(--s40)">
+      ...
+    </div>
+    ```
+  </PreviewCode>
+</Preview>
 
+:::warning
+Whether a value actually changes at a breakpoint depends on whether that property supports responsive behavior.
+Check the **BP** (<small>short for breakpoint</small>) column in [Prop Class](/docs/prop-class) to see which properties are supported.
+:::
 
-### Token resolution per property
-
-How tokens are handled varies per property when a matching token exists:
-
-- If there is a dedicated class for that token, that class is output.
-    - Example: `fz='l'` outputs the `-fz:l` class.
-- If a corresponding token exists but is not registered as a class, the CSS variable is output as an inline style.
-    - Example: `c='red'` outputs `class="-c"` and `style="--c:var(--red)"`.
+For properties that do not support responsive behavior by default (i.e., no CSS is provided), you can add support via [SCSS customization](/docs/customize/).
