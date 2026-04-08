@@ -40,7 +40,7 @@ describe('PropValueTypes', () => {
   it('d には presets と utils の値を設定できる（レスポンシブ対応）', () => {
     // bp: 1 なので Responsive でラップされる
     expectTypeOf<PropValueTypes['d']>().toEqualTypeOf<
-      Responsive<'none' | 'block' | 'inline-flex' | (string & {}) | number | boolean | null | undefined>
+      Responsive<'none' | 'block' | 'flex' | 'inline-flex' | 'grid' | 'inline-grid' | (string & {}) | number | boolean | null | undefined>
     >();
   });
 
@@ -159,7 +159,9 @@ describe('ResponsivePropValueTypes', () => {
     type Props = ResponsivePropValueTypes;
     type DProp = Props['d'];
 
-    expectTypeOf<DProp>().toEqualTypeOf<'none' | 'block' | 'inline-flex' | (string & {}) | number | boolean | null | undefined>();
+    expectTypeOf<DProp>().toEqualTypeOf<
+      'none' | 'block' | 'flex' | 'inline-flex' | 'grid' | 'inline-grid' | (string & {}) | number | boolean | null | undefined
+    >();
   });
 });
 
