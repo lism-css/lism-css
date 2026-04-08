@@ -47,8 +47,8 @@ export function Item({ isHorizontal, isStart, isEnd, isHighlighted, icon, iconPr
       ji={isHorizontal ? 'c' : null}
       gtr={isHorizontal ? 'subgrid' : null}
       gr={isHorizontal ? '1/-1' : null}
-      g-x={isHorizontal ? null : '20'}
-      g-y={isHorizontal ? '10' : null}
+      cg={isHorizontal ? null : '20'}
+      rg={isHorizontal ? '10' : null}
       {...props}
     >
       <Line {...lineProps} />

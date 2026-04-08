@@ -72,6 +72,18 @@ describe('PropValueTypes', () => {
     >();
   });
 
+  it('cg（column-gap）には space トークンの値を設定できる（レスポンシブ対応）', () => {
+    expectTypeOf<PropValueTypes['cg']>().toEqualTypeOf<
+      Responsive<'5' | '10' | '15' | '20' | '30' | '40' | '50' | '60' | '70' | '80' | (string & {}) | number | boolean | null | undefined>
+    >();
+  });
+
+  it('rg（row-gap）には space トークンの値を設定できる（レスポンシブ対応）', () => {
+    expectTypeOf<PropValueTypes['rg']>().toEqualTypeOf<
+      Responsive<'5' | '10' | '15' | '20' | '30' | '40' | '50' | '60' | '70' | '80' | (string & {}) | number | boolean | null | undefined>
+    >();
+  });
+
   it('presets も utils も token もないプロパティは string | number | boolean 型で含まれる', () => {
     // bg は presets/utils/token がないが、PropValueTypes に含まれる（string | number | boolean フォールバック）
     // bg は bp: 1 なので Responsive でラップされる
@@ -125,12 +137,16 @@ describe('ResponsivePropValueTypes', () => {
     type WExists = 'w' extends keyof Props ? true : false;
     type HExists = 'h' extends keyof Props ? true : false;
     type ArExists = 'ar' extends keyof Props ? true : false;
+    type CgExists = 'cg' extends keyof Props ? true : false;
+    type RgExists = 'rg' extends keyof Props ? true : false;
 
     expectTypeOf<FzExists>().toEqualTypeOf<true>();
     expectTypeOf<DExists>().toEqualTypeOf<true>();
     expectTypeOf<WExists>().toEqualTypeOf<true>();
     expectTypeOf<HExists>().toEqualTypeOf<true>();
     expectTypeOf<ArExists>().toEqualTypeOf<true>();
+    expectTypeOf<CgExists>().toEqualTypeOf<true>();
+    expectTypeOf<RgExists>().toEqualTypeOf<true>();
 
     // bp: 1 が設定されていないプロパティ（含まれないはず）
     type FwExists = 'fw' extends keyof Props ? true : false;
