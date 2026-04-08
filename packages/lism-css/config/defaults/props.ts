@@ -234,8 +234,8 @@ export default {
     overwriteBaseVar: 1,
     bp: 1,
   },
-  'g-x': { prop: 'columnGap', token: 'space', bp: 1 },
-  'g-y': { prop: 'rowGap', token: 'space', bp: 1 },
+  cg: { prop: 'columnGap', token: 'space', bp: 1 },
+  rg: { prop: 'rowGap', token: 'space', bp: 1 },
   cols: { isVar: 1, bp: 1 },
   rows: { isVar: 1, bp: 1 },
 
