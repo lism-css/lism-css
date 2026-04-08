@@ -134,7 +134,7 @@ const docsSidebar: SidebarSection[] = [
       '/docs/set-class/',
       '/docs/module-class/',
       '/docs/utility-class/',
-      '/docs/prop-class/',
+      '/docs/property-class/',
       '/docs/responsive/',
       { type: 'separator' },
       '/docs/customize/',

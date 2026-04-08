@@ -19,8 +19,8 @@ const headerText = t(currentLang, 'header');
 ---
 
 <Container as="header" class="z--header" layout="flex" ai="center">
-  {/* 全体のgridレイアウトの切り替えと、ハンバーガーボタンの表示タイミングがずれないように setGutterは内側につける */}
-  <Flex ai="center" w="100%" g="15" setGutter>
+  {/* 全体のgridレイアウトの切り替えと、ハンバーガーボタンの表示タイミングがずれないように set="gutter"は内側につける */}
+  <Flex ai="center" w="100%" g="15" set="gutter">
     <Group mx-e="auto">
       <Link href={homeUrl} class="siteTitle" layout="flex" ai="center" g="5" fw="normal" c="inherit" td="none" hov="under">
         <img class="u-onlyLightMode" src="/logo-black.svg" alt="" aria-labelledby="site-logo-label" width="300" height="62" />
@@ -52,7 +52,8 @@ const headerText = t(currentLang, 'header');
     {/* ハンバーガーメニューボタン（モバイルのみ表示） */}
     <Modal.OpenBtn
       modalId="site-nav"
-      class="c--menuTrigger l--center set--plain -bd -bdrs:10"
+      class="c--menuTrigger l--center -bd -bdrs:10"
+      set="plain"
       d={['grid', null, 'none']}
       bgc="base"
       bdrs="10"
