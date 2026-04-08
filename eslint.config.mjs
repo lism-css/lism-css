@@ -106,5 +106,21 @@ export default defineConfig(
   ...storybook.configs['flat/recommended'],
   {
     files: ['**/*.stories.@(ts|tsx|js|jsx|mjs|cjs)'],
+    languageOptions: {
+      parserOptions: {
+        projectService: {
+          allowDefaultProject: ['packages/lism-ui/src/components/*/*.stories.ts', 'packages/lism-ui/src/components/*/*.stories.tsx'],
+          maximumDefaultProjectFileMatchCount_THIS_WILL_SLOW_DOWN_LINTING: 20,
+        },
+        tsconfigRootDir: import.meta.dirname,
+      },
+    },
+    rules: {
+      '@typescript-eslint/no-unsafe-assignment': 'off',
+      '@typescript-eslint/no-unsafe-member-access': 'off',
+      '@typescript-eslint/no-unsafe-argument': 'off',
+      '@typescript-eslint/no-unsafe-return': 'off',
+      '@typescript-eslint/no-unsafe-call': 'off',
+    },
   }
 );
