@@ -3,7 +3,7 @@
  */
 import getMaybeCssVar from 'lism-css/lib/getMaybeCssVar';
 
-type NavMenuRootProps = {
+export type NavMenuRootProps = {
   hovC?: string;
   hovBgc?: string;
   itemP?: string;
@@ -11,7 +11,7 @@ type NavMenuRootProps = {
   [key: string]: unknown;
 };
 
-type NavMenuLinkProps = {
+export type NavMenuLinkProps = {
   href?: string;
   as?: string;
   [key: string]: unknown;

@@ -1,34 +1,39 @@
 'use client';
 import { useState, useId, Children, isValidElement } from 'react';
-import { Lism } from 'lism-css/react';
+import { Lism, type LismComponentProps } from 'lism-css/react';
 import Tab from './Tab';
 import TabItem from './TabItem';
 import TabList from './TabList';
 import TabPanel from './TabPanel';
 import getTabsProps from '../getProps';
-// import { TabContext } from './context';
 
 import '../_style.css';
 
-export default function Tabs({ tabId = '', defaultIndex = 1, listProps = {}, children, ...props }) {
+type TabsProps = LismComponentProps & {
+  tabId?: string;
+  defaultIndex?: number;
+  listProps?: LismComponentProps;
+};
+
+export default function Tabs({ tabId = '', defaultIndex = 1, listProps = {}, children, ...props }: TabsProps) {
   const [activeIndex, setActiveIndex] = useState(defaultIndex);
   const theTabId = tabId || useId();
-  const btns = [];
-  const panels = [];
+  const btns: React.ReactElement[] = [];
+  const panels: React.ReactElement[] = [];
 
   // Tabs.Item の処理
   Children.forEach(children, (child, index) => {
     const tabIndex = index + 1; // 1 はじまり
-    // console.log('child.type', isValidElement(child), child.type);
 
     if (isValidElement(child) && child.type === TabItem) {
-      Children.forEach(child.props.children, (nestedChild) => {
+      const childProps = child.props as { children?: React.ReactNode };
+      Children.forEach(childProps.children, (nestedChild) => {
         if (isValidElement(nestedChild)) {
           if (nestedChild.type === Tab) {
-            const tabProps = nestedChild.props;
+            const tabProps = nestedChild.props as Record<string, unknown>;
             btns.push(
               <Tab
-                {...tabProps}
+                {...(tabProps as LismComponentProps)}
                 tabId={theTabId}
                 index={tabIndex}
                 key={tabIndex}
@@ -37,8 +42,16 @@ export default function Tabs({ tabId = '', defaultIndex = 1, listProps = {}, chi
               />
             );
           } else if (nestedChild.type === TabPanel) {
-            const panelProps = nestedChild.props;
-            panels.push(<TabPanel {...panelProps} tabId={theTabId} index={tabIndex} key={tabIndex} isActive={tabIndex === activeIndex} />);
+            const panelProps = nestedChild.props as Record<string, unknown>;
+            panels.push(
+              <TabPanel
+                {...(panelProps as LismComponentProps)}
+                tabId={theTabId}
+                index={tabIndex}
+                key={tabIndex}
+                isActive={tabIndex === activeIndex}
+              />
+            );
           }
         }
       });

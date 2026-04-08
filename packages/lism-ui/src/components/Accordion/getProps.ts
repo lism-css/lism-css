@@ -1,24 +1,24 @@
 import atts from 'lism-css/lib/helper/atts';
 
-type AccordionRootProps = {
+export type AccordionRootProps = {
   lismClass?: string;
   allowMultiple?: boolean;
   [key: string]: unknown;
 };
 
-type AccordionItemProps = {
+export type AccordionItemProps = {
   lismClass?: string;
   [key: string]: unknown;
 };
 
-type AccordionHeadingProps = {
+export type AccordionHeadingProps = {
   as?: string;
   role?: string;
   lismClass?: string;
   [key: string]: unknown;
 };
 
-type AccordionPanelProps = {
+export type AccordionPanelProps = {
   lismClass?: string;
   _contextID?: string;
   accID?: string;

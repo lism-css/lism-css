@@ -1,4 +1,4 @@
-type ShapeDividerProps = {
+export type ShapeDividerProps = {
   viewBox?: string;
   isAnimation?: boolean;
   isEmpty?: boolean;

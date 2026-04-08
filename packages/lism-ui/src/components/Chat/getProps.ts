@@ -36,7 +36,7 @@ export const defaultProps = {
   },
 };
 
-type ChatProps = {
+export type ChatProps = {
   variant?: string;
   direction?: string;
   keycolor?: string;

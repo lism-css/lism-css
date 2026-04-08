@@ -1,8 +1,7 @@
-import type { ReactNode } from 'react';
-import { Flow, Lism, Center, Icon, type PresetIconName } from 'lism-css/react';
+import { Flow, Lism, Center, Icon, type LismComponentProps, type PresetIconName } from 'lism-css/react';
 import getAlertProps, { type AlertProps } from '../getProps';
 
-export default function Alert({ children, ...inputProps }: AlertProps & { children?: ReactNode }) {
+export default function Alert({ children, ...inputProps }: AlertProps & LismComponentProps) {
   const { icon, layout, flow, ...alertProps } = getAlertProps(inputProps);
 
   return (

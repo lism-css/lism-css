@@ -1,13 +1,13 @@
 import atts from 'lism-css/lib/helper/atts';
 
-type ModalRootProps = {
+export type ModalRootProps = {
   lismClass?: string;
   duration?: string;
   style?: Record<string, string>;
   [key: string]: unknown;
 };
 
-type ModalInnerProps = {
+export type ModalInnerProps = {
   lismClass?: string;
   offset?: string;
   style?: Record<string, string>;

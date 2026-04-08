@@ -1,14 +1,13 @@
 'use client';
 import { useRef, useEffect } from 'react';
-import { Lism } from 'lism-css/react';
+import { Lism, type LismComponentProps } from 'lism-css/react';
 import { setEvent } from '../setModal';
-import { getProps } from '../getProps';
+import { getProps, type ModalRootProps } from '../getProps';
 
 import '../_style.css';
 
-// duration: [s]
-const Modal = ({ children, ...props }) => {
-  const ref = useRef(null);
+const Modal = ({ children, ...props }: ModalRootProps & LismComponentProps) => {
+  const ref = useRef<HTMLDialogElement>(null);
   useEffect(() => {
     if (!ref?.current) return;
     return setEvent(ref?.current);
