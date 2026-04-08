@@ -112,7 +112,7 @@ const docsSidebar: SidebarSection[] = [
   {
     label: 'はじめに',
     translate: { en: 'Getting Started' },
-    items: ['/docs/overview/', '/docs/installation/', '/docs/features/', '/docs/changelog/'],
+    items: ['/docs/overview/', '/docs/installation/', '/docs/mcp/', '/docs/skills/', '/docs/features/', '/docs/changelog/'],
   },
 
   // 概要カテゴリ
@@ -126,6 +126,7 @@ const docsSidebar: SidebarSection[] = [
       '/docs/tokens/',
       '/docs/tokens/colors/',
       '/docs/tokens/typography/',
+      '/docs/tokens/half-leading/',
       '/docs/tokens/spacing/',
       { type: 'separator' },
       // '/docs/reset-css/',

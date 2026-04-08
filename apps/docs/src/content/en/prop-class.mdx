@@ -64,8 +64,8 @@ The tables below summarize information for each property.
 
 | Column | Description |
 |---|---|
-|**Property**| The CSS property |
-|**Shorthand**| The abbreviated form. This is the `{prop}` string in the `-{prop}:{val}` class format, and also the prop name used with Lism components.|
+|**Shorthand**| The abbreviated form of the CSS property. This is the `{prop}` string in the `-{prop}:{val}` class format, and also the prop name used with Lism components.|
+|**Property**| The corresponding CSS property |
 |**To Class**| Values that are output as Prop Utility classes |
 |**BP**| Whether breakpoint support classes (`-{prop}_{bp}`) are available |
 
@@ -75,23 +75,23 @@ The shorthand string is output as a class name. It is also the property name use
 
 ## Typography
 
-|Property|Shorthand|To Class|BP|
+|Shorthand|Property|To Class|BP|
 |---|---|---|---|
-|`font`|`f`|`inherit`|-|
-|`font-size`|`fz`|[`FZ`](/docs/tokens/typography/#fz-font-size)|○|
-|`font-family`|`ff`|[`FF`](/docs/tokens/typography/#ff-font-family)|-|
-|`font-weight`|`fw`|[`FW`](/docs/tokens/typography/#fw--font-weight)|-|
-|`font-style`|`fs`|`italic`|-|
-|`line-height`|`lh`|[`LH`](/docs/tokens/typography/#lh-line-height), <br/>`1`|-|
-|`letter-spacing`|`lts`|[`LTS`](/docs/tokens/typography/#lts-letter-spacing)|-|
-|`text-align`|`ta`|`center`<br/>`left`<br/>`right`|-|
-|`text-decoration`|`td`|`none`|-|
-|`text-transform`|`tt`|`upper`<br/>`lower`|-|
+|`f`|`font`|`inherit`|-|
+|`fz`|`font-size`|[`FZ`](/docs/tokens/typography/#fz-font-size)|✔|
+|`ff`|`font-family`|[`FF`](/docs/tokens/typography/#ff-font-family)|-|
+|`fw`|`font-weight`|[`FW`](/docs/tokens/typography/#fw--font-weight)|-|
+|`fs`|`font-style`|`italic`|-|
+|`lh`|`line-height`|[`LH`](/docs/tokens/half-leading/), <br/>`1`|-|
+|`lts`|`letter-spacing`|[`LTS`](/docs/tokens/typography/#lts-letter-spacing)|-|
+|`ta`|`text-align`|`center`<br/>`left`<br/>`right`|-|
+|`td`|`text-decoration`|`none`|-|
+|`tt`|`text-transform`|`upper`<br/>`lower`|-|
 
 
 <Preview>
   <PreviewTitle>Examples</PreviewTitle>
-  <PreviewArea p='20'>
+  <PreviewArea p='30'>
     <p class="-fz:xl -fw:bold -lts:l -ta:center -tt:upper">Example text</p>
   </PreviewArea>
   <PreviewCode slot="tab" label="HTML">
@@ -111,31 +111,27 @@ The shorthand string is output as a class name. It is also the property name use
 
 ## Colors
 
-|Property|Shorthand|To Class|BP|
+|Shorthand|Property|To Class|BP|
 |---|---|---|---|
-|`color`|`c`|`brand`,`accent`<br />`text`,`text-2`,<br />`base`,<br />`inherit`|-|
-|`background-color`|`bgc`|`brand`,`accent`<br />`base`,`base-2`,<br />`text`,<br />`inherit`<br />`transparent`|-|
-|`background-image`|`bgi`|-|-|
-|`background-repeat`|`bgr`|`no-repeat`|-|
-|`background-position`|`bgp`|`center`|-|
-|`background-size`|`bgsz`|`cover`,`contain`|-|
-|`--bdc`|`bdc`|`brand`,`accent`<br />`divider`,<br />`inherit`,<br />`transparent`|-|
+|`c`|`color`|`brand`,`accent`<br />`text`,`text-2`,<br />`base`,<br />`inherit`|-|
+|`bgc`|`background-color`|`brand`,`accent`<br />`base`,`base-2`,<br />`text`,<br />`inherit`<br />`transparent`|-|
+|`bdc`|`--bdc`|`brand`,`accent`<br />`divider`,<br />`inherit`,<br />`transparent`|-|
 {/* |`--keycolor`|`keycolor`|-|-| */}
 
 
 <Preview>
   <PreviewTitle>Examples</PreviewTitle>
-  <PreviewArea p='20'>
-    <Text c="brand" bgc="base-2" bd p="30">Example text</Text>
+  <PreviewArea p='30'>
+    <Text c="brand" bgc="base-2" bd bdc="current" p="30">Example text</Text>
   </PreviewArea>
   <PreviewCode slot="tab" label="HTML">
-  ```html
-  <p class="-c:brand -bgc:base-2 -bd -p:30">Example text</p>
+  ```html "-c:brand -bgc:base-2 -bdc:current"
+  <p class="-c:brand -bgc:base-2 -bdc:current -bd -p:30">Example text</p>
   ```
   </PreviewCode>
   <PreviewCode slot="tab" label="JSX">
   ```jsx
-  <Text c="brand" bgc="base-2" bd p="30">
+  <Text c="brand" bgc="base-2" bd bdc="current" p="30">
     Example text
   </Text>
   ```
@@ -150,34 +146,36 @@ Related tokens: <a href="/docs/tokens/colors/"><code>COLOR</code></a>
 export const LinkSPACE = () => <a href="/docs/tokens/spacing/"><code>SPACE</code></a>;
 
 ### Padding
-|Property|Shorthand|To Class|BP|
+
+|Shorthand|Property|To Class|BP|
 |---|---|---|---|
-|`padding`|`p`|<LinkSPACE/>|○|
-|`padding-inline`|`px`|<LinkSPACE/>|○|
-|`padding-block`|`py`|<LinkSPACE/>|○|
-|`padding-inline-start`|`px-s`|-|○|
-|`padding-inline-end`|`px-e`|-|○|
-|`padding-block-start`|`py-s`|-|○|
-|`padding-block-end`|`py-e`|-|○|
-|`padding-left`|`pl`|-|○|
-|`padding-right`|`pr`|-|○|
-|`padding-top`|`pt`|-|○|
-|`padding-bottom`|`pb`|-|○|
+|`p`|`padding`|<LinkSPACE/>|✔|
+|`px`|`padding-inline`|<LinkSPACE/>|✔|
+|`py`|`padding-block`|<LinkSPACE/>|✔|
+|`px-s`|`padding-inline-start`|-|✔|
+|`px-e`|`padding-inline-end`|-|✔|
+|`py-s`|`padding-block-start`|-|✔|
+|`py-e`|`padding-block-end`|-|✔|
+|`pl`|`padding-left`|-|✔|
+|`pr`|`padding-right`|-|✔|
+|`pt`|`padding-top`|-|✔|
+|`pb`|`padding-bottom`|-|✔|
 
 ### Margin
-|Property|Shorthand|To Class|BP|
+
+|Shorthand|Property|To Class|BP|
 |---|---|---|---|
-|`margin`|`m`|`auto`, <LinkSPACE/>|○|
-|`margin-inline`|`mx`|`auto`, <LinkSPACE/>|○|
-|`margin-block`|`my`|`auto`, <LinkSPACE/>|○|
-|`margin-inline-start`|`mx-s`|`auto`|○|
-|`margin-inline-end`|`mx-e`|`auto`|○|
-|`margin-block-start`|`my-s`|`auto`, <LinkSPACE/>|○|
-|`margin-block-end`|`my-e`|`auto`|○|
-|`margin-left`|`ml`|-|○|
-|`margin-right`|`mr`|-|○|
-|`margin-top`|`mt`|-|○|
-|`margin-bottom`|`mb`|-|○|
+|`m`|`margin`|`auto`, <LinkSPACE/>|✔|
+|`mx`|`margin-inline`|`auto`, <LinkSPACE/>|✔|
+|`my`|`margin-block`|`auto`, <LinkSPACE/>|✔|
+|`mx-s`|`margin-inline-start`|`auto`|✔|
+|`mx-e`|`margin-inline-end`|`auto`|✔|
+|`my-s`|`margin-block-start`|`auto`, <LinkSPACE/>|✔|
+|`my-e`|`margin-block-end`|`auto`|✔|
+|`ml`|`margin-left`|-|✔|
+|`mr`|`margin-right`|-|✔|
+|`mt`|`margin-top`|-|✔|
+|`mb`|`margin-bottom`|-|✔|
 
 
 <Spacer h='1rem' />
@@ -185,26 +183,26 @@ export const LinkSPACE = () => <a href="/docs/tokens/spacing/"><code>SPACE</code
 <Preview>
   <PreviewTitle>Space Examples</PreviewTitle>
   <PreviewArea p='20' resize>
-    <Lism p={['15', '20']} bd>
+    <Lism p={['20', '30']} bd>
       <Text>Example text</Text>
-      <Text my-s="15" mx="20">
+      <Text my-s="20" mx="30">
         <Fragment>Example text</Fragment>
       </Text>
     </Lism>
   </PreviewArea>
   <PreviewCode slot="tab" label="HTML">
-  ```html
-  <div class="-p:15 -p_sm -bd" style="--p_sm: var(--s20)">
+  ```html "-p:20 -p_sm" "--p_sm:" "-my-s:20 -mx:30"
+  <div class="-p:20 -p_sm -bd" style="--p_sm: var(--s30)">
     <p>Example text</p>
-    <p class="-my-s:15 -mx:20">Example text</p>
+    <p class="-my-s:20 -mx:30">Example text</p>
   </div>
   ```
   </PreviewCode>
   <PreviewCode slot="tab" label="JSX">
-  ```jsx
-  <Lism p={['15', '20']} bd>
+  ```jsx "p={['20', '30']}" "my-s=\"20\"" "mx=\"30\""
+  <Lism p={['20', '30']} bd>
     <Text>Example text</Text>
-    <Text my-s="15" mx="20">
+    <Text my-s="20" mx="30">
       Example text
     </Text>
   </Lism>
@@ -215,55 +213,104 @@ export const LinkSPACE = () => <a href="/docs/tokens/spacing/"><code>SPACE</code
 
 
 ## Width & Height
-|Property|Shorthand|To Class|BP|
+
+|Shorthand|Property|To Class|BP|
 |---|---|---|---|
-|`width`|`w`|`100%`,<br/>`fit`(`fit-content`)|○|
-|`height`|`h`|`100%`,<br/>`fit`(`fit-content`)|○|
-|`max-width`|`max-w`|`100%`|○|
-|`max-height`|`max-h`|`100%`|○|
-|`min-width`|`min-w`|`100%`|○|
-|`min-height`|`min-h`|`100%`|○|
-|`inline-size`|`sz`|-|-|
-|`max-inline-size`|`max-sz`|`xs`,`s`,`m`,`l`,`xl`,`full`,`container`|-|
-|`min-inline-size`|`min-sz`|-|-|
-|`block-size`|`ysz`|-|-|
-|`max-block-size`|`max-ysz`|-|-|
-|`min-block-size`|`min-ysz`|-|-|
+|`w`|`width`|`100%`,<br/>`fit`(`fit-content`)|✔|
+|`h`|`height`|`100%`,<br/>`fit`(`fit-content`)|✔|
+|`max-w`|`max-width`|`100%`|✔|
+|`max-h`|`max-height`|`100%`|✔|
+|`min-w`|`min-width`|`100%`|✔|
+|`min-h`|`min-height`|`100%`|✔|
+|`sz`|`inline-size`|-|-|
+|`max-sz`|`max-inline-size`|`xs`,`s`,`m`,`l`,`xl`,`min`,`full`,`container`|-|
+|`min-sz`|`min-inline-size`|-|-|
+|`ysz`|`block-size`|-|-|
+|`max-ysz`|`max-block-size`|-|-|
+|`min-ysz`|`min-block-size`|-|-|
 
 
 Related tokens: <a href="/docs/tokens/#size"><code>SIZE</code></a>
 
+<Preview>
+  <PreviewTitle>Examples</PreviewTitle>
+  <PreviewArea p='30'>
+    <Lism w="fit" h="5em" bgc="base-2" p="10" bd>
+      <Text>Example text</Text>
+    </Lism>
+  </PreviewArea>
+  <PreviewCode slot="tab" label="HTML">
+  ```html "-w:fit -h" "--h:"
+  <div class="-w:fit -h -bgc:base-2 -p:10 -bd" style="--h:5em">Example text</div>
+  ```
+  </PreviewCode>
+  <PreviewCode slot="tab" label="JSX">
+  ```jsx 'w="fit" h="5em"'
+  <Lism w="fit" h="5em" bgc="base-2" p="10" bd>
+    Example text..
+  </Lism>
+  ```
+  </PreviewCode>
+</Preview>
 
 
 ## Displays
-|Prop|Shorthand|To Class|BP|
+
+|Shorthand|Prop|To Class|BP|
 |---|---|---|---|
-|`display`|`d`|`none`,<br />`block`,<br />`inline-flex`|○|
-|`visibility`|`v`|`hidden`|-|
-|`opacity`|`o`|[`OPACITY`](/docs/tokens/#opacity), `0`|-|
-|`overflow`|`ov`| `auto`, `clip`, `hidden`|-|
-|`overflow-x`|`ov-x`|`auto`, `clip`, `scroll`|-|
-|`overflow-y`|`ov-y`|`auto`, `clip`, `scroll`|-|
-|`aspect-ratio`|`ar`|`21/9`,`16/9`,`3/2`,`1/1`,<br />`og`|○|
+|`d`|`display`|`none`,<br />`block`,<br />`flex`,<br />`inline-flex`,<br />`grid`,<br />`inline-grid`|✔|
+|`v`|`visibility`|`hidden`|-|
+|`o`|`opacity`|[`OPACITY`](/docs/tokens/#opacity), `0`|-|
+|`ov`|`overflow`| `auto`, `clip`, `hidden`|-|
+|`ov-x`|`overflow-x`|`auto`, `clip`, `scroll`|-|
+|`ov-y`|`overflow-y`|`auto`, `clip`, `scroll`|-|
+|`ar`|`aspect-ratio`|`21/9`,`16/9`,`3/2`,`1/1`,<br />`og`|✔|
+
+
+<Preview>
+  <PreviewTitle>Examples</PreviewTitle>
+  <PreviewArea p='30'>
+    <Lism>
+      <Text d="inline-flex" ar="1/1" p="20" bgc="base-2" bd>Box</Text>
+      <Text d="inline-flex" o="-20" px="20">Text</Text>
+    </Lism>
+  </PreviewArea>
+  <PreviewCode slot="tab" label="HTML">
+  ```html '-d:inline-flex' '-ar:1/1' '-o:-20'
+  <div>
+    <p class="-d:inline-flex -ar:1/1 -p:20 -bgc:base-2 -bd">Box</p>
+    <p class="-d:inline-flex -o:-20 -px:20">Text</p>
+  </div>
+  ```
+  </PreviewCode>
+  <PreviewCode slot="tab" label="JSX">
+  ```jsx 'd="inline-flex"' 'ar="1/1"' 'o="-20"'
+  <Lism>
+    <Text d="inline-flex" ar="1/1" p="20" bgc="base-2" bd>Box</Text>
+    <Text d="inline-flex" o="-20" px="20">Text</Text>
+  </Lism>
+  ```
+  </PreviewCode>
+</Preview>
 
 
 ## Positions
 
-|Prop|Shorthand|To Class|BP|
+|Shorthand|Prop|To Class|BP|
 |---|---|---|---|
-|`position`|`pos`|`relative`,<br />`absolute`,<br />`static`,<br />`fixed`,<br />`sticky`|-|
-|`top`|`t`|`0`,`50%`,`100%`|-|
-|`left`|`l`|`0`,`50%`,`100%`|-|
-|`right`|`r`|`0`,`50%`,`100%`|-|
-|`bottom`|`b`|`0`,`50%`,`100%`|-|
-|`z-index`|`z`|`-1`, `0`, `1`, `99`|-|
-|`inset`|`i`|`0`|-|
-|`inset-inline`|`i-x`|-|-|
-|`inset-block`|`i-y`|-|-|
-|`inset-inline-start`|`i-x-s`|-|-|
-|`inset-inline-end`|`i-x-e`|-|-|
-|`inset-block-start`|`i-y-s`|-|-|
-|`inset-block-end`|`i-y-e`|-|-|
+|`pos`|`position`|`relative`,<br />`absolute`,<br />`static`,<br />`fixed`,<br />`sticky`|-|
+|`t`|`top`|`0`,`50%`,`100%`|-|
+|`l`|`left`|`0`,`50%`,`100%`|-|
+|`r`|`right`|`0`,`50%`,`100%`|-|
+|`b`|`bottom`|`0`,`50%`,`100%`|-|
+|`z`|`z-index`|`-1`, `0`, `1`, `99`|-|
+|`i`|`inset`|`0`|-|
+|`i-x`|`inset-inline`|-|-|
+|`i-y`|`inset-block`|-|-|
+|`i-x-s`|`inset-inline-start`|-|-|
+|`i-x-e`|`inset-inline-end`|-|-|
+|`i-y-s`|`inset-block-start`|-|-|
+|`i-y-e`|`inset-block-end`|-|-|
 
 Here are some examples of positioning elements with `position: absolute`.
 
@@ -273,54 +320,39 @@ Here are some examples of positioning elements with `position: absolute`.
     Positioning examples
   </PreviewTitle>
   <PreviewArea resize p='5'>
-    <Box pos="relative" ar="3/2" lh="1" ff="mono">
-      <Group pos="absolute" l="0" t="0" bgc="base-2" bd p="10">A</Group>
-      <Group pos="absolute" l="0" r="0" w="fit" mx="auto" bgc="base-2" bd p="10">B</Group>
-      <Group pos="absolute" r="0" t="0" bgc="base-2" bd p="10">C</Group>
-      <Group pos="absolute" l="0" t="0" b="0" h="fit" my="auto" bgc="base-2" bd p="10">D</Group>
-      <Group pos="absolute" i="0" m="auto" w="fit" h="fit" bgc="base-2" bd p="10">E</Group>
-      <Group pos="absolute" r="0" t="0" b="0" h="fit" my="auto" bgc="base-2" bd p="10">F</Group>
-      <Group pos="absolute" l="0" b="0" bgc="base-2" bd p="10">G</Group>
-      <Group pos="absolute" l="0" r="0" b="0" w="fit" mx="auto" bgc="base-2" bd p="10">H</Group>
-      <Group pos="absolute" r="0" b="0" bgc="base-2" bd p="10">I</Group>
-    </Box>
-  </PreviewArea>
-  <PreviewCode slot='tab' label='JSX'>
-    ```jsx
-    <Box pos="relative" ar="3/2" lh="1" ff="mono">
+    <Box pos="relative" ar="16/9" lh="1" ff="mono">
       <Group pos="absolute" l="0" t="0" bgc="base-2" bd p="10">
-        A
+        <Fragment>A</Fragment>
       </Group>
       <Group pos="absolute" l="0" r="0" w="fit" mx="auto" bgc="base-2" bd p="10">
-        B
+        <Fragment>B</Fragment>
       </Group>
       <Group pos="absolute" r="0" t="0" bgc="base-2" bd p="10">
-        C
+        <Fragment>C</Fragment>
       </Group>
       <Group pos="absolute" l="0" t="0" b="0" h="fit" my="auto" bgc="base-2" bd p="10">
-        D
+        <Fragment>D</Fragment>
       </Group>
       <Group pos="absolute" i="0" m="auto" w="fit" h="fit" bgc="base-2" bd p="10">
-        E
+        <Fragment>E</Fragment>
       </Group>
       <Group pos="absolute" r="0" t="0" b="0" h="fit" my="auto" bgc="base-2" bd p="10">
-        F
+        <Fragment>F</Fragment>
       </Group>
       <Group pos="absolute" l="0" b="0" bgc="base-2" bd p="10">
-        G
+        <Fragment>G</Fragment>
       </Group>
       <Group pos="absolute" l="0" r="0" b="0" w="fit" mx="auto" bgc="base-2" bd p="10">
-        H
+        <Fragment>H</Fragment>
       </Group>
       <Group pos="absolute" r="0" b="0" bgc="base-2" bd p="10">
-        I
+        <Fragment>I</Fragment>
       </Group>
     </Box>
-    ```
-  </PreviewCode>
+  </PreviewArea>
   <PreviewCode slot='tab' label='HTML'>
     ```html
-    <div class="l--box -pos:relative -ar:3/2 -lh:1 -ff:mono">
+    <div class="l--box -pos:relative -ar:16/9 -lh:1 -ff:mono">
       <div class="-pos:absolute -l:0 -t:0 -bgc:base-2 -bd -p:10">A</div>
       <div class="-pos:absolute -l:0 -r:0 -w:fit -mx:auto -bgc:base-2 -bd -p:10">B</div>
       <div class="-pos:absolute -r:0 -t:0 -bgc:base-2 -bd -p:10">C</div>
@@ -333,6 +365,21 @@ Here are some examples of positioning elements with `position: absolute`.
     </div>
     ```
   </PreviewCode>
+  <PreviewCode slot='tab' label='JSX'>
+    ```jsx 
+    <Box pos="relative" ar="16/9" lh="1" ff="mono">
+      <Group pos="absolute" l="0" t="0" bgc="base-2" bd p="10">A</Group>
+      <Group pos="absolute" l="0" r="0" w="fit" mx="auto" bgc="base-2" bd p="10">B</Group>
+      <Group pos="absolute" r="0" t="0" bgc="base-2" bd p="10">C</Group>
+      <Group pos="absolute" l="0" t="0" b="0" h="fit" my="auto" bgc="base-2" bd p="10">D</Group>
+      <Group pos="absolute" i="0" m="auto" w="fit" h="fit" bgc="base-2" bd p="10">E</Group>
+      <Group pos="absolute" r="0" t="0" b="0" h="fit" my="auto" bgc="base-2" bd p="10">F</Group>
+      <Group pos="absolute" l="0" b="0" bgc="base-2" bd p="10">G</Group>
+      <Group pos="absolute" l="0" r="0" b="0" w="fit" mx="auto" bgc="base-2" bd p="10">H</Group>
+      <Group pos="absolute" r="0" b="0" bgc="base-2" bd p="10">I</Group>
+    </Box>
+    ```
+  </PreviewCode>
 </Preview>
 
 
@@ -342,56 +389,161 @@ Here are some examples of positioning elements with `position: absolute`.
 
 ### Gap
 
-|Property|Shorthand|To Class|BP|
+|Shorthand|Property|To Class|BP|
 |---|---|---|---|
-|`gap`|`g`|<LinkSPACE/>,`inherit`|○|
-|`column-gap`|`cg`|-|○|
-|`row-gap`|`rg`|-|○|
+|`g`|`gap`|<LinkSPACE/>,`inherit`|✔|
+|`cg`|`column-gap`|-|✔|
+|`rg`|`row-gap`|-|✔|
 
 
 ### Flex
 
-|Prop|Shorthand|To Class|BP|
+|Shorthand|Prop|To Class|BP|
 |---|---|---|---|
-|`flex-wrap`|`fxw`|`wrap`|○|
-|`flex-direction`|`fxd`|`column`,<br /> `column-reverse`,<br /> `row-reverse`|○|
-|`flex`|`fx`|`1`|○|
-|`flex-shrink`|`fxsh`|`0`|-|
-|`flex-grow`|`fxg`|`1`|-|
-|`flex-basis`|`fxb`|-|○|
+|`fxw`|`flex-wrap`|`wrap`|✔|
+|`fxd`|`flex-direction`|`column`,<br /> `column-reverse`,<br /> `row-reverse`|✔|
+|`fx`|`flex`|`1`|✔|
+|`fxsh`|`flex-shrink`|`0`|-|
+|`fxg`|`flex-grow`|`1`|-|
+|`fxb`|`flex-basis`|-|✔|
+
+
+<Preview>
+  <PreviewTitle>Examples</PreviewTitle>
+  <PreviewArea p='30'>
+    <Flex g="20">
+      <Lism fxg="1" bd p="10" bgc="base-2">
+        <Fragment>Item</Fragment>
+      </Lism>
+      <Lism fxg="2" bd p="10" bgc="base-2">
+        <Fragment>Item</Fragment>
+      </Lism>
+      <Lism fxg="1" bd p="10" bgc="base-2">
+        <Fragment>Item</Fragment>
+      </Lism>
+    </Flex>
+  </PreviewArea>
+  <PreviewCode slot="tab" label="HTML">
+  ```html
+  <div class="l--flex -g:20">
+    <div class="-fxg:1 -bd -p:10 -bgc:base-2">Item</div>
+    <div class="-fxg:2 -bd -p:10 -bgc:base-2">Item</div>
+    <div class="-fxg:1 -bd -p:10 -bgc:base-2">Item</div>
+  </div>
+  ```
+  </PreviewCode>
+  <PreviewCode slot="tab" label="JSX">
+  ```jsx
+  <Flex g="20">
+    <Lism fxg="1" bd p="10" bgc="base-2">Item</Lism>
+    <Lism fxg="2" bd p="10" bgc="base-2">Item</Lism>
+    <Lism fxg="1" bd p="10" bgc="base-2">Item</Lism>
+  </Flex>
+  ```
+  </PreviewCode>
+</Preview>
 
 
 ### Grid
 
-|Prop|Shorthand|To Class|BP|
+|Shorthand|Prop|To Class|BP|
 |---|---|---|---|
-|`grid-template`|`gt`|-|○|
-|`grid-template-areas`|`gta`|-|○|
-|`grid-template-columns`|`gtc`|`subgrid`|○|
-|`grid-template-rows`|`gtr`|`subgrid`|○|
-|`grid-auto-flow`|`gaf`|`column`,<br />`row`|○|
-|`grid-auto-rows`|`gar`|-|-|
-|`grid-auto-columns`|`gac`|-|-|
-|`grid-area`|`ga`|`1/1`|○|
-|`grid-column`|`gc`|`1/-1`|○|
-|`grid-row`|`gr`|`1/-1`|○|
-|`grid-column-start`|`gcs`|-|-|
-|`grid-row-start`|`grs`|-|-|
-|`grid-column-end`|`gce`|-|-|
-|`grid-row-end`|`gre`|-|-|
+|`gt`|`grid-template`|-|✔|
+|`gta`|`grid-template-areas`|-|✔|
+|`gtc`|`grid-template-columns`|`subgrid`|✔|
+|`gtr`|`grid-template-rows`|`subgrid`|✔|
+|`gaf`|`grid-auto-flow`|`column`,<br />`row`|✔|
+|`gar`|`grid-auto-rows`|-|-|
+|`gac`|`grid-auto-columns`|-|-|
+|`ga`|`grid-area`|`1/1`|✔|
+|`gc`|`grid-column`|`1/-1`|✔|
+|`gr`|`grid-row`|`1/-1`|✔|
+|`gcs`|`grid-column-start`|-|-|
+|`grs`|`grid-row-start`|-|-|
+|`gce`|`grid-column-end`|-|-|
+|`gre`|`grid-row-end`|-|-|
+
+
+<Preview>
+  <PreviewTitle>Examples</PreviewTitle>
+  <PreviewArea p='30'>
+    <Grid g="20" gtc="repeat(2, 1fr)">
+      <Lism gc="1/-1" bd p="10" bgc="base-2">
+        <Fragment>Item A</Fragment>
+      </Lism>
+      <Lism bd p="10" bgc="base-2">
+        <Fragment>Item B</Fragment>
+      </Lism>
+      <Lism bd p="10" bgc="base-2">
+        <Fragment>Item C</Fragment>
+      </Lism>
+    </Grid>
+  </PreviewArea>
+  <PreviewCode slot="tab" label="HTML">
+  ```html "-gc:1/-1" "--gtc:"
+  <div class="l--grid -g:20" style="--gtc: repeat(2, 1fr)">
+    <div class="-gc:1/-1 -bd -p:10 -bgc:base-2">Item A</div>
+    <div class="-bd -p:10 -bgc:base-2">Item B</div>
+    <div class="-bd -p:10 -bgc:base-2">Item C</div>
+  </div>
+  ```
+  </PreviewCode>
+  <PreviewCode slot="tab" label="JSX">
+  ```jsx 'gtc=' 'gc="1/-1"'
+  <Grid g="20" gtc="repeat(2, 1fr)">
+    <Lism gc="1/-1" bd p="10" bgc="base-2">Item A</Lism>
+    <Lism bd p="10" bgc="base-2">Item B</Lism>
+    <Lism bd p="10" bgc="base-2">Item C</Lism>
+  </Grid>
+  ```
+  </PreviewCode>
+</Preview>
+
+In the above Examples, `--gtc` variable is accepted even without a `-gtc` class because `l--grid` receives `--gtc`.
 
 
 ### Places
 
-|Prop|Shorthand|To Class|BP|
+|Shorthand|Prop|To Class|BP|
 |---|---|---|---|
-|`align-items`|`ai`|`center`, `start`, `end`, `flex-start`, `flex-end`, `stretch`|⚪︎|
-|`align-content`|`ac`|`center`, `start`, `end`, `flex-start`, `flex-end`, `between`|⚪︎|
-|`justify-items`|`ji`|`center`, `start`, `end`, `flex-start`, `flex-end`, `stretch`|⚪︎|
-|`justify-content`|`jc`|`center`, `start`, `end`, `flex-start`, `flex-end`, `between`|⚪︎|
-|`align-self`|`aslf`|`center`, `start`, `end`, `stretch`|-|
-|`justify-self`|`jslf`|`center`, `start`, `end`, `stretch`|-|
+|`ai`|`align-items`|`center`, `start`, `end`, `flex-start`, `flex-end`, `stretch`|✔|
+|`ac`|`align-content`|`center`, `start`, `end`, `flex-start`, `flex-end`, `between`|✔|
+|`ji`|`justify-items`|`center`, `start`, `end`, `flex-start`, `flex-end`, `stretch`|✔|
+|`jc`|`justify-content`|`center`, `start`, `end`, `flex-start`, `flex-end`, `between`|✔|
+|`aslf`|`align-self`|`center`, `start`, `end`, `stretch`|-|
+|`jslf`|`justify-self`|`center`, `start`, `end`, `stretch`|-|
 |`order`|`order`|`-1`, `0`, `1`|-|
+
+
+<Preview>
+  <PreviewTitle>Examples</PreviewTitle>
+  <PreviewArea p='30'>
+    <Flex jc="between">
+      <Lism bd p="10" bgc="base-2">
+        <Fragment>Item 1</Fragment>
+      </Lism>
+      <Lism bd p="10" bgc="base-2">
+        <Fragment>Item 2</Fragment>
+      </Lism>
+    </Flex>
+  </PreviewArea>
+  <PreviewCode slot="tab" label="HTML">
+  ```html "-jc:between"
+  <div class="l--flex -jc:between">
+    <div class="-bd -p:10 -bgc:base-2">Item 1</div>
+    <div class="-bd -p:10 -bgc:base-2">Item 2</div>
+  </div>
+  ```
+  </PreviewCode>
+  <PreviewCode slot="tab" label="JSX">
+  ```jsx 'jc="between"'
+  <Flex jc="between">
+    <Lism bd p="10" bgc="base-2">Item 1</Lism>
+    <Lism bd p="10" bgc="base-2">Item 2</Lism>
+  </Flex>
+  ```
+  </PreviewCode>
+</Preview>
 
 {/* |`place-items`|`pi`|-|-|
 |`place-content`|`pc`|-|-|
@@ -402,77 +554,88 @@ Here are some examples of positioning elements with `position: absolute`.
 
 ## Styling
 
-### Background
+### Shadow & Radius
 
-|Prop|Shorthand|To Class|BP|
+|Shorthand|Prop|To Class|BP|
 |---|---|---|---|
-|`background`|`bg`|-|⚪︎|
+|`bxsh`|`box-shadow`|[`SHADOW`](/docs/tokens/#shadow)|✔|
+|`bdrs`|`border-radius`|[`RADIUS`](/docs/tokens/#radius)|✔|
 
-### Shadow
-|Prop|Shorthand|To Class|BP|
-|---|---|---|---|
-|`box-shadow`|`bxsh`|[`SHADOW`](/docs/tokens/#shadow)|○|
+<Preview>
+  <PreviewTitle>Examples</PreviewTitle>
+  <PreviewArea p='30'>
+    <Lism bxsh="20" bdrs="20" p="20" bd>
+      <Fragment>Box</Fragment>
+    </Lism>
+  </PreviewArea>
+  <PreviewCode slot="tab" label="HTML">
+  ```html '-bxsh:20' '-bdrs:20'
+  <div class="-bxsh:20 -bdrs:20 -p:20 -bd">Box</div>
+  ```
+  </PreviewCode>
+  <PreviewCode slot="tab" label="JSX">
+  ```jsx 'bxsh="20"' 'bdrs="20"'
+  <Lism bxsh="20" bdrs="20" p="20" bd>Box</Lism>
+  ```
+  </PreviewCode>
+</Preview>
 
-
-### Radius
-
-|Prop|Shorthand|To Class|BP|
-|---|---|---|---|
-|`border-radius`|`bdrs`|[`RADIUS`](/docs/tokens/#radius)|○|
-{/* |`border-top-left-radius`|`(bdrs_.)bdtlrs`|-|-|
-|`border-top-right-radius`|`(bdrs_.)bdtrrs`|-|-|
-|`border-bottom-left-radius`|`(bdrs_.)bdblrs`|-|-|
-|`border-bottom-right-radius`|`(bdrs_.)bdbrrs`|-|-|
-|`border-start-start-radius`|`(bdrs_.)bdssrs`|-|-|
-|`border-start-end-radius`|`(bdrs_.)bdsers`|-|-|
-|`border-end-start-radius`|`(bdrs_.)bdesrs`|-|-|
-|`border-end-end-radius`|`(bdrs_.)bdeers`|-|-| */}
 
 
 ### Border
-|Prop|Shorthand|To Class|BP|
+
+|Shorthand|Prop|To Class|BP|
 |---|---|---|---|
-|`border`|`bd`|`none`|-|
-|`--bdc`|`bdc`|`brand`,`accent`<br />`divider`,<br />`inherit`,<br />`transparent`|-|
-|`--bds`|`bds`|`dashed`,`dotted`,`double`|-|
-|`--bdw`|`bdw`|-|○|
-|`border-top`|`bd-t`|-|-|
-|`border-right`|`bd-r`|-|-|
-|`border-bottom`|`bd-b`|-|-|
-|`border-left`|`bd-l`|-|-|
-|`border-inline`|`bd-x`|-|-|
-|`border-block`|`bd-y`|-|-|
-|`border-inline-start`|`bd-x-s`|-|-|
-|`border-inline-end`|`bd-x-e`|-|-|
-|`border-block-start`|`bd-y-s`|-|-|
-|`border-block-end`|`bd-y-e`|-|-|
+|`bd`|`border`|`none`|-|
+|`bdc`|`--bdc`|`brand`,`accent`<br />`divider`,<br />`inherit`,<br />`transparent`|-|
+|`bds`|`--bds`|`dashed`,`dotted`,`double`|-|
+|`bdw`|`--bdw`|-|✔|
+|`bd-t`|`border-top`|-|-|
+|`bd-r`|`border-right`|-|-|
+|`bd-b`|`border-bottom`|-|-|
+|`bd-l`|`border-left`|-|-|
+|`bd-x`|`border-inline`|-|-|
+|`bd-y`|`border-block`|-|-|
+|`bd-x-s`|`border-inline-start`|-|-|
+|`bd-x-e`|`border-inline-end`|-|-|
+|`bd-y-s`|`border-block-start`|-|-|
+|`bd-y-e`|`border-block-end`|-|-|
 
-{/* `COLOR`,`PALETTE` */}
 
-{/* |`bdl`|`border-left`|-|-|-|
-|`bdr`|`border-right`|-|-|-|
-|`bdt`|`border-top`|-|-|-|
-|`bdb`|`border-bottom`|-|-|-|
-|`bdis`|`border-inline-start`|-|-|-|
-|`bdbs`|`border-block-start`|-|-|-| */}
-
-{/* Additionally, the following can be specified within the `borders` object.
-|Prop|CSS|Token|To Class|BP|
-|---|---|---|---|---|
-|`l`|`border-left`||- |-|
-|`r`|`border-right`||- |-|
-|`t`|`border-top`||- |-|
-|`b`|`border-bottom`||- |-|
-|`is`|`border-inline-start`||- |-|
-|`ie`|`border-inline-end`||- |-|
-|`bs`|`border-block-start`||-|-|
-|`be`|`border-block-end`||-|-| */}
-
+<Preview>
+  <PreviewTitle>Examples</PreviewTitle>
+  <PreviewArea p='30'>
+    <Lism bd bdc="current" bds="dashed" bdw="2px" p="20">
+      <Text>Box</Text>
+    </Lism>
+  </PreviewArea>
+  <PreviewCode slot="tab" label="HTML">
+  ```html '-bd -bdc:current -bds:dashed' '--bdw:2px'
+  <div class="-bd -bdc:current -bds:dashed -p:20" style="--bdw:2px"><p>Box</p></div>
+  ```
+  </PreviewCode>
+  <PreviewCode slot="tab" label="JSX">
+  ```jsx 'bd bdc="current" bds="dashed" bdw="2px"'
+  <Lism bd bdc="current" bds="dashed" bdw="2px" p="20">Box</Lism>
+  ```
+  </PreviewCode>
+</Preview>
 
 <Reference>
 The border specification has some unique behavior. See the [border page](/docs/props/bd/) for details.
 </Reference>
 
+
+## Background
+
+|Shorthand|Prop|To Class|BP|
+|---|---|---|---|
+|`bg`|`background`|-|✔|
+|`bgc`|`background-color`|`brand`,`accent`<br />`base`,`base-2`,<br />`text`,<br />`inherit`<br />`transparent`|-|
+|`bgi`|`background-image`|-|-|
+|`bgr`|`background-repeat`|`no-repeat`|-|
+|`bgp`|`background-position`|`center`|-|
+|`bgsz`|`background-size`|`cover`,`contain`|-|
 
 
 {/* ### Transforms
@@ -487,13 +650,38 @@ The border specification has some unique behavior. See the [border page](/docs/p
 
 ## Other CSS
 
-|Prop|Shorthand|To Class|BP|
+|Shorthand|Prop|To Class|BP|
 |---|---|---|---|
 |`float`|`float`|`left`,`right`|-|
 |`clear`|`clear`|`both`|-|
 |`isolation`|`isolation`|`isolate`|-|
-|`overflow-wrap`|`ovwrap`|`anywhere`|-|
-|`white-space`|`whspace`|`nowrap`|-|
+|`ovwrap`|`overflow-wrap`|`anywhere`|-|
+|`whspace`|`white-space`|`nowrap`|-|
+
+
+<Preview>
+  <PreviewTitle>Examples</PreviewTitle>
+  <PreviewArea p='30'>
+    <Text whspace="nowrap" ov="hidden" bd p="10" bgc="base-2" max-sz="s">
+      <Fragment>whspace: nowrap — This long text will not wrap and will overflow</Fragment>
+    </Text>
+  </PreviewArea>
+  <PreviewCode slot="tab" label="HTML">
+  ```html
+  <p class="-whspace:nowrap -ov:hidden -bd -p:10 -bgc:base-2 -max-sz:s">
+    whspace: nowrap — This long text will not wrap and will overflow
+  </p>
+  ```
+  </PreviewCode>
+  <PreviewCode slot="tab" label="JSX">
+  ```jsx
+  <Text whspace="nowrap" ov="hidden" bd p="10" bgc="base-2" max-sz="s">
+    whspace: nowrap — This long text will not wrap and will overflow
+  </Text>
+  ```
+  </PreviewCode>
+</Preview>
+
 {/* |`word-break`|`wordbreak`|`keep`(`keep-all`),<br />`all`(`break-all`)|-| */}
 {/* |`linebreak`|`linebreak`|`strict`|-| */}
 
