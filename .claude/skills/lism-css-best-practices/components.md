@@ -282,7 +282,7 @@ State Modules クラス（`is--*` / `set--*`）を出力するためのプロパ
 | `<Icon>` | `a--icon` | SVG アイコン・アイコンフォント |
 | `<Spacer>` | `a--spacer` | 空白要素 |
 | `<Divider>` | `a--divider` | 区切り線 |
-| `<Decorator>` | `a--decorator` | 装飾要素 |
+| `<Decorator>` | `a--decorator` | 装飾要素（SCSS定義なし、クラス名のみ出力） |
 
 ```jsx
 <Icon as={LucideArrowRight} fz="xl" />
