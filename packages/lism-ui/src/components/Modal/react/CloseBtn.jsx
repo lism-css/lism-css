@@ -2,7 +2,7 @@ import { Lism, Icon } from 'lism-css/react';
 import { defaultProps } from '../getProps';
 
 // duration: [s]
-export default function CloseBtn({ children, modalId = '', icon, srText = 'Close', ...props }) {
+export default function CloseBtn({ children, modalId = '', icon = undefined, srText = 'Close', ...props }) {
   // const lismProps = getLismProps(getAccProps(props));
 
   return (

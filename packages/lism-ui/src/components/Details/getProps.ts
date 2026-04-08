@@ -1,12 +1,14 @@
 import atts from 'lism-css/lib/helper/atts';
 
+type DetailsProps = {
+  lismClass?: string;
+  [key: string]: unknown;
+};
+
 /**
  * Detailsコンポーネントのルート要素用プロパティを生成
- * @param {Object} props - コンポーネントのプロパティ
- * @param {string} props.lismClass - 追加のLismクラス
- * @returns {Object} 処理済みプロパティ
  */
-export function getDetailsProps({ lismClass, ...props }) {
+export function getDetailsProps({ lismClass, ...props }: DetailsProps): Record<string, unknown> {
   props.lismClass = atts(lismClass, 'c--details');
   return props;
 }

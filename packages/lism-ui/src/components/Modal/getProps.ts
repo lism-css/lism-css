@@ -1,6 +1,20 @@
 import atts from 'lism-css/lib/helper/atts';
 
-export function getProps({ lismClass = '', duration, style = {}, ...props }) {
+type ModalRootProps = {
+  lismClass?: string;
+  duration?: string;
+  style?: Record<string, string>;
+  [key: string]: unknown;
+};
+
+type ModalInnerProps = {
+  lismClass?: string;
+  offset?: string;
+  style?: Record<string, string>;
+  [key: string]: unknown;
+};
+
+export function getProps({ lismClass = '', duration, style = {}, ...props }: ModalRootProps): Record<string, unknown> {
   const theProps = {
     lismClass: atts(lismClass, 'c--modal'),
     setPlain: true,
@@ -12,7 +26,7 @@ export function getProps({ lismClass = '', duration, style = {}, ...props }) {
   return { as: 'dialog', ...theProps, style, ...props };
 }
 
-export function getInnerProps({ lismClass = '', offset, style = {}, ...props }) {
+export function getInnerProps({ lismClass = '', offset, style = {}, ...props }: ModalInnerProps): Record<string, unknown> {
   if (offset) {
     style['--offset'] = offset;
   }

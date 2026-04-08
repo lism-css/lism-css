@@ -2,7 +2,6 @@
  * Chat コンポーネントの共通プロパティ処理
  */
 
-// 各サブ要素のデフォルトプロパティ
 export const defaultProps = {
   avatar: {
     lismClass: 'c--chat_avatar',
@@ -37,10 +36,17 @@ export const defaultProps = {
   },
 };
 
+type ChatProps = {
+  variant?: string;
+  direction?: string;
+  keycolor?: string;
+  [key: string]: unknown;
+};
+
 /**
  * Chat コンポーネントのルートプロパティを生成
  */
-export default function getChatProps({ variant = 'speak', direction = 'start', keycolor = 'gray', ...props }) {
+export default function getChatProps({ variant = 'speak', direction = 'start', keycolor = 'gray', ...props }: ChatProps): Record<string, unknown> {
   return {
     lismClass: 'c--chat',
     variant,

@@ -26,6 +26,9 @@ export default defineConfig(
       '**/.stylelintrc.mjs',
       '**/.astro/**',
       '**/vite.config.*',
+      // lism-ui: Astro 向けファイルは tsconfig から exclude されているため ESLint の型チェック対象外
+      'packages/lism-ui/src/**/astro/**',
+      'packages/lism-ui/src/components/astro.ts',
     ],
   },
   eslintConfigPrettier,
@@ -105,11 +108,34 @@ export default defineConfig(
   },
   ...storybook.configs['flat/recommended'],
   {
-    files: ['**/*.stories.@(ts|tsx|js|jsx|mjs|cjs)'],
+    // tsconfig から除外されている lism-ui astro re-exports は
+    // allowDefaultProject で型チェックなし lint のみ実施
+    files: [
+      'packages/lism-ui/src/**/astro/index.ts',
+      'packages/lism-ui/src/**/astro/transformTabitems.ts',
+      'packages/lism-ui/src/components/astro.ts',
+    ],
     languageOptions: {
       parserOptions: {
         projectService: {
-          allowDefaultProject: ['packages/lism-ui/src/components/*/*.stories.ts', 'packages/lism-ui/src/components/*/*.stories.tsx'],
+          allowDefaultProject: [
+            'packages/lism-ui/src/components/Accordion/astro/index.ts',
+            'packages/lism-ui/src/components/Alert/astro/index.ts',
+            'packages/lism-ui/src/components/Avatar/astro/index.ts',
+            'packages/lism-ui/src/components/Badge/astro/index.ts',
+            'packages/lism-ui/src/components/Button/astro/index.ts',
+            'packages/lism-ui/src/components/Callout/astro/index.ts',
+            'packages/lism-ui/src/components/Chat/astro/index.ts',
+            'packages/lism-ui/src/components/Details/astro/index.ts',
+            'packages/lism-ui/src/components/DummyImage/astro/index.ts',
+            'packages/lism-ui/src/components/DummyText/astro/index.ts',
+            'packages/lism-ui/src/components/Modal/astro/index.ts',
+            'packages/lism-ui/src/components/NavMenu/astro/index.ts',
+            'packages/lism-ui/src/components/ShapeDivider/astro/index.ts',
+            'packages/lism-ui/src/components/Tabs/astro/index.ts',
+            'packages/lism-ui/src/components/Tabs/astro/transformTabitems.ts',
+            'packages/lism-ui/src/components/astro.ts',
+          ],
           maximumDefaultProjectFileMatchCount_THIS_WILL_SLOW_DOWN_LINTING: 20,
         },
         tsconfigRootDir: import.meta.dirname,
