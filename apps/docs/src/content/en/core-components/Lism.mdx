@@ -78,7 +78,7 @@ Specifies the primary class name for the current component.
 This class is output with a relatively high priority in the `<Lism>` class processing order.
 
 <PreviewTitle>Example</PreviewTitle>
-```jsx "lismClass='c--myComponent'"
+```jsx 'lismClass="c--myComponent"'
 <Lism p='10' lismClass='c--myComponent'>Lorem ipsum texts...</Lism>
 
 ↓
@@ -94,8 +94,8 @@ When multiple classes are specified in `lismClass`, the variation class is appli
 
 
 <PreviewTitle>Example</PreviewTitle>
-```jsx "variant='secondary'"
-<Lism lismClass='c--myComponent' variant='secondary'>Lorem ipsum texts...</Lism>
+```jsx 'variant="secondary"'
+<Lism lismClass="c--myComponent" variant="secondary">Lorem ipsum texts...</Lism>
 
 ↓
 
@@ -108,7 +108,7 @@ When multiple classes are specified in `lismClass`, the variation class is appli
 Specifies a layout module. For example, setting `layout='flow'` outputs the `.l--flow` class.
 
 <PreviewTitle>Example</PreviewTitle>
-```jsx "layout='flow'"
+```jsx 'layout="flow"'
 <Lism layout='flow'>Lorem ipsum texts...</Lism>
 
 ↓
@@ -122,7 +122,7 @@ Specifies a layout module. For example, setting `layout='flow'` outputs the `.l-
 Specifies the HTML tag or external component to render. Defaults to `div`.
 
 <PreviewTitle>Example of specifying an HTML tag</PreviewTitle>
-```jsx "as='p'"
+```jsx 'as="p"'
 <Lism as='p'>Lorem ipsum texts...</Lism>
 
 ↓
@@ -248,7 +248,7 @@ The output format is determined by the value (`value`) specified via `prop={valu
 <Preview>
 <PreviewTitle>`true` / `"-"` → class only (no variable)</PreviewTitle>
 <PreviewCode>
-```jsx "p='-'" "bdrs" "-p" "-bdrs"
+```jsx 'p="-"' "bdrs" "-p" "-bdrs"
 <Lism p='-' bdrs>contents</Lism>
 // → <div class="-p -bdrs">contents</div>
 ```
@@ -270,7 +270,7 @@ This is useful when you want to define the variable value in CSS, or when you wa
 <Preview>
 <PreviewTitle>BP-supported property with custom value → class + CSS variable</PreviewTitle>
 <PreviewCode>
-```jsx "fz='20px'" "-fz" "--fz:20px"
+```jsx 'fz="20px"' "-fz" "--fz:20px"
 <Lism fz='20px'>contents</Lism>
 // → <div class="-fz" style="--fz:20px">contents</div>
 ```
@@ -280,7 +280,7 @@ This is useful when you want to define the variable value in CSS, or when you wa
 <Preview>
 <PreviewTitle>BP-unsupported property with custom value → direct style output</PreviewTitle>
 <PreviewCode>
-```jsx "o='0.75'" "opacity:0.75"
+```jsx 'o="0.75"' "opacity:0.75"
 <Lism o='0.75'>contents</Lism>
 // → <div style="opacity:0.75">contents</div>
 ```
