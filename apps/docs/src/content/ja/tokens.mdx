@@ -3,15 +3,65 @@ title: 'Design Tokens'
 description: 'Lism CSS で定義されているカラー、スペーシング、シャドウなどのデザイントークン一覧を紹介します。'
 ---
 
-import { Box, Stack, Cluster, Columns, Frame, Center, Text } from 'lism-css/astro';
+import { Box, Stack, Cluster, Columns, Frame, Center, Inline, Text } from 'lism-css/astro';
 import { DummyText } from '@lism-css/ui/astro';
+
+export const ColorBadge = ({color, label}) => {
+  return <Cluster g='10'>
+      <Inline w='1.5em' ar='1/1' bgc={color} bdrs='10' bxsh='10' />
+      <code>{label || color}</code>
+    </Cluster>;
+}
 
 
 Lism CSS では、主要なCSSプロパティに対してデザイントークンを用意しています。
 
-- [**カラートークン**](/docs/tokens/colors/) — セマンティックカラーとパレットカラー
-- [**タイポグラフィトークン**](/docs/tokens/typography/) — フォントファミリー、サイズ、行間、字間
-- [**スペーシングトークン**](/docs/tokens/spacing/) — フィボナッチ数列に基づく余白のスケーリング
+
+## [COLOR](/docs/tokens/colors/)
+
+|トークン名|変数|
+|---|---|
+|<ColorBadge color='base' />|`--base`|
+|<ColorBadge color='base-2' />|`--base-2`|
+|<ColorBadge color='text' />|`--text`|
+|<ColorBadge color='text-2' />|`--text-2`|
+|<ColorBadge color='divider' />|`--divider`|
+|<ColorBadge color='link' />|`--link`|
+|<ColorBadge color='brand' />|`--brand`|
+|<ColorBadge color='accent' />|`--accent`|
+
+パレットカラー（`--red`, `--blue`, `--green` 等）やカスタマイズ方法は [カラートークン](/docs/tokens/colors/) を参照してください。
+
+
+## [Typography](/docs/tokens/typography/)
+
+|トークン|変数|
+|---|---|
+|`FF` (font-family)|`--ff--base`, `--ff--accent`, `--ff--mono`|
+|`FW` (font-weight)|`--fw--light`, `--fw--normal`, `--fw--bold`|
+|`FZ` (font-size)|`--fz--2xs` 〜 `--fz--5xl`|
+|`LH` (line-height)|`--hl--xs`, `--hl--s`, `--hl--base`, `--hl--l`|
+|`LTS` (letter-spacing)|`--lts--s`, `--lts--base`, `--lts--l`|
+
+各トークンの詳細やスケーリング規則は [タイポグラフィトークン](/docs/tokens/typography/) を参照してください。
+
+
+## [SPACE](/docs/tokens/spacing/)
+
+|トークン値|変数|概算値|
+|---|---|---|
+|`5`|`--s5`|`4px`|
+|`10`|`--s10`|`8px`|
+|`15`|`--s15`|`12px`|
+|`20`|`--s20`|`16px`|
+|`30`|`--s30`|`24px`|
+|`40`|`--s40`|`40px`|
+|`50`|`--s50`|`64px`|
+|`60`|`--s60`|`104px`|
+|`70`|`--s70`|`168px`|
+|`80`|`--s80`|`272px`|
+
+フィボナッチ数列ベースのスケーリング。対応する prop class の詳細は [スペーシングトークン](/docs/tokens/spacing/) を参照してください。
 
 
 ## `RADIUS`
