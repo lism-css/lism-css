@@ -36,13 +36,6 @@ describe('StateProps', () => {
       assertType<StateProps>({ isSide: true });
       assertType<StateProps>({ isSkipFlow: true });
       assertType<StateProps>({ isVertical: true });
-      assertType<StateProps>({ setGutter: true });
-      assertType<StateProps>({ setShadow: true });
-      assertType<StateProps>({ setHov: true });
-      assertType<StateProps>({ setTransition: true });
-      assertType<StateProps>({ setPlain: true });
-      assertType<StateProps>({ setInnerRs: true });
-      assertType<StateProps>({ setBp: true });
     });
   });
 
@@ -67,26 +60,11 @@ describe('StateProps', () => {
     });
   });
 
-  describe('setStyles を持つステートは string を受け入れる', () => {
-    it('setMask - string を受け入れる', () => {
-      assertType<StateProps>({ setMask: '<svg>...</svg>' });
-      assertType<StateProps>({ setMask: 'url(image.png)' });
-    });
-
-    it('setMask - string 以外は受け入れない', () => {
-      // @ts-expect-error - boolean は受け入れない
-      assertType<StateProps>({ setMask: true });
-      // @ts-expect-error - number は受け入れない
-      assertType<StateProps>({ setMask: 123 });
-    });
-  });
-
   describe('複数のステートを同時に指定できる', () => {
     it('複数のステートを指定', () => {
       assertType<StateProps>({
         isContainer: true,
         isWrapper: 's',
-        setMask: '<svg>...</svg>',
       });
     });
   });
@@ -99,7 +77,6 @@ describe('StateProps', () => {
     it('undefined を明示的に指定できる', () => {
       assertType<StateProps>({ isContainer: undefined });
       assertType<StateProps>({ isWrapper: undefined });
-      assertType<StateProps>({ setMask: undefined });
     });
   });
 });

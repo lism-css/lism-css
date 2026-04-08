@@ -8,7 +8,7 @@ import type { WithArbitraryString, ArrayElement } from './utils';
 type StatesConfig = typeof STATES;
 
 // ============================================================
-// State 設定の3つのパターン
+// State 設定の2つのパターン
 // ============================================================
 //
 // 1. 文字列形式 (SimpleState)
@@ -18,10 +18,6 @@ type StatesConfig = typeof STATES;
 // 2. preset あり (PresetState)
 //    例: isWrapper: { className: 'is--wrapper', preset: ['s', 'l'], ... }
 //    → プリセット値がサジェストされつつ、任意の文字列も受け付ける
-//
-// 3. setStyles あり (CustomStyleState)
-//    例: setMask: { className: 'set--mask', setStyles: (val) => ({ '--maskImg': val }) }
-//    → 文字列のみ受け付ける（値がスタイルに変換される）
 //
 // ============================================================
 
@@ -35,9 +31,7 @@ type ExtractStateValue<T> = T extends string
   ? boolean // 文字列形式 → boolean のみ
   : T extends { preset: readonly unknown[] }
     ? WithArbitraryString<PresetElement<T>> | boolean // preset あり → プリセット値 | 任意文字列 | boolean
-    : T extends { setStyles: unknown }
-      ? string // setStyles あり → 文字列のみ
-      : never;
+    : never;
 
 /**
  * config/index.ts の STATES から自動生成される State Props の型

@@ -32,7 +32,6 @@ interface PropConfig {
   important?: number;
   exUtility?: Record<string, unknown>;
   customVar?: string;
-  setStyles?: (val: unknown) => Record<string, string | number | undefined>;
   className?: string;
   utilKey?: string;
   [key: string]: unknown;
@@ -45,7 +44,6 @@ interface StatePropDataObject {
   presetClass?: string;
   customVar?: string;
   tokenKey?: string;
-  setStyles?: (propVal: string) => Record<string, string | number | undefined>;
 }
 
 type StatePropData = string | StatePropDataObject;
@@ -60,6 +58,7 @@ export interface LismPropsBase extends StateProps, PropValueTypes {
   variant?: string;
   style?: StyleWithCustomProps;
   _propConfig?: Record<string, PropConfig>;
+  set?: string | string[];
   hov?: boolean | string | Record<string, unknown>;
   css?: Record<string, string | number | undefined>;
   [key: `aria-${string}`]: unknown;
@@ -139,7 +138,7 @@ export class LismPropsData {
 
   analyzeState(statePropData: StatePropDataObject, propVal: unknown): void {
     // isWrapper などの特別な処理が必要なレイアウトステート
-    const { className, preset, presetClass, customVar, tokenKey, setStyles } = statePropData;
+    const { className, preset, presetClass, customVar, tokenKey } = statePropData;
     if (propVal === true) {
       this.lismState.push(className);
     } else if (preset && isPresetValue(preset, propVal)) {
@@ -149,8 +148,6 @@ export class LismPropsData {
       this.lismState.push(className);
       if (tokenKey && customVar) {
         this.addStyle(customVar, getMaybeCssVar(propVal as string | number, tokenKey));
-      } else if (setStyles && typeof propVal === 'string') {
-        this.addStyles(setStyles(propVal));
       }
     }
   }
@@ -177,6 +174,12 @@ export class LismPropsData {
 
         // 解析処理
         this.analyzeLismProp(propName, propVal);
+      } else if (propName === 'set') {
+        const propVal = this.extractProp(propName);
+        if (propVal) {
+          const values = Array.isArray(propVal) ? propVal : [propVal];
+          values.forEach((v: string) => this.lismState.push(`set--${v}`));
+        }
       } else if (propName === 'hov') {
         const propVal = this.extractProp(propName);
         this.setHovProps(propVal as boolean | string | Record<string, unknown> | null);
