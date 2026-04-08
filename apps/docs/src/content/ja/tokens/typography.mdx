@@ -1,5 +1,6 @@
 ---
 title: 'タイポグラフィトークン'
+navtitle: 'Typography'
 description: 'Lism CSS で使用するフォントファミリー、フォントサイズ、行間などのタイポグラフィ関連のデザイントークンについて解説します。'
 ---
 
@@ -7,7 +8,7 @@ import { Box, Stack, Cluster, Columns, Frame, Center, Text } from 'lism-css/astr
 import { DummyText } from '@lism-css/ui/astro';
 import { FzDemos } from "@/content/token-previews.jsx";
 
-
+フォントファミリー、フォントサイズ、行間など、タイポグラフィに関するデザイントークンについて解説します。
 
 ## FF: font-family
 
@@ -122,16 +123,18 @@ import { FzDemos } from "@/content/token-previews.jsx";
 </Preview>
 
 
-### フォントサイズのスケーリング規則
+### フォントサイズのスケーリング規則について
 
-Lism では、フォントサイズのスケーリングには数学的に美しいとされるスケーリング規則に基づいて定義しています。
+Lism では、フォントサイズのスケーリングには数学的・音楽的に美しいとされる調和数列に基づいて定義しています。
 
 <Reference>
-参考: [音楽、数学、タイポグラフィ](https://standard.shiftbrain.com/blog/music-math-typography)
+参考: [タイポグラフィと余白のスケーリング設計について](https://css-notes.com/layout/typography-scaling/)
 </Reference>
 
 
-デフォルトでは、**分子8の調和数列**ベースに設定しています。
+いわゆるハーモニックモジュラースケーリングとか呼ばれるもので、Every Layoutなどでもこのスケーリング手法が紹介されています。
+
+Lism CSS では、デフォルトでは、**分子8の調和数列**ベースに設定しています。
 
 :::note
 当サイトでは、英語ページでは `--fz-mol` を `7` に設定しています。

@@ -1,5 +1,6 @@
 ---
 title: 'スペーシングトークン'
+navtitle: 'Spacing'
 description: 'Lism CSS のフィボナッチ数列に基づくスペーシングトークンと、対応するpropクラスについて解説します。'
 ---
 
@@ -7,7 +8,7 @@ import { Box, Stack, Cluster, Columns, Frame, Center, Text } from 'lism-css/astr
 import { DummyText } from '@lism-css/ui/astro';
 import { SpacingDemos } from "@/content/token-previews.jsx";
 
-
+フィボナッチ数列に基づくスペーシングトークンと、対応する prop class について解説します。
 
 ## SPACE: 余白のスケーリング
 
@@ -40,6 +41,9 @@ import { SpacingDemos } from "@/content/token-previews.jsx";
   </PreviewArea>
 </Preview>
 
+<Reference>
+参考: [タイポグラフィと余白のスケーリング設計について](https://css-notes.com/layout/typography-scaling/)
+</Reference>
 
 {/* - ~~`1 = 0.25`, `2 = 0.5` として計算~~
   - 1=s10, 2=s20, 3=s30, 5=s40, 8=s50, 13=s60,...
@@ -60,23 +64,13 @@ import { SpacingDemos } from "@/content/token-previews.jsx";
 | `p` | `padding` | `-p:5`, `-p:20`, ... | ○ |
 | `px` | `padding-inline` | `-px:10`, `-px:30`, ... | ○ |
 | `py` | `padding-block` | `-py:15`, `-py:40`, ... | ○ |
-| `m` | `margin` | `-m:10`, `-m:auto`, ... | ○ |
-| `mx` | `margin-inline` | `-mx:20`, `-mx:auto`, ... | ○ |
-| `my` | `margin-block` | `-my:30`, `-my:auto`, ... | ○ |
-| `my-s` | `margin-block-start` | `-my-s:20`, `-my-s:auto`, ... | ○ |
-| `g` | `gap` | `-g:10`, `-g:inherit`, ... | ○ |
+| `m` | `margin` | `-m:10`, `-m:20`, ... | ○ |
+| `mx` | `margin-inline` | `-mx:10`, `-mx:20`, ... | ○ |
+| `my` | `margin-block` | `-my:10`, `-my:20`, ... | ○ |
+| `my-s` | `margin-block-start` | `-my-s:10`, `-my-s:20`, ... | ○ |
+| `g` | `gap` | `-g:10`, `-g:20`, ... | ○ |
 
-`margin` 系は `auto` にも対応し、`gap` は `inherit` にも対応しています。
-
-### auto のみ
-
-以下のプロパティには `auto` の prop class のみが用意されています。
-
-| プロパティ | CSS | クラス |
-|---|---|---|
-| `mx-s` | `margin-inline-start` | `-mx-s:auto` |
-| `mx-e` | `margin-inline-end` | `-mx-e:auto` |
-| `my-e` | `margin-block-end` | `-my-e:auto` |
+`gap` は `inherit` にも対応しています。
 
 ### プリセットクラスなし
 
@@ -89,9 +83,26 @@ import { SpacingDemos } from "@/content/token-previews.jsx";
 | `py-s` | `padding-block-start` |
 | `py-e` | `padding-block-end` |
 | `pl`, `pr`, `pt`, `pb` | 物理方向の padding |
+| `mx-s` | `margin-inline-start` |
+| `mx-e` | `margin-inline-end` |
+| `my-e` | `margin-block-end` |
 | `ml`, `mr`, `mt`, `mb` | 物理方向の margin |
 | `g-x` | `column-gap` |
 | `g-y` | `row-gap` |
+
+### margin 系の auto 対応
+
+margin 系のプロパティには、スペーシングトークンに加えて `auto` の prop class も用意されています。
+
+| プロパティ | CSS | クラス |
+|---|---|---|
+| `m` | `margin` | `-m:auto` |
+| `mx` | `margin-inline` | `-mx:auto` |
+| `my` | `margin-block` | `-my:auto` |
+| `mx-s` | `margin-inline-start` | `-mx-s:auto` |
+| `mx-e` | `margin-inline-end` | `-mx-e:auto` |
+| `my-s` | `margin-block-start` | `-my-s:auto` |
+| `my-e` | `margin-block-end` | `-my-e:auto` |
 
 <Reference>
 各 prop class の詳細は [Prop Class 一覧](/docs/prop-class/) を参照してください。
