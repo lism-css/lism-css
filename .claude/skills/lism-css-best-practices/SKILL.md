@@ -70,6 +70,7 @@ function Card({ children }) {
 
 | ファイル | 内容 |
 |---------|------|
+| [components.md](./components.md) | コンポーネントシステム — コア・セマンティック・レイアウト・ステート・アトミック・UIコンポーネント一覧、getLismProps、CLI |
 | [props.md](./props.md) | Props システム — 主要Props一覧・Prop Class記法・is--/set-- Props・レスポンシブ対応 |
 | [tokens.md](./tokens.md) | デザイントークン — 余白・フォントサイズ・角丸・影・カラー・パレット |
 | [css-rules.md](./css-rules.md) | CSS設計ルール — Layer構造・命名規則・プレフィックス・カスタムCSS追加ルール |
