@@ -2,18 +2,19 @@
 title: 'Skills File'
 description: 'Place a SKILL.md file in your project to communicate Lism CSS design rules, Props, tokens, and naming conventions to AI agents.'
 ---
-import { Tabs } from '@lism-css/ui/astro';
-
 By placing the SKILL.md file in your project, you can communicate Lism CSS design rules, Props, tokens, and naming conventions to AI agents.
 
 ### File structure
 
-The skill consists of 4 files:
+The skill consists of 7 files:
 
 | File | Contents |
 |------|----------|
 | `SKILL.md` | Entry point — overview, package structure, implementation rules, reference links |
-| `props.md` | Props system — key Props list, Prop Class syntax, is--/set-- Props, responsive design |
+| `base-styles.md` | Base styling — Reset CSS, HTML element base styles, CSS variables overview, set-- classes |
+| `module-class.md` | Module classes — is--/l--/a--/c--/u-- class list and usage |
+| `prop-class.md` | Prop Class — `-{prop}:{value}` syntax, key Prop list, responsive design |
+| `components.md` | Component system — core, layout, semantic, and UI component list |
 | `tokens.md` | Design tokens — spacing, font sizes, border radius, shadows, colors, palettes |
 | `css-rules.md` | CSS design rules — Layer structure, naming conventions, prefixes, custom CSS rules |
 
@@ -21,23 +22,29 @@ GitHub: [lism-css/lism-css/.claude/skills/lism-css-best-practices/](https://gith
 
 
 ### Setup
-<Tabs.Root g="15" variant="line">
-  <Tabs.Item>
-    <Tabs.Tab px="10">skills.sh</Tabs.Tab>
-    <Tabs.Panel layout="flow" flow="s">
-      ```bash frame="none"
-      npx skills add lism-css/lism-css
-      ```
 
-       Files will be copied to `.claude/skills/lism-css-best-practices/`.
-    </Tabs.Panel>
-  </Tabs.Item>
-  <Tabs.Item>
-    <Tabs.Tab px="10">Manual copy</Tabs.Tab>
-    <Tabs.Panel layout="flow" flow="s">
-        Download the 4 files from the [GitHub skills directory](https://github.com/lism-css/lism-css/tree/main/.claude/skills/lism-css-best-practices) and place them in your project's `.claude/skills/lism-css-best-practices/` directory.
+<Preview>
+  <PreviewCode slot='tab' label='npm'>
+  ```bash frame="none"
+  npx skills add lism-css/lism-css
+  ```
+  </PreviewCode>
+  <PreviewCode slot='tab' label='pnpm'>
+  ```bash frame="none"
+  pnpm dlx skills add lism-css/lism-css
+  ```
+  </PreviewCode>
+  <PreviewCode slot='tab' label='yarn'>
+  ```bash frame="none"
+  yarn dlx skills add lism-css/lism-css
+  ```
+  </PreviewCode>
+  <PreviewCode slot='tab' label='bun'>
+  ```bash frame="none"
+  bunx skills add lism-css/lism-css
+  ```
+  </PreviewCode>
+</Preview>
 
-        For OpenAI Codex, copy the content of `SKILL.md` (without the frontmatter — the `---` delimited header) to `AGENTS.md` in your project root.
-    </Tabs.Panel>
-  </Tabs.Item>
-</Tabs.Root>
+Install the Lism CSS skill into your project using the command above.
+For more information about the `skills` command, see [skills.sh](https://skills.sh).
