@@ -69,7 +69,7 @@
 | 確認したい内容 | 参照先 |
 |---|---|
 | ブレークポイント・コンテナクエリ定義（CSS） | `packages/lism-css/src/scss/_query.scss` |
-| レスポンシブ Props の正規化・出力（JS） | `packages/lism-css/src/lib/getBpData.ts` |
+| レスポンシブ Props の正規化（JS） | `packages/lism-css/src/lib/getBpData.ts` |
 
 ### コンポーネント関連
 
