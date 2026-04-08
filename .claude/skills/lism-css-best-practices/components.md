@@ -20,6 +20,12 @@ import { Lism, Box, Flex, Stack, Grid, Text, Media } from 'lism-css/astro';
 // → <div class="-p:20 -fz:l -c:brand">コンテンツ</div>
 ```
 
+
+## Lism Props
+
+`<Lism>` で受け取れる Lism CSS 専用プロパティを **Lism Props** と呼びます。
+
+
 ### 共通 Props
 
 すべての Lism コンポーネントで使えるプロップスです。
@@ -31,15 +37,15 @@ import { Lism, Box, Flex, Stack, Grid, Text, Media } from 'lism-css/astro';
 | `variant` | `lismClass` に対するバリエーションクラスを出力 | `variant='secondary'` |
 | `layout` | レイアウトモジュールを指定し `l--{layout}` クラスを出力 | `layout='flow'` |
 | `exProps` | Lism Props処理をスキップして外部コンポーネントに直接渡す属性のオブジェクト | `exProps={{ size: '1em' }}` |
-| `style` | インラインスタイル（React: camelCase、CSS変数: `--` プレフィックス） | `style={{ '--my-var': '10px' }}` |
 
 ```jsx
 // as で HTML 要素を指定
 <Lism as="section" p="30">...</Lism>
 // → <section class="-p:30">...</section>
 
-// as で外部コンポーネントを指定（Next.js Image の例）
-<Media as={Image} src="..." bxsh="20" bdrs="20" />
+// as で外部コンポーネントを指定
+<Media as={Image} src="..." p="20" bd />
+// → Image コンポーネントに { className: '-p:20 -bd' } が渡される
 
 // lismClass でコンポーネントクラスを付与
 <Lism lismClass='c--myComponent' p='10'>...</Lism>
@@ -50,197 +56,103 @@ import { Lism, Box, Flex, Stack, Grid, Text, Media } from 'lism-css/astro';
 // → <div class="c--myComponent c--myComponent--secondary">...</div>
 
 // exProps で外部コンポーネント用プロパティを明示的に分離
-<Icon as={Hoge} exProps={{ size: '1em' }} p="10" fz="l">...</Icon>
-// → p, fz は Lism が処理、size は Hoge に直接渡される
+<Icon as={HogeIcon} exProps={{ size: '1em' }} p="10" fz="l">...</Icon>
+// → p, fz は Lism が処理、size は HogeIcon に直接渡される
 ```
-
-
-## Lism Props
-
-`<Lism>` で受け取れる Lism CSS 専用プロパティを **Lism Props** と呼びます。主に **CSS Props** と **State Props** の2種類があります。
 
 
 ### CSS Props
 
 主要な CSS プロパティに対して省略記法（Shorthand）で指定できます。値に応じて **Prop Class**（`-{prop}:{value}`）やインラインスタイルに変換されます。
 
-#### 値の変換パターン
+各プロパティで受け付けるトークン値・プリセット値の詳細は [prop-class.md](./prop-class.md) を参照。  
+もしくは、[定義ファイルの`props.ts`](https://github.com/lism-css/lism-css/blob/dev/packages/lism-css/config/defaults/props.ts) を読んでください。
 
-指定した値によって、出力が以下のように変わります。
+`prop={value}`で指定した値(`value`)によって、基本的な出力は以下のように分類されます。
 
-| 状況 | 出力 | 例 |
+| 値 | 出力形式 | 例 |
 |------|------|-----|
-| トークン値・プリセット値 | `.-{prop}:{value}` クラスのみ | `fz='l'` → `class="-fz:l"` |
-| `true` または `"-"` | `.-{prop}` クラスのみ（変数なし） | `bd` / `bd='-'` → `class="-bd"` |
+| トークン値・プリセット値 | `-{prop}:{value}` クラスのみ | `fz='l'` → `class="-fz:l"` |
+| `true` または `"-"` | `-{prop}` クラスのみ（変数なし） | `bd` / `bd='-'` → `class="-bd"` |
 | `:` で始まる値 | 強制的にユーティリティクラス化 | `p=':hoge'` → `class="-p:hoge"` |
-| BP対応プロパティのカスタム値 | `.-{prop}` クラス + `--{prop}` CSS変数 | `fz='20px'` → `class="-fz" style="--fz:20px"` |
-| CSS変数のみのプロパティ | `style` に `--{prop}` 変数のみ | `bdw='2px'` → `style="--bdw:2px"` |
-| 単純なインライン出力 | `style` 属性に直接出力 | `o='0.75'` → `style="opacity:0.75"` |
+| その他の値（レスポンシブ対応プロパティ） | `-{prop}` + `--{prop}` | `fz='20px'` → `class="-fz"` + `style="--fz:20px"` |
+| その他の値（レスポンシブ非対応プロパティ） | `style` 属性に直接出力 | `o='0.7'` → `style="opacity:0.7"` |
+| その他の値（変数プロパティ） | `--{prop}` | `bdw='2px'` → `style="--bdw:2px"` (`border-width`としては出力されない) |
+| レスポンシブ指定値 | 上記いずれかのベース出力 + `-{prop}_{bp}` + `--{prop}_{bp}` | `p={[10,20]}` → `class="-p:10 -p_sm"` + `style="--p_sm:var(--s20)"`|
+
+補足: 
+- **レスポンシブ対応プロパティ**かどうかは、 `props.ts`で`bp: 1`がセットされているかどうかで分かります。
+- **変数プロパティ**とは、`bds`, `bdc`, `bdw`, `keycolor`, `cols`, `rows`といった一部のプロパティ（`props.ts`で`isVar`がセットされているもの）のこと。これらはCSSプロパティがそのままstyle属性に出力されることはなく、常にCSS 変数（`--{prop}`）が使用されます。
+
+
 
 ```jsx
 // トークン値 → クラスのみ
 <Lism fz='l' p='20'>...</Lism>
-// → <div class="-fz:l -p:20">...</div>
+// 出力 → <div class="-fz:l -p:20">...</div>
 
 // カラートークン（クラス化されていない場合）→ クラス + CSS変数
 <Lism c='red'>...</Lism>
-// → <div class="-c" style="--c:var(--red)">...</div>
+// 出力 → <div class="-c" style="--c:var(--red)">...</div>
 
-// カスタム値 → クラス + CSS変数
-<Lism fz='20px'>...</Lism>
-// → <div class="-fz" style="--fz:20px">...</div>
-
-// border 系（CSS変数のみ出力される特殊パターン）
+// CSS変数のみ出力される特殊パターン
 <Lism bd bdc="#000" bdw="2px">...</Lism>
-// → <div class="-bd" style="--bdc:#000;--bdw:2px">...</div>
+// 出力 → <div class="-bd" style="--bdc:#000;--bdw:2px">...</div>
 
 // `-` でクラスだけ出力（変数は親から継承したい場合などに使う）
 <Lism p='-' bdrs>...</Lism>
-// → <div class="-p -bdrs">...</div>
+// 出力 → <div class="-p -bdrs">...</div>
 
 // `:` で強制ユーティリティクラス化
 <Lism p=':hoge'>...</Lism>
-// → <div class="-p:hoge">...</div>
+// 出力 → <div class="-p:hoge">...</div>
+
+// カスタム値（BP対応プロパティ） → クラス + CSS変数
+<Lism fz='20px'>...</Lism>
+// 出力 → <div class="-fz" style="--fz:20px">...</div>
+
+// カスタム値（BP非対応プロパティ）→ style属性にプロパティ直書き
+<Lism o='0.7'>...</Lism>
+// 出力 → <div style="opacity:0.7">...</div>
 ```
-
-
-#### CSS Props 一覧
-
-| カテゴリ | Shorthand | CSS Property | BP |
-|---------|-----------|-------------|-----|
-| **Typography** | `fz` | font-size | ✔ |
-| | `fw` | font-weight | - |
-| | `ff` | font-family | - |
-| | `fs` | font-style | - |
-| | `lh` | line-height | - |
-| | `lts` | letter-spacing | - |
-| | `ta` | text-align | - |
-| | `td` | text-decoration | - |
-| **Colors** | `c` | color | - |
-| | `bgc` | background-color | - |
-| | `bdc` | --bdc（CSS変数のみ） | - |
-| **Padding** | `p` | padding | ✔ |
-| | `px` | padding-inline | ✔ |
-| | `py` | padding-block | ✔ |
-| | `px-s`,`px-e` | padding-inline-start/end | ✔ |
-| | `py-s`,`py-e` | padding-block-start/end | ✔ |
-| | `pl`,`pr`,`pt`,`pb` | padding-left/right/top/bottom | ✔ |
-| **Margin** | `m` | margin | ✔ |
-| | `mx` | margin-inline | ✔ |
-| | `my` | margin-block | ✔ |
-| | `mx-s`,`mx-e` | margin-inline-start/end | ✔ |
-| | `my-s`,`my-e` | margin-block-start/end | ✔ |
-| | `ml`,`mr`,`mt`,`mb` | margin-left/right/top/bottom | ✔ |
-| **Size** | `w` | width | ✔ |
-| | `h` | height | ✔ |
-| | `max-w`,`min-w` | max/min-width | ✔ |
-| | `max-h`,`min-h` | max/min-height | ✔ |
-| | `sz` | inline-size | - |
-| | `max-sz` | max-inline-size | - |
-| **Display** | `d` | display | ✔ |
-| | `v` | visibility | - |
-| | `o` | opacity | - |
-| | `ov` | overflow | - |
-| | `ar` | aspect-ratio | ✔ |
-| **Position** | `pos` | position | - |
-| | `t`,`l`,`r`,`b` | top/left/right/bottom | - |
-| | `z` | z-index | - |
-| | `i` | inset | - |
-| **Gap** | `g` | gap | ✔ |
-| | `cg` | column-gap | ✔ |
-| | `rg` | row-gap | ✔ |
-| **Flex** | `fxw` | flex-wrap | ✔ |
-| | `fxd` | flex-direction | ✔ |
-| | `fx` | flex | ✔ |
-| | `fxsh` | flex-shrink | - |
-| | `fxg` | flex-grow | - |
-| | `fxb` | flex-basis | ✔ |
-| **Grid** | `gt` | grid-template | ✔ |
-| | `gta` | grid-template-areas | ✔ |
-| | `gtc` | grid-template-columns | ✔ |
-| | `gtr` | grid-template-rows | ✔ |
-| | `gaf` | grid-auto-flow | ✔ |
-| | `ga` | grid-area | ✔ |
-| | `gc` | grid-column | ✔ |
-| | `gr` | grid-row | ✔ |
-| **Places** | `ai` | align-items | ✔ |
-| | `ac` | align-content | ✔ |
-| | `ji` | justify-items | ✔ |
-| | `jc` | justify-content | ✔ |
-| | `aslf` | align-self | - |
-| | `jslf` | justify-self | - |
-| | `order` | order | - |
-| **Shadow/Radius** | `bxsh` | box-shadow | ✔ |
-| | `bdrs` | border-radius | ✔ |
-| **Border** | `bd` | border | - |
-| | `bdc` | --bdc | - |
-| | `bds` | --bds | - |
-| | `bdw` | --bdw | ✔ |
-| | `bd-t`,`bd-r`,`bd-b`,`bd-l` | border-top/right/bottom/left | - |
-| | `bd-x`,`bd-y` | border-inline/block | - |
-| **Background** | `bg` | background | ✔ |
-| | `bgc` | background-color | - |
-| | `bgi` | background-image | - |
-| | `bgr` | background-repeat | - |
-| | `bgp` | background-position | - |
-| | `bgsz` | background-size | - |
-| **Other** | `float` | float | - |
-| | `isolation` | isolation | - |
-| | `ovwrap` | overflow-wrap | - |
-| | `whspace` | white-space | - |
-
-**BP** = ブレイクポイント対応（配列・オブジェクトでレスポンシブ指定可能）
-
-各プロパティで受け付けるトークン値・プリセット値の詳細は [prop-class.md](./prop-class.md) を参照。
 
 
 #### レスポンシブ指定
 
-BP対応プロパティは、配列またはオブジェクトでブレイクポイントごとの値を指定できます。
+レスポンシブ対応プロパティは、配列またはオブジェクトでブレイクポイント（`sm`,`md`）ごとの値を指定できます。（`lg`は要カスタマイズ）
 
-| BP | デフォルト値 |
-|----|------------|
-| `sm` | `width >= 480px` |
-| `md` | `width >= 800px` |
-| (`lg`) | `width >= 1120px`（要SCSSカスタマイズ） |
-
-デフォルトで**コンテナクエリ**を採用しており、先祖に`.is--container`（コンテナ要素）が必要です。
 
 ```jsx
 // 配列（base → sm → md の順）
-<Lism p={['20', '30', '5rem']}>...</Lism>
+<Lism p={['20', '30', '40']}>...</Lism>
+// <div class="-p:20 -p_sm -p_md" style="--p_sm:var(--s30);--p_md:var(--s40)">...</div>
 
-// オブジェクトで直接指定
-<Lism p={{ base: '20', sm: '30', md: '5rem' }}>...</Lism>
-
-// ↓ どちらも同じ出力
-// <div class="-p:20 -p_sm -p_md" style="--p_sm:var(--s30);--p_md:5rem">...</div>
-
-// BPをスキップ（md のみ指定）
-<Lism p={[null, null, '40']}>...</Lism>
-<Lism p={{ md: '40' }}>...</Lism>
+// 途中のBPをスキップ（smを飛ばしてmd のみ指定）
+<Lism p={['20', null, '40']}>...</Lism>
 // → <div class="-p_md" style="--p_md:var(--s40)">...</div>
 ```
+
+デフォルトで**コンテナクエリ**を採用しているため、先祖にコンテナ要素（`is--container`が出力される`<Container>`または`isContainer`の指定）が必要です。
 
 
 ### State Props
 
-State Modules クラス（`.is--*` / `.set--*`）を出力するためのプロパティ群です。
+State Modules クラス（`is--*` / `set--*`）を出力するためのプロパティ群です。
 
 | Prop | 出力クラス | 用途 |
 |------|-----------|------|
-| `isWrapper(='{s\|l}')` | `.is--wrapper` + `.-contentSize:{s\|l}` | コンテンツ幅制限 |
-| `isLayer` | `.is--layer` | 絶対配置レイヤー（inset:0） |
-| `isLinkBox` | `.is--linkBox` | ボックス全体リンク化 |
-| `isContainer` | `.is--container` | コンテナクエリ対象 |
-| `isSide` | `.is--side` | サイド要素 |
-| `isSkipFlow` | `.is--skipFlow` | Flow 余白をスキップ |
-| `isVertical` | `.is--vertical` | 縦書き方向 |
-| `setGutter` | `.set--gutter` | 左右ガター余白 |
-| `setShadow` | `.set--shadow` | シャドウ付与 |
-| `setHov` | `.set--hov` | ホバー効果 |
-| `setTransition` | `.set--transition` | トランジション |
-| `setPlain` | `.set--plain` | プレーン状態 |
+| `isWrapper(='{s\|l}')` | `is--wrapper` + `-contentSize:{s\|l}` | コンテンツ幅制限 |
+| `isLayer` | `is--layer` | 絶対配置レイヤー（inset:0） |
+| `isLinkBox` | `is--linkBox` | ボックス全体リンク化 |
+| `isContainer` | `is--container` | コンテナクエリ対象 |
+| `isSide` | `is--side` | サイド要素 |
+| `isSkipFlow` | `is--skipFlow` | Flow 余白をスキップ |
+| `isVertical` | `is--vertical` | 縦書き方向 |
+| `setGutter` | `set--gutter` | 左右ガター余白 |
+| `setShadow` | `set--shadow` | シャドウ付与 |
+| `setHov` | `set--hov` | ホバー効果 |
+| `setTransition` | `set--transition` | トランジション |
+| `setPlain` | `set--plain` | プレーン状態 |
 
 ```jsx
 // State Props の使用例
