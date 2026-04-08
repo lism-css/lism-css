@@ -71,3 +71,17 @@ export const HighLevel: Story = {
     </ShapeDivider>
   ),
 };
+
+export const Animation: Story = {
+  name: 'animation',
+  args: {
+    viewBox: '0 0 1200 120',
+    level: 10,
+    isAnimation: true,
+  },
+  render: (args) => (
+    <ShapeDivider {...args}>
+      <path d={WAVE_PATH} />
+    </ShapeDivider>
+  ),
+};
