@@ -168,7 +168,7 @@ function getPostUrl(slug: string): string {
           // ラベルを現在の言語で取得
           const itemLabel = getTranslatedLabel(item.label, item.translate, currentLang);
           return (
-            <Link href={itemPath} data-active={isActive} setHov class="siteNav_toplink" td="none" c="inherit" lh="s">
+            <Link href={itemPath} data-active={isActive} set="hov" class="siteNav_toplink" td="none" c="inherit" lh="s">
               <Inline layout="flex" g="5" ai="center">
                 {item.icon && <Icon icon={item.icon} />}
                 {itemLabel}

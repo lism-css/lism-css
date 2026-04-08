@@ -122,7 +122,7 @@ Combine this class with CSS variables to configure transition behavior.
 <Preview>
   <PreviewTitle>Example: combining `set--transition` to animate the bxsh intensity</PreviewTitle>
   <PreviewArea p='30'>
-    <LinkBox href="###" setTransition bxsh="10" hov={{ bxsh: '40' }} bd p="20">
+    <LinkBox href="###" set="transition" bxsh="10" hov={{ bxsh: '40' }} bd p="20">
       <p>LinkBox</p>
       <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
     </LinkBox>
@@ -136,8 +136,8 @@ Combine this class with CSS variables to configure transition behavior.
     ```
   </PreviewCode>
   <PreviewCode slot='tab' label='JSX'>
-  ```jsx "setTransition" "bxsh='10' hov=\{\{ bxsh: '40'\}\}"
-  <LinkBox href="###" setTransition bxsh="10" hov={{ bxsh: '40' }} bd p="20">
+  ```jsx 'set="transition"' "bxsh='10' hov=\{\{ bxsh: '40'\}\}"
+  <LinkBox href="###" set="transition" bxsh="10" hov={{ bxsh: '40' }} bd p="20">
     <p>LinkBox</p>
     <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
   </LinkBox>
@@ -149,7 +149,7 @@ Combine this class with CSS variables to configure transition behavior.
 <Preview>
   <PreviewTitle>Example: slowly transitioning the border-color</PreviewTitle>
   <PreviewArea p='30'>
-    <LinkBox href="###" setTransition hov={{ bdc: 'red' }} bd bdw="3px" bgc="base-2" p="20" style={{ '--hov-duration': '.5s' }}>
+    <LinkBox href="###" set="transition" hov={{ bdc: 'red' }} bd bdw="3px" bgc="base-2" p="20" style={{ '--hov-duration': '.5s' }}>
       <p>LinkBox</p>
       <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
     </LinkBox>
@@ -163,8 +163,8 @@ Combine this class with CSS variables to configure transition behavior.
     ```
   </PreviewCode>
   <PreviewCode slot='tab' label='JSX'>
-    ```jsx "setTransition" "--hov-duration"
-    <LinkBox href="###" setTransition hov={{ bdc: 'red' }} bd bdw="3px" bgc="base-2" p="20" style={{ '--hov-duration': '.5s' }}>
+    ```jsx 'set="transition"' "--hov-duration"
+    <LinkBox href="###" set="transition" hov={{ bdc: 'red' }} bd bdw="3px" bgc="base-2" p="20" style={{ '--hov-duration': '.5s' }}>
       <p>LinkBox</p>
       <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
     </LinkBox>
@@ -184,7 +184,7 @@ Combine this class with CSS variables to configure transition behavior.
 }`}>
   <PreviewTitle>Adding `.-hov:shadowUp`</PreviewTitle>
   <PreviewArea p='30'>
-    <LinkBox href="###" setTransition hov="shadowUp" bxsh="10" bd p="20">
+    <LinkBox href="###" set="transition" hov="shadowUp" bxsh="10" bd p="20">
       <p>LinkBox</p>
       <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
     </LinkBox>
@@ -210,7 +210,7 @@ Combine this class with CSS variables to configure transition behavior.
   </PreviewCode>
   <PreviewCode slot='tab' label='JSX'>
     ```jsx 'hov="shadowUp"'
-    <LinkBox href="###" setTransition hov="shadowUp" bd p="20">
+    <LinkBox href="###" set="transition" hov="shadowUp" bd p="20">
       <p>LinkBox</p>
       <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
     </LinkBox>
@@ -251,9 +251,9 @@ By leveraging `set--hov`, you can trigger style changes on child elements when t
 <Preview>
   <PreviewTitle>Example using `-hov:to:show` and `-hov:to:zoom`</PreviewTitle>
   <PreviewArea p='20'>
-    <Frame isLinkBox setHov href="#banner-link" ar="16/9" bdrs="30">
-      <Media isLayer setTransition hov="to:zoom" src="https://cdn.lism-css.com/img/a-1.jpg" alt="" width="960" height="640" loading="lazy" />
-      <Layer setTransition hov="to:show" bgc="rgb(0 0 0 / 40%)" style={{ backdropFilter: 'blur(6px)' }}>
+    <Frame isLinkBox set="hov" href="#banner-link" ar="16/9" bdrs="30">
+      <Media isLayer set="transition" hov="to:zoom" src="https://cdn.lism-css.com/img/a-1.jpg" alt="" width="960" height="640" loading="lazy" />
+      <Layer set="transition" hov="to:show" bgc="rgb(0 0 0 / 40%)" style={{ backdropFilter: 'blur(6px)' }}>
         <Center h="100%" c="#fff">
           <Inline fz="2xl" fs="italic" fw="light" lts="l" bdrs="99" px="20" py="10">
             <Fragment>View More</Fragment>
@@ -275,10 +275,10 @@ By leveraging `set--hov`, you can trigger style changes on child elements when t
     ```
   </PreviewCode>
   <PreviewCode slot='tab' label='JSX'>
-    ```jsx 'setHov' 'hov="to:show"' 'hov="to:zoom"' 'setTransition'
-    <Frame isLinkBox setHov href="#banner-link" ar="16/9" bdrs="30">
-      <Media isLayer setTransition hov="to:zoom" src="https://cdn.lism-css.com/img/a-1.jpg" alt="" width="960" height="640" loading="lazy" />
-      <Layer setTransition hov="to:show" bgc="rgb(0 0 0 / 40%)" style={{ backdropFilter: 'blur(6px)' }}>
+    ```jsx 'set="hov"' 'hov="to:show"' 'hov="to:zoom"' 'set="transition"'
+    <Frame isLinkBox set="hov" href="#banner-link" ar="16/9" bdrs="30">
+      <Media isLayer set="transition" hov="to:zoom" src="https://cdn.lism-css.com/img/a-1.jpg" alt="" width="960" height="640" loading="lazy" />
+      <Layer set="transition" hov="to:show" bgc="rgb(0 0 0 / 40%)" style={{ backdropFilter: 'blur(6px)' }}>
         <Center h="100%" c="#fff">
           <Inline fz="2xl" fs="italic" fw="light" lts="l" bdrs="99" px="20" py="10">
             View More

@@ -3,7 +3,7 @@ import atts from 'lism-css/lib/helper/atts';
 export function getProps({ lismClass = '', duration, style = {}, ...props }) {
   const theProps = {
     lismClass: atts(lismClass, 'c--modal'),
-    setPlain: true,
+    set: 'plain',
   };
   if (duration) {
     style['--duration'] = duration;
@@ -25,6 +25,6 @@ export function getInnerProps({ lismClass = '', offset, style = {}, ...props }) 
 
 export const defaultProps = {
   body: { lismClass: 'c--modal_body' },
-  closeBtn: { as: 'button', setPlain: true, hov: 'o', d: 'inline-flex' },
-  openBtn: { as: 'button', setPlain: true, hov: 'o', d: 'inline-flex' },
+  closeBtn: { as: 'button', set: 'plain', hov: 'o', d: 'inline-flex' },
+  openBtn: { as: 'button', set: 'plain', hov: 'o', d: 'inline-flex' },
 };

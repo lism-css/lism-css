@@ -40,13 +40,13 @@ const displayTitle = manualTitle || entry?.data.title || path;
 const href = getLocalizedUrl(path.startsWith('/') ? path : `/${path}`, currentLang);
 ---
 
-<LinkBox href={href} layout="stack" bdrs="20" my="40" bd bgc="base" hov="bxsh, bdc, bgc" setHov setTransition class="c--innerLink">
-  <Flex class="c--innerLink__icon" c="text-2" p="5" lh="1" pos="absolute" setTransition>
+<LinkBox href={href} layout="stack" bdrs="20" my="40" bd bgc="base" hov="bxsh, bdc, bgc" set={["hov", "transition"]} class="c--innerLink">
+  <Flex class="c--innerLink__icon" c="text-2" p="5" lh="1" pos="absolute" set="transition">
     <Icon icon="link" />
   </Flex>
   <Group px-s="40" p="30">
     <span class="c--innerLink__title -fw:bold">{displayTitle}</span>
-    <Inline setTransition> →</Inline>
+    <Inline set="transition"> →</Inline>
   </Group>
 </LinkBox>
 

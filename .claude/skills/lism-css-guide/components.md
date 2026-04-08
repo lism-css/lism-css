@@ -165,11 +165,11 @@ State Modules クラス（`is--*` / `set--*`）を出力するためのプロパ
 | `isSide` | `is--side` | サイド要素 |
 | `isSkipFlow` | `is--skipFlow` | Flow 余白をスキップ |
 | `isVertical` | `is--vertical` | 縦書き方向 |
-| `setGutter` | `set--gutter` | 左右ガター余白 |
-| `setShadow` | `set--shadow` | シャドウ付与 |
-| `setHov` | `set--hov` | ホバー効果 |
-| `setTransition` | `set--transition` | トランジション |
-| `setPlain` | `set--plain` | プレーン状態 |
+| `set="gutter"` | `set--gutter` | 左右ガター余白 |
+| `set="shadow"` | `set--shadow` | シャドウ付与 |
+| `set="hov"` | `set--hov` | ホバー効果 |
+| `set="transition"` | `set--transition` | トランジション |
+| `set="plain"` | `set--plain` | プレーン状態 |
 
 ```jsx
 // State Props の使用例
