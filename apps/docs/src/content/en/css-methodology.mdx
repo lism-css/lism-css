@@ -64,6 +64,10 @@ To address the common problem of CSS specificity becoming overly complex, Lism d
       <td>Other user-defined custom modules and UI components with specific roles (`.c--{modules}`).</td>
     </tr> */}
     <tr>
+      <td class='-whspace:nowrap'>Custom<br/>`@lism-custom`</td>
+      <td>A layer for user-defined custom classification classes (`.z--{zone}`, `.p--{page}`, etc.).</td>
+    </tr>
+    <tr>
       <td class='-whspace:nowrap'>Utility<br/>`@lism-utility`</td>
       <td>The layer for utility classes with a clear purpose or style (`.u--{name}`).</td>
     </tr>
@@ -250,30 +254,36 @@ Example: `[data-opened]`, `[data-active]`
 
 #### Naming and placing custom classes
 
-When defining your own components (`.header`, `.footer`, `c--pricing`, etc.), place them inside `@layer lism-modules`.
+When defining your own components (`.c--card`, `c--pricing`, etc.), place them inside `@layer lism-modules`.
 
 ```css
 @layer lism-modules {
+  .c--card { /* ... */ }
   .c--pricing { /* ... */ }
-  .z--header { /* ... */ }
 }
 ```
 
-The following prefix conventions are recommended:
+If you add custom classes that match Lism CSS's existing class categories (`set--`, `is--`, `l--`, `a--`, `u--`), use the same prefix and add them to the corresponding layer.
+For utility classes combining a CSS property and its value, use the Prop Class format `-{prop}:{value}`.
 
-| Prefix | Scope | User extension |
-|---|---|---|
-| `l--`, `a--` | Lism core (layout / atomic) | No (core only) |
-| `c--` | Components | Users can add freely. The `lism-css` core does not define any `c--` classes — this namespace is reserved for users. `lism-ui` provides official preset `c--` components |
-| `z--`, etc. | Zoning (`z--header`, `z--main`, `z--sidebar`, etc.) | User-defined OK |
-| No prefix | User-defined | Free (`.header`, `.site-nav`, etc.) |
 
-Other classification examples:
+#### Adding custom classifications
+
+You may also define your own prefixes that don't match any of the built-in Lism class categories.
 
 | Category Example | Format | Example |
 |---|---|---|
-|Zoning|`.z--{zoneName}` or `{zoneName}` |`.z--header`,<br />`.header`|
-|Page classification|`.p--{type}-{id\|slug}` or `{slug}Page`, etc. |`.p--front`,<br />`.p--page--{slug}`, <br />`.frontPage`,<br />`.page--{slug}`|
+|Zoning|`.z--{zoneName}` or `{zoneName}` |`.z--header`,<br />`.z--main`,<br />`.z--sidebar`|
+|Page classification|`.p--{type}-{id\|slug}` or `{slug}Page`, etc. |`.p--front`,<br />`.p--page--{slug}`|
+
+Place these in `@layer lism-custom`.
+
+```css
+@layer lism-custom {
+  .z--header { /* ... */ }
+  .p--front { /* ... */ }
+}
+```
 
 
 

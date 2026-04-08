@@ -64,6 +64,10 @@ export const WhsNw = ({children}) => {
       <td>その他、ユーザーが定義する具体的な役割を持つカスタムモジュール・UIコンポーネント群 (`.c--{modules}`) 。</td>
     </tr> */}
     <tr>
+      <td class='-whspace:nowrap'>Custom<br/>`@lism-custom`</td>
+      <td>ユーザーが定義する独自分類のクラス（`.z--{zone}`, `.p--{page}` 等）を配置するためのカスタマイズ用レイヤー。</td>
+    </tr>
+    <tr>
       <td class='-whspace:nowrap'>Utility<br/>`@lism-utility`</td>
       <td>機能やスタイルが明確なユーティリティクラス`.u--{name}`を定義するレイヤー。</td>
     </tr>
@@ -253,30 +257,36 @@ Javascriptで動的に付け外しされるような状態管理には、data属
 
 #### 独自クラスの命名と配置
 
-ユーザーが独自のコンポーネント（`.header`, `.footer`, `c--pricing` 等）を定義する場合は、`@layer lism-modules` に配置してください。
+ユーザーが独自のコンポーネント（`.c--card`, `c--pricing` 等）を定義する場合は、`@layer lism-modules` に配置してください。
 
 ```css
 @layer lism-modules {
+  .c--card { /* ... */ }
   .c--pricing { /* ... */ }
-  .z--header { /* ... */ }
 }
 ```
 
-クラスのプレフィックスについては以下を推奨します。
+その他、Lism CSS の各クラス分類（`set--`, `is--`, `l--`, `a--`, `u--`）に合致する独自クラスを追加する場合は、同じプレフィックスを追加し、それぞれの定義レイヤーに追加するようにしてください。
+CSSプロパティとその値のセットの組み合わせでのユーティリティクラスは、Prop Class の`-{prop}:{value}`形式を利用します。
 
-| プレフィックス | 管轄 | ユーザー拡張 |
-|---|---|---|
-| `l--`, `a--` | Lism コア（レイアウト・装飾） | しない（コア提供のみ） |
-| `c--` | コンポーネント | ユーザーも追加OK。lism-css コアには `c--` は存在せず、最初からユーザー向けの名前空間。`lism-ui` が公式プリセットとして `c--` コンポーネントを提供 |
-| `z--` 等 | ゾーニング（`z--header`, `z--main`, `z--sidebar` 等） | ユーザー定義OK |
-| プレフィックスなし | ユーザー独自 | 自由（`.header`, `.site-nav` 等） |
 
-その他の分類例：
+#### 独自分類の追加：
+
+Lismが定義するクラス群のどれとも合致しないプレフィックスを用意することも許容しています。
 
 |分類の例|形式|例|
 |---|---|---|
-|ゾーニング|`.z--{zoneName}` または `{zoneName}` |`.z--header`,<br />`.header`|
-|ページの分類|`.p--{type}-{id\|slug}` または `{slug}Page`など |`.p--front`,<br />`.p--page--{slug}`, <br />`.frontPage`,<br />`.page--{slug}`|
+|ゾーニング|`.z--{zoneName}` または `{zoneName}` |`.z--header`,<br />`.z--main`,<br />`.z--sidebar`|
+|ページの分類|`.p--{type}-{id\|slug}` または `{slug}Page`など |`.p--front`,<br />`.p--page--{slug}`|
+
+これらを定義する場合は、 `@layer lism-custom` に配置してください。
+
+```css
+@layer lism-custom {
+  .z--header { /* ... */ }
+  .p--front { /* ... */ }
+}
+```
 
 
 
