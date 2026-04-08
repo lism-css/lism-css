@@ -16,7 +16,7 @@
  */
 
 const PLACE_PRESETS = ['start', 'center', 'end'] as const;
-const PLACE_UTILS = { 'flex-start': 'flex-start', 'flex-end': 'flex-end' } as const;
+const PLACE_FX_PRESETS = ['flex-start', 'flex-end'] as const;
 const PLACE_SHORTHANDS = { s: 'start', e: 'end', c: 'center', fs: 'flex-start', fe: 'flex-end' } as const;
 
 export default {
@@ -291,29 +291,27 @@ export default {
   // -(ai|ac|ji|jc|aslf|jslf):   /    -$1:
   ai: {
     prop: 'alignItems',
-    presets: [...PLACE_PRESETS, 'stretch'],
-    utils: PLACE_UTILS,
+    presets: [...PLACE_PRESETS, 'stretch', ...PLACE_FX_PRESETS],
     shorthands: PLACE_SHORTHANDS,
     bp: 1,
   },
   ac: {
     prop: 'alignContent',
-    presets: PLACE_PRESETS,
-    utils: { ...PLACE_UTILS, between: 'space-between' },
+    presets: [...PLACE_PRESETS, ...PLACE_FX_PRESETS],
+    utils: { between: 'space-between' },
     shorthands: PLACE_SHORTHANDS,
     bp: 1,
   },
   ji: {
     prop: 'justifyItems',
-    presets: [...PLACE_PRESETS, 'stretch'],
-    utils: PLACE_UTILS,
+    presets: [...PLACE_PRESETS, 'stretch', ...PLACE_FX_PRESETS],
     shorthands: PLACE_SHORTHANDS,
     bp: 1,
   },
   jc: {
     prop: 'justifyContent',
-    presets: PLACE_PRESETS,
-    utils: { ...PLACE_UTILS, between: 'space-between' },
+    presets: [...PLACE_PRESETS, ...PLACE_FX_PRESETS],
+    utils: { between: 'space-between' },
     shorthands: PLACE_SHORTHANDS,
     bp: 1,
   },
