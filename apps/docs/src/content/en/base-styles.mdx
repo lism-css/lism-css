@@ -42,12 +42,253 @@ Or alternatively:
 
 In addition to the Reset CSS, the `@lism-base` layer defines default base styles for HTML elements, making use of tokens defined on `:root`.
 
-<PreviewTitle>Source code</PreviewTitle>
-<EmbedCode dirPath='packages/lism-css' srcPath='src/scss/base/_html.scss' />
+Here, the styles applied to each element are introduced by group.
+
+:::note
+For details on the CSS variables (tokens) used in each style, refer to the [Design Tokens](/docs/tokens/) page.
+:::
+
+
+### body
+
+Basic settings for font, color, and text decoration are applied to `body`.
+
+```scss
+body {
+  --hl: var(--hl--base);
+  font-size: var(--fz--base);
+  font-family: var(--ff--base);
+  letter-spacing: var(--lts--base);
+  background-color: var(--base);
+  color: var(--text);
+  text-underline-offset: var(--under-offset, 0.125em);
+}
+```
+
+`--hl` is a variable that manages the half-leading (the spacing above and below a line). On `body`, `--hl--base` is set and inherited by child elements.
+
+`text-underline-offset` adjusts the position of link underlines and can be overridden with the `--under-offset` variable.
+
+
+### Line height for all elements
+
+In Lism CSS, the following style is applied to **all elements**.
+
+```scss
+* {
+  line-height: calc(1em + var(--hl) * 2);
+}
+```
+
+Unlike a typical declaration such as `line-height: 1.6`, this approach achieves a **fixed line spacing that is independent of font size**.
+The formula works by defining the half-leading amount first, then adding it above and below the cap height (approximately `1em`).
+
+Because the line spacing does not grow excessively as font size increases, it helps unify the "**vertical rhythm**" in typography, allowing you to compose layouts with harmonious spacing from headings to body text.
+
+For more details, see [Typography Tokens](/docs/tokens/typography/#lh-line-height).
+
+
+### Headings (h1–h6)
+
+Font family, weight, and size are set for heading elements.
+
+```scss
+:is(h1, h2, h3, h4, h5, h6) {
+  font-family: var(--headings-ff, inherit);
+  font-weight: var(--headings-fw, var(--fw--bold));
+}
+h1 { font-size: var(--fz--3xl); }
+h2 { font-size: var(--fz--2xl); }
+h3 { font-size: var(--fz--xl); }
+h4 { font-size: var(--fz--l); }
+h5, h6 { font-size: var(--fz--m); }
+```
+
+By defining `--headings-ff` and `--headings-fw`, you can customize the font family and weight for all headings at once.
+
+
+### Links (a)
+
+CSS variables for link color and underline are set on the `a` tag.
+
+```scss
+a {
+  color: var(--link-c, var(--link));
+  text-decoration: var(--link-td, underline);
+  text-decoration-thickness: var(--link-td-thickness, auto);
+  text-decoration-color: var(--link-td-color, currentColor);
+}
+```
+
+| Variable | Fallback | Purpose |
+|------|------------|------|
+| `--link-c` | `var(--link)` | Link text color |
+| `--link-td` | `underline` | Text decoration type |
+| `--link-td-thickness` | `auto` | Underline thickness |
+| `--link-td-color` | `currentColor` | Underline color |
+
+### Inline text elements
+
+```scss
+small {
+  --hl: var(--hl--s);
+  font-size: var(--fz--xs);
+}
+b, strong {
+  font-weight: var(--fw--bold);
+}
+sup, sub {
+  --hl: var(--hl--xs);
+  font-size: 80%;
+}
+code, kbd, var, samp {
+  font-family: var(--ff--mono);
+}
+```
+
+For `small` and `sup`/`sub`, `--hl` is set to a smaller value to adjust the line spacing to match the font size.
+
+
+### Blockquote
+
+```scss
+blockquote {
+  background-color: var(--base-2);
+  padding: var(--s30);
+}
+```
+
+A simple background color and padding are applied to `blockquote`.
+
+### Other text elements
+
+```scss
+legend, caption, figcaption {
+  font-size: var(--fz--s);
+}
+```
+
+The font size of these elements is set slightly smaller by default.
+
+### Divider
+
+```scss
+hr {
+  border: none;
+  block-size: 0;
+  border-block-start: 1px solid var(--divider);
+}
+```
+
+`hr` uses a fixed `block-start` direction and is set to the `--divider` color.
+
+
+### Lists (ul, ol)
+
+```scss
+:is(ul, ol):where(:not([class])),
+:is(ul, ol):where([class^='-']) {
+  list-style: revert;
+  padding-inline-start: var(--s30);
+}
+```
+
+While the Reset CSS removes list styles from elements with a class, this rule restores the browser default list style for lists with no class, or with only a Prop Class (a class starting with `-`).
+
+
+### Definition lists (dl)
+
+```scss
+dt {
+  font-weight: var(--fw--bold);
+}
+dd + dt {
+  margin-block-start: var(--s20);
+}
+```
+
+`dt` is displayed in bold, and spacing is added between consecutive `dd + dt` pairs to clearly separate entries.
+
+
+### Tables
+
+Table cell styles can be customized with CSS variables.
+
+```scss
+table {
+  --td-c: inherit;
+  --td-bgc: transparent;
+  --td-p: var(--s10);
+  --td-min-sz: initial;
+}
+td {
+  color: var(--td-c);
+  background-color: var(--td-bgc);
+  padding: var(--td-p);
+  min-inline-size: var(--td-min-sz);
+}
+th {
+  color: var(--th-c, var(--td-c));
+  background-color: var(--th-bgc, var(--td-bgc));
+  padding: var(--th-p, var(--td-p));
+  min-inline-size: var(--th-min-sz, var(--td-min-sz));
+}
+```
+
+| Variable | Fallback | Purpose |
+|------|------------|------|
+| `--td-c` | `inherit` | Cell text color |
+| `--td-bgc` | `transparent` | Cell background color |
+| `--td-p` | `var(--s10)` | Cell padding |
+| `--td-min-sz` | `initial` | Cell minimum width |
+| `--th-c` | `var(--td-c)` | Header cell text color |
+| `--th-bgc` | `var(--td-bgc)` | Header cell background color |
+| `--th-p` | `var(--td-p)` | Header cell padding |
+| `--th-min-sz` | `var(--td-min-sz)` | Header cell minimum width |
+
+Since `th` uses the `td` variables as fallbacks, setting `--td-*` on `table` also affects `th`. To override `th` individually, use `--th-*`.
+
+
+### Form elements
+
+Consistent styles are applied to form controls.
+
+```scss
+input, button, textarea, select, ::file-selector-button {
+  background-color: var(--controls-bgc, var(--base-2));
+  border: solid 1px var(--controls-bdc, var(--divider));
+  padding: var(--controls-p, var(--s5) var(--s10));
+  border-radius: var(--controls-bdrs, var(--bdrs--10));
+}
+```
+
+| Variable | Fallback | Purpose |
+|------|------------|------|
+| `--controls-bgc` | `var(--base-2)` | Background color |
+| `--controls-bdc` | `var(--divider)` | Border color |
+| `--controls-p` | `var(--s5) var(--s10)` | Padding |
+| `--controls-bdrs` | `var(--bdrs--10)` | Border radius |
+
+
+### Others
+
+```scss
+:disabled {
+  opacity: var(--o--n20);
+}
+:focus-visible {
+  outline-offset: var(--focus-offset, 0px);
+}
+```
+
+Disabled elements receive an opacity of `--o--n20` (`0.5`), and `:focus-visible` allows the outline offset to be adjusted with `--focus-offset`.
+
+
+---
 
 ### Preview of basic HTML styles
 
-The following is a preview of the basic HTML styles with only `@lism-base` applied.
+The following is a preview of HTML elements with the base styles applied above.
 
 <PreviewTitle>Preview</PreviewTitle>
 <PreviewArea>
@@ -56,3 +297,6 @@ The following is a preview of the basic HTML styles with only `@lism-base` appli
 <Button href='/demo/html-base-style' variant='fill' target='_blank' bdrs='10' w='fit' mx='auto'>
   View in full screen
 </Button>
+
+<PreviewTitle>Source code</PreviewTitle>
+<EmbedCode dirPath='packages/lism-css' srcPath='src/scss/base/_html.scss' />

@@ -42,12 +42,260 @@ import 'lism-css/reset.css';
 
 Reset CSS のほか、`@lism-base`レイヤーでは、`:root`で定義したトークンを活用しつつHTMLタグのデフォルトベーススタイルを定義しています。
 
+
 <PreviewTitle>ソースコード</PreviewTitle>
 <EmbedCode dirPath='packages/lism-css' srcPath='src/scss/base/_html.scss' />
 
-### HTML基本スタイルのプレビュー
 
-`@lism-base`が適用されただけのHTML基本スタイルのプレビューです。
+ここでは各要素に適用されるスタイルをグループごとに紹介します。
+
+:::info
+各スタイルで使用されているトークン変数（`--{token}--{value}`）の詳細については、[デザイントークン](/docs/tokens/)のページを参照してください。
+:::
+
+
+### body
+
+`body` にはフォント・色・文字装飾に関する基本設定が適用されます。
+
+```scss
+body {
+  --hl: var(--hl--base);
+  font-size: var(--fz--base);
+  font-family: var(--ff--base);
+  letter-spacing: var(--lts--base);
+  background-color: var(--base);
+  color: var(--text);
+  text-underline-offset: var(--under-offset, 0.125em);
+}
+```
+
+`--hl` はハーフレディング（行間の上下余白）を管理するための変数です。`body` では `--hl--base` がセットされ、子要素に継承されます。
+
+`text-underline-offset` はリンクの下線位置を調整するプロパティで、`--under-offset` 変数で上書き可能です。
+
+
+### 全要素の行間
+
+Lism CSS では、**全要素に対して**以下のスタイルが適用されています。
+
+```scss
+* {
+  line-height: calc(1em + var(--hl) * 2);
+}
+```
+
+これは一般的な `line-height: 1.6` のような指定とは異なり、**フォントサイズに依存しない固定量の行間**を実現する仕組みです。  
+ハーフレディング（Half-leading）の量を先に定義しておき、それを文字の高さ(≒`1em`)の上下に付与するという計算式です。
+
+フォントサイズが大きくなっても行間が過大にならないため、タイポグラフィにおける「**縦のリズム**」を統一することができ、見出しから本文まで調和の取れた余白でレイアウトを組むことができます。
+
+詳しくは [タイポグラフィトークン](/docs/tokens/typography/#lh-line-height) を参照してください。
+
+
+### 見出し（h1〜h6）
+
+見出し要素にはフォントファミリー・ウェイト・サイズが設定されます。
+
+```scss
+:is(h1, h2, h3, h4, h5, h6) {
+  font-family: var(--headings-ff, inherit);
+  font-weight: var(--headings-fw, var(--fw--bold));
+}
+h1 { font-size: var(--fz--3xl); }
+h2 { font-size: var(--fz--2xl); }
+h3 { font-size: var(--fz--xl); }
+h4 { font-size: var(--fz--l); }
+h5, h6 { font-size: var(--fz--m); }
+```
+
+`--headings-ff` と `--headings-fw` を定義すれば、全見出しのフォントファミリー・ウェイトを一括でカスタマイズできます。
+
+
+### リンク（a）
+
+`a` タグにはリンクの色と下線に関するCSS変数が設定されています。
+
+```scss
+a {
+  color: var(--link-c, var(--link));
+  text-decoration: var(--link-td, underline);
+  text-decoration-thickness: var(--link-td-thickness, auto);
+  text-decoration-color: var(--link-td-color, currentColor);
+}
+```
+
+| 変数 | フォールバック | 用途 |
+|------|------------|------|
+| `--link-c` | `var(--link)` | リンクテキストの色 |
+| `--link-td` | `underline` | テキスト装飾の種類 |
+| `--link-td-thickness` | `auto` | 下線の太さ |
+| `--link-td-color` | `currentColor` | 下線の色 |
+
+### インラインテキスト要素
+
+```scss
+small {
+  --hl: var(--hl--s);
+  font-size: var(--fz--xs);
+}
+b, strong {
+  font-weight: var(--fw--bold);
+}
+sup, sub {
+  --hl: var(--hl--xs);
+  font-size: 80%;
+}
+code, kbd, var, samp {
+  font-family: var(--ff--mono);
+}
+```
+
+`small` や `sup`/`sub` では `--hl` を小さめの値に変更し、フォントサイズに合った行間になるよう調整しています。
+
+
+### 引用
+
+```scss
+blockquote {
+  background-color: var(--base-2);
+  padding: var(--s30);
+}
+```
+
+`blockquote` にはシンプルな背景色と余白が適用されています。
+
+### その他のテキスト要素
+
+```scss
+legend, caption, figcaption {
+  font-size: var(--fz--s);
+}
+```
+
+これらのフォントサイズはデフォルトで少し小さめにセットしています。
+
+### 区切り
+
+```scss
+hr {
+  border: none;
+  block-size: 0;
+  border-block-start: 1px solid var(--divider);
+}
+```
+
+`hr` は方向を`block-start`に固定し、 `--divider` カラーにセットしています。
+
+
+### リスト（ul, ol）
+
+```scss
+:is(ul, ol):where(:not([class])),
+:is(ul, ol):where([class^='-']) {
+  list-style: revert;
+  padding-inline-start: var(--s30);
+}
+```
+
+クラスを持たないリスト、または Prop Classしかクラスを持たない（class属性が `-` で始まる）リストに対して、ブラウザデフォルトスタイルを復活させています。（余白はスペーシングトークンで管理）
+
+
+### 定義リスト（dl）
+
+```scss
+dt {
+  font-weight: var(--fw--bold);
+}
+dd + dt {
+  margin-block-start: var(--s20);
+}
+```
+
+`dt` は太字にし、連続する `dd + dt` の間には余白を設けて項目の区切りを明確にしています。
+
+
+### テーブル
+
+テーブルセルの一部スタイルはCSS変数でカスタマイズ可能です。
+
+```scss
+table {
+  --td-c: inherit;
+  --td-bgc: transparent;
+  --td-p: var(--s10);
+  --td-min-sz: initial;
+}
+td {
+  color: var(--td-c);
+  background-color: var(--td-bgc);
+  padding: var(--td-p);
+  min-inline-size: var(--td-min-sz);
+}
+th {
+  color: var(--th-c, var(--td-c));
+  background-color: var(--th-bgc, var(--td-bgc));
+  padding: var(--th-p, var(--td-p));
+  min-inline-size: var(--th-min-sz, var(--td-min-sz));
+}
+```
+
+| 変数 | フォールバック | 用途 |
+|------|------------|------|
+| `--td-c` | `inherit` | セルのテキスト色 |
+| `--td-bgc` | `transparent` | セルの背景色 |
+| `--td-p` | `var(--s10)` | セルのパディング |
+| `--td-min-sz` | `initial` | セルの最小幅 |
+| `--th-c` | `var(--td-c)` | 見出しセルのテキスト色 |
+| `--th-bgc` | `var(--td-bgc)` | 見出しセルの背景色 |
+| `--th-p` | `var(--td-p)` | 見出しセルのパディング |
+| `--th-min-sz` | `var(--td-min-sz)` | 見出しセルの最小幅 |
+
+`th` は `td` の変数をフォールバックとして参照するため、`table` で `--td-*` を設定すれば `th` にも反映されます。　　
+それぞれ個別に変更したい場合は `--th-*` を指定してください。
+
+
+### フォーム要素
+
+フォームコントロールには、デフォルトで一括で統一的なスタイルが適用されます。
+
+```scss
+input, button, textarea, select, ::file-selector-button {
+  background-color: var(--controls-bgc, var(--base-2));
+  border: solid 1px var(--controls-bdc, var(--divider));
+  padding: var(--controls-p, var(--s5) var(--s10));
+  border-radius: var(--controls-bdrs, var(--bdrs--10));
+}
+```
+
+| 変数 | フォールバック | 用途 |
+|------|------------|------|
+| `--controls-bgc` | `var(--base-2)` | 背景色 |
+| `--controls-bdc` | `var(--divider)` | ボーダー色 |
+| `--controls-p` | `var(--s5) var(--s10)` | パディング |
+| `--controls-bdrs` | `var(--bdrs--10)` | 角丸 |
+
+
+### その他
+
+```scss
+:disabled {
+  opacity: var(--o--n20);
+}
+:focus-visible {
+  outline-offset: var(--focus-offset, 0px);
+}
+```
+
+`disabled` 状態の要素は不透明度を低下させ、  
+`:focus-visible` に表示されるアウトラインのオフセットを、 `--focus-offset` で調整できるようにしています。
+
+
+---
+
+## HTML基本スタイルのプレビュー
+
+上記のベーススタイルが適用されたHTML要素のプレビューです。
 
 <PreviewTitle>Preview</PreviewTitle>
 <PreviewArea>
@@ -56,5 +304,4 @@ Reset CSS のほか、`@lism-base`レイヤーでは、`:root`で定義したト
 <Button href='/demo/html-base-style' variant='fill' target='_blank' bdrs='10' w='fit' mx='auto'>
   大きい画面で見る
 </Button>
-
 
