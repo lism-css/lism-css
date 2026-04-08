@@ -1,0 +1,109 @@
+---
+title: 'Spacing Tokens'
+navtitle: 'Spacing'
+description: 'An overview of Fibonacci-based spacing tokens in Lism CSS and which prop classes support them.'
+---
+
+import { Box, Stack, Cluster, Columns, Frame, Center, Text } from 'lism-css/astro';
+import { DummyText } from '@lism-css/ui/astro';
+import { SpacingDemos } from "@/content/token-previews.jsx";
+
+This page covers Fibonacci-based spacing tokens and the prop classes that support them.
+
+## SPACE: Spacing Scale
+
+Spacing uses a scaling system based on the Fibonacci sequence ((0, 1,) 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, ...).
+
+By default, `0.5rem ≈ 8px` is used as the scaling unit, with token values `10`, `20`, `30`, ... `80` defined accordingly.
+However, since those intervals can feel too large in practice, `5` and `15` are included as fine-tuning exceptions for the lower end of the scale.
+```css
+:root {
+  /* Fibonacci scale with spacing unit of 8 */
+  --s-unit: calc(var(--REM) * 0.5); /* ≒ 8px */
+  --s5: calc(0.5 * var(--s-unit)); /* exception */
+  --s10: var(--s-unit);
+  --s15: calc(1.5 * var(--s-unit)); /* exception */
+  --s20: calc(2 * var(--s-unit));
+  --s30: calc(3 * var(--s-unit));
+  --s40: calc(5 * var(--s-unit));
+  --s50: calc(8 * var(--s-unit));
+  --s60: calc(13 * var(--s-unit));
+  --s70: calc(21 * var(--s-unit));
+  --s80: calc(34 * var(--s-unit));
+}
+```
+
+
+<Preview>
+  <PreviewTitle>Preview</PreviewTitle>
+  <PreviewArea p='20' flow='s' resize>
+    <SpacingDemos spaces={[5, 10, 15, 20, 30, 40, 50, 60, 70, 80]} isValueLabel />
+  </PreviewArea>
+</Preview>
+
+<Reference>
+Reference: [On typography and spacing scaling design](https://css-notes.com/layout/typography-scaling/)
+</Reference>
+
+{/* - ~~`1 = 0.25`, `2 = 0.5` として計算~~
+  - 1=s10, 2=s20, 3=s30, 5=s40, 8=s50, 13=s60,...
+  - 5, 15, 25, ...など、`5`の倍数は前後の値の中間値となるように計算 */}
+
+
+## Supported Prop Classes
+
+Spacing tokens can be used with `padding`, `margin`, and `gap` prop classes.
+However, **not all properties support them**.
+
+### Full Support (Token Values 5–80)
+
+The following properties have prop classes for all spacing tokens: `5`, `10`, `15`, `20`, `30`, `40`, `50`, `60`, `70`, `80`.
+
+| Property | CSS | Class examples | BP |
+|---|---|---|---|
+| `p` | `padding` | `-p:5`, `-p:20`, ... | ○ |
+| `px` | `padding-inline` | `-px:10`, `-px:30`, ... | ○ |
+| `py` | `padding-block` | `-py:15`, `-py:40`, ... | ○ |
+| `m` | `margin` | `-m:10`, `-m:20`, ... | ○ |
+| `mx` | `margin-inline` | `-mx:10`, `-mx:20`, ... | ○ |
+| `my` | `margin-block` | `-my:10`, `-my:20`, ... | ○ |
+| `my-s` | `margin-block-start` | `-my-s:10`, `-my-s:20`, ... | ○ |
+| `g` | `gap` | `-g:10`, `-g:20`, ... | ○ |
+
+`gap` also supports `inherit`.
+
+### No Preset Classes
+
+The following properties do not have preset spacing token prop classes. However, you can still specify values via CSS custom properties (`--px-s`, etc.) or JSX props (`px-s="20"`, etc.).
+
+| Property | CSS |
+|---|---|
+| `px-s` | `padding-inline-start` |
+| `px-e` | `padding-inline-end` |
+| `py-s` | `padding-block-start` |
+| `py-e` | `padding-block-end` |
+| `pl`, `pr`, `pt`, `pb` | Physical direction padding |
+| `mx-s` | `margin-inline-start` |
+| `mx-e` | `margin-inline-end` |
+| `my-e` | `margin-block-end` |
+| `ml`, `mr`, `mt`, `mb` | Physical direction margin |
+| `g-x` | `column-gap` |
+| `g-y` | `row-gap` |
+
+### Margin Auto Support
+
+Margin properties also have `auto` prop classes in addition to spacing tokens.
+
+| Property | CSS | Class |
+|---|---|---|
+| `m` | `margin` | `-m:auto` |
+| `mx` | `margin-inline` | `-mx:auto` |
+| `my` | `margin-block` | `-my:auto` |
+| `mx-s` | `margin-inline-start` | `-mx-s:auto` |
+| `mx-e` | `margin-inline-end` | `-mx-e:auto` |
+| `my-s` | `margin-block-start` | `-my-s:auto` |
+| `my-e` | `margin-block-end` | `-my-e:auto` |
+
+<Reference>
+For a full list of prop classes, see [Prop Class Reference](/docs/prop-class/).
+</Reference>

@@ -120,8 +120,11 @@ const docsSidebar: SidebarSection[] = [
     translate: { en: 'Overview' },
     items: [
       '/docs/css-methodology/',
+      { type: 'separator' },
       '/docs/tokens/',
-      '/docs/typography/',
+      '/docs/tokens/colors/',
+      '/docs/tokens/typography/',
+      '/docs/tokens/spacing/',
       { type: 'separator' },
       // '/docs/reset-css/',
       '/docs/base-styles/',

@@ -1,0 +1,165 @@
+---
+title: 'カラートークン'
+navtitle: 'Colors'
+description: 'Lism CSS で定義されているセマンティックカラーとパレットカラーのトークン、カスタマイズ方法について解説します。'
+---
+
+import { Box, Stack, Cluster, Columns, Frame, Center, Inline, Lism, Text } from 'lism-css/astro';
+import { DummyText } from '@lism-css/ui/astro';
+
+export const ColorBadge = ({color, label}) => {
+  return <Cluster g='10'>
+      <Inline w='1.5em' ar='1/1' bgc={color} bdrs='10' bxsh='10' />
+      <code>{label || color}</code>
+    </Cluster>;
+}
+
+Lism CSS で定義しているカラー関連のデザイントークンについて解説します。セマンティックカラーとパレットカラーの2種類が用意されています。
+
+## COLOR
+
+|トークン名|変数|
+|---|---|
+|<ColorBadge color='base' />|`--base`|
+|<ColorBadge color='base-2' />|`--base-2`|
+|<ColorBadge color='text' />|`--text`|
+|<ColorBadge color='text-2' />|`--text-2`|
+|<ColorBadge color='divider' />|`--divider`|
+|<ColorBadge color='link' />|`--link`|
+|<ColorBadge color='brand' />|`--brand`|
+|<ColorBadge color='accent' />|`--accent`|
+{/* |<ColorBadge color='accent-2' />|`--accent-2`| */}
+
+これらのカラーは、サイトに合わせて調整してご利用ください。
+{/* モダンCSSでは`color-mix()`があるので、hsl値の中身を変数にすることはしていません。 */}
+
+
+<Preview>
+  <PreviewTitle>Preview</PreviewTitle>
+  <PreviewArea p='30'>
+    <Box bd p='30'>
+      <Text fw='bold' c='brand'>Main color example text</Text>
+      <DummyText length='codes' pre='text: ' />
+      <DummyText c='text-2' length='s' pre='text-2: ' />
+    </Box>
+
+    <Box bgc='base-2' p='30'>
+      <Text fw='bold' c='accent'>Accent color example text</Text>
+      <DummyText length='codes' pre='text: ' />
+      <DummyText c='text-2' length='s' pre='text-2: ' />
+      </Box>
+    </PreviewArea>
+  </Preview>
+
+
+## PALETTE
+
+|パレットトークン|変数|
+|---|---|
+|<ColorBadge color='red' />|`--red`|
+|<ColorBadge color='orange' />|`--orange`|
+|<ColorBadge color='yellow' />|`--yellow`|
+|<ColorBadge color='green' />|`--green`|
+|<ColorBadge color='blue' />|`--blue`|
+|<ColorBadge color='purple' />|`--purple`|
+|<ColorBadge color='pink' />|`--pink`|
+|<ColorBadge color='gray' />|`--gray`|
+|<ColorBadge color='black' />|`--black`|
+|<ColorBadge color='white' />|`--white`|
+
+パレットカラーはOKLCHで定義されています。
+
+`--L`が明度、`--C`が彩度の基準値として定義されており、この二つの値を調整するとパレットカラー全体の色味を調整できます。
+
+
+## パレットカラーの活用
+
+`u--cbox` ユーティリティクラスを使うと、`--keycolor` をベースに `color-mix()` で `color`, `background-color`, `border-color` を一括生成できます。
+
+<Preview>
+  <PreviewTitle>u--cbox の基本的な使い方</PreviewTitle>
+  <PreviewArea resize p='20'>
+    <Lism className="u--cbox" keycolor="red" p="20">
+      <DummyText length="codes" />
+    </Lism>
+    <Lism className="u--cbox" keycolor="purple" bd bdrs="20" bxsh="20" setShadow p="20">
+      <DummyText length="codes" />
+    </Lism>
+    <Lism className="u--cbox" keycolor="brand" bdc="keycolor" bd-x-s bdw="4px" p="20">
+      <DummyText length="codes" />
+    </Lism>
+  </PreviewArea>
+  <PreviewCode slot="tab" label="HTML">
+    ```html
+    <div class="u--cbox -p:20" style="--keycolor: var(--red)">...</div>
+    <div class="u--cbox set--shadow -bd -bdrs:20 -bxsh:20 -p:20" style="--keycolor: var(--purple)">...</div>
+    <div class="u--cbox -bd-x-s -p:20" style="--keycolor: var(--brand); --bdc: var(--keycolor); --bdw: 4px">...</div>
+    ```
+  </PreviewCode>
+  <PreviewCode slot="tab" label='JSX'>
+    ```jsx
+    <Lism className='u--cbox' keycolor='red' p='20'>...</Lism>
+    <Lism className='u--cbox' keycolor='purple' bd bdrs='20' bxsh='20' setShadow p='20'>...</Lism>
+    <Lism className='u--cbox' keycolor='brand' bdc='keycolor' bd-x-s bdw='4px' p='20'>...</Lism>
+    ```
+  </PreviewCode>
+</Preview>
+
+
+<PreviewTitle>パレットカラー一覧</PreviewTitle>
+<PreviewArea p='20' ov-y='auto' max-h='25rem'>
+  <Lism className="u--cbox" keycolor="red" bd bdrs="20" bxsh="20" setShadow p="20">
+    <DummyText length="codes" />
+  </Lism>
+  <Lism className="u--cbox" keycolor="orange" bd bdrs="20" bxsh="20" setShadow p="20">
+    <DummyText length="codes" />
+  </Lism>
+  <Lism className="u--cbox" keycolor="yellow" bd bdrs="20" bxsh="20" setShadow p="20">
+    <DummyText length="codes" />
+  </Lism>
+  <Lism className="u--cbox" keycolor="green" bd bdrs="20" bxsh="20" setShadow p="20">
+    <DummyText length="codes" />
+  </Lism>
+  <Lism className="u--cbox" keycolor="blue" bd bdrs="20" bxsh="20" setShadow p="20">
+    <DummyText length="codes" />
+  </Lism>
+  <Lism className="u--cbox" keycolor="purple" bd bdrs="20" bxsh="20" setShadow p="20">
+    <DummyText length="codes" />
+  </Lism>
+  <Lism className="u--cbox" keycolor="pink" bd bdrs="20" bxsh="20" setShadow p="20">
+    <DummyText length="codes" />
+  </Lism>
+  <Lism className="u--cbox" keycolor="gray" bd bdrs="20" bxsh="20" setShadow p="20">
+    <DummyText length="codes" />
+  </Lism>
+</PreviewArea>
+
+<Reference>
+`u--cbox` の詳しい使い方やカスタマイズ方法は [ユーティリティクラス](/docs/utility-class/#u--cbox) を参照してください。
+</Reference>
+
+
+## カスタマイズ例
+
+### ダークモード対応
+
+パレットカラーはOKLCHベースで定義されているため、`--L`（明度）と`--C`（彩度）の2つの変数を調整するだけで全体の色味を一括変更できます。
+
+```css
+:root[data-theme='dark'] {
+  --L: 72%;
+  --C: 0.22;
+}
+```
+
+### セマンティックカラーのカスタマイズ
+
+サイトのブランドカラーに合わせて、セマンティックカラーを上書きできます。
+
+```css
+:root {
+  --brand: #1e5f8c;
+  --accent: #d94a6a;
+  --link: oklch(50% 0.3 240);
+}
+```

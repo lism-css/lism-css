@@ -5,7 +5,6 @@ description: 'A reference of all design tokens in Lism CSS, including colors, sp
 
 import { Box, Stack, Cluster, Columns, Frame, Center, Inline, Text } from 'lism-css/astro';
 import { DummyText } from '@lism-css/ui/astro';
-import { FzDemos, SpacingDemos, BoxShadowDemos } from "@/content/token-previews.jsx";
 
 export const ColorBadge = ({color, label}) => {
   return <Cluster g='10'>
@@ -15,7 +14,10 @@ export const ColorBadge = ({color, label}) => {
 }
 
 
-## COLOR
+Lism CSS provides design tokens for major CSS properties.
+
+
+## [COLOR](/docs/tokens/colors/)
 
 | Token | Variable |
 |---|---|
@@ -27,55 +29,40 @@ export const ColorBadge = ({color, label}) => {
 |<ColorBadge color='link' />|`--link`|
 |<ColorBadge color='brand' />|`--brand`|
 |<ColorBadge color='accent' />|`--accent`|
-{/* |<ColorBadge color='accent-2' />|`--accent-2`| */}
 
-Adjust these colors to match your site's design.
-{/* With modern CSS's `color-mix()`, there is no need to define hsl values as inner variables. */}
+For palette colors (`--red`, `--blue`, `--green`, etc.) and customization, see [Color Tokens](/docs/tokens/colors/).
 
 
-<Preview>
-  <PreviewTitle>Preview</PreviewTitle>
-  <PreviewArea p='30'>
-    <Box bd p='30'>
-      <Text fw='bold' c='brand'>Main color example text</Text>
-      <DummyText length='codes' pre='text: ' />
-      <DummyText c='text-2' length='s' pre='text-2: ' />
-    </Box>
+## [Typography](/docs/tokens/typography/)
 
-    <Box bgc='base-2' p='30'>
-      <Text fw='bold' c='accent'>Accent color example text</Text>
-      <DummyText length='codes' pre='text: ' />
-      <DummyText c='text-2' length='s' pre='text-2: ' />
-      </Box>
-    </PreviewArea>
-  </Preview>
-
-### PALETTE
-
-| Palette token | Variable |
+| Token | Variable |
 |---|---|
-|<ColorBadge color='red' />|`--red`|
-|<ColorBadge color='orange' />|`--orange`|
-|<ColorBadge color='yellow' />|`--yellow`|
-|<ColorBadge color='green' />|`--green`|
-|<ColorBadge color='blue' />|`--blue`|
-|<ColorBadge color='purple' />|`--purple`|
-|<ColorBadge color='pink' />|`--pink`|
-|<ColorBadge color='gray' />|`--gray`|
-|<ColorBadge color='black' />|`--black`|
-|<ColorBadge color='white' />|`--white`|
+|`FF` (font-family)|`--ff--base`, `--ff--accent`, `--ff--mono`|
+|`FW` (font-weight)|`--fw--light`, `--fw--normal`, `--fw--bold`|
+|`FZ` (font-size)|`--fz--2xs` to `--fz--5xl`|
+|`LH` (line-height)|`--hl--xs`, `--hl--s`, `--hl--base`, `--hl--l`|
+|`LTS` (letter-spacing)|`--lts--s`, `--lts--base`, `--lts--l`|
 
-Palette colors are defined in OKLCH.
+For details on each token and scaling rules, see [Typography Tokens](/docs/tokens/typography/).
 
-`--L` is defined as the base lightness value and `--C` as the base chroma value. Adjusting these two values lets you tune the overall palette color.
 
-For example, the following makes the palette slightly brighter, making it easy to implement dark mode support.
-```css
-:root[data-theme='dark'] {
-  --L: 72%;
-  --C: 0.22;
-}
-```
+## [SPACE](/docs/tokens/spacing/)
+
+| Token value | Variable | Approx. |
+|---|---|---|
+|`5`|`--s5`|`4px`|
+|`10`|`--s10`|`8px`|
+|`15`|`--s15`|`12px`|
+|`20`|`--s20`|`16px`|
+|`30`|`--s30`|`24px`|
+|`40`|`--s40`|`40px`|
+|`50`|`--s50`|`64px`|
+|`60`|`--s60`|`104px`|
+|`70`|`--s70`|`168px`|
+|`80`|`--s80`|`272px`|
+
+Fibonacci-based spacing scale. For supported prop classes, see [Spacing Tokens](/docs/tokens/spacing/).
+
 
 ## `RADIUS`
 
