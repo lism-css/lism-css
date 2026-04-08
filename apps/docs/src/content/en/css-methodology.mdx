@@ -64,12 +64,12 @@ To address the common problem of CSS specificity becoming overly complex, Lism d
       <td>Other user-defined custom modules and UI components with specific roles (`.c--{modules}`).</td>
     </tr> */}
     <tr>
-      <td class='-whspace:nowrap'>Utility<br/>`@lism-utility`</td>
-      <td>The layer for utility classes with a clear purpose or style (`.u--{name}`).</td>
+      <td class='-whspace:nowrap'>Custom<br/>`@lism-custom`</td>
+      <td>A layer for user-defined custom classification classes (`.z--{zone}`, `.p--{page}`, etc.).</td>
     </tr>
     <tr>
-      <td class='-whspace:nowrap'>Custom<br/>`@lism-custom`</td>
-      <td>A customization layer for defining styles that should take priority over the layers above while remaining lower specificity than Prop Classes.</td>
+      <td class='-whspace:nowrap'>Utility<br/>`@lism-utility`</td>
+      <td>The layer for utility classes with a clear purpose or style (`.u--{name}`).</td>
     </tr>
     <tr>
       <td class='-whspace:nowrap'>Props<br/>`-`</td>
@@ -252,18 +252,38 @@ For state management that is dynamically toggled by JavaScript, use data attribu
 Example: `[data-opened]`, `[data-active]`
 
 
-#### Naming custom classes
+#### Naming and placing custom classes
 
-There are no strict rules for classes that are not part of the built-in Lism package.
+When defining your own components (`.c--card`, `c--pricing`, etc.), place them inside `@layer lism-modules`.
 
-The recommended approach is either to use a Lism-like prefix for visual consistency, or to use no prefix at all to make it clear that the class is custom.
-(Custom component classes are recommended to be defined as `c--` within `@lism-modules`.)
+```css
+@layer lism-modules {
+  .c--card { /* ... */ }
+  .c--pricing { /* ... */ }
+}
+```
 
+If you add custom classes that match Lism CSS's existing class categories (`set--`, `is--`, `l--`, `a--`, `u--`), use the same prefix and add them to the corresponding layer.
+For utility classes combining a CSS property and its value, use the Prop Class format `-{prop}:{value}`.
+
+
+#### Adding custom classifications
+
+You may also define your own prefixes that don't match any of the built-in Lism class categories.
 
 | Category Example | Format | Example |
 |---|---|---|
-|Zoning|`.z--{zoneName}` or `{zoneName}` |`.z--header`,<br />`.header`|
-|Page classification|`.p--{type}-{id\|slug}` or `{slug}Page`, etc. |`.p--front`,<br />`.p--page--{slug}`, <br />`.frontPage`,<br />`.page--{slug}`|
+|Zoning|`.z--{zoneName}` or `{zoneName}` |`.z--header`,<br />`.z--main`,<br />`.z--sidebar`|
+|Page classification|`.p--{type}-{id\|slug}` or `{slug}Page`, etc. |`.p--front`,<br />`.p--page--{slug}`|
+
+Place these in `@layer lism-custom`.
+
+```css
+@layer lism-custom {
+  .z--header { /* ... */ }
+  .p--front { /* ... */ }
+}
+```
 
 
 

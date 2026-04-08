@@ -64,12 +64,12 @@ export const WhsNw = ({children}) => {
       <td>その他、ユーザーが定義する具体的な役割を持つカスタムモジュール・UIコンポーネント群 (`.c--{modules}`) 。</td>
     </tr> */}
     <tr>
-      <td class='-whspace:nowrap'>Utility<br/>`@lism-utility`</td>
-      <td>機能やスタイルが明確なユーティリティクラス`.u--{name}`を定義するレイヤー。</td>
+      <td class='-whspace:nowrap'>Custom<br/>`@lism-custom`</td>
+      <td>ユーザーが定義する独自分類のクラス（`.z--{zone}`, `.p--{page}` 等）を配置するためのカスタマイズ用レイヤー。</td>
     </tr>
     <tr>
-      <td class='-whspace:nowrap'>Custom<br/>`@lism-custom`</td>
-      <td>上記のレイヤーより優先しつつ Prop Classよりも詳細度を下げたいスタイルを定義できるカスタマイズ用レイヤー。</td>
+      <td class='-whspace:nowrap'>Utility<br/>`@lism-utility`</td>
+      <td>機能やスタイルが明確なユーティリティクラス`.u--{name}`を定義するレイヤー。</td>
     </tr>
     <tr>
       <td class='-whspace:nowrap'>Props<br/>`-`</td>
@@ -255,18 +255,38 @@ Javascriptで動的に付け外しされるような状態管理には、data属
 例: `[data-opened]`, `[data-active]`
 
 
-#### 独自クラスの命名について
+#### 独自クラスの命名と配置
 
-Lismパッケージに内蔵されているクラス群ではないものをどうするかについては、明確な定めはありません。
+ユーザーが独自のコンポーネント（`.c--card`, `c--pricing` 等）を定義する場合は、`@layer lism-modules` に配置してください。
 
-プレフィックスをLismに寄せて統一感を出すか、もしくは独自クラスであることを明確にす　るためにプレフィックスをつけない、というのがおすすめです。  
-（コンポーネントクラスは `@lism-modules`で`c--`として定義するのを推奨しています。）
+```css
+@layer lism-modules {
+  .c--card { /* ... */ }
+  .c--pricing { /* ... */ }
+}
+```
 
+その他、Lism CSS の各クラス分類（`set--`, `is--`, `l--`, `a--`, `u--`）に合致する独自クラスを追加する場合は、同じプレフィックスを追加し、それぞれの定義レイヤーに追加するようにしてください。
+CSSプロパティとその値のセットの組み合わせでのユーティリティクラスは、Prop Class の`-{prop}:{value}`形式を利用します。
+
+
+#### 独自分類の追加：
+
+Lismが定義するクラス群のどれとも合致しないプレフィックスを用意することも許容しています。
 
 |分類の例|形式|例|
 |---|---|---|
-|ゾーニング|`.z--{zoneName}` または `{zoneName}` |`.z--header`,<br />`.header`|
-|ページの分類|`.p--{type}-{id\|slug}` または `{slug}Page`など |`.p--front`,<br />`.p--page--{slug}`, <br />`.frontPage`,<br />`.page--{slug}`|
+|ゾーニング|`.z--{zoneName}` または `{zoneName}` |`.z--header`,<br />`.z--main`,<br />`.z--sidebar`|
+|ページの分類|`.p--{type}-{id\|slug}` または `{slug}Page`など |`.p--front`,<br />`.p--page--{slug}`|
+
+これらを定義する場合は、 `@layer lism-custom` に配置してください。
+
+```css
+@layer lism-custom {
+  .z--header { /* ... */ }
+  .p--front { /* ... */ }
+}
+```
 
 
 
