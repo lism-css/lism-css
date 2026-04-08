@@ -59,7 +59,7 @@ describe('MCP Tools (integration)', () => {
     expect(data.categories).toBeDefined();
   });
 
-  it('get_props_system で Prop Class 記法 "-g:5" を渡すと g prop が返る', async () => {
+  it('get_props_system で Property Class 記法 "-g:5" を渡すと g prop が返る', async () => {
     const client = await createTestClient();
     const result = await client.callTool({ name: 'get_props_system', arguments: { prop: '-g:5' } });
     expect(result.isError).toBeFalsy();

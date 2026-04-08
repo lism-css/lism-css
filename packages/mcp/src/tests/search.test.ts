@@ -137,12 +137,12 @@ describe('searchDocs with aliases', () => {
   });
 });
 
-describe('searchDocs with Prop Class notation', () => {
+describe('searchDocs with Property Class notation', () => {
   const propClassEntries: DocsEntry[] = [
     entry({
-      sourcePath: 'prop-class.mdx',
-      title: 'Prop Class',
-      keywords: ['prop class', '-g:', '-g:5', '-p:', '-p:20', 'gap', 'padding'],
+      sourcePath: 'property-class.mdx',
+      title: 'Property Class',
+      keywords: ['property class', '-g:', '-g:5', '-p:', '-p:20', 'gap', 'padding'],
       snippet: '-{prop}:{value} の形式（例: -g:5, -p:20, -fz:l）。',
       category: 'props',
     }),
@@ -172,27 +172,27 @@ describe('searchDocs with Prop Class notation', () => {
     },
   ] satisfies PropCategory[]);
 
-  it('"-g:5" で Prop Class ページがヒットする', () => {
+  it('"-g:5" で Property Class ページがヒットする', () => {
     const results = searchDocs(propClassEntries, '-g:5', { cssPropertyMap });
     expect(results.length).toBeGreaterThan(0);
-    expect(results[0].heading).toBe('Prop Class');
+    expect(results[0].heading).toBe('Property Class');
   });
 
-  it('".-p:20" で Prop Class ページがヒットする', () => {
+  it('".-p:20" で Property Class ページがヒットする', () => {
     const results = searchDocs(propClassEntries, '.-p:20', { cssPropertyMap });
     expect(results.length).toBeGreaterThan(0);
-    const propClassResult = results.find((r) => r.heading === 'Prop Class');
+    const propClassResult = results.find((r) => r.heading === 'Property Class');
     expect(propClassResult).toBeDefined();
   });
 
-  it('"gap" で Prop Class ページと Tokens ページがヒットする', () => {
+  it('"gap" で Property Class ページと Tokens ページがヒットする', () => {
     const results = searchDocs(propClassEntries, 'gap', { cssPropertyMap });
     expect(results.length).toBeGreaterThanOrEqual(2);
     const titles = results.map((r) => r.heading);
-    expect(titles).toContain('Prop Class');
+    expect(titles).toContain('Property Class');
   });
 
-  it('Prop Class 記法でないクエリには影響しない', () => {
+  it('Property Class 記法でないクエリには影響しない', () => {
     const results = searchDocs(propClassEntries, 'Grid', { cssPropertyMap });
     expect(results[0].heading).toBe('Grid / l--grid');
   });

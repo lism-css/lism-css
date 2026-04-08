@@ -77,7 +77,7 @@ packages/mcp/
 │   ├── lib/
 │   │   ├── load-data.ts        # データ読み込み・キャッシュ
 │   │   ├── schemas.ts          # Zod スキーマ定義
-│   │   ├── search.ts           # ドキュメント検索ロジック・Prop Class記法パーサー
+│   │   ├── search.ts           # ドキュメント検索ロジック・Property Class記法パーサー
 │   │   ├── response.ts         # レスポンスのフォーマット
 │   │   └── types.ts            # TypeScript 型定義
 │   ├── tools/
@@ -232,7 +232,7 @@ Zod スキーマによる検証を挟むことで、JSONデータが期待する
       ├─ loadJSON('docs-index.json')  ← キャッシュからメモリ取得
       │
       ├─ searchDocs() 実行
-      │    ├─ クエリを展開             ← Prop Class記法("-g:5"→"g","gap","prop class")
+      │    ├─ クエリを展開             ← Property Class記法("-g:5"→"g","gap","property class")
       │    │                              CSSプロパティ名("font-size"→"fz")を自動追加
       │    ├─ 展開済みクエリをトークン化 ← "レスポンシブ" → ["レスポンシブ"]
       │    ├─ 各ドキュメントをスコアリング
@@ -334,7 +334,7 @@ server.registerTool(
 |---------|------|----------|
 | `overview.json` | フレームワーク概要、CSS Layer、インストール手順 | overview.mdx, installation.mdx 等 |
 | `tokens.json` | デザイントークン（色、余白、フォントサイズ等） | SCSS トークンファイル |
-| `props-system.json` | Props → CSSプロパティのマッピング、Prop Class命名規則（`classNaming`） | config/defaults/props.ts |
+| `props-system.json` | Props → CSSプロパティのマッピング、Property Class命名規則（`classNaming`） | config/defaults/props.ts |
 | `components.json` | 全コンポーネントの名前・props・使用例 | コンポーネントソースと MDX |
 | `docs-index.json` | ドキュメント検索用インデックス | apps/docs/ 配下の全 MDX |
 | `meta.ts` | 生成日時とソースコミットハッシュ | git HEAD |
@@ -393,4 +393,4 @@ pnpm dev      # TypeScript ウォッチモード
 | **全ツール読み取り専用** | 副作用なし。アノテーションで明示しクライアントに安全性を伝達 |
 | **静的JSONデータ** | APIやDB不要。ファイルだけで完結するシンプルな構成 |
 | **スコアリング検索** | title > keywords > headings > description > snippet の重み付けで関連度の高い結果を返す |
-| **クエリ自動展開** | Prop Class記法（`-g:5`→`g`+`gap`）やCSSプロパティ名（`font-size`→`fz`）を自動的に展開し、検索ヒット率を向上 |
+| **クエリ自動展開** | Property Class記法（`-g:5`→`g`+`gap`）やCSSプロパティ名（`font-size`→`fz`）を自動的に展開し、検索ヒット率を向上 |
