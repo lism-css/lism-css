@@ -1,6 +1,6 @@
 # Skill Template Update
 
-`.claude/skills/lism-css-guide/` 配下の 7 ファイルを、リポジトリの最新ソースに合わせて更新してください。
+`.claude/skills/lism-css-guide/` 配下の 10 ファイルを、リポジトリの最新ソースに合わせて更新してください。
 
 
 ## 対象ファイルと更新内容
@@ -8,11 +8,14 @@
 | ファイル | 更新内容 | 主なソース参照先 |
 |----------|----------|-----------------|
 | `SKILL.md` | バージョン情報・パッケージ構成・import パス・実装ルール・詳細ファイル一覧 | `packages/lism-css/package.json`, `packages/lism-ui/package.json`, 各パッケージの exports |
-| `base-styles.md` | Reset CSS・HTML要素のベーススタイル・CSS変数（トークン）概要・set-- クラス一覧 | `packages/lism-css/src/scss/base/`, `packages/lism-css/src/scss/token/` |
-| `module-class.md` | モジュールクラス — is--/l--/a--/c--/u-- クラスの一覧と用途 | `packages/lism-css/src/scss/module/`, `packages/lism-css/src/scss/base/` |
-| `prop-class.md` | Prop Class — `-{prop}:{value}` 記法・主要 Prop 一覧・レスポンシブ対応・コンポーネントでの使い方 | `packages/lism-css/src/config/propConfig.ts`, `packages/lism-css/src/scss/base/_prop-class.scss` |
+| `base-styles.md` | Reset CSS・HTML要素のベーススタイル・CSS変数（トークン）概要 | `packages/lism-css/src/scss/base/`, `packages/lism-css/src/scss/base/tokens/` |
+| `set-class.md` | `set--` クラス — `set--plain`/`set--shadow`/`set--hov`/`set--transition` 等のセットアップクラス | `packages/lism-css/src/scss/base/set/` |
+| `module-class.md` | モジュールクラス — is--/l--/a--/c-- クラスの一覧と用途 | `packages/lism-css/src/scss/modules/`, `packages/lism-ui/src/`（c-- 系） |
+| `utility-class.md` | ユーティリティクラス — `u--` クラスの一覧・Prop Class との違い | `packages/lism-css/src/scss/utility/` |
+| `prop-class.md` | Prop Class — `-{prop}:{value}` 記法・主要 Prop 一覧・特殊 Prop（ボーダー・ホバー）・出力タイプ | `packages/lism-css/config/defaults/props.ts`, `packages/lism-css/src/scss/_prop-config.scss`, `packages/lism-css/src/scss/props/` |
+| `prop-responsive.md` | レスポンシブ対応 — ブレークポイント・コンテナクエリ・HTML/コンポーネントでの指定方法 | `packages/lism-css/src/scss/_query.scss` |
 | `components.md` | コンポーネントシステム — コア・セマンティック・レイアウト・ステート・アトミック・UI コンポーネント一覧、getLismProps、CLI | `packages/lism-css/src/components/`, `packages/lism-ui/src/`, 各パッケージの exports |
-| `tokens.md` | デザイントークン（余白・フォントサイズ・角丸・影・カラー・パレット） | `packages/lism-css/src/scss/token/`, `packages/lism-css/config/defaults/tokens.ts` |
+| `tokens.md` | デザイントークン（余白・フォントサイズ・角丸・影・カラー・パレット） | `packages/lism-css/src/scss/base/tokens/`, `packages/lism-css/config/defaults/tokens.ts` |
 | `css-rules.md` | CSS Layer 構造・命名規則・プレフィックス・カスタムCSS ルール | `packages/lism-css/src/scss/` |
 
 
@@ -28,26 +31,44 @@
 
 | 確認したい内容 | 参照先 |
 |---|---|
-| Reset CSS | `packages/lism-css/src/scss/base/_reset.scss` |
+| Reset CSS | `packages/lism-css/src/scss/reset.scss` |
 | HTML要素のベーススタイル | `packages/lism-css/src/scss/base/` 配下の SCSS |
-| set-- クラス | `packages/lism-css/src/scss/base/` 配下の `_set--*.scss` |
-| CSS変数（トークン）概要 | `packages/lism-css/src/scss/token/` |
+| CSS変数（トークン）概要 | `packages/lism-css/src/scss/base/tokens/` |
+
+### `set--` クラス関連
+
+| 確認したい内容 | 参照先 |
+|---|---|
+| set-- クラス一覧 | `packages/lism-css/src/scss/base/set/` 配下の SCSS |
+| set-- に対応するコンポーネント Props | `packages/lism-css/src/components/` |
 
 ### モジュールクラス関連
 
 | 確認したい内容 | 参照先 |
 |---|---|
-| is-- / l-- / a-- クラス | `packages/lism-css/src/scss/module/` 配下の SCSS |
-| c-- / u-- クラス | `packages/lism-css/src/scss/base/`, `packages/lism-css/src/scss/module/` |
-| プレフィックスと Layer の対応 | `packages/lism-css/src/scss/` のエントリポイント（`main.scss` 等） |
+| is-- / l-- / a-- クラス | `packages/lism-css/src/scss/modules/` 配下の SCSS（`state/`, `layout/`, `atomic/`） |
+| c-- クラス | `packages/lism-ui/src/`（UIコンポーネントのCSS）。ユーザー定義は `@layer lism-custom` |
+| プレフィックスと Layer の対応 | `packages/lism-css/src/scss/_with_layer.scss` |
+
+### ユーティリティクラス関連
+
+| 確認したい内容 | 参照先 |
+|---|---|
+| u-- クラス一覧 | `packages/lism-css/src/scss/utility/` 配下の SCSS |
 
 ### Prop Class 関連
 
 | 確認したい内容 | 参照先 |
 |---|---|
-| Props 名と CSS プロパティの対応 | `packages/lism-css/src/config/propConfig.ts` |
-| Prop Class の省略形例外 | `packages/lism-css/src/scss/base/_prop-class.scss` 等の SCSS 出力ルール |
-| レスポンシブのブレークポイント | `packages/lism-css/src/scss/query/` または `_query.scss` |
+| Props 名と CSS プロパティの対応 | `packages/lism-css/config/defaults/props.ts` |
+| Prop Class の SCSS 出力設定 | `packages/lism-css/src/scss/_prop-config.scss` |
+| Prop Class のカテゴリ別 SCSS | `packages/lism-css/src/scss/props/` 配下（`_border.scss`, `_hover.scss` 等） |
+
+### レスポンシブ対応関連
+
+| 確認したい内容 | 参照先 |
+|---|---|
+| ブレークポイント・コンテナクエリ定義 | `packages/lism-css/src/scss/_query.scss` |
 
 ### コンポーネント関連
 
@@ -62,23 +83,23 @@
 
 | 確認したい内容 | 参照先 |
 |---|---|
-| 余白・フォントサイズ・角丸・影 | `packages/lism-css/src/scss/token/` 配下の SCSS |
-| カラー・パレット | `packages/lism-css/src/scss/token/` 配下のカラー関連 SCSS |
+| 余白・フォントサイズ・角丸・影 | `packages/lism-css/src/scss/base/tokens/` 配下の SCSS |
+| カラー・パレット | `packages/lism-css/src/scss/base/tokens/` 配下のカラー関連 SCSS |
 | JS/TS のトークン定義 | `packages/lism-css/config/defaults/tokens.ts` |
 
 ### CSS 設計関連
 
 | 確認したい内容 | 参照先 |
 |---|---|
-| Layer 構造 | `packages/lism-css/src/scss/` のエントリポイント（`main.scss` 等） |
-| クラス命名規則・プレフィックス | `packages/lism-css/src/scss/module/`, `packages/lism-css/src/scss/base/` |
+| Layer 構造 | `packages/lism-css/src/scss/_with_layer.scss`, `packages/lism-css/src/scss/main.scss` |
+| クラス命名規則・プレフィックス | `packages/lism-css/src/scss/modules/`, `packages/lism-css/src/scss/base/` |
 
 
 ## 作業手順
 
 ### 1. 現在のテンプレートとバージョン情報の取得
 
-- `.claude/skills/lism-css-guide/` 配下の 7 ファイルを読み取る
+- `.claude/skills/lism-css-guide/` 配下の 10 ファイルを読み取る
 - `packages/lism-css/package.json` からバージョンを取得し、`SKILL.md` のバージョン表記と比較する
 
 ### 2. ソースコードの読み取りと照合
