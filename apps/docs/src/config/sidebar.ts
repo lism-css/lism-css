@@ -60,6 +60,7 @@ export type SidebarSection =
   | {
       label: string;
       translate?: TranslateLabels; // 他言語用ラベル
+      rootPath?: string; // ネスト深度判定用のルートパス（例: '/docs/'）
       items: Array<SidebarNavItem>;
     };
 
@@ -118,6 +119,7 @@ const docsSidebar: SidebarSection[] = [
   {
     label: '概要',
     translate: { en: 'Overview' },
+    rootPath: '/docs/',
     items: [
       '/docs/css-methodology/',
       { type: 'separator' },

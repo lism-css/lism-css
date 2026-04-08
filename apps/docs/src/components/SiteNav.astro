@@ -117,6 +117,31 @@ function hasDirProperty(item: SidebarSection): item is SidebarSection & { dir: s
 }
 
 /**
+ * URLパスのネスト深度を計算する
+ * rootPathからの相対パスのセグメント数 - 1 を返す（0以下ならネストなし）
+ * 例: rootPath='/docs/', url='/docs/tokens/' → 0（直下）, url='/docs/tokens/colors/' → 1
+ */
+function getNestedDepth(url: string, rootPath: string): number {
+  const normalizedUrl = url.endsWith('/') ? url.slice(0, -1) : url;
+  const normalizedRoot = rootPath.endsWith('/') ? rootPath.slice(0, -1) : rootPath;
+  if (!normalizedUrl.startsWith(normalizedRoot + '/')) return 0;
+  const relativePath = normalizedUrl.slice(normalizedRoot.length + 1);
+  const segments = relativePath.split('/').filter(Boolean);
+  return segments.length - 1; // 直下=0, 1階層ネスト=1, ...
+}
+
+/**
+ * dir指定時のネスト深度を計算する
+ * post.idのdir以降のパスセグメント数 - 1 を返す
+ * 例: dir='props', id='props/layout/gap' → 1
+ */
+function getDirNestedDepth(postId: string, dir: string): number {
+  const relativePath = postId.startsWith(dir + '/') ? postId.slice(dir.length + 1) : postId;
+  const segments = relativePath.split('/').filter(Boolean);
+  return segments.length - 1;
+}
+
+/**
  * slugからURLパスを生成するヘルパー
  * - ui/xxx → /ui/xxx/
  * - xxx → /docs/xxx/
@@ -188,8 +213,10 @@ function getPostUrl(slug: string): string {
                   const isDraft = post.data.draft;
                   // navtitleがあればそれを、なければtitleを表示
                   const navLabel = post.data.navtitle ?? post.data.title;
+                  // ネスト深度を計算（サブディレクトリにある記事）
+                  const nestedDepth = getDirNestedDepth(post.id, section.dir);
                   return (
-                    <ListItem class={isDraft ? '_draft' : undefined}>
+                    <ListItem class={isDraft ? '_draft' : undefined} data-nested={nestedDepth > 0 ? nestedDepth : undefined}>
                       <NavLink href={postPath} isActive={isActive}>
                         {navLabel}
                       </NavLink>
@@ -216,8 +243,11 @@ function getPostUrl(slug: string): string {
                     const isActive = currentPathWithoutLang === pathForCompare || currentPathWithoutLang === item;
                     // 下書き記事には _draft クラスを付与
                     const isDraft = post?.data?.draft;
+                    // rootPath指定時はネスト深度を計算
+                    const rootPath = 'rootPath' in section ? section.rootPath : undefined;
+                    const nestedDepth = rootPath ? getNestedDepth(item, rootPath) : 0;
                     return (
-                      <ListItem class={isDraft ? '_draft' : undefined}>
+                      <ListItem class={isDraft ? '_draft' : undefined} data-nested={nestedDepth > 0 ? nestedDepth : undefined}>
                         <NavLink href={itemPath} isActive={isActive}>
                           {navLabel}
                         </NavLink>
@@ -232,8 +262,11 @@ function getPostUrl(slug: string): string {
                   const isActive = currentPathWithoutLang === pathForCompare || currentPathWithoutLang === item.link;
                   // アイテムラベルを現在の言語で取得
                   const itemLabel = getTranslatedLabel(item.label, item.translate, currentLang);
+                  // rootPath指定時はネスト深度を計算
+                  const rootPath = 'rootPath' in section ? section.rootPath : undefined;
+                  const nestedDepth = rootPath ? getNestedDepth(item.link, rootPath) : 0;
                   return (
-                    <ListItem>
+                    <ListItem data-nested={nestedDepth > 0 ? nestedDepth : undefined}>
                       <NavLink href={itemPath} isActive={isActive}>
                         {itemLabel}
                       </NavLink>
