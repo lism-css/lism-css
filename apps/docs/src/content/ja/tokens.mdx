@@ -3,79 +3,16 @@ title: 'Design Tokens'
 description: 'Lism CSS で定義されているカラー、スペーシング、シャドウなどのデザイントークン一覧を紹介します。'
 ---
 
-import { Box, Stack, Cluster, Columns, Frame, Center, Inline, Text } from 'lism-css/astro';
+import { Box, Stack, Cluster, Columns, Frame, Center, Text } from 'lism-css/astro';
 import { DummyText } from '@lism-css/ui/astro';
-import { FzDemos, SpacingDemos, BoxShadowDemos } from "@/content/token-previews.jsx";
-
-export const ColorBadge = ({color, label}) => {
-  return <Cluster g='10'>
-      <Inline w='1.5em' ar='1/1' bgc={color} bdrs='10' bxsh='10' />
-      <code>{label || color}</code>
-    </Cluster>;
-}
 
 
-## COLOR
+Lism CSS では、主要なCSSプロパティに対してデザイントークンを用意しています。
 
-|トークン名|変数|
-|---|---|
-|<ColorBadge color='base' />|`--base`|
-|<ColorBadge color='base-2' />|`--base-2`|
-|<ColorBadge color='text' />|`--text`|
-|<ColorBadge color='text-2' />|`--text-2`|
-|<ColorBadge color='divider' />|`--divider`|
-|<ColorBadge color='link' />|`--link`|
-|<ColorBadge color='brand' />|`--brand`|
-|<ColorBadge color='accent' />|`--accent`|
-{/* |<ColorBadge color='accent-2' />|`--accent-2`| */}
+- [**カラートークン**](/docs/tokens/colors/) — セマンティックカラーとパレットカラー
+- [**タイポグラフィトークン**](/docs/tokens/typography/) — フォントファミリー、サイズ、行間、字間
+- [**スペーシングトークン**](/docs/tokens/spacing/) — フィボナッチ数列に基づく余白のスケーリング
 
-これらのカラーは、サイトに合わせて調整してご利用ください。
-{/* モダンCSSでは`color-mix()`があるので、hsl値の中身を変数にすることはしていません。 */}
-
-
-<Preview>
-  <PreviewTitle>Preview</PreviewTitle>
-  <PreviewArea p='30'>
-    <Box bd p='30'>
-      <Text fw='bold' c='brand'>Main color example text</Text>
-      <DummyText length='codes' pre='text: ' />
-      <DummyText c='text-2' length='s' pre='text-2: ' />
-    </Box>
-
-    <Box bgc='base-2' p='30'>
-      <Text fw='bold' c='accent'>Accent color example text</Text>
-      <DummyText length='codes' pre='text: ' />
-      <DummyText c='text-2' length='s' pre='text-2: ' />
-      </Box>
-    </PreviewArea>
-  </Preview>
-
-### PALETTE
-
-|パレットトークン|変数|
-|---|---|
-|<ColorBadge color='red' />|`--red`|
-|<ColorBadge color='orange' />|`--orange`|
-|<ColorBadge color='yellow' />|`--yellow`|
-|<ColorBadge color='green' />|`--green`|
-|<ColorBadge color='blue' />|`--blue`|
-|<ColorBadge color='purple' />|`--purple`|
-|<ColorBadge color='pink' />|`--pink`|
-|<ColorBadge color='gray' />|`--gray`|
-|<ColorBadge color='black' />|`--black`|
-|<ColorBadge color='white' />|`--white`|
-
-パレットカラーはOKLCHで定義されています。
-
-`--L`が明度、`--C`が彩度の基準値として定義されており、この二つの値を調整するとパレットカラー全体の色味を調整できます。
-
-例えば、以下のようにすることで全体を少し明るくすることができ、ダークモード対応が簡単に実装できます。
-```css
-:root[data-theme='dark'] {
-  --L: 72%;
-  --C: 0.22;
-}
-```
 
 ## `RADIUS`
 
@@ -214,4 +151,3 @@ box-shadow は少し特殊で、ユーティリティクラス内で複数のsha
 |`min`|`--sz--min`|
 
 `max-sz`, [`.is--wrapper`](/docs/module-class/#is--wrapper) 等で使用できます。
-

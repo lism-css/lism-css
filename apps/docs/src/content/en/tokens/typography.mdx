@@ -1,17 +1,15 @@
 ---
-title: 'Typography & Spacing'
-description: 'An overview of typography and spacing design tokens used in Lism CSS.'
+title: 'Typography Tokens'
+description: 'An overview of typography design tokens in Lism CSS, including font-family, font-size, line-height, and more.'
 ---
 
 import { Box, Stack, Cluster, Columns, Frame, Center, Text } from 'lism-css/astro';
 import { DummyText } from '@lism-css/ui/astro';
-import { FzDemos, SpacingDemos, BoxShadowDemos } from "@/content/token-previews.jsx";
+import { FzDemos } from "@/content/token-previews.jsx";
 
 
 
-## Typography
-
-### FF: font-family
+## FF: font-family
 
 Tokens for `font-family`.
 
@@ -45,7 +43,7 @@ Tokens for `font-family`.
 </Preview>
 
 
-### FW : font-weight
+## FW : font-weight
 
 Tokens for `font-weight`.
 
@@ -81,7 +79,7 @@ Numeric utility classes `-fw:100` through `-fw:900` are also available for fine-
 </Preview>
 
 
-### FZ: font-size
+## FZ: font-size
 
 Tokens for `font-size`.
 
@@ -124,7 +122,7 @@ Tokens for `font-size`.
 </Preview>
 
 
-#### Font Size Scaling Rules
+### Font Size Scaling Rules
 
 Lism defines font-size scaling based on mathematically elegant scaling principles.
 
@@ -157,7 +155,7 @@ On this documentation site, `--fz-mol` is set to `7` for English pages.
 
 
 
-### LH: line-height
+## LH: line-height
 
 Lism CSS takes a unique approach to `line-height`, managing it through **half-leading values**.
 
@@ -239,7 +237,7 @@ The `lh` class uses these variables internally:
 </Preview>
 
 
-#### Benefits of Half-Leading Management
+### Benefits of Half-Leading Management
 
 When `line-height` is set to a typical value like `1.6`, the effective line spacing grows as the font size increases.
 
@@ -287,7 +285,7 @@ Reference: [Half-leading trim class](/docs/utility-class/#u--trim--u--trimitems)
 </Preview> */}
 
 
-### LTS: letter-spacing
+## LTS: letter-spacing
 
 Tokens for `letter-spacing`.
 
@@ -321,43 +319,3 @@ Tokens for `letter-spacing`.
     ```
   </PreviewCode>
 </Preview>
-
-
-
-## `SPACE`: Spacing Scale
-
-Spacing uses a scaling system based on the Fibonacci sequence ((0, 1,) 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, ...).
-
-By default, `0.5rem ≈ 8px` is used as the scaling unit, with token values `10`, `20`, `30`, ... `80` defined accordingly.
-However, since those intervals can feel too large in practice, `5` and `15` are included as fine-tuning exceptions for the lower end of the scale.
-```css
-:root {
-  /* Fibonacci scale with spacing unit of 8 */
-  --s-unit: calc(var(--REM) * 0.5); /* ≒ 8px */
-  --s5: calc(0.5 * var(--s-unit)); /* exception */
-  --s10: var(--s-unit);
-  --s15: calc(1.5 * var(--s-unit)); /* exception */
-  --s20: calc(2 * var(--s-unit));
-  --s30: calc(3 * var(--s-unit));
-  --s40: calc(5 * var(--s-unit));
-  --s50: calc(8 * var(--s-unit));
-  --s60: calc(13 * var(--s-unit));
-  --s70: calc(21 * var(--s-unit));
-  --s80: calc(34 * var(--s-unit));
-}
-```
-
-
-<Preview>
-  <PreviewTitle>Preview</PreviewTitle>
-  <PreviewArea p='20' flow='s' resize>
-    <SpacingDemos spaces={[5, 10, 15, 20, 30, 40, 50, 60, 70, 80]} isValueLabel />
-  </PreviewArea>
-</Preview>
-
-
-
-
-{/* - ~~`1 = 0.25`, `2 = 0.5` として計算~~
-  - 1=s10, 2=s20, 3=s30, 5=s40, 8=s50, 13=s60,...
-  - 5, 15, 25, ...など、`5`の倍数は前後の値の中間値となるように計算 */}
