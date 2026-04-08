@@ -16,13 +16,13 @@ Examples of using Lism to display banner links.
 <Preview>
   <PreviewTitle>Preview</PreviewTitle>
   <PreviewArea p='20'>
-    <LinkBox layout="frame" href="#banner-link" hov="o" setTransition bdrs="20">
+    <LinkBox layout="frame" href="#banner-link" hov="o" set="transition" bdrs="20">
       <img src="https://picsum.photos/seed/hogeee/1200/400" alt="" width="800" height="200" />
     </LinkBox>
   </PreviewArea>
   <PreviewCode slot='tab' label='JSX'>
     ```jsx "Frame" "LinkBox"
-    <LinkBox layout="frame" href="#banner-link" hov="o" setTransition bdrs="20">
+    <LinkBox layout="frame" href="#banner-link" hov="o" set="transition" bdrs="20">
       <img src="https://picsum.photos/seed/hogeee/1200/400" alt="" width="800" height="200" />
     </LinkBox>
     ```
@@ -40,7 +40,7 @@ Examples of using Lism to display banner links.
 <Preview>
   <PreviewTitle>Overlaying content on an image with `Layer`</PreviewTitle>
   <PreviewArea p='20' resize>
-    <LinkBox layout="frame" href="#banner-link" hov="o" setTransition bdrs="20">
+    <LinkBox layout="frame" href="#banner-link" hov="o" set="transition" bdrs="20">
       <Media isLayer src="https://picsum.photos/seed/hogeee/1200/400" alt="" width="960" height="640" loading="lazy" />
       <Flex jc="between" ai="center" pos="relative" g="20" p="30" c="#fff" bgc="rgb(0 0 0 / 50%)" min-h="30cqw">
         <Stack g="10">
@@ -55,7 +55,7 @@ Examples of using Lism to display banner links.
   </PreviewArea>
   <PreviewCode slot='tab' label='JSX'>
     ```jsx
-    <LinkBox layout="frame" href="#banner-link" hov="o" setTransition bdrs="20">
+    <LinkBox layout="frame" href="#banner-link" hov="o" set="transition" bdrs="20">
       <Media isLayer src="https://picsum.photos/seed/hogeee/1200/400" alt="" width="960" height="640" loading="lazy" />
       <Flex jc="between" ai="center" pos="relative" g="20" p="30" c="#fff" bgc="rgb(0 0 0 / 50%)" min-h="30cqw">
         <Stack g="10">

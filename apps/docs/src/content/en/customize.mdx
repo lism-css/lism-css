@@ -30,10 +30,10 @@ The variables defined in `lism-css/scss/_setting.scss` can be overridden.
 <EmbedCode dirPath='packages/lism-css' srcPath='src/scss/_setting.scss' />
 
 - `$breakpoints`: Breakpoint value definitions
-- `$common_support_bp`: Breakpoints commonly supported across major Prop Classes
+- `$common_support_bp`: Breakpoints commonly supported across major Property Classes
 - `$is_container_query`: Whether to use container queries
-- `$default_important`: Whether to add `!important` to Prop Classes by default (`0` | `1`)
-- `$props`: Output configuration for Prop Classes
+- `$default_important`: Whether to add `!important` to Property Classes by default (`0` | `1`)
+- `$props`: Output configuration for Property Classes
 
 These can be overridden using `@use` with `with`.
 
@@ -83,14 +83,14 @@ After defining your overrides, import `lism-css/scss/main.scss` to apply the cus
   // Generate utility classes up to lg size
   $is_container_query: 0,
   // Output using media queries
-  $default_important: 1 // Add !important to Prop Classes by default
+  $default_important: 1 // Add !important to Property Classes by default
 );
 
 @use '../path-to/node_modules/lism-css/scss/main';
 ```
 
 
-<PreviewTitle>Customize Prop Class output</PreviewTitle>
+<PreviewTitle>Customize Property Class output</PreviewTitle>
 ```scss
 // Configuration overrides
 @use '../path-to/node_modules/lism-css/scss/setting' with (
@@ -177,7 +177,7 @@ const { props, tokens } = DEFAULT_CONFIG;
 
 export default {
   props: {
-    // Add Prop Class output
+    // Add Property Class output
     d: { presets: [...(props.d.presets || []), 'flex', 'grid'] },
     p: { utils: { box: '2em' } },
   },

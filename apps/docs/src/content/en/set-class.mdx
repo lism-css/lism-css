@@ -190,7 +190,7 @@ Sets the `transition` property using dedicated variables.
 <Preview>
   <PreviewTitle>Usage example</PreviewTitle>
   <PreviewArea p='30'>
-    <Lism setTransition hov={{c: 'red'}} style={{ '--hov-prop': 'color'}}>Example</Lism>
+    <Lism set="transition" hov={{c: 'red'}} style={{ '--hov-prop': 'color'}}>Example</Lism>
   </PreviewArea>
   <PreviewCode label="HTML" slot="tab">
     ```html
@@ -199,7 +199,7 @@ Sets the `transition` property using dedicated variables.
   </PreviewCode>
   <PreviewCode label="JSX" slot="tab">
     ```jsx
-    <Lism setTransition hov={{c: 'red'}} style={{ '--hov-prop': 'color'}}>Example</Lism>
+    <Lism set="transition" hov={{c: 'red'}} style={{ '--hov-prop': 'color'}}>Example</Lism>
     ```
   </PreviewCode>
 </Preview>
@@ -220,7 +220,7 @@ Apply `set--innerRs` to the parent element, then use `-bdrs:inner` on the child 
 <Preview>
   <PreviewTitle>Usage example</PreviewTitle>
   <PreviewArea p='30'>
-    <Lism setInnerRs p="15" bdrs="40" bd bxsh="20">
+    <Lism set="innerRs" p="15" bdrs="40" bd bxsh="20">
       <Frame bdrs="inner" ar="og">
         <img src="https://cdn.lism-css.com/img/u-5.jpg" width="1920" height="1280" alt="" />
       </Frame>
@@ -236,8 +236,8 @@ Apply `set--innerRs` to the parent element, then use `-bdrs:inner` on the child 
     ```
   </PreviewCode>
   <PreviewCode label="JSX" slot="tab">
-    ```jsx 'setInnerRs' 'bdrs="inner"' 'p="15" bdrs="40"'
-    <Lism setInnerRs p="15" bdrs="40" bd bxsh="20">
+    ```jsx 'set="innerRs"' 'bdrs="inner"' 'p="15" bdrs="40"'
+    <Lism set="innerRs" p="15" bdrs="40" bd bxsh="20">
       <Frame bdrs="inner" ar="og">
         <img src="https://cdn.lism-css.com/img/u-5.jpg" width="1920" height="1280" alt="" />
       </Frame>
@@ -285,7 +285,7 @@ It is provided as a separate class from padding utilities to reserve a consisten
 <Preview>
   <PreviewTitle>Example</PreviewTitle>
   <PreviewArea resize p='15'>
-    <Lism setGutter>
+    <Lism set="gutter">
       <p>Lorem ipsum content...</p>
       <p>Lorem ipsum content...</p>
       <p>Lorem ipsum content...</p>
@@ -302,7 +302,7 @@ It is provided as a separate class from padding utilities to reserve a consisten
   </PreviewCode>
   <PreviewCode slot='tab' label='JSX'>
   ```jsx
-  <Lism setGutter>
+  <Lism set="gutter">
     <p>Lorem ipsum content...</p>
     <p>Lorem ipsum content...</p>
     <p>Lorem ipsum content...</p>
@@ -322,7 +322,7 @@ It can be used as a workaround for properties that do not support [responsive br
 <Preview>
   <PreviewTitle>Example: changing text color to red at sm size and above</PreviewTitle>
   <PreviewArea resize>
-    <Lism setBp p="20" style={{ color: 'var(--_is_sm) red;' }}>
+    <Lism set="bp" p="20" style={{ color: 'var(--_is_sm) red;' }}>
       <p>Lorem ipsum dolor sit amet. Consectetur adipiscing elit, sed do eiusmod tempor Incididunt ut.</p>
     </Lism>
   </PreviewArea>
@@ -334,8 +334,8 @@ It can be used as a workaround for properties that do not support [responsive br
   ```
   </PreviewCode>
   <PreviewCode slot='tab' label='JSX'>
-    ```jsx "setBp" "var(--_is_sm) red"
-    <Lism setBp p="20" style={{ color: 'var(--_is_sm) red;' }}>
+    ```jsx 'set="bp"' "var(--_is_sm) red"
+    <Lism set="bp" p="20" style={{ color: 'var(--_is_sm) red;' }}>
       <p>Lorem ipsum dolor sit amet. Consectetur adipiscing elit, sed do eiusmod tempor Incididunt ut.</p>
     </Lism>
     ```
@@ -350,7 +350,7 @@ Combines with the `--mask` variable to apply a mask to the element itself.
 
 <EmbedCode dirPath='packages/lism-css' srcPath='src/scss/base/set/_mask.scss' />
 
-In Lism components, a string passed to the `setMask` prop is output as `--maskImg`. (When only `<svg>~</svg>` is passed, it is base64-encoded.)
+Use `set="mask"` to apply the `set--mask` class. Set the `--maskImg` variable manually via the `style` prop.
 
 <Preview>
   <PreviewTitle>Example</PreviewTitle>
@@ -362,7 +362,8 @@ In Lism components, a string passed to the `setMask` prop is output as `--maskIm
       alt=""
       loading="lazy"
       ar="og"
-      setMask={`<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><path fill="#000000" d="M170.4,25.7c16.1,14.2,23.2,38.5,24.8,61.7c1.7,23.3-1.8,45.5-12.9,62.3c-11,16.9-29.3,28.6-48.8,34.5 c-19.4,5.9-40,6.1-59.5,0.4c-19.5-5.6-37.9-17.4-51.7-34.9c-14-17.5-23.2-40.8-18-60.2c5-19.4,24.5-34.7,43.5-48.4 s37.6-25.7,59.5-29.7C129.1,7.3,154.2,11.4,170.4,25.7z" /></svg>`}
+      set="mask"
+      style={{ '--maskImg': `url("data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMjAwIDIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBmaWxsPSIjMDAwMDAwIiBkPSJNMTcwLjQsMjUuN2MxNi4xLDE0LjIsMjMuMiwzOC41LDI0LjgsNjEuN2MxLjcsMjMuMy0xLjgsNDUuNS0xMi45LDYyLjNjLTExLDE2LjktMjkuMywyOC42LTQ4LjgsMzQuNSBjLTE5LjQsNS45LTQwLDYuMS01OS41LDAuNGMtMTkuNS01LjYtMzcuOS0xNy40LTUxLjctMzQuOWMtMTQtMTcuNS0yMy4yLTQwLjgtMTgtNjAuMmM1LTE5LjQsMjQuNS0zNC43LDQzLjUtNDguNCBzMzcuNi0yNS43LDU5LjUtMjkuN0MxMjkuMSw3LjMsMTU0LjIsMTEuNCwxNzAuNCwyNS43eiIgLz48L3N2Zz4=")` }}
     />
   </PreviewArea>
   <PreviewCode slot='tab' label='JSX'>
@@ -374,7 +375,8 @@ In Lism components, a string passed to the `setMask` prop is output as `--maskIm
       alt=""
       loading="lazy"
       ar="og"
-      setMask={`<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><path fill="#000000" d="M170.4,25.7c16.1,14.2,23.2,38.5,24.8,61.7c1.7,23.3-1.8,45.5-12.9,62.3c-11,16.9-29.3,28.6-48.8,34.5 c-19.4,5.9-40,6.1-59.5,0.4c-19.5-5.6-37.9-17.4-51.7-34.9c-14-17.5-23.2-40.8-18-60.2c5-19.4,24.5-34.7,43.5-48.4 s37.6-25.7,59.5-29.7C129.1,7.3,154.2,11.4,170.4,25.7z" /></svg>`}
+      set="mask"
+      style={{ '--maskImg': 'url("data:image/svg+xml;base64,...")' }}
     />
     ```
   </PreviewCode>
