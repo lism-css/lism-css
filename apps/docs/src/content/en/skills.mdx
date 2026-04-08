@@ -1,0 +1,43 @@
+---
+title: 'Skills File'
+description: 'Place a SKILL.md file in your project to communicate Lism CSS design rules, Props, tokens, and naming conventions to AI agents.'
+---
+import { Tabs } from '@lism-css/ui/astro';
+
+By placing the SKILL.md file in your project, you can communicate Lism CSS design rules, Props, tokens, and naming conventions to AI agents.
+
+### File structure
+
+The skill consists of 4 files:
+
+| File | Contents |
+|------|----------|
+| `SKILL.md` | Entry point — overview, package structure, implementation rules, reference links |
+| `props.md` | Props system — key Props list, Prop Class syntax, is--/set-- Props, responsive design |
+| `tokens.md` | Design tokens — spacing, font sizes, border radius, shadows, colors, palettes |
+| `css-rules.md` | CSS design rules — Layer structure, naming conventions, prefixes, custom CSS rules |
+
+GitHub: [lism-css/lism-css/.claude/skills/lism-css-best-practices/](https://github.com/lism-css/lism-css/tree/main/.claude/skills/lism-css-best-practices)
+
+
+### Setup
+<Tabs.Root g="15" variant="line">
+  <Tabs.Item>
+    <Tabs.Tab px="10">skills.sh</Tabs.Tab>
+    <Tabs.Panel layout="flow" flow="s">
+      ```bash frame="none"
+      npx skills add lism-css/lism-css
+      ```
+
+       Files will be copied to `.claude/skills/lism-css-best-practices/`.
+    </Tabs.Panel>
+  </Tabs.Item>
+  <Tabs.Item>
+    <Tabs.Tab px="10">Manual copy</Tabs.Tab>
+    <Tabs.Panel layout="flow" flow="s">
+        Download the 4 files from the [GitHub skills directory](https://github.com/lism-css/lism-css/tree/main/.claude/skills/lism-css-best-practices) and place them in your project's `.claude/skills/lism-css-best-practices/` directory.
+
+        For OpenAI Codex, copy the content of `SKILL.md` (without the frontmatter — the `---` delimited header) to `AGENTS.md` in your project root.
+    </Tabs.Panel>
+  </Tabs.Item>
+</Tabs.Root>

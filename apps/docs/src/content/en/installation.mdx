@@ -149,43 +149,9 @@ npx @lism-css/cli add --all
 ```
 
 
-## AI Tool Integration (MCP)
+## AI Tool Integration
 
-An MCP server is available that allows AI coding tools to reference the Lism CSS documentation and API.
+Set up AI coding tools (Claude Code, Cursor, Codex, etc.) to work effectively with Lism CSS.
 
-<Preview>
-  <PreviewCode slot='tab' label='Claude Code'>
-  ```bash frame="none"
-  claude mcp add lism-css -- npx -y @lism-css/mcp
-  ```
-  </PreviewCode>
-  <PreviewCode slot='tab' label='Cursor'>
-  ```json frame="none"
-  // .cursor/mcp.json
-  {
-    "mcpServers": {
-      "lism-css": {
-        "command": "npx",
-        "args": ["-y", "@lism-css/mcp"]
-      }
-    }
-  }
-  ```
-  </PreviewCode>
-  <PreviewCode slot='tab' label='VS Code'>
-  ```json frame="none"
-  // .vscode/mcp.json
-  {
-    "servers": {
-      "lism-css": {
-        "type": "stdio",
-        "command": "npx",
-        "args": ["-y", "@lism-css/mcp"]
-      }
-    }
-  }
-  ```
-  </PreviewCode>
-</Preview>
-
-For details, see [GitHub - @lism-css/mcp](https://github.com/lism-css/lism-css/tree/main/packages/mcp).
+- [MCP Server](/docs/mcp/) — AI tools can reference component, Props, and token information in real time
+- [Skills File](/docs/skills/) — Place a file in your project to communicate design rules to AI agents
