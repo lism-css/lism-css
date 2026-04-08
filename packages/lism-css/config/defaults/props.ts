@@ -52,8 +52,7 @@ export default {
 
   d: {
     prop: 'display',
-    presets: ['none', 'block'],
-    utils: { 'inline-flex': 'inline-flex' },
+    presets: ['none', 'block', 'inline-flex'],
     bp: 1,
   },
   o: { prop: 'opacity', presets: ['0'], token: 'o', tokenClass: 1 },
@@ -170,8 +169,7 @@ export default {
   // position
   pos: {
     prop: 'position',
-    presets: ['static', 'fixed', 'sticky'],
-    utils: { relative: 'relative', absolute: 'absolute' },
+    presets: ['static', 'fixed', 'sticky', 'relative', 'absolute'],
   },
   z: { prop: 'zIndex', presets: ['-1', '0', '1', '99'] },
   t: { prop: 'top', utils: { 0: '0%' }, presets: ['50%', '100%'], token: 'space' },
@@ -244,7 +242,7 @@ export default {
   // flex
   fxf: { prop: 'flexFlow' },
   fxw: { prop: 'flexWrap', presets: ['wrap'], bp: 1 },
-  fxd: { prop: 'flexDirection', utils: { column: 'column', 'column-reverse': 'column-reverse', 'row-reverse': 'row-reverse' }, bp: 1 },
+  fxd: { prop: 'flexDirection', presets: ['column', 'column-reverse', 'row-reverse'], bp: 1 },
   fx: { prop: 'flex', presets: ['1'], bp: 1 },
   fxg: { prop: 'flexGrow', presets: ['1'] },
   fxsh: { prop: 'flexShrink', presets: ['0'] },
@@ -274,7 +272,7 @@ export default {
     // exUtility: { repeat: { '--rows': '1', '--gtr': 'repeat(var(--rows), 1fr)' } },
     bp: 1,
   },
-  gaf: { prop: 'gridAutoFlow', utils: { row: 'row', column: 'column' }, bp: 1 }, //dense
+  gaf: { prop: 'gridAutoFlow', presets: ['row', 'column'], bp: 1 }, //dense
   gac: { prop: 'gridAutoColumns' },
   gar: { prop: 'gridAutoRows' },
 
@@ -361,7 +359,7 @@ export default {
   // },
 
   // others
-  ovwrap: { prop: 'overflowWrap', utils: { anywhere: 'anywhere' } },
+  ovwrap: { prop: 'overflowWrap', presets: ['anywhere'] },
   whspace: { prop: 'whiteSpace', presets: ['nowrap'] },
   // wordbreak: { prop: 'wordBreak', utils: { keep: 'keep-all', all: 'break-all' } },
   float: { prop: 'float', presets: ['left', 'right'] },
