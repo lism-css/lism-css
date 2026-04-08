@@ -68,10 +68,6 @@ To address the common problem of CSS specificity becoming overly complex, Lism d
       <td>The layer for utility classes with a clear purpose or style (`.u--{name}`).</td>
     </tr>
     <tr>
-      <td class='-whspace:nowrap'>Custom<br/>`@lism-custom`</td>
-      <td>A customization layer for defining styles that should take priority over the layers above while remaining lower specificity than Prop Classes.</td>
-    </tr>
-    <tr>
       <td class='-whspace:nowrap'>Props<br/>`-`</td>
       <td>**Prop Classes** (`.-{prop}:{val}`) tied to individual CSS properties.<br />This group is the only one placed outside of layers, giving it higher specificity while still allowing reasonable coexistence with external CSS.</td>
     </tr>
@@ -252,13 +248,27 @@ For state management that is dynamically toggled by JavaScript, use data attribu
 Example: `[data-opened]`, `[data-active]`
 
 
-#### Naming custom classes
+#### Naming and placing custom classes
 
-There are no strict rules for classes that are not part of the built-in Lism package.
+When defining your own components (`.header`, `.footer`, `c--pricing`, etc.), place them inside `@layer lism-modules`.
 
-The recommended approach is either to use a Lism-like prefix for visual consistency, or to use no prefix at all to make it clear that the class is custom.
-(Custom component classes are recommended to be defined as `c--` within `@lism-modules`.)
+```css
+@layer lism-modules {
+  .c--pricing { /* ... */ }
+  .z--header { /* ... */ }
+}
+```
 
+The following prefix conventions are recommended:
+
+| Prefix | Scope | User extension |
+|---|---|---|
+| `l--`, `a--` | Lism core (layout / atomic) | No (core only) |
+| `c--` | Components | Users can add freely. The `lism-css` core does not define any `c--` classes — this namespace is reserved for users. `lism-ui` provides official preset `c--` components |
+| `z--`, etc. | Zoning (`z--header`, `z--main`, `z--sidebar`, etc.) | User-defined OK |
+| No prefix | User-defined | Free (`.header`, `.site-nav`, etc.) |
+
+Other classification examples:
 
 | Category Example | Format | Example |
 |---|---|---|
