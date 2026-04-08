@@ -67,7 +67,7 @@ Since each built-in class defines a default value, they can be used simply by ad
 </Preview>
 
 :::info
-In the [`<Lism>` component](/components/lism), passing a string to the `hov` prop automatically outputs the corresponding `-hov` class.
+In the [`<Lism>` component](/docs/core-components/Lism/), passing a string to the `hov` prop automatically outputs the corresponding `-hov` class.
 :::
 
 <Spacer h='20' />
@@ -102,7 +102,7 @@ In the [`<Lism>` component](/components/lism), passing a string to the `hov` pro
 </Preview>
 
 :::info
-In the [`<Lism>` component](/components/lism), passing an object like `hov={{ prop:value }}` outputs a `-hov:prop` class paired with a `--hov-prop:value` CSS variable.
+In the [`<Lism>` component](/docs/core-components/Lism/), passing an object like `hov={{ prop:value }}` outputs a `-hov:prop` class paired with a `--hov-prop:value` CSS variable.
 :::
 
 <Spacer h='20' />
@@ -155,7 +155,7 @@ Combine this class with CSS variables to configure transition behavior.
     </LinkBox>
   </PreviewArea>
   <PreviewCode slot='tab' label='HTML'>
-    ```html "set--transition" "--hov-duration:1s"
+    ```html "set--transition" "--hov-duration: 0.5s"
     <a class="is--linkBox -hov:bdc set--transition -bd -bgc:base-2 -p:20" style="--hov-bdc: var(--red); --hov-duration: 0.5s; --bdw: 3px" href="###">
       <p>LinkBox</p>
       <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
@@ -220,79 +220,12 @@ Combine this class with CSS variables to configure transition behavior.
 
 
 <div class='u--srOnly' id='set--hov'></div>
-## `.set--hov` and Special Variables
-
+## `set--hov` and `-hov:to:xxx`
 
 Lism defines a class called [`set--hov`](/docs/css-methodology/#set--hov), which sets up the `--_isHov` and `--_notHov` variables.
 
-- `--_isHov` is defined as an empty value only when the element is not hovered (and not focused within).
-- `--_notHov` is the opposite — it is defined as an empty value when the element is hovered or focused within.
 
-```css
-@media (any-hover: hover) {
-  .set--hov:hover {
-    --_notHov: ;
-  }
-  .set--hov:not(:is(:hover, :focus-within)) {
-    --_isHov: ;
-  }
-}
-@media (any-hover: none) {
-  .set--hov {
-    --_isHov: ;
-  }
-}
-.set--hov:is(:focus-visible, :focus-within) {
-  --_notHov: ;
-}
-```
-
-For example, writing `var(--_isHov, value)` means that since `--_isHov` is undefined on hover, `value` is applied.
-When not hovered, `--_isHov` is defined as empty, making it an invalid value that is ignored. (Note: if a style is already applied to the same property on the same element, it will also be invalidated.)
-
-Here is an example:
-
-<Preview css={`
-.-hov\\:test {
-  color: var(--_isHov, green) var(--_notHov, blue);
-  background-color: var(--_notHov, lightgray);
-  box-shadow: var(--_isHov, var(--bxsh--30));
-}
-`}>
-  <PreviewTitle>Adding `.-hov:test`</PreviewTitle>
-  <PreviewArea p='30'>
-    <div className="-p:30 -bd -fz:l set--hov -hov:test">BOX</div>
-  </PreviewArea>
-
-  <PreviewCode slot='tab' label='Additional CSS'>
-    ```css
-    /* Variables are defined in .set--hov */
-    .-hov\:test {
-      color: var(--_isHov, red) var(--_notHov, blue); /* red on hover, blue otherwise */
-      background-color: var(--_notHov, lightgray); /* lightgray when not hovered, invalid on hover */
-      box-shadow: var(--_isHov, var(--bxsh--30)); /* shadow on hover, invalid when not hovered */
-    }
-    ```
-  </PreviewCode>
-  <PreviewCode slot='tab' label='HTML'>
-    ```html "set--hov -hov:test"
-    <div class="-p:30 -bd -fz:l set--hov -hov:test">BOX</div>
-    ```
-  </PreviewCode>
-</Preview>
-
-
-In the `color` example above, two `var()` expressions are placed side by side — one is always empty while the other has a value — so only one of them applies at any given time.
-This technique allows you to write both hover and non-hover styles in the same declaration.
-
-
-### Passing hover state to child elements
-
-This is where `set--hov` becomes particularly powerful.
-By adding `set--hov` to a parent element and using the `--_isHov` and `--_notHov` variables in child elements, you can control the behavior of children when the parent is hovered.
-
-
-The core package includes a small set of such child-targeting classes under the `-hov:to:xxx` naming convention by default.
+By leveraging `set--hov`, you can trigger style changes on child elements when the parent is hovered. The core package includes a small set of such child-targeting classes under the `-hov:to:xxx` naming convention by default.
 
 ```css
 /* Hide when parent set--hov is hovered */
@@ -308,18 +241,18 @@ The core package includes a small set of such child-targeting classes under the 
   visibility: var(--_notHov, hidden);
 }
 
+/* Zoom in when parent set--hov is hovered */
 .-hov\:to\:zoom {
   --transProp: scale;
   scale: var(--_isHov, 1.1);
 }
 ```
 
-
 <Preview>
-  <PreviewTitle>Example using `to:show`</PreviewTitle>
+  <PreviewTitle>Example using `-hov:to:show` and `-hov:to:zoom`</PreviewTitle>
   <PreviewArea p='20'>
     <Frame isLinkBox setHov href="#banner-link" ar="16/9" bdrs="30">
-      <Media isLayer src="https://cdn.lism-css.com/img/a-1.jpg" alt="" width="960" height="640" loading="lazy" />
+      <Media isLayer setTransition hov="to:zoom" src="https://cdn.lism-css.com/img/a-1.jpg" alt="" width="960" height="640" loading="lazy" />
       <Layer setTransition hov="to:show" bgc="rgb(0 0 0 / 40%)" style={{ backdropFilter: 'blur(6px)' }}>
         <Center h="100%" c="#fff">
           <Inline fz="2xl" fs="italic" fw="light" lts="l" bdrs="99" px="20" py="10">
@@ -330,9 +263,9 @@ The core package includes a small set of such child-targeting classes under the 
     </Frame>
   </PreviewArea>
   <PreviewCode slot='tab' label='HTML'>
-    ```html "set--hov" "-hov:to:show" "set--transition"
+    ```html "set--hov" "-hov:to:show" "-hov:to:zoom" "set--transition"
     <a class="l--frame is--linkBox set--hov -ar:16/9 -bdrs:30" href="#banner-link">
-      <img class="is--layer" src="https://cdn.lism-css.com/img/a-1.jpg" width="960" height="640" loading="lazy" />
+      <img class="is--layer set--transition -hov:to:zoom" src="https://cdn.lism-css.com/img/a-1.jpg" width="960" height="640" loading="lazy" />
       <div class="is--layer set--transition -hov:to:show -bgc" style="--bgc: rgb(0 0 0 / 40%); backdrop-filter: blur(6px)">
         <div class="l--center -h:100% -c" style="--c: #fff">
           <span class="-fz:2xl -fs:italic -fw:light -lts:l -bdrs:99 -px:20 -py:10">View More</span>
@@ -342,9 +275,9 @@ The core package includes a small set of such child-targeting classes under the 
     ```
   </PreviewCode>
   <PreviewCode slot='tab' label='JSX'>
-    ```jsx "setHov" "hov='to:show'" "setTransition"
+    ```jsx 'setHov' 'hov="to:show"' 'hov="to:zoom"' 'setTransition'
     <Frame isLinkBox setHov href="#banner-link" ar="16/9" bdrs="30">
-      <Media isLayer src="https://cdn.lism-css.com/img/a-1.jpg" alt="" width="960" height="640" loading="lazy" />
+      <Media isLayer setTransition hov="to:zoom" src="https://cdn.lism-css.com/img/a-1.jpg" alt="" width="960" height="640" loading="lazy" />
       <Layer setTransition hov="to:show" bgc="rgb(0 0 0 / 40%)" style={{ backdropFilter: 'blur(6px)' }}>
         <Center h="100%" c="#fff">
           <Inline fz="2xl" fs="italic" fw="light" lts="l" bdrs="99" px="20" py="10">
@@ -358,68 +291,3 @@ The core package includes a small set of such child-targeting classes under the 
 </Preview>
 
 
-
-### Creating custom `-hov:to` classes
-
-
-Let's create a custom `-hov:to:zoom` class that zooms in when the parent is hovered, and a `-hov:to:letterSpread` class that spreads the letter spacing.
-
-Additionally, we'll override `--hov-duration` on the parent to change the transition duration of all child elements at once.
-
-<Preview css={`
-.-hov\\:to\\:letterSpread {
-  --transProp: letter-spacing;
-  letter-spacing: var(--_isHov, 4px);
-}`}>
-  <PreviewTitle>Example: adjusting child hover actions with custom classes</PreviewTitle>
-  <PreviewArea p='20'>
-    <LinkBox href="#banner-link" setHov ov="hidden" ar="16/9" bdrs="30" style={{ '--hov-duration': '.4s' }}>
-      <Frame isLayer>
-        <Media setTransition hov="to:zoom" src="https://cdn.lism-css.com/img/a-2.jpg" alt="" width="960" height="640" loading="lazy" />
-      </Frame>
-      <Layer setTransition hov="to:hide" style={{ backdropFilter: 'grayscale(70%)' }} />
-      <Center isLayer c="#fff" bgc="rgb(0 0 0 / 40%)">
-        <Text setTransition hov="to:letterSpread" fz="2xl">
-          <Fragment>LinkBox</Fragment>
-        </Text>
-      </Center>
-    </LinkBox>
-  </PreviewArea>
-
-  <PreviewCode slot='tab' label='Additional CSS'>
-  ```css
-  .-hov\:to\:letterSpread {
-    --transProp: letter-spacing;
-    letter-spacing: var(--_isHov, 0.125em);
-  }
-  ```
-  </PreviewCode>
-  <PreviewCode slot='tab' label='HTML'>
-    ```html "set--hov" "-hov:to:zoom" "-hov:to:letterSpread" "--hov-duration"
-    <a href="#banner-link" class="is--linkBox set--hov -ar:16/9 -ov:hidden -bdrs:30" style="--hov-duration: 0.4s">
-      <div class="l--frame is--layer">
-        <img class="is--layer set--transition -hov:to:zoom" src="https://cdn.lism-css.com/img/a-2.jpg" width="960" height="640" loading="lazy" />
-      </div>
-      <div class="is--layer set--transition -hov:to:hide" style="backdrop-filter: grayscale(70%)"></div>
-      <div class="l--center is--layer -c -bgc" style="--c: #fff; --bgc: rgb(0 0 0 / 40%)">
-        <span class="-hov:to:letterSpread -fz:2xl">LinkBox</span>
-      </div>
-    </a>
-    ```
-  </PreviewCode>
-  <PreviewCode slot='tab' label='JSX'>
-    ```jsx "setHov" "hov='to:zoom'" "hov='to:letterSpread'" "--hov-duration"
-    <LinkBox href="#banner-link" setHov ov="hidden" ar="16/9" bdrs="30" style={{ '--hov-duration': '.4s' }}>
-      <Frame isLayer>
-        <Media setTransition hov="to:zoom" src="https://cdn.lism-css.com/img/a-2.jpg" alt="" width="960" height="640" loading="lazy" />
-      </Frame>
-      <Layer setTransition hov="to:hide" style={{ backdropFilter: 'grayscale(70%)' }} />
-      <Center isLayer c="#fff" bgc="rgb(0 0 0 / 40%)">
-        <Text setTransition hov="to:letterSpread" fz="2xl">
-          LinkBox
-        </Text>
-      </Center>
-    </LinkBox>
-    ```
-  </PreviewCode>
-</Preview>

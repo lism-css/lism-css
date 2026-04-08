@@ -26,20 +26,229 @@ import { Lism, Box, Flex, Stack, Grid, Text, Media } from 'lism-css/astro';
 
 | Prop | 説明 | 例 |
 |------|------|-----|
-| `as` | レンダリングする HTML 要素を指定（デフォルト: `'div'`） | `as="section"` |
-| `exProps` | 外部コンポーネントに渡す追加属性のオブジェクト | `exProps={{ 'data-id': '1' }}` |
+| `as` | レンダリングする HTML 要素または外部コンポーネントを指定（デフォルト: `'div'`） | `as="section"`, `as={Image}` |
+| `lismClass` | コンポーネントの主要クラス名を指定。出力順序が高めになる | `lismClass='c--myComponent'` |
+| `variant` | `lismClass` に対するバリエーションクラスを出力 | `variant='secondary'` |
+| `layout` | レイアウトモジュールを指定し `l--{layout}` クラスを出力 | `layout='flow'` |
+| `exProps` | Lism Props処理をスキップして外部コンポーネントに直接渡す属性のオブジェクト | `exProps={{ size: '1em' }}` |
 | `style` | インラインスタイル（React: camelCase、CSS変数: `--` プレフィックス） | `style={{ '--my-var': '10px' }}` |
-| `children` | 子要素 | — |
-
-その他、`p`, `m`, `fz`, `c`, `bgc` 等の Lism Props がすべて利用可能です（[prop-class.md](./prop-class.md) 参照）。
 
 ```jsx
 // as で HTML 要素を指定
 <Lism as="section" p="30">...</Lism>
 // → <section class="-p:30">...</section>
 
-// as で外部コンポーネントを指定
-<Lism as={MyComponent} p="20">...</Lism>
+// as で外部コンポーネントを指定（Next.js Image の例）
+<Media as={Image} src="..." bxsh="20" bdrs="20" />
+
+// lismClass でコンポーネントクラスを付与
+<Lism lismClass='c--myComponent' p='10'>...</Lism>
+// → <div class="c--myComponent -p:10">...</div>
+
+// variant でバリエーション
+<Lism lismClass='c--myComponent' variant='secondary'>...</Lism>
+// → <div class="c--myComponent c--myComponent--secondary">...</div>
+
+// exProps で外部コンポーネント用プロパティを明示的に分離
+<Icon as={Hoge} exProps={{ size: '1em' }} p="10" fz="l">...</Icon>
+// → p, fz は Lism が処理、size は Hoge に直接渡される
+```
+
+
+## Lism Props
+
+`<Lism>` で受け取れる Lism CSS 専用プロパティを **Lism Props** と呼びます。主に **CSS Props** と **State Props** の2種類があります。
+
+
+### CSS Props
+
+主要な CSS プロパティに対して省略記法（Shorthand）で指定できます。値に応じて **Prop Class**（`-{prop}:{value}`）やインラインスタイルに変換されます。
+
+#### 値の変換パターン
+
+指定した値によって、出力が以下のように変わります。
+
+| 状況 | 出力 | 例 |
+|------|------|-----|
+| トークン値・プリセット値 | `.-{prop}:{value}` クラスのみ | `fz='l'` → `class="-fz:l"` |
+| `true` または `"-"` | `.-{prop}` クラスのみ（変数なし） | `bd` / `bd='-'` → `class="-bd"` |
+| `:` で始まる値 | 強制的にユーティリティクラス化 | `p=':hoge'` → `class="-p:hoge"` |
+| BP対応プロパティのカスタム値 | `.-{prop}` クラス + `--{prop}` CSS変数 | `fz='20px'` → `class="-fz" style="--fz:20px"` |
+| CSS変数のみのプロパティ | `style` に `--{prop}` 変数のみ | `bdw='2px'` → `style="--bdw:2px"` |
+| 単純なインライン出力 | `style` 属性に直接出力 | `o='0.75'` → `style="opacity:0.75"` |
+
+```jsx
+// トークン値 → クラスのみ
+<Lism fz='l' p='20'>...</Lism>
+// → <div class="-fz:l -p:20">...</div>
+
+// カラートークン（クラス化されていない場合）→ クラス + CSS変数
+<Lism c='red'>...</Lism>
+// → <div class="-c" style="--c:var(--red)">...</div>
+
+// カスタム値 → クラス + CSS変数
+<Lism fz='20px'>...</Lism>
+// → <div class="-fz" style="--fz:20px">...</div>
+
+// border 系（CSS変数のみ出力される特殊パターン）
+<Lism bd bdc="#000" bdw="2px">...</Lism>
+// → <div class="-bd" style="--bdc:#000;--bdw:2px">...</div>
+
+// `-` でクラスだけ出力（変数は親から継承したい場合などに使う）
+<Lism p='-' bdrs>...</Lism>
+// → <div class="-p -bdrs">...</div>
+
+// `:` で強制ユーティリティクラス化
+<Lism p=':hoge'>...</Lism>
+// → <div class="-p:hoge">...</div>
+```
+
+
+#### CSS Props 一覧
+
+| カテゴリ | Shorthand | CSS Property | BP |
+|---------|-----------|-------------|-----|
+| **Typography** | `fz` | font-size | ✔ |
+| | `fw` | font-weight | - |
+| | `ff` | font-family | - |
+| | `fs` | font-style | - |
+| | `lh` | line-height | - |
+| | `lts` | letter-spacing | - |
+| | `ta` | text-align | - |
+| | `td` | text-decoration | - |
+| **Colors** | `c` | color | - |
+| | `bgc` | background-color | - |
+| | `bdc` | --bdc（CSS変数のみ） | - |
+| **Padding** | `p` | padding | ✔ |
+| | `px` | padding-inline | ✔ |
+| | `py` | padding-block | ✔ |
+| | `px-s`,`px-e` | padding-inline-start/end | ✔ |
+| | `py-s`,`py-e` | padding-block-start/end | ✔ |
+| | `pl`,`pr`,`pt`,`pb` | padding-left/right/top/bottom | ✔ |
+| **Margin** | `m` | margin | ✔ |
+| | `mx` | margin-inline | ✔ |
+| | `my` | margin-block | ✔ |
+| | `mx-s`,`mx-e` | margin-inline-start/end | ✔ |
+| | `my-s`,`my-e` | margin-block-start/end | ✔ |
+| | `ml`,`mr`,`mt`,`mb` | margin-left/right/top/bottom | ✔ |
+| **Size** | `w` | width | ✔ |
+| | `h` | height | ✔ |
+| | `max-w`,`min-w` | max/min-width | ✔ |
+| | `max-h`,`min-h` | max/min-height | ✔ |
+| | `sz` | inline-size | - |
+| | `max-sz` | max-inline-size | - |
+| **Display** | `d` | display | ✔ |
+| | `v` | visibility | - |
+| | `o` | opacity | - |
+| | `ov` | overflow | - |
+| | `ar` | aspect-ratio | ✔ |
+| **Position** | `pos` | position | - |
+| | `t`,`l`,`r`,`b` | top/left/right/bottom | - |
+| | `z` | z-index | - |
+| | `i` | inset | - |
+| **Gap** | `g` | gap | ✔ |
+| | `cg` | column-gap | ✔ |
+| | `rg` | row-gap | ✔ |
+| **Flex** | `fxw` | flex-wrap | ✔ |
+| | `fxd` | flex-direction | ✔ |
+| | `fx` | flex | ✔ |
+| | `fxsh` | flex-shrink | - |
+| | `fxg` | flex-grow | - |
+| | `fxb` | flex-basis | ✔ |
+| **Grid** | `gt` | grid-template | ✔ |
+| | `gta` | grid-template-areas | ✔ |
+| | `gtc` | grid-template-columns | ✔ |
+| | `gtr` | grid-template-rows | ✔ |
+| | `gaf` | grid-auto-flow | ✔ |
+| | `ga` | grid-area | ✔ |
+| | `gc` | grid-column | ✔ |
+| | `gr` | grid-row | ✔ |
+| **Places** | `ai` | align-items | ✔ |
+| | `ac` | align-content | ✔ |
+| | `ji` | justify-items | ✔ |
+| | `jc` | justify-content | ✔ |
+| | `aslf` | align-self | - |
+| | `jslf` | justify-self | - |
+| | `order` | order | - |
+| **Shadow/Radius** | `bxsh` | box-shadow | ✔ |
+| | `bdrs` | border-radius | ✔ |
+| **Border** | `bd` | border | - |
+| | `bdc` | --bdc | - |
+| | `bds` | --bds | - |
+| | `bdw` | --bdw | ✔ |
+| | `bd-t`,`bd-r`,`bd-b`,`bd-l` | border-top/right/bottom/left | - |
+| | `bd-x`,`bd-y` | border-inline/block | - |
+| **Background** | `bg` | background | ✔ |
+| | `bgc` | background-color | - |
+| | `bgi` | background-image | - |
+| | `bgr` | background-repeat | - |
+| | `bgp` | background-position | - |
+| | `bgsz` | background-size | - |
+| **Other** | `float` | float | - |
+| | `isolation` | isolation | - |
+| | `ovwrap` | overflow-wrap | - |
+| | `whspace` | white-space | - |
+
+**BP** = ブレイクポイント対応（配列・オブジェクトでレスポンシブ指定可能）
+
+各プロパティで受け付けるトークン値・プリセット値の詳細は [prop-class.md](./prop-class.md) を参照。
+
+
+#### レスポンシブ指定
+
+BP対応プロパティは、配列またはオブジェクトでブレイクポイントごとの値を指定できます。
+
+| BP | デフォルト値 |
+|----|------------|
+| `sm` | `width >= 480px` |
+| `md` | `width >= 800px` |
+| (`lg`) | `width >= 1120px`（要SCSSカスタマイズ） |
+
+デフォルトで**コンテナクエリ**を採用しており、先祖に`.is--container`（コンテナ要素）が必要です。
+
+```jsx
+// 配列（base → sm → md の順）
+<Lism p={['20', '30', '5rem']}>...</Lism>
+
+// オブジェクトで直接指定
+<Lism p={{ base: '20', sm: '30', md: '5rem' }}>...</Lism>
+
+// ↓ どちらも同じ出力
+// <div class="-p:20 -p_sm -p_md" style="--p_sm:var(--s30);--p_md:5rem">...</div>
+
+// BPをスキップ（md のみ指定）
+<Lism p={[null, null, '40']}>...</Lism>
+<Lism p={{ md: '40' }}>...</Lism>
+// → <div class="-p_md" style="--p_md:var(--s40)">...</div>
+```
+
+
+### State Props
+
+State Modules クラス（`.is--*` / `.set--*`）を出力するためのプロパティ群です。
+
+| Prop | 出力クラス | 用途 |
+|------|-----------|------|
+| `isWrapper(='{s\|l}')` | `.is--wrapper` + `.-contentSize:{s\|l}` | コンテンツ幅制限 |
+| `isLayer` | `.is--layer` | 絶対配置レイヤー（inset:0） |
+| `isLinkBox` | `.is--linkBox` | ボックス全体リンク化 |
+| `isContainer` | `.is--container` | コンテナクエリ対象 |
+| `isSide` | `.is--side` | サイド要素 |
+| `isSkipFlow` | `.is--skipFlow` | Flow 余白をスキップ |
+| `isVertical` | `.is--vertical` | 縦書き方向 |
+| `setGutter` | `.set--gutter` | 左右ガター余白 |
+| `setShadow` | `.set--shadow` | シャドウ付与 |
+| `setHov` | `.set--hov` | ホバー効果 |
+| `setTransition` | `.set--transition` | トランジション |
+| `setPlain` | `.set--plain` | プレーン状態 |
+
+```jsx
+// State Props の使用例
+<Stack isLayer>背景レイヤー</Stack>
+// → <div class="l--stack is--layer">...</div>
+
+<Flex isWrapper="l">コンテンツ</Flex>
+// → <div class="l--flex is--wrapper -contentSize:l">...</div>
 ```
 
 
@@ -182,33 +391,17 @@ import { Lism, Box, Flex, Stack, Grid, Text, Media } from 'lism-css/astro';
 
 ## `getLismProps()` — 外部コンポーネントとの連携
 
-`as` に外部コンポーネントを渡しても Props が正しく処理されない場合、`getLismProps()` を使って className と style を手動で取得できます。
+なんらかの理由で`as`に外部コンポーネントを渡せない場合、`getLismProps()` を使うことでも `<Lism>`が処理できるプロパティ群を `className` と `style` に変換することができます。
 
 ```jsx
 import getLismProps from 'lism-css/lib/getLismProps';
 
 function MyComponent({ children }) {
-  // Lism Props を className + style に変換
-  const lismProps = getLismProps({ p: '20', fz: 'l', c: 'brand' });
-  // → { className: '-p:20 -fz:l -c:brand', style: {} }
+  // Lism Props を getLismProps() で 変換
+  const lismProps = getLismProps({ p: '20', fz: 'l', c: 'red' });
+  // → { className: '-p:20 -fz:l -c', style: {'--c': 'var(--red)'} }
 
   return <div {...lismProps}>{children}</div>;
-}
-```
-
-外部の UI ライブラリやカスタムコンポーネントに Lism のスタイルシステムを適用したい場合に有効です。
-
-```jsx
-import getLismProps from 'lism-css/lib/getLismProps';
-import { motion } from 'framer-motion';
-
-function AnimatedBox({ children, ...lismPropsInput }) {
-  const { className, style, ...rest } = getLismProps(lismPropsInput);
-  return (
-    <motion.div className={className} style={style} {...rest}>
-      {children}
-    </motion.div>
-  );
 }
 ```
 

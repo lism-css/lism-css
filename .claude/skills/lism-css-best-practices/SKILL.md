@@ -70,11 +70,13 @@ function Card({ children }) {
 
 | ファイル | 内容 |
 |---------|------|
-| [base-styles.md](./base-styles.md) | ベーススタイリング — Reset CSS・HTML要素のベーススタイル・CSS変数（トークン）概要・set--クラス一覧 |
-| [module-class.md](./module-class.md) | モジュールクラス — is--/l--/a--/c--/u-- クラスの一覧と用途 |
+| [tokens.md](./tokens.md) | デザイントークン・CSS変数 — 余白・フォントサイズ・角丸・影・カラー・パレット |
+| [base-styles.md](./base-styles.md) | ベーススタイリング — Reset CSS・HTML要素のベーススタイル・CSS変数（トークン） |
+| [set-class.md](./set-class.md) | `set--` クラス — `set--plain`/`set--shadow`/`set--hov`/`set--transition` 等のセットアップクラス |
+| [module-class.md](./module-class.md) | モジュールクラス — `is--`/`l--`/`a--`/`c--` クラスの一覧と用途 |
+| [utility-class.md](./utility-class.md) | ユーティリティクラス — `u--` クラスの一覧・SCSS ソースリンク・Prop Class との違い |
 | [prop-class.md](./prop-class.md) | Prop Class — `-{prop}:{value}` 記法・主要Prop一覧・レスポンシブ対応・コンポーネントでの使い方 |
 | [components.md](./components.md) | コンポーネントシステム — コア・セマンティック・レイアウト・ステート・アトミック・UIコンポーネント一覧、getLismProps、CLI |
-| [tokens.md](./tokens.md) | デザイントークン — 余白・フォントサイズ・角丸・影・カラー・パレット |
 | [css-rules.md](./css-rules.md) | CSS設計ルール — Layer構造・命名規則・プレフィックス・カスタムCSS追加ルール |
 
 各ファイルのセクション末尾には、公式ドキュメントへのリンクを `詳細: URL` の書式で記載しています。
