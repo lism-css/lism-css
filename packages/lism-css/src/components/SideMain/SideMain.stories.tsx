@@ -76,11 +76,11 @@ export const WithMainWidth: Story = {
   },
 };
 
-// fxd='row-r' で横並び時にサイドを左側に配置
+// fxd='row-reverse' で横並び時にサイドを左側に配置
 export const Reversed: Story = {
-  name: 'fxd: row-r（反転）',
+  name: 'fxd: row-reverse（反転）',
   args: {
-    fxd: 'row-r',
+    fxd: 'row-reverse',
     g: '30',
     children: (
       <>

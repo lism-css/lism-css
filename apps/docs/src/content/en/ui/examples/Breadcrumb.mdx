@@ -15,14 +15,14 @@ Examples of using Lism to display breadcrumb navigation.
   <PreviewTitle>Example 1: with slash</PreviewTitle>
   <PreviewArea p='20'>
     <Cluster as="ol" g="15">
-      <ListItem d="in-flex" ai="center" g="15">
+      <ListItem d="inline-flex" ai="center" g="15">
         <Link href="#menu-1" c="20">Menu item 1</Link>
       </ListItem>
-      <ListItem d="in-flex" ai="center" g="15">
+      <ListItem d="inline-flex" ai="center" g="15">
         <Decorator o="-20">/</Decorator>
         <Link href="#menu-2" c="20">Menu item 2</Link>
       </ListItem>
-      <ListItem d="in-flex" ai="center" g="15">
+      <ListItem d="inline-flex" ai="center" g="15">
         <Decorator o="-20">/</Decorator>
         <span>Current page titile...</span>
       </ListItem>
@@ -31,18 +31,18 @@ Examples of using Lism to display breadcrumb navigation.
   <PreviewCode slot='tab' label='JSX'>
     ```jsx
     <Cluster as="ol" g="15">
-      <ListItem d="in-flex" ai="center" g="15">
+      <ListItem d="inline-flex" ai="center" g="15">
         <Link href="#menu-1" c="20">
           Menu item 1
         </Link>
       </ListItem>
-      <ListItem d="in-flex" ai="center" g="15">
+      <ListItem d="inline-flex" ai="center" g="15">
         <Decorator o="-20">/</Decorator>
         <Link href="#menu-2" c="20">
           Menu item 2
         </Link>
       </ListItem>
-      <ListItem d="in-flex" ai="center" g="15">
+      <ListItem d="inline-flex" ai="center" g="15">
         <Decorator o="-20">/</Decorator>
         <span>Current page titile...</span>
       </ListItem>
@@ -52,14 +52,14 @@ Examples of using Lism to display breadcrumb navigation.
   <PreviewCode slot='tab' label='HTML'>
     ```html
     <ol class="l--cluster -g:15">
-      <li class="-d:in-flex -ai:center -g:15">
+      <li class="-d:inline-flex -ai:center -g:15">
         <a class="-c:20" href="#menu-1"> Menu item 1 </a>
       </li>
-      <li class="-d:in-flex -ai:center -g:15">
+      <li class="-d:inline-flex -ai:center -g:15">
         <div class="a--decorator -o:-20" aria-hidden="true">/</div>
         <a class="-c:20" href="#menu-2"> Menu item 2 </a>
       </li>
-      <li class="-d:in-flex -ai:center -g:15">
+      <li class="-d:inline-flex -ai:center -g:15">
         <div class="a--decorator -o:-20" aria-hidden="true">/</div>
         <span>Current page titile…</span>
       </li>
@@ -72,14 +72,14 @@ Examples of using Lism to display breadcrumb navigation.
   <PreviewTitle>Example 2: with Icon</PreviewTitle>
   <PreviewArea p='20'>
     <Cluster as="ol" g="15">
-      <ListItem d="in-flex" ai="center" g="15">
+      <ListItem d="inline-flex" ai="center" g="15">
         <a class="set--plain" href="#menu-1">Menu item 1</a>
       </ListItem>
-      <ListItem d="in-flex" ai="center" g="15">
+      <ListItem d="inline-flex" ai="center" g="15">
         <Icon icon="caret-right" c="text-2" />
         <a class="set--plain" href="#menu-2">Menu item 2</a>
       </ListItem>
-      <ListItem d="in-flex" ai="center" g="15">
+      <ListItem d="inline-flex" ai="center" g="15">
         <Icon icon="caret-right" c="text-2" />
         <span class="-c:text-2">Current page titile...</span>
       </ListItem>
@@ -88,18 +88,18 @@ Examples of using Lism to display breadcrumb navigation.
   <PreviewCode slot='tab' label='JSX'>
     ```jsx
     <Cluster as="ol" g="15">
-      <ListItem d="in-flex" ai="center" g="15">
+      <ListItem d="inline-flex" ai="center" g="15">
         <a class="set--plain" href="#menu-1">
           Menu item 1
         </a>
       </ListItem>
-      <ListItem d="in-flex" ai="center" g="15">
+      <ListItem d="inline-flex" ai="center" g="15">
         <Icon icon="caret-right" c="text-2" />
         <a class="set--plain" href="#menu-2">
           Menu item 2
         </a>
       </ListItem>
-      <ListItem d="in-flex" ai="center" g="15">
+      <ListItem d="inline-flex" ai="center" g="15">
         <Icon icon="caret-right" c="text-2" />
         <span class="-c:text-2">Current page titile...</span>
       </ListItem>
@@ -109,10 +109,10 @@ Examples of using Lism to display breadcrumb navigation.
   <PreviewCode slot='tab' label='HTML'>
     ```html
     <ol class="l--cluster -g:15">
-      <li class="-d:in-flex -ai:center -g:15">
+      <li class="-d:inline-flex -ai:center -g:15">
         <a class="set--plain" href="#menu-1">Menu item 1</a>
       </li>
-      <li class="-d:in-flex -ai:center -g:15">
+      <li class="-d:inline-flex -ai:center -g:15">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 256 256"
@@ -127,7 +127,7 @@ Examples of using Lism to display breadcrumb navigation.
         </svg>
         <a class="set--plain" href="#menu-2">Menu item 2</a>
       </li>
-      <li class="-d:in-flex -ai:center -g:15">
+      <li class="-d:inline-flex -ai:center -g:15">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 256 256"

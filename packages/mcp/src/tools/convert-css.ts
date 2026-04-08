@@ -89,13 +89,8 @@ function normalizeCssPropertyName(raw: string): string | null {
 
 /** よくある CSS 値 → Lism トークン値の変換テーブル */
 const VALUE_ALIASES: Record<string, string> = {
-  column: 'col',
-  'column-reverse': 'col-r',
-  'row-reverse': 'row-r',
   'space-between': 'between',
-  'flex-start': 'flex-s',
-  'flex-end': 'flex-e',
-  currentcolor: 'cc',
+  currentcolor: 'current',
   uppercase: 'upper',
   lowercase: 'lower',
 };

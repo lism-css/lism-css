@@ -16,8 +16,8 @@
  */
 
 const PLACE_PRESETS = ['start', 'center', 'end'] as const;
-const PLACE_UTILS = { 'flex-s': 'flex-start', 'flex-e': 'flex-end' } as const;
-const PLACE_SHORTHANDS = { s: 'start', e: 'end', c: 'center', fs: 'flex-s', fe: 'flex-e' } as const;
+const PLACE_FX_PRESETS = ['flex-start', 'flex-end'] as const;
+const PLACE_SHORTHANDS = { s: 'start', e: 'end', c: 'center', fs: 'flex-start', fe: 'flex-end' } as const;
 
 export default {
   f: { prop: 'font', presets: ['inherit'] },
@@ -52,8 +52,7 @@ export default {
 
   d: {
     prop: 'display',
-    presets: ['none', 'block'],
-    utils: { 'in-flex': 'inline-flex' },
+    presets: ['none', 'block', 'inline-flex'],
     bp: 1,
   },
   o: { prop: 'opacity', presets: ['0'], token: 'o', tokenClass: 1 },
@@ -132,7 +131,7 @@ export default {
   bdc: {
     isVar: 1,
     presets: ['brand', 'accent', 'divider', 'inherit', 'transparent'],
-    utils: { cc: 'currentColor' },
+    utils: { current: 'currentColor' },
     token: 'color',
   },
   bdw: { isVar: 1, bp: 1 }, // --bdw のみ
@@ -170,8 +169,7 @@ export default {
   // position
   pos: {
     prop: 'position',
-    presets: ['static', 'fixed', 'sticky'],
-    utils: { rel: 'relative', abs: 'absolute' },
+    presets: ['static', 'fixed', 'sticky', 'relative', 'absolute'],
   },
   z: { prop: 'zIndex', presets: ['-1', '0', '1', '99'] },
   t: { prop: 'top', utils: { 0: '0%' }, presets: ['50%', '100%'], token: 'space' },
@@ -244,7 +242,7 @@ export default {
   // flex
   fxf: { prop: 'flexFlow' },
   fxw: { prop: 'flexWrap', presets: ['wrap'], bp: 1 },
-  fxd: { prop: 'flexDirection', utils: { col: 'column', 'col-r': 'column-reverse', 'row-r': 'row-reverse' }, bp: 1 },
+  fxd: { prop: 'flexDirection', presets: ['column', 'column-reverse', 'row-reverse'], bp: 1 },
   fx: { prop: 'flex', presets: ['1'], bp: 1 },
   fxg: { prop: 'flexGrow', presets: ['1'] },
   fxsh: { prop: 'flexShrink', presets: ['0'] },
@@ -274,7 +272,7 @@ export default {
     // exUtility: { repeat: { '--rows': '1', '--gtr': 'repeat(var(--rows), 1fr)' } },
     bp: 1,
   },
-  gaf: { prop: 'gridAutoFlow', utils: { row: 'row', col: 'column' }, bp: 1 }, //dense
+  gaf: { prop: 'gridAutoFlow', presets: ['row', 'column'], bp: 1 }, //dense
   gac: { prop: 'gridAutoColumns' },
   gar: { prop: 'gridAutoRows' },
 
@@ -291,29 +289,27 @@ export default {
   // -(ai|ac|ji|jc|aslf|jslf):   /    -$1:
   ai: {
     prop: 'alignItems',
-    presets: [...PLACE_PRESETS, 'stretch'],
-    utils: PLACE_UTILS,
+    presets: [...PLACE_PRESETS, 'stretch', ...PLACE_FX_PRESETS],
     shorthands: PLACE_SHORTHANDS,
     bp: 1,
   },
   ac: {
     prop: 'alignContent',
-    presets: PLACE_PRESETS,
-    utils: { ...PLACE_UTILS, between: 'space-between' },
+    presets: [...PLACE_PRESETS, ...PLACE_FX_PRESETS],
+    utils: { between: 'space-between' },
     shorthands: PLACE_SHORTHANDS,
     bp: 1,
   },
   ji: {
     prop: 'justifyItems',
-    presets: [...PLACE_PRESETS, 'stretch'],
-    utils: PLACE_UTILS,
+    presets: [...PLACE_PRESETS, 'stretch', ...PLACE_FX_PRESETS],
     shorthands: PLACE_SHORTHANDS,
     bp: 1,
   },
   jc: {
     prop: 'justifyContent',
-    presets: PLACE_PRESETS,
-    utils: { ...PLACE_UTILS, between: 'space-between' },
+    presets: [...PLACE_PRESETS, ...PLACE_FX_PRESETS],
+    utils: { between: 'space-between' },
     shorthands: PLACE_SHORTHANDS,
     bp: 1,
   },
@@ -363,7 +359,7 @@ export default {
   // },
 
   // others
-  ovwrap: { prop: 'overflowWrap', utils: { any: 'anywhere' } },
+  ovwrap: { prop: 'overflowWrap', presets: ['anywhere'] },
   whspace: { prop: 'whiteSpace', presets: ['nowrap'] },
   // wordbreak: { prop: 'wordBreak', utils: { keep: 'keep-all', all: 'break-all' } },
   float: { prop: 'float', presets: ['left', 'right'] },

@@ -23,11 +23,11 @@ export const defaultProps = {
   },
   body: {
     lismClass: 'c--chat_body',
-    pos: 'rel',
+    pos: 'relative',
   },
   deco: {
     lismClass: 'c--chat_deco',
-    pos: 'abs',
+    pos: 'absolute',
   },
   content: {
     lismClass: 'c--chat_content',
