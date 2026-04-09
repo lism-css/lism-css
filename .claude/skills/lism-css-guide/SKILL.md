@@ -44,8 +44,6 @@ npm i @lism-css/ui
 
 ```js
 import 'lism-css/main.css';
-// UI コンポーネントのCSS
-import '@lism-css/ui/style.css';
 ```
 
 ### コンポーネント読み込み
@@ -63,33 +61,28 @@ import { Accordion, Tabs, Modal, Button } from '@lism-css/ui/astro';
 
 ## 実装ルール
 
-### Props / クラスで書くもの（Lism に任せる）
-- レイアウト構造（`Stack`, `Flex`, `Grid`, `Columns` 等のレイアウトモジュール）
-- 余白・サイズ・フォントサイズなどのトークン値
-- レスポンシブ切り替え
-- 色・ボーダー・シャドウなどの装飾
+### 基本: できる限りLism CSSの用意しているクラス・CSS変数・コンポーネントを使って書く
 
-### ネイティブ CSS で書くもの（適切な @layer 内で）
-- アニメーション・トランジション
-- 複雑なセレクタ（`:nth-child`, `::before`, `::after` 等）
-- カスタムプロパティを使った独自の計算
+まずは以下のチェックリストを確認しながら、Lism CSS でできることが何かを考えてから実装方針を立ててください。
+
+- `l--`,`a--`,`is--`, `c--`などのModule Classを用いることができるか？（React, Astroの場合は `Lism`, `Stack`, `Flex`, `Grid`, `Columns` 等のコンポーネントを利用して構築できるか？）
+- `set--`系クラス、`u--`系クラスは使えないか？
+- Property Class (`-{prop}:{value}` or `<Lism prop="value">`))を使ってスタイリングできるか？
+- 値をレスポンシブに切り替える時は Lism の Property Class (`-{prop}_{bp}` or `<Lism prop={[...]}>`)を使って実装できるか？
+- カラー・余白・フォントサイズ・タイポグラフィ・行間（ハーフレディング）・サイズ・角丸・シャドウなどはトークン値を流用できないか？
+- その他、LismのクラスやCSS変数でできることかどうか
+
+### ネイティブ CSS で書くもの（必要に応じて適切な @layer 内で書くこと）
+- アニメーションやhoverエフェクトは、Lismになければ適宜クラスを追加して使用する
+- コンポーネントの実装も、Lismになければ適宜`c--`クラスを追加して使用する(`@layer lism-modules`内で定義すること)
+- 複雑なセレクタ（`:nth-child`, `::before`, `::after` 等）を使用する必要があるスタイル
+- カスタムプロパティを使った独自の計算式が必要なスタイル
 - Lism のトークンやモジュールでカバーできない特殊なスタイル
 
 ### コンポーネント化のルール
-- 同じスタイルの組み合わせが3箇所以上で使われる場合は、コンポーネントとして切り出す
-- コンポーネントは Lism のレイアウトモジュールをベースに構築する
+- 同じスタイルの組み合わせが3箇所以上で使われる場合は、コンポーネントとして切り出すことを検討する
+- コンポーネントはできる限り `<Lism>`系コアモジュールやレイアウトモジュール（`Stack`, `Flex`, `Grid`, `Columns` 等）をベースに構築し、Lism Propsを活用して作成すること
 - カスタムクラスが必要な場合は `.c--{name}` の命名規則に従う
-
-```jsx
-// NG: 同じ構造をコピーペースト
-<Box bgc="base-2" bdrs="20" p="30">...</Box>
-<Box bgc="base-2" bdrs="20" p="30">...</Box>
-
-// OK: コンポーネント化
-function Card({ children }) {
-  return <Box bgc="base-2" bdrs="20" p="30">{children}</Box>;
-}
-```
 
 
 ## 詳細リファレンス
@@ -105,8 +98,8 @@ function Card({ children }) {
 | [utility-class.md](./utility-class.md) | ユーティリティクラス — `u--` クラスの一覧・SCSS ソースリンク・Property Class との違い | [utility-class](https://lism-css.com/docs/utility-class/) |
 | [property-class.md](./property-class.md) | Property Class — `-{prop}:{value}` 記法・主要Prop一覧・特殊Prop（ボーダー・ホバー）・出力タイプ | [property-class](https://lism-css.com/docs/property-class/) |
 | [prop-responsive.md](./prop-responsive.md) | レスポンシブ対応 — ブレークポイント・コンテナクエリ・HTML/コンポーネントでの指定方法 | [responsive](https://lism-css.com/docs/responsive/) |
-| [lism-components.md](./lism-components.md) | コンポーネントシステム — コア・セマンティック・レイアウト・ステート・アトミック一覧、Lism Props、getLismProps | [components](https://lism-css.com/docs/components/) |
-| [ui-components.md](./ui-components.md) | UIコンポーネント（`@lism-css/ui`）— Accordion・Modal・Tabs・Button 等の Props・構造・CLI | [components](https://lism-css.com/docs/components/) |
+| [components-core.md](./components-core.md) | コンポーネントシステム — コア・セマンティック・レイアウト・ステート・アトミック一覧、Lism Props、getLismProps | [components](https://lism-css.com/docs/components/) |
+| [components-ui.md](./components-ui.md) | UIコンポーネント（`@lism-css/ui`）— Accordion・Modal・Tabs・Button 等の Props・構造・CLI | [components](https://lism-css.com/docs/components/) |
 | [css-rules.md](./css-rules.md) | CSS設計ルール — Layer構造・命名規則・プレフィックス・カスタムCSS追加ルール | [css-methodology](https://lism-css.com/docs/css-methodology/) |
 
 各ファイルの冒頭にはTOC（目次）があり、セクションごとの詳細URL・ソースURLがまとめて記載されています。
