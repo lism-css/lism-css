@@ -1,4 +1,5 @@
 import atts from 'lism-css/lib/helper/atts';
+import mergeSet from 'lism-css/lib/helper/mergeSet';
 
 export function getRootProps({ lismClass, allowMultiple, ...props }) {
   props.lismClass = atts(lismClass, 'c--accordion');
@@ -12,14 +13,13 @@ export function getItemProps({ lismClass, ...props }) {
   return props;
 }
 
-export function getHeadingProps(props) {
-  const defaultProps = {
+export function getHeadingProps({ set, unset, ...props }) {
+  const returnProps = {
     lismClass: 'c--accordion_heading',
     as: 'div',
-    set: 'plain',
+    set: mergeSet('plain', set, unset),
+    ...props,
   };
-
-  const returnProps = { ...defaultProps, ...props };
 
   // div の時は role 付与
   if (returnProps.as === 'div') {
@@ -54,18 +54,21 @@ export function getPanelProps({ lismClass, _contextID, accID = '__LISM_ACC_ID__'
   return { panelProps, contentProps };
 }
 
-export const defaultProps = {
-  // header: { lismClass: 'c--accordion_header' },
-  button: {
+export function getButtonProps({ set, unset, ...props }) {
+  return {
     lismClass: 'c--accordion_button',
     as: 'button',
     layout: 'flex',
-    set: 'plain',
+    set: mergeSet('plain', set, unset),
     g: '10',
     w: '100%',
     ai: 'center',
     jc: 'between',
-  },
+    ...props,
+  };
+}
+
+export const defaultProps = {
   icon: {
     lismClass: 'c--accordion_icon a--icon',
     as: 'span',

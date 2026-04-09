@@ -3,7 +3,7 @@
  */
 import getLismProps from 'lism-css/lib/getLismProps';
 import { Lism } from 'lism-css/react';
-import { getDetailsProps, defaultProps } from '../getProps';
+import { getDetailsProps, getTitleProps, defaultProps } from '../getProps';
 
 // スタイルのインポート
 import '../_style.css';
@@ -34,11 +34,7 @@ export function Summary({ children, ...props }) {
  * Title - タイトルコンポーネント
  */
 export function Title({ children, ...props }) {
-  return (
-    <Lism {...defaultProps.title} {...props}>
-      {children}
-    </Lism>
-  );
+  return <Lism {...getTitleProps(props)}>{children}</Lism>;
 }
 
 /**

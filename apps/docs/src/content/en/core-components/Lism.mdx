@@ -189,6 +189,14 @@ A set of props corresponding to [State Modules](/docs/css-methodology/) classes.
 | `set="transition"` | `set--transition` | Transition |
 | `set="plain"` | `set--plain` | Plain state |
 
+`set` accepts arrays, comma-separated, or space-separated values for multiple classes.  
+Use `unset` to remove specific set classes applied internally by a component.
+
+```jsx
+<Lism set={['hov', 'transition']}>...</Lism>
+<AccordionButton unset="plain">...</AccordionButton>
+```
+
 <Reference>
 [Learn about State Modules classes and usage examples](/docs/css-methodology/)
 </Reference>

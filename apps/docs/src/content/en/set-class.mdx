@@ -396,3 +396,18 @@ In Lism components, use `set="mask"` with `css={{ '--maskImg': getSvgUrl(svgStri
   </PreviewCode>
 </Preview>
  */}
+
+
+## Removing Set Classes with `unset`
+
+When a component internally applies a default `set` class that you want to remove, use the `unset` prop.
+
+For example, `Accordion.Button` has `set="plain"` applied internally. You can remove it by passing `unset="plain"`.
+
+```jsx
+{/* Remove the default set="plain" */}
+<Accordion.Button unset="plain">...</Accordion.Button>
+
+{/* Apply multiple set classes and remove one */}
+<Lism set={['hov', 'transition', 'shadow']} unset="shadow">...</Lism>
+```

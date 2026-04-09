@@ -396,3 +396,18 @@ Lismが提供するコンポーネントでは、`set="mask"`と`css={{ '--maskI
   </PreviewCode>
 </Preview>
  */}
+
+
+## `unset` で Set Class を除外する
+
+コンポーネント内部でデフォルト適用されている `set` クラスを、使用側で除外したい場合は `unset` prop を利用できます。
+
+例えば `Accordion.Button` は内部で `set="plain"` が適用されていますが、`unset="plain"` を渡すことでリセットを解除できます。
+
+```jsx
+{/* デフォルトの set="plain" を解除 */}
+<Accordion.Button unset="plain">...</Accordion.Button>
+
+{/* 複数の set を適用しつつ一部を解除 */}
+<Lism set={['hov', 'transition', 'shadow']} unset="shadow">...</Lism>
+```

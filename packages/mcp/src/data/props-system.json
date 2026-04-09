@@ -1029,7 +1029,14 @@
           "cssProperty": "(class: set--{value})",
           "type": "string | string[]",
           "responsive": false,
-          "description": "Set Class を適用する。値: 'gutter', 'shadow', 'hov', 'transition', 'mask', 'plain', 'innerRs', 'bp'。複数指定時は配列で渡す。"
+          "description": "Set Class を適用する。値: 'gutter', 'shadow', 'hov', 'transition', 'mask', 'plain', 'innerRs', 'bp'。複数指定時は配列またはカンマ・空白区切りで渡す。unset と組み合わせて一部を除外可能。"
+        },
+        {
+          "prop": "unset",
+          "cssProperty": "(set の除外)",
+          "type": "string | string[]",
+          "responsive": false,
+          "description": "set から指定した値を除外する。コンポーネント内部で set='plain' がデフォルト適用されている場合などに unset='plain' で解除できる。"
         },
         {
           "prop": "hov",

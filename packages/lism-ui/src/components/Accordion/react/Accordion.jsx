@@ -2,7 +2,7 @@
 import { createContext, useRef, useId, useEffect, useContext } from 'react';
 import getLismProps from 'lism-css/lib/getLismProps';
 import { Lism, Stack } from 'lism-css/react';
-import { getRootProps, getItemProps, getHeadingProps, getPanelProps, defaultProps } from '../getProps';
+import { getRootProps, getItemProps, getHeadingProps, getPanelProps, getButtonProps, defaultProps } from '../getProps';
 import { setEvent } from '../setAccordion';
 import AccIcon from './AccIcon';
 
@@ -63,7 +63,7 @@ export function Button({ children, accID: _accID = '__LISM_ACC_ID__', ...props }
   const accID = ctx?.accID || _accID;
 
   return (
-    <Lism {...defaultProps.button} {...props} aria-controls={accID} aria-expanded="false">
+    <Lism {...getButtonProps(props)} aria-controls={accID} aria-expanded="false">
       {children}
       <AccIcon />
     </Lism>
