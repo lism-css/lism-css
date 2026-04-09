@@ -33,7 +33,11 @@ export function registerGetGuide(server: McpServer): void {
   server.registerTool(
     'get_guide',
     {
-      description: `Get a detailed guide on a specific lism-css topic. Topics:\n${TOPIC_DESCRIPTION}`,
+      description:
+        'Get a detailed guide on a specific lism-css topic. Use this when you need comprehensive documentation on a broad topic rather than a specific component or prop.\n' +
+        'For individual component lookup, get_component is more direct. For individual prop lookup, use get_props_system.\n' +
+        'The response is the full guide as pre-formatted Markdown. Output it verbatim. Do NOT summarize or omit sections.\n' +
+        `\nAvailable topics:\n${TOPIC_DESCRIPTION}`,
       inputSchema: {
         topic: z.enum(Object.keys(GUIDE_TOPICS) as [GuideTopic, ...GuideTopic[]]).describe('The guide topic to retrieve.'),
       },

@@ -9,7 +9,11 @@ export function registerGetComponent(server: McpServer): void {
     'get_component',
     {
       description:
-        '特定のlism-cssコンポーネントに関する詳細情報（用途・Props・使用例）を取得します。該当するものが見つからない場合は、より広範なキーワードで search_docs または get_guide を実行してください。',
+        'Get detailed information about a specific lism-css component: purpose, props, and usage examples.\n' +
+        'Use this when you need documentation for a known component by name (e.g. "Box", "Flex", "Accordion", "Lism", "HTML").\n' +
+        'Do NOT use this for broad topic guides (use get_guide with "components-core" or "components-ui") or keyword search across all docs (use search_docs).\n' +
+        'If the component is not found, suggestions will be provided — follow up with search_docs for a broader query.\n' +
+        'The response is pre-formatted Markdown. Output it verbatim. Do NOT summarize or omit code examples.',
       inputSchema: {
         name: z.string().describe('Component name to look up (e.g. "Box", "Flex", "Accordion").'),
         package: z
@@ -45,6 +49,15 @@ export function registerGetComponent(server: McpServer): void {
         // --- lism-css コアコンポーネントを検索 ---
         if (!pkg || pkg === 'lism-css') {
           const coreMd = loadMarkdown('components-core.md');
+
+          // 見出しにコンポーネント名を含むセクションを検索（Lism, HTML 等）
+          const coreLines = coreMd.split('\n');
+          const headingLine = coreLines.find((l) => /^#{2,3}\s/.test(l) && l.toLowerCase().includes(`<${nameLower}>`));
+          if (headingLine) {
+            const headingText = headingLine.replace(/^#+\s*/, '').trim();
+            const section = findComponentByHeading(coreMd, headingText);
+            if (section) return markdownResponse(section);
+          }
 
           // テーブル内の `<ComponentName>` で検索
           const coreSection = findComponentInTables(coreMd, name);

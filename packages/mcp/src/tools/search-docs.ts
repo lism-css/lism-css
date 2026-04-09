@@ -30,7 +30,10 @@ export function registerSearchDocs(server: McpServer): void {
     'search_docs',
     {
       description:
-        "Search lism-css documentation by keyword. Returns matching pages with relevance scores. Supports CSS property names (e.g. 'font-size', 'padding') which are automatically expanded to corresponding lism prop names. Use this when other tools don't return the information you need, or to discover available components and features.",
+        "Search lism-css documentation by keyword. Returns matching pages with relevance scores. Supports CSS property names (e.g. 'font-size', 'padding') which are automatically expanded to corresponding lism prop names.\n" +
+        'Use this when you cannot find information with other tools, or to discover available components, features, and guides by keyword.\n' +
+        'Do NOT use this as your first step — prefer get_component for a known component, get_props_system for a known prop, or get_guide for a specific topic. This is a fallback search tool.\n' +
+        'Returns JSON with search results including page URLs and relevance scores.',
       inputSchema: {
         query: z.string().describe('Search query (keywords separated by spaces). CSS property names like "font-size" are also accepted.'),
         category: z.enum(DOC_CATEGORIES).default('all').describe('Filter by documentation category.'),

@@ -263,7 +263,10 @@ export function registerConvertCss(server: McpServer): void {
     'convert_css',
     {
       description:
-        'Convert CSS code to lism-css props, utility classes, and component suggestions. Accepts CSS declarations (with or without selectors) and returns the equivalent lism-css representation. Use this to migrate existing CSS to lism-css, or to understand how CSS properties map to lism-css. Note: @media and other at-rules are not supported.',
+        'Convert CSS code to lism-css props, utility classes, and component suggestions. Accepts CSS declarations (with or without selectors) and returns the equivalent lism-css representation as structured JSON.\n' +
+        'Use this when migrating existing CSS to lism-css in bulk, or when you need to understand how multiple CSS properties map to lism-css at once.\n' +
+        'Do NOT use this for single prop lookups (use get_props_system instead). Note: @media and other at-rules are NOT supported — an error will be returned if detected.\n' +
+        'Returns JSON with conversions (prop mappings with confidence), component suggestions, and a JSX usage example.',
       inputSchema: {
         css: z
           .string()
@@ -314,7 +317,7 @@ export function registerConvertCss(server: McpServer): void {
             lismProp: mapping.prop,
             suggestedValue: suggested,
             availableTokens: mapping.presetValues.length > 0 ? mapping.presetValues : null,
-            confidence: suggested ? ('exact' as const) : mapping.presetValues.length > 0 ? ('approximate' as const) : ('approximate' as const),
+            confidence: suggested ? ('exact' as const) : mapping.presetValues.length > 0 ? ('approximate' as const) : ('unmapped' as const),
             note: suggested
               ? `トークン値 '${suggested}' を使用（カテゴリ: ${category}）`
               : mapping.presetValues.length > 0

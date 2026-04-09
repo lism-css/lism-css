@@ -33,7 +33,10 @@ export function registerGetOverview(server: McpServer): void {
     'get_overview',
     {
       description:
-        'Get an overview of the lism-css framework: architecture, design philosophy, packages, breakpoints, CSS layers, and implementation rules. Start here to understand the framework before using other tools.',
+        'Get an overview of the lism-css framework: architecture, design philosophy, packages, breakpoints, CSS layers, and implementation rules.\n' +
+        'Use this as your FIRST call when starting any lism-css task — it provides the foundational context needed to use other tools effectively.\n' +
+        'Do NOT use this to look up specific components (use get_component), individual props (use get_props_system), or design tokens (use get_tokens).\n' +
+        'The response is pre-formatted Markdown. Output it verbatim to the user. Do NOT summarize or omit sections.',
       annotations: READ_ONLY_ANNOTATIONS,
     },
     () => {

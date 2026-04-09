@@ -1,53 +1,10 @@
-import type { DocsEntry, PropCategory, SearchResult } from './types.js';
+import type { DocsEntry, SearchResult } from './types.js';
 
 function tokenize(text: string): string[] {
   return text
     .toLowerCase()
     .split(/[\s\-_./]+/)
     .filter((t) => t.length > 0);
-}
-
-/**
- * コンポーネント名 → aliases (lowercase) のマップを構築。
- * ComponentInfo に限らず { name, aliases? } を持つ任意の配列から生成できる。
- */
-export function buildAliasMap(items: Array<{ name: string; aliases?: string[] }>): Map<string, string[]> {
-  const map = new Map<string, string[]>();
-  for (const item of items) {
-    if (item.aliases && item.aliases.length > 0) {
-      map.set(
-        item.name.toLowerCase(),
-        item.aliases.map((a) => a.toLowerCase())
-      );
-    }
-  }
-  return map;
-}
-
-/**
- * CSSプロパティ名 → Lism prop名のマップを構築。
- * 検索クエリにCSSプロパティ名が含まれていた場合に、対応するLism prop名で展開するために使用。
- */
-export function buildCssPropertyMap(categories: PropCategory[]): Map<string, string[]> {
-  const map = new Map<string, string[]>();
-  for (const cat of categories) {
-    for (const p of cat.props) {
-      // "(class: ...)" はスキップ
-      if (p.cssProperty.startsWith('(class:')) continue;
-
-      // "--hl (CSS変数)" → "--hl"
-      const normalized = p.cssProperty
-        .replace(/\s*\(.*\)$/, '')
-        .trim()
-        .toLowerCase();
-      if (!normalized) continue;
-
-      const existing = map.get(normalized) ?? [];
-      existing.push(p.prop.toLowerCase());
-      map.set(normalized, existing);
-    }
-  }
-  return map;
 }
 
 // ".-g:5" or "-g:5" → prop="g", value="5" / "-p" → prop="p"
@@ -92,22 +49,7 @@ function expandQuery(query: string, cssPropertyMap?: Map<string, string[]>): str
   return additions.length > 0 ? `${query} ${additions.join(' ')}` : query;
 }
 
-// docs entry のタイトルからコンポーネント名を完全一致で抽出して aliases を取得
-function getEntryAliases(entry: DocsEntry, aliasMap: Map<string, string[]>): string[] {
-  // タイトルをトークン化して各トークンを完全一致で比較
-  const titleTokens = entry.title
-    .toLowerCase()
-    .split(/[\s/]+/)
-    .map((t) => t.trim());
-  for (const [name, aliases] of aliasMap) {
-    if (titleTokens.includes(name)) {
-      return aliases;
-    }
-  }
-  return [];
-}
-
-function scoreEntry(entry: DocsEntry, queryTokens: string[], aliasMap?: Map<string, string[]>): number {
+function scoreEntry(entry: DocsEntry, queryTokens: string[]): number {
   let score = 0;
   const titleLower = entry.title.toLowerCase();
   const descLower = entry.description.toLowerCase();
@@ -128,28 +70,17 @@ function scoreEntry(entry: DocsEntry, queryTokens: string[], aliasMap?: Map<stri
     if (snippetLower.includes(token)) score += 1;
   }
 
-  // コンポーネントの aliases によるブースト（完全一致のみ）
-  if (aliasMap) {
-    const aliases = getEntryAliases(entry, aliasMap);
-    if (aliases.length > 0) {
-      for (const token of queryTokens) {
-        if (aliases.includes(token)) score += 5;
-      }
-    }
-  }
-
   return score;
 }
 
 export interface SearchDocsOptions {
   category?: string;
   limit?: number;
-  aliasMap?: Map<string, string[]>;
   cssPropertyMap?: Map<string, string[]>;
 }
 
 export function searchDocs(entries: DocsEntry[], query: string, options?: SearchDocsOptions): SearchResult[] {
-  const { category, limit = 10, aliasMap, cssPropertyMap } = options ?? {};
+  const { category, limit = 10, cssPropertyMap } = options ?? {};
 
   // CSSプロパティ名・Property Class記法をLism prop名に展開してからトークナイズ
   const expandedQuery = expandQuery(query, cssPropertyMap);
@@ -163,7 +94,7 @@ export function searchDocs(entries: DocsEntry[], query: string, options?: Search
 
   const scored = filtered
     .map((entry) => {
-      const score = scoreEntry(entry, queryTokens, aliasMap);
+      const score = scoreEntry(entry, queryTokens);
       return { entry, score };
     })
     .filter(({ score }) => score > 0)

@@ -7,7 +7,10 @@ export function registerGetTokens(server: McpServer): void {
     'get_tokens',
     {
       description:
-        'Get design tokens (colors, spacing, font sizes, shadows, etc.) used in lism-css. Returns the full tokens reference as Markdown. Use get_overview first to understand the framework.',
+        'Get design tokens (colors, spacing, font sizes, shadows, etc.) used in lism-css. Returns the full token reference including CSS variable names and available values.\n' +
+        'Use this when you need to check available token values, variable names, or design scales (e.g. "what spacing values exist?", "what are the font size tokens?").\n' +
+        'For prop-to-CSS mappings, get_props_system is more suitable. For CSS conversion, use convert_css. Call get_overview first if you have not yet.\n' +
+        'The response is pre-formatted Markdown. Output it verbatim. Do NOT summarize or omit token values.',
       annotations: READ_ONLY_ANNOTATIONS,
     },
     () => {

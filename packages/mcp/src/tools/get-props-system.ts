@@ -19,7 +19,10 @@ export function registerGetPropsSystem(server: McpServer): void {
     'get_props_system',
     {
       description:
-        'Get the lism-css Props system reference: how React/Astro props map to CSS classes and styles. Supports lookup by lism prop name (e.g. "p", "fz") OR by CSS property name (e.g. "padding", "font-size"). Omit prop to get the full reference. Related: use convert_css for bulk CSS conversion, get_component to see how props are used in components.',
+        'Get the lism-css Props system reference: how React/Astro props map to CSS classes and styles. Supports lookup by lism prop name (e.g. "p", "fz") OR by CSS property name (e.g. "padding", "font-size"). Omit the prop parameter to get the full reference.\n' +
+        'Use this when you need to find a specific prop mapping, understand the Property Class system, or check what CSS property a lism prop corresponds to.\n' +
+        'For bulk CSS-to-lism conversion, convert_css is more efficient. For component-specific documentation, use get_component.\n' +
+        'The response is pre-formatted Markdown. Output it verbatim. Do NOT summarize the prop tables.',
       inputSchema: {
         prop: z
           .string()

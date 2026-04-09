@@ -8,6 +8,7 @@ import { registerGetPropsSystem } from '../tools/get-props-system.js';
 import { registerGetComponent } from '../tools/get-component.js';
 import { registerGetGuide } from '../tools/get-guide.js';
 import { registerSearchDocs } from '../tools/search-docs.js';
+import { registerConvertCss } from '../tools/convert-css.js';
 
 async function createTestClient() {
   const server = new McpServer({ name: 'test', version: '0.0.1' });
@@ -17,6 +18,7 @@ async function createTestClient() {
   registerGetComponent(server);
   registerGetGuide(server);
   registerSearchDocs(server);
+  registerConvertCss(server);
 
   const [clientTransport, serverTransport] = InMemoryTransport.createLinkedPair();
   await server.connect(serverTransport);
@@ -110,6 +112,22 @@ describe('MCP Tools (integration)', () => {
     expect(text).toContain('Flex');
   });
 
+  it('get_component で Lism を検索すると該当セクションの Markdown が返る', async () => {
+    const client = await createTestClient();
+    const result = await client.callTool({ name: 'get_component', arguments: { name: 'Lism' } });
+    expect(result.isError).toBeFalsy();
+    const text = getText(result);
+    expect(text).toContain('Lism');
+  });
+
+  it('get_component で HTML を検索すると該当セクションの Markdown が返る', async () => {
+    const client = await createTestClient();
+    const result = await client.callTool({ name: 'get_component', arguments: { name: 'HTML' } });
+    expect(result.isError).toBeFalsy();
+    const text = getText(result);
+    expect(text).toContain('HTML');
+  });
+
   it('get_component で存在しないコンポーネントを検索すると代替提案付きの正常レスポンスを返す', async () => {
     const client = await createTestClient();
     const result = await client.callTool({ name: 'get_component', arguments: { name: 'NonExistentComponent999' } });
@@ -150,10 +168,10 @@ describe('MCP Tools (integration)', () => {
     expect(data.results).toBeDefined();
   });
 
-  it('ツール一覧が6つ登録されている', async () => {
+  it('ツール一覧が7つ登録されている', async () => {
     const client = await createTestClient();
     const tools = await client.listTools();
-    expect(tools.tools.length).toBe(6);
+    expect(tools.tools.length).toBe(7);
   });
 
   it('全ツールにreadOnlyHintアノテーションがある', async () => {

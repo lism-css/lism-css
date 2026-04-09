@@ -15,8 +15,8 @@
     "format": "prettier --write . --ignore-path ../../.prettierignore",
     "generate:ai-assets": "node scripts/generate-ai-assets.mjs",
     "build": "pnpm generate:ai-assets && tsc -p tsconfig.build.json && cp src/data/docs-index.json dist/data/ && rm -rf dist/data/guides && cp -r src/data/guides dist/data/guides",
-    "dev": "tsc --watch",
-    "test": "vitest run",
+    "dev": "pnpm generate:ai-assets && tsc --watch",
+    "test": "pnpm generate:ai-assets && vitest run",
     "prepack": "case \"$npm_execpath\" in *pnpm*) ;; *) echo 'Error: Use pnpm publish' && exit 1;; esac"
   },
   "dependencies": {
