@@ -1,5 +1,6 @@
 import { assertType, describe, it } from 'vitest';
 import type { StateProps } from './StateProps';
+import type { LismPropsBase } from '../getLismProps';
 import type { STATES } from '../../../config/index';
 
 describe('StateProps', () => {
@@ -77,6 +78,45 @@ describe('StateProps', () => {
     it('undefined を明示的に指定できる', () => {
       assertType<StateProps>({ isContainer: undefined });
       assertType<StateProps>({ isWrapper: undefined });
+    });
+  });
+});
+
+describe('LismPropsBase — set / unset', () => {
+  describe('set prop', () => {
+    it('文字列を受け付ける', () => {
+      assertType<LismPropsBase>({ set: 'gutter' });
+      assertType<LismPropsBase>({ set: 'hov,transition' });
+    });
+
+    it('文字列配列を受け付ける', () => {
+      assertType<LismPropsBase>({ set: ['hov', 'transition'] });
+    });
+
+    it('undefined / 省略可', () => {
+      assertType<LismPropsBase>({ set: undefined });
+      assertType<LismPropsBase>({});
+    });
+  });
+
+  describe('unset prop', () => {
+    it('文字列を受け付ける', () => {
+      assertType<LismPropsBase>({ unset: 'gutter' });
+    });
+
+    it('文字列配列を受け付ける', () => {
+      assertType<LismPropsBase>({ unset: ['hov', 'transition'] });
+    });
+
+    it('undefined / 省略可', () => {
+      assertType<LismPropsBase>({ unset: undefined });
+    });
+  });
+
+  describe('set + unset 同時指定', () => {
+    it('両方同時に指定できる', () => {
+      assertType<LismPropsBase>({ set: ['hov', 'transition', 'shadow'], unset: 'shadow' });
+      assertType<LismPropsBase>({ set: 'gutter', unset: ['gutter'] });
     });
   });
 });

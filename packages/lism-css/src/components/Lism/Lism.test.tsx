@@ -1204,6 +1204,63 @@ describe('Lism', () => {
         const element = screen.getByTestId('lism');
         expect(element).toHaveClass('set--mask');
       });
+
+      test('set="hov,transition" カンマ区切り文字列で複数クラスが出力される', () => {
+        render(
+          <Lism set="hov,transition" data-testid="lism">
+            test
+          </Lism>
+        );
+        const element = screen.getByTestId('lism');
+        expect(element).toHaveClass('set--hov');
+        expect(element).toHaveClass('set--transition');
+      });
+    });
+
+    describe('unset States', () => {
+      test('set + unset で指定した値が除外される', () => {
+        render(
+          <Lism set={['hov', 'transition', 'shadow']} unset="shadow" data-testid="lism">
+            test
+          </Lism>
+        );
+        const element = screen.getByTestId('lism');
+        expect(element).toHaveClass('set--hov');
+        expect(element).toHaveClass('set--transition');
+        expect(element).not.toHaveClass('set--shadow');
+      });
+
+      test('unset を配列で複数指定できる', () => {
+        render(
+          <Lism set={['hov', 'transition', 'shadow']} unset={['hov', 'shadow']} data-testid="lism">
+            test
+          </Lism>
+        );
+        const element = screen.getByTestId('lism');
+        expect(element).not.toHaveClass('set--hov');
+        expect(element).toHaveClass('set--transition');
+        expect(element).not.toHaveClass('set--shadow');
+      });
+
+      test('unset で全て除外すると set-- クラスが出力されない', () => {
+        render(
+          <Lism set="gutter" unset="gutter" data-testid="lism">
+            test
+          </Lism>
+        );
+        const element = screen.getByTestId('lism');
+        expect(element.className).not.toMatch(/set--/);
+      });
+
+      test('set が無い場合、unset だけ指定しても何も出力されない', () => {
+        render(
+          <Lism unset="gutter" data-testid="lism">
+            test
+          </Lism>
+        );
+        const element = screen.getByTestId('lism');
+        expect(element.className).not.toMatch(/set--/);
+      });
     });
 
     describe('複数のState Classを同時に指定', () => {
