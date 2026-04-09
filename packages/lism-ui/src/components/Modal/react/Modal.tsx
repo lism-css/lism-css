@@ -7,7 +7,7 @@ import { getProps, type ModalRootProps } from '../getProps';
 
 import '../_style.css';
 
-const Modal = ({ children, ...props }: ModalRootProps & LismComponentProps) => {
+const Modal = <T extends ElementType = 'dialog'>({ children, ...props }: ModalRootProps & LismComponentProps<T>) => {
   const ref = useRef<HTMLDialogElement>(null);
   useEffect(() => {
     if (!ref?.current) return;

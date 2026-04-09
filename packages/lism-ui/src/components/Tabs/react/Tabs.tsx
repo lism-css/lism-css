@@ -1,5 +1,6 @@
 'use client';
 import { useState, useId, Children, isValidElement } from 'react';
+import type { ElementType } from 'react';
 import { Lism, type LismComponentProps } from 'lism-css/react';
 import Tab from './Tab';
 import TabItem from './TabItem';
@@ -9,13 +10,13 @@ import getTabsProps from '../getProps';
 
 import '../_style.css';
 
-type TabsProps = LismComponentProps & {
+type TabsProps<T extends ElementType = 'div'> = LismComponentProps<T> & {
   tabId?: string;
   defaultIndex?: number;
   listProps?: LismComponentProps;
 };
 
-export default function Tabs({ tabId = '', defaultIndex = 1, listProps = {}, children, ...props }: TabsProps) {
+export default function Tabs<T extends ElementType = 'div'>({ tabId = '', defaultIndex = 1, listProps = {}, children, ...props }: TabsProps<T>) {
   const [activeIndex, setActiveIndex] = useState(defaultIndex);
   const theTabId = tabId || useId();
   const btns: React.ReactElement[] = [];

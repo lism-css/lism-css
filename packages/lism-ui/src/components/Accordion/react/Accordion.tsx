@@ -72,7 +72,7 @@ export function Heading({ children, ...props }: AccordionHeadingProps & LismComp
   );
 }
 
-type ButtonProps = LismComponentProps & {
+type ButtonProps<T extends ElementType = 'button'> = LismComponentProps<T> & {
   accID?: string;
 };
 
@@ -80,12 +80,12 @@ type ButtonProps = LismComponentProps & {
  * 開閉トリガーボタン
  * accID: Context から取得できればそれを優先、なければ props / プレースホルダー
  */
-export function Button({ children, accID: _accID = '__LISM_ACC_ID__', ...props }: ButtonProps) {
+export function Button<T extends ElementType = 'button'>({ children, accID: _accID = '__LISM_ACC_ID__', ...props }: ButtonProps<T>) {
   const ctx = useContext(AccordionContext);
   const accID = ctx?.accID || _accID;
 
   return (
-    <Lism {...defaultProps.button} {...props} aria-controls={accID} aria-expanded="false">
+    <Lism {...(defaultProps.button as object)} {...(props as object)} aria-controls={accID} aria-expanded="false">
       {children}
       <AccIcon />
     </Lism>

@@ -1,15 +1,22 @@
+import type { ElementType } from 'react';
 import { Lism, Icon, type LismComponentProps, type IconProps } from 'lism-css/react';
 import { defaultProps } from '../getProps';
 
-type CloseBtnProps = LismComponentProps<'button'> & {
+type CloseBtnProps<T extends ElementType = 'button'> = LismComponentProps<T> & {
   modalId?: string;
   icon?: IconProps['icon'];
   srText?: string;
 };
 
-export default function CloseBtn({ children, modalId = '', icon = undefined, srText = 'Close', ...props }: CloseBtnProps) {
+export default function CloseBtn<T extends ElementType = 'button'>({
+  children,
+  modalId = '',
+  icon = undefined,
+  srText = 'Close',
+  ...props
+}: CloseBtnProps<T>) {
   return (
-    <Lism data-modal-close={modalId} {...defaultProps.closeBtn} {...props}>
+    <Lism data-modal-close={modalId} {...(defaultProps.closeBtn as object)} {...(props as object)}>
       {children ? (
         children
       ) : (

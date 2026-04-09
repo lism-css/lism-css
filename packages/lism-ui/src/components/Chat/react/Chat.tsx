@@ -1,16 +1,18 @@
-import { Lism, Flow, Grid, Frame, Decorator, type LismComponentProps } from 'lism-css/react';
+import type { ElementType } from 'react';
+import { Lism, Flow, Grid, Frame, Decorator, type LayoutComponentProps } from 'lism-css/react';
+import type { GridLayoutProps } from 'lism-css/lib/types/LayoutProps';
 import getChatProps, { defaultProps } from '../getProps';
 import type { ChatProps } from '../getProps';
 import '../_style.css';
 
-type Props = ChatProps &
-  LismComponentProps & {
+type Props<T extends ElementType = 'div'> = ChatProps &
+  LayoutComponentProps<T, GridLayoutProps> & {
     name?: string;
     avatar?: string;
     flow?: string;
   };
 
-export default function Chat({ name, avatar, flow = 's', children, ...props }: Props) {
+export default function Chat<T extends ElementType = 'div'>({ name, avatar, flow = 's', children, ...props }: Props<T>) {
   const { 'data-chat-dir': direction, ...chatProps } = getChatProps(props);
 
   return (

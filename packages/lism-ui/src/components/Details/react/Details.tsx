@@ -8,7 +8,7 @@ import { getDetailsProps, defaultProps } from '../getProps';
 // スタイルのインポート
 import '../_style.css';
 
-type DetailsRootProps = LismComponentProps & { open?: boolean };
+type DetailsRootProps = LismComponentProps<'details'> & { open?: boolean };
 
 /**
  * Details - ルートコンポーネント
@@ -28,7 +28,7 @@ export function Details({ children, open, ...props }: DetailsRootProps) {
  * Summary - サマリーコンポーネント
  * details要素のsummary部分
  */
-export function Summary({ children, ...props }: LismComponentProps) {
+export function Summary({ children, ...props }: LismComponentProps<'summary'>) {
   return (
     <Lism as="summary" {...defaultProps.summary} {...props}>
       {children}
@@ -39,7 +39,7 @@ export function Summary({ children, ...props }: LismComponentProps) {
 /**
  * Title - タイトルコンポーネント
  */
-export function Title({ children, ...props }: LismComponentProps) {
+export function Title({ children, ...props }: LismComponentProps<'span'>) {
   return (
     <Lism {...defaultProps.title} {...props}>
       {children}
@@ -50,7 +50,7 @@ export function Title({ children, ...props }: LismComponentProps) {
 /**
  * Icon - アイコンコンポーネント
  */
-export function Icon({ children, ...props }: LismComponentProps) {
+export function Icon({ children, ...props }: LismComponentProps<'span'>) {
   return (
     <Lism {...defaultProps.icon} {...props}>
       {children}
