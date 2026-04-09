@@ -40,3 +40,9 @@ type ExtractStateValue<T> = T extends string
 export type StateProps = {
   [K in keyof StatesConfig]?: ExtractStateValue<StatesConfig[K]>;
 };
+
+/** set / unset prop で使われるプリセット値（エディタ補完用） */
+type SetPreset = 'gutter' | 'shadow' | 'hov' | 'transition' | 'mask' | 'plain' | 'innerRs' | 'bp';
+
+/** set / unset prop の値の型: プリセット値がサジェストされつつ、任意の文字列も受け付ける */
+export type SetPropValue = WithArbitraryString<SetPreset> | WithArbitraryString<SetPreset>[];

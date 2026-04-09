@@ -84,13 +84,25 @@ describe('StateProps', () => {
 
 describe('LismPropsBase — set / unset', () => {
   describe('set prop', () => {
-    it('文字列を受け付ける', () => {
+    it('プリセット値を受け付ける', () => {
       assertType<LismPropsBase>({ set: 'gutter' });
+      assertType<LismPropsBase>({ set: 'shadow' });
+      assertType<LismPropsBase>({ set: 'hov' });
+      assertType<LismPropsBase>({ set: 'transition' });
+      assertType<LismPropsBase>({ set: 'mask' });
+      assertType<LismPropsBase>({ set: 'plain' });
+      assertType<LismPropsBase>({ set: 'innerRs' });
+      assertType<LismPropsBase>({ set: 'bp' });
+    });
+
+    it('任意の文字列も受け付ける', () => {
+      assertType<LismPropsBase>({ set: 'custom-value' });
       assertType<LismPropsBase>({ set: 'hov,transition' });
     });
 
     it('文字列配列を受け付ける', () => {
       assertType<LismPropsBase>({ set: ['hov', 'transition'] });
+      assertType<LismPropsBase>({ set: ['gutter', 'custom-value'] });
     });
 
     it('undefined / 省略可', () => {
@@ -100,8 +112,13 @@ describe('LismPropsBase — set / unset', () => {
   });
 
   describe('unset prop', () => {
-    it('文字列を受け付ける', () => {
+    it('プリセット値を受け付ける', () => {
       assertType<LismPropsBase>({ unset: 'gutter' });
+      assertType<LismPropsBase>({ unset: 'shadow' });
+    });
+
+    it('任意の文字列も受け付ける', () => {
+      assertType<LismPropsBase>({ unset: 'custom-value' });
     });
 
     it('文字列配列を受け付ける', () => {
