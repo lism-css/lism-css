@@ -6,6 +6,7 @@ import { registerGetOverview } from './tools/get-overview.js';
 import { registerGetTokens } from './tools/get-tokens.js';
 import { registerGetPropsSystem } from './tools/get-props-system.js';
 import { registerGetComponent } from './tools/get-component.js';
+import { registerGetGuide } from './tools/get-guide.js';
 import { registerSearchDocs } from './tools/search-docs.js';
 import { registerConvertCss } from './tools/convert-css.js';
 
@@ -22,6 +23,7 @@ async function main() {
   registerGetTokens(server);
   registerGetPropsSystem(server);
   registerGetComponent(server);
+  registerGetGuide(server);
   registerSearchDocs(server);
   registerConvertCss(server);
 
