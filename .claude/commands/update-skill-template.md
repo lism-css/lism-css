@@ -11,8 +11,8 @@
 | `base-styles.md` | Reset CSS・HTML要素のベーススタイル・CSS変数（トークン）概要 | `packages/lism-css/src/scss/base/`, `packages/lism-css/src/scss/base/tokens/` |
 | `set-class.md` | `set--` クラス — `set--plain`/`set--shadow`/`set--hov`/`set--transition` 等のセットアップクラス | `packages/lism-css/src/scss/base/set/`, `packages/lism-css/src/scss/base/tokens/_shadow.scss` |
 | `module-class.md` | モジュールクラス — is--/l--/a--/c-- クラスの一覧と用途 | `packages/lism-css/src/scss/modules/`, `packages/lism-ui/src/`（c-- 系） |
-| `utility-class.md` | ユーティリティクラス — `u--` クラスの一覧・Prop Class との違い | `packages/lism-css/src/scss/utility/` |
-| `prop-class.md` | Prop Class — `-{prop}:{value}` 記法・主要 Prop 一覧・特殊 Prop（ボーダー・ホバー）・出力タイプ | `packages/lism-css/config/defaults/props.ts`, `packages/lism-css/src/scss/_prop-config.scss`, `packages/lism-css/src/scss/props/` |
+| `utility-class.md` | ユーティリティクラス — `u--` クラスの一覧・Property Class との違い | `packages/lism-css/src/scss/utility/` |
+| `property-class.md` | Property Class — `-{prop}:{value}` 記法・主要 Prop 一覧・特殊 Prop（ボーダー・ホバー）・出力タイプ | `packages/lism-css/config/defaults/props.ts`, `packages/lism-css/src/scss/_prop-config.scss`, `packages/lism-css/src/scss/props/` |
 | `prop-responsive.md` | レスポンシブ対応 — ブレークポイント・コンテナクエリ・HTML/コンポーネントでの指定方法 | `packages/lism-css/src/scss/_query.scss`, `packages/lism-css/src/lib/getBpData.ts` |
 | `components.md` | コンポーネントシステム — コア・セマンティック・レイアウト・ステート・アトミック・UI コンポーネント一覧、getLismProps、CLI | `packages/lism-css/src/components/`, `packages/lism-ui/src/`, 各パッケージの exports |
 | `tokens.md` | デザイントークン（余白・フォントサイズ・角丸・影・カラー・パレット） | `packages/lism-css/src/scss/base/tokens/`, `packages/lism-css/config/defaults/tokens.ts` |
@@ -56,13 +56,13 @@
 |---|---|
 | u-- クラス一覧 | `packages/lism-css/src/scss/utility/` 配下の SCSS |
 
-### Prop Class 関連
+### Property Class 関連
 
 | 確認したい内容 | 参照先 |
 |---|---|
 | Props 名と CSS プロパティの対応 | `packages/lism-css/config/defaults/props.ts` |
-| Prop Class の SCSS 出力設定 | `packages/lism-css/src/scss/_prop-config.scss` |
-| Prop Class のカテゴリ別 SCSS | `packages/lism-css/src/scss/props/` 配下（`_border.scss`, `_hover.scss` 等） |
+| Property Class の SCSS 出力設定 | `packages/lism-css/src/scss/_prop-config.scss` |
+| Property Class のカテゴリ別 SCSS | `packages/lism-css/src/scss/props/` 配下（`_border.scss`, `_hover.scss` 等） |
 
 ### レスポンシブ対応関連
 
