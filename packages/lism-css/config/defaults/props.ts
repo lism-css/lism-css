@@ -52,7 +52,7 @@ export default {
 
   d: {
     prop: 'display',
-    presets: ['none', 'block', 'flex', 'inline-flex', 'grid', 'inline-grid'],
+    presets: ['none', 'block', 'flex', 'inline-flex', 'grid', 'inline-grid', 'inline', 'inline-block'],
     bp: 1,
   },
   o: { prop: 'opacity', presets: ['0'], token: 'o', tokenClass: 1 },
