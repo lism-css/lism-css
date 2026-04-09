@@ -1,0 +1,11 @@
+---
+import type { HTMLTag, Polymorphic } from 'astro/types';
+import type { AstroLismBaseProps } from '../../types';
+import { Lism } from '../../Lism';
+
+type Props<Tag extends HTMLTag = 'div'> = Polymorphic<{ as: Tag }> & AstroLismBaseProps;
+
+const { as: Tag = 'div', exProps, ...props } = Astro.props;
+---
+
+<Lism isLayer as={Tag} {...props} {...exProps}><slot /></Lism>

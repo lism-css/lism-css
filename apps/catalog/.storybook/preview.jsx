@@ -1,5 +1,5 @@
 import 'lism-css/main.css';
-import Container from '../../../packages/lism-css/src/components/Container/Container';
+import Container from '../../../packages/lism-css/src/components/state/Container/Container';
 
 /** @type { import('@storybook/react-vite').Preview } */
 const preview = {

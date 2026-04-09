@@ -1,0 +1,12 @@
+---
+import type { HTMLTag, Polymorphic } from 'astro/types';
+import type { AstroLismFixedLayoutProps } from '../../types';
+import type { SideMainProps } from 'lism-css/lib/types/LayoutProps';
+import { Lism } from '../../Lism';
+
+type Props<Tag extends HTMLTag = 'div'> = Polymorphic<{ as: Tag }> & AstroLismFixedLayoutProps & Omit<SideMainProps, 'layout'>;
+
+const props = Astro.props;
+---
+
+<Lism layout="sideMain" {...props}><slot /></Lism>
