@@ -9,9 +9,10 @@ import getBpData from './getBpData';
 import atts from './helper/atts';
 import isEmptyObj from './helper/isEmptyObj';
 import filterEmptyObj from './helper/filterEmptyObj';
+import mergeSet from './helper/mergeSet';
 import splitWithComma from './helper/splitWithComma';
 import { type StyleWithCustomProps } from './types';
-import { type StateProps } from './types/StateProps';
+import { type StateProps, type SetPropValue } from './types/StateProps';
 import { type PropValueTypes } from './types/PropValueTypes';
 import { type LayoutType, type LayoutProps } from './types/LayoutProps';
 export { type LayoutType };
@@ -60,6 +61,8 @@ export interface LismPropsBase extends StateProps, PropValueTypes {
   variant?: string;
   style?: StyleWithCustomProps;
   _propConfig?: Record<string, PropConfig>;
+  set?: SetPropValue;
+  unset?: SetPropValue;
   hov?: boolean | string | Record<string, unknown>;
   css?: Record<string, string | number | undefined>;
   [key: `aria-${string}`]: unknown;
@@ -157,6 +160,10 @@ export class LismPropsData {
 
   // prop解析
   analyzeProps(): void {
+    // set/unset は合成処理のため先に取り出す
+    const rawSet = this.extractProp('set');
+    const rawUnset = this.extractProp('unset');
+
     Object.keys(this.attrs).forEach((propName) => {
       // state チェック
       if (Object.hasOwn(STATES, propName)) {
@@ -186,6 +193,9 @@ export class LismPropsData {
         this.addStyles(cssVales as Record<string, string | number | undefined>);
       }
     });
+
+    // set/unset 合成: base は持たないため rawSet をそのまま合成元に使う
+    mergeSet(undefined, rawSet, rawUnset).forEach((v) => this.lismState.push(`set--${v}`));
   }
 
   // Lism Prop 解析
