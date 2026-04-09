@@ -1,6 +1,7 @@
 /**
  * React版 Detailsコンポーネント
  */
+import type { ElementType } from 'react';
 import getLismProps from 'lism-css/lib/getLismProps';
 import { Lism, type LismComponentProps } from 'lism-css/react';
 import { getDetailsProps, defaultProps } from '../getProps';
@@ -28,9 +29,9 @@ export function Details({ children, open, ...props }: DetailsRootProps) {
  * Summary - サマリーコンポーネント
  * details要素のsummary部分
  */
-export function Summary({ children, ...props }: LismComponentProps<'summary'>) {
+export function Summary<T extends ElementType = 'summary'>({ children, ...props }: LismComponentProps<T>) {
   return (
-    <Lism as="summary" {...defaultProps.summary} {...props}>
+    <Lism as="summary" {...(defaultProps.summary as object)} {...(props as object)}>
       {children}
     </Lism>
   );
@@ -39,9 +40,9 @@ export function Summary({ children, ...props }: LismComponentProps<'summary'>) {
 /**
  * Title - タイトルコンポーネント
  */
-export function Title({ children, ...props }: LismComponentProps<'span'>) {
+export function Title<T extends ElementType = 'span'>({ children, ...props }: LismComponentProps<T>) {
   return (
-    <Lism {...defaultProps.title} {...props}>
+    <Lism {...(defaultProps.title as object)} {...(props as object)}>
       {children}
     </Lism>
   );
@@ -50,9 +51,9 @@ export function Title({ children, ...props }: LismComponentProps<'span'>) {
 /**
  * Icon - アイコンコンポーネント
  */
-export function Icon({ children, ...props }: LismComponentProps<'span'>) {
+export function Icon<T extends ElementType = 'span'>({ children, ...props }: LismComponentProps<T>) {
   return (
-    <Lism {...defaultProps.icon} {...props}>
+    <Lism {...(defaultProps.icon as object)} {...(props as object)}>
       {children}
     </Lism>
   );
@@ -61,10 +62,10 @@ export function Icon({ children, ...props }: LismComponentProps<'span'>) {
 /**
  * Content - コンテンツコンポーネント
  */
-export function Content({ children, ...props }: LismComponentProps) {
+export function Content<T extends ElementType = 'div'>({ children, ...props }: LismComponentProps<T>) {
   return (
     <Lism {...defaultProps.body}>
-      <Lism {...defaultProps.content} {...props}>
+      <Lism {...(defaultProps.content as object)} {...(props as object)}>
         {children}
       </Lism>
     </Lism>
