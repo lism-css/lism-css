@@ -62,6 +62,8 @@ export interface PropRow {
   cssProperty: string;
   /** 所属する ### セクション名 */
   sectionName: string;
+  /** プリセット値クラス列の生テキスト（例: "-fz:root, -fz:base, ..."） */
+  presetColumn: string;
 }
 
 /**
@@ -118,7 +120,8 @@ export function parsePropRows(md: string): PropRow[] {
           .replace(/\([^)]*\)$/, '')
           .trim();
         if (prop && cssProperty) {
-          rows.push({ prop, cssProperty, sectionName: currentSection });
+          const presetColumn = cells.length >= 3 ? cells[2].replace(/`/g, '').trim() : '';
+          rows.push({ prop, cssProperty, sectionName: currentSection, presetColumn });
         }
       }
     }

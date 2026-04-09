@@ -1,9 +1,8 @@
 import { z } from 'zod';
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
-import { loadJSON } from '../lib/load-data.js';
-import { PropsSystemDataSchema, ComponentInfoSchema } from '../lib/schemas.js';
+import { loadMarkdown } from '../lib/load-markdown.js';
+import { parsePropRows, type PropRow } from '../lib/markdown-utils.js';
 import { success, error, READ_ONLY_ANNOTATIONS } from '../lib/response.js';
-import type { PropEntry } from '../lib/types.js';
 
 /** CSS宣言 */
 interface CssDeclaration {
@@ -17,6 +16,7 @@ interface ConversionEntry {
   lismProp: string | null;
   suggestedValue: string | null;
   availableTokens: string[] | null;
+  confidence: 'exact' | 'approximate' | 'unmapped';
   note: string;
 }
 
@@ -31,6 +31,19 @@ interface ComponentSuggestion {
 // CSS パース
 // ----------------------------------------------------------------
 
+/** @ルール（@media 等）が含まれていないか検査する */
+function detectAtRules(cssText: string): string | null {
+  const atRuleMatch = cssText.match(/@(\w[\w-]*)/);
+  if (atRuleMatch) {
+    return `@${atRuleMatch[1]} ルールは未対応です。CSS 宣言（property: value;）のみを入力してください。`;
+  }
+  return null;
+}
+
+/**
+ * CSS テキストから宣言を抽出する。
+ * `;` で分割する際に `url()` 等の括弧内の `;` を無視する。
+ */
 function parseCssDeclarations(cssText: string): CssDeclaration[] {
   // コメント除去
   let cleaned = cssText.replace(/\/\*[\s\S]*?\*\//g, '');
@@ -38,16 +51,33 @@ function parseCssDeclarations(cssText: string): CssDeclaration[] {
   // セレクタ + ブレースを除去（裸の宣言リストも受け付ける）
   cleaned = cleaned.replace(/[^{}]*\{/g, '').replace(/\}/g, '');
 
-  const declarations: CssDeclaration[] = [];
-  for (const line of cleaned.split(';')) {
-    const trimmed = line.trim();
-    if (!trimmed) continue;
+  // 括弧のネストを考慮して `;` で分割
+  const segments: string[] = [];
+  let current = '';
+  let parenDepth = 0;
 
-    const colonIdx = trimmed.indexOf(':');
+  for (const ch of cleaned) {
+    if (ch === '(') parenDepth++;
+    if (ch === ')') parenDepth = Math.max(0, parenDepth - 1);
+
+    if (ch === ';' && parenDepth === 0) {
+      segments.push(current.trim());
+      current = '';
+    } else {
+      current += ch;
+    }
+  }
+  if (current.trim()) segments.push(current.trim());
+
+  const declarations: CssDeclaration[] = [];
+  for (const segment of segments) {
+    if (!segment) continue;
+
+    const colonIdx = segment.indexOf(':');
     if (colonIdx === -1) continue;
 
-    const property = trimmed.substring(0, colonIdx).trim().toLowerCase();
-    const value = trimmed.substring(colonIdx + 1).trim();
+    const property = segment.substring(0, colonIdx).trim().toLowerCase();
+    const value = segment.substring(colonIdx + 1).trim();
 
     if (property && value) {
       declarations.push({ property, value });
@@ -57,30 +87,50 @@ function parseCssDeclarations(cssText: string): CssDeclaration[] {
 }
 
 // ----------------------------------------------------------------
-// CSSプロパティ → PropEntry マップ
+// property-class.md からのマッピング構築
 // ----------------------------------------------------------------
 
-function buildCssPropertyMap(categories: { props: PropEntry[] }[]): Map<string, PropEntry> {
-  const map = new Map<string, PropEntry>();
-  for (const cat of categories) {
-    for (const prop of cat.props) {
-      const normalized = normalizeCssPropertyName(prop.cssProperty);
-      if (normalized) map.set(normalized, prop);
+interface PropMapping {
+  prop: string;
+  cssProperty: string;
+  presetValues: string[];
+  sectionName: string;
+}
+
+/** プリセット値列から値を抽出する（例: "-fz:root, -fz:base" → ["root", "base"]） */
+function extractPresetValues(presetColumn: string, propName: string): string[] {
+  if (!presetColumn || presetColumn === '—' || presetColumn === '-') return [];
+
+  const values: string[] = [];
+  // -{prop}:{value} パターンを全て抽出
+  const escaped = propName.replace(/[-/\\^$*+?.()|[\]{}]/g, '\\$&');
+  const regex = new RegExp(`-${escaped}:([^,\\s\`〜]+)`, 'g');
+  let match: RegExpExecArray | null;
+  while ((match = regex.exec(presetColumn)) !== null) {
+    values.push(match[1]);
+  }
+  return values;
+}
+
+function buildMappings(md: string): PropMapping[] {
+  return parsePropRows(md).map((row) => ({
+    prop: row.prop,
+    cssProperty: row.cssProperty,
+    presetValues: extractPresetValues(row.presetColumn, row.prop),
+    sectionName: row.sectionName,
+  }));
+}
+
+function buildCssPropertyMap(mappings: PropMapping[]): Map<string, PropMapping> {
+  const map = new Map<string, PropMapping>();
+  for (const mapping of mappings) {
+    const normalized = mapping.cssProperty.toLowerCase();
+    // CSS カスタムプロパティ形式はスキップ（"--hl" 等）
+    if (!normalized.startsWith('(class:')) {
+      map.set(normalized, mapping);
     }
   }
   return map;
-}
-
-/** cssProperty フィールドの正規化 */
-function normalizeCssPropertyName(raw: string): string | null {
-  // "(class: is--container)" → スキップ（CSS プロパティではない）
-  if (raw.startsWith('(class:')) return null;
-
-  // "--hl (CSS変数)" → "--hl"
-  return raw
-    .replace(/\s*\(.*\)$/, '')
-    .trim()
-    .toLowerCase();
 }
 
 // ----------------------------------------------------------------
@@ -95,9 +145,9 @@ const VALUE_ALIASES: Record<string, string> = {
   lowercase: 'lower',
 };
 
-function suggestValue(propEntry: PropEntry, cssValue: string): string | null {
-  const tokens = propEntry.values;
-  if (!tokens || tokens.length === 0) return null;
+function suggestValue(mapping: PropMapping, cssValue: string): string | null {
+  const tokens = mapping.presetValues;
+  if (tokens.length === 0) return null;
 
   // 直接一致
   if (tokens.includes(cssValue)) return cssValue;
@@ -163,11 +213,9 @@ function detectComponent(declarations: CssDeclaration[]): ComponentSuggestion | 
 // 変換メイン
 // ----------------------------------------------------------------
 
-function findCategory(categories: { category: string; props: PropEntry[] }[], propName: string): string {
-  for (const cat of categories) {
-    if (cat.props.some((p) => p.prop === propName)) return cat.category;
-  }
-  return 'unknown';
+function findCategory(mappings: PropMapping[], propName: string): string {
+  const found = mappings.find((m) => m.prop === propName);
+  return found?.sectionName ?? 'unknown';
 }
 
 function buildExample(conversions: ConversionEntry[], component: ComponentSuggestion | null): string {
@@ -215,20 +263,27 @@ export function registerConvertCss(server: McpServer): void {
     'convert_css',
     {
       description:
-        'Convert CSS code to lism-css props, utility classes, and component suggestions. Accepts CSS declarations (with or without selectors) and returns the equivalent lism-css representation. Use this to migrate existing CSS to lism-css, or to understand how CSS properties map to lism-css.',
+        'Convert CSS code to lism-css props, utility classes, and component suggestions. Accepts CSS declarations (with or without selectors) and returns the equivalent lism-css representation. Use this to migrate existing CSS to lism-css, or to understand how CSS properties map to lism-css. Note: @media and other at-rules are not supported.',
       inputSchema: {
         css: z
           .string()
           .describe(
-            'CSS code to convert. Accepts a full rule block with selector (e.g. ".foo { padding: 1rem; }") or bare declarations (e.g. "padding: 1rem; font-size: 16px;").'
+            'CSS code to convert. Accepts a full rule block with selector (e.g. ".foo { padding: 1rem; }") or bare declarations (e.g. "padding: 1rem; font-size: 16px;"). @media and other at-rules are not supported.'
           ),
       },
       annotations: READ_ONLY_ANNOTATIONS,
     },
     ({ css }) => {
       try {
-        const propsData = loadJSON('props-system.json', PropsSystemDataSchema);
-        const cssPropertyMap = buildCssPropertyMap(propsData.categories);
+        // @ ルール検出
+        const atRuleError = detectAtRules(css);
+        if (atRuleError) {
+          return error(atRuleError);
+        }
+
+        const md = loadMarkdown('property-class.md');
+        const mappings = buildMappings(md);
+        const cssPropertyMap = buildCssPropertyMap(mappings);
 
         const declarations = parseCssDeclarations(css);
 
@@ -238,30 +293,32 @@ export function registerConvertCss(server: McpServer): void {
 
         // 各宣言を変換
         const conversions: ConversionEntry[] = declarations.map((decl) => {
-          const propEntry = cssPropertyMap.get(decl.property);
+          const mapping = cssPropertyMap.get(decl.property);
 
-          if (!propEntry) {
+          if (!mapping) {
             return {
               css: `${decl.property}: ${decl.value}`,
               lismProp: null,
               suggestedValue: null,
               availableTokens: null,
+              confidence: 'unmapped' as const,
               note: 'Lism Props に該当なし。style で直接指定してください。',
             };
           }
 
-          const suggested = suggestValue(propEntry, decl.value);
-          const category = findCategory(propsData.categories, propEntry.prop);
+          const suggested = suggestValue(mapping, decl.value);
+          const category = findCategory(mappings, mapping.prop);
 
           return {
             css: `${decl.property}: ${decl.value}`,
-            lismProp: propEntry.prop,
+            lismProp: mapping.prop,
             suggestedValue: suggested,
-            availableTokens: propEntry.values ?? null,
+            availableTokens: mapping.presetValues.length > 0 ? mapping.presetValues : null,
+            confidence: suggested ? ('exact' as const) : mapping.presetValues.length > 0 ? ('approximate' as const) : ('approximate' as const),
             note: suggested
               ? `トークン値 '${suggested}' を使用（カテゴリ: ${category}）`
-              : propEntry.values && propEntry.values.length > 0
-                ? `カスタム値。利用可能なトークン: ${propEntry.values.join(', ')}（カテゴリ: ${category}）`
+              : mapping.presetValues.length > 0
+                ? `カスタム値。利用可能なトークン: ${mapping.presetValues.join(', ')}（カテゴリ: ${category}）`
                 : `カスタム値として指定（カテゴリ: ${category}）`,
           };
         });
