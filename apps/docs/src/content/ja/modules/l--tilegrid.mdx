@@ -8,7 +8,7 @@ import { TileGrid, Box, Center } from 'lism-css/astro';
 
 `cols`（列数）と`rows`（行数）を指定して、**均等なタイル型グリッドレイアウト**を構成するためのコンポーネントです。
 
-内部的には `grid-template: repeat(rows, 1fr) / repeat(cols, 1fr)` を使用しています。
+内部的には `grid-template: repeat(rows, minmax(0, 1fr)) / repeat(cols, minmax(0, 1fr))` を使用しています。
 
 
 ## Props

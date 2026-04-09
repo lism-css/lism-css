@@ -203,16 +203,16 @@ dialog.c--modal#modalID.set--plain
         </Flex>
         <Modal.Body ov-y="auto">
           <Stack className="u--collapseGrid" bd-b p="0" ov="clip">
-            <Link href="#menu-link01" c="inherit" hov="neutral" px="20" py="15">
+            <Link href="#menu-link01" set="plain" hov="neutral" px="20" py="15">
               <Fragment>Menu item 1</Fragment>
             </Link>
-            <Link href="#menu-link02" c="inherit" hov="neutral" px="20" py="15">
+            <Link href="#menu-link02" set="plain" hov="neutral" px="20" py="15">
               <Fragment>Menu item 2</Fragment>
             </Link>
-            <Link href="#menu-link03" c="inherit" hov="neutral" px="20" py="15">
+            <Link href="#menu-link03" set="plain" hov="neutral" px="20" py="15">
               <Fragment>Menu item 3</Fragment>
             </Link>
-            <Link href="#menu-link04" c="inherit" hov="neutral" px="20" py="15">
+            <Link href="#menu-link04" set="plain" hov="neutral" px="20" py="15">
               <Fragment>Menu item 4</Fragment>
             </Link>
           </Stack>
@@ -223,7 +223,7 @@ dialog.c--modal#modalID.set--plain
   <PreviewCode slot='tab' label='JSX'>
     ```jsx '"modal-03"'
     <Modal.OpenBtn modalId='modal-03' ai='center' g='5'>
-      <Icon icon='menu' fz='xl' /><span>MENU</span>
+      <Icon icon='menu' fz='l' /><span>MENU</span>
     </Modal.OpenBtn>
 
     <Modal.Root id='modal-03'>
@@ -234,10 +234,10 @@ dialog.c--modal#modalID.set--plain
         </Flex>
         <Modal.Body ov-y='auto'>
           <Stack className='u--collapseGrid' bd-b p='0' ov='clip'>
-            <Link href='#menu-link01' className='set--plain' hov='o' px='20' py='15'>Menu item 1</Link>
-            <Link href='#menu-link02' className='set--plain' hov='o' px='20' py='15'>Menu item 2</Link>
-            <Link href='#menu-link03' className='set--plain' hov='o' px='20' py='15'>Menu item 3</Link>
-            <Link href='#menu-link04' className='set--plain' hov='o' px='20' py='15'>Menu item 4</Link>
+            <Link href='#menu-link01' set="plain" hov='neutral' px='20' py='15'>Menu item 1</Link>
+            <Link href='#menu-link02' set="plain" hov='neutral' px='20' py='15'>Menu item 2</Link>
+            <Link href='#menu-link03' set="plain" hov='neutral' px='20' py='15'>Menu item 3</Link>
+            <Link href='#menu-link04' set="plain" hov='neutral' px='20' py='15'>Menu item 4</Link>
           </Stack>
         </Modal.Body>
       </Modal.Inner>
