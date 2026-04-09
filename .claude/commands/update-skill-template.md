@@ -1,6 +1,6 @@
 # Skill Template Update
 
-`.claude/skills/lism-css-guide/` 配下の 10 ファイルを、リポジトリの最新ソースに合わせて更新してください。
+`.claude/skills/lism-css-guide/` 配下の 12 ファイルを、リポジトリの最新ソースに合わせて更新してください。
 
 
 ## 対象ファイルと更新内容
@@ -14,9 +14,11 @@
 | `utility-class.md` | ユーティリティクラス (`u--` クラス) の一覧とProperty Class との違い | `packages/lism-css/src/scss/utility/` |
 | `property-class.md` | Property Class (`-{prop}:{value}`)の一覧、記法と出力の解説、特殊Prop（ボーダー・ホバー） | `packages/lism-css/config/defaults/props.ts`, `packages/lism-css/src/scss/_prop-config.scss`, `packages/lism-css/src/scss/props/` |
 | `prop-responsive.md` | レスポンシブ対応 — ブレークポイント・コンテナクエリ・HTML/コンポーネントでの指定方法 | `packages/lism-css/src/scss/_query.scss`, `packages/lism-css/src/lib/getBpData.ts` |
-| `components.md` | コンポーネントシステム — コア・セマンティック・レイアウト・ステート・アトミック・UI コンポーネント一覧、getLismProps、CLI | `packages/lism-css/src/components/`, `packages/lism-ui/src/`, 各パッケージの exports |
+| `components-core.md` | コアコンポーネント — セマンティック・レイアウト・ステート・アトミック一覧、Lism Props、getLismProps | `packages/lism-css/src/components/`, 各パッケージの exports |
+| `components-ui.md` | UIコンポーネント（`@lism-css/ui`）— Accordion・Modal・Tabs・Button 等の Props・構造・CLI | `packages/lism-ui/src/`, 各パッケージの exports |
 | `tokens.md` | デザイントークン（余白・フォントサイズ・角丸・影・カラー・パレット） | `packages/lism-css/src/scss/base/tokens/`, `packages/lism-css/config/defaults/tokens.ts` |
 | `css-rules.md` | CSS Layer 構造・命名規則・プレフィックス・カスタムCSS ルール | `packages/lism-css/src/scss/` |
+| `customize.md` | カスタマイズ — @layerオフ・SCSS変数上書き・lism.config.js・CLIビルド | `packages/lism-css/src/scss/`, `packages/lism-css/lism.config.js`, `apps/docs/src/content/ja/customize.mdx` |
 
 
 ## 情報の優先順位
@@ -71,7 +73,7 @@
 | ブレークポイント・コンテナクエリ定義（CSS） | `packages/lism-css/src/scss/_query.scss` |
 | レスポンシブ Props の正規化（JS） | `packages/lism-css/src/lib/getBpData.ts` |
 
-### コンポーネント関連
+### コンポーネント関連（components-core.md / components-ui.md）
 
 | 確認したい内容 | 参照先 |
 |---|---|
@@ -80,6 +82,16 @@
 | getLismProps の仕組み | `packages/lism-css/src/lib/getLismProps.ts`, `packages/lism-css/config/` |
 | ヘルパー関数 | `packages/lism-css/src/lib/helper/`（mergeSet, atts, isNumStr 等） |
 | CLI ツール | `packages/lism-css/bin/` または `package.json` の bin フィールド |
+
+### カスタマイズ関連（customize.md）
+
+| 確認したい内容 | 参照先 |
+|---|---|
+| @layer オフ | `packages/lism-css/src/scss/`（`main.scss` / `_with_layer.scss`） |
+| SCSS 設定変数 | `packages/lism-css/src/scss/` 配下の `$lism-` 変数定義 |
+| lism.config.js | `packages/lism-css/lism.config.js`（存在する場合） |
+| CLI ビルド | `packages/lism-css/bin/` または `package.json` の bin フィールド |
+| ドキュメント | `apps/docs/src/content/ja/customize.mdx` |
 
 ### トークン関連
 
@@ -101,7 +113,7 @@
 
 ### 1. 現在のテンプレートとバージョン情報の取得
 
-- `.claude/skills/lism-css-guide/` 配下の 10 ファイルを読み取る
+- `.claude/skills/lism-css-guide/` 配下の 12 ファイルを読み取る
 - `packages/lism-css/package.json` からバージョンを取得し、`SKILL.md` のバージョン表記と比較する
 
 ### 2. ソースコードの読み取りと照合
