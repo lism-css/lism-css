@@ -351,7 +351,7 @@
     "description": "プロトタイピングやデザインモックアップ用のダミーテキストを出力するコンポーネントです。",
     "category": "ui",
     "headings": ["Props", "Import", "使用例"],
-    "keywords": ["DummyText", "ダミー", "テスト", "プレビュー", "プレースホルダー", "lorem ipsum"],
+    "keywords": ["DummyText", "ダミー", "テスト", "プレビュー", "プレースホルダー", "lorem ipsum", "placeholder"],
     "snippet": "ダミーテキストを生成するコンポーネント。複数の言語とテキスト長に対応。@lism-css/uiパッケージから提供。"
   },
   {
@@ -387,7 +387,19 @@
     "description": "Lism CSS の Stack モジュールについて解説します。複数の要素を Flex で縦方向に配置するレイアウトモジュールです。",
     "category": "modules",
     "headings": ["CSS", "Import", "Props", "Usage"],
-    "keywords": ["Stack", "スタック", "縦並び", "vertical", "l--stack", "display", "display: flex", "flex-direction", "flex-direction: column"],
+    "keywords": [
+      "Stack",
+      "スタック",
+      "縦並び",
+      "vertical",
+      "l--stack",
+      "display",
+      "display: flex",
+      "flex-direction",
+      "flex-direction: column",
+      "縦積み",
+      "column direction"
+    ],
     "snippet": "縦方向に要素を積み重ねるFlexレイアウト。flex-direction: column のFlex。ai='center'で内在的な中央寄せも可能。"
   },
   {
@@ -406,7 +418,8 @@
       "display",
       "display: grid",
       "grid-template-columns",
-      "grid-template-rows"
+      "grid-template-rows",
+      "格子"
     ],
     "snippet": "CSS Gridレイアウトを構成。gtc, gtr, gta, cols, rows 等で列・行を制御。subgridもサポート。均等タイルは l--tileGrid を参照。"
   },
@@ -440,7 +453,7 @@
     "description": "Lism CSS の Center モジュールについて解説します。要素を上下左右中央揃えで配置するためのレイアウトモジュールです。",
     "category": "modules",
     "headings": ["CSS", "主なProps", "Import", "Usage"],
-    "keywords": ["Center", "中央揃え", "center", "layout", "l--center", "display", "display: grid", "place-items", "place-items: center"],
+    "keywords": ["Center", "中央揃え", "center", "layout", "l--center", "display", "display: grid", "place-items", "place-items: center", "中央配置"],
     "snippet": "子要素を中央揃えにするレイアウト。place-items: center の Grid。高さがあれば上下左右中央揃え。"
   },
   {
@@ -449,7 +462,7 @@
     "description": "Lism CSS の Cluster モジュールについて解説します。要素を横方向に並べて自動で折り返すレイアウトモジュールです。",
     "category": "modules",
     "headings": ["CSS", "Import", "Usage"],
-    "keywords": ["Cluster", "クラスター", "横並び", "wrap", "l--cluster", "タグ", "display", "display: flex", "flex-wrap"],
+    "keywords": ["Cluster", "クラスター", "横並び", "wrap", "l--cluster", "タグ", "display", "display: flex", "flex-wrap", "badge list"],
     "snippet": "横方向に要素を並べ、自動的に折り返すFlexレイアウト。タグやバッジの並びに適している。"
   },
   {
@@ -458,7 +471,19 @@
     "description": "Lism CSS の Columns モジュールについて解説します。ブレイクポイントごとに列数を指定できるカラムレイアウトです。",
     "category": "modules",
     "headings": ["Props", "CSS", "Import", "Usage"],
-    "keywords": ["Columns", "カラム", "列", "multi-column", "l--columns", "subgrid", "display", "display: grid", "grid-template-columns"],
+    "keywords": [
+      "Columns",
+      "カラム",
+      "列",
+      "multi-column",
+      "l--columns",
+      "subgrid",
+      "display",
+      "display: grid",
+      "grid-template-columns",
+      "等分割",
+      "multi column"
+    ],
     "snippet": "均等幅のカラムレイアウト。cols で列数を指定する Grid。レスポンシブ対応可能。subgridも活用可能。"
   },
   {
@@ -467,7 +492,7 @@
     "description": "Lism CSS の Flow モジュールについて解説します。子要素間の余白を自動管理する flow-root レイアウトモジュールです。",
     "category": "modules",
     "headings": ["対応コンポーネント", "Usage", "l--flow を入れ子にする時の注意点"],
-    "keywords": ["Flow", "フロー", "コンテンツ", "記事", "l--flow", "本文", "is--skipFlow", "display: flow-root"],
+    "keywords": ["Flow", "フロー", "コンテンツ", "記事", "l--flow", "本文", "is--skipFlow", "display: flow-root", "article body", "縦方向余白"],
     "snippet": "コンテンツフロー用のレイアウト。display: flow-root で子要素間の余白を管理。見出しタグは余白が2倍。is--skipFlowで余白打ち消しも可能。"
   },
   {
@@ -476,7 +501,20 @@
     "description": "Lism CSS の FluidCols モジュールについて解説します。カラム幅に応じて自動で折り返すブレイクポイント非依存の段組みレイアウトです。",
     "category": "modules",
     "headings": ["Props", "CSS", "Import", "Usage"],
-    "keywords": ["FluidCols", "流動カラム", "auto-fill", "fluid", "l--fluidCols", "display", "display: grid"],
+    "keywords": [
+      "FluidCols",
+      "流動カラム",
+      "auto-fill",
+      "fluid",
+      "l--fluidCols",
+      "display",
+      "display: grid",
+      "auto-wrap",
+      "自動折り返し",
+      "responsive grid",
+      "メディアクエリなし",
+      "折り返しグリッド"
+    ],
     "snippet": "子要素が最小幅に達すると自動的に折り返すグリッドレイアウト。メディアクエリに依存しない。cols で最小幅を指定。"
   },
   {
@@ -485,7 +523,7 @@
     "description": "Lism CSS の Frame モジュールについて解説します。直下のメディア要素を自身のサイズに合わせて表示するレイアウトモジュールです。",
     "category": "modules",
     "headings": ["対応コンポーネント", "Usage"],
-    "keywords": ["Frame", "フレーム", "aspect-ratio", "アスペクト比", "l--frame", "画像", "video", "iframe"],
+    "keywords": ["Frame", "フレーム", "aspect-ratio", "アスペクト比", "l--frame", "画像", "video", "iframe", "比率維持"],
     "snippet": "直下のメディア要素（img, video, iframe）を自身のサイズに合わせて表示するレイアウトモジュール。arでアスペクト比を指定。"
   },
   {
@@ -494,7 +532,7 @@
     "description": "Lism CSS の SwitchCols モジュールについて解説します。メディアクエリ不要で複数列と1列を自動切り替えするレイアウトです。",
     "category": "modules",
     "headings": ["Props", "CSS", "Import", "Usage"],
-    "keywords": ["SwitchCols", "切り替え", "switch", "カラム", "l--switchCols"],
+    "keywords": ["SwitchCols", "切り替え", "switch", "カラム", "l--switchCols", "responsive columns", "メディアクエリなし"],
     "snippet": "複数列以上と1列への切り替えをメディアクエリを使わずに実装するレイアウト。breakSizeで切り替えポイントを指定。"
   },
   {
@@ -503,7 +541,7 @@
     "description": "Lism CSS の SideMain モジュールについて解説します。メディアクエリ不要でサイドとメインの2カラムレイアウトを構築します。",
     "category": "modules",
     "headings": ["基本構造", "CSS", "Import", "Props", "Usage", "`Grid`を使って似たレイアウトを構成する例"],
-    "keywords": ["SideMain", "サイドバー", "sidebar", "メイン", "l--sideMain", "2カラム", "is--side"],
+    "keywords": ["SideMain", "サイドバー", "sidebar", "メイン", "l--sideMain", "2カラム", "is--side", "two column"],
     "snippet": "サイドバー + メインコンテンツの2カラムレイアウト。メイン側が可変幅。sideW, mainWで幅を制御。fxd='row-reverse'で反転も可能。"
   },
   {
@@ -512,7 +550,7 @@
     "description": "Lism CSS の Container モジュールについて解説します。container-type を設定しコンテナクエリを有効にするコンポーネントです。",
     "category": "modules",
     "headings": ["Props", "Import", "Usage"],
-    "keywords": ["Container", "コンテナ", "container query", "is--container", "isContainer"],
+    "keywords": ["Container", "コンテナ", "container query", "is--container", "isContainer", "レスポンシブ基準"],
     "snippet": "コンテナクエリの基準要素。container-typeをセットし、子要素のレスポンシブ対応の基準となる。isContainerプロパティでどのコンポーネントからでも呼び出し可能。"
   },
   {
@@ -521,7 +559,19 @@
     "description": "Lism CSS の Layer モジュールについて解説します。親要素に重ねて配置するオーバーレイ用のコンポーネントです。",
     "category": "modules",
     "headings": ["Import", "Usage"],
-    "keywords": ["Layer", "レイヤー", "overlay", "オーバーレイ", "is--layer", "absolute", "backdrop-filter", "blur", "position: absolute"],
+    "keywords": [
+      "Layer",
+      "レイヤー",
+      "overlay",
+      "オーバーレイ",
+      "is--layer",
+      "absolute",
+      "backdrop-filter",
+      "blur",
+      "position: absolute",
+      "重ねる",
+      "背景装飾"
+    ],
     "snippet": "親要素に対して絶対配置で重なるレイヤー要素。オーバーレイや背景装飾に使用。blur等のbackdrop-filterプロパティも個別に指定可能。"
   },
   {
@@ -530,7 +580,7 @@
     "description": "Lism CSS の LinkBox モジュールについて解説します。ボックス全体をクリック可能なリンクにするコンポーネントです。",
     "category": "modules",
     "headings": ["Import", "Props", "Usage", "Opt-in"],
-    "keywords": ["LinkBox", "リンク", "clickable", "カード", "is--linkBox", "u--expandedLink"],
+    "keywords": ["LinkBox", "リンク", "clickable", "カード", "is--linkBox", "u--expandedLink", "クリッカブル"],
     "snippet": "ボックス全体をリンク領域にする。hrefを指定してaタグにする方法と、内部にu--expandedLinkを配置する方法の2通りがある。"
   },
   {
@@ -539,7 +589,7 @@
     "description": "Lism CSS の Wrapper モジュールについて解説します。コンテンツ幅を制御する is--wrapper クラスを出力するコンポーネントです。",
     "category": "modules",
     "headings": ["Props", "Import", "Usage"],
-    "keywords": ["Wrapper", "ラッパー", "コンテンツ幅", "max-width", "is--wrapper", "contentSize"],
+    "keywords": ["Wrapper", "ラッパー", "コンテンツ幅", "max-width", "is--wrapper", "contentSize", "幅制限", "width limiter"],
     "snippet": "コンテンツ幅を制限するラッパー要素。contentSizeで幅を指定。s, lのプリセットサイズや任意値も設定可能。"
   },
   {
@@ -557,7 +607,7 @@
     "description": "Lism CSS の Divider モジュールについて解説します。コンテンツ間に区切り線を描画するコンポーネントです。",
     "category": "modules",
     "headings": ["構造", "CSS", "Props", "Import", "Usage"],
-    "keywords": ["Divider", "区切り線", "hr", "a--divider", "セパレーター", "border"],
+    "keywords": ["Divider", "区切り線", "hr", "a--divider", "セパレーター", "border", "separator", "仕切り"],
     "snippet": "区切り線を表示するコンポーネント。水平・垂直の区切りを表現。bds, bdw, bdc でスタイルをカスタマイズ可能。"
   },
   {
@@ -566,7 +616,7 @@
     "description": "画像や動画などのメディア要素を出力するLismコンポーネントです。",
     "category": "core-components",
     "headings": ["Import"],
-    "keywords": ["Media", "メディア", "img", "video", "iframe", "画像", "picture", "Astro Image"],
+    "keywords": ["Media", "メディア", "img", "video", "iframe", "画像", "picture", "Astro Image", "動画"],
     "snippet": "img, video, iframe 等のメディア要素を統一的に扱うコンポーネント。objectPositionやfilter系はstyleで指定。Astro版では as='img' で Astro Image、as='picture' で Astro Picture に自動マッピング。Next.js の Image コンポーネントとの連携も可能。"
   },
   {
@@ -575,7 +625,7 @@
     "description": "Lism CSS の Spacer モジュールについて解説します。要素間にスペースを確保するための空要素を出力します。",
     "category": "modules",
     "headings": ["構造", "Props", "Import", "Usage"],
-    "keywords": ["Spacer", "スペーサー", "余白", "空白", "a--spacer"],
+    "keywords": ["Spacer", "スペーサー", "余白", "空白", "a--spacer", "スペース", "gap element"],
     "snippet": "空白を挿入するコンポーネント。w, h で幅・高さを指定。SPACEトークンの値も使用可能。"
   },
   {
@@ -584,7 +634,7 @@
     "description": "Lism CSS の Decorator モジュールについて解説します。装飾用の空要素を出力するコンポーネントです。",
     "category": "modules",
     "headings": ["構造", "Props", "Import", "Usage"],
-    "keywords": ["Decorator", "デコレーター", "装飾", "a--decorator"],
+    "keywords": ["Decorator", "デコレーター", "装飾", "a--decorator", "visual decoration"],
     "snippet": "装飾用の空要素を出力するコンポーネント。size, filter系プロパティ, clipPathに対応。aria-hidden='true'がデフォルトで付与される。"
   },
   {
@@ -593,7 +643,7 @@
     "description": "@lism-css/ui で提供する Accordion コンポーネントについて解説します。",
     "category": "ui",
     "headings": ["基本構造", "ソースコード", "Import", "Props", "Examples"],
-    "keywords": ["Accordion", "アコーディオン", "開閉", "toggle", "FAQ"],
+    "keywords": ["Accordion", "アコーディオン", "開閉", "toggle", "FAQ", "折りたたみ", "collapsible"],
     "snippet": "クリックでコンテンツの開閉を切り替えるアコーディオンUI。@lism-css/uiパッケージで提供。"
   },
   {
@@ -602,7 +652,7 @@
     "description": "@lism-css/ui で提供する Modal コンポーネントについて解説します。",
     "category": "ui",
     "headings": ["How to use", "Props", "Usage"],
-    "keywords": ["Modal", "モーダル", "dialog", "ダイアログ", "ポップアップ"],
+    "keywords": ["Modal", "モーダル", "dialog", "ダイアログ", "ポップアップ", "popup"],
     "snippet": "モーダルダイアログUI。dialog要素を使用。@lism-css/uiパッケージで提供。"
   },
   {
@@ -611,7 +661,7 @@
     "description": "@lism-css/ui で提供する Tabs コンポーネントについて解説します。",
     "category": "ui",
     "headings": ["基本構造", "CSS", "JavaScript", "Import", "Props", "Usage", "スタイルバリエーションの作成例", "Opt-in"],
-    "keywords": ["Tabs", "タブ", "切り替え", "panel"],
+    "keywords": ["Tabs", "タブ", "切り替え", "panel", "tab navigation"],
     "snippet": "タブ切り替えUI。タブをクリックしてコンテンツパネルを切り替える。@lism-css/uiパッケージで提供。"
   },
   {
@@ -620,7 +670,7 @@
     "description": "@lism-css/ui で提供する Details コンポーネントについて解説します。",
     "category": "ui",
     "headings": ["How to use", "Examples"],
-    "keywords": ["Details", "details", "summary", "開閉"],
+    "keywords": ["Details", "details", "summary", "開閉", "disclosure"],
     "snippet": "HTMLのdetails/summary要素をラップ。ネイティブのHTML要素を使用したアコーディオン。@lism-css/uiパッケージで提供。"
   },
   {
@@ -629,7 +679,7 @@
     "description": "@lism-css/ui で提供する Alert コンポーネントについて解説します。",
     "category": "ui",
     "headings": ["How to use", "Examples", "Only lism-css"],
-    "keywords": ["Alert", "アラート", "注意", "notice", "warning", "info"],
+    "keywords": ["Alert", "アラート", "注意", "notice", "warning", "info", "お知らせ", "通知"],
     "snippet": "短めの文言を目立たせて強調表示したい時に使えるコンポーネント。アイコンとキーカラーでバリエーション。"
   },
   {
@@ -638,7 +688,7 @@
     "description": "@lism-css/ui で提供する Callout コンポーネントについて解説します。",
     "category": "ui",
     "headings": ["How to use", "Examples", "Only lism-css", "Only Core"],
-    "keywords": ["Callout", "コールアウト", "補足", "note", "注意書き"],
+    "keywords": ["Callout", "コールアウト", "補足", "note", "注意書き", "強調ボックス", "highlight"],
     "snippet": "記事の中で重要なポイントを示すためのコンポーネント。@lism-css/uiパッケージで提供。"
   },
   {
@@ -647,7 +697,7 @@
     "description": "@lism-css/ui で提供する Button コンポーネントについて解説します。",
     "category": "ui",
     "headings": ["How to use", "Examples", "Opt-in", "Only lism-css"],
-    "keywords": ["Button", "ボタン", "クリック", "outline", "action"],
+    "keywords": ["Button", "ボタン", "クリック", "outline", "action", "CTA", "submit"],
     "snippet": "ボタンコンポーネント。variant (outline 等) と keycolor でバリエーションを表現。@lism-css/uiパッケージで提供。"
   },
   {
@@ -656,7 +706,7 @@
     "description": "@lism-css/ui で提供する Badge コンポーネントについて解説します。",
     "category": "ui",
     "headings": ["How to use", "Examples", "Only lism-css"],
-    "keywords": ["Badge", "バッジ", "ラベル", "タグ", "status"],
+    "keywords": ["Badge", "バッジ", "ラベル", "タグ", "status", "ステータス表示", "tag label", "カテゴリ表示"],
     "snippet": "バッジ (ラベル) コンポーネント。カテゴリやステータスの表示に使用。@lism-css/uiパッケージで提供。"
   },
   {
@@ -665,7 +715,7 @@
     "description": "@lism-css/ui で提供する Avatar コンポーネントについて解説します。",
     "category": "ui",
     "headings": ["How to use", "Examples", "Only lism-css"],
-    "keywords": ["Avatar", "アバター", "プロフィール", "画像", "丸"],
+    "keywords": ["Avatar", "アバター", "プロフィール", "画像", "丸", "user icon", "ユーザーアイコン"],
     "snippet": "アバター画像用のコンポーネント。円形の画像表示に使用。@lism-css/uiパッケージで提供。"
   },
   {
@@ -674,7 +724,7 @@
     "description": "@lism-css/ui で提供する Chat コンポーネントについて解説します。",
     "category": "ui",
     "headings": ["How to use", "Examples", "Opt-in"],
-    "keywords": ["Chat", "チャット", "吹き出し", "会話", "balloon"],
+    "keywords": ["Chat", "チャット", "吹き出し", "会話", "balloon", "message bubble", "speech bubble"],
     "snippet": "チャット風の吹き出しコンポーネント。会話形式のUI表現に使用。@lism-css/uiパッケージで提供。"
   },
   {
@@ -692,7 +742,7 @@
     "description": "@lism-css/ui で提供する ShapeDivider コンポーネントについて解説します。",
     "category": "ui",
     "headings": ["How to use", "Examples"],
-    "keywords": ["ShapeDivider", "波", "wave", "区切り", "SVG", "セクション"],
+    "keywords": ["ShapeDivider", "波", "wave", "区切り", "SVG", "セクション", "section separator"],
     "snippet": "セクション間の波型などの装飾的な区切り要素。SVGベースの形状で区切りを表現。@lism-css/uiパッケージで提供。"
   },
   {

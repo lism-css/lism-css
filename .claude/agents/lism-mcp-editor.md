@@ -44,6 +44,7 @@ sourcePath, title, description, category, headings[], keywords[], snippet
 - **ソース**: `apps/docs/src/content/ja/` 配下の全 MDX ファイル
 - **title ルール**: modules カテゴリは `コンポーネント名 / クラス名` 形式で併記（例: `"Flex / l--flex"`）
 - **keywords ルール（CSS 逆引き用）**: props・modules カテゴリのエントリには、関連する CSS プロパティ名を keywords に含める（例: Flex → `"display", "flex-direction"`, ボーダー → `"border", "border-radius"` 等）
+- **keywords ルール（alias 保持）**: MDX に存在しない alias/synonym keywords（例: `"クリッカブル"`, `"CTA"` 等）が既存の keywords に含まれている場合、削除しないこと。自然言語検索用に意図的に追加されたものである
 
 
 ## 作業ルール

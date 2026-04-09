@@ -24,6 +24,7 @@
 - **更新内容**: 各ページの sourcePath, title, description, category, headings, keywords, snippet
 - **title ルール**: modules カテゴリのエントリは、title に JSX コンポーネント名と CSS クラス名を `コンポーネント名 / クラス名` の形式で併記すること（例: `"Flex / l--flex"`, `"Container / is--container"`, `"Icon / a--icon"`）。クラス名は sourcePath のファイル名部分から取得できる。
 - **keywords ルール（CSS 逆引き用）**: props カテゴリや modules カテゴリのエントリには、関連する CSS プロパティ名を keywords に含める（例: Flex のドキュメントに `"display", "flex", "flex-direction"` を追加、ボーダー props のドキュメントに `"border", "border-radius"` を追加）。これにより CSS プロパティ名での検索精度が向上する
+- **keywords ルール（alias 保持）**: MDX に存在しない alias/synonym keywords（例: `"クリッカブル"`, `"横並び折り返し"`, `"CTA"` 等）が既存の keywords に含まれている場合、それらを削除しないこと。これらは自然言語検索の精度向上のために意図的に追加されたものである
 
 
 ## 作業手順
