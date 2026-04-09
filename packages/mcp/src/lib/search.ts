@@ -92,11 +92,15 @@ function expandQuery(query: string, cssPropertyMap?: Map<string, string[]>): str
   return additions.length > 0 ? `${query} ${additions.join(' ')}` : query;
 }
 
-// docs entry のタイトルに含まれるコンポーネント名から aliases を取得
+// docs entry のタイトルからコンポーネント名を完全一致で抽出して aliases を取得
 function getEntryAliases(entry: DocsEntry, aliasMap: Map<string, string[]>): string[] {
-  const titleLower = entry.title.toLowerCase();
+  // タイトルをトークン化して各トークンを完全一致で比較
+  const titleTokens = entry.title
+    .toLowerCase()
+    .split(/[\s/]+/)
+    .map((t) => t.trim());
   for (const [name, aliases] of aliasMap) {
-    if (titleLower.includes(name)) {
+    if (titleTokens.includes(name)) {
       return aliases;
     }
   }
@@ -124,13 +128,12 @@ function scoreEntry(entry: DocsEntry, queryTokens: string[], aliasMap?: Map<stri
     if (snippetLower.includes(token)) score += 1;
   }
 
-  // コンポーネントの aliases によるブースト
+  // コンポーネントの aliases によるブースト（完全一致のみ）
   if (aliasMap) {
     const aliases = getEntryAliases(entry, aliasMap);
     if (aliases.length > 0) {
-      const aliasesStr = aliases.join(' ');
       for (const token of queryTokens) {
-        if (aliasesStr.includes(token)) score += 5;
+        if (aliases.includes(token)) score += 5;
       }
     }
   }
