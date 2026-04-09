@@ -1,9 +1,14 @@
-import { readFileSync, readdirSync } from 'node:fs';
+import { existsSync, readFileSync, readdirSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const guidesDir = resolve(__dirname, '..', 'data', 'guides');
+
+// スキル Markdown の正本を直接参照（開発・テスト時）
+// npm パッケージとして利用される場合は dist/data/guides/ にフォールバック
+const skillsDir = resolve(__dirname, '..', '..', '..', '..', '.claude', 'skills', 'lism-css-guide');
+const distDir = resolve(__dirname, '..', 'data', 'guides');
+const guidesDir = existsSync(skillsDir) ? skillsDir : distDir;
 
 const cache = new Map<string, string>();
 
