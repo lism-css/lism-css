@@ -20,7 +20,6 @@ import { Lism, Box, Flex, Stack, Grid, Text, Media } from 'lism-css/astro';
 - [アトミックコンポーネント（Atomic Modules）](#アトミックコンポーネントatomic-modules)
 - [Layout 優先の原則](#layout-優先の原則-layout-isstate-vs-state-layout)
 - [`getLismProps()`](#getlismprops--外部コンポーネントとの連携)
-- [UI コンポーネント（`@lism-css/ui`）](#ui-コンポーネントlism-cssui)
 
 [詳細](https://lism-css.com/docs/components/)
 
@@ -82,7 +81,7 @@ import { Lism, Box, Flex, Stack, Grid, Text, Media } from 'lism-css/astro';
 
 主要な CSS プロパティに対して省略記法（Shorthand）で指定できます。値に応じて **Property Class**（`-{prop}:{value}`）やインラインスタイルに変換されます。
 
-各プロパティで受け付けるトークン値・プリセット値の詳細は [property-class.md](./property-class.md) を参照。  
+各プロパティで受け付けるトークン値・プリセット値の詳細は [property-class.md](./property-class.md) を参照。
 もしくは、[定義ファイルの`props.ts`](https://github.com/lism-css/lism-css/blob/dev/packages/lism-css/config/defaults/props.ts) を読んでください。
 
 `prop={value}`で指定した値(`value`)によって、基本的な出力は以下のように分類されます。
@@ -97,7 +96,7 @@ import { Lism, Box, Flex, Stack, Grid, Text, Media } from 'lism-css/astro';
 | その他の値（変数プロパティ） | `--{prop}` | `bdw='2px'` → `style="--bdw:2px"` (`border-width`としては出力されない) |
 | レスポンシブ指定値 | 上記いずれかのベース出力 + `-{prop}_{bp}` + `--{prop}_{bp}` | `p={[10,20]}` → `class="-p:10 -p_sm"` + `style="--p_sm:var(--s20)"`|
 
-補足: 
+補足:
 - **レスポンシブ対応プロパティ**かどうかは、 `props.ts`で`bp: 1`がセットされているかどうかで分かります。
 - **変数プロパティ**とは、`bds`, `bdc`, `bdw`, `keycolor`, `cols`, `rows`といった一部のプロパティ（`props.ts`で`isVar`がセットされているもの）のこと。これらはCSSプロパティがそのままstyle属性に出力されることはなく、常にCSS 変数（`--{prop}`）が使用されます。
 
@@ -335,64 +334,5 @@ function MyComponent({ children }) {
   // → { className: '-p:20 -fz:l -c', style: {'--c': 'var(--red)'} }
 
   return <div {...lismProps}>{children}</div>;
-}
-```
-
-
-## UI コンポーネント（`@lism-css/ui`）
-
-`@lism-css/ui` パッケージには、Lism CSS の上に構築されたインタラクティブな UI コンポーネントが含まれます。
-
-```jsx
-// React
-import { Accordion, Tabs, Modal, Button } from '@lism-css/ui/react';
-
-// Astro
-import { Accordion, Tabs, Modal, Button } from '@lism-css/ui/astro';
-```
-
-### 利用可能なコンポーネント
-
-| コンポーネント | 用途 |
-|-------------|------|
-| `Accordion` | 折りたたみパネル |
-| `Alert` | 警告・通知ボックス |
-| `Avatar` | ユーザーアイコン |
-| `Badge` | ラベル・バッジ |
-| `Button` | ボタン |
-| `Callout` | 注釈・補足ボックス |
-| `Chat` | チャット風 UI |
-| `Details` | 詳細表示（details/summary） |
-| `Modal` | モーダルダイアログ |
-| `NavMenu` | ナビゲーションメニュー |
-| `Tabs` | タブ切り替え UI |
-| `ShapeDivider` | 図形区切り線 |
-| `DummyText` | ダミーテキスト（開発用） |
-| `DummyImage` | ダミー画像（開発用） |
-
-
-### CLI でプロジェクトにコピーして使う
-
-`@lism-css/ui` の UI コンポーネントは、CLI コマンドで自分のプロジェクトにソースコードをコピーして使うこともできます。コピーしたファイルは自由にカスタマイズ可能です。
-
-```bash
-# 初期設定（framework、出力先ディレクトリを対話的に設定）
-npx lism-ui init
-
-# コンポーネントを追加
-npx lism-ui add Button Modal
-npx lism-ui add -a          # 全コンポーネントを追加
-
-# 利用可能なコンポーネント一覧を表示
-npx lism-ui list
-```
-
-`init` で生成される `lism-ui.json`:
-
-```json
-{
-  "framework": "react",
-  "componentsDir": "src/components/ui",
-  "helperDir": "src/components/ui/_helper"
 }
 ```
