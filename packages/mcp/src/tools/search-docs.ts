@@ -1,11 +1,29 @@
 import { z } from 'zod';
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { loadJSON } from '../lib/load-data.js';
-import { DocsEntrySchema, ComponentInfoSchema, PropsSystemDataSchema } from '../lib/schemas.js';
-import { buildAliasMap, buildCssPropertyMap, searchDocs } from '../lib/search.js';
+import { loadMarkdown } from '../lib/load-markdown.js';
+import { DocsEntrySchema } from '../lib/schemas.js';
+import { parsePropRows } from '../lib/markdown-utils.js';
+import { searchDocs } from '../lib/search.js';
 import { success, error, READ_ONLY_ANNOTATIONS } from '../lib/response.js';
 
 const DOC_CATEGORIES = ['all', 'core-components', 'modules', 'props', 'ui', 'guide'] as const;
+
+/**
+ * property-class.md のテーブルから CSSプロパティ名 → Lism prop名 のマップを構築する。
+ * search.ts の buildCssPropertyMap と同じインターフェースを返す。
+ */
+function buildCssPropertyMapFromMarkdown(md: string): Map<string, string[]> {
+  const map = new Map<string, string[]>();
+  for (const row of parsePropRows(md)) {
+    const normalized = row.cssProperty.toLowerCase();
+    if (normalized.startsWith('(class:')) continue;
+    const existing = map.get(normalized) ?? [];
+    existing.push(row.prop.toLowerCase());
+    map.set(normalized, existing);
+  }
+  return map;
+}
 
 export function registerSearchDocs(server: McpServer): void {
   server.registerTool(
@@ -23,15 +41,12 @@ export function registerSearchDocs(server: McpServer): void {
     ({ query, category, limit }) => {
       try {
         const entries = loadJSON('docs-index.json', z.array(DocsEntrySchema));
-        const components = loadJSON('components.json', z.array(ComponentInfoSchema));
-        const propsData = loadJSON('props-system.json', PropsSystemDataSchema);
-        const aliasMap = buildAliasMap(components);
-        const cssPropertyMap = buildCssPropertyMap(propsData.categories);
-        const results = searchDocs(entries, query, { category, limit, aliasMap, cssPropertyMap });
+        const cssPropertyMap = buildCssPropertyMapFromMarkdown(loadMarkdown('property-class.md'));
+        const results = searchDocs(entries, query, { category, limit, cssPropertyMap });
         return success({ query, results });
       } catch (e) {
         return error(
-          `Failed to search docs: ${e instanceof Error ? e.message : String(e)}. The data files may not be built yet. Ensure the server was installed correctly.`
+          `Failed to search docs: ${e instanceof Error ? e.message : String(e)}. The data files may not be built yet. Run "pnpm build" in packages/mcp first.`
         );
       }
     }
