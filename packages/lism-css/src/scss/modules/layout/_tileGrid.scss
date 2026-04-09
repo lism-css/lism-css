@@ -1,8 +1,4 @@
 .l--tileGrid {
   display: grid;
-  grid-template: repeat(var(--rows, 1), 1fr) / repeat(var(--cols, 1), 1fr);
-
-  > * {
-    min-width: 0;
-  }
+  grid-template: repeat(var(--rows, 1), minmax(0, 1fr)) / repeat(var(--cols, 1), minmax(0, 1fr));
 }
