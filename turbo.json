@@ -38,8 +38,9 @@
     },
     "build:mcp-data": {
       "dependsOn": ["^build"],
-      "outputs": ["packages/mcp/src/data/*.json"],
+      "outputs": ["packages/mcp/src/data/*.json", "packages/mcp/src/data/guides/*.md"],
       "inputs": [
+        ".claude/skills/lism-css-guide/*.md",
         "apps/docs/src/content/ja/**/*.mdx",
         "packages/lism-css/config/defaults/tokens.ts",
         "packages/lism-css/config/defaults/props.ts",
