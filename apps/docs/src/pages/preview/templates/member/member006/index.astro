@@ -1,7 +1,7 @@
 ---
 import DemoLayout from '@/layouts/DemoLayout.astro';
 
-import { Container, Frame, Cluster, Grid, Icon, LinkBox, Media, Stack, Text, Heading } from 'lism-css/astro';
+import { Container, Frame, Cluster, Grid, TileGrid, Icon, LinkBox, Media, Stack, Text, Heading } from 'lism-css/astro';
 import './_style.css';
 ---
 
@@ -9,7 +9,7 @@ import './_style.css';
   <Container isWrapper="l" bgc="base-2" py="50" set="gutter">
     <Stack g="50">
       <Heading level="2" class="u--trim" fz="4xl" fw="500" c="gray" ta="center" lts="l">Team</Heading>
-      <Grid gt="repeat" cols={['1', null, '2']} g="40">
+      <TileGrid cols={['1', null, '2']} g="40">
         <Grid gtr="subgrid" gr="span 2" g="30" bgc="white" p="30" bdrs="10">
           <Grid gtc="auto 1fr" g="30">
             <Frame as="figure" ar="1/1" w="stretch" max-w="8rem" bdrs="10">
@@ -93,7 +93,7 @@ import './_style.css';
             丁寧なコミュニケーションと緻密なスケジュール管理で、お客様からの信頼も厚い。
           </Text>
         </Grid>
-      </Grid>
+      </TileGrid>
     </Stack>
   </Container>
 </DemoLayout>

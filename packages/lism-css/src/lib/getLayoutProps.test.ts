@@ -240,6 +240,25 @@ describe('getLayoutProps', () => {
     });
   });
 
+  describe('tileGrid レイアウト', () => {
+    test('lismClass に l--tileGrid が追加される', () => {
+      const result = getLayoutProps('tileGrid', {});
+      expect(result.lismClass).toBe('l--tileGrid');
+    });
+
+    test('既存の lismClass がある場合、マージされる', () => {
+      const result = getLayoutProps('tileGrid', { lismClass: 'existing' });
+      expect(result.lismClass).toContain('l--tileGrid');
+      expect(result.lismClass).toContain('existing');
+    });
+
+    test('その他のプロップスはそのまま維持される', () => {
+      const result = getLayoutProps('tileGrid', { lismClass: 'test', style: { color: 'red' } });
+      expect(result.lismClass).toContain('test');
+      expect(result.style?.color).toBe('red');
+    });
+  });
+
   describe('複数プロップスの組み合わせ', () => {
     test('lismClass と style が両方ある場合、正しく処理される', () => {
       const result = getLayoutProps('sideMain', {

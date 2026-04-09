@@ -227,6 +227,7 @@ State Modules クラス（`is--*` / `set--*`）を出力するためのプロパ
 | `<Center>` | `center` | `l--center` | 中央配置 |
 | `<Frame>` | `frame` | `l--frame` | アスペクト比フレーム |
 | `<Columns>` | `columns` | `l--columns` | CSS columns |
+| `<TileGrid>` | `tileGrid` | `l--tileGrid` | 均等タイルグリッド（cols x rows） |
 | `<FluidCols>` | `fluidCols` | `l--fluidCols` | auto-fill/auto-fit グリッド |
 | `<SwitchCols>` | `switchCols` | `l--switchCols` | レスポンシブカラム切り替え |
 | `<SideMain>` | `sideMain` | `l--sideMain` | サイド＋メインの2カラム |
@@ -238,6 +239,9 @@ State Modules クラス（`is--*` / `set--*`）を出力するためのプロパ
 ```jsx
 // Grid: template 系 props
 <Grid gtc="1fr 1fr" gtr="auto">...</Grid>
+
+// TileGrid: 均等タイルグリッド
+<TileGrid cols="3" rows="2" g="20">...</TileGrid>
 
 // SwitchCols: 切り替えブレークポイント
 <SwitchCols breakSize="480px">...</SwitchCols>

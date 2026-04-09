@@ -34,6 +34,9 @@ export interface StackProps {
 export interface ColumnsProps {
   layout: 'columns';
 }
+export interface TileGridProps {
+  layout: 'tileGrid';
+}
 
 // layout 固有の extra props を持つ型
 export interface FlowLayoutProps {
@@ -69,7 +72,8 @@ export type LayoutSpecificProps =
   | GridLayoutProps
   | StackProps
   | SideMainProps
-  | SwitchColsProps;
+  | SwitchColsProps
+  | TileGridProps;
 
 // LayoutType は LayoutSpecificProps から導出（NoLayoutProps を除く）
 export type LayoutType = Exclude<LayoutSpecificProps, NoLayoutProps>['layout'];

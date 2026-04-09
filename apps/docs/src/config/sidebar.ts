@@ -165,6 +165,7 @@ const docsSidebar: SidebarSection[] = [
 
       { type: 'separator' },
       '/docs/modules/l--grid/',
+      '/docs/modules/l--tilegrid/',
       '/docs/modules/l--center/',
 
       { type: 'separator' },

@@ -225,7 +225,7 @@ SPACE トークン（全値）: `5`, `10`, `15`, `20`, `30`, `40`, `50`, `60`, `
 
 | Prop | CSS プロパティ | プリセット値クラス | BP クラス |
 |------|--------------|-------------|-----|
-| `gt` | `grid-template` | `-gt:repeat` | `-gt_sm`, `-gt_md` |
+| `gt` | `grid-template` | — | `-gt_sm`, `-gt_md` |
 | `gta` | `grid-template-areas` | — | `-gta_sm`, `-gta_md` |
 | `gtc` | `grid-template-columns` | `-gtc:subgrid` | `-gtc_sm`, `-gtc_md` |
 | `gtr` | `grid-template-rows` | `-gtr:subgrid` | `-gtr_sm`, `-gtr_md` |
@@ -376,7 +376,6 @@ Property Class の値名は基本的に CSS の実値と同じですが、以下
 | `-w:fit` | `width: fit-content` | `w`, `h` |
 | `-ac:between` | `align-content: space-between` | `ac`, `jc` |
 | `-bdc:current` | `border-color: currentColor` | `bdc` |
-| `-gt:repeat` | 特殊な grid-template 値 | `gt` |
 
 
 ## Property Class の特殊な出力タイプ

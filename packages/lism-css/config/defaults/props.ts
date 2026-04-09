@@ -252,12 +252,6 @@ export default {
   // gd: { prop: 'grid' },
   gt: {
     prop: 'gridTemplate',
-    presets: ['repeat'],
-    exUtility: {
-      repeat: {
-        'grid-template': 'repeat(var(--rows,1), 1fr) / repeat(var(--cols,1), 1fr)',
-      },
-    },
     bp: 1,
   },
   gta: { prop: 'gridTemplateAreas', bp: 1 },
