@@ -28,7 +28,7 @@ import '../container/_style.scss';
     <!-- <p>また、<code>l--flow</code> の直下で <code>-max-sz:full</code> が連続すると、その間の余白は0となります。</p> -->
 
     <Spacer h="5" />
-    <Flow isWrapper flow="s" setGutter>
+    <Flow isWrapper flow="s" set="gutter">
       <AttsLabels atts="is--wrapper,set--gutter" />
       <LoremContent />
       <FullSizeContent />
@@ -51,7 +51,7 @@ import '../container/_style.scss';
     <!-- <p><code>@propetry</code>が無効なブラウザ</p> -->
     <Spacer h="5" />
 
-    <Flow isContainer isWrapper flow="s" setGutter>
+    <Flow isContainer isWrapper flow="s" set="gutter">
       <AttsLabels atts="is--wrapper,is--container,set--gutter" />
       <LoremContent />
       <FullSizeContent />

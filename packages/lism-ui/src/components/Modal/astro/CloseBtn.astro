@@ -1,12 +1,12 @@
 ---
 // import type { LismProps } from 'lism-css/types';
 import { Lism, Icon } from 'lism-css/astro';
-import { defaultProps } from '../getProps';
+import { getCloseBtnProps } from '../getProps';
 
 // Propsの定義
 // interface Props extends LismProps {}
 const { modalId = '', icon, srText = 'Close', ...props } = Astro.props || {};
-const btnProps = { ...defaultProps.closeBtn, ...props };
+const btnProps = getCloseBtnProps(props);
 ---
 
 {

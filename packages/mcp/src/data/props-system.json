@@ -1025,60 +1025,18 @@
           "description": "縦書きモードにする。"
         },
         {
-          "prop": "setGutter",
-          "cssProperty": "(class: set--gutter)",
-          "type": "boolean",
+          "prop": "set",
+          "cssProperty": "(class: set--{value})",
+          "type": "string | string[]",
           "responsive": false,
-          "description": "左右にガター（余白）を付ける。"
+          "description": "Set Class を適用する。値: 'gutter', 'shadow', 'hov', 'transition', 'mask', 'plain', 'innerRs', 'bp'。複数指定時は配列またはカンマ・空白区切りで渡す。unset と組み合わせて一部を除外可能。"
         },
         {
-          "prop": "setShadow",
-          "cssProperty": "(class: set--shadow)",
-          "type": "boolean",
+          "prop": "unset",
+          "cssProperty": "(set の除外)",
+          "type": "string | string[]",
           "responsive": false,
-          "description": "シャドウ用のセットクラスを付与する。"
-        },
-        {
-          "prop": "setHov",
-          "cssProperty": "(class: set--hov)",
-          "type": "boolean",
-          "responsive": false,
-          "description": "ホバー状態管理用のセットクラスを付与する。子要素へのホバー状態伝播に使用。"
-        },
-        {
-          "prop": "setTransition",
-          "cssProperty": "(class: set--transition)",
-          "type": "boolean",
-          "responsive": false,
-          "description": "トランジション用のセットクラスを付与する。"
-        },
-        {
-          "prop": "setMask",
-          "cssProperty": "(class: set--mask)",
-          "type": "string",
-          "responsive": false,
-          "description": "マスク画像を設定するセットクラスを付与する。SVGやURL文字列を値として指定。"
-        },
-        {
-          "prop": "setPlain",
-          "cssProperty": "(class: set--plain)",
-          "type": "boolean",
-          "responsive": false,
-          "description": "プレーン表示用のセットクラスを付与する。"
-        },
-        {
-          "prop": "setInnerRs",
-          "cssProperty": "(class: set--innerRs)",
-          "type": "boolean",
-          "responsive": false,
-          "description": "内側の角丸を設定するセットクラスを付与する。"
-        },
-        {
-          "prop": "setBp",
-          "cssProperty": "(class: set--bp)",
-          "type": "boolean",
-          "responsive": false,
-          "description": "ブレイクポイント制御用のセットクラスを付与する。"
+          "description": "set から指定した値を除外する。コンポーネント内部で set='plain' がデフォルト適用されている場合などに unset='plain' で解除できる。"
         },
         {
           "prop": "hov",

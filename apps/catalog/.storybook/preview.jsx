@@ -24,6 +24,7 @@ const preview = {
       options: ['box', 'center', 'cluster', 'columns', 'flex', 'flow', 'frame', 'grid', 'stack', 'fluidCols', 'switchCols', 'sideMain'],
       table: { category: 'Common Props' },
     },
+    set: { control: 'text', table: { category: 'State' } },
 
     // --- Prop Class / Typography ---
     fz: { control: 'object', table: { category: 'Prop Class', subcategory: 'Typography' } },
@@ -149,7 +150,6 @@ const preview = {
     isWrapper: { control: 'object', table: { category: 'State' } },
     isLayer: { control: 'boolean', table: { category: 'State' } },
     isLinkBox: { control: 'boolean', table: { category: 'State' } },
-    setGutter: { control: 'boolean', table: { category: 'State' } },
     isVertical: { control: 'boolean', table: { category: 'State' } },
   },
   parameters: {

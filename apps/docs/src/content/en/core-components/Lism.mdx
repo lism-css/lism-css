@@ -183,11 +183,19 @@ A set of props corresponding to [State Modules](/docs/css-methodology/) classes.
 | `isSide` | `is--side` | Side element |
 | `isSkipFlow` | `is--skipFlow` | Skip Flow spacing |
 | `isVertical` | `is--vertical` | Vertical writing mode |
-| `setGutter` | `set--gutter` | Horizontal gutter spacing |
-| `setShadow` | `set--shadow` | Apply shadow |
-| `setHov` | `set--hov` | Hover effect |
-| `setTransition` | `set--transition` | Transition |
-| `setPlain` | `set--plain` | Plain state |
+| `set="gutter"` | `set--gutter` | Horizontal gutter spacing |
+| `set="shadow"` | `set--shadow` | Apply shadow |
+| `set="hov"` | `set--hov` | Hover effect |
+| `set="transition"` | `set--transition` | Transition |
+| `set="plain"` | `set--plain` | Plain state |
+
+`set` accepts arrays, comma-separated, or space-separated values for multiple classes.  
+Use `unset` to remove specific set classes applied internally by a component.
+
+```jsx
+<Lism set={['hov', 'transition']}>...</Lism>
+<AccordionButton unset="plain">...</AccordionButton>
+```
 
 <Reference>
 [Learn about State Modules classes and usage examples](/docs/css-methodology/)

@@ -541,14 +541,14 @@ describe('Lism', () => {
         expect(element).toHaveClass('-d:block');
       });
 
-      test('d="inline-flex" を指定できる', () => {
+      test('d="in-flex" を指定できる', () => {
         render(
-          <Lism d="inline-flex" data-testid="lism">
+          <Lism d="in-flex" data-testid="lism">
             test
           </Lism>
         );
         const element = screen.getByTestId('lism');
-        expect(element).toHaveClass('-d:inline-flex');
+        expect(element).toHaveClass('-d:in-flex');
       });
 
       test('v（visibility）を指定できる', () => {
@@ -590,7 +590,7 @@ describe('Lism', () => {
           </Lism>
         );
         const element = screen.getByTestId('lism');
-        expect(element).toHaveClass('-pos:relative');
+        expect(element).toHaveClass('-pos:rel');
       });
 
       test('pos="absolute" を指定できる', () => {
@@ -600,7 +600,7 @@ describe('Lism', () => {
           </Lism>
         );
         const element = screen.getByTestId('lism');
-        expect(element).toHaveClass('-pos:absolute');
+        expect(element).toHaveClass('-pos:abs');
       });
 
       test('pos="fixed" を指定できる', () => {
@@ -783,22 +783,22 @@ describe('Lism', () => {
 
         test('fxd（flex-direction）を指定できる', () => {
           render(
-            <Lism fxd="column" data-testid="lism">
+            <Lism fxd="col" data-testid="lism">
               test
             </Lism>
           );
           const element = screen.getByTestId('lism');
-          expect(element).toHaveClass('-fxd:column');
+          expect(element).toHaveClass('-fxd:col');
         });
 
-        test('fxd="row-reverse" を指定できる', () => {
+        test('fxd="row-r" を指定できる', () => {
           render(
-            <Lism fxd="row-reverse" data-testid="lism">
+            <Lism fxd="row-r" data-testid="lism">
               test
             </Lism>
           );
           const element = screen.getByTestId('lism');
-          expect(element).toHaveClass('-fxd:row-reverse');
+          expect(element).toHaveClass('-fxd:row-r');
         });
 
         test('fx（flex）を指定できる', () => {
@@ -875,12 +875,12 @@ describe('Lism', () => {
 
         test('gaf（grid-auto-flow）を指定できる', () => {
           render(
-            <Lism gaf="column" data-testid="lism">
+            <Lism gaf="col" data-testid="lism">
               test
             </Lism>
           );
           const element = screen.getByTestId('lism');
-          expect(element).toHaveClass('-gaf:column');
+          expect(element).toHaveClass('-gaf:col');
         });
 
         test('ga（grid-area）を指定できる', () => {
@@ -1034,12 +1034,12 @@ describe('Lism', () => {
 
       test('ovwrap（overflow-wrap）を指定できる', () => {
         render(
-          <Lism ovwrap="anywhere" data-testid="lism">
+          <Lism ovwrap="any" data-testid="lism">
             test
           </Lism>
         );
         const element = screen.getByTestId('lism');
-        expect(element).toHaveClass('-ovwrap:anywhere');
+        expect(element).toHaveClass('-ovwrap:any');
       });
     });
 
@@ -1155,22 +1155,20 @@ describe('Lism', () => {
       });
     });
 
-    describe('set-- States (gutter)', () => {
-      test('setGutter を指定できる', () => {
+    describe('set-- States', () => {
+      test('set="gutter" で set--gutter クラスが出力される', () => {
         render(
-          <Lism setGutter data-testid="lism">
+          <Lism set="gutter" data-testid="lism">
             test
           </Lism>
         );
         const element = screen.getByTestId('lism');
         expect(element).toHaveClass('set--gutter');
       });
-    });
 
-    describe('set-- States', () => {
-      test('setShadow を指定できる', () => {
+      test('set="shadow" で set--shadow クラスが出力される', () => {
         render(
-          <Lism setShadow data-testid="lism">
+          <Lism set="shadow" data-testid="lism">
             test
           </Lism>
         );
@@ -1178,9 +1176,9 @@ describe('Lism', () => {
         expect(element).toHaveClass('set--shadow');
       });
 
-      test('setHov を指定できる', () => {
+      test('set="hov" で set--hov クラスが出力される', () => {
         render(
-          <Lism setHov data-testid="lism">
+          <Lism set="hov" data-testid="lism">
             test
           </Lism>
         );
@@ -1188,19 +1186,20 @@ describe('Lism', () => {
         expect(element).toHaveClass('set--hov');
       });
 
-      test('setTransition を指定できる', () => {
+      test('set={["hov", "transition"]} で複数の set-- クラスが出力される', () => {
         render(
-          <Lism setTransition data-testid="lism">
+          <Lism set={['hov', 'transition']} data-testid="lism">
             test
           </Lism>
         );
         const element = screen.getByTestId('lism');
+        expect(element).toHaveClass('set--hov');
         expect(element).toHaveClass('set--transition');
       });
 
-      test('setPlain を指定できる', () => {
+      test('set="plain" で set--plain クラスが出力される', () => {
         render(
-          <Lism setPlain data-testid="lism">
+          <Lism set="plain" data-testid="lism">
             test
           </Lism>
         );
@@ -1208,9 +1207,9 @@ describe('Lism', () => {
         expect(element).toHaveClass('set--plain');
       });
 
-      test('setInnerRs を指定できる', () => {
+      test('set="innerRs" で set--innerRs クラスが出力される', () => {
         render(
-          <Lism setInnerRs data-testid="lism">
+          <Lism set="innerRs" data-testid="lism">
             test
           </Lism>
         );
@@ -1218,21 +1217,89 @@ describe('Lism', () => {
         expect(element).toHaveClass('set--innerRs');
       });
 
-      test('setMask を指定できる', () => {
+      test('set="mask" で set--mask クラスが出力される', () => {
         render(
-          <Lism setMask="url(/path/to/mask.svg)" data-testid="lism">
+          <Lism set="mask" data-testid="lism">
             test
           </Lism>
         );
         const element = screen.getByTestId('lism');
         expect(element).toHaveClass('set--mask');
       });
+
+      test('set="hov,transition" カンマ区切り文字列で複数クラスが出力される', () => {
+        render(
+          <Lism set="hov,transition" data-testid="lism">
+            test
+          </Lism>
+        );
+        const element = screen.getByTestId('lism');
+        expect(element).toHaveClass('set--hov');
+        expect(element).toHaveClass('set--transition');
+      });
+
+      test('set="hov transition" 空白区切り文字列で複数クラスが出力される', () => {
+        render(
+          <Lism set="hov transition" data-testid="lism">
+            test
+          </Lism>
+        );
+        const element = screen.getByTestId('lism');
+        expect(element).toHaveClass('set--hov');
+        expect(element).toHaveClass('set--transition');
+      });
+    });
+
+    describe('unset States', () => {
+      test('set + unset で指定した値が除外される', () => {
+        render(
+          <Lism set={['hov', 'transition', 'shadow']} unset="shadow" data-testid="lism">
+            test
+          </Lism>
+        );
+        const element = screen.getByTestId('lism');
+        expect(element).toHaveClass('set--hov');
+        expect(element).toHaveClass('set--transition');
+        expect(element).not.toHaveClass('set--shadow');
+      });
+
+      test('unset を配列で複数指定できる', () => {
+        render(
+          <Lism set={['hov', 'transition', 'shadow']} unset={['hov', 'shadow']} data-testid="lism">
+            test
+          </Lism>
+        );
+        const element = screen.getByTestId('lism');
+        expect(element).not.toHaveClass('set--hov');
+        expect(element).toHaveClass('set--transition');
+        expect(element).not.toHaveClass('set--shadow');
+      });
+
+      test('unset で全て除外すると set-- クラスが出力されない', () => {
+        render(
+          <Lism set="gutter" unset="gutter" data-testid="lism">
+            test
+          </Lism>
+        );
+        const element = screen.getByTestId('lism');
+        expect(element.className).not.toMatch(/set--/);
+      });
+
+      test('set が無い場合、unset だけ指定しても何も出力されない', () => {
+        render(
+          <Lism unset="gutter" data-testid="lism">
+            test
+          </Lism>
+        );
+        const element = screen.getByTestId('lism');
+        expect(element.className).not.toMatch(/set--/);
+      });
     });
 
     describe('複数のState Classを同時に指定', () => {
       test('複数のState Classを同時に指定できる', () => {
         render(
-          <Lism isContainer isLayer setShadow data-testid="lism">
+          <Lism isContainer isLayer set="shadow" data-testid="lism">
             test
           </Lism>
         );
