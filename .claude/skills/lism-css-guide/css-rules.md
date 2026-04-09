@@ -19,7 +19,12 @@ Lism CSS は CSS Layers による詳細度管理を採用しています。
 ```
 Settings（トークン定義）
   → @layer lism-base（Reset CSS・トークン・.set--クラス）
-  → @layer lism-modules（.is-- / .l-- / .a-- / .c-- モジュール群）
+      → @layer reset（リセットCSS）
+  → @layer lism-modules
+      → @layer state（.is-- ステートモジュール）
+      → @layer layout（.l-- レイアウトモジュール）
+      → @layer atomic（.a-- アトミックモジュール）
+      → .c-- は sublayer なし（lism-modules 直下、または lism-custom で定義）
   → @layer lism-custom（ユーザーカスタマイズ用）
   → @layer lism-utility（.u-- ユーティリティクラス）
   → Property Class（レイヤー外 — 最も詳細度が高い）

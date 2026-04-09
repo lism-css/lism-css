@@ -19,8 +19,7 @@ CSSコードを書く場合やコンポーネントのPropsに値を指定する
 |---|---|---|---|
 | 余白 (space) | `5`, `10`, `15`, `20`, `30`, `40`, `50`, `60`, `70`, `80` | `--s{n}` | `--s20` |
 | フォントサイズ (fz) | `root`, `base`, `2xs`, `xs`, `s`, `m`, `l`, `xl`, `2xl`, `3xl`, `4xl`, `5xl` | `--fz--{key}` | `--fz--l` |
-| 行間 (lh) | `base`, `xs`, `s`, `l` | `--lh--{key}` | `--lh--s` |
-| 見出し行間 (hl) | `base`, `xs`, `s`, `l` | `--hl--{key}` | `--hl--s` |
+| ハーフレディング・行間 (lh/hl) | `base`, `xs`, `s`, `l` | `--hl--{key}` | `--hl--s` |
 | 字間 (lts) | `base`, `s`, `l` | `--lts--{key}` | `--lts--s` |
 | フォント (ff) | `base`, `accent`, `mono` | `--ff--{key}` | `--ff--mono` |
 | ウェイト (fw) | `light`, `normal`, `bold` | `--fw--{key}` | `--fw--bold` |
