@@ -47,7 +47,9 @@ components/ComponentName/
 └── script.js          # クライアントJS（LinkBox のみ）
 ```
 
-- `atomic/` サブディレクトリに `Icon`, `Divider`, `Spacer`, `Media`, `Decorator` がある
+- `layout/` サブディレクトリに Box, Flow, Flex, Cluster, Stack, Grid, FluidCols, SwitchCols, SideMain, Center, Columns, Frame がある
+- `state/` サブディレクトリに Container, Wrapper, Layer, LinkBox がある
+- `atomic/` サブディレクトリに Icon, Divider, Spacer, Decorator がある
 - `Lism` コアコンポーネントは `.tsx` / `.ts` で実装されている
 - `Icon` など一部を除き、全コンポーネントは基本的に `Lism` を継承し、`getLismProps()` で Props を処理
 

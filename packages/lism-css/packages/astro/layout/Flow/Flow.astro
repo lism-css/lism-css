@@ -1,0 +1,12 @@
+---
+import type { HTMLTag, Polymorphic } from 'astro/types';
+import type { AstroLismFixedLayoutProps } from '../../types';
+import type { FlowLayoutProps } from 'lism-css/lib/types/LayoutProps';
+import { Lism } from '../../Lism';
+
+type Props<Tag extends HTMLTag = 'div'> = Polymorphic<{ as: Tag }> & AstroLismFixedLayoutProps & Omit<FlowLayoutProps, 'layout'>;
+
+const props = Astro.props;
+---
+
+<Lism layout="flow" {...props}><slot /></Lism>
