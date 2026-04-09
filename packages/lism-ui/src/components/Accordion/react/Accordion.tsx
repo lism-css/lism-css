@@ -8,7 +8,7 @@ import {
   getItemProps,
   getHeadingProps,
   getPanelProps,
-  defaultProps,
+  getButtonProps,
   type AccordionRootProps,
   type AccordionItemProps,
   type AccordionHeadingProps,
@@ -85,7 +85,7 @@ export function Button<T extends ElementType = 'button'>({ children, accID: _acc
   const accID = ctx?.accID || _accID;
 
   return (
-    <Lism {...(defaultProps.button as object)} {...(props as object)} aria-controls={accID} aria-expanded="false">
+    <Lism {...(getButtonProps(props as Record<string, unknown>) as object)} aria-controls={accID} aria-expanded="false">
       {children}
       <AccIcon />
     </Lism>

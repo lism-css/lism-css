@@ -1,4 +1,5 @@
 import atts from 'lism-css/lib/helper/atts';
+import mergeSet from 'lism-css/lib/helper/mergeSet';
 
 export type AccordionRootProps = {
   lismClass?: string;
@@ -37,12 +38,30 @@ export function getItemProps({ lismClass, ...props }: AccordionItemProps) {
   return props;
 }
 
-export function getHeadingProps({ as = 'div', role, lismClass, ...props }: AccordionHeadingProps) {
-  return {
+export function getHeadingProps({ as = 'div', role, lismClass, set, unset, ...props }: AccordionHeadingProps) {
+  const returnProps = {
     lismClass: atts(lismClass, 'c--accordion_heading'),
     as,
-    setPlain: true,
-    role: as === 'div' ? 'heading' : role,
+    set: mergeSet('plain', set, unset),
+    ...props,
+  };
+
+  if (returnProps.as === 'div') {
+    (returnProps as Record<string, unknown>).role = role ?? 'heading';
+  }
+  return returnProps;
+}
+
+export function getButtonProps({ set, unset, ...props }: Record<string, unknown>) {
+  return {
+    lismClass: 'c--accordion_button',
+    as: 'button',
+    layout: 'flex',
+    set: mergeSet('plain', set, unset),
+    g: '10',
+    w: '100%',
+    ai: 'center',
+    jc: 'between',
     ...props,
   };
 }

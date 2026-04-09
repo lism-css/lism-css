@@ -1,6 +1,6 @@
 import type { ElementType } from 'react';
 import { Lism, type LismComponentProps } from 'lism-css/react';
-import { defaultProps } from '../getProps';
+import { getOpenBtnProps } from '../getProps';
 
 type OpenBtnProps<T extends ElementType = 'button'> = LismComponentProps<T> & {
   modalId?: string;
@@ -8,7 +8,7 @@ type OpenBtnProps<T extends ElementType = 'button'> = LismComponentProps<T> & {
 
 export default function OpenBtn<T extends ElementType = 'button'>({ children, modalId = '', ...props }: OpenBtnProps<T>) {
   return (
-    <Lism data-modal-open={modalId} {...(defaultProps.openBtn as object)} {...(props as object)}>
+    <Lism data-modal-open={modalId} {...(getOpenBtnProps(props as Record<string, unknown>) as object)}>
       {children}
     </Lism>
   );

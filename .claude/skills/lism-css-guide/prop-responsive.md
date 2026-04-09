@@ -5,14 +5,14 @@ Lism CSS はコンテナクエリをデフォルトで採用しています。
 
 ## TOC
 
-- [HTML / Prop Class での指定](#html--prop-class-での指定)
+- [HTML / Property Class での指定](#html--property-class-での指定)
 - [Lism コンポーネントでの指定](#lism-コンポーネントでの指定)
 
 [詳細](https://lism-css.com/docs/responsive/)
 
 ---
 
-## HTML / Prop Class での指定
+## HTML / Property Class での指定
 
 ブレークポイント用のクラス `-{prop}_{bp}` と CSS変数 `--{prop}_{bp}` を組み合わせます。
 

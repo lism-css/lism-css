@@ -1,4 +1,5 @@
 import atts from 'lism-css/lib/helper/atts';
+import mergeSet from 'lism-css/lib/helper/mergeSet';
 import type { LismProps } from 'lism-css/lib/getLismProps';
 
 export type DetailsProps = {
@@ -12,6 +13,16 @@ export type DetailsProps = {
 export function getDetailsProps({ lismClass, ...props }: DetailsProps): LismProps {
   props.lismClass = atts(lismClass, 'c--details');
   return props;
+}
+
+export function getTitleProps({ set, unset, ...props }: Record<string, unknown>) {
+  return {
+    lismClass: 'c--details_title',
+    as: 'span',
+    fx: '1',
+    set: mergeSet('plain', set, unset),
+    ...props,
+  };
 }
 
 /**

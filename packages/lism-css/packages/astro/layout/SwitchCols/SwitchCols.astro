@@ -1,0 +1,12 @@
+---
+import type { HTMLTag, Polymorphic } from 'astro/types';
+import type { AstroLismFixedLayoutProps } from '../../types';
+import type { SwitchColsProps } from 'lism-css/lib/types/LayoutProps';
+import { Lism } from '../../Lism';
+
+type Props<Tag extends HTMLTag = 'div'> = Polymorphic<{ as: Tag }> & AstroLismFixedLayoutProps & Omit<SwitchColsProps, 'layout'>;
+
+const props = Astro.props;
+---
+
+<Lism layout="switchCols" {...props}><slot /></Lism>

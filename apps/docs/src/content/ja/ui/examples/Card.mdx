@@ -13,7 +13,7 @@ import Card from '@/components/ex/Card/index.jsx';
 
 export const ExampleCard = (props) => {
   return(
-    <SideMain isLinkBox href='###' hov='bxsh' setTransition sideW='50%' bgc='base' bdrs='20' bxsh='10' ov='hidden' {...props}>
+    <SideMain isLinkBox href='###' hov='bxsh' set="transition" sideW='50%' bgc='base' bdrs='20' bxsh='10' ov='hidden' {...props}>
       <Frame isSide ar='16/9' >
         <Media src='https://cdn.lism-css.com/img/a-1.jpg' alt='' width='960' height='640' />
       </Frame>
@@ -52,7 +52,7 @@ export const ExampleImgCard = (props) => {
 <Preview>
   <PreviewTitle>Preview</PreviewTitle>
   <PreviewArea bg=':stripe' resize p='30'>
-    <SideMain isLinkBox href="###" hov="bxsh" setTransition sideW="50%" bgc="base" bdrs="20" bxsh="10" ov="hidden">
+    <SideMain isLinkBox href="###" hov="bxsh" set="transition" sideW="50%" bgc="base" bdrs="20" bxsh="10" ov="hidden">
       <Frame isSide ar="16/9">
         <Media src="https://cdn.lism-css.com/img/a-1.jpg" alt="" width="960" height="640" />
       </Frame>
@@ -69,7 +69,7 @@ export const ExampleImgCard = (props) => {
   </PreviewArea>
   <PreviewCode slot='tab' label='JSX'>
     ```jsx "SideMain" 'as="a" isLinkBox'
-    <SideMain isLinkBox href="###" hov="bxsh" setTransition sideW="50%" bgc="base" bdrs="20" bxsh="10" ov="hidden">
+    <SideMain isLinkBox href="###" hov="bxsh" set="transition" sideW="50%" bgc="base" bdrs="20" bxsh="10" ov="hidden">
       <Frame isSide ar="16/9">
         <Media src="https://cdn.lism-css.com/img/a-1.jpg" alt="" width="960" height="640" />
       </Frame>
@@ -95,7 +95,7 @@ export const ExampleImgCard = (props) => {
 <Preview>
   <PreviewTitle>`u--expandedLink`を使う例</PreviewTitle>
   <PreviewArea bg=':stripe' resize p='30'>
-    <SideMain isLinkBox hov="bxsh" setTransition sideW="50%" bgc="base" bdrs="20" bxsh="10" ov="hidden">
+    <SideMain isLinkBox hov="bxsh" set="transition" sideW="50%" bgc="base" bdrs="20" bxsh="10" ov="hidden">
       <Frame isSide ar="16/9" pos="relative">
         <Media src="https://cdn.lism-css.com/img/a-1.jpg" alt="" width="960" height="640" />
         <Link href="#badge-link" pos="absolute" t="0" r="0" fz="s" bgc="black" c="white" m="20" px="15" bdrs="99" td="none" hov="neutral">
@@ -119,7 +119,7 @@ export const ExampleImgCard = (props) => {
   </PreviewArea>
   <PreviewCode slot='tab' label='JSX'>
     ```jsx "isLinkBox" "\<Link " "u--expandedLink"
-    <SideMain isLinkBox hov="bxsh" setTransition sideW="50%" bgc="base" bdrs="20" bxsh="10" ov="hidden">
+    <SideMain isLinkBox hov="bxsh" set="transition" sideW="50%" bgc="base" bdrs="20" bxsh="10" ov="hidden">
       <Frame isSide ar="16/9" pos="relative">
         <Media src="https://cdn.lism-css.com/img/a-1.jpg" alt="" width="960" height="640" />
         <Link href="#badge-link" pos="absolute" t="0" r="0" fz="s" bgc="black" c="white" m="20" px="15" bdrs="99" td="none" hov="neutral">
@@ -246,7 +246,7 @@ export const ExampleImgCard = (props) => {
 <Preview>
   <PreviewTitle>Flex時にメディア側のアスペクト比を指定すると、コンテンツ側の高さが低い場合にその比率で固定されます。</PreviewTitle>
   <PreviewArea bg=':stripe' resize p='20'>
-    <LinkBox href="#_" layout="flex" p="15" c="text" bgc="base" bd bdw="2px" bdc="base-2" bdrs="20" hov="bxsh" setHov setTransition>
+    <LinkBox href="#_" layout="flex" p="15" c="text" bgc="base" bd bdw="2px" bdc="base-2" bdrs="20" hov="bxsh" set={["hov", "transition"]}>
       <Frame w={['25%', '30%']} ar="1/1" fxsh="0" bdrs="10">
         <Media src="https://cdn.lism-css.com/img/a-1.jpg" alt="" width="960" height="640" />
       </Frame>
@@ -263,7 +263,7 @@ export const ExampleImgCard = (props) => {
   </PreviewArea>
   <PreviewCode slot='tab' label='JSX'>
     ```jsx 'ar="1/1"'
-    <LinkBox href="#_" layout="flex" p="15" c="text" bgc="base" bd bdw="2px" bdc="base-2" bdrs="20" hov="bxsh" setHov setTransition>
+    <LinkBox href="#_" layout="flex" p="15" c="text" bgc="base" bd bdw="2px" bdc="base-2" bdrs="20" hov="bxsh" set={["hov", "transition"]}>
       <Frame w={['25%', '30%']} ar="1/1" fxsh="0" bdrs="10">
         <Media src="https://cdn.lism-css.com/img/a-1.jpg" alt="" width="960" height="640" />
       </Frame>
@@ -303,11 +303,10 @@ export const ExampleImgCard = (props) => {
       bdrs="20"
       bxsh="10"
       hov="bxsh"
-      setHov
-      setTransition
+      set={["hov", "transition"]}
     >
       <Frame ga="img" aslf="stretch" ar={['og', '1/1']} max-w="100%" pos="relative" bdrs="20" bxsh="10">
-        <Media css={{ scale: 'var(--_isHov, 1.25)' }} setTransition src="https://cdn.lism-css.com/img/a-1.jpg" alt="" width="960" height="640" />
+        <Media css={{ scale: 'var(--_isHov, 1.25)' }} set="transition" src="https://cdn.lism-css.com/img/a-1.jpg" alt="" width="960" height="640" />
       </Frame>
       <Stack g="20" p="15">
         <h3 className="-fz:l">Card Title</h3>
@@ -336,11 +335,10 @@ export const ExampleImgCard = (props) => {
       bdrs="20"
       bxsh="10"
       hov="bxsh"
-      setHov
-      setTransition
+      set={["hov", "transition"]}
     >
       <Frame ga="img" aslf="stretch" ar={['og', '1/1']} max-w="100%" pos="relative" bdrs="20" bxsh="10">
-        <Media css={{ scale: 'var(--_isHov, 1.25)' }} setTransition src="https://cdn.lism-css.com/img/a-1.jpg" alt="" width="960" height="640" />
+        <Media css={{ scale: 'var(--_isHov, 1.25)' }} set="transition" src="https://cdn.lism-css.com/img/a-1.jpg" alt="" width="960" height="640" />
       </Frame>
       <Stack g="20" p="15">
         <h3 className="-fz:l">Card Title</h3>
@@ -371,7 +369,7 @@ export const ExampleImgCard = (props) => {
 }`}>
   <PreviewTitle>Preview</PreviewTitle>
   <PreviewArea bg=':stripe' p='20'>
-    <LinkBox href="#card-a" pos="relative" bdrs="20" bxsh="20" ov="hidden" setHov max-w="xs" mx="auto">
+    <LinkBox href="#card-a" pos="relative" bdrs="20" bxsh="20" ov="hidden" set="hov" max-w="xs" mx="auto">
       <Frame ar="1/1">
         <img src="https://cdn.lism-css.com/img/a-1.jpg" alt="" width="960" height="640" />
       </Frame>
@@ -380,7 +378,7 @@ export const ExampleImgCard = (props) => {
         <Layer style={{ backdropFilter: 'blur(6px) brightness(1.1)' }} />
         <Box pos="relative" z="1" c="white" lh="s">
           <h3 className="u--trim -fz:l">Card Title</h3>
-          <Grid setTransition hov="to:slide" my="15">
+          <Grid set="transition" hov="to:slide" my="15">
             <Box ov="hidden">
               <DummyText py="5" fz="s" lh="xs" />
             </Box>
@@ -393,8 +391,8 @@ export const ExampleImgCard = (props) => {
     </LinkBox>
   </PreviewArea>
   <PreviewCode slot='tab' label='JSX'>
-  ```jsx "setHov" 'hov="to:slide"'
-  <LinkBox href="#card-a" pos="relative" bdrs="20" bxsh="20" ov="hidden" setHov max-w="xs" mx="auto">
+  ```jsx 'set="hov"' 'hov="to:slide"'
+  <LinkBox href="#card-a" pos="relative" bdrs="20" bxsh="20" ov="hidden" set="hov" max-w="xs" mx="auto">
     <Frame ar="1/1">
       <img src="https://cdn.lism-css.com/img/a-1.jpg" alt="" width="960" height="640" />
     </Frame>
@@ -403,7 +401,7 @@ export const ExampleImgCard = (props) => {
       <Layer style={{ backdropFilter: 'blur(6px) brightness(1.1)' }} />
       <Box pos="relative" z="1" c="white" lh="s">
         <h3 className="u--trim -fz:l">Card Title</h3>
-        <Grid setTransition hov="to:slide" my="15">
+        <Grid set="transition" hov="to:slide" my="15">
           <Box ov="hidden">
             <DummyText py="5" fz="s" lh="xs" />
           </Box>

@@ -73,8 +73,8 @@ function Card({ children }) {
 | [base-styles.md](./base-styles.md) | ベーススタイリング — Reset CSS・HTML要素のベーススタイル・CSS変数（トークン） | [base-styles](https://lism-css.com/docs/base-styles/) |
 | [set-class.md](./set-class.md) | `set--` クラス — `set--plain`/`set--shadow`/`set--hov`/`set--transition` 等のセットアップクラス | [set](https://lism-css.com/docs/set/) |
 | [module-class.md](./module-class.md) | モジュールクラス — `is--`/`l--`/`a--`/`c--` クラスの一覧と用途 | [state](https://lism-css.com/docs/state/), [module-class](https://lism-css.com/docs/module-class/) |
-| [utility-class.md](./utility-class.md) | ユーティリティクラス — `u--` クラスの一覧・SCSS ソースリンク・Prop Class との違い | [utility-class](https://lism-css.com/docs/utility-class/) |
-| [prop-class.md](./prop-class.md) | Prop Class — `-{prop}:{value}` 記法・主要Prop一覧・特殊Prop（ボーダー・ホバー）・出力タイプ | [prop-class](https://lism-css.com/docs/prop-class/) |
+| [utility-class.md](./utility-class.md) | ユーティリティクラス — `u--` クラスの一覧・SCSS ソースリンク・Property Class との違い | [utility-class](https://lism-css.com/docs/utility-class/) |
+| [property-class.md](./property-class.md) | Property Class — `-{prop}:{value}` 記法・主要Prop一覧・特殊Prop（ボーダー・ホバー）・出力タイプ | [property-class](https://lism-css.com/docs/property-class/) |
 | [prop-responsive.md](./prop-responsive.md) | レスポンシブ対応 — ブレークポイント・コンテナクエリ・HTML/コンポーネントでの指定方法 | [responsive](https://lism-css.com/docs/responsive/) |
 | [components.md](./components.md) | コンポーネントシステム — コア・セマンティック・レイアウト・ステート・アトミック・UIコンポーネント一覧、getLismProps、CLI | [components](https://lism-css.com/docs/components/) |
 | [css-rules.md](./css-rules.md) | CSS設計ルール — Layer構造・命名規則・プレフィックス・カスタムCSS追加ルール | [css-methodology](https://lism-css.com/docs/css-methodology/) |

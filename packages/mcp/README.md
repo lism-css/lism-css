@@ -11,7 +11,7 @@ Enables AI tools (Claude Code, Cursor, etc.) to accurately reference the latest 
 |------|-------------|
 | `get_overview` | Framework overview (architecture, design philosophy, packages, breakpoints, installation guide, CSS Layers) |
 | `get_tokens` | List and filter design tokens (colors, spacing, font sizes, shadows, radii, etc.) |
-| `get_props_system` | Props system reference — how React/Astro props map to CSS classes and styles. Supports reverse lookup by CSS property name (e.g. `padding` → `p`) and Prop Class notation (e.g. `-g:5`) |
+| `get_props_system` | Props system reference — how React/Astro props map to CSS classes and styles. Supports reverse lookup by CSS property name (e.g. `padding` → `p`) and Property Class notation (e.g. `-g:5`) |
 | `get_component` | Component details (props, usage examples, sub-component structure). Optionally filter by package (`lism-css` or `@lism-css/ui`) |
 | `search_docs` | Full-text documentation search with relevance scoring. Supports category filtering and CSS property name expansion |
 | `convert_css` | Convert CSS code to lism-css props and component suggestions. Useful for migrating existing CSS to Lism CSS |

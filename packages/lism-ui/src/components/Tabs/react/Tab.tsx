@@ -1,4 +1,5 @@
 import { Lism, type LismComponentProps } from 'lism-css/react';
+import { getTabProps } from '../getProps';
 
 type TabProps = LismComponentProps & {
   tabId?: string;
@@ -10,6 +11,11 @@ export default function Tab({ tabId = 'tab', index = 0, isActive = false, ...pro
   const controlId = `${tabId}-${index}`;
 
   return (
-    <Lism as="button" lismClass="c--tabs_tab" setPlain role="tab" aria-controls={controlId} aria-selected={isActive ? 'true' : 'false'} {...props} />
+    <Lism
+      {...(getTabProps(props as Record<string, unknown>) as object)}
+      role="tab"
+      aria-controls={controlId}
+      aria-selected={isActive ? 'true' : 'false'}
+    />
   );
 }

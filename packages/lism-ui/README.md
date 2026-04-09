@@ -113,7 +113,7 @@ import { Stack, Text } from 'lism-css/astro';
 
 Lism CSS is organized into two packages:
 
-- **[lism-css](https://www.npmjs.com/package/lism-css)** — Core CSS framework providing layout components (Box, Flex, Stack, Grid, etc.), design tokens, prop classes, and the responsive system.
+- **[lism-css](https://www.npmjs.com/package/lism-css)** — Core CSS framework providing layout components (Box, Flex, Stack, Grid, etc.), design tokens, property classes, and the responsive system.
 - **@lism-css/ui** (this package) — Interactive UI components (Accordion, Modal, Tabs, etc.) that extend the core layout system with ready-to-use interface patterns.
 
 You need `lism-css` installed to use `@lism-css/ui`.

@@ -1,5 +1,6 @@
 import { assertType, describe, it } from 'vitest';
 import type { StateProps } from './StateProps';
+import type { LismPropsBase } from '../getLismProps';
 import type { STATES } from '../../../config/index';
 
 describe('StateProps', () => {
@@ -36,13 +37,6 @@ describe('StateProps', () => {
       assertType<StateProps>({ isSide: true });
       assertType<StateProps>({ isSkipFlow: true });
       assertType<StateProps>({ isVertical: true });
-      assertType<StateProps>({ setGutter: true });
-      assertType<StateProps>({ setShadow: true });
-      assertType<StateProps>({ setHov: true });
-      assertType<StateProps>({ setTransition: true });
-      assertType<StateProps>({ setPlain: true });
-      assertType<StateProps>({ setInnerRs: true });
-      assertType<StateProps>({ setBp: true });
     });
   });
 
@@ -67,26 +61,11 @@ describe('StateProps', () => {
     });
   });
 
-  describe('setStyles を持つステートは string を受け入れる', () => {
-    it('setMask - string を受け入れる', () => {
-      assertType<StateProps>({ setMask: '<svg>...</svg>' });
-      assertType<StateProps>({ setMask: 'url(image.png)' });
-    });
-
-    it('setMask - string 以外は受け入れない', () => {
-      // @ts-expect-error - boolean は受け入れない
-      assertType<StateProps>({ setMask: true });
-      // @ts-expect-error - number は受け入れない
-      assertType<StateProps>({ setMask: 123 });
-    });
-  });
-
   describe('複数のステートを同時に指定できる', () => {
     it('複数のステートを指定', () => {
       assertType<StateProps>({
         isContainer: true,
         isWrapper: 's',
-        setMask: '<svg>...</svg>',
       });
     });
   });
@@ -99,7 +78,62 @@ describe('StateProps', () => {
     it('undefined を明示的に指定できる', () => {
       assertType<StateProps>({ isContainer: undefined });
       assertType<StateProps>({ isWrapper: undefined });
-      assertType<StateProps>({ setMask: undefined });
+    });
+  });
+});
+
+describe('LismPropsBase — set / unset', () => {
+  describe('set prop', () => {
+    it('プリセット値を受け付ける', () => {
+      assertType<LismPropsBase>({ set: 'gutter' });
+      assertType<LismPropsBase>({ set: 'shadow' });
+      assertType<LismPropsBase>({ set: 'hov' });
+      assertType<LismPropsBase>({ set: 'transition' });
+      assertType<LismPropsBase>({ set: 'mask' });
+      assertType<LismPropsBase>({ set: 'plain' });
+      assertType<LismPropsBase>({ set: 'innerRs' });
+      assertType<LismPropsBase>({ set: 'bp' });
+    });
+
+    it('任意の文字列も受け付ける', () => {
+      assertType<LismPropsBase>({ set: 'custom-value' });
+      assertType<LismPropsBase>({ set: 'hov,transition' });
+    });
+
+    it('文字列配列を受け付ける', () => {
+      assertType<LismPropsBase>({ set: ['hov', 'transition'] });
+      assertType<LismPropsBase>({ set: ['gutter', 'custom-value'] });
+    });
+
+    it('undefined / 省略可', () => {
+      assertType<LismPropsBase>({ set: undefined });
+      assertType<LismPropsBase>({});
+    });
+  });
+
+  describe('unset prop', () => {
+    it('プリセット値を受け付ける', () => {
+      assertType<LismPropsBase>({ unset: 'gutter' });
+      assertType<LismPropsBase>({ unset: 'shadow' });
+    });
+
+    it('任意の文字列も受け付ける', () => {
+      assertType<LismPropsBase>({ unset: 'custom-value' });
+    });
+
+    it('文字列配列を受け付ける', () => {
+      assertType<LismPropsBase>({ unset: ['hov', 'transition'] });
+    });
+
+    it('undefined / 省略可', () => {
+      assertType<LismPropsBase>({ unset: undefined });
+    });
+  });
+
+  describe('set + unset 同時指定', () => {
+    it('両方同時に指定できる', () => {
+      assertType<LismPropsBase>({ set: ['hov', 'transition', 'shadow'], unset: 'shadow' });
+      assertType<LismPropsBase>({ set: 'gutter', unset: ['gutter'] });
     });
   });
 });

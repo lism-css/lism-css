@@ -1,14 +1,14 @@
 ---
 title: 'Spacing Tokens'
 navtitle: 'Spacing'
-description: 'An overview of Fibonacci-based spacing tokens in Lism CSS and which prop classes support them.'
+description: 'An overview of Fibonacci-based spacing tokens in Lism CSS and which property classes support them.'
 ---
 
 import { Box, Stack, Cluster, Columns, Frame, Center, Text } from 'lism-css/astro';
 import { DummyText } from '@lism-css/ui/astro';
 import { SpacingDemos } from "@/content/token-previews.jsx";
 
-This page covers Fibonacci-based spacing tokens and the prop classes that support them.
+This page covers Fibonacci-based spacing tokens and the property classes that support them.
 
 ## SPACE: Spacing Scale
 
@@ -50,14 +50,14 @@ Reference: [On typography and spacing scaling design](https://css-notes.com/layo
   - 5, 15, 25, ...など、`5`の倍数は前後の値の中間値となるように計算 */}
 
 
-## Supported Prop Classes
+## Supported Property Classes
 
-Spacing tokens can be used with `padding`, `margin`, and `gap` prop classes.
+Spacing tokens can be used with `padding`, `margin`, and `gap` property classes.
 However, **not all properties support them**.
 
 ### Full Support (Token Values 5–80)
 
-The following properties have prop classes for all spacing tokens: `5`, `10`, `15`, `20`, `30`, `40`, `50`, `60`, `70`, `80`.
+The following properties have property classes for all spacing tokens: `5`, `10`, `15`, `20`, `30`, `40`, `50`, `60`, `70`, `80`.
 
 | Property | CSS | Class examples | BP |
 |---|---|---|---|
@@ -74,7 +74,7 @@ The following properties have prop classes for all spacing tokens: `5`, `10`, `1
 
 ### No Preset Classes
 
-The following properties do not have preset spacing token prop classes. However, you can still specify values via CSS custom properties (`--px-s`, etc.) or JSX props (`px-s="20"`, etc.).
+The following properties do not have preset spacing token property classes. However, you can still specify values via CSS custom properties (`--px-s`, etc.) or JSX props (`px-s="20"`, etc.).
 
 | Property | CSS |
 |---|---|
@@ -92,7 +92,7 @@ The following properties do not have preset spacing token prop classes. However,
 
 ### Margin Auto Support
 
-Margin properties also have `auto` prop classes in addition to spacing tokens.
+Margin properties also have `auto` property classes in addition to spacing tokens.
 
 | Property | CSS | Class |
 |---|---|---|
@@ -105,5 +105,5 @@ Margin properties also have `auto` prop classes in addition to spacing tokens.
 | `my-e` | `margin-block-end` | `-my-e:auto` |
 
 <Reference>
-For a full list of prop classes, see [Prop Class Reference](/docs/prop-class/).
+For a full list of property classes, see [Property Class Reference](/docs/property-class/).
 </Reference>

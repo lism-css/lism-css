@@ -1,14 +1,13 @@
 ---
 // import type { LismProps } from 'lism-css/types';
 import { Lism } from 'lism-css/astro';
-import { defaultProps } from '../getProps';
+import { getOpenBtnProps } from '../getProps';
 
 // Propsの定義
 // interface Props extends LismProps {}
 const { modalId = '', ...props } = Astro.props || {};
-const btnProps = { ...defaultProps.openBtn, ...props };
 ---
 
-<Lism data-modal-open={modalId} {...btnProps}>
+<Lism data-modal-open={modalId} {...getOpenBtnProps(props)}>
   <slot />
 </Lism>

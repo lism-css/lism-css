@@ -1,0 +1,29 @@
+---
+import type { HTMLTag, Polymorphic } from 'astro/types';
+import type { ElementType } from 'react';
+import type { IconProps, IconOwnProps } from 'lism-css/react/atomic/Icon/getProps';
+import type { AstroLismBaseProps } from '../../types';
+import getLismProps from 'lism-css/lib/getLismProps';
+import getProps from 'lism-css/react/atomic/Icon/getProps';
+import SVG from './SVG.astro';
+
+type Props<Tag extends HTMLTag = 'svg'> = Omit<Polymorphic<{ as: Tag }>, 'as'> & {
+  as?: Tag | ElementType;
+} & AstroLismBaseProps &
+  Omit<IconOwnProps, 'as' | keyof AstroLismBaseProps>;
+
+// const hasChildren = Astro.slots.has('default');
+// let { IconTag, iconProps, otherProps } = getProps(props, hasChildren);
+// if (IconTag === '_SVG_') IconTag = SVG;
+
+let { Component, lismProps, exProps = {}, content } = getProps(Astro.props as unknown as IconProps);
+
+if (Component === '_SVG_') {
+  Component = SVG;
+  if (content) {
+    exProps.__html = content;
+  }
+}
+---
+
+<Component {...getLismProps(lismProps)} {...exProps}><slot /></Component>

@@ -1,14 +1,14 @@
 ---
 title: 'スペーシングトークン'
 navtitle: 'Spacing'
-description: 'Lism CSS のフィボナッチ数列に基づくスペーシングトークンと、対応するpropクラスについて解説します。'
+description: 'Lism CSS のフィボナッチ数列に基づくスペーシングトークンと、対応するpropertyクラスについて解説します。'
 ---
 
 import { Box, Stack, Cluster, Columns, Frame, Center, Text } from 'lism-css/astro';
 import { DummyText } from '@lism-css/ui/astro';
 import { SpacingDemos } from "@/content/token-previews.jsx";
 
-フィボナッチ数列に基づくスペーシングトークンと、対応する prop class について解説します。
+フィボナッチ数列に基づくスペーシングトークンと、対応する property class について解説します。
 
 ## SPACE: 余白のスケーリング
 
@@ -50,14 +50,14 @@ import { SpacingDemos } from "@/content/token-previews.jsx";
   - 5, 15, 25, ...など、`5`の倍数は前後の値の中間値となるように計算 */}
 
 
-## 対応する Prop Class
+## 対応する Property Class
 
-スペーシングトークンは、`padding`, `margin`, `gap` 系の prop class で利用できます。
+スペーシングトークンは、`padding`, `margin`, `gap` 系の property class で利用できます。
 ただし、**すべてのプロパティで使えるわけではありません**。
 
 ### フルサポート（トークン値 5〜80）
 
-以下のプロパティには、スペーシングトークン `5`, `10`, `15`, `20`, `30`, `40`, `50`, `60`, `70`, `80` に対応した prop class が用意されています。
+以下のプロパティには、スペーシングトークン `5`, `10`, `15`, `20`, `30`, `40`, `50`, `60`, `70`, `80` に対応した property class が用意されています。
 
 | プロパティ | CSS | クラス例 | BP対応 |
 |---|---|---|---|
@@ -74,7 +74,7 @@ import { SpacingDemos } from "@/content/token-previews.jsx";
 
 ### プリセットクラスなし
 
-以下のプロパティには、スペーシングトークンのプリセット prop class は用意されていません。ただし、CSS変数（`--px-s` 等）や JSX prop（`px-s="20"` 等）での値指定は可能です。
+以下のプロパティには、スペーシングトークンのプリセット property class は用意されていません。ただし、CSS変数（`--px-s` 等）や JSX prop（`px-s="20"` 等）での値指定は可能です。
 
 | プロパティ | CSS |
 |---|---|
@@ -92,7 +92,7 @@ import { SpacingDemos } from "@/content/token-previews.jsx";
 
 ### margin 系の auto 対応
 
-margin 系のプロパティには、スペーシングトークンに加えて `auto` の prop class も用意されています。
+margin 系のプロパティには、スペーシングトークンに加えて `auto` の property class も用意されています。
 
 | プロパティ | CSS | クラス |
 |---|---|---|
@@ -105,5 +105,5 @@ margin 系のプロパティには、スペーシングトークンに加えて 
 | `my-e` | `margin-block-end` | `-my-e:auto` |
 
 <Reference>
-各 prop class の詳細は [Prop Class 一覧](/docs/prop-class/) を参照してください。
+各 property class の詳細は [Property Class 一覧](/docs/property-class/) を参照してください。
 </Reference>

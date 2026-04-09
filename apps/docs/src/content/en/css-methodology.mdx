@@ -73,7 +73,7 @@ To address the common problem of CSS specificity becoming overly complex, Lism d
     </tr>
     <tr>
       <td class='-whspace:nowrap'>Props<br/>`-`</td>
-      <td>**Prop Classes** (`.-{prop}:{val}`) tied to individual CSS properties.<br />This group is the only one placed outside of layers, giving it higher specificity while still allowing reasonable coexistence with external CSS.</td>
+      <td>**Property Classes** (`.-{prop}:{val}`) tied to individual CSS properties.<br />This group is the only one placed outside of layers, giving it higher specificity while still allowing reasonable coexistence with external CSS.</td>
     </tr>
   </tbody>
 </table>
@@ -151,14 +151,14 @@ Utility classes with a clear decorative or functional purpose are defined as fol
 
 
 
-### Prop Class
+### Property Class
 
-In Lism CSS, utility classes that correspond to a single CSS property are defined as **Prop Classes**.
+In Lism CSS, utility classes that correspond to a single CSS property are defined as **Property Classes**.
 
 Utility classes are provided for major properties, covering commonly used values and dedicated token values, with responsive support built in.
 
 
-Prop Classes come in three formats:
+Property Classes come in three formats:
 
 | Format | Description | Example |
 |---|---|---|
@@ -209,11 +209,11 @@ Prop Classes come in three formats:
 
 
 <Reference>
-See the [Prop Class reference page](/docs/prop-class) for the full list.
+See the [Property Class reference page](/docs/property-class) for the full list.
 </Reference>
 
 
-### Responsive Prop Classes
+### Responsive Property Classes
 
 The `.-{prop}_{bp}` class format combined with the `--{prop}_{bp}` variable format enables responsive styling.
 
@@ -264,7 +264,7 @@ When defining your own components (`.c--card`, `c--pricing`, etc.), place them i
 ```
 
 If you add custom classes that match Lism CSS's existing class categories (`set--`, `is--`, `l--`, `a--`, `u--`), use the same prefix and add them to the corresponding layer.
-For utility classes combining a CSS property and its value, use the Prop Class format `-{prop}:{value}`.
+For utility classes combining a CSS property and its value, use the Property Class format `-{prop}:{value}`.
 
 
 #### Adding custom classifications
@@ -327,10 +327,10 @@ By using simple numeric variations, you can expand them to `base-3`, `text-3`, a
 :::
 
 
-#### Variable names for Prop Classes
-- Custom properties corresponding to Prop Classes use `--{prop}`, expressed with the **same abbreviation as the class name**.
+#### Variable names for Property Classes
+- Custom properties corresponding to Property Classes use `--{prop}`, expressed with the **same abbreviation as the class name**.
   - Examples: `--p`, `--mx`, `--c`, `--bgc`, `--bdrs`
-- Breakpoint values for Prop Classes use `--{prop}_{bp}`.
+- Breakpoint values for Property Classes use `--{prop}_{bp}`.
   - Examples: `--p_sm`, `--mx_md`
 
 #### Variable names for elements
@@ -338,7 +338,7 @@ By using simple numeric variations, you can expand them to `base-3`, `text-3`, a
   - Examples: `--link-td`, `--headings-ff`, `--gutter-size`, `--under-offset`, `--hl-unit`, `--ov-bgc`
 - Variables for the primary functionality of a component or module class are expressed as a single block, like `--{propName}`.
   - Examples: `--sideW`, `--mainW` for `.l--sideMain`
-  - Note: When the property is also defined as a Prop Class, the same variable name can be used to allow overriding.
+  - Note: When the property is also defined as a Property Class, the same variable name can be used to allow overriding.
     - Example: `--c`, `--bgc` on `.c--button`
 - Properties for child elements of specific components or modules (e.g., `c--hoge_item`) use the format `--_{item}-{propName}`.
   - Example: `--_icon-size`
@@ -367,7 +367,7 @@ For the `{value}` part of `-{prop}:{value}`:
 
 ## Abbreviation Rules
 
-This section explains the abbreviation rules for both the `{prop}` and `{value}` parts of Prop Classes (`-{prop}:{value}`), as well as the corresponding CSS variable names and component prop keys.
+This section explains the abbreviation rules for both the `{prop}` and `{value}` parts of Property Classes (`-{prop}:{value}`), as well as the corresponding CSS variable names and component prop keys.
 
 ### The `{prop}` part
 

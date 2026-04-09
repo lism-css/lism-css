@@ -4,7 +4,7 @@ import { Lightbulb } from 'lucide-react';
 
 function App() {
   return (
-    <Container size="s" setGutter layout="flow">
+    <Container size="s" set="gutter" layout="flow">
       <Flex g="15" py="15">
         <img src="vite.svg" />
         <h1>Vite + Lism UI</h1>
