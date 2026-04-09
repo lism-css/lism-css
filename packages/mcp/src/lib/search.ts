@@ -54,7 +54,7 @@ export function buildCssPropertyMap(categories: PropCategory[]): Map<string, str
 const PROP_CLASS_RE = /^\.?-([a-z][a-z0-9-]*)(:.+)?$/i;
 
 /**
- * Prop Class 記法（例: "-g:5", ".-p:20", "-fz"）から prop 名を抽出する。
+ * Property Class 記法（例: "-g:5", ".-p:20", "-fz"）から prop 名を抽出する。
  * get-props-system.ts からも利用される共通ユーティリティ。
  */
 export function parsePropClassName(input: string): string | null {
@@ -63,9 +63,9 @@ export function parsePropClassName(input: string): string | null {
 }
 
 /**
- * 検索クエリをCSSプロパティ名やProp Class記法で展開する。
+ * 検索クエリをCSSプロパティ名やProperty Class記法で展開する。
  * 例: "font-size" → "font-size fz"
- * 例: "-g:5" → "-g:5 g gap prop class"
+ * 例: "-g:5" → "-g:5 g gap property class"
  */
 function expandQuery(query: string, cssPropertyMap?: Map<string, string[]>): string {
   const additions: string[] = [];
@@ -74,7 +74,7 @@ function expandQuery(query: string, cssPropertyMap?: Map<string, string[]>): str
 
   if (cssPropertyMap) {
     for (const [cssProp, lismProps] of cssPropertyMap) {
-      // Prop Class 記法の逆引き（例: "-g:5" の "g" → "gap"）
+      // Property Class 記法の逆引き（例: "-g:5" の "g" → "gap"）
       if (parsedProp && lismProps.includes(parsedProp)) {
         additions.push(cssProp);
       }
@@ -86,7 +86,7 @@ function expandQuery(query: string, cssPropertyMap?: Map<string, string[]>): str
   }
 
   if (parsedProp) {
-    additions.push(parsedProp, 'prop class');
+    additions.push(parsedProp, 'property class');
   }
 
   return additions.length > 0 ? `${query} ${additions.join(' ')}` : query;
@@ -148,7 +148,7 @@ export interface SearchDocsOptions {
 export function searchDocs(entries: DocsEntry[], query: string, options?: SearchDocsOptions): SearchResult[] {
   const { category, limit = 10, aliasMap, cssPropertyMap } = options ?? {};
 
-  // CSSプロパティ名・Prop Class記法をLism prop名に展開してからトークナイズ
+  // CSSプロパティ名・Property Class記法をLism prop名に展開してからトークナイズ
   const expandedQuery = expandQuery(query, cssPropertyMap);
   const queryTokens = tokenize(expandedQuery);
   if (queryTokens.length === 0) return [];

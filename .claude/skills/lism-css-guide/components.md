@@ -80,9 +80,9 @@ import { Lism, Box, Flex, Stack, Grid, Text, Media } from 'lism-css/astro';
 
 ### CSS Props
 
-主要な CSS プロパティに対して省略記法（Shorthand）で指定できます。値に応じて **Prop Class**（`-{prop}:{value}`）やインラインスタイルに変換されます。
+主要な CSS プロパティに対して省略記法（Shorthand）で指定できます。値に応じて **Property Class**（`-{prop}:{value}`）やインラインスタイルに変換されます。
 
-各プロパティで受け付けるトークン値・プリセット値の詳細は [prop-class.md](./prop-class.md) を参照。  
+各プロパティで受け付けるトークン値・プリセット値の詳細は [property-class.md](./property-class.md) を参照。  
 もしくは、[定義ファイルの`props.ts`](https://github.com/lism-css/lism-css/blob/dev/packages/lism-css/config/defaults/props.ts) を読んでください。
 
 `prop={value}`で指定した値(`value`)によって、基本的な出力は以下のように分類されます。

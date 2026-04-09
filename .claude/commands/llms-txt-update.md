@@ -32,7 +32,7 @@
 |---|---|---|
 | Getting Started | `overview.mdx`, `installation.mdx`, `changelog.mdx` | |
 | Core Concepts | `css-methodology.mdx`, `tokens.mdx`, `typography.mdx`, `base-styles.mdx`, `reset-css.mdx`, `responsive.mdx`, `customize.mdx` | |
-| CSS Classes | `set-class.mdx`, `module-class.mdx`, `utility-class.mdx`, `prop-class.mdx` | |
+| CSS Classes | `set-class.mdx`, `module-class.mdx`, `utility-class.mdx`, `property-class.mdx` | |
 | Core Components | `core-components/*.mdx`（`Media.mdx` を除く） | |
 | State Modules | `modules/is--*.mdx` | |
 | Layout Modules | `modules/l--*.mdx` | |

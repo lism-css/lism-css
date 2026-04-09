@@ -59,7 +59,7 @@ React の props を CSS クラス・スタイルに変換：
 | 種類 | 例 |
 |------|-----|
 | レスポンシブ | `p={{base: '20', md: '30'}}` または `p={['20', null, '30']}`（ユーザーが使うのは後者で、前者はシステム処理用） |
-| Prop Class | `-p:20`, `-bgc:base-2` |
+| Property Class | `-p:20`, `-bgc:base-2` |
 | ブレークポイント | `-p_sm`, `-g_md` |
 | 処理が特殊な props | `hov`（hover）, `bd`（border） |
 
@@ -85,7 +85,7 @@ lism-base → lism-modules → lism-custom → lism-utility
 
 | ファイル | 説明 |
 |----------|------|
-| `_prop-config.scss` | Prop Class の定義 |
+| `_prop-config.scss` | Property Class の定義 |
 | `_query.scss` | ブレークポイント定義 |
 | `_auto_output.scss` | 自動出力処理 |
 

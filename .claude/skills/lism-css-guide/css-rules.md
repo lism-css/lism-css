@@ -22,7 +22,7 @@ Settings（トークン定義）
   → @layer lism-modules（.is-- / .l-- / .a-- / .c-- モジュール群）
   → @layer lism-custom（ユーザーカスタマイズ用）
   → @layer lism-utility（.u-- ユーティリティクラス）
-  → Prop Class（レイヤー外 — 最も詳細度が高い）
+  → Property Class（レイヤー外 — 最も詳細度が高い）
 ```
 
 
@@ -40,7 +40,7 @@ Settings（トークン定義）
 | `.a--` | lism-modules | レイアウト最小単位モジュール | `.a--icon`, `.a--divider` |
 | `.c--` | lism-modules | 具体的な役割のコンポーネント | `.c--button`, `.c--accordion` |
 | `.u--` | lism-utility | 用途が明確なユーティリティ | `.u--cbox`, `.u--trim` |
-| `.-` | レイヤー外 | 単一プロパティ制御（Prop Class） | `.-fz:l`, `.-p:20`, `.-d:none` |
+| `.-` | レイヤー外 | 単一プロパティ制御（Property Class） | `.-fz:l`, `.-p:20`, `.-d:none` |
 
 **併用ルール:**
 - `.l--` と `.c--` は併用OK（例: `<div class="l--flex c--nav">`）
@@ -49,14 +49,14 @@ Settings（トークン定義）
 - 子要素: `.c--card_header`, `.c--card_body`
 
 **記述順序:**
-class 属性にクラスを直接記述する場合、Prop Class（`-` プレフィックス）はモジュールクラスやユーティリティクラスの**後ろ**に書いてください。
+class 属性にクラスを直接記述する場合、Property Class（`-` プレフィックス）はモジュールクラスやユーティリティクラスの**後ろ**に書いてください。
 
 ```html
-<!-- OK: モジュールクラス → Prop Class -->
+<!-- OK: モジュールクラス → Property Class -->
 <div class="l--flex c--nav -p:20 -g:20">...</div>
 <div class="l--box u--cbox -bd -p:20">...</div>
 
-<!-- NG: Prop Class が先 -->
+<!-- NG: Property Class が先 -->
 <div class="-p:20 -g:20 l--flex c--nav">...</div>
 ```
 
@@ -96,10 +96,10 @@ class 属性にクラスを直接記述する場合、Prop Class（`-` プレフ
 ただし、明確にその数値に意図がある場合は、生のCSS値を使用しても構いません。
 
 **レイヤー外に書く場合:**
-`@layer` の外（レイヤーなし）でカスタムCSSを書くのは、**Prop Class（`-{prop}:{value}`）を拡張する場合のみ**としてください。それ以外のカスタムスタイルは必ずいずれかの `@layer` 内に記述します。
+`@layer` の外（レイヤーなし）でカスタムCSSを書くのは、**Property Class（`-{prop}:{value}`）を拡張する場合のみ**としてください。それ以外のカスタムスタイルは必ずいずれかの `@layer` 内に記述します。
 
 ```css
-/* OK: Prop Class の拡張はレイヤー外 */
+/* OK: Property Class の拡張はレイヤー外 */
 .-myProp\:myValue { ... }
 
 /* NG: コンポーネントやユーティリティをレイヤー外に書かない */

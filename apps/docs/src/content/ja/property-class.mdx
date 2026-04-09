@@ -1,6 +1,6 @@
 ---
-title: 'Prop Class'
-description: 'A complete list of Prop Classes that map to CSS properties, with usage examples.'
+title: 'Property Class'
+description: 'CSSプロパティに紐づいた Property Class の一覧とその使い方について解説します。'
 ---
 import { Lism, Flow, Container, Frame, Layer, Media, Box, Flex, Grid, Center, Columns, Spacer, Group, Text } from "lism-css/astro";
 import { DummyText } from '@lism-css/ui/astro';
@@ -41,35 +41,35 @@ export const PropTable = ({data={}, ...props}) => {
 }
 
 
-Lism provides utility classes for the major CSS properties, making it easy to set frequently used values and tokens.
-For particularly important CSS properties, breakpoint-specific classes are also available.
+Lismでは、主要なCSSプロパティ群に対して、それらで頻繁に使用される値やトークンを手軽にセットできるようなユーティリティクラスを用意しています。  
+さらに、その中でも特に重要なCSSプロパティについてはブレイクポイント指定用クラスも用意しています。
 
-These are called [Prop Classes](/docs/css-methodology/#prop-class) and are defined in the format `-{prop}(:{value})` and `-{prop}_{bp}`.
+それらを [Property Class](/docs/css-methodology/#property-class) と呼んでおり、`-{prop}(:{value})`, `-{prop}_{bp}` という形式で定義しています。
 
-This page lists all available Prop Classes.
+このページでは、その Property Classの一覧を紹介します。
 
 
 :::info
-You can change which classes are output by [customizing via SCSS](/docs/customize/).
+[SCSSでカスタマイズ](/docs/customize/)することで、出力するクラスの種類は変更できます。
 :::
 
 
-{/* ## Full Prop Class list
+{/* ## 全Property Class一覧
 ...*/}
 
 
-## How to read the tables on this page
+## このページの表の見方
 
-The tables below summarize information for each property.
+ここからはテーブル形式で、各プロパティの情報をまとめていきます。
 
-| Column | Description |
+|カラム名|説明|
 |---|---|
-|**Shorthand**| The abbreviated form of the CSS property. This is the `{prop}` string in the `-{prop}:{val}` class format, and also the prop name used with Lism components.|
-|**Property**| The corresponding CSS property |
-|**To Class**| Values that are output as Prop Utility classes |
-|**BP**| Whether breakpoint support classes (`-{prop}_{bp}`) are available |
+|**Shorthand**|CSSプロパティの省略形。Propertyクラスの`-{prop}:{val}`の`{prop}`にあたる文字列です。<br />また、Lismコンポーネントに指定するためのプロパティ名もこの文字列です。|
+|**Property**|対応するCSSプロパティ|
+|**To Class**|Property Utility クラスとして出力される値|
+|**BP**|ブレイクポイント対応クラス（`-{prop}_{bp}`）サポートの有無|
 
-The shorthand string is output as a class name. It is also the property name used with `Lism` components.
+省略形の文字列(Shorthand)は、クラスとして出力されます。また、`Lism`コンポーネントに指定するプロパティも、この文字列です。
 
 
 
@@ -139,7 +139,7 @@ The shorthand string is output as a class name. It is also the property name use
 </Preview>
 
 
-Related tokens: <a href="/docs/tokens/colors/"><code>COLOR</code></a>
+関連トークン: <a href="/docs/tokens/colors/"><code>COLOR</code></a>
 
 ## Spacing
 
@@ -230,7 +230,7 @@ export const LinkSPACE = () => <a href="/docs/tokens/spacing/"><code>SPACE</code
 |`min-ysz`|`min-block-size`|-|-|
 
 
-Related tokens: <a href="/docs/tokens/#size"><code>SIZE</code></a>
+関連トークン: <a href="/docs/tokens/#size"><code>SIZE</code></a>
 
 <Preview>
   <PreviewTitle>Examples</PreviewTitle>
@@ -312,12 +312,12 @@ Related tokens: <a href="/docs/tokens/#size"><code>SIZE</code></a>
 |`i-y-s`|`inset-block-start`|-|-|
 |`i-y-e`|`inset-block-end`|-|-|
 
-Here are some examples of positioning elements with `position: absolute`.
+`position:absolute`で要素を配置する例をいくつか紹介します。
 
 
 <Preview>
   <PreviewTitle>
-    Positioning examples
+    配置の指定例
   </PreviewTitle>
   <PreviewArea resize p='5'>
     <Box pos="relative" ar="16/9" lh="1" ff="mono">
@@ -499,7 +499,7 @@ Here are some examples of positioning elements with `position: absolute`.
   </PreviewCode>
 </Preview>
 
-In the above Examples, `--gtc` variable is accepted even without a `-gtc` class because `l--grid` receives `--gtc`.
+上記 Examples で`-gtc`クラスがなくても`--gtc`変数が受け取れているのは、`l--grid`が `--gtc`を受け取るためです。
 
 
 ### Places
@@ -622,7 +622,7 @@ In the above Examples, `--gtc` variable is accepted even without a `-gtc` class 
 </Preview>
 
 <Reference>
-The border specification has some unique behavior. See the [border page](/docs/props/bd/) for details.
+borderに関する仕様は少し特殊になっています。詳しくは[borderページ](/docs/props/bd/)をご覧ください。
 </Reference>
 
 
@@ -663,20 +663,20 @@ The border specification has some unique behavior. See the [border page](/docs/p
   <PreviewTitle>Examples</PreviewTitle>
   <PreviewArea p='30'>
     <Text whspace="nowrap" ov="hidden" bd p="10" bgc="base-2" max-sz="s">
-      <Fragment>whspace: nowrap — This long text will not wrap and will overflow</Fragment>
+      <Fragment>whspace: nowrap — この長いテキストは折り返さずにはみ出します</Fragment>
     </Text>
   </PreviewArea>
   <PreviewCode slot="tab" label="HTML">
   ```html
   <p class="-whspace:nowrap -ov:hidden -bd -p:10 -bgc:base-2 -max-sz:s">
-    whspace: nowrap — This long text will not wrap and will overflow
+    whspace: nowrap — この長いテキストは折り返さずにはみ出します
   </p>
   ```
   </PreviewCode>
   <PreviewCode slot="tab" label="JSX">
   ```jsx
   <Text whspace="nowrap" ov="hidden" bd p="10" bgc="base-2" max-sz="s">
-    whspace: nowrap — This long text will not wrap and will overflow
+    whspace: nowrap — この長いテキストは折り返さずにはみ出します
   </Text>
   ```
   </PreviewCode>
