@@ -1,7 +1,7 @@
 ---
 import DemoLayout from '@/layouts/DemoLayout.astro';
 
-import { Box, Stack, Container, Frame, Grid, Media, Icon, Layer, Text } from 'lism-css/astro';
+import { Box, Stack, Container, Frame, Grid, TileGrid, Media, Icon, Layer, Text } from 'lism-css/astro';
 import { Button } from '@lism-css/ui/astro';
 import './_style.css';
 ---
@@ -18,7 +18,7 @@ import './_style.css';
           <Text class="u--trim" fz="5xl" fw="100" ff="accent" lts="l" c="white" ta="center">Contact</Text>
           <Text class="u--trim" fz="m" c="white" ta="center">お気軽にご相談ください</Text>
         </Stack>
-        <Grid gt="repeat" cols={['1', null, '3']} g={['30', null, '40']}>
+        <TileGrid cols={['1', null, '3']} g={['30', null, '40']}>
           <Grid gtr="subgrid" gr="span 2" g="30" bgc="white" p="30" bdrs="10">
             <Box jslf="c" p="30" bdrs="99" bgc="base-2">
               <Icon icon="book" fz="4xl" c="text-2" />
@@ -50,7 +50,7 @@ import './_style.css';
               <Text class="u--trim" fz="s" lh="s" o="-20">2営業日以内に返信いたします</Text>
             </Stack>
           </Grid>
-        </Grid>
+        </TileGrid>
       </Stack>
     </Container>
   </Stack>

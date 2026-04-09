@@ -1,0 +1,11 @@
+---
+import type { HTMLTag, Polymorphic } from 'astro/types';
+import type { AstroLismFixedLayoutProps } from '../../types';
+import { Lism } from '../../Lism';
+
+type Props<Tag extends HTMLTag = 'div'> = Polymorphic<{ as: Tag }> & AstroLismFixedLayoutProps;
+
+const props = Astro.props;
+---
+
+<Lism layout="tileGrid" {...props}><slot /></Lism>

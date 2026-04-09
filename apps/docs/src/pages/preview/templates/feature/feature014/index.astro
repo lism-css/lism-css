@@ -1,7 +1,7 @@
 ---
 import DemoLayout from '@/layouts/DemoLayout.astro';
 
-import { Stack, Container, Frame, Grid, Media, Flex, Icon, Text, Inline, Heading } from 'lism-css/astro';
+import { Stack, Container, Frame, Grid, TileGrid, Media, Flex, Icon, Text, Inline, Heading } from 'lism-css/astro';
 import { Button } from '@lism-css/ui/astro';
 import './_style.css';
 ---
@@ -13,7 +13,7 @@ import './_style.css';
         <Text class="u--trim" fz="4xl" fw="light" lts="l">Feature</Text>
         <Heading level="2" class="u--trim" fz="m" fw="normal" o="-20">鉱石の概要と効能</Heading>
       </Stack>
-      <Grid gt="repeat" cols={['1', null, '3']}>
+      <TileGrid cols={['1', null, '3']}>
         <Grid gtr="subgrid" gr="span 3" ji="c" g="30" p={['40', null, '0 40']}>
           <Frame as="figure" ar="1/1" w="10rem" bdrs="99">
             <Media src="https://cdn.lism-css.com/random/img?category=v&r=1" alt="" width="960" height="640" set="transition" hov="to:zoom" />
@@ -101,7 +101,7 @@ import './_style.css';
             </Button>
           </Flex>
         </Grid>
-      </Grid>
+      </TileGrid>
     </Stack>
   </Container>
 </DemoLayout>

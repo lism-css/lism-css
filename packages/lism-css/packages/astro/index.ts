@@ -29,6 +29,7 @@ export * from './layout/Grid';
 export * from './layout/SideMain';
 export * from './layout/Stack';
 export * from './layout/SwitchCols';
+export * from './layout/TileGrid';
 
 // state (is--)
 export * from './state/Container';

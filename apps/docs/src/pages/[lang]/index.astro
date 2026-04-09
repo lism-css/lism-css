@@ -4,7 +4,7 @@
  * 日本語トップページの翻訳版
  */
 import SimpleLayout from '@/layouts/SimpleLayout.astro';
-import { Stack, Grid, Icon, Flex, Lism, Heading, Text, Link } from 'lism-css/astro';
+import { Stack, TileGrid, Icon, Flex, Lism, Heading, Text, Link } from 'lism-css/astro';
 import { Button } from '@lism-css/ui/astro';
 import Gradbox from '@/components/parts/Gradbox.astro';
 import { siteConfig } from '@/config/site';
@@ -77,7 +77,7 @@ const FEATURES = [
   schemaType="SoftwareSourceCode"
   excludeFromSearch
 >
-  <Grid class="hero" gt="repeat" cols="5" rows="1" min-h={['50svh', '75vh']} ai="center">
+  <TileGrid class="hero" cols="5" rows="1" min-h={['50svh', '75vh']} ai="center">
     <Stack class="hero_content" g="40" gc="1 / 5" gr="1" z="1">
       <Stack g="30">
         <Lism class="hero_heading -w:fit">
@@ -95,7 +95,7 @@ const FEATURES = [
     <Lism class="hero_image" gc="3 / 6" gr="1" pb="10" z="0">
       <Gradbox />
     </Lism>
-  </Grid>
+  </TileGrid>
 
   <Lism layout="columns" cols={[2]} g={['30', null, '40']} my-s="50">
     {

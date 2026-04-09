@@ -1,13 +1,13 @@
 ---
 import DemoLayout from '@/layouts/DemoLayout.astro';
 
-import { Container, Flex, Frame, Grid, Icon, Layer, LinkBox, Media, Stack, Text, Inline } from 'lism-css/astro';
+import { Container, Flex, Frame, Grid, TileGrid, Icon, Layer, LinkBox, Media, Stack, Text, Inline } from 'lism-css/astro';
 import './_style.css';
 ---
 
 <DemoLayout title="Feature007">
   <Container isWrapper="l" bgc="base" py="50" set="gutter">
-    <Grid gt="repeat" cols={['2', '3', '4']} rows={['4', '3']} g="20">
+    <TileGrid cols={['2', '3', '4']} rows={['4', '3']} g="20">
       <LinkBox
         href="#"
         gr={['1 / span 2', null, '1 / span 3']}
@@ -16,7 +16,7 @@ import './_style.css';
         ov="hidden"
         bdrs="30"
         bxsh="20"
-        set={["hov", "transition"]}
+        set={['hov', 'transition']}
       >
         <Frame isLayer>
           <Media src="https://cdn.lism-css.com/random/img?category=v&r=1" alt="" width="960" height="640" set="transition" hov="to:zoom" />
@@ -43,7 +43,7 @@ import './_style.css';
         ov="hidden"
         bdrs="30"
         bxsh="20"
-        set={["hov", "transition"]}
+        set={['hov', 'transition']}
       >
         <Frame isLayer>
           <Media src="https://cdn.lism-css.com/random/img?category=v&r=2" alt="" width="960" height="640" set="transition" hov="to:zoom" />
@@ -62,7 +62,16 @@ import './_style.css';
           </Flex>
         </Grid>
       </LinkBox>
-      <LinkBox href="#" gr={['4', '3', '1 / span 1']} gc={['1', null, '4']} pos="relative" ov="hidden" bdrs="30" bxsh="20" set={["hov", "transition"]}>
+      <LinkBox
+        href="#"
+        gr={['4', '3', '1 / span 1']}
+        gc={['1', null, '4']}
+        pos="relative"
+        ov="hidden"
+        bdrs="30"
+        bxsh="20"
+        set={['hov', 'transition']}
+      >
         <Frame isLayer>
           <Media src="https://cdn.lism-css.com/random/img?category=v&r=3" alt="" width="960" height="640" set="transition" hov="to:zoom" />
         </Frame>
@@ -88,7 +97,7 @@ import './_style.css';
         ov="hidden"
         bdrs="30"
         bxsh="20"
-        set={["hov", "transition"]}
+        set={['hov', 'transition']}
       >
         <Frame isLayer>
           <Media src="https://cdn.lism-css.com/random/img?category=v&r=4" alt="" width="960" height="640" set="transition" hov="to:zoom" />
@@ -107,7 +116,7 @@ import './_style.css';
           </Flex>
         </Grid>
       </LinkBox>
-    </Grid>
+    </TileGrid>
   </Container>
 </DemoLayout>
 
