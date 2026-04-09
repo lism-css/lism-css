@@ -4,7 +4,7 @@
 import type { ElementType } from 'react';
 import getLismProps from 'lism-css/lib/getLismProps';
 import { Lism, type LismComponentProps } from 'lism-css/react';
-import { getDetailsProps, defaultProps } from '../getProps';
+import { getDetailsProps, getTitleProps, defaultProps } from '../getProps';
 
 // スタイルのインポート
 import '../_style.css';
@@ -41,11 +41,7 @@ export function Summary<T extends ElementType = 'summary'>({ children, ...props 
  * Title - タイトルコンポーネント
  */
 export function Title<T extends ElementType = 'span'>({ children, ...props }: LismComponentProps<T>) {
-  return (
-    <Lism {...(defaultProps.title as object)} {...(props as object)}>
-      {children}
-    </Lism>
-  );
+  return <Lism {...(getTitleProps(props as Record<string, unknown>) as object)}>{children}</Lism>;
 }
 
 /**
