@@ -105,7 +105,8 @@ function Card({ children }) {
 | [utility-class.md](./utility-class.md) | ユーティリティクラス — `u--` クラスの一覧・SCSS ソースリンク・Property Class との違い | [utility-class](https://lism-css.com/docs/utility-class/) |
 | [property-class.md](./property-class.md) | Property Class — `-{prop}:{value}` 記法・主要Prop一覧・特殊Prop（ボーダー・ホバー）・出力タイプ | [property-class](https://lism-css.com/docs/property-class/) |
 | [prop-responsive.md](./prop-responsive.md) | レスポンシブ対応 — ブレークポイント・コンテナクエリ・HTML/コンポーネントでの指定方法 | [responsive](https://lism-css.com/docs/responsive/) |
-| [components.md](./components.md) | コンポーネントシステム — コア・セマンティック・レイアウト・ステート・アトミック・UIコンポーネント一覧、getLismProps、CLI | [components](https://lism-css.com/docs/components/) |
+| [lism-components.md](./lism-components.md) | コンポーネントシステム — コア・セマンティック・レイアウト・ステート・アトミック一覧、Lism Props、getLismProps | [components](https://lism-css.com/docs/components/) |
+| [ui-components.md](./ui-components.md) | UIコンポーネント（`@lism-css/ui`）— Accordion・Modal・Tabs・Button 等の Props・構造・CLI | [components](https://lism-css.com/docs/components/) |
 | [css-rules.md](./css-rules.md) | CSS設計ルール — Layer構造・命名規則・プレフィックス・カスタムCSS追加ルール | [css-methodology](https://lism-css.com/docs/css-methodology/) |
 
 各ファイルの冒頭にはTOC（目次）があり、セクションごとの詳細URL・ソースURLがまとめて記載されています。
