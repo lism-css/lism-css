@@ -29,7 +29,7 @@ MCP サーバー (`@lism-css/mcp`) が利用可能な場合は、コンポーネ
 ### CDN（CSSのみ）
 
 ```html
-<link href="https://cdn.jsdelivr.net/npm/lism-css/dist/css/main.css" rel="stylesheet" />
+<link href="https://cdn.jsdelivr.net/npm/lism-css@0/dist/css/main.css" rel="stylesheet" />
 ```
 
 ### npm パッケージ

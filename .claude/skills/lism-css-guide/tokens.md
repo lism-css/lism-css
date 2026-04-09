@@ -42,7 +42,7 @@ CSSコードを書く場合やコンポーネントのPropsに値を指定する
 | 書字方向 (writing) | `vertical` | `--writing--{key}` | `--writing--vertical` |
 | フロー余白 (flow) | `s`, `l` | `--flow--{key}` | `--flow--s` |
 | セマンティックカラー (c) | `base`, `base-2`, `text`, `text-2`, `divider`, `link`, `brand`, `accent` | `--{name}` | `--brand` |
-| パレットカラー (palette) | `red`, `blue`, `green`, `yellow`, `purple`, `orange`, `pink`, `gray`, `white`, `black`, `keycolor` | `--{name}` | `--red` |
+| パレットカラー (palette) | `red`, `blue`, `green`, `yellow`, `purple`, `orange`, `pink`, `gray`, `white`, `black` | `--{name}` | `--red` |
 
 
 ---
@@ -70,7 +70,7 @@ CSSコードを書く場合やコンポーネントのPropsに値を指定する
 
 ## フォントサイズ (fz)
 
-倍音列（調和数列）ベースのスケーリング。`--fz-mol`（デフォルト `8`）を分子とする `mol / (mol ± n)` の比率で算出される。
+倍音列（調和数列）ベースの、ハーモニックモジュラースケーリングを採用。`--fz-mol`（デフォルト `8`）を分子とする `mol / (mol ± n)` の比率で算出される。
 
 | CSS変数 | 値 | 説明 |
 |---------|-----|------|
@@ -183,7 +183,7 @@ CSSコードを書く場合やコンポーネントのPropsに値を指定する
 
 ### パレットカラー
 
-OKLCH で定義されたカラーパレット。`--L`（明度）と `--C`（彩度）の基準値を調整するとパレット全体の色味を変更可能。
+OKLCH で定義されたカラーパレット。`--L`（明度）と `--C`（彩度）の基準値を調整するとパレット全体の色味を変更可能。デフォルト: `--L: 60%`, `--C: 0.22`。
 
 | CSS変数 | 値 |
 |---------|-----|

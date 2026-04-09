@@ -42,7 +42,7 @@ import { Accordion, Tabs, Modal, Button } from '@lism-css/ui/astro';
 |------|------|-----|----------|------|
 | `allowMultiple` | Root | `boolean` | — | 複数アイテムの同時展開を許可 |
 | `as` | Heading | `string` | `div` | 見出しのHTMLタグ。`div` 時は `role='heading'` が自動付与。`h2`〜`h6` 指定時は role なし |
-| `flow` | Panel | `string` | — | パネル内コンテンツ領域のフロー余白 |
+| `flow` | Panel | `string` | — | パネル内コンテンツ領域（`c--accordion_content`）のフロー余白 |
 
 ```jsx
 <Accordion.Root>
@@ -234,7 +234,6 @@ HTML の `details/summary` 要素をラップしたコンポーネント。Accor
 |------|------|-----|----------|------|
 | `tabId` | Root | `string` | — | タブを特定するための ID 文字列 |
 | `defaultIndex` | Root | `number` | `1` | 初期アクティブタブ（1始まり） |
-| `variant` | Root | `string` | — | スタイルバリエーション。`c--tabs--{variant}` クラスが出力 |
 | `listProps` | Root | `object` | — | タブボタンリスト要素へ渡す props |
 
 ```jsx
