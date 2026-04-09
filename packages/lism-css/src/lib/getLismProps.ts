@@ -46,7 +46,6 @@ interface StatePropDataObject {
   presetClass?: string;
   customVar?: string;
   tokenKey?: string;
-  setStyles?: (propVal: string) => Record<string, string | number | undefined>;
 }
 
 type StatePropData = string | StatePropDataObject;
@@ -142,7 +141,7 @@ export class LismPropsData {
 
   analyzeState(statePropData: StatePropDataObject, propVal: unknown): void {
     // isWrapper などの特別な処理が必要なレイアウトステート
-    const { className, preset, presetClass, customVar, tokenKey, setStyles } = statePropData;
+    const { className, preset, presetClass, customVar, tokenKey } = statePropData;
     if (propVal === true) {
       this.lismState.push(className);
     } else if (preset && isPresetValue(preset, propVal)) {
@@ -152,8 +151,6 @@ export class LismPropsData {
       this.lismState.push(className);
       if (tokenKey && customVar) {
         this.addStyle(customVar, getMaybeCssVar(propVal as string | number, tokenKey));
-      } else if (setStyles && typeof propVal === 'string') {
-        this.addStyles(setStyles(propVal));
       }
     }
   }

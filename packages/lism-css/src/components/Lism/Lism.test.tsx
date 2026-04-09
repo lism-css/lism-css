@@ -423,6 +423,28 @@ describe('Lism', () => {
           const element = screen.getByTestId('lism');
           expect(element).toHaveClass('-g:inherit');
         });
+
+        test('cg（column-gap）を指定できる', () => {
+          render(
+            <Lism cg="20" data-testid="lism">
+              test
+            </Lism>
+          );
+          const element = screen.getByTestId('lism');
+          expect(element).toHaveClass('-cg');
+          expect(element).toHaveStyle({ '--cg': 'var(--s20)' });
+        });
+
+        test('rg（row-gap）を指定できる', () => {
+          render(
+            <Lism rg="20" data-testid="lism">
+              test
+            </Lism>
+          );
+          const element = screen.getByTestId('lism');
+          expect(element).toHaveClass('-rg');
+          expect(element).toHaveStyle({ '--rg': 'var(--s20)' });
+        });
       });
     });
 
