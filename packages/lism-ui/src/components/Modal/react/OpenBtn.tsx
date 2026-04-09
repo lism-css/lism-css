@@ -1,7 +1,7 @@
 import { Lism, type LismComponentProps } from 'lism-css/react';
 import { defaultProps } from '../getProps';
 
-type OpenBtnProps = LismComponentProps & {
+type OpenBtnProps = LismComponentProps<'button'> & {
   modalId?: string;
 };
 

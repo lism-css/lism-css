@@ -1,7 +1,8 @@
+import type { ElementType } from 'react';
 import { Flow, Lism, Center, Icon, type LismComponentProps, type IconProps } from 'lism-css/react';
 import getAlertProps, { type AlertProps } from '../getProps';
 
-export default function Alert({ children, ...inputProps }: AlertProps & LismComponentProps) {
+export default function Alert<T extends ElementType = 'div'>({ children, ...inputProps }: AlertProps & LismComponentProps<T>) {
   const { icon, layout, flow, ...alertProps } = getAlertProps(inputProps);
 
   return (
