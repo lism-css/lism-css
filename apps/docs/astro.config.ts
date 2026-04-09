@@ -40,6 +40,9 @@ export default defineConfig({
     // Dummy → DummyText/DummyImage 分割移動に伴うリダイレクト
     '/docs/core-components/dummy/': '/docs/ui/DummyText/',
     '/en/docs/core-components/dummy/': '/en/docs/ui/DummyText/',
+    // typography → tokens/typography に移動
+    '/docs/typography/': '/docs/tokens/typography/',
+    '/en/docs/typography/': '/en/docs/tokens/typography/',
   },
 
   // パスエイリアス設定

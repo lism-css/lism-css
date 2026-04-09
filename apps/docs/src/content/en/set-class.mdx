@@ -47,14 +47,22 @@ By overriding the `--shc` variable here, you can adjust the color tint of the sh
     <Stack g="10">
       <Text> Default: </Text>
       <Flex className="set--shadow -g:30" px-s="15">
-        <Box bxsh="20" p="30" bdrs="20">Box</Box>
-        <Box bxsh="40" p="30" bdrs="20">Box</Box>
+        <Box bxsh="20" p="30" bdrs="20">
+          <Fragment>Box</Fragment>
+        </Box>
+        <Box bxsh="40" p="30" bdrs="20">
+          <Fragment>Box</Fragment>
+        </Box>
       </Flex>
       <Spacer h="40" />
       <Text> Overriding variables with set--shadow: </Text>
       <Flex className="set--shadow -g:30" px-s="15" style={{ '--shc': 'hsl(200 50% 50% / 20%)' }}>
-        <Box bxsh="20" p="30" bdrs="20">Box</Box>
-        <Box bxsh="40" p="30" bdrs="20">Box</Box>
+        <Box bxsh="20" p="30" bdrs="20">
+          <Fragment>Box</Fragment>
+        </Box>
+        <Box bxsh="40" p="30" bdrs="20">
+          <Fragment>Box</Fragment>
+        </Box>
       </Flex>
     </Stack>
     <div class="a--spacer" />
@@ -82,46 +90,95 @@ By overriding the `--shc` variable here, you can adjust the color tint of the sh
 </Preview>
 
 
-### `set--bp`
+### `set--hov`
 
-A utility class for applying styles only at or above a specific breakpoint.
-It can be used as a workaround for properties that do not support [responsive breakpoints](/docs/responsive/).
+Sets the hover state variables (`--_notHov`, `--_isHov``) as follows. Primarily used to **control hover styles on child elements**.
 
-<EmbedCode dirPath='packages/lism-css' srcPath='src/scss/base/set/_bp.scss' />
+- `--_isHov` is defined as an empty value only when not hovered (and not focus-within).
+- Conversely, `--_notHov` is defined as an empty value when hovered or focus-within.
 
-<Preview>
-  <PreviewTitle>Example: changing text color to red at sm size and above</PreviewTitle>
-  <PreviewArea resize>
-    <Box className="set--bp" p="20" style={{ color: 'var(--_is_sm) red;' }}>
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.</p>
-    </Box>
+<EmbedCode dirPath='packages/lism-css' srcPath='src/scss/base/set/_hov.scss' />
+
+
+This empty variable trick enables the following patterns:
+
+- `var(--_isHov, {value to apply on hover})`
+- `var(--_notHov, {value to apply when not hovered})`
+
+For example, with `color: var(--_isHov, red)`, when hovered `--_isHov` becomes undefined, so `color: red` is applied.
+
+:::info
+Using `var(--_isHov, ...) var(--_notHov, ...)` allows you to **write both hover and non-hover styles on a single line**, but this does not work for properties like `box-shadow` that accept space-separated values.
+:::
+
+<PreviewTitle>Example: `-hov:test`</PreviewTitle>
+```css
+.-hov\:test {
+  color: var(--_isHov, green) var(--_notHov, red); /* green on hover, red when not hovered */
+  box-shadow: var(--_isHov, var(--bxsh--30)); /* shadow on hover (invalid value when not hovered) */
+  opacity: var(--_notHov, var(--o--n20)); /* reduced opacity when not hovered (invalid value on hover) */
+}
+```
+
+<Preview css={`
+.-hov\\:test {
+  color: var(--_isHov, green) var(--_notHov, red);
+  box-shadow: var(--_isHov, var(--bxsh--30));
+  opacity: var(--_notHov, var(--o--n20));
+}
+`}>
+  <PreviewTitle>Preview of `-hov:test`</PreviewTitle>
+  <PreviewArea p='30'>
+    <div className="set--hov -hov:test -p:30 -bd -bdc:current ">BOX</div>
   </PreviewArea>
-  <PreviewCode slot='tab' label='HTML'>
-  ```html "set--bp" "var(--_is_sm) red"
-  <div class="set--bp l--box -p:20" style="color: var(--_is_sm) red">
-    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.</p>
-  </div>
-  ```
-  </PreviewCode>
-  <PreviewCode slot='tab' label='JSX'>
-    ```jsx "set--bp" "var(--_is_sm) red"
-    <Box className="set--bp" p="20" style={{ color: 'var(--_is_sm) red;' }}>
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.</p>
-    </Box>
+  <PreviewCode>
+    ```html "set--hov -hov:test"
+    <div className="set--hov -hov:test -p:30 -bd -bdc:current ">BOX</div>
     ```
   </PreviewCode>
 </Preview>
 
-### `set--hov`
 
-Sets CSS variables for hover style management. Primarily used to control hover styles on child elements.
+By applying `set--hov` to a parent element and using the `--_isHov` and `--_notHov` variables on child elements, you can trigger style changes on children based on the parent's hover state.
 
-<EmbedCode dirPath='packages/lism-css' srcPath='src/scss/base/set/_hov.scss' />
+For example, this is useful for zooming an image inside a card when the parent box is hovered. The `-hov:to:zoom` class is provided out of the box for this purpose.
+
+```css
+.-hov\:to\:zoom {
+  --transProp: scale;
+  scale: var(--_isHov, 1.1);
+}
+```
+
+<Preview>
+  <PreviewTitle>Usage example of `-hov:to:zoom`</PreviewTitle>
+  <PreviewArea p='30'>
+    <a href="###" class="l--frame is--linkBox set--hov -ar:21/9 -ov:hidden">
+      <img class="set--transition -hov:to:zoom" src="https://cdn.lism-css.com/img/a-2.jpg" width="960" height="640" loading="lazy" />
+      <div class="is--layer -bgc" style="--c: #fff; --bgc: rgb(0 0 0 / 50%)"></div>
+      <div class="l--center is--layer -c" style="--c: #fff;">
+        <span class="-fz:xl">Banner Link</span>
+      </div>
+    </a>
+  </PreviewArea>
+  <PreviewCode>
+    ```html "set--hov" "-hov:to:zoom"
+    <a href="###" class="l--frame is--linkBox set--hov -ar:21/9 -ov:hidden">
+      <img class="set--transition -hov:to:zoom" src="https://cdn.lism-css.com/img/a-2.jpg" width="960" height="640" loading="lazy" />
+      <div class="is--layer -bgc" style="--c: #fff; --bgc: rgb(0 0 0 / 50%)"></div>
+      <div class="l--center is--layer -c" style="--c: #fff;">
+        <span class="-fz:xl">Banner Link</span>
+      </div>
+    </a>
+    ```
+  </PreviewCode>
+</Preview>
+
+
 
 <Reference>
 See the [`hover` documentation page](/docs/props/hov#set--hov) for usage examples.
 </Reference>
-
 
 
 ### `set--transition`
@@ -130,44 +187,62 @@ Sets the `transition` property using dedicated variables.
 
 <EmbedCode dirPath='packages/lism-css' srcPath='src/scss/base/set/_transition.scss' />
 
+<Preview>
+  <PreviewTitle>Usage example</PreviewTitle>
+  <PreviewArea p='30'>
+    <Lism setTransition hov={{c: 'red'}} style={{ '--hov-prop': 'color'}}>Example</Lism>
+  </PreviewArea>
+  <PreviewCode label="HTML" slot="tab">
+    ```html
+    <div class="set--transition -hov:c" style="--hov-prop: color; --hov-c: var(--red);">Example</div>
+    ```
+  </PreviewCode>
+  <PreviewCode label="JSX" slot="tab">
+    ```jsx
+    <Lism setTransition hov={{c: 'red'}} style={{ '--hov-prop': 'color'}}>Example</Lism>
+    ```
+  </PreviewCode>
+</Preview>
+
 <Reference>
 See the [`hover` documentation page](/docs/props/hov#set--transition) for usage examples.
 </Reference>
 
 
+
 ### `set--innerRs`
 
-A utility class that calculates the inner border radius (`--bdrs--inner`) of a child element based on the parent element's padding and border radius.
-The calculation is based on the parent element's (`set--innerRs`) `p` (`--p`) and `bdrs` (`--bdrs`) values. (Both must be specified.)
+A class that automatically calculates the inner border radius (`--bdrs--inner`) from the parent element's border radius (`--bdrs`) and padding (`--p`).
+Apply `set--innerRs` to the parent element, then use `-bdrs:inner` on the child element to apply the calculated `--bdrs--inner`.
 
-To apply the calculated `--bdrs--inner` to a child element, use `-bdrs:inner` on that child.
+(Both `bdrs` and `p` must be specified on the parent element.)
 
 <Preview>
   <PreviewTitle>Usage example</PreviewTitle>
   <PreviewArea p='30'>
-    <Lism className="set--innerRs" p="15" bd bxsh="20" bdrs="40">
+    <Lism setInnerRs p="15" bdrs="40" bd bxsh="20">
       <Frame bdrs="inner" ar="og">
         <img src="https://cdn.lism-css.com/img/u-5.jpg" width="1920" height="1280" alt="" />
       </Frame>
     </Lism>
   </PreviewArea>
-  <PreviewCode label="JSX" slot="tab">
-```jsx
-<Lism className="set--innerRs" p="15" bd bxsh="20" bdrs="40">
-  <Frame bdrs="inner" ar="og">
-    <img src="https://cdn.lism-css.com/img/u-5.jpg" width="1920" height="1280" alt="" />
-  </Frame>
-</Lism>
-```
-  </PreviewCode>
   <PreviewCode label="HTML" slot="tab">
-```html
-<div class="set--innerRs -p:15 -bd -bxsh:20 -bdrs:40">
-  <div class="l--frame -bdrs:inner -ar:og">
-    <img src="https://cdn.lism-css.com/img/u-5.jpg" width="1920" height="1280" alt="" />
-  </div>
-</div>
-```
+    ```html "set--innerRs" "-bdrs:inner" "-p:15 -bdrs:40"
+    <div class="set--innerRs -p:15 -bdrs:40 -bd -bxsh:20">
+      <div class="l--frame -bdrs:inner -ar:og">
+        <img src="https://cdn.lism-css.com/img/u-5.jpg" width="1920" height="1280" alt="" />
+      </div>
+    </div>
+    ```
+  </PreviewCode>
+  <PreviewCode label="JSX" slot="tab">
+    ```jsx 'setInnerRs' 'bdrs="inner"' 'p="15" bdrs="40"'
+    <Lism setInnerRs p="15" bdrs="40" bd bxsh="20">
+      <Frame bdrs="inner" ar="og">
+        <img src="https://cdn.lism-css.com/img/u-5.jpg" width="1920" height="1280" alt="" />
+      </Frame>
+    </Lism>
+    ```
   </PreviewCode>
 </Preview>
 
@@ -179,7 +254,9 @@ Since `p` and `bdrs` are managed as variables even when their values change at b
   <PreviewTitle>Usage example</PreviewTitle>
   <PreviewArea p='20' resize>
     <Lism p={[10, 15]} bd bdrs={['30', '40']} class="set--innerRs">
-      <Lism bd p="20" bdrs="inner">Example</Lism>
+      <Lism bd p="20" bdrs="inner" bgc="base-2">
+        <Fragment>Example</Fragment>
+      </Lism>
     </Lism>
   </PreviewArea>
   {/* <PreviewCode label="HTML" slot="tab">
@@ -187,7 +264,7 @@ Since `p` and `bdrs` are managed as variables even when their values change at b
   <PreviewCode label="JSX" slot="tab">
 ```jsx
 <Lism p={[10, 15]} bd bdrs={['30', '40']} class="set--innerRs">
-  <Lism bd p="20" bdrs="inner">
+  <Lism bd p="20" bdrs="inner" bgc="base-2">
     Example
   </Lism>
 </Lism>
@@ -235,19 +312,48 @@ It is provided as a separate class from padding utilities to reserve a consisten
 </Preview>
 
 
+### `set--bp`
+
+A utility class for applying styles only at or above a specific breakpoint.
+It can be used as a workaround for properties that do not support [responsive breakpoints](/docs/responsive/).
+
+<EmbedCode dirPath='packages/lism-css' srcPath='src/scss/base/set/_bp.scss' />
+
+<Preview>
+  <PreviewTitle>Example: changing text color to red at sm size and above</PreviewTitle>
+  <PreviewArea resize>
+    <Lism setBp p="20" style={{ color: 'var(--_is_sm) red;' }}>
+      <p>Lorem ipsum dolor sit amet. Consectetur adipiscing elit, sed do eiusmod tempor Incididunt ut.</p>
+    </Lism>
+  </PreviewArea>
+  <PreviewCode slot='tab' label='HTML'>
+  ```html "set--bp" "var(--_is_sm) red"
+  <div class="set--bp -p:20" style="color: var(--_is_sm) red">
+    <p>Lorem ipsum dolor sit amet. Consectetur adipiscing elit, sed do eiusmod tempor Incididunt ut.</p>
+  </div>
+  ```
+  </PreviewCode>
+  <PreviewCode slot='tab' label='JSX'>
+    ```jsx "setBp" "var(--_is_sm) red"
+    <Lism setBp p="20" style={{ color: 'var(--_is_sm) red;' }}>
+      <p>Lorem ipsum dolor sit amet. Consectetur adipiscing elit, sed do eiusmod tempor Incididunt ut.</p>
+    </Lism>
+    ```
+  </PreviewCode>
+</Preview>
 
 
-{/*
+{/* 
 ### `set--mask`
 
-`--mask`変数と組み合わせて、自身にmaskを適用します。
+Combines with the `--mask` variable to apply a mask to the element itself.
 
 <EmbedCode dirPath='packages/lism-css' srcPath='src/scss/base/set/_mask.scss' />
 
-Lismが提供するコンポーネントでは、`setMask`プロパティに指定した文字列が`--maskImg`として出力されるようになっています。（この時、`<svg>~</svg>`だけを渡すと、base64へエンコードされます。
+In Lism components, a string passed to the `setMask` prop is output as `--maskImg`. (When only `<svg>~</svg>` is passed, it is base64-encoded.)
 
 <Preview>
-  <PreviewTitle>例</PreviewTitle>
+  <PreviewTitle>Example</PreviewTitle>
   <PreviewArea p='10'>
     <Media
       src="https://cdn.lism-css.com/img/u-2.jpg"

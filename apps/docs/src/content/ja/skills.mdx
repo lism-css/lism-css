@@ -1,0 +1,54 @@
+---
+title: 'Skills File'
+description: 'プロジェクトにSKILL.mdファイルを配置して、AIエージェントに Lism CSS の設計ルール・Props・トークン・命名規則を伝える方法。'
+---
+プロジェクトに SKILL.md ファイルを配置することで、AIエージェントに Lism CSS の設計ルール・Props・トークン・命名規則などを伝えることができます。
+
+### ファイル構成
+
+スキルは以下の10ファイルで構成されています。
+
+| ファイル | 内容 |
+|---------|------|
+| `SKILL.md` | エントリポイント — 概要・パッケージ構成・実装ルール・参照リスト |
+| `tokens.md` | デザイントークン — 余白・フォントサイズ・角丸・影・カラー・パレット |
+| `base-styles.md` | ベーススタイリング — Reset CSS・HTML要素のベーススタイル・CSS変数概要 |
+| `set-class.md` | `set--` クラス — `set--plain`/`set--shadow`/`set--hov`/`set--transition` 等 |
+| `module-class.md` | モジュールクラス — is--/l--/a--/c-- クラスの一覧と用途 |
+| `utility-class.md` | ユーティリティクラス — u-- クラスの一覧 |
+| `prop-class.md` | Prop Class — `-{prop}:{value}` 記法・主要Prop一覧 |
+| `prop-responsive.md` | レスポンシブ対応 — ブレークポイント・コンテナクエリ・指定方法 |
+| `components.md` | コンポーネントシステム — コア・レイアウト・セマンティック・UI コンポーネント一覧 |
+| `css-rules.md` | CSS設計ルール — Layer構造・命名規則・プレフィックス・カスタムCSS追加ルール |
+
+GitHub: [lism-css/lism-css/.claude/skills/lism-css-guide/](https://github.com/lism-css/lism-css/tree/main/.claude/skills/lism-css-guide)
+
+
+### セットアップ
+
+<Preview>
+  <PreviewCode slot='tab' label='npm'>
+  ```bash frame="none"
+  npx skills add lism-css/lism-css
+  ```
+  </PreviewCode>
+  <PreviewCode slot='tab' label='pnpm'>
+  ```bash frame="none"
+  pnpm dlx skills add lism-css/lism-css
+  ```
+  </PreviewCode>
+  <PreviewCode slot='tab' label='yarn'>
+  ```bash frame="none"
+  yarn dlx skills add lism-css/lism-css
+  ```
+  </PreviewCode>
+  <PreviewCode slot='tab' label='bun'>
+  ```bash frame="none"
+  bunx skills add lism-css/lism-css
+  ```
+  </PreviewCode>
+</Preview>
+
+上記のコマンドで、あなたのプロジェクトに Lism CSS のスキルをインストールできます。
+
+<small>`skills` コマンドについては、[skills.sh](https://skills.sh) をご覧ください。</small>

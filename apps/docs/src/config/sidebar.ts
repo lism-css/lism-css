@@ -60,6 +60,7 @@ export type SidebarSection =
   | {
       label: string;
       translate?: TranslateLabels; // 他言語用ラベル
+      rootPath?: string; // ネスト深度判定用のルートパス（例: '/docs/'）
       items: Array<SidebarNavItem>;
     };
 
@@ -111,17 +112,22 @@ const docsSidebar: SidebarSection[] = [
   {
     label: 'はじめに',
     translate: { en: 'Getting Started' },
-    items: ['/docs/overview/', '/docs/installation/', '/docs/features/', '/docs/changelog/'],
+    items: ['/docs/overview/', '/docs/installation/', '/docs/mcp/', '/docs/skills/', '/docs/features/', '/docs/changelog/'],
   },
 
   // 概要カテゴリ
   {
     label: '概要',
     translate: { en: 'Overview' },
+    rootPath: '/docs/',
     items: [
       '/docs/css-methodology/',
+      { type: 'separator' },
       '/docs/tokens/',
-      '/docs/typography/',
+      '/docs/tokens/colors/',
+      '/docs/tokens/typography/',
+      '/docs/tokens/half-leading/',
+      '/docs/tokens/spacing/',
       { type: 'separator' },
       // '/docs/reset-css/',
       '/docs/base-styles/',

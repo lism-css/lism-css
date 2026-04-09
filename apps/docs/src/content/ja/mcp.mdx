@@ -1,0 +1,53 @@
+---
+title: 'MCP Server'
+description: 'AIコーディングツールが Lism CSS のコンポーネント・Props・トークン情報をリアルタイムに参照できる MCP サーバーのセットアップ方法。'
+---
+
+`@lism-css/mcp` は、Lism CSS のドキュメント・API情報をAIコーディングツールに提供する MCP (Model Context Protocol) サーバーです。
+
+### できること
+
+- **コンポーネント情報の参照** — 各コンポーネントのProps・使用例・サブコンポーネント構成
+- **Props ↔ CSS マッピング** — `p` → `padding`、`fz` → `font-size` など、省略記法の逆引き
+- **デザイントークンの参照** — 色、余白、フォントサイズなどのトークン値
+- **ドキュメント検索** — キーワードによる全文検索
+- **CSS → Lism 変換** — 既存CSSコードからLism CSSのprops・コンポーネント提案
+
+### セットアップ
+
+<Preview>
+  <PreviewCode slot='tab' label='Claude Code'>
+  ```bash frame="none"
+  claude mcp add lism-css -- npx -y @lism-css/mcp
+  ```
+  </PreviewCode>
+  <PreviewCode slot='tab' label='Cursor'>
+  ```json frame="none"
+  // .cursor/mcp.json
+  {
+    "mcpServers": {
+      "lism-css": {
+        "command": "npx",
+        "args": ["-y", "@lism-css/mcp"]
+      }
+    }
+  }
+  ```
+  </PreviewCode>
+  <PreviewCode slot='tab' label='VS Code (Copilot)'>
+  ```json frame="none"
+  // .vscode/mcp.json
+  {
+    "servers": {
+      "lism-css": {
+        "type": "stdio",
+        "command": "npx",
+        "args": ["-y", "@lism-css/mcp"]
+      }
+    }
+  }
+  ```
+  </PreviewCode>
+</Preview>
+
+詳細は [GitHub - @lism-css/mcp](https://github.com/lism-css/lism-css/tree/main/packages/mcp) をご覧ください。

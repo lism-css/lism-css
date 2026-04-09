@@ -86,7 +86,7 @@ The side element's width is fixed to the value set by `--sideW`. When the main e
 
 #### Reversed order
 
-Using the `-fxd:row-r` class (`flex-direction:row-reverse`) together allows you to reverse only the horizontal order.
+Using the `-fxd:row-reverse` class (`flex-direction:row-reverse`) together allows you to reverse only the horizontal order.
 
 :::check
 This places the side element on the left when horizontal, and at the bottom when stacked vertically.
@@ -95,7 +95,7 @@ This places the side element on the left when horizontal, and at the bottom when
 <Preview>
   <PreviewTitle>Example</PreviewTitle>
   <PreviewArea resize p='20'>
-    <SideMain fxd="row-r" sideW="10rem" mainW="16rem" g="20">
+    <SideMain fxd="row-reverse" sideW="10rem" mainW="16rem" g="20">
       <Box>
         <DummyText />
       </Box>
@@ -103,8 +103,8 @@ This places the side element on the left when horizontal, and at the bottom when
     </SideMain>
   </PreviewArea>
   <PreviewCode slot='tab' label='JSX'>
-    ```jsx "fxd='row-r'"
-    <SideMain fxd="row-r" sideW="10rem" mainW="16rem" g="20">
+    ```jsx 'fxd="row-reverse"'
+    <SideMain fxd="row-reverse" sideW="10rem" mainW="16rem" g="20">
       <Box>
         <p>
           Lorem ipsum dolor sit amet. Consectetur adipiscing elit, sed do eiusmod tempor Incididunt ut. Labore et dolore magna aliqua. Ut enim ad minim
@@ -116,8 +116,8 @@ This places the side element on the left when horizontal, and at the bottom when
     ```
   </PreviewCode>
   <PreviewCode slot='tab' label='HTML'>
-    ```html "-fxd:row-r"
-    <div class="l--sideMain -fxd:row-r -g:20" style="--sideW: 10rem; --mainW: 16rem">
+    ```html "-fxd:row-reverse"
+    <div class="l--sideMain -fxd:row-reverse -g:20" style="--sideW: 10rem; --mainW: 16rem">
       <div class="l--box">
         <p>Lorem ipsum dolor sit amet, ...</p>
       </div>

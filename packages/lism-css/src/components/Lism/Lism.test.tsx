@@ -423,6 +423,28 @@ describe('Lism', () => {
           const element = screen.getByTestId('lism');
           expect(element).toHaveClass('-g:inherit');
         });
+
+        test('cg（column-gap）を指定できる', () => {
+          render(
+            <Lism cg="20" data-testid="lism">
+              test
+            </Lism>
+          );
+          const element = screen.getByTestId('lism');
+          expect(element).toHaveClass('-cg');
+          expect(element).toHaveStyle({ '--cg': 'var(--s20)' });
+        });
+
+        test('rg（row-gap）を指定できる', () => {
+          render(
+            <Lism rg="20" data-testid="lism">
+              test
+            </Lism>
+          );
+          const element = screen.getByTestId('lism');
+          expect(element).toHaveClass('-rg');
+          expect(element).toHaveStyle({ '--rg': 'var(--s20)' });
+        });
       });
     });
 
@@ -519,14 +541,14 @@ describe('Lism', () => {
         expect(element).toHaveClass('-d:block');
       });
 
-      test('d="in-flex" を指定できる', () => {
+      test('d="inline-flex" を指定できる', () => {
         render(
-          <Lism d="in-flex" data-testid="lism">
+          <Lism d="inline-flex" data-testid="lism">
             test
           </Lism>
         );
         const element = screen.getByTestId('lism');
-        expect(element).toHaveClass('-d:in-flex');
+        expect(element).toHaveClass('-d:inline-flex');
       });
 
       test('v（visibility）を指定できる', () => {
@@ -568,7 +590,7 @@ describe('Lism', () => {
           </Lism>
         );
         const element = screen.getByTestId('lism');
-        expect(element).toHaveClass('-pos:rel');
+        expect(element).toHaveClass('-pos:relative');
       });
 
       test('pos="absolute" を指定できる', () => {
@@ -578,7 +600,7 @@ describe('Lism', () => {
           </Lism>
         );
         const element = screen.getByTestId('lism');
-        expect(element).toHaveClass('-pos:abs');
+        expect(element).toHaveClass('-pos:absolute');
       });
 
       test('pos="fixed" を指定できる', () => {
@@ -761,22 +783,22 @@ describe('Lism', () => {
 
         test('fxd（flex-direction）を指定できる', () => {
           render(
-            <Lism fxd="col" data-testid="lism">
+            <Lism fxd="column" data-testid="lism">
               test
             </Lism>
           );
           const element = screen.getByTestId('lism');
-          expect(element).toHaveClass('-fxd:col');
+          expect(element).toHaveClass('-fxd:column');
         });
 
-        test('fxd="row-r" を指定できる', () => {
+        test('fxd="row-reverse" を指定できる', () => {
           render(
-            <Lism fxd="row-r" data-testid="lism">
+            <Lism fxd="row-reverse" data-testid="lism">
               test
             </Lism>
           );
           const element = screen.getByTestId('lism');
-          expect(element).toHaveClass('-fxd:row-r');
+          expect(element).toHaveClass('-fxd:row-reverse');
         });
 
         test('fx（flex）を指定できる', () => {
@@ -853,12 +875,12 @@ describe('Lism', () => {
 
         test('gaf（grid-auto-flow）を指定できる', () => {
           render(
-            <Lism gaf="col" data-testid="lism">
+            <Lism gaf="column" data-testid="lism">
               test
             </Lism>
           );
           const element = screen.getByTestId('lism');
-          expect(element).toHaveClass('-gaf:col');
+          expect(element).toHaveClass('-gaf:column');
         });
 
         test('ga（grid-area）を指定できる', () => {
@@ -1012,12 +1034,12 @@ describe('Lism', () => {
 
       test('ovwrap（overflow-wrap）を指定できる', () => {
         render(
-          <Lism ovwrap="any" data-testid="lism">
+          <Lism ovwrap="anywhere" data-testid="lism">
             test
           </Lism>
         );
         const element = screen.getByTestId('lism');
-        expect(element).toHaveClass('-ovwrap:any');
+        expect(element).toHaveClass('-ovwrap:anywhere');
       });
     });
 

@@ -1,0 +1,201 @@
+---
+title: 'タイポグラフィトークン'
+navtitle: 'Typography'
+description: 'Lism CSS で使用するフォントファミリー、フォントサイズ、行間などのタイポグラフィ関連のデザイントークンについて解説します。'
+---
+
+import { Box, Stack, Cluster, Columns, Frame, Center, Text } from 'lism-css/astro';
+import { DummyText } from '@lism-css/ui/astro';
+import { FzDemos } from "@/content/token-previews.jsx";
+
+フォントファミリー、フォントサイズ、行間など、タイポグラフィに関するデザイントークンについて解説します。
+
+## FF: font-family
+
+`font-family` 用のトークンです。
+
+|トークン|変数|クラス|
+|---|---|---|
+|`base`|<span class='-whspace:nowrap'>`--ff--base`</span>|<span class='-whspace:nowrap'>`-ff:base`</span>|
+|`accent`|<span class='-whspace:nowrap'>`--ff--accent`</span>|<span class='-whspace:nowrap'>`-ff:accent`</span>|
+|`mono`|<span class='-whspace:nowrap'>`--ff--mono`</span>|<span class='-whspace:nowrap'>`-ff:mono`</span>|
+
+
+<Preview>
+  <PreviewTitle>Preview</PreviewTitle>
+  <PreviewArea p='20' flow='s'>
+    <Text ff="base" fz="xl">
+      <Fragment>base: English text, 漢字ひらがな</Fragment>
+    </Text>
+    <Text ff="accent" fz="xl">
+      <Fragment>accent: English text, 漢字ひらがな</Fragment>
+    </Text>
+    <Text ff="mono" fz="xl">
+      <Fragment>mono: English text, 漢字ひらがな</Fragment>
+    </Text>
+  </PreviewArea>
+  <PreviewCode>
+  ```jsx
+  <p class="-ff:base -fz:xl">Lorem ipsum ...</p>
+  <p class="-ff:accent -fz:xl">Lorem ipsum ...</p>
+  <p class="-ff:mono -fz:xl">Lorem ipsum ...</p>
+  ```
+  </PreviewCode>
+</Preview>
+
+
+## FW : font-weight
+
+`font-weight` 用のトークンです。
+
+|トークン|変数|クラス|初期値|
+|---|---|---|---|
+|`light`|`--fw--light`|`-fw:light`|`300`|
+|`normal`|`--fw--normal`|`-fw:normal`|`400`|
+|`bold`|`--fw--bold`|`-fw:bold`|`600`|
+
+また、`-fw:100` ~ `-fw:900` の数値ユーティリティクラスも用意しており、細かいウェイト指定が可能です。
+
+<Preview>
+  <PreviewTitle>Preview</PreviewTitle>
+  <PreviewArea p='20' flow='s'>
+    <DummyText length="s" fw="light" />
+    <DummyText length="s" fw="normal" />
+    <DummyText length="s" fw="bold" />
+  </PreviewArea>
+  <PreviewCode slot='tab' label='HTML'>
+    ```html
+    <p class="-fw:light">Lorem ipsum ...</p>
+    <p class="-fw:normal">Lorem ipsum ...</p>
+    <p class="-fw:bold">Lorem ipsum ...</p>
+    ```
+  </PreviewCode>
+  <PreviewCode slot='tab' label='JSX'>
+    ```jsx
+    <Text fw='light'>Lorem ipsum ...</Text>
+    <Text fw='normal'>Lorem ipsum ...</Text>
+    <Text fw='bold'>Lorem ipsum ...</Text>
+    ```
+  </PreviewCode>
+</Preview>
+
+
+## FZ: font-size
+
+`font-size` 用のトークンです。
+
+|トークン|変数|クラス|初期値|
+|---|---|---|---|
+|`base`|`--fz--base`|`-fz:base`|`--REM`|
+|`2xs`|`--fz--2xs`|`-fz:2xs`|`1em * 8 / 11`|
+|`xs`|`--fz--xs`|`-fz:xs`|`1em * 8 / 10`|
+|`s`|`--fz--s`|`-fz:s`|`1em * 8 / 9`|
+|`m`|`--fz--m`|`-fz:m`|`1em`|
+|`l`|`--fz--l`|`-fz:l`|`1em * 8 / 7`|
+|`xl`|`--fz--xl`|`-fz:xl`|`1em * 8 / 6`|
+|`2xl`|`--fz--2xl`|`-fz:2xl`|`1em * 8 / 5`|
+|`3xl`|`--fz--3xl`|`-fz:3xl`|`1em * 8 / 4`|
+|`4xl`|`--fz--4xl`|`-fz:4xl`|`1em * 8 / 3`|
+|`5xl`|`--fz--5xl`|`-fz:5xl`|`1em * 8 / 2`|
+
+
+
+
+<Preview>
+  <PreviewTitle>Preview</PreviewTitle>
+  <PreviewArea p='0' flow='s'>
+    <FzDemos />
+  </PreviewArea>
+  <PreviewCode>
+    ```html
+    <p class="-fz:2xs">Lorem ipsum ...</p>
+    <p class="-fz:xs">Lorem ipsum ...</p>
+    <p class="-fz:s">Lorem ipsum ...</p>
+    <p class="-fz:m">Lorem ipsum ...</p>
+    <p class="-fz:base">Lorem ipsum ...</p>
+    <p class="-fz:l">Lorem ipsum ...</p>
+    <p class="-fz:xl">Lorem ipsum ...</p>
+    <p class="-fz:2xl">Lorem ipsum ...</p>
+    <p class="-fz:3xl">Lorem ipsum ...</p>
+    <p class="-fz:4xl">Lorem ipsum ...</p>
+    ```
+  </PreviewCode>
+</Preview>
+
+
+### フォントサイズのスケーリング規則について
+
+Lism では、フォントサイズのスケーリングには数学的・音楽的に美しいとされる調和数列に基づいて定義しています。
+
+<Reference>
+参考: [タイポグラフィと余白のスケーリング設計について](https://css-notes.com/layout/typography-scaling/)
+</Reference>
+
+
+いわゆるハーモニックモジュラースケーリングとか呼ばれるもので、Every Layoutなどでもこのスケーリング手法が紹介されています。
+
+Lism CSS では、デフォルトでは、**分子8の調和数列**ベースに設定しています。
+
+:::note
+当サイトでは、英語ページでは `--fz-mol` を `7` に設定しています。
+:::
+
+```css
+:root {
+  --fz-mol: 8;
+  --fz--5xl: calc(1em * var(--fz-mol) / (var(--fz-mol) - 6));
+  --fz--4xl: calc(1em * var(--fz-mol) / (var(--fz-mol) - 5));
+  --fz--3xl: calc(1em * var(--fz-mol) / (var(--fz-mol) - 4));
+  --fz--2xl: calc(1em * var(--fz-mol) / (var(--fz-mol) - 3));
+  --fz--xl: calc(1em * var(--fz-mol) / (var(--fz-mol) - 2));
+  --fz--l: calc(1em * var(--fz-mol) / (var(--fz-mol) - 1));
+  --fz--m: 1em;
+  --fz--s: calc(1em * var(--fz-mol) / (var(--fz-mol) + 1));
+  --fz--xs: calc(1em * var(--fz-mol) / (var(--fz-mol) + 2));
+  --fz--2xs: calc(1em * var(--fz-mol) / (var(--fz-mol) + 3));
+}
+```
+
+
+
+## [LH: line-height](/docs/tokens/half-leading/)
+
+Lism CSSでは、`line-height` をハーフレディングの値で管理する独自の仕組みを採用しています。
+
+詳細は [ハーフレディング（line-height）](/docs/tokens/half-leading/) を参照してください。
+
+
+## LTS: letter-spacing
+
+`letter-spacing` 用のトークンです。
+
+|トークン|変数|クラス|初期値
+|---|---|---|---|
+|`base`|`--lts--base`|`-lts:base`|`normal`|
+|`s`|`--lts--s`|`-lts:s`|`-0.05em`|
+|`l`|`--lts--l`|`-lts:l`|`0.05em`|
+{/* |`xl`|`--lts--xl`|`-lts:xl`|`0.125em`| */}
+
+<Preview>
+  <PreviewTitle>Preview</PreviewTitle>
+  <PreviewArea p='20' flow='s'>
+    <DummyText length="s" pre="<code>s:</code> " lts="s" />
+    <DummyText length="s" pre="<code>base:</code> " lts="base" />
+    <DummyText length="s" pre="<code>l:</code> " lts="l" />
+    {/* <DummyText length='s' pre='<code>xl:</code> ' lts='xl' /> */}
+  </PreviewArea>
+  <PreviewCode slot='tab' label='HTML'>
+    ```html
+    <p class="-lts:s">Lorem ipsum ...</p>
+    <p class="-lts:base">Lorem ipsum ...</p>
+    <p class="-lts:l">Lorem ipsum ...</p>
+    ```
+  </PreviewCode>
+  <PreviewCode slot='tab' label='JSX'>
+    ```jsx
+    <Text lts='s'>Lorem ipsum ...</Text>
+    <Text lts='base'>Lorem ipsum ...</Text>
+    <Text lts='l'>Lorem ipsum ...</Text>
+    ```
+  </PreviewCode>
+</Preview>

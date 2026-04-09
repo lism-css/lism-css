@@ -1,11 +1,10 @@
 ---
-title: 'Design Tokens'
+title: 'デザイントークン'
 description: 'Lism CSS で定義されているカラー、スペーシング、シャドウなどのデザイントークン一覧を紹介します。'
 ---
 
 import { Box, Stack, Cluster, Columns, Frame, Center, Inline, Text } from 'lism-css/astro';
 import { DummyText } from '@lism-css/ui/astro';
-import { FzDemos, SpacingDemos, BoxShadowDemos } from "@/content/token-previews.jsx";
 
 export const ColorBadge = ({color, label}) => {
   return <Cluster g='10'>
@@ -15,7 +14,10 @@ export const ColorBadge = ({color, label}) => {
 }
 
 
-## COLOR
+Lism CSS では、主要なCSSプロパティに対してデザイントークンを用意しています。
+
+
+## [COLOR](/docs/tokens/colors/)
 
 |トークン名|変数|
 |---|---|
@@ -27,55 +29,40 @@ export const ColorBadge = ({color, label}) => {
 |<ColorBadge color='link' />|`--link`|
 |<ColorBadge color='brand' />|`--brand`|
 |<ColorBadge color='accent' />|`--accent`|
-{/* |<ColorBadge color='accent-2' />|`--accent-2`| */}
 
-これらのカラーは、サイトに合わせて調整してご利用ください。
-{/* モダンCSSでは`color-mix()`があるので、hsl値の中身を変数にすることはしていません。 */}
+パレットカラー（`--red`, `--blue`, `--green` 等）やカスタマイズ方法は [カラートークン](/docs/tokens/colors/) を参照してください。
 
 
-<Preview>
-  <PreviewTitle>Preview</PreviewTitle>
-  <PreviewArea p='30'>
-    <Box bd p='30'>
-      <Text fw='bold' c='brand'>Main color example text</Text>
-      <DummyText length='codes' pre='text: ' />
-      <DummyText c='text-2' length='s' pre='text-2: ' />
-    </Box>
+## [Typography](/docs/tokens/typography/)
 
-    <Box bgc='base-2' p='30'>
-      <Text fw='bold' c='accent'>Accent color example text</Text>
-      <DummyText length='codes' pre='text: ' />
-      <DummyText c='text-2' length='s' pre='text-2: ' />
-      </Box>
-    </PreviewArea>
-  </Preview>
-
-### PALETTE
-
-|パレットトークン|変数|
+|トークン|変数|
 |---|---|
-|<ColorBadge color='red' />|`--red`|
-|<ColorBadge color='orange' />|`--orange`|
-|<ColorBadge color='yellow' />|`--yellow`|
-|<ColorBadge color='green' />|`--green`|
-|<ColorBadge color='blue' />|`--blue`|
-|<ColorBadge color='purple' />|`--purple`|
-|<ColorBadge color='pink' />|`--pink`|
-|<ColorBadge color='gray' />|`--gray`|
-|<ColorBadge color='black' />|`--black`|
-|<ColorBadge color='white' />|`--white`|
+|`FF` (font-family)|`--ff--base`, `--ff--accent`, `--ff--mono`|
+|`FW` (font-weight)|`--fw--light`, `--fw--normal`, `--fw--bold`|
+|`FZ` (font-size)|`--fz--2xs` 〜 `--fz--5xl`|
+|`LH` (line-height)|`--hl--xs`, `--hl--s`, `--hl--base`, `--hl--l`|
+|`LTS` (letter-spacing)|`--lts--s`, `--lts--base`, `--lts--l`|
 
-パレットカラーはOKLCHで定義されています。
+各トークンの詳細やスケーリング規則は [タイポグラフィトークン](/docs/tokens/typography/) を参照してください。
 
-`--L`が明度、`--C`が彩度の基準値として定義されており、この二つの値を調整するとパレットカラー全体の色味を調整できます。
 
-例えば、以下のようにすることで全体を少し明るくすることができ、ダークモード対応が簡単に実装できます。
-```css
-:root[data-theme='dark'] {
-  --L: 72%;
-  --C: 0.22;
-}
-```
+## [SPACE](/docs/tokens/spacing/)
+
+|トークン値|変数|概算値|
+|---|---|---|
+|`5`|`--s5`|`4px`|
+|`10`|`--s10`|`8px`|
+|`15`|`--s15`|`12px`|
+|`20`|`--s20`|`16px`|
+|`30`|`--s30`|`24px`|
+|`40`|`--s40`|`40px`|
+|`50`|`--s50`|`64px`|
+|`60`|`--s60`|`104px`|
+|`70`|`--s70`|`168px`|
+|`80`|`--s80`|`272px`|
+
+フィボナッチ数列ベースのスケーリング。対応する prop class の詳細は [スペーシングトークン](/docs/tokens/spacing/) を参照してください。
+
 
 ## `RADIUS`
 
@@ -214,4 +201,3 @@ box-shadow は少し特殊で、ユーティリティクラス内で複数のsha
 |`min`|`--sz--min`|
 
 `max-sz`, [`.is--wrapper`](/docs/module-class/#is--wrapper) 等で使用できます。
-

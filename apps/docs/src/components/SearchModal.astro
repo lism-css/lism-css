@@ -12,8 +12,8 @@ const searchText = t(lang, 'search');
 
 <!-- 検索モーダル -->
 <Modal.Root id="search-modal" isContainer isWrapper p="30" py="40" jc="start">
-  <Modal.Inner layout="stack" pos="rel" w="100%" max-h="100%" p="30" g="30" bdrs="20" bxsh="40">
-    <Modal.CloseBtn modalId="search-modal" pos="abs" t="0" r="0" z="1" fz="xl" p="10" m="20" />
+  <Modal.Inner layout="stack" pos="relative" w="100%" max-h="100%" p="30" g="30" bdrs="20" bxsh="40">
+    <Modal.CloseBtn modalId="search-modal" pos="absolute" t="0" r="0" z="1" fz="xl" p="10" m="20" />
     <Flex ai="center" jc="between">
       <Inline fz="l" fw="bold" class="u--trim">{searchText.title}</Inline>
     </Flex>

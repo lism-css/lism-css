@@ -85,7 +85,7 @@ By specifying `flip` to mirror the shape, you can use the same SVG path for both
     </Wrapper>
   </PreviewArea>
   <PreviewCode slot='tab' label='JSX'>
-    ```jsx "\<ShapeDivider" "\/ShapeDivider\>" "flip='XY'"
+    ```jsx "\<ShapeDivider" "\/ShapeDivider\>" 'flip="XY"'
     <Wrapper setGutter py='40'>
       <DummyText />
     </Wrapper>
@@ -133,7 +133,7 @@ Even when empty, `level` still controls the height, making it useful for managin
     </Wrapper>
   </PreviewArea>
   <PreviewCode slot='tab' label='JSX'>
-    ```jsx "isEmpty" "level='5'"
+    ```jsx "isEmpty" 'level="5"'
     <Wrapper setGutter bgc='base'>
       <ShapeDivider isEmpty level='5' />
       <Box py='20'>
@@ -162,7 +162,7 @@ An example with animation enabled using `isAnimation`.
 <Preview>
   <PreviewTitle>Preview</PreviewTitle>
   <PreviewArea p='15' layout='' resize>
-    <Container pos="rel" setGutter>
+    <Container pos="relative" setGutter>
       <ShapeDivider isEmpty level="7" />
       <Frame isLayer z="-1" max-w="100%">
         <Media src="https://cdn.lism-css.com/img/a-1.jpg" alt="" width="960" height="640" />
@@ -183,7 +183,7 @@ An example with animation enabled using `isAnimation`.
   </PreviewArea>
   <PreviewCode slot='tab' label='JSX'>
     ```jsx "isAnimation"
-    <Container pos='rel'>
+    <Container pos='relative'>
       <ShapeDivider isEmpty level='7' />
       <Frame isLayer z='-1' max-w='100%'>
         <Media src='https://cdn.lism-css.com/img/a-1.jpg' alt='' width='960' height='640' />
@@ -219,7 +219,7 @@ In such cases, using `stretch` and `offset` to shift the SVG can produce a more 
       <ShapeDivider isEmpty level="4" />
       <DummyText length="l" />
     </Container>
-    <Container pos="rel" setGutter c="base" bgc="text">
+    <Container pos="relative" setGutter c="base" bgc="text">
       <ShapeDivider viewBox="0 0 100 10" c="base" flip="Y" level="8" stretch={1.1} offset="-5%">
         <path d="M100 6C89.3 3.3 82.7 9 70 9S48.4 3 38 3 24.5 6 17 6C7.4 6 0 0 0 0v10h100V6z"></path>
       </ShapeDivider>
@@ -241,7 +241,7 @@ In such cases, using `stretch` and `offset` to shift the SVG can produce a more 
       <ShapeDivider isEmpty level='4' />
       <DummyText length='l' />
     </Container>
-    <Container pos='rel' setGutter c='base' bgc='text'>
+    <Container pos='relative' setGutter c='base' bgc='text'>
       <ShapeDivider viewBox='0 0 100 10' c='base' flip='Y' level='8' stretch={1.1} offset='-5%'>
         <path d='M100 6C89.3 3.3 82.7 9 70 9S48.4 3 38 3 24.5 6 17 6C7.4 6 0 0 0 0v10h100V6z'></path>
       </ShapeDivider>

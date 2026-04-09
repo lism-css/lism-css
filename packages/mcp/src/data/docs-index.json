@@ -38,16 +38,52 @@
       "省略",
       "Emmet"
     ],
-    "snippet": "CSSの階層構造を明確に定義。@layer lism-reset → lism-base → lism-modules → lism-utility の順。Module Class (.l--name, .a--name 等)、Prop Class (.-prop:value)、Set Class (.set--name) の命名規則を説明。"
+    "snippet": "CSSの階層構造を明確に定義。@layer lism-reset → lism-base → lism-modules → lism-custom → lism-utility の順。lism-custom はユーザー独自プレフィックスのクラス用レイヤー。Module Class (.l--name, .a--name 等)、Prop Class (.-prop:value)、Set Class (.set--name) の命名規則を説明。"
   },
   {
     "sourcePath": "tokens.mdx",
     "title": "Design Tokens",
-    "description": "Lism CSS で定義されているカラー、スペーシング、シャドウなどのデザイントークン一覧を紹介します。",
+    "description": "Lism CSS で定義されているデザイントークンの概要ページ。RADIUS, SHADOW, OPACITY, SIZE トークンと、カラー・タイポグラフィ・スペーシングの各サブページへのリンク。",
     "category": "guide",
-    "headings": ["COLOR", "RADIUS", "SHADOW", "OPACITY", "SIZE"],
-    "keywords": ["token", "トークン", "design token", "カラー", "スペーシング", "spacing", "color", "font-size", "shadow", "radius"],
-    "snippet": "タイポグラフィ、余白、カラー、シャドウなどの主要なプロパティに対してデザイントークンを定義。CSS変数で管理し、一貫性のあるデザインを実現。"
+    "headings": ["RADIUS", "SHADOW", "OPACITY", "SIZE"],
+    "keywords": ["token", "トークン", "design token", "shadow", "radius", "opacity", "size"],
+    "snippet": "デザイントークンの概要。RADIUS, SHADOW, OPACITY, SIZE トークンを掲載。カラー・タイポグラフィ・スペーシングは個別ページで詳細を解説。"
+  },
+  {
+    "sourcePath": "tokens/colors.mdx",
+    "title": "カラートークン",
+    "description": "Lism CSS で定義されているセマンティックカラーとパレットカラーのトークン、カスタマイズ方法について解説します。",
+    "category": "guide",
+    "headings": ["COLOR", "PALETTE", "パレットカラーの活用", "カスタマイズ例"],
+    "keywords": ["color", "カラー", "palette", "パレット", "OKLCH", "brand", "accent", "dark mode", "ダークモード", "u--cbox", "keycolor"],
+    "snippet": "セマンティックカラー（base, text, brand, accent等）とOKLCHベースのパレットカラー（red, blue, green等）を定義。u--cboxユーティリティでの活用例、ダークモード対応などのカスタマイズ方法を紹介。"
+  },
+  {
+    "sourcePath": "tokens/typography.mdx",
+    "title": "タイポグラフィトークン",
+    "description": "Lism CSS で使用するフォントファミリー、フォントサイズ、行間などのタイポグラフィ関連のデザイントークンについて解説します。",
+    "category": "guide",
+    "headings": ["FF: font-family", "FW: font-weight", "FZ: font-size", "LTS: letter-spacing"],
+    "keywords": ["typography", "タイポグラフィ", "font", "文字", "テキスト", "heading", "font-size"],
+    "snippet": "フォントサイズ（調和数列ベース）、文字間隔などのタイポグラフィ設計を解説。フォントサイズのスケーリング規則を紹介。"
+  },
+  {
+    "sourcePath": "tokens/half-leading.mdx",
+    "title": "ハーフレディング（line-height）",
+    "description": "Lism CSS のハーフレディングによる line-height 管理の仕組みと、関連するデザイントークンについて解説します。",
+    "category": "guide",
+    "headings": ["トークン", "ハーフレディング管理のメリット"],
+    "keywords": ["line-height", "half-leading", "ハーフレディング", "行間", "lh", "--hl"],
+    "snippet": "line-heightをハーフレディング（文字上下の余白）で管理する仕組み。--hl変数によりフォントサイズに依存しない一定の行間を実現。トークン（xs/s/base/l）とlhクラスの使い方を解説。"
+  },
+  {
+    "sourcePath": "tokens/spacing.mdx",
+    "title": "スペーシングトークン",
+    "description": "Lism CSS のフィボナッチ数列に基づくスペーシングトークンと、対応するpropクラスについて解説します。",
+    "category": "guide",
+    "headings": ["SPACE: 余白のスケーリング", "対応する Prop Class"],
+    "keywords": ["spacing", "余白", "スペーシング", "フィボナッチ", "padding", "margin", "gap", "prop class"],
+    "snippet": "フィボナッチ数列に基づいた余白スケーリング（5〜80）を定義。p, px, py, m, mx, my, g等のpropクラスでフルサポート。方向別プロパティはBP対応のみなど、対応範囲を詳細に解説。"
   },
   {
     "sourcePath": "prop-class.mdx",
@@ -128,15 +164,6 @@
     "headings": ["レスポンシブ対応", "コンテナクエリ・メディアクエリ", "ブレイクポイント"],
     "keywords": ["responsive", "レスポンシブ", "ブレークポイント", "breakpoint", "コンテナクエリ", "container query", "sm", "md"],
     "snippet": "CSS変数とクラスを組み合わせたレスポンシブ対応。コンテナクエリをデフォルトで採用。p={[20, 30, 40]} のような配列記法で sm, md ブレークポイントの値を指定。"
-  },
-  {
-    "sourcePath": "typography.mdx",
-    "title": "Typography & Spacing",
-    "description": "Lism CSS で使用するフォントやスペーシングに関するデザイントークンについて解説します。",
-    "category": "guide",
-    "headings": ["Typography", "`SPACE`: 余白のスケーリング"],
-    "keywords": ["typography", "タイポグラフィ", "font", "文字", "テキスト", "heading", "spacing", "余白", "スペーシング", "フィボナッチ"],
-    "snippet": "フォントサイズ、行間、文字間隔などのタイポグラフィ設計と、フィボナッチ数列に基づいた余白のスケーリングについて解説。ハーフレディングによるline-height管理の仕組みを紹介。"
   },
   {
     "sourcePath": "reset-css.mdx",
@@ -453,7 +480,7 @@
     "category": "modules",
     "headings": ["基本構造", "CSS", "Import", "Props", "Usage", "`Grid`を使って似たレイアウトを構成する例"],
     "keywords": ["SideMain", "サイドバー", "sidebar", "メイン", "l--sideMain", "2カラム", "is--side"],
-    "snippet": "サイドバー + メインコンテンツの2カラムレイアウト。メイン側が可変幅。sideW, mainWで幅を制御。fxd='row-r'で反転も可能。"
+    "snippet": "サイドバー + メインコンテンツの2カラムレイアウト。メイン側が可変幅。sideW, mainWで幅を制御。fxd='row-reverse'で反転も可能。"
   },
   {
     "sourcePath": "modules/is--container.mdx",

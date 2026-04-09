@@ -1,0 +1,201 @@
+---
+title: 'Typography Tokens'
+navtitle: 'Typography'
+description: 'An overview of typography design tokens in Lism CSS, including font-family, font-size, line-height, and more.'
+---
+
+import { Box, Stack, Cluster, Columns, Frame, Center, Text } from 'lism-css/astro';
+import { DummyText } from '@lism-css/ui/astro';
+import { FzDemos } from "@/content/token-previews.jsx";
+
+This page covers typography-related design tokens, including font-family, font-size, and line-height.
+
+## FF: font-family
+
+Tokens for `font-family`.
+
+| Token | Variable | Class |
+|---|---|---|
+|`base`|<span class='-whspace:nowrap'>`--ff--base`</span>|<span class='-whspace:nowrap'>`-ff:base`</span>|
+|`accent`|<span class='-whspace:nowrap'>`--ff--accent`</span>|<span class='-whspace:nowrap'>`-ff:accent`</span>|
+|`mono`|<span class='-whspace:nowrap'>`--ff--mono`</span>|<span class='-whspace:nowrap'>`-ff:mono`</span>|
+
+
+<Preview>
+  <PreviewTitle>Preview</PreviewTitle>
+  <PreviewArea p='20' flow='s'>
+    <Text ff="base" fz="xl">
+      <Fragment>base: English text, 漢字ひらがな</Fragment>
+    </Text>
+    <Text ff="accent" fz="xl">
+      <Fragment>accent: English text, 漢字ひらがな</Fragment>
+    </Text>
+    <Text ff="mono" fz="xl">
+      <Fragment>mono: English text, 漢字ひらがな</Fragment>
+    </Text>
+  </PreviewArea>
+  <PreviewCode>
+  ```jsx
+  <p class="-ff:base -fz:xl">Lorem ipsum ...</p>
+  <p class="-ff:accent -fz:xl">Lorem ipsum ...</p>
+  <p class="-ff:mono -fz:xl">Lorem ipsum ...</p>
+  ```
+  </PreviewCode>
+</Preview>
+
+
+## FW : font-weight
+
+Tokens for `font-weight`.
+
+| Token | Variable | Class | Default value |
+|---|---|---|---|
+|`light`|`--fw--light`|`-fw:light`|`300`|
+|`normal`|`--fw--normal`|`-fw:normal`|`400`|
+|`bold`|`--fw--bold`|`-fw:bold`|`600`|
+
+Numeric utility classes `-fw:100` through `-fw:900` are also available for fine-grained weight control.
+
+<Preview>
+  <PreviewTitle>Preview</PreviewTitle>
+  <PreviewArea p='20' flow='s'>
+    <DummyText length="s" fw="light" />
+    <DummyText length="s" fw="normal" />
+    <DummyText length="s" fw="bold" />
+  </PreviewArea>
+  <PreviewCode slot='tab' label='HTML'>
+    ```html
+    <p class="-fw:light">Lorem ipsum ...</p>
+    <p class="-fw:normal">Lorem ipsum ...</p>
+    <p class="-fw:bold">Lorem ipsum ...</p>
+    ```
+  </PreviewCode>
+  <PreviewCode slot='tab' label='JSX'>
+    ```jsx
+    <Text fw='light'>Lorem ipsum ...</Text>
+    <Text fw='normal'>Lorem ipsum ...</Text>
+    <Text fw='bold'>Lorem ipsum ...</Text>
+    ```
+  </PreviewCode>
+</Preview>
+
+
+## FZ: font-size
+
+Tokens for `font-size`.
+
+| Token | Variable | Class | Default value |
+|---|---|---|---|
+|`base`|`--fz--base`|`-fz:base`|`--REM`|
+|`2xs`|`--fz--2xs`|`-fz:2xs`|`1em * 8 / 11`|
+|`xs`|`--fz--xs`|`-fz:xs`|`1em * 8 / 10`|
+|`s`|`--fz--s`|`-fz:s`|`1em * 8 / 9`|
+|`m`|`--fz--m`|`-fz:m`|`1em`|
+|`l`|`--fz--l`|`-fz:l`|`1em * 8 / 7`|
+|`xl`|`--fz--xl`|`-fz:xl`|`1em * 8 / 6`|
+|`2xl`|`--fz--2xl`|`-fz:2xl`|`1em * 8 / 5`|
+|`3xl`|`--fz--3xl`|`-fz:3xl`|`1em * 8 / 4`|
+|`4xl`|`--fz--4xl`|`-fz:4xl`|`1em * 8 / 3`|
+|`5xl`|`--fz--5xl`|`-fz:5xl`|`1em * 8 / 2`|
+
+
+
+
+<Preview>
+  <PreviewTitle>Preview</PreviewTitle>
+  <PreviewArea p='0' flow='s'>
+    <FzDemos lang="en" />
+  </PreviewArea>
+  <PreviewCode>
+    ```html
+    <p class="-fz:2xs">Lorem ipsum ...</p>
+    <p class="-fz:xs">Lorem ipsum ...</p>
+    <p class="-fz:s">Lorem ipsum ...</p>
+    <p class="-fz:m">Lorem ipsum ...</p>
+    <p class="-fz:base">Lorem ipsum ...</p>
+    <p class="-fz:l">Lorem ipsum ...</p>
+    <p class="-fz:xl">Lorem ipsum ...</p>
+    <p class="-fz:2xl">Lorem ipsum ...</p>
+    <p class="-fz:3xl">Lorem ipsum ...</p>
+    <p class="-fz:4xl">Lorem ipsum ...</p>
+    ```
+  </PreviewCode>
+</Preview>
+
+
+### Font Size Scaling Rules
+
+Lism defines font-size scaling based on mathematically and musically elegant harmonic series.
+
+<Reference>
+Reference: [On typography and spacing scaling design](https://css-notes.com/layout/typography-scaling/)
+</Reference>
+
+
+This approach is sometimes called harmonic modular scaling, and is also introduced in resources such as Every Layout.
+
+By default, Lism CSS uses scaling based on the **harmonic series with numerator 8**.
+
+:::note
+On this documentation site, `--fz-mol` is set to `7` for English pages.
+:::
+
+```css
+:root {
+  --fz-mol: 8;
+  --fz--5xl: calc(1em * var(--fz-mol) / (var(--fz-mol) - 6));
+  --fz--4xl: calc(1em * var(--fz-mol) / (var(--fz-mol) - 5));
+  --fz--3xl: calc(1em * var(--fz-mol) / (var(--fz-mol) - 4));
+  --fz--2xl: calc(1em * var(--fz-mol) / (var(--fz-mol) - 3));
+  --fz--xl: calc(1em * var(--fz-mol) / (var(--fz-mol) - 2));
+  --fz--l: calc(1em * var(--fz-mol) / (var(--fz-mol) - 1));
+  --fz--m: 1em;
+  --fz--s: calc(1em * var(--fz-mol) / (var(--fz-mol) + 1));
+  --fz--xs: calc(1em * var(--fz-mol) / (var(--fz-mol) + 2));
+  --fz--2xs: calc(1em * var(--fz-mol) / (var(--fz-mol) + 3));
+}
+```
+
+
+
+## [LH: line-height](/docs/tokens/half-leading/)
+
+Lism CSS takes a unique approach to `line-height`, managing it through **half-leading values**.
+
+For details, see [Half-Leading (line-height)](/docs/tokens/half-leading/).
+
+
+## LTS: letter-spacing
+
+Tokens for `letter-spacing`.
+
+| Token | Variable | Class | Default value |
+|---|---|---|---|
+|`base`|`--lts--base`|`-lts:base`|`normal`|
+|`s`|`--lts--s`|`-lts:s`|`-0.05em`|
+|`l`|`--lts--l`|`-lts:l`|`0.05em`|
+{/* |`xl`|`--lts--xl`|`-lts:xl`|`0.125em`| */}
+
+<Preview>
+  <PreviewTitle>Preview</PreviewTitle>
+  <PreviewArea p='20' flow='s'>
+    <DummyText length="s" pre="<code>s:</code> " lts="s" />
+    <DummyText length="s" pre="<code>base:</code> " lts="base" />
+    <DummyText length="s" pre="<code>l:</code> " lts="l" />
+    {/* <DummyText length='s' pre='<code>xl:</code> ' lts='xl' /> */}
+  </PreviewArea>
+  <PreviewCode slot='tab' label='HTML'>
+    ```html
+    <p class="-lts:s">Lorem ipsum ...</p>
+    <p class="-lts:base">Lorem ipsum ...</p>
+    <p class="-lts:l">Lorem ipsum ...</p>
+    ```
+  </PreviewCode>
+  <PreviewCode slot='tab' label='JSX'>
+    ```jsx
+    <Text lts='s'>Lorem ipsum ...</Text>
+    <Text lts='base'>Lorem ipsum ...</Text>
+    <Text lts='l'>Lorem ipsum ...</Text>
+    ```
+  </PreviewCode>
+</Preview>

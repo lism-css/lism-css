@@ -20,7 +20,7 @@ export const ExampleCard = (props) => {
       <Stack g='30' p='30'>
         <h3 className='u--trim -fz:l'>Card Title</h3>
         <Text className='u--trim' fz='s' lh='s' o='-10'>ロレム・イプサムの座り雨、トマ好き学習だったエリット、しかし時と活力はそのような木々と楽しみ。</Text>
-        <Inline d='in-flex' mx-s='auto' my-s='auto' c='inherit' td='none' bd-b lh='s' p='10'>View More →</Inline>
+        <Inline d='inline-flex' mx-s='auto' my-s='auto' c='inherit' td='none' bd-b lh='s' p='10'>View More →</Inline>
       </Stack>
     </SideMain>
   )
@@ -28,7 +28,7 @@ export const ExampleCard = (props) => {
 
 export const ExampleImgCard = (props) => {
   return(
-    <Frame pos='rel' ar='3/4' bdrs='30' bxsh='30' {...props}>
+    <Frame pos='relative' ar='3/4' bdrs='30' bxsh='30' {...props}>
       <Media src='https://cdn.lism-css.com/img/a-1.jpg' alt='' width='960' height='640' />
       <Layer bgc='rgb(0 0 0 / 20%)'/>
       <Layer layout='stack' c='white' p='30' g='30'>
@@ -61,14 +61,14 @@ export const ExampleImgCard = (props) => {
         <Text className="u--trim" fz="s" lh="s" o="-10">
           <Fragment>ロレム・イプサムの座り雨、トマ好き学習だったエリット、しかし時と活力はそのような木々と楽しみ。</Fragment>
         </Text>
-        <Inline d="in-flex" mx-s="auto" my-s="auto" c="inherit" td="none" bd-b lh="s" p="10">
+        <Inline d="inline-flex" mx-s="auto" my-s="auto" c="inherit" td="none" bd-b lh="s" p="10">
           <Fragment>View More →</Fragment>
         </Inline>
       </Stack>
     </SideMain>
   </PreviewArea>
   <PreviewCode slot='tab' label='JSX'>
-    ```jsx "SideMain" "as='a' isLinkBox"
+    ```jsx "SideMain" 'as="a" isLinkBox'
     <SideMain isLinkBox href="###" hov="bxsh" setTransition sideW="50%" bgc="base" bdrs="20" bxsh="10" ov="hidden">
       <Frame isSide ar="16/9">
         <Media src="https://cdn.lism-css.com/img/a-1.jpg" alt="" width="960" height="640" />
@@ -78,7 +78,7 @@ export const ExampleImgCard = (props) => {
         <Text className="u--trim" fz="s" lh="s" o="-10">
           ロレム・イプサムの座り雨、トマ好き学習だったエリット、しかし時と活力はそのような木々と楽しみ。
         </Text>
-        <Inline d="in-flex" mx-s="auto" my-s="auto" c="inherit" td="none" bd-b lh="s" p="10">
+        <Inline d="inline-flex" mx-s="auto" my-s="auto" c="inherit" td="none" bd-b lh="s" p="10">
           View More →
         </Inline>
       </Stack>
@@ -96,9 +96,9 @@ export const ExampleImgCard = (props) => {
   <PreviewTitle>`u--expandedLink`を使う例</PreviewTitle>
   <PreviewArea bg=':stripe' resize p='30'>
     <SideMain isLinkBox hov="bxsh" setTransition sideW="50%" bgc="base" bdrs="20" bxsh="10" ov="hidden">
-      <Frame isSide ar="16/9" pos="rel">
+      <Frame isSide ar="16/9" pos="relative">
         <Media src="https://cdn.lism-css.com/img/a-1.jpg" alt="" width="960" height="640" />
-        <Link href="#badge-link" pos="abs" t="0" r="0" fz="s" bgc="black" c="white" m="20" px="15" bdrs="99" td="none" hov="neutral">
+        <Link href="#badge-link" pos="absolute" t="0" r="0" fz="s" bgc="black" c="white" m="20" px="15" bdrs="99" td="none" hov="neutral">
           <Fragment>Category</Fragment>
         </Link>
       </Frame>
@@ -111,7 +111,7 @@ export const ExampleImgCard = (props) => {
         <Text className="u--trim" fz="s" lh="s" o="-10">
           <Fragment>ロレム・イプサムの座り雨、トマ好き学習だったエリット、しかし時と活力はそのような木々と楽しみ。</Fragment>
         </Text>
-        <Inline d="in-flex" mx-s="auto" my-s="auto" c="inherit" td="none" bd-b lh="s" p="10">
+        <Inline d="inline-flex" mx-s="auto" my-s="auto" c="inherit" td="none" bd-b lh="s" p="10">
           <Fragment>View More →</Fragment>
         </Inline>
       </Stack>
@@ -120,9 +120,9 @@ export const ExampleImgCard = (props) => {
   <PreviewCode slot='tab' label='JSX'>
     ```jsx "isLinkBox" "\<Link " "u--expandedLink"
     <SideMain isLinkBox hov="bxsh" setTransition sideW="50%" bgc="base" bdrs="20" bxsh="10" ov="hidden">
-      <Frame isSide ar="16/9" pos="rel">
+      <Frame isSide ar="16/9" pos="relative">
         <Media src="https://cdn.lism-css.com/img/a-1.jpg" alt="" width="960" height="640" />
-        <Link href="#badge-link" pos="abs" t="0" r="0" fz="s" bgc="black" c="white" m="20" px="15" bdrs="99" td="none" hov="neutral">
+        <Link href="#badge-link" pos="absolute" t="0" r="0" fz="s" bgc="black" c="white" m="20" px="15" bdrs="99" td="none" hov="neutral">
           Category
         </Link>
       </Frame>
@@ -135,7 +135,7 @@ export const ExampleImgCard = (props) => {
         <Text className="u--trim" fz="s" lh="s" o="-10">
           ロレム・イプサムの座り雨、トマ好き学習だったエリット、しかし時と活力はそのような木々と楽しみ。
         </Text>
-        <Inline d="in-flex" mx-s="auto" my-s="auto" c="inherit" td="none" bd-b lh="s" p="10">
+        <Inline d="inline-flex" mx-s="auto" my-s="auto" c="inherit" td="none" bd-b lh="s" p="10">
           View More →
         </Inline>
       </Stack>
@@ -154,7 +154,7 @@ export const ExampleImgCard = (props) => {
   </PreviewArea>
   <PreviewCode slot='tab' label='JSX'>
     ```jsx
-    <Frame pos="rel" ar="3/4" bdrs="30" bxsh="30" max-w="24em">
+    <Frame pos="relative" ar="3/4" bdrs="30" bxsh="30" max-w="24em">
       <Media src="https://cdn.lism-css.com/img/a-1.jpg" alt="" width="960" height="640" />
       <Layer bgc="rgb(0 0 0 / 20%)" />
       <Layer layout="stack" c="white" p="30" g="30">
@@ -171,7 +171,7 @@ export const ExampleImgCard = (props) => {
   </PreviewCode>
   <PreviewCode slot='tab' label='HTML'>
     ```html
-    <div class="l--frame -pos:rel -ar -bdrs:30 -bxsh:30 -max-w" style="--ar: 3/4; --max-w: 24em">
+    <div class="l--frame -pos:relative -ar -bdrs:30 -bxsh:30 -max-w" style="--ar: 3/4; --max-w: 24em">
       <img src="https://cdn.lism-css.com/img/a-1.jpg" width="960" height="640" />
       <div class="is--layer -bgc" style="--bgc: rgb(0 0 0 / 20%)"></div>
       <div class="l--stack is--layer -c -p:30 -g:30" style="--c: var(--white)">
@@ -200,7 +200,7 @@ export const ExampleImgCard = (props) => {
         <Text className="u--trim" fz="s" lh="s" o="-10">
           <Fragment>ロレム・イプサムの座り雨、トマ好き学習だったエリット、しかし時と活力はそのような木々と楽しみ。</Fragment>
         </Text>
-        <Link href="#" d="in-flex" mx-s="auto" c="base" bgc="text" td="none" lh="s" py="15" px="20" jc="center" hov="neutral" bdrs="inner">
+        <Link href="#" d="inline-flex" mx-s="auto" c="base" bgc="text" td="none" lh="s" py="15" px="20" jc="center" hov="neutral" bdrs="inner">
           <Fragment>View More →</Fragment>
         </Link>
       </Stack>
@@ -217,7 +217,7 @@ export const ExampleImgCard = (props) => {
         <Text className="u--trim" fz="s" lh="s" o="-10">
           ロレム・イプサムの座り雨、トマ好き学習だったエリット、しかし時と活力はそのような木々と楽しみ。
         </Text>
-        <Link href="#" d="in-flex" mx-s="auto" c="base" bgc="text" td="none" lh="s" py="15" px="20" jc="center" hov="neutral" bdrs="inner">
+        <Link href="#" d="inline-flex" mx-s="auto" c="base" bgc="text" td="none" lh="s" py="15" px="20" jc="center" hov="neutral" bdrs="inner">
           View More →
         </Link>
       </Stack>
@@ -233,7 +233,7 @@ export const ExampleImgCard = (props) => {
       <div class="l--stack -g:30 -p:15">
         <h3 class="u--trim -fz:l">Card Title</h3>
         <p class="u--trim -fz:s -lh:s -o:-10">ロレム・イプサムの座り雨、トマ好き学習だったエリット、しかし時と活力はそのような木々と楽しみ。</p>
-        <a class="-bdrs:inner -d:in-flex -mx-s:auto -c:base -bgc:text -td:none -lh:s -py:15 -px:20 -jc:center -hov:neutral" href="#">View More →</a>
+        <a class="-bdrs:inner -d:inline-flex -mx-s:auto -c:base -bgc:text -td:none -lh:s -py:15 -px:20 -jc:center -hov:neutral" href="#">View More →</a>
       </div>
     </div>
     ```
@@ -255,14 +255,14 @@ export const ExampleImgCard = (props) => {
         <Text className="u--trim" fz="s" lh="s" o="-10">
           <Fragment>ロレム・イプサムの座り雨、トマ好き学習だったエリット、しかし時と活力はそのような木々と楽しみ。ブラインド行うにはいくつかの重要な事柄が流れます。</Fragment>
         </Text>
-        <Inline d="in-flex" mx-s="auto" my-s="auto" c="var(--_isHov, var(--link)) var(--_notHov, inherit)" td="none" bd-b lh="s" p="10">
+        <Inline d="inline-flex" mx-s="auto" my-s="auto" c="var(--_isHov, var(--link)) var(--_notHov, inherit)" td="none" bd-b lh="s" p="10">
           <Fragment>View More →</Fragment>
         </Inline>
       </Stack>
     </LinkBox>
   </PreviewArea>
   <PreviewCode slot='tab' label='JSX'>
-    ```jsx "ar='1/1'"
+    ```jsx 'ar="1/1"'
     <LinkBox href="#_" layout="flex" p="15" c="text" bgc="base" bd bdw="2px" bdc="base-2" bdrs="20" hov="bxsh" setHov setTransition>
       <Frame w={['25%', '30%']} ar="1/1" fxsh="0" bdrs="10">
         <Media src="https://cdn.lism-css.com/img/a-1.jpg" alt="" width="960" height="640" />
@@ -272,7 +272,7 @@ export const ExampleImgCard = (props) => {
         <Text className="u--trim" fz="s" lh="s" o="-10">
           ロレム・イプサムの座り雨、トマ好き学習だったエリット、しかし時と活力はそのような木々と楽しみ。ブラインド行うにはいくつかの重要な事柄が流れます。
         </Text>
-        <Inline d="in-flex" mx-s="auto" my-s="auto" c="var(--_isHov, var(--link)) var(--_notHov, inherit)" td="none" bd-b lh="s" p="10">
+        <Inline d="inline-flex" mx-s="auto" my-s="auto" c="var(--_isHov, var(--link)) var(--_notHov, inherit)" td="none" bd-b lh="s" p="10">
           View More →
         </Inline>
       </Stack>
@@ -306,7 +306,7 @@ export const ExampleImgCard = (props) => {
       setHov
       setTransition
     >
-      <Frame ga="img" aslf="stretch" ar={['og', '1/1']} max-w="100%" pos="rel" bdrs="20" bxsh="10">
+      <Frame ga="img" aslf="stretch" ar={['og', '1/1']} max-w="100%" pos="relative" bdrs="20" bxsh="10">
         <Media css={{ scale: 'var(--_isHov, 1.25)' }} setTransition src="https://cdn.lism-css.com/img/a-1.jpg" alt="" width="960" height="640" />
       </Frame>
       <Stack g="20" p="15">
@@ -314,7 +314,7 @@ export const ExampleImgCard = (props) => {
         <Text className="u--trim" fz="s" lh="s" o="-10">
           <Fragment>ロレム・イプサムの座り雨、トマ好き学習だったエリット、しかし時と活力はそのような木々と楽しみ。ブラインド行うにはいくつかの重要な事柄が流れます。</Fragment>
         </Text>
-        <Inline d="in-flex" mx-s="auto" my-s="20" c="inherit" td="none" bd-b lh="1" p="10">
+        <Inline d="inline-flex" mx-s="auto" my-s="20" c="inherit" td="none" bd-b lh="1" p="10">
           <Fragment>View More →</Fragment>
         </Inline>
       </Stack>
@@ -339,7 +339,7 @@ export const ExampleImgCard = (props) => {
       setHov
       setTransition
     >
-      <Frame ga="img" aslf="stretch" ar={['og', '1/1']} max-w="100%" pos="rel" bdrs="20" bxsh="10">
+      <Frame ga="img" aslf="stretch" ar={['og', '1/1']} max-w="100%" pos="relative" bdrs="20" bxsh="10">
         <Media css={{ scale: 'var(--_isHov, 1.25)' }} setTransition src="https://cdn.lism-css.com/img/a-1.jpg" alt="" width="960" height="640" />
       </Frame>
       <Stack g="20" p="15">
@@ -347,7 +347,7 @@ export const ExampleImgCard = (props) => {
         <Text className="u--trim" fz="s" lh="s" o="-10">
           ロレム・イプサムの座り雨、トマ好き学習だったエリット、しかし時と活力はそのような木々と楽しみ。ブラインド行うにはいくつかの重要な事柄が流れます。
         </Text>
-        <Inline d="in-flex" mx-s="auto" my-s="20" c="inherit" td="none" bd-b lh="1" p="10">
+        <Inline d="inline-flex" mx-s="auto" my-s="20" c="inherit" td="none" bd-b lh="1" p="10">
           View More →
         </Inline>
       </Stack>
@@ -371,14 +371,14 @@ export const ExampleImgCard = (props) => {
 }`}>
   <PreviewTitle>Preview</PreviewTitle>
   <PreviewArea bg=':stripe' p='20'>
-    <LinkBox href="#card-a" pos="rel" bdrs="20" bxsh="20" ov="hidden" setHov max-w="xs" mx="auto">
+    <LinkBox href="#card-a" pos="relative" bdrs="20" bxsh="20" ov="hidden" setHov max-w="xs" mx="auto">
       <Frame ar="1/1">
         <img src="https://cdn.lism-css.com/img/a-1.jpg" alt="" width="960" height="640" />
       </Frame>
       <Layer bgc="rgba(0 0 0 / 10%)" />
-      <Stack pos="abs" b="0" w="100%" p="30" bgc="rgb(255 255 255 / 20%)">
+      <Stack pos="absolute" b="0" w="100%" p="30" bgc="rgb(255 255 255 / 20%)">
         <Layer style={{ backdropFilter: 'blur(6px) brightness(1.1)' }} />
-        <Box pos="rel" z="1" c="white" lh="s">
+        <Box pos="relative" z="1" c="white" lh="s">
           <h3 className="u--trim -fz:l">Card Title</h3>
           <Grid setTransition hov="to:slide" my="15">
             <Box ov="hidden">
@@ -393,15 +393,15 @@ export const ExampleImgCard = (props) => {
     </LinkBox>
   </PreviewArea>
   <PreviewCode slot='tab' label='JSX'>
-  ```jsx "setHov" "hov='to:slide'"
-  <LinkBox href="#card-a" pos="rel" bdrs="20" bxsh="20" ov="hidden" setHov max-w="xs" mx="auto">
+  ```jsx "setHov" 'hov="to:slide"'
+  <LinkBox href="#card-a" pos="relative" bdrs="20" bxsh="20" ov="hidden" setHov max-w="xs" mx="auto">
     <Frame ar="1/1">
       <img src="https://cdn.lism-css.com/img/a-1.jpg" alt="" width="960" height="640" />
     </Frame>
     <Layer bgc="rgba(0 0 0 / 10%)" />
-    <Stack pos="abs" b="0" w="100%" p="30" bgc="rgb(255 255 255 / 20%)">
+    <Stack pos="absolute" b="0" w="100%" p="30" bgc="rgb(255 255 255 / 20%)">
       <Layer style={{ backdropFilter: 'blur(6px) brightness(1.1)' }} />
-      <Box pos="rel" z="1" c="white" lh="s">
+      <Box pos="relative" z="1" c="white" lh="s">
         <h3 className="u--trim -fz:l">Card Title</h3>
         <Grid setTransition hov="to:slide" my="15">
           <Box ov="hidden">

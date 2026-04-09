@@ -13,7 +13,7 @@ export function Line(props) {
   return <Decorator lismClass="c--timeline_line" bgc="divider" jslf="center" {...props} />;
 }
 export function Shape(props) {
-  return <Center lismClass="c--timeline_shape" pos="rel" z="1" c="base" ar="1/1" bdrs="99" jslf="center" {...props} />;
+  return <Center lismClass="c--timeline_shape" pos="relative" z="1" c="base" ar="1/1" bdrs="99" jslf="center" {...props} />;
 }
 
 export function Item({ isHorizontal, isStart, isEnd, isHighlighted, icon, iconProps = {}, shapeColor, children, ...props }) {
@@ -47,13 +47,13 @@ export function Item({ isHorizontal, isStart, isEnd, isHighlighted, icon, iconPr
       ji={isHorizontal ? 'c' : null}
       gtr={isHorizontal ? 'subgrid' : null}
       gr={isHorizontal ? '1/-1' : null}
-      g-x={isHorizontal ? null : '20'}
-      g-y={isHorizontal ? '10' : null}
+      cg={isHorizontal ? null : '20'}
+      rg={isHorizontal ? '10' : null}
       {...props}
     >
       <Line {...lineProps} />
       <Shape bgc={shapeColor || 'text'} {...shapeProps}>
-        {isHighlighted && <Decorator className="c--timeline_highlight" as="span" pos="abs" z="-1" bgc="inherit" bdrs="99" o="-30" />}
+        {isHighlighted && <Decorator className="c--timeline_highlight" as="span" pos="absolute" z="-1" bgc="inherit" bdrs="99" o="-30" />}
         {icon && <Icon icon={icon} style={{ scale: '0.625' }} {...iconProps} />}
       </Shape>
       {children}

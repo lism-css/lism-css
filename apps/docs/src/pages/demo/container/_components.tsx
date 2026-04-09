@@ -13,7 +13,7 @@ export function AttsLabels({ atts = '', ...props }) {
       w="100%"
       max-w="100%"
       jc="center"
-      pos="abs"
+      pos="absolute"
       t="0"
       l="0"
       ta="center"
@@ -59,7 +59,7 @@ export function TipCode({
   }
 
   return (
-    <Lism as="code" bd d="in-flex" fz="s" lh="xs" px="10" m="5" bdrs="10" whspace="nowrap" className="u--cbox" keycolor={color} {...props}>
+    <Lism as="code" bd d="inline-flex" fz="s" lh="xs" px="10" m="5" bdrs="10" whspace="nowrap" className="u--cbox" keycolor={color} {...props}>
       {text || children}
     </Lism>
   );

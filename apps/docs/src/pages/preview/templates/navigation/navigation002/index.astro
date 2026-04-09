@@ -8,7 +8,7 @@ import './_style.css';
 <DemoLayout title="Navigation002">
   <Container isWrapper="l" bgc="base" py="50" setGutter>
     <Grid gtc={['auto', null, 'auto 1fr']} g="50 60">
-      <Stack ai="flex-s" g="30">
+      <Stack ai="flex-start" g="30">
         <Heading level="2" class="u--trim" fz="2xl" fw="bold" ta="center">製品カテゴリー</Heading>
         <Text class="u--trim" fz="s" o="-10">気になるカテゴリーから探せます</Text>
       </Stack>
@@ -63,7 +63,7 @@ import './_style.css';
             </Flex>
           </LinkBox>
         </FluidCols>
-        <Flex jc="flex-e">
+        <Flex jc="flex-end">
           <LinkBox href="#" layout="flex" ai="center" g="10" setTransition hov={{ c: 'link' }}>
             <Text class="u--trim">全てのカテゴリーを見る</Text>
             <Icon icon="arrow-right" />

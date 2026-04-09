@@ -40,7 +40,7 @@ describe('PropValueTypes', () => {
   it('d には presets と utils の値を設定できる（レスポンシブ対応）', () => {
     // bp: 1 なので Responsive でラップされる
     expectTypeOf<PropValueTypes['d']>().toEqualTypeOf<
-      Responsive<'none' | 'block' | 'in-flex' | (string & {}) | number | boolean | null | undefined>
+      Responsive<'none' | 'block' | 'flex' | 'inline-flex' | 'grid' | 'inline-grid' | (string & {}) | number | boolean | null | undefined>
     >();
   });
 
@@ -50,16 +50,16 @@ describe('PropValueTypes', () => {
 
   it('pos には presets と utils の値を設定できる', () => {
     expectTypeOf<PropValueTypes['pos']>().toEqualTypeOf<
-      'static' | 'fixed' | 'sticky' | 'rel' | 'abs' | (string & {}) | number | boolean | null | undefined
+      'static' | 'fixed' | 'sticky' | 'relative' | 'absolute' | (string & {}) | number | boolean | null | undefined
     >();
   });
 
   it('ai には presets と utils の値を設定できる（レスポンシブ対応）', () => {
     // presets: [...PLACE_PRESETS, 'stretch'] → 'start' | 'center' | 'end' | 'stretch'
-    // utils: { 'flex-s': 'flex-start', 'flex-e': 'flex-end' }
+    // utils: { 'flex-start': 'flex-start', 'flex-end': 'flex-end' }
     // bp: 1 なので Responsive でラップされる
     expectTypeOf<PropValueTypes['ai']>().toEqualTypeOf<
-      Responsive<'start' | 'center' | 'end' | 'stretch' | 'flex-s' | 'flex-e' | (string & {}) | number | boolean | null | undefined>
+      Responsive<'start' | 'center' | 'end' | 'stretch' | 'flex-start' | 'flex-end' | (string & {}) | number | boolean | null | undefined>
     >();
   });
 
@@ -69,6 +69,18 @@ describe('PropValueTypes', () => {
     // bp: 1 なので Responsive でラップされる
     expectTypeOf<PropValueTypes['bdrs']>().toEqualTypeOf<
       Responsive<'0' | '10' | '20' | '30' | '40' | '99' | 'inner' | (string & {}) | number | boolean | null | undefined>
+    >();
+  });
+
+  it('cg（column-gap）には space トークンの値を設定できる（レスポンシブ対応）', () => {
+    expectTypeOf<PropValueTypes['cg']>().toEqualTypeOf<
+      Responsive<'5' | '10' | '15' | '20' | '30' | '40' | '50' | '60' | '70' | '80' | (string & {}) | number | boolean | null | undefined>
+    >();
+  });
+
+  it('rg（row-gap）には space トークンの値を設定できる（レスポンシブ対応）', () => {
+    expectTypeOf<PropValueTypes['rg']>().toEqualTypeOf<
+      Responsive<'5' | '10' | '15' | '20' | '30' | '40' | '50' | '60' | '70' | '80' | (string & {}) | number | boolean | null | undefined>
     >();
   });
 
@@ -125,12 +137,16 @@ describe('ResponsivePropValueTypes', () => {
     type WExists = 'w' extends keyof Props ? true : false;
     type HExists = 'h' extends keyof Props ? true : false;
     type ArExists = 'ar' extends keyof Props ? true : false;
+    type CgExists = 'cg' extends keyof Props ? true : false;
+    type RgExists = 'rg' extends keyof Props ? true : false;
 
     expectTypeOf<FzExists>().toEqualTypeOf<true>();
     expectTypeOf<DExists>().toEqualTypeOf<true>();
     expectTypeOf<WExists>().toEqualTypeOf<true>();
     expectTypeOf<HExists>().toEqualTypeOf<true>();
     expectTypeOf<ArExists>().toEqualTypeOf<true>();
+    expectTypeOf<CgExists>().toEqualTypeOf<true>();
+    expectTypeOf<RgExists>().toEqualTypeOf<true>();
 
     // bp: 1 が設定されていないプロパティ（含まれないはず）
     type FwExists = 'fw' extends keyof Props ? true : false;
@@ -159,7 +175,9 @@ describe('ResponsivePropValueTypes', () => {
     type Props = ResponsivePropValueTypes;
     type DProp = Props['d'];
 
-    expectTypeOf<DProp>().toEqualTypeOf<'none' | 'block' | 'in-flex' | (string & {}) | number | boolean | null | undefined>();
+    expectTypeOf<DProp>().toEqualTypeOf<
+      'none' | 'block' | 'flex' | 'inline-flex' | 'grid' | 'inline-grid' | (string & {}) | number | boolean | null | undefined
+    >();
   });
 });
 

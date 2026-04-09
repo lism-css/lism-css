@@ -200,7 +200,7 @@ import { Accordion, NavMenu } from '@lism-css/ui/astro'
     </NavMenu.Root>
   </PreviewArea>
   <PreviewCode>
-    ```jsx "bdc='border'" "itemP='30'"
+    ```jsx 'bdc="border"' 'itemP="30"'
     <NavMenu.Root bd itemP="30">
       <NavMenu.Item hov="bgc">
         <NavMenu.Link href="#menu1">Menu item</NavMenu.Link>
@@ -398,13 +398,13 @@ import { Accordion, NavMenu } from '@lism-css/ui/astro'
         <NavMenu.Item hov="o">
           <NavMenu.Link href="#menu1">Menu item</NavMenu.Link>
         </NavMenu.Item>
-        <NavMenu.Item setHov pos="rel">
+        <NavMenu.Item setHov pos="relative">
           <NavMenu.Link href="#menu3" ai="center" g="5">
             <Fragment>
               Hover Menu Item <Icon icon="caret-down" style={{ translate: '10%' }} />
             </Fragment>
           </NavMenu.Link>
-          <NavMenu.Nest fz="s" hov="to:show" pos="abs" t="100%" px-s="0" lh="s" bgc="base" bxsh="20" bdrs="10">
+          <NavMenu.Nest fz="s" hov="to:show" pos="absolute" t="100%" px-s="0" lh="s" bgc="base" bxsh="20" bdrs="10">
             <NavMenu.Item hov="bgc">
               <NavMenu.Link href="#child-menu1">Nested item</NavMenu.Link>
             </NavMenu.Item>
@@ -420,19 +420,19 @@ import { Accordion, NavMenu } from '@lism-css/ui/astro'
     </Box>
   </PreviewArea>
   <PreviewCode>
-    ```jsx "fxd='row'"
+    ```jsx 'fxd="row"'
     <Box min-h="15rem">
       <NavMenu.Root fxd="row" lh="s" itemP="10">
         <NavMenu.Item hov="o">
           <NavMenu.Link href="#menu1">Menu item</NavMenu.Link>
         </NavMenu.Item>
-        <NavMenu.Item setHov pos="rel">
+        <NavMenu.Item setHov pos="relative">
           <NavMenu.Link href="#menu3" ai="center" g="5">
             <Fragment>
               Hover Menu Item <Icon icon="caret-down" style={{ translate: '10%' }} />
             </Fragment>
           </NavMenu.Link>
-          <NavMenu.Nest fz="s" hov="to:show" pos="abs" t="100%" px-s="0" lh="s" bgc="base" bxsh="20" bdrs="10">
+          <NavMenu.Nest fz="s" hov="to:show" pos="absolute" t="100%" px-s="0" lh="s" bgc="base" bxsh="20" bdrs="10">
             <NavMenu.Item hov="bgc">
               <NavMenu.Link href="#child-menu1">Nested item</NavMenu.Link>
             </NavMenu.Item>
