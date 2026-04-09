@@ -8,20 +8,14 @@ type CloseBtnProps<T extends ElementType = 'button'> = LismComponentProps<T> & {
   srText?: string;
 };
 
-export default function CloseBtn<T extends ElementType = 'button'>({
-  children,
-  modalId = '',
-  icon = undefined,
-  srText = 'Close',
-  ...props
-}: CloseBtnProps<T>) {
+export default function CloseBtn<T extends ElementType = 'button'>({ children, modalId = '', icon, srText = 'Close', ...props }: CloseBtnProps<T>) {
   return (
     <Lism data-modal-close={modalId} {...(defaultProps.closeBtn as object)} {...(props as object)}>
       {children ? (
         children
       ) : (
         <>
-          <Icon icon={icon} />
+          <Icon icon={icon || 'x'} />
           <span className="u--srOnly">{srText || 'Close'}</span>
         </>
       )}
