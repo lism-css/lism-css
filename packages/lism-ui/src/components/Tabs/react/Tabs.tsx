@@ -18,7 +18,8 @@ type TabsProps<T extends ElementType = 'div'> = LismComponentProps<T> & {
 
 export default function Tabs<T extends ElementType = 'div'>({ tabId = '', defaultIndex = 1, listProps = {}, children, ...props }: TabsProps<T>) {
   const [activeIndex, setActiveIndex] = useState(defaultIndex);
-  const theTabId = tabId || useId();
+  const generatedId = useId();
+  const theTabId = tabId || generatedId;
   const btns: React.ReactElement[] = [];
   const panels: React.ReactElement[] = [];
 
