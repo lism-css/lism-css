@@ -541,6 +541,26 @@ describe('Lism', () => {
         expect(element).toHaveClass('-d:block');
       });
 
+      test('d="inline" を指定できる', () => {
+        render(
+          <Lism d="inline" data-testid="lism">
+            test
+          </Lism>
+        );
+        const element = screen.getByTestId('lism');
+        expect(element).toHaveClass('-d:inline');
+      });
+
+      test('d="inline-block" を指定できる', () => {
+        render(
+          <Lism d="inline-block" data-testid="lism">
+            test
+          </Lism>
+        );
+        const element = screen.getByTestId('lism');
+        expect(element).toHaveClass('-d:inline-block');
+      });
+
       test('d="inline-flex" を指定できる', () => {
         render(
           <Lism d="inline-flex" data-testid="lism">
