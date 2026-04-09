@@ -1,5 +1,5 @@
 import type { ElementType } from 'react';
-import { Flow, Lism, Center, Icon, type LismComponentProps, type IconProps } from 'lism-css/react';
+import { Flow, Lism, Center, Icon, type LismComponentProps } from 'lism-css/react';
 import getAlertProps, { type AlertProps } from '../getProps';
 
 export default function Alert<T extends ElementType = 'div'>({ children, ...inputProps }: AlertProps & LismComponentProps<T>) {
@@ -8,7 +8,7 @@ export default function Alert<T extends ElementType = 'div'>({ children, ...inpu
   return (
     <Lism layout={layout} {...alertProps}>
       <Center isSide={layout === 'sideMain'} c="keycolor" fz="xl" fxsh="0">
-        <Icon icon={icon as IconProps['icon']} />
+        <Icon icon={icon} />
       </Center>
       <Flow flow={flow}>{children}</Flow>
     </Lism>

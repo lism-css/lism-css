@@ -1,9 +1,10 @@
 import PRESETS from './presets';
+import type { IconProps } from 'lism-css/react';
 
 export type CalloutProps = {
   type?: string;
   keycolor?: string;
-  icon?: string;
+  icon?: IconProps['icon'];
   title?: string;
   flow?: string;
   [key: string]: unknown;
@@ -11,7 +12,7 @@ export type CalloutProps = {
 
 export default function getCalloutProps({ type = 'note', keycolor, icon, title, flow = 's', ...props }: CalloutProps) {
   const presetData = type ? PRESETS[type] : null;
-  const _icon = icon || presetData?.icon || 'note';
+  const _icon = (icon || presetData?.icon || 'note') as IconProps['icon'];
   const _keycolor = keycolor || presetData?.color || null;
 
   return {

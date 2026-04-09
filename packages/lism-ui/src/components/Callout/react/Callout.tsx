@@ -1,5 +1,5 @@
 import type { ElementType } from 'react';
-import { Flow, Flex, Stack, Icon, Center, type LismComponentProps, type IconProps } from 'lism-css/react';
+import { Flow, Flex, Stack, Icon, Center, type LismComponentProps } from 'lism-css/react';
 import getCalloutProps, { type CalloutProps } from '../getProps';
 
 export default function Callout<T extends ElementType = 'div'>({ children, ...inputProps }: CalloutProps & LismComponentProps<T>) {
@@ -10,7 +10,7 @@ export default function Callout<T extends ElementType = 'div'>({ children, ...in
       {title && (
         <Flex className="c--callout_head" c="keycolor" fw="bold" ai="center" g="10">
           <Center className="c--callout_icon" fz="xl">
-            <Icon icon={icon as IconProps['icon']} />
+            <Icon icon={icon} />
           </Center>
           <span className="c--callout_title">{title}</span>
         </Flex>

@@ -5,7 +5,7 @@ import type { ElementType, CSSProperties } from 'react';
 
 export type PresetIconName = keyof typeof presets;
 
-interface IconObject {
+export interface IconObject {
   as: ElementType;
   [key: string]: unknown;
 }

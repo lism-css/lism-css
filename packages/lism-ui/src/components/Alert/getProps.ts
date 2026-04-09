@@ -1,18 +1,19 @@
 import PRESETS from './presets';
 import type { LayoutType } from 'lism-css/lib/getLismProps';
+import type { IconProps } from 'lism-css/react';
 
 export type AlertProps = {
   type?: string;
   keycolor?: string;
   layout?: LayoutType;
-  icon?: string;
+  icon?: IconProps['icon'];
   flow?: string;
   [key: string]: unknown;
 };
 
 export default function getAlertProps({ type = 'alert', keycolor, layout = 'flex', icon, flow = 's', ...props }: AlertProps) {
   const presetData = type ? PRESETS[type] : null;
-  const _icon = icon || presetData?.icon || 'info';
+  const _icon = (icon || presetData?.icon || 'info') as IconProps['icon'];
   const _color = keycolor || presetData?.color || 'currentColor';
 
   return {
