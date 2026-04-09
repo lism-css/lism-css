@@ -1,4 +1,4 @@
-import { Flow, Lism, Center, Icon, type LismComponentProps, type PresetIconName } from 'lism-css/react';
+import { Flow, Lism, Center, Icon, type LismComponentProps, type IconProps } from 'lism-css/react';
 import getAlertProps, { type AlertProps } from '../getProps';
 
 export default function Alert({ children, ...inputProps }: AlertProps & LismComponentProps) {
@@ -7,7 +7,7 @@ export default function Alert({ children, ...inputProps }: AlertProps & LismComp
   return (
     <Lism layout={layout} {...alertProps}>
       <Center isSide={layout === 'sideMain'} c="keycolor" fz="xl" fxsh="0">
-        <Icon icon={icon as PresetIconName} />
+        <Icon icon={icon as IconProps['icon']} />
       </Center>
       <Flow flow={flow}>{children}</Flow>
     </Lism>

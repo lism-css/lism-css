@@ -1,9 +1,9 @@
-import { Lism, Icon, type LismComponentProps, type PresetIconName } from 'lism-css/react';
+import { Lism, Icon, type LismComponentProps, type IconProps } from 'lism-css/react';
 import { defaultProps } from '../getProps';
 
 type CloseBtnProps = LismComponentProps & {
   modalId?: string;
-  icon?: PresetIconName;
+  icon?: IconProps['icon'];
   srText?: string;
 };
 
