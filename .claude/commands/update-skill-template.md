@@ -9,10 +9,10 @@
 |----------|----------|-----------------|
 | `SKILL.md` | バージョン情報・パッケージ構成・import パス・実装ルール・詳細ファイル一覧 | `packages/lism-css/package.json`, `packages/lism-ui/package.json`, 各パッケージの exports |
 | `base-styles.md` | Reset CSS・HTML要素のベーススタイル・CSS変数（トークン）概要 | `packages/lism-css/src/scss/base/`, `packages/lism-css/src/scss/base/tokens/` |
-| `set-class.md` | `set--` クラス — `set--plain`/`set--shadow`/`set--hov`/`set--transition` 等のセットアップクラス | `packages/lism-css/src/scss/base/set/`, `packages/lism-css/src/scss/base/tokens/_shadow.scss` |
-| `module-class.md` | モジュールクラス — is--/l--/a--/c-- クラスの一覧と用途 | `packages/lism-css/src/scss/modules/`, `packages/lism-ui/src/`（c-- 系） |
-| `utility-class.md` | ユーティリティクラス — `u--` クラスの一覧・Property Class との違い | `packages/lism-css/src/scss/utility/` |
-| `property-class.md` | Property Class — `-{prop}:{value}` 記法・主要 Prop 一覧・特殊 Prop（ボーダー・ホバー）・出力タイプ | `packages/lism-css/config/defaults/props.ts`, `packages/lism-css/src/scss/_prop-config.scss`, `packages/lism-css/src/scss/props/` |
+| `set-class.md` | `set--`クラス (`set--plain`,`set--shadow`,`set--hov`,`set--transition`,`set--gutter` 等) の一覧と用途解説 | `packages/lism-css/src/scss/base/set/`, `packages/lism-css/src/scss/base/tokens/_shadow.scss` |
+| `module-class.md` | モジュールクラス (`is--`, `l--`, `a--`, `c--` クラス) の一覧と用途 | `packages/lism-css/src/scss/modules/`, `packages/lism-ui/src/`（c-- 系） |
+| `utility-class.md` | ユーティリティクラス (`u--` クラス) の一覧とProperty Class との違い | `packages/lism-css/src/scss/utility/` |
+| `property-class.md` | Property Class (`-{prop}:{value}`)の一覧、記法と出力の解説、特殊Prop（ボーダー・ホバー） | `packages/lism-css/config/defaults/props.ts`, `packages/lism-css/src/scss/_prop-config.scss`, `packages/lism-css/src/scss/props/` |
 | `prop-responsive.md` | レスポンシブ対応 — ブレークポイント・コンテナクエリ・HTML/コンポーネントでの指定方法 | `packages/lism-css/src/scss/_query.scss`, `packages/lism-css/src/lib/getBpData.ts` |
 | `components.md` | コンポーネントシステム — コア・セマンティック・レイアウト・ステート・アトミック・UI コンポーネント一覧、getLismProps、CLI | `packages/lism-css/src/components/`, `packages/lism-ui/src/`, 各パッケージの exports |
 | `tokens.md` | デザイントークン（余白・フォントサイズ・角丸・影・カラー・パレット） | `packages/lism-css/src/scss/base/tokens/`, `packages/lism-css/config/defaults/tokens.ts` |
@@ -40,7 +40,7 @@
 | 確認したい内容 | 参照先 |
 |---|---|
 | set-- クラス一覧 | `packages/lism-css/src/scss/base/set/` 配下の SCSS、`packages/lism-css/src/scss/base/tokens/_shadow.scss`（set--shadow） |
-| set-- に対応するコンポーネント Props | `packages/lism-css/config/defaults/states.ts`, `packages/lism-css/src/lib/types/StateProps.ts` |
+| set prop の処理ロジック | `packages/lism-css/src/lib/helper/mergeSet.ts` |
 
 ### モジュールクラス関連
 
@@ -75,9 +75,10 @@
 
 | 確認したい内容 | 参照先 |
 |---|---|
-| コアコンポーネント一覧 | `packages/lism-css/src/components/` の export |
+| コアコンポーネント一覧 | `packages/lism-css/src/components/` の export（`layout/`, `state/`, `atomic/` サブディレクトリ構成） |
 | UI コンポーネント一覧 | `packages/lism-ui/src/` の export |
 | getLismProps の仕組み | `packages/lism-css/src/lib/getLismProps.ts`, `packages/lism-css/config/` |
+| ヘルパー関数 | `packages/lism-css/src/lib/helper/`（mergeSet, atts, isNumStr 等） |
 | CLI ツール | `packages/lism-css/bin/` または `package.json` の bin フィールド |
 
 ### トークン関連
@@ -92,7 +93,7 @@
 
 | 確認したい内容 | 参照先 |
 |---|---|
-| Layer 構造 | `packages/lism-css/src/scss/_with_layer.scss`, `packages/lism-css/src/scss/main.scss` |
+| Layer 構造 | `packages/lism-css/src/scss/_with_layer.scss`, `packages/lism-css/src/scss/main.scss`（`lism-base` → `lism-modules`{`state`,`layout`,`atomic`} → `lism-custom` → `lism-utility`） |
 | クラス命名規則・プレフィックス | `packages/lism-css/src/scss/modules/`, `packages/lism-css/src/scss/base/` |
 
 
