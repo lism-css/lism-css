@@ -1,9 +1,9 @@
 @layer lism-modules {
   .c--chat {
     --cbox-bgPct: 8%;
-    --gta: 'avatar name' 'avatar body';
-    --gtc: auto 1fr;
-    --gtr: minmax(1.5rem, auto) auto;
+    grid-template-areas: 'avatar name' 'avatar body';
+    grid-template-columns: auto 1fr;
+    grid-template-rows: minmax(1.5rem, auto) auto;
     --_avator-size: clamp(48px, 32px + 5cqw, 64px); /* @320px:40px ~ @640:64px */
     --_deco-size: calc(min(var(--_avator-size), 80px) / 4 + 0.25rem);
     --_deco-mask: none;
@@ -46,8 +46,8 @@
   [data-chat-dir='end'] {
     --_deco-scale: -1 1;
     --_deco-inset-x: calc(100% - 1px) auto;
-    --gta: 'name avatar' 'body avatar';
-    --gtc: 1fr auto;
+    grid-template-areas: 'name avatar' 'body avatar';
+    grid-template-columns: 1fr auto;
   }
 }
 

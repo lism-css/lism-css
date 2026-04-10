@@ -57,13 +57,8 @@ export default function getLayoutProps<P extends InputProps>(layout: LayoutType 
   return rest as Omit<P, LayoutSpecificKeys> & BaseProps;
 }
 
-function getGridProps({ _propConfig = {}, ...props }: InputProps): BaseProps {
-  // gt系のベース値は l--grid は 変数のみでいい
-  _propConfig.gta = { isVar: 1 };
-  _propConfig.gtc = { isVar: 1 };
-  _propConfig.gtr = { isVar: 1 };
-
-  return { ...props, _propConfig };
+function getGridProps(props: InputProps): BaseProps {
+  return { ...props };
 }
 
 function getSideMainProps({ sideW, mainW, style, ...props }: InputProps): BaseProps {

@@ -481,7 +481,7 @@ Here are some examples of positioning elements with `position: absolute`.
   </PreviewArea>
   <PreviewCode slot="tab" label="HTML">
   ```html "-gc:1/-1" "--gtc:"
-  <div class="l--grid -g:20" style="--gtc: repeat(2, 1fr)">
+  <div class="l--grid -g:20 -gtc" style="--gtc: repeat(2, 1fr)">
     <div class="-gc:1/-1 -bd -p:10 -bgc:base-2">Item A</div>
     <div class="-bd -p:10 -bgc:base-2">Item B</div>
     <div class="-bd -p:10 -bgc:base-2">Item C</div>
@@ -498,8 +498,6 @@ Here are some examples of positioning elements with `position: absolute`.
   ```
   </PreviewCode>
 </Preview>
-
-In the above Examples, `--gtc` variable is accepted even without a `-gtc` class because `l--grid` receives `--gtc`.
 
 
 ### Places
