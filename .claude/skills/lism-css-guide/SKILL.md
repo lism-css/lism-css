@@ -103,3 +103,11 @@ import { Accordion, Tabs, Modal, Button } from '@lism-css/ui/astro';
 | [css-rules.md](./css-rules.md) | CSS設計ルール — Layer構造・命名規則・プレフィックス・カスタムCSS追加ルール | [css-methodology](https://lism-css.com/docs/css-methodology/) |
 
 各ファイルの冒頭にはTOC（目次）があり、セクションごとの詳細URL・ソースURLがまとめて記載されています。
+
+
+## このスキルのアップデート方法
+
+skills.sh のコマンドを利用してください。
+
+- `npx skills check` でアップデートの有無を確認
+- `npx skills update` でアップデートを実行

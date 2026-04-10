@@ -19,17 +19,17 @@ HTML では直接クラスを付与し、Lism コンポーネントでは `set` 
 
 ## 対応ソースコード
 
-ソース: https://github.com/lism-css/lism-css/tree/dev/packages/lism-css/src/scss/base/set
+ソース: https://github.com/lism-css/lism-css/tree/main/packages/lism-css/src/scss/base/set
 
 | クラス | ソースファイル |
 |--------|---------------|
-| `set--plain` | [`_plain.scss`](https://github.com/lism-css/lism-css/blob/dev/packages/lism-css/src/scss/base/set/_plain.scss) |
-| `set--shadow` | [`_shadow.scss`](https://github.com/lism-css/lism-css/blob/dev/packages/lism-css/src/scss/base/tokens/_shadow.scss) |
-| `set--hov` | [`_hov.scss`](https://github.com/lism-css/lism-css/blob/dev/packages/lism-css/src/scss/base/set/_hov.scss) |
-| `set--transition` | [`_transition.scss`](https://github.com/lism-css/lism-css/blob/dev/packages/lism-css/src/scss/base/set/_transition.scss) |
-| `set--gutter` | [`_gutter.scss`](https://github.com/lism-css/lism-css/blob/dev/packages/lism-css/src/scss/base/set/_gutter.scss) |
-| `set--innerRs` | [`_innerRs.scss`](https://github.com/lism-css/lism-css/blob/dev/packages/lism-css/src/scss/base/set/_innerRs.scss) |
-| `set--bp` | [`_bp.scss`](https://github.com/lism-css/lism-css/blob/dev/packages/lism-css/src/scss/base/set/_bp.scss) |
+| `set--plain` | [`_plain.scss`](https://github.com/lism-css/lism-css/blob/main/packages/lism-css/src/scss/base/set/_plain.scss) |
+| `set--shadow` | [`_shadow.scss`](https://github.com/lism-css/lism-css/blob/main/packages/lism-css/src/scss/base/tokens/_shadow.scss) |
+| `set--hov` | [`_hov.scss`](https://github.com/lism-css/lism-css/blob/main/packages/lism-css/src/scss/base/set/_hov.scss) |
+| `set--transition` | [`_transition.scss`](https://github.com/lism-css/lism-css/blob/main/packages/lism-css/src/scss/base/set/_transition.scss) |
+| `set--gutter` | [`_gutter.scss`](https://github.com/lism-css/lism-css/blob/main/packages/lism-css/src/scss/base/set/_gutter.scss) |
+| `set--innerRs` | [`_innerRs.scss`](https://github.com/lism-css/lism-css/blob/main/packages/lism-css/src/scss/base/set/_innerRs.scss) |
+| `set--bp` | [`_bp.scss`](https://github.com/lism-css/lism-css/blob/main/packages/lism-css/src/scss/base/set/_bp.scss) |
 
 ---
 

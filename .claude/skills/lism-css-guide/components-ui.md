@@ -34,6 +34,8 @@ import { Accordion, Tabs, Modal, Button } from '@lism-css/ui/astro';
 
 ## Accordion
 
+ソース: [Accordion/](https://github.com/lism-css/lism-css/tree/main/packages/lism-ui/src/components/Accordion)
+
 アコーディオン UI。クリックでコンテンツの開閉を切り替える。JSで開閉アニメーションを制御。パネルに `hidden='until-found'` を使用しブラウザのページ内検索に対応。
 
 **構造:** `Accordion.Root > Accordion.Item > (Accordion.Heading > Accordion.Button) + Accordion.Panel`（`Accordion.Icon` は自動で含まれる）
@@ -58,6 +60,8 @@ import { Accordion, Tabs, Modal, Button } from '@lism-css/ui/astro';
 
 ## Alert
 
+ソース: [Alert/](https://github.com/lism-css/lism-css/tree/main/packages/lism-ui/src/components/Alert)
+
 短めの文言を目立たせて強調表示するアラートボックス。`type` プリセットによりアイコンとカラーが自動設定される。
 
 | Prop | 型 | デフォルト | 説明 |
@@ -75,6 +79,8 @@ import { Accordion, Tabs, Modal, Button } from '@lism-css/ui/astro';
 
 ## Avatar
 
+ソース: [Avatar/](https://github.com/lism-css/lism-css/tree/main/packages/lism-ui/src/components/Avatar)
+
 アバター（プロフィール画像）コンポーネント。Frame ベースの円形画像表示。`c--avatar` クラスが付与される。
 
 | Prop | 型 | デフォルト | 説明 |
@@ -90,6 +96,8 @@ import { Accordion, Tabs, Modal, Button } from '@lism-css/ui/astro';
 
 ## Badge
 
+ソース: [Badge/](https://github.com/lism-css/lism-css/tree/main/packages/lism-ui/src/components/Badge)
+
 バッジ（ラベル）コンポーネント。`span` 要素としてインライン表示。`c--badge` クラスが付与される。
 
 | Prop | 型 | デフォルト | 説明 |
@@ -103,6 +111,8 @@ import { Accordion, Tabs, Modal, Button } from '@lism-css/ui/astro';
 
 
 ## Button
+
+ソース: [Button/](https://github.com/lism-css/lism-css/tree/main/packages/lism-ui/src/components/Button)
 
 ボタン型リンクコンポーネント。デフォルトで `a` 要素として出力。`c--button` クラスが付与される。
 
@@ -118,6 +128,8 @@ import { Accordion, Tabs, Modal, Button } from '@lism-css/ui/astro';
 
 
 ## Callout
+
+ソース: [Callout/](https://github.com/lism-css/lism-css/tree/main/packages/lism-ui/src/components/Callout)
 
 記事中の重要ポイントを示すコンポーネント。タイトルとアイコン付きの強調ボックス。`type` プリセットによりアイコンとカラーが自動設定される。
 
@@ -136,6 +148,8 @@ import { Accordion, Tabs, Modal, Button } from '@lism-css/ui/astro';
 
 ## Chat
 
+ソース: [Chat/](https://github.com/lism-css/lism-css/tree/main/packages/lism-ui/src/components/Chat)
+
 チャット風の吹き出しコンポーネント。Grid ベースの会話形式 UI。`c--chat` クラスが付与される。
 
 | Prop | 型 | デフォルト | 説明 |
@@ -153,6 +167,8 @@ import { Accordion, Tabs, Modal, Button } from '@lism-css/ui/astro';
 
 
 ## Details
+
+ソース: [Details/](https://github.com/lism-css/lism-css/tree/main/packages/lism-ui/src/components/Details)
 
 HTML の `details/summary` 要素をラップしたコンポーネント。Accordion とは違い JS を使わず CSS のみで実装。
 
@@ -175,6 +191,8 @@ HTML の `details/summary` 要素をラップしたコンポーネント。Accor
 
 
 ## Modal
+
+ソース: [Modal/](https://github.com/lism-css/lism-css/tree/main/packages/lism-ui/src/components/Modal)
 
 モーダルダイアログ UI。`dialog` 要素を使用。`data-modal-open` / `data-modal-close` 属性で開閉を制御。
 
@@ -201,6 +219,8 @@ HTML の `details/summary` 要素をラップしたコンポーネント。Accor
 
 ## NavMenu
 
+ソース: [NavMenu/](https://github.com/lism-css/lism-css/tree/main/packages/lism-ui/src/components/NavMenu)
+
 ナビゲーションメニューコンポーネント。`c--navMenu` クラスが付与される。
 
 **構造:** `NavMenu.Root > NavMenu.Item > NavMenu.Link`（`NavMenu.Nest` でネスト可能）
@@ -225,6 +245,8 @@ HTML の `details/summary` 要素をラップしたコンポーネント。Accor
 
 
 ## Tabs
+
+ソース: [Tabs/](https://github.com/lism-css/lism-css/tree/main/packages/lism-ui/src/components/Tabs)
 
 タブ切り替え UI。タブクリックでコンテンツパネルを切り替える。スタイリングはほぼなく動きのみ提供。
 
@@ -252,6 +274,8 @@ HTML の `details/summary` 要素をラップしたコンポーネント。Accor
 
 ## ShapeDivider
 
+ソース: [ShapeDivider/](https://github.com/lism-css/lism-css/tree/main/packages/lism-ui/src/components/ShapeDivider)
+
 セクション間の波型などの装飾的な区切り要素。SVG ベースの形状で区切りを表現。
 
 | Prop | 型 | デフォルト | 説明 |
@@ -273,6 +297,8 @@ HTML の `details/summary` 要素をラップしたコンポーネント。Accor
 
 ## DummyText
 
+ソース: [DummyText/](https://github.com/lism-css/lism-css/tree/main/packages/lism-ui/src/components/DummyText)
+
 ダミーテキストを生成するコンポーネント。プレビューやテスト用。複数の言語とテキスト長に対応。
 
 | Prop | 型 | デフォルト | 説明 |
@@ -288,6 +314,8 @@ HTML の `details/summary` 要素をラップしたコンポーネント。Accor
 
 
 ## DummyImage
+
+ソース: [DummyImage/](https://github.com/lism-css/lism-css/tree/main/packages/lism-ui/src/components/DummyImage)
 
 ダミーのプレースホルダー画像を出力するコンポーネント。`cdn.lism-css.com` からダミー画像を取得。
 
