@@ -4,27 +4,12 @@ description: 'Place a SKILL.md file in your project to communicate Lism CSS desi
 ---
 By placing the SKILL.md file in your project, you can communicate Lism CSS design rules, Props, tokens, and naming conventions to AI agents.
 
-### File structure
-
-The skill consists of 10 files:
-
-| File | Contents |
-|------|----------|
-| `SKILL.md` | Entry point — overview, package structure, implementation rules, reference links |
-| `tokens.md` | Design tokens — spacing, font sizes, border radius, shadows, colors, palettes |
-| `base-styles.md` | Base styling — Reset CSS, HTML element base styles, CSS variables overview |
-| `set-class.md` | `set--` classes — `set--plain`/`set--shadow`/`set--hov`/`set--transition`, etc. |
-| `module-class.md` | Module classes — is--/l--/a--/c-- class list and usage |
-| `utility-class.md` | Utility classes — u-- class list |
-| `property-class.md` | Property Class — `-{prop}:{value}` syntax, key Prop list |
-| `prop-responsive.md` | Responsive design — breakpoints, container queries, usage patterns |
-| `components.md` | Component system — core, layout, semantic, and UI component list |
-| `css-rules.md` | CSS design rules — Layer structure, naming conventions, prefixes, custom CSS rules |
 
 GitHub: [lism-css/lism-css/.claude/skills/lism-css-guide/](https://github.com/lism-css/lism-css/tree/main/.claude/skills/lism-css-guide)
 
 
-### Setup
+
+## Setup
 
 <Preview>
   <PreviewCode slot='tab' label='npm'>
@@ -52,6 +37,9 @@ GitHub: [lism-css/lism-css/.claude/skills/lism-css-guide/](https://github.com/li
 Install the Lism CSS skill into your project using the command above.
 
 
+<small>For more information about the `skills` command, see [skills.sh](https://skills.sh).</small>
+
+
 ### Update
 
 ```bash frame="none"
@@ -62,4 +50,19 @@ npx skills check
 npx skills update
 ```
 
-For more information about the `skills` command, see [skills.sh](https://skills.sh).
+### File structure
+
+The skill consists of 10 files:
+
+| File | Contents |
+|------|----------|
+| `SKILL.md` | Entry point — overview, package structure, implementation rules, reference links |
+| `tokens.md` | Design tokens — spacing, font sizes, border radius, shadows, colors, palettes |
+| `base-styles.md` | Base styling — Reset CSS, HTML element base styles, CSS variables overview |
+| `set-class.md` | `set--` classes — `set--plain`/`set--shadow`/`set--hov`/`set--transition`, etc. |
+| `module-class.md` | Module classes — is--/l--/a--/c-- class list and usage |
+| `utility-class.md` | Utility classes — u-- class list |
+| `property-class.md` | Property Class — `-{prop}:{value}` syntax, key Prop list |
+| `prop-responsive.md` | Responsive design — breakpoints, container queries, usage patterns |
+| `components.md` | Component system — core, layout, semantic, and UI component list |
+| `css-rules.md` | CSS design rules — Layer structure, naming conventions, prefixes, custom CSS rules |
