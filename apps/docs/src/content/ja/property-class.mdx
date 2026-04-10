@@ -481,7 +481,7 @@ export const LinkSPACE = () => <a href="/docs/tokens/spacing/"><code>SPACE</code
   </PreviewArea>
   <PreviewCode slot="tab" label="HTML">
   ```html "-gc:1/-1" "--gtc:"
-  <div class="l--grid -g:20" style="--gtc: repeat(2, 1fr)">
+  <div class="l--grid -g:20 -gtc" style="--gtc: repeat(2, 1fr)">
     <div class="-gc:1/-1 -bd -p:10 -bgc:base-2">Item A</div>
     <div class="-bd -p:10 -bgc:base-2">Item B</div>
     <div class="-bd -p:10 -bgc:base-2">Item C</div>
@@ -498,8 +498,6 @@ export const LinkSPACE = () => <a href="/docs/tokens/spacing/"><code>SPACE</code
   ```
   </PreviewCode>
 </Preview>
-
-上記 Examples で`-gtc`クラスがなくても`--gtc`変数が受け取れているのは、`l--grid`が `--gtc`を受け取るためです。
 
 
 ### Places

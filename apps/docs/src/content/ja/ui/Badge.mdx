@@ -24,9 +24,7 @@ import { Badge } from '@lism-css/ui/astro';
     <Cluster g="15">
       <Badge>Badge</Badge>
       <Badge variant="outline">Badge</Badge>
-      <Badge className="u--cbox" keycolor="blue" bdrs="99">
-        Badge
-      </Badge>
+      <Badge className="u--cbox" keycolor="blue" bdrs="99">Badge</Badge>
     </Cluster>
     ```
   </PreviewCode>
@@ -35,9 +33,7 @@ import { Badge } from '@lism-css/ui/astro';
     <div class="l--cluster -g:15">
       <span class="c--badge -d:inline-flex -fz:xs -lh:xs -py:5 -px:10 -bdrs:10">Badge</span>
       <span class="c--badge c--badge--outline -d:inline-flex -fz:xs -lh:xs -py:5 -px:10 -bdrs:10">Badge</span>
-      <span class="u--cbox c--badge -d:inline-flex -fz:xs -lh:xs -py:5 -px:10 -bdrs:99" style="--keycolor:var(--blue)">
-        Badge
-      </span>
+      <span class="u--cbox c--badge -d:inline-flex -fz:xs -lh:xs -py:5 -px:10 -bdrs:99" style="--keycolor:var(--blue)">Badge</span>
     </div>
     ```
   </PreviewCode>
@@ -124,18 +120,10 @@ import { Badge } from '@lism-css/ui/astro';
       <Badge bgc="orange">Badge</Badge>
       <Badge bgc="yellow">Badge</Badge>
       <Badge bgc="green">Badge</Badge>
-      <Badge bgc="blue" bdrs="99">
-        Badge
-      </Badge>
-      <Badge bgc="purple" bdrs="99">
-        Badge
-      </Badge>
-      <Badge bgc="pink" bdrs="99">
-        Badge
-      </Badge>
-      <Badge bgc="gray" bdrs="99">
-        Badge
-      </Badge>
+      <Badge bgc="blue" bdrs="99">Badge</Badge>
+      <Badge bgc="purple" bdrs="99">Badge</Badge>
+      <Badge bgc="pink" bdrs="99">Badge</Badge>
+      <Badge bgc="gray" bdrs="99">Badge</Badge>
     </Cluster>
     ```
   </PreviewCode>
@@ -143,8 +131,9 @@ import { Badge } from '@lism-css/ui/astro';
     ```html
     <div class="l--cluster -g:15">
       <span class="c--badge -d:inline-flex -fz:xs -lh:xs -py:5 -px:10 -bdrs:10">Badge</span>
-      <span class="c--badge -d:inline-flex -fz:xs -lh:xs -py:5 -px:10 -bdrs:10" style="--bgc: var(--red)">Badge</span>
-      ... ...
+      <span class="c--badge -d:inline-flex -fz:xs -lh:xs -py:5 -px:10 -bdrs:10 -bgc" style="--bgc: var(--red)">Badge</span>
+      <span class="c--badge -d:inline-flex -fz:xs -lh:xs -py:5 -px:10 -bdrs:10 -bgc" style="--bgc: var(--orange)">Badge</span>
+      ...
     </div>
     ```
   </PreviewCode>
@@ -190,19 +179,8 @@ import { Badge } from '@lism-css/ui/astro';
     ```jsx
     <Cluster g="15">
       <Badge variant="outline">Badge</Badge>
-      <Badge variant="outline" c="red">
-        Badge
-      </Badge>
-      <Badge variant="outline" c="orange">
-        Badge
-      </Badge>
-      ...
-      <Badge variant="outline" c="blue" fz="xs" bdrs="99">
-        Badge
-      </Badge>
-      <Badge variant="outline" c="purple" fz="xs" bdrs="99">
-        Badge
-      </Badge>
+      <Badge variant="outline" c="red">Badge</Badge>
+      <Badge variant="outline" c="orange">Badge</Badge>
       ...
     </Cluster>
     ```
@@ -244,15 +222,9 @@ import { Badge } from '@lism-css/ui/astro';
   <PreviewCode slot='tab' label='JSX'>
     ```jsx
     <Cluster g="15">
-      <Badge className="u--cbox" keycolor="red">
-        Red
-      </Badge>
-      <Badge className="u--cbox" keycolor="orange">
-        Orange
-      </Badge>
-      <Badge className="u--cbox" keycolor="yellow">
-        Yellow
-      </Badge>
+      <Badge className="u--cbox" keycolor="red">Red</Badge>
+      <Badge className="u--cbox" keycolor="orange">Orange</Badge>
+      <Badge className="u--cbox" keycolor="yellow">Yellow</Badge>
       ...
     </Cluster>
     ```
@@ -286,13 +258,9 @@ import { BookIcon } from '@phosphor-icons/react';
     ```jsx
     <Cluster g="15" ai="center">
       <Badge d="inline-flex" g="5" px-s="10" ai="center">
-        <Icon icon="star-fill" style={{ translate: '-10% 0' }} />
-        Badge
-      </Badge>
+        <Icon icon="star-fill" style={{ translate: '-10% 0' }} />Badge</Badge>
       <Badge variant="outline" d="inline-flex" g="5" px-s="10" ai="center" bdrs="10">
-        <Icon icon="tag" style={{ translate: '-10% 0' }} />
-        Badge
-      </Badge>
+        <Icon icon="tag" style={{ translate: '-10% 0' }} />Badge</Badge>
     </Cluster>
     ```
   </PreviewCode>
@@ -321,15 +289,9 @@ import { BookIcon } from '@phosphor-icons/react';
   <PreviewCode slot='tab' label='JSX'>
     ```jsx
     <Cluster g="15">
-      <Lism as="span" fz="xs" lh="xs" py="5" px="10" bgc="text" c="base" bdrs="10">
-        Badge
-      </Lism>
-      <Lism as="span" fz="xs" lh="xs" py="5" px="10" bd bdc="current" bdrs="10">
-        Badge
-      </Lism>
-      <Lism as="span" className="u--cbox" keycolor="blue" bd bdc="keycolor:base:40%" fz="xs" lh="xs" py="5" px="10" bdrs="99">
-        Badge
-      </Lism>
+      <Lism as="span" fz="xs" lh="xs" py="5" px="10" bgc="text" c="base" bdrs="10">Badge</Lism>
+      <Lism as="span" fz="xs" lh="xs" py="5" px="10" bd bdc="current" bdrs="10">Badge</Lism>
+      <Lism as="span" className="u--cbox" keycolor="blue" bd bdc="keycolor:base:40%" fz="xs" lh="xs" py="5" px="10" bdrs="99">Badge</Lism>
     </Cluster>
     ```
   </PreviewCode>
