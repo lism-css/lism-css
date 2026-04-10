@@ -5,7 +5,7 @@ import path from 'node:path';
  * ファイル配置位置から helperDir への相対パスに置換する。
  *
  * 例:
- *   fileRelPath = "setAccordion.js"   (shared, コンポーネント直下)
+ *   fileRelPath = "setAccordion.ts"   (shared, コンポーネント直下)
  *   helperDir   = "_helper"
  *   → {{HELPER}} → ../_helper
  *
