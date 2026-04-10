@@ -52,6 +52,6 @@ nr test #テスト
 
 ## 注意事項
 
-- `.claude/skills/` 内でソースファイルを参照する場合、相対パスではなく GitHub URL（`https://github.com/lism-css/lism-css/blob/dev/...`）を使用すること
+- `.claude/skills/` 内でソースファイルを参照する場合、相対パスではなく GitHub URL（`https://github.com/lism-css/lism-css/blob/main/...`）を使用すること
 - スキルやドキュメントの更新時に `packages/mcp/src/data/*.json` を参照しないこと（手動管理に起因する不整合があるため）。情報源は `apps/docs/src/content/` やパッケージソースを使う
 - `lism-css-guide` スキルは、明示的に指示がない限り読み込まないこと（ユーザー向けのスキルであり、開発中は不要）

@@ -53,7 +53,7 @@ CSS Layer の外（最も高い詳細度）に配置され、`-{prop}(:{value})`
 
 ## 全 Prop 一覧
 
-ソース: [props.ts](https://github.com/lism-css/lism-css/blob/dev/packages/lism-css/config/defaults/props.ts)
+ソース: [props.ts](https://github.com/lism-css/lism-css/blob/main/packages/lism-css/config/defaults/props.ts)
 
 ### タイポグラフィ
 
