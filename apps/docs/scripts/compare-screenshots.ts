@@ -5,10 +5,12 @@
  * ベースライン画像とピクセル比較してレイアウト差分を検出します。
  *
  * 使い方:
- *   npx tsx scripts/compare-screenshots.ts                    # 比較（初回はベースライン生成）
- *   npx tsx scripts/compare-screenshots.ts --threshold 0.5    # 差分率しきい値を変更（デフォルト: 0.1%）
- *   npx tsx scripts/compare-screenshots.ts cta                # カテゴリ指定
- *   npx tsx scripts/compare-screenshots.ts cta/cta001         # テンプレート指定
+ *   npx tsx scripts/compare-screenshots.ts                    # 全言語を比較（初回はベースライン生成）
+ *   npx tsx scripts/compare-screenshots.ts --threshold 0.5    # 差分率しきい値を変更（デフォルト: 0.01%）
+ *   npx tsx scripts/compare-screenshots.ts --lang=en          # 英語版のみ比較
+ *   npx tsx scripts/compare-screenshots.ts cta                # カテゴリ指定（全言語）
+ *   npx tsx scripts/compare-screenshots.ts cta/cta001         # テンプレート指定（全言語）
+ *   npx tsx scripts/compare-screenshots.ts cta/cta001 --lang=ja  # 特定テンプレートの日本語版のみ比較
  */
 
 import { chromium, type Browser, type Page } from 'playwright';
@@ -33,12 +35,19 @@ const CONFIG = {
   waitAfterLoad: 500,
 };
 
+// 対応言語（ja はデフォルト＝パスプレフィックスなし）
+const ALL_LANGS = ['ja', 'en'] as const;
+type Lang = (typeof ALL_LANGS)[number];
+
 // コマンドライン引数をパース
 const args = process.argv.slice(2);
 const thresholdIndex = args.indexOf('--threshold');
 // 差分率しきい値（%）: これ以下の差分は無視する
 const threshold = thresholdIndex !== -1 ? parseFloat(args[thresholdIndex + 1]) : 0.01;
-// --threshold とその値を除いた残りをフィルタとして使用
+// --lang オプション: 指定言語のみ比較（省略時は全言語）
+const langValue = args.find((a) => a.startsWith('--lang='))?.split('=')[1];
+const targetLangs: readonly Lang[] = langValue ? [langValue as Lang] : ALL_LANGS;
+// --threshold, --lang とその値を除いた残りをフィルタとして使用
 const filters = args.filter((a, i) => !a.startsWith('--') && args[i - 1] !== '--threshold');
 
 /**
@@ -169,8 +178,9 @@ async function setupImageInterception(page: Page, grayPng: Buffer): Promise<void
 /**
  * スクリーンショットを撮影して指定ディレクトリに保存
  */
-async function captureScreenshot(page: Page, outputDir: string, category: string, id: string): Promise<string | null> {
-  const outputPath = join(outputDir, category, `${id}.png`);
+async function captureScreenshot(page: Page, outputDir: string, category: string, id: string, lang: Lang): Promise<string | null> {
+  // ja はプレフィックスなし、それ以外は lang/ サブディレクトリ
+  const outputPath = lang === 'ja' ? join(outputDir, category, `${id}.png`) : join(outputDir, lang, category, `${id}.png`);
   const dir = dirname(outputPath);
 
   if (!existsSync(dir)) {
@@ -178,7 +188,10 @@ async function captureScreenshot(page: Page, outputDir: string, category: string
   }
 
   try {
-    const url = `http://localhost:${CONFIG.port}/preview/templates/${category}/${id}/`;
+    const url =
+      lang === 'ja'
+        ? `http://localhost:${CONFIG.port}/preview/templates/${category}/${id}/`
+        : `http://localhost:${CONFIG.port}/preview/templates/${category}/${id}/${lang}/`;
     await page.goto(url, { waitUntil: 'networkidle' });
     await page.waitForTimeout(CONFIG.waitAfterLoad);
     await page.screenshot({ path: outputPath, type: 'png' });
@@ -226,13 +239,15 @@ function compareImages(baselinePath: string, newPath: string, diffPath: string):
 /**
  * 1テンプレートの撮影→比較
  */
-async function processTemplate(page: Page, category: string, id: string, isInitialRun: boolean): Promise<CompareResult> {
-  const baselinePath = join(CONFIG.baselineDir, category, `${id}.png`);
-  const diffPath = join(CONFIG.diffDir, category, `${id}.png`);
+async function processTemplate(page: Page, category: string, id: string, lang: Lang, isInitialRun: boolean): Promise<CompareResult> {
+  // ja はプレフィックスなし、それ以外は lang/ サブディレクトリ
+  const langPrefix = lang === 'ja' ? '' : lang;
+  const baselinePath = join(CONFIG.baselineDir, langPrefix, category, `${id}.png`);
+  const diffPath = join(CONFIG.diffDir, langPrefix, category, `${id}.png`);
 
   if (isInitialRun) {
     // 初回: ベースラインを生成
-    const result = await captureScreenshot(page, CONFIG.baselineDir, category, id);
+    const result = await captureScreenshot(page, CONFIG.baselineDir, category, id, lang);
     if (!result) {
       return { status: 'error', message: 'スクリーンショット撮影失敗' };
     }
@@ -240,7 +255,7 @@ async function processTemplate(page: Page, category: string, id: string, isIniti
   }
 
   // 2回目以降: 一時ディレクトリに撮影 → ベースラインと比較
-  const tempPath = await captureScreenshot(page, CONFIG.tempDir, category, id);
+  const tempPath = await captureScreenshot(page, CONFIG.tempDir, category, id, lang);
   if (!tempPath) {
     return { status: 'error', message: 'スクリーンショット撮影失敗' };
   }
@@ -271,6 +286,7 @@ async function processTemplate(page: Page, category: string, id: string, isIniti
 async function main() {
   console.log('🔍 テンプレートスクリーンショット比較');
   console.log(`   しきい値: ${threshold}%`);
+  console.log(`   言語: ${targetLangs.join(', ')}`);
   console.log('');
 
   // dist ディレクトリの存在確認
@@ -330,28 +346,33 @@ async function main() {
     const changedItems: Array<{ name: string; diffPercent: number; diffPath: string }> = [];
 
     console.log(isInitialRun ? '📸 ベースライン撮影開始...' : '📸 撮影・比較開始...');
-    for (const { category, id } of templatePaths) {
-      const name = `${category}/${id}`;
-      const result = await processTemplate(page, category, id, isInitialRun);
+    for (const lang of targetLangs) {
+      if (targetLangs.length > 1) {
+        console.log(`\n🌐 [${lang}]`);
+      }
+      for (const { category, id } of templatePaths) {
+        const name = `${category}/${id}`;
+        const result = await processTemplate(page, category, id, lang, isInitialRun);
 
-      switch (result.status) {
-        case 'unchanged':
-          unchanged++;
-          process.stdout.write(`  ✅ ${name} (変更なし)\n`);
-          break;
-        case 'changed':
-          changed++;
-          changedItems.push({ name, diffPercent: result.diffPercent, diffPath: result.diffPath });
-          process.stdout.write(`  ⚠️  ${name} (差分: ${result.diffPercent}%)\n`);
-          break;
-        case 'new':
-          newCount++;
-          process.stdout.write(isInitialRun ? `  📸 ${name}\n` : `  🆕 ${name} (新規)\n`);
-          break;
-        case 'error':
-          errors++;
-          process.stdout.write(`  ❌ ${name}: ${result.message}\n`);
-          break;
+        switch (result.status) {
+          case 'unchanged':
+            unchanged++;
+            process.stdout.write(`  ✅ ${name} (変更なし)\n`);
+            break;
+          case 'changed':
+            changed++;
+            changedItems.push({ name, diffPercent: result.diffPercent, diffPath: result.diffPath });
+            process.stdout.write(`  ⚠️  ${name} (差分: ${result.diffPercent}%)\n`);
+            break;
+          case 'new':
+            newCount++;
+            process.stdout.write(isInitialRun ? `  📸 ${name}\n` : `  🆕 ${name} (新規)\n`);
+            break;
+          case 'error':
+            errors++;
+            process.stdout.write(`  ❌ ${name}: ${result.message}\n`);
+            break;
+        }
       }
     }
 

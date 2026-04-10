@@ -5,7 +5,7 @@
  * 比較用ベースライン（グレー差し替え）と公開用スクリーンショット（本番画像）を更新します。
  *
  * 使い方:
- *   npx tsx scripts/update-screenshots.ts    # diff/ にある差分テンプレートを更新
+ *   npx tsx scripts/update-screenshots.ts    # diff/ にある差分テンプレートを更新（全言語対応）
  */
 
 import { chromium, type Browser, type Page } from 'playwright';
@@ -18,6 +18,12 @@ import { PNG } from 'pngjs';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 const ROOT_DIR = join(__dirname, '..');
+
+// 対応言語（ja はデフォルト＝パスプレフィックスなし）
+const ALL_LANGS = ['ja', 'en'] as const;
+type Lang = (typeof ALL_LANGS)[number];
+// ja 以外の言語（ディレクトリスキャン時に言語プレフィックスとして識別）
+const NON_DEFAULT_LANGS = ALL_LANGS.filter((l): l is Exclude<Lang, 'ja'> => l !== 'ja');
 
 const CONFIG = {
   // 比較用ベースライン（グレー差し替え画像）
@@ -32,23 +38,43 @@ const CONFIG = {
 };
 
 /**
- * _screenshots/diff/ から差分があるテンプレート一覧を取得
+ * _screenshots/diff/ から差分があるテンプレート一覧を取得（言語対応）
+ * ja: diff/{category}/{id}.png, en: diff/en/{category}/{id}.png
  */
-function getDiffTemplatePaths(): Array<{ category: string; id: string }> {
+function getDiffTemplatePaths(): Array<{ category: string; id: string; lang: Lang }> {
   if (!existsSync(CONFIG.diffDir)) {
     return [];
   }
 
-  const paths: Array<{ category: string; id: string }> = [];
+  const paths: Array<{ category: string; id: string; lang: Lang }> = [];
   const entries = readdirSync(CONFIG.diffDir, { withFileTypes: true });
 
   for (const entry of entries) {
     if (!entry.isDirectory()) continue;
-    const category = entry.name;
-    const files = readdirSync(join(CONFIG.diffDir, category));
-    for (const file of files) {
-      if (file.endsWith('.png')) {
-        paths.push({ category, id: basename(file, '.png') });
+    const name = entry.name;
+
+    if ((NON_DEFAULT_LANGS as readonly string[]).includes(name)) {
+      // 言語ディレクトリ（en/ など）→ 中のカテゴリ/IDを走査
+      const langDir = join(CONFIG.diffDir, name);
+      const langEntries = readdirSync(langDir, { withFileTypes: true });
+      for (const langEntry of langEntries) {
+        if (!langEntry.isDirectory()) continue;
+        const category = langEntry.name;
+        const files = readdirSync(join(langDir, category));
+        for (const file of files) {
+          if (file.endsWith('.png')) {
+            paths.push({ category, id: basename(file, '.png'), lang: name as Lang });
+          }
+        }
+      }
+    } else {
+      // カテゴリディレクトリ（ja、プレフィックスなし）
+      const category = name;
+      const files = readdirSync(join(CONFIG.diffDir, category));
+      for (const file of files) {
+        if (file.endsWith('.png')) {
+          paths.push({ category, id: basename(file, '.png'), lang: 'ja' });
+        }
       }
     }
   }
@@ -147,13 +173,17 @@ async function setupImageInterception(page: Page, grayPng: Buffer): Promise<void
 /**
  * スクリーンショットを撮影して保存
  */
-async function captureScreenshot(page: Page, outputDir: string, category: string, id: string): Promise<boolean> {
-  const outputPath = join(outputDir, category, `${id}.png`);
+async function captureScreenshot(page: Page, outputDir: string, category: string, id: string, lang: Lang): Promise<boolean> {
+  // ja はプレフィックスなし、それ以外は lang/ サブディレクトリ
+  const outputPath = lang === 'ja' ? join(outputDir, category, `${id}.png`) : join(outputDir, lang, category, `${id}.png`);
   const dir = dirname(outputPath);
   if (!existsSync(dir)) mkdirSync(dir, { recursive: true });
 
   try {
-    const url = `http://localhost:${CONFIG.port}/preview/templates/${category}/${id}/`;
+    const url =
+      lang === 'ja'
+        ? `http://localhost:${CONFIG.port}/preview/templates/${category}/${id}/`
+        : `http://localhost:${CONFIG.port}/preview/templates/${category}/${id}/${lang}/`;
     await page.goto(url, { waitUntil: 'networkidle' });
     await page.waitForTimeout(CONFIG.waitAfterLoad);
     await page.screenshot({ path: outputPath, type: 'png' });
@@ -182,8 +212,8 @@ async function main() {
   }
 
   console.log(`📋 更新対象: ${templatePaths.length}件`);
-  for (const { category, id } of templatePaths) {
-    console.log(`   - ${category}/${id}`);
+  for (const { category, id, lang } of templatePaths) {
+    console.log(`   - ${category}/${id}${lang !== 'ja' ? ` [${lang}]` : ''}`);
   }
   console.log('');
 
@@ -213,13 +243,13 @@ async function main() {
     let failed = 0;
 
     console.log('📸 撮影・更新開始...');
-    for (const { category, id } of templatePaths) {
-      const name = `${category}/${id}`;
+    for (const { category, id, lang } of templatePaths) {
+      const name = `${category}/${id}${lang !== 'ja' ? ` [${lang}]` : ''}`;
 
       // 比較用ベースラインを更新（グレー差し替えあり）
-      const baselineOk = await captureScreenshot(grayPage, CONFIG.baselineDir, category, id);
+      const baselineOk = await captureScreenshot(grayPage, CONFIG.baselineDir, category, id, lang);
       // 公開用スクリーンショットを更新（本番画像）
-      const publicOk = await captureScreenshot(realPage, CONFIG.publicDir, category, id);
+      const publicOk = await captureScreenshot(realPage, CONFIG.publicDir, category, id, lang);
 
       if (baselineOk && publicOk) {
         updated++;
