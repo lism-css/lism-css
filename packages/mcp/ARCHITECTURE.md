@@ -1,13 +1,11 @@
 # MCP サーバー アーキテクチャガイド
 
-このドキュメントでは、`@lism-css/mcp` パッケージの全体像と処理の流れを、MCPサーバー構築の初心者にも分かるように解説します。
+このドキュメントでは、`@lism-css/mcp` パッケージの全体像と処理の流れを解説します。
 
 
 ## MCP とは
 
 **MCP（Model Context Protocol）** は、AI アシスタント（Claude など）が**外部のデータやツールにアクセスするための標準プロトコル**です。
-
-通常、AI は学習済みの知識しか持っていませんが、MCP を使うと「最新のドキュメント」「プロジェクト固有のAPI情報」などを**リアルタイムにAIへ提供**できます。
 
 ```
 ┌───────────────────┐         MCP プロトコル         ┌──────────────────┐
@@ -19,51 +17,27 @@
   呼び出す                                             結果を返す
 ```
 
-### 仕組みのポイント
-
-- **クライアント**: Claude Code などの AI アシスタント。ユーザーの質問に応じてツールを選択・呼び出す
-- **サーバー**: ツール（機能）を提供する側。このパッケージがそれにあたる
-- **通信方式**: 標準入出力（stdin/stdout）を使った JSON-RPC。HTTP サーバーは不要
-
 
 ## Stdio トランスポートの仕組み
 
-「サーバー」という名前ですが、HTTP サーバーのように**常駐させる必要はありません**。
-
-このサーバーは **Stdio（標準入出力）方式** を採用しており、**クライアント（Claude Code等）が子プロセスとして自動で起動・終了**します。
-
-```
-1. ユーザーが Claude Code を起動
-2. Claude Code が設定ファイルを読む
-3. Claude Code が自動で node bin/lism-mcp.mjs を子プロセスとして起動
-4. stdin/stdout でやりとり
-5. Claude Code を終了 → 子プロセスも終了
-```
-
-MCP にはもう1つ **HTTP (SSE) 方式** もありますが、そちらはリモートやチーム共有向けで、自分でサーバーを常駐させる必要があります。ローカルで使う前提なら Stdio が最もシンプルです。
-
-| | Stdio（このサーバー） | HTTP (SSE) |
-|---|---|---|
-| 起動 | クライアントが自動起動 | 自分で常駐させる |
-| ネットワーク | 不要（ローカル通信） | 必要 |
-| 設定 | コマンドパスを指定するだけ | URLを指定 |
+このサーバーは **Stdio（標準入出力）方式** を採用しており、**クライアント（Claude Code等）が子プロセスとして自動で起動・終了**します。HTTP サーバーを常駐させる必要はありません。
 
 
 ## このMCPサーバーの役割
 
 Lism CSS のドキュメント・API情報を、AI が正確に参照できるようにするためのサーバーです。
 
-AI が Lism CSS を使ったコードを生成する際に、**古い知識や推測ではなく、最新のソースから生成されたデータ**を参照できるようになります。
+### 提供するツール（7つ）
 
-### 提供するツール（5つ）
-
-| ツール名 | 用途 | 入力例 |
-|---------|------|--------|
-| `get_overview` | フレームワークの概要を取得 | （引数なし） |
-| `get_tokens` | デザイントークンを取得 | `category: "spacing"` |
-| `get_props_system` | Props → CSS マッピングを参照 | `prop: "p"` or `prop: "-g:5"` |
-| `get_component` | コンポーネントの詳細を取得 | `name: "Accordion"` |
-| `search_docs` | ドキュメントをキーワード検索 | `query: "レスポンシブ"` |
+| ツール名 | 用途 | 返却形式 | 入力例 |
+|---------|------|---------|--------|
+| `get_overview` | フレームワークの概要を取得 | Markdown | （引数なし） |
+| `get_tokens` | デザイントークンを取得 | Markdown | （引数なし） |
+| `get_props_system` | Props → CSS マッピングを参照 | Markdown | `prop: "p"` or `prop: "padding"` |
+| `get_component` | コンポーネントの詳細を取得 | Markdown | `name: "Accordion"` |
+| `get_guide` | 特定トピックのガイドを取得 | Markdown | `topic: "css-rules"` |
+| `search_docs` | ドキュメントをキーワード検索 | JSON | `query: "レスポンシブ"` |
+| `convert_css` | CSS を lism-css props に変換 | JSON | `css: "padding: 1rem;"` |
 
 
 ## ファイル構成
@@ -75,31 +49,56 @@ packages/mcp/
 ├── src/
 │   ├── index.ts                # サーバー初期化・起動
 │   ├── lib/
-│   │   ├── load-data.ts        # データ読み込み・キャッシュ
-│   │   ├── schemas.ts          # Zod スキーマ定義
-│   │   ├── search.ts           # ドキュメント検索ロジック・Property Class記法パーサー
+│   │   ├── load-data.ts        # JSON データ読み込み（docs-index.json のみ）
+│   │   ├── load-markdown.ts    # Markdown ガイド読み込み・キャッシュ
+│   │   ├── markdown-utils.ts   # Markdown パーサー（セクション抽出・テーブル解析）
+│   │   ├── schemas.ts          # Zod スキーマ定義（DocsEntrySchema）
+│   │   ├── search.ts           # ドキュメント検索ロジック
 │   │   ├── response.ts         # レスポンスのフォーマット
 │   │   └── types.ts            # TypeScript 型定義
 │   ├── tools/
-│   │   ├── get-overview.ts     # ツール: フレームワーク概要
-│   │   ├── get-tokens.ts       # ツール: デザイントークン
-│   │   ├── get-props-system.ts # ツール: Props システム
-│   │   ├── get-component.ts    # ツール: コンポーネント情報
-│   │   └── search-docs.ts      # ツール: ドキュメント検索
+│   │   ├── get-overview.ts     # ツール: フレームワーク概要（SKILL.md ベース）
+│   │   ├── get-tokens.ts       # ツール: デザイントークン（tokens.md）
+│   │   ├── get-props-system.ts # ツール: Props システム（property-class.md）
+│   │   ├── get-component.ts    # ツール: コンポーネント情報（components-*.md）
+│   │   ├── get-guide.ts        # ツール: 汎用ガイド取得
+│   │   ├── search-docs.ts      # ツール: ドキュメント検索
+│   │   └── convert-css.ts      # ツール: CSS → lism-css 変換
 │   ├── data/
 │   │   ├── meta.ts             # メタ情報（生成日時等）
-│   │   ├── overview.json       # フレームワーク概要データ
-│   │   ├── tokens.json         # デザイントークン定義
-│   │   ├── props-system.json   # Props システムデータ
-│   │   ├── components.json     # コンポーネント定義
 │   │   └── docs-index.json     # ドキュメント検索インデックス
 │   └── tests/
-│       ├── search.test.ts      # 検索ロジックのユニットテスト
-│       └── tools.test.ts       # ツール統合テスト
+│       ├── search.test.ts
+│       ├── tools.test.ts
+│       └── convert-css.test.ts
 ├── package.json
 ├── tsconfig.json
 └── tsconfig.build.json
 ```
+
+
+## データソースと生成フロー
+
+### Skill-First アーキテクチャ
+
+```
+① パッケージソース（最上位の事実）
+   packages/lism-css/, packages/lism-ui/
+        │
+        │  手動で整理（/update-skill-template コマンド）
+        ▼
+② .claude/skills/lism-css-guide/*.md（正本）
+        │
+        ├─ load-markdown.ts が直接参照（開発・テスト時）
+        │
+        └─ pnpm build（cp）→ dist/data/guides/*.md（npm 配布時）
+```
+
+参照系ツール（get_overview, get_tokens, get_props_system, get_component, get_guide）は **Markdown を直接返却**します。
+
+### docs-index.json
+
+ドキュメント検索インデックス（`search_docs` 用）は Markdown では代替不可のため、JSON として維持しています。`/mcp-update` コマンドで更新します。
 
 
 ## 処理の流れ
@@ -107,244 +106,58 @@ packages/mcp/
 ### 1. サーバー起動
 
 ```
-$ node bin/lism-mcp.mjs
-```
-
-`bin/lism-mcp.mjs` が `dist/index.js`（TypeScript コンパイル済み）を呼び出し、以下の順序で初期化が進みます。
-
-```
 bin/lism-mcp.mjs
-  └─► dist/index.js (= src/index.ts のコンパイル結果)
+  └─► dist/index.js
         │
-        ├─ 1) preloadAll()     ← 全データを一括読み込み
-        ├─ 2) new McpServer()  ← MCPサーバーインスタンス生成
-        ├─ 3) register*()      ← 5つのツールを登録
-        └─ 4) server.connect() ← 標準入出力で待ち受け開始
+        ├─ 1) preloadAll()     ← docs-index.json をメモリに読み込み
+        ├─ 2) preloadGuides()  ← guides/*.md をメモリに読み込み
+        ├─ 3) new McpServer()  ← MCPサーバーインスタンス生成
+        ├─ 4) register*()      ← 7つのツールを登録
+        └─ 5) server.connect() ← 標準入出力で待ち受け開始
 ```
 
-**ソースコード（src/index.ts）:**
-
-```typescript
-async function main() {
-    // 1) 起動時に全JSONデータをメモリへ読み込み
-    preloadAll();
-
-    // 2) MCPサーバーを初期化
-    const server = new McpServer({
-        name: 'lism-css',
-        version: '0.1.0',
-    });
-
-    // 3) 5つのツールを登録
-    registerGetOverview(server);
-    registerGetTokens(server);
-    registerGetPropsSystem(server);
-    registerGetComponent(server);
-    registerSearchDocs(server);
-
-    // 4) 標準入出力でクライアントと接続
-    const transport = new StdioServerTransport();
-    await server.connect(transport);
-}
-```
-
-### 2. データのプリロード
-
-サーバー起動時に `preloadAll()` で全JSONファイルを一括読み込みし、メモリにキャッシュします。
+### 2. ツール呼び出し
 
 ```
-preloadAll()
-  │
-  ├─► overview.json      ─┐
-  ├─► tokens.json         │  readFileSync() で読み込み
-  ├─► props-system.json   ├─► JSON.parse() → Zod で検証 → Map にキャッシュ
-  ├─► components.json     │
-  └─► docs-index.json    ─┘
-```
-
-**なぜ起動時に全部読むのか？**
-ツール呼び出し時にファイルI/Oが発生すると応答が遅くなります。起動時にまとめて読み込んでおくことで、ツール実行時は常にメモリから高速に取得できます。
-
-**ソースコード（src/lib/load-data.ts）:**
-
-```typescript
-// メモリキャッシュ
-const cache = new Map<string, unknown>();
-
-export function loadJSON<T>(filename: string, schema: ZodType<T>): T {
-    // キャッシュにあればそのまま返す
-    if (cache.has(filename)) return cache.get(filename) as T;
-
-    // ファイルから読み込み → JSON パース → Zod で型検証
-    const raw = readFileSync(filePath, 'utf-8');
-    const data = schema.parse(JSON.parse(raw));
-
-    // キャッシュに保存
-    cache.set(filename, data);
-    return data;
-}
-```
-
-Zod スキーマによる検証を挟むことで、JSONデータが期待する型構造と一致しない場合は**起動時にエラーで即座に検出**できます。
-
-### 3. ツール呼び出し（リクエスト → レスポンス）
-
-クライアント（Claude Code等）がツールを呼び出すと、以下の流れで処理されます。
-
-```
-┌─────────────┐      JSON-RPC       ┌──────────────────────────────────────┐
-│ Claude Code │  ──── stdin ────►   │ MCP サーバー                         │
-│             │                     │                                      │
-│ 「spacing   │                     │  1) リクエストを受信                  │
-│  トークンの │                     │  2) 該当ツールのハンドラを実行        │
-│  一覧は？」 │                     │  3) キャッシュからデータ取得          │
-│             │                     │  4) フィルタリング・加工              │
-│             │  ◄── stdout ────   │  5) JSON/Markdown でレスポンスを返却  │
-│             │                     │                                      │
-│ 結果を受け  │                     └──────────────────────────────────────┘
-│ 取って回答  │
-└─────────────┘
-```
-
-#### 具体例: `get_tokens` ツールの場合
-
-```
-クライアント: get_tokens({ category: "spacing" })
+クライアント: get_tokens({})
       │
       ▼
   ツールハンドラ実行
       │
-      ├─ loadJSON('tokens.json')    ← キャッシュからメモリ取得（ファイルI/O なし）
+      ├─ loadMarkdown('tokens.md')  ← キャッシュからメモリ取得
       │
-      ├─ category でフィルタリング   ← "spacing" に一致するカテゴリだけ抽出
-      │
-      └─► success({ tokens: [...] })  ← JSON レスポンスを返却
+      └─► markdownResponse(content)  ← Markdown レスポンスを返却
 ```
 
-#### 具体例: `search_docs` ツールの場合
+### 3. レスポンスの形式
 
-```
-クライアント: search_docs({ query: "レスポンシブ", limit: 5 })
-      │
-      ▼
-  ツールハンドラ実行
-      │
-      ├─ loadJSON('docs-index.json')  ← キャッシュからメモリ取得
-      │
-      ├─ searchDocs() 実行
-      │    ├─ クエリを展開             ← Property Class記法("-g:5"→"g","gap","property class")
-      │    │                              CSSプロパティ名("font-size"→"fz")を自動追加
-      │    ├─ 展開済みクエリをトークン化 ← "レスポンシブ" → ["レスポンシブ"]
-      │    ├─ 各ドキュメントをスコアリング
-      │    │    ├─ title に一致:       +10点
-      │    │    ├─ keywords に一致:     +5点
-      │    │    ├─ headings に一致:     +3点
-      │    │    ├─ description に一致:  +2点
-      │    │    └─ snippet に一致:      +1点
-      │    ├─ スコア降順でソート
-      │    └─ 上位5件を返却
-      │
-      └─► success({ query, results: [...] })
-```
-
-
-### 4. レスポンスの形式
-
-ツールの種類によって、2つのレスポンス形式があります。
-
-**JSON 形式**（get_tokens, get_props_system, get_component, search_docs）:
-
-```json
-{
-  "meta": {
-    "generatedAt": "2026-02-25",
-    "sourceCommit": "c482377a",
-    "docsVersion": "0.1.0"
-  },
-  "tokens": [ ... ]
-}
-```
-
-**Markdown 形式**（get_overview）:
-
-```markdown
-# lism-css Overview
-
-> Generated at: 2026-02-25 | Source commit: c482377a
-
-## Description
-Lism CSS は...
-```
-
-全ツールに `meta` 情報が付与されるため、クライアント側でデータの鮮度を判断できます。
+| 形式 | 対象ツール |
+|------|----------|
+| **Markdown** | get_overview, get_tokens, get_props_system, get_component, get_guide |
+| **JSON** | search_docs, convert_css |
 
 
 ## ツール登録の仕組み
 
-各ツールは `server.registerTool()` で登録します。これは MCP SDK が提供するメソッドで、ツール名・設定オブジェクト・ハンドラの3引数を指定します。
+各ツールは `server.registerTool()` で登録します。
 
 ```typescript
 server.registerTool(
-    'get_tokens',                          // (1) ツール名
+    'get_tokens',
     {
-        description: 'Get design tokens...', // (2) ツールの説明（AI が選択判断に使う）
-        inputSchema: {                       // (3) 入力パラメータの Zod スキーマ
-            category: z.enum([...]),
-        },
-        annotations: READ_ONLY_ANNOTATIONS,  // (4) アノテーション（読み取り専用等）
+        description: 'Get design tokens...',
+        annotations: READ_ONLY_ANNOTATIONS,
     },
-    ({ category }) => { ... }              // (5) ハンドラ関数
+    () => markdownResponse(loadMarkdown('tokens.md'))
 );
 ```
 
-| 引数 | 役割 |
-|------|------|
-| ツール名 | クライアントがツールを指定する際の識別子 |
-| 設定オブジェクト | `description`（説明文）、`inputSchema`（Zodスキーマ）、`annotations`（読み取り専用等）をまとめて指定 |
-| ハンドラ | 実際の処理ロジック |
-
-> **Note:** SDK v1.26.0 以前は `server.tool()` で個別の引数として渡す旧 API が使われていましたが、現在は非推奨です。
-
-
-## データの管理
-
-### データソースと生成フロー
-
-```
-リポジトリのソースコード
-  │
-  ├─ packages/lism-css/   (CSS・コンポーネント定義)
-  ├─ packages/lism-ui/    (UIコンポーネント)
-  └─ apps/docs/           (MDX ドキュメント)
-         │
-         │  手動で /mcp-update コマンドを実行
-         ▼
-  packages/mcp/src/data/*.json
-         │
-         │  pnpm build (tsc + cp)
-         ▼
-  packages/mcp/dist/data/*.json  ← サーバーが参照
-```
-
-`data/` 配下の JSON は**リポジトリのソースコードから手動で再生成**するものです。自動生成スクリプトではなく、ソースを読み取って Claude Code 等が `/mcp-update` コマンドで更新します。
-
-### データファイル一覧
-
-| ファイル | 内容 | データ元 |
-|---------|------|----------|
-| `overview.json` | フレームワーク概要、CSS Layer、インストール手順 | overview.mdx, installation.mdx 等 |
-| `tokens.json` | デザイントークン（色、余白、フォントサイズ等） | SCSS トークンファイル |
-| `props-system.json` | Props → CSSプロパティのマッピング、Property Class命名規則（`classNaming`） | config/defaults/props.ts |
-| `components.json` | 全コンポーネントの名前・props・使用例 | コンポーネントソースと MDX |
-| `docs-index.json` | ドキュメント検索用インデックス | apps/docs/ 配下の全 MDX |
-| `meta.ts` | 生成日時とソースコミットハッシュ | git HEAD |
+全ツールは読み取り専用（`readOnlyHint: true`）です。
 
 
 ## 使い方
 
 ### Claude Code での設定
-
-`claude_desktop_config.json`（または `.claude.json` の `mcpServers`）に以下を追加します。
 
 ```json
 {
@@ -357,9 +170,7 @@ server.registerTool(
 }
 ```
 
-設定後、Claude Code を再起動すると `get_overview`, `get_tokens` 等のツールが使えるようになります。
-
-### npm パッケージとして公開した場合
+### npm パッケージとして
 
 ```json
 {
@@ -376,8 +187,7 @@ server.registerTool(
 
 ```bash
 cd packages/mcp
-
-pnpm build    # TypeScript コンパイル + JSON コピー
+pnpm build    # generate:ai-assets + TypeScript コンパイル + データコピー
 pnpm test     # テスト実行
 pnpm dev      # TypeScript ウォッチモード
 ```
@@ -387,10 +197,9 @@ pnpm dev      # TypeScript ウォッチモード
 
 | 設計 | 理由 |
 |------|------|
+| **Skill-First** | スキル Markdown を正本とし、JSON との二重管理を解消 |
+| **Markdown 返却** | AI にとって自然なフォーマット。パース不要で即座に活用可能 |
 | **Stdio トランスポート** | HTTP サーバー不要。プロセス起動するだけで動く |
 | **起動時プリロード** | ツール呼び出し時のファイルI/Oを排除し高速化 |
-| **Zod バリデーション** | JSONデータの型安全性をランタイムで保証 |
+| **Zod バリデーション** | docs-index.json の型安全性をランタイムで保証 |
 | **全ツール読み取り専用** | 副作用なし。アノテーションで明示しクライアントに安全性を伝達 |
-| **静的JSONデータ** | APIやDB不要。ファイルだけで完結するシンプルな構成 |
-| **スコアリング検索** | title > keywords > headings > description > snippet の重み付けで関連度の高い結果を返す |
-| **クエリ自動展開** | Property Class記法（`-g:5`→`g`+`gap`）やCSSプロパティ名（`font-size`→`fz`）を自動的に展開し、検索ヒット率を向上 |

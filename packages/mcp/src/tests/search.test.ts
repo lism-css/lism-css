@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
-import { buildAliasMap, buildCssPropertyMap, searchDocs } from '../lib/search.js';
-import type { DocsEntry, PropCategory } from '../lib/types.js';
+import { searchDocs } from '../lib/search.js';
+import type { DocsEntry } from '../lib/types.js';
 
 function entry(overrides: Partial<DocsEntry> = {}): DocsEntry {
   return {
@@ -75,65 +75,32 @@ describe('searchDocs', () => {
   });
 });
 
-describe('searchDocs with aliases', () => {
-  const docsEntries: DocsEntry[] = [
+describe('searchDocs — 自然言語 alias (keywords) による検索', () => {
+  const aliasEntries: DocsEntry[] = [
     entry({
-      sourcePath: 'modules/l--fluidcols.mdx',
-      title: 'FluidCols / l--fluidCols',
-      keywords: ['FluidCols', 'fluid', 'auto-fill'],
-      snippet: '子要素が最小幅に達すると自動的に折り返すグリッドレイアウト。メディアクエリに依存しない。',
-      category: 'modules',
+      sourcePath: 'link-box.mdx',
+      title: 'LinkBox',
+      keywords: ['リンク', 'clickable', 'カード', 'クリッカブル'],
+      category: 'core-components',
     }),
     entry({
-      sourcePath: 'modules/l--grid.mdx',
-      title: 'Grid / l--grid',
-      keywords: ['Grid', 'グリッド', 'CSS Grid'],
-      snippet: 'CSS Gridレイアウトを構成。',
-      category: 'modules',
-    }),
-    entry({
-      sourcePath: 'modules/l--cluster.mdx',
-      title: 'Cluster / l--cluster',
-      keywords: ['Cluster', 'wrap'],
-      snippet: '横方向に要素を並べ、自動的に折り返すFlexレイアウト。',
-      category: 'modules',
+      sourcePath: 'button.mdx',
+      title: 'Button',
+      keywords: ['ボタン', 'CTA', 'submit'],
+      category: 'ui',
     }),
   ];
 
-  const aliasMap = buildAliasMap([
-    { name: 'FluidCols', aliases: ['auto-wrap', '自動折り返し', 'responsive grid', 'メディアクエリなし', 'fluid columns'] },
-    { name: 'Grid', aliases: ['CSS Grid', 'グリッド'] },
-    { name: 'Cluster', aliases: ['横並び折り返し', 'flex wrap'] },
-  ]);
-
-  it('aliases がスコアリングに反映される', () => {
-    const results = searchDocs(docsEntries, '自動折り返し', { aliasMap });
-    expect(results.length).toBeGreaterThan(0);
-    // FluidCols が aliases マッチで上位に出る
-    expect(results[0].heading).toBe('FluidCols / l--fluidCols');
+  it('「クリッカブル」で LinkBox がヒットする', () => {
+    const results = searchDocs(aliasEntries, 'クリッカブル');
+    expect(results.length).toBe(1);
+    expect(results[0].heading).toBe('LinkBox');
   });
 
-  it('「メディアクエリなし」で FluidCols がヒットする', () => {
-    const results = searchDocs(docsEntries, 'メディアクエリなし', { aliasMap });
-    const fluidColsResult = results.find((r) => r.heading.includes('FluidCols'));
-    expect(fluidColsResult).toBeDefined();
-    expect(fluidColsResult!.score).toBeGreaterThan(0);
-  });
-
-  it('aliases なしの場合も従来通り動作する', () => {
-    const results = searchDocs(docsEntries, 'Grid');
-    expect(results.length).toBeGreaterThan(0);
-    expect(results[0].heading).toBe('Grid / l--grid');
-  });
-
-  it('aliases ブーストにより aliases なしより高スコアになる', () => {
-    const withAliases = searchDocs(docsEntries, '自動折り返し', { aliasMap });
-    const withoutAliases = searchDocs(docsEntries, '自動折り返し');
-
-    const scoreWith = withAliases.find((r) => r.heading.includes('FluidCols'))?.score ?? 0;
-    const scoreWithout = withoutAliases.find((r) => r.heading.includes('FluidCols'))?.score ?? 0;
-
-    expect(scoreWith).toBeGreaterThan(scoreWithout);
+  it('「CTA」で Button がヒットする', () => {
+    const results = searchDocs(aliasEntries, 'CTA');
+    expect(results.length).toBe(1);
+    expect(results[0].heading).toBe('Button');
   });
 });
 
@@ -161,16 +128,10 @@ describe('searchDocs with Property Class notation', () => {
     }),
   ];
 
-  const cssPropertyMap = buildCssPropertyMap([
-    {
-      category: 'spacing',
-      description: '',
-      props: [
-        { prop: 'g', cssProperty: 'gap', type: 'string', responsive: true, description: '', values: ['5', '10', '20'] },
-        { prop: 'p', cssProperty: 'padding', type: 'string', responsive: true, description: '', values: ['20', '30'] },
-      ],
-    },
-  ] satisfies PropCategory[]);
+  const cssPropertyMap = new Map<string, string[]>([
+    ['gap', ['g']],
+    ['padding', ['p']],
+  ]);
 
   it('"-g:5" で Property Class ページがヒットする', () => {
     const results = searchDocs(propClassEntries, '-g:5', { cssPropertyMap });

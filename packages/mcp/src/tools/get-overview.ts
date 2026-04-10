@@ -1,46 +1,31 @@
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
-import { loadJSON } from '../lib/load-data.js';
-import { OverviewDataSchema } from '../lib/schemas.js';
+import { loadMarkdown } from '../lib/load-markdown.js';
+import { extractSection } from '../lib/markdown-utils.js';
 import { markdownResponse, error, READ_ONLY_ANNOTATIONS } from '../lib/response.js';
-import { meta } from '../data/meta.js';
-import type { z } from 'zod';
 
-function toMarkdown(data: z.infer<typeof OverviewDataSchema>): string {
-  const lines: string[] = [];
+/**
+ * SKILL.md を中核に、css-rules.md の Layer 構造セクションと
+ * prop-responsive.md のブレークポイントセクションを付加して返す。
+ */
+function buildOverviewMarkdown(): string {
+  const skill = loadMarkdown('SKILL.md');
+  const cssRules = loadMarkdown('css-rules.md');
+  const responsive = loadMarkdown('prop-responsive.md');
 
-  lines.push(`# lism-css Overview`);
-  lines.push('');
-  lines.push(`> Generated at: ${meta.generatedAt} | Source commit: ${meta.sourceCommit} | Docs version: ${meta.docsVersion}`);
-  lines.push('');
-  lines.push(`## Description`);
-  lines.push('');
-  lines.push(data.description);
-  lines.push('');
-  lines.push(`## Architecture`);
-  lines.push('');
-  lines.push(data.architecture);
-  lines.push('');
-  lines.push(`## Packages`);
-  lines.push('');
-  for (const pkg of data.packages) {
-    lines.push(`- **${pkg.name}** (\`${pkg.npmName}\` v${pkg.version}): ${pkg.description}`);
+  const layerSection = extractSection(cssRules, 'CSS Layer 構造');
+  const bpSection = extractSection(responsive, 'ブレークポイント');
+
+  const parts: string[] = [skill];
+  if (layerSection) {
+    parts.push('\n---\n');
+    parts.push(layerSection);
   }
-  lines.push('');
-  lines.push(`## Breakpoints`);
-  lines.push('');
-  for (const [key, value] of Object.entries(data.breakpoints)) {
-    lines.push(`- \`${key}\`: ${value}`);
+  if (bpSection) {
+    parts.push('\n---\n');
+    parts.push(bpSection);
   }
-  lines.push('');
-  lines.push(`## CSS Layers`);
-  lines.push('');
-  lines.push(data.cssLayers);
-  lines.push('');
-  lines.push(`## Installation`);
-  lines.push('');
-  lines.push(data.installation);
 
-  return lines.join('\n');
+  return parts.join('\n');
 }
 
 export function registerGetOverview(server: McpServer): void {
@@ -48,16 +33,18 @@ export function registerGetOverview(server: McpServer): void {
     'get_overview',
     {
       description:
-        'Get an overview of the lism-css framework: architecture, design philosophy, packages, breakpoints, installation guide, and CSS layers. Start here to understand the framework before using other tools.',
+        'Get an overview of the lism-css framework: architecture, design philosophy, packages, breakpoints, CSS layers, and implementation rules.\n' +
+        'Use this as your FIRST call when starting any lism-css task — it provides the foundational context needed to use other tools effectively.\n' +
+        'Do NOT use this to look up specific components (use get_component), individual props (use get_props_system), or design tokens (use get_tokens).\n' +
+        'The response is pre-formatted Markdown. Output it verbatim to the user. Do NOT summarize or omit sections.',
       annotations: READ_ONLY_ANNOTATIONS,
     },
     () => {
       try {
-        const data = loadJSON('overview.json', OverviewDataSchema);
-        return markdownResponse(toMarkdown(data));
+        return markdownResponse(buildOverviewMarkdown());
       } catch (e) {
         return error(
-          `Failed to load overview data: ${e instanceof Error ? e.message : String(e)}. The data files may not be built yet. Ensure the server was installed correctly.`
+          `Failed to load overview data: ${e instanceof Error ? e.message : String(e)}. The data files may not be built yet. Run "pnpm build" in packages/mcp first.`
         );
       }
     }
