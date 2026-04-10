@@ -44,8 +44,6 @@ export default function getLayoutProps<P extends InputProps>(layout: LayoutType 
 
   if (layout === 'flow') {
     return getFlowProps(rest) as Omit<P, LayoutSpecificKeys> & BaseProps;
-  } else if (layout === 'grid') {
-    return getGridProps(rest) as Omit<P, LayoutSpecificKeys> & BaseProps;
   } else if (layout === 'sideMain') {
     return getSideMainProps(rest) as Omit<P, LayoutSpecificKeys> & BaseProps;
   } else if (layout === 'fluidCols') {
@@ -55,10 +53,6 @@ export default function getLayoutProps<P extends InputProps>(layout: LayoutType 
   }
 
   return rest as Omit<P, LayoutSpecificKeys> & BaseProps;
-}
-
-function getGridProps(props: InputProps): BaseProps {
-  return { ...props };
 }
 
 function getSideMainProps({ sideW, mainW, style, ...props }: InputProps): BaseProps {

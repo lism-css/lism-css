@@ -332,7 +332,7 @@ describe('getLismProps', () => {
       expect(result.style?.['--w']).toBe('200px');
     });
 
-    test('layout経由で_propConfigが渡される', () => {
+    test('layout: grid で gtc が CSS変数として出力される', () => {
       const result = getLismProps({
         layout: 'grid',
         gtc: '1fr 1fr',
