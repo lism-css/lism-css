@@ -1,0 +1,13 @@
+import type { ElementType } from 'react';
+import { Lism, type LismComponentProps } from 'lism-css/react';
+import '../_style.css';
+
+export default function Badge<T extends ElementType = 'span'>(props: LismComponentProps<T>) {
+  // c--badge では c, bgc は 変数で受け取る
+  const _propConfig = {
+    c: { isVar: 1 },
+    bgc: { isVar: 1 },
+  };
+
+  return <Lism lismClass="c--badge" as="span" d="inline-flex" fz="xs" lh="xs" py="5" px="10" bdrs="10" _propConfig={_propConfig} {...props} />;
+}

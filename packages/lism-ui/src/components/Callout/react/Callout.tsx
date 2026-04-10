@@ -1,8 +1,8 @@
-import type { ReactNode } from 'react';
-import { Flow, Flex, Stack, Icon, Center } from 'lism-css/react';
+import type { ElementType } from 'react';
+import { Flow, Flex, Stack, Icon, Center, type LismComponentProps } from 'lism-css/react';
 import getCalloutProps, { type CalloutProps } from '../getProps';
 
-export default function Callout({ children, ...inputProps }: CalloutProps & { children?: ReactNode }) {
+export default function Callout<T extends ElementType = 'div'>({ children, ...inputProps }: CalloutProps & LismComponentProps<T>) {
   const { icon, title, flow, ...calloutProps } = getCalloutProps(inputProps);
 
   return (

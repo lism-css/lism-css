@@ -17,6 +17,10 @@
     "dev": "vite",
     "build": "vite build && pnpm build:css",
     "build:css": "node build-css.js",
+    "typecheck": "tsc --noEmit",
+    "lint": "pnpm lint:eslint && pnpm lint:style",
+    "lint:eslint": "eslint '**/*.{js,mjs,ts,tsx}'",
+    "lint:style": "stylelint '**/*.{css,scss}'",
     "prepack": "case \"$npm_execpath\" in *pnpm*) ;; *) echo 'Error: Use pnpm publish' && exit 1;; esac"
   },
   "files": [
@@ -28,11 +32,10 @@
   "exports": {
     "./react": {
       "import": "./dist/components/react.js",
-      "types": "./dist/components/index.d.ts"
+      "types": "./dist/components/react.d.ts"
     },
     "./astro": {
-      "import": "./src/components/astro.js",
-      "types": "./dist/components/index.d.ts"
+      "import": "./src/components/astro.ts"
     },
     "./scripts/*": "./dist/scripts/*.js",
     "./style.css": "./dist/style.css"
@@ -49,6 +52,10 @@
     "lism-css": "workspace:*"
   },
   "devDependencies": {
+    "@storybook/react-vite": "^10.3.3",
+    "eslint": "^9.39.4",
+    "storybook": "^10.3.3",
+    "stylelint": "^17.4.0",
     "@babel/cli": "^7.28.6",
     "@babel/core": "^7.29.0",
     "@babel/preset-env": "^7.29.0",

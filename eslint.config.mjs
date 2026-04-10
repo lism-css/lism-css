@@ -26,6 +26,9 @@ export default defineConfig(
       '**/.stylelintrc.mjs',
       '**/.astro/**',
       '**/vite.config.*',
+      // lism-ui: Astro 向けファイルは tsconfig から除外されているため lint 対象外
+      'packages/lism-ui/src/**/astro/**',
+      'packages/lism-ui/src/components/astro.ts',
     ],
   },
   eslintConfigPrettier,
@@ -103,8 +106,5 @@ export default defineConfig(
       '@typescript-eslint/no-unsafe-call': 'off',
     },
   },
-  ...storybook.configs['flat/recommended'],
-  {
-    files: ['**/*.stories.@(ts|tsx|js|jsx|mjs|cjs)'],
-  }
+  ...storybook.configs['flat/recommended']
 );

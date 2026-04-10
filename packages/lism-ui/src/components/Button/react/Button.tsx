@@ -1,0 +1,13 @@
+import type { ElementType } from 'react';
+import { Flex, type LismComponentProps } from 'lism-css/react';
+import '../_style.css';
+
+export default function Button<T extends ElementType = 'a'>(props: LismComponentProps<T>) {
+  // c--button では c, bgc は 変数で受け取る
+  const _propConfig = {
+    c: { isVar: 1 },
+    bgc: { isVar: 1 },
+  };
+
+  return <Flex lismClass="c--button" as="a" lh="s" py="10" px="20" hov="o" _propConfig={_propConfig} {...props} />;
+}

@@ -35,9 +35,9 @@ const entries = {
   'components/react': resolve(__dirname, 'src/components/react.ts'),
 
   // ↓ scripts.jsのビルドと、setEvent.js もこれでビルドされる.
-  'scripts/tabs': resolve(__dirname, 'src/components/Tabs/script.js'),
-  'scripts/accordion': resolve(__dirname, 'src/components/Accordion/script.js'),
-  'scripts/modal': resolve(__dirname, 'src/components/Modal/script.js'),
+  'scripts/tabs': resolve(__dirname, 'src/components/Tabs/script.ts'),
+  'scripts/accordion': resolve(__dirname, 'src/components/Accordion/script.ts'),
+  'scripts/modal': resolve(__dirname, 'src/components/Modal/script.ts'),
 };
 
 // build.lib を設定すると でライブラリモードになる。
