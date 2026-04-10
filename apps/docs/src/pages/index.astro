@@ -4,130 +4,173 @@
  * Lism CSSの紹介とドキュメントへの導線
  */
 import SimpleLayout from '@/layouts/SimpleLayout.astro';
-import { Stack, TileGrid, Icon, Flex, Lism, Heading, Text, Link } from 'lism-css/astro';
+import { Stack, TileGrid, Flex, Lism, Heading, Text, Link, Columns, LinkBox } from 'lism-css/astro';
 import { Button } from '@lism-css/ui/astro';
 import Gradbox from '@/components/parts/Gradbox.astro';
 import { siteConfig } from '@/config/site';
-import LismExDemo from '@/content/ja/_demo/LismExDemo.mdx';
+// import LismExDemo from '@/content/ja/_demo/LismExDemo.mdx';
 
-// 特徴ポイント
-const POINTS = [
+const FEATURES = [
   {
-    title: 'reset.css レベルからの設計',
-    desc: 'Lism CSSは、reset.cssからユーティリティクラスまで、サイト全体のCSS設計理論を構築しています。',
+    icon: '<rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/>',
+    title: 'レイアウトモジュール',
+    desc: 'Stack, Flex, Grid, Columns など、よく使うレイアウトパターンをモジュール化。組み合わせるだけでサイトの骨組みが完成します。',
   },
   {
+    icon: '<line x1="4" y1="21" x2="4" y2="14"/><line x1="4" y1="10" x2="4" y2="3"/><line x1="12" y1="21" x2="12" y2="12"/><line x1="12" y1="8" x2="12" y2="3"/><line x1="20" y1="21" x2="20" y2="16"/><line x1="20" y1="12" x2="20" y2="3"/><line x1="1" y1="14" x2="7" y2="14"/><line x1="9" y1="8" x2="15" y2="8"/><line x1="17" y1="16" x2="23" y2="16"/>',
+    title: 'ハーモニックスケール',
+    desc: '余白・フォントサイズ・行間を調和的な比率で設計。自然と心地よいリズムをデザインに生み出すタイポグラフィ設計です。',
+  },
+  {
+    icon: '<circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>',
     title: 'デザイントークン',
-    desc: '事前にデザイントークンをCSS変数で定義します。それらを流用することでサイト全体の一貫性を保ちます。',
+    desc: 'カラー・フォントサイズ・余白・角丸・シャドウなどを段階的なCSS変数で一元管理。サイト全体の一貫性を保ちます。',
   },
   {
-    title: 'レイアウトファースト',
-    desc: 'WEBサイトでよく使われるレイアウト要素を細分化し、基礎となるモジュールを定義しています。',
+    icon: '<polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/>',
+    title: 'Property Class',
+    desc: '-fz:l, -p:20 のような直感的なクラス名で素早くスタイリング可能。形式が明確で短縮記法なのにAIが迷いません。',
   },
   {
-    title: 'モダン設計',
-    desc: '@layer, Containerクエリなど、モダンなCSSの機能を積極的に活用しています。',
+    icon: '<polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/>',
+    title: 'CSSレイヤー構造',
+    desc: '@layer による 厳格なCSSレイヤー設計。詳細度の衝突を防ぎ、拡張性と保守性を両立します。',
   },
   {
-    title: 'レスポンシブ対応',
-    desc: 'ユーティリティ & CSS変数を組み合わせてレスポンシブ対応する独自アプローチを採用しています。',
-  },
-  {
-    title: 'どんなサイトにも使えます',
-    desc: 'Lismはあくまで設計理論。設定・ビルド不要で素のHTMLコーディングにも活用できます。',
+    icon: '<rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/>',
+    title: 'レスポンシブ',
+    desc: 'CSS変数とクラスを組み合わせた独自のレスポンシブ手法。軽量なのに柔軟で幅広いレイアウトに対応できます。',
   },
 ];
 
-// 特徴カード
-const FEATURES = [
-  { keycolor: 'pink', title: '軽量', desc: 'Start from just 30kb~, with responsive design.' },
-  { keycolor: 'blue', title: 'ビルド不要', desc: 'No config, No build. Just load the CSS to start using.' },
-  { keycolor: 'purple', title: 'モダンCSS', desc: '@layer, Container Query, Grid, CSS Variables' },
-  { keycolor: 'green', title: '無料', desc: 'Lism CSS is available for free.' },
+// エコシステム
+const ecosystems = [
+  {
+    icon: '<path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>',
+    title: 'Skills',
+    desc: 'AIエージェント向けの実装ガイドスキルを用意しています。AIが Lism CSS の設計を理解し、ベストプラクティスに従ったコードを生成します。',
+    href: '/docs/skills/',
+  },
+  {
+    icon: '<rect x="4" y="4" width="16" height="16" rx="2" ry="2"/><rect x="9" y="9" width="6" height="6"/><line x1="9" y1="1" x2="9" y2="4"/><line x1="15" y1="1" x2="15" y2="4"/><line x1="9" y1="20" x2="9" y2="23"/><line x1="15" y1="20" x2="15" y2="23"/><line x1="20" y1="9" x2="23" y2="9"/><line x1="20" y1="14" x2="23" y2="14"/><line x1="1" y1="9" x2="4" y2="9"/><line x1="1" y1="14" x2="4" y2="14"/>',
+    title: 'MCPサーバー',
+    desc: 'Claude Code や Cursor 等のAIコーディングツールに Lism CSSの仕様を提供。AIと協力して効率的にサイトを構築できます。',
+    href: '/docs/mcp/',
+  },
+  {
+    icon: '<rect width="7" height="7" x="14" y="3" rx="1"/><path d="M10 21V8a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-5a1 1 0 0 0-1-1H3"/>',
+    title: 'UIコンポーネント',
+    desc: 'Accordion, Modal, Tabs, Button 等のインタラクティブUIを React / Astro で提供。CLIコマンドでプロジェクトに追加できます。',
+    href: '/ui/',
+  },
+  {
+    icon: '<rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/>',
+    title: 'Templates',
+    desc: 'すぐに使えるページテンプレート集。ランディングページやブログなど、実用的なレイアウトパーツをコピーしてすぐに始められます。',
+    href: '/templates/',
+  },
 ];
 ---
 
 <SimpleLayout title={siteConfig.name} description={siteConfig.description} schemaType="SoftwareSourceCode" excludeFromSearch>
-  <TileGrid class="hero" cols="5" rows="1" min-h={['50svh', '75vh']} ai="center">
-    <Stack class="hero_content" g="40" gc="1 / 5" gr="1" z="1">
+  <TileGrid class="c--hero" cols="5" rows="1" min-h={['50svh', '75vh']} ai="center">
+    <Stack class="c--hero_content" g="40" gc="1 / 5" gr="1" z="1">
       <Stack g="30">
-        <Lism class="hero_heading -w:fit">
-          <Heading level="1" fz="4xl" fw="bold" ff="mono">Lism CSS</Heading>
+        <Lism class="-w:fit">
+          <Heading level="1" fz={['3xl', '4xl']} fw="light" ff="accent" lts="l">
+            AIと人のための<br />CSS設計<Lism as="br" d={['inherit', null, 'none']} />フレームワーク</Heading
+          >
         </Lism>
-        <Text class="hero_tagline" fz="m" c="text-2">
-          WEBサイト向けのレイアウトファーストなCSSフレームワーク。<br />
-          コーディングを軽やかに。デザインに調和とリズムを。
+        <Text class="c--hero_tagline" fz="m" c="text-2">
+          軽量でビルド不要。どのサイトにも導入できます。<br />
+          あなたはもう、CSS設計に悩む必要はありません。
         </Text>
       </Stack>
       <Flex>
-        <Link href="/docs/overview/" bgc="text" c="base" td="none" bdrs="99" py="10" px="20" hov="neutral">ドキュメント →</Link>
+        <Link href="/docs/overview/" bgc="text" c="base" td="none" bdrs="99" py="10" px="30" hov="neutral">ドキュメント</Link>
       </Flex>
     </Stack>
-    <Lism class="hero_image" gc="3 / 6" gr="1" pb="10" z="0">
+    <Lism class="c--hero_image" gc="3 / 6" gr="1" pb="10" z="0">
       <Gradbox />
     </Lism>
   </TileGrid>
 
-  <Lism layout="columns" cols={[2]} g={['30', null, '40']} my-s="50">
-    {
-      FEATURES.map((feature) => (
-        <Stack
-          class="u--cbox set--shadow"
-          keycolor={feature.keycolor}
-          g="5"
-          py={['20', null, '30']}
-          px={['20', null, '30']}
-          bdrs="20"
-          bgc="base"
-          bxsh="20"
-          bd
-        >
-          <Heading level="2" fz={['m', 'l']} c="text">
-            {feature.title}
-          </Heading>
-          <Text c="text-2" fz={['s', 'm']} lh="s">
-            {feature.desc}
-          </Text>
-        </Stack>
-      ))
-    }
-  </Lism>
-  <!-- <Spacer h="40" /> -->
+  <Stack as="section" ai="center" g="50" py="60">
+    <Stack ai="center" g="20">
+      <Text fz="2xs" fw="500" c="text-2" tt="upper" lts="0.15em"> FEATURES </Text>
+      <!-- <Heading level="2" ff="accent" fw="normal" ta="center" fz="48px" lts="s">A sophisticated design philosophy</Heading> -->
+      <Heading level="2" ff="accent" fw="normal" ta="center" fz="3xl" lts="s">洗練された設計理論</Heading>
+    </Stack>
 
-  <Lism layout="flow" as="section" my-s="50">
-    <Heading level="2" class="h2">独自のCSS設計</Heading>
-
-    <Lism layout="fluidCols" cols="20rem" g="40">
+    <Columns cols={[1, 2, 3]} g="40">
       {
-        POINTS.map((point) => (
-          <Stack g="20" p="30" bdrs="20" bgc="base" bxsh="30" lh="s">
-            <Heading level="3" fz="m" fw="bold">
-              {point.title}
-            </Heading>
-            <Text fz="s" c="text-2">
-              {point.desc}
+        FEATURES.map((card) => (
+          <Stack g="20" p="10">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              set:html={card.icon}
+            />
+            <Text fw="bold">{card.title}</Text>
+            <Text fz="s" c="text-2" lh="s">
+              {card.desc}
             </Text>
           </Stack>
         ))
       }
-    </Lism>
-  </Lism>
+    </Columns>
+  </Stack>
 
-  {/* 専用コンポーネント */}
-  <Lism as="section" layout="flow" g="20" my-s="50">
-    <Heading level="2" class="h2">Astro/React用のコンポーネント</Heading>
-    <Text>Lism CSSを手軽に扱えるように、ReactやAstroで利用できるコンポーネントを無償で提供しています。</Text>
+  <Stack as="section" ai="center" g="50" py="60">
+    <Stack ai="center" g="20">
+      <Text fz="2xs" fw="500" c="text-2" tt="upper" lts="0.15em">ECOSYSTEM</Text>
+      <Heading level="2" ff="accent" fw="normal" ta="center" fz="3xl" lts="s">充実のエコシステム</Heading>
+    </Stack>
 
-    <Lism max-w="m" mx="auto">
-      <LismExDemo />
-    </Lism>
-  </Lism>
+    <Columns cols={[1, 2]} g="30">
+      {
+        ecosystems.map((item) => (
+          <LinkBox href={item.href} layout="stack" g="20" p="30" bd hov="bxsh" td="none">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              set:html={item.icon}
+            />
+            <Text fz="l" fw="bold">
+              {item.title}
+            </Text>
+            <Text fz="s" c="text-2" lh="s">
+              {item.desc}
+            </Text>
+          </LinkBox>
+        ))
+      }
+    </Columns>
+  </Stack>
+
+  <Stack as="section" ai="center" g="20" py="60">
+    <Heading level="2" ff="accent" fw="normal" ta="center" fz="3xl" lts="s">どこでも使えます</Heading>
+    <Text ta="center" c="text-2" lh="s"> Lism CSSは、CSSファイルを一つ読み込むだけでも導入できます。 </Text>
+  </Stack>
 
   {/* CTAボタン */}
   <Flex jc="center" my-s="60">
-    <Button variant="fill" fz="l" href="/docs/overview/" bdrs="99" g="15" py="10" px="30">
+    <Button variant="fill" href="/docs/installation" bdrs="99" py="15" px="30">
       <span>Getting Started</span>
-      <Icon lh="1" fz="l">🚀</Icon>
     </Button>
   </Flex>
 </SimpleLayout>
