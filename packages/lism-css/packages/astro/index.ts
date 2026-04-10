@@ -3,7 +3,6 @@
  */
 
 export * from './Lism';
-export { default as HTML } from './HTML';
 /** @deprecated DummyText / DummyImage (@lism-css/ui) を使用してください */
 export * from './Dummy';
 
