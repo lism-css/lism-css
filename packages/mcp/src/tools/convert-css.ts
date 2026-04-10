@@ -317,7 +317,7 @@ export function registerConvertCss(server: McpServer): void {
             lismProp: mapping.prop,
             suggestedValue: suggested,
             availableTokens: mapping.presetValues.length > 0 ? mapping.presetValues : null,
-            confidence: suggested ? ('exact' as const) : mapping.presetValues.length > 0 ? ('approximate' as const) : ('unmapped' as const),
+            confidence: suggested ? ('exact' as const) : ('approximate' as const),
             note: suggested
               ? `トークン値 '${suggested}' を使用（カテゴリ: ${category}）`
               : mapping.presetValues.length > 0

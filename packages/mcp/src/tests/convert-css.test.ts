@@ -178,4 +178,18 @@ describe('convert_css', () => {
     expect(data.conversions[0].confidence).toBeDefined();
     expect(['exact', 'approximate', 'unmapped']).toContain(data.conversions[0].confidence);
   });
+
+  it('プリセット値を持たない prop でも mapping があれば unmapped にならない', async () => {
+    const client = await createTestClient();
+    const result = await client.callTool({
+      name: 'convert_css',
+      arguments: { css: 'margin-top: 12px;' },
+    });
+    expect(result.isError).toBeFalsy();
+
+    const data = getResult(result);
+    const conv = data.conversions[0];
+    expect(conv.lismProp).toBe('mt');
+    expect(conv.confidence).not.toBe('unmapped');
+  });
 });
