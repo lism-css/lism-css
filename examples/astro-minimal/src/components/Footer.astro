@@ -1,50 +1,39 @@
 ---
-import { Lism, Container, Stack, Flex, Text, Link, Divider } from 'lism-css/astro';
+import { Lism, Stack, Flex, Text, Link, Divider } from 'lism-css/astro';
 ---
 
-<Lism as="footer" py="50">
-  <Container size="m">
-    <Stack g="40">
-      <Flex jc="space-between" g="40">
-        <Stack g="15">
-          <Text fw="bold" fz="l" ff="accent" fs="italic">Aura UI</Text>
-          <Text fz="s" c="text-2" lh="l">Build interfaces that feel inevitable.<br />Open source and free forever.</Text>
+<Lism as="footer" pt="50" pb="30" px="50">
+  <Stack g="50">
+    <Flex jc="between">
+      <Stack g="20" style={{ width: '300px' }}>
+        <Link href="/" ff="accent" fz="2xl" fw="700" fs="italic" c="text" td="none"> Lism CSS </Link>
+        <Text fz="s" c="text-2" lh="s">
+          Lightweight CSS layout framework.<br />
+          Open source. MIT License.
+        </Text>
+      </Stack>
+      <Flex g="50">
+        <Stack g="20">
+          <Text fz="xs" fw="600">Resources</Text>
+          <Link href="https://lism-css.com/" fz="xs" c="text-2" td="none">Documentation</Link>
+          <Link href="https://github.com/lism-css/lism-css" fz="xs" c="text-2" td="none">GitHub</Link>
+          <Link href="https://www.npmjs.com/package/lism-css" fz="xs" c="text-2" td="none">npm</Link>
         </Stack>
-        <Flex g="50">
-          <Stack g="15">
-            <Text fz="xs" fw="bold">Product</Text>
-            <Stack g="10">
-              <Link href="#" td="none" c="text-2" hov={{ o: true }} fz="s">Components</Link>
-              <Link href="#" td="none" c="text-2" hov={{ o: true }} fz="s">Templates</Link>
-              <Link href="#" td="none" c="text-2" hov={{ o: true }} fz="s">Changelog</Link>
-            </Stack>
-          </Stack>
-          <Stack g="15">
-            <Text fz="xs" fw="bold">Resources</Text>
-            <Stack g="10">
-              <Link href="#" td="none" c="text-2" hov={{ o: true }} fz="s">Documentation</Link>
-              <Link href="#" td="none" c="text-2" hov={{ o: true }} fz="s">GitHub</Link>
-              <Link href="#" td="none" c="text-2" hov={{ o: true }} fz="s">Community</Link>
-            </Stack>
-          </Stack>
-          <Stack g="15">
-            <Text fz="xs" fw="bold">Company</Text>
-            <Stack g="10">
-              <Link href="#" td="none" c="text-2" hov={{ o: true }} fz="s">About</Link>
-              <Link href="#" td="none" c="text-2" hov={{ o: true }} fz="s">Blog</Link>
-              <Link href="#" td="none" c="text-2" hov={{ o: true }} fz="s">Contact</Link>
-            </Stack>
-          </Stack>
-        </Flex>
+        <Stack g="20">
+          <Text fz="xs" fw="600">Community</Text>
+          <Link href="https://github.com/lism-css/lism-css/issues" fz="xs" c="text-2" td="none">Issues</Link>
+          <Link href="https://github.com/lism-css/lism-css/discussions" fz="xs" c="text-2" td="none">Discussions</Link>
+        </Stack>
       </Flex>
-      <Divider />
-      <Flex jc="space-between" ai="center" fz="xs" c="text-2">
-        <Text>&copy; 2026 Aura UI. All rights reserved.</Text>
-        <Flex g="20">
-          <Link href="#" td="none" c="text-2" hov={{ o: true }}>Privacy</Link>
-          <Link href="#" td="none" c="text-2" hov={{ o: true }}>Terms</Link>
-        </Flex>
+    </Flex>
+
+    <Divider />
+
+    <Flex jc="between" ai="center">
+      <Text fz="2xs" style={{ color: '#ccc' }}>© 2026 Lism CSS.</Text>
+      <Flex g="30" ai="center">
+        <Link href="https://github.com/lism-css/lism-css/blob/main/LICENSE" fz="2xs" c="text-2" td="none">MIT License</Link>
       </Flex>
-    </Stack>
-  </Container>
+    </Flex>
+  </Stack>
 </Lism>

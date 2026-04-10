@@ -1,23 +1,18 @@
 ---
-import { Lism, Container, Flex, Link, Text } from 'lism-css/astro';
+import { Lism, Flex, Link, Divider } from 'lism-css/astro';
 ---
 
-<Lism as="header" py="15">
-  <Container size="m">
-    <Flex ai="center" jc="space-between">
-      <Link href="/" hov={{ o: true }} td="none">
-        <Text fw="bold" fz="l" ff="accent" fs="italic">Aura UI</Text>
-      </Link>
-      <Flex as="nav" g="30" fz="s">
-        <Link href="#" td="none" hov={{ o: true }}>Components</Link>
-        <Link href="#" td="none" hov={{ o: true }}>Documentation</Link>
-        <Link href="#" td="none" hov={{ o: true }}>Examples</Link>
-        <Link href="#" td="none" hov={{ o: true }}>Pricing</Link>
-      </Flex>
-      <Flex ai="center" g="20">
-        <Link href="#" td="none" hov={{ o: true }} fz="s">Sign in</Link>
-        <Lism as="a" href="#" px="20" py="5" bgc="text" c="base" bdrs="99" fz="xs" fw="bold" td="none" hov={{ o: true }}>Get Started</Lism>
-      </Flex>
+<Lism as="header">
+  <Flex ai="center" jc="between" py="20" px="50">
+    <Link href="/" ff="accent" fz="2xl" fw="700" fs="italic" c="text" td="none"> Lism CSS </Link>
+    <Flex as="nav" g="30" ai="center">
+      <Link href="https://lism-css.com/" c="text-2" fz="s" td="none">Docs</Link>
+      <Link href="https://github.com/lism-css/lism-css" c="text-2" fz="s" td="none">GitHub</Link>
+      <Link href="https://www.npmjs.com/package/lism-css" c="text-2" fz="s" td="none">npm</Link>
     </Flex>
-  </Container>
+    <Flex ai="center" g="20">
+      <Link href="https://lism-css.com/" bgc="text" c="base" fz="s" fw="500" px="30" py="10" bdrs="99" td="none"> Get Started </Link>
+    </Flex>
+  </Flex>
+  <Divider />
 </Lism>
