@@ -5,13 +5,14 @@
  * 各テンプレートページのスクリーンショットを撮影して保存します。
  *
  * 使い方:
- *   pnpm screenshot:new                # 新規のみ生成（ビルド後に実行）
- *   pnpm screenshot:force              # 全て再生成（ビルド後に実行）
- *   npx tsx scripts/generate-screenshots.ts cta            # カテゴリ指定
- *   npx tsx scripts/generate-screenshots.ts cta/cta001     # テンプレート指定
+ *   pnpm screenshot:new                # 新規のみ生成（全言語、ビルド後に実行）
+ *   pnpm screenshot:force              # 全て再生成（全言語、ビルド後に実行）
+ *   npx tsx scripts/generate-screenshots.ts cta            # カテゴリ指定（全言語）
+ *   npx tsx scripts/generate-screenshots.ts cta/cta001     # テンプレート指定（全言語）
  *   npx tsx scripts/generate-screenshots.ts cta section    # 複数指定
- *   npx tsx scripts/generate-screenshots.ts --lang=en      # 英語版を生成
- *   npx tsx scripts/generate-screenshots.ts --lang=en --force  # 英語版を全て再生成
+ *   npx tsx scripts/generate-screenshots.ts --lang=en      # 英語版のみ生成
+ *   npx tsx scripts/generate-screenshots.ts --lang=ja      # 日本語版のみ生成
+ *   npx tsx scripts/generate-screenshots.ts cta/cta001 --lang=en --force  # 特定テンプレートの英語版を再生成
  */
 
 import { chromium, type Browser, type Page } from 'playwright';
@@ -37,12 +38,16 @@ const CONFIG = {
   waitAfterLoad: 500,
 };
 
+// 対応言語（ja はデフォルト＝パスプレフィックスなし）
+const ALL_LANGS = ['ja', 'en'] as const;
+type Lang = (typeof ALL_LANGS)[number];
+
 // コマンドライン引数をパース
 const args = process.argv.slice(2);
 const forceRegenerate = args.includes('--force');
-// --lang オプション: 指定言語のスクリーンショットを生成（例: --lang=en）
-const langArg = args.find((a) => a.startsWith('--lang='));
-const lang = langArg ? langArg.split('=')[1] : undefined;
+// --lang オプション: 指定言語のみ生成（省略時は全言語）
+const langValue = args.find((a) => a.startsWith('--lang='))?.split('=')[1];
+const targetLangs: readonly Lang[] = langValue ? [langValue as Lang] : ALL_LANGS;
 // --force, --lang 以外の引数をフィルタとして使用（例: "cta", "cta/cta001"）
 const filters = args.filter((a) => !a.startsWith('--'));
 
@@ -166,9 +171,14 @@ function startPreviewServer(): Promise<ChildProcess> {
 /**
  * スクリーンショットを撮影
  */
-async function takeScreenshot(page: Page, category: string, id: string): Promise<{ success: boolean; skipped?: boolean; error?: string }> {
-  // lang指定時は en/ サブディレクトリに保存（例: public/screenshots/templates/en/cta/cta001.png）
-  const outputPath = lang ? join(CONFIG.outputDir, lang, category, `${id}.png`) : join(CONFIG.outputDir, category, `${id}.png`);
+async function takeScreenshot(
+  page: Page,
+  category: string,
+  id: string,
+  lang: Lang
+): Promise<{ success: boolean; skipped?: boolean; error?: string }> {
+  // ja はプレフィックスなし、それ以外は lang/ サブディレクトリに保存
+  const outputPath = lang === 'ja' ? join(CONFIG.outputDir, category, `${id}.png`) : join(CONFIG.outputDir, lang, category, `${id}.png`);
 
   // 強制再生成でない場合、既存ファイルをスキップ
   if (!forceRegenerate && existsSync(outputPath)) {
@@ -182,10 +192,11 @@ async function takeScreenshot(page: Page, category: string, id: string): Promise
   }
 
   try {
-    // lang指定時は言語別プレビューページにアクセス（例: /preview/templates/cta/cta001/en/）
-    const url = lang
-      ? `http://localhost:${CONFIG.port}/preview/templates/${category}/${id}/${lang}/`
-      : `http://localhost:${CONFIG.port}/preview/templates/${category}/${id}/`;
+    // ja はデフォルトURL、それ以外は言語別プレビューページ
+    const url =
+      lang === 'ja'
+        ? `http://localhost:${CONFIG.port}/preview/templates/${category}/${id}/`
+        : `http://localhost:${CONFIG.port}/preview/templates/${category}/${id}/${lang}/`;
     await page.goto(url, { waitUntil: 'networkidle' });
 
     // 画像やフォントの読み込み完了を待つ
@@ -212,7 +223,7 @@ async function takeScreenshot(page: Page, category: string, id: string): Promise
 async function main() {
   console.log('🖼️  テンプレートスクリーンショット生成');
   console.log(`   モード: ${forceRegenerate ? '全て再生成' : '新規のみ'}`);
-  if (lang) console.log(`   言語: ${lang}`);
+  console.log(`   言語: ${targetLangs.join(', ')}`);
   console.log('');
 
   // distディレクトリの存在確認
@@ -253,20 +264,25 @@ async function main() {
     let skipped = 0;
     let failed = 0;
 
-    // 各テンプレートのスクリーンショットを撮影
+    // 各テンプレートのスクリーンショットを言語ごとに撮影
     console.log('📸 スクリーンショット撮影開始...');
-    for (const { category, id } of templatePaths) {
-      const result = await takeScreenshot(page, category, id);
+    for (const lang of targetLangs) {
+      if (targetLangs.length > 1) {
+        console.log(`\n🌐 [${lang}]`);
+      }
+      for (const { category, id } of templatePaths) {
+        const result = await takeScreenshot(page, category, id, lang);
 
-      if (result.skipped) {
-        skipped++;
-        process.stdout.write(`  ⏭️  ${category}/${id} (スキップ)\n`);
-      } else if (result.success) {
-        generated++;
-        process.stdout.write(`  ✅ ${category}/${id}\n`);
-      } else {
-        failed++;
-        process.stdout.write(`  ❌ ${category}/${id}: ${result.error}\n`);
+        if (result.skipped) {
+          skipped++;
+          process.stdout.write(`  ⏭️  ${category}/${id} (スキップ)\n`);
+        } else if (result.success) {
+          generated++;
+          process.stdout.write(`  ✅ ${category}/${id}\n`);
+        } else {
+          failed++;
+          process.stdout.write(`  ❌ ${category}/${id}: ${result.error}\n`);
+        }
       }
     }
 
