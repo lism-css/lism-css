@@ -870,5 +870,131 @@
     "headings": ["Create Component", "Usage"],
     "keywords": ["Table", "テーブル", "表", "固定", "スクロール", "example"],
     "snippet": "行・列の固定表示に対応した汎用Tableレイアウトの実装例。CSS変数でボーダースタイルを調整可能。"
+  },
+  {
+    "sourcePath": "utility-class.mdx",
+    "title": "u--cbox",
+    "description": "keycolor変数をベースに、color/background-color/border-colorをcolor-mix()で自動生成するユーティリティクラス。",
+    "category": "guide",
+    "headings": ["u--cbox"],
+    "keywords": ["u--cbox", "カラーボックス", "keycolor", "color-mix", "配色", "テーマカラー", "バッジ"],
+    "snippet": "--keycolor変数をベースに --c, --bgc, --bdc を color-mix() で生成。bdクラスとの併用でボーダーも表示可能。バッジやカード等のカラーテーマ適用に使用。"
+  },
+  {
+    "sourcePath": "utility-class.mdx",
+    "title": "u--trim / u--trimChildren",
+    "description": "テキストのハーフレディング分の余白を調整するユーティリティクラス。",
+    "category": "guide",
+    "headings": ["u--trim", "u--trimChildren"],
+    "keywords": ["u--trim", "u--trimChildren", "ハーフレディング", "行間調整", "テキスト余白", "margin-block", "トリム"],
+    "snippet": "u--trimは自身のmargin-blockを調整。u--trimChildrenは子要素全ての上下マージンを調整。img, figure, tableに対してはマージン調節を無効化。"
+  },
+  {
+    "sourcePath": "utility-class.mdx",
+    "title": "u--expandedLink",
+    "description": "クリック範囲を親要素に広げるユーティリティクラス。is--linkBoxと併用。",
+    "category": "guide",
+    "headings": ["u--expandedLink"],
+    "keywords": ["u--expandedLink", "クリック範囲", "リンク拡張", "linkBox"],
+    "snippet": "クリック範囲を親要素に広げるためのクラス。主にis--linkBoxと併用して、内部のリンクをボックス全体に広げるために使用。"
+  },
+  {
+    "sourcePath": "utility-class.mdx",
+    "title": "u--srOnly",
+    "description": "要素を視覚的に隠してスクリーンリーダーのみに表示するユーティリティクラス。",
+    "category": "guide",
+    "headings": ["u--srOnly"],
+    "keywords": ["u--srOnly", "スクリーンリーダー", "アクセシビリティ", "非表示", "visually hidden", "sr-only"],
+    "snippet": "要素を視覚的に隠すクラス。position: absolute + clip-path: inset(50%) で視覚上非表示にしつつ、スクリーンリーダーには読み上げ可能。"
+  },
+  {
+    "sourcePath": "utility-class.mdx",
+    "title": "u--collapseGrid",
+    "description": "グリッド・フレックス子要素間にボーダー（区切り線）を表示するユーティリティクラス。",
+    "category": "guide",
+    "headings": ["u--collapseGrid"],
+    "keywords": ["u--collapseGrid", "グリッド区切り", "ボーダー", "テーブル風", "カレンダー", "box-shadow"],
+    "snippet": "box-shadowで子要素間に区切りボーダーを表示。p='0' ov='clip'で周囲のボーダーを非表示にでき、bd追加でカレンダー風の表現も可能。"
+  },
+  {
+    "sourcePath": "utility-class.mdx",
+    "title": "u--snap",
+    "description": "scroll-snap系プロパティをCSS変数で制御するユーティリティクラス。",
+    "category": "guide",
+    "headings": ["u--snap"],
+    "keywords": ["u--snap", "スクロールスナップ", "scroll-snap", "カルーセル"],
+    "snippet": "scroll-snap-type等のプロパティをCSS変数でセットできるようにするクラス。"
+  },
+  {
+    "sourcePath": "utility-class.mdx",
+    "title": "u--clipText",
+    "description": "テキストで背景をクリッピングするユーティリティクラス。",
+    "category": "guide",
+    "headings": ["u--clipText"],
+    "keywords": ["u--clipText", "テキストクリップ", "背景クリッピング", "グラデーション文字", "background-clip"],
+    "snippet": "テキストで背景をクリッピングするクラス。bgiにグラデーション等を指定し、文字の形で背景を切り抜く表現が可能。"
+  },
+  {
+    "sourcePath": "set-class.mdx",
+    "title": "set--plain",
+    "description": "主要スタイルをリセットするためのSetクラス。",
+    "category": "guide",
+    "headings": ["set--plain"],
+    "keywords": ["set--plain", "スタイルリセット", "ボタンリセット", "reset"],
+    "snippet": "主要スタイルをリセットするクラス。buttonやinput等のブラウザデフォルトスタイルを除去する場合に使用。unsetで解除可能。"
+  },
+  {
+    "sourcePath": "set-class.mdx",
+    "title": "set--shadow",
+    "description": "シャドウを構成するCSS変数を再定義するSetクラス。",
+    "category": "guide",
+    "headings": ["set--shadow"],
+    "keywords": ["set--shadow", "シャドウ", "影", "box-shadow", "--shc"],
+    "snippet": "set--shadowクラスを指定した要素では --bxsh-- 変数が再定義される。--shc変数でシャドウの色味をカスタマイズ可能。"
+  },
+  {
+    "sourcePath": "set-class.mdx",
+    "title": "set--hov",
+    "description": "ホバー状態の判定変数（--_isHov, --_notHov）をセットするSetクラス。",
+    "category": "guide",
+    "headings": ["set--hov"],
+    "keywords": ["set--hov", "ホバー", "hover", "--_isHov", "--_notHov", "空変数トリック", "子要素ホバー"],
+    "snippet": "hover/focus-within状態を空変数トリックで判定。var(--_isHov, 値)でhover時のみスタイル適用。親要素に付与して子要素のホバースタイルを制御可能。"
+  },
+  {
+    "sourcePath": "set-class.mdx",
+    "title": "set--transition",
+    "description": "CSS変数を用いてtransitionプロパティをセットするSetクラス。",
+    "category": "guide",
+    "headings": ["set--transition"],
+    "keywords": ["set--transition", "トランジション", "アニメーション", "transition"],
+    "snippet": "専用のCSS変数を用いてtransitionプロパティをセットするクラス。set--hovと組み合わせてスムーズなホバーアニメーションを実現。"
+  },
+  {
+    "sourcePath": "set-class.mdx",
+    "title": "set--innerRs",
+    "description": "親要素の角丸とPaddingから内側の角丸を自動計算するSetクラス。",
+    "category": "guide",
+    "headings": ["set--innerRs"],
+    "keywords": ["set--innerRs", "角丸", "内側角丸", "border-radius", "自動計算", "--bdrs--inner"],
+    "snippet": "親要素の --bdrs と --p から内側の角丸 --bdrs--inner を自動計算。子要素で -bdrs:inner を使って適用。レスポンシブ対応。"
+  },
+  {
+    "sourcePath": "set-class.mdx",
+    "title": "set--gutter",
+    "description": "コンテンツの左右に統一した余白をつけるSetクラス。",
+    "category": "guide",
+    "headings": ["set--gutter"],
+    "keywords": ["set--gutter", "ガター", "左右余白", "サイド余白", "padding", "--gutter-size"],
+    "snippet": "サイト全体で統一した左右余白を確保するクラス。--gutter-size変数（初期値 var(--s30)）で余白量を制御。"
+  },
+  {
+    "sourcePath": "set-class.mdx",
+    "title": "set--bp",
+    "description": "特定のブレイクポイント以上でのみスタイルを適用するSetクラス。",
+    "category": "guide",
+    "headings": ["set--bp"],
+    "keywords": ["set--bp", "ブレイクポイント", "メディアクエリ", "レスポンシブ", "--_is_sm", "条件付きスタイル"],
+    "snippet": "特定のブレイクポイント以上でのみスタイルを適用するクラス。var(--_is_sm) 等の変数を使い、レスポンシブ対応していないプロパティを条件付きで変化させるハック的手段。"
   }
 ]
