@@ -13,6 +13,20 @@ Breaking changes may continue frequently until the v1.0 release, so all notable 
 
 - Adjusted Callout component styles to align with the shadow design changes in lism-css v0.11.0
 
+## v.0.12.0 (2026.04.10)
+
+- Added TileGrid layout module (promoted from `-gt:repeat`)
+- Added flex, grid, inline-grid, inline, inline-block to `d` (display)
+- Changed gap shorthands from `g-x`/`g-y` to `cg`/`rg`
+- Removed `setXxxx` individual props in favor of unified `set=""` `unset=""`
+- Repositioned `@layer lism-custom` between modules and utility
+- Changed list padding-inline-start to `--list-px-s` custom property
+- Removed deprecated HTML component files
+- Changed Property Class value abbreviations to CSS actual values (`in-flex`→`inline-flex`, `rel`→`relative`, `abs`→`absolute`, `col`→`column`, `cc`→`current`, etc.)
+- Renamed "Prop Class" terminology to "Property Class"
+- Removed `--gtr`/`--gtc`/`--gta` CSS variables and grid-template declarations from `l--grid`
+- Removed unused `--bdrs--5` token
+
 ## v.0.11.0 (2026.04.05)
 
 - Reduced `bdrs`/`bxsh` tokens, redesigned shadow system, removed `--sh-inset`

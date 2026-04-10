@@ -13,6 +13,20 @@ v.1.0リリースまでしばらく激しい変更が続く可能性があるた
 
 - Callout コンポーネントのスタイルを lism-css v0.11.0 の shadow 設計変更に合わせて調整
 
+## v.0.12.0 (2026.04.10)
+
+- TileGrid レイアウトモジュールを追加（`-gt:repeat` から昇格）
+- `d` (display) に flex, grid, inline-grid, inline, inline-block を追加
+- gap 系 shorthand を `g-x`/`g-y` から `cg`/`rg` に変更
+- `setXxxx` 個別 props を廃止し、`set=""` `unset=""` に統一
+- `@layer lism-custom` を modules と utility の間に再配置
+- リストの padding-inline-start を `--list-px-s` カスタムプロパティに変更
+- 非推奨の HTML コンポーネントファイルを削除
+- Property Class の値略記を CSS 実値ベースに変更（`in-flex`→`inline-flex`, `rel`→`relative`, `abs`→`absolute`, `col`→`column`, `cc`→`current` 等）
+- 用語「Prop Class」を「Property Class」にリネーム
+- `l--grid` から `--gtr`/`--gtc`/`--gta` CSS 変数と grid-template 宣言を削除
+- 未使用トークン `--bdrs--5` の削除
+
 ## v.0.11.0 (2026.04.05)
 
 - `bdrs`・`bxsh` トークン削減、shadow 設計変更、`--sh-inset` 廃止
