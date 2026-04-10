@@ -194,11 +194,15 @@ hr {
 :is(ul, ol):where(:not([class])),
 :is(ul, ol):where([class^='-']) {
   list-style: revert;
-  padding-inline-start: var(--s30);
+  padding-inline-start: var(--list-px-s, var(--s30));
 }
 ```
 
-クラスを持たないリスト、または Property Classしかクラスを持たない（class属性が `-` で始まる）リストに対して、ブラウザデフォルトスタイルを復活させています。（余白はスペーシングトークンで管理）
+クラスを持たないリスト、または Property Classしかクラスを持たない（class属性が `-` で始まる）リストに対して、ブラウザデフォルトスタイルを復活させています。
+
+| 変数 | フォールバック | 用途 |
+|------|------------|------|
+| `--list-px-s` | `var(--s30)` | リストの `padding-inline-start` |
 
 
 ### 定義リスト（dl）

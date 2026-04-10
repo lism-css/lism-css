@@ -99,7 +99,7 @@ hr {
 :is(ul, ol):where(:not([class])),
 :is(ul, ol):where([class^='-']) {
   list-style: revert;
-  padding-inline-start: var(--s30);
+  padding-inline-start: var(--list-px-s, var(--s30));
 }
 
 dt {

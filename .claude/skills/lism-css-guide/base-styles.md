@@ -69,6 +69,12 @@ Reset CSS に加え、`@layer lism-base` 内で HTML タグに基本スタイル
 | `--link-td-thickness` | `auto` | 下線の太さ |
 | `--link-td-color` | `currentColor` | 下線の色 |
 
+### リスト（ul, ol）
+
+| 変数 | フォールバック | 用途 |
+|------|------------|------|
+| `--list-px-s` | `var(--s30)` | リストの `padding-inline-start` |
+
 ### テーブル（table, td, th）
 
 | 変数 | フォールバック | 用途 |
