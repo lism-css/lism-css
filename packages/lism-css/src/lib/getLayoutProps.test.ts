@@ -16,27 +16,14 @@ describe('getLayoutProps', () => {
   });
 
   describe('grid レイアウト', () => {
-    test('grid レイアウトの場合、_propConfig が設定される', () => {
-      const result = getLayoutProps('grid', {});
-      expect(result._propConfig).toBeDefined();
-      expect(result._propConfig?.gta).toEqual({ isVar: 1 });
-      expect(result._propConfig?.gtc).toEqual({ isVar: 1 });
-      expect(result._propConfig?.gtr).toEqual({ isVar: 1 });
-    });
-
-    test('既存の _propConfig がある場合、マージされる', () => {
-      const result = getLayoutProps('grid', {
-        _propConfig: { customProp: { isVar: 2 } },
-      });
-      expect(result._propConfig?.customProp).toEqual({ isVar: 2 });
-      expect(result._propConfig?.gta).toEqual({ isVar: 1 });
-      expect(result._propConfig?.gtc).toEqual({ isVar: 1 });
-      expect(result._propConfig?.gtr).toEqual({ isVar: 1 });
-    });
-
     test('lismClass に l--grid が追加される', () => {
       const result = getLayoutProps('grid', {});
       expect(result.lismClass).toBe('l--grid');
+    });
+
+    test('_propConfig は自動付与されない', () => {
+      const result = getLayoutProps('grid', {});
+      expect(result._propConfig).toBeUndefined();
     });
   });
 
