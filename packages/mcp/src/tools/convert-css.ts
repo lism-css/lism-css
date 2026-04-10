@@ -33,7 +33,7 @@ interface ComponentSuggestion {
 
 /** @ルール（@media 等）が含まれていないか検査する */
 function detectAtRules(cssText: string): string | null {
-  const atRuleMatch = cssText.match(/@(\w[\w-]*)/);
+  const atRuleMatch = cssText.match(/^@(\w[\w-]*)/m);
   if (atRuleMatch) {
     return `@${atRuleMatch[1]} ルールは未対応です。CSS 宣言（property: value;）のみを入力してください。`;
   }

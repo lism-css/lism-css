@@ -153,7 +153,8 @@ export function findComponentInTables(md: string, name: string): string {
   const lines = md.split('\n');
 
   // コンポーネント名のパターン: `<Flex>`, `<flex>`, または単純に "flex" がテーブル行に含まれるか
-  const pattern = new RegExp(`\`?<${name}>?\`?`, 'i');
+  const escaped = name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const pattern = new RegExp(`\`?<${escaped}>?\`?`, 'i');
 
   // まず対象行を探す
   let targetLineIdx = -1;
