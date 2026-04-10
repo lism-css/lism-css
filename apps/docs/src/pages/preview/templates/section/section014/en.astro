@@ -1,0 +1,33 @@
+---
+import DemoLayout from '@/layouts/DemoLayout.astro';
+
+import { Container, Grid, Box, Frame, Media, Stack, Text, Heading } from 'lism-css/astro';
+import './_style.css';
+---
+
+<DemoLayout title="Section014">
+  <Container isWrapper="l" py="50" set="gutter">
+    <Grid gtc={['auto', null, 'auto 1fr']} g="40 50">
+      <Box>
+        <Heading level="2" class="u--trim" fz="3xl" fw="bold" hl="l">For a Future That Delivers<br />the Best User Experience</Heading>
+      </Box>
+      <Box>
+        <Text class="u--trim" fz="m">
+          Our service aims to provide the best possible experience for our users. We have built a platform that combines ease of use with security,
+          leveraging the latest technology. To accommodate diverse needs, we also offer flexible customization options.
+        </Text>
+      </Box>
+      <Frame as="figure" ar="2/1" gc="1 / -1">
+        <Media src="https://cdn.lism-css.com/random/img" alt="" width="960" height="640" />
+      </Frame>
+      <Stack gc="1 / -1" jc="flex-end" g="30">
+        <p>
+          To accommodate diverse needs, we also offer flexible customization options. Additionally, we never forget environmental responsibility,
+          advancing initiatives with a sustainable future in mind. We continually pursue improvement and innovation so that our users can feel secure.
+          Furthermore, by strengthening collaboration with communities and providing spaces for users to connect, we are creating richer experiences.
+          We promise to continue developing future-oriented services that blend technology and humanity.
+        </p>
+      </Stack>
+    </Grid>
+  </Container>
+</DemoLayout>

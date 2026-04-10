@@ -1,0 +1,115 @@
+---
+import DemoLayout from '@/layouts/DemoLayout.astro';
+
+import { Stack, LinkBox, Container, Frame, Columns, Media, Flex, Text, Heading } from 'lism-css/astro';
+import './_style.css';
+---
+
+<DemoLayout title="Feature013">
+  <Container isWrapper="l" bgc="base-2" py="50" set="gutter">
+    <Stack g="40">
+      <Stack ai="center" g="5">
+        <Heading level="2" fz="2xl" fw="bold">Curated Products</Heading>
+        <Text fz="m" o="-20">Pickup Products</Text>
+      </Stack>
+      <Stack g="40">
+        <LinkBox
+          href="#"
+          layout="tileGrid"
+          class="set--innerRs"
+          set={['hov', 'transition']}
+          gc="1 / -1"
+          cols={['1', null, '2']}
+          bgc="white"
+          ov="hidden"
+          bdrs="20"
+          hov="bxsh"
+        >
+          <Frame pos="relative" min-h="100%">
+            <Media src="https://cdn.lism-css.com/random/img?r=1" alt="" width="960" height="640" set="transition" hov="to:zoom" />
+          </Frame>
+          <Stack g="30" jc="center" p="40">
+            <Text class="u--trim" fz="l" fw="bold">Limited Edition Collaboration Model</Text>
+            <Text class="u--trim" fz="s">
+              Discover a one-of-a-kind piece available only here. From artist collaborations to limited-edition models. Enrich your self-care moments.
+              Transform your daily routine into a comfortable experience.
+            </Text>
+            <Flex bdrs="inner" jc="center" bd p="10" set="transition" hov="to:reverse">
+              <Text fz="m">View Detail</Text>
+            </Flex>
+          </Stack>
+        </LinkBox>
+        <Columns cols={['1', '2', '4']} g="40">
+          <LinkBox layout="grid" gtr="subgrid" gr="span 3" set="hov" g="30" href="#">
+            <Frame as="figure" ar="16/9" bdrs="20" pos="relative">
+              <Media src="/img/img-1.jpg" alt="" width="960" height="640" set="transition" hov="to:zoom" />
+            </Frame>
+            <Stack g="20">
+              <Text class="u--trim" fz="m" fw="bold">Climate & Living Appliances</Text>
+              <Text class="u--trim" fz="s" o="-10"
+                >Blending seamlessly into your space, creating comfortable air and quality time. Items that elevate your daily life.</Text
+              >
+            </Stack>
+            <Flex my-s="auto" jc="center" bd bdc="line" p="10" bdrs="20" set="transition" hov="to:reverse">
+              <Text fz="s">View Detail</Text>
+            </Flex>
+          </LinkBox>
+          <LinkBox layout="grid" gtr="subgrid" gr="span 3" set="hov" g="30" href="#">
+            <Frame as="figure" ar="16/9" bdrs="20" pos="relative">
+              <Media src="https://cdn.lism-css.com/random/img?r=2" alt="" width="960" height="640" set="transition" hov="to:zoom" />
+            </Frame>
+            <Stack g="20">
+              <Text class="u--trim" fz="m" fw="bold">Smart Home</Text>
+              <Text class="u--trim" fz="s" o="-10">
+                Appliances work together quietly to support your lifestyle. Creating a future of everyday living where technology feels invisible.
+              </Text>
+            </Stack>
+            <Flex my-s="auto" jc="center" bd bdc="line" p="10" bdrs="20" set="transition" hov="to:reverse">
+              <Text fz="s">View Detail</Text>
+            </Flex>
+          </LinkBox>
+          <LinkBox layout="grid" gtr="subgrid" gr="span 3" set="hov" g="30" href="#">
+            <Frame as="figure" ar="16/9" bdrs="20" pos="relative">
+              <Media src="https://cdn.lism-css.com/random/img?r=3" alt="" width="960" height="640" set="transition" hov="to:zoom" />
+            </Frame>
+            <Stack g="20">
+              <Text class="u--trim" fz="m" fw="bold">Accessories</Text>
+              <Text class="u--trim" fz="s" o="-10"
+                >Dedicated accessories that enrich the product experience. Infusing the brand's aesthetic sensibility into every detail.</Text
+              >
+            </Stack>
+            <Flex my-s="auto" jc="center" bd bdc="line" p="10" bdrs="20" set="transition" hov="to:reverse">
+              <Text fz="s">View Detail</Text>
+            </Flex>
+          </LinkBox>
+          <LinkBox layout="grid" gtr="subgrid" gr="span 3" set="hov" g="30" href="#">
+            <Frame as="figure" ar="16/9" bdrs="20" pos="relative">
+              <Media src="https://cdn.lism-css.com/random/img?r=4" alt="" width="960" height="640" set="transition" hov="to:zoom" />
+            </Frame>
+            <Stack g="20">
+              <Text class="u--trim" fz="m" fw="bold">Beauty & Wellness</Text>
+              <Text class="u--trim" fz="s" o="-10"
+                >Enrich the time you spend caring for yourself. Transform your daily self-care into a comfortable experience.</Text
+              >
+            </Stack>
+            <Flex my-s="auto" jc="center" bd bdc="line" p="10" bdrs="20" set="transition" hov="to:reverse">
+              <Text fz="s">View Detail</Text>
+            </Flex>
+          </LinkBox>
+        </Columns>
+      </Stack>
+    </Stack>
+  </Container>
+</DemoLayout>
+
+<style>
+  @media (any-hover: hover) {
+    .-hov\:to\:zoom {
+      scale: var(--_isHov, 1.1);
+    }
+    .-hov\:to\:reverse {
+      background-color: var(--_isHov, var(--black));
+      color: var(--_isHov, var(--white));
+    }
+  }
+</style>

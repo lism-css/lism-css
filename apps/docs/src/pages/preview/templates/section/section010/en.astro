@@ -1,0 +1,31 @@
+---
+import DemoLayout from '@/layouts/DemoLayout.astro';
+
+import { Box, Stack, Container, Frame, Layer, Media, Text, Inline, Heading } from 'lism-css/astro';
+import './_style.css';
+---
+
+<DemoLayout title="Section010">
+  <Container isWrapper="m" py="50" set="gutter">
+    <Stack g="30">
+      <Frame as="figure" ar="16/9" pos="relative">
+        <Media src="https://cdn.lism-css.com/random/img" alt="" width="960" height="640" />
+        <Layer p="40 0">
+          <Stack jc="center" ai="flex-start" min-h="100%" g="20">
+            <Box bgc="white" p="20 30">
+              <Heading level="2" class="u--trim" fz="min(4.5vw, 1.75rem)" fw="bold" ff="accent" lts="l">Feel the Beauty of Each Season</Heading>
+            </Box>
+          </Stack>
+          <Box as="figcaption" p="20" pos="absolute" b="0" r="0">
+            <Inline class="u--trim" fz="s" c="white" ff="accent" lts="l">Feel the beauty of each season</Inline>
+          </Box>
+        </Layer>
+      </Frame>
+      <Text>
+        Handcrafted one by one using eco-friendly, naturally derived methods. Bringing nature's bounty to your everyday life. Our products harness the
+        full power of nature, aiming for a sustainable future. Delivering a comfortable life along with the ever-changing scenery of each season. We
+        hope you can enjoy precious moments while appreciating the beauty of the four seasons.
+      </Text>
+    </Stack>
+  </Container>
+</DemoLayout>

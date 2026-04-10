@@ -53,19 +53,19 @@ if (!template) {
 // カテゴリ情報
 const categoryData = templates[category as TemplateCategoryId];
 
-// プレビューURLとコード埋め込み用のパス
-const previewUrl = `/preview/templates/${category}/${id}/`;
+// プレビューURLとコード埋め込み用のパス（言語に応じて切り替え）
+const previewUrl = `/preview/templates/${category}/${id}/${lang}/`;
 const templatePath = `src/pages/preview/templates/${category}/${id}`;
 ---
 
-<BaseLayout title={`${template.title} - Templates`} description={template.description} excludeFromSearch>
+<BaseLayout title={`${template.title} - Templates`} description={template.description[lang]} excludeFromSearch>
   <Flow g="30" class="templatePage">
     <Stack as="header" g="10">
       <Text fz="xs" c="text-2" tt="uppercase" lts="l">
         {categoryData.label}
       </Text>
       <h1 class="-fz:3xl -fw:bold">{template.title}</h1>
-      <Text c="text-2">{template.description}</Text>
+      <Text c="text-2">{template.description[lang]}</Text>
     </Stack>
     {
       template.draft && (
@@ -83,7 +83,7 @@ const templatePath = `src/pages/preview/templates/${category}/${id}`;
     {/* ソースコード */}
     <Stack g="15">
       <PreviewTitle>Code</PreviewTitle>
-      <SrcCode dir="docs" path={templatePath + '/index.astro'} title="index.astro" />
+      <SrcCode dir="docs" path={templatePath + `/${lang}.astro`} title={`${lang}.astro`} />
       <SrcCode dir="docs" path={templatePath + '/_style.css'} title="style.css" />
     </Stack>
   </Flow>

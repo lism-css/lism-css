@@ -1,0 +1,51 @@
+---
+import DemoLayout from '@/layouts/DemoLayout.astro';
+
+import { Container, Grid, Frame, Media, Stack, Flow, Layer, Center, Text, Inline, Heading } from 'lism-css/astro';
+import './_style.css';
+---
+
+<DemoLayout title="Greeting003">
+  <Container isWrapper="l" py="50" set="gutter">
+    <Grid gtc={['auto', null, 'auto 1fr']} g="50 60">
+      <Frame ar="5/2" gc="1 / -1" pos="relative">
+        <Media src="https://cdn.lism-css.com/random/img" alt="" width="960" height="640" />
+        <Layer bgc="rgb(0 0 0 / 30%)">
+          <Center h="100%" c="white">
+            <Inline class="u--trim" fz="3xl" fw="light" ff="accent" lts="l" px="20" py="10">Message from Our CEO</Inline>
+          </Center>
+        </Layer>
+      </Frame>
+      <Stack g="40" max-w={['stretch', null, '24rem']}>
+        <Heading level="2" class="u--trim" fz="3xl" fw="bold">Toward the World We Envision<br />For the Future We Deliver</Heading>
+        <Text class="u--trim" fz="xl" o="-20">CEO　神宮寺 慧</Text>
+      </Stack>
+      <Flow class="u--trim" fz="m">
+        <p>
+          The 21st century we live in is an era where technology evolves at an exponential pace never before experienced by humanity. As AI begins to
+          possess creativity and the boundaries between physical and digital spaces dissolve, the role of those involved in "making things" is
+          shifting from merely supplying convenient "products" to envisioning and proposing the "experiences" of the future. Our designs are questions
+          to the future.
+        </p>
+        <p>
+          "When technology truly extends human capability, how will our lives change?" "How will the definitions of comfort and richness evolve?" --
+          Our work is the embodiment of exploring those answers.
+        </p>
+        <p>
+          That is why our products may sometimes appear radical and challenge conventional thinking. This is an expression of our strong desire to
+          bring a glimpse of future possibilities into your daily lives. Our studio brings together not only designers but also engineers,
+          sociologists, and artists -- a diverse pool of talent. The dialogues they engage in daily and the sparks born from the collision of
+          interdisciplinary knowledge are the wellspring of our innovation. New materials inspired by biomimicry, interfaces that read human emotions,
+          product ecosystems designed with circular economy principles. These are all small yet significant stepping stones to shaping the everyday
+          life of the future.
+        </p>
+        <p>
+          What we create is not merely a product. It is a "catalyst" for you to imagine and discuss the future. We hope that by touching our products,
+          you catch a glimpse of the near future and find opportunities to think about the society and life ahead. That is the greatest joy for us as
+          designers and as a company. We promise to continue aiming for uncharted frontiers of design, posing bold questions, and taking on daring
+          challenges. We sincerely look forward to creating a more human and more inspiring future together with you.
+        </p>
+      </Flow>
+    </Grid>
+  </Container>
+</DemoLayout>

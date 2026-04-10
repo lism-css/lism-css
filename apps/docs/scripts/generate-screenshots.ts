@@ -10,6 +10,8 @@
  *   npx tsx scripts/generate-screenshots.ts cta            # カテゴリ指定
  *   npx tsx scripts/generate-screenshots.ts cta/cta001     # テンプレート指定
  *   npx tsx scripts/generate-screenshots.ts cta section    # 複数指定
+ *   npx tsx scripts/generate-screenshots.ts --lang=en      # 英語版を生成
+ *   npx tsx scripts/generate-screenshots.ts --lang=en --force  # 英語版を全て再生成
  */
 
 import { chromium, type Browser, type Page } from 'playwright';
@@ -38,7 +40,10 @@ const CONFIG = {
 // コマンドライン引数をパース
 const args = process.argv.slice(2);
 const forceRegenerate = args.includes('--force');
-// --force 以外の引数をフィルタとして使用（例: "cta", "cta/cta001"）
+// --lang オプション: 指定言語のスクリーンショットを生成（例: --lang=en）
+const langArg = args.find((a) => a.startsWith('--lang='));
+const lang = langArg ? langArg.split('=')[1] : undefined;
+// --force, --lang 以外の引数をフィルタとして使用（例: "cta", "cta/cta001"）
 const filters = args.filter((a) => !a.startsWith('--'));
 
 /**
@@ -162,7 +167,8 @@ function startPreviewServer(): Promise<ChildProcess> {
  * スクリーンショットを撮影
  */
 async function takeScreenshot(page: Page, category: string, id: string): Promise<{ success: boolean; skipped?: boolean; error?: string }> {
-  const outputPath = join(CONFIG.outputDir, category, `${id}.png`);
+  // lang指定時は en/ サブディレクトリに保存（例: public/screenshots/templates/en/cta/cta001.png）
+  const outputPath = lang ? join(CONFIG.outputDir, lang, category, `${id}.png`) : join(CONFIG.outputDir, category, `${id}.png`);
 
   // 強制再生成でない場合、既存ファイルをスキップ
   if (!forceRegenerate && existsSync(outputPath)) {
@@ -176,7 +182,10 @@ async function takeScreenshot(page: Page, category: string, id: string): Promise
   }
 
   try {
-    const url = `http://localhost:${CONFIG.port}/preview/templates/${category}/${id}/`;
+    // lang指定時は言語別プレビューページにアクセス（例: /preview/templates/cta/cta001/en/）
+    const url = lang
+      ? `http://localhost:${CONFIG.port}/preview/templates/${category}/${id}/${lang}/`
+      : `http://localhost:${CONFIG.port}/preview/templates/${category}/${id}/`;
     await page.goto(url, { waitUntil: 'networkidle' });
 
     // 画像やフォントの読み込み完了を待つ
@@ -203,6 +212,7 @@ async function takeScreenshot(page: Page, category: string, id: string): Promise
 async function main() {
   console.log('🖼️  テンプレートスクリーンショット生成');
   console.log(`   モード: ${forceRegenerate ? '全て再生成' : '新規のみ'}`);
+  if (lang) console.log(`   言語: ${lang}`);
   console.log('');
 
   // distディレクトリの存在確認

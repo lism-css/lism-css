@@ -1,0 +1,94 @@
+---
+import DemoLayout from '@/layouts/DemoLayout.astro';
+
+import { Stack, Container, Frame, Columns, Grid, Media, Flex, Icon, Layer, Center, Text, Inline } from 'lism-css/astro';
+import './_style.css';
+---
+
+<DemoLayout title="Feature002">
+  <Container isWrapper="l" py="50" set="gutter">
+    <Stack g="40">
+      <Grid gtc={['1fr', null, 'auto 1fr']} g="inherit">
+        <Stack class="u--trimChildren" g="20">
+          <h2>Our Initiatives</h2>
+          <Text fz="l" ff="accent" o="-20">Our efforts</Text>
+        </Stack>
+        <Flex class="u--trimChildren" jc={['s', null, 'end']}>
+          <Text max-w="32rem" fz="s" o="-10">
+            Looking ahead to the future of our community, we are advancing initiatives toward a sustainable society. Through environmental
+            conservation and community revitalization, we aim to build a town we can be proud to pass on to the next generation.
+          </Text>
+        </Flex>
+      </Grid>
+      <Columns cols={[2, null, 4]} g={['30', '40']}>
+        <Grid as="a" isLinkBox href="#" g="20" ai="start" set="hov">
+          <Frame as="figure" ar="1/1" bdrs="10" pos="relative">
+            <Media src="https://cdn.lism-css.com/random/img?r=1" alt="" width="960" height="640" set="transition" hov="to:zoom" />
+            <Layer set="transition" hov="to:show" bgc="rgb(0 0 0 / 30%)" style={{ backdropFilter: 'blur(4px)' }}>
+              <Center h="100%" c="white">
+                <Inline fz="xl" fs="italic" fw="light" lts="l" px="20" py="10">View More</Inline>
+              </Center>
+            </Layer>
+          </Frame>
+          <Flex ai="center" jc="flex-start" g="15" fz="m" lh="s">
+            <Inline>Shaping the Future Together</Inline>
+            <Icon icon="arrow-right" mx-s="auto" set="transition" hov="to:solid" />
+          </Flex>
+        </Grid>
+        <Grid as="a" isLinkBox href="#" g="20" ai="start" set="hov">
+          <Frame as="figure" ar="1/1" bdrs="10" pos="relative">
+            <Media src="https://cdn.lism-css.com/random/img?r=2" alt="" width="960" height="640" set="transition" hov="to:zoom" />
+            <Layer set="transition" hov="to:show" bgc="rgb(0 0 0 / 30%)" style={{ backdropFilter: 'blur(4px)' }}>
+              <Center h="100%" c="white">
+                <Inline fz="xl" fs="italic" fw="light" lts="l" px="20" py="10">View More</Inline>
+              </Center>
+            </Layer>
+          </Frame>
+          <Flex ai="center" jc="flex-start" g="15" fz="m" lh="s">
+            <Inline>A Gathering Place for Everyone</Inline>
+            <Icon icon="arrow-right" mx-s="auto" set="transition" hov="to:solid" />
+          </Flex>
+        </Grid>
+        <Grid as="a" isLinkBox href="#" g="20" ai="start" set="hov">
+          <Frame as="figure" ar="1/1" bdrs="10" pos="relative">
+            <Media src="https://cdn.lism-css.com/random/img?r=3" alt="" width="960" height="640" set="transition" hov="to:zoom" />
+            <Layer set="transition" hov="to:show" bgc="rgb(0 0 0 / 30%)" style={{ backdropFilter: 'blur(4px)' }}>
+              <Center h="100%" c="white">
+                <Inline fz="xl" fs="italic" fw="light" lts="l" px="20" py="10">View More</Inline>
+              </Center>
+            </Layer>
+          </Frame>
+          <Flex ai="center" jc="flex-start" g="15" fz="m" lh="s">
+            <Inline>From Local Farms to Your Table</Inline>
+            <Icon icon="arrow-right" mx-s="auto" set="transition" hov="to:solid" />
+          </Flex>
+        </Grid>
+        <Grid as="a" isLinkBox href="#" g="20" ai="start" set="hov">
+          <Frame as="figure" ar="1/1" bdrs="10" pos="relative">
+            <Media src="https://cdn.lism-css.com/random/img?r=4" alt="" width="960" height="640" set="transition" hov="to:zoom" />
+            <Layer set="transition" hov="to:show" bgc="rgb(0 0 0 / 30%)" style={{ backdropFilter: 'blur(4px)' }}>
+              <Center h="100%" c="white">
+                <Inline fz="xl" fs="italic" fw="light" lts="l" px="20" py="10">View More</Inline>
+              </Center>
+            </Layer>
+          </Frame>
+          <Flex ai="center" jc="flex-start" g="15" fz="m" lh="s">
+            <Inline>Creating a Green Landscape</Inline>
+            <Icon icon="arrow-right" mx-s="auto" set="transition" hov="to:solid" />
+          </Flex>
+        </Grid>
+      </Columns>
+    </Stack>
+  </Container>
+</DemoLayout>
+
+<style>
+  @media (any-hover: hover) {
+    .-hov\:to\:zoom {
+      scale: var(--_isHov, 1.1);
+    }
+    .-hov\:to\:solid {
+      opacity: var(--_notHov, var(--o--n30));
+    }
+  }
+</style>

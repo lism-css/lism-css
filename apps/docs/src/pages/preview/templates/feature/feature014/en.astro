@@ -1,0 +1,109 @@
+---
+import DemoLayout from '@/layouts/DemoLayout.astro';
+
+import { Stack, Container, Frame, Grid, TileGrid, Media, Flex, Icon, Text, Inline, Heading } from 'lism-css/astro';
+import { Button } from '@lism-css/ui/astro';
+import './_style.css';
+---
+
+<DemoLayout title="Feature014">
+  <Container isWrapper="l" bgc="base-2" py="50" set="gutter">
+    <Stack g="50">
+      <Stack ai="center" g="30">
+        <Text class="u--trim" fz="4xl" fw="light" lts="l">Feature</Text>
+        <Heading level="2" class="u--trim" fz="m" fw="normal" o="-20">Gemstone Overview & Benefits</Heading>
+      </Stack>
+      <TileGrid cols={['1', null, '3']}>
+        <Grid gtr="subgrid" gr="span 3" ji="c" g="30" p={['40', null, '0 40']}>
+          <Frame as="figure" ar="1/1" w="10rem" bdrs="99">
+            <Media src="https://cdn.lism-css.com/random/img?category=v&r=1" alt="" width="960" height="640" set="transition" hov="to:zoom" />
+          </Frame>
+          <Stack g="30">
+            <Text class="u--trim" fz="l" fw="bold" ta="center">Aquamarine</Text>
+            <Text class="u--trim" fz="s" o="-20">
+              A stone with calm, pure energy like the sea. It is said to facilitate communication and guide you toward a happy future.
+            </Text>
+          </Stack>
+          <Flex w="stretch">
+            <Button
+              layout="grid"
+              gtc="1em 1fr 1em"
+              g="15"
+              variant="outline"
+              href="#"
+              jc="center"
+              w="stretch"
+              p="20 30"
+              bdrs="99"
+              set="transition"
+              hov="reverse"
+            >
+              <Inline gc="2">View More</Inline>
+              <Icon icon="arrow-right" gc="3" />
+            </Button>
+          </Flex>
+        </Grid>
+        <Grid gtr="subgrid" gr="span 3" ji="c" g="30" p={['40', null, '0 40']} bd bdw={['1px 0 0 0', null, '0 0 0 1px']} bdc="white">
+          <Frame as="figure" ar="1/1" w="10rem" bdrs="99">
+            <Media src="https://cdn.lism-css.com/random/img?category=v&r=2" alt="" width="960" height="640" set="transition" hov="to:zoom" />
+          </Frame>
+          <Stack g="30">
+            <Text class="u--trim" fz="l" fw="bold" ta="center">Rose Quartz</Text>
+            <Text class="u--trim" fz="s" o="-20">
+              A stone symbolizing love and beauty. It is said to bring out the inner radiance of its owner and nurture a heart of kindness and
+              compassion.
+            </Text>
+          </Stack>
+          <Flex w="stretch">
+            <Button
+              layout="grid"
+              gtc="1em 1fr 1em"
+              g="15"
+              variant="outline"
+              href="#"
+              jc="center"
+              w="stretch"
+              p="20 30"
+              bdrs="99"
+              set="transition"
+              hov="reverse"
+            >
+              <Inline gc="2">View More</Inline>
+              <Icon icon="arrow-right" gc="3" />
+            </Button>
+          </Flex>
+        </Grid>
+        <Grid gtr="subgrid" gr="span 3" ji="c" g="30" p={['40', null, '0 40']} bd bdw={['1px 0 0 0', null, '0 0 0 1px']} bdc="white">
+          <Frame as="figure" ar="1/1" w="10rem" bdrs="99">
+            <Media src="https://cdn.lism-css.com/random/img?category=v&r=3" alt="" width="960" height="640" set="transition" hov="to:zoom" />
+          </Frame>
+          <Stack g="30">
+            <Text class="u--trim" fz="l" fw="bold" ta="center">Moonstone</Text>
+            <Text class="u--trim" fz="s" o="-20">
+              A mystical stone imbued with the energy of the moon. It is believed to enrich sensitivity, nurture love, and enhance the charm of its
+              owner.
+            </Text>
+          </Stack>
+          <Flex w="stretch">
+            <Button
+              layout="grid"
+              gtc="1em 1fr 1em"
+              g="15"
+              variant="outline"
+              href="#"
+              jc="center"
+              w="stretch"
+              p="20 30"
+              bdrs="99"
+              set="transition"
+              hov="reverse"
+            >
+              <Inline gc="2">View More</Inline>
+              <Icon icon="arrow-right" gc="3" />
+            </Button>
+          </Flex>
+        </Grid>
+      </TileGrid>
+    </Stack>
+  </Container>
+</DemoLayout>

@@ -1,0 +1,75 @@
+---
+import DemoLayout from '@/layouts/DemoLayout.astro';
+
+import { Container, Frame, Grid, Media, Stack, Flex, Text, Inline, Heading } from 'lism-css/astro';
+import { Button } from '@lism-css/ui/astro';
+import './_style.css';
+---
+
+<DemoLayout title="Information003">
+  <Container isWrapper="m" bgc="base" py="50" set="gutter">
+    <Stack g="20" ai="center" mb="40">
+      <Heading level="2" class="u--trim" fz="2xl" fw="bold">Shop List</Heading>
+      <Text class="u--trim" fz="s" ta="center" o="-20">Our Locations</Text>
+    </Stack>
+    <Stack>
+      <Grid gtc={['auto', null, 'minmax(auto, 300px) 1fr']} g="40" py="40" bd-y-e>
+        <Frame as="figure" ar="4/3" bdrs="10">
+          <Media src="https://cdn.lism-css.com/random/img?category=room&r=1" alt="" width="960" height="640" />
+        </Frame>
+        <Stack g="20">
+          <Text class="u--trim" fz="l" fw="bold" lts="l">Tokyo Main Store</Text>
+          <Stack fz="s" g="0">
+            <p>1-1-1-1 Jingumae, Shibuya-ku, Tokyo 150-0001</p>
+            <p>TEL: 03-1234-5678</p>
+            <p>Hours: 10:00 - 20:00</p>
+            <p>Closed: Wednesdays</p>
+          </Stack>
+          <Flex jc="fe" my-s="auto" g="20">
+            <Button href="#" fz="s" bdrs="10">
+              <Inline gc="1">Web Site</Inline>
+            </Button>
+            <Button variant="outline" href="#" fz="s" bdrs="10">Google Map</Button>
+          </Flex>
+        </Stack>
+      </Grid>
+      <Grid gtc={['auto', null, 'minmax(auto, 300px) 1fr']} g="40" py="40" bd-y-e>
+        <Frame as="figure" ar="4/3" bdrs="10">
+          <Media src="https://cdn.lism-css.com/random/img?category=room&r=2" alt="" width="960" height="640" />
+        </Frame>
+        <Stack g="20">
+          <Text class="u--trim" fz="l" fw="bold" lts="l">Osaka Branch</Text>
+          <Stack fz="s">
+            <p>1-1-1-1 Umeda, Kita-ku, Osaka 530-0001</p>
+            <p>TEL: 06-1234-5678</p>
+            <p>Hours: 10:00 - 20:00</p>
+            <p>Closed: Wednesdays</p>
+          </Stack>
+          <Flex jc="fe" my-s="auto" g="20">
+            <Button href="#" fz="s" bdrs="10">
+              <Inline gc="1">Web Site</Inline>
+            </Button>
+            <Button variant="outline" href="#" fz="s" bdrs="10">Google Map</Button>
+          </Flex>
+        </Stack>
+      </Grid>
+      <Grid gtc={['auto', null, 'minmax(auto, 300px) 1fr']} g="40" py="40" bd-y-e>
+        <Frame as="figure" ar="4/3" bdrs="10">
+          <Media src="https://cdn.lism-css.com/random/img?category=room&r=3" alt="" width="960" height="640" />
+        </Frame>
+        <Stack g="20">
+          <Text class="u--trim" fz="l" fw="bold" lts="l">Fukuoka Branch</Text>
+          <Stack fz="s">
+            <p>1-1-1-1 Tenjin, Chuo-ku, Fukuoka 810-0001</p>
+            <p>TEL: 092-1234-5678</p>
+            <p>Hours: 10:00 - 20:00</p>
+            <p>Closed: Wednesdays</p>
+          </Stack>
+          <Flex jc="fe" my-s="auto" g="20">
+            <Button variant="outline" href="#" fz="s" bdrs="10">Google Map</Button>
+          </Flex>
+        </Stack>
+      </Grid>
+    </Stack>
+  </Container>
+</DemoLayout>

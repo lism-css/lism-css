@@ -1,0 +1,33 @@
+---
+import DemoLayout from '@/layouts/DemoLayout.astro';
+
+import { Container, Columns, Frame, Flex, Media, Stack, Heading } from 'lism-css/astro';
+import { Button } from '@lism-css/ui/astro';
+import './_style.css';
+---
+
+<DemoLayout title="Section013">
+  <Container isWrapper="l" bgc="gray" py="50" set="gutter">
+    <Columns cols={[1, null, 3]} g={['30', null, '40']} c="white">
+      <Stack g="30">
+        <Heading level="2" class="u--trim" fz="5xl" ff="accent" fs="italic" fw="900" lts="l">Feature</Heading>
+        <p>
+          Our service aims to provide the best possible experience for our users. We have built a platform that combines ease of use with security,
+          leveraging the latest technology.
+        </p>
+      </Stack>
+      <Frame as="figure" ar={['4/3', null, '3/4']}>
+        <Media src="https://cdn.lism-css.com/random/img?category=v" alt="" width="960" height="640" />
+      </Frame>
+      <Stack aslf="end" g="30">
+        <p>
+          We have built a platform that combines ease of use with security, leveraging the latest technology. To accommodate diverse needs, we also
+          offer flexible customization options.
+        </p>
+        <Flex>
+          <Button href="#" variant="outline" c="white" w="stretch" min-w="8rem" py="15" bdrs="10">View Detail</Button>
+        </Flex>
+      </Stack>
+    </Columns>
+  </Container>
+</DemoLayout>

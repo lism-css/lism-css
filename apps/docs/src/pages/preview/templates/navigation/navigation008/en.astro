@@ -1,0 +1,135 @@
+---
+import DemoLayout from '@/layouts/DemoLayout.astro';
+
+import { Stack, Container, Frame, Flex, Grid, FluidCols, Media, Layer, Icon, Text, Heading } from 'lism-css/astro';
+import { Button } from '@lism-css/ui/astro';
+import './_style.css';
+---
+
+<DemoLayout title="Navigation008">
+  <Grid gtr="auto" gtc={['auto', null, 'auto 1fr']} pos="relative">
+    <Container isWrapper="l" gr="1" gc="1" py="50" set="gutter" pos="relative" z="1">
+      <Stack g="40">
+        <Stack g="30" ai="fs" c="white">
+          <Heading level="2" class="u--trim" fz="3xl" fw="bold" ta="center">Open Positions</Heading>
+          <p>
+            We are hiring for a variety of roles related to our service development.<br />
+            If you are interested, please review the job details and feel free to contact us.
+          </p>
+        </Stack>
+        <Stack g="50">
+          <FluidCols cols="18rem" g="30">
+            <Grid gtr="subgrid" gr="span 3" g="30" p="40" bgc="white" bdrs="10">
+              <Text class="u--trim" fz="xl" fw="bold">Web Director</Text>
+              <Text class="u--trim" fz="s" o="-20">
+                Responsible for improving our website and app features, from planning new content to managing production progress. Using data
+                analysis, you will help grow our service into something more attractive and user-friendly.
+              </Text>
+              <Flex>
+                <Button layout="grid" href="#" gtc="1em 1fr 1em" g="15" w="stretch" py="15" bdrs="10">
+                  <Text gc="2">View Job Details</Text>
+                  <Icon icon="arrow-right" fz="100%" gc="3" />
+                </Button>
+              </Flex>
+            </Grid>
+            <Grid gtr="subgrid" gr="span 3" g="30" p="40" bgc="white" bdrs="10">
+              <Text class="u--trim" fz="xl" fw="bold">UI/UX Designer</Text>
+              <Text class="u--trim" fz="s" o="-20">
+                Design intuitive and delightful user experiences that maximize the excitement of travel. Through screen design, prototyping, and user
+                testing for websites and apps, you will drive overall service quality improvement.
+              </Text>
+              <Flex>
+                <Button layout="grid" href="#" gtc="1em 1fr 1em" g="15" w="stretch" py="15" bdrs="10">
+                  <Text gc="2">View Job Details</Text>
+                  <Icon icon="arrow-right" fz="100%" gc="3" />
+                </Button>
+              </Flex>
+            </Grid>
+            <Grid gtr="subgrid" gr="span 3" g="30" p="40" bgc="white" bdrs="10">
+              <Text class="u--trim" fz="xl" fw="bold">Front-end Engineer</Text>
+              <Text class="u--trim" fz="s" o="-20">
+                Accurately implement UI designs using modern technologies such as React and Vue.js. Your role is to deliver smooth interactions and
+                fast page loads so users can search for trips without frustration.
+              </Text>
+              <Flex>
+                <Button layout="grid" href="#" gtc="1em 1fr 1em" g="15" w="stretch" py="15" bdrs="10">
+                  <Text gc="2">View Job Details</Text>
+                  <Icon icon="arrow-right" fz="100%" gc="3" />
+                </Button>
+              </Flex>
+            </Grid>
+            <Grid gtr="subgrid" gr="span 3" g="30" p="40" bgc="white" bdrs="10">
+              <Text class="u--trim" fz="xl" fw="bold">Back-end Engineer</Text>
+              <Text class="u--trim" fz="s" o="-20">
+                Develop and operate the server-side systems that form the core of our service, including travel plan search, booking, and payment
+                infrastructure. Achieve both scalability and robustness to ensure stable service delivery.
+              </Text>
+              <Flex>
+                <Button layout="grid" href="#" gtc="1em 1fr 1em" g="15" w="stretch" py="15" bdrs="10">
+                  <Text gc="2">View Job Details</Text>
+                  <Icon icon="arrow-right" fz="100%" gc="3" />
+                </Button>
+              </Flex>
+            </Grid>
+            <Grid gtr="subgrid" gr="span 3" g="30" p="40" bgc="white" bdrs="10">
+              <Text class="u--trim" fz="xl" fw="bold">Digital Marketer</Text>
+              <Text class="u--trim" fz="s" o="-20">
+                Leverage SEO, ad operations, social media, and content marketing to promote our service and acquire new customers. Drive business
+                growth through data-driven strategy planning and execution.
+              </Text>
+              <Flex>
+                <Button layout="grid" href="#" gtc="1em 1fr 1em" g="15" w="stretch" py="15" bdrs="10">
+                  <Text gc="2">View Job Details</Text>
+                  <Icon icon="arrow-right" fz="100%" gc="3" />
+                </Button>
+              </Flex>
+            </Grid>
+            <Grid gtr="subgrid" gr="span 3" g="30" p="40" bgc="white" bdrs="10">
+              <Text class="u--trim" fz="xl" fw="bold">Content Creator</Text>
+              <Text class="u--trim" fz="s" o="-20">
+                Plan and produce articles, videos, and photos for social media that convey the appeal of travel destinations. Storytelling skills that
+                inspire people's desire to travel are essential.
+              </Text>
+              <Flex>
+                <Button layout="grid" href="#" gtc="1em 1fr 1em" g="15" w="stretch" py="15" bdrs="10">
+                  <Text gc="2">View Job Details</Text>
+                  <Icon icon="arrow-right" fz="100%" gc="3" />
+                </Button>
+              </Flex>
+            </Grid>
+            <Grid gtr="subgrid" gr="span 3" g="30" p="40" bgc="white" bdrs="10">
+              <Text class="u--trim" fz="xl" fw="bold">Customer Support</Text>
+              <Text class="u--trim" fz="s" o="-20">
+                Support customers from booking inquiries to troubleshooting during travel. Through email and phone communication, you play a vital
+                role in resolving concerns and ensuring customers can enjoy their trips with peace of mind.
+              </Text>
+              <Flex>
+                <Button layout="grid" href="#" gtc="1em 1fr 1em" g="15" w="stretch" py="15" bdrs="10">
+                  <Text gc="2">View Job Details</Text>
+                  <Icon icon="arrow-right" fz="100%" gc="3" />
+                </Button>
+              </Flex>
+            </Grid>
+            <Grid gtr="subgrid" gr="span 3" g="30" p="40" bgc="white" bdrs="10">
+              <Text class="u--trim" fz="xl" fw="bold">Data Analyst</Text>
+              <Text class="u--trim" fz="s" o="-20">
+                Analyze booking data and user behavior logs to extract insights for service improvement and marketing strategy. A position that
+                supports data-driven decision making and contributes to business growth.
+              </Text>
+              <Flex>
+                <Button layout="grid" href="#" gtc="1em 1fr 1em" g="15" w="stretch" py="15" bdrs="10">
+                  <Text gc="2">View Job Details</Text>
+                  <Icon icon="arrow-right" fz="100%" gc="3" />
+                </Button>
+              </Flex>
+            </Grid>
+          </FluidCols>
+        </Stack>
+      </Stack>
+    </Container>
+    <Frame gr="1" gc="1" pos="a" w="100%" h="100%">
+      <Media src="https://cdn.lism-css.com/random/img?category=working&r=1" alt="" width="960" height="640" />
+      <Layer style={{ backdropFilter: 'blur(4px)' }} bgc="black:50%" />
+    </Frame>
+  </Grid>
+</DemoLayout>

@@ -1,0 +1,39 @@
+---
+import DemoLayout from '@/layouts/DemoLayout.astro';
+
+import { Container, Frame, Columns, Media, Stack } from 'lism-css/astro';
+import { Button } from '@lism-css/ui/astro';
+import './_style.css';
+---
+
+<DemoLayout title="Section003-2">
+  <Container bgc="base">
+    <Columns cols={['1', null, '2']} g="5">
+      <Stack g="40" gr={[null, null, '1']} gc={[null, null, '2']} bgc="base-2" ai="center" jc="center" p="60 50">
+        <h2>Inspiration at Your Fingertips</h2>
+        <Stack g="30">
+          <p>
+            There are wonderful places and stories hidden in your city that you have yet to discover. Our service carefully delivers locally rooted
+            information, from hidden cafes known only to locals to small weekend events.
+          </p>
+          <p>Your usual way home transforms into a road full of new discoveries. Let's start that experience together.</p>
+        </Stack>
+        <Button href="#" min-w="250px" py="15" bdrs="10">View More</Button>
+      </Stack>
+      <Columns cols="2" gc={[null, null, '1']} g="5">
+        <Frame as="figure">
+          <Media src="https://cdn.lism-css.com/random/img?r=1" alt="" width="960" height="640" />
+        </Frame>
+        <Frame as="figure">
+          <Media src="https://cdn.lism-css.com/random/img?r=2" alt="" width="960" height="640" />
+        </Frame>
+        <Frame as="figure">
+          <Media src="https://cdn.lism-css.com/random/img?r=3" alt="" width="960" height="640" />
+        </Frame>
+        <Frame as="figure">
+          <Media src="https://cdn.lism-css.com/random/img?r=4" alt="" width="960" height="640" />
+        </Frame>
+      </Columns>
+    </Columns>
+  </Container>
+</DemoLayout>

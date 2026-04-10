@@ -1,0 +1,40 @@
+---
+import DemoLayout from '@/layouts/DemoLayout.astro';
+
+import { Wrapper, Grid, Flex, Frame, Media, Stack, Flow, Inline, Heading } from 'lism-css/astro';
+import './_style.css';
+---
+
+<DemoLayout title="Greeting002">
+  <Wrapper contentSize="l" py="50" bgc="base" set="gutter">
+    <Stack g="50">
+      <Stack class="u--trimChildren" g="40">
+        <Inline fz="min(22vw, 10rem)" fw="bold" ff="accent" mx-s="-.5rem" c="gray" o="-30" whspace="nowrap">Greeting</Inline>
+        <Heading level="2" fz="3xl" fw="bold" ff="accent">Message from the CEO</Heading>
+      </Stack>
+      <Flow fz="l" lh="l">
+        <p>
+          In today's world where everything is connected to the internet and vast amounts of data are generated, how to safely and effectively utilize
+          that data has become a key source of competitive advantage for businesses.
+        </p>
+        <p>
+          Since our founding, we have focused on technology development in the information security field, providing robust systems and solutions that
+          protect our clients' valuable information assets from all threats. While technology evolves daily, our conviction that "trust" from our
+          clients is the foundation of our business will never waver. Through world-class security technology and consulting, we will continue to
+          contribute to building a social infrastructure where our clients can confidently utilize data and create new value.
+        </p>
+      </Flow>
+      <Flex jc="flex-end">
+        <Grid gtc="6rem auto" g="30" ai="center" px="40">
+          <Frame as="figure" ar="1/1" bdrs="99">
+            <Media src="https://cdn.lism-css.com/random/img?category=ceo" alt="" width="960" height="640" style={{ objectPosition: '50% 20%' }} />
+          </Frame>
+          <Stack g="20" class="u--trimChildren" ff="accent">
+            <Inline fz="l">CEO</Inline>
+            <Inline fz="xl" fw="bold">田中　誠二</Inline>
+          </Stack>
+        </Grid>
+      </Flex>
+    </Stack>
+  </Wrapper>
+</DemoLayout>

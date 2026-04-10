@@ -1,0 +1,99 @@
+---
+import DemoLayout from '@/layouts/DemoLayout.astro';
+
+import { Container, Frame, Cluster, Grid, TileGrid, Icon, LinkBox, Media, Stack, Text, Heading } from 'lism-css/astro';
+import './_style.css';
+---
+
+<DemoLayout title="Member006">
+  <Container isWrapper="l" bgc="base-2" py="50" set="gutter">
+    <Stack g="50">
+      <Heading level="2" class="u--trim" fz="4xl" fw="500" c="gray" ta="center" lts="l">Team</Heading>
+      <TileGrid cols={['1', null, '2']} g="40">
+        <Grid gtr="subgrid" gr="span 2" g="30" bgc="white" p="30" bdrs="10">
+          <Grid gtc="auto 1fr" g="30">
+            <Frame as="figure" ar="1/1" w="stretch" max-w="8rem" bdrs="10">
+              <Media src="https://cdn.lism-css.com/random/img?category=avatar&r=1" alt="" width="960" height="640" />
+            </Frame>
+            <Grid gtc={['auto', '1fr auto']} g="0 30" jc="center">
+              <Stack g="20" jc="center">
+                <Text class="u--trim" fz="l" fw="bold">鈴木 太郎</Text>
+                <Text class="u--trim" fz="xs" o="-10">CEO / Creative Director</Text>
+              </Stack>
+              <Cluster g="20">
+                <LinkBox href="#" c="text" o="-20" hov={{ o: 'inherit' }}><Icon icon="logo-x" fz="l" /></LinkBox>
+                <LinkBox href="#" c="text" o="-20" hov={{ o: 'inherit' }}><Icon icon="logo-instagram" fz="l" /></LinkBox>
+              </Cluster>
+            </Grid>
+          </Grid>
+          <Text class="u--trim" fz="s" o="-10">
+            Founded the company in 2010. Solving numerous client challenges through the power of creativity. He oversees the quality of entire
+            projects and leads the team with strength. Weekend camping is his greatest joy.
+          </Text>
+        </Grid>
+        <Grid gtr="subgrid" gr="span 2" g="30" bgc="white" p="30" bdrs="10">
+          <Grid gtc="auto 1fr" g="30">
+            <Frame as="figure" ar="1/1" w="stretch" max-w="8rem" bdrs="10">
+              <Media src="https://cdn.lism-css.com/random/img?category=avatar&r=2" alt="" width="960" height="640" />
+            </Frame>
+            <Grid gtc={['auto', '1fr auto']} g="0 30" jc="center">
+              <Stack g="20" jc="center">
+                <Text class="u--trim" fz="l" fw="bold">佐藤 美咲</Text>
+                <Text class="u--trim" fz="xs" o="-10">Art Director / UI/UX Designer</Text>
+              </Stack>
+              <Cluster g="20">
+                <LinkBox href="#" c="text" o="-20" hov={{ o: 'inherit' }}><Icon icon="logo-tiktok" fz="l" /></LinkBox>
+                <LinkBox href="#" c="text" o="-20" hov={{ o: 'inherit' }}><Icon icon="logo-youtube" fz="l" /></LinkBox>
+              </Cluster>
+            </Grid>
+          </Grid>
+          <Text class="u--trim" fz="s" o="-10">
+            Specializes in intuitive and beautiful UI/UX design based on human psychology and behavior. She constantly pursues what truly valuable
+            experiences mean for users, overseeing the entire visual direction.
+          </Text>
+        </Grid>
+        <Grid gtr="subgrid" gr="span 2" g="30" bgc="white" p="30" bdrs="10">
+          <Grid gtc="auto 1fr" g="30">
+            <Frame as="figure" ar="1/1" w="stretch" max-w="8rem" bdrs="10">
+              <Media src="https://cdn.lism-css.com/random/img?category=avatar&r=3" alt="" width="960" height="640" />
+            </Frame>
+            <Grid gtc={['auto', '1fr auto']} g="0 30" jc="center">
+              <Stack g="20" jc="center">
+                <Text class="u--trim" fz="l" fw="bold">高橋 健太</Text>
+                <Text class="u--trim" fz="xs" o="-10">Technical Director / Lead Engineer</Text>
+              </Stack>
+              <Cluster g="20">
+                <LinkBox href="#" c="text" o="-20" hov={{ o: 'inherit' }}><Icon icon="logo-x" fz="l" /></LinkBox>
+                <LinkBox href="#" c="text" o="-20" hov={{ o: 'inherit' }}><Icon icon="logo-github" fz="l" /></LinkBox>
+              </Cluster>
+            </Grid>
+          </Grid>
+          <Text class="u--trim" fz="s" o="-10">
+            His passion for the latest web technologies is his greatest weapon. Even with challenging requirements, he leads projects to success
+            through optimal technology selection and implementation. A reliable tech leader who is also passionate about mentoring junior members.
+          </Text>
+        </Grid>
+        <Grid gtr="subgrid" gr="span 2" g="30" bgc="white" p="30" bdrs="10">
+          <Grid gtc="auto 1fr" g="30">
+            <Frame as="figure" ar="1/1" w="stretch" max-w="8rem" bdrs="10">
+              <Media src="https://cdn.lism-css.com/random/img?category=avatar&r=4" alt="" width="960" height="640" />
+            </Frame>
+            <Grid gtc={['auto', '1fr auto']} g="0 30" jc="center">
+              <Stack g="20" jc="center">
+                <Text class="u--trim" fz="l" fw="bold">田中 雄大</Text>
+                <Text class="u--trim" fz="xs" o="-10">Web Director / Project Manager</Text>
+              </Stack>
+              <Cluster g="20">
+                <LinkBox href="#" c="text" o="-20" hov={{ o: 'inherit' }}><Icon icon="logo-x" fz="l" /></LinkBox>
+              </Cluster>
+            </Grid>
+          </Grid>
+          <Text class="u--trim" fz="s" o="-10">
+            The bridge between clients and the production team, he is the commander who keeps projects running smoothly. With careful communication
+            and precise schedule management, he has earned strong trust from clients.
+          </Text>
+        </Grid>
+      </TileGrid>
+    </Stack>
+  </Container>
+</DemoLayout>
