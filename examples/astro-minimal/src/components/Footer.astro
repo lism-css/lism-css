@@ -1,0 +1,50 @@
+---
+import { Lism, Container, Stack, Flex, Text, Link, Divider } from 'lism-css/astro';
+---
+
+<Lism as="footer" py="50">
+  <Container size="m">
+    <Stack g="40">
+      <Flex jc="space-between" g="40">
+        <Stack g="15">
+          <Text fw="bold" fz="l" ff="accent" fs="italic">Aura UI</Text>
+          <Text fz="s" c="text-2" lh="l">Build interfaces that feel inevitable.<br />Open source and free forever.</Text>
+        </Stack>
+        <Flex g="50">
+          <Stack g="15">
+            <Text fz="xs" fw="bold">Product</Text>
+            <Stack g="10">
+              <Link href="#" td="none" c="text-2" hov={{ o: true }} fz="s">Components</Link>
+              <Link href="#" td="none" c="text-2" hov={{ o: true }} fz="s">Templates</Link>
+              <Link href="#" td="none" c="text-2" hov={{ o: true }} fz="s">Changelog</Link>
+            </Stack>
+          </Stack>
+          <Stack g="15">
+            <Text fz="xs" fw="bold">Resources</Text>
+            <Stack g="10">
+              <Link href="#" td="none" c="text-2" hov={{ o: true }} fz="s">Documentation</Link>
+              <Link href="#" td="none" c="text-2" hov={{ o: true }} fz="s">GitHub</Link>
+              <Link href="#" td="none" c="text-2" hov={{ o: true }} fz="s">Community</Link>
+            </Stack>
+          </Stack>
+          <Stack g="15">
+            <Text fz="xs" fw="bold">Company</Text>
+            <Stack g="10">
+              <Link href="#" td="none" c="text-2" hov={{ o: true }} fz="s">About</Link>
+              <Link href="#" td="none" c="text-2" hov={{ o: true }} fz="s">Blog</Link>
+              <Link href="#" td="none" c="text-2" hov={{ o: true }} fz="s">Contact</Link>
+            </Stack>
+          </Stack>
+        </Flex>
+      </Flex>
+      <Divider />
+      <Flex jc="space-between" ai="center" fz="xs" c="text-2">
+        <Text>&copy; 2026 Aura UI. All rights reserved.</Text>
+        <Flex g="20">
+          <Link href="#" td="none" c="text-2" hov={{ o: true }}>Privacy</Link>
+          <Link href="#" td="none" c="text-2" hov={{ o: true }}>Terms</Link>
+        </Flex>
+      </Flex>
+    </Stack>
+  </Container>
+</Lism>

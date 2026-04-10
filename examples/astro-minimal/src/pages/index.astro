@@ -1,0 +1,219 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { Lism, Container, Stack, Box, Center, Cluster, Columns, Text, Heading, Divider } from 'lism-css/astro';
+---
+
+<Layout title="Aura UI - Built with Lism CSS">
+  <Header />
+  <Lism as="main">
+    <!-- Hero -->
+    <Lism as="section" py="60">
+      <Container size="s">
+        <Center>
+          <Stack g="30" ai="center">
+            <Heading level="1" fz="4xl" ff="accent" fs="italic" ta="center">Hello, Lism CSS</Heading>
+            <Text c="text-2" ta="center"
+              >A meticulously crafted component library for designers and<br />developers who refuse to compromise on quality.</Text
+            >
+            <Cluster g="15">
+              <Lism as="a" href="#" px="30" py="10" bgc="text" c="base" bdrs="99" fz="s" fw="bold" td="none" hov={{ o: true }}>Browse Components</Lism
+              >
+              <Lism as="a" href="#" px="30" py="10" bd bdrs="99" fz="s" fw="bold" td="none" hov={{ o: true }}>Read Documentation &rarr;</Lism>
+            </Cluster>
+          </Stack>
+        </Center>
+      </Container>
+    </Lism>
+
+    <!-- Works With -->
+    <Lism as="section" pb="50">
+      <Container size="s">
+        <Stack g="20" ai="center">
+          <Text fz="2xs" c="text-2" fw="bold" tt="upper" lts="0.1em">Works with</Text>
+          <Divider />
+          <Cluster g="40">
+            <Text fz="s" fw="bold" c="text-2">HTML</Text>
+            <Text fz="s" fw="bold" c="text-2">React</Text>
+            <Text fz="s" fw="bold" c="text-2">Next.js</Text>
+            <Text fz="s" fw="bold" c="text-2">Astro</Text>
+          </Cluster>
+        </Stack>
+      </Container>
+    </Lism>
+
+    <!-- Why Aura UI -->
+    <Lism as="section" py="60" bgc="base-2">
+      <Container size="s">
+        <Center>
+          <Stack g="20" ai="center">
+            <Text fz="2xs" c="text-2" fw="bold" tt="upper" lts="0.1em">Why Aura UI</Text>
+            <Heading level="2" fz="3xl" ff="accent" fs="italic" ta="center">Everything you need,<br />nothing you don't.</Heading>
+            <Text c="text-2" ta="center"
+              >Designed for the modern web. Every component is accessible,<br />customizable, and built with performance in mind.</Text
+            >
+          </Stack>
+        </Center>
+      </Container>
+    </Lism>
+
+    <!-- Pixel-Perfect Components -->
+    <Lism as="section" py="60">
+      <Container size="m">
+        <Columns cols="2" g="40" ai="center">
+          <Stack g="20">
+            <Heading level="2" fz="2xl" ff="accent" fs="italic">Pixel-Perfect Components</Heading>
+            <Text c="text-2" lh="l"
+              >Every component is designed down to the last pixel. Consistent spacing, harmonious proportions, and thoughtful interactions that
+              elevate your product.</Text
+            >
+          </Stack>
+          <Box bgc="base-2" bdrs="20" py="60" ta="center">
+            <Text c="text-2" fz="s">Screenshot placeholder</Text>
+          </Box>
+        </Columns>
+      </Container>
+    </Lism>
+
+    <!-- Features -->
+    <Lism as="section" py="60">
+      <Container size="m">
+        <Stack g="40">
+          <Center>
+            <Stack g="15" ai="center">
+              <Text fz="2xs" c="text-2" fw="bold" tt="upper" lts="0.1em">Features</Text>
+              <Heading level="2" fz="3xl" ff="accent" fs="italic" ta="center">Crafted for every detail.</Heading>
+            </Stack>
+          </Center>
+          <Columns cols="3" g="20">
+            <Box p="30" bd bdrs="20">
+              <Stack g="15">
+                <Center w="40px" h="40px" bd bdrs="10">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    ><circle cx="12" cy="12" r="10"></circle><path d="M2 12h20"></path><path
+                      d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg
+                  >
+                </Center>
+                <Text fw="bold">40+ Components</Text>
+                <Text fz="s" c="text-2">Buttons, modals, tables, navigation, and more. All production-ready.</Text>
+              </Stack>
+            </Box>
+            <Box p="30" bd bdrs="20">
+              <Stack g="15">
+                <Center w="40px" h="40px" bd bdrs="10">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"></path></svg
+                  >
+                </Center>
+                <Text fw="bold">Lightweight</Text>
+                <Text fz="s" c="text-2">Tree-shakeable and optimized. Only ship the code you actually use.</Text>
+              </Stack>
+            </Box>
+            <Box p="30" bd bdrs="20">
+              <Stack g="15">
+                <Center w="40px" h="40px" bd bdrs="10">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"><path d="m16 18 6-6-6-6"></path><path d="m8 6-6 6 6 6"></path></svg
+                  >
+                </Center>
+                <Text fw="bold">TypeScript Native</Text>
+                <Text fz="s" c="text-2">Full type safety with intelligent autocomplete for every prop.</Text>
+              </Stack>
+            </Box>
+            <Box p="30" bd bdrs="20">
+              <Stack g="15">
+                <Center w="40px" h="40px" bd bdrs="10">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg
+                  >
+                </Center>
+                <Text fw="bold">Dark Mode</Text>
+                <Text fz="s" c="text-2">Built-in dark mode support with seamless theme switching.</Text>
+              </Stack>
+            </Box>
+            <Box p="30" bd bdrs="20">
+              <Stack g="15">
+                <Center w="40px" h="40px" bd bdrs="10">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    ><path d="M12 2 2 7l10 5 10-5-10-5z"></path><path d="m2 17 10 5 10-5"></path><path d="m2 12 10 5 10-5"></path></svg
+                  >
+                </Center>
+                <Text fw="bold">Themeable</Text>
+                <Text fz="s" c="text-2">CSS variables and design tokens. Match any brand in minutes.</Text>
+              </Stack>
+            </Box>
+            <Box p="30" bd bdrs="20">
+              <Stack g="15">
+                <Center w="40px" h="40px" bd bdrs="10">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    ><rect x="3" y="3" width="7" height="7" rx="1"></rect><rect x="14" y="3" width="7" height="7" rx="1"></rect><rect
+                      x="3"
+                      y="14"
+                      width="7"
+                      height="7"
+                      rx="1"></rect><rect x="14" y="14" width="7" height="7" rx="1"></rect></svg
+                  >
+                </Center>
+                <Text fw="bold">Composable</Text>
+                <Text fz="s" c="text-2">Headless primitives with styled defaults. Compose your own patterns.</Text>
+              </Stack>
+            </Box>
+          </Columns>
+        </Stack>
+      </Container>
+    </Lism>
+  </Lism>
+  <Footer />
+</Layout>

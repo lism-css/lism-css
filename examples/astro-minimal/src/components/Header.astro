@@ -1,0 +1,23 @@
+---
+import { Lism, Container, Flex, Link, Text } from 'lism-css/astro';
+---
+
+<Lism as="header" py="15">
+  <Container size="m">
+    <Flex ai="center" jc="space-between">
+      <Link href="/" hov={{ o: true }} td="none">
+        <Text fw="bold" fz="l" ff="accent" fs="italic">Aura UI</Text>
+      </Link>
+      <Flex as="nav" g="30" fz="s">
+        <Link href="#" td="none" hov={{ o: true }}>Components</Link>
+        <Link href="#" td="none" hov={{ o: true }}>Documentation</Link>
+        <Link href="#" td="none" hov={{ o: true }}>Examples</Link>
+        <Link href="#" td="none" hov={{ o: true }}>Pricing</Link>
+      </Flex>
+      <Flex ai="center" g="20">
+        <Link href="#" td="none" hov={{ o: true }} fz="s">Sign in</Link>
+        <Lism as="a" href="#" px="20" py="5" bgc="text" c="base" bdrs="99" fz="xs" fw="bold" td="none" hov={{ o: true }}>Get Started</Lism>
+      </Flex>
+    </Flex>
+  </Container>
+</Lism>
