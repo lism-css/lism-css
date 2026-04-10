@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Center } from './index';
-import HTML from '../../HTML';
+import { Text } from '../../Text';
 
 const meta: Meta<typeof Center> = {
   title: 'Layout/Center',
@@ -32,8 +32,8 @@ export const WithAspectRatio: Story = {
     bgc: 'base-2',
     children: (
       <>
-        <HTML.p fz="l">TEXT</HTML.p>
-        <HTML.p fz="s">Lorem ipsum dolor sit amet.</HTML.p>
+        <Text fz="l">TEXT</Text>
+        <Text fz="s">Lorem ipsum dolor sit amet.</Text>
       </>
     ),
   },
@@ -49,7 +49,7 @@ export const IntrinsicCenter: Story = {
     bgc: 'base-2',
     children: (
       <>
-        <HTML.p fz="l">TEXT</HTML.p>
+        <Text fz="l">TEXT</Text>
         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
       </>
     ),

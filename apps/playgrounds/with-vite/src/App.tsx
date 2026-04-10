@@ -1,4 +1,4 @@
-import { Box, Flex, Container, HTML, Dummy, Divider, Columns, Icon, Cluster, Lism } from 'lism-css/react';
+import { Box, Flex, Container, Link, Dummy, Divider, Columns, Icon, Cluster, Lism } from 'lism-css/react';
 import { Accordion } from '@lism-css/ui/react';
 import { Lightbulb } from 'lucide-react';
 
@@ -48,9 +48,9 @@ function App() {
       <Dummy length="l" />
 
       <Flex jc="center">
-        <HTML.a href="###" hov="o" bgc="text" lh="xs" c="base" px="20" py="15" td="none" bdrs="99">
+        <Link href="###" hov="o" bgc="text" lh="xs" c="base" px="20" py="15" td="none" bdrs="99">
           Link Button
-        </HTML.a>
+        </Link>
       </Flex>
       <Divider />
       <Accordion.Root>
