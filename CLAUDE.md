@@ -5,23 +5,28 @@
 - 会話・質問は全てこのプロジェクトに関することです。その前提で回答してください
 - 実装・設計・ファイル変更を伴う作業を勝手に行わないこと。ユーザーがタスク実装コマンドやスキルを提示するか、または明示的に実装許可を出すまで待って下さい。
 - 質問への回答や簡単な説明は即座に対応して構いません。
-- `lism-css-guide` スキルは、明示的に指示がない限り読み込まないこと（ユーザー向けのスキルであり、開発中は不要）
 
 
 ## プロジェクト概要
 
-Lism CSS は軽量なCSSフレームワークで、ReactコンポーネントとAstroコンポーネントをnpmパッケージとして公開しています。
-pnpm workspaces と Turbo を使用したモノレポ構造です。
+Lism CSS は軽量な CSS設計フレームワーク。レイアウトモジュール、ユーティリティクラス、デザイントークン等を CSSレイヤー構造で提供し、React / Astro コンポーネントも同梱している。
 
-## ワークスペース一覧
+pnpm workspaces と Turbo を使用したモノレポ構造。lint 系設定ファイルはルート直下に配置。
 
-- `packages/lism-css/`: コアCSSライブラリ（npm公開）- 詳細は [packages/lism-css/CLAUDE.md](packages/lism-css/CLAUDE.md) を参照
-- `packages/lism-ui/`: UIコンポーネントライブラリ（npm公開）- 詳細は [packages/lism-ui/CLAUDE.md](packages/lism-ui/CLAUDE.md) を参照
-- `apps/docs/`: Astro ベースのドキュメントサイト - 詳細は [apps/docs/CLAUDE.md](apps/docs/CLAUDE.md) を参照
-- `apps/playgrounds/with-vite/`: Viteでの動作テスト環境。ここは明示的に指示がない限りは編集したり読み取りしないでください。
-- lint系設定ファイルは、ルート直下に配置しています。
 
-各ワークスペースの詳細な実装やアーキテクチャについては、それぞれの CLAUDE.md ファイルを参照してください。
+### packages（npm 公開）
+- `packages/lism-css/`: コア CSS + React / Astro レイアウトコンポーネント — [CLAUDE.md](packages/lism-css/CLAUDE.md)
+- `packages/lism-ui/`: インタラクティブ UI コンポーネント（Accordion, Modal, Tabs 等）— [CLAUDE.md](packages/lism-ui/CLAUDE.md)
+- `packages/lism-cli/`: Lism UI コンポーネントをプロジェクトに追加する CLI ツール
+- `packages/mcp/`: AI コーディングツール向け MCP サーバー
+
+### apps
+- `apps/docs/`: Astro ベースのドキュメントサイト — [CLAUDE.md](apps/docs/CLAUDE.md)
+- `apps/catalog/`: コンポーネントカタログ
+- `apps/cli/`: CLI レジストリ（lism-cli が参照するコンポーネントデータ）
+- `apps/playgrounds/with-vite/`: Vite での動作テスト環境。明示的に指示がない限り編集・読み取りしないこと
+
+各ワークスペースの詳細な実装やアーキテクチャについては、それぞれの CLAUDE.md や README.md を参照。
 
 
 ## Git / PR 運用
@@ -30,36 +35,23 @@ pnpm workspaces と Turbo を使用したモノレポ構造です。
 - 新しいブランチを作成する際は、必ず `dev` から切ること（`main` から切らない）
 - プルリクエストのターゲットブランチも `dev`
 
-
 ## 主要コマンド
 
-### 開発
 
 ```bash
-cd apps/docs && pnpm dev        # ドキュメントサイト
-cd packages/lism-css && pnpm dev # コアライブラリ開発
+nr dev:docs # ドキュメントサイトlocalhostの立ち上げ
+nr build  # 全ワークスペースを Turbo でビルド
+nr build:core # packages/lism-css のみビルド
+nr build:ui # packages/lism-ui のみビルド
+nr build:docs # apps/docs のみビルド
+nr lint # lintの実行
+nr typecheck #typescript チェック
+nr test #テスト
 ```
 
-### ビルド
 
-```bash
-pnpm build  # 全ワークスペースを Turbo でビルド
-```
+## 注意事項
 
-### リント
-
-```bash
-pnpm lint
-```
-
-### typescript チェック
-
-```bash
-pnpm typecheck
-``` 
-
-### テスト
-
-```bash
-pnpm test
-```
+- `.claude/skills/` 内でソースファイルを参照する場合、相対パスではなく GitHub URL（`https://github.com/lism-css/lism-css/blob/dev/...`）を使用すること
+- スキルやドキュメントの更新時に `packages/mcp/src/data/*.json` を参照しないこと（手動管理に起因する不整合があるため）。情報源は `apps/docs/src/content/` やパッケージソースを使う
+- `lism-css-guide` スキルは、明示的に指示がない限り読み込まないこと（ユーザー向けのスキルであり、開発中は不要）
