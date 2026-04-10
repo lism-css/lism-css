@@ -179,10 +179,10 @@ Default breakpoints: `sm` = 480px, `md` = 800px, `lg` = 1120px (container querie
 Lism CSS provides CSS custom properties for consistent design:
 
 - **Colors:** `--base`, `--base-2`, `--text`, `--text-2`, `--link`, `--divider`, `--brand`, `--accent`, plus palette colors (`--red`, `--blue`, `--green`, etc.)
-- **Spacing:** `--s10` through `--s50` (mapped to rem values)
-- **Font Sizes:** `--fz--xs` through `--fz--2xl`
-- **Border Radius:** `--bdrs--5` (2px) through `--bdrs--99` (99rem)
-- **Shadows:** `--shsz--5` through `--shsz--50` with configurable shadow colors
+- **Spacing:** `--s5`, `--s10`, `--s15`, `--s20`, `--s30`, `--s40` … `--s80` (mapped to rem values)
+- **Font Sizes:** `--fz--2xs` through `--fz--5xl`
+- **Border Radius:** `--bdrs--10` (0.25rem) through `--bdrs--99` (99rem)
+- **Shadows:** `--bxsh--10` through `--bxsh--40` with configurable shadow colors
 - **Container Sizes:** `--sz--xs` (32rem) through `--sz--xl` (1600px)
 
 ## UI Components
