@@ -1,0 +1,72 @@
+---
+import DemoLayout from '@/layouts/DemoLayout.astro';
+
+import { Wrapper, Frame, Grid, Box, Media, Stack, Inline } from 'lism-css/astro';
+import './_style.css';
+---
+
+<DemoLayout title="Information001">
+  <Wrapper bgc="base" py="50" set="gutter">
+    <Stack g="40">
+      <Stack g="20" ai="center">
+        <h2 class="u--trim">Company Information</h2>
+        <Inline class="u--trim" fz="s" ta="center" o="-30">About Us</Inline>
+      </Stack>
+      <Frame as="figure" ar="3/1" bdrs="10">
+        <Media src="https://cdn.lism-css.com/random/img?category=building" alt="" width="960" height="640" />
+      </Frame>
+      <Grid as="dl" className="u--collapseGrid" ov="clip" p="0" gtr="auto" gtc="auto 1fr" cg="50" bd-y>
+        <Grid gtc="subgrid" gc="1/-1" p="20">
+          <dt>Company Name</dt>
+          <dd>Rhythm Inc.</dd>
+        </Grid>
+        <Grid gtc="subgrid" gc="1/-1" p="20">
+          <dt>Founded</dt>
+          <dd>January 1, 2020</dd>
+        </Grid>
+        <Grid gtc="subgrid" gc="1/-1" p="20">
+          <dt>Location</dt>
+          <dd>10000 Marunouchi, Chiyoda-ku, Tokyo</dd>
+        </Grid>
+        <Grid gtc="subgrid" gc="1/-1" p="20">
+          <dt>Representative</dt>
+          <dd>Taro Tanaka</dd>
+        </Grid>
+        <Grid gtc="subgrid" gc="1/-1" p="20">
+          <dt>Business</dt>
+          <dd>Software Development, System Integration, IT Consulting</dd>
+        </Grid>
+        <Grid gtc="subgrid" gc="1/-1" p="20">
+          <dt>Capital</dt>
+          <dd>100 million yen</dd>
+        </Grid>
+        <Grid gtc="subgrid" gc="1/-1" p="20">
+          <dt>Employees</dt>
+          <dd>100</dd>
+        </Grid>
+        <Grid gtc="subgrid" gc="1/-1" p="20">
+          <dt>Banks</dt>
+          <dd>MUFG Bank, Mizuho Bank</dd>
+        </Grid>
+        <Grid gtc="subgrid" gc="1/-1" p="20">
+          <dt>Major Clients</dt>
+          <dd>ABC Corp., XYZ Inc., 123 Co., Ltd.</dd>
+        </Grid>
+        <Grid gtc="subgrid" gc="1/-1" g="40 50" p="20">
+          <dt>Access</dt>
+          <dd>0-minute walk from Tokyo Station<br />*The map below shows Tokyo Station</dd>
+          <Box gc="1/-1">
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3240.8252786101943!2d139.7644908758969!3d35.68130392996982!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x60188bfbd89f700b%3A0x277c49ba34ed38!2z5p2x5Lqs6aeF!5e0!3m2!1sja!2sjp!4v1755771376764!5m2!1sja!2sjp"
+              width="100%"
+              height="400"
+              style="border:0;"
+              allowfullscreen=""
+              loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"></iframe>
+          </Box>
+        </Grid>
+      </Grid>
+    </Stack>
+  </Wrapper>
+</DemoLayout>

@@ -1,0 +1,57 @@
+---
+import DemoLayout from '@/layouts/DemoLayout.astro';
+
+import { Box, Stack, Container, Frame, Grid, TileGrid, Media, Icon, Layer, Text } from 'lism-css/astro';
+import { Button } from '@lism-css/ui/astro';
+import './_style.css';
+---
+
+<DemoLayout title="CTA002">
+  <Stack g="20" pos="relative" py="50">
+    <Frame isLayer>
+      <Media isLayer src="https://cdn.lism-css.com/random/img" alt="" width="960" height="640" />
+      <Layer style={{ backdropFilter: 'blur(4px)' }} bgc="black:30%" />
+    </Frame>
+    <Container isWrapper="l" set="gutter" z="0">
+      <Stack g="40">
+        <Stack g="30" ai="center">
+          <Text class="u--trim" fz="5xl" fw="100" ff="accent" lts="l" c="white" ta="center">Contact</Text>
+          <Text class="u--trim" fz="m" c="white" ta="center">Feel free to contact us</Text>
+        </Stack>
+        <TileGrid cols={['1', null, '3']} g={['30', null, '40']}>
+          <Grid gtr="subgrid" gr="span 2" g="30" bgc="white" p="30" bdrs="10">
+            <Box jslf="c" p="30" bdrs="99" bgc="base-2">
+              <Icon icon="book" fz="4xl" c="text-2" />
+            </Box>
+            <Stack g="20" ai="center">
+              <Text class="u--trim" fz="m">Request a brochure</Text>
+              <Button href="#" variant="outline" w="stretch" jc="center" bdrs="10" py="15" fw="bold">Request Form</Button>
+            </Stack>
+          </Grid>
+          <Grid gtr="subgrid" gr="span 2" g="30" bgc="white" p="30" bdrs="10">
+            <Box jslf="c" p="30" bdrs="99" bgc="base-2">
+              <Icon icon="user" fz="4xl" c="text-2" />
+            </Box>
+            <Stack g="20" ai="center">
+              <Text class="u--trim" fz="m">Call us</Text>
+              <Button href="#" w="stretch" jc="center" bdrs="10" py="15" fw="bold">TEL: 0123-xx-xxxx</Button>
+              <Text class="u--trim" fz="s" lh="s" o="-20">Business hours: 9:00 - 18:00</Text>
+            </Stack>
+          </Grid>
+          <Grid gtr="subgrid" gr="span 2" g="30" bgc="white" p="30" bdrs="10">
+            <Box jslf="c" p="30" bdrs="99" bgc="base-2">
+              <Icon icon="chat" fz="4xl" c="text-2" />
+            </Box>
+            <Stack g="20" ai="center">
+              <Text class="u--trim" fz="m">Send us a message</Text>
+              <Button href="#" w="stretch" jc="center" bgc="accent" bdrs="10" py="15" fw="bold">Chat with us</Button>
+              <Text class="u--trim" fz="xs" o="-20">or</Text>
+              <Button href="#" variant="outline" w="stretch" jc="center" bdrs="10" py="15" fw="bold">Contact via email</Button>
+              <Text class="u--trim" fz="s" lh="s" o="-20">We will reply within 2 business days</Text>
+            </Stack>
+          </Grid>
+        </TileGrid>
+      </Stack>
+    </Container>
+  </Stack>
+</DemoLayout>

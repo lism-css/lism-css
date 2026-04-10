@@ -1,0 +1,134 @@
+---
+import DemoLayout from '@/layouts/DemoLayout.astro';
+
+import { Stack, Container, Frame, FluidCols, Grid, Media, Layer, Center, Cluster, Text, Inline, Heading } from 'lism-css/astro';
+import { Button } from '@lism-css/ui/astro';
+import './_style.css';
+---
+
+<DemoLayout title="Works001">
+  <Container isWrapper="l" py="50" set="gutter">
+    <Stack g="40">
+      <Stack g="20">
+        <Heading level="2" class="u--trim" fz="3xl" fw="bold">Our Works</Heading>
+        <Text class="u--trim" fz="l" o="-20">Works</Text>
+      </Stack>
+      <Cluster g="15">
+        <Button href="####" bdrs="10">All</Button>
+        <Button href="####" bgc="base-2" c="text" bdrs="10">Web</Button>
+        <Button href="####" bgc="base-2" c="text" bdrs="10">Design</Button>
+        <Button href="####" bgc="base-2" c="text" bdrs="10">Video</Button>
+        <Button href="####" bgc="base-2" c="text" bdrs="10">Branding</Button>
+        <Button href="####" bgc="base-2" c="text" bdrs="10">Music</Button>
+      </Cluster>
+      <FluidCols cols="20rem" g="40" ac="start">
+        <Grid gtr="subgrid" gr="span 2" g="30" ai="start">
+          <Stack as="a" isLinkBox href="#" g="30" set="hov">
+            <Frame as="figure" ar="16/9" bdrs="20" pos="relative">
+              <Media src="https://cdn.lism-css.com/random/img?r=1" alt="" width="960" height="640" />
+              <Layer set="transition" hov="to:show" bgc="rgb(0 0 0 / 30%)" style={{ backdropFilter: 'blur(4px)' }}>
+                <Center h="100%" c="white">
+                  <Inline fz="xl" fs="i" fw="light" lts="l" px="20" py="10">View More</Inline>
+                </Center>
+              </Layer>
+            </Frame>
+            <Text class="u--trim" fz="l" fw="bold">Making Everyday Cooking an Exciting Experience</Text>
+          </Stack>
+          <Cluster g="15">
+            <Button href="####" bgc="base-2" fz="s" c="text" bdrs="10">Web</Button>
+            <Button href="####" bgc="base-2" fz="s" c="text" bdrs="10">Branding</Button>
+            <Button href="####" bgc="base-2" fz="s" c="text" bdrs="10">Video</Button>
+          </Cluster>
+        </Grid>
+        <Grid gtr="subgrid" gr="span 2" g="30" ai="start" ai="start">
+          <Stack as="a" isLinkBox href="#" g="30" set="hov">
+            <Frame as="figure" ar="16/9" bdrs="20" pos="relative">
+              <Media src="https://cdn.lism-css.com/random/img?r=2" alt="" width="960" height="640" />
+              <Layer set="transition" hov="to:show" bgc="rgb(0 0 0 / 30%)" style={{ backdropFilter: 'blur(4px)' }}>
+                <Center h="100%" c="white">
+                  <Inline fz="xl" fs="i" fw="light" lts="l" px="20" py="10">View More</Inline>
+                </Center>
+              </Layer>
+            </Frame>
+            <Text class="u--trim" fz="l" fw="bold">Items That Elevate the Quality of Daily Life</Text>
+          </Stack>
+          <Cluster g="15">
+            <Button href="####" bgc="base-2" fz="s" c="text" bdrs="10">Design</Button>
+            <Button href="####" bgc="base-2" fz="s" c="text" bdrs="10">Video</Button>
+          </Cluster>
+        </Grid>
+        <Grid gtr="subgrid" gr="span 2" g="30" ai="start">
+          <Stack as="a" isLinkBox href="#" g="30" set="hov">
+            <Frame as="figure" ar="16/9" bdrs="20" pos="relative">
+              <Media src="https://cdn.lism-css.com/random/img?r=3" alt="" width="960" height="640" />
+              <Layer set="transition" hov="to:show" bgc="rgb(0 0 0 / 30%)" style={{ backdropFilter: 'blur(4px)' }}>
+                <Center h="100%" c="white">
+                  <Inline fz="xl" fs="i" fw="light" lts="l" px="20" py="10">View More</Inline>
+                </Center>
+              </Layer>
+            </Frame>
+            <Text class="u--trim" fz="l" fw="bold">An Object-like Presence</Text>
+          </Stack>
+          <Cluster g="15">
+            <Button href="####" bgc="base-2" fz="s" c="text" bdrs="10">Branding</Button>
+            <Button href="####" bgc="base-2" fz="s" c="text" bdrs="10">Video</Button>
+            <Button href="####" bgc="base-2" fz="s" c="text" bdrs="10">Music</Button>
+          </Cluster>
+        </Grid>
+        <Grid gtr="subgrid" gr="span 2" g="30" ai="start">
+          <Stack as="a" isLinkBox href="#" g="30" set="hov">
+            <Frame as="figure" ar="16/9" bdrs="20" pos="relative">
+              <Media src="https://cdn.lism-css.com/random/img?r=4" alt="" width="960" height="640" />
+              <Layer set="transition" hov="to:show" bgc="rgb(0 0 0 / 30%)" style={{ backdropFilter: 'blur(4px)' }}>
+                <Center h="100%" c="white">
+                  <Inline fz="xl" fs="i" fw="light" lts="l" px="20" py="10">View More</Inline>
+                </Center>
+              </Layer>
+            </Frame>
+            <Text class="u--trim" fz="l" fw="bold">Quiet and Clean Design</Text>
+          </Stack>
+          <Cluster g="15">
+            <Button href="####" bgc="base-2" fz="s" c="text" bdrs="10">Web</Button>
+            <Button href="####" bgc="base-2" fz="s" c="text" bdrs="10">Design</Button>
+            <Button href="####" bgc="base-2" fz="s" c="text" bdrs="10">Music</Button>
+          </Cluster>
+        </Grid>
+        <Grid gtr="subgrid" gr="span 2" g="30" ai="start">
+          <Stack as="a" isLinkBox href="#" g="30" set="hov">
+            <Frame as="figure" ar="16/9" bdrs="20" pos="relative">
+              <Media src="https://cdn.lism-css.com/random/img?r=5" alt="" width="960" height="640" />
+              <Layer set="transition" hov="to:show" bgc="rgb(0 0 0 / 30%)" style={{ backdropFilter: 'blur(4px)' }}>
+                <Center h="100%" c="white">
+                  <Inline fz="xl" fs="i" fw="light" lts="l" px="20" py="10">View More</Inline>
+                </Center>
+              </Layer>
+            </Frame>
+            <Text class="u--trim" fz="l" fw="bold">Audio That Displays Music as Art in Your Space</Text>
+          </Stack>
+          <Cluster g="15">
+            <Button href="####" bgc="base-2" fz="s" c="text" bdrs="10">Design</Button>
+            <Button href="####" bgc="base-2" fz="s" c="text" bdrs="10">Branding</Button>
+          </Cluster>
+        </Grid>
+        <Grid gtr="subgrid" gr="span 2" g="30" ai="start">
+          <Stack as="a" isLinkBox href="#" g="30" set="hov">
+            <Frame as="figure" ar="16/9" bdrs="20" pos="relative">
+              <Media src="https://cdn.lism-css.com/random/img?r=6" alt="" width="960" height="640" />
+              <Layer set="transition" hov="to:show" bgc="rgb(0 0 0 / 30%)" style={{ backdropFilter: 'blur(4px)' }}>
+                <Center h="100%" c="white">
+                  <Inline fz="xl" fs="i" fw="light" lts="l" px="20" py="10">View More</Inline>
+                </Center>
+              </Layer>
+            </Frame>
+            <Text class="u--trim" fz="l" fw="bold">Dramatically Staging Your Space</Text>
+          </Stack>
+          <Cluster g="15">
+            <Button href="####" bgc="base-2" fz="s" c="text" bdrs="10">Design</Button>
+            <Button href="####" bgc="base-2" fz="s" c="text" bdrs="10">Video</Button>
+            <Button href="####" bgc="base-2" fz="s" c="text" bdrs="10">Music</Button>
+          </Cluster>
+        </Grid>
+      </FluidCols>
+    </Stack>
+  </Container>
+</DemoLayout>

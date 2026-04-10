@@ -1,0 +1,51 @@
+---
+import DemoLayout from '@/layouts/DemoLayout.astro';
+
+import { Container, Frame, TileGrid, Wrapper, Layer, Media, Stack, Flex, Text, Heading } from 'lism-css/astro';
+import { Button } from '@lism-css/ui/astro';
+import './_style.css';
+---
+
+<DemoLayout title="Section007">
+  <Container pos="relative">
+    <TileGrid isLayer cols={['2', null, '4']} rows={['2', null, '1']} g="0">
+      <Frame as="figure" gr={['1', null, '1']} gc={['1', null, '1']} g="15">
+        <Media src="https://cdn.lism-css.com/random/img?category=v&r=1" alt="" width="960" height="640" />
+      </Frame>
+      <Frame as="figure" gr={['1', null, '1']} gc={['2', null, '2']} g="15">
+        <Media src="https://cdn.lism-css.com/random/img?category=v&r=2" alt="" width="960" height="640" />
+      </Frame>
+      <Frame as="figure" gr={['2', null, '1']} gc={['1', null, '3']} g="15">
+        <Media src="https://cdn.lism-css.com/random/img?category=v&r=3" alt="" width="960" height="640" />
+      </Frame>
+      <Frame as="figure" gr={['2', null, '1']} gc={['2', null, '4']} g="15">
+        <Media src="https://cdn.lism-css.com/random/img?category=v&r=4" alt="" width="960" height="640" />
+      </Frame>
+    </TileGrid>
+    <Layer style={{ backdropFilter: 'blur(8px)' }} bgc="black:30%" z="0" />
+    <Wrapper contentSize="s" set="gutter" py="60" c="white" pos="relative">
+      <Stack g="40">
+        <Stack g="30" ai="center">
+          <Text class="u--trim" fz="5xl" fw="100" lts="l">Feature</Text>
+          <Heading level="2" class="u--trim" fz="l" fw="normal" lts="l">About Our Products</Heading>
+        </Stack>
+        <Stack g="30">
+          <p>
+            No matter how beautiful a design may be, it is meaningless without great usability. We have pursued intuitive, seamless operability that
+            communicates intent the moment you touch it.
+          </p>
+          <p>
+            The flicker of light, pleasing operational sounds, the smooth feel of a dial. Meticulous design that appeals to all five senses elevates
+            everyday actions into stress-free, enriching experiences. Enjoy a natural, water-like usability that makes you forget the technology
+            behind it.
+          </p>
+        </Stack>
+        <Flex jc="center">
+          <Button layout="grid" href="#" variant="outline" min-w="14rem" py="15" c="white" bdrs="99">
+            <span>View More</span>
+          </Button>
+        </Flex>
+      </Stack>
+    </Wrapper>
+  </Container>
+</DemoLayout>

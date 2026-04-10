@@ -1,0 +1,80 @@
+---
+import DemoLayout from '@/layouts/DemoLayout.astro';
+
+import { Container, Frame, Grid, Media, Stack, Flex, Text, Heading } from 'lism-css/astro';
+import { Button } from '@lism-css/ui/astro';
+import './_style.css';
+---
+
+<DemoLayout title="Information004">
+  <Container isWrapper="m" bgc="base" py="50" set="gutter">
+    <Stack g="20" ai="center" mb="40">
+      <Heading level="2" class="u--trim" fz="2xl" fw="bold">Offices</Heading>
+      <Text class="u--trim" fz="s" ta="center" o="-20">All Offices</Text>
+    </Stack>
+    <Stack>
+      <Grid gtc={['auto', null, 'minmax(auto, 200px) repeat(2, 1fr)']} g="40" py="40" bd-y-e>
+        <Stack class="u--trimChildren" g="15">
+          <Text fz="l" fw="bold" lts="l">Tokyo Headquarters</Text>
+          <Text fz="s" o="-20">Tokyo Office</Text>
+        </Stack>
+        <Stack g="30">
+          <Stack class="u--trim" fz="s">
+            <p>1-1-1-1 Jingumae, Shibuya-ku, Tokyo 150-0001</p>
+            <p>TEL: 03-1234-5678</p>
+            <p>Hours: 10:00 - 20:00</p>
+            <p>Closed: Wednesdays</p>
+          </Stack>
+          <Flex my-s="auto" g="20">
+            <Button href="#" fz="s" bdrs="99">Web Site</Button>
+            <Button variant="outline" href="#" fz="s" bdrs="99">Google Map</Button>
+          </Flex>
+        </Stack>
+        <Frame as="figure" ar="gold" bdrs="10">
+          <Media src="https://cdn.lism-css.com/random/img?category=office&r=1" alt="" width="960" height="640" />
+        </Frame>
+      </Grid>
+      <Grid gtc={['auto', null, 'minmax(auto, 200px) repeat(2, 1fr)']} g="40" py="40" bd-y-e>
+        <Stack class="u--trimChildren" g="15">
+          <Text fz="l" fw="bold" lts="l">Hokkaido Branch</Text>
+          <Text fz="s" o="-20">Hokkaido Branch</Text>
+        </Stack>
+        <Stack g="30">
+          <Stack class="u--trim" fz="s">
+            <p>1-1-1-1 Kita 1-jo Nishi, Chuo-ku, Sapporo, Hokkaido 060-0001</p>
+            <p>TEL: 011-1234-5678</p>
+            <p>Hours: 10:00 - 20:00</p>
+            <p>Closed: Wednesdays</p>
+          </Stack>
+          <Flex my-s="auto" g="20">
+            <Button href="#" fz="s" bdrs="99">Web Site</Button>
+            <Button variant="outline" href="#" fz="s" bdrs="99">Google Map</Button>
+          </Flex>
+        </Stack>
+        <Frame as="figure" ar="gold" bdrs="10">
+          <Media src="https://cdn.lism-css.com/random/img?category=office&r=2" alt="" width="960" height="640" />
+        </Frame>
+      </Grid>
+      <Grid gtc={['auto', null, 'minmax(auto, 200px) repeat(2, 1fr)']} g="40" py="40" bd-y-e>
+        <Stack class="u--trimChildren" g="15">
+          <Text fz="l" fw="bold" lts="l">Okinawa Branch</Text>
+          <Text fz="s" o="-20">Okinawa Branch</Text>
+        </Stack>
+        <Stack g="30">
+          <Stack class="u--trim" fz="s">
+            <p>1-1-1-1 Kumoji, Naha, Okinawa 900-0001</p>
+            <p>TEL: 03-1234-5678</p>
+            <p>Hours: 10:00 - 20:00</p>
+            <p>Closed: Wednesdays</p>
+          </Stack>
+          <Flex my-s="auto" g="20">
+            <Button variant="outline" href="#" fz="s" bdrs="99">Google Map</Button>
+          </Flex>
+        </Stack>
+        <Frame as="figure" ar="gold" bdrs="10">
+          <Media src="https://cdn.lism-css.com/random/img?category=office&r=3" alt="" width="960" height="640" />
+        </Frame>
+      </Grid>
+    </Stack>
+  </Container>
+</DemoLayout>

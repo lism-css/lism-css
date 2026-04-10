@@ -1,0 +1,127 @@
+---
+import DemoLayout from '@/layouts/DemoLayout.astro';
+
+import { Stack, Container, Frame, Columns, Grid, Media, Flex, Layer, Center, Text, Inline } from 'lism-css/astro';
+import './_style.css';
+---
+
+<DemoLayout title="Feature012">
+  <Container isWrapper="l" py="50" set="gutter">
+    <Stack g="40">
+      <Flex ai="baseline" g="0 30" fxw="wrap">
+        <h2>Browse by Category</h2>
+        <Inline fz="m" fw="bold" o="-20">Categories</Inline>
+      </Flex>
+      <Columns cols={[1, 2, 3]} g="40" cg="40">
+        <Grid g="30" as="a" isLinkBox href="#" set="hov">
+          <Frame as="figure" ar="16/9" bdrs="20" pos="relative">
+            <Media src="https://cdn.lism-css.com/random/img?r=1" alt="" width="960" height="640" />
+            <Layer set="transition" hov="to:show" bgc="rgb(0 0 0 / 30%)" style={{ backdropFilter: 'blur(4px)' }}>
+              <Center h="100%" c="white">
+                <Inline fz="xl" fs="italic" fw="light" lts="l" px="20" py="10">View More</Inline>
+              </Center>
+            </Layer>
+            <Flex pos="absolute" t="0" l="0" lh="1" fz="xs" c="white" bgc="black" p="0.625em .875em" m="20" bdrs="99">
+              <Inline>KITCHEN</Inline>
+            </Flex>
+          </Frame>
+          <Stack g="20">
+            <Text class="u--trim" fz="l" fw="bold">Kitchen</Text>
+            <Text class="u--trim" fz="s"
+              >Turn everyday cooking into a delightful experience. Minimal-design kitchen appliances that beautifully accent your space.</Text
+            >
+          </Stack>
+        </Grid>
+        <Grid g="30" as="a" isLinkBox href="#" set="hov">
+          <Frame as="figure" ar="16/9" bdrs="20" pos="relative">
+            <Media src="https://cdn.lism-css.com/random/img?r=2" alt="" width="960" height="640" />
+            <Layer set="transition" hov="to:show" bgc="rgb(0 0 0 / 30%)" style={{ backdropFilter: 'blur(4px)' }}>
+              <Center h="100%" c="white">
+                <Inline fz="xl" fs="italic" fw="light" lts="l" px="20" py="10">View More</Inline>
+              </Center>
+            </Layer>
+            <Flex pos="absolute" t="0" l="0" lh="1" fz="xs" c="white" bgc="black" p="0.625em .875em" m="20" bdrs="99">
+              <Inline>LIVING & AIR</Inline>
+            </Flex>
+          </Frame>
+          <Stack g="20">
+            <Text class="u--trim" fz="l" fw="bold">Climate & Living Appliances</Text>
+            <Text class="u--trim" fz="s"
+              >Blending seamlessly into your space, creating comfortable air and quality time. Items that elevate your daily life.</Text
+            >
+          </Stack>
+        </Grid>
+        <Grid g="30" as="a" isLinkBox href="#" set="hov">
+          <Frame as="figure" ar="16/9" bdrs="20" pos="relative">
+            <Media src="https://cdn.lism-css.com/random/img?r=3" alt="" width="960" height="640" />
+            <Layer set="transition" hov="to:show" bgc="rgb(0 0 0 / 30%)" style={{ backdropFilter: 'blur(4px)' }}>
+              <Center h="100%" c="white">
+                <Inline fz="xl" fs="italic" fw="light" lts="l" px="20" py="10">View More</Inline>
+              </Center>
+            </Layer>
+            <Flex pos="absolute" t="0" l="0" lh="1" fz="xs" c="white" bgc="black" p="0.625em .875em" m="20" bdrs="99">
+              <Inline>CLEANING</Inline>
+            </Flex>
+          </Frame>
+          <Stack g="20">
+            <Text class="u--trim" fz="l" fw="bold">Vacuum Cleaners</Text>
+            <Text class="u--trim" fz="s">Making even cleaning a beautiful moment. Powerful suction combined with a sculptural design presence.</Text>
+          </Stack>
+        </Grid>
+        <Grid g="30" as="a" isLinkBox href="#" set="hov">
+          <Frame as="figure" ar="16/9" bdrs="20" pos="relative">
+            <Media src="https://cdn.lism-css.com/random/img?r=4" alt="" width="960" height="640" />
+            <Layer set="transition" hov="to:show" bgc="rgb(0 0 0 / 30%)" style={{ backdropFilter: 'blur(4px)' }}>
+              <Center h="100%" c="white">
+                <Inline fz="xl" fs="italic" fw="light" lts="l" px="20" py="10">View More</Inline>
+              </Center>
+            </Layer>
+            <Flex pos="absolute" t="0" l="0" lh="1" fz="xs" c="white" bgc="black" p="0.625em .875em" m="20" bdrs="99">
+              <Inline>LAUNDRY</Inline>
+            </Flex>
+          </Frame>
+          <Stack g="20">
+            <Text class="u--trim" fz="l" fw="bold">Washing Machines & Garment Care</Text>
+            <Text class="u--trim" fz="s">Treating your precious garments gently and beautifully. A quiet, clean design that refines your space.</Text>
+          </Stack>
+        </Grid>
+        <Grid g="30" as="a" isLinkBox href="#" set="hov">
+          <Frame as="figure" ar="16/9" bdrs="20" pos="relative">
+            <Media src="https://cdn.lism-css.com/random/img?r=5" alt="" width="960" height="640" />
+            <Layer set="transition" hov="to:show" bgc="rgb(0 0 0 / 30%)" style={{ backdropFilter: 'blur(4px)' }}>
+              <Center h="100%" c="white">
+                <Inline fz="xl" fs="italic" fw="light" lts="l" px="20" py="10">View More</Inline>
+              </Center>
+            </Layer>
+            <Flex pos="absolute" t="0" l="0" lh="1" fz="xs" c="white" bgc="black" p="0.625em .875em" m="20" bdrs="99">
+              <Inline>AUDIO</Inline>
+            </Flex>
+          </Frame>
+          <Stack g="20">
+            <Text class="u--trim" fz="l" fw="bold">Audio</Text>
+            <Text class="u--trim" fz="s">Moving, crystal-clear, immersive sound. Audio that displays music like art in your space.</Text>
+          </Stack>
+        </Grid>
+        <Grid g="30" as="a" isLinkBox href="#" set="hov">
+          <Frame as="figure" ar="16/9" bdrs="20" pos="relative">
+            <Media src="https://cdn.lism-css.com/random/img?r=6" alt="" width="960" height="640" />
+            <Layer set="transition" hov="to:show" bgc="rgb(0 0 0 / 30%)" style={{ backdropFilter: 'blur(4px)' }}>
+              <Center h="100%" c="white">
+                <Inline fz="xl" fs="italic" fw="light" lts="l" px="20" py="10">View More</Inline>
+              </Center>
+            </Layer>
+            <Flex pos="absolute" t="0" l="0" lh="1" fz="xs" c="white" bgc="black" p="0.625em .875em" m="20" bdrs="99">
+              <Inline>LIGHTING</Inline>
+            </Flex>
+          </Frame>
+          <Stack g="20">
+            <Text class="u--trim" fz="l" fw="bold">Lighting</Text>
+            <Text class="u--trim" fz="s"
+              >Orchestrating light and shadow to dramatically enhance your space. Design comfortable illumination for every scene.</Text
+            >
+          </Stack>
+        </Grid>
+      </Columns>
+    </Stack>
+  </Container>
+</DemoLayout>

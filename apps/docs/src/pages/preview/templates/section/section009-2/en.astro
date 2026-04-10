@@ -1,0 +1,36 @@
+---
+import DemoLayout from '@/layouts/DemoLayout.astro';
+
+import { Stack, Container, Frame, Grid, Media, Flex, Icon, Text, Inline, Heading } from 'lism-css/astro';
+import './_style.css';
+---
+
+<DemoLayout title="Section009-2">
+  <Container isWrapper="l" py="50" set="gutter">
+    <Stack g="50">
+      <Grid gtc={['auto', null, '1fr 1fr']}>
+        <Stack g="50" jc="center" p={['40', null, '50']}>
+          <Stack as="hgroup" g="30" ai="flex-start" jc="center">
+            <Text class="u--trim" fz="4rem" fw="100" fs="i" lts="l">Feature</Text>
+            <Heading level="2" class="u--trim" fz="xl" fw="bold" lts="l">The Society We Envision Lies Ahead</Heading>
+          </Stack>
+          <Text fz="m" lh="l">
+            Our service aims for a sustainable future, placing importance on environmental consideration and social responsibility.<br />
+            By deepening our ties with local communities and respecting diverse values, we are building communities that can grow together. Leveraging innovative
+            technology and design to enhance user experience, we strive for transparent communication and building trust. We will continue our efforts to
+            achieve both sustainable development and social contribution.
+          </Text>
+          <Flex jc="flex-end">
+            <Flex as="a" isLinkBox href="#" ai="center" g="15" set="transition" hov="c">
+              <Inline fz="l" fs="i">View More</Inline>
+              <Icon icon="arrow-right" />
+            </Flex>
+          </Flex>
+        </Stack>
+        <Frame as="figure" gr={[null, null, '1']} gc={['1', null, '1']} bdrs="10">
+          <Media src="https://cdn.lism-css.com/random/img" alt="" width="960" height="640" />
+        </Frame>
+      </Grid>
+    </Stack>
+  </Container>
+</DemoLayout>

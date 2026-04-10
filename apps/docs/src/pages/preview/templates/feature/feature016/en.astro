@@ -1,0 +1,56 @@
+---
+import DemoLayout from '@/layouts/DemoLayout.astro';
+
+import { Container, Frame, Grid, Media, Stack, Flex, Text, Heading } from 'lism-css/astro';
+import { Button } from '@lism-css/ui/astro';
+import './_style.css';
+---
+
+<DemoLayout title="Feature016">
+  <Container isWrapper="l" bgc="base" py="50" set="gutter">
+    <Grid gtc={['auto', null, 'minmax(20rem, 1fr) 2fr']} g={['40', '50']} bgc="base-2" p={['50 40', '50']} bdrs="20">
+      <Stack gr="1" g="40">
+        <Stack g="30">
+          <Heading level="2" class="u--trim" fz="3xl" fw="bold" lh="l" c="gray"
+            >Captivating Spots<br />for a Truly Unique<br />and Special Experience</Heading
+          >
+          <Text class="u--trim" fz="m" o="-20">Feature special spots</Text>
+        </Stack>
+        <Text>
+          Elevate your journey to an extraordinary experience. We are a premium travel service specializing in luxury hotels, hidden resorts, and
+          exclusive transportation arrangements around the world. From travel to accommodation and dining, we provide the finest hospitality. We
+          promise you a luxurious time of pure fulfillment, away from the hustle and bustle.
+        </Text>
+        <Flex my-s="auto">
+          <Button href="#" jc="center" w="stretch" p="15" bdrs="10">View More</Button>
+        </Flex>
+      </Stack>
+      <Grid gtc="repeat(2, 1fr)" g="30" ac="start">
+        <Grid gtr="subgrid" gr="span 2" g="20">
+          <Frame as="figure" ar="4/3" bdrs="10">
+            <Media src="https://cdn.lism-css.com/random/img?r=1" alt="" width="960" height="640" />
+          </Frame>
+          <Text class="u--trim" fz="s" c="gray">A dreamlike and beautiful sunset</Text>
+        </Grid>
+        <Grid gtr="subgrid" gr="span 2" g="20">
+          <Frame as="figure" ar="4/3" bdrs="10">
+            <Media src="https://cdn.lism-css.com/random/img?r=2" alt="" width="960" height="640" />
+          </Frame>
+          <Text class="u--trim" fz="s" c="gray">A scenic spot overlooking the vast sky</Text>
+        </Grid>
+        <Grid gtr="subgrid" gr="span 2" g="20">
+          <Frame as="figure" ar="4/3" bdrs="10">
+            <Media src="https://cdn.lism-css.com/random/img?r=3" alt="" width="960" height="640" />
+          </Frame>
+          <Text class="u--trim" fz="s" c="gray">A tranquil world of blue</Text>
+        </Grid>
+        <Grid gtr="subgrid" gr="span 2" g="20">
+          <Frame as="figure" ar="4/3" bdrs="10">
+            <Media src="https://cdn.lism-css.com/random/img?r=4" alt="" width="960" height="640" />
+          </Frame>
+          <Text class="u--trim" fz="s" c="gray">A gentle moment feeling the breeze</Text>
+        </Grid>
+      </Grid>
+    </Grid>
+  </Container>
+</DemoLayout>

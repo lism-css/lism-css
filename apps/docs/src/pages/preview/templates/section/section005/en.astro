@@ -1,0 +1,51 @@
+---
+import DemoLayout from '@/layouts/DemoLayout.astro';
+import { Button } from '@lism-css/ui/astro';
+
+import { Container, Frame, Flex, Grid, Layer, Media, Stack, Heading } from 'lism-css/astro';
+import './_style.css';
+---
+
+<DemoLayout title="Section005">
+  <Container bgc="base">
+    <Grid gtr={['auto', '100svh']} gtc="auto">
+      <Grid gr="1 / -1" gc="1 / -1" gtc="1fr 1fr" gtr="1fr 1fr">
+        <Frame as="figure" gr="1" gc="1">
+          <Media src="https://cdn.lism-css.com/random/img?category=japan&r=1" alt="" width="960" height="640" />
+        </Frame>
+        <Frame as="figure" gr="1" gc="2">
+          <Media src="https://cdn.lism-css.com/random/img?category=japan&r=2" alt="" width="960" height="640" />
+        </Frame>
+        <Frame as="figure" gr="2" gc="1">
+          <Media src="https://cdn.lism-css.com/random/img?category=japan&r=3" alt="" width="960" height="640" />
+        </Frame>
+        <Frame as="figure" gr="2" gc="2">
+          <Media src="https://cdn.lism-css.com/random/img?category=japan&r=4" alt="" width="960" height="640" />
+        </Frame>
+      </Grid>
+      <Grid pos="relative" gr="1 / -1" gc="1 / -1">
+        <Layer gr="1 / -1" gc="1 / -1" style={{ backdropFilter: 'blur(4px)' }} bgc="black:30%" z="0" />
+        <Grid gr="1 / -1" gc="1 / -1" ai="center" jc="center" p="40" z="1">
+          <Stack g="40" ai="center" w="stretch" max-w="450px" bgc="base" bdrs="10" p={['40', '50']} z="1">
+            <Heading level="2" class="u--trim">A Moment to Center Your Mind</Heading>
+            <Stack g="20">
+              <p>In our busy daily lives, we tend to put ourselves last. Why not take just a few minutes to sit quietly with your own thoughts?</p>
+              <p>
+                Our service offers guided meditations supervised by experts, soothing nature sounds, and other content designed to calm your mind.
+              </p>
+              <p>
+                In the morning, during a work break, or before bed. Anytime, anywhere, easily reset your mind and rediscover a calm, positive version
+                of yourself.
+              </p>
+            </Stack>
+            <Flex w="stretch" jc="center">
+              <Button layout="grid" href="#" w="100%" max-w="250px" py="15" bdrs="10">
+                <span>View More</span>
+              </Button>
+            </Flex>
+          </Stack>
+        </Grid>
+      </Grid>
+    </Grid>
+  </Container>
+</DemoLayout>

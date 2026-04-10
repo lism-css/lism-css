@@ -1,0 +1,64 @@
+---
+import DemoLayout from '@/layouts/DemoLayout.astro';
+import { Button } from '@lism-css/ui/astro';
+
+import { Container, Flex, Grid, Icon, Stack, Text, Inline, Heading } from 'lism-css/astro';
+import './_style.css';
+---
+
+<DemoLayout title="PriceTable001">
+  <Container isWrapper="l" bgc="base" py="50" set="gutter">
+    <Stack g="50">
+      <Heading level="2" class="u--trim" fz="2xl" fw="bold" ta="center">Pricing Plans</Heading>
+      <Grid gtc="repeat(auto-fit, minmax(18rem, 1fr))" g="40">
+        <Grid gtr="subgrid" gr="span 4" g="30" bgc="white" p="40" bd bdc="blue" bdw="2px" bdrs="20" bxsh="20">
+          <Stack w="stretch" g="20">
+            <Inline class="u--trim" fz="m" fw="bold" c="blue">Hobby</Inline>
+            <Inline class="u--trim" fz="xl" fw="bold">Free</Inline>
+          </Stack>
+          <Text class="u--trim" fz="xs" o="-20">
+            No setup fees or hidden charges. You can access all features with only the displayed monthly rate. There are no contract commitments, so
+            you can change or cancel your plan at any time with peace of mind.
+          </Text>
+          <Stack as="ul" g="10">
+            <Flex as="li" g="15" ai="center"><Icon icon="check" c="blue" /><Inline fz="s">Tax return document creation</Inline></Flex>
+            <Flex as="li" g="15" ai="center"><Icon icon="check" c="blue" /><Inline fz="s">Bank & card integration</Inline></Flex>
+            <Flex as="li" g="15" ai="center"><Icon icon="check" c="blue" /><Inline fz="s">Auto journal entry</Inline></Flex>
+            <Flex as="li" g="15" ai="center"><Icon icon="check" c="blue" /><Inline fz="s">Monthly financial reports</Inline></Flex>
+            <Flex as="li" g="15" ai="center"><Icon icon="check" c="blue" /><Inline fz="s">Team invitations (up to 3)</Inline></Flex>
+            <Flex as="li" g="15" ai="center"><Icon icon="check" c="blue" /><Inline fz="s">Data backup</Inline></Flex>
+            <Flex as="li" g="15" ai="center"><Icon icon="check" c="blue" /><Inline fz="s">Chat support</Inline></Flex>
+            <Flex as="li" g="15" ai="center"><Icon icon="check" c="blue" /><Inline fz="s">Phone support</Inline></Flex>
+          </Stack>
+          <Button href="#" bgc="blue" py="15" bdrs="10">Get Started</Button>
+        </Grid>
+        <Grid gtr="subgrid" gr="span 4" g="30" bgc="gray:5%" p="40" bdrs="20" bxsh="20">
+          <Stack w="stretch" g="20">
+            <Inline class="u--trim" fz="m" fw="bold" c="blue">Personal</Inline>
+            <Flex ai="end" g="10">
+              <Inline class="u--trim" fz="xl" fw="bold">$19.80</Inline>
+              <Inline class="u--trim" fz="xs" fw="bold">/mo</Inline>
+            </Flex>
+          </Stack>
+          <Text class="u--trim" fz="xs" o="-20">
+            Comprehensive support from our dedicated specialists is included. Feel free to reach out via email or chat anytime for questions about
+            operations or accounting consultations.
+          </Text>
+          <Stack as="ul" g="10">
+            <Flex as="li" g="15" ai="center"><Icon icon="check" c="blue" /><Inline fz="s">Tax return document creation</Inline></Flex>
+            <Flex as="li" g="15" ai="center"><Icon icon="check" c="blue" /><Inline fz="s">Bank & card integration</Inline></Flex>
+            <Flex as="li" g="15" ai="center"><Icon icon="check" c="blue" /><Inline fz="s">Auto journal entry</Inline></Flex>
+            <Flex as="li" g="15" ai="center"><Icon icon="check" c="blue" /><Inline fz="s">Monthly financial reports</Inline></Flex>
+            <Flex as="li" g="15" ai="center"><Icon icon="check" c="blue" /><Inline fz="s">Team invitations (up to 3)</Inline></Flex>
+            <Flex as="li" g="15" ai="center"><Icon icon="check" c="blue" /><Inline fz="s">Data backup</Inline></Flex>
+            <Flex as="li" g="15" ai="center"><Icon icon="check" c="blue" /><Inline fz="s">Chat support</Inline></Flex>
+            <Flex as="li" g="15" ai="center"><Icon icon="check" c="blue" /><Inline fz="s">Phone support</Inline></Flex>
+            <Flex as="li" g="15" ai="center"><Icon icon="check" c="blue" /><Inline fz="s">API integration</Inline></Flex>
+            <Flex as="li" g="15" ai="center"><Icon icon="check" c="blue" /><Inline fz="s">Invoice mailing service</Inline></Flex>
+          </Stack>
+          <Button href="#" py="15" bdrs="10">Choose Plan</Button>
+        </Grid>
+      </Grid>
+    </Stack>
+  </Container>
+</DemoLayout>

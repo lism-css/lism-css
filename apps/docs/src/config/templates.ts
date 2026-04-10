@@ -5,11 +5,13 @@
  * MDXファイルを使わず、このデータから動的にページを生成
  */
 
+import type { LangCode } from '@/config/site';
+
 // テンプレートアイテムの型
 export interface TemplateItem {
   id: string; // テンプレートID（例: cta001）
   title: string; // タイトル（例: CTA001）
-  description: string; // 説明文
+  description: Record<LangCode, string>; // 言語別の説明文
   draft?: boolean; // 下書きフラグ（本番環境では非公開）
 }
 
@@ -24,10 +26,38 @@ const templates = {
   cta: {
     label: 'CTA',
     items: [
-      { id: 'cta001', title: 'CTA001', description: 'CTA用のテンプレートです。breakpoint「md」以下は1カラムになり、アイテムが縦に並びます。' },
-      { id: 'cta002', title: 'CTA002', description: 'CTA用のテンプレートです。breakpoint「md」以下は1カラムになり、アイテムが縦に並びます。' },
-      { id: 'cta003', title: 'CTA003', description: 'CTA用のテンプレートです。breakpoint「md」以下は1カラムになり、アイテムが縦に並びます。' },
-      { id: 'cta004', title: 'CTA004', description: 'CTA用のテンプレートです。breakpoint「md」以下は1カラムになり、アイテムが縦に並びます。' },
+      {
+        id: 'cta001',
+        title: 'CTA001',
+        description: {
+          ja: 'CTA用のテンプレートです。breakpoint「md」以下は1カラムになり、アイテムが縦に並びます。',
+          en: 'A CTA template. Below the "md" breakpoint, it switches to a single column layout with items stacked vertically.',
+        },
+      },
+      {
+        id: 'cta002',
+        title: 'CTA002',
+        description: {
+          ja: 'CTA用のテンプレートです。breakpoint「md」以下は1カラムになり、アイテムが縦に並びます。',
+          en: 'A CTA template. Below the "md" breakpoint, it switches to a single column layout with items stacked vertically.',
+        },
+      },
+      {
+        id: 'cta003',
+        title: 'CTA003',
+        description: {
+          ja: 'CTA用のテンプレートです。breakpoint「md」以下は1カラムになり、アイテムが縦に並びます。',
+          en: 'A CTA template. Below the "md" breakpoint, it switches to a single column layout with items stacked vertically.',
+        },
+      },
+      {
+        id: 'cta004',
+        title: 'CTA004',
+        description: {
+          ja: 'CTA用のテンプレートです。breakpoint「md」以下は1カラムになり、アイテムが縦に並びます。',
+          en: 'A CTA template. Below the "md" breakpoint, it switches to a single column layout with items stacked vertically.',
+        },
+      },
     ],
   },
   feature: {
@@ -36,82 +66,130 @@ const templates = {
       {
         id: 'feature001',
         title: 'Feature001',
-        description: '特徴・注目コンテンツ用のテンプレートです。breakpoint「md」以下は1カラムで表示され、アイテムが縦に並びます。',
+        description: {
+          ja: '特徴・注目コンテンツ用のテンプレートです。breakpoint「md」以下は1カラムで表示され、アイテムが縦に並びます。',
+          en: 'A template for featured content. Below the "md" breakpoint, it displays in a single column with items stacked vertically.',
+        },
       },
       {
         id: 'feature002',
         title: 'Feature002',
-        description: '特徴・注目コンテンツ用のテンプレートです。breakpoint「md」以下でレイアウトが変わり、アイテムの並びが変更されます。',
+        description: {
+          ja: '特徴・注目コンテンツ用のテンプレートです。breakpoint「md」以下でレイアウトが変わり、アイテムの並びが変更されます。',
+          en: 'A template for featured content. Below the "md" breakpoint, the layout changes and item arrangement is adjusted.',
+        },
       },
       {
         id: 'feature003',
         title: 'Feature003',
-        description: '特徴・注目コンテンツ用のテンプレートです。breakpoint「md」以下はレイアウトが変わり、アイテムの並びが変更されます。',
+        description: {
+          ja: '特徴・注目コンテンツ用のテンプレートです。breakpoint「md」以下はレイアウトが変わり、アイテムの並びが変更されます。',
+          en: 'A template for featured content. Below the "md" breakpoint, the layout changes and item arrangement is adjusted.',
+        },
       },
       {
         id: 'feature004',
         title: 'Feature004',
-        description: '特徴・注目コンテンツ用のテンプレートです。breakpoint「md」以下は1カラムになり、アイテムが縦に並びます。',
+        description: {
+          ja: '特徴・注目コンテンツ用のテンプレートです。breakpoint「md」以下は1カラムになり、アイテムが縦に並びます。',
+          en: 'A template for featured content. Below the "md" breakpoint, it switches to a single column layout with items stacked vertically.',
+        },
       },
       {
         id: 'feature005',
         title: 'Feature005',
-        description: '特徴・注目コンテンツ用のテンプレートです。breakpoint「md」以下は1カラムになり、アイテムが縦に並びます。',
+        description: {
+          ja: '特徴・注目コンテンツ用のテンプレートです。breakpoint「md」以下は1カラムになり、アイテムが縦に並びます。',
+          en: 'A template for featured content. Below the "md" breakpoint, it switches to a single column layout with items stacked vertically.',
+        },
       },
       {
         id: 'feature006',
         title: 'Feature006',
-        description: '特徴・注目コンテンツ用のテンプレートです。breakpoint「md」以下は1カラムになり、アイテムが縦に並びます。',
+        description: {
+          ja: '特徴・注目コンテンツ用のテンプレートです。breakpoint「md」以下は1カラムになり、アイテムが縦に並びます。',
+          en: 'A template for featured content. Below the "md" breakpoint, it switches to a single column layout with items stacked vertically.',
+        },
       },
       {
         id: 'feature007',
         title: 'Feature007',
-        description: '特徴・注目コンテンツ用のテンプレートです。breakpoint「md」以下はレイアウトが変わり、アイテムの並びが変更されます。',
+        description: {
+          ja: '特徴・注目コンテンツ用のテンプレートです。breakpoint「md」以下はレイアウトが変わり、アイテムの並びが変更されます。',
+          en: 'A template for featured content. Below the "md" breakpoint, the layout changes and item arrangement is adjusted.',
+        },
       },
       {
         id: 'feature008',
         title: 'Feature008',
-        description: '特徴・注目コンテンツ用のテンプレートです。breakpoint「md」以下はレイアウトが変わり、アイテムの並びが変更されます。',
+        description: {
+          ja: '特徴・注目コンテンツ用のテンプレートです。breakpoint「md」以下はレイアウトが変わり、アイテムの並びが変更されます。',
+          en: 'A template for featured content. Below the "md" breakpoint, the layout changes and item arrangement is adjusted.',
+        },
       },
       {
         id: 'feature009',
         title: 'Feature009',
-        description: '特徴・注目コンテンツ用のテンプレートです。アイテムの最小幅が設定されており、コンテナ幅に応じてカラム数が変化します。',
+        description: {
+          ja: '特徴・注目コンテンツ用のテンプレートです。アイテムの最小幅が設定されており、コンテナ幅に応じてカラム数が変化します。',
+          en: 'A template for featured content. Items have a minimum width set, and the number of columns changes according to the container width.',
+        },
       },
       {
         id: 'feature010',
         title: 'Feature010',
-        description: '特徴・注目コンテンツ用のテンプレートです。breakpoint「md」以下は1カラムで表示され、アイテムが縦に並びます。',
+        description: {
+          ja: '特徴・注目コンテンツ用のテンプレートです。breakpoint「md」以下は1カラムで表示され、アイテムが縦に並びます。',
+          en: 'A template for featured content. Below the "md" breakpoint, it displays in a single column with items stacked vertically.',
+        },
       },
       {
         id: 'feature011',
         title: 'Feature011',
-        description: '特徴・注目コンテンツ用のテンプレートです。breakpoint「md」以下はレイアウトが変わり、アイテムの並びが変更されます。',
+        description: {
+          ja: '特徴・注目コンテンツ用のテンプレートです。breakpoint「md」以下はレイアウトが変わり、アイテムの並びが変更されます。',
+          en: 'A template for featured content. Below the "md" breakpoint, the layout changes and item arrangement is adjusted.',
+        },
       },
       {
         id: 'feature012',
         title: 'Feature012',
-        description: '特徴・注目コンテンツ用のテンプレートです。breakpoint「md」以下は2カラム、「sm」以下は1カラムで表示されます。',
+        description: {
+          ja: '特徴・注目コンテンツ用のテンプレートです。breakpoint「md」以下は2カラム、「sm」以下は1カラムで表示されます。',
+          en: 'A template for featured content. Below the "md" breakpoint, it displays in 2 columns, and below "sm" it switches to a single column.',
+        },
       },
       {
         id: 'feature013',
         title: 'Feature013',
-        description: '特徴・注目コンテンツ用のテンプレートです。breakpoint「md」以下は2カラム、「sm」以下は1カラムで表示されます。',
+        description: {
+          ja: '特徴・注目コンテンツ用のテンプレートです。breakpoint「md」以下は2カラム、「sm」以下は1カラムで表示されます。',
+          en: 'A template for featured content. Below the "md" breakpoint, it displays in 2 columns, and below "sm" it switches to a single column.',
+        },
       },
       {
         id: 'feature014',
         title: 'Feature014',
-        description: '特徴・注目コンテンツ用のテンプレートです。breakpoint「md」以下は1カラムで表示され、アイテムが縦に並びます。',
+        description: {
+          ja: '特徴・注目コンテンツ用のテンプレートです。breakpoint「md」以下は1カラムで表示され、アイテムが縦に並びます。',
+          en: 'A template for featured content. Below the "md" breakpoint, it displays in a single column with items stacked vertically.',
+        },
       },
       {
         id: 'feature015',
         title: 'Feature015',
-        description: '特徴・注目コンテンツ用のテンプレートです。breakpoint「md」以下は1カラムになり、アイテムが縦に並びます。',
+        description: {
+          ja: '特徴・注目コンテンツ用のテンプレートです。breakpoint「md」以下は1カラムになり、アイテムが縦に並びます。',
+          en: 'A template for featured content. Below the "md" breakpoint, it switches to a single column layout with items stacked vertically.',
+        },
       },
       {
         id: 'feature016',
         title: 'Feature016',
-        description: '特徴・注目コンテンツ用のテンプレートです。breakpoint「md」以下は1カラムになり、アイテムが縦に並びます。',
+        description: {
+          ja: '特徴・注目コンテンツ用のテンプレートです。breakpoint「md」以下は1カラムになり、アイテムが縦に並びます。',
+          en: 'A template for featured content. Below the "md" breakpoint, it switches to a single column layout with items stacked vertically.',
+        },
       },
     ],
   },
@@ -121,15 +199,21 @@ const templates = {
       {
         id: 'greeting001',
         title: 'Greeting001',
-        description: '挨拶用のテンプレートです。breakpoint「md」以下はレイアウトが変わり、アイテムの並びが変更されます。',
+        description: {
+          ja: '挨拶用のテンプレートです。breakpoint「md」以下はレイアウトが変わり、アイテムの並びが変更されます。',
+          en: 'A greeting template. Below the "md" breakpoint, the layout changes and item arrangement is adjusted.',
+        },
       },
-      { id: 'greeting002', title: 'Greeting002', description: '挨拶用のテンプレートです。' },
+      { id: 'greeting002', title: 'Greeting002', description: { ja: '挨拶用のテンプレートです。', en: 'A greeting template.' } },
       {
         id: 'greeting003',
         title: 'Greeting003',
-        description: '挨拶用のテンプレートです。breakpoint「md」以下はレイアウトが変わり、アイテムの並びが変更されます。',
+        description: {
+          ja: '挨拶用のテンプレートです。breakpoint「md」以下はレイアウトが変わり、アイテムの並びが変更されます。',
+          en: 'A greeting template. Below the "md" breakpoint, the layout changes and item arrangement is adjusted.',
+        },
       },
-      { id: 'greeting004', title: 'Greeting004', description: '挨拶用のテンプレートです。' },
+      { id: 'greeting004', title: 'Greeting004', description: { ja: '挨拶用のテンプレートです。', en: 'A greeting template.' } },
     ],
   },
   history: {
@@ -138,29 +222,55 @@ const templates = {
       {
         id: 'history001',
         title: 'History001',
-        description: '沿革コンテンツ用のテンプレートです。breakpoint「md」以下はレイアウトが変わり、アイテムの並びが変更されます。',
+        description: {
+          ja: '沿革コンテンツ用のテンプレートです。breakpoint「md」以下はレイアウトが変わり、アイテムの並びが変更されます。',
+          en: 'A history/timeline template. Below the "md" breakpoint, the layout changes and item arrangement is adjusted.',
+        },
       },
       {
         id: 'history002',
         title: 'History002',
-        description: '沿革コンテンツ用のテンプレートです。breakpoint「md」以下はレイアウトが変わり、アイテムの並びが変更されます。',
+        description: {
+          ja: '沿革コンテンツ用のテンプレートです。breakpoint「md」以下はレイアウトが変わり、アイテムの並びが変更されます。',
+          en: 'A history/timeline template. Below the "md" breakpoint, the layout changes and item arrangement is adjusted.',
+        },
       },
     ],
   },
   information: {
     label: 'Information',
     items: [
-      { id: 'information001', title: 'Information001', description: '情報用のテンプレートです。内容は全てダミーコンテンツです。' },
-      { id: 'information002', title: 'Information002', description: '情報用のテンプレートです。内容は全てダミーコンテンツです。' },
+      {
+        id: 'information001',
+        title: 'Information001',
+        description: {
+          ja: '情報用のテンプレートです。内容は全てダミーコンテンツです。',
+          en: 'An information template. All content is placeholder text.',
+        },
+      },
+      {
+        id: 'information002',
+        title: 'Information002',
+        description: {
+          ja: '情報用のテンプレートです。内容は全てダミーコンテンツです。',
+          en: 'An information template. All content is placeholder text.',
+        },
+      },
       {
         id: 'information003',
         title: 'Information003',
-        description: '情報用のテンプレートです。breakpoint「md」以下は1カラムになり、アイテムが縦に並びます。内容は全てダミーコンテンツです。',
+        description: {
+          ja: '情報用のテンプレートです。breakpoint「md」以下は1カラムになり、アイテムが縦に並びます。内容は全てダミーコンテンツです。',
+          en: 'An information template. Below the "md" breakpoint, it switches to a single column layout with items stacked vertically. All content is placeholder text.',
+        },
       },
       {
         id: 'information004',
         title: 'Information004',
-        description: '情報用のテンプレートです。breakpoint「md」以下は1カラムになり、アイテムが縦に並びます。内容は全てダミーコンテンツです。',
+        description: {
+          ja: '情報用のテンプレートです。breakpoint「md」以下は1カラムになり、アイテムが縦に並びます。内容は全てダミーコンテンツです。',
+          en: 'An information template. Below the "md" breakpoint, it switches to a single column layout with items stacked vertically. All content is placeholder text.',
+        },
       },
     ],
   },
@@ -170,32 +280,50 @@ const templates = {
       {
         id: 'member001',
         title: 'Member001',
-        description: 'メンバー一覧用のテンプレートです。アイテムの最小幅が設定されており、コンテナ幅に応じてカラム数が変化します。',
+        description: {
+          ja: 'メンバー一覧用のテンプレートです。アイテムの最小幅が設定されており、コンテナ幅に応じてカラム数が変化します。',
+          en: 'A team member list template. Items have a minimum width set, and the number of columns changes according to the container width.',
+        },
       },
       {
         id: 'member002',
         title: 'Member002',
-        description: 'メンバー一覧用のテンプレートです。アイテムの最小幅が設定されており、コンテナ幅に応じてカラム数が変化します。',
+        description: {
+          ja: 'メンバー一覧用のテンプレートです。アイテムの最小幅が設定されており、コンテナ幅に応じてカラム数が変化します。',
+          en: 'A team member list template. Items have a minimum width set, and the number of columns changes according to the container width.',
+        },
       },
       {
         id: 'member003',
         title: 'Member003',
-        description: 'メンバー一覧用のテンプレートです。アイテムの最小幅が設定されており、コンテナ幅に応じてカラム数が変化します。',
+        description: {
+          ja: 'メンバー一覧用のテンプレートです。アイテムの最小幅が設定されており、コンテナ幅に応じてカラム数が変化します。',
+          en: 'A team member list template. Items have a minimum width set, and the number of columns changes according to the container width.',
+        },
       },
       {
         id: 'member004',
         title: 'Member004',
-        description: 'メンバー一覧用のテンプレートです。アイテムの最小幅が設定されており、コンテナ幅に応じてカラム数が変化します。',
+        description: {
+          ja: 'メンバー一覧用のテンプレートです。アイテムの最小幅が設定されており、コンテナ幅に応じてカラム数が変化します。',
+          en: 'A team member list template. Items have a minimum width set, and the number of columns changes according to the container width.',
+        },
       },
       {
         id: 'member005',
         title: 'Member005',
-        description: 'メンバー一覧用のテンプレートです。アイテムの最小幅が設定されており、コンテナ幅に応じてカラム数が変化します。',
+        description: {
+          ja: 'メンバー一覧用のテンプレートです。アイテムの最小幅が設定されており、コンテナ幅に応じてカラム数が変化します。',
+          en: 'A team member list template. Items have a minimum width set, and the number of columns changes according to the container width.',
+        },
       },
       {
         id: 'member006',
         title: 'Member006',
-        description: 'メンバー一覧用のテンプレートです。アイテムの最小幅が設定されており、コンテナ幅に応じてカラム数が変化します。',
+        description: {
+          ja: 'メンバー一覧用のテンプレートです。アイテムの最小幅が設定されており、コンテナ幅に応じてカラム数が変化します。',
+          en: 'A team member list template. Items have a minimum width set, and the number of columns changes according to the container width.',
+        },
       },
     ],
   },
@@ -205,43 +333,66 @@ const templates = {
       {
         id: 'navigation001',
         title: 'Navigation001',
-        description: 'ナビゲーション用のテンプレートです。アイテムの最小幅が設定されており、コンテナ幅に応じてカラム数が変化します。',
+        description: {
+          ja: 'ナビゲーション用のテンプレートです。アイテムの最小幅が設定されており、コンテナ幅に応じてカラム数が変化します。',
+          en: 'A navigation template. Items have a minimum width set, and the number of columns changes according to the container width.',
+        },
       },
       {
         id: 'navigation002',
         title: 'Navigation002',
-        description:
-          'ナビゲーション用のテンプレートです。アイテムの最小幅が設定されており、コンテナ幅に応じてカラム数が変化します。breakpoint「md」以下は1カラムで表示されます。',
+        description: {
+          ja: 'ナビゲーション用のテンプレートです。アイテムの最小幅が設定されており、コンテナ幅に応じてカラム数が変化します。breakpoint「md」以下は1カラムで表示されます。',
+          en: 'A navigation template. Items have a minimum width set, and the number of columns changes according to the container width. Below the "md" breakpoint, it displays in a single column.',
+        },
       },
       {
         id: 'navigation003',
         title: 'Navigation003',
-        description: 'ナビゲーション用のテンプレートです。アイテムの最小幅が設定されており、コンテナ幅に応じてカラム数が変化します。',
+        description: {
+          ja: 'ナビゲーション用のテンプレートです。アイテムの最小幅が設定されており、コンテナ幅に応じてカラム数が変化します。',
+          en: 'A navigation template. Items have a minimum width set, and the number of columns changes according to the container width.',
+        },
       },
       {
         id: 'navigation004',
         title: 'Navigation004',
-        description: 'ナビゲーション用のテンプレートです。アイテムの最小幅が設定されており、コンテナ幅に応じてカラム数が変化します。',
+        description: {
+          ja: 'ナビゲーション用のテンプレートです。アイテムの最小幅が設定されており、コンテナ幅に応じてカラム数が変化します。',
+          en: 'A navigation template. Items have a minimum width set, and the number of columns changes according to the container width.',
+        },
       },
       {
         id: 'navigation005',
         title: 'Navigation005',
-        description: 'ナビゲーション用のテンプレートです。アイテムの最小幅が設定されており、コンテナ幅に応じてカラム数が変化します。',
+        description: {
+          ja: 'ナビゲーション用のテンプレートです。アイテムの最小幅が設定されており、コンテナ幅に応じてカラム数が変化します。',
+          en: 'A navigation template. Items have a minimum width set, and the number of columns changes according to the container width.',
+        },
       },
       {
         id: 'navigation006',
         title: 'Navigation006',
-        description: 'ナビゲーション用のテンプレートです。アイテムの最小幅が設定されており、コンテナ幅に応じてカラム数が変化します。',
+        description: {
+          ja: 'ナビゲーション用のテンプレートです。アイテムの最小幅が設定されており、コンテナ幅に応じてカラム数が変化します。',
+          en: 'A navigation template. Items have a minimum width set, and the number of columns changes according to the container width.',
+        },
       },
       {
         id: 'navigation007',
         title: 'Navigation007',
-        description: 'ナビゲーション用のテンプレートです。アイテムの最小幅が設定されており、コンテナ幅に応じてカラム数が変化します。',
+        description: {
+          ja: 'ナビゲーション用のテンプレートです。アイテムの最小幅が設定されており、コンテナ幅に応じてカラム数が変化します。',
+          en: 'A navigation template. Items have a minimum width set, and the number of columns changes according to the container width.',
+        },
       },
       {
         id: 'navigation008',
         title: 'Navigation008',
-        description: 'ナビゲーション用のテンプレートです。アイテムの最小幅が設定されており、コンテナ幅に応じてカラム数が変化します。',
+        description: {
+          ja: 'ナビゲーション用のテンプレートです。アイテムの最小幅が設定されており、コンテナ幅に応じてカラム数が変化します。',
+          en: 'A navigation template. Items have a minimum width set, and the number of columns changes according to the container width.',
+        },
       },
     ],
   },
@@ -251,32 +402,50 @@ const templates = {
       {
         id: 'news001',
         title: 'News001',
-        description: 'お知らせ用のテンプレートです。breakpoint「sm」以下はレイアウトが変わり、アイテムの並びが変更されます。',
+        description: {
+          ja: 'お知らせ用のテンプレートです。breakpoint「sm」以下はレイアウトが変わり、アイテムの並びが変更されます。',
+          en: 'A news/announcements template. Below the "sm" breakpoint, the layout changes and item arrangement is adjusted.',
+        },
       },
       {
         id: 'news002',
         title: 'News002',
-        description: 'お知らせ用のテンプレートです。breakpoint「sm」以下はレイアウトが変わり、アイテムの並びが変更されます。',
+        description: {
+          ja: 'お知らせ用のテンプレートです。breakpoint「sm」以下はレイアウトが変わり、アイテムの並びが変更されます。',
+          en: 'A news/announcements template. Below the "sm" breakpoint, the layout changes and item arrangement is adjusted.',
+        },
       },
       {
         id: 'news003',
         title: 'News003',
-        description: 'お知らせ用のテンプレートです。breakpoint「md」以下はレイアウトが変わり、アイテムの並びが変更されます。',
+        description: {
+          ja: 'お知らせ用のテンプレートです。breakpoint「md」以下はレイアウトが変わり、アイテムの並びが変更されます。',
+          en: 'A news/announcements template. Below the "md" breakpoint, the layout changes and item arrangement is adjusted.',
+        },
       },
       {
         id: 'news004',
         title: 'News004',
-        description: 'お知らせ用のテンプレートです。breakpoint「md」以下はレイアウトが変わり、アイテムの並びが変更されます。',
+        description: {
+          ja: 'お知らせ用のテンプレートです。breakpoint「md」以下はレイアウトが変わり、アイテムの並びが変更されます。',
+          en: 'A news/announcements template. Below the "md" breakpoint, the layout changes and item arrangement is adjusted.',
+        },
       },
       {
         id: 'news005',
         title: 'News005',
-        description: 'お知らせ用のテンプレートです。breakpoint「md」以下はレイアウトが変わり、アイテムの並びが変更されます。',
+        description: {
+          ja: 'お知らせ用のテンプレートです。breakpoint「md」以下はレイアウトが変わり、アイテムの並びが変更されます。',
+          en: 'A news/announcements template. Below the "md" breakpoint, the layout changes and item arrangement is adjusted.',
+        },
       },
       {
         id: 'news006',
         title: 'News006',
-        description: 'お知らせ用のテンプレートです。breakpoint「md」以下はレイアウトが変わり、アイテムの並びが変更されます。',
+        description: {
+          ja: 'お知らせ用のテンプレートです。breakpoint「md」以下はレイアウトが変わり、アイテムの並びが変更されます。',
+          en: 'A news/announcements template. Below the "md" breakpoint, the layout changes and item arrangement is adjusted.',
+        },
       },
     ],
   },
@@ -286,134 +455,206 @@ const templates = {
       {
         id: 'pricetable001',
         title: 'PriceTable001',
-        description: '価格表用のテンプレートです。breakpoint「md」以下は1カラムになり、アイテムが縦に並びます。',
+        description: {
+          ja: '価格表用のテンプレートです。breakpoint「md」以下は1カラムになり、アイテムが縦に並びます。',
+          en: 'A pricing table template. Below the "md" breakpoint, it switches to a single column layout with items stacked vertically.',
+        },
       },
       {
         id: 'pricetable002',
         title: 'PriceTable002',
-        description: '価格表用のテンプレートです。breakpoint「md」以下は1カラムになり、アイテムが縦に並びます。',
+        description: {
+          ja: '価格表用のテンプレートです。breakpoint「md」以下は1カラムになり、アイテムが縦に並びます。',
+          en: 'A pricing table template. Below the "md" breakpoint, it switches to a single column layout with items stacked vertically.',
+        },
       },
       {
         id: 'pricetable003',
         title: 'PriceTable003',
-        description: '価格表用のテンプレートです。breakpoint「md」以下は1カラムになり、アイテムが縦に並びます。',
+        description: {
+          ja: '価格表用のテンプレートです。breakpoint「md」以下は1カラムになり、アイテムが縦に並びます。',
+          en: 'A pricing table template. Below the "md" breakpoint, it switches to a single column layout with items stacked vertically.',
+        },
       },
       {
         id: 'pricetable004',
         title: 'PriceTable004',
-        description: '価格表用のテンプレートです。breakpoint「md」以下は1カラムになり、アイテムが縦に並びます。',
+        description: {
+          ja: '価格表用のテンプレートです。breakpoint「md」以下は1カラムになり、アイテムが縦に並びます。',
+          en: 'A pricing table template. Below the "md" breakpoint, it switches to a single column layout with items stacked vertically.',
+        },
       },
     ],
   },
   section: {
     label: 'Section',
     items: [
-      { id: 'section001', title: 'Section001', description: 'セクション用のテンプレートです。' },
+      { id: 'section001', title: 'Section001', description: { ja: 'セクション用のテンプレートです。', en: 'A section template.' } },
       {
         id: 'section002',
         title: 'Section002',
-        description: 'セクション用のテンプレートです。breakpoint「md」以下はレイアウトが変わり、アイテムの並びが変更されます。',
+        description: {
+          ja: 'セクション用のテンプレートです。breakpoint「md」以下はレイアウトが変わり、アイテムの並びが変更されます。',
+          en: 'A section template. Below the "md" breakpoint, the layout changes and item arrangement is adjusted.',
+        },
       },
       {
         id: 'section002-2',
         title: 'Section002-2',
-        description: 'セクション用のテンプレートです。breakpoint「md」以下はレイアウトが変わり、アイテムの並びが変更されます。',
+        description: {
+          ja: 'セクション用のテンプレートです。breakpoint「md」以下はレイアウトが変わり、アイテムの並びが変更されます。',
+          en: 'A section template. Below the "md" breakpoint, the layout changes and item arrangement is adjusted.',
+        },
       },
       {
         id: 'section003',
         title: 'Section003',
-        description: 'セクション用のテンプレートです。breakpoint「md」以下はレイアウトが変わり、アイテムの並びが変更されます。',
+        description: {
+          ja: 'セクション用のテンプレートです。breakpoint「md」以下はレイアウトが変わり、アイテムの並びが変更されます。',
+          en: 'A section template. Below the "md" breakpoint, the layout changes and item arrangement is adjusted.',
+        },
       },
       {
         id: 'section003-2',
         title: 'Section003-2',
-        description: 'セクション用のテンプレートです。breakpoint「md」以下はレイアウトが変わり、アイテムの並びが変更されます。',
+        description: {
+          ja: 'セクション用のテンプレートです。breakpoint「md」以下はレイアウトが変わり、アイテムの並びが変更されます。',
+          en: 'A section template. Below the "md" breakpoint, the layout changes and item arrangement is adjusted.',
+        },
       },
       {
         id: 'section004',
         title: 'Section004',
-        description: 'セクション用のテンプレートです。breakpoint「md」以下はレイアウトが変わり、アイテムの並びが変更されます。',
+        description: {
+          ja: 'セクション用のテンプレートです。breakpoint「md」以下はレイアウトが変わり、アイテムの並びが変更されます。',
+          en: 'A section template. Below the "md" breakpoint, the layout changes and item arrangement is adjusted.',
+        },
       },
-      { id: 'section005', title: 'Section005', description: 'セクション用のテンプレートです。' },
+      { id: 'section005', title: 'Section005', description: { ja: 'セクション用のテンプレートです。', en: 'A section template.' } },
       {
         id: 'section006',
         title: 'Section006',
-        description: 'セクション用のテンプレートです。breakpoint「md」以下はレイアウトが変わり、アイテムの並びが変更されます。',
+        description: {
+          ja: 'セクション用のテンプレートです。breakpoint「md」以下はレイアウトが変わり、アイテムの並びが変更されます。',
+          en: 'A section template. Below the "md" breakpoint, the layout changes and item arrangement is adjusted.',
+        },
       },
       {
         id: 'section007',
         title: 'Section007',
-        description: 'セクション用のテンプレートです。breakpoint「md」以下はレイアウトが変わり、アイテムの並びが変更されます。',
+        description: {
+          ja: 'セクション用のテンプレートです。breakpoint「md」以下はレイアウトが変わり、アイテムの並びが変更されます。',
+          en: 'A section template. Below the "md" breakpoint, the layout changes and item arrangement is adjusted.',
+        },
       },
       {
         id: 'section008',
         title: 'Section008',
-        description: 'セクション用のテンプレートです。breakpoint「md」以下はレイアウトが変わり、アイテムの並びが変更されます。',
+        description: {
+          ja: 'セクション用のテンプレートです。breakpoint「md」以下はレイアウトが変わり、アイテムの並びが変更されます。',
+          en: 'A section template. Below the "md" breakpoint, the layout changes and item arrangement is adjusted.',
+        },
       },
       {
         id: 'section009',
         title: 'Section009',
-        description: 'セクション用のテンプレートです。breakpoint「md」以下は1カラムで表示され、アイテムが縦に並びます。',
+        description: {
+          ja: 'セクション用のテンプレートです。breakpoint「md」以下は1カラムで表示され、アイテムが縦に並びます。',
+          en: 'A section template. Below the "md" breakpoint, it displays in a single column with items stacked vertically.',
+        },
       },
       {
         id: 'section009-2',
         title: 'Section009-2',
-        description: 'セクション用のテンプレートです。breakpoint「md」以下は1カラムで表示され、アイテムが縦に並びます。',
+        description: {
+          ja: 'セクション用のテンプレートです。breakpoint「md」以下は1カラムで表示され、アイテムが縦に並びます。',
+          en: 'A section template. Below the "md" breakpoint, it displays in a single column with items stacked vertically.',
+        },
       },
-      { id: 'section010', title: 'Section010', description: 'セクション用のテンプレートです。' },
-      { id: 'section011', title: 'Section011', description: 'セクション用のテンプレートです。' },
+      { id: 'section010', title: 'Section010', description: { ja: 'セクション用のテンプレートです。', en: 'A section template.' } },
+      { id: 'section011', title: 'Section011', description: { ja: 'セクション用のテンプレートです。', en: 'A section template.' } },
       {
         id: 'section012',
         title: 'Section012',
-        description: 'セクション用のテンプレートです。breakpoint「md」以下は1カラムで表示され、アイテムが縦に並びます。',
+        description: {
+          ja: 'セクション用のテンプレートです。breakpoint「md」以下は1カラムで表示され、アイテムが縦に並びます。',
+          en: 'A section template. Below the "md" breakpoint, it displays in a single column with items stacked vertically.',
+        },
       },
       {
         id: 'section013',
         title: 'Section013',
-        description: 'セクション用のテンプレートです。breakpoint「md」以下はレイアウトが変わり、アイテムの並びが変更されます。',
+        description: {
+          ja: 'セクション用のテンプレートです。breakpoint「md」以下はレイアウトが変わり、アイテムの並びが変更されます。',
+          en: 'A section template. Below the "md" breakpoint, the layout changes and item arrangement is adjusted.',
+        },
       },
       {
         id: 'section014',
         title: 'Section014',
-        description: 'セクション用のテンプレートです。breakpoint「md」以下はレイアウトが変わり、アイテムの並びが変更されます。',
+        description: {
+          ja: 'セクション用のテンプレートです。breakpoint「md」以下はレイアウトが変わり、アイテムの並びが変更されます。',
+          en: 'A section template. Below the "md" breakpoint, the layout changes and item arrangement is adjusted.',
+        },
       },
       {
         id: 'section015',
         title: 'Section015',
-        description: 'セクション用のテンプレートです。breakpoint「md」以下は1カラムになり、アイテムが縦に並びます。',
+        description: {
+          ja: 'セクション用のテンプレートです。breakpoint「md」以下は1カラムになり、アイテムが縦に並びます。',
+          en: 'A section template. Below the "md" breakpoint, it switches to a single column layout with items stacked vertically.',
+        },
       },
       {
         id: 'section015-2',
         title: 'Section015-2',
-        description: 'セクション用のテンプレートです。breakpoint「md」以下は1カラムになり、アイテムが縦に並びます。',
+        description: {
+          ja: 'セクション用のテンプレートです。breakpoint「md」以下は1カラムになり、アイテムが縦に並びます。',
+          en: 'A section template. Below the "md" breakpoint, it switches to a single column layout with items stacked vertically.',
+        },
       },
       {
         id: 'section016',
         title: 'Section016',
-        description: 'セクション用のテンプレートです。breakpoint「md」以下はレイアウトが変わり、アイテムの並びが変更されます。',
+        description: {
+          ja: 'セクション用のテンプレートです。breakpoint「md」以下はレイアウトが変わり、アイテムの並びが変更されます。',
+          en: 'A section template. Below the "md" breakpoint, the layout changes and item arrangement is adjusted.',
+        },
       },
       {
         id: 'section901',
         title: '調整中：Section901',
-        description: 'セクション用のテンプレートです。breakpoint「md」以下は1カラムで表示され、アイテムが縦に並びます。',
+        description: {
+          ja: 'セクション用のテンプレートです。breakpoint「md」以下は1カラムで表示され、アイテムが縦に並びます。',
+          en: 'A section template. Below the "md" breakpoint, it displays in a single column with items stacked vertically.',
+        },
         draft: true,
       },
       {
         id: 'section901-2',
         title: '調整中：Section901-2',
-        description: 'セクション用のテンプレートです。breakpoint「md」以下は1カラムで表示され、アイテムが縦に並びます。',
+        description: {
+          ja: 'セクション用のテンプレートです。breakpoint「md」以下は1カラムで表示され、アイテムが縦に並びます。',
+          en: 'A section template. Below the "md" breakpoint, it displays in a single column with items stacked vertically.',
+        },
         draft: true,
       },
       {
         id: 'section902',
         title: '調整中：Section902',
-        description: 'セクション用のテンプレートです。breakpoint「md」以下は1カラムで表示され、アイテムが縦に並びます。',
+        description: {
+          ja: 'セクション用のテンプレートです。breakpoint「md」以下は1カラムで表示され、アイテムが縦に並びます。',
+          en: 'A section template. Below the "md" breakpoint, it displays in a single column with items stacked vertically.',
+        },
         draft: true,
       },
       {
         id: 'section902-2',
         title: '調整中：Section902-2',
-        description: 'セクション用のテンプレートです。breakpoint「md」以下は1カラムで表示され、アイテムが縦に並びます。',
+        description: {
+          ja: 'セクション用のテンプレートです。breakpoint「md」以下は1カラムで表示され、アイテムが縦に並びます。',
+          en: 'A section template. Below the "md" breakpoint, it displays in a single column with items stacked vertically.',
+        },
         draft: true,
       },
     ],
@@ -424,13 +665,18 @@ const templates = {
       {
         id: 'testimonials001',
         title: 'Testimonials001',
-        description: 'お客様の声用のテンプレートです。アイテムの最小幅が設定されており、コンテナ幅に応じてカラム数が変化します。',
+        description: {
+          ja: 'お客様の声用のテンプレートです。アイテムの最小幅が設定されており、コンテナ幅に応じてカラム数が変化します。',
+          en: 'A testimonials template. Items have a minimum width set, and the number of columns changes according to the container width.',
+        },
       },
       {
         id: 'testimonials002',
         title: 'Testimonials002',
-        description:
-          'お客様の声用のテンプレートです。breakpoint毎にアイテムの幅が変更されます。またアイテムをスナップした際に特定の位置で止まります。',
+        description: {
+          ja: 'お客様の声用のテンプレートです。breakpoint毎にアイテムの幅が変更されます。またアイテムをスナップした際に特定の位置で止まります。',
+          en: 'A testimonials template. Item widths change at each breakpoint. Items snap to specific positions when scrolled.',
+        },
       },
     ],
   },
@@ -440,12 +686,18 @@ const templates = {
       {
         id: 'works001',
         title: 'Works001',
-        description: '実績用のテンプレートです。アイテムの最小幅が設定されており、コンテナ幅に応じてカラム数が変化します。',
+        description: {
+          ja: '実績用のテンプレートです。アイテムの最小幅が設定されており、コンテナ幅に応じてカラム数が変化します。',
+          en: 'A portfolio/works template. Items have a minimum width set, and the number of columns changes according to the container width.',
+        },
       },
       {
         id: 'works002',
         title: 'Works002',
-        description: '実績用のテンプレートです。アイテムの最小幅が設定されており、コンテナ幅に応じてカラム数が変化します。',
+        description: {
+          ja: '実績用のテンプレートです。アイテムの最小幅が設定されており、コンテナ幅に応じてカラム数が変化します。',
+          en: 'A portfolio/works template. Items have a minimum width set, and the number of columns changes according to the container width.',
+        },
       },
     ],
   },

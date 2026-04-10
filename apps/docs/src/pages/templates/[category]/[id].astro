@@ -39,14 +39,14 @@ const previewUrl = `/preview/templates/${category}/${id}/`;
 const templatePath = `src/pages/preview/templates/${category}/${id}`;
 ---
 
-<BaseLayout title={`${template.title} - Templates`} description={template.description} excludeFromSearch>
+<BaseLayout title={`${template.title} - Templates`} description={template.description.ja} excludeFromSearch>
   <Flow g="30" class="templatePage">
     <Stack as="header" g="10">
       <Text fz="xs" c="text-2" tt="uppercase" lts="l">
         {categoryData.label}
       </Text>
       <h1 class="-fz:3xl -fw:bold">{template.title}</h1>
-      <Text c="text-2">{template.description}</Text>
+      <Text c="text-2">{template.description.ja}</Text>
     </Stack>
     {
       template.draft && (

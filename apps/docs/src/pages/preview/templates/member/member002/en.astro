@@ -1,0 +1,88 @@
+---
+import DemoLayout from '@/layouts/DemoLayout.astro';
+
+import { Container, Flex, Frame, FluidCols, Media, Stack, Text, Heading } from 'lism-css/astro';
+import './_style.css';
+---
+
+<DemoLayout title="Member002">
+  <Container isWrapper="l" bgc="base" py="50" set="gutter">
+    <Stack g="50">
+      <Heading level="2" class="u--trim" fz="2xl" fw="bold" ta="center">Team Members</Heading>
+      <FluidCols cols="14rem" g="40">
+        <Flex g="30" ai="center">
+          <Frame as="figure" ar="1/1" w="stretch" max-w="100px" bdrs="99">
+            <Media src="https://cdn.lism-css.com/random/img?category=avatar&r=1" alt="" width="960" height="640" />
+          </Frame>
+          <Stack g="20">
+            <Text class="u--trim" fz="m" fw="bold">Taro Suzuki</Text>
+            <Text class="u--trim" fz="xs" o="-10">CEO / Creative Director</Text>
+          </Stack>
+        </Flex>
+        <Flex g="30" ai="center">
+          <Frame as="figure" ar="1/1" w="stretch" max-w="100px" bdrs="99">
+            <Media src="https://cdn.lism-css.com/random/img?category=avatar&r=2" alt="" width="960" height="640" />
+          </Frame>
+          <Stack g="20">
+            <Text class="u--trim" fz="m" fw="bold">Misaki Sato</Text>
+            <Text class="u--trim" fz="xs" o="-10">Art Director / UI/UX Designer</Text>
+          </Stack>
+        </Flex>
+        <Flex g="30" ai="center">
+          <Frame as="figure" ar="1/1" w="stretch" max-w="100px" bdrs="99">
+            <Media src="https://cdn.lism-css.com/random/img?category=avatar&r=3" alt="" width="960" height="640" />
+          </Frame>
+          <Stack g="20">
+            <Text class="u--trim" fz="m" fw="bold">Kenta Takahashi</Text>
+            <Text class="u--trim" fz="xs" o="-10">Technical Director / Lead Engineer</Text>
+          </Stack>
+        </Flex>
+        <Flex g="30" ai="center">
+          <Frame as="figure" ar="1/1" w="stretch" max-w="100px" bdrs="99">
+            <Media src="https://cdn.lism-css.com/random/img?category=avatar&r=4" alt="" width="960" height="640" />
+          </Frame>
+          <Stack g="20">
+            <Text class="u--trim" fz="m" fw="bold">Yudai Tanaka</Text>
+            <Text class="u--trim" fz="xs" o="-10">Web Director / Project Manager</Text>
+          </Stack>
+        </Flex>
+        <Flex g="30" ai="center">
+          <Frame as="figure" ar="1/1" w="stretch" max-w="100px" bdrs="99">
+            <Media src="https://cdn.lism-css.com/random/img?category=avatar&r=5" alt="" width="960" height="640" />
+          </Frame>
+          <Stack g="20">
+            <Text class="u--trim" fz="m" fw="bold">Saori Ito</Text>
+            <Text class="u--trim" fz="xs" o="-10">Web Designer</Text>
+          </Stack>
+        </Flex>
+        <Flex g="30" ai="center">
+          <Frame as="figure" ar="1/1" w="stretch" max-w="100px" bdrs="99">
+            <Media src="https://cdn.lism-css.com/random/img?category=avatar&r=6" alt="" width="960" height="640" />
+          </Frame>
+          <Stack g="20">
+            <Text class="u--trim" fz="m" fw="bold">Takuya Watanabe</Text>
+            <Text class="u--trim" fz="xs" o="-10">Front-end Engineer</Text>
+          </Stack>
+        </Flex>
+        <Flex g="30" ai="center">
+          <Frame as="figure" ar="1/1" w="stretch" max-w="100px" bdrs="99">
+            <Media src="https://cdn.lism-css.com/random/img?category=avatar&r=7" alt="" width="960" height="640" />
+          </Frame>
+          <Stack g="20">
+            <Text class="u--trim" fz="m" fw="bold">Daisuke Yamamoto</Text>
+            <Text class="u--trim" fz="xs" o="-10">Back-end Engineer</Text>
+          </Stack>
+        </Flex>
+        <Flex g="30" ai="center">
+          <Frame as="figure" ar="1/1" w="stretch" max-w="100px" bdrs="99">
+            <Media src="https://cdn.lism-css.com/random/img?category=avatar&r=8" alt="" width="960" height="640" />
+          </Frame>
+          <Stack g="20">
+            <Text class="u--trim" fz="m" fw="bold">Makoto Kobayashi</Text>
+            <Text class="u--trim" fz="xs" o="-10">Account Executive / Sales</Text>
+          </Stack>
+        </Flex>
+      </FluidCols>
+    </Stack>
+  </Container>
+</DemoLayout>

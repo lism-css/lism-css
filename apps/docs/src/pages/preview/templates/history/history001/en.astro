@@ -1,0 +1,77 @@
+---
+import DemoLayout from '@/layouts/DemoLayout.astro';
+
+import { Stack, Container, Frame, Grid, Media, Box, Text, Heading } from 'lism-css/astro';
+import './_style.css';
+---
+
+<DemoLayout title="History001">
+  <Container isWrapper="m" bgc="base" py="50" set="gutter">
+    <Stack g="50">
+      <Heading level="2" class="u--trim" fz="3xl" fw="bold" ff="accent" ta="center">Our Journey</Heading>
+      <Stack bd-l g="40">
+        <Grid gtc={['auto', null, '16rem 1fr']} g="30">
+          <Box>
+            <Text bd-l bdc="text" fz="2xl" p="15 30" mx-s="-1px">2025</Text>
+          </Box>
+          <Stack g="30" px-s={['30', null, '0']} pb="20">
+            <Frame as="figure" ar="16/9" bdrs="10">
+              <Media src="https://cdn.lism-css.com/random/img?category=building" alt="" width="960" height="640" />
+            </Frame>
+            <Stack g="20">
+              <Text fz="l" fw="bold">Lism Inc. Founded</Text>
+              <p>"We want to deliver travel that truly connects with each individual's heart" --</p>
+              <p>
+                Driven by this singular passion, founders Sato and Suzuki established "Journeyful Inc." in a small apartment room in Tokyo.
+                Questioning conventional package tours, they set out to develop a service that would enable anyone to design a journey that weaves
+                their own story, powered by technology. Travel specialists and engineers gathered, and with just five members, they took the first
+                step toward a grand dream.
+              </p>
+            </Stack>
+          </Stack>
+        </Grid>
+        <Grid gtc={['auto', null, '16rem 1fr']} g="30">
+          <Box>
+            <Text bd-l bdc="text" fz="2xl" p="15 30" mx-s="-1px">2026</Text>
+          </Box>
+          <Stack g="30" px-s={['30', null, '0']} pb="20">
+            <Frame as="figure" ar="16/9" bdrs="10">
+              <Media src="https://cdn.lism-css.com/random/img?category=japan" alt="" width="960" height="640" />
+            </Frame>
+            <Stack g="20">
+              <Text fz="l" fw="bold">"Journeyful" Launched</Text>
+              <p>After approximately 18 months of development, the travel web service "Journeyful" was officially launched.</p>
+              <p>
+                At launch, the service started with dedicated concierges providing online consultations, proposing custom-made travel plans tailored
+                to each user's preferences. The personalized travel experiences, far from generic tours, became a hot topic on social media and gained
+                support from travel enthusiasts. It presented a new option for those seeking their own special journey.
+              </p>
+            </Stack>
+          </Stack>
+        </Grid>
+        <Grid gtc={['auto', null, '16rem 1fr']} g="30">
+          <Box>
+            <Text bd-l bdc="text" fz="2xl" p="15 30" mx-s="-1px">2027</Text>
+          </Box>
+          <Stack g="30" px-s={['30', null, '0']} pb="20">
+            <Frame as="figure" ar="16/9" bdrs="10">
+              <Media src="https://cdn.lism-css.com/random/img?category=room" alt="" width="960" height="640" />
+            </Frame>
+            <Stack g="20">
+              <Text fz="l" fw="bold">New Brand "Journeyful Earth" Launched</Text>
+              <p>
+                Under the philosophy of "contributing to local communities and the environment through travel," we launched "Journeyful Earth," a new
+                brand specializing in sustainable tourism.
+              </p>
+              <p>
+                We introduced a system that selects environmentally-friendly transportation and accommodation, and donates a portion of travel revenue
+                to local environmental organizations. This initiative was recognized with the Sustainability Award at the "Japan Travel Awards 2025."
+                We will continue to pursue a form of travel that enriches travelers, the communities that welcome them, and the planet as a whole.
+              </p>
+            </Stack>
+          </Stack>
+        </Grid>
+      </Stack>
+    </Stack>
+  </Container>
+</DemoLayout>

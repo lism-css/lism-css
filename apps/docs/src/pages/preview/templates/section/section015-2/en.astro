@@ -1,0 +1,33 @@
+---
+import DemoLayout from '@/layouts/DemoLayout.astro';
+
+import { Stack, Container, Frame, Grid, Media, Flex, Text, Heading } from 'lism-css/astro';
+import { Button } from '@lism-css/ui/astro';
+import './_style.css';
+---
+
+<DemoLayout title="Section015-2">
+  <Container>
+    <Stack g="50">
+      <Grid gtc={['auto', null, '1fr 1fr']}>
+        <Stack g="40" jc="center" bgc="base-2" p={['50 40', null, '50']} min-h="50svw">
+          <Stack as="hgroup" g="30" ai="fs" jc="center">
+            <Heading level="2" class="u--trim" fz="4rem" fw="100" lts="l">Product</Heading>
+            <Text class="u--trim" fz="l" fw="bold" lts="l">Turn Your Ordinary Morning into Something Special</Text>
+          </Stack>
+          <Text fz="m" lh="l">
+            A perfect slice of toast can transform a busy morning into a heartfelt moment. With proprietary steam technology and second-by-second
+            temperature control, it achieves the ideal toast for every type of bread. Crispy on the outside, soft and chewy on the inside -- creating
+            the ultimate texture that amazes everyone. Enjoy the small daily luxury that brings out the best in your bread.
+          </Text>
+          <Flex>
+            <Button href="#" jc="center" p="15" bdrs="10" min-w="10rem">View More</Button>
+          </Flex>
+        </Stack>
+        <Frame as="figure" gr={[null, null, '1']} gc={['1', null, '1']}>
+          <Media src="https://cdn.lism-css.com/random/img" alt="" width="960" height="640" />
+        </Frame>
+      </Grid>
+    </Stack>
+  </Container>
+</DemoLayout>

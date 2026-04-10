@@ -1,0 +1,127 @@
+---
+import DemoLayout from '@/layouts/DemoLayout.astro';
+
+import { Container, Grid, Box, Flex, Center, Icon, Text, Inline } from 'lism-css/astro';
+import { Button } from '@lism-css/ui/astro';
+import './_style.css';
+---
+
+<DemoLayout title="Feature011">
+  <Container isWrapper="m" bgc="base-2" py="50" set="gutter">
+    <Grid
+      gt={[
+        '"title" "body" "link" / 1fr',
+        null,
+        `"title link"
+				 "body body" / auto 1fr`,
+      ]}
+      g="40"
+    >
+      <Box ga="title">
+        <h2 class="u--trim">Service Features</h2>
+      </Box>
+      <Grid ga="body" gtc={['1fr auto', null, 'auto 1fr auto']} g="30">
+        <Grid
+          as="a"
+          isLinkBox
+          href="#"
+          gtc="subgrid"
+          gc="1 / -1"
+          g={['20', '30', '40']}
+          bgc="base"
+          p={['20', '30']}
+          bdrs="10"
+          set={['hov', 'transition']}
+          ai="center"
+          hov="bxsh"
+        >
+          <Grid gtc="subgrid" g="inherit" gc={['1', null, '1 / span 2']}>
+            <Flex g={['20', null, '30']} ai="center">
+              <Inline layout="center" fxsh="0" fz="xs" lh="xs" c="base" py="10" px={['15', '20']} bgc="text" bdrs="99">POINT 1</Inline>
+              <Text fz="m" fw="bold">Build wealth while having fun</Text>
+            </Flex>
+            <Flex ai="center" c="text" td="none" g="30">
+              <Text
+                >Introducing "Goal-Based Savings" where you can save by setting target amounts. Plan your wealth building in an enjoyable way.</Text
+              >
+            </Flex>
+          </Grid>
+          <Center w="fit" bd p="15" bdrs="99" set="transition" hov="to:reverse">
+            <Icon icon="arrow-right" fz="s" />
+          </Center>
+        </Grid>
+        <Grid
+          as="a"
+          isLinkBox
+          href="#"
+          gtc="subgrid"
+          gc="1 / -1"
+          g={['20', null, '40']}
+          bgc="base"
+          p={['20', '30']}
+          bdrs="10"
+          set={['hov', 'transition']}
+          ai="center"
+          hov="bxsh"
+        >
+          <Grid gtc="subgrid" g="inherit" gc={['1', null, '1 / span 2']}>
+            <Flex g={['20', null, '30']} ai="center">
+              <Inline layout="center" fxsh="0" fz="xs" lh="xs" c="base" py="10" px={['15', '20']} bgc="text" bdrs="99">POINT 2</Inline>
+              <Text fz="m" fw="bold">Reliable security measures</Text>
+            </Flex>
+            <Flex ai="center" c="text" td="none" g="30">
+              <Text
+                >With encrypted communications and two-factor authentication, we rigorously protect your valuable assets and personal information.</Text
+              >
+            </Flex>
+          </Grid>
+          <Center w="fit" bd p="15" bdrs="99" set="transition" hov="to:reverse">
+            <Icon icon="arrow-right" fz="s" />
+          </Center>
+        </Grid>
+        <Grid
+          as="a"
+          isLinkBox
+          href="#"
+          gtc="subgrid"
+          gc="1 / -1"
+          g={['20', null, '40']}
+          bgc="base"
+          p={['20', '30']}
+          bdrs="10"
+          set={['hov', 'transition']}
+          ai="center"
+          hov="bxsh"
+        >
+          <Grid gtc="subgrid" g="inherit" gc={['1', null, '1 / span 2']}>
+            <Flex g={['20', null, '30']} ai="center">
+              <Inline layout="center" fxsh="0" fz="xs" lh="xs" c="base" py="10" px={['15', '20']} bgc="text" bdrs="99">POINT 3</Inline>
+              <Text fz="m" fw="bold">All you need is your smartphone!</Text>
+            </Flex>
+            <Flex ai="center" c="text" td="none" g="30">
+              <Text
+                >From account opening to checking your portfolio, everything is completed in the smartphone app. Check your assets anytime, anywhere.</Text
+              >
+            </Flex>
+          </Grid>
+          <Center w="fit" bd p="15" bdrs="99" set="transition" hov="to:reverse">
+            <Icon icon="arrow-right" fz="s" />
+          </Center>
+        </Grid>
+      </Grid>
+      <Flex ga="link" ai="flex-end" jc="flex-end">
+        <Button href="#" variant="outline" w={['stretch', null, 'auto']} min-w="8rem" fz="s" bd bdc="text" py="15" bdrs="10">View Detail</Button>
+      </Flex>
+    </Grid>
+  </Container>
+</DemoLayout>
+
+<style is:inline>
+  @media (any-hover: hover) {
+    .-hov\:to\:reverse {
+      background-color: var(--_isHov, var(--text));
+      color: var(--_isHov, var(--base));
+      border-color: var(--text);
+    }
+  }
+</style>
