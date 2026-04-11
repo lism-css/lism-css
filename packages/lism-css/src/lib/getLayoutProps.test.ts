@@ -73,7 +73,7 @@ describe('getLayoutProps', () => {
       expect(result.style?.['--sideW']).toBe('var(--sz--s)');
     });
 
-    test('sideW と mainW 以外のプロップスは維持される', () => {
+    test('sideW と mainW 以外のpropsは維持される', () => {
       const result = getLayoutProps('sideMain', {
         sideW: '200px',
         mainW: '800px',
@@ -111,7 +111,7 @@ describe('getLayoutProps', () => {
       expect(result.style?.['--autoMode']).toBe('auto-fill');
     });
 
-    test('autoFill 以外のプロップスは維持される', () => {
+    test('autoFill 以外のpropsは維持される', () => {
       const result = getLayoutProps('fluidCols', {
         autoFill: true,
         otherProp: 'value',
@@ -171,7 +171,7 @@ describe('getLayoutProps', () => {
       expect(result.style?.['--flow']).toBe('1rem');
     });
 
-    test('flow 以外のプロップスは維持される', () => {
+    test('flow 以外のpropsは維持される', () => {
       const result = getLayoutProps('flow', {
         flow: 's',
         otherProp: 'value',
@@ -217,7 +217,7 @@ describe('getLayoutProps', () => {
       expect(result.style?.['--breakSize']).toBe('600px');
     });
 
-    test('breakSize 以外のプロップスは維持される', () => {
+    test('breakSize 以外のpropsは維持される', () => {
       const result = getLayoutProps('switchCols', {
         breakSize: '600px',
         otherProp: 'value',
@@ -239,14 +239,14 @@ describe('getLayoutProps', () => {
       expect(result.lismClass).toContain('existing');
     });
 
-    test('その他のプロップスはそのまま維持される', () => {
+    test('その他のpropsはそのまま維持される', () => {
       const result = getLayoutProps('tileGrid', { lismClass: 'test', style: { color: 'red' } });
       expect(result.lismClass).toContain('test');
       expect(result.style?.color).toBe('red');
     });
   });
 
-  describe('複数プロップスの組み合わせ', () => {
+  describe('複数propsの組み合わせ', () => {
     test('lismClass と style が両方ある場合、正しく処理される', () => {
       const result = getLayoutProps('sideMain', {
         lismClass: 'custom-class',
@@ -259,7 +259,7 @@ describe('getLayoutProps', () => {
       expect(result.style?.['--sideW']).toBe('200px');
     });
 
-    test('レイアウト固有のプロップスは削除され、その他は維持される', () => {
+    test('レイアウト固有のpropsは削除され、その他は維持される', () => {
       const result = getLayoutProps('flow', {
         flow: 's',
         lismClass: 'test',

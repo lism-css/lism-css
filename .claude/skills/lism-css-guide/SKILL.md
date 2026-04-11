@@ -84,8 +84,8 @@ import { Accordion, Tabs, Button } from '@lism-css/ui/astro';
 
 #### NG: レスポンシブの考慮漏れ・Gridの直書き
 
-渡されたPCサイズのデザインだけをみて、`<Grid gtc="repeat(3, 1fr)>`みたいにしてしまう。  
-特に指示がなければ、レスポンシブを意識して実装すること。`<Columns cols={[1, 2, 3]}>`などを使ってブレイクポイントで切り替えるか、`<FluidCols>`や`<MainSide>`で自動的なレスポンシブレイアウトを採用できないかをまずは考えること。
+渡されたPCサイズのデザインだけをみて、カラムレイアウトを`<Grid gtc="repeat(3, 1fr)>`のように固定してしまわないようにすること。
+特に指示がなければ、レスポンシブを意識して実装する。`<Columns>`（`l--columns`）を使ってブレイクポイントで切り替えるか、`l--sideMain`や`l--fluidCols`で自動レスポンシブを採用することを検討する。
 
 また、Lism CSSではコンテナクエリを採用しているため、レスポンシブの値切り替えには先祖要素で `isContainer`(`is--container`クラス) が必要なことに注意。
 
@@ -99,18 +99,18 @@ import { Accordion, Tabs, Button } from '@lism-css/ui/astro';
 
 このスキルには以下の詳細ファイルが含まれます。必要に応じて参照してください。
 
-- [tokens.md](./tokens.md) — デザイントークン・CSS変数（余白・フォントサイズ・角丸・影・カラー・パレット）
-- [css-rules.md](./css-rules.md) — CSS設計ルール（Layer構造・命名規則・プレフィックス・カスタムCSS追加ルール）
-- [base-styles.md](./base-styles.md) — ベーススタイリング（Reset CSS・HTML要素のベーススタイル・CSS変数）
-- [set-class.md](./set-class.md) — `set--` クラス（`set--plain`/`set--shadow`/`set--hov`/`set--transition` 等）
-- [module-class.md](./module-class.md) — モジュールクラス（`is--`/`l--`/`a--`/`c--` クラスの一覧と用途）
-- [utility-class.md](./utility-class.md) — ユーティリティクラス（`u--` クラスの一覧・Property Class との違い）
-- [property-class.md](./property-class.md) — Property Class（`-{prop}:{value}` 記法・主要Prop一覧・特殊Prop・出力タイプ）
-- [prop-responsive.md](./prop-responsive.md) — レスポンシブ対応（ブレークポイント・コンテナクエリ・指定方法）
-- [components-core.md](./components-core.md) — コアコンポーネント（レイアウト・セマンティック・ステート・Lism Props・getLismProps）
-- [components-ui.md](./components-ui.md) — UIコンポーネント（Accordion・Modal・Tabs・Button 等の Props・構造・CLI）
+- [tokens.md](./tokens.md) — Lismで利用できるデザイントークンとCSS変数。（余白・フォントサイズ・タイポグラフィ・角丸・影・カラー・不透明度）
+- [css-rules.md](./css-rules.md) — CSS設計の概要。（Layer構造・クラスの分類・命名規則・プレフィックスのつけ方・カスタムCSSの追加ルール）
+- [base-styles.md](./base-styles.md) — HTML要素のベーススタイリング。（Reset CSSやHTML要素の基本スタイルをカスタマイズできるCSS変数）
+- [set-class.md](./set-class.md) — ベーススタイル・変数セットに使用する`set--` クラスの一覧と用途。
+- [module-class.md](./module-class.md) — レイアウトやコンポーネントに使用するモジュールクラス（`is--`/`l--`/`a--`/`c--` クラス）の一覧と用途。
+- [utility-class.md](./utility-class.md) — 具体的な用途・装飾・機能を持つユーティリティクラス（`u--` クラス）の一覧と用途。
+- [property-class.md](./property-class.md) — 単一のCSSプロパティに対応するProperty Class（`-{prop}:{value}`形式のクラス）の一覧・記法。
+- [prop-responsive.md](./prop-responsive.md) — レスポンシブ対応（ブレークポイント・コンテナクエリ）の書き方・仕様。
+- [components-core.md](./components-core.md) — `lism-css`パッケージに含まれるコアコンポーネントの一覧と用途。（React, Astroで使える`<Lism>`・Lism Props・getLismProps ）
+- [components-ui.md](./components-ui.md) — `@lism-css/ui`パッケージに含まれるUIコンポーネント（Accordion・Modal・Tabs・Button 等）の Props・構造とCLIコマンドによるインストール方法。
 
-各ファイルの冒頭にはTOC（目次）があり、セクションごとの詳細URL・ソースURLがまとめて記載されています。
+これら各ファイルの冒頭にはTOC（目次）があり、セクションごとの詳細URL・ソースURLがまとめて記載されています。
 
 
 ## このスキルファイル自身のアップデート方法

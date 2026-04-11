@@ -3,10 +3,10 @@
 Lism CSS（`lism-css`パッケージ）は React / Astro 向けのコンポーネントを提供しています。
 
 ```jsx
-// React
+// React でのimport
 import { Lism, Box, Flex, Stack, Grid, Text, Media } from 'lism-css/react';
 
-// Astro
+// Astro でのimport
 import { Lism, Box, Flex, Stack, Grid, Text, Media } from 'lism-css/astro';
 ```
 
@@ -15,9 +15,9 @@ import { Lism, Box, Flex, Stack, Grid, Text, Media } from 'lism-css/astro';
 - [コアコンポーネント: `<Lism>`](#コアコンポーネント-lism)
 - [Lism Props](#lism-props)
 - [セマンティックコンポーネント](#セマンティックコンポーネント)
-- [レイアウトコンポーネント（Layout Modules）](#レイアウトコンポーネントlayout-modules)
-- [ステートコンポーネント（State Modules）](#ステートコンポーネントstate-modules)
-- [アトミックコンポーネント（Atomic Modules）](#アトミックコンポーネントatomic-modules)
+- [Atomic Modules](#atomic-modules)
+- [State Modules](#state-modules)
+- [Layout Modules](#layout-modules)
 - [Layout 優先の原則](#layout-優先の原則-layout-isstate-vs-state-layout)
 - [`getLismProps()`](#getlismprops--外部コンポーネントとの連携)
 
@@ -31,7 +31,10 @@ import { Lism, Box, Flex, Stack, Grid, Text, Media } from 'lism-css/astro';
 
 ```jsx
 <Lism p="20" fz="l" c="brand">コンテンツ</Lism>
-// → <div class="-p:20 -fz:l -c:brand">コンテンツ</div>
+```
+↓ 出力
+```html
+<div class="-p:20 -fz:l -c:brand">コンテンツ</div>
 ```
 
 
@@ -44,15 +47,16 @@ import { Lism, Box, Flex, Stack, Grid, Text, Media } from 'lism-css/astro';
 
 ### 共通 Props
 
-すべての Lism コンポーネントで使えるプロップスです。
+すべての Lism コンポーネントで使えるpropsです。
 
 | Prop | 説明 | 例 |
 |------|------|-----|
-| `as` | レンダリングする HTML 要素または外部コンポーネントを指定（デフォルト: `'div'`） | `as="section"`, `as={Image}` |
-| `lismClass` | コンポーネントの主要クラス名を指定。出力順序が高めになる | `lismClass='c--myComponent'` |
-| `variant` | `lismClass` に対するバリエーションクラスを出力 | `variant='secondary'` |
-| `layout` | レイアウトモジュールを指定し `l--{layout}` クラスを出力 | `layout='flow'` |
-| `exProps` | Lism Props処理をスキップして外部コンポーネントに直接渡す属性のオブジェクト | `exProps={{ size: '1em' }}` |
+| `as` | レンダリングする HTML 要素または外部コンポーネントを指定（デフォルト: `"div"`） | `as="section"`, `as={Image}` |
+| `lismClass` | コンポーネントの主要クラス名を指定。（`c--{lismClass}`） | `lismClass="c--myComponent"` |
+| `variant` | `lismClass` に対するバリエーションクラスを指定。（`c--{lismClass}--{variant}`） | `variant="secondary"` |
+| `layout` | レイアウトモジュール（`l--{layout}`）を指定。 | `layout="flow"` |
+| `set` | セットクラス（`set--{value}`）を指定。スペース区切りで複数指定可 | `set="gutter"`, `set="transition plain"` |
+| `exProps` | Lism Propsの処理をスキップして外部コンポーネントに直接渡すpropsオブジェクト | `exProps={{ size: '1em' }}` |
 
 ```jsx
 // as で HTML 要素を指定
@@ -74,6 +78,14 @@ import { Lism, Box, Flex, Stack, Grid, Text, Media } from 'lism-css/astro';
 // exProps で外部コンポーネント用プロパティを明示的に分離
 <Icon as={HogeIcon} exProps={{ size: "1em" }} p="10" fz="l">...</Icon>
 // → p, fz は Lism が処理、size は HogeIcon に直接渡される
+
+// set でセットモジュールを付与（layout と同じ要領）
+<Box set="shadow" p="30">...</Box>
+// → <div class="l--box set--shadow -p:30">...</div>
+
+// set を複数指定
+<Stack set="shadow hov" p="30">...</Stack>
+// → <div class="l--stack set--shadow set--hov -p:30">...</div>
 ```
 
 
@@ -153,22 +165,19 @@ import { Lism, Box, Flex, Stack, Grid, Text, Media } from 'lism-css/astro';
 
 ### State Props
 
-State Modules クラス（`is--*` / `set--*`）を出力するためのプロパティ群です。
+State Modules クラス（`is--*`）を出力するためのプロパティ群です。
 
-| Prop | 出力クラス | 用途 |
-|------|-----------|------|
-| `isWrapper(='{s\|l}')` | `is--wrapper` + `-contentSize:{s\|l}` | コンテンツ幅制限 |
-| `isLayer` | `is--layer` | 絶対配置レイヤー（inset:0） |
-| `isLinkBox` | `is--linkBox` | ボックス全体リンク化 |
-| `isContainer` | `is--container` | コンテナクエリ対象 |
-| `isSide` | `is--side` | サイド要素 |
-| `isSkipFlow` | `is--skipFlow` | Flow 余白をスキップ |
-| `isVertical` | `is--vertical` | 縦書き方向 |
-| `set="gutter"` | `set--gutter` | 左右ガター余白 |
-| `set="shadow"` | `set--shadow` | シャドウ付与 |
-| `set="hov"` | `set--hov` | ホバー効果 |
-| `set="transition"` | `set--transition` | トランジション |
-| `set="plain"` | `set--plain` | プレーン状態 |
+| Prop | 出力クラス |
+|------|-----------|
+| `isWrapper` | `is--wrapper` |
+| `isWrapper="{s\|l}"` | `is--wrapper` + `-contentSize:{s\|l}` |
+| `isWrapper="{value}"` | `is--wrapper` + `-contentSize` + `--contentSize:{value}` |
+| `isLayer` | `is--layer` |
+| `isLinkBox` | `is--linkBox` |
+| `isContainer` | `is--container` |
+| `isSide` | `is--side` |
+| `isSkipFlow` | `is--skipFlow` |
+| `isVertical` | `is--vertical` |
 
 ```jsx
 // State Props の使用例
@@ -206,79 +215,7 @@ State Modules クラス（`is--*` / `set--*`）を出力するためのプロパ
 </Group>
 ```
 
-### `<HTML>` コンポーネント
-
-任意の HTML タグを直接レンダリングするためのコンポーネント。セマンティックコンポーネントがカバーしない要素に使います。
-
-
-## レイアウトコンポーネント（Layout Modules）
-
-レイアウト構造を定義するメインのコンポーネント群です。内部で `layout` prop が固定されており、対応する `l--{layout}` クラスが自動で出力されます。
-
-| コンポーネント | layout | 出力クラス | 用途 |
-|-------------|--------|-----------|------|
-| `<Box>` | `box` | `l--box` | 汎用ボックス |
-| `<Flex>` | `flex` | `l--flex` | Flexbox（横方向） |
-| `<Stack>` | `stack` | `l--stack` | 縦積み（flex-direction: column） |
-| `<Cluster>` | `cluster` | `l--cluster` | 折り返し Flex（flex-wrap） |
-| `<Grid>` | `grid` | `l--grid` | CSS Grid |
-| `<Flow>` | `flow` | `l--flow` | フローコンテンツ（子要素間に余白） |
-| `<Center>` | `center` | `l--center` | 中央配置 |
-| `<Frame>` | `frame` | `l--frame` | アスペクト比フレーム |
-| `<Columns>` | `columns` | `l--columns` | CSS columns |
-| `<TileGrid>` | `tileGrid` | `l--tileGrid` | 均等タイルグリッド（cols x rows） |
-| `<FluidCols>` | `fluidCols` | `l--fluidCols` | auto-fill/auto-fit グリッド |
-| `<SwitchCols>` | `switchCols` | `l--switchCols` | レスポンシブカラム切り替え |
-| `<SideMain>` | `sideMain` | `l--sideMain` | サイド＋メインの2カラム |
-
-### レイアウト固有の Props
-
-一部のレイアウトコンポーネントには専用の props があります。
-
-```jsx
-// Grid: template 系 props
-<Grid gtc="1fr 1fr" gtr="auto">...</Grid>
-
-// TileGrid: 均等タイルグリッド
-<TileGrid cols="3" rows="2" g="20">...</TileGrid>
-
-// SwitchCols: 切り替えブレークポイント
-<SwitchCols breakSize="480px">...</SwitchCols>
-
-// SideMain: サイド幅とメイン幅
-<SideMain sideW="200px" mainW="1fr">...</SideMain>
-
-// FluidCols: auto-fill モード
-<FluidCols autoFill>...</FluidCols>
-
-// Flow: 子要素間の余白
-<Flow flow="30">...</Flow>
-```
-
-
-## ステートコンポーネント（State Modules）
-
-要素に構造的な振る舞い（状態）を付与するコンポーネント群です。内部で `is--` クラスを出力します。
-
-| コンポーネント | 内部の state | 出力クラス | 用途 |
-|-------------|------------|-----------|------|
-| `<Container>` | `isContainer` + `isWrapper` | `is--container is--wrapper` | コンテナクエリ対象 + 幅制限 |
-| `<Wrapper>` | `isWrapper` | `is--wrapper` | コンテンツ幅制限 |
-| `<Layer>` | `isLayer` | `is--layer` | 絶対配置レイヤー（inset: 0） |
-| `<LinkBox>` | `isLinkBox` | `is--linkBox` | ボックス全体リンク化 |
-
-```jsx
-<Container size="l">...</Container>
-// → <div class="is--container is--wrapper -contentSize:l">...</div>
-
-<Wrapper contentSize="s">...</Wrapper>
-// → <div class="is--wrapper -contentSize:s">...</div>
-```
-
-
-## アトミックコンポーネント（Atomic Modules）
-
-特定の役割を持つ単機能コンポーネントです。
+## Atomic Modules
 
 | コンポーネント | 出力クラス | 用途 |
 |-------------|-----------|------|
@@ -287,11 +224,99 @@ State Modules クラス（`is--*` / `set--*`）を出力するためのプロパ
 | `<Divider>` | `a--divider` | 区切り線 |
 | `<Decorator>` | `a--decorator` | 装飾要素（SCSS定義なし、クラス名のみ出力） |
 
+
+### `<Icon>`コンポーネント
+
+Iconコンポーネントの仕様は特殊なので解説します。
+
+1. `as`と`exProps`を活用して外部ライブラリのアイコンコンポーネントなどを表示できます。
+
 ```jsx
-<Icon as={LucideArrowRight} fz="xl" />
-<Media as="img" src="/image.jpg" alt="説明" ar="16/9" />
+// weight を明示的に CatIcon に渡す
+<Icon as={CatIcon} exProps={{ weight: 'fill' }} c="blue" />
+
+// Lism で "weight" は処理されず最終的に CatIcon に渡るので、結果は同じ
+<Icon as={CatIcon} weight="fill" c="blue"/>
 ```
 
+2. `icon="文字列"`を指定すると、`lism-css`に内包される[プリセットアイコン](https://lism-css.com/en/docs/modules/a--icon/#using-preset-icons)を利用できます（一致するアイコンがあれば）。
+
+```jsx
+<Icon icon='menu' />
+```
+
+3. `icon` prop には、`icon={{as:IconName, exProps1, exProps2, ...}}` の形式で、`as`と`exProps`を一括で渡すことができます。
+
+```jsx
+// LucidIconを使った例
+<Icon icon={{as: Home, strokeWidth: 1, size: 64}} />
+```
+
+これにより、iconを指定することのできるカスタムコンポーネントを作る時に、1つのpropでiconデータの受け渡しができるようになっています。
+
+
+4. `viewBox`の指定があれば`svg`要素としてで出力されるので、`<path>`などを直接書くことができます。
+```jsx
+<Icon viewBox="0 0 256 256" label="Icon name" size="1em">
+  <path d="..."></path>
+</Icon>
+```
+
+## State Modules
+
+`<Lism isXxx>`のエイリアスコンポーネントです。
+
+| コンポーネント | 内部処理 | 出力クラス | 
+|-------------|------------|-----------|
+| `<Container>` | `isContainer` | `is--container` |
+| `<Wrapper>` | `isWrapper` | `is--wrapper` | 
+| `<Layer>` | `isLayer` | `is--layer` |
+| `<LinkBox>` | `isLinkBox` | `is--linkBox` |
+
+
+### `LinkBox` の特殊処理
+
+LinkBoxのみ、ただのエイリアスではなく特殊な処理がされており、`href`を指定すると内部で`as="a"`となり、`LinkBox`が`<a>`タグで出力されます。（デフォルトは`div`)
+
+
+## Layout Modules
+
+内部で `layout` prop が固定されており、対応する `l--{layout}` クラスが自動で出力されます。
+
+| コンポーネント | 出力クラス |
+|-------------|-----------|
+| `<Box>` | `l--box` |
+| `<Flex>` | `l--flex` |
+| `<Stack>` | `l--stack` |
+| `<Cluster>` | `l--cluster` |
+| `<Grid>` | `l--grid` |
+| `<Flow>` | `l--flow` |
+| `<Center>` | `l--center` |
+| `<Frame>` | `l--frame` |
+| `<Columns>` | `l--columns` |
+| `<TileGrid>` | `l--tileGrid` |
+| `<FluidCols>` | `l--fluidCols` |
+| `<SwitchCols>` | `l--switchCols` |
+| `<SideMain>` | `l--sideMain` |
+
+また、一部のレイアウトコンポーネントには専用の props があります。
+
+```jsx
+// TileGrid: 均等タイルグリッド
+<TileGrid cols="3" rows="2">...</TileGrid>
+
+// SwitchCols: レイアウトの切り替えポイントとなるサイズ
+<SwitchCols breakSize="480px">...</SwitchCols>
+
+// SideMain: サイド幅とメイン幅
+<SideMain sideW="200px" mainW="40rem">...</SideMain>
+
+// FluidCols: カラム維持サイズ と auto-fill モード
+<FluidCols cols="20rem" autoFill>...</FluidCols>
+
+// Flow: 子要素間の余白
+<Flow flow="30">...</Flow>
+```
 
 ## Layout 優先の原則: `<Layout isState>` vs `<State layout="...">`
 
