@@ -112,9 +112,8 @@ import { Accordion, Tabs, Button } from '@lism-css/ui/astro';
 
 各ファイルの冒頭にはTOC（目次）があり、セクションごとの詳細URL・ソースURLがまとめて記載されています。
 
-## このスキルのアップデート方法
 
-skills.sh のコマンドを利用してください。
+## このスキルファイル自身のアップデート方法
 
-- `npx skills check` でアップデートの有無を確認
-- `npx skills update` でアップデートを実行
+`skills add lism-css/lism-css` を再実行してください。
+更新があるか確認したい場合は、[GitHub リポジトリ](https://github.com/lism-css/lism-css/tree/main/.claude/skills/lism-css-guide) を直接チェックしてください。

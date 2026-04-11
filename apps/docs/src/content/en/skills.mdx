@@ -5,7 +5,7 @@ description: 'Place a SKILL.md file in your project to communicate Lism CSS desi
 By placing the SKILL.md file in your project, you can communicate Lism CSS design rules, Props, tokens, and naming conventions to AI agents.
 
 
-GitHub: [lism-css/lism-css/.claude/skills/lism-css-guide/](https://github.com/lism-css/lism-css/tree/main/.claude/skills/lism-css-guide)
+GitHub: [lism-css/.claude/skills/lism-css-guide/](https://github.com/lism-css/lism-css/tree/main/.claude/skills/lism-css-guide)
 
 
 
@@ -42,12 +42,20 @@ Install the Lism CSS skill into your project using the command above.
 
 ### Update
 
+If installed globally, you can update with the following commands:
+
 ```bash frame="none"
 # Check for available updates
 npx skills check
 
 # Update skills to the latest version
 npx skills update
+```
+
+If installed in a project, run `skills add` again. To check for updates, see the [GitHub repository](https://github.com/lism-css/lism-css/tree/main/.claude/skills/lism-css-guide) directly.
+
+```bash frame="none"
+npx skills add lism-css/lism-css
 ```
 
 ### File structure
