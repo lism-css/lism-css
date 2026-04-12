@@ -160,23 +160,23 @@ const docsSidebar: SidebarSection[] = [
     label: 'Layout Modules',
     items: [
       '/docs/modules/l--box/',
-      '/docs/modules/l--flow/',
+      '/docs/modules/l--center/',
       '/docs/modules/l--frame/',
+      '/docs/modules/l--flow/',
 
       { type: 'separator' },
       '/docs/modules/l--flex/',
       '/docs/modules/l--cluster/',
       '/docs/modules/l--stack/',
-      '/docs/modules/l--sidemain/',
 
       { type: 'separator' },
       '/docs/modules/l--grid/',
       '/docs/modules/l--tilegrid/',
-      '/docs/modules/l--center/',
 
       { type: 'separator' },
       '/docs/modules/l--columns/',
       '/docs/modules/l--fluidcols/',
+      '/docs/modules/l--sidemain/',
       '/docs/modules/l--switchcols/',
 
       { type: 'separator' },
