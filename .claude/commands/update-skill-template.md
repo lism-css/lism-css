@@ -1,24 +1,51 @@
 # Skill Template Update
 
-`.claude/skills/lism-css-guide/` 配下の 12 ファイルを、リポジトリの最新ソースに合わせて更新してください。
+`.claude/skills/lism-css-guide/` 配下のルートファイル＋ `modules/` サブフォルダ配下のモジュール詳細ファイルを、最新ソースに合わせて更新してください。
 
 
 ## 対象ファイルと更新内容
 
+### ルート直下の基本ファイル
+
 | ファイル | 更新内容 | 主なソース参照先 |
 |----------|----------|-----------------|
-| `SKILL.md` | バージョン情報・パッケージ構成・import パス・実装ルール・詳細ファイル一覧 | `packages/lism-css/package.json`, `packages/lism-ui/package.json`, 各パッケージの exports |
+| `SKILL.md` | バージョン情報・パッケージ構成・import パス・実装ルール・詳細ファイル一覧・モジュール別リファレンスへのリンク一覧 | `packages/lism-css/package.json`, `packages/lism-ui/package.json`, 各パッケージの exports |
 | `base-styles.md` | Reset CSS・HTML要素のベーススタイル・CSS変数（トークン）概要 | `packages/lism-css/src/scss/base/`, `packages/lism-css/src/scss/base/tokens/` |
 | `set-class.md` | `set--`クラス (`set--plain`,`set--shadow`,`set--hov`,`set--transition`,`set--gutter` 等) の一覧と用途解説 | `packages/lism-css/src/scss/base/set/`, `packages/lism-css/src/scss/base/tokens/_shadow.scss` |
-| `module-class.md` | モジュールクラス (`is--`, `l--`, `a--`, `c--` クラス) の一覧と用途 | `packages/lism-css/src/scss/modules/`, `packages/lism-ui/src/`（c-- 系） |
+| `module-class.md` | モジュールクラス (`is--`, `l--`, `a--`, `c--` クラス) の一覧と用途（※俯瞰マップに徹する。個別モジュールへのリンクは載せない） | `packages/lism-css/src/scss/modules/`, `packages/lism-ui/src/`（c-- 系） |
 | `utility-class.md` | ユーティリティクラス (`u--` クラス) の一覧とProperty Class との違い | `packages/lism-css/src/scss/utility/` |
 | `property-class.md` | Property Class (`-{prop}:{value}`)の一覧、記法と出力の解説、特殊Prop（ボーダー・ホバー） | `packages/lism-css/config/defaults/props.ts`, `packages/lism-css/src/scss/_prop-config.scss`, `packages/lism-css/src/scss/props/` |
 | `prop-responsive.md` | レスポンシブ対応 — ブレークポイント・コンテナクエリ・HTML/コンポーネントでの指定方法 | `packages/lism-css/src/scss/_query.scss`, `packages/lism-css/src/lib/getBpData.ts` |
-| `components-core.md` | コアコンポーネント — セマンティック・レイアウト・ステート・アトミック一覧、Lism Props、getLismProps | `packages/lism-css/src/components/`, 各パッケージの exports |
+| `components-core.md` | コアコンポーネント — セマンティック・Lism Props・getLismProps。Atomic/State/Layout の対応表には `modules/*.md` への詳細リンクを保持する（※個別 Props・仕様の詳細は `modules/*.md` 側に移管済み） | `packages/lism-css/src/components/`, 各パッケージの exports |
 | `components-ui.md` | UIコンポーネント（`@lism-css/ui`）— Accordion・Modal・Tabs・Button 等の Props・構造・CLI | `packages/lism-ui/src/`, 各パッケージの exports |
 | `tokens.md` | デザイントークン（余白・フォントサイズ・角丸・影・カラー・パレット） | `packages/lism-css/src/scss/base/tokens/`, `packages/lism-css/config/defaults/tokens.ts` |
 | `css-rules.md` | CSS Layer 構造・命名規則・プレフィックス・カスタムCSS ルール | `packages/lism-css/src/scss/` |
 | `customize.md` | カスタマイズ — @layerオフ・SCSS変数上書き・lism.config.js・CLIビルド | `packages/lism-css/src/scss/`, `packages/lism-css/lism.config.js`, `apps/docs/src/content/ja/customize.mdx` |
+
+### `modules/` サブフォルダ配下のモジュール詳細ファイル
+
+各モジュールに 1 ファイル。クラス名は camelCase のまま（例: `l--sideMain.md`, `l--tileGrid.md`, `is--linkBox.md`）、MDX 側は lowercase（`l--sidemain.mdx` 等）であることに注意。
+
+ファイルの対応関係は `packages/lism-css/src/scss/modules/{layout,state,atomic}/` 配下の SCSS と 1:1。カテゴリ別の更新内容は以下：
+
+| カテゴリ | 更新内容 | 主なソース参照先 |
+|----------|----------|-----------------|
+| Layout（`modules/l--*.md`） | クラス名 / 対応コンポーネント / SCSS raw URL / 専用 Props / Usage（基本パターン + 応用）/ 関連モジュール | `packages/lism-css/src/scss/modules/layout/`, `apps/docs/src/content/ja/modules/l--*.mdx` |
+| State（`modules/is--*.md`） | 同上 + 状態モジュール固有の挙動（`href` → `<a>`、`contentSize`、`@sm`/`@md` バリエーション等） | `packages/lism-css/src/scss/modules/state/`, `apps/docs/src/content/ja/modules/is--*.mdx` |
+| Atomic（`modules/a--*.md`） | クラス名 / 対応コンポーネント / 専用 Props / Usage / HTML 出力構造 | `packages/lism-css/src/scss/modules/atomic/`, `apps/docs/src/content/ja/modules/a--*.mdx` |
+
+各 `modules/*.md` は以下の構成を維持すること（Phase 2 で確定したテンプレート）：
+
+- Front matter なし、`# {クラス名} / <Component>` の h1 で開始
+- `## 基本情報`（クラス名 / コンポーネント / SCSSソース / ドキュメント）。URL は以下の形式を維持し、誤って書き換えないこと：
+    - SCSSソース: `https://raw.githubusercontent.com/lism-css/lism-css/main/packages/lism-css/src/scss/modules/{layout|state|atomic}/_{name}.scss`
+        - **SCSS ファイルが存在するモジュールのみ記載する**。`l--box` や `a--decorator` のように `packages/lism-css/src/scss/modules/` 配下に対応する `_{name}.scss` を持たないモジュールでは、この行自体を省略する
+    - ドキュメント（人間向け）: `https://lism-css.com/docs/modules/{lowercase}/` — `{lowercase}` はクラス名の小文字版（例: `l--sideMain.md` → `l--sidemain`）
+- `## 専用Props`（該当モジュールのみ）
+- `## Usage`（JSX + HTML コードブロックのペアで記載。MDX の `<Preview>` / `<PreviewArea>` / `<PreviewCode>` / `<SrcCode>` 等のカスタムコンポーネントは廃棄）
+- 必要に応じて追加セクション（HTML 構造、動作の仕組み、特殊仕様、Opt-in スタイル、注意点 など）
+- `## 関連モジュール`（3〜4個に絞る）
+- コード例で使う要素・クラス・コンポーネントは `lism-css` パッケージに含まれるものだけに限定する（`@lism-css/ui` の `<DummyText />` や docs サイト専用の `has--itemGuide` 等、外部由来のものは含めない）
 
 
 ## 情報の優先順位
@@ -51,6 +78,8 @@
 | is-- / l-- / a-- クラス | `packages/lism-css/src/scss/modules/` 配下の SCSS（`state/`, `layout/`, `atomic/`） |
 | c-- クラス | `packages/lism-ui/src/`（UIコンポーネントのCSS）。ユーザー定義は `@layer lism-custom` |
 | プレフィックスと Layer の対応 | `packages/lism-css/src/scss/_with_layer.scss` |
+| 個別モジュールの使い方・専用 Props | `apps/docs/src/content/ja/modules/*.mdx`（サンプル・文言の情報源）。ファイル名は lowercase なので camelCase の Skill ファイル名との対応に注意 |
+| モジュール詳細の React/Astro 側の Props 実装 | `packages/lism-css/src/components/layout/`, `state/`, `atomic/` |
 
 ### ユーティリティクラス関連
 
@@ -113,8 +142,9 @@
 
 ### 1. 現在のテンプレートとバージョン情報の取得
 
-- `.claude/skills/lism-css-guide/` 配下の 12 ファイルを読み取る
+- `.claude/skills/lism-css-guide/` 配下のルートファイル＋ `modules/` 配下の全ファイルを読み取る
 - `packages/lism-css/package.json` からバージョンを取得し、`SKILL.md` のバージョン表記と比較する
+- `modules/` 配下の存在チェック: `packages/lism-css/src/scss/modules/{layout,state,atomic}/` 配下の SCSS と `modules/*.md` が 1:1 対応しているか、さらに `SKILL.md` の「モジュール単位の詳細リファレンス」セクションのリンクと実ファイルが一致するかを確認（数値ではなくソースの実体を基準にする）
 
 ### 2. ソースコードの読み取りと照合
 
@@ -126,6 +156,7 @@
 3. **存在確認**: テンプレートに記載されているが、ソースから削除された項目がないか
 4. **コード例の正確性**: JSX / HTML のコード例が現在の API で動作するか
 5. **バージョン情報**: SKILL.md のバージョン表記が最新か
+6. **モジュール詳細ファイルの整合性**: `modules/*.md` の専用 Props・SCSS raw URL・ドキュメント URL・関連モジュール相互リンク先が現在のソース構成と一致しているか
 
 ### 3. テンプレートの更新
 
@@ -144,7 +175,9 @@
 
 ## 注意事項
 
-- テンプレートはAI向けのリファレンスであり、全 Props・全トークンの完全な一覧ではない。代表的・頻出のものを記載する方針は維持する
 - ソースに存在しない情報を推測で追加しないこと
 - テンプレートの説明文は簡潔なスタイルを維持する（「です・ます」調ではなく体言止め中心）
 - `詳細: URL` のリンクは変更しない（URL の有効性チェックは本コマンドの範囲外）
+- スキルファイル内のソースコードへのリンクは、必ず raw URL 形式（`https://raw.githubusercontent.com/lism-css/lism-css/main/{path}`）を使用すること。`https://github.com/lism-css/lism-css/blob/main/...` 形式は使わない。ディレクトリへのリンク（`tree/`）はそのまま GitHub URL で可
+- `modules/*.md` は camelCase（実クラス名）、MDX 情報源は lowercase。同期対応を間違えないこと
+- `is--skipFlow` / `is--side` は独立した `modules/*.md` を作らず、それぞれ `l--flow.md` / `l--sideMain.md` 内で言及する方針を維持する

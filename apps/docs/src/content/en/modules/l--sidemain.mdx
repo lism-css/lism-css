@@ -1,15 +1,24 @@
 ---
-title: 'SideMain'
-description: 'Documentation for the SideMain module in Lism CSS. A two-column layout that switches between side-main and single-column without media queries.'
+title: 'SideMain (l--sidemain)'
+navtitle: 'l--sidemain'
+description: 'l--sidemain is a two-column layout module that automatically switches between horizontal and vertical arrangements based on the content width you want to preserve.'
 ---
 import { SideMain, Grid, Box, Stack, Spacer } from 'lism-css/astro';
 import { DummyText } from '@lism-css/ui/astro';
 
-Creates a two-column layout that switches between horizontal and vertical arrangements based on the desired content width, without relying on media queries or container queries.
+`l--sidemain` is a two-column layout module that, without relying on media queries or container queries, **automatically switches between horizontal and vertical arrangements based on the content width you want to preserve**.
 
-This is useful for layouts such as a main content area with a side panel.
 
-## Structure
+- Specify the width of the side content with `--sideW`, and specify the width you want to preserve as much as possible for the main content with `--mainW`.
+- As long as the main content can preserve `--mainW`, the horizontal arrangement is kept; if it falls below that, it automatically switches to a vertical arrangement.
+
+This is useful for layouts such as "image and content" or "main area and sidebar".
+
+## CSS
+
+<SrcCode path='src/scss/modules/layout/_sideMain.scss' />
+
+One child element must have `.is--side`.
 
 ```pug
 div.l--sideMain
@@ -17,28 +26,27 @@ div.l--sideMain
   div.is--side
 ```
 
-## CSS
 
-<EmbedCode dirPath='packages/lism-css' srcPath='src/scss/modules/layout/_sideMain.scss' />
+## Lism Component
 
-
-## Import
+### Import
 
 <ImportPackage component='SideMain' />
 
-## Props
+### Props
 
 | Property | Output | Description |
 |---|---|---|
 | `sideW`| <PropBadge type="cssvar">`--sideW`</PropBadge> | Width of the side element |
 | `mainW` | <PropBadge type="cssvar">`--mainW`</PropBadge> | Minimum width to maintain for the main element |
 
-{/* In addition, [Props available on `<Flex>`](/components/flex#props) can be used. */}
 
 ## Usage
 
 A child element with `.is--side` is required.
 The side element's width is fixed to the value set by `--sideW`. When the main element's width falls below `--mainW`, the layout automatically switches to a single column.
+
+### Usage example
 
 <Preview>
   <PreviewTitle>Usage example</PreviewTitle>
@@ -84,7 +92,7 @@ The side element's width is fixed to the value set by `--sideW`. When the main e
   </PreviewCode>
 </Preview>
 
-#### Reversed order
+### Reversed order
 
 Using the `-fxd:row-reverse` class (`flex-direction:row-reverse`) together allows you to reverse only the horizontal order.
 

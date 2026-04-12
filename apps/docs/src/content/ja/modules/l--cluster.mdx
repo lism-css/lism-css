@@ -1,24 +1,29 @@
 ---
-title: 'Cluster'
-description: 'Lism CSS の Cluster モジュールについて解説します。要素を横方向に並べて自動で折り返すレイアウトモジュールです。'
+title: 'Cluster (l--cluster)'
+navtitle: 'l--cluster'
+description: 'l--cluster は、複数の要素を横方向に並べて配置し、数が多ければ折り返すレイアウトモジュールです。'
 ---
 
 import { Box, Cluster, Lism } from 'lism-css/astro';
 
-複数の要素を横方向に連続的に並べて配置し、数が多ければ折り返すレイアウトモジュールです。
+`l--cluster` は、**複数の要素を横方向に連続的に並べて配置し、数が多ければ折り返す**レイアウトモジュールです。
 
 
 ## CSS
 
-<EmbedCode dirPath='packages/lism-css' srcPath='src/scss/modules/layout/_cluster.scss' />
+<SrcCode path='src/scss/modules/layout/_cluster.scss' />
 
 
-## Import
+## Lismコンポーネント
+
+### Import
 
 <ImportPackage component='Cluster' />
 
 
 ## Usage
+
+### 使用例
 
 <Preview>
   <PreviewTitle>シンプルな`<Cluster>`の例</PreviewTitle>
@@ -84,4 +89,3 @@ import { Box, Cluster, Lism } from 'lism-css/astro';
   ```
   </PreviewCode>
 </Preview>
-

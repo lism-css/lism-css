@@ -1,12 +1,21 @@
 ---
-title: 'Container'
-description: 'Lism CSS の Container モジュールについて解説します。container-type を設定しコンテナクエリを有効にするコンポーネントです。'
+title: 'Container (is--container)'
+navtitle: 'is--container'
+description: 'is--container は、container-type を宣言してコンテナクエリを有効にするためのモジュールクラスです。'
 ---
 import { Container, Wrapper, Box, Lism, Spacer } from "lism-css/astro";
 
-`container-type`をセットできる[`is--container`](/docs/module-class/#is--container) クラスをコンポーネントから利用する例を紹介していきます。
+`is--container` は、`container-type` を宣言してコンテナクエリを有効にするためのモジュールクラスです。
 
-`is--container` は基本的に `isContainer`プロパティで**どのコンポーネントからでも呼び出せるようになっています。**
+
+## CSS
+
+<SrcCode path='src/scss/modules/state/_container.scss' />
+
+
+## Lismコンポーネントでの使い方
+
+`isContainer` プロパティで**どのコンポーネントからでも呼び出せるようになっています。**
 
 | プロパティ | 出力 |
 |---|---|
@@ -14,18 +23,14 @@ import { Container, Wrapper, Box, Lism, Spacer } from "lism-css/astro";
 
 さらに、`<Lism isContainer>` のエイリアスとして、`<Container>` も用意しています。
 
-ここでは、この専用コンポーネントを紹介していきます。
-
-
-
-## Import
+### Import
 
 <ImportPackage component='Container' />
 
 
 ## Usage
 
-`isContainer`をLismコンポーネントにセットするか、または`<Container>`コンポーネントを使用して`is--container`が付与され要素の内部では、コンテナクエリが有効になります。
+### 使用例
 
 <Preview>
   <PreviewTitle>例</PreviewTitle>

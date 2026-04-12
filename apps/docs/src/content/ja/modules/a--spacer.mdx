@@ -1,39 +1,44 @@
 ---
-title: 'Spacer'
-description: 'Lism CSS の Spacer モジュールについて解説します。要素間にスペースを確保するための空要素を出力します。'
+title: 'Spacer (a--spacer)'
+navtitle: 'a--spacer'
+description: 'a--spacer は、要素間にスペースを確保するためのモジュールです。'
 ---
 
 import { Spacer, Box, Flex } from 'lism-css/astro';
 
 
-スペースを確保するためのモジュールです。
+`a--spacer`は、要素間のスペースを確保するためのモジュールです。
 
 
-## 構造
+## CSS
+
+<SrcCode path='src/scss/modules/atomic/_spacer.scss' />
+
+
+## Lismコンポーネント
+
+`<Spacer>`は、デフォルトで`aria-hidden="true"`が付与されます。
+
+### Import
+
+<ImportPackage component='Spacer' />
+
+### 出力されるHTML構造
+
 ```pug
-div.a--spacer[aria-hidden="true"]
+div.a--spacer
 ```
 
-
-## Props
-
-
-| プロパティ | 説明 |
-|---|---|
-|`w`| `width`の値|
-|`h`| `height`の値|
+### 専用Props
 
 :::info
 `<Spacer>`では、`w`と`h`に対してSPACEトークンの値が使えます。
 :::
 
 
-## Import
-
-<ImportPackage component='Spacer' />
-
-
 ## Usage
+
+### 使用例
 
 <Preview>
   <PreviewTitle>`<Spacer>`の使用例</PreviewTitle>
@@ -58,6 +63,8 @@ div.a--spacer[aria-hidden="true"]
   </PreviewCode>
 </Preview>
 
+### SPACEトークンを使う例
+
 <Preview>
   <PreviewTitle>`SPACE`トークンを使う例</PreviewTitle>
   <PreviewArea resize p='15' layout=''>
@@ -81,6 +88,8 @@ div.a--spacer[aria-hidden="true"]
   </PreviewCode>
 </Preview>
 
+
+### 横方向のスペーサー
 
 <Preview>
   <PreviewTitle>横方向のスペーサーの例</PreviewTitle>

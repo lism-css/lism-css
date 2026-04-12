@@ -1,35 +1,31 @@
 ---
-title: 'Grid'
-description: 'Documentation for the Grid module in Lism CSS. A layout module for arranging content using CSS Grid.'
+title: 'Grid (l--grid)'
+navtitle: 'l--grid'
+description: 'l--grid is a layout module for arranging content using CSS Grid.'
 ---
 
 import { Grid, Lism, Box, Layer, Center, Decorator, Frame, Media } from 'lism-css/astro';
 import { DummyText } from '@lism-css/ui/astro';
 
 
-A component for arranging content in a **Grid layout**.
+`l--grid` is a layout module for **arranging content in a Grid layout**.
 
 
-## Import
+## CSS
+
+<SrcCode path='src/scss/modules/layout/_grid.scss' />
+
+
+## Lism Component
+
+### Import
 
 <ImportPackage component='Grid' />
 
 
-## Props
-
-|Prop|CSS|
-|---|---|
-|`gt`|`grid-template`|
-|`gta`|`grid-template-areas`|
-|`gtc`|`grid-template-columns`|
-|`gtr`|`grid-template-rows`|
-|`gaf`|`grid-auto-flow`|
-|`gar`|`grid-auto-rows`|
-|`gac`|`grid-auto-columns`|
-
-
 ## Usage
 
+### Basic usage
 
 <Preview>
   <PreviewTitle>Main content in the center</PreviewTitle>
@@ -67,6 +63,8 @@ A component for arranging content in a **Grid layout**.
 </Preview>
 
 
+
+### Switching grid areas at breakpoints
 
 <Preview>
   <PreviewTitle>Switching grid areas at breakpoints</PreviewTitle>

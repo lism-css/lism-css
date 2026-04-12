@@ -1,33 +1,29 @@
 ---
-title: 'Flex'
-description: 'Lism CSS の Flex モジュールについて解説します。コンテンツを Flexbox で配置するためのレイアウトモジュールです。'
+title: 'Flex (l--flex)'
+navtitle: 'l--flex'
+description: 'l--flex は、コンテンツを Flex レイアウトで配置するためのレイアウトモジュールです。'
 ---
 
 import { Box, Flex, Lism } from 'lism-css/astro';
 
-コンテンツを**Flexレイアウトで配置する**ためのコンポーネントです。
+`l--flex` は、**コンテンツを Flex レイアウトで配置する**ためのレイアウトモジュールです。
 
 
 ## CSS
 
-<EmbedCode dirPath='packages/lism-css' srcPath='src/scss/modules/layout/_flex.scss' />
+<SrcCode path='src/scss/modules/layout/_flex.scss' />
 
 
-## Import
+## Lismコンポーネント
+
+### Import
 
 <ImportPackage component='Flex' />
 
 
-## Props
-
-|Prop|CSS|
-|---|---|
-|`fxf`|`flex-flow`|
-|`fxw`|`flex-wrap`|
-|`fxd`|`flex-direction`|
-
-
 ## Usage
+
+### 基本的な使い方
 
 <Preview>
   <PreviewTitle>`<Flex>`</PreviewTitle>
@@ -58,6 +54,8 @@ import { Box, Flex, Lism } from 'lism-css/astro';
   </PreviewCode>
 </Preview>
 
+### flexプロパティの指定
+
 <Preview>
   <PreviewTitle>flexプロパティの使用例</PreviewTitle>
   <PreviewArea resize p='30'>
@@ -87,6 +85,7 @@ import { Box, Flex, Lism } from 'lism-css/astro';
   </PreviewCode>
 </Preview>
 
+### 子要素のflexプロパティ
 
 <Preview>
   <PreviewTitle>子要素のflexプロパティの使用例</PreviewTitle>

@@ -24,14 +24,14 @@
 
 | クラス | 用途 | ソースファイル |
 |--------|------|---------------|
-| `u--trim` | ハーフレディングのネガティブマージンでテキスト上下の余白を詰める | [`_trimHL.scss`](https://github.com/lism-css/lism-css/blob/main/packages/lism-css/src/scss/utility/_trimHL.scss) |
-| `u--trimChildren` | 子要素すべてにハーフレディングトリムを適用（`img`, `figure`, `button` は除外） | [`_trimHL.scss`](https://github.com/lism-css/lism-css/blob/main/packages/lism-css/src/scss/utility/_trimHL.scss) |
-| `u--cbox` | `--keycolor` を使い `color-mix()` で `--c` / `--bgc` / `--bdc` を自動生成する色付きボックス | [`_cbox.scss`](https://github.com/lism-css/lism-css/blob/main/packages/lism-css/src/scss/utility/_cbox.scss) |
-| `u--collapseGrid` | Grid / Flex の子要素間に `box-shadow` で境界線を表現する | [`_itemDivider.scss`](https://github.com/lism-css/lism-css/blob/main/packages/lism-css/src/scss/utility/_itemDivider.scss) |
-| `u--expandedLink` | `::before` 疑似要素で親コンテナ全体をクリック可能にするリンク。`is--linkBox` と併用 | [`_linkExpand.scss`](https://github.com/lism-css/lism-css/blob/main/packages/lism-css/src/scss/utility/_linkExpand.scss) |
-| `u--srOnly` | スクリーンリーダー専用（視覚的に非表示）。`clip-path: inset(50%)` で実装 | [`_hidden.scss`](https://github.com/lism-css/lism-css/blob/main/packages/lism-css/src/scss/utility/_hidden.scss) |
-| `u--snap` | スクロールスナップコンテナ。`--snapType`, `--snapAlign`, `--snapStop` で制御 | [`_snap.scss`](https://github.com/lism-css/lism-css/blob/main/packages/lism-css/src/scss/utility/_snap.scss) |
-| `u--clipText` | テキストで背景をクリッピング（`background-clip: text`） | [`_clipText.scss`](https://github.com/lism-css/lism-css/blob/main/packages/lism-css/src/scss/utility/_clipText.scss) |
+| `u--trim` | ハーフレディングのネガティブマージンでテキスト上下の余白を詰める | [`_trimHL.scss`](https://raw.githubusercontent.com/lism-css/lism-css/main/packages/lism-css/src/scss/utility/_trimHL.scss) |
+| `u--trimChildren` | 子要素すべてにハーフレディングトリムを適用（`img`, `figure`, `button` は除外） | [`_trimHL.scss`](https://raw.githubusercontent.com/lism-css/lism-css/main/packages/lism-css/src/scss/utility/_trimHL.scss) |
+| `u--cbox` | `--keycolor` を使い `color-mix()` で `--c` / `--bgc` / `--bdc` を自動生成する色付きボックス | [`_cbox.scss`](https://raw.githubusercontent.com/lism-css/lism-css/main/packages/lism-css/src/scss/utility/_cbox.scss) |
+| `u--collapseGrid` | Grid / Flex の子要素間に `box-shadow` で境界線を表現する | [`_itemDivider.scss`](https://raw.githubusercontent.com/lism-css/lism-css/main/packages/lism-css/src/scss/utility/_itemDivider.scss) |
+| `u--expandedLink` | `::before` 疑似要素で親コンテナ全体をクリック可能にするリンク。`is--linkBox` と併用 | [`_linkExpand.scss`](https://raw.githubusercontent.com/lism-css/lism-css/main/packages/lism-css/src/scss/utility/_linkExpand.scss) |
+| `u--srOnly` | スクリーンリーダー専用（視覚的に非表示）。`clip-path: inset(50%)` で実装 | [`_hidden.scss`](https://raw.githubusercontent.com/lism-css/lism-css/main/packages/lism-css/src/scss/utility/_hidden.scss) |
+| `u--snap` | スクロールスナップコンテナ。`--snapType`, `--snapAlign`, `--snapStop` で制御 | [`_snap.scss`](https://raw.githubusercontent.com/lism-css/lism-css/main/packages/lism-css/src/scss/utility/_snap.scss) |
+| `u--clipText` | テキストで背景をクリッピング（`background-clip: text`） | [`_clipText.scss`](https://raw.githubusercontent.com/lism-css/lism-css/main/packages/lism-css/src/scss/utility/_clipText.scss) |
 
 
 ## 使用例

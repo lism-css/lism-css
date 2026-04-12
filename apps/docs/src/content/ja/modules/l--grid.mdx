@@ -1,35 +1,31 @@
 ---
-title: 'Grid'
-description: 'Lism CSS の Grid モジュールについて解説します。コンテンツを CSS Grid で配置するためのレイアウトモジュールです。'
+title: 'Grid (l--grid)'
+navtitle: 'l--grid'
+description: 'l--grid は、コンテンツを Grid レイアウトで配置するためのレイアウトモジュールです。'
 ---
 
 import { Grid, Lism, Box, Layer, Center, Decorator, Frame, Media } from 'lism-css/astro';
 import { DummyText } from '@lism-css/ui/astro';
 
 
-コンテンツを**Gridレイアウトで配置する**ためのコンポーネントです。
+`l--grid` は、**コンテンツを Grid レイアウトで配置する**ためのレイアウトモジュールです。
 
 
-## Import
+## CSS
+
+<SrcCode path='src/scss/modules/layout/_grid.scss' />
+
+
+## Lismコンポーネント
+
+### Import
 
 <ImportPackage component='Grid' />
 
 
-## Props
-
-|Prop|CSS|
-|---|---|
-|`gt`|`grid-template`|
-|`gta`|`grid-template-areas`|
-|`gtc`|`grid-template-columns`|
-|`gtr`|`grid-template-rows`|
-|`gaf`|`grid-auto-flow`|
-|`gar`|`grid-auto-rows`|
-|`gac`|`grid-auto-columns`|
-
-
 ## Usage
 
+### 基本的な使い方
 
 <Preview>
   <PreviewTitle>真ん中にメインコンテンツ</PreviewTitle>
@@ -66,7 +62,7 @@ import { DummyText } from '@lism-css/ui/astro';
   </PreviewCode>
 </Preview>
 
-
+### ブレイクポイントでエリアを切り替える
 
 <Preview>
   <PreviewTitle>ブレイクポイントでエリアを切り替える</PreviewTitle>
@@ -220,8 +216,3 @@ import { DummyText } from '@lism-css/ui/astro';
     ```
   </PreviewCode>
 </Preview>
-
-
-
-
-

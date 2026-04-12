@@ -1,28 +1,28 @@
 ---
-title: 'Stack'
-description: 'Documentation for the Stack module in Lism CSS. A layout module that arranges elements vertically using Flexbox.'
+title: 'Stack (l--stack)'
+navtitle: 'l--stack'
+description: 'l--stack is a layout module that arranges multiple elements vertically using a Flex layout.'
 ---
 import { Stack } from 'lism-css/astro';
 import { DummyText } from '@lism-css/ui/astro';
 
-A component that arranges multiple elements **vertically** using a Flex layout.
+`l--stack` is a layout module that **arranges multiple elements vertically using a Flex layout**.
 
 ## CSS
 
-<EmbedCode dirPath='packages/lism-css' srcPath='src/scss/modules/layout/_stack.scss' />
+<SrcCode path='src/scss/modules/layout/_stack.scss' />
 
 
-## Import
+## Lism Component
+
+### Import
 
 <ImportPackage component='Stack' />
 
 
-## Props
-
-The [Props available on `<Flex>`](/docs/modules/l--flex#props) can be used.
-
-
 ## Usage
+
+### Basic usage
 
 <Preview>
   <PreviewTitle>Simple `<Stack>` example</PreviewTitle>
@@ -55,7 +55,7 @@ The [Props available on `<Flex>`](/docs/modules/l--flex#props) can be used.
 
 
 
-### Center-aligned layout using Stack
+### Center-aligned layout
 
 The combination of `<Stack ai="center">` (`.l--stack.-ai:center`) enables what Every Layout calls **"intrinsic centering"** — content is centered only when it is short enough.
 

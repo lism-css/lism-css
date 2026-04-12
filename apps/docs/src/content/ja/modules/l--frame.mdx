@@ -1,27 +1,27 @@
 ---
-title: 'Frame'
-description: 'Lism CSS の Frame モジュールについて解説します。直下のメディア要素を自身のサイズに合わせて表示するレイアウトモジュールです。'
+title: 'Frame (l--frame)'
+navtitle: 'l--frame'
+description: 'l--frame は、直下のメディア要素（img, video, iframe）を自身のサイズにフィットさせて表示するレイアウトモジュールです。'
 ---
 import { Box, Flow, Flex, Media, Layer, Frame, Center, Columns, Inline } from 'lism-css/astro';
 import { DummyText } from '@lism-css/ui/astro';
 
 
-`l--frame` は、直下のメディア要素（`img`,`video`,`iframe`）を 自身のサイズに合わせて表示するレイアウトモジュールです。
+`l--frame` は、直下のメディア要素（`img`,`video`,`iframe`）を 自身のサイズにフィットさせて表示するレイアウトモジュールです。
 
 
-<PreviewTitle>CSS</PreviewTitle>
-<EmbedCode dirPath='packages/lism-css' srcPath='src/scss/modules/layout/_frame.scss' />
+## CSS
+
+<SrcCode path='src/scss/modules/layout/_frame.scss' />
 
 
-## 対応コンポーネント
-
-`lism-css` では`<Frame>`コンポーネントを配布しています。
+## Lismコンポーネント
 
 ### Import
 
 <ImportPackage component='Frame' />
 
-### Props
+### 専用Props
 
 | プロパティ | 説明 |
 |---|---|
@@ -31,8 +31,9 @@ import { DummyText } from '@lism-css/ui/astro';
 <HelpText>(`ar` 自体はどのコンポーネントにも指定できる CSS Props です。)</HelpText>
 
 
-
 ## Usage
+
+### アスペクト比の指定
 
 <Preview>
   <PreviewTitle>`ar='16/9'`を指定</PreviewTitle>
@@ -56,6 +57,8 @@ import { DummyText } from '@lism-css/ui/astro';
     ```
   </PreviewCode>
 </Preview>
+
+### `figure`, `figcaption`の使用
 
 <Preview>
   <PreviewTitle>`figure`, `figcaption`の使用</PreviewTitle>
@@ -87,6 +90,8 @@ import { DummyText } from '@lism-css/ui/astro';
   </PreviewCode>
 </Preview>
 
+### `video`の使用
+
 <Preview>
   <PreviewTitle>`video`の使用</PreviewTitle>
   <PreviewArea resize>
@@ -116,6 +121,7 @@ import { DummyText } from '@lism-css/ui/astro';
   </PreviewCode>
 </Preview>
 
+### `iframe`の使用
 
 <Preview>
   <PreviewTitle>`iframe`の使用</PreviewTitle>
@@ -161,7 +167,7 @@ import { DummyText } from '@lism-css/ui/astro';
   </PreviewCode>
 </Preview>
 
-
+### Layer系を活用する
 
 <Preview>
   <PreviewTitle>Layer系を活用する</PreviewTitle>
@@ -211,8 +217,7 @@ import { DummyText } from '@lism-css/ui/astro';
 </Preview>
 
 
-
-### ar はどのコンポーネントにも指定できます
+### `ar`はどのコンポーネントにも指定できます
 
 :::note
 ::title[arで指定できる値について]

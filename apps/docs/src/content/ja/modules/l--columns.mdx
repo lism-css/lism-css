@@ -1,34 +1,35 @@
 ---
-title: 'Columns'
-description: 'Lism CSS の Columns モジュールについて解説します。ブレイクポイントごとに列数を指定できるカラムレイアウトです。'
+title: 'Columns (l--columns)'
+navtitle: 'l--columns'
+description: 'l--columns は、ブレイクポイントごとに指定した列数で表示できるカラムレイアウトモジュールです。'
 ---
 import { Lism, Box, Frame, Media, Columns, Grid, Divider, Heading } from 'lism-css/astro';
 import { DummyText, DummyImage } from '@lism-css/ui/astro';
 
-ブレイクポイントごとに指定した列数で表示できるカラムレイアウトを作成します。
+`l--columns` は、**ブレイクポイントごとに指定した列数で表示できる**カラムレイアウトモジュールです。
 
-## Props
+
+## CSS
+
+<SrcCode path='src/scss/modules/layout/_columns.scss' />
+
+
+## Lismコンポーネント
+
+### Import
+
+<ImportPackage component='Columns' />
+
+### 専用Props
 
 | プロパティ | 説明 | デフォルト値 |
 |---|---|---|
 | `cols` <PropBadge type="cssvar">`--cols`</PropBadge> | 列数を指定します。ブレイクポイント指定も可能です。 | `2` |
 
-{/* - `cols`: 列数を指定します。ブレイクポイント指定も可能です。 */}
-その他、[`<Grid>`で使えるprops](/docs/modules/l--grid#props)が使えます。
-
-
-## CSS
-
-<EmbedCode dirPath='packages/lism-css' srcPath='src/scss/modules/layout/_columns.scss' />
-
-
-
-## Import
-
-<ImportPackage component='Columns' />
-
 
 ## Usage
+
+### 2列レイアウト
 
 <Preview>
   <PreviewTitle>

@@ -1,39 +1,44 @@
 ---
-title: 'Spacer'
-description: 'Documentation for the Spacer module in Lism CSS. Outputs an empty element to reserve space between content.'
+title: 'Spacer (a--spacer)'
+navtitle: 'a--spacer'
+description: 'a--spacer is a module for reserving space between elements.'
 ---
 
 import { Spacer, Box, Flex } from 'lism-css/astro';
 
 
-A module for reserving empty space.
+`a--spacer` is a module for reserving space between elements.
 
 
-## Structure
+## CSS
+
+<SrcCode path='src/scss/modules/atomic/_spacer.scss' />
+
+
+## Lism Component
+
+`<Spacer>` is rendered with `aria-hidden="true"` by default.
+
+### Import
+
+<ImportPackage component='Spacer' />
+
+### HTML Structure
+
 ```pug
-div.a--spacer[aria-hidden="true"]
+div.a--spacer
 ```
 
-
-## Props
-
-
-| Property | Description |
-|---|---|
-|`w`| `width` value |
-|`h`| `height` value |
+### Props
 
 :::info
 In `<Spacer>`, SPACE token values can be used for `w` and `h`.
 :::
 
 
-## Import
-
-<ImportPackage component='Spacer' />
-
-
 ## Usage
+
+### Basic example
 
 <Preview>
   <PreviewTitle>Usage example of `<Spacer>`</PreviewTitle>
@@ -58,6 +63,8 @@ In `<Spacer>`, SPACE token values can be used for `w` and `h`.
   </PreviewCode>
 </Preview>
 
+### Using a SPACE token
+
 <Preview>
   <PreviewTitle>Using a SPACE token</PreviewTitle>
   <PreviewArea resize p='15' layout=''>
@@ -81,6 +88,8 @@ In `<Spacer>`, SPACE token values can be used for `w` and `h`.
   </PreviewCode>
 </Preview>
 
+
+### Horizontal spacer
 
 <Preview>
   <PreviewTitle>Horizontal spacer example</PreviewTitle>

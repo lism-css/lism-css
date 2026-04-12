@@ -1,28 +1,29 @@
 ---
-title: 'Stack'
-description: 'Lism CSS の Stack モジュールについて解説します。複数の要素を Flex で縦方向に配置するレイアウトモジュールです。'
+title: 'Stack (l--stack)'
+navtitle: 'l--stack'
+description: 'l--stack は、複数の要素を Flex レイアウトで縦並びに配置するレイアウトモジュールです。'
 ---
 import { Stack } from 'lism-css/astro';
 import { DummyText } from '@lism-css/ui/astro';
 
-複数の要素をFlexレイアウトで**縦並び**に配置するコンポーネントです。
+`l--stack` は、**複数の要素を Flex レイアウトで縦並びに配置する**ためのレイアウトモジュールです。
+
 
 ## CSS
 
-<EmbedCode dirPath='packages/lism-css' srcPath='src/scss/modules/layout/_stack.scss' />
+<SrcCode path='src/scss/modules/layout/_stack.scss' />
 
 
-## Import
+## Lismコンポーネント
+
+### Import
 
 <ImportPackage component='Stack' />
 
 
-## Props
-
-[`<Flex>`で使えるProps](/docs/modules/l--flex#props)が使えます。
-
-
 ## Usage
+
+### 基本的な使い方
 
 <Preview>
   <PreviewTitle>シンプルな`<Stack>`の例</PreviewTitle>
@@ -54,8 +55,7 @@ import { DummyText } from '@lism-css/ui/astro';
 </Preview>
 
 
-
-### Stackを活用したセンター寄せレイアウト
+### センター寄せレイアウト
 
 `<Stack ai="center">`( `.l--stack.-ai:center` )の組み合わせで、Every Layout で言うところの **"内在的な中央寄せ"** （コンテンツが短い時だけ中央寄せ）にできます。
 

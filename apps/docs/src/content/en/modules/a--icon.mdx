@@ -1,6 +1,7 @@
 ---
-title: 'Icon'
-description: 'Documentation for the Icon module in Lism CSS. A component for rendering SVG icon elements with preset and custom icon support.'
+title: 'Icon (a--icon)'
+navtitle: 'a--icon'
+description: 'a--icon is a module for displaying icon elements.'
 ---
 
 import { Container, Columns, Grid, Stack, Flex, Spacer, Cluster, Icon, Center } from 'lism-css/astro';
@@ -22,21 +23,33 @@ export const PresetIcons = ({icons}) => {
 }
 
 
-A component for rendering icon elements.
-
-
-## Structure
-```pug
-svg.a--icon
-```
+`a--icon` is a module for displaying icon elements.
 
 
 ## CSS
 
-<EmbedCode dirPath='packages/lism-css' srcPath='src/scss/modules/atomic/_icon.scss' />
+<SrcCode path='src/scss/modules/atomic/_icon.scss' />
 
 
-## Props
+## Lism Component
+
+`<Icon>` automatically adds `aria-label` and `role="img"` when `label` is specified, or `aria-hidden="true"` when it is not.
+
+### Import
+
+<ImportPackage component='Icon' />
+
+### HTML Structure
+
+```pug
+svg.a--icon[aria-hidden="true"]
+
+or
+
+svg.a--icon[aria-label="..."][role="img"]
+```
+
+### Props
 
 | Property | Description |
 |---|---|
@@ -44,10 +57,6 @@ svg.a--icon
 | `size` | Effective when calling a preset icon. Output as `width` and `height`. |
 | `label` | Output as `aria-label`. When specified, `role="img"` is also added; when omitted, `aria-hidden="true"` is output instead. |
 
-
-## Import
-
-<ImportPackage component='Icon' />
 
 ## Usage
 

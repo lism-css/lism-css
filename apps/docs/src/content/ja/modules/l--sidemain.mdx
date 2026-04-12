@@ -1,15 +1,25 @@
 ---
-title: 'SideMain'
-description: 'Lism CSS の SideMain モジュールについて解説します。メディアクエリ不要でサイドとメインの2カラムレイアウトを構築します。'
+title: 'SideMain (l--sidemain)'
+navtitle: 'l--sidemain'
+description: 'l--sidemain は、維持したいコンテンツの長さを基準にして、横並び・縦並びが自動で切り替わる2カラムレイアウトのモジュールです。'
 ---
 import { SideMain, Grid, Box, Stack, Spacer } from 'lism-css/astro';
 import { DummyText } from '@lism-css/ui/astro';
 
-メディアクエリ・コンテナクエリに依存せず、維持したいコンテンツの長さを基準にして横並びと縦並びの切り替えを行うことができる2カラムレイアウトを作成します。
+`l--sidemain` は、メディアクエリ・コンテナクエリに依存せず、**維持したいコンテンツの長さを基準にして横並び・縦並びが自動で切り替わる2カラムレイアウト**のモジュールです。
 
-メインコンテンツとそのサイドコンテンツ、のようなレイアウトに活用できます。
 
-## 基本構造
+- サイドコンテンツの横幅を`--sideW`で指定し、メインコンテンツには可能な限り維持したい横幅を`--mainW`で指定します。
+- メインコンテンツ側が`--mainW`を維持できる範囲内で横並びが維持され、それを下回ってしまう場合は縦並びへ自動で切り替わります。
+
+「画像とコンテンツ」、「メインエリアとサイドバー」のようなレイアウトに活用できます。
+
+
+## CSS
+
+<SrcCode path='src/scss/modules/layout/_sideMain.scss' />
+
+子要素の一方に`.is--side`が必要です。
 
 ```pug
 div.l--sideMain
@@ -17,28 +27,26 @@ div.l--sideMain
   div.is--side
 ```
 
-## CSS
 
-<EmbedCode dirPath='packages/lism-css' srcPath='src/scss/modules/layout/_sideMain.scss' />
+## Lismコンポーネント
 
-
-## Import
+### Import
 
 <ImportPackage component='SideMain' />
 
-## Props
+### 専用Props
 
 | プロパティ | 出力 | 説明  |
 |---|---|---|
 | `sideW`| <PropBadge type="cssvar">`--sideW`</PropBadge> | side要素の横幅 |
 | `mainW` | <PropBadge type="cssvar">`--mainW`</PropBadge> | main要素で維持したい最小幅 |
 
-{/* その他、[`<Flex>`で使えるProps](/components/flex#props)が使えます。 */}
 
 ## Usage
 
-子要素に`.is--side`が必要です。  
 `.is--side`の横幅を`--sideW`で指定した値に固定しつつ、もう一方のメイン要素が`--mainW`で指定した横幅を下回るようになると、自動で1カラムに切り替わるようになっています。
+
+### 使用例
 
 <Preview>
   <PreviewTitle>使用例</PreviewTitle>
@@ -84,7 +92,7 @@ div.l--sideMain
   </PreviewCode>
 </Preview>
 
-#### 反転
+### 反転
 
 `-fxd:row-reverse`クラス（`flex-direction:row-reverse`）を併用することで、横並びの時の順番だけを反転させることができます。
 
@@ -126,6 +134,7 @@ div.l--sideMain
     ```
   </PreviewCode>
 </Preview>
+
 
 ## `Grid`を使って似たレイアウトを構成する例
 

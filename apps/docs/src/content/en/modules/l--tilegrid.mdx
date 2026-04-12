@@ -1,37 +1,39 @@
 ---
-title: 'TileGrid'
-description: 'Learn about the TileGrid module in Lism CSS. A layout module for creating uniform row-and-column grids (tile layouts).'
+title: 'TileGrid (l--tilegrid)'
+navtitle: 'l--tilegrid'
+description: 'l--tilegrid is a layout module for creating uniform tile-style grid layouts by specifying cols and rows.'
 ---
 
 import { TileGrid, Box, Center } from 'lism-css/astro';
 
 
-A component for creating **uniform tile-style grid layouts** by specifying `cols` (number of columns) and `rows` (number of rows).
+`l--tilegrid` is a layout module for creating **uniform tile-style grid layouts** by specifying `cols` (number of columns) and `rows` (number of rows).
 
 Internally, it uses `grid-template: repeat(rows, 1fr) / repeat(cols, 1fr)`.
 
 
-## Props
+## CSS
+
+<SrcCode path='src/scss/modules/layout/_tileGrid.scss' />
+
+
+## Lism Component
+
+### Import
+
+<ImportPackage component='TileGrid' />
+
+### Props
 
 | Property | Description | Default |
 |---|---|---|
 | `cols` <PropBadge type="cssvar">`--cols`</PropBadge> | Specifies the number of columns. Breakpoint-specific values are supported. | `1` |
 | `rows` <PropBadge type="cssvar">`--rows`</PropBadge> | Specifies the number of rows. Breakpoint-specific values are supported. | `1` |
 
-Other [props available on `<Grid>`](/en/docs/modules/l--grid#props) can also be used.
-
-
-## CSS
-
-<EmbedCode dirPath='packages/lism-css' srcPath='src/scss/modules/layout/_tileGrid.scss' />
-
-
-## Import
-
-<ImportPackage component='TileGrid' />
-
 
 ## Usage
+
+### Basic usage
 
 <Preview>
   <PreviewTitle>3-column x 3-row tile grid</PreviewTitle>

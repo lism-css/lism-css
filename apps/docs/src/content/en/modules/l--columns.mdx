@@ -1,34 +1,34 @@
 ---
-title: 'Columns'
-description: 'Documentation for the Columns module in Lism CSS. A column layout that displays content in a specified number of columns per breakpoint.'
+title: 'Columns (l--columns)'
+navtitle: 'l--columns'
+description: 'l--columns is a column layout module that displays content in the specified number of columns at each breakpoint.'
 ---
 import { Lism, Box, Frame, Media, Columns, Grid, Divider, Heading } from 'lism-css/astro';
 import { DummyText, DummyImage } from '@lism-css/ui/astro';
 
-Creates a column layout that displays content in the specified number of columns at each breakpoint.
+`l--columns` is a column layout module that **displays content in the specified number of columns at each breakpoint**.
 
-## Props
+## CSS
+
+<SrcCode path='src/scss/modules/layout/_columns.scss' />
+
+
+## Lism Component
+
+### Import
+
+<ImportPackage component='Columns' />
+
+### Props
 
 | Property | Description | Default |
 |---|---|---|
 | `cols` <PropBadge type="cssvar">`--cols`</PropBadge> | Specifies the number of columns. Breakpoint-based values are also supported. | `2` |
 
-{/* - `cols`: Specifies the number of columns. Breakpoint-based values are also supported. */}
-You can also use any [props available on `<Grid>`](/docs/modules/l--grid#props).
-
-
-## CSS
-
-<EmbedCode dirPath='packages/lism-css' srcPath='src/scss/modules/layout/_columns.scss' />
-
-
-
-## Import
-
-<ImportPackage component='Columns' />
-
 
 ## Usage
+
+### 2-column layout
 
 <Preview>
   <PreviewTitle>

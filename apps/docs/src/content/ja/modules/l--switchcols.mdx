@@ -1,31 +1,36 @@
 ---
-title: 'SwitchCols'
-description: 'Lism CSS の SwitchCols モジュールについて解説します。メディアクエリ不要で複数列と1列を自動切り替えするレイアウトです。'
+title: 'SwitchCols (l--switchcols)'
+navtitle: 'l--switchcols'
+description: 'l--switchcols は、複数列と1列の切り替えをコンテナクエリやメディアクエリを使わずに実装するレイアウトモジュールです。'
 ---
 
 import { SwitchCols, Box, Frame } from 'lism-css/astro';
 
 
-**複数列以上↔︎1列への切り替えをメディアクエリを使わずに実装する**レイアウトです。
+`l--switchcols` は、**複数列以上↔︎1列への切り替えをコンテナクエリやメディアクエリを使わずに実装する**レイアウトモジュールです。
 
 
-## Props
+## CSS
+
+<SrcCode path='src/scss/modules/layout/_switchCols.scss' />
+
+
+## Lismコンポーネント
+
+### Import
+
+<ImportPackage component='SwitchCols' />
+
+### 専用Props
 
 | プロパティ | 説明 |
 |---|---|
 | `breakSize` <PropBadge type="cssvar">`--breakSize`</PropBadge> | 横並びを維持するのに必要な幅（親のサイズ）を指定できます。[szトークン](/docs/tokens/#size)の指定ができます。|
 
 
-## CSS
-
-<EmbedCode dirPath='packages/lism-css' srcPath='src/scss/modules/layout/_switchCols.scss' />
-
-
-## Import
-<ImportPackage component='SwitchCols' />
-
-
 ## Usage
+
+### デフォルト幅で利用する
 
 <Preview>
   <PreviewTitle>デフォルト幅で利用する例</PreviewTitle>
@@ -56,6 +61,7 @@ import { SwitchCols, Box, Frame } from 'lism-css/astro';
   </PreviewCode>
 </Preview>
 
+### breakSizeの指定
 
 <Preview>
   <PreviewTitle>breakSizeを指定して利用する例</PreviewTitle>
@@ -86,6 +92,7 @@ import { SwitchCols, Box, Frame } from 'lism-css/astro';
   </PreviewCode>
 </Preview>
 
+### flex-growで比率を調整する
 
 <Preview>
   <PreviewTitle>子要素にflex-growを指定して比率を調整する例</PreviewTitle>

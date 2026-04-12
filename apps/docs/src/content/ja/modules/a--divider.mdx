@@ -1,37 +1,43 @@
 ---
-title: 'Divider'
-description: 'Lism CSS の Divider モジュールについて解説します。コンテンツ間に区切り線を描画するコンポーネントです。'
+title: 'Divider (a--divider)'
+navtitle: 'a--divider'
+description: 'a--divider は、コンテンツ間に区切り線を描画するためのモジュールです。'
 ---
 
 import { Divider, Flex, Box, Stack } from 'lism-css/astro';
 
-区切り線を描画するコンポーネントです。`--bdc`が`var(--divider)`に初期セットされます。
-
-
-## 構造
-```pug
-div.a--divider
-```
+`a--divider`は、コンテンツ間に区切り線を描画するためのモジュールです。`--bdc`は`var(--divider)`に初期セットされます。
 
 
 ## CSS
 
-<EmbedCode dirPath='packages/lism-css' srcPath='src/scss/modules/atomic/_divider.scss' />
+<SrcCode path='src/scss/modules/atomic/_divider.scss' />
 
 
-## Props
+## Lismコンポーネント
+
+`<Divider>`は、デフォルトで`aria-hidden="true"`が付与されます。
+
+### Import
+
+<ImportPackage component='Divider' />
+
+### 出力されるHTML構造
+
+```pug
+div.a--divider
+```
+
+### 専用Props
 
 | プロパティ | 説明 |
 |---|---|
 | `bdw`,`bds`,`bdc` | 区切り線のボーダープロパティ |
 
 
-## Import
-
-<ImportPackage component='Divider' />
-
-
 ## Usage
+
+### 使用例
 
 <Preview>
   <PreviewTitle>例</PreviewTitle>
@@ -61,6 +67,8 @@ div.a--divider
 </Preview>
 
 
+### スタイルの変更例
+
 <Preview>
   <PreviewTitle>スタイルの変更例</PreviewTitle>
   <PreviewArea resize p='20'>
@@ -88,6 +96,8 @@ div.a--divider
   </PreviewCode>
 </Preview>
 
+
+### 縦方向の区切り線
 
 <Preview>
   <PreviewTitle>縦方向の区切り線</PreviewTitle>
@@ -125,5 +135,3 @@ div.a--divider
     ```
   </PreviewCode>
 </Preview>
-
-

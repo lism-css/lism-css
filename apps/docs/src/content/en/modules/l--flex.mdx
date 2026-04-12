@@ -1,33 +1,29 @@
 ---
-title: 'Flex'
-description: 'Documentation for the Flex module in Lism CSS. A layout module for arranging content using Flexbox.'
+title: 'Flex (l--flex)'
+navtitle: 'l--flex'
+description: 'l--flex is a layout module for arranging content using Flexbox.'
 ---
 
 import { Box, Flex, Lism } from 'lism-css/astro';
 
-A component for laying out content using **Flexbox**.
+`l--flex` is a layout module for **arranging content using Flexbox**.
 
 
 ## CSS
 
-<EmbedCode dirPath='packages/lism-css' srcPath='src/scss/modules/layout/_flex.scss' />
+<SrcCode path='src/scss/modules/layout/_flex.scss' />
 
 
-## Import
+## Lism Component
+
+### Import
 
 <ImportPackage component='Flex' />
 
 
-## Props
-
-|Prop|CSS|
-|---|---|
-|`fxf`|`flex-flow`|
-|`fxw`|`flex-wrap`|
-|`fxd`|`flex-direction`|
-
-
 ## Usage
+
+### Basic usage
 
 <Preview>
   <PreviewTitle>`<Flex>`</PreviewTitle>
@@ -58,6 +54,8 @@ A component for laying out content using **Flexbox**.
   </PreviewCode>
 </Preview>
 
+### Using flex props
+
 <Preview>
   <PreviewTitle>Using flex props</PreviewTitle>
   <PreviewArea resize p='30'>
@@ -87,6 +85,8 @@ A component for laying out content using **Flexbox**.
   </PreviewCode>
 </Preview>
 
+
+### Child element flex props
 
 <Preview>
   <PreviewTitle>Using flex props on child elements</PreviewTitle>

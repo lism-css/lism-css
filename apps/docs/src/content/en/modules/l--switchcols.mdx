@@ -1,31 +1,36 @@
 ---
-title: 'SwitchCols'
-description: 'Documentation for the SwitchCols module in Lism CSS. A layout that switches between multi-column and single-column without media queries.'
+title: 'SwitchCols (l--switchcols)'
+navtitle: 'l--switchcols'
+description: 'l--switchcols is a layout module that switches between multi-column and single-column without using container queries or media queries.'
 ---
 
 import { SwitchCols, Box, Frame } from 'lism-css/astro';
 
 
-A layout that **switches between multi-column and single-column without using media queries**.
+`l--switchcols` is a layout module that **switches between multi-column and single-column without using container queries or media queries**.
 
 
-## Props
+## CSS
+
+<SrcCode path='src/scss/modules/layout/_switchCols.scss' />
+
+
+## Lism Component
+
+### Import
+
+<ImportPackage component='SwitchCols' />
+
+### Props
 
 | Property | Description |
 |---|---|
 | `breakSize` <PropBadge type="cssvar">`--breakSize`</PropBadge> | Specifies the parent width required to maintain the horizontal layout. Accepts [sz tokens](/docs/tokens/#size). |
 
 
-## CSS
-
-<EmbedCode dirPath='packages/lism-css' srcPath='src/scss/modules/layout/_switchCols.scss' />
-
-
-## Import
-<ImportPackage component='SwitchCols' />
-
-
 ## Usage
+
+### Using with the default width
 
 <Preview>
   <PreviewTitle>Using with the default width</PreviewTitle>
@@ -57,6 +62,8 @@ A layout that **switches between multi-column and single-column without using me
 </Preview>
 
 
+### Specifying breakSize
+
 <Preview>
   <PreviewTitle>Using with a specified `breakSize`</PreviewTitle>
   <PreviewArea resize p='15'>
@@ -86,6 +93,8 @@ A layout that **switches between multi-column and single-column without using me
   </PreviewCode>
 </Preview>
 
+
+### Adjusting proportions with flex-grow
 
 <Preview>
   <PreviewTitle>Adjusting proportions by specifying `flex-grow` on child elements</PreviewTitle>
