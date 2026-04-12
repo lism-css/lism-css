@@ -9,6 +9,7 @@ import { registerGetComponent } from '../tools/get-component.js';
 import { registerGetGuide } from '../tools/get-guide.js';
 import { registerSearchDocs } from '../tools/search-docs.js';
 import { registerConvertCss } from '../tools/convert-css.js';
+import { getGuideFilenames, loadMarkdown } from '../lib/load-markdown.js';
 
 async function createTestClient() {
   const server = new McpServer({ name: 'test', version: '0.0.1' });
@@ -103,13 +104,49 @@ describe('MCP Tools (integration)', () => {
     expect(text).toContain('Accordion');
   });
 
-  it('get_component で Flex を検索すると該当セクションの Markdown が返る', async () => {
+  it('get_component で Flex を検索すると modules/l--flex.md の Markdown が返る', async () => {
     const client = await createTestClient();
     const result = await client.callTool({ name: 'get_component', arguments: { name: 'Flex' } });
     expect(result.isError).toBeFalsy();
 
     const text = getText(result);
-    expect(text).toContain('Flex');
+    expect(text).toContain('# l--flex / `<Flex>`');
+    expect(text).toContain('SCSSソース:');
+    expect(text).toContain('## 関連モジュール');
+  });
+
+  it('get_component は "l--flex" / "<Flex>" / "flex" の表記揺れを同一視する', async () => {
+    const client = await createTestClient();
+    const variants = ['l--flex', '<Flex>', 'flex'];
+    const texts: string[] = [];
+    for (const name of variants) {
+      const result = await client.callTool({ name: 'get_component', arguments: { name } });
+      expect(result.isError).toBeFalsy();
+      texts.push(getText(result));
+    }
+    expect(texts[0]).toBe(texts[1]);
+    expect(texts[1]).toBe(texts[2]);
+    expect(texts[0]).toContain('# l--flex / `<Flex>`');
+  });
+
+  it('get_component で Container (State Module) が modules/is--container.md を返す', async () => {
+    const client = await createTestClient();
+    const result = await client.callTool({ name: 'get_component', arguments: { name: 'Container' } });
+    expect(result.isError).toBeFalsy();
+
+    const text = getText(result);
+    expect(text).toContain('# is--container / `<Container>`');
+    expect(text).toContain('SCSSソース:');
+  });
+
+  it('get_component で Icon (Atomic Module) が modules/a--icon.md を返す', async () => {
+    const client = await createTestClient();
+    const result = await client.callTool({ name: 'get_component', arguments: { name: 'Icon' } });
+    expect(result.isError).toBeFalsy();
+
+    const text = getText(result);
+    expect(text).toContain('# a--icon / `<Icon>`');
+    expect(text).toContain('SCSSソース:');
   });
 
   it('get_component で Lism を検索すると該当セクションの Markdown が返る', async () => {
@@ -180,5 +217,20 @@ describe('MCP Tools (integration)', () => {
     for (const tool of tools.tools) {
       expect(tool.annotations?.readOnlyHint).toBe(true);
     }
+  });
+});
+
+describe('load-markdown', () => {
+  it('getGuideFilenames が modules/ サブディレクトリ配下も再帰的に列挙する', () => {
+    const filenames = getGuideFilenames();
+    expect(filenames).toContain('SKILL.md');
+    expect(filenames).toContain('modules/l--flex.md');
+    expect(filenames).toContain('modules/is--container.md');
+    expect(filenames).toContain('modules/a--icon.md');
+  });
+
+  it('loadMarkdown がサブディレクトリ配下のファイルも読み込める', () => {
+    const content = loadMarkdown('modules/l--flex.md');
+    expect(content).toContain('# l--flex / `<Flex>`');
   });
 });
