@@ -67,8 +67,8 @@ The props specific to Lism CSS that `<Lism>` accepts are called **Lism Props**.
 {/* |Type|Description|
 |---|---|
 |**Common Props**|Basic shared properties|
-|**State Props**|Props for outputting classes classified as [State Modules](/docs/css-methodology//#state-modules)|
-|**CSS Props**|Props for outputting classes classified as [Property Class](/docs/property-class/)| */}
+|**State Props**|Props for outputting classes classified as [State Modules](/en/docs/css-methodology//#state-modules)|
+|**CSS Props**|Props for outputting classes classified as [Property Class](/en/docs/property-class/)| */}
 
 
 
@@ -171,7 +171,7 @@ By doing this, the Lism `Icon` component processes `p` and `fz`, while the exter
 
 ### State Props
 
-A set of props corresponding to [State Modules](/docs/css-methodology/) classes.
+A set of props corresponding to [State Modules](/en/docs/css-methodology/) classes.
 
 
 | Prop | Output class | Purpose |
@@ -198,7 +198,7 @@ Use `unset` to remove specific set classes applied internally by a component.
 ```
 
 <Reference>
-[Learn about State Modules classes and usage examples](/docs/css-methodology/)
+[Learn about State Modules classes and usage examples](/en/docs/css-methodology/)
 </Reference>
 
 
@@ -208,7 +208,7 @@ Major CSS properties can be specified using shorthand notation.
 For example, `font-size` can be written as `fz`, and `padding` as `p`.
 
 <Reference>
-[See the full list of available Props](/docs/property-class/)
+[See the full list of available Props](/en/docs/property-class/)
 </Reference>
 
 <Spacer h='10'/>
@@ -225,7 +225,7 @@ The output format is determined by the value (`value`) specified via `prop={valu
 | Other values (variable-only) | `--{prop}` variable only | `bdw='2px'` → `--bdw:2px` |
 
 :::note[Notes]
-- **BP-supported properties**: Properties that can switch values at breakpoints. See the **BP** column in [Property Class](/docs/property-class).
+- **BP-supported properties**: Properties that can switch values at breakpoints. See the **BP** column in [Property Class](/en/docs/property-class).
 - **Variable-only properties**: Properties like `bds`, `bdc`, `bdw`, `keycolor` that always output only CSS variables (`--{prop}`).
 - When a matching token exists but has no dedicated class, the value is output as a CSS variable. (e.g., `c='red'` → `class="-c"` + `style="--c:var(--red)"`)
 :::
@@ -323,7 +323,7 @@ Using `className='-p:hoge'` also works, but passing it as a CSS Prop via `:` ens
 
 BP-supported properties can specify values per breakpoint (`sm`, `md`) using arrays or objects.
 
-[Learn more about responsive support](/docs/responsive)
+[Learn more about responsive support](/en/docs/responsive)
 
 <Preview>
   <PreviewTitle>Example 1: array syntax (base → sm → md)</PreviewTitle>
@@ -359,7 +359,7 @@ BP-supported properties can specify values per breakpoint (`sm`, `md`) using arr
 
 :::warning
 Whether a value actually changes at a breakpoint depends on whether that property supports responsive behavior.
-Check the **BP** (<small>short for breakpoint</small>) column in [Property Class](/docs/property-class) to see which properties are supported.
+Check the **BP** (<small>short for breakpoint</small>) column in [Property Class](/en/docs/property-class) to see which properties are supported.
 :::
 
-For properties that do not support responsive behavior by default (i.e., no CSS is provided), you can add support via [SCSS customization](/docs/customize/).
+For properties that do not support responsive behavior by default (i.e., no CSS is provided), you can add support via [SCSS customization](/en/docs/customize/).
