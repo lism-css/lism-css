@@ -13,7 +13,7 @@ HTML では直接クラスを付与し、Lism コンポーネントでは `set` 
 - [`set--innerRs`](#set--innerrs)
 - [`set--bp`](#set--bp)
 
-[詳細](https://lism-css.com/docs/set/)
+[詳細](https://lism-css.com/docs/set-class/)
 
 ---
 

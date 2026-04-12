@@ -21,3 +21,4 @@ export { default as EmbedCode } from './EmbedCode.astro';
 export { default as ImportPackage } from './ImportPackage.astro';
 export { default as SrcCode } from './SrcCode.astro';
 export { default as ImportSource } from './ImportSource.astro';
+export { default as ModLink } from './ModLink.astro';

@@ -21,7 +21,7 @@ import { Lism, Box, Flex, Stack, Grid, Text, Media } from 'lism-css/astro';
 - [Layout 優先の原則](#layout-優先の原則-layout-isstate-vs-state-layout)
 - [`getLismProps()`](#getlismprops--外部コンポーネントとの連携)
 
-[詳細](https://lism-css.com/docs/components/)
+[詳細](https://lism-css.com/docs/core-components/Lism/)
 
 ---
 

@@ -1,0 +1,22 @@
+---
+/**
+ * モジュールページへの言語対応リンクを生成するMDX用コンポーネント
+ * - slug にはモジュールページのファイル名（小文字）を渡す
+ * - 表示テキストを slug と異なる表記にしたい場合は label で上書き可能
+ */
+import { getLangFromUrl, getLocalizedUrl } from '@/lib/i18n';
+
+interface Props {
+  /** モジュールスラッグ（例: "is--container", "is--linkbox"） */
+  slug: string;
+  /** 表示テキスト（省略時は slug をそのまま表示） */
+  label?: string;
+}
+
+const { slug, label } = Astro.props;
+
+const currentLang = getLangFromUrl(Astro.url);
+const href = getLocalizedUrl(`/docs/modules/${slug}/`, currentLang);
+---
+
+<a href={href}><code>{label ?? slug}</code></a>
