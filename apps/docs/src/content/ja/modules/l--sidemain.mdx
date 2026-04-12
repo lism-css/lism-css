@@ -9,7 +9,10 @@ import { DummyText } from '@lism-css/ui/astro';
 
 メインコンテンツとそのサイドコンテンツ、のようなレイアウトに活用できます。
 
-## 基本構造
+
+## CSS
+
+子要素の一方に`.is--side`が必要です。
 
 ```pug
 div.l--sideMain
@@ -17,16 +20,16 @@ div.l--sideMain
   div.is--side
 ```
 
-## CSS
-
-<EmbedCode dirPath='packages/lism-css' srcPath='src/scss/modules/layout/_sideMain.scss' />
+<SrcCode path='src/scss/modules/layout/_sideMain.scss' />
 
 
-## Import
+## Lismコンポーネント
+
+### Import
 
 <ImportPackage component='SideMain' />
 
-## Props
+### 専用Props
 
 | プロパティ | 出力 | 説明  |
 |---|---|---|
@@ -35,10 +38,12 @@ div.l--sideMain
 
 {/* その他、[`<Flex>`で使えるProps](/components/flex#props)が使えます。 */}
 
+
 ## Usage
 
-子要素に`.is--side`が必要です。  
 `.is--side`の横幅を`--sideW`で指定した値に固定しつつ、もう一方のメイン要素が`--mainW`で指定した横幅を下回るようになると、自動で1カラムに切り替わるようになっています。
+
+### 使用例
 
 <Preview>
   <PreviewTitle>使用例</PreviewTitle>
@@ -84,7 +89,7 @@ div.l--sideMain
   </PreviewCode>
 </Preview>
 
-#### 反転
+### 反転
 
 `-fxd:row-reverse`クラス（`flex-direction:row-reverse`）を併用することで、横並びの時の順番だけを反転させることができます。
 
@@ -126,6 +131,7 @@ div.l--sideMain
     ```
   </PreviewCode>
 </Preview>
+
 
 ## `Grid`を使って似たレイアウトを構成する例
 

@@ -10,7 +10,18 @@ import { DummyText } from '@lism-css/ui/astro';
 Creates a **breakpoint-independent multi-column layout** where columns automatically wrap before they shrink below the specified minimum width.
 
 
-## Props
+## CSS
+
+<SrcCode path='src/scss/modules/layout/_fluidCols.scss' />
+
+
+## Lism Component
+
+### Import
+
+<ImportPackage component='FluidCols' />
+
+### Props
 
 | Property | Description |
 |---|---|
@@ -21,16 +32,9 @@ Creates a **breakpoint-independent multi-column layout** where columns automatic
 You can also use any [props available on `<Grid>`](/docs/modules/l--grid#props).
 
 
-## CSS
-
-<EmbedCode dirPath='packages/lism-css' srcPath='src/scss/modules/layout/_fluidCols.scss' />
-
-
-## Import
-<ImportPackage component='FluidCols' />
-
-
 ## Usage
+
+### Using the default column width
 
 <Preview>
   <PreviewTitle>Using the default column width</PreviewTitle>
@@ -91,6 +95,8 @@ You can also use any [props available on `<Grid>`](/docs/modules/l--grid#props).
 </Preview>
 
 
+### Specifying column width with `auto-fill`
+
 <Preview>
   <PreviewTitle>Using `cols=12em` with `auto-fill`</PreviewTitle>
   <PreviewArea resize p='15'>
@@ -123,6 +129,8 @@ You can also use any [props available on `<Grid>`](/docs/modules/l--grid#props).
   </PreviewCode>
 </Preview>
 
+
+### 2 columns → 1 column
 
 <Preview>
   <PreviewTitle>2 columns → 1 column</PreviewTitle>

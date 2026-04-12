@@ -11,7 +11,18 @@ import { TileGrid, Box, Center } from 'lism-css/astro';
 内部的には `grid-template: repeat(rows, minmax(0, 1fr)) / repeat(cols, minmax(0, 1fr))` を使用しています。
 
 
-## Props
+## CSS
+
+<SrcCode path='src/scss/modules/layout/_tileGrid.scss' />
+
+
+## Lismコンポーネント
+
+### Import
+
+<ImportPackage component='TileGrid' />
+
+### 専用Props
 
 | プロパティ | 説明 | デフォルト値 |
 |---|---|---|
@@ -21,17 +32,9 @@ import { TileGrid, Box, Center } from 'lism-css/astro';
 その他、[`<Grid>`で使えるprops](/docs/modules/l--grid#props)が使えます。
 
 
-## CSS
-
-<EmbedCode dirPath='packages/lism-css' srcPath='src/scss/modules/layout/_tileGrid.scss' />
-
-
-## Import
-
-<ImportPackage component='TileGrid' />
-
-
 ## Usage
+
+### 基本的な使い方
 
 <Preview>
   <PreviewTitle>3列 x 3行のタイルグリッド</PreviewTitle>

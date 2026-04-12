@@ -10,15 +10,16 @@ import { Box, Flex, Lism } from 'lism-css/astro';
 
 ## CSS
 
-<EmbedCode dirPath='packages/lism-css' srcPath='src/scss/modules/layout/_flex.scss' />
+<SrcCode path='src/scss/modules/layout/_flex.scss' />
 
 
-## Import
+## Lismコンポーネント
+
+### Import
 
 <ImportPackage component='Flex' />
 
-
-## Props
+### 専用Props
 
 |Prop|CSS|
 |---|---|
@@ -28,6 +29,8 @@ import { Box, Flex, Lism } from 'lism-css/astro';
 
 
 ## Usage
+
+### 基本的な使い方
 
 <Preview>
   <PreviewTitle>`<Flex>`</PreviewTitle>
@@ -58,6 +61,8 @@ import { Box, Flex, Lism } from 'lism-css/astro';
   </PreviewCode>
 </Preview>
 
+### flexプロパティの指定
+
 <Preview>
   <PreviewTitle>flexプロパティの使用例</PreviewTitle>
   <PreviewArea resize p='30'>
@@ -87,6 +92,7 @@ import { Box, Flex, Lism } from 'lism-css/astro';
   </PreviewCode>
 </Preview>
 
+### 子要素のflexプロパティ
 
 <Preview>
   <PreviewTitle>子要素のflexプロパティの使用例</PreviewTitle>

@@ -9,7 +9,9 @@ Creates a two-column layout that switches between horizontal and vertical arrang
 
 This is useful for layouts such as a main content area with a side panel.
 
-## Structure
+## CSS
+
+One child element must have `.is--side`.
 
 ```pug
 div.l--sideMain
@@ -17,16 +19,16 @@ div.l--sideMain
   div.is--side
 ```
 
-## CSS
-
-<EmbedCode dirPath='packages/lism-css' srcPath='src/scss/modules/layout/_sideMain.scss' />
+<SrcCode path='src/scss/modules/layout/_sideMain.scss' />
 
 
-## Import
+## Lism Component
+
+### Import
 
 <ImportPackage component='SideMain' />
 
-## Props
+### Props
 
 | Property | Output | Description |
 |---|---|---|
@@ -39,6 +41,8 @@ div.l--sideMain
 
 A child element with `.is--side` is required.
 The side element's width is fixed to the value set by `--sideW`. When the main element's width falls below `--mainW`, the layout automatically switches to a single column.
+
+### Usage example
 
 <Preview>
   <PreviewTitle>Usage example</PreviewTitle>
@@ -84,7 +88,7 @@ The side element's width is fixed to the value set by `--sideW`. When the main e
   </PreviewCode>
 </Preview>
 
-#### Reversed order
+### Reversed order
 
 Using the `-fxd:row-reverse` class (`flex-direction:row-reverse`) together allows you to reverse only the horizontal order.
 

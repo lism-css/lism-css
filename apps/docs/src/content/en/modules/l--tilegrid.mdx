@@ -11,7 +11,18 @@ A component for creating **uniform tile-style grid layouts** by specifying `cols
 Internally, it uses `grid-template: repeat(rows, 1fr) / repeat(cols, 1fr)`.
 
 
-## Props
+## CSS
+
+<SrcCode path='src/scss/modules/layout/_tileGrid.scss' />
+
+
+## Lism Component
+
+### Import
+
+<ImportPackage component='TileGrid' />
+
+### Props
 
 | Property | Description | Default |
 |---|---|---|
@@ -21,17 +32,9 @@ Internally, it uses `grid-template: repeat(rows, 1fr) / repeat(cols, 1fr)`.
 Other [props available on `<Grid>`](/en/docs/modules/l--grid#props) can also be used.
 
 
-## CSS
-
-<EmbedCode dirPath='packages/lism-css' srcPath='src/scss/modules/layout/_tileGrid.scss' />
-
-
-## Import
-
-<ImportPackage component='TileGrid' />
-
-
 ## Usage
+
+### Basic usage
 
 <Preview>
   <PreviewTitle>3-column x 3-row tile grid</PreviewTitle>

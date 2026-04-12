@@ -10,7 +10,18 @@ import { DummyText } from '@lism-css/ui/astro';
 **カラム要素が指定した幅より小さくならないように自動で折り返しされる**、ブレイクポイントに依存しない段組みレイアウトを作成します。
 
 
-## Props
+## CSS
+
+<SrcCode path='src/scss/modules/layout/_fluidCols.scss' />
+
+
+## Lismコンポーネント
+
+### Import
+
+<ImportPackage component='FluidCols' />
+
+### 専用Props
 
 | プロパティ | 説明 |
 |---|---|
@@ -21,16 +32,9 @@ import { DummyText } from '@lism-css/ui/astro';
 その他、[`<Grid>`で使えるprops](/docs/modules/l--grid#props)が使えます。
 
 
-## CSS
-
-<EmbedCode dirPath='packages/lism-css' srcPath='src/scss/modules/layout/_fluidCols.scss' />
-
-
-## Import
-<ImportPackage component='FluidCols' />
-
-
 ## Usage
+
+### デフォルト幅で利用する
 
 <Preview>
   <PreviewTitle>デフォルト幅で利用する例</PreviewTitle>
@@ -90,6 +94,7 @@ import { DummyText } from '@lism-css/ui/astro';
   </PreviewCode>
 </Preview>
 
+### カラム幅と`auto-fill`の指定
 
 <Preview>
   <PreviewTitle>`cols=12em`, `auto-fill`を使う </PreviewTitle>
@@ -123,6 +128,7 @@ import { DummyText } from '@lism-css/ui/astro';
   </PreviewCode>
 </Preview>
 
+### 2列→1列
 
 <Preview>
   <PreviewTitle>2列→1列</PreviewTitle>
@@ -149,4 +155,3 @@ import { DummyText } from '@lism-css/ui/astro';
     ```
   </PreviewCode>
 </Preview>
-

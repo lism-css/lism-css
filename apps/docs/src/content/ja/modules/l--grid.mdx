@@ -10,12 +10,18 @@ import { DummyText } from '@lism-css/ui/astro';
 コンテンツを**Gridレイアウトで配置する**ためのコンポーネントです。
 
 
-## Import
+## CSS
+
+<SrcCode path='src/scss/modules/layout/_grid.scss' />
+
+
+## Lismコンポーネント
+
+### Import
 
 <ImportPackage component='Grid' />
 
-
-## Props
+### 専用Props
 
 |Prop|CSS|
 |---|---|
@@ -30,6 +36,7 @@ import { DummyText } from '@lism-css/ui/astro';
 
 ## Usage
 
+### 基本的な使い方
 
 <Preview>
   <PreviewTitle>真ん中にメインコンテンツ</PreviewTitle>
@@ -66,7 +73,7 @@ import { DummyText } from '@lism-css/ui/astro';
   </PreviewCode>
 </Preview>
 
-
+### ブレイクポイントでエリアを切り替える
 
 <Preview>
   <PreviewTitle>ブレイクポイントでエリアを切り替える</PreviewTitle>
@@ -220,8 +227,3 @@ import { DummyText } from '@lism-css/ui/astro';
     ```
   </PreviewCode>
 </Preview>
-
-
-
-
-

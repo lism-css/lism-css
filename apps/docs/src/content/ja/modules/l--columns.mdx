@@ -7,7 +7,19 @@ import { DummyText, DummyImage } from '@lism-css/ui/astro';
 
 ブレイクポイントごとに指定した列数で表示できるカラムレイアウトを作成します。
 
-## Props
+
+## CSS
+
+<SrcCode path='src/scss/modules/layout/_columns.scss' />
+
+
+## Lismコンポーネント
+
+### Import
+
+<ImportPackage component='Columns' />
+
+### 専用Props
 
 | プロパティ | 説明 | デフォルト値 |
 |---|---|---|
@@ -17,18 +29,9 @@ import { DummyText, DummyImage } from '@lism-css/ui/astro';
 その他、[`<Grid>`で使えるprops](/docs/modules/l--grid#props)が使えます。
 
 
-## CSS
-
-<EmbedCode dirPath='packages/lism-css' srcPath='src/scss/modules/layout/_columns.scss' />
-
-
-
-## Import
-
-<ImportPackage component='Columns' />
-
-
 ## Usage
+
+### 2列レイアウト
 
 <Preview>
   <PreviewTitle>

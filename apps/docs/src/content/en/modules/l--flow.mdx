@@ -23,14 +23,12 @@ Inside `l--flow`, the spacing between content items is controlled by `--flow` an
 Heading tags receive double the spacing compared to other elements.
 
 
-<PreviewTitle>CSS</PreviewTitle>
-<EmbedCode dirPath='packages/lism-css' srcPath='src/scss/modules/layout/_flow.scss' />
+## CSS
+
+<SrcCode path='src/scss/modules/layout/_flow.scss' />
 
 
-## Component
-
-`lism-css` provides a `<Flow>` component.
-
+## Lism Component
 
 ### Import
 
@@ -44,6 +42,8 @@ Heading tags receive double the spacing compared to other elements.
 
 
 ## Usage
+
+### Basic usage
 
 <Preview>
   <PreviewTitle>`l--flow`</PreviewTitle>
@@ -88,6 +88,8 @@ Heading tags receive double the spacing compared to other elements.
 {/* </Lism> */}
 
 
+### Using `-flow:s`
+
 <Preview>
   <PreviewTitle>Using `-flow:s`</PreviewTitle>
   <PreviewArea p='20' layout=''>
@@ -130,6 +132,8 @@ Heading tags receive double the spacing compared to other elements.
 </Preview>
 
 
+
+### Setting a custom value
 
 When a non-token value is passed to `flow`, it is output as the `-flow:` class and `--flow` CSS variable.
 

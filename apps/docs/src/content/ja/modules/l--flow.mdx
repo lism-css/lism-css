@@ -23,20 +23,18 @@ import { DummyText } from '@lism-css/ui/astro';
 また、見出しタグのみ余白が2倍になるようになっています。
 
 
-<PreviewTitle>CSS</PreviewTitle>
-<EmbedCode dirPath='packages/lism-css' srcPath='src/scss/modules/layout/_flow.scss' />
+## CSS
+
+<SrcCode path='src/scss/modules/layout/_flow.scss' />
 
 
-## 対応コンポーネント
-
-`lism-css` では`<Flow>`コンポーネントを配布しています。
-
+## Lismコンポーネント
 
 ### Import
 
 <ImportPackage component='Flow' />
 
-### Props
+### 専用Props
 
 | プロパティ | 説明 |
 |---|---|
@@ -44,6 +42,8 @@ import { DummyText } from '@lism-css/ui/astro';
 
 
 ## Usage
+
+### 基本的な使い方
 
 <Preview>
   <PreviewTitle>`l--flow`</PreviewTitle>
@@ -87,6 +87,7 @@ import { DummyText } from '@lism-css/ui/astro';
 </Preview>
 {/* </Lism> */}
 
+### `-flow:s`を併用する
 
 <Preview>
   <PreviewTitle>`-flow:s`を併用する</PreviewTitle>
@@ -129,7 +130,7 @@ import { DummyText } from '@lism-css/ui/astro';
   </PreviewCode>
 </Preview>
 
-
+### 任意の値をセットする
 
 `flow`にトークン値以外を指定すると、`-flow:` クラスと`--flow`変数で出力されます。
 
@@ -165,7 +166,6 @@ import { DummyText } from '@lism-css/ui/astro';
 </Preview>
 
 `l--flow`は`--flow`が未定義であれば`--flow--base`がセットされますが、ネストされていると親の値を継承されることに注意してください。
-
 
 
 ### `is--skipFlow`
@@ -242,4 +242,3 @@ import { DummyText } from '@lism-css/ui/astro';
     ```
   </PreviewCode>
 </Preview>
-
