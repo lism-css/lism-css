@@ -6,7 +6,6 @@
 
 - クラス名: `l--box`
 - コンポーネント: `<Box>`
-- SCSSソース: https://raw.githubusercontent.com/lism-css/lism-css/main/packages/lism-css/src/scss/modules/layout/_box.scss
 - ドキュメント（人間向け）: https://lism-css.com/docs/modules/l--box/
 
 ## Usage

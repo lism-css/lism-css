@@ -39,6 +39,7 @@
 - Front matter なし、`# {クラス名} / <Component>` の h1 で開始
 - `## 基本情報`（クラス名 / コンポーネント / SCSSソース / ドキュメント）。URL は以下の形式を維持し、誤って書き換えないこと：
     - SCSSソース: `https://raw.githubusercontent.com/lism-css/lism-css/main/packages/lism-css/src/scss/modules/{layout|state|atomic}/_{name}.scss`
+        - **SCSS ファイルが存在するモジュールのみ記載する**。`l--box` や `a--decorator` のように `packages/lism-css/src/scss/modules/` 配下に対応する `_{name}.scss` を持たないモジュールでは、この行自体を省略する
     - ドキュメント（人間向け）: `https://lism-css.com/docs/modules/{lowercase}/` — `{lowercase}` はクラス名の小文字版（例: `l--sideMain.md` → `l--sidemain`）
 - `## 専用Props`（該当モジュールのみ）
 - `## Usage`（JSX + HTML コードブロックのペアで記載。MDX の `<Preview>` / `<PreviewArea>` / `<PreviewCode>` / `<SrcCode>` 等のカスタムコンポーネントは廃棄）
