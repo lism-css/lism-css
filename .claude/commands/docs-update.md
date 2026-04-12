@@ -76,6 +76,55 @@
 修正はサブエージェントが1パスで実施済み。ユーザーは `git diff` で確認できる。
 
 
+## レイアウトモジュール (`modules/l--*.mdx`) の構成テンプレート
+
+`l--*.mdx` ファイルはセクション構成が統一されている。更新時もこの構成を維持すること。
+
+```
+---
+title / description
+---
+
+import文
+
+導入文（モジュールの概要説明）
+
+## CSS                              ← CSSファイルがある場合のみ（box は省略）
+
+<SrcCode path='src/scss/modules/layout/_xxx.scss' />
+
+## Lismコンポーネント                  ← en: ## Lism Component
+
+### Import
+
+<ImportPackage component='Xxx' />
+
+### 専用Props                        ← en: ### Props（専用Propsがある場合のみ）
+
+| プロパティ | 説明 |
+|---|---|
+| ... | ... |
+
+## Usage
+
+### サブタイトル1                     ← 各例に ### 見出しを付ける（目次に表示される）
+
+<Preview>...</Preview>
+
+### サブタイトル2
+
+<Preview>...</Preview>
+```
+
+### 構成上の注意点
+
+- **CSS セクション**: `<SrcCode>` を使用（`<EmbedCode>` は使わない）
+- **専用Props**: そのコンポーネント固有のPropsのみ記載。Grid/Flex等の共通Propsへの参照リンクは不要
+- **Usage の見出し**: 全ての使用例（またはグループ）に `###` 見出しを付与する
+- **追加セクション**: flow（`## l--flow を入れ子にする時の注意点`）、sidemain（`## Grid を使って似たレイアウトを構成する例`）のように、Usage 後に補足セクションがある場合はそのまま維持する
+- **sidemain の CSS**: SrcCode の後に基本構造図（`.is--side` の説明）を配置する
+
+
 ## 注意事項
 
 - ソースに存在しない情報を推測で追加しないこと
