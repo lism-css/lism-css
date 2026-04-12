@@ -76,107 +76,32 @@
 修正はサブエージェントが1パスで実施済み。ユーザーは `git diff` で確認できる。
 
 
-## レイアウトモジュール (`modules/l--*.mdx`) の構成テンプレート
+## モジュールドキュメント (`modules/{l,a,is}--*.mdx`) の構成ポイント
 
-`l--*.mdx` ファイルはセクション構成が統一されている。更新時もこの構成を維持すること。
+既存ファイルは構成が統一済み。更新時は内容修正に留め、以下のポイントを崩さないこと。
 
-```
----
-title / description
----
+### 共通
 
-import文
+- **セクションの並び**: 導入文 → `## CSS` → Lismコンポーネントのセクション → `## Usage` → 必要なら補足セクション
+- **CSS セクション**: `<SrcCode>` を使う（`<EmbedCode>` は使わない）。CSS ファイルを持たないモジュール（l--box, a--decorator 等）は省略
+- **Usage の見出し**: 使用例（またはグループ）ごとに `###` を付ける（目次に表示される）
+- **専用Props**: そのコンポーネント固有のPropsのみ記載。共通Props（Grid/Flex 等）への参照リンクは書かない
+- **補足セクション**: `## l--flow を入れ子にする時の注意点`、`## Grid を使って似たレイアウトを構成する例` 等、Usage 後の補足セクションはそのまま維持
 
-導入文（モジュールの概要説明）
+### タイプ別の差分
 
-## CSS                              ← CSSファイルがある場合のみ（box は省略）
+| タイプ | Lismコンポーネントの見出し | 特記事項 |
+|---|---|---|
+| `l--*` | `## Lismコンポーネント` | `### Import` → （必要なら `### 専用Props`） |
+| `a--*` | `## Lismコンポーネント` | `### Import` → `### 出力されるHTML構造`（pug 記法）→（必要なら `### 専用Props`） |
+| `is--*` | `## Lismコンポーネントでの使い方` | 専用コンポーネント（例: `<Layer>`, `<LinkBox>`）を持つものだけ `### Import` を付ける。`isXxx` プロパティで使えるものは冒頭に対応表を置く。`is--vertical` のように Lism コンポーネントを持たない場合はこのセクション自体を省略 |
 
-<SrcCode path='src/scss/modules/layout/_xxx.scss' />
+### 英語版 (`en/modules/`) の見出し対応
 
-## Lismコンポーネント                  ← en: ## Lism Component
-
-### Import
-
-<ImportPackage component='Xxx' />
-
-### 専用Props                        ← en: ### Props（専用Propsがある場合のみ）
-
-| プロパティ | 説明 |
-|---|---|
-| ... | ... |
-
-## Usage
-
-### サブタイトル1                     ← 各例に ### 見出しを付ける（目次に表示される）
-
-<Preview>...</Preview>
-
-### サブタイトル2
-
-<Preview>...</Preview>
-```
-
-### 構成上の注意点
-
-- **CSS セクション**: `<SrcCode>` を使用（`<EmbedCode>` は使わない）
-- **専用Props**: そのコンポーネント固有のPropsのみ記載。Grid/Flex等の共通Propsへの参照リンクは不要
-- **Usage の見出し**: 全ての使用例（またはグループ）に `###` 見出しを付与する
-- **追加セクション**: flow（`## l--flow を入れ子にする時の注意点`）、sidemain（`## Grid を使って似たレイアウトを構成する例`）のように、Usage 後に補足セクションがある場合はそのまま維持する
-- **sidemain の CSS**: SrcCode の後に基本構造図（`.is--side` の説明）を配置する
-
-
-## アトミックモジュール (`modules/a--*.mdx`) の構成テンプレート
-
-`a--*.mdx` ファイルも l--系と同じセクション構成に統一されている。更新時もこの構成を維持すること。
-
-```
----
-title / description
----
-
-import文
-
-導入文（モジュールの概要説明）
-
-## CSS                              ← CSSファイルがある場合のみ（decorator は省略）
-
-<SrcCode path='src/scss/modules/atomic/_xxx.scss' />
-
-## Lismコンポーネント                  ← en: ## Lism Component
-
-### Import
-
-<ImportPackage component='Xxx' />
-
-### 出力されるHTML構造                  ← en: ### HTML Structure
-
-```pug
-div.a--xxx
-```
-
-### 専用Props                        ← en: ### Props（専用Propsがある場合のみ）
-
-| プロパティ | 説明 |
-|---|---|
-| ... | ... |
-
-## Usage
-
-### サブタイトル1                     ← 各例に ### 見出しを付ける（目次に表示される）
-
-<Preview>...</Preview>
-
-### サブタイトル2
-
-<Preview>...</Preview>
-```
-
-### 構成上の注意点
-
-- **CSS セクション**: `<SrcCode>` を使用（`<EmbedCode>` は使わない）
-- **出力されるHTML構造**: l--系にはないa--系固有のセクション。pugフォーマットでHTML構造を記載
-- **専用Props**: そのコンポーネント固有のPropsのみ記載
-- **Usage の見出し**: 全ての使用例（またはグループ）に `###` 見出しを付与する
+- `## Lismコンポーネント` → `## Lism Component`
+- `## Lismコンポーネントでの使い方` → `## Usage with Lism Component`
+- `### 専用Props` → `### Props`
+- `### 出力されるHTML構造` → `### HTML Structure`
 
 
 ## 注意事項
