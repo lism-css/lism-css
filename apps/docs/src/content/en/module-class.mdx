@@ -4,13 +4,6 @@ description: 'An overview of Lism CSS module classes (is--, l--, a--, c--) and t
 ---
 
 
-import { Flow, Box, Lism, Stack, Flex, Container, Frame, Center, Spacer, Media } from 'lism-css/astro';
-import { DummyText } from '@lism-css/ui/astro';
-import ModuleList from '@/components/ModuleList.astro';
-
-{/* import { Desktop } from '@phosphor-icons/react'; */}
-
-
 Lism uses the following module classes.
 
 - `is--{module}`: Versatile state modules that can be applied or removed across multiple types of elements.
@@ -23,171 +16,56 @@ In general, multiple module classes from different layers cannot be combined, ex
 For example, `.l--` and `.c--` can be used together, but `.l--XXX` and `.l--YYY`, or `.c--XXX` and `.c--YYY`, should not be combined within the same element.
 
 
-## State Module
+## State Modules
 
-### `is--container`
+Versatile state modules that can be applied or removed across multiple types of elements.
 
-Applying `is--container` sets <code>container-type: inline-size</code> on the element.
-Since Lism CSS supports property switching via container queries,
-      <b>this class must be applied to any wrapper element you want to use as the container query reference.</b>
-
-### `is--wrapper`
-
-`is--wrapper` is a class for defining wrapper elements.
-You can control the width of direct child elements using `--contentSize`, and preset sizes can be specified with `-contentSize:{s|l}`.
-
-<Spacer h='1rem' />
-
-| Class name | Content width (`--contentSize`) |
+| Class | Description |
 |---|---|
-| `is--wrapper`| `--sz--m` |
-| `-contentSize:s` | `--sz--s` |
-| `-contentSize:l` | `--sz--l` |
-
-<Preview>
-  <PreviewTitle>Example</PreviewTitle>
-  <PreviewArea resize p='15'>
-    <Lism isWrapper="s" className="-bd:guide -hov:itemGuide">
-      <div>Contents...</div>
-      <div>Contents...</div>
-    </Lism>
-  </PreviewArea>
-  <PreviewCode slot='tab' label='HTML'>
-  ```html
-  <div class="is--wrapper -contentSize:s">
-    <div>Contents...</div>
-    <div>Contents...</div>
-  </div>
-  ```
-  </PreviewCode>
-  <PreviewCode slot='tab' label='JSX'>
-  ```jsx
-  <Lism isWrapper="s">
-    <div>Contents...</div>
-    <div>Contents...</div>
-  </Lism>
-  ```
-  </PreviewCode>
-</Preview>
-
-
-<Reference>
-See [`<Wrapper>`](/modules/state/wrapper) for usage examples.
-</Reference>
-
-
-
-
-### `is--layer`
-
-Positions an element to match the size of its parent using `position: absolute`.
-
-The CSS is as follows — the element is positioned with both `inset: 0` and `overflow: hidden` applied.
-
-```css
-.is--layer {
-  position: absolute;
-  inset: 0;
-  overflow: hidden;
-}
-```
-
-<Reference>
-See [`<Layer>`](/modules/state/layer) for usage examples.
-</Reference>
-
-
-### `is--linkBox`
-
-A class for making an entire box into a clickable link.
-
-<Reference>
-See [`<LinkBox>`](/modules/state/linkbox) for usage examples.
-</Reference>
-
-<Spacer h='1rem' />
-
-
-### `is--vertical`
-
-| Class name |
-|---|
-| `is--vertical`|
-| `is--vertical@sm`|
-| `is--vertical@md`|
-
-Using `is--vertical@[sm|md]` enables vertical writing mode only at that breakpoint and above. (**The `.set--bp` class must also be applied.**)
-
-The value for vertical writing is managed via a token (`--vertical-mode`). (<span class='-fz:s'>This allows switching between `vertical-rl` and `vertical-lr` by overriding the variable according to the `lang` attribute.</span>)
-
-<Preview>
-  <PreviewTitle>Example: vertical writing at sm size and above</PreviewTitle>
-  <PreviewArea p='0' resize>
-    <Flow set="gutter" py="20" w="100%" h="20em" className="is--vertical@sm set--bp">
-      <DummyText lang="ja" length="s" />
-      <DummyText lang="ja" length="l" offset="3" />
-    </Flow>
-  </PreviewArea>
-  <PreviewCode slot='tab' label='HTML'>
-  ```html "is--vertical@sm set--bp"
-  <div class="is--vertical@sm set--bp l--flow set--gutter -py:20 -w:100% -h" style="--h: 20em">
-    <p>ロレム・イプサムの座り雨。目まぐるしい文章の流れの中で、それは静かに歩く仮の言葉です。</p>
-    <p>
-      Elitも穏やかに続いていきますが、積み重ねられてきた「LiberroyとFoogの取り組み」は、決するための答えというより、余白のようなものです。作業が進むにつれて、工夫や考えとともに関心が折り重なりながらも、必要以上に主張せず彼らの作品は私たちに一定の示唆を与えてくれます。
-    </p>
-  </div>
-  ```
-  </PreviewCode>
-  <PreviewCode slot='tab' label='JSX'>
-    ```jsx "is--vertical@sm set--bp"
-    <Flow set="gutter" py="20" w="100%" h="20em" className="is--vertical@sm set--bp">
-      <p>ロレム・イプサムの座り雨。目まぐるしい文章の流れの中で、それは静かに歩く仮の言葉です。</p>
-      <p>
-        Elitも穏やかに続いていきますが、積み重ねられてきた「LiberroyとFoogの取り組み」は、余白のようなものです。作業が進むにつれて、工夫や考えとともに関心が折り重なりながらも、必要以上に主張せず彼らの作品は私たちに一定の示唆を与えてくれます。
-      </p>
-    </Flow>
-    ```
-  </PreviewCode>
-</Preview>
-
-
-### `is--side`
-
-A class applied to the side element of `l--sideMain`.
-
-<Reference>
-See [`<SideMain>`](/modules/layout/sidemain) for usage examples.
-</Reference>
-
-
-### `is--skipFlow`
-
-When used as a direct child of `l--flow`, this cancels the spacing between the element and the following sibling.
-
-<Reference>
-See [`<Flow>`](/modules/layout/flow) for usage examples.
-</Reference>
-
-
+| [`is--container`](/docs/modules/is--container/) | Defines the reference element for container queries |
+| [`is--wrapper`](/docs/modules/is--wrapper/) | Wrapper element that controls content width |
+| [`is--layer`](/docs/modules/is--layer/) | Overlay layer positioned over a parent element |
+| [`is--linkBox`](/docs/modules/is--linkBox/) | Makes the entire box a clickable link |
+| [`is--vertical`](/docs/modules/is--vertical/) | Applies vertical writing mode |
+| `is--side` | For the side element of `l--sideMain` (→ see [`l--sidemain`](/docs/modules/l--sidemain/)) |
+| `is--skipFlow` | Cancels spacing with the next sibling inside `l--flow` (→ see [`l--flow`](/docs/modules/l--flow/)) |
 
 
 ## Layout Modules
 
-`l--flex`, `l--grid`, `l--center`, and similar classes fall under Layout Modules.
+Modules that serve as the building blocks of layouts.
 
-<ModuleList moduleType='Layout Modules'/>
+| Class | Description |
+|---|---|
+| [`l--box`](/docs/modules/l--box/) | Simple module for grouping content |
+| [`l--flow`](/docs/modules/l--flow/) | Flow-root module that auto-manages spacing between children |
+| [`l--frame`](/docs/modules/l--frame/) | Fits child media to its own size |
+| [`l--flex`](/docs/modules/l--flex/) | Lays out content using Flexbox |
+| [`l--cluster`](/docs/modules/l--cluster/) | Arranges items horizontally with automatic wrapping |
+| [`l--stack`](/docs/modules/l--stack/) | Arranges elements vertically |
+| [`l--sidemain`](/docs/modules/l--sidemain/) | Two-column layout with side and main areas |
+| [`l--grid`](/docs/modules/l--grid/) | Lays out content using CSS Grid |
+| [`l--tilegrid`](/docs/modules/l--tilegrid/) | Uniform row-column grid (tile layout) |
+| [`l--center`](/docs/modules/l--center/) | Centers content both horizontally and vertically |
+| [`l--columns`](/docs/modules/l--columns/) | Column layout with breakpoint-based column counts |
+| [`l--fluidcols`](/docs/modules/l--fluidcols/) | Fluid columns that wrap based on column width |
+| [`l--switchcols`](/docs/modules/l--switchcols/) | Automatically switches between multi-column and single-column |
 
 
 ## Atomic Modules
 
-`a--divider`, `a--spacer`, `a--decorator`, and `a--icon` fall under Atomic Modules.
+Modules that represent the smallest units of a layout.
 
-<ModuleList moduleType='Atomic Modules'/>
+| Class | Description |
+|---|---|
+| [`a--decorator`](/docs/modules/a--decorator/) | Empty element for decoration |
+| [`a--divider`](/docs/modules/a--divider/) | Divider line between content |
+| [`a--icon`](/docs/modules/a--icon/) | Outputs an SVG icon |
+| [`a--spacer`](/docs/modules/a--spacer/) | Empty element for spacing between elements |
 
 
 {/* ## Dynamic Modules
-`c--accordion`, `c--modal`, `c--tabs` fall under Dynamic Modules.
-<ModuleList moduleType='Dynamic Modules'/> */}
+`c--accordion`, `c--modal`, `c--tabs` fall under Dynamic Modules. */}
 
 
 ## Custom Modules

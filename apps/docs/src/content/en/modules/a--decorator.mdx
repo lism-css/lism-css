@@ -1,34 +1,42 @@
 ---
 title: 'Decorator'
-description: 'Documentation for the Decorator module in Lism CSS. A component that outputs an empty decorative element with aria-hidden.'
+navtitle: 'a--decorator'
+description: 'Documentation for the Decorator module in Lism CSS. A module used as an empty element for decorating content.'
 ---
 
 import { Decorator, Box, Flex, Grid, Spacer } from 'lism-css/astro';
 import { DummyText } from '@lism-css/ui/astro';
 
-A component that outputs an empty element for decorating content.
-Rendered with `aria-hidden="true"` by default.
+`a--decorator` is a module used as an empty element for decorating content.
 
-## Structure
+
+## Lism Component
+
+`<Decorator>` is rendered with `aria-hidden="true"` by default.
+
+### Import
+
+<ImportPackage component='Decorator' />
+
+### HTML Structure
 
 ```pug
-div.a--decorator[aria-hidden="true"]
+div.a--decorator
 ```
 
-## Props
+### Props
 
 |Prop|Description|
 |---|---|
 | `size` | Sets the decorator's size (width and height) at once.<br/>When specified, the value is passed to `w` (`width`) and `ar='1/1'` (`aspect-ratio:1/1`) is applied automatically. |
 | `clipPath`,`boxSizing` | Passed to `style.clipPath` and `style.boxSizing` respectively. |
 
-## Import
-
-<ImportPackage component='Decorator' />
 
 ## Usage
 
 Here are some decoration examples using `<Decorator>`.
+
+### Basic example
 
 <Preview>
   <PreviewTitle>Example</PreviewTitle>

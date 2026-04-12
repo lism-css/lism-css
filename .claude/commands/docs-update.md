@@ -125,6 +125,60 @@ import文
 - **sidemain の CSS**: SrcCode の後に基本構造図（`.is--side` の説明）を配置する
 
 
+## アトミックモジュール (`modules/a--*.mdx`) の構成テンプレート
+
+`a--*.mdx` ファイルも l--系と同じセクション構成に統一されている。更新時もこの構成を維持すること。
+
+```
+---
+title / description
+---
+
+import文
+
+導入文（モジュールの概要説明）
+
+## CSS                              ← CSSファイルがある場合のみ（decorator は省略）
+
+<SrcCode path='src/scss/modules/atomic/_xxx.scss' />
+
+## Lismコンポーネント                  ← en: ## Lism Component
+
+### Import
+
+<ImportPackage component='Xxx' />
+
+### 出力されるHTML構造                  ← en: ### HTML Structure
+
+```pug
+div.a--xxx
+```
+
+### 専用Props                        ← en: ### Props（専用Propsがある場合のみ）
+
+| プロパティ | 説明 |
+|---|---|
+| ... | ... |
+
+## Usage
+
+### サブタイトル1                     ← 各例に ### 見出しを付ける（目次に表示される）
+
+<Preview>...</Preview>
+
+### サブタイトル2
+
+<Preview>...</Preview>
+```
+
+### 構成上の注意点
+
+- **CSS セクション**: `<SrcCode>` を使用（`<EmbedCode>` は使わない）
+- **出力されるHTML構造**: l--系にはないa--系固有のセクション。pugフォーマットでHTML構造を記載
+- **専用Props**: そのコンポーネント固有のPropsのみ記載
+- **Usage の見出し**: 全ての使用例（またはグループ）に `###` 見出しを付与する
+
+
 ## 注意事項
 
 - ソースに存在しない情報を推測で追加しないこと

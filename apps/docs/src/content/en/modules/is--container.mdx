@@ -1,12 +1,21 @@
 ---
 title: 'Container'
+navtitle: 'is--container'
 description: 'Documentation for the Container module in Lism CSS. A component that sets container-type to enable container queries.'
 ---
 import { Container, Wrapper, Box, Lism, Spacer } from "lism-css/astro";
 
-This page demonstrates how to use the [`is--container`](/docs/css-methodology//#is--container) class — which sets `container-type` — through components.
+`is--container` is a module class that sets `container-type` to enable container queries.
 
-`is--container` can be applied via the `isContainer` property on **any component**.
+
+## CSS
+
+<SrcCode path='src/scss/modules/state/_container.scss' />
+
+
+## Using with Lism Components
+
+It can be applied via the `isContainer` property on **any component**.
 
 | Property | Output |
 |---|---|
@@ -14,17 +23,14 @@ This page demonstrates how to use the [`is--container`](/docs/css-methodology//#
 
 A dedicated `<Container>` component is also available as an alias for `<Lism isContainer>`.
 
-This section introduces that dedicated component.
-
-
-## Import
+### Import
 
 <ImportPackage component='Container' />
 
 
 ## Usage
 
-When `isContainer` is set on a Lism component, or when the `<Container>` component is used, the `is--container` class is applied and container queries become active inside the element.
+### Example
 
 <Preview>
   <PreviewTitle>Example</PreviewTitle>

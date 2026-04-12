@@ -1,29 +1,31 @@
 ---
 title: 'Layer'
+navtitle: 'is--layer'
 description: 'Lism CSS の Layer モジュールについて解説します。親要素に重ねて配置するオーバーレイ用のコンポーネントです。'
 ---
-
-
 import { Media, Layer, Stack, Flex, Box, Columns, Center, Frame, Text } from 'lism-css/astro';
 import { DummyText } from '@lism-css/ui/astro';
 
+`is--layer` は、親要素に重ねて配置するオーバーレイ用のモジュールクラスです。
 
 
-[`.is--layer`](/docs/css-methodology/#is--layer)をデフォルトで出力するコンポーネント(`<Lism isLayer>`のエイリアス）です。
+## CSS
+
+<SrcCode path='src/scss/modules/state/_layer.scss' />
 
 
+## Lismコンポーネントでの使い方
 
-{/* <Reference>
-要素を単純に`position:absolute`で配置したいだけの場合は、`-pos:absolute`クラスなどを使用することもできます。
-参考：[absoluteで配置する方法](/components/props/others/absolute)
-</Reference> */}
+`<Lism isLayer>` のエイリアスとして `<Layer>` が用意されています。
 
-
-## Import
+### Import
 
 <ImportPackage component='Layer' />
 
+
 ## Usage
+
+### 使用例
 
 <Preview>
   <PreviewTitle>使用例</PreviewTitle>
@@ -95,8 +97,6 @@ import { DummyText } from '@lism-css/ui/astro';
     ```
   </PreviewCode>
 </Preview>
-
-
 
 
 <Preview>

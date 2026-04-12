@@ -148,7 +148,13 @@ const docsSidebar: SidebarSection[] = [
   },
   {
     label: 'State Modules',
-    items: ['/docs/modules/is--container/', '/docs/modules/is--wrapper/', '/docs/modules/is--layer/', '/docs/modules/is--linkbox/'],
+    items: [
+      '/docs/modules/is--container/',
+      '/docs/modules/is--wrapper/',
+      '/docs/modules/is--layer/',
+      '/docs/modules/is--linkbox/',
+      '/docs/modules/is--vertical/',
+    ],
   },
   {
     label: 'Layout Modules',

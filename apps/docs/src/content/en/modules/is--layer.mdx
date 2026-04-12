@@ -1,29 +1,31 @@
 ---
 title: 'Layer'
+navtitle: 'is--layer'
 description: 'Documentation for the Layer module in Lism CSS. A component for creating overlay layers positioned over a parent element.'
 ---
-
-
 import { Media, Layer, Stack, Flex, Box, Columns, Center, Frame, Text } from 'lism-css/astro';
 import { DummyText } from '@lism-css/ui/astro';
 
+`is--layer` is a module class for creating overlay layers positioned over a parent element.
 
 
-A component that outputs [`.is--layer`](/docs/css-methodology//#is--layer) by default (an alias for `<Lism isLayer>`).
+## CSS
+
+<SrcCode path='src/scss/modules/state/_layer.scss' />
 
 
+## Using with Lism Components
 
-{/* <Reference>
-If you simply want to position an element with `position:absolute`, you can also use the `-pos:absolute` class.
-See: [Positioning with absolute](/components/props/others/absolute)
-</Reference> */}
+A `<Layer>` component is available as an alias for `<Lism isLayer>`.
 
-
-## Import
+### Import
 
 <ImportPackage component='Layer' />
 
+
 ## Usage
+
+### Example
 
 <Preview>
   <PreviewTitle>Example</PreviewTitle>
@@ -91,8 +93,6 @@ You can apply `backdrop-filter` via the `style` prop.
     ```
   </PreviewCode>
 </Preview>
-
-
 
 
 <Preview>

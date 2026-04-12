@@ -1,37 +1,43 @@
 ---
 title: 'Divider'
-description: 'Documentation for the Divider module in Lism CSS. A component that renders a dividing line between content sections.'
+navtitle: 'a--divider'
+description: 'Documentation for the Divider module in Lism CSS. A module for rendering a dividing line between content sections.'
 ---
 
 import { Divider, Flex, Box, Stack } from 'lism-css/astro';
 
-A component that renders a dividing line. `--bdc` is initialized to `var(--divider)`.
-
-
-## Structure
-```pug
-div.a--divider
-```
+`a--divider` is a module for rendering a dividing line between content sections. `--bdc` is initialized to `var(--divider)`.
 
 
 ## CSS
 
-<EmbedCode dirPath='packages/lism-css' srcPath='src/scss/modules/atomic/_divider.scss' />
+<SrcCode path='src/scss/modules/atomic/_divider.scss' />
 
 
-## Props
+## Lism Component
+
+`<Divider>` is rendered with `aria-hidden="true"` by default.
+
+### Import
+
+<ImportPackage component='Divider' />
+
+### HTML Structure
+
+```pug
+div.a--divider
+```
+
+### Props
 
 | Property | Description |
 |---|---|
 | `bdw`,`bds`,`bdc` | Border properties for the dividing line |
 
 
-## Import
-
-<ImportPackage component='Divider' />
-
-
 ## Usage
+
+### Basic example
 
 <Preview>
   <PreviewTitle>Example</PreviewTitle>
@@ -57,6 +63,8 @@ div.a--divider
 </Preview>
 
 
+### Customizing the style
+
 <Preview>
   <PreviewTitle>Customizing the style</PreviewTitle>
   <PreviewArea resize p='20'>
@@ -80,6 +88,8 @@ div.a--divider
   </PreviewCode>
 </Preview>
 
+
+### Vertical dividing line
 
 <Preview>
   <PreviewTitle>Vertical dividing line</PreviewTitle>
@@ -113,5 +123,3 @@ div.a--divider
     ```
   </PreviewCode>
 </Preview>
-
-
