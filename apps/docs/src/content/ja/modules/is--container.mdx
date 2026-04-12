@@ -50,7 +50,7 @@ import { Container, Wrapper, Box, Lism, Spacer } from "lism-css/astro";
 <Preview>
   <PreviewTitle>例</PreviewTitle>
   <PreviewArea resize p='15'>
-    <Container size="s" p="20">
+    <Container isWrapper="s" p="20">
       <Box bd p={['10', '30']}>
         <Fragment>このBOXは、paddingが切り替わります。</Fragment>
       </Box>
@@ -58,7 +58,7 @@ import { Container, Wrapper, Box, Lism, Spacer } from "lism-css/astro";
   </PreviewArea>
   <PreviewCode slot='tab' label='JSX'>
     ```jsx
-    <Container size="s" p="20">
+    <Container isWrapper="s" p="20">
       <Box bd p={['10', '30']}>
         このBOXは、paddingが切り替わります。
       </Box>

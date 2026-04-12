@@ -50,7 +50,7 @@ When `isContainer` is set on a Lism component, or when the `<Container>` compone
 <Preview>
   <PreviewTitle>Example</PreviewTitle>
   <PreviewArea resize p='15'>
-    <Container size="s" p="20">
+    <Container isWrapper="s" p="20">
       <Box bd p={['10', '30']}>
         <Fragment>This Box switches its padding based on the container size.</Fragment>
       </Box>
@@ -58,7 +58,7 @@ When `isContainer` is set on a Lism component, or when the `<Container>` compone
   </PreviewArea>
   <PreviewCode slot='tab' label='JSX'>
     ```jsx
-    <Container size="s" p="20">
+    <Container isWrapper="s" p="20">
       <Box bd p={['10', '30']}>
         This Box switches its padding based on the container size.
       </Box>

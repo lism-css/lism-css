@@ -7,7 +7,7 @@ const meta: Meta<typeof Container> = {
   tags: ['autodocs'],
   argTypes: {
     children: { control: false },
-    size: {
+    isWrapper: {
       control: 'text',
       description: 'コンテンツの最大幅サイズ。プリセット値 ("s", "l") や任意のCSS値を指定可能。',
     },
@@ -31,18 +31,18 @@ export const Default: Story = {
   },
 };
 
-export const SizeS: Story = {
-  name: 'size: "s"',
+export const WrapperS: Story = {
+  name: 'isWrapper: "s"',
   args: {
-    size: 's',
+    isWrapper: 's',
     children: <DemoContent />,
   },
 };
 
-export const SizeL: Story = {
-  name: 'size: "l"',
+export const WrapperL: Story = {
+  name: 'isWrapper: "l"',
   args: {
-    size: 'l',
+    isWrapper: 'l',
     children: <DemoContent />,
   },
 };
