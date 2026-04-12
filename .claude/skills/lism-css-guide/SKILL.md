@@ -112,6 +112,41 @@ import { Accordion, Tabs, Button } from '@lism-css/ui/astro';
 
 これら各ファイルの冒頭にはTOC（目次）があり、セクションごとの詳細URL・ソースURLがまとめて記載されています。
 
+### モジュール単位の詳細リファレンス
+
+`l--*` / `is--*` / `a--*` クラスや対応するコンポーネント（`<Flex>`, `<Grid>` 等）を使ってUIを実装する時は、以下のモジュール別ファイルを参照してください。
+
+**Layout Modules**
+
+- `l--box` / `<Box>`: [modules/l--box.md](./modules/l--box.md)
+- `l--flex` / `<Flex>`: [modules/l--flex.md](./modules/l--flex.md)
+- `l--stack` / `<Stack>`: [modules/l--stack.md](./modules/l--stack.md)
+- `l--cluster` / `<Cluster>`: [modules/l--cluster.md](./modules/l--cluster.md)
+- `l--grid` / `<Grid>`: [modules/l--grid.md](./modules/l--grid.md)
+- `l--flow` / `<Flow>`: [modules/l--flow.md](./modules/l--flow.md)
+- `l--center` / `<Center>`: [modules/l--center.md](./modules/l--center.md)
+- `l--frame` / `<Frame>`: [modules/l--frame.md](./modules/l--frame.md)
+- `l--columns` / `<Columns>`: [modules/l--columns.md](./modules/l--columns.md)
+- `l--tileGrid` / `<TileGrid>`: [modules/l--tileGrid.md](./modules/l--tileGrid.md)
+- `l--fluidCols` / `<FluidCols>`: [modules/l--fluidCols.md](./modules/l--fluidCols.md)
+- `l--switchCols` / `<SwitchCols>`: [modules/l--switchCols.md](./modules/l--switchCols.md)
+- `l--sideMain` / `<SideMain>`: [modules/l--sideMain.md](./modules/l--sideMain.md)
+
+**State Modules**
+
+- `is--container` / `<Container>`: [modules/is--container.md](./modules/is--container.md)
+- `is--wrapper` / `<Wrapper>`: [modules/is--wrapper.md](./modules/is--wrapper.md)
+- `is--layer` / `<Layer>`: [modules/is--layer.md](./modules/is--layer.md)
+- `is--linkBox` / `<LinkBox>`: [modules/is--linkBox.md](./modules/is--linkBox.md)
+- `is--vertical`: [modules/is--vertical.md](./modules/is--vertical.md)
+
+**Atomic Modules**
+
+- `a--icon` / `<Icon>`: [modules/a--icon.md](./modules/a--icon.md)
+- `a--divider` / `<Divider>`: [modules/a--divider.md](./modules/a--divider.md)
+- `a--spacer` / `<Spacer>`: [modules/a--spacer.md](./modules/a--spacer.md)
+- `a--decorator` / `<Decorator>`: [modules/a--decorator.md](./modules/a--decorator.md)
+
 
 ## このスキルファイル自身のアップデート方法
 
