@@ -14,6 +14,11 @@ function normalizeComponentKey(input: string): string {
     .replace(/^(l--|is--|a--|c--)/, '');
 }
 
+/** 入力が `<ComponentName>` 形式（React コンポーネントとしての問い合わせ）か判定する */
+function isAngleBracketNotation(input: string): boolean {
+  return /^<[^<>]+>$/.test(input.trim());
+}
+
 /** modules/*.md の先頭行 `# l--flex / \`<Flex>\`` からクラス名とコンポーネント名を抽出する */
 function parseModuleHeading(md: string): { className: string; componentName?: string } | null {
   const firstLine = md.split('\n', 1)[0] ?? '';
@@ -22,23 +27,37 @@ function parseModuleHeading(md: string): { className: string; componentName?: st
   return { className: match[1], componentName: match[2] };
 }
 
-let moduleAliasMap: Map<string, string> | null = null;
+let classAliasMap: Map<string, string> | null = null;
+let componentAliasMap: Map<string, string> | null = null;
 
-/** modules/*.md を走査して「正規化キー → ファイルパス」の alias map を構築する（遅延初期化・キャッシュ） */
-function getModuleAliasMap(): Map<string, string> {
-  if (moduleAliasMap) return moduleAliasMap;
-  const map = new Map<string, string>();
+/** modules/*.md を走査して、クラス名由来 / React コンポーネント名由来の alias map を構築する（遅延初期化・キャッシュ）。
+ *  angle-bracket 形式の問い合わせ（`<Vertical>` など）には componentAliasMap のみを照合し、
+ *  クラス専用モジュール（例: is--vertical）を誤ってヒットさせないために分離している。 */
+function buildAliasMaps(): void {
+  if (classAliasMap && componentAliasMap) return;
+  const classMap = new Map<string, string>();
+  const componentMap = new Map<string, string>();
   for (const filename of getGuideFilenames()) {
     if (!filename.startsWith('modules/')) continue;
     const parsed = parseModuleHeading(loadMarkdown(filename));
     if (!parsed) continue;
-    map.set(normalizeComponentKey(parsed.className), filename);
+    classMap.set(normalizeComponentKey(parsed.className), filename);
     if (parsed.componentName) {
-      map.set(normalizeComponentKey(parsed.componentName), filename);
+      componentMap.set(normalizeComponentKey(parsed.componentName), filename);
     }
   }
-  moduleAliasMap = map;
-  return map;
+  classAliasMap = classMap;
+  componentAliasMap = componentMap;
+}
+
+function getClassAliasMap(): Map<string, string> {
+  buildAliasMaps();
+  return classAliasMap!;
+}
+
+function getComponentAliasMap(): Map<string, string> {
+  buildAliasMaps();
+  return componentAliasMap!;
 }
 
 export function registerGetComponent(server: McpServer): void {
@@ -65,13 +84,21 @@ export function registerGetComponent(server: McpServer): void {
       try {
         const normalizedKey = normalizeComponentKey(name);
         const rawLower = name.toLowerCase();
+        const isAngle = isAngleBracketNotation(name);
 
         // --- 1) lism-css コア: modules/ の個別ファイルを alias map で解決 ---
+        //   angle-bracket 形式 (`<Vertical>`) は React コンポーネント alias のみと照合し、
+        //   クラス専用モジュール (is--vertical 等) への false positive を避ける。
         if (!pkg || pkg === 'lism-css') {
-          const aliasMap = getModuleAliasMap();
-          const hit = aliasMap.get(normalizedKey);
-          if (hit) {
-            return markdownResponse(loadMarkdown(hit));
+          const componentHit = getComponentAliasMap().get(normalizedKey);
+          if (componentHit) {
+            return markdownResponse(loadMarkdown(componentHit));
+          }
+          if (!isAngle) {
+            const classHit = getClassAliasMap().get(normalizedKey);
+            if (classHit) {
+              return markdownResponse(loadMarkdown(classHit));
+            }
           }
         }
 
@@ -120,9 +147,13 @@ export function registerGetComponent(server: McpServer): void {
 
         const moduleCandidates: string[] = [];
         if (!pkg || pkg === 'lism-css') {
-          for (const [key, file] of getModuleAliasMap()) {
-            if (key.includes(normalizedKey) && !moduleCandidates.includes(file)) {
-              moduleCandidates.push(file.replace(/^modules\//, '').replace(/\.md$/, ''));
+          const seenFiles = new Set<string>();
+          for (const map of [getComponentAliasMap(), getClassAliasMap()]) {
+            for (const [key, file] of map) {
+              if (key.includes(normalizedKey) && !seenFiles.has(file)) {
+                seenFiles.add(file);
+                moduleCandidates.push(file.replace(/^modules\//, '').replace(/\.md$/, ''));
+              }
             }
           }
         }
