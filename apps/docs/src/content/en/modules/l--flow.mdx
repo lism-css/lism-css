@@ -1,17 +1,18 @@
 ---
-title: 'Flow'
+title: 'Flow (l--flow)'
 navtitle: 'l--flow'
-description: 'Documentation for the Flow module in Lism CSS. A flow-root layout module that automatically manages spacing between child elements.'
+description: 'l--flow is a flow layout module that manages spacing between child elements using margin.'
 ---
 
 import { Flow, Box, Lism, Text } from 'lism-css/astro';
 import { DummyText } from '@lism-css/ui/astro';
 
 
-`l--flow` is a layout module with `display: flow-root` that **manages spacing between child elements**.
+`l--flow` is a flow layout module that manages spacing between child elements using `margin`.  
+It is useful for flow layouts of text content such as article content.
 
 :::point
-Inside `l--flow`, the spacing between content items is controlled by `--flow` and `margin-block-start`.
+Directly under `l--flow`, the spacing between content items is controlled by `--flow` and `margin-block-start`.
 :::
 
 
@@ -21,7 +22,7 @@ Inside `l--flow`, the spacing between content items is controlled by `--flow` an
 | `.l--flow.-flow:s` | `--flow--s` (`--s20`) |
 | `.l--flow.-flow:` | `--flow` |
 
-Heading tags receive double the spacing compared to other elements.
+Heading tags receive larger spacing than other elements (adjustable via `--flow-hScale`).
 
 
 ## CSS

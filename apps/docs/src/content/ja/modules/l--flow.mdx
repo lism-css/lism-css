@@ -1,17 +1,18 @@
 ---
-title: 'Flow'
+title: 'Flow (l--flow)'
 navtitle: 'l--flow'
-description: 'Lism CSS の Flow モジュールについて解説します。子要素間の余白を自動管理する flow-root レイアウトモジュールです。'
+description: 'l--flow は、子要素間の余白を margin で管理するフローレイアウトモジュールです。'
 ---
 
 import { Flow, Box, Lism, Text } from 'lism-css/astro';
 import { DummyText } from '@lism-css/ui/astro';
 
 
-`l--flow` は、`display`が`flow-root`で、かつ**子要素間の余白を管理できる**レイアウトモジュールです。
+`l--flow` は、子要素間の余白を `margin` で管理するフローレイアウトモジュールです。  
+記事コンテンツなどのテキストコンテンツ向けのフローレイアウトに活用できます。
 
 :::point
-`l--flow`系の直下では、コンテンツの間隔が `--flow`と`margin-block-start` で管理されます。
+`l--flow`の直下では、コンテンツの間隔が `--flow`と`margin-block-start` で管理されます。
 :::
 
 
@@ -21,7 +22,7 @@ import { DummyText } from '@lism-css/ui/astro';
 | `.l--flow.-flow:s` | `--flow--s` (`--s20`) |
 | `.l--flow.-flow:` | `--flow` |
 
-また、見出しタグのみ余白が2倍になるようになっています。
+また、見出しタグのみ余白が大きくなるようになっています。（`--flow-hScale` で調整可能）
 
 
 ## CSS
