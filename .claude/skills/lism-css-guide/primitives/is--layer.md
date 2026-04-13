@@ -11,7 +11,7 @@
 
 ## 使い方
 
-`<Layer>` は `<Lism isLayer>` のエイリアスです。他コンポーネントにも `isLayer` Prop で付与できます（例: `<Frame isLayer>` で画像をレイヤー化）。
+`<Layer>` は `<Lism isLayer>` のエイリアスです。他コンポーネントにも `isLayer` Prop で付与できます（例: `<Frame isLayer>`）。
 
 ## Usage
 

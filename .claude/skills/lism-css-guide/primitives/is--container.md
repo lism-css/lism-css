@@ -11,7 +11,7 @@
 
 ## 使い方
 
-`<Container>` は `<Lism isContainer>` のエイリアスです。`isContainer` Prop は**どのコンポーネントからでも呼び出せる**ため、既存のレイアウトプリミティブに後付けでコンテナ宣言を追加できます。
+`<Container>` は `<Lism isContainer>` のエイリアスです。`isContainer` Prop は他のコンポーネントにも使用できます（例: `<Flow isContainer>`）。
 
 | Prop | 出力 |
 |------|------|

@@ -11,7 +11,7 @@
 
 ## 使い方
 
-`<Wrapper>` は `<Lism isWrapper>` のエイリアスです。`isWrapper` Prop は**どのコンポーネントからでも呼び出せる**ので、既存のレイアウトプリミティブに後付けで幅制限を適用できます。
+`<Wrapper>` は `<Lism isWrapper>` のエイリアスです。`isWrapper` Prop は他のコンポーネントにも使用できます（例: `<Flow isWrapper>`）。
 
 | 指定 | 出力 |
 |------|------|
@@ -25,8 +25,6 @@
 | Prop | 説明 |
 |------|------|
 | `contentSize` | コンテンツサイズ。`s` / `l` / トークン / 任意値 |
-| `layout` | 併用する Layout モジュール名を指定（例: `"flow"` → `.l--flow is--wrapper`） |
-| `isContainer` | `is--container` も同時に付与 |
 
 ```jsx
 // 下記の ① と ② は同じ結果
