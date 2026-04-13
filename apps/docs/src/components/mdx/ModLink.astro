@@ -1,7 +1,7 @@
 ---
 /**
  * Primitive ページへの言語対応リンクを生成するMDX用コンポーネント
- * - slug はそのまま表示テキストとして使われ、URL 生成時は自動で小文字化される
+ * - slug はそのまま表示テキスト・URL スラッグとして使われる
  * - CSS クラス名の表記（例: "is--boxLink"）をそのまま渡して OK
  * - 表示テキストを slug と別にしたい場合のみ label で上書きする
  */
@@ -17,7 +17,7 @@ interface Props {
 const { slug, label } = Astro.props;
 
 const currentLang = getLangFromUrl(Astro.url);
-const href = getLocalizedUrl(`/docs/primitives/${slug.toLowerCase()}/`, currentLang);
+const href = getLocalizedUrl(`/docs/primitives/${slug}/`, currentLang);
 ---
 
 <a href={href}><code>{label ?? slug}</code></a>

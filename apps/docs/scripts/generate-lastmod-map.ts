@@ -57,10 +57,11 @@ function getGitLastModifiedMap(): Map<string, Date> {
 /**
  * ファイルパス（git root 相対）をサイトのフルURL配列に変換
  *
- * コンテンツファイル（Astro glob loader が entry.id を小文字化するため slug も小文字化する）:
- *   apps/docs/src/content/ja/overview.mdx      → [https://lism-css.com/docs/overview/]
- *   apps/docs/src/content/ja/ui/Accordion.mdx   → [https://lism-css.com/docs/ui/accordion/, https://lism-css.com/ui/accordion/]
- *   apps/docs/src/content/en/overview.mdx       → [https://lism-css.com/en/docs/overview/]
+ * コンテンツファイル（content.config.ts の generateId でファイル名の casing をそのまま ID に使う）:
+ *   apps/docs/src/content/ja/overview.mdx             → [https://lism-css.com/docs/overview/]
+ *   apps/docs/src/content/ja/ui/Accordion.mdx          → [https://lism-css.com/docs/ui/Accordion/, https://lism-css.com/ui/Accordion/]
+ *   apps/docs/src/content/ja/primitives/l--tileGrid.mdx → [https://lism-css.com/docs/primitives/l--tileGrid/]
+ *   apps/docs/src/content/en/overview.mdx              → [https://lism-css.com/en/docs/overview/]
  *
  * ページファイル:
  *   apps/docs/src/pages/index.astro             → [https://lism-css.com/]
@@ -73,8 +74,7 @@ function filePathToSiteUrls(filePath: string): string[] {
   // コンテンツファイル
   const contentMatch = filePath.match(/^apps\/docs\/src\/content\/(\w+)\/(.+)\.mdx?$/);
   if (contentMatch) {
-    const [, lang, rawSlug] = contentMatch;
-    const slug = rawSlug.toLowerCase();
+    const [, lang, slug] = contentMatch;
     const langPrefix = lang === ROOT_LANG ? '' : `/${lang}`;
     const urls = [`${SITE_URL}${langPrefix}/docs/${slug}/`];
 

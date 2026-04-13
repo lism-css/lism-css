@@ -70,6 +70,17 @@ describe('searchDocs', () => {
     expect(results[0].url).toBe('https://lism-css.com/docs/box/');
   });
 
+  it('キャメルケースの sourcePath がそのまま URL に反映される', () => {
+    const camelEntries: DocsEntry[] = [
+      entry({ sourcePath: 'primitives/l--tileGrid.mdx', title: 'TileGrid', keywords: ['grid'] }),
+      entry({ sourcePath: 'primitives/is--boxLink.mdx', title: 'BoxLink', keywords: ['link'] }),
+    ];
+    const tileResult = searchDocs(camelEntries, 'TileGrid');
+    expect(tileResult[0].url).toBe('https://lism-css.com/docs/primitives/l--tileGrid/');
+    const boxResult = searchDocs(camelEntries, 'BoxLink');
+    expect(boxResult[0].url).toBe('https://lism-css.com/docs/primitives/is--boxLink/');
+  });
+
   it('マッチしない場合は空配列を返す', () => {
     expect(searchDocs(entries, 'nonexistent')).toEqual([]);
   });

@@ -22,7 +22,8 @@
 
 - **ソース**: `apps/docs/src/content/ja/` 配下の全 MDX ファイル
 - **更新内容**: 各ページの sourcePath, title, description, category, headings, keywords, snippet
-- **title ルール**: primitives カテゴリのエントリは、title に JSX コンポーネント名と CSS クラス名を `コンポーネント名 / クラス名` の形式で併記すること（例: `"Flex / l--flex"`, `"Container / is--container"`, `"Icon / a--icon"`）。クラス名は sourcePath のファイル名部分から取得できる。
+- **sourcePath ルール（ファイル名そのまま）**: `sourcePath` は `search_docs` が返す公開 URL のスラッグ部分としてそのまま使われる。**MDX ファイル名の大文字・小文字をそのまま保持して記述する**こと（例: `primitives/l--tileGrid.mdx`, `primitives/is--boxLink.mdx`, `primitives/l--fluidCols.mdx`, `primitives/l--switchCols.mdx`, `primitives/l--sideMain.mdx`）。Astro の content collections (`glob` loader) にはキャメルケース保持のため `generateId` を設定済みなので、公開 URL もファイル名と同じキャメルケースで配信される。
+- **title ルール**: primitives カテゴリのエントリは、title に JSX コンポーネント名と CSS クラス名を `コンポーネント名 / クラス名` の形式で併記すること（例: `"Flex / l--flex"`, `"Container / is--container"`, `"Icon / a--icon"`）。クラス名は sourcePath のファイル名部分（キャメルケースのまま）から取得できる。
 - **keywords ルール（CSS 逆引き用）**: props カテゴリや primitives カテゴリのエントリには、関連する CSS プロパティ名を keywords に含める（例: Flex のドキュメントに `"display", "flex", "flex-direction"` を追加、ボーダー props のドキュメントに `"border", "border-radius"` を追加）。これにより CSS プロパティ名での検索精度が向上する
 - **keywords ルール（alias 保持）**: MDX に存在しない alias/synonym keywords（例: `"クリッカブル"`, `"横並び折り返し"`, `"CTA"` 等）が既存の keywords に含まれている場合、それらを削除しないこと。これらは自然言語検索の精度向上のために意図的に追加されたものである
 

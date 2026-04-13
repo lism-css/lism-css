@@ -25,10 +25,15 @@ const mdMdxWithUnderscoreExcludes = ['**/*.{md,mdx}', '!**/_*/**'] as const;
  * - en: 英語
  * memo: Astro 5 の Content Layer では各コレクションに loader が必須（legacy.collections 併用だと同期がスキップされる）
  */
+// ファイル名の大文字・小文字をそのまま ID に使う（デフォルトは kebab-case 化されるため）。
+// 例: `primitives/l--tileGrid.mdx` → ID `primitives/l--tileGrid`
+const generateId = ({ entry }: { entry: string }) => entry.replace(/\.(md|mdx)$/, '');
+
 const ja = defineCollection({
   loader: glob({
     base: './src/content/ja',
     pattern: [...mdMdxWithUnderscoreExcludes],
+    generateId,
   }),
   schema: postSchema,
 });
@@ -37,6 +42,7 @@ const en = defineCollection({
   loader: glob({
     base: './src/content/en',
     pattern: [...mdMdxWithUnderscoreExcludes],
+    generateId,
   }),
   schema: postSchema,
 });

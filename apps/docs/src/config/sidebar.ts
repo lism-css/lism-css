@@ -152,7 +152,7 @@ const docsSidebar: SidebarSection[] = [
       '/docs/primitives/is--container/',
       '/docs/primitives/is--wrapper/',
       '/docs/primitives/is--layer/',
-      '/docs/primitives/is--boxlink/',
+      '/docs/primitives/is--boxLink/',
       '/docs/primitives/is--vertical/',
     ],
   },
@@ -171,13 +171,13 @@ const docsSidebar: SidebarSection[] = [
 
       { type: 'separator' },
       '/docs/primitives/l--grid/',
-      '/docs/primitives/l--tilegrid/',
+      '/docs/primitives/l--tileGrid/',
 
       { type: 'separator' },
       '/docs/primitives/l--columns/',
-      '/docs/primitives/l--fluidcols/',
-      '/docs/primitives/l--sidemain/',
-      '/docs/primitives/l--switchcols/',
+      '/docs/primitives/l--fluidCols/',
+      '/docs/primitives/l--sideMain/',
+      '/docs/primitives/l--switchCols/',
 
       { type: 'separator' },
     ],
