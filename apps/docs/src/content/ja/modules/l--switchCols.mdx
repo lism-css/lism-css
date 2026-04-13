@@ -1,25 +1,25 @@
 ---
-title: 'SwitchCols (l--switchcols)'
-navtitle: 'l--switchcols'
-description: 'l--switchcols は、複数列と1列の切り替えをコンテナクエリやメディアクエリを使わずに実装するレイアウトモジュールです。'
+title: 'SwitchCols (l--switchCols)'
+navtitle: 'l--switchCols'
+description: 'l--switchCols は、複数列と1列の切り替えをコンテナクエリやメディアクエリを使わずに実装するレイアウトモジュールです。'
 ---
 
 import { SwitchCols, Box, Frame } from 'lism-css/astro';
 
 
-`l--switchcols` は、**複数列以上↔︎1列への切り替えをコンテナクエリやメディアクエリを使わずに実装する**レイアウトモジュールです。
+`l--switchCols` は、**複数列以上↔︎1列への切り替えをコンテナクエリやメディアクエリを使わずに実装する**レイアウトモジュールです。
 
 
 ## CSS
 
-<SrcCode path='src/scss/modules/layout/_switchCols.scss' />
+<SrcCode path="src/scss/modules/layout/_switchCols.scss" />
 
 
 ## Lismコンポーネント
 
 ### Import
 
-<ImportPackage component='SwitchCols' />
+<ImportPackage component="SwitchCols" />
 
 ### 専用Props
 
@@ -34,14 +34,14 @@ import { SwitchCols, Box, Frame } from 'lism-css/astro';
 
 <Preview>
   <PreviewTitle>デフォルト幅で利用する例</PreviewTitle>
-  <PreviewArea resize p='15'>
+  <PreviewArea resize p="15">
     <SwitchCols g="20">
       <div class="-bgc:base-2 -p:20">Box</div>
       <div class="-bgc:base-2 -p:20">Box</div>
       <div class="-bgc:base-2 -p:20">Box</div>
     </SwitchCols>
   </PreviewArea>
-  <PreviewCode slot='tab' label='JSX'>
+  <PreviewCode slot="tab" label="JSX">
     ```jsx
     <SwitchCols g="20">
       <div class="-bgc:base-2 -p:20">Box</div>
@@ -50,7 +50,7 @@ import { SwitchCols, Box, Frame } from 'lism-css/astro';
     </SwitchCols>
     ```
   </PreviewCode>
-  <PreviewCode slot='tab' label='HTML'>
+  <PreviewCode slot="tab" label="HTML">
     ```html
     <div class="l--switchCols -g:20">
       <div class="-bgc:base-2 -p:20">Box</div>
@@ -65,14 +65,14 @@ import { SwitchCols, Box, Frame } from 'lism-css/astro';
 
 <Preview>
   <PreviewTitle>breakSizeを指定して利用する例</PreviewTitle>
-  <PreviewArea resize p='15'>
+  <PreviewArea resize p="15">
     <SwitchCols breakSize="s" g="20">
       <div class="-bgc:base-2 -p:20">Box</div>
       <div class="-bgc:base-2 -p:20">Box</div>
       <div class="-bgc:base-2 -p:20">Box</div>
     </SwitchCols>
   </PreviewArea>
-  <PreviewCode slot='tab' label='JSX'>
+  <PreviewCode slot="tab" label="JSX">
     ```jsx
     <SwitchCols breakSize="s" g="20">
       <div class="-bgc:base-2 -p:20">Box</div>
@@ -81,7 +81,7 @@ import { SwitchCols, Box, Frame } from 'lism-css/astro';
     </SwitchCols>
     ```
   </PreviewCode>
-  <PreviewCode slot='tab' label='HTML'>
+  <PreviewCode slot="tab" label="HTML">
     ```html
     <div class="l--switchCols -g:20" style="--breakSize: var(--sz--s)">
       <div class="-bgc:base-2 -p:20">Box</div>
@@ -96,13 +96,13 @@ import { SwitchCols, Box, Frame } from 'lism-css/astro';
 
 <Preview>
   <PreviewTitle>子要素にflex-growを指定して比率を調整する例</PreviewTitle>
-  <PreviewArea resize p='15'>
+  <PreviewArea resize p="15">
     <SwitchCols breakSize="s" g="20">
       <div class="-bgc:base-2 -p:20">Box</div>
       <div class="-bgc:base-2 -p:20" style={{ flexGrow: 2 }}>Box</div>
     </SwitchCols>
   </PreviewArea>
-  <PreviewCode slot='tab' label='JSX'>
+  <PreviewCode slot="tab" label="JSX">
     ```jsx
     <SwitchCols breakSize="s" g="20">
       <div class="-bgc:base-2 -p:20">Box</div>
@@ -112,7 +112,7 @@ import { SwitchCols, Box, Frame } from 'lism-css/astro';
     </SwitchCols>
     ```
   </PreviewCode>
-  <PreviewCode slot='tab' label='HTML'>
+  <PreviewCode slot="tab" label="HTML">
     ```html
     <div class="l--switchCols -g:20" style="--breakSize: var(--sz--s)">
       <div class="-bgc:base-2 -p:20">Box</div>

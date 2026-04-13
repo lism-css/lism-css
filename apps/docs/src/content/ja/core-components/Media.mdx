@@ -14,7 +14,7 @@ Astro版ではデフォルトで Astro の`<Image>`が使用されます。React
 
 ## Import
 
-<ImportPackage component='Media' />
+<ImportPackage component="Media" />
 
 <Preview>
   <PreviewTitle>
@@ -23,12 +23,12 @@ Astro版ではデフォルトで Astro の`<Image>`が使用されます。React
   <PreviewArea>
     <Media src="https://cdn.lism-css.com/img/a-1.jpg" width="960" height="640" alt="Dummy Image" />
   </PreviewArea>
-  <PreviewCode slot='tab' label='JSX'>
+  <PreviewCode slot="tab" label="JSX">
     ```jsx
     <Media src="https://cdn.lism-css.com/img/a-1.jpg" width="960" height="640" alt="Dummy Image" />
     ```
   </PreviewCode>
-  <PreviewCode slot='tab' label='HTML'>
+  <PreviewCode slot="tab" label="HTML">
     ```html
     <img src="https://cdn.lism-css.com/img/a-1.jpg" width="960" height="640" alt="Dummy Image" />
     ```
@@ -45,7 +45,7 @@ Astro版ではデフォルトで Astro の`<Image>`が使用されます。React
       </Lism>
     </Frame>
   </PreviewArea>
-  <PreviewCode slot='tab' label='JSX'>
+  <PreviewCode slot="tab" label="JSX">
     ```jsx "style={{ filter: 'contrast(1.1) saturate(0.2)' }}"
     <Frame as="figure" ar="2/1" pos="relative">
       <Media style={{ filter: 'contrast(1.1) saturate(0.2)' }} src="https://cdn.lism-css.com/img/a-1.jpg" width="960" height="640" alt="Dummy Image" />
@@ -65,14 +65,14 @@ Astro版ではデフォルトで Astro の`<Image>`が使用されます。React
       <Media src="https://cdn.lism-css.com/img/a-1.jpg" style={{ objectPosition: '50% 0%' }} alt="" width="960" height="640" />
     </Frame>
   </PreviewArea>
-  <PreviewCode slot='tab' label='JSX'>
+  <PreviewCode slot="tab" label="JSX">
     ```jsx
     <Frame as="figure" ar="16/9">
       <Media src="https://cdn.lism-css.com/img/a-1.jpg" style={{ objectPosition: '50% 0%' }} alt="" width="960" height="640" />
     </Frame>
     ```
   </PreviewCode>
-  <PreviewCode slot='tab' label='HTML'>
+  <PreviewCode slot="tab" label="HTML">
     ```html
     <figure class="l--frame -ar:16/9">
       <img style="object-position: 50% 0%" src="https://cdn.lism-css.com/img/a-1.jpg" width="960" height="640" />
@@ -115,7 +115,7 @@ import Image from 'next/image';
   <PreviewArea>
     <Media src={myImage} inferSize alt="Dummy Image" quality="high" format="webp" />
   </PreviewArea>
-  <PreviewCode slot='tab' label='.astro'>
+  <PreviewCode slot="tab" label=".astro">
     ```jsx 'quality="high"' 'format="webp"'
     import myImage from '@/img/img-1.jpg';
 
@@ -131,7 +131,7 @@ import Image from 'next/image';
   <PreviewArea>
     <Media src="https://cdn.lism-css.com/img/a-1.jpg" inferSize alt="Dummy Image" quality="high" format="webp" />
   </PreviewArea>
-  <PreviewCode slot='tab' label='.astro'>
+  <PreviewCode slot="tab" label=".astro">
     ```jsx "inferSize"
     <Media src="https://cdn.lism-css.com/img/a-1.jpg" inferSize alt="Dummy Image" quality="high" format="webp" />
     ```
@@ -143,7 +143,7 @@ import Image from 'next/image';
   <PreviewArea>
     <Media as="picture" src="https://cdn.lism-css.com/img/a-2.jpg" width="960" height="640" alt="Dummy Image" formats={['avif', 'webp']} />
   </PreviewArea>
-  <PreviewCode slot='tab' label='.astro'>
+  <PreviewCode slot="tab" label=".astro">
     ```jsx "as=\"picture\""  "formats={['avif', 'webp']}"
     <Media as="picture" src="https://cdn.lism-css.com/img/a-2.jpg" width="960" height="640" alt="Dummy Image" formats={['avif', 'webp']} />
     ```

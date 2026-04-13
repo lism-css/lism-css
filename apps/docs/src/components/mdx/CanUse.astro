@@ -242,17 +242,17 @@ const browsers = [
 ---
 
 <Group layout="stack" bdrs="10" bgc="base-2" class="c--canuse">
-  <Inline layout="flex" ai="center" class="c--canuse__prop" px="15" bdc="base" bd-b aslf="start">
+  <Inline layout="flex" ai="center" class="c--canuse_prop" px="15" bdc="base" bd-b aslf="start">
     <Inline c="text-2" py="5" bdc="base" bd-x-e px-e="15" mx-e="15" fz="2xs">Can Use ?</Inline>
     <Inline fz="xs" ff="mono">{prop}</Inline>
   </Inline>
-  <!-- {prop && <span class="c--canuse__prop">{prop}</span>} -->
-  <Inline layout="cluster" class="c--canuse__browsers" lh="1" z="1" g="10" p="20">
+  <!-- {prop && <span class="c--canuse_prop">{prop}</span>} -->
+  <Inline layout="cluster" class="c--canuse_browsers" lh="1" z="1" g="10" p="20">
     {
       browsers.map((browser) => (
-        <Inline layout="flex" ai="center" class:list={['c--canuse__browser', browser.supported ? '-supported' : '-unsupported']}>
-          <img class="c--canuse__appimg" src={browser.icon} alt={browser.name} width="20" height="20" />
-          <Inline class="c--canuse__icon" layout="center">
+        <Inline layout="flex" ai="center" class:list={['c--canuse_browser', browser.supported ? '-supported' : '-unsupported']}>
+          <img class="c--canuse_appimg" src={browser.icon} alt={browser.name} width="20" height="20" />
+          <Inline class="c--canuse_icon" layout="center">
             <Icon icon={browser.supported ? 'check' : 'x'} />
           </Inline>
           {browser.supported && (
@@ -273,7 +273,7 @@ const browsers = [
     }
   }
 
-  .c--canuse__appimg {
+  .c--canuse_appimg {
     width: 1.375em;
     height: 1.375em;
   }
@@ -284,7 +284,7 @@ const browsers = [
   .-unsupported {
     --_icon-c: #c61717;
   }
-  .c--canuse__icon {
+  .c--canuse_icon {
     color: var(--_icon-c, currentColor);
     border-radius: 50%;
     border: 1px solid;

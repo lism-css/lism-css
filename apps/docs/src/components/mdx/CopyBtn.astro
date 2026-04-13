@@ -24,7 +24,7 @@ const copyText = t(lang, 'copyCode');
   bdrs="10"
   {...props}
 >
-  <svg class="c--copyBtn__icon a--icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="1em" height="1em" aria-hidden="true">
+  <svg class="c--copyBtn_icon a--icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="1em" height="1em" aria-hidden="true">
     <rect x="128" y="128" width="336" height="336" rx="57" ry="57" fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="32"></rect>
     <path
       d="M383.5 128l.5-24a56.16 56.16 0 00-56-56H112a64.19 64.19 0 00-64 64v216a56.16 56.16 0 0056 56h24"
@@ -35,12 +35,12 @@ const copyText = t(lang, 'copyCode');
       stroke-width="32"></path>
   </svg>
 
-  <svg class="c--copyBtn__icon a--icon _checked" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="1em" height="1em" aria-hidden="true">
+  <svg class="c--copyBtn_icon a--icon _checked" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="1em" height="1em" aria-hidden="true">
     <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32" d="M416 128L192 384l-96-96"></path>
   </svg>
 
-  <span class="c--copyBtn__text -d:none" id="label--copy-code">{copyText.copy}</span>
-  <span class="c--copyBtn__text -d:none" id="label--copy-code-done">{copyText.copied}</span>
+  <span class="c--copyBtn_text -d:none" id="label--copy-code">{copyText.copy}</span>
+  <span class="c--copyBtn_text -d:none" id="label--copy-code-done">{copyText.copied}</span>
 </Lism>
 
 <style>
@@ -56,7 +56,7 @@ const copyText = t(lang, 'copyCode');
     background: color-mix(in srgb, var(--codeBlock-bgc), var(--text) 20%);
   }
 
-  .c--copyBtn__icon {
+  .c--copyBtn_icon {
     grid-area: 1 / 1;
     stroke: currentColor;
     scale: 1.2;
@@ -97,7 +97,7 @@ const copyText = t(lang, 'copyCode');
 
       button.addEventListener('click', async () => {
         const codeContent = button.getAttribute('data-code');
-        // const buttonText = button.querySelector('.c--copyBtn__text');
+        // const buttonText = button.querySelector('.c--copyBtn_text');
 
         if (!codeContent) return;
 

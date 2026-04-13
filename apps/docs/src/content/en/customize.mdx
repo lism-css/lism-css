@@ -27,7 +27,7 @@ You can customize the output CSS by overriding SCSS variables.
 The variables defined in `lism-css/scss/_setting.scss` can be overridden.
 
 <PreviewTitle>`_setting.scss`</PreviewTitle>
-<EmbedCode dirPath='packages/lism-css' srcPath='src/scss/_setting.scss' />
+<EmbedCode dirPath="packages/lism-css" srcPath="src/scss/_setting.scss" />
 
 - `$breakpoints`: Breakpoint value definitions
 - `$common_support_bp`: Breakpoints commonly supported across major Property Classes
@@ -145,7 +145,7 @@ export default {
   },
   states: {
     isHoge: 'is--hoge',
-    setFoo: 'set-foo',
+    setFoo: 'set--foo',
     ...
   },
 };
@@ -154,13 +154,13 @@ export default {
 <Preview>
   <PreviewTitle>Default values</PreviewTitle>
   <PreviewCode slot="tab" label="props">
-  <EmbedCode dirPath='packages/lism-css' srcPath='config/defaults/props.ts' />
+  <EmbedCode dirPath="packages/lism-css" srcPath="config/defaults/props.ts" />
   </PreviewCode>
   <PreviewCode slot="tab" label="tokens">
-  <EmbedCode dirPath='packages/lism-css' srcPath='config/defaults/tokens.ts' />
+  <EmbedCode dirPath="packages/lism-css" srcPath="config/defaults/tokens.ts" />
   </PreviewCode>
   <PreviewCode slot="tab" label="states">
-  <EmbedCode dirPath='packages/lism-css' srcPath='config/defaults/states.ts' />
+  <EmbedCode dirPath="packages/lism-css" srcPath="config/defaults/states.ts" />
   </PreviewCode>
 </Preview>
 
@@ -200,12 +200,12 @@ With the above customization, the following behavior is added to Lism components
 - `o='-5'` → outputs `-o:-5`
 - `isHoge` → outputs `is--hoge`
 
-{/* <Box p='box' bd o='-5' isHoge>Box</Box> */}
+{/* <Box p="box" bd o="-5" isHoge>Box</Box> */}
 
 <Preview>
-  <PreviewCode slot='tab' label='HTML'>
+  <PreviewCode slot="tab" label="HTML">
   ```jsx
-  <Box p='box' d='flex' o='-5' isHoge>Box</Box>
+  <Box p="box" d="flex" o="-5" isHoge>Box</Box>
 
   ↓　Output
 
@@ -313,7 +313,7 @@ You can also override SCSS variables in line with your `lism.config.js` configur
 }
 ```
 
-{/* <Box p='box' d='flex' o='-5' isHoge bd>
+{/* <Box p="box" d="flex" o="-5" isHoge bd>
 <div>Box</div>
 <div>Box</div>
 </Box> */}

@@ -18,10 +18,10 @@ import Table from '@/components/ex/Table/index.jsx';
 `Table`(`.c--table`)というコンポーネントを作って利用する例を紹介していきます。
 
 ### Source Code
-<ImportSource name='Table' css react />
+<ImportSource name="Table" css react />
 
 ### Import
-<ImportPackage component='Table' packageName='@lism-css/ui' />
+<ImportPackage component="Table" packageName="@lism-css/ui" />
 
 
 
@@ -29,9 +29,9 @@ import Table from '@/components/ex/Table/index.jsx';
 
 <Preview>
   <PreviewTitle>Preview</PreviewTitle>
-  <PreviewArea p='20'>
+  <PreviewArea p="20">
     <Table>
-      {/* <caption class=''>Caption</caption> */}
+      {/* <caption class="">Caption</caption> */}
       <thead>
         <tr>
           <th>Header 1</th>
@@ -70,7 +70,7 @@ import Table from '@/components/ex/Table/index.jsx';
       </tfoot>
     </Table>
   </PreviewArea>
-  <PreviewCode slot='tab' label='JSX'>
+  <PreviewCode slot="tab" label="JSX">
     ```jsx
     <Table>
       <caption>Caption</caption>
@@ -80,7 +80,7 @@ import Table from '@/components/ex/Table/index.jsx';
     </Table>
     ```
   </PreviewCode>
-  <PreviewCode slot='tab' label='HTML'>
+  <PreviewCode slot="tab" label="HTML">
     ```html
     <table class="c--table">
       <caption>
@@ -103,7 +103,7 @@ import Table from '@/components/ex/Table/index.jsx';
 
 <Preview>
   <PreviewTitle>--bdwXで左右のボーダーをなくし、thのカラーリングを指定する例</PreviewTitle>
-  <PreviewArea p='20'>
+  <PreviewArea p="20">
     <Table thBgc="base-2" bdwX="0px">
       <thead>
         <tr>
@@ -143,7 +143,7 @@ import Table from '@/components/ex/Table/index.jsx';
       </tfoot>
     </Table>
   </PreviewArea>
-  <PreviewCode slot='tab' label='JSX'>
+  <PreviewCode slot="tab" label="JSX">
     ```jsx
     <Table thBgc="base-2" bdwX="0px">
       <thead>...</thead>
@@ -152,7 +152,7 @@ import Table from '@/components/ex/Table/index.jsx';
     </Table>
     ```
   </PreviewCode>
-  <PreviewCode slot='tab' label='HTML'>
+  <PreviewCode slot="tab" label="HTML">
     ```html
     <table class="c--table" style="--bdwX: 0px; --th-bgc: var(--base-2)">
       <thead>
@@ -182,7 +182,7 @@ import Table from '@/components/ex/Table/index.jsx';
 
 <Preview>
   <PreviewTitle>scroll時にtheadと、1列目のセルを固定する例</PreviewTitle>
-  <PreviewArea p='20' _dir='rtl'>
+  <PreviewArea p="20" _dir="rtl">
     <Frame ov="auto" max-h="20rem">
       <Table data-table-sticky="col head" thBgc="base-2" tdMinSz="10rem">
         <thead>
@@ -287,7 +287,7 @@ import Table from '@/components/ex/Table/index.jsx';
       </Table>
     </Frame>
   </PreviewArea>
-  <PreviewCode slot='tab' label='JSX'>
+  <PreviewCode slot="tab" label="JSX">
     ```jsx "data-table-sticky"
     <Frame ov="auto" max-h="20rem">
       <Table data-table-sticky="col head" thBgc="base-2" tdMinSz="10rem">
@@ -298,7 +298,7 @@ import Table from '@/components/ex/Table/index.jsx';
     </Frame>
     ```
   </PreviewCode>
-  <PreviewCode slot='tab' label='HTML'>
+  <PreviewCode slot="tab" label="HTML">
     ```html "data-table-sticky"
     <div class="l--frame -ov:auto" style="max-height: 20rem">
       <table class="c--table" data-table-sticky="col head" style="--th-bgc: var(--base-2); --td-min-sz: 10rem">

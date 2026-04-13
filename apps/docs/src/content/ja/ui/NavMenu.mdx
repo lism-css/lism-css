@@ -16,7 +16,7 @@ import { Accordion, NavMenu } from '@lism-css/ui/astro'
 
 ### Import
 
-<ImportPackage component='NavMenu' packageName='@lism-css/ui' css='style.css' />
+<ImportPackage component="NavMenu" packageName="@lism-css/ui" css="style.css" />
 
 
 ### Props
@@ -31,17 +31,17 @@ import { Accordion, NavMenu } from '@lism-css/ui/astro'
 ### Source Code
 
 <Preview>
-  <PreviewCode slot='tab' label='_style.css'>
-    <SrcCode dir='lism-ui' path='src/components/NavMenu/_style.css' />
+  <PreviewCode slot="tab" label="_style.css">
+    <SrcCode dir="lism-ui" path="src/components/NavMenu/_style.css" />
   </PreviewCode>
-  <PreviewCode slot='tab' label='NavMenu.tsx'>
-    <SrcCode dir='lism-ui' path='src/components/NavMenu/react/NavMenu.tsx' />
+  <PreviewCode slot="tab" label="NavMenu.tsx">
+    <SrcCode dir="lism-ui" path="src/components/NavMenu/react/NavMenu.tsx" />
   </PreviewCode>
-  {/* <PreviewCode slot='tab' label='Root.astro'>
-    <SrcCode dir='lism-ui' path='src/components/NavMenu/astro/Root.astro' />
+  {/* <PreviewCode slot="tab" label="Root.astro">
+    <SrcCode dir="lism-ui" path="src/components/NavMenu/astro/Root.astro" />
   </PreviewCode> */}
-  <PreviewCode slot='tab' label='getProps.ts'>
-    <SrcCode dir='lism-ui' path='src/components/NavMenu/getProps.ts' />
+  <PreviewCode slot="tab" label="getProps.ts">
+    <SrcCode dir="lism-ui" path="src/components/NavMenu/getProps.ts" />
   </PreviewCode>
   
 </Preview>
@@ -52,7 +52,7 @@ import { Accordion, NavMenu } from '@lism-css/ui/astro'
 ### シンプルな例
 <Preview>
   <PreviewTitle>例</PreviewTitle>
-  <PreviewArea p='20'>
+  <PreviewArea p="20">
     <NavMenu.Root>
       <NavMenu.Item>
         <NavMenu.Link href="#menu" hov="bgc">
@@ -95,7 +95,7 @@ import { Accordion, NavMenu } from '@lism-css/ui/astro'
 </Preview>
 
 
-{/* <Spacer h='10' />
+{/* <Spacer h="10" />
 
 メニューの内容が複雑でない場合は、次のように`<NavMenu.Link>`の記述を省略できます。
 
@@ -112,18 +112,18 @@ import { Accordion, NavMenu } from '@lism-css/ui/astro'
   </PreviewCode>
 </Preview>
 
-<Callout type='info' my-s='15'>
+<Callout type="info" my-s="15">
 `<NavMenu.Item>`に`href`指定すると、内部で`<NavMenu.Link>`が自動生成されるようになっています。  
 </Callout> */}
 
-<Spacer h='10' />
+<Spacer h="10" />
 
 
 ### アイコンやバッジを表示する例
 {/* テキストをspanで囲んで -fx:1 でも可 */}
 <Preview>
   <PreviewTitle>例</PreviewTitle>
-  <PreviewArea p='30'>
+  <PreviewArea p="30">
     <NavMenu.Root>
       <NavMenu.Item>
         <NavMenu.Link href="#menu1" g="15" ai="center" bgc="text" c="base" hov="neutral">
@@ -186,7 +186,7 @@ import { Accordion, NavMenu } from '@lism-css/ui/astro'
 
 <Preview>
   <PreviewTitle>`itemP`を指定</PreviewTitle>
-  <PreviewArea p='30'>
+  <PreviewArea p="30">
     <NavMenu.Root bd itemP="30">
       <NavMenu.Item hov="bgc">
         <NavMenu.Link href="#menu1">Menu item</NavMenu.Link>
@@ -224,7 +224,7 @@ import { Accordion, NavMenu } from '@lism-css/ui/astro'
 
 <Preview>
   <PreviewTitle>メニューのネスト</PreviewTitle>
-  <PreviewArea p='20'>
+  <PreviewArea p="20">
     <NavMenu.Root bd-y hovBgc="base-2">
       <NavMenu.Item>
         <NavMenu.Link hov="bgc" href="#menu1">
@@ -312,7 +312,7 @@ import { Accordion, NavMenu } from '@lism-css/ui/astro'
 
 <Preview>
   <PreviewTitle>例</PreviewTitle>
-  <PreviewArea p='20'>
+  <PreviewArea p="20">
     <NavMenu.Root bd-y hovBgc="base-2">
       <NavMenu.Item>
         <NavMenu.Link hov="bgc" href="#menu1">
@@ -392,7 +392,7 @@ import { Accordion, NavMenu } from '@lism-css/ui/astro'
 
 <Preview>
   <PreviewTitle>hoverでネストメニューを表示</PreviewTitle>
-  <PreviewArea p='20'>
+  <PreviewArea p="20">
     <Box min-h="15rem">
       <NavMenu.Root fxd="row" lh="s" itemP="10">
         <NavMenu.Item hov="o">

@@ -7,8 +7,8 @@ import { Box, Stack, Cluster, Columns, Frame, Center, Inline, Text } from 'lism-
 import { DummyText } from '@lism-css/ui/astro';
 
 export const ColorBadge = ({color, label}) => {
-  return <Cluster g='10'>
-      <Inline w='1.5em' ar='1/1' bgc={color} bdrs='10' bxsh='10' />
+  return <Cluster g="10">
+      <Inline w="1.5em" ar="1/1" bgc={color} bdrs="10" bxsh="10" />
       <code>{label || color}</code>
     </Cluster>;
 }
@@ -21,14 +21,14 @@ Lism CSS provides design tokens for major CSS properties.
 
 | Token | Variable |
 |---|---|
-|<ColorBadge color='base' />|`--base`|
-|<ColorBadge color='base-2' />|`--base-2`|
-|<ColorBadge color='text' />|`--text`|
-|<ColorBadge color='text-2' />|`--text-2`|
-|<ColorBadge color='divider' />|`--divider`|
-|<ColorBadge color='link' />|`--link`|
-|<ColorBadge color='brand' />|`--brand`|
-|<ColorBadge color='accent' />|`--accent`|
+|<ColorBadge color="base" />|`--base`|
+|<ColorBadge color="base-2" />|`--base-2`|
+|<ColorBadge color="text" />|`--text`|
+|<ColorBadge color="text-2" />|`--text-2`|
+|<ColorBadge color="divider" />|`--divider`|
+|<ColorBadge color="link" />|`--link`|
+|<ColorBadge color="brand" />|`--brand`|
+|<ColorBadge color="accent" />|`--accent`|
 
 For palette colors (`--red`, `--blue`, `--green`, etc.) and customization, see [Color Tokens](/en/docs/tokens/colors/).
 
@@ -77,16 +77,16 @@ Fibonacci-based spacing scale. For supported property classes, see [Spacing Toke
 
 <Preview>
   <PreviewTitle>Preview</PreviewTitle>
-  <PreviewArea p='30'>
-    <Columns cols={[3, 6]} g='30'>
-      <Center ar='2/1' bdrs='10' bd h='100%' ff='mono' fz='xs' c='text-2'>10</Center>
-      <Center ar='2/1' bdrs='20' bd h='100%' ff='mono' fz='xs' c='text-2'>20</Center>
-      <Center ar='2/1' bdrs='30' bd h='100%' ff='mono' fz='xs' c='text-2'>30</Center>
-      <Center ar='2/1' bdrs='40' bd h='100%' ff='mono' fz='xs' c='text-2'>40</Center>
-      <Center ar='2/1' bdrs='99' bd h='100%' ff='mono' fz='xs' c='text-2'>99</Center>
+  <PreviewArea p="30">
+    <Columns cols={[3, 6]} g="30">
+      <Center ar="2/1" bdrs="10" bd h="100%" ff="mono" fz="xs" c="text-2">10</Center>
+      <Center ar="2/1" bdrs="20" bd h="100%" ff="mono" fz="xs" c="text-2">20</Center>
+      <Center ar="2/1" bdrs="30" bd h="100%" ff="mono" fz="xs" c="text-2">30</Center>
+      <Center ar="2/1" bdrs="40" bd h="100%" ff="mono" fz="xs" c="text-2">40</Center>
+      <Center ar="2/1" bdrs="99" bd h="100%" ff="mono" fz="xs" c="text-2">99</Center>
     </Columns>
   </PreviewArea>
-  <PreviewCode slot='tab' label='HTML'>
+  <PreviewCode slot="tab" label="HTML">
     ```jsx
     <div class="-bdrs:10">...</div>
     <div class="-bdrs:20">...</div>
@@ -101,7 +101,7 @@ Fibonacci-based spacing scale. For supported property classes, see [Spacing Toke
 ## `SHADOW`
 
 
-{/* <Callout type='warning'>
+{/* <Callout type="warning">
 box-shadow は少し特殊で、ユーティリティクラス内で複数のshadow用変数が組み合わされています。
 </Callout> */}
 
@@ -125,7 +125,7 @@ The value of `--bxsh--{token}` is composed of the following variables.
 
 <Preview>
   <PreviewTitle>Preview</PreviewTitle>
-  <PreviewArea p={['30','40']} py='40'>
+  <PreviewArea p={['30','40']} py="40">
     <Columns cols={[3, 4, 5]} g={['30', '40']}>
       {['10', '20', '30', '40'].map((name) => {
         return (
@@ -136,7 +136,7 @@ The value of `--bxsh--{token}` is composed of the following variables.
       })}
     </Columns>
   </PreviewArea>
-  <PreviewCode slot='tab' label='HTML'>
+  <PreviewCode slot="tab" label="HTML">
     ```jsx
     <div class="-bxsh:10">...</div>
     <div class="-bxsh:20">...</div>
@@ -158,24 +158,24 @@ The value of `--bxsh--{token}` is composed of the following variables.
 
 <Preview>
   <PreviewTitle>Preview</PreviewTitle>
-  <PreviewArea p='40'>
-    {/* <DummyText pre='1: '/> */}
+  <PreviewArea p="40">
+    {/* <DummyText pre="1: "/> */}
     <DummyText o="-10" pre="-10: " />
     <DummyText o="-20" pre="-20: " />
     <DummyText o="-30" pre="-30: " />
   </PreviewArea>
-  <PreviewCode slot='tab' label='HTML'>
+  <PreviewCode slot="tab" label="HTML">
     ```jsx
     <p class="-o:-10">Lorem ipsum ...</p>
     <p class="-o:-20">Lorem ipsum ...</p>
     <p class="-o:-30">Lorem ipsum ...</p>
     ```
   </PreviewCode>
-  <PreviewCode slot='tab' label='JSX'>
+  <PreviewCode slot="tab" label="JSX">
     ```jsx
-    <Text o='-10'>Lorem ipsum ...</Text>
-    <Text o='-20'>Lorem ipsum ...</Text>
-    <Text o='-30'>Lorem ipsum ...</Text>
+    <Text o="-10">Lorem ipsum ...</Text>
+    <Text o="-20">Lorem ipsum ...</Text>
+    <Text o="-30">Lorem ipsum ...</Text>
     ```
   </PreviewCode>
 </Preview>

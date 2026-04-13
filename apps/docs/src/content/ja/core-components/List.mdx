@@ -15,21 +15,21 @@ import { List, ListItem } from "lism-css/astro";
 
 ## Import
 
-<ImportPackage component='List, ListItem' />
+<ImportPackage component="List, ListItem" />
 
 
 ## 基本的な使い方
 
 <Preview>
   <PreviewTitle>`<List>`の出力例</PreviewTitle>
-  <PreviewArea p='20'>
+  <PreviewArea p="20">
     <List>
       <ListItem>リストアイテム 1</ListItem>
       <ListItem>リストアイテム 2</ListItem>
       <ListItem>リストアイテム 3</ListItem>
     </List>
   </PreviewArea>
-  <PreviewCode slot='tab' label='JSX'>
+  <PreviewCode slot="tab" label="JSX">
     ```jsx
     <List>
       <ListItem>リストアイテム 1</ListItem>
@@ -38,7 +38,7 @@ import { List, ListItem } from "lism-css/astro";
     </List>
     ```
   </PreviewCode>
-  <PreviewCode slot='tab' label='HTML'>
+  <PreviewCode slot="tab" label="HTML">
     ```html
     <ul>
       <li>リストアイテム 1</li>
@@ -56,14 +56,14 @@ import { List, ListItem } from "lism-css/astro";
 
 <Preview>
   <PreviewTitle>`<List as="ol">`の出力例</PreviewTitle>
-  <PreviewArea p='20'>
+  <PreviewArea p="20">
     <List as="ol">
       <ListItem>リストアイテム 1</ListItem>
       <ListItem>リストアイテム 2</ListItem>
       <ListItem>リストアイテム 3</ListItem>
     </List>
   </PreviewArea>
-  <PreviewCode slot='tab' label='JSX'>
+  <PreviewCode slot="tab" label="JSX">
     ```jsx
     <List as="ol">
       <ListItem>リストアイテム 1</ListItem>
@@ -72,7 +72,7 @@ import { List, ListItem } from "lism-css/astro";
     </List>
     ```
   </PreviewCode>
-  <PreviewCode slot='tab' label='HTML'>
+  <PreviewCode slot="tab" label="HTML">
     ```html
     <ol>
       <li>リストアイテム 1</li>
@@ -90,7 +90,7 @@ import { List, ListItem } from "lism-css/astro";
 
 <Preview>
   <PreviewTitle>`<List as="dl">`の出力例</PreviewTitle>
-  <PreviewArea p='20'>
+  <PreviewArea p="20">
     <List as="dl">
       <ListItem as="dt" fw="bold">
         <Fragment>用語 1</Fragment>
@@ -102,7 +102,7 @@ import { List, ListItem } from "lism-css/astro";
       <ListItem as="dd">用語 2 の説明文です。</ListItem>
     </List>
   </PreviewArea>
-  <PreviewCode slot='tab' label='JSX'>
+  <PreviewCode slot="tab" label="JSX">
     ```jsx
     <List as="dl">
       <ListItem as="dt" fw="bold">
@@ -116,7 +116,7 @@ import { List, ListItem } from "lism-css/astro";
     </List>
     ```
   </PreviewCode>
-  <PreviewCode slot='tab' label='HTML'>
+  <PreviewCode slot="tab" label="HTML">
     ```html
     <dl>
       <dt class="-fw:bold">用語 1</dt>

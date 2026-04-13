@@ -14,7 +14,7 @@ import { Accordion, DummyText } from '@lism-css/ui/astro';
 
 <Preview>
   <PreviewTitle>Preview</PreviewTitle>
-  <PreviewArea p='20'>
+  <PreviewArea p="20">
     <Accordion.Root bd>
       <Accordion.Item>
         <Accordion.Heading>
@@ -34,7 +34,7 @@ import { Accordion, DummyText } from '@lism-css/ui/astro';
       </Accordion.Item>
     </Accordion.Root>
   </PreviewArea>
-  <PreviewCode slot='tab' label='JSX'>
+  <PreviewCode slot="tab" label="JSX">
     ```jsx
     <Accordion.Root>
       <Accordion.Item>
@@ -56,7 +56,7 @@ import { Accordion, DummyText } from '@lism-css/ui/astro';
     </Accordion.Root>
     ```
   </PreviewCode>
-  <PreviewCode slot='tab' label='HTML'>
+  <PreviewCode slot="tab" label="HTML">
 ```html
 ```
   </PreviewCode>
@@ -66,7 +66,7 @@ import { Accordion, DummyText } from '@lism-css/ui/astro';
 ## 基本構造
 
 <Preview>
-  <PreviewCode slot='tab' label='HTML'>
+  <PreviewCode slot="tab" label="HTML">
     ```pug
     div.l--stack.c--accordion
       div.c--accordion_item
@@ -78,7 +78,7 @@ import { Accordion, DummyText } from '@lism-css/ui/astro';
           div.c--accordion_content(.l--flow) ...Contents...
     ```
   </PreviewCode>
-  <PreviewCode slot='tab' label='JSX'>
+  <PreviewCode slot="tab" label="JSX">
     ```jsx
     <Accordion.Root>
       <Accordion.Item>
@@ -104,14 +104,14 @@ import { Accordion, DummyText } from '@lism-css/ui/astro';
 ## ソースコード
 
 <Preview>
-  <PreviewCode slot='tab' label='CSS'>
-    <SrcCode dir='lism-ui' path='src/components/Accordion/_style.css' title='_style.css'/>
+  <PreviewCode slot="tab" label="CSS">
+    <SrcCode dir="lism-ui" path="src/components/Accordion/_style.css" title="_style.css"/>
   </PreviewCode>
-  <PreviewCode slot='tab' label='JS'>
-    <SrcCode dir='lism-ui' path='src/components/Accordion/setAccordion.ts' title='setAccordion.ts'/>
+  <PreviewCode slot="tab" label="JS">
+    <SrcCode dir="lism-ui" path="src/components/Accordion/setAccordion.ts" title="setAccordion.ts"/>
   </PreviewCode>
-  <PreviewCode slot='tab' label='React'>
-    <SrcCode dir='lism-ui' path='src/components/Accordion/react/Accordion.tsx' title='Accordion.tsx'/>
+  <PreviewCode slot="tab" label="React">
+    <SrcCode dir="lism-ui" path="src/components/Accordion/react/Accordion.tsx" title="Accordion.tsx"/>
   </PreviewCode>
 </Preview>
 
@@ -121,7 +121,7 @@ import { Accordion, DummyText } from '@lism-css/ui/astro';
 
 `@lism-css/ui` パッケージで提供しています。
 
-<ImportPackage component='Accordion' script='accordion.js' packageName='@lism-css/ui' />
+<ImportPackage component="Accordion" script="accordion.js" packageName="@lism-css/ui" />
 
 以下のコンポーネントが利用できます。
 
@@ -150,7 +150,7 @@ import { Accordion, DummyText } from '@lism-css/ui/astro';
 
 <Preview>
   <PreviewTitle>例</PreviewTitle>
-  <PreviewArea p='20'>
+  <PreviewArea p="20">
     <Accordion.Root bd>
       <Accordion.Item>
         <Accordion.Heading as="h3">
@@ -170,7 +170,7 @@ import { Accordion, DummyText } from '@lism-css/ui/astro';
       </Accordion.Item>
     </Accordion.Root>
   </PreviewArea>
-  <PreviewCode slot='tab' label='JSX'>
+  <PreviewCode slot="tab" label="JSX">
     ```jsx 'as="h3"'
     <Accordion.Root bd>
       <Accordion.Item>
@@ -192,7 +192,7 @@ import { Accordion, DummyText } from '@lism-css/ui/astro';
     </Accordion.Root>
     ```
   </PreviewCode>
-  <PreviewCode slot='tab' label='HTML'>
+  <PreviewCode slot="tab" label="HTML">
   ```html "h3"
   <div class="c--accordion l--stack">
     <div class="c--accordion_item">
@@ -222,7 +222,7 @@ import { Accordion, DummyText } from '@lism-css/ui/astro';
 
 <Preview>
   <PreviewTitle>Preview</PreviewTitle>
-  <PreviewArea p='20'>
+  <PreviewArea p="20">
     <Accordion.Root allowMultiple bd style={{ '--duration': '.15s' }}>
       <Accordion.Item>
         <Accordion.Heading>
@@ -250,7 +250,7 @@ import { Accordion, DummyText } from '@lism-css/ui/astro';
       </Accordion.Item>
     </Accordion.Root>
   </PreviewArea>
-  <PreviewCode slot='tab' label='JSX'>
+  <PreviewCode slot="tab" label="JSX">
 ```jsx "allowMultiple" "--duration"
 <Accordion.Root g="1px" allowMultiple>
   <Accordion.Item style={{ '--duration': '.15s' }}>
@@ -273,7 +273,7 @@ import { Accordion, DummyText } from '@lism-css/ui/astro';
 </Accordion.Root>
 ```
   </PreviewCode>
-  <PreviewCode slot='tab' label='HTML'>
+  <PreviewCode slot="tab" label="HTML">
 ```html "data-allow-multiple" "--duration"
 <div class="c--accordion l--stack" data-allow-multiple>
   <div class="c--accordion_item" style="--duration: 0.15s">...</div>

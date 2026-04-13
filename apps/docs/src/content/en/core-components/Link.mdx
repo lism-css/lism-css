@@ -13,22 +13,22 @@ import { Link } from "lism-css/astro";
 
 ## Import
 
-<ImportPackage component='Link' />
+<ImportPackage component="Link" />
 
 
 ## Basic Usage
 
 <Preview>
   <PreviewTitle>`<Link>` output example</PreviewTitle>
-  <PreviewArea p='20'>
+  <PreviewArea p="20">
     <Link href="###">Link text</Link>
   </PreviewArea>
-  <PreviewCode slot='tab' label='JSX'>
+  <PreviewCode slot="tab" label="JSX">
     ```jsx
     <Link href="###">Link text</Link>
     ```
   </PreviewCode>
-  <PreviewCode slot='tab' label='HTML'>
+  <PreviewCode slot="tab" label="HTML">
     ```html
     <a href="###">Link text</a>
     ```
@@ -37,19 +37,19 @@ import { Link } from "lism-css/astro";
 
 <Preview>
   <PreviewTitle>Applying Lism Props</PreviewTitle>
-  <PreviewArea p='20'>
+  <PreviewArea p="20">
     <Link href="###" c="green" fw="bold">
       <Fragment>Styled link</Fragment>
     </Link>
   </PreviewArea>
-  <PreviewCode slot='tab' label='JSX'>
+  <PreviewCode slot="tab" label="JSX">
     ```jsx
     <Link href="###" c="green" fw="bold">
       Styled link
     </Link>
     ```
   </PreviewCode>
-  <PreviewCode slot='tab' label='HTML'>
+  <PreviewCode slot="tab" label="HTML">
     ```html
     <a href="###" class="-c -fw:bold" style="--c: var(--green)">Styled link</a>
     ```

@@ -11,7 +11,7 @@ svgで境界線を描画するコンポーネントです。
 
 <Preview>
   <PreviewTitle>Preview</PreviewTitle>
-  <PreviewArea resize layout=''>
+  <PreviewArea resize layout="">
     <Stack>
       <ShapeDivider isEmpty level="2" />
       <DummyText p="30" />
@@ -29,7 +29,7 @@ svgで境界線を描画するコンポーネントです。
 
 ### Import
 
-<ImportPackage component='ShapeDivider' packageName='@lism-css/ui' css='style.css' />
+<ImportPackage component="ShapeDivider" packageName="@lism-css/ui" css="style.css" />
 
 
 ### Props
@@ -46,14 +46,14 @@ svgで境界線を描画するコンポーネントです。
 ### Source Code
 
 <Preview>
-  <PreviewCode slot='tab' label='_style.css'>
-    <SrcCode dir='lism-ui' path='src/components/ShapeDivider/_style.css' />
+  <PreviewCode slot="tab" label="_style.css">
+    <SrcCode dir="lism-ui" path="src/components/ShapeDivider/_style.css" />
   </PreviewCode>
-  <PreviewCode slot='tab' label='ShapeDivider.tsx'>
-    <SrcCode dir='lism-ui' path='src/components/ShapeDivider/react/ShapeDivider.tsx' />
+  <PreviewCode slot="tab" label="ShapeDivider.tsx">
+    <SrcCode dir="lism-ui" path="src/components/ShapeDivider/react/ShapeDivider.tsx" />
   </PreviewCode>
-  <PreviewCode slot='tab' label='getProps.ts'>
-    <SrcCode dir='lism-ui' path='src/components/ShapeDivider/getProps.ts' />
+  <PreviewCode slot="tab" label="getProps.ts">
+    <SrcCode dir="lism-ui" path="src/components/ShapeDivider/getProps.ts" />
   </PreviewCode>
 </Preview>
 
@@ -66,7 +66,7 @@ flipを指定して反転させることで、同じsvgパスを使って上下�
 
 <Preview>
   <PreviewTitle>Preview</PreviewTitle>
-  <PreviewArea resize p='0' layout=''>
+  <PreviewArea resize p="0" layout="">
     <Wrapper set="gutter" py="40">
       <DummyText />
     </Wrapper>
@@ -85,23 +85,23 @@ flipを指定して反転させることで、同じsvgパスを使って上下�
       <DummyText />
     </Wrapper>
   </PreviewArea>
-  <PreviewCode slot='tab' label='JSX'>
+  <PreviewCode slot="tab" label="JSX">
     ```jsx "\<ShapeDivider" "\/ShapeDivider\>" 'flip="XY"'
-    <Wrapper set="gutter" py='40'>
+    <Wrapper set="gutter" py="40">
       <DummyText />
     </Wrapper>
-    <ShapeDivider viewBox='0 0 10 10' level='4'>
-      <path d='M10,10V0L0,9.5V10L10,10z'></path>
+    <ShapeDivider viewBox="0 0 10 10" level="4">
+      <path d="M10,10V0L0,9.5V10L10,10z"></path>
     </ShapeDivider>
-    <Wrapper set="gutter" bgc='text' c='base'>
-      <Box py='40'>
-        <DummyText length='l' />
+    <Wrapper set="gutter" bgc="text" c="base">
+      <Box py="40">
+        <DummyText length="l" />
       </Box>
     </Wrapper>
-    <ShapeDivider viewBox='0 0 10 10' level='4' flip='XY'>
-      <path d='M10,10V0L0,9.5V10L10,10z'></path>
+    <ShapeDivider viewBox="0 0 10 10" level="4" flip="XY">
+      <path d="M10,10V0L0,9.5V10L10,10z"></path>
     </ShapeDivider>
-    <Wrapper set="gutter" py='40'>
+    <Wrapper set="gutter" py="40">
       <DummyText />
     </Wrapper>
     ```
@@ -117,7 +117,7 @@ pathを用意せず、空のisEmptyを指定してスペーサーとしても利
 
 <Preview>
   <PreviewTitle>Preview</PreviewTitle>
-  <PreviewArea resize p='0' layout=''>
+  <PreviewArea resize p="0" layout="">
     <Wrapper set="gutter" bgc="base">
       <ShapeDivider isEmpty level="5" />
       <Box py="20">
@@ -133,20 +133,20 @@ pathを用意せず、空のisEmptyを指定してスペーサーとしても利
       </Box>
     </Wrapper>
   </PreviewArea>
-  <PreviewCode slot='tab' label='JSX'>
+  <PreviewCode slot="tab" label="JSX">
     ```jsx "isEmpty" 'level="5"'
-    <Wrapper set="gutter" bgc='base'>
-      <ShapeDivider isEmpty level='5' />
-      <Box py='20'>
-        <DummyText length='l' />
+    <Wrapper set="gutter" bgc="base">
+      <ShapeDivider isEmpty level="5" />
+      <Box py="20">
+        <DummyText length="l" />
       </Box>
-      <ShapeDivider viewBox='0 0 10 10' level='5' >
-        <path d='M10,10V0L0,9.5V10L10,10z'></path>
+      <ShapeDivider viewBox="0 0 10 10" level="5" >
+        <path d="M10,10V0L0,9.5V10L10,10z"></path>
       </ShapeDivider>
     </Wrapper>
-    <Wrapper set="gutter" bgc='text' c='base'>
-      <Box py='40'>
-        <DummyText length='l' />
+    <Wrapper set="gutter" bgc="text" c="base">
+      <Box py="40">
+        <DummyText length="l" />
       </Box>
     </Wrapper>
     ```
@@ -154,7 +154,7 @@ pathを用意せず、空のisEmptyを指定してスペーサーとしても利
 </Preview>
 
 
-<Spacer h='1rem'/>
+<Spacer h="1rem"/>
 
 ### アニメーションをオンにする例
 
@@ -162,7 +162,7 @@ pathを用意せず、空のisEmptyを指定してスペーサーとしても利
 
 <Preview>
   <PreviewTitle>Preview</PreviewTitle>
-  <PreviewArea p='15' layout='' resize>
+  <PreviewArea p="15" layout="" resize>
     <Container pos="relative" set="gutter">
       <ShapeDivider isEmpty level="7" />
       <Frame isLayer z="-1" max-w="100%">
@@ -182,31 +182,31 @@ pathを用意せず、空のisEmptyを指定してスペーサーとしても利
       <DummyText length="l" />
     </Container>
   </PreviewArea>
-  <PreviewCode slot='tab' label='JSX'>
+  <PreviewCode slot="tab" label="JSX">
     ```jsx "isAnimation"
-    <Container pos='relative'>
-      <ShapeDivider isEmpty level='7' />
-      <Frame isLayer z='-1' max-w='100%'>
-        <Media src='https://cdn.lism-css.com/img/a-1.jpg' alt='' width='960' height='640' />
-        <Layer bgc='black:50%' />
+    <Container pos="relative">
+      <ShapeDivider isEmpty level="7" />
+      <Frame isLayer z="-1" max-w="100%">
+        <Media src="https://cdn.lism-css.com/img/a-1.jpg" alt="" width="960" height="640" />
+        <Layer bgc="black:50%" />
       </Frame>
-      <Wrapper contentSize='s' set="gutter" py='40' c='white'>
-        <DummyText length='xl' />
+      <Wrapper contentSize="s" set="gutter" py="40" c="white">
+        <DummyText length="xl" />
       </Wrapper>
-      <ShapeDivider viewBox='0 0 100 10' isAnimation c='base' level='7'>
-        <path opacity='.3' d='M100,5.5C91.5,3,79.5,7.5,71.5,8C58,9,49,0.5,36,2c-9,1-13.5,3.5-20.5,3.5C8.5,6,0,2,0,2v8h100V5.5z'></path>
-        <path opacity='.3' d='M100,1.5C87.8,6.6,79.3,2.1,67.8,2.6S53,6.5,42.5,5.5S23,0,15,0S1,3,0,4v6h100V1.5z'></path>
-        <path d='M100,7.5C91.5,5,77.1,11.8,54,8C34.6,4.8,14.4,4.1,0,8.5V10h100V7.5z'></path>
+      <ShapeDivider viewBox="0 0 100 10" isAnimation c="base" level="7">
+        <path opacity=".3" d="M100,5.5C91.5,3,79.5,7.5,71.5,8C58,9,49,0.5,36,2c-9,1-13.5,3.5-20.5,3.5C8.5,6,0,2,0,2v8h100V5.5z"></path>
+        <path opacity=".3" d="M100,1.5C87.8,6.6,79.3,2.1,67.8,2.6S53,6.5,42.5,5.5S23,0,15,0S1,3,0,4v6h100V1.5z"></path>
+        <path d="M100,7.5C91.5,5,77.1,11.8,54,8C34.6,4.8,14.4,4.1,0,8.5V10h100V7.5z"></path>
       </ShapeDivider>
     </Container>
-    <Container isWrapper='s' set="gutter" bgc='base' py='40'>
-      <DummyText length='l' />
+    <Container isWrapper="s" set="gutter" bgc="base" py="40">
+      <DummyText length="l" />
     </Container>
     ```
   </PreviewCode>
 </Preview>
 
-<Spacer h='1rem'/>
+<Spacer h="1rem"/>
 
 ### 内部のSVGをずらして配置する例
 
@@ -215,7 +215,7 @@ pathを用意せず、空のisEmptyを指定してスペーサーとしても利
 
 <Preview>
   <PreviewTitle>`stretch`,`offset`の活用</PreviewTitle>
-  <PreviewArea resize p='0' layout=''>
+  <PreviewArea resize p="0" layout="">
     <Container isWrapper="s" set="gutter" bgc="base" py="40">
       <ShapeDivider isEmpty level="4" />
       <DummyText length="l" />
@@ -236,26 +236,26 @@ pathを用意せず、空のisEmptyを指定してスペーサーとしても利
       <ShapeDivider isEmpty level="4" />
     </Container>
   </PreviewArea>
-  <PreviewCode slot='tab' label='JSX'>
+  <PreviewCode slot="tab" label="JSX">
     ```jsx "stretch=" "offset="
-    <Container isWrapper='s' set="gutter" bgc='base' py='40'>
-      <ShapeDivider isEmpty level='4' />
-      <DummyText length='l' />
+    <Container isWrapper="s" set="gutter" bgc="base" py="40">
+      <ShapeDivider isEmpty level="4" />
+      <DummyText length="l" />
     </Container>
-    <Container pos='relative' set="gutter" c='base' bgc='text'>
-      <ShapeDivider viewBox='0 0 100 10' c='base' flip='Y' level='8' stretch={1.1} offset='-5%'>
-        <path d='M100 6C89.3 3.3 82.7 9 70 9S48.4 3 38 3 24.5 6 17 6C7.4 6 0 0 0 0v10h100V6z'></path>
+    <Container pos="relative" set="gutter" c="base" bgc="text">
+      <ShapeDivider viewBox="0 0 100 10" c="base" flip="Y" level="8" stretch={1.1} offset="-5%">
+        <path d="M100 6C89.3 3.3 82.7 9 70 9S48.4 3 38 3 24.5 6 17 6C7.4 6 0 0 0 0v10h100V6z"></path>
       </ShapeDivider>
-      <Wrapper contentSize='s' py='40'>
-        <DummyText length='xl' />
+      <Wrapper contentSize="s" py="40">
+        <DummyText length="xl" />
       </Wrapper>
-      <ShapeDivider viewBox='0 0 100 10' c='base' level='8' stretch={1.1}>
-        <path d='M100 6C89.3 3.3 82.7 9 70 9S48.4 3 38 3 24.5 6 17 6C7.4 6 0 0 0 0v10h100V6z'></path>
+      <ShapeDivider viewBox="0 0 100 10" c="base" level="8" stretch={1.1}>
+        <path d="M100 6C89.3 3.3 82.7 9 70 9S48.4 3 38 3 24.5 6 17 6C7.4 6 0 0 0 0v10h100V6z"></path>
       </ShapeDivider>
     </Container>
-    <Container isWrapper='s' set="gutter" bgc='base' py='40'>
-      <DummyText length='l' />
-      <ShapeDivider isEmpty level='4' />
+    <Container isWrapper="s" set="gutter" bgc="base" py="40">
+      <DummyText length="l" />
+      <ShapeDivider isEmpty level="4" />
     </Container>
     ```
   </PreviewCode>

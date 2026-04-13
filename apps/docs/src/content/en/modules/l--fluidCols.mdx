@@ -1,42 +1,42 @@
 ---
-title: 'FluidCols (l--fluidcols)'
-navtitle: 'l--fluidcols'
-description: 'l--fluidcols は、カラム要素が指定した幅より小さくならないように自動で折り返す、ブレイクポイント非依存の段組みレイアウトモジュールです。'
+title: 'FluidCols (l--fluidCols)'
+navtitle: 'l--fluidCols'
+description: 'l--fluidCols is a breakpoint-independent multi-column layout module where columns automatically wrap before they shrink below the specified minimum width.'
 ---
 
 import { FluidCols, Box, Frame } from 'lism-css/astro';
 import { DummyText } from '@lism-css/ui/astro';
 
 
-`l--fluidcols` は、**カラム要素が指定した幅より小さくならないように自動で折り返す**、ブレイクポイントに依存しない段組みレイアウトモジュールです。
+`l--fluidCols` is a **breakpoint-independent multi-column layout module** where columns automatically wrap before they shrink below the specified minimum width.
 
 
 ## CSS
 
-<SrcCode path='src/scss/modules/layout/_fluidCols.scss' />
+<SrcCode path="src/scss/modules/layout/_fluidCols.scss" />
 
 
-## Lismコンポーネント
+## Lism Component
 
 ### Import
 
-<ImportPackage component='FluidCols' />
+<ImportPackage component="FluidCols" />
 
-### 専用Props
+### Props
 
-| プロパティ | 説明 |
+| Property | Description |
 |---|---|
-| `cols` <PropBadge type="cssvar">`--cols`</PropBadge> | カラムが維持する最小幅を指定します。
-| `autoFill` <PropBadge type="cssvar">`--autoMode`</PropBadge> | 自動折り返しのモードを`auto-fill`に切り替えます。
+| `cols` <PropBadge type="cssvar">`--cols`</PropBadge> | Specifies the minimum width each column should maintain.
+| `autoFill` <PropBadge type="cssvar">`--autoMode`</PropBadge> | Switches the auto-wrap mode to `auto-fill`.
 
 
 ## Usage
 
-### デフォルト幅で利用する
+### Using the default column width
 
 <Preview>
-  <PreviewTitle>デフォルト幅で利用する例</PreviewTitle>
-  <PreviewArea resize p='15'>
+  <PreviewTitle>Using the default column width</PreviewTitle>
+  <PreviewArea resize p="15">
     <FluidCols g="20">
       <Box bxsh="20" p="20">
         <DummyText lang="ja" />
@@ -92,11 +92,12 @@ import { DummyText } from '@lism-css/ui/astro';
   </PreviewCode>
 </Preview>
 
-### カラム幅と`auto-fill`の指定
+
+### Specifying column width with `auto-fill`
 
 <Preview>
-  <PreviewTitle>`cols=12em`, `auto-fill`を使う </PreviewTitle>
-  <PreviewArea resize p='15'>
+  <PreviewTitle>Using `cols=12em` with `auto-fill`</PreviewTitle>
+  <PreviewArea resize p="15">
     <FluidCols cols="12em" autoFill g="20" fz="s">
       <Box bxsh="20" p="20">
         <DummyText lang="ja" length="s" />
@@ -126,11 +127,12 @@ import { DummyText } from '@lism-css/ui/astro';
   </PreviewCode>
 </Preview>
 
-### 2列→1列
+
+### 2 columns → 1 column
 
 <Preview>
-  <PreviewTitle>2列→1列</PreviewTitle>
-  <PreviewArea resize p='15'>
+  <PreviewTitle>2 columns → 1 column</PreviewTitle>
+  <PreviewArea resize p="15">
     <FluidCols cols="320px" g="20">
       <Frame ar="16/9">
         <img src="https://cdn.lism-css.com/img/a-1.jpg" width="600" height="400" />

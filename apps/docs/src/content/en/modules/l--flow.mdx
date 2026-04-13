@@ -27,14 +27,14 @@ Heading tags receive larger spacing than other elements (adjustable via `--flow-
 
 ## CSS
 
-<SrcCode path='src/scss/modules/layout/_flow.scss' />
+<SrcCode path="src/scss/modules/layout/_flow.scss" />
 
 
 ## Lism Component
 
 ### Import
 
-<ImportPackage component='Flow' />
+<ImportPackage component="Flow" />
 
 ### Props
 
@@ -49,7 +49,7 @@ Heading tags receive larger spacing than other elements (adjustable via `--flow-
 
 <Preview>
   <PreviewTitle>`l--flow`</PreviewTitle>
-  <PreviewArea p='20' layout=''>
+  <PreviewArea p="20" layout="">
     <Flow hov="itemGuide">
       <DummyText lang="ja" />
       <h2>Heading 2</h2>
@@ -64,7 +64,7 @@ Heading tags receive larger spacing than other elements (adjustable via `--flow-
       <DummyText lang="ja" />
     </Flow>
   </PreviewArea>
-  <PreviewCode slot='tab' label='JSX'>
+  <PreviewCode slot="tab" label="JSX">
   ```jsx
   <Flow>
     <p>Lorem ipsum content...</p>
@@ -75,7 +75,7 @@ Heading tags receive larger spacing than other elements (adjustable via `--flow-
   </Flow>
   ```
   </PreviewCode>
-  <PreviewCode slot='tab' label='HTML'>
+  <PreviewCode slot="tab" label="HTML">
   ```html
   <div class="l--flow">
     <p>Lorem ipsum content...</p>
@@ -94,7 +94,7 @@ Heading tags receive larger spacing than other elements (adjustable via `--flow-
 
 <Preview>
   <PreviewTitle>Using `-flow:s`</PreviewTitle>
-  <PreviewArea p='20' layout=''>
+  <PreviewArea p="20" layout="">
     <Flow flow="s" hov="itemGuide">
       <DummyText lang="ja" />
       <h2>Heading 2</h2>
@@ -109,7 +109,7 @@ Heading tags receive larger spacing than other elements (adjustable via `--flow-
       <DummyText lang="ja" />
     </Flow>
   </PreviewArea>
-  <PreviewCode slot='tab' label='JSX'>
+  <PreviewCode slot="tab" label="JSX">
   ```jsx 'flow="s"'
   <Flow flow="s">
     <p>Lorem ipsum content...</p>
@@ -120,7 +120,7 @@ Heading tags receive larger spacing than other elements (adjustable via `--flow-
   </Flow>
   ```
   </PreviewCode>
-  <PreviewCode slot='tab' label='HTML'>
+  <PreviewCode slot="tab" label="HTML">
   ```html "-flow:s"
   <div class="l--flow -flow:s">
     <p>Lorem ipsum content...</p>
@@ -141,7 +141,7 @@ When a non-token value is passed to `flow`, it is output as the `-flow:` class a
 
 <Preview>
   <PreviewTitle>Setting a custom value</PreviewTitle>
-  <PreviewArea p='20'>
+  <PreviewArea p="20">
     <Flow flow="10px" hov="itemGuide">
       <Text>Contents...</Text>
       <h2>Heading</h2>
@@ -150,7 +150,7 @@ When a non-token value is passed to `flow`, it is output as the `-flow:` class a
       <Text>Contents...</Text>
     </Flow>
   </PreviewArea>
-  <PreviewCode slot='tab' label='JSX'>
+  <PreviewCode slot="tab" label="JSX">
   ```jsx 'flow="10px"'
   <Flow flow="10px">
     <p>Contents...</p>
@@ -159,7 +159,7 @@ When a non-token value is passed to `flow`, it is output as the `-flow:` class a
   </Flow>
   ```
   </PreviewCode>
-  <PreviewCode slot='tab' label='HTML'>
+  <PreviewCode slot="tab" label="HTML">
   ```html "--flow:10px"
   <div class="l--flow -flow:" style="--flow: 10px">
     <p>Contents...</p>
@@ -182,7 +182,7 @@ This is useful when you want to place an absolutely positioned element at the st
 
 <Preview>
   <PreviewTitle>Example</PreviewTitle>
-  <PreviewArea p='20'>
+  <PreviewArea p="20">
     <div class="l--flow -hov:itemGuide">
       <div class="is--skipFlow">Skip flow...</div>
       <p>Lorem ipsum, Example content...</p>
@@ -190,7 +190,7 @@ This is useful when you want to place an absolutely positioned element at the st
       <p>Lorem ipsum, Example content...</p>
     </div>
   </PreviewArea>
-  <PreviewCode slot='tab' label='HTML'>
+  <PreviewCode slot="tab" label="HTML">
   ```html
   <div class="l--flow">
     <div class="is--skipFlow">skip flow...</div>
@@ -211,7 +211,7 @@ When you nest `l--flow` directly inside another `l--flow` and set a custom `--fl
 
 <Preview>
   <PreviewTitle>When `--flow` is defined on a directly nested `l--flow`</PreviewTitle>
-  <PreviewArea p='20' layout=''>
+  <PreviewArea p="20" layout="">
     <Flow hov="itemGuide">
       <p>Flow contents...</p>
       <p>Flow contents...</p>
@@ -230,7 +230,7 @@ When you nest `l--flow` directly inside another `l--flow` and set a custom `--fl
       </Flow>
     </Flow>
   </PreviewArea>
-  <PreviewCode slot='tab' label='JSX'>
+  <PreviewCode slot="tab" label="JSX">
     ```jsx "\<Flow " '\<Flow flow="5px"'
     <Flow>
       <p>Flow contents...</p>

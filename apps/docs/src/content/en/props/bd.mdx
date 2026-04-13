@@ -64,7 +64,7 @@ Additionally, `bdw` supports breakpoint specification.
 
 <Preview>
   <PreviewTitle>Usage example</PreviewTitle>
-  <PreviewArea p='30'>
+  <PreviewArea p="30">
     <Box bd p="10">
       <DummyText length="s" />
     </Box>
@@ -72,17 +72,17 @@ Additionally, `bdw` supports breakpoint specification.
       <DummyText length="s" />
     </Box>
   </PreviewArea>
-  <PreviewCode label='JSX' slot='tab'>
+  <PreviewCode label="JSX" slot="tab">
     ```jsx
-    <Box bd p='10'>
+    <Box bd p="10">
       <p>Lorem ipsum dolor sit amet. Consectetur adipiscing elit, sed do eiusmod tempor Incididunt ut.</p>
     </Box>
-    <Box bd bds='dashed' bdw='4px' bdc='red' p='15'>
+    <Box bd bds="dashed" bdw="4px" bdc="red" p="15">
       <p>Lorem ipsum dolor sit amet. Consectetur adipiscing elit, sed do eiusmod tempor Incididunt ut.</p>
     </Box>
     ```
   </PreviewCode>
-  <PreviewCode label='HTML' slot='tab'>
+  <PreviewCode label="HTML" slot="tab">
     ```html "-bd" "--bdc" "--bdw" "--bds"
     <div class="l--box -bd -p:10">
       <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor.</p>
@@ -106,7 +106,7 @@ To apply a border on only one side, use the `.-bd-{side}` class.
 
 <Preview>
   <PreviewTitle>Specifying all 4 sides</PreviewTitle>
-  <PreviewArea p='30' flow='50'>
+  <PreviewArea p="30" flow="50">
     <Box bd-t px="10">
       <Fragment>-t: Top</Fragment>
     </Box>
@@ -120,15 +120,15 @@ To apply a border on only one side, use the `.-bd-{side}` class.
       <Fragment>-l: Left</Fragment>
     </Box>
   </PreviewArea>
-  <PreviewCode label='JSX' slot='tab'>
+  <PreviewCode label="JSX" slot="tab">
     ```jsx "bd-t" "bd-r" "bd-b" "bd-l"
-    <Box bd-t px='10'>-t: Top</Box>
-    <Box bd-r px='10'>-r: Right</Box>
-    <Box bd-b px='10'>-b: Bottom</Box>
-    <Box bd-l px='10'>-l: Left</Box>
+    <Box bd-t px="10">-t: Top</Box>
+    <Box bd-r px="10">-r: Right</Box>
+    <Box bd-b px="10">-b: Bottom</Box>
+    <Box bd-l px="10">-l: Left</Box>
     ```
   </PreviewCode>
-  <PreviewCode label='HTML' slot='tab'>
+  <PreviewCode label="HTML" slot="tab">
     ```html "-bd-t" "-bd-r" "-bd-b" "-bd-l"
     <div class="l--box -bd-t -px:10">-t: Top</div>
     <div class="l--box -bd-r -px:10">-r: Right</div>
@@ -140,7 +140,7 @@ To apply a border on only one side, use the `.-bd-{side}` class.
 
 <Preview>
   <PreviewTitle>Specifying block and inline directions</PreviewTitle>
-  <PreviewArea p='30' flow='50'>
+  <PreviewArea p="30" flow="50">
     <Box bd-x-s bdw="2px" px="10" bgc="base-2">
       <Fragment>inline-start</Fragment>
     </Box>
@@ -160,17 +160,17 @@ To apply a border on only one side, use the `.-bd-{side}` class.
       <Fragment>block</Fragment>
     </Box>
   </PreviewArea>
-  <PreviewCode label='JSX' slot='tab'>
+  <PreviewCode label="JSX" slot="tab">
     ```jsx "bd-x" "bd-y" "bd-x-s" "bd-x-e" "bd-y-s" "bd-y-e"
-    <Box bd-x-s bdw='2px' px='10' bgc='base-2'>inline-start</Box>
-    <Box bd-x-e bdw='2px' px='10' bgc='base-2'>inline-end</Box>
-    <Box bd-y-s bdw='2px' px='10' bgc='base-2'>block-start</Box>
-    <Box bd-y-e bdw='2px' px='10' bgc='base-2'>block-end</Box>
-    <Box bd-x bdw='2px' px='10' bgc='base-2'>inline</Box>
-    <Box bd-y bdw='2px' px='10' bgc='base-2'>block</Box>
+    <Box bd-x-s bdw="2px" px="10" bgc="base-2">inline-start</Box>
+    <Box bd-x-e bdw="2px" px="10" bgc="base-2">inline-end</Box>
+    <Box bd-y-s bdw="2px" px="10" bgc="base-2">block-start</Box>
+    <Box bd-y-e bdw="2px" px="10" bgc="base-2">block-end</Box>
+    <Box bd-x bdw="2px" px="10" bgc="base-2">inline</Box>
+    <Box bd-y bdw="2px" px="10" bgc="base-2">block</Box>
     ```
   </PreviewCode>
-  <PreviewCode label='HTML' slot='tab'>
+  <PreviewCode label="HTML" slot="tab">
     ```html "-bd-x" "-bd-y" "-bd-x-s" "-bd-x-e" "-bd-y-s" "-bd-y-e"
     <div class="l--box -bd-x-s -px:10 -bgc:base-2" style="--bdw: 2px">inline-start</div>
     <div class="l--box -bd-x-e -px:10 -bgc:base-2" style="--bdw: 2px">inline-end</div>
@@ -182,25 +182,25 @@ To apply a border on only one side, use the `.-bd-{side}` class.
   </PreviewCode>
 </Preview>
 
-<Spacer h='10' />
+<Spacer h="10" />
 
 When different styles are needed for each side, you can combine the `.-bd` class with `--bdw`, `--bds`, and `--bdc` as follows:
 
 <Preview>
   <PreviewTitle>Per-side specification of `bdw`, `bds`, `bdc`</PreviewTitle>
-  <PreviewArea resize p='30'>
+  <PreviewArea resize p="30">
     <Box bd bdw="0 0 1px .5em" bds="dashed solid" bdc="var(--purple) var(--blue)" p="15">
       <Fragment>border</Fragment>
     </Box>
   </PreviewArea>
-  <PreviewCode label='JSX' slot='tab'>
+  <PreviewCode label="JSX" slot="tab">
     ```jsx
     <Box bd bdw="0 0 1px .5em" bds="dashed solid" bdc="var(--purple) var(--blue)" p="15">
       border
     </Box>
     ```
   </PreviewCode>
-  <PreviewCode label='HTML' slot='tab'>
+  <PreviewCode label="HTML" slot="tab">
     ```html
     <div class="l--box -bd -p:15" style="--bdw: 0 0 1px 0.5em; --bds: dashed solid; --bdc: var(--purple) var(--blue)">border</div>
     ```
@@ -216,19 +216,19 @@ When different styles are needed for each side, you can combine the `.-bd` class
 
 <Preview>
   <PreviewTitle>Example of `bd`</PreviewTitle>
-  <PreviewArea p='30' resize>
+  <PreviewArea p="30" resize>
     <Box bd bdw={['1px', '3px', '6px']} p="15">
       <Fragment>border</Fragment>
     </Box>
   </PreviewArea>
-  <PreviewCode label='JSX' slot='tab'>
+  <PreviewCode label="JSX" slot="tab">
     ```jsx
     <Box bd bdw={['1px', '3px', '6px']} p="15">
       border
     </Box>
     ```
   </PreviewCode>
-  <PreviewCode label='HTML' slot='tab'>
+  <PreviewCode label="HTML" slot="tab">
     ```html
     <div class="l--box -bd -bdw_sm -bdw_md -p:15" style="--bdw: 1px; --bdw_sm: 3px; --bdw_md: 6px">border</div>
     ```
@@ -243,7 +243,7 @@ By switching `bdw` at breakpoints, you can also change which side the border app
 
 <Preview>
   <PreviewTitle>Switching the border side</PreviewTitle>
-  <PreviewArea p='30' resize>
+  <PreviewArea p="30" resize>
     <Flex fxd={['column', 'row']}>
       <Box px="15" py="5">
         <Fragment>Box</Fragment>
@@ -256,7 +256,7 @@ By switching `bdw` at breakpoints, you can also change which side the border app
       </Box>
     </Flex>
   </PreviewArea>
-  <PreviewCode label='JSX' slot='tab'>
+  <PreviewCode label="JSX" slot="tab">
     ```jsx
     <Flex fxd={['column', 'row']}>
       <Box px="15" py="5">
@@ -271,7 +271,7 @@ By switching `bdw` at breakpoints, you can also change which side the border app
     </Flex>
     ```
   </PreviewCode>
-  <PreviewCode label='HTML' slot='tab'>
+  <PreviewCode label="HTML" slot="tab">
     ```html
     <div class="l--flex -fxd:column -fxd_sm" style="--fxd_sm: row">
       <div class="l--box -px:15 -py:5">Box</div>
@@ -291,19 +291,19 @@ You can also pass a value directly to `bd`.
 
 <Preview>
   <PreviewTitle>Example of `bd`</PreviewTitle>
-  <PreviewArea p='30' resize>
+  <PreviewArea p="30" resize>
     <Box bd="solid 1px #555" p="10">
       border
     </Box>
   </PreviewArea>
-  <PreviewCode label='JSX' slot='tab'>
+  <PreviewCode label="JSX" slot="tab">
     ```jsx
     <Box bd="solid 1px #555" p="10">
       border
     </Box>
     ```
   </PreviewCode>
-  <PreviewCode label='HTML' slot='tab'>
+  <PreviewCode label="HTML" slot="tab">
     ```html
     <div class="l--box -p:10" style="border: solid 1px #555">border</div>
     ```
@@ -318,19 +318,19 @@ These are output simply as inline styles.
 
 <Preview>
   <PreviewTitle>bdl,bdb</PreviewTitle>
-  <PreviewArea resize p='30'>
+  <PreviewArea resize p="30">
     <Box borders={{ l: 'solid 4px green', b: 'solid 1px blue' }} px="10">
       left,bottom
     </Box>
   </PreviewArea>
-  <PreviewCode label='JSX' slot='tab'>
+  <PreviewCode label="JSX" slot="tab">
     ```jsx
     <Box borders={{ l: 'solid 4px green', b: 'solid 1px blue' }} px="10">
       left,bottom
     </Box>
     ```
   </PreviewCode>
-  <PreviewCode label='HTML' slot='tab'>
+  <PreviewCode label="HTML" slot="tab">
     ```html
     <div class="l--box" style="border-left: solid 4px green; border-bottom: solid 1px blue">left,bottom</div>
     ```

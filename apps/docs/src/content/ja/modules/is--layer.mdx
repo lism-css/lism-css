@@ -11,7 +11,7 @@ import { DummyText } from '@lism-css/ui/astro';
 
 ## CSS
 
-<SrcCode path='src/scss/modules/state/_layer.scss' />
+<SrcCode path="src/scss/modules/state/_layer.scss" />
 
 
 ## Lismコンポーネントでの使い方
@@ -20,7 +20,7 @@ import { DummyText } from '@lism-css/ui/astro';
 
 ### Import
 
-<ImportPackage component='Layer' />
+<ImportPackage component="Layer" />
 
 
 ## Usage
@@ -29,7 +29,7 @@ import { DummyText } from '@lism-css/ui/astro';
 
 <Preview>
   <PreviewTitle>使用例</PreviewTitle>
-  <PreviewArea p='15'>
+  <PreviewArea p="15">
     <Box pos="relative" py="40">
       <Text fz="2xl" fw="bold" ta="center" lts="l" o="-30">
         <Fragment>BACKGROUND</Fragment>
@@ -39,7 +39,7 @@ import { DummyText } from '@lism-css/ui/astro';
       </Layer>
     </Box>
   </PreviewArea>
-  <PreviewCode slot='tab' label='JSX'>
+  <PreviewCode slot="tab" label="JSX">
     ```jsx
     <Box pos="relative" py="40">
       <Text fz="2xl" fw="bold" ta="center" lts="l" o="-30">
@@ -51,7 +51,7 @@ import { DummyText } from '@lism-css/ui/astro';
     </Box>
     ```
   </PreviewCode>
-  <PreviewCode slot='tab' label='HTML'>
+  <PreviewCode slot="tab" label="HTML">
     ```html
     <div class="l--box -pos:relative -py:40">
       <p class="-fz:2xl -fw:bold -ta:center -lts:l -o:-30">BACKGROUND</p>
@@ -70,7 +70,7 @@ import { DummyText } from '@lism-css/ui/astro';
 
 <Preview>
   <PreviewTitle>背景にブラーをかける</PreviewTitle>
-  <PreviewArea p='15'>
+  <PreviewArea p="15">
     <Box pos="relative" p="40">
       <Text fz="2xl" fw="bold" ta="center">
         <Fragment>BACKGROUND</Fragment>
@@ -78,7 +78,7 @@ import { DummyText } from '@lism-css/ui/astro';
       <Layer style={{ backdropFilter: 'blur(3px)' }} />
     </Box>
   </PreviewArea>
-  <PreviewCode slot='tab' label='JSX'>
+  <PreviewCode slot="tab" label="JSX">
     ```jsx {3}
     <Box pos="relative" p="40">
       <Text fz="2xl" fw="bold" ta="center">
@@ -88,7 +88,7 @@ import { DummyText } from '@lism-css/ui/astro';
     </Box>
     ```
   </PreviewCode>
-  <PreviewCode slot='tab' label='HTML'>
+  <PreviewCode slot="tab" label="HTML">
     ```html {3}
     <div class="l--box -pos:relative -p:40">
       <p class="-fz:2xl -fw:bold -ta:center">BACKGROUND</p>
@@ -101,7 +101,7 @@ import { DummyText } from '@lism-css/ui/astro';
 
 <Preview>
   <PreviewTitle>背景の色味を変える</PreviewTitle>
-  <PreviewArea p='15'>
+  <PreviewArea p="15">
     <Frame ar="2/1" pos="relative">
       <img src="https://cdn.lism-css.com/img/a-1.jpg" alt="" width="960" height="640" />
       <Layer style={{ backdropFilter: 'contrast(1.1) sepia(0.4) grayscale(0.4)' }} />
@@ -130,7 +130,7 @@ import { DummyText } from '@lism-css/ui/astro';
 
 <Preview>
   <PreviewTitle>例</PreviewTitle>
-  <PreviewArea p='15'>
+  <PreviewArea p="15">
     <Box pos="relative" py="50" px="40">
       <Frame isLayer>
         <Media src="https://cdn.lism-css.com/img/a-2.jpg" alt="" width="960" height="640" loading="lazy" decoding="async" />
@@ -142,7 +142,7 @@ import { DummyText } from '@lism-css/ui/astro';
       </Stack>
     </Box>
   </PreviewArea>
-  <PreviewCode slot='tab' label='JSX'>
+  <PreviewCode slot="tab" label="JSX">
     ```jsx {2-4} "\<Frame isLayer"
     <Box pos="relative" py="50" px="40">
       <Frame isLayer>
@@ -160,7 +160,7 @@ import { DummyText } from '@lism-css/ui/astro';
     </Box>
     ```
   </PreviewCode>
-  <PreviewCode slot='tab' label='HTML'>
+  <PreviewCode slot="tab" label="HTML">
     ```html {2-4}
     <div class="l--box -pos:relative -py:50 -px:40">
       <div class="l--frame is--layer">

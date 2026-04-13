@@ -15,14 +15,14 @@ import { Text, Inline } from "lism-css/astro";
 
 ## Import
 
-<ImportPackage component='Inline' />
+<ImportPackage component="Inline" />
 
 
 ## 基本的な使い方
 
 <Preview>
   <PreviewTitle>`<Inline>`の出力例</PreviewTitle>
-  <PreviewArea p='20'>
+  <PreviewArea p="20">
     <Text>
       <Fragment>テキストの中で</Fragment>
       <Inline fz="l" fs="italic">
@@ -31,7 +31,7 @@ import { Text, Inline } from "lism-css/astro";
       <Fragment>としてスタイルできます。</Fragment>
     </Text>
   </PreviewArea>
-  <PreviewCode slot='tab' label='JSX'>
+  <PreviewCode slot="tab" label="JSX">
     ```jsx
     <Text>
       テキストの中で
@@ -47,7 +47,7 @@ import { Text, Inline } from "lism-css/astro";
 
 <Preview>
   <PreviewTitle>`as="strong"` の例</PreviewTitle>
-  <PreviewArea p='20'>
+  <PreviewArea p="20">
     <Text>
       <Fragment>これは</Fragment>
       <Inline as="strong" c="red">
@@ -56,7 +56,7 @@ import { Text, Inline } from "lism-css/astro";
       <Fragment>テキストです。</Fragment>
     </Text>
   </PreviewArea>
-  <PreviewCode slot='tab' label='JSX'>
+  <PreviewCode slot="tab" label="JSX">
     ```jsx
     <Text>
       これは
@@ -67,7 +67,7 @@ import { Text, Inline } from "lism-css/astro";
     </Text>
     ```
   </PreviewCode>
-  <PreviewCode slot='tab' label='HTML'>
+  <PreviewCode slot="tab" label="HTML">
     ```html
     <p>これは<strong class="-c" style="--c: var(--red)">強調された</strong>テキストです。</p>
     ```

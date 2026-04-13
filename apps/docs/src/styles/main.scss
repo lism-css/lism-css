@@ -18,17 +18,17 @@ link:first-child + * {
 
 // 追加ユーティリティ
 
-.u-onlyLightMode {
+.u--onlyLightMode {
   display: block;
 }
-.u-onlyDarkMode {
+.u--onlyDarkMode {
   display: none;
 }
 [data-theme='dark'] {
-  .u-onlyLightMode {
+  .u--onlyLightMode {
     display: none;
   }
-  .u-onlyDarkMode {
+  .u--onlyDarkMode {
     display: block;
   }
 }
@@ -66,14 +66,14 @@ link:first-child + * {
 /* ----------------------------------------
     guide
  ---------------------------------------- */
-
+@layer lism-custom {
+  .has--itemGuide > * {
+    padding: 0 4px;
+    border: 1px dashed hsla(0, 0%, 63%, 0.4);
+  }
+}
 .-bd\:guide {
   border: 1px dashed rgba(160, 160, 160, 0.5);
-}
-
-:where(.has--itemGuide > *) {
-  padding: 0 4px;
-  border: 1px dashed hsla(0, 0%, 63%, 0.4);
 }
 .-hov\:itemGuide {
   > * {

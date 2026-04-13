@@ -1,27 +1,27 @@
 ---
-title: 'TileGrid (l--tilegrid)'
-navtitle: 'l--tilegrid'
-description: 'l--tilegrid は、列数と行数を指定して均等なタイル型グリッドレイアウトを構成するレイアウトモジュールです。'
+title: 'TileGrid (l--tileGrid)'
+navtitle: 'l--tileGrid'
+description: 'l--tileGrid は、列数と行数を指定して均等なタイル型グリッドレイアウトを構成するレイアウトモジュールです。'
 ---
 
 import { TileGrid, Box, Center } from 'lism-css/astro';
 
 
-`l--tilegrid` は、`cols`（列数）と`rows`（行数）を指定して、**均等なタイル型グリッドレイアウト**を構成するためのレイアウトモジュールです。
+`l--tileGrid` は、`cols`（列数）と`rows`（行数）を指定して、**均等なタイル型グリッドレイアウト**を構成するためのレイアウトモジュールです。
 
 内部的には `grid-template: repeat(rows, minmax(0, 1fr)) / repeat(cols, minmax(0, 1fr))` を使用しています。
 
 
 ## CSS
 
-<SrcCode path='src/scss/modules/layout/_tileGrid.scss' />
+<SrcCode path="src/scss/modules/layout/_tileGrid.scss" />
 
 
 ## Lismコンポーネント
 
 ### Import
 
-<ImportPackage component='TileGrid' />
+<ImportPackage component="TileGrid" />
 
 ### 専用Props
 
@@ -37,7 +37,7 @@ import { TileGrid, Box, Center } from 'lism-css/astro';
 
 <Preview>
   <PreviewTitle>3列 x 3行のタイルグリッド</PreviewTitle>
-  <PreviewArea resize p='15'>
+  <PreviewArea resize p="15">
     <TileGrid cols="3" rows="3" g="5" min-h="50svh">
       <Box p="20" bgc="base-2">item1</Box>
       <Box p="20" bgc="base-2">item2</Box>
@@ -47,7 +47,7 @@ import { TileGrid, Box, Center } from 'lism-css/astro';
       <Center gc="3" gr="1 / -1" p="20" bgc="blue">item6</Center>
     </TileGrid>
   </PreviewArea>
-  <PreviewCode slot='tab' label='JSX'>
+  <PreviewCode slot="tab" label="JSX">
     ```jsx " gc=" " gr="
     <TileGrid cols="3" rows="3" g="5" min-h="50svh">
       <Box p="20" bgc="base-2">
@@ -71,7 +71,7 @@ import { TileGrid, Box, Center } from 'lism-css/astro';
     </TileGrid>
     ```
   </PreviewCode>
-  <PreviewCode slot='tab' label='HTML'>
+  <PreviewCode slot="tab" label="HTML">
     ```html "--cols:3;--rows:3"
     <div class="l--tileGrid -g:5" style="--cols: 3; --rows: 3; min-height: 50svh">
       <div class="l--box -bgc:base-2 -p:20">item1</div>
@@ -92,7 +92,7 @@ import { TileGrid, Box, Center } from 'lism-css/astro';
 
 <Preview>
   <PreviewTitle>例</PreviewTitle>
-  <PreviewArea resize p='15'>
+  <PreviewArea resize p="15">
     <TileGrid cols={['2', '3']} rows="4" min-h="50svh" gaf="row dense">
       <Box gc={['1 / -1', 'span 2']} gr={['span 2', '1 / -1']} p="20" bgc="base-2">A</Box>
       <Box p="20" bgc="green:20%">B</Box>
@@ -128,5 +128,5 @@ import { TileGrid, Box, Center } from 'lism-css/astro';
 {/* ## 関連
 
 - [`<Columns>`](/docs/modules/l--columns): 均等列のみ（1D）のカラムレイアウト
-- [`<FluidCols>`](/docs/modules/l--fluidcols): auto-fit / auto-fill による流動的列数
+- [`<FluidCols>`](/docs/modules/l--fluidcols/): auto-fit / auto-fill による流動的列数
 - [`<Grid>`](/docs/modules/l--grid): 汎用の CSS Grid レイアウト */}

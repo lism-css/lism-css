@@ -4,12 +4,12 @@ const { icon = '', ...props } = Astro.props;
 ---
 
 <Text class="c--helpText" fz="s" c="text-2" lh="s" {...props}>
-  {icon && <Icon icon={icon} c="blue" class="u-inlineCenter" />}
+  {icon && <Icon icon={icon} c="blue" class="u--inlineCenter" />}
   <slot />
 </Text>
 
 <style>
-  .u-inlineCenter {
+  .u--inlineCenter {
     /* 基準をmiddleにセット */
     vertical-align: middle;
 

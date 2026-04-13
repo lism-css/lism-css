@@ -34,7 +34,7 @@ In Lism, responsive support is implemented by combining classes in the `.-{prop}
 
 <Preview>
   <PreviewTitle>Responsive example</PreviewTitle>
-  <PreviewArea resize p='15'>
+  <PreviewArea resize p="15">
     <Lism p={[20, 40, 50]} bd>
       <p>Example</p>
     </Lism>
@@ -84,9 +84,9 @@ There are two patterns:
 }
 ```
 
-<p class='-my-s:15'>Only a limited set of properties (`p`,`px`,`py`,`m`,`mx`,`my`,`g`,`fz`,`c`,`bgc`,`bdrs`,`bxsh`) — those where having the value always accessible via a CSS variable is considered useful — use this pattern.</p>
+<p class="-my-s:15">Only a limited set of properties (`p`,`px`,`py`,`m`,`mx`,`my`,`g`,`fz`,`c`,`bgc`,`bdrs`,`bxsh`) — those where having the value always accessible via a CSS variable is considered useful — use this pattern.</p>
 
-<Spacer h='20'></Spacer>
+<Spacer h="20"></Spacer>
 
 <PreviewTitle>Implementation example for pattern 2</PreviewTitle>
 ```css
@@ -112,7 +112,7 @@ Lism adopts **container queries** by default.
 Note that with container queries, a **container element** must be defined on an ancestor element in order to switch values at breakpoints.
 :::
 
-<p class='-my-s:10'>(To define a container element in Lism, `.is--container` is the convenient way to do so.)</p>
+<p class="-my-s:10">(To define a container element in Lism, `.is--container` is the convenient way to do so.)</p>
 
 You can also switch from container queries to media queries by [customizing via SCSS files](/en/docs/customize/).
 
@@ -133,7 +133,7 @@ Standard support covers `sm` and `md` only. Support for `lg` and beyond requires
 :::
 
 
-<Spacer h='20'></Spacer>
+<Spacer h="20"></Spacer>
 
 To use these breakpoints in your own project with `.scss`, you can do so as follows:
 
