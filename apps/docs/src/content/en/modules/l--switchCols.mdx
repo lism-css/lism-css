@@ -1,13 +1,13 @@
 ---
-title: 'SwitchCols (l--switchcols)'
-navtitle: 'l--switchcols'
-description: 'l--switchcols は、複数列と1列の切り替えをコンテナクエリやメディアクエリを使わずに実装するレイアウトモジュールです。'
+title: 'SwitchCols (l--switchCols)'
+navtitle: 'l--switchCols'
+description: 'l--switchCols is a layout module that switches between multi-column and single-column without using container queries or media queries.'
 ---
 
 import { SwitchCols, Box, Frame } from 'lism-css/astro';
 
 
-`l--switchcols` は、**複数列以上↔︎1列への切り替えをコンテナクエリやメディアクエリを使わずに実装する**レイアウトモジュールです。
+`l--switchCols` is a layout module that **switches between multi-column and single-column without using container queries or media queries**.
 
 
 ## CSS
@@ -15,25 +15,25 @@ import { SwitchCols, Box, Frame } from 'lism-css/astro';
 <SrcCode path="src/scss/modules/layout/_switchCols.scss" />
 
 
-## Lismコンポーネント
+## Lism Component
 
 ### Import
 
 <ImportPackage component="SwitchCols" />
 
-### 専用Props
+### Props
 
-| プロパティ | 説明 |
+| Property | Description |
 |---|---|
-| `breakSize` <PropBadge type="cssvar">`--breakSize`</PropBadge> | 横並びを維持するのに必要な幅（親のサイズ）を指定できます。[szトークン](/docs/tokens/#size)の指定ができます。|
+| `breakSize` <PropBadge type="cssvar">`--breakSize`</PropBadge> | Specifies the parent width required to maintain the horizontal layout. Accepts [sz tokens](/en/docs/tokens/#size). |
 
 
 ## Usage
 
-### デフォルト幅で利用する
+### Using with the default width
 
 <Preview>
-  <PreviewTitle>デフォルト幅で利用する例</PreviewTitle>
+  <PreviewTitle>Using with the default width</PreviewTitle>
   <PreviewArea resize p="15">
     <SwitchCols g="20">
       <div class="-bgc:base-2 -p:20">Box</div>
@@ -61,10 +61,11 @@ import { SwitchCols, Box, Frame } from 'lism-css/astro';
   </PreviewCode>
 </Preview>
 
-### breakSizeの指定
+
+### Specifying breakSize
 
 <Preview>
-  <PreviewTitle>breakSizeを指定して利用する例</PreviewTitle>
+  <PreviewTitle>Using with a specified `breakSize`</PreviewTitle>
   <PreviewArea resize p="15">
     <SwitchCols breakSize="s" g="20">
       <div class="-bgc:base-2 -p:20">Box</div>
@@ -92,10 +93,11 @@ import { SwitchCols, Box, Frame } from 'lism-css/astro';
   </PreviewCode>
 </Preview>
 
-### flex-growで比率を調整する
+
+### Adjusting proportions with flex-grow
 
 <Preview>
-  <PreviewTitle>子要素にflex-growを指定して比率を調整する例</PreviewTitle>
+  <PreviewTitle>Adjusting proportions by specifying `flex-grow` on child elements</PreviewTitle>
   <PreviewArea resize p="15">
     <SwitchCols breakSize="s" g="20">
       <div class="-bgc:base-2 -p:20">Box</div>
