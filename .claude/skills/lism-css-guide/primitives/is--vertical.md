@@ -5,7 +5,7 @@
 ## 基本情報
 
 - クラス名: `is--vertical`
-- SCSSソース: https://raw.githubusercontent.com/lism-css/lism-css/main/packages/lism-css/src/scss/modules/trait/_vertical.scss
+- SCSSソース: https://raw.githubusercontent.com/lism-css/lism-css/main/packages/lism-css/src/scss/primitives/trait/_vertical.scss
 - ドキュメント（人間向け）: https://lism-css.com/docs/primitives/is--vertical/
 
 ## クラスバリエーション

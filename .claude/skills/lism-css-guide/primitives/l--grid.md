@@ -6,7 +6,7 @@
 
 - クラス名: `l--grid`
 - コンポーネント: `<Grid>`
-- SCSSソース: https://raw.githubusercontent.com/lism-css/lism-css/main/packages/lism-css/src/scss/modules/layout/_grid.scss
+- SCSSソース: https://raw.githubusercontent.com/lism-css/lism-css/main/packages/lism-css/src/scss/primitives/layout/_grid.scss
 - ドキュメント（人間向け）: https://lism-css.com/docs/primitives/l--grid/
 
 ## Usage

@@ -6,7 +6,7 @@
 
 - クラス名: `l--flex`
 - コンポーネント: `<Flex>`
-- SCSSソース: https://raw.githubusercontent.com/lism-css/lism-css/main/packages/lism-css/src/scss/modules/layout/_flex.scss
+- SCSSソース: https://raw.githubusercontent.com/lism-css/lism-css/main/packages/lism-css/src/scss/primitives/layout/_flex.scss
 - ドキュメント（人間向け）: https://lism-css.com/docs/primitives/l--flex/
 
 ## Usage

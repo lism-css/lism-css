@@ -6,7 +6,7 @@
 
 - クラス名: `l--flow`
 - コンポーネント: `<Flow>`
-- SCSSソース: https://raw.githubusercontent.com/lism-css/lism-css/main/packages/lism-css/src/scss/modules/layout/_flow.scss
+- SCSSソース: https://raw.githubusercontent.com/lism-css/lism-css/main/packages/lism-css/src/scss/primitives/layout/_flow.scss
 - ドキュメント（人間向け）: https://lism-css.com/docs/primitives/l--flow/
 
 ## 余白の仕組み
