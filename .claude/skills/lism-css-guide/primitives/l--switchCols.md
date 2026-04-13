@@ -7,7 +7,7 @@
 - クラス名: `l--switchCols`
 - コンポーネント: `<SwitchCols>`
 - SCSSソース: https://raw.githubusercontent.com/lism-css/lism-css/main/packages/lism-css/src/scss/primitives/layout/_switchCols.scss
-- ドキュメント（人間向け）: https://lism-css.com/docs/primitives/l--switchcols/
+- ドキュメント（人間向け）: https://lism-css.com/docs/primitives/l--switchCols/
 
 ## 専用Props
 

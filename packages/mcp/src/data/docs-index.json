@@ -4,18 +4,18 @@
     "title": "概要",
     "description": "Lism CSS の概要と特徴について解説します。",
     "category": "guide",
-    "headings": ["Lism CSS の特徴", "Inspirations"],
+    "headings": ["Why Lism CSS?", "ゼロビルドでどんな環境でも使えます。", "Lism CSS のエコシステム", "Inspirations"],
     "keywords": ["overview", "概要", "特徴", "レイアウトファースト", "ゼロビルド", "コンテナクエリ", "Every Layout", "framework"],
-    "snippet": "Lism CSS は、WEBサイトの骨組みをテンポ良くサクっと作るための軽量なCSSフレームワークです。レイアウトファーストなモジュール設計とCSS変数を組み合わせたレスポンシブなユーティリティ設計が特徴です。"
+    "snippet": "Lism CSS は、WEBサイトの骨組みをテンポ良く美しく作るための軽量なCSS設計フレームワーク。CSS設計不要でCDNから1行で導入可能。React/Astro向け専用コンポーネントも提供。エコシステムとして @lism-css/ui、@lism-css/cli、@lism-css/mcp も用意。"
   },
   {
     "sourcePath": "installation.mdx",
     "title": "インストール",
     "description": "Lism CSS のインストール方法と基本的な使い方を解説します。",
     "category": "guide",
-    "headings": ["CSS設計のみを導入したい場合", "専用のコンポーネントを使用したい場合", "AIツール連携 (MCP)"],
+    "headings": ["CSS設計のみを導入したい場合", "Lism専用のJSXコンポーネントを使用したい場合", "Lism UI の導入", "AIツール連携"],
     "keywords": ["install", "インストール", "CDN", "npm", "setup", "セットアップ", "導入", "MCP", "AI"],
-    "snippet": "CSSを読み込むだけでも導入でき、CDN経由でも利用可能。npm パッケージとしてインストールし、lism-css/react や lism-css/astro からコンポーネントをインポートして使用。AIコーディングツール向けのMCPサーバーも提供。"
+    "snippet": "CSSを読み込むだけでも導入でき、CDN経由でも利用可能。npm パッケージとしてインストールし、lism-css/react や lism-css/astro からコンポーネントをインポートして使用。UIコンポーネントは別パッケージ @lism-css/ui として提供。AIコーディングツール向けのSkills・MCPサーバーも提供。"
   },
   {
     "sourcePath": "css-methodology.mdx",
@@ -39,16 +39,16 @@
       "省略",
       "Emmet"
     ],
-    "snippet": "CSSの階層構造を明確に定義。@layer lism-base → lism-primitives → lism-components → lism-custom → lism-utility の順。lism-primitives は trait/layout/atomic のサブレイヤーを持ち、lism-components は BEM 構造の c-- 用、lism-custom はユーザー独自プレフィックスのクラス用レイヤー。Primitive Class (.l--name, .a--name, .is--name 等)、Component Class (.c--name)、Property Class (.-prop:value)、Set Class (.set--name) の命名規則を説明。"
+    "snippet": "CSSの階層構造を明確に定義。@layer lism-base → lism-primitive → lism-component → lism-custom → lism-utility の順。lism-primitive は trait/layout/atomic のサブレイヤーを持ち、lism-component は BEM 構造の c-- 用、lism-custom はユーザー独自プレフィックスのクラス用レイヤー。Primitive Class (.l--name, .a--name, .is--name 等)、Component Class (.c--name)、Property Class (.-prop:value)、Set Class (.set--name) の命名規則を説明。"
   },
   {
     "sourcePath": "tokens.mdx",
-    "title": "Design Tokens",
-    "description": "Lism CSS で定義されているデザイントークンの概要ページ。RADIUS, SHADOW, OPACITY, SIZE トークンと、カラー・タイポグラフィ・スペーシングの各サブページへのリンク。",
+    "title": "デザイントークン",
+    "description": "Lism CSS で定義されているカラー、スペーシング、シャドウなどのデザイントークン一覧を紹介します。",
     "category": "guide",
-    "headings": ["RADIUS", "SHADOW", "OPACITY", "SIZE"],
-    "keywords": ["token", "トークン", "design token", "shadow", "radius", "opacity", "size"],
-    "snippet": "デザイントークンの概要。RADIUS, SHADOW, OPACITY, SIZE トークンを掲載。カラー・タイポグラフィ・スペーシングは個別ページで詳細を解説。"
+    "headings": ["COLOR", "Typography", "SPACE", "RADIUS", "SHADOW", "OPACITY", "SIZE"],
+    "keywords": ["token", "トークン", "design token", "shadow", "radius", "opacity", "size", "color", "spacing", "typography"],
+    "snippet": "デザイントークンの一覧ページ。COLOR, Typography, SPACE, RADIUS, SHADOW, OPACITY, SIZE トークンを掲載。カラー・タイポグラフィ・スペーシングは個別ページでも詳細を解説。"
   },
   {
     "sourcePath": "tokens/colors.mdx",
@@ -64,7 +64,7 @@
     "title": "タイポグラフィトークン",
     "description": "Lism CSS で使用するフォントファミリー、フォントサイズ、行間などのタイポグラフィ関連のデザイントークンについて解説します。",
     "category": "guide",
-    "headings": ["FF: font-family", "FW: font-weight", "FZ: font-size", "LTS: letter-spacing"],
+    "headings": ["FF: font-family", "FW : font-weight", "FZ: font-size", "LH: line-height", "LTS: letter-spacing"],
     "keywords": ["typography", "タイポグラフィ", "font", "文字", "テキスト", "heading", "font-size"],
     "snippet": "フォントサイズ（調和数列ベース）、文字間隔などのタイポグラフィ設計を解説。フォントサイズのスケーリング規則を紹介。"
   },
@@ -73,9 +73,9 @@
     "title": "ハーフレディング（line-height）",
     "description": "Lism CSS のハーフレディングによる line-height 管理の仕組みと、関連するデザイントークンについて解説します。",
     "category": "guide",
-    "headings": ["トークン", "ハーフレディング管理のメリット"],
+    "headings": ["仕組み", "トークン", "lh クラス", "ハーフレディング管理のメリット"],
     "keywords": ["line-height", "half-leading", "ハーフレディング", "行間", "lh", "--hl"],
-    "snippet": "line-heightをハーフレディング（文字上下の余白）で管理する仕組み。--hl変数によりフォントサイズに依存しない一定の行間を実現。トークン（xs/s/base/l）とlhクラスの使い方を解説。"
+    "snippet": "line-heightをハーフレディング（文字上下の余白）で管理する仕組み。`calc(1em + var(--hl) * 2)` によりフォントサイズに依存しない一定の行間を実現。--hl--xs/s/base/l のトークンと -lh:{token} クラスの使い方を解説。"
   },
   {
     "sourcePath": "tokens/spacing.mdx",
@@ -101,6 +101,7 @@
       "Positions",
       "Layouts",
       "Styling",
+      "Background",
       "Other CSS"
     ],
     "keywords": [
@@ -110,6 +111,8 @@
       "クラス",
       "CSS property",
       "g",
+      "cg",
+      "rg",
       "p",
       "m",
       "fz",
@@ -186,7 +189,7 @@
   },
   {
     "sourcePath": "utility-class.mdx",
-    "title": "Utilitiy Class",
+    "title": "Utility Class",
     "description": "スタイルや装飾をまとめて適用できる Lism CSS のユーティリティクラスについて解説します。",
     "category": "guide",
     "headings": ["u--cbox", "u--trim & u--trimChildren", "u--srOnly", "u--collapseGrid", "u--snap", "u--clipText", "Opt-in"],
@@ -209,14 +212,14 @@
     "category": "guide",
     "headings": ["Trait Primitives", "Layout Primitives", "Atomic Primitives"],
     "keywords": ["primitive", "プリミティブ", "trait", "layout", "レイアウト", "class", "BEM", "is--vertical"],
-    "snippet": "レイアウトを組み立てる積み木として Primitive クラスを定義。.l--{name}, .a--{name}, .is--{name} 等の命名規則。Trait Primitives (is--container, is--wrapper, is--layer, is--boxLink, is--vertical) も解説。BEM 構造を持つ Component Class (.c--{name}) は別レイヤー（lism-components）に配置される。"
+    "snippet": "レイアウトを組み立てる積み木として Primitive クラスを定義。.l--{name}, .a--{name}, .is--{name} 等の命名規則。Trait Primitives (is--container, is--wrapper, is--layer, is--boxLink, is--vertical) も解説。BEM 構造を持つ Component Class (.c--{name}) は別レイヤー（lism-component）に配置される。"
   },
   {
     "sourcePath": "base-styles.mdx",
     "title": "Base Styles",
     "description": "@lism-base レイヤーで定義される Reset CSS やHTML要素のベーススタイルについて解説します。",
     "category": "guide",
-    "headings": ["Reset CSS", "Base styles"],
+    "headings": ["Reset CSS", "Base styles", "HTML基本スタイルのプレビュー"],
     "keywords": ["html", "base", "ベース", "スタイル", "要素", "reset"],
     "snippet": "Lism CSS がHTML要素に対して適用するベーススタイルについて解説。Reset CSSと@lism-baseレイヤーで定義されるベーススタイルを紹介。"
   },
@@ -262,9 +265,9 @@
     "title": "-hov",
     "description": "hover時の挙動をコントロールする -hov プロパティクラスの使い方について解説します。",
     "category": "props",
-    "headings": ["基本的な使い方", "`.set--hov` と特殊変数"],
+    "headings": ["基本的な使い方", "`.set--hov` と `-hov:to:xxx`"],
     "keywords": ["hover", "ホバー", "hov", "インタラクション", "animation", "set--hov", "set--transition", "transition"],
-    "snippet": "ホバー関連のProp。hov を使ったホバーエフェクトの設定方法。set--hovとset--transitionの活用、子要素へのホバー状態伝播を解説。"
+    "snippet": "ホバー関連のProp。-hov:{prop} クラスでホバーエフェクトを設定。set--transition との組み合わせでアニメーション実現。set--hov と -hov:to:xxx クラスで親要素ホバー時の子要素スタイル制御も可能。"
   },
   {
     "sourcePath": "props/max-sz.mdx",
@@ -280,7 +283,7 @@
     "title": "Lism",
     "description": "LismのCSS設計に対応した様々なプロパティを受け取ることができる汎用的なコンポーネントです。",
     "category": "core-components",
-    "headings": ["Import", "Lism Props", "補足"],
+    "headings": ["Import", "Lism Props"],
     "keywords": ["Lism", "core", "コア", "基盤", "コンポーネント", "lismClass", "variant", "layout", "as", "exProps"],
     "snippet": "全コンポーネントの基盤。Props システムによる CSS クラス・スタイルの自動変換を提供。as prop で出力要素や外部コンポーネントを指定可能。レスポンシブ指定は配列またはオブジェクト形式で対応。"
   },

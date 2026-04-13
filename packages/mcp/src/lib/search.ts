@@ -105,9 +105,25 @@ export function searchDocs(entries: DocsEntry[], query: string, options?: Search
 
   return scored.map(({ entry, score }) => ({
     sourcePath: entry.sourcePath,
-    url: `${DOCS_BASE_URL}/${entry.sourcePath.replace(/\.mdx$/, '')}/`,
+    url: `${DOCS_BASE_URL}/${sourcePathToUrlSlug(entry.sourcePath)}/`,
     heading: entry.title,
     snippet: entry.snippet,
     score,
   }));
+}
+
+/**
+ * `sourcePath`（実 MDX ファイルの相対パス）を公開 URL のスラッグに変換する。
+ *
+ * - `primitives/` 配下のみファイル名の casing を保持（CSS クラス名と URL を一致させるための例外）
+ * - それ以外は全て小文字化（Astro content collections の `generateId` と揃える）
+ *
+ * 例:
+ *   `primitives/l--tileGrid.mdx`   → `primitives/l--tileGrid`
+ *   `core-components/Group.mdx`    → `core-components/group`
+ *   `ui/DummyImage.mdx`            → `ui/dummyimage`
+ */
+function sourcePathToUrlSlug(sourcePath: string): string {
+  const withoutExt = sourcePath.replace(/\.mdx$/, '');
+  return withoutExt.startsWith('primitives/') ? withoutExt : withoutExt.toLowerCase();
 }

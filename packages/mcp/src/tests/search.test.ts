@@ -70,6 +70,28 @@ describe('searchDocs', () => {
     expect(results[0].url).toBe('https://lism-css.com/docs/box/');
   });
 
+  it('primitives/ 配下の sourcePath はファイル名の casing を保持して URL に反映される', () => {
+    const camelEntries: DocsEntry[] = [
+      entry({ sourcePath: 'primitives/l--tileGrid.mdx', title: 'TileGrid', keywords: ['grid'] }),
+      entry({ sourcePath: 'primitives/is--boxLink.mdx', title: 'BoxLink', keywords: ['link'] }),
+    ];
+    const tileResult = searchDocs(camelEntries, 'TileGrid');
+    expect(tileResult[0].url).toBe('https://lism-css.com/docs/primitives/l--tileGrid/');
+    const boxResult = searchDocs(camelEntries, 'BoxLink');
+    expect(boxResult[0].url).toBe('https://lism-css.com/docs/primitives/is--boxLink/');
+  });
+
+  it('primitives/ 以外の sourcePath はファイル名の casing を維持しつつ URL は小文字化される', () => {
+    const mixedCaseEntries: DocsEntry[] = [
+      entry({ sourcePath: 'core-components/Group.mdx', title: 'Group', keywords: ['layout'] }),
+      entry({ sourcePath: 'ui/DummyImage.mdx', title: 'DummyImage', keywords: ['media'] }),
+      entry({ sourcePath: 'ui/examples/Card.mdx', title: 'Card', keywords: ['example'] }),
+    ];
+    expect(searchDocs(mixedCaseEntries, 'Group')[0].url).toBe('https://lism-css.com/docs/core-components/group/');
+    expect(searchDocs(mixedCaseEntries, 'DummyImage')[0].url).toBe('https://lism-css.com/docs/ui/dummyimage/');
+    expect(searchDocs(mixedCaseEntries, 'Card')[0].url).toBe('https://lism-css.com/docs/ui/examples/card/');
+  });
+
   it('マッチしない場合は空配列を返す', () => {
     expect(searchDocs(entries, 'nonexistent')).toEqual([]);
   });
