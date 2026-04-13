@@ -108,9 +108,9 @@ describe('LismPropsBase — set / util', () => {
       assertType<LismPropsBase>({ set: 'custom-value' });
     });
 
-    it('配列は受け付けない', () => {
-      // @ts-expect-error - 配列形式は廃止
+    it('文字列配列も受け付ける（内部 API 用途）', () => {
       assertType<LismPropsBase>({ set: ['hov', 'transition'] });
+      assertType<LismPropsBase>({ set: ['gutter', 'custom-value'] });
     });
 
     it('undefined / 省略可', () => {
@@ -142,8 +142,7 @@ describe('LismPropsBase — set / util', () => {
       assertType<LismPropsBase>({ util: 'custom-util' });
     });
 
-    it('配列は受け付けない', () => {
-      // @ts-expect-error - 配列形式は受け付けない
+    it('文字列配列も受け付ける（内部 API 用途）', () => {
       assertType<LismPropsBase>({ util: ['cbox', 'trim'] });
     });
 

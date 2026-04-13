@@ -17,7 +17,7 @@ export function getTabProps({ set, ...props }: Record<string, unknown>) {
   return {
     as: 'button',
     lismClass: 'c--tabs_tab',
-    set: mergeSet('plain', set).join(' '),
+    set: mergeSet('plain', set),
     ...props,
   };
 }

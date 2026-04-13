@@ -19,7 +19,7 @@ export type ModalInnerProps = {
 export function getProps({ lismClass = '', set, duration, style = {}, ...props }: ModalRootProps) {
   const theProps = {
     lismClass: atts(lismClass, 'c--modal'),
-    set: mergeSet('plain', set).join(' '),
+    set: mergeSet('plain', set),
   };
   if (duration) {
     style['--duration'] = duration;
@@ -42,7 +42,7 @@ export function getInnerProps({ lismClass = '', offset, style = {}, ...props }: 
 export function getOpenBtnProps({ set, ...props }: Record<string, unknown>) {
   return {
     as: 'button',
-    set: mergeSet('plain', set).join(' '),
+    set: mergeSet('plain', set),
     hov: 'o',
     d: 'inline-flex',
     ...props,
@@ -52,7 +52,7 @@ export function getOpenBtnProps({ set, ...props }: Record<string, unknown>) {
 export function getCloseBtnProps({ set, ...props }: Record<string, unknown>) {
   return {
     as: 'button',
-    set: mergeSet('plain', set).join(' '),
+    set: mergeSet('plain', set),
     hov: 'o',
     d: 'inline-flex',
     ...props,

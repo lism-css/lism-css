@@ -49,8 +49,10 @@ type SetPreset = 'gutter' | 'shadow' | 'hov' | 'transition' | 'mask' | 'plain' |
  *
  * - 値はスペース区切りで複数指定可能
  * - 先頭に `-` を付けると、その識別子を除外する（例: `set="card -bd"`）
+ * - 文字列配列も受け付けるが、これは内部 API 用途（lism-ui など）であり、
+ *   ユーザー向けドキュメントでは紹介していない
  */
-export type SetPropValue = WithArbitraryString<SetPreset>;
+export type SetPropValue = WithArbitraryString<SetPreset> | WithArbitraryString<SetPreset>[];
 
 /** util prop で使われるプリセット値（既知の `u--` クラス名・エディタ補完用） */
 type UtilPreset = 'cbox' | 'trim' | 'trimChildren' | 'srOnly' | 'clipText' | 'collapseGrid' | 'snap';
@@ -60,5 +62,7 @@ type UtilPreset = 'cbox' | 'trim' | 'trimChildren' | 'srOnly' | 'clipText' | 'co
  *
  * - 値はスペース区切りで複数指定可能
  * - 先頭に `-` を付けると、その識別子を除外する（例: `util="cbox -trim"`）
+ * - 文字列配列も受け付けるが、これは内部 API 用途であり、
+ *   ユーザー向けドキュメントでは紹介していない
  */
-export type UtilPropValue = WithArbitraryString<UtilPreset>;
+export type UtilPropValue = WithArbitraryString<UtilPreset> | WithArbitraryString<UtilPreset>[];

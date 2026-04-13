@@ -3,10 +3,15 @@
  * 値内の `-` prefix は除外マーカーとして扱われ、その識別子は base + value から除外される。
  *
  * `set` / `util` のいずれの prop でも共用できる汎用処理。
+ *
+ * 入力は文字列（スペース区切り）だけでなく、内部 API 用途として文字列配列も受け付ける。
+ * ユーザー向けドキュメントでは配列形式は紹介していない。
  */
 
 function normalize(value: unknown): string[] {
-  if (!value || typeof value !== 'string') return [];
+  if (!value) return [];
+  if (Array.isArray(value)) return value.flatMap((item) => normalize(item));
+  if (typeof value !== 'string') return [];
   return value
     .split(/\s+/)
     .map((s) => s.trim())

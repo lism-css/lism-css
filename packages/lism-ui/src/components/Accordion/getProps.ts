@@ -42,7 +42,7 @@ export function getHeadingProps({ as = 'div', role, lismClass, set, ...props }: 
   const returnProps = {
     lismClass: atts(lismClass, 'c--accordion_heading'),
     as,
-    set: mergeSet('plain', set).join(' '),
+    set: mergeSet('plain', set),
     ...props,
   };
 
@@ -57,7 +57,7 @@ export function getButtonProps({ set, ...props }: Record<string, unknown>) {
     lismClass: 'c--accordion_button',
     as: 'button',
     layout: 'flex',
-    set: mergeSet('plain', set).join(' '),
+    set: mergeSet('plain', set),
     g: '10',
     w: '100%',
     ai: 'center',

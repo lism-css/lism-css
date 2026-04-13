@@ -20,7 +20,7 @@ export function getTitleProps({ set, ...props }: Record<string, unknown>) {
     lismClass: 'c--details_title',
     as: 'span',
     fx: '1',
-    set: mergeSet('plain', set).join(' '),
+    set: mergeSet('plain', set),
     ...props,
   };
 }
