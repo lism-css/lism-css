@@ -149,7 +149,7 @@ export class LismPropsData {
   }
 
   analyzeState(statePropData: StatePropDataObject, propVal: unknown): void {
-    // isWrapper などの特別な処理が必要なレイアウトステート
+    // isWrapper などの特別な処理が必要なレイアウトトレイト
     const { className, preset, presetClass, customVar, tokenKey } = statePropData;
     if (propVal === true) {
       this.lismState.push(className);

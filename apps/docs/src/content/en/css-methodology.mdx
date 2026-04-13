@@ -24,18 +24,6 @@ This page explains the CSS design principles behind Lism.
 
 To address the common problem of CSS specificity becoming overly complex, Lism defines a clear layer structure.
 
-{/*
-|Layer|Role|Max Specificity|
-|---|---|---|
-|Settings|SASS configuration variables, mixins, etc. — nothing that outputs styles directly.||
-|Base|Token definitions, Reset CSS, and base styles for HTML elements.|0-0-1|
-|State|Highly versatile classes that can be toggled across many modules.|0-1-0|
-|Layout|Classes that serve as layout building blocks.|0-1-0|
-|Element|Classes with the smallest role as a design element.|0-1-0|
-|Component|Other components with more specific roles.|0-1-0|
-|Props|Classes tied to individual CSS properties.|0-1-0 !|
-|Utility|Other exceptional utility classes.|| */}
-
 <table className="l--table">
   <thead>
     <tr>

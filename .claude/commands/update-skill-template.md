@@ -41,7 +41,7 @@
     - SCSSソース: `https://raw.githubusercontent.com/lism-css/lism-css/main/packages/lism-css/src/scss/modules/{layout|trait|atomic}/_{name}.scss`
         - **SCSS ファイルが存在する Primitive のみ記載する**。`l--box` や `a--decorator` のように `packages/lism-css/src/scss/modules/` 配下に対応する `_{name}.scss` を持たない Primitive では、この行自体を省略する
     - ドキュメント（人間向け）: `https://lism-css.com/docs/primitives/{lowercase}/` — `{lowercase}` はクラス名の小文字版（例: `l--sideMain.md` → `l--sidemain`）
-- `## 専用Props`（該当モジュールのみ）
+- `## 専用Props`（該当プリミティブのみ）
 - `## Usage`（JSX + HTML コードブロックのペアで記載。MDX の `<Preview>` / `<PreviewArea>` / `<PreviewCode>` / `<SrcCode>` 等のカスタムコンポーネントは廃棄）
 - 必要に応じて追加セクション（HTML 構造、動作の仕組み、特殊仕様、Opt-in スタイル、注意点 など）
 - `## 関連プリミティブ`（3〜4個に絞る）

@@ -25,13 +25,13 @@ describe('StateProps', () => {
     });
   });
 
-  describe('文字列形式のステートは boolean を受け入れる', () => {
+  describe('文字列形式のトレイトは boolean を受け入れる', () => {
     it('isContainer', () => {
       assertType<StateProps>({ isContainer: true });
       assertType<StateProps>({ isContainer: false });
     });
 
-    it('その他のステート', () => {
+    it('その他のトレイト', () => {
       assertType<StateProps>({ isLayer: true });
       assertType<StateProps>({ isBoxLink: true });
       assertType<StateProps>({ isCoverLink: true });
@@ -41,7 +41,7 @@ describe('StateProps', () => {
     });
   });
 
-  describe('プリセット値を持つステートは、プリセット値・string・boolean を受け入れる', () => {
+  describe('プリセット値を持つトレイトは、プリセット値・string・boolean を受け入れる', () => {
     it('isWrapper - プリセット値を受け入れる', () => {
       assertType<StateProps>({ isWrapper: 's' });
       assertType<StateProps>({ isWrapper: 'l' });
@@ -62,8 +62,8 @@ describe('StateProps', () => {
     });
   });
 
-  describe('複数のステートを同時に指定できる', () => {
-    it('複数のステートを指定', () => {
+  describe('複数のトレイトを同時に指定できる', () => {
+    it('複数のトレイトを指定', () => {
       assertType<StateProps>({
         isContainer: true,
         isWrapper: 's',

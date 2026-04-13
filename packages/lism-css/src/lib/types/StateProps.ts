@@ -35,7 +35,7 @@ type ExtractStateValue<T> = T extends string
 
 /**
  * config/index.ts の STATES から自動生成される State Props の型
- * config/index.ts の STATES に新しいステートを追加すると自動的に反映される
+ * config/index.ts の STATES に新しいトレイトを追加すると自動的に反映される
  */
 export type StateProps = {
   [K in keyof StatesConfig]?: ExtractStateValue<StatesConfig[K]>;
