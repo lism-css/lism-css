@@ -1,15 +1,12 @@
 ---
 import type { HTMLTag, Polymorphic } from 'astro/types';
-import type { DecoratorProps } from 'lism-css/react/atomic/Decorator/getProps';
+import type { AstroLismFixedLayoutProps } from '../../types';
+import type { DecoratorOwnProps } from 'lism-css/react/atomic/Decorator/Decorator';
 import { Lism } from '../../Lism';
-import getProps from 'lism-css/react/atomic/Decorator/getProps';
 
-type Props<Tag extends HTMLTag = 'div'> = Polymorphic<{ as: Tag }> &
-  DecoratorProps & {
-    exProps?: Record<string, unknown>;
-  };
+type Props<Tag extends HTMLTag = 'div'> = Polymorphic<{ as: Tag }> & AstroLismFixedLayoutProps & DecoratorOwnProps;
 
 const { as: Tag = 'div', exProps, ...props } = Astro.props;
 ---
 
-<Lism as={Tag} {...getProps(props)} {...exProps}><slot /></Lism>
+<Lism as={Tag} atomic="decorator" aria-hidden="true" {...props} {...exProps}><slot /></Lism>

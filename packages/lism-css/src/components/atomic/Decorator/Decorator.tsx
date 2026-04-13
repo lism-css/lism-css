@@ -1,7 +1,15 @@
-// import React from 'react';
 import { Lism } from '../../Lism';
-import getProps, { type DecoratorProps } from './getProps';
+import type { LismComponentProps } from '../../Lism/Lism';
+import type { CssValue } from '../../../lib/types/LayoutProps';
+
+export interface DecoratorOwnProps {
+  size?: CssValue;
+  clipPath?: string;
+  boxSizing?: string;
+}
+
+export type DecoratorProps = LismComponentProps & DecoratorOwnProps;
 
 export default function Decorator(props: DecoratorProps) {
-  return <Lism {...getProps(props)} />;
+  return <Lism atomic="decorator" aria-hidden="true" {...props} />;
 }

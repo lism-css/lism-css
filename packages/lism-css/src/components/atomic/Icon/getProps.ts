@@ -1,5 +1,4 @@
 import presets from './presets';
-import atts from '../../../lib/helper/atts';
 import type { LismProps } from '../../../lib/getLismProps';
 import type { ElementType, CSSProperties } from 'react';
 
@@ -109,7 +108,9 @@ export default function getProps({ lismClass, as, icon, label, exProps = {}, ...
 
         // class, styleは切り分ける. fill は除去（<SVG> で currentColorセット
         const { class: svgClass, style: svgStyle, ...svgAttrs } = svgProps;
-        className = atts(className, svgClass as string | undefined);
+        if (svgClass) {
+          className = className ? `${className} ${svgClass as string}` : (svgClass as string);
+        }
         style = { ...style, ...(svgStyle as CSSProperties) };
 
         // 属性とコンテンツ
@@ -140,7 +141,11 @@ export default function getProps({ lismClass, as, icon, label, exProps = {}, ...
     exProps['aria-hidden'] = 'true';
   }
 
-  _rest.lismClass = atts(lismClass, 'a--icon', className);
+  // c-- は lismClass を素通し、a--icon は atomic prop 経由で付与する。
+  // SVG パース由来の className はユーザー className と同じ扱いで Lism に渡す。
+  _rest.lismClass = lismClass;
+  _rest.atomic = 'icon';
+  if (className) _rest.className = className;
   _rest.style = { ...style };
 
   return { Component, lismProps: _rest, exProps, content };
