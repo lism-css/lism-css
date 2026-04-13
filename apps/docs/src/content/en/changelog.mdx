@@ -9,17 +9,26 @@ Breaking changes may continue frequently until the v1.0 release, so all notable 
 
 <Divider bds="dashed" my="40" />
 
-## v.0.13.0 (unreleased)
+## v.0.13.0 (2026.04.14)
 
-**Breaking changes**: Renamed the "State" identifiers in the Props system to "Trait" for consistency.
+This release contains **breaking changes**.
 
-- Type `StateProps` → `TraitProps`
-- Constant `STATES` → `TRAITS`
-- `lism.config.js` config key `states` → `traits`
-- Documentation: `State Props` → `Trait Props`
-- File rename: `config/defaults/states.ts` → `config/defaults/traits.ts`
-
-Note: Prop names such as `isContainer` / `isWrapper` and the emitted `is--*` class names are unchanged. Migration is only required if you currently use the `states:` key in `lism.config.js`, the `StateProps` type, or the `STATES` constant.
+- Added `util` prop; unified `set` / `util` as strings with `-` prefix for exclusion
+- Renamed `is--linkBox` → `is--boxLink`
+- Renamed `u--expandedLink` → `is--coverLink`
+- Removed `Container`'s `size` prop in favor of `isWrapper`
+- Renamed concept `Module` → `Primitive`
+  - CSS layer `lism-modules` → `lism-primitive`
+  - SCSS directory `src/scss/modules` → `src/scss/primitives`
+- Added new CSS layer `lism-component`
+- Renamed `State` identifiers in the Props system to `Trait`:
+  - Type `StateProps` → `TraitProps`
+  - Constant `STATES` → `TRAITS`
+  - `lism.config.js` key `states` → `traits`
+  - File `config/defaults/states.ts` → `config/defaults/traits.ts`
+  - Note: Prop names such as `isContainer` / `isWrapper` and `is--*` class names are unchanged
+- Unified BEM element notation for `c--` components to single `_`
+- Reorganized class output order (moved `set--` / `u--` before property classes)
 
 ## `@lism-css/ui` v.0.12.0 (2026.04.10)
 

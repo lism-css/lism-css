@@ -9,17 +9,26 @@ v.1.0リリースまでしばらく激しい変更が続く可能性があるた
 
 <Divider bds="dashed" my="40" />
 
-## v.0.13.0 (unreleased)
+## v.0.13.0 (2026.04.14)
 
-**破壊的変更**: Props システムの「State」系識別子を「Trait」に統一しました。
+**破壊的変更**を含むリリースです。
 
-- 型 `StateProps` → `TraitProps` にリネーム
-- 定数 `STATES` → `TRAITS` にリネーム
-- `lism.config.js` の設定キー `states` → `traits` にリネーム
-- ドキュメント表記 `State Props` → `Trait Props` に統一
-- 参照ファイル `config/defaults/states.ts` → `config/defaults/traits.ts` にリネーム
-
-※ `isContainer`, `isWrapper` 等の props 名や `is--*` クラス名は変更ありません。ユーザー側で `lism.config.js` の `states:` キー・`StateProps` 型・`STATES` 定数を利用している場合のみマイグレーションが必要です。
+- `util` prop を追加し、`set` / `util` を string に統一。`-` prefix で除外する仕様に変更
+- `is--linkBox` を `is--boxLink` にリネーム
+- `u--expandedLink` を `is--coverLink` にリネーム
+- `Container` の `size` プロパティを廃止し、`isWrapper` に統一
+- 概念名 `Module` → `Primitive` にリネーム
+  - CSS レイヤー `lism-modules` → `lism-primitive`
+  - SCSS ディレクトリ `src/scss/modules` → `src/scss/primitives`
+- 新規 CSS レイヤー `lism-component` を追加
+- Props システムの `State` 系識別子を `Trait` に統一リネーム
+  - 型 `StateProps` → `TraitProps`
+  - 定数 `STATES` → `TRAITS`
+  - `lism.config.js` の設定キー `states` → `traits`
+  - 参照ファイル `config/defaults/states.ts` → `config/defaults/traits.ts`
+  - ※ `isContainer`, `isWrapper` 等の props 名や `is--*` クラス名は変更なし
+- `c--` コンポーネントの BEM element 記法を単一 `_` に統一
+- クラス出力順を整理（`set--` / `u--` を property class より前に移動）
 
 ## `@lism-css/ui` v.0.12.0 (2026.04.10)
 
