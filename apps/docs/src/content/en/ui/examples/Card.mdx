@@ -3,7 +3,7 @@ title: 'Card'
 description: 'Example implementation of card-style content layouts using Lism CSS.'
 ---
 
-import { Box, Flex, Stack, Center, Grid, Frame, LinkBox, Layer, Columns, Media, SideMain, Group, Inline, Link, Text } from 'lism-css/astro';
+import { Box, Flex, Stack, Center, Grid, Frame, BoxLink, Layer, Columns, Media, SideMain, Group, Inline, Link, Text } from 'lism-css/astro';
 import { DummyText } from '@lism-css/ui/astro';
 import Card from '@/components/ex/Card/index.jsx';
 
@@ -13,7 +13,7 @@ Examples of creating card-style content layouts.
 
 export const ExampleCard = (props) => {
   return(
-    <SideMain isLinkBox href='###' hov='bxsh' set="transition" sideW='50%' bgc='base' bdrs='20' bxsh='10' ov='hidden' {...props}>
+    <SideMain isBoxLink href='###' hov='bxsh' set="transition" sideW='50%' bgc='base' bdrs='20' bxsh='10' ov='hidden' {...props}>
       <Frame isSide ar='16/9' >
         <Media src='https://cdn.lism-css.com/img/a-1.jpg' alt='' width='960' height='640' />
       </Frame>
@@ -47,12 +47,12 @@ export const ExampleImgCard = (props) => {
 
 By building with [`SideMain`](/en/docs/modules/l--sidemain/), the layout automatically switches to vertical when the display area becomes narrow.
 
-Additionally, [`is--linkBox`](/en/docs/modules/is--linkBox/) is applied to make the entire card content a link.
+Additionally, [`is--boxLink`](/en/docs/modules/is--boxLink/) is applied to make the entire card content a link.
 
 <Preview>
   <PreviewTitle>Preview</PreviewTitle>
   <PreviewArea bg=':stripe' resize p='30'>
-    <SideMain isLinkBox href="###" hov="bxsh" set="transition" sideW="50%" bgc="base" bdrs="20" bxsh="10" ov="hidden">
+    <SideMain isBoxLink href="###" hov="bxsh" set="transition" sideW="50%" bgc="base" bdrs="20" bxsh="10" ov="hidden">
       <Frame isSide ar="16/9">
         <Media src="https://cdn.lism-css.com/img/a-1.jpg" alt="" width="960" height="640" />
       </Frame>
@@ -64,8 +64,8 @@ Additionally, [`is--linkBox`](/en/docs/modules/is--linkBox/) is applied to make 
     </SideMain>
   </PreviewArea>
   <PreviewCode slot='tab' label='JSX'>
-    ```jsx "SideMain" 'as="a" isLinkBox'
-    <SideMain isLinkBox href="###" hov="bxsh" set="transition" sideW="50%" bgc="base" bdrs="20" bxsh="10" ov="hidden">
+    ```jsx "SideMain" 'as="a" isBoxLink'
+    <SideMain isBoxLink href="###" hov="bxsh" set="transition" sideW="50%" bgc="base" bdrs="20" bxsh="10" ov="hidden">
       <Frame isSide ar="16/9">
         <Media src="https://cdn.lism-css.com/img/a-1.jpg" alt="" width="960" height="640" />
       </Frame>
@@ -86,19 +86,19 @@ Additionally, [`is--linkBox`](/en/docs/modules/is--linkBox/) is applied to make 
 
 ### Placing an additional link inside the card
 
-When you want to make the entire card a link while also including a separate link inside, use [`u--expandedLink`](/en/docs/utility-class/#u-expandedlink).
+When you want to make the entire card a link while also including a separate link inside, use [`is--coverLink`](/en/docs/modules/is--boxLink/).
 
 <Preview>
-  <PreviewTitle>Example using `u--expandedLink`</PreviewTitle>
+  <PreviewTitle>Example using `is--coverLink`</PreviewTitle>
   <PreviewArea bg=':stripe' resize p='30'>
-    <SideMain isLinkBox hov="bxsh" set="transition" sideW="50%" bgc="base" bdrs="20" bxsh="10" ov="hidden">
+    <SideMain isBoxLink hov="bxsh" set="transition" sideW="50%" bgc="base" bdrs="20" bxsh="10" ov="hidden">
       <Frame isSide ar="16/9" pos="relative">
         <Media src="https://cdn.lism-css.com/img/a-1.jpg" alt="" width="960" height="640" />
         <Link href="#badge-link" pos="absolute" t="0" r="0" fz="s" bgc="black" c="white" m="20" px="15" bdrs="99" td="none" hov="neutral">Category</Link>
       </Frame>
       <Stack g="30" p="30">
         <h3 className="u--trim -fz:l">
-          <Link className="u--expandedLink" href="#card-link">Card with .u--expandedLink</Link>
+          <Link isCoverLink href="#card-link">Card with .is--coverLink</Link>
         </h3>
         <Text className="u--trim" fz="s" lh="s" o="-10">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</Text>
         <Inline d="inline-flex" mx-s="auto" my-s="auto" c="inherit" td="none" bd-b lh="s" p="10">View More →</Inline>
@@ -106,8 +106,8 @@ When you want to make the entire card a link while also including a separate lin
     </SideMain>
   </PreviewArea>
   <PreviewCode slot='tab' label='JSX'>
-    ```jsx "isLinkBox" "\<Link " "u--expandedLink"
-    <SideMain isLinkBox hov="bxsh" set="transition" sideW="50%" bgc="base" bdrs="20" bxsh="10" ov="hidden">
+    ```jsx "isBoxLink" "isCoverLink"
+    <SideMain isBoxLink hov="bxsh" set="transition" sideW="50%" bgc="base" bdrs="20" bxsh="10" ov="hidden">
       <Frame isSide ar="16/9" pos="relative">
         <Media src="https://cdn.lism-css.com/img/a-1.jpg" alt="" width="960" height="640" />
         <Link href="#badge-link" pos="absolute" t="0" r="0" fz="s" bgc="black" c="white" m="20" px="15" bdrs="99" td="none" hov="neutral">
@@ -116,8 +116,8 @@ When you want to make the entire card a link while also including a separate lin
       </Frame>
       <Stack g="30" p="30">
         <h3 className="u--trim -fz:l">
-          <Link className="u--expandedLink" href="#card-link">
-            Card with .u--expandedLink
+          <Link isCoverLink href="#card-link">
+            Card with .is--coverLink
           </Link>
         </h3>
         <Text className="u--trim" fz="s" lh="s" o="-10">
@@ -230,7 +230,7 @@ When you want to make the entire card a link while also including a separate lin
 <Preview>
   <PreviewTitle>When specifying an aspect ratio on the media side in Flex, it locks to that ratio when the content side is shorter.</PreviewTitle>
   <PreviewArea bg=':stripe' resize p='20'>
-    <LinkBox href="#_" layout="flex" p="15" c="text" bgc="base" bd bdw="2px" bdc="base-2" bdrs="20" hov="bxsh" set={["hov", "transition"]}>
+    <BoxLink href="#_" layout="flex" p="15" c="text" bgc="base" bd bdw="2px" bdc="base-2" bdrs="20" hov="bxsh" set={["hov", "transition"]}>
       <Frame w={['25%', '30%']} ar="1/1" fxsh="0" bdrs="10">
         <Media src="https://cdn.lism-css.com/img/a-1.jpg" alt="" width="960" height="640" />
       </Frame>
@@ -239,11 +239,11 @@ When you want to make the entire card a link while also including a separate lin
         <Text className="u--trim" fz="s" lh="s" o="-10">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</Text>
         <Inline d="inline-flex" mx-s="auto" my-s="auto" c="var(--_isHov, var(--link)) var(--_notHov, inherit)" td="none" bd-b lh="s" p="10">View More →</Inline>
       </Stack>
-    </LinkBox>
+    </BoxLink>
   </PreviewArea>
   <PreviewCode slot='tab' label='JSX'>
     ```jsx 'ar="1/1"'
-    <LinkBox href="#_" layout="flex" p="15" c="text" bgc="base" bd bdw="2px" bdc="base-2" bdrs="20" hov="bxsh" set={["hov", "transition"]}>
+    <BoxLink href="#_" layout="flex" p="15" c="text" bgc="base" bd bdw="2px" bdc="base-2" bdrs="20" hov="bxsh" set={["hov", "transition"]}>
       <Frame w={['25%', '30%']} ar="1/1" fxsh="0" bdrs="10">
         <Media src="https://cdn.lism-css.com/img/a-1.jpg" alt="" width="960" height="640" />
       </Frame>
@@ -256,7 +256,7 @@ When you want to make the entire card a link while also including a separate lin
           View More →
         </Inline>
       </Stack>
-    </LinkBox>
+    </BoxLink>
     ```
   </PreviewCode>
 </Preview>
@@ -269,7 +269,7 @@ An example using `Grid` to toggle between horizontal and vertical layouts at a b
 <Preview>
   <PreviewTitle>Switching layout at a breakpoint</PreviewTitle>
   <PreviewArea bg=':stripe' resize p='20'>
-    <LinkBox
+    <BoxLink
       href="#_"
       layout="grid"
       gt={[`'img' '.'`, `'img .' / 200px 1fr`]}
@@ -293,11 +293,11 @@ An example using `Grid` to toggle between horizontal and vertical layouts at a b
         <Text className="u--trim" fz="s" lh="s" o="-10">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</Text>
         <Inline d="inline-flex" mx-s="auto" my-s="20" c="inherit" td="none" bd-b lh="1" p="10">View More →</Inline>
       </Stack>
-    </LinkBox>
+    </BoxLink>
   </PreviewArea>
   <PreviewCode slot='tab' label='JSX'>
     ```jsx
-    <LinkBox
+    <BoxLink
       href="#_"
       layout="grid"
       gt={[`'img' '.'`, `'img .' / 200px 1fr`]}
@@ -325,7 +325,7 @@ An example using `Grid` to toggle between horizontal and vertical layouts at a b
           View More →
         </Inline>
       </Stack>
-    </LinkBox>
+    </BoxLink>
     ```
   </PreviewCode>
 </Preview>
@@ -345,7 +345,7 @@ The following example requires a custom `.-hov\:to\:slide` class to be defined s
 }`}>
   <PreviewTitle>Preview</PreviewTitle>
   <PreviewArea bg=':stripe' p='20'>
-    <LinkBox href="#card-a" pos="relative" bdrs="20" bxsh="20" ov="hidden" set="hov" max-w="xs" mx="auto">
+    <BoxLink href="#card-a" pos="relative" bdrs="20" bxsh="20" ov="hidden" set="hov" max-w="xs" mx="auto">
       <Frame ar="1/1">
         <img src="https://cdn.lism-css.com/img/a-1.jpg" alt="" width="960" height="640" />
       </Frame>
@@ -362,11 +362,11 @@ The following example requires a custom `.-hov\:to\:slide` class to be defined s
           <Group className="u--trim" fz="xs" o="-10">2000.01.01 / Author</Group>
         </Box>
       </Stack>
-    </LinkBox>
+    </BoxLink>
   </PreviewArea>
   <PreviewCode slot='tab' label='JSX'>
   ```jsx 'set="hov"' 'hov="to:slide"'
-  <LinkBox href="#card-a" pos="relative" bdrs="20" bxsh="20" ov="hidden" set="hov" max-w="xs" mx="auto">
+  <BoxLink href="#card-a" pos="relative" bdrs="20" bxsh="20" ov="hidden" set="hov" max-w="xs" mx="auto">
     <Frame ar="1/1">
       <img src="https://cdn.lism-css.com/img/a-1.jpg" alt="" width="960" height="640" />
     </Frame>
@@ -385,7 +385,7 @@ The following example requires a custom `.-hov\:to\:slide` class to be defined s
         </Group>
       </Box>
     </Stack>
-  </LinkBox>
+  </BoxLink>
   ```
   </PreviewCode>
 <PreviewCode slot='tab' label='Additional CSS'>

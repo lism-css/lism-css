@@ -125,7 +125,8 @@ CSS Layer の外（最も高い詳細度）に配置され、`-{prop}(:{value})`
 | `keycolor` | `--keycolor` 変数のみ | — | — |
 
 セマンティックカラー: `base`, `base-2`, `text`, `text-2`, `divider`, `link`, `brand`, `accent`  
-パレットカラー: `red`, `blue`, `green`, `yellow`, `purple`, `orange`, `pink`, `gray`, `white`, `black`, `keycolor`
+パレットカラー: `red`, `blue`, `green`, `yellow`, `purple`, `orange`, `pink`, `gray`, `white`, `black`  
+キーカラー変数: `keycolor`（ユーザー定義の `--keycolor` を参照する独立変数。詳細は `tokens.md` を参照）
 
 ### 角丸
 

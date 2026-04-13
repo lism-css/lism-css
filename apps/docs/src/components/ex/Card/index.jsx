@@ -12,7 +12,7 @@ export default function Card({ layout = 'sideMain', ...props }) {
   // hrefが指定されていればlink化
   if (props.href) {
     defaultProps.tag = 'a';
-    defaultProps.isLinkBox = true;
+    defaultProps.isBoxLink = true;
   }
 
   return <Lism lismClass="c--card" {...defaultProps} {...props} />;

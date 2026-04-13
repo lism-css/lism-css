@@ -79,7 +79,7 @@ describe('searchDocs — 自然言語 alias (keywords) による検索', () => {
   const aliasEntries: DocsEntry[] = [
     entry({
       sourcePath: 'link-box.mdx',
-      title: 'LinkBox',
+      title: 'BoxLink',
       keywords: ['リンク', 'clickable', 'カード', 'クリッカブル'],
       category: 'core-components',
     }),
@@ -91,10 +91,10 @@ describe('searchDocs — 自然言語 alias (keywords) による検索', () => {
     }),
   ];
 
-  it('「クリッカブル」で LinkBox がヒットする', () => {
+  it('「クリッカブル」で BoxLink がヒットする', () => {
     const results = searchDocs(aliasEntries, 'クリッカブル');
     expect(results.length).toBe(1);
-    expect(results[0].heading).toBe('LinkBox');
+    expect(results[0].heading).toBe('BoxLink');
   });
 
   it('「CTA」で Button がヒットする', () => {

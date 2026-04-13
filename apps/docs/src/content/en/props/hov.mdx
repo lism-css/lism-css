@@ -3,7 +3,7 @@ title: '-hov'
 description: 'How to use the -hov property classes for controlling hover behavior and transitions.'
 ---
 
-import { Flex, Media, Layer, Spacer, Box, Center, Stack, Frame, LinkBox, Inline, Text } from 'lism-css/react';
+import { Flex, Media, Layer, Spacer, Box, Center, Stack, Frame, BoxLink, Inline, Text } from 'lism-css/react';
 
 
 This page introduces the CSS design for controlling hover behavior in Lism.
@@ -31,37 +31,37 @@ Since each built-in class defines a default value, they can be used simply by ad
 <Preview>
   <PreviewTitle>Usage examples of `.-hov:o`, `.-hov:c`, `.-hov:bxsh`</PreviewTitle>
   <PreviewArea p='30'>
-    <LinkBox href="###" hov="o" bgc="base-2" bd p="20">
-      <p>LinkBox</p>
+    <BoxLink href="###" hov="o" bgc="base-2" bd p="20">
+      <p>BoxLink</p>
       <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-    </LinkBox>
-    <LinkBox href="###" hov="c,bxsh" bd p="20">
-      <p>LinkBox</p>
+    </BoxLink>
+    <BoxLink href="###" hov="c,bxsh" bd p="20">
+      <p>BoxLink</p>
       <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-    </LinkBox>
+    </BoxLink>
   </PreviewArea>
   <PreviewCode slot='tab' label='HTML'>
     ```html "-hov:o" "-hov:c" "-hov:bxsh"
-    <a href="###" class="is--linkBox -hov:o -bgc:base-2 -bd -p:20">
-      <p>LinkBox</p>
+    <a href="###" class="is--boxLink -hov:o -bgc:base-2 -bd -p:20">
+      <p>BoxLink</p>
       <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
     </a>
-    <a href="###" class="is--linkBox -hov:c -hov:bxsh -bd -p:20">
-      <p>LinkBox</p>
+    <a href="###" class="is--boxLink -hov:c -hov:bxsh -bd -p:20">
+      <p>BoxLink</p>
       <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
     </a>
     ```
   </PreviewCode>
   <PreviewCode slot='tab' label='JSX'>
     ```jsx 'hov="o"' 'hov="c,bxsh"'
-    <LinkBox href='###' hov='o' bgc='base-2' bd p='20'>
-      <p>LinkBox</p>
+    <BoxLink href='###' hov='o' bgc='base-2' bd p='20'>
+      <p>BoxLink</p>
       <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-    </LinkBox>
-    <LinkBox href='###' hov='c,bxsh' bd p='20'>
-      <p>LinkBox</p>
+    </BoxLink>
+    <BoxLink href='###' hov='c,bxsh' bd p='20'>
+      <p>BoxLink</p>
       <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-    </LinkBox>
+    </BoxLink>
     ```
   </PreviewCode>
 </Preview>
@@ -78,25 +78,25 @@ In the [`<Lism>` component](/en/docs/core-components/Lism/), passing a string to
 <Preview>
   <PreviewTitle>Example of changing `bgc` and `c`</PreviewTitle>
   <PreviewArea p='30'>
-    <LinkBox href="###" bgc="base-2" p="20" hov={{ bgc: 'brand', c: 'white' }}>
-      <p>LinkBox.</p>
+    <BoxLink href="###" bgc="base-2" p="20" hov={{ bgc: 'brand', c: 'white' }}>
+      <p>BoxLink.</p>
       <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-    </LinkBox>
+    </BoxLink>
   </PreviewArea>
   <PreviewCode slot='tab' label='HTML'>
   ```html "-hov:bgc" "-hov:c" "--hov-bgc" "--hov-c"
-  <a class="is--linkBox -hov:bgc -hov:c -bgc:base-2 -p:20" style="--hov-bgc: var(--brand); --hov-c: var(--white)" href="###">
-    <p>LinkBox.</p>
+  <a class="is--boxLink -hov:bgc -hov:c -bgc:base-2 -p:20" style="--hov-bgc: var(--brand); --hov-c: var(--white)" href="###">
+    <p>BoxLink.</p>
     <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
   </a>
   ```
   </PreviewCode>
   <PreviewCode slot='tab' label='JSX'>
   ```jsx "hov="
-  <LinkBox href="###" hov={{ bgc: 'brand', c: 'white' }} bgc="base-2" p="20">
-    <p>LinkBox.</p>
+  <BoxLink href="###" hov={{ bgc: 'brand', c: 'white' }} bgc="base-2" p="20">
+    <p>BoxLink.</p>
     <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-  </LinkBox>
+  </BoxLink>
   ```
   </PreviewCode>
 </Preview>
@@ -122,25 +122,25 @@ Combine this class with CSS variables to configure transition behavior.
 <Preview>
   <PreviewTitle>Example: combining `set--transition` to animate the bxsh intensity</PreviewTitle>
   <PreviewArea p='30'>
-    <LinkBox href="###" set="transition" bxsh="10" hov={{ bxsh: '40' }} bd p="20">
-      <p>LinkBox</p>
+    <BoxLink href="###" set="transition" bxsh="10" hov={{ bxsh: '40' }} bd p="20">
+      <p>BoxLink</p>
       <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-    </LinkBox>
+    </BoxLink>
   </PreviewArea>
   <PreviewCode slot='tab' label='HTML'>
     ```html "set--transition" "-bxsh:10 -hov:bxsh" "--hov-bxsh:var(--bxsh--40)"
-    <a href="###" class="is--linkBox set--transition -bxsh:10 -hov:bxsh -bd -p:20" style="--hov-bxsh: var(--bxsh--40)">
-      <p>LinkBox</p>
+    <a href="###" class="is--boxLink set--transition -bxsh:10 -hov:bxsh -bd -p:20" style="--hov-bxsh: var(--bxsh--40)">
+      <p>BoxLink</p>
       <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
     </a>
     ```
   </PreviewCode>
   <PreviewCode slot='tab' label='JSX'>
   ```jsx 'set="transition"' "bxsh='10' hov=\{\{ bxsh: '40'\}\}"
-  <LinkBox href="###" set="transition" bxsh="10" hov={{ bxsh: '40' }} bd p="20">
-    <p>LinkBox</p>
+  <BoxLink href="###" set="transition" bxsh="10" hov={{ bxsh: '40' }} bd p="20">
+    <p>BoxLink</p>
     <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-  </LinkBox>
+  </BoxLink>
   ```
   </PreviewCode>
 </Preview>
@@ -149,25 +149,25 @@ Combine this class with CSS variables to configure transition behavior.
 <Preview>
   <PreviewTitle>Example: slowly transitioning the border-color</PreviewTitle>
   <PreviewArea p='30'>
-    <LinkBox href="###" set="transition" hov={{ bdc: 'red' }} bd bdw="3px" bgc="base-2" p="20" style={{ '--hov-duration': '.5s' }}>
-      <p>LinkBox</p>
+    <BoxLink href="###" set="transition" hov={{ bdc: 'red' }} bd bdw="3px" bgc="base-2" p="20" style={{ '--hov-duration': '.5s' }}>
+      <p>BoxLink</p>
       <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-    </LinkBox>
+    </BoxLink>
   </PreviewArea>
   <PreviewCode slot='tab' label='HTML'>
     ```html "set--transition" "--hov-duration: 0.5s"
-    <a class="is--linkBox -hov:bdc set--transition -bd -bgc:base-2 -p:20" style="--hov-bdc: var(--red); --hov-duration: 0.5s; --bdw: 3px" href="###">
-      <p>LinkBox</p>
+    <a class="is--boxLink -hov:bdc set--transition -bd -bgc:base-2 -p:20" style="--hov-bdc: var(--red); --hov-duration: 0.5s; --bdw: 3px" href="###">
+      <p>BoxLink</p>
       <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
     </a>
     ```
   </PreviewCode>
   <PreviewCode slot='tab' label='JSX'>
     ```jsx 'set="transition"' "--hov-duration"
-    <LinkBox href="###" set="transition" hov={{ bdc: 'red' }} bd bdw="3px" bgc="base-2" p="20" style={{ '--hov-duration': '.5s' }}>
-      <p>LinkBox</p>
+    <BoxLink href="###" set="transition" hov={{ bdc: 'red' }} bd bdw="3px" bgc="base-2" p="20" style={{ '--hov-duration': '.5s' }}>
+      <p>BoxLink</p>
       <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-    </LinkBox>
+    </BoxLink>
     ```
   </PreviewCode>
 </Preview>
@@ -184,10 +184,10 @@ Combine this class with CSS variables to configure transition behavior.
 }`}>
   <PreviewTitle>Adding `.-hov:shadowUp`</PreviewTitle>
   <PreviewArea p='30'>
-    <LinkBox href="###" set="transition" hov="shadowUp" bxsh="10" bd p="20">
-      <p>LinkBox</p>
+    <BoxLink href="###" set="transition" hov="shadowUp" bxsh="10" bd p="20">
+      <p>BoxLink</p>
       <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-    </LinkBox>
+    </BoxLink>
   </PreviewArea>
 
   <PreviewCode slot='tab' label='Additional CSS'>
@@ -202,18 +202,18 @@ Combine this class with CSS variables to configure transition behavior.
   </PreviewCode>
   <PreviewCode slot='tab' label='HTML'>
     ```html "-hov:shadowUp"
-    <a href="###" class="is--linkBox set--transition -hov:shadowUp -bd -p:20">
-      <p>LinkBox</p>
+    <a href="###" class="is--boxLink set--transition -hov:shadowUp -bd -p:20">
+      <p>BoxLink</p>
       <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
     </a>
     ```
   </PreviewCode>
   <PreviewCode slot='tab' label='JSX'>
     ```jsx 'hov="shadowUp"'
-    <LinkBox href="###" set="transition" hov="shadowUp" bd p="20">
-      <p>LinkBox</p>
+    <BoxLink href="###" set="transition" hov="shadowUp" bd p="20">
+      <p>BoxLink</p>
       <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-    </LinkBox>
+    </BoxLink>
     ```
   </PreviewCode>
 </Preview>
@@ -251,7 +251,7 @@ By leveraging `set--hov`, you can trigger style changes on child elements when t
 <Preview>
   <PreviewTitle>Example using `-hov:to:show` and `-hov:to:zoom`</PreviewTitle>
   <PreviewArea p='20'>
-    <Frame isLinkBox set="hov" href="#banner-link" ar="16/9" bdrs="30">
+    <Frame isBoxLink set="hov" href="#banner-link" ar="16/9" bdrs="30">
       <Media isLayer set="transition" hov="to:zoom" src="https://cdn.lism-css.com/img/a-1.jpg" alt="" width="960" height="640" loading="lazy" />
       <Layer set="transition" hov="to:show" bgc="rgb(0 0 0 / 40%)" style={{ backdropFilter: 'blur(6px)' }}>
         <Center h="100%" c="#fff">
@@ -264,7 +264,7 @@ By leveraging `set--hov`, you can trigger style changes on child elements when t
   </PreviewArea>
   <PreviewCode slot='tab' label='HTML'>
     ```html "set--hov" "-hov:to:show" "-hov:to:zoom" "set--transition"
-    <a class="l--frame is--linkBox set--hov -ar:16/9 -bdrs:30" href="#banner-link">
+    <a class="l--frame is--boxLink set--hov -ar:16/9 -bdrs:30" href="#banner-link">
       <img class="is--layer set--transition -hov:to:zoom" src="https://cdn.lism-css.com/img/a-1.jpg" width="960" height="640" loading="lazy" />
       <div class="is--layer set--transition -hov:to:show -bgc" style="--bgc: rgb(0 0 0 / 40%); backdrop-filter: blur(6px)">
         <div class="l--center -h:100% -c" style="--c: #fff">
@@ -276,7 +276,7 @@ By leveraging `set--hov`, you can trigger style changes on child elements when t
   </PreviewCode>
   <PreviewCode slot='tab' label='JSX'>
     ```jsx 'set="hov"' 'hov="to:show"' 'hov="to:zoom"' 'set="transition"'
-    <Frame isLinkBox set="hov" href="#banner-link" ar="16/9" bdrs="30">
+    <Frame isBoxLink set="hov" href="#banner-link" ar="16/9" bdrs="30">
       <Media isLayer set="transition" hov="to:zoom" src="https://cdn.lism-css.com/img/a-1.jpg" alt="" width="960" height="640" loading="lazy" />
       <Layer set="transition" hov="to:show" bgc="rgb(0 0 0 / 40%)" style={{ backdropFilter: 'blur(6px)' }}>
         <Center h="100%" c="#fff">

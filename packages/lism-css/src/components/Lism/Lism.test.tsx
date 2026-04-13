@@ -1134,14 +1134,14 @@ describe('Lism', () => {
         expect(element).toHaveClass('is--layer');
       });
 
-      test('isLinkBox を指定できる', () => {
+      test('isBoxLink を指定できる', () => {
         render(
-          <Lism isLinkBox data-testid="lism">
+          <Lism isBoxLink data-testid="lism">
             test
           </Lism>
         );
         const element = screen.getByTestId('lism');
-        expect(element).toHaveClass('is--linkBox');
+        expect(element).toHaveClass('is--boxLink');
       });
 
       test('isSide を指定できる', () => {

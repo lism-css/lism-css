@@ -152,7 +152,7 @@ const docsSidebar: SidebarSection[] = [
       '/docs/modules/is--container/',
       '/docs/modules/is--wrapper/',
       '/docs/modules/is--layer/',
-      '/docs/modules/is--linkbox/',
+      '/docs/modules/is--boxlink/',
       '/docs/modules/is--vertical/',
     ],
   },

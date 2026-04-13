@@ -4,7 +4,7 @@
  * content/ja/ui/ 配下のMDXを一覧表示
  */
 import BaseLayout from '@/layouts/BaseLayout.astro';
-import { Stack, FluidCols, LinkBox, Frame, Lism, Media } from 'lism-css/astro';
+import { Stack, FluidCols, BoxLink, Frame, Lism, Media } from 'lism-css/astro';
 import { getPostsByLang } from '@/lib/content';
 import { getRootLang } from '@/lib/i18n';
 import fs from 'node:fs';
@@ -68,12 +68,12 @@ function getThumbPath(title: string): string {
             const postUrl = `/ui/${post.id.replace('ui/', '')}/`;
             const thumbPath = getThumbPath(post.data.title);
             return (
-              <LinkBox layout="stack" href={postUrl} p="5" g="5" bdrs="20" hov="neutral" class={post.data.draft ? '_draft' : ''}>
+              <BoxLink layout="stack" href={postUrl} p="5" g="5" bdrs="20" hov="neutral" class={post.data.draft ? '_draft' : ''}>
                 <Frame ar="3/2" bd bdrs="20" bgc="base">
                   <Media src={thumbPath} alt={post.data.title} width="360" height="240" loading="lazy" />
                 </Frame>
                 <Lism class="u--trim -ff:mono -fz:s -p:10">{post.data.title}</Lism>
-              </LinkBox>
+              </BoxLink>
             );
           })
         }
@@ -91,12 +91,12 @@ function getThumbPath(title: string): string {
               const postUrl = `/ui/${post.id.replace('ui/', '')}/`;
               const thumbPath = getThumbPath(post.data.title);
               return (
-                <LinkBox layout="stack" href={postUrl} p="5" g="5" bdrs="20" hov="neutral" class={post.data.draft ? '_draft' : ''}>
+                <BoxLink layout="stack" href={postUrl} p="5" g="5" bdrs="20" hov="neutral" class={post.data.draft ? '_draft' : ''}>
                   <Frame ar="3/2" bd bdrs="20" bgc="base">
                     <Media src={thumbPath} alt={post.data.title} width="360" height="240" loading="lazy" />
                   </Frame>
                   <Lism class="u--trim -ff:mono -fz:s -p:10">{post.data.title}</Lism>
-                </LinkBox>
+                </BoxLink>
               );
             })}
           </FluidCols>

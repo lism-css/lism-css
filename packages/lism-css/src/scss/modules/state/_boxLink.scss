@@ -1,6 +1,6 @@
 @use '../../_mixin' as mixin;
 
-.is--linkBox {
+.is--boxLink {
   position: relative;
   display: block;
   color: inherit;
@@ -11,12 +11,12 @@
 }
 
 // リンクをクリック可能にするためにz-indexあげる
-.is--linkBox a {
+.is--boxLink a {
   position: relative;
-  z-index: 2; // .u-linkExpand::before + 1
+  z-index: 2; // .is--coverLink::before + 1
 }
 
 /* これをしてしまうと z-index 関係がややこしくなる。リンク以外のz-indexはデフォのままにする。 */
-// .is--linkBox > * {
+// .is--boxLink > * {
 // 	z-index: 0;
 // }

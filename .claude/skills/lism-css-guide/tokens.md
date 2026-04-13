@@ -198,6 +198,24 @@ OKLCH で定義されたカラーパレット。`--L`（明度）と `--C`（彩
 | `--black` | `#000` |
 | `--white` | `#fff` |
 
+### キーカラー変数 (`--keycolor`)
+
+`--keycolor` は、カラートークンとは性質が異なる。初めから値があるわけではない。ボックス全体のカラーリングなどを行う際の「軸となる色」を指定するための変数。
+
+`--keycolor: var(--red)` のように指定しておくことで、そのボックス自身や子要素のカラー Props（`c`, `bgc`, `bdc` など）で 特定の色をハードコーディングせずに `--keycolor` 経由で参照できるようにすることができる。代表的な使用例は `u--cbox` ユーティリティクラス。
+
+```html
+<!-- ボックスにキーカラーを設定、テキストをキーカラーに連動させる例 -->
+<div class="u--cbox" style="--keycolor: var(--red)">
+  <p class="-c" style="-c:var(--keycolor)">...</p>
+</div>
+```
+```jsx
+<Lism class="u--cbox" keycolor="var(--red)">
+  <Text c="keycolor">...</Text>
+</Lism>
+```
+
 - `c`, `bgc` 等のカラー系 Props では、セマンティックカラー → パレットカラーの順で検索される
 - どちらも最終的に `var(--{name})` に変換される
 

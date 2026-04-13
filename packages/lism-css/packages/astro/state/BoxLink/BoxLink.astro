@@ -8,9 +8,9 @@ type Props<Tag extends HTMLTag = 'a'> = Polymorphic<{ as: Tag }> & AstroLismBase
 const { as, exProps, ...props } = Astro.props;
 
 const hasHref = !!props.href;
-// LinkBoxは基本的にリンク要素（aタグ）として機能するため、
+// BoxLinkは基本的にリンク要素（aタグ）として機能するため、
 // hrefがないかつ、aタグとしてレンダリングする場合はdivタグに置き換える
 const tag: HTMLTag = !hasHref && (as ?? 'a') === 'a' ? 'div' : (as ?? 'a');
 ---
 
-<Lism isLinkBox as={tag} {...props} {...exProps}><slot /></Lism>
+<Lism isBoxLink as={tag} {...props} {...exProps}><slot /></Lism>

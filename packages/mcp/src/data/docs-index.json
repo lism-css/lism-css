@@ -188,21 +188,9 @@
     "title": "Utilitiy Class",
     "description": "スタイルや装飾をまとめて適用できる Lism CSS のユーティリティクラスについて解説します。",
     "category": "guide",
-    "headings": ["u--cbox", "u--trim & u--trimChildren", "u--expandedLink", "u--srOnly", "u--collapseGrid", "u--snap", "u--clipText", "Opt-in"],
-    "keywords": [
-      "utility",
-      "ユーティリティ",
-      "class",
-      "クラス",
-      "u--cbox",
-      "u--trim",
-      "u--expandedLink",
-      "u--srOnly",
-      "u--collapseGrid",
-      "u--snap",
-      "u--clipText"
-    ],
-    "snippet": "用途が明確な装飾・機能をまとめてセットするユーティリティクラス (.u--{style}) の一覧。u--cbox, u--trim, u--expandedLink, u--collapseGrid 等を解説。"
+    "headings": ["u--cbox", "u--trim & u--trimChildren", "u--srOnly", "u--collapseGrid", "u--snap", "u--clipText", "Opt-in"],
+    "keywords": ["utility", "ユーティリティ", "class", "クラス", "u--cbox", "u--trim", "u--srOnly", "u--collapseGrid", "u--snap", "u--clipText"],
+    "snippet": "用途が明確な装飾・機能をまとめてセットするユーティリティクラス (.u--{style}) の一覧。u--cbox, u--trim, u--collapseGrid 等を解説。"
   },
   {
     "sourcePath": "set-class.mdx",
@@ -220,7 +208,7 @@
     "category": "guide",
     "headings": ["State Module", "Layout Modules", "Atomic Modules", "Custom Modules"],
     "keywords": ["module", "モジュール", "layout", "レイアウト", "class", "BEM", "is--vertical"],
-    "snippet": "レイアウトの構成要素を細分化してモジュールとして定義。.l--{name}, .a--{name}, .c--{name} 等の命名規則。State Module (is--container, is--wrapper, is--layer, is--linkBox, is--vertical) も解説。"
+    "snippet": "レイアウトの構成要素を細分化してモジュールとして定義。.l--{name}, .a--{name}, .c--{name} 等の命名規則。State Module (is--container, is--wrapper, is--layer, is--boxLink, is--vertical) も解説。"
   },
   {
     "sourcePath": "base-styles.mdx",
@@ -575,13 +563,25 @@
     "snippet": "親要素に対して絶対配置で重なるレイヤー要素。オーバーレイや背景装飾に使用。blur等のbackdrop-filterプロパティも個別に指定可能。"
   },
   {
-    "sourcePath": "modules/is--linkBox.mdx",
-    "title": "LinkBox / is--linkBox",
-    "description": "Lism CSS の LinkBox モジュールについて解説します。ボックス全体をクリック可能なリンクにするコンポーネントです。",
+    "sourcePath": "modules/is--boxLink.mdx",
+    "title": "BoxLink / is--boxLink",
+    "description": "Lism CSS の BoxLink モジュールについて解説します。ボックス全体をクリック可能なリンクにするコンポーネントです。",
     "category": "modules",
     "headings": ["Import", "Props", "Usage", "Opt-in"],
-    "keywords": ["LinkBox", "リンク", "clickable", "カード", "is--linkBox", "u--expandedLink", "クリッカブル"],
-    "snippet": "ボックス全体をリンク領域にする。hrefを指定してaタグにする方法と、内部にu--expandedLinkを配置する方法の2通りがある。"
+    "keywords": [
+      "BoxLink",
+      "LinkBox",
+      "リンク",
+      "clickable",
+      "カード",
+      "is--boxLink",
+      "is--linkBox",
+      "is--coverLink",
+      "u--expandedLink",
+      "stretched-link",
+      "クリッカブル"
+    ],
+    "snippet": "ボックス全体をリンク領域にする。hrefを指定してaタグにする方法と、内部にis--coverLink（旧u--expandedLink）を配置する方法の2通りがある。"
   },
   {
     "sourcePath": "modules/is--wrapper.mdx",
@@ -890,13 +890,13 @@
     "snippet": "u--trimは自身のmargin-blockを調整。u--trimChildrenは子要素全ての上下マージンを調整。img, figure, tableに対してはマージン調節を無効化。"
   },
   {
-    "sourcePath": "utility-class.mdx",
-    "title": "u--expandedLink",
-    "description": "クリック範囲を親要素に広げるユーティリティクラス。is--linkBoxと併用。",
-    "category": "guide",
-    "headings": ["u--expandedLink"],
-    "keywords": ["u--expandedLink", "クリック範囲", "リンク拡張", "linkBox"],
-    "snippet": "クリック範囲を親要素に広げるためのクラス。主にis--linkBoxと併用して、内部のリンクをボックス全体に広げるために使用。"
+    "sourcePath": "modules/is--boxLink.mdx",
+    "title": "is--coverLink",
+    "description": "クリック範囲を親要素全体に広げる State モジュール。is--boxLinkと併用。",
+    "category": "modules",
+    "headings": ["Usage"],
+    "keywords": ["is--coverLink", "u--expandedLink", "stretched-link", "クリック範囲", "リンク拡張", "boxLink", "linkBox"],
+    "snippet": "クリック範囲を親要素全体に広げるためのクラス（旧 u--expandedLink）。is--boxLink と併用し、内部リンクをボックス全体に広げるために使用。"
   },
   {
     "sourcePath": "utility-class.mdx",

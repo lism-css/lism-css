@@ -11,6 +11,9 @@
 - [Overview](https://www.lism-css.com/en/docs/overview/): An overview of Lism CSS and its key features.
 - [Installation](https://www.lism-css.com/en/docs/installation/): Learn how to install Lism CSS and get started with the basics.
 - [Changelog](https://www.lism-css.com/en/docs/changelog/): A log of all notable changes and updates across Lism CSS releases.
+- [Features of Lism CSS](https://www.lism-css.com/en/docs/features/): A detailed look at the design philosophy and key features of Lism CSS.
+- [MCP Server](https://www.lism-css.com/en/docs/mcp/): Set up the MCP server so AI coding tools can reference Lism CSS component, Props, and token information in real time.
+- [Skills](https://www.lism-css.com/en/docs/skills/): Place a SKILL.md file in your project to communicate Lism CSS design rules, Props, tokens, and naming conventions to AI agents.
 
 ## Core Concepts
 
@@ -18,7 +21,8 @@
 - [Design Tokens](https://www.lism-css.com/en/docs/tokens/): A reference of all design tokens in Lism CSS, including colors, spacing, and shadows.
 - [Color Tokens](https://www.lism-css.com/en/docs/tokens/colors/): A reference of semantic colors and palette color tokens defined in Lism CSS, along with customization examples.
 - [Typography Tokens](https://www.lism-css.com/en/docs/tokens/typography/): An overview of typography design tokens in Lism CSS, including font-family, font-size, line-height, and more.
-- [Spacing Tokens](https://www.lism-css.com/en/docs/tokens/spacing/): An overview of Fibonacci-based spacing tokens in Lism CSS and which Property Classes support them.
+- [Half-Leading (line-height)](https://www.lism-css.com/en/docs/tokens/half-leading/): How Lism CSS manages line-height through half-leading values, and the related design tokens.
+- [Spacing Tokens](https://www.lism-css.com/en/docs/tokens/spacing/): An overview of Fibonacci-based spacing tokens in Lism CSS and which property classes support them.
 - [Base Styles](https://www.lism-css.com/en/docs/base-styles/): Learn about the Reset CSS and HTML element base styles defined in the @lism-base layer.
 - [Reset CSS](https://www.lism-css.com/en/docs/reset-css/): Learn about the lightweight Reset CSS provided by Lism CSS and how to load it.
 - [Prop Responsive](https://www.lism-css.com/en/docs/responsive/): Learn how Lism CSS handles responsive design with breakpoint classes and variables.
@@ -43,33 +47,35 @@
 
 ## State Modules
 
-- [Container](https://www.lism-css.com/en/docs/modules/is--container/): Documentation for the Container module in Lism CSS. A component that sets container-type to enable container queries.
-- [Layer](https://www.lism-css.com/en/docs/modules/is--layer/): Documentation for the Layer module in Lism CSS. A component for creating overlay layers positioned over a parent element.
-- [LinkBox](https://www.lism-css.com/en/docs/modules/is--linkBox/): Documentation for the LinkBox module in Lism CSS. A component that makes an entire box clickable as a link.
-- [Wrapper](https://www.lism-css.com/en/docs/modules/is--wrapper/): Documentation for the Wrapper module in Lism CSS. A component that outputs the is--wrapper class to control content width.
+- [BoxLink (is--boxLink)](https://www.lism-css.com/en/docs/modules/is--boxLink/): is--boxLink is a module class that makes an entire box clickable.
+- [Container (is--container)](https://www.lism-css.com/en/docs/modules/is--container/): is--container is a module class that declares container-type to enable container queries.
+- [Layer (is--layer)](https://www.lism-css.com/en/docs/modules/is--layer/): is--layer is a module class for creating overlay layers absolutely positioned on top of a parent element.
+- [is--vertical](https://www.lism-css.com/en/docs/modules/is--vertical/): is--vertical is a module class that applies vertical writing mode (writing-mode) to an element.
+- [Wrapper (is--wrapper)](https://www.lism-css.com/en/docs/modules/is--wrapper/): is--wrapper is a module class that collectively controls the width of its direct child content.
 
 ## Layout Modules
 
-- [Box](https://www.lism-css.com/en/docs/modules/l--box/): Documentation for the Box module in Lism CSS. A simple layout module for grouping content without specific layout behavior.
-- [Center](https://www.lism-css.com/en/docs/modules/l--center/): Documentation for the Center module in Lism CSS. A layout module for centering elements both horizontally and vertically.
-- [Cluster](https://www.lism-css.com/en/docs/modules/l--cluster/): Documentation for the Cluster module in Lism CSS. A layout module that arranges elements horizontally with automatic wrapping.
-- [Columns](https://www.lism-css.com/en/docs/modules/l--columns/): Documentation for the Columns module in Lism CSS. A column layout that displays content in a specified number of columns per breakpoint.
-- [Flex](https://www.lism-css.com/en/docs/modules/l--flex/): Documentation for the Flex module in Lism CSS. A layout module for arranging content using Flexbox.
-- [Flow](https://www.lism-css.com/en/docs/modules/l--flow/): Documentation for the Flow module in Lism CSS. A flow-root layout module that automatically manages spacing between child elements.
-- [FluidCols](https://www.lism-css.com/en/docs/modules/l--fluidcols/): Documentation for the FluidCols module in Lism CSS. A breakpoint-independent column layout with automatic wrapping based on minimum column width.
-- [Frame](https://www.lism-css.com/en/docs/modules/l--frame/): Documentation for the Frame module in Lism CSS. A layout module that scales child media elements to fit its own size.
-- [Grid](https://www.lism-css.com/en/docs/modules/l--grid/): Documentation for the Grid module in Lism CSS. A layout module for arranging content using CSS Grid.
-- [SideMain](https://www.lism-css.com/en/docs/modules/l--sidemain/): Documentation for the SideMain module in Lism CSS. A two-column layout that switches between side-main and single-column without media queries.
-- [Stack](https://www.lism-css.com/en/docs/modules/l--stack/): Documentation for the Stack module in Lism CSS. A layout module that arranges elements vertically using Flexbox.
-- [SwitchCols](https://www.lism-css.com/en/docs/modules/l--switchcols/): Documentation for the SwitchCols module in Lism CSS. A layout that switches between multi-column and single-column without media queries.
+- [Box (l--box)](https://www.lism-css.com/en/docs/modules/l--box/): l--box is a simple layout module that groups content without applying any particular layout behavior.
+- [Center (l--center)](https://www.lism-css.com/en/docs/modules/l--center/): l--center is a layout module for centering elements both horizontally and vertically.
+- [Cluster (l--cluster)](https://www.lism-css.com/en/docs/modules/l--cluster/): l--cluster is a layout module that arranges multiple elements horizontally and wraps them to the next line when there are too many to fit.
+- [Columns (l--columns)](https://www.lism-css.com/en/docs/modules/l--columns/): l--columns is a column layout module that displays content in the specified number of columns at each breakpoint.
+- [Flex (l--flex)](https://www.lism-css.com/en/docs/modules/l--flex/): l--flex is a layout module for arranging content using Flexbox.
+- [Flow (l--flow)](https://www.lism-css.com/en/docs/modules/l--flow/): l--flow is a flow layout module that manages spacing between child elements using margin.
+- [FluidCols (l--fluidcols)](https://www.lism-css.com/en/docs/modules/l--fluidcols/): l--fluidcols is a breakpoint-independent multi-column layout module where columns automatically wrap before they shrink below the specified minimum width.
+- [Frame (l--frame)](https://www.lism-css.com/en/docs/modules/l--frame/): l--frame is a layout module that fits the direct child media element (img, video, iframe) to its own size.
+- [Grid (l--grid)](https://www.lism-css.com/en/docs/modules/l--grid/): l--grid is a layout module for arranging content using CSS Grid.
+- [SideMain (l--sidemain)](https://www.lism-css.com/en/docs/modules/l--sidemain/): l--sidemain is a two-column layout module that automatically switches between horizontal and vertical arrangements based on the content width you want to preserve.
+- [Stack (l--stack)](https://www.lism-css.com/en/docs/modules/l--stack/): l--stack is a layout module that arranges multiple elements vertically using a Flex layout.
+- [SwitchCols (l--switchcols)](https://www.lism-css.com/en/docs/modules/l--switchcols/): l--switchcols is a layout module that switches between multi-column and single-column without using container queries or media queries.
+- [TileGrid (l--tilegrid)](https://www.lism-css.com/en/docs/modules/l--tilegrid/): l--tilegrid is a layout module for creating uniform tile-style grid layouts by specifying cols and rows.
 
 ## Atomic Modules
 
-- [Decorator](https://www.lism-css.com/en/docs/modules/a--decorator/): Documentation for the Decorator module in Lism CSS. A component that outputs an empty decorative element with aria-hidden.
-- [Divider](https://www.lism-css.com/en/docs/modules/a--divider/): Documentation for the Divider module in Lism CSS. A component that renders a dividing line between content sections.
-- [Icon](https://www.lism-css.com/en/docs/modules/a--icon/): Documentation for the Icon module in Lism CSS. A component for rendering SVG icon elements with preset and custom icon support.
+- [Decorator (a--decorator)](https://www.lism-css.com/en/docs/modules/a--decorator/): a--decorator is a module used as an empty element for decorating content.
+- [Divider (a--divider)](https://www.lism-css.com/en/docs/modules/a--divider/): a--divider is a module for rendering a dividing line between content sections.
+- [Icon (a--icon)](https://www.lism-css.com/en/docs/modules/a--icon/): a--icon is a module for displaying icon elements.
 - [Media](https://www.lism-css.com/en/docs/core-components/Media/): A Lism component for outputting media elements such as images and videos.
-- [Spacer](https://www.lism-css.com/en/docs/modules/a--spacer/): Documentation for the Spacer module in Lism CSS. Outputs an empty element to reserve space between content.
+- [Spacer (a--spacer)](https://www.lism-css.com/en/docs/modules/a--spacer/): a--spacer is a module for reserving space between elements.
 
 ## UI Components
 
