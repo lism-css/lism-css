@@ -30,6 +30,14 @@ describe('mergeSet', () => {
     test('base と value は重複除去して結合される', () => {
       expect(mergeSet('plain hov', 'hov gutter')).toEqual(['plain', 'hov', 'gutter']);
     });
+
+    test('カンマ区切りの文字列も互換として受け付ける', () => {
+      expect(mergeSet(undefined, 'hov,transition')).toEqual(['hov', 'transition']);
+    });
+
+    test('カンマ + スペース混在でも分割される', () => {
+      expect(mergeSet(undefined, 'hov, transition, shadow')).toEqual(['hov', 'transition', 'shadow']);
+    });
   });
 
   describe('`-` prefix による除外', () => {

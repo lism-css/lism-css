@@ -4,8 +4,8 @@
  *
  * `set` / `util` のいずれの prop でも共用できる汎用処理。
  *
- * 入力は文字列（スペース区切り）だけでなく、内部 API 用途として文字列配列も受け付ける。
- * ユーザー向けドキュメントでは配列形式は紹介していない。
+ * 入力は空白区切りを基本とし、カンマ区切りも互換のため受け付ける。
+ * 内部 API 用途として文字列配列も受け付けるが、配列形式はユーザー向けドキュメントでは紹介していない。
  */
 
 function normalize(value: unknown): string[] {
@@ -13,7 +13,7 @@ function normalize(value: unknown): string[] {
   if (Array.isArray(value)) return value.flatMap((item) => normalize(item));
   if (typeof value !== 'string') return [];
   return value
-    .split(/\s+/)
+    .split(/[,\s]+/)
     .map((s) => s.trim())
     .filter(Boolean);
 }
