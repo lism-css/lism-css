@@ -1,5 +1,5 @@
 <h1 align="center">
-  <a href="https://lism-css.com" target="_blank">
+  <a href="https://lism-css.com/en/" target="_blank">
     Lism CSS
   </a>
 </h1>
@@ -142,11 +142,13 @@ import { Box, Flex, Stack, Text, Heading } from 'lism-css/astro';
 
 ## AI Tool Integration
 
-### llms.txt
+### Claude Code Skill
 
+```bash
+npx skills add lism-css/lism-css
 ```
-https://lism-css.com/llms.txt
-```
+
+See the [Skills documentation](https://lism-css.com/en/docs/skills/) for details.
 
 ### MCP Server
 
@@ -156,9 +158,15 @@ claude mcp add lism-css -- npx -y @lism-css/mcp
 
 See the [lism-css package README](https://www.npmjs.com/package/lism-css#ai-tool-integration) for Cursor and VS Code setup.
 
+### llms.txt
+
+```
+https://lism-css.com/llms.txt
+```
+
 ## Documentation
 
-For full documentation, visit [lism-css.com](https://lism-css.com).
+For full documentation, visit [lism-css.com/en](https://lism-css.com/en/).
 
 ## Playgrounds
 

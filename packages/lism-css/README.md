@@ -244,7 +244,7 @@ claude mcp add lism-css -- npx -y @lism-css/mcp
 
 ## Documentation
 
-For full documentation, visit [lism-css.com](https://lism-css.com).
+For full documentation, visit [lism-css.com/en](https://lism-css.com/en/).
 
 ## Community
 

@@ -142,11 +142,13 @@ import { Box, Flex, Stack, Text, Heading } from 'lism-css/astro';
 
 ## AI ツール連携
 
-### llms.txt
+### Claude Code Skill
 
+```bash
+npx skills add lism-css/lism-css
 ```
-https://lism-css.com/llms.txt
-```
+
+詳細は [Skills ドキュメント](https://lism-css.com/docs/skills/) を参照してください。
 
 ### MCP サーバー
 
@@ -155,6 +157,12 @@ claude mcp add lism-css -- npx -y @lism-css/mcp
 ```
 
 Cursor や VS Code のセットアップ方法は、[lism-css パッケージの README](https://www.npmjs.com/package/lism-css#ai-tool-integration) を参照してください。
+
+### llms.txt
+
+```
+https://lism-css.com/llms.txt
+```
 
 ## ドキュメント
 
