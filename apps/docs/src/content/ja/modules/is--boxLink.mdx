@@ -46,9 +46,9 @@ BoxLink内部に**別のリンク**も配置するには、2 を採用してく�
 `<BoxLink>`に`href`を指定すると`<BoxLink>`自体が`<a>`タグになります。
 
 <Preview>
-  <PreviewTitle id='linkbox-demo01'>例</PreviewTitle>
+  <PreviewTitle id='boxlink-demo01'>例</PreviewTitle>
   <PreviewArea p='20'>
-    <BoxLink href="#linkbox-demo01" p="30" bgc="base" bd bdrs="30" hov="o">
+    <BoxLink href="#boxlink-demo01" p="30" bgc="base" bd bdrs="30" hov="o">
       <Group fz="xl" fw="bold">
         <Fragment>Heading text</Fragment>
       </Group>
@@ -60,7 +60,7 @@ BoxLink内部に**別のリンク**も配置するには、2 を採用してく�
   </PreviewArea>
   <PreviewCode slot='tab' label='JSX'>
     ```jsx {1} "href="
-    <BoxLink href="#linkbox-demo01" p="30" bgc="base" bd bdrs="30" hov="o">
+    <BoxLink href="#boxlink-demo01" p="30" bgc="base" bd bdrs="30" hov="o">
       <Group fz="xl" fw="bold">
         Heading text
       </Group>
@@ -74,8 +74,8 @@ BoxLink内部に**別のリンク**も配置するには、2 を採用してく�
     ```
   </PreviewCode>
   <PreviewCode slot='tab' label='HTML'>
-    ```jsx {1} "<a class=\"is--boxLink"
-    <a class="is--boxLink -hov:o -p:30 -bgc:base -bd -bdrs:30" href="#linkbox-demo01">
+    ```html {1} "is--boxLink"
+    <a class="is--boxLink -hov:o -p:30 -bgc:base -bd -bdrs:30" href="#boxlink-demo01">
       <p class="-fz:xl -fw:bold">Heading text</p>
       <p class="-c:text-2 -lh:s -my-s:15">
         Lorem ipsum dolor sit, amet consectetur adipisicing elit, sed do eiusmod tempor. Non facere laudantium ex eos doloribus aut dolore nisi provident.
@@ -94,11 +94,11 @@ BoxLink内部に**別のリンク**も配置するには、2 を採用してく�
 この時、BoxLinkの内部に別のリンクも配置できます。
 
 <Preview>
-  <PreviewTitle id='linkbox-demo02'>例</PreviewTitle>
+  <PreviewTitle id='boxlink-demo02'>例</PreviewTitle>
   <PreviewArea p='20'>
     <BoxLink as="section" p="30" bgc="base" bd bdrs="30" set="transition" hov="bxsh">
       <Group fz="xl" fw="bold">
-        <Link isCoverLink href="#linkbox-demo02">
+        <Link isCoverLink href="#boxlink-demo02">
           <Fragment>Heading link text</Fragment>
         </Link>
       </Group>
@@ -114,7 +114,7 @@ BoxLink内部に**別のリンク**も配置するには、2 を採用してく�
     ```jsx 'isCoverLink'
     <BoxLink p="30" bgc="base" bd bdrs="30" set="transition" hov="bxsh">
       <Group fz="xl" fw="bold">
-        <Link isCoverLink href="#linkbox-demo02">
+        <Link isCoverLink href="#boxlink-demo02">
           Heading link text
         </Link>
       </Group>
@@ -131,10 +131,10 @@ BoxLink内部に**別のリンク**も配置するには、2 を採用してく�
     ```
   </PreviewCode>
   <PreviewCode slot='tab' label='HTML'>
-    ```jsx "is--coverLink"
+    ```html "is--coverLink"
     <div class="is--boxLink -hov:bxsh -p:30 -bgc:base -bd -bdrs:30 set--transition">
       <div class="-fz:xl -fw:bold">
-        <a class="is--coverLink" href="#linkbox-demo02">
+        <a class="is--coverLink" href="#boxlink-demo02">
           Heading Link
         </a>
       </div>
