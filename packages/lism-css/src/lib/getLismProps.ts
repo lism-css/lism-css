@@ -157,9 +157,11 @@ export class LismPropsData {
 
   // prop解析
   analyzeProps(): void {
-    // set / util は合成処理のため先に取り出す
+    // set / util は property class の前に置きたいので先に取り出して push
     const rawSet = this.extractProp('set');
     const rawUtil = this.extractProp('util');
+    mergeSet(undefined, rawSet).forEach((v) => this.addUtil(`set--${v}`));
+    mergeSet(undefined, rawUtil).forEach((v) => this.addUtil(`u--${v}`));
 
     Object.keys(this.attrs).forEach((propName) => {
       // state チェック
@@ -190,10 +192,6 @@ export class LismPropsData {
         this.addStyles(cssVales as Record<string, string | number | undefined>);
       }
     });
-
-    // set / util 合成: base は持たないため rawSet / rawUtil をそのまま合成元に使う
-    mergeSet(undefined, rawSet).forEach((v) => this.lismState.push(`set--${v}`));
-    mergeSet(undefined, rawUtil).forEach((v) => this.addUtil(`u--${v}`));
   }
 
   // Lism Prop 解析
