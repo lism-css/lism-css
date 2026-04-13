@@ -114,11 +114,11 @@ describe('searchDocs with Property Class notation', () => {
       category: 'props',
     }),
     entry({
-      sourcePath: 'modules/l--grid.mdx',
+      sourcePath: 'primitives/l--grid.mdx',
       title: 'Grid / l--grid',
       keywords: ['Grid', 'グリッド'],
       snippet: 'CSS Gridレイアウト。',
-      category: 'modules',
+      category: 'primitives',
     }),
     entry({
       sourcePath: 'tokens.mdx',

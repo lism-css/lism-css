@@ -13,7 +13,7 @@ const guidesDir = existsSync(skillsDir) ? skillsDir : distDir;
 const cache = new Map<string, string>();
 
 /** guides/ ディレクトリから Markdown ファイルを読み込む（キャッシュ付き）。
- *  filename にはサブディレクトリを含む posix 区切りの相対パス（例: `modules/l--flex.md`）を渡せる。 */
+ *  filename にはサブディレクトリを含む posix 区切りの相対パス（例: `primitives/l--flex.md`）を渡せる。 */
 export function loadMarkdown(filename: string): string {
   if (cache.has(filename)) return cache.get(filename)!;
   const filePath = resolve(guidesDir, filename);
