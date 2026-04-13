@@ -50,7 +50,7 @@ LinkBox には主に2通りの使い方があります。
 ```jsx
 <LinkBox as="section" p="30" bgc="base" bd bdrs="30" set="transition" hov="bxsh">
   <Group fz="xl" fw="bold">
-    <Link className="is--coverLink" href="/article/1">
+    <Link isCoverLink href="/article/1">
       Heading link text
     </Link>
   </Group>

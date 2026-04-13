@@ -46,7 +46,7 @@ const dateLocale = lang === 'ja' ? 'ja-JP' : 'en-US';
 	</Frame> -->
 
   <Heading level="3" class="c--postCard__title" fz="m" fw="bold" lh="xs" style={{ '--focus-offset': '2px' }}>
-    <Link href={postUrl} class="is--coverLink">{post.data.title}</Link>
+    <Link href={postUrl} isCoverLink>{post.data.title}</Link>
   </Heading>
   <Text fz="xs" lh="s" o="-10">
     {post.data.description}

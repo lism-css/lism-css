@@ -104,7 +104,7 @@ export const ExampleImgCard = (props) => {
       </Frame>
       <Stack g="30" p="30">
         <h3 className="u--trim -fz:l">
-          <Link className="is--coverLink" href="#card-link">
+          <Link isCoverLink href="#card-link">
             <Fragment>Card with .is--coverLink</Fragment>
           </Link>
         </h3>
@@ -118,7 +118,7 @@ export const ExampleImgCard = (props) => {
     </SideMain>
   </PreviewArea>
   <PreviewCode slot='tab' label='JSX'>
-    ```jsx "isLinkBox" "\<Link " "is--coverLink"
+    ```jsx "isLinkBox" "isCoverLink"
     <SideMain isLinkBox hov="bxsh" set="transition" sideW="50%" bgc="base" bdrs="20" bxsh="10" ov="hidden">
       <Frame isSide ar="16/9" pos="relative">
         <Media src="https://cdn.lism-css.com/img/a-1.jpg" alt="" width="960" height="640" />
@@ -128,7 +128,7 @@ export const ExampleImgCard = (props) => {
       </Frame>
       <Stack g="30" p="30">
         <h3 className="u--trim -fz:l">
-          <Link className="is--coverLink" href="#card-link">
+          <Link isCoverLink href="#card-link">
             Card with .is--coverLink
           </Link>
         </h3>
