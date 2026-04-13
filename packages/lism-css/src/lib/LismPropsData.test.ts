@@ -7,7 +7,7 @@ describe('LismPropsData', () => {
       const instance = new LismPropsData({});
       expect(instance.className).toBe('');
       expect(instance.uClasses).toEqual([]);
-      expect(instance.lismState).toEqual([]);
+      expect(instance.lismTrait).toEqual([]);
       expect(instance.styles).toEqual({});
       expect(instance.attrs).toEqual({});
     });
@@ -168,36 +168,36 @@ describe('LismPropsData', () => {
     });
   });
 
-  describe('analyzeState - State処理', () => {
-    test('isContainer: true でステートクラスが追加される', () => {
+  describe('analyzeTrait - Trait処理', () => {
+    test('isContainer: true でトレイトクラスが追加される', () => {
       const instance = new LismPropsData({ isContainer: true });
-      expect(instance.lismState).toContain('is--container');
+      expect(instance.lismTrait).toContain('is--container');
     });
 
     test('isContainer: false では何も追加されない', () => {
       const instance = new LismPropsData({ isContainer: false });
-      expect(instance.lismState).not.toContain('is--container');
+      expect(instance.lismTrait).not.toContain('is--container');
     });
 
-    test('isWrapper: true でステートクラスが追加される', () => {
+    test('isWrapper: true でトレイトクラスが追加される', () => {
       const instance = new LismPropsData({ isWrapper: true });
-      expect(instance.lismState).toContain('is--wrapper');
+      expect(instance.lismTrait).toContain('is--wrapper');
     });
 
-    test('isWrapper: プリセット値でステートとプリセットクラスが追加される', () => {
+    test('isWrapper: プリセット値でトレイトとプリセットクラスが追加される', () => {
       const instance = new LismPropsData({ isWrapper: 's' });
-      expect(instance.lismState).toContain('is--wrapper -contentSize:s');
+      expect(instance.lismTrait).toContain('is--wrapper -contentSize:s');
     });
 
-    test('isWrapper: カスタム値でステートクラスと変数が追加される', () => {
+    test('isWrapper: カスタム値でトレイトクラスと変数が追加される', () => {
       const instance = new LismPropsData({ isWrapper: '800px' });
-      expect(instance.lismState).toContain('is--wrapper');
+      expect(instance.lismTrait).toContain('is--wrapper');
       expect(instance.styles['--contentSize']).toBe('800px');
     });
 
-    test('isLayer: true でステートクラスが追加される', () => {
+    test('isLayer: true でトレイトクラスが追加される', () => {
       const instance = new LismPropsData({ isLayer: true });
-      expect(instance.lismState).toContain('is--layer');
+      expect(instance.lismTrait).toContain('is--layer');
     });
 
     test('複数のstateが同時に機能する', () => {
@@ -205,8 +205,8 @@ describe('LismPropsData', () => {
         isContainer: true,
         isLayer: true,
       });
-      expect(instance.lismState).toContain('is--container');
-      expect(instance.lismState).toContain('is--layer');
+      expect(instance.lismTrait).toContain('is--container');
+      expect(instance.lismTrait).toContain('is--layer');
     });
   });
 

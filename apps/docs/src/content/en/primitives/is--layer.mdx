@@ -1,0 +1,174 @@
+---
+title: 'Layer (is--layer)'
+navtitle: 'is--layer'
+description: 'is--layer is a class for creating overlay layers absolutely positioned on top of a parent element.'
+---
+import { Media, Layer, Stack, Flex, Box, Columns, Center, Frame, Text } from 'lism-css/astro';
+import { DummyText } from '@lism-css/ui/astro';
+
+`is--layer` is a class for creating overlay layers absolutely positioned on top of a parent element.
+
+
+## CSS
+
+<SrcCode path="src/scss/primitives/trait/_layer.scss" />
+
+
+## Using with Lism Components
+
+A `<Layer>` component is available as an alias for `<Lism isLayer>`.
+
+### Import
+
+<ImportPackage component="Layer" />
+
+
+## Usage
+
+### Example
+
+<Preview>
+  <PreviewTitle>Example</PreviewTitle>
+  <PreviewArea p="15">
+    <Box pos="relative" py="40">
+      <Text fz="2xl" fw="bold" ta="center" lts="l" o="-30">BACKGROUND</Text>
+      <Layer p="15" bgc="purple:10%">
+        <p>Layer Contents...</p>
+      </Layer>
+    </Box>
+  </PreviewArea>
+  <PreviewCode slot="tab" label="JSX">
+    ```jsx
+    <Box pos="relative" py="40">
+      <Text fz="2xl" fw="bold" ta="center" lts="l" o="-30">
+        BACKGROUND
+      </Text>
+      <Layer p="15" bgc="purple:10%">
+        <p>Layer Contents...</p>
+      </Layer>
+    </Box>
+    ```
+  </PreviewCode>
+  <PreviewCode slot="tab" label="HTML">
+    ```html
+    <div class="l--box -pos:relative -py:40">
+      <p class="-fz:2xl -fw:bold -ta:center -lts:l -o:-30">BACKGROUND</p>
+      <div class="is--layer -p:15 -bgc" style="--bgc: color-mix(in srgb, var(--purple) 10%, transparent)">
+        <p>Layer Contents…</p>
+      </div>
+    </div>
+    ```
+  </PreviewCode>
+</Preview>
+
+
+### Using backdrop-filter
+
+You can apply `backdrop-filter` via the `style` prop.
+
+<Preview>
+  <PreviewTitle>Applying a blur to the background</PreviewTitle>
+  <PreviewArea p="15">
+    <Box pos="relative" p="40">
+      <Text fz="2xl" fw="bold" ta="center">BACKGROUND</Text>
+      <Layer style={{ backdropFilter: 'blur(3px)' }} />
+    </Box>
+  </PreviewArea>
+  <PreviewCode slot="tab" label="JSX">
+    ```jsx {3}
+    <Box pos="relative" p="40">
+      <Text fz="2xl" fw="bold" ta="center">
+        BACKGROUND
+      </Text>
+      <Layer style={{ backdropFilter: 'blur(3px)' }} />
+    </Box>
+    ```
+  </PreviewCode>
+  <PreviewCode slot="tab" label="HTML">
+    ```html {3}
+    <div class="l--box -pos:relative -p:40">
+      <p class="-fz:2xl -fw:bold -ta:center">BACKGROUND</p>
+      <div class="is--layer" style="backdrop-filter: blur(3px)"></div>
+    </div>
+    ```
+  </PreviewCode>
+</Preview>
+
+
+<Preview>
+  <PreviewTitle>Adjusting the background color tone</PreviewTitle>
+  <PreviewArea p="15">
+    <Frame ar="2/1" pos="relative">
+      <img src="https://cdn.lism-css.com/img/a-1.jpg" alt="" width="960" height="640" />
+      <Layer style={{ backdropFilter: 'contrast(1.1) sepia(0.4) grayscale(0.4)' }} />
+      <Text pos="absolute" b="0" r="0" p="20" lh="1" c="white" fz="xs" o="-10">Photo by xxxxxx</Text>
+    </Frame>
+  </PreviewArea>
+  <PreviewCode>
+    ```jsx {3,8,12}
+    <Frame ar="2/1" pos="relative">
+      <img src="https://cdn.lism-css.com/img/a-1.jpg" alt="" width="960" height="640" />
+      <Layer style={{ backdropFilter: 'contrast(1.1) sepia(0.4) grayscale(0.4)' }} />
+      <Text pos="absolute" b="0" r="0" p="20" lh="1" c="white" fz="xs" o="-10">
+        Photo by xxxxxx
+      </Text>
+    </Frame>
+    ```
+  </PreviewCode>
+</Preview>
+
+
+### Media Layer
+
+Here is a layout example using `.is--layer` to place an image as a background behind content.
+
+<Preview>
+  <PreviewTitle>Example</PreviewTitle>
+  <PreviewArea p="15">
+    <Box pos="relative" py="50" px="40">
+      <Frame isLayer>
+        <Media src="https://cdn.lism-css.com/img/a-2.jpg" alt="" width="960" height="640" loading="lazy" decoding="async" />
+      </Frame>
+      <Layer bgc="black:50%" />
+      <Stack pos="relative" g="30" c="white">
+        <DummyText length="s" />
+        <DummyText length="l" />
+      </Stack>
+    </Box>
+  </PreviewArea>
+  <PreviewCode slot="tab" label="JSX">
+    ```jsx {2-4} "\<Frame isLayer"
+    <Box pos="relative" py="50" px="40">
+      <Frame isLayer>
+        <Media src="https://cdn.lism-css.com/img/a-2.jpg" alt="" width="960" height="640" loading="lazy" decoding="async" />
+      </Frame>
+      <Layer bgc="black:50%" />
+      <Stack pos="relative" g="30" c="white">
+        <p>Lorem ipsum dolor sit amet. Consectetur adipiscing elit, sed do eiusmod tempor Incididunt ut.</p>
+        <p>
+          Lorem ipsum dolor sit amet. Consectetur adipiscing elit, sed do eiusmod tempor Incididunt ut. Labore et dolore magna aliqua. Ut enim ad minim
+          veniam, quis nostrud exercitation ullamco laboris nisi ut. Aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
+          velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint.
+        </p>
+      </Stack>
+    </Box>
+    ```
+  </PreviewCode>
+  <PreviewCode slot="tab" label="HTML">
+    ```html {2-4}
+    <div class="l--box -pos:relative -py:50 -px:40">
+      <div class="l--frame is--layer">
+        <img src="https://cdn.lism-css.com/img/a-2.jpg" width="960" height="640" loading="lazy" decoding="async" />
+      </div>
+      <div class="is--layer -bgc" style="--bgc: color-mix(in srgb, var(--black) 50%, transparent)"></div>
+      <div class="l--stack -pos:relative -g:30 -c" style="--c: var(--white)">
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor.</p>
+        <p>
+          Lorem ipsum dolor sit, amet consectetur adipisicing elit, sed do eiusmod tempor. Non facere laudantium ex eos doloribus aut dolore nisi
+          provident libero, eum nulla sunt, porro sed dicta. Impedit ullam eveniet obcaecati minima.
+        </p>
+      </div>
+    </div>
+    ```
+  </PreviewCode>
+</Preview>

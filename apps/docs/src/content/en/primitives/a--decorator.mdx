@@ -1,0 +1,71 @@
+---
+title: 'Decorator (a--decorator)'
+navtitle: 'a--decorator'
+description: 'a--decorator is a class used as an empty element for decorating content.'
+---
+
+import { Decorator, Box, Flex, Grid, Spacer } from 'lism-css/astro';
+import { DummyText } from '@lism-css/ui/astro';
+
+`a--decorator` is a class used as an empty element for decorating content.
+
+
+## Lism Component
+
+`<Decorator>` is rendered with `aria-hidden="true"` by default.
+
+### Import
+
+<ImportPackage component="Decorator" />
+
+### HTML Structure
+
+```pug
+div.a--decorator
+```
+
+### Props
+
+|Prop|Description|
+|---|---|
+| `size` | Sets the decorator's size (width and height) at once.<br/>When specified, the value is passed to `w` (`width`) and `ar='1/1'` (`aspect-ratio:1/1`) is applied automatically. |
+| `clipPath`,`boxSizing` | Passed to `style.clipPath` and `style.boxSizing` respectively. |
+
+
+## Usage
+
+Here are some decoration examples using `<Decorator>`.
+
+### Basic example
+
+<Preview>
+  <PreviewTitle>Example</PreviewTitle>
+  <PreviewArea p="20">
+    <Box p="30" pos="relative">
+      <DummyText />
+      <Decorator size="1.25em" pos="absolute" t="0" l="0" bd-x-s bd-y-s bdc="current" />
+      <Decorator size="1.25em" pos="absolute" r="0" b="0" bd-x-e bd-y-e bdc="current" />
+    </Box>
+  </PreviewArea>
+  <PreviewCode slot="tab" label="JSX">
+    ```jsx
+    <Box p="30" pos="relative">
+      <p>
+        Lorem ipsum dolor sit amet. Consectetur adipiscing elit, sed do eiusmod tempor Incididunt ut. Labore et dolore magna aliqua. Ut enim ad minim
+        veniam, quis nostrud exercitation ullamco laboris nisi ut.
+      </p>
+      <Decorator size="1.25em" pos="absolute" t="0" l="0" bd-x-s bd-y-s bdc="current" />
+      <Decorator size="1.25em" pos="absolute" r="0" b="0" bd-x-e bd-y-e bdc="current" />
+    </Box>
+    ```
+  </PreviewCode>
+  <PreviewCode slot="tab" label="HTML">
+    ```jsx
+    <div class="l--box -p:30 -pos:relative">
+      <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit, sed do eiusmod tempor. Non facere laudantium ex eos doloribus aut dolore nisi.</p>
+      <div class="a--decorator -pos:absolute -t:0 -l:0 -bd-x-s -bd-y-s -bdc:current -ar:1/1 -w" style="--w:1.25em" aria-hidden="true"></div>
+      <div class="a--decorator -pos:absolute -r:0 -b:0 -bd-x-e -bd-y-e -bdc:current -ar:1/1 -w" style="--w:1.25em" aria-hidden="true"></div>
+    </div>
+    ```
+  </PreviewCode>
+</Preview>

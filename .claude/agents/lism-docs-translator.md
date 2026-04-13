@@ -66,7 +66,7 @@ ja版で日本語プレースホルダーテキストが使われている箇所
 |--------|------|
 | コンポーネント | component |
 | トークン | token |
-| モジュール | module |
+| プリミティブ | primitive |
 | レイアウト | layout |
 | ユーティリティ | utility |
 | プロップ / Props | prop / props |

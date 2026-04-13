@@ -1,0 +1,89 @@
+---
+title: 'Stack (l--stack)'
+navtitle: 'l--stack'
+description: 'l--stack is a class that arranges multiple elements vertically using a Flex layout.'
+---
+import { Stack } from 'lism-css/astro';
+import { DummyText } from '@lism-css/ui/astro';
+
+`l--stack` is a class that **arranges multiple elements vertically using a Flex layout**.
+
+## CSS
+
+<SrcCode path="src/scss/primitives/layout/_stack.scss" />
+
+
+## Lism Component
+
+### Import
+
+<ImportPackage component="Stack" />
+
+
+## Usage
+
+### Basic usage
+
+<Preview>
+  <PreviewTitle>Simple `<Stack>` example</PreviewTitle>
+  <PreviewArea p="30">
+    <Stack g="20" className="has--itemGuide">
+      <p>Content</p>
+      <p>Content</p>
+      <p>Content</p>
+    </Stack>
+  </PreviewArea>
+  <PreviewCode slot="tab" label="JSX">
+  ```jsx
+  <Stack g="20">
+    <p>Content</p>
+    <p>Content</p>
+    <p>Content</p>
+  </Stack>
+  ```
+  </PreviewCode>
+  <PreviewCode slot="tab" label="HTML">
+  ```jsx
+  <div class="l--stack -g:20">
+    <p>Content</p>
+    <p>Content</p>
+    <p>Content</p>
+  </div>
+  ```
+  </PreviewCode>
+</Preview>
+
+
+
+### Center-aligned layout
+
+The combination of `<Stack ai="center">` (`.l--stack.-ai:center`) enables what Every Layout calls **"intrinsic centering"** — content is centered only when it is short enough.
+
+<Preview>
+  <PreviewTitle>Intrinsic centering</PreviewTitle>
+  <PreviewArea resize>
+    <Stack ai="center" g="20" p="30" className="has--itemGuide">
+      <h3 role="presentation">Heading</h3>
+      <DummyText length="s" />
+      <DummyText length="l" />
+    </Stack>
+  </PreviewArea>
+  <PreviewCode slot="tab" label="JSX">
+  ```jsx 'ai="center"'
+  <Stack ai="center" g="20" p="30">
+    <h3>Heading</h3>
+    <p>...</p>
+    <p>...</p>
+  </Stack>
+  ```
+  </PreviewCode>
+  <PreviewCode slot="tab" label="HTML">
+  ```jsx "-ai:center"
+  <div class="l--stack -ai:center -p:30 -g:20">
+    <h3>Heading</h3>
+    <p>...</p>
+    <p>...</p>
+  </div>
+  ```
+  </PreviewCode>
+</Preview>

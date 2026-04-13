@@ -1,0 +1,62 @@
+---
+title: 'is--vertical'
+navtitle: 'is--vertical'
+description: 'is--vertical は、要素に縦書きモード（writing-mode）を適用するクラスです。'
+---
+import { Flow } from 'lism-css/astro';
+import { DummyText } from '@lism-css/ui/astro';
+
+`is--vertical` は、要素に縦書きモード（`writing-mode`）を適用するクラスです。
+
+縦書き用の値は、トークン（`--vertical-mode`）で管理しています。
+これにより、`lang`属性に合わせて変数を上書きすることで、`vertical-rl`か`vertical-lr`を切り替えることができるようにもなっています。
+
+レスポンシブ対応として、特定のブレイクポイント以上でのみ縦書きにするバリエーションも用意されています。
+
+| クラス名 | 説明 |
+|---|---|
+| `is--vertical`| 常に縦書きモードにする |
+| `is--vertical@sm`| smサイズ以上で縦書きにする |
+| `is--vertical@md`| mdサイズ以上で縦書きにする |
+
+`is--vertical@[sm|md]`を使う場合は、**`.set--bp`クラスを併用する必要があります。**
+
+
+## CSS
+
+<SrcCode path="src/scss/primitives/trait/_vertical.scss" />
+
+
+## Usage
+
+### smサイズ以上で縦書きにする例
+
+<Preview>
+  <PreviewTitle>smサイズ以上で縦書きにする例</PreviewTitle>
+  <PreviewArea p="0" resize>
+    <Flow set="gutter" py="20" w="100%" h="20em" className="is--vertical@sm set--bp">
+      <DummyText lang="ja" length="s" />
+      <DummyText lang="ja" length="l" offset="3" />
+    </Flow>
+  </PreviewArea>
+  <PreviewCode slot="tab" label="HTML">
+  ```html "is--vertical@sm set--bp"
+  <div class="l--flow is--vertical@sm set--bp set--gutter -py:20 -w:100% -h" style="--h: 20em">
+    <p>ロレム・イプサムの座り雨。目まぐるしい文章の流れの中で、それは静かに歩く仮の言葉です。</p>
+    <p>
+      Elitも穏やかに続いていきますが、積み重ねられてきた「LiberroyとFoogの取り組み」は、決するための答えというより、余白のようなものです。作業が進むにつれて、工夫や考えとともに関心が折り重なりながらも、必要以上に主張せず彼らの作品は私たちに一定の示唆を与えてくれます。
+    </p>
+  </div>
+  ```
+  </PreviewCode>
+  <PreviewCode slot="tab" label="JSX">
+    ```jsx "is--vertical@sm set--bp"
+    <Flow set="gutter" py="20" w="100%" h="20em" className="is--vertical@sm set--bp">
+      <p>ロレム・イプサムの座り雨。目まぐるしい文章の流れの中で、それは静かに歩く仮の言葉です。</p>
+      <p>
+        Elitも穏やかに続いていきますが、積み重ねられてきた「LiberroyとFoogの取り組み」は、余白のようなものです。作業が進むにつれて、工夫や考えとともに関心が折り重なりながらも、必要以上に主張せず彼らの作品は私たちに一定の示唆を与えてくれます。
+      </p>
+    </Flow>
+    ```
+  </PreviewCode>
+</Preview>

@@ -1,0 +1,89 @@
+---
+title: 'Stack (l--stack)'
+navtitle: 'l--stack'
+description: 'l--stack は、複数の要素を Flex レイアウトで縦並びに配置するクラスです。'
+---
+import { Stack } from 'lism-css/astro';
+import { DummyText } from '@lism-css/ui/astro';
+
+`l--stack` は、**複数の要素を Flex レイアウトで縦並びに配置する**ためのクラスです。
+
+
+## CSS
+
+<SrcCode path="src/scss/primitives/layout/_stack.scss" />
+
+
+## Lismコンポーネント
+
+### Import
+
+<ImportPackage component="Stack" />
+
+
+## Usage
+
+### 基本的な使い方
+
+<Preview>
+  <PreviewTitle>シンプルな`<Stack>`の例</PreviewTitle>
+  <PreviewArea p="30">
+    <Stack g="20" className="has--itemGuide">
+      <p>コンテンツ</p>
+      <p>コンテンツ</p>
+      <p>コンテンツ</p>
+    </Stack>
+  </PreviewArea>
+  <PreviewCode slot="tab" label="JSX">
+  ```jsx
+  <Stack g="20">
+    <p>コンテンツ</p>
+    <p>コンテンツ</p>
+    <p>コンテンツ</p>
+  </Stack>
+  ```
+  </PreviewCode>
+  <PreviewCode slot="tab" label="HTML">
+  ```jsx
+  <div class="l--stack -g:20">
+    <p>コンテンツ</p>
+    <p>コンテンツ</p>
+    <p>コンテンツ</p>
+  </div>
+  ```
+  </PreviewCode>
+</Preview>
+
+
+### センター寄せレイアウト
+
+`<Stack ai="center">`( `.l--stack.-ai:center` )の組み合わせで、Every Layout で言うところの **"内在的な中央寄せ"** （コンテンツが短い時だけ中央寄せ）にできます。
+
+<Preview>
+  <PreviewTitle>内在的な中央寄せ</PreviewTitle>
+  <PreviewArea resize>
+    <Stack ai="center" g="20" p="30" className="has--itemGuide">
+      <h3 role="presentation">見出し</h3>
+      <DummyText length="s" />
+      <DummyText length="l" />
+    </Stack>
+  </PreviewArea>
+  <PreviewCode slot="tab" label="JSX">
+  ```jsx 'ai="center"'
+  <Stack ai="center" g="20" p="30">
+    <h3>見出し</h3>
+    <p>...</p>
+    <p>...</p>
+  </Stack>
+  ```
+  </PreviewCode>
+  <PreviewCode slot="tab" label="HTML">
+  ```jsx "-ai:center"
+  <div class="l--stack -ai:center -p:30 -g:20">
+    <h3>見出し</h3>
+    <p>...</p>
+    <p>...</p>
+  </div>
+  ```
+  </PreviewCode>
+</Preview>

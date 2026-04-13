@@ -19,8 +19,8 @@ function isAngleBracketNotation(input: string): boolean {
   return /^<[^<>]+>$/.test(input.trim());
 }
 
-/** modules/*.md の先頭行 `# l--flex / \`<Flex>\`` からクラス名とコンポーネント名を抽出する */
-function parseModuleHeading(md: string): { className: string; componentName?: string } | null {
+/** primitives/*.md の先頭行 `# l--flex / \`<Flex>\`` からクラス名とコンポーネント名を抽出する */
+function parsePrimitiveHeading(md: string): { className: string; componentName?: string } | null {
   const firstLine = md.split('\n', 1)[0] ?? '';
   const match = firstLine.match(/^#\s+((?:l|is|a|c)--[A-Za-z0-9]+)(?:\s*\/\s*`<([A-Za-z0-9]+)>`)?/);
   if (!match) return null;
@@ -30,16 +30,16 @@ function parseModuleHeading(md: string): { className: string; componentName?: st
 let classAliasMap: Map<string, string> | null = null;
 let componentAliasMap: Map<string, string> | null = null;
 
-/** modules/*.md を走査して、クラス名由来 / React コンポーネント名由来の alias map を構築する（遅延初期化・キャッシュ）。
+/** primitives/*.md を走査して、クラス名由来 / React コンポーネント名由来の alias map を構築する（遅延初期化・キャッシュ）。
  *  angle-bracket 形式の問い合わせ（`<Vertical>` など）には componentAliasMap のみを照合し、
- *  クラス専用モジュール（例: is--vertical）を誤ってヒットさせないために分離している。 */
+ *  クラス専用プリミティブ（例: is--vertical）を誤ってヒットさせないために分離している。 */
 function buildAliasMaps(): void {
   if (classAliasMap && componentAliasMap) return;
   const classMap = new Map<string, string>();
   const componentMap = new Map<string, string>();
   for (const filename of getGuideFilenames()) {
-    if (!filename.startsWith('modules/')) continue;
-    const parsed = parseModuleHeading(loadMarkdown(filename));
+    if (!filename.startsWith('primitives/')) continue;
+    const parsed = parsePrimitiveHeading(loadMarkdown(filename));
     if (!parsed) continue;
     classMap.set(normalizeComponentKey(parsed.className), filename);
     if (parsed.componentName) {
@@ -86,9 +86,9 @@ export function registerGetComponent(server: McpServer): void {
         const rawLower = name.toLowerCase();
         const isAngle = isAngleBracketNotation(name);
 
-        // --- 1) lism-css コア: modules/ の個別ファイルを alias map で解決 ---
+        // --- 1) lism-css コア: primitives/ の個別ファイルを alias map で解決 ---
         //   angle-bracket 形式 (`<Vertical>`) は React コンポーネント alias のみと照合し、
-        //   クラス専用モジュール (is--vertical 等) への false positive を避ける。
+        //   クラス専用プリミティブ (is--vertical 等) への false positive を避ける。
         if (!pkg || pkg === 'lism-css') {
           const componentHit = getComponentAliasMap().get(normalizedKey);
           if (componentHit) {
@@ -152,7 +152,7 @@ export function registerGetComponent(server: McpServer): void {
             for (const [key, file] of map) {
               if (key.includes(normalizedKey) && !seenFiles.has(file)) {
                 seenFiles.add(file);
-                moduleCandidates.push(file.replace(/^modules\//, '').replace(/\.md$/, ''));
+                moduleCandidates.push(file.replace(/^primitives\//, '').replace(/\.md$/, ''));
               }
             }
           }

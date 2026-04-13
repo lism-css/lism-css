@@ -1,0 +1,60 @@
+---
+title: 'Container (is--container)'
+navtitle: 'is--container'
+description: 'is--container は、container-type を宣言してコンテナクエリを有効にするためのクラスです。'
+---
+import { Container, Wrapper, Box, Lism, Spacer } from "lism-css/astro";
+
+`is--container` は、`container-type` を宣言してコンテナクエリを有効にするためのクラスです。
+
+
+## CSS
+
+<SrcCode path="src/scss/primitives/trait/_container.scss" />
+
+
+## Lismコンポーネントでの使い方
+
+`isContainer` プロパティで**どのコンポーネントからでも呼び出せるようになっています。**
+
+| プロパティ | 出力 |
+|---|---|
+| `isContainer`| `.is--container` |
+
+さらに、`<Lism isContainer>` のエイリアスとして、`<Container>` も用意しています。
+
+### Import
+
+<ImportPackage component="Container" />
+
+
+## Usage
+
+### 使用例
+
+<Preview>
+  <PreviewTitle>例</PreviewTitle>
+  <PreviewArea resize p="15">
+    <Container isWrapper="s" p="20">
+      <Box bd p={['10', '30']}>
+        <Fragment>このBOXは、paddingが切り替わります。</Fragment>
+      </Box>
+    </Container>
+  </PreviewArea>
+  <PreviewCode slot="tab" label="JSX">
+    ```jsx
+    <Container isWrapper="s" p="20">
+      <Box bd p={['10', '30']}>
+        このBOXは、paddingが切り替わります。
+      </Box>
+    </Container>
+    ```
+  </PreviewCode>
+  <PreviewCode slot="tab" label="HTML">
+    ```html
+    <div class="is--container is--wrapper -contentSize:s -p:20">
+      <div class="l--box -bd -p:10 -p_sm" style="--p_sm: var(--s30)">このBOXは、paddingが切り替わります。</div>
+    </div>
+    ```
+  </PreviewCode>
+</Preview>

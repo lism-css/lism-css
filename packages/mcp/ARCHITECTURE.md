@@ -93,7 +93,7 @@ packages/mcp/
         ▼
 ② .claude/skills/lism-css-guide/
         ├─ *.md                  # ルート直下のトピック別ガイド
-        └─ modules/{l--|is--|a--}*.md  # モジュール単位の詳細ファイル
+        └─ modules/{l--|is--|a--}*.md  # プリミティブ単位の詳細ファイル
         │
         ├─ load-markdown.ts が再帰的に直接参照（開発・テスト時）
         │   skillsDir が存在すれば優先、なければ distDir にフォールバック
@@ -120,12 +120,12 @@ packages/mcp/
 | `components-ui` | components-ui.md | UI コンポーネント（Accordion, Modal, Tabs, Button 等） |
 | `base-styles` | base-styles.md | ベーススタイリング・リセット CSS・HTML 要素スタイル |
 | `set-class` | set-class.md | Set クラス（set--plain, set--shadow, set--hov 等） |
-| `module-class` | module-class.md | Module クラスプレフィックス（is--, l--, a--, c--） |
+| `primitive-class` | primitive-class.md | Primitive クラスプレフィックス（is--, l--, a--）と Component クラス（c--） |
 | `utility-class` | utility-class.md | ユーティリティクラス（u--trim, u--cbox 等） |
 | `css-rules` | css-rules.md | CSS 設計方法論・Layer 構造・命名規則 |
 | `responsive` | prop-responsive.md | レスポンシブ設計・ブレークポイント・コンテナクエリ |
 
-個別モジュール（`l--flex`, `is--container`, `a--icon` 等）は `get_guide` の topic としては露出しません。代わりに `get_component` から名前ベースで取得できます。
+個別プリミティブ（`l--flex`, `is--container`, `a--icon` 等）は `get_guide` の topic としては露出しません。代わりに `get_component` から名前ベースで取得できます。
 
 
 ## 処理の流れ

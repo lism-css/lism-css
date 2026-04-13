@@ -27,7 +27,7 @@
 | グループ | ディレクトリ | 内容 | 照合対象 |
 |---|---|---|---|
 | A | `core-components/` | Lism コアコンポーネント | `lism-css` のコンポーネント・Props 定義 |
-| B | `modules/` | CSS モジュール | `lism-css` の SCSS・コンポーネント |
+| B | `primitives/` | CSS プリミティブ | `lism-css` の SCSS・コンポーネント |
 | C | `props/` | Props システム | `lism-css` の config・SCSS |
 | D | `ui/`（`examples/` 除く） | `@lism-css/ui` コンポーネント | `lism-ui` のソース |
 | E | `ui/examples/` | コンポーネント組み合わせ例 | `lism-css` のコンポーネント |
@@ -76,14 +76,14 @@
 修正はサブエージェントが1パスで実施済み。ユーザーは `git diff` で確認できる。
 
 
-## モジュールドキュメント (`modules/{l,a,is}--*.mdx`) の構成ポイント
+## プリミティブクラスに関するドキュメント (`primitives/{l,a,is}--*.mdx`) の構成ポイント
 
 既存ファイルは構成が統一済み。更新時は内容修正に留め、以下のポイントを崩さないこと。
 
 ### 共通
 
 - **セクションの並び**: 導入文 → `## CSS` → Lismコンポーネントのセクション → `## Usage` → 必要なら補足セクション
-- **CSS セクション**: `<SrcCode>` を使う（`<EmbedCode>` は使わない）。CSS ファイルを持たないモジュール（l--box, a--decorator 等）は省略
+- **CSS セクション**: `<SrcCode>` を使う（`<EmbedCode>` は使わない）。CSS ファイルを持たないプリミティブ（l--box, a--decorator 等）は省略
 - **Usage の見出し**: 使用例（またはグループ）ごとに `###` を付ける（目次に表示される）
 - **専用Props**: そのコンポーネント固有のPropsのみ記載。共通Props（Grid/Flex 等）への参照リンクは書かない
 - **補足セクション**: `## l--flow を入れ子にする時の注意点`、`## Grid を使って似たレイアウトを構成する例` 等、Usage 後の補足セクションはそのまま維持
@@ -96,7 +96,7 @@
 | `a--*` | `## Lismコンポーネント` | `### Import` → `### 出力されるHTML構造`（pug 記法）→（必要なら `### 専用Props`） |
 | `is--*` | `## Lismコンポーネントでの使い方` | 専用コンポーネント（例: `<Layer>`, `<BoxLink>`）を持つものだけ `### Import` を付ける。`isXxx` プロパティで使えるものは冒頭に対応表を置く。`is--vertical` のように Lism コンポーネントを持たない場合はこのセクション自体を省略 |
 
-### 英語版 (`en/modules/`) の見出し対応
+### 英語版 (`en/primitives/`) の見出し対応
 
 - `## Lismコンポーネント` → `## Lism Component`
 - `## Lismコンポーネントでの使い方` → `## Usage with Lism Component`

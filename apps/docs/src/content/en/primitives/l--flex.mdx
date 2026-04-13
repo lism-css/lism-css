@@ -1,0 +1,115 @@
+---
+title: 'Flex (l--flex)'
+navtitle: 'l--flex'
+description: 'l--flex is a class for arranging content using Flexbox.'
+---
+
+import { Box, Flex, Lism } from 'lism-css/astro';
+
+`l--flex` is a class for **arranging content using Flexbox**.
+
+
+## CSS
+
+<SrcCode path="src/scss/primitives/layout/_flex.scss" />
+
+
+## Lism Component
+
+### Import
+
+<ImportPackage component="Flex" />
+
+
+## Usage
+
+### Basic usage
+
+<Preview>
+  <PreviewTitle>`<Flex>`</PreviewTitle>
+  <PreviewArea p="30">
+    <Flex className="has--itemGuide">
+      <div>Item</div>
+      <div>Item</div>
+      <div>Item</div>
+    </Flex>
+  </PreviewArea>
+  <PreviewCode slot="tab" label="JSX">
+  ```jsx
+  <Flex>
+    <div>Item</div>
+    <div>Item</div>
+    <div>Item</div>
+  </Flex>
+  ```
+  </PreviewCode>
+  <PreviewCode slot="tab" label="HTML">
+  ```html
+  <div class="l--flex">
+    <div>Item</div>
+    <div>Item</div>
+    <div>Item</div>
+  </div>
+  ```
+  </PreviewCode>
+</Preview>
+
+### Using flex props
+
+<Preview>
+  <PreviewTitle>Using flex props</PreviewTitle>
+  <PreviewArea resize p="30">
+    <Flex g="20" fxw="wrap" jc={['baseline', 'center']} className="has--itemGuide">
+      <div>Flex Content</div>
+      <div>Flex Content</div>
+      <div>Flex Content</div>
+    </Flex>
+  </PreviewArea>
+  <PreviewCode slot="tab" label="JSX">
+  ```jsx
+  <Flex fxw="wrap" jc="center" g="20">
+    <div>Flex Content</div>
+    <div>Flex Content</div>
+    <div>Flex Content</div>
+  </Flex>
+  ```
+  </PreviewCode>
+  <PreviewCode slot="tab" label="HTML">
+  ```html
+  <div class="l--flex -fxw:wrap -g:20 -jc:center">
+    <div>Flex Content</div>
+    <div>Flex Content</div>
+    <div>Flex Content</div>
+  </div>
+  ```
+  </PreviewCode>
+</Preview>
+
+
+### Child element flex props
+
+<Preview>
+  <PreviewTitle>Using flex props on child elements</PreviewTitle>
+  <PreviewArea resize p="30">
+    <Flex g="20" className="has--itemGuide">
+      <Lism fx="1">Flex Content</Lism>
+      <Lism fxb={['33%', '25%']}>Flex Content</Lism>
+    </Flex>
+  </PreviewArea>
+  <PreviewCode slot="tab" label="JSX">
+  ```jsx
+  <Flex g="20">
+    <Lism fx="1">Flex Content</Lism>
+    <Lism fxb={['33%', '25%']}>Flex Content</Lism>
+  </Flex>
+  ```
+  </PreviewCode>
+  <PreviewCode slot="tab" label="HTML">
+  ```html
+  <div class="l--flex -g:20">
+    <div class="-fx:1">Flex Content</div>
+    <div class="-fxb -fxb_sm" style="--fxb: 33%; --fxb_sm: 25%">Flex Content</div>
+  </div>
+  ```
+  </PreviewCode>
+</Preview>

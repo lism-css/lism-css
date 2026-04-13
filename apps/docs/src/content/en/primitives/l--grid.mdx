@@ -1,0 +1,224 @@
+---
+title: 'Grid (l--grid)'
+navtitle: 'l--grid'
+description: 'l--grid is a class for arranging content using CSS Grid.'
+---
+
+import { Grid, Lism, Box, Layer, Center, Decorator, Frame, Media } from 'lism-css/astro';
+import { DummyText } from '@lism-css/ui/astro';
+
+
+`l--grid` is a class for **arranging content in a Grid layout**.
+
+
+## CSS
+
+<SrcCode path="src/scss/primitives/layout/_grid.scss" />
+
+
+## Lism Component
+
+### Import
+
+<ImportPackage component="Grid" />
+
+
+## Usage
+
+### Basic usage
+
+<Preview>
+  <PreviewTitle>Main content in the center</PreviewTitle>
+  <PreviewArea p="15">
+    <Grid gtc="auto 1fr auto" g="15">
+      <Center p="20" bgc="base-2">L</Center>
+      <Center p="20" bd>Center</Center>
+      <Center p="20" bgc="base-2">R</Center>
+    </Grid>
+  </PreviewArea>
+  <PreviewCode slot="tab" label="JSX">
+    ```jsx
+    <Grid gtc="auto 1fr auto" g="15">
+      <Center p="20" bgc="base-2">
+        L
+      </Center>
+      <Center p="20" bd>
+        Center
+      </Center>
+      <Center p="20" bgc="base-2">
+        R
+      </Center>
+    </Grid>
+    ```
+  </PreviewCode>
+  <PreviewCode slot="tab" label="HTML">
+    ```html
+    <div class="l--grid -gtc -g:15" style="--gtc: auto 1fr auto">
+      <div class="l--center -p:20 -bgc:base-2">L</div>
+      <div class="l--center -p:20 -bd">Center</div>
+      <div class="l--center -p:20 -bgc:base-2">R</div>
+    </div>
+    ```
+  </PreviewCode>
+</Preview>
+
+
+
+### Switching grid areas at breakpoints
+
+<Preview>
+  <PreviewTitle>Switching grid areas at breakpoints</PreviewTitle>
+  <PreviewArea resize p="15">
+    <Grid g="15" gtc={['1fr 1fr', '8em 1fr 8em']} gta={[`'main main' 'left right'`, `'left main right'`]}>
+      <Box ga="left" p="15" bgc="base-2">Left</Box>
+      <Box ga="main" p="15" bd>Center</Box>
+      <Box ga="right" p="15" bgc="base-2">Right</Box>
+    </Grid>
+  </PreviewArea>
+  <PreviewCode slot="tab" label="JSX">
+    ```jsx
+    <Grid g="15" gtc={['1fr 1fr', '8em 1fr 8em']} gta={[`'main main' 'left right'`, `'left main right'`]}>
+      <Box ga="left" p="15" bgc="base-2">
+        Left
+      </Box>
+      <Box ga="main" p="15" bd>
+        Center
+      </Box>
+      <Box ga="right" p="15" bgc="base-2">
+        Right
+      </Box>
+    </Grid>
+    ```
+  </PreviewCode>
+  <PreviewCode slot="tab" label="HTML">
+    ```html
+    <div
+      class="l--grid -gta -gta_sm -gtc -gtc_sm -g:15"
+      style="--gta: 'main main' 'left right'; --gta_sm: 'left main right'; --gtc: 1fr 1fr; --gtc_sm: 8em 1fr 8em"
+    >
+      <div class="l--box -p:15 -bgc:base-2 -ga" style="--ga: left">Left</div>
+      <div class="l--box -p:15 -bd -ga" style="--ga: main">Center</div>
+      <div class="l--box -p:15 -bgc:base-2 -ga" style="--ga: right">Right</div>
+    </div>
+    ```
+  </PreviewCode>
+</Preview>
+
+
+### Overlapping child elements
+
+Here is an example of stacking elements using `grid-area:1/1` (`.-ga:1`) without using `position:absolute`.
+
+<Preview>
+  <PreviewTitle>Overlapping Grid child elements</PreviewTitle>
+  <PreviewArea p="15">
+    <Grid ar="16/9">
+      <Frame ga="1/1" w="100%" h="100%" pos="relative">
+        <Media src="https://cdn.lism-css.com/img/a-1.jpg" alt="" inferSize />
+        <Layer style={{ backdropFilter: 'blur(10px)' }} bgc="rgb(0 0 0 / 40%)" />
+      </Frame>
+      <Center ga="1/1" fz="3xl" z="1" c="white">SAMPLE TEXT</Center>
+    </Grid>
+  </PreviewArea>
+  <PreviewCode slot="tab" label="JSX">
+    ```jsx 'ga="1/1"'
+    <Grid ar="16/9">
+      <Frame ga="1/1" w="100%" h="100%" pos="relative">
+        <Media src="https://cdn.lism-css.com/img/a-1.jpg" alt="" inferSize />
+        <Layer style={{ backdropFilter: 'blur(10px)' }} bgc="rgb(0 0 0 / 40%)" />
+      </Frame>
+      <Center ga="1/1" fz="3xl" z="1" c="white">
+        SAMPLE TEXT
+      </Center>
+    </Grid>
+    ```
+  </PreviewCode>
+  <PreviewCode slot="tab" label="HTML">
+    ```jsx "-ga:1"
+    <div class="l--grid -ar:16/9">
+      <div class="l--frame -ga:1/1 -w:100% -h:100% -pos:relative">
+        <img src="https://cdn.lism-css.com/img/a-1.jpg" />
+        <div class="is--layer -bgc" style="backdrop-filter:blur(10px);--bgc:rgb(0 0 0 / 40%)"></div>
+      </div>
+      <div class="l--center -ga:1/1 -fz:3xl -z:1 -c" style="--c:var(--white)">
+        SAMPLE TEXT
+      </div>
+    </div>
+    ```
+  </PreviewCode>
+</Preview>
+
+
+### Using subgrid
+
+<Preview>
+  <PreviewTitle>Example: building a latest-articles list</PreviewTitle>
+  <PreviewArea p="20" resize>
+    <Grid gtc={['auto', 'auto 1fr']} bd-b>
+      <Grid gtc="subgrid" gc="1/-1" g="20" ai="center" bd-t py="20" px="10">
+        <Grid gtc={['auto auto', '1fr 1fr']} g="20" jc="start" ai="center">
+          <Lism fz="s">2024.05.31</Lism>
+          <Lism d="inline-flex" jc="center" fz="xs" lh="s" bgc="text" c="base" py="5" px="10" bdrs="10">NEWS</Lism>
+        </Grid>
+        <DummyText util="trim" lang="ja" length="s" as="a" href="####" hov="o" c="inherit" td="none" lh="s" />
+      </Grid>
+      <Grid gtc="subgrid" gc="1/-1" g="20" ai="center" bd-t py="20" px="10">
+        <Grid gtc={['auto auto', '1fr 1fr']} g="20" jc="start" ai="center">
+          <Lism fz="s">2024.05.29</Lism>
+          <Lism d="inline-flex" jc="center" fz="xs" lh="s" bgc="text" c="base" py="5" px="10" bdrs="10">TIPS</Lism>
+        </Grid>
+        <DummyText util="trim" lang="ja" offset="2" as="a" href="####" hov="o" c="inherit" td="none" lh="s" />
+      </Grid>
+      <Grid gtc="subgrid" gc="1/-1" g="20" ai="center" bd-t py="20" px="10">
+        <Grid gtc={['auto auto', '1fr 1fr']} g="20" jc="start" ai="center">
+          <Lism fz="s">2024.05.18</Lism>
+          <Lism d="inline-flex" jc="center" fz="xs" lh="s" bgc="text" c="base" py="5" px="10" bdrs="10">COLUMN</Lism>
+        </Grid>
+        <DummyText util="trim" lang="ja" length="l" offset="6" as="a" href="####" hov="o" c="inherit" td="none" lh="s" />
+      </Grid>
+    </Grid>
+  </PreviewArea>
+  <PreviewCode slot="tab" label="JSX">
+    ```jsx
+    <Grid gtc={['auto', 'auto 1fr']} bd-b>
+      <Grid gtc="subgrid" gc="1/-1" g="20" ai="center" bd-t py="20" px="10">
+        <Grid gtc={['auto auto', '1fr 1fr']} g="20" jc="start" ai="center">
+          <Lism fz="s">2024.05.31</Lism>
+          <Lism d="inline-flex" jc="center" fz="xs" lh="s" bgc="text" c="base" py="5" px="10" bdrs="10">
+            NEWS
+          </Lism>
+        </Grid>
+        <Text util="trim" as="a" href="####" hov="o" c="inherit" td="none" lh="s">
+          ロレム・イプサムの座り雨。目まぐるしい文章の流れの中で、それは静かに歩く仮の言葉です。
+        </Text>
+      </Grid>
+      <Grid gtc="subgrid" gc="1/-1" g="20" ai="center" bd-t py="20" px="10">
+        <Grid gtc={['auto auto', '1fr 1fr']} g="20" jc="start" ai="center">
+          <Lism fz="s">2024.05.29</Lism>
+          <Lism d="inline-flex" jc="center" fz="xs" lh="s" bgc="text" c="base" py="5" px="10" bdrs="10">
+            TIPS
+          </Lism>
+        </Grid>
+        <Text util="trim" as="a" href="####" hov="o" c="inherit" td="none" lh="s">
+          それは静かに歩く仮の言葉です。Elitも穏やかに続いていきますが、積み重ねられてきた「LiberroyとFoogの取り組み」は、余白のようなものです。
+        </Text>
+      </Grid>
+      <Grid gtc="subgrid" gc="1/-1" g="20" ai="center" bd-t py="20" px="10">
+        <Grid gtc={['auto auto', '1fr 1fr']} g="20" jc="start" ai="center">
+          <Lism fz="s">2024.05.18</Lism>
+          <Lism d="inline-flex" jc="center" fz="xs" lh="s" bgc="text" c="base" py="5" px="10" bdrs="10">
+            COLUMN
+          </Lism>
+        </Grid>
+        <Text util="trim" as="a" href="####" hov="o" c="inherit" td="none" lh="s">
+          作業が進むにつれて、工夫や考えとともに関心が折り重なりながらも、必要以上に主張せず彼らの作品は私たちに一定の示唆を与えてくれます。
+        </Text>
+      </Grid>
+    </Grid>
+    ```
+  </PreviewCode>
+</Preview>
+
+
+
+

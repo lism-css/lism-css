@@ -1,5 +1,5 @@
 // import { PROPS } from '../config';
-import { PROPS, STATES } from '../../config/index';
+import { PROPS, TRAITS } from '../../config/index';
 import getLayoutProps from './getLayoutProps';
 import isPresetValue from './isPresetValue';
 import isTokenValue from './isTokenValue';
@@ -12,7 +12,7 @@ import filterEmptyObj from './helper/filterEmptyObj';
 import mergeSet from './helper/mergeSet';
 import splitWithComma from './helper/splitWithComma';
 import { type StyleWithCustomProps } from './types';
-import { type StateProps, type SetPropValue, type UtilPropValue } from './types/StateProps';
+import { type TraitProps, type SetPropValue, type UtilPropValue } from './types/TraitProps';
 import { type PropValueTypes } from './types/PropValueTypes';
 import { type LayoutType, type LayoutProps } from './types/LayoutProps';
 export { type LayoutType };
@@ -39,8 +39,8 @@ interface PropConfig {
   [key: string]: unknown;
 }
 
-// StatePropData based on config/defaults/states.ts
-interface StatePropDataObject {
+// TraitPropData based on config/defaults/traits.ts
+interface TraitPropDataObject {
   className: string;
   preset?: string[] | readonly string[];
   presetClass?: string;
@@ -48,10 +48,10 @@ interface StatePropDataObject {
   tokenKey?: string;
 }
 
-type StatePropData = string | StatePropDataObject;
+type TraitPropData = string | TraitPropDataObject;
 
 // LismPropsData が受け取る型（layout 処理済み）
-export interface LismPropsBase extends StateProps, PropValueTypes {
+export interface LismPropsBase extends TraitProps, PropValueTypes {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   forwardedRef?: React.Ref<any>;
   class?: string;
@@ -91,12 +91,12 @@ function buildLismClass(lismClass: string | undefined, variant: string | undefin
 export class LismPropsData {
   // 最終出力 className
   className: string = '';
-  // 出力順のためのクラスバケット: [lismClass] [lismState] [uClasses]
+  // 出力順のためのクラスバケット: [lismClass] [lismTrait] [uClasses]
   // - lismClass : コンポーネント基底クラス + variant + l--{layout}（getLayoutProps 側で付与済み）
-  // - lismState : is--* 等の state クラス
+  // - lismTrait : is--* 等の trait クラス
   // - uClasses  : set--* → u--* → -property の順で push される utility クラス
   lismClass: string = '';
-  lismState: string[] = [];
+  lismTrait: string[] = [];
   uClasses: string[] = [];
   styles: StyleWithCustomProps = {};
   attrs: Record<string, unknown> = {};
@@ -143,21 +143,21 @@ export class LismPropsData {
   }
 
   // 最終クラス文字列の組み立て（出力順の唯一の確定地点）
-  // 出力順: [user/astro className] [lismClass] [lismState] [uClasses]
+  // 出力順: [user/astro className] [lismClass] [lismTrait] [uClasses]
   buildClassName(userClassName?: string, astroClassName?: string): string {
-    return atts(userClassName || astroClassName, this.lismClass, this.lismState, this.uClasses);
+    return atts(userClassName || astroClassName, this.lismClass, this.lismTrait, this.uClasses);
   }
 
-  analyzeState(statePropData: StatePropDataObject, propVal: unknown): void {
-    // isWrapper などの特別な処理が必要なレイアウトステート
-    const { className, preset, presetClass, customVar, tokenKey } = statePropData;
+  analyzeTrait(traitPropData: TraitPropDataObject, propVal: unknown): void {
+    // isWrapper などの特別な処理が必要なレイアウトトレイト
+    const { className, preset, presetClass, customVar, tokenKey } = traitPropData;
     if (propVal === true) {
-      this.lismState.push(className);
+      this.lismTrait.push(className);
     } else if (preset && isPresetValue(preset, propVal)) {
-      this.lismState.push(`${className} ${presetClass}:${String(propVal)}`);
+      this.lismTrait.push(`${className} ${presetClass}:${String(propVal)}`);
     } else if (propVal) {
       // カスタム値
-      this.lismState.push(className);
+      this.lismTrait.push(className);
       if (tokenKey && customVar) {
         this.addStyle(customVar, getMaybeCssVar(propVal as string | number, tokenKey));
       }
@@ -173,16 +173,16 @@ export class LismPropsData {
     mergeSet(undefined, rawUtil).forEach((v) => this.addUtil(`u--${v}`));
 
     Object.keys(this.attrs).forEach((propName) => {
-      // state チェック
-      if (Object.hasOwn(STATES, propName)) {
+      // trait チェック
+      if (Object.hasOwn(TRAITS, propName)) {
         const propVal = this.extractProp(propName);
-        const statePropData = (STATES as Record<string, StatePropData>)[propName];
+        const traitPropData = (TRAITS as Record<string, TraitPropData>)[propName];
 
-        if (typeof statePropData === 'string') {
+        if (typeof traitPropData === 'string') {
           // そのままクラス化
-          if (propVal) this.lismState.push(statePropData);
+          if (propVal) this.lismTrait.push(traitPropData);
         } else {
-          this.analyzeState(statePropData, propVal);
+          this.analyzeTrait(traitPropData, propVal);
         }
       } else if (Object.hasOwn(PROPS, propName)) {
         // Lism系のプロパティかどうか

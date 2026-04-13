@@ -75,7 +75,7 @@
 | グループ | ディレクトリ |
 |----------|-------------|
 | A | `core-components/` |
-| B | `modules/` |
+| B | `primitives/` |
 | C | `props/` |
 | D | `ui/`（`examples/` 除く） |
 | E | `ui/examples/` |

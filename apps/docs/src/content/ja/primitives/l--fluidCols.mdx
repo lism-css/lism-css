@@ -1,0 +1,155 @@
+---
+title: 'FluidCols (l--fluidCols)'
+navtitle: 'l--fluidCols'
+description: 'l--fluidCols は、カラム要素が指定した幅より小さくならないように自動で折り返す、ブレイクポイント非依存の段組みクラスです。'
+---
+
+import { FluidCols, Box, Frame } from 'lism-css/astro';
+import { DummyText } from '@lism-css/ui/astro';
+
+
+`l--fluidCols` は、**カラム要素が指定した幅より小さくならないように自動で折り返す**、ブレイクポイントに依存しない段組みクラスです。
+
+
+## CSS
+
+<SrcCode path="src/scss/primitives/layout/_fluidCols.scss" />
+
+
+## Lismコンポーネント
+
+### Import
+
+<ImportPackage component="FluidCols" />
+
+### 専用Props
+
+| プロパティ | 説明 |
+|---|---|
+| `cols` <PropBadge type="cssvar">`--cols`</PropBadge> | カラムが維持する最小幅を指定します。
+| `autoFill` <PropBadge type="cssvar">`--autoMode`</PropBadge> | 自動折り返しのモードを`auto-fill`に切り替えます。
+
+
+## Usage
+
+### デフォルト幅で利用する
+
+<Preview>
+  <PreviewTitle>デフォルト幅で利用する例</PreviewTitle>
+  <PreviewArea resize p="15">
+    <FluidCols g="20">
+      <Box bxsh="20" p="20">
+        <DummyText lang="ja" />
+      </Box>
+      <Box bxsh="20" p="20">
+        <DummyText lang="ja" offset="1" />
+      </Box>
+      <Box bxsh="20" p="20">
+        <DummyText lang="ja" />
+      </Box>
+      <Box bxsh="20" p="20">
+        <DummyText lang="ja" offset="2" />
+      </Box>
+      <Box bxsh="20" p="20">
+        <DummyText lang="ja" length="s" />
+      </Box>
+      <Box bxsh="20" p="20">
+        <DummyText lang="ja" />
+      </Box>
+    </FluidCols>
+  </PreviewArea>
+  <PreviewCode>
+    ```jsx
+    <FluidCols g="15">
+      <Box bxsh="20" p="20">
+        <p>
+          ロレム・イプサムの座り雨。目まぐるしい文章の流れの中で、それは静かに歩く仮の言葉です。Elitも穏やかに続いていきますが、積み重ねられてきた「LiberroyとFoogの取り組み」は、余白のようなものです。
+        </p>
+      </Box>
+      <Box bxsh="20" p="20">
+        <p>
+          目まぐるしい文章の流れの中で、それは静かに歩く仮の言葉です。Elitも穏やかに続いていきますが、積み重ねられてきた「LiberroyとFoogの取り組み」は、余白のようなものです。
+        </p>
+      </Box>
+      <Box bxsh="20" p="20">
+        <p>
+          ロレム・イプサムの座り雨。目まぐるしい文章の流れの中で、それは静かに歩く仮の言葉です。Elitも穏やかに続いていきますが、積み重ねられてきた「LiberroyとFoogの取り組み」は、余白のようなものです。
+        </p>
+      </Box>
+      <Box bxsh="20" p="20">
+        <p>それは静かに歩く仮の言葉です。Elitも穏やかに続いていきますが、積み重ねられてきた「LiberroyとFoogの取り組み」は、余白のようなものです。</p>
+      </Box>
+      <Box bxsh="20" p="20">
+        <p>ロレム・イプサムの座り雨。目まぐるしい文章の流れの中で、それは静かに歩く仮の言葉です。</p>
+      </Box>
+      <Box bxsh="20" p="20">
+        <p>
+          ロレム・イプサムの座り雨。目まぐるしい文章の流れの中で、それは静かに歩く仮の言葉です。Elitも穏やかに続いていきますが、積み重ねられてきた「LiberroyとFoogの取り組み」は、余白のようなものです。
+        </p>
+      </Box>
+    </FluidCols>
+    ```
+  </PreviewCode>
+</Preview>
+
+### カラム幅と`auto-fill`の指定
+
+<Preview>
+  <PreviewTitle>`cols=12em`, `auto-fill`を使う </PreviewTitle>
+  <PreviewArea resize p="15">
+    <FluidCols cols="12em" autoFill g="20" fz="s">
+      <Box bxsh="20" p="20">
+        <DummyText lang="ja" length="s" />
+      </Box>
+      <Box bxsh="20" p="20">
+        <DummyText lang="ja" offset="2" />
+      </Box>
+      <Box bxsh="20" p="20">
+        <DummyText lang="ja" length="s" />
+      </Box>
+    </FluidCols>
+  </PreviewArea>
+  <PreviewCode>
+    ```jsx
+    <FluidCols cols="12rem" autoFill g="20" fz="s">
+      <Box bxsh="20" p="20">
+        <p>ロレム・イプサムの座り雨。目まぐるしい文章の流れの中で、それは静かに歩く仮の言葉です。</p>
+      </Box>
+      <Box bxsh="20" p="20">
+        <p>それは静かに歩く仮の言葉です。Elitも穏やかに続いていきますが、積み重ねられてきた「LiberroyとFoogの取り組み」は、余白のようなものです。</p>
+      </Box>
+      <Box bxsh="20" p="20">
+        <p>ロレム・イプサムの座り雨。目まぐるしい文章の流れの中で、それは静かに歩く仮の言葉です。</p>
+      </Box>
+    </FluidCols>
+    ```
+  </PreviewCode>
+</Preview>
+
+### 2列→1列
+
+<Preview>
+  <PreviewTitle>2列→1列</PreviewTitle>
+  <PreviewArea resize p="15">
+    <FluidCols cols="320px" g="20">
+      <Frame ar="16/9">
+        <img src="https://cdn.lism-css.com/img/a-1.jpg" width="600" height="400" />
+      </Frame>
+      <Frame ar="16/9">
+        <img src="https://cdn.lism-css.com/img/a-3.jpg" width="600" height="400" />
+      </Frame>
+    </FluidCols>
+  </PreviewArea>
+  <PreviewCode>
+    ```jsx
+    <FluidCols cols="320px" g="20">
+      <Frame ar="16/9">
+        <img src="https://cdn.lism-css.com/img/a-1.jpg" width="600" height="400" />
+      </Frame>
+      <Frame ar="16/9">
+        <img src="https://cdn.lism-css.com/img/a-3.jpg" width="600" height="400" />
+      </Frame>
+    </FluidCols>
+    ```
+  </PreviewCode>
+</Preview>

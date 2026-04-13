@@ -1,0 +1,132 @@
+---
+title: 'TileGrid (l--tileGrid)'
+navtitle: 'l--tileGrid'
+description: 'l--tileGrid は、列数と行数を指定して均等なタイル型グリッドレイアウトを構成するクラスです。'
+---
+
+import { TileGrid, Box, Center } from 'lism-css/astro';
+
+
+`l--tileGrid` は、`cols`（列数）と`rows`（行数）を指定して、**均等なタイル型グリッドレイアウト**を構成するためのクラスです。
+
+内部的には `grid-template: repeat(rows, minmax(0, 1fr)) / repeat(cols, minmax(0, 1fr))` を使用しています。
+
+
+## CSS
+
+<SrcCode path="src/scss/primitives/layout/_tileGrid.scss" />
+
+
+## Lismコンポーネント
+
+### Import
+
+<ImportPackage component="TileGrid" />
+
+### 専用Props
+
+| プロパティ | 説明 | デフォルト値 |
+|---|---|---|
+| `cols` <PropBadge type="cssvar">`--cols`</PropBadge> | 列数を指定します。ブレイクポイント指定も可能です。 | `1` |
+| `rows` <PropBadge type="cssvar">`--rows`</PropBadge> | 行数を指定します。ブレイクポイント指定も可能です。 | `1` |
+
+
+## Usage
+
+### 基本的な使い方
+
+<Preview>
+  <PreviewTitle>3列 x 3行のタイルグリッド</PreviewTitle>
+  <PreviewArea resize p="15">
+    <TileGrid cols="3" rows="3" g="5" min-h="50svh">
+      <Box p="20" bgc="base-2">item1</Box>
+      <Box p="20" bgc="base-2">item2</Box>
+      <Box p="20" bgc="base-2">item3</Box>
+      <Box p="20" bgc="base-2">item4</Box>
+      <Box p="20" bgc="base-2" gc="span 2">item5</Box>
+      <Center gc="3" gr="1 / -1" p="20" bgc="blue">item6</Center>
+    </TileGrid>
+  </PreviewArea>
+  <PreviewCode slot="tab" label="JSX">
+    ```jsx " gc=" " gr="
+    <TileGrid cols="3" rows="3" g="5" min-h="50svh">
+      <Box p="20" bgc="base-2">
+        item1
+      </Box>
+      <Box p="20" bgc="base-2">
+        item2
+      </Box>
+      <Box p="20" bgc="base-2">
+        item3
+      </Box>
+      <Box p="20" bgc="base-2">
+        item4
+      </Box>
+      <Box p="20" bgc="base-2" gc="span 2">
+        item5
+      </Box>
+      <Center gc="3" gr="1 / -1" p="20" bgc="blue">
+        item6
+      </Center>
+    </TileGrid>
+    ```
+  </PreviewCode>
+  <PreviewCode slot="tab" label="HTML">
+    ```html "--cols:3;--rows:3"
+    <div class="l--tileGrid -g:5" style="--cols: 3; --rows: 3; min-height: 50svh">
+      <div class="l--box -bgc:base-2 -p:20">item1</div>
+      <div class="l--box -bgc:base-2 -p:20">item2</div>
+      <div class="l--box -bgc:base-2 -p:20">item3</div>
+      <div class="l--box -bgc:base-2 -p:20">item4</div>
+      <div class="l--box -bgc:base-2 -p:20 -gc:span 2">item5</div>
+      <div class="l--center -p:20 -bgc:blue" style="grid-column: 3; grid-row: 1 / -1">item6</div>
+    </div>
+    ```
+  </PreviewCode>
+</Preview>
+
+
+### ブレイクポイント指定
+
+`cols`、`rows` はそれぞれブレイクポイント指定が可能です。
+
+<Preview>
+  <PreviewTitle>例</PreviewTitle>
+  <PreviewArea resize p="15">
+    <TileGrid cols={['2', '3']} rows="4" min-h="50svh" gaf="row dense">
+      <Box gc={['1 / -1', 'span 2']} gr={['span 2', '1 / -1']} p="20" bgc="base-2">A</Box>
+      <Box p="20" bgc="green:20%">B</Box>
+      <Box p="20" bgc="blue:20%">C</Box>
+      <Box p="20" bgc="red:20%">D</Box>
+      <Box p="20" bgc="purple:20%">E</Box>
+    </TileGrid>
+  </PreviewArea>
+  <PreviewCode>
+    ```jsx "cols={['2', '3']}" "rows="4""
+    <TileGrid cols={['2', '3']} rows="4" min-h="50svh" gaf="row dense">
+      <Box gc={['1 / -1', 'span 2']} gr={['span 2', '1 / -1']} p="20" bgc="base-2">
+        A
+      </Box>
+      <Box p="20" bgc="green:20%">
+        B
+      </Box>
+      <Box p="20" bgc="blue:20%">
+        C
+      </Box>
+      <Box p="20" bgc="red:20%">
+        D
+      </Box>
+      <Box p="20" bgc="purple:20%">
+        E
+      </Box>
+    </TileGrid>
+    ```
+  </PreviewCode>
+</Preview>
+
+
+{/* ## 関連
+
+- [`<Columns>`](/docs/primitives/l--columns): 均等列のみ（1D）のカラムレイアウト
+- [`<FluidCols>`](/docs/primitives/l--fluidcols/): auto-fit / auto-fill による流動的列数
+- [`<Grid>`](/docs/primitives/l--grid): 汎用の CSS Grid レイアウト */}

@@ -17,7 +17,7 @@ if (typeof window !== 'undefined' && window._LISM_CSS_CONFIG_) {
 
 export const CONFIG = mergedConfig;
 
-const { tokens, props, states } = CONFIG;
+const { tokens, props, traits } = CONFIG;
 
 const tokensWithColor = {
   color: [...tokens.c.values, ...tokens.palette.values],
@@ -28,8 +28,8 @@ const tokensWithColor = {
 export const TOKENS = arrayConvertToSet(structuredClone(tokensWithColor));
 export const PROPS = arrayConvertToSet(structuredClone(props));
 
-// STATES は objDeepMerge の型推論により literal types が保持される
-export const STATES = states;
+// TRAITS は objDeepMerge の型推論により literal types が保持される
+export const TRAITS = traits;
 
 // ブレイクポイント
 export const BREAK_POINTS = ['sm', 'md', 'lg', 'xl'] as const;

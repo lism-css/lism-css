@@ -1,0 +1,71 @@
+---
+title: 'Decorator (a--decorator)'
+navtitle: 'a--decorator'
+description: 'a--decorator は、コンテンツを装飾するための空要素として使うクラスです。'
+---
+
+import { Decorator, Box, Flex, Grid, Spacer } from 'lism-css/astro';
+import { DummyText } from '@lism-css/ui/astro';
+
+`a--decorator`は、コンテンツを装飾するための空要素として使うクラスです。
+
+
+## Lismコンポーネント
+
+`<Decorator>`は、デフォルトで`aria-hidden="true"`が付与されます。
+
+### Import
+
+<ImportPackage component="Decorator" />
+
+### 出力されるHTML構造
+
+```pug
+div.a--decorator
+```
+
+### 専用Props
+
+|Prop|説明 |
+|---|---|
+| `size` | デコレーターのサイズ（横幅・高さ）を一括指定します。<br/>この指定がある場合、指定したサイズは`w`(`width`)に渡され、`ar='1/1'`(`aspect-ratio:1/1`)が自動で付与されます。 |
+| `clipPath`,`boxSizing` | `style.clipPath`,`style.boxSizing`へ渡します|
+
+
+## Usage
+
+`<Decorator>`を使った装飾例を紹介します。
+
+### 使用例
+
+<Preview>
+  <PreviewTitle>例</PreviewTitle>
+  <PreviewArea p="20">
+    <Box p="30" pos="relative">
+      <DummyText />
+      <Decorator size="1.25em" pos="absolute" t="0" l="0" bd-x-s bd-y-s bdc="current" />
+      <Decorator size="1.25em" pos="absolute" r="0" b="0" bd-x-e bd-y-e bdc="current" />
+    </Box>
+  </PreviewArea>
+  <PreviewCode slot="tab" label="JSX">
+    ```jsx
+    <Box p="30" pos="relative">
+      <p>
+        Lorem ipsum dolor sit amet. Consectetur adipiscing elit, sed do eiusmod tempor Incididunt ut. Labore et dolore magna aliqua. Ut enim ad minim
+        veniam, quis nostrud exercitation ullamco laboris nisi ut.
+      </p>
+      <Decorator size="1.25em" pos="absolute" t="0" l="0" bd-x-s bd-y-s bdc="current" />
+      <Decorator size="1.25em" pos="absolute" r="0" b="0" bd-x-e bd-y-e bdc="current" />
+    </Box>
+    ```
+  </PreviewCode>
+  <PreviewCode slot="tab" label="HTML">
+    ```jsx
+    <div class="l--box -p:30 -pos:relative">
+      <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit, sed do eiusmod tempor. Non facere laudantium ex eos doloribus aut dolore nisi.</p>
+      <div class="a--decorator -pos:absolute -t:0 -l:0 -bd-x-s -bd-y-s -bdc:current -ar:1/1 -w" style="--w:1.25em" aria-hidden="true"></div>
+      <div class="a--decorator -pos:absolute -r:0 -b:0 -bd-x-e -bd-y-e -bdc:current -ar:1/1 -w" style="--w:1.25em" aria-hidden="true"></div>
+    </div>
+    ```
+  </PreviewCode>
+</Preview>

@@ -104,7 +104,7 @@ describe('MCP Tools (integration)', () => {
     expect(text).toContain('Accordion');
   });
 
-  it('get_component で Flex を検索すると modules/l--flex.md の Markdown が返る', async () => {
+  it('get_component で Flex を検索すると primitives/l--flex.md の Markdown が返る', async () => {
     const client = await createTestClient();
     const result = await client.callTool({ name: 'get_component', arguments: { name: 'Flex' } });
     expect(result.isError).toBeFalsy();
@@ -112,7 +112,7 @@ describe('MCP Tools (integration)', () => {
     const text = getText(result);
     expect(text).toContain('# l--flex / `<Flex>`');
     expect(text).toContain('SCSSソース:');
-    expect(text).toContain('## 関連モジュール');
+    expect(text).toContain('## 関連プリミティブ');
   });
 
   it('get_component は "l--flex" / "<Flex>" / "flex" の表記揺れを同一視する', async () => {
@@ -129,7 +129,7 @@ describe('MCP Tools (integration)', () => {
     expect(texts[0]).toContain('# l--flex / `<Flex>`');
   });
 
-  it('get_component で Container (State Module) が modules/is--container.md を返す', async () => {
+  it('get_component で Container (Trait Primitive) が primitives/is--container.md を返す', async () => {
     const client = await createTestClient();
     const result = await client.callTool({ name: 'get_component', arguments: { name: 'Container' } });
     expect(result.isError).toBeFalsy();
@@ -139,7 +139,7 @@ describe('MCP Tools (integration)', () => {
     expect(text).toContain('SCSSソース:');
   });
 
-  it('get_component で Icon (Atomic Module) が modules/a--icon.md を返す', async () => {
+  it('get_component で Icon (Atomic Primitive) が primitives/a--icon.md を返す', async () => {
     const client = await createTestClient();
     const result = await client.callTool({ name: 'get_component', arguments: { name: 'Icon' } });
     expect(result.isError).toBeFalsy();
@@ -175,7 +175,7 @@ describe('MCP Tools (integration)', () => {
     expect(data.error).toContain('not found');
   });
 
-  it('get_component で "is--vertical" (クラス直指定) が modules/is--vertical.md を返す', async () => {
+  it('get_component で "is--vertical" (クラス直指定) が primitives/is--vertical.md を返す', async () => {
     const client = await createTestClient();
     const result = await client.callTool({ name: 'get_component', arguments: { name: 'is--vertical' } });
     expect(result.isError).toBeFalsy();
@@ -241,16 +241,16 @@ describe('MCP Tools (integration)', () => {
 });
 
 describe('load-markdown', () => {
-  it('getGuideFilenames が modules/ サブディレクトリ配下も再帰的に列挙する', () => {
+  it('getGuideFilenames が primitives/ サブディレクトリ配下も再帰的に列挙する', () => {
     const filenames = getGuideFilenames();
     expect(filenames).toContain('SKILL.md');
-    expect(filenames).toContain('modules/l--flex.md');
-    expect(filenames).toContain('modules/is--container.md');
-    expect(filenames).toContain('modules/a--icon.md');
+    expect(filenames).toContain('primitives/l--flex.md');
+    expect(filenames).toContain('primitives/is--container.md');
+    expect(filenames).toContain('primitives/a--icon.md');
   });
 
   it('loadMarkdown がサブディレクトリ配下のファイルも読み込める', () => {
-    const content = loadMarkdown('modules/l--flex.md');
+    const content = loadMarkdown('primitives/l--flex.md');
     expect(content).toContain('# l--flex / `<Flex>`');
   });
 });
