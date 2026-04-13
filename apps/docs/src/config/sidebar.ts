@@ -112,7 +112,7 @@ const docsSidebar: SidebarSection[] = [
   {
     label: 'はじめに',
     translate: { en: 'Getting Started' },
-    items: ['/docs/overview/', '/docs/installation/', '/docs/mcp/', '/docs/skills/', '/docs/features/', '/docs/changelog/'],
+    items: ['/docs/overview/', '/docs/installation/', '/docs/skills/', '/docs/mcp/', '/docs/features/', '/docs/changelog/'],
   },
 
   // 概要カテゴリ
@@ -135,6 +135,9 @@ const docsSidebar: SidebarSection[] = [
       '/docs/primitives/',
       '/docs/utility-class/',
       '/docs/property-class/',
+      '/docs/props/bd',
+      '/docs/props/hov',
+      '/docs/props/max-sz',
       '/docs/responsive/',
       { type: 'separator' },
       '/docs/customize/',
@@ -185,10 +188,6 @@ const docsSidebar: SidebarSection[] = [
   {
     label: 'Atomic Primitives',
     items: ['/docs/primitives/a--decorator/', '/docs/primitives/a--divider/', '/docs/primitives/a--icon/', '/docs/primitives/a--spacer/'],
-  },
-  {
-    label: 'Props',
-    dir: 'props',
   },
 ];
 
