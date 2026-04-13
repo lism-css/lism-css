@@ -16,19 +16,19 @@ Nearly all components distributed by Lism are based on this `<Lism>` component.
 
 <Preview>
   <PreviewTitle>Output example of `<Lism>`</PreviewTitle>
-  <PreviewArea p='20'>
+  <PreviewArea p="20">
     <Lism p="20" fw="bold" c="blue" bgc="base-2" bdrs="20">
       <Fragment>Lism content</Fragment>
     </Lism>
   </PreviewArea>
-  <PreviewCode slot='tab' label='JSX'>
+  <PreviewCode slot="tab" label="JSX">
     ```jsx
     <Lism p="20" fw="bold" c="blue" bgc="base-2" bdrs="20">
       Lism content
     </Lism>
     ```
   </PreviewCode>
-  <PreviewCode slot='tab' label='HTML'>
+  <PreviewCode slot="tab" label="HTML">
     ```html
     <div class="-p:20 -fw:bold -c -bgc:base-2 -bdrs:20" style="--c: var(--blue)">Lism content</div>
     ```
@@ -40,12 +40,12 @@ Nearly all components distributed by Lism are based on this `<Lism>` component.
 ## Import
 
 <Preview>
-  <PreviewCode slot='tab' label='React'>
+  <PreviewCode slot="tab" label="React">
 ```jsx
 import { Lism } from 'lism-css/react';
 ```
   </PreviewCode>
-  <PreviewCode slot='tab' label='Astro'>
+  <PreviewCode slot="tab" label="Astro">
 ```jsx
 import { Lism, Media } from 'lism-css/astro';
 ```
@@ -79,7 +79,7 @@ This class is output with a relatively high priority in the `<Lism>` class proce
 
 <PreviewTitle>Example</PreviewTitle>
 ```jsx 'lismClass="c--myComponent"'
-<Lism p='10' lismClass='c--myComponent'>Lorem ipsum texts...</Lism>
+<Lism p="10" lismClass="c--myComponent">Lorem ipsum texts...</Lism>
 
 ↓
 
@@ -109,7 +109,7 @@ Specifies a layout module. For example, setting `layout='flow'` outputs the `.l-
 
 <PreviewTitle>Example</PreviewTitle>
 ```jsx 'layout="flow"'
-<Lism layout='flow'>Lorem ipsum texts...</Lism>
+<Lism layout="flow">Lorem ipsum texts...</Lism>
 
 ↓
 
@@ -178,7 +178,7 @@ Specifies the HTML tag or external component to render. Defaults to `div`.
 
 <PreviewTitle>Example of specifying an HTML tag</PreviewTitle>
 ```jsx 'as="p"'
-<Lism as='p'>Lorem ipsum texts...</Lism>
+<Lism as="p">Lorem ipsum texts...</Lism>
 
 ↓
 
@@ -254,7 +254,7 @@ For example, `font-size` can be written as `fz`, and `padding` as `p`.
 [See the full list of available Props](/en/docs/property-class/)
 </Reference>
 
-<Spacer h='10'/>
+<Spacer h="10"/>
 
 The output format is determined by the value (`value`) specified via `prop={value}`:
 
@@ -280,7 +280,7 @@ The output format is determined by the value (`value`) specified via `prop={valu
 <PreviewTitle>Token value → class only</PreviewTitle>
 <PreviewCode>
 ```jsx
-<Lism fz='l' p='20'>...</Lism>
+<Lism fz="l" p="20">...</Lism>
 // → <div class="-fz:l -p:20">...</div>
 ```
 </PreviewCode>
@@ -290,7 +290,7 @@ The output format is determined by the value (`value`) specified via `prop={valu
 <PreviewTitle>Color token (no dedicated class) → class + CSS variable</PreviewTitle>
 <PreviewCode>
 ```jsx
-<Lism c='red'>...</Lism>
+<Lism c="red">...</Lism>
 // → <div class="-c" style="--c:var(--red)">...</div>
 ```
 </PreviewCode>
@@ -300,7 +300,7 @@ The output format is determined by the value (`value`) specified via `prop={valu
 <PreviewTitle>`true` / `"-"` → class only (no variable)</PreviewTitle>
 <PreviewCode>
 ```jsx 'p="-"' "bdrs" "-p" "-bdrs"
-<Lism p='-' bdrs>contents</Lism>
+<Lism p="-" bdrs>contents</Lism>
 // → <div class="-p -bdrs">contents</div>
 ```
 </PreviewCode>
@@ -322,7 +322,7 @@ This is useful when you want to define the variable value in CSS, or when you wa
 <PreviewTitle>BP-supported property with custom value → class + CSS variable</PreviewTitle>
 <PreviewCode>
 ```jsx 'fz="20px"' "-fz" "--fz:20px"
-<Lism fz='20px'>contents</Lism>
+<Lism fz="20px">contents</Lism>
 // → <div class="-fz" style="--fz:20px">contents</div>
 ```
 </PreviewCode>
@@ -332,20 +332,20 @@ This is useful when you want to define the variable value in CSS, or when you wa
 <PreviewTitle>BP-unsupported property with custom value → direct style output</PreviewTitle>
 <PreviewCode>
 ```jsx 'o="0.75"' "opacity:0.75"
-<Lism o='0.75'>contents</Lism>
+<Lism o="0.75">contents</Lism>
 // → <div style="opacity:0.75">contents</div>
 ```
 </PreviewCode>
 </Preview>
 
 
-<div id='output-utility'></div>
+<div id="output-utility"></div>
 #### Force output as a utility class with `:`
 
 Even if no corresponding Property Class exists, prefixing a value with `:` will output the string after it as a utility class name.
 
 ```jsx
-<Lism p=':hoge'>...</Lism>
+<Lism p=":hoge">...</Lism>
 // → <div class="-p:hoge">...</div>
 ```
 
@@ -370,12 +370,12 @@ BP-supported properties can specify values per breakpoint (`sm`, `md`) using arr
 
 <Preview>
   <PreviewTitle>Example 1: array syntax (base → sm → md)</PreviewTitle>
-  <PreviewCode label='JSX' slot='tab'>
+  <PreviewCode label="JSX" slot="tab">
     ```jsx
     <Lism p={['20', '30', '5rem']}>...</Lism>
     ```
   </PreviewCode>
-  <PreviewCode label='Output HTML' slot='tab'>
+  <PreviewCode label="Output HTML" slot="tab">
     ```html
     <div class="-p:20 -p_sm -p_md" style="--p_sm:var(--s30);--p_md:5rem">
       ...
@@ -386,12 +386,12 @@ BP-supported properties can specify values per breakpoint (`sm`, `md`) using arr
 
 <Preview>
   <PreviewTitle>Example 2: skip intermediate breakpoints (`@md` only)</PreviewTitle>
-  <PreviewCode label='JSX' slot='tab'>
+  <PreviewCode label="JSX" slot="tab">
     ```jsx
     <Lism p={[null, null, '40']}>...</Lism>
     ```
   </PreviewCode>
-  <PreviewCode label='Output HTML' slot='tab'>
+  <PreviewCode label="Output HTML" slot="tab">
     ```html
     <div class="-p_md" style="--p_md:var(--s40)">
       ...

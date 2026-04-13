@@ -16,7 +16,7 @@ This is useful for layouts such as "image and content" or "main area and sidebar
 
 ## CSS
 
-<SrcCode path='src/scss/modules/layout/_sideMain.scss' />
+<SrcCode path="src/scss/modules/layout/_sideMain.scss" />
 
 One child element must have `.is--side`.
 
@@ -31,7 +31,7 @@ div.l--sideMain
 
 ### Import
 
-<ImportPackage component='SideMain' />
+<ImportPackage component="SideMain" />
 
 ### Props
 
@@ -50,7 +50,7 @@ The side element's width is fixed to the value set by `--sideW`. When the main e
 
 <Preview>
   <PreviewTitle>Usage example</PreviewTitle>
-  <PreviewArea resize p='20'>
+  <PreviewArea resize p="20">
     <SideMain sideW="12rem" mainW="20rem" g="20">
       <Box p="15" bd bdc="blue">
         <p>Main Content</p>
@@ -61,7 +61,7 @@ The side element's width is fixed to the value set by `--sideW`. When the main e
       </Box>
     </SideMain>
   </PreviewArea>
-  <PreviewCode slot='tab' label='JSX'>
+  <PreviewCode slot="tab" label="JSX">
     ```jsx "sideW" "isSide"
     <SideMain sideW="12rem" mainW="20rem" g="20">
       <Box p="15" bd bdc="blue">
@@ -77,7 +77,7 @@ The side element's width is fixed to the value set by `--sideW`. When the main e
     </SideMain>
     ```
   </PreviewCode>
-  <PreviewCode slot='tab' label='HTML'>
+  <PreviewCode slot="tab" label="HTML">
     ```html "is--side" "--sideW"
     <div class="l--sideMain -g:20" style="--sideW: 12rem; --mainW: 20rem">
       <div class="l--box -p:15 -bd" style="--bdc: var(--blue)">
@@ -102,7 +102,7 @@ This places the side element on the left when horizontal, and at the bottom when
 
 <Preview>
   <PreviewTitle>Example</PreviewTitle>
-  <PreviewArea resize p='20'>
+  <PreviewArea resize p="20">
     <SideMain fxd="row-reverse" sideW="10rem" mainW="16rem" g="20">
       <Box>
         <DummyText />
@@ -110,7 +110,7 @@ This places the side element on the left when horizontal, and at the bottom when
       <Box isSide bgc="blue:20%">Side Content</Box>
     </SideMain>
   </PreviewArea>
-  <PreviewCode slot='tab' label='JSX'>
+  <PreviewCode slot="tab" label="JSX">
     ```jsx 'fxd="row-reverse"'
     <SideMain fxd="row-reverse" sideW="10rem" mainW="16rem" g="20">
       <Box>
@@ -123,7 +123,7 @@ This places the side element on the left when horizontal, and at the bottom when
     </SideMain>
     ```
   </PreviewCode>
-  <PreviewCode slot='tab' label='HTML'>
+  <PreviewCode slot="tab" label="HTML">
     ```html "-fxd:row-reverse"
     <div class="l--sideMain -fxd:row-reverse -g:20" style="--sideW: 10rem; --mainW: 16rem">
       <div class="l--box">
@@ -141,7 +141,7 @@ This places the side element on the left when horizontal, and at the bottom when
 
 <Preview>
   <PreviewTitle>Building a SideMain-like layout using `Grid`</PreviewTitle>
-  <PreviewArea resize p='20'>
+  <PreviewArea resize p="20">
     <Grid gta={[`'.' 'side'`, `'. side'`]} gtc={[null, '1fr 10rem']} g="20">
       <Box>
         <DummyText />
@@ -149,7 +149,7 @@ This places the side element on the left when horizontal, and at the bottom when
       <Box ga="side" bgc="blue:20%">Side Content</Box>
     </Grid>
   </PreviewArea>
-  <PreviewCode slot='tab' label='JSX'>
+  <PreviewCode slot="tab" label="JSX">
     ```jsx "gta=" "gtc="
     <Grid gta={[`'.' 'side'`, `'. side'`]} gtc={[null, '1fr 10rem']} g="20">
       <Box>
@@ -162,7 +162,7 @@ This places the side element on the left when horizontal, and at the bottom when
     </Grid>
     ```
   </PreviewCode>
-  <PreviewCode slot='tab' label='HTML'>
+  <PreviewCode slot="tab" label="HTML">
     ```html "-gd -gd_sm" "'. side' / 1fr 10rem" "-ga" "--ga:side"
     <div class="l--grid -gta -gta_sm -gtc_sm -g:20" style="--gta: '.' 'side'; --gta_sm: '. side'; --gtc_sm: 1fr 10rem">
       <div class="l--box">
@@ -176,7 +176,7 @@ This places the side element on the left when horizontal, and at the bottom when
 
 <Preview>
   <PreviewTitle>Example: `side` on the left, switching at `@md`</PreviewTitle>
-  <PreviewArea resize p='20'>
+  <PreviewArea resize p="20">
     <Grid gta={[`'.' 'side'`, null, `'side .'`]} gtc={[null, null, '10rem 1fr']} g="20">
       <Box>
         <DummyText />
@@ -184,7 +184,7 @@ This places the side element on the left when horizontal, and at the bottom when
       <Box ga="side" bgc="blue:20%">Side Content</Box>
     </Grid>
   </PreviewArea>
-  <PreviewCode slot='tab' label='JSX'>
+  <PreviewCode slot="tab" label="JSX">
     ```jsx
     <Grid gta={[`'.' 'side'`, null, `'side .'`]} gtc={[null, null, '10rem 1fr']} g="20">
       <Box>
@@ -197,7 +197,7 @@ This places the side element on the left when horizontal, and at the bottom when
     </Grid>
     ```
   </PreviewCode>
-  <PreviewCode slot='tab' label='HTML'>
+  <PreviewCode slot="tab" label="HTML">
     ```html
     <div class="l--grid -gta -gta_md -gtc_md -g:20" style="--gta: '.' 'side'; --gta_md: 'side .'; --gtc_md: 10rem 1fr">
       <div class="l--box">

@@ -26,12 +26,12 @@ c--tabs
 
 ## CSS
 
-<EmbedCode dirPath='packages/lism-ui' srcPath='src/components/Tabs/_style.css' />
+<EmbedCode dirPath="packages/lism-ui" srcPath="src/components/Tabs/_style.css" />
 
 
 ## JavaScript
 
-<EmbedCode dirPath='packages/lism-ui' srcPath='src/components/Tabs/setTabs.js' />
+<EmbedCode dirPath="packages/lism-ui" srcPath="src/components/Tabs/setTabs.js" />
 
 
 ## Import
@@ -40,7 +40,7 @@ c--tabs
 `@lism-css/ui` パッケージで提供しています。
 
 
-<ImportPackage component='Tabs' script='tabs.js' packageName='@lism-css/ui' />
+<ImportPackage component="Tabs" script="tabs.js" packageName="@lism-css/ui" />
 
 
 ## Props
@@ -80,14 +80,14 @@ c--tabs
 
 ## Usage
 
-<Callout type='warning'>
+<Callout type="warning">
 `<Tabs.Item>`の子要素は`<Tabs.Tab>`と`<Tabs.Panel>`のみしか認識しません。また、この2つは必ず両方使用してください。
 </Callout>
 
 
 <Preview>
   <PreviewTitle>例</PreviewTitle>
-  <PreviewArea p='20'>
+  <PreviewArea p="20">
     <Tabs.Root g="15">
       <Tabs.Item>
         <Tabs.Tab px="10">Tab 1</Tabs.Tab>
@@ -103,25 +103,25 @@ c--tabs
       </Tabs.Item>
     </Tabs.Root>
   </PreviewArea>
-  <PreviewCode slot='tab' label='JSX'>
+  <PreviewCode slot="tab" label="JSX">
     ```jsx
-    <Tabs.Root g='15'>
+    <Tabs.Root g="15">
       <Tabs.Item>
-        <Tabs.Tab px='10'>Tab 1</Tabs.Tab>
+        <Tabs.Tab px="10">Tab 1</Tabs.Tab>
         <Tabs.Panel>
-          <DummyText pre='Tab 01: '/>
+          <DummyText pre="Tab 01: "/>
         </Tabs.Panel>
       </Tabs.Item>
       <Tabs.Item>
-        <Tabs.Tab px='10'>Tab 2</Tabs.Tab>
+        <Tabs.Tab px="10">Tab 2</Tabs.Tab>
         <Tabs.Panel>
-          <DummyText length='l' offset={1} pre='Tab 02: ' />
+          <DummyText length="l" offset={1} pre="Tab 02: " />
         </Tabs.Panel>
       </Tabs.Item>
     </Tabs.Root>
     ```
   </PreviewCode>
-  <PreviewCode slot='tab' label='HTML'>
+  <PreviewCode slot="tab" label="HTML">
     ```html
     ```
   </PreviewCode>
@@ -132,7 +132,7 @@ c--tabs
 
 <Preview>
   <PreviewTitle>`listProps`を使う例</PreviewTitle>
-  <PreviewArea p='20'>
+  <PreviewArea p="20">
     <Tabs.Root g="15" ji="center" listProps={{ bd: '-', bdrs: '99', p: '10', lh: 'xs' }}>
       <Tabs.Item>
         <Tabs.Tab px="10">Tab 1</Tabs.Tab>
@@ -148,19 +148,19 @@ c--tabs
       </Tabs.Item>
     </Tabs.Root>
   </PreviewArea>
-  <PreviewCode slot='tab' label='JSX'>
+  <PreviewCode slot="tab" label="JSX">
     ```jsx "listProps"
-    <Tabs.Root g='15' ji='center' listProps={{bd: '-', bdrs: '99', p: '10', lh:'xs'}}>
+    <Tabs.Root g="15" ji="center" listProps={{bd: '-', bdrs: '99', p: '10', lh:'xs'}}>
       <Tabs.Item>
-        <Tabs.Tab px='10'>Tab 1</Tabs.Tab>
+        <Tabs.Tab px="10">Tab 1</Tabs.Tab>
         <Tabs.Panel>
-          <DummyText pre='Tab 01: '/>
+          <DummyText pre="Tab 01: "/>
         </Tabs.Panel>
       </Tabs.Item>
       <Tabs.Item>
-        <Tabs.Tab px='10'>Tab 2</Tabs.Tab>
+        <Tabs.Tab px="10">Tab 2</Tabs.Tab>
         <Tabs.Panel>
-          <DummyText length='l' offset={1} pre='Tab 02: ' />
+          <DummyText length="l" offset={1} pre="Tab 02: " />
         </Tabs.Panel>
       </Tabs.Item>
     </Tabs.Root>
@@ -179,7 +179,7 @@ c--tabs
 
 <Preview>
   <PreviewTitle>例</PreviewTitle>
-  <PreviewArea p='20'>
+  <PreviewArea p="20">
     <Tabs.Root defaultIndex={2} listProps={{ 'bd-b': '-' }}>
       <Tabs.Item>
         <Tabs.Tab p="10">Tab 1</Tabs.Tab>
@@ -195,19 +195,19 @@ c--tabs
       </Tabs.Item>
     </Tabs.Root>
   </PreviewArea>
-  <PreviewCode slot='tab' label='JSX'>
+  <PreviewCode slot="tab" label="JSX">
     ```jsx "defaultIndex=\{2\}"
     <Tabs.Root defaultIndex={2} listProps={{'bd-b': '-'}}>
       <Tabs.Item>
-        <Tabs.Tab p='10'>Tab 1</Tabs.Tab>
-        <Tabs.Panel p='10'>
-          <DummyText pre='Tab 01: '/>
+        <Tabs.Tab p="10">Tab 1</Tabs.Tab>
+        <Tabs.Panel p="10">
+          <DummyText pre="Tab 01: "/>
         </Tabs.Panel>
       </Tabs.Item>
       <Tabs.Item>
-        <Tabs.Tab p='10'>Tab 2</Tabs.Tab>
-        <Tabs.Panel p='10'>
-          <DummyText length='l' offset={1} pre='Tab 02: ' />
+        <Tabs.Tab p="10">Tab 2</Tabs.Tab>
+        <Tabs.Panel p="10">
+          <DummyText length="l" offset={1} pre="Tab 02: " />
         </Tabs.Panel>
       </Tabs.Item>
     </Tabs.Root>
@@ -230,7 +230,7 @@ c--tabs
 
 <Preview>
   <PreviewTitle>`@sm`サイズより大きい場合、コンテンツを横並びにする例</PreviewTitle>
-  <PreviewArea p='20' resize>
+  <PreviewArea p="20" resize>
     <Tabs.Root g="15" gt={[null, '"list panel" auto / auto 1fr']} listProps={{ fxd: [null, 'column'], bd: '-', bdw: ['0 0 1px 0', '0 1px 0 0'] }}>
       <Tabs.Item>
         <Tabs.Tab px="15" px-s="10" py="10" py-s="5">
@@ -253,20 +253,20 @@ c--tabs
   <PreviewCode>
     ```jsx
     <Tabs.Root
-      g='15'
+      g="15"
       gt={[null, '"list panel" auto / auto 1fr']}
       listProps={{fxd: [null, 'column'], bd: '-', bdw:['0 0 1px 0','0 1px 0 0']}}
     >
       <Tabs.Item>
-        <Tabs.Tab px='15' px-s='10' py='10' py-s='5'>Tab 1</Tabs.Tab>
-        <Tabs.Panel p='5'>
-          <DummyText pre='Tab 01: '/>
+        <Tabs.Tab px="15" px-s="10" py="10" py-s="5">Tab 1</Tabs.Tab>
+        <Tabs.Panel p="5">
+          <DummyText pre="Tab 01: "/>
         </Tabs.Panel>
       </Tabs.Item>
       <Tabs.Item>
-        <Tabs.Tab px='15' px-s='10' py='10' py-s='5'>Tab 2</Tabs.Tab>
-        <Tabs.Panel p='5'>
-          <DummyText length='l' offset={1} pre='Tab 02: ' />
+        <Tabs.Tab px="15" px-s="10" py="10" py-s="5">Tab 2</Tabs.Tab>
+        <Tabs.Panel p="5">
+          <DummyText length="l" offset={1} pre="Tab 02: " />
         </Tabs.Panel>
       </Tabs.Item>
     </Tabs.Root>
@@ -281,13 +281,13 @@ c--tabs
 コアではスタイルを特に持ちませんので、サイトごとにスタイルを用意してご利用ください。
 
 `c--tabs_tab`では`--_isSelected`, `--_notSelected`が使えるようになっていますので、活用していただくと便利です。
-<HelpText icon='info' >（[`set--hov`](/docs/props/hov#set--hov)の`--_isHov`,`--_notHov`と同じようにして使用できます。）</HelpText>
+<HelpText icon="info" >（[`set--hov`](/docs/props/hov#set--hov)の`--_isHov`,`--_notHov`と同じようにして使用できます。）</HelpText>
 
 ここではいくつかのスタイリング例を紹介します。
 
 <Preview>
   <PreviewTitle>`variant='line'`</PreviewTitle>
-  <PreviewArea p='20'>
+  <PreviewArea p="20">
     <Tabs.Root variant="line" g="15">
       <Tabs.Item>
         <Tabs.Tab>Tab 1</Tabs.Tab>
@@ -303,9 +303,9 @@ c--tabs
       </Tabs.Item>
     </Tabs.Root>
   </PreviewArea>
-  <PreviewCode slot='tab' label='追加CSS'>
+  <PreviewCode slot="tab" label="追加CSS">
 ```scss
-/* Memo: ov-x='auto' の時に margin がネガティブだとアウトなので、borderではなくbox-shadowで表現する。 */
+/* Memo: ov-x="auto" の時に margin がネガティブだとアウトなので、borderではなくbox-shadowで表現する。 */
 :where(.c--tabs--line) {
   --sh-size: inset 0 -2px;
 
@@ -320,7 +320,7 @@ c--tabs
 }
 ```
   </PreviewCode>
-  <PreviewCode slot='tab' label='JSX'>
+  <PreviewCode slot="tab" label="JSX">
     ```jsx 'variant="line"'
     <Tabs.Root variant="line" g="15">
       <Tabs.Item>
@@ -343,7 +343,7 @@ c--tabs
 
 <Preview>
   <PreviewTitle>`variant='emboss'`</PreviewTitle>
-  <PreviewArea p='20'>
+  <PreviewArea p="20">
     <Tabs.Root variant="emboss" g="15" ji="center">
       <Tabs.Item>
         <Tabs.Tab>Tab 1</Tabs.Tab>
@@ -359,7 +359,7 @@ c--tabs
       </Tabs.Item>
     </Tabs.Root>
   </PreviewArea>
-  <PreviewCode slot='tab' label='追加CSS'>
+  <PreviewCode slot="tab" label="追加CSS">
 ```scss
 :where(.c--tabs--emboss) {
   .c--tabs_list {
@@ -377,7 +377,7 @@ c--tabs
 }
 ```
   </PreviewCode>
-  <PreviewCode slot='tab' label='JSX'>
+  <PreviewCode slot="tab" label="JSX">
     ```jsx 'variant="emboss"'
     <Tabs.Root variant="emboss" g="15" ji="center">
       <Tabs.Item>
@@ -416,7 +416,7 @@ c--tabs
 
 <Preview>
   <PreviewTitle>例（Tab 2の高さに固定されます）</PreviewTitle>
-  <PreviewArea p='20'>
+  <PreviewArea p="20">
     <Tabs.Root data-tabs-keep-height g="15">
       <Tabs.Item>
         <Tabs.Tab px="10">Tab 1</Tabs.Tab>

@@ -13,16 +13,16 @@ Utility classes defined in the `@lism-base` layer are provided in the format `se
 
 A class for resetting primary styles.
 
-<EmbedCode dirPath='packages/lism-css' srcPath='src/scss/base/set/_plain.scss' />
+<EmbedCode dirPath="packages/lism-css" srcPath="src/scss/base/set/_plain.scss" />
 
 <Preview>
   <PreviewTitle>Applying `set--plain` to a `button` element</PreviewTitle>
-  <PreviewArea p='20' layout=''>
+  <PreviewArea p="20" layout="">
     <div class="l--flex -g:20 -ff:mono">
       <button class="set--plain">button</button>
     </div>
   </PreviewArea>
-  <PreviewCode slot='tab' label='HTML'>
+  <PreviewCode slot="tab" label="HTML">
   ```html "'set--plain'"
   <div class="l--flex -g:20 -ff:mono">
     <button class="set--plain">button</button>
@@ -37,13 +37,13 @@ A class for resetting primary styles.
 
 Elements with the `.set--shadow` class have the `--bxsh--` variables that compose the shadow redefined.
 
-<EmbedCode dirPath='packages/lism-css' srcPath='src/scss/base/tokens/_shadow.scss' />
+<EmbedCode dirPath="packages/lism-css" srcPath="src/scss/base/tokens/_shadow.scss" />
 
 By overriding the `--shc` variable here, you can adjust the color tint of the shadow.
 
 <Preview>
   <PreviewTitle>Example of overriding shadow color</PreviewTitle>
-  <PreviewArea p='30' nogrid>
+  <PreviewArea p="30" nogrid>
     <Stack g="10">
       <Text> Default: </Text>
       <Flex className="set--shadow -g:30" px-s="15">
@@ -67,7 +67,7 @@ By overriding the `--shc` variable here, you can adjust the color tint of the sh
     </Stack>
     <div class="a--spacer" />
   </PreviewArea>
-    <PreviewCode slot='tab' label='HTML'>
+    <PreviewCode slot="tab" label="HTML">
     ```html "set--shadow"
     <div class="l--flex set--shadow -g:30" style="--shc: hsl(200 50% 50% / 20%)">
       <div class="l--box -bxsh:20 -p:30 -bdrs:20">Box</div>
@@ -75,7 +75,7 @@ By overriding the `--shc` variable here, you can adjust the color tint of the sh
     </div>
     ```
   </PreviewCode>
-  <PreviewCode slot='tab' label='JSX'>
+  <PreviewCode slot="tab" label="JSX">
     ```jsx "set--shadow"
     <Flex className="set--shadow" g="30" style={{ '--shc': 'hsl(200 50% 50% / 20%)' }}>
       <Box bxsh="20" p="30" bdrs="20">
@@ -97,7 +97,7 @@ Sets the hover state variables (`--_notHov`, `--_isHov``) as follows. Primarily 
 - `--_isHov` is defined as an empty value only when not hovered (and not focus-within).
 - Conversely, `--_notHov` is defined as an empty value when hovered or focus-within.
 
-<EmbedCode dirPath='packages/lism-css' srcPath='src/scss/base/set/_hov.scss' />
+<EmbedCode dirPath="packages/lism-css" srcPath="src/scss/base/set/_hov.scss" />
 
 
 This empty variable trick enables the following patterns:
@@ -128,7 +128,7 @@ Using `var(--_isHov, ...) var(--_notHov, ...)` allows you to **write both hover 
 }
 `}>
   <PreviewTitle>Preview of `-hov:test`</PreviewTitle>
-  <PreviewArea p='30'>
+  <PreviewArea p="30">
     <div className="set--hov -hov:test -p:30 -bd -bdc:current ">BOX</div>
   </PreviewArea>
   <PreviewCode>
@@ -152,7 +152,7 @@ For example, this is useful for zooming an image inside a card when the parent b
 
 <Preview>
   <PreviewTitle>Usage example of `-hov:to:zoom`</PreviewTitle>
-  <PreviewArea p='30'>
+  <PreviewArea p="30">
     <a href="###" class="l--frame is--boxLink set--hov -ar:21/9 -ov:hidden">
       <img class="set--transition -hov:to:zoom" src="https://cdn.lism-css.com/img/a-2.jpg" width="960" height="640" loading="lazy" />
       <div class="is--layer -bgc" style="--c: #fff; --bgc: rgb(0 0 0 / 50%)"></div>
@@ -185,11 +185,11 @@ See the [`hover` documentation page](/en/docs/props/hov#set--hov) for usage exam
 
 Sets the `transition` property using dedicated variables.
 
-<EmbedCode dirPath='packages/lism-css' srcPath='src/scss/base/set/_transition.scss' />
+<EmbedCode dirPath="packages/lism-css" srcPath="src/scss/base/set/_transition.scss" />
 
 <Preview>
   <PreviewTitle>Usage example</PreviewTitle>
-  <PreviewArea p='30'>
+  <PreviewArea p="30">
     <Lism set="transition" hov={{c: 'red'}} style={{ '--hov-prop': 'color'}}>Example</Lism>
   </PreviewArea>
   <PreviewCode label="HTML" slot="tab">
@@ -219,7 +219,7 @@ Apply `set--innerRs` to the parent element, then use `-bdrs:inner` on the child 
 
 <Preview>
   <PreviewTitle>Usage example</PreviewTitle>
-  <PreviewArea p='30'>
+  <PreviewArea p="30">
     <Lism set="innerRs" p="15" bdrs="40" bd bxsh="20">
       <Frame bdrs="inner" ar="og">
         <img src="https://cdn.lism-css.com/img/u-5.jpg" width="1920" height="1280" alt="" />
@@ -246,13 +246,13 @@ Apply `set--innerRs` to the parent element, then use `-bdrs:inner` on the child 
   </PreviewCode>
 </Preview>
 
-<Spacer h='1rem' />
+<Spacer h="1rem" />
 
 Since `p` and `bdrs` are managed as variables even when their values change at breakpoints, `set--innerRs` also supports responsive border radius.
 
 <Preview>
   <PreviewTitle>Usage example</PreviewTitle>
-  <PreviewArea p='20' resize>
+  <PreviewArea p="20" resize>
     <Lism p={[10, 15]} bd bdrs={['30', '40']} class="set--innerRs">
       <Lism bd p="20" bdrs="inner" bgc="base-2">
         <Fragment>Example</Fragment>
@@ -284,14 +284,14 @@ It is provided as a separate class from padding utilities to reserve a consisten
 
 <Preview>
   <PreviewTitle>Example</PreviewTitle>
-  <PreviewArea resize p='15'>
+  <PreviewArea resize p="15">
     <Lism set="gutter">
       <p>Lorem ipsum content...</p>
       <p>Lorem ipsum content...</p>
       <p>Lorem ipsum content...</p>
     </Lism>
   </PreviewArea>
-  <PreviewCode slot='tab' label='HTML'>
+  <PreviewCode slot="tab" label="HTML">
   ```html
   <div class="set--gutter">
     <p>Lorem ipsum content...</p>
@@ -300,7 +300,7 @@ It is provided as a separate class from padding utilities to reserve a consisten
   </div>
   ```
   </PreviewCode>
-  <PreviewCode slot='tab' label='JSX'>
+  <PreviewCode slot="tab" label="JSX">
   ```jsx
   <Lism set="gutter">
     <p>Lorem ipsum content...</p>
@@ -317,7 +317,7 @@ It is provided as a separate class from padding utilities to reserve a consisten
 A utility class for applying styles only at or above a specific breakpoint.
 It can be used as a workaround for properties that do not support [responsive breakpoints](/en/docs/responsive/).
 
-<EmbedCode dirPath='packages/lism-css' srcPath='src/scss/base/set/_bp.scss' />
+<EmbedCode dirPath="packages/lism-css" srcPath="src/scss/base/set/_bp.scss" />
 
 <Preview>
   <PreviewTitle>Example: changing text color to red at sm size and above</PreviewTitle>
@@ -326,14 +326,14 @@ It can be used as a workaround for properties that do not support [responsive br
       <p>Lorem ipsum dolor sit amet. Consectetur adipiscing elit, sed do eiusmod tempor Incididunt ut.</p>
     </Lism>
   </PreviewArea>
-  <PreviewCode slot='tab' label='HTML'>
+  <PreviewCode slot="tab" label="HTML">
   ```html "set--bp" "var(--_is_sm) red"
   <div class="set--bp -p:20" style="color: var(--_is_sm) red">
     <p>Lorem ipsum dolor sit amet. Consectetur adipiscing elit, sed do eiusmod tempor Incididunt ut.</p>
   </div>
   ```
   </PreviewCode>
-  <PreviewCode slot='tab' label='JSX'>
+  <PreviewCode slot="tab" label="JSX">
     ```jsx 'set="bp"' "var(--_is_sm) red"
     <Lism set="bp" p="20" style={{ color: 'var(--_is_sm) red;' }}>
       <p>Lorem ipsum dolor sit amet. Consectetur adipiscing elit, sed do eiusmod tempor Incididunt ut.</p>
@@ -348,13 +348,13 @@ It can be used as a workaround for properties that do not support [responsive br
 
 Combines with the `--mask` variable to apply a mask to the element itself.
 
-<EmbedCode dirPath='packages/lism-css' srcPath='src/scss/base/set/_mask.scss' />
+<EmbedCode dirPath="packages/lism-css" srcPath="src/scss/base/set/_mask.scss" />
 
 In Lism components, use `set="mask"` with `css={{ '--maskImg': getSvgUrl(svgString) }}`.
 
 <Preview>
   <PreviewTitle>Example</PreviewTitle>
-  <PreviewArea p='10'>
+  <PreviewArea p="10">
     <Media
       src="https://cdn.lism-css.com/img/u-2.jpg"
       width="960"
@@ -366,7 +366,7 @@ In Lism components, use `set="mask"` with `css={{ '--maskImg': getSvgUrl(svgStri
       css={{ '--maskImg': `url('data:image/svg+xml,<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><path fill="%23000000" d="M170.4,25.7c16.1,14.2,23.2,38.5,24.8,61.7c1.7,23.3-1.8,45.5-12.9,62.3c-11,16.9-29.3,28.6-48.8,34.5 c-19.4,5.9-40,6.1-59.5,0.4c-19.5-5.6-37.9-17.4-51.7-34.9c-14-17.5-23.2-40.8-18-60.2c5-19.4,24.5-34.7,43.5-48.4 s37.6-25.7,59.5-29.7C129.1,7.3,154.2,11.4,170.4,25.7z" /></svg>')` }}
     />
   </PreviewArea>
-  <PreviewCode slot='tab' label='JSX'>
+  <PreviewCode slot="tab" label="JSX">
     ```jsx
     <Media
       src="https://cdn.lism-css.com/img/u-2.jpg"
@@ -380,7 +380,7 @@ In Lism components, use `set="mask"` with `css={{ '--maskImg': getSvgUrl(svgStri
     />
     ```
   </PreviewCode>
-  <PreviewCode slot='tab' label='HTML'>
+  <PreviewCode slot="tab" label="HTML">
     ```html
     <img
       class="set--mask -ar:og"

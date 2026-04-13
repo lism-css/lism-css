@@ -10,7 +10,7 @@ A component for displaying content in a chat conversation style.
 
 <Preview>
   <PreviewTitle>Preview</PreviewTitle>
-  <PreviewArea resize p='30' _dir='rtl'>
+  <PreviewArea resize p="30" _dir="rtl">
     <Chat name="Taro" avatar="https://cdn.lism-css.com/img/avatar/a-01.jpg">
       <p>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
@@ -18,14 +18,14 @@ A component for displaying content in a chat conversation style.
       </p>
     </Chat>
   </PreviewArea>
-  <PreviewCode slot='tab' label='React / Astro'>
+  <PreviewCode slot="tab" label="React / Astro">
     ```jsx
     <Chat name="Taro" avatar="https://cdn.lism-css.com/img/avatar/a-01.jpg">
       <p>Lorem ipsum dolor sit amet...</p>
     </Chat>
     ```
   </PreviewCode>
-  <PreviewCode slot='tab' label='HTML'>
+  <PreviewCode slot="tab" label="HTML">
     ```html
     <div class="c--chat c--chat--speak l--grid -ji:start" style="--keycolor: var(--gray)" data-chat-dir="start">
       <div class="c--chat_avatar l--frame -bgc:base -ar:1/1 -bdrs:99" src="https://cdn.lism-css.com/img/avatar/a-01.jpg" aria-hidden="true">
@@ -50,7 +50,7 @@ Provided as `Chat` (`.c--chat`) from the `@lism-css/ui` package.
 
 
 ### Import
-<ImportPackage component='Chat' packageName='@lism-css/ui' css='style.css' />
+<ImportPackage component="Chat" packageName="@lism-css/ui" css="style.css" />
 
 
 ### Props
@@ -68,14 +68,14 @@ Provided as `Chat` (`.c--chat`) from the `@lism-css/ui` package.
 ### Source Code
 
 <Preview>
-  <PreviewCode slot='tab' label='_style.css'>
-    <SrcCode dir='lism-ui' path='src/components/Chat/_style.css' />
+  <PreviewCode slot="tab" label="_style.css">
+    <SrcCode dir="lism-ui" path="src/components/Chat/_style.css" />
   </PreviewCode>
-  <PreviewCode slot='tab' label='Chat.tsx'>
-    <SrcCode dir='lism-ui' path='src/components/Chat/react/Chat.tsx' />
+  <PreviewCode slot="tab" label="Chat.tsx">
+    <SrcCode dir="lism-ui" path="src/components/Chat/react/Chat.tsx" />
   </PreviewCode>
-  <PreviewCode slot='tab' label='Chat.astro'>
-    <SrcCode dir='lism-ui' path='src/components/Chat/astro/Chat.astro' />
+  <PreviewCode slot="tab" label="Chat.astro">
+    <SrcCode dir="lism-ui" path="src/components/Chat/astro/Chat.astro" />
   </PreviewCode>
 </Preview>
 
@@ -84,7 +84,7 @@ Provided as `Chat` (`.c--chat`) from the `@lism-css/ui` package.
 
 <Preview>
   <PreviewTitle>Usage examples of `<Chat>`</PreviewTitle>
-  <PreviewArea resize p='20' _dir='rtl'>
+  <PreviewArea resize p="20" _dir="rtl">
     <Chat name="Taro" avatar="https://cdn.lism-css.com/img/avatar/a-01.jpg">
       <DummyText lang="ja" />
     </Chat>
@@ -95,11 +95,11 @@ Provided as `Chat` (`.c--chat`) from the `@lism-css/ui` package.
   </PreviewArea>
   <PreviewCode>
     ```jsx
-    <Chat name='Taro' avatar='https://cdn.lism-css.com/img/avatar/a-01.jpg'>
-      <DummyText lang='ja' />
+    <Chat name="Taro" avatar="https://cdn.lism-css.com/img/avatar/a-01.jpg">
+      <DummyText lang="ja" />
     </Chat>
-    <Chat direction='end' name='Hanako' avatar='https://cdn.lism-css.com/img/avatar/a-02.jpg' keycolor='green'>
-      <DummyText lang='ja' length='codes' />
+    <Chat direction="end" name="Hanako" avatar="https://cdn.lism-css.com/img/avatar/a-02.jpg" keycolor="green">
+      <DummyText lang="ja" length="codes" />
     </Chat>
     ```
   </PreviewCode>
@@ -108,7 +108,7 @@ Provided as `Chat` (`.c--chat`) from the `@lism-css/ui` package.
 
 ## Opt-in
 
-### variant='think'
+### variant="think"
 
 An example of adding a style to represent thoughts — something a character is thinking rather than saying aloud.
 
@@ -121,7 +121,7 @@ An example of adding a style to represent thoughts — something a character is 
 }
 `}>
   <PreviewTitle>`variant='think'`</PreviewTitle>
-  <PreviewArea resize p='20' _dir='rtl'>
+  <PreviewArea resize p="20" _dir="rtl">
     <Chat variant="think" name="Name B" avatar="https://cdn.lism-css.com/img/avatar/a-01.jpg" keycolor="blue">
       <DummyText length="xs" />
     </Chat>
@@ -129,17 +129,17 @@ An example of adding a style to represent thoughts — something a character is 
       <DummyText length="codes" />
     </Chat>
   </PreviewArea>
-  <PreviewCode slot='tab' label='JSX'>
+  <PreviewCode slot="tab" label="JSX">
     ```jsx
-    <Chat variant='think' name='Name B' avatar='https://cdn.lism-css.com/img/avatar/a-01.jpg' keycolor='blue'>
-      <DummyText length='xs' />
+    <Chat variant="think" name="Name B" avatar="https://cdn.lism-css.com/img/avatar/a-01.jpg" keycolor="blue">
+      <DummyText length="xs" />
     </Chat>
-    <Chat variant='think' direction='end' name='Name B' avatar='https://cdn.lism-css.com/img/avatar/a-02.jpg' keycolor='purple'>
-      <DummyText length='codes' />
+    <Chat variant="think" direction="end" name="Name B" avatar="https://cdn.lism-css.com/img/avatar/a-02.jpg" keycolor="purple">
+      <DummyText length="codes" />
     </Chat>
     ```
   </PreviewCode>
-  <PreviewCode slot='tab' label='CSS'>
+  <PreviewCode slot="tab" label="CSS">
     ```css
     @layer lism-modules {
       .c--chat--think {

@@ -15,21 +15,21 @@ import { List, ListItem } from "lism-css/astro";
 
 ## Import
 
-<ImportPackage component='List, ListItem' />
+<ImportPackage component="List, ListItem" />
 
 
 ## Basic Usage
 
 <Preview>
   <PreviewTitle>`<List>` output example</PreviewTitle>
-  <PreviewArea p='20'>
+  <PreviewArea p="20">
     <List>
       <ListItem>List item 1</ListItem>
       <ListItem>List item 2</ListItem>
       <ListItem>List item 3</ListItem>
     </List>
   </PreviewArea>
-  <PreviewCode slot='tab' label='JSX'>
+  <PreviewCode slot="tab" label="JSX">
     ```jsx
     <List>
       <ListItem>List item 1</ListItem>
@@ -38,7 +38,7 @@ import { List, ListItem } from "lism-css/astro";
     </List>
     ```
   </PreviewCode>
-  <PreviewCode slot='tab' label='HTML'>
+  <PreviewCode slot="tab" label="HTML">
     ```html
     <ul>
       <li>List item 1</li>
@@ -56,14 +56,14 @@ Use `as="ol"` to output an `<ol>` tag.
 
 <Preview>
   <PreviewTitle>`<List as="ol">` output example</PreviewTitle>
-  <PreviewArea p='20'>
+  <PreviewArea p="20">
     <List as="ol">
       <ListItem>List item 1</ListItem>
       <ListItem>List item 2</ListItem>
       <ListItem>List item 3</ListItem>
     </List>
   </PreviewArea>
-  <PreviewCode slot='tab' label='JSX'>
+  <PreviewCode slot="tab" label="JSX">
     ```jsx
     <List as="ol">
       <ListItem>List item 1</ListItem>
@@ -72,7 +72,7 @@ Use `as="ol"` to output an `<ol>` tag.
     </List>
     ```
   </PreviewCode>
-  <PreviewCode slot='tab' label='HTML'>
+  <PreviewCode slot="tab" label="HTML">
     ```html
     <ol>
       <li>List item 1</li>
@@ -90,7 +90,7 @@ Use `<List as="dl">` with `<ListItem as="dt">` and `<ListItem as="dd">` to creat
 
 <Preview>
   <PreviewTitle>`<List as="dl">` output example</PreviewTitle>
-  <PreviewArea p='20'>
+  <PreviewArea p="20">
     <List as="dl">
       <ListItem as="dt" fw="bold">Term 1</ListItem>
       <ListItem as="dd">Description for term 1.</ListItem>
@@ -98,7 +98,7 @@ Use `<List as="dl">` with `<ListItem as="dt">` and `<ListItem as="dd">` to creat
       <ListItem as="dd">Description for term 2.</ListItem>
     </List>
   </PreviewArea>
-  <PreviewCode slot='tab' label='JSX'>
+  <PreviewCode slot="tab" label="JSX">
     ```jsx
     <List as="dl">
       <ListItem as="dt" fw="bold">
@@ -112,7 +112,7 @@ Use `<List as="dl">` with `<ListItem as="dt">` and `<ListItem as="dd">` to creat
     </List>
     ```
   </PreviewCode>
-  <PreviewCode slot='tab' label='HTML'>
+  <PreviewCode slot="tab" label="HTML">
     ```html
     <dl>
       <dt class="-fw:bold">Term 1</dt>

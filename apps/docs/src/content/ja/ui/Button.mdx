@@ -12,7 +12,7 @@ import { ArrowRightIcon, ShoppingCartSimpleIcon } from "@phosphor-icons/react";
 
 <Preview>
   <PreviewTitle>Preview</PreviewTitle>
-  <PreviewArea p='20' bg=':stripe' layout=''>
+  <PreviewArea p="20" bg=":stripe" layout="">
     <Flex layout="cluster" g="15">
       <Button href="###" variant="fill">
         <Fragment>Button</Fragment>
@@ -22,7 +22,7 @@ import { ArrowRightIcon, ShoppingCartSimpleIcon } from "@phosphor-icons/react";
       </Button>
     </Flex>
   </PreviewArea>
-  <PreviewCode slot='tab' label='React / Astro'>
+  <PreviewCode slot="tab" label="React / Astro">
     ```jsx
     <Flex layout="cluster" g="15">
       <Button href="###" variant="fill">
@@ -34,7 +34,7 @@ import { ArrowRightIcon, ShoppingCartSimpleIcon } from "@phosphor-icons/react";
     </Flex>
     ```
   </PreviewCode>
-  <PreviewCode slot='tab' label='HTML'>
+  <PreviewCode slot="tab" label="HTML">
     ```jsx
     <div class="l--cluster -g:15">
       <a class="c--button c--button--fill l--flex -lh:s -py:10 -px:20 -hov:o" href="###">
@@ -59,7 +59,7 @@ import { ArrowRightIcon, ShoppingCartSimpleIcon } from "@phosphor-icons/react";
 
 ### Import
 
-<ImportPackage component='Button' packageName='@lism-css/ui' css='style.css' />
+<ImportPackage component="Button" packageName="@lism-css/ui" css="style.css" />
 
 
 ### Props
@@ -75,14 +75,14 @@ import { ArrowRightIcon, ShoppingCartSimpleIcon } from "@phosphor-icons/react";
 ### 基本構造
 
 <Preview>
-  <PreviewCode slot='tab' label='React / Astro'>
+  <PreviewCode slot="tab" label="React / Astro">
     ```jsx
     <Button href="">
       (<Icon />)TEXT(<Icon />)
     </Button>
     ```
   </PreviewCode>
-  <PreviewCode slot='tab' label='HTML'>
+  <PreviewCode slot="tab" label="HTML">
     ```html
     <a class="c--button c--button--fill|outline l--flex -lh:s -py:10 -px:20 -hov:o" href="">
       (<svg class="a--icon"></svg>)TEXT(<svg class="a--icon"></svg>)
@@ -95,14 +95,14 @@ import { ArrowRightIcon, ShoppingCartSimpleIcon } from "@phosphor-icons/react";
 ### Source Code
 
 <Preview>
-  <PreviewCode slot='tab' label='_style.css'>
-    <SrcCode dir='lism-ui' path='src/components/Button/_style.css' />
+  <PreviewCode slot="tab" label="_style.css">
+    <SrcCode dir="lism-ui" path="src/components/Button/_style.css" />
   </PreviewCode>
-  <PreviewCode slot='tab' label='Button.tsx'>
-    <SrcCode dir='lism-ui' path='src/components/Button/react/Button.tsx' />
+  <PreviewCode slot="tab" label="Button.tsx">
+    <SrcCode dir="lism-ui" path="src/components/Button/react/Button.tsx" />
   </PreviewCode>
-  <PreviewCode slot='tab' label='Button.astro'>
-    <SrcCode dir='lism-ui' path='src/components/Button/astro/Button.astro' />
+  <PreviewCode slot="tab" label="Button.astro">
+    <SrcCode dir="lism-ui" path="src/components/Button/astro/Button.astro" />
   </PreviewCode>
 </Preview>
 
@@ -111,7 +111,7 @@ import { ArrowRightIcon, ShoppingCartSimpleIcon } from "@phosphor-icons/react";
 
 <Preview>
   <PreviewTitle>`Button`の使用例</PreviewTitle>
-  <PreviewArea p='20' bg=':stripe' layout=''>
+  <PreviewArea p="20" bg=":stripe" layout="">
     <Flex g="15">
       <Button href="###">Button</Button>
       <Button href="###" bgc="brand" bdrs="10">
@@ -124,7 +124,7 @@ import { ArrowRightIcon, ShoppingCartSimpleIcon } from "@phosphor-icons/react";
     </Flex>
   </PreviewArea>
 
-  <PreviewCode slot='tab' label='JSX'>
+  <PreviewCode slot="tab" label="JSX">
     ```jsx
     <Flex g="15">
       <Button href="###">Button</Button>
@@ -135,7 +135,7 @@ import { ArrowRightIcon, ShoppingCartSimpleIcon } from "@phosphor-icons/react";
     </Flex>
     ```
   </PreviewCode>
-  <PreviewCode slot='tab' label='HTML'>
+  <PreviewCode slot="tab" label="HTML">
     ```html
     <div class="l--flex -g:15">
       <a class="c--button l--flex -lh:s -py:10 -px:20 -hov:o" href="###">Button</a>
@@ -151,7 +151,7 @@ import { ArrowRightIcon, ShoppingCartSimpleIcon } from "@phosphor-icons/react";
 ### variant: outline
 <Preview>
   <PreviewTitle>`outline`の使用例</PreviewTitle>
-  <PreviewArea p='20' bg=':stripe' layout=''>
+  <PreviewArea p="20" bg=":stripe" layout="">
     <Flex g="15">
       <Button href="###">Button</Button>
       <Button href="###" variant="outline" c="brand" bdrs="10">
@@ -164,7 +164,7 @@ import { ArrowRightIcon, ShoppingCartSimpleIcon } from "@phosphor-icons/react";
     </Flex>
   </PreviewArea>
 
-  <PreviewCode slot='tab' label='JSX'>
+  <PreviewCode slot="tab" label="JSX">
     ```jsx
     <Flex g="15">
       <Button href="###">Button</Button>
@@ -175,7 +175,7 @@ import { ArrowRightIcon, ShoppingCartSimpleIcon } from "@phosphor-icons/react";
     </Flex>
     ```
   </PreviewCode>
-  <PreviewCode slot='tab' label='HTML'>
+  <PreviewCode slot="tab" label="HTML">
     ```html
     <div class="l--flex -g:15">
       <a class="c--button c--button--outline l--flex -lh:s -py:10 -px:20 -hov:o" href="###">Button</a>
@@ -191,7 +191,7 @@ import { ArrowRightIcon, ShoppingCartSimpleIcon } from "@phosphor-icons/react";
 ### アイコンを使う例
 <Preview>
   <PreviewTitle>アイコンを使う例</PreviewTitle>
-  <PreviewArea p='20' bg=':stripe' layout=''>
+  <PreviewArea p="20" bg=":stripe" layout="">
     <Cluster g="15">
       <Button href="###" g="5" bdrs="10">
         <Icon icon="cart" style={{ translate: '-25% 0' }} />
@@ -206,7 +206,7 @@ import { ArrowRightIcon, ShoppingCartSimpleIcon } from "@phosphor-icons/react";
       </Button>
     </Cluster>
   </PreviewArea>
-  <PreviewCode slot='tab' label='JSX'>
+  <PreviewCode slot="tab" label="JSX">
     ```jsx
     <Cluster g="15">
       <Button href="###" g="5" bdrs="10">
@@ -233,7 +233,7 @@ import { ArrowRightIcon, ShoppingCartSimpleIcon } from "@phosphor-icons/react";
 
 <Preview>
   <PreviewTitle>サイズの調整</PreviewTitle>
-  <PreviewArea p='20' bg=':stripe' flow='s'>
+  <PreviewArea p="20" bg=":stripe" flow="s">
     <Button href="###" w="fit" bdrs="10">
       <Fragment>Button</Fragment>
     </Button>
@@ -241,12 +241,12 @@ import { ArrowRightIcon, ShoppingCartSimpleIcon } from "@phosphor-icons/react";
       <Fragment>Button</Fragment>
     </Button>
   </PreviewArea>
-  <PreviewCode slot='tab' label='JSX'>
+  <PreviewCode slot="tab" label="JSX">
     ```jsx 'w="fit"' 'max-w="12em"' 'py="15"'
-    <Button href='###' w='fit' bdrs='10'>
+    <Button href="###" w="fit" bdrs="10">
       Button
     </Button>
-    <Button href='###' max-w='12em' py='15' fz='l' bdrs='10'>
+    <Button href="###" max-w="12em" py="15" fz="l" bdrs="10">
       Button
     </Button>
     ```
@@ -262,7 +262,7 @@ import { ArrowRightIcon, ShoppingCartSimpleIcon } from "@phosphor-icons/react";
 
 <Preview>
   <PreviewTitle>Preview</PreviewTitle>
-  <PreviewArea p='20' flow='20'>
+  <PreviewArea p="20" flow="20">
     <Stack max-w="20em" g="15">
       <Button href="###" layout="grid" py="15" bdrs="10" hov="neutral">
         <Icon icon="cart" />
@@ -279,25 +279,25 @@ import { ArrowRightIcon, ShoppingCartSimpleIcon } from "@phosphor-icons/react";
       </Button>
     </Stack>
   </PreviewArea>
-  <PreviewCode slot='tab' label='JSX'>
+  <PreviewCode slot="tab" label="JSX">
     ```jsx 'layout="grid"'
-    <Button href='###' layout='grid' max-w='20em' py='15' bdrs='10' hov='neutral'>
-      <Icon icon='cart' />
+    <Button href="###" layout="grid" max-w="20em" py="15" bdrs="10" hov="neutral">
+      <Icon icon="cart" />
       <span>Button</span>
     </Button>
-    <Button href='###' layout='grid' max-w='20em' py='15' bdrs='10' hov='neutral'>
+    <Button href="###" layout="grid" max-w="20em" py="15" bdrs="10" hov="neutral">
       <span>Button</span>
       <Icon icon={ArrowRightIcon} />
     </Button>
-    <Button href='###' layout='grid' max-w='20em' py='15' bdrs='10' hov='neutral'>
-      <Icon icon='cart' />
+    <Button href="###" layout="grid" max-w="20em" py="15" bdrs="10" hov="neutral">
+      <Icon icon="cart" />
       <span>Button</span>
       <Icon icon={ArrowRightIcon} />
     </Button>
     ```
   </PreviewCode>
 
-  <PreviewCode slot='tab' label='CSS'>
+  <PreviewCode slot="tab" label="CSS">
   ```css
   .c--button:where(.l--grid) {
     grid-template-columns: minmax(1em, auto) 1fr minmax(1em, auto);
@@ -335,7 +335,7 @@ import { ArrowRightIcon, ShoppingCartSimpleIcon } from "@phosphor-icons/react";
   }
 }`}>
   <PreviewTitle>例</PreviewTitle>
-  <PreviewArea p='20' bg=':stripe' layout=''>
+  <PreviewArea p="20" bg=":stripe" layout="">
     <Flex g="15">
       <Button href="###" hov="reverse" variant="fill">
         <Fragment>Button</Fragment>
@@ -346,7 +346,7 @@ import { ArrowRightIcon, ShoppingCartSimpleIcon } from "@phosphor-icons/react";
     </Flex>
   </PreviewArea>
 
-  <PreviewCode slot='tab' label='追加CSS'>
+  <PreviewCode slot="tab" label="追加CSS">
   ```scss
   .-hov\:reverse {
     --hov-c: var(--bgc);
@@ -366,7 +366,7 @@ import { ArrowRightIcon, ShoppingCartSimpleIcon } from "@phosphor-icons/react";
   }
   ```
   </PreviewCode>
-  <PreviewCode slot='tab' label='JSX'>
+  <PreviewCode slot="tab" label="JSX">
   ```jsx 'hov="reverse"'
   <Flex g="15">
     <Button href="###" hov="reverse" variant="fill">
@@ -382,7 +382,7 @@ import { ArrowRightIcon, ShoppingCartSimpleIcon } from "@phosphor-icons/react";
 
 {/* <Preview>
   <PreviewTitle>color指定ありでのreverseの動作例</PreviewTitle>
-  <PreviewArea resize p='20' bg=':stripe'>
+  <PreviewArea resize p="20" bg=":stripe">
     <Flex layout="cluster" g="15">
       <Button href="###" hov="reverse" variant="fill" bgc="brand">
         Button
@@ -395,7 +395,7 @@ import { ArrowRightIcon, ShoppingCartSimpleIcon } from "@phosphor-icons/react";
       </Button>
     </Flex>
   </PreviewArea>
-  <PreviewCode slot='tab' label='JSX'>
+  <PreviewCode slot="tab" label="JSX">
     ```jsx
     <Flex layout="cluster" g="15">
       <Button href="###" hov="reverse" variant="fill" bgc="brand">
@@ -419,7 +419,7 @@ import { ArrowRightIcon, ShoppingCartSimpleIcon } from "@phosphor-icons/react";
 
 <Preview>
   <PreviewTitle>Preview</PreviewTitle>
-  <PreviewArea p='20' bg=':stripe' flow='s'>
+  <PreviewArea p="20" bg=":stripe" flow="s">
     <Flex g="15">
       <Link href="###" d="inline-flex" w="fit" td="none" c="base" bgc="text" lh="s" py="10" px="20" bdrs="20" hov="o">Button</Link>
       <Link href="###" d="inline-flex" w="fit" td="none" c="inherit" bd lh="s" py="10" px="20" bdrs="20" hov="o">Button</Link>
@@ -444,19 +444,19 @@ import { ArrowRightIcon, ShoppingCartSimpleIcon } from "@phosphor-icons/react";
       <Icon icon={ArrowRightIcon} />
     </Grid>
   </PreviewArea>
-  <PreviewCode slot='tab' label='JSX'>
+  <PreviewCode slot="tab" label="JSX">
     ```jsx
-    <Flex g='15'>
-      <Link href='###' d='inline-flex' w='fit' td='none' c='base' bgc='text' lh='s' py='10' px='20' bdrs='20' hov='o'>Button</Link>
-      <Link href='###' d='inline-flex' w='fit' td='none' c='inherit' bd lh='s' py='10' px='20' bdrs='20' hov='o'>Button</Link>
+    <Flex g="15">
+      <Link href="###" d="inline-flex" w="fit" td="none" c="base" bgc="text" lh="s" py="10" px="20" bdrs="20" hov="o">Button</Link>
+      <Link href="###" d="inline-flex" w="fit" td="none" c="inherit" bd lh="s" py="10" px="20" bdrs="20" hov="o">Button</Link>
     </Flex>
-    <Grid as='a' href='###' gtc='1em 1fr 1em' ji='center' ai='center' px='15' py='10' g='30' w='16rem' td='none' bgc='text' c='base' bdrs='20' hov='neutral'>
-      <Lism as='span' gc='2'>Button</Lism>
+    <Grid as="a" href="###" gtc="1em 1fr 1em" ji="center" ai="center" px="15" py="10" g="30" w="16rem" td="none" bgc="text" c="base" bdrs="20" hov="neutral">
+      <Lism as="span" gc="2">Button</Lism>
       <Icon icon={ArrowRightIcon}/>
     </Grid>
     ```
   </PreviewCode>
-  <PreviewCode slot='tab' label='HTML'>
+  <PreviewCode slot="tab" label="HTML">
     ```html
     <div class="l--flex -g:15">
       <a href="###" class="-d:inline-flex -w:fit -td:none -c:base -bgc:text -lh:s -py:10 -px:20 -bdrs:20 -hov:o">Button</a>

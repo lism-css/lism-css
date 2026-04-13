@@ -11,7 +11,7 @@ import './_opt-in/_decorations.css';
 
 装飾ボックスの作成例を紹介します。
 
-<Callout type='alert'>
+<Callout type="alert">
 このページは準備中です...
 </Callout>
 
@@ -26,7 +26,7 @@ import './_opt-in/_decorations.css';
 
 <Preview>
   <PreviewTitle>Call</PreviewTitle>
-  <PreviewArea resize p='20'>
+  <PreviewArea resize p="20">
     <Grid ta="left">
       <Decorator size="1.25em" bd-l bdc="current" mr="auto" style={{ rotate: '45deg', transformOrigin: 'left bottom' }} />
       <Box p="20" mr="auto">
@@ -61,87 +61,87 @@ import './_opt-in/_decorations.css';
   </PreviewArea>
   <PreviewCode>
     ```jsx
-    <Grid ta='left'>
+    <Grid ta="left">
       <Decorator
-        size='1.25em'
+        size="1.25em"
         bd-l
-        bdc='current'
-        mr='auto'
+        bdc="current"
+        mr="auto"
         style={{'rotate':'45deg','transformOrigin':'left bottom'}}
       />
-      <Box p='20' mr='auto'>
-        <DummyText length='s'/>
+      <Box p="20" mr="auto">
+        <DummyText length="s"/>
       </Box>
       <Decorator
-        size='1.25em'
+        size="1.25em"
         bd-l
-        bdc='current'
-        mr='auto'
+        bdc="current"
+        mr="auto"
         style={{'rotate':'-45deg','transformOrigin':'left top'}}
       />
     </Grid>
     <Grid as={Grid}>
       <Decorator
-        size='1.25em'
+        size="1.25em"
         bd-r
-        bdc='current'
-        ml='auto'
+        bdc="current"
+        ml="auto"
         style={{'rotate':'-45deg','transformOrigin':'right bottom'}}
       />
-      <Box p='20' ml='auto'>
-        <DummyText length='xs' />
+      <Box p="20" ml="auto">
+        <DummyText length="xs" />
       </Box>
       <Decorator
-        size='1.25em'
+        size="1.25em"
         bd-r
-        bdc='current'
-        ml='auto'
+        bdc="current"
+        ml="auto"
         style={{'rotate':'45deg','transformOrigin':'right top'}}
       />
     </Grid>
-    <Spacer h='10' />
-    <Flex variant='ltr' jc='center' ta='center'>
+    <Spacer h="10" />
+    <Flex variant="ltr" jc="center" ta="center">
       <Decorator
-        fxsh='0'
-        size='1.25em'
+        fxsh="0"
+        size="1.25em"
         bd-t
-        bdc='current'
+        bdc="current"
         style={{'rotate':'-45deg','transformOrigin':'right top'}}
       />
-      <Box px='15' py='5'>
-        <DummyText length='xs' />
+      <Box px="15" py="5">
+        <DummyText length="xs" />
       </Box>
       <Decorator
-        fxsh='0'
-        size='1.25em'
+        fxsh="0"
+        size="1.25em"
         bd-t
-        bdc='current'
+        bdc="current"
         style={{'rotate':'45deg','transformOrigin':'left top'}}
       />
     </Flex>
-    <Spacer h='10' />
+    <Spacer h="10" />
     <Flex
-      variant='ltr'
-      jc='center'
-       ai='flex-end'
-      ta='center'
+      variant="ltr"
+      jc="center"
+       ai="flex-end"
+      ta="center"
     >
       <Decorator
-        fxsh='0'
-        size='1.25em'
+        fxsh="0"
+        size="1.25em"
         bd-b
-        bdc='current'
+        bdc="current"
         style={{'rotate':'45deg','transformOrigin':'right bottom'}}
       />
       
-      <Box px='15' py='5' fxg=''>
-        <DummyText length='s' />
+      <Box px="15" py="5" fxg="">
+        <DummyText length="s" />
       </Box>
       <Decorator
-        fxsh='0'
-        size='1.25em'
+        fxsh="0"
+        size="1.25em"
         bd-b
-        bdc='current'
+        bdc="current"
         style={{'rotate':'-45deg','transformOrigin':'left bottom'}}
       />
     </Flex>
@@ -155,7 +155,7 @@ import './_opt-in/_decorations.css';
 
 <Preview>
   <PreviewTitle>Kakko</PreviewTitle>
-  <PreviewArea resize p='20'>
+  <PreviewArea resize p="20">
     <Box p="30" pos="relative">
       <DummyText />
       <Decorator size="1.25em" pos="absolute" t="0" l="0" bdc="current" bd-l bd-t />
@@ -169,15 +169,15 @@ import './_opt-in/_decorations.css';
   </PreviewArea>
   <PreviewCode>
   ```jsx
-  <Box p='30' pos='relative'>
+  <Box p="30" pos="relative">
     <DummyText />
-    <Decorator size='1.25em' pos='absolute' t='0' l='0' bdc='current' bd-l bd-t />
-    <Decorator size='1.25em' pos='absolute' r='0' b='0' bdc='current' bd-r bd-b />
+    <Decorator size="1.25em" pos="absolute" t="0" l="0" bdc="current" bd-l bd-t />
+    <Decorator size="1.25em" pos="absolute" r="0" b="0" bdc="current" bd-r bd-b />
   </Box>
-  <Box p='30' pos='relative'>
+  <Box p="30" pos="relative">
     <DummyText />
-    <Decorator pos='absolute' t='0' l='0' w='1em' h='100%' bdc='current' bd-l bd-y />
-    <Decorator pos='absolute' t='0' r='0' w='1em' h='100%' bdc='current' bd-r bd-y />
+    <Decorator pos="absolute" t="0" l="0" w="1em" h="100%" bdc="current" bd-l bd-y />
+    <Decorator pos="absolute" t="0" r="0" w="1em" h="100%" bdc="current" bd-r bd-y />
   </Box>
   ```
   </PreviewCode>
@@ -188,7 +188,7 @@ import './_opt-in/_decorations.css';
 
 <Preview>
   <PreviewTitle>Sticky</PreviewTitle>
-  <PreviewArea resize p='20'>
+  <PreviewArea resize p="20">
     <Grid gt='"content ." / auto 1fr'>
       <Box ga="content" min-w="8em" max-w="30em" bgc="base-2" p="20" w="fit-content" bd-x-e bdc="current" bdw=".5em">
         <DummyText />

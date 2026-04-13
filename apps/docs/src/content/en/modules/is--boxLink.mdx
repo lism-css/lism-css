@@ -11,7 +11,7 @@ import { DummyText } from '@lism-css/ui/astro';
 
 ## CSS
 
-<SrcCode path='src/scss/modules/state/_boxLink.scss' />
+<SrcCode path="src/scss/modules/state/_boxLink.scss" />
 
 
 ## Using with Lism Components
@@ -20,7 +20,7 @@ A `<BoxLink>` component is available as an alias for `<Lism isBoxLink>`.
 
 ### Import
 
-<ImportPackage component='BoxLink' />
+<ImportPackage component="BoxLink" />
 
 ### Props
 
@@ -46,8 +46,8 @@ To include **additional links** inside a BoxLink, use approach 2.
 When `href` is provided to `<BoxLink>`, the component itself renders as an `<a>` tag.
 
 <Preview>
-  <PreviewTitle id='boxlink-demo01'>Example</PreviewTitle>
-  <PreviewArea p='20'>
+  <PreviewTitle id="boxlink-demo01">Example</PreviewTitle>
+  <PreviewArea p="20">
     <BoxLink href="#boxlink-demo01" p="30" bgc="base" bd bdrs="30" hov="o">
       <Group fz="xl" fw="bold">
         <Fragment>Heading text</Fragment>
@@ -58,7 +58,7 @@ When `href` is provided to `<BoxLink>`, the component itself renders as an `<a>`
       </Group>
     </BoxLink>
   </PreviewArea>
-  <PreviewCode slot='tab' label='JSX'>
+  <PreviewCode slot="tab" label="JSX">
     ```jsx {1} "href="
     <BoxLink href="#boxlink-demo01" p="30" bgc="base" bd bdrs="30" hov="o">
       <Group fz="xl" fw="bold">
@@ -73,7 +73,7 @@ When `href` is provided to `<BoxLink>`, the component itself renders as an `<a>`
     </BoxLink>
     ```
   </PreviewCode>
-  <PreviewCode slot='tab' label='HTML'>
+  <PreviewCode slot="tab" label="HTML">
     ```html {1} "is--boxLink"
     <a class="is--boxLink -hov:o -p:30 -bgc:base -bd -bdrs:30" href="#boxlink-demo01">
       <p class="-fz:xl -fw:bold">Heading text</p>
@@ -94,8 +94,8 @@ You can also make the entire box clickable by using `.is--coverLink` on an ancho
 This approach also allows you to place additional links inside the BoxLink.
 
 <Preview>
-  <PreviewTitle id='boxlink-demo02'>Example</PreviewTitle>
-  <PreviewArea p='20'>
+  <PreviewTitle id="boxlink-demo02">Example</PreviewTitle>
+  <PreviewArea p="20">
     <BoxLink as="section" p="30" bgc="base" bd bdrs="30" set="transition" hov="bxsh">
       <Group fz="xl" fw="bold">
         <Link isCoverLink href="#boxlink-demo02">
@@ -110,7 +110,7 @@ This approach also allows you to place additional links inside the BoxLink.
       </Group>
     </BoxLink>
   </PreviewArea>
-  <PreviewCode slot='tab' label='JSX'>
+  <PreviewCode slot="tab" label="JSX">
     ```jsx 'isCoverLink'
     <BoxLink p="30" bgc="base" bd bdrs="30" set="transition" hov="bxsh">
       <Group fz="xl" fw="bold">
@@ -130,7 +130,7 @@ This approach also allows you to place additional links inside the BoxLink.
     </BoxLink>
     ```
   </PreviewCode>
-  <PreviewCode slot='tab' label='HTML'>
+  <PreviewCode slot="tab" label="HTML">
     ```html "is--coverLink"
     <div class="is--boxLink set--transition -p:30 -bgc:base -bd -bdrs:30 -hov:bxsh">
       <div class="-fz:xl -fw:bold">

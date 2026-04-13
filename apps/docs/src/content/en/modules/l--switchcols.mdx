@@ -12,14 +12,14 @@ import { SwitchCols, Box, Frame } from 'lism-css/astro';
 
 ## CSS
 
-<SrcCode path='src/scss/modules/layout/_switchCols.scss' />
+<SrcCode path="src/scss/modules/layout/_switchCols.scss" />
 
 
 ## Lism Component
 
 ### Import
 
-<ImportPackage component='SwitchCols' />
+<ImportPackage component="SwitchCols" />
 
 ### Props
 
@@ -34,14 +34,14 @@ import { SwitchCols, Box, Frame } from 'lism-css/astro';
 
 <Preview>
   <PreviewTitle>Using with the default width</PreviewTitle>
-  <PreviewArea resize p='15'>
+  <PreviewArea resize p="15">
     <SwitchCols g="20">
       <div class="-bgc:base-2 -p:20">Box</div>
       <div class="-bgc:base-2 -p:20">Box</div>
       <div class="-bgc:base-2 -p:20">Box</div>
     </SwitchCols>
   </PreviewArea>
-  <PreviewCode slot='tab' label='JSX'>
+  <PreviewCode slot="tab" label="JSX">
     ```jsx
     <SwitchCols g="20">
       <div class="-bgc:base-2 -p:20">Box</div>
@@ -50,7 +50,7 @@ import { SwitchCols, Box, Frame } from 'lism-css/astro';
     </SwitchCols>
     ```
   </PreviewCode>
-  <PreviewCode slot='tab' label='HTML'>
+  <PreviewCode slot="tab" label="HTML">
     ```html
     <div class="l--switchCols -g:20">
       <div class="-bgc:base-2 -p:20">Box</div>
@@ -66,14 +66,14 @@ import { SwitchCols, Box, Frame } from 'lism-css/astro';
 
 <Preview>
   <PreviewTitle>Using with a specified `breakSize`</PreviewTitle>
-  <PreviewArea resize p='15'>
+  <PreviewArea resize p="15">
     <SwitchCols breakSize="s" g="20">
       <div class="-bgc:base-2 -p:20">Box</div>
       <div class="-bgc:base-2 -p:20">Box</div>
       <div class="-bgc:base-2 -p:20">Box</div>
     </SwitchCols>
   </PreviewArea>
-  <PreviewCode slot='tab' label='JSX'>
+  <PreviewCode slot="tab" label="JSX">
     ```jsx
     <SwitchCols breakSize="s" g="20">
       <div class="-bgc:base-2 -p:20">Box</div>
@@ -82,7 +82,7 @@ import { SwitchCols, Box, Frame } from 'lism-css/astro';
     </SwitchCols>
     ```
   </PreviewCode>
-  <PreviewCode slot='tab' label='HTML'>
+  <PreviewCode slot="tab" label="HTML">
     ```html
     <div class="l--switchCols -g:20" style="--breakSize: var(--sz--s)">
       <div class="-bgc:base-2 -p:20">Box</div>
@@ -98,13 +98,13 @@ import { SwitchCols, Box, Frame } from 'lism-css/astro';
 
 <Preview>
   <PreviewTitle>Adjusting proportions by specifying `flex-grow` on child elements</PreviewTitle>
-  <PreviewArea resize p='15'>
+  <PreviewArea resize p="15">
     <SwitchCols breakSize="s" g="20">
       <div class="-bgc:base-2 -p:20">Box</div>
       <div class="-bgc:base-2 -p:20" style={{ flexGrow: 2 }}>Box</div>
     </SwitchCols>
   </PreviewArea>
-  <PreviewCode slot='tab' label='JSX'>
+  <PreviewCode slot="tab" label="JSX">
     ```jsx
     <SwitchCols breakSize="s" g="20">
       <div class="-bgc:base-2 -p:20">Box</div>
@@ -114,7 +114,7 @@ import { SwitchCols, Box, Frame } from 'lism-css/astro';
     </SwitchCols>
     ```
   </PreviewCode>
-  <PreviewCode slot='tab' label='HTML'>
+  <PreviewCode slot="tab" label="HTML">
     ```html
     <div class="l--switchCols -g:20" style="--breakSize: var(--sz--s)">
       <div class="-bgc:base-2 -p:20">Box</div>

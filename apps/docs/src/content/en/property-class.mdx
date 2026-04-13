@@ -10,8 +10,8 @@ import { DummyText } from '@lism-css/ui/astro';
 export const PropTable = ({data={}, ...props}) => {
   const dataKyes = Object.keys(data);
   return (
-    <Lism as='table' {...props}>
-      {/* <thead className='-ta:left'>
+    <Lism as="table" {...props}>
+      {/* <thead className="-ta:left">
         <tr>
           <th>Class</th>
           <th>Value</th>
@@ -91,7 +91,7 @@ The shorthand string is output as a class name. It is also the property name use
 
 <Preview>
   <PreviewTitle>Examples</PreviewTitle>
-  <PreviewArea p='30'>
+  <PreviewArea p="30">
     <p class="-fz:xl -fw:bold -lts:l -ta:center -tt:upper">Example text</p>
   </PreviewArea>
   <PreviewCode slot="tab" label="HTML">
@@ -121,7 +121,7 @@ The shorthand string is output as a class name. It is also the property name use
 
 <Preview>
   <PreviewTitle>Examples</PreviewTitle>
-  <PreviewArea p='30'>
+  <PreviewArea p="30">
     <Text c="brand" bgc="base-2" bd bdc="current" p="30">Example text</Text>
   </PreviewArea>
   <PreviewCode slot="tab" label="HTML">
@@ -178,11 +178,11 @@ export const LinkSPACE = () => <a href="/en/docs/tokens/spacing/"><code>SPACE</c
 |`mb`|`margin-bottom`|-|✔|
 
 
-<Spacer h='1rem' />
+<Spacer h="1rem" />
 
 <Preview>
   <PreviewTitle>Space Examples</PreviewTitle>
-  <PreviewArea p='20' resize>
+  <PreviewArea p="20" resize>
     <Lism p={['20', '30']} bd>
       <Text>Example text</Text>
       <Text my-s="20" mx="30">
@@ -234,7 +234,7 @@ Related tokens: <a href="/en/docs/tokens/#size"><code>SIZE</code></a>
 
 <Preview>
   <PreviewTitle>Examples</PreviewTitle>
-  <PreviewArea p='30'>
+  <PreviewArea p="30">
     <Lism w="fit" h="5em" bgc="base-2" p="10" bd>
       <Text>Example text</Text>
     </Lism>
@@ -269,7 +269,7 @@ Related tokens: <a href="/en/docs/tokens/#size"><code>SIZE</code></a>
 
 <Preview>
   <PreviewTitle>Examples</PreviewTitle>
-  <PreviewArea p='30'>
+  <PreviewArea p="30">
     <Lism>
       <Text d="inline-flex" ar="1/1" p="20" bgc="base-2" bd>Box</Text>
       <Text d="inline-flex" o="-20" px="20">Text</Text>
@@ -319,7 +319,7 @@ Here are some examples of positioning elements with `position: absolute`.
   <PreviewTitle>
     Positioning examples
   </PreviewTitle>
-  <PreviewArea resize p='5'>
+  <PreviewArea resize p="5">
     <Box pos="relative" ar="16/9" lh="1" ff="mono">
       <Group pos="absolute" l="0" t="0" bgc="base-2" bd p="10">
         <Fragment>A</Fragment>
@@ -350,7 +350,7 @@ Here are some examples of positioning elements with `position: absolute`.
       </Group>
     </Box>
   </PreviewArea>
-  <PreviewCode slot='tab' label='HTML'>
+  <PreviewCode slot="tab" label="HTML">
     ```html
     <div class="l--box -pos:relative -ar:16/9 -lh:1 -ff:mono">
       <div class="-pos:absolute -l:0 -t:0 -bgc:base-2 -bd -p:10">A</div>
@@ -365,7 +365,7 @@ Here are some examples of positioning elements with `position: absolute`.
     </div>
     ```
   </PreviewCode>
-  <PreviewCode slot='tab' label='JSX'>
+  <PreviewCode slot="tab" label="JSX">
     ```jsx 
     <Box pos="relative" ar="16/9" lh="1" ff="mono">
       <Group pos="absolute" l="0" t="0" bgc="base-2" bd p="10">A</Group>
@@ -410,7 +410,7 @@ Here are some examples of positioning elements with `position: absolute`.
 
 <Preview>
   <PreviewTitle>Examples</PreviewTitle>
-  <PreviewArea p='30'>
+  <PreviewArea p="30">
     <Flex g="20">
       <Lism fxg="1" bd p="10" bgc="base-2">
         <Fragment>Item</Fragment>
@@ -466,7 +466,7 @@ Here are some examples of positioning elements with `position: absolute`.
 
 <Preview>
   <PreviewTitle>Examples</PreviewTitle>
-  <PreviewArea p='30'>
+  <PreviewArea p="30">
     <Grid g="20" gtc="repeat(2, 1fr)">
       <Lism gc="1/-1" bd p="10" bgc="base-2">
         <Fragment>Item A</Fragment>
@@ -515,7 +515,7 @@ Here are some examples of positioning elements with `position: absolute`.
 
 <Preview>
   <PreviewTitle>Examples</PreviewTitle>
-  <PreviewArea p='30'>
+  <PreviewArea p="30">
     <Flex jc="between">
       <Lism bd p="10" bgc="base-2">
         <Fragment>Item 1</Fragment>
@@ -561,7 +561,7 @@ Here are some examples of positioning elements with `position: absolute`.
 
 <Preview>
   <PreviewTitle>Examples</PreviewTitle>
-  <PreviewArea p='30'>
+  <PreviewArea p="30">
     <Lism bxsh="20" bdrs="20" p="20" bd>
       <Fragment>Box</Fragment>
     </Lism>
@@ -602,7 +602,7 @@ Here are some examples of positioning elements with `position: absolute`.
 
 <Preview>
   <PreviewTitle>Examples</PreviewTitle>
-  <PreviewArea p='30'>
+  <PreviewArea p="30">
     <Lism bd bdc="current" bds="dashed" bdw="2px" p="20">
       <Text>Box</Text>
     </Lism>
@@ -659,7 +659,7 @@ The border specification has some unique behavior. See the [border page](/en/doc
 
 <Preview>
   <PreviewTitle>Examples</PreviewTitle>
-  <PreviewArea p='30'>
+  <PreviewArea p="30">
     <Text whspace="nowrap" ov="hidden" bd p="10" bgc="base-2" max-sz="s">
       <Fragment>whspace: nowrap — This long text will not wrap and will overflow</Fragment>
     </Text>

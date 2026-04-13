@@ -12,7 +12,7 @@ Unlike [`Accordion`](/ui/accordion), this component is implemented with CSS only
 
 <Preview>
   <PreviewTitle>Preview</PreviewTitle>
-  <PreviewArea p='20'>
+  <PreviewArea p="20">
     <Details.Root bd>
       <Details.Summary p="20" bgc="base-2" hov="neutral">
         <Details.Title>Details Title</Details.Title>
@@ -23,7 +23,7 @@ Unlike [`Accordion`](/ui/accordion), this component is implemented with CSS only
       </Details.Content>
     </Details.Root>
   </PreviewArea>
-  <PreviewCode slot='tab' label='JSX'>
+  <PreviewCode slot="tab" label="JSX">
     ```jsx
     <Details.Root bd>
       <Details.Summary p="20" bgc="base-2" hov="neutral">
@@ -36,7 +36,7 @@ Unlike [`Accordion`](/ui/accordion), this component is implemented with CSS only
     </Details.Root>
     ```
   </PreviewCode>
-  <PreviewCode slot='tab' label='HTML'>
+  <PreviewCode slot="tab" label="HTML">
     ```html
     <details class="c--details -bd">
       <summary class="c--details_summary l--flex -g:10 -ai:center -p:20 -bgc:base-2 -hov:neutral">
@@ -61,7 +61,7 @@ Provided as `Details` (`.c--details`) from the `@lism-css/ui` package.
 
 ### Import
 
-<ImportPackage component='Details' packageName='@lism-css/ui' css='style.css' />
+<ImportPackage component="Details" packageName="@lism-css/ui" css="style.css" />
 
 
 The following components are available:
@@ -76,7 +76,7 @@ The following components are available:
 ### Structure
 
 <Preview>
-  <PreviewCode slot='tab' label='JSX'>
+  <PreviewCode slot="tab" label="JSX">
     ```jsx
     <Details.Root>
       <Details.Summary>
@@ -87,7 +87,7 @@ The following components are available:
     </Details.Root>
     ```
   </PreviewCode>
-  <PreviewCode slot='tab' label='HTML'>
+  <PreviewCode slot="tab" label="HTML">
     ```pug
     details.c--details
       summary.c--details_summary.l--flex.-g:10.-ai:center
@@ -114,16 +114,16 @@ The following components are available:
 Here is the actual source code.
 
 <Preview>
-  <PreviewCode slot='tab' label='React'>
-    <SrcCode dir='lism-ui' path='src/components/Details/react/Details.tsx' title='Details.tsx' />
+  <PreviewCode slot="tab" label="React">
+    <SrcCode dir="lism-ui" path="src/components/Details/react/Details.tsx" title="Details.tsx" />
   </PreviewCode>
-  <PreviewCode slot='tab' label='Astro'>
-    <SrcCode dir='lism-ui' path='src/components/Details/astro/Details.astro' title='Details.astro'/>
-    <Divider my='5' />
-    <SrcCode dir='lism-ui' path='src/components/Details/astro/Summary.astro' title='Summary.astro' />
+  <PreviewCode slot="tab" label="Astro">
+    <SrcCode dir="lism-ui" path="src/components/Details/astro/Details.astro" title="Details.astro"/>
+    <Divider my="5" />
+    <SrcCode dir="lism-ui" path="src/components/Details/astro/Summary.astro" title="Summary.astro" />
   </PreviewCode>
-  <PreviewCode slot='tab' label='_style.css'>
-    <SrcCode dir='lism-ui' path='src/components/Details/_style.css' />
+  <PreviewCode slot="tab" label="_style.css">
+    <SrcCode dir="lism-ui" path="src/components/Details/_style.css" />
   </PreviewCode>
 </Preview>
 
@@ -139,7 +139,7 @@ Additionally, as a native feature of `details`/`summary`, specifying a `name` at
 
 <Preview>
   <PreviewTitle>Example</PreviewTitle>
-  <PreviewArea p='20'>
+  <PreviewArea p="20">
     <Stack g="10">
       <Details.Root bd name="details-group-01">
         <Details.Summary p="20" bgc="base-2" hov="neutral">
@@ -161,7 +161,7 @@ Additionally, as a native feature of `details`/`summary`, specifying a `name` at
       </Details.Root>
     </Stack>
   </PreviewArea>
-  <PreviewCode slot='tab' label='JSX'>
+  <PreviewCode slot="tab" label="JSX">
     ```jsx 'as="h3"' 'name="details-group-01"'
     <Stack g="10">
       <Details.Root bd name="details-group-01">
@@ -203,7 +203,7 @@ For local adjustments, override the `--duration` variable. For global adjustment
 
 <Preview>
   <PreviewTitle>Example</PreviewTitle>
-  <PreviewArea p='20'>
+  <PreviewArea p="20">
     <Details.Root bd style={{ '--duration': '.4s' }}>
       <Details.Summary p="20" bgc="base-2" hov="neutral">
         <Details.Icon />
@@ -214,7 +214,7 @@ For local adjustments, override the `--duration` variable. For global adjustment
       </Details.Content>
     </Details.Root>
   </PreviewArea>
-  <PreviewCode slot='tab' label='JSX'>
+  <PreviewCode slot="tab" label="JSX">
     ```jsx "--duration"
     <Details.Root bd style={{ '--duration': '.4s' }}>
       <Details.Summary p="20" bgc="base-2" hov="neutral">

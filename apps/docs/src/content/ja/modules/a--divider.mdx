@@ -11,7 +11,7 @@ import { Divider, Flex, Box, Stack } from 'lism-css/astro';
 
 ## CSS
 
-<SrcCode path='src/scss/modules/atomic/_divider.scss' />
+<SrcCode path="src/scss/modules/atomic/_divider.scss" />
 
 
 ## Lismコンポーネント
@@ -20,7 +20,7 @@ import { Divider, Flex, Box, Stack } from 'lism-css/astro';
 
 ### Import
 
-<ImportPackage component='Divider' />
+<ImportPackage component="Divider" />
 
 ### 出力されるHTML構造
 
@@ -41,7 +41,7 @@ div.a--divider
 
 <Preview>
   <PreviewTitle>例</PreviewTitle>
-  <PreviewArea resize p='20'>
+  <PreviewArea resize p="20">
     <Box bgc="base-2" py="40" ta="center">
       <Fragment>...Contents...</Fragment>
     </Box>
@@ -50,14 +50,14 @@ div.a--divider
       <Fragment>...Contents...</Fragment>
     </Box>
   </PreviewArea>
-  <PreviewCode slot='tab' label='JSX'>
+  <PreviewCode slot="tab" label="JSX">
     ```jsx {2}
-    <Box bgc='base-2' py='40' ta='center'>...Contents...</Box>
+    <Box bgc="base-2" py="40" ta="center">...Contents...</Box>
     <Divider />
-    <Box bgc='base-2' py='40' ta='center'>...Contents...</Box>
+    <Box bgc="base-2" py="40" ta="center">...Contents...</Box>
     ```
   </PreviewCode>
-  <PreviewCode slot='tab' label='HTML'>
+  <PreviewCode slot="tab" label="HTML">
     ```html {2}
     <div class="l--box -bgc:base-2 -py:40 -ta:center">...Contents...</div>
     <div class="a--divider" aria-hidden="true"></div>
@@ -71,7 +71,7 @@ div.a--divider
 
 <Preview>
   <PreviewTitle>スタイルの変更例</PreviewTitle>
-  <PreviewArea resize p='20'>
+  <PreviewArea resize p="20">
     <Box bgc="base-2" py="40" ta="center">
       <Fragment>...Contents...</Fragment>
     </Box>
@@ -80,14 +80,14 @@ div.a--divider
       <Fragment>...Contents...</Fragment>
     </Box>
   </PreviewArea>
-  <PreviewCode slot='tab' label='JSX'>
+  <PreviewCode slot="tab" label="JSX">
     ```jsx {2}
-    <Box bgc='base-2' py='40' ta='center'>...Contents...</Box>
-    <Divider bds='dotted' bdw='4px' bdc='blue'/>
-    <Box bgc='base-2' py='40' ta='center'>...Contents...</Box>
+    <Box bgc="base-2" py="40" ta="center">...Contents...</Box>
+    <Divider bds="dotted" bdw="4px" bdc="blue"/>
+    <Box bgc="base-2" py="40" ta="center">...Contents...</Box>
     ```
   </PreviewCode>
-  <PreviewCode slot='tab' label='HTML'>
+  <PreviewCode slot="tab" label="HTML">
     ```html {2}
     <div class="l--box -bgc:base-2 -py:40 -ta:center">...Contents...</div>
     <div class="a--divider" aria-hidden="true" style="--bds: dotted; --bdw: 4px; --bdc: var(--blue)"></div>
@@ -101,7 +101,7 @@ div.a--divider
 
 <Preview>
   <PreviewTitle>縦方向の区切り線</PreviewTitle>
-  <PreviewArea resize p='20' layout=''>
+  <PreviewArea resize p="20" layout="">
     <Flex ai="center" g="20">
       <Box fx="1" bgc="base-2" py="40" ta="center">
         <Fragment>...Contents...</Fragment>
@@ -112,7 +112,7 @@ div.a--divider
       </Box>
     </Flex>
   </PreviewArea>
-  <PreviewCode slot='tab' label='JSX'>
+  <PreviewCode slot="tab" label="JSX">
     ```jsx {3} "isVertical"
     <Flex ai="center" g="20">
       <Box fx="1" bgc="base-2" py="40" ta="center">
@@ -125,7 +125,7 @@ div.a--divider
     </Flex>
     ```
   </PreviewCode>
-  <PreviewCode slot='tab' label='HTML'>
+  <PreviewCode slot="tab" label="HTML">
     ```html {3} "is--vertical"
     <div class="l--flex -g:20 -ai:center">
       <div class="-fx:1 -bgc:base-2 -py:40 -ta:center">...Contents...</div>

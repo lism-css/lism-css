@@ -15,21 +15,21 @@ You can change the output tag with the `as` prop: `span`(default) / `em` / `stro
 
 ## Import
 
-<ImportPackage component='Inline' />
+<ImportPackage component="Inline" />
 
 
 ## Basic Usage
 
 <Preview>
   <PreviewTitle>`<Inline>` output example</PreviewTitle>
-  <PreviewArea p='20'>
+  <PreviewArea p="20">
     <Text>
       <Fragment>You can style </Fragment>
       <Inline fz="l" fs="italic">inline elements</Inline>
       <Fragment> within text.</Fragment>
     </Text>
   </PreviewArea>
-  <PreviewCode slot='tab' label='JSX'>
+  <PreviewCode slot="tab" label="JSX">
     ```jsx
     <Text>
       You can style
@@ -45,14 +45,14 @@ You can change the output tag with the `as` prop: `span`(default) / `em` / `stro
 
 <Preview>
   <PreviewTitle>`as="strong"` example</PreviewTitle>
-  <PreviewArea p='20'>
+  <PreviewArea p="20">
     <Text>
       This is{' '}
       <Inline as="strong" c="red">emphasized</Inline>{' '}
       text.
     </Text>
   </PreviewArea>
-  <PreviewCode slot='tab' label='JSX'>
+  <PreviewCode slot="tab" label="JSX">
     ```jsx
     <Text>
       This is{' '}
@@ -63,7 +63,7 @@ You can change the output tag with the `as` prop: `span`(default) / `em` / `stro
     </Text>
     ```
   </PreviewCode>
-  <PreviewCode slot='tab' label='HTML'>
+  <PreviewCode slot="tab" label="HTML">
     ```html
     <p>This is <strong class="-c" style="--c: var(--red)">emphasized</strong> text.</p>
     ```

@@ -12,14 +12,14 @@ import { DummyText } from '@lism-css/ui/astro';
 
 ## CSS
 
-<SrcCode path='src/scss/modules/layout/_center.scss' />
+<SrcCode path="src/scss/modules/layout/_center.scss" />
 
 
 ## Lism Component
 
 ### Import
 
-<ImportPackage component='Center' />
+<ImportPackage component="Center" />
 
 
 ## Usage
@@ -38,19 +38,19 @@ For horizontal centering only, `<Stack ai="center">` also works.
   <PreviewTitle>
     When no height is set
   </PreviewTitle>
-  <PreviewArea resize p='15'>
+  <PreviewArea resize p="15">
     <Center bd p="30">
       <Text fz="l">TEXT</Text>
     </Center>
   </PreviewArea>
-  <PreviewCode slot='tab' label='JSX'>
+  <PreviewCode slot="tab" label="JSX">
     ```jsx
     <Center bd p="30">
       <Text fz="l">TEXT</Text>
     </Center>
     ```
   </PreviewCode>
-  <PreviewCode slot='tab' label='HTML'>
+  <PreviewCode slot="tab" label="HTML">
     ```jsx
     <div class="l--center -bd -p:30">
       <p class="-fz:l">TEXT</p>
@@ -63,14 +63,14 @@ For horizontal centering only, `<Stack ai="center">` also works.
   <PreviewTitle>
     Long text wraps left-aligned, preserving readability.
   </PreviewTitle>
-  <PreviewArea resize p='15'>
+  <PreviewArea resize p="15">
     <Center bd p="30" g="15">
       <Text fz="l">TEXT</Text>
       <DummyText length="xs" lang="ja" />
       <DummyText lang="ja" />
     </Center>
   </PreviewArea>
-  <PreviewCode slot='tab' label='JSX'>
+  <PreviewCode slot="tab" label="JSX">
     ```jsx
     <Center bd p="30" g="15">
       <Text fz="l">TEXT</Text>
@@ -79,7 +79,7 @@ For horizontal centering only, `<Stack ai="center">` also works.
     </Center>
     ```
   </PreviewCode>
-  <PreviewCode slot='tab' label='HTML'>
+  <PreviewCode slot="tab" label="HTML">
     ```jsx
     <div class="l--center -bd -p:30 -g:15">
       <p class="-fz:l">TEXT</p>
@@ -99,13 +99,13 @@ When Center has a **height or aspect ratio** set, content is also centered verti
   <PreviewTitle>
     Centered both horizontally and vertically
   </PreviewTitle>
-  <PreviewArea p='15'>
+  <PreviewArea p="15">
     <Center g="10" ar="3/2" bd>
       <Text fz="l">TEXT</Text>
       <Text fz="s">Lorem ipsum dolor sit amet.</Text>
     </Center>
   </PreviewArea>
-  <PreviewCode slot='tab' label='JSX'>
+  <PreviewCode slot="tab" label="JSX">
     ```jsx 'ar="3/2"'
     <Center g="10" ar="3/2" bd>
       <Text fz="l">TEXT</Text>
@@ -113,7 +113,7 @@ When Center has a **height or aspect ratio** set, content is also centered verti
     </Center>
     ```
   </PreviewCode>
-  <PreviewCode slot='tab' label='HTML'>
+  <PreviewCode slot="tab" label="HTML">
     ```html "-ar:3/2"
     <div class="l--center -bd -g:10 -ar:3/2">
       <p class="-fz:l">TEXT</p>

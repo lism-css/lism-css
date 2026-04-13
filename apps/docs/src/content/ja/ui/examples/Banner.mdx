@@ -15,19 +15,19 @@ import { DummyText } from '@lism-css/ui/astro';
 {/* https://picsum.photos/seed/lismcss/1200/600 */}
 <Preview>
   <PreviewTitle>Preview</PreviewTitle>
-  <PreviewArea p='20'>
+  <PreviewArea p="20">
     <BoxLink layout="frame" href="#banner-link" hov="o" set="transition" bdrs="20">
       <img src="https://picsum.photos/seed/hogeee/1200/400" alt="" width="800" height="200" />
     </BoxLink>
   </PreviewArea>
-  <PreviewCode slot='tab' label='JSX'>
+  <PreviewCode slot="tab" label="JSX">
     ```jsx "Frame" "BoxLink"
     <BoxLink layout="frame" href="#banner-link" hov="o" set="transition" bdrs="20">
       <img src="https://picsum.photos/seed/hogeee/1200/400" alt="" width="800" height="200" />
     </BoxLink>
     ```
   </PreviewCode>
-  <PreviewCode slot='tab' label='HTML'>
+  <PreviewCode slot="tab" label="HTML">
     ```html "l--frame" "is--boxLink"
     <a class="l--frame is--boxLink set--transition -bdrs:20 -hov:o" href="#banner-link">
       <img src="https://picsum.photos/seed/hogeee/1200/400" alt="" width="800" height="200" />
@@ -39,7 +39,7 @@ import { DummyText } from '@lism-css/ui/astro';
 
 <Preview>
   <PreviewTitle>`Layer`で画像に被せてコンテンツを表示</PreviewTitle>
-  <PreviewArea p='20' resize>
+  <PreviewArea p="20" resize>
     <BoxLink layout="frame" href="#banner-link" hov="o" set="transition" bdrs="20">
       <Media isLayer src="https://picsum.photos/seed/hogeee/1200/400" alt="" width="960" height="640" loading="lazy" />
       <Flex jc="between" ai="center" pos="relative" g="20" p="30" c="#fff" bgc="rgb(0 0 0 / 50%)" min-h="30cqw">
@@ -55,7 +55,7 @@ import { DummyText } from '@lism-css/ui/astro';
       </Flex>
     </BoxLink>
   </PreviewArea>
-  <PreviewCode slot='tab' label='JSX'>
+  <PreviewCode slot="tab" label="JSX">
     ```jsx
     <BoxLink layout="frame" href="#banner-link" hov="o" set="transition" bdrs="20">
       <Media isLayer src="https://picsum.photos/seed/hogeee/1200/400" alt="" width="960" height="640" loading="lazy" />
@@ -73,7 +73,7 @@ import { DummyText } from '@lism-css/ui/astro';
     </BoxLink>
     ```
   </PreviewCode>
-  <PreviewCode slot='tab' label='HTML'>
+  <PreviewCode slot="tab" label="HTML">
     ```html "l--frame" "is--boxLink"
     <a class="l--frame is--boxLink set--transition -hov:o -bdrs:20" href="#banner-link">
       <img class="is--layer" src="https://picsum.photos/seed/hogeee/1200/400" width="960" height="640" loading="lazy" />

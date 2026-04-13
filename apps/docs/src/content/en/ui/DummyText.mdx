@@ -30,21 +30,21 @@ import { DummyText } from '@lism-css/ui/react';
 
 <Preview>
   <PreviewTitle>Dummy text in different languages</PreviewTitle>
-  <PreviewArea p='20'>
+  <PreviewArea p="20">
     <DummyText />
     <DummyText lang="ja" />
   </PreviewArea>
   <PreviewCode>
     ```jsx
     <DummyText />
-    <DummyText lang='ja' />
+    <DummyText lang="ja" />
     ```
   </PreviewCode>
 </Preview>
 
 <Preview>
   <PreviewTitle>Dummy text at different lengths</PreviewTitle>
-  <PreviewArea p='20'>
+  <PreviewArea p="20">
     <Stack g="5">
       <DummyText lang="ja" length="xs" pre="xs: " />
       <DummyText length="xs" pre="xs: " />
@@ -68,18 +68,18 @@ import { DummyText } from '@lism-css/ui/react';
   </PreviewArea>
   <PreviewCode>
     ```jsx
-    <DummyText lang='ja' length='xs' pre='xs: ' />
-    <DummyText lang='ja' length='s' pre='s: ' />
-    <DummyText lang='ja' length='m' pre='m: ' />
-    <DummyText lang='ja' length='l' pre='l: ' />
-    <DummyText lang='ja' length='xl' pre='xl: ' />
+    <DummyText lang="ja" length="xs" pre="xs: " />
+    <DummyText lang="ja" length="s" pre="s: " />
+    <DummyText lang="ja" length="m" pre="m: " />
+    <DummyText lang="ja" length="l" pre="l: " />
+    <DummyText lang="ja" length="xl" pre="xl: " />
     ```
   </PreviewCode>
 </Preview>
 
 <Preview>
   <PreviewTitle>Setting `length='codes'` outputs dummy text containing `<b>`, `<i>`, `<a>`, and `<code>` elements.</PreviewTitle>
-  <PreviewArea p='20'>
+  <PreviewArea p="20">
     <DummyText lang="ja" length="codes" />
   </PreviewArea>
   <PreviewCode>
@@ -92,16 +92,16 @@ import { DummyText } from '@lism-css/ui/react';
 
 <Preview>
   <PreviewTitle>Example of offset</PreviewTitle>
-  <PreviewArea p='20'>
+  <PreviewArea p="20">
     <DummyText lang="ja" length="xs" />
     <DummyText lang="ja" offset={1} />
     <DummyText lang="ja" length="l" offset={3} />
   </PreviewArea>
   <PreviewCode>
     ```jsx
-    <DummyText lang='ja' length='xs' />
-    <DummyText lang='ja' offset={1} />
-    <DummyText lang='ja' length='l' offset={3} />
+    <DummyText lang="ja" length="xs" />
+    <DummyText lang="ja" offset={1} />
+    <DummyText lang="ja" length="l" offset={3} />
     ```
   </PreviewCode>
 </Preview>

@@ -10,7 +10,7 @@ import { Wrapper, Box, Lism, Spacer } from "lism-css/astro";
 
 ## CSS
 
-<SrcCode path='src/scss/modules/state/_wrapper.scss' />
+<SrcCode path="src/scss/modules/state/_wrapper.scss" />
 
 
 ## Using with Lism Components
@@ -28,7 +28,7 @@ A dedicated `<Wrapper>` component is also available as an alias for `<Lism isWra
 
 ### Import
 
-<ImportPackage component='Wrapper' />
+<ImportPackage component="Wrapper" />
 
 ### Props
 
@@ -42,10 +42,10 @@ A dedicated `<Wrapper>` component is also available as an alias for `<Lism isWra
 
 ```jsx
 // ①
-<Flow isWrapper='s' isContainer>...</Flow>
+<Flow isWrapper="s" isContainer>...</Flow>
 
 // ②
-<Wrapper contentSize='s' layout='flow' isContainer>...</Wrapper>
+<Wrapper contentSize="s" layout="flow" isContainer>...</Wrapper>
 ```
 
 
@@ -55,14 +55,14 @@ A dedicated `<Wrapper>` component is also available as an alias for `<Lism isWra
 
 <Preview>
   <PreviewTitle>Example</PreviewTitle>
-  <PreviewArea resize p='15'>
+  <PreviewArea resize p="15">
     <Wrapper layout="flow" p="20" className="-bd:guide -hov:itemGuide">
       <p>Content</p>
       <p>Content</p>
       <p>...</p>
     </Wrapper>
   </PreviewArea>
-  <PreviewCode slot='tab' label='JSX'>
+  <PreviewCode slot="tab" label="JSX">
     ```jsx
     <Wrapper layout="flow" p="20">
       <p>Content</p>
@@ -71,7 +71,7 @@ A dedicated `<Wrapper>` component is also available as an alias for `<Lism isWra
     </Wrapper>
     ```
   </PreviewCode>
-  <PreviewCode slot='tab' label='HTML'>
+  <PreviewCode slot="tab" label="HTML">
     ```html
     <div class="l--flow is--wrapper -p:20">
       <p>Content</p>
@@ -84,14 +84,14 @@ A dedicated `<Wrapper>` component is also available as an alias for `<Lism isWra
 
 <Preview>
   <PreviewTitle>With `contentSize='s'`</PreviewTitle>
-  <PreviewArea resize p='15'>
+  <PreviewArea resize p="15">
     <Wrapper contentSize="s" layout="flow" p="20" className="-bd:guide -hov:itemGuide">
       <p>Content</p>
       <p>Content</p>
       <p>...</p>
     </Wrapper>
   </PreviewArea>
-  <PreviewCode slot='tab' label='JSX'>
+  <PreviewCode slot="tab" label="JSX">
     ```jsx
     <Wrapper contentSize="s" layout="flow" p="20">
       <p>Content</p>
@@ -100,7 +100,7 @@ A dedicated `<Wrapper>` component is also available as an alias for `<Lism isWra
     </Wrapper>
     ```
   </PreviewCode>
-  <PreviewCode slot='tab' label='HTML'>
+  <PreviewCode slot="tab" label="HTML">
     ```html
     <div class="l--flow is--wrapper -contentSize:s -p:20">
       <p>Content</p>
@@ -117,13 +117,13 @@ To use a value other than `s` or `l`, pass any value to `isWrapper` and it will 
 
 <Preview>
   <PreviewTitle>Setting a custom value on is--wrapper</PreviewTitle>
-  <PreviewArea resize p='15'>
+  <PreviewArea resize p="15">
     <Lism isWrapper="20rem" p="20" className="-bd:guide -hov:itemGuide">
       <div>Contents...</div>
       <div>Contents...</div>
     </Lism>
   </PreviewArea>
-  <PreviewCode slot='tab' label='JSX'>
+  <PreviewCode slot="tab" label="JSX">
   ```jsx
   <Lism isWrapper="20rem" p="20">
     <div>Contents...</div>
@@ -131,7 +131,7 @@ To use a value other than `s` or `l`, pass any value to `isWrapper` and it will 
   </Lism>
   ```
   </PreviewCode>
-  <PreviewCode slot='tab' label='HTML'>
+  <PreviewCode slot="tab" label="HTML">
   ```html
   <div class="is--wrapper -p:20" style="--contentSize: 20rem">
     <div>Contents...</div>
@@ -149,4 +149,4 @@ A demo page is available where you can explore the behavior of `is--wrapper`.
 We recommend viewing it on a wide screen.
 :::
 
-<PreviewFrame url='/demo/container' />
+<PreviewFrame url="/demo/container" />

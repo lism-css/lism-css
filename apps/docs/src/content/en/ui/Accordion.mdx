@@ -14,7 +14,7 @@ The panel uses `hidden="until-found"`, so its content can be discovered by the b
 
 <Preview>
   <PreviewTitle>Preview</PreviewTitle>
-  <PreviewArea p='20'>
+  <PreviewArea p="20">
     <Accordion.Root bd>
       <Accordion.Item>
         <Accordion.Heading>
@@ -34,7 +34,7 @@ The panel uses `hidden="until-found"`, so its content can be discovered by the b
       </Accordion.Item>
     </Accordion.Root>
   </PreviewArea>
-  <PreviewCode slot='tab' label='JSX'>
+  <PreviewCode slot="tab" label="JSX">
     ```jsx
     <Accordion.Root>
       <Accordion.Item>
@@ -56,7 +56,7 @@ The panel uses `hidden="until-found"`, so its content can be discovered by the b
     </Accordion.Root>
     ```
   </PreviewCode>
-  <PreviewCode slot='tab' label='HTML'>
+  <PreviewCode slot="tab" label="HTML">
 ```html
 ```
   </PreviewCode>
@@ -66,7 +66,7 @@ The panel uses `hidden="until-found"`, so its content can be discovered by the b
 ## Structure
 
 <Preview>
-  <PreviewCode slot='tab' label='HTML'>
+  <PreviewCode slot="tab" label="HTML">
     ```pug
     div.l--stack.c--accordion
       div.c--accordion_item
@@ -78,7 +78,7 @@ The panel uses `hidden="until-found"`, so its content can be discovered by the b
           div.c--accordion_content(.l--flow) ...Contents...
     ```
   </PreviewCode>
-  <PreviewCode slot='tab' label='JSX'>
+  <PreviewCode slot="tab" label="JSX">
     ```jsx
     <Accordion.Root>
       <Accordion.Item>
@@ -104,14 +104,14 @@ The icon is rendered using CSS pseudo-elements (`::before` / `::after`), so no S
 ## Source Code
 
 <Preview>
-  <PreviewCode slot='tab' label='CSS'>
-    <SrcCode dir='lism-ui' path='src/components/Accordion/_style.css' title='_style.css'/>
+  <PreviewCode slot="tab" label="CSS">
+    <SrcCode dir="lism-ui" path="src/components/Accordion/_style.css" title="_style.css"/>
   </PreviewCode>
-  <PreviewCode slot='tab' label='JS'>
-    <SrcCode dir='lism-ui' path='src/components/Accordion/setAccordion.ts' title='setAccordion.ts'/>
+  <PreviewCode slot="tab" label="JS">
+    <SrcCode dir="lism-ui" path="src/components/Accordion/setAccordion.ts" title="setAccordion.ts"/>
   </PreviewCode>
-  <PreviewCode slot='tab' label='React'>
-    <SrcCode dir='lism-ui' path='src/components/Accordion/react/Accordion.tsx' title='Accordion.tsx'/>
+  <PreviewCode slot="tab" label="React">
+    <SrcCode dir="lism-ui" path="src/components/Accordion/react/Accordion.tsx" title="Accordion.tsx"/>
   </PreviewCode>
 </Preview>
 
@@ -121,7 +121,7 @@ The icon is rendered using CSS pseudo-elements (`::before` / `::after`), so no S
 
 Provided by the `@lism-css/ui` package.
 
-<ImportPackage component='Accordion' script='setAccordion.js' packageName='@lism-css/ui' />
+<ImportPackage component="Accordion" script="setAccordion.js" packageName="@lism-css/ui" />
 
 The following components are available:
 
@@ -150,7 +150,7 @@ The following components are available:
 
 <Preview>
   <PreviewTitle>Example</PreviewTitle>
-  <PreviewArea p='20'>
+  <PreviewArea p="20">
     <Accordion.Root bd>
       <Accordion.Item>
         <Accordion.Heading as="h3">
@@ -170,7 +170,7 @@ The following components are available:
       </Accordion.Item>
     </Accordion.Root>
   </PreviewArea>
-  <PreviewCode slot='tab' label='JSX'>
+  <PreviewCode slot="tab" label="JSX">
     ```jsx 'as="h3"'
     <Accordion.Root bd>
       <Accordion.Item>
@@ -192,7 +192,7 @@ The following components are available:
     </Accordion.Root>
     ```
   </PreviewCode>
-  <PreviewCode slot='tab' label='HTML'>
+  <PreviewCode slot="tab" label="HTML">
   ```html "h3"
   <div class="c--accordion l--stack">
     <div class="c--accordion_item">
@@ -222,7 +222,7 @@ Specifying `allowMultiple` allows multiple panels to be open simultaneously.
 
 <Preview>
   <PreviewTitle>Preview</PreviewTitle>
-  <PreviewArea p='20'>
+  <PreviewArea p="20">
     <Accordion.Root allowMultiple bd style={{ '--duration': '.15s' }}>
       <Accordion.Item>
         <Accordion.Heading>
@@ -250,7 +250,7 @@ Specifying `allowMultiple` allows multiple panels to be open simultaneously.
       </Accordion.Item>
     </Accordion.Root>
   </PreviewArea>
-  <PreviewCode slot='tab' label='JSX'>
+  <PreviewCode slot="tab" label="JSX">
 ```jsx "allowMultiple" "--duration"
 <Accordion.Root g="1px" allowMultiple>
   <Accordion.Item style={{ '--duration': '.15s' }}>
@@ -273,7 +273,7 @@ Specifying `allowMultiple` allows multiple panels to be open simultaneously.
 </Accordion.Root>
 ```
   </PreviewCode>
-  <PreviewCode slot='tab' label='HTML'>
+  <PreviewCode slot="tab" label="HTML">
 ```html "data-allow-multiple" "--duration"
 <div class="c--accordion l--stack" data-allow-multiple>
   <div class="c--accordion_item" style="--duration: 0.15s">...</div>
