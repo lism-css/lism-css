@@ -1,6 +1,6 @@
 # l--tileGrid / `<TileGrid>`
 
-`cols`（列数）と `rows`（行数）を指定して、**均等なタイル型グリッドレイアウト**を構成するモジュール。内部的には `grid-template: repeat(rows, minmax(0, 1fr)) / repeat(cols, minmax(0, 1fr))` を使用します。
+`cols`（列数）と `rows`（行数）を指定して、**均等なタイル型グリッドレイアウト**を構成するクラス。内部的には `grid-template: repeat(rows, minmax(0, 1fr)) / repeat(cols, minmax(0, 1fr))` を使用します。
 
 ## 基本情報
 

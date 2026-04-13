@@ -1,6 +1,6 @@
 # a--spacer / `<Spacer>`
 
-要素間のスペースを確保する Atomic プリミティブ。`<Spacer>` はデフォルトで `aria-hidden="true"` が付与されます。
+要素間のスペースを確保するクラス。`<Spacer>` はデフォルトで `aria-hidden="true"` が付与されます。
 
 ## 基本情報
 

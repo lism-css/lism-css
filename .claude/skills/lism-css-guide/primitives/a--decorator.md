@@ -1,6 +1,6 @@
 # a--decorator / `<Decorator>`
 
-コンテンツを装飾するための空要素として使う Atomic プリミティブ。`<Decorator>` はデフォルトで `aria-hidden="true"` が付与されます。
+コンテンツを装飾するための空要素として使うクラス。`<Decorator>` はデフォルトで `aria-hidden="true"` が付与されます。
 
 ## 基本情報
 

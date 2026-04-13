@@ -1,6 +1,6 @@
 # a--divider / `<Divider>`
 
-コンテンツ間に区切り線を描画する Atomic プリミティブ。`--bdc` は `var(--divider)` が初期セットされます。`<Divider>` はデフォルトで `aria-hidden="true"` が付与されます。
+コンテンツ間に区切り線を描画するクラス。`--bdc` は `var(--divider)` が初期セットされます。`<Divider>` はデフォルトで `aria-hidden="true"` が付与されます。
 
 ## 基本情報
 
