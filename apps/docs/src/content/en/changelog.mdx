@@ -9,6 +9,18 @@ Breaking changes may continue frequently until the v1.0 release, so all notable 
 
 <Divider bds="dashed" my="40" />
 
+## v.0.13.0 (unreleased)
+
+**Breaking changes**: Renamed the "State" identifiers in the Props system to "Trait" for consistency.
+
+- Type `StateProps` → `TraitProps`
+- Constant `STATES` → `TRAITS`
+- `lism.config.js` config key `states` → `traits`
+- Documentation: `State Props` → `Trait Props`
+- File rename: `config/defaults/states.ts` → `config/defaults/traits.ts`
+
+Note: Prop names such as `isContainer` / `isWrapper` and the emitted `is--*` class names are unchanged. Migration is only required if you currently use the `states:` key in `lism.config.js`, the `StateProps` type, or the `STATES` constant.
+
 ## `@lism-css/ui` v.0.12.0 (2026.04.10)
 
 - Aligned with lism-css 0.12.0

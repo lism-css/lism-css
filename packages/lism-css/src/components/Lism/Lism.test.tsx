@@ -1080,8 +1080,8 @@ describe('Lism', () => {
     });
   });
 
-  describe('State Class', () => {
-    describe('is-- States', () => {
+  describe('Trait Class', () => {
+    describe('is-- Traits', () => {
       test('isContainer を指定できる', () => {
         render(
           <Lism isContainer data-testid="lism">
@@ -1175,7 +1175,7 @@ describe('Lism', () => {
       });
     });
 
-    describe('set-- States', () => {
+    describe('set-- Classes', () => {
       test('set="gutter" で set--gutter クラスが出力される', () => {
         render(
           <Lism set="gutter" data-testid="lism">
@@ -1340,8 +1340,8 @@ describe('Lism', () => {
       });
     });
 
-    describe('複数のState Classを同時に指定', () => {
-      test('複数のState Classを同時に指定できる', () => {
+    describe('複数のTrait Classを同時に指定', () => {
+      test('複数のTrait Classを同時に指定できる', () => {
         render(
           <Lism isContainer isLayer set="shadow" data-testid="lism">
             test

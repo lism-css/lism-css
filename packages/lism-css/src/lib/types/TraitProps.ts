@@ -1,44 +1,44 @@
-import type { STATES } from '../../../config/index';
+import type { TRAITS } from '../../../config/index';
 import type { WithArbitraryString, ArrayElement } from './utils';
 
 /**
- * config/index.ts から STATES の型を取得
+ * config/index.ts から TRAITS の型を取得
  * objDeepMerge の DeepMergeResult 型により literal types が保持される
  */
-type StatesConfig = typeof STATES;
+type TraitsConfig = typeof TRAITS;
 
 // ============================================================
-// State 設定の2つのパターン
+// Trait 設定の2つのパターン
 // ============================================================
 //
-// 1. 文字列形式 (SimpleState)
+// 1. 文字列形式 (SimpleTrait)
 //    例: isContainer: 'is--container'
 //    → boolean のみ受け付ける（true/false でクラスの付与を制御）
 //
-// 2. preset あり (PresetState)
+// 2. preset あり (PresetTrait)
 //    例: isWrapper: { className: 'is--wrapper', preset: ['s', 'l'], ... }
 //    → プリセット値がサジェストされつつ、任意の文字列も受け付ける
 //
 // ============================================================
 
-/** preset を持つ State の値の型を抽出 */
+/** preset を持つ Trait の値の型を抽出 */
 type PresetElement<T> = T extends { preset: readonly unknown[] } ? ArrayElement<T['preset']> : never;
 
 /**
- * State 設定から Props の値の型を抽出するユーティリティ型
+ * Trait 設定から Props の値の型を抽出するユーティリティ型
  */
-type ExtractStateValue<T> = T extends string
+type ExtractTraitValue<T> = T extends string
   ? boolean // 文字列形式 → boolean のみ
   : T extends { preset: readonly unknown[] }
     ? WithArbitraryString<PresetElement<T>> | boolean // preset あり → プリセット値 | 任意文字列 | boolean
     : never;
 
 /**
- * config/index.ts の STATES から自動生成される State Props の型
- * config/index.ts の STATES に新しいトレイトを追加すると自動的に反映される
+ * config/index.ts の TRAITS から自動生成される Trait Props の型
+ * config/index.ts の TRAITS に新しいトレイトを追加すると自動的に反映される
  */
-export type StateProps = {
-  [K in keyof StatesConfig]?: ExtractStateValue<StatesConfig[K]>;
+export type TraitProps = {
+  [K in keyof TraitsConfig]?: ExtractTraitValue<TraitsConfig[K]>;
 };
 
 /** set prop で使われるプリセット値（エディタ補完用） */

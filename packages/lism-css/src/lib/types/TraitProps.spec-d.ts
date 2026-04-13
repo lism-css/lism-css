@@ -1,20 +1,20 @@
 import { assertType, describe, it } from 'vitest';
-import type { StateProps } from './StateProps';
+import type { TraitProps } from './TraitProps';
 import type { LismPropsBase } from '../getLismProps';
-import type { STATES } from '../../../config/index';
+import type { TRAITS } from '../../../config/index';
 
-describe('StateProps', () => {
+describe('TraitProps', () => {
   describe('config/index.ts からの型生成が動作する', () => {
-    it('STATES が正しく型推論される', () => {
-      // STATES の型チェック
-      type StatesType = typeof STATES;
-      const _test: StatesType = {} as StatesType;
-      assertType<StatesType>(_test);
+    it('TRAITS が正しく型推論される', () => {
+      // TRAITS の型チェック
+      type TraitsType = typeof TRAITS;
+      const _test: TraitsType = {} as TraitsType;
+      assertType<TraitsType>(_test);
     });
 
-    it('StateProps が STATES から生成されている', () => {
-      // StateProps の型は STATES から生成される
-      type IsWrapperType = StateProps['isWrapper'];
+    it('TraitProps が TRAITS から生成されている', () => {
+      // TraitProps の型は TRAITS から生成される
+      type IsWrapperType = TraitProps['isWrapper'];
       // isWrapper は "s" | "l" | undefined であることを確認
       const wrapper1: IsWrapperType = 's';
       const wrapper2: IsWrapperType = 'l';
@@ -27,44 +27,44 @@ describe('StateProps', () => {
 
   describe('文字列形式のトレイトは boolean を受け入れる', () => {
     it('isContainer', () => {
-      assertType<StateProps>({ isContainer: true });
-      assertType<StateProps>({ isContainer: false });
+      assertType<TraitProps>({ isContainer: true });
+      assertType<TraitProps>({ isContainer: false });
     });
 
     it('その他のトレイト', () => {
-      assertType<StateProps>({ isLayer: true });
-      assertType<StateProps>({ isBoxLink: true });
-      assertType<StateProps>({ isCoverLink: true });
-      assertType<StateProps>({ isSide: true });
-      assertType<StateProps>({ isSkipFlow: true });
-      assertType<StateProps>({ isVertical: true });
+      assertType<TraitProps>({ isLayer: true });
+      assertType<TraitProps>({ isBoxLink: true });
+      assertType<TraitProps>({ isCoverLink: true });
+      assertType<TraitProps>({ isSide: true });
+      assertType<TraitProps>({ isSkipFlow: true });
+      assertType<TraitProps>({ isVertical: true });
     });
   });
 
   describe('プリセット値を持つトレイトは、プリセット値・string・boolean を受け入れる', () => {
     it('isWrapper - プリセット値を受け入れる', () => {
-      assertType<StateProps>({ isWrapper: 's' });
-      assertType<StateProps>({ isWrapper: 'l' });
+      assertType<TraitProps>({ isWrapper: 's' });
+      assertType<TraitProps>({ isWrapper: 'l' });
     });
 
     it('isWrapper - string を受け入れる', () => {
-      assertType<StateProps>({ isWrapper: 'custom' });
-      assertType<StateProps>({ isWrapper: '800px' });
+      assertType<TraitProps>({ isWrapper: 'custom' });
+      assertType<TraitProps>({ isWrapper: '800px' });
     });
 
     it('isWrapper - boolean を受け入れる', () => {
-      assertType<StateProps>({ isWrapper: true });
+      assertType<TraitProps>({ isWrapper: true });
     });
 
     it('isWrapper - number は受け入れない', () => {
       // @ts-expect-error - number は受け入れない
-      assertType<StateProps>({ isWrapper: 100 });
+      assertType<TraitProps>({ isWrapper: 100 });
     });
   });
 
   describe('複数のトレイトを同時に指定できる', () => {
     it('複数のトレイトを指定', () => {
-      assertType<StateProps>({
+      assertType<TraitProps>({
         isContainer: true,
         isWrapper: 's',
       });
@@ -73,12 +73,12 @@ describe('StateProps', () => {
 
   describe('すべてのプロパティはオプショナル', () => {
     it('空のオブジェクト', () => {
-      assertType<StateProps>({});
+      assertType<TraitProps>({});
     });
 
     it('undefined を明示的に指定できる', () => {
-      assertType<StateProps>({ isContainer: undefined });
-      assertType<StateProps>({ isWrapper: undefined });
+      assertType<TraitProps>({ isContainer: undefined });
+      assertType<TraitProps>({ isWrapper: undefined });
     });
   });
 });

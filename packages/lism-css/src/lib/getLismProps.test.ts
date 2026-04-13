@@ -234,7 +234,7 @@ describe('getLismProps', () => {
     });
   });
 
-  describe('State処理', () => {
+  describe('Trait処理', () => {
     test('isContainer: true の場合クラスが追加される', () => {
       const result = getLismProps({ isContainer: true });
       expect(result.className).toContain('is--container');

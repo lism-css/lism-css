@@ -9,6 +9,18 @@ v.1.0リリースまでしばらく激しい変更が続く可能性があるた
 
 <Divider bds="dashed" my="40" />
 
+## v.0.13.0 (unreleased)
+
+**破壊的変更**: Props システムの「State」系識別子を「Trait」に統一しました。
+
+- 型 `StateProps` → `TraitProps` にリネーム
+- 定数 `STATES` → `TRAITS` にリネーム
+- `lism.config.js` の設定キー `states` → `traits` にリネーム
+- ドキュメント表記 `State Props` → `Trait Props` に統一
+- 参照ファイル `config/defaults/states.ts` → `config/defaults/traits.ts` にリネーム
+
+※ `isContainer`, `isWrapper` 等の props 名や `is--*` クラス名は変更ありません。ユーザー側で `lism.config.js` の `states:` キー・`StateProps` 型・`STATES` 定数を利用している場合のみマイグレーションが必要です。
+
 ## `@lism-css/ui` v.0.12.0 (2026.04.10)
 
 - lism-css 0.12.0 への追従

@@ -51,7 +51,7 @@
 | `ui/**/*.mdx` | `https://www.lism-css.com/en/ui/{ui以下のパス}/` |
 | それ以外 | `https://www.lism-css.com/en/docs/{パス}/` |
 
-パスは拡張子 `.mdx` を除いたもの（例: `modules/l--flex.mdx` → `modules/l--flex`）。
+パスは拡張子 `.mdx` を除いたもの（例: `primitives/l--flex.mdx` → `primitives/l--flex`）。
 
 ### 5. llms.txt の生成
 

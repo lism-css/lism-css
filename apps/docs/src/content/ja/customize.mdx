@@ -143,7 +143,7 @@ export default {
     foo: [...],
     ...
   },
-  states: {
+  traits: {
     isHoge: 'is--hoge',
     setFoo: 'set--foo',
     ...
@@ -159,8 +159,8 @@ export default {
   <PreviewCode slot="tab" label="tokens">
   <EmbedCode dirPath="packages/lism-css" srcPath="config/defaults/tokens.ts" />
   </PreviewCode>
-  <PreviewCode slot="tab" label="states">
-  <EmbedCode dirPath="packages/lism-css" srcPath="config/defaults/states.ts" />
+  <PreviewCode slot="tab" label="traits">
+  <EmbedCode dirPath="packages/lism-css" srcPath="config/defaults/traits.ts" />
   </PreviewCode>
 </Preview>
 
@@ -185,7 +185,7 @@ export default {
     // トークン追加
     o: [...(tokens.o || []), '-5'],
   },
-  states: {
+  traits: {
     // Trait Primitive 出力用のプロパティを追加
     isHoge: 'is--hoge',
   },

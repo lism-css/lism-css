@@ -1,6 +1,6 @@
 # Skill Template Update
 
-`.claude/skills/lism-css-guide/` 配下のルートファイル＋ `modules/` サブフォルダ配下のプリミティブ詳細ファイルを、最新ソースに合わせて更新してください。
+`.claude/skills/lism-css-guide/` 配下のルートファイル＋ `primitives/` サブフォルダ配下のプリミティブ詳細ファイルを、最新ソースに合わせて更新してください。
 
 
 ## 対象ファイルと更新内容
@@ -142,9 +142,9 @@
 
 ### 1. 現在のテンプレートとバージョン情報の取得
 
-- `.claude/skills/lism-css-guide/` 配下のルートファイル＋ `modules/` 配下の全ファイルを読み取る
+- `.claude/skills/lism-css-guide/` 配下のルートファイル＋ `primitives/` 配下の全ファイルを読み取る
 - `packages/lism-css/package.json` からバージョンを取得し、`SKILL.md` のバージョン表記と比較する
-- `modules/` 配下の存在チェック: `packages/lism-css/src/scss/modules/{layout,state,atomic}/` 配下の SCSS と `modules/*.md` が 1:1 対応しているか、さらに `SKILL.md` の「プリミティブ単位の詳細リファレンス」セクションのリンクと実ファイルが一致するかを確認（数値ではなくソースの実体を基準にする）
+- `primitives/` 配下の存在チェック: `packages/lism-css/src/scss/modules/{layout,trait,atomic}/` 配下の SCSS と `primitives/*.md` が 1:1 対応しているか、さらに `SKILL.md` の「プリミティブ単位の詳細リファレンス」セクションのリンクと実ファイルが一致するかを確認（数値ではなくソースの実体を基準にする）
 
 ### 2. ソースコードの読み取りと照合
 
@@ -156,7 +156,7 @@
 3. **存在確認**: テンプレートに記載されているが、ソースから削除された項目がないか
 4. **コード例の正確性**: JSX / HTML のコード例が現在の API で動作するか
 5. **バージョン情報**: SKILL.md のバージョン表記が最新か
-6. **プリミティブ詳細ファイルの整合性**: `modules/*.md` の専用 Props・SCSS raw URL・ドキュメント URL・関連プリミティブ相互リンク先が現在のソース構成と一致しているか
+6. **プリミティブ詳細ファイルの整合性**: `primitives/*.md` の専用 Props・SCSS raw URL・ドキュメント URL・関連プリミティブ相互リンク先が現在のソース構成と一致しているか
 
 ### 3. テンプレートの更新
 
@@ -179,5 +179,5 @@
 - テンプレートの説明文は簡潔なスタイルを維持する（「です・ます」調ではなく体言止め中心）
 - `詳細: URL` のリンクは変更しない（URL の有効性チェックは本コマンドの範囲外）
 - スキルファイル内のソースコードへのリンクは、必ず raw URL 形式（`https://raw.githubusercontent.com/lism-css/lism-css/main/{path}`）を使用すること。`https://github.com/lism-css/lism-css/blob/main/...` 形式は使わない。ディレクトリへのリンク（`tree/`）はそのまま GitHub URL で可
-- `modules/*.md` は camelCase（実クラス名）、MDX 情報源は lowercase。同期対応を間違えないこと
-- `is--skipFlow` / `is--side` は独立した `modules/*.md` を作らず、それぞれ `l--flow.md` / `l--sideMain.md` 内で言及する方針を維持する
+- `primitives/*.md` は camelCase（実クラス名）、MDX 情報源は lowercase。同期対応を間違えないこと
+- `is--skipFlow` / `is--side` は独立した `primitives/*.md` を作らず、それぞれ `l--flow.md` / `l--sideMain.md` 内で言及する方針を維持する
