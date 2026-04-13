@@ -109,7 +109,7 @@ These are further categorized into several types:
 |Layout Primitives<HelpText fz="xs">Primitives that serve as layout building blocks</HelpText>|`.l--{name}`|`.l--grid`,<br />`.l--columns`|
 |Atomic Primitives<HelpText fz="xs">The smallest layout unit primitives</HelpText>|`.a--{name}`|`.a--divider`,<br />`.a--icon`|
 
-Primitive classes are standalone — they do not have variations or child element classes. Only the `c--` Component Classes described next follow a BEM-like structure.
+Primitive classes are standalone — they have no variations or child element classes. Only the `c--` Component Classes described next follow a BEM-like structure.
 
 #### Combination rules between Primitives
 
@@ -118,26 +118,43 @@ Primitive classes are standalone — they do not have variations or child elemen
 | `l--` × `l--` | NG | Same category cannot be combined |
 | `a--` × `a--` | NG | Same category cannot be combined |
 | `is--` × `is--` | OK | Multiple Traits can be combined |
-| `l--` × `is--` | OK | |
-| `a--` × `is--` | OK | |
+| `is--` × `l--`/`a--` | OK | |
 | `l--` × `a--` | Discouraged | Not intended to coexist |
 
 
 ### Component Class
 
-**Component Classes** prefixed with `c--` are concrete UI parts composed from Primitives. They are not included in the core `lism-css`. The `@lism-css/ui` package and user-defined `c--*` classes are placed in `@layer lism-components`.
+**Component Classes** prefixed with `c--` are concrete UI components composed from Primitives.  
+They are not included in the core `lism-css` and are partially provided via the `@lism-css/ui` package.
+
+
+Users can also freely define their own `c--` classes inside `@layer lism-components`.
+
+```css
+@layer lism-components {
+  .c--card { /* ... */ }
+  .c--pricing { /* ... */ }
+}
+```
+
+
+`c--` classes can follow a BEM-like structure (Block / Modifier / Element), each expressed in the following format:
 
 | Category | Format | Example |
 |---|---|---|
-|Component<HelpText fz="xs">Concrete UI part with BEM-like structure</HelpText>|`.c--{name}`|`.c--button`,<br />`.c--accordion`|
+|Block<HelpText fz="xs">The base class</HelpText>|`.c--{name}`|`.c--button`,<br />`.c--card`|
+|Modifier<HelpText fz="xs">Variation</HelpText>|`.c--{name}--{modifier}`|`.c--button--outline`|
+|Element<HelpText fz="xs">Child element</HelpText>|`.c--{name}_{element}`|`.c--card_header`,<br />`.c--card_body`|
 
-`c--` classes follow a BEM-like structure (Block / Modifier / Element).
+:::point
+Modifiers are used alongside the Block class, e.g. `.c--button.c--button--outline`.  
+Elements use a single underscore (`_`) as the separator.
+:::
 
-- **Block**: `.c--button`
-- **Modifier**: `.c--button--outline` (used together with the base class, e.g. `.c--button.c--button--outline`)
-- **Element**: `.c--card_header`, `.c--card_body` (underscore separator)
+Combining Blocks (`.c--xxx.c--yyy`) is generally NG, but the following combinations are allowed:
 
-Combining classes of the same category (`.c--xxx.c--yyy`) is NG. Only Modifier combinations like `.c--button.c--button--outline` are allowed.
+- Block with its own Modifier: `.c--xxx.c--xxx--variant`
+- Block with another Block's Element: `.c--xxx.c--yyy_elem`
 
 
 
@@ -242,34 +259,26 @@ See the [Responsive styling guide](/en/docs/responsive/) for details.
 
 
 
-### Other Recommended Conventions
+### Naming and placing custom classes
 
+When you add your own classes that match one of Lism CSS's existing class categories (`set--`, `is--`, `l--`, `a--`, `u--`, `-{prop}:{value}`), use the same prefix and add them to the corresponding definition layer.
 
-#### Dynamic Attributes
+If you need to override an existing Lism class, do so within that same layer.
 
-For state management that is dynamically toggled by JavaScript, use data attributes.
-
-Example: `[data-opened]`, `[data-active]`
-
-
-#### Naming and placing custom classes
-
-When defining your own components (`.c--card`, `.c--pricing`, etc.), place them inside `@layer lism-components`.
+For example, `set--` class redefinitions belong in `@layer lism-base`. In that case, define them after the Lism `main.css` is loaded, or boost the specificity by repeating the class name (e.g. `.set--xxx.set--xxx`) to ensure the override takes effect.
 
 ```css
-@layer lism-components {
-  .c--card { /* ... */ }
-  .c--pricing { /* ... */ }
+@layer lism-base {
+  /* New addition */
+  .set--hoge { /* ... */ }
+
+  /* Override */
+  .set--plain.set--plain { /* ... */ }
 }
 ```
 
-If you add custom classes that match Lism CSS's existing class categories (`set--`, `is--`, `l--`, `a--`, `u--`), use the same prefix and add them to the corresponding layer.
-For utility classes combining a CSS property and its value, use the Property Class format `-{prop}:{value}`.
 
-If you absolutely need to override an existing Lism class, use `@layer lism-custom` — it has higher specificity than `lism-primitives` / `lism-components` (note that `set--` class redefinitions belong in `@layer lism-base`).
-
-
-#### Adding custom classifications
+### Adding custom classifications
 
 You may also define your own prefixes that don't match any of the built-in Lism class categories.
 
@@ -286,6 +295,13 @@ Place these in `@layer lism-custom`.
   .p--front { /* ... */ }
 }
 ```
+
+
+### Using data attributes for dynamic state
+
+For state management that is dynamically toggled by JavaScript, use data attributes.
+
+Example: `[data-opened]`, `[data-active]`
 
 
 

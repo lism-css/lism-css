@@ -49,10 +49,14 @@ Settings（トークン定義）
 
 **併用ルール:**
 - `.l--` と `.c--` は併用OK（例: `<div class="l--flex c--nav">`）
-- 同カテゴリ内の併用は不可（例: `.l--flex` と `.l--grid` は同要素に付けない）
+- 同カテゴリ内の Primitive 併用は不可（例: `.l--flex` と `.l--grid`、`.a--icon` と `.a--divider` は同要素に付けない）
+- `.l--` × `.a--` は非推奨（役割的に同居しない想定）
 - `.is--` 同士は併用OK（Trait は複数併用できる）
-- バリエーション: `.c--button.c--button--outline`（`c--` のみ Modifier 併記が可能）
-- 子要素: `.c--card_header`, `.c--card_body`（`c--` のみ Element を持つ）
+- `.is--` × `.l--` / `.a--` も併用OK
+- `c--` の Block 同士の併用（`.c--xxx.c--yyy`）は基本 NG。ただし以下は許容:
+  - Block と自身の Modifier: `.c--button.c--button--outline`
+  - Block と他 Block の Element: `.c--xxx.c--yyy_elem`
+- 子要素: `.c--card_header`, `.c--card_body`（`c--` のみ Element を持つ。`_` 一つ区切り）
 
 **記述順序:**
 class 属性にクラスを直接記述する場合は、以下の順序で並べてください。粒度の大きい（塊としての役割を持つ）クラスから、粒度の小さい（単一プロパティ制御）クラスの順です。

@@ -93,10 +93,19 @@ Lism コンポーネントでは `isContainer`, `isLayer` 等の Props として
 
 `c--` プレフィックスで定義する **Component クラス** は、Primitive を組み合わせて作られた具体的な UI 部品です。`@layer lism-components` に配置され、コアの `lism-css` には含まれず、`@lism-css/ui` パッケージやユーザー定義として提供されます。
 
-`c--` クラスは BEM 構造を持ち、Block / Modifier / Element の併用が可能です。
+`c--` クラスは BEM 構造（Block / Modifier / Element）を持つことができ、それぞれ次の形式で定義します。
 
-- バリエーション作成時のクラス例: `.c--button.c--button--outline`
-- 子要素のクラス例: `.c--card_header`, `.c--card_body`
+| 分類 | 形式 | 例 |
+|---|---|---|
+| Block | `.c--{name}` | `.c--button`, `.c--card` |
+| Modifier | `.c--{name}--{modifier}` | `.c--button--outline` |
+| Element | `.c--{name}_{element}` | `.c--card_header`, `.c--card_body` |
+
+- Modifier は Block と併記して使用: `.c--button.c--button--outline`
+- Element は `_`（アンダースコア）一つ区切り
+- Block 同士の併用（`.c--xxx.c--yyy`）は基本 NG。ただし次は許容される:
+  - Block と自身の Modifier: `.c--xxx.c--xxx--variant`
+  - Block と他 Block の Element: `.c--xxx.c--yyy_elem`
 
 `c--`を使った独自コンポーネントを使う場合でも、他の Primitive クラス（`.l--`, `is--`）や Property Class（`-{prop}:{value}`）との組み合わせを前提とした設計にすることでCSSの記述量を削減できます。`c--`クラスにスタイルが全くなく、HTML側での可視性を高める名前付けのためだけに利用しても構いません。
 
