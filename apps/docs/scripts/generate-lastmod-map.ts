@@ -14,6 +14,7 @@ import { execSync } from 'node:child_process';
 import { existsSync, writeFileSync } from 'node:fs';
 import { resolve, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { toContentSlug } from '../src/lib/contentSlug';
 
 const SITE_URL = 'https://lism-css.com';
 const ROOT_LANG = 'ja';
@@ -78,7 +79,7 @@ function filePathToSiteUrls(filePath: string): string[] {
   if (contentMatch) {
     const [, lang, rawSlug] = contentMatch;
     // primitives/ 配下のみ casing 保持、それ以外は小文字化（content.config.ts の generateId と揃える）
-    const slug = rawSlug.startsWith('primitives/') ? rawSlug : rawSlug.toLowerCase();
+    const slug = toContentSlug(rawSlug);
     const langPrefix = lang === ROOT_LANG ? '' : `/${lang}`;
     const urls = [`${SITE_URL}${langPrefix}/docs/${slug}/`];
 

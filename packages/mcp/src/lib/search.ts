@@ -118,6 +118,10 @@ export function searchDocs(entries: DocsEntry[], query: string, options?: Search
  * - `primitives/` 配下のみファイル名の casing を保持（CSS クラス名と URL を一致させるための例外）
  * - それ以外は全て小文字化（Astro content collections の `generateId` と揃える）
  *
+ * IMPORTANT: `apps/docs/src/lib/contentSlug.ts` の `toContentSlug` と必ず同じロジックに保つこと。
+ * 別ワークスペース（apps/docs）なので直接 import できず、ローカル実装で複製している。
+ * apps/docs 側を変更した場合は必ずここも合わせて更新する。
+ *
  * 例:
  *   `primitives/l--tileGrid.mdx`   → `primitives/l--tileGrid`
  *   `core-components/Group.mdx`    → `core-components/group`

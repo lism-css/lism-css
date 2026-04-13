@@ -1,6 +1,7 @@
 import { defineCollection } from 'astro:content';
 import { glob } from 'astro/loaders';
 import { z } from 'astro/zod';
+import { toContentSlug } from './lib/contentSlug';
 
 /**
  * 記事コレクションの共通スキーマ
@@ -30,7 +31,7 @@ const mdMdxWithUnderscoreExcludes = ['**/*.{md,mdx}', '!**/_*/**'] as const;
 // それ以外のコレクション（core-components / ui / ui/examples 等）は従来通り小文字化して URL casing の破壊的変更を避ける。
 const generateId = ({ entry }: { entry: string }) => {
   const withoutExt = entry.replace(/\.(md|mdx)$/, '');
-  return withoutExt.startsWith('primitives/') ? withoutExt : withoutExt.toLowerCase();
+  return toContentSlug(withoutExt);
 };
 
 const ja = defineCollection({
