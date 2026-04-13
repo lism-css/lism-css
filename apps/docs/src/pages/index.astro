@@ -4,7 +4,7 @@
  * Lism CSSの紹介とドキュメントへの導線
  */
 import SimpleLayout from '@/layouts/SimpleLayout.astro';
-import { Stack, TileGrid, Flex, Lism, Heading, Text, Link, Columns, LinkBox } from 'lism-css/astro';
+import { Stack, TileGrid, Flex, Lism, Heading, Text, Link, Columns, BoxLink } from 'lism-css/astro';
 import { Button } from '@lism-css/ui/astro';
 import Gradbox from '@/components/parts/Gradbox.astro';
 import { siteConfig } from '@/config/site';
@@ -137,7 +137,7 @@ const ecosystems = [
     <Columns cols={[1, 2]} g="30">
       {
         ecosystems.map((item) => (
-          <LinkBox href={item.href} layout="stack" g="20" p="30" bd hov="bxsh" td="none">
+          <BoxLink href={item.href} layout="stack" g="20" p="30" bd hov="bxsh" td="none">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="24"
@@ -156,7 +156,7 @@ const ecosystems = [
             <Text fz="s" c="text-2" lh="s">
               {item.desc}
             </Text>
-          </LinkBox>
+          </BoxLink>
         ))
       }
     </Columns>

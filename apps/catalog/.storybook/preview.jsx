@@ -149,7 +149,7 @@ const preview = {
     isContainer: { control: 'boolean', table: { category: 'State' } },
     isWrapper: { control: 'object', table: { category: 'State' } },
     isLayer: { control: 'boolean', table: { category: 'State' } },
-    isLinkBox: { control: 'boolean', table: { category: 'State' } },
+    isBoxLink: { control: 'boolean', table: { category: 'State' } },
     isVertical: { control: 'boolean', table: { category: 'State' } },
   },
   parameters: {

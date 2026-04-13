@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { LinkBox } from './index';
+import { BoxLink } from './index';
 
-const meta: Meta<typeof LinkBox> = {
-  title: 'State/LinkBox',
-  component: LinkBox,
+const meta: Meta<typeof BoxLink> = {
+  title: 'State/BoxLink',
+  component: BoxLink,
   tags: ['autodocs'],
   argTypes: {
     children: { control: false },
@@ -12,13 +12,13 @@ const meta: Meta<typeof LinkBox> = {
 };
 
 export default meta;
-type Story = StoryObj<typeof LinkBox>;
+type Story = StoryObj<typeof BoxLink>;
 
 export const Default: Story = {
   args: {
     href: '#',
     p: '20',
-    children: <p>LinkBox content</p>,
+    children: <p>BoxLink content</p>,
   },
 };
 
@@ -26,6 +26,6 @@ export const WithoutHref: Story = {
   name: 'href なし (div)',
   args: {
     p: '20',
-    children: <p>LinkBox without href renders as div</p>,
+    children: <p>BoxLink without href renders as div</p>,
   },
 };

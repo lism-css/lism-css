@@ -137,7 +137,7 @@ import { Accordion, Tabs, Button } from '@lism-css/ui/astro';
 - `is--container` / `<Container>`: [modules/is--container.md](./modules/is--container.md)
 - `is--wrapper` / `<Wrapper>`: [modules/is--wrapper.md](./modules/is--wrapper.md)
 - `is--layer` / `<Layer>`: [modules/is--layer.md](./modules/is--layer.md)
-- `is--linkBox` / `<LinkBox>`: [modules/is--linkBox.md](./modules/is--linkBox.md)
+- `is--boxLink` / `<BoxLink>`: [modules/is--boxLink.md](./modules/is--boxLink.md)
 - `is--vertical`: [modules/is--vertical.md](./modules/is--vertical.md)
 
 **Atomic Modules**

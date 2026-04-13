@@ -24,7 +24,7 @@
 
 ### `modules/` サブフォルダ配下のモジュール詳細ファイル
 
-各モジュールに 1 ファイル。クラス名は camelCase のまま（例: `l--sideMain.md`, `l--tileGrid.md`, `is--linkBox.md`）、MDX 側は lowercase（`l--sidemain.mdx` 等）であることに注意。
+各モジュールに 1 ファイル。クラス名は camelCase のまま（例: `l--sideMain.md`, `l--tileGrid.md`, `is--boxLink.md`）、MDX 側は lowercase（`l--sidemain.mdx` 等）であることに注意。
 
 ファイルの対応関係は `packages/lism-css/src/scss/modules/{layout,state,atomic}/` 配下の SCSS と 1:1。カテゴリ別の更新内容は以下：
 

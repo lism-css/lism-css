@@ -1,7 +1,7 @@
 ---
 import DemoLayout from '@/layouts/DemoLayout.astro';
 
-import { Stack, LinkBox, Container, Frame, Columns, Media, Flex, Text, Heading } from 'lism-css/astro';
+import { Stack, BoxLink, Container, Frame, Columns, Media, Flex, Text, Heading } from 'lism-css/astro';
 import './_style.css';
 ---
 
@@ -13,7 +13,7 @@ import './_style.css';
         <Text fz="m" o="-20">Pickup Products</Text>
       </Stack>
       <Stack g="40">
-        <LinkBox
+        <BoxLink
           href="#"
           layout="tileGrid"
           class="set--innerRs"
@@ -38,9 +38,9 @@ import './_style.css';
               <Text fz="m">View Detail</Text>
             </Flex>
           </Stack>
-        </LinkBox>
+        </BoxLink>
         <Columns cols={['1', '2', '4']} g="40">
-          <LinkBox layout="grid" gtr="subgrid" gr="span 3" set="hov" g="30" href="#">
+          <BoxLink layout="grid" gtr="subgrid" gr="span 3" set="hov" g="30" href="#">
             <Frame as="figure" ar="16/9" bdrs="20" pos="relative">
               <Media src="/img/img-1.jpg" alt="" width="960" height="640" set="transition" hov="to:zoom" />
             </Frame>
@@ -53,8 +53,8 @@ import './_style.css';
             <Flex my-s="auto" jc="center" bd bdc="line" p="10" bdrs="20" set="transition" hov="to:reverse">
               <Text fz="s">View Detail</Text>
             </Flex>
-          </LinkBox>
-          <LinkBox layout="grid" gtr="subgrid" gr="span 3" set="hov" g="30" href="#">
+          </BoxLink>
+          <BoxLink layout="grid" gtr="subgrid" gr="span 3" set="hov" g="30" href="#">
             <Frame as="figure" ar="16/9" bdrs="20" pos="relative">
               <Media src="https://cdn.lism-css.com/random/img?r=2" alt="" width="960" height="640" set="transition" hov="to:zoom" />
             </Frame>
@@ -67,8 +67,8 @@ import './_style.css';
             <Flex my-s="auto" jc="center" bd bdc="line" p="10" bdrs="20" set="transition" hov="to:reverse">
               <Text fz="s">View Detail</Text>
             </Flex>
-          </LinkBox>
-          <LinkBox layout="grid" gtr="subgrid" gr="span 3" set="hov" g="30" href="#">
+          </BoxLink>
+          <BoxLink layout="grid" gtr="subgrid" gr="span 3" set="hov" g="30" href="#">
             <Frame as="figure" ar="16/9" bdrs="20" pos="relative">
               <Media src="https://cdn.lism-css.com/random/img?r=3" alt="" width="960" height="640" set="transition" hov="to:zoom" />
             </Frame>
@@ -81,8 +81,8 @@ import './_style.css';
             <Flex my-s="auto" jc="center" bd bdc="line" p="10" bdrs="20" set="transition" hov="to:reverse">
               <Text fz="s">View Detail</Text>
             </Flex>
-          </LinkBox>
-          <LinkBox layout="grid" gtr="subgrid" gr="span 3" set="hov" g="30" href="#">
+          </BoxLink>
+          <BoxLink layout="grid" gtr="subgrid" gr="span 3" set="hov" g="30" href="#">
             <Frame as="figure" ar="16/9" bdrs="20" pos="relative">
               <Media src="https://cdn.lism-css.com/random/img?r=4" alt="" width="960" height="640" set="transition" hov="to:zoom" />
             </Frame>
@@ -95,7 +95,7 @@ import './_style.css';
             <Flex my-s="auto" jc="center" bd bdc="line" p="10" bdrs="20" set="transition" hov="to:reverse">
               <Text fz="s">View Detail</Text>
             </Flex>
-          </LinkBox>
+          </BoxLink>
         </Columns>
       </Stack>
     </Stack>

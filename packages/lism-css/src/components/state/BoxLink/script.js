@@ -1,8 +1,8 @@
 /**
  * altKey押下時の処理 テスト用
  */
-export default function enableSelectTextWithAltKeyAtLinkBox() {
-  const boxes = document.querySelectorAll('.is--linkBox');
+export default function enableSelectTextWithAltKeyAtBoxLink() {
+  const boxes = document.querySelectorAll('.is--boxLink');
 
   boxes.forEach((box) => {
     let isAltPressed = false;

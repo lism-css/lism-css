@@ -33,7 +33,7 @@ describe('StateProps', () => {
 
     it('その他のステート', () => {
       assertType<StateProps>({ isLayer: true });
-      assertType<StateProps>({ isLinkBox: true });
+      assertType<StateProps>({ isBoxLink: true });
       assertType<StateProps>({ isCoverLink: true });
       assertType<StateProps>({ isSide: true });
       assertType<StateProps>({ isSkipFlow: true });

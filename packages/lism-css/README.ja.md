@@ -131,7 +131,7 @@ Lism CSS は以下の React / Astro コンポーネントを提供します:
 Lism, Box, Flow, Flex, Cluster, Stack, Grid, FluidCols, SwitchCols, SideMain, Center, Columns, Frame
 
 **構造コンポーネント:**
-Container, Wrapper, Layer, LinkBox
+Container, Wrapper, Layer, BoxLink
 
 **コンテンツコンポーネント:**
 Text, Heading, Inline, Link, Group, List

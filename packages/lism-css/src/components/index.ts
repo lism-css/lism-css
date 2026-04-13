@@ -29,7 +29,7 @@ export * from './layout/TileGrid';
 // state (is--)
 export * from './state/Container';
 export * from './state/Layer';
-export * from './state/LinkBox';
+export * from './state/BoxLink';
 export * from './state/Wrapper';
 
 // atomic (a--)
