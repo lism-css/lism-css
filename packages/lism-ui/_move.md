@@ -72,7 +72,7 @@ const props = Astro.props;
 
 ### 基本ルール
 
-1. **レイヤー**: `@layer lism-modules { }` 内に定義
+1. **レイヤー**: `@layer lism-components { }` 内に定義
 2. **命名規則**: コンポーネントクラスは `c--` プレフィックス
 3. **サブ要素**: `c--component_element` 形式（アンダースコア区切り）
 4. **バリアント**: `c--component--variant` 形式（ダブルハイフン区切り）
@@ -80,7 +80,7 @@ const props = Astro.props;
 ### スタイル例
 
 ```css
-@layer lism-modules {
+@layer lism-components {
     /* メインコンポーネント */
     .c--component {
         /* CSS 変数の定義 */
@@ -219,7 +219,7 @@ rmdir apps/docs/src/components/ex/ComponentName
 
 - [ ] ディレクトリ構造を作成
 - [ ] `_style.css` を移行・調整
-  - [ ] `@layer lism-modules` で囲む
+  - [ ] `@layer lism-components` で囲む
   - [ ] クラス名が `c--` プレフィックスになっている
 - [ ] React コンポーネントを作成
   - [ ] `lism-css/react` からインポート
@@ -260,7 +260,7 @@ rmdir apps/docs/src/components/ex/ComponentName
 ### 注意点
 
 1. **依存コンポーネント**: `Lism`, `Flow`, `Grid`, `Frame`, `Decorator` を使用
-2. **スタイル調整**: 元のスタイルは既に `@layer lism-modules` を使用しているため、大きな変更は不要
+2. **スタイル調整**: 元のスタイルは既に `@layer lism-components` を使用しているため、大きな変更は不要
 3. **data 属性**: `data-chat-dir` はそのまま維持
 4. **variant**: `speak`, `think` の2種類のバリアントあり
 5. **keycolor**: カラーボックス (`u--cbox`) を使用した色管理
