@@ -41,14 +41,14 @@ To address the common problem of CSS specificity becoming overly complex, Lism d
       <td>The layer for Reset CSS, token definitions, variable sets, and initial element styles.<br/>`.set--{state}` classes are also defined here.</td>
     </tr>
     <tr>
-      <td class='-whspace:nowrap'>Primitives<br/>`@lism-primitives`</td>
+      <td class='-whspace:nowrap'>Primitives<br/>`@lism-primitive`</td>
       <td>
         The layer for Primitives — the building blocks for composing layouts.<br />
         It is further subdivided into sub-layers where `.is--{trait}`, `.l--{layout}`, and `.a--{atomic}` are defined.
       </td>
     </tr>
     <tr>
-      <td class='-whspace:nowrap'>Components<br/>`@lism-components`</td>
+      <td class='-whspace:nowrap'>Components<br/>`@lism-component`</td>
       <td>The layer for UI components with BEM-like structure (`.c--{name}`). Not included in the core `lism-css` — `@lism-css/ui` and user-defined `c--*` classes belong here.</td>
     </tr>
     <tr>
@@ -128,10 +128,10 @@ Primitive classes are standalone — they have no variations or child element cl
 They are not included in the core `lism-css` and are partially provided via the `@lism-css/ui` package.
 
 
-Users can also freely define their own `c--` classes inside `@layer lism-components`.
+Users can also freely define their own `c--` classes inside `@layer lism-component`.
 
 ```css
-@layer lism-components {
+@layer lism-component {
   .c--card { /* ... */ }
   .c--pricing { /* ... */ }
 }

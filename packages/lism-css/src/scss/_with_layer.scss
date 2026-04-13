@@ -4,7 +4,7 @@
 @use 'sass:meta';
 
 // レイヤー順序を明示的に宣言（詳細度: 上ほど弱い）
-@layer lism-base, lism-primitives, lism-components, lism-custom, lism-utility;
+@layer lism-base, lism-primitive, lism-component, lism-custom, lism-utility;
 
 @layer lism-base {
   // resetは中でも layer定義済み。 lism-base.reset となる
@@ -13,7 +13,7 @@
   @include meta.load-css('base');
 }
 
-@layer lism-primitives {
+@layer lism-primitive {
   @layer trait {
     @include meta.load-css('primitives/trait');
   }
@@ -26,7 +26,7 @@
 }
 
 /* stylelint-disable-next-line block-no-empty -- BEM 構造を持つ UI コンポーネント（c--）用レイヤー。コアでは空、@lism-css/ui やユーザー定義クラスがここに配置される。 */
-@layer lism-components {
+@layer lism-component {
 }
 
 /* stylelint-disable-next-line block-no-empty -- ユーザーの独自分類クラス用レイヤー */

@@ -1,8 +1,8 @@
 # Primitive クラス
 
-Lism CSS では、レイアウトを組み立てる小さな積み木として **Primitive クラス**（`is--` / `l--` / `a--`）を提供します。これらはすべて `@layer lism-primitives` に属します（サブレイヤーは `trait` / `layout` / `atomic`）。
+Lism CSS では、レイアウトを組み立てる小さな積み木として **Primitive クラス**（`is--` / `l--` / `a--`）を提供します。これらはすべて `@layer lism-primitive` に属します（サブレイヤーは `trait` / `layout` / `atomic`）。
 
-具体的な UI 部品は **Component クラス**（`c--`）として `@layer lism-components` に配置されますが、コアの `lism-css` には含まれず、`@lism-css/ui` パッケージやユーザー定義として提供されます。
+具体的な UI 部品は **Component クラス**（`c--`）として `@layer lism-component` に配置されますが、コアの `lism-css` には含まれず、`@lism-css/ui` パッケージやユーザー定義として提供されます。
 
 ## TOC
 
@@ -20,10 +20,10 @@ Lism CSS では、レイアウトを組み立てる小さな積み木として *
 
 | プレフィックス | 種類 | サブレイヤー | 役割 |
 |--------------|------|------------|------|
-| `is--` | Trait Primitive | `lism-primitives.trait` | 要素に静的な構造的特性を付与する汎用クラス |
-| `l--` | Layout Primitive | `lism-primitives.layout` | レイアウトの構成単位となる Primitive |
-| `a--` | Atomic Primitive | `lism-primitives.atomic` | レイアウトの最小単位（アイコン・区切り線等） |
-| `c--` | Component | `lism-components` | BEM 構造を持つ具体的な UI 部品 |
+| `is--` | Trait Primitive | `lism-primitive.trait` | 要素に静的な構造的特性を付与する汎用クラス |
+| `l--` | Layout Primitive | `lism-primitive.layout` | レイアウトの構成単位となる Primitive |
+| `a--` | Atomic Primitive | `lism-primitive.atomic` | レイアウトの最小単位（アイコン・区切り線等） |
+| `c--` | Component | `lism-component` | BEM 構造を持つ具体的な UI 部品 |
 
 **併用ルール:**
 - `is--` は他のすべての Primitive / Component と併用可能（複数の `is--` 同士もOK）
@@ -91,7 +91,7 @@ Lism コンポーネントでは `isContainer`, `isLayer` 等の Props として
 
 ## Component（`c--`）
 
-`c--` プレフィックスで定義する **Component クラス** は、Primitive を組み合わせて作られた具体的な UI 部品です。`@layer lism-components` に配置され、コアの `lism-css` には含まれず、`@lism-css/ui` パッケージやユーザー定義として提供されます。
+`c--` プレフィックスで定義する **Component クラス** は、Primitive を組み合わせて作られた具体的な UI 部品です。`@layer lism-component` に配置され、コアの `lism-css` には含まれず、`@lism-css/ui` パッケージやユーザー定義として提供されます。
 
 `c--` クラスは BEM 構造（Block / Modifier / Element）を持つことができ、それぞれ次の形式で定義します。
 
@@ -114,7 +114,7 @@ Lism コンポーネントでは `isContainer`, `isLayer` 等の Props として
 `l--stack` と併用する前提でのカスタムクラス例
 
 ```css
-@layer lism-components {
+@layer lism-component {
   .c--myCard {
     gap: var(--s20);
     padding: var(--s30);
@@ -140,7 +140,7 @@ export default function MyCard(props) {
 }
 ```
 ```css
-@layer lism-components {
+@layer lism-component {
   .c--myCard {
     /* 複雑なスタイルあれば css で書く */
   }

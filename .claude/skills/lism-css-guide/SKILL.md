@@ -62,7 +62,7 @@ import { Accordion, Tabs, Button } from '@lism-css/ui/astro';
 ### ネイティブCSS で書くもの（必要に応じて適切な `@layer` 内で書くこと）
 
 - Lismにないアニメーションやhoverエフェクト（適宜クラスを追加して使用する）
-- 独自コンポーネントの実装に合わせた`c--`クラス(`@layer lism-components`内で定義する)
+- 独自コンポーネントの実装に合わせた`c--`クラス(`@layer lism-component`内で定義する)
 - 複雑なセレクタ（`:nth-child`, `::before`, `::after` 等）を使用する必要があるスタイル
 - カスタムプロパティを使った独自の計算式が必要なスタイル
 - その他、Lism のトークンやプリミティブでカバーできない特殊なスタイル
