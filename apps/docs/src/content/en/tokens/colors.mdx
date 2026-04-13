@@ -8,8 +8,8 @@ import { Box, Stack, Cluster, Columns, Frame, Center, Inline, Lism, Text } from 
 import { DummyText } from '@lism-css/ui/astro';
 
 export const ColorBadge = ({color, label}) => {
-  return <Cluster g='10'>
-      <Inline w='1.5em' ar='1/1' bgc={color} bdrs='10' bxsh='10' />
+  return <Cluster g="10">
+      <Inline w="1.5em" ar="1/1" bgc={color} bdrs="10" bxsh="10" />
       <code>{label || color}</code>
     </Cluster>;
 }
@@ -20,15 +20,15 @@ This page covers the color-related design tokens defined in Lism CSS. Two types 
 
 | Token | Variable |
 |---|---|
-|<ColorBadge color='base' />|`--base`|
-|<ColorBadge color='base-2' />|`--base-2`|
-|<ColorBadge color='text' />|`--text`|
-|<ColorBadge color='text-2' />|`--text-2`|
-|<ColorBadge color='divider' />|`--divider`|
-|<ColorBadge color='link' />|`--link`|
-|<ColorBadge color='brand' />|`--brand`|
-|<ColorBadge color='accent' />|`--accent`|
-{/* |<ColorBadge color='accent-2' />|`--accent-2`| */}
+|<ColorBadge color="base" />|`--base`|
+|<ColorBadge color="base-2" />|`--base-2`|
+|<ColorBadge color="text" />|`--text`|
+|<ColorBadge color="text-2" />|`--text-2`|
+|<ColorBadge color="divider" />|`--divider`|
+|<ColorBadge color="link" />|`--link`|
+|<ColorBadge color="brand" />|`--brand`|
+|<ColorBadge color="accent" />|`--accent`|
+{/* |<ColorBadge color="accent-2" />|`--accent-2`| */}
 
 Adjust these colors to match your site's design.
 {/* With modern CSS's `color-mix()`, there is no need to define hsl values as inner variables. */}
@@ -36,17 +36,17 @@ Adjust these colors to match your site's design.
 
 <Preview>
   <PreviewTitle>Preview</PreviewTitle>
-  <PreviewArea p='30'>
-    <Box bd p='30'>
-      <Text fw='bold' c='brand'>Main color example text</Text>
-      <DummyText length='codes' pre='text: ' />
-      <DummyText c='text-2' length='s' pre='text-2: ' />
+  <PreviewArea p="30">
+    <Box bd p="30">
+      <Text fw="bold" c="brand">Main color example text</Text>
+      <DummyText length="codes" pre="text: " />
+      <DummyText c="text-2" length="s" pre="text-2: " />
     </Box>
 
-    <Box bgc='base-2' p='30'>
-      <Text fw='bold' c='accent'>Accent color example text</Text>
-      <DummyText length='codes' pre='text: ' />
-      <DummyText c='text-2' length='s' pre='text-2: ' />
+    <Box bgc="base-2" p="30">
+      <Text fw="bold" c="accent">Accent color example text</Text>
+      <DummyText length="codes" pre="text: " />
+      <DummyText c="text-2" length="s" pre="text-2: " />
       </Box>
     </PreviewArea>
   </Preview>
@@ -56,16 +56,16 @@ Adjust these colors to match your site's design.
 
 | Palette token | Variable |
 |---|---|
-|<ColorBadge color='red' />|`--red`|
-|<ColorBadge color='orange' />|`--orange`|
-|<ColorBadge color='yellow' />|`--yellow`|
-|<ColorBadge color='green' />|`--green`|
-|<ColorBadge color='blue' />|`--blue`|
-|<ColorBadge color='purple' />|`--purple`|
-|<ColorBadge color='pink' />|`--pink`|
-|<ColorBadge color='gray' />|`--gray`|
-|<ColorBadge color='black' />|`--black`|
-|<ColorBadge color='white' />|`--white`|
+|<ColorBadge color="red" />|`--red`|
+|<ColorBadge color="orange" />|`--orange`|
+|<ColorBadge color="yellow" />|`--yellow`|
+|<ColorBadge color="green" />|`--green`|
+|<ColorBadge color="blue" />|`--blue`|
+|<ColorBadge color="purple" />|`--purple`|
+|<ColorBadge color="pink" />|`--pink`|
+|<ColorBadge color="gray" />|`--gray`|
+|<ColorBadge color="black" />|`--black`|
+|<ColorBadge color="white" />|`--white`|
 
 Palette colors are defined in OKLCH.
 
@@ -78,14 +78,14 @@ The `u--cbox` utility class generates `color`, `background-color`, and `border-c
 
 <Preview>
   <PreviewTitle>Basic u--cbox usage</PreviewTitle>
-  <PreviewArea resize p='20'>
-    <Lism className="u--cbox" keycolor="red" p="20">
+  <PreviewArea resize p="20">
+    <Lism util="cbox" keycolor="red" p="20">
       <DummyText length="codes" />
     </Lism>
-    <Lism className="u--cbox" keycolor="purple" bd bdrs="20" bxsh="20" set="shadow" p="20">
+    <Lism util="cbox" keycolor="purple" bd bdrs="20" bxsh="20" set="shadow" p="20">
       <DummyText length="codes" />
     </Lism>
-    <Lism className="u--cbox" keycolor="brand" bdc="keycolor" bd-x-s bdw="4px" p="20">
+    <Lism util="cbox" keycolor="brand" bdc="keycolor" bd-x-s bdw="4px" p="20">
       <DummyText length="codes" />
     </Lism>
   </PreviewArea>
@@ -96,40 +96,40 @@ The `u--cbox` utility class generates `color`, `background-color`, and `border-c
     <div class="u--cbox -bd-x-s -p:20" style="--keycolor: var(--brand); --bdc: var(--keycolor); --bdw: 4px">...</div>
     ```
   </PreviewCode>
-  <PreviewCode slot="tab" label='JSX'>
+  <PreviewCode slot="tab" label="JSX">
     ```jsx
-    <Lism className='u--cbox' keycolor='red' p='20'>...</Lism>
-    <Lism className='u--cbox' keycolor='purple' bd bdrs='20' bxsh='20' set="shadow" p='20'>...</Lism>
-    <Lism className='u--cbox' keycolor='brand' bdc='keycolor' bd-x-s bdw='4px' p='20'>...</Lism>
+    <Lism util="cbox" keycolor="red" p="20">...</Lism>
+    <Lism util="cbox" keycolor="purple" bd bdrs="20" bxsh="20" set="shadow" p="20">...</Lism>
+    <Lism util="cbox" keycolor="brand" bdc="keycolor" bd-x-s bdw="4px" p="20">...</Lism>
     ```
   </PreviewCode>
 </Preview>
 
 
 <PreviewTitle>Palette color list</PreviewTitle>
-<PreviewArea p='20' ov-y='auto' max-h='25rem'>
-  <Lism className="u--cbox" keycolor="red" bd bdrs="20" bxsh="20" set="shadow" p="20">
+<PreviewArea p="20" ov-y="auto" max-h="25rem">
+  <Lism util="cbox" keycolor="red" bd bdrs="20" bxsh="20" set="shadow" p="20">
     <DummyText length="codes" />
   </Lism>
-  <Lism className="u--cbox" keycolor="orange" bd bdrs="20" bxsh="20" set="shadow" p="20">
+  <Lism util="cbox" keycolor="orange" bd bdrs="20" bxsh="20" set="shadow" p="20">
     <DummyText length="codes" />
   </Lism>
-  <Lism className="u--cbox" keycolor="yellow" bd bdrs="20" bxsh="20" set="shadow" p="20">
+  <Lism util="cbox" keycolor="yellow" bd bdrs="20" bxsh="20" set="shadow" p="20">
     <DummyText length="codes" />
   </Lism>
-  <Lism className="u--cbox" keycolor="green" bd bdrs="20" bxsh="20" set="shadow" p="20">
+  <Lism util="cbox" keycolor="green" bd bdrs="20" bxsh="20" set="shadow" p="20">
     <DummyText length="codes" />
   </Lism>
-  <Lism className="u--cbox" keycolor="blue" bd bdrs="20" bxsh="20" set="shadow" p="20">
+  <Lism util="cbox" keycolor="blue" bd bdrs="20" bxsh="20" set="shadow" p="20">
     <DummyText length="codes" />
   </Lism>
-  <Lism className="u--cbox" keycolor="purple" bd bdrs="20" bxsh="20" set="shadow" p="20">
+  <Lism util="cbox" keycolor="purple" bd bdrs="20" bxsh="20" set="shadow" p="20">
     <DummyText length="codes" />
   </Lism>
-  <Lism className="u--cbox" keycolor="pink" bd bdrs="20" bxsh="20" set="shadow" p="20">
+  <Lism util="cbox" keycolor="pink" bd bdrs="20" bxsh="20" set="shadow" p="20">
     <DummyText length="codes" />
   </Lism>
-  <Lism className="u--cbox" keycolor="gray" bd bdrs="20" bxsh="20" set="shadow" p="20">
+  <Lism util="cbox" keycolor="gray" bd bdrs="20" bxsh="20" set="shadow" p="20">
     <DummyText length="codes" />
   </Lism>
 </PreviewArea>

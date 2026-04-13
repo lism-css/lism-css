@@ -12,19 +12,19 @@ import { Alert, DummyText } from '@lism-css/ui/astro';
 
 <Preview>
   <PreviewTitle>Preview</PreviewTitle>
-  <PreviewArea resize p='20'>
+  <PreviewArea resize p="20">
     <Alert>
       <p>ロレム・イプサムの座り雨。目まぐるしい文章の流れの中で、それは静かに歩く仮の言葉です。</p>
     </Alert>
   </PreviewArea>
-  <PreviewCode slot='tab' label='React / Astro'>
+  <PreviewCode slot="tab" label="React / Astro">
     ```jsx
     <Alert>
       <p>ロレム・イプサムの座り雨。目まぐるしい文章の流れの中で、それは静かに歩く仮の言葉です。</p>
     </Alert>
     ```
   </PreviewCode>
-  <PreviewCode slot='tab' label='HTML'>
+  <PreviewCode slot="tab" label="HTML">
     ```jsx
     <div class="c--alert u--cbox l--flex -ai:center -p:15 -g:15 -bd -bdrs:10" style="--keycolor:var(--red)">
       <div class="l--center -c -fz:xl -fxsh:0" style="--c:var(--keycolor)">
@@ -58,18 +58,18 @@ import { Alert, DummyText } from '@lism-css/ui/astro';
 
 
 ### Import
-<ImportPackage component='Alert' packageName='@lism-css/ui' />
+<ImportPackage component="Alert" packageName="@lism-css/ui" />
 
 
 ### Anatomy
 
 <Preview>
-  <PreviewCode slot='tab' label='React / Astro'>
+  <PreviewCode slot="tab" label="React / Astro">
     ```jsx
     <Alert type="">...CONTENT...</Alert>
     ```
   </PreviewCode>
-  <PreviewCode slot='tab' label='HTML'>
+  <PreviewCode slot="tab" label="HTML">
     ```html
     <div class="c--alert u--cbox l--flex -ai:center -p:15 -g:15 -bd -bdrs:10" style="--keycolor: var(--red)">
       <div class="l--center -c -fz:xl -fxsh:0" style="--c: var(--keycolor)">
@@ -99,14 +99,14 @@ import { Alert, DummyText } from '@lism-css/ui/astro';
 ### Source Code
 
 <Preview>
-  <PreviewCode slot='tab' label='Alert.tsx'>
-    <SrcCode dir='lism-ui' path='src/components/Alert/react/Alert.tsx' />
+  <PreviewCode slot="tab" label="Alert.tsx">
+    <SrcCode dir="lism-ui" path="src/components/Alert/react/Alert.tsx" />
   </PreviewCode>
-  <PreviewCode slot='tab' label='Alert.astro'>
-    <SrcCode dir='lism-ui' path='src/components/Alert/astro/Alert.astro' />
+  <PreviewCode slot="tab" label="Alert.astro">
+    <SrcCode dir="lism-ui" path="src/components/Alert/astro/Alert.astro" />
   </PreviewCode>
-  <PreviewCode slot='tab' label='getProps.ts'>
-    <SrcCode dir='lism-ui' path='src/components/Alert/getProps.ts' />
+  <PreviewCode slot="tab" label="getProps.ts">
+    <SrcCode dir="lism-ui" path="src/components/Alert/getProps.ts" />
   </PreviewCode>
 </Preview>
 
@@ -118,12 +118,12 @@ import { Alert, DummyText } from '@lism-css/ui/astro';
 
 <Preview>
   <PreviewTitle>Preview</PreviewTitle>
-  <PreviewArea resize p='20'>
+  <PreviewArea resize p="20">
     <Alert layout="sideMain">
       <p>ロレム・イプサムの座り雨。目まぐるしい文章の流れの中で、それは静かに歩く仮の言葉です。</p>
     </Alert>
   </PreviewArea>
-  <PreviewCode slot='tab' label='JSX'>
+  <PreviewCode slot="tab" label="JSX">
     ```jsx
     <Alert layout="sideMain">
       <p>ロレム・イプサムの座り雨。目まぐるしい文章の流れの中で、それは静かに歩く仮の言葉です。</p>
@@ -137,7 +137,7 @@ import { Alert, DummyText } from '@lism-css/ui/astro';
 
 <Preview>
   <PreviewTitle>typeの指定</PreviewTitle>
-  <PreviewArea p='20' resize>
+  <PreviewArea p="20" resize>
     <Alert type="alert">
       <DummyText lang="ja" length="codes" />
     </Alert>
@@ -157,14 +157,14 @@ import { Alert, DummyText } from '@lism-css/ui/astro';
       <DummyText lang="ja" length="codes" />
     </Alert>
   </PreviewArea>
-  <PreviewCode slot='tab' label='JSX'>
+  <PreviewCode slot="tab" label="JSX">
   ```jsx
-  <Alert type='alert'>...</Alert>
-  <Alert type='point'>...</Alert>
-  <Alert type='warning'>...</Alert>
-  <Alert type='check'>...</Alert>
-  <Alert type='info'>...</Alert>
-  <Alert type='help'>...</Alert>
+  <Alert type="alert">...</Alert>
+  <Alert type="point">...</Alert>
+  <Alert type="warning">...</Alert>
+  <Alert type="check">...</Alert>
+  <Alert type="info">...</Alert>
+  <Alert type="help">...</Alert>
   ```
   </PreviewCode>
 </Preview>
@@ -176,12 +176,12 @@ import { Alert, DummyText } from '@lism-css/ui/astro';
   <PreviewTitle>
     カラーとアイコンを指定する例
   </PreviewTitle>
-  <PreviewArea p='20'>
+  <PreviewArea p="20">
     <Alert icon="good" keycolor="pink">
       <p>ロレム・イプサムの座り雨。目まぐるしい文章の流れの中で、それは静かに歩く仮の言葉です。</p>
     </Alert>
   </PreviewArea>
-  <PreviewCode slot='tab' label='JSX'>
+  <PreviewCode slot="tab" label="JSX">
     ```jsx
     <Alert icon="good" keycolor="pink">
       <p>ロレム・イプサムの座り雨。目まぐるしい文章の流れの中で、それは静かに歩く仮の言葉です。</p>
@@ -199,8 +199,8 @@ import { Alert, DummyText } from '@lism-css/ui/astro';
 
 <Preview>
   <PreviewTitle>Preview</PreviewTitle>
-  <PreviewArea p='20'>
-    <SideMain className="u--cbox" keycolor="red" ai="center" p="15" g="15" bd bdrs="10">
+  <PreviewArea p="20">
+    <SideMain util="cbox" keycolor="red" ai="center" p="15" g="15" bd bdrs="10">
       <Center isSide c="keycolor" fz="xl">
         <Icon icon="alert" />
       </Center>
@@ -209,9 +209,9 @@ import { Alert, DummyText } from '@lism-css/ui/astro';
       </Flow>
     </SideMain>
   </PreviewArea>
-  <PreviewCode slot='tab' label='JSX'>
+  <PreviewCode slot="tab" label="JSX">
     ```jsx
-    <SideMain className="u--cbox" keycolor="red" ai="center" p="15" g="15" bd bdrs="10">
+    <SideMain util="cbox" keycolor="red" ai="center" p="15" g="15" bd bdrs="10">
       <Center isSide c="keycolor" fz="xl">
         <Icon icon="alert" />
       </Center>
@@ -221,7 +221,7 @@ import { Alert, DummyText } from '@lism-css/ui/astro';
     </SideMain>
     ```
   </PreviewCode>
-  <PreviewCode slot='tab' label='HTML'>
+  <PreviewCode slot="tab" label="HTML">
     ```html
     <div class="l--sideMain u--cbox -ai:center -p:15 -g:15 -bd -bdrs:10" style="--keycolor: var(--red)">
       <div class="l--center is--side -c -fz:xl" style="--c: var(--keycolor)">

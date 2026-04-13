@@ -12,19 +12,19 @@ A component for displaying short messages with visual emphasis.
 
 <Preview>
   <PreviewTitle>Preview</PreviewTitle>
-  <PreviewArea resize p='20'>
+  <PreviewArea resize p="20">
     <Alert>
       <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
     </Alert>
   </PreviewArea>
-  <PreviewCode slot='tab' label='React / Astro'>
+  <PreviewCode slot="tab" label="React / Astro">
     ```jsx
     <Alert>
       <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
     </Alert>
     ```
   </PreviewCode>
-  <PreviewCode slot='tab' label='HTML'>
+  <PreviewCode slot="tab" label="HTML">
     ```jsx
     <div class="c--alert u--cbox l--flex -ai:center -p:15 -g:15 -bd -bdrs:10" style="--keycolor:var(--red)">
       <div class="l--center -c -fz:xl -fxsh:0" style="--c:var(--keycolor)">
@@ -58,18 +58,18 @@ Provided as `Alert` from the `@lism-css/ui` package.
 
 
 ### Import
-<ImportPackage component='Alert' packageName='@lism-css/ui' />
+<ImportPackage component="Alert" packageName="@lism-css/ui" />
 
 
 ### Anatomy
 
 <Preview>
-  <PreviewCode slot='tab' label='React / Astro'>
+  <PreviewCode slot="tab" label="React / Astro">
     ```jsx
     <Alert type="">...CONTENT...</Alert>
     ```
   </PreviewCode>
-  <PreviewCode slot='tab' label='HTML'>
+  <PreviewCode slot="tab" label="HTML">
     ```html
     <div class="c--alert u--cbox l--flex -ai:center -p:15 -g:15 -bd -bdrs:10" style="--keycolor: var(--red)">
       <div class="l--center -c -fz:xl -fxsh:0" style="--c: var(--keycolor)">
@@ -97,14 +97,14 @@ Provided as `Alert` from the `@lism-css/ui` package.
 ### Source Code
 
 <Preview>
-  <PreviewCode slot='tab' label='Alert.tsx'>
-    <SrcCode dir='lism-ui' path='src/components/Alert/react/Alert.tsx' />
+  <PreviewCode slot="tab" label="Alert.tsx">
+    <SrcCode dir="lism-ui" path="src/components/Alert/react/Alert.tsx" />
   </PreviewCode>
-  <PreviewCode slot='tab' label='Alert.astro'>
-    <SrcCode dir='lism-ui' path='src/components/Alert/astro/Alert.astro' />
+  <PreviewCode slot="tab" label="Alert.astro">
+    <SrcCode dir="lism-ui" path="src/components/Alert/astro/Alert.astro" />
   </PreviewCode>
-  <PreviewCode slot='tab' label='getProps.ts'>
-    <SrcCode dir='lism-ui' path='src/components/Alert/getProps.ts' />
+  <PreviewCode slot="tab" label="getProps.ts">
+    <SrcCode dir="lism-ui" path="src/components/Alert/getProps.ts" />
   </PreviewCode>
 </Preview>
 
@@ -116,12 +116,12 @@ Provided as `Alert` from the `@lism-css/ui` package.
 
 <Preview>
   <PreviewTitle>Preview</PreviewTitle>
-  <PreviewArea resize p='20'>
+  <PreviewArea resize p="20">
     <Alert layout="sideMain">
       <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore.</p>
     </Alert>
   </PreviewArea>
-  <PreviewCode slot='tab' label='JSX'>
+  <PreviewCode slot="tab" label="JSX">
     ```jsx
     <Alert layout="sideMain">
       <p>Lorem ipsum dolor sit amet...</p>
@@ -135,7 +135,7 @@ Provided as `Alert` from the `@lism-css/ui` package.
 
 <Preview>
   <PreviewTitle>Specifying type</PreviewTitle>
-  <PreviewArea p='20' resize>
+  <PreviewArea p="20" resize>
     <Alert type="alert">
       <DummyText lang="ja" length="codes" />
     </Alert>
@@ -155,14 +155,14 @@ Provided as `Alert` from the `@lism-css/ui` package.
       <DummyText lang="ja" length="codes" />
     </Alert>
   </PreviewArea>
-  <PreviewCode slot='tab' label='JSX'>
+  <PreviewCode slot="tab" label="JSX">
   ```jsx
-  <Alert type='alert'>...</Alert>
-  <Alert type='point'>...</Alert>
-  <Alert type='warning'>...</Alert>
-  <Alert type='check'>...</Alert>
-  <Alert type='info'>...</Alert>
-  <Alert type='help'>...</Alert>
+  <Alert type="alert">...</Alert>
+  <Alert type="point">...</Alert>
+  <Alert type="warning">...</Alert>
+  <Alert type="check">...</Alert>
+  <Alert type="info">...</Alert>
+  <Alert type="help">...</Alert>
   ```
   </PreviewCode>
 </Preview>
@@ -174,12 +174,12 @@ Provided as `Alert` from the `@lism-css/ui` package.
   <PreviewTitle>
     Specifying a custom color and icon
   </PreviewTitle>
-  <PreviewArea p='20'>
+  <PreviewArea p="20">
     <Alert icon="good" keycolor="pink">
       <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore.</p>
     </Alert>
   </PreviewArea>
-  <PreviewCode slot='tab' label='JSX'>
+  <PreviewCode slot="tab" label="JSX">
     ```jsx
     <Alert icon="good" keycolor="pink">
       <p>Lorem ipsum dolor sit amet...</p>
@@ -197,8 +197,8 @@ An example of building an Alert using only lism-css, without `@lism-css/ui`.
 
 <Preview>
   <PreviewTitle>Preview</PreviewTitle>
-  <PreviewArea p='20'>
-    <SideMain className="u--cbox" keycolor="red" ai="center" p="15" g="15" bd bdrs="10">
+  <PreviewArea p="20">
+    <SideMain util="cbox" keycolor="red" ai="center" p="15" g="15" bd bdrs="10">
       <Center isSide c="keycolor" fz="xl">
         <Icon icon="alert" />
       </Center>
@@ -207,9 +207,9 @@ An example of building an Alert using only lism-css, without `@lism-css/ui`.
       </Flow>
     </SideMain>
   </PreviewArea>
-  <PreviewCode slot='tab' label='JSX'>
+  <PreviewCode slot="tab" label="JSX">
     ```jsx
-    <SideMain className="u--cbox" keycolor="red" ai="center" p="15" g="15" bd bdrs="10">
+    <SideMain util="cbox" keycolor="red" ai="center" p="15" g="15" bd bdrs="10">
       <Center isSide c="keycolor" fz="xl">
         <Icon icon="alert" />
       </Center>
@@ -219,7 +219,7 @@ An example of building an Alert using only lism-css, without `@lism-css/ui`.
     </SideMain>
     ```
   </PreviewCode>
-  <PreviewCode slot='tab' label='HTML'>
+  <PreviewCode slot="tab" label="HTML">
     ```html
     <div class="l--sideMain u--cbox -ai:center -p:15 -g:15 -bd -bdrs:10" style="--keycolor: var(--red)">
       <div class="l--center is--side -c -fz:xl" style="--c: var(--keycolor)">

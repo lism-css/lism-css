@@ -20,7 +20,7 @@ Provided as `Modal` from the `@lism-css/ui` package.
 
 Provided by the `@lism-css/ui` package.
 
-<ImportPackage component='Modal' script='modal.js' packageName='@lism-css/ui' />
+<ImportPackage component="Modal" script="modal.js" packageName="@lism-css/ui" />
 
 `<Modal.Root>`, `<Modal.Inner>`, `<Modal.Body>`, and `<Modal.CloseBtn>` are available.
 
@@ -28,14 +28,14 @@ Provided by the `@lism-css/ui` package.
 ### Source Code
 
 <Preview>
-  <PreviewCode slot='tab' label='React'>
-    <SrcCode dir='lism-ui' path='src/components/Modal/react/Modal.tsx' title='Modal.tsx'/>
+  <PreviewCode slot="tab" label="React">
+    <SrcCode dir="lism-ui" path="src/components/Modal/react/Modal.tsx" title="Modal.tsx"/>
   </PreviewCode>
-  <PreviewCode slot='tab' label='CSS'>
-    <SrcCode dir='lism-ui' path='src/components/Modal/_style.css' title='_style.css'/>
+  <PreviewCode slot="tab" label="CSS">
+    <SrcCode dir="lism-ui" path="src/components/Modal/_style.css" title="_style.css"/>
   </PreviewCode>
-  <PreviewCode slot='tab' label='JS'>
-    <SrcCode dir='lism-ui' path='src/components/Modal/setModal.ts' title='setModal.ts'/>
+  <PreviewCode slot="tab" label="JS">
+    <SrcCode dir="lism-ui" path="src/components/Modal/setModal.ts" title="setModal.ts"/>
   </PreviewCode>
 </Preview>
 
@@ -75,7 +75,7 @@ Add an `id` to `.c--modal`, and set `data-modal-open` and `data-modal-close` att
 
 <Preview>
   <PreviewTitle>Modal usage example</PreviewTitle>
-  <PreviewArea p='30'>
+  <PreviewArea p="30">
     <Modal.OpenBtn modalId="modal-01" className="-bd -px:15 -py:5 -bdrs:10">
       <Fragment>Open Modal 01</Fragment>
     </Modal.OpenBtn>
@@ -83,29 +83,29 @@ Add an `id` to `.c--modal`, and set `data-modal-open` and `data-modal-close` att
     <Modal.Root id="modal-01" isWrapper isContainer p="30">
       <Modal.Inner layout="stack" pos="relative" p="30" bdrs="20" bxsh="40">
         <Modal.CloseBtn modalId="modal-01" autofocus pos="absolute" t="0" r="0" z="1" fz="xl" p="10" m="15" />
-        <Modal.Body layout="stack" g="30" className="u--trimChildren">
+        <Modal.Body layout="stack" g="30" util="trimChildren">
           <div className="-fz:xl -fw:bold">Modal Title</div>
           <DummyText />
         </Modal.Body>
       </Modal.Inner>
     </Modal.Root>
   </PreviewArea>
-  <PreviewCode slot='tab' label='JSX'>
+  <PreviewCode slot="tab" label="JSX">
     ```jsx '"modal-01"'
-    <Modal.OpenBtn modalId='modal-01' className='-bd -px:15 -py:5 -bdrs:10'>Open Modal 01</Modal.OpenBtn>
+    <Modal.OpenBtn modalId="modal-01" className="-bd -px:15 -py:5 -bdrs:10">Open Modal 01</Modal.OpenBtn>
 
-    <Modal.Root id='modal-01' isWrapper isContainer p='30'>
-      <Modal.Inner layout='stack' pos='relative' p='30' bdrs='20' bxsh='40'>
-        <Modal.CloseBtn modalId='modal-01' autofocus pos='absolute' t='0' r='0' z='1' fz='xl' p='10' m='15' />
-        <Modal.Body layout='stack' g='30' className='u--trimChildren'>
-          <div className='-fz:xl -fw:bold'>Modal Title</div>
+    <Modal.Root id="modal-01" isWrapper isContainer p="30">
+      <Modal.Inner layout="stack" pos="relative" p="30" bdrs="20" bxsh="40">
+        <Modal.CloseBtn modalId="modal-01" autofocus pos="absolute" t="0" r="0" z="1" fz="xl" p="10" m="15" />
+        <Modal.Body layout="stack" g="30" util="trimChildren">
+          <div className="-fz:xl -fw:bold">Modal Title</div>
           <DummyText />
         </Modal.Body>
       </Modal.Inner>
     </Modal.Root>
     ```
   </PreviewCode>
-  <PreviewCode slot='tab' label='HTML'>
+  <PreviewCode slot="tab" label="HTML">
     ```html
     ```
   </PreviewCode>
@@ -115,7 +115,7 @@ Add an `id` to `.c--modal`, and set `data-modal-open` and `data-modal-close` att
 
 <Preview>
   <PreviewTitle>Modal usage example 2</PreviewTitle>
-  <PreviewArea p='30'>
+  <PreviewArea p="30">
     <Modal.OpenBtn modalId="modal-02" className="-bd -px:15 -py:5 -bdrs:10">
       <Fragment>Open Modal 02</Fragment>
     </Modal.OpenBtn>
@@ -148,32 +148,32 @@ Add an `id` to `.c--modal`, and set `data-modal-open` and `data-modal-close` att
       </Modal.Inner>
     </Modal.Root>
   </PreviewArea>
-  <PreviewCode slot='tab' label='JSX'>
+  <PreviewCode slot="tab" label="JSX">
     ```jsx '"modal-02"'
-    <Modal.OpenBtn modalId='modal-02' className='-bd -px:15 -py:5 -bdrs:10'>Open Modal 02</Modal.OpenBtn>
+    <Modal.OpenBtn modalId="modal-02" className="-bd -px:15 -py:5 -bdrs:10">Open Modal 02</Modal.OpenBtn>
 
-    <Modal.Root id='modal-02' isWrapper='s' isContainer px='30' py='50'>
-      <Modal.Inner layout='stack' max-h='100%' bdrs='20' bxsh='40'>
-        <Flex ai='center' jc='between' py='15' bd-b>
-          <Inline fz='l' fw='bold' lh='s' mx-s='30'>Modal Header</Inline>
-          <Modal.CloseBtn modalId='modal-02' autofocus fz='xl' p='15' mx='15'/>
+    <Modal.Root id="modal-02" isWrapper="s" isContainer px="30" py="50">
+      <Modal.Inner layout="stack" max-h="100%" bdrs="20" bxsh="40">
+        <Flex ai="center" jc="between" py="15" bd-b>
+          <Inline fz="l" fw="bold" lh="s" mx-s="30">Modal Header</Inline>
+          <Modal.CloseBtn modalId="modal-02" autofocus fz="xl" p="15" mx="15"/>
         </Flex>
-        <Modal.Body layout='flow' px='30' py='20' ov-y='auto'>
+        <Modal.Body layout="flow" px="30" py="20" ov-y="auto">
           <DummyText />
-          <DummyText length='xl' offset={1} />
-          <DummyText length='l' />
-          <DummyText length='xl' offset={3} />
+          <DummyText length="xl" offset={1} />
+          <DummyText length="l" />
+          <DummyText length="xl" offset={3} />
           <ul><li>Lorem ipsum dolor sit amet.</li><li>Consectetur adipiscing elit.</li><li>Labore et dolore magna aliqua.</li></ul>
-          <DummyText length='xl' offset={2}/>
+          <DummyText length="xl" offset={2}/>
         </Modal.Body>
-        <Flex jc='end' px='30' py='20' bd-t>
-          <Modal.CloseBtn modalId='modal-02' bgc='text' c='base' lh='s' px='15' py='10' bd='none' bdrs='10'>Close</Modal.CloseBtn>
+        <Flex jc="end" px="30" py="20" bd-t>
+          <Modal.CloseBtn modalId="modal-02" bgc="text" c="base" lh="s" px="15" py="10" bd="none" bdrs="10">Close</Modal.CloseBtn>
         </Flex>
       </Modal.Inner>
     </Modal.Root>
     ```
   </PreviewCode>
-  <PreviewCode slot='tab' label='HTML'>
+  <PreviewCode slot="tab" label="HTML">
     ```html
     ```
   </PreviewCode>
@@ -185,7 +185,7 @@ Add an `id` to `.c--modal`, and set `data-modal-open` and `data-modal-close` att
 
 <Preview>
   <PreviewTitle>Drawer menu example</PreviewTitle>
-  <PreviewArea p='30'>
+  <PreviewArea p="30">
     <Modal.OpenBtn modalId="modal-03" ai="center" g="5">
       <Icon icon="menu" fz="l" />
       <span>MENU</span>
@@ -198,7 +198,7 @@ Add an `id` to `.c--modal`, and set `data-modal-open` and `data-modal-close` att
           <Modal.CloseBtn modalId="modal-03" autofocus fz="xl" p="5" />
         </Flex>
         <Modal.Body ov-y="auto">
-          <Stack className="u--collapseGrid" bd-b p="0" ov="clip">
+          <Stack util="collapseGrid" bd-b p="0" ov="clip">
             <Link href="#menu-link01" c="inherit" hov="neutral" px="20" py="15">
               <Fragment>Menu item 1</Fragment>
             </Link>
@@ -216,31 +216,31 @@ Add an `id` to `.c--modal`, and set `data-modal-open` and `data-modal-close` att
       </Modal.Inner>
     </Modal.Root>
   </PreviewArea>
-  <PreviewCode slot='tab' label='JSX'>
+  <PreviewCode slot="tab" label="JSX">
     ```jsx '"modal-03"'
-    <Modal.OpenBtn modalId='modal-03' ai='center' g='5'>
-      <Icon icon='menu' fz='xl' /><span>MENU</span>
+    <Modal.OpenBtn modalId="modal-03" ai="center" g="5">
+      <Icon icon="menu" fz="xl" /><span>MENU</span>
     </Modal.OpenBtn>
 
-    <Modal.Root id='modal-03'>
-      <Modal.Inner layout='stack' max-w='24rem' h='100%' bxsh='40' offset='-100px 0'>
-        <Flex bd-b ai='center' jc='between' p='20'>
-          <Inline fz='l'>MENU</Inline>
-          <Modal.CloseBtn modalId='modal-03' autofocus fz='xl' p='5'/>
+    <Modal.Root id="modal-03">
+      <Modal.Inner layout="stack" max-w="24rem" h="100%" bxsh="40" offset="-100px 0">
+        <Flex bd-b ai="center" jc="between" p="20">
+          <Inline fz="l">MENU</Inline>
+          <Modal.CloseBtn modalId="modal-03" autofocus fz="xl" p="5"/>
         </Flex>
-        <Modal.Body ov-y='auto'>
-          <Stack className='u--collapseGrid' bd-b p='0' ov='clip'>
-            <Link href='#menu-link01' className='set--plain' hov='o' px='20' py='15'>Menu item 1</Link>
-            <Link href='#menu-link02' className='set--plain' hov='o' px='20' py='15'>Menu item 2</Link>
-            <Link href='#menu-link03' className='set--plain' hov='o' px='20' py='15'>Menu item 3</Link>
-            <Link href='#menu-link04' className='set--plain' hov='o' px='20' py='15'>Menu item 4</Link>
+        <Modal.Body ov-y="auto">
+          <Stack util="collapseGrid" bd-b p="0" ov="clip">
+            <Link href="#menu-link01" className="set--plain" hov="o" px="20" py="15">Menu item 1</Link>
+            <Link href="#menu-link02" className="set--plain" hov="o" px="20" py="15">Menu item 2</Link>
+            <Link href="#menu-link03" className="set--plain" hov="o" px="20" py="15">Menu item 3</Link>
+            <Link href="#menu-link04" className="set--plain" hov="o" px="20" py="15">Menu item 4</Link>
           </Stack>
         </Modal.Body>
       </Modal.Inner>
     </Modal.Root>
     ```
   </PreviewCode>
-  <PreviewCode slot='tab' label='HTML'>
+  <PreviewCode slot="tab" label="HTML">
     ```html
     ```
   </PreviewCode>

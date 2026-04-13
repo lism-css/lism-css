@@ -11,7 +11,7 @@ A component for highlighting important points within an article.
 
 <Preview>
   <PreviewTitle>Preview</PreviewTitle>
-  <PreviewArea resize p='20'>
+  <PreviewArea resize p="20">
     <Callout title="Callout Title">
       <p>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
@@ -19,14 +19,14 @@ A component for highlighting important points within an article.
       </p>
     </Callout>
   </PreviewArea>
-    <PreviewCode slot='tab' label='React / Astro'>
+    <PreviewCode slot="tab" label="React / Astro">
     ```jsx
     <Callout title="Callout Title">
       <p>Lorem ipsum dolor sit amet...</p>
     </Callout>
     ```
   </PreviewCode>
-  <PreviewCode slot='tab' label='HTML'>
+  <PreviewCode slot="tab" label="HTML">
     ```jsx
     <div class="c--callout u--cbox set--shadow l--stack -p:20 -g:10 -bd-x-s -bxsh:10" style="--keycolor:var(--blue);--bdc:var(--keycolor);--bdw: 3px">
       <div class="c--callout_head l--flex -c -fw:bold -ai:center -g:10" style="--c:var(--keycolor)">
@@ -62,20 +62,20 @@ Provided as `Callout` from the `@lism-css/ui` package.
 
 
 ### Import
-<ImportPackage component='Callout' packageName='@lism-css/ui' />
+<ImportPackage component="Callout" packageName="@lism-css/ui" />
 
 
 ### Anatomy
 
 <Preview>
-  <PreviewCode slot='tab' label='React / Astro'>
+  <PreviewCode slot="tab" label="React / Astro">
     ```jsx
     <Callout type="" title="">
       ...CONTENT...
     </Callout>
     ```
   </PreviewCode>
-  <PreviewCode slot='tab' label='HTML'>
+  <PreviewCode slot="tab" label="HTML">
     ```html
     <div class="c--callout u--cbox set--shadow l--stack -p:20 -g:10 -bd-x-s -bxsh:10" style="--keycolor: var(--blue); --bdc: var(--keycolor); --bdw: 3px">
       <div class="c--callout_head l--flex -c -fw:bold -ai:center -g:10" style="--c: var(--keycolor)">
@@ -104,14 +104,14 @@ Provided as `Callout` from the `@lism-css/ui` package.
 ### Source Code
 
 <Preview>
-  <PreviewCode slot='tab' label='Callout.tsx'>
-    <SrcCode dir='lism-ui' path='src/components/Callout/react/Callout.tsx' />
+  <PreviewCode slot="tab" label="Callout.tsx">
+    <SrcCode dir="lism-ui" path="src/components/Callout/react/Callout.tsx" />
   </PreviewCode>
-  <PreviewCode slot='tab' label='Callout.astro'>
-    <SrcCode dir='lism-ui' path='src/components/Callout/astro/Callout.astro' />
+  <PreviewCode slot="tab" label="Callout.astro">
+    <SrcCode dir="lism-ui" path="src/components/Callout/astro/Callout.astro" />
   </PreviewCode>
-  <PreviewCode slot='tab' label='getProps.ts'>
-    <SrcCode dir='lism-ui' path='src/components/Callout/getProps.ts' />
+  <PreviewCode slot="tab" label="getProps.ts">
+    <SrcCode dir="lism-ui" path="src/components/Callout/getProps.ts" />
   </PreviewCode>
 </Preview>
 
@@ -122,7 +122,7 @@ Provided as `Callout` from the `@lism-css/ui` package.
 ### Available types
 <Preview>
   <PreviewTitle>Specifying type</PreviewTitle>
-  <PreviewArea p='20'>
+  <PreviewArea p="20">
     <Stack g="30" p="10">
       <Callout title='Callout: type="note"' type="note">
         <DummyText length="codes" lang="ja" />
@@ -144,16 +144,16 @@ Provided as `Callout` from the `@lism-css/ui` package.
       </Callout>
     </Stack>
   </PreviewArea>
-  <PreviewCode slot='tab' label='JSX'>
+  <PreviewCode slot="tab" label="JSX">
     ```jsx
-    <Callout title='Callout: type="note"' type='note'>
-      <DummyText length='codes' lang='ja'/>
+    <Callout title='Callout: type="note"' type="note">
+      <DummyText length="codes" lang="ja"/>
     </Callout>
-    <Callout title='Callout: type="alert"' type='alert'>...</Callout>
-    <Callout title='Callout: type="warning"' type='warning'>...</Callout>
-    <Callout title='Callout: type="point"' type='point'>...</Callout>
-    <Callout title='Callout: type="check"' type='check'>...</Callout>
-    <Callout title='Callout: type="help"' type='help'>...</Callout>
+    <Callout title='Callout: type="alert"' type="alert">...</Callout>
+    <Callout title='Callout: type="warning"' type="warning">...</Callout>
+    <Callout title='Callout: type="point"' type="point">...</Callout>
+    <Callout title='Callout: type="check"' type="check">...</Callout>
+    <Callout title='Callout: type="help"' type="help">...</Callout>
     ```
   </PreviewCode>
 </Preview>
@@ -164,12 +164,12 @@ An example using only lism-css, without `@lism-css/ui`.
 
 <Preview>
   <PreviewTitle>Specifying `icon` and `keycolor`</PreviewTitle>
-  <PreviewArea p='20'>
+  <PreviewArea p="20">
     <Callout title="Heading text..." icon="cart" keycolor="pink">
       <DummyText lang="ja" />
     </Callout>
   </PreviewArea>
-  <PreviewCode slot='tab' label='JSX'>
+  <PreviewCode slot="tab" label="JSX">
     ```jsx
     <Callout title="Heading text..." icon="cart" keycolor="pink">
       <DummyText lang="ja" />
@@ -187,8 +187,8 @@ An example of building the component using only Lism core elements, without a de
 
 <Preview>
   <PreviewTitle>Preview</PreviewTitle>
-  <PreviewArea resize p='20'>
-    <Stack className="u--cbox" keycolor="blue" p="20" g="10" bdc="keycolor" bd-x-s bdw="3px" bxsh="10" bdrs="10">
+  <PreviewArea resize p="20">
+    <Stack util="cbox" keycolor="blue" p="20" g="10" bdc="keycolor" bd-x-s bdw="3px" bxsh="10" bdrs="10">
       <Flex c="keycolor" fw="bold" ai="center" g="10">
         <Center className="c--note_icon" fz="xl">
           <Icon icon="note" />
@@ -200,9 +200,9 @@ An example of building the component using only Lism core elements, without a de
       </Lism>
     </Stack>
   </PreviewArea>
-  <PreviewCode slot='tab' label='JSX'>
+  <PreviewCode slot="tab" label="JSX">
     ```jsx
-    <Stack className="u--cbox" keycolor="blue" p="20" g="10" bdc="keycolor" bd-x-s bdw="3px" bxsh="10" bdrs="10">
+    <Stack util="cbox" keycolor="blue" p="20" g="10" bdc="keycolor" bd-x-s bdw="3px" bxsh="10" bdrs="10">
       <Flex c="keycolor" fw="bold" ai="center" g="10">
         <Center className="c--note_icon" fz="xl">
           <Icon icon="note" />
@@ -215,7 +215,7 @@ An example of building the component using only Lism core elements, without a de
     </Stack>
     ```
   </PreviewCode>
-  <PreviewCode slot='tab' label='HTML'>
+  <PreviewCode slot="tab" label="HTML">
   ```html
   <div class="u--cbox l--stack -p:20 -g:10 -bd-x-s -bxsh:10" style="--keycolor: var(--blue); --bdc: var(--keycolor); --bdw: 3px">
     <div class="l--flex -c -fw:bold -ai:center -g:10" style="--c: var(--keycolor)">

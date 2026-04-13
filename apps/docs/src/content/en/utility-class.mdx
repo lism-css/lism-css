@@ -18,18 +18,18 @@ Generates `--c`, `--bgc`, and `--bdc` from the `--keycolor` variable using `colo
 
 `color` and `background-color` are set to the generated variables respectively, but `--bdc` is only defined as a variable — to display a border, use it together with the [`-bd` class](/css/bd).
 
-<EmbedCode dirPath='packages/lism-css' srcPath='src/scss/utility/_cbox.scss' />
+<EmbedCode dirPath="packages/lism-css" srcPath="src/scss/utility/_cbox.scss" />
 
 <Preview>
   <PreviewTitle>Example</PreviewTitle>
-  <PreviewArea resize p='20'>
-    <Lism className="u--cbox" keycolor="red" p="20">
+  <PreviewArea resize p="20">
+    <Lism util="cbox" keycolor="red" p="20">
       <DummyText length="codes" />
     </Lism>
-    <Lism className="u--cbox" keycolor="purple" bd bdrs="20" bxsh="20" set="shadow" p="20">
+    <Lism util="cbox" keycolor="purple" bd bdrs="20" bxsh="20" set="shadow" p="20">
       <DummyText length="codes" />
     </Lism>
-    <Lism className="u--cbox" keycolor="brand" bdc="keycolor" bd-x-s bdw="4px" p="20">
+    <Lism util="cbox" keycolor="brand" bdc="keycolor" bd-x-s bdw="4px" p="20">
       <DummyText length="codes" />
     </Lism>
   </PreviewArea>
@@ -55,38 +55,38 @@ Generates `--c`, `--bgc`, and `--bdc` from the `--keycolor` variable using `colo
     </div>
     ```
   </PreviewCode>
-  <PreviewCode slot="tab" label='JSX'>
+  <PreviewCode slot="tab" label="JSX">
     ```jsx
-    <Lism className='u--cbox' keycolor='blue' p='20'><p>Lorem ipsum dolor <i>sit amet</i>. consectetur <a href='###'>adipisicing elit</a>, sed do eiusmod tempor. Non facere <code>Laudantium</code> ex eos <b>doloribus aut dolore</b> nisi provident.</p></Lism>
-    <Lism className='u--cbox' keycolor='red' bd p='20'><p>Lorem ipsum dolor <i>sit amet</i>. consectetur <a href='###'>adipisicing elit</a>, sed do eiusmod tempor. Non facere <code>Laudantium</code> ex eos <b>doloribus aut dolore</b> nisi provident.</p></Lism>
-    <Lism className='u--cbox' keycolor='purple' bd bdc='keycolor:base:25%' p='20'><p>Lorem ipsum dolor <i>sit amet</i>. consectetur <a href='###'>adipisicing elit</a>, sed do eiusmod tempor. Non facere <code>Laudantium</code> ex eos <b>doloribus aut dolore</b> nisi provident.</p></Lism>
-    <Lism className='u--cbox' keycolor='#688f04' bd-x-s bdw='4px' p='20'><p>Lorem ipsum dolor <i>sit amet</i>. consectetur <a href='###'>adipisicing elit</a>, sed do eiusmod tempor. Non facere <code>Laudantium</code> ex eos <b>doloribus aut dolore</b> nisi provident.</p></Lism>
+    <Lism util="cbox" keycolor="blue" p="20"><p>Lorem ipsum dolor <i>sit amet</i>. consectetur <a href="###">adipisicing elit</a>, sed do eiusmod tempor. Non facere <code>Laudantium</code> ex eos <b>doloribus aut dolore</b> nisi provident.</p></Lism>
+    <Lism util="cbox" keycolor="red" bd p="20"><p>Lorem ipsum dolor <i>sit amet</i>. consectetur <a href="###">adipisicing elit</a>, sed do eiusmod tempor. Non facere <code>Laudantium</code> ex eos <b>doloribus aut dolore</b> nisi provident.</p></Lism>
+    <Lism util="cbox" keycolor="purple" bd bdc="keycolor:base:25%" p="20"><p>Lorem ipsum dolor <i>sit amet</i>. consectetur <a href="###">adipisicing elit</a>, sed do eiusmod tempor. Non facere <code>Laudantium</code> ex eos <b>doloribus aut dolore</b> nisi provident.</p></Lism>
+    <Lism util="cbox" keycolor="#688f04" bd-x-s bdw="4px" p="20"><p>Lorem ipsum dolor <i>sit amet</i>. consectetur <a href="###">adipisicing elit</a>, sed do eiusmod tempor. Non facere <code>Laudantium</code> ex eos <b>doloribus aut dolore</b> nisi provident.</p></Lism>
     ```
   </PreviewCode>
 </Preview>
 
 <Preview>
   <PreviewTitle>Badge usage example and variable customization</PreviewTitle>
-  <PreviewArea resize p='20'>
+  <PreviewArea resize p="20">
     <Lism layout="cluster" g="10">
-      <Lism as="span" className="u--cbox" keycolor="red" bd fz="s" lh="s" py="5" px="10" bdrs="99">
+      <Lism as="span" util="cbox" keycolor="red" bd fz="s" lh="s" py="5" px="10" bdrs="99">
         <Fragment>Badge</Fragment>
       </Lism>
-      <Lism as="span" className="u--cbox" keycolor="green" bd fz="s" lh="s" py="5" px="10" bdrs="99">
+      <Lism as="span" util="cbox" keycolor="green" bd fz="s" lh="s" py="5" px="10" bdrs="99">
         <Fragment>Badge</Fragment>
       </Lism>
-      <Lism as="span" className="u--cbox" keycolor="blue" bd fz="s" lh="s" py="5" px="10" bdrs="99">
+      <Lism as="span" util="cbox" keycolor="blue" bd fz="s" lh="s" py="5" px="10" bdrs="99">
         <Fragment>Badge</Fragment>
       </Lism>
     </Lism>
     <Lism layout="cluster" g="10" style={{ '--cbox-cPct': '76%', '--cbox-bdPct': '20%' }}>
-      <Lism as="span" className="u--cbox" keycolor="red" bd fz="s" lh="s" py="5" px="10" bdrs="99">
+      <Lism as="span" util="cbox" keycolor="red" bd fz="s" lh="s" py="5" px="10" bdrs="99">
         <Fragment>Badge</Fragment>
       </Lism>
-      <Lism as="span" className="u--cbox" keycolor="green" bd fz="s" lh="s" py="5" px="10" bdrs="99">
+      <Lism as="span" util="cbox" keycolor="green" bd fz="s" lh="s" py="5" px="10" bdrs="99">
         <Fragment>Badge</Fragment>
       </Lism>
-      <Lism as="span" className="u--cbox" keycolor="blue" bd fz="s" lh="s" py="5" px="10" bdrs="99">
+      <Lism as="span" util="cbox" keycolor="blue" bd fz="s" lh="s" py="5" px="10" bdrs="99">
         <Fragment>Badge</Fragment>
       </Lism>
     </Lism>
@@ -99,17 +99,17 @@ Generates `--c`, `--bgc`, and `--bdc` from the `--keycolor` variable using `colo
     <div class="u--cbox -bd-x-s -p:20" style="--keycolor: #688f04; --bdw: 4px">...</div>
     ```
   </PreviewCode>
-  <PreviewCode slot="tab" label='JSX'>
+  <PreviewCode slot="tab" label="JSX">
     ```jsx
-    <Lism layout='cluster' g='10'>
-      <Lism as='span' className='u--cbox' keycolor='orange' bd fz='s' lh='s' py='5' px='10' bdrs='99'>Badge</Lism>
-      <Lism as='span' className='u--cbox' keycolor='green' bd fz='s' lh='s' py='5' px='10' bdrs='99'>Badge</Lism>
-      <Lism as='span' className='u--cbox' keycolor='blue' bd fz='s' lh='s' py='5' px='10' bdrs='99'>Badge</Lism>
+    <Lism layout="cluster" g="10">
+      <Lism as="span" util="cbox" keycolor="orange" bd fz="s" lh="s" py="5" px="10" bdrs="99">Badge</Lism>
+      <Lism as="span" util="cbox" keycolor="green" bd fz="s" lh="s" py="5" px="10" bdrs="99">Badge</Lism>
+      <Lism as="span" util="cbox" keycolor="blue" bd fz="s" lh="s" py="5" px="10" bdrs="99">Badge</Lism>
     </Lism>
-    <Lism layout='cluster' g='10' style={{'--cbox-cPct': '76%', '--cbox-bdPct': '20%'}}>
-      <Lism as='span' className='u--cbox' keycolor='orange' bd fz='s' lh='s' py='5' px='10' bdrs='99'>Badge</Lism>
-      <Lism as='span' className='u--cbox' keycolor='green' bd fz='s' lh='s' py='5' px='10' bdrs='99'>Badge</Lism>
-      <Lism as='span' className='u--cbox' keycolor='blue' bd fz='s' lh='s' py='5' px='10' bdrs='99'>Badge</Lism>
+    <Lism layout="cluster" g="10" style={{'--cbox-cPct': '76%', '--cbox-bdPct': '20%'}}>
+      <Lism as="span" util="cbox" keycolor="orange" bd fz="s" lh="s" py="5" px="10" bdrs="99">Badge</Lism>
+      <Lism as="span" util="cbox" keycolor="green" bd fz="s" lh="s" py="5" px="10" bdrs="99">Badge</Lism>
+      <Lism as="span" util="cbox" keycolor="blue" bd fz="s" lh="s" py="5" px="10" bdrs="99">Badge</Lism>
     </Lism>
     ```
   </PreviewCode>
@@ -117,84 +117,84 @@ Generates `--c`, `--bgc`, and `--bdc` from the `--keycolor` variable using `colo
 
 
 <PreviewTitle>Palette color list</PreviewTitle>
-<PreviewArea p='20' ov-y='auto' max-h='25rem'>
-  <Lism className="u--cbox" keycolor="red" bd bdrs="20" bxsh="20" set="shadow" p="20">
+<PreviewArea p="20" ov-y="auto" max-h="25rem">
+  <Lism util="cbox" keycolor="red" bd bdrs="20" bxsh="20" set="shadow" p="20">
     <DummyText length="codes" />
   </Lism>
-  <Lism className="u--cbox" keycolor="orange" bd bdrs="20" bxsh="20" set="shadow" p="20">
+  <Lism util="cbox" keycolor="orange" bd bdrs="20" bxsh="20" set="shadow" p="20">
     <DummyText length="codes" />
   </Lism>
-  <Lism className="u--cbox" keycolor="yellow" bd bdrs="20" bxsh="20" set="shadow" p="20">
+  <Lism util="cbox" keycolor="yellow" bd bdrs="20" bxsh="20" set="shadow" p="20">
     <DummyText length="codes" />
   </Lism>
-  <Lism className="u--cbox" keycolor="purple" bd bdrs="20" bxsh="20" set="shadow" p="20">
+  <Lism util="cbox" keycolor="purple" bd bdrs="20" bxsh="20" set="shadow" p="20">
     <DummyText length="codes" />
   </Lism>
-  <Lism className="u--cbox" keycolor="green" bd bdrs="20" bxsh="20" set="shadow" p="20">
+  <Lism util="cbox" keycolor="green" bd bdrs="20" bxsh="20" set="shadow" p="20">
     <DummyText length="codes" />
   </Lism>
-  <Lism className="u--cbox" keycolor="blue" bd bdrs="20" bxsh="20" set="shadow" p="20">
+  <Lism util="cbox" keycolor="blue" bd bdrs="20" bxsh="20" set="shadow" p="20">
     <DummyText length="codes" />
   </Lism>
-  <Lism className="u--cbox" keycolor="purple" bd bdrs="20" bxsh="20" set="shadow" p="20">
+  <Lism util="cbox" keycolor="purple" bd bdrs="20" bxsh="20" set="shadow" p="20">
     <DummyText length="codes" />
   </Lism>
-  <Lism className="u--cbox" keycolor="pink" bd bdrs="20" bxsh="20" set="shadow" p="20">
+  <Lism util="cbox" keycolor="pink" bd bdrs="20" bxsh="20" set="shadow" p="20">
     <DummyText length="codes" />
   </Lism>
-  <Lism className="u--cbox" keycolor="gray" bd bdrs="20" bxsh="20" set="shadow" p="20">
+  <Lism util="cbox" keycolor="gray" bd bdrs="20" bxsh="20" set="shadow" p="20">
     <DummyText length="codes" />
   </Lism>
   <hr />
-  <Lism className="u--cbox" keycolor="red" bd-x-s bdc="keycolor" bdw="4px" bxsh="10" set="shadow" p="20">
+  <Lism util="cbox" keycolor="red" bd-x-s bdc="keycolor" bdw="4px" bxsh="10" set="shadow" p="20">
     <Inline c="keycolor" fw="bold">
       <Fragment>Title Text</Fragment>
     </Inline>
     <DummyText length="codes" />
   </Lism>
-  <Lism className="u--cbox" keycolor="orange" bd-x-s bdc="keycolor" bdw="4px" bxsh="10" set="shadow" p="20">
+  <Lism util="cbox" keycolor="orange" bd-x-s bdc="keycolor" bdw="4px" bxsh="10" set="shadow" p="20">
     <Inline c="keycolor" fw="bold">
       <Fragment>Title Text</Fragment>
     </Inline>
     <DummyText length="codes" />
   </Lism>
-  <Lism className="u--cbox" keycolor="yellow" bd-x-s bdc="keycolor" bdw="4px" bxsh="10" set="shadow" p="20">
+  <Lism util="cbox" keycolor="yellow" bd-x-s bdc="keycolor" bdw="4px" bxsh="10" set="shadow" p="20">
     <Inline c="keycolor" fw="bold">
       <Fragment>Title Text</Fragment>
     </Inline>
     <DummyText length="codes" />
   </Lism>
-  <Lism className="u--cbox" keycolor="purple" bd-x-s bdc="keycolor" bdw="4px" bxsh="10" set="shadow" p="20">
+  <Lism util="cbox" keycolor="purple" bd-x-s bdc="keycolor" bdw="4px" bxsh="10" set="shadow" p="20">
     <Inline c="keycolor" fw="bold">
       <Fragment>Title Text</Fragment>
     </Inline>
     <DummyText length="codes" />
   </Lism>
-  <Lism className="u--cbox" keycolor="green" bd-x-s bdc="keycolor" bdw="4px" bxsh="10" set="shadow" p="20">
+  <Lism util="cbox" keycolor="green" bd-x-s bdc="keycolor" bdw="4px" bxsh="10" set="shadow" p="20">
     <Inline c="keycolor" fw="bold">
       <Fragment>Title Text</Fragment>
     </Inline>
     <DummyText length="codes" />
   </Lism>
-  <Lism className="u--cbox" keycolor="blue" bd-x-s bdc="keycolor" bdw="4px" bxsh="10" set="shadow" p="20">
+  <Lism util="cbox" keycolor="blue" bd-x-s bdc="keycolor" bdw="4px" bxsh="10" set="shadow" p="20">
     <Inline c="keycolor" fw="bold">
       <Fragment>Title Text</Fragment>
     </Inline>
     <DummyText length="codes" />
   </Lism>
-  <Lism className="u--cbox" keycolor="purple" bd-x-s bdc="keycolor" bdw="4px" bxsh="10" set="shadow" p="20">
+  <Lism util="cbox" keycolor="purple" bd-x-s bdc="keycolor" bdw="4px" bxsh="10" set="shadow" p="20">
     <Inline c="keycolor" fw="bold">
       <Fragment>Title Text</Fragment>
     </Inline>
     <DummyText length="codes" />
   </Lism>
-  <Lism className="u--cbox" keycolor="pink" bd-x-s bdc="keycolor" bdw="4px" bxsh="10" set="shadow" p="20">
+  <Lism util="cbox" keycolor="pink" bd-x-s bdc="keycolor" bdw="4px" bxsh="10" set="shadow" p="20">
     <Inline c="keycolor" fw="bold">
       <Fragment>Title Text</Fragment>
     </Inline>
     <DummyText length="codes" />
   </Lism>
-  <Lism className="u--cbox" keycolor="gray" bd-x-s bdc="keycolor" bdw="4px" bxsh="10" set="shadow" p="20">
+  <Lism util="cbox" keycolor="gray" bd-x-s bdc="keycolor" bdw="4px" bxsh="10" set="shadow" p="20">
     <Inline c="keycolor" fw="bold">
       <Fragment>Title Text</Fragment>
     </Inline>
@@ -211,9 +211,9 @@ Classes for adjusting the half-leading spacing of text.
 
 <Preview>
   <PreviewTitle>`u--trim`</PreviewTitle>
-  <PreviewArea resize p='20'>
+  <PreviewArea resize p="20">
     <Box bd bds="dashed">
-      <DummyText className="u--trim" length="s" />
+      <DummyText util="trim" length="s" />
     </Box>
   </PreviewArea>
   <PreviewCode slot="tab" label="HTML">
@@ -223,15 +223,15 @@ Classes for adjusting the half-leading spacing of text.
     </div>
     ```
   </PreviewCode>
-  <PreviewCode slot="tab" label='JSX'>
+  <PreviewCode slot="tab" label="JSX">
     ```jsx "u--trim"
     <Box bd bds="dashed">
-      <Text className="u--trim">Lorem ipsum dolor sit amet. Consectetur adipiscing elit, sed do eiusmod tempor Incididunt ut.</Text>
+      <Text util="trim">Lorem ipsum dolor sit amet. Consectetur adipiscing elit, sed do eiusmod tempor Incididunt ut.</Text>
     </Box>
     ```
   </PreviewCode>
-  <PreviewCode slot="tab" label='CSS'>
-    <EmbedCode dirPath='packages/lism-css' srcPath='src/scss/utility/_trimHL.scss' />
+  <PreviewCode slot="tab" label="CSS">
+    <EmbedCode dirPath="packages/lism-css" srcPath="src/scss/utility/_trimHL.scss" />
   </PreviewCode>
 </Preview>
 
@@ -240,8 +240,8 @@ Margin adjustment is disabled for `img`, `figure`, and `table` elements inside `
 
 <Preview>
   <PreviewTitle>`u--trimChildren`</PreviewTitle>
-  <PreviewArea resize p='20'>
-    <Stack className="u--trimChildren" bd g="30" p="30" bdrs="10" max-sz="s">
+  <PreviewArea resize p="20">
+    <Stack util="trimChildren" bd g="30" p="30" bdrs="10" max-sz="s">
       <Media ar="og" src="https://cdn.lism-css.com/img/a-1.jpg" alt="" inferSize />
       <DummyText lang="ja" length="s" fw="bold" fz="l" />
       <DummyText lang="ja" length="l" o="-10" fz="s" />
@@ -256,9 +256,9 @@ Margin adjustment is disabled for `img`, `figure`, and `table` elements inside `
     </div>
     ```
   </PreviewCode>
-  <PreviewCode slot="tab" label='JSX'>
+  <PreviewCode slot="tab" label="JSX">
     ```jsx
-    <Stack className="u--trimChildren" bd g="30" p="30" bdrs="10">
+    <Stack util="trimChildren" bd g="30" p="30" bdrs="10">
       <Media ar="og" src="https://cdn.lism-css.com/img/a-1.jpg" alt="" inferSize />
       <p>Lorem ipsum dolor sit amet. Consectetur adipiscing elit, sed do eiusmod tempor Incididunt ut.</p>
       <p>
@@ -300,8 +300,8 @@ Implemented using `box-shadow`, so some care is needed when using it.
 
 <Preview>
   <PreviewTitle>Example</PreviewTitle>
-  <PreviewArea resize p='20'>
-    <Grid layout="fluidCols" className="u--collapseGrid" cols="12rem" bdrs="20">
+  <PreviewArea resize p="20">
+    <Grid layout="fluidCols" util="collapseGrid" cols="12rem" bdrs="20">
       <Box p="15">Grid Item</Box>
       <Box p="15">Grid Item</Box>
       <Box p="15">Grid Item</Box>
@@ -312,7 +312,7 @@ Implemented using `box-shadow`, so some care is needed when using it.
   </PreviewArea>
   <PreviewCode>
     ```jsx
-    <Grid layout="fluidCols" className="u--collapseGrid" cols="12rem" bdrs="20">
+    <Grid layout="fluidCols" util="collapseGrid" cols="12rem" bdrs="20">
       <Box p="15">Grid Item</Box>
       <Box p="15">Grid Item</Box>
       <Box p="15">Grid Item</Box>
@@ -326,8 +326,8 @@ Implemented using `box-shadow`, so some care is needed when using it.
 
 <Preview>
   <PreviewTitle>Setting `p='0'` and `ov='clip'` on the parent hides the outer border.</PreviewTitle>
-  <PreviewArea resize p='20'>
-    <Grid layout="fluidCols" className="u--collapseGrid" cols="12rem" p="0" ov="clip">
+  <PreviewArea resize p="20">
+    <Grid layout="fluidCols" util="collapseGrid" cols="12rem" p="0" ov="clip">
       <Box p="15">Grid Item</Box>
       <Box p="15">Grid Item</Box>
       <Box p="15">Grid Item</Box>
@@ -339,7 +339,7 @@ Implemented using `box-shadow`, so some care is needed when using it.
   </PreviewArea>
   <PreviewCode>
     ```jsx
-    <Grid layout="fluidCols" className="u--collapseGrid" cols="12rem">
+    <Grid layout="fluidCols" util="collapseGrid" cols="12rem">
       <Box p="15">
         <p>
           Lorem ipsum dolor sit amet. Consectetur adipiscing elit, sed do eiusmod tempor Incididunt ut. Labore et dolore magna aliqua. Ut enim ad minim
@@ -392,8 +392,8 @@ Adding `bd` to the parent grid in that state makes it possible to create a calen
 
 <Preview>
   <PreviewTitle>With `bd` applied</PreviewTitle>
-  <PreviewArea resize p='20'>
-    <Grid layout="fluidCols" className="u--collapseGrid" cols="10rem" ov="clip" p="0" bd>
+  <PreviewArea resize p="20">
+    <Grid layout="fluidCols" util="collapseGrid" cols="10rem" ov="clip" p="0" bd>
       <Box p="15">Grid Item</Box>
       <Box p="15">Grid Item</Box>
       <Box p="15">Grid Item</Box>
@@ -404,7 +404,7 @@ Adding `bd` to the parent grid in that state makes it possible to create a calen
   </PreviewArea>
   <PreviewCode>
     ```jsx
-    <Grid layout="fluidCols" className="u--collapseGrid" cols="10rem" ov="clip" p="0" bd>
+    <Grid layout="fluidCols" util="collapseGrid" cols="10rem" ov="clip" p="0" bd>
       <Box p="15">Grid Item</Box>
       <Box p="15">Grid Item</Box>
       <Box p="15">Grid Item</Box>
@@ -422,8 +422,8 @@ This utility class also makes it easy to display borders between items in a flex
 
 <Preview>
   <PreviewTitle>Example</PreviewTitle>
-  <PreviewArea resize p='20'>
-    <Flex fxd={['column', 'row']} className="u--collapseGrid">
+  <PreviewArea resize p="20">
+    <Flex fxd={['column', 'row']} util="collapseGrid">
       <Box fx="1" p="15">
         <Fragment>Box</Fragment>
       </Box>
@@ -440,7 +440,7 @@ This utility class also makes it easy to display borders between items in a flex
   </PreviewArea>
   <PreviewCode>
     ```jsx
-    <Flex fxd={['column', 'row']} className="u--collapseGrid">
+    <Flex fxd={['column', 'row']} util="collapseGrid">
       <Box fx="1" p="15">
         Box
       </Box>
@@ -462,8 +462,8 @@ This utility class also makes it easy to display borders between items in a flex
 You can also achieve a table-like layout using Grid.
 <Preview>
   <PreviewTitle>Table-like layout using `u--collapseGrid`</PreviewTitle>
-  <PreviewArea resize p='15'>
-    <Grid gtc={['2fr 3fr', '1fr 2fr']} className="u--collapseGrid">
+  <PreviewArea resize p="15">
+    <Grid gtc={['2fr 3fr', '1fr 2fr']} util="collapseGrid">
       <Box p="15" bgc="base-2">
         <Fragment>A</Fragment>
       </Box>
@@ -480,9 +480,9 @@ You can also achieve a table-like layout using Grid.
       </Box>
     </Grid>
   </PreviewArea>
-  <PreviewCode slot='tab' label='JSX'>
+  <PreviewCode slot="tab" label="JSX">
     ```jsx
-    <Grid gtc={['2fr 3fr', '1fr 2fr']} className="u--collapseGrid">
+    <Grid gtc={['2fr 3fr', '1fr 2fr']} util="collapseGrid">
       <Box p="15" bgc="base-2">
         A
       </Box>
@@ -507,7 +507,7 @@ You can also achieve a table-like layout using Grid.
     </Grid>
     ```
   </PreviewCode>
-  <PreviewCode slot='tab' label='HTML'>
+  <PreviewCode slot="tab" label="HTML">
     ```html
     <div class="l--grid u--collapseGrid -gtc -gtc_sm -bd" style="--gtc: 2fr 3fr; --gtc_sm: 1fr 2fr">
       <div class="l--box -p:15 -bgc:base-2">A</div>
@@ -530,15 +530,15 @@ You can also achieve a table-like layout using Grid.
 
 Allows `scroll-snap-` properties to be set via CSS variables.
 
-<EmbedCode dirPath='packages/lism-css' srcPath='src/scss/utility/_snap.scss' />
+<EmbedCode dirPath="packages/lism-css" srcPath="src/scss/utility/_snap.scss" />
 
-<Box class='u--snap' ov='auto' ar='16/9' bd>
-  <div className='l--frame -ar:16/9 -p:15'><img src='https://cdn.lism-css.com/img/u-1.jpg' width='960' height='640' loading='lazy' /></div>
-  <div className='l--frame -ar:16/9 -p:15'><img src='https://cdn.lism-css.com/img/u-2.jpg' width='960' height='640' loading='lazy' /></div>
-  <div className='l--frame -ar:16/9 -p:15'><img src='https://cdn.lism-css.com/img/u-3.jpg' width='960' height='640' loading='lazy' /></div>
-  <div className='l--frame -ar:16/9 -p:15'><img src='https://cdn.lism-css.com/img/u-4.jpg' width='960' height='640' loading='lazy' /></div>
-  <div className='l--frame -ar:16/9 -p:15'><img src='https://cdn.lism-css.com/img/u-5.jpg' width='960' height='640' loading='lazy' /></div>
-  <div className='l--frame -ar:16/9 -p:15'><img src='https://cdn.lism-css.com/img/u-6.jpg' width='960' height='640' loading='lazy' /></div>
+<Box class="u--snap" ov="auto" ar="16/9" bd>
+  <div className="l--frame -ar:16/9 -p:15"><img src="https://cdn.lism-css.com/img/u-1.jpg" width="960" height="640" loading="lazy" /></div>
+  <div className="l--frame -ar:16/9 -p:15"><img src="https://cdn.lism-css.com/img/u-2.jpg" width="960" height="640" loading="lazy" /></div>
+  <div className="l--frame -ar:16/9 -p:15"><img src="https://cdn.lism-css.com/img/u-3.jpg" width="960" height="640" loading="lazy" /></div>
+  <div className="l--frame -ar:16/9 -p:15"><img src="https://cdn.lism-css.com/img/u-4.jpg" width="960" height="640" loading="lazy" /></div>
+  <div className="l--frame -ar:16/9 -p:15"><img src="https://cdn.lism-css.com/img/u-5.jpg" width="960" height="640" loading="lazy" /></div>
+  <div className="l--frame -ar:16/9 -p:15"><img src="https://cdn.lism-css.com/img/u-6.jpg" width="960" height="640" loading="lazy" /></div>
 </Box>
 
 
@@ -548,17 +548,17 @@ A class for clipping a background with text.
 
 <Preview>
   <PreviewTitle>Background clipped by text</PreviewTitle>
-  <PreviewArea p='20'>
+  <PreviewArea p="20">
     <Center>
-      <Box className="u--clipText" bgr="no-repeat" bgi="linear-gradient(45deg, var(--blue), var(--pink))">
+      <Box util="clipText" bgr="no-repeat" bgi="linear-gradient(45deg, var(--blue), var(--pink))">
         <Text fz="5xl" fw="bold" lh="1" lts="l">TEXT</Text>
       </Box>
     </Center>
   </PreviewArea>
-  <PreviewCode label='JSX' slot='tab'>
+  <PreviewCode label="JSX" slot="tab">
     ```jsx
     <Center>
-      <Box className="u--clipText" bgi="linear-gradient(45deg, var(--blue), var(--pink))">
+      <Box util="clipText" bgi="linear-gradient(45deg, var(--blue), var(--pink))">
         <Text fz="5xl" fw="bold" lh="1" lts="l">
           TEXT
         </Text>
@@ -566,7 +566,7 @@ A class for clipping a background with text.
     </Center>
     ```
   </PreviewCode>
-  <PreviewCode label='HTML' slot='tab'>
+  <PreviewCode label="HTML" slot="tab">
     ```html
     <div class="l--box u--clipText -bgi:linear-gradient(to top, #a8edea 0%, #fed6e3 100%)"></div>
     ```
@@ -595,32 +595,32 @@ Since `vertical-align: middle;` alone can cause misalignment, an additional `tra
   translate: 0 calc(-1 * (0.35em - 0.5ex));
 }`}>
   <PreviewTitle>Usage example</PreviewTitle>
-  <PreviewArea p='20'>
+  <PreviewArea p="20">
     <p>
-      <Icon className="u--inlineCenter" icon="alert" c="red" fz="xl" /> Lorem ipsum dolor sit amet.
+      <Icon util="inlineCenter" icon="alert" c="red" fz="xl" /> Lorem ipsum dolor sit amet.
     </p>
     <p>
-      <Icon className="u--inlineCenter" as={Dog} fz="l" />
-      Dog, and <Icon className="u--inlineCenter" as={Cat} fz="l" />
+      <Icon util="inlineCenter" as={Dog} fz="l" />
+      Dog, and <Icon util="inlineCenter" as={Cat} fz="l" />
       Cat.
     </p>
     <p>
       <span class="u--inlineCenter -fz:xl">🚀</span> Emoji.
     </p>
     <p>
-      <Icon fz="2xl" className="u--inlineCenter" src="https://emojix.s3.ap-northeast-1.amazonaws.com/g3/svg/1f916.svg" alt="image" /> Inline img icon.
+      <Icon fz="2xl" util="inlineCenter" src="https://emojix.s3.ap-northeast-1.amazonaws.com/g3/svg/1f916.svg" alt="image" /> Inline img icon.
     </p>
   </PreviewArea>
-  <PreviewCode slot='tab' label='JSX'>
+  <PreviewCode slot="tab" label="JSX">
     ```jsx "u--inlineCenter"
-    <p><Icon className='u--inlineCenter' icon='alert' c='red' fz='xl' /> Lorem ipsum dolor sit amet.</p>
-    <p><Icon className='u--inlineCenter' as={Dog} fz='l' />Dog, and <Icon className='u--inlineCenter' as={Cat} fz='l'/>Cat.</p>
-    <p><span class='u--inlineCenter -fz:xl'>🚀</span> Emoji.</p>
-    <p><Icon fz='2xl' className='u--inlineCenter' src="https://emojix.s3.ap-northeast-1.amazonaws.com/g3/svg/1f916.svg" alt="image" /> Inline img icon.</p>
+    <p><Icon util="inlineCenter" icon="alert" c="red" fz="xl" /> Lorem ipsum dolor sit amet.</p>
+    <p><Icon util="inlineCenter" as={Dog} fz="l" />Dog, and <Icon util="inlineCenter" as={Cat} fz="l"/>Cat.</p>
+    <p><span class="u--inlineCenter -fz:xl">🚀</span> Emoji.</p>
+    <p><Icon fz="2xl" util="inlineCenter" src="https://emojix.s3.ap-northeast-1.amazonaws.com/g3/svg/1f916.svg" alt="image" /> Inline img icon.</p>
     ```
   </PreviewCode>
 
-  <PreviewCode slot='tab' label='**Additional CSS**'>
+  <PreviewCode slot="tab" label="**Additional CSS**">
   ```css
   .u--inlineCenter {
     vertical-align: middle; /* Set baseline to middle */

@@ -10,25 +10,25 @@ import { Badge } from '@lism-css/ui/astro';
 
 <Preview>
   <PreviewTitle>Preview</PreviewTitle>
-  <PreviewArea p='20' bg=':stripe'>
+  <PreviewArea p="20" bg=":stripe">
     <Cluster g="15">
       <Badge>Badge</Badge>
       <Badge variant="outline">Badge</Badge>
-      <Badge className="u--cbox" keycolor="blue" bdrs="99">
+      <Badge util="cbox" keycolor="blue" bdrs="99">
         <Fragment>Badge</Fragment>
       </Badge>
     </Cluster>
   </PreviewArea>
-  <PreviewCode slot='tab' label='React / Astro'>
+  <PreviewCode slot="tab" label="React / Astro">
     ```jsx
     <Cluster g="15">
       <Badge>Badge</Badge>
       <Badge variant="outline">Badge</Badge>
-      <Badge className="u--cbox" keycolor="blue" bdrs="99">Badge</Badge>
+      <Badge util="cbox" keycolor="blue" bdrs="99">Badge</Badge>
     </Cluster>
     ```
   </PreviewCode>
-  <PreviewCode slot='tab' label='HTML'>
+  <PreviewCode slot="tab" label="HTML">
     ```jsx
     <div class="l--cluster -g:15">
       <span class="c--badge -d:inline-flex -fz:xs -lh:xs -py:5 -px:10 -bdrs:10">Badge</span>
@@ -47,7 +47,7 @@ import { Badge } from '@lism-css/ui/astro';
 
 
 ### Import
-<ImportPackage component='Badge' packageName='@lism-css/ui' css='style.css' />
+<ImportPackage component="Badge" packageName="@lism-css/ui" css="style.css" />
 
 
 ### Props
@@ -59,12 +59,12 @@ import { Badge } from '@lism-css/ui/astro';
 ### 基本構造
 
 <Preview>
-  <PreviewCode slot='tab' label='React / Astro'>
+  <PreviewCode slot="tab" label="React / Astro">
     ```jsx
     <Badge>...</Badge>
     ```
   </PreviewCode>
-  <PreviewCode slot='tab' label='HTML'>
+  <PreviewCode slot="tab" label="HTML">
     ```html
     <span class="c--badge -d:inline-flex -fz:xs -lh:xs -py:5 -px:10 -bdrs:10">...</span>
     ```
@@ -75,14 +75,14 @@ import { Badge } from '@lism-css/ui/astro';
 ### Source Code
 
 <Preview>
-  <PreviewCode slot='tab' label='_style.css'>
-    <SrcCode dir='lism-ui' path='src/components/Badge/_style.css' />
+  <PreviewCode slot="tab" label="_style.css">
+    <SrcCode dir="lism-ui" path="src/components/Badge/_style.css" />
   </PreviewCode>
-  <PreviewCode slot='tab' label='Badge.tsx'>
-    <SrcCode dir='lism-ui' path='src/components/Badge/react/Badge.tsx' />
+  <PreviewCode slot="tab" label="Badge.tsx">
+    <SrcCode dir="lism-ui" path="src/components/Badge/react/Badge.tsx" />
   </PreviewCode>
-  <PreviewCode slot='tab' label='Badge.astro'>
-    <SrcCode dir='lism-ui' path='src/components/Badge/astro/Badge.astro' />
+  <PreviewCode slot="tab" label="Badge.astro">
+    <SrcCode dir="lism-ui" path="src/components/Badge/astro/Badge.astro" />
   </PreviewCode>
 </Preview>
 
@@ -91,7 +91,7 @@ import { Badge } from '@lism-css/ui/astro';
 
 <Preview>
   <PreviewTitle>`<Badge>`の使用例</PreviewTitle>
-  <PreviewArea p='20' bg=':stripe'>
+  <PreviewArea p="20" bg=":stripe">
     <Cluster g="15">
       <Badge>Badge</Badge>
       <Badge bgc="red">Badge</Badge>
@@ -112,7 +112,7 @@ import { Badge } from '@lism-css/ui/astro';
       </Badge>
     </Cluster>
   </PreviewArea>
-  <PreviewCode slot='tab' label='JSX'>
+  <PreviewCode slot="tab" label="JSX">
     ```jsx
     <Cluster g="15">
       <Badge>Badge</Badge>
@@ -127,7 +127,7 @@ import { Badge } from '@lism-css/ui/astro';
     </Cluster>
     ```
   </PreviewCode>
-  <PreviewCode slot='tab' label='HTML'>
+  <PreviewCode slot="tab" label="HTML">
     ```html
     <div class="l--cluster -g:15">
       <span class="c--badge -d:inline-flex -fz:xs -lh:xs -py:5 -px:10 -bdrs:10">Badge</span>
@@ -146,7 +146,7 @@ import { Badge } from '@lism-css/ui/astro';
 
 <Preview>
   <PreviewTitle>`variant='outline'`</PreviewTitle>
-  <PreviewArea p='20' bg=':stripe'>
+  <PreviewArea p="20" bg=":stripe">
     <Cluster g="15">
       <Badge variant="outline">Badge</Badge>
       <Badge variant="outline" c="red">
@@ -175,7 +175,7 @@ import { Badge } from '@lism-css/ui/astro';
       </Badge>
     </Cluster>
   </PreviewArea>
-  <PreviewCode slot='tab' label='JSX'>
+  <PreviewCode slot="tab" label="JSX">
     ```jsx
     <Cluster g="15">
       <Badge variant="outline">Badge</Badge>
@@ -191,40 +191,40 @@ import { Badge } from '@lism-css/ui/astro';
 
 <Preview>
   <PreviewTitle>[`u--cbox`](/docs/utility-class/#u--cbox)クラスを使ったスタイリングの例</PreviewTitle>
-  <PreviewArea p='20' bg=':stripe'>
+  <PreviewArea p="20" bg=":stripe">
     <Cluster g="15">
-      <Badge className="u--cbox" keycolor="red">
+      <Badge util="cbox" keycolor="red">
         <Fragment>Red</Fragment>
       </Badge>
-      <Badge className="u--cbox" keycolor="orange">
+      <Badge util="cbox" keycolor="orange">
         <Fragment>Orange</Fragment>
       </Badge>
-      <Badge className="u--cbox" keycolor="yellow">
+      <Badge util="cbox" keycolor="yellow">
         <Fragment>Yellow</Fragment>
       </Badge>
-      <Badge className="u--cbox" keycolor="green">
+      <Badge util="cbox" keycolor="green">
         <Fragment>Green</Fragment>
       </Badge>
-      <Badge className="u--cbox" keycolor="blue">
+      <Badge util="cbox" keycolor="blue">
         <Fragment>Blue</Fragment>
       </Badge>
-      <Badge className="u--cbox" keycolor="purple">
+      <Badge util="cbox" keycolor="purple">
         <Fragment>Purple</Fragment>
       </Badge>
-      <Badge className="u--cbox" keycolor="pink">
+      <Badge util="cbox" keycolor="pink">
         <Fragment>Pink</Fragment>
       </Badge>
-      <Badge className="u--cbox" keycolor="gray">
+      <Badge util="cbox" keycolor="gray">
         <Fragment>Gray</Fragment>
       </Badge>
     </Cluster>
   </PreviewArea>
-  <PreviewCode slot='tab' label='JSX'>
+  <PreviewCode slot="tab" label="JSX">
     ```jsx
     <Cluster g="15">
-      <Badge className="u--cbox" keycolor="red">Red</Badge>
-      <Badge className="u--cbox" keycolor="orange">Orange</Badge>
-      <Badge className="u--cbox" keycolor="yellow">Yellow</Badge>
+      <Badge util="cbox" keycolor="red">Red</Badge>
+      <Badge util="cbox" keycolor="orange">Orange</Badge>
+      <Badge util="cbox" keycolor="yellow">Yellow</Badge>
       ...
     </Cluster>
     ```
@@ -242,7 +242,7 @@ import { BookIcon } from '@phosphor-icons/react';
 
 <Preview>
   <PreviewTitle>例</PreviewTitle>
-  <PreviewArea p='20' bg=':stripe'>
+  <PreviewArea p="20" bg=":stripe">
     <Cluster g="15" ai="center">
       <Badge d="inline-flex" g="5" px-s="10" ai="center">
         <Icon icon="star-fill" style={{ translate: '-10% 0' }} />
@@ -254,7 +254,7 @@ import { BookIcon } from '@phosphor-icons/react';
       </Badge>
     </Cluster>
   </PreviewArea>
-  <PreviewCode slot='tab' label='JSX'>
+  <PreviewCode slot="tab" label="JSX">
     ```jsx
     <Cluster g="15" ai="center">
       <Badge d="inline-flex" g="5" px-s="10" ai="center">
@@ -273,7 +273,7 @@ import { BookIcon } from '@phosphor-icons/react';
 
 <Preview>
   <PreviewTitle>Example</PreviewTitle>
-  <PreviewArea p='20' bg=':stripe'>
+  <PreviewArea p="20" bg=":stripe">
     <Cluster g="15">
       <Lism as="span" fz="xs" lh="xs" py="5" px="10" bgc="text" c="base" bdrs="10">
         <Fragment>Badge</Fragment>
@@ -281,21 +281,21 @@ import { BookIcon } from '@phosphor-icons/react';
       <Lism as="span" fz="xs" lh="xs" py="5" px="10" bd bdc="current" bdrs="10">
         <Fragment>Badge</Fragment>
       </Lism>
-      <Lism as="span" className="u--cbox" keycolor="blue" bd bdc="keycolor:base:40%" fz="xs" lh="xs" py="5" px="10" bdrs="99">
+      <Lism as="span" util="cbox" keycolor="blue" bd bdc="keycolor:base:40%" fz="xs" lh="xs" py="5" px="10" bdrs="99">
         <Fragment>Badge</Fragment>
       </Lism>
     </Cluster>
   </PreviewArea>
-  <PreviewCode slot='tab' label='JSX'>
+  <PreviewCode slot="tab" label="JSX">
     ```jsx
     <Cluster g="15">
       <Lism as="span" fz="xs" lh="xs" py="5" px="10" bgc="text" c="base" bdrs="10">Badge</Lism>
       <Lism as="span" fz="xs" lh="xs" py="5" px="10" bd bdc="current" bdrs="10">Badge</Lism>
-      <Lism as="span" className="u--cbox" keycolor="blue" bd bdc="keycolor:base:40%" fz="xs" lh="xs" py="5" px="10" bdrs="99">Badge</Lism>
+      <Lism as="span" util="cbox" keycolor="blue" bd bdc="keycolor:base:40%" fz="xs" lh="xs" py="5" px="10" bdrs="99">Badge</Lism>
     </Cluster>
     ```
   </PreviewCode>
-  <PreviewCode slot='tab' label='HTML'>
+  <PreviewCode slot="tab" label="HTML">
     ```html
     <div class="l--cluster -g:15">
       <span class="-fz:xs -lh:xs -py:5 -px:10 -bgc:text -c:base -bdrs:10">Badge</span>
