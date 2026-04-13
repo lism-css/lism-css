@@ -1,24 +1,39 @@
 ---
-title: 'Module Class'
-description: 'Lism CSS のモジュールクラス（is--, l--, a--, c--）の分類と使い方について解説します。'
+title: 'Primitive Class'
+description: 'Lism CSS のプリミティブクラス（is--, l--, a--）の分類と使い方について解説します。'
 ---
 
 
-Lismでは、次のようなモジュールクラスを使います。
+Lism では、レイアウトを組み立てる小さな積み木として **Primitive クラス** を提供しています。
 
-- `is--{module}`: 複数の種類のモジュールに対してつけ外しできるような汎用性の高い状態モジュール群。
-- `l--{module}`: レイアウトの構成単位となるようなモジュール群。
-- `a--{module}`: レイアウトの最小単位となるモジュール群。
-- `c--{module}`: その他のより具体的な役割を持つコンポーネント群。（他のクラスとの組み合わせを前提にした設計になっているものが多い。）
+- `is--{name}`: 要素に**静的な構造的特性 (trait)** を与える Trait Primitive。
+- `l--{name}`: レイアウトの構成単位となる Layout Primitive。
+- `a--{name}`: レイアウトの最小単位となる Atomic Primitive。
+
+これらを組み合わせることで複雑なレイアウトを構築でき、`c--` で始まる **[Component Class](/docs/css-methodology/#component-class)** はこれらの Primitive を組み合わせて作られた具体的な UI 部品として位置付けられます。
+
+:::info
+Primitive クラスはバリエーション（`--outline` 等）や子要素クラス（`_header` 等）を持たない、単体で機能するクラスです。BEM 構造を持つのは `c--` の Component Class のみです。
+:::
 
 
-基本的に、State Modulesを除いた各レイヤーの他モジュールクラスとの複数併用はできません。  
-たとえば、`.l--`と`.c--`は併用できますが、`.l--XXX`と`.l--YYY`、`.c--XXX`と`.c--YYY`は同一属性内では併用しないものとします。
+#### 併用ルール
+
+| 組み合わせ | 可否 | 備考 |
+|---|---|---|
+| `l--` × `l--` | NG | 同カテゴリの併用は不可 |
+| `a--` × `a--` | NG | 同カテゴリの併用は不可 |
+| `is--` × `is--` | OK | Trait は複数併用できる |
+| `l--` × `is--` | OK | |
+| `a--` × `is--` | OK | |
+| `l--` × `a--` | 非推奨 | 役割的には同居しない想定 |
+| `l--` × `c--` | OK | 例: `l--flex c--nav` |
+| `a--` × `c--` | OK | |
 
 
-## State Modules
+## Trait Primitives
 
-要素に対して汎用的につけ外しできる状態モジュール群です。
+要素に対して汎用的につけ外しできる、静的な構造的特性を表す Primitive 群です。
 
 | クラス | 概要 |
 |---|---|
@@ -32,14 +47,14 @@ Lismでは、次のようなモジュールクラスを使います。
 | `is--skipFlow` | `l--flow` 内で次の兄弟との余白を打ち消す（→ <ModLink slug="l--flow" /> 参照） |
 
 
-## Layout Modules
+## Layout Primitives
 
-レイアウトの構成単位となるモジュール群です。
+レイアウトの構成単位となる Primitive 群です。
 
 | クラス | 概要 |
 |---|---|
-| <ModLink slug="l--box" /> | コンテンツをグループ化するシンプルなモジュール |
-| <ModLink slug="l--flow" /> | 子要素間の余白を自動管理する flow-root モジュール |
+| <ModLink slug="l--box" /> | コンテンツをグループ化するシンプルな Primitive |
+| <ModLink slug="l--flow" /> | 子要素間の余白を自動管理する flow-root Primitive |
 | <ModLink slug="l--frame" /> | 直下のメディア要素を自身のサイズに合わせて表示 |
 | <ModLink slug="l--flex" /> | Flexbox でコンテンツを配置 |
 | <ModLink slug="l--cluster" /> | 横方向に並べて自動折り返し |
@@ -53,9 +68,9 @@ Lismでは、次のようなモジュールクラスを使います。
 | <ModLink slug="l--switchCols" /> | 複数列と 1 列を自動切り替え |
 
 
-## Atomic Modules
+## Atomic Primitives
 
-レイアウトの最小単位となるモジュール群です。
+レイアウトの最小単位となる Primitive 群です。
 
 | クラス | 概要 |
 |---|---|
@@ -63,11 +78,3 @@ Lismでは、次のようなモジュールクラスを使います。
 | <ModLink slug="a--divider" /> | コンテンツ間の区切り線 |
 | <ModLink slug="a--icon" /> | SVG アイコンを出力 |
 | <ModLink slug="a--spacer" /> | 要素間にスペースを確保する空要素 |
-
-
-{/* ## Dynamic Modules
-`c--accordion`, `c--modal`, `c--tabs`がDynamic Modulesにあたります。 */}
-
-
-## Custom Modules
-`c--button`, `c--card` がCustom Modulesにあたります。

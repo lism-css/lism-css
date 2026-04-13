@@ -53,19 +53,19 @@ To address the common problem of CSS specificity becoming overly complex, Lism d
       <td>The layer for Reset CSS, token definitions, variable sets, and initial element styles.<br/>`.set--{state}` classes are also defined here.</td>
     </tr>
     <tr>
-      <td class='-whspace:nowrap'>Modules<br/>`@lism-modules`</td>
+      <td class='-whspace:nowrap'>Primitives<br/>`@lism-primitives`</td>
       <td>
-        The layer that defines the collection of modules.<br />
-        It is further subdivided into sub-layers where `.is--{state}`, `.l--{layout}`, `.a--{atomic}`, and `.c--{custom}` are defined.
+        The layer for Primitives — the building blocks for composing layouts.<br />
+        It is further subdivided into sub-layers where `.is--{trait}`, `.l--{layout}`, and `.a--{atomic}` are defined.
       </td>
     </tr>
-    {/* <tr>
-      <td class='-whspace:nowrap'>Custom Modules<br/>`@lism-modules`</td>
-      <td>Other user-defined custom modules and UI components with specific roles (`.c--{modules}`).</td>
-    </tr> */}
+    <tr>
+      <td class='-whspace:nowrap'>Components<br/>`@lism-components`</td>
+      <td>The layer for UI components with BEM-like structure (`.c--{name}`). Not included in the core `lism-css` — `@lism-css/ui` and user-defined `c--*` classes belong here.</td>
+    </tr>
     <tr>
       <td class='-whspace:nowrap'>Custom<br/>`@lism-custom`</td>
-      <td>A layer for user-defined custom classification classes (`.z--{zone}`, `.p--{page}`, etc.).</td>
+      <td>A customization layer for overriding existing Lism classes or for user-defined classification classes with custom prefixes (`.z--{zone}`, `.p--{page}`, etc.).</td>
     </tr>
     <tr>
       <td class='-whspace:nowrap'>Utility<br/>`@lism-utility`</td>
@@ -109,35 +109,47 @@ This section explains the design philosophy behind the core class groups in Lism
 |---|---|---|
 |Set Class|`.set--{style}`|`.set--plain`,<br />`.set--transition`|
 
-### Module Class
+### Primitive Class
 
-Layout building blocks are broken down and defined as **Module Classes**.
+**Primitive Classes** are small building blocks for composing layouts.
 
 These are further categorized into several types:
 
 | Category | Format | Example |
 |---|---|---|
-|State Modules<HelpText fz="xs">Classes with layout functionality that can be toggled on or off as a state</HelpText>|`.is--{stateName}`|`.is--wrapper`,<br />`.is--container`|
-|Layout Modules<HelpText fz="xs">Modules that serve as layout building blocks</HelpText>|`.l--{name}`|`.l--grid`,<br />`.l--columns`|
-|Atomic Modules<HelpText fz="xs">The smallest layout unit modules</HelpText>|`.a--{name}`|`.a--divider`,<br />`.a--icon`|
-|Custom Modules<HelpText fz="xs">Other component groups with more specific roles</HelpText>|`.c--{name}`|`.c--button`,<br />`.c--accordion`|
+|Trait Primitives<HelpText fz="xs">Classes that apply a static structural trait to an element</HelpText>|`.is--{name}`|`.is--wrapper`,<br />`.is--container`|
+|Layout Primitives<HelpText fz="xs">Primitives that serve as layout building blocks</HelpText>|`.l--{name}`|`.l--grid`,<br />`.l--columns`|
+|Atomic Primitives<HelpText fz="xs">The smallest layout unit primitives</HelpText>|`.a--{name}`|`.a--divider`,<br />`.a--icon`|
 
-{/* |Dynamic<HelpText>Modules with behavior combined with JavaScript</HelpText>|`.d--{name}`|`.c--accordion`,<br />`.c--modal`,<br />`.c--tabs`| */}
+Primitive classes are standalone — they do not have variations or child element classes. Only the `c--` Component Classes described next follow a BEM-like structure.
 
-#### Defining style variations
+#### Combination rules between Primitives
 
-When defining variants of a module, create a class by appending a BEM-style Modifier to the base class name. Always include the base module class alongside the modifier class to avoid duplicating CSS.
+| Combination | Allowed | Notes |
+|---|---|---|
+| `l--` × `l--` | NG | Same category cannot be combined |
+| `a--` × `a--` | NG | Same category cannot be combined |
+| `is--` × `is--` | OK | Multiple Traits can be combined |
+| `l--` × `is--` | OK | |
+| `a--` × `is--` | OK | |
+| `l--` × `a--` | Discouraged | Not intended to coexist |
 
-- Format: `.{pre}--{name}--{variant}`
-- Example: `.c--button.c--button--outline`
 
+### Component Class
 
-#### Class names for child elements
+**Component Classes** prefixed with `c--` are concrete UI parts composed from Primitives. They are not included in the core `lism-css`. The `@lism-css/ui` package and user-defined `c--*` classes are placed in `@layer lism-components`.
 
-For modules that function as a unit including child elements, append a BEM-style Element string to the class name.
+| Category | Format | Example |
+|---|---|---|
+|Component<HelpText fz="xs">Concrete UI part with BEM-like structure</HelpText>|`.c--{name}`|`.c--button`,<br />`.c--accordion`|
 
-- Format: `.{pre}--{componentName}_{elementName}`
-- Example: `.c--hoge_item`
+`c--` classes follow a BEM-like structure (Block / Modifier / Element).
+
+- **Block**: `.c--button`
+- **Modifier**: `.c--button--outline` (used together with the base class, e.g. `.c--button.c--button--outline`)
+- **Element**: `.c--card_header`, `.c--card_body` (underscore separator)
+
+Combining classes of the same category (`.c--xxx.c--yyy`) is NG. Only Modifier combinations like `.c--button.c--button--outline` are allowed.
 
 
 
@@ -254,10 +266,10 @@ Example: `[data-opened]`, `[data-active]`
 
 #### Naming and placing custom classes
 
-When defining your own components (`.c--card`, `c--pricing`, etc.), place them inside `@layer lism-modules`.
+When defining your own components (`.c--card`, `.c--pricing`, etc.), place them inside `@layer lism-components`.
 
 ```css
-@layer lism-modules {
+@layer lism-components {
   .c--card { /* ... */ }
   .c--pricing { /* ... */ }
 }
@@ -265,6 +277,8 @@ When defining your own components (`.c--card`, `c--pricing`, etc.), place them i
 
 If you add custom classes that match Lism CSS's existing class categories (`set--`, `is--`, `l--`, `a--`, `u--`), use the same prefix and add them to the corresponding layer.
 For utility classes combining a CSS property and its value, use the Property Class format `-{prop}:{value}`.
+
+If you absolutely need to override an existing Lism class, use `@layer lism-custom` — it has higher specificity than `lism-primitives` / `lism-components` (note that `set--` class redefinitions belong in `@layer lism-base`).
 
 
 #### Adding custom classifications
@@ -351,8 +365,8 @@ By using simple numeric variations, you can expand them to `base-3`, `text-3`, a
 
 About prefixes:
 
-- Prefixes connected with double hyphens (`--`), such as `l--` and `a--`, indicate that only one class from the same layer can be applied to the same element.
-- Prefixes starting with a single hyphen, such as `set-`, `is-`, and `u-`, indicate that multiple classes from the same layer can be applied to the same element.
+- Prefixes such as `l--`, `a--`, and `c--` indicate that classes from the same category cannot be combined on the same element (with `c--` only allowing variation Modifiers as exceptions).
+- Trait-like prefixes such as `set--`, `is--`, and `u--` can be combined freely on the same element.
 
 
 

@@ -1,24 +1,39 @@
 ---
-title: 'Module Class'
-description: 'An overview of Lism CSS module classes (is--, l--, a--, c--) and their usage.'
+title: 'Primitive Class'
+description: 'An overview of Lism CSS primitive classes (is--, l--, a--) and their usage.'
 ---
 
 
-Lism uses the following module classes.
+Lism provides **Primitive classes** as small building blocks for composing layouts.
 
-- `is--{module}`: Versatile state modules that can be applied or removed across multiple types of elements.
-- `l--{module}`: Modules that serve as the building blocks of layouts.
-- `a--{module}`: Modules that represent the smallest units of a layout.
-- `c--{module}`: Components with more specific roles. (Many are designed to be used in combination with other classes.)
+- `is--{name}`: Trait Primitives that apply a **static structural trait** to an element.
+- `l--{name}`: Layout Primitives that serve as the building blocks of layouts.
+- `a--{name}`: Atomic Primitives that represent the smallest units of a layout.
+
+By combining these, you can build complex layouts. The `c--` prefixed **[Component Class](/en/docs/css-methodology/#component-class)** represents concrete UI parts composed from these Primitives.
+
+:::info
+Primitive classes are standalone classes that do not have variations (such as `--outline`) or child element classes (such as `_header`). Only `c--` Component Classes follow a BEM-like structure.
+:::
 
 
-In general, multiple module classes from different layers cannot be combined, except for State Modules.
-For example, `.l--` and `.c--` can be used together, but `.l--XXX` and `.l--YYY`, or `.c--XXX` and `.c--YYY`, should not be combined within the same element.
+#### Combination Rules
+
+| Combination | Allowed | Notes |
+|---|---|---|
+| `l--` × `l--` | NG | Same category cannot be combined |
+| `a--` × `a--` | NG | Same category cannot be combined |
+| `is--` × `is--` | OK | Multiple Traits can be combined |
+| `l--` × `is--` | OK | |
+| `a--` × `is--` | OK | |
+| `l--` × `a--` | Discouraged | Not intended to coexist |
+| `l--` × `c--` | OK | e.g. `l--flex c--nav` |
+| `a--` × `c--` | OK | |
 
 
-## State Modules
+## Trait Primitives
 
-Versatile state modules that can be applied or removed across multiple types of elements.
+Primitives that represent static structural traits that can be toggled on any element.
 
 | Class | Description |
 |---|---|
@@ -32,14 +47,14 @@ Versatile state modules that can be applied or removed across multiple types of 
 | `is--skipFlow` | Cancels spacing with the next sibling inside `l--flow` (→ see <ModLink slug="l--flow" />) |
 
 
-## Layout Modules
+## Layout Primitives
 
-Modules that serve as the building blocks of layouts.
+Primitives that serve as the building blocks of layouts.
 
 | Class | Description |
 |---|---|
-| <ModLink slug="l--box" /> | Simple module for grouping content |
-| <ModLink slug="l--flow" /> | Flow-root module that auto-manages spacing between children |
+| <ModLink slug="l--box" /> | Simple primitive for grouping content |
+| <ModLink slug="l--flow" /> | Flow-root primitive that auto-manages spacing between children |
 | <ModLink slug="l--frame" /> | Fits child media to its own size |
 | <ModLink slug="l--flex" /> | Lays out content using Flexbox |
 | <ModLink slug="l--cluster" /> | Arranges items horizontally with automatic wrapping |
@@ -53,9 +68,9 @@ Modules that serve as the building blocks of layouts.
 | <ModLink slug="l--switchCols" /> | Automatically switches between multi-column and single-column |
 
 
-## Atomic Modules
+## Atomic Primitives
 
-Modules that represent the smallest units of a layout.
+Primitives that represent the smallest units of a layout.
 
 | Class | Description |
 |---|---|
@@ -63,11 +78,3 @@ Modules that represent the smallest units of a layout.
 | <ModLink slug="a--divider" /> | Divider line between content |
 | <ModLink slug="a--icon" /> | Outputs an SVG icon |
 | <ModLink slug="a--spacer" /> | Empty element for spacing between elements |
-
-
-{/* ## Dynamic Modules
-`c--accordion`, `c--modal`, `c--tabs` fall under Dynamic Modules. */}
-
-
-## Custom Modules
-`c--button` and `c--card` fall under Custom Modules.

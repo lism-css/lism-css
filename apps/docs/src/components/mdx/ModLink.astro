@@ -1,6 +1,6 @@
 ---
 /**
- * モジュールページへの言語対応リンクを生成するMDX用コンポーネント
+ * Primitive ページへの言語対応リンクを生成するMDX用コンポーネント
  * - slug はそのまま表示テキストとして使われ、URL 生成時は自動で小文字化される
  * - CSS クラス名の表記（例: "is--boxLink"）をそのまま渡して OK
  * - 表示テキストを slug と別にしたい場合のみ label で上書きする
@@ -8,7 +8,7 @@
 import { getLangFromUrl, getLocalizedUrl } from '@/lib/i18n';
 
 interface Props {
-  /** モジュールスラッグ（例: "is--container", "is--boxLink"） */
+  /** Primitive スラッグ（例: "is--container", "is--boxLink"） */
   slug: string;
   /** 表示テキスト（省略時は slug をそのまま表示） */
   label?: string;
@@ -17,7 +17,7 @@ interface Props {
 const { slug, label } = Astro.props;
 
 const currentLang = getLangFromUrl(Astro.url);
-const href = getLocalizedUrl(`/docs/modules/${slug.toLowerCase()}/`, currentLang);
+const href = getLocalizedUrl(`/docs/primitives/${slug.toLowerCase()}/`, currentLang);
 ---
 
 <a href={href}><code>{label ?? slug}</code></a>
