@@ -66,6 +66,83 @@ describe('getLismProps', () => {
     });
   });
 
+  describe('variant BEM は c-- 専用', () => {
+    test('layout=box + variant を指定しても l--box--primary は生成されない', () => {
+      const result = getLismProps({ layout: 'box', variant: 'primary' });
+      expect(result.className).toContain('l--box');
+      expect(result.className).not.toContain('l--box--primary');
+    });
+
+    test('atomic=divider + variant を指定しても a--divider--primary は生成されない', () => {
+      const result = getLismProps({ atomic: 'divider', variant: 'primary' });
+      expect(result.className).toContain('a--divider');
+      expect(result.className).not.toContain('a--divider--primary');
+    });
+  });
+
+  describe('atomic prop', () => {
+    test('atomic=divider で a--divider が追加される', () => {
+      const result = getLismProps({ atomic: 'divider' });
+      expect(result.className).toContain('a--divider');
+    });
+
+    test('atomic=spacer で a--spacer が追加され、w がスペーストークンに変換される', () => {
+      const result = getLismProps({ atomic: 'spacer', w: '20' });
+      expect(result.className).toContain('a--spacer');
+      expect(result.className).toContain('-w');
+      expect(result.style?.['--w']).toBe('var(--s20)');
+    });
+
+    test('atomic=spacer で h もスペーストークンに変換される', () => {
+      const result = getLismProps({ atomic: 'spacer', h: '40' });
+      expect(result.className).toContain('a--spacer');
+      expect(result.style?.['--h']).toBe('var(--s40)');
+    });
+
+    test('atomic=decorator で size が ar=1/1 と w に展開される', () => {
+      const result = getLismProps({ atomic: 'decorator', size: '100px' } as LismProps & Record<string, unknown>);
+      expect(result.className).toContain('a--decorator');
+      expect(result.className).toContain('-ar:1/1');
+      expect(result.style?.['--w']).toBe('100px');
+    });
+
+    test('atomic=decorator で clipPath が style に設定される', () => {
+      const result = getLismProps({ atomic: 'decorator', clipPath: 'circle(50%)' } as LismProps & Record<string, unknown>);
+      expect(result.style?.clipPath).toBe('circle(50%)');
+    });
+
+    test('atomic=decorator で boxSizing が style に設定される', () => {
+      const result = getLismProps({ atomic: 'decorator', boxSizing: 'border-box' } as LismProps & Record<string, unknown>);
+      expect(result.style?.boxSizing).toBe('border-box');
+    });
+
+    test('atomic=icon で a--icon が追加される', () => {
+      const result = getLismProps({ atomic: 'icon' });
+      expect(result.className).toContain('a--icon');
+    });
+
+    test('atomic と layout の両方指定時、a-- → l-- の順で出力される', () => {
+      const result = getLismProps({ atomic: 'divider', layout: 'box' });
+      const cls = result.className as string;
+      expect(cls.indexOf('a--divider')).toBeLessThan(cls.indexOf('l--box'));
+    });
+  });
+
+  describe('出力順', () => {
+    test('lismClass → primitiveClass → uClasses の順で出力される', () => {
+      const result = getLismProps({
+        lismClass: 'c--box',
+        layout: 'flex',
+        isContainer: true,
+        p: '20',
+      });
+      const cls = result.className as string;
+      expect(cls.indexOf('c--box')).toBeLessThan(cls.indexOf('l--flex'));
+      expect(cls.indexOf('l--flex')).toBeLessThan(cls.indexOf('is--container'));
+      expect(cls.indexOf('is--container')).toBeLessThan(cls.indexOf('-p:20'));
+    });
+  });
+
   describe('ref処理', () => {
     test('forwardedRefが設定される', () => {
       const mockRef = { current: null };

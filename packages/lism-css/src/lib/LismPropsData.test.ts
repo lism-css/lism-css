@@ -7,7 +7,7 @@ describe('LismPropsData', () => {
       const instance = new LismPropsData({});
       expect(instance.className).toBe('');
       expect(instance.uClasses).toEqual([]);
-      expect(instance.lismTrait).toEqual([]);
+      expect(instance.primitiveClass).toEqual([]);
       expect(instance.styles).toEqual({});
       expect(instance.attrs).toEqual({});
     });
@@ -171,33 +171,33 @@ describe('LismPropsData', () => {
   describe('analyzeTrait - Trait処理', () => {
     test('isContainer: true でトレイトクラスが追加される', () => {
       const instance = new LismPropsData({ isContainer: true });
-      expect(instance.lismTrait).toContain('is--container');
+      expect(instance.primitiveClass).toContain('is--container');
     });
 
     test('isContainer: false では何も追加されない', () => {
       const instance = new LismPropsData({ isContainer: false });
-      expect(instance.lismTrait).not.toContain('is--container');
+      expect(instance.primitiveClass).not.toContain('is--container');
     });
 
     test('isWrapper: true でトレイトクラスが追加される', () => {
       const instance = new LismPropsData({ isWrapper: true });
-      expect(instance.lismTrait).toContain('is--wrapper');
+      expect(instance.primitiveClass).toContain('is--wrapper');
     });
 
     test('isWrapper: プリセット値でトレイトとプリセットクラスが追加される', () => {
       const instance = new LismPropsData({ isWrapper: 's' });
-      expect(instance.lismTrait).toContain('is--wrapper -contentSize:s');
+      expect(instance.primitiveClass).toContain('is--wrapper -contentSize:s');
     });
 
     test('isWrapper: カスタム値でトレイトクラスと変数が追加される', () => {
       const instance = new LismPropsData({ isWrapper: '800px' });
-      expect(instance.lismTrait).toContain('is--wrapper');
+      expect(instance.primitiveClass).toContain('is--wrapper');
       expect(instance.styles['--contentSize']).toBe('800px');
     });
 
     test('isLayer: true でトレイトクラスが追加される', () => {
       const instance = new LismPropsData({ isLayer: true });
-      expect(instance.lismTrait).toContain('is--layer');
+      expect(instance.primitiveClass).toContain('is--layer');
     });
 
     test('複数のstateが同時に機能する', () => {
@@ -205,8 +205,8 @@ describe('LismPropsData', () => {
         isContainer: true,
         isLayer: true,
       });
-      expect(instance.lismTrait).toContain('is--container');
-      expect(instance.lismTrait).toContain('is--layer');
+      expect(instance.primitiveClass).toContain('is--container');
+      expect(instance.primitiveClass).toContain('is--layer');
     });
   });
 

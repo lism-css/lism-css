@@ -1,6 +1,7 @@
 // import { PROPS } from '../config';
 import { PROPS, TRAITS } from '../../config/index';
 import getLayoutProps from './getLayoutProps';
+import getAtomicProps from './getAtomicProps';
 import isPresetValue from './isPresetValue';
 import isTokenValue from './isTokenValue';
 import getUtilKey from './getUtilKey';
@@ -15,7 +16,8 @@ import { type StyleWithCustomProps } from './types';
 import { type TraitProps, type SetPropValue, type UtilPropValue } from './types/TraitProps';
 import { type PropValueTypes } from './types/PropValueTypes';
 import { type LayoutType, type LayoutProps } from './types/LayoutProps';
-export { type LayoutType };
+import { type AtomicType, type AtomicProps } from './types/AtomicProps';
+export { type LayoutType, type AtomicType };
 
 // PropConfig interface based on config/defaults/props.ts
 interface PropConfig {
@@ -50,13 +52,18 @@ interface TraitPropDataObject {
 
 type TraitPropData = string | TraitPropDataObject;
 
-// LismPropsData が受け取る型（layout 処理済み）
+// LismPropsData が受け取る型（layout / atomic 処理済み）
 export interface LismPropsBase extends TraitProps, PropValueTypes {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   forwardedRef?: React.Ref<any>;
-  class?: string;
+  class?: string | null;
   className?: string;
   lismClass?: string;
+  /**
+   * a--* / l--* / is--* クラスを集約する内部スロット。
+   * 通常は getLayoutProps / getAtomicProps 経由で push される。
+   */
+  primitiveClass?: string[];
   variant?: string;
   style?: StyleWithCustomProps;
   _propConfig?: Record<string, PropConfig>;
@@ -77,26 +84,26 @@ const getTokenKey = (propName: string): string => {
   return (propData?.token as string) || '';
 };
 
-// lismClass に variant クラスを差し込む
-// 例: lismClass='l--box extra', variant='primary' → 'l--box l--box--primary extra'
+// lismClass の末尾に variant BEM クラスを append する
+// 例: lismClass='c--box extra', variant='primary' → 'c--box extra c--box--primary'
+// 変換対象は先頭クラスのみ。複数 c-- を積む場合はユーザーが書き順で制御する。
 function buildLismClass(lismClass: string | undefined, variant: string | undefined): string {
   if (!lismClass) return '';
   if (!variant) return lismClass;
 
-  const parts = lismClass.split(' ');
-  const baseClass = parts[0];
-  return [baseClass, `${baseClass}--${variant}`, ...parts.slice(1)].join(' ');
+  const baseClass = lismClass.split(' ')[0];
+  return `${lismClass} ${baseClass}--${variant}`;
 }
 
 export class LismPropsData {
   // 最終出力 className
   className: string = '';
-  // 出力順のためのクラスバケット: [lismClass] [lismTrait] [uClasses]
-  // - lismClass : コンポーネント基底クラス + variant + l--{layout}（getLayoutProps 側で付与済み）
-  // - lismTrait : is--* 等の trait クラス
-  // - uClasses  : set--* → u--* → -property の順で push される utility クラス
+  // 出力順のためのクラスバケット: [lismClass] [primitiveClass] [uClasses]
+  // - lismClass      : c--* 基底クラス（variant BEM 展開の対象）
+  // - primitiveClass : a--* / l--* / is--* の primitive クラス（getAtomicProps → getLayoutProps → analyzeTrait の順で push）
+  // - uClasses       : set--* → u--* → -property の順で push される utility クラス
   lismClass: string = '';
-  lismTrait: string[] = [];
+  primitiveClass: string[] = [];
   uClasses: string[] = [];
   styles: StyleWithCustomProps = {};
   attrs: Record<string, unknown> = {};
@@ -104,11 +111,24 @@ export class LismPropsData {
 
   constructor(allProps: LismPropsBase & Record<string, unknown>) {
     // 受け取るpropsとそうでないpropsを分ける
-    const { forwardedRef, class: astroClassName, className: userClassName, lismClass, variant, style = {}, _propConfig = {}, ...others } = allProps;
+    const {
+      forwardedRef,
+      class: astroClassName,
+      className: userClassName,
+      lismClass,
+      primitiveClass,
+      variant,
+      style = {},
+      _propConfig = {},
+      ...others
+    } = allProps;
 
     this.styles = { ...style };
     this._propConfig = { ..._propConfig };
     this.lismClass = buildLismClass(lismClass, variant);
+    if (primitiveClass && primitiveClass.length) {
+      this.primitiveClass = [...primitiveClass];
+    }
 
     // propsの処理
     if (!isEmptyObj(others)) {
@@ -143,21 +163,21 @@ export class LismPropsData {
   }
 
   // 最終クラス文字列の組み立て（出力順の唯一の確定地点）
-  // 出力順: [user/astro className] [lismClass] [lismTrait] [uClasses]
-  buildClassName(userClassName?: string, astroClassName?: string): string {
-    return atts(userClassName || astroClassName, this.lismClass, this.lismTrait, this.uClasses);
+  // 出力順: [user/astro className] [lismClass] [primitiveClass] [uClasses]
+  buildClassName(userClassName?: string, astroClassName?: string | null): string {
+    return atts(userClassName || astroClassName || undefined, this.lismClass, this.primitiveClass, this.uClasses);
   }
 
   analyzeTrait(traitPropData: TraitPropDataObject, propVal: unknown): void {
     // isWrapper などの特別な処理が必要なレイアウトトレイト
     const { className, preset, presetClass, customVar, tokenKey } = traitPropData;
     if (propVal === true) {
-      this.lismTrait.push(className);
+      this.primitiveClass.push(className);
     } else if (preset && isPresetValue(preset, propVal)) {
-      this.lismTrait.push(`${className} ${presetClass}:${String(propVal)}`);
+      this.primitiveClass.push(`${className} ${presetClass}:${String(propVal)}`);
     } else if (propVal) {
       // カスタム値
-      this.lismTrait.push(className);
+      this.primitiveClass.push(className);
       if (tokenKey && customVar) {
         this.addStyle(customVar, getMaybeCssVar(propVal as string | number, tokenKey));
       }
@@ -180,7 +200,7 @@ export class LismPropsData {
 
         if (typeof traitPropData === 'string') {
           // そのままクラス化
-          if (propVal) this.lismTrait.push(traitPropData);
+          if (propVal) this.primitiveClass.push(traitPropData);
         } else {
           this.analyzeTrait(traitPropData, propVal);
         }
@@ -415,7 +435,7 @@ export class LismPropsData {
   }
 }
 
-export interface LismProps extends LismPropsBase, LayoutProps {}
+export interface LismProps extends LismPropsBase, LayoutProps, AtomicProps {}
 
 export interface LismOutputProps {
   className?: string;
@@ -436,8 +456,12 @@ export default function getLismProps(props: LismProps): LismOutputProps {
     return {};
   }
 
-  const { layout, ...rest } = props;
-  const propObj = new LismPropsData(getLayoutProps(layout, rest) as LismPropsBase & Record<string, unknown>);
+  // atomic → layout の順に処理する。
+  // この順序が primitiveClass 内の a-- → l-- 出力順を決定する。
+  const { atomic, layout, ...rest } = props;
+  const afterAtomic = getAtomicProps(atomic, rest);
+  const afterLayout = getLayoutProps(layout, afterAtomic);
+  const propObj = new LismPropsData(afterLayout as LismPropsBase & Record<string, unknown>);
   return {
     ...filterEmptyObj({
       className: propObj.className,

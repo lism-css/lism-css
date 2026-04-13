@@ -3,22 +3,22 @@ import getLayoutProps from './getLayoutProps';
 
 describe('getLayoutProps', () => {
   describe('基本的な動作', () => {
-    test('layout クラスが lismClass に追加される', () => {
+    test('layout クラスが primitiveClass に追加される', () => {
       const result = getLayoutProps('flex', { lismClass: 'existing' });
-      expect(result.lismClass).toContain('l--flex');
-      expect(result.lismClass).toContain('existing');
+      expect(result.primitiveClass).toContain('l--flex');
+      expect(result.lismClass).toBe('existing');
     });
 
-    test('lismClass が未定義の場合でも layout クラスが追加される', () => {
+    test('primitiveClass が未定義の場合でも layout クラスが追加される', () => {
       const result = getLayoutProps('stack', {});
-      expect(result.lismClass).toBe('l--stack');
+      expect(result.primitiveClass).toEqual(['l--stack']);
     });
   });
 
   describe('grid レイアウト', () => {
-    test('lismClass に l--grid が追加される', () => {
+    test('primitiveClass に l--grid が追加される', () => {
       const result = getLayoutProps('grid', {});
-      expect(result.lismClass).toBe('l--grid');
+      expect(result.primitiveClass).toEqual(['l--grid']);
     });
 
     test('_propConfig は自動付与されない', () => {
@@ -122,16 +122,16 @@ describe('getLayoutProps', () => {
   });
 
   describe('flow レイアウト', () => {
-    test('flow がトークン値の場合、lismClass に -flow:{value} が追加される', () => {
+    test('flow がトークン値の場合、primitiveClass に -flow:{value} が追加される', () => {
       const result = getLayoutProps('flow', { flow: 's' });
-      expect(result.lismClass).toContain('-flow:s');
-      expect(result.lismClass).toContain('l--flow');
+      expect(result.primitiveClass).toContain('-flow:s');
+      expect(result.primitiveClass).toContain('l--flow');
     });
 
-    test('flow がトークン値でない場合、lismClass に -flow: が追加され、style に --flow が設定される', () => {
+    test('flow がトークン値でない場合、primitiveClass に -flow: が追加され、style に --flow が設定される', () => {
       const result = getLayoutProps('flow', { flow: '2rem' });
-      expect(result.lismClass).toContain('-flow:');
-      expect(result.lismClass).toContain('l--flow');
+      expect(result.primitiveClass).toContain('-flow:');
+      expect(result.primitiveClass).toContain('l--flow');
       expect(result.style?.['--flow']).toBe('2rem');
     });
 
@@ -142,24 +142,24 @@ describe('getLayoutProps', () => {
 
     test('flow が未定義の場合、何も追加されない', () => {
       const result = getLayoutProps('flow', {});
-      expect(result.lismClass).toBe('l--flow');
+      expect(result.primitiveClass).toEqual(['l--flow']);
       expect(result.style).toBeUndefined();
     });
 
     test('flow が 0 の場合、何も変換されない', () => {
       const result = getLayoutProps('flow', { flow: 0 });
-      expect(result.lismClass).toBe('l--flow');
+      expect(result.primitiveClass).toEqual(['l--flow']);
       expect(result.style).toBeUndefined();
     });
 
-    test('既存の lismClass がある場合、マージされる', () => {
+    test('既存の lismClass と primitiveClass がある場合、マージされる', () => {
       const result = getLayoutProps('flow', {
         lismClass: 'existing',
         flow: 's',
       });
-      expect(result.lismClass).toContain('existing');
-      expect(result.lismClass).toContain('l--flow');
-      expect(result.lismClass).toContain('-flow:s');
+      expect(result.lismClass).toBe('existing');
+      expect(result.primitiveClass).toContain('l--flow');
+      expect(result.primitiveClass).toContain('-flow:s');
     });
 
     test('既存の style がある場合、マージされる', () => {
@@ -228,20 +228,20 @@ describe('getLayoutProps', () => {
   });
 
   describe('tileGrid レイアウト', () => {
-    test('lismClass に l--tileGrid が追加される', () => {
+    test('primitiveClass に l--tileGrid が追加される', () => {
       const result = getLayoutProps('tileGrid', {});
-      expect(result.lismClass).toBe('l--tileGrid');
+      expect(result.primitiveClass).toEqual(['l--tileGrid']);
     });
 
     test('既存の lismClass がある場合、マージされる', () => {
       const result = getLayoutProps('tileGrid', { lismClass: 'existing' });
-      expect(result.lismClass).toContain('l--tileGrid');
-      expect(result.lismClass).toContain('existing');
+      expect(result.primitiveClass).toContain('l--tileGrid');
+      expect(result.lismClass).toBe('existing');
     });
 
     test('その他のpropsはそのまま維持される', () => {
       const result = getLayoutProps('tileGrid', { lismClass: 'test', style: { color: 'red' } });
-      expect(result.lismClass).toContain('test');
+      expect(result.lismClass).toBe('test');
       expect(result.style?.color).toBe('red');
     });
   });
@@ -253,8 +253,8 @@ describe('getLayoutProps', () => {
         sideW: '200px',
         style: { color: 'red' },
       });
-      expect(result.lismClass).toContain('custom-class');
-      expect(result.lismClass).toContain('l--sideMain');
+      expect(result.lismClass).toBe('custom-class');
+      expect(result.primitiveClass).toContain('l--sideMain');
       expect(result.style?.color).toBe('red');
       expect(result.style?.['--sideW']).toBe('200px');
     });
@@ -267,7 +267,8 @@ describe('getLayoutProps', () => {
         otherProp2: 'value2',
       });
       expect((result as unknown as Record<string, unknown>).flow).toBeUndefined();
-      expect(result.lismClass).toBeDefined();
+      expect(result.lismClass).toBe('test');
+      expect(result.primitiveClass).toContain('l--flow');
       expect(result.otherProp1).toBe('value1');
       expect(result.otherProp2).toBe('value2');
     });
