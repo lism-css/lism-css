@@ -7,16 +7,12 @@ describe('mergeSet', () => {
       expect(mergeSet(undefined, 'gutter')).toEqual(['gutter']);
     });
 
-    test('カンマ区切りの文字列を分割', () => {
-      expect(mergeSet(undefined, 'hov,transition')).toEqual(['hov', 'transition']);
-    });
-
-    test('カンマ+スペースの文字列を分割してトリム', () => {
-      expect(mergeSet(undefined, 'hov, transition, shadow')).toEqual(['hov', 'transition', 'shadow']);
-    });
-
     test('空白区切りの文字列を分割', () => {
       expect(mergeSet(undefined, 'plain hov')).toEqual(['plain', 'hov']);
+    });
+
+    test('複数の空白を分割してトリム', () => {
+      expect(mergeSet(undefined, '  hov   transition  shadow ')).toEqual(['hov', 'transition', 'shadow']);
     });
 
     test('空文字列は空配列', () => {
@@ -24,7 +20,7 @@ describe('mergeSet', () => {
     });
 
     test('空白のみの要素はフィルタされる', () => {
-      expect(mergeSet(undefined, 'hov, , shadow')).toEqual(['hov', 'shadow']);
+      expect(mergeSet(undefined, 'hov   shadow')).toEqual(['hov', 'shadow']);
     });
 
     test('重複は除去される', () => {
@@ -59,10 +55,6 @@ describe('mergeSet', () => {
 
     test('全て除外されると空配列', () => {
       expect(mergeSet('gutter', '-gutter')).toEqual([]);
-    });
-
-    test('カンマ区切りでも除外できる', () => {
-      expect(mergeSet(undefined, 'hov, transition, shadow, -shadow')).toEqual(['hov', 'transition']);
     });
 
     test('対象が無い `-name` は無視される', () => {

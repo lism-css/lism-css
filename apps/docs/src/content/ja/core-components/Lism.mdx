@@ -132,11 +132,10 @@ import { Lism, Media } from 'lism-css/astro';
 
 #### 複数指定
 
-スペース区切り、またはカンマ区切りで複数指定できます。
+スペース区切りで複数指定できます。
 
 ```jsx
 <Lism set="hov transition">...</Lism>
-<Lism set="hov, transition">...</Lism>
 ```
 
 #### `-` prefix で除外
@@ -165,7 +164,7 @@ import { Lism, Media } from 'lism-css/astro';
 <div class="u--cbox">...</div>
 ```
 
-`set` prop と同様に、スペース・カンマ区切りで複数指定したり、値の先頭に `-` を付けて除外したりできます。
+`set` prop と同様に、スペース区切りで複数指定したり、値の先頭に `-` を付けて除外したりできます。
 
 ```jsx
 <Lism util="cbox trim">...</Lism>

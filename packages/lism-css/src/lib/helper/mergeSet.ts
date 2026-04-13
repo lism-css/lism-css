@@ -8,7 +8,7 @@
 function normalize(value: unknown): string[] {
   if (!value || typeof value !== 'string') return [];
   return value
-    .split(/[,\s]+/)
+    .split(/\s+/)
     .map((s) => s.trim())
     .filter(Boolean);
 }

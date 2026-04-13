@@ -1247,17 +1247,6 @@ describe('Lism', () => {
         expect(element).toHaveClass('set--mask');
       });
 
-      test('set="hov,transition" カンマ区切り文字列で複数クラスが出力される', () => {
-        render(
-          <Lism set="hov,transition" data-testid="lism">
-            test
-          </Lism>
-        );
-        const element = screen.getByTestId('lism');
-        expect(element).toHaveClass('set--hov');
-        expect(element).toHaveClass('set--transition');
-      });
-
       test('set="hov transition" 空白区切り文字列で複数クラスが出力される', () => {
         render(
           <Lism set="hov transition" data-testid="lism">
@@ -1320,17 +1309,6 @@ describe('Lism', () => {
       test('util="cbox trim" 空白区切りで複数の u-- クラスが出力される', () => {
         render(
           <Lism util="cbox trim" data-testid="lism">
-            test
-          </Lism>
-        );
-        const element = screen.getByTestId('lism');
-        expect(element).toHaveClass('u--cbox');
-        expect(element).toHaveClass('u--trim');
-      });
-
-      test('util="cbox,trim" カンマ区切りでも複数指定できる', () => {
-        render(
-          <Lism util="cbox,trim" data-testid="lism">
             test
           </Lism>
         );

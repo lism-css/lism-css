@@ -47,7 +47,7 @@ type SetPreset = 'gutter' | 'shadow' | 'hov' | 'transition' | 'mask' | 'plain' |
 /**
  * set prop の値の型。プリセット値がサジェストされつつ、任意の文字列も受け付ける。
  *
- * - 値はスペース・カンマ区切りで複数指定可能
+ * - 値はスペース区切りで複数指定可能
  * - 先頭に `-` を付けると、その識別子を除外する（例: `set="card -bd"`）
  */
 export type SetPropValue = WithArbitraryString<SetPreset>;
@@ -58,7 +58,7 @@ type UtilPreset = 'cbox' | 'trim' | 'trimChildren' | 'srOnly' | 'clipText' | 'co
 /**
  * util prop の値の型。既知の `u--` クラス名がサジェストされつつ、任意の文字列も受け付ける。
  *
- * - 値はスペース・カンマ区切りで複数指定可能
+ * - 値はスペース区切りで複数指定可能
  * - 先頭に `-` を付けると、その識別子を除外する（例: `util="cbox -trim"`）
  */
 export type UtilPropValue = WithArbitraryString<UtilPreset>;

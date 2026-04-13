@@ -96,9 +96,8 @@ describe('LismPropsBase — set / util', () => {
       assertType<LismPropsBase>({ set: 'bp' });
     });
 
-    it('スペース・カンマ区切りで複数指定できる', () => {
+    it('スペース区切りで複数指定できる', () => {
       assertType<LismPropsBase>({ set: 'hov transition' });
-      assertType<LismPropsBase>({ set: 'hov,transition' });
     });
 
     it('`-` prefix で除外指定できる', () => {
@@ -131,9 +130,8 @@ describe('LismPropsBase — set / util', () => {
       assertType<LismPropsBase>({ util: 'snap' });
     });
 
-    it('スペース・カンマ区切りで複数指定できる', () => {
+    it('スペース区切りで複数指定できる', () => {
       assertType<LismPropsBase>({ util: 'cbox trim' });
-      assertType<LismPropsBase>({ util: 'cbox,trim' });
     });
 
     it('`-` prefix で除外指定できる', () => {
