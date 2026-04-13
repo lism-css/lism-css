@@ -407,3 +407,28 @@ BP対応プロパティは、配列またはオブジェクトでブレイクポ
 
 デフォルトでレスポンシブ対応されていない（CSSが用意されていない）プロパティに関しては、[SCSSによるカスタマイズ](/docs/customize/)を行うことで対応できます。
 
+
+### クラスの出力順
+
+`<Lism>` が生成する `class` 属性は、大きく **「ユーザー指定」「モジュールクラス群」「ユーティリティ群」** の3ブロックに分かれます。ユーティリティ群は粒度の低い（＝塊としての）順 `set--` → `u--` → Property Class で並びます。
+
+```
+[className] [lismClass] [l--{layout}] [is--*(State)] [set--*] [u--*] [Property Class...]
+```
+
+| # | 区分 | 由来 | 例 |
+|---|---|---|---|
+| 1 | `className` | ユーザーが直接渡すクラス | `my-card` |
+| 2 | `lismClass`（+ `variant`） | コンポーネント本体のクラス。`c--*`（複合）や `a--*`（atomic）等 | `c--box`, `a--icon`, `c--box c--box--primary` |
+| 3 | レイアウトモジュール | `layout` prop | `l--box`, `l--flow` |
+| 4 | State Modules | State Props（`isWrapper` 等） | `is--wrapper`, `is--layer` |
+| 5 | Set Class | `set` prop | `set--hov`, `set--card` |
+| 6 | `u--` ユーティリティ | `util` prop | `u--cbox`, `u--trim` |
+| 7 | Property Class | CSS Props（`hov` 含む） | `-p:20`, `-bgc:base-2` |
+
+2〜4 はいずれも [Module Class](/docs/css-methodology/)（CSS レイヤー `lism-modules`）に属し、5〜7 はユーティリティ系のクラスです。
+
+:::note
+`class` 属性内の並び順は CSS の適用結果（詳細度・カスケード順）には影響しません。この順序はあくまで可読性と一貫性のための整理です。
+:::
+
