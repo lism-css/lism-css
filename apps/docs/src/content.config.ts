@@ -25,9 +25,13 @@ const mdMdxWithUnderscoreExcludes = ['**/*.{md,mdx}', '!**/_*/**'] as const;
  * - en: 英語
  * memo: Astro 5 の Content Layer では各コレクションに loader が必須（legacy.collections 併用だと同期がスキップされる）
  */
-// ファイル名の大文字・小文字をそのまま ID に使う（デフォルトは kebab-case 化されるため）。
-// 例: `primitives/l--tileGrid.mdx` → ID `primitives/l--tileGrid`
-const generateId = ({ entry }: { entry: string }) => entry.replace(/\.(md|mdx)$/, '');
+// `primitives/` 配下のみ、ファイル名の大文字・小文字をそのまま ID（= URL スラッグ）に使う。
+// CSS クラス名（例: `l--tileGrid`）とドキュメント URL を一致させるための例外扱い。
+// それ以外のコレクション（core-components / ui / ui/examples 等）は従来通り小文字化して URL casing の破壊的変更を避ける。
+const generateId = ({ entry }: { entry: string }) => {
+  const withoutExt = entry.replace(/\.(md|mdx)$/, '');
+  return withoutExt.startsWith('primitives/') ? withoutExt : withoutExt.toLowerCase();
+};
 
 const ja = defineCollection({
   loader: glob({

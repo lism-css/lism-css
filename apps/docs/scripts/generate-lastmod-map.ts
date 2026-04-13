@@ -57,11 +57,13 @@ function getGitLastModifiedMap(): Map<string, Date> {
 /**
  * ファイルパス（git root 相対）をサイトのフルURL配列に変換
  *
- * コンテンツファイル（content.config.ts の generateId でファイル名の casing をそのまま ID に使う）:
- *   apps/docs/src/content/ja/overview.mdx             → [https://lism-css.com/docs/overview/]
- *   apps/docs/src/content/ja/ui/Accordion.mdx          → [https://lism-css.com/docs/ui/Accordion/, https://lism-css.com/ui/Accordion/]
- *   apps/docs/src/content/ja/primitives/l--tileGrid.mdx → [https://lism-css.com/docs/primitives/l--tileGrid/]
- *   apps/docs/src/content/en/overview.mdx              → [https://lism-css.com/en/docs/overview/]
+ * コンテンツファイル（content.config.ts の generateId と同じ分岐で URL を組み立てる）:
+ *   - `primitives/` 配下のみファイル名の casing をそのまま ID / URL に使う（CSS クラス名と URL を一致させる）
+ *   - それ以外のコンテンツは従来通り全て小文字化する
+ *   apps/docs/src/content/ja/overview.mdx               → [https://lism-css.com/docs/overview/]
+ *   apps/docs/src/content/ja/ui/Accordion.mdx            → [https://lism-css.com/docs/ui/accordion/, https://lism-css.com/ui/accordion/]
+ *   apps/docs/src/content/ja/primitives/l--tileGrid.mdx  → [https://lism-css.com/docs/primitives/l--tileGrid/]
+ *   apps/docs/src/content/en/overview.mdx                → [https://lism-css.com/en/docs/overview/]
  *
  * ページファイル:
  *   apps/docs/src/pages/index.astro             → [https://lism-css.com/]
@@ -74,7 +76,9 @@ function filePathToSiteUrls(filePath: string): string[] {
   // コンテンツファイル
   const contentMatch = filePath.match(/^apps\/docs\/src\/content\/(\w+)\/(.+)\.mdx?$/);
   if (contentMatch) {
-    const [, lang, slug] = contentMatch;
+    const [, lang, rawSlug] = contentMatch;
+    // primitives/ 配下のみ casing 保持、それ以外は小文字化（content.config.ts の generateId と揃える）
+    const slug = rawSlug.startsWith('primitives/') ? rawSlug : rawSlug.toLowerCase();
     const langPrefix = lang === ROOT_LANG ? '' : `/${lang}`;
     const urls = [`${SITE_URL}${langPrefix}/docs/${slug}/`];
 

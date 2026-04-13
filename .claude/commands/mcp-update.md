@@ -22,8 +22,9 @@
 
 - **ソース**: `apps/docs/src/content/ja/` 配下の全 MDX ファイル
 - **更新内容**: 各ページの sourcePath, title, description, category, headings, keywords, snippet
-- **sourcePath ルール（ファイル名そのまま）**: `sourcePath` は `search_docs` が返す公開 URL のスラッグ部分としてそのまま使われる。**MDX ファイル名の大文字・小文字をそのまま保持して記述する**こと（例: `primitives/l--tileGrid.mdx`, `primitives/is--boxLink.mdx`, `primitives/l--fluidCols.mdx`, `primitives/l--switchCols.mdx`, `primitives/l--sideMain.mdx`）。Astro の content collections (`glob` loader) にはキャメルケース保持のため `generateId` を設定済みなので、公開 URL もファイル名と同じキャメルケースで配信される。
-- **title ルール**: primitives カテゴリのエントリは、title に JSX コンポーネント名と CSS クラス名を `コンポーネント名 / クラス名` の形式で併記すること（例: `"Flex / l--flex"`, `"Container / is--container"`, `"Icon / a--icon"`）。クラス名は sourcePath のファイル名部分（キャメルケースのまま）から取得できる。
+- **sourcePath ルール（実ファイルパスそのまま）**: `sourcePath` は**実在する MDX ファイルの相対パスそのもの**を記述する。ファイル名の大文字・小文字は実ファイルと一致させること（例: `core-components/Group.mdx`, `ui/DummyImage.mdx`, `ui/examples/Card.mdx`, `primitives/l--tileGrid.mdx`, `primitives/is--boxLink.mdx`）。
+  - URL への変換は `search_docs` 側（`packages/mcp/src/lib/search.ts` の `sourcePathToUrlSlug`）が担当する。`primitives/` 配下のみファイル名の casing を保持し、それ以外は小文字化する（Astro content collections の `generateId` と同じ規則）。そのため `sourcePath` 側で casing を書き換える必要はない。
+- **title ルール**: primitives カテゴリのエントリは、title に JSX コンポーネント名と CSS クラス名を `コンポーネント名 / クラス名` の形式で併記すること（例: `"Flex / l--flex"`, `"Container / is--container"`, `"Icon / a--icon"`）。クラス名は sourcePath のファイル名部分（primitives はキャメルケースのまま）から取得できる。
 - **keywords ルール（CSS 逆引き用）**: props カテゴリや primitives カテゴリのエントリには、関連する CSS プロパティ名を keywords に含める（例: Flex のドキュメントに `"display", "flex", "flex-direction"` を追加、ボーダー props のドキュメントに `"border", "border-radius"` を追加）。これにより CSS プロパティ名での検索精度が向上する
 - **keywords ルール（alias 保持）**: MDX に存在しない alias/synonym keywords（例: `"クリッカブル"`, `"横並び折り返し"`, `"CTA"` 等）が既存の keywords に含まれている場合、それらを削除しないこと。これらは自然言語検索の精度向上のために意図的に追加されたものである
 
