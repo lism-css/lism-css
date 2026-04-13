@@ -7,7 +7,7 @@ import { parsePropRows } from '../lib/markdown-utils.js';
 import { searchDocs } from '../lib/search.js';
 import { success, error, READ_ONLY_ANNOTATIONS } from '../lib/response.js';
 
-const DOC_CATEGORIES = ['all', 'core-components', 'primitives', 'props', 'ui', 'guide'] as const;
+const DOC_CATEGORIES = ['all', 'core-components', 'primitives', 'property-class', 'ui', 'guide'] as const;
 
 /**
  * property-class.md のテーブルから CSSプロパティ名 → Lism prop名 のマップを構築する。
