@@ -86,10 +86,10 @@ Additionally, [`is--linkBox`](/en/docs/modules/is--linkBox/) is applied to make 
 
 ### Placing an additional link inside the card
 
-When you want to make the entire card a link while also including a separate link inside, use [`u--expandedLink`](/en/docs/utility-class/#u-expandedlink).
+When you want to make the entire card a link while also including a separate link inside, use [`is--coverLink`](/en/docs/modules/is--linkBox/).
 
 <Preview>
-  <PreviewTitle>Example using `u--expandedLink`</PreviewTitle>
+  <PreviewTitle>Example using `is--coverLink`</PreviewTitle>
   <PreviewArea bg=':stripe' resize p='30'>
     <SideMain isLinkBox hov="bxsh" set="transition" sideW="50%" bgc="base" bdrs="20" bxsh="10" ov="hidden">
       <Frame isSide ar="16/9" pos="relative">
@@ -98,7 +98,7 @@ When you want to make the entire card a link while also including a separate lin
       </Frame>
       <Stack g="30" p="30">
         <h3 className="u--trim -fz:l">
-          <Link className="u--expandedLink" href="#card-link">Card with .u--expandedLink</Link>
+          <Link className="is--coverLink" href="#card-link">Card with .is--coverLink</Link>
         </h3>
         <Text className="u--trim" fz="s" lh="s" o="-10">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</Text>
         <Inline d="inline-flex" mx-s="auto" my-s="auto" c="inherit" td="none" bd-b lh="s" p="10">View More →</Inline>
@@ -106,7 +106,7 @@ When you want to make the entire card a link while also including a separate lin
     </SideMain>
   </PreviewArea>
   <PreviewCode slot='tab' label='JSX'>
-    ```jsx "isLinkBox" "\<Link " "u--expandedLink"
+    ```jsx "isLinkBox" "\<Link " "is--coverLink"
     <SideMain isLinkBox hov="bxsh" set="transition" sideW="50%" bgc="base" bdrs="20" bxsh="10" ov="hidden">
       <Frame isSide ar="16/9" pos="relative">
         <Media src="https://cdn.lism-css.com/img/a-1.jpg" alt="" width="960" height="640" />
@@ -116,8 +116,8 @@ When you want to make the entire card a link while also including a separate lin
       </Frame>
       <Stack g="30" p="30">
         <h3 className="u--trim -fz:l">
-          <Link className="u--expandedLink" href="#card-link">
-            Card with .u--expandedLink
+          <Link className="is--coverLink" href="#card-link">
+            Card with .is--coverLink
           </Link>
         </h3>
         <Text className="u--trim" fz="s" lh="s" o="-10">

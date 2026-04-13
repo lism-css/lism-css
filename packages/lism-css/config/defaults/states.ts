@@ -9,6 +9,7 @@ export default {
   },
   isLayer: 'is--layer',
   isLinkBox: 'is--linkBox',
+  isCoverLink: 'is--coverLink',
   isSide: 'is--side',
   isSkipFlow: 'is--skipFlow',
   isVertical: 'is--vertical',

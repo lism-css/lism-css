@@ -43,14 +43,14 @@ LinkBox には主に2通りの使い方があります。
 </a>
 ```
 
-### パターン2: `<div>` + 内部に `u--expandedLink`
+### パターン2: `<div>` + 内部に `is--coverLink`
 
-`<LinkBox>` は `<div>` にしたまま、内部のアンカー要素に `u--expandedLink` クラスを付けてボックス全体をクリック可能にします。**LinkBox 内部にさらに別のリンクを配置したい場合はこちらを選ぶこと**。
+`<LinkBox>` は `<div>` にしたまま、内部のアンカー要素に `is--coverLink` クラスを付けてボックス全体をクリック可能にします。**LinkBox 内部にさらに別のリンクを配置したい場合はこちらを選ぶこと**。
 
 ```jsx
 <LinkBox as="section" p="30" bgc="base" bd bdrs="30" set="transition" hov="bxsh">
   <Group fz="xl" fw="bold">
-    <Link className="u--expandedLink" href="/article/1">
+    <Link className="is--coverLink" href="/article/1">
       Heading link text
     </Link>
   </Group>
@@ -64,7 +64,7 @@ LinkBox には主に2通りの使い方があります。
 ```html
 <div class="is--linkBox -hov:bxsh -p:30 -bgc:base -bd -bdrs:30 set--transition">
   <div class="-fz:xl -fw:bold">
-    <a class="u--expandedLink" href="/article/1">Heading link text</a>
+    <a class="is--coverLink" href="/article/1">Heading link text</a>
   </div>
   <p class="-c:text-2 -lh:s -my-s:15">記事の抜粋テキスト...</p>
   <div class="-my-s:10">
@@ -81,11 +81,11 @@ LinkBox には主に2通りの使い方があります。
 
 ```css
 @supports selector(:has(*)) {
-  .is--linkBox:has(.u--expandedLink:focus-visible) {
+  .is--linkBox:has(.is--coverLink:focus-visible) {
     outline: auto 1px;
     outline: auto 1px -webkit-focus-ring-color;
   }
-  .u--expandedLink:focus {
+  .is--coverLink:focus {
     outline: 0;
   }
 }
