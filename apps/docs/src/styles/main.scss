@@ -66,14 +66,14 @@ link:first-child + * {
 /* ----------------------------------------
     guide
  ---------------------------------------- */
-
+@layer lism-custom {
+  .has--itemGuide > * {
+    padding: 0 4px;
+    border: 1px dashed hsla(0, 0%, 63%, 0.4);
+  }
+}
 .-bd\:guide {
   border: 1px dashed rgba(160, 160, 160, 0.5);
-}
-
-:where(.has--itemGuide > *) {
-  padding: 0 4px;
-  border: 1px dashed hsla(0, 0%, 63%, 0.4);
 }
 .-hov\:itemGuide {
   > * {
