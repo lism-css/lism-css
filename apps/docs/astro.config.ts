@@ -91,6 +91,9 @@ export default defineConfig({
     '/en/docs/modules/a--divider/': '/en/docs/primitives/a--divider/',
     '/en/docs/modules/a--icon/': '/en/docs/primitives/a--icon/',
     '/en/docs/modules/a--spacer/': '/en/docs/primitives/a--spacer/',
+    // is--linkBox → is--boxLink リネーム（#245）で漏れていた旧 URL 対応
+    '/docs/modules/is--linkbox/': '/docs/primitives/is--boxlink/',
+    '/en/docs/modules/is--linkbox/': '/en/docs/primitives/is--boxlink/',
   },
 
   // パスエイリアス設定
