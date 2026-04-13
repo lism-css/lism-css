@@ -7,7 +7,7 @@
 - クラス名: `l--sideMain`
 - コンポーネント: `<SideMain>`
 - SCSSソース: https://raw.githubusercontent.com/lism-css/lism-css/main/packages/lism-css/src/scss/modules/layout/_sideMain.scss
-- ドキュメント（人間向け）: https://lism-css.com/docs/modules/l--sidemain/
+- ドキュメント（人間向け）: https://lism-css.com/docs/primitives/l--sidemain/
 
 ## 動作の仕組み
 

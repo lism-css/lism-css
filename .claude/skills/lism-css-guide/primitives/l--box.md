@@ -6,7 +6,7 @@
 
 - クラス名: `l--box`
 - コンポーネント: `<Box>`
-- ドキュメント（人間向け）: https://lism-css.com/docs/modules/l--box/
+- ドキュメント（人間向け）: https://lism-css.com/docs/primitives/l--box/
 
 ## Usage
 

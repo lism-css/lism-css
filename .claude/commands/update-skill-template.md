@@ -12,35 +12,35 @@
 | `SKILL.md` | バージョン情報・パッケージ構成・import パス・実装ルール・詳細ファイル一覧・モジュール別リファレンスへのリンク一覧 | `packages/lism-css/package.json`, `packages/lism-ui/package.json`, 各パッケージの exports |
 | `base-styles.md` | Reset CSS・HTML要素のベーススタイル・CSS変数（トークン）概要 | `packages/lism-css/src/scss/base/`, `packages/lism-css/src/scss/base/tokens/` |
 | `set-class.md` | `set--`クラス (`set--plain`,`set--shadow`,`set--hov`,`set--transition`,`set--gutter` 等) の一覧と用途解説 | `packages/lism-css/src/scss/base/set/`, `packages/lism-css/src/scss/base/tokens/_shadow.scss` |
-| `module-class.md` | モジュールクラス (`is--`, `l--`, `a--`, `c--` クラス) の一覧と用途（※俯瞰マップに徹する。個別モジュールへのリンクは載せない） | `packages/lism-css/src/scss/modules/`, `packages/lism-ui/src/`（c-- 系） |
+| `primitive-class.md` | Primitive クラス (`is--`, `l--`, `a--`) と Component クラス (`c--`) の一覧と用途（※俯瞰マップに徹する。個別 Primitive へのリンクは載せない） | `packages/lism-css/src/scss/modules/`, `packages/lism-ui/src/`（c-- 系） |
 | `utility-class.md` | ユーティリティクラス (`u--` クラス) の一覧とProperty Class との違い | `packages/lism-css/src/scss/utility/` |
 | `property-class.md` | Property Class (`-{prop}:{value}`)の一覧、記法と出力の解説、特殊Prop（ボーダー・ホバー） | `packages/lism-css/config/defaults/props.ts`, `packages/lism-css/src/scss/_prop-config.scss`, `packages/lism-css/src/scss/props/` |
 | `prop-responsive.md` | レスポンシブ対応 — ブレークポイント・コンテナクエリ・HTML/コンポーネントでの指定方法 | `packages/lism-css/src/scss/_query.scss`, `packages/lism-css/src/lib/getBpData.ts` |
-| `components-core.md` | コアコンポーネント — セマンティック・Lism Props・getLismProps。Atomic/State/Layout の対応表には `modules/*.md` への詳細リンクを保持する（※個別 Props・仕様の詳細は `modules/*.md` 側に移管済み） | `packages/lism-css/src/components/`, 各パッケージの exports |
+| `components-core.md` | コアコンポーネント — セマンティック・Lism Props・getLismProps。Atomic/Trait/Layout の対応表には `primitives/*.md` への詳細リンクを保持する（※個別 Props・仕様の詳細は `primitives/*.md` 側に移管済み） | `packages/lism-css/src/components/`, 各パッケージの exports |
 | `components-ui.md` | UIコンポーネント（`@lism-css/ui`）— Accordion・Modal・Tabs・Button 等の Props・構造・CLI | `packages/lism-ui/src/`, 各パッケージの exports |
 | `tokens.md` | デザイントークン（余白・フォントサイズ・角丸・影・カラー・パレット） | `packages/lism-css/src/scss/base/tokens/`, `packages/lism-css/config/defaults/tokens.ts` |
 | `css-rules.md` | CSS Layer 構造・命名規則・プレフィックス・カスタムCSS ルール | `packages/lism-css/src/scss/` |
 | `customize.md` | カスタマイズ — @layerオフ・SCSS変数上書き・lism.config.js・CLIビルド | `packages/lism-css/src/scss/`, `packages/lism-css/lism.config.js`, `apps/docs/src/content/ja/customize.mdx` |
 
-### `modules/` サブフォルダ配下のモジュール詳細ファイル
+### `primitives/` サブフォルダ配下の Primitive 詳細ファイル
 
-各モジュールに 1 ファイル。クラス名は camelCase のまま（例: `l--sideMain.md`, `l--tileGrid.md`, `is--boxLink.md`）、MDX 側は lowercase（`l--sidemain.mdx` 等）であることに注意。
+各 Primitive に 1 ファイル。クラス名は camelCase のまま（例: `l--sideMain.md`, `l--tileGrid.md`, `is--boxLink.md`）、MDX 側は lowercase（`l--sidemain.mdx` 等）であることに注意。
 
-ファイルの対応関係は `packages/lism-css/src/scss/modules/{layout,state,atomic}/` 配下の SCSS と 1:1。カテゴリ別の更新内容は以下：
+ファイルの対応関係は `packages/lism-css/src/scss/modules/{layout,trait,atomic}/` 配下の SCSS と 1:1。カテゴリ別の更新内容は以下：
 
 | カテゴリ | 更新内容 | 主なソース参照先 |
 |----------|----------|-----------------|
-| Layout（`modules/l--*.md`） | クラス名 / 対応コンポーネント / SCSS raw URL / 専用 Props / Usage（基本パターン + 応用）/ 関連モジュール | `packages/lism-css/src/scss/modules/layout/`, `apps/docs/src/content/ja/modules/l--*.mdx` |
-| State（`modules/is--*.md`） | 同上 + 状態モジュール固有の挙動（`href` → `<a>`、`contentSize`、`@sm`/`@md` バリエーション等） | `packages/lism-css/src/scss/modules/state/`, `apps/docs/src/content/ja/modules/is--*.mdx` |
-| Atomic（`modules/a--*.md`） | クラス名 / 対応コンポーネント / 専用 Props / Usage / HTML 出力構造 | `packages/lism-css/src/scss/modules/atomic/`, `apps/docs/src/content/ja/modules/a--*.mdx` |
+| Layout（`primitives/l--*.md`） | クラス名 / 対応コンポーネント / SCSS raw URL / 専用 Props / Usage（基本パターン + 応用）/ 関連 Primitive | `packages/lism-css/src/scss/modules/layout/`, `apps/docs/src/content/ja/primitives/l--*.mdx` |
+| Trait（`primitives/is--*.md`） | 同上 + Trait Primitive 固有の挙動（`href` → `<a>`、`contentSize`、`@sm`/`@md` バリエーション等） | `packages/lism-css/src/scss/modules/trait/`, `apps/docs/src/content/ja/primitives/is--*.mdx` |
+| Atomic（`primitives/a--*.md`） | クラス名 / 対応コンポーネント / 専用 Props / Usage / HTML 出力構造 | `packages/lism-css/src/scss/modules/atomic/`, `apps/docs/src/content/ja/primitives/a--*.mdx` |
 
-各 `modules/*.md` は以下の構成を維持すること（Phase 2 で確定したテンプレート）：
+各 `primitives/*.md` は以下の構成を維持すること（Phase 2 で確定したテンプレート）：
 
 - Front matter なし、`# {クラス名} / <Component>` の h1 で開始
 - `## 基本情報`（クラス名 / コンポーネント / SCSSソース / ドキュメント）。URL は以下の形式を維持し、誤って書き換えないこと：
-    - SCSSソース: `https://raw.githubusercontent.com/lism-css/lism-css/main/packages/lism-css/src/scss/modules/{layout|state|atomic}/_{name}.scss`
-        - **SCSS ファイルが存在するモジュールのみ記載する**。`l--box` や `a--decorator` のように `packages/lism-css/src/scss/modules/` 配下に対応する `_{name}.scss` を持たないモジュールでは、この行自体を省略する
-    - ドキュメント（人間向け）: `https://lism-css.com/docs/modules/{lowercase}/` — `{lowercase}` はクラス名の小文字版（例: `l--sideMain.md` → `l--sidemain`）
+    - SCSSソース: `https://raw.githubusercontent.com/lism-css/lism-css/main/packages/lism-css/src/scss/modules/{layout|trait|atomic}/_{name}.scss`
+        - **SCSS ファイルが存在する Primitive のみ記載する**。`l--box` や `a--decorator` のように `packages/lism-css/src/scss/modules/` 配下に対応する `_{name}.scss` を持たない Primitive では、この行自体を省略する
+    - ドキュメント（人間向け）: `https://lism-css.com/docs/primitives/{lowercase}/` — `{lowercase}` はクラス名の小文字版（例: `l--sideMain.md` → `l--sidemain`）
 - `## 専用Props`（該当モジュールのみ）
 - `## Usage`（JSX + HTML コードブロックのペアで記載。MDX の `<Preview>` / `<PreviewArea>` / `<PreviewCode>` / `<SrcCode>` 等のカスタムコンポーネントは廃棄）
 - 必要に応じて追加セクション（HTML 構造、動作の仕組み、特殊仕様、Opt-in スタイル、注意点 など）
@@ -134,7 +134,7 @@
 
 | 確認したい内容 | 参照先 |
 |---|---|
-| Layer 構造 | `packages/lism-css/src/scss/_with_layer.scss`, `packages/lism-css/src/scss/main.scss`（`lism-base` → `lism-modules`{`state`,`layout`,`atomic`} → `lism-custom` → `lism-utility`） |
+| Layer 構造 | `packages/lism-css/src/scss/_with_layer.scss`, `packages/lism-css/src/scss/main.scss`（`lism-base` → `lism-primitives`{`trait`,`layout`,`atomic`} → `lism-components` → `lism-custom` → `lism-utility`） |
 | クラス命名規則・プレフィックス | `packages/lism-css/src/scss/modules/`, `packages/lism-css/src/scss/base/` |
 
 

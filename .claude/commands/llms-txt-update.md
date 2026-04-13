@@ -32,11 +32,11 @@
 |---|---|---|
 | Getting Started | `overview.mdx`, `installation.mdx`, `changelog.mdx` | |
 | Core Concepts | `css-methodology.mdx`, `tokens.mdx`, `typography.mdx`, `base-styles.mdx`, `reset-css.mdx`, `responsive.mdx`, `customize.mdx` | |
-| CSS Classes | `set-class.mdx`, `module-class.mdx`, `utility-class.mdx`, `property-class.mdx` | |
+| CSS Classes | `set-class.mdx`, `primitives.mdx`, `utility-class.mdx`, `property-class.mdx` | |
 | Core Components | `core-components/*.mdx`（`Media.mdx` を除く） | |
-| State Modules | `modules/is--*.mdx` | |
-| Layout Modules | `modules/l--*.mdx` | |
-| Atomic Modules | `modules/a--*.mdx` + `core-components/Media.mdx` | Media はファイルパスは core-components だがこのセクションに配置 |
+| Trait Primitives | `primitives/is--*.mdx` | |
+| Layout Primitives | `primitives/l--*.mdx` | |
+| Atomic Primitives | `primitives/a--*.mdx` + `core-components/Media.mdx` | Media はファイルパスは core-components だがこのセクションに配置 |
 | UI Components | `ui/*.mdx`（`examples/` 配下・`DummyText.mdx`・`DummyImage.mdx` を除く） | |
 | Optional | `ui/examples/*.mdx`, `props/*.mdx`, `ui/DummyText.mdx`, `ui/DummyImage.mdx` | |
 

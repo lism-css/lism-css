@@ -120,7 +120,7 @@ packages/mcp/
 | `components-ui` | components-ui.md | UI コンポーネント（Accordion, Modal, Tabs, Button 等） |
 | `base-styles` | base-styles.md | ベーススタイリング・リセット CSS・HTML 要素スタイル |
 | `set-class` | set-class.md | Set クラス（set--plain, set--shadow, set--hov 等） |
-| `module-class` | module-class.md | Module クラスプレフィックス（is--, l--, a--, c--） |
+| `primitive-class` | primitive-class.md | Primitive クラスプレフィックス（is--, l--, a--）と Component クラス（c--） |
 | `utility-class` | utility-class.md | ユーティリティクラス（u--trim, u--cbox 等） |
 | `css-rules` | css-rules.md | CSS 設計方法論・Layer 構造・命名規則 |
 | `responsive` | prop-responsive.md | レスポンシブ設計・ブレークポイント・コンテナクエリ |

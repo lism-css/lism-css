@@ -7,7 +7,7 @@
 - クラス名: `l--cluster`
 - コンポーネント: `<Cluster>`
 - SCSSソース: https://raw.githubusercontent.com/lism-css/lism-css/main/packages/lism-css/src/scss/modules/layout/_cluster.scss
-- ドキュメント（人間向け）: https://lism-css.com/docs/modules/l--cluster/
+- ドキュメント（人間向け）: https://lism-css.com/docs/primitives/l--cluster/
 
 ## Usage
 

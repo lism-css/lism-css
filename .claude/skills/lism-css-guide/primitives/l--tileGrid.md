@@ -7,7 +7,7 @@
 - クラス名: `l--tileGrid`
 - コンポーネント: `<TileGrid>`
 - SCSSソース: https://raw.githubusercontent.com/lism-css/lism-css/main/packages/lism-css/src/scss/modules/layout/_tileGrid.scss
-- ドキュメント（人間向け）: https://lism-css.com/docs/modules/l--tilegrid/
+- ドキュメント（人間向け）: https://lism-css.com/docs/primitives/l--tilegrid/
 
 ## 専用Props
 

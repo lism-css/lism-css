@@ -7,7 +7,7 @@
 - クラス名: `l--fluidCols`
 - コンポーネント: `<FluidCols>`
 - SCSSソース: https://raw.githubusercontent.com/lism-css/lism-css/main/packages/lism-css/src/scss/modules/layout/_fluidCols.scss
-- ドキュメント（人間向け）: https://lism-css.com/docs/modules/l--fluidcols/
+- ドキュメント（人間向け）: https://lism-css.com/docs/primitives/l--fluidcols/
 
 ## 専用Props
 

@@ -7,7 +7,7 @@
 - クラス名: `a--divider`
 - コンポーネント: `<Divider>`
 - SCSSソース: https://raw.githubusercontent.com/lism-css/lism-css/main/packages/lism-css/src/scss/modules/atomic/_divider.scss
-- ドキュメント（人間向け）: https://lism-css.com/docs/modules/a--divider/
+- ドキュメント（人間向け）: https://lism-css.com/docs/primitives/a--divider/
 
 ## 専用Props
 

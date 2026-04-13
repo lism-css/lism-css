@@ -6,8 +6,8 @@
 
 - クラス名: `is--wrapper`
 - コンポーネント: `<Wrapper>`
-- SCSSソース: https://raw.githubusercontent.com/lism-css/lism-css/main/packages/lism-css/src/scss/modules/state/_wrapper.scss
-- ドキュメント（人間向け）: https://lism-css.com/docs/modules/is--wrapper/
+- SCSSソース: https://raw.githubusercontent.com/lism-css/lism-css/main/packages/lism-css/src/scss/modules/trait/_wrapper.scss
+- ドキュメント（人間向け）: https://lism-css.com/docs/primitives/is--wrapper/
 
 ## 使い方
 

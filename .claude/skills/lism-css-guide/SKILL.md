@@ -52,7 +52,7 @@ import { Accordion, Tabs, Button } from '@lism-css/ui/astro';
 
 まずは以下のチェックリストを確認しながら、Lism CSS でできることが何かを考えてから実装方針を立ててください。
 
-- `l--`,`a--`,`is--`, `c--`などのModule Classを用いることができるか？（React, Astroの場合は `Lism`, `Stack`, `Flex`, `Columns` 等のコンポーネントを利用して構築できるか？）
+- `l--`,`a--`,`is--` などの Primitive Class や `c--` などの Component Class を用いることができるか？（React, Astroの場合は `Lism`, `Stack`, `Flex`, `Columns` 等のコンポーネントを利用して構築できるか？）
 - Lism の用意している `set--`系クラス、`u--`系クラスは使えないか？
 - Property Class (`-{prop}:{value}` or `<Lism prop="value">`))を使ってスタイリングできるか？
 - 値をレスポンシブに切り替える時は Lism の Property Class (`-{prop}_{bp}` or `<Lism prop={[...]}>`)を使って実装できるか？
@@ -62,7 +62,7 @@ import { Accordion, Tabs, Button } from '@lism-css/ui/astro';
 ### ネイティブCSS で書くもの（必要に応じて適切な `@layer` 内で書くこと）
 
 - Lismにないアニメーションやhoverエフェクト（適宜クラスを追加して使用する）
-- 独自コンポーネントの実装に合わせた`c--`クラス(`@layer lism-modules`内で定義する)
+- 独自コンポーネントの実装に合わせた`c--`クラス(`@layer lism-components`内で定義する)
 - 複雑なセレクタ（`:nth-child`, `::before`, `::after` 等）を使用する必要があるスタイル
 - カスタムプロパティを使った独自の計算式が必要なスタイル
 - その他、Lism のトークンやモジュールでカバーできない特殊なスタイル
@@ -103,7 +103,7 @@ import { Accordion, Tabs, Button } from '@lism-css/ui/astro';
 - [css-rules.md](./css-rules.md) — CSS設計の概要。（Layer構造・クラスの分類・命名規則・プレフィックスのつけ方・カスタムCSSの追加ルール）
 - [base-styles.md](./base-styles.md) — HTML要素のベーススタイリング。（Reset CSSやHTML要素の基本スタイルをカスタマイズできるCSS変数）
 - [set-class.md](./set-class.md) — ベーススタイル・変数セットに使用する`set--` クラスの一覧と用途。
-- [module-class.md](./module-class.md) — レイアウトやコンポーネントに使用するモジュールクラス（`is--`/`l--`/`a--`/`c--` クラス）の一覧と用途。
+- [primitive-class.md](./primitive-class.md) — レイアウトを組み立てる Primitive クラス（`is--`/`l--`/`a--`）と Component クラス（`c--`）の一覧と用途。
 - [utility-class.md](./utility-class.md) — 具体的な用途・装飾・機能を持つユーティリティクラス（`u--` クラス）の一覧と用途。
 - [property-class.md](./property-class.md) — 単一のCSSプロパティに対応するProperty Class（`-{prop}:{value}`形式のクラス）の一覧・記法。
 - [prop-responsive.md](./prop-responsive.md) — レスポンシブ対応（ブレークポイント・コンテナクエリ）の書き方・仕様。
@@ -112,40 +112,40 @@ import { Accordion, Tabs, Button } from '@lism-css/ui/astro';
 
 これら各ファイルの冒頭にはTOC（目次）があり、セクションごとの詳細URL・ソースURLがまとめて記載されています。
 
-### モジュール単位の詳細リファレンス
+### Primitive 単位の詳細リファレンス
 
-`l--*` / `is--*` / `a--*` クラスや対応するコンポーネント（`<Flex>`, `<Grid>` 等）を使ってUIを実装する時は、以下のモジュール別ファイルを参照してください。
+`l--*` / `is--*` / `a--*` クラスや対応するコンポーネント（`<Flex>`, `<Grid>` 等）を使ってUIを実装する時は、以下の Primitive 別ファイルを参照してください。
 
-**Layout Modules**
+**Layout Primitives**
 
-- `l--box` / `<Box>`: [modules/l--box.md](./modules/l--box.md)
-- `l--flex` / `<Flex>`: [modules/l--flex.md](./modules/l--flex.md)
-- `l--stack` / `<Stack>`: [modules/l--stack.md](./modules/l--stack.md)
-- `l--cluster` / `<Cluster>`: [modules/l--cluster.md](./modules/l--cluster.md)
-- `l--grid` / `<Grid>`: [modules/l--grid.md](./modules/l--grid.md)
-- `l--flow` / `<Flow>`: [modules/l--flow.md](./modules/l--flow.md)
-- `l--center` / `<Center>`: [modules/l--center.md](./modules/l--center.md)
-- `l--frame` / `<Frame>`: [modules/l--frame.md](./modules/l--frame.md)
-- `l--columns` / `<Columns>`: [modules/l--columns.md](./modules/l--columns.md)
-- `l--tileGrid` / `<TileGrid>`: [modules/l--tileGrid.md](./modules/l--tileGrid.md)
-- `l--fluidCols` / `<FluidCols>`: [modules/l--fluidCols.md](./modules/l--fluidCols.md)
-- `l--switchCols` / `<SwitchCols>`: [modules/l--switchCols.md](./modules/l--switchCols.md)
-- `l--sideMain` / `<SideMain>`: [modules/l--sideMain.md](./modules/l--sideMain.md)
+- `l--box` / `<Box>`: [primitives/l--box.md](./primitives/l--box.md)
+- `l--flex` / `<Flex>`: [primitives/l--flex.md](./primitives/l--flex.md)
+- `l--stack` / `<Stack>`: [primitives/l--stack.md](./primitives/l--stack.md)
+- `l--cluster` / `<Cluster>`: [primitives/l--cluster.md](./primitives/l--cluster.md)
+- `l--grid` / `<Grid>`: [primitives/l--grid.md](./primitives/l--grid.md)
+- `l--flow` / `<Flow>`: [primitives/l--flow.md](./primitives/l--flow.md)
+- `l--center` / `<Center>`: [primitives/l--center.md](./primitives/l--center.md)
+- `l--frame` / `<Frame>`: [primitives/l--frame.md](./primitives/l--frame.md)
+- `l--columns` / `<Columns>`: [primitives/l--columns.md](./primitives/l--columns.md)
+- `l--tileGrid` / `<TileGrid>`: [primitives/l--tileGrid.md](./primitives/l--tileGrid.md)
+- `l--fluidCols` / `<FluidCols>`: [primitives/l--fluidCols.md](./primitives/l--fluidCols.md)
+- `l--switchCols` / `<SwitchCols>`: [primitives/l--switchCols.md](./primitives/l--switchCols.md)
+- `l--sideMain` / `<SideMain>`: [primitives/l--sideMain.md](./primitives/l--sideMain.md)
 
-**State Modules**
+**Trait Primitives**
 
-- `is--container` / `<Container>`: [modules/is--container.md](./modules/is--container.md)
-- `is--wrapper` / `<Wrapper>`: [modules/is--wrapper.md](./modules/is--wrapper.md)
-- `is--layer` / `<Layer>`: [modules/is--layer.md](./modules/is--layer.md)
-- `is--boxLink` / `<BoxLink>`: [modules/is--boxLink.md](./modules/is--boxLink.md)
-- `is--vertical`: [modules/is--vertical.md](./modules/is--vertical.md)
+- `is--container` / `<Container>`: [primitives/is--container.md](./primitives/is--container.md)
+- `is--wrapper` / `<Wrapper>`: [primitives/is--wrapper.md](./primitives/is--wrapper.md)
+- `is--layer` / `<Layer>`: [primitives/is--layer.md](./primitives/is--layer.md)
+- `is--boxLink` / `<BoxLink>`: [primitives/is--boxLink.md](./primitives/is--boxLink.md)
+- `is--vertical`: [primitives/is--vertical.md](./primitives/is--vertical.md)
 
-**Atomic Modules**
+**Atomic Primitives**
 
-- `a--icon` / `<Icon>`: [modules/a--icon.md](./modules/a--icon.md)
-- `a--divider` / `<Divider>`: [modules/a--divider.md](./modules/a--divider.md)
-- `a--spacer` / `<Spacer>`: [modules/a--spacer.md](./modules/a--spacer.md)
-- `a--decorator` / `<Decorator>`: [modules/a--decorator.md](./modules/a--decorator.md)
+- `a--icon` / `<Icon>`: [primitives/a--icon.md](./primitives/a--icon.md)
+- `a--divider` / `<Divider>`: [primitives/a--divider.md](./primitives/a--divider.md)
+- `a--spacer` / `<Spacer>`: [primitives/a--spacer.md](./primitives/a--spacer.md)
+- `a--decorator` / `<Decorator>`: [primitives/a--decorator.md](./primitives/a--decorator.md)
 
 
 ## このスキルファイル自身のアップデート方法
