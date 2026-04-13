@@ -77,35 +77,38 @@ const getTokenKey = (propName: string): string => {
   return (propData?.token as string) || '';
 };
 
+// lismClass に variant クラスを差し込む
+// 例: lismClass='l--box extra', variant='primary' → 'l--box l--box--primary extra'
+function buildLismClass(lismClass: string | undefined, variant: string | undefined): string {
+  if (!lismClass) return '';
+  if (!variant) return lismClass;
+
+  const parts = lismClass.split(' ');
+  const baseClass = parts[0];
+  return [baseClass, `${baseClass}--${variant}`, ...parts.slice(1)].join(' ');
+}
+
 export class LismPropsData {
-  // propList = {};
+  // 最終出力 className
   className: string = '';
-  uClasses: string[] = [];
+  // 出力順のためのクラスバケット: [lismClass] [lismState] [uClasses]
+  // - lismClass : コンポーネント基底クラス + variant + l--{layout}（getLayoutProps 側で付与済み）
+  // - lismState : is--* 等の state クラス
+  // - uClasses  : set--* → u--* → -property の順で push される utility クラス
+  lismClass: string = '';
   lismState: string[] = [];
+  uClasses: string[] = [];
   styles: StyleWithCustomProps = {};
   attrs: Record<string, unknown> = {};
   _propConfig?: Record<string, PropConfig>;
 
   constructor(allProps: LismPropsBase & Record<string, unknown>) {
     // 受け取るpropsとそうでないpropsを分ける
-    const { forwardedRef, class: classFromAstro, className, lismClass, variant, style = {}, _propConfig = {}, ...others } = allProps;
+    const { forwardedRef, class: astroClassName, className: userClassName, lismClass, variant, style = {}, _propConfig = {}, ...others } = allProps;
 
     this.styles = { ...style };
     this._propConfig = { ..._propConfig };
-
-    let _lismClass = lismClass || '';
-    // variantがあれば追加処理
-    if (variant && lismClass) {
-      // lismClassをスペースで分割して配列化
-      const lismClassArr = lismClass.split(' ');
-      const baseClass = lismClassArr[0];
-
-      // {baseClass}--{variant} 形式でクラス名を生成
-      const variantClass = `${baseClass}--${variant}`;
-
-      // baseClass の後ろにvariantクラスを追加
-      _lismClass = [baseClass, variantClass, ...lismClassArr.slice(1)].join(' ');
-    }
+    this.lismClass = buildLismClass(lismClass, variant);
 
     // propsの処理
     if (!isEmptyObj(others)) {
@@ -136,7 +139,13 @@ export class LismPropsData {
     // }
 
     // クラスの結合
-    this.className = atts(className || classFromAstro, _lismClass, this.lismState, this.uClasses);
+    this.className = this.buildClassName(userClassName, astroClassName);
+  }
+
+  // 最終クラス文字列の組み立て（出力順の唯一の確定地点）
+  // 出力順: [user/astro className] [lismClass] [lismState] [uClasses]
+  buildClassName(userClassName?: string, astroClassName?: string): string {
+    return atts(userClassName || astroClassName, this.lismClass, this.lismState, this.uClasses);
   }
 
   analyzeState(statePropData: StatePropDataObject, propVal: unknown): void {
