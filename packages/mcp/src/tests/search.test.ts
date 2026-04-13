@@ -133,7 +133,7 @@ describe('searchDocs with Property Class notation', () => {
       title: 'Property Class',
       keywords: ['property class', '-g:', '-g:5', '-p:', '-p:20', 'gap', 'padding'],
       snippet: '-{prop}:{value} の形式（例: -g:5, -p:20, -fz:l）。',
-      category: 'props',
+      category: 'property-class',
     }),
     entry({
       sourcePath: 'primitives/l--grid.mdx',
