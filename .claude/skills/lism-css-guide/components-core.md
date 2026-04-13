@@ -55,7 +55,8 @@ import { Lism, Box, Flex, Stack, Grid, Text, Media } from 'lism-css/astro';
 | `lismClass` | コンポーネントの主要クラス名を指定。（`c--{lismClass}`） | `lismClass="c--myComponent"` |
 | `variant` | `lismClass` に対するバリエーションクラスを指定。（`c--{lismClass}--{variant}`） | `variant="secondary"` |
 | `layout` | レイアウトモジュール（`l--{layout}`）を指定。 | `layout="flow"` |
-| `set` | セットクラス（`set--{value}`）を指定。スペース区切りで複数指定可 | `set="gutter"`, `set="transition plain"` |
+| `set` | セットクラス（`set--{value}`）を指定。スペース・カンマ区切りで複数指定可。値の先頭に `-` を付けると除外 | `set="gutter"`, `set="transition plain"`, `set="-plain"` |
+| `util` | ユーティリティクラス（`u--{value}`）を指定。`set` と同様に複数指定・`-` prefix 除外が可能 | `util="cbox"`, `util="cbox trim"`, `util="-trim"` |
 | `exProps` | Lism Propsの処理をスキップして外部コンポーネントに直接渡すpropsオブジェクト | `exProps={{ size: '1em' }}` |
 
 ```jsx
@@ -83,9 +84,20 @@ import { Lism, Box, Flex, Stack, Grid, Text, Media } from 'lism-css/astro';
 <Box set="shadow" p="30">...</Box>
 // → <div class="l--box set--shadow -p:30">...</div>
 
-// set を複数指定
+// set を複数指定（スペース区切り／カンマ区切り）
 <Stack set="shadow hov" p="30">...</Stack>
 // → <div class="l--stack set--shadow set--hov -p:30">...</div>
+
+// `-` prefix で除外（コンポーネント内部で適用済みの set を打ち消す用途）
+<AccordionButton set="-plain">...</AccordionButton>
+
+// util でユーティリティクラス（u--）を付与
+<Box util="cbox" keycolor="red" p="20">...</Box>
+// → <div class="l--box u--cbox -p:20" style="--keycolor: var(--red)">...</div>
+
+// util を複数指定・除外も set と同じ記法
+<Lism util="cbox trim">...</Lism>
+<Lism util="cbox -trim">...</Lism>
 ```
 
 
