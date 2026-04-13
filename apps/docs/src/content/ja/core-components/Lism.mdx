@@ -74,8 +74,12 @@ import { Lism, Media } from 'lism-css/astro';
 
 ### `lismClass`
 
-現在のコンポーネントの主要なクラス名を指定できます。
-`<Lism>`のクラス処理の中で優先度が高めの出力順となります。
+コンポーネントの基底となる`c--`クラス（Component Class）を指定するための専用スロットです。
+ここに指定したクラスは `variant` prop によるBEM展開の対象にもなります。
+
+:::info
+BEM展開は`c--`基底クラス専用の仕組みです。`a--*`（atomic）や`l--*`（layout）は後述の`atomic` / `layout` prop から指定してください。
+:::
 
 <PreviewTitle>例</PreviewTitle>
 ```jsx 'lismClass="c--myComponent"'
@@ -89,7 +93,7 @@ import { Lism, Media } from 'lism-css/astro';
 
 ### `variant`
 
-`lismClass`に対するバリエーションクラスを出力できます。  
+`lismClass`に対するバリエーションクラスを出力できます。
 `lismClass` に複数クラスが指定されている場合、先頭のクラスに対してバリエーションクラスを出力します。
 
 
@@ -103,7 +107,7 @@ import { Lism, Media } from 'lism-css/astro';
 ```
 
 
-### layout
+### `layout`
 
 レイアウトプリミティブを指定できます。例えば`layout='flow'`とすると、`.l--flow`クラスが出力されます。
 
@@ -115,6 +119,28 @@ import { Lism, Media } from 'lism-css/astro';
 
 <div class="l--flow">Lorem ipsum texts...</div>
 ```
+
+
+### `atomic`
+
+Atomic Primitive クラス（`a--*`）を指定できます。`<Divider>` / `<Spacer>` / `<Decorator>` といった atomic コンポーネントと等価の動作を `<Lism>` 側からも呼び出せます。
+
+| 値 | 付与クラス | 等価コンポーネント |
+|---|---|---|
+| `'divider'` | `a--divider` | `<Divider>` |
+| `'spacer'` | `a--spacer` | `<Spacer>` |
+| `'decorator'` | `a--decorator` | `<Decorator>` |
+
+<PreviewTitle>例</PreviewTitle>
+```jsx 'atomic="divider"'
+<Lism atomic="divider" />
+
+↓
+
+<div class="a--divider" aria-hidden="true"></div>
+```
+
+`atomic="spacer"` 時は `w` / `h` のスペーストークン変換、`atomic="decorator"` 時は `size` / `clipPath` / `boxSizing` 固有処理が行われます。
 
 
 ### `set`
@@ -410,26 +436,27 @@ BP対応プロパティは、配列またはオブジェクトでブレイクポ
 
 ### クラスの出力順
 
-`<Lism>` が生成する `class` 属性は、大きく **「ユーザー指定」「コンポーネント・プリミティブ群」「ユーティリティ群」** の3ブロックに分かれます。ユーティリティ群は粒度の低い（＝塊としての）順 `set--` → `u--` → Property Class で並びます。
+`<Lism>` が生成する `class` 属性は、大きく **「ユーザー指定」「コンポーネント（`c--`）」「プリミティブ群（`a--` / `l--` / `is--`）」「ユーティリティ群」** の4ブロックに分かれます。ユーティリティ群は粒度の低い（＝塊としての）順 `set--` → `u--` → Property Class で並びます。
 
 ```
-[className] [lismClass] [l--{layout}] [is--*(Trait)] [set--*] [u--*] [Property Class...]
+[className] [lismClass (c--)] [a--*] [l--*] [is--*] [set--*] [u--*] [Property Class...]
 ```
 
 | # | 区分 | 由来 | 例 |
 |---|---|---|---|
 | 1 | `className` | ユーザーが直接渡すクラス | `my-card` |
-| 2 | `lismClass`（+ `variant`） | コンポーネント本体のクラス。`c--*`（複合）や `a--*`（atomic）等 | `c--box`, `a--icon`, `c--box c--box--primary` |
-| 3 | レイアウトプリミティブ | `layout` prop | `l--box`, `l--flow` |
-| 4 | トレイトプリミティブ | Trait Props（`isWrapper` 等） | `is--wrapper`, `is--layer` |
-| 5 | Set Class | `set` prop | `set--hov`, `set--card` |
-| 6 | `u--` ユーティリティ | `util` prop | `u--cbox`, `u--trim` |
-| 7 | Property Class | CSS Props（`hov` 含む） | `-p:20`, `-bgc:base-2` |
+| 2 | `lismClass`（+ `variant`） | コンポーネントの基底`c--`クラス。BEM展開の対象 | `c--box`, `c--box c--box--primary` |
+| 3 | Atomic Primitive | `atomic` prop | `a--divider`, `a--spacer` |
+| 4 | Layout Primitive | `layout` prop | `l--box`, `l--flow` |
+| 5 | Trait Primitive | Trait Props（`isWrapper` 等） | `is--wrapper`, `is--layer` |
+| 6 | Set Class | `set` prop | `set--hov`, `set--card` |
+| 7 | `u--` ユーティリティ | `util` prop | `u--cbox`, `u--trim` |
+| 8 | Property Class | CSS Props（`hov` 含む） | `-p:20`, `-bgc:base-2` |
 
-2〜4 はいずれも [Component Class / Primitive Class](/docs/css-methodology/)（CSS レイヤー `lism-component` / `lism-primitive`）に属し、5〜7 はユーティリティ系のクラスです。
+2 は [Component Class](/docs/css-methodology/)（CSS レイヤー `lism-component`）、3〜5 は [Primitive Class](/docs/css-methodology/)（CSS レイヤー `lism-primitive`）に属し、6〜8 はユーティリティ系のクラスです。
 
 :::note
-`layout="flow"` の `-flow:{size}` はレイアウトプリミティブ固有の設定クラスとして扱われるため、`l--flow` の直後に出力されます。
+`layout="flow"` の `-flow:{size}` はレイアウトプリミティブ固有の設定クラスとして扱われるため、`l--flow` 直後のプリミティブ群に並びます。
 :::
 
 :::note

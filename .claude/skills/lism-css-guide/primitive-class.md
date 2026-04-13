@@ -29,7 +29,7 @@ Lism CSS では、レイアウトを組み立てる小さな積み木として *
 - `is--` は他のすべての Primitive / Component と併用可能（複数の `is--` 同士もOK）
 - `l--` と `c--` は併用可能（例: `class="l--flex c--nav"`）
 - 同カテゴリ内の併用は不可（例: `l--flex` と `l--grid` は同要素に付けない）
-- `c--` のみ Modifier との併記が可能（`.c--button.c--button--outline`）
+- **BEM Modifier（`.c--button.c--button--outline`）は `c--` 専用。`a--` / `l--` には `variant` の BEM 展開は適用されない**
 
 
 ## Trait Primitive（`is--`）
