@@ -24,7 +24,7 @@ const langSelectText = t(currentLang, 'langSelect');
   <Lism
     as="button"
     type="button"
-    class="c--langSelect__trigger l--flex -ai:center"
+    class="c--langSelect_trigger l--flex -ai:center"
     p="10"
     bgc="base"
     bdrs="10"
@@ -38,15 +38,15 @@ const langSelectText = t(currentLang, 'langSelect');
         d="M247.15,212.42l-56-112a8,8,0,0,0-14.31,0l-21.71,43.43A88,88,0,0,1,108,126.93,103.65,103.65,0,0,0,135.69,64H160a8,8,0,0,0,0-16H104V32a8,8,0,0,0-16,0V48H32a8,8,0,0,0,0,16h87.63A87.76,87.76,0,0,1,96,116.35a87.74,87.74,0,0,1-19-31,8,8,0,1,0-15.08,5.34A103.63,103.63,0,0,0,84,127a87.55,87.55,0,0,1-52,17,8,8,0,0,0,0,16,103.46,103.46,0,0,0,64-22.08,104.18,104.18,0,0,0,51.44,21.31l-26.6,53.19a8,8,0,0,0,14.31,7.16L148.94,192h70.11l13.79,27.58A8,8,0,0,0,240,224a8,8,0,0,0,7.15-11.58ZM156.94,176,184,121.89,211.05,176Z"
       ></path>
     </Icon>
-    <Inline class="c--langSelect__current" fz="xs" lh="xs" c="text-2">{getLangLabel(currentLang)}</Inline>
-    <Icon icon="caret-down" fz="xs" class="c--langSelect__arrow" />
+    <Inline class="c--langSelect_current" fz="xs" lh="xs" c="text-2">{getLangLabel(currentLang)}</Inline>
+    <Icon icon="caret-down" fz="xs" class="c--langSelect_arrow" />
   </Lism>
 
-  <Lism as="ul" class="c--langSelect__menu" bgc="base" bdrs="10" bxsh="10" role="listbox" aria-label={langSelectText.menuAriaLabel}>
+  <Lism as="ul" class="c--langSelect_menu" bgc="base" bdrs="10" bxsh="10" role="listbox" aria-label={langSelectText.menuAriaLabel}>
     {
       alternateUrls.map(({ lang, url }) => (
         <ListItem role="option" aria-selected={lang === currentLang}>
-          <a href={url} class:list={['c--langSelect__item', { '-active': lang === currentLang }]} lang={lang} hreflang={lang}>
+          <a href={url} class:list={['c--langSelect_item', { '-active': lang === currentLang }]} lang={lang} hreflang={lang}>
             {getLangLabel(lang)}
           </a>
         </ListItem>
@@ -58,20 +58,20 @@ const langSelectText = t(currentLang, 'langSelect');
 <style>
   /* .c--langSelect {} */
 
-  .c--langSelect__trigger {
+  .c--langSelect_trigger {
     gap: 0.375em;
     cursor: pointer;
   }
 
-  .c--langSelect__arrow {
+  .c--langSelect_arrow {
     transition: transform 0.2s;
   }
 
-  .c--langSelect[data-open] .c--langSelect__arrow {
+  .c--langSelect[data-open] .c--langSelect_arrow {
     transform: rotate(180deg);
   }
 
-  .c--langSelect__menu {
+  .c--langSelect_menu {
     position: absolute;
     bottom: 100%; /* 上に表示 */
     left: 0;
@@ -88,13 +88,13 @@ const langSelectText = t(currentLang, 'langSelect');
       transform 0.2s;
   }
 
-  .c--langSelect[data-open] .c--langSelect__menu {
+  .c--langSelect[data-open] .c--langSelect_menu {
     opacity: 1;
     visibility: visible;
     transform: translateY(0);
   }
 
-  .c--langSelect__item {
+  .c--langSelect_item {
     display: block;
     padding: 0.5em 0.75em;
     font-size: var(--fz--s);
@@ -104,11 +104,11 @@ const langSelectText = t(currentLang, 'langSelect');
     transition: background-color 0.2s;
   }
 
-  .c--langSelect__item:hover {
+  .c--langSelect_item:hover {
     background: var(--base-2);
   }
 
-  .c--langSelect__item.-active {
+  .c--langSelect_item.-active {
     font-weight: bold;
     background: var(--base-2);
   }
@@ -117,7 +117,7 @@ const langSelectText = t(currentLang, 'langSelect');
 <script>
   // 言語セレクトのトグル動作
   document.querySelectorAll('.c--langSelect').forEach((select) => {
-    const trigger = select.querySelector('.c--langSelect__trigger');
+    const trigger = select.querySelector('.c--langSelect_trigger');
     if (!trigger) return;
 
     // クリックでメニュー開閉

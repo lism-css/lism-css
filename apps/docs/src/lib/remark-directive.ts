@@ -28,7 +28,7 @@
  *
  * 出力（変換後）:
  *   <Callout type="point">
- *     <div class="c--callout__title">タイトルテキスト</div>
+ *     <div class="c--callout_title">タイトルテキスト</div>
  *     ここに文章
  *   </Callout>
  *
@@ -120,7 +120,7 @@ export function remarkDirectiveHandler() {
                   {
                     type: 'mdxJsxAttribute',
                     name: 'class',
-                    value: 'c--callout__title',
+                    value: 'c--callout_title',
                   },
                 ],
                 children: child.children,

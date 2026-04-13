@@ -41,11 +41,11 @@ const href = getLocalizedUrl(path.startsWith('/') ? path : `/${path}`, currentLa
 ---
 
 <BoxLink href={href} layout="stack" bdrs="20" my="40" bd bgc="base" hov="bxsh, bdc, bgc" set="hov transition" class="c--innerLink">
-  <Flex class="c--innerLink__icon" c="text-2" p="5" lh="1" pos="absolute" set="transition">
+  <Flex class="c--innerLink_icon" c="text-2" p="5" lh="1" pos="absolute" set="transition">
     <Icon icon="link" />
   </Flex>
   <Group px-s="40" p="30">
-    <span class="c--innerLink__title -fw:bold">{displayTitle}</span>
+    <span class="c--innerLink_title -fw:bold">{displayTitle}</span>
     <Inline set="transition"> →</Inline>
   </Group>
 </BoxLink>
@@ -58,14 +58,14 @@ const href = getLocalizedUrl(path.startsWith('/') ? path : `/${path}`, currentLa
     --bdw: 3px;
     --hov-prop: border-color, box-shadow, background-color, translate;
   }
-  .c--innerLink__icon {
+  .c--innerLink_icon {
     border-radius: calc(var(--bdrs--20) - 3px) 0 var(--bdrs--20) 0;
     background-color: var(--_isHov, var(--divider)) var(--_notHov, var(--base-2));
   }
-  /* .c--innerLink__title {
+  /* .c--innerLink_title {
 		text-decoration: var(--_isHov, underline);
 	} */
-  .c--innerLink__title + span {
+  .c--innerLink_title + span {
     display: inline-flex;
     translate: var(--_isHov, 3px 0);
   }

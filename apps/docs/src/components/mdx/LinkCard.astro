@@ -125,23 +125,23 @@ const displayFavicon = ogpData?.favicon || '';
 <BoxLink href={href} target="_blank" rel="noopener noreferrer" class="c--linkCard -my:40" bdrs="20" my="40" p="20" bgc="base" bd>
   <Flex g="20" ai="stretch" w="100%">
     <Stack g="10" fx="1" py="5" min-w="0">
-      <Inline class="c--linkCard__title" fz="m" fw="bold" lh="s">{displayTitle}</Inline>
+      <Inline class="c--linkCard_title" fz="m" fw="bold" lh="s">{displayTitle}</Inline>
       {
         displayDescription && (
-          <Inline class="c--linkCard__desc" fz="s" lh="s" o="-10">
+          <Inline class="c--linkCard_desc" fz="s" lh="s" o="-10">
             {displayDescription}
           </Inline>
         )
       }
       <Flex g="10" ai="center" my-s="auto" py-s="10">
-        {displayFavicon && <img src={displayFavicon} alt="" width="16" height="16" class="c--linkCard__favicon" loading="lazy" />}
-        <Inline class="c--linkCard__site" fz="xs" lh="1" o="-10">{displaySiteName}</Inline>
+        {displayFavicon && <img src={displayFavicon} alt="" width="16" height="16" class="c--linkCard_favicon" loading="lazy" />}
+        <Inline class="c--linkCard_site" fz="xs" lh="1" o="-10">{displaySiteName}</Inline>
       </Flex>
     </Stack>
 
     {
       displayImage && (
-        <Frame w="120px" ar="1/1" fxsh="0" bdrs="10" class="c--linkCard__thumb">
+        <Frame w="120px" ar="1/1" fxsh="0" bdrs="10" class="c--linkCard_thumb">
           <img src={displayImage} alt="" loading="lazy" />
         </Frame>
       )
@@ -160,8 +160,8 @@ const displayFavicon = ogpData?.favicon || '';
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   }
 
-  .c--linkCard__title,
-  .c--linkCard__desc {
+  .c--linkCard_title,
+  .c--linkCard_desc {
     /* テキストを最大2行に制限し、省略時は ... を表示 */
     display: -webkit-box;
     -webkit-line-clamp: 2;
@@ -169,7 +169,7 @@ const displayFavicon = ogpData?.favicon || '';
     overflow: hidden;
   }
 
-  .c--linkCard__site {
+  .c--linkCard_site {
     /* テキストを1行に制限し、省略時は ... を表示 */
     overflow: hidden;
     text-overflow: ellipsis;
@@ -177,7 +177,7 @@ const displayFavicon = ogpData?.favicon || '';
     max-width: 100%;
   }
 
-  .c--linkCard__favicon {
+  .c--linkCard_favicon {
     width: 1em;
     height: 1em;
     object-fit: contain;
@@ -185,7 +185,7 @@ const displayFavicon = ogpData?.favicon || '';
   }
 
   @container (width < 380px) {
-    .c--linkCard__thumb {
+    .c--linkCard_thumb {
       display: none;
     }
   }
