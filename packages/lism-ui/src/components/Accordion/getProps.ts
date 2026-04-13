@@ -38,11 +38,11 @@ export function getItemProps({ lismClass, ...props }: AccordionItemProps) {
   return props;
 }
 
-export function getHeadingProps({ as = 'div', role, lismClass, set, unset, ...props }: AccordionHeadingProps) {
+export function getHeadingProps({ as = 'div', role, lismClass, set, ...props }: AccordionHeadingProps) {
   const returnProps = {
     lismClass: atts(lismClass, 'c--accordion_heading'),
     as,
-    set: mergeSet('plain', set, unset),
+    set: mergeSet('plain', set).join(' '),
     ...props,
   };
 
@@ -52,12 +52,12 @@ export function getHeadingProps({ as = 'div', role, lismClass, set, unset, ...pr
   return returnProps;
 }
 
-export function getButtonProps({ set, unset, ...props }: Record<string, unknown>) {
+export function getButtonProps({ set, ...props }: Record<string, unknown>) {
   return {
     lismClass: 'c--accordion_button',
     as: 'button',
     layout: 'flex',
-    set: mergeSet('plain', set, unset),
+    set: mergeSet('plain', set).join(' '),
     g: '10',
     w: '100%',
     ai: 'center',

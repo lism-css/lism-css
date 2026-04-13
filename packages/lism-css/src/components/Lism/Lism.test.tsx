@@ -1206,9 +1206,9 @@ describe('Lism', () => {
         expect(element).toHaveClass('set--hov');
       });
 
-      test('set={["hov", "transition"]} で複数の set-- クラスが出力される', () => {
+      test('set="hov transition" で複数の set-- クラスが出力される', () => {
         render(
-          <Lism set={['hov', 'transition']} data-testid="lism">
+          <Lism set="hov transition" data-testid="lism">
             test
           </Lism>
         );
@@ -1270,10 +1270,10 @@ describe('Lism', () => {
       });
     });
 
-    describe('unset States', () => {
-      test('set + unset で指定した値が除外される', () => {
+    describe('set 値内 `-` prefix による除外', () => {
+      test('set 値内 `-name` で指定した値が除外される', () => {
         render(
-          <Lism set={['hov', 'transition', 'shadow']} unset="shadow" data-testid="lism">
+          <Lism set="hov transition shadow -shadow" data-testid="lism">
             test
           </Lism>
         );
@@ -1283,9 +1283,9 @@ describe('Lism', () => {
         expect(element).not.toHaveClass('set--shadow');
       });
 
-      test('unset を配列で複数指定できる', () => {
+      test('複数の `-name` で複数除外できる', () => {
         render(
-          <Lism set={['hov', 'transition', 'shadow']} unset={['hov', 'shadow']} data-testid="lism">
+          <Lism set="hov transition shadow -hov -shadow" data-testid="lism">
             test
           </Lism>
         );
@@ -1295,24 +1295,70 @@ describe('Lism', () => {
         expect(element).not.toHaveClass('set--shadow');
       });
 
-      test('unset で全て除外すると set-- クラスが出力されない', () => {
+      test('全て除外すると set-- クラスが出力されない', () => {
         render(
-          <Lism set="gutter" unset="gutter" data-testid="lism">
+          <Lism set="gutter -gutter" data-testid="lism">
             test
           </Lism>
         );
         const element = screen.getByTestId('lism');
         expect(element.className).not.toMatch(/set--/);
       });
+    });
 
-      test('set が無い場合、unset だけ指定しても何も出力されない', () => {
+    describe('util prop による u-- クラス出力', () => {
+      test('util="cbox" で u--cbox クラスが出力される', () => {
         render(
-          <Lism unset="gutter" data-testid="lism">
+          <Lism util="cbox" data-testid="lism">
             test
           </Lism>
         );
         const element = screen.getByTestId('lism');
-        expect(element.className).not.toMatch(/set--/);
+        expect(element).toHaveClass('u--cbox');
+      });
+
+      test('util="cbox trim" 空白区切りで複数の u-- クラスが出力される', () => {
+        render(
+          <Lism util="cbox trim" data-testid="lism">
+            test
+          </Lism>
+        );
+        const element = screen.getByTestId('lism');
+        expect(element).toHaveClass('u--cbox');
+        expect(element).toHaveClass('u--trim');
+      });
+
+      test('util="cbox,trim" カンマ区切りでも複数指定できる', () => {
+        render(
+          <Lism util="cbox,trim" data-testid="lism">
+            test
+          </Lism>
+        );
+        const element = screen.getByTestId('lism');
+        expect(element).toHaveClass('u--cbox');
+        expect(element).toHaveClass('u--trim');
+      });
+
+      test('util 値内 `-name` で指定した値が除外される', () => {
+        render(
+          <Lism util="cbox trim -trim" data-testid="lism">
+            test
+          </Lism>
+        );
+        const element = screen.getByTestId('lism');
+        expect(element).toHaveClass('u--cbox');
+        expect(element).not.toHaveClass('u--trim');
+      });
+
+      test('set と util を同時に指定できる', () => {
+        render(
+          <Lism set="hov" util="cbox" data-testid="lism">
+            test
+          </Lism>
+        );
+        const element = screen.getByTestId('lism');
+        expect(element).toHaveClass('set--hov');
+        expect(element).toHaveClass('u--cbox');
       });
     });
 

@@ -4,7 +4,6 @@ import mergeSet from 'lism-css/lib/helper/mergeSet';
 export type ModalRootProps = {
   lismClass?: string;
   set?: string;
-  unset?: string;
   duration?: string;
   style?: Record<string, string>;
   [key: string]: unknown;
@@ -17,10 +16,10 @@ export type ModalInnerProps = {
   [key: string]: unknown;
 };
 
-export function getProps({ lismClass = '', set, unset, duration, style = {}, ...props }: ModalRootProps) {
+export function getProps({ lismClass = '', set, duration, style = {}, ...props }: ModalRootProps) {
   const theProps = {
     lismClass: atts(lismClass, 'c--modal'),
-    set: mergeSet('plain', set, unset),
+    set: mergeSet('plain', set).join(' '),
   };
   if (duration) {
     style['--duration'] = duration;
@@ -40,20 +39,20 @@ export function getInnerProps({ lismClass = '', offset, style = {}, ...props }: 
   };
 }
 
-export function getOpenBtnProps({ set, unset, ...props }: Record<string, unknown>) {
+export function getOpenBtnProps({ set, ...props }: Record<string, unknown>) {
   return {
     as: 'button',
-    set: mergeSet('plain', set, unset),
+    set: mergeSet('plain', set).join(' '),
     hov: 'o',
     d: 'inline-flex',
     ...props,
   };
 }
 
-export function getCloseBtnProps({ set, unset, ...props }: Record<string, unknown>) {
+export function getCloseBtnProps({ set, ...props }: Record<string, unknown>) {
   return {
     as: 'button',
-    set: mergeSet('plain', set, unset),
+    set: mergeSet('plain', set).join(' '),
     hov: 'o',
     d: 'inline-flex',
     ...props,

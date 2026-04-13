@@ -83,7 +83,7 @@ describe('StateProps', () => {
   });
 });
 
-describe('LismPropsBase — set / unset', () => {
+describe('LismPropsBase — set / util', () => {
   describe('set prop', () => {
     it('プリセット値を受け付ける', () => {
       assertType<LismPropsBase>({ set: 'gutter' });
@@ -96,14 +96,22 @@ describe('LismPropsBase — set / unset', () => {
       assertType<LismPropsBase>({ set: 'bp' });
     });
 
-    it('任意の文字列も受け付ける', () => {
-      assertType<LismPropsBase>({ set: 'custom-value' });
+    it('スペース・カンマ区切りで複数指定できる', () => {
+      assertType<LismPropsBase>({ set: 'hov transition' });
       assertType<LismPropsBase>({ set: 'hov,transition' });
     });
 
-    it('文字列配列を受け付ける', () => {
+    it('`-` prefix で除外指定できる', () => {
+      assertType<LismPropsBase>({ set: 'hov -plain' });
+    });
+
+    it('任意の文字列も受け付ける', () => {
+      assertType<LismPropsBase>({ set: 'custom-value' });
+    });
+
+    it('配列は受け付けない', () => {
+      // @ts-expect-error - 配列形式は廃止
       assertType<LismPropsBase>({ set: ['hov', 'transition'] });
-      assertType<LismPropsBase>({ set: ['gutter', 'custom-value'] });
     });
 
     it('undefined / 省略可', () => {
@@ -112,29 +120,43 @@ describe('LismPropsBase — set / unset', () => {
     });
   });
 
-  describe('unset prop', () => {
+  describe('util prop', () => {
     it('プリセット値を受け付ける', () => {
-      assertType<LismPropsBase>({ unset: 'gutter' });
-      assertType<LismPropsBase>({ unset: 'shadow' });
+      assertType<LismPropsBase>({ util: 'cbox' });
+      assertType<LismPropsBase>({ util: 'trim' });
+      assertType<LismPropsBase>({ util: 'trimChildren' });
+      assertType<LismPropsBase>({ util: 'srOnly' });
+      assertType<LismPropsBase>({ util: 'clipText' });
+      assertType<LismPropsBase>({ util: 'collapseGrid' });
+      assertType<LismPropsBase>({ util: 'snap' });
+    });
+
+    it('スペース・カンマ区切りで複数指定できる', () => {
+      assertType<LismPropsBase>({ util: 'cbox trim' });
+      assertType<LismPropsBase>({ util: 'cbox,trim' });
+    });
+
+    it('`-` prefix で除外指定できる', () => {
+      assertType<LismPropsBase>({ util: 'cbox -trim' });
     });
 
     it('任意の文字列も受け付ける', () => {
-      assertType<LismPropsBase>({ unset: 'custom-value' });
+      assertType<LismPropsBase>({ util: 'custom-util' });
     });
 
-    it('文字列配列を受け付ける', () => {
-      assertType<LismPropsBase>({ unset: ['hov', 'transition'] });
+    it('配列は受け付けない', () => {
+      // @ts-expect-error - 配列形式は受け付けない
+      assertType<LismPropsBase>({ util: ['cbox', 'trim'] });
     });
 
     it('undefined / 省略可', () => {
-      assertType<LismPropsBase>({ unset: undefined });
+      assertType<LismPropsBase>({ util: undefined });
     });
   });
 
-  describe('set + unset 同時指定', () => {
+  describe('set + util 同時指定', () => {
     it('両方同時に指定できる', () => {
-      assertType<LismPropsBase>({ set: ['hov', 'transition', 'shadow'], unset: 'shadow' });
-      assertType<LismPropsBase>({ set: 'gutter', unset: ['gutter'] });
+      assertType<LismPropsBase>({ set: 'hov transition', util: 'cbox trim' });
     });
   });
 });

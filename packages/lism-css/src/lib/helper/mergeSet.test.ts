@@ -2,89 +2,93 @@ import { describe, test, expect } from 'vitest';
 import mergeSet from './mergeSet';
 
 describe('mergeSet', () => {
-  describe('base / set の正規化', () => {
+  describe('値の正規化', () => {
     test('単一の文字列', () => {
-      expect(mergeSet(undefined, 'gutter', null)).toEqual(['gutter']);
+      expect(mergeSet(undefined, 'gutter')).toEqual(['gutter']);
     });
 
     test('カンマ区切りの文字列を分割', () => {
-      expect(mergeSet(undefined, 'hov,transition', null)).toEqual(['hov', 'transition']);
+      expect(mergeSet(undefined, 'hov,transition')).toEqual(['hov', 'transition']);
     });
 
     test('カンマ+スペースの文字列を分割してトリム', () => {
-      expect(mergeSet(undefined, 'hov, transition, shadow', null)).toEqual(['hov', 'transition', 'shadow']);
+      expect(mergeSet(undefined, 'hov, transition, shadow')).toEqual(['hov', 'transition', 'shadow']);
     });
 
     test('空白区切りの文字列を分割', () => {
-      expect(mergeSet(undefined, 'plain hov', null)).toEqual(['plain', 'hov']);
-    });
-
-    test('配列をそのまま返す', () => {
-      expect(mergeSet(undefined, ['hov', 'transition'], null)).toEqual(['hov', 'transition']);
-    });
-
-    test('配列要素内のカンマ区切り・空白区切り文字列も展開する', () => {
-      expect(mergeSet(undefined, ['plain hov', 'transition,shadow'], null)).toEqual(['plain', 'hov', 'transition', 'shadow']);
+      expect(mergeSet(undefined, 'plain hov')).toEqual(['plain', 'hov']);
     });
 
     test('空文字列は空配列', () => {
-      expect(mergeSet(undefined, '', null)).toEqual([]);
+      expect(mergeSet(undefined, '')).toEqual([]);
     });
 
     test('空白のみの要素はフィルタされる', () => {
-      expect(mergeSet(undefined, 'hov, , shadow', null)).toEqual(['hov', 'shadow']);
+      expect(mergeSet(undefined, 'hov, , shadow')).toEqual(['hov', 'shadow']);
     });
 
-    test('base と set は重複除去して結合される', () => {
-      expect(mergeSet('plain hov', ['hov', 'gutter'], null)).toEqual(['plain', 'hov', 'gutter']);
+    test('重複は除去される', () => {
+      expect(mergeSet(undefined, 'hov hov shadow')).toEqual(['hov', 'shadow']);
+    });
+
+    test('base と value は重複除去して結合される', () => {
+      expect(mergeSet('plain hov', 'hov gutter')).toEqual(['plain', 'hov', 'gutter']);
     });
   });
 
-  describe('base + set + unset 合成', () => {
-    test('base のみでも unset で除外できる', () => {
-      expect(mergeSet('plain hov', undefined, 'hov')).toEqual(['plain']);
+  describe('`-` prefix による除外', () => {
+    test('value 内の `-name` で base の値を除外できる', () => {
+      expect(mergeSet('plain hov', '-hov')).toEqual(['plain']);
     });
 
-    test('base に set を追加しつつ unset で1つ除外', () => {
-      expect(mergeSet('plain hov', 'gutter', 'hov')).toEqual(['plain', 'gutter']);
+    test('value 内の `-name` を含めつつ追加もできる', () => {
+      expect(mergeSet('plain hov', 'gutter -hov')).toEqual(['plain', 'gutter']);
     });
 
-    test('unset 文字列で1つ除外', () => {
-      expect(mergeSet(undefined, ['hov', 'transition', 'shadow'], 'shadow')).toEqual(['hov', 'transition']);
+    test('value 単体内で除外指定できる', () => {
+      expect(mergeSet(undefined, 'hov transition shadow -shadow')).toEqual(['hov', 'transition']);
     });
 
-    test('unset 配列で複数除外', () => {
-      expect(mergeSet(undefined, ['hov', 'transition', 'shadow'], ['hov', 'shadow'])).toEqual(['transition']);
+    test('複数の除外指定', () => {
+      expect(mergeSet(undefined, 'hov transition shadow -hov -shadow')).toEqual(['transition']);
     });
 
-    test('unset で全て除外すると空配列', () => {
-      expect(mergeSet('gutter', undefined, 'gutter')).toEqual([]);
+    test('base 側の `-name` でも除外として扱われる', () => {
+      expect(mergeSet('-hov', 'hov transition')).toEqual(['transition']);
     });
 
-    test('unset にカンマ区切りと空白区切りを混在指定できる', () => {
-      expect(mergeSet(undefined, ['hov', 'transition', 'shadow'], 'hov, shadow')).toEqual(['transition']);
+    test('全て除外されると空配列', () => {
+      expect(mergeSet('gutter', '-gutter')).toEqual([]);
     });
 
-    test('unset に set に無い値を指定しても無視される', () => {
-      expect(mergeSet('gutter', undefined, 'shadow')).toEqual(['gutter']);
+    test('カンマ区切りでも除外できる', () => {
+      expect(mergeSet(undefined, 'hov, transition, shadow, -shadow')).toEqual(['hov', 'transition']);
+    });
+
+    test('対象が無い `-name` は無視される', () => {
+      expect(mergeSet('gutter', '-shadow')).toEqual(['gutter']);
     });
   });
 
   describe('入力が falsy', () => {
     test('すべて null は空配列', () => {
-      expect(mergeSet(null, null, null)).toEqual([]);
+      expect(mergeSet(null, null)).toEqual([]);
     });
 
     test('すべて undefined は空配列', () => {
-      expect(mergeSet(undefined, undefined, undefined)).toEqual([]);
+      expect(mergeSet(undefined, undefined)).toEqual([]);
     });
 
-    test('base/set が false でも空配列', () => {
-      expect(mergeSet(false, false, null)).toEqual([]);
+    test('base/value が false でも空配列', () => {
+      expect(mergeSet(false, false)).toEqual([]);
     });
 
-    test('base/set が無い場合、unset だけ指定しても空配列', () => {
-      expect(mergeSet(null, null, 'gutter')).toEqual([]);
+    test('base のみ指定', () => {
+      expect(mergeSet('gutter', undefined)).toEqual(['gutter']);
+    });
+
+    test('value のみ指定', () => {
+      expect(mergeSet(undefined, 'gutter')).toEqual(['gutter']);
     });
   });
 });

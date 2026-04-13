@@ -40,7 +40,7 @@ const displayTitle = manualTitle || entry?.data.title || path;
 const href = getLocalizedUrl(path.startsWith('/') ? path : `/${path}`, currentLang);
 ---
 
-<BoxLink href={href} layout="stack" bdrs="20" my="40" bd bgc="base" hov="bxsh, bdc, bgc" set={['hov', 'transition']} class="c--innerLink">
+<BoxLink href={href} layout="stack" bdrs="20" my="40" bd bgc="base" hov="bxsh, bdc, bgc" set="hov transition" class="c--innerLink">
   <Flex class="c--innerLink__icon" c="text-2" p="5" lh="1" pos="absolute" set="transition">
     <Icon icon="link" />
   </Flex>

@@ -12,7 +12,7 @@ import filterEmptyObj from './helper/filterEmptyObj';
 import mergeSet from './helper/mergeSet';
 import splitWithComma from './helper/splitWithComma';
 import { type StyleWithCustomProps } from './types';
-import { type StateProps, type SetPropValue } from './types/StateProps';
+import { type StateProps, type SetPropValue, type UtilPropValue } from './types/StateProps';
 import { type PropValueTypes } from './types/PropValueTypes';
 import { type LayoutType, type LayoutProps } from './types/LayoutProps';
 export { type LayoutType };
@@ -61,7 +61,7 @@ export interface LismPropsBase extends StateProps, PropValueTypes {
   style?: StyleWithCustomProps;
   _propConfig?: Record<string, PropConfig>;
   set?: SetPropValue;
-  unset?: SetPropValue;
+  util?: UtilPropValue;
   hov?: boolean | string | Record<string, unknown>;
   css?: Record<string, string | number | undefined>;
   [key: `aria-${string}`]: unknown;
@@ -157,9 +157,9 @@ export class LismPropsData {
 
   // prop解析
   analyzeProps(): void {
-    // set/unset は合成処理のため先に取り出す
+    // set / util は合成処理のため先に取り出す
     const rawSet = this.extractProp('set');
-    const rawUnset = this.extractProp('unset');
+    const rawUtil = this.extractProp('util');
 
     Object.keys(this.attrs).forEach((propName) => {
       // state チェック
@@ -191,8 +191,9 @@ export class LismPropsData {
       }
     });
 
-    // set/unset 合成: base は持たないため rawSet をそのまま合成元に使う
-    mergeSet(undefined, rawSet, rawUnset).forEach((v) => this.lismState.push(`set--${v}`));
+    // set / util 合成: base は持たないため rawSet / rawUtil をそのまま合成元に使う
+    mergeSet(undefined, rawSet).forEach((v) => this.lismState.push(`set--${v}`));
+    mergeSet(undefined, rawUtil).forEach((v) => this.addUtil(`u--${v}`));
   }
 
   // Lism Prop 解析
