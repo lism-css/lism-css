@@ -15,12 +15,12 @@ export function getDetailsProps({ lismClass, ...props }: DetailsProps): LismProp
   return props;
 }
 
-export function getTitleProps({ set, unset, ...props }: Record<string, unknown>) {
+export function getTitleProps({ set, ...props }: Record<string, unknown>) {
   return {
     lismClass: 'c--details_title',
     as: 'span',
     fx: '1',
-    set: mergeSet('plain', set, unset),
+    set: mergeSet('plain', set),
     ...props,
   };
 }

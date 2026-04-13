@@ -69,7 +69,7 @@ By overriding the `--shc` variable here, you can adjust the color tint of the sh
   </PreviewArea>
     <PreviewCode slot='tab' label='HTML'>
     ```html "set--shadow"
-    <div class="set--shadow l--flex -g:30" style="--shc: hsl(200 50% 50% / 20%)">
+    <div class="l--flex set--shadow -g:30" style="--shc: hsl(200 50% 50% / 20%)">
       <div class="l--box -bxsh:20 -p:30 -bdrs:20">Box</div>
       <div class="l--box -bxsh:40 -p:30 -bdrs:20">Box</div>
     </div>
@@ -398,16 +398,3 @@ In Lism components, use `set="mask"` with `css={{ '--maskImg': getSvgUrl(svgStri
  */}
 
 
-## Removing Set Classes with `unset`
-
-When a component internally applies a default `set` class that you want to remove, use the `unset` prop.
-
-For example, `Accordion.Button` has `set="plain"` applied internally. You can remove it by passing `unset="plain"`.
-
-```jsx
-{/* Remove the default set="plain" */}
-<Accordion.Button unset="plain">...</Accordion.Button>
-
-{/* Apply multiple set classes and remove one */}
-<Lism set={['hov', 'transition', 'shadow']} unset="shadow">...</Lism>
-```

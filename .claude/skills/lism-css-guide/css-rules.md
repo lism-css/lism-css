@@ -54,16 +54,31 @@ Settings（トークン定義）
 - 子要素: `.c--card_header`, `.c--card_body`
 
 **記述順序:**
-class 属性にクラスを直接記述する場合、Property Class（`-` プレフィックス）はモジュールクラスやユーティリティクラスの**後ろ**に書いてください。
+class 属性にクラスを直接記述する場合は、以下の順序で並べてください。粒度の大きい（塊としての役割を持つ）クラスから、粒度の小さい（単一プロパティ制御）クラスの順です。
+
+```
+[customClass] [c--/a--] [l--] [is--*] [set--*] [u--*] [Property Class...]
+```
+
+| # | 区分 | 例 |
+|---|---|---|
+| 1 | 独自クラス（`customClass`） | `my-card`, `hoge` |
+| 2 | コンポーネント（`c--` / `a--`） | `c--box`, `a--icon`, `c--box c--box--primary` |
+| 3 | レイアウトモジュール（`l--`） | `l--flex`, `l--grid` |
+| 4 | State Modules（`is--`） | `is--wrapper`, `is--layer` |
+| 5 | Set Class（`set--`） | `set--hov`, `set--card` |
+| 6 | ユーティリティ（`u--`） | `u--cbox`, `u--trim` |
+| 7 | Property Class（`-`） | `-p:20`, `-bgc:base-2` |
 
 ```html
-<!-- OK: モジュールクラス → Property Class -->
-<div class="l--flex c--nav -p:20 -g:20">...</div>
-<div class="l--box u--cbox -bd -p:20">...</div>
+<!-- OK -->
+<div class="c--nav l--flex -p:20 -g:20">...</div>
 
 <!-- NG: Property Class が先 -->
 <div class="-p:20 -g:20 l--flex c--nav">...</div>
 ```
+
+なお、`class` 属性内の並び順は CSS の適用結果（詳細度・カスケード順）には影響しません。この順序はあくまで可読性と一貫性のための整理です。
 
 
 ## カスタムCSS を追加する場合

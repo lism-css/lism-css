@@ -13,11 +13,11 @@ export default function getTabsProps({ lismClass, ...props }: TabsProps) {
   };
 }
 
-export function getTabProps({ set, unset, ...props }: Record<string, unknown>) {
+export function getTabProps({ set, ...props }: Record<string, unknown>) {
   return {
     as: 'button',
     lismClass: 'c--tabs_tab',
-    set: mergeSet('plain', set, unset),
+    set: mergeSet('plain', set),
     ...props,
   };
 }

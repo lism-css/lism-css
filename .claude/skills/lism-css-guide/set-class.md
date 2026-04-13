@@ -3,6 +3,8 @@
 `@layer lism-base` に属し、特定の機能を有効にするために CSS変数やベーススタイルをセットアップするクラス群です。
 HTML では直接クラスを付与し、Lism コンポーネントでは `set` prop（`set="plain"`, `set="shadow"` 等）で指定します。
 
+`set` prop の記法（複数値指定・`-` prefix による除外）は [components-core.md](./components-core.md#共通-props) を参照してください。
+
 ## TOC
 
 - [`set--plain`](#set--plain)

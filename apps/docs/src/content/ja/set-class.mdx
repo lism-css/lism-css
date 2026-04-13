@@ -69,7 +69,7 @@ import { Button } from '@lism-css/ui/astro';
   </PreviewArea>
     <PreviewCode slot='tab' label='HTML'>
     ```html "set--shadow"
-    <div class="set--shadow l--flex -g:30" style="--shc: hsl(200 50% 50% / 20%)">
+    <div class="l--flex set--shadow -g:30" style="--shc: hsl(200 50% 50% / 20%)">
       <div class="l--box -bxsh:20 -p:30 -bdrs:20">Box</div>
       <div class="l--box -bxsh:40 -p:30 -bdrs:20">Box</div>
     </div>
@@ -398,16 +398,3 @@ Lismが提供するコンポーネントでは、`set="mask"`と`css={{ '--maskI
  */}
 
 
-## `unset` で Set Class を除外する
-
-コンポーネント内部でデフォルト適用されている `set` クラスを、使用側で除外したい場合は `unset` prop を利用できます。
-
-例えば `Accordion.Button` は内部で `set="plain"` が適用されていますが、`unset="plain"` を渡すことでリセットを解除できます。
-
-```jsx
-{/* デフォルトの set="plain" を解除 */}
-<Accordion.Button unset="plain">...</Accordion.Button>
-
-{/* 複数の set を適用しつつ一部を解除 */}
-<Lism set={['hov', 'transition', 'shadow']} unset="shadow">...</Lism>
-```

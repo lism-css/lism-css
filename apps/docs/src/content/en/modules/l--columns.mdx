@@ -10,14 +10,14 @@ import { DummyText, DummyImage } from '@lism-css/ui/astro';
 
 ## CSS
 
-<SrcCode path='src/scss/modules/layout/_columns.scss' />
+<SrcCode path="src/scss/modules/layout/_columns.scss" />
 
 
 ## Lism Component
 
 ### Import
 
-<ImportPackage component='Columns' />
+<ImportPackage component="Columns" />
 
 ### Props
 
@@ -34,7 +34,7 @@ import { DummyText, DummyImage } from '@lism-css/ui/astro';
   <PreviewTitle>
     2-column `<Columns>`
   </PreviewTitle>
-  <PreviewArea resize p='20'>
+  <PreviewArea resize p="20">
     <Columns cols={2} g="20">
       <Box bgc="base-2" p="20">Box</Box>
       <Box bgc="base-2" p="20">Box</Box>
@@ -42,7 +42,7 @@ import { DummyText, DummyImage } from '@lism-css/ui/astro';
       <Box bgc="base-2" p="20">Box</Box>
     </Columns>
   </PreviewArea>
-  <PreviewCode slot='tab' label='JSX'>
+  <PreviewCode slot="tab" label="JSX">
     ```jsx "cols={2}"
     <Columns cols={2} g="20">
       <Box bgc="base-2" p="20">
@@ -60,7 +60,7 @@ import { DummyText, DummyImage } from '@lism-css/ui/astro';
     </Columns>
     ```
   </PreviewCode>
-  <PreviewCode slot='tab' label='HTML'>
+  <PreviewCode slot="tab" label="HTML">
     ```html "--cols:2"
     <div class="l--columns -g:20" style="--cols: 2">
       <div class="l--box -bgc:base-2 -p:20">Box</div>
@@ -76,7 +76,7 @@ import { DummyText, DummyImage } from '@lism-css/ui/astro';
 
 <Preview>
   <PreviewTitle>1 col → sm: 2 cols → md: 3 cols</PreviewTitle>
-  <PreviewArea resize p='20'>
+  <PreviewArea resize p="20">
     <Columns cols={[1, 2, 3]} g="20">
       <Box bgc="base-2" p="20">Box1</Box>
       <Box bgc="base-2" p="20">Box2</Box>
@@ -86,7 +86,7 @@ import { DummyText, DummyImage } from '@lism-css/ui/astro';
       <Box bgc="base-2" p="20">Box6</Box>
     </Columns>
   </PreviewArea>
-  <PreviewCode slot='tab' label='JSX'>
+  <PreviewCode slot="tab" label="JSX">
     ```jsx "cols={[1, 2, 3]}"
     <Columns cols={[1, 2, 3]} g="20">
       <Box bgc="base-2" p="20">
@@ -110,7 +110,7 @@ import { DummyText, DummyImage } from '@lism-css/ui/astro';
     </Columns>
     ```
   </PreviewCode>
-  <PreviewCode slot='tab' label='HTML'>
+  <PreviewCode slot="tab" label="HTML">
     ```html "--cols:1;--cols_sm:2;--cols_md:3"
     <div class="l--columns -cols_sm -cols_md -g:20" style="--cols: 1; --cols_sm: 2; --cols_md: 3">
       <div class="l--box -bgc:base-2 -p:20">Box1</div>
@@ -128,7 +128,7 @@ import { DummyText, DummyImage } from '@lism-css/ui/astro';
 
 <Preview>
   <PreviewTitle>2 cols → `@md`: 4 cols</PreviewTitle>
-  <PreviewArea resize p='15'>
+  <PreviewArea resize p="15">
     <Columns cols={[2, null, 4]} g="15">
       <Box bgc="base-2" p="20">Box</Box>
       <Box bgc="base-2" p="20">Box</Box>
@@ -136,14 +136,14 @@ import { DummyText, DummyImage } from '@lism-css/ui/astro';
       <Box bgc="base-2" p="20">Box</Box>
     </Columns>
   </PreviewArea>
-  <PreviewCode slot='tab' label='JSX'>
+  <PreviewCode slot="tab" label="JSX">
     ```jsx "cols={[2, null, 4]}"
     <Columns cols={[2, null, 4]} g="15">
       ...
     </Columns>
     ```
   </PreviewCode>
-  <PreviewCode slot='tab' label='HTML'>
+  <PreviewCode slot="tab" label="HTML">
     ```html "--cols:2;--cols_md:4"
     <div class="l--columns -g:15" style="--cols: 2; --cols_md: 4">...</div>
     ```
@@ -153,7 +153,7 @@ import { DummyText, DummyImage } from '@lism-css/ui/astro';
 ### Using gc (grid-column)
 <Preview>
   <PreviewTitle>Alternating 1:2 and 2:1 column spans</PreviewTitle>
-  <PreviewArea resize p='15'>
+  <PreviewArea resize p="15">
     <Columns cols="6" g="15">
       <Frame gc="span 2">
         <img src="https://cdn.lism-css.com/img/a-1.jpg" alt="" />
@@ -179,8 +179,8 @@ import { DummyText, DummyImage } from '@lism-css/ui/astro';
       <Frame gc="span 1">
         <DummyImage />
       </Frame>
-      {/* <Frame gc='span 3'><DummyImage /></Frame> */}
-      {/* <Frame gc='span 3'><DummyImage /></Frame> */}
+      {/* <Frame gc="span 3"><DummyImage /></Frame> */}
+      {/* <Frame gc="span 3"><DummyImage /></Frame> */}
     </Columns>
   </PreviewArea>
   <PreviewCode>
@@ -222,33 +222,33 @@ Creates a card layout using subgrid within a 1 → 2 → 3 column layout.
 
 <Preview>
   <PreviewTitle>subgrid</PreviewTitle>
-  <PreviewArea resize p='15'>
+  <PreviewArea resize p="15">
     <Columns cols={[1, 2, 3]} g="20">
-      <Grid className="u--trimChildren" g="30" p="20" gtr="subgrid" gr="span 4" bgc="base-2" bdrs="10">
+      <Grid util="trimChildren" g="30" p="20" gtr="subgrid" gr="span 4" bgc="base-2" bdrs="10">
         <Media ar="og" bdrs="10" src="https://cdn.lism-css.com/img/a-1.jpg" alt="" inferSize />
         <Heading level="2" lh="s" aslf="center" fz="m">Card Title</Heading>
         <DummyText lh="s" />
         <Lism lh="s" bd-t fz="s" px="10" py="20 10" o="-10">Date: 2025-01-01</Lism>
       </Grid>
-      <Grid className="u--trimChildren" g="30" p="20" gtr="subgrid" gr="span 4" bgc="base-2" bdrs="10">
+      <Grid util="trimChildren" g="30" p="20" gtr="subgrid" gr="span 4" bgc="base-2" bdrs="10">
         <Media ar="og" bdrs="10" src="https://cdn.lism-css.com/img/a-2.jpg" alt="" inferSize />
         <Heading level="2" lh="s" aslf="center" fz="m">Card Title Lorem ipsum</Heading>
         <DummyText lh="s" length="s" />
         <Lism lh="s" bd-t fz="s" px="10" py="20 10" o="-10">Date: 2025-01-01</Lism>
       </Grid>
-      <Grid className="u--trimChildren" g="30" p="20" gtr="subgrid" gr="span 4" bgc="base-2" bdrs="10">
+      <Grid util="trimChildren" g="30" p="20" gtr="subgrid" gr="span 4" bgc="base-2" bdrs="10">
         <Media ar="og" bdrs="10" src="https://cdn.lism-css.com/img/a-3.jpg" alt="" inferSize />
         <Heading level="2" lh="s" aslf="center" fz="m">Card Title, long, long, long, very long long looong.</Heading>
         <DummyText lh="s" />
         <Lism lh="s" bd-t fz="s" px="10" py="20 10" o="-10">Date: 2025-01-01</Lism>
       </Grid>
-      <Grid className="u--trimChildren" g="30" p="20" gtr="subgrid" gr="span 4" bgc="base-2" bdrs="10">
+      <Grid util="trimChildren" g="30" p="20" gtr="subgrid" gr="span 4" bgc="base-2" bdrs="10">
         <Media ar="og" bdrs="10" src="https://cdn.lism-css.com/img/a-4.jpg" alt="" inferSize />
         <Heading level="2" lh="s" aslf="center" fz="m">Card Title</Heading>
         <DummyText lh="s" length="s" />
         <Lism lh="s" bd-t fz="s" px="10" py="20 10" o="-10">Date: 2025-01-01</Lism>
       </Grid>
-      <Grid className="u--trimChildren" g="20" p="20" gtr="subgrid" gr="span 4" bgc="base-2" bdrs="10">
+      <Grid util="trimChildren" g="20" p="20" gtr="subgrid" gr="span 4" bgc="base-2" bdrs="10">
         <Media ar="og" bdrs="10" src="https://cdn.lism-css.com/img/a-5.jpg" alt="" inferSize />
         <Heading level="2" lh="s" aslf="center" fz="m">Card Title</Heading>
         <DummyText lh="s" />
@@ -256,10 +256,10 @@ Creates a card layout using subgrid within a 1 → 2 → 3 column layout.
       </Grid>
     </Columns>
   </PreviewArea>
-  <PreviewCode slot='tab' label='JSX'>
+  <PreviewCode slot="tab" label="JSX">
     ```jsx 'gtr="subgrid" gr="span 4"'
     <Columns cols={[1, 2, 3]} g="15">
-      <Grid className="u--trimChildren" g="20" p="20" gtr="subgrid" gr="span 4" bgc="base-2" bdrs="10">
+      <Grid util="trimChildren" g="20" p="20" gtr="subgrid" gr="span 4" bgc="base-2" bdrs="10">
         <Media ar="og" bdrs="10" src="https://cdn.lism-css.com/img/a-1.jpg" />
         <Heading level="2" aslf="center" fz="m">
           Card Title
@@ -273,7 +273,7 @@ Creates a card layout using subgrid within a 1 → 2 → 3 column layout.
           Date: 2025-01-01
         </Lism>
       </Grid>
-      <Grid className="u--trimChildren" g="20" p="20" gtr="subgrid" gr="span 4" bgc="base-2" bdrs="10">
+      <Grid util="trimChildren" g="20" p="20" gtr="subgrid" gr="span 4" bgc="base-2" bdrs="10">
         <Media ar="og" bdrs="10" src="https://cdn.lism-css.com/img/a-2.jpg" />
         <Heading level="2" aslf="center" fz="m">
           Card Title Lorem ipsum
@@ -284,7 +284,7 @@ Creates a card layout using subgrid within a 1 → 2 → 3 column layout.
           Date: 2025-01-01
         </Lism>
       </Grid>
-      <Grid className="u--trimChildren" g="20" p="20" gtr="subgrid" gr="span 4" bgc="base-2" bdrs="10">
+      <Grid util="trimChildren" g="20" p="20" gtr="subgrid" gr="span 4" bgc="base-2" bdrs="10">
         <Media ar="og" bdrs="10" src="https://cdn.lism-css.com/img/a-3.jpg" />
         <Heading level="2" aslf="center" fz="m">
           Card Title, long, long, long, very long long looong.
@@ -298,7 +298,7 @@ Creates a card layout using subgrid within a 1 → 2 → 3 column layout.
           Date: 2025-01-01
         </Lism>
       </Grid>
-      <Grid className="u--trimChildren" g="20" p="20" gtr="subgrid" gr="span 4" bgc="base-2" bdrs="10">
+      <Grid util="trimChildren" g="20" p="20" gtr="subgrid" gr="span 4" bgc="base-2" bdrs="10">
         <Media ar="og" bdrs="10" src="https://cdn.lism-css.com/img/a-4.jpg" />
         <Heading level="2" aslf="center" fz="m">
           Card Title
@@ -309,7 +309,7 @@ Creates a card layout using subgrid within a 1 → 2 → 3 column layout.
           Date: 2025-01-01
         </Lism>
       </Grid>
-      <Grid className="u--trimChildren" g="20" p="20" gtr="subgrid" gr="span 4" bgc="base-2" bdrs="10">
+      <Grid util="trimChildren" g="20" p="20" gtr="subgrid" gr="span 4" bgc="base-2" bdrs="10">
         <Media ar="og" bdrs="10" src="https://cdn.lism-css.com/img/a-5.jpg" />
         <Heading level="2" aslf="center" fz="m">
           Card Title
@@ -326,7 +326,7 @@ Creates a card layout using subgrid within a 1 → 2 → 3 column layout.
     </Columns>
     ```
   </PreviewCode>
-  <PreviewCode slot='tab' label='HTML'>
+  <PreviewCode slot="tab" label="HTML">
   ```html
   ```
   </PreviewCode>

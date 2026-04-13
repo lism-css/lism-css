@@ -13,14 +13,14 @@ import { DummyText } from '@lism-css/ui/astro';
 
 ## CSS
 
-<SrcCode path='src/scss/modules/layout/_grid.scss' />
+<SrcCode path="src/scss/modules/layout/_grid.scss" />
 
 
 ## Lism Component
 
 ### Import
 
-<ImportPackage component='Grid' />
+<ImportPackage component="Grid" />
 
 
 ## Usage
@@ -29,14 +29,14 @@ import { DummyText } from '@lism-css/ui/astro';
 
 <Preview>
   <PreviewTitle>Main content in the center</PreviewTitle>
-  <PreviewArea p='15'>
+  <PreviewArea p="15">
     <Grid gtc="auto 1fr auto" g="15">
       <Center p="20" bgc="base-2">L</Center>
       <Center p="20" bd>Center</Center>
       <Center p="20" bgc="base-2">R</Center>
     </Grid>
   </PreviewArea>
-  <PreviewCode slot='tab' label='JSX'>
+  <PreviewCode slot="tab" label="JSX">
     ```jsx
     <Grid gtc="auto 1fr auto" g="15">
       <Center p="20" bgc="base-2">
@@ -51,7 +51,7 @@ import { DummyText } from '@lism-css/ui/astro';
     </Grid>
     ```
   </PreviewCode>
-  <PreviewCode slot='tab' label='HTML'>
+  <PreviewCode slot="tab" label="HTML">
     ```html
     <div class="l--grid -gtc -g:15" style="--gtc: auto 1fr auto">
       <div class="l--center -p:20 -bgc:base-2">L</div>
@@ -68,14 +68,14 @@ import { DummyText } from '@lism-css/ui/astro';
 
 <Preview>
   <PreviewTitle>Switching grid areas at breakpoints</PreviewTitle>
-  <PreviewArea resize p='15'>
+  <PreviewArea resize p="15">
     <Grid g="15" gtc={['1fr 1fr', '8em 1fr 8em']} gta={[`'main main' 'left right'`, `'left main right'`]}>
       <Box ga="left" p="15" bgc="base-2">Left</Box>
       <Box ga="main" p="15" bd>Center</Box>
       <Box ga="right" p="15" bgc="base-2">Right</Box>
     </Grid>
   </PreviewArea>
-  <PreviewCode slot='tab' label='JSX'>
+  <PreviewCode slot="tab" label="JSX">
     ```jsx
     <Grid g="15" gtc={['1fr 1fr', '8em 1fr 8em']} gta={[`'main main' 'left right'`, `'left main right'`]}>
       <Box ga="left" p="15" bgc="base-2">
@@ -90,7 +90,7 @@ import { DummyText } from '@lism-css/ui/astro';
     </Grid>
     ```
   </PreviewCode>
-  <PreviewCode slot='tab' label='HTML'>
+  <PreviewCode slot="tab" label="HTML">
     ```html
     <div
       class="l--grid -gta -gta_sm -gtc -gtc_sm -g:15"
@@ -111,7 +111,7 @@ Here is an example of stacking elements using `grid-area:1/1` (`.-ga:1`) without
 
 <Preview>
   <PreviewTitle>Overlapping Grid child elements</PreviewTitle>
-  <PreviewArea p='15'>
+  <PreviewArea p="15">
     <Grid ar="16/9">
       <Frame ga="1/1" w="100%" h="100%" pos="relative">
         <Media src="https://cdn.lism-css.com/img/a-1.jpg" alt="" inferSize />
@@ -120,7 +120,7 @@ Here is an example of stacking elements using `grid-area:1/1` (`.-ga:1`) without
       <Center ga="1/1" fz="3xl" z="1" c="white">SAMPLE TEXT</Center>
     </Grid>
   </PreviewArea>
-  <PreviewCode slot='tab' label='JSX'>
+  <PreviewCode slot="tab" label="JSX">
     ```jsx 'ga="1/1"'
     <Grid ar="16/9">
       <Frame ga="1/1" w="100%" h="100%" pos="relative">
@@ -133,7 +133,7 @@ Here is an example of stacking elements using `grid-area:1/1` (`.-ga:1`) without
     </Grid>
     ```
   </PreviewCode>
-  <PreviewCode slot='tab' label='HTML'>
+  <PreviewCode slot="tab" label="HTML">
     ```jsx "-ga:1"
     <div class="l--grid -ar:16/9">
       <div class="l--frame -ga:1/1 -w:100% -h:100% -pos:relative">
@@ -153,32 +153,32 @@ Here is an example of stacking elements using `grid-area:1/1` (`.-ga:1`) without
 
 <Preview>
   <PreviewTitle>Example: building a latest-articles list</PreviewTitle>
-  <PreviewArea p='20' resize>
+  <PreviewArea p="20" resize>
     <Grid gtc={['auto', 'auto 1fr']} bd-b>
       <Grid gtc="subgrid" gc="1/-1" g="20" ai="center" bd-t py="20" px="10">
         <Grid gtc={['auto auto', '1fr 1fr']} g="20" jc="start" ai="center">
           <Lism fz="s">2024.05.31</Lism>
           <Lism d="inline-flex" jc="center" fz="xs" lh="s" bgc="text" c="base" py="5" px="10" bdrs="10">NEWS</Lism>
         </Grid>
-        <DummyText className="u--trim" lang="ja" length="s" as="a" href="####" hov="o" c="inherit" td="none" lh="s" />
+        <DummyText util="trim" lang="ja" length="s" as="a" href="####" hov="o" c="inherit" td="none" lh="s" />
       </Grid>
       <Grid gtc="subgrid" gc="1/-1" g="20" ai="center" bd-t py="20" px="10">
         <Grid gtc={['auto auto', '1fr 1fr']} g="20" jc="start" ai="center">
           <Lism fz="s">2024.05.29</Lism>
           <Lism d="inline-flex" jc="center" fz="xs" lh="s" bgc="text" c="base" py="5" px="10" bdrs="10">TIPS</Lism>
         </Grid>
-        <DummyText className="u--trim" lang="ja" offset="2" as="a" href="####" hov="o" c="inherit" td="none" lh="s" />
+        <DummyText util="trim" lang="ja" offset="2" as="a" href="####" hov="o" c="inherit" td="none" lh="s" />
       </Grid>
       <Grid gtc="subgrid" gc="1/-1" g="20" ai="center" bd-t py="20" px="10">
         <Grid gtc={['auto auto', '1fr 1fr']} g="20" jc="start" ai="center">
           <Lism fz="s">2024.05.18</Lism>
           <Lism d="inline-flex" jc="center" fz="xs" lh="s" bgc="text" c="base" py="5" px="10" bdrs="10">COLUMN</Lism>
         </Grid>
-        <DummyText className="u--trim" lang="ja" length="l" offset="6" as="a" href="####" hov="o" c="inherit" td="none" lh="s" />
+        <DummyText util="trim" lang="ja" length="l" offset="6" as="a" href="####" hov="o" c="inherit" td="none" lh="s" />
       </Grid>
     </Grid>
   </PreviewArea>
-  <PreviewCode slot='tab' label='JSX'>
+  <PreviewCode slot="tab" label="JSX">
     ```jsx
     <Grid gtc={['auto', 'auto 1fr']} bd-b>
       <Grid gtc="subgrid" gc="1/-1" g="20" ai="center" bd-t py="20" px="10">
@@ -188,7 +188,7 @@ Here is an example of stacking elements using `grid-area:1/1` (`.-ga:1`) without
             NEWS
           </Lism>
         </Grid>
-        <Text className="u--trim" as="a" href="####" hov="o" c="inherit" td="none" lh="s">
+        <Text util="trim" as="a" href="####" hov="o" c="inherit" td="none" lh="s">
           ロレム・イプサムの座り雨。目まぐるしい文章の流れの中で、それは静かに歩く仮の言葉です。
         </Text>
       </Grid>
@@ -199,7 +199,7 @@ Here is an example of stacking elements using `grid-area:1/1` (`.-ga:1`) without
             TIPS
           </Lism>
         </Grid>
-        <Text className="u--trim" as="a" href="####" hov="o" c="inherit" td="none" lh="s">
+        <Text util="trim" as="a" href="####" hov="o" c="inherit" td="none" lh="s">
           それは静かに歩く仮の言葉です。Elitも穏やかに続いていきますが、積み重ねられてきた「LiberroyとFoogの取り組み」は、余白のようなものです。
         </Text>
       </Grid>
@@ -210,7 +210,7 @@ Here is an example of stacking elements using `grid-area:1/1` (`.-ga:1`) without
             COLUMN
           </Lism>
         </Grid>
-        <Text className="u--trim" as="a" href="####" hov="o" c="inherit" td="none" lh="s">
+        <Text util="trim" as="a" href="####" hov="o" c="inherit" td="none" lh="s">
           作業が進むにつれて、工夫や考えとともに関心が折り重なりながらも、必要以上に主張せず彼らの作品は私たちに一定の示唆を与えてくれます。
         </Text>
       </Grid>
