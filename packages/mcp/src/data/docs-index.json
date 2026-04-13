@@ -207,7 +207,7 @@
     "title": "Primitive Class",
     "description": "Lism CSS のプリミティブクラス（is--, l--, a--）の分類と使い方について解説します。",
     "category": "guide",
-    "headings": ["Trait Primitives", "Layout Primitives", "Atomic Primitives", "Component Class"],
+    "headings": ["Trait Primitives", "Layout Primitives", "Atomic Primitives"],
     "keywords": ["primitive", "プリミティブ", "trait", "layout", "レイアウト", "class", "BEM", "is--vertical"],
     "snippet": "レイアウトを組み立てる積み木として Primitive クラスを定義。.l--{name}, .a--{name}, .is--{name} 等の命名規則。Trait Primitives (is--container, is--wrapper, is--layer, is--boxLink, is--vertical) も解説。BEM 構造を持つ Component Class (.c--{name}) は別レイヤー（lism-components）に配置される。"
   },
@@ -226,6 +226,10 @@
     "description": "Lism CSS の各バージョンにおける変更履歴をまとめています。",
     "category": "guide",
     "headings": [
+      "v.0.13.0 (unreleased)",
+      "`@lism-css/ui` v.0.12.0 (2026.04.10)",
+      "`@lism-css/ui` v.0.11.0 (2026.04.05)",
+      "v.0.12.0 (2026.04.10)",
       "v.0.11.0 (2026.04.05)",
       "v.0.10.5 (2026.04.05)",
       "v.0.10.4 (2026.04.04)",
@@ -353,29 +357,29 @@
     "snippet": "cdn.lism-css.comからダミーのプレースホルダー画像を出力するコンポーネント。@lism-css/uiパッケージから提供。"
   },
   {
-    "sourcePath": "modules/l--box.mdx",
+    "sourcePath": "primitives/l--box.mdx",
     "title": "Box / l--box",
-    "description": "Lism CSS の Box モジュールについて解説します。コンテンツをグループ化するシンプルなレイアウトプリミティブです。",
-    "category": "modules",
-    "headings": ["対応コンポーネント", "Usage"],
+    "description": "l--box は、コンテンツをグループ化するだけのシンプルなクラスです。",
+    "category": "primitives",
+    "headings": ["Lismコンポーネント", "Usage"],
     "keywords": ["Box", "ボックス", "layout", "レイアウト", "l--box"],
     "snippet": "最も基本的なレイアウトプリミティブ。コンテンツをグループ化するだけのシンプルな汎用ボックス要素。l--box クラスが付与される。"
   },
   {
-    "sourcePath": "modules/l--flex.mdx",
+    "sourcePath": "primitives/l--flex.mdx",
     "title": "Flex / l--flex",
-    "description": "Lism CSS の Flex モジュールについて解説します。コンテンツを Flexbox で配置するためのレイアウトプリミティブです。",
-    "category": "modules",
-    "headings": ["CSS", "Import", "Props", "Usage"],
+    "description": "l--flex は、コンテンツを Flex レイアウトで配置するためのクラスです。",
+    "category": "primitives",
+    "headings": ["CSS", "Lismコンポーネント", "Usage"],
     "keywords": ["Flex", "flexbox", "フレックス", "layout", "l--flex", "横並び", "display", "display: flex", "flex-direction", "flex-wrap"],
     "snippet": "Flexboxレイアウトを構成。display: flex が適用される。g, ai, jc, fxw, fxd 等で配置を制御。"
   },
   {
-    "sourcePath": "modules/l--stack.mdx",
+    "sourcePath": "primitives/l--stack.mdx",
     "title": "Stack / l--stack",
-    "description": "Lism CSS の Stack モジュールについて解説します。複数の要素を Flex で縦方向に配置するレイアウトプリミティブです。",
-    "category": "modules",
-    "headings": ["CSS", "Import", "Props", "Usage"],
+    "description": "l--stack は、複数の要素を Flex レイアウトで縦並びに配置するクラスです。",
+    "category": "primitives",
+    "headings": ["CSS", "Lismコンポーネント", "Usage"],
     "keywords": [
       "Stack",
       "スタック",
@@ -392,11 +396,11 @@
     "snippet": "縦方向に要素を積み重ねるFlexレイアウト。flex-direction: column のFlex。ai='center'で内在的な中央寄せも可能。"
   },
   {
-    "sourcePath": "modules/l--grid.mdx",
+    "sourcePath": "primitives/l--grid.mdx",
     "title": "Grid / l--grid",
-    "description": "Lism CSS の Grid モジュールについて解説します。コンテンツを CSS Grid で配置するためのレイアウトプリミティブです。",
-    "category": "modules",
-    "headings": ["Import", "Props", "Usage"],
+    "description": "l--grid は、コンテンツを Grid レイアウトで配置するためのクラスです。",
+    "category": "primitives",
+    "headings": ["CSS", "Lismコンポーネント", "Usage"],
     "keywords": [
       "Grid",
       "グリッド",
@@ -410,14 +414,14 @@
       "grid-template-rows",
       "格子"
     ],
-    "snippet": "CSS Gridレイアウトを構成。gtc, gtr, gta, cols, rows 等で列・行を制御。subgridもサポート。均等タイルは l--tileGrid を参照。"
+    "snippet": "CSS Gridレイアウトを構成。subgridもサポート。均等タイルは l--tileGrid を参照。"
   },
   {
-    "sourcePath": "modules/l--tilegrid.mdx",
+    "sourcePath": "primitives/l--tileGrid.mdx",
     "title": "TileGrid / l--tileGrid",
-    "description": "Lism CSS の TileGrid モジュールについて解説します。均等な行列グリッド（タイル型レイアウト）を構成するためのレイアウトプリミティブです。",
-    "category": "modules",
-    "headings": ["Props", "CSS", "Import", "Usage"],
+    "description": "l--tileGrid は、列数と行数を指定して均等なタイル型グリッドレイアウトを構成するクラスです。",
+    "category": "primitives",
+    "headings": ["CSS", "Lismコンポーネント", "Usage"],
     "keywords": [
       "TileGrid",
       "タイル",
@@ -434,32 +438,32 @@
       "tile",
       "均等"
     ],
-    "snippet": "colsとrowsで均等なタイル型グリッドレイアウトを構成。grid-template: repeat(rows, 1fr) / repeat(cols, 1fr) のGrid。ブレイクポイント指定も可能。"
+    "snippet": "colsとrowsで均等なタイル型グリッドレイアウトを構成。grid-template: repeat(rows, minmax(0, 1fr)) / repeat(cols, minmax(0, 1fr)) のGrid。ブレイクポイント指定も可能。"
   },
   {
-    "sourcePath": "modules/l--center.mdx",
+    "sourcePath": "primitives/l--center.mdx",
     "title": "Center / l--center",
-    "description": "Lism CSS の Center モジュールについて解説します。要素を上下左右中央揃えで配置するためのレイアウトプリミティブです。",
-    "category": "modules",
-    "headings": ["CSS", "主なProps", "Import", "Usage"],
+    "description": "l--center は、要素を上下左右中央揃えで配置するためのクラスです。",
+    "category": "primitives",
+    "headings": ["CSS", "Lismコンポーネント", "Usage"],
     "keywords": ["Center", "中央揃え", "center", "layout", "l--center", "display", "display: grid", "place-items", "place-items: center", "中央配置"],
     "snippet": "子要素を中央揃えにするレイアウト。place-items: center の Grid。高さがあれば上下左右中央揃え。"
   },
   {
-    "sourcePath": "modules/l--cluster.mdx",
+    "sourcePath": "primitives/l--cluster.mdx",
     "title": "Cluster / l--cluster",
-    "description": "Lism CSS の Cluster モジュールについて解説します。要素を横方向に並べて自動で折り返すレイアウトプリミティブです。",
-    "category": "modules",
-    "headings": ["CSS", "Import", "Usage"],
+    "description": "l--cluster は、複数の要素を横方向に並べて配置し、数が多ければ折り返すクラスです。",
+    "category": "primitives",
+    "headings": ["CSS", "Lismコンポーネント", "Usage"],
     "keywords": ["Cluster", "クラスター", "横並び", "wrap", "l--cluster", "タグ", "display", "display: flex", "flex-wrap", "badge list"],
     "snippet": "横方向に要素を並べ、自動的に折り返すFlexレイアウト。タグやバッジの並びに適している。"
   },
   {
-    "sourcePath": "modules/l--columns.mdx",
+    "sourcePath": "primitives/l--columns.mdx",
     "title": "Columns / l--columns",
-    "description": "Lism CSS の Columns モジュールについて解説します。ブレイクポイントごとに列数を指定できるカラムレイアウトです。",
-    "category": "modules",
-    "headings": ["Props", "CSS", "Import", "Usage"],
+    "description": "l--columns は、ブレイクポイントごとに指定した列数で表示できるカラムクラスです。",
+    "category": "primitives",
+    "headings": ["CSS", "Lismコンポーネント", "Usage"],
     "keywords": [
       "Columns",
       "カラム",
@@ -476,20 +480,20 @@
     "snippet": "均等幅のカラムレイアウト。cols で列数を指定する Grid。レスポンシブ対応可能。subgridも活用可能。"
   },
   {
-    "sourcePath": "modules/l--flow.mdx",
+    "sourcePath": "primitives/l--flow.mdx",
     "title": "Flow / l--flow",
-    "description": "Lism CSS の Flow モジュールについて解説します。子要素間の余白を自動管理する flow-root レイアウトプリミティブです。",
-    "category": "modules",
-    "headings": ["対応コンポーネント", "Usage", "l--flow を入れ子にする時の注意点"],
+    "description": "l--flow は、子要素間の余白を margin で管理するフロークラスです。",
+    "category": "primitives",
+    "headings": ["CSS", "Lismコンポーネント", "Usage", "`l--flow` を入れ子にする時の注意点"],
     "keywords": ["Flow", "フロー", "コンテンツ", "記事", "l--flow", "本文", "is--skipFlow", "display: flow-root", "article body", "縦方向余白"],
-    "snippet": "コンテンツフロー用のレイアウト。display: flow-root で子要素間の余白を管理。見出しタグは余白が2倍。is--skipFlowで余白打ち消しも可能。"
+    "snippet": "コンテンツフロー用のレイアウト。子要素間の余白を margin で管理。見出しタグは余白が大きくなる。is--skipFlowで余白打ち消しも可能。"
   },
   {
-    "sourcePath": "modules/l--fluidcols.mdx",
+    "sourcePath": "primitives/l--fluidCols.mdx",
     "title": "FluidCols / l--fluidCols",
-    "description": "Lism CSS の FluidCols モジュールについて解説します。カラム幅に応じて自動で折り返すブレイクポイント非依存の段組みレイアウトです。",
-    "category": "modules",
-    "headings": ["Props", "CSS", "Import", "Usage"],
+    "description": "l--fluidCols は、カラム要素が指定した幅より小さくならないように自動で折り返す、ブレイクポイント非依存の段組みクラスです。",
+    "category": "primitives",
+    "headings": ["CSS", "Lismコンポーネント", "Usage"],
     "keywords": [
       "FluidCols",
       "流動カラム",
@@ -507,47 +511,47 @@
     "snippet": "子要素が最小幅に達すると自動的に折り返すグリッドレイアウト。メディアクエリに依存しない。cols で最小幅を指定。"
   },
   {
-    "sourcePath": "modules/l--frame.mdx",
+    "sourcePath": "primitives/l--frame.mdx",
     "title": "Frame / l--frame",
-    "description": "Lism CSS の Frame モジュールについて解説します。直下のメディア要素を自身のサイズに合わせて表示するレイアウトプリミティブです。",
-    "category": "modules",
-    "headings": ["対応コンポーネント", "Usage"],
+    "description": "l--frame は、直下のメディア要素（img, video, iframe）を自身のサイズにフィットさせて表示するクラスです。",
+    "category": "primitives",
+    "headings": ["CSS", "Lismコンポーネント", "Usage"],
     "keywords": ["Frame", "フレーム", "aspect-ratio", "アスペクト比", "l--frame", "画像", "video", "iframe", "比率維持"],
-    "snippet": "直下のメディア要素（img, video, iframe）を自身のサイズに合わせて表示するレイアウトプリミティブ。arでアスペクト比を指定。"
+    "snippet": "直下のメディア要素（img, video, iframe）を自身のサイズにフィットさせて表示するクラス。arでアスペクト比を指定。"
   },
   {
-    "sourcePath": "modules/l--switchcols.mdx",
+    "sourcePath": "primitives/l--switchCols.mdx",
     "title": "SwitchCols / l--switchCols",
-    "description": "Lism CSS の SwitchCols モジュールについて解説します。メディアクエリ不要で複数列と1列を自動切り替えするレイアウトです。",
-    "category": "modules",
-    "headings": ["Props", "CSS", "Import", "Usage"],
+    "description": "l--switchCols は、複数列と1列の切り替えをコンテナクエリやメディアクエリを使わずに実装するクラスです。",
+    "category": "primitives",
+    "headings": ["CSS", "Lismコンポーネント", "Usage"],
     "keywords": ["SwitchCols", "切り替え", "switch", "カラム", "l--switchCols", "responsive columns", "メディアクエリなし"],
-    "snippet": "複数列以上と1列への切り替えをメディアクエリを使わずに実装するレイアウト。breakSizeで切り替えポイントを指定。"
+    "snippet": "複数列以上と1列への切り替えをコンテナクエリ・メディアクエリを使わずに実装するクラス。breakSizeで切り替えポイントを指定。"
   },
   {
-    "sourcePath": "modules/l--sidemain.mdx",
+    "sourcePath": "primitives/l--sideMain.mdx",
     "title": "SideMain / l--sideMain",
-    "description": "Lism CSS の SideMain モジュールについて解説します。メディアクエリ不要でサイドとメインの2カラムレイアウトを構築します。",
-    "category": "modules",
-    "headings": ["基本構造", "CSS", "Import", "Props", "Usage", "`Grid`を使って似たレイアウトを構成する例"],
+    "description": "l--sideMain は、維持したいコンテンツの長さを基準にして、横並び・縦並びが自動で切り替わる2カラムレイアウトのクラスです。",
+    "category": "primitives",
+    "headings": ["CSS", "Lismコンポーネント", "Usage", "`Grid`を使って似たレイアウトを構成する例"],
     "keywords": ["SideMain", "サイドバー", "sidebar", "メイン", "l--sideMain", "2カラム", "is--side", "two column"],
-    "snippet": "サイドバー + メインコンテンツの2カラムレイアウト。メイン側が可変幅。sideW, mainWで幅を制御。fxd='row-reverse'で反転も可能。"
+    "snippet": "サイドバー + メインコンテンツの2カラムレイアウト。メイン側が可変幅。sideW, mainWで幅を制御。メディアクエリ・コンテナクエリに依存せず自動で切り替わる。"
   },
   {
-    "sourcePath": "modules/is--container.mdx",
+    "sourcePath": "primitives/is--container.mdx",
     "title": "Container / is--container",
-    "description": "Lism CSS の Container モジュールについて解説します。container-type を設定しコンテナクエリを有効にするコンポーネントです。",
-    "category": "modules",
-    "headings": ["Props", "Import", "Usage"],
+    "description": "is--container は、container-type を宣言してコンテナクエリを有効にするためのクラスです。",
+    "category": "primitives",
+    "headings": ["CSS", "Lismコンポーネントでの使い方", "Usage"],
     "keywords": ["Container", "コンテナ", "container query", "is--container", "isContainer", "レスポンシブ基準"],
     "snippet": "コンテナクエリの基準要素。container-typeをセットし、子要素のレスポンシブ対応の基準となる。isContainerプロパティでどのコンポーネントからでも呼び出し可能。"
   },
   {
-    "sourcePath": "modules/is--layer.mdx",
+    "sourcePath": "primitives/is--layer.mdx",
     "title": "Layer / is--layer",
-    "description": "Lism CSS の Layer モジュールについて解説します。親要素に重ねて配置するオーバーレイ用のコンポーネントです。",
-    "category": "modules",
-    "headings": ["Import", "Usage"],
+    "description": "is--layer は、absoluteで親要素の上に被せて配置するオーバーレイ用のクラスです。",
+    "category": "primitives",
+    "headings": ["CSS", "Lismコンポーネントでの使い方", "Usage"],
     "keywords": [
       "Layer",
       "レイヤー",
@@ -561,14 +565,14 @@
       "重ねる",
       "背景装飾"
     ],
-    "snippet": "親要素に対して絶対配置で重なるレイヤー要素。オーバーレイや背景装飾に使用。blur等のbackdrop-filterプロパティも個別に指定可能。"
+    "snippet": "親要素に対して絶対配置で重なるレイヤー要素。オーバーレイや背景装飾に使用。backdrop-filterの活用も解説。"
   },
   {
-    "sourcePath": "modules/is--boxLink.mdx",
+    "sourcePath": "primitives/is--boxLink.mdx",
     "title": "BoxLink / is--boxLink",
-    "description": "Lism CSS の BoxLink モジュールについて解説します。ボックス全体をクリック可能なリンクにするコンポーネントです。",
-    "category": "modules",
-    "headings": ["Import", "Props", "Usage", "Opt-in"],
+    "description": "is--boxLink は、ボックス全体をクリック可能にするクラスです。",
+    "category": "primitives",
+    "headings": ["CSS", "Lismコンポーネントでの使い方", "Usage", "Opt-in"],
     "keywords": [
       "BoxLink",
       "LinkBox",
@@ -585,29 +589,29 @@
     "snippet": "ボックス全体をリンク領域にする。hrefを指定してaタグにする方法と、内部にis--coverLink（旧u--expandedLink）を配置する方法の2通りがある。"
   },
   {
-    "sourcePath": "modules/is--wrapper.mdx",
+    "sourcePath": "primitives/is--wrapper.mdx",
     "title": "Wrapper / is--wrapper",
-    "description": "Lism CSS の Wrapper モジュールについて解説します。コンテンツ幅を制御する is--wrapper クラスを出力するコンポーネントです。",
-    "category": "modules",
-    "headings": ["Props", "Import", "Usage"],
+    "description": "is--wrapper は、その直下のコンテンツ幅を一括制御できるクラスです。",
+    "category": "primitives",
+    "headings": ["CSS", "Lismコンポーネントでの使い方", "Usage"],
     "keywords": ["Wrapper", "ラッパー", "コンテンツ幅", "max-width", "is--wrapper", "contentSize", "幅制限", "width limiter"],
-    "snippet": "コンテンツ幅を制限するラッパー要素。contentSizeで幅を指定。s, lのプリセットサイズや任意値も設定可能。"
+    "snippet": "コンテンツ幅を制限するラッパー要素。isWrapperプロパティでどのコンポーネントからでも呼び出し可能。contentSizeで幅を指定。s, lのプリセットサイズや任意値も設定可能。"
   },
   {
-    "sourcePath": "modules/a--icon.mdx",
+    "sourcePath": "primitives/a--icon.mdx",
     "title": "Icon / a--icon",
-    "description": "Lism CSS の Icon モジュールについて解説します。SVG アイコンを出力するためのコンポーネントです。",
-    "category": "modules",
-    "headings": ["構造", "CSS", "Props", "Import", "Usage"],
+    "description": "a--icon は、アイコン要素を表示するためのクラスです。",
+    "category": "primitives",
+    "headings": ["CSS", "Lismコンポーネント", "Usage"],
     "keywords": ["Icon", "アイコン", "SVG", "a--icon", "phosphor-icons"],
     "snippet": "アイコンを表示するコンポーネント。外部パッケージ(react-icons, phosphor-icons等)のアイコン、プリセットアイコン、SVG直接記述、img指定に対応。"
   },
   {
-    "sourcePath": "modules/a--divider.mdx",
+    "sourcePath": "primitives/a--divider.mdx",
     "title": "Divider / a--divider",
-    "description": "Lism CSS の Divider モジュールについて解説します。コンテンツ間に区切り線を描画するコンポーネントです。",
-    "category": "modules",
-    "headings": ["構造", "CSS", "Props", "Import", "Usage"],
+    "description": "a--divider は、コンテンツ間に区切り線を描画するためのクラスです。",
+    "category": "primitives",
+    "headings": ["CSS", "Lismコンポーネント", "Usage"],
     "keywords": ["Divider", "区切り線", "hr", "a--divider", "セパレーター", "border", "separator", "仕切り"],
     "snippet": "区切り線を表示するコンポーネント。水平・垂直の区切りを表現。bds, bdw, bdc でスタイルをカスタマイズ可能。"
   },
@@ -621,22 +625,22 @@
     "snippet": "img, video, iframe 等のメディア要素を統一的に扱うコンポーネント。objectPositionやfilter系はstyleで指定。Astro版では as='img' で Astro Image、as='picture' で Astro Picture に自動マッピング。Next.js の Image コンポーネントとの連携も可能。"
   },
   {
-    "sourcePath": "modules/a--spacer.mdx",
+    "sourcePath": "primitives/a--spacer.mdx",
     "title": "Spacer / a--spacer",
-    "description": "Lism CSS の Spacer モジュールについて解説します。要素間にスペースを確保するための空要素を出力します。",
-    "category": "modules",
-    "headings": ["構造", "Props", "Import", "Usage"],
+    "description": "a--spacer は、要素間にスペースを確保するためのクラスです。",
+    "category": "primitives",
+    "headings": ["CSS", "Lismコンポーネント", "Usage"],
     "keywords": ["Spacer", "スペーサー", "余白", "空白", "a--spacer", "スペース", "gap element"],
     "snippet": "空白を挿入するコンポーネント。w, h で幅・高さを指定。SPACEトークンの値も使用可能。"
   },
   {
-    "sourcePath": "modules/a--decorator.mdx",
+    "sourcePath": "primitives/a--decorator.mdx",
     "title": "Decorator / a--decorator",
-    "description": "Lism CSS の Decorator モジュールについて解説します。装飾用の空要素を出力するコンポーネントです。",
-    "category": "modules",
-    "headings": ["構造", "Props", "Import", "Usage"],
+    "description": "a--decorator は、コンテンツを装飾するための空要素として使うクラスです。",
+    "category": "primitives",
+    "headings": ["Lismコンポーネント", "Usage"],
     "keywords": ["Decorator", "デコレーター", "装飾", "a--decorator", "visual decoration"],
-    "snippet": "装飾用の空要素を出力するコンポーネント。size, filter系プロパティ, clipPathに対応。aria-hidden='true'がデフォルトで付与される。"
+    "snippet": "装飾用の空要素を出力するコンポーネント。aria-hidden='true'がデフォルトで付与される。"
   },
   {
     "sourcePath": "ui/Accordion.mdx",
@@ -891,10 +895,10 @@
     "snippet": "u--trimは自身のmargin-blockを調整。u--trimChildrenは子要素全ての上下マージンを調整。img, figure, tableに対してはマージン調節を無効化。"
   },
   {
-    "sourcePath": "modules/is--boxLink.mdx",
+    "sourcePath": "primitives/is--boxLink.mdx",
     "title": "is--coverLink",
     "description": "クリック範囲を親要素全体に広げるためのクラス。is--boxLinkと併用。",
-    "category": "modules",
+    "category": "primitives",
     "headings": ["Usage"],
     "keywords": ["is--coverLink", "u--expandedLink", "stretched-link", "クリック範囲", "リンク拡張", "boxLink", "linkBox"],
     "snippet": "クリック範囲を親要素全体に広げるためのクラス（旧 u--expandedLink）。is--boxLink と併用し、内部リンクをボックス全体に広げるために使用。"
@@ -997,5 +1001,48 @@
     "headings": ["set--bp"],
     "keywords": ["set--bp", "ブレイクポイント", "メディアクエリ", "レスポンシブ", "--_is_sm", "条件付きスタイル"],
     "snippet": "特定のブレイクポイント以上でのみスタイルを適用するクラス。var(--_is_sm) 等の変数を使い、レスポンシブ対応していないプロパティを条件付きで変化させるハック的手段。"
+  },
+  {
+    "sourcePath": "features.mdx",
+    "title": "Lism CSSの特徴",
+    "description": "Lism CSS の設計思想と主な特徴について詳しく解説します。",
+    "category": "guide",
+    "headings": [
+      "サイト全体のCSS設計を担う",
+      "心地よいリズムを生むトークン設計",
+      "レイアウトファーストなプリミティブ設計",
+      "CSS変数を活かしたユーティリティ設計",
+      "CSSを書くことを前提にした設計思想",
+      "メディアクエリに依存しないレイアウト"
+    ],
+    "keywords": ["特徴", "設計思想", "レイアウトファースト", "トークン", "プリミティブ", "CSS変数", "メディアクエリなし", "フレームワーク"],
+    "snippet": "Lism CSS はサイト全体のCSS設計を丸ごと引き受けるフレームワーク。デザイントークン・命名規則・@layer階層を包括的に定義。レイアウトファーストなプリミティブ設計とCSS変数を活かしたユーティリティ設計が特徴。メディアクエリに依存しないレイアウトパターンも提供。"
+  },
+  {
+    "sourcePath": "mcp.mdx",
+    "title": "MCP Server",
+    "description": "AIコーディングツールが Lism CSS のコンポーネント・Props・トークン情報をリアルタイムに参照できる MCP サーバーのセットアップ方法。",
+    "category": "guide",
+    "headings": ["できること", "セットアップ"],
+    "keywords": ["MCP", "AI", "Claude", "Cursor", "セットアップ", "コーディング支援", "Model Context Protocol"],
+    "snippet": "@lism-css/mcp は Lism CSS の情報をAIコーディングツールに提供するMCPサーバー。コンポーネント情報の参照・Props↔CSSマッピング・デザイントークン参照・ドキュメント検索・CSS→Lism変換に対応。Claude Code, Cursor 等から利用可能。"
+  },
+  {
+    "sourcePath": "skills.mdx",
+    "title": "Skills",
+    "description": "プロジェクトにSKILL.mdファイルを配置して、AIエージェントに Lism CSS の設計ルール・Props・トークン・命名規則を伝える方法。",
+    "category": "guide",
+    "headings": ["セットアップ", "アップデート", "ファイル構成"],
+    "keywords": ["skills", "SKILL.md", "AIエージェント", "設計ルール", "Claude", "コーディング支援"],
+    "snippet": "プロジェクトにSKILL.mdファイルを配置することでAIエージェントにLism CSSの設計ルール・Props・トークン・命名規則を伝えられる。npxコマンドで導入・アップデート可能。"
+  },
+  {
+    "sourcePath": "primitives/is--vertical.mdx",
+    "title": "is--vertical",
+    "description": "is--vertical は、要素に縦書きモード（writing-mode）を適用するクラスです。",
+    "category": "primitives",
+    "headings": ["CSS", "Usage"],
+    "keywords": ["is--vertical", "縦書き", "writing-mode", "vertical-rl", "vertical-lr", "縦方向", "テキスト方向"],
+    "snippet": "要素に縦書きモード（writing-mode）を適用するクラス。--vertical-modeトークンで値を管理。is--vertical@sm / is--vertical@md でブレイクポイント以上のみ縦書きにするバリエーションも提供。set--bp との併用が必要。"
   }
 ]
