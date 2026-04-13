@@ -1,6 +1,6 @@
 # l--flex / `<Flex>`
 
-コンテンツを Flex レイアウトで配置するためのレイアウトモジュール。
+コンテンツを Flex レイアウトで配置するためのレイアウトプリミティブ。
 
 ## 基本情報
 
@@ -67,7 +67,7 @@ Property Class や Lism Props で Flex 関連プロパティ（`g`, `fxw`, `jc`,
 </div>
 ```
 
-## 関連モジュール
+## 関連プリミティブ
 
 - [l--stack](./l--stack.md) — 縦積みの Flexbox（`flex-direction: column`）
 - [l--cluster](./l--cluster.md) — 折り返し前提の横並び（`flex-wrap: wrap`）

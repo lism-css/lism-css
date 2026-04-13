@@ -1,6 +1,6 @@
 # Skill Template Update
 
-`.claude/skills/lism-css-guide/` 配下のルートファイル＋ `modules/` サブフォルダ配下のモジュール詳細ファイルを、最新ソースに合わせて更新してください。
+`.claude/skills/lism-css-guide/` 配下のルートファイル＋ `modules/` サブフォルダ配下のプリミティブ詳細ファイルを、最新ソースに合わせて更新してください。
 
 
 ## 対象ファイルと更新内容
@@ -9,7 +9,7 @@
 
 | ファイル | 更新内容 | 主なソース参照先 |
 |----------|----------|-----------------|
-| `SKILL.md` | バージョン情報・パッケージ構成・import パス・実装ルール・詳細ファイル一覧・モジュール別リファレンスへのリンク一覧 | `packages/lism-css/package.json`, `packages/lism-ui/package.json`, 各パッケージの exports |
+| `SKILL.md` | バージョン情報・パッケージ構成・import パス・実装ルール・詳細ファイル一覧・プリミティブ別リファレンスへのリンク一覧 | `packages/lism-css/package.json`, `packages/lism-ui/package.json`, 各パッケージの exports |
 | `base-styles.md` | Reset CSS・HTML要素のベーススタイル・CSS変数（トークン）概要 | `packages/lism-css/src/scss/base/`, `packages/lism-css/src/scss/base/tokens/` |
 | `set-class.md` | `set--`クラス (`set--plain`,`set--shadow`,`set--hov`,`set--transition`,`set--gutter` 等) の一覧と用途解説 | `packages/lism-css/src/scss/base/set/`, `packages/lism-css/src/scss/base/tokens/_shadow.scss` |
 | `primitive-class.md` | Primitive クラス (`is--`, `l--`, `a--`) と Component クラス (`c--`) の一覧と用途（※俯瞰マップに徹する。個別 Primitive へのリンクは載せない） | `packages/lism-css/src/scss/modules/`, `packages/lism-ui/src/`（c-- 系） |
@@ -30,7 +30,7 @@
 
 | カテゴリ | 更新内容 | 主なソース参照先 |
 |----------|----------|-----------------|
-| Layout（`primitives/l--*.md`） | クラス名 / 対応コンポーネント / SCSS raw URL / 専用 Props / Usage（基本パターン + 応用）/ 関連 Primitive | `packages/lism-css/src/scss/modules/layout/`, `apps/docs/src/content/ja/primitives/l--*.mdx` |
+| Layout（`primitives/l--*.md`） | クラス名 / 対応コンポーネント / SCSS raw URL / 専用 Props / Usage（基本パターン + 応用）/ 関連プリミティブ | `packages/lism-css/src/scss/modules/layout/`, `apps/docs/src/content/ja/primitives/l--*.mdx` |
 | Trait（`primitives/is--*.md`） | 同上 + Trait Primitive 固有の挙動（`href` → `<a>`、`contentSize`、`@sm`/`@md` バリエーション等） | `packages/lism-css/src/scss/modules/trait/`, `apps/docs/src/content/ja/primitives/is--*.mdx` |
 | Atomic（`primitives/a--*.md`） | クラス名 / 対応コンポーネント / 専用 Props / Usage / HTML 出力構造 | `packages/lism-css/src/scss/modules/atomic/`, `apps/docs/src/content/ja/primitives/a--*.mdx` |
 
@@ -44,7 +44,7 @@
 - `## 専用Props`（該当モジュールのみ）
 - `## Usage`（JSX + HTML コードブロックのペアで記載。MDX の `<Preview>` / `<PreviewArea>` / `<PreviewCode>` / `<SrcCode>` 等のカスタムコンポーネントは廃棄）
 - 必要に応じて追加セクション（HTML 構造、動作の仕組み、特殊仕様、Opt-in スタイル、注意点 など）
-- `## 関連モジュール`（3〜4個に絞る）
+- `## 関連プリミティブ`（3〜4個に絞る）
 - コード例で使う要素・クラス・コンポーネントは `lism-css` パッケージに含まれるものだけに限定する（`@lism-css/ui` のコンポーネント解説を除く）
 
 
@@ -144,7 +144,7 @@
 
 - `.claude/skills/lism-css-guide/` 配下のルートファイル＋ `modules/` 配下の全ファイルを読み取る
 - `packages/lism-css/package.json` からバージョンを取得し、`SKILL.md` のバージョン表記と比較する
-- `modules/` 配下の存在チェック: `packages/lism-css/src/scss/modules/{layout,state,atomic}/` 配下の SCSS と `modules/*.md` が 1:1 対応しているか、さらに `SKILL.md` の「モジュール単位の詳細リファレンス」セクションのリンクと実ファイルが一致するかを確認（数値ではなくソースの実体を基準にする）
+- `modules/` 配下の存在チェック: `packages/lism-css/src/scss/modules/{layout,state,atomic}/` 配下の SCSS と `modules/*.md` が 1:1 対応しているか、さらに `SKILL.md` の「プリミティブ単位の詳細リファレンス」セクションのリンクと実ファイルが一致するかを確認（数値ではなくソースの実体を基準にする）
 
 ### 2. ソースコードの読み取りと照合
 
@@ -156,7 +156,7 @@
 3. **存在確認**: テンプレートに記載されているが、ソースから削除された項目がないか
 4. **コード例の正確性**: JSX / HTML のコード例が現在の API で動作するか
 5. **バージョン情報**: SKILL.md のバージョン表記が最新か
-6. **モジュール詳細ファイルの整合性**: `modules/*.md` の専用 Props・SCSS raw URL・ドキュメント URL・関連モジュール相互リンク先が現在のソース構成と一致しているか
+6. **プリミティブ詳細ファイルの整合性**: `modules/*.md` の専用 Props・SCSS raw URL・ドキュメント URL・関連プリミティブ相互リンク先が現在のソース構成と一致しているか
 
 ### 3. テンプレートの更新
 

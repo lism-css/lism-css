@@ -116,7 +116,7 @@ import { Box, Flex, Stack, Text, Heading } from 'lism-css/astro';
 
 | Type | Examples |
 |------|---------|
-| Layout Module | `l--flex`, `l--grid`, `l--stack`, `l--center`, `l--columns`, `l--sideMain` |
+| Layout Primitive | `l--flex`, `l--grid`, `l--stack`, `l--center`, `l--columns`, `l--sideMain` |
 | State | `is--wrapper`, `is--container`, `is--layer` |
 | Property Class | `-p:20`, `-bgc:base-2`, `-fz:l`, `-ta:center` |
 | Breakpoint | `-p_sm`, `-g_md`, `-fz_lg` |

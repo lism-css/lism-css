@@ -69,7 +69,7 @@ import { Accordion, Tabs, Modal, Button } from '@lism-css/ui/astro';
 | `type` | `'alert' \| 'point' \| 'warning' \| 'check' \| 'help' \| 'info'` | `'alert'` | アラートタイプ。keycolor と icon の組み合わせプリセット |
 | `keycolor` | `string` | — | キーカラー |
 | `icon` | `ReactNode \| string` | — | カスタムアイコン |
-| `layout` | `'flex' \| 'sideMain'` | `'flex'` | レイアウトモジュール |
+| `layout` | `'flex' \| 'sideMain'` | `'flex'` | レイアウトプリミティブ |
 | `flow` | `string` | `'s'` | コンテンツを囲む要素のフロー余白 |
 
 ```jsx
@@ -204,7 +204,7 @@ HTML の `details/summary` 要素をラップしたコンポーネント。Accor
 | `modalId` | OpenBtn / CloseBtn | `string` | — | 対象モーダルの ID |
 | `duration` | Root | `string` | — | アニメーション持続時間。`--duration` 変数として出力 |
 | `offset` | Inner | `string` | — | 非表示時の位置オフセット。`--offset` 変数として出力 |
-| `layout` | Inner | `string` | — | Inner 要素のレイアウトモジュール |
+| `layout` | Inner | `string` | — | Inner 要素のレイアウトプリミティブ |
 
 ```jsx
 <Modal.OpenBtn modalId='modal-01'>Open</Modal.OpenBtn>

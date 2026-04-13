@@ -54,7 +54,7 @@
 </TileGrid>
 ```
 
-## 関連モジュール
+## 関連プリミティブ
 
 - [l--columns](./l--columns.md) — 等幅列のみ（1D）のカラム
 - [l--fluidCols](./l--fluidCols.md) — 自動折り返し型段組

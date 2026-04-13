@@ -1,13 +1,13 @@
 ---
 title: 'TileGrid (l--tileGrid)'
 navtitle: 'l--tileGrid'
-description: 'l--tileGrid は、列数と行数を指定して均等なタイル型グリッドレイアウトを構成するレイアウトモジュールです。'
+description: 'l--tileGrid は、列数と行数を指定して均等なタイル型グリッドレイアウトを構成するレイアウトプリミティブです。'
 ---
 
 import { TileGrid, Box, Center } from 'lism-css/astro';
 
 
-`l--tileGrid` は、`cols`（列数）と`rows`（行数）を指定して、**均等なタイル型グリッドレイアウト**を構成するためのレイアウトモジュールです。
+`l--tileGrid` は、`cols`（列数）と`rows`（行数）を指定して、**均等なタイル型グリッドレイアウト**を構成するためのレイアウトプリミティブです。
 
 内部的には `grid-template: repeat(rows, minmax(0, 1fr)) / repeat(cols, minmax(0, 1fr))` を使用しています。
 

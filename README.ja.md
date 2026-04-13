@@ -116,7 +116,7 @@ import { Box, Flex, Stack, Text, Heading } from 'lism-css/astro';
 
 | タイプ | 例 |
 |--------|-----|
-| レイアウトモジュール | `l--flex`, `l--grid`, `l--stack`, `l--center`, `l--columns`, `l--sideMain` |
+| レイアウトプリミティブ | `l--flex`, `l--grid`, `l--stack`, `l--center`, `l--columns`, `l--sideMain` |
 | ステート | `is--wrapper`, `is--container`, `is--layer` |
 | プロップクラス | `-p:20`, `-bgc:base-2`, `-fz:l`, `-ta:center` |
 | ブレークポイント | `-p_sm`, `-g_md`, `-fz_lg` |

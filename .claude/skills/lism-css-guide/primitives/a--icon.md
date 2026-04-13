@@ -1,6 +1,6 @@
 # a--icon / `<Icon>`
 
-アイコン要素を表示するための Atomic モジュール。`flex-shrink: 0`、デフォルトサイズ `1em`。
+アイコン要素を表示するための Atomic プリミティブ。`flex-shrink: 0`、デフォルトサイズ `1em`。
 
 ## 基本情報
 
@@ -98,7 +98,7 @@ import { phIcons, logoIcons } from 'lism-css/react/atomic/Icon/presets';
 <Icon fz="4xl" src="/img/avatar01.jpg" alt="avatar" />
 ```
 
-## 関連モジュール
+## 関連プリミティブ
 
 - [a--divider](./a--divider.md) — 区切り線
 - [a--spacer](./a--spacer.md) — 空白要素

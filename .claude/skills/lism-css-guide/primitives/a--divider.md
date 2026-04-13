@@ -1,6 +1,6 @@
 # a--divider / `<Divider>`
 
-コンテンツ間に区切り線を描画する Atomic モジュール。`--bdc` は `var(--divider)` が初期セットされます。`<Divider>` はデフォルトで `aria-hidden="true"` が付与されます。
+コンテンツ間に区切り線を描画する Atomic プリミティブ。`--bdc` は `var(--divider)` が初期セットされます。`<Divider>` はデフォルトで `aria-hidden="true"` が付与されます。
 
 ## 基本情報
 
@@ -62,7 +62,7 @@
 </div>
 ```
 
-## 関連モジュール
+## 関連プリミティブ
 
 - [a--spacer](./a--spacer.md) — 要素間のスペース確保
 - [a--decorator](./a--decorator.md) — 装飾用空要素

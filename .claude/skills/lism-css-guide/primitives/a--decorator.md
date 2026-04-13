@@ -1,6 +1,6 @@
 # a--decorator / `<Decorator>`
 
-コンテンツを装飾するための空要素として使う Atomic モジュール。`<Decorator>` はデフォルトで `aria-hidden="true"` が付与されます。
+コンテンツを装飾するための空要素として使う Atomic プリミティブ。`<Decorator>` はデフォルトで `aria-hidden="true"` が付与されます。
 
 ## 基本情報
 
@@ -38,7 +38,7 @@
 </div>
 ```
 
-## 関連モジュール
+## 関連プリミティブ
 
 - [a--spacer](./a--spacer.md) — 要素間スペース
 - [a--divider](./a--divider.md) — 区切り線
