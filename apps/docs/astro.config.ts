@@ -43,6 +43,13 @@ export default defineConfig({
     // typography → tokens/typography に移動
     '/docs/typography/': '/docs/tokens/typography/',
     '/en/docs/typography/': '/en/docs/tokens/typography/',
+    // props/* → property-class/* に移動（bd / hov / max-sz）
+    '/docs/props/bd/': '/docs/property-class/bd/',
+    '/docs/props/hov/': '/docs/property-class/hov/',
+    '/docs/props/max-sz/': '/docs/property-class/max-sz/',
+    '/en/docs/props/bd/': '/en/docs/property-class/bd/',
+    '/en/docs/props/hov/': '/en/docs/property-class/hov/',
+    '/en/docs/props/max-sz/': '/en/docs/property-class/max-sz/',
     // module-class → primitives リネーム（#247）
     '/docs/module-class/': '/docs/primitives/',
     '/en/docs/module-class/': '/en/docs/primitives/',
