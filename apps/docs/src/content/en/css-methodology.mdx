@@ -350,11 +350,11 @@ By using simple numeric variations, you can expand them to `base-3`, `text-3`, a
 #### Variable names for elements
 - Properties that are **overridable from `:root`** and are specific to a particular element or class use the format `--{target}-{prop}`.
   - Examples: `--link-td`, `--headings-ff`, `--gutter-size`, `--under-offset`, `--hl-unit`, `--ov-bgc`
-- Variables for the primary functionality of a component or module class are expressed as a single block, like `--{propName}`.
+- Variables for the primary functionality of a component or primitive class are expressed as a single block, like `--{propName}`.
   - Examples: `--sideW`, `--mainW` for `.l--sideMain`
   - Note: When the property is also defined as a Property Class, the same variable name can be used to allow overriding.
     - Example: `--c`, `--bgc` on `.c--button`
-- Properties for child elements of specific components or modules (e.g., `c--hoge_item`) use the format `--_{item}-{propName}`.
+- Properties for child elements of specific components or primitives (e.g., `c--hoge_item`) use the format `--_{item}-{propName}`.
   - Example: `--_icon-size`
 - Variables used for special state management start with `_` and are written as a single camelCase block: `--_{varName}`.
   - Examples: `--_isHov`, `--_notHov`

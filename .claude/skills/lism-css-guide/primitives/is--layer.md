@@ -1,6 +1,6 @@
 # is--layer / `<Layer>`
 
-`position: absolute` で親要素の上に被せて配置するオーバーレイ用モジュールクラス。親には `pos="relative"` が必要です。
+`position: absolute` で親要素の上に被せて配置するオーバーレイ用プリミティブクラス。親には `pos="relative"` が必要です。
 
 ## 基本情報
 

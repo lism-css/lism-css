@@ -71,15 +71,15 @@
 | set-- クラス一覧 | `packages/lism-css/src/scss/base/set/` 配下の SCSS、`packages/lism-css/src/scss/base/tokens/_shadow.scss`（set--shadow） |
 | set prop の処理ロジック | `packages/lism-css/src/lib/helper/mergeSet.ts` |
 
-### モジュールクラス関連
+### プリミティブクラス / コンポーネントクラス関連
 
 | 確認したい内容 | 参照先 |
 |---|---|
-| is-- / l-- / a-- クラス | `packages/lism-css/src/scss/modules/` 配下の SCSS（`state/`, `layout/`, `atomic/`） |
-| c-- クラス | `packages/lism-ui/src/`（UIコンポーネントのCSS）。ユーザー定義は `@layer lism-custom` |
+| is-- / l-- / a-- クラス | `packages/lism-css/src/scss/modules/` 配下の SCSS（`trait/`, `layout/`, `atomic/`） |
+| c-- クラス | `packages/lism-ui/src/`（UIコンポーネントのCSS）。ユーザー独自は `@layer lism-components` または `@layer lism-custom` |
 | プレフィックスと Layer の対応 | `packages/lism-css/src/scss/_with_layer.scss` |
-| 個別モジュールの使い方・専用 Props | `apps/docs/src/content/ja/modules/*.mdx`（サンプル・文言の情報源）。ファイル名は lowercase なので camelCase の Skill ファイル名との対応に注意 |
-| モジュール詳細の React/Astro 側の Props 実装 | `packages/lism-css/src/components/layout/`, `state/`, `atomic/` |
+| 個別プリミティブの使い方・専用 Props | `apps/docs/src/content/ja/primitives/*.mdx`（サンプル・文言の情報源）。ファイル名は lowercase なので camelCase の Skill ファイル名との対応に注意 |
+| プリミティブ詳細の React/Astro 側の Props 実装 | `packages/lism-css/src/components/layout/`, `state/`, `atomic/` |
 
 ### ユーティリティクラス関連
 
