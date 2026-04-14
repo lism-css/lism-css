@@ -42,6 +42,9 @@ function pushPrimitive(existing: string[] | undefined, ...classes: string[]): st
 }
 
 // スペーストークンへの一括変換（w / h 用）
+// 値は BP 形 ({base, md, ...}) のまま返し、後段の analyzeLismProp に渡す。
+// トークン → CSS var への解決はここでしかできないため（後段は token 名を知らない）、
+// BP 形を維持したまま各ブレークポイント値に getMaybeCssVar を適用する。
 function toSpaceValue(val: unknown): unknown {
   const bpObj = getBpData(val as Parameters<typeof getBpData>[0]);
   const result: Record<string, unknown> = {};
@@ -82,7 +85,7 @@ function getDecoratorProps({ size, clipPath, boxSizing, style, ...props }: Input
   if (boxSizing) newStyle.boxSizing = boxSizing as StyleWithCustomProps['boxSizing'];
 
   const next: InputProps = { ...props, style: newStyle };
-  if (size != null && size !== '') {
+  if (size) {
     next.ar = '1/1';
     next.w = size;
   }
