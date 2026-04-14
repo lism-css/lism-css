@@ -2,6 +2,7 @@
   .c--tabs {
     display: grid;
     grid: 'list' 'panel' / 100%;
+    gap: var(--s20);
   }
   .c--tabs_list {
     grid-area: list;
@@ -9,24 +10,21 @@
     overflow-x: auto;
   }
   .c--tabs_tab {
-    &[aria-selected='true'] {
-      --_notSelected: ;
-    }
-    &[aria-selected='false'] {
-      --_isSelected: ;
-    }
-    /* 非アクティブの時、薄いカラーに */
-    :where(&) {
-      color: var(--_notSelected, var(--text-2));
-    }
+    color: var(--_notSelected, var(--text-2));
+    background-color: var(--_isSelected, var(--base-2));
+    padding: 0.25em 0.75em;
   }
-
+  .c--tabs_tab[aria-selected='true'] {
+    --_notSelected: ;
+  }
+  .c--tabs_tab[aria-selected='false'] {
+    --_isSelected: ;
+  }
   .c--tabs_panel {
     grid-area: panel;
     width: 100%;
-
-    &:where([aria-hidden='true']) {
-      display: none;
-    }
+  }
+  .c--tabs_panel:where([aria-hidden='true']) {
+    display: none;
   }
 }

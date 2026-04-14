@@ -26,7 +26,7 @@ const scopedCss = `.${scopeId}{ ${css} }`;
   <slot />
   {
     Astro.slots.has('tab') && (
-      <Tabs.Root class="c--preview_code" variant="line" g="15">
+      <Tabs.Root class="c--preview_code" variant="prev" g="15">
         <slot name="tab" />
       </Tabs.Root>
     )
@@ -35,16 +35,15 @@ const scopedCss = `.${scopeId}{ ${css} }`;
 {scopedCss && <style set:html={scopedCss} />}
 
 <style is:global>
-  :where(.c--tabs--line) {
-    --sh-size: inset 0 -2px;
-
-    .c--tabs_list {
-      box-shadow: var(--sh-size) 0 var(--divider);
-    }
-    .c--tabs_tab {
-      font-size: var(--fz--s);
-      padding: 0.5em 0.875em;
-      box-shadow: var(--_isSelected, var(--sh-size) 0 0 currentColor);
-    }
+  .c--tabs--prev .c--tabs_list {
+    /* Memo: ov-x='auto' の時に margin がネガティブだと崩れるので、box-shadowで表現する。 */
+    box-shadow: inset 0 -2px 0 var(--divider);
+  }
+  .c--tabs--prev .c--tabs_tab {
+    font-size: var(--fz--s);
+    padding-block: 0.5em;
+    padding-inline: 0.875em;
+    background-color: transparent;
+    box-shadow: var(--_isSelected, inset 0 -2px 0 0 currentColor);
   }
 </style>

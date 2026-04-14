@@ -1,0 +1,11 @@
+@layer lism-component {
+  .c--tabs--line > .c--tabs_list {
+    /* Memo: ov-x='auto' の時に margin がネガティブだと崩れるので、box-shadowで表現する。 */
+    box-shadow: inset 0 -2px 0 var(--divider);
+  }
+  .c--tabs--line .c--tabs_tab {
+    font-size: var(--fz--s);
+    background-color: transparent;
+    box-shadow: var(--_isSelected, inset 0 -2px 0 0 currentColor);
+  }
+}

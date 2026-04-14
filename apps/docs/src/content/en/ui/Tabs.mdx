@@ -5,7 +5,9 @@ description: 'Documentation for the Tabs component provided by @lism-css/ui.'
 
 import { Icon } from 'lism-css/astro';
 import { Tabs, DummyText } from '@lism-css/ui/astro';
-import '../../ja/ui/_opt-in/_tabs.css'
+import '../../ja/ui/_opt-in/_tabs-line.css'
+import '../../ja/ui/_opt-in/_tabs-emboss.css'
+import '../../ja/ui/_opt-in/_tabs-keep-height.css'
 
 
 A component for creating tab elements.
@@ -19,7 +21,7 @@ Provided as `Tabs` from the `@lism-css/ui` package.
 
 ### Import
 
-<ImportPackage component="Tabs" script="setTabs.js" packageName="@lism-css/ui" />
+<ImportPackage component="Tabs" script="tabs.js" packageName="@lism-css/ui" />
 
 
 ### Props
@@ -56,19 +58,19 @@ The source code is available on [GitHub](https://github.com/lism-css/lism-css/tr
 
 ## Examples
 
-
+### Basic example
 <Preview>
   <PreviewTitle>Example</PreviewTitle>
-  <PreviewArea p="20">
-    <Tabs.Root g="15">
+  <PreviewArea p="30">
+    <Tabs.Root>
       <Tabs.Item>
-        <Tabs.Tab px="10">Tab 1</Tabs.Tab>
+        <Tabs.Tab>Tab 1</Tabs.Tab>
         <Tabs.Panel>
           <DummyText pre="Tab 01: " />
         </Tabs.Panel>
       </Tabs.Item>
       <Tabs.Item>
-        <Tabs.Tab px="10">Tab 2</Tabs.Tab>
+        <Tabs.Tab>Tab 2</Tabs.Tab>
         <Tabs.Panel>
           <DummyText length="l" offset={1} pre="Tab 02: " />
         </Tabs.Panel>
@@ -77,15 +79,15 @@ The source code is available on [GitHub](https://github.com/lism-css/lism-css/tr
   </PreviewArea>
   <PreviewCode slot="tab" label="JSX">
     ```jsx
-    <Tabs.Root g="15">
+    <Tabs.Root>
       <Tabs.Item>
-        <Tabs.Tab px="10">Tab 1</Tabs.Tab>
+        <Tabs.Tab>Tab 1</Tabs.Tab>
         <Tabs.Panel>
           <DummyText pre="Tab 01: " />
         </Tabs.Panel>
       </Tabs.Item>
       <Tabs.Item>
-        <Tabs.Tab px="10">Tab 2</Tabs.Tab>
+        <Tabs.Tab>Tab 2</Tabs.Tab>
         <Tabs.Panel>
           <DummyText length="l" offset={1} pre="Tab 02: " />
         </Tabs.Panel>
@@ -100,47 +102,6 @@ The source code is available on [GitHub](https://github.com/lism-css/lism-css/tr
 </Preview>
 
 
-You can pass props to `.c--tabs_list` using `listProps`.
-
-<Preview>
-  <PreviewTitle>Example using `listProps`</PreviewTitle>
-  <PreviewArea p="20">
-    <Tabs.Root g="15" ji="center" listProps={{ bd: '-', bdrs: '99', p: '10', lh: 'xs' }}>
-      <Tabs.Item>
-        <Tabs.Tab px="10">Tab 1</Tabs.Tab>
-        <Tabs.Panel>
-          <DummyText pre="Tab 01: " />
-        </Tabs.Panel>
-      </Tabs.Item>
-      <Tabs.Item>
-        <Tabs.Tab px="10">Tab 2</Tabs.Tab>
-        <Tabs.Panel>
-          <DummyText length="l" offset={1} pre="Tab 02: " />
-        </Tabs.Panel>
-      </Tabs.Item>
-    </Tabs.Root>
-  </PreviewArea>
-  <PreviewCode slot="tab" label="JSX">
-    ```jsx "listProps"
-    <Tabs.Root g="15" ji="center" listProps={{ bd: '-', bdrs: '99', p: '10', lh: 'xs' }}>
-      <Tabs.Item>
-        <Tabs.Tab px="10">Tab 1</Tabs.Tab>
-        <Tabs.Panel>
-          <DummyText pre="Tab 01: " />
-        </Tabs.Panel>
-      </Tabs.Item>
-      <Tabs.Item>
-        <Tabs.Tab px="10">Tab 2</Tabs.Tab>
-        <Tabs.Panel>
-          <DummyText length="l" offset={1} pre="Tab 02: " />
-        </Tabs.Panel>
-      </Tabs.Item>
-    </Tabs.Root>
-    ```
-  </PreviewCode>
-</Preview>
-
-
 ### Specifying the initially open tab
 
 Use `defaultIndex` on `<Tabs.Root>` to specify which tab is open by default.
@@ -148,17 +109,17 @@ Use `defaultIndex` on `<Tabs.Root>` to specify which tab is open by default.
 
 <Preview>
   <PreviewTitle>Example</PreviewTitle>
-  <PreviewArea p="20">
-    <Tabs.Root defaultIndex={2} listProps={{ 'bd-b': '-' }}>
+  <PreviewArea p="30">
+    <Tabs.Root defaultIndex={2}>
       <Tabs.Item>
-        <Tabs.Tab p="10">Tab 1</Tabs.Tab>
-        <Tabs.Panel p="10">
+        <Tabs.Tab>Tab 1</Tabs.Tab>
+        <Tabs.Panel>
           <DummyText pre="Tab 01: " />
         </Tabs.Panel>
       </Tabs.Item>
       <Tabs.Item>
-        <Tabs.Tab p="10">Tab 2</Tabs.Tab>
-        <Tabs.Panel p="10">
+        <Tabs.Tab>Tab 2</Tabs.Tab>
+        <Tabs.Panel>
           <DummyText length="l" offset={1} pre="Tab 02: " />
         </Tabs.Panel>
       </Tabs.Item>
@@ -166,16 +127,16 @@ Use `defaultIndex` on `<Tabs.Root>` to specify which tab is open by default.
   </PreviewArea>
   <PreviewCode slot="tab" label="JSX">
     ```jsx "defaultIndex=\{2\}"
-    <Tabs.Root defaultIndex={2} listProps={{ 'bd-b': '-' }}>
+    <Tabs.Root defaultIndex={2}>
       <Tabs.Item>
-        <Tabs.Tab p="10">Tab 1</Tabs.Tab>
-        <Tabs.Panel p="10">
+        <Tabs.Tab>Tab 1</Tabs.Tab>
+        <Tabs.Panel>
           <DummyText pre="Tab 01: " />
         </Tabs.Panel>
       </Tabs.Item>
       <Tabs.Item>
-        <Tabs.Tab p="10">Tab 2</Tabs.Tab>
-        <Tabs.Panel p="10">
+        <Tabs.Tab>Tab 2</Tabs.Tab>
+        <Tabs.Panel>
           <DummyText length="l" offset={1} pre="Tab 02: " />
         </Tabs.Panel>
       </Tabs.Item>
@@ -193,21 +154,21 @@ At the same time, changing the tab list (`.c--tabs_list`) buttons to stack verti
 
 <Preview>
   <PreviewTitle>Example: side-by-side layout on `@sm` and above</PreviewTitle>
-  <PreviewArea p="20" resize>
-    <Tabs.Root g="15" gt={[null, '"list panel" auto / auto 1fr']} listProps={{ fxd: [null, 'column'], bd: '-', bdw: ['0 0 1px 0', '0 1px 0 0'] }}>
+  <PreviewArea p="30" resize>
+    <Tabs.Root gt={[null, '"list panel" auto / auto 1fr']} listProps={{ fxd: [null, 'column'] }}>
       <Tabs.Item>
-        <Tabs.Tab px="15" px-s="10" py="10" py-s="5">
+        <Tabs.Tab>
           <Fragment>Tab 1</Fragment>
         </Tabs.Tab>
-        <Tabs.Panel p="5">
+        <Tabs.Panel>
           <DummyText pre="Tab 01: " />
         </Tabs.Panel>
       </Tabs.Item>
       <Tabs.Item>
-        <Tabs.Tab px="15" px-s="10" py="10" py-s="5">
+        <Tabs.Tab>
           <Fragment>Tab 2</Fragment>
         </Tabs.Tab>
-        <Tabs.Panel p="5">
+        <Tabs.Panel>
           <DummyText length="l" offset={1} pre="Tab 02: " />
         </Tabs.Panel>
       </Tabs.Item>
@@ -215,20 +176,16 @@ At the same time, changing the tab list (`.c--tabs_list`) buttons to stack verti
   </PreviewArea>
   <PreviewCode>
     ```jsx
-    <Tabs.Root g="15" gt={[null, '"list panel" auto / auto 1fr']} listProps={{ fxd: [null, 'column'], bd: '-', bdw: ['0 0 1px 0', '0 1px 0 0'] }}>
+    <Tabs.Root gt={[null, '"list panel" auto / auto 1fr']} listProps={{ fxd: [null, 'column'] }}>
       <Tabs.Item>
-        <Tabs.Tab px="15" px-s="10" py="10" py-s="5">
-          Tab 1
-        </Tabs.Tab>
-        <Tabs.Panel p="5">
+        <Tabs.Tab>Tab 1</Tabs.Tab>
+        <Tabs.Panel>
           <DummyText pre="Tab 01: " />
         </Tabs.Panel>
       </Tabs.Item>
       <Tabs.Item>
-        <Tabs.Tab px="15" px-s="10" py="10" py-s="5">
-          Tab 2
-        </Tabs.Tab>
-        <Tabs.Panel p="5">
+        <Tabs.Tab>Tab 2</Tabs.Tab>
+        <Tabs.Panel>
           <DummyText length="l" offset={1} pre="Tab 02: " />
         </Tabs.Panel>
       </Tabs.Item>
@@ -237,20 +194,27 @@ At the same time, changing the tab list (`.c--tabs_list`) buttons to stack verti
   </PreviewCode>
 </Preview>
 
+
+## Opt-in
 
 
 ### Style variation examples
 
-The core component provides no visual styling, so add your own styles per project.
-
-`c--tabs_tab` exposes `--_isSelected` and `--_notSelected` variables, which you can use in the same way as `--_isHov` and `--_notHov` from [`set--hov`](/en/docs/property-class/hov#set--hov).
+`c--tabs_tab` exposes `--_isSelected` and `--_notSelected` variables, which are handy for styling.
+(They can be used in the same way as `--_isHov` and `--_notHov` from [`set--hov`](/en/docs/property-class/hov#set--hov).)
 
 Here are a few styling examples.
 
+#### `c--tabs--line`
+
+<PreviewTitle>Required additional CSS</PreviewTitle>
+<SrcCode dir="docs" path="src/content/ja/ui/_opt-in/_tabs-line.css" />
+
+
 <Preview>
   <PreviewTitle>`variant='line'`</PreviewTitle>
-  <PreviewArea p="20">
-    <Tabs.Root variant="line" g="15">
+  <PreviewArea p="30">
+    <Tabs.Root variant="line">
       <Tabs.Item>
         <Tabs.Tab>Tab 1</Tabs.Tab>
         <Tabs.Panel>
@@ -265,26 +229,9 @@ Here are a few styling examples.
       </Tabs.Item>
     </Tabs.Root>
   </PreviewArea>
-  <PreviewCode slot="tab" label="Additional CSS">
-```scss
-/* Memo: Use box-shadow instead of border to avoid margin issues with ov-x="auto". */
-:where(.c--tabs--line) {
-  --sh-size: inset 0 -2px;
-
-  .c--tabs_list {
-    box-shadow: var(--sh-size) 0 var(--divider);
-  }
-  .c--tabs_tab {
-    font-size: var(--fz--s);
-    padding: 0.5em 0.875em;
-    box-shadow: var(--_isSelected, var(--sh-size) 0 0 currentColor);
-  }
-}
-```
-  </PreviewCode>
   <PreviewCode slot="tab" label="JSX">
     ```jsx 'variant="line"'
-    <Tabs.Root variant="line" g="15">
+    <Tabs.Root variant="line">
       <Tabs.Item>
         <Tabs.Tab>Tab 1</Tabs.Tab>
         <Tabs.Panel>
@@ -302,11 +249,15 @@ Here are a few styling examples.
   </PreviewCode>
 </Preview>
 
+#### `c--tabs--emboss`
+
+<PreviewTitle>Required additional CSS</PreviewTitle>
+<SrcCode dir="docs" path="src/content/ja/ui/_opt-in/_tabs-emboss.css" />
 
 <Preview>
   <PreviewTitle>`variant='emboss'`</PreviewTitle>
-  <PreviewArea p="20">
-    <Tabs.Root variant="emboss" g="15" ji="center">
+  <PreviewArea p="30">
+    <Tabs.Root variant="emboss">
       <Tabs.Item>
         <Tabs.Tab>Tab 1</Tabs.Tab>
         <Tabs.Panel>
@@ -321,27 +272,9 @@ Here are a few styling examples.
       </Tabs.Item>
     </Tabs.Root>
   </PreviewArea>
-  <PreviewCode slot="tab" label="Additional CSS">
-```scss
-:where(.c--tabs--emboss) {
-  .c--tabs_list {
-    padding: 4px;
-    font-size: var(--fz--s);
-    background-color: var(--base-2);
-    border-radius: var(--bdrs--20);
-  }
-  .c--tabs_tab {
-    padding: 0.25em 0.75em;
-    border-radius: calc(var(--bdrs--20) - 2px); /* parent bdrs - parent padding / 2 */
-    background-color: var(--_isSelected, var(--base));
-    box-shadow: var(--_isSelected, var(--bxsh--10));
-  }
-}
-```
-  </PreviewCode>
   <PreviewCode slot="tab" label="JSX">
     ```jsx 'variant="emboss"'
-    <Tabs.Root variant="emboss" g="15" ji="center">
+    <Tabs.Root variant="emboss">
       <Tabs.Item>
         <Tabs.Tab>Tab 1</Tabs.Tab>
         <Tabs.Panel>
@@ -359,26 +292,18 @@ Here are a few styling examples.
   </PreviewCode>
 </Preview>
 
-
-
-## Opt-in
 
 ### Fixing the height
 
 An example of how to fix the overall tabs height to match the tallest content panel.
 
 <PreviewTitle>Required additional CSS</PreviewTitle>
-```scss
-[data-tabs-keep-height] > [aria-hidden='true'] {
-  display: block;
-  visibility: hidden;
-  opacity: 0;
-}
-```
+<SrcCode dir="docs" path="src/content/ja/ui/_opt-in/_tabs-keep-height.css" />
+
 
 <Preview>
   <PreviewTitle>Example (height is fixed to Tab 2)</PreviewTitle>
-  <PreviewArea p="20">
+  <PreviewArea p="30">
     <Tabs.Root data-tabs-keep-height g="15">
       <Tabs.Item>
         <Tabs.Tab px="10">Tab 1</Tabs.Tab>
