@@ -1,9 +1,16 @@
 ---
+import type { HTMLTag, Polymorphic } from 'astro/types';
+import type { AstroLismFixedLayoutProps } from 'lism-css/astro';
 import { Stack } from 'lism-css/astro';
-import { getRootProps } from '../getProps';
+import { getRootProps, type NavMenuRootProps } from '../getProps';
 import '../_style.css';
+
+type Props<Tag extends HTMLTag = 'ul'> = Polymorphic<{ as: Tag }> & AstroLismFixedLayoutProps & NavMenuRootProps;
+
+const { as: asTag = 'ul' as HTMLTag, ...restProps } = Astro.props;
+const { as: _as, ...rootProps } = getRootProps(restProps as NavMenuRootProps);
 ---
 
-<Stack {...getRootProps(Astro.props)}>
+<Stack as={asTag} {...rootProps as Record<string, unknown>}>
   <slot />
 </Stack>

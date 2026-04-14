@@ -1,8 +1,15 @@
 ---
+import type { HTMLTag, Polymorphic } from 'astro/types';
+import type { AstroLismFixedLayoutProps } from 'lism-css/astro';
 import { Stack } from 'lism-css/astro';
 import { getNestProps } from '../getProps';
+
+type Props<Tag extends HTMLTag = 'ul'> = Polymorphic<{ as: Tag }> & AstroLismFixedLayoutProps;
+
+const { as: asTag = 'ul' as HTMLTag, ...restProps } = Astro.props;
+const { as: _as, ...nestProps } = getNestProps(restProps);
 ---
 
-<Stack {...getNestProps(Astro.props)}>
+<Stack as={asTag} {...nestProps as Record<string, unknown>}>
   <slot />
 </Stack>

@@ -1,8 +1,15 @@
 ---
+import type { HTMLTag, Polymorphic } from 'astro/types';
+import type { AstroLismFixedLayoutProps } from 'lism-css/astro';
 import { Flex } from 'lism-css/astro';
-import { getLinkProps } from '../getProps';
+import { getLinkProps, type NavMenuLinkProps } from '../getProps';
+
+type Props<Tag extends HTMLTag = 'a'> = Polymorphic<{ as: Tag }> & AstroLismFixedLayoutProps & NavMenuLinkProps;
+
+const { as: asTagProp, href, ...restProps } = Astro.props;
+const { as: asTag, ...linkProps } = getLinkProps({ as: asTagProp, href, ...restProps });
 ---
 
-<Flex {...getLinkProps(Astro.props)}>
+<Flex as={asTag as HTMLTag} {...linkProps as Record<string, unknown>}>
   <slot />
 </Flex>
