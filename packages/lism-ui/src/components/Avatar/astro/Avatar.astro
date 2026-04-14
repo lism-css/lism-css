@@ -1,6 +1,13 @@
 ---
 import { Frame } from 'lism-css/astro';
 
+interface Props {
+  size?: string;
+  src?: string;
+  alt?: string;
+  [key: string]: unknown;
+}
+
 const { size = '1.5em', src = '', alt = '', ...props } = Astro.props;
 ---
 
