@@ -1,26 +1,21 @@
 ---
-// import type { LismProps } from 'lism-css/types';
+import type { HTMLTag, Polymorphic } from 'astro/types';
+import type { AstroLismBaseProps } from 'lism-css/astro';
 import { Lism } from 'lism-css/astro';
-// import Tab from './Tab.astro';
-// import TabPanel from './TabPanel.astro';
 import TabList from './TabList.astro';
 import uuid from '../../../helper/uuid';
-
 import transformTabitems from './transformTabitems';
 import getTabsProps from '../getProps';
-
 import '../_style.css';
 
-// import TheTab from './TheTab.astro';}
-// slotsについて: https://docs.astro.build/ja/reference/api-reference/#astroslots
+type Props<Tag extends HTMLTag = 'div'> = Polymorphic<{ as: Tag }> &
+  AstroLismBaseProps & {
+    defaultIndex?: number;
+    tabId?: string;
+    listProps?: Record<string, unknown>;
+  };
 
-// Propsの定義
-// interface Props extends LismProps {
-// 	uid?: string | number;
-// 	defaultIndex?: string | number;
-// }
-// propsの取得
-const { defaultIndex = 1, tabId = '', listProps = {}, ...props } = Astro.props || {};
+const { as: asTag = 'div' as HTMLTag, defaultIndex = 1, tabId = '', listProps = {}, ...restProps } = Astro.props;
 
 // tabID生成
 const theTabID = tabId ? tabId : uuid();
@@ -31,7 +26,7 @@ const { btns, panels } = transformTabitems(await Astro.slots.render('default'), 
 const hasItems = btns.length > 0;
 ---
 
-<Lism {...getTabsProps(props)}>
+<Lism as={asTag} {...getTabsProps(restProps as Record<string, unknown>) as Record<string, unknown>}>
   {
     btns && (
       <TabList {...listProps}>
@@ -51,7 +46,7 @@ const hasItems = btns.length > 0;
 
 <script>
   import setTabs from '../setTabs';
-  const tabsAll = document.querySelectorAll('.c--tabs');
+  const tabsAll = document.querySelectorAll<HTMLElement>('.c--tabs');
   tabsAll.forEach((tabs) => {
     setTabs(tabs);
   });

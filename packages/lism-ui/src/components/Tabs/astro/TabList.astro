@@ -1,8 +1,13 @@
 ---
-// import type { LismProps } from 'lism-css/types';
+import type { HTMLTag, Polymorphic } from 'astro/types';
+import type { AstroLismBaseProps } from 'lism-css/astro';
 import { Lism } from 'lism-css/astro';
+
+type Props<Tag extends HTMLTag = 'div'> = Polymorphic<{ as: Tag }> & AstroLismBaseProps;
+
+const { as: asTag = 'div' as HTMLTag, ...restProps } = Astro.props;
 ---
 
-<Lism lismClass="c--tabs_list" role="tablist" {...Astro.props}>
+<Lism as={asTag} lismClass="c--tabs_list" role="tablist" {...restProps as Record<string, unknown>}>
   <slot />
 </Lism>

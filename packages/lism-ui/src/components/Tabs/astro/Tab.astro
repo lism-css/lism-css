@@ -1,18 +1,21 @@
 ---
-// import type { LismProps } from 'lism-css/types';
+import type { HTMLTag, Polymorphic } from 'astro/types';
+import type { AstroLismBaseProps } from 'lism-css/astro';
 import { Lism } from 'lism-css/astro';
 import { getTabProps } from '../getProps';
 
-// export interface Props extends LismProps {
-// 	// controlId: string;
-// 	isActive?: boolean;
-// 	tabId?: string | number;
-// 	index?: number;
-// }
-const { tabId = 'tab', index = 0, isActive, ...props } = Astro.props;
+type Props<Tag extends HTMLTag = 'button'> = Polymorphic<{ as: Tag }> &
+  AstroLismBaseProps & {
+    tabId?: string | number;
+    index?: number;
+    isActive?: boolean;
+  };
+
+const { as: asTag = 'button' as HTMLTag, tabId = 'tab', index = 0, isActive, ...restProps } = Astro.props;
+const { as: _as, ...tabProps } = getTabProps(restProps as Record<string, unknown>);
 const controlId = `${tabId}-${index}`;
 ---
 
-<Lism {...getTabProps(props)} role="tab" aria-controls={controlId} aria-selected={isActive ? 'true' : 'false'}>
+<Lism as={asTag} {...tabProps as Record<string, unknown>} role="tab" aria-controls={controlId} aria-selected={isActive ? 'true' : 'false'}>
   <slot />
 </Lism>

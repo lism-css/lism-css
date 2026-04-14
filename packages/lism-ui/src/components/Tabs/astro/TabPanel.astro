@@ -1,16 +1,26 @@
 ---
-// import type { LismProps } from 'lism-css/types';
+import type { HTMLTag, Polymorphic } from 'astro/types';
+import type { AstroLismBaseProps } from 'lism-css/astro';
 import { Lism } from 'lism-css/astro';
 
-// export interface Props extends LismProps {
-// 	isActive?: boolean;
-// 	tabId?: string | number;
-// 	index?: number;
-// }
-const { tabId = 'tab', index = 0, isActive = false, ...props } = Astro.props;
+type Props<Tag extends HTMLTag = 'div'> = Polymorphic<{ as: Tag }> &
+  AstroLismBaseProps & {
+    tabId?: string | number;
+    index?: number;
+    isActive?: boolean;
+  };
+
+const { as: asTag = 'div' as HTMLTag, tabId = 'tab', index = 0, isActive = false, ...restProps } = Astro.props;
 const controlId = `${tabId}-${index}`;
 ---
 
-<Lism id={controlId} role="tabpanel" aria-hidden={isActive ? 'false' : 'true'} lismClass="c--tabs_panel" {...props}>
+<Lism
+  as={asTag}
+  id={controlId}
+  role="tabpanel"
+  aria-hidden={isActive ? 'false' : 'true'}
+  lismClass="c--tabs_panel"
+  {...restProps as Record<string, unknown>}
+>
   <slot />
 </Lism>
