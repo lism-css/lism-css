@@ -17,7 +17,7 @@ import { Spacer, Box, Flex } from 'lism-css/astro';
 
 ## Lism Component
 
-`<Spacer>` is rendered with `aria-hidden="true"` by default.
+`<Spacer>` is provided as an alias for `<Lism atomic="spacer" aria-hidden="true" />`.
 
 ### Import
 
@@ -26,17 +26,13 @@ import { Spacer, Box, Flex } from 'lism-css/astro';
 ### HTML Structure
 
 ```pug
-div.a--spacer
+div.a--spacer[aria-hidden="true"]
 ```
 
 ### Props
 
 :::info
 In `<Spacer>`, SPACE token values can be used for `w` and `h`.
-:::
-
-:::info
-`<Lism atomic="spacer" />` produces the same output as `<Spacer />`.
 :::
 
 

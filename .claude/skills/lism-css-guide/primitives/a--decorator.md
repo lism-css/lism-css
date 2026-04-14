@@ -1,6 +1,6 @@
 # a--decorator / `<Decorator>`
 
-コンテンツを装飾するための空要素として使うクラス。`<Decorator>` はデフォルトで `aria-hidden="true"` が付与されます。
+コンテンツを装飾するための空要素として使うクラス。`<Decorator>` は `<Lism atomic="decorator" aria-hidden="true" />` のエイリアスとして用意されています。
 
 ## 基本情報
 
@@ -18,7 +18,7 @@
 
 ## Usage
 
-### 使用例（コーナー装飾）
+### 装飾に使用する例（コーナー装飾）
 
 `pos="absolute"` と組み合わせて、親の四隅にコーナー枠を配置する例です。`bdc="current"` で文字色に追随します。
 

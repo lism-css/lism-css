@@ -16,7 +16,8 @@ import { Divider, Flex, Box, Stack } from 'lism-css/astro';
 
 ## Lismコンポーネント
 
-`<Divider>`は、デフォルトで`aria-hidden="true"`が付与されます。
+`<Lism atomic="divider" aria-hidden="true" />`のエイリアスとして、`<Divider>`を用意しています。
+
 
 ### Import
 
@@ -25,23 +26,13 @@ import { Divider, Flex, Box, Stack } from 'lism-css/astro';
 ### 出力されるHTML構造
 
 ```pug
-div.a--divider
+div.a--divider[aria-hidden="true"]
 ```
-
-### 専用Props
-
-| プロパティ | 説明 |
-|---|---|
-| `bdw`,`bds`,`bdc` | 区切り線のボーダープロパティ |
-
-:::info
-`<Lism atomic="divider" />` とすることで`<Divider />`と等価の出力を得られます。
-:::
 
 
 ## Usage
 
-### 使用例
+### 基本例
 
 <Preview>
   <PreviewTitle>例</PreviewTitle>

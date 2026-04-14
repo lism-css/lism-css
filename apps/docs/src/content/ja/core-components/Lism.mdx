@@ -436,24 +436,23 @@ BP対応プロパティは、配列またはオブジェクトでブレイクポ
 
 ### クラスの出力順
 
-`<Lism>` が生成する `class` 属性は、大きく **「ユーザー指定」「コンポーネント（`c--`）」「プリミティブ群（`a--` / `l--` / `is--`）」「ユーティリティ群」** の4ブロックに分かれます。ユーティリティ群は粒度の低い（＝塊としての）順 `set--` → `u--` → Property Class で並びます。
+`<Lism>` が生成する `class` 属性は、以下のような順序で出力されます
 
 ```
-[className] [lismClass (c--)] [a--*] [l--*] [is--*] [set--*] [u--*] [Property Class...]
+[className] [c--] [a--] [l--] [is--] [set--] [u--] [-]
 ```
 
-| # | 区分 | 由来 | 例 |
-|---|---|---|---|
-| 1 | `className` | ユーザーが直接渡すクラス | `my-card` |
-| 2 | `lismClass`（+ `variant`） | コンポーネントの基底`c--`クラス。BEM展開の対象 | `c--box`, `c--box c--box--primary` |
-| 3 | Atomic Primitive | `atomic` prop | `a--divider`, `a--spacer` |
-| 4 | Layout Primitive | `layout` prop | `l--box`, `l--flow` |
-| 5 | Trait Primitive | Trait Props（`isWrapper` 等） | `is--wrapper`, `is--layer` |
-| 6 | Set Class | `set` prop | `set--hov`, `set--card` |
-| 7 | `u--` ユーティリティ | `util` prop | `u--cbox`, `u--trim` |
-| 8 | Property Class | CSS Props（`hov` 含む） | `-p:20`, `-bgc:base-2` |
+| # | Prop | 例 |
+|---|---|---|
+| 1 | 独自クラス（`className`） | `z--header`, `hoge` |
+| 2 | `lismClass` (+ `variant`) | `c--box`, `c--box--primary` |
+| 3 | `atomic` | `a--icon`, `a--divider` |
+| 4 | `layout` | `l--flex`, `l--columns` |
+| 5 | `isXxxx` | `is--wrapper`, `is--layer` |
+| 6 | `set` | `set--hov`, `set--transition` |
+| 7 | `util` | `u--cbox`, `u--trim` |
+| 8 | `prop={value}` | `-p:20`, `-bgc:base-2` |
 
-2 は [Component Class](/docs/css-methodology/)（CSS レイヤー `lism-component`）、3〜5 は [Primitive Class](/docs/css-methodology/)（CSS レイヤー `lism-primitive`）に属し、6〜8 はユーティリティ系のクラスです。
 
 :::note
 `layout="flow"` の `-flow:{size}` はレイアウトプリミティブ固有の設定クラスとして扱われるため、`l--flow` 直後のプリミティブ群に並びます。

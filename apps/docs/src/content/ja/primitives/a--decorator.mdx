@@ -12,7 +12,7 @@ import { DummyText } from '@lism-css/ui/astro';
 
 ## Lismコンポーネント
 
-`<Decorator>`は、デフォルトで`aria-hidden="true"`が付与されます。
+`<Lism atomic="decorator" aria-hidden="true" />`のエイリアスとして、`<Decorator>`を用意しています。
 
 ### Import
 
@@ -21,7 +21,7 @@ import { DummyText } from '@lism-css/ui/astro';
 ### 出力されるHTML構造
 
 ```pug
-div.a--decorator
+div.a--decorator[aria-hidden="true"]
 ```
 
 ### 専用Props
@@ -31,16 +31,12 @@ div.a--decorator
 | `size` | デコレーターのサイズ（横幅・高さ）を一括指定します。<br/>この指定がある場合、指定したサイズは`w`(`width`)に渡され、`ar='1/1'`(`aspect-ratio:1/1`)が自動で付与されます。 |
 | `clipPath`,`boxSizing` | `style.clipPath`,`style.boxSizing`へ渡します|
 
-:::info
-`<Lism atomic="decorator" />` とすることで`<Decorator />`と等価の出力を得られます。
-:::
-
 
 ## Usage
 
 `<Decorator>`を使った装飾例を紹介します。
 
-### 使用例
+### 装飾に使用する例
 
 <Preview>
   <PreviewTitle>例</PreviewTitle>

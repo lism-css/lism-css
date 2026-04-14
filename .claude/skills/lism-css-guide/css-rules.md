@@ -4,6 +4,7 @@
 
 - [CSS Layer 構造](#css-layer-構造)
 - [命名規則とプレフィックス](#命名規則とプレフィックス)
+- [Component Class（`c--`）](#component-classc--)
 - [カスタムCSS を追加する場合](#カスタムcss-を追加する場合)
 - [CSS の配置場所](#css-の配置場所)
 
@@ -59,31 +60,94 @@ Settings（トークン定義）
 - 子要素: `.c--card_header`, `.c--card_body`（`c--` のみ Element を持つ。`_` 一つ区切り）
 
 **記述順序:**
-class 属性にクラスを直接記述する場合は、以下の順序で並べてください。粒度の大きい（塊としての役割を持つ）クラスから、粒度の小さい（単一プロパティ制御）クラスの順です。
+class 属性にクラスを直接記述する場合は、以下の順序で並べてください。
 
 ```
-[customClass] [c--/a--] [l--] [is--*] [set--*] [u--*] [Property Class...]
+[customClass] [c--] [a--] [l--] [is--] [set--] [u--] [-]
 ```
 
 | # | 区分 | 例 |
 |---|---|---|
-| 1 | 独自クラス（`customClass`） | `my-card`, `hoge` |
-| 2 | Component / Atomic Primitive（`c--` / `a--`） | `c--box`, `a--icon`, `c--box c--box--primary` |
-| 3 | Layout Primitive（`l--`） | `l--flex`, `l--grid` |
-| 4 | Trait Primitives（`is--`） | `is--wrapper`, `is--layer` |
-| 5 | Set Class（`set--`） | `set--hov`, `set--card` |
-| 6 | ユーティリティ（`u--`） | `u--cbox`, `u--trim` |
-| 7 | Property Class（`-`） | `-p:20`, `-bgc:base-2` |
+| 1 | 独自クラス（`customClass`） | `z--header`, `hoge` |
+| 2 | Component（`c--`） | `c--box`, `c--box--primary` |
+| 3 | Atomic Primitive（`a--`） | `a--icon`, `a--divider` |
+| 4 | Layout Primitive（`l--`） | `l--flex`, `l--columns` |
+| 5 | Trait Primitives（`is--`） | `is--wrapper`, `is--layer` |
+| 6 | Set Class（`set--`） | `set--hov`, `set--transition` |
+| 7 | Utility Class（`u--`） | `u--cbox`, `u--trim` |
+| 8 | Property Class（`-`） | `-p:20`, `-bgc:base-2` |
 
 ```html
 <!-- OK -->
 <div class="c--nav l--flex -p:20 -g:20">...</div>
 
-<!-- NG: Property Class が先 -->
+<!-- NG: Property Class が先 になっている -->
 <div class="-p:20 -g:20 l--flex c--nav">...</div>
 ```
 
 なお、`class` 属性内の並び順は CSS の適用結果（詳細度・カスケード順）には影響しません。この順序はあくまで可読性と一貫性のための整理です。
+
+
+## Component Class（`c--`）
+
+`c--` プレフィックスで定義する **Component クラス** は、Primitive を組み合わせて作られた具体的な UI 部品です。`@layer lism-component` に配置され、コアの `lism-css` には含まれず、`@lism-css/ui` パッケージやユーザー定義として提供されます。
+
+`c--` クラスは BEM 構造（Block / Modifier / Element）を持つことができ、それぞれ次の形式で定義します。
+
+| 分類 | 形式 | 例 |
+|---|---|---|
+| Block | `.c--{name}` | `.c--button`, `.c--card` |
+| Modifier | `.c--{name}--{modifier}` | `.c--button--outline` |
+| Element | `.c--{name}_{element}` | `.c--card_header`, `.c--card_body` |
+
+- Modifier は Block と併記して使用: `.c--button.c--button--outline`
+- Element は `_`（アンダースコア）一つ区切り
+- Block 同士の併用（`.c--xxx.c--yyy`）は基本 NG。ただし次は許容される:
+  - Block と自身の Modifier: `.c--xxx.c--xxx--variant`
+  - Block と他 Block の Element: `.c--xxx.c--yyy_elem`
+- `a--` / `l--` には `variant` の BEM 展開は適用されない**
+
+`c--` を使った独自コンポーネントを使う場合でも、他の Primitive クラス（`.l--`, `.is--`）や Property Class（`-{prop}:{value}`）との組み合わせを前提とした設計にすることで CSS の記述量を削減できます。`c--` クラスにスタイルが全くなく、HTML 側での可視性を高める名前付けのためだけに利用しても構いません。
+
+
+### 作成例
+
+`l--stack` と併用する前提でのカスタムクラス例:
+
+```css
+@layer lism-component {
+  .c--myCard {
+    gap: var(--s20);
+    padding: var(--s30);
+    border-radius: var(--bdrs--20);
+    box-shadow: var(--bxsh--20);
+    border: 1px solid currentColor;
+    /* ... */
+  }
+}
+```
+
+```html
+<div class="c--myCard l--stack">
+  ...
+</div>
+```
+
+素の HTML サイトではこのように `c--` クラスに CSS を書いてスタイリングしても問題ありませんが、React などでコンポーネントを作成できる場合は、特別な理由がない限り Property Class を活用してください。
+
+```jsx
+export default function MyCard(props) {
+  return <Stack lismClass="c--myCard" g="20" p="30" bdrs="20" bxsh="20" bd {...props} />;
+}
+```
+
+```css
+@layer lism-component {
+  .c--myCard {
+    /* 複雑なスタイルがあれば css で書く */
+  }
+}
+```
 
 
 ## カスタムCSS を追加する場合
