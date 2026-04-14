@@ -68,8 +68,9 @@ export function getLangFromUrl(url: URL | string): LangCode {
 
 /**
  * URLから言語プレフィックスを除いたパスを取得
- * - /en/layout/grid → /layout/grid
- * - /layout/grid → /layout/grid
+ * - /en/layout/grid/ → /layout/grid/
+ * - /layout/grid/ → /layout/grid/
+ * memo: 元のパスの trailing slash の有無はそのまま維持する
  */
 export function getPathWithoutLang(url: URL | string): string {
   const pathname = typeof url === 'string' ? url : url.pathname;
@@ -80,7 +81,10 @@ export function getPathWithoutLang(url: URL | string): string {
   if (firstSegment && langCodes.includes(firstSegment as LangCode)) {
     const lang = firstSegment as LangCode;
     if (!isRootLang(lang)) {
-      return '/' + segments.slice(1).join('/');
+      const rest = segments.slice(1).join('/');
+      const hasTrailingSlash = pathname.endsWith('/');
+      if (!rest) return '/';
+      return `/${rest}${hasTrailingSlash ? '/' : ''}`;
     }
   }
 
