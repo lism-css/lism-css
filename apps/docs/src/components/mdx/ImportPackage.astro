@@ -17,7 +17,7 @@ const { version: pkgVersion } = JSON.parse(readFileSync(resolve(process.cwd(), '
 
 const getCopyCode = (name: string) => `import { ${component} } from '${packageName}${name}';`;
 
-const jsImportCode = `<script type=\"module\" src=\"https://cdn.jsdelivr.net/npm/${packageName}@${pkgVersion}/dist/scripts/${script}\"></script>`;
+const jsImportCode = `<script type="module" src="https://cdn.jsdelivr.net/npm/${packageName}@${pkgVersion}/dist/scripts/${script}"></script>`;
 
 const cssImportCode = `<link href="https://cdn.jsdelivr.net/npm/${packageName}@${pkgVersion}/dist/${css}" rel="stylesheet" />`;
 ---
