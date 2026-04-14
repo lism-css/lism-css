@@ -1,11 +1,16 @@
-# MCP Server URL 更新（軽量版）
+# MCP Server URL / 構成更新（軽量版）
 
-`packages/mcp/src/data/docs-index.json` の `sourcePath` と `category` のみを、実ファイルの移動に追従させて更新する軽量コマンド。
-テキスト系フィールド（title, description, headings, keywords, snippet）は**変更しない**。
+`packages/mcp/src/data/docs-index.json` の構成を実ファイル構成に追従させる軽量コマンド。以下の3種類の差分に対応する:
+
+1. **ファイル移動・リネーム**: `sourcePath` と `category` を新パスに合わせて更新
+2. **新規ページ追加**: 未登録の MDX を検出して新規エントリを追加
+3. **削除ページ**: 実ファイルが存在しない（かつ移動先もない）エントリを削除
+
+既存エントリの**テキスト系フィールド（`title`, `description`, `headings`, `keywords`, `snippet`）は変更しない**（移動時も維持）。新規追加エントリについては、このコマンド内で frontmatter と本文から生成する。
 
 > **使い分け**:
-> - 新規ページ追加・内容更新・テキスト系も一括再生成したい → `/mcp-update`
-> - ファイル移動に追従して `sourcePath` / `category` だけ更新したい → このコマンド
+> - 既存エントリの内容も含めて一括で再生成したい → `/mcp-update`
+> - ファイル構成の差分（移動・新規・削除）にだけ追従したい → このコマンド
 
 ## 作業手順
 
@@ -13,56 +18,86 @@
 
 - `git rev-parse --short HEAD` で現在のコミットハッシュを取得
 
-### 2. 不整合エントリの検出
+### 2. 実ファイル一覧の取得
 
-- `packages/mcp/src/data/docs-index.json` を読み込む
-- 各エントリの `sourcePath` について、`apps/docs/src/content/ja/{sourcePath}` が実在するか確認
-- 存在しないエントリを「移動候補」として抽出
+- `apps/docs/src/content/ja/**/*.mdx` を Glob で取得
+- 以下は集計対象から除外する:
+  - `_demo/` など先頭アンダースコアのディレクトリ配下
+  - `test.mdx` のような明らかなテスト用ファイル（frontmatter やファイル名から判断）
+- 残ったファイルの相対パス（`ja/` 以下）を「実在ファイル集合」とする
 
-### 3. 新パスの自動探索
+### 3. docs-index.json の読み込みと分類
 
-各移動候補について、ファイル名（basename）で `apps/docs/src/content/ja/**/{basename}` を Glob 検索し、以下のように分岐する。
+`packages/mcp/src/data/docs-index.json` を読み込み、各エントリの `sourcePath` を「実在ファイル集合」と突き合わせて以下に分類する:
 
-- **単一マッチ**: そのパスを新 `sourcePath` として採用
+- **一致**: 実ファイルが存在するエントリ（処理不要）
+- **不一致**: `sourcePath` の実ファイルが存在しないエントリ → 手順 4 で移動 or 削除を判定
+- **未登録**: 実在ファイル集合にあるが `docs-index.json` に `sourcePath` として存在しないファイル → 手順 5 で新規追加
+
+> 補足: 同一 `sourcePath` を共有する複数エントリ（例: `utility-class.mdx` の分割エントリ）は、1つでも実ファイルがあれば全て「一致」扱いとする。
+
+### 4. 不一致エントリの処理（移動 or 削除）
+
+各不一致エントリについて、ファイル名（basename）で `apps/docs/src/content/ja/**/{basename}` を Glob 検索し、以下のように分岐する:
+
+- **単一マッチ**: そのパスを新 `sourcePath` として採用（移動候補）
 - **複数マッチ**: 候補をユーザーに提示して選択を仰ぐ
-- **マッチなし**: 該当ファイルは削除された可能性があるため、ユーザーに報告する。自動では削除しない
+- **マッチなし**: 削除候補として扱う
 
-### 4. 変更プランの提示
+### 5. 新規ページのエントリ生成
 
-ユーザーに変更内容を提示して確認を取る。各エントリについて以下を表示:
+手順 3 で抽出した「未登録」ファイルについて、新規エントリを生成する。対象ファイルの frontmatter と本文を読み取り、以下のフィールドを作成:
 
-- 旧 `sourcePath` → 新 `sourcePath`
-- 旧 `category` → 新 `category`
-
-### 5. エントリ更新
-
-ユーザーから承認を得たら、以下の方針で `docs-index.json` を更新する:
-
-- `sourcePath`: 新パスに置換
+- `sourcePath`: `ja/` からの相対パス
+- `title`: frontmatter の `title`
+- `description`: frontmatter の `description`
 - `category`:
-  - 新パスがディレクトリ配下の場合（例: `property-class/bd.mdx`）は**先頭ディレクトリ名**を採用（例: `"property-class"`）
-  - 新パスが top-level（例: `overview.mdx`）の場合は**既存の category を維持**（top-level のカテゴリ付けは規則的に決まらないため）
-- テキスト系フィールド（`title`, `description`, `headings`, `keywords`, `snippet`）は**変更しない**
-- 配列の要素順序は維持すること
+  - サブディレクトリ配下の場合は**先頭ディレクトリ名**を採用（例: `core-components/lism-props.mdx` → `"core-components"`）
+  - top-level のファイル（例: `overview.mdx`）は、既存の top-level エントリの category 付与傾向に倣って決定（基本的に `"guide"`）
+- `headings`: 本文中の `##` レベル見出し（必要に応じて主要な `###` も拾う）
+- `keywords`: title / description / 見出し / 本文から 10〜20 個程度を抽出（日本語・英語・省略形を混在させる）
+- `snippet`: 本文を要約した 1〜3 文程度の説明
 
-### 6. meta.ts の更新
+新規エントリの挿入位置は、関連する既存エントリ（同じ category やディレクトリの隣）の直後を選ぶ。
+
+### 6. 変更プランの提示
+
+以下を整理してユーザーに提示し、承認を取る:
+
+- **移動エントリ**: 旧 `sourcePath` / `category` → 新 `sourcePath` / `category`
+- **追加エントリ**: 新規 `sourcePath` と category、タイトル（テキスト系フィールドの詳細は長くなるので必要なら折りたたんで提示）
+- **削除エントリ**: `sourcePath` と title
+- **保留**: 「複数マッチ」でユーザー選択待ちのエントリ
+
+### 7. docs-index.json の更新
+
+ユーザーから承認を得たら、以下の方針で更新する:
+
+- **移動**: 該当エントリの `sourcePath` と `category` を新パス基準に置換。テキスト系フィールドは一切変更しない
+- **追加**: 手順 5 で生成したエントリを適切な位置に挿入
+- **削除**: 該当エントリを配列から除去
+- 配列の既存要素順序は可能な限り維持する（移動・追加時もローカルな順序調整に留める）
+
+### 8. meta.ts の更新
 
 `packages/mcp/src/data/meta.ts` を以下のように更新:
 
 - `generatedAt`: 今日の日付（`YYYY-MM-DD`）
 - `sourceCommit`: 手順 1 で取得した HEAD コミットハッシュ
 
-### 7. 差分サマリーの報告
+### 9. 差分サマリーの報告
 
 変更点のサマリーをユーザーに報告する。報告内容:
 
-- 更新したエントリ数
-- 旧 `sourcePath` / `category` → 新 `sourcePath` / `category` のリスト
-- 「マッチなし」「複数マッチ」で保留したエントリがあれば明示
+- 移動したエントリ数と 旧 → 新 のリスト
+- 追加したエントリ数と `sourcePath` / `title` のリスト
+- 削除したエントリ数と `sourcePath` / `title` のリスト
+- 「複数マッチ」等で保留したエントリがあれば明示
 
 ## 注意事項
 
-- JSON の既存フィールドは、`sourcePath` と `category` 以外は変更しないこと
-- 配列の要素順序は維持すること
-- 削除されたページや新規追加されたページは扱わない（その場合は `/mcp-update` を使うこと）
+- 既存エントリの `sourcePath` / `category` 以外のフィールドは変更しないこと（移動時も維持する）
+- 配列の要素順序は可能な限り維持すること
+- 削除候補が見つかった場合でも、単独では削除しない。必ずユーザーの承認を得てから削除する
 - サブエージェントは起動せず、メインエージェントが直接処理する（軽量処理のため）
+- 情報源は `apps/docs/src/content/ja/` のみ。英語版（`en/`）は参照しない
