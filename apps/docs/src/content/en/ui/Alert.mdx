@@ -12,7 +12,7 @@ A component for displaying short messages with visual emphasis.
 
 <Preview>
   <PreviewTitle>Preview</PreviewTitle>
-  <PreviewArea resize p="20">
+  <PreviewArea resize p="30">
     <Alert>
       <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
     </Alert>
@@ -116,7 +116,7 @@ Provided as `Alert` from the `@lism-css/ui` package.
 
 <Preview>
   <PreviewTitle>Preview</PreviewTitle>
-  <PreviewArea resize p="20">
+  <PreviewArea resize p="30">
     <Alert layout="sideMain">
       <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore.</p>
     </Alert>
@@ -135,24 +135,24 @@ Provided as `Alert` from the `@lism-css/ui` package.
 
 <Preview>
   <PreviewTitle>Specifying type</PreviewTitle>
-  <PreviewArea p="20" resize>
+  <PreviewArea resize p="30">
     <Alert type="alert">
-      <DummyText lang="ja" length="codes" />
+      <DummyText lang="en" length="codes" />
     </Alert>
     <Alert type="point">
-      <DummyText lang="ja" length="codes" />
+      <DummyText lang="en" length="codes" />
     </Alert>
     <Alert type="warning">
-      <DummyText lang="ja" length="codes" />
+      <DummyText lang="en" length="codes" />
     </Alert>
     <Alert type="check">
-      <DummyText lang="ja" length="codes" />
+      <DummyText lang="en" length="codes" />
     </Alert>
     <Alert type="info">
-      <DummyText lang="ja" length="codes" />
+      <DummyText lang="en" length="codes" />
     </Alert>
     <Alert type="help">
-      <DummyText lang="ja" length="codes" />
+      <DummyText lang="en" length="codes" />
     </Alert>
   </PreviewArea>
   <PreviewCode slot="tab" label="JSX">
@@ -197,8 +197,8 @@ An example of building an Alert using only lism-css, without `@lism-css/ui`.
 
 <Preview>
   <PreviewTitle>Preview</PreviewTitle>
-  <PreviewArea p="20">
-    <SideMain util="cbox" keycolor="red" ai="center" p="15" g="15" bd bdrs="10">
+  <PreviewArea p="30" resize>
+    <SideMain set="shadow" util="cbox" keycolor="red" ai="center" p="15" g="15" bd bdrs="10" bxsh="10">
       <Center isSide c="keycolor" fz="xl">
         <Icon icon="alert" />
       </Center>
@@ -209,7 +209,7 @@ An example of building an Alert using only lism-css, without `@lism-css/ui`.
   </PreviewArea>
   <PreviewCode slot="tab" label="JSX">
     ```jsx
-    <SideMain util="cbox" keycolor="red" ai="center" p="15" g="15" bd bdrs="10">
+    <SideMain set="shadow" util="cbox" keycolor="red" ai="center" p="15" g="15" bd bdrs="10" bxsh="10">
       <Center isSide c="keycolor" fz="xl">
         <Icon icon="alert" />
       </Center>
@@ -221,7 +221,7 @@ An example of building an Alert using only lism-css, without `@lism-css/ui`.
   </PreviewCode>
   <PreviewCode slot="tab" label="HTML">
     ```html
-    <div class="l--sideMain u--cbox -ai:center -p:15 -g:15 -bd -bdrs:10" style="--keycolor: var(--red)">
+    <div class="l--sideMain set--shadow u--cbox -ai:center -p:15 -g:15 -bd -bdrs:10 -bxsh:10" style="--keycolor: var(--red)">
       <div class="l--center is--side -c -fz:xl" style="--c: var(--keycolor)">
         <svg
           xmlns="http://www.w3.org/2000/svg"

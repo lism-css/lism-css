@@ -22,12 +22,14 @@ export default function getAlertProps({ type = 'alert', keycolor, layout = 'flex
     flow,
     lismClass: 'c--alert',
     util: 'cbox',
+    set: 'shadow',
     keycolor: _color,
     ai: 'center',
     p: '15',
     g: '15',
     bd: true,
     bdrs: '10',
+    bxsh: '10',
     ...props,
   };
 }
