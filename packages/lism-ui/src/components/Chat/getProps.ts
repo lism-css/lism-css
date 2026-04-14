@@ -26,10 +26,13 @@ export const defaultProps = {
   },
   deco: {
     lismClass: 'c--chat_deco',
+    util: 'cbox',
+    isSkipFlow: true,
     pos: 'absolute',
   },
   content: {
     lismClass: 'c--chat_content',
+    util: 'cbox',
     bdrs: '30',
     p: '20',
     lh: 's',

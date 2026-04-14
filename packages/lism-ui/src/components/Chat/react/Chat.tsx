@@ -24,8 +24,8 @@ export default function Chat<T extends ElementType = 'div'>({ name, avatar, flow
       )}
       {name && <Lism {...defaultProps.name}>{name}</Lism>}
       <Lism {...defaultProps.body}>
-        <Decorator {...defaultProps.deco} className="u--cbox is--skipFlow" />
-        <Flow {...defaultProps.content} className="u--cbox" flow={flow} jslf={direction}>
+        <Decorator {...defaultProps.deco} />
+        <Flow {...defaultProps.content} flow={flow} jslf={direction}>
           {children}
         </Flow>
       </Lism>
