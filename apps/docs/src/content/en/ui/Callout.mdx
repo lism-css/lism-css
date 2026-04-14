@@ -11,7 +11,7 @@ A component for highlighting important points within an article.
 
 <Preview>
   <PreviewTitle>Preview</PreviewTitle>
-  <PreviewArea resize p="20">
+  <PreviewArea p="30" resize>
     <Callout title="Callout Title">
       <p>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
@@ -103,17 +103,7 @@ Provided as `Callout` from the `@lism-css/ui` package.
 
 ### Source Code
 
-<Preview>
-  <PreviewCode slot="tab" label="Callout.tsx">
-    <SrcCode dir="lism-ui" path="src/components/Callout/react/Callout.tsx" />
-  </PreviewCode>
-  <PreviewCode slot="tab" label="Callout.astro">
-    <SrcCode dir="lism-ui" path="src/components/Callout/astro/Callout.astro" />
-  </PreviewCode>
-  <PreviewCode slot="tab" label="getProps.ts">
-    <SrcCode dir="lism-ui" path="src/components/Callout/getProps.ts" />
-  </PreviewCode>
-</Preview>
+The source code is available on [GitHub](https://github.com/lism-css/lism-css/tree/main/packages/lism-ui/src/components/Callout).
 
 
 
@@ -122,32 +112,32 @@ Provided as `Callout` from the `@lism-css/ui` package.
 ### Available types
 <Preview>
   <PreviewTitle>Specifying type</PreviewTitle>
-  <PreviewArea p="20">
-    <Stack g="30" p="10">
+  <PreviewArea p="30">
+    <Stack g="30">
       <Callout title='Callout: type="note"' type="note">
-        <DummyText length="codes" lang="ja" />
+        <DummyText length="codes" lang="en" />
       </Callout>
       <Callout title='Callout: type="alert"' type="alert">
-        <DummyText length="codes" lang="ja" />
+        <DummyText length="codes" lang="en" />
       </Callout>
       <Callout title='Callout: type="warning"' type="warning">
-        <DummyText length="codes" lang="ja" />
+        <DummyText length="codes" lang="en" />
       </Callout>
       <Callout title='Callout: type="point"' type="point">
-        <DummyText length="codes" lang="ja" />
+        <DummyText length="codes" lang="en" />
       </Callout>
       <Callout title='Callout: type="check"' type="check">
-        <DummyText length="codes" lang="ja" />
+        <DummyText length="codes" lang="en" />
       </Callout>
       <Callout title='Callout: type="help"' type="help">
-        <DummyText length="codes" lang="ja" />
+        <DummyText length="codes" lang="en" />
       </Callout>
     </Stack>
   </PreviewArea>
   <PreviewCode slot="tab" label="JSX">
     ```jsx
     <Callout title='Callout: type="note"' type="note">
-      <DummyText length="codes" lang="ja"/>
+      <DummyText length="codes" lang="en"/>
     </Callout>
     <Callout title='Callout: type="alert"' type="alert">...</Callout>
     <Callout title='Callout: type="warning"' type="warning">...</Callout>
@@ -164,15 +154,15 @@ An example using only lism-css, without `@lism-css/ui`.
 
 <Preview>
   <PreviewTitle>Specifying `icon` and `keycolor`</PreviewTitle>
-  <PreviewArea p="20">
+  <PreviewArea p="30">
     <Callout title="Heading text..." icon="cart" keycolor="pink">
-      <DummyText lang="ja" />
+      <DummyText lang="en" />
     </Callout>
   </PreviewArea>
   <PreviewCode slot="tab" label="JSX">
     ```jsx
     <Callout title="Heading text..." icon="cart" keycolor="pink">
-      <DummyText lang="ja" />
+      <DummyText lang="en" />
     </Callout>
     ```
   </PreviewCode>
@@ -187,7 +177,7 @@ An example of building the component using only Lism core elements, without a de
 
 <Preview>
   <PreviewTitle>Preview</PreviewTitle>
-  <PreviewArea resize p="20">
+  <PreviewArea p="30" resize>
     <Stack util="cbox" keycolor="blue" p="20" g="10" bdc="keycolor" bd-x-s bdw="3px" bxsh="10" bdrs="10">
       <Flex c="keycolor" fw="bold" ai="center" g="10">
         <Center className="c--note_icon" fz="xl">

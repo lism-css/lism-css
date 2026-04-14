@@ -20,13 +20,16 @@ export default function getAlertProps({ type = 'alert', keycolor, layout = 'flex
     icon: _icon,
     layout,
     flow,
-    lismClass: 'c--alert u--cbox',
+    lismClass: 'c--alert',
+    util: 'cbox',
+    set: 'shadow',
     keycolor: _color,
     ai: 'center',
     p: '15',
     g: '15',
     bd: true,
     bdrs: '10',
+    bxsh: '10',
     ...props,
   };
 }
