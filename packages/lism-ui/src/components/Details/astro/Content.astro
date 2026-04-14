@@ -4,17 +4,18 @@
  * details要素の開閉されるコンテンツ部分のラッパー
  * grid-template-rows: 0fr → 1fr のアニメーションに必要
  */
+import type { HTMLTag, Polymorphic } from 'astro/types';
 import type { AstroLismFixedLayoutProps } from 'lism-css/astro';
 import { Lism } from 'lism-css/astro';
 import { defaultProps } from '../getProps';
 
-type Props = AstroLismFixedLayoutProps;
+type Props<Tag extends HTMLTag = 'div'> = Polymorphic<{ as: Tag }> & AstroLismFixedLayoutProps;
 
-const props: Props = Astro.props;
+const { as: asTag = 'div' as HTMLTag, ...restProps } = Astro.props;
 ---
 
 <Lism {...defaultProps.body as Record<string, unknown>}>
-  <Lism {...defaultProps.content as Record<string, unknown>} {...props}>
+  <Lism as={asTag} {...defaultProps.content as Record<string, unknown>} {...restProps}>
     <slot />
   </Lism>
 </Lism>

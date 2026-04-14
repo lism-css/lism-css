@@ -3,15 +3,17 @@
  * Icon - アイコンコンポーネント
  * 開閉状態を示すアイコン（開いた時に回転）
  */
+import type { HTMLTag, Polymorphic } from 'astro/types';
 import type { AstroLismFixedLayoutProps } from 'lism-css/astro';
 import { Lism } from 'lism-css/astro';
 import { defaultProps } from '../getProps';
 
-type Props = AstroLismFixedLayoutProps;
+type Props<Tag extends HTMLTag = 'span'> = Polymorphic<{ as: Tag }> & AstroLismFixedLayoutProps;
 
-const props: Props = Astro.props;
+const { as: asTag = 'span' as HTMLTag, ...restProps } = Astro.props;
+const { as: _defaultAs, ...iconDefaultProps } = defaultProps.icon;
 ---
 
-<Lism {...defaultProps.icon as Record<string, unknown>} {...props}>
+<Lism as={asTag} {...iconDefaultProps as Record<string, unknown>} {...restProps}>
   <slot />
 </Lism>

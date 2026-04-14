@@ -1,13 +1,14 @@
 ---
+import type { HTMLTag, Polymorphic } from 'astro/types';
 import type { AstroLismFixedLayoutProps } from 'lism-css/astro';
 import { Lism } from 'lism-css/astro';
 import { defaultProps } from '../getProps';
 
-type Props = AstroLismFixedLayoutProps;
+type Props<Tag extends HTMLTag = 'summary'> = Polymorphic<{ as: Tag }> & AstroLismFixedLayoutProps;
 
-const props: Props = Astro.props;
+const { as: asTag = 'summary' as HTMLTag, ...restProps } = Astro.props;
 ---
 
-<Lism as="summary" {...defaultProps.summary as Record<string, unknown>} {...props}>
+<Lism as={asTag} {...defaultProps.summary as Record<string, unknown>} {...restProps}>
   <slot />
 </Lism>
