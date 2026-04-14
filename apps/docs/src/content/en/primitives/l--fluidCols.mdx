@@ -4,7 +4,7 @@ navtitle: 'l--fluidCols'
 description: 'l--fluidCols is a breakpoint-independent multi-column class where columns automatically wrap before they shrink below the specified minimum width.'
 ---
 
-import { FluidCols, Box, Frame } from 'lism-css/astro';
+import { FluidCols, Lism, Frame } from 'lism-css/astro';
 import { DummyText } from '@lism-css/ui/astro';
 
 
@@ -32,130 +32,86 @@ import { DummyText } from '@lism-css/ui/astro';
 
 ## Usage
 
-### Using the default column width
-
+### Setting the size with `--cols`
 <Preview>
-  <PreviewTitle>Using the default column width</PreviewTitle>
-  <PreviewArea resize p="15">
-    <FluidCols g="20">
-      <Box bxsh="20" p="20">
-        <DummyText />
-      </Box>
-      <Box bxsh="20" p="20">
-        <DummyText offset="1" />
-      </Box>
-      <Box bxsh="20" p="20">
-        <DummyText offset="2" />
-      </Box>
-      <Box bxsh="20" p="20">
-        <DummyText />
-      </Box>
-      <Box bxsh="20" p="20">
-        <DummyText offset="1" />
-      </Box>
-      <Box bxsh="20" p="20">
-        <DummyText offset="2" />
-      </Box>
+  <PreviewTitle>Setting the size with `--cols`</PreviewTitle>
+  <PreviewArea resize p="20">
+    <FluidCols cols="16em" g="20">
+      <Lism as="div" p="20" bd>Item A</Lism>
+      <Lism as="div" p="20" bd>Item B</Lism>
+      <Lism as="div" p="20" bd>Item C</Lism>
+      <Lism as="div" p="20" bd>Item D</Lism>
+      <Lism as="div" p="20" bd>Item E</Lism>
+      <Lism as="div" p="20" bd>Item F</Lism>
     </FluidCols>
   </PreviewArea>
-  <PreviewCode>
+  <PreviewCode slot="tab" label="JSX">
     ```jsx
-    <FluidCols g="15">
-      <Box bxsh="20" p="20">
-        <p>
-          Lorem ipsum dolor sit amet. Consectetur adipiscing elit, sed do eiusmod tempor Incididunt ut. Labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut.
-        </p>
-      </Box>
-      <Box bxsh="20" p="20">
-        <p>
-          Consectetur adipiscing elit, sed do eiusmod tempor Incididunt ut. Labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut.
-        </p>
-      </Box>
-      <Box bxsh="20" p="20">
-        <p>
-          Sed do eiusmod tempor Incididunt ut. Labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut.
-        </p>
-      </Box>
-       <Box bxsh="20" p="20">
-        <p>
-          Lorem ipsum dolor sit amet. Consectetur adipiscing elit, sed do eiusmod tempor Incididunt ut. Labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut.
-        </p>
-      </Box>
-      <Box bxsh="20" p="20">
-        <p>
-          Consectetur adipiscing elit, sed do eiusmod tempor Incididunt ut. Labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut.
-        </p>
-      </Box>
-      <Box bxsh="20" p="20">
-        <p>
-          Sed do eiusmod tempor Incididunt ut. Labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut.
-        </p>
-      </Box>
+    <FluidCols cols="16em" g="20">
+      <Lism as="div" p="20" bd>Item A</Lism>
+      <Lism as="div" p="20" bd>Item B</Lism>
+      <Lism as="div" p="20" bd>Item C</Lism>
+      <Lism as="div" p="20" bd>Item D</Lism>
+      <Lism as="div" p="20" bd>Item E</Lism>
+      <Lism as="div" p="20" bd>Item F</Lism>
     </FluidCols>
+    ```
+  </PreviewCode>
+  <PreviewCode slot="tab" label="HTML">
+    ```html "--cols:16em"
+    <div class="l--fluidCols -g:20" style="--cols: 16em">
+      <div class="-p:20 -bd">Item A</div>
+      <div class="-p:20 -bd">Item B</div>
+      <div class="-p:20 -bd">Item C</div>
+      <div class="-p:20 -bd">Item D</div>
+      <div class="-p:20 -bd">Item E</div>
+      <div class="-p:20 -bd">Item F</div>
+    </div>
     ```
   </PreviewCode>
 </Preview>
 
+### Using `auto-fill`
 
-### Specifying column width with `auto-fill`
+In `l--fluidCols`, you can control the first argument of the `repeat()` function in `grid-template-columns` via `--autoMode`. (The default is `auto-fit`.)
+
+Setting `--autoMode: auto-fill` (`autoFill`) changes the behavior when there are only a few items.
+
 
 <Preview>
   <PreviewTitle>Using `cols=12em` with `auto-fill`</PreviewTitle>
-  <PreviewArea resize p="15">
+  <PreviewArea resize p="20">
     <FluidCols cols="12em" autoFill g="20" fz="s">
-      <Box bxsh="20" p="20">
-        <DummyText length="s" />
-      </Box>
-      <Box bxsh="20" p="20">
-        <DummyText offset="2" />
-      </Box>
-      <Box bxsh="20" p="20">
-        <DummyText length="s" />
-      </Box>
+      <Lism as="div" p="20" bd>auto-fill</Lism>
+      <Lism as="div" p="20" bd>auto-fill</Lism>
+    </FluidCols>
+    <FluidCols cols="12em" g="20" fz="s">
+      <Lism as="div" p="20" bd>auto-fit</Lism>
+      <Lism as="div" p="20" bd>auto-fit</Lism>
     </FluidCols>
   </PreviewArea>
-  <PreviewCode>
-    ```jsx
-    <FluidCols cols="12rem" autoFill g="20" fz="s">
-      <Box bxsh="20" p="20">
-        <p>ロレム・イプサムの座り雨。目まぐるしい文章の流れの中で、それは静かに歩く仮の言葉です。</p>
-      </Box>
-      <Box bxsh="20" p="20">
-        <p>それは静かに歩く仮の言葉です。Elitも穏やかに続いていきますが、積み重ねられてきた「LiberroyとFoogの取り組み」は、余白のようなものです。</p>
-      </Box>
-      <Box bxsh="20" p="20">
-        <p>ロレム・イプサムの座り雨。目まぐるしい文章の流れの中で、それは静かに歩く仮の言葉です。</p>
-      </Box>
+  <PreviewCode slot="tab" label="JSX">
+    ```jsx 'autoFill'
+    <FluidCols cols="12em" autoFill g="20" fz="s">
+      <Lism as="div" p="20" bd>auto-fill</Lism>
+      <Lism as="div" p="20" bd>auto-fill</Lism>
+    </FluidCols>
+    <FluidCols cols="12em" g="20" fz="s">
+      <Lism as="div" p="20" bd>auto-fit</Lism>
+      <Lism as="div" p="20" bd>auto-fit</Lism>
     </FluidCols>
     ```
   </PreviewCode>
-</Preview>
-
-
-### 2 columns → 1 column
-
-<Preview>
-  <PreviewTitle>2 columns → 1 column</PreviewTitle>
-  <PreviewArea resize p="15">
-    <FluidCols cols="320px" g="20">
-      <Frame ar="16/9">
-        <img src="https://cdn.lism-css.com/img/a-1.jpg" width="600" height="400" />
-      </Frame>
-      <Frame ar="16/9">
-        <img src="https://cdn.lism-css.com/img/a-3.jpg" width="600" height="400" />
-      </Frame>
-    </FluidCols>
-  </PreviewArea>
-  <PreviewCode>
-    ```jsx
-    <FluidCols cols="320px" g="20">
-      <Frame ar="16/9">
-        <img src="https://cdn.lism-css.com/img/a-1.jpg" width="600" height="400" />
-      </Frame>
-      <Frame ar="16/9">
-        <img src="https://cdn.lism-css.com/img/a-3.jpg" width="600" height="400" />
-      </Frame>
-    </FluidCols>
+  <PreviewCode slot="tab" label="HTML">
+    ```html "--autoMode:auto-fill"
+    <div class="l--fluidCols -g:20 -fz:s" style="--cols:12em; --autoMode:auto-fill">
+      <div class="-p:20 -bd">auto-fill</div>
+      <div class="-p:20 -bd">auto-fill</div>
+    </div>
+    <div class="l--fluidCols -g:20 -fz:s" style="--cols:12em">
+      <div class="-p:20 -bd">auto-fit</div>
+      <div class="-p:20 -bd">auto-fit</div>
+    </div>
     ```
   </PreviewCode>
 </Preview>
