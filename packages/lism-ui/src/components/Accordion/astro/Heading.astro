@@ -1,10 +1,15 @@
 ---
+import type { HTMLTag, Polymorphic } from 'astro/types';
+import type { AstroLismBaseProps } from 'lism-css/astro';
 import { Lism } from 'lism-css/astro';
-import { getHeadingProps } from '../getProps';
+import { getHeadingProps, type AccordionHeadingProps } from '../getProps';
 
-// interface Props extends LismProps {}
+type Props<Tag extends HTMLTag = 'div'> = Polymorphic<{ as: Tag }> & AstroLismBaseProps & AccordionHeadingProps;
+
+const { as: asTag = 'div' as HTMLTag, ...restProps } = Astro.props;
+const { as: _as, ...headingProps } = getHeadingProps(restProps as AccordionHeadingProps);
 ---
 
-<Lism {...getHeadingProps(Astro.props || {})}>
+<Lism as={asTag} {...headingProps as Record<string, unknown>}>
   <slot />
 </Lism>

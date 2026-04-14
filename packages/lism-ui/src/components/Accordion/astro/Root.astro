@@ -1,13 +1,17 @@
 ---
+import type { HTMLTag, Polymorphic } from 'astro/types';
+import type { AstroLismBaseProps } from 'lism-css/astro';
 import { Stack } from 'lism-css/astro';
-import { getRootProps } from '../getProps';
-
+import { getRootProps, type AccordionRootProps } from '../getProps';
 import '../_style.css';
 
-const rootProps = getRootProps(Astro.props || {});
+type Props<Tag extends HTMLTag = 'div'> = Polymorphic<{ as: Tag }> & AstroLismBaseProps & AccordionRootProps;
+
+const { as: asTag = 'div' as HTMLTag, ...restProps } = Astro.props;
+const rootProps = getRootProps(restProps as AccordionRootProps);
 ---
 
-<Stack {...rootProps}>
+<Stack as={asTag} {...rootProps as Record<string, unknown>}>
   <slot />
 </Stack>
 

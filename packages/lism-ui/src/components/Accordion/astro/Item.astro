@@ -1,17 +1,22 @@
 ---
-// scriptを使うので ref の関係で <Lism> ではなく getLismProps() を使う
+import type { AstroLismBaseProps } from 'lism-css/astro';
 import getLismProps from 'lism-css/lib/getLismProps';
-import { getItemProps } from '../getProps';
-import uuid from '../../../helper/uuid.js';
-
+import { getItemProps, type AccordionItemProps } from '../getProps';
+import uuid from '../../../helper/uuid';
 import '../_style.css';
 
-const { accID: _accID, ...restProps } = Astro.props || {};
+type Props = AstroLismBaseProps &
+  AccordionItemProps & {
+    accID?: string;
+  };
+
+// scriptを使うので ref の関係で <Lism> ではなく getLismProps() を使う
+const { accID: _accID, ...restProps } = Astro.props;
 
 // aria-controls / id 紐付け用のIDを生成（カスタム指定があればそれを使用、なければ自動生成）
 const accID = _accID || uuid();
 
-const lismProps = getLismProps(getItemProps(restProps));
+const lismProps = getLismProps(getItemProps(restProps as AccordionItemProps));
 
 // 子要素のHTMLを取得し、プレースホルダーの有無で出力方法を切り替え
 // - プレースホルダーあり → 置換して set:html で出力

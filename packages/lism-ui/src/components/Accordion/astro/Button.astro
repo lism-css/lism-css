@@ -1,13 +1,21 @@
 ---
+import type { HTMLTag, Polymorphic } from 'astro/types';
+import type { AstroLismBaseProps } from 'lism-css/astro';
 import { Lism } from 'lism-css/astro';
 import Icon from './Icon.astro';
 import { getButtonProps } from '../getProps';
 
-// interface Props extends LismProps {}
-const { isOpen = false, accID = '__LISM_ACC_ID__', ...props } = Astro.props || {};
+type Props<Tag extends HTMLTag = 'button'> = Polymorphic<{ as: Tag }> &
+  AstroLismBaseProps & {
+    isOpen?: boolean;
+    accID?: string;
+  };
+
+const { as: asTag = 'button' as HTMLTag, isOpen = false, accID = '__LISM_ACC_ID__', ...restProps } = Astro.props;
+const { as: _as, ...buttonProps } = getButtonProps(restProps as Record<string, unknown>);
 ---
 
-<Lism {...getButtonProps(props)} aria-controls={accID} aria-expanded={isOpen ? 'true' : 'false'}>
+<Lism as={asTag} {...buttonProps as Record<string, unknown>} aria-controls={accID} aria-expanded={isOpen ? 'true' : 'false'}>
   <slot />
   <Icon />
 </Lism>

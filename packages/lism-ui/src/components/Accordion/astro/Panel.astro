@@ -1,14 +1,17 @@
 ---
-// import type { LismProps } from 'lism-css/types';
+import type { HTMLTag, Polymorphic } from 'astro/types';
+import type { AstroLismBaseProps } from 'lism-css/astro';
 import { Lism } from 'lism-css/astro';
-import { getPanelProps } from '../getProps';
+import { getPanelProps, type AccordionPanelProps } from '../getProps';
 
-// interface Props extends LismProps {}
-const { panelProps, contentProps } = getPanelProps(Astro.props || {});
+type Props<Tag extends HTMLTag = 'div'> = Polymorphic<{ as: Tag }> & AstroLismBaseProps & AccordionPanelProps;
+
+const { as: asTag = 'div' as HTMLTag, ...restProps } = Astro.props;
+const { panelProps, contentProps } = getPanelProps(restProps as AccordionPanelProps);
 ---
 
-<Lism {...panelProps}>
-  <Lism {...contentProps}>
+<Lism as={asTag} {...panelProps as Record<string, unknown>}>
+  <Lism {...contentProps as Record<string, unknown>}>
     <slot />
   </Lism>
 </Lism>
