@@ -12,7 +12,7 @@ import { DummyText } from '@lism-css/ui/astro';
 
 ## Lismコンポーネント
 
-`<Decorator>`は、デフォルトで`aria-hidden="true"`が付与されます。
+`<Lism atomic="decorator" aria-hidden="true" />`のエイリアスとして、`<Decorator>`を用意しています。
 
 ### Import
 
@@ -21,7 +21,7 @@ import { DummyText } from '@lism-css/ui/astro';
 ### 出力されるHTML構造
 
 ```pug
-div.a--decorator
+div.a--decorator[aria-hidden="true"]
 ```
 
 ### 専用Props
@@ -36,7 +36,7 @@ div.a--decorator
 
 `<Decorator>`を使った装飾例を紹介します。
 
-### 使用例
+### 装飾に使用する例
 
 <Preview>
   <PreviewTitle>例</PreviewTitle>

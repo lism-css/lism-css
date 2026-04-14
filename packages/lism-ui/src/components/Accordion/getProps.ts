@@ -82,7 +82,8 @@ export function getPanelProps({ lismClass, _contextID, accID = '__LISM_ACC_ID__'
 
 export const defaultProps = {
   icon: {
-    lismClass: 'c--accordion_icon a--icon',
+    lismClass: 'c--accordion_icon',
+    atomic: 'icon',
     as: 'span',
     pi: 'center',
     fxsh: '0',

@@ -1,6 +1,6 @@
 # a--divider / `<Divider>`
 
-コンテンツ間に区切り線を描画するクラス。`--bdc` は `var(--divider)` が初期セットされます。`<Divider>` はデフォルトで `aria-hidden="true"` が付与されます。
+コンテンツ間に区切り線を描画するクラス。`--bdc` は `var(--divider)` が初期セットされます。`<Divider>` は `<Lism atomic="divider" aria-hidden="true" />` のエイリアスとして用意されています。
 
 ## 基本情報
 
@@ -8,13 +8,6 @@
 - コンポーネント: `<Divider>`
 - SCSSソース: https://raw.githubusercontent.com/lism-css/lism-css/main/packages/lism-css/src/scss/primitives/atomic/_divider.scss
 - ドキュメント（人間向け）: https://lism-css.com/docs/primitives/a--divider/
-
-## 専用Props
-
-| Prop | 説明 |
-|------|------|
-| `bdw` / `bds` / `bdc` | 区切り線のボーダー幅 / スタイル / 色 |
-| `isVertical` | 縦方向の区切り線にする（`is--vertical` クラス付与） |
 
 ## Usage
 

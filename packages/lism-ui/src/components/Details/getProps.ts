@@ -30,7 +30,7 @@ export function getTitleProps({ set, ...props }: Record<string, unknown>) {
  */
 export const defaultProps = {
   summary: { lismClass: 'c--details_summary', layout: 'flex', g: '10', ai: 'center' },
-  icon: { lismClass: 'c--details_icon a--icon', as: 'span', 'aria-hidden': 'true' },
+  icon: { lismClass: 'c--details_icon', atomic: 'icon', as: 'span', 'aria-hidden': 'true' },
   body: { lismClass: 'c--details_body' },
   content: { lismClass: 'c--details_content', layout: 'flow', flow: 's' },
 } as const;

@@ -16,7 +16,8 @@ import { Divider, Flex, Box, Stack } from 'lism-css/astro';
 
 ## Lism Component
 
-`<Divider>` is rendered with `aria-hidden="true"` by default.
+`<Divider>` is provided as an alias for `<Lism atomic="divider" aria-hidden="true" />`.
+
 
 ### Import
 
@@ -25,14 +26,8 @@ import { Divider, Flex, Box, Stack } from 'lism-css/astro';
 ### HTML Structure
 
 ```pug
-div.a--divider
+div.a--divider[aria-hidden="true"]
 ```
-
-### Props
-
-| Property | Description |
-|---|---|
-| `bdw`,`bds`,`bdc` | Border properties for the dividing line |
 
 
 ## Usage

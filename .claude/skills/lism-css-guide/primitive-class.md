@@ -2,7 +2,6 @@
 
 Lism CSS では、レイアウトを組み立てる小さな積み木として **Primitive クラス**（`is--` / `l--` / `a--`）を提供します。これらはすべて `@layer lism-primitive` に属します（サブレイヤーは `trait` / `layout` / `atomic`）。
 
-具体的な UI 部品は **Component クラス**（`c--`）として `@layer lism-component` に配置されますが、コアの `lism-css` には含まれず、`@lism-css/ui` パッケージやユーザー定義として提供されます。
 
 ## TOC
 
@@ -10,7 +9,6 @@ Lism CSS では、レイアウトを組み立てる小さな積み木として *
 - [Trait Primitive（`is--`）](#trait-primitiveis--)
 - [Layout Primitive（`l--`）](#layout-primitivel--)
 - [Atomic Primitive（`a--`）](#atomic-primitivea--)
-- [Component（`c--`）](#componentc--)
 
 [詳細](https://lism-css.com/docs/primitives/)
 
@@ -23,13 +21,11 @@ Lism CSS では、レイアウトを組み立てる小さな積み木として *
 | `is--` | Trait Primitive | `lism-primitive.trait` | 要素に静的な構造的特性を付与する汎用クラス |
 | `l--` | Layout Primitive | `lism-primitive.layout` | レイアウトの構成単位となる Primitive |
 | `a--` | Atomic Primitive | `lism-primitive.atomic` | レイアウトの最小単位（アイコン・区切り線等） |
-| `c--` | Component | `lism-component` | BEM 構造を持つ具体的な UI 部品 |
 
 **併用ルール:**
-- `is--` は他のすべての Primitive / Component と併用可能（複数の `is--` 同士もOK）
-- `l--` と `c--` は併用可能（例: `class="l--flex c--nav"`）
+- `is--` は他のすべての Primitive と併用可能（複数の `is--` 同士もOK）
 - 同カテゴリ内の併用は不可（例: `l--flex` と `l--grid` は同要素に付けない）
-- `c--` のみ Modifier との併記が可能（`.c--button.c--button--outline`）
+- `a--` / `l--` には `variant` の BEM 展開は適用されない（BEM Modifier は `c--` 専用）
 
 
 ## Trait Primitive（`is--`）
@@ -49,7 +45,7 @@ Lism CSS では、レイアウトを組み立てる小さな積み木として *
 | `is--skipFlow` | `l--flow` 直下で使用し、次の兄弟要素のフロー余白をゼロにする。`l--flow`の中にあるが`position:absolute`にしたい要素などに使用する |
 | `is--side` | `l--sideMain` 直下で使用し、サイド側の要素であることを示す |
 
-Lism コンポーネントでは `isContainer`, `isLayer` 等の Props として利用できます。
+Lism コンポーネントでは `isContainer`, `isLayer` 等の Props として利用できます。（例: `<Lism isContainer>`)
 
 
 ## Layout Primitive（`l--`）
@@ -87,62 +83,3 @@ Lism コンポーネントでは `isContainer`, `isLayer` 等の Props として
 | `a--decorator` | 装飾用要素（SCSS定義なし、クラス名のみ出力） |
 
 それぞれ対応するコンポーネント（`<Icon>`, `<Divider>`, `<Spacer>`, `<Decorator>`）があります。
-
-
-## Component（`c--`）
-
-`c--` プレフィックスで定義する **Component クラス** は、Primitive を組み合わせて作られた具体的な UI 部品です。`@layer lism-component` に配置され、コアの `lism-css` には含まれず、`@lism-css/ui` パッケージやユーザー定義として提供されます。
-
-`c--` クラスは BEM 構造（Block / Modifier / Element）を持つことができ、それぞれ次の形式で定義します。
-
-| 分類 | 形式 | 例 |
-|---|---|---|
-| Block | `.c--{name}` | `.c--button`, `.c--card` |
-| Modifier | `.c--{name}--{modifier}` | `.c--button--outline` |
-| Element | `.c--{name}_{element}` | `.c--card_header`, `.c--card_body` |
-
-- Modifier は Block と併記して使用: `.c--button.c--button--outline`
-- Element は `_`（アンダースコア）一つ区切り
-- Block 同士の併用（`.c--xxx.c--yyy`）は基本 NG。ただし次は許容される:
-  - Block と自身の Modifier: `.c--xxx.c--xxx--variant`
-  - Block と他 Block の Element: `.c--xxx.c--yyy_elem`
-
-`c--`を使った独自コンポーネントを使う場合でも、他の Primitive クラス（`.l--`, `is--`）や Property Class（`-{prop}:{value}`）との組み合わせを前提とした設計にすることでCSSの記述量を削減できます。`c--`クラスにスタイルが全くなく、HTML側での可視性を高める名前付けのためだけに利用しても構いません。
-
-### 作成例
-
-`l--stack` と併用する前提でのカスタムクラス例
-
-```css
-@layer lism-component {
-  .c--myCard {
-    gap: var(--s20);
-    padding: var(--s30);
-    border-radius: var(--bdrs--20);
-    box-shadow: var(--bxsh--20);
-    border: 1px solid currentColor;
-    /* ... */
-  }
-}
-```
-
-```html
-<div class="c--myCard l--stack">
-  ...
-</div>
-```
-
-素のHTMLサイトではこのように`c--`クラスにCSSを書いてスタイリングしても大丈夫ですが、Reactなどでコンポーネントを作成できる場合は、特別な理由がない限りProperty Classを活用してください。
-
-```jsx
-export default function MyCard(props) {
-  return <Stack lismClass="c--myCard" g="20" p="30" bdrs="20" bxsh="20" bd {...props} />;
-}
-```
-```css
-@layer lism-component {
-  .c--myCard {
-    /* 複雑なスタイルあれば css で書く */
-  }
-}
-```

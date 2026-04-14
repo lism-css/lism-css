@@ -12,7 +12,7 @@ import { DummyText } from '@lism-css/ui/astro';
 
 ## Lism Component
 
-`<Decorator>` is rendered with `aria-hidden="true"` by default.
+`<Decorator>` is provided as an alias for `<Lism atomic="decorator" aria-hidden="true" />`.
 
 ### Import
 
@@ -21,7 +21,7 @@ import { DummyText } from '@lism-css/ui/astro';
 ### HTML Structure
 
 ```pug
-div.a--decorator
+div.a--decorator[aria-hidden="true"]
 ```
 
 ### Props
@@ -36,7 +36,7 @@ div.a--decorator
 
 Here are some decoration examples using `<Decorator>`.
 
-### Basic example
+### Decoration example
 
 <Preview>
   <PreviewTitle>Example</PreviewTitle>

@@ -1,4 +1,3 @@
-import atts from '../lib/helper/atts';
 import isTokenValue from '../lib/isTokenValue';
 import getMaybeCssVar from '../lib/getMaybeCssVar';
 import { type StyleWithCustomProps } from './types';
@@ -24,23 +23,25 @@ type LayoutSpecificKeys = keyof LayoutOwnProps;
 
 export interface BaseProps {
   lismClass?: string;
+  primitiveClass?: string[];
   style?: StyleWithCustomProps;
   _propConfig?: Record<string, PropConfig>;
 }
 
 interface InputProps extends BaseProps, LayoutOwnProps {}
 
+// primitiveClass への安全な push（常に新しい配列を返して非破壊に扱う）
+function pushPrimitive(existing: string[] | undefined, ...classes: string[]): string[] {
+  return [...(existing ?? []), ...classes];
+}
+
 export default function getLayoutProps<P extends InputProps>(layout: LayoutType | undefined, props: P): Omit<P, LayoutSpecificKeys> & BaseProps {
   if (!layout) return props;
 
   const rest: InputProps = {
     ...props,
-    lismClass: atts(props.lismClass, `l--${layout}`),
+    primitiveClass: pushPrimitive(props.primitiveClass, `l--${layout}`),
   };
-
-  // if (variant) {
-  // 	rest.lismClass = atts(rest.lismClass, `${layout}:${variant}`);
-  // }
 
   if (layout === 'flow') {
     return getFlowProps(rest) as Omit<P, LayoutSpecificKeys> & BaseProps;
@@ -68,14 +69,21 @@ function getLiquidProps({ autoFill, style, ...props }: InputProps): BaseProps {
   return { ...props, style };
 }
 
-function getFlowProps({ flow, style, ...props }: InputProps): BaseProps {
+function getFlowProps({ flow, style, primitiveClass, ...props }: InputProps): BaseProps {
   if (isTokenValue('flow', flow)) {
-    props.lismClass = atts(props.lismClass, `-flow:${flow}`);
+    return {
+      ...props,
+      primitiveClass: pushPrimitive(primitiveClass, `-flow:${flow}`),
+      style,
+    };
   } else if (flow) {
-    props.lismClass = atts(props.lismClass, `-flow:`);
-    style = { ...style, '--flow': getMaybeCssVar(flow, 'space') } as StyleWithCustomProps;
+    return {
+      ...props,
+      primitiveClass: pushPrimitive(primitiveClass, `-flow:`),
+      style: { ...style, '--flow': getMaybeCssVar(flow, 'space') } as StyleWithCustomProps,
+    };
   }
-  return { ...props, style };
+  return { ...props, primitiveClass, style };
 }
 
 function getSwitchColsProps({ breakSize, style, ...props }: InputProps): BaseProps {

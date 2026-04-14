@@ -17,7 +17,7 @@ import { Spacer, Box, Flex } from 'lism-css/astro';
 
 ## Lismコンポーネント
 
-`<Spacer>`は、デフォルトで`aria-hidden="true"`が付与されます。
+`<Lism atomic="spacer" aria-hidden="true" />`のエイリアスとして、`<Spacer>`を用意しています。
 
 ### Import
 
@@ -26,7 +26,7 @@ import { Spacer, Box, Flex } from 'lism-css/astro';
 ### 出力されるHTML構造
 
 ```pug
-div.a--spacer
+div.a--spacer[aria-hidden="true"]
 ```
 
 ### 専用Props
@@ -36,9 +36,11 @@ div.a--spacer
 :::
 
 
+
+
 ## Usage
 
-### 使用例
+### 基本例
 
 <Preview>
   <PreviewTitle>`<Spacer>`の使用例</PreviewTitle>

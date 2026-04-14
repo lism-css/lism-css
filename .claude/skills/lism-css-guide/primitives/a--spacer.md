@@ -1,6 +1,6 @@
 # a--spacer / `<Spacer>`
 
-要素間のスペースを確保するクラス。`<Spacer>` はデフォルトで `aria-hidden="true"` が付与されます。
+要素間のスペースを確保するクラス。`<Spacer>` は `<Lism atomic="spacer" aria-hidden="true" />` のエイリアスとして用意されています。
 
 ## 基本情報
 

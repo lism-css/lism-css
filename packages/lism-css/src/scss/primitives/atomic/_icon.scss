@@ -1,5 +1,5 @@
 .a--icon {
-  flex-shrink: 0; // Callout など、アイコンはflex直下の子要素にしたい場合も多いので、指定しておく
+  flex-shrink: 0; // アイコンはflex直下の子要素にしたい場合が多いのでデフォルトで適用する
 }
 
 /* fill指定のない svg にテキストカラーを継承させる */
@@ -7,7 +7,7 @@
   fill: currentcolor;
 }
 
-/* 属性によるサイズ指定がない場合　*/
+/* 属性によるサイズ指定がない場合は 1em サイズが基本　*/
 .a--icon:where(:not([width])) {
   width: 1em;
   height: 1em;

@@ -100,10 +100,10 @@ import { Accordion, Tabs, Button } from '@lism-css/ui/astro';
 このスキルには以下の詳細ファイルが含まれます。必要に応じて参照してください。
 
 - [tokens.md](./tokens.md) — Lismで利用できるデザイントークンとCSS変数。（余白・フォントサイズ・タイポグラフィ・角丸・影・カラー・不透明度）
-- [css-rules.md](./css-rules.md) — CSS設計の概要。（Layer構造・クラスの分類・命名規則・プレフィックスのつけ方・カスタムCSSの追加ルール）
+- [css-rules.md](./css-rules.md) — CSS設計の概要。（Layer構造・クラスの分類・命名規則・プレフィックスのつけ方・Component クラス（`c--`）・カスタムCSSの追加ルール）
 - [base-styles.md](./base-styles.md) — HTML要素のベーススタイリング。（Reset CSSやHTML要素の基本スタイルをカスタマイズできるCSS変数）
 - [set-class.md](./set-class.md) — ベーススタイル・変数セットに使用する`set--` クラスの一覧と用途。
-- [primitive-class.md](./primitive-class.md) — レイアウトを組み立てる Primitive クラス（`is--`/`l--`/`a--`）と Component クラス（`c--`）の一覧と用途。
+- [primitive-class.md](./primitive-class.md) — レイアウトを組み立てる Primitive クラス（`is--`/`l--`/`a--`）の一覧と用途。
 - [utility-class.md](./utility-class.md) — 具体的な用途・装飾・機能を持つユーティリティクラス（`u--` クラス）の一覧と用途。
 - [property-class.md](./property-class.md) — 単一のCSSプロパティに対応するProperty Class（`-{prop}:{value}`形式のクラス）の一覧・記法。
 - [prop-responsive.md](./prop-responsive.md) — レスポンシブ対応（ブレークポイント・コンテナクエリ）の書き方・仕様。
