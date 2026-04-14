@@ -46,18 +46,10 @@ import { DummyText, DummyImage } from '@lism-css/ui/astro';
   <PreviewCode slot="tab" label="JSX">
     ```jsx "cols={2}"
     <Columns cols={2} g="20">
-      <Box bgc="base-2" p="20">
-        Box
-      </Box>
-      <Box bgc="base-2" p="20">
-        Box
-      </Box>
-      <Box bgc="base-2" p="20">
-        Box
-      </Box>
-      <Box bgc="base-2" p="20">
-        Box
-      </Box>
+      <Box bgc="base-2" p="20">Box</Box>
+      <Box bgc="base-2" p="20">Box</Box>
+      <Box bgc="base-2" p="20">Box</Box>
+      <Box bgc="base-2" p="20">Box</Box>
     </Columns>
     ```
   </PreviewCode>
@@ -90,24 +82,12 @@ import { DummyText, DummyImage } from '@lism-css/ui/astro';
   <PreviewCode slot="tab" label="JSX">
     ```jsx "cols={[1, 2, 3]}"
     <Columns cols={[1, 2, 3]} g="20">
-      <Box bgc="base-2" p="20">
-        Box1
-      </Box>
-      <Box bgc="base-2" p="20">
-        Box2
-      </Box>
-      <Box bgc="base-2" p="20">
-        Box3
-      </Box>
-      <Box bgc="base-2" p="20">
-        Box4
-      </Box>
-      <Box bgc="base-2" p="20">
-        Box5
-      </Box>
-      <Box bgc="base-2" p="20">
-        Box6
-      </Box>
+      <Box bgc="base-2" p="20">Box1</Box>
+      <Box bgc="base-2" p="20">Box2</Box>
+      <Box bgc="base-2" p="20">Box3</Box>
+      <Box bgc="base-2" p="20">Box4</Box>
+      <Box bgc="base-2" p="20">Box5</Box>
+      <Box bgc="base-2" p="20">Box6</Box>
     </Columns>
     ```
   </PreviewCode>
@@ -129,7 +109,7 @@ import { DummyText, DummyImage } from '@lism-css/ui/astro';
 
 <Preview>
   <PreviewTitle>2列 → `@md`:4列</PreviewTitle>
-  <PreviewArea resize p="15">
+  <PreviewArea resize p="20">
     <Columns cols={[2, null, 4]} g="15">
       <Box bgc="base-2" p="20">Box</Box>
       <Box bgc="base-2" p="20">Box</Box>
@@ -154,64 +134,56 @@ import { DummyText, DummyImage } from '@lism-css/ui/astro';
 ### gc(grid-column)の活用
 <Preview>
   <PreviewTitle>1:2, 2:1 で順番にコンテンツを表示</PreviewTitle>
-  <PreviewArea resize p="15">
-    <Columns cols="6" g="15">
-      <Frame gc="span 2">
+  <PreviewArea resize p="20">
+    <Columns cols="3" g="15">
+      <Frame gc="span 1">
         <img src="https://cdn.lism-css.com/img/a-1.jpg" alt="" />
       </Frame>
-      <Frame gc="span 4">
+      <Frame gc="span 2">
         <img src="https://cdn.lism-css.com/img/a-3.jpg" alt="" />
       </Frame>
-      <Frame gc="span 4">
+      <Frame gc="span 2">
         <img src="https://cdn.lism-css.com/img/a-4.jpg" alt="" />
       </Frame>
-      <Frame gc="span 2">
+      <Frame gc="span 1">
         <img src="https://cdn.lism-css.com/img/a-2.jpg" alt="" />
       </Frame>
-      <Frame gc="span 1">
-        <DummyImage />
-      </Frame>
-      <Frame gc="span 2">
-        <DummyImage />
-      </Frame>
-      <Frame gc="span 2">
-        <DummyImage />
-      </Frame>
-      <Frame gc="span 1">
-        <DummyImage />
-      </Frame>
-      {/* <Frame gc="span 3"><DummyImage /></Frame> */}
-      {/* <Frame gc="span 3"><DummyImage /></Frame> */}
     </Columns>
   </PreviewArea>
-  <PreviewCode>
-    ```jsx
-    <Columns cols="6" g="15">
-      <Frame gc="span 2">
+  <PreviewCode slot="tab" label="JSX">
+    ```jsx 'gc="span 1"' 'gc="span 2"'
+    <Columns cols="3" g="15">
+      <Frame gc="span 1">
         <img src="https://cdn.lism-css.com/img/a-1.jpg" alt="" />
       </Frame>
-      <Frame gc="span 4">
+      <Frame gc="span 2">
         <img src="https://cdn.lism-css.com/img/a-3.jpg" alt="" />
       </Frame>
-      <Frame gc="span 4">
+      <Frame gc="span 2">
         <img src="https://cdn.lism-css.com/img/a-4.jpg" alt="" />
       </Frame>
-      <Frame gc="span 2">
+      <Frame gc="span 1">
         <img src="https://cdn.lism-css.com/img/a-2.jpg" alt="" />
       </Frame>
-      <Frame gc="span 1">
-        <img src="https://cdn.lism-css.com/dummy-image.jpg" width="600" height="400" alt="" />
-      </Frame>
-      <Frame gc="span 2">
-        <img src="https://cdn.lism-css.com/dummy-image.jpg" width="600" height="400" alt="" />
-      </Frame>
-      <Frame gc="span 2">
-        <img src="https://cdn.lism-css.com/dummy-image.jpg" width="600" height="400" alt="" />
-      </Frame>
-      <Frame gc="span 1">
-        <img src="https://cdn.lism-css.com/dummy-image.jpg" width="600" height="400" alt="" />
-      </Frame>
     </Columns>
+    ```
+  </PreviewCode>
+  <PreviewCode slot="tab" label="HTML">
+    ```html "--gc: span 1" "--gc: span 2"
+    <div class="l--columns -g:15" style="--cols: 3">
+      <div class="l--frame -gc" style="--gc: span 1">
+        <img src="https://cdn.lism-css.com/img/a-1.jpg" alt="" />
+      </div>
+      <div class="l--frame -gc" style="--gc: span 2">
+        <img src="https://cdn.lism-css.com/img/a-3.jpg" alt="" />
+      </div>
+      <div class="l--frame -gc" style="--gc: span 2">
+        <img src="https://cdn.lism-css.com/img/a-4.jpg" alt="" />
+      </div>
+      <div class="l--frame -gc" style="--gc: span 1">
+        <img src="https://cdn.lism-css.com/img/a-2.jpg" alt="" />
+      </div>
+    </div>
     ```
   </PreviewCode>
 </Preview>
@@ -223,7 +195,7 @@ import { DummyText, DummyImage } from '@lism-css/ui/astro';
 
 <Preview>
   <PreviewTitle>subgrid</PreviewTitle>
-  <PreviewArea resize p="15">
+  <PreviewArea resize p="20">
     <Columns cols={[1, 2, 3]} g="20">
       <Grid util="trimChildren" g="30" p="20" gtr="subgrid" gr="span 4" bgc="base-2" bdrs="10">
         <Media ar="og" bdrs="10" src="https://cdn.lism-css.com/img/a-1.jpg" alt="" inferSize />
