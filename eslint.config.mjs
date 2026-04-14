@@ -26,9 +26,6 @@ export default defineConfig(
       '**/.stylelintrc.mjs',
       '**/.astro/**',
       '**/vite.config.*',
-      // lism-ui: .astro ファイルは astro check で型チェックするため lint 対象外
-      'packages/lism-ui/src/**/*.astro',
-      'packages/lism-ui/src/**/astro/**/*.js',
     ],
   },
   eslintConfigPrettier,
