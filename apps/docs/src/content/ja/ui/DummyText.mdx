@@ -7,7 +7,22 @@ import { DummyText } from '@lism-css/ui/astro';
 
 ダミーのプレースホルダーテキストを出力します。複数の言語とテキスト長に対応しています。
 
-## Props
+
+## How to use
+
+`@lism-css/ui` パッケージで`DummyText`として提供しています。
+
+
+### Import
+
+```jsx
+import { DummyText } from '@lism-css/ui/astro';
+// or
+import { DummyText } from '@lism-css/ui/react';
+```
+
+
+### Props
 
 | プロパティ | 説明 |
 |---|---|
@@ -17,16 +32,8 @@ import { DummyText } from '@lism-css/ui/astro';
 | `as` | HTMLタグを指定できます。デフォルトは`p`です。 |
 | `offset` | ダミーテキストのオフセットを指定できます。`,`、`.`単位で区切って切り捨てします。（長さは短くなります） |
 
-## Import
 
-```jsx
-import { DummyText } from '@lism-css/ui/astro';
-// or
-import { DummyText } from '@lism-css/ui/react';
-```
-
-
-## 使用例
+## Examples
 
 <Preview>
   <PreviewTitle>ダミーテキストの言語の違い</PreviewTitle>

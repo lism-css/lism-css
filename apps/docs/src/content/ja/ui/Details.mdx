@@ -73,33 +73,6 @@ import { Accordion, Details, DummyText } from '@lism-css/ui/astro';
 - `<Details.Content>`
 
 
-### 基本構造
-
-<Preview>
-  <PreviewCode slot="tab" label="JSX">
-    ```jsx
-    <Details.Root>
-      <Details.Summary>
-        <Details.Title>Details Title</Details.Title>
-        <Details.Icon />
-      </Details.Summary>
-      <Details.Content>...Contents...</Details.Content>
-    </Details.Root>
-    ```
-  </PreviewCode>
-  <PreviewCode slot="tab" label="HTML">
-    ```pug
-    details.c--details
-      summary.c--details_summary.l--flex.-g:10.-ai:center
-        span.c--details_title.-fx:1
-        span.c--details_icon.a--icon[aria-hidden="true"]
-      div.c--details_body
-        div.c--details_content.l--flow
-    ```
-  </PreviewCode>
-</Preview>
-
-
 ### Props
 
 
@@ -107,6 +80,19 @@ import { Accordion, Details, DummyText } from '@lism-css/ui/astro';
 |---|---|
 | <PropBadge>`<Details.Root>`</PropBadge><br/>`--duration` | 展開アニメーションの秒数 |
 | <PropBadge>`<Details.Title>`</PropBadge><br/>`as` | summary要素内のタイトルを出力するHTMLタグの種類|
+
+
+### 基本構造
+
+```jsx
+<Details.Root>
+  <Details.Summary>
+    <Details.Title>Details Title</Details.Title>
+    <Details.Icon />
+  </Details.Summary>
+  <Details.Content>...Contents...</Details.Content>
+</Details.Root>
+```
 
 
 ### ソースコード

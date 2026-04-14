@@ -18,33 +18,12 @@ Provided as `Modal` from the `@lism-css/ui` package.
 
 ### Import
 
-Provided by the `@lism-css/ui` package.
-
 <ImportPackage component="Modal" script="modal.js" packageName="@lism-css/ui" />
 
 `<Modal.Root>`, `<Modal.Inner>`, `<Modal.Body>`, and `<Modal.CloseBtn>` are available.
 
 
-### Source Code
-
-The source code is available on [GitHub](https://github.com/lism-css/lism-css/tree/main/packages/lism-ui/src/components/Modal).
-
-
-### Structure
-
-```pug
-button[data-modal-open='modalID']
-dialog.c--modal#modalID.set--plain
-    .c--modal_inner
-        .c--modal_body ...Contents...
-    button[data-modal-close='modalID']
-```
-
-Add an `id` to `.c--modal`, and set `data-modal-open` and `data-modal-close` attributes on `<button>` elements to make them open/close triggers for the modal.
-
-
-
-## Props
+### Props
 
 | Property | Description |
 |---|---|
@@ -55,10 +34,28 @@ Add an `id` to `.c--modal`, and set `data-modal-open` and `data-modal-close` att
 |<PropBadge>`<Modal.CloseBtn>`</PropBadge><br/> `modalId`| Output as `data-modal-close`. Specifies the modal `id` on the trigger element that closes the modal. |
 
 
+### Structure
+
+```jsx
+<Modal.OpenBtn modalId="modalID">Open</Modal.OpenBtn>
+<Modal.Root id="modalID">
+  <Modal.Inner>
+    <Modal.Body>...Contents...</Modal.Body>
+    <Modal.CloseBtn modalId="modalID" />
+  </Modal.Inner>
+</Modal.Root>
+```
+
+Add an `id` to `<Modal.Root>`, and pass the same `modalId` to `<Modal.OpenBtn>` / `<Modal.CloseBtn>` to wire up the open/close triggers.
 
 
-## Usage
+### Source Code
 
+The source code is available on [GitHub](https://github.com/lism-css/lism-css/tree/main/packages/lism-ui/src/components/Modal).
+
+
+
+## Examples
 
 - Modal uses `dialog`. Be careful not to change the `display` value.
 - Due to animation issues with `::backdrop`, the design assumes the dialog covers the full screen width with a background color applied.

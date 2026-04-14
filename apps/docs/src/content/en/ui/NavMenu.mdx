@@ -27,6 +27,28 @@ Provided as `NavMenu` (`.c--navMenu`) from the `@lism-css/ui` package.
 | <PropBadge>`<NavMenu.Root>`</PropBadge><br/>`hovC` | Outputs `--hov-c`. (For use when `.-hov:c` is applied to `.c--navMenu_link`.) |
 | <PropBadge>`<NavMenu.Link>`</PropBadge><br/>`hov` | Specifies the hover style. |
 
+
+### Structure
+
+```jsx
+<NavMenu.Root>
+  <NavMenu.Item>
+    <NavMenu.Link href="">Menu item</NavMenu.Link>
+  </NavMenu.Item>
+  <NavMenu.Item>
+    <NavMenu.Link href="">Menu item</NavMenu.Link>
+    <NavMenu.Nest>
+      <NavMenu.Item>
+        <NavMenu.Link href="">Nested item</NavMenu.Link>
+      </NavMenu.Item>
+    </NavMenu.Nest>
+  </NavMenu.Item>
+</NavMenu.Root>
+```
+
+Use `<NavMenu.Nest>` to create nested menus.
+
+
 ### Source Code
 
 The source code is available on [GitHub](https://github.com/lism-css/lism-css/tree/main/packages/lism-ui/src/components/NavMenu).

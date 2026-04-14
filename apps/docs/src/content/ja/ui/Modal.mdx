@@ -18,33 +18,12 @@ import { Modal, DummyText } from '@lism-css/ui/astro';
 
 ### Import
 
-`@lism-css/ui` パッケージで提供しています。
-
 <ImportPackage component="Modal" script="modal.js" packageName="@lism-css/ui" />
 
 `<Modal.Root>`, `<Modal.Inner>`, `<Modal.Body>`, `<Modal.CloseBtn>`が利用できます。
 
 
-### ソースコード
-
-ソースコードは [GitHub](https://github.com/lism-css/lism-css/tree/main/packages/lism-ui/src/components/Modal) で公開しています。
-
-
-### 基本構造
-
-```pug
-button[data-modal-open='modalID']
-dialog.c--modal#modalID.set--plain
-    .c--modal_inner
-        .c--modal_body ...Contents...
-    button[data-modal-close='modalID']
-```
-
-`.c--modal`に`id`をつけ、`<button>`に`data-modal-open`属性と`data-modal-close`属性をつけることでそのモーダルの開閉ボタンになります。
-
-
-
-## Props
+### Props
 
 | プロパティ | 説明 |
 |---|---|
@@ -55,10 +34,28 @@ dialog.c--modal#modalID.set--plain
 |<PropBadge>`<Modal.CloseBtn>`</PropBadge><br/> `modalId`| `data-modal-close`として出力されます。モーダルを閉じるトリガー要素にて、モーダルの`id`を指定します。|
 
 
+### 基本構造
+
+```jsx
+<Modal.OpenBtn modalId="modalID">Open</Modal.OpenBtn>
+<Modal.Root id="modalID">
+  <Modal.Inner>
+    <Modal.Body>...Contents...</Modal.Body>
+    <Modal.CloseBtn modalId="modalID" />
+  </Modal.Inner>
+</Modal.Root>
+```
+
+`<Modal.Root>`に`id`をつけ、`<Modal.OpenBtn>` / `<Modal.CloseBtn>`に同じ`modalId`を指定することで、そのモーダルの開閉ボタンになります。
 
 
-## Usage
+### ソースコード
 
+ソースコードは [GitHub](https://github.com/lism-css/lism-css/tree/main/packages/lism-ui/src/components/Modal) で公開しています。
+
+
+
+## Examples
 
 - Modalは`dialog`を使用しています。display値を変更しないように注意してください。
 - `::backdrop` はアニメーションに問題があるため、dialogをスクリーン幅いっぱいにして背景色をつけて運用する前提で設計しています。

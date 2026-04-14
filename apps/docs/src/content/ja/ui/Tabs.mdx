@@ -11,39 +11,18 @@ import './_opt-in/_tabs.css'
 タブ要素を作成できるコンポーネントです。  
 スタイリングはほぼなく、動きに関わる部分だけを提供しています。表示スタイルは適宜カスタマイズしてご利用ください。
 
-## 基本構造
-```pug
-c--tabs
-  div.c--tabs_list[role="tablist"]
-    button.c--tabs_tab.set--plain[role="tab"][aria-controls="{tabID}"][aria-selected="true"]
-    ...button
 
-  div.c--tabs_panel[id="{tabID}"][role="tabpanel"][aria-hidden="false"]
-    ...Contents...
-  ...div.c--tabs_panel
-```
+## How to use
+
+`@lism-css/ui` パッケージで`Tabs`として提供しています。
 
 
-## CSS
-
-<EmbedCode dirPath="packages/lism-ui" srcPath="src/components/Tabs/_style.css" />
-
-
-## JavaScript
-
-<EmbedCode dirPath="packages/lism-ui" srcPath="src/components/Tabs/setTabs.js" />
-
-
-## Import
-
-
-`@lism-css/ui` パッケージで提供しています。
-
+### Import
 
 <ImportPackage component="Tabs" script="tabs.js" packageName="@lism-css/ui" />
 
 
-## Props
+### Props
 
 | プロパティ | 説明 |
 |---|---|
@@ -53,50 +32,44 @@ c--tabs
 |<PropBadge>`<Tabs.Root>`</PropBadge><br/>`listProps`|タブボタンを囲むリスト要素(`c--tabs_list`)へ渡すpropsを指定できます。|
 {/* |<PropBadge>`<Tabs.Item>`</PropBadge><br/>`label` | タブテキストを指定します。 | */}
 
-
 {/* |<PropBadge>`<Tabs.Root>`</PropBadge><br/>`keepHeight`|`[data-tabs-height="keep"]`が出力され、タブの高さを一番コンテンツ量の多いパネルに合わせて固定することができます。| */}
 
-{/* **ボタンカラーについて**
 
-平常時のカラーと、アクティブ時のカラーをそれぞれ専用の変数で管理しています。
+### 基本構造
 
-```css
-:where(.c--tabs) {
-  --tab-c: var(--text);
-  --tab-c--active: var(--base);
-  --tab-bgc: var(--base-2);
-  --tab-bgc--active: var(--text);
-}
-``` */}
-
-
-{/* - `<Tabs.Root>`
-  - `keepHeight` が true の場合、タブの高さを固定する（切り替えた時に高さが動かないようにする）
-  - `defaultIndex`で最初に開くタブを指定できる
-  - `tabId`: tabId.指定しなければランダム生成されます。(ページ内で一意の値の指定である必要があります。)
-- `<Tabs.Item>`
-  - `index`: (必須) タブのindex番号 */}
-
-
-## Usage
+```jsx
+<Tabs.Root>
+  <Tabs.Item>
+    <Tabs.Tab>Tab label</Tabs.Tab>
+    <Tabs.Panel>...Contents...</Tabs.Panel>
+  </Tabs.Item>
+</Tabs.Root>
+```
 
 <Callout type="warning">
 `<Tabs.Item>`の子要素は`<Tabs.Tab>`と`<Tabs.Panel>`のみしか認識しません。また、この2つは必ず両方使用してください。
 </Callout>
 
 
+### ソースコード
+
+ソースコードは [GitHub](https://github.com/lism-css/lism-css/tree/main/packages/lism-ui/src/components/Tabs) で公開しています。
+
+
+## Examples
+
 <Preview>
   <PreviewTitle>例</PreviewTitle>
   <PreviewArea p="20">
-    <Tabs.Root g="15">
+    <Tabs.Root>
       <Tabs.Item>
-        <Tabs.Tab px="10">Tab 1</Tabs.Tab>
+        <Tabs.Tab>Tab 1</Tabs.Tab>
         <Tabs.Panel>
           <DummyText pre="Tab 01: " />
         </Tabs.Panel>
       </Tabs.Item>
       <Tabs.Item>
-        <Tabs.Tab px="10">Tab 2</Tabs.Tab>
+        <Tabs.Tab>Tab 2</Tabs.Tab>
         <Tabs.Panel>
           <DummyText length="l" offset={1} pre="Tab 02: " />
         </Tabs.Panel>
@@ -105,15 +78,15 @@ c--tabs
   </PreviewArea>
   <PreviewCode slot="tab" label="JSX">
     ```jsx
-    <Tabs.Root g="15">
+    <Tabs.Root>
       <Tabs.Item>
-        <Tabs.Tab px="10">Tab 1</Tabs.Tab>
+        <Tabs.Tab>Tab 1</Tabs.Tab>
         <Tabs.Panel>
           <DummyText pre="Tab 01: "/>
         </Tabs.Panel>
       </Tabs.Item>
       <Tabs.Item>
-        <Tabs.Tab px="10">Tab 2</Tabs.Tab>
+        <Tabs.Tab>Tab 2</Tabs.Tab>
         <Tabs.Panel>
           <DummyText length="l" offset={1} pre="Tab 02: " />
         </Tabs.Panel>
@@ -276,7 +249,7 @@ c--tabs
 
 
 
-## スタイルバリエーションの作成例
+### スタイルバリエーションの作成例
 
 コアではスタイルを特に持ちませんので、サイトごとにスタイルを用意してご利用ください。
 

@@ -63,53 +63,12 @@ The panel uses `hidden="until-found"`, so its content can be discovered by the b
 </Preview>
 
 
-## Structure
+## How to use
 
-<Preview>
-  <PreviewCode slot="tab" label="HTML">
-    ```pug
-    div.c--accordion.l--stack
-      div.c--accordion_item
-        div.c--accordion_heading[role="heading"]
-          button.c--accordion_button[aria-controls="{id}"][aria-expanded="false"]
-            Accordion Label
-            span.c--accordion_icon.a--icon[aria-hidden="true"]
-        div.c--accordion_panel#id[hidden="until-found"]
-          div.c--accordion_content(.l--flow) ...Contents...
-    ```
-  </PreviewCode>
-  <PreviewCode slot="tab" label="JSX">
-    ```jsx
-    <Accordion.Root>
-      <Accordion.Item>
-        <Accordion.Heading>
-          <Accordion.Button>Accordion Label</Accordion.Button>
-        </Accordion.Heading>
-        <Accordion.Panel p="20" pt="5">
-          ...Contents...
-        </Accordion.Panel>
-      </Accordion.Item>
-    </Accordion.Root>
-    ```
-  </PreviewCode>
-</Preview>
-
-:::note
-`<Accordion.Button>` automatically includes `<Accordion.Icon>` at the end.
-The icon is rendered using CSS pseudo-elements (`::before` / `::after`), so no SVG specification is needed.
-:::
+Provided as `Accordion` from the `@lism-css/ui` package.
 
 
-
-## Source Code
-
-The source code is available on [GitHub](https://github.com/lism-css/lism-css/tree/main/packages/lism-ui/src/components/Accordion).
-
-
-
-## Import
-
-Provided by the `@lism-css/ui` package.
+### Import
 
 <ImportPackage component="Accordion" script="setAccordion.js" packageName="@lism-css/ui" />
 
@@ -123,13 +82,40 @@ The following components are available:
 - `<Accordion.Panel>`: The content panel that opens and closes (uses `hidden="until-found"`)
 
 
-## Props
+### Props
 
 | Property | Description |
 |---|---|
 | <PropBadge>`<Accordion.Root>`</PropBadge><br/>`allowMultiple` | Allows multiple accordions to be expanded simultaneously. By default, only one can be open at a time. |
 | <PropBadge>`<Accordion.Heading>`</PropBadge><br/>`as` | Specifies the HTML tag for the heading. Defaults to `div` (with `role="heading"` added automatically). If `h2`–`h6` is specified, `role` is not added. |
 | <PropBadge>`<Accordion.Panel>`</PropBadge><br/>`flow` | Flow layout setting passed to the content area (`__content`) inside the panel. |
+
+
+### Structure
+
+```jsx
+<Accordion.Root>
+  <Accordion.Item>
+    <Accordion.Heading>
+      <Accordion.Button>Accordion Label</Accordion.Button>
+    </Accordion.Heading>
+    <Accordion.Panel p="20" pt="5">
+      ...Contents...
+    </Accordion.Panel>
+  </Accordion.Item>
+</Accordion.Root>
+```
+
+:::note
+`<Accordion.Button>` automatically includes `<Accordion.Icon>` at the end.
+The icon is rendered using CSS pseudo-elements (`::before` / `::after`), so no SVG specification is needed.
+:::
+
+
+### Source Code
+
+The source code is available on [GitHub](https://github.com/lism-css/lism-css/tree/main/packages/lism-ui/src/components/Accordion).
+
 
 
 ## Examples

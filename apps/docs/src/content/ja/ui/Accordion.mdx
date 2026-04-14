@@ -63,53 +63,12 @@ import { Accordion, DummyText } from '@lism-css/ui/astro';
 </Preview>
 
 
-## 基本構造
+## How to use
 
-<Preview>
-  <PreviewCode slot="tab" label="HTML">
-    ```pug
-    div.c--accordion.l--stack
-      div.c--accordion_item
-        div.c--accordion_heading[role="heading"]
-          button.c--accordion_button[aria-controls="{id}"][aria-expanded="false"]
-            Accordion Label
-            span.c--accordion_icon.a--icon[aria-hidden="true"]
-        div.c--accordion_panel#id[hidden="until-found"]
-          div.c--accordion_content(.l--flow) ...Contents...
-    ```
-  </PreviewCode>
-  <PreviewCode slot="tab" label="JSX">
-    ```jsx
-    <Accordion.Root>
-      <Accordion.Item>
-        <Accordion.Heading>
-          <Accordion.Button>Accordion Label</Accordion.Button>
-        </Accordion.Heading>
-        <Accordion.Panel p="20" pt="5">
-          ...Contents...
-        </Accordion.Panel>
-      </Accordion.Item>
-    </Accordion.Root>
-    ```
-  </PreviewCode>
-</Preview>
-
-:::note
-`<Accordion.Button>` には、末尾に `<Accordion.Icon>` が自動的に配置されます。
-アイコンはCSSの疑似要素（`::before` / `::after`）で描画されるため、SVGの指定は不要です。
-:::
+`@lism-css/ui` パッケージで`Accordion`として提供しています。
 
 
-
-## ソースコード
-
-ソースコードは [GitHub](https://github.com/lism-css/lism-css/tree/main/packages/lism-ui/src/components/Accordion) で公開しています。
-
-
-
-## Import
-
-`@lism-css/ui` パッケージで提供しています。
+### Import
 
 <ImportPackage component="Accordion" script="accordion.js" packageName="@lism-css/ui" />
 
@@ -123,13 +82,40 @@ import { Accordion, DummyText } from '@lism-css/ui/astro';
 - `<Accordion.Panel>`: 開閉されるコンテンツパネル（`hidden="until-found"` を使用）
 
 
-## Props
+### Props
 
 | プロパティ | 説明 |
 |---|---|
 | <PropBadge>`<Accordion.Root>`</PropBadge><br/>`allowMultiple` | 複数のアコーディオンを同時に展開できるようにします。デフォルトでは一つしか展開できません。 |
 | <PropBadge>`<Accordion.Heading>`</PropBadge><br/>`as` | 見出しのHTMLタグを指定します。デフォルトは `div`（`role="heading"` が自動付与されます）。`h2`〜`h6` を指定すると `role` は付与されません。 |
 | <PropBadge>`<Accordion.Panel>`</PropBadge><br/>`flow` | パネル内のコンテンツ領域（`__content`）に渡すフローレイアウトの設定。 |
+
+
+### 基本構造
+
+```jsx
+<Accordion.Root>
+  <Accordion.Item>
+    <Accordion.Heading>
+      <Accordion.Button>Accordion Label</Accordion.Button>
+    </Accordion.Heading>
+    <Accordion.Panel p="20" pt="5">
+      ...Contents...
+    </Accordion.Panel>
+  </Accordion.Item>
+</Accordion.Root>
+```
+
+:::note
+`<Accordion.Button>` には、末尾に `<Accordion.Icon>` が自動的に配置されます。
+アイコンはCSSの疑似要素（`::before` / `::after`）で描画されるため、SVGの指定は不要です。
+:::
+
+
+### ソースコード
+
+ソースコードは [GitHub](https://github.com/lism-css/lism-css/tree/main/packages/lism-ui/src/components/Accordion) で公開しています。
+
 
 
 ## Examples

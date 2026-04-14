@@ -28,6 +28,28 @@ import { Accordion, NavMenu } from '@lism-css/ui/astro'
 | <PropBadge>`<NavMenu.Link>`</PropBadge><br/>`hov` | hover時のスタイルを指定できます。 |
 {/* | <PropBadge>`<NavMenu.Root>`</PropBadge><br/>`nestLevel` | ネストの深さを指定します。`[data-nest-level]`に値を出力します。<br />ただし、トップレベルでは指定しないでください。（`:not([data-nest-level])`で変数の初期値をセットするため）| */}
 
+
+### 基本構造
+
+```jsx
+<NavMenu.Root>
+  <NavMenu.Item>
+    <NavMenu.Link href="">Menu item</NavMenu.Link>
+  </NavMenu.Item>
+  <NavMenu.Item>
+    <NavMenu.Link href="">Menu item</NavMenu.Link>
+    <NavMenu.Nest>
+      <NavMenu.Item>
+        <NavMenu.Link href="">Nested item</NavMenu.Link>
+      </NavMenu.Item>
+    </NavMenu.Nest>
+  </NavMenu.Item>
+</NavMenu.Root>
+```
+
+ネスト構造には `<NavMenu.Nest>` を使用します。
+
+
 ### ソースコード
 
 ソースコードは [GitHub](https://github.com/lism-css/lism-css/tree/main/packages/lism-ui/src/components/NavMenu) で公開しています。

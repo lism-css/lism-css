@@ -11,39 +11,18 @@ import '../../ja/ui/_opt-in/_tabs.css'
 A component for creating tab elements.
 It provides minimal styling — only the interaction behavior is included. Visual styles should be customized per project.
 
-## Structure
-```pug
-c--tabs
-  div.c--tabs_list[role="tablist"]
-    button.c--tabs_tab.set--plain[role="tab"][aria-controls="{tabID}"][aria-selected="true"]
-    ...button
 
-  div.c--tabs_panel[id="{tabID}"][role="tabpanel"][aria-hidden="false"]
-    ...Contents...
-  ...div.c--tabs_panel
-```
+## How to use
+
+Provided as `Tabs` from the `@lism-css/ui` package.
 
 
-## CSS
-
-<EmbedCode dirPath="packages/lism-ui" srcPath="src/components/Tabs/_style.css" />
-
-
-## JavaScript
-
-<EmbedCode dirPath="packages/lism-ui" srcPath="src/components/Tabs/setTabs.js" />
-
-
-## Import
-
-
-Provided by the `@lism-css/ui` package.
-
+### Import
 
 <ImportPackage component="Tabs" script="setTabs.js" packageName="@lism-css/ui" />
 
 
-## Props
+### Props
 
 | Property | Description |
 |---|---|
@@ -53,11 +32,29 @@ Provided by the `@lism-css/ui` package.
 |<PropBadge>`<Tabs.Root>`</PropBadge><br/>`listProps`| Props passed to the list element (`c--tabs_list`) wrapping the tab buttons. |
 
 
-## Usage
+### Structure
+
+```jsx
+<Tabs.Root>
+  <Tabs.Item>
+    <Tabs.Tab>Tab label</Tabs.Tab>
+    <Tabs.Panel>...Contents...</Tabs.Panel>
+  </Tabs.Item>
+</Tabs.Root>
+```
 
 <Callout type="warning">
 Only `<Tabs.Tab>` and `<Tabs.Panel>` are recognized as children of `<Tabs.Item>`. Both must always be used together.
 </Callout>
+
+
+### Source Code
+
+The source code is available on [GitHub](https://github.com/lism-css/lism-css/tree/main/packages/lism-ui/src/components/Tabs).
+
+
+
+## Examples
 
 
 <Preview>
@@ -242,7 +239,7 @@ At the same time, changing the tab list (`.c--tabs_list`) buttons to stack verti
 
 
 
-## Style variation examples
+### Style variation examples
 
 The core component provides no visual styling, so add your own styles per project.
 

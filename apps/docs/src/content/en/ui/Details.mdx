@@ -73,33 +73,6 @@ The following components are available:
 - `<Details.Content>`
 
 
-### Structure
-
-<Preview>
-  <PreviewCode slot="tab" label="JSX">
-    ```jsx
-    <Details.Root>
-      <Details.Summary>
-        <Details.Title>Details Title</Details.Title>
-        <Details.Icon />
-      </Details.Summary>
-      <Details.Content>...Contents...</Details.Content>
-    </Details.Root>
-    ```
-  </PreviewCode>
-  <PreviewCode slot="tab" label="HTML">
-    ```pug
-    details.c--details
-      summary.c--details_summary.l--flex.-g:10.-ai:center
-        span.c--details_title.-fx:1
-        span.c--details_icon.a--icon[aria-hidden="true"]
-      div.c--details_body
-        div.c--details_content.l--flow
-    ```
-  </PreviewCode>
-</Preview>
-
-
 ### Props
 
 
@@ -107,6 +80,19 @@ The following components are available:
 |---|---|
 | <PropBadge>`<Details.Root>`</PropBadge><br/>`--duration` | Duration of the expand/collapse animation. |
 | <PropBadge>`<Details.Title>`</PropBadge><br/>`as` | The HTML tag used to render the title inside the summary element. |
+
+
+### Structure
+
+```jsx
+<Details.Root>
+  <Details.Summary>
+    <Details.Title>Details Title</Details.Title>
+    <Details.Icon />
+  </Details.Summary>
+  <Details.Content>...Contents...</Details.Content>
+</Details.Root>
+```
 
 
 ### Source Code
