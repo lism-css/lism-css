@@ -1,10 +1,13 @@
 ---
+import type { AstroLismFixedLayoutProps } from 'lism-css/astro';
 import { Lism } from 'lism-css/astro';
 import { defaultProps } from '../getProps';
 
-const props = Astro.props || {};
+type Props = AstroLismFixedLayoutProps;
+
+const props: Props = Astro.props;
 ---
 
-<Lism as="summary" {...defaultProps.summary} {...props}>
+<Lism as="summary" {...defaultProps.summary as Record<string, unknown>} {...props}>
   <slot />
 </Lism>

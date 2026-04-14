@@ -3,12 +3,15 @@
  * Icon - アイコンコンポーネント
  * 開閉状態を示すアイコン（開いた時に回転）
  */
+import type { AstroLismFixedLayoutProps } from 'lism-css/astro';
 import { Lism } from 'lism-css/astro';
 import { defaultProps } from '../getProps';
 
-const props = Astro.props || {};
+type Props = AstroLismFixedLayoutProps;
+
+const props: Props = Astro.props;
 ---
 
-<Lism {...defaultProps.icon} {...props}>
+<Lism {...defaultProps.icon as Record<string, unknown>} {...props}>
   <slot />
 </Lism>
