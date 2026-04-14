@@ -243,8 +243,8 @@ Margin adjustment is disabled for `img`, `figure`, and `table` elements inside `
   <PreviewArea resize p="20">
     <Stack util="trimChildren" bd g="30" p="30" bdrs="10" max-sz="s">
       <Media ar="og" src="https://cdn.lism-css.com/img/a-1.jpg" alt="" inferSize />
-      <DummyText lang="ja" length="s" fw="bold" fz="l" />
-      <DummyText lang="ja" length="l" o="-10" fz="s" />
+      <DummyText length="s" fw="bold" fz="l" />
+      <DummyText length="l" o="-10" fz="s" />
     </Stack>
   </PreviewArea>
   <PreviewCode slot="tab" label="HTML">
@@ -340,48 +340,13 @@ Implemented using `box-shadow`, so some care is needed when using it.
   <PreviewCode>
     ```jsx
     <Grid layout="fluidCols" util="collapseGrid" cols="12rem">
-      <Box p="15">
-        <p>
-          Lorem ipsum dolor sit amet. Consectetur adipiscing elit, sed do eiusmod tempor Incididunt ut. Labore et dolore magna aliqua. Ut enim ad minim
-          veniam, quis nostrud exercitation ullamco laboris nisi ut.
-        </p>
-      </Box>
-      <Box p="15">
-        <p>
-          Lorem ipsum dolor sit amet. Consectetur adipiscing elit, sed do eiusmod tempor Incididunt ut. Labore et dolore magna aliqua. Ut enim ad minim
-          veniam, quis nostrud exercitation ullamco laboris nisi ut.
-        </p>
-      </Box>
-      <Box p="15">
-        <p>
-          Lorem ipsum dolor sit amet. Consectetur adipiscing elit, sed do eiusmod tempor Incididunt ut. Labore et dolore magna aliqua. Ut enim ad minim
-          veniam, quis nostrud exercitation ullamco laboris nisi ut.
-        </p>
-      </Box>
-      <Box p="15">
-        <p>
-          Lorem ipsum dolor sit amet. Consectetur adipiscing elit, sed do eiusmod tempor Incididunt ut. Labore et dolore magna aliqua. Ut enim ad minim
-          veniam, quis nostrud exercitation ullamco laboris nisi ut.
-        </p>
-      </Box>
-      <Box p="15">
-        <p>
-          Lorem ipsum dolor sit amet. Consectetur adipiscing elit, sed do eiusmod tempor Incididunt ut. Labore et dolore magna aliqua. Ut enim ad minim
-          veniam, quis nostrud exercitation ullamco laboris nisi ut.
-        </p>
-      </Box>
-      <Box p="15">
-        <p>
-          Lorem ipsum dolor sit amet. Consectetur adipiscing elit, sed do eiusmod tempor Incididunt ut. Labore et dolore magna aliqua. Ut enim ad minim
-          veniam, quis nostrud exercitation ullamco laboris nisi ut.
-        </p>
-      </Box>
-      <Box p="15">
-        <p>
-          Lorem ipsum dolor sit amet. Consectetur adipiscing elit, sed do eiusmod tempor Incididunt ut. Labore et dolore magna aliqua. Ut enim ad minim
-          veniam, quis nostrud exercitation ullamco laboris nisi ut.
-        </p>
-      </Box>
+      <Box p="15">Grid Item</Box>
+      <Box p="15">Grid Item</Box>
+      <Box p="15">Grid Item</Box>
+      <Box p="15">Grid Item</Box>
+      <Box p="15">Grid Item</Box>
+      <Box p="15">Grid Item</Box>
+      <Box p="15">Grid Item</Box>
     </Grid>
     ```
   </PreviewCode>
@@ -441,18 +406,10 @@ This utility class also makes it easy to display borders between items in a flex
   <PreviewCode>
     ```jsx
     <Flex fxd={['column', 'row']} util="collapseGrid">
-      <Box fx="1" p="15">
-        Box
-      </Box>
-      <Box fx="1" p="15">
-        Box
-      </Box>
-      <Box fx="1" p="15">
-        Box
-      </Box>
-      <Box fx="1" p="15">
-        Box
-      </Box>
+      <Box fx="1" p="15">Box</Box>
+      <Box fx="1" p="15">Box</Box>
+      <Box fx="1" p="15">Box</Box>
+      <Box fx="1" p="15">Box</Box>
     </Flex>
     ```
   </PreviewCode>

@@ -66,16 +66,16 @@ For horizontal centering only, `<Stack ai="center">` also works.
   <PreviewArea resize p="15">
     <Center bd p="30" g="15">
       <Text fz="l">TEXT</Text>
-      <DummyText length="xs" lang="ja" />
-      <DummyText lang="ja" />
+      <DummyText length="xs" />
+      <DummyText />
     </Center>
   </PreviewArea>
   <PreviewCode slot="tab" label="JSX">
     ```jsx
     <Center bd p="30" g="15">
       <Text fz="l">TEXT</Text>
-      <p>...</p>
-      <p>...</p>
+      <p>Lorem ipsum dolor sit amet.</p>
+      <p>Lorem ipsum dolor sit amet. Consectetur adipiscing elit, sed do eiusmod tempor Incididunt ut. Labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut.</p>
     </Center>
     ```
   </PreviewCode>
@@ -83,8 +83,8 @@ For horizontal centering only, `<Stack ai="center">` also works.
     ```jsx
     <div class="l--center -bd -p:30 -g:15">
       <p class="-fz:l">TEXT</p>
-      <p>...</p>
-      <p>...</p>
+      <p>Lorem ipsum dolor sit amet.</p>
+      <p>Lorem ipsum dolor sit amet. Consectetur adipiscing elit, sed do eiusmod tempor Incididunt ut. Labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut.</p>
     </div>
     ```
   </PreviewCode>
@@ -117,7 +117,7 @@ When Center has a **height or aspect ratio** set, content is also centered verti
     ```html "-ar:3/2"
     <div class="l--center -bd -g:10 -ar:3/2">
       <p class="-fz:l">TEXT</p>
-      <p class="-fz:s">ロレム・イプサムの座り雨。</p>
+      <p class="-fz:s">Lorem ipsum dolor sit amet.</p>
     </div>
     ```
   </PreviewCode>
