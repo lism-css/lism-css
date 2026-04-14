@@ -1,0 +1,378 @@
+---
+title: 'Lism Props'
+description: 'A reference for the Lism CSS-specific props accepted by <Lism>-family components.'
+order: 2
+---
+import { Lism, Spacer } from "lism-css/astro";
+
+The props specific to Lism CSS that `<Lism>`-family components accept are called **Lism Props**.
+
+{/* In addition to the above, there are several more complex ones. These are explained in the [Notes](#notes) section below. */}
+
+
+{/* Lism Props are mainly classified into the following three types: */}
+
+{/* |Type|Description|
+|---|---|
+|**Common Props**|Basic shared properties|
+|**Trait Props**|Props for outputting classes classified as [Trait Primitives](/en/docs/css-methodology//#trait-primitives)|
+|**CSS Props**|Props for outputting classes classified as [Property Class](/en/docs/property-class/)| */}
+
+## `as`
+
+Specifies the HTML tag or external component to render. Defaults to `div`.
+
+<PreviewTitle>Example of specifying an HTML tag</PreviewTitle>
+```jsx 'as="p"'
+<Lism as="p">Lorem ipsum texts...</Lism>
+
+↓
+
+<p>Lorem ipsum texts...</p>
+```
+
+By specifying an external component, you can have `<Lism>` **render as a different external component**.
+
+<Preview>
+  <PreviewTitle>Example: rendering Lism's `<Media>` component using Next.js's `<Image>`</PreviewTitle>
+  <PreviewCode>
+```jsx
+import Image from 'next/image';
+
+<Media as={Image} src="..." p="20" bd />
+```
+  </PreviewCode>
+</Preview>
+
+Lism Props (`p` and `bd` in the example above) are first processed to generate `className` and `style`, which are then passed to the component specified by `as`.
+This is useful when you want to use Lism Props on non-Lism components.
+
+
+## `lismClass`
+
+A dedicated slot for the component's base `c--` class (Component Class).
+Classes passed here are also the target of BEM expansion by the `variant` prop.
+
+:::info
+BEM expansion is exclusively for `c--` base classes. To attach `a--*` (atomic) or `l--*` (layout) classes, use the `atomic` / `layout` props described below.
+:::
+
+<PreviewTitle>Example</PreviewTitle>
+```jsx 'lismClass="c--myComponent"'
+<Lism p="10" lismClass="c--myComponent">Lorem ipsum texts...</Lism>
+
+↓
+
+<div class="c--myComponent -p:10">Lorem ipsum texts...</div>
+```
+
+
+### `variant`
+
+Outputs a variation class for `lismClass`.
+When multiple classes are specified in `lismClass`, the variation class is applied to the first class.
+
+
+<PreviewTitle>Example</PreviewTitle>
+```jsx 'variant="secondary"'
+<Lism lismClass="c--myComponent" variant="secondary">Lorem ipsum texts...</Lism>
+
+↓
+
+<div class="c--myComponent c--myComponent--secondary">Lorem ipsum texts...</div>
+```
+
+
+## Trait Props
+
+A set of props corresponding to [Trait Primitives](/en/docs/css-methodology/) classes.
+
+
+| Prop | Output class | Purpose |
+|---|---|---|
+| `isWrapper(='{s\|l}')` | `is--wrapper` + `-contentSize:{s\|l}` | Content width restriction |
+| `isLayer` | `is--layer` | Absolute positioned layer (inset:0) |
+| `isBoxLink` | `is--boxLink` | Make entire box clickable |
+| `isCoverLink` | `is--coverLink` | Link with a clickable area covering the parent element |
+| `isContainer` | `is--container` | Container query target |
+| `isSide` | `is--side` | Side element |
+| `isSkipFlow` | `is--skipFlow` | Skip Flow spacing |
+| `isVertical` | `is--vertical` | Vertical writing mode |
+
+<Reference>
+[Learn about Trait Primitives classes and usage examples](/en/docs/css-methodology/)
+</Reference>
+
+
+## `layout` / `atomic`
+
+`layout` and `atomic` are props for specifying Layout Primitive classes (`l--*`) and Atomic Primitive classes (`a--*`), respectively.
+
+
+For example, specifying `layout='flow'` outputs the `.l--flow` class, and specifying `atomic='divider'` outputs the `.a--divider` class.
+
+<PreviewTitle>Example</PreviewTitle>
+```jsx 'layout="flow"' 'atomic="divider"' "l--flow" "a--divider"
+<Lism layout="flow">Lorem ipsum texts...</Lism>
+<Lism atomic="divider" />
+
+↓
+
+<div class="l--flow">Lorem ipsum texts...</div>
+<div class="a--divider"></div>
+```
+
+:::info
+Some `layout` / `atomic` values enable additional dedicated processing.
+
+- Example 1: `layout="sideMain"` accepts `sideW` / `mainW`
+- Example 2: `atomic="spacer"` accepts `w` / `h` as space tokens
+:::
+
+
+## `set` / `util`
+
+`set` specifies [Set Class](/en/docs/set-class/) entries (`set--{value}`),  
+`util` specifies [Utility Class](/en/docs/utility-class/) entries (`u--{value}`).
+
+<PreviewTitle>Example</PreviewTitle>
+```jsx 'set="shadow"' 'util="cbox"' "set--shadow" "u--cbox"
+<Lism set="shadow" util="cbox">...</Lism>
+
+↓
+
+<div class="set--shadow u--cbox">...</div>
+```
+
+### Multiple values
+
+Both props accept space-separated values.
+
+```jsx
+<Lism set="hov transition" util="cbox trim">...</Lism>
+```
+
+### Excluding with `-` prefix
+
+Prefix a value with `-` to exclude that identifier. This is useful when you want to remove a class that has been applied internally by a component.
+
+```jsx
+{/* Exclude set="plain" (set--plain) that MyButton applies by default */}
+<MyButton set="-plain">...</MyButton>
+
+{/* Exclude u--trim and add u--cbox */}
+<MyCallout util="-trim cbox">...</MyCallout>
+```
+
+
+## `exProps`
+
+Accepts **props that you want to skip Lism Props processing for** as an object.
+
+This is handy when a prop name of the external component specified via `as` conflicts with a Lism Prop name, and you want to explicitly mark it as belonging to the external component.
+
+<Preview>
+  <PreviewTitle>Example</PreviewTitle>
+  <PreviewCode>
+```jsx
+<Icon as={Hoge} exProps={{ size: '1em' }} p="10" fz="l">
+  ...
+</Icon>
+```
+  </PreviewCode>
+</Preview>
+
+By doing this, the Lism `Icon` component processes `p` and `fz`, while the external component `Hoge` reliably receives `size`.
+(In this particular example, `exProps` is not strictly necessary since Lism does not currently process `size`, but explicitly marking external component props ensures no future conflicts.)
+
+
+## CSS Props
+
+Major CSS properties can be specified using shorthand notation.
+For example, `font-size` can be written as `fz`, and `padding` as `p`.
+
+<Reference>
+[See the full list of available Props](/en/docs/property-class/)
+</Reference>
+
+<Spacer h="10"/>
+
+The output format is determined by the value (`value`) specified via `prop={value}`:
+
+| Value | Output format | Example |
+|------|------|-----|
+| Token / preset value | `-{prop}:{value}` class | `fz='l'` → `-fz:l` |
+| `true` / `"-"` | `-{prop}` class only (no variable) | `bd` → `-bd` |
+| Value starting with `:` | Forced utility class | `p=':hoge'` → `-p:hoge` |
+| Other values (BP-supported) | `-{prop}` class + `--{prop}` variable | `fz='20px'` → `-fz` + `--fz:20px` |
+| Other values (BP-unsupported) | Direct `style` attribute output | `o='0.7'` → `opacity:0.7` |
+| Other values (variable-only) | `--{prop}` variable only | `bdw='2px'` → `--bdw:2px` |
+
+:::note[Notes]
+- **BP-supported properties**: Properties that can switch values at breakpoints. See the **BP** column in [Property Class](/en/docs/property-class).
+- **Variable-only properties**: Properties like `bds`, `bdc`, `bdw`, `keycolor` that always output only CSS variables (`--{prop}`).
+- When a matching token exists but has no dedicated class, the value is output as a CSS variable. (e.g., `c='red'` → `class="-c"` + `style="--c:var(--red)"`)
+:::
+
+
+### Code examples
+
+<Preview>
+<PreviewTitle>Token value → class only</PreviewTitle>
+<PreviewCode>
+```jsx
+<Lism fz="l" p="20">...</Lism>
+// → <div class="-fz:l -p:20">...</div>
+```
+</PreviewCode>
+</Preview>
+
+<Preview>
+<PreviewTitle>Color token (no dedicated class) → class + CSS variable</PreviewTitle>
+<PreviewCode>
+```jsx
+<Lism c="red">...</Lism>
+// → <div class="-c" style="--c:var(--red)">...</div>
+```
+</PreviewCode>
+</Preview>
+
+<Preview>
+<PreviewTitle>`true` / `"-"` → class only (no variable)</PreviewTitle>
+<PreviewCode>
+```jsx 'p="-"' "bdrs" "-p" "-bdrs"
+<Lism p="-" bdrs>contents</Lism>
+// → <div class="-p -bdrs">contents</div>
+```
+</PreviewCode>
+</Preview>
+
+This is useful when you want to define the variable value in CSS, or when you want to **inherit the same variable from a parent element**.
+
+<Preview>
+<PreviewTitle>Variable-only property → CSS variable only</PreviewTitle>
+<PreviewCode>
+```jsx
+<Lism bd bdc="#000" bdw="2px">...</Lism>
+// → <div class="-bd" style="--bdc:#000;--bdw:2px">...</div>
+```
+</PreviewCode>
+</Preview>
+
+<Preview>
+<PreviewTitle>BP-supported property with custom value → class + CSS variable</PreviewTitle>
+<PreviewCode>
+```jsx 'fz="20px"' "-fz" "--fz:20px"
+<Lism fz="20px">contents</Lism>
+// → <div class="-fz" style="--fz:20px">contents</div>
+```
+</PreviewCode>
+</Preview>
+
+<Preview>
+<PreviewTitle>BP-unsupported property with custom value → direct style output</PreviewTitle>
+<PreviewCode>
+```jsx 'o="0.75"' "opacity:0.75"
+<Lism o="0.75">contents</Lism>
+// → <div style="opacity:0.75">contents</div>
+```
+</PreviewCode>
+</Preview>
+
+
+<div id="output-utility"></div>
+### Force output as a utility class with `:`
+
+Even if no corresponding Property Class exists, prefixing a value with `:` will output the string after it as a utility class name.
+
+```jsx
+<Lism p=":hoge">...</Lism>
+// → <div class="-p:hoge">...</div>
+```
+
+Add a custom utility class in your CSS and use it as needed.
+
+```css
+.-p\:hoge {
+  /* ... your styles ... */
+}
+```
+
+:::info
+Using `className='-p:hoge'` also works, but passing it as a CSS Prop via `:` ensures consistent output ordering.
+:::
+
+
+### Responsive syntax
+
+BP-supported properties can specify values per breakpoint (`sm`, `md`) using arrays or objects.
+
+[Learn more about responsive support](/en/docs/responsive)
+
+<Preview>
+  <PreviewTitle>Example 1: array syntax (base → sm → md)</PreviewTitle>
+  <PreviewCode label="JSX" slot="tab">
+    ```jsx
+    <Lism p={['20', '30', '5rem']}>...</Lism>
+    ```
+  </PreviewCode>
+  <PreviewCode label="Output HTML" slot="tab">
+    ```html
+    <div class="-p:20 -p_sm -p_md" style="--p_sm:var(--s30);--p_md:5rem">
+      ...
+    </div>
+    ```
+  </PreviewCode>
+</Preview>
+
+<Preview>
+  <PreviewTitle>Example 2: skip intermediate breakpoints (`@md` only)</PreviewTitle>
+  <PreviewCode label="JSX" slot="tab">
+    ```jsx
+    <Lism p={[null, null, '40']}>...</Lism>
+    ```
+  </PreviewCode>
+  <PreviewCode label="Output HTML" slot="tab">
+    ```html
+    <div class="-p_md" style="--p_md:var(--s40)">
+      ...
+    </div>
+    ```
+  </PreviewCode>
+</Preview>
+
+:::warning
+Whether a value actually changes at a breakpoint depends on whether that property supports responsive behavior.
+Check the **BP** (<small>short for breakpoint</small>) column in [Property Class](/en/docs/property-class) to see which properties are supported.
+:::
+
+For properties that do not support responsive behavior by default (i.e., no CSS is provided), you can add support via [SCSS customization](/en/docs/customize/).
+
+
+## Class output order
+
+The `class` attribute generated by `<Lism>` is output in the following order:
+
+```
+[className] [c--] [a--] [l--] [is--] [set--] [u--] [-]
+```
+
+| # | Prop | Example |
+|---|---|---|
+| 1 | User-defined class (`className`) | `z--header`, `hoge` |
+| 2 | `lismClass` (+ `variant`) | `c--box`, `c--box--primary` |
+| 3 | `atomic` | `a--icon`, `a--divider` |
+| 4 | `layout` | `l--flex`, `l--columns` |
+| 5 | `isXxxx` | `is--wrapper`, `is--layer` |
+| 6 | `set` | `set--hov`, `set--transition` |
+| 7 | `util` | `u--cbox`, `u--trim` |
+| 8 | `prop={value}` | `-p:20`, `-bgc:base-2` |
+
+
+:::note
+The `-flow:{size}` class produced by `layout="flow"` is treated as a layout-primitive-specific configuration class, so it is emitted alongside the primitive group right after `l--flow`.
+:::
+
+:::note
+The order within the `class` attribute does not affect the CSS cascade (specificity or cascade order). This ordering exists purely for readability and consistency.
+:::

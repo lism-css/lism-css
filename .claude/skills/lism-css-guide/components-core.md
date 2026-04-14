@@ -20,7 +20,7 @@ import { Lism, Box, Flex, Stack, Grid, Text, Media } from 'lism-css/astro';
 - [Layout Primitives](#layout-primitives)
 - [`getLismProps()`](#getlismprops--外部コンポーネントとの連携)
 
-[詳細](https://lism-css.com/docs/core-components/Lism/)
+[詳細](https://lism-css.com/docs/core-components/lism-props/)
 
 ---
 
@@ -41,7 +41,7 @@ import { Lism, Box, Flex, Stack, Grid, Text, Media } from 'lism-css/astro';
 
 ソース: [props.ts](https://raw.githubusercontent.com/lism-css/lism-css/main/packages/lism-css/config/defaults/props.ts)
 
-`<Lism>` で受け取れる Lism CSS 専用プロパティを **Lism Props** と呼びます。
+`<Lism>`系コンポーネントで受け取れる Lism CSS 専用プロパティを **Lism Props** と呼びます。
 
 
 ### 共通 Props
