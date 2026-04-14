@@ -13,52 +13,55 @@
 
 | Prop | CSS変数 | 説明 |
 |------|--------|------|
-| `cols` | `--cols` | カラムが維持する最小幅を指定（`12rem`, `320px` など） |
+| `cols` | `--cols` | カラムが維持する最小幅を指定（`16em`, `320px` など） |
 | `autoFill` | `--autoMode` | `auto-fill` モードに切り替え（デフォルトは `auto-fit`） |
 
 ## Usage
 
-### デフォルト幅で利用する
+### `--cols`でサイズを指定する
 
 ```jsx
-<FluidCols g="20">
-  <Box bxsh="20" p="20"><p>カード1のコンテンツ</p></Box>
-  <Box bxsh="20" p="20"><p>カード2のコンテンツ</p></Box>
-  <Box bxsh="20" p="20"><p>カード3のコンテンツ</p></Box>
+<FluidCols cols="16em" g="20">
+  <Lism as="div" p="20" bd>Item A</Lism>
+  <Lism as="div" p="20" bd>Item B</Lism>
+  <Lism as="div" p="20" bd>Item C</Lism>
+  <Lism as="div" p="20" bd>Item D</Lism>
 </FluidCols>
 ```
 
 ```html
-<div class="l--fluidCols -g:20">
-  <div class="l--box -bxsh:20 -p:20"><p>カード1のコンテンツ</p></div>
-  <div class="l--box -bxsh:20 -p:20"><p>カード2のコンテンツ</p></div>
-  <div class="l--box -bxsh:20 -p:20"><p>カード3のコンテンツ</p></div>
+<div class="l--fluidCols -g:20" style="--cols: 16em">
+  <div class="-p:20 -bd">Item A</div>
+  <div class="-p:20 -bd">Item B</div>
+  <div class="-p:20 -bd">Item C</div>
+  <div class="-p:20 -bd">Item D</div>
 </div>
 ```
 
-### カラム最小幅と `auto-fill` の指定
+### `auto-fill`を使用する
+
+`l--fluidCols` では、`grid-template-columns` の `repeat()` 関数の第一引数を `--autoMode` で指定できます（デフォルトは `auto-fit`）。`--autoMode:auto-fill`（`autoFill`）を指定することで、要素数が少ない時の挙動が変わります。
 
 ```jsx
-<FluidCols cols="12rem" autoFill g="20" fz="s">
-  <Box bxsh="20" p="20"><p>A</p></Box>
-  <Box bxsh="20" p="20"><p>B</p></Box>
-  <Box bxsh="20" p="20"><p>C</p></Box>
+<FluidCols cols="12em" autoFill g="20" fz="s">
+  <Lism as="div" p="20" bd>auto-fill</Lism>
+  <Lism as="div" p="20" bd>auto-fill</Lism>
+</FluidCols>
+<FluidCols cols="12em" g="20" fz="s">
+  <Lism as="div" p="20" bd>auto-fit</Lism>
+  <Lism as="div" p="20" bd>auto-fit</Lism>
 </FluidCols>
 ```
 
-### 2列 → 1列
-
-カラム最小幅を大きめに設定すれば「2列 → コンテナが狭まれば 1列」のような段階的段組も自然に作れます。
-
-```jsx
-<FluidCols cols="320px" g="20">
-  <Frame ar="16/9">
-    <img src="/img/a-1.jpg" width="600" height="400" />
-  </Frame>
-  <Frame ar="16/9">
-    <img src="/img/a-3.jpg" width="600" height="400" />
-  </Frame>
-</FluidCols>
+```html
+<div class="l--fluidCols -g:20 -fz:s" style="--cols:12em; --autoMode:auto-fill">
+  <div class="-p:20 -bd">auto-fill</div>
+  <div class="-p:20 -bd">auto-fill</div>
+</div>
+<div class="l--fluidCols -g:20 -fz:s" style="--cols:12em">
+  <div class="-p:20 -bd">auto-fit</div>
+  <div class="-p:20 -bd">auto-fit</div>
+</div>
 ```
 
 ## 関連プリミティブ
