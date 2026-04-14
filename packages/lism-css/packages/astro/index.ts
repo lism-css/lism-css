@@ -41,3 +41,6 @@ export * from './atomic/Decorator';
 export * from './atomic/Divider';
 export * from './atomic/Icon';
 export * from './atomic/Spacer';
+
+// Type exports for Astro components
+export type { AstroLismBaseProps, AstroLismFixedLayoutProps } from './types';
