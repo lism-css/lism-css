@@ -45,34 +45,19 @@ import { DummyText } from '@lism-css/ui/react';
 <Preview>
   <PreviewTitle>Dummy text at different lengths</PreviewTitle>
   <PreviewArea p="20">
-    <Stack g="5">
-      <DummyText lang="ja" length="xs" pre="xs: " />
-      <DummyText length="xs" pre="xs: " />
-    </Stack>
-    <Stack g="5">
-      <DummyText lang="ja" length="s" pre="s: " />
-      <DummyText length="s" pre="s: " />
-    </Stack>
-    <Stack g="5">
-      <DummyText lang="ja" length="m" pre="m: " />
-      <DummyText length="m" pre="m: " />
-    </Stack>
-    <Stack g="5">
-      <DummyText lang="ja" length="l" pre="l: " />
-      <DummyText length="l" pre="l: " />
-    </Stack>
-    <Stack g="5">
-      <DummyText lang="ja" length="xl" pre="xl: " />
-      <DummyText length="xl" pre="xl: " />
-    </Stack>
+    <DummyText length="xs" pre="xs: " />
+    <DummyText length="s" pre="s: " />
+    <DummyText length="m" pre="m: " />
+    <DummyText length="l" pre="l: " />
+    <DummyText length="xl" pre="xl: " />
   </PreviewArea>
   <PreviewCode>
     ```jsx
-    <DummyText lang="ja" length="xs" pre="xs: " />
-    <DummyText lang="ja" length="s" pre="s: " />
-    <DummyText lang="ja" length="m" pre="m: " />
-    <DummyText lang="ja" length="l" pre="l: " />
-    <DummyText lang="ja" length="xl" pre="xl: " />
+    <DummyText length="xs" pre="xs: " />
+    <DummyText length="s" pre="s: " />
+    <DummyText length="m" pre="m: " />
+    <DummyText length="l" pre="l: " />
+    <DummyText length="xl" pre="xl: " />
     ```
   </PreviewCode>
 </Preview>
@@ -80,11 +65,11 @@ import { DummyText } from '@lism-css/ui/react';
 <Preview>
   <PreviewTitle>Setting `length='codes'` outputs dummy text containing `<b>`, `<i>`, `<a>`, and `<code>` elements.</PreviewTitle>
   <PreviewArea p="20">
-    <DummyText lang="ja" length="codes" />
+    <DummyText length="codes" />
   </PreviewArea>
   <PreviewCode>
     ```jsx
-    <DummyText lang="ja" length="codes" />
+    <DummyText length="codes" />
     ```
   </PreviewCode>
 </Preview>
@@ -93,15 +78,15 @@ import { DummyText } from '@lism-css/ui/react';
 <Preview>
   <PreviewTitle>Example of offset</PreviewTitle>
   <PreviewArea p="20">
-    <DummyText lang="ja" length="xs" />
-    <DummyText lang="ja" offset={1} />
-    <DummyText lang="ja" length="l" offset={3} />
+    <DummyText length="xs" />
+    <DummyText offset={1} />
+    <DummyText length="l" offset={3} />
   </PreviewArea>
   <PreviewCode>
     ```jsx
-    <DummyText lang="ja" length="xs" />
-    <DummyText lang="ja" offset={1} />
-    <DummyText lang="ja" length="l" offset={3} />
+    <DummyText length="xs" />
+    <DummyText offset={1} />
+    <DummyText length="l" offset={3} />
     ```
   </PreviewCode>
 </Preview>
