@@ -2,7 +2,7 @@ export type ShapeDividerProps = {
   viewBox?: string;
   isAnimation?: boolean;
   isEmpty?: boolean;
-  level?: number;
+  level?: number | `${number}`;
   stretch?: string;
   offset?: string;
   flip?: string;
@@ -11,7 +11,7 @@ export type ShapeDividerProps = {
 };
 
 export default function getProps({ viewBox, isAnimation, isEmpty, level = 5, stretch, offset, flip, style = {}, ...restProps }: ShapeDividerProps) {
-  if (level === 0) return null;
+  if (Number(level) === 0) return null;
 
   const computedStyle: Record<string, string | undefined> = { ...style };
   computedStyle['--level'] = level != null ? String(level) : undefined;
