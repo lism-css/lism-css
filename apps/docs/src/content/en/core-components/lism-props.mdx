@@ -83,27 +83,6 @@ When multiple classes are specified in `lismClass`, the variation class is appli
 ```
 
 
-## Trait Props
-
-A set of props corresponding to [Trait Primitives](/en/docs/css-methodology/) classes.
-
-
-| Prop | Output class | Purpose |
-|---|---|---|
-| `isWrapper(='{s\|l}')` | `is--wrapper` + `-contentSize:{s\|l}` | Content width restriction |
-| `isLayer` | `is--layer` | Absolute positioned layer (inset:0) |
-| `isBoxLink` | `is--boxLink` | Make entire box clickable |
-| `isCoverLink` | `is--coverLink` | Link with a clickable area covering the parent element |
-| `isContainer` | `is--container` | Container query target |
-| `isSide` | `is--side` | Side element |
-| `isSkipFlow` | `is--skipFlow` | Skip Flow spacing |
-| `isVertical` | `is--vertical` | Vertical writing mode |
-
-<Reference>
-[Learn about Trait Primitives classes and usage examples](/en/docs/css-methodology/)
-</Reference>
-
-
 ## `layout` / `atomic`
 
 `layout` and `atomic` are props for specifying Layout Primitive classes (`l--*`) and Atomic Primitive classes (`a--*`), respectively.
@@ -165,25 +144,25 @@ Prefix a value with `-` to exclude that identifier. This is useful when you want
 ```
 
 
-## `exProps`
+## Trait Props
 
-Accepts **props that you want to skip Lism Props processing for** as an object.
+A set of props corresponding to [Trait Primitives](/en/docs/css-methodology/) classes.
 
-This is handy when a prop name of the external component specified via `as` conflicts with a Lism Prop name, and you want to explicitly mark it as belonging to the external component.
 
-<Preview>
-  <PreviewTitle>Example</PreviewTitle>
-  <PreviewCode>
-```jsx
-<Icon as={Hoge} exProps={{ size: '1em' }} p="10" fz="l">
-  ...
-</Icon>
-```
-  </PreviewCode>
-</Preview>
+| Prop | Output class | Purpose |
+|---|---|---|
+| `isWrapper(='{s\|l}')` | `is--wrapper` + `-contentSize:{s\|l}` | Content width restriction |
+| `isLayer` | `is--layer` | Absolute positioned layer (inset:0) |
+| `isBoxLink` | `is--boxLink` | Make entire box clickable |
+| `isCoverLink` | `is--coverLink` | Link with a clickable area covering the parent element |
+| `isContainer` | `is--container` | Container query target |
+| `isSide` | `is--side` | Side element |
+| `isSkipFlow` | `is--skipFlow` | Skip Flow spacing |
+| `isVertical` | `is--vertical` | Vertical writing mode |
 
-By doing this, the Lism `Icon` component processes `p` and `fz`, while the external component `Hoge` reliably receives `size`.
-(In this particular example, `exProps` is not strictly necessary since Lism does not currently process `size`, but explicitly marking external component props ensures no future conflicts.)
+<Reference>
+[Learn about Trait Primitives classes and usage examples](/en/docs/css-methodology/)
+</Reference>
 
 
 ## CSS Props
@@ -281,16 +260,16 @@ This is useful when you want to define the variable value in CSS, or when you wa
 
 
 <div id="output-utility"></div>
-### Force output as a utility class with `:`
+### Force output as a class with `:`
 
-Even if no corresponding Property Class exists, prefixing a value with `:` will output the string after it as a utility class name.
+Even if no corresponding Property Class exists, prefixing a value with `:` will output the string after it as a class name.
 
 ```jsx
 <Lism p=":hoge">...</Lism>
 // → <div class="-p:hoge">...</div>
 ```
 
-Add a custom utility class in your CSS and use it as needed.
+Add a custom class in your CSS and use it as needed.
 
 ```css
 .-p\:hoge {
@@ -347,6 +326,27 @@ Check the **BP** (<small>short for breakpoint</small>) column in [Property Class
 :::
 
 For properties that do not support responsive behavior by default (i.e., no CSS is provided), you can add support via [SCSS customization](/en/docs/customize/).
+
+
+## `exProps`
+
+Accepts **props that you want to skip Lism Props processing for** as an object.
+
+This is handy when a prop name of the external component specified via `as` conflicts with a Lism Prop name, and you want to explicitly mark it as belonging to the external component.
+
+<Preview>
+  <PreviewTitle>Example</PreviewTitle>
+  <PreviewCode>
+```jsx
+<Icon as={Hoge} exProps={{ size: '1em' }} p="10" fz="l">
+  ...
+</Icon>
+```
+  </PreviewCode>
+</Preview>
+
+By doing this, the Lism `Icon` component processes `p` and `fz`, while the external component `Hoge` reliably receives `size`.
+(In this particular example, `exProps` is not strictly necessary since Lism does not currently process `size`, but explicitly marking external component props ensures no future conflicts.)
 
 
 ## Class output order

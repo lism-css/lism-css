@@ -83,27 +83,6 @@ BEM展開は`c--`基底クラス専用の仕組みです。`a--*`（atomic）や
 ```
 
 
-## Trait Props
-
-[Trait Primitives](/docs/css-methodology/) クラスに対応するプロパティ群です。
-
-
-| Prop | 出力クラス | 用途 |
-|---|---|---|
-| `isWrapper(='{s\|l}')` | `is--wrapper` + `-contentSize:{s\|l}` | コンテンツ幅制限 |
-| `isLayer` | `is--layer` | 絶対配置レイヤー（inset:0） |
-| `isBoxLink` | `is--boxLink` | ボックス全体リンク化 |
-| `isCoverLink` | `is--coverLink` | 親要素全体に広がるクリック範囲を持つリンク |
-| `isContainer` | `is--container` | コンテナクエリ対象 |
-| `isSide` | `is--side` | サイド要素 |
-| `isSkipFlow` | `is--skipFlow` | Flow 余白をスキップ |
-| `isVertical` | `is--vertical` | 縦書き方向 |
-
-<Reference>
-[Trait Primitives クラスについての解説と使用例はこちら](/docs/css-methodology/)
-</Reference>
-
-
 ## `layout` / `atomic`
 
 `layout` と `atomic` はそれぞれ Layout Primitive クラス（`l--*`）と Atomic Primitive クラス（`a--*`）を指定するための prop です。
@@ -167,25 +146,25 @@ BEM展開は`c--`基底クラス専用の仕組みです。`a--*`（atomic）や
 ```
 
 
-## `exProps`
+## Trait Props
 
-**Lism Props としての処理をスキップしたいプロパティ**をオブジェクトで指定できます。
+[Trait Primitives](/docs/css-methodology/) クラスに対応するプロパティ群です。
 
-`as`で指定した外部コンポーネントが受け取れるプロパティと Lism Props の名前が被っている場合など、外部コンポーネント用のプロパティであることを明示的にしたい時に便利です。
 
-<Preview>
-  <PreviewTitle>例</PreviewTitle>
-  <PreviewCode>
-```jsx
-<Icon as={Hoge} exProps={{ size: '1em' }} p="10" fz="l">
-  ...
-</Icon>
-```
-  </PreviewCode>
-</Preview>
+| Prop | 出力クラス | 用途 |
+|---|---|---|
+| `isWrapper(='{s\|l}')` | `is--wrapper` + `-contentSize:{s\|l}` | コンテンツ幅制限 |
+| `isLayer` | `is--layer` | 絶対配置レイヤー（inset:0） |
+| `isBoxLink` | `is--boxLink` | ボックス全体リンク化 |
+| `isCoverLink` | `is--coverLink` | 親要素全体に広がるクリック範囲を持つリンク |
+| `isContainer` | `is--container` | コンテナクエリ対象 |
+| `isSide` | `is--side` | サイド要素 |
+| `isSkipFlow` | `is--skipFlow` | Flow 余白をスキップ |
+| `isVertical` | `is--vertical` | 縦書き方向 |
 
-上記のようにすることで、Lismの`Icon`コンポーネントで`p`, `fz` を受け取って処理し、`Hoge`という外部コンポーネント側で確実に`size`を受け取ることができます。  
-（現状、Lism 側では `size` は処理されないためこの例では`exProps`は不要ですが、外部コンポーネント用のプロパティを明示的に指定しておくと、将来的にも影響がでる心配がなくなります。）
+<Reference>
+[Trait Primitives クラスについての解説と使用例はこちら](/docs/css-methodology/)
+</Reference>
 
 
 ## CSS Props
@@ -283,16 +262,16 @@ CSS側で変数の中身を記述したい場合や、**親と同じ変数を継
 
 
 <div id="output-utility"></div>
-### `:` でユーティリティクラスとして強制的に出力
+### `:` でクラスとして強制的に出力
 
-対応する Property Class がない場合でも、`:` から始めることでその後ろの文字列がユーティリティクラス名として出力されます。
+対応する Property Class がない場合でも、`:` から始めることでその後ろの文字列がクラス名として出力されます。
 
 ```jsx
 <Lism p=":hoge">...</Lism>
 // → <div class="-p:hoge">...</div>
 ```
 
-任意のユーティリティクラスをCSSへ追加し、ご利用ください。
+任意のクラスをCSSへ追加し、ご利用ください。
 
 ```css
 .-p\:hoge {
@@ -349,6 +328,27 @@ BP対応プロパティは、配列またはオブジェクトでブレイクポ
 :::
 
 デフォルトでレスポンシブ対応されていない（CSSが用意されていない）プロパティに関しては、[SCSSによるカスタマイズ](/docs/customize/)を行うことで対応できます。
+
+
+## `exProps`
+
+**Lism Props としての処理をスキップしたいプロパティ**をオブジェクトで指定できます。
+
+`as`で指定した外部コンポーネントが受け取れるプロパティと Lism Props の名前が被っている場合など、外部コンポーネント用のプロパティであることを明示的にしたい時に便利です。
+
+<Preview>
+  <PreviewTitle>例</PreviewTitle>
+  <PreviewCode>
+```jsx
+<Icon as={Hoge} exProps={{ size: '1em' }} p="10" fz="l">
+  ...
+</Icon>
+```
+  </PreviewCode>
+</Preview>
+
+上記のようにすることで、Lismの`Icon`コンポーネントで`p`, `fz` を受け取って処理し、`Hoge`という外部コンポーネント側で確実に`size`を受け取ることができます。  
+（現状、Lism 側では `size` は処理されないためこの例では`exProps`は不要ですが、外部コンポーネント用のプロパティを明示的に指定しておくと、将来的にも影響がでる心配がなくなります。）
 
 
 ## クラスの出力順
