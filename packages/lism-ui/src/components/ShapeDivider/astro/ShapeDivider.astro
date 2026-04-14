@@ -1,11 +1,11 @@
 ---
 import type { HTMLTag, Polymorphic } from 'astro/types';
-import type { AstroLismFixedLayoutProps } from 'lism-css/astro';
+import type { AstroLismBaseProps } from 'lism-css/astro';
 import { Lism } from 'lism-css/astro';
 import getProps, { type ShapeDividerProps } from '../getProps';
 import '../_style.css';
 
-type Props<Tag extends HTMLTag = 'div'> = Polymorphic<{ as: Tag }> & AstroLismFixedLayoutProps & ShapeDividerProps;
+type Props<Tag extends HTMLTag = 'div'> = Polymorphic<{ as: Tag }> & AstroLismBaseProps & ShapeDividerProps;
 
 const componentProps = getProps(Astro.props);
 const { viewBox, isEmpty, ...lismProps } = componentProps || {};

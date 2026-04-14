@@ -1,12 +1,12 @@
 ---
 import type { HTMLTag, Polymorphic } from 'astro/types';
-import type { AstroLismFixedLayoutProps } from 'lism-css/astro';
+import type { AstroLismBaseProps } from 'lism-css/astro';
 import type { IconProps } from 'lism-css/react';
 import { Flow, Flex, Stack, Icon, Center } from 'lism-css/astro';
-import getCalloutProps from '../getProps';
+import getCalloutProps, { type CalloutProps } from '../getProps';
 
 type Props<Tag extends HTMLTag = 'div'> = Polymorphic<{ as: Tag }> &
-  AstroLismFixedLayoutProps & {
+  AstroLismBaseProps & {
     type?: string;
     keycolor?: string;
     icon?: IconProps['icon'];
@@ -14,7 +14,7 @@ type Props<Tag extends HTMLTag = 'div'> = Polymorphic<{ as: Tag }> &
     flow?: string;
   };
 
-const { icon, title, flow, ...calloutProps } = getCalloutProps(Astro.props);
+const { icon, title, flow, ...calloutProps } = getCalloutProps(Astro.props as CalloutProps);
 ---
 
 <Stack {...calloutProps}>

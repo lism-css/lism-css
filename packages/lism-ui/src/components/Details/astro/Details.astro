@@ -4,14 +4,14 @@
  * details要素をレンダリングし、CSSのみでアニメーションを実装
  * スクリプト不要で::details-contentを使用
  */
-import type { AstroLismFixedLayoutProps } from 'lism-css/astro';
+import type { AstroLismBaseProps } from 'lism-css/astro';
 import getLismProps from 'lism-css/lib/getLismProps';
 import { getDetailsProps, type DetailsProps } from '../getProps';
 
 // スタイルのインポート
 import '../_style.css';
 
-type Props = AstroLismFixedLayoutProps & DetailsProps;
+type Props = AstroLismBaseProps & DetailsProps;
 
 const props: Props = Astro.props;
 ---

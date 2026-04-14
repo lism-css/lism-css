@@ -1,10 +1,10 @@
 ---
 import type { HTMLTag, Polymorphic } from 'astro/types';
-import type { AstroLismFixedLayoutProps } from 'lism-css/astro';
+import type { AstroLismBaseProps } from 'lism-css/astro';
 import { Lism } from 'lism-css/astro';
 import '../_style.css';
 
-type Props<Tag extends HTMLTag = 'span'> = Polymorphic<{ as: Tag }> & AstroLismFixedLayoutProps;
+type Props<Tag extends HTMLTag = 'span'> = Polymorphic<{ as: Tag }> & AstroLismBaseProps;
 
 const props = Astro.props;
 ---

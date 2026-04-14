@@ -1,12 +1,12 @@
 ---
 import type { HTMLTag, Polymorphic } from 'astro/types';
-import type { AstroLismFixedLayoutProps } from 'lism-css/astro';
+import type { AstroLismBaseProps } from 'lism-css/astro';
 import { Lism, Flow, Grid, Frame, Decorator } from 'lism-css/astro';
 import getChatProps, { defaultProps } from '../getProps';
 import '../_style.css';
 
 type Props<Tag extends HTMLTag = 'div'> = Polymorphic<{ as: Tag }> &
-  AstroLismFixedLayoutProps & {
+  AstroLismBaseProps & {
     /** 吹き出しスタイル */
     variant?: 'speak' | 'think';
     /** 吹き出しの方向 */
