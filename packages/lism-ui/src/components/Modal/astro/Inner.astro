@@ -1,13 +1,15 @@
 ---
-// import type { LismProps } from 'lism-css/types';
+import type { HTMLTag, Polymorphic } from 'astro/types';
+import type { AstroLismBaseProps } from 'lism-css/astro';
 import { Lism } from 'lism-css/astro';
-import { getInnerProps } from '../getProps';
+import { getInnerProps, type ModalInnerProps } from '../getProps';
 
-// Propsの定義
-// interface Props extends LismProps {}
-const props = Astro.props || {};
+type Props<Tag extends HTMLTag = 'div'> = Polymorphic<{ as: Tag }> & AstroLismBaseProps & ModalInnerProps;
+
+const { as: asTag = 'div' as HTMLTag, ...restProps } = Astro.props;
+const innerProps = getInnerProps(restProps as ModalInnerProps);
 ---
 
-<Lism {...getInnerProps(props)}>
+<Lism as={asTag} {...innerProps as Record<string, unknown>}>
   <slot />
 </Lism>

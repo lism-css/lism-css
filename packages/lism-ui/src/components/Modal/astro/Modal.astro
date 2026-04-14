@@ -1,17 +1,17 @@
 ---
-// import type { LismProps } from 'lism-css/types';
+import type { HTMLTag, Polymorphic } from 'astro/types';
+import type { AstroLismBaseProps } from 'lism-css/astro';
 import { Lism } from 'lism-css/astro';
-import { getProps } from '../getProps';
+import { getProps, type ModalRootProps } from '../getProps';
 import '../_style.css';
 
-// Propsの定義
-// interface Props extends LismProps {
-// 	duration?: string | number;
-// }
-const props = Astro.props || {};
+type Props<Tag extends HTMLTag = 'dialog'> = Polymorphic<{ as: Tag }> & AstroLismBaseProps & ModalRootProps;
+
+const { as: asTag = 'dialog' as HTMLTag, ...restProps } = Astro.props;
+const { as: _as, ...modalProps } = getProps(restProps as ModalRootProps);
 ---
 
-<Lism {...getProps(props)}>
+<Lism as={asTag} {...modalProps as Record<string, unknown>}>
   <slot />
 </Lism>
 

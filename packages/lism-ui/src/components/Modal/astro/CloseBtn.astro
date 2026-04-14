@@ -1,21 +1,28 @@
 ---
-// import type { LismProps } from 'lism-css/types';
+import type { HTMLTag, Polymorphic } from 'astro/types';
+import type { AstroLismBaseProps } from 'lism-css/astro';
 import { Lism, Icon } from 'lism-css/astro';
+import type { IconProps } from 'lism-css/react';
 import { getCloseBtnProps } from '../getProps';
 
-// Propsの定義
-// interface Props extends LismProps {}
-const { modalId = '', icon, srText = 'Close', ...props } = Astro.props || {};
-const btnProps = getCloseBtnProps(props);
+type Props<Tag extends HTMLTag = 'button'> = Polymorphic<{ as: Tag }> &
+  AstroLismBaseProps & {
+    modalId?: string;
+    icon?: IconProps['icon'];
+    srText?: string;
+  };
+
+const { as: asTag = 'button' as HTMLTag, modalId = '', icon, srText = 'Close', ...restProps } = Astro.props;
+const { as: _as, ...btnProps } = getCloseBtnProps(restProps as Record<string, unknown>);
 ---
 
 {
   Astro.slots.has('default') ? (
-    <Lism data-modal-close={modalId} {...btnProps}>
+    <Lism as={asTag} data-modal-close={modalId} {...(btnProps as Record<string, unknown>)}>
       <slot />
     </Lism>
   ) : (
-    <Lism data-modal-close={modalId} {...btnProps}>
+    <Lism as={asTag} data-modal-close={modalId} {...(btnProps as Record<string, unknown>)}>
       <Icon icon={icon || 'x'} />
       <span class="u--srOnly">{srText || 'Close'}</span>
     </Lism>
