@@ -1,18 +1,50 @@
 import { Lism, type LismComponentProps } from 'lism-css/react';
 import atts from 'lism-css/lib/helper/atts';
-import getProps, { type ShapeDividerProps } from '../getProps';
 import '../_style.css';
 
-export default function ShapeDivider({ children, className, ...props }: ShapeDividerProps & LismComponentProps) {
-  const componentProps = getProps(props);
+type ShapeDividerProps = LismComponentProps & {
+  viewBox?: string;
+  isAnimation?: boolean;
+  isEmpty?: boolean;
+  level?: number;
+  stretch?: string;
+  offset?: string;
+  flip?: string;
+  [key: string]: unknown;
+};
 
-  // level が 0 の場合は非表示
-  if (!componentProps) return null;
+export default function ShapeDivider({
+  children,
+  className,
+  viewBox,
+  isAnimation,
+  isEmpty,
+  level = 5,
+  stretch,
+  offset,
+  flip,
+  style,
+  ...props
+}: ShapeDividerProps) {
+  if (level === 0) return null;
 
-  const { viewBox, isEmpty, ...lismProps } = componentProps;
+  const computedStyle = {
+    ...style,
+    '--level': String(level),
+    ...(offset != null && { '--_inner-offset': offset }),
+    ...(stretch != null && { '--_inner-stretch': stretch }),
+  };
 
   return (
-    <Lism className={atts(className, 'c--shapeDivider')} {...lismProps}>
+    <Lism
+      className={atts(className, 'c--shapeDivider')}
+      max-sz="full"
+      aria-hidden="true"
+      data-flip={flip || undefined}
+      data-has-animation={isAnimation ? 'true' : undefined}
+      style={computedStyle}
+      {...props}
+    >
       {isEmpty ? null : (
         <div className="c--shapeDivider_inner">
           <svg

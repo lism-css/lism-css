@@ -4,15 +4,6 @@ import type { ElementType } from 'react';
 import getLismProps from 'lism-css/lib/getLismProps';
 import atts from 'lism-css/lib/helper/atts';
 import { Lism, Stack, type LismComponentProps } from 'lism-css/react';
-import {
-  getRootProps,
-  getHeadingProps,
-  getPanelProps,
-  defaultProps,
-  type AccordionRootProps,
-  type AccordionHeadingProps,
-  type AccordionPanelProps,
-} from '../getProps';
 import { setEvent } from '../setAccordion';
 import AccIcon from './AccIcon';
 
@@ -24,13 +15,14 @@ type AccordionContextType = { accID: string } | null;
 // Astro 環境では Context が使えないため null がフォールバック
 const AccordionContext = createContext<AccordionContextType>(null);
 
+type AccordionRootProps = { allowMultiple?: boolean };
+
 /**
  * 複数の AccordionItem をラップするルート要素
  */
-export function AccordionRoot({ children, className, ...props }: AccordionRootProps & LismComponentProps) {
-  const rootProps = getRootProps(props);
+export function AccordionRoot({ children, className, allowMultiple, ...props }: AccordionRootProps & LismComponentProps) {
   return (
-    <Stack className={atts(className, 'c--accordion')} {...rootProps}>
+    <Stack className={atts(className, 'c--accordion')} data-allow-multiple={allowMultiple ? '' : undefined} {...props}>
       {children}
     </Stack>
   );
@@ -69,10 +61,10 @@ export function AccordionItem({ children, className, ...props }: LismComponentPr
  * 見出しエリアのラッパー（デフォルトは <div role="heading">）
  * as に h2〜h6 を指定すると role は付与されない
  */
-export function Heading({ children, className, ...props }: AccordionHeadingProps & LismComponentProps) {
-  const { as: headingAs, ...headingProps } = getHeadingProps(props);
+export function Heading({ children, className, role, set = 'plain', ...props }: LismComponentProps & { role?: string }) {
+  const isDiv = !props.as || props.as === 'div';
   return (
-    <Lism as={headingAs as ElementType} className={atts(className, 'c--accordion_heading')} {...headingProps}>
+    <Lism as="div" className={atts(className, 'c--accordion_heading')} set={set} role={isDiv ? (role ?? 'heading') : role} {...props}>
       {children}
     </Lism>
   );
@@ -92,9 +84,15 @@ export function Button<T extends ElementType = 'button'>({ children, className, 
 
   return (
     <Lism
-      {...(defaultProps.button as object)}
-      {...(props as object)}
+      as="button"
       className={atts(className, 'c--accordion_button')}
+      layout="flex"
+      set="plain"
+      g="10"
+      w="100%"
+      ai="center"
+      jc="between"
+      {...(props as object)}
       aria-controls={accID}
       aria-expanded="false"
     >
@@ -104,16 +102,24 @@ export function Button<T extends ElementType = 'button'>({ children, className, 
   );
 }
 
+type PanelProps = { accID?: string; isOpen?: boolean };
+
 /**
  * パネル
  */
-export function Panel({ children, className, ...props }: AccordionPanelProps & LismComponentProps) {
+export function Panel({ children, className, accID: propAccID = '__LISM_ACC_ID__', isOpen = false, ...props }: PanelProps & LismComponentProps) {
   const ctx = useContext(AccordionContext);
-  const { panelProps, contentProps } = getPanelProps({ _contextID: ctx?.accID, ...props });
+  const id = ctx?.accID || propAccID;
 
   return (
-    <Lism className={atts(className, 'c--accordion_panel')} {...panelProps}>
-      <Lism className="c--accordion_content" {...contentProps}>
+    <Lism
+      className={atts(className, 'c--accordion_panel')}
+      id={id}
+      hidden={isOpen ? undefined : ('until-found' as unknown as boolean)}
+      pos="relative"
+      ov="hidden"
+    >
+      <Lism className="c--accordion_content" layout="flow" {...props}>
         {children}
       </Lism>
     </Lism>

@@ -1,9 +1,8 @@
 ---
 import { Lism } from 'lism-css/astro';
 import atts from 'lism-css/lib/helper/atts';
-import { getItemProps } from '../getProps';
 
 const { class: className, ...props } = Astro.props;
 ---
 
-<Lism {...getItemProps(props)} class={atts(className, 'c--navMenu_item')}><slot /></Lism>
+<Lism as="li" class={atts(className, 'c--navMenu_item')} {...props}><slot /></Lism>

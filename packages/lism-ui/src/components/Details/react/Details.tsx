@@ -5,7 +5,6 @@ import type { ElementType } from 'react';
 import getLismProps from 'lism-css/lib/getLismProps';
 import { Lism, type LismComponentProps } from 'lism-css/react';
 import atts from 'lism-css/lib/helper/atts';
-import { defaultProps } from '../getProps';
 
 // スタイルのインポート
 import '../_style.css';
@@ -35,7 +34,7 @@ export function Details({ children, open, className, ...props }: DetailsRootProp
  */
 export function Summary<T extends ElementType = 'summary'>({ children, className, ...props }: LismComponentProps<T>) {
   return (
-    <Lism as="summary" {...(defaultProps.summary as object)} {...(props as object)} className={atts(className, 'c--details_summary')}>
+    <Lism as="summary" layout="flex" g="10" ai="center" {...(props as object)} className={atts(className, 'c--details_summary')}>
       {children}
     </Lism>
   );
@@ -46,7 +45,7 @@ export function Summary<T extends ElementType = 'summary'>({ children, className
  */
 export function Title<T extends ElementType = 'span'>({ children, className, ...props }: LismComponentProps<T>) {
   return (
-    <Lism {...(defaultProps.title as object)} {...(props as object)} className={atts(className, 'c--details_title')}>
+    <Lism as="span" fx="1" set="plain" {...(props as object)} className={atts(className, 'c--details_title')}>
       {children}
     </Lism>
   );
@@ -57,7 +56,7 @@ export function Title<T extends ElementType = 'span'>({ children, className, ...
  */
 export function Icon<T extends ElementType = 'span'>({ children, className, ...props }: LismComponentProps<T>) {
   return (
-    <Lism {...(defaultProps.icon as object)} {...(props as object)} className={atts(className, 'c--details_icon')}>
+    <Lism atomic="icon" as="span" aria-hidden="true" {...(props as object)} className={atts(className, 'c--details_icon')}>
       {children}
     </Lism>
   );
@@ -69,7 +68,7 @@ export function Icon<T extends ElementType = 'span'>({ children, className, ...p
 export function Content<T extends ElementType = 'div'>({ children, className, ...props }: LismComponentProps<T>) {
   return (
     <Lism className="c--details_body">
-      <Lism {...(defaultProps.content as object)} {...(props as object)} className={atts(className, 'c--details_content')}>
+      <Lism layout="flow" flow="s" {...(props as object)} className={atts(className, 'c--details_content')}>
         {children}
       </Lism>
     </Lism>

@@ -1,40 +1,48 @@
-import type { ElementType } from 'react';
 import { Lism, Stack, Flex, type LismComponentProps } from 'lism-css/react';
 import atts from 'lism-css/lib/helper/atts';
-import { getRootProps, getNestProps, getItemProps, getLinkProps, type NavMenuRootProps, type NavMenuLinkProps } from '../getProps';
+import getMaybeCssVar from 'lism-css/lib/getMaybeCssVar';
 import '../_style.css';
 
-export function Root({ children, className, ...props }: NavMenuRootProps & LismComponentProps) {
-  const { as: rootAs, ...rootProps } = getRootProps(props);
+type RootProps = {
+  hovC?: string;
+  hovBgc?: string;
+  itemP?: string;
+};
+
+export function Root({ children, className, hovC, hovBgc, itemP, style, ...props }: RootProps & LismComponentProps) {
+  const computedStyle = { ...style };
+  if (hovBgc) computedStyle['--hov-bgc'] = getMaybeCssVar(hovBgc, 'color');
+  if (hovC) computedStyle['--hov-c'] = getMaybeCssVar(hovC, 'color');
+  if (itemP) computedStyle['--_item-p'] = getMaybeCssVar(itemP, 'space');
+
   return (
-    <Stack as={rootAs as ElementType} className={atts(className, 'c--navMenu')} {...rootProps}>
+    <Stack as="ul" className={atts(className, 'c--navMenu')} style={computedStyle} {...props}>
       {children}
     </Stack>
   );
 }
 
 export function Nest({ children, className, ...props }: LismComponentProps) {
-  const { as: nestAs, ...nestProps } = getNestProps(props as Record<string, unknown>);
   return (
-    <Stack as={nestAs as ElementType} className={atts(className, 'c--navMenu_nest')} {...nestProps}>
+    <Stack as="ul" className={atts(className, 'c--navMenu_nest')} px-s="20" {...props}>
       {children}
     </Stack>
   );
 }
 
 export function Item({ children, className, ...props }: LismComponentProps) {
-  const { as: itemAs, ...itemProps } = getItemProps(props as Record<string, unknown>);
   return (
-    <Lism as={itemAs as ElementType} className={atts(className, 'c--navMenu_item')} {...itemProps}>
+    <Lism as="li" className={atts(className, 'c--navMenu_item')} {...props}>
       {children}
     </Lism>
   );
 }
 
-export function Link({ children, className, ...props }: NavMenuLinkProps & LismComponentProps) {
-  const { as: linkAs, ...linkProps } = getLinkProps(props);
+type LinkProps = LismComponentProps & { href?: string };
+
+export function Link({ children, className, ...props }: LinkProps) {
   return (
-    <Flex as={linkAs as ElementType} className={atts(className, 'c--navMenu_link')} {...linkProps}>
+    <Flex as={props.href ? 'a' : 'span'} className={atts(className, 'c--navMenu_link')} c="inherit" {...props}>
       {children}
     </Flex>
   );

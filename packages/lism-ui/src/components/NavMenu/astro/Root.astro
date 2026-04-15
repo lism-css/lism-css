@@ -1,10 +1,14 @@
 ---
 import { Stack } from 'lism-css/astro';
 import atts from 'lism-css/lib/helper/atts';
-import { getRootProps } from '../getProps';
+import getMaybeCssVar from 'lism-css/lib/getMaybeCssVar';
 import '../_style.css';
 
-const { class: className, ...props } = Astro.props;
+const { class: className, hovC, hovBgc, itemP, style = {}, ...props } = Astro.props;
+const computedStyle = { ...style };
+if (hovBgc) computedStyle['--hov-bgc'] = getMaybeCssVar(hovBgc, 'color');
+if (hovC) computedStyle['--hov-c'] = getMaybeCssVar(hovC, 'color');
+if (itemP) computedStyle['--_item-p'] = getMaybeCssVar(itemP, 'space');
 ---
 
-<Stack {...getRootProps(props)} class={atts(className, 'c--navMenu')}><slot /></Stack>
+<Stack as="ul" class={atts(className, 'c--navMenu')} style={computedStyle} {...props}><slot /></Stack>

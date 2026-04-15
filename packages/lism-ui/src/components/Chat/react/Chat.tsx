@@ -3,43 +3,43 @@ import { Lism, Flow, Grid, Frame, Decorator, type LayoutComponentProps } from 'l
 import type { GridLayoutProps } from 'lism-css/lib/types/LayoutProps';
 import atts from 'lism-css/lib/helper/atts';
 import buildModifierClass from '../../../helper/buildModifierClass';
-import getChatProps, { defaultProps } from '../getProps';
-import type { ChatProps } from '../getProps';
 import '../_style.css';
 
-type Props<T extends ElementType = 'div'> = ChatProps &
-  LayoutComponentProps<T, GridLayoutProps> & {
-    name?: string;
-    avatar?: string;
-    flow?: string;
-  };
+type Props<T extends ElementType = 'div'> = LayoutComponentProps<T, GridLayoutProps> & {
+  name?: string;
+  avatar?: string;
+  flow?: string;
+  variant?: 'speak' | 'think';
+  direction?: 'start' | 'end';
+  keycolor?: string;
+  [key: string]: unknown;
+};
 
 export default function Chat<T extends ElementType = 'div'>({
   name,
   avatar,
   flow = 's',
   variant = 'speak',
+  direction = 'start',
   className,
   children,
   ...props
 }: Props<T>) {
-  const { 'data-chat-dir': direction, ...chatProps } = getChatProps(props);
-
   return (
-    <Grid className={atts(className, buildModifierClass('c--chat', { variant }))} data-chat-dir={direction} {...chatProps}>
+    <Grid className={atts(className, buildModifierClass('c--chat', { variant }))} keycolor="gray" data-chat-dir={direction} ji={direction} {...props}>
       {avatar && (
-        <Frame className="c--chat_avatar" {...defaultProps.avatar}>
+        <Frame className="c--chat_avatar" bgc="base" ar="1/1" bdrs="99" aria-hidden="true">
           <img src={avatar} alt="" width="60" height="60" decoding="async" />
         </Frame>
       )}
       {name && (
-        <Lism className="c--chat_name" {...defaultProps.name}>
+        <Lism className="c--chat_name" c="text-2" fs="italic" fz="2xs" lh="1" py="5" px="10" aslf="end">
           {name}
         </Lism>
       )}
-      <Lism className="c--chat_body" {...defaultProps.body}>
-        <Decorator className="c--chat_deco" {...defaultProps.deco} />
-        <Flow className="c--chat_content" {...defaultProps.content} flow={flow} jslf={direction}>
+      <Lism className="c--chat_body" pos="relative">
+        <Decorator className="c--chat_deco" util="cbox" isSkipFlow pos="absolute" />
+        <Flow className="c--chat_content" util="cbox" bdrs="30" p="20" lh="s" flow={flow} jslf={direction}>
           {children}
         </Flow>
       </Lism>
