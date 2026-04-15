@@ -21,6 +21,17 @@ describe('LismPropsData', () => {
       const instance = new LismPropsData({ class: 'astro-class' });
       expect(instance.className).toContain('astro-class');
     });
+
+    test('className と class が両方指定された場合、両方マージされ重複は除去される', () => {
+      const instance = new LismPropsData({
+        className: 'c--foo',
+        class: 'user-class c--foo',
+      });
+      expect(instance.className).toContain('c--foo');
+      expect(instance.className).toContain('user-class');
+      // 重複除去されて c--foo は 1 回だけ
+      expect(instance.className.match(/c--foo/g)?.length).toBe(1);
+    });
   });
 
   describe('ref処理', () => {

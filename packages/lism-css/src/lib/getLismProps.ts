@@ -137,9 +137,10 @@ export class LismPropsData {
   }
 
   // 最終クラス文字列の組み立て（出力順の唯一の確定地点）
-  // 出力順: [user/astro className] [primitiveClass] [uClasses]
+  // 出力順: [className&class] [primitiveClass] [uClasses]
+  // className と class が両方来た場合は両方マージする（atts 内で重複は除去される）。
   buildClassName(userClassName?: string, astroClassName?: string | null): string {
-    return atts(userClassName || astroClassName || undefined, this.primitiveClass, this.uClasses);
+    return atts(userClassName, astroClassName, this.primitiveClass, this.uClasses);
   }
 
   analyzeTrait(traitPropData: TraitPropDataObject, propVal: unknown): void {

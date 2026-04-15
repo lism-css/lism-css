@@ -8,7 +8,7 @@ type ModifierValue = string | number | undefined | null | false;
  * buildModifierClass('c--button', { variant: 'outline', size: 'lg' })
  *   → 'c--button c--button--outline c--button--lg'
  *
- * 値が undefined / null / false / 空文字 の modifier はスキップする。
+ * falsy な値（undefined / null / false / '' / 0 / NaN）の modifier はスキップする。
  * className との合成は行わないので、呼び出し側で atts() 等で結合する。
  */
 export default function buildModifierClass(baseClass: string, modifiers?: Record<string, ModifierValue>): string {
@@ -18,7 +18,7 @@ export default function buildModifierClass(baseClass: string, modifiers?: Record
   const classes: string[] = [baseClass];
   for (const key in modifiers) {
     const value = modifiers[key];
-    if (value === undefined || value === null || value === false || value === '') continue;
+    if (!value) continue;
     classes.push(`${baseClass}--${value}`);
   }
   return classes.join(' ');

@@ -9,8 +9,9 @@ import atts from 'lism-css/lib/helper/atts';
 import { defaultProps } from '../getProps';
 
 const { class: className, ...props } = Astro.props || {};
+const { className: baseClass, ...baseContentProps } = defaultProps.content;
 ---
 
 <Lism {...defaultProps.body}>
-  <Lism {...defaultProps.content} {...props} class={atts(className, defaultProps.content.className)}><slot /></Lism>
+  <Lism {...baseContentProps} {...props} class={atts(className, baseClass)}><slot /></Lism>
 </Lism>

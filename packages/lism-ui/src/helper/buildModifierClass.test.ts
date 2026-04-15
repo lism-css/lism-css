@@ -15,11 +15,12 @@ describe('buildModifierClass', () => {
     expect(buildModifierClass('c--button', { variant: 'outline', size: 'lg' })).toBe('c--button c--button--outline c--button--lg');
   });
 
-  it('undefined / null / false / 空文字の値はスキップする', () => {
+  it('undefined / null / false / 空文字 / 0 の値はスキップする', () => {
     expect(buildModifierClass('c--box', { variant: undefined })).toBe('c--box');
     expect(buildModifierClass('c--box', { variant: null })).toBe('c--box');
     expect(buildModifierClass('c--box', { variant: false })).toBe('c--box');
     expect(buildModifierClass('c--box', { variant: '' })).toBe('c--box');
+    expect(buildModifierClass('c--grid', { cols: 0 })).toBe('c--grid');
   });
 
   it('一部だけ有効な modifier の場合、無効なものだけスキップする', () => {

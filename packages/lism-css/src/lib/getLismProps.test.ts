@@ -22,6 +22,18 @@ describe('getLismProps', () => {
       const result = getLismProps({ class: 'astro-class' });
       expect(result.className).toBe('astro-class');
     });
+
+    test('className と class が両方指定された場合、両方マージされる', () => {
+      const result = getLismProps({
+        className: 'c--foo',
+        class: 'user-class c--foo',
+      } as LismProps & Record<string, unknown>);
+      const cls = result.className as string;
+      expect(cls).toContain('c--foo');
+      expect(cls).toContain('user-class');
+      // 重複除去されて c--foo は 1 回だけ
+      expect(cls.match(/c--foo/g)?.length).toBe(1);
+    });
   });
 
   describe('atomic prop', () => {
