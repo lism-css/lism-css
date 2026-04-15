@@ -5,7 +5,7 @@
 
 import { siteConfig } from '@/config/site';
 
-export type SchemaType = 'HomePage' | 'TechArticle';
+export type SchemaType = 'HomePage' | 'SoftwareSourceCode' | 'TechArticle';
 
 /** 共通の Organization 情報 */
 const organization = {
@@ -47,6 +47,14 @@ export function generateHomePageSchema(params: { url: string; lang: string }) {
   };
 }
 
+/** ローカライズ版トップページ用: SoftwareSourceCode のみを単独出力（WebSite は root のみ） */
+export function generateLocalizedHomePageSchema(params: { url: string; lang: string }) {
+  return {
+    '@context': 'https://schema.org',
+    ...generateSoftwareSourceCodeSchema(params),
+  };
+}
+
 /** ドキュメントページ用: 技術記事としての説明 */
 export function generateTechArticleSchema(params: { url: string; title: string; description?: string; lang: string; datePublished?: string }) {
   return {
@@ -80,6 +88,8 @@ export function generateJsonLd(
   switch (schemaType) {
     case 'HomePage':
       return generateHomePageSchema(params);
+    case 'SoftwareSourceCode':
+      return generateLocalizedHomePageSchema(params);
     case 'TechArticle':
       return generateTechArticleSchema(params);
   }
