@@ -1,5 +1,3 @@
-import mergeSet from 'lism-css/lib/helper/mergeSet';
-
 export type AccordionRootProps = {
   allowMultiple?: boolean;
   [key: string]: unknown;
@@ -23,10 +21,10 @@ export function getRootProps({ allowMultiple, ...props }: AccordionRootProps) {
   return props;
 }
 
-export function getHeadingProps({ as = 'div', role, set, ...props }: AccordionHeadingProps) {
+export function getHeadingProps({ as = 'div', role, set = 'plain', ...props }: AccordionHeadingProps) {
   const returnProps: Record<string, unknown> = {
     as,
-    set: mergeSet('plain', set),
+    set,
     ...props,
   };
 
@@ -36,11 +34,11 @@ export function getHeadingProps({ as = 'div', role, set, ...props }: AccordionHe
   return returnProps;
 }
 
-export function getButtonProps({ set, ...props }: { set?: unknown; [key: string]: unknown }) {
+export function getButtonProps({ set = 'plain', ...props }: { set?: unknown; [key: string]: unknown }) {
   return {
     as: 'button',
     layout: 'flex',
-    set: mergeSet('plain', set),
+    set,
     g: '10',
     w: '100%',
     ai: 'center',

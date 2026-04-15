@@ -1,5 +1,3 @@
-import mergeSet from 'lism-css/lib/helper/mergeSet';
-
 export type ModalRootProps = {
   set?: string;
   duration?: string;
@@ -13,14 +11,14 @@ export type ModalInnerProps = {
   [key: string]: unknown;
 };
 
-export function getProps({ set, duration, style = {}, ...props }: ModalRootProps) {
+export function getProps({ set = 'plain', duration, style = {}, ...props }: ModalRootProps) {
   if (duration) {
     style['--duration'] = duration;
   }
 
   return {
     as: 'dialog',
-    set: mergeSet('plain', set),
+    set,
     style,
     ...props,
   };
@@ -36,20 +34,20 @@ export function getInnerProps({ offset, style = {}, ...props }: ModalInnerProps)
   };
 }
 
-export function getOpenBtnProps({ set, ...props }: Record<string, unknown>) {
+export function getOpenBtnProps({ set = 'plain', ...props }: Record<string, unknown>) {
   return {
     as: 'button',
-    set: mergeSet('plain', set),
+    set,
     hov: 'o',
     d: 'inline-flex',
     ...props,
   };
 }
 
-export function getCloseBtnProps({ set, ...props }: Record<string, unknown>) {
+export function getCloseBtnProps({ set = 'plain', ...props }: Record<string, unknown>) {
   return {
     as: 'button',
-    set: mergeSet('plain', set),
+    set,
     hov: 'o',
     d: 'inline-flex',
     ...props,
