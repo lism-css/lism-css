@@ -23,7 +23,7 @@ export default function Chat<T extends ElementType = 'div'>({
   children,
   ...props
 }: Props<T>) {
-  const { 'data-chat-dir': direction, ...chatProps } = getChatProps({ variant, ...props });
+  const { 'data-chat-dir': direction, ...chatProps } = getChatProps(props);
 
   return (
     <Grid className={atts(className, buildModifierClass('c--chat', { variant }))} data-chat-dir={direction} {...chatProps}>

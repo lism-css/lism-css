@@ -22,7 +22,7 @@ interface Props {
 }
 
 const { name, avatar, flow = 's', variant = 'speak', class: className, ...inputProps } = Astro.props;
-const { 'data-chat-dir': direction, ...chatProps } = getChatProps({ variant, ...inputProps });
+const { 'data-chat-dir': direction, ...chatProps } = getChatProps(inputProps);
 ---
 
 <Grid class={atts(className, buildModifierClass('c--chat', { variant }))} data-chat-dir={direction} {...chatProps}>

@@ -44,7 +44,7 @@ export type ChatProps = {
 /**
  * Chat コンポーネントのルートプロパティを生成（className以外の共通props）
  */
-export default function getChatProps({ variant: _variant = 'speak', direction = 'start', keycolor = 'gray', ...props }: ChatProps) {
+export default function getChatProps({ direction = 'start', keycolor = 'gray', ...props }: ChatProps) {
   return {
     keycolor,
     'data-chat-dir': direction,
