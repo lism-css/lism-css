@@ -1,6 +1,6 @@
 import type { ElementType } from 'react';
 import { Lism, Icon, type LismComponentProps, type IconProps } from 'lism-css/react';
-import { getCloseBtnProps } from '../getProps';
+import { defaultProps } from '../getProps';
 
 type CloseBtnProps<T extends ElementType = 'button'> = LismComponentProps<T> & {
   modalId?: string;
@@ -10,7 +10,7 @@ type CloseBtnProps<T extends ElementType = 'button'> = LismComponentProps<T> & {
 
 export default function CloseBtn<T extends ElementType = 'button'>({ children, modalId = '', icon, srText = 'Close', ...props }: CloseBtnProps<T>) {
   return (
-    <Lism data-modal-close={modalId} {...(getCloseBtnProps(props as Record<string, unknown>) as object)}>
+    <Lism data-modal-close={modalId} {...(defaultProps.closeBtn as object)} {...(props as object)}>
       {children ? (
         children
       ) : (

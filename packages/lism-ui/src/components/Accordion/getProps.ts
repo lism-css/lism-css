@@ -1,5 +1,3 @@
-import mergeSet from 'lism-css/lib/helper/mergeSet';
-
 export type AccordionRootProps = {
   allowMultiple?: boolean;
   [key: string]: unknown;
@@ -23,10 +21,10 @@ export function getRootProps({ allowMultiple, ...props }: AccordionRootProps) {
   return props;
 }
 
-export function getHeadingProps({ as = 'div', role, set, ...props }: AccordionHeadingProps) {
+export function getHeadingProps({ as = 'div', role, set = 'plain', ...props }: AccordionHeadingProps) {
   const returnProps: Record<string, unknown> = {
     as,
-    set: mergeSet('plain', set),
+    set,
     ...props,
   };
 
@@ -34,19 +32,6 @@ export function getHeadingProps({ as = 'div', role, set, ...props }: AccordionHe
     returnProps.role = role ?? 'heading';
   }
   return returnProps;
-}
-
-export function getButtonProps({ set, ...props }: { set?: unknown; [key: string]: unknown }) {
-  return {
-    as: 'button',
-    layout: 'flex',
-    set: mergeSet('plain', set),
-    g: '10',
-    w: '100%',
-    ai: 'center',
-    jc: 'between',
-    ...props,
-  };
 }
 
 export function getPanelProps({ _contextID, accID = '__LISM_ACC_ID__', isOpen = false, ...props }: AccordionPanelProps) {
@@ -63,6 +48,15 @@ export function getPanelProps({ _contextID, accID = '__LISM_ACC_ID__', isOpen = 
 }
 
 export const defaultProps = {
+  button: {
+    as: 'button',
+    layout: 'flex',
+    set: 'plain',
+    g: '10',
+    w: '100%',
+    ai: 'center',
+    jc: 'between',
+  },
   icon: {
     atomic: 'icon',
     as: 'span',

@@ -1,9 +1,6 @@
-import mergeSet from 'lism-css/lib/helper/mergeSet';
-
-export function getTabProps({ set, ...props }: { set?: unknown; [key: string]: unknown }) {
-  return {
+export const defaultProps = {
+  tab: {
     as: 'button',
-    set: mergeSet('plain', set),
-    ...props,
-  };
-}
+    set: 'plain',
+  },
+} as const;
