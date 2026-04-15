@@ -10,7 +10,6 @@ type ShapeDividerProps = LismComponentProps & {
   stretch?: string;
   offset?: string;
   flip?: string;
-  [key: string]: unknown;
 };
 
 export default function ShapeDivider({

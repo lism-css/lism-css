@@ -61,10 +61,16 @@ export function AccordionItem({ children, className, ...props }: LismComponentPr
  * 見出しエリアのラッパー（デフォルトは <div role="heading">）
  * as に h2〜h6 を指定すると role は付与されない
  */
-export function Heading({ children, className, role, set = 'plain', ...props }: LismComponentProps & { role?: string }) {
-  const isDiv = !props.as || props.as === 'div';
+export function Heading<T extends ElementType = 'div'>({ children, className, as, role, ...props }: LismComponentProps<T> & { role?: string }) {
+  const isDiv = !as || as === 'div';
   return (
-    <Lism as="div" className={atts(className, 'c--accordion_heading')} set={set} role={isDiv ? (role ?? 'heading') : role} {...props}>
+    <Lism
+      as={(as ?? 'div') as 'div'}
+      className={atts(className, 'c--accordion_heading')}
+      set="plain"
+      role={isDiv ? (role ?? 'heading') : role}
+      {...(props as object)}
+    >
       {children}
     </Lism>
   );

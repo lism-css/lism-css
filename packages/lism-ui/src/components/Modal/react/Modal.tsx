@@ -9,14 +9,7 @@ import '../_style.css';
 
 type ModalRootProps = { duration?: string };
 
-const Modal = <T extends ElementType = 'dialog'>({
-  children,
-  className,
-  set = 'plain',
-  duration,
-  style,
-  ...props
-}: ModalRootProps & LismComponentProps<T>) => {
+const Modal = <T extends ElementType = 'dialog'>({ children, className, duration, style, ...props }: ModalRootProps & LismComponentProps<T>) => {
   const ref = useRef<HTMLDialogElement>(null);
   useEffect(() => {
     if (!ref?.current) return;
@@ -25,7 +18,7 @@ const Modal = <T extends ElementType = 'dialog'>({
 
   const mergedStyle = duration ? { ...style, '--duration': duration } : style;
   return (
-    <Lism forwardedRef={ref} as="dialog" className={atts(className, 'c--modal')} set={set} style={mergedStyle} {...(props as object)}>
+    <Lism forwardedRef={ref} as="dialog" className={atts(className, 'c--modal')} set="plain" style={mergedStyle} {...(props as object)}>
       {children}
     </Lism>
   );

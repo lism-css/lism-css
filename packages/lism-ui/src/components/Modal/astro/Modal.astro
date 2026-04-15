@@ -3,11 +3,11 @@ import { Lism } from 'lism-css/astro';
 import atts from 'lism-css/lib/helper/atts';
 import '../_style.css';
 
-const { class: className, set = 'plain', duration, style, ...props } = Astro.props || {};
+const { class: className, duration, style, ...props } = Astro.props || {};
 const mergedStyle = duration ? { ...style, '--duration': duration } : style;
 ---
 
-<Lism as="dialog" class={atts(className, 'c--modal')} set={set} style={mergedStyle} {...props}><slot /></Lism>
+<Lism as="dialog" class={atts(className, 'c--modal')} set="plain" style={mergedStyle} {...props}><slot /></Lism>
 
 <script>
   import setModal from '../setModal';

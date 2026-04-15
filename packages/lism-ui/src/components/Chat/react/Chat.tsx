@@ -12,7 +12,6 @@ type Props<T extends ElementType = 'div'> = LayoutComponentProps<T, GridLayoutPr
   variant?: 'speak' | 'think';
   direction?: 'start' | 'end';
   keycolor?: string;
-  [key: string]: unknown;
 };
 
 export default function Chat<T extends ElementType = 'div'>({
@@ -26,7 +25,13 @@ export default function Chat<T extends ElementType = 'div'>({
   ...props
 }: Props<T>) {
   return (
-    <Grid className={atts(className, buildModifierClass('c--chat', { variant }))} keycolor="gray" data-chat-dir={direction} ji={direction} {...props}>
+    <Grid
+      className={atts(className, buildModifierClass('c--chat', { variant }))}
+      keycolor="gray"
+      data-chat-dir={direction}
+      ji={direction}
+      {...(props as object)}
+    >
       {avatar && (
         <Frame className="c--chat_avatar" bgc="base" ar="1/1" bdrs="99" aria-hidden="true">
           <img src={avatar} alt="" width="60" height="60" decoding="async" />
