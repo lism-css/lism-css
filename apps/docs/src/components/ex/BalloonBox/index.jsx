@@ -1,9 +1,10 @@
 import { Flex, Lism, Decorator } from 'lism-css/react';
+import atts from 'lism-css/lib/helper/atts';
 
-export default function BalloonBox({ variant = 'left', bdw = '1px', bdc, bgc, keycolor, bdrs = '20', children, ...props }) {
+export default function BalloonBox({ variant = 'left', bdw = '1px', bdc, bgc, keycolor, bdrs = '20', children, className, ...props }) {
   const colorProps = { bdc, bgc };
   if (keycolor) {
-    colorProps.lismClass += ' u--cbox';
+    colorProps.className = 'u--cbox';
     colorProps.keycolor = keycolor;
   } else {
     colorProps.bgc = bgc || 'base';
@@ -59,7 +60,7 @@ export default function BalloonBox({ variant = 'left', bdw = '1px', bdc, bgc, ke
   }
 
   return (
-    <Flex lismClass="c--balloonBox" variant={variant} {...parentProps} {...props}>
+    <Flex {...parentProps} {...props} className={atts(className, 'c--balloonBox', variant && `c--balloonBox--${variant}`)}>
       <Lism pos="relative" bd p="20" w="fit-content" bdw={bdw} bdrs={bdrs} {...colorProps}>
         {children}
         <Decorator pos="absolute" size="0.875em" bd="inherit" bgc="inherit" boxSizing="content-box" {...decoProps} />

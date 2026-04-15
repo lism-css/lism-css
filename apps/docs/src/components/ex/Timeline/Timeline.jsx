@@ -1,22 +1,23 @@
 import { Lism, Center, Grid, Icon, Decorator } from 'lism-css/react';
+import atts from 'lism-css/lib/helper/atts';
 import './style.css';
 
-export function Root({ children, isHorizontal, ...props }) {
+export function Root({ children, isHorizontal, className, ...props }) {
   return (
-    <Grid lismClass="c--timeline" variant={isHorizontal ? 'horizontal' : null} gaf={isHorizontal ? 'c' : null} lh="s" {...props}>
+    <Grid gaf={isHorizontal ? 'c' : null} lh="s" {...props} className={atts(className, 'c--timeline', isHorizontal && 'c--timeline--horizontal')}>
       {children}
     </Grid>
   );
 }
 
-export function Line(props) {
-  return <Decorator lismClass="c--timeline_line" bgc="divider" jslf="center" {...props} />;
+export function Line({ className, ...props }) {
+  return <Decorator bgc="divider" jslf="center" {...props} className={atts(className, 'c--timeline_line')} />;
 }
-export function Shape(props) {
-  return <Center lismClass="c--timeline_shape" pos="relative" z="1" c="base" ar="1/1" bdrs="99" jslf="center" {...props} />;
+export function Shape({ className, ...props }) {
+  return <Center pos="relative" z="1" c="base" ar="1/1" bdrs="99" jslf="center" {...props} className={atts(className, 'c--timeline_shape')} />;
 }
 
-export function Item({ isHorizontal, isStart, isEnd, isHighlighted, icon, iconProps = {}, shapeColor, children, ...props }) {
+export function Item({ isHorizontal, isStart, isEnd, isHighlighted, icon, iconProps = {}, shapeColor, children, className, ...props }) {
   let dataTimeline = null;
   let lineProps = {
     gr: isHorizontal ? '1' : '1/-1',
@@ -41,7 +42,6 @@ export function Item({ isHorizontal, isStart, isEnd, isHighlighted, icon, iconPr
 
   return (
     <Grid
-      lismClass="c--timeline_item"
       data-timeline={dataTimeline}
       ai="center"
       ji={isHorizontal ? 'c' : null}
@@ -50,6 +50,7 @@ export function Item({ isHorizontal, isStart, isEnd, isHighlighted, icon, iconPr
       cg={isHorizontal ? null : '20'}
       rg={isHorizontal ? '10' : null}
       {...props}
+      className={atts(className, 'c--timeline_item')}
     >
       <Line {...lineProps} />
       <Shape bgc={shapeColor || 'text'} {...shapeProps}>
@@ -61,12 +62,12 @@ export function Item({ isHorizontal, isStart, isEnd, isHighlighted, icon, iconPr
   );
 }
 
-export function Time(props) {
-  return <Lism className="c--timeline_time" fz="xs" fw="bold" gr="2" gc="2" {...props} />;
+export function Time({ className, ...props }) {
+  return <Lism fz="xs" fw="bold" gr="2" gc="2" {...props} className={atts(className, 'c--timeline_time')} />;
 }
-export function Title(props) {
-  return <Lism className="c--timeline_title" fz="s" fw="bold" gr="3" gc="2" {...props} />;
+export function Title({ className, ...props }) {
+  return <Lism fz="s" fw="bold" gr="3" gc="2" {...props} className={atts(className, 'c--timeline_title')} />;
 }
-export function Text(props) {
-  return <Lism className="c--timeline_text" fz="s" my-s="15" gr="4" gc="2" {...props} />;
+export function Text({ className, ...props }) {
+  return <Lism fz="s" my-s="15" gr="4" gc="2" {...props} className={atts(className, 'c--timeline_text')} />;
 }

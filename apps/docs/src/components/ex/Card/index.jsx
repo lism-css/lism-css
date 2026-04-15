@@ -1,6 +1,7 @@
 import { Lism } from 'lism-css/react';
+import atts from 'lism-css/lib/helper/atts';
 
-export default function Card({ layout = 'sideMain', ...props }) {
+export default function Card({ layout = 'sideMain', className, ...props }) {
   const defaultProps = {
     c: 'text',
     bgc: 'base',
@@ -15,5 +16,5 @@ export default function Card({ layout = 'sideMain', ...props }) {
     defaultProps.isBoxLink = true;
   }
 
-  return <Lism lismClass="c--card" {...defaultProps} {...props} />;
+  return <Lism {...defaultProps} {...props} className={atts(className, 'c--card')} />;
 }
