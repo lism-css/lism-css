@@ -96,7 +96,7 @@ const enableGA = !isDev && siteConfig.publish;
   <title>{titleMetaText}</title>
   {description && <meta name="description" content={description} />}
   <link rel="canonical" href={canonicalUrl} />
-  {!siteConfig.publish && <meta name="robots" content="noindex, nofollow" />}
+  {siteConfig.publish ? <meta name="robots" content="index, follow, max-image-preview:large" /> : <meta name="robots" content="noindex, nofollow" />}
 
   {/* 多言語 hreflang: 検索エンジンに各言語版の存在を通知 */}
   {alternateUrls.map(({ lang: altLang, url }) => <link rel="alternate" hreflang={altLang} href={toAbsoluteUrl(url)} />)}
