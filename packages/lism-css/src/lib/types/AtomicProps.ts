@@ -23,8 +23,6 @@ export interface SpacerAtomicProps {
 export interface DecoratorAtomicProps {
   atomic: 'decorator';
   size?: CssValue;
-  clipPath?: string;
-  boxSizing?: string;
 }
 
 // icon（内部用。user-facing では案内しない）

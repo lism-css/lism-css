@@ -62,16 +62,6 @@ describe('getLismProps', () => {
       expect(result.style?.['--w']).toBe('100px');
     });
 
-    test('atomic=decorator で clipPath が style に設定される', () => {
-      const result = getLismProps({ atomic: 'decorator', clipPath: 'circle(50%)' } as LismProps & Record<string, unknown>);
-      expect(result.style?.clipPath).toBe('circle(50%)');
-    });
-
-    test('atomic=decorator で boxSizing が style に設定される', () => {
-      const result = getLismProps({ atomic: 'decorator', boxSizing: 'border-box' } as LismProps & Record<string, unknown>);
-      expect(result.style?.boxSizing).toBe('border-box');
-    });
-
     test('atomic=icon で a--icon が追加される', () => {
       const result = getLismProps({ atomic: 'icon' });
       expect(result.className).toContain('a--icon');
