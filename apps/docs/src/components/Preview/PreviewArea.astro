@@ -1,8 +1,11 @@
 ---
 import { Lism, Icon } from 'lism-css/astro';
 import { ArrowDownRightIcon } from '@phosphor-icons/react';
+import { getLangFromUrl, t } from '@/lib/i18n';
 
 const { resize, setCqUnit = true, p = '5', ...props } = Astro.props || {};
+const lang = getLangFromUrl(Astro.url);
+const previewText = t(lang, 'preview');
 ---
 
 <Lism className="c--preview_area">
@@ -12,7 +15,7 @@ const { resize, setCqUnit = true, p = '5', ...props } = Astro.props || {};
       {
         resize && (
           <Lism class="c--preview_help -hov:to:show -pos:absolute -b:0 -r:0 -lh:xs -p:5 -bdrs:10">
-            <span>リサイズ可能</span> <Icon as={ArrowDownRightIcon} />
+            <span>{previewText.resize}</span> <Icon as={ArrowDownRightIcon} />
           </Lism>
         )
       }

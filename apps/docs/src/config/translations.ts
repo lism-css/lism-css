@@ -19,6 +19,7 @@ type TranslationKeys = {
   postNav: 'prev' | 'next' | 'ariaLabel';
   translationNotice: 'title' | 'description';
   demo: 'openNewTab' | 'lismNote';
+  preview: 'resize';
 };
 
 /**
@@ -73,6 +74,9 @@ export const translations: Record<LangCode, UITranslations> = {
       openNewTab: '別タブで表示 ↗',
       lismNote: '※ CSSが書かれていないクラスはLism CSSのものです。',
     },
+    preview: {
+      resize: 'リサイズ',
+    },
   },
   en: {
     toc: {
@@ -114,6 +118,9 @@ export const translations: Record<LangCode, UITranslations> = {
     demo: {
       openNewTab: 'Open in new tab ↗',
       lismNote: '* Classes without CSS are from Lism CSS.',
+    },
+    preview: {
+      resize: 'Resize',
     },
   },
 };
