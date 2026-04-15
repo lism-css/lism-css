@@ -1,8 +1,9 @@
 ---
 // import type { LismProps } from 'lism-css/types';
 import { Lism } from 'lism-css/astro';
+import atts from 'lism-css/lib/helper/atts';
+
+const { class: className, ...props } = Astro.props;
 ---
 
-<Lism lismClass="c--tabs_list" role="tablist" {...Astro.props}>
-  <slot />
-</Lism>
+<Lism role="tablist" {...props} class={atts(className, 'c--tabs_list')}><slot /></Lism>

@@ -1,15 +1,9 @@
 ---
 import { Lism } from 'lism-css/astro';
+import atts from 'lism-css/lib/helper/atts';
 import { defaultProps } from '../getProps';
 
-// Propsの定義
-// interface Props extends LismProps {
-// 	icon?: string;
-// 	size?: string;
-// 	iconProps?: Object;
-// }
-
-const props = Astro.props || {};
+const { class: className, ...props } = Astro.props || {};
 ---
 
-<Lism {...defaultProps.icon} {...props} />
+<Lism {...defaultProps.icon} {...props} class={atts(className, defaultProps.icon.className)} />

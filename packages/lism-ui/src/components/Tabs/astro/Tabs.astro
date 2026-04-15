@@ -20,7 +20,7 @@ import '../_style.css';
 // 	defaultIndex?: string | number;
 // }
 // propsの取得
-const { defaultIndex = 1, tabId = '', listProps = {}, ...props } = Astro.props || {};
+const { defaultIndex = 1, tabId = '', listProps = {}, class: className, ...props } = Astro.props || {};
 
 // tabID生成
 const theTabID = tabId ? tabId : uuid();
@@ -31,7 +31,7 @@ const { btns, panels } = transformTabitems(await Astro.slots.render('default'), 
 const hasItems = btns.length > 0;
 ---
 
-<Lism {...getTabsProps(props)}>
+<Lism {...getTabsProps({ className, ...props })}>
   {
     btns && (
       <TabList {...listProps}>

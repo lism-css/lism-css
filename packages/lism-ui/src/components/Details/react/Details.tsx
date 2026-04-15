@@ -4,6 +4,7 @@
 import type { ElementType } from 'react';
 import getLismProps from 'lism-css/lib/getLismProps';
 import { Lism, type LismComponentProps } from 'lism-css/react';
+import atts from 'lism-css/lib/helper/atts';
 import { getDetailsProps, getTitleProps, defaultProps } from '../getProps';
 
 // スタイルのインポート
@@ -29,9 +30,9 @@ export function Details({ children, open, ...props }: DetailsRootProps) {
  * Summary - サマリーコンポーネント
  * details要素のsummary部分
  */
-export function Summary<T extends ElementType = 'summary'>({ children, ...props }: LismComponentProps<T>) {
+export function Summary<T extends ElementType = 'summary'>({ children, className, ...props }: LismComponentProps<T>) {
   return (
-    <Lism as="summary" {...(defaultProps.summary as object)} {...(props as object)}>
+    <Lism as="summary" {...(defaultProps.summary as object)} {...(props as object)} className={atts(className, defaultProps.summary.className)}>
       {children}
     </Lism>
   );
@@ -47,9 +48,9 @@ export function Title<T extends ElementType = 'span'>({ children, ...props }: Li
 /**
  * Icon - アイコンコンポーネント
  */
-export function Icon<T extends ElementType = 'span'>({ children, ...props }: LismComponentProps<T>) {
+export function Icon<T extends ElementType = 'span'>({ children, className, ...props }: LismComponentProps<T>) {
   return (
-    <Lism {...(defaultProps.icon as object)} {...(props as object)}>
+    <Lism {...(defaultProps.icon as object)} {...(props as object)} className={atts(className, defaultProps.icon.className)}>
       {children}
     </Lism>
   );
@@ -58,10 +59,10 @@ export function Icon<T extends ElementType = 'span'>({ children, ...props }: Lis
 /**
  * Content - コンテンツコンポーネント
  */
-export function Content<T extends ElementType = 'div'>({ children, ...props }: LismComponentProps<T>) {
+export function Content<T extends ElementType = 'div'>({ children, className, ...props }: LismComponentProps<T>) {
   return (
     <Lism {...defaultProps.body}>
-      <Lism {...(defaultProps.content as object)} {...(props as object)}>
+      <Lism {...(defaultProps.content as object)} {...(props as object)} className={atts(className, defaultProps.content.className)}>
         {children}
       </Lism>
     </Lism>

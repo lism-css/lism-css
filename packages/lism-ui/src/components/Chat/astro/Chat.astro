@@ -19,8 +19,8 @@ interface Props {
   [key: string]: unknown;
 }
 
-const { name, avatar, flow = 's', ...inputProps } = Astro.props;
-const { 'data-chat-dir': direction, ...chatProps } = getChatProps(inputProps);
+const { name, avatar, flow = 's', class: className, ...inputProps } = Astro.props;
+const { 'data-chat-dir': direction, ...chatProps } = getChatProps({ className, ...inputProps });
 ---
 
 <Grid data-chat-dir={direction} {...chatProps}>

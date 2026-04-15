@@ -4,7 +4,8 @@ import getAlertProps, { type AlertProps } from '../getProps';
 
 type Props = AlertProps;
 
-const { icon, layout, flow, ...alertProps } = getAlertProps(Astro.props);
+const { class: className, ...astroProps } = Astro.props;
+const { icon, layout, flow, ...alertProps } = getAlertProps({ className, ...astroProps });
 ---
 
 <Lism layout={layout} {...alertProps}>

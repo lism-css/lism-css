@@ -1,22 +1,24 @@
 import atts from 'lism-css/lib/helper/atts';
 import mergeSet from 'lism-css/lib/helper/mergeSet';
+import buildModifierClass from '../../helper/buildModifierClass';
 
 type TabsProps = {
-  lismClass?: string;
+  className?: string;
+  variant?: string;
   [key: string]: unknown;
 };
 
-export default function getTabsProps({ lismClass, ...props }: TabsProps) {
+export default function getTabsProps({ className, variant, ...props }: TabsProps) {
   return {
-    lismClass: atts(lismClass, 'c--tabs'),
+    className: atts(className, buildModifierClass('c--tabs', { variant })),
     ...props,
   };
 }
 
-export function getTabProps({ set, ...props }: Record<string, unknown>) {
+export function getTabProps({ className, set, ...props }: { className?: string; set?: unknown; [key: string]: unknown }) {
   return {
     as: 'button',
-    lismClass: 'c--tabs_tab',
+    className: atts(className, 'c--tabs_tab'),
     set: mergeSet('plain', set),
     ...props,
   };

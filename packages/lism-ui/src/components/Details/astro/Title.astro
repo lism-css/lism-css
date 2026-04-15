@@ -2,9 +2,7 @@
 import { Lism } from 'lism-css/astro';
 import { getTitleProps } from '../getProps';
 
-const props = Astro.props || {};
+const { class: className, ...props } = Astro.props || {};
 ---
 
-<Lism {...getTitleProps(props)}>
-  <slot />
-</Lism>
+<Lism {...getTitleProps({ className, ...props })}><slot /></Lism>

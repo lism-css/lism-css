@@ -18,6 +18,7 @@
     "build": "vite build && pnpm build:css",
     "build:css": "node build-css.js",
     "typecheck": "tsc --noEmit",
+    "test": "vitest run",
     "lint": "pnpm lint:eslint && pnpm lint:style",
     "lint:eslint": "eslint '**/*.{js,mjs,ts,tsx}'",
     "lint:style": "stylelint '**/*.{css,scss}'",

@@ -3,13 +3,14 @@ import { Lism } from 'lism-css/astro';
 import getProps from '../getProps';
 import '../_style.css';
 
-const componentProps = getProps(Astro.props);
-const { viewBox, isAnimation, isEmpty, ...lismProps } = componentProps || {};
+const { class: className, ...astroProps } = Astro.props;
+const componentProps = getProps({ className, ...astroProps });
+const { viewBox, isAnimation, isEmpty, className: outClassName, ...lismProps } = componentProps || {};
 ---
 
 {
   componentProps && (
-    <Lism {...lismProps}>
+    <Lism class={outClassName} {...lismProps}>
       {isEmpty ? null : (
         <div class="c--shapeDivider_inner">
           <svg

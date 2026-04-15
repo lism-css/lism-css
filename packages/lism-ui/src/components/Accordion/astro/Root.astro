@@ -4,12 +4,11 @@ import { getRootProps } from '../getProps';
 
 import '../_style.css';
 
-const rootProps = getRootProps(Astro.props || {});
+const { class: className, ...props } = Astro.props || {};
+const rootProps = getRootProps({ className, ...props });
 ---
 
-<Stack {...rootProps}>
-  <slot />
-</Stack>
+<Stack {...rootProps}><slot /></Stack>
 
 <script>
   import setAccordion from '../setAccordion';

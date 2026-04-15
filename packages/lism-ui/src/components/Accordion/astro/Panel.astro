@@ -3,12 +3,10 @@
 import { Lism } from 'lism-css/astro';
 import { getPanelProps } from '../getProps';
 
-// interface Props extends LismProps {}
-const { panelProps, contentProps } = getPanelProps(Astro.props || {});
+const { class: className, ...props } = Astro.props || {};
+const { panelProps, contentProps } = getPanelProps({ className, ...props });
 ---
 
 <Lism {...panelProps}>
-  <Lism {...contentProps}>
-    <slot />
-  </Lism>
+  <Lism {...contentProps}><slot /></Lism>
 </Lism>

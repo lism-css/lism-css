@@ -4,16 +4,10 @@ import { Lism } from 'lism-css/astro';
 import { getProps } from '../getProps';
 import '../_style.css';
 
-// Propsの定義
-// interface Props extends LismProps {
-// 	duration?: string | number;
-// }
-const props = Astro.props || {};
+const { class: className, ...props } = Astro.props || {};
 ---
 
-<Lism {...getProps(props)}>
-  <slot />
-</Lism>
+<Lism {...getProps({ className, ...props })}><slot /></Lism>
 
 <script>
   import setModal from '../setModal';

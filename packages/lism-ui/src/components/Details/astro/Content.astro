@@ -5,13 +5,12 @@
  * grid-template-rows: 0fr → 1fr のアニメーションに必要
  */
 import { Lism } from 'lism-css/astro';
+import atts from 'lism-css/lib/helper/atts';
 import { defaultProps } from '../getProps';
 
-const props = Astro.props || {};
+const { class: className, ...props } = Astro.props || {};
 ---
 
 <Lism {...defaultProps.body}>
-  <Lism {...defaultProps.content} {...props}>
-    <slot />
-  </Lism>
+  <Lism {...defaultProps.content} {...props} class={atts(className, defaultProps.content.className)}><slot /></Lism>
 </Lism>

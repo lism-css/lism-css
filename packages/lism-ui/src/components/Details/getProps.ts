@@ -3,21 +3,21 @@ import mergeSet from 'lism-css/lib/helper/mergeSet';
 import type { LismProps } from 'lism-css/lib/getLismProps';
 
 export type DetailsProps = {
-  lismClass?: string;
+  className?: string;
   [key: string]: unknown;
 };
 
 /**
  * Detailsコンポーネントのルート要素用プロパティを生成
  */
-export function getDetailsProps({ lismClass, ...props }: DetailsProps): LismProps {
-  props.lismClass = atts(lismClass, 'c--details');
+export function getDetailsProps({ className, ...props }: DetailsProps): LismProps {
+  props.className = atts(className, 'c--details');
   return props;
 }
 
-export function getTitleProps({ set, ...props }: Record<string, unknown>) {
+export function getTitleProps({ className, set, ...props }: { className?: string; set?: unknown; [key: string]: unknown }) {
   return {
-    lismClass: 'c--details_title',
+    className: atts(className, 'c--details_title'),
     as: 'span',
     fx: '1',
     set: mergeSet('plain', set),
@@ -29,8 +29,8 @@ export function getTitleProps({ set, ...props }: Record<string, unknown>) {
  * 各サブコンポーネント用のデフォルトプロパティ
  */
 export const defaultProps = {
-  summary: { lismClass: 'c--details_summary', layout: 'flex', g: '10', ai: 'center' },
-  icon: { lismClass: 'c--details_icon', atomic: 'icon', as: 'span', 'aria-hidden': 'true' },
-  body: { lismClass: 'c--details_body' },
-  content: { lismClass: 'c--details_content', layout: 'flow', flow: 's' },
+  summary: { className: 'c--details_summary', layout: 'flex', g: '10', ai: 'center' },
+  icon: { className: 'c--details_icon', atomic: 'icon', as: 'span', 'aria-hidden': 'true' },
+  body: { className: 'c--details_body' },
+  content: { className: 'c--details_content', layout: 'flow', flow: 's' },
 } as const;

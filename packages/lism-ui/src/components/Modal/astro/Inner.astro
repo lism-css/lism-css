@@ -3,11 +3,7 @@
 import { Lism } from 'lism-css/astro';
 import { getInnerProps } from '../getProps';
 
-// Propsの定義
-// interface Props extends LismProps {}
-const props = Astro.props || {};
+const { class: className, ...props } = Astro.props || {};
 ---
 
-<Lism {...getInnerProps(props)}>
-  <slot />
-</Lism>
+<Lism {...getInnerProps({ className, ...props })}><slot /></Lism>

@@ -10,9 +10,7 @@ import { getDetailsProps } from '../getProps';
 // スタイルのインポート
 import '../_style.css';
 
-const props = Astro.props || {};
+const { class: className, ...props } = Astro.props || {};
 ---
 
-<details {...getLismProps(getDetailsProps(props))}>
-  <slot />
-</details>
+<details {...getLismProps(getDetailsProps({ className, ...props }))}><slot /></details>

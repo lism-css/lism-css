@@ -1,4 +1,5 @@
 import PRESETS from './presets';
+import atts from 'lism-css/lib/helper/atts';
 import type { LayoutType } from 'lism-css/lib/getLismProps';
 import type { IconProps } from 'lism-css/react';
 
@@ -8,10 +9,11 @@ export type AlertProps = {
   layout?: LayoutType;
   icon?: IconProps['icon'];
   flow?: string;
+  className?: string;
   [key: string]: unknown;
 };
 
-export default function getAlertProps({ type = 'alert', keycolor, layout = 'flex', icon, flow = 's', ...props }: AlertProps) {
+export default function getAlertProps({ type = 'alert', keycolor, layout = 'flex', icon, flow = 's', className, ...props }: AlertProps) {
   const presetData = type ? PRESETS[type] : null;
   const _icon = (icon || presetData?.icon || 'info') as IconProps['icon'];
   const _color = keycolor || presetData?.color || 'currentColor';
@@ -20,7 +22,7 @@ export default function getAlertProps({ type = 'alert', keycolor, layout = 'flex
     icon: _icon,
     layout,
     flow,
-    lismClass: 'c--alert',
+    className: atts(className, 'c--alert'),
     util: 'cbox',
     set: 'shadow',
     keycolor: _color,

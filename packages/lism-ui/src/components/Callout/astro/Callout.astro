@@ -4,7 +4,8 @@ import getCalloutProps, { type CalloutProps } from '../getProps';
 
 type Props = CalloutProps;
 
-const { icon, title, flow, ...calloutProps } = getCalloutProps(Astro.props);
+const { class: className, ...astroProps } = Astro.props;
+const { icon, title, flow, ...calloutProps } = getCalloutProps({ className, ...astroProps });
 ---
 
 <Stack {...calloutProps}>

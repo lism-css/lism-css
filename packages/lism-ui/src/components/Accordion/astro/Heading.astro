@@ -2,9 +2,7 @@
 import { Lism } from 'lism-css/astro';
 import { getHeadingProps } from '../getProps';
 
-// interface Props extends LismProps {}
+const { class: className, ...props } = Astro.props || {};
 ---
 
-<Lism {...getHeadingProps(Astro.props || {})}>
-  <slot />
-</Lism>
+<Lism {...getHeadingProps({ className, ...props })}><slot /></Lism>

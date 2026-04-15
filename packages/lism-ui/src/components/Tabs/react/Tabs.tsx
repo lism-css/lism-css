@@ -14,6 +14,7 @@ type TabsProps<T extends ElementType = 'div'> = LismComponentProps<T> & {
   tabId?: string;
   defaultIndex?: number;
   listProps?: LismComponentProps;
+  variant?: string;
 };
 
 export default function Tabs<T extends ElementType = 'div'>({ tabId = '', defaultIndex = 1, listProps = {}, children, ...props }: TabsProps<T>) {

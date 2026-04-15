@@ -1,10 +1,20 @@
 ---
 import { Lism } from 'lism-css/astro';
+import atts from 'lism-css/lib/helper/atts';
+import buildModifierClass from '../../../helper/buildModifierClass';
 import '../_style.css';
 
-const props = Astro.props;
+const { class: className, variant, ...props } = Astro.props;
 ---
 
-<Lism lismClass="c--badge" as="span" d="inline-flex" fz="xs" lh="xs" py="5" px="10" bdrs="10" {...props}>
-  <slot />
-</Lism>
+<Lism
+  as="span"
+  d="inline-flex"
+  fz="xs"
+  lh="xs"
+  py="5"
+  px="10"
+  bdrs="10"
+  {...props}
+  class={atts(className, buildModifierClass('c--badge', { variant }))}><slot /></Lism
+>
