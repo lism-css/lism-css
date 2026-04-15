@@ -1,21 +1,20 @@
 ---
 // import type { LismProps } from 'lism-css/types';
 import { Lism, Icon } from 'lism-css/astro';
-import { getCloseBtnProps } from '../getProps';
+import { defaultProps } from '../getProps';
 
 // Propsの定義
 // interface Props extends LismProps {}
 const { modalId = '', icon, srText = 'Close', ...props } = Astro.props || {};
-const btnProps = getCloseBtnProps(props);
 ---
 
 {
   Astro.slots.has('default') ? (
-    <Lism data-modal-close={modalId} {...btnProps}>
+    <Lism data-modal-close={modalId} {...defaultProps.closeBtn} {...props}>
       <slot />
     </Lism>
   ) : (
-    <Lism data-modal-close={modalId} {...btnProps}>
+    <Lism data-modal-close={modalId} {...defaultProps.closeBtn} {...props}>
       <Icon icon={icon || 'x'} />
       <span class="u--srOnly">{srText || 'Close'}</span>
     </Lism>

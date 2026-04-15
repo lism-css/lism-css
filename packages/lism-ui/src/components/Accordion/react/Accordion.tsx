@@ -7,8 +7,8 @@ import { Lism, Stack, type LismComponentProps } from 'lism-css/react';
 import {
   getRootProps,
   getHeadingProps,
-  getButtonProps,
   getPanelProps,
+  defaultProps,
   type AccordionRootProps,
   type AccordionHeadingProps,
   type AccordionPanelProps,
@@ -92,7 +92,8 @@ export function Button<T extends ElementType = 'button'>({ children, className, 
 
   return (
     <Lism
-      {...(getButtonProps(props as Record<string, unknown>) as object)}
+      {...(defaultProps.button as object)}
+      {...(props as object)}
       className={atts(className, 'c--accordion_button')}
       aria-controls={accID}
       aria-expanded="false"

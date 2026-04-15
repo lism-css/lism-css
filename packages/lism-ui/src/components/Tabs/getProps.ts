@@ -1,7 +1,6 @@
-export function getTabProps({ set = 'plain', ...props }: { set?: unknown; [key: string]: unknown }) {
-  return {
+export const defaultProps = {
+  tab: {
     as: 'button',
-    set,
-    ...props,
-  };
-}
+    set: 'plain',
+  },
+} as const;

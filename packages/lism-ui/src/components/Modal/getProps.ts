@@ -34,22 +34,17 @@ export function getInnerProps({ offset, style = {}, ...props }: ModalInnerProps)
   };
 }
 
-export function getOpenBtnProps({ set = 'plain', ...props }: Record<string, unknown>) {
-  return {
+export const defaultProps = {
+  openBtn: {
     as: 'button',
-    set,
+    set: 'plain',
     hov: 'o',
     d: 'inline-flex',
-    ...props,
-  };
-}
-
-export function getCloseBtnProps({ set = 'plain', ...props }: Record<string, unknown>) {
-  return {
+  },
+  closeBtn: {
     as: 'button',
-    set,
+    set: 'plain',
     hov: 'o',
     d: 'inline-flex',
-    ...props,
-  };
-}
+  },
+} as const;

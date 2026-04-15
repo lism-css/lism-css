@@ -34,19 +34,6 @@ export function getHeadingProps({ as = 'div', role, set = 'plain', ...props }: A
   return returnProps;
 }
 
-export function getButtonProps({ set = 'plain', ...props }: { set?: unknown; [key: string]: unknown }) {
-  return {
-    as: 'button',
-    layout: 'flex',
-    set,
-    g: '10',
-    w: '100%',
-    ai: 'center',
-    jc: 'between',
-    ...props,
-  };
-}
-
 export function getPanelProps({ _contextID, accID = '__LISM_ACC_ID__', isOpen = false, ...props }: AccordionPanelProps) {
   const panelProps = {
     id: _contextID || accID,
@@ -61,6 +48,15 @@ export function getPanelProps({ _contextID, accID = '__LISM_ACC_ID__', isOpen = 
 }
 
 export const defaultProps = {
+  button: {
+    as: 'button',
+    layout: 'flex',
+    set: 'plain',
+    g: '10',
+    w: '100%',
+    ai: 'center',
+    jc: 'between',
+  },
   icon: {
     atomic: 'icon',
     as: 'span',

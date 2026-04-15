@@ -2,7 +2,7 @@
 // import type { LismProps } from 'lism-css/types';
 import { Lism } from 'lism-css/astro';
 import atts from 'lism-css/lib/helper/atts';
-import { getTabProps } from '../getProps';
+import { defaultProps } from '../getProps';
 
 // export interface Props extends LismProps {
 // 	// controlId: string;
@@ -14,6 +14,13 @@ const { tabId = 'tab', index = 0, isActive, class: className, ...props } = Astro
 const controlId = `${tabId}-${index}`;
 ---
 
-<Lism {...getTabProps(props)} class={atts(className, 'c--tabs_tab')} role="tab" aria-controls={controlId} aria-selected={isActive ? 'true' : 'false'}>
+<Lism
+  {...defaultProps.tab}
+  {...props}
+  class={atts(className, 'c--tabs_tab')}
+  role="tab"
+  aria-controls={controlId}
+  aria-selected={isActive ? 'true' : 'false'}
+>
   <slot />
 </Lism>
