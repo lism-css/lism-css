@@ -17,43 +17,39 @@ export default function BalloonBox({ variant = 'left', bdw = '1px', bdc, bgc, ke
   switch (variant) {
     case 'left':
       parentProps = { jc: 's', pl: '1em' };
-      decoProps = {
-        t: '50%',
-        l: '0',
+      decoProps = { t: '50%', l: '0' };
+      decoStyle = {
         rotate: '45deg',
         translate: '-50% -50%',
+        clipPath: 'polygon(0% 0%, 0% 100%, 100% 100%)',
       };
-      decoStyle = { clipPath: 'polygon(0% 0%, 0% 100%, 100% 100%)' };
       break;
     case 'right':
       parentProps = { jc: 'e', pr: '1em' };
-      decoProps = {
-        t: '50%',
-        l: '100%',
+      decoProps = { t: '50%', l: '100%' };
+      decoStyle = {
         rotate: '-45deg',
         translate: '-50% -50%',
+        clipPath: 'polygon(0% 100%, 100% 0%, 100% 100%)',
       };
-      decoStyle = { clipPath: 'polygon(0% 100%, 100% 0%, 100% 100%)' };
       break;
     case 'top':
       parentProps = { jc: 'c', pt: '1em' };
-      decoProps = {
-        t: '0',
-        l: '50%',
+      decoProps = { t: '0', l: '50%' };
+      decoStyle = {
         rotate: '45deg',
         translate: '-50% -50%',
+        clipPath: 'polygon(0% 0%, 0% 100%, 100% 0%)',
       };
-      decoStyle = { clipPath: 'polygon(0% 0%, 0% 100%, 100% 0%)' };
       break;
     case 'bottom':
       parentProps = { jc: 'c', pb: '1em' };
-      decoProps = {
-        t: '100%',
-        l: '50%',
+      decoProps = { t: '100%', l: '50%' };
+      decoStyle = {
         rotate: '45deg',
         translate: '-50% -50%',
+        clipPath: 'polygon(100% 0%, 0% 100%, 100% 100%)',
       };
-      decoStyle = { clipPath: 'polygon(100% 0%, 0% 100%, 100% 100%)' };
       break;
     default:
       break;
