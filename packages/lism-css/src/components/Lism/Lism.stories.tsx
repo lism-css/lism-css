@@ -31,20 +31,11 @@ export const AsParagraph: Story = {
   },
 };
 
-export const WithLismClass: Story = {
-  name: 'lismClass',
+export const WithClassName: Story = {
+  name: 'className',
   args: {
-    lismClass: 'c--myComponent',
+    className: 'c--myComponent',
     p: '10',
-    children: 'Lorem ipsum texts...',
-  },
-};
-
-export const WithVariant: Story = {
-  name: 'variant',
-  args: {
-    lismClass: 'c--myComponent',
-    variant: 'secondary',
     children: 'Lorem ipsum texts...',
   },
 };

@@ -22,7 +22,6 @@ interface LayoutOwnProps {
 type LayoutSpecificKeys = keyof LayoutOwnProps;
 
 export interface BaseProps {
-  lismClass?: string;
   primitiveClass?: string[];
   style?: StyleWithCustomProps;
   _propConfig?: Record<string, PropConfig>;

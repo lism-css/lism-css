@@ -17,49 +17,9 @@ describe('LismPropsData', () => {
       expect(instance.className).toContain('test-class');
     });
 
-    test('lismClassが設定される', () => {
-      const instance = new LismPropsData({ lismClass: 'l--test' });
-      expect(instance.className).toContain('l--test');
-    });
-
-    test('classNameとlismClassが結合される', () => {
-      const instance = new LismPropsData({
-        className: 'custom',
-        lismClass: 'l--test',
-      });
-      expect(instance.className).toContain('custom');
-      expect(instance.className).toContain('l--test');
-    });
-
     test('Astroのclass属性が処理される', () => {
       const instance = new LismPropsData({ class: 'astro-class' });
       expect(instance.className).toContain('astro-class');
-    });
-  });
-
-  describe('variant処理', () => {
-    test('variantがある場合、バリアントクラスが追加される', () => {
-      const instance = new LismPropsData({
-        lismClass: 'c--box',
-        variant: 'primary',
-      });
-      expect(instance.className).toContain('c--box');
-      expect(instance.className).toContain('c--box--primary');
-    });
-
-    test('variantがあってもlismClassがない場合は無視される', () => {
-      const instance = new LismPropsData({ variant: 'primary' });
-      expect(instance.className).not.toContain('primary');
-    });
-
-    test('lismClassに複数クラスがある場合、最初のクラスをベースにvariantが追加される', () => {
-      const instance = new LismPropsData({
-        lismClass: 'c--box additional-class',
-        variant: 'primary',
-      });
-      expect(instance.className).toContain('c--box');
-      expect(instance.className).toContain('c--box--primary');
-      expect(instance.className).toContain('additional-class');
     });
   });
 
@@ -376,9 +336,7 @@ describe('LismPropsData', () => {
   describe('複雑な組み合わせ', () => {
     test('複数のプロパティが同時に機能する', () => {
       const instance = new LismPropsData({
-        className: 'custom',
-        lismClass: 'c--box',
-        variant: 'primary',
+        className: 'custom c--box',
         fz: 'xl',
         c: 'base',
         p: '20',
@@ -388,7 +346,6 @@ describe('LismPropsData', () => {
 
       expect(instance.className).toContain('custom');
       expect(instance.className).toContain('c--box');
-      expect(instance.className).toContain('c--box--primary');
       expect(instance.className).toContain('is--container');
       expect(instance.uClasses).toContain('-fz:xl');
       expect(instance.uClasses).toContain('-c:base');

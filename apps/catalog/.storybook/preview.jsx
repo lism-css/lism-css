@@ -17,8 +17,7 @@ const preview = {
     // --- Common Props ---
     as: { control: 'text', table: { category: 'Common Props' } },
     exProps: { control: 'object', table: { category: 'Common Props' } },
-    lismClass: { control: 'text', table: { category: 'Common Props' } },
-    variant: { control: 'text', table: { category: 'Common Props' } },
+    className: { control: 'text', table: { category: 'Common Props' } },
     layout: {
       control: 'select',
       options: ['box', 'center', 'cluster', 'columns', 'flex', 'flow', 'frame', 'grid', 'stack', 'fluidCols', 'switchCols', 'sideMain'],

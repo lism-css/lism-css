@@ -58,13 +58,11 @@ export interface LismPropsBase extends TraitProps, PropValueTypes {
   forwardedRef?: React.Ref<any>;
   class?: string | null;
   className?: string;
-  lismClass?: string;
   /**
    * a--* / l--* / is--* クラスを集約する内部スロット。
    * 通常は getLayoutProps / getAtomicProps 経由で push される。
    */
   primitiveClass?: string[];
-  variant?: string;
   style?: StyleWithCustomProps;
   _propConfig?: Record<string, PropConfig>;
   set?: SetPropValue;
@@ -84,25 +82,12 @@ const getTokenKey = (propName: string): string => {
   return (propData?.token as string) || '';
 };
 
-// lismClass の末尾に variant BEM クラスを append する
-// 例: lismClass='c--box extra', variant='primary' → 'c--box extra c--box--primary'
-// 変換対象は先頭クラスのみ。複数 c-- を積む場合はユーザーが書き順で制御する。
-function buildLismClass(lismClass: string | undefined, variant: string | undefined): string {
-  if (!lismClass) return '';
-  if (!variant) return lismClass;
-
-  const baseClass = lismClass.split(' ')[0];
-  return `${lismClass} ${baseClass}--${variant}`;
-}
-
 export class LismPropsData {
   // 最終出力 className
   className: string = '';
-  // 出力順のためのクラスバケット: [lismClass] [primitiveClass] [uClasses]
-  // - lismClass      : c--* 基底クラス（variant BEM 展開の対象）
+  // 出力順のためのクラスバケット: [primitiveClass] [uClasses]
   // - primitiveClass : a--* / l--* / is--* の primitive クラス（getAtomicProps → getLayoutProps → analyzeTrait の順で push）
   // - uClasses       : set--* → u--* → -property の順で push される utility クラス
-  lismClass: string = '';
   primitiveClass: string[] = [];
   uClasses: string[] = [];
   styles: StyleWithCustomProps = {};
@@ -111,21 +96,10 @@ export class LismPropsData {
 
   constructor(allProps: LismPropsBase & Record<string, unknown>) {
     // 受け取るpropsとそうでないpropsを分ける
-    const {
-      forwardedRef,
-      class: astroClassName,
-      className: userClassName,
-      lismClass,
-      primitiveClass,
-      variant,
-      style = {},
-      _propConfig = {},
-      ...others
-    } = allProps;
+    const { forwardedRef, class: astroClassName, className: userClassName, primitiveClass, style = {}, _propConfig = {}, ...others } = allProps;
 
     this.styles = { ...style };
     this._propConfig = { ..._propConfig };
-    this.lismClass = buildLismClass(lismClass, variant);
     if (primitiveClass && primitiveClass.length) {
       this.primitiveClass = [...primitiveClass];
     }
@@ -163,9 +137,9 @@ export class LismPropsData {
   }
 
   // 最終クラス文字列の組み立て（出力順の唯一の確定地点）
-  // 出力順: [user/astro className] [lismClass] [primitiveClass] [uClasses]
+  // 出力順: [user/astro className] [primitiveClass] [uClasses]
   buildClassName(userClassName?: string, astroClassName?: string | null): string {
-    return atts(userClassName || astroClassName || undefined, this.lismClass, this.primitiveClass, this.uClasses);
+    return atts(userClassName || astroClassName || undefined, this.primitiveClass, this.uClasses);
   }
 
   analyzeTrait(traitPropData: TraitPropDataObject, propVal: unknown): void {

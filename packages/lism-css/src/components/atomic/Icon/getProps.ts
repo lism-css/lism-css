@@ -71,7 +71,7 @@ Icon の出力パターン
   - as=svg で指定された場合 → <svg> で出力し、childrenはそのまま返す。（<path> などを渡して使えるようにする）
   - as が指定された場合 → asで渡されるコンポーネントまたは要素を呼び出す
 */
-export default function getProps({ lismClass, as, icon, label, exProps = {}, ..._props }: IconProps) {
+export default function getProps({ as, icon, label, exProps = {}, ..._props }: IconProps) {
   // '_SVG_' は内部センチネル値として使用し、Icon.tsx で SVG コンポーネントに置換される
   let Component: ElementType | '_SVG_' = as || 'span';
   let content = '';
@@ -141,9 +141,8 @@ export default function getProps({ lismClass, as, icon, label, exProps = {}, ...
     exProps['aria-hidden'] = 'true';
   }
 
-  // c-- は lismClass を素通し、a--icon は atomic prop 経由で付与する。
-  // SVG パース由来の className はユーザー className と同じ扱いで Lism に渡す。
-  _rest.lismClass = lismClass;
+  // a--icon は atomic prop 経由で付与する。
+  // SVG パース由来の className はユーザー className と合成して Lism に渡す。
   _rest.atomic = 'icon';
   if (className) _rest.className = className;
   _rest.style = { ...style };
