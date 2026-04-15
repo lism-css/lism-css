@@ -2,13 +2,11 @@
  * NavMenu コンポーネントの共通プロパティ処理
  */
 import getMaybeCssVar from 'lism-css/lib/getMaybeCssVar';
-import atts from 'lism-css/lib/helper/atts';
 
 export type NavMenuRootProps = {
   hovC?: string;
   hovBgc?: string;
   itemP?: string;
-  className?: string;
   style?: Record<string, string>;
   [key: string]: unknown;
 };
@@ -16,11 +14,10 @@ export type NavMenuRootProps = {
 export type NavMenuLinkProps = {
   href?: string;
   as?: string;
-  className?: string;
   [key: string]: unknown;
 };
 
-export function getRootProps({ hovC, hovBgc, itemP, className, style = {}, ...props }: NavMenuRootProps) {
+export function getRootProps({ hovC, hovBgc, itemP, style = {}, ...props }: NavMenuRootProps) {
   const computedStyle = { ...style };
 
   if (hovBgc) computedStyle['--hov-bgc'] = getMaybeCssVar(hovBgc, 'color');
@@ -28,33 +25,29 @@ export function getRootProps({ hovC, hovBgc, itemP, className, style = {}, ...pr
   if (itemP) computedStyle['--_item-p'] = getMaybeCssVar(itemP, 'space');
 
   return {
-    className: atts(className, 'c--navMenu'),
     as: 'ul',
     style: computedStyle,
     ...props,
   };
 }
 
-export function getNestProps({ className, ...props }: { className?: string; [key: string]: unknown }) {
+export function getNestProps(props: Record<string, unknown>) {
   return {
-    className: atts(className, 'c--navMenu_nest'),
     as: 'ul',
     'px-s': '20',
     ...props,
   };
 }
 
-export function getItemProps({ className, ...props }: { className?: string; [key: string]: unknown }) {
+export function getItemProps(props: Record<string, unknown>) {
   return {
-    className: atts(className, 'c--navMenu_item'),
     as: 'li',
     ...props,
   };
 }
 
-export function getLinkProps({ href, as = 'span', className, ...props }: NavMenuLinkProps) {
+export function getLinkProps({ href, as = 'span', ...props }: NavMenuLinkProps) {
   return {
-    className: atts(className, 'c--navMenu_link'),
     as: href ? 'a' : as,
     href,
     c: 'inherit',

@@ -1,5 +1,7 @@
 ---
 import { Lism, Flow, Grid, Frame, Decorator } from 'lism-css/astro';
+import atts from 'lism-css/lib/helper/atts';
+import buildModifierClass from '../../../helper/buildModifierClass';
 import getChatProps, { defaultProps } from '../getProps';
 import '../_style.css';
 
@@ -19,22 +21,28 @@ interface Props {
   [key: string]: unknown;
 }
 
-const { name, avatar, flow = 's', class: className, ...inputProps } = Astro.props;
-const { 'data-chat-dir': direction, ...chatProps } = getChatProps({ className, ...inputProps });
+const { name, avatar, flow = 's', variant = 'speak', class: className, ...inputProps } = Astro.props;
+const { 'data-chat-dir': direction, ...chatProps } = getChatProps({ variant, ...inputProps });
 ---
 
-<Grid data-chat-dir={direction} {...chatProps}>
+<Grid class={atts(className, buildModifierClass('c--chat', { variant }))} data-chat-dir={direction} {...chatProps}>
   {
     avatar && (
-      <Frame {...defaultProps.avatar} src={avatar} alt="">
+      <Frame class="c--chat_avatar" {...defaultProps.avatar} src={avatar} alt="">
         <img src={avatar} alt="" width="60" height="60" decoding="async" />
       </Frame>
     )
   }
-  {name && <Lism {...defaultProps.name}>{name}</Lism>}
-  <Lism {...defaultProps.body}>
-    <Decorator {...defaultProps.deco} />
-    <Flow {...defaultProps.content} flow={flow} jslf={direction}>
+  {
+    name && (
+      <Lism class="c--chat_name" {...defaultProps.name}>
+        {name}
+      </Lism>
+    )
+  }
+  <Lism class="c--chat_body" {...defaultProps.body}>
+    <Decorator class="c--chat_deco" {...defaultProps.deco} />
+    <Flow class="c--chat_content" {...defaultProps.content} flow={flow} jslf={direction}>
       <slot />
     </Flow>
   </Lism>

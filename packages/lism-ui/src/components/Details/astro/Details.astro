@@ -5,12 +5,17 @@
  * スクリプト不要で::details-contentを使用
  */
 import getLismProps from 'lism-css/lib/getLismProps';
-import { getDetailsProps } from '../getProps';
+import atts from 'lism-css/lib/helper/atts';
 
 // スタイルのインポート
 import '../_style.css';
 
 const { class: className, ...props } = Astro.props || {};
+
+const lismProps = getLismProps({
+  className: atts(className, 'c--details'),
+  ...props,
+});
 ---
 
-<details {...getLismProps(getDetailsProps({ className, ...props }))}><slot /></details>
+<details {...lismProps}><slot /></details>

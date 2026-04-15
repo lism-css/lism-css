@@ -8,7 +8,6 @@ import atts from 'lism-css/lib/helper/atts';
 import { defaultProps } from '../getProps';
 
 const { class: className, ...props } = Astro.props || {};
-const { className: baseClass, ...baseIconProps } = defaultProps.icon;
 ---
 
-<Lism {...baseIconProps} {...props} class={atts(className, baseClass)}><slot /></Lism>
+<Lism {...defaultProps.icon} {...props} class={atts(className, 'c--details_icon')}><slot /></Lism>

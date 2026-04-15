@@ -2,15 +2,14 @@
 import { createContext, useRef, useId, useEffect, useContext } from 'react';
 import type { ElementType } from 'react';
 import getLismProps from 'lism-css/lib/getLismProps';
+import atts from 'lism-css/lib/helper/atts';
 import { Lism, Stack, type LismComponentProps } from 'lism-css/react';
 import {
   getRootProps,
-  getItemProps,
   getHeadingProps,
-  getPanelProps,
   getButtonProps,
+  getPanelProps,
   type AccordionRootProps,
-  type AccordionItemProps,
   type AccordionHeadingProps,
   type AccordionPanelProps,
 } from '../getProps';
@@ -28,15 +27,19 @@ const AccordionContext = createContext<AccordionContextType>(null);
 /**
  * 複数の AccordionItem をラップするルート要素
  */
-export function AccordionRoot({ children, ...props }: AccordionRootProps & LismComponentProps) {
+export function AccordionRoot({ children, className, ...props }: AccordionRootProps & LismComponentProps) {
   const rootProps = getRootProps(props);
-  return <Stack {...rootProps}>{children}</Stack>;
+  return (
+    <Stack className={atts(className, 'c--accordion')} {...rootProps}>
+      {children}
+    </Stack>
+  );
 }
 
 /**
  * 個別のアコーディオンアイテム（<div> ベース、setEvent で開閉イベントを登録）
  */
-export function AccordionItem({ children, ...props }: AccordionItemProps & LismComponentProps) {
+export function AccordionItem({ children, className, ...props }: LismComponentProps) {
   const ref = useRef<HTMLDivElement>(null);
 
   // コンポーネント単位でユニークIDを生成
@@ -48,7 +51,10 @@ export function AccordionItem({ children, ...props }: AccordionItemProps & LismC
     return setEvent(ref.current);
   }, []);
 
-  const lismProps = getLismProps(getItemProps(props));
+  const lismProps = getLismProps({
+    className: atts(className, 'c--accordion_item'),
+    ...props,
+  });
 
   return (
     <AccordionContext.Provider value={{ accID }}>
@@ -63,10 +69,10 @@ export function AccordionItem({ children, ...props }: AccordionItemProps & LismC
  * 見出しエリアのラッパー（デフォルトは <div role="heading">）
  * as に h2〜h6 を指定すると role は付与されない
  */
-export function Heading({ children, ...props }: AccordionHeadingProps & LismComponentProps) {
+export function Heading({ children, className, ...props }: AccordionHeadingProps & LismComponentProps) {
   const { as: headingAs, ...headingProps } = getHeadingProps(props);
   return (
-    <Lism as={headingAs as ElementType} {...headingProps}>
+    <Lism as={headingAs as ElementType} className={atts(className, 'c--accordion_heading')} {...headingProps}>
       {children}
     </Lism>
   );
@@ -80,12 +86,17 @@ type ButtonProps<T extends ElementType = 'button'> = LismComponentProps<T> & {
  * 開閉トリガーボタン
  * accID: Context から取得できればそれを優先、なければ props / プレースホルダー
  */
-export function Button<T extends ElementType = 'button'>({ children, accID: _accID = '__LISM_ACC_ID__', ...props }: ButtonProps<T>) {
+export function Button<T extends ElementType = 'button'>({ children, className, accID: _accID = '__LISM_ACC_ID__', ...props }: ButtonProps<T>) {
   const ctx = useContext(AccordionContext);
   const accID = ctx?.accID || _accID;
 
   return (
-    <Lism {...(getButtonProps(props as Record<string, unknown>) as object)} aria-controls={accID} aria-expanded="false">
+    <Lism
+      {...(getButtonProps(props as Record<string, unknown>) as object)}
+      className={atts(className, 'c--accordion_button')}
+      aria-controls={accID}
+      aria-expanded="false"
+    >
       {children}
       <AccIcon />
     </Lism>
@@ -95,13 +106,15 @@ export function Button<T extends ElementType = 'button'>({ children, accID: _acc
 /**
  * パネル
  */
-export function Panel({ children, ...props }: AccordionPanelProps & LismComponentProps) {
+export function Panel({ children, className, ...props }: AccordionPanelProps & LismComponentProps) {
   const ctx = useContext(AccordionContext);
   const { panelProps, contentProps } = getPanelProps({ _contextID: ctx?.accID, ...props });
 
   return (
-    <Lism {...panelProps}>
-      <Lism {...contentProps}>{children}</Lism>
+    <Lism className={atts(className, 'c--accordion_panel')} {...panelProps}>
+      <Lism className="c--accordion_content" {...contentProps}>
+        {children}
+      </Lism>
     </Lism>
   );
 }

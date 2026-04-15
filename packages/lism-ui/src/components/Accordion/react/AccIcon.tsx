@@ -4,5 +4,5 @@ import { defaultProps } from '../getProps';
 
 // CSS疑似要素（::before / ::after）でアイコンを描画するコンポーネント
 export default function AccIcon({ className, ...props }: LismComponentProps) {
-  return <Lism {...defaultProps.icon} {...props} className={atts(className, defaultProps.icon.className)} />;
+  return <Lism {...defaultProps.icon} {...props} className={atts(className, 'c--accordion_icon')} />;
 }

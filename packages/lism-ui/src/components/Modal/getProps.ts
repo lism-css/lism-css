@@ -1,8 +1,6 @@
-import atts from 'lism-css/lib/helper/atts';
 import mergeSet from 'lism-css/lib/helper/mergeSet';
 
 export type ModalRootProps = {
-  className?: string;
   set?: string;
   duration?: string;
   style?: Record<string, string>;
@@ -10,30 +8,29 @@ export type ModalRootProps = {
 };
 
 export type ModalInnerProps = {
-  className?: string;
   offset?: string;
   style?: Record<string, string>;
   [key: string]: unknown;
 };
 
-export function getProps({ className = '', set, duration, style = {}, ...props }: ModalRootProps) {
-  const theProps = {
-    className: atts(className, 'c--modal'),
-    set: mergeSet('plain', set),
-  };
+export function getProps({ set, duration, style = {}, ...props }: ModalRootProps) {
   if (duration) {
     style['--duration'] = duration;
   }
 
-  return { as: 'dialog', ...theProps, style, ...props };
+  return {
+    as: 'dialog',
+    set: mergeSet('plain', set),
+    style,
+    ...props,
+  };
 }
 
-export function getInnerProps({ className = '', offset, style = {}, ...props }: ModalInnerProps) {
+export function getInnerProps({ offset, style = {}, ...props }: ModalInnerProps) {
   if (offset) {
     style['--offset'] = offset;
   }
   return {
-    className: atts(className, 'c--modal_inner'),
     style,
     ...props,
   };
@@ -58,7 +55,3 @@ export function getCloseBtnProps({ set, ...props }: Record<string, unknown>) {
     ...props,
   };
 }
-
-export const defaultProps = {
-  body: { className: 'c--modal_body' },
-};

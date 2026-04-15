@@ -1,13 +1,14 @@
 ---
 // import type { LismProps } from 'lism-css/types';
 import { Lism } from 'lism-css/astro';
+import atts from 'lism-css/lib/helper/atts';
 import { getProps } from '../getProps';
 import '../_style.css';
 
 const { class: className, ...props } = Astro.props || {};
 ---
 
-<Lism {...getProps({ className, ...props })}><slot /></Lism>
+<Lism {...getProps(props)} class={atts(className, 'c--modal')}><slot /></Lism>
 
 <script>
   import setModal from '../setModal';

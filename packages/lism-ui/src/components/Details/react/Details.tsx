@@ -5,7 +5,7 @@ import type { ElementType } from 'react';
 import getLismProps from 'lism-css/lib/getLismProps';
 import { Lism, type LismComponentProps } from 'lism-css/react';
 import atts from 'lism-css/lib/helper/atts';
-import { getDetailsProps, getTitleProps, defaultProps } from '../getProps';
+import { getTitleProps, defaultProps } from '../getProps';
 
 // スタイルのインポート
 import '../_style.css';
@@ -16,8 +16,11 @@ type DetailsRootProps = LismComponentProps<'details'> & { open?: boolean };
  * Details - ルートコンポーネント
  * details要素をレンダリング
  */
-export function Details({ children, open, ...props }: DetailsRootProps) {
-  const lismProps = getLismProps(getDetailsProps(props));
+export function Details({ children, open, className, ...props }: DetailsRootProps) {
+  const lismProps = getLismProps({
+    className: atts(className, 'c--details'),
+    ...props,
+  });
 
   return (
     <details open={open} {...lismProps}>
@@ -32,7 +35,7 @@ export function Details({ children, open, ...props }: DetailsRootProps) {
  */
 export function Summary<T extends ElementType = 'summary'>({ children, className, ...props }: LismComponentProps<T>) {
   return (
-    <Lism as="summary" {...(defaultProps.summary as object)} {...(props as object)} className={atts(className, defaultProps.summary.className)}>
+    <Lism as="summary" {...(defaultProps.summary as object)} {...(props as object)} className={atts(className, 'c--details_summary')}>
       {children}
     </Lism>
   );
@@ -41,8 +44,12 @@ export function Summary<T extends ElementType = 'summary'>({ children, className
 /**
  * Title - タイトルコンポーネント
  */
-export function Title<T extends ElementType = 'span'>({ children, ...props }: LismComponentProps<T>) {
-  return <Lism {...(getTitleProps(props as Record<string, unknown>) as object)}>{children}</Lism>;
+export function Title<T extends ElementType = 'span'>({ children, className, ...props }: LismComponentProps<T>) {
+  return (
+    <Lism {...(getTitleProps(props as Record<string, unknown>) as object)} className={atts(className, 'c--details_title')}>
+      {children}
+    </Lism>
+  );
 }
 
 /**
@@ -50,7 +57,7 @@ export function Title<T extends ElementType = 'span'>({ children, ...props }: Li
  */
 export function Icon<T extends ElementType = 'span'>({ children, className, ...props }: LismComponentProps<T>) {
   return (
-    <Lism {...(defaultProps.icon as object)} {...(props as object)} className={atts(className, defaultProps.icon.className)}>
+    <Lism {...(defaultProps.icon as object)} {...(props as object)} className={atts(className, 'c--details_icon')}>
       {children}
     </Lism>
   );
@@ -61,8 +68,8 @@ export function Icon<T extends ElementType = 'span'>({ children, className, ...p
  */
 export function Content<T extends ElementType = 'div'>({ children, className, ...props }: LismComponentProps<T>) {
   return (
-    <Lism {...defaultProps.body}>
-      <Lism {...(defaultProps.content as object)} {...(props as object)} className={atts(className, defaultProps.content.className)}>
+    <Lism className="c--details_body">
+      <Lism {...(defaultProps.content as object)} {...(props as object)} className={atts(className, 'c--details_content')}>
         {children}
       </Lism>
     </Lism>

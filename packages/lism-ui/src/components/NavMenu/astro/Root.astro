@@ -1,9 +1,10 @@
 ---
 import { Stack } from 'lism-css/astro';
+import atts from 'lism-css/lib/helper/atts';
 import { getRootProps } from '../getProps';
 import '../_style.css';
 
 const { class: className, ...props } = Astro.props;
 ---
 
-<Stack {...getRootProps({ className, ...props })}><slot /></Stack>
+<Stack {...getRootProps(props)} class={atts(className, 'c--navMenu')}><slot /></Stack>

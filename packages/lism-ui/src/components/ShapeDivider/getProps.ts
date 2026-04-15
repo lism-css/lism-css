@@ -1,5 +1,3 @@
-import atts from 'lism-css/lib/helper/atts';
-
 export type ShapeDividerProps = {
   viewBox?: string;
   isAnimation?: boolean;
@@ -8,23 +6,11 @@ export type ShapeDividerProps = {
   stretch?: string;
   offset?: string;
   flip?: string;
-  className?: string;
   style?: Record<string, string>;
   [key: string]: unknown;
 };
 
-export default function getProps({
-  viewBox,
-  isAnimation,
-  isEmpty,
-  level = 5,
-  stretch,
-  offset,
-  flip,
-  className,
-  style = {},
-  ...restProps
-}: ShapeDividerProps) {
+export default function getProps({ viewBox, isAnimation, isEmpty, level = 5, stretch, offset, flip, style = {}, ...restProps }: ShapeDividerProps) {
   if (level === 0) return null;
 
   const computedStyle: Record<string, string | undefined> = { ...style };
@@ -33,7 +19,6 @@ export default function getProps({
   computedStyle['--_inner-stretch'] = stretch ?? undefined;
 
   const _props: Record<string, unknown> = {
-    className: atts(className, 'c--shapeDivider'),
     'max-sz': 'full',
     'aria-hidden': 'true',
   };

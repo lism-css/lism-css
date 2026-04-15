@@ -1,14 +1,15 @@
 ---
 import { Flow, Flex, Stack, Icon, Center } from 'lism-css/astro';
+import atts from 'lism-css/lib/helper/atts';
 import getCalloutProps, { type CalloutProps } from '../getProps';
 
 type Props = CalloutProps;
 
 const { class: className, ...astroProps } = Astro.props;
-const { icon, title, flow, ...calloutProps } = getCalloutProps({ className, ...astroProps });
+const { icon, title, flow, ...calloutProps } = getCalloutProps(astroProps);
 ---
 
-<Stack {...calloutProps}>
+<Stack class={atts(className, 'c--callout')} {...calloutProps}>
   {
     title && (
       <Flex class="c--callout_head" c="keycolor" fw="bold" ai="center" g="10">
