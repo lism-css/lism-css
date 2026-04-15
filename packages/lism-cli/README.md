@@ -79,12 +79,16 @@ src/components/ui/
 │   └── uuid.js
 ├── Accordion/
 │   ├── _style.css
-│   ├── getProps.js
 │   ├── setAccordion.js
 │   ├── script.js
 │   └── react/
-│       ├── Accordion.jsx
-│       ├── AccIcon.jsx
+│       ├── Root.jsx
+│       ├── Item.jsx
+│       ├── Heading.jsx
+│       ├── Button.jsx
+│       ├── Panel.jsx
+│       ├── Icon.jsx
+│       ├── context.js
 │       └── index.js
 └── Modal/
     ├── _style.css

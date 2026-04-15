@@ -1,12 +1,7 @@
-/**
- * React版 Detailsコンポーネント
- */
-import type { ElementType } from 'react';
 import getLismProps from 'lism-css/lib/getLismProps';
-import { Lism, type LismComponentProps } from 'lism-css/react';
+import { type LismComponentProps } from 'lism-css/react';
 import atts from 'lism-css/lib/helper/atts';
 
-// スタイルのインポート
 import '../_style.css';
 
 type DetailsRootProps = LismComponentProps<'details'> & { open?: boolean };
@@ -15,7 +10,7 @@ type DetailsRootProps = LismComponentProps<'details'> & { open?: boolean };
  * Details - ルートコンポーネント
  * details要素をレンダリング
  */
-export function Details({ children, open, className, ...props }: DetailsRootProps) {
+export default function Details({ children, open, className, ...props }: DetailsRootProps) {
   const lismProps = getLismProps({
     className: atts(className, 'c--details'),
     ...props,
@@ -25,52 +20,5 @@ export function Details({ children, open, className, ...props }: DetailsRootProp
     <details open={open} {...lismProps}>
       {children}
     </details>
-  );
-}
-
-/**
- * Summary - サマリーコンポーネント
- * details要素のsummary部分
- */
-export function Summary<T extends ElementType = 'summary'>({ children, className, ...props }: LismComponentProps<T>) {
-  return (
-    <Lism as="summary" layout="flex" g="10" ai="center" {...(props as object)} className={atts(className, 'c--details_summary')}>
-      {children}
-    </Lism>
-  );
-}
-
-/**
- * Title - タイトルコンポーネント
- */
-export function Title<T extends ElementType = 'span'>({ children, className, ...props }: LismComponentProps<T>) {
-  return (
-    <Lism as="span" fx="1" set="plain" {...(props as object)} className={atts(className, 'c--details_title')}>
-      {children}
-    </Lism>
-  );
-}
-
-/**
- * Icon - アイコンコンポーネント
- */
-export function Icon<T extends ElementType = 'span'>({ children, className, ...props }: LismComponentProps<T>) {
-  return (
-    <Lism atomic="icon" as="span" aria-hidden="true" {...(props as object)} className={atts(className, 'c--details_icon')}>
-      {children}
-    </Lism>
-  );
-}
-
-/**
- * Content - コンテンツコンポーネント
- */
-export function Content<T extends ElementType = 'div'>({ children, className, ...props }: LismComponentProps<T>) {
-  return (
-    <Lism className="c--details_body">
-      <Lism layout="flow" flow="s" {...(props as object)} className={atts(className, 'c--details_content')}>
-        {children}
-      </Lism>
-    </Lism>
   );
 }

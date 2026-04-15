@@ -75,7 +75,7 @@ import { Stack, Text } from 'lism-css/react';
 
 <Stack g="20">
   <Accordion>
-    <Accordion.Header>FAQ Question</Accordion.Header>
+    <Accordion.Heading>FAQ Question</Accordion.Heading>
     <Accordion.Body>
       <Text>Answer content goes here.</Text>
     </Accordion.Body>
@@ -97,7 +97,7 @@ import { Stack, Text } from 'lism-css/astro';
 
 <Stack g="20">
   <Accordion>
-    <Accordion.Header>FAQ Question</Accordion.Header>
+    <Accordion.Heading>FAQ Question</Accordion.Heading>
     <Accordion.Body>
       <Text>Answer content goes here.</Text>
     </Accordion.Body>
