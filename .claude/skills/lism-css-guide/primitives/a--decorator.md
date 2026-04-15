@@ -13,8 +13,6 @@
 | Prop | 説明 |
 |------|------|
 | `size` | デコレーターのサイズを一括指定。この指定があると `w`（`width`）に値が渡され、自動で `ar="1/1"`（`aspect-ratio:1/1`）が付与される |
-| `clipPath` | `style.clipPath` に渡す |
-| `boxSizing` | `style.boxSizing` に渡す |
 
 ## Usage
 

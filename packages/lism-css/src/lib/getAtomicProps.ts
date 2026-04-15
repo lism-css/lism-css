@@ -15,8 +15,6 @@ interface PropConfig {
 interface AtomicOwnProps {
   // decorator 固有
   size?: CssValue;
-  clipPath?: string;
-  boxSizing?: string;
 }
 
 type AtomicSpecificKeys = keyof AtomicOwnProps;
@@ -78,12 +76,8 @@ function getSpacerProps(props: InputProps): InputProps {
   return next;
 }
 
-function getDecoratorProps({ size, clipPath, boxSizing, style, ...props }: InputProps): InputProps {
-  const newStyle: StyleWithCustomProps = { ...style } as StyleWithCustomProps;
-  if (clipPath) newStyle.clipPath = clipPath;
-  if (boxSizing) newStyle.boxSizing = boxSizing as StyleWithCustomProps['boxSizing'];
-
-  const next: InputProps = { ...props, style: newStyle };
+function getDecoratorProps({ size, ...props }: InputProps): InputProps {
+  const next: InputProps = { ...props };
   if (size) {
     next.ar = '1/1';
     next.w = size;

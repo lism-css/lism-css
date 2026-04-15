@@ -13,7 +13,7 @@ export default function BalloonBox({ variant = 'left', bdw = '1px', bdc, bgc, ke
 
   let parentProps = {};
   let decoProps = {};
-  // let wrapProps = {};
+  let decoStyle = {};
   switch (variant) {
     case 'left':
       parentProps = { jc: 's', pl: '1em' };
@@ -22,8 +22,8 @@ export default function BalloonBox({ variant = 'left', bdw = '1px', bdc, bgc, ke
         l: '0',
         rotate: '45deg',
         translate: '-50% -50%',
-        clipPath: 'polygon(0% 0%, 0% 100%, 100% 100%)',
       };
+      decoStyle = { clipPath: 'polygon(0% 0%, 0% 100%, 100% 100%)' };
       break;
     case 'right':
       parentProps = { jc: 'e', pr: '1em' };
@@ -32,8 +32,8 @@ export default function BalloonBox({ variant = 'left', bdw = '1px', bdc, bgc, ke
         l: '100%',
         rotate: '-45deg',
         translate: '-50% -50%',
-        clipPath: 'polygon(0% 100%, 100% 0%, 100% 100%)',
       };
+      decoStyle = { clipPath: 'polygon(0% 100%, 100% 0%, 100% 100%)' };
       break;
     case 'top':
       parentProps = { jc: 'c', pt: '1em' };
@@ -42,8 +42,8 @@ export default function BalloonBox({ variant = 'left', bdw = '1px', bdc, bgc, ke
         l: '50%',
         rotate: '45deg',
         translate: '-50% -50%',
-        clipPath: 'polygon(0% 0%, 0% 100%, 100% 0%)',
       };
+      decoStyle = { clipPath: 'polygon(0% 0%, 0% 100%, 100% 0%)' };
       break;
     case 'bottom':
       parentProps = { jc: 'c', pb: '1em' };
@@ -52,8 +52,8 @@ export default function BalloonBox({ variant = 'left', bdw = '1px', bdc, bgc, ke
         l: '50%',
         rotate: '45deg',
         translate: '-50% -50%',
-        clipPath: 'polygon(100% 0%, 0% 100%, 100% 100%)',
       };
+      decoStyle = { clipPath: 'polygon(100% 0%, 0% 100%, 100% 100%)' };
       break;
     default:
       break;
@@ -63,7 +63,7 @@ export default function BalloonBox({ variant = 'left', bdw = '1px', bdc, bgc, ke
     <Flex {...parentProps} {...props} className={atts(className, 'c--balloonBox', variant && `c--balloonBox--${variant}`)}>
       <Lism pos="relative" bd p="20" w="fit-content" bdw={bdw} bdrs={bdrs} {...colorProps}>
         {children}
-        <Decorator pos="absolute" size="0.875em" bd="inherit" bgc="inherit" boxSizing="content-box" {...decoProps} />
+        <Decorator pos="absolute" size="0.875em" bd="inherit" bgc="inherit" {...decoProps} style={{ boxSizing: 'content-box', ...decoStyle }} />
       </Lism>
     </Flex>
   );

@@ -4,8 +4,6 @@ import type { CssValue } from '../../../lib/types/LayoutProps';
 
 export interface DecoratorOwnProps {
   size?: CssValue;
-  clipPath?: string;
-  boxSizing?: string;
 }
 
 export type DecoratorProps = LismComponentProps & DecoratorOwnProps;

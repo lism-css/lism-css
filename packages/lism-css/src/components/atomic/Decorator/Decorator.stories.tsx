@@ -50,6 +50,6 @@ export const WithClipPath: Story = {
   args: {
     size: '100px',
     bgc: 'blue',
-    clipPath: 'polygon(50% 0%, 0% 100%, 100% 100%)',
+    style: { clipPath: 'polygon(50% 0%, 0% 100%, 100% 100%)' },
   },
 };
