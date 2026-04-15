@@ -4,9 +4,8 @@ import getLayoutProps from './getLayoutProps';
 describe('getLayoutProps', () => {
   describe('基本的な動作', () => {
     test('layout クラスが primitiveClass に追加される', () => {
-      const result = getLayoutProps('flex', { lismClass: 'existing' });
+      const result = getLayoutProps('flex', {});
       expect(result.primitiveClass).toContain('l--flex');
-      expect(result.lismClass).toBe('existing');
     });
 
     test('primitiveClass が未定義の場合でも layout クラスが追加される', () => {
@@ -152,12 +151,12 @@ describe('getLayoutProps', () => {
       expect(result.style).toBeUndefined();
     });
 
-    test('既存の lismClass と primitiveClass がある場合、マージされる', () => {
+    test('既存の primitiveClass がある場合、マージされる', () => {
       const result = getLayoutProps('flow', {
-        lismClass: 'existing',
+        primitiveClass: ['existing'],
         flow: 's',
       });
-      expect(result.lismClass).toBe('existing');
+      expect(result.primitiveClass).toContain('existing');
       expect(result.primitiveClass).toContain('l--flow');
       expect(result.primitiveClass).toContain('-flow:s');
     });
@@ -233,27 +232,26 @@ describe('getLayoutProps', () => {
       expect(result.primitiveClass).toEqual(['l--tileGrid']);
     });
 
-    test('既存の lismClass がある場合、マージされる', () => {
-      const result = getLayoutProps('tileGrid', { lismClass: 'existing' });
+    test('既存の primitiveClass がある場合、マージされる', () => {
+      const result = getLayoutProps('tileGrid', { primitiveClass: ['existing'] });
       expect(result.primitiveClass).toContain('l--tileGrid');
-      expect(result.lismClass).toBe('existing');
+      expect(result.primitiveClass).toContain('existing');
     });
 
     test('その他のpropsはそのまま維持される', () => {
-      const result = getLayoutProps('tileGrid', { lismClass: 'test', style: { color: 'red' } });
-      expect(result.lismClass).toBe('test');
+      const result = getLayoutProps('tileGrid', { style: { color: 'red' } } as Parameters<typeof getLayoutProps>[1]);
       expect(result.style?.color).toBe('red');
     });
   });
 
   describe('複数propsの組み合わせ', () => {
-    test('lismClass と style が両方ある場合、正しく処理される', () => {
+    test('primitiveClass と style が両方ある場合、正しく処理される', () => {
       const result = getLayoutProps('sideMain', {
-        lismClass: 'custom-class',
+        primitiveClass: ['custom-primitive'],
         sideW: '200px',
         style: { color: 'red' },
       });
-      expect(result.lismClass).toBe('custom-class');
+      expect(result.primitiveClass).toContain('custom-primitive');
       expect(result.primitiveClass).toContain('l--sideMain');
       expect(result.style?.color).toBe('red');
       expect(result.style?.['--sideW']).toBe('200px');
@@ -262,15 +260,13 @@ describe('getLayoutProps', () => {
     test('レイアウト固有のpropsは削除され、その他は維持される', () => {
       const result = getLayoutProps('flow', {
         flow: 's',
-        lismClass: 'test',
         otherProp1: 'value1',
         otherProp2: 'value2',
-      });
+      } as Parameters<typeof getLayoutProps>[1]);
       expect((result as unknown as Record<string, unknown>).flow).toBeUndefined();
-      expect(result.lismClass).toBe('test');
       expect(result.primitiveClass).toContain('l--flow');
-      expect(result.otherProp1).toBe('value1');
-      expect(result.otherProp2).toBe('value2');
+      expect((result as Record<string, unknown>).otherProp1).toBe('value1');
+      expect((result as Record<string, unknown>).otherProp2).toBe('value2');
     });
   });
 });

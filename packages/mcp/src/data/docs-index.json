@@ -285,22 +285,21 @@
     "description": "LismのCSS設計に対応した様々なプロパティを受け取ることができる汎用的なコンポーネントです。",
     "category": "core-components",
     "headings": ["Import", "Lism Props"],
-    "keywords": ["Lism", "core", "コア", "基盤", "コンポーネント", "lismClass", "variant", "layout", "atomic", "as", "exProps"],
-    "snippet": "全コンポーネントの基盤。Props システムによる CSS クラス・スタイルの自動変換を提供。lismClass で c-- クラス（BEM 展開対象）を指定、layout で l-- クラス、atomic で a-- クラス（divider / spacer / decorator）を指定可能。as prop で出力要素や外部コンポーネントを指定可能。レスポンシブ指定は配列またはオブジェクト形式で対応。"
+    "keywords": ["Lism", "core", "コア", "基盤", "コンポーネント", "className", "layout", "atomic", "as", "exProps"],
+    "snippet": "全コンポーネントの基盤。Props システムによる CSS クラス・スタイルの自動変換を提供。className で c-- クラスや任意クラスを指定、layout で l-- クラス、atomic で a-- クラス（divider / spacer / decorator）を指定可能。as prop で出力要素や外部コンポーネントを指定可能。レスポンシブ指定は配列またはオブジェクト形式で対応。"
   },
   {
     "sourcePath": "core-components/lism-props.mdx",
     "title": "Lism Props",
     "description": "<Lism> 系コンポーネントが受け取る、Lism CSS 専用プロパティの一覧と使い方です。",
     "category": "core-components",
-    "headings": ["as", "lismClass", "Trait Props", "layout / atomic", "set / util", "exProps", "CSS Props", "クラスの出力順"],
+    "headings": ["as", "className", "layout / atomic", "set / util", "Trait Props", "CSS Props", "exProps", "クラスの出力順"],
     "keywords": [
       "Lism Props",
       "props",
       "プロパティ",
       "as",
-      "lismClass",
-      "variant",
+      "className",
       "layout",
       "atomic",
       "set",
@@ -317,7 +316,7 @@
       "shorthand",
       "省略記法"
     ],
-    "snippet": "<Lism>系コンポーネントが受け取るLism CSS専用プロパティの解説。as で出力要素や外部コンポーネントを指定、lismClass で c-- クラスと variant による BEM 展開、layout / atomic で l-- / a-- クラス、set / util で set-- / u-- クラスを指定（'-' prefix で除外可）。isWrapper, isLayer, isBoxLink, isContainer などの Trait Props も提供。CSS Props (p, fz, c 等) は値の種類に応じて class / CSS変数 / style属性を自動で切り替え、配列・オブジェクト形式でレスポンシブ指定も可能。exProps で外部コンポーネント向け props を明示的に渡せる。生成される class 属性は className → c-- → a-- → l-- → is-- → set-- → u-- → - の順で出力される。"
+    "snippet": "<Lism>系コンポーネントが受け取るLism CSS専用プロパティの解説。as で出力要素や外部コンポーネントを指定、className で c-- クラス（Component Class）や任意クラスを直接指定、layout / atomic で l-- / a-- クラス、set / util で set-- / u-- クラスを指定（'-' prefix で除外可）。isWrapper, isLayer, isBoxLink, isContainer などの Trait Props も提供。CSS Props (p, fz, c 等) は値の種類に応じて class / CSS変数 / style属性を自動で切り替え、配列・オブジェクト形式でレスポンシブ指定も可能。exProps で外部コンポーネント向け props を明示的に渡せる。生成される class 属性は className → a-- → l-- → is-- → set-- → u-- → - の順で出力される。"
   },
   {
     "sourcePath": "core-components/Text.mdx",

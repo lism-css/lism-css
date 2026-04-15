@@ -1,13 +1,15 @@
 ---
 import { Flow, Lism, Center, Icon } from 'lism-css/astro';
+import atts from 'lism-css/lib/helper/atts';
 import getAlertProps, { type AlertProps } from '../getProps';
 
 type Props = AlertProps;
 
-const { icon, layout, flow, ...alertProps } = getAlertProps(Astro.props);
+const { class: className, ...astroProps } = Astro.props;
+const { icon, layout, flow, ...alertProps } = getAlertProps(astroProps);
 ---
 
-<Lism layout={layout} {...alertProps}>
+<Lism layout={layout} class={atts(className, 'c--alert')} {...alertProps}>
   <Center isSide={layout === 'sideMain'} c="keycolor" fz="xl" fxsh="0">
     <Icon icon={icon} />
   </Center>

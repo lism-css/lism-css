@@ -1,13 +1,13 @@
 ---
 import { Lism } from 'lism-css/astro';
+import atts from 'lism-css/lib/helper/atts';
 import Icon from './Icon.astro';
 import { getButtonProps } from '../getProps';
 
-// interface Props extends LismProps {}
-const { isOpen = false, accID = '__LISM_ACC_ID__', ...props } = Astro.props || {};
+const { isOpen = false, accID = '__LISM_ACC_ID__', class: className, ...props } = Astro.props || {};
 ---
 
-<Lism {...getButtonProps(props)} aria-controls={accID} aria-expanded={isOpen ? 'true' : 'false'}>
+<Lism {...getButtonProps(props)} class={atts(className, 'c--accordion_button')} aria-controls={accID} aria-expanded={isOpen ? 'true' : 'false'}>
   <slot />
   <Icon />
 </Lism>

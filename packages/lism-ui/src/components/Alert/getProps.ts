@@ -20,7 +20,6 @@ export default function getAlertProps({ type = 'alert', keycolor, layout = 'flex
     icon: _icon,
     layout,
     flow,
-    lismClass: 'c--alert',
     util: 'cbox',
     set: 'shadow',
     keycolor: _color,

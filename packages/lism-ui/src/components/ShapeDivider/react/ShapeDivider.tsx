@@ -1,8 +1,9 @@
 import { Lism, type LismComponentProps } from 'lism-css/react';
+import atts from 'lism-css/lib/helper/atts';
 import getProps, { type ShapeDividerProps } from '../getProps';
 import '../_style.css';
 
-export default function ShapeDivider({ children, ...props }: ShapeDividerProps & LismComponentProps) {
+export default function ShapeDivider({ children, className, ...props }: ShapeDividerProps & LismComponentProps) {
   const componentProps = getProps(props);
 
   // level が 0 の場合は非表示
@@ -11,7 +12,7 @@ export default function ShapeDivider({ children, ...props }: ShapeDividerProps &
   const { viewBox, isEmpty, ...lismProps } = componentProps;
 
   return (
-    <Lism {...lismProps}>
+    <Lism className={atts(className, 'c--shapeDivider')} {...lismProps}>
       {isEmpty ? null : (
         <div className="c--shapeDivider_inner">
           <svg

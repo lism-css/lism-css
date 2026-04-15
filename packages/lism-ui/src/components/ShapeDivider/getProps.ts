@@ -19,7 +19,6 @@ export default function getProps({ viewBox, isAnimation, isEmpty, level = 5, str
   computedStyle['--_inner-stretch'] = stretch ?? undefined;
 
   const _props: Record<string, unknown> = {
-    lismClass: 'c--shapeDivider',
     'max-sz': 'full',
     'aria-hidden': 'true',
   };

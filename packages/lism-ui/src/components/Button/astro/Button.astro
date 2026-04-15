@@ -1,10 +1,10 @@
 ---
 import { Flex } from 'lism-css/astro';
+import atts from 'lism-css/lib/helper/atts';
+import buildModifierClass from '../../../helper/buildModifierClass';
 import '../_style.css';
 
-const props = Astro.props;
+const { class: className, variant, ...props } = Astro.props;
 ---
 
-<Flex lismClass="c--button" as="a" lh="s" py="10" px="20" hov="o" {...props}>
-  <slot />
-</Flex>
+<Flex as="a" lh="s" py="10" px="20" hov="o" {...props} class={atts(className, buildModifierClass('c--button', { variant }))}><slot /></Flex>

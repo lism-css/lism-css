@@ -42,11 +42,12 @@ src/components/
 
 ```jsx
 import { Lism, Flex, Grid, Flow } from 'lism-css/react';
+import atts from 'lism-css/lib/helper/atts';
 import '../_style.css';
 
-export default function ComponentName(props) {
+export default function ComponentName({ className, ...props }) {
     return (
-        <Lism lismClass='c--component' {...props} />
+        <Lism {...props} className={atts(className, 'c--component')} />
     );
 }
 ```
@@ -55,15 +56,14 @@ export default function ComponentName(props) {
 
 ```astro
 ---
-import { Lism, Flex, Grid, Flow } from 'lism-css/astro';
+import { Lism } from 'lism-css/astro';
+import atts from 'lism-css/lib/helper/atts';
 import '../_style.css';
 
-const props = Astro.props;
+const { class: className, ...props } = Astro.props;
 ---
 
-<Lism lismClass='c--component' {...props}>
-    <slot />
-</Lism>
+<Lism {...props} class={atts(className, 'c--component')}><slot /></Lism>
 ```
 
 ---
@@ -116,13 +116,26 @@ const props = Astro.props;
 CSS 変数として受け取りたいプロパティは `_propConfig` で指定：
 
 ```jsx
+import atts from 'lism-css/lib/helper/atts';
+
 const _propConfig = {
     c: { isVar: 1 },     // color を --c として出力
     bgc: { isVar: 1 },   // background-color を --bgc として出力
 };
 
 return (
-    <Lism lismClass='c--component' _propConfig={_propConfig} {...props} />
+    <Lism {...props} _propConfig={_propConfig} className={atts(props.className, 'c--component')} />
+);
+```
+
+BEM の modifier を使いたい場合は `helper/buildModifierClass` を組み合わせます。
+
+```jsx
+import atts from 'lism-css/lib/helper/atts';
+import buildModifierClass from '../../helper/buildModifierClass';
+
+return (
+    <Lism {...rest} className={atts(className, buildModifierClass('c--component', { variant }))} />
 );
 ```
 
@@ -132,13 +145,14 @@ return (
 
 ```typescript
 // getProps.ts
+import atts from 'lism-css/lib/helper/atts';
 import PRESETS from './presets';
 
-export default function getComponentProps({ type, ...props }) {
+export default function getComponentProps({ type, className, ...props }) {
     const presetData = type ? PRESETS[type] : null;
-    
+
     return {
-        lismClass: 'c--component',
+        className: atts(className, 'c--component'),
         // プリセットからの値
         someValue: presetData?.someValue || 'default',
         // その他のプロパティ
@@ -223,7 +237,7 @@ rmdir apps/docs/src/components/ex/ComponentName
   - [ ] クラス名が `c--` プレフィックスになっている
 - [ ] React コンポーネントを作成
   - [ ] `lism-css/react` からインポート
-  - [ ] `lismClass` を適切に設定
+  - [ ] `className` で `c--` ベースクラスを合成（必要なら `buildModifierClass` も利用）
   - [ ] プロパティのデフォルト値を設定
 - [ ] Astro コンポーネントを作成
   - [ ] `lism-css/astro` からインポート

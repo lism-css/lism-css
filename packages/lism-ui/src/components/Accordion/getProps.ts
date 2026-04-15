@@ -1,60 +1,43 @@
-import atts from 'lism-css/lib/helper/atts';
 import mergeSet from 'lism-css/lib/helper/mergeSet';
 
 export type AccordionRootProps = {
-  lismClass?: string;
   allowMultiple?: boolean;
-  [key: string]: unknown;
-};
-
-export type AccordionItemProps = {
-  lismClass?: string;
   [key: string]: unknown;
 };
 
 export type AccordionHeadingProps = {
   as?: string;
   role?: string;
-  lismClass?: string;
   [key: string]: unknown;
 };
 
 export type AccordionPanelProps = {
-  lismClass?: string;
   _contextID?: string;
   accID?: string;
   isOpen?: boolean;
   [key: string]: unknown;
 };
 
-export function getRootProps({ lismClass, allowMultiple, ...props }: AccordionRootProps) {
-  props.lismClass = atts(lismClass, 'c--accordion');
+export function getRootProps({ allowMultiple, ...props }: AccordionRootProps) {
   if (allowMultiple) props['data-allow-multiple'] = '';
   return props;
 }
 
-export function getItemProps({ lismClass, ...props }: AccordionItemProps) {
-  props.lismClass = atts(lismClass, 'c--accordion_item');
-  return props;
-}
-
-export function getHeadingProps({ as = 'div', role, lismClass, set, ...props }: AccordionHeadingProps) {
-  const returnProps = {
-    lismClass: atts(lismClass, 'c--accordion_heading'),
+export function getHeadingProps({ as = 'div', role, set, ...props }: AccordionHeadingProps) {
+  const returnProps: Record<string, unknown> = {
     as,
     set: mergeSet('plain', set),
     ...props,
   };
 
-  if (returnProps.as === 'div') {
-    (returnProps as Record<string, unknown>).role = role ?? 'heading';
+  if (as === 'div') {
+    returnProps.role = role ?? 'heading';
   }
   return returnProps;
 }
 
-export function getButtonProps({ set, ...props }: Record<string, unknown>) {
+export function getButtonProps({ set, ...props }: { set?: unknown; [key: string]: unknown }) {
   return {
-    lismClass: 'c--accordion_button',
     as: 'button',
     layout: 'flex',
     set: mergeSet('plain', set),
@@ -66,23 +49,21 @@ export function getButtonProps({ set, ...props }: Record<string, unknown>) {
   };
 }
 
-export function getPanelProps({ lismClass, _contextID, accID = '__LISM_ACC_ID__', isOpen = false, ...props }: AccordionPanelProps) {
+export function getPanelProps({ _contextID, accID = '__LISM_ACC_ID__', isOpen = false, ...props }: AccordionPanelProps) {
   const panelProps = {
-    lismClass: atts(lismClass, 'c--accordion_panel'),
     id: _contextID || accID,
     hidden: isOpen ? undefined : ('until-found' as unknown as boolean),
-    pos: 'relative',
-    ov: 'hidden',
+    pos: 'relative' as const,
+    ov: 'hidden' as const,
   };
 
-  const contentProps = { lismClass: 'c--accordion_content', layout: 'flow' as const, ...props };
+  const contentProps = { layout: 'flow' as const, ...props };
 
   return { panelProps, contentProps };
 }
 
 export const defaultProps = {
   icon: {
-    lismClass: 'c--accordion_icon',
     atomic: 'icon',
     as: 'span',
     pi: 'center',

@@ -22,7 +22,6 @@ interface AtomicOwnProps {
 type AtomicSpecificKeys = keyof AtomicOwnProps;
 
 export interface BaseProps {
-  lismClass?: string;
   primitiveClass?: string[];
   style?: StyleWithCustomProps;
   _propConfig?: Record<string, PropConfig>;

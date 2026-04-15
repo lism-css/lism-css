@@ -25,7 +25,6 @@ export function getRootProps({ hovC, hovBgc, itemP, style = {}, ...props }: NavM
   if (itemP) computedStyle['--_item-p'] = getMaybeCssVar(itemP, 'space');
 
   return {
-    lismClass: 'c--navMenu',
     as: 'ul',
     style: computedStyle,
     ...props,
@@ -34,7 +33,6 @@ export function getRootProps({ hovC, hovBgc, itemP, style = {}, ...props }: NavM
 
 export function getNestProps(props: Record<string, unknown>) {
   return {
-    lismClass: 'c--navMenu_nest',
     as: 'ul',
     'px-s': '20',
     ...props,
@@ -43,7 +41,6 @@ export function getNestProps(props: Record<string, unknown>) {
 
 export function getItemProps(props: Record<string, unknown>) {
   return {
-    lismClass: 'c--navMenu_item',
     as: 'li',
     ...props,
   };
@@ -51,7 +48,6 @@ export function getItemProps(props: Record<string, unknown>) {
 
 export function getLinkProps({ href, as = 'span', ...props }: NavMenuLinkProps) {
   return {
-    lismClass: 'c--navMenu_link',
     as: href ? 'a' : as,
     href,
     c: 'inherit',

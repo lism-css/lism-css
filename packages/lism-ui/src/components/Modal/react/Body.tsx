@@ -1,9 +1,9 @@
 import { Lism, type LismComponentProps } from 'lism-css/react';
-import { defaultProps } from '../getProps';
+import atts from 'lism-css/lib/helper/atts';
 
-export default function ModalBody({ children, ...props }: LismComponentProps) {
+export default function ModalBody({ children, className, ...props }: LismComponentProps) {
   return (
-    <Lism {...defaultProps.body} {...props}>
+    <Lism {...props} className={atts(className, 'c--modal_body')}>
       {children}
     </Lism>
   );

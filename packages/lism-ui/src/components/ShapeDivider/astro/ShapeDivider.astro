@@ -1,15 +1,17 @@
 ---
 import { Lism } from 'lism-css/astro';
+import atts from 'lism-css/lib/helper/atts';
 import getProps from '../getProps';
 import '../_style.css';
 
-const componentProps = getProps(Astro.props);
+const { class: className, ...astroProps } = Astro.props;
+const componentProps = getProps(astroProps);
 const { viewBox, isAnimation, isEmpty, ...lismProps } = componentProps || {};
 ---
 
 {
   componentProps && (
-    <Lism {...lismProps}>
+    <Lism class={atts(className, 'c--shapeDivider')} {...lismProps}>
       {isEmpty ? null : (
         <div class="c--shapeDivider_inner">
           <svg

@@ -18,65 +18,21 @@ describe('getLismProps', () => {
       expect(result.className).toBe('custom-class');
     });
 
-    test('lismClassが正しく設定される', () => {
-      const result = getLismProps({ lismClass: 'test-lism' });
-      expect(result.className).toBe('test-lism');
-    });
-
-    test('classNameとlismClassが結合される', () => {
-      const result = getLismProps({
-        className: 'custom',
-        lismClass: 'lism',
-      });
-      expect(result.className).toContain('custom');
-      expect(result.className).toContain('lism');
-    });
-
     test('Astroのclass属性が処理される', () => {
       const result = getLismProps({ class: 'astro-class' });
       expect(result.className).toBe('astro-class');
     });
-  });
 
-  describe('variant処理', () => {
-    test('variantがある場合、バリアントクラスが追加される', () => {
+    test('className と class が両方指定された場合、両方マージされる', () => {
       const result = getLismProps({
-        lismClass: 'c--box',
-        variant: 'primary',
-      });
-      expect(result.className).toContain('c--box');
-      expect(result.className).toContain('c--box--primary');
-    });
-
-    test('variantがあってもlismClassがない場合は無視される', () => {
-      const result = getLismProps({
-        variant: 'primary',
-      });
-      expect(result).toEqual({});
-    });
-
-    test('lismClassに複数クラスがある場合、最初のクラスをベースにvariantが追加される', () => {
-      const result = getLismProps({
-        lismClass: 'c--box additional-class',
-        variant: 'primary',
-      });
-      expect(result.className).toContain('c--box');
-      expect(result.className).toContain('c--box--primary');
-      expect(result.className).toContain('additional-class');
-    });
-  });
-
-  describe('variant BEM は c-- 専用', () => {
-    test('layout=box + variant を指定しても l--box--primary は生成されない', () => {
-      const result = getLismProps({ layout: 'box', variant: 'primary' });
-      expect(result.className).toContain('l--box');
-      expect(result.className).not.toContain('l--box--primary');
-    });
-
-    test('atomic=divider + variant を指定しても a--divider--primary は生成されない', () => {
-      const result = getLismProps({ atomic: 'divider', variant: 'primary' });
-      expect(result.className).toContain('a--divider');
-      expect(result.className).not.toContain('a--divider--primary');
+        className: 'c--foo',
+        class: 'user-class c--foo',
+      } as LismProps & Record<string, unknown>);
+      const cls = result.className as string;
+      expect(cls).toContain('c--foo');
+      expect(cls).toContain('user-class');
+      // 重複除去されて c--foo は 1 回だけ
+      expect(cls.match(/c--foo/g)?.length).toBe(1);
     });
   });
 
@@ -129,9 +85,9 @@ describe('getLismProps', () => {
   });
 
   describe('出力順', () => {
-    test('lismClass → primitiveClass → uClasses の順で出力される', () => {
+    test('className → primitiveClass → uClasses の順で出力される', () => {
       const result = getLismProps({
-        lismClass: 'c--box',
+        className: 'c--box',
         layout: 'flex',
         isContainer: true,
         p: '20',
@@ -453,9 +409,7 @@ describe('getLismProps', () => {
   describe('複雑な組み合わせ', () => {
     test('複数のプロパティが同時に機能する', () => {
       const result = getLismProps({
-        className: 'custom',
-        lismClass: 'c--box',
-        variant: 'primary',
+        className: 'custom c--box',
         layout: 'flow',
         fz: 'xl',
         c: 'base',
@@ -466,7 +420,6 @@ describe('getLismProps', () => {
 
       expect(result.className).toContain('custom');
       expect(result.className).toContain('c--box');
-      expect(result.className).toContain('c--box--primary');
       expect(result.className).toContain('l--flow');
       expect(result.className).toContain('-fz:xl');
       expect(result.className).toContain('is--container');
