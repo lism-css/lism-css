@@ -5,7 +5,7 @@
 
 import { siteConfig } from '@/config/site';
 
-export type SchemaType = 'SoftwareSourceCode' | 'TechArticle';
+export type SchemaType = 'HomePage' | 'TechArticle';
 
 /** 共通の Organization 情報 */
 const organization = {
@@ -14,10 +14,20 @@ const organization = {
   url: 'https://github.com/lism-css',
 } as const;
 
-/** トップページ用: ソフトウェアプロジェクトとしての説明 */
+/** サイト全体を表す WebSite スキーマ（site name 補助シグナル用） */
+export function generateWebSiteSchema(params: { url: string; lang: string }) {
+  return {
+    '@type': 'WebSite',
+    name: siteConfig.name,
+    url: params.url,
+    inLanguage: params.lang,
+    publisher: organization,
+  };
+}
+
+/** ソフトウェアプロジェクトとしての説明 */
 export function generateSoftwareSourceCodeSchema(params: { url: string; lang: string }) {
   return {
-    '@context': 'https://schema.org',
     '@type': 'SoftwareSourceCode',
     name: siteConfig.name,
     description: 'A lightweight, layout-first CSS framework with React and Astro components.',
@@ -26,6 +36,14 @@ export function generateSoftwareSourceCodeSchema(params: { url: string; lang: st
     programmingLanguage: 'CSS',
     author: organization,
     inLanguage: params.lang,
+  };
+}
+
+/** トップページ用: WebSite + SoftwareSourceCode を @graph で並列出力 */
+export function generateHomePageSchema(params: { url: string; lang: string }) {
+  return {
+    '@context': 'https://schema.org',
+    '@graph': [generateWebSiteSchema(params), generateSoftwareSourceCodeSchema(params)],
   };
 }
 
@@ -60,8 +78,8 @@ export function generateJsonLd(
   }
 ) {
   switch (schemaType) {
-    case 'SoftwareSourceCode':
-      return generateSoftwareSourceCodeSchema(params);
+    case 'HomePage':
+      return generateHomePageSchema(params);
     case 'TechArticle':
       return generateTechArticleSchema(params);
   }
