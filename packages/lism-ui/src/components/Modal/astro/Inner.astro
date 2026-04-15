@@ -1,10 +1,9 @@
 ---
-// import type { LismProps } from 'lism-css/types';
 import { Lism } from 'lism-css/astro';
 import atts from 'lism-css/lib/helper/atts';
-import { getInnerProps } from '../getProps';
 
-const { class: className, ...props } = Astro.props || {};
+const { class: className, offset, style, ...props } = Astro.props || {};
+const mergedStyle = offset ? { ...style, '--offset': offset } : style;
 ---
 
-<Lism {...getInnerProps(props)} class={atts(className, 'c--modal_inner')}><slot /></Lism>
+<Lism class={atts(className, 'c--modal_inner')} style={mergedStyle} {...props}><slot /></Lism>

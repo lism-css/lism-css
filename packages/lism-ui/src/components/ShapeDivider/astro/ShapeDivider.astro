@@ -1,17 +1,27 @@
 ---
 import { Lism } from 'lism-css/astro';
 import atts from 'lism-css/lib/helper/atts';
-import getProps from '../getProps';
 import '../_style.css';
 
-const { class: className, ...astroProps } = Astro.props;
-const componentProps = getProps(astroProps);
-const { viewBox, isAnimation, isEmpty, ...lismProps } = componentProps || {};
+const { class: className, viewBox, isAnimation, isEmpty, level = 5, stretch, offset, flip, style = {}, ...props } = Astro.props;
+
+const computedStyle: Record<string, string | undefined> = { ...style };
+computedStyle['--level'] = String(level);
+if (offset != null) computedStyle['--_inner-offset'] = offset;
+if (stretch != null) computedStyle['--_inner-stretch'] = stretch;
 ---
 
 {
-  componentProps && (
-    <Lism class={atts(className, 'c--shapeDivider')} {...lismProps}>
+  level !== 0 && (
+    <Lism
+      class={atts(className, 'c--shapeDivider')}
+      max-sz="full"
+      aria-hidden="true"
+      data-flip={flip || undefined}
+      data-has-animation={isAnimation ? 'true' : undefined}
+      style={computedStyle}
+      {...props}
+    >
       {isEmpty ? null : (
         <div class="c--shapeDivider_inner">
           <svg

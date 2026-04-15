@@ -2,7 +2,6 @@
 // import type { LismProps } from 'lism-css/types';
 import { Lism } from 'lism-css/astro';
 import atts from 'lism-css/lib/helper/atts';
-import { defaultProps } from '../getProps';
 
 // export interface Props extends LismProps {
 // 	// controlId: string;
@@ -15,7 +14,8 @@ const controlId = `${tabId}-${index}`;
 ---
 
 <Lism
-  {...defaultProps.tab}
+  as="button"
+  set="plain"
   {...props}
   class={atts(className, 'c--tabs_tab')}
   role="tab"

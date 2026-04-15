@@ -6,11 +6,10 @@
  */
 import { Lism } from 'lism-css/astro';
 import atts from 'lism-css/lib/helper/atts';
-import { defaultProps } from '../getProps';
 
 const { class: className, ...props } = Astro.props || {};
 ---
 
 <Lism class="c--details_body">
-  <Lism {...defaultProps.content} {...props} class={atts(className, 'c--details_content')}><slot /></Lism>
+  <Lism layout="flow" flow="s" {...props} class={atts(className, 'c--details_content')}><slot /></Lism>
 </Lism>

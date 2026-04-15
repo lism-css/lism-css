@@ -1,9 +1,8 @@
 ---
 import { Flex } from 'lism-css/astro';
 import atts from 'lism-css/lib/helper/atts';
-import { getLinkProps } from '../getProps';
 
-const { class: className, ...props } = Astro.props;
+const { class: className, href, as = 'span', ...props } = Astro.props;
 ---
 
-<Flex {...getLinkProps(props)} class={atts(className, 'c--navMenu_link')}><slot /></Flex>
+<Flex as={href ? 'a' : as} class={atts(className, 'c--navMenu_link')} href={href} c="inherit" {...props}><slot /></Flex>

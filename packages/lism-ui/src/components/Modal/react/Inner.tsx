@@ -1,10 +1,12 @@
 import { Lism, type LismComponentProps } from 'lism-css/react';
 import atts from 'lism-css/lib/helper/atts';
-import { getInnerProps, type ModalInnerProps } from '../getProps';
 
-export default function ModalInner({ children, className, ...props }: ModalInnerProps & LismComponentProps) {
+type ModalInnerProps = { offset?: string };
+
+export default function ModalInner({ children, className, offset, style, ...props }: ModalInnerProps & LismComponentProps) {
+  const mergedStyle = offset ? { ...style, '--offset': offset } : style;
   return (
-    <Lism {...getInnerProps(props)} className={atts(className, 'c--modal_inner')}>
+    <Lism className={atts(className, 'c--modal_inner')} style={mergedStyle} {...props}>
       {children}
     </Lism>
   );

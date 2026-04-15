@@ -2,13 +2,18 @@
 import { Lism } from 'lism-css/astro';
 import atts from 'lism-css/lib/helper/atts';
 import Icon from './Icon.astro';
-import { defaultProps } from '../getProps';
 
 const { isOpen = false, accID = '__LISM_ACC_ID__', class: className, ...props } = Astro.props || {};
 ---
 
 <Lism
-  {...defaultProps.button}
+  as="button"
+  layout="flex"
+  set="plain"
+  g="10"
+  w="100%"
+  ai="center"
+  jc="between"
   {...props}
   class={atts(className, 'c--accordion_button')}
   aria-controls={accID}
