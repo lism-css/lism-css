@@ -48,38 +48,21 @@ import Image from 'next/image';
 Lismコンポーネント以外に対しても Lism Props を使いたい時に活用してください。
 
 
-## `lismClass`
+## `className`
 
-コンポーネントの基底となる`c--`クラス（Component Class）を指定するための専用スロットです。
-ここに指定したクラスは `variant` prop によるBEM展開の対象にもなります。
+コンポーネントに任意のクラス名を付与するための標準の prop です。`c--`基底クラス（Component Class）や外部スタイルのクラスなどは、この prop から指定します。
 
 :::info
-BEM展開は`c--`基底クラス専用の仕組みです。`a--*`（atomic）や`l--*`（layout）は後述の`atomic` / `layout` prop から指定してください。
+以前は `lismClass` / `variant` という専用スロットがありましたが、`className` に一本化しました。BEM 展開は `@lism-css/ui` の `buildModifierClass` ヘルパーを使って UI コンポーネント側で組み立てる形に変わっています。
 :::
 
 <PreviewTitle>例</PreviewTitle>
-```jsx 'lismClass="c--myComponent"'
-<Lism p="10" lismClass="c--myComponent">Lorem ipsum texts...</Lism>
+```jsx 'className="c--myComponent"'
+<Lism p="10" className="c--myComponent">Lorem ipsum texts...</Lism>
 
 ↓
 
 <div class="c--myComponent -p:10">Lorem ipsum texts...</div>
-```
-
-
-### `variant`
-
-`lismClass`に対するバリエーションクラスを出力できます。
-`lismClass` に複数クラスが指定されている場合、先頭のクラスに対してバリエーションクラスを出力します。
-
-
-<PreviewTitle>例</PreviewTitle>
-```jsx 'variant="secondary"'
-<Lism lismClass="c--myComponent" variant="secondary">Lorem ipsum texts...</Lism>
-
-↓
-
-<div class="c--myComponent c--myComponent--secondary">Lorem ipsum texts...</div>
 ```
 
 
@@ -356,19 +339,18 @@ BP対応プロパティは、配列またはオブジェクトでブレイクポ
 `<Lism>` が生成する `class` 属性は、以下のような順序で出力されます
 
 ```
-[className] [c--] [a--] [l--] [is--] [set--] [u--] [-]
+[className] [a--] [l--] [is--] [set--] [u--] [-]
 ```
 
 | # | Prop | 例 |
 |---|---|---|
-| 1 | 独自クラス（`className`） | `z--header`, `hoge` |
-| 2 | `lismClass` (+ `variant`) | `c--box`, `c--box--primary` |
-| 3 | `atomic` | `a--icon`, `a--divider` |
-| 4 | `layout` | `l--flex`, `l--columns` |
-| 5 | `isXxxx` | `is--wrapper`, `is--layer` |
-| 6 | `set` | `set--hov`, `set--transition` |
-| 7 | `util` | `u--cbox`, `u--trim` |
-| 8 | `prop={value}` | `-p:20`, `-bgc:base-2` |
+| 1 | 独自クラス（`className`） | `c--box`, `z--header`, `hoge` |
+| 2 | `atomic` | `a--icon`, `a--divider` |
+| 3 | `layout` | `l--flex`, `l--columns` |
+| 4 | `isXxxx` | `is--wrapper`, `is--layer` |
+| 5 | `set` | `set--hov`, `set--transition` |
+| 6 | `util` | `u--cbox`, `u--trim` |
+| 7 | `prop={value}` | `-p:20`, `-bgc:base-2` |
 
 
 :::note
