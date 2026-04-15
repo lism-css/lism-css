@@ -1,5 +1,6 @@
 'use client';
 import { useState, useId, Children, isValidElement } from 'react';
+import type { ElementType } from 'react';
 import { Lism, type LismComponentProps } from 'lism-css/react';
 import atts from 'lism-css/lib/helper/atts';
 import buildModifierClass from '../../../helper/buildModifierClass';
@@ -10,14 +11,22 @@ import TabPanel from './TabPanel';
 
 import '../_style.css';
 
-type TabsProps = LismComponentProps<'div'> & {
+type TabsProps<T extends ElementType = 'div'> = LismComponentProps<T> & {
   tabId?: string;
   defaultIndex?: number;
   listProps?: LismComponentProps;
   variant?: string;
 };
 
-export default function Tabs({ tabId = '', defaultIndex = 1, listProps = {}, variant, className, children, ...props }: TabsProps) {
+export default function Tabs<T extends ElementType = 'div'>({
+  tabId = '',
+  defaultIndex = 1,
+  listProps = {},
+  variant,
+  className,
+  children,
+  ...props
+}: TabsProps<T>) {
   const [activeIndex, setActiveIndex] = useState(defaultIndex);
   const generatedId = useId();
   const theTabId = tabId || generatedId;
@@ -62,7 +71,7 @@ export default function Tabs({ tabId = '', defaultIndex = 1, listProps = {}, var
   });
 
   return (
-    <Lism className={atts(className, buildModifierClass('c--tabs', { variant }))} {...props}>
+    <Lism className={atts(className, buildModifierClass('c--tabs', { variant }))} {...(props as LismComponentProps<ElementType>)}>
       {btns.length === 0 ? (
         // TabItemを使わず直接TabListなどを子要素に配置する場合
         children
