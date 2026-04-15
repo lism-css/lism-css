@@ -13,7 +13,7 @@ import { Button } from '@lism-css/ui/astro';
 
 主要スタイルをリセットするためのクラスです。
 
-<EmbedCode dirPath="packages/lism-css" srcPath="src/scss/base/set/_plain.scss" />
+<SrcCode path="src/scss/base/set/_plain.scss" />
 
 <Preview>
   <PreviewTitle>`set--plain`を`button`に適用する例</PreviewTitle>
@@ -37,7 +37,7 @@ import { Button } from '@lism-css/ui/astro';
 
 `.set--shadow` クラスを指定した要素では、シャドウを構成する`--bxsh--`変数が再定義されます。  
 
-<EmbedCode dirPath="packages/lism-css" srcPath="src/scss/base/tokens/_shadow.scss" />
+<SrcCode path="src/scss/base/tokens/_shadow.scss" />
 
 ここで`--shc`変数を上書きすることで、シャドウの色味を調整したりすることが可能です。 
 
@@ -97,7 +97,7 @@ import { Button } from '@lism-css/ui/astro';
 - `--_isHov`は非hover時（かつ非focus-within時）にのみ空白定義さます。
 - `--_notHov`は逆に、hover時またはfocus-within時に空白定義されます。
 
-<EmbedCode dirPath="packages/lism-css" srcPath="src/scss/base/set/_hov.scss" />
+<SrcCode path="src/scss/base/set/_hov.scss" />
 
 
 この空変数トリックにより、次のような書き方ができます。
@@ -185,7 +185,7 @@ import { Button } from '@lism-css/ui/astro';
 
 専用の変数を用いて、transitionプロパティをセットします。
 
-<EmbedCode dirPath="packages/lism-css" srcPath="src/scss/base/set/_transition.scss" />
+<SrcCode path="src/scss/base/set/_transition.scss" />
 
 <Preview>
   <PreviewTitle>使用例</PreviewTitle>
@@ -216,6 +216,8 @@ import { Button } from '@lism-css/ui/astro';
 親要素に`set--innerRs`をクラスをセットし、子要素では`-bdrs:inner`をセットすることで、計算された`--bdrs--inner`をセットすることができます。
 
 （親要素では`bdrs`と`p`の指定が必須となります。）
+
+<SrcCode path="src/scss/base/set/_innerRs.scss" />
 
 <Preview>
   <PreviewTitle>使用例</PreviewTitle>
@@ -282,6 +284,8 @@ import { Button } from '@lism-css/ui/astro';
 |---|---|---|
 | `set--gutter` | `--gutter-size` | `var(--s30)` |
 
+<SrcCode path="src/scss/base/set/_gutter.scss" />
+
 <Preview>
   <PreviewTitle>例</PreviewTitle>
   <PreviewArea resize p="15">
@@ -317,7 +321,7 @@ import { Button } from '@lism-css/ui/astro';
 特定のブレイクポイント以上でのみスタイルを適用させるためのユーティリティクラスです。
 [ブレイクポイント対応](/docs/responsive/)していないプロパティを変化させたい時のハック的手段として活用できます。
 
-<EmbedCode dirPath="packages/lism-css" srcPath="src/scss/base/set/_bp.scss" />
+<SrcCode path="src/scss/base/set/_bp.scss" />
 
 <Preview>
   <PreviewTitle>smサイズ以上でテキストカラーを赤に変える例</PreviewTitle>
@@ -348,7 +352,7 @@ import { Button } from '@lism-css/ui/astro';
 
 `--mask`変数と組み合わせて、自身にmaskを適用します。
 
-<EmbedCode dirPath="packages/lism-css" srcPath="src/scss/base/set/_mask.scss" />
+<SrcCode path="src/scss/base/set/_mask.scss" />
 
 Lismが提供するコンポーネントでは、`set="mask"`と`css={{ '--maskImg': getSvgUrl(svgString) }}`を組み合わせて使用します。
 

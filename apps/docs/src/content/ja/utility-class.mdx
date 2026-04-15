@@ -18,7 +18,7 @@ import { Dog, Cat } from "@phosphor-icons/react";
 
 `color`, `background-color` にそれぞれ生成された 変数がセットされますが、`--bdc`は変数定義のみになるため、ボーダーを表示する時は[`-bd`クラス](/css/bd)との併用が必要です。
 
-<EmbedCode dirPath="packages/lism-css" srcPath="src/scss/utility/_cbox.scss" />
+<SrcCode path="src/scss/utility/_cbox.scss" />
 
 <Preview>
   <PreviewTitle>例</PreviewTitle>
@@ -231,7 +231,7 @@ import { Dog, Cat } from "@phosphor-icons/react";
     ```
   </PreviewCode>
   <PreviewCode slot="tab" label="CSS">
-    <EmbedCode dirPath="packages/lism-css" srcPath="src/scss/utility/_trimHL.scss" />
+    <SrcCode path="src/scss/utility/_trimHL.scss" />
   </PreviewCode>
 </Preview>
 
@@ -277,19 +277,7 @@ import { Dog, Cat } from "@phosphor-icons/react";
 要素を視覚的に隠すことができるクラスです。  
 スクリーンリーダー用のテキストなどに利用してください。
 
-```css
-.u--srOnly:not(#_) {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip-path: inset(50%);
-  white-space: nowrap;
-  border: 0;
-}
-```
+<SrcCode path="src/scss/utility/_hidden.scss" />
 
 
 ## `u--collapseGrid`
@@ -298,6 +286,8 @@ import { Dog, Cat } from "@phosphor-icons/react";
 グリッド・フレックスボックス等の子要素間に区切りとなるようなボーダーを表示します。
 
 実装としてはbox-shadowで表現していますので、少し扱いには注意が必要です。
+
+<SrcCode path="src/scss/utility/_itemDivider.scss" />
 
 <Preview>
   <PreviewTitle>例</PreviewTitle>
@@ -488,7 +478,7 @@ Gridを使って table タグのような表現もできるようになります
 
 `scroll-snap-`系のプロパティをCSS変数でセットできるようにします。
 
-<EmbedCode dirPath="packages/lism-css" srcPath="src/scss/utility/_snap.scss" />
+<SrcCode path="src/scss/utility/_snap.scss" />
 
 <Box class="u--snap" ov="auto" ar="16/9" bd>
   <div className="l--frame -ar:16/9 -p:15"><img src="https://cdn.lism-css.com/img/u-1.jpg" width="960" height="640" loading="lazy" /></div>
@@ -503,6 +493,8 @@ Gridを使って table タグのような表現もできるようになります
 ## `u--clipText`
 
 テキストで背景をクリッピングするためのクラスです。
+
+<SrcCode path="src/scss/utility/_clipText.scss" />
 
 <Preview>
   <PreviewTitle>テキストで背景をクリッピング</PreviewTitle>
@@ -530,10 +522,6 @@ Gridを使って table タグのような表現もできるようになります
     ```
   </PreviewCode>
 </Preview>
-
-```css
-...
-```
 
 
 

@@ -18,7 +18,7 @@ Generates `--c`, `--bgc`, and `--bdc` from the `--keycolor` variable using `colo
 
 `color` and `background-color` are set to the generated variables respectively, but `--bdc` is only defined as a variable — to display a border, use it together with the [`-bd` class](/css/bd).
 
-<EmbedCode dirPath="packages/lism-css" srcPath="src/scss/utility/_cbox.scss" />
+<SrcCode path="src/scss/utility/_cbox.scss" />
 
 <Preview>
   <PreviewTitle>Example</PreviewTitle>
@@ -231,7 +231,7 @@ Classes for adjusting the half-leading spacing of text.
     ```
   </PreviewCode>
   <PreviewCode slot="tab" label="CSS">
-    <EmbedCode dirPath="packages/lism-css" srcPath="src/scss/utility/_trimHL.scss" />
+    <SrcCode path="src/scss/utility/_trimHL.scss" />
   </PreviewCode>
 </Preview>
 
@@ -276,19 +276,7 @@ Margin adjustment is disabled for `img`, `figure`, and `table` elements inside `
 A class for visually hiding an element.
 Use it for screen reader text and similar content.
 
-```css
-.u--srOnly.u--srOnly {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip-path: inset(50%);
-  white-space: nowrap;
-  border: 0;
-}
-```
+<SrcCode path="src/scss/utility/_hidden.scss" />
 
 
 ## `u--collapseGrid`
@@ -297,6 +285,8 @@ Use it for screen reader text and similar content.
 Displays dividing borders between children of a grid or flexbox container.
 
 Implemented using `box-shadow`, so some care is needed when using it.
+
+<SrcCode path="src/scss/utility/_itemDivider.scss" />
 
 <Preview>
   <PreviewTitle>Example</PreviewTitle>
@@ -487,7 +477,7 @@ You can also achieve a table-like layout using Grid.
 
 Allows `scroll-snap-` properties to be set via CSS variables.
 
-<EmbedCode dirPath="packages/lism-css" srcPath="src/scss/utility/_snap.scss" />
+<SrcCode path="src/scss/utility/_snap.scss" />
 
 <Box class="u--snap" ov="auto" ar="16/9" bd>
   <div className="l--frame -ar:16/9 -p:15"><img src="https://cdn.lism-css.com/img/u-1.jpg" width="960" height="640" loading="lazy" /></div>
@@ -502,6 +492,8 @@ Allows `scroll-snap-` properties to be set via CSS variables.
 ## `u--clipText`
 
 A class for clipping a background with text.
+
+<SrcCode path="src/scss/utility/_clipText.scss" />
 
 <Preview>
   <PreviewTitle>Background clipped by text</PreviewTitle>
@@ -529,10 +521,6 @@ A class for clipping a background with text.
     ```
   </PreviewCode>
 </Preview>
-
-```css
-...
-```
 
 
 

@@ -13,7 +13,7 @@ Utility classes defined in the `@lism-base` layer are provided in the format `se
 
 A class for resetting primary styles.
 
-<EmbedCode dirPath="packages/lism-css" srcPath="src/scss/base/set/_plain.scss" />
+<SrcCode path="src/scss/base/set/_plain.scss" />
 
 <Preview>
   <PreviewTitle>Applying `set--plain` to a `button` element</PreviewTitle>
@@ -37,7 +37,7 @@ A class for resetting primary styles.
 
 Elements with the `.set--shadow` class have the `--bxsh--` variables that compose the shadow redefined.
 
-<EmbedCode dirPath="packages/lism-css" srcPath="src/scss/base/tokens/_shadow.scss" />
+<SrcCode path="src/scss/base/tokens/_shadow.scss" />
 
 By overriding the `--shc` variable here, you can adjust the color tint of the shadow.
 
@@ -97,7 +97,7 @@ Sets the hover state variables (`--_notHov`, `--_isHov``) as follows. Primarily 
 - `--_isHov` is defined as an empty value only when not hovered (and not focus-within).
 - Conversely, `--_notHov` is defined as an empty value when hovered or focus-within.
 
-<EmbedCode dirPath="packages/lism-css" srcPath="src/scss/base/set/_hov.scss" />
+<SrcCode path="src/scss/base/set/_hov.scss" />
 
 
 This empty variable trick enables the following patterns:
@@ -185,7 +185,7 @@ See the [`hover` documentation page](/en/docs/property-class/hov#set--hov) for u
 
 Sets the `transition` property using dedicated variables.
 
-<EmbedCode dirPath="packages/lism-css" srcPath="src/scss/base/set/_transition.scss" />
+<SrcCode path="src/scss/base/set/_transition.scss" />
 
 <Preview>
   <PreviewTitle>Usage example</PreviewTitle>
@@ -216,6 +216,8 @@ A class that automatically calculates the inner border radius (`--bdrs--inner`) 
 Apply `set--innerRs` to the parent element, then use `-bdrs:inner` on the child element to apply the calculated `--bdrs--inner`.
 
 (Both `bdrs` and `p` must be specified on the parent element.)
+
+<SrcCode path="src/scss/base/set/_innerRs.scss" />
 
 <Preview>
   <PreviewTitle>Usage example</PreviewTitle>
@@ -282,6 +284,8 @@ It is provided as a separate class from padding utilities to reserve a consisten
 |---|---|---|
 | `set--gutter` | `--gutter-size` | `var(--s30)` |
 
+<SrcCode path="src/scss/base/set/_gutter.scss" />
+
 <Preview>
   <PreviewTitle>Example</PreviewTitle>
   <PreviewArea resize p="15">
@@ -317,7 +321,7 @@ It is provided as a separate class from padding utilities to reserve a consisten
 A utility class for applying styles only at or above a specific breakpoint.
 It can be used as a workaround for properties that do not support [responsive breakpoints](/en/docs/responsive/).
 
-<EmbedCode dirPath="packages/lism-css" srcPath="src/scss/base/set/_bp.scss" />
+<SrcCode path="src/scss/base/set/_bp.scss" />
 
 <Preview>
   <PreviewTitle>Example: changing text color to red at sm size and above</PreviewTitle>
@@ -348,7 +352,7 @@ It can be used as a workaround for properties that do not support [responsive br
 
 Combines with the `--mask` variable to apply a mask to the element itself.
 
-<EmbedCode dirPath="packages/lism-css" srcPath="src/scss/base/set/_mask.scss" />
+<SrcCode path="src/scss/base/set/_mask.scss" />
 
 In Lism components, use `set="mask"` with `css={{ '--maskImg': getSvgUrl(svgString) }}`.
 
