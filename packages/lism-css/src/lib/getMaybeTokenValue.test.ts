@@ -33,20 +33,20 @@ describe('getMaybeTokenValue', () => {
       expect(getMaybeTokenValue('size', 20, TOKENS)).toBe('var(--size--20)');
     });
 
-    test('マイナスの値は n プレフィックスに変換される', () => {
+    test('マイナスの値はそのまま変数名の一部になる', () => {
       const TOKENS = {
         margin: new Set(['-10', '-20']),
       };
-      expect(getMaybeTokenValue('margin', '-10', TOKENS)).toBe('var(--margin--n10)');
-      expect(getMaybeTokenValue('margin', '-20', TOKENS)).toBe('var(--margin--n20)');
+      expect(getMaybeTokenValue('margin', '-10', TOKENS)).toBe('var(--margin---10)');
+      expect(getMaybeTokenValue('margin', '-20', TOKENS)).toBe('var(--margin---20)');
     });
 
-    test('マイナスの数値も n プレフィックスに変換される', () => {
+    test('マイナスの数値もそのまま変数名の一部になる', () => {
       const TOKENS = {
         margin: new Set(['-10', '-20']),
       };
-      expect(getMaybeTokenValue('margin', -10, TOKENS)).toBe('var(--margin--n10)');
-      expect(getMaybeTokenValue('margin', -20, TOKENS)).toBe('var(--margin--n20)');
+      expect(getMaybeTokenValue('margin', -10, TOKENS)).toBe('var(--margin---10)');
+      expect(getMaybeTokenValue('margin', -20, TOKENS)).toBe('var(--margin---20)');
     });
   });
 
@@ -74,12 +74,12 @@ describe('getMaybeTokenValue', () => {
       expect(getMaybeTokenValue('size', 20, TOKENS)).toBe('var(--size--20)');
     });
 
-    test('マイナスの値は n プレフィックスに変換される', () => {
+    test('マイナスの値はそのまま変数名の一部になる', () => {
       const TOKENS = {
         margin: ['-10', '-20'],
       };
-      expect(getMaybeTokenValue('margin', '-10', TOKENS)).toBe('var(--margin--n10)');
-      expect(getMaybeTokenValue('margin', '-20', TOKENS)).toBe('var(--margin--n20)');
+      expect(getMaybeTokenValue('margin', '-10', TOKENS)).toBe('var(--margin---10)');
+      expect(getMaybeTokenValue('margin', '-20', TOKENS)).toBe('var(--margin---20)');
     });
   });
 
@@ -230,11 +230,11 @@ describe('getMaybeTokenValue', () => {
       expect(getMaybeTokenValue('custom', 'baz_qux', TOKENS)).toBe('var(--custom--baz_qux)');
     });
 
-    test('マイナスで始まるが負の数値ではない値', () => {
+    test('マイナスで始まる値もそのまま変数名の一部になる', () => {
       const TOKENS = {
         custom: new Set(['-webkit-fill-available']),
       };
-      expect(getMaybeTokenValue('custom', '-webkit-fill-available', TOKENS)).toBe('var(--custom--nwebkit-fill-available)');
+      expect(getMaybeTokenValue('custom', '-webkit-fill-available', TOKENS)).toBe('var(--custom---webkit-fill-available)');
     });
 
     test('空の TOKENS オブジェクト', () => {
@@ -273,7 +273,7 @@ describe('getMaybeTokenValue', () => {
       const TOKENS = {
         fz: new Set(['-2', '-1', '0', '1', '2', '3']),
       };
-      expect(getMaybeTokenValue('fz', '-2', TOKENS)).toBe('var(--fz--n2)');
+      expect(getMaybeTokenValue('fz', '-2', TOKENS)).toBe('var(--fz---2)');
       expect(getMaybeTokenValue('fz', '0', TOKENS)).toBe('var(--fz--0)');
       expect(getMaybeTokenValue('fz', '2', TOKENS)).toBe('var(--fz--2)');
     });

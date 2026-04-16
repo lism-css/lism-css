@@ -29,22 +29,14 @@ export default function getMaybeTokenValue(tokenKey: string, value: TokenValue, 
   if (!tokenValues) return String(value);
 
   // 数値の時は文字列化してから判定
-  let stringValue = typeof value === 'number' ? `${value}` : value;
+  const stringValue = typeof value === 'number' ? `${value}` : value;
 
   if (tokenValues instanceof Set) {
     if (tokenValues.has(stringValue)) {
-      // マイナスの値を変換（-10 → n10）
-      if (stringValue.startsWith('-')) {
-        stringValue = `n${stringValue.slice(1)}`;
-      }
       return `var(--${tokenKey}--${stringValue})`;
     }
   } else if (Array.isArray(tokenValues)) {
     if (tokenValues.includes(stringValue)) {
-      // マイナスの値を変換（-10 → n10）
-      if (stringValue.startsWith('-')) {
-        stringValue = `n${stringValue.slice(1)}`;
-      }
       return `var(--${tokenKey}--${stringValue})`;
     }
   } else if ('pre' in tokenValues || 'values' in tokenValues) {

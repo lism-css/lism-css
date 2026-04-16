@@ -243,7 +243,7 @@ In this example, the following styles would be automatically generated into `lis
   padding: 2em;
 }
 .-o\:-5 {
-  opacity: var(--o--n5);
+  opacity: var(--o---5);
 }
 ```
 
@@ -256,7 +256,7 @@ Also, the styles for `is--` classes must be manually defined and loaded.
 <PreviewTitle>The following must be loaded manually:</PreviewTitle>
 ```css
 :root {
-  --o--n5: 0.9;
+  --o---5: 0.9;
 }
 .is--hoge {
   /* ... */
@@ -296,7 +296,7 @@ You can also override SCSS variables in line with your `lism.config.js` configur
     ),
     'o': (
       utilities: (
-        '-5': 'var(--o--n5)',
+        '-5': 'var(--o---5)',
       ),
     ),
   )
@@ -308,7 +308,7 @@ You can also override SCSS variables in line with your `lism.config.js` configur
 // Append token definitions
 @layer lism-base {
   :root {
-    --o--n5: 0.9;
+    --o---5: 0.9;
   }
 }
 ```
