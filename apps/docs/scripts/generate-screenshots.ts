@@ -298,6 +298,9 @@ async function main() {
     if (failed > 0) {
       exitCode = 1;
     }
+  } catch (error) {
+    console.error('❌ エラー:', error instanceof Error ? (error.stack ?? error.message) : error);
+    exitCode = 1;
   } finally {
     // クリーンアップ
     if (browser) {
