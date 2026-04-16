@@ -1,18 +1,15 @@
 ---
 title: '-max-sz'
-description: 'コンテンツの最大幅を制御する -max-sz プロパティクラスの使い方について解説します。'
+description: 'コンテンツの最大幅を制御する -max-sz クラスの使い方について解説します。'
 ---
 
 import { Flex, Media, Layer, Spacer, Box, Center, Stack, Frame, BoxLink } from 'lism-css/react';
 
 
-Lismには、コンテンツサイズ用のトークンとして`--sz--{sz}`が用意されています、（`{sz}` = `xs`, `s`, `m`, `l`, `xl`, `min`）
+Lismには、コンテンツサイズ用のトークンとして`--sz--{sz}`（`{sz}` = `xs`, `s`, `m`, `l`, `xl`）が用意されており、それぞれに対応する`-max-sz`クラスが用意されています。（`-max-sz:{xs~xl}`）
 
-コンテンツの最大幅（`max-inline-size`)指定用の `-max-sz`クラスに対して、それぞれユーティリティクラスが用意されています。
 
-{/* `is--wrapper`が`max-inline-size`でコンテンツサイズを制御するので、それに合わせて`-max-sz`Propertyクラスのプリセット値も用意しています。 */}
-
-`-max-sz:{xs~xl}`はそのまま`--sz--{xs~xl}`がセットされるクラスです。
+このページでは、それ以外の特殊なクラスについて紹介します。
 
 
 ## -max-sz:full, -max-sz:container
