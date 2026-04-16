@@ -1,11 +1,22 @@
 ---
+import type { AstroLismBaseProps } from 'lism-css/astro';
 import { Lism } from 'lism-css/astro';
 import atts from 'lism-css/lib/helper/atts';
 import '../_style.css';
 
+type Props = AstroLismBaseProps & {
+  viewBox?: string;
+  isEmpty?: boolean;
+  level?: number;
+  stretch?: string;
+  offset?: string;
+  flip?: string;
+  isAnimation?: boolean;
+};
+
 const { class: className, viewBox, isAnimation, isEmpty, level = 5, stretch, offset, flip, style = {}, ...props } = Astro.props;
 
-const computedStyle: Record<string, string | undefined> = { ...style };
+const computedStyle: Record<string, unknown> = { ...style };
 computedStyle['--level'] = String(level);
 if (offset != null) computedStyle['--_inner-offset'] = offset;
 if (stretch != null) computedStyle['--_inner-stretch'] = stretch;
@@ -19,7 +30,7 @@ if (stretch != null) computedStyle['--_inner-stretch'] = stretch;
       aria-hidden="true"
       data-flip={flip || undefined}
       data-has-animation={isAnimation ? 'true' : undefined}
-      style={computedStyle}
+      style={computedStyle as Record<string, string | undefined>}
       {...props}
     >
       {isEmpty ? null : (
