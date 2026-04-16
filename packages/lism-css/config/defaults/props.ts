@@ -83,8 +83,8 @@ export default {
     prop: 'maxInlineSize',
     token: 'sz',
     tokenClass: 1,
+    presets: ['full'],
     exUtility: {
-      min: '',
       full: '',
       container: '',
     },

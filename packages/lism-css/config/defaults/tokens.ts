@@ -8,7 +8,7 @@ export default {
   o: ['-10', '-20', '-30'],
   bdrs: ['10', '20', '30', '40', '99', 'inner'],
   bxsh: ['10', '20', '30', '40'],
-  sz: ['xs', 's', 'm', 'l', 'xl', 'min', 'full', 'container'],
+  sz: ['xs', 's', 'm', 'l', 'xl', 'container'],
   ar: ['og'],
   space: {
     pre: '--s',
