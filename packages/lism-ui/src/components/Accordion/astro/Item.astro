@@ -1,12 +1,17 @@
 ---
 // scriptを使うので ref の関係で <Lism> ではなく getLismProps() を使う
+import type { AstroLismBaseProps } from 'lism-css/astro';
 import getLismProps from 'lism-css/lib/getLismProps';
 import atts from 'lism-css/lib/helper/atts';
 import uuid from '../../../helper/uuid.js';
 
 import '../_style.css';
 
-const { accID: _accID, class: className, ...restProps } = Astro.props || {};
+type Props = AstroLismBaseProps & {
+  accID?: string;
+};
+
+const { accID: _accID, class: className, ...restProps } = Astro.props;
 
 // aria-controls / id 紐付け用のIDを生成（カスタム指定があればそれを使用、なければ自動生成）
 const accID = _accID || uuid();

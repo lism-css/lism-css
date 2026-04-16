@@ -1,10 +1,15 @@
 ---
+import type { AstroLismBaseProps } from 'lism-css/astro';
 import { Stack } from 'lism-css/astro';
 import atts from 'lism-css/lib/helper/atts';
 
 import '../_style.css';
 
-const { class: className, allowMultiple, ...props } = Astro.props || {};
+type Props = AstroLismBaseProps & {
+  allowMultiple?: boolean;
+};
+
+const { class: className, allowMultiple, ...props } = Astro.props;
 ---
 
 <Stack class={atts(className, 'c--accordion')} data-allow-multiple={allowMultiple ? '' : undefined} {...props}><slot /></Stack>

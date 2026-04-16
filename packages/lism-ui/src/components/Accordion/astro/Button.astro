@@ -1,9 +1,17 @@
 ---
+import type { HTMLTag, Polymorphic } from 'astro/types';
+import type { AstroLismBaseProps } from 'lism-css/astro';
 import { Lism } from 'lism-css/astro';
 import atts from 'lism-css/lib/helper/atts';
 import Icon from './Icon.astro';
 
-const { isOpen = false, accID = '__LISM_ACC_ID__', class: className, ...props } = Astro.props || {};
+type Props<Tag extends HTMLTag = 'button'> = Polymorphic<{ as: Tag }> &
+  AstroLismBaseProps & {
+    isOpen?: boolean;
+    accID?: string;
+  };
+
+const { isOpen = false, accID = '__LISM_ACC_ID__', class: className, ...props } = Astro.props;
 ---
 
 <Lism
