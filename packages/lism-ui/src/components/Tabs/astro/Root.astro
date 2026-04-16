@@ -1,10 +1,7 @@
 ---
-// import type { LismProps } from 'lism-css/types';
 import { Lism } from 'lism-css/astro';
 import atts from 'lism-css/lib/helper/atts';
 import buildModifierClass from '../../../helper/buildModifierClass';
-// import Tab from './Tab.astro';
-// import TabPanel from './Panel.astro';
 import TabList from './List.astro';
 import uuid from '../../../helper/uuid.js';
 
@@ -12,14 +9,6 @@ import transformTabitems from './transformTabitems.js';
 
 import '../_style.css';
 
-// import TheTab from './TheTab.astro';}
-// slotsについて: https://docs.astro.build/ja/reference/api-reference/#astroslots
-
-// Propsの定義
-// interface Props extends LismProps {
-// 	uid?: string | number;
-// 	defaultIndex?: string | number;
-// }
 // propsの取得
 const { defaultIndex = 1, tabId = '', listProps = {}, variant, class: className, ...props } = Astro.props || {};
 
