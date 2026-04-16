@@ -118,23 +118,16 @@ Property Classの命名規則については、以下の通りです。
 | font | `f` |
 | font-size | `fz` |
 | font-weight | `fw` |
-| text-align | `ta` |
-| text-decoration | `td` |
-| border | `bd` |
-| border-style | `bds` |
-| border-width | `bdw` |
 | background | `bg` |
 | background-color | `bgc` |
 | background-image | `bgi` |
 | flex | `fx` |
 | flex-shrink | `fxsh` |
 | flex-grow | `fxg` |
-| overflow | `ov` |
-| overflow-wrap | `ovw` |
+| grid-template | `gt` |
+| grid-template-columns | `gtc` |
+| grid-template-rows | `gtr` |
 </div>
-
-{/* | grid-template-columns | `gtc` |
-| grid-template-rows | `gtr` | */}
 
 
 #### 方向指定系の形式: 「グループ略称」 + `-` +「方向指定」
@@ -142,14 +135,15 @@ Property Classの命名規則については、以下の通りです。
 - 方向を示すサイドプロパティは、ハイフン（`-`）付きのサフィックスで方向を指定します。
 - `inline`/`block`は、`x`/`y` とします。
 
-<div class="c--propTable">
+<figure class="c--propTable">
+<figcaption>例:</figcaption>
 | 方向 | サフィックス | 例 |
 |------|-----------|-----|
 | physical | `-t` / `-b` / `-l` / `-r` | `bd-t`, `bd-b`, `bd-l`, `bd-r` |
 | inline / block | `-x` / `-y` | `bd-x`, `bd-y` |
 | start / end | `-s` / `-e` | `bd-x-s`, `bd-x-e`, `bd-y-s`, `bd-y-e` |
 | x / y | `-x` / `-y` | `ov-x`, `ov-y` |
-</div>
+</figure>
 
 #### 方向指定系の例外: `p`, `m` のみ、最初のハイフンを省略
 
@@ -169,18 +163,20 @@ Property Classの命名規則については、以下の通りです。
 
 NG例: `flex`を`fx`とし、`flex-shrink`を`fsh`としてしまう。（`font-*`系に`fsh`がないので実害はないが、一貫性を保つためにNGとする）
 
-### max-* / min-* プロパティ
+### max- / min- プロパティ
 
 `max-`, `min-` プレフィックスはハイフンを保持します。
 
-<div class="c--propTable">
+
+<figure class="c--propTable">
+<figcaption>例:</figcaption>
 | CSS プロパティ | Prop |
 |-------------|------|
 | max-width | `max-w` |
 | min-width | `min-w` |
 | max-height | `max-h` |
 | min-height | `min-h` |
-</div>
+</figure>
 
 ### その他のプロパティ
 
@@ -189,9 +185,9 @@ NG例: `flex`を`fx`とし、`flex-shrink`を`fsh`としてしまう。（`font-
 1. **1単語**: そのまま使用 or 省略
 2. ハイフン繋がり、または**6文字以上**: Emmet形式、または認識しやすい範囲で省略
 
-例
 
-<div class="c--propTable">
+<figure class="c--propTable">
+<figcaption>例:</figcaption>
 | CSS プロパティ | Prop | 分類 |
 |-------------|------|------|
 | float | `float` | そのまま |
@@ -199,18 +195,19 @@ NG例: `flex`を`fx`とし、`flex-shrink`を`fsh`としてしまう。（`font-
 | position | `pos` | 省略 |
 | overflow | `ov` | 省略 |
 | inline-size | `sz` | 省略 |
-| block-size | `ysz` | 省略 |
+| block-size | `bsz` | 省略 |
 | aspect-ratio | `ar` | 省略 |
 | writing-mode | `wm` | 省略 |
 | white-space | `whs` | 省略 |
-</div>
+</figure>
 
 
 ### 1文字プロパティの短縮名の再利用
 
-**グループ持たない1文字プロパティ**の場合は、その他のハイフン前半部分の略称としてその文字を再利用できます。
+**グループを持たない1文字プロパティ**の場合は、その他のハイフン前半部分の略称としてその文字を再利用できます。
+また、**方向プロパティのみ**をサブプロパティに持つ場合も、方向サフィックスと衝突しない範囲で再利用できます。
 
-例えば、`top-*` のようなグループは存在しないので、`text-*` の `text` を `t` として再利用できます。
+以下はその一例です。
 
 <div class="c--propTable">
 | 1文字 Prop | 再利用先 | 展開例 |
@@ -218,6 +215,7 @@ NG例: `flex`を`fx`とし、`flex-shrink`を`fsh`としてしまう。（`font-
 | `t`(`top`) | `text-*`| `ta`(`text-align`) |
 | `l`(`left`) | `line-*`| `lh`(`line-height`) |
 | `w`(`width`) | `writing-`| `wm`(`writing-mode`) |
+| `p`(`padding`) | `place-*`| `pi`(`place-items`) |
 </div>
 
 :::note
