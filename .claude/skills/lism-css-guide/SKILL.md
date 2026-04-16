@@ -100,7 +100,8 @@ import { Accordion, Tabs, Button } from '@lism-css/ui/astro';
 このスキルには以下の詳細ファイルが含まれます。必要に応じて参照してください。
 
 - [tokens.md](./tokens.md) — Lismで利用できるデザイントークンとCSS変数。（余白・フォントサイズ・タイポグラフィ・角丸・影・カラー・不透明度）
-- [css-rules.md](./css-rules.md) — CSS設計の概要。（Layer構造・クラスの分類・命名規則・プレフィックスのつけ方・Component クラス（`c--`）・カスタムCSSの追加ルール）
+- [css-rules.md](./css-rules.md) — CSS設計の概要。（Layer構造・クラスの分類・プレフィックスのつけ方・Component クラス（`c--`）・カスタムCSSの追加ルール）
+- [naming.md](./naming.md) — 命名規則の詳細。（CSS変数名・クラス名・Property Class の `{prop}` / `{value}` の省略ルール）
 - [base-styles.md](./base-styles.md) — HTML要素のベーススタイリング。（Reset CSSやHTML要素の基本スタイルをカスタマイズできるCSS変数）
 - [set-class.md](./set-class.md) — ベーススタイル・変数セットに使用する`set--` クラスの一覧と用途。
 - [primitive-class.md](./primitive-class.md) — レイアウトを組み立てる Primitive クラス（`is--`/`l--`/`a--`）の一覧と用途。
