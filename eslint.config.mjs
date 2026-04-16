@@ -26,7 +26,6 @@ export default defineConfig(
       'packages/lism-css/config.d.ts',
       '**/.prettierrc.cjs',
       '**/.stylelintrc.mjs',
-      '**/.astro/**',
       '**/vite.config.*',
     ],
   },
