@@ -3,7 +3,7 @@ import { resolve } from 'path';
 import { defineConfig } from 'vite';
 import dts from 'unplugin-dts/vite';
 import preserveDirectives from 'rollup-plugin-preserve-directives';
-// import { nodePolyfills } from 'vite-plugin-node-polyfills';
+import { libInjectCss } from 'vite-plugin-lib-inject-css';
 
 // import {useRef} from 'react'; とかした時に、React is not defined 言われないように
 import react from '@vitejs/plugin-react-swc';
@@ -44,8 +44,8 @@ const entries = {
 // https://ja.vitejs.dev/guide/build.html#library-mode
 export default defineConfig({
   plugins: [
-    react({ jsxRuntime: 'automatic' }), // React 17以降推奨のautomaticを明示
-    // lismResolver() // lism-css/パッケージ名の解決プラグイン
+    react({ jsxRuntime: 'automatic' }),
+    libInjectCss(),
     dts({
       tsconfigPath: './tsconfig.json',
       outDir: 'dist',
