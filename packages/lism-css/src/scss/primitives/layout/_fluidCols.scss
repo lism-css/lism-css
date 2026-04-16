@@ -2,7 +2,7 @@
     Memo: オーバーフロー回避のため、 min({cols}, 100%) とする。
 */
 .l--fluidCols {
-  --cols: var(--sz--min);
+  --cols: 18rem;
   --autoMode: auto-fit;
   display: grid;
   grid-template-columns: repeat(var(--autoMode), minmax(min(var(--cols), 100%), 1fr));

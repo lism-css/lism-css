@@ -84,7 +84,6 @@ export default {
     token: 'sz',
     tokenClass: 1,
     exUtility: {
-      min: '',
       full: '',
       container: '',
     },
