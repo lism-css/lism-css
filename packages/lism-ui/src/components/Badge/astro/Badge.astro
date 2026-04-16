@@ -1,8 +1,15 @@
 ---
+import type { HTMLTag, Polymorphic } from 'astro/types';
+import type { AstroLismBaseProps } from 'lism-css/astro';
 import { Lism } from 'lism-css/astro';
 import atts from 'lism-css/lib/helper/atts';
 import buildModifierClass from '../../../helper/buildModifierClass';
 import '../_style.css';
+
+type Props<Tag extends HTMLTag = 'span'> = Polymorphic<{ as: Tag }> &
+  AstroLismBaseProps & {
+    variant?: string;
+  };
 
 const { class: className, variant, ...props } = Astro.props;
 ---
