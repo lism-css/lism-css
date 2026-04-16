@@ -7,6 +7,8 @@ import eslintConfigPrettier from 'eslint-config-prettier/flat';
 import globals from 'globals';
 import eslint from '@eslint/js';
 import tseslint from 'typescript-eslint';
+import astro from 'eslint-plugin-astro';
+import astroParser from 'astro-eslint-parser';
 
 export default defineConfig(
   {
@@ -24,11 +26,7 @@ export default defineConfig(
       'packages/lism-css/config.d.ts',
       '**/.prettierrc.cjs',
       '**/.stylelintrc.mjs',
-      '**/.astro/**',
       '**/vite.config.*',
-      // lism-ui: Astro 向けファイルは tsconfig から除外されているため lint 対象外
-      'packages/lism-ui/src/**/astro/**',
-      'packages/lism-ui/src/components/astro.ts',
     ],
   },
   eslintConfigPrettier,
@@ -106,5 +104,30 @@ export default defineConfig(
       '@typescript-eslint/no-unsafe-call': 'off',
     },
   },
-  ...storybook.configs['flat/recommended']
+  ...storybook.configs['flat/recommended'],
+  {
+    files: ['packages/lism-ui/src/**/astro/**/*.ts', 'packages/lism-ui/src/components/astro.ts'],
+    extends: [tseslint.configs.disableTypeChecked],
+    languageOptions: {
+      parserOptions: { projectService: false },
+    },
+  },
+  ...astro.configs.recommended,
+  {
+    files: ['**/*.astro'],
+    languageOptions: {
+      parser: astroParser,
+      parserOptions: {
+        parser: tseslint.parser,
+        projectService: false,
+        project: null,
+        tsconfigRootDir: import.meta.dirname,
+      },
+      globals: { astroHTML: 'readonly' },
+    },
+    rules: {
+      'react/no-unknown-property': 'off',
+      'no-irregular-whitespace': 'off',
+    },
+  }
 );
