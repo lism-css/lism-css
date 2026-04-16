@@ -70,43 +70,47 @@ export default defineConfig({
 ### React
 
 ```jsx
-import { Accordion, Modal, Tabs, Button } from '@lism-css/ui/react';
-import { Stack, Text } from 'lism-css/react';
+import { Accordion, Button } from '@lism-css/ui/react';
+import { Text } from 'lism-css/react';
 
-<Stack g="20">
-  <Accordion>
-    <Accordion.Heading>FAQ Question</Accordion.Heading>
-    <Accordion.Body>
+<Accordion.Root>
+  <Accordion.Item>
+    <Accordion.Heading>
+      <Accordion.Button>FAQ Question</Accordion.Button>
+    </Accordion.Heading>
+    <Accordion.Panel>
       <Text>Answer content goes here.</Text>
-    </Accordion.Body>
-  </Accordion>
+    </Accordion.Panel>
+  </Accordion.Item>
+</Accordion.Root>
 
-  <Button href="/about" variant="outline">
-    Learn More
-  </Button>
-</Stack>
+<Button href="/about" variant="outline">
+  Learn More
+</Button>
 ```
 
 ### Astro
 
 ```astro
 ---
-import { Accordion, Modal, Tabs, Button } from '@lism-css/ui/astro';
-import { Stack, Text } from 'lism-css/astro';
+import { Accordion, Button } from '@lism-css/ui/astro';
+import { Text } from 'lism-css/astro';
 ---
 
-<Stack g="20">
-  <Accordion>
-    <Accordion.Heading>FAQ Question</Accordion.Heading>
-    <Accordion.Body>
+<Accordion.Root>
+  <Accordion.Item>
+    <Accordion.Heading>
+      <Accordion.Button>FAQ Question</Accordion.Button>
+    </Accordion.Heading>
+    <Accordion.Panel>
       <Text>Answer content goes here.</Text>
-    </Accordion.Body>
-  </Accordion>
+    </Accordion.Panel>
+  </Accordion.Item>
+</Accordion.Root>
 
-  <Button href="/about" variant="outline">
-    Learn More
-  </Button>
-</Stack>
+<Button href="/about" variant="outline">
+  Learn More
+</Button>
 ```
 
 ## Relationship to lism-css
