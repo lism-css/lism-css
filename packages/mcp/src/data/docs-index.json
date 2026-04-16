@@ -22,7 +22,7 @@
     "title": "CSS設計",
     "description": "Lism CSS の階層構造やクラス設計の方針など、CSS設計の全体像について解説します。",
     "category": "guide",
-    "headings": ["Lism CSSの階層構造", "デザイントークン", "CSSのクラス設計", "命名規則について", "単語の省略について"],
+    "headings": ["Lism CSSの階層構造", "デザイントークン", "CSSのクラス設計"],
     "keywords": [
       "CSS設計",
       "methodology",
@@ -184,7 +184,15 @@
       "overflow",
       "opacity",
       "flex",
-      "grid"
+      "grid",
+      "wm",
+      "writing-mode",
+      "iso",
+      "isolation",
+      "float",
+      "clear",
+      "whs",
+      "white-space"
     ],
     "snippet": "単一のCSSプロパティに対応するユーティリティクラス。-{prop}:{value} の形式（例: -g:5, -p:20, -fz:l）。HTMLでは class=\"-g:5\" のように使用。レスポンシブ対応の -_{bp} 形式もサポート。"
   },
@@ -257,6 +265,8 @@
     "description": "Lism CSS の各バージョンにおける変更履歴をまとめています。",
     "category": "guide",
     "headings": [
+      "`@lism-css/ui` v.0.13.1 (2026.04.15)",
+      "v.0.13.1 (2026.04.15)",
       "`@lism-css/ui` v.0.13.0 (2026.04.14)",
       "v.0.13.0 (2026.04.14)",
       "`@lism-css/ui` v.0.12.0 (2026.04.10)",
@@ -1067,7 +1077,7 @@
     "title": "MCP Server",
     "description": "AIコーディングツールが Lism CSS のコンポーネント・Props・トークン情報をリアルタイムに参照できる MCP サーバーのセットアップ方法。",
     "category": "guide",
-    "headings": ["できること", "セットアップ"],
+    "headings": ["セットアップ", "できること"],
     "keywords": ["MCP", "AI", "Claude", "Cursor", "セットアップ", "コーディング支援", "Model Context Protocol"],
     "snippet": "@lism-css/mcp は Lism CSS の情報をAIコーディングツールに提供するMCPサーバー。コンポーネント情報の参照・Props↔CSSマッピング・デザイントークン参照・ドキュメント検索・CSS→Lism変換に対応。Claude Code, Cursor 等から利用可能。"
   },
