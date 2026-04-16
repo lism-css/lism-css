@@ -1032,14 +1032,14 @@ describe('Lism', () => {
     });
 
     describe('Other CSS', () => {
-      test('isolation を指定できる', () => {
+      test('iso（isolation）を指定できる', () => {
         render(
-          <Lism isolation="isolate" data-testid="lism">
+          <Lism iso="isolate" data-testid="lism">
             test
           </Lism>
         );
         const element = screen.getByTestId('lism');
-        expect(element).toHaveClass('-isolation:isolate');
+        expect(element).toHaveClass('-iso:isolate');
       });
 
       test('whs（white-space）を指定できる', () => {

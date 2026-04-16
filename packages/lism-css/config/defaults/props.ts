@@ -89,9 +89,9 @@ export default {
       container: '',
     },
   },
-  ysz: { prop: 'blockSize', token: 'sz' },
-  'min-ysz': { prop: 'minBlockSize', token: 'sz' },
-  'max-ysz': { prop: 'maxBlockSize', token: 'sz' },
+  bsz: { prop: 'blockSize', token: 'sz' },
+  'min-bsz': { prop: 'minBlockSize', token: 'sz' },
+  'max-bsz': { prop: 'maxBlockSize', token: 'sz' },
 
   // bg
   bg: { prop: 'background', bp: 1 },
@@ -358,6 +358,6 @@ export default {
   // wordbreak: { prop: 'wordBreak', utils: { keep: 'keep-all', all: 'break-all' } },
   float: { prop: 'float', presets: ['left', 'right'] },
   clear: { prop: 'clear', presets: ['both'] },
-  isolation: { prop: 'isolation', presets: ['isolate'] },
+  iso: { prop: 'isolation', presets: ['isolate'] },
   wm: { prop: 'writingMode', presets: ['vertical-rl'], bp: 1 },
 } as const;
