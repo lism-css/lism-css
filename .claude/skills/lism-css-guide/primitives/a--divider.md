@@ -50,7 +50,7 @@
 ```html
 <div class="l--flex -g:20 -ai:center">
   <div class="-fx:1 -bgc:base-2 -py:40">...Contents...</div>
-  <div class="a--divider is--vertical -aslf:stretch" style="--bds: dashed; --bdw: 2px" aria-hidden="true"></div>
+  <div class="a--divider -wm:v-rl -aslf:stretch" style="--bds: dashed; --bdw: 2px" aria-hidden="true"></div>
   <div class="-fx:1 -bgc:base-2 -py:40">...Contents...</div>
 </div>
 ```

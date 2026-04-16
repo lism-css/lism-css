@@ -131,9 +131,9 @@ Examples of creating a divider component with a label text.
     <div class="l--flex -ai:center -g:15">
       <div class="l--box -fx:1 -bgc:base-2 -py:40 -ta:center">Box</div>
       <div class="l--stack -ai:center -g:10 -lh:s -fz:s -aslf:stretch">
-        <div class="a--divider is--vertical -fx:1" aria-hidden="true"></div>
+        <div class="a--divider -wm:v-rl -fx:1" aria-hidden="true"></div>
         <span>Label</span>
-        <div class="a--divider is--vertical -fx:1" aria-hidden="true"></div>
+        <div class="a--divider -wm:v-rl -fx:1" aria-hidden="true"></div>
       </div>
       <div class="l--box -fx:1 -bgc:base-2 -py:40 -ta:center">Box</div>
     </div>
@@ -146,12 +146,12 @@ Examples of creating a divider component with a label text.
   <PreviewArea resize p="20" layout="">
     <Flex ai="stretch" g="15">
       <Box fx="1" bgc="base-2" py="40" ta="center">Box</Box>
-      <Flex isVertical ai="center" g="15" lh="s" fz="xs" aslf="stretch">
+      <Flex wm="vertical-rl" ai="center" g="15" lh="s" fz="xs" aslf="stretch">
         <span class="-px:5">Label</span>
         <Divider fx="1" />
       </Flex>
       <Box fx="1" bgc="base-2" py="40" ta="center">Box</Box>
-      <Flex isVertical ai="center" g="15" lh="s" fz="xs" aslf="stretch">
+      <Flex wm="vertical-rl" ai="center" g="15" lh="s" fz="xs" aslf="stretch">
         <Divider fx="1" />
         <span class="-px:5">Label</span>
       </Flex>
@@ -159,19 +159,19 @@ Examples of creating a divider component with a label text.
     </Flex>
   </PreviewArea>
   <PreviewCode slot="tab" label="JSX">
-    ```jsx "isVertical"
+    ```jsx "wm=\"vertical-rl\""
     <Flex ai="stretch" g="15">
       <Box fx="1" bgc="base-2" py="40" ta="center">
         Box
       </Box>
-      <Flex isVertical ai="center" g="15" lh="s" fz="xs" aslf="stretch">
+      <Flex wm="vertical-rl" ai="center" g="15" lh="s" fz="xs" aslf="stretch">
         <span class="-px:5">Label</span>
         <Divider fx="1" />
       </Flex>
       <Box fx="1" bgc="base-2" py="40" ta="center">
         Box
       </Box>
-      <Flex isVertical ai="center" g="15" lh="s" fz="xs" aslf="stretch">
+      <Flex wm="vertical-rl" ai="center" g="15" lh="s" fz="xs" aslf="stretch">
         <Divider fx="1" />
         <span class="-px:5">Label</span>
       </Flex>
@@ -182,15 +182,15 @@ Examples of creating a divider component with a label text.
     ```
   </PreviewCode>
   <PreviewCode slot="tab" label="HTML">
-    ```html "is--vertical"
+    ```html "-wm:v-rl"
     <div class="l--flex -ai:stretch -g:15">
       <div class="l--box -fx:1 -bgc:base-2 -py:40 -ta:center">Box</div>
-      <div class="l--flex is--vertical -ai:center -g:15 -lh:s -fz:xs -aslf:stretch">
+      <div class="l--flex -wm:v-rl -ai:center -g:15 -lh:s -fz:xs -aslf:stretch">
         <span class="-px:5">Label</span>
         <div class="a--divider -fx:1" aria-hidden="true"></div>
       </div>
       <div class="l--box -fx:1 -bgc:base-2 -py:40 -ta:center">Box</div>
-      <div class="l--flex is--vertical -ai:center -g:15 -lh:s -fz:xs -aslf:stretch">
+      <div class="l--flex -wm:v-rl -ai:center -g:15 -lh:s -fz:xs -aslf:stretch">
         <div class="a--divider -fx:1" aria-hidden="true"></div>
         <span class="-px:5">Label</span>
       </div>
