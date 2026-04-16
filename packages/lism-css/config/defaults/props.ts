@@ -354,7 +354,7 @@ export default {
 
   // others
   ovw: { prop: 'overflowWrap', presets: ['anywhere'] },
-  whspace: { prop: 'whiteSpace', presets: ['nowrap'] },
+  whs: { prop: 'whiteSpace', presets: ['nowrap'] },
   // wordbreak: { prop: 'wordBreak', utils: { keep: 'keep-all', all: 'break-all' } },
   float: { prop: 'float', presets: ['left', 'right'] },
   clear: { prop: 'clear', presets: ['both'] },

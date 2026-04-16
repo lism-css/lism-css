@@ -5,7 +5,7 @@ description: 'Lism CSS の階層構造やクラス設計の方針など、CSS設
 import { Lism, Box } from "lism-css/astro";
 
 export const WhsNw = ({children}) => {
-  return <span className='-whspace:nowrap'>{children}</span>
+  return <span className='-whs:nowrap'>{children}</span>
 }
 
 このページでは、LismがどのようなCSS設計になっているかを説明します。
@@ -41,26 +41,26 @@ export const WhsNw = ({children}) => {
       <td>Reset CSS、トークン定義や変数セット、要素の初期スタイルをセットするレイヤー。<br/>`.set--{state}`クラスもここで定義されます。</td>
     </tr>
     <tr>
-      <td class='-whspace:nowrap'>Primitives<br/>`@lism-primitive`</td>
+      <td class='-whs:nowrap'>Primitives<br/>`@lism-primitive`</td>
       <td>
         レイアウトを組み立てるための積み木となる Primitive 群を定義するレイヤー。<br />
         この中でさらにサブレイヤーが分かれており、 `.is--{trait}`, `.l--{layout}`, `.a--{atomic}` が定義されます。
       </td>
     </tr>
     <tr>
-      <td class='-whspace:nowrap'>Components<br/>`@lism-component`</td>
+      <td class='-whs:nowrap'>Components<br/>`@lism-component`</td>
       <td>BEM 構造を持つ UI 部品（`.c--{name}`）を定義するレイヤー。コアの `lism-css` には含まれず、`@lism-css/ui` パッケージやユーザー定義の `c--*` クラスがここに配置されます。</td>
     </tr>
     <tr>
-      <td class='-whspace:nowrap'>Custom<br/>`@lism-custom`</td>
+      <td class='-whs:nowrap'>Custom<br/>`@lism-custom`</td>
       <td>ユーザーが Lism の既存クラスを上書きしたい場合や、独自プレフィックス（`.z--{zone}`, `.p--{page}` 等）のクラスを配置するためのカスタマイズ用レイヤー。</td>
     </tr>
     <tr>
-      <td class='-whspace:nowrap'>Utility<br/>`@lism-utility`</td>
+      <td class='-whs:nowrap'>Utility<br/>`@lism-utility`</td>
       <td>機能やスタイルが明確なユーティリティクラス`.u--{name}`を定義するレイヤー。</td>
     </tr>
     <tr>
-      <td class='-whspace:nowrap'>Props<br/>`-`</td>
+      <td class='-whs:nowrap'>Props<br/>`-`</td>
       <td>単一のCSSプロパティティに紐づいた **Property Class** (`.-{prop}:{val}`) 。<br />このクラス群のみ、レイヤーを外して詳細度を高くしつつ、ある程度外部CSSとも共存できるようにしています。</td>
     </tr>
   </tbody>

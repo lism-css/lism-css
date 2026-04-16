@@ -1042,14 +1042,14 @@ describe('Lism', () => {
         expect(element).toHaveClass('-isolation:isolate');
       });
 
-      test('whspace（white-space）を指定できる', () => {
+      test('whs（white-space）を指定できる', () => {
         render(
-          <Lism whspace="nowrap" data-testid="lism">
+          <Lism whs="nowrap" data-testid="lism">
             test
           </Lism>
         );
         const element = screen.getByTestId('lism');
-        expect(element).toHaveClass('-whspace:nowrap');
+        expect(element).toHaveClass('-whs:nowrap');
       });
 
       test('ovw（overflow-wrap）を指定できる', () => {

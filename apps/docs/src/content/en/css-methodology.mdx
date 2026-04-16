@@ -5,7 +5,7 @@ description: 'An overview of the CSS layer structure and class design methodolog
 import { Lism, Box } from "lism-css/astro";
 
 export const WhsNw = ({children}) => {
-  return <span className='-whspace:nowrap'>{children}</span>
+  return <span className='-whs:nowrap'>{children}</span>
 }
 
 This page explains the CSS design principles behind Lism.
@@ -41,26 +41,26 @@ To address the common problem of CSS specificity becoming overly complex, Lism d
       <td>The layer for Reset CSS, token definitions, variable sets, and initial element styles.<br/>`.set--{state}` classes are also defined here.</td>
     </tr>
     <tr>
-      <td class='-whspace:nowrap'>Primitives<br/>`@lism-primitive`</td>
+      <td class='-whs:nowrap'>Primitives<br/>`@lism-primitive`</td>
       <td>
         The layer for Primitives — the building blocks for composing layouts.<br />
         It is further subdivided into sub-layers where `.is--{trait}`, `.l--{layout}`, and `.a--{atomic}` are defined.
       </td>
     </tr>
     <tr>
-      <td class='-whspace:nowrap'>Components<br/>`@lism-component`</td>
+      <td class='-whs:nowrap'>Components<br/>`@lism-component`</td>
       <td>The layer for UI components with BEM-like structure (`.c--{name}`). Not included in the core `lism-css` — `@lism-css/ui` and user-defined `c--*` classes belong here.</td>
     </tr>
     <tr>
-      <td class='-whspace:nowrap'>Custom<br/>`@lism-custom`</td>
+      <td class='-whs:nowrap'>Custom<br/>`@lism-custom`</td>
       <td>A customization layer for overriding existing Lism classes or for user-defined classification classes with custom prefixes (`.z--{zone}`, `.p--{page}`, etc.).</td>
     </tr>
     <tr>
-      <td class='-whspace:nowrap'>Utility<br/>`@lism-utility`</td>
+      <td class='-whs:nowrap'>Utility<br/>`@lism-utility`</td>
       <td>The layer for utility classes with a clear purpose or style (`.u--{name}`).</td>
     </tr>
     <tr>
-      <td class='-whspace:nowrap'>Props<br/>`-`</td>
+      <td class='-whs:nowrap'>Props<br/>`-`</td>
       <td>**Property Classes** (`.-{prop}:{val}`) tied to individual CSS properties.<br />This group is the only one placed outside of layers, giving it higher specificity while still allowing reasonable coexistence with external CSS.</td>
     </tr>
   </tbody>
@@ -401,7 +401,7 @@ Other properties are either left as-is or abbreviated to a degree where the orig
 However, **hyphens (`-`) in the original property name are generally omitted entirely**, with a few exceptions.
 
 - `clear` → `clear`
-- `white-space` → `whspace`
+- `white-space` → `whs`
 - `writing-mode` → `writing`
 
 
