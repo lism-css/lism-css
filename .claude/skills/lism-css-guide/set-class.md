@@ -82,7 +82,7 @@ HTML では直接クラスを付与し、Lism コンポーネントでは `set` 
 .-hov\:test {
   color: var(--_isHov, green) var(--_notHov, red); /* hover時はgreen, 非hover時はred*/
   box-shadow: var(--_isHov, var(--bxsh--30)); /* hover時はshadowをつける（非hover時は無効な値） */
-  opacity: var(--_notHov, var(--o--n20)); /* 非hover時は不透明度を下げる（hover時は無効な値） */
+  opacity: var(--_notHov, var(--o---20)); /* 非hover時は不透明度を下げる（hover時は無効な値） */
 }
 ```
 

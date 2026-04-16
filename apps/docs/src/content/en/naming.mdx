@@ -25,7 +25,7 @@ Each block of a variable name is written in camelCase, following the basic form 
 | `s`, `m`, `l`, `xl`... | When representing graduated steps above and below a base value | `--fz--s`, `--fz--l` |
 | `base` | Values set as the initial value of `:root` / `body` | `--fz--base`, `--lh--base` |
 | `10`, `20`, `30`... | When values increase stepwise from `0` (`none`) | `--bdrs--20`, `--bxsh--30` |
-| `-10`, `-20`, `-30`... | When values decrease stepwise from `0` (`none`) | `--o--n10`, `--o--n20` |
+| `-10`, `-20`, `-30`... | When values decrease stepwise from `0` (`none`) | `--o---10`, `--o---20` |
 | Semantic names | When none of the above fit, use a semantic name | `--ar--og` |
 
 
@@ -253,11 +253,11 @@ If a matching token exists, use the token value (the `{value}` portion of `--{to
 .-bxsh:10         → box-shadow: var(--bxsh--10);
 ```
 
-As an exception, tokens whose value is `-{NUM}` are written as `n{NUM}` in the variable, but the class still uses `-{NUM}`.
+Tokens whose value is `-{NUM}` are treated the same way — the value is concatenated as-is into the variable name.
 
 ```
-.-o:-10          → opacity: var(--o--n10);
-.-o:-20          → opacity: var(--o--n20);
+.-o:-10          → opacity: var(--o---10);
+.-o:-20          → opacity: var(--o---20);
 ```
 
 
