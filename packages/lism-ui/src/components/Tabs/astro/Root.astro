@@ -1,4 +1,6 @@
 ---
+import type { HTMLTag, Polymorphic } from 'astro/types';
+import type { AstroLismBaseProps } from 'lism-css/astro';
 import { Lism } from 'lism-css/astro';
 import atts from 'lism-css/lib/helper/atts';
 import buildModifierClass from '../../../helper/buildModifierClass';
@@ -9,8 +11,16 @@ import transformTabitems from './transformTabitems.js';
 
 import '../_style.css';
 
+type Props<Tag extends HTMLTag = 'div'> = Polymorphic<{ as: Tag }> &
+  AstroLismBaseProps & {
+    defaultIndex?: number;
+    tabId?: string;
+    listProps?: AstroLismBaseProps;
+    variant?: string;
+  };
+
 // propsの取得
-const { defaultIndex = 1, tabId = '', listProps = {}, variant, class: className, ...props } = Astro.props || {};
+const { defaultIndex = 1, tabId = '', listProps = {}, variant, class: className, ...props } = Astro.props;
 
 // tabID生成
 const theTabID = tabId ? tabId : uuid();
@@ -43,6 +53,6 @@ const hasItems = btns.length > 0;
   import setTabs from '../setTabs';
   const tabsAll = document.querySelectorAll('.c--tabs');
   tabsAll.forEach((tabs) => {
-    setTabs(tabs);
+    setTabs(tabs as HTMLElement);
   });
 </script>
