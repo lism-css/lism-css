@@ -1,8 +1,16 @@
 ---
+import type { HTMLTag, Polymorphic } from 'astro/types';
+import type { AstroLismBaseProps } from 'lism-css/astro';
 import { Flex } from 'lism-css/astro';
 import atts from 'lism-css/lib/helper/atts';
 
+type Props<Tag extends HTMLTag = 'span'> = Polymorphic<{ as: Tag }> &
+  AstroLismBaseProps & {
+    href?: string;
+  };
+
 const { class: className, href, as = 'span', ...props } = Astro.props;
+const linkProps = href ? { ...props, href } : props;
 ---
 
-<Flex as={href ? 'a' : as} class={atts(className, 'c--navMenu_link')} href={href} c="inherit" {...props}><slot /></Flex>
+<Flex as={href ? 'a' : as} class={atts(className, 'c--navMenu_link')} c="inherit" {...linkProps as Record<string, unknown>}><slot /></Flex>

@@ -1,6 +1,9 @@
 ---
+import type { AstroLismBaseProps } from 'lism-css/astro';
 import { Stack } from 'lism-css/astro';
 import atts from 'lism-css/lib/helper/atts';
+
+type Props = AstroLismBaseProps;
 
 const { class: className, ...props } = Astro.props;
 ---
