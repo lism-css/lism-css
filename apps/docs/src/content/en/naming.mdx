@@ -253,7 +253,7 @@ If a matching token exists, use the token value (the `{value}` portion of `--{to
 .-bxsh:10         → box-shadow: var(--bxsh--10);
 ```
 
-Tokens whose value is `-{NUM}` are treated the same way — the value is concatenated as-is into the variable name.
+Like positive tokens, tokens whose value is `-{NUM}` also have the value concatenated as-is into the variable name.
 
 ```
 .-o:-10          → opacity: var(--o---10);
