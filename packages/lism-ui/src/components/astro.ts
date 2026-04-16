@@ -11,4 +11,3 @@ export { default as NavMenu } from './NavMenu/astro';
 export { default as ShapeDivider } from './ShapeDivider/astro';
 export { default as Tabs } from './Tabs/astro';
 export { default as DummyText } from './DummyText/astro';
-export { default as DummyImage } from './DummyImage/astro';

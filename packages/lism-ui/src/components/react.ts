@@ -11,4 +11,3 @@ export { default as NavMenu } from './NavMenu/react';
 export { default as ShapeDivider } from './ShapeDivider/react';
 export { default as Tabs } from './Tabs/react';
 export { default as DummyText } from './DummyText/react';
-export { default as DummyImage } from './DummyImage/react';
