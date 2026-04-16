@@ -8,6 +8,7 @@ import Icon from './Icon';
 
 type ButtonProps<T extends ElementType = 'button'> = LismComponentProps<T> & {
   accID?: string;
+  isOpen?: boolean;
 };
 
 /**
@@ -18,6 +19,7 @@ export default function Button<T extends ElementType = 'button'>({
   children,
   className,
   accID: _accID = '__LISM_ACC_ID__',
+  isOpen = false,
   ...props
 }: ButtonProps<T>) {
   const ctx = useContext(AccordionContext);
@@ -35,7 +37,7 @@ export default function Button<T extends ElementType = 'button'>({
       jc="between"
       {...(props as object)}
       aria-controls={accID}
-      aria-expanded="false"
+      aria-expanded={isOpen ? 'true' : 'false'}
     >
       {children}
       <Icon />

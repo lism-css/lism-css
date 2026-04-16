@@ -26,7 +26,7 @@ const { name, avatar, flow = 's', variant = 'speak', direction = 'start', class:
 <Grid class={atts(className, buildModifierClass('c--chat', { variant }))} keycolor="gray" data-chat-dir={direction} ji={direction} {...props}>
   {
     avatar && (
-      <Frame class="c--chat_avatar" bgc="base" ar="1/1" bdrs="99" aria-hidden="true" src={avatar} alt="">
+      <Frame class="c--chat_avatar" bgc="base" ar="1/1" bdrs="99" aria-hidden="true">
         <img src={avatar} alt="" width="60" height="60" decoding="async" />
       </Frame>
     )
