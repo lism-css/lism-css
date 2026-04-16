@@ -122,7 +122,7 @@ const docsSidebar: SidebarSection[] = [
     rootPath: '/docs/',
     items: [
       '/docs/css-methodology/',
-      { type: 'separator' },
+      '/docs/naming/',
       '/docs/tokens/',
       '/docs/tokens/colors/',
       '/docs/tokens/typography/',
