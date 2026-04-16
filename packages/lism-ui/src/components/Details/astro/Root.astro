@@ -4,13 +4,18 @@
  * details要素をレンダリングし、CSSのみでアニメーションを実装
  * スクリプト不要で::details-contentを使用
  */
+import type { AstroLismBaseProps } from 'lism-css/astro';
 import getLismProps from 'lism-css/lib/getLismProps';
 import atts from 'lism-css/lib/helper/atts';
 
 // スタイルのインポート
 import '../_style.css';
 
-const { class: className, ...props } = Astro.props || {};
+type Props = AstroLismBaseProps & {
+  open?: boolean;
+};
+
+const { class: className, open, ...props } = Astro.props;
 
 const lismProps = getLismProps({
   className: atts(className, 'c--details'),
@@ -18,4 +23,4 @@ const lismProps = getLismProps({
 });
 ---
 
-<details {...lismProps}><slot /></details>
+<details open={open} {...lismProps}><slot /></details>
