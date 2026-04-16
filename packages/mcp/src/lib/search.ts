@@ -125,7 +125,7 @@ export function searchDocs(entries: DocsEntry[], query: string, options?: Search
  * 例:
  *   `primitives/l--tileGrid.mdx`   → `primitives/l--tileGrid`
  *   `core-components/Group.mdx`    → `core-components/group`
- *   `ui/DummyImage.mdx`            → `ui/dummyimage`
+ *   `ui/DummyText.mdx`             → `ui/dummytext`
  */
 function sourcePathToUrlSlug(sourcePath: string): string {
   const withoutExt = sourcePath.replace(/\.mdx$/, '');

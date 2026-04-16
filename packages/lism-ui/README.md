@@ -28,7 +28,6 @@ All components are based on the layout system and design tokens of Lism CSS.
 | **ShapeDivider** | Decorative section dividers with SVG shapes |
 | **Tabs** | Tabbed content panels |
 | **DummyText** | Placeholder text for prototyping |
-| **DummyImage** | Placeholder image for prototyping |
 
 ## Installation
 

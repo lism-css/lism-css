@@ -25,7 +25,6 @@ import { Accordion, Tabs, Modal, Button } from '@lism-css/ui/astro';
 - [Tabs](#tabs)
 - [ShapeDivider](#shapedivider)
 - [DummyText](#dummytext)
-- [DummyImage](#dummyimage)
 - [CLI でプロジェクトにコピーして使う](#cli-でプロジェクトにコピーして使う)
 
 [詳細](https://lism-css.com/ui/)
@@ -310,17 +309,6 @@ HTML の `details/summary` 要素をラップしたコンポーネント。Accor
 
 ```jsx
 <DummyText lang='ja' />
-```
-
-
-## DummyImage
-
-ソース: [DummyImage/](https://github.com/lism-css/lism-css/tree/main/packages/lism-ui/src/components/DummyImage)
-
-ダミーのプレースホルダー画像を出力するコンポーネント。`cdn.lism-css.com` からダミー画像を取得。
-
-```jsx
-<DummyImage />
 ```
 
 

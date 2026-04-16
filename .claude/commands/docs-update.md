@@ -64,7 +64,7 @@
 4. **import パスの正確性**: `lism-css/astro`, `@lism-css/ui/astro` 等のパスが正しいか
 5. **リンク切れ**: 内部リンク（`/docs/...`）の参照先が存在するか
 6. **説明文の正確性**: 機能の説明がソースの実際の挙動と一致しているか
-7. **ダミーコンポーネントの不使用**: `/ui/` 以外の MDX の `<PreviewCode>` 内コードブロックで `<DummyText>` や `<DummyImage>` が使われていないこと。`<PreviewArea>` 内は許容。コード例では実際のテキスト・HTML要素を直接記述する。テキスト内容は `packages/lism-ui/src/components/DummyText/texts.ts` を参照
+7. **ダミーコンポーネントの不使用**: `/ui/` 以外の MDX の `<PreviewCode>` 内コードブロックで `<DummyText>` が使われていないこと。`<PreviewArea>` 内は許容。コード例では実際のテキスト・HTML要素を直接記述する。テキスト内容は `packages/lism-ui/src/components/DummyText/texts.ts` を参照
 8. **PreviewArea 内のテキスト独立行**: `<PreviewArea>` 内の JSX 式において、テキストだけが独立した行になっているケース（`[インデント][テキスト][改行]` のパターン）がないかチェックする。Astro の MDX 解釈により、JSX コンポーネントの子要素としてテキストが独立行にあると `<p>` タグが自動生成されてしまうため、そのようなテキストは `<Fragment>` で囲う必要がある。ただし `<DummyText />` 等の自己閉じコンポーネントや、JSX タグの開始・終了行はテキストではないので対象外。
    - NG: `<Hoge>\n    テキスト内容\n  </Hoge>`（テキストが独立行）
    - OK: `<Hoge>テキスト内容</Hoge>`（1行に収まっている）

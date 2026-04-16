@@ -1,7 +1,7 @@
 import { Lism, type LismComponentProps } from '../Lism';
 
 /**
- * @deprecated DummyText / DummyImage (@lism-css/ui) を使用してください。
+ * @deprecated DummyText (@lism-css/ui) を使用してください。
  */
 export default function Dummy({ lang = 'en', ...props }: LismComponentProps & { lang?: string }) {
   const message =

@@ -37,8 +37,8 @@
 | Trait Primitives | `primitives/is--*.mdx` | |
 | Layout Primitives | `primitives/l--*.mdx` | |
 | Atomic Primitives | `primitives/a--*.mdx` + `core-components/Media.mdx` | Media はファイルパスは core-components だがこのセクションに配置 |
-| UI Components | `ui/*.mdx`（`examples/` 配下・`DummyText.mdx`・`DummyImage.mdx` を除く） | |
-| Optional | `ui/examples/*.mdx`, `props/*.mdx`, `ui/DummyText.mdx`, `ui/DummyImage.mdx` | |
+| UI Components | `ui/*.mdx`（`examples/` 配下・`DummyText.mdx` を除く） | |
+| Optional | `ui/examples/*.mdx`, `props/*.mdx`, `ui/DummyText.mdx` | |
 
 **どのセクションにも該当しないファイルがあれば、ユーザーに報告して配置を確認する。**
 

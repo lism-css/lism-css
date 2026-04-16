@@ -36,7 +36,7 @@ model: sonnet
 
 ### ダミーテキストの扱い
 
-`<PreviewCode>` 内のコード例では `<DummyText>` / `<DummyImage>` は使用せず、実際のテキストを直接記述する。
+`<PreviewCode>` 内のコード例では `<DummyText>` は使用せず、実際のテキストを直接記述する。
 ja版で日本語プレースホルダーテキストが使われている箇所は、en版では対応する英語テキストに置き換える。
 
 テキストの対応は `packages/lism-ui/src/components/DummyText/texts.ts` を参照。

@@ -84,11 +84,11 @@ describe('searchDocs', () => {
   it('primitives/ 以外の sourcePath はファイル名の casing を維持しつつ URL は小文字化される', () => {
     const mixedCaseEntries: DocsEntry[] = [
       entry({ sourcePath: 'core-components/Group.mdx', title: 'Group', keywords: ['layout'] }),
-      entry({ sourcePath: 'ui/DummyImage.mdx', title: 'DummyImage', keywords: ['media'] }),
+      entry({ sourcePath: 'ui/DummyText.mdx', title: 'DummyText', keywords: ['text'] }),
       entry({ sourcePath: 'ui/examples/Card.mdx', title: 'Card', keywords: ['example'] }),
     ];
     expect(searchDocs(mixedCaseEntries, 'Group')[0].url).toBe('https://lism-css.com/docs/core-components/group/');
-    expect(searchDocs(mixedCaseEntries, 'DummyImage')[0].url).toBe('https://lism-css.com/docs/ui/dummyimage/');
+    expect(searchDocs(mixedCaseEntries, 'DummyText')[0].url).toBe('https://lism-css.com/docs/ui/dummytext/');
     expect(searchDocs(mixedCaseEntries, 'Card')[0].url).toBe('https://lism-css.com/docs/ui/examples/card/');
   });
 
