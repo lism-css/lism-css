@@ -145,9 +145,9 @@ import { Divider, Flex, Box, Stack, Inline } from 'lism-css/astro';
     <div class="l--flex -ai:center -g:15">
       <div class="l--box -fx:1 -bgc:base-2 -py:40 -ta:center">Box</div>
       <div class="l--stack -ai:center -g:10 -lh:s -fz:s -aslf:stretch">
-        <div class="a--divider -wm:v-rl -fx:1" aria-hidden="true"></div>
+        <div class="a--divider -wm:vertical-rl -fx:1" aria-hidden="true"></div>
         <span>Label</span>
-        <div class="a--divider -wm:v-rl -fx:1" aria-hidden="true"></div>
+        <div class="a--divider -wm:vertical-rl -fx:1" aria-hidden="true"></div>
       </div>
       <div class="l--box -fx:1 -bgc:base-2 -py:40 -ta:center">Box</div>
     </div>
@@ -202,15 +202,15 @@ import { Divider, Flex, Box, Stack, Inline } from 'lism-css/astro';
     ```
   </PreviewCode>
   <PreviewCode slot="tab" label="HTML">
-    ```html "-wm:v-rl"
+    ```html "-wm:vertical-rl"
     <div class="l--flex -ai:stretch -g:15">
       <div class="l--box -fx:1 -bgc:base-2 -py:40 -ta:center">Box</div>
-      <div class="l--flex -wm:v-rl -ai:center -g:15 -lh:s -fz:xs -aslf:stretch">
+      <div class="l--flex -wm:vertical-rl -ai:center -g:15 -lh:s -fz:xs -aslf:stretch">
         <span class="-px:5">Label</span>
         <div class="a--divider -fx:1" aria-hidden="true"></div>
       </div>
       <div class="l--box -fx:1 -bgc:base-2 -py:40 -ta:center">Box</div>
-      <div class="l--flex -wm:v-rl -ai:center -g:15 -lh:s -fz:xs -aslf:stretch">
+      <div class="l--flex -wm:vertical-rl -ai:center -g:15 -lh:s -fz:xs -aslf:stretch">
         <div class="a--divider -fx:1" aria-hidden="true"></div>
         <span class="-px:5">Label</span>
       </div>
