@@ -1052,14 +1052,14 @@ describe('Lism', () => {
         expect(element).toHaveClass('-whspace:nowrap');
       });
 
-      test('ovwrap（overflow-wrap）を指定できる', () => {
+      test('ovw（overflow-wrap）を指定できる', () => {
         render(
-          <Lism ovwrap="anywhere" data-testid="lism">
+          <Lism ovw="anywhere" data-testid="lism">
             test
           </Lism>
         );
         const element = screen.getByTestId('lism');
-        expect(element).toHaveClass('-ovwrap:anywhere');
+        expect(element).toHaveClass('-ovw:anywhere');
       });
     });
 
