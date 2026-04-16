@@ -9,11 +9,18 @@ Breaking changes may continue frequently until the v1.0 release, so all notable 
 
 <Divider bds="dashed" my="40" />
 
-## `@lism-css/ui` (Next Release)
+## `@lism-css/ui` v.0.14.0 (2026.04.17)
 
-**Breaking Changes**
+This release contains **breaking changes**.
 
-- Removed the `DummyImage` component. Use the CDN dummy image URL directly instead (e.g., `https://cdn.lism-css.com/dummy-image.jpg`).
+- Aligned with lism-css 0.14.0 (removed `lismClass` / `variant` props, unified to `className`)
+- Removed the `DummyImage` component (use the CDN dummy image URL directly instead, e.g. `https://cdn.lism-css.com/dummy-image.jpg`)
+- Renamed internal files for `Details` / `Tabs` to the `Root` convention
+- Added the `buildModifierClass` helper for BEM modifier composition
+- Fixed an issue where component CSS imports were not included in the built output (vite.config adjustment)
+- Fixed React/Astro initial props mismatches (6 components)
+- Split React components into the same file structure as Astro
+- Inlined `getProps` into components
 
 ## v.0.14.0 (2026.04.17)
 
