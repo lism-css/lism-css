@@ -42,6 +42,34 @@
     "snippet": "CSSの階層構造を明確に定義。@layer lism-base → lism-primitive → lism-component → lism-custom → lism-utility の順。lism-primitive は trait/layout/atomic のサブレイヤーを持ち、lism-component は BEM 構造の c-- 用、lism-custom はユーザー独自プレフィックスのクラス用レイヤー。Primitive Class (.l--name, .a--name, .is--name 等)、Component Class (.c--name)、Property Class (.-prop:value)、Set Class (.set--name) の命名規則を説明。"
   },
   {
+    "sourcePath": "naming.mdx",
+    "title": "命名規則",
+    "description": "Lism CSS における Property Class の Prop 名・値名の省略ルールや、CSS変数の命名規則について解説します。",
+    "category": "guide",
+    "headings": ["CSS変数の命名規則", "クラスの命名規則", "`{prop}` の省略ルール", "`{value}` の省略ルール"],
+    "keywords": [
+      "命名規則",
+      "naming",
+      "省略",
+      "省略形",
+      "shorthand",
+      "Emmet",
+      "prop",
+      "value",
+      "CSS変数",
+      "カスタムプロパティ",
+      "Property Class",
+      "prefix",
+      "camelCase",
+      "token",
+      "breakpoint",
+      "方向指定",
+      "max-",
+      "min-"
+    ],
+    "snippet": "Lism CSS の命名規則をまとめたページ。CSS変数はトークン変数 `--{prop}--{token}`、Property Class 用変数 `--{prop}` / `--{prop}_{bp}`、状態管理用の内部変数 `--_{varName}` などの形式で統一。クラスはプレフィックス（`c--`, `a--`, `l--`, `is--`, `set--`, `u--`）で分類を示し、続く名称は camelCase。Prop 名は Emmet を参考に 1 文字プロパティ（p, m, g, c, f, w, h, d, o, v, i, t, b, l, r, z）やグループ略称 + サブプロパティ形式（fz, bgc, gtc 等）で省略。方向サフィックスは `-t` / `-b` / `-l` / `-r` / `-x` / `-y` / `-s` / `-e` を使用し、p/m のみ最初のハイフンを省略（pt, px, my 等）。値は基本的に CSS の実値をそのまま使用し、トークン値を使う場合は `--{prop}--{value}` の `{value}` 部分を採用。"
+  },
+  {
     "sourcePath": "tokens.mdx",
     "title": "デザイントークン",
     "description": "Lism CSS で定義されているカラー、スペーシング、シャドウなどのデザイントークン一覧を紹介します。",
