@@ -74,19 +74,22 @@ Property Class の形式:
 
 基本は [Emmet](https://docs.emmet.io/cheat-sheet/) 準拠。
 
+> **Note**: 「1文字プロパティ」セクション以外の表は **代表例** であり、全プロパティの一覧ではない。記載のないプロパティは本ページのルールに沿って省略する。
+
 ### 1文字プロパティ
+
+1文字に省略する主要プロパティは以下の通り（このリストが全て）。
 
 | 省略 | プロパティ | 省略 | プロパティ |
 |------|-----------|------|-----------|
-| `p` | `padding` | `h` | `height` |
-| `m` | `margin` | `d` | `display` |
-| `g` | `gap` | `o` | `opacity` |
-| `c` | `color` | `v` | `visibility` |
-| `f` | `font` | `i` | `inset` |
-| `w` | `width` | `t` | `top` |
-| `z` | `z-index` | `b` | `bottom` |
-| | | `l` | `left` |
-| | | `r` | `right` |
+| `p` | `padding`    | `i` | `inset` |
+| `m` | `margin`     | `t` | `top` |
+| `g` | `gap`        | `b` | `bottom` |
+| `c` | `color`      | `l` | `left` |
+| `f` | `font`       | `r` | `right` |
+| `w` | `width`      | `o` | `opacity` |
+| `h` | `height`     | `v` | `visibility` |
+| `d` | `display`    | `z` | `z-index` |
 
 Emmet と異なるのは `o` (`opacity`) のみ。
 
@@ -145,7 +148,7 @@ NG例: `flex` → `fx` としたうえで `flex-shrink` を `fsh` にする（`f
 
 ### 1文字プロパティの短縮名の再利用
 
-グループを持たない1文字プロパティや、方向プロパティのみをサブプロパティに持つ場合は、衝突しない範囲で再利用可:
+グループを持たない1文字プロパティや、方向プロパティのみをサブプロパティに持つ場合は、衝突しない範囲で再利用可。
 
 | 1文字 Prop | 再利用先 | 展開例 |
 |-----------|---------|--------|
