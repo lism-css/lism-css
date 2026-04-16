@@ -1,10 +1,17 @@
 ---
-// import type { LismProps } from 'lism-css/types';
+import type { HTMLTag, Polymorphic } from 'astro/types';
+import type { AstroLismBaseProps } from 'lism-css/astro';
+import type { IconOwnProps } from 'lism-css/react/atomic/Icon/getProps';
 import { Lism, Icon } from 'lism-css/astro';
 
-// Propsの定義
-// interface Props extends LismProps {}
-const { modalId = '', icon, srText = 'Close', ...props } = Astro.props || {};
+type Props<Tag extends HTMLTag = 'button'> = Polymorphic<{ as: Tag }> &
+  AstroLismBaseProps & {
+    modalId?: string;
+    icon?: IconOwnProps['icon'];
+    srText?: string;
+  };
+
+const { modalId = '', icon, srText = 'Close', ...props } = Astro.props;
 ---
 
 {

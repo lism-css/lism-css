@@ -1,8 +1,13 @@
 ---
+import type { AstroLismBaseProps } from 'lism-css/astro';
 import { Lism } from 'lism-css/astro';
 import atts from 'lism-css/lib/helper/atts';
 
-const { class: className, offset, style, ...props } = Astro.props || {};
+type Props = AstroLismBaseProps & {
+  offset?: string;
+};
+
+const { class: className, offset, style, ...props } = Astro.props;
 const mergedStyle = offset ? { ...style, '--offset': offset } : style;
 ---
 

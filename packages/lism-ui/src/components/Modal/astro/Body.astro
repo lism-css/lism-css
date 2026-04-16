@@ -1,9 +1,11 @@
 ---
-// import type { LismProps } from 'lism-css/types';
+import type { AstroLismBaseProps } from 'lism-css/astro';
 import { Lism } from 'lism-css/astro';
 import atts from 'lism-css/lib/helper/atts';
 
-const { class: className, ...props } = Astro.props || {};
+type Props = AstroLismBaseProps;
+
+const { class: className, ...props } = Astro.props;
 ---
 
 <Lism class={atts(className, 'c--modal_body')} {...props}><slot /></Lism>
