@@ -316,36 +316,6 @@ It is provided as a separate class from padding utilities to reserve a consisten
 </Preview>
 
 
-### `set--bp`
-
-A utility class for applying styles only at or above a specific breakpoint.
-It can be used as a workaround for properties that do not support [responsive breakpoints](/en/docs/responsive/).
-
-<SrcCode path="src/scss/base/set/_bp.scss" />
-
-<Preview>
-  <PreviewTitle>Example: changing text color to red at sm size and above</PreviewTitle>
-  <PreviewArea resize>
-    <Lism set="bp" p="20" style={{ color: 'var(--_is_sm) red;' }}>
-      <p>Lorem ipsum dolor sit amet. Consectetur adipiscing elit, sed do eiusmod tempor Incididunt ut.</p>
-    </Lism>
-  </PreviewArea>
-  <PreviewCode slot="tab" label="HTML">
-  ```html "set--bp" "var(--_is_sm) red"
-  <div class="set--bp -p:20" style="color: var(--_is_sm) red">
-    <p>Lorem ipsum dolor sit amet. Consectetur adipiscing elit, sed do eiusmod tempor Incididunt ut.</p>
-  </div>
-  ```
-  </PreviewCode>
-  <PreviewCode slot="tab" label="JSX">
-    ```jsx 'set="bp"' "var(--_is_sm) red"
-    <Lism set="bp" p="20" style={{ color: 'var(--_is_sm) red;' }}>
-      <p>Lorem ipsum dolor sit amet. Consectetur adipiscing elit, sed do eiusmod tempor Incididunt ut.</p>
-    </Lism>
-    ```
-  </PreviewCode>
-</Preview>
-
 
 {/* 
 ### `set--mask`

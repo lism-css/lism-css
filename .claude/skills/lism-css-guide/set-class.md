@@ -13,8 +13,6 @@ HTML では直接クラスを付与し、Lism コンポーネントでは `set` 
 - [`set--transition`](#set--transition)
 - [`set--gutter`](#set--gutter)
 - [`set--innerRs`](#set--innerrs)
-- [`set--bp`](#set--bp)
-
 [詳細](https://lism-css.com/docs/set-class/)
 
 ---
@@ -31,8 +29,6 @@ HTML では直接クラスを付与し、Lism コンポーネントでは `set` 
 | `set--transition` | [`_transition.scss`](https://raw.githubusercontent.com/lism-css/lism-css/main/packages/lism-css/src/scss/base/set/_transition.scss) |
 | `set--gutter` | [`_gutter.scss`](https://raw.githubusercontent.com/lism-css/lism-css/main/packages/lism-css/src/scss/base/set/_gutter.scss) |
 | `set--innerRs` | [`_innerRs.scss`](https://raw.githubusercontent.com/lism-css/lism-css/main/packages/lism-css/src/scss/base/set/_innerRs.scss) |
-| `set--bp` | [`_bp.scss`](https://raw.githubusercontent.com/lism-css/lism-css/main/packages/lism-css/src/scss/base/set/_bp.scss) |
-
 ---
 
 ## `set--plain`
@@ -177,16 +173,3 @@ HTML では直接クラスを付与し、Lism コンポーネントでは `set` 
 ```
 
 
-## `set--bp`
-
-ブレークポイント判定用の hack 変数をセットします。コンテナクエリで各ブレークポイントを超えた時に空変数がセットされ、CSS の空変数トリックで条件分岐に使えます。
-`sm`, `md`にのみ対応しています。（`--_is_sm`, `--_is_md`が定義されます。）
-
-smサイズ以上でテキストカラーを赤に変える例:
-
-```html
-<div class="set--bp -p:20" style="color: var(--_is_sm) red">...</div>
-```
-```jsx
-<Lism set="bp" p="20" style={{ color: 'var(--_is_sm) red;' }}>...</Lism>
-```

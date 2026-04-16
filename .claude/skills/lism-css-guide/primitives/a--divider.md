@@ -37,12 +37,12 @@
 
 ### 縦方向の区切り線
 
-`isVertical` を指定すると縦方向の区切り線になります。Flex 子要素として使うなら `aslf="stretch"` で高さいっぱいに伸ばせます。
+Property Class `-wm:vertical-rl`（または `<Divider wm="vertical-rl">`）を指定すると縦方向の区切り線になります。Flex 子要素として使うなら `aslf="stretch"` で高さいっぱいに伸ばせます。
 
 ```jsx
 <Flex ai="center" g="20">
   <Box fx="1" bgc="base-2" py="40">...Contents...</Box>
-  <Divider isVertical bds="dashed" bdw="2px" aslf="stretch" />
+  <Divider wm="vertical-rl" bds="dashed" bdw="2px" aslf="stretch" />
   <Box fx="1" bgc="base-2" py="40">...Contents...</Box>
 </Flex>
 ```
@@ -50,7 +50,7 @@
 ```html
 <div class="l--flex -g:20 -ai:center">
   <div class="-fx:1 -bgc:base-2 -py:40">...Contents...</div>
-  <div class="a--divider is--vertical -aslf:stretch" style="--bds: dashed; --bdw: 2px" aria-hidden="true"></div>
+  <div class="a--divider -wm:vertical-rl -aslf:stretch" style="--bds: dashed; --bdw: 2px" aria-hidden="true"></div>
   <div class="-fx:1 -bgc:base-2 -py:40">...Contents...</div>
 </div>
 ```

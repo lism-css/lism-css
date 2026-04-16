@@ -316,36 +316,6 @@ import { Button } from '@lism-css/ui/astro';
 </Preview>
 
 
-### `set--bp`
-
-特定のブレイクポイント以上でのみスタイルを適用させるためのユーティリティクラスです。
-[ブレイクポイント対応](/docs/responsive/)していないプロパティを変化させたい時のハック的手段として活用できます。
-
-<SrcCode path="src/scss/base/set/_bp.scss" />
-
-<Preview>
-  <PreviewTitle>smサイズ以上でテキストカラーを赤に変える例</PreviewTitle>
-  <PreviewArea resize>
-    <Lism set="bp" p="20" style={{ color: 'var(--_is_sm) red;' }}>
-      <p>ロレム・イプサムの座り雨。目まぐるしい文章の流れの中で、それは静かに歩く仮の言葉です。</p>
-    </Lism>
-  </PreviewArea>
-  <PreviewCode slot="tab" label="HTML">
-  ```html "set--bp" "var(--_is_sm) red"
-  <div class="set--bp -p:20" style="color: var(--_is_sm) red">
-    <p>ロレム・イプサムの座り雨。目まぐるしい文章の流れの中で、それは静かに歩く仮の言葉です。</p>
-  </div>
-  ```
-  </PreviewCode>
-  <PreviewCode slot="tab" label="JSX">
-    ```jsx 'set="bp"' "var(--_is_sm) red"
-    <Lism set="bp" p="20" style={{ color: 'var(--_is_sm) red;' }}>
-      <p>ロレム・イプサムの座り雨。目まぐるしい文章の流れの中で、それは静かに歩く仮の言葉です。</p>
-    </Lism>
-    ```
-  </PreviewCode>
-</Preview>
-
 
 {/* 
 ### `set--mask`

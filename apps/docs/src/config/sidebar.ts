@@ -122,7 +122,7 @@ const docsSidebar: SidebarSection[] = [
     rootPath: '/docs/',
     items: [
       '/docs/css-methodology/',
-      { type: 'separator' },
+      '/docs/naming/',
       '/docs/tokens/',
       '/docs/tokens/colors/',
       '/docs/tokens/typography/',
@@ -151,13 +151,7 @@ const docsSidebar: SidebarSection[] = [
   },
   {
     label: 'Trait Primitives',
-    items: [
-      '/docs/primitives/is--container/',
-      '/docs/primitives/is--wrapper/',
-      '/docs/primitives/is--layer/',
-      '/docs/primitives/is--boxLink/',
-      '/docs/primitives/is--vertical/',
-    ],
+    items: ['/docs/primitives/is--container/', '/docs/primitives/is--wrapper/', '/docs/primitives/is--layer/', '/docs/primitives/is--boxLink/'],
   },
   {
     label: 'Layout Primitives',

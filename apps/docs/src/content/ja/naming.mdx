@@ -1,0 +1,294 @@
+---
+title: '命名規則'
+description: 'Lism CSS における Property Class の Prop 名・値名の省略ルールや、CSS変数の命名規則について解説します。'
+---
+
+このページでは、Lism CSSにおけるクラス名やCSS変数名の命名規則を説明します。
+
+## CSS変数の命名規則
+
+変数名の各ブロックはキャメルケースで `--{varName}` の形式が基本となります。
+
+### トークン変数
+
+| 種類 | 形式 | 例 |
+|------|------|-----|
+| 基本 | `--{prop}--{token}` | `--fz--l`, `--bdrs--20`, `--bxsh--10`, `--sz--s` |
+| カラー | `--{color}` | `--brand`, `--text`, `--text-2`,`--red` |
+| スペーシング | `--s{Token}` | `--s10`, `--s40` |
+
+
+#### トークンのバリエーション表現
+
+| 表記 | 条件 | 例 |
+|------|------|-----|
+| `s`, `m`, `l`, `xl`... | ベース値を中心に大小の段階を示す場合 | `--fz--s`, `--fz--l` |
+| `base` | `:root`/`body` の初期値にセットされるもの | `--fz--base`, `--lh--base` |
+| `10`, `20`, `30`... | `0`（`none`）基準で段階的に増加する場合 | `--bdrs--20`, `--bxsh--30` |
+| `-10`, `-20`, `-30`... | `0`（`none`）基準で段階的に減少する場合 | `--o--n10`, `--o--n20` |
+| セマンティック名 | 上記に当てはまらない場合は、セマンティックな名前をつける | `--ar--og` |
+
+
+### Property Class 用の変数
+
+Property Class（`-{prop}:{value}`）で使用される変数名に関するルールです。
+
+| 形式 | 説明 | 例 |
+|------|------|-----|
+| `--{prop}` | クラスの`{prop}`部分と同じ省略名 | `--p`, `--bgc`, `--bdrs`, `--max-sz` |
+| `--{prop}_{bp}` | ブレークポイント値 | `--p_sm`, `--mx_md` |
+
+
+### その他の変数
+
+| 形式 | 用途 | 例 |
+|------|------|-----|
+| `--{target}-{prop}` | 要素・クラスに対するプロパティ（`:root`で上書き可能） | `--link-td`, `--headings-ff` |
+| `--{propName}` | プリミティブの主要機能変数 | `--sideW`, `--mainW` |
+| `--_{item}-{propName}` | コンポーネントクラス（`c--`）の子要素に対するプロパティ | `--_icon-size` |
+| `--_{varName}` | 状態管理用の内部変数 | `--_isHov`, `--_notHov` |
+
+## クラスの命名規則
+
+クラス分類に合わせたプレフィックスをつけます。この時、ハイフン2つ（`--`) で繋ぎます。
+
+- Component: `c--`
+- Atomic Primitives: `a--`
+- Layout Primitives: `l--`
+- Trait Primitives: `is--`
+- Set Class: `set--`
+- Utility Class: `u--`
+
+プレフィックスに続く名称は、camelCaseで命名します。
+
+- NG： `c--my-component` 
+- OK： `c--myComponent`
+
+
+Property Classの命名規則については、以下の通りです。
+
+- 特定の値とセットのクラス: `-{prop}:{value}`
+- `--{prop}`変数を受け取るクラス: `-{prop}`
+- ブレークポイント(`--{prop}_{bp}`)を受け取るクラス: `-{prop}_{bp}`
+
+## `{prop}` の省略ルール
+
+基本的な方向性として、 [Emmet](https://docs.emmet.io/cheat-sheet/)  を参考にした省略を行います。
+
+### 1文字プロパティ
+
+1文字に省略できる主要プロパティを、以下のように定めます。
+
+<div class="c--propTable">
+| 省略記法 | プロパティ |
+|------|------|
+| `p` | `padding` |
+| `m` | `margin` |
+| `g` | `gap` |
+| `c` | `color` |
+| `f` | `font` |
+| `w` | `width` |
+| `h` | `height` |
+| `d` | `display` |
+| `o` | `opacity` |
+| `v` | `visibility` |
+| `i` | `inset` |
+| `t` | `top` |
+| `b` | `bottom` |
+| `l` | `left` |
+| `r` | `right` |
+| `z` | `z-index` |
+</div>
+
+上記の中で Emmet と異なるのは `opacity`です。
+
+### プロパティグループ
+
+以下のようなプロパティについての省略ルールを紹介します。
+- `font/font-*`, `background/background-*`, `padding/padding-*` のように、ショートハンド/ロングハンドのグループ
+- `text-align`と`text-decoration`のような`text-*`系などの共通したプレフィックスを持つグループ
+
+#### 基本形式: 「グループ略称」+「サブプロパティ名の省略形」
+
+いくつかの例を挙げます。
+
+<div class="c--propTable">
+| CSS プロパティ | Prop |
+|-------------|------|
+| font | `f` |
+| font-size | `fz` |
+| font-weight | `fw` |
+| background | `bg` |
+| background-color | `bgc` |
+| background-image | `bgi` |
+| flex | `fx` |
+| flex-shrink | `fxsh` |
+| flex-grow | `fxg` |
+| grid-template | `gt` |
+| grid-template-columns | `gtc` |
+| grid-template-rows | `gtr` |
+</div>
+
+
+#### 方向指定系の形式: 「グループ略称」 + `-` +「方向指定」
+
+- 方向を示すサイドプロパティは、ハイフン（`-`）付きのサフィックスで方向を指定します。
+- `inline`/`block`は、`x`/`y` とします。
+
+<figure class="c--propTable">
+<figcaption>例:</figcaption>
+| 方向 | サフィックス | 例 |
+|------|-----------|-----|
+| physical | `-t` / `-b` / `-l` / `-r` | `bd-t`, `bd-b`, `bd-l`, `bd-r` |
+| inline / block | `-x` / `-y` | `bd-x`, `bd-y` |
+| start / end | `-s` / `-e` | `bd-x-s`, `bd-x-e`, `bd-y-s`, `bd-y-e` |
+| x / y | `-x` / `-y` | `ov-x`, `ov-y` |
+</figure>
+
+#### 方向指定系の例外: `p`, `m` のみ、最初のハイフンを省略
+
+`padding`, `margin` については、`pt`, `px`, `my` のような記法が CSS フレームワークで広く普及しているため、最初のハイフンを省略します。
+
+<div class="c--propTable">
+| 方向 | 省略形|
+|-------------|----------|
+| physical | `pt`, `pb`, `pl`, `pr`, `mt`, `mb`, `ml`, `mr` |
+| inline/block  | `px`, `py`, `mx`, `my` |
+| start/end | `px-s`, `px-e`, `py-s`, `py-e`, `mx-s`, `mx-e`, `my-s`, `my-e` |
+</div>
+
+#### グループ略称の衝突禁止
+
+一つのグループで使用された略称を他のグループで再利用してはいけません。
+
+NG例: `flex`を`fx`とし、`flex-shrink`を`fsh`としてしまう。（`fx` グループの一貫性を崩すため）
+
+### max- / min- プロパティ
+
+`max-`, `min-` プレフィックスはハイフンを保持します。
+
+
+<figure class="c--propTable">
+<figcaption>例:</figcaption>
+| CSS プロパティ | Prop |
+|-------------|------|
+| max-width | `max-w` |
+| min-width | `min-w` |
+| max-height | `max-h` |
+| min-height | `min-h` |
+</figure>
+
+### その他のプロパティ
+
+その他のプロパティは、以下の基準で省略します。
+
+1. **1単語**: そのまま使用 or 省略
+2. ハイフン繋がり、または**6文字以上**: Emmet形式、または認識しやすい範囲で省略
+
+
+<figure class="c--propTable">
+<figcaption>例:</figcaption>
+| CSS プロパティ | Prop | 分類 |
+|-------------|------|------|
+| float | `float` | そのまま |
+| order | `order` | そのまま |
+| position | `pos` | 省略 |
+| overflow | `ov` | 省略 |
+| inline-size | `sz` | 省略 |
+| block-size | `bsz` | 省略 |
+| aspect-ratio | `ar` | 省略 |
+| writing-mode | `wm` | 省略 |
+| white-space | `whs` | 省略 |
+</figure>
+
+
+### 1文字プロパティの短縮名の再利用
+
+**グループを持たない1文字プロパティ**の場合は、その他のハイフン前半部分の略称としてその文字を再利用できます。
+また、**方向プロパティのみ**をサブプロパティに持つ場合も、方向サフィックスと衝突しない範囲で再利用できます。
+
+以下はその一例です。
+
+<div class="c--propTable">
+| 1文字 Prop | 再利用先 | 展開例 |
+|-----------|---------|--------|
+| `t`(`top`) | `text-*`| `ta`(`text-align`) |
+| `l`(`left`) | `line-*`| `lh`(`line-height`) |
+| `w`(`width`) | `writing-`| `wm`(`writing-mode`) |
+| `p`(`padding`) | `place-*`| `pi`(`place-items`) |
+</div>
+
+:::note
+`grid-*` の `g` は例外的で、`grid`をLismでは扱わないという例外的なルールによって許容されています。
+:::
+
+
+## `{value}` の省略ルール
+
+Property Class`-{prop}:{value}`の`{value}`部分の省略ルールについて説明します。  
+
+### 基本ルール: CSS の実値をそのまま使う
+
+`{value}` 部分は基本的に**省略はしません**。`{prop}` がすでに省略されているので、その代わり `{value}` との組み合わせからプロパティを推測できるようにするためです。
+
+```
+.-d:none          → display: none;
+.-d:inline-flex   → display: inline-flex;
+.-pos:relative    → position: relative;
+.-ta:center       → text-align: center;
+.-fx:1            → flex: 1;
+.-fxd:column      → flex-direction: column;
+```
+
+### トークン値を利用する場合
+
+対応するトークンがある場合は、そのトークン値(`--{token}--{value}` の `{value}`部分)を利用します。
+
+```
+.-c:text-2        → color: var(--text-2);
+.-fz:l            → font-size: var(--fz--l);
+.-p10             → padding: var(--s10);
+.-fw:bold         → font-weight: var(--fw--bold);
+.-bdrs:20         → border-radius: var(--bdrs--20);
+.-bxsh:10         → box-shadow: var(--bxsh--10);
+```
+
+例外として、 トークン値が`-{NUM}`のものは、変数では`{n{NUM}}`となっていますが、クラス側は`-{NUM}`を採用します。
+
+```
+.-o:-10          → opacity: var(--o--n10);
+.-o:-20          → opacity: var(--o--n20);
+```
+
+
+### 値の表記ルール
+
+単位、マイナス、小数点なども、基本的にはそのままクラス化します。
+
+```
+.-w:100%        → width: 100%;
+.-h:100%        → height: 100%;
+.-z:-1          → z-index: -1;
+.-ar:16/9       → aspect-ratio: 16/9;
+```
+
+小数点付きのProperty Classはコアにはないが、例えば`opacity:0.75`のような固定値をクラス化したい場合は次のようなCSSを追加して利用します。
+
+```css
+.-o\:0\.75{opacity: 0.75;}
+
+/* → <div class="-o:0.75"> のようにして使う */
+```
+
+### 長いキーワード値、かつ意味が通りやすいものは省略可
+
+例外的に、6文字以上の値で、かつ省略してもすぐに意味がわかるものであれば省略可とします。
+
+| 実際の値 | 省略名 |クラスの例
+|--------|------------|-----|
+| `uppercase` | `upper` | `-tt:upper` |
+| `lowercase` | `lower` | `-tt:lower` |
+| `fit-content` | `fit` | `-w:fit`, `-h:fit` |
+| `space-between` | `between` | `-ac:between`, `-jc:between` |
+| `currentColor` | `current` | `-bdc:current` |
+

@@ -31,7 +31,7 @@
 | セクション | 対象ファイル | 備考 |
 |---|---|---|
 | Getting Started | `overview.mdx`, `installation.mdx`, `changelog.mdx` | |
-| Core Concepts | `css-methodology.mdx`, `tokens.mdx`, `typography.mdx`, `base-styles.mdx`, `reset-css.mdx`, `responsive.mdx`, `customize.mdx` | |
+| Core Concepts | `css-methodology.mdx`, `naming.mdx`, `tokens.mdx`, `typography.mdx`, `base-styles.mdx`, `reset-css.mdx`, `responsive.mdx`, `customize.mdx` | |
 | CSS Classes | `set-class.mdx`, `primitives.mdx`, `utility-class.mdx`, `property-class.mdx` | |
 | Core Components | `core-components/*.mdx`（`Media.mdx` を除く） | |
 | Trait Primitives | `primitives/is--*.mdx` | |

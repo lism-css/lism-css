@@ -225,9 +225,9 @@ export const LinkSPACE = () => <a href="/docs/tokens/spacing/"><code>SPACE</code
 |`sz`|`inline-size`|-|-|
 |`max-sz`|`max-inline-size`|`xs`,`s`,`m`,`l`,`xl`,`min`,`full`,`container`|-|
 |`min-sz`|`min-inline-size`|-|-|
-|`ysz`|`block-size`|-|-|
-|`max-ysz`|`max-block-size`|-|-|
-|`min-ysz`|`min-block-size`|-|-|
+|`bsz`|`block-size`|-|-|
+|`max-bsz`|`max-block-size`|-|-|
+|`min-bsz`|`min-block-size`|-|-|
 
 
 関連トークン: <a href="/docs/tokens/#size"><code>SIZE</code></a>
@@ -264,6 +264,7 @@ export const LinkSPACE = () => <a href="/docs/tokens/spacing/"><code>SPACE</code
 |`ov`|`overflow`| `auto`, `clip`, `hidden`|-|
 |`ov-x`|`overflow-x`|`auto`, `clip`, `scroll`|-|
 |`ov-y`|`overflow-y`|`auto`, `clip`, `scroll`|-|
+|`ovw`|`overflow-wrap`|`anywhere`|-|
 |`ar`|`aspect-ratio`|`21/9`,`16/9`,`3/2`,`1/1`,<br />`og`|✔|
 
 
@@ -652,30 +653,37 @@ borderに関する仕様は少し特殊になっています。詳しくは[bord
 |---|---|---|---|
 |`float`|`float`|`left`,`right`|-|
 |`clear`|`clear`|`both`|-|
-|`isolation`|`isolation`|`isolate`|-|
-|`ovwrap`|`overflow-wrap`|`anywhere`|-|
-|`whspace`|`white-space`|`nowrap`|-|
+|`iso`|`isolation`|`isolate`|-|
+|`wm`|`writing-mode`|`vertical-rl`|✔|
+|`whs`|`white-space`|`nowrap`|-|
 
 
 <Preview>
-  <PreviewTitle>Examples</PreviewTitle>
-  <PreviewArea p="30">
-    <Text whspace="nowrap" ov="hidden" bd p="10" bgc="base-2" max-sz="s">
-      <Fragment>whspace: nowrap — この長いテキストは折り返さずにはみ出します</Fragment>
-    </Text>
+  <PreviewTitle>Examples: smサイズ以上で縦書きにする例</PreviewTitle>
+  <PreviewArea p="0" resize>
+    <Flow set="gutter" py="20" w="100%" h="20em" wm={[null, 'vertical-rl']}>
+      <DummyText lang="ja" length="s" />
+      <DummyText lang="ja" length="l" offset="3" />
+    </Flow>
   </PreviewArea>
   <PreviewCode slot="tab" label="HTML">
-  ```html
-  <p class="-whspace:nowrap -ov:hidden -bd -p:10 -bgc:base-2 -max-sz:s">
-    whspace: nowrap — この長いテキストは折り返さずにはみ出します
-  </p>
+  ```html "-wm_sm" "--wm_sm:"
+  <div class="l--flow set--gutter -py:20 -w:100% -h -wm_sm" style="--h: 20em; --wm_sm: vertical-rl">
+    <p>ロレム・イプサムの座り雨。目まぐるしい文章の流れの中で、それは静かに歩く仮の言葉です。</p>
+    <p>
+      Elitも穏やかに続いていきますが、積み重ねられてきた「LiberroyとFoogの取り組み」は、決するための答えというより、余白のようなものです。作業が進むにつれて、工夫や考えとともに関心が折り重なりながらも、必要以上に主張せず彼らの作品は私たちに一定の示唆を与えてくれます。
+    </p>
+  </div>
   ```
   </PreviewCode>
   <PreviewCode slot="tab" label="JSX">
-  ```jsx
-  <Text whspace="nowrap" ov="hidden" bd p="10" bgc="base-2" max-sz="s">
-    whspace: nowrap — この長いテキストは折り返さずにはみ出します
-  </Text>
+  ```jsx 'wm={[null, "vertical-rl"]}'
+  <Flow set="gutter" py="20" w="100%" h="20em" wm={[null, 'vertical-rl']}>
+    <p>ロレム・イプサムの座り雨。目まぐるしい文章の流れの中で、それは静かに歩く仮の言葉です。</p>
+    <p>
+      Elitも穏やかに続いていきますが、積み重ねられてきた「LiberroyとFoogの取り組み」は、余白のようなものです。作業が進むにつれて、工夫や考えとともに関心が折り重なりながらも、必要以上に主張せず彼らの作品は私たちに一定の示唆を与えてくれます。
+    </p>
+  </Flow>
   ```
   </PreviewCode>
 </Preview>

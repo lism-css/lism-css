@@ -1032,34 +1032,34 @@ describe('Lism', () => {
     });
 
     describe('Other CSS', () => {
-      test('isolation を指定できる', () => {
+      test('iso（isolation）を指定できる', () => {
         render(
-          <Lism isolation="isolate" data-testid="lism">
+          <Lism iso="isolate" data-testid="lism">
             test
           </Lism>
         );
         const element = screen.getByTestId('lism');
-        expect(element).toHaveClass('-isolation:isolate');
+        expect(element).toHaveClass('-iso:isolate');
       });
 
-      test('whspace（white-space）を指定できる', () => {
+      test('whs（white-space）を指定できる', () => {
         render(
-          <Lism whspace="nowrap" data-testid="lism">
+          <Lism whs="nowrap" data-testid="lism">
             test
           </Lism>
         );
         const element = screen.getByTestId('lism');
-        expect(element).toHaveClass('-whspace:nowrap');
+        expect(element).toHaveClass('-whs:nowrap');
       });
 
-      test('ovwrap（overflow-wrap）を指定できる', () => {
+      test('ovw（overflow-wrap）を指定できる', () => {
         render(
-          <Lism ovwrap="anywhere" data-testid="lism">
+          <Lism ovw="anywhere" data-testid="lism">
             test
           </Lism>
         );
         const element = screen.getByTestId('lism');
-        expect(element).toHaveClass('-ovwrap:anywhere');
+        expect(element).toHaveClass('-ovw:anywhere');
       });
     });
 
@@ -1162,16 +1162,6 @@ describe('Lism', () => {
         );
         const element = screen.getByTestId('lism');
         expect(element).toHaveClass('is--skipFlow');
-      });
-
-      test('isVertical を指定できる', () => {
-        render(
-          <Lism isVertical data-testid="lism">
-            test
-          </Lism>
-        );
-        const element = screen.getByTestId('lism');
-        expect(element).toHaveClass('is--vertical');
       });
     });
 

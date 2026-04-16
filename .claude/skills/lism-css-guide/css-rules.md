@@ -3,12 +3,14 @@
 ## TOC
 
 - [CSS Layer 構造](#css-layer-構造)
-- [命名規則とプレフィックス](#命名規則とプレフィックス)
+- [プレフィックスとクラス分類](#プレフィックスとクラス分類)
 - [Component Class（`c--`）](#component-classc--)
 - [カスタムCSS を追加する場合](#カスタムcss-を追加する場合)
 - [CSS の配置場所](#css-の配置場所)
 
 [詳細](https://lism-css.com/docs/css-methodology/)
+
+> **命名規則の詳細**: CSS変数名・クラス名・Property Class の `{prop}` / `{value}` の省略ルールについては [naming.md](./naming.md) を参照してください。
 
 ---
 
@@ -32,7 +34,7 @@ Settings（トークン定義）
 ```
 
 
-## 命名規則とプレフィックス
+## プレフィックスとクラス分類
 
 [詳細](https://lism-css.com/docs/primitives/)
 

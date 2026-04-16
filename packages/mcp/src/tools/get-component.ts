@@ -31,8 +31,8 @@ let classAliasMap: Map<string, string> | null = null;
 let componentAliasMap: Map<string, string> | null = null;
 
 /** primitives/*.md を走査して、クラス名由来 / React コンポーネント名由来の alias map を構築する（遅延初期化・キャッシュ）。
- *  angle-bracket 形式の問い合わせ（`<Vertical>` など）には componentAliasMap のみを照合し、
- *  クラス専用プリミティブ（例: is--vertical）を誤ってヒットさせないために分離している。 */
+ *  angle-bracket 形式の問い合わせには componentAliasMap のみを照合し、
+ *  クラス専用プリミティブへの false positive を避けるために分離している。 */
 function buildAliasMaps(): void {
   if (classAliasMap && componentAliasMap) return;
   const classMap = new Map<string, string>();
@@ -88,7 +88,7 @@ export function registerGetComponent(server: McpServer): void {
 
         // --- 1) lism-css コア: primitives/ の個別ファイルを alias map で解決 ---
         //   angle-bracket 形式 (`<Vertical>`) は React コンポーネント alias のみと照合し、
-        //   クラス専用プリミティブ (is--vertical 等) への false positive を避ける。
+        //   クラス専用プリミティブへの false positive を避ける。
         if (!pkg || pkg === 'lism-css') {
           const componentHit = getComponentAliasMap().get(normalizedKey);
           if (componentHit) {

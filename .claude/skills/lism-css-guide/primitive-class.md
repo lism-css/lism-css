@@ -41,7 +41,6 @@ Lism CSS では、レイアウトを組み立てる小さな積み木として *
 | `is--layer` | 親要素全体に被さる絶対配置レイヤー（`position: absolute; inset: 0;`）。背景画像・カラーオーバーレイ・フィルターレイヤー・コンテンツ等を重ねて表示する |
 | `is--boxLink` | ボックス全体をクリッカブルなリンク領域にする。自身を`a`タグにして利用するか、もしくは自身を`div`にして内部の`a`タグに`is--coverLink`を付与して使う |
 | `is--coverLink` | 親要素全体に被さるクリック領域を持つリンク（`::before` を `inset: 0` で広げる）。`is--boxLink` と併用する |
-| `is--vertical` | 縦書きモードを定義する（`writing-mode: var(--vertical-mode)`） |
 | `is--skipFlow` | `l--flow` 直下で使用し、次の兄弟要素のフロー余白をゼロにする。`l--flow`の中にあるが`position:absolute`にしたい要素などに使用する |
 | `is--side` | `l--sideMain` 直下で使用し、サイド側の要素であることを示す |
 
