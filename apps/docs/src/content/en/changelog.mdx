@@ -15,6 +15,23 @@ Breaking changes may continue frequently until the v1.0 release, so all notable 
 
 - Removed the `DummyImage` component. Use the CDN dummy image URL directly instead (e.g., `https://cdn.lism-css.com/dummy-image.jpg`).
 
+## v.0.14.0 (2026.04.17)
+
+This release contains **breaking changes**.
+
+- Removed `lismClass` / `variant` props in favor of unified `className`
+- Property Class renames:
+  - `ysz` → `bsz` (block-size)
+  - `isolation` → `iso`
+  - `whspace` → `whs` (white-space)
+  - `ovwrap` → `ovw` (overflow-wrap)
+- Removed `is--vertical`; migrated to Property Class `-wm:vertical-rl`
+- Disabled `set--bp`
+- Renamed negative token variables from `--o--n{N}` to `--o---{N}`
+- Removed `--sz--min` / `--sz--full` tokens
+- Removed dedicated `clipPath` / `boxSizing` props from `Decorator`
+- Changed `fluidCols` default min size to 20rem
+
 ## `@lism-css/ui` v.0.13.1 (2026.04.15)
 
 - Aligned with lism-css 0.13.1

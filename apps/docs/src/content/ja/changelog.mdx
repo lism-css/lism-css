@@ -15,6 +15,23 @@ v.1.0リリースまでしばらく激しい変更が続く可能性があるた
 
 - `DummyImage` コンポーネントを削除しました。`cdn.lism-css.com` のダミー画像URL（例: `https://cdn.lism-css.com/dummy-image.jpg`）を直接使用してください。
 
+## v.0.14.0 (2026.04.17)
+
+**破壊的変更**を含むリリースです。
+
+- `lismClass` / `variant` props を削除し、`className` 一本に集約
+- Property Class のリネーム:
+  - `ysz` → `bsz`（block-size 系）
+  - `isolation` → `iso`
+  - `whspace` → `whs`（white-space）
+  - `ovwrap` → `ovw`（overflow-wrap）
+- `is--vertical` を削除し、Property Class `-wm:vertical-rl` に移行
+- `set--bp` を無効化
+- ネガティブトークン変数を `--o--n{N}` から `--o---{N}` に変更
+- `--sz--min` / `--sz--full` トークンを削除
+- `Decorator` から `clipPath` / `boxSizing` 専用 props を削除
+- `fluidCols` のデフォルト min サイズを 20rem に変更
+
 ## `@lism-css/ui` v.0.13.1 (2026.04.15)
 
 - lism-css 0.13.1 の変更に追従
