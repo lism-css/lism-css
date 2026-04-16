@@ -51,7 +51,7 @@ Property Class や Lism Props で Flex 関連プロパティ（`g`, `fxw`, `jc`,
 
 ### 子要素の Flex プロパティ
 
-子要素側も `fx`（flex shorthand）, `fxb`（flex-basis）, `fxg`（flex-grow）, `fxs`（flex-shrink）などで個別制御できます。
+子要素側も `fx`（flex shorthand）, `fxb`（flex-basis）, `fxg`（flex-grow）, `fxsh`（flex-shrink）などで個別制御できます。
 
 ```jsx
 <Flex g="20">

@@ -110,6 +110,7 @@ import { Accordion, Tabs, Button } from '@lism-css/ui/astro';
 - [prop-responsive.md](./prop-responsive.md) — レスポンシブ対応（ブレークポイント・コンテナクエリ）の書き方・仕様。
 - [components-core.md](./components-core.md) — `lism-css`パッケージに含まれるコアコンポーネントの一覧と用途。（React, Astroで使える`<Lism>`・Lism Props・getLismProps ）
 - [components-ui.md](./components-ui.md) — `@lism-css/ui`パッケージに含まれるUIコンポーネント（Accordion・Modal・Tabs・Button 等）の Props・構造とCLIコマンドによるインストール方法。
+- [customize.md](./customize.md) — SCSS変数の上書きによる、lism-cssのコアCSSの挙動カスタマイズ方法・`lism.config.js` によるコアコンポーネント挙動のカスタマイズ方法。
 
 これら各ファイルの冒頭にはTOC（目次）があり、セクションごとの詳細URL・ソースURLがまとめて記載されています。
 
