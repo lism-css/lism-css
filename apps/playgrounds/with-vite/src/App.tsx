@@ -1,5 +1,5 @@
-import { Box, Flex, Container, Link, Dummy, Divider, Columns, Icon, Cluster, Lism } from 'lism-css/react';
-import { Accordion } from '@lism-css/ui/react';
+import { Box, Flex, Container, Link, Divider, Columns, Icon, Cluster, Lism } from 'lism-css/react';
+import { Accordion, Button, DummyText } from '@lism-css/ui/react';
 import { Lightbulb } from 'lucide-react';
 
 function App() {
@@ -7,7 +7,7 @@ function App() {
     <Container isWrapper="s" set="gutter" layout="flow">
       <Flex g="15" py="15">
         <img src="vite.svg" />
-        <h1>Vite + Lism UI</h1>
+        <h1>Vite + Lism CSS</h1>
       </Flex>
       <Lism />
       <p>
@@ -38,14 +38,14 @@ function App() {
         </Box>
       </Columns>
 
-      <Dummy length="s" />
+      <DummyText length="s" />
       <Cluster g="10">
         <span>Icons:</span>
         <Icon icon="lightbulb" size="1.5em" />
         <Icon as={Lightbulb} size="1.5em" />
         <Icon icon={{ as: Lightbulb, strokeWidth: '3' }} c="orange" size="1.5em" />
       </Cluster>
-      <Dummy length="l" />
+      <DummyText length="l" />
 
       <Flex jc="center">
         <Link href="###" hov="o" bgc="text" lh="xs" c="base" px="20" py="15" td="none" bdrs="99">
@@ -53,16 +53,33 @@ function App() {
         </Link>
       </Flex>
       <Divider />
-      <Accordion.Root>
-        <Accordion.Item bd>
+      <h2>lism-ui</h2>
+      <Flex g="20">
+        <Button>Button</Button>
+        <Button variant="outline">Button</Button>
+      </Flex>
+      <Accordion.Root bd>
+        <Accordion.Item>
           <Accordion.Heading>
-            <Accordion.Button p="20">アコーディオン Example 1</Accordion.Button>
+            <Accordion.Button p="20">Accordion Example 1</Accordion.Button>
           </Accordion.Heading>
           <Accordion.Panel p="20" pt="5">
-            <p>これはアコーディオンの中身です。@lism-css/ui を使用しています。</p>
+            <DummyText length="l" />
+          </Accordion.Panel>
+        </Accordion.Item>
+        <Accordion.Item bd-t>
+          <Accordion.Heading>
+            <Accordion.Button p="20">Accordion Example 2</Accordion.Button>
+          </Accordion.Heading>
+          <Accordion.Panel p="20" pt="5">
+            <DummyText length="l" />
           </Accordion.Panel>
         </Accordion.Item>
       </Accordion.Root>
+      <Divider />
+      <Box py="20" my-s="50" ta="center" c="text-2">
+        Lism CSS
+      </Box>
     </Container>
   );
 }
