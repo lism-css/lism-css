@@ -17,8 +17,8 @@ export default function Badge<T extends ElementType = 'span'>(props: LismCompone
       py="5"
       px="10"
       bdrs="10"
-      {...rest}
       className={atts(className, buildModifierClass('c--badge', { variant }))}
+      {...rest}
     />
   );
 }

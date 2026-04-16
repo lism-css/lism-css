@@ -35,9 +35,9 @@ export default function Button<T extends ElementType = 'button'>({
       w="100%"
       ai="center"
       jc="between"
-      {...(props as object)}
       aria-controls={accID}
       aria-expanded={isOpen ? 'true' : 'false'}
+      {...(props as object)}
     >
       {children}
       <Icon />

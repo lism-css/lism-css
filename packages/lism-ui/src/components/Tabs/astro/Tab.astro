@@ -16,11 +16,11 @@ const controlId = `${tabId}-${index}`;
 <Lism
   as="button"
   set="plain"
-  {...props}
   class={atts(className, 'c--tabs_tab')}
   role="tab"
   aria-controls={controlId}
   aria-selected={isActive ? 'true' : 'false'}
+  {...props}
 >
   <slot />
 </Lism>

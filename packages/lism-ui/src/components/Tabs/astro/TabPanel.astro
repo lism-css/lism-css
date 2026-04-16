@@ -12,4 +12,4 @@ const { tabId = 'tab', index = 0, isActive = false, class: className, ...props }
 const controlId = `${tabId}-${index}`;
 ---
 
-<Lism id={controlId} role="tabpanel" aria-hidden={isActive ? 'false' : 'true'} {...props} class={atts(className, 'c--tabs_panel')}><slot /></Lism>
+<Lism id={controlId} role="tabpanel" aria-hidden={isActive ? 'false' : 'true'} class={atts(className, 'c--tabs_panel')} {...props}><slot /></Lism>

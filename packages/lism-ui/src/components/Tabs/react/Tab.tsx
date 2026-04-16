@@ -14,11 +14,11 @@ export default function Tab({ tabId = 'tab', index = 0, isActive = false, classN
     <Lism
       as="button"
       set="plain"
-      {...props}
       className={atts(className, 'c--tabs_tab')}
       role="tab"
       aria-controls={controlId}
       aria-selected={isActive ? 'true' : 'false'}
+      {...props}
     />
   );
 }

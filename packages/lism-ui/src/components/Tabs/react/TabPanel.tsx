@@ -10,5 +10,5 @@ type TabPanelProps = LismComponentProps & {
 export default function TabPanel({ tabId = 'tab', isActive = false, index = 0, className, ...props }: TabPanelProps) {
   const controlId = `${tabId}-${index}`;
 
-  return <Lism id={controlId} role="tabpanel" aria-hidden={isActive ? 'false' : 'true'} {...props} className={atts(className, 'c--tabs_panel')} />;
+  return <Lism id={controlId} role="tabpanel" aria-hidden={isActive ? 'false' : 'true'} className={atts(className, 'c--tabs_panel')} {...props} />;
 }
