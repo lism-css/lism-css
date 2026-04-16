@@ -37,7 +37,7 @@ CSSコードを書く場合やコンポーネントのPropsに値を指定する
 | 透明度 (o) | `-10`, `-20`, `-30` | `--o--n{n}` | `--o--n10` |
 | 角丸 (bdrs) | `10`, `20`, `30`, `40`, `99`, `inner` | `--bdrs--{key}` | `--bdrs--20` |
 | 影 (bxsh) | `10`, `20`, `30`, `40` | `--bxsh--{n}` | `--bxsh--20` |
-| サイズ (sz) | `xs`, `s`, `m`, `l`, `xl`, `min`, `full`, `container` | `--sz--{key}` | `--sz--l` |
+| サイズ (sz) | `xs`, `s`, `m`, `l`, `xl`, `container` | `--sz--{key}` | `--sz--l` |
 | アスペクト比 (ar) | `og` | `--ar--{key}` | `--ar--og` |
 | フロー余白 (flow) | `s`, `l` | `--flow--{key}` | `--flow--s` |
 | セマンティックカラー (c) | `base`, `base-2`, `text`, `text-2`, `divider`, `link`, `brand`, `accent` | `--{name}` | `--brand` |
