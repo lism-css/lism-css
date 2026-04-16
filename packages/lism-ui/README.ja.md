@@ -70,43 +70,47 @@ export default defineConfig({
 ### React
 
 ```jsx
-import { Accordion, Modal, Tabs, Button } from '@lism-css/ui/react';
-import { Stack, Text } from 'lism-css/react';
+import { Accordion, Button } from '@lism-css/ui/react';
+import { Text } from 'lism-css/react';
 
-<Stack g="20">
-  <Accordion>
-    <Accordion.Heading>FAQ の質問</Accordion.Heading>
-    <Accordion.Body>
+<Accordion.Root>
+  <Accordion.Item>
+    <Accordion.Heading>
+      <Accordion.Button>FAQ の質問</Accordion.Button>
+    </Accordion.Heading>
+    <Accordion.Panel>
       <Text>回答の内容がここに入ります。</Text>
-    </Accordion.Body>
-  </Accordion>
+    </Accordion.Panel>
+  </Accordion.Item>
+</Accordion.Root>
 
-  <Button href="/about" variant="outline">
-    詳しく見る
-  </Button>
-</Stack>
+<Button href="/about" variant="outline">
+  詳しく見る
+</Button>
 ```
 
 ### Astro
 
 ```astro
 ---
-import { Accordion, Modal, Tabs, Button } from '@lism-css/ui/astro';
-import { Stack, Text } from 'lism-css/astro';
+import { Accordion, Button } from '@lism-css/ui/astro';
+import { Text } from 'lism-css/astro';
 ---
 
-<Stack g="20">
-  <Accordion>
-    <Accordion.Heading>FAQ の質問</Accordion.Heading>
-    <Accordion.Body>
+<Accordion.Root>
+  <Accordion.Item>
+    <Accordion.Heading>
+      <Accordion.Button>FAQ の質問</Accordion.Button>
+    </Accordion.Heading>
+    <Accordion.Panel>
       <Text>回答の内容がここに入ります。</Text>
-    </Accordion.Body>
-  </Accordion>
+    </Accordion.Panel>
+  </Accordion.Item>
+</Accordion.Root>
 
-  <Button href="/about" variant="outline">
-    詳しく見る
-  </Button>
-</Stack>
+<Button href="/about" variant="outline">
+  詳しく見る
+</Button>
 ```
 
 ## lism-css との関係

@@ -53,23 +53,24 @@
     "lism-css": "workspace:*"
   },
   "devDependencies": {
-    "@storybook/react-vite": "^10.3.3",
-    "eslint": "^9.39.4",
-    "storybook": "^10.3.3",
-    "stylelint": "^17.4.0",
     "@babel/cli": "^7.28.6",
     "@babel/core": "^7.29.0",
     "@babel/preset-env": "^7.29.0",
     "@babel/preset-react": "^7.28.5",
     "@rollup/plugin-babel": "^6.1.0",
+    "@storybook/react-vite": "^10.3.3",
     "@types/node": "^25.5.0",
     "@vitejs/plugin-react-swc": "^3.11.0",
+    "eslint": "^9.39.4",
     "glob": "^13.0.6",
     "rollup": "^4.59.0",
     "rollup-plugin-preserve-directives": "^0.4.0",
+    "storybook": "^10.3.3",
+    "stylelint": "^17.4.0",
     "typescript": "^5.8.3",
     "unplugin-dts": "1.0.0-beta.6",
-    "vite": "^7.3.1"
+    "vite": "^7.3.1",
+    "vite-plugin-lib-inject-css": "^2.2.2"
   },
   "peerDependencies": {
     "@types/react": "*",
@@ -77,5 +78,8 @@
     "react": "^18 || ^19",
     "react-dom": "^18 || ^19"
   },
-  "sideEffects": false
+  "sideEffects": [
+    "**/*.css",
+    "**/*.scss"
+  ]
 }

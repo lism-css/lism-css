@@ -1,7 +1,7 @@
 /**
  * Astro版Detailsコンポーネントのエクスポート
  */
-import Root from './Details.astro';
+import Root from './Root.astro';
 import Summary from './Summary.astro';
 import Title from './Title.astro';
 import Icon from './Icon.astro';

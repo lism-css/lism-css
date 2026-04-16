@@ -5,9 +5,9 @@ import { Lism, type LismComponentProps } from 'lism-css/react';
 import atts from 'lism-css/lib/helper/atts';
 import buildModifierClass from '../../../helper/buildModifierClass';
 import Tab from './Tab';
-import TabItem from './TabItem';
-import TabList from './TabList';
-import TabPanel from './TabPanel';
+import TabItem from './Item';
+import TabList from './List';
+import TabPanel from './Panel';
 
 import '../_style.css';
 
