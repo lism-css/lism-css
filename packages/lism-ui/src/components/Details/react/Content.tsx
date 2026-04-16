@@ -8,7 +8,7 @@ import atts from 'lism-css/lib/helper/atts';
 export default function Content<T extends ElementType = 'div'>({ children, className, ...props }: LismComponentProps<T>) {
   return (
     <Lism className="c--details_body">
-      <Lism layout="flow" flow="s" {...(props as object)} className={atts(className, 'c--details_content')}>
+      <Lism layout="flow" flow="s" className={atts(className, 'c--details_content')} {...(props as object)}>
         {children}
       </Lism>
     </Lism>

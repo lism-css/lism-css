@@ -9,7 +9,7 @@ type DummyTextProps<T extends ElementType = 'p'> = LismComponentProps<T> & {
   offset?: number;
 };
 
-export default function DummyText<T extends ElementType = 'p'>({ pre = '', length = 'm', lang = 'en', offset = 0, ...props }: DummyTextProps<T>) {
+export default function DummyText<T extends ElementType = 'p'>({ as, pre = '', length = 'm', lang = 'en', offset = 0, ...props }: DummyTextProps<T>) {
   const content = getContent({ pre, lang, length, offset });
-  return <Lism {...(props as LismComponentProps)} dangerouslySetInnerHTML={{ __html: content }} />;
+  return <Lism as={as ?? 'p'} {...(props as LismComponentProps)} dangerouslySetInnerHTML={{ __html: content }} />;
 }

@@ -6,4 +6,4 @@ import atts from 'lism-css/lib/helper/atts';
 const { class: className, ...props } = Astro.props || {};
 ---
 
-<Lism {...props} class={atts(className, 'c--modal_body')}><slot /></Lism>
+<Lism class={atts(className, 'c--modal_body')} {...props}><slot /></Lism>

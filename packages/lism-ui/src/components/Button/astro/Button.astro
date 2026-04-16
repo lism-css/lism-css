@@ -7,4 +7,4 @@ import '../_style.css';
 const { class: className, variant, ...props } = Astro.props;
 ---
 
-<Flex as="a" lh="s" py="10" px="20" hov="o" {...props} class={atts(className, buildModifierClass('c--button', { variant }))}><slot /></Flex>
+<Flex as="a" lh="s" py="10" px="20" hov="o" class={atts(className, buildModifierClass('c--button', { variant }))} {...props}><slot /></Flex>

@@ -5,4 +5,4 @@ import atts from 'lism-css/lib/helper/atts';
 const { class: className, ...props } = Astro.props || {};
 ---
 
-<Lism as="summary" layout="flex" g="10" ai="center" {...props} class={atts(className, 'c--details_summary')}><slot /></Lism>
+<Lism as="summary" layout="flex" g="10" ai="center" class={atts(className, 'c--details_summary')} {...props}><slot /></Lism>

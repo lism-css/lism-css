@@ -8,7 +8,7 @@ import atts from 'lism-css/lib/helper/atts';
  */
 export default function Summary<T extends ElementType = 'summary'>({ children, className, ...props }: LismComponentProps<T>) {
   return (
-    <Lism as="summary" layout="flex" g="10" ai="center" {...(props as object)} className={atts(className, 'c--details_summary')}>
+    <Lism as="summary" layout="flex" g="10" ai="center" className={atts(className, 'c--details_summary')} {...(props as object)}>
       {children}
     </Lism>
   );

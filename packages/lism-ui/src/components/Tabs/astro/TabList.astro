@@ -6,4 +6,4 @@ import atts from 'lism-css/lib/helper/atts';
 const { class: className, ...props } = Astro.props;
 ---
 
-<Lism role="tablist" {...props} class={atts(className, 'c--tabs_list')}><slot /></Lism>
+<Lism role="tablist" class={atts(className, 'c--tabs_list')} {...props}><slot /></Lism>
