@@ -24,9 +24,9 @@ export const WithCustomStyle: Story = {
   },
 };
 
-// isVertical で縦方向の区切り線（Flex 内で使用）
+// -wm:v-rl で縦方向の区切り線（Flex 内で使用）
 export const Vertical: Story = {
-  name: 'isVertical（縦方向）',
+  name: 'writing-mode: vertical-rl（縦方向）',
   decorators: [
     (Story) => (
       <Flex g="20" ai="stretch" h="2em">
@@ -37,7 +37,7 @@ export const Vertical: Story = {
     ),
   ],
   args: {
-    isVertical: true,
+    wm: 'vertical-rl',
     bdw: '2px',
   },
 };

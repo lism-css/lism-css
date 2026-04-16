@@ -12,5 +12,4 @@ export default {
   isCoverLink: 'is--coverLink',
   isSide: 'is--side',
   isSkipFlow: 'is--skipFlow',
-  isVertical: 'is--vertical',
 } as const;

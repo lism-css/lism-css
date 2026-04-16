@@ -37,7 +37,6 @@ describe('TraitProps', () => {
       assertType<TraitProps>({ isCoverLink: true });
       assertType<TraitProps>({ isSide: true });
       assertType<TraitProps>({ isSkipFlow: true });
-      assertType<TraitProps>({ isVertical: true });
     });
   });
 
@@ -93,7 +92,6 @@ describe('LismPropsBase — set / util', () => {
       assertType<LismPropsBase>({ set: 'mask' });
       assertType<LismPropsBase>({ set: 'plain' });
       assertType<LismPropsBase>({ set: 'innerRs' });
-      assertType<LismPropsBase>({ set: 'bp' });
     });
 
     it('スペース区切りで複数指定できる', () => {

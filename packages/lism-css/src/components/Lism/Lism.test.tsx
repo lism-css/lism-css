@@ -1163,16 +1163,6 @@ describe('Lism', () => {
         const element = screen.getByTestId('lism');
         expect(element).toHaveClass('is--skipFlow');
       });
-
-      test('isVertical を指定できる', () => {
-        render(
-          <Lism isVertical data-testid="lism">
-            test
-          </Lism>
-        );
-        const element = screen.getByTestId('lism');
-        expect(element).toHaveClass('is--vertical');
-      });
     });
 
     describe('set-- Classes', () => {

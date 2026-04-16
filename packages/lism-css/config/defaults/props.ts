@@ -359,4 +359,5 @@ export default {
   float: { prop: 'float', presets: ['left', 'right'] },
   clear: { prop: 'clear', presets: ['both'] },
   isolation: { prop: 'isolation', presets: ['isolate'] },
+  wm: { prop: 'writingMode', presets: ['vertical-rl'], bp: 1 },
 } as const;
