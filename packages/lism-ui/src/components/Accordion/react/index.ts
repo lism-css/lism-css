@@ -1,7 +1,8 @@
-import { AccordionRoot as Root, AccordionItem as Item, Heading, Button, Panel } from './Accordion';
-import Icon from './AccIcon';
+import Root from './Root';
+import Item from './Item';
+import Heading from './Heading';
+import Button from './Button';
+import Panel from './Panel';
+import Icon from './Icon';
 
-// Header は Heading のエイリアス
-const Header = Heading;
-
-export default { Root, Item, Header, Heading, Panel, Icon, Button };
+export default { Root, Item, Heading, Button, Panel, Icon };
