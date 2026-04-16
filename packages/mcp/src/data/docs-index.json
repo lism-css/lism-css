@@ -202,8 +202,8 @@
     "description": "ベーススタイルの上書きやトークン再定義に使用する set-- 形式のユーティリティクラスについて解説します。",
     "category": "guide",
     "headings": [],
-    "keywords": ["set", "set class", "set--plain", "set--shadow", "set--transition", "set--hov", "set--bp", "set--innerRs", "set--gutter"],
-    "snippet": "ベーススタイルの上書きやトークンの再定義、機能的なプロパティを初期セットするためのクラス (.set--{style})。set--plain, set--shadow, set--transition, set--hov, set--bp, set--innerRs, set--gutter を解説。"
+    "keywords": ["set", "set class", "set--plain", "set--shadow", "set--transition", "set--hov", "set--innerRs", "set--gutter"],
+    "snippet": "ベーススタイルの上書きやトークンの再定義、機能的なプロパティを初期セットするためのクラス (.set--{style})。set--plain, set--shadow, set--transition, set--hov, set--innerRs, set--gutter を解説。"
   },
   {
     "sourcePath": "primitives.mdx",
@@ -211,8 +211,8 @@
     "description": "Lism CSS のプリミティブクラス（is--, l--, a--）の分類と使い方について解説します。",
     "category": "guide",
     "headings": ["Trait Primitives", "Layout Primitives", "Atomic Primitives"],
-    "keywords": ["primitive", "プリミティブ", "trait", "layout", "レイアウト", "class", "BEM", "is--vertical"],
-    "snippet": "レイアウトを組み立てる積み木として Primitive クラスを定義。.l--{name}, .a--{name}, .is--{name} 等の命名規則。Trait Primitives (is--container, is--wrapper, is--layer, is--boxLink, is--vertical) も解説。BEM 構造を持つ Component Class (.c--{name}) は別レイヤー（lism-component）に配置される。"
+    "keywords": ["primitive", "プリミティブ", "trait", "layout", "レイアウト", "class", "BEM"],
+    "snippet": "レイアウトを組み立てる積み木として Primitive クラスを定義。.l--{name}, .a--{name}, .is--{name} 等の命名規則。Trait Primitives (is--container, is--wrapper, is--layer, is--boxLink) も解説。BEM 構造を持つ Component Class (.c--{name}) は別レイヤー（lism-component）に配置される。"
   },
   {
     "sourcePath": "base-styles.mdx",
@@ -1019,15 +1019,6 @@
     "snippet": "サイト全体で統一した左右余白を確保するクラス。--gutter-size変数（初期値 var(--s30)）で余白量を制御。"
   },
   {
-    "sourcePath": "set-class.mdx",
-    "title": "set--bp",
-    "description": "特定のブレイクポイント以上でのみスタイルを適用するSetクラス。",
-    "category": "guide",
-    "headings": ["set--bp"],
-    "keywords": ["set--bp", "ブレイクポイント", "メディアクエリ", "レスポンシブ", "--_is_sm", "条件付きスタイル"],
-    "snippet": "特定のブレイクポイント以上でのみスタイルを適用するクラス。var(--_is_sm) 等の変数を使い、レスポンシブ対応していないプロパティを条件付きで変化させるハック的手段。"
-  },
-  {
     "sourcePath": "features.mdx",
     "title": "Lism CSSの特徴",
     "description": "Lism CSS の設計思想と主な特徴について詳しく解説します。",
@@ -1060,14 +1051,5 @@
     "headings": ["セットアップ", "アップデート", "ファイル構成"],
     "keywords": ["skills", "SKILL.md", "AIエージェント", "設計ルール", "Claude", "コーディング支援"],
     "snippet": "プロジェクトにSKILL.mdファイルを配置することでAIエージェントにLism CSSの設計ルール・Props・トークン・命名規則を伝えられる。npxコマンドで導入・アップデート可能。"
-  },
-  {
-    "sourcePath": "primitives/is--vertical.mdx",
-    "title": "is--vertical",
-    "description": "is--vertical は、要素に縦書きモード（writing-mode）を適用するクラスです。",
-    "category": "primitives",
-    "headings": ["CSS", "Usage"],
-    "keywords": ["is--vertical", "縦書き", "writing-mode", "vertical-rl", "vertical-lr", "縦方向", "テキスト方向"],
-    "snippet": "要素に縦書きモード（writing-mode）を適用するクラス。--vertical-modeトークンで値を管理。is--vertical@sm / is--vertical@md でブレイクポイント以上のみ縦書きにするバリエーションも提供。set--bp との併用が必要。"
   }
 ]

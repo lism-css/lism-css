@@ -138,7 +138,6 @@ import { Accordion, Tabs, Button } from '@lism-css/ui/astro';
 - `is--wrapper` / `<Wrapper>`: [primitives/is--wrapper.md](./primitives/is--wrapper.md)
 - `is--layer` / `<Layer>`: [primitives/is--layer.md](./primitives/is--layer.md)
 - `is--boxLink` / `<BoxLink>`: [primitives/is--boxLink.md](./primitives/is--boxLink.md)
-- `is--vertical`: [primitives/is--vertical.md](./primitives/is--vertical.md)
 
 **Atomic Primitives**
 
