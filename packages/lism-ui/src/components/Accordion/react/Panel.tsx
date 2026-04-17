@@ -1,21 +1,19 @@
 'use client';
 import { useContext } from 'react';
 import atts from 'lism-css/lib/helper/atts';
-import { Lism, Flow, type LismComponentProps } from 'lism-css/react';
+import { Lism, Flow, type LayoutComponentProps } from 'lism-css/react';
+import type { FlowLayoutProps } from 'lism-css/lib/types/LayoutProps';
 import { AccordionContext } from './context';
 
-type PanelProps = { accID?: string; isOpen?: boolean };
+type PanelProps = LayoutComponentProps<'div', FlowLayoutProps> & {
+  accID?: string;
+  isOpen?: boolean;
+};
 
 /**
  * パネル
  */
-export default function Panel({
-  children,
-  className,
-  accID: propAccID = '__LISM_ACC_ID__',
-  isOpen = false,
-  ...props
-}: PanelProps & LismComponentProps) {
+export default function Panel({ children, className, accID: propAccID = '__LISM_ACC_ID__', isOpen = false, ...props }: PanelProps) {
   const ctx = useContext(AccordionContext);
   const id = ctx?.accID || propAccID;
 
