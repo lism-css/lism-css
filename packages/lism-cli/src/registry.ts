@@ -1,4 +1,5 @@
-const REGISTRY_BASE_URL = 'https://cli.lism-css.com/r';
+const DEFAULT_REGISTRY_BASE_URL = 'https://cli.lism-css.com/r';
+const REGISTRY_BASE_URL = process.env.LISM_REGISTRY_BASE_URL || DEFAULT_REGISTRY_BASE_URL;
 
 export interface RegistryFile {
   path: string;
@@ -32,6 +33,14 @@ export interface RegistryHelper {
 }
 
 async function fetchJson<T>(url: string): Promise<T> {
+  // file:// スキームはローカル検証用に直接ファイルを読む
+  if (url.startsWith('file://')) {
+    const { fileURLToPath } = await import('node:url');
+    const { readFile } = await import('node:fs/promises');
+    const path = fileURLToPath(url);
+    const raw = await readFile(path, 'utf-8');
+    return JSON.parse(raw) as T;
+  }
   const res = await fetch(url);
   if (!res.ok) {
     throw new Error(`Failed to fetch ${url}: ${res.status} ${res.statusText}`);

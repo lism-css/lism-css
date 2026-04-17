@@ -6,7 +6,7 @@ import { fetchCatalog, fetchComponent, fetchHelper } from '../registry.js';
 import { resolveHelperPlaceholder } from '../transform.js';
 import { runInit } from './init.js';
 import { logger } from '../logger.js';
-import type { LismConfig } from '../config.js';
+import type { LismCliConfig } from '../config.js';
 import type { RegistryComponent, RegistryFile } from '../registry.js';
 
 interface AddOptions {
@@ -18,12 +18,12 @@ interface AddOptions {
 type OverwritePolicy = 'all' | 'none' | 'per-component';
 
 export async function addCommand(names: string[], options: AddOptions): Promise<void> {
-  let config: LismConfig;
+  let config: LismCliConfig;
 
   if (configExists()) {
-    config = readConfig();
+    config = await readConfig();
   } else {
-    logger.info('lism-ui.json が見つかりません。セットアップを開始します...\n');
+    logger.info('lism.config.js が見つかりません。セットアップを開始します...\n');
     config = await runInit();
     console.log();
   }
@@ -90,7 +90,7 @@ function hasExistingFiles(files: RegistryFile[], baseDir: string): boolean {
 
 async function writeComponent(
   component: RegistryComponent,
-  config: LismConfig,
+  config: LismCliConfig,
   overwriteAll: boolean,
   policy: OverwritePolicy,
   installedHelpers: Set<string>

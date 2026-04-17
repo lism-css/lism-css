@@ -1,11 +1,12 @@
+import fs from 'node:fs';
 import { select, input } from '@inquirer/prompts';
-import { configExists, writeConfig, getConfigPath } from '../config.js';
+import { configExists, findConfigFile, getDefaultConfigPath, patchConfigWithCli, writeFreshConfig } from '../config.js';
 import { logger } from '../logger.js';
-import type { LismConfig } from '../config.js';
+import type { LismCliConfig } from '../config.js';
 
-/** 対話式で設定を作成し lism-ui.json に書き込む。作成した config を返す。 */
-export async function runInit(): Promise<LismConfig> {
-  const framework = await select<LismConfig['framework']>({
+/** 対話式で設定を作成し lism.config.js に書き込む（既存時は cli セクションをパッチ）。作成した config を返す。 */
+export async function runInit(): Promise<LismCliConfig> {
+  const framework = await select<LismCliConfig['framework']>({
     message: 'フレームワークを選択してください:',
     choices: [
       { name: 'React', value: 'react' },
@@ -23,17 +24,31 @@ export async function runInit(): Promise<LismConfig> {
     default: `${componentsDir}/_helper`,
   });
 
-  const config: LismConfig = { framework, componentsDir, helperDir };
-  writeConfig(config);
-  logger.success(`${getConfigPath()} を作成しました。`);
+  const config: LismCliConfig = { framework, componentsDir, helperDir };
+
+  const configPath = getDefaultConfigPath();
+  if (fs.existsSync(configPath)) {
+    const { patched, path: outPath } = patchConfigWithCli(config);
+    if (patched) {
+      logger.success(`${outPath} に cli セクションを追記しました。`);
+    } else {
+      logger.warn(`${outPath} に既に cli セクションが含まれているか、export default が検出できませんでした。手動で追記してください。`);
+    }
+  } else {
+    const outPath = writeFreshConfig(config);
+    logger.success(`${outPath} を作成しました。`);
+  }
 
   return config;
 }
 
 export async function initCommand(): Promise<void> {
-  if (configExists()) {
-    logger.warn(`${getConfigPath()} は既に存在します。上書きする場合は削除してから再実行してください。`);
-    return;
+  const found = findConfigFile();
+  if (found?.kind === 'legacy-json') {
+    logger.warn(`${found.filename} を検出しました。lism.config.js へ移行します。古いファイルは後で削除してください。`);
+  } else if (found?.kind === 'module' && configExists()) {
+    // lism.config.js 系が存在する場合、patchConfigWithCli で cli セクションのみ追記する
+    // （全体の上書きはしない）
   }
 
   await runInit();
