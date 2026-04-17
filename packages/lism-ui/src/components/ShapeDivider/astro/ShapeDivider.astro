@@ -9,7 +9,7 @@ type Props<Tag extends HTMLTag = 'div'> = Polymorphic<{ as: Tag }> &
   AstroLismBaseProps & {
     viewBox?: string;
     isEmpty?: boolean;
-    level?: number;
+    level?: number | `${number}`;
     stretch?: string;
     offset?: string;
     flip?: string;

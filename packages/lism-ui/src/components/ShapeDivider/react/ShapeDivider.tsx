@@ -7,7 +7,7 @@ type ShapeDividerProps<T extends ElementType = 'div'> = LismComponentProps<T> & 
   viewBox?: string;
   isAnimation?: boolean;
   isEmpty?: boolean;
-  level?: number;
+  level?: number | `${number}`;
   stretch?: string;
   offset?: string;
   flip?: string;
