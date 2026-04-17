@@ -12,4 +12,4 @@ type Props<Tag extends HTMLTag = 'a'> = Polymorphic<{ as: Tag }> &
 const { class: className, as = 'a', ...props } = Astro.props;
 ---
 
-<Flex as={as} class={atts(className, 'c--navMenu_link')} c="inherit" {...props as Record<string, unknown>}><slot /></Flex>
+<Flex as={as} class={atts(className, 'c--navMenu_link')} c="inherit" {...props}><slot /></Flex>
