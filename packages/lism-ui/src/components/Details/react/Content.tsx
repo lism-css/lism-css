@@ -1,5 +1,5 @@
 import type { ElementType } from 'react';
-import { Lism, type LismComponentProps } from 'lism-css/react';
+import { Lism, Flow, type LismComponentProps } from 'lism-css/react';
 import atts from 'lism-css/lib/helper/atts';
 
 /**
@@ -8,9 +8,9 @@ import atts from 'lism-css/lib/helper/atts';
 export default function Content<T extends ElementType = 'div'>({ children, className, ...props }: LismComponentProps<T>) {
   return (
     <Lism className="c--details_body">
-      <Lism layout="flow" flow="s" className={atts(className, 'c--details_content')} {...(props as object)}>
+      <Flow flow="s" className={atts(className, 'c--details_content')} {...(props as object)}>
         {children}
-      </Lism>
+      </Flow>
     </Lism>
   );
 }
