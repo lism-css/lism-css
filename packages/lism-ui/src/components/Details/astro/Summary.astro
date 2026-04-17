@@ -1,10 +1,11 @@
 ---
 import type { HTMLTag, Polymorphic } from 'astro/types';
-import type { AstroFlexProps } from 'lism-css/astro';
+import type { AstroLayoutProps } from 'lism-css/astro';
+import type { FlexProps } from 'lism-css/lib/types/LayoutProps';
 import { Flex } from 'lism-css/astro';
 import atts from 'lism-css/lib/helper/atts';
 
-type Props<Tag extends HTMLTag = 'summary'> = Polymorphic<{ as: Tag }> & AstroFlexProps;
+type Props<Tag extends HTMLTag = 'summary'> = Polymorphic<{ as: Tag }> & AstroLayoutProps<FlexProps>;
 
 const { class: className, as = 'summary', ...props } = Astro.props;
 ---

@@ -1,12 +1,13 @@
 ---
 import type { HTMLTag, Polymorphic } from 'astro/types';
-import type { AstroFlexProps } from 'lism-css/astro';
+import type { AstroLayoutProps } from 'lism-css/astro';
+import type { FlexProps } from 'lism-css/lib/types/LayoutProps';
 import { Flex } from 'lism-css/astro';
 import atts from 'lism-css/lib/helper/atts';
 import Icon from './Icon.astro';
 
 type Props<Tag extends HTMLTag = 'button'> = Polymorphic<{ as: Tag }> &
-  AstroFlexProps & {
+  AstroLayoutProps<FlexProps> & {
     isOpen?: boolean;
     accID?: string;
   };

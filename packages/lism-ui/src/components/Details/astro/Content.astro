@@ -5,11 +5,12 @@
  * grid-template-rows: 0fr → 1fr のアニメーションに必要
  */
 import type { HTMLTag, Polymorphic } from 'astro/types';
-import type { AstroFlowProps } from 'lism-css/astro';
+import type { AstroLayoutProps } from 'lism-css/astro';
+import type { FlowLayoutProps } from 'lism-css/lib/types/LayoutProps';
 import { Lism, Flow } from 'lism-css/astro';
 import atts from 'lism-css/lib/helper/atts';
 
-type Props<Tag extends HTMLTag = 'div'> = Polymorphic<{ as: Tag }> & AstroFlowProps;
+type Props<Tag extends HTMLTag = 'div'> = Polymorphic<{ as: Tag }> & AstroLayoutProps<FlowLayoutProps>;
 
 const { class: className, ...props } = Astro.props;
 ---
