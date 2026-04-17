@@ -10,7 +10,7 @@ import { AccordionContext } from './context';
 /**
  * 個別のアコーディオンアイテム（setEvent で開閉イベントを登録）
  */
-export default function Item<T extends ElementType = 'div'>({ children, className, as, ...props }: LismComponentProps<T>) {
+export default function Item<T extends ElementType = 'div'>({ children, className, as, exProps, ...props }: LismComponentProps<T>) {
   const ref = useRef<HTMLElement>(null);
   const accID = useId();
 
@@ -28,7 +28,7 @@ export default function Item<T extends ElementType = 'div'>({ children, classNam
 
   return (
     <AccordionContext.Provider value={{ accID }}>
-      <Tag ref={ref} {...lismProps}>
+      <Tag ref={ref} {...lismProps} {...exProps}>
         {children}
       </Tag>
     </AccordionContext.Provider>

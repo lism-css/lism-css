@@ -26,7 +26,7 @@ export default function ShapeDivider<T extends ElementType = 'div'>({
   style,
   ...props
 }: ShapeDividerProps<T>) {
-  if (level === 0) return null;
+  if (Number(level) === 0) return null;
 
   const computedStyle = {
     ...style,
