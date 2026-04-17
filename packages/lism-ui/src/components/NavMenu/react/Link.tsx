@@ -5,9 +5,9 @@ import atts from 'lism-css/lib/helper/atts';
 
 type LinkProps = LayoutComponentProps<ElementType, FlexProps> & { href?: string };
 
-export default function Link({ children, className, as = 'span', ...props }: LinkProps) {
+export default function Link({ children, className, ...props }: LinkProps) {
   return (
-    <Flex as={props.href ? 'a' : as} className={atts(className, 'c--navMenu_link')} c="inherit" {...(props as object)}>
+    <Flex as="a" className={atts(className, 'c--navMenu_link')} c="inherit" {...(props as object)}>
       {children}
     </Flex>
   );
