@@ -1,10 +1,11 @@
 import type { ElementType } from 'react';
-import { Stack, type LismComponentProps } from 'lism-css/react';
+import { Stack, type LayoutComponentProps } from 'lism-css/react';
+import type { StackProps } from 'lism-css/lib/types/LayoutProps';
 import atts from 'lism-css/lib/helper/atts';
 import getMaybeCssVar from 'lism-css/lib/getMaybeCssVar';
 import '../_style.css';
 
-type RootProps<T extends ElementType = 'ul'> = LismComponentProps<T> & {
+type RootProps<T extends ElementType = 'ul'> = LayoutComponentProps<T, StackProps> & {
   hovC?: string;
   hovBgc?: string;
   itemP?: string;

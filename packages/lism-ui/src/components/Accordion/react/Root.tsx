@@ -1,10 +1,11 @@
 import type { ElementType } from 'react';
 import atts from 'lism-css/lib/helper/atts';
-import { Stack, type LismComponentProps } from 'lism-css/react';
+import { Stack, type LayoutComponentProps } from 'lism-css/react';
+import type { StackProps } from 'lism-css/lib/types/LayoutProps';
 
 import '../_style.css';
 
-type AccordionRootProps<T extends ElementType = 'div'> = LismComponentProps<T> & {
+type AccordionRootProps<T extends ElementType = 'div'> = LayoutComponentProps<T, StackProps> & {
   allowMultiple?: boolean;
 };
 
