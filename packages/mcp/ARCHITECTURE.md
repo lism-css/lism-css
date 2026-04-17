@@ -91,7 +91,7 @@ packages/mcp/
         │
         │  手動で整理（/update-skill-template コマンド）
         ▼
-② .claude/skills/lism-css-guide/
+② skills/lism-css-guide/
         ├─ *.md                  # ルート直下のトピック別ガイド
         └─ modules/{l--|is--|a--}*.md  # プリミティブ単位の詳細ファイル
         │
@@ -228,7 +228,7 @@ server.registerTool(
 
 ```
 参照順:
-  1. .claude/skills/lism-css-guide/ （開発時の正本）
+  1. skills/lism-css-guide/ （開発時の正本）
   2. dist/data/guides/              （npm パッケージ配布時のフォールバック）
 ```
 

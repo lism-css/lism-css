@@ -3,7 +3,7 @@
 MCP サーバーの `docs-index.json`（`packages/mcp/src/data/`）を最新ソースから再生成する。
 
 > **注:** 参照系ツール（get_overview, get_tokens, get_props_system, get_component, get_guide）は
-> `.claude/skills/lism-css-guide/*.md` を正本として Markdown を返却する構成になっています。
+> `skills/lism-css-guide/*.md` を正本として Markdown を返却する構成になっています。
 > スキルファイルの更新は `/update-skill-template` コマンドで行います。
 > このコマンドでは `docs-index.json` のみを更新対象とします。
 

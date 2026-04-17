@@ -152,4 +152,4 @@ import { Accordion, Tabs, Button } from '@lism-css/ui/astro';
 ## このスキルファイル自身のアップデート方法
 
 `skills add lism-css/lism-css` を再実行してください。
-更新があるか確認したい場合は、[GitHub リポジトリ](https://github.com/lism-css/lism-css/tree/main/.claude/skills/lism-css-guide) を直接チェックしてください。
+更新があるか確認したい場合は、[GitHub リポジトリ](https://github.com/lism-css/lism-css/tree/main/skills/lism-css-guide) を直接チェックしてください。

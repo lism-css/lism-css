@@ -12,7 +12,7 @@ model: sonnet
 親エージェントから指定された `docs-index.json`（`packages/mcp/src/data/` 配下）を、最新のドキュメントソースと照合して更新します。
 
 > **注:** 参照系ツール（get_overview, get_tokens, get_props_system, get_component, get_guide）は
-> `.claude/skills/lism-css-guide/*.md` を正本として Markdown 返却に移行済みです。
+> `skills/lism-css-guide/*.md` を正本として Markdown 返却に移行済みです。
 > このエージェントは `docs-index.json` のみを対象とします。
 
 
