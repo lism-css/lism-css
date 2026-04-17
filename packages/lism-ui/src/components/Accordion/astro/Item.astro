@@ -1,25 +1,21 @@
 ---
-// scriptを使うので ref の関係で <Lism> ではなく getLismProps() を使う
+import type { HTMLTag, Polymorphic } from 'astro/types';
 import type { AstroLismBaseProps } from 'lism-css/astro';
-import getLismProps from 'lism-css/lib/getLismProps';
+import { Lism } from 'lism-css/astro';
 import atts from 'lism-css/lib/helper/atts';
 import uuid from '../../../helper/uuid.js';
 
 import '../_style.css';
 
-type Props = AstroLismBaseProps & {
-  accID?: string;
-};
+type Props<Tag extends HTMLTag = 'div'> = Polymorphic<{ as: Tag }> &
+  AstroLismBaseProps & {
+    accID?: string;
+  };
 
-const { accID: _accID, class: className, ...restProps } = Astro.props;
+const { as = 'div', accID: _accID, class: className, ...restProps } = Astro.props;
 
 // aria-controls / id 紐付け用のIDを生成（カスタム指定があればそれを使用、なければ自動生成）
 const accID = _accID || uuid();
-
-const lismProps = getLismProps({
-  className: atts(className, 'c--accordion_item'),
-  ...restProps,
-});
 
 // 子要素のHTMLを取得し、プレースホルダーの有無で出力方法を切り替え
 // - プレースホルダーあり → 置換して set:html で出力
@@ -30,10 +26,10 @@ const slotHtml = rendered.includes('__LISM_ACC_ID__') ? rendered.replaceAll('__L
 
 {
   slotHtml !== null ? (
-    <div {...lismProps} set:html={slotHtml} />
+    <Lism as={as} class={atts(className, 'c--accordion_item')} set:html={slotHtml} {...restProps} />
   ) : (
-    <div {...lismProps}>
+    <Lism as={as} class={atts(className, 'c--accordion_item')} {...restProps}>
       <slot />
-    </div>
+    </Lism>
   )
 }
