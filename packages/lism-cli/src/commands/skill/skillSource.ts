@@ -16,8 +16,8 @@ export function resolveSkillSourceDir(): string {
   const pkgSkills = path.resolve(__dirname, '..', 'skills', 'lism-css-guide');
   if (fs.existsSync(path.join(pkgSkills, 'SKILL.md'))) return pkgSkills;
 
-  // モノレポ開発時フォールバック（dist/ から packages/lism-cli/../.. を辿る）
-  const repoSkills = path.resolve(__dirname, '..', '..', '..', '..', 'skills', 'lism-css-guide');
+  // モノレポ開発時フォールバック（dist/ → packages/lism-cli/ → packages/ → リポジトリルート）
+  const repoSkills = path.resolve(__dirname, '..', '..', '..', 'skills', 'lism-css-guide');
   if (fs.existsSync(path.join(repoSkills, 'SKILL.md'))) return repoSkills;
 
   throw new Error('パッケージ同梱のスキルディレクトリが見つかりません。`pnpm build` 済みか確認してください。');

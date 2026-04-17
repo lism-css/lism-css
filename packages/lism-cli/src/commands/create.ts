@@ -41,7 +41,8 @@ export async function runCreate({ template, targetDir, force = false }: RunCreat
     }
   }
 
-  // TODO: PR #290 が main にマージされたら 'main' に戻す（現状 examples/ は dev にしか存在しない）
+  // FIXME(#290 マージ前): 'main' に戻すこと。publish 後に 'dev' のままだと取得先が永続的に dev を指す。
+  // 現状は examples/ が dev にしか存在しないため暫定で 'dev' 固定。
   const ref = 'dev';
   logger.info(`テンプレート "${tpl.name}" を取得中（ref: ${ref}）...`);
   await downloadTemplate(`github:lism-css/lism-css/examples/${tpl.name}#${ref}`, {

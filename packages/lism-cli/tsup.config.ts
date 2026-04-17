@@ -10,6 +10,11 @@ const lismCssPkg = JSON.parse(readFileSync(resolve(__dirname, '../lism-css/packa
   version: string;
 };
 
+// `lism --version` 用に自身のバージョンを埋め込む（package.json と createProgram.ts の二重管理回避）
+const cliPkg = JSON.parse(readFileSync(resolve(__dirname, 'package.json'), 'utf-8')) as {
+  version: string;
+};
+
 export default defineConfig({
   entry: ['src/index.ts', 'src/index-legacy.ts', 'src/lib.ts'],
   format: ['esm'],
@@ -19,5 +24,6 @@ export default defineConfig({
   target: 'node18',
   define: {
     __LISM_CSS_VERSION__: JSON.stringify(lismCssPkg.version),
+    __CLI_VERSION__: JSON.stringify(cliPkg.version),
   },
 });
