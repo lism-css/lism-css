@@ -9,13 +9,14 @@
   },
   "files": [
     "dist",
-    "bin"
+    "bin",
+    "skills"
   ],
   "scripts": {
     "format": "prettier --write . --ignore-path ../../.prettierignore",
-    "build": "tsup",
+    "build": "tsup && rm -rf skills && cp -r ../../skills ./skills",
     "dev": "tsup --watch",
-    "prepublishOnly": "tsup"
+    "prepublishOnly": "pnpm build"
   },
   "dependencies": {
     "@inquirer/prompts": "^7.0.0",
