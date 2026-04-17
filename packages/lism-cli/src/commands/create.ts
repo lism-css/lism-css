@@ -41,7 +41,8 @@ export async function runCreate({ template, targetDir, force = false }: RunCreat
     }
   }
 
-  const ref = process.env.LISM_CREATE_REF || 'main';
+  // TODO: PR #290 が main にマージされたら 'main' に戻す（現状 examples/ は dev にしか存在しない）
+  const ref = 'dev';
   logger.info(`テンプレート "${tpl.name}" を取得中（ref: ${ref}）...`);
   await downloadTemplate(`github:lism-css/lism-css/examples/${tpl.name}#${ref}`, {
     dir: outDir,
