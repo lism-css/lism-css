@@ -19,11 +19,28 @@ export function createSkillCommand(): Command {
       .option('--gemini', '.gemini/skills/ に配置')
       .option('--junie', '.junie/skills/ に配置');
 
-  toolFlags(skill.command('add').description('スキルを配置する').option('-o, --overwrite', '確認なしで上書き', false)).action(skillAddCommand);
+  toolFlags(
+    skill
+      .command('add')
+      .description('スキルを配置する')
+      .option('-o, --overwrite', '確認なしで上書き', false)
+      .option('-y, --yes', '確認プロンプトをスキップ（差分なしなら noop、差分ありなら上書き）', false)
+      .option('--ref <ref>', 'GitHub の取得元 ref（ブランチ／タグ／コミット）')
+  ).action(skillAddCommand);
 
-  skill.command('check').description('配置済みスキルのバージョンを確認する').action(skillCheckCommand);
+  skill
+    .command('check')
+    .description('配置済みスキルとリモートの差分を確認する')
+    .option('--ref <ref>', 'GitHub の取得元 ref（ブランチ／タグ／コミット）')
+    .option('-v, --verbose', 'ファイル単位の差分を表示')
+    .action(skillCheckCommand);
 
-  toolFlags(skill.command('update').description('配置済みスキルを最新版で上書きする（--overwrite 同等）')).action(skillUpdateCommand);
+  toolFlags(
+    skill
+      .command('update')
+      .description('配置済みスキルを最新版で上書きする（--overwrite 同等）')
+      .option('--ref <ref>', 'GitHub の取得元 ref（ブランチ／タグ／コミット）')
+  ).action(skillUpdateCommand);
 
   return skill;
 }

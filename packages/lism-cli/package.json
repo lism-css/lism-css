@@ -17,12 +17,11 @@
   },
   "files": [
     "dist",
-    "bin",
-    "skills"
+    "bin"
   ],
   "scripts": {
     "format": "prettier --write . --ignore-path ../../.prettierignore",
-    "build": "tsup && rm -rf skills && cp -r ../../skills ./skills",
+    "build": "tsup",
     "dev": "tsup --watch",
     "prepublishOnly": "pnpm build"
   },

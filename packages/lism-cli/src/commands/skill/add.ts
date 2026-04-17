@@ -3,11 +3,13 @@ import path from 'node:path';
 import { checkbox, confirm } from '@inquirer/prompts';
 import { logger } from '../../logger.js';
 import { ALL_SKILL_TOOLS, SKILL_PATHS, TOOL_MARKERS, type SkillTool } from './paths.js';
-import { copyDirRecursive, resolveSkillSourceDir } from './skillSource.js';
+import { cleanupTempDir, compareSkillDirs, copyDirRecursive, DEFAULT_SKILL_REF, fetchSkillSource, hasDiff } from './skillSource.js';
 
 export interface SkillAddOptions {
   all?: boolean;
   overwrite?: boolean;
+  yes?: boolean;
+  ref?: string;
   claude?: boolean;
   codex?: boolean;
   cursor?: boolean;
@@ -32,7 +34,6 @@ function autoDetectTools(cwd: string): SkillTool[] {
 
 export async function skillAddCommand(options: SkillAddOptions): Promise<void> {
   const cwd = process.cwd();
-  const srcDir = resolveSkillSourceDir();
 
   let targets = resolveExplicitTools(options);
 
@@ -56,20 +57,44 @@ export async function skillAddCommand(options: SkillAddOptions): Promise<void> {
     return;
   }
 
-  for (const tool of targets) {
-    await deploySkillTo(srcDir, tool, options.overwrite ?? false);
-  }
+  const ref = options.ref ?? DEFAULT_SKILL_REF;
+  logger.info(`スキルを取得中（ref: ${ref}）...`);
+  const { dir: srcDir } = await fetchSkillSource(ref);
 
-  logger.success('完了しました。');
+  try {
+    for (const tool of targets) {
+      await deploySkillTo(srcDir, tool, options);
+    }
+    logger.success('完了しました。');
+  } finally {
+    cleanupTempDir(srcDir);
+  }
 }
 
-async function deploySkillTo(srcDir: string, tool: SkillTool, overwrite: boolean): Promise<void> {
+async function deploySkillTo(srcDir: string, tool: SkillTool, options: SkillAddOptions): Promise<void> {
   const destDir = path.resolve(process.cwd(), SKILL_PATHS[tool]);
   const existing = fs.existsSync(destDir);
 
-  if (existing && !overwrite) {
+  if (existing && !options.overwrite && !options.yes) {
+    const diff = compareSkillDirs(destDir, srcDir);
+    const label = `${tool} (${SKILL_PATHS[tool]})`;
+
+    if (!hasDiff(diff)) {
+      logger.log(`  スキップ（差分なし）: ${label}`);
+      return;
+    }
+
+    logger.log('');
+    logger.log(`  ${label} に差分があります:`);
+    if (diff.modified.length > 0) logger.log(`    変更: ${diff.modified.length} ファイル`);
+    if (diff.added.length > 0) logger.log(`    追加: ${diff.added.length} ファイル`);
+    if (diff.localOnly.length > 0) {
+      logger.log(`    削除: ${diff.localOnly.length} ファイル（ローカルのみに存在、上書き時に削除されます）`);
+      for (const rel of diff.localOnly) logger.log(`      - ${rel}`);
+    }
+
     const go = await confirm({
-      message: `${SKILL_PATHS[tool]} は既に存在します。上書きしますか？`,
+      message: `${SKILL_PATHS[tool]} を上書きしますか？`,
       default: false,
     });
     if (!go) {
