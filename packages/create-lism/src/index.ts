@@ -14,6 +14,8 @@ async function main(): Promise<void> {
     const a = args[i];
     if (a === '-t' || a === '--template') {
       template = args[++i];
+    } else if (a.startsWith('--template=')) {
+      template = a.slice('--template='.length);
     } else if (a === '-f' || a === '--force') {
       force = true;
     } else if (a === '-h' || a === '--help') {

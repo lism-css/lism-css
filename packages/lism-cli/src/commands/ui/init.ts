@@ -28,7 +28,7 @@ export async function runInit(): Promise<LismCliConfig> {
 
   const configPath = getDefaultConfigPath();
   if (fs.existsSync(configPath)) {
-    const { patched, path: outPath } = patchConfigWithCli(config);
+    const { patched, path: outPath } = await patchConfigWithCli(config);
     if (patched) {
       logger.success(`${outPath} に cli セクションを追記しました。`);
     } else {

@@ -101,13 +101,26 @@ export function writeFreshConfig(cli: LismCliConfig): string {
  * 既存の lism.config.js に `cli` セクションを追記する。
  * - すでに `cli` が含まれる場合は false を返し、呼び出し側で案内
  * - `export default {` が見つからない場合も false
+ *
+ * `cli` 存在判定は jiti でモジュールを実際に評価して `default.cli` の有無で行う
+ * （コメントや他キー値に含まれる "cli:" で false positive を起こさないため）。
  */
-export function patchConfigWithCli(cli: LismCliConfig): { path: string; patched: boolean } {
+export async function patchConfigWithCli(cli: LismCliConfig): Promise<{ path: string; patched: boolean }> {
   const filePath = getDefaultConfigPath();
   const original = fs.readFileSync(filePath, 'utf-8');
-  if (/\bcli\s*:/m.test(original)) {
+
+  let hasCliKey = false;
+  try {
+    const jiti = createJiti(import.meta.url, { interopDefault: true });
+    const mod = await jiti.import(filePath);
+    hasCliKey = !!mod?.cli;
+  } catch (err) {
+    throw new Error(`${filePath} を読み込めませんでした（構文エラー等）。修正してから再実行してください: ${String(err)}`);
+  }
+  if (hasCliKey) {
     return { path: filePath, patched: false };
   }
+
   const match = original.match(/export default\s*\{/);
   if (!match) {
     return { path: filePath, patched: false };
