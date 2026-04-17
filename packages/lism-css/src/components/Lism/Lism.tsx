@@ -5,9 +5,10 @@ import { type LayoutSpecificProps } from '../../lib/types/LayoutProps';
 type ReactStyleWithCustomProps = CSSProperties & Record<`--${string}`, string | number | undefined>;
 
 /** 要素固有の HTML Props + 共通オプション */
-type LismElementProps<T extends ElementType> = Omit<ComponentPropsWithoutRef<T>, 'style'> & {
+type LismElementProps<T extends ElementType> = Omit<ComponentPropsWithoutRef<T>, 'style' | 'className'> & {
   as?: T;
   children?: ReactNode;
+  className?: string;
   exProps?: Record<string, unknown>;
   /** React では camelCase のみ有効（kebab-case は実行時に無視される） */
   style?: ReactStyleWithCustomProps;
