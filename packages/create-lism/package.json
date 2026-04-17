@@ -1,0 +1,31 @@
+{
+  "name": "create-lism",
+  "version": "0.1.0",
+  "description": "Scaffold a new Lism CSS project (thin wrapper around @lism-css/cli create)",
+  "type": "module",
+  "bin": {
+    "create-lism": "./bin/create-lism.mjs"
+  },
+  "files": [
+    "dist",
+    "bin"
+  ],
+  "scripts": {
+    "format": "prettier --write . --ignore-path ../../.prettierignore",
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "prepublishOnly": "pnpm build"
+  },
+  "dependencies": {
+    "@lism-css/cli": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/node": "^25.5.0",
+    "tsup": "^8.0.0",
+    "typescript": "^5.8.3"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "license": "MIT"
+}

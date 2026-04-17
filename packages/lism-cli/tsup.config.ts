@@ -11,9 +11,10 @@ const lismCssPkg = JSON.parse(readFileSync(resolve(__dirname, '../lism-css/packa
 };
 
 export default defineConfig({
-  entry: ['src/index.ts', 'src/index-legacy.ts'],
+  entry: ['src/index.ts', 'src/index-legacy.ts', 'src/lib.ts'],
   format: ['esm'],
-  dts: false,
+  // lib.ts の公開 API を TypeScript から消費する create-lism のために dts を生成
+  dts: { entry: 'src/lib.ts' },
   clean: true,
   target: 'node18',
   define: {

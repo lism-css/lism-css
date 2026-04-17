@@ -7,6 +7,14 @@
     "lism": "./bin/lism.mjs",
     "lism-ui": "./bin/cli.mjs"
   },
+  "main": "./dist/lib.js",
+  "types": "./dist/lib.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/lib.d.ts",
+      "default": "./dist/lib.js"
+    }
+  },
   "files": [
     "dist",
     "bin",
