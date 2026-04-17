@@ -44,3 +44,4 @@ export * from './atomic/Spacer';
 
 // Type exports for Astro components
 export type { AstroLismBaseProps, AstroLismFixedLayoutProps } from './types';
+export type { AstroFlowProps } from './layout/Flow/types';
