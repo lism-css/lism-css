@@ -1,26 +1,16 @@
 ---
-/**
- * Details - ルートコンポーネント
- * details要素をレンダリングし、CSSのみでアニメーションを実装
- * スクリプト不要で::details-contentを使用
- */
+import type { HTMLTag, Polymorphic } from 'astro/types';
 import type { AstroLismBaseProps } from 'lism-css/astro';
-import getLismProps from 'lism-css/lib/getLismProps';
+import { Lism } from 'lism-css/astro';
 import atts from 'lism-css/lib/helper/atts';
-
-// スタイルのインポート
 import '../_style.css';
 
-type Props = AstroLismBaseProps & {
-  open?: boolean;
-};
+type Props<Tag extends HTMLTag = 'details'> = Polymorphic<{ as: Tag }> &
+  AstroLismBaseProps & {
+    open?: boolean;
+  };
 
-const { class: className, open, ...props } = Astro.props;
-
-const lismProps = getLismProps({
-  className: atts(className, 'c--details'),
-  ...props,
-});
+const { class: className, as = 'details', open, ...props } = Astro.props;
 ---
 
-<details open={open} {...lismProps}><slot /></details>
+<Lism as={as} class={atts(className, 'c--details')} open={open} {...props}><slot /></Lism>
