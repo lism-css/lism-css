@@ -6,6 +6,31 @@ description: 'Learn how to install Lism CSS and get started with the basics.'
 This guide explains how to set up and use Lism CSS.
 
 
+## Quick start (create-lism)
+
+The fastest way to start from scratch is using `create-lism`.
+
+<Preview>
+  <PreviewCode slot="tab" label="pnpm">
+  ```bash frame="none"
+  pnpm create lism --template astro-minimal ./my-app
+  ```
+  </PreviewCode>
+  <PreviewCode slot="tab" label="npm">
+  ```bash frame="none"
+  npm create lism@latest -- --template astro-minimal my-app
+  ```
+  </PreviewCode>
+  <PreviewCode slot="tab" label="yarn">
+  ```bash frame="none"
+  yarn create lism --template astro-minimal my-app
+  ```
+  </PreviewCode>
+</Preview>
+
+This is equivalent to `lism create` from `@lism-css/cli`. If you want to add Lism CSS to an existing project, follow the sections below instead.
+
+
 There are two main approaches to getting started.
 
 ## CSS-only setup
@@ -135,18 +160,20 @@ import { Accordion, Tabs, Button } from '@lism-css/ui/astro';
 
 ### Copy to your project with the CLI
 
-Using `@lism-css/cli`, you can copy UI component source code directly into your project and customize it freely.
+Using `@lism-css/cli`'s `lism ui add`, you can copy UI component source code directly into your project and customize it freely.
 
 ```bash frame="none"
 # Add a component (interactive setup on first run)
-npx @lism-css/cli add accordion
+npx @lism-css/cli ui add accordion
 
 # Add multiple components at once
-npx @lism-css/cli add accordion modal tabs
+npx @lism-css/cli ui add accordion modal tabs
 
 # Add all components
-npx @lism-css/cli add --all
+npx @lism-css/cli ui add --all
 ```
+
+The legacy `lism-ui` command (`npx lism-ui add accordion`) continues to work via an internal redirect.
 
 
 ## AI Tool Integration

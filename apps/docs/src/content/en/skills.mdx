@@ -8,55 +8,83 @@ By placing the SKILL.md file in your project, you can communicate Lism CSS desig
 GitHub: [lism-css/skills/lism-css-guide/](https://github.com/lism-css/lism-css/tree/main/skills/lism-css-guide)
 
 
-
 ## Setup
+
+`@lism-css/cli`'s `lism skill add` can auto-detect the AI tools you use and place the SKILL.md files accordingly.
 
 <Preview>
   <PreviewCode slot="tab" label="npm">
   ```bash frame="none"
-  npx skills add lism-css/lism-css
+  npx @lism-css/cli skill add
   ```
   </PreviewCode>
   <PreviewCode slot="tab" label="pnpm">
   ```bash frame="none"
-  pnpm dlx skills add lism-css/lism-css
+  pnpm dlx @lism-css/cli skill add
   ```
   </PreviewCode>
   <PreviewCode slot="tab" label="yarn">
   ```bash frame="none"
-  yarn dlx skills add lism-css/lism-css
+  yarn dlx @lism-css/cli skill add
   ```
   </PreviewCode>
   <PreviewCode slot="tab" label="bun">
   ```bash frame="none"
-  bunx skills add lism-css/lism-css
+  bunx @lism-css/cli skill add
   ```
   </PreviewCode>
 </Preview>
 
-Install the Lism CSS skill into your project using the command above.
+In interactive mode, the CLI detects project-root markers (`.claude/`, `.cursor/`, etc.) and pre-checks matching destinations. To target tools non-interactively, pass the flags directly:
 
+```bash frame="none"
+# Single tool
+npx @lism-css/cli skill add --claude
 
-<small>For more information about the `skills` command, see [skills.sh](https://skills.sh).</small>
+# Multiple tools
+npx @lism-css/cli skill add --claude --cursor
+
+# All tools
+npx @lism-css/cli skill add --all
+```
+
+### Destinations
+
+| Flag | Destination |
+|------|-------------|
+| `--claude` | `.claude/skills/lism-css-guide` |
+| `--codex` | `.agents/skills/lism-css-guide` |
+| `--cursor` | `.cursor/skills/lism-css-guide` |
+| `--windsurf` | `.windsurf/skills/lism-css-guide` |
+| `--cline` | `.cline/skills/lism-css-guide` |
+| `--copilot` | `.github/skills/lism-css-guide` |
+| `--gemini` | `.gemini/skills/lism-css-guide` |
+| `--junie` | `.junie/skills/lism-css-guide` |
 
 
 ### Update
 
-If installed globally, you can update with the following commands:
+You can check for version drift and force-update as needed.
 
 ```bash frame="none"
-# Check for available updates
-npx skills check
+# Compare bundled version vs local version
+npx @lism-css/cli skill check
 
-# Update skills to the latest version
-npx skills update
+# Overwrite with the latest version
+npx @lism-css/cli skill update --claude
 ```
 
-If installed in a project, run `skills add` again. To check for updates, see the [GitHub repository](https://github.com/lism-css/lism-css/tree/main/skills/lism-css-guide) directly.
+For upstream changes, see the [GitHub repository](https://github.com/lism-css/lism-css/tree/main/skills/lism-css-guide) directly.
+
+
+### Using [skills.sh](https://skills.sh)
+
+If you are using [skills.sh](https://skills.sh), `skills add lism-css/lism-css` also fetches the same skill.
 
 ```bash frame="none"
 npx skills add lism-css/lism-css
 ```
+
 
 ### File structure
 

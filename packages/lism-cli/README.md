@@ -1,139 +1,118 @@
 # @lism-css/cli
 
-[Lism UI](https://lism-css.com) のコンポーネントソースをプロジェクトに追加する CLI ツールです。
+[Lism CSS](https://lism-css.com) / [Lism UI](https://lism-css.com) のための CLI ツール。`lism` コマンドで新規プロジェクト生成・UI コンポーネント追加・AI スキル配置を行います。
 
 ## 前提条件
 
 - Node.js 18 以上
-- `lism-css` がインストール済みであること
 
-```bash
-npm install lism-css
-# or
-pnpm add lism-css
+## コマンド体系
+
 ```
+lism create [targetDir] [--template <name>]   # examples から新規プロジェクト
+lism ui    { init | add <names...> | list }   # Lism UI コンポーネントの追加
+lism skill { add | check | update }           # AI エージェント向け SKILL.md 配置
+```
+
+旧 `lism-ui` コマンドは `lism ui` への透過リダイレクトとして残しているため、既存ユーザーは `lism-ui add accordion` のまま利用できます。
 
 ## 使い方
 
-### コンポーネントの追加
+### プロジェクトを新規作成
 
 ```bash
-pnpm dlx @lism-css/cli add accordion
+# 対話モード
+pnpm dlx @lism-css/cli create
+
+# テンプレート名・出力先を指定
+pnpm dlx @lism-css/cli create --template astro-minimal ./my-app
 ```
 
-`lism-ui.json` が存在しない場合、対話形式でセットアップが始まります。
+同じ動作は `pnpm create lism` / `npm create lism@latest` でも呼び出せます（`create-lism` パッケージ経由）。
+
+### UI コンポーネントの追加
+
+```bash
+# 単一 / 複数
+pnpm dlx @lism-css/cli ui add accordion
+pnpm dlx @lism-css/cli ui add accordion modal tabs
+
+# 全コンポーネント
+pnpm dlx @lism-css/cli ui add --all
+
+# 一覧
+pnpm dlx @lism-css/cli ui list
+```
+
+初回実行時に `lism.config.js` が無い場合は対話式セットアップが走り、`cli` セクションを書き込みます。
 
 ```
 ? フレームワークを選択してください: React
 ? コンポーネントの出力先ディレクトリ: src/components/ui
 ? helper の出力先ディレクトリ: src/components/ui/_helper
-✔ lism-ui.json を作成しました。
-
-accordion を展開中...
-  作成: src/components/ui/Accordion/_style.css
-  作成: src/components/ui/Accordion/getProps.js
-  ...
+✔ lism.config.js を作成しました。
 ```
 
-### 複数コンポーネントを追加
+`ui init` で設定の生成のみ行うこともできます。既存の `lism.config.js` には `cli` セクションのみ追記されます。
+
+### AI エージェント向けスキルの配置
+
+`SKILL.md` を各種 AI ツールの所定ディレクトリへ展開します。
 
 ```bash
-pnpm dlx @lism-css/cli add accordion modal tabs
+# 対話モード（使用中のツールを自動検出）
+pnpm dlx @lism-css/cli skill add
+
+# ツールを明示指定
+pnpm dlx @lism-css/cli skill add --claude --cursor
+
+# 全ツール
+pnpm dlx @lism-css/cli skill add --all
+
+# バージョン差分チェック
+pnpm dlx @lism-css/cli skill check
+
+# 上書き更新
+pnpm dlx @lism-css/cli skill update --claude
 ```
 
-### 全コンポーネントを追加
+配置先の対応表：
 
-```bash
-pnpm dlx @lism-css/cli add --all
+| ツール | 配置先 |
+|--------|--------|
+| `--claude` | `.claude/skills/lism-css-guide` |
+| `--codex` | `.agents/skills/lism-css-guide` |
+| `--cursor` | `.cursor/skills/lism-css-guide` |
+| `--windsurf` | `.windsurf/skills/lism-css-guide` |
+| `--cline` | `.cline/skills/lism-css-guide` |
+| `--copilot` | `.github/skills/lism-css-guide` |
+| `--gemini` | `.gemini/skills/lism-css-guide` |
+| `--junie` | `.junie/skills/lism-css-guide` |
+
+## lism.config.js
+
+`ui init` / `ui add` が生成・読み込む設定ファイル。CSS の設定（`tokens` 等）と CLI 設定を同居できます。
+
+```js
+export default {
+  cli: {
+    framework: 'react', // 'react' | 'astro'
+    componentsDir: 'src/components/ui',
+    helperDir: 'src/components/ui/_helper',
+  },
+};
 ```
 
-### コンポーネント一覧の確認
-
-```bash
-pnpm dlx @lism-css/cli list
-```
-
-### 初期設定（init）
-
-`lism-ui.json` を対話形式で生成します。フレームワーク（React / Astro）や出力先ディレクトリを設定できます。
-
-```bash
-pnpm dlx @lism-css/cli init
-```
-
-`init` を実行しなくても、`add` コマンドの初回実行時に `lism-ui.json` がなければ自動でセットアップが始まります。事前に設定だけ済ませたい場合に使ってください。
-
-## オプション
-
-| オプション | 説明 |
-|-----------|------|
-| `-o, --overwrite` | 既存ファイルを確認なしで上書き |
-| `-a, --all` | 全コンポーネントを追加 |
-
-## 生成されるファイル構成
-
-```
-src/components/ui/
-├── _helper/
-│   ├── animation.ts
-│   └── uuid.js
-├── Accordion/
-│   ├── _style.css
-│   ├── setAccordion.js
-│   ├── script.js
-│   └── react/
-│       ├── Root.jsx
-│       ├── Item.jsx
-│       ├── Heading.jsx
-│       ├── Button.jsx
-│       ├── Panel.jsx
-│       ├── Icon.jsx
-│       ├── context.js
-│       └── index.js
-└── Modal/
-    ├── _style.css
-    ├── ...
-    └── react/
-```
-
-## lism-ui.json
-
-`init` 時に生成される設定ファイルです。
-
-```json
-{
-  "framework": "react",
-  "componentsDir": "src/components/ui",
-  "helperDir": "src/components/ui/_helper"
-}
-```
-
-| フィールド | 説明 |
-|-----------|------|
-| `framework` | `"react"` または `"astro"` |
-| `componentsDir` | コンポーネントの出力先ディレクトリ |
-| `helperDir` | helper ファイルの出力先ディレクトリ |
+`lism.config.ts` / `lism.config.mjs` も同様に読み込まれます。旧 `lism-ui.json` は廃止予定（互換ロードのみ。起動時に deprecation 警告）。
 
 ## パッケージが見つからないエラーが出る場合
 
 npm / pnpm の Safe Supply Chain 機能により、公開から間もないパッケージがブロックされる場合があります。
 
-```
-No versions available for @lism-css/cli
-ℹ Safe-chain: Some package versions were suppressed due to minimum age requirement.
-```
-
-`--safe-chain-skip-minimum-package-age` フラグで回避できます。
-
 ```bash
-# npx の場合
-npx --safe-chain-skip-minimum-package-age @lism-css/cli add accordion
-
-# pnpm dlx の場合
-pnpm --safe-chain-skip-minimum-package-age dlx @lism-css/cli add accordion
+npm exec --safe-chain-skip-minimum-package-age @lism-css/cli create
+pnpm --safe-chain-skip-minimum-package-age dlx @lism-css/cli create
 ```
-
-この制限はパッケージ公開から一定期間が経過すると自動的に解除されます。
 
 ## License
 
