@@ -1,13 +1,13 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { confirm, select } from '@inquirer/prompts';
-import { configExists, readConfig } from '../config.js';
-import { fetchCatalog, fetchComponent, fetchHelper } from '../registry.js';
-import { resolveHelperPlaceholder } from '../transform.js';
+import { configExists, readConfig } from '../../config.js';
+import { fetchCatalog, fetchComponent, fetchHelper } from '../../registry.js';
+import { resolveHelperPlaceholder } from '../../transform.js';
 import { runInit } from './init.js';
-import { logger } from '../logger.js';
-import type { LismCliConfig } from '../config.js';
-import type { RegistryComponent, RegistryFile } from '../registry.js';
+import { logger } from '../../logger.js';
+import type { LismCliConfig } from '../../config.js';
+import type { RegistryComponent, RegistryFile } from '../../registry.js';
 
 interface AddOptions {
   overwrite: boolean;

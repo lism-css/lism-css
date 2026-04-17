@@ -1,8 +1,8 @@
 import fs from 'node:fs';
 import { select, input } from '@inquirer/prompts';
-import { configExists, findConfigFile, getDefaultConfigPath, patchConfigWithCli, writeFreshConfig } from '../config.js';
-import { logger } from '../logger.js';
-import type { LismCliConfig } from '../config.js';
+import { configExists, findConfigFile, getDefaultConfigPath, patchConfigWithCli, writeFreshConfig } from '../../config.js';
+import { logger } from '../../logger.js';
+import type { LismCliConfig } from '../../config.js';
 
 /** 対話式で設定を作成し lism.config.js に書き込む（既存時は cli セクションをパッチ）。作成した config を返す。 */
 export async function runInit(): Promise<LismCliConfig> {
