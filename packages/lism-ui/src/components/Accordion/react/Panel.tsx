@@ -1,7 +1,7 @@
 'use client';
 import { useContext } from 'react';
 import atts from 'lism-css/lib/helper/atts';
-import { Lism, type LismComponentProps } from 'lism-css/react';
+import { Lism, Flow, type LismComponentProps } from 'lism-css/react';
 import { AccordionContext } from './context';
 
 type PanelProps = { accID?: string; isOpen?: boolean };
@@ -27,9 +27,9 @@ export default function Panel({
       pos="relative"
       ov="hidden"
     >
-      <Lism className="c--accordion_content" layout="flow" {...props}>
+      <Flow className="c--accordion_content" {...props}>
         {children}
-      </Lism>
+      </Flow>
     </Lism>
   );
 }

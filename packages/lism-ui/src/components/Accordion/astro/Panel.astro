@@ -1,9 +1,9 @@
 ---
-import type { AstroLismBaseProps } from 'lism-css/astro';
-import { Lism } from 'lism-css/astro';
+import type { AstroFlowProps } from 'lism-css/astro';
+import { Lism, Flow } from 'lism-css/astro';
 import atts from 'lism-css/lib/helper/atts';
 
-type Props = AstroLismBaseProps & {
+type Props = AstroFlowProps & {
   accID?: string;
   isOpen?: boolean;
 };
@@ -12,5 +12,5 @@ const { class: className, accID = '__LISM_ACC_ID__', isOpen = false, ...props } 
 ---
 
 <Lism class={atts(className, 'c--accordion_panel')} id={accID} hidden={isOpen ? undefined : 'until-found'} pos="relative" ov="hidden">
-  <Lism class="c--accordion_content" layout="flow" {...props}><slot /></Lism>
+  <Flow class="c--accordion_content" {...props}><slot /></Flow>
 </Lism>
