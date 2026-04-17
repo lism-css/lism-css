@@ -1,21 +1,24 @@
 ---
-import type { AstroLismBaseProps } from 'lism-css/astro';
+import type { HTMLTag, Polymorphic } from 'astro/types';
+import type { AstroLayoutProps } from 'lism-css/astro';
+import type { StackProps } from 'lism-css/lib/types/LayoutProps';
 import { Stack } from 'lism-css/astro';
 import atts from 'lism-css/lib/helper/atts';
 import getMaybeCssVar from 'lism-css/lib/getMaybeCssVar';
 import '../_style.css';
 
-type Props = AstroLismBaseProps & {
-  hovC?: string;
-  hovBgc?: string;
-  itemP?: string;
-};
+type Props<Tag extends HTMLTag = 'ul'> = Polymorphic<{ as: Tag }> &
+  AstroLayoutProps<StackProps> & {
+    hovC?: string;
+    hovBgc?: string;
+    itemP?: string;
+  };
 
-const { class: className, hovC, hovBgc, itemP, style = {}, ...props } = Astro.props;
-const computedStyle = { ...style };
+const { class: className, as = 'ul', hovC, hovBgc, itemP, style = {}, ...props } = Astro.props;
+const computedStyle = { ...(style as Record<string, string | undefined>) };
 if (hovBgc) computedStyle['--hov-bgc'] = getMaybeCssVar(hovBgc, 'color');
 if (hovC) computedStyle['--hov-c'] = getMaybeCssVar(hovC, 'color');
 if (itemP) computedStyle['--_item-p'] = getMaybeCssVar(itemP, 'space');
 ---
 
-<Stack as="ul" class={atts(className, 'c--navMenu')} style={computedStyle} {...props}><slot /></Stack>
+<Stack as={as} class={atts(className, 'c--navMenu')} style={computedStyle} {...props}><slot /></Stack>

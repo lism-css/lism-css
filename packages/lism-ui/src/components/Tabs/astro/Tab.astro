@@ -1,20 +1,22 @@
 ---
+import type { HTMLTag, Polymorphic } from 'astro/types';
 import type { AstroLismBaseProps } from 'lism-css/astro';
 import { Lism } from 'lism-css/astro';
 import atts from 'lism-css/lib/helper/atts';
 
-type Props = AstroLismBaseProps & {
-  tabId?: string;
-  index?: number;
-  isActive?: boolean;
-};
+type Props<Tag extends HTMLTag = 'button'> = Polymorphic<{ as: Tag }> &
+  AstroLismBaseProps & {
+    tabId?: string;
+    index?: number;
+    isActive?: boolean;
+  };
 
-const { tabId = 'tab', index = 0, isActive = false, class: className, ...props } = Astro.props;
+const { tabId = 'tab', index = 0, isActive = false, class: className, as = 'button', ...props } = Astro.props;
 const controlId = `${tabId}-${index}`;
 ---
 
 <Lism
-  as="button"
+  as={as}
   set="plain"
   class={atts(className, 'c--tabs_tab')}
   role="tab"

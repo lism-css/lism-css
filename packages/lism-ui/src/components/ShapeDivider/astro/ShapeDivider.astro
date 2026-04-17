@@ -1,22 +1,24 @@
 ---
+import type { HTMLTag, Polymorphic } from 'astro/types';
 import type { AstroLismBaseProps } from 'lism-css/astro';
 import { Lism } from 'lism-css/astro';
 import atts from 'lism-css/lib/helper/atts';
 import '../_style.css';
 
-type Props = AstroLismBaseProps & {
-  viewBox?: string;
-  isEmpty?: boolean;
-  level?: number;
-  stretch?: string;
-  offset?: string;
-  flip?: string;
-  isAnimation?: boolean;
-};
+type Props<Tag extends HTMLTag = 'div'> = Polymorphic<{ as: Tag }> &
+  AstroLismBaseProps & {
+    viewBox?: string;
+    isEmpty?: boolean;
+    level?: number;
+    stretch?: string;
+    offset?: string;
+    flip?: string;
+    isAnimation?: boolean;
+  };
 
-const { class: className, viewBox, isAnimation, isEmpty, level = 5, stretch, offset, flip, style = {}, ...props } = Astro.props;
+const { class: className, as = 'div', viewBox, isAnimation, isEmpty, level = 5, stretch, offset, flip, style = {}, ...props } = Astro.props;
 
-const computedStyle: Record<string, unknown> = { ...style };
+const computedStyle: Record<string, unknown> = { ...(style as Record<string, string | undefined>) };
 computedStyle['--level'] = String(level);
 if (offset != null) computedStyle['--_inner-offset'] = offset;
 if (stretch != null) computedStyle['--_inner-stretch'] = stretch;
@@ -25,6 +27,7 @@ if (stretch != null) computedStyle['--_inner-stretch'] = stretch;
 {
   level !== 0 && (
     <Lism
+      as={as}
       class={atts(className, 'c--shapeDivider')}
       max-sz="full"
       aria-hidden="true"

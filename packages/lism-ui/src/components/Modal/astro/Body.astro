@@ -1,11 +1,12 @@
 ---
+import type { HTMLTag, Polymorphic } from 'astro/types';
 import type { AstroLismBaseProps } from 'lism-css/astro';
 import { Lism } from 'lism-css/astro';
 import atts from 'lism-css/lib/helper/atts';
 
-type Props = AstroLismBaseProps;
+type Props<Tag extends HTMLTag = 'div'> = Polymorphic<{ as: Tag }> & AstroLismBaseProps;
 
-const { class: className, ...props } = Astro.props;
+const { class: className, as = 'div', ...props } = Astro.props;
 ---
 
-<Lism class={atts(className, 'c--modal_body')} {...props}><slot /></Lism>
+<Lism as={as} class={atts(className, 'c--modal_body')} {...props}><slot /></Lism>

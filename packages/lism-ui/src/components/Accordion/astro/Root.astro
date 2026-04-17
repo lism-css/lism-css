@@ -1,18 +1,21 @@
 ---
-import type { AstroLismBaseProps } from 'lism-css/astro';
+import type { HTMLTag, Polymorphic } from 'astro/types';
+import type { AstroLayoutProps } from 'lism-css/astro';
+import type { StackProps } from 'lism-css/lib/types/LayoutProps';
 import { Stack } from 'lism-css/astro';
 import atts from 'lism-css/lib/helper/atts';
 
 import '../_style.css';
 
-type Props = AstroLismBaseProps & {
-  allowMultiple?: boolean;
-};
+type Props<Tag extends HTMLTag = 'div'> = Polymorphic<{ as: Tag }> &
+  AstroLayoutProps<StackProps> & {
+    allowMultiple?: boolean;
+  };
 
-const { class: className, allowMultiple, ...props } = Astro.props;
+const { class: className, as = 'div', allowMultiple, ...props } = Astro.props;
 ---
 
-<Stack class={atts(className, 'c--accordion')} data-allow-multiple={allowMultiple ? '' : undefined} {...props}><slot /></Stack>
+<Stack as={as} class={atts(className, 'c--accordion')} data-allow-multiple={allowMultiple ? '' : undefined} {...props}><slot /></Stack>
 
 <script>
   import setAccordion from '../setAccordion';
