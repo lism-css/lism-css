@@ -9,8 +9,7 @@ const SKILL_REMOTE = 'github:lism-css/lism-css/skills/lism-css-guide';
 
 /** ref が未指定の場合のデフォルト参照先 */
 // FIXME(#290 マージ前): 'main' に戻すこと。publish 後に 'dev' のままだと取得先が永続的に dev を指す。
-// TEST(#290): dev マージ前の beta 検証のため 'feat/cli-restructure' に一時差し替え。dev マージ時に 'dev' に戻すこと。
-export const DEFAULT_SKILL_REF = 'feat/cli-restructure';
+export const DEFAULT_SKILL_REF = 'dev';
 
 /**
  * 指定 ref のスキルをリモートから取得し、展開先ディレクトリパスを返す。
