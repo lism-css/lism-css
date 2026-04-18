@@ -98,12 +98,25 @@ export function writeFreshConfig(cli: LismCliConfig): string {
 }
 
 /**
+ * 指定された lism.config.{js,mjs} に `cli` セクションが存在するかを返す。
+ * jiti で実際にモジュールを評価して `default.cli` の有無を判定するため、コメントや
+ * 他キー値に含まれる "cli:" で false positive にならない。
+ */
+export async function hasCliSection(filePath: string): Promise<boolean> {
+  try {
+    const jiti = createJiti(import.meta.url, { interopDefault: true });
+    const mod = await jiti.import(filePath);
+    return !!(mod as LismConfigFile | undefined)?.cli;
+  } catch (err) {
+    throw new Error(`${filePath} を読み込めませんでした（構文エラー等）。修正してから再実行してください: ${String(err)}`);
+  }
+}
+
+/**
  * 既存の lism.config.{js,mjs} に `cli` セクションを追記する。
- * - すでに `cli` が含まれる場合は false を返し、呼び出し側で案内
- * - オブジェクトリテラルの挿入位置を特定できない場合も false
- *
- * `cli` 存在判定は jiti でモジュールを実際に評価して `default.cli` の有無で行う
- * （コメントや他キー値に含まれる "cli:" で false positive を起こさないため）。
+ * - すでに `cli` が含まれ、かつ `options.force` が false（既定）の場合は patched: false を返す
+ * - `options.force` が true の場合は既存の `cli` セクションを削除してから追記する
+ * - オブジェクトリテラルの挿入位置を特定できない場合も patched: false
  *
  * 対応する記法：
  * - `export default { ... }`
@@ -113,31 +126,87 @@ export function writeFreshConfig(cli: LismCliConfig): string {
  *
  * @param targetPath 対象ファイルの絶対パス。省略時は lism.config.js を対象にする。
  */
-export async function patchConfigWithCli(cli: LismCliConfig, targetPath?: string): Promise<{ path: string; patched: boolean }> {
+export async function patchConfigWithCli(
+  cli: LismCliConfig,
+  targetPath?: string,
+  options: { force?: boolean; existingCli?: boolean } = {}
+): Promise<{ path: string; patched: boolean }> {
   const filePath = targetPath ?? getDefaultConfigPath();
-  const original = fs.readFileSync(filePath, 'utf-8');
+  let source = fs.readFileSync(filePath, 'utf-8');
 
-  let hasCliKey = false;
-  try {
-    const jiti = createJiti(import.meta.url, { interopDefault: true });
-    const mod = await jiti.import(filePath);
-    hasCliKey = !!mod?.cli;
-  } catch (err) {
-    throw new Error(`${filePath} を読み込めませんでした（構文エラー等）。修正してから再実行してください: ${String(err)}`);
-  }
-  if (hasCliKey) {
-    return { path: filePath, patched: false };
+  // 呼び出し側で既に hasCliSection を評価済みならその結果を使い、jiti による再評価を避ける
+  const hasExisting = options.existingCli ?? (await hasCliSection(filePath));
+  if (hasExisting) {
+    if (!options.force) {
+      return { path: filePath, patched: false };
+    }
+    const removed = removeCliSection(source);
+    if (removed === null) {
+      return { path: filePath, patched: false };
+    }
+    source = removed;
   }
 
-  const insertAt = findInsertPosition(original);
+  const insertAt = findInsertPosition(source);
   if (insertAt === -1) {
     return { path: filePath, patched: false };
   }
 
   const insertion = `\n  cli: ${renderCliObject(cli, '  ')},`;
-  const updated = original.slice(0, insertAt) + insertion + original.slice(insertAt);
+  const updated = source.slice(0, insertAt) + insertion + source.slice(insertAt);
   fs.writeFileSync(filePath, updated);
   return { path: filePath, patched: true };
+}
+
+/**
+ * 既存の `cli: { ... }` セクション（と末尾カンマ）を取り除いた文字列を返す。
+ * 文字列リテラル・コメント内の `{` / `}` はバランス計算から除外する。
+ * 見つからない、または括弧がアンバランスな場合は null を返す。
+ */
+function removeCliSection(source: string): string | null {
+  // 直前が行頭・カンマ・`{` のいずれかに限定し、"my_cli:" や文字列値との誤マッチを避ける
+  const match = source.match(/(^|[\n,{])(\s*)cli\s*:\s*\{/);
+  if (!match) return null;
+  const sectionStart = match.index! + match[1].length + match[2].length;
+  const openBrace = match.index! + match[0].length - 1;
+
+  let i = openBrace + 1;
+  let depth = 1;
+  while (i < source.length && depth > 0) {
+    const c = source[i];
+    if (c === '"' || c === "'" || c === '`') {
+      const quote = c;
+      i++;
+      while (i < source.length && source[i] !== quote) {
+        if (source[i] === '\\') i++;
+        i++;
+      }
+      i++;
+      continue;
+    }
+    if (c === '/' && source[i + 1] === '/') {
+      while (i < source.length && source[i] !== '\n') i++;
+      continue;
+    }
+    if (c === '/' && source[i + 1] === '*') {
+      i += 2;
+      while (i < source.length - 1 && !(source[i] === '*' && source[i + 1] === '/')) i++;
+      i += 2;
+      continue;
+    }
+    if (c === '{') depth++;
+    else if (c === '}') depth--;
+    i++;
+  }
+  if (depth !== 0) return null;
+
+  let end = i;
+  if (source[end] === ',') end++;
+  // セクションの直後に改行だけが残らないよう、末尾の空行を 1 つ吸収
+  const trailing = source.slice(end).match(/^[ \t]*\n/);
+  if (trailing) end += trailing[0].length;
+
+  return source.slice(0, sectionStart) + source.slice(end);
 }
 
 /**

@@ -3,7 +3,8 @@ import path from 'node:path';
 import { checkbox, confirm } from '@inquirer/prompts';
 import { logger } from '../../logger.js';
 import { ALL_SKILL_TOOLS, SKILL_PATHS, TOOL_MARKERS, type SkillTool } from './paths.js';
-import { cleanupTempDir, compareSkillDirs, copyDirRecursive, DEFAULT_SKILL_REF, fetchSkillSource, hasDiff } from './skillSource.js';
+import { cleanupTempDir, compareSkillDirs, copyDirRecursive, fetchSkillSource, hasDiff } from './skillSource.js';
+import { DEFAULT_SKILL_REF } from '../../constants.js';
 
 export interface SkillAddOptions {
   all?: boolean;

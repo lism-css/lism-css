@@ -3,13 +3,7 @@ import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import { downloadTemplate } from 'giget';
-
-/** スキル取得元の GitHub リポジトリ内パス */
-const SKILL_REMOTE = 'github:lism-css/lism-css/skills/lism-css-guide';
-
-/** ref が未指定の場合のデフォルト参照先 */
-// FIXME(#290 マージ前): 'main' に戻すこと。publish 後に 'dev' のままだと取得先が永続的に dev を指す。
-export const DEFAULT_SKILL_REF = 'dev';
+import { DEFAULT_SKILL_REF, SKILL_SOURCE_PATH, SOURCE_REPO } from '../../constants.js';
 
 /**
  * 指定 ref のスキルをリモートから取得し、展開先ディレクトリパスを返す。
@@ -17,7 +11,7 @@ export const DEFAULT_SKILL_REF = 'dev';
  */
 export async function fetchSkillSource(ref: string = DEFAULT_SKILL_REF): Promise<{ dir: string; ref: string }> {
   const tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), 'lism-skill-'));
-  await downloadTemplate(`${SKILL_REMOTE}#${ref}`, {
+  await downloadTemplate(`github:${SOURCE_REPO}/${SKILL_SOURCE_PATH}#${ref}`, {
     dir: tmpDir,
     force: true,
     forceClean: true,

@@ -31,11 +31,6 @@
     "clean": {
       "cache": false
     },
-    "build:registry": {
-      "dependsOn": ["^build"],
-      "outputs": ["public/r/**"],
-      "inputs": ["scripts/**", "../lism-ui/src/components/**", "../lism-ui/src/helper/**", "../lism-ui/package.json"]
-    },
     "build:mcp-data": {
       "dependsOn": ["^build"],
       "outputs": ["packages/mcp/src/data/*.json"],

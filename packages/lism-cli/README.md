@@ -40,7 +40,12 @@ pnpm dlx @lism-css/cli ui add --all
 
 # 一覧
 pnpm dlx @lism-css/cli ui list
+
+# 特定の ref（ブランチ / タグ / コミット）から取得
+pnpm dlx @lism-css/cli ui add accordion --ref dev
 ```
+
+コンポーネントは [`packages/lism-ui/src/components`](https://github.com/lism-css/lism-css/tree/main/packages/lism-ui/src/components) から [giget](https://github.com/unjs/giget) 経由で直接取得されます。`lism-ui` を更新するだけで CLI 側も自動で追従します。
 
 初回実行時に `lism.config.js` が無い場合は対話式セットアップが走り、`cli` セクションを書き込みます。
 

@@ -2,16 +2,24 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { confirm, select } from '@inquirer/prompts';
 import { configExists, readConfig } from '../../config.js';
-import { fetchCatalog, fetchComponent, fetchHelper } from '../../registry.js';
+import {
+  fetchCatalog,
+  fetchComponent,
+  fetchHelper,
+  type FetchOptions,
+  type RegistryCatalog,
+  type RegistryComponent,
+  type RegistryFile,
+} from './fetcher.js';
 import { resolveHelperPlaceholder } from '../../transform.js';
 import { runInit } from './init.js';
 import { logger } from '../../logger.js';
 import type { LismCliConfig } from '../../config.js';
-import type { RegistryComponent, RegistryFile } from '../../registry.js';
 
 interface AddOptions {
   overwrite: boolean;
   all: boolean;
+  ref?: string;
 }
 
 /** 上書き方針 */
@@ -28,9 +36,20 @@ export async function addCommand(names: string[], options: AddOptions): Promise<
     console.log();
   }
 
-  // --all: カタログから全コンポーネント名を取得
+  const fetchOpts: FetchOptions = { ref: options.ref };
+
+  // カタログを 1 回取得して入力の正規化（case-insensitive）に使う
+  let catalog: RegistryCatalog;
+  try {
+    catalog = await fetchCatalog(fetchOpts);
+  } catch (err) {
+    const refInfo = options.ref ? ` (ref: ${options.ref})` : '';
+    const reason = err instanceof Error ? err.message : String(err);
+    logger.error(`カタログの取得に失敗しました${refInfo}: ${reason}`);
+    process.exit(1);
+  }
+
   if (options.all) {
-    const catalog = await fetchCatalog();
     names = catalog.components.map((c) => c.name);
     logger.info(`全 ${names.length} コンポーネントを追加します...`);
   }
@@ -40,14 +59,29 @@ export async function addCommand(names: string[], options: AddOptions): Promise<
     process.exit(1);
   }
 
+  // 入力を PascalCase の正規名に解決（`navmenu` / `NavMenu` どちらでも受け付ける）
+  const resolvedNames: string[] = [];
+  const notFound: string[] = [];
+  for (const input of names) {
+    const lower = input.toLowerCase();
+    const match = catalog.components.find((c) => c.name.toLowerCase() === lower);
+    if (match) resolvedNames.push(match.name);
+    else notFound.push(input);
+  }
+  if (notFound.length > 0) {
+    logger.error(`見つからないコンポーネント: ${notFound.join(', ')}`);
+    process.exit(1);
+  }
+
   // 全コンポーネントを並列 fetch し、書き込みは逐次で実行
-  const results = await Promise.allSettled(names.map((name) => fetchComponent(name)));
+  const excludeRootFiles = new Set(catalog.excludeComponentFiles);
+  const results = await Promise.allSettled(resolvedNames.map((n) => fetchComponent(n, excludeRootFiles, fetchOpts)));
 
   const installedHelpers = new Set<string>();
 
   // -o フラグがなく複数コンポーネントの場合、最初に全体の上書き方針を確認
   let overwritePolicy: OverwritePolicy = 'per-component';
-  if (!options.overwrite && names.length > 1) {
+  if (!options.overwrite && resolvedNames.length > 1) {
     overwritePolicy = await askOverwritePolicy();
   }
 
@@ -55,14 +89,14 @@ export async function addCommand(names: string[], options: AddOptions): Promise<
 
   let hasFailure = false;
 
-  for (let i = 0; i < names.length; i++) {
+  for (let i = 0; i < resolvedNames.length; i++) {
     const result = results[i];
     if (result.status === 'rejected') {
-      logger.error(`"${names[i]}" の取得に失敗しました: ${String(result.reason)}`);
+      logger.error(`"${resolvedNames[i]}" の取得に失敗しました: ${String(result.reason)}`);
       hasFailure = true;
       continue;
     }
-    const helperFailed = await writeComponent(result.value, config, overwriteAll, overwritePolicy, installedHelpers);
+    const helperFailed = await writeComponent(result.value, config, overwriteAll, overwritePolicy, installedHelpers, fetchOpts);
     if (helperFailed) hasFailure = true;
   }
 
@@ -102,14 +136,15 @@ async function writeComponent(
   config: LismCliConfig,
   overwriteAll: boolean,
   policy: OverwritePolicy,
-  installedHelpers: Set<string>
+  installedHelpers: Set<string>,
+  fetchOpts: FetchOptions
 ): Promise<boolean> {
   logger.info(`${component.name} を展開中...`);
 
   const filesToWrite = [...component.files.shared, ...component.files[config.framework]];
 
-  // コンポーネント名を PascalCase に（先頭大文字）
-  const componentDirName = component.name.charAt(0).toUpperCase() + component.name.slice(1);
+  // component.name は registry-index.json 由来で PascalCase が保持されている
+  const componentDirName = component.name;
   const componentDir = path.resolve(process.cwd(), config.componentsDir, componentDirName);
   const helperDir = path.resolve(process.cwd(), config.helperDir);
 
@@ -150,7 +185,7 @@ async function writeComponent(
   let helperFailed = false;
 
   if (helpersToInstall.length > 0) {
-    const helperResults = await Promise.allSettled(helpersToInstall.map((h) => fetchHelper(h)));
+    const helperResults = await Promise.allSettled(helpersToInstall.map((h) => fetchHelper(h, fetchOpts)));
 
     for (let i = 0; i < helpersToInstall.length; i++) {
       const result = helperResults[i];

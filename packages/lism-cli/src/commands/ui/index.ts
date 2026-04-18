@@ -12,6 +12,7 @@ export function createUiCommand(): Command {
     .addOption(new Option('--framework <name>', 'フレームワーク').choices(['react', 'astro']))
     .option('--components-dir <path>', 'コンポーネントの出力先ディレクトリ')
     .option('--helper-dir <path>', 'helper の出力先ディレクトリ')
+    .option('-f, --force', '既存の cli セクションを上書き', false)
     .action(initCommand);
 
   ui.command('add')
@@ -19,9 +20,13 @@ export function createUiCommand(): Command {
     .argument('[names...]', '追加するコンポーネント名')
     .option('-o, --overwrite', '既存ファイルを確認なしで上書き', false)
     .option('-a, --all', '全コンポーネントを追加', false)
+    .option('--ref <ref>', '取得元の Git ref（ブランチ / タグ / コミット）')
     .action(addCommand);
 
-  ui.command('list').description('利用可能なコンポーネント一覧を表示する').action(listCommand);
+  ui.command('list')
+    .description('利用可能なコンポーネント一覧を表示する')
+    .option('--ref <ref>', '取得元の Git ref（ブランチ / タグ / コミット）')
+    .action(listCommand);
 
   return ui;
 }
