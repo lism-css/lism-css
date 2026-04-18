@@ -93,6 +93,9 @@ function generateCatalog(): CatalogJson {
     for (const rel of files) {
       if (EXCLUDE_COMPONENT_FILES_SET.has(rel)) continue;
       if (isStoryFile(rel)) continue;
+      // 将来コンポーネント直下に *.test.* が置かれてもテスト由来の helper import が
+      // カタログに混入しないようにするための予防線（fetcher.ts 側も同様に除外済み）
+      if (isTestFile(rel)) continue;
 
       const content = fs.readFileSync(path.join(dir, rel), 'utf-8');
       for (const h of extractHelperDeps(content)) helperSet.add(h);

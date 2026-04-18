@@ -8,6 +8,11 @@ export interface InitOptions {
   componentsDir?: string;
   helperDir?: string;
   force?: boolean;
+  /**
+   * initCommand 経路で既に hasCliSection を評価済みのときにその結果を伝搬する内部用フラグ。
+   * 未指定の場合は patchConfigWithCli 内で通常通り判定される。
+   */
+  existingCli?: boolean;
 }
 
 /**
@@ -44,7 +49,10 @@ export async function runInit(options: InitOptions = {}): Promise<LismCliConfig>
   const found = findConfigFile();
 
   if (found?.kind === 'module') {
-    const { patched, path: outPath } = await patchConfigWithCli(config, found.path, { force: options.force });
+    const { patched, path: outPath } = await patchConfigWithCli(config, found.path, {
+      force: options.force,
+      existingCli: options.existingCli,
+    });
     if (patched) {
       logger.success(`${outPath} に cli セクションを${options.force ? '更新' : '追記'}しました。`);
     } else {
@@ -62,15 +70,26 @@ export async function runInit(options: InitOptions = {}): Promise<LismCliConfig>
 export async function initCommand(options: InitOptions): Promise<void> {
   const found = findConfigFile();
 
+  let existingCli = false;
   if (found?.kind === 'legacy-json') {
     logger.warn(`${found.filename} を検出しました。lism.config.js へ移行します。古いファイルは後で削除してください。`);
-  } else if (found?.kind === 'module' && (await hasCliSection(found.path))) {
-    if (!options.force) {
-      logger.warn(`${found.filename} には既に cli セクションが設定されています。上書きするには --force を指定してください。`);
-      return;
+  } else if (found?.kind === 'module') {
+    // ユーザーの lism.config.* に構文エラーがあると jiti が throw するため、
+    // スタックトレース付きで uncaught にならないよう logger.error で握って終了する。
+    try {
+      existingCli = await hasCliSection(found.path);
+    } catch (err) {
+      logger.error(err instanceof Error ? err.message : String(err));
+      process.exit(1);
     }
-    logger.warn(`${found.filename} の既存の cli セクションを上書きします。`);
+    if (existingCli) {
+      if (!options.force) {
+        logger.warn(`${found.filename} には既に cli セクションが設定されています。上書きするには --force を指定してください。`);
+        return;
+      }
+      logger.warn(`${found.filename} の既存の cli セクションを上書きします。`);
+    }
   }
 
-  await runInit(options);
+  await runInit({ ...options, existingCli });
 }

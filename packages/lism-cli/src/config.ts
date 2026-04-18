@@ -129,12 +129,14 @@ export async function hasCliSection(filePath: string): Promise<boolean> {
 export async function patchConfigWithCli(
   cli: LismCliConfig,
   targetPath?: string,
-  options: { force?: boolean } = {}
+  options: { force?: boolean; existingCli?: boolean } = {}
 ): Promise<{ path: string; patched: boolean }> {
   const filePath = targetPath ?? getDefaultConfigPath();
   let source = fs.readFileSync(filePath, 'utf-8');
 
-  if (await hasCliSection(filePath)) {
+  // 呼び出し側で既に hasCliSection を評価済みならその結果を使い、jiti による再評価を避ける
+  const hasExisting = options.existingCli ?? (await hasCliSection(filePath));
+  if (hasExisting) {
     if (!options.force) {
       return { path: filePath, patched: false };
     }

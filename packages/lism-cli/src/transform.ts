@@ -27,19 +27,21 @@ export function resolveHelperPlaceholder(content: string, fileRelPath: string, c
   return content.replace(/\{\{HELPER\}\}/g, posixPath);
 }
 
-/** 相対パスを shared / react / astro に分類（lism-ui 側のコンポーネントディレクトリ基準） */
+/**
+ * 相対パスを shared / react / astro に分類（lism-ui 側のコンポーネントディレクトリ基準）。
+ * 入力は fetcher.ts の walkFiles が POSIX 形式に正規化済みである前提。
+ */
 export function classifyFile(relativePath: string): FrameworkCategory {
-  if (relativePath.startsWith('react/') || relativePath.startsWith('react\\')) return 'react';
-  if (relativePath.startsWith('astro/') || relativePath.startsWith('astro\\')) return 'astro';
+  if (relativePath.startsWith('react/')) return 'react';
+  if (relativePath.startsWith('astro/')) return 'astro';
   return 'shared';
 }
 
-/** `react/` or `astro/` プレフィックスを剥がしてフラット化後のパスを返す */
+/** `react/` or `astro/` プレフィックスを剥がしてフラット化後のパスを返す（入力は POSIX 前提） */
 export function stripFrameworkPrefix(relativePath: string): string {
-  const normalized = relativePath.split(path.sep).join('/');
-  if (normalized.startsWith('react/')) return normalized.slice('react/'.length);
-  if (normalized.startsWith('astro/')) return normalized.slice('astro/'.length);
-  return normalized;
+  if (relativePath.startsWith('react/')) return relativePath.slice('react/'.length);
+  if (relativePath.startsWith('astro/')) return relativePath.slice('astro/'.length);
+  return relativePath;
 }
 
 /**
