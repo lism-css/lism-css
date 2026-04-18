@@ -43,7 +43,8 @@ export async function runCreate({ template, targetDir, force = false }: RunCreat
 
   // FIXME(#290 マージ前): 'main' に戻すこと。publish 後に 'dev' のままだと取得先が永続的に dev を指す。
   // 現状は examples/ が dev にしか存在しないため暫定で 'dev' 固定。
-  const ref = 'dev';
+  // TEST(#290): dev マージ前の beta 検証のため 'feat/cli-restructure' に一時差し替え。dev マージ時に 'dev' に戻すこと。
+  const ref = 'feat/cli-restructure';
   logger.info(`テンプレート "${tpl.name}" を取得中（ref: ${ref}）...`);
   await downloadTemplate(`github:lism-css/lism-css/examples/${tpl.name}#${ref}`, {
     dir: outDir,
