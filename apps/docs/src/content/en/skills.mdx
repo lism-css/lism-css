@@ -10,7 +10,37 @@ GitHub: [lism-css/skills/lism-css-guide/](https://github.com/lism-css/lism-css/t
 
 ## Setup
 
-`@lism-css/cli`'s `lism skill add` can auto-detect the AI tools you use and place the SKILL.md files accordingly.
+### Via skills.sh
+
+With [skills.sh](https://skills.sh), you can easily fetch the skill using the following command:
+
+<Preview>
+  <PreviewCode slot="tab" label="npm">
+  ```bash frame="none"
+  npx skills add lism-css/lism-css
+  ```
+  </PreviewCode>
+  <PreviewCode slot="tab" label="pnpm">
+  ```bash frame="none"
+  pnpm dlx skills add lism-css/lism-css
+  ```
+  </PreviewCode>
+  <PreviewCode slot="tab" label="yarn">
+  ```bash frame="none"
+  yarn dlx skills add lism-css/lism-css
+  ```
+  </PreviewCode>
+  <PreviewCode slot="tab" label="bun">
+  ```bash frame="none"
+  bunx skills add lism-css/lism-css
+  ```
+  </PreviewCode>
+</Preview>
+
+
+### Via @lism-css/cli
+
+You can also fetch the same skill with `@lism-css/cli`'s `lism skill add`. It only supports installing into the project directory, but offers the `skill check` command to compare the bundled skill with your local files.
 
 <Preview>
   <PreviewCode slot="tab" label="npm">
@@ -48,7 +78,7 @@ npx @lism-css/cli skill add --claude --cursor
 npx @lism-css/cli skill add --all
 ```
 
-### Destinations
+#### Destinations
 
 | Flag | Destination |
 |------|-------------|
@@ -62,7 +92,7 @@ npx @lism-css/cli skill add --all
 | `--junie` | `.junie/skills/lism-css-guide` |
 
 
-### Update
+#### Update
 
 You can diff your local files against the bundled skill and force-update as needed.
 
@@ -75,33 +105,3 @@ npx @lism-css/cli skill update --claude
 ```
 
 `skill check` compares each installed file with the bundled one by sha256, then lists the changed / added / removed files. For upstream changes, see the [GitHub repository](https://github.com/lism-css/lism-css/tree/main/skills/lism-css-guide) directly.
-
-
-### Using [skills.sh](https://skills.sh)
-
-If you are using [skills.sh](https://skills.sh), `skills add lism-css/lism-css` also fetches the same skill.
-
-```bash frame="none"
-npx skills add lism-css/lism-css
-```
-
-
-### File structure
-
-The skill consists of 13 files:
-
-| File | Contents |
-|------|----------|
-| `SKILL.md` | Entry point — overview, package structure, implementation rules, reference links |
-| `tokens.md` | Design tokens — spacing, font sizes, border radius, shadows, colors, palettes |
-| `base-styles.md` | Base styling — Reset CSS, HTML element base styles, CSS variables overview |
-| `set-class.md` | `set--` classes — `set--plain`/`set--shadow`/`set--hov`/`set--transition`, etc. |
-| `primitive-class.md` | Primitive classes — is--/l--/a-- and Component (c--) class list and usage |
-| `utility-class.md` | Utility classes — u-- class list |
-| `property-class.md` | Property Class — `-{prop}:{value}` syntax, key Prop list |
-| `prop-responsive.md` | Responsive design — breakpoints, container queries, usage patterns |
-| `components-core.md` | `lism-css` components — Lism / layout / semantic / Atomic & Trait Primitives |
-| `components-ui.md` | `@lism-css/ui` components — Accordion / Modal / Tabs / Button / Badge / Callout, etc. |
-| `css-rules.md` | CSS design rules — Layer structure, prefixes, custom CSS rules |
-| `naming.md` | Naming conventions — CSS variables / classes / `{prop}` / `{value}` shortening rules |
-| `customize.md` | Customization — toggling `@layer`, SCSS / `lism.config.js` overrides, extra styles |
