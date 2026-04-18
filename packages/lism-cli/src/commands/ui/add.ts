@@ -114,15 +114,22 @@ async function writeComponent(
   const helperDir = path.resolve(process.cwd(), config.helperDir);
 
   // コンポーネント単位の上書き判定
-  let shouldWrite = overwriteAll;
-  if (!overwriteAll && policy !== 'none' && hasExistingFiles(filesToWrite, componentDir)) {
-    if (policy === 'per-component') {
-      shouldWrite = await confirm({
-        message: `${componentDirName} は既に存在します。上書きしますか？`,
-        default: false,
-      });
-    }
-  } else if (policy !== 'none') {
+  let shouldWrite: boolean;
+  const hasExisting = hasExistingFiles(filesToWrite, componentDir);
+
+  if (overwriteAll) {
+    shouldWrite = true;
+  } else if (!hasExisting) {
+    // 新規コンポーネントは policy に関わらず書く
+    shouldWrite = true;
+  } else if (policy === 'none') {
+    shouldWrite = false;
+  } else if (policy === 'per-component') {
+    shouldWrite = await confirm({
+      message: `${componentDirName} は既に存在します。上書きしますか？`,
+      default: false,
+    });
+  } else {
     shouldWrite = true;
   }
 
