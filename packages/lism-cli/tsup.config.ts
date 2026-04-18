@@ -16,7 +16,7 @@ const cliPkg = JSON.parse(readFileSync(resolve(__dirname, 'package.json'), 'utf-
 };
 
 export default defineConfig({
-  entry: ['src/index.ts', 'src/index-legacy.ts', 'src/lib.ts'],
+  entry: ['src/index.ts', 'src/lib.ts'],
   format: ['esm'],
   // lib.ts の公開 API を TypeScript から消費する create-lism のために dts を生成
   dts: { entry: 'src/lib.ts' },

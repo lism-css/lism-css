@@ -318,22 +318,24 @@ HTML の `details/summary` 要素をラップしたコンポーネント。Accor
 
 ```bash
 # 初期設定（framework、出力先ディレクトリを対話的に設定）
-npx lism-ui init
+npx @lism-css/cli ui init
 
 # コンポーネントを追加
-npx lism-ui add Button Modal
-npx lism-ui add -a          # 全コンポーネントを追加
+npx @lism-css/cli ui add Button Modal
+npx @lism-css/cli ui add -a          # 全コンポーネントを追加
 
 # 利用可能なコンポーネント一覧を表示
-npx lism-ui list
+npx @lism-css/cli ui list
 ```
 
-`init` で生成される `lism-ui.json`:
+`ui init` で生成される `lism.config.js` の `cli` セクション:
 
-```json
-{
-  "framework": "react",
-  "componentsDir": "src/components/ui",
-  "helperDir": "src/components/ui/_helper"
-}
+```js
+export default {
+  cli: {
+    framework: 'react',
+    componentsDir: 'src/components/ui',
+    helperDir: 'src/components/ui/_helper',
+  },
+};
 ```

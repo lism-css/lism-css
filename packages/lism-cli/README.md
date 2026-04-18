@@ -14,8 +14,6 @@ lism ui    { init | add <names...> | list }   # Lism UI コンポーネントの
 lism skill { add | check | update }           # AI エージェント向け SKILL.md 配置
 ```
 
-旧 `lism-ui` コマンドは `lism ui` への透過リダイレクトとして残しているため、既存ユーザーは `lism-ui add accordion` のまま利用できます。
-
 ## 使い方
 
 ### プロジェクトを新規作成
