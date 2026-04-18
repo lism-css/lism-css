@@ -8,7 +8,6 @@ import { cleanupTempDir, compareSkillDirs, copyDirRecursive, DEFAULT_SKILL_REF, 
 export interface SkillAddOptions {
   all?: boolean;
   overwrite?: boolean;
-  yes?: boolean;
   ref?: string;
   claude?: boolean;
   codex?: boolean;
@@ -75,7 +74,7 @@ async function deploySkillTo(srcDir: string, tool: SkillTool, options: SkillAddO
   const destDir = path.resolve(process.cwd(), SKILL_PATHS[tool]);
   const existing = fs.existsSync(destDir);
 
-  if (existing && !options.overwrite && !options.yes) {
+  if (existing && !options.overwrite) {
     const diff = compareSkillDirs(destDir, srcDir);
     const label = `${tool} (${SKILL_PATHS[tool]})`;
 

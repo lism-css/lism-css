@@ -24,7 +24,6 @@ export function createSkillCommand(): Command {
       .command('add')
       .description('スキルを配置する')
       .option('-o, --overwrite', '確認なしで上書き', false)
-      .option('-y, --yes', '確認プロンプトをスキップ（差分なしなら noop、差分ありなら上書き）', false)
       .option('--ref <ref>', 'GitHub の取得元 ref（ブランチ／タグ／コミット）')
   ).action(skillAddCommand);
 
