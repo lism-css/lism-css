@@ -23,13 +23,13 @@ export const RAW_GITHUB_BASE = 'https://raw.githubusercontent.com';
 // -----------------------------------------------------------------------------
 
 /** `lism ui add` / `lism ui list` が参照する lism-ui ソースの ref */
-export const DEFAULT_UI_REF = 'dev';
+export const DEFAULT_UI_REF = 'main';
 
 /** `lism skill add` / `check` / `update` が参照するスキルディレクトリの ref */
-export const DEFAULT_SKILL_REF = 'dev';
+export const DEFAULT_SKILL_REF = 'main';
 
 /** `lism create` が参照する examples テンプレートの ref */
-export const DEFAULT_TEMPLATES_REF = 'dev';
+export const DEFAULT_TEMPLATES_REF = 'main';
 
 // -----------------------------------------------------------------------------
 // Repository internal paths
