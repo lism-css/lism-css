@@ -5,6 +5,7 @@ import { logger } from '../../logger.js';
 import { ALL_SKILL_TOOLS, SKILL_PATHS, TOOL_MARKERS, type SkillTool } from './paths.js';
 import { cleanupTempDir, compareSkillDirs, copyDirRecursive, fetchSkillSource, hasDiff } from './skillSource.js';
 import { DEFAULT_SKILL_REF } from '../../constants.js';
+import { t } from '../../i18n.js';
 
 export interface SkillAddOptions {
   all?: boolean;
@@ -40,32 +41,32 @@ export async function skillAddCommand(options: SkillAddOptions): Promise<void> {
   if (targets.length === 0) {
     const detected = autoDetectTools(cwd);
     if (detected.length > 0) {
-      logger.info(`検出した AI ツール: ${detected.join(', ')}`);
+      logger.info(t('skill.add.detected', { list: detected.join(', ') }));
     }
     targets = await checkbox<SkillTool>({
-      message: '配置先のツールを選択してください（スペースで選択、Enter で確定）:',
-      choices: ALL_SKILL_TOOLS.map((t) => ({
-        name: `${t}  →  ${SKILL_PATHS[t]}`,
-        value: t,
-        checked: detected.includes(t),
+      message: t('skill.add.promptTools'),
+      choices: ALL_SKILL_TOOLS.map((tool) => ({
+        name: `${tool}  →  ${SKILL_PATHS[tool]}`,
+        value: tool,
+        checked: detected.includes(tool),
       })),
     });
   }
 
   if (targets.length === 0) {
-    logger.warn('配置先が選択されませんでした。');
+    logger.warn(t('skill.add.noTargets'));
     return;
   }
 
   const ref = options.ref ?? DEFAULT_SKILL_REF;
-  logger.info(`スキルを取得中（ref: ${ref}）...`);
+  logger.info(t('skill.add.fetching', { ref }));
   const { dir: srcDir } = await fetchSkillSource(ref);
 
   try {
     for (const tool of targets) {
       await deploySkillTo(srcDir, tool, options);
     }
-    logger.success('完了しました。');
+    logger.success(t('common.done'));
   } finally {
     cleanupTempDir(srcDir);
   }
@@ -80,30 +81,30 @@ async function deploySkillTo(srcDir: string, tool: SkillTool, options: SkillAddO
     const label = `${tool} (${SKILL_PATHS[tool]})`;
 
     if (!hasDiff(diff)) {
-      logger.log(`  スキップ（差分なし）: ${label}`);
+      logger.log(t('skill.add.skippedSame', { label }));
       return;
     }
 
     logger.log('');
-    logger.log(`  ${label} に差分があります:`);
-    if (diff.modified.length > 0) logger.log(`    変更: ${diff.modified.length} ファイル`);
-    if (diff.added.length > 0) logger.log(`    追加: ${diff.added.length} ファイル`);
+    logger.log(t('skill.add.hasDiff', { label }));
+    if (diff.modified.length > 0) logger.log(t('skill.add.modifiedFiles', { count: diff.modified.length }));
+    if (diff.added.length > 0) logger.log(t('skill.add.addedFiles', { count: diff.added.length }));
     if (diff.localOnly.length > 0) {
-      logger.log(`    削除: ${diff.localOnly.length} ファイル（ローカルのみに存在、上書き時に削除されます）`);
+      logger.log(t('skill.add.localOnlyFiles', { count: diff.localOnly.length }));
       for (const rel of diff.localOnly) logger.log(`      - ${rel}`);
     }
 
     const go = await confirm({
-      message: `${SKILL_PATHS[tool]} を上書きしますか？`,
+      message: t('skill.add.confirmOverwrite', { path: SKILL_PATHS[tool] }),
       default: false,
     });
     if (!go) {
-      logger.log(`  スキップ: ${tool}`);
+      logger.log(t('skill.add.skippedTool', { tool }));
       return;
     }
   }
 
   if (existing) fs.rmSync(destDir, { recursive: true, force: true });
   copyDirRecursive(srcDir, destDir);
-  logger.log(`  配置: ${tool} → ${path.relative(process.cwd(), destDir)}`);
+  logger.log(t('skill.add.deployed', { tool, path: path.relative(process.cwd(), destDir) }));
 }

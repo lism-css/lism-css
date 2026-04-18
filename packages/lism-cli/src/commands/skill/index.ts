@@ -2,44 +2,45 @@ import { Command } from 'commander';
 import { skillAddCommand } from './add.js';
 import { skillCheckCommand } from './check.js';
 import { skillUpdateCommand } from './update.js';
+import { SKILL_PATHS } from './paths.js';
+import { t } from '../../i18n.js';
 
 /** `lism skill` サブコマンドツリー */
 export function createSkillCommand(): Command {
-  const skill = new Command('skill').description('AI エージェント向けスキル（SKILL.md）の配置と管理');
+  const skill = new Command('skill').description(t('cli.skill.description'));
+
+  const toolOptDescription = (tool: keyof typeof SKILL_PATHS): string => t('cli.skill.opt.toolPath', { path: SKILL_PATHS[tool] });
 
   const toolFlags = (cmd: Command) =>
     cmd
-      .option('--all', '全ツールに配置')
-      .option('--claude', '.claude/skills/ に配置')
-      .option('--codex', '.agents/skills/ に配置')
-      .option('--cursor', '.cursor/skills/ に配置')
-      .option('--windsurf', '.windsurf/skills/ に配置')
-      .option('--cline', '.cline/skills/ に配置')
-      .option('--copilot', '.github/skills/ に配置')
-      .option('--gemini', '.gemini/skills/ に配置')
-      .option('--junie', '.junie/skills/ に配置');
+      .option('--all', t('cli.skill.opt.all'))
+      .option('--claude', toolOptDescription('claude'))
+      .option('--codex', toolOptDescription('codex'))
+      .option('--cursor', toolOptDescription('cursor'))
+      .option('--windsurf', toolOptDescription('windsurf'))
+      .option('--cline', toolOptDescription('cline'))
+      .option('--copilot', toolOptDescription('copilot'))
+      .option('--gemini', toolOptDescription('gemini'))
+      .option('--junie', toolOptDescription('junie'));
 
   toolFlags(
     skill
       .command('add')
-      .description('スキルを配置する')
-      .option('-o, --overwrite', '確認なしで上書き', false)
-      .option('--ref <ref>', 'GitHub の取得元 ref（ブランチ／タグ／コミット）')
+      .description(t('cli.skill.add.description'))
+      .option('-o, --overwrite', t('cli.skill.add.opt.overwrite'), false)
+      .option('--ref <ref>', t('cli.skill.opt.ref'))
   ).action(skillAddCommand);
 
   skill
     .command('check')
-    .description('配置済みスキルとリモートの差分を確認する')
-    .option('--ref <ref>', 'GitHub の取得元 ref（ブランチ／タグ／コミット）')
-    .option('-v, --verbose', 'ファイル単位の差分を表示')
+    .description(t('cli.skill.check.description'))
+    .option('--ref <ref>', t('cli.skill.opt.ref'))
+    .option('-v, --verbose', t('cli.skill.check.opt.verbose'))
     .action(skillCheckCommand);
 
-  toolFlags(
-    skill
-      .command('update')
-      .description('配置済みスキルを最新版で上書きする（--overwrite 同等）')
-      .option('--ref <ref>', 'GitHub の取得元 ref（ブランチ／タグ／コミット）')
-  ).action(skillUpdateCommand);
+  toolFlags(skill.command('update').description(t('cli.skill.update.description')).option('--ref <ref>', t('cli.skill.opt.ref'))).action(
+    skillUpdateCommand
+  );
 
   return skill;
 }

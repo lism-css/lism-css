@@ -4,6 +4,7 @@ import { logger } from '../../logger.js';
 import { ALL_SKILL_TOOLS, SKILL_PATHS } from './paths.js';
 import { cleanupTempDir, compareSkillDirs, fetchSkillSource, hasDiff, type SkillDiff } from './skillSource.js';
 import { DEFAULT_SKILL_REF } from '../../constants.js';
+import { t } from '../../i18n.js';
 
 export interface SkillCheckOptions {
   ref?: string;
@@ -15,12 +16,12 @@ export async function skillCheckCommand(options: SkillCheckOptions = {}): Promis
   const installed = ALL_SKILL_TOOLS.filter((tool) => fs.existsSync(path.join(cwd, SKILL_PATHS[tool], 'SKILL.md')));
 
   if (installed.length === 0) {
-    logger.info('インストール済みのスキルは見つかりませんでした。`lism skill add` で配置できます。');
+    logger.info(t('skill.check.noneInstalled'));
     return;
   }
 
   const ref = options.ref ?? DEFAULT_SKILL_REF;
-  logger.info(`リモートスキルを取得中（ref: ${ref}）...`);
+  logger.info(t('skill.check.fetching', { ref }));
   const { dir: remoteDir } = await fetchSkillSource(ref);
 
   try {
@@ -31,7 +32,7 @@ export async function skillCheckCommand(options: SkillCheckOptions = {}): Promis
       const label = `${tool.padEnd(9)} ${SKILL_PATHS[tool]}`;
 
       if (!hasDiff(diff)) {
-        logger.log(`  ✓ ${label}  (最新)`);
+        logger.log(t('skill.check.upToDate', { label }));
         continue;
       }
 
@@ -43,9 +44,9 @@ export async function skillCheckCommand(options: SkillCheckOptions = {}): Promis
 
     logger.log('');
     if (outdatedCount === 0) {
-      logger.success('すべてのスキルが最新です。');
+      logger.success(t('skill.check.allLatest'));
     } else {
-      logger.info(`${outdatedCount} 件のツールに差分があります。\`lism skill update\` で最新に更新できます。`);
+      logger.info(t('skill.check.outdated', { count: outdatedCount }));
     }
   } finally {
     cleanupTempDir(remoteDir);
@@ -54,9 +55,9 @@ export async function skillCheckCommand(options: SkillCheckOptions = {}): Promis
 
 function formatDiffSummary(diff: SkillDiff): string {
   const parts: string[] = [];
-  if (diff.modified.length > 0) parts.push(`変更 ${diff.modified.length}`);
-  if (diff.added.length > 0) parts.push(`追加 ${diff.added.length}`);
-  if (diff.localOnly.length > 0) parts.push(`削除 ${diff.localOnly.length}`);
+  if (diff.modified.length > 0) parts.push(t('skill.check.diffModified', { count: diff.modified.length }));
+  if (diff.added.length > 0) parts.push(t('skill.check.diffAdded', { count: diff.added.length }));
+  if (diff.localOnly.length > 0) parts.push(t('skill.check.diffDeleted', { count: diff.localOnly.length }));
   return `      ${parts.join(' / ')}`;
 }
 

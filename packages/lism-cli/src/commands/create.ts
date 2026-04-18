@@ -5,15 +5,27 @@ import { select, input, confirm } from '@inquirer/prompts';
 import { logger } from '../logger.js';
 import { LISM_CSS_VERSION } from '../version.js';
 import { DEFAULT_TEMPLATES_REF, EXAMPLES_PATH, SOURCE_REPO } from '../constants.js';
+import { t, tOf } from '../i18n.js';
+
+interface LocalizedText {
+  ja: string;
+  en: string;
+}
 
 interface TemplateDef {
   name: string;
-  label: string;
-  description: string;
+  label: LocalizedText;
+  description: LocalizedText;
 }
 
 /** 配信対象の examples 一覧（将来は examples ディレクトリから自動生成に置き換え可能） */
-const TEMPLATES: TemplateDef[] = [{ name: 'astro-minimal', label: 'Astro (minimal)', description: 'Astro ベースの最小構成' }];
+const TEMPLATES: TemplateDef[] = [
+  {
+    name: 'astro-minimal',
+    label: { ja: 'Astro (最小構成)', en: 'Astro (minimal)' },
+    description: { ja: 'Astro ベースの最小構成', en: 'Minimal Astro setup' },
+  },
+];
 
 interface CreateOptions {
   template?: string;
@@ -33,17 +45,17 @@ export async function runCreate({ template, targetDir, force = false }: RunCreat
 
   if (fs.existsSync(outDir) && fs.readdirSync(outDir).length > 0 && !force) {
     const ok = await confirm({
-      message: `${outDir} は既に存在し、空ではありません。上書きしますか？`,
+      message: t('create.confirmOverwrite', { dir: outDir }),
       default: false,
     });
     if (!ok) {
-      logger.warn('中断しました。');
+      logger.warn(t('create.aborted'));
       return;
     }
   }
 
   const ref = DEFAULT_TEMPLATES_REF;
-  logger.info(`テンプレート "${tpl.name}" を取得中（ref: ${ref}）...`);
+  logger.info(t('create.fetching', { name: tpl.name, ref }));
   await downloadTemplate(`github:${SOURCE_REPO}/${EXAMPLES_PATH}/${tpl.name}#${ref}`, {
     dir: outDir,
     force: true,
@@ -53,9 +65,9 @@ export async function runCreate({ template, targetDir, force = false }: RunCreat
   // workspace:* を公開バージョンに書き換える
   rewriteWorkspaceDeps(outDir);
 
-  logger.success(`${outDir} にプロジェクトを生成しました。`);
+  logger.success(t('create.created', { dir: outDir }));
   logger.log('');
-  logger.log('次のコマンドで開発を開始できます:');
+  logger.log(t('create.nextSteps'));
   const rel = path.relative(process.cwd(), outDir) || '.';
   logger.log(`  cd ${rel}`);
   logger.log('  npm install   # or pnpm install / yarn');
@@ -71,21 +83,21 @@ async function resolveTemplate(requested?: string): Promise<TemplateDef> {
   if (requested) {
     const found = TEMPLATES.find((t) => t.name === requested);
     if (!found) {
-      throw new Error(`テンプレート "${requested}" は見つかりません。利用可能: ${TEMPLATES.map((t) => t.name).join(', ')}`);
+      throw new Error(t('create.templateNotFound', { name: requested, list: TEMPLATES.map((x) => x.name).join(', ') }));
     }
     return found;
   }
   const picked = await select<string>({
-    message: 'テンプレートを選択してください:',
-    choices: TEMPLATES.map((t) => ({ name: `${t.label} — ${t.description}`, value: t.name })),
+    message: t('create.promptSelectTemplate'),
+    choices: TEMPLATES.map((tpl) => ({ name: `${tOf(tpl.label)} — ${tOf(tpl.description)}`, value: tpl.name })),
   });
-  return TEMPLATES.find((t) => t.name === picked)!;
+  return TEMPLATES.find((x) => x.name === picked)!;
 }
 
 async function resolveTargetDir(provided: string | undefined, templateName: string): Promise<string> {
   if (provided) return provided;
   return input({
-    message: '出力先ディレクトリ:',
+    message: t('create.promptTargetDir'),
     default: `./${templateName}`,
   });
 }
@@ -117,9 +129,9 @@ function rewriteWorkspaceDeps(projectDir: string): void {
     }
     if (touched) {
       fs.writeFileSync(pkgPath, JSON.stringify(pkg, null, 2) + '\n');
-      logger.log(`  package.json の workspace:* を ^${LISM_CSS_VERSION} に置換しました。`);
+      logger.log(t('create.workspaceReplaced', { version: LISM_CSS_VERSION }));
     }
   } catch (err) {
-    logger.warn(`package.json の書き換えに失敗しました: ${String(err)}`);
+    logger.warn(t('create.workspaceFailed', { reason: String(err) }));
   }
 }
