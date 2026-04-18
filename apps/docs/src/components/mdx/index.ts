@@ -4,6 +4,7 @@
  */
 
 export { default as Callout } from './Callout.astro';
+export { default as DocsLink } from './DocsLink.astro';
 
 // Preview系コンポーネント（docsから移植）
 export { Preview, PreviewTitle, PreviewArea, PreviewCode, PreviewFrame } from '../Preview';
