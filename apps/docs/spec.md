@@ -13,29 +13,21 @@
 
 - `src/components/mdx/index.ts` - エクスポート管理
 - `src/pages/[...slug].astro` - `<Content components={...} />` で注入
-- コンポーネント: `Callout`, `LinkCard`, `Demo`, `DemoCode`
+- コンポーネント: `Callout`
 
 
 ## Markdown 拡張記法
 
 - `astro.config.ts` - プラグイン登録
-- `src/lib/remark-linkcard.ts` - URL だけの段落 → `<LinkCard>` 変換
 - `src/lib/remark-callout.ts` - `:::type ... :::` → `<Callout>` 変換
 - `src/lib/rehype-blockquote-cite.ts` - blockquote の cite 属性変換
 - Callout type: `alert`（赤）, `point`（橙）, `warning`（黄）, `check`（緑）, `help`（紫）, `note`（青）
 
 
-## Demo コンポーネント
+## プレビューページ
 
-- `src/components/mdx/Demo/` - Demo 関連コンポーネント
 - `src/layouts/DemoLayout.astro` - プレビューページ用レイアウト
 - プレビューページは `src/pages/preview/{example-name}/` に配置（`index.astro`, `_src.html`, `_src.css`）
-
-
-## LinkCard コンポーネント
-
-- `src/components/mdx/LinkCard.astro` - コンポーネント本体
-- `src/lib/ogpCache.ts` - OGP キャッシュ管理（`.cache/ogp/`、有効期限 7 日）
 
 
 ## 目次生成

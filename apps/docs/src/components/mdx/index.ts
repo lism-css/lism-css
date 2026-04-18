@@ -4,10 +4,6 @@
  */
 
 export { default as Callout } from './Callout.astro';
-export { default as LinkCard } from './LinkCard.astro';
-
-// export { default as Demo } from './Demo/Demo.astro';
-// export { default as DemoCode } from './Demo/DemoCode.astro';
 
 // Preview系コンポーネント（docsから移植）
 export { Preview, PreviewTitle, PreviewArea, PreviewCode, PreviewFrame } from '../Preview';
