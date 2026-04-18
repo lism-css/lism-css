@@ -6,9 +6,47 @@ description: 'Learn how to install Lism CSS and get started with the basics.'
 This guide explains how to set up and use Lism CSS.
 
 
-## Quick start (create-lism)
+## CSS-only setup
 
-The fastest way to start from scratch is using `create-lism`.
+For simple HTML sites or other cases where you only need the CSS file, you can use it via CDN.
+
+
+<PreviewTitle>Load via CDN</PreviewTitle>
+```html
+<link href="https://cdn.jsdelivr.net/npm/lism-css@0.14.0/dist/css/main.css" rel="stylesheet" />
+```
+
+You can also download the CSS file and load it locally.
+
+
+## Quick start
+
+The fastest way to start from scratch is using `create lism`. The template and output directory can be chosen through interactive prompts.
+
+<Preview>
+  <PreviewCode slot="tab" label="pnpm">
+  ```bash frame="none"
+  pnpm create lism@latest
+  ```
+  </PreviewCode>
+  <PreviewCode slot="tab" label="npm">
+  ```bash frame="none"
+  npm create lism@latest
+  ```
+  </PreviewCode>
+  <PreviewCode slot="tab" label="yarn">
+  ```bash frame="none"
+  yarn create lism
+  ```
+  </PreviewCode>
+</Preview>
+
+This is equivalent to `lism create` from `@lism-css/cli`.
+
+
+### Specify a template
+
+Pass `--template` to skip the interactive prompt and choose a template directly.
 
 <Preview>
   <PreviewCode slot="tab" label="pnpm">
@@ -28,25 +66,15 @@ The fastest way to start from scratch is using `create-lism`.
   </PreviewCode>
 </Preview>
 
-This is equivalent to `lism create` from `@lism-css/cli`. If you want to add Lism CSS to an existing project, follow the sections below instead.
+
+### Available templates
+
+| Template | Description |
+|---|---|
+| `astro-minimal` | Minimal Astro-based setup |
 
 
-There are two main approaches to getting started.
-
-## CSS-only setup
-
-For simple HTML sites or other cases where you only need the CSS file, you can use it via CDN.
-
-
-<PreviewTitle>Load via CDN</PreviewTitle>
-```html
-<link href="https://cdn.jsdelivr.net/npm/lism-css@0.14.0/dist/css/main.css" rel="stylesheet" />
-```
-
-You can also download the CSS file and load it locally.
-
-
-## Using dedicated components
+## Use React/Astro components
 
 React (.jsx) and Astro (.astro) components are distributed as an npm package.
 
@@ -100,32 +128,6 @@ import { Box, Flex, ... } from 'lism-css/astro';
 ```
 </PreviewCode>
 </Preview>
-
-
-
-:::warning
-::title[Note when importing .astro files]
-
-Directly importing `.astro` files from inside `node_modules` may not work and could require additional configuration.
-If you encounter a "**Directory import '...' is not supported resolving ES modules** ..." error, add `"lism-css"` to `vite.ssr.noExternal` in your `astro.config.js`.
-
-<PreviewTitle>`astro.config.js`</PreviewTitle>
-```js
-import { defineConfig } from 'astro/config';
-
-export default defineConfig({
-  // ...other settings
-  vite: {
-    ssr: {
-      noExternal: ['lism-css'],
-    },
-  },
-});
-```
-
-
-<small>(We are investigating whether this can be resolved by improving the package distribution method...)</small>
-:::
 
 
 
