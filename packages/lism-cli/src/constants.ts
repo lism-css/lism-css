@@ -20,12 +20,10 @@ export const RAW_GITHUB_BASE = 'https://raw.githubusercontent.com';
 // FIXME(マージ運用):
 //   - dev ブランチへマージする直前に、各値を `'dev'` に揃えること。
 //   - main ブランチへマージする直前に、各値を `'main'` に揃えること。
-//   - 現状 DEFAULT_UI_REF のみ PR #292 (fix/292-giget-registry-migration)
-//     の beta publish 検証用に当該ブランチを指している。
 // -----------------------------------------------------------------------------
 
 /** `lism ui add` / `lism ui list` が参照する lism-ui ソースの ref */
-export const DEFAULT_UI_REF = 'fix/292-giget-registry-migration';
+export const DEFAULT_UI_REF = 'dev';
 
 /** `lism skill add` / `check` / `update` が参照するスキルディレクトリの ref */
 export const DEFAULT_SKILL_REF = 'dev';
