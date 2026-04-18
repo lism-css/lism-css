@@ -113,6 +113,6 @@ function generateCatalog(): CatalogJson {
 }
 
 const catalog = generateCatalog();
-fs.writeFileSync(OUTPUT_FILE, JSON.stringify(catalog, null, '\t') + '\n');
+fs.writeFileSync(OUTPUT_FILE, JSON.stringify(catalog, null, 2) + '\n');
 console.log(`Registry index generated: ${catalog.components.length} components, ${catalog.helpers.length} helpers`);
 console.log(`Output: ${path.relative(process.cwd(), OUTPUT_FILE)}`);

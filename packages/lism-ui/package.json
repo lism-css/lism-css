@@ -17,7 +17,7 @@
     "dev": "vite",
     "build": "pnpm gen:registry && vite build && pnpm build:css",
     "build:css": "node build-css.js",
-    "gen:registry": "tsx scripts/generate-registry-index.ts",
+    "gen:registry": "tsx scripts/generate-registry-index.ts && prettier --write registry-index.json --log-level warn",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "lint": "pnpm lint:eslint && pnpm lint:style",
