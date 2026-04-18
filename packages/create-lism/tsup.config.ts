@@ -10,5 +10,7 @@ export default defineConfig({
   banner: {
     js: "import { createRequire as __createRequire } from 'module'; const require = __createRequire(import.meta.url);",
   },
-  noExternal: ['@lism-css/cli', '@inquirer/prompts', 'commander', 'giget', 'jiti', 'picocolors'],
+  // node 標準モジュール以外はすべて bundle に内包する。
+  // lism-cli の依存変更に追従不要にするためハードコードを避ける。
+  noExternal: [/.*/],
 });
