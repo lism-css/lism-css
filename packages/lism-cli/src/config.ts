@@ -4,7 +4,7 @@ import { createJiti } from 'jiti';
 import { logger } from './logger.js';
 
 const LEGACY_CONFIG_FILE = 'lism-ui.json';
-const CONFIG_SEARCH = ['lism.config.ts', 'lism.config.mjs', 'lism.config.js'] as const;
+const CONFIG_SEARCH = ['lism.config.js', 'lism.config.mjs'] as const;
 
 export interface LismCliConfig {
   framework: 'react' | 'astro';
@@ -48,13 +48,13 @@ export function getDefaultConfigPath(): string {
 
 /**
  * CLI 設定を読み込む。
- * - `lism.config.{ts,mjs,js}`: 動的インポート（jiti）で default export から `cli` を取得
+ * - `lism.config.{js,mjs}`: 動的インポート（jiti）で default export から `cli` を取得
  * - `lism-ui.json` (legacy): JSON.parse、deprecation 警告を出す
  */
 export async function readConfig(): Promise<LismCliConfig> {
   const found = findConfigFile();
   if (!found) {
-    throw new Error('lism.config.js / lism.config.mjs / lism.config.ts / lism-ui.json のいずれも見つかりません。');
+    throw new Error('lism.config.js / lism.config.mjs / lism-ui.json のいずれも見つかりません。');
   }
 
   if (found.kind === 'legacy-json') {
@@ -98,15 +98,17 @@ export function writeFreshConfig(cli: LismCliConfig): string {
 }
 
 /**
- * 既存の lism.config.js に `cli` セクションを追記する。
+ * 既存の lism.config.{js,mjs} に `cli` セクションを追記する。
  * - すでに `cli` が含まれる場合は false を返し、呼び出し側で案内
  * - `export default {` が見つからない場合も false
  *
  * `cli` 存在判定は jiti でモジュールを実際に評価して `default.cli` の有無で行う
  * （コメントや他キー値に含まれる "cli:" で false positive を起こさないため）。
+ *
+ * @param targetPath 対象ファイルの絶対パス。省略時は lism.config.js を対象にする。
  */
-export async function patchConfigWithCli(cli: LismCliConfig): Promise<{ path: string; patched: boolean }> {
-  const filePath = getDefaultConfigPath();
+export async function patchConfigWithCli(cli: LismCliConfig, targetPath?: string): Promise<{ path: string; patched: boolean }> {
+  const filePath = targetPath ?? getDefaultConfigPath();
   const original = fs.readFileSync(filePath, 'utf-8');
 
   let hasCliKey = false;

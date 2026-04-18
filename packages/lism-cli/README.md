@@ -103,7 +103,7 @@ export default {
 };
 ```
 
-`lism.config.ts` / `lism.config.mjs` も同様に読み込まれます。旧 `lism-ui.json` は廃止予定（互換ロードのみ。起動時に deprecation 警告）。
+`lism.config.mjs` も同様に読み込まれます。旧 `lism-ui.json` は廃止予定（互換ロードのみ。起動時に deprecation 警告）。
 
 ## パッケージが見つからないエラーが出る場合
 
