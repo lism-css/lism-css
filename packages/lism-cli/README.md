@@ -69,7 +69,7 @@ pnpm dlx @lism-css/cli skill add --claude --cursor
 # 全ツール
 pnpm dlx @lism-css/cli skill add --all
 
-# バージョン差分チェック
+# 同梱スキルとローカルのファイル差分をチェック（変更 / 追加 / 削除のサマリ表示）
 pnpm dlx @lism-css/cli skill check
 
 # 上書き更新
@@ -104,6 +104,8 @@ export default {
 ```
 
 `lism.config.mjs` も同様に読み込まれます。旧 `lism-ui.json` は廃止予定（互換ロードのみ。起動時に deprecation 警告）。
+
+> **Note:** TypeScript の `lism.config.ts` は現在未対応です。`lism-css` 本体の SCSS ビルド（`vite-plugin-lism-css` / `lism-css build`）も `.ts` を読み込まない設計のため、設定ファイルは `.js` / `.mjs` で記述してください。
 
 ## パッケージが見つからないエラーが出る場合
 

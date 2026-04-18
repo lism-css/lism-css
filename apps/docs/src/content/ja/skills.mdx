@@ -64,17 +64,17 @@ npx @lism-css/cli skill add --all
 
 ### アップデート
 
-バージョン差分を確認してから更新できます。
+同梱スキルとローカルのファイル差分を確認してから更新できます。
 
 ```bash frame="none"
-# 同梱スキルとローカルの version を比較
+# 同梱スキルとローカルのファイル差分をチェック（変更 / 追加 / 削除のサマリ表示）
 npx @lism-css/cli skill check
 
 # 最新版で上書き
 npx @lism-css/cli skill update --claude
 ```
 
-最新情報が気になる場合は [GitHub リポジトリ](https://github.com/lism-css/lism-css/tree/main/skills/lism-css-guide) を直接チェックしてください。
+`skill check` は配置済みの各ファイルを sha256 で比較し、変更 / 追加 / 削除されたファイルをまとめて表示します。最新情報が気になる場合は [GitHub リポジトリ](https://github.com/lism-css/lism-css/tree/main/skills/lism-css-guide) を直接チェックしてください。
 
 
 ### [skills.sh](https://skills.sh) 経由での配置
@@ -88,7 +88,7 @@ npx skills add lism-css/lism-css
 
 ### ファイル構成
 
-スキルは以下の10ファイルで構成されています。
+スキルは以下の 13 ファイルで構成されています。
 
 | ファイル | 内容 |
 |---------|------|
@@ -100,5 +100,8 @@ npx skills add lism-css/lism-css
 | `utility-class.md` | ユーティリティクラス — u-- クラスの一覧 |
 | `property-class.md` | Property Class — `-{prop}:{value}` 記法・主要Prop一覧 |
 | `prop-responsive.md` | レスポンシブ対応 — ブレークポイント・コンテナクエリ・指定方法 |
-| `components.md` | コンポーネントシステム — コア・レイアウト・セマンティック・UI コンポーネント一覧 |
-| `css-rules.md` | CSS設計ルール — Layer構造・命名規則・プレフィックス・カスタムCSS追加ルール |
+| `components-core.md` | `lism-css` のコンポーネント — Lism・レイアウト・セマンティック・Atomic/Trait Primitives |
+| `components-ui.md` | `@lism-css/ui` のコンポーネント — Accordion / Modal / Tabs / Button / Badge / Callout 等 |
+| `css-rules.md` | CSS設計ルール — Layer構造・プレフィックス・カスタムCSS追加ルール |
+| `naming.md` | 命名規則 — CSS変数 / クラス / `{prop}` / `{value}` の省略ルール |
+| `customize.md` | カスタマイズ — `@layer` オフ・SCSS/`lism.config.js` での上書き・追加スタイル読み込み |

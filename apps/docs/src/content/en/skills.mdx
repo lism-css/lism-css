@@ -64,17 +64,17 @@ npx @lism-css/cli skill add --all
 
 ### Update
 
-You can check for version drift and force-update as needed.
+You can diff your local files against the bundled skill and force-update as needed.
 
 ```bash frame="none"
-# Compare bundled version vs local version
+# Diff the bundled skill against local files (shows changed / added / removed summary)
 npx @lism-css/cli skill check
 
 # Overwrite with the latest version
 npx @lism-css/cli skill update --claude
 ```
 
-For upstream changes, see the [GitHub repository](https://github.com/lism-css/lism-css/tree/main/skills/lism-css-guide) directly.
+`skill check` compares each installed file with the bundled one by sha256, then lists the changed / added / removed files. For upstream changes, see the [GitHub repository](https://github.com/lism-css/lism-css/tree/main/skills/lism-css-guide) directly.
 
 
 ### Using [skills.sh](https://skills.sh)
@@ -88,7 +88,7 @@ npx skills add lism-css/lism-css
 
 ### File structure
 
-The skill consists of 10 files:
+The skill consists of 13 files:
 
 | File | Contents |
 |------|----------|
@@ -100,5 +100,8 @@ The skill consists of 10 files:
 | `utility-class.md` | Utility classes — u-- class list |
 | `property-class.md` | Property Class — `-{prop}:{value}` syntax, key Prop list |
 | `prop-responsive.md` | Responsive design — breakpoints, container queries, usage patterns |
-| `components.md` | Component system — core, layout, semantic, and UI component list |
-| `css-rules.md` | CSS design rules — Layer structure, naming conventions, prefixes, custom CSS rules |
+| `components-core.md` | `lism-css` components — Lism / layout / semantic / Atomic & Trait Primitives |
+| `components-ui.md` | `@lism-css/ui` components — Accordion / Modal / Tabs / Button / Badge / Callout, etc. |
+| `css-rules.md` | CSS design rules — Layer structure, prefixes, custom CSS rules |
+| `naming.md` | Naming conventions — CSS variables / classes / `{prop}` / `{value}` shortening rules |
+| `customize.md` | Customization — toggling `@layer`, SCSS / `lism.config.js` overrides, extra styles |
