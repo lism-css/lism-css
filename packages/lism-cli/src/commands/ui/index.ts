@@ -12,6 +12,7 @@ export function createUiCommand(): Command {
     .addOption(new Option('--framework <name>', 'フレームワーク').choices(['react', 'astro']))
     .option('--components-dir <path>', 'コンポーネントの出力先ディレクトリ')
     .option('--helper-dir <path>', 'helper の出力先ディレクトリ')
+    .option('-f, --force', '既存の cli セクションを上書き', false)
     .action(initCommand);
 
   ui.command('add')
