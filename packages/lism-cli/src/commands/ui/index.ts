@@ -1,4 +1,4 @@
-import { Command } from 'commander';
+import { Command, Option } from 'commander';
 import { addCommand } from './add.js';
 import { initCommand } from './init.js';
 import { listCommand } from './list.js';
@@ -7,7 +7,12 @@ import { listCommand } from './list.js';
 export function createUiCommand(): Command {
   const ui = new Command('ui').description('Lism UI コンポーネントの追加・管理');
 
-  ui.command('init').description('lism.config.js の cli セクションを生成する').action(initCommand);
+  ui.command('init')
+    .description('lism.config.js の cli セクションを生成する')
+    .addOption(new Option('--framework <name>', 'フレームワーク').choices(['react', 'astro']))
+    .option('--components-dir <path>', 'コンポーネントの出力先ディレクトリ')
+    .option('--helper-dir <path>', 'helper の出力先ディレクトリ')
+    .action(initCommand);
 
   ui.command('add')
     .description('コンポーネントを追加する')

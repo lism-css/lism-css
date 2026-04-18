@@ -53,13 +53,22 @@ export async function addCommand(names: string[], options: AddOptions): Promise<
 
   const overwriteAll = options.overwrite || overwritePolicy === 'all';
 
+  let hasFailure = false;
+
   for (let i = 0; i < names.length; i++) {
     const result = results[i];
     if (result.status === 'rejected') {
       logger.error(`"${names[i]}" の取得に失敗しました: ${String(result.reason)}`);
+      hasFailure = true;
       continue;
     }
-    await writeComponent(result.value, config, overwriteAll, overwritePolicy, installedHelpers);
+    const helperFailed = await writeComponent(result.value, config, overwriteAll, overwritePolicy, installedHelpers);
+    if (helperFailed) hasFailure = true;
+  }
+
+  if (hasFailure) {
+    logger.error('一部のコンポーネント / helper の追加に失敗しました。');
+    process.exit(1);
   }
 
   logger.success('完了しました。');
@@ -94,7 +103,7 @@ async function writeComponent(
   overwriteAll: boolean,
   policy: OverwritePolicy,
   installedHelpers: Set<string>
-): Promise<void> {
+): Promise<boolean> {
   logger.info(`${component.name} を展開中...`);
 
   const filesToWrite = [...component.files.shared, ...component.files[config.framework]];
@@ -131,6 +140,8 @@ async function writeComponent(
   const helpersToInstall = component.helpers.filter((h) => !installedHelpers.has(h));
   for (const h of helpersToInstall) installedHelpers.add(h);
 
+  let helperFailed = false;
+
   if (helpersToInstall.length > 0) {
     const helperResults = await Promise.allSettled(helpersToInstall.map((h) => fetchHelper(h)));
 
@@ -138,6 +149,7 @@ async function writeComponent(
       const result = helperResults[i];
       if (result.status === 'rejected') {
         logger.error(`  helper "${helpersToInstall[i]}" の取得に失敗しました: ${String(result.reason)}`);
+        helperFailed = true;
         continue;
       }
 
@@ -165,4 +177,6 @@ async function writeComponent(
       }
     }
   }
+
+  return helperFailed;
 }
