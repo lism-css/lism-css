@@ -162,7 +162,7 @@ import { Accordion, Tabs, Button } from '@lism-css/ui/astro';
 
 ### CLI でプロジェクトにコピーする
 
-`@lism-css/cli` の `lism ui add` を使うと、UIコンポーネントのソースコードを自分のプロジェクトにコピーし、自由にカスタマイズできます。
+`@lism-css/cli` の `lism ui add` を使うと、UIコンポーネントのソースコードを自分のプロジェクトにコピーし、自由にカスタマイズできます。コンポーネント名は kebab-case で指定します（例: `NavMenu` → `nav-menu`）。
 
 ```bash frame="none"
 # コンポーネントを追加（初回は対話形式でセットアップ）
@@ -170,6 +170,9 @@ npx @lism-css/cli ui add accordion
 
 # 複数コンポーネントをまとめて追加
 npx @lism-css/cli ui add accordion modal tabs
+
+# 複合語のコンポーネントは kebab-case で
+npx @lism-css/cli ui add nav-menu shape-divider
 
 # 全コンポーネントを追加
 npx @lism-css/cli ui add --all

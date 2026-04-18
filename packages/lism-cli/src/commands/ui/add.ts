@@ -59,12 +59,14 @@ export async function addCommand(names: string[], options: AddOptions): Promise<
     process.exit(1);
   }
 
-  // 入力を PascalCase の正規名に解決（`navmenu` / `NavMenu` どちらでも受け付ける）
+  // 入力を PascalCase の正規名に解決
+  // kebab-case / snake_case / camelCase / PascalCase / lowercase のいずれも受け付ける
+  const normalize = (s: string) => s.replace(/[-_]/g, '').toLowerCase();
   const resolvedNames: string[] = [];
   const notFound: string[] = [];
   for (const input of names) {
-    const lower = input.toLowerCase();
-    const match = catalog.components.find((c) => c.name.toLowerCase() === lower);
+    const normalized = normalize(input);
+    const match = catalog.components.find((c) => normalize(c.name) === normalized);
     if (match) resolvedNames.push(match.name);
     else notFound.push(input);
   }
