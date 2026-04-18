@@ -19,7 +19,6 @@ import type { LismCliConfig } from '../../config.js';
 interface AddOptions {
   overwrite: boolean;
   all: boolean;
-  force?: boolean;
   ref?: string;
 }
 
@@ -37,7 +36,7 @@ export async function addCommand(names: string[], options: AddOptions): Promise<
     console.log();
   }
 
-  const fetchOpts: FetchOptions = { ref: options.ref, force: options.force };
+  const fetchOpts: FetchOptions = { ref: options.ref };
 
   // カタログを 1 回取得して入力の正規化（case-insensitive）に使う
   let catalog: RegistryCatalog;
@@ -75,7 +74,8 @@ export async function addCommand(names: string[], options: AddOptions): Promise<
   }
 
   // 全コンポーネントを並列 fetch し、書き込みは逐次で実行
-  const results = await Promise.allSettled(resolvedNames.map((n) => fetchComponent(n, fetchOpts)));
+  const excludeRootFiles = new Set(catalog.excludeComponentFiles);
+  const results = await Promise.allSettled(resolvedNames.map((n) => fetchComponent(n, excludeRootFiles, fetchOpts)));
 
   const installedHelpers = new Set<string>();
 

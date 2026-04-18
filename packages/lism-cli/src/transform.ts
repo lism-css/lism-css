@@ -3,12 +3,6 @@ import path from 'node:path';
 export type FrameworkCategory = 'react' | 'astro' | 'shared';
 
 /**
- * registry 配信から除外する lism-ui 内部のエクスポートファイル。
- * コンポーネントディレクトリ直下のこの名前は無視する。
- */
-export const EXCLUDE_COMPONENT_FILES = new Set(['__contexts.js', 'react.ts', 'astro.ts']);
-
-/**
  * ファイル内容中の {{HELPER}} プレースホルダーを、
  * ファイル配置位置から helperDir への相対パスに置換する。
  *

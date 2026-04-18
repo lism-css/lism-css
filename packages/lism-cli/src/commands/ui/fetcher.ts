@@ -2,7 +2,7 @@ import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import { downloadTemplate } from 'giget';
-import { EXCLUDE_COMPONENT_FILES, transformComponentFile, type TransformedFile } from '../../transform.js';
+import { transformComponentFile } from '../../transform.js';
 
 /** giget で取得するリポジトリ（owner/repo）。 */
 const REPO = 'lism-css/lism-css';
@@ -23,8 +23,6 @@ const REGISTRY_INDEX_PATH = 'packages/lism-ui/registry-index.json';
 
 export interface FetchOptions {
   ref?: string;
-  /** キャッシュ無効化（giget の force: true 相当） */
-  force?: boolean;
 }
 
 export interface RegistryFile {
@@ -34,6 +32,8 @@ export interface RegistryFile {
 
 export interface RegistryCatalog {
   version: string;
+  /** コンポーネントディレクトリ直下で配信対象から除外するファイル名一覧（lism-ui 側がカタログに同梱） */
+  excludeComponentFiles: string[];
   components: Array<{ name: string; helpers: string[] }>;
   helpers: string[];
 }
@@ -82,9 +82,9 @@ function cleanupTmpDir(dir: string): void {
   }
 }
 
-function isExcludedComponentFile(rel: string): boolean {
+function isExcludedComponentFile(rel: string, excludeRootFiles: ReadonlySet<string>): boolean {
   // ルート直下の内部エクスポートファイルのみ除外
-  if (!rel.includes('/') && EXCLUDE_COMPONENT_FILES.has(rel)) return true;
+  if (!rel.includes('/') && excludeRootFiles.has(rel)) return true;
   // storybook / test ファイルも配信対象外
   if (/(^|\/)[^/]+\.stories\.[a-z]+$/.test(rel)) return true;
   if (/(^|\/)[^/]+\.test\.[a-z]+$/.test(rel)) return true;
@@ -95,7 +95,7 @@ function isExcludedComponentFile(rel: string): boolean {
 export async function fetchCatalog(options: FetchOptions = {}): Promise<RegistryCatalog> {
   const ref = options.ref ?? DEFAULT_UI_REF;
   const url = `${RAW_BASE}/${REPO}/${ref}/${REGISTRY_INDEX_PATH}`;
-  const res = await fetch(url, { cache: options.force ? 'no-store' : 'default' });
+  const res = await fetch(url);
   if (!res.ok) {
     throw new Error(`Failed to fetch registry-index.json (${res.status} ${res.statusText}): ${url}`);
   }
@@ -105,8 +105,9 @@ export async function fetchCatalog(options: FetchOptions = {}): Promise<Registry
 /**
  * 指定コンポーネントを giget で一時ディレクトリに展開 → transform して FileEntry を返す。
  * name は PascalCase（例: 'Accordion', 'NavMenu'）。
+ * excludeRootFiles はカタログ (registry-index.json) の excludeComponentFiles から渡す。
  */
-export async function fetchComponent(name: string, options: FetchOptions = {}): Promise<RegistryComponent> {
+export async function fetchComponent(name: string, excludeRootFiles: ReadonlySet<string>, options: FetchOptions = {}): Promise<RegistryComponent> {
   const ref = options.ref ?? DEFAULT_UI_REF;
   const tmp = makeTmpDir('lism-ui-component-');
   try {
@@ -114,7 +115,6 @@ export async function fetchComponent(name: string, options: FetchOptions = {}): 
       dir: tmp,
       force: true,
       forceClean: true,
-      ...(options.force ? { preferOffline: false } : {}),
     });
 
     const files = walkFiles(tmp);
@@ -122,7 +122,7 @@ export async function fetchComponent(name: string, options: FetchOptions = {}): 
     const classified: RegistryComponent['files'] = { shared: [], react: [], astro: [] };
 
     for (const rel of files) {
-      if (isExcludedComponentFile(rel)) continue;
+      if (isExcludedComponentFile(rel, excludeRootFiles)) continue;
       const raw = fs.readFileSync(path.join(tmp, rel), 'utf-8');
       const { file, helpers } = transformComponentFile(rel, raw);
       for (const h of helpers) helperSet.add(h);
@@ -139,42 +139,65 @@ export async function fetchComponent(name: string, options: FetchOptions = {}): 
   }
 }
 
+interface HelperTree {
+  /** helper 名 → 関連ファイル一覧（拡張子違いで複数 ex: helper.js + helper.d.ts） */
+  byName: Map<string, RegistryFile[]>;
+}
+
 /**
- * helper をまとめて giget で取得し、指定名の helper を FileEntry で返す。
- * 複数 helper を連続で取得する場合でも tmpDir は呼び出し毎に作り直す（簡潔さ優先）。
+ * helper tree（src/helper 配下の全ファイル）を ref ごとに 1 度だけ取得して共有するキャッシュ。
+ * 同一プロセス内で fetchHelper が複数回呼ばれても tarball ダウンロードは ref あたり 1 回に抑える。
+ *
+ * 並列呼び出しに対応するため Promise を保持する（in-flight も共有）。
+ */
+const helperTreeCache = new Map<string, Promise<HelperTree>>();
+
+async function loadHelperTree(ref: string): Promise<HelperTree> {
+  const cached = helperTreeCache.get(ref);
+  if (cached) return cached;
+
+  const promise = (async (): Promise<HelperTree> => {
+    const tmp = makeTmpDir('lism-ui-helper-');
+    try {
+      await downloadTemplate(`github:${REPO}/${HELPER_PATH}#${ref}`, {
+        dir: tmp,
+        force: true,
+        forceClean: true,
+      });
+
+      const byName = new Map<string, RegistryFile[]>();
+      for (const rel of walkFiles(tmp)) {
+        if (/(^|\/)[^/]+\.test\.[a-z]+$/.test(rel)) continue;
+        const base = path.basename(rel).replace(/\.[^.]+$/, '');
+        const entry: RegistryFile = { path: rel, content: fs.readFileSync(path.join(tmp, rel), 'utf-8') };
+        const list = byName.get(base);
+        if (list) list.push(entry);
+        else byName.set(base, [entry]);
+      }
+
+      return { byName };
+    } finally {
+      cleanupTmpDir(tmp);
+    }
+  })();
+
+  helperTreeCache.set(ref, promise);
+  // 失敗したらキャッシュから外して次回再試行可能にする
+  promise.catch(() => helperTreeCache.delete(ref));
+
+  return promise;
+}
+
+/**
+ * 共有キャッシュから指定名の helper を取り出す。
+ * 同一 ref への複数 helper 取得は内部的に tarball 1 回のみ。
  */
 export async function fetchHelper(name: string, options: FetchOptions = {}): Promise<RegistryHelper> {
   const ref = options.ref ?? DEFAULT_UI_REF;
-  const tmp = makeTmpDir('lism-ui-helper-');
-  try {
-    await downloadTemplate(`github:${REPO}/${HELPER_PATH}#${ref}`, {
-      dir: tmp,
-      force: true,
-      forceClean: true,
-    });
-
-    const files = walkFiles(tmp);
-
-    // テストファイルは配信対象外
-    const candidates = files.filter((f) => !/(^|\/)[^/]+\.test\.[a-z]+$/.test(f));
-
-    // 拡張子を除いたファイル名が name と一致するものが対象
-    const matched = candidates.filter((f) => {
-      const base = path.basename(f).replace(/\.[^.]+$/, '');
-      return base === name;
-    });
-
-    if (matched.length === 0) {
-      throw new Error(`helper "${name}" が見つかりません（${HELPER_PATH}）`);
-    }
-
-    const entries: RegistryFile[] = matched.map((rel) => ({
-      path: rel,
-      content: fs.readFileSync(path.join(tmp, rel), 'utf-8'),
-    }));
-
-    return { name, files: entries };
-  } finally {
-    cleanupTmpDir(tmp);
+  const tree = await loadHelperTree(ref);
+  const files = tree.byName.get(name);
+  if (!files || files.length === 0) {
+    throw new Error(`helper "${name}" が見つかりません（${HELPER_PATH}）`);
   }
+  return { name, files };
 }

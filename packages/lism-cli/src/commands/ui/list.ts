@@ -2,14 +2,13 @@ import { fetchCatalog, type FetchOptions, type RegistryCatalog } from './fetcher
 import { logger } from '../../logger.js';
 
 interface ListOptions {
-  force?: boolean;
   ref?: string;
 }
 
 export async function listCommand(options: ListOptions = {}): Promise<void> {
   logger.info('コンポーネント一覧を取得中...');
 
-  const fetchOpts: FetchOptions = { ref: options.ref, force: options.force };
+  const fetchOpts: FetchOptions = { ref: options.ref };
   let catalog: RegistryCatalog;
   try {
     catalog = await fetchCatalog(fetchOpts);

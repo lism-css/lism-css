@@ -27,12 +27,18 @@ interface ComponentMeta {
 
 interface CatalogJson {
   version: string;
+  /**
+   * コンポーネントディレクトリから配信時に除外するルート直下のファイル一覧（内部エクスポート）。
+   * カタログに同梱することで CLI 側と二重定義にならないようにしている。
+   */
+  excludeComponentFiles: string[];
   components: ComponentMeta[];
   helpers: string[];
 }
 
 /** コンポーネントディレクトリから除外するルート直下のファイル（内部エクスポート） */
-const EXCLUDE_COMPONENT_FILES = new Set(['__contexts.js', 'react.ts', 'astro.ts']);
+const EXCLUDE_COMPONENT_FILES = ['__contexts.js', 'react.ts', 'astro.ts'];
+const EXCLUDE_COMPONENT_FILES_SET = new Set(EXCLUDE_COMPONENT_FILES);
 
 function walkFiles(dir: string, base = dir): string[] {
   if (!fs.existsSync(dir)) return [];
@@ -85,7 +91,7 @@ function generateCatalog(): CatalogJson {
     const helperSet = new Set<string>();
 
     for (const rel of files) {
-      if (EXCLUDE_COMPONENT_FILES.has(rel)) continue;
+      if (EXCLUDE_COMPONENT_FILES_SET.has(rel)) continue;
       if (isStoryFile(rel)) continue;
 
       const content = fs.readFileSync(path.join(dir, rel), 'utf-8');
@@ -107,6 +113,7 @@ function generateCatalog(): CatalogJson {
 
   return {
     version,
+    excludeComponentFiles: [...EXCLUDE_COMPONENT_FILES].sort(),
     components,
     helpers: [...helperSet].sort(),
   };

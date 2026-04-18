@@ -41,9 +41,6 @@ pnpm dlx @lism-css/cli ui add --all
 # 一覧
 pnpm dlx @lism-css/cli ui list
 
-# 最新を強制取得（giget キャッシュを無視）
-pnpm dlx @lism-css/cli ui add accordion --force
-
 # 特定の ref（ブランチ / タグ / コミット）から取得
 pnpm dlx @lism-css/cli ui add accordion --ref dev
 ```
