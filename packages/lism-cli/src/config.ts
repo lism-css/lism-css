@@ -100,10 +100,16 @@ export function writeFreshConfig(cli: LismCliConfig): string {
 /**
  * 既存の lism.config.{js,mjs} に `cli` セクションを追記する。
  * - すでに `cli` が含まれる場合は false を返し、呼び出し側で案内
- * - `export default {` が見つからない場合も false
+ * - オブジェクトリテラルの挿入位置を特定できない場合も false
  *
  * `cli` 存在判定は jiti でモジュールを実際に評価して `default.cli` の有無で行う
  * （コメントや他キー値に含まれる "cli:" で false positive を起こさないため）。
+ *
+ * 対応する記法：
+ * - `export default { ... }`
+ * - `export default defineConfig({ ... })`（関数呼び出しラッパー）
+ * - `export default ({ ... })`（カッコ包み）
+ * - `const config = { ... }; export default config;`（変数経由）
  *
  * @param targetPath 対象ファイルの絶対パス。省略時は lism.config.js を対象にする。
  */
@@ -123,15 +129,41 @@ export async function patchConfigWithCli(cli: LismCliConfig, targetPath?: string
     return { path: filePath, patched: false };
   }
 
-  const match = original.match(/export default\s*\{/);
-  if (!match) {
+  const insertAt = findInsertPosition(original);
+  if (insertAt === -1) {
     return { path: filePath, patched: false };
   }
-  const insertAt = match.index! + match[0].length;
+
   const insertion = `\n  cli: ${renderCliObject(cli, '  ')},`;
   const updated = original.slice(0, insertAt) + insertion + original.slice(insertAt);
   fs.writeFileSync(filePath, updated);
   return { path: filePath, patched: true };
+}
+
+/**
+ * `cli` キーを挿入すべきオブジェクトリテラルの `{` 直後の位置を返す。
+ * 見つからなければ -1。
+ */
+function findInsertPosition(source: string): number {
+  // パターン1: `export default {` / `export default defineConfig({` / `export default ({`
+  // 末尾が必ず `{` になるように構成
+  const inline = source.match(/export default\s*(?:[A-Za-z_$][A-Za-z0-9_$]*\s*)?\(?\s*\{/);
+  if (inline) {
+    return inline.index! + inline[0].length;
+  }
+
+  // パターン2: `const config = { ... }; export default config;` のような変数経由
+  const varExport = source.match(/export default\s+([A-Za-z_$][A-Za-z0-9_$]*)\s*;?/);
+  if (varExport) {
+    const varName = varExport[1];
+    const escaped = varName.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    const decl = source.match(new RegExp(`(?:const|let|var)\\s+${escaped}\\s*=\\s*(?:[A-Za-z_$][A-Za-z0-9_$]*\\s*)?\\(?\\s*\\{`));
+    if (decl) {
+      return decl.index! + decl[0].length;
+    }
+  }
+
+  return -1;
 }
 
 function renderConfigTemplate(cli: LismCliConfig): string {
