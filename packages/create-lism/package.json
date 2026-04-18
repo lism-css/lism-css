@@ -1,7 +1,7 @@
 {
   "name": "create-lism",
   "version": "0.1.0",
-  "description": "Scaffold a new Lism CSS project (thin wrapper around @lism-css/cli create)",
+  "description": "Scaffold a new Lism CSS project",
   "type": "module",
   "bin": {
     "create-lism": "./bin/create-lism.mjs"
@@ -16,10 +16,8 @@
     "dev": "tsup --watch",
     "prepublishOnly": "pnpm build"
   },
-  "dependencies": {
-    "@lism-css/cli": "workspace:*"
-  },
   "devDependencies": {
+    "@lism-css/cli": "workspace:*",
     "@types/node": "^25.5.0",
     "tsup": "^8.0.0",
     "typescript": "^5.8.3"

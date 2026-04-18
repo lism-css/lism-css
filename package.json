@@ -23,6 +23,7 @@
     "build:core:css": "turbo run build:css --filter=./packages/lism-css",
     "build:ui": "turbo run build --filter=./packages/lism-ui",
     "build:mcp": "turbo run build --filter=./packages/mcp",
+    "build:cli": "turbo run build --filter=./packages/lism-cli --filter=./packages/create-lism",
     "build:docs": "turbo run build --filter=./apps/docs",
     "check:docs": "pnpm build:core && pnpm --filter lism-docs exec astro check",
     "merge:dev": "git checkout main && git merge dev",
@@ -31,7 +32,7 @@
     "publish:core": "pnpm run build:core && pnpm --filter lism-css publish",
     "publish:ui": "pnpm run build:ui && pnpm --filter @lism-css/ui publish --access public",
     "publish:mcp": "pnpm run build:mcp && pnpm --filter @lism-css/mcp publish --access public",
-    "publish:cli": "pnpm --filter @lism-css/cli publish --access public",
+    "publish:cli": "pnpm run build:cli && pnpm --filter @lism-css/cli publish --access public && pnpm --filter create-lism publish",
     "sync:cdn-versions": "node scripts/sync-cdn-versions.mjs",
     "prepare": "husky"
   },
