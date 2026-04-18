@@ -5,7 +5,7 @@ let ACCORDION_HIDDEN_VALUE = 'until-found';
 
 type AccordionElements = {
   heading: HTMLElement;
-  button: HTMLButtonElement;
+  button: HTMLElement;
   panel: HTMLElement;
   content: HTMLElement;
 };
@@ -16,7 +16,7 @@ const getAccordionElements = (accordionItem: HTMLElement): AccordionElements => 
   const panel = accordionItem.querySelector<HTMLElement>('.c--accordion_panel')!;
   return {
     heading,
-    button: heading.querySelector('button')!,
+    button: heading.querySelector<HTMLElement>('.c--accordion_button')!,
     panel,
     content: panel.querySelector<HTMLElement>('.c--accordion_content')!,
   };
