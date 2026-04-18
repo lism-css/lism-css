@@ -19,9 +19,15 @@ export function createUiCommand(): Command {
     .argument('[names...]', '追加するコンポーネント名')
     .option('-o, --overwrite', '既存ファイルを確認なしで上書き', false)
     .option('-a, --all', '全コンポーネントを追加', false)
+    .option('-f, --force', 'giget のキャッシュを使わず常に最新を取得', false)
+    .option('--ref <ref>', '取得元の Git ref（ブランチ / タグ / コミット）')
     .action(addCommand);
 
-  ui.command('list').description('利用可能なコンポーネント一覧を表示する').action(listCommand);
+  ui.command('list')
+    .description('利用可能なコンポーネント一覧を表示する')
+    .option('-f, --force', 'カタログのキャッシュを使わず常に最新を取得', false)
+    .option('--ref <ref>', '取得元の Git ref（ブランチ / タグ / コミット）')
+    .action(listCommand);
 
   return ui;
 }

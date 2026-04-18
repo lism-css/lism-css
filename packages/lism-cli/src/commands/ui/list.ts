@@ -1,10 +1,16 @@
-import { fetchCatalog } from '../../registry.js';
+import { fetchCatalog, type FetchOptions } from './fetcher.js';
 import { logger } from '../../logger.js';
 
-export async function listCommand(): Promise<void> {
+interface ListOptions {
+  force?: boolean;
+  ref?: string;
+}
+
+export async function listCommand(options: ListOptions = {}): Promise<void> {
   logger.info('コンポーネント一覧を取得中...');
 
-  const catalog = await fetchCatalog();
+  const fetchOpts: FetchOptions = { ref: options.ref, force: options.force };
+  const catalog = await fetchCatalog(fetchOpts);
 
   logger.log(`\nLism UI v${catalog.version}\n`);
   logger.log('コンポーネント:');
