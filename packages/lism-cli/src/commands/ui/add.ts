@@ -2,7 +2,15 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { confirm, select } from '@inquirer/prompts';
 import { configExists, readConfig } from '../../config.js';
-import { fetchCatalog, fetchComponent, fetchHelper, type FetchOptions, type RegistryComponent, type RegistryFile } from './fetcher.js';
+import {
+  fetchCatalog,
+  fetchComponent,
+  fetchHelper,
+  type FetchOptions,
+  type RegistryCatalog,
+  type RegistryComponent,
+  type RegistryFile,
+} from './fetcher.js';
 import { resolveHelperPlaceholder } from '../../transform.js';
 import { runInit } from './init.js';
 import { logger } from '../../logger.js';
@@ -32,7 +40,15 @@ export async function addCommand(names: string[], options: AddOptions): Promise<
   const fetchOpts: FetchOptions = { ref: options.ref, force: options.force };
 
   // カタログを 1 回取得して入力の正規化（case-insensitive）に使う
-  const catalog = await fetchCatalog(fetchOpts);
+  let catalog: RegistryCatalog;
+  try {
+    catalog = await fetchCatalog(fetchOpts);
+  } catch (err) {
+    const refInfo = options.ref ? ` (ref: ${options.ref})` : '';
+    const reason = err instanceof Error ? err.message : String(err);
+    logger.error(`カタログの取得に失敗しました${refInfo}: ${reason}`);
+    process.exit(1);
+  }
 
   if (options.all) {
     names = catalog.components.map((c) => c.name);
