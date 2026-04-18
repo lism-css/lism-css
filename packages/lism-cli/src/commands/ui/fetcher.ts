@@ -3,23 +3,7 @@ import os from 'node:os';
 import path from 'node:path';
 import { downloadTemplate } from 'giget';
 import { transformComponentFile } from '../../transform.js';
-
-/** giget で取得するリポジトリ（owner/repo）。 */
-const REPO = 'lism-css/lism-css';
-
-/**
- * デフォルトの ref。
- * FIXME(dev マージ前): 'dev' に戻すこと。現状は本ブランチ (#292) の beta publish 検証用。
- */
-export const DEFAULT_UI_REF = 'fix/292-giget-registry-migration';
-
-/** raw GitHub で registry-index.json を fetch する際のベース URL */
-const RAW_BASE = 'https://raw.githubusercontent.com';
-
-/** コンポーネント / helper のリポジトリ内パス */
-const COMPONENTS_PATH = 'packages/lism-ui/src/components';
-const HELPER_PATH = 'packages/lism-ui/src/helper';
-const REGISTRY_INDEX_PATH = 'packages/lism-ui/registry-index.json';
+import { DEFAULT_UI_REF, RAW_GITHUB_BASE, SOURCE_REPO, UI_COMPONENTS_PATH, UI_HELPER_PATH, UI_REGISTRY_INDEX_PATH } from '../../constants.js';
 
 export interface FetchOptions {
   ref?: string;
@@ -94,7 +78,7 @@ function isExcludedComponentFile(rel: string, excludeRootFiles: ReadonlySet<stri
 /** カタログ（registry-index.json）を raw GitHub から取得 */
 export async function fetchCatalog(options: FetchOptions = {}): Promise<RegistryCatalog> {
   const ref = options.ref ?? DEFAULT_UI_REF;
-  const url = `${RAW_BASE}/${REPO}/${ref}/${REGISTRY_INDEX_PATH}`;
+  const url = `${RAW_GITHUB_BASE}/${SOURCE_REPO}/${ref}/${UI_REGISTRY_INDEX_PATH}`;
   const res = await fetch(url);
   if (!res.ok) {
     throw new Error(`Failed to fetch registry-index.json (${res.status} ${res.statusText}): ${url}`);
@@ -111,7 +95,7 @@ export async function fetchComponent(name: string, excludeRootFiles: ReadonlySet
   const ref = options.ref ?? DEFAULT_UI_REF;
   const tmp = makeTmpDir('lism-ui-component-');
   try {
-    await downloadTemplate(`github:${REPO}/${COMPONENTS_PATH}/${name}#${ref}`, {
+    await downloadTemplate(`github:${SOURCE_REPO}/${UI_COMPONENTS_PATH}/${name}#${ref}`, {
       dir: tmp,
       force: true,
       forceClean: true,
@@ -159,7 +143,7 @@ async function loadHelperTree(ref: string): Promise<HelperTree> {
   const promise = (async (): Promise<HelperTree> => {
     const tmp = makeTmpDir('lism-ui-helper-');
     try {
-      await downloadTemplate(`github:${REPO}/${HELPER_PATH}#${ref}`, {
+      await downloadTemplate(`github:${SOURCE_REPO}/${UI_HELPER_PATH}#${ref}`, {
         dir: tmp,
         force: true,
         forceClean: true,
@@ -197,7 +181,7 @@ export async function fetchHelper(name: string, options: FetchOptions = {}): Pro
   const tree = await loadHelperTree(ref);
   const files = tree.byName.get(name);
   if (!files || files.length === 0) {
-    throw new Error(`helper "${name}" が見つかりません（${HELPER_PATH}）`);
+    throw new Error(`helper "${name}" が見つかりません（${UI_HELPER_PATH}）`);
   }
   return { name, files };
 }

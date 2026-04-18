@@ -2,7 +2,8 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { logger } from '../../logger.js';
 import { ALL_SKILL_TOOLS, SKILL_PATHS } from './paths.js';
-import { cleanupTempDir, compareSkillDirs, DEFAULT_SKILL_REF, fetchSkillSource, hasDiff, type SkillDiff } from './skillSource.js';
+import { cleanupTempDir, compareSkillDirs, fetchSkillSource, hasDiff, type SkillDiff } from './skillSource.js';
+import { DEFAULT_SKILL_REF } from '../../constants.js';
 
 export interface SkillCheckOptions {
   ref?: string;

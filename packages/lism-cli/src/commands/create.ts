@@ -4,6 +4,7 @@ import { downloadTemplate } from 'giget';
 import { select, input, confirm } from '@inquirer/prompts';
 import { logger } from '../logger.js';
 import { LISM_CSS_VERSION } from '../version.js';
+import { DEFAULT_TEMPLATES_REF, EXAMPLES_PATH, SOURCE_REPO } from '../constants.js';
 
 interface TemplateDef {
   name: string;
@@ -41,11 +42,9 @@ export async function runCreate({ template, targetDir, force = false }: RunCreat
     }
   }
 
-  // FIXME(#290 マージ前): 'main' に戻すこと。publish 後に 'dev' のままだと取得先が永続的に dev を指す。
-  // 現状は examples/ が dev にしか存在しないため暫定で 'dev' 固定。
-  const ref = 'dev';
+  const ref = DEFAULT_TEMPLATES_REF;
   logger.info(`テンプレート "${tpl.name}" を取得中（ref: ${ref}）...`);
-  await downloadTemplate(`github:lism-css/lism-css/examples/${tpl.name}#${ref}`, {
+  await downloadTemplate(`github:${SOURCE_REPO}/${EXAMPLES_PATH}/${tpl.name}#${ref}`, {
     dir: outDir,
     force: true,
     forceClean: force,
