@@ -15,8 +15,9 @@
   "scripts": {
     "format": "prettier --write . --ignore-path ../../.prettierignore",
     "dev": "vite",
-    "build": "vite build && pnpm build:css",
+    "build": "pnpm gen:registry && vite build && pnpm build:css",
     "build:css": "node build-css.js",
+    "gen:registry": "tsx scripts/generate-registry-index.ts",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "lint": "pnpm lint:eslint && pnpm lint:style",
@@ -67,6 +68,7 @@
     "rollup-plugin-preserve-directives": "^0.4.0",
     "storybook": "^10.3.3",
     "stylelint": "^17.4.0",
+    "tsx": "^4.21.0",
     "typescript": "^5.8.3",
     "unplugin-dts": "1.0.0-beta.6",
     "vite": "^7.3.1",

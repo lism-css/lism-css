@@ -20,13 +20,14 @@
 ## 開発コマンド
 
 ```bash
-pnpm dev        # 開発サーバー
-pnpm build      # フルビルド（React + CSS）
-pnpm build:css  # CSS のみ
+pnpm dev           # 開発サーバー
+pnpm build         # フルビルド（registry-index + React + CSS）
+pnpm build:css     # CSS のみ
+pnpm gen:registry  # registry-index.json を再生成
 ```
 
 
-## 主要ディレクトリ
+## 主要ディレクトリ / ファイル
 
 | パス | 説明 |
 |------|------|
@@ -35,6 +36,8 @@ pnpm build:css  # CSS のみ
 | `src/components/astro.ts` | Astro エクスポート一覧 |
 | `src/helper/` | ユーティリティ関数 |
 | `src/style.scss` | スタイルエントリポイント |
+| `scripts/generate-registry-index.ts` | `@lism-css/cli` が参照するカタログ JSON を生成するスクリプト |
+| `registry-index.json` | `@lism-css/cli` の `lism ui list` / `--all` が giget 経由で fetch するカタログ（build 時に自動再生成・commit 済み） |
 
 
 ## コンポーネント構造
