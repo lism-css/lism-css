@@ -3,6 +3,8 @@
  *
  * - shared / react / astro にファイルを分類
  * - helper import を {{HELPER}} プレースホルダーに変換
+ * - react/ astro/ サブディレクトリは CLI 配置時にフラット化されるため、
+ *   registry 上の `path` からプレフィックスを剥がし、内容中の `../` sibling import を `./` に書き換える
  * - コンポーネント別 JSON、カタログ index.json、helper JSON を出力
  */
 
@@ -103,6 +105,29 @@ function classifyFile(relativePath: string): 'react' | 'astro' | 'shared' {
   return 'shared';
 }
 
+/** react/ or astro/ プレフィックスを剥がす */
+function stripFrameworkPrefix(relativePath: string): string {
+  if (relativePath.startsWith('react/')) return relativePath.slice('react/'.length);
+  if (relativePath.startsWith('astro/')) return relativePath.slice('astro/'.length);
+  return relativePath;
+}
+
+/**
+ * `react/` or `astro/` サブディレクトリの中身を親コンポーネントディレクトリへフラット化する時、
+ * 親階層のファイル（`_style.css` / `getProps` / `setAccordion` 等）への
+ * `from '../xxx'` / `import '../xxx'` の相対 import を `from './xxx'` / `import './xxx'` に書き換える。
+ *
+ * 注: helper import は既に replaceHelperImports で `{{HELPER}}/...` に置換済みのため、
+ * 残っている `../` は兄弟参照のみと仮定できる。
+ */
+function flattenSiblingImports(content: string): string {
+  // from '../x' / from "../x"
+  let replaced = content.replace(/(from\s+['"])\.\.\/([^'"]+)(['"])/g, '$1./$2$3');
+  // bare import '../x' (e.g. '../_style.css')
+  replaced = replaced.replace(/(import\s+['"])\.\.\/([^'"]+)(['"])/g, '$1./$2$3');
+  return replaced;
+}
+
 // --- メイン処理 ---
 
 function generateRegistry(): void {
@@ -142,18 +167,25 @@ function generateRegistry(): void {
 
     for (const file of files) {
       if (excludeFiles.has(file)) continue;
+      // Storybook stories はレジストリ配信対象外
+      if (/(^|\/)[^/]+\.stories\.[a-z]+$/.test(file)) continue;
 
       const fullPath = path.join(componentDir, file);
       const rawContent = fs.readFileSync(fullPath, 'utf-8');
 
-      const { content, helpers } = replaceHelperImports(rawContent);
+      const { content: helperResolved, helpers } = replaceHelperImports(rawContent);
       for (const h of helpers) {
         componentHelpers.add(h);
         allHelpers.add(h);
       }
 
       const category = classifyFile(file);
-      classified[category].push({ path: file, content });
+      // react/astro 配下は親ディレクトリへフラット化するため、
+      // `path` からプレフィックスを剥がし、内容の `../` sibling import を `./` に書き換える
+      const needsFlatten = category !== 'shared';
+      const outPath = needsFlatten ? stripFrameworkPrefix(file) : file;
+      const outContent = needsFlatten ? flattenSiblingImports(helperResolved) : helperResolved;
+      classified[category].push({ path: outPath, content: outContent });
     }
 
     const helperList = [...componentHelpers];

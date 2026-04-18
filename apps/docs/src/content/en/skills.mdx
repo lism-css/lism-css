@@ -5,62 +5,90 @@ description: 'Place a SKILL.md file in your project to communicate Lism CSS desi
 By placing the SKILL.md file in your project, you can communicate Lism CSS design rules, Props, tokens, and naming conventions to AI agents.
 
 
-GitHub: [lism-css/.claude/skills/lism-css-guide/](https://github.com/lism-css/lism-css/tree/main/.claude/skills/lism-css-guide)
-
+GitHub: [lism-css/skills/lism-css-guide/](https://github.com/lism-css/lism-css/tree/main/skills/lism-css-guide)
 
 
 ## Setup
 
+`@lism-css/cli`'s `lism skill add` can auto-detect the AI tools you use and place the SKILL.md files accordingly.
+
 <Preview>
   <PreviewCode slot="tab" label="npm">
   ```bash frame="none"
-  npx skills add lism-css/lism-css
+  npx @lism-css/cli skill add
   ```
   </PreviewCode>
   <PreviewCode slot="tab" label="pnpm">
   ```bash frame="none"
-  pnpm dlx skills add lism-css/lism-css
+  pnpm dlx @lism-css/cli skill add
   ```
   </PreviewCode>
   <PreviewCode slot="tab" label="yarn">
   ```bash frame="none"
-  yarn dlx skills add lism-css/lism-css
+  yarn dlx @lism-css/cli skill add
   ```
   </PreviewCode>
   <PreviewCode slot="tab" label="bun">
   ```bash frame="none"
-  bunx skills add lism-css/lism-css
+  bunx @lism-css/cli skill add
   ```
   </PreviewCode>
 </Preview>
 
-Install the Lism CSS skill into your project using the command above.
+In interactive mode, the CLI detects project-root markers (`.claude/`, `.cursor/`, etc.) and pre-checks matching destinations. To target tools non-interactively, pass the flags directly:
 
+```bash frame="none"
+# Single tool
+npx @lism-css/cli skill add --claude
 
-<small>For more information about the `skills` command, see [skills.sh](https://skills.sh).</small>
+# Multiple tools
+npx @lism-css/cli skill add --claude --cursor
+
+# All tools
+npx @lism-css/cli skill add --all
+```
+
+### Destinations
+
+| Flag | Destination |
+|------|-------------|
+| `--claude` | `.claude/skills/lism-css-guide` |
+| `--codex` | `.agents/skills/lism-css-guide` |
+| `--cursor` | `.cursor/skills/lism-css-guide` |
+| `--windsurf` | `.windsurf/skills/lism-css-guide` |
+| `--cline` | `.cline/skills/lism-css-guide` |
+| `--copilot` | `.github/skills/lism-css-guide` |
+| `--gemini` | `.gemini/skills/lism-css-guide` |
+| `--junie` | `.junie/skills/lism-css-guide` |
 
 
 ### Update
 
-If installed globally, you can update with the following commands:
+You can diff your local files against the bundled skill and force-update as needed.
 
 ```bash frame="none"
-# Check for available updates
-npx skills check
+# Diff the bundled skill against local files (shows changed / added / removed summary)
+npx @lism-css/cli skill check
 
-# Update skills to the latest version
-npx skills update
+# Overwrite with the latest version
+npx @lism-css/cli skill update --claude
 ```
 
-If installed in a project, run `skills add` again. To check for updates, see the [GitHub repository](https://github.com/lism-css/lism-css/tree/main/.claude/skills/lism-css-guide) directly.
+`skill check` compares each installed file with the bundled one by sha256, then lists the changed / added / removed files. For upstream changes, see the [GitHub repository](https://github.com/lism-css/lism-css/tree/main/skills/lism-css-guide) directly.
+
+
+### Using [skills.sh](https://skills.sh)
+
+If you are using [skills.sh](https://skills.sh), `skills add lism-css/lism-css` also fetches the same skill.
 
 ```bash frame="none"
 npx skills add lism-css/lism-css
 ```
 
+
 ### File structure
 
-The skill consists of 10 files:
+The skill consists of 13 files:
 
 | File | Contents |
 |------|----------|
@@ -72,5 +100,8 @@ The skill consists of 10 files:
 | `utility-class.md` | Utility classes — u-- class list |
 | `property-class.md` | Property Class — `-{prop}:{value}` syntax, key Prop list |
 | `prop-responsive.md` | Responsive design — breakpoints, container queries, usage patterns |
-| `components.md` | Component system — core, layout, semantic, and UI component list |
-| `css-rules.md` | CSS design rules — Layer structure, naming conventions, prefixes, custom CSS rules |
+| `components-core.md` | `lism-css` components — Lism / layout / semantic / Atomic & Trait Primitives |
+| `components-ui.md` | `@lism-css/ui` components — Accordion / Modal / Tabs / Button / Badge / Callout, etc. |
+| `css-rules.md` | CSS design rules — Layer structure, prefixes, custom CSS rules |
+| `naming.md` | Naming conventions — CSS variables / classes / `{prop}` / `{value}` shortening rules |
+| `customize.md` | Customization — toggling `@layer`, SCSS / `lism.config.js` overrides, extra styles |

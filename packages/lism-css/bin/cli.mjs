@@ -17,7 +17,17 @@ console.log('🤖 projectRoot:', projectRoot);
 
 // 設定ファイルのパス
 const defaultConfigPath = path.resolve(__dirname, '../config/default-config.js');
-const userConfigPath = path.resolve(projectRoot, 'lism.config.js');
+
+// ユーザー設定ファイルを検索（優先順: .js → .mjs）
+const CONFIG_SEARCH = ['lism.config.js', 'lism.config.mjs'];
+function findUserConfigPath() {
+  for (const name of CONFIG_SEARCH) {
+    const abs = path.resolve(projectRoot, name);
+    if (fs.existsSync(abs)) return abs;
+  }
+  return null;
+}
+const userConfigPath = findUserConfigPath();
 
 // コマンドライン引数の先頭をサブコマンドとして解釈（デフォルトは build-config）
 const args = process.argv.slice(2);
@@ -30,9 +40,9 @@ async function main() {
     const defaultConfigModule = await import(pathToFileURL(defaultConfigPath).href);
     const defaultConfig = defaultConfigModule?.default || {};
 
-    // user の lism.config.js は存在する時のみ読み込む
+    // user の lism.config.{js,mjs} は存在する時のみ読み込む
     let userConfig = {};
-    if (fs.existsSync(userConfigPath)) {
+    if (userConfigPath) {
       const userConfigModule = await import(pathToFileURL(userConfigPath).href);
       userConfig = userConfigModule?.default || {};
 

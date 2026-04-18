@@ -1,6 +1,6 @@
 # Skill Template Update
 
-`.claude/skills/lism-css-guide/` 配下のルートファイル＋ `primitives/` サブフォルダ配下のプリミティブ詳細ファイルを、最新ソースに合わせて更新してください。
+`skills/lism-css-guide/` 配下のルートファイル＋ `primitives/` サブフォルダ配下のプリミティブ詳細ファイルを、最新ソースに合わせて更新してください。
 
 
 ## 対象ファイルと更新内容
@@ -143,7 +143,7 @@
 
 ### 1. 現在のテンプレートとバージョン情報の取得
 
-- `.claude/skills/lism-css-guide/` 配下のルートファイル＋ `primitives/` 配下の全ファイルを読み取る
+- `skills/lism-css-guide/` 配下のルートファイル＋ `primitives/` 配下の全ファイルを読み取る
 - `packages/lism-css/package.json` からバージョンを取得し、`SKILL.md` のバージョン表記と比較する
 - `primitives/` 配下の存在チェック: `packages/lism-css/src/scss/primitives/{layout,trait,atomic}/` 配下の SCSS と `primitives/*.md` が 1:1 対応しているか、さらに `SKILL.md` の「プリミティブ単位の詳細リファレンス」セクションのリンクと実ファイルが一致するかを確認（数値ではなくソースの実体を基準にする）
 

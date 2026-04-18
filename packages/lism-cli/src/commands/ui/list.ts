@@ -1,5 +1,5 @@
-import { fetchCatalog } from '../registry.js';
-import { logger } from '../logger.js';
+import { fetchCatalog } from '../../registry.js';
+import { logger } from '../../logger.js';
 
 export async function listCommand(): Promise<void> {
   logger.info('コンポーネント一覧を取得中...');

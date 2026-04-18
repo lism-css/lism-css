@@ -1,13 +1,13 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { confirm, select } from '@inquirer/prompts';
-import { configExists, readConfig } from '../config.js';
-import { fetchCatalog, fetchComponent, fetchHelper } from '../registry.js';
-import { resolveHelperPlaceholder } from '../transform.js';
+import { configExists, readConfig } from '../../config.js';
+import { fetchCatalog, fetchComponent, fetchHelper } from '../../registry.js';
+import { resolveHelperPlaceholder } from '../../transform.js';
 import { runInit } from './init.js';
-import { logger } from '../logger.js';
-import type { LismConfig } from '../config.js';
-import type { RegistryComponent, RegistryFile } from '../registry.js';
+import { logger } from '../../logger.js';
+import type { LismCliConfig } from '../../config.js';
+import type { RegistryComponent, RegistryFile } from '../../registry.js';
 
 interface AddOptions {
   overwrite: boolean;
@@ -18,12 +18,12 @@ interface AddOptions {
 type OverwritePolicy = 'all' | 'none' | 'per-component';
 
 export async function addCommand(names: string[], options: AddOptions): Promise<void> {
-  let config: LismConfig;
+  let config: LismCliConfig;
 
   if (configExists()) {
-    config = readConfig();
+    config = await readConfig();
   } else {
-    logger.info('lism-ui.json が見つかりません。セットアップを開始します...\n');
+    logger.info('lism.config.js が見つかりません。セットアップを開始します...\n');
     config = await runInit();
     console.log();
   }
@@ -53,13 +53,22 @@ export async function addCommand(names: string[], options: AddOptions): Promise<
 
   const overwriteAll = options.overwrite || overwritePolicy === 'all';
 
+  let hasFailure = false;
+
   for (let i = 0; i < names.length; i++) {
     const result = results[i];
     if (result.status === 'rejected') {
       logger.error(`"${names[i]}" の取得に失敗しました: ${String(result.reason)}`);
+      hasFailure = true;
       continue;
     }
-    await writeComponent(result.value, config, overwriteAll, overwritePolicy, installedHelpers);
+    const helperFailed = await writeComponent(result.value, config, overwriteAll, overwritePolicy, installedHelpers);
+    if (helperFailed) hasFailure = true;
+  }
+
+  if (hasFailure) {
+    logger.error('一部のコンポーネント / helper の追加に失敗しました。');
+    process.exit(1);
   }
 
   logger.success('完了しました。');
@@ -90,11 +99,11 @@ function hasExistingFiles(files: RegistryFile[], baseDir: string): boolean {
 
 async function writeComponent(
   component: RegistryComponent,
-  config: LismConfig,
+  config: LismCliConfig,
   overwriteAll: boolean,
   policy: OverwritePolicy,
   installedHelpers: Set<string>
-): Promise<void> {
+): Promise<boolean> {
   logger.info(`${component.name} を展開中...`);
 
   const filesToWrite = [...component.files.shared, ...component.files[config.framework]];
@@ -105,15 +114,22 @@ async function writeComponent(
   const helperDir = path.resolve(process.cwd(), config.helperDir);
 
   // コンポーネント単位の上書き判定
-  let shouldWrite = overwriteAll;
-  if (!overwriteAll && policy !== 'none' && hasExistingFiles(filesToWrite, componentDir)) {
-    if (policy === 'per-component') {
-      shouldWrite = await confirm({
-        message: `${componentDirName} は既に存在します。上書きしますか？`,
-        default: false,
-      });
-    }
-  } else if (policy !== 'none') {
+  let shouldWrite: boolean;
+  const hasExisting = hasExistingFiles(filesToWrite, componentDir);
+
+  if (overwriteAll) {
+    shouldWrite = true;
+  } else if (!hasExisting) {
+    // 新規コンポーネントは policy に関わらず書く
+    shouldWrite = true;
+  } else if (policy === 'none') {
+    shouldWrite = false;
+  } else if (policy === 'per-component') {
+    shouldWrite = await confirm({
+      message: `${componentDirName} は既に存在します。上書きしますか？`,
+      default: false,
+    });
+  } else {
     shouldWrite = true;
   }
 
@@ -131,6 +147,8 @@ async function writeComponent(
   const helpersToInstall = component.helpers.filter((h) => !installedHelpers.has(h));
   for (const h of helpersToInstall) installedHelpers.add(h);
 
+  let helperFailed = false;
+
   if (helpersToInstall.length > 0) {
     const helperResults = await Promise.allSettled(helpersToInstall.map((h) => fetchHelper(h)));
 
@@ -138,6 +156,7 @@ async function writeComponent(
       const result = helperResults[i];
       if (result.status === 'rejected') {
         logger.error(`  helper "${helpersToInstall[i]}" の取得に失敗しました: ${String(result.reason)}`);
+        helperFailed = true;
         continue;
       }
 
@@ -165,4 +184,6 @@ async function writeComponent(
       }
     }
   }
+
+  return helperFailed;
 }

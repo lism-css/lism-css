@@ -4,7 +4,7 @@ import path from 'node:path';
 import { normalizePath } from 'vite';
 
 const TARGET_ID = 'lism-css/config.js';
-const SEARCH = ['lism.config.mjs', 'lism.config.js', 'lism.config.ts'];
+const SEARCH = ['lism.config.js', 'lism.config.mjs'];
 
 export default function mynpm(opts = {}) {
   let root = '';
