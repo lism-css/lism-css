@@ -10,6 +10,8 @@
 - Button / Badge / Tabs.Root / Chat は引き続き `variant` prop を受け付けますが、内部実装は `buildModifierClass` に置き換わっています。
 - Accordion / Details / Modal / Alert / Callout / NavMenu / ShapeDivider の `getProps` が受け取る `lismClass` プロパティは廃止し、`className` に統一しました。外側から `lismClass` を渡していた場合は `className` へ置き換えてください。
 
+- `NavMenu.Link`（Astro・React）のデフォルト要素を `span` から `a` に変更しました。`href` を渡さずに使用していた場合、レンダリングされる HTML タグが変わります。`as="span"` を明示して以前の挙動を維持できます。
+
 ### ADDED
 
 - `helper/buildModifierClass`: BEM ルートクラスに対して modifier クラスを展開する純粋関数を追加しました。
