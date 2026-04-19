@@ -5,7 +5,7 @@ description: '役割宣言の is--* と 機能付与の has--* からなる Trai
 import { Lism, Box, Frame } from 'lism-css/astro';
 
 
-**Trait Class** は、要素に対して宣言的に「役割」や「機能」を付与するクラス群です。`@layer lism-trait` に属し、`@layer lism-component` よりも後に適用されるため、ユーザーが明示的に宣言した trait は Component Class よりも優先されます。
+**Trait Class** は、要素に「役割」を宣言したり、「機能」を付与するためのクラス群です。`@layer lism-trait` に属し、`@layer lism-component` よりも後に適用されるため、ユーザーが明示的に宣言した Trait は Component Class よりも優先されます。
 
 - `is--{name}`: 要素に**役割・存在**（〜である）を宣言するクラス
 - `has--{name}`: 要素に**機能**（〜を持つ）を付与するクラス
