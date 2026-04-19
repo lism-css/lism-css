@@ -16,6 +16,7 @@ import { runInit } from './init.js';
 import { logger } from '../../logger.js';
 import { normalizeComponentName } from './normalize.js';
 import type { LismCliConfig } from '../../config.js';
+import { t } from '../../i18n.js';
 
 interface AddOptions {
   overwrite: boolean;
@@ -32,7 +33,7 @@ export async function addCommand(names: string[], options: AddOptions): Promise<
   if (configExists()) {
     config = await readConfig();
   } else {
-    logger.info('lism.config.js が見つかりません。セットアップを開始します...\n');
+    logger.info(t('ui.add.noConfig'));
     config = await runInit();
     console.log();
   }
@@ -46,17 +47,17 @@ export async function addCommand(names: string[], options: AddOptions): Promise<
   } catch (err) {
     const refInfo = options.ref ? ` (ref: ${options.ref})` : '';
     const reason = err instanceof Error ? err.message : String(err);
-    logger.error(`カタログの取得に失敗しました${refInfo}: ${reason}`);
+    logger.error(t('ui.catalogFailed', { refInfo, reason }));
     process.exit(1);
   }
 
   if (options.all) {
     names = catalog.components.map((c) => c.name);
-    logger.info(`全 ${names.length} コンポーネントを追加します...`);
+    logger.info(t('ui.add.addingAll', { count: names.length }));
   }
 
   if (names.length === 0) {
-    logger.error('追加するコンポーネント名を指定してください。');
+    logger.error(t('ui.add.specifyName'));
     process.exit(1);
   }
 
@@ -71,7 +72,7 @@ export async function addCommand(names: string[], options: AddOptions): Promise<
     else notFound.push(input);
   }
   if (notFound.length > 0) {
-    logger.error(`見つからないコンポーネント: ${notFound.join(', ')}`);
+    logger.error(t('ui.add.notFound', { list: notFound.join(', ') }));
     process.exit(1);
   }
 
@@ -94,7 +95,7 @@ export async function addCommand(names: string[], options: AddOptions): Promise<
   for (let i = 0; i < resolvedNames.length; i++) {
     const result = results[i];
     if (result.status === 'rejected') {
-      logger.error(`"${resolvedNames[i]}" の取得に失敗しました: ${String(result.reason)}`);
+      logger.error(t('ui.add.componentFetchFailed', { name: resolvedNames[i], reason: String(result.reason) }));
       hasFailure = true;
       continue;
     }
@@ -103,20 +104,20 @@ export async function addCommand(names: string[], options: AddOptions): Promise<
   }
 
   if (hasFailure) {
-    logger.error('一部のコンポーネント / helper の追加に失敗しました。');
+    logger.error(t('ui.add.someFailed'));
     process.exit(1);
   }
 
-  logger.success('完了しました。');
+  logger.success(t('common.done'));
 }
 
 async function askOverwritePolicy(): Promise<OverwritePolicy> {
   return select<OverwritePolicy>({
-    message: '既存ファイルの上書き方針を選択してください:',
+    message: t('ui.add.promptOverwritePolicy'),
     choices: [
-      { name: '全て上書き', value: 'all' },
-      { name: '全てスキップ', value: 'none' },
-      { name: 'コンポーネントごとに確認', value: 'per-component' },
+      { name: t('ui.add.policyAll'), value: 'all' },
+      { name: t('ui.add.policyNone'), value: 'none' },
+      { name: t('ui.add.policyPerComponent'), value: 'per-component' },
     ],
   });
 }
@@ -125,7 +126,7 @@ async function askOverwritePolicy(): Promise<OverwritePolicy> {
 function writeFile(filePath: string, content: string): void {
   fs.mkdirSync(path.dirname(filePath), { recursive: true });
   fs.writeFileSync(filePath, content);
-  logger.log(`  作成: ${path.relative(process.cwd(), filePath)}`);
+  logger.log(t('ui.add.created', { path: path.relative(process.cwd(), filePath) }));
 }
 
 /** コンポーネントディレクトリ内に既存ファイルがあるか */
@@ -141,7 +142,7 @@ async function writeComponent(
   installedHelpers: Set<string>,
   fetchOpts: FetchOptions
 ): Promise<boolean> {
-  logger.info(`${component.name} を展開中...`);
+  logger.info(t('ui.add.deploying', { name: component.name }));
 
   const filesToWrite = [...component.files.shared, ...component.files[config.framework]];
 
@@ -163,7 +164,7 @@ async function writeComponent(
     shouldWrite = false;
   } else if (policy === 'per-component') {
     shouldWrite = await confirm({
-      message: `${componentDirName} は既に存在します。上書きしますか？`,
+      message: t('ui.add.confirmOverwriteComponent', { name: componentDirName }),
       default: false,
     });
   } else {
@@ -171,7 +172,7 @@ async function writeComponent(
   }
 
   if (!shouldWrite) {
-    logger.log(`  スキップ: ${componentDirName}`);
+    logger.log(t('ui.add.skippedComponent', { name: componentDirName }));
   } else {
     for (const file of filesToWrite) {
       const filePath = path.join(componentDir, file.path);
@@ -192,7 +193,7 @@ async function writeComponent(
     for (let i = 0; i < helpersToInstall.length; i++) {
       const result = helperResults[i];
       if (result.status === 'rejected') {
-        logger.error(`  helper "${helpersToInstall[i]}" の取得に失敗しました: ${String(result.reason)}`);
+        logger.error(t('ui.add.helperFetchFailed', { name: helpersToInstall[i], reason: String(result.reason) }));
         helperFailed = true;
         continue;
       }
@@ -202,16 +203,16 @@ async function writeComponent(
 
         if (fs.existsSync(filePath) && !overwriteAll) {
           if (policy === 'none') {
-            logger.log(`  スキップ: ${file.path}`);
+            logger.log(t('ui.add.skippedFile', { path: file.path }));
             continue;
           }
           if (policy === 'per-component') {
             const shouldOverwrite = await confirm({
-              message: `${path.relative(process.cwd(), filePath)} は既に存在します。上書きしますか？`,
+              message: t('ui.add.confirmOverwriteFile', { path: path.relative(process.cwd(), filePath) }),
               default: false,
             });
             if (!shouldOverwrite) {
-              logger.log(`  スキップ: ${file.path}`);
+              logger.log(t('ui.add.skippedFile', { path: file.path }));
               continue;
             }
           }

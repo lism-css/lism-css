@@ -2,6 +2,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { createJiti } from 'jiti';
 import { logger } from './logger.js';
+import { t } from './i18n.js';
 
 const LEGACY_CONFIG_FILE = 'lism-ui.json';
 const CONFIG_SEARCH = ['lism.config.js', 'lism.config.mjs'] as const;
@@ -54,11 +55,11 @@ export function getDefaultConfigPath(): string {
 export async function readConfig(): Promise<LismCliConfig> {
   const found = findConfigFile();
   if (!found) {
-    throw new Error('lism.config.js / lism.config.mjs / lism-ui.json のいずれも見つかりません。');
+    throw new Error(t('config.notFound'));
   }
 
   if (found.kind === 'legacy-json') {
-    logger.warn(`[deprecated] ${LEGACY_CONFIG_FILE} は廃止予定です。"lism ui init" で lism.config.js へ移行してください。`);
+    logger.warn(t('config.legacyWarning', { filename: LEGACY_CONFIG_FILE }));
     const raw = fs.readFileSync(found.path, 'utf-8');
     const parsed = JSON.parse(raw) as LismCliConfig;
     return parsed;
@@ -70,7 +71,7 @@ export async function readConfig(): Promise<LismCliConfig> {
   // `cli` サブキーがあればそれを優先、なければモジュール全体を CLI 設定として扱う（後方互換）
   const cli = (mod as LismConfigFile | undefined)?.cli ?? (mod as LismCliConfig | undefined);
   if (!cli || typeof cli !== 'object') {
-    throw new Error(`${found.filename} から CLI 設定（cli キー）を読み込めませんでした。`);
+    throw new Error(t('config.cliSectionMissing', { filename: found.filename }));
   }
   validateCliConfig(cli);
   return cli;
@@ -79,13 +80,13 @@ export async function readConfig(): Promise<LismCliConfig> {
 function validateCliConfig(cli: unknown): asserts cli is LismCliConfig {
   const c = cli as Partial<LismCliConfig>;
   if (c.framework !== 'react' && c.framework !== 'astro') {
-    throw new Error(`cli.framework は "react" または "astro" を指定してください。`);
+    throw new Error(t('config.invalidFramework'));
   }
   if (typeof c.componentsDir !== 'string' || !c.componentsDir) {
-    throw new Error('cli.componentsDir は文字列で指定してください。');
+    throw new Error(t('config.invalidComponentsDir'));
   }
   if (typeof c.helperDir !== 'string' || !c.helperDir) {
-    throw new Error('cli.helperDir は文字列で指定してください。');
+    throw new Error(t('config.invalidHelperDir'));
   }
 }
 
@@ -108,7 +109,7 @@ export async function hasCliSection(filePath: string): Promise<boolean> {
     const mod = await jiti.import(filePath);
     return !!(mod as LismConfigFile | undefined)?.cli;
   } catch (err) {
-    throw new Error(`${filePath} を読み込めませんでした（構文エラー等）。修正してから再実行してください: ${String(err)}`);
+    throw new Error(t('config.loadFailed', { path: filePath, reason: String(err) }));
   }
 }
 

@@ -1,6 +1,7 @@
 import { select, input } from '@inquirer/prompts';
 import { findConfigFile, hasCliSection, patchConfigWithCli, writeFreshConfig } from '../../config.js';
 import { logger } from '../../logger.js';
+import { t } from '../../i18n.js';
 import type { LismCliConfig } from '../../config.js';
 
 export interface InitOptions {
@@ -23,7 +24,7 @@ export async function runInit(options: InitOptions = {}): Promise<LismCliConfig>
   const framework =
     options.framework ??
     (await select<LismCliConfig['framework']>({
-      message: 'フレームワークを選択してください:',
+      message: t('ui.init.promptFramework'),
       choices: [
         { name: 'React', value: 'react' },
         { name: 'Astro', value: 'astro' },
@@ -33,14 +34,14 @@ export async function runInit(options: InitOptions = {}): Promise<LismCliConfig>
   const componentsDir =
     options.componentsDir ??
     (await input({
-      message: 'コンポーネントの出力先ディレクトリ:',
+      message: t('ui.init.promptComponentsDir'),
       default: 'src/components/ui',
     }));
 
   const helperDir =
     options.helperDir ??
     (await input({
-      message: 'helper の出力先ディレクトリ:',
+      message: t('ui.init.promptHelperDir'),
       default: `${componentsDir}/_helper`,
     }));
 
@@ -54,14 +55,14 @@ export async function runInit(options: InitOptions = {}): Promise<LismCliConfig>
       existingCli: options.existingCli,
     });
     if (patched) {
-      logger.success(`${outPath} に cli セクションを${options.force ? '更新' : '追記'}しました。`);
+      logger.success(t(options.force ? 'ui.init.patchedUpdate' : 'ui.init.patchedAdd', { path: outPath }));
     } else {
-      logger.warn(`${outPath} に既に cli セクションが含まれているか、export default が検出できませんでした。手動で追記してください。`);
+      logger.warn(t('ui.init.notPatched', { path: outPath }));
     }
   } else {
     // found が null、または legacy-json（別途 initCommand で warning 済み）
     const outPath = writeFreshConfig(config);
-    logger.success(`${outPath} を作成しました。`);
+    logger.success(t('ui.init.created', { path: outPath }));
   }
 
   return config;
@@ -72,7 +73,7 @@ export async function initCommand(options: InitOptions): Promise<void> {
 
   let existingCli = false;
   if (found?.kind === 'legacy-json') {
-    logger.warn(`${found.filename} を検出しました。lism.config.js へ移行します。古いファイルは後で削除してください。`);
+    logger.warn(t('ui.init.legacyDetected', { filename: found.filename }));
   } else if (found?.kind === 'module') {
     // ユーザーの lism.config.* に構文エラーがあると jiti が throw するため、
     // スタックトレース付きで uncaught にならないよう logger.error で握って終了する。
@@ -84,10 +85,10 @@ export async function initCommand(options: InitOptions): Promise<void> {
     }
     if (existingCli) {
       if (!options.force) {
-        logger.warn(`${found.filename} には既に cli セクションが設定されています。上書きするには --force を指定してください。`);
+        logger.warn(t('ui.init.alreadyExists', { filename: found.filename }));
         return;
       }
-      logger.warn(`${found.filename} の既存の cli セクションを上書きします。`);
+      logger.warn(t('ui.init.willOverwrite', { filename: found.filename }));
     }
   }
 
