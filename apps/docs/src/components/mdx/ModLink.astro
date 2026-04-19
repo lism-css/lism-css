@@ -3,7 +3,7 @@
  * Primitive / Trait ページへの言語対応リンクを生成するMDX用コンポーネント
  * - slug はそのまま表示テキスト・URL スラッグとして使われる
  * - CSS クラス名の表記（例: "is--boxLink", "l--box"）をそのまま渡して OK
- * - `is--` で始まる slug は /docs/trait-class/ 配下へ、それ以外は /docs/primitives/ 配下へリンクする
+ * - `is--` / `has--` で始まる slug は /docs/trait-class/ 配下へ、それ以外は /docs/primitives/ 配下へリンクする
  * - 表示テキストを slug と別にしたい場合のみ label で上書きする
  */
 import { getLangFromUrl, getLocalizedUrl } from '@/lib/i18n';
@@ -18,7 +18,8 @@ interface Props {
 const { slug, label } = Astro.props;
 
 const currentLang = getLangFromUrl(Astro.url);
-const basePath = slug.startsWith('is--') ? '/docs/trait-class/' : '/docs/primitives/';
+const isTraitSlug = slug.startsWith('is--') || slug.startsWith('has--');
+const basePath = isTraitSlug ? '/docs/trait-class/' : '/docs/primitives/';
 const href = getLocalizedUrl(`${basePath}${slug}/`, currentLang);
 ---
 
