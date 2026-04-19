@@ -7,7 +7,7 @@ import { Lism, Stack, Center, Heading, Link, Text } from 'lism-css/astro';
 <Layout title="Lism CSS - Lightweight Layout Framework">
   <Stack min-h="100svh">
     <Header />
-    <Center as="section" isContainer set="gutter" fxg="1" g="40">
+    <Center as="section" isContainer hasGutter fxg="1" g="40">
       <Heading level="1" ff="accent" fw="normal" ta="center" fz="5xl">Get started</Heading>
       <Stack ai="center">
         <Text ta="center" c="text-2" fz="xs">Install Lism CSS Skills for AI agents:</Text>
@@ -15,7 +15,8 @@ import { Lism, Stack, Center, Heading, Link, Text } from 'lism-css/astro';
       </Stack>
       <Link
         href="https://lism-css.com/en/docs/"
-        set="plain transition"
+        set="plain"
+        hasTransition
         bgc="text"
         c="base"
         bd
@@ -27,7 +28,7 @@ import { Lism, Stack, Center, Heading, Link, Text } from 'lism-css/astro';
         hov={{ bxsh: '-', c: 'text', bgc: 'transparent' }}>Documentation</Link
       >
     </Center>
-    <Lism as="footer" isContainer set="gutter" py="40">
+    <Lism as="footer" isContainer hasGutter py="40">
       <Center>
         <Text ta="center" c="text-2" fz="xs">Minimal Astro example for <Link href="https://lism-css.com/">Lism CSS</Link></Text>
       </Center>
