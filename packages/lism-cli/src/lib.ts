@@ -4,5 +4,5 @@
  */
 export { runCreate } from './commands/create.js';
 export type { RunCreateArgs } from './commands/create.js';
-export { setLang, t } from './i18n.js';
+export { setLang, t, tOf } from './i18n.js';
 export type { Lang } from './i18n.js';

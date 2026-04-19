@@ -58,7 +58,7 @@ function printHelp(): void {
       `  -t, --template <name>   ${t('cli.create.opt.template')}`,
       `  -f, --force             ${t('cli.create.opt.force')}`,
       `      --lang <code>       ${t('cli.opt.lang')}`,
-      `  -h, --help              ${t('create-lism.opt.help')}`,
+      `  -h, --help              ${t('common.help')}`,
       '',
     ].join('\n')
   );

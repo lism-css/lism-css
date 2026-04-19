@@ -29,10 +29,6 @@ export const messages = {
     ja: 'CLI の表示言語を指定（ja | en）',
     en: 'Display language for the CLI (ja | en)',
   },
-  'create-lism.opt.help': {
-    ja: 'ヘルプを表示',
-    en: 'Show help',
-  },
 
   // create
   'cli.create.description': {
@@ -187,14 +183,16 @@ export const messages = {
   // ---------------------------------------------------------------------------
   // ui
   // ---------------------------------------------------------------------------
+  // ui 共通（add / list で共有）
+  'ui.catalogFailed': {
+    ja: 'カタログの取得に失敗しました{refInfo}: {reason}',
+    en: 'Failed to fetch catalog{refInfo}: {reason}',
+  },
+
   // ui add
   'ui.add.noConfig': {
     ja: 'lism.config.js が見つかりません。セットアップを開始します...\n',
     en: 'lism.config.js not found. Starting setup...\n',
-  },
-  'ui.add.catalogFailed': {
-    ja: 'カタログの取得に失敗しました{refInfo}: {reason}',
-    en: 'Failed to fetch catalog{refInfo}: {reason}',
   },
   'ui.add.addingAll': {
     ja: '全 {count} コンポーネントを追加します...',
@@ -442,6 +440,10 @@ export const messages = {
   'common.done': {
     ja: '完了しました。',
     en: 'Done.',
+  },
+  'common.help': {
+    ja: 'ヘルプを表示',
+    en: 'Show help',
   },
 } as const satisfies Record<string, MessageEntry>;
 

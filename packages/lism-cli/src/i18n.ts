@@ -48,7 +48,11 @@ export function preScanLang(argv: string[]): void {
   for (let i = 0; i < argv.length; i++) {
     const a = argv[i];
     if (a === '--lang') {
-      setLang(argv[i + 1]);
+      const next = argv[i + 1];
+      // 次トークンが別オプション（例: --force）の場合は値とみなさない
+      if (next !== undefined && !next.startsWith('-')) {
+        setLang(next);
+      }
       return;
     }
     if (a.startsWith('--lang=')) {

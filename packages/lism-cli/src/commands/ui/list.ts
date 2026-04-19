@@ -16,7 +16,7 @@ export async function listCommand(options: ListOptions = {}): Promise<void> {
   } catch (err) {
     const refInfo = options.ref ? ` (ref: ${options.ref})` : '';
     const reason = err instanceof Error ? err.message : String(err);
-    logger.error(t('ui.add.catalogFailed', { refInfo, reason }));
+    logger.error(t('ui.catalogFailed', { refInfo, reason }));
     process.exit(1);
   }
 
