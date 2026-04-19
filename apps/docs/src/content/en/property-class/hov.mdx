@@ -149,22 +149,22 @@ Combine this class with CSS variables to configure transition behavior.
 <Preview>
   <PreviewTitle>Example: slowly transitioning the border-color</PreviewTitle>
   <PreviewArea p="30">
-    <BoxLink href="###" hasTransition hov={{ bdc: 'red' }} bd bdw="3px" bgc="base-2" p="20" style={{ '--hov-duration': '.5s' }}>
+    <BoxLink href="###" hasTransition hov={{ bdc: 'red' }} bd bdw="3px" bgc="base-2" p="20" style={{ '--transition-duration': '.5s' }}>
       <p>BoxLink</p>
       <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
     </BoxLink>
   </PreviewArea>
   <PreviewCode slot="tab" label="HTML">
-    ```html "has--transition" "--hov-duration: 0.5s"
-    <a class="is--boxLink has--transition -bd -bgc:base-2 -p:20 -hov:bdc" style="--hov-bdc: var(--red); --hov-duration: 0.5s; --bdw: 3px" href="###">
+    ```html "has--transition" "--transition-duration: 0.5s"
+    <a class="is--boxLink has--transition -bd -bgc:base-2 -p:20 -hov:bdc" style="--hov-bdc: var(--red); --transition-duration: 0.5s; --bdw: 3px" href="###">
       <p>BoxLink</p>
       <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
     </a>
     ```
   </PreviewCode>
   <PreviewCode slot="tab" label="JSX">
-    ```jsx 'hasTransition' "--hov-duration"
-    <BoxLink href="###" hasTransition hov={{ bdc: 'red' }} bd bdw="3px" bgc="base-2" p="20" style={{ '--hov-duration': '.5s' }}>
+    ```jsx 'hasTransition' "--transition-duration"
+    <BoxLink href="###" hasTransition hov={{ bdc: 'red' }} bd bdw="3px" bgc="base-2" p="20" style={{ '--transition-duration': '.5s' }}>
       <p>BoxLink</p>
       <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
     </BoxLink>
@@ -230,20 +230,20 @@ By leveraging `set--hov`, you can trigger style changes on child elements when t
 ```css
 /* Hide when parent set--hov is hovered */
 .-hov\:to\:hide {
-  --transProp: opacity;
+  --transitionProps: opacity;
   opacity: var(--_isHov, 0);
 }
 
 /* Show when parent set--hov is hovered */
 .-hov\:to\:show {
-  --transProp: opacity, visibility;
+  --transitionProps: opacity, visibility;
   opacity: var(--_notHov, 0);
   visibility: var(--_notHov, hidden);
 }
 
 /* Zoom in when parent set--hov is hovered */
 .-hov\:to\:zoom {
-  --transProp: scale;
+  --transitionProps: scale;
   scale: var(--_isHov, 1.1);
 }
 ```

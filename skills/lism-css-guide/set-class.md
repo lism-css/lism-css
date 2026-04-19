@@ -102,7 +102,7 @@ HTML では直接クラスを付与し、Lism コンポーネントでは `set` 
 
 ```css
 .-hov\:to\:zoom {
-  --transProp: scale;
+  --transitionProps: scale;
   scale: var(--_isHov, 1.1);
 }
 ```
@@ -114,23 +114,26 @@ HTML では直接クラスを付与し、Lism コンポーネントでは `set` 
 
 ```scss
 .has--transition {
-  transition: var(--hov-duration, 0.25s) var(--hov-ease, linear) var(--hov-delay, 0s);
-  transition-property: var(--hov-prop, all);
+  --duration: var(--transition-duration, 0.2s);
+  --ease: ease;
+  --delay: 0s;
+  --transitionProps: all;
+  transition: var(--duration) var(--ease) var(--delay);
+  transition-property: var(--transitionProps);
 }
 ```
 
-| カスタム変数 | デフォルト |
-|-------------|-----------|
-| `--hov-prop` | `all` |
-| `--hov-duration` | `0.25s` |
-| `--hov-ease` | `linear` |
-| `--hov-delay` | `0s` |
+| カスタム変数 | デフォルト | 役割 |
+|-------------|-----------|------|
+| `--transition-duration` | `0.2s` | `:root` などから全体のデフォルト duration を上書きするためのグローバル変数 |
+| `--transitionProps` | `all` | transition 対象プロパティ（要素側で初期化） |
+| `--duration` / `--ease` / `--delay` | `var(--transition-duration, 0.2s)` / `ease` / `0s` | `.has--transition` 内で直接上書きできるローカル変数 |
 
 ```html
-<div class="has--transition -hov:c" style="--hov-prop: color; --hov-c: var(--red);">...</div>
+<div class="has--transition -hov:c" style="--transitionProps: color; --hov-c: var(--red);">...</div>
 ```
 ```jsx
-<Lism hasTransition hov={{c: 'red'}} style={{ '--hov-prop': 'color'}}>...</Lism>
+<Lism hasTransition hov={{c: 'red'}} style={{ '--transitionProps': 'color'}}>...</Lism>
 ```
 
 

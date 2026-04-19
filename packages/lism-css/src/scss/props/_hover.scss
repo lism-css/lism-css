@@ -28,17 +28,17 @@
 // ------------------------------------------------------------
 
 .-hov\:to\:hide {
-  --transProp: opacity;
+  --transitionProps: opacity;
   opacity: var(--_isHov, 0) #{mixin.$maybe_important};
 }
 
 .-hov\:to\:show {
-  --transProp: opacity, visibility;
+  --transitionProps: opacity, visibility;
   opacity: var(--_notHov, 0) #{mixin.$maybe_important};
   visibility: var(--_notHov, hidden) #{mixin.$maybe_important};
 }
 
 .-hov\:to\:zoom {
-  --transProp: scale;
+  --transitionProps: scale;
   scale: var(--_isHov, 1.1);
 }

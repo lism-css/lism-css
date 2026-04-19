@@ -54,7 +54,7 @@ Lism コンポーネントでは `isContainer`, `isLayer` 等の Props として
 
 | クラス | 用途 | 主な CSS 変数 |
 |--------|------|--------------|
-| `has--transition` | transition プロパティをまとめてセット。hover 連動スタイル（`-hov:*`）と組み合わせて使用 | `--hov-prop`, `--hov-duration`, `--hov-ease`, `--hov-delay` |
+| `has--transition` | transition プロパティをまとめてセット。hover 連動スタイル（`-hov:*`）と組み合わせて使用 | `--transitionProps`, `--duration`, `--ease`, `--delay`（グローバル上書きは `--transition-duration`） |
 | `has--gutter` | コンテンツの左右に統一した余白（gutter）を設定する | `--gutter-size`（デフォルト `var(--s30)`） |
 | `has--snap` | `scroll-snap-` 系プロパティを CSS 変数経由でセットできるようにする | `--snapType`, `--snapAlign` 等 |
 

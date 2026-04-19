@@ -1,6 +1,8 @@
-@use '../_mixin' as mixin;
-
 .has--transition {
-  transition: var(--hov-duration, 0.25s) var(--hov-ease, linear) var(--hov-delay, 0s);
-  transition-property: var(--hov-prop, all);
+  --duration: var(--transition-duration, 0.2s);
+  --ease: ease;
+  --delay: 0s;
+  --transitionProps: all;
+  transition: var(--duration) var(--ease) var(--delay);
+  transition-property: var(--transitionProps);
 }
