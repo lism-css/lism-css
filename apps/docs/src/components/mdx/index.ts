@@ -13,7 +13,6 @@ export { Spacer } from 'lism-css/astro';
 export { Preview, PreviewTitle, PreviewArea, PreviewCode, PreviewFrame } from '../Preview';
 
 // DocComponents（docsから移植）
-export { default as HelpText } from './HelpText.astro';
 export { default as PropBadge } from './PropBadge.astro';
 
 export { default as ImportPackage } from './ImportPackage.astro';

@@ -21,15 +21,6 @@ import { DummyText } from '@lism-css/ui/astro';
 
 <ImportPackage component="Frame" />
 
-### Props
-
-| Property | Description |
-|---|---|
-| `ar` | Specifies the aspect ratio of the frame. |
-{/* | `objectPosition` | Specifies the object-position of the direct child media element. | */}
-
-<HelpText>(`ar` itself is a general-purpose CSS Prop that can be specified on any component.)</HelpText>
-
 
 ## Usage
 
@@ -220,63 +211,3 @@ import { DummyText } from '@lism-css/ui/astro';
   </PreviewCode>
 </Preview>
 
-
-
-### `ar` can be used on any component
-
-:::note
-::title[About values available for `ar`]
-`ar` (the CSS Prop for `aspect-ratio`) is a general-purpose property that can be specified on any component.
-[See here for the available values.](/en/docs/property-class/#aspect-ratio)
-:::
-
-
-<Preview>
-  <PreviewTitle>Example of specifying `ar` on Flow</PreviewTitle>
-  <PreviewArea resize p="5">
-    <Flow ar="16/9" ov-y="auto" p="30" bgc="base">
-      <DummyText />
-      <DummyText length="l" />
-      <Frame ar="16/9" max-w="50%">
-        <Media src="https://cdn.lism-css.com/img/a-1.jpg" alt="" width="960" height="640" />
-      </Frame>
-      <DummyText length="xl" />
-      <DummyText />
-    </Flow>
-  </PreviewArea>
-  <PreviewCode slot="tab" label="JSX">
-    ```jsx 'Flow ar="16/9"' 'ov-y="auto"'
-    <Flow ar="16/9" ov-y="auto" p="30">
-      ...
-    </Flow>
-    ```
-  </PreviewCode>
-</Preview>
-
-
-<Preview>
-  <PreviewTitle>`ar` can also be changed at breakpoints.</PreviewTitle>
-  <PreviewArea resize p="15">
-    <Frame ar={['1/1', '3/2', '16/9']} pos="relative">
-      <img src="https://cdn.lism-css.com/img/a-1.jpg" alt="" width="960" height="640" />
-      <Box pos="absolute" l="0" t="0" bgc="black" c="white" p="10" lh="s" fz="s" m="15" bdrs="10">
-        {`Ratio:`}
-        <Inline d={['inline', 'none']}>1/1</Inline>
-        <Inline d={['none', 'inline', 'none']}>3/2</Inline>
-        <Inline d={['none', null, 'inline']}>16/9</Inline>
-      </Box>
-    </Frame>
-  </PreviewArea>
-  <PreviewCode slot="tab" label="JSX">
-    ```jsx
-    <Frame ar={['1/1', '3/2', '16/9']} pos="relative">
-      ...
-    </Frame>
-    ```
-  </PreviewCode>
-  <PreviewCode slot="tab" label="HTML">
-    ```html
-    <div class="l--frame -ar:1/1 -pos:relative -ar_sm -ar_md" style="--ar_sm: 3/2; --ar_md: 16/9">...</div>
-    ```
-  </PreviewCode>
-</Preview>

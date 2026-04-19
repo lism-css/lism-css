@@ -60,9 +60,10 @@ After defining your overrides, import `lism-css/scss/main.scss` to apply the cus
 // @use '../path-to/node_modules/lism-css/scss/main_no_layer';
 ```
 
-<HelpText icon="info">Toggling `@layer` on or off is not controlled by a variable. Switch the `main.scss` file you import instead.</HelpText>
-<HelpText icon="info">When using Astro, the `../path-to/node_modules/` prefix is not needed.</HelpText>
-
+:::info
+- Toggling `@layer` on or off is not controlled by a variable. Switch the `main.scss` file you import instead.
+- When using Astro, the `../path-to/node_modules/` prefix is not needed.
+:::
 
 
 {/* For example, if you only need `sm` and `md` size support, setting `$common_support_bp` to `md` will prevent `lg` and larger breakpoint utility classes from being generated. */}

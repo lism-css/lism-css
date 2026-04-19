@@ -99,9 +99,9 @@ These are further categorized into several types:
 
 | Category | Format | Example |
 |---|---|---|
-|Trait Primitives<HelpText fz="xs">Classes that apply a static structural trait to an element</HelpText>|`.is--{name}`|`.is--wrapper`,<br />`.is--container`|
-|Layout Primitives<HelpText fz="xs">Primitives that serve as layout building blocks</HelpText>|`.l--{name}`|`.l--grid`,<br />`.l--columns`|
-|Atomic Primitives<HelpText fz="xs">The smallest layout unit primitives</HelpText>|`.a--{name}`|`.a--divider`,<br />`.a--icon`|
+|Trait Primitives<br /><small>Classes that apply a static structural trait to an element</small>|`.is--{name}`|`.is--wrapper`,<br />`.is--container`|
+|Layout Primitives<br /><small>Primitives that serve as layout building blocks</small>|`.l--{name}`|`.l--grid`,<br />`.l--columns`|
+|Atomic Primitives<br /><small>The smallest layout unit primitives</small>|`.a--{name}`|`.a--divider`,<br />`.a--icon`|
 
 Primitive classes are standalone — they have no variations or child element classes. Only the `c--` Component Classes described next follow a BEM-like structure.
 
@@ -136,9 +136,9 @@ Users can also freely define their own `c--` classes inside `@layer lism-compone
 
 | Category | Format | Example |
 |---|---|---|
-|Block<HelpText fz="xs">The base class</HelpText>|`.c--{name}`|`.c--button`,<br />`.c--card`|
-|Modifier<HelpText fz="xs">Variation</HelpText>|`.c--{name}--{modifier}`|`.c--button--outline`|
-|Element<HelpText fz="xs">Child element</HelpText>|`.c--{name}_{element}`|`.c--card_header`,<br />`.c--card_body`|
+|Block<br /><small>The base class</small>|`.c--{name}`|`.c--button`,<br />`.c--card`|
+|Modifier<br /><small>Variation</small>|`.c--{name}--{modifier}`|`.c--button--outline`|
+|Element<br /><small>Child element</small>|`.c--{name}_{element}`|`.c--card_header`,<br />`.c--card_body`|
 
 :::point
 Modifiers are used alongside the Block class, e.g. `.c--button.c--button--outline`.  
@@ -183,40 +183,6 @@ Property Classes come in three formats:
 \* Breakpoint-responsive classes are also only available by default for a select subset of major properties.
 :::
 
-
-
-<PreviewTitle>Some examples include the following:</PreviewTitle>
-
-```css
-.-ta\:center {
-  text-align: center;
-}
-.-ta\:left {
-  text-align: left;
-}
-.-fz\:l {
-  font-size: var(--fz--l);
-}
-.-fz\:3xl {
-  font-size: var(--fz--3xl);
-}
-
-.-p {
-  padding: var(--p);
-}
-@container (min-width: 480px) {
-  .-p_sm {
-    padding: var(--p_sm);
-  }
-}
-@container (min-width: 800px) {
-  .-p_md {
-    padding: var(--p_md);
-  }
-}
-```
-
-<HelpText>(The actual implementation may differ slightly, but this gives you the general idea.)</HelpText>
 
 
 See the [Property Class reference page](/en/docs/property-class) for the full list.
