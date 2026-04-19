@@ -2,7 +2,7 @@
  * isVar: 1 → クラス出力はせずstyle属性での変数出力のみ (--bdw, --keycolor など)
  * bp: 0 → Prop-valユーティリティクラス化されなければ、style属性で出力するだけ。
  * bp: 1 → .-prop と --prop の セットがベースにあり、.-prop_bp と .--prop_bp で ブレイクポイント指定できる。
- *       .-prop{propaty:var(--prop)} が基本で、ユーティリティクラスは .-prop:val{propaty:value} となる。
+ *       .-prop{property:var(--prop)} が基本で、ユーティリティクラスは .-prop:val{property:value} となる。
  *
  * ↓コンポーネント処理で使用される
  * tokenClass: 1 → 対応するトークン値がそのまま全てユーティリティクラス化されるもの。
@@ -10,8 +10,10 @@
  * shorthands: → コンポーネント側で短く書くための設定
  *
  * ↓SCSS出力で使用される
- * alwaysVar: 1 → .-prop,[class*=-prop:] {propaty:var(--prop)} で、ユーティリティクラス時も常に変数管理となる。
- * overwriteBaseVar: 1 → ブレイクポイントクラスで --prop: var(--prop_$bp) がセットされ、常にベース変数の --prop で値が取得できるようになる。
+ * alwaysVar: 1 → state変数扱い。 .-prop,[class*=-prop:] {property:var(--prop)} の base 出力となり、
+ *   ユーティリティクラスは --prop をセットする形になる。
+ *   加えて BPクラスも .-prop_$bp { property: var(--prop); --prop: var(--prop_$bp) !important; } を出力し、
+ *   常に --prop が当該要素の現在値になるよう上書きされる（consumer が --prop を参照できる）。
  * important: 1 → !important を付けて最終的に出力する
  */
 
@@ -21,7 +23,7 @@ const PLACE_SHORTHANDS = { s: 'start', e: 'end', c: 'center', fs: 'flex-start', 
 
 export default {
   f: { prop: 'font', presets: ['inherit'] },
-  fz: { prop: 'fontSize', token: 'fz', tokenClass: 1, bp: 1, alwaysVar: 1 },
+  fz: { prop: 'fontSize', token: 'fz', tokenClass: 1, bp: 1 },
   fw: {
     prop: 'fontWeight',
     token: 'fw',
@@ -153,7 +155,6 @@ export default {
     tokenClass: 1,
     bp: 1,
     alwaysVar: 1,
-    overwriteBaseVar: 1,
   },
   'bdrs-tl': { prop: 'borderTopLeftRadius', token: 'bdrs' },
   'bdrs-tr': { prop: 'borderTopRightRadius', token: 'bdrs' },
@@ -164,7 +165,7 @@ export default {
   'bdrs-es': { prop: 'borderEndStartRadius', token: 'bdrs' },
   'bdrs-ee': { prop: 'borderEndEndRadius', token: 'bdrs' },
 
-  bxsh: { prop: 'boxShadow', utils: { 0: 'none' }, token: 'bxsh', tokenClass: 1, bp: 1, alwaysVar: 1 },
+  bxsh: { prop: 'boxShadow', utils: { 0: 'none' }, token: 'bxsh', tokenClass: 1, bp: 1 },
 
   // position
   pos: {
@@ -191,11 +192,10 @@ export default {
     token: 'space',
     tokenClass: 1,
     alwaysVar: 1,
-    overwriteBaseVar: 1,
     bp: 1,
   },
-  px: { prop: 'paddingInline', presets: ['0'], token: 'space', tokenClass: 1, alwaysVar: 1, bp: 1 },
-  py: { prop: 'paddingBlock', presets: ['0'], token: 'space', tokenClass: 1, alwaysVar: 1, bp: 1 },
+  px: { prop: 'paddingInline', presets: ['0'], token: 'space', tokenClass: 1, bp: 1 },
+  py: { prop: 'paddingBlock', presets: ['0'], token: 'space', tokenClass: 1, bp: 1 },
   'px-s': { prop: 'paddingInlineStart', token: 'space', bp: 1 },
   'px-e': { prop: 'paddingInlineEnd', token: 'space', bp: 1 },
   'py-s': { prop: 'paddingBlockStart', token: 'space', bp: 1 },
@@ -210,11 +210,10 @@ export default {
     token: 'space',
     tokenClass: 1,
     alwaysVar: 1,
-    overwriteBaseVar: 1,
     bp: 1,
   },
-  mx: { prop: 'marginInline', presets: ['auto', '0'], token: 'space', tokenClass: 1, alwaysVar: 1, bp: 1 },
-  my: { prop: 'marginBlock', presets: ['auto', '0'], token: 'space', tokenClass: 1, alwaysVar: 1, bp: 1 },
+  mx: { prop: 'marginInline', presets: ['auto', '0'], token: 'space', tokenClass: 1, bp: 1 },
+  my: { prop: 'marginBlock', presets: ['auto', '0'], token: 'space', tokenClass: 1, bp: 1 },
   'mx-s': { prop: 'marginInlineStart', presets: ['auto'], token: 'space', bp: 1 },
   'mx-e': { prop: 'marginInlineEnd', presets: ['auto'], token: 'space', bp: 1 },
   'my-s': { prop: 'marginBlockStart', token: 'space', bp: 1, presets: ['auto', '0'], tokenClass: 1 },
@@ -230,8 +229,6 @@ export default {
     exUtility: { inherit: { gap: 'inherit' } },
     token: 'space',
     tokenClass: 1,
-    alwaysVar: 1,
-    overwriteBaseVar: 1,
     bp: 1,
   },
   cg: { prop: 'columnGap', token: 'space', bp: 1 },

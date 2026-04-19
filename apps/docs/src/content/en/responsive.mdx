@@ -10,27 +10,6 @@ import { Lism, Box, Spacer } from "lism-css/astro";
 In Lism, responsive support is implemented by combining classes in the `.-{prop}_{bp}` format with variables in the `--{prop}_{bp}` format.
 
 
-<PreviewTitle>Example</PreviewTitle>
-```css
-.-p {
-  padding: var(--p);
-}
-
-/* @sm ~ */
-@container (min-width: 480px) {
-  .-p_sm {
-    padding: var(--p_sm);
-  }
-}
-
-/* @md ~ */
-@container (min-width: 800px) {
-  .-p_md {
-    padding: var(--p_md);
-  }
-}
-```
-
 
 <Preview>
   <PreviewTitle>Responsive example</PreviewTitle>
@@ -66,41 +45,41 @@ You can also toggle responsive support per property by [customizing via SCSS fil
 
 There are two patterns:
 
-1. Properties where the value is always accessible via the `-{prop}` variable
-2. Properties that are simply overridden at each breakpoint
 
-
-<PreviewTitle>Implementation example for pattern 1</PreviewTitle>
-```css
-.-p {
-  padding: var(--p);
-}
-
-@container (min-width: 480px) {
-  .-p_sm {
-    --p: var(--p_sm) !important;
-    padding: var(--p_sm);
-  }
-}
-```
-
-<p class="-my-s:15">Only a limited set of properties (`p`,`px`,`py`,`m`,`mx`,`my`,`g`,`fz`,`c`,`bgc`,`bdrs`,`bxsh`) — those where having the value always accessible via a CSS variable is considered useful — use this pattern.</p>
+1. Default: Properties that are simply overridden at each breakpoint
+1. Exception: Properties where the value is always accessible via the `-{prop}` variable
 
 <Spacer h="20"></Spacer>
 
-<PreviewTitle>Implementation example for pattern 2</PreviewTitle>
+<PreviewTitle>CSS example for the default pattern</PreviewTitle>
 ```css
-.-d {
-  display: var(--d);
-}
-
+.-d {display: var(--d)}
 @container (min-width: 480px) {
-  .-d_sm {
-    display: var(--d_sm);
-  }
+  .-d_sm {display: var(--d_sm)}
+}
+@container (min-width: 800px) {
+  .-d_md {display: var(--d_md)}
 }
 ```
 
+
+
+<PreviewTitle>CSS example for the exception pattern</PreviewTitle>
+```css
+.-p {padding: var(--p);}
+@container (min-width: 480px) {
+  .-p_sm {padding: var(--p);--p: var(--p_sm) !important}
+}
+@container (min-width: 800px) {
+  .-p_md {padding: var(--p);--p: var(--p_md) !important}
+}
+```
+
+Properties in the exception pattern always let you reference the value via a CSS variable. By default, only a very limited set of properties (`c`, `bgc`, `p`, `m`, `bdrs`) is implemented this way.
+
+:::info
+In the source code, any property with `alwaysVar: 1` set in [props.ts](https://github.com/lism-css/lism-css/blob/main/packages/lism-css/config/defaults/props.ts) is output using this pattern.
+:::
 
 
 

@@ -29,9 +29,34 @@ Lism CSS はコンテナクエリをデフォルトで採用しています。
 ```
 
 **仕組み:**
-1. `-p_sm` クラスは `@container (min-width: 480px)` 内で `padding: var(--p_sm)` を適用
-2. `--p_sm` 変数で切り替え先の値を指定
-3. `overwriteBaseVar` 対応の Prop はベース変数（`--p`）も上書きされる
+- BPクラス `-{prop}_{bp}` は `@container (min-width: ...)` 内で発火し、`--{prop}_{bp}` 変数で切り替え先の値を指定
+- 出力形式はプロパティによって 2 パターン（基本 / 例外）
+
+**基本パターン** — BP 用変数を直接読む:
+
+```css
+.-d { display: var(--d) }
+@container (min-width: 480px) {
+  .-d_sm { display: var(--d_sm) }
+}
+@container (min-width: 800px) {
+  .-d_md { display: var(--d_md) }
+}
+```
+
+**例外パターン** — `alwaysVar` 対応の `c`, `bgc`, `p`, `m`, `bdrs` のみ。ベース変数 `--p` が常に現在適用中の値を指すように上書きされる（state 変数扱い）:
+
+```css
+.-p { padding: var(--p) }
+@container (min-width: 480px) {
+  .-p_sm { padding: var(--p); --p: var(--p_sm) !important }
+}
+@container (min-width: 800px) {
+  .-p_md { padding: var(--p); --p: var(--p_md) !important }
+}
+```
+
+ソースコードの [props.ts](https://raw.githubusercontent.com/lism-css/lism-css/main/packages/lism-css/config/defaults/props.ts) で `alwaysVar: 1` がセットされているプロパティがこのパターンで出力されます。
 
 ## Lism コンポーネントでの指定
 
