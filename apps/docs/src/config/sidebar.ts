@@ -144,16 +144,7 @@ const docsSidebar: SidebarSection[] = [
       '/docs/customize/',
     ],
   },
-  // コアコンポーネント カテゴリ
-  {
-    label: 'コアコンポーネント',
-    translate: { en: 'Core Components' },
-    dir: 'core-components',
-  },
-  {
-    label: 'Trait Class',
-    items: ['/docs/trait-class/is--container/', '/docs/trait-class/is--wrapper/', '/docs/trait-class/is--layer/', '/docs/trait-class/is--boxLink/'],
-  },
+
   {
     label: 'Layout Primitives',
     items: [
@@ -183,6 +174,16 @@ const docsSidebar: SidebarSection[] = [
   {
     label: 'Atomic Primitives',
     items: ['/docs/primitives/a--decorator/', '/docs/primitives/a--divider/', '/docs/primitives/a--icon/', '/docs/primitives/a--spacer/'],
+  },
+  {
+    label: 'Trait Class',
+    items: ['/docs/trait-class/is--container/', '/docs/trait-class/is--wrapper/', '/docs/trait-class/is--layer/', '/docs/trait-class/is--boxLink/'],
+  },
+  // コアコンポーネント カテゴリ
+  {
+    label: 'コアコンポーネント',
+    translate: { en: 'Core Components' },
+    dir: 'core-components',
   },
 ];
 
