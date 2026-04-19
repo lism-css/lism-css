@@ -56,6 +56,8 @@ Lism CSS はコンテナクエリをデフォルトで採用しています。
 }
 ```
 
+ソースコードの [props.ts](https://raw.githubusercontent.com/lism-css/lism-css/main/packages/lism-css/config/defaults/props.ts) で `alwaysVar: 1` がセットされているプロパティがこのパターンで出力されます。
+
 ## Lism コンポーネントでの指定
 
 配列形式またはオブジェクト形式でレスポンシブ値を指定します。
