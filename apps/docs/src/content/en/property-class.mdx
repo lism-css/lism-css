@@ -46,6 +46,28 @@ For particularly important CSS properties, breakpoint-specific classes are also 
 
 These are called **Property Classes** and are defined in the format `-{prop}(:{value})` and `-{prop}_{bp}`.
 
+<PreviewTitle>Here are some examples:</PreviewTitle>
+
+```css
+.-fz\:l { font-size: var(--fz--l) }
+.-fz\:xl { font-size: var(--fz--xl) }
+.-ta\:center { text-align: center }
+.-d\:none { display: none }
+.-p\:20 { padding: var(--p--20) }
+
+.-d{display:var(--d)}
+.-p,[class*="-p:"]{padding:var(--p)}
+@container (min-width: 480px) {
+  .-d_sm{display:var(--d_sm)}
+  .-p_sm{padding:var(--p);--p:var(--p_sm)!important}
+}
+@container (min-width: 800px) {
+  .-d_md{display:var(--d_md)}
+  .-p_md{padding:var(--p);--p:var(--p_md)!important}
+}
+```
+
+
 This page lists all available Property Classes.
 
 

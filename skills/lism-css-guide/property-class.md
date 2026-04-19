@@ -384,8 +384,22 @@ Property Class の値名は基本的に CSS の実値と同じですが、以下
 
 ### `alwaysVar` タイプ
 
-`fz`, `p`, `px`, `py`, `m`, `mx`, `my`, `g`, `c`, `bgc`, `bdrs`, `bxsh` など。  
-プリセット値クラス（`-p:20`）でも常に CSS 変数（`--p`）経由で値が適用されます。これにより、子要素や疑似要素から `var(--p)` で親の値を参照できます。
+`c`, `bgc`, `p`, `m`, `bdrs` の 5 つ。
+
+例えば`-p`の場合、プリセット値クラス（`-p:20`）でも常に CSS 変数（`--p`）経由で値が適用されます。  
+さらに BP クラスでも `padding:var(--p);--p:var(--p_sm) !important;` の形で出力されるため、`--p` は常に現在適用中の値を指します。
+
+これにより、子要素や疑似要素から `var(--p)` で親の値を参照できます。
+
+**CSS 出力例:**
+
+```css
+.-p, [class*="-p:"] { padding: var(--p) }
+.-p\:20 { --p: var(--s20) }
+@container (min-width: 480px) {
+  .-p_sm { padding: var(--p); --p: var(--p_sm) !important }
+}
+```
 
 
 ## Property Class の検索・一括修正
