@@ -29,9 +29,9 @@ Lism CSS はコンテナクエリをデフォルトで採用しています。
 ```
 
 **仕組み:**
-1. `-p_sm` クラスは `@container (min-width: 480px)` 内で `padding: var(--p_sm)` を適用
+1. `-p_sm` クラスは `@container (min-width: 480px)` 内で `padding: var(--p)` を適用
 2. `--p_sm` 変数で切り替え先の値を指定
-3. `overwriteBaseVar` 対応の Prop はベース変数（`--p`）も上書きされる
+3. `alwaysVar` 対応の Prop（state 変数）はベース変数（`--p`）も `--p_sm` の値で上書きされる
 
 ## Lism コンポーネントでの指定
 

@@ -31,7 +31,6 @@ interface PropConfig {
   isVar?: number;
   bp?: 0 | 1;
   alwaysVar?: number;
-  overwriteBaseVar?: number;
   important?: number;
   exUtility?: Record<string, unknown>;
   customVar?: string;

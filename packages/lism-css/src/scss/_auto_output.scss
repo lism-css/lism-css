@@ -6,15 +6,15 @@
 @use './query' as query;
 @use './setting' as setting;
 
-/* 
+/*
 base_type:
 	0 →　なし（ユーティリティクラス以外は普通のインラインスタイルのみ）
 	1 →　.-d{display: var(--d)} 　(メリット：importantなしでbp対応できる)
-	2 → .-p, [class*='-p\:'] {padding: var(--p);} の形式で、BPクラス含めて全て変数にセットするもの。
-	    常に変数で管理されるようになるので、他の処理と絡ませることがしやすい。
-	    デメリット: *= は処理負荷が高い。また、途中のBPから使えるようにするにはCSS記述増える）
-
-	3 → BPクラスには変数使わないが、文字数省略のため baseのProperty Classだけ変数化して *= セレクタ使う
+	2 → alwaysVar 対象。 .-p, [class*='-p\:'] {padding: var(--p);} の形式で、
+	    ユーティリティクラスは --p をセットする形になる（state 変数として扱う）。
+	    BPクラスも .-p_$bp { padding: var(--p); --p: var(--p_$bp) !important; } を出力し、
+	    --p が常に現在値を参照できるようになる。
+	    デメリット: *= は処理負荷が高い。
 */
 
 // マップから値を取得し、nullの場合はデフォルト値を返す
@@ -218,7 +218,7 @@ $bp_outputs: (
       $prop_data: map.get(setting.$props, $key);
       $prop_name: map.get($prop_data, prop);
       $isVar: map_get_with_default($prop_data, isVar, 0);
-      $overwriteBaseVar: map_get_with_default($prop_data, overwriteBaseVar, 0);
+      $alwaysVar: map_get_with_default($prop_data, alwaysVar, 0);
       $important: map_get_with_default($prop_data, important, setting.$default_important);
 
       @if $isVar == 1 {
@@ -226,11 +226,12 @@ $bp_outputs: (
       }
 
       .-#{$key}_#{$bp} {
-        #{$prop_name}: var(--#{$key}_#{$bp}) #{get_important_str($important)};
-
-        // 常に --prop でそのBPの値を取得できるように
-        @if $overwriteBaseVar == 1 {
+        @if $alwaysVar == 1 {
+          // state 変数扱い: --prop を単一情報源にし、--prop を上書きして property は var(--prop) を読む
+          #{$prop_name}: var(--#{$key}) #{get_important_str($important)};
           --#{$key}: var(--#{$key}_#{$bp}) !important;
+        } @else {
+          #{$prop_name}: var(--#{$key}_#{$bp}) #{get_important_str($important)};
         }
       }
     }
