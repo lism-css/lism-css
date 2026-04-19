@@ -1,8 +1,11 @@
 .has--snap {
-  scroll-snap-type: var(--snapType, both mandatory);
+  --snapType: both mandatory;
+  --snapAlign: start;
+  --snapStop: normal;
+  scroll-snap-type: var(--snapType);
 
   & > * {
-    scroll-snap-align: var(--snapAlign, start);
-    scroll-snap-stop: var(--snapStop, normal);
+    scroll-snap-align: var(--snapAlign);
+    scroll-snap-stop: var(--snapStop);
   }
 }
