@@ -15,7 +15,7 @@ The props specific to Lism CSS that `<Lism>`-family components accept are called
 {/* |Type|Description|
 |---|---|
 |**Common Props**|Basic shared properties|
-|**Trait Props**|Props for outputting classes classified as [Trait Primitives](/en/docs/css-methodology//#trait-primitives)|
+|**Trait Props**|Props for outputting classes classified as [Trait Class](/en/docs/trait-class/)|
 |**CSS Props**|Props for outputting classes classified as [Property Class](/en/docs/property-class/)| */}
 
 ## `as`
@@ -129,7 +129,7 @@ Some `layout` / `atomic` values enable additional dedicated processing.
 
 ## Trait Props
 
-Props corresponding to Trait Primitives classes (`is--*`).
+Props corresponding to Trait Classes (`is--*` / `has--*`).
 
 
 | Prop | Output class | Purpose |
@@ -141,12 +141,15 @@ Props corresponding to Trait Primitives classes (`is--*`).
 | `isContainer` | `is--container` | Container query target |
 | `isSide` | `is--side` | Side element |
 | `isSkipFlow` | `is--skipFlow` | Skip Flow spacing |
+| `hasTransition` | `has--transition` | Sets `transition` properties via CSS variables |
+| `hasGutter` | `has--gutter` | Reserves a unified horizontal gutter (`--gutter-size`) |
+| `hasSnap` | `has--snap` | Sets `scroll-snap-*` properties via CSS variables |
 
 <Spacer h="20" />
 
-For an overview of [Primitives classes](/en/docs/primitives/), see the following.
+For an overview of [Trait Classes](/en/docs/trait-class/), see the following.
 
-<DocsLink path="/docs/primitives/" />
+<DocsLink path="/docs/trait-class/" />
 
 
 ## CSS Props
