@@ -38,29 +38,29 @@ With [skills.sh](https://skills.sh), you can easily fetch the skill using the fo
 </Preview>
 
 
-### Via @lism-css/cli
+### Via lism-cli
 
-You can also fetch the same skill with `@lism-css/cli`'s `lism skill add`. It only supports installing into the project directory, but offers the `skill check` command to compare the bundled skill with your local files.
+You can also fetch the same skill with `lism-cli`'s `lism skill add`. It only supports installing into the project directory, but offers the `skill check` command to compare the bundled skill with your local files.
 
 <Preview>
   <PreviewCode slot="tab" label="npm">
   ```bash frame="none"
-  npx @lism-css/cli skill add
+  npx lism-cli skill add
   ```
   </PreviewCode>
   <PreviewCode slot="tab" label="pnpm">
   ```bash frame="none"
-  pnpm dlx @lism-css/cli skill add
+  pnpm dlx lism-cli skill add
   ```
   </PreviewCode>
   <PreviewCode slot="tab" label="yarn">
   ```bash frame="none"
-  yarn dlx @lism-css/cli skill add
+  yarn dlx lism-cli skill add
   ```
   </PreviewCode>
   <PreviewCode slot="tab" label="bun">
   ```bash frame="none"
-  bunx @lism-css/cli skill add
+  bunx lism-cli skill add
   ```
   </PreviewCode>
 </Preview>
@@ -69,13 +69,13 @@ In interactive mode, the CLI detects project-root markers (`.claude/`, `.cursor/
 
 ```bash frame="none"
 # Single tool
-npx @lism-css/cli skill add --claude
+npx lism-cli skill add --claude
 
 # Multiple tools
-npx @lism-css/cli skill add --claude --cursor
+npx lism-cli skill add --claude --cursor
 
 # All tools
-npx @lism-css/cli skill add --all
+npx lism-cli skill add --all
 ```
 
 #### Destinations
@@ -98,10 +98,10 @@ You can diff your local files against the bundled skill and force-update as need
 
 ```bash frame="none"
 # Diff the bundled skill against local files (shows changed / added / removed summary)
-npx @lism-css/cli skill check
+npx lism-cli skill check
 
 # Overwrite with the latest version
-npx @lism-css/cli skill update --claude
+npx lism-cli skill update --claude
 ```
 
 `skill check` compares each installed file with the bundled one by sha256, then lists the changed / added / removed files. For upstream changes, see the [GitHub repository](https://github.com/lism-css/lism-css/tree/main/skills/lism-css-guide) directly.

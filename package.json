@@ -32,7 +32,7 @@
     "publish:core": "pnpm run build:core && pnpm --filter lism-css publish",
     "publish:ui": "pnpm run build:ui && pnpm --filter @lism-css/ui publish --access public",
     "publish:mcp": "pnpm run build:mcp && pnpm --filter @lism-css/mcp publish --access public",
-    "publish:cli": "pnpm run build:cli && pnpm --filter @lism-css/cli publish --access public && pnpm --filter create-lism publish",
+    "publish:cli": "pnpm run build:cli && pnpm --filter lism-cli publish && pnpm --filter create-lism publish",
     "sync:cdn-versions": "node scripts/sync-cdn-versions.mjs",
     "prepare": "husky"
   },

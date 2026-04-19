@@ -320,15 +320,15 @@ HTML の `details/summary` 要素をラップしたコンポーネント。Accor
 
 ```bash
 # 初期設定（framework、出力先ディレクトリを対話的に設定）
-npx @lism-css/cli ui init
+npx lism-cli ui init
 
 # コンポーネントを追加
-npx @lism-css/cli ui add Button Modal
-npx @lism-css/cli ui add NavMenu
-npx @lism-css/cli ui add --all        # 全コンポーネントを追加
+npx lism-cli ui add Button Modal
+npx lism-cli ui add NavMenu
+npx lism-cli ui add --all        # 全コンポーネントを追加
 
 # 利用可能なコンポーネント一覧を表示
-npx @lism-css/cli ui list
+npx lism-cli ui list
 ```
 
 `ui init` で生成される `lism.config.js` の `cli` セクション:
