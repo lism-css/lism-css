@@ -2,7 +2,7 @@
  * isVar: 1 → クラス出力はせずstyle属性での変数出力のみ (--bdw, --keycolor など)
  * bp: 0 → Prop-valユーティリティクラス化されなければ、style属性で出力するだけ。
  * bp: 1 → .-prop と --prop の セットがベースにあり、.-prop_bp と .--prop_bp で ブレイクポイント指定できる。
- *       .-prop{propaty:var(--prop)} が基本で、ユーティリティクラスは .-prop:val{propaty:value} となる。
+ *       .-prop{property:var(--prop)} が基本で、ユーティリティクラスは .-prop:val{property:value} となる。
  *
  * ↓コンポーネント処理で使用される
  * tokenClass: 1 → 対応するトークン値がそのまま全てユーティリティクラス化されるもの。
@@ -10,9 +10,9 @@
  * shorthands: → コンポーネント側で短く書くための設定
  *
  * ↓SCSS出力で使用される
- * alwaysVar: 1 → state変数扱い。 .-prop,[class*=-prop:] {propaty:var(--prop)} の base 出力となり、
+ * alwaysVar: 1 → state変数扱い。 .-prop,[class*=-prop:] {property:var(--prop)} の base 出力となり、
  *   ユーティリティクラスは --prop をセットする形になる。
- *   加えて BPクラスも .-prop_$bp { propaty: var(--prop); --prop: var(--prop_$bp) !important; } を出力し、
+ *   加えて BPクラスも .-prop_$bp { property: var(--prop); --prop: var(--prop_$bp) !important; } を出力し、
  *   常に --prop が当該要素の現在値になるよう上書きされる（consumer が --prop を参照できる）。
  * important: 1 → !important を付けて最終的に出力する
  */
