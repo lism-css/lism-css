@@ -34,22 +34,22 @@ Settings（トークン定義）
 ```
 
 
-## プレフィックスとクラス分類
+## クラス分類とプレフィックス
 
 [詳細](https://lism-css.com/docs/naming/)
 
-クラス名のプレフィックスによって、役割とレイヤーの所属が決まります。
+Lism CSSで定義されるクラスは、その役割とレイヤーの所属が決まっており、その分類によってプレフィックスが定められています。
 
-| プレフィックス | レイヤー | 役割 | 例 |
-|--------------|---------|------|-----|
-| `.set--` | `lism-base` | ベーススタイル上書き・変数提供 | `.set--plain`, `.set--hov`, `.set--shadow` |
-| `.l--` | `lism-primitive.layout` | Layout Primitive | `.l--grid`, `.l--flex`, `.l--stack` |
-| `.a--` | `lism-primitive.atomic` | Atomic Primitive | `.a--icon`, `.a--divider` |
-| `.c--` | `lism-component` | Component Class（BEM 構造を持つ UI 部品） | `.c--button`, `.c--accordion` |
-| `.is--` | `lism-trait` | Trait（役割宣言 — 〜である） | `.is--container`, `.is--wrapper`, `.is--layer`, `.is--boxLink` |
-| `.has--` | `lism-trait` | Trait（機能付与 — 〜を持つ） | `.has--transition`, `.has--gutter`, `.has--snap` |
-| `.u--` | `lism-utility` | 用途が明確な装飾系ユーティリティ | `.u--cbox`, `.u--trim`, `.u--collapseGrid` |
-| `.-` | レイヤー外 | 単一プロパティ制御（Property Class） | `.-fz:l`, `.-p:20`, `.-d:none` |
+| 分類 | 役割 | プレフィックス | 例 |
+|---|---|---|---|
+| Set Class | ベーススタイル上書き・変数提供 | `set--` | `.set--plain`, `.set--hov`, `.set--shadow` |
+| Layout Primitive | レイアウトの構成単位となる Primitive | `l--` | `.l--grid`, `.l--flex`, `.l--stack` |
+| Atomic Primitive | レイアウトの最小単位となる Primitive | `a--` | `.a--icon`, `.a--divider` |
+| Component Class | BEM 構造を持つ UI 部品 | `c--` | `.c--button`, `.c--accordion` |
+| `is--` Trait | 要素に役割（〜である）を宣言 | `is--` | `.is--container`, `.is--wrapper`, `.is--layer`, `.is--boxLink` |
+| `has--` Trait | 要素に機能（〜を持つ）を付与 | `has--` | `.has--transition`, `.has--gutter`, `.has--snap` |
+| Utility Class | 用途が明確な装飾系ユーティリティ | `u--` | `.u--cbox`, `.u--trim`, `.u--collapseGrid` |
+| Property Class | 単一プロパティの制御 | `-` | `.-fz:l`, `.-p:20`, `.-d:none` |
 
 **併用ルール:**
 - `.l--` と `.c--` は併用OK（例: `<div class="l--flex c--nav">`）
