@@ -41,7 +41,7 @@ Lism CSSを利用するための手順を解説します。
   </PreviewCode>
 </Preview>
 
-`@lism-css/cli` の `lism create` と等価です。
+`lism-cli` の `lism create` と等価です。
 
 
 ### テンプレートを指定して実行する
@@ -162,17 +162,17 @@ import { Accordion, Tabs, Button } from '@lism-css/ui/astro';
 
 ### CLI でプロジェクトにコピーする
 
-`@lism-css/cli` の `lism ui add` を使うと、UIコンポーネントのソースコードを自分のプロジェクトにコピーし、自由にカスタマイズできます。コンポーネント名は `import` するときと同じ PascalCase で指定します。
+`lism-cli` の `lism ui add` を使うと、UIコンポーネントのソースコードを自分のプロジェクトにコピーし、自由にカスタマイズできます。コンポーネント名は `import` するときと同じ PascalCase で指定します。
 
 ```bash frame="none"
 # コンポーネントを追加（初回は対話形式でセットアップ）
-npx @lism-css/cli ui add Accordion
+npx lism-cli ui add Accordion
 
 # 複数コンポーネントをまとめて追加
-npx @lism-css/cli ui add Accordion Modal Tabs NavMenu
+npx lism-cli ui add Accordion Modal Tabs NavMenu
 
 # 全コンポーネントを追加
-npx @lism-css/cli ui add --all
+npx lism-cli ui add --all
 ```
 
 名前は大文字小文字・ハイフン・アンダースコアを無視して解決するため、`NavMenu` / `navmenu` / `nav-menu` / `nav_menu` のいずれでも同じコンポーネントに解決されます。

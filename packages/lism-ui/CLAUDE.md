@@ -36,8 +36,8 @@ pnpm gen:registry  # registry-index.json を再生成
 | `src/components/astro.ts` | Astro エクスポート一覧 |
 | `src/helper/` | ユーティリティ関数 |
 | `src/style.scss` | スタイルエントリポイント |
-| `scripts/generate-registry-index.ts` | `@lism-css/cli` が参照するカタログ JSON を生成するスクリプト |
-| `registry-index.json` | `@lism-css/cli` の `lism ui list` / `--all` が giget 経由で fetch するカタログ（build 時に自動再生成・commit 済み） |
+| `scripts/generate-registry-index.ts` | `lism-cli` が参照するカタログ JSON を生成するスクリプト |
+| `registry-index.json` | `lism-cli` の `lism ui list` / `--all` が giget 経由で fetch するカタログ（build 時に自動再生成・commit 済み） |
 
 
 ## コンポーネント構造

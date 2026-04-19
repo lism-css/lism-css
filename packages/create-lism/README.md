@@ -2,7 +2,7 @@
 
 [Lism CSS](https://lism-css.com) のスターターテンプレートから新規プロジェクトを生成する CLI ラッパーです。`pnpm create lism` / `npm create lism@latest` から呼び出せます。
 
-内部ロジックは [`@lism-css/cli`](https://www.npmjs.com/package/@lism-css/cli) の `lism create` と共通です（バンドル済み）。
+内部ロジックは [`lism-cli`](https://www.npmjs.com/package/lism-cli) の `lism create` と共通です（バンドル済み）。
 
 ## 使い方
 

@@ -1,6 +1,6 @@
-# @lism-css/cli
+# lism-cli
 
-[Lism CSS](https://lism-css.com) / [Lism UI](https://lism-css.com) のための CLI ツール。`lism` コマンドで新規プロジェクト生成・UI コンポーネント追加・AI スキル配置を行います。
+[Lism CSS](https://lism-css.com) / [Lism UI](https://lism-css.com/ui) のための CLI ツール。`lism` コマンドで新規プロジェクト生成・UI コンポーネント追加・AI スキル配置を行います。
 
 ## 前提条件
 
@@ -20,10 +20,10 @@ lism skill { add | check | update }           # AI エージェント向け SKIL
 
 ```bash
 # 対話モード
-pnpm dlx @lism-css/cli create
+pnpm dlx lism-cli create
 
 # テンプレート名・出力先を指定
-pnpm dlx @lism-css/cli create --template astro-minimal ./my-app
+pnpm dlx lism-cli create --template astro-minimal ./my-app
 ```
 
 同じ動作は `pnpm create lism` / `npm create lism@latest` でも呼び出せます（`create-lism` パッケージ経由）。
@@ -32,17 +32,17 @@ pnpm dlx @lism-css/cli create --template astro-minimal ./my-app
 
 ```bash
 # 単一 / 複数
-pnpm dlx @lism-css/cli ui add accordion
-pnpm dlx @lism-css/cli ui add accordion modal tabs
+pnpm dlx lism-cli ui add accordion
+pnpm dlx lism-cli ui add accordion modal tabs
 
 # 全コンポーネント
-pnpm dlx @lism-css/cli ui add --all
+pnpm dlx lism-cli ui add --all
 
 # 一覧
-pnpm dlx @lism-css/cli ui list
+pnpm dlx lism-cli ui list
 
 # 特定の ref（ブランチ / タグ / コミット）から取得
-pnpm dlx @lism-css/cli ui add accordion --ref dev
+pnpm dlx lism-cli ui add accordion --ref dev
 ```
 
 コンポーネントは [`packages/lism-ui/src/components`](https://github.com/lism-css/lism-css/tree/main/packages/lism-ui/src/components) から [giget](https://github.com/unjs/giget) 経由で直接取得されます。`lism-ui` を更新するだけで CLI 側も自動で追従します。
@@ -64,19 +64,19 @@ pnpm dlx @lism-css/cli ui add accordion --ref dev
 
 ```bash
 # 対話モード（使用中のツールを自動検出）
-pnpm dlx @lism-css/cli skill add
+pnpm dlx lism-cli skill add
 
 # ツールを明示指定
-pnpm dlx @lism-css/cli skill add --claude --cursor
+pnpm dlx lism-cli skill add --claude --cursor
 
 # 全ツール
-pnpm dlx @lism-css/cli skill add --all
+pnpm dlx lism-cli skill add --all
 
 # 同梱スキルとローカルのファイル差分をチェック（変更 / 追加 / 削除のサマリ表示）
-pnpm dlx @lism-css/cli skill check
+pnpm dlx lism-cli skill check
 
 # 上書き更新
-pnpm dlx @lism-css/cli skill update --claude
+pnpm dlx lism-cli skill update --claude
 ```
 
 配置先の対応表：
@@ -115,8 +115,8 @@ export default {
 npm / pnpm の Safe Supply Chain 機能により、公開から間もないパッケージがブロックされる場合があります。
 
 ```bash
-npm exec --safe-chain-skip-minimum-package-age @lism-css/cli create
-pnpm --safe-chain-skip-minimum-package-age dlx @lism-css/cli create
+npm exec --safe-chain-skip-minimum-package-age lism-cli create
+pnpm --safe-chain-skip-minimum-package-age dlx lism-cli create
 ```
 
 ## License

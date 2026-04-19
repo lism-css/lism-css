@@ -8,8 +8,8 @@
 
 | パッケージ | bin | 役割 |
 |---|---|---|
-| `@lism-css/cli` | `lism` | 本体（`create` / `ui` / `skill`） |
-| `create-lism` | `create-lism` | `pnpm create lism` 用ラッパー。`@lism-css/cli` を **bundle で内包**（runtime 依存ナシ） |
+| `lism-cli` | `lism` | 本体（`create` / `ui` / `skill`） |
+| `create-lism` | `create-lism` | `pnpm create lism` 用ラッパー。`lism-cli` を **bundle で内包**（runtime 依存ナシ） |
 
 配信元はすべて giget で `github:lism-css/lism-css/...` から直 fetch（旧 HTTP Registry / `cli.lism-css.com` は廃止）。
 
@@ -31,10 +31,10 @@
 
 ```bash
 nr build:cli    # cli → create-lism の順（^build 依存で順序保証）
-nr publish:cli  # build → @lism-css/cli publish → create-lism publish
+nr publish:cli  # build → lism-cli publish → create-lism publish
 ```
 
-- `@lism-css/cli` と `create-lism` は **同じバージョンで一緒に** publish する
+- `lism-cli` と `create-lism` は **同じバージョンで一緒に** publish する
 - `lism create` で生成されるプロジェクトの `lism-css: workspace:*` は tsup の `define` で埋め込んだ `__LISM_CSS_VERSION__`（`packages/lism-css/package.json` の version）に置換される。**lism-css リリース後は CLI も rebuild & publish しないと新規プロジェクトが古い lism-css を引く**
 - `packages/lism-ui/registry-index.json` は **commit 対象**。コンポーネント増減時は `pnpm --filter @lism-css/ui build` で再生成して commit する
 - 検証目的の beta publish でも `DEFAULT_*_REF` を PR ブランチに固定しないこと（壊れる）。検証時は CLI 側の `--ref` フラグで都度指定する

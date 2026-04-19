@@ -41,7 +41,7 @@ The fastest way to start from scratch is using `create lism`. The template and o
   </PreviewCode>
 </Preview>
 
-This is equivalent to `lism create` from `@lism-css/cli`.
+This is equivalent to `lism create` from `lism-cli`.
 
 
 ### Specify a template
@@ -162,17 +162,17 @@ import { Accordion, Tabs, Button } from '@lism-css/ui/astro';
 
 ### Copy to your project with the CLI
 
-Using `@lism-css/cli`'s `lism ui add`, you can copy UI component source code directly into your project and customize it freely. Component names are specified in PascalCase — the same form you use when importing.
+Using `lism-cli`'s `lism ui add`, you can copy UI component source code directly into your project and customize it freely. Component names are specified in PascalCase — the same form you use when importing.
 
 ```bash frame="none"
 # Add a component (interactive setup on first run)
-npx @lism-css/cli ui add Accordion
+npx lism-cli ui add Accordion
 
 # Add multiple components at once
-npx @lism-css/cli ui add Accordion Modal Tabs NavMenu
+npx lism-cli ui add Accordion Modal Tabs NavMenu
 
 # Add all components
-npx @lism-css/cli ui add --all
+npx lism-cli ui add --all
 ```
 
 Case, hyphens, and underscores are ignored when resolving names, so `NavMenu` / `navmenu` / `nav-menu` / `nav_menu` all resolve to the same component.

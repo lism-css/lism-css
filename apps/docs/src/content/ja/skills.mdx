@@ -38,29 +38,29 @@ GitHub: [lism-css/skills/lism-css-guide/](https://github.com/lism-css/lism-css/t
 </Preview>
 
 
-### @lism-css/cli 経由
+### lism-cli 経由
 
-`@lism-css/cli` の `lism skill add` からも同じスキルを取得できます。プロジェクト直下への配置のみ対応していますが、`skill check` コマンドで同梱スキルとローカルの差分を確認できるのが特徴です。
+`lism-cli` の `lism skill add` からも同じスキルを取得できます。プロジェクト直下への配置のみ対応していますが、`skill check` コマンドで同梱スキルとローカルの差分を確認できるのが特徴です。
 
 <Preview>
   <PreviewCode slot="tab" label="npm">
   ```bash frame="none"
-  npx @lism-css/cli skill add
+  npx lism-cli skill add
   ```
   </PreviewCode>
   <PreviewCode slot="tab" label="pnpm">
   ```bash frame="none"
-  pnpm dlx @lism-css/cli skill add
+  pnpm dlx lism-cli skill add
   ```
   </PreviewCode>
   <PreviewCode slot="tab" label="yarn">
   ```bash frame="none"
-  yarn dlx @lism-css/cli skill add
+  yarn dlx lism-cli skill add
   ```
   </PreviewCode>
   <PreviewCode slot="tab" label="bun">
   ```bash frame="none"
-  bunx @lism-css/cli skill add
+  bunx lism-cli skill add
   ```
   </PreviewCode>
 </Preview>
@@ -69,13 +69,13 @@ GitHub: [lism-css/skills/lism-css-guide/](https://github.com/lism-css/lism-css/t
 
 ```bash frame="none"
 # 単一ツールに配置
-npx @lism-css/cli skill add --claude
+npx lism-cli skill add --claude
 
 # 複数ツールを同時に
-npx @lism-css/cli skill add --claude --cursor
+npx lism-cli skill add --claude --cursor
 
 # 全ツール
-npx @lism-css/cli skill add --all
+npx lism-cli skill add --all
 ```
 
 #### 配置先の対応表
@@ -98,10 +98,10 @@ npx @lism-css/cli skill add --all
 
 ```bash frame="none"
 # 同梱スキルとローカルのファイル差分をチェック（変更 / 追加 / 削除のサマリ表示）
-npx @lism-css/cli skill check
+npx lism-cli skill check
 
 # 最新版で上書き
-npx @lism-css/cli skill update --claude
+npx lism-cli skill update --claude
 ```
 
 `skill check` は配置済みの各ファイルを sha256 で比較し、変更 / 追加 / 削除されたファイルをまとめて表示します。最新情報が気になる場合は [GitHub リポジトリ](https://github.com/lism-css/lism-css/tree/main/skills/lism-css-guide) を直接チェックしてください。

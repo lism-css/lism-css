@@ -1,8 +1,8 @@
-import { runCreate, setLang, t } from '@lism-css/cli';
+import { runCreate, setLang, t } from 'lism-cli';
 
 /**
  * `pnpm create lism` / `npm create lism@latest` から呼ばれる薄いラッパー。
- * 最小限の引数パースのみ行い、本体は `@lism-css/cli` の `runCreate` に委譲する。
+ * 最小限の引数パースのみ行い、本体は `lism-cli` の `runCreate` に委譲する。
  */
 async function main(): Promise<void> {
   const args = process.argv.slice(2);
