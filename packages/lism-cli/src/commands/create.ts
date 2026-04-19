@@ -66,12 +66,12 @@ export async function runCreate({ template, targetDir, force = false }: RunCreat
   rewriteWorkspaceDeps(outDir);
 
   logger.success(t('create.created', { dir: outDir }));
-  logger.log('');
-  logger.log(t('create.nextSteps'));
+  logger.heading(t('create.nextSteps'));
   const rel = path.relative(process.cwd(), outDir) || '.';
   logger.log(`  cd ${rel}`);
   logger.log('  npm install   # or pnpm install / yarn');
   logger.log('  npm run dev');
+  logger.log('');
 }
 
 /** commander から呼ぶアクション */
