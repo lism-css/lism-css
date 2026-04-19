@@ -92,7 +92,7 @@ This section explains the design philosophy behind the core class groups in Lism
 
 ### Set Class
 
-**Set Classes** are utility classes defined within the `@lism-base` layer. They are used to override base styles or redefine tokens.
+**Set Classes** are utility classes defined within the `@lism-base` layer. They are used for HTML element base styling or for setting variables.
 
 | Category | Format | Example |
 |---|---|---|
@@ -110,31 +110,6 @@ These are further categorized into several types:
 |Atomic Primitives<br /><small>The smallest layout unit primitives</small>|`.a--{name}`|`.a--divider`,<br />`.a--icon`|
 
 Primitive classes are standalone — they have no variations or child element classes. Only the `c--` Component Classes described next follow a BEM-like structure.
-
-### Trait Class
-
-**Trait Classes** declaratively attach a role or feature to an element.  
-They belong to the `@lism-trait` layer (placed *after* `@lism-component`), so user-declared traits take precedence over Component Classes.
-
-| Category | Format | Example |
-|---|---|---|
-|`is--` Trait<br /><small>Declares a role ("is a …") on an element</small>|`.is--{name}`|`.is--container`,<br />`.is--wrapper`,<br />`.is--layer`,<br />`.is--boxLink`|
-|`has--` Trait<br /><small>Attaches a feature ("has a …") to an element</small>|`.has--{name}`|`.has--transition`,<br />`.has--gutter`,<br />`.has--snap`|
-
-See the [naming guide](/en/docs/naming/) for the detailed decision criteria and usage guidelines.
-
-#### Combination rules between Primitives / Traits
-
-| Combination | Allowed | Notes |
-|---|---|---|
-| `l--` × `l--` | NG | Same category cannot be combined |
-| `a--` × `a--` | NG | Same category cannot be combined |
-| `is--` × `is--` | OK | Multiple Traits can be combined |
-| `has--` × `has--` | OK | Multiple Traits can be combined |
-| `is--` × `has--` | OK | |
-| `is--`/`has--` × `l--`/`a--` | OK | |
-| `l--` × `a--` | Discouraged | Not intended to coexist |
-
 
 ### Component Class
 
@@ -169,6 +144,31 @@ Combining Blocks (`.c--xxx.c--yyy`) is generally NG, but the following combinati
 
 - Block with its own Modifier: `.c--xxx.c--xxx--variant`
 - Block with another Block's Element: `.c--xxx.c--yyy_elem`
+
+
+### Trait Class
+
+**Trait Classes** declare a role on an element or attach a feature to it.  
+They belong to the `@lism-trait` layer (placed *after* `@lism-component`), so user-declared traits take precedence over Component Classes.
+
+| Category | Format | Example |
+|---|---|---|
+|`is--` Trait<br /><small>Declares a role ("is a …") on an element</small>|`.is--{name}`|`.is--container`,<br />`.is--wrapper`,<br />`.is--layer`,<br />`.is--boxLink`|
+|`has--` Trait<br /><small>Attaches a feature ("has a …") to an element</small>|`.has--{name}`|`.has--transition`,<br />`.has--gutter`,<br />`.has--snap`|
+
+See the [naming guide](/en/docs/naming/) for the detailed decision criteria and usage guidelines.
+
+#### Combination rules between Primitives / Traits
+
+| Combination | Allowed | Notes |
+|---|---|---|
+| `l--` × `l--` | NG | Same category cannot be combined |
+| `a--` × `a--` | NG | Same category cannot be combined |
+| `is--` × `is--` | OK | Multiple Traits can be combined |
+| `has--` × `has--` | OK | Multiple Traits can be combined |
+| `is--` × `has--` | OK | |
+| `is--`/`has--` × `l--`/`a--` | OK | |
+| `l--` × `a--` | Discouraged | Not intended to coexist |
 
 
 
@@ -238,7 +238,7 @@ See the [Responsive styling guide](/en/docs/responsive/) for details.
 
 
 
-### Naming and placing custom classes
+## Naming and placing custom classes
 
 When you add your own classes that match one of Lism CSS's existing class categories (`set--`, `is--`, `has--`, `l--`, `a--`, `u--`, `-{prop}:{value}`), use the same prefix and add them to the corresponding definition layer.
 
@@ -276,7 +276,7 @@ Place these in `@layer lism-custom`.
 ```
 
 
-### Using data attributes for dynamic state
+## Using data attributes for dynamic state
 
 For state management that is dynamically toggled by JavaScript, use data attributes.
 
