@@ -33,13 +33,14 @@
       "BEM",
       "Property Class",
       "Primitive Class",
+      "Trait Class",
       "Component Class",
       "Set Class",
       "Utility Class",
       "省略",
       "Emmet"
     ],
-    "snippet": "CSSの階層構造を明確に定義。@layer lism-base → lism-primitive → lism-component → lism-custom → lism-utility の順。lism-primitive は trait/layout/atomic のサブレイヤーを持ち、lism-component は BEM 構造の c-- 用、lism-custom はユーザー独自プレフィックスのクラス用レイヤー。Primitive Class (.l--name, .a--name, .is--name 等)、Component Class (.c--name)、Property Class (.-prop:value)、Set Class (.set--name) の命名規則を説明。"
+    "snippet": "CSSの階層構造を明確に定義。@layer lism-base → lism-primitive → lism-trait → lism-component → lism-custom → lism-utility の順。Primitive Class (.l--name, .a--name)、Trait Class (.is--name, .has--name)、Component Class (.c--name)、Property Class (.-prop:value)、Set Class (.set--name) の命名規則を説明。"
   },
   {
     "sourcePath": "naming.mdx",
@@ -238,17 +239,17 @@
     "description": "ベーススタイルの上書きやトークン再定義に使用する set-- 形式のユーティリティクラスについて解説します。",
     "category": "guide",
     "headings": [],
-    "keywords": ["set", "set class", "set--plain", "set--shadow", "set--transition", "set--hov", "set--innerRs", "set--gutter"],
-    "snippet": "ベーススタイルの上書きやトークンの再定義、機能的なプロパティを初期セットするためのクラス (.set--{style})。set--plain, set--shadow, set--transition, set--hov, set--innerRs, set--gutter を解説。"
+    "keywords": ["set", "set class", "set--plain", "set--shadow", "set--hov", "set--innerRs"],
+    "snippet": "ベーススタイルの上書きやトークンの再定義、機能的なプロパティを初期セットするためのクラス (.set--{style})。set--plain, set--shadow, set--hov, set--innerRs を解説。"
   },
   {
     "sourcePath": "primitives.mdx",
     "title": "Primitive Class",
-    "description": "Lism CSS のプリミティブクラス（is--, l--, a--）の分類と使い方について解説します。",
+    "description": "Lism CSS のプリミティブクラス（l--, a--）の分類と使い方について解説します。",
     "category": "guide",
-    "headings": ["Trait Primitives", "Layout Primitives", "Atomic Primitives"],
-    "keywords": ["primitive", "プリミティブ", "trait", "layout", "レイアウト", "class", "BEM"],
-    "snippet": "レイアウトを組み立てる積み木として Primitive クラスを定義。.l--{name}, .a--{name}, .is--{name} 等の命名規則。Trait Primitives (is--container, is--wrapper, is--layer, is--boxLink) も解説。BEM 構造を持つ Component Class (.c--{name}) は別レイヤー（lism-component）に配置される。"
+    "headings": ["Layout Primitives", "Atomic Primitives"],
+    "keywords": ["primitive", "プリミティブ", "layout", "レイアウト", "class", "l--", "a--"],
+    "snippet": "レイアウトを組み立てる積み木として Primitive クラスを定義。.l--{name} (Layout Primitives) と .a--{name} (Atomic Primitives) の命名規則を説明。"
   },
   {
     "sourcePath": "base-styles.mdx",
@@ -265,6 +266,8 @@
     "description": "Lism CSS の各バージョンにおける変更履歴をまとめています。",
     "category": "guide",
     "headings": [
+      "`@lism-css/ui` v.0.14.0 (2026.04.17)",
+      "v.0.14.0 (2026.04.17)",
       "`@lism-css/ui` v.0.13.1 (2026.04.15)",
       "v.0.13.1 (2026.04.15)",
       "`@lism-css/ui` v.0.13.0 (2026.04.14)",
@@ -304,9 +307,9 @@
     "title": "-hov",
     "description": "hover時の挙動をコントロールする -hov プロパティクラスの使い方について解説します。",
     "category": "property-class",
-    "headings": ["基本的な使い方", "`.set--hov` と `-hov:to:xxx`"],
-    "keywords": ["hover", "ホバー", "hov", "インタラクション", "animation", "set--hov", "set--transition", "transition"],
-    "snippet": "ホバー関連のProp。-hov:{prop} クラスでホバーエフェクトを設定。set--transition との組み合わせでアニメーション実現。set--hov と -hov:to:xxx クラスで親要素ホバー時の子要素スタイル制御も可能。"
+    "headings": ["基本的な使い方", "`set--hov` と `-hov:to:xxx`"],
+    "keywords": ["hover", "ホバー", "hov", "インタラクション", "animation", "set--hov", "has--transition", "transition"],
+    "snippet": "ホバー関連のProp。-hov:{prop} クラスでホバーエフェクトを設定。has--transition との組み合わせでアニメーション実現。set--hov と -hov:to:xxx クラスで親要素ホバー時の子要素スタイル制御も可能。"
   },
   {
     "sourcePath": "property-class/max-sz.mdx",
@@ -331,7 +334,7 @@
     "title": "Lism Props",
     "description": "<Lism> 系コンポーネントが受け取る、Lism CSS 専用プロパティの一覧と使い方です。",
     "category": "core-components",
-    "headings": ["as", "className", "layout / atomic", "set / util", "Trait Props", "CSS Props", "exProps", "クラスの出力順"],
+    "headings": ["as", "className", "set / util", "layout / atomic", "Trait Props", "CSS Props", "exProps", "クラスの出力順"],
     "keywords": [
       "Lism Props",
       "props",
@@ -349,12 +352,15 @@
       "isLayer",
       "isBoxLink",
       "isContainer",
+      "hasTransition",
+      "hasGutter",
+      "hasSnap",
       "responsive",
       "レスポンシブ",
       "shorthand",
       "省略記法"
     ],
-    "snippet": "<Lism>系コンポーネントが受け取るLism CSS専用プロパティの解説。as で出力要素や外部コンポーネントを指定、className で c-- クラス（Component Class）や任意クラスを直接指定、layout / atomic で l-- / a-- クラス、set / util で set-- / u-- クラスを指定（'-' prefix で除外可）。isWrapper, isLayer, isBoxLink, isContainer などの Trait Props も提供。CSS Props (p, fz, c 等) は値の種類に応じて class / CSS変数 / style属性を自動で切り替え、配列・オブジェクト形式でレスポンシブ指定も可能。exProps で外部コンポーネント向け props を明示的に渡せる。生成される class 属性は className → a-- → l-- → is-- → set-- → u-- → - の順で出力される。"
+    "snippet": "<Lism>系コンポーネントが受け取るLism CSS専用プロパティの解説。as で出力要素や外部コンポーネントを指定、className で c-- クラス（Component Class）や任意クラスを直接指定、layout / atomic で l-- / a-- クラス、set / util で set-- / u-- クラスを指定（'-' prefix で除外可）。isWrapper, isLayer, isBoxLink, isContainer, hasTransition, hasGutter, hasSnap などの Trait Props も提供。CSS Props (p, fz, c 等) は値の種類に応じて class / CSS変数 / style属性を自動で切り替え、配列・オブジェクト形式でレスポンシブ指定も可能。exProps で外部コンポーネント向け props を明示的に渡せる。生成される class 属性は className → a-- → l-- → set-- → is-- / has-- → u-- → - の順で出力される。"
   },
   {
     "sourcePath": "core-components/Text.mdx",
@@ -601,7 +607,7 @@
     "snippet": "サイドバー + メインコンテンツの2カラムレイアウト。メイン側が可変幅。sideW, mainWで幅を制御。メディアクエリ・コンテナクエリに依存せず自動で切り替わる。"
   },
   {
-    "sourcePath": "primitives/is--container.mdx",
+    "sourcePath": "trait-class/is--container.mdx",
     "title": "Container / is--container",
     "description": "is--container は、container-type を宣言してコンテナクエリを有効にするためのクラスです。",
     "category": "primitives",
@@ -610,7 +616,7 @@
     "snippet": "コンテナクエリの基準要素。container-typeをセットし、子要素のレスポンシブ対応の基準となる。isContainerプロパティでどのコンポーネントからでも呼び出し可能。"
   },
   {
-    "sourcePath": "primitives/is--layer.mdx",
+    "sourcePath": "trait-class/is--layer.mdx",
     "title": "Layer / is--layer",
     "description": "is--layer は、absoluteで親要素の上に被せて配置するオーバーレイ用のクラスです。",
     "category": "primitives",
@@ -631,7 +637,7 @@
     "snippet": "親要素に対して絶対配置で重なるレイヤー要素。オーバーレイや背景装飾に使用。backdrop-filterの活用も解説。"
   },
   {
-    "sourcePath": "primitives/is--boxLink.mdx",
+    "sourcePath": "trait-class/is--boxLink.mdx",
     "title": "BoxLink / is--boxLink",
     "description": "is--boxLink は、ボックス全体をクリック可能にするクラスです。",
     "category": "primitives",
@@ -652,7 +658,7 @@
     "snippet": "ボックス全体をリンク領域にする。hrefを指定してaタグにする方法と、内部にis--coverLink（旧u--expandedLink）を配置する方法の2通りがある。"
   },
   {
-    "sourcePath": "primitives/is--wrapper.mdx",
+    "sourcePath": "trait-class/is--wrapper.mdx",
     "title": "Wrapper / is--wrapper",
     "description": "is--wrapper は、その直下のコンテンツ幅を一括制御できるクラスです。",
     "category": "primitives",
@@ -958,7 +964,7 @@
     "snippet": "u--trimは自身のmargin-blockを調整。u--trimChildrenは子要素全ての上下マージンを調整。img, figure, tableに対してはマージン調節を無効化。"
   },
   {
-    "sourcePath": "primitives/is--boxLink.mdx",
+    "sourcePath": "trait-class/is--boxLink.mdx",
     "title": "is--coverLink",
     "description": "クリック範囲を親要素全体に広げるためのクラス。is--boxLinkと併用。",
     "category": "primitives",
@@ -985,12 +991,12 @@
     "snippet": "box-shadowで子要素間に区切りボーダーを表示。p='0' ov='clip'で周囲のボーダーを非表示にでき、bd追加でカレンダー風の表現も可能。"
   },
   {
-    "sourcePath": "utility-class.mdx",
-    "title": "u--snap",
-    "description": "scroll-snap系プロパティをCSS変数で制御するユーティリティクラス。",
+    "sourcePath": "trait-class.mdx",
+    "title": "has--snap",
+    "description": "scroll-snap系プロパティをCSS変数で制御する Trait クラス。",
     "category": "guide",
-    "headings": ["u--snap"],
-    "keywords": ["u--snap", "スクロールスナップ", "scroll-snap", "カルーセル"],
+    "headings": ["has--snap"],
+    "keywords": ["has--snap", "スクロールスナップ", "scroll-snap", "カルーセル"],
     "snippet": "scroll-snap-type等のプロパティをCSS変数でセットできるようにするクラス。"
   },
   {
@@ -1030,12 +1036,12 @@
     "snippet": "hover/focus-within状態を空変数トリックで判定。var(--_isHov, 値)でhover時のみスタイル適用。親要素に付与して子要素のホバースタイルを制御可能。"
   },
   {
-    "sourcePath": "set-class.mdx",
-    "title": "set--transition",
-    "description": "CSS変数を用いてtransitionプロパティをセットするSetクラス。",
+    "sourcePath": "trait-class.mdx",
+    "title": "has--transition",
+    "description": "CSS変数を用いてtransitionプロパティをセットする Trait クラス。",
     "category": "guide",
-    "headings": ["set--transition"],
-    "keywords": ["set--transition", "トランジション", "アニメーション", "transition"],
+    "headings": ["has--transition"],
+    "keywords": ["has--transition", "トランジション", "アニメーション", "transition"],
     "snippet": "専用のCSS変数を用いてtransitionプロパティをセットするクラス。set--hovと組み合わせてスムーズなホバーアニメーションを実現。"
   },
   {
@@ -1048,12 +1054,12 @@
     "snippet": "親要素の --bdrs と --p から内側の角丸 --bdrs--inner を自動計算。子要素で -bdrs:inner を使って適用。レスポンシブ対応。"
   },
   {
-    "sourcePath": "set-class.mdx",
-    "title": "set--gutter",
-    "description": "コンテンツの左右に統一した余白をつけるSetクラス。",
+    "sourcePath": "trait-class.mdx",
+    "title": "has--gutter",
+    "description": "コンテンツの左右に統一した余白をつける Trait クラス。",
     "category": "guide",
-    "headings": ["set--gutter"],
-    "keywords": ["set--gutter", "ガター", "左右余白", "サイド余白", "padding", "--gutter-size"],
+    "headings": ["has--gutter"],
+    "keywords": ["has--gutter", "ガター", "左右余白", "サイド余白", "padding", "--gutter-size"],
     "snippet": "サイト全体で統一した左右余白を確保するクラス。--gutter-size変数（初期値 var(--s30)）で余白量を制御。"
   },
   {
@@ -1089,5 +1095,38 @@
     "headings": ["セットアップ", "アップデート", "ファイル構成"],
     "keywords": ["skills", "SKILL.md", "AIエージェント", "設計ルール", "Claude", "コーディング支援"],
     "snippet": "プロジェクトにSKILL.mdファイルを配置することでAIエージェントにLism CSSの設計ルール・Props・トークン・命名規則を伝えられる。npxコマンドで導入・アップデート可能。"
+  },
+  {
+    "sourcePath": "trait-class.mdx",
+    "title": "Trait Class",
+    "description": "役割宣言の is--* と機能付与の has--* からなる Trait Class について解説します。",
+    "category": "guide",
+    "headings": ["`is--*`（役割宣言）", "`has--*`（機能付与）", "has--transition", "has--gutter", "has--snap", "has--mask"],
+    "keywords": [
+      "trait",
+      "trait class",
+      "is--",
+      "has--",
+      "is--container",
+      "is--wrapper",
+      "is--layer",
+      "is--boxLink",
+      "has--transition",
+      "has--gutter",
+      "has--snap",
+      "has--mask",
+      "役割宣言",
+      "機能付与"
+    ],
+    "snippet": "Trait Class は要素に「役割」を宣言（is--*）したり「機能」を付与（has--*）するためのクラス群。@layer lism-trait に属する。is--container, is--wrapper, is--layer, is--boxLink, has--transition, has--gutter, has--snap, has--mask を提供。"
+  },
+  {
+    "sourcePath": "trait-class.mdx",
+    "title": "has--mask",
+    "description": "--maskImg 変数と組み合わせて、自身にマスクを適用する Trait クラス。",
+    "category": "guide",
+    "headings": ["has--mask"],
+    "keywords": ["has--mask", "マスク", "mask", "--maskImg", "--maskPos", "--maskSize", "mask-image"],
+    "snippet": "--maskImg変数にSVG等を指定して自身にマスクを適用するクラス。--maskPos, --maskSize, --maskRepeat 変数でマスクの表示をコントロール可能。"
   }
 ]
