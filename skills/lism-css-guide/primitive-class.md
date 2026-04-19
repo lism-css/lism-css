@@ -1,12 +1,13 @@
 # Primitive クラス
 
-Lism CSS では、レイアウトを組み立てる小さな積み木として **Primitive クラス**（`is--` / `l--` / `a--`）を提供します。これらはすべて `@layer lism-primitive` に属します（サブレイヤーは `trait` / `layout` / `atomic`）。
+Lism CSS では、レイアウトを組み立てる小さな積み木として **Primitive クラス**（`l--` / `a--`）を提供します。これらはすべて `@layer lism-primitive` に属します（サブレイヤーは `layout` / `atomic`）。
+
+`is--*` / `has--*` は `@layer lism-trait`（Primitive とは別レイヤー）に配置される **Trait クラス**です。[trait-class.md](./trait-class.md) を参照。
 
 
 ## TOC
 
 - [プレフィックス一覧](#プレフィックス一覧)
-- [Trait Primitive（`is--`）](#trait-primitiveis--)
 - [Layout Primitive（`l--`）](#layout-primitivel--)
 - [Atomic Primitive（`a--`）](#atomic-primitivea--)
 
@@ -18,33 +19,13 @@ Lism CSS では、レイアウトを組み立てる小さな積み木として *
 
 | プレフィックス | 種類 | サブレイヤー | 役割 |
 |--------------|------|------------|------|
-| `is--` | Trait Primitive | `lism-primitive.trait` | 要素に静的な構造的特性を付与する汎用クラス |
 | `l--` | Layout Primitive | `lism-primitive.layout` | レイアウトの構成単位となる Primitive |
 | `a--` | Atomic Primitive | `lism-primitive.atomic` | レイアウトの最小単位（アイコン・区切り線等） |
 
 **併用ルール:**
-- `is--` は他のすべての Primitive と併用可能（複数の `is--` 同士もOK）
 - 同カテゴリ内の併用は不可（例: `l--flex` と `l--grid` は同要素に付けない）
 - `a--` / `l--` には `variant` の BEM 展開は適用されない（BEM Modifier は `c--` 専用）
-
-
-## Trait Primitive（`is--`）
-
-[詳細](https://lism-css.com/docs/primitives/#trait-primitives)
-
-要素に**静的な構造的特性 (trait)** を付与するクラスです。他の Primitive / Component と自由に組み合わせられます。
-
-| クラス | 用途 |
-|--------|------|
-| `is--container` | コンテナクエリの基準要素を定義する（`container-type: inline-size`を付与する）。Lism のレスポンシブ機能の判定基準となるラッパーに付与する |
-| `is--wrapper` | 直下の子要素のコンテンツ幅を一括で制限する。`-contentSize:s` / `-contentSize:l` で事前定義したプリセットサイズを指定可能（デフォルト: `--sz--m`）。セクション・ヘッダー・フッター・記事コンテンツなどで、共通したコンテンツ幅を使用する |
-| `is--layer` | 親要素全体に被さる絶対配置レイヤー（`position: absolute; inset: 0;`）。背景画像・カラーオーバーレイ・フィルターレイヤー・コンテンツ等を重ねて表示する |
-| `is--boxLink` | ボックス全体をクリッカブルなリンク領域にする。自身を`a`タグにして利用するか、もしくは自身を`div`にして内部の`a`タグに`is--coverLink`を付与して使う |
-| `is--coverLink` | 親要素全体に被さるクリック領域を持つリンク（`::before` を `inset: 0` で広げる）。`is--boxLink` と併用する |
-| `is--skipFlow` | `l--flow` 直下で使用し、次の兄弟要素のフロー余白をゼロにする。`l--flow`の中にあるが`position:absolute`にしたい要素などに使用する |
-| `is--side` | `l--sideMain` 直下で使用し、サイド側の要素であることを示す |
-
-Lism コンポーネントでは `isContainer`, `isLayer` 等の Props として利用できます。（例: `<Lism isContainer>`)
+- `is--` / `has--` (Trait) とは自由に併用可能
 
 
 ## Layout Primitive（`l--`）

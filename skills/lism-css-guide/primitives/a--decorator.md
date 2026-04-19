@@ -40,4 +40,4 @@
 
 - [a--spacer](./a--spacer.md) — 要素間スペース
 - [a--divider](./a--divider.md) — 区切り線
-- [is--layer](./is--layer.md) — `position: absolute` のオーバーレイ
+- [is--layer](../trait-class/is--layer.md) — `position: absolute` のオーバーレイ

@@ -131,4 +131,4 @@
 ## 関連プリミティブ
 
 - [l--stack](./l--stack.md) — `gap` で余白を管理する縦積み（こちらは Flexbox）
-- [is--wrapper](./is--wrapper.md) — 記事コンテンツ幅の制限用ラッパー（`l--flow` とセットで使うことが多い）
+- [is--wrapper](../trait-class/is--wrapper.md) — 記事コンテンツ幅の制限用ラッパー（`l--flow` とセットで使うことが多い）

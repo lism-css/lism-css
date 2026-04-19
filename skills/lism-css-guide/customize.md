@@ -114,7 +114,7 @@ export default {
     // トークン値を追加
   },
   traits: {
-    // Trait Primitive 用の props を追加
+    // Trait（is--* / has--*）用の props を追加
   },
 };
 ```
