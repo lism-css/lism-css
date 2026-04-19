@@ -44,7 +44,30 @@ export const PropTable = ({data={}, ...props}) => {
 Lismでは、主要なCSSプロパティ群に対して、それらで頻繁に使用される値やトークンを手軽にセットできるようなユーティリティクラスを用意しています。  
 さらに、その中でも特に重要なCSSプロパティについてはブレイクポイント指定用クラスも用意しています。
 
-それらを [Property Class](/docs/css-methodology/#property-class) と呼んでおり、`-{prop}(:{value})`, `-{prop}_{bp}` という形式で定義しています。
+それらを **Property Class** と呼んでおり、`-{prop}(:{value})`, `-{prop}_{bp}` という形式で定義しています。
+
+{/* <PreviewTitle>例えば以下のようなものがあります。</PreviewTitle>
+
+```css
+.-fz\:l { font-size: var(--fz--l) }
+.-fz\:xl { font-size: var(--fz--xl) }
+.-ta\:center { text-align: center }
+.-p\:20 { padding: var(--p--20) }
+
+.-p {
+  padding: var(--p);
+}
+.-p,[class*="-p:"]{padding:var(--p)}
+@container (min-width: 480px) {
+  .-w_sm{width:var(--w_sm)}
+  .-p_sm{padding:var(--p_sm);--p:var(--p_sm)!important}
+}
+@container (min-width: 800px) {
+  .-w_md{width:var(--w_md)}
+  .-p_md{padding:var(--p_md);--p:var(--p_md)!important}
+}
+``` */}
+
 
 このページでは、その Property Classの一覧を紹介します。
 
@@ -620,10 +643,13 @@ export const LinkSPACE = () => <a href="/docs/tokens/spacing/"><code>SPACE</code
   </PreviewCode>
 </Preview>
 
-<Reference>
-borderに関する仕様は少し特殊になっています。詳しくは[borderページ](/docs/property-class/bd/)をご覧ください。
-</Reference>
 
+<Spacer h="10" />
+:::info
+borderに関する仕様は少し特殊になっていますので、詳しくは[borderページ](/docs/property-class/bd/)をご覧ください。
+:::
+
+<DocsLink path="/docs/property-class/bd/" />
 
 ## Background
 
@@ -647,7 +673,7 @@ borderに関する仕様は少し特殊になっています。詳しくは[bord
 
 
 
-## Other CSS
+## Other Properties
 
 |Shorthand|Prop|To Class|BP|
 |---|---|---|---|
@@ -699,3 +725,14 @@ borderに関する仕様は少し特殊になっています。詳しくは[bord
 
 {/* |`filter`|`fltr`|||
 |`backdrop-filter`|`bdfltr`||| */}
+
+
+## hover
+
+Lismでは、`:hover`時のスタイルは-hov:で始まるPropertyクラスで定義します。
+
+ただし、`-hov`系クラスは通常のPropertyクラスと比べて少し特殊な仕組みで動作します。
+
+詳しくは[hoverページ](/docs/property-class/hov/)をご覧ください。
+
+<DocsLink path="/docs/property-class/hov/" />

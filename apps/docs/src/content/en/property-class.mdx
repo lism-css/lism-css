@@ -44,7 +44,7 @@ export const PropTable = ({data={}, ...props}) => {
 Lism provides utility classes for the major CSS properties, making it easy to set frequently used values and tokens.
 For particularly important CSS properties, breakpoint-specific classes are also available.
 
-These are called [Property Classes](/en/docs/css-methodology/#property-class) and are defined in the format `-{prop}(:{value})` and `-{prop}_{bp}`.
+These are called **Property Classes** and are defined in the format `-{prop}(:{value})` and `-{prop}_{bp}`.
 
 This page lists all available Property Classes.
 
@@ -620,9 +620,13 @@ Here are some examples of positioning elements with `position: absolute`.
   </PreviewCode>
 </Preview>
 
-<Reference>
+
+<Spacer h="10" />
+:::info
 The border specification has some unique behavior. See the [border page](/en/docs/property-class/bd/) for details.
-</Reference>
+:::
+
+<DocsLink path="/docs/property-class/bd/" />
 
 
 ## Background
@@ -647,7 +651,7 @@ The border specification has some unique behavior. See the [border page](/en/doc
 
 
 
-## Other CSS
+## Other Properties
 
 |Shorthand|Prop|To Class|BP|
 |---|---|---|---|
@@ -699,3 +703,14 @@ The border specification has some unique behavior. See the [border page](/en/doc
 
 {/* |`filter`|`fltr`|||
 |`backdrop-filter`|`bdfltr`||| */}
+
+
+## hover
+
+In Lism, styles for the `:hover` state are defined with Property classes that start with `-hov:`.
+
+However, `-hov` classes work with a slightly different mechanism compared to regular Property classes.
+
+See the [hover page](/en/docs/property-class/hov/) for details.
+
+<DocsLink path="/docs/property-class/hov/" />

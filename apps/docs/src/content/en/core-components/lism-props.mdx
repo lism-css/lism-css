@@ -66,32 +66,6 @@ The old dedicated `lismClass` / `variant` slots have been removed. BEM modifier 
 ```
 
 
-## `layout` / `atomic`
-
-`layout` and `atomic` are props for specifying Layout Primitive classes (`l--*`) and Atomic Primitive classes (`a--*`), respectively.
-
-
-For example, specifying `layout='flow'` outputs the `.l--flow` class, and specifying `atomic='divider'` outputs the `.a--divider` class.
-
-<PreviewTitle>Example</PreviewTitle>
-```jsx 'layout="flow"' 'atomic="divider"' "l--flow" "a--divider"
-<Lism layout="flow">Lorem ipsum texts...</Lism>
-<Lism atomic="divider" />
-
-↓
-
-<div class="l--flow">Lorem ipsum texts...</div>
-<div class="a--divider"></div>
-```
-
-:::info
-Some `layout` / `atomic` values enable additional dedicated processing.
-
-- Example 1: `layout="sideMain"` accepts `sideW` / `mainW`
-- Example 2: `atomic="spacer"` accepts `w` / `h` as space tokens
-:::
-
-
 ## `set` / `util`
 
 `set` specifies [Set Class](/en/docs/set-class/) entries (`set--{value}`),  
@@ -127,9 +101,35 @@ Prefix a value with `-` to exclude that identifier. This is useful when you want
 ```
 
 
+## `layout` / `atomic`
+
+`layout` and `atomic` are props for specifying Layout Primitive classes (`l--*`) and Atomic Primitive classes (`a--*`), respectively.
+
+
+For example, specifying `layout='flow'` outputs the `.l--flow` class, and specifying `atomic='divider'` outputs the `.a--divider` class.
+
+<PreviewTitle>Example</PreviewTitle>
+```jsx 'layout="flow"' 'atomic="divider"' "l--flow" "a--divider"
+<Lism layout="flow">Lorem ipsum texts...</Lism>
+<Lism atomic="divider" />
+
+↓
+
+<div class="l--flow">Lorem ipsum texts...</div>
+<div class="a--divider"></div>
+```
+
+:::info
+Some `layout` / `atomic` values enable additional dedicated processing.
+
+- Example 1: `layout="sideMain"` accepts `sideW` / `mainW`
+- Example 2: `atomic="spacer"` accepts `w` / `h` as space tokens
+:::
+
+
 ## Trait Props
 
-A set of props corresponding to [Trait Primitives](/en/docs/css-methodology/) classes.
+Props corresponding to Trait Primitives classes (`is--*`).
 
 
 | Prop | Output class | Purpose |
@@ -142,23 +142,24 @@ A set of props corresponding to [Trait Primitives](/en/docs/css-methodology/) cl
 | `isSide` | `is--side` | Side element |
 | `isSkipFlow` | `is--skipFlow` | Skip Flow spacing |
 
-<Reference>
-[Learn about Trait Primitives classes and usage examples](/en/docs/css-methodology/)
-</Reference>
+<Spacer h="20" />
+
+For an overview of [Primitives classes](/en/docs/primitives/), see the following.
+
+<DocsLink path="/docs/primitives/" />
 
 
 ## CSS Props
 
-Major CSS properties can be specified using shorthand notation.
-For example, `font-size` can be written as `fz`, and `padding` as `p`.
+Props corresponding to [Property Class](/en/docs/property-class/) (`-{prop}:{value}`).
 
-<Reference>
-[See the full list of available Props](/en/docs/property-class/)
-</Reference>
+Use the same shortened CSS property names as the `{prop}` part.
+(e.g. `font-size` can be written as `fz`, and `padding` as `p`.)
+
 
 <Spacer h="10"/>
 
-The output format is determined by the value (`value`) specified via `prop={value}`:
+The output format is determined by the value specified via `prop={value}`:
 
 | Value | Output format | Example |
 |------|------|-----|
@@ -268,7 +269,6 @@ Using `className='-p:hoge'` also works, but passing it as a CSS Prop via `:` ens
 
 BP-supported properties can specify values per breakpoint (`sm`, `md`) using arrays or objects.
 
-[Learn more about responsive support](/en/docs/responsive)
 
 <Preview>
   <PreviewTitle>Example 1: array syntax (base → sm → md)</PreviewTitle>

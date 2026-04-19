@@ -1,0 +1,84 @@
+---
+/**
+ * ドキュメント内の別ページへのカードリンク
+ * コンテンツコレクションから title / description を取得して表示する
+ * URL は現在の言語に自動変換される
+ */
+import { BoxLink, Flex, Icon, Group, Inline } from 'lism-css/astro';
+import { getPostWithFallback } from '@/lib/content';
+import { getLangFromUrl, getLocalizedUrl } from '@/lib/i18n';
+
+interface Props {
+  // ドキュメント内ページのパス（例: '/docs/features', '/ui/Accordion'）
+  path: string;
+  // 手動でタイトルを上書きする場合
+  title?: string;
+  // 手動で説明文を上書きする場合
+  description?: string;
+}
+
+const { path = '', title: manualTitle, description: manualDescription } = Astro.props;
+
+// 現在の言語を取得
+const currentLang = getLangFromUrl(Astro.url);
+
+// path から hash を分離（記事検索には使わず、href にのみ付与）
+const [pathWithoutHash, hash] = path.split('#');
+
+// path → content collection の slug に変換
+// 例: '/docs/features' → 'features', '/ui/Accordion' → 'ui/Accordion'
+const slug = pathWithoutHash
+  .replace(/^\/docs\//, '')
+  .replace(/^\//, '')
+  .replace(/\/$/, '');
+
+// コンテンツコレクションから記事を取得（フォールバック対応）
+const { entry } = await getPostWithFallback(currentLang, slug);
+
+// 記事が見つからない場合の警告
+if (!entry) {
+  console.warn(`[DocsLink] 記事が見つかりません: ${slug} (path: ${path})`);
+}
+
+// 表示用データ（手動指定があればそちらを優先）
+const displayTitle = manualTitle || entry?.data.title || path;
+const displayDescription = manualDescription || entry?.data.description || '';
+
+// リンク先URL（言語対応、hash を保持）
+const href = getLocalizedUrl(pathWithoutHash, currentLang) + (hash ? `#${hash}` : '');
+---
+
+<BoxLink href={href} layout="stack" bdrs="20" my="40" bd bgc="base" hov="bxsh, bdc, bgc" set="hov transition" class="c--docsLink">
+  <Flex class="c--docsLink_icon" c="text-2" p="5" lh="1" pos="absolute" set="transition">
+    <Icon viewBox="0 0 256 256">
+      <path
+        d="M232,48H160a40,40,0,0,0-32,16A40,40,0,0,0,96,48H24a8,8,0,0,0-8,8V200a8,8,0,0,0,8,8H96a24,24,0,0,1,24,24,8,8,0,0,0,16,0,24,24,0,0,1,24-24h72a8,8,0,0,0,8-8V56A8,8,0,0,0,232,48ZM96,192H32V64H96a24,24,0,0,1,24,24V200A39.81,39.81,0,0,0,96,192Zm128,0H160a39.81,39.81,0,0,0-24,8V88a24,24,0,0,1,24-24h64ZM160,88h40a8,8,0,0,1,0,16H160a8,8,0,0,1,0-16Zm48,40a8,8,0,0,1-8,8H160a8,8,0,0,1,0-16h40A8,8,0,0,1,208,128Zm0,32a8,8,0,0,1-8,8H160a8,8,0,0,1,0-16h40A8,8,0,0,1,208,160Z"
+      ></path>
+    </Icon>
+  </Flex>
+  <Group px-s="40" p="30">
+    <div class="c--docsLink_head">
+      <span class="c--docsLink_title -fw:bold">{displayTitle}</span>
+      <Inline set="transition"> →</Inline>
+    </div>
+    {displayDescription && <p class="c--docsLink_description -c:text-2 -fz:sm -mt:10">{displayDescription}</p>}
+  </Group>
+</BoxLink>
+
+<style>
+  .c--docsLink {
+    --hov-bdc: var(--divider);
+    --hov-bxsh: var(--bxsh--30);
+    --bdc: var(--base-2);
+    --bdw: 3px;
+    --hov-prop: border-color, box-shadow, background-color, translate;
+  }
+  .c--docsLink_icon {
+    border-radius: calc(var(--bdrs--20) - 3px) 0 var(--bdrs--20) 0;
+    background-color: var(--_isHov, var(--divider)) var(--_notHov, var(--base-2));
+  }
+  .c--docsLink_title + span {
+    display: inline-flex;
+    translate: var(--_isHov, 3px 0);
+  }
+</style>

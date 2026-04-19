@@ -28,8 +28,7 @@ src/
 │   ├── ThemeSwitch.astro     # テーマ切り替え
 │   ├── mdx/                  # MDXグローバルコンポーネント
 │   │   ├── index.ts
-│   │   ├── Callout.astro
-│   │   └── LinkCard.astro
+│   │   └── Callout.astro
 │   └── parts/                # 汎用UIコンポーネント
 │       ├── PostCard.astro
 │       ├── PostNavigation.astro
@@ -52,9 +51,7 @@ src/
 │   ├── pageHelpers.ts        # ページ共通ヘルパー
 │   ├── generateToc.ts        # 目次生成
 │   ├── ogImage.tsx           # OG画像テンプレート
-│   ├── ogpCache.ts           # OGPキャッシュ管理
 │   ├── remark-callout.ts     # :::記法変換
-│   ├── remark-linkcard.ts    # URL→LinkCard変換
 │   └── expressive-code.config.ts
 ├── pages/                # ルーティング
 │   ├── index.astro
