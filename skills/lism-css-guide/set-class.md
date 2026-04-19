@@ -127,7 +127,7 @@ HTML では直接クラスを付与し、Lism コンポーネントでは `set` 
 |-------------|-----------|------|
 | `--transition-duration` | `0.2s` | `:root` などから全体のデフォルト duration を上書きするためのグローバル変数 |
 | `--transitionProps` | `all` | transition 対象プロパティ（要素側で初期化） |
-| `--duration` / `--ease` / `--delay` | `var(--transition-duration, 0.2s)` / `ease` / `0s` | `.has--transition` 内で直接上書きできるローカル変数 |
+| `--duration` / `--ease` / `--delay` | `--transition-duration` / `ease` / `0s` | `.has--transition` 内で直接上書きできるローカル変数 |
 
 ```html
 <div class="has--transition -hov:c" style="--transitionProps: color; --hov-c: var(--red);">...</div>

@@ -149,22 +149,22 @@ Combine this class with CSS variables to configure transition behavior.
 <Preview>
   <PreviewTitle>Example: slowly transitioning the border-color</PreviewTitle>
   <PreviewArea p="30">
-    <BoxLink href="###" hasTransition hov={{ bdc: 'red' }} bd bdw="3px" bgc="base-2" p="20" style={{ '--transition-duration': '.5s' }}>
+    <BoxLink href="###" hasTransition hov={{ bdc: 'red' }} bd bdw="3px" bgc="base-2" p="20" style={{ '--duration': '.5s' }}>
       <p>BoxLink</p>
       <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
     </BoxLink>
   </PreviewArea>
   <PreviewCode slot="tab" label="HTML">
-    ```html "has--transition" "--transition-duration: 0.5s"
-    <a class="is--boxLink has--transition -bd -bgc:base-2 -p:20 -hov:bdc" style="--hov-bdc: var(--red); --transition-duration: 0.5s; --bdw: 3px" href="###">
+    ```html "has--transition" "--duration: 0.5s"
+    <a class="is--boxLink has--transition -bd -bgc:base-2 -p:20 -hov:bdc" style="--hov-bdc: var(--red); --duration: 0.5s; --bdw: 3px" href="###">
       <p>BoxLink</p>
       <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
     </a>
     ```
   </PreviewCode>
   <PreviewCode slot="tab" label="JSX">
-    ```jsx 'hasTransition' "--transition-duration"
-    <BoxLink href="###" hasTransition hov={{ bdc: 'red' }} bd bdw="3px" bgc="base-2" p="20" style={{ '--transition-duration': '.5s' }}>
+    ```jsx 'hasTransition' "--duration"
+    <BoxLink href="###" hasTransition hov={{ bdc: 'red' }} bd bdw="3px" bgc="base-2" p="20" style={{ '--duration': '.5s' }}>
       <p>BoxLink</p>
       <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
     </BoxLink>
