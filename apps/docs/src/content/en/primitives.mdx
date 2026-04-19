@@ -1,12 +1,11 @@
 ---
 title: 'Primitive Class'
-description: 'An overview of Lism CSS primitive classes (is--, l--, a--) and their usage.'
+description: 'An overview of Lism CSS primitive classes (l--, a--) and their usage.'
 ---
 
 
 Lism provides **Primitive classes** as small building blocks for composing layouts.
 
-- `is--{name}`: Trait Primitives that apply a **static structural trait** to an element.
 - `l--{name}`: Layout Primitives that serve as the building blocks of layouts.
 - `a--{name}`: Atomic Primitives that represent the smallest units of a layout.
 
@@ -16,6 +15,8 @@ By combining these, you can build complex layouts. The `c--` prefixed **[Compone
 Primitive classes are standalone classes that do not have variations (such as `--outline`) or child element classes (such as `_header`). Only `c--` Component Classes follow a BEM-like structure.
 :::
 
+For `is--*` classes that declare a role on an element (Trait Classes), see [Trait Class](/en/docs/trait-class/).
+
 
 #### Combination Rules
 
@@ -23,27 +24,11 @@ Primitive classes are standalone classes that do not have variations (such as `-
 |---|---|---|
 | `l--` × `l--` | NG | Same category cannot be combined |
 | `a--` × `a--` | NG | Same category cannot be combined |
-| `is--` × `is--` | OK | Multiple Traits can be combined |
-| `l--` × `is--` | OK | |
+| `l--` × `is--` | OK | Multiple Traits can be combined |
 | `a--` × `is--` | OK | |
 | `l--` × `a--` | Discouraged | Not intended to coexist |
 | `l--` × `c--` | OK | e.g. `c--nav l--flex` |
 | `a--` × `c--` | OK | |
-
-
-## Trait Primitives
-
-Primitives that represent static structural traits that can be toggled on any element.
-
-| Class | Description |
-|---|---|
-| <ModLink slug="is--container" /> | Defines the reference element for container queries |
-| <ModLink slug="is--wrapper" /> | Wrapper element that controls content width |
-| <ModLink slug="is--layer" /> | Overlay layer positioned over a parent element |
-| <ModLink slug="is--boxLink" /> | Makes the entire box a clickable link |
-| `is--coverLink` | A link with a clickable area covering the entire parent element (→ see <ModLink slug="is--boxLink" />) |
-| `is--side` | For the side element of `l--sideMain` (→ see <ModLink slug="l--sideMain" />) |
-| `is--skipFlow` | Cancels spacing with the next sibling inside `l--flow` (→ see <ModLink slug="l--flow" />) |
 
 
 ## Layout Primitives

@@ -1,0 +1,121 @@
+---
+title: 'Trait Class'
+description: 'Learn about Trait Classes: is--* for declaring roles and has--* for attaching features.'
+---
+import { Lism, Box, Frame } from 'lism-css/astro';
+
+
+**Trait Classes** declaratively attach a role or feature to an element. They belong to `@layer lism-trait`, which is applied *after* `@layer lism-component`, so user-declared traits take precedence over Component Classes.
+
+- `is--{name}`: declares a **role / existence** (“is a …”).
+- `has--{name}`: attaches a **feature** (“has a …”).
+
+## `is--` vs `has--`
+
+|  | `is--` | `has--` |
+|---|---|---|
+| Meaning | “is a …” (role / existence declaration) | “has a …” (feature attachment) |
+| CSS variables | Not required (if present, purely for tuning that role) | Required (provides customization points) |
+| Behavior | Structural placement / existence stamp | Enables some feature |
+
+
+## `is--*` (Role declaration)
+
+| Class | Description |
+|---|---|
+| <ModLink slug="is--container" /> | Defines the reference element for container queries |
+| <ModLink slug="is--wrapper" /> | Wrapper element that controls content width |
+| <ModLink slug="is--layer" /> | Overlay layer positioned over a parent element |
+| <ModLink slug="is--boxLink" /> | Makes the entire box a clickable link |
+| `is--coverLink` | A link with a clickable area covering the entire parent element (→ see <ModLink slug="is--boxLink" />) |
+| `is--side` | For the side element of `l--sideMain` (→ see <ModLink slug="l--sideMain" />) |
+| `is--skipFlow` | Cancels spacing with the next sibling inside `l--flow` (→ see <ModLink slug="l--flow" />) |
+
+
+## `has--*` (Feature attachment)
+
+
+### `has--transition`
+
+Sets the `transition` property using dedicated variables.
+
+<SrcCode path="src/scss/trait/_hasTransition.scss" />
+
+<Preview>
+  <PreviewTitle>Usage example</PreviewTitle>
+  <PreviewArea p="30">
+    <Lism hasTransition hov={{c: 'red'}} style={{ '--hov-prop': 'color'}}>Example</Lism>
+  </PreviewArea>
+  <PreviewCode label="HTML" slot="tab">
+    ```html
+    <div class="has--transition -hov:c" style="--hov-prop: color; --hov-c: var(--red);">Example</div>
+    ```
+  </PreviewCode>
+  <PreviewCode label="JSX" slot="tab">
+    ```jsx
+    <Lism hasTransition hov={{c: 'red'}} style={{ '--hov-prop': 'color'}}>Example</Lism>
+    ```
+  </PreviewCode>
+</Preview>
+
+
+See the [`hover` documentation page](/en/docs/property-class/hov#has--transition) for usage examples.
+
+<DocsLink path="/docs/property-class/hov#has--transition" />
+
+
+### `has--gutter`
+
+A class that adds predefined horizontal spacing to the left and right sides of content.
+It is provided as a separate class from padding utilities to reserve a consistent horizontal margin across the entire site.
+
+| Class name | Spacing | Default value |
+|---|---|---|
+| `has--gutter` | `--gutter-size` | `var(--s30)` |
+
+<SrcCode path="src/scss/trait/_hasGutter.scss" />
+
+<Preview>
+  <PreviewTitle>Example</PreviewTitle>
+  <PreviewArea resize p="15">
+    <Lism hasGutter>
+      <p>Lorem ipsum content...</p>
+      <p>Lorem ipsum content...</p>
+      <p>Lorem ipsum content...</p>
+    </Lism>
+  </PreviewArea>
+  <PreviewCode slot="tab" label="HTML">
+  ```html
+  <div class="has--gutter">
+    <p>Lorem ipsum content...</p>
+    <p>Lorem ipsum content...</p>
+    <p>Lorem ipsum content...</p>
+  </div>
+  ```
+  </PreviewCode>
+  <PreviewCode slot="tab" label="JSX">
+  ```jsx
+  <Lism hasGutter>
+    <p>Lorem ipsum content...</p>
+    <p>Lorem ipsum content...</p>
+    <p>Lorem ipsum content...</p>
+  </Lism>
+  ```
+  </PreviewCode>
+</Preview>
+
+
+### `has--snap`
+
+Allows `scroll-snap-` properties to be set via CSS variables.
+
+<SrcCode path="src/scss/trait/_hasSnap.scss" />
+
+<Box class="has--snap" ov="auto" ar="16/9" bd>
+  <div className="l--frame -ar:16/9 -p:15"><img src="https://cdn.lism-css.com/img/u-1.jpg" width="960" height="640" loading="lazy" /></div>
+  <div className="l--frame -ar:16/9 -p:15"><img src="https://cdn.lism-css.com/img/u-2.jpg" width="960" height="640" loading="lazy" /></div>
+  <div className="l--frame -ar:16/9 -p:15"><img src="https://cdn.lism-css.com/img/u-3.jpg" width="960" height="640" loading="lazy" /></div>
+  <div className="l--frame -ar:16/9 -p:15"><img src="https://cdn.lism-css.com/img/u-4.jpg" width="960" height="640" loading="lazy" /></div>
+  <div className="l--frame -ar:16/9 -p:15"><img src="https://cdn.lism-css.com/img/u-5.jpg" width="960" height="640" loading="lazy" /></div>
+  <div className="l--frame -ar:16/9 -p:15"><img src="https://cdn.lism-css.com/img/u-6.jpg" width="960" height="640" loading="lazy" /></div>
+</Box>

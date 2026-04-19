@@ -1,0 +1,121 @@
+---
+title: 'Trait Class'
+description: '役割宣言の is--* と 機能付与の has--* からなる Trait Class について解説します。'
+---
+import { Lism, Box, Frame } from 'lism-css/astro';
+
+
+**Trait Class** は、要素に対して宣言的に「役割」や「機能」を付与するクラス群です。`@layer lism-trait` に属し、`@layer lism-component` よりも後に適用されるため、ユーザーが明示的に宣言した trait は Component Class よりも優先されます。
+
+- `is--{name}`: 要素に**役割・存在**（〜である）を宣言するクラス
+- `has--{name}`: 要素に**機能**（〜を持つ）を付与するクラス
+
+## `is--` と `has--` の判定軸
+
+|  | `is--` | `has--` |
+|---|---|---|
+| 意味 | 〜である（役割・存在の宣言） | 〜を持つ（機能の付与） |
+| CSS 変数 | 必須ではない（あっても「その役割を調整するためのもの」） | 必須（カスタマイズポイントを提供） |
+| 動作 | 構造的な配置・存在のスタンプ | 何らかの機能を有効化 |
+
+
+## `is--*`（役割宣言）
+
+| クラス | 概要 |
+|---|---|
+| <ModLink slug="is--container" /> | コンテナクエリの基準要素を定義する |
+| <ModLink slug="is--wrapper" /> | コンテンツ幅を制御するラッパー要素 |
+| <ModLink slug="is--layer" /> | 親要素に重ねるオーバーレイレイヤー |
+| <ModLink slug="is--boxLink" /> | ボックス全体をリンク化する |
+| `is--coverLink` | 親要素全体に広がるクリック領域を持つリンク（→ <ModLink slug="is--boxLink" /> 参照） |
+| `is--side` | `l--sideMain` の side 要素用（→ <ModLink slug="l--sideMain" /> 参照） |
+| `is--skipFlow` | `l--flow` 内で次の兄弟との余白を打ち消す（→ <ModLink slug="l--flow" /> 参照） |
+
+
+## `has--*`（機能付与）
+
+
+### `has--transition`
+
+専用の変数を用いて、transitionプロパティをセットします。
+
+<SrcCode path="src/scss/trait/_hasTransition.scss" />
+
+<Preview>
+  <PreviewTitle>使用例</PreviewTitle>
+  <PreviewArea p="30">
+    <Lism hasTransition hov={{c: 'red'}} style={{ '--hov-prop': 'color'}}>Example</Lism>
+  </PreviewArea>
+  <PreviewCode label="HTML" slot="tab">
+    ```html
+    <div class="has--transition -hov:c" style="--hov-prop: color; --hov-c: var(--red);">Example</div>
+    ```
+  </PreviewCode>
+  <PreviewCode label="JSX" slot="tab">
+    ```jsx
+    <Lism hasTransition hov={{c: 'red'}} style={{ '--hov-prop': 'color'}}>Example</Lism>
+    ```
+  </PreviewCode>
+</Preview>
+
+
+活用例は [`hover`の解説ページ](/docs/property-class/hov#has--transition) を参照してください。
+
+<DocsLink path="/docs/property-class/hov#has--transition" />
+
+
+### `has--gutter`
+
+コンテンツの左右にあらかじめ定義済みの余白をつけることができるクラスです。  
+サイト全体で統一した余白量を左右に確保するためのものとして、padding系のユーティリティとは別のクラスとして用意しています。
+
+| クラス名 | 余白量 |初期値 |
+|---|---|---|
+| `has--gutter` | `--gutter-size` | `var(--s30)` |
+
+<SrcCode path="src/scss/trait/_hasGutter.scss" />
+
+<Preview>
+  <PreviewTitle>例</PreviewTitle>
+  <PreviewArea resize p="15">
+    <Lism hasGutter>
+      <p>Lorem ipsum content...</p>
+      <p>Lorem ipsum content...</p>
+      <p>Lorem ipsum content...</p>
+    </Lism>
+  </PreviewArea>
+  <PreviewCode slot="tab" label="HTML">
+  ```html
+  <div class="has--gutter">
+    <p>Lorem ipsum content...</p>
+    <p>Lorem ipsum content...</p>
+    <p>Lorem ipsum content...</p>
+  </div>
+  ```
+  </PreviewCode>
+  <PreviewCode slot="tab" label="JSX">
+  ```jsx
+  <Lism hasGutter>
+    <p>Lorem ipsum content...</p>
+    <p>Lorem ipsum content...</p>
+    <p>Lorem ipsum content...</p>
+  </Lism>
+  ```
+  </PreviewCode>
+</Preview>
+
+
+### `has--snap`
+
+`scroll-snap-`系のプロパティをCSS変数でセットできるようにします。
+
+<SrcCode path="src/scss/trait/_hasSnap.scss" />
+
+<Box class="has--snap" ov="auto" ar="16/9" bd>
+  <div className="l--frame -ar:16/9 -p:15"><img src="https://cdn.lism-css.com/img/u-1.jpg" width="960" height="640" loading="lazy" /></div>
+  <div className="l--frame -ar:16/9 -p:15"><img src="https://cdn.lism-css.com/img/u-2.jpg" width="960" height="640" loading="lazy" /></div>
+  <div className="l--frame -ar:16/9 -p:15"><img src="https://cdn.lism-css.com/img/u-3.jpg" width="960" height="640" loading="lazy" /></div>
+  <div className="l--frame -ar:16/9 -p:15"><img src="https://cdn.lism-css.com/img/u-4.jpg" width="960" height="640" loading="lazy" /></div>
+  <div className="l--frame -ar:16/9 -p:15"><img src="https://cdn.lism-css.com/img/u-5.jpg" width="960" height="640" loading="lazy" /></div>
+  <div className="l--frame -ar:16/9 -p:15"><img src="https://cdn.lism-css.com/img/u-6.jpg" width="960" height="640" loading="lazy" /></div>
+</Box>
