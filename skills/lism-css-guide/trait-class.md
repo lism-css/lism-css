@@ -55,8 +55,9 @@ Lism コンポーネントでは `isContainer`, `isLayer` 等の Props として
 | `has--transition` | transition プロパティをまとめてセット。主に hoverクラス（`-hov:*`）と組み合わせて使用 | `--transitionProps`, `--duration`, `--ease`, `--delay`（グローバル上書きは `--transition-duration`） |
 | `has--gutter` | コンテンツの左右に統一した余白（gutter）を設定する | `--gutter-size`（デフォルト `var(--s30)`） |
 | `has--snap` | `scroll-snap-` 系プロパティを CSS 変数経由でセットできるようにする | `--snapType`, `--snapAlign` 等 |
+| `has--mask` | `--maskImg` 変数と組み合わせて、要素自身にマスクを適用する | `--maskImg`, `--maskPos`（`50%`）, `--maskSize`（`contain`）, `--maskRepeat`（`no-repeat`） |
 
-Lism コンポーネントでは `hasTransition`, `hasGutter`, `hasSnap` という Props として利用できます（例: `<Lism hasTransition>`）。
+Lism コンポーネントでは `hasTransition`, `hasGutter`, `hasSnap`, `hasMask` という Props として利用できます（例: `<Lism hasTransition>`）。
 
 
 ## `is--` と `has--` の判断軸

@@ -39,10 +39,11 @@ describe('TraitProps', () => {
       assertType<TraitProps>({ isSkipFlow: true });
     });
 
-    it('has-- Trait（hasGutter / hasTransition / hasSnap）', () => {
+    it('has-- Trait（hasGutter / hasTransition / hasSnap / hasMask）', () => {
       assertType<TraitProps>({ hasGutter: true });
       assertType<TraitProps>({ hasTransition: true });
       assertType<TraitProps>({ hasSnap: true });
+      assertType<TraitProps>({ hasMask: true });
     });
   });
 
@@ -94,7 +95,6 @@ describe('LismPropsBase — set / util', () => {
     it('プリセット値を受け付ける', () => {
       assertType<LismPropsBase>({ set: 'shadow' });
       assertType<LismPropsBase>({ set: 'hov' });
-      assertType<LismPropsBase>({ set: 'mask' });
       assertType<LismPropsBase>({ set: 'plain' });
       assertType<LismPropsBase>({ set: 'innerRs' });
     });

@@ -70,7 +70,7 @@
 |---|---|---|
 | `set--` | HTML 要素の基礎スタイリング / 変数セット | `set--plain`, `set--hov`, `set--shadow` |
 | `is--` | 〜である（役割・存在の宣言）。CSS 変数は必須ではない | `is--container`, `is--wrapper`, `is--layer` |
-| `has--` | 〜を持つ（単一機能 trait の付与）。CSS 変数でカスタマイズ可 | `has--transition`, `has--gutter`, `has--snap` |
+| `has--` | 〜を持つ（単一機能 trait の付与）。CSS 変数でカスタマイズ可 | `has--transition`, `has--gutter`, `has--snap`, `has--mask` |
 | `u--` | 装飾的効果（単独 or 子要素の装飾） | `u--trim`, `u--cbox`, `u--collapseGrid` |
 
 - `set--` は `@lism-base` 層で HTML 要素の基礎スタイル・変数を提供するもの。

@@ -1216,16 +1216,6 @@ describe('Lism', () => {
         const element = screen.getByTestId('lism');
         expect(element).toHaveClass('set--innerRs');
       });
-
-      test('set="mask" で set--mask クラスが出力される', () => {
-        render(
-          <Lism set="mask" data-testid="lism">
-            test
-          </Lism>
-        );
-        const element = screen.getByTestId('lism');
-        expect(element).toHaveClass('set--mask');
-      });
     });
 
     describe('set 値内 `-` prefix による除外', () => {
@@ -1338,6 +1328,16 @@ describe('Lism', () => {
         );
         const element = screen.getByTestId('lism');
         expect(element).toHaveClass('has--snap');
+      });
+
+      test('hasMask で has--mask クラスが出力される', () => {
+        render(
+          <Lism hasMask data-testid="lism">
+            test
+          </Lism>
+        );
+        const element = screen.getByTestId('lism');
+        expect(element).toHaveClass('has--mask');
       });
 
       test('複数の has-- Trait を同時に指定できる', () => {

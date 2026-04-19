@@ -47,7 +47,7 @@ Lism CSSで定義されるクラスは、その役割とレイヤーの所属が
 | Atomic Primitive | レイアウトの最小単位となる Primitive | `a--` | `.a--icon`, `.a--divider` |
 | Component Class | BEM 構造を持つ UI 部品 | `c--` | `.c--button`, `.c--accordion` |
 | `is--` Trait | 要素に役割（〜である）を宣言 | `is--` | `.is--container`, `.is--wrapper`, `.is--layer`, `.is--boxLink` |
-| `has--` Trait | 要素に機能（〜を持つ）を付与 | `has--` | `.has--transition`, `.has--gutter`, `.has--snap` |
+| `has--` Trait | 要素に機能（〜を持つ）を付与 | `has--` | `.has--transition`, `.has--gutter`, `.has--snap`, `.has--mask` |
 | Utility Class | 用途が明確な装飾系ユーティリティ | `u--` | `.u--cbox`, `.u--trim`, `.u--collapseGrid` |
 | Property Class | 単一プロパティの制御 | `-` | `.-fz:l`, `.-p:20`, `.-d:none` |
 

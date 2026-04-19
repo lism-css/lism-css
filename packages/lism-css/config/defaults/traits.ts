@@ -15,4 +15,5 @@ export default {
   hasTransition: 'has--transition',
   hasGutter: 'has--gutter',
   hasSnap: 'has--snap',
+  hasMask: 'has--mask',
 } as const;
