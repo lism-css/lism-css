@@ -101,6 +101,8 @@ npm publish とデプロイはユーザーが手動で行う。
 
 #### 5-B. changelog エントリ
 
+ここの changelog.mdx作成は `lism-css` と `@lism-css/ui` 更新時のみ。
+
 リリースノートの内容をもとに、changelog.mdx 用の簡潔なエントリを日本語・英語の両方で生成する。
 
 **フォーマット:**
