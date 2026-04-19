@@ -48,8 +48,8 @@ const displayDescription = manualDescription || entry?.data.description || '';
 const href = getLocalizedUrl(pathWithoutHash, currentLang) + (hash ? `#${hash}` : '');
 ---
 
-<BoxLink href={href} layout="stack" bdrs="20" my="40" bd bgc="base" hov="bxsh, bdc, bgc" set="hov transition" class="c--docsLink">
-  <Flex class="c--docsLink_icon" c="text-2" p="5" lh="1" pos="absolute" set="transition">
+<BoxLink href={href} layout="stack" bdrs="20" my="40" bd bgc="base" hov="bxsh, bdc, bgc" set="hov" hasTransition class="c--docsLink">
+  <Flex class="c--docsLink_icon" c="text-2" p="5" lh="1" pos="absolute" hasTransition>
     <Icon viewBox="0 0 256 256">
       <path
         d="M232,48H160a40,40,0,0,0-32,16A40,40,0,0,0,96,48H24a8,8,0,0,0-8,8V200a8,8,0,0,0,8,8H96a24,24,0,0,1,24,24,8,8,0,0,0,16,0,24,24,0,0,1,24-24h72a8,8,0,0,0,8-8V56A8,8,0,0,0,232,48ZM96,192H32V64H96a24,24,0,0,1,24,24V200A39.81,39.81,0,0,0,96,192Zm128,0H160a39.81,39.81,0,0,0-24,8V88a24,24,0,0,1,24-24h64ZM160,88h40a8,8,0,0,1,0,16H160a8,8,0,0,1,0-16Zm48,40a8,8,0,0,1-8,8H160a8,8,0,0,1,0-16h40A8,8,0,0,1,208,128Zm0,32a8,8,0,0,1-8,8H160a8,8,0,0,1,0-16h40A8,8,0,0,1,208,160Z"
@@ -59,7 +59,7 @@ const href = getLocalizedUrl(pathWithoutHash, currentLang) + (hash ? `#${hash}` 
   <Group px-s="40" p="30">
     <div class="c--docsLink_head">
       <span class="c--docsLink_title -fw:bold">{displayTitle}</span>
-      <Inline set="transition"> →</Inline>
+      <Inline hasTransition> →</Inline>
     </div>
     {displayDescription && <p class="c--docsLink_description -c:text-2 -fz:sm -mt:10">{displayDescription}</p>}
   </Group>

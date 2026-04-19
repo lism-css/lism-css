@@ -16,20 +16,20 @@ import { DummyText } from '@lism-css/ui/astro';
 <Preview>
   <PreviewTitle>Preview</PreviewTitle>
   <PreviewArea p="20">
-    <BoxLink layout="frame" href="#banner-link" hov="o" set="transition" bdrs="20">
+    <BoxLink layout="frame" href="#banner-link" hov="o" hasTransition bdrs="20">
       <img src="https://picsum.photos/seed/hogeee/1200/400" alt="" width="800" height="200" />
     </BoxLink>
   </PreviewArea>
   <PreviewCode slot="tab" label="JSX">
     ```jsx "Frame" "BoxLink"
-    <BoxLink layout="frame" href="#banner-link" hov="o" set="transition" bdrs="20">
+    <BoxLink layout="frame" href="#banner-link" hov="o" hasTransition bdrs="20">
       <img src="https://picsum.photos/seed/hogeee/1200/400" alt="" width="800" height="200" />
     </BoxLink>
     ```
   </PreviewCode>
   <PreviewCode slot="tab" label="HTML">
     ```html "l--frame" "is--boxLink"
-    <a class="l--frame is--boxLink set--transition -bdrs:20 -hov:o" href="#banner-link">
+    <a class="l--frame is--boxLink has--transition -bdrs:20 -hov:o" href="#banner-link">
       <img src="https://picsum.photos/seed/hogeee/1200/400" alt="" width="800" height="200" />
     </a>
     ```
@@ -40,7 +40,7 @@ import { DummyText } from '@lism-css/ui/astro';
 <Preview>
   <PreviewTitle>`Layer`で画像に被せてコンテンツを表示</PreviewTitle>
   <PreviewArea p="20" resize>
-    <BoxLink layout="frame" href="#banner-link" hov="o" set="transition" bdrs="20">
+    <BoxLink layout="frame" href="#banner-link" hov="o" hasTransition bdrs="20">
       <Media isLayer src="https://picsum.photos/seed/hogeee/1200/400" alt="" width="960" height="640" loading="lazy" />
       <Flex jc="between" ai="center" pos="relative" g="20" p="30" c="#fff" bgc="rgb(0 0 0 / 50%)" min-h="30cqw">
         <Stack g="10">
@@ -57,7 +57,7 @@ import { DummyText } from '@lism-css/ui/astro';
   </PreviewArea>
   <PreviewCode slot="tab" label="JSX">
     ```jsx
-    <BoxLink layout="frame" href="#banner-link" hov="o" set="transition" bdrs="20">
+    <BoxLink layout="frame" href="#banner-link" hov="o" hasTransition bdrs="20">
       <Media isLayer src="https://picsum.photos/seed/hogeee/1200/400" alt="" width="960" height="640" loading="lazy" />
       <Flex jc="between" ai="center" pos="relative" g="20" p="30" c="#fff" bgc="rgb(0 0 0 / 50%)" min-h="30cqw">
         <Stack g="10">
@@ -75,7 +75,7 @@ import { DummyText } from '@lism-css/ui/astro';
   </PreviewCode>
   <PreviewCode slot="tab" label="HTML">
     ```html "l--frame" "is--boxLink"
-    <a class="l--frame is--boxLink set--transition -hov:o -bdrs:20" href="#banner-link">
+    <a class="l--frame is--boxLink has--transition -hov:o -bdrs:20" href="#banner-link">
       <img class="is--layer" src="https://picsum.photos/seed/hogeee/1200/400" width="960" height="640" loading="lazy" />
       <div class="l--flex -jc:between -ai:center -pos:relative -g:20 -p:30 -c -bgc -min-h" style="--c: #fff; --bgc: rgb(0 0 0 / 50%); --min-h: 30cqw">
         <div class="l--stack -g:10">

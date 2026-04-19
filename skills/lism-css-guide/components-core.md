@@ -55,7 +55,7 @@ import { Lism, Box, Flex, Stack, Grid, Text, Media } from 'lism-css/astro';
 | `variant` | `lismClass` 先頭クラスに対する BEM Modifier を付与（`c--` 専用。`a--` / `l--` には展開されない） | `variant="secondary"` |
 | `layout` | レイアウトプリミティブ（`l--{layout}`）を指定 | `layout="flow"` |
 | `atomic` | アトミックプリミティブ（`a--{atomic}`）を指定。`'divider'` / `'spacer'` / `'decorator'` が利用可能（`'icon'` は内部用） | `atomic="divider"` |
-| `set` | セットクラス（`set--{value}`）を指定。スペース区切りで複数指定可。値の先頭に `-` を付けると除外 | `set="gutter"`, `set="transition plain"`, `set="-plain"` |
+| `set` | セットクラス（`set--{value}`）を指定。スペース区切りで複数指定可。値の先頭に `-` を付けると除外 | `set="plain"`, `set="hov shadow"`, `set="-plain"` |
 | `util` | ユーティリティクラス（`u--{value}`）を指定。`set` と同様に複数指定・`-` prefix 除外が可能 | `util="cbox"`, `util="cbox trim"`, `util="-trim"` |
 | `exProps` | Lism Propsの処理をスキップして外部コンポーネントに直接渡すpropsオブジェクト | `exProps={{ size: '1em' }}` |
 

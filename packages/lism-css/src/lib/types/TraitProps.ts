@@ -42,7 +42,7 @@ export type TraitProps = {
 };
 
 /** set prop で使われるプリセット値（エディタ補完用） */
-type SetPreset = 'gutter' | 'shadow' | 'hov' | 'transition' | 'mask' | 'plain' | 'innerRs';
+type SetPreset = 'shadow' | 'hov' | 'mask' | 'plain' | 'innerRs';
 
 /**
  * set prop の値の型。プリセット値がサジェストされつつ、任意の文字列も受け付ける。
@@ -55,7 +55,7 @@ type SetPreset = 'gutter' | 'shadow' | 'hov' | 'transition' | 'mask' | 'plain' |
 export type SetPropValue = WithArbitraryString<SetPreset> | WithArbitraryString<SetPreset>[];
 
 /** util prop で使われるプリセット値（既知の `u--` クラス名・エディタ補完用） */
-type UtilPreset = 'cbox' | 'trim' | 'trimChildren' | 'srOnly' | 'clipText' | 'collapseGrid' | 'snap';
+type UtilPreset = 'cbox' | 'trim' | 'trimChildren' | 'srOnly' | 'clipText' | 'collapseGrid';
 
 /**
  * util prop の値の型。既知の `u--` クラス名がサジェストされつつ、任意の文字列も受け付ける。

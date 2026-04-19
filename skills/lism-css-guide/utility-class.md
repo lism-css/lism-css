@@ -31,7 +31,7 @@ Lism コンポーネントでの `util` prop による指定方法は [component
 | `u--cbox` | `--keycolor` を使い `color-mix()` で `--c` / `--bgc` / `--bdc` を自動生成する色付きボックス | [`_cbox.scss`](https://raw.githubusercontent.com/lism-css/lism-css/main/packages/lism-css/src/scss/utility/_cbox.scss) |
 | `u--collapseGrid` | Grid / Flex の子要素間に `box-shadow` で境界線を表現する | [`_itemDivider.scss`](https://raw.githubusercontent.com/lism-css/lism-css/main/packages/lism-css/src/scss/utility/_itemDivider.scss) |
 | `u--srOnly` | スクリーンリーダー専用（視覚的に非表示）。`clip-path: inset(50%)` で実装 | [`_hidden.scss`](https://raw.githubusercontent.com/lism-css/lism-css/main/packages/lism-css/src/scss/utility/_hidden.scss) |
-| `u--snap` | スクロールスナップコンテナ。`--snapType`, `--snapAlign`, `--snapStop` で制御 | [`_snap.scss`](https://raw.githubusercontent.com/lism-css/lism-css/main/packages/lism-css/src/scss/utility/_snap.scss) |
+| `has--snap` | スクロールスナップコンテナ。`--snapType`, `--snapAlign`, `--snapStop` で制御 | [`_snap.scss`](https://raw.githubusercontent.com/lism-css/lism-css/main/packages/lism-css/src/scss/trait/_hasSnap.scss) |
 | `u--clipText` | テキストで背景をクリッピング（`background-clip: text`） | [`_clipText.scss`](https://raw.githubusercontent.com/lism-css/lism-css/main/packages/lism-css/src/scss/utility/_clipText.scss) |
 
 

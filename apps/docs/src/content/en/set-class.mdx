@@ -154,7 +154,7 @@ For example, this is useful for zooming an image inside a card when the parent b
   <PreviewTitle>Usage example of `-hov:to:zoom`</PreviewTitle>
   <PreviewArea p="30">
     <a href="###" class="l--frame is--boxLink set--hov -ar:21/9 -ov:hidden">
-      <img class="set--transition -hov:to:zoom" src="https://cdn.lism-css.com/img/a-2.jpg" width="960" height="640" loading="lazy" />
+      <img class="has--transition -hov:to:zoom" src="https://cdn.lism-css.com/img/a-2.jpg" width="960" height="640" loading="lazy" />
       <div class="is--layer -bgc" style="--c: #fff; --bgc: rgb(0 0 0 / 50%)"></div>
       <div class="l--center is--layer -c" style="--c: #fff;">
         <span class="-fz:xl">Banner Link</span>
@@ -164,7 +164,7 @@ For example, this is useful for zooming an image inside a card when the parent b
   <PreviewCode>
     ```html "set--hov" "-hov:to:zoom"
     <a href="###" class="l--frame is--boxLink set--hov -ar:21/9 -ov:hidden">
-      <img class="set--transition -hov:to:zoom" src="https://cdn.lism-css.com/img/a-2.jpg" width="960" height="640" loading="lazy" />
+      <img class="has--transition -hov:to:zoom" src="https://cdn.lism-css.com/img/a-2.jpg" width="960" height="640" loading="lazy" />
       <div class="is--layer -bgc" style="--c: #fff; --bgc: rgb(0 0 0 / 50%)"></div>
       <div class="l--center is--layer -c" style="--c: #fff;">
         <span class="-fz:xl">Banner Link</span>
@@ -181,33 +181,33 @@ See the [`hover` documentation page](/en/docs/property-class/hov#set--hov) for u
 <DocsLink path="/docs/property-class/hov#set--hov" />
 
 
-### `set--transition`
+### `has--transition`
 
 Sets the `transition` property using dedicated variables.
 
-<SrcCode path="src/scss/base/set/_transition.scss" />
+<SrcCode path="src/scss/trait/_hasTransition.scss" />
 
 <Preview>
   <PreviewTitle>Usage example</PreviewTitle>
   <PreviewArea p="30">
-    <Lism set="transition" hov={{c: 'red'}} style={{ '--hov-prop': 'color'}}>Example</Lism>
+    <Lism hasTransition hov={{c: 'red'}} style={{ '--hov-prop': 'color'}}>Example</Lism>
   </PreviewArea>
   <PreviewCode label="HTML" slot="tab">
     ```html
-    <div class="set--transition -hov:c" style="--hov-prop: color; --hov-c: var(--red);">Example</div>
+    <div class="has--transition -hov:c" style="--hov-prop: color; --hov-c: var(--red);">Example</div>
     ```
   </PreviewCode>
   <PreviewCode label="JSX" slot="tab">
     ```jsx
-    <Lism set="transition" hov={{c: 'red'}} style={{ '--hov-prop': 'color'}}>Example</Lism>
+    <Lism hasTransition hov={{c: 'red'}} style={{ '--hov-prop': 'color'}}>Example</Lism>
     ```
   </PreviewCode>
 </Preview>
 
 
-See the [`hover` documentation page](/en/docs/property-class/hov#set--transition) for usage examples.
+See the [`hover` documentation page](/en/docs/property-class/hov#has--transition) for usage examples.
 
-<DocsLink path="/docs/property-class/hov#set--transition" />
+<DocsLink path="/docs/property-class/hov#has--transition" />
 
 
 
@@ -276,21 +276,21 @@ Since `p` and `bdrs` are managed as variables even when their values change at b
 </Preview>
 
 
-### `set--gutter`
+### `has--gutter`
 
 A class that adds predefined horizontal spacing to the left and right sides of content.
 It is provided as a separate class from padding utilities to reserve a consistent horizontal margin across the entire site.
 
 | Class name | Spacing | Default value |
 |---|---|---|
-| `set--gutter` | `--gutter-size` | `var(--s30)` |
+| `has--gutter` | `--gutter-size` | `var(--s30)` |
 
-<SrcCode path="src/scss/base/set/_gutter.scss" />
+<SrcCode path="src/scss/trait/_hasGutter.scss" />
 
 <Preview>
   <PreviewTitle>Example</PreviewTitle>
   <PreviewArea resize p="15">
-    <Lism set="gutter">
+    <Lism hasGutter>
       <p>Lorem ipsum content...</p>
       <p>Lorem ipsum content...</p>
       <p>Lorem ipsum content...</p>
@@ -298,7 +298,7 @@ It is provided as a separate class from padding utilities to reserve a consisten
   </PreviewArea>
   <PreviewCode slot="tab" label="HTML">
   ```html
-  <div class="set--gutter">
+  <div class="has--gutter">
     <p>Lorem ipsum content...</p>
     <p>Lorem ipsum content...</p>
     <p>Lorem ipsum content...</p>
@@ -307,7 +307,7 @@ It is provided as a separate class from padding utilities to reserve a consisten
   </PreviewCode>
   <PreviewCode slot="tab" label="JSX">
   ```jsx
-  <Lism set="gutter">
+  <Lism hasGutter>
     <p>Lorem ipsum content...</p>
     <p>Lorem ipsum content...</p>
     <p>Lorem ipsum content...</p>

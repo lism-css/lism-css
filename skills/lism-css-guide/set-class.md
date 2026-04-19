@@ -10,8 +10,8 @@ HTML では直接クラスを付与し、Lism コンポーネントでは `set` 
 - [`set--plain`](#set--plain)
 - [`set--shadow`](#set--shadow)
 - [`set--hov`](#set--hov)
-- [`set--transition`](#set--transition)
-- [`set--gutter`](#set--gutter)
+- [`has--transition`](#has--transition)
+- [`has--gutter`](#has--gutter)
 - [`set--innerRs`](#set--innerrs)
 [詳細](https://lism-css.com/docs/set-class/)
 
@@ -26,8 +26,8 @@ HTML では直接クラスを付与し、Lism コンポーネントでは `set` 
 | `set--plain` | [`_plain.scss`](https://raw.githubusercontent.com/lism-css/lism-css/main/packages/lism-css/src/scss/base/set/_plain.scss) |
 | `set--shadow` | [`_shadow.scss`](https://raw.githubusercontent.com/lism-css/lism-css/main/packages/lism-css/src/scss/base/tokens/_shadow.scss) |
 | `set--hov` | [`_hov.scss`](https://raw.githubusercontent.com/lism-css/lism-css/main/packages/lism-css/src/scss/base/set/_hov.scss) |
-| `set--transition` | [`_transition.scss`](https://raw.githubusercontent.com/lism-css/lism-css/main/packages/lism-css/src/scss/base/set/_transition.scss) |
-| `set--gutter` | [`_gutter.scss`](https://raw.githubusercontent.com/lism-css/lism-css/main/packages/lism-css/src/scss/base/set/_gutter.scss) |
+| `has--transition` | [`_transition.scss`](https://raw.githubusercontent.com/lism-css/lism-css/main/packages/lism-css/src/scss/trait/_hasTransition.scss) |
+| `has--gutter` | [`_gutter.scss`](https://raw.githubusercontent.com/lism-css/lism-css/main/packages/lism-css/src/scss/trait/_hasGutter.scss) |
 | `set--innerRs` | [`_innerRs.scss`](https://raw.githubusercontent.com/lism-css/lism-css/main/packages/lism-css/src/scss/base/set/_innerRs.scss) |
 ---
 
@@ -92,7 +92,7 @@ HTML では直接クラスを付与し、Lism コンポーネントでは `set` 
 
 ```html
 <a href="###" class="l--frame is--boxLink set--hov -ar:21/9 -ov:hidden">
-  <img class="set--transition -hov:to:zoom" src="https://cdn.lism-css.com/img/a-2.jpg" width="960" height="640" loading="lazy" />
+  <img class="has--transition -hov:to:zoom" src="https://cdn.lism-css.com/img/a-2.jpg" width="960" height="640" loading="lazy" />
   <div class="is--layer -bgc" style="--c: #fff; --bgc: rgb(0 0 0 / 50%)"></div>
   <div class="l--center is--layer -c" style="--c: #fff;">
     <span class="-fz:xl">バナーリンク</span>
@@ -108,12 +108,12 @@ HTML では直接クラスを付与し、Lism コンポーネントでは `set` 
 ```
 
 
-## `set--transition`
+## `has--transition`
 
 トランジション用の CSS をセットアップします。
 
 ```scss
-.set--transition {
+.has--transition {
   transition: var(--hov-duration, 0.25s) var(--hov-ease, linear) var(--hov-delay, 0s);
   transition-property: var(--hov-prop, all);
 }
@@ -127,29 +127,29 @@ HTML では直接クラスを付与し、Lism コンポーネントでは `set` 
 | `--hov-delay` | `0s` |
 
 ```html
-<div class="set--transition -hov:c" style="--hov-prop: color; --hov-c: var(--red);">...</div>
+<div class="has--transition -hov:c" style="--hov-prop: color; --hov-c: var(--red);">...</div>
 ```
 ```jsx
-<Lism set="transition" hov={{c: 'red'}} style={{ '--hov-prop': 'color'}}>...</Lism>
+<Lism hasTransition hov={{c: 'red'}} style={{ '--hov-prop': 'color'}}>...</Lism>
 ```
 
 
 
-## `set--gutter`
+## `has--gutter`
 
 要素に左右パディングを適用します。`--gutter-size` のデフォルトは `var(--s30)` です。
 
 ```scss
-.set--gutter {
+.has--gutter {
   padding-inline: var(--gutter-size);
 }
 ```
 
 ```html
-<div class="set--gutter">...</div>
+<div class="has--gutter">...</div>
 ```
 ```jsx
-<Lism set="gutter">...</Lism>
+<Lism hasGutter>...</Lism>
 ```
 
 

@@ -687,14 +687,14 @@ The border specification has some unique behavior. See the [border page](/en/doc
 <Preview>
   <PreviewTitle>Examples: vertical writing at sm size and above</PreviewTitle>
   <PreviewArea p="0" resize>
-    <Flow set="gutter" py="20" w="100%" h="20em" wm={[null, 'vertical-rl']}>
+    <Flow hasGutter py="20" w="100%" h="20em" wm={[null, 'vertical-rl']}>
       <DummyText length="s" />
       <DummyText length="l" offset="3" />
     </Flow>
   </PreviewArea>
   <PreviewCode slot="tab" label="HTML">
   ```html "-wm_sm" "--wm_sm:"
-  <div class="l--flow set--gutter -py:20 -w:100% -h -wm_sm" style="--h: 20em; --wm_sm: vertical-rl">
+  <div class="l--flow has--gutter -py:20 -w:100% -h -wm_sm" style="--h: 20em; --wm_sm: vertical-rl">
     <p>Lorem ipsum dolor sit amet. Consectetur adipiscing elit, sed do eiusmod tempor Incididunt ut.</p>
     <p>
       Labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut. Aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint.
@@ -704,7 +704,7 @@ The border specification has some unique behavior. See the [border page](/en/doc
   </PreviewCode>
   <PreviewCode slot="tab" label="JSX">
   ```jsx 'wm={[null, "vertical-rl"]}'
-  <Flow set="gutter" py="20" w="100%" h="20em" wm={[null, 'vertical-rl']}>
+  <Flow hasGutter py="20" w="100%" h="20em" wm={[null, 'vertical-rl']}>
     <p>Lorem ipsum dolor sit amet. Consectetur adipiscing elit, sed do eiusmod tempor Incididunt ut.</p>
     <p>
       Labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut. Aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint.

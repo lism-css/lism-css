@@ -33,13 +33,13 @@ Examples of creating a reel component that displays content with horizontal scro
 <Preview>
   <PreviewTitle>Implementation with Flex<SwipeHelp /></PreviewTitle>
   <PreviewArea p="10">
-    <Flex util="snap" ov="auto" g="20" bdrs="20">
+    <Flex hasSnap ov="auto" g="20" bdrs="20">
       <ReelImages ar="16/9" fxsh="0" w="100%" bdrs="20" />
     </Flex>
   </PreviewArea>
   <PreviewCode slot="tab" label="JSX">
     ```jsx
-    <Flex util="snap" ov="auto" g="20" bdrs="20">
+    <Flex hasSnap ov="auto" g="20" bdrs="20">
       <ReelImages ar="16/9" fxsh="0" w="100%" bdrs="20" />
     </Flex>
     ```
@@ -53,7 +53,7 @@ Examples of creating a reel component that displays content with horizontal scro
 <Preview>
   <PreviewTitle>Adjusting snap position to match reel padding<SwipeHelp /></PreviewTitle>
   <PreviewArea resize p="10">
-    <Flex util="snap" ov="auto" bgc="black" p="20" g="20" bdrs="30" style={{ 'scroll-padding': 'var(--p)' }}>
+    <Flex hasSnap ov="auto" bgc="black" p="20" g="20" bdrs="30" style={{ 'scroll-padding': 'var(--p)' }}>
       <Frame ar="16/9" bdrs="20" fxsh="0" w="90%">
         <img src="https://cdn.lism-css.com/img/u-1.jpg" alt="" />
       </Frame>
@@ -73,7 +73,7 @@ Examples of creating a reel component that displays content with horizontal scro
   </PreviewArea>
   <PreviewCode slot="tab" label="JSX">
     ```jsx
-    <Flex util="snap" ov="auto" bgc="black" p="20" g="20" bdrs="30" style={{ 'scroll-padding': 'var(--p)' }}>
+    <Flex hasSnap ov="auto" bgc="black" p="20" g="20" bdrs="30" style={{ 'scroll-padding': 'var(--p)' }}>
       <Frame ar="16/9" bdrs="20" fxsh="0" w="90%">
         <img src="https://cdn.lism-css.com/img/u-1.jpg" alt="" />
       </Frame>
@@ -101,7 +101,7 @@ Examples of creating a reel component that displays content with horizontal scro
 <Preview>
   <PreviewTitle>Setting snap-align to center and responsively adjusting element size<SwipeHelp /></PreviewTitle>
   <PreviewArea resize p="10">
-    <Flex util="snap" ov="auto" g="20" p="15" bgc="black" bdrs="20" style={{ '--snapAlign': 'center' }}>
+    <Flex hasSnap ov="auto" g="20" p="15" bgc="black" bdrs="20" style={{ '--snapAlign': 'center' }}>
       <Frame ar="16/9" fxsh="0" w={['80%', '60%']} mx-s={['10%', '20%']} bdrs="20">
         <img src="https://cdn.lism-css.com/img/u-1.jpg" alt="" />
       </Frame>
@@ -121,7 +121,7 @@ Examples of creating a reel component that displays content with horizontal scro
   </PreviewArea>
   <PreviewCode slot="tab" label="JSX">
     ```jsx
-    <Flex util="snap" ov="auto" g="20" p="15" bgc="black" bdrs="20" style={{ '--snapAlign': 'center' }}>
+    <Flex hasSnap ov="auto" g="20" p="15" bgc="black" bdrs="20" style={{ '--snapAlign': 'center' }}>
       <Frame ar="16/9" fxsh="0" w={['80%', '60%']} mx-s={['10%', '20%']} bdrs="20">
         <img src="https://cdn.lism-css.com/img/u-1.jpg" alt="" />
       </Frame>
@@ -153,13 +153,13 @@ Examples of creating a reel component that displays content with horizontal scro
 <Preview>
   <PreviewTitle>Preview<SwipeHelp /></PreviewTitle>
   <PreviewArea resize p="10">
-    <Grid util="snap" ov="auto" gaf="column" gac="100%" g="20" bdrs="20" tabIndex="0">
+    <Grid hasSnap ov="auto" gaf="column" gac="100%" g="20" bdrs="20" tabIndex="0">
       <ReelImages ar="16/9" bdrs="20" />
     </Grid>
   </PreviewArea>
   <PreviewCode slot="tab" label="JSX">
     ```jsx
-    <Grid util="snap" ov="auto" gaf="column" gac="100%" g="20" bdrs="20" tabIndex="0">
+    <Grid hasSnap ov="auto" gaf="column" gac="100%" g="20" bdrs="20" tabIndex="0">
       <ReelImages ar="16/9" bdrs="20" />
     </Grid>
     ```
@@ -177,7 +177,7 @@ When responsively adjusting child element sizes in a Grid-based reel, specify `-
 <Preview>
   <PreviewTitle>Preview<SwipeHelp /></PreviewTitle>
   <PreviewArea resize p="10">
-    <Grid util="snap" ov="auto" gaf="column" gac="var(--cols)" cols={['70%', '40%']} g="15" bdrs="20" tabIndex="0">
+    <Grid hasSnap ov="auto" gaf="column" gac="var(--cols)" cols={['70%', '40%']} g="15" bdrs="20" tabIndex="0">
       <Frame ar="16/9" bdrs="20">
         <img src="https://cdn.lism-css.com/img/u-1.jpg" alt="" />
       </Frame>
@@ -197,7 +197,7 @@ When responsively adjusting child element sizes in a Grid-based reel, specify `-
   </PreviewArea>
   <PreviewCode slot="tab" label="JSX">
     ```jsx
-    <Grid util="snap" ov="auto" gaf="column" gac="var(--cols)" cols={['70%', '40%']} g="15" bdrs="20" tabIndex="0">
+    <Grid hasSnap ov="auto" gaf="column" gac="var(--cols)" cols={['70%', '40%']} g="15" bdrs="20" tabIndex="0">
       <Frame ar="16/9" bdrs="20">
         <img src="https://cdn.lism-css.com/img/u-1.jpg" alt="" />
       </Frame>
@@ -230,7 +230,7 @@ When responsively adjusting child element sizes in a Grid-based reel, specify `-
     Specify child element width with `gac` (`grid-auto-columns`)
   </PreviewTitle>
   <PreviewArea resize p="10">
-    <Grid util="snap" gaf="column" gac="24rem" g="20">
+    <Grid hasSnap gaf="column" gac="24rem" g="20">
       <Box bgc="base-2" p="30">
         <DummyText />
       </Box>
@@ -263,7 +263,7 @@ By adding an `id` to each reel item and providing anchor links, you can create n
 <Preview>
   <PreviewTitle>Adding button navigation</PreviewTitle>
   <PreviewArea p="30 20" layout="">
-    <Grid util="snap" ov="auto" gaf="column" gac="75%" g="15" bdrs="20" style={{ '--snapAlign': 'center', 'scroll-behavior': 'smooth' }}>
+    <Grid hasSnap ov="auto" gaf="column" gac="75%" g="15" bdrs="20" style={{ '--snapAlign': 'center', 'scroll-behavior': 'smooth' }}>
       <Frame id="image-1" ar="16/9" bdrs="20">
         <img src="https://cdn.lism-css.com/img/u-1.jpg" alt="" />
       </Frame>
@@ -290,7 +290,7 @@ By adding an `id` to each reel item and providing anchor links, you can create n
   </PreviewArea>
   <PreviewCode>
     ```jsx "id=" "href="
-    <Grid util="snap" ov="auto" gaf="column" gac="75%" g="15" bdrs="20" style={{ '--snapAlign': 'center', 'scroll-behavior': 'smooth' }}>
+    <Grid hasSnap ov="auto" gaf="column" gac="75%" g="15" bdrs="20" style={{ '--snapAlign': 'center', 'scroll-behavior': 'smooth' }}>
       <Frame id="image-1" ar="16/9" bdrs="20"><img src="https://cdn.lism-css.com/img/u-1.jpg" alt="" /></Frame>
       <Frame id="image-2" ar="16/9" bdrs="20"><img src="https://cdn.lism-css.com/img/u-2.jpg" alt="" /></Frame>
       <Frame id="image-3" ar="16/9" bdrs="20"><img src="https://cdn.lism-css.com/img/u-3.jpg" alt="" /></Frame>
@@ -318,13 +318,13 @@ The following example demonstrates switching to a 2-column layout by setting `gt
 <Preview>
   <PreviewTitle>Example: disable reel only at `~@md`<SwipeHelp /></PreviewTitle>
   <PreviewArea resize p="10">
-    <Grid util="snap" ov="auto" g="15" gaf={['column', null, 'row']} gac="75%" gtc={[null, null, 'repeat(2, 1fr)']}>
+    <Grid hasSnap ov="auto" g="15" gaf={['column', null, 'row']} gac="75%" gtc={[null, null, 'repeat(2, 1fr)']}>
       <ReelImages />
     </Grid>
   </PreviewArea>
   <PreviewCode>
     ```jsx "gaf" "gtc"
-    <Grid util="snap" ov="auto" g="15" gaf={['column', null, 'row']} gac="75%" gtc={[null, null, 'repeat(2, 1fr)']}>
+    <Grid hasSnap ov="auto" g="15" gaf={['column', null, 'row']} gac="75%" gtc={[null, null, 'repeat(2, 1fr)']}>
       ...
     </Grid>
     ```
@@ -338,7 +338,7 @@ The following example demonstrates switching to a 2-column layout by setting `gt
   <PreviewTitle>Preview<SwipeHelp icon={MouseScrollIcon} /></PreviewTitle>
   <PreviewArea resize p="10">
     <Box max-w="24rem" mx="auto">
-      <Box class="u--snap" ov="auto" ar="3/4" bdrs="20" bgc="black">
+      <Box class="has--snap" ov="auto" ar="3/4" bdrs="20" bgc="black">
         <Frame ar="3/4">
           <img src="https://cdn.lism-css.com/img/v/u-1.jpg" alt="" />
         </Frame>
@@ -357,7 +357,7 @@ The following example demonstrates switching to a 2-column layout by setting `gt
   <PreviewCode>
     ```jsx
     <Box max-w="24rem" mx="auto">
-      <Box class="u--snap" ov="auto" ar="3/4" bdrs="20" bgc="black">
+      <Box class="has--snap" ov="auto" ar="3/4" bdrs="20" bgc="black">
         <Frame ar="3/4">
           <img src="https://cdn.lism-css.com/img/v/u-1.jpg" alt="" />
         </Frame>

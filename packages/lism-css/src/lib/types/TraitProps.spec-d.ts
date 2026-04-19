@@ -38,6 +38,12 @@ describe('TraitProps', () => {
       assertType<TraitProps>({ isSide: true });
       assertType<TraitProps>({ isSkipFlow: true });
     });
+
+    it('has-- Trait（hasGutter / hasTransition / hasSnap）', () => {
+      assertType<TraitProps>({ hasGutter: true });
+      assertType<TraitProps>({ hasTransition: true });
+      assertType<TraitProps>({ hasSnap: true });
+    });
   });
 
   describe('プリセット値を持つトレイトは、プリセット値・string・boolean を受け入れる', () => {
@@ -66,6 +72,7 @@ describe('TraitProps', () => {
       assertType<TraitProps>({
         isContainer: true,
         isWrapper: 's',
+        hasGutter: true,
       });
     });
   });
@@ -85,17 +92,15 @@ describe('TraitProps', () => {
 describe('LismPropsBase — set / util', () => {
   describe('set prop', () => {
     it('プリセット値を受け付ける', () => {
-      assertType<LismPropsBase>({ set: 'gutter' });
       assertType<LismPropsBase>({ set: 'shadow' });
       assertType<LismPropsBase>({ set: 'hov' });
-      assertType<LismPropsBase>({ set: 'transition' });
       assertType<LismPropsBase>({ set: 'mask' });
       assertType<LismPropsBase>({ set: 'plain' });
       assertType<LismPropsBase>({ set: 'innerRs' });
     });
 
     it('スペース区切りで複数指定できる', () => {
-      assertType<LismPropsBase>({ set: 'hov transition' });
+      assertType<LismPropsBase>({ set: 'hov shadow' });
     });
 
     it('`-` prefix で除外指定できる', () => {
@@ -107,8 +112,8 @@ describe('LismPropsBase — set / util', () => {
     });
 
     it('文字列配列も受け付ける（内部 API 用途）', () => {
-      assertType<LismPropsBase>({ set: ['hov', 'transition'] });
-      assertType<LismPropsBase>({ set: ['gutter', 'custom-value'] });
+      assertType<LismPropsBase>({ set: ['hov', 'shadow'] });
+      assertType<LismPropsBase>({ set: ['innerRs', 'custom-value'] });
     });
 
     it('undefined / 省略可', () => {
@@ -125,7 +130,6 @@ describe('LismPropsBase — set / util', () => {
       assertType<LismPropsBase>({ util: 'srOnly' });
       assertType<LismPropsBase>({ util: 'clipText' });
       assertType<LismPropsBase>({ util: 'collapseGrid' });
-      assertType<LismPropsBase>({ util: 'snap' });
     });
 
     it('スペース区切りで複数指定できる', () => {
@@ -151,7 +155,7 @@ describe('LismPropsBase — set / util', () => {
 
   describe('set + util 同時指定', () => {
     it('両方同時に指定できる', () => {
-      assertType<LismPropsBase>({ set: 'hov transition', util: 'cbox trim' });
+      assertType<LismPropsBase>({ set: 'hov shadow', util: 'cbox trim' });
     });
   });
 });

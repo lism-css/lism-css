@@ -85,7 +85,7 @@ export class LismPropsData {
   // 最終出力 className
   className: string = '';
   // 出力順のためのクラスバケット: [primitiveClass] [uClasses]
-  // - primitiveClass : a--* / l--* / is--* の primitive クラス（getAtomicProps → getLayoutProps → analyzeTrait の順で push）
+  // - primitiveClass : a--* / l--* / is--* / has--* の primitive / trait クラス（getAtomicProps → getLayoutProps → analyzeTrait の順で push）
   // - uClasses       : set--* → u--* → -property の順で push される utility クラス
   primitiveClass: string[] = [];
   uClasses: string[] = [];

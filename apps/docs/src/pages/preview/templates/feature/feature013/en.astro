@@ -6,7 +6,7 @@ import './_style.css';
 ---
 
 <DemoLayout title="Feature013">
-  <Container isWrapper="l" bgc="base-2" py="50" set="gutter">
+  <Container isWrapper="l" bgc="base-2" py="50" hasGutter>
     <Stack g="40">
       <Stack ai="center" g="5">
         <Heading level="2" fz="2xl" fw="bold">Curated Products</Heading>
@@ -17,7 +17,8 @@ import './_style.css';
           href="#"
           layout="tileGrid"
           class="set--innerRs"
-          set="hov transition"
+          set="hov"
+          hasTransition
           gc="1 / -1"
           cols={['1', null, '2']}
           bgc="white"
@@ -26,7 +27,7 @@ import './_style.css';
           hov="bxsh"
         >
           <Frame pos="relative" min-h="100%">
-            <Media src="https://cdn.lism-css.com/random/img?r=1" alt="" width="960" height="640" set="transition" hov="to:zoom" />
+            <Media src="https://cdn.lism-css.com/random/img?r=1" alt="" width="960" height="640" hasTransition hov="to:zoom" />
           </Frame>
           <Stack g="30" jc="center" p="40">
             <Text class="u--trim" fz="l" fw="bold">Limited Edition Collaboration Model</Text>
@@ -34,7 +35,7 @@ import './_style.css';
               Discover a one-of-a-kind piece available only here. From artist collaborations to limited-edition models. Enrich your self-care moments.
               Transform your daily routine into a comfortable experience.
             </Text>
-            <Flex bdrs="inner" jc="center" bd p="10" set="transition" hov="to:reverse">
+            <Flex bdrs="inner" jc="center" bd p="10" hasTransition hov="to:reverse">
               <Text fz="m">View Detail</Text>
             </Flex>
           </Stack>
@@ -42,7 +43,7 @@ import './_style.css';
         <Columns cols={['1', '2', '4']} g="40">
           <BoxLink layout="grid" gtr="subgrid" gr="span 3" set="hov" g="30" href="#">
             <Frame as="figure" ar="16/9" bdrs="20" pos="relative">
-              <Media src="/img/img-1.jpg" alt="" width="960" height="640" set="transition" hov="to:zoom" />
+              <Media src="/img/img-1.jpg" alt="" width="960" height="640" hasTransition hov="to:zoom" />
             </Frame>
             <Stack g="20">
               <Text class="u--trim" fz="m" fw="bold">Climate & Living Appliances</Text>
@@ -50,13 +51,13 @@ import './_style.css';
                 >Blending seamlessly into your space, creating comfortable air and quality time. Items that elevate your daily life.</Text
               >
             </Stack>
-            <Flex my-s="auto" jc="center" bd bdc="line" p="10" bdrs="20" set="transition" hov="to:reverse">
+            <Flex my-s="auto" jc="center" bd bdc="line" p="10" bdrs="20" hasTransition hov="to:reverse">
               <Text fz="s">View Detail</Text>
             </Flex>
           </BoxLink>
           <BoxLink layout="grid" gtr="subgrid" gr="span 3" set="hov" g="30" href="#">
             <Frame as="figure" ar="16/9" bdrs="20" pos="relative">
-              <Media src="https://cdn.lism-css.com/random/img?r=2" alt="" width="960" height="640" set="transition" hov="to:zoom" />
+              <Media src="https://cdn.lism-css.com/random/img?r=2" alt="" width="960" height="640" hasTransition hov="to:zoom" />
             </Frame>
             <Stack g="20">
               <Text class="u--trim" fz="m" fw="bold">Smart Home</Text>
@@ -64,13 +65,13 @@ import './_style.css';
                 Appliances work together quietly to support your lifestyle. Creating a future of everyday living where technology feels invisible.
               </Text>
             </Stack>
-            <Flex my-s="auto" jc="center" bd bdc="line" p="10" bdrs="20" set="transition" hov="to:reverse">
+            <Flex my-s="auto" jc="center" bd bdc="line" p="10" bdrs="20" hasTransition hov="to:reverse">
               <Text fz="s">View Detail</Text>
             </Flex>
           </BoxLink>
           <BoxLink layout="grid" gtr="subgrid" gr="span 3" set="hov" g="30" href="#">
             <Frame as="figure" ar="16/9" bdrs="20" pos="relative">
-              <Media src="https://cdn.lism-css.com/random/img?r=3" alt="" width="960" height="640" set="transition" hov="to:zoom" />
+              <Media src="https://cdn.lism-css.com/random/img?r=3" alt="" width="960" height="640" hasTransition hov="to:zoom" />
             </Frame>
             <Stack g="20">
               <Text class="u--trim" fz="m" fw="bold">Accessories</Text>
@@ -78,13 +79,13 @@ import './_style.css';
                 >Dedicated accessories that enrich the product experience. Infusing the brand's aesthetic sensibility into every detail.</Text
               >
             </Stack>
-            <Flex my-s="auto" jc="center" bd bdc="line" p="10" bdrs="20" set="transition" hov="to:reverse">
+            <Flex my-s="auto" jc="center" bd bdc="line" p="10" bdrs="20" hasTransition hov="to:reverse">
               <Text fz="s">View Detail</Text>
             </Flex>
           </BoxLink>
           <BoxLink layout="grid" gtr="subgrid" gr="span 3" set="hov" g="30" href="#">
             <Frame as="figure" ar="16/9" bdrs="20" pos="relative">
-              <Media src="https://cdn.lism-css.com/random/img?r=4" alt="" width="960" height="640" set="transition" hov="to:zoom" />
+              <Media src="https://cdn.lism-css.com/random/img?r=4" alt="" width="960" height="640" hasTransition hov="to:zoom" />
             </Frame>
             <Stack g="20">
               <Text class="u--trim" fz="m" fw="bold">Beauty & Wellness</Text>
@@ -92,7 +93,7 @@ import './_style.css';
                 >Enrich the time you spend caring for yourself. Transform your daily self-care into a comfortable experience.</Text
               >
             </Stack>
-            <Flex my-s="auto" jc="center" bd bdc="line" p="10" bdrs="20" set="transition" hov="to:reverse">
+            <Flex my-s="auto" jc="center" bd bdc="line" p="10" bdrs="20" hasTransition hov="to:reverse">
               <Text fz="s">View Detail</Text>
             </Flex>
           </BoxLink>

@@ -154,7 +154,7 @@ import { Button } from '@lism-css/ui/astro';
   <PreviewTitle>`-hov:to:zoom`の使用例</PreviewTitle>
   <PreviewArea p="30">
     <a href="###" class="l--frame is--boxLink set--hov -ar:21/9 -ov:hidden">
-      <img class="set--transition -hov:to:zoom" src="https://cdn.lism-css.com/img/a-2.jpg" width="960" height="640" loading="lazy" />
+      <img class="has--transition -hov:to:zoom" src="https://cdn.lism-css.com/img/a-2.jpg" width="960" height="640" loading="lazy" />
       <div class="is--layer -bgc" style="--c: #fff; --bgc: rgb(0 0 0 / 50%)"></div>
       <div class="l--center is--layer -c" style="--c: #fff;">
         <span class="-fz:xl">バナーリンク</span>
@@ -164,7 +164,7 @@ import { Button } from '@lism-css/ui/astro';
   <PreviewCode>
     ```html "set--hov" "-hov:to:zoom"
     <a href="###" class="l--frame is--boxLink set--hov -ar:21/9 -ov:hidden">
-      <img class="set--transition -hov:to:zoom" src="https://cdn.lism-css.com/img/a-2.jpg" width="960" height="640" loading="lazy" />
+      <img class="has--transition -hov:to:zoom" src="https://cdn.lism-css.com/img/a-2.jpg" width="960" height="640" loading="lazy" />
       <div class="is--layer -bgc" style="--c: #fff; --bgc: rgb(0 0 0 / 50%)"></div>
       <div class="l--center is--layer -c" style="--c: #fff;">
         <span class="-fz:xl">バナーリンク</span>
@@ -181,33 +181,33 @@ import { Button } from '@lism-css/ui/astro';
 <DocsLink path="/docs/property-class/hov#set--hov" />
 
 
-### `set--transition`
+### `has--transition`
 
 専用の変数を用いて、transitionプロパティをセットします。
 
-<SrcCode path="src/scss/base/set/_transition.scss" />
+<SrcCode path="src/scss/trait/_hasTransition.scss" />
 
 <Preview>
   <PreviewTitle>使用例</PreviewTitle>
   <PreviewArea p="30">
-    <Lism set="transition" hov={{c: 'red'}} style={{ '--hov-prop': 'color'}}>Example</Lism>
+    <Lism hasTransition hov={{c: 'red'}} style={{ '--hov-prop': 'color'}}>Example</Lism>
   </PreviewArea>
   <PreviewCode label="HTML" slot="tab">
     ```html
-    <div class="set--transition -hov:c" style="--hov-prop: color; --hov-c: var(--red);">Example</div>
+    <div class="has--transition -hov:c" style="--hov-prop: color; --hov-c: var(--red);">Example</div>
     ```
   </PreviewCode>
   <PreviewCode label="JSX" slot="tab">
     ```jsx
-    <Lism set="transition" hov={{c: 'red'}} style={{ '--hov-prop': 'color'}}>Example</Lism>
+    <Lism hasTransition hov={{c: 'red'}} style={{ '--hov-prop': 'color'}}>Example</Lism>
     ```
   </PreviewCode>
 </Preview>
 
 
-活用例は [`hover`の解説ページ](/docs/property-class/hov#set--transition) を参照してください。
+活用例は [`hover`の解説ページ](/docs/property-class/hov#has--transition) を参照してください。
 
-<DocsLink path="/docs/property-class/hov#set--transition" />
+<DocsLink path="/docs/property-class/hov#has--transition" />
 
 
 ### `set--innerRs`
@@ -275,21 +275,21 @@ import { Button } from '@lism-css/ui/astro';
 </Preview>
 
 
-### `set--gutter`
+### `has--gutter`
 
 コンテンツの左右にあらかじめ定義済みの余白をつけることができるクラスです。  
 サイト全体で統一した余白量を左右に確保するためのものとして、padding系のユーティリティとは別のクラスとして用意しています。
 
 | クラス名 | 余白量 |初期値 |
 |---|---|---|
-| `set--gutter` | `--gutter-size` | `var(--s30)` |
+| `has--gutter` | `--gutter-size` | `var(--s30)` |
 
-<SrcCode path="src/scss/base/set/_gutter.scss" />
+<SrcCode path="src/scss/trait/_hasGutter.scss" />
 
 <Preview>
   <PreviewTitle>例</PreviewTitle>
   <PreviewArea resize p="15">
-    <Lism set="gutter">
+    <Lism hasGutter>
       <p>Lorem ipsum content...</p>
       <p>Lorem ipsum content...</p>
       <p>Lorem ipsum content...</p>
@@ -297,7 +297,7 @@ import { Button } from '@lism-css/ui/astro';
   </PreviewArea>
   <PreviewCode slot="tab" label="HTML">
   ```html
-  <div class="set--gutter">
+  <div class="has--gutter">
     <p>Lorem ipsum content...</p>
     <p>Lorem ipsum content...</p>
     <p>Lorem ipsum content...</p>
@@ -306,7 +306,7 @@ import { Button } from '@lism-css/ui/astro';
   </PreviewCode>
   <PreviewCode slot="tab" label="JSX">
   ```jsx
-  <Lism set="gutter">
+  <Lism hasGutter>
     <p>Lorem ipsum content...</p>
     <p>Lorem ipsum content...</p>
     <p>Lorem ipsum content...</p>

@@ -48,7 +48,7 @@ BoxLink には主に2通りの使い方があります。
 `<BoxLink>` は `<div>` にしたまま、内部のアンカー要素に `is--coverLink` クラスを付けてボックス全体をクリック可能にします。**BoxLink 内部にさらに別のリンクを配置したい場合はこちらを選ぶこと**。
 
 ```jsx
-<BoxLink as="section" p="30" bgc="base" bd bdrs="30" set="transition" hov="bxsh">
+<BoxLink as="section" p="30" bgc="base" bd bdrs="30" hasTransition hov="bxsh">
   <Group fz="xl" fw="bold">
     <Link isCoverLink href="/article/1">
       Heading link text
@@ -62,7 +62,7 @@ BoxLink には主に2通りの使い方があります。
 ```
 
 ```html
-<div class="is--boxLink -hov:bxsh -p:30 -bgc:base -bd -bdrs:30 set--transition">
+<div class="is--boxLink -hov:bxsh -p:30 -bgc:base -bd -bdrs:30 has--transition">
   <div class="-fz:xl -fw:bold">
     <a class="is--coverLink" href="/article/1">Heading link text</a>
   </div>
