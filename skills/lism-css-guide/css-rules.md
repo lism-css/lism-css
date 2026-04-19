@@ -26,8 +26,8 @@ Settings（トークン定義）
   → @layer lism-primitive
       → @layer layout（.l-- Layout Primitive）
       → @layer atomic（.a-- Atomic Primitive）
+  → @layer lism-trait（.is-- / .has-- Trait Class）
   → @layer lism-component（.c-- Component Class — BEM 構造を持つ UI 部品）
-  → @layer lism-trait（.is-- / .has-- Trait Class — component より優先）
   → @layer lism-custom（ユーザーカスタマイズ用）
   → @layer lism-utility（.u-- ユーティリティクラス）
   → Property Class（レイヤー外 — 最も詳細度が高い）
@@ -42,13 +42,13 @@ Settings（トークン定義）
 
 | プレフィックス | レイヤー | 役割 | 例 |
 |--------------|---------|------|-----|
-| `.set--` | lism-base | ベーススタイル上書き・変数提供 | `.set--plain`, `.set--hov`, `.set--shadow` |
-| `.l--` | lism-primitive.layout | Layout Primitive | `.l--grid`, `.l--flex`, `.l--stack` |
-| `.a--` | lism-primitive.atomic | Atomic Primitive | `.a--icon`, `.a--divider` |
-| `.c--` | lism-component | Component Class（BEM 構造を持つ UI 部品） | `.c--button`, `.c--accordion` |
-| `.is--` | lism-trait | Trait（役割宣言 — 〜である） | `.is--container`, `.is--wrapper`, `.is--layer`, `.is--boxLink` |
-| `.has--` | lism-trait | Trait（機能付与 — 〜を持つ） | `.has--transition`, `.has--gutter`, `.has--snap` |
-| `.u--` | lism-utility | 用途が明確な装飾系ユーティリティ | `.u--cbox`, `.u--trim`, `.u--collapseGrid` |
+| `.set--` | `lism-base` | ベーススタイル上書き・変数提供 | `.set--plain`, `.set--hov`, `.set--shadow` |
+| `.l--` | `lism-primitive.layout` | Layout Primitive | `.l--grid`, `.l--flex`, `.l--stack` |
+| `.a--` | `lism-primitive.atomic` | Atomic Primitive | `.a--icon`, `.a--divider` |
+| `.c--` | `lism-component` | Component Class（BEM 構造を持つ UI 部品） | `.c--button`, `.c--accordion` |
+| `.is--` | `lism-trait` | Trait（役割宣言 — 〜である） | `.is--container`, `.is--wrapper`, `.is--layer`, `.is--boxLink` |
+| `.has--` | `lism-trait` | Trait（機能付与 — 〜を持つ） | `.has--transition`, `.has--gutter`, `.has--snap` |
+| `.u--` | `lism-utility` | 用途が明確な装飾系ユーティリティ | `.u--cbox`, `.u--trim`, `.u--collapseGrid` |
 | `.-` | レイヤー外 | 単一プロパティ制御（Property Class） | `.-fz:l`, `.-p:20`, `.-d:none` |
 
 **併用ルール:**
@@ -61,6 +61,13 @@ Settings（トークン定義）
   - Block と自身の Modifier: `.c--button.c--button--outline`
   - Block と他 Block の Element: `.c--xxx.c--yyy_elem`
 - 子要素: `.c--card_header`, `.c--card_body`（`c--` のみ Element を持つ。`_` 一つ区切り）
+
+**`is--` と `has--` の判定軸:**
+
+|  | `is--` | `has--` |
+|---|---|---|
+| 意味 | 〜である（役割・存在の宣言） | 〜を持つ（機能の付与） |
+| CSS 変数 | 必須ではない | 必須（カスタマイズポイントを提供） |
 
 **記述順序:**
 class 属性にクラスを直接記述する場合は、以下の順序で並べてください。

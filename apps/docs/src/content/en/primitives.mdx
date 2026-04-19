@@ -9,27 +9,6 @@ Lism provides **Primitive classes** as small building blocks for composing layou
 - `l--{name}`: Layout Primitives that serve as the building blocks of layouts.
 - `a--{name}`: Atomic Primitives that represent the smallest units of a layout.
 
-By combining these, you can build complex layouts. The `c--` prefixed **[Component Class](/en/docs/css-methodology/#component-class)** represents concrete UI parts composed from these Primitives.
-
-:::info
-Primitive classes are standalone classes that do not have variations (such as `--outline`) or child element classes (such as `_header`). Only `c--` Component Classes follow a BEM-like structure.
-:::
-
-For `is--*` classes that declare a role on an element (Trait Classes), see [Trait Class](/en/docs/trait-class/).
-
-
-#### Combination Rules
-
-| Combination | Allowed | Notes |
-|---|---|---|
-| `l--` × `l--` | NG | Same category cannot be combined |
-| `a--` × `a--` | NG | Same category cannot be combined |
-| `l--` × `is--` | OK | Multiple Traits can be combined |
-| `a--` × `is--` | OK | |
-| `l--` × `a--` | Discouraged | Not intended to coexist |
-| `l--` × `c--` | OK | e.g. `c--nav l--flex` |
-| `a--` × `c--` | OK | |
-
 
 ## Layout Primitives
 

@@ -48,15 +48,12 @@ To address the common problem of CSS specificity becoming overly complex, Lism d
       </td>
     </tr>
     <tr>
-      <td class='-whs:nowrap'>Components<br/>`@lism-component`</td>
-      <td>The layer for UI components with BEM-like structure (`.c--{name}`). Not included in the core `lism-css` — `@lism-css/ui` and user-defined `c--*` classes belong here.</td>
+      <td class='-whs:nowrap'>Trait<br/>`@lism-trait`</td>
+      <td>The layer for classes that declaratively attach a role or feature to an element (`.is--{name}`, `.has--{name}`).</td>
     </tr>
     <tr>
-      <td class='-whs:nowrap'>Trait<br/>`@lism-trait`</td>
-      <td>
-        The layer for classes that declaratively attach a role or feature to an element (`.is--{name}`, `.has--{name}`).<br />
-        Placed *after* `@lism-component`, so user-declared Traits take precedence over Component Classes.
-      </td>
+      <td class='-whs:nowrap'>Components<br/>`@lism-component`</td>
+      <td>The layer for UI components with BEM-like structure (`.c--{name}`). Not included in the core `lism-css` — `@lism-css/ui` and user-defined `c--*` classes belong here.</td>
     </tr>
     <tr>
       <td class='-whs:nowrap'>Custom<br/>`@lism-custom`</td>
@@ -111,6 +108,33 @@ These are further categorized into several types:
 
 Primitive classes are standalone — they have no variations or child element classes. Only the `c--` Component Classes described next follow a BEM-like structure.
 
+Combining Primitives follows these rules:
+
+| Combination | Allowed | Notes |
+|---|---|---|
+| `l--` × `l--` | NG | Same category cannot be combined |
+| `a--` × `a--` | NG | Same category cannot be combined |
+| `l--` × `a--` | Discouraged | Not intended to coexist |
+
+### Trait Class
+
+**Trait Classes** declare a role on an element or attach a feature to it.
+
+| Category | Format | Example |
+|---|---|---|
+|`is--` Trait<br /><small>Declares a role ("is a …") on an element</small>|`.is--{name}`|`.is--container`,<br />`.is--wrapper`,<br />`.is--layer`,<br />`.is--boxLink`|
+|`has--` Trait<br /><small>Attaches a feature ("has a …") to an element</small>|`.has--{name}`|`.has--transition`,<br />`.has--gutter`,<br />`.has--snap`|
+
+The decision criteria between `is--` and `has--` are:
+
+|  | `is--` | `has--` |
+|---|---|---|
+| Meaning | "is a …" (role / existence declaration) | "has a …" (feature attachment) |
+| CSS variables | Not required | Required (provides customization points) |
+
+See the [naming guide](/en/docs/naming/) for the detailed decision criteria and usage guidelines.
+
+
 ### Component Class
 
 **Component Classes** prefixed with `c--` are concrete UI components composed from Primitives.  
@@ -144,31 +168,6 @@ Combining Blocks (`.c--xxx.c--yyy`) is generally NG, but the following combinati
 
 - Block with its own Modifier: `.c--xxx.c--xxx--variant`
 - Block with another Block's Element: `.c--xxx.c--yyy_elem`
-
-
-### Trait Class
-
-**Trait Classes** declare a role on an element or attach a feature to it.  
-They belong to the `@lism-trait` layer (placed *after* `@lism-component`), so user-declared Traits take precedence over Component Classes.
-
-| Category | Format | Example |
-|---|---|---|
-|`is--` Trait<br /><small>Declares a role ("is a …") on an element</small>|`.is--{name}`|`.is--container`,<br />`.is--wrapper`,<br />`.is--layer`,<br />`.is--boxLink`|
-|`has--` Trait<br /><small>Attaches a feature ("has a …") to an element</small>|`.has--{name}`|`.has--transition`,<br />`.has--gutter`,<br />`.has--snap`|
-
-See the [naming guide](/en/docs/naming/) for the detailed decision criteria and usage guidelines.
-
-#### Combination rules between Primitives / Traits
-
-| Combination | Allowed | Notes |
-|---|---|---|
-| `l--` × `l--` | NG | Same category cannot be combined |
-| `a--` × `a--` | NG | Same category cannot be combined |
-| `is--` × `is--` | OK | Multiple Traits can be combined |
-| `has--` × `has--` | OK | Multiple Traits can be combined |
-| `is--` × `has--` | OK | |
-| `is--`/`has--` × `l--`/`a--` | OK | |
-| `l--` × `a--` | Discouraged | Not intended to coexist |
 
 
 

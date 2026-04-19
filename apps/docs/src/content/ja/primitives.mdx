@@ -9,27 +9,6 @@ Lism では、レイアウトを組み立てる小さな積み木として **Pri
 - `l--{name}`: レイアウトの構成単位となる Layout Primitive。
 - `a--{name}`: レイアウトの最小単位となる Atomic Primitive。
 
-これらを組み合わせることで複雑なレイアウトを構築でき、`c--` で始まる **[Component Class](/docs/css-methodology/#component-class)** はこれらの Primitive を組み合わせて作られた具体的な UI 部品として位置付けられます。
-
-:::info
-Primitive クラスはバリエーション（`--outline` 等）や子要素クラス（`_header` 等）を持たない、単体で機能するクラスです。BEM 構造を持つのは `c--` の Component Class のみです。
-:::
-
-要素に役割を宣言する `is--*`（Trait Class）については [Trait Class](/docs/trait-class/) を参照してください。
-
-
-#### 併用ルール
-
-| 組み合わせ | 可否 | 備考 |
-|---|---|---|
-| `l--` × `l--` | NG | 同カテゴリの併用は不可 |
-| `a--` × `a--` | NG | 同カテゴリの併用は不可 |
-| `l--` × `is--` | OK | Trait は複数併用できる |
-| `a--` × `is--` | OK | |
-| `l--` × `a--` | 非推奨 | 役割的には同居しない想定 |
-| `l--` × `c--` | OK | 例: `c--nav l--flex` |
-| `a--` × `c--` | OK | |
-
 
 ## Layout Primitives
 

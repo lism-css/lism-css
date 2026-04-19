@@ -1,8 +1,7 @@
 # Primitive クラス
 
-Lism CSS では、レイアウトを組み立てる小さな積み木として **Primitive クラス**（`l--` / `a--`）を提供します。これらはすべて `@layer lism-primitive` に属します（サブレイヤーは `layout` / `atomic`）。
-
-`is--*` / `has--*` は `@layer lism-trait`（Primitive とは別レイヤー）に配置される **Trait クラス**です。[trait-class.md](./trait-class.md) を参照。
+Lism CSS では、レイアウトを組み立てる小さな積み木として **Primitive クラス**（`l--` / `a--`）を提供します。
+これらは `@layer lism-primitive` に属します（サブレイヤーは `layout` / `atomic`）。
 
 
 ## TOC
@@ -22,10 +21,7 @@ Lism CSS では、レイアウトを組み立てる小さな積み木として *
 | `l--` | Layout Primitive | `lism-primitive.layout` | レイアウトの構成単位となる Primitive |
 | `a--` | Atomic Primitive | `lism-primitive.atomic` | レイアウトの最小単位（アイコン・区切り線等） |
 
-**併用ルール:**
-- 同カテゴリ内の併用は不可（例: `l--flex` と `l--grid` は同要素に付けない）
-- `a--` / `l--` には `variant` の BEM 展開は適用されない（BEM Modifier は `c--` 専用）
-- `is--` / `has--` (Trait) とは自由に併用可能
+併用ルールは [css-rules.md](./css-rules.md#プレフィックスとクラス分類) を参照してください。
 
 
 ## Layout Primitive（`l--`）
