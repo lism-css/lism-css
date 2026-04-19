@@ -91,7 +91,7 @@ HTML では直接クラスを付与し、Lism コンポーネントでは `set` 
 例えば、親のボックスがhoverされたら、その内部の画像をズームするようなケースで活用でき、`-hov:to:zoom`クラスが標準で用意されています。
 
 ```html
-<a href="###" class="l--frame is--boxLink set--hov -ar:21/9 -ov:hidden">
+<a href="###" class="l--frame set--hov is--boxLink -ar:21/9 -ov:hidden">
   <img class="has--transition -hov:to:zoom" src="https://cdn.lism-css.com/img/a-2.jpg" width="960" height="640" loading="lazy" />
   <div class="is--layer -bgc" style="--c: #fff; --bgc: rgb(0 0 0 / 50%)"></div>
   <div class="l--center is--layer -c" style="--c: #fff;">

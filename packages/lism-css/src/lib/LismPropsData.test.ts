@@ -6,8 +6,11 @@ describe('LismPropsData', () => {
     test('空のpropsでインスタンスが作成される', () => {
       const instance = new LismPropsData({});
       expect(instance.className).toBe('');
-      expect(instance.uClasses).toEqual([]);
       expect(instance.primitiveClass).toEqual([]);
+      expect(instance.setClasses).toEqual([]);
+      expect(instance.traitClasses).toEqual([]);
+      expect(instance.uClasses).toEqual([]);
+      expect(instance.propClasses).toEqual([]);
       expect(instance.styles).toEqual({});
       expect(instance.attrs).toEqual({});
     });
@@ -57,26 +60,26 @@ describe('LismPropsData', () => {
   });
 
   describe('analyzeProps - Lism Props処理', () => {
-    test('fz: トークン値がユーティリティクラスになる', () => {
+    test('fz: トークン値が property class になる', () => {
       const instance = new LismPropsData({ fz: 'xl' });
-      expect(instance.uClasses).toContain('-fz:xl');
+      expect(instance.propClasses).toContain('-fz:xl');
     });
 
     test('fz: カスタム値は変数として出力される', () => {
       const instance = new LismPropsData({ fz: '18px' });
-      expect(instance.uClasses).toContain('-fz');
+      expect(instance.propClasses).toContain('-fz');
       expect(instance.styles['--fz']).toBe('18px');
     });
 
     test('w: カスタム値は変数として出力される (bp:1)', () => {
       const instance = new LismPropsData({ w: '200px' });
-      expect(instance.uClasses).toContain('-w');
+      expect(instance.propClasses).toContain('-w');
       expect(instance.styles['--w']).toBe('200px');
     });
 
-    test('c: プリセット値がユーティリティクラスになる', () => {
+    test('c: プリセット値が property class になる', () => {
       const instance = new LismPropsData({ c: 'base' });
-      expect(instance.uClasses).toContain('-c:base');
+      expect(instance.propClasses).toContain('-c:base');
     });
 
     test('c: カスタム値は変数として出力される', () => {
@@ -84,26 +87,26 @@ describe('LismPropsData', () => {
       expect(instance.styles['--c']).toBe('var(--blue)');
     });
 
-    test('p: トークン値がユーティリティクラスになる', () => {
+    test('p: トークン値が property class になる', () => {
       const instance = new LismPropsData({ p: '20' });
-      expect(instance.uClasses).toContain('-p:20');
+      expect(instance.propClasses).toContain('-p:20');
     });
 
-    test(': プレフィックス付きの値はユーティリティクラスになる', () => {
+    test(': プレフィックス付きの値は property class になる', () => {
       const instance = new LismPropsData({ w: ':fit' });
-      expect(instance.uClasses).toContain('-w:fit');
+      expect(instance.propClasses).toContain('-w:fit');
       expect(instance.styles.width).toBeUndefined();
     });
 
-    test('true値はユーティリティクラスのみ出力', () => {
+    test('true値は property class のみ出力', () => {
       const instance = new LismPropsData({ w: true });
-      expect(instance.uClasses).toContain('-w');
+      expect(instance.propClasses).toContain('-w');
       expect(instance.styles.width).toBeUndefined();
     });
 
-    test('- 値はユーティリティクラスのみ出力', () => {
+    test('- 値は property class のみ出力', () => {
       const instance = new LismPropsData({ w: '-' });
-      expect(instance.uClasses).toContain('-w');
+      expect(instance.propClasses).toContain('-w');
     });
   });
 
@@ -112,8 +115,8 @@ describe('LismPropsData', () => {
       const instance = new LismPropsData({
         fz: { base: 'xl', sm: 'l' },
       });
-      expect(instance.uClasses).toContain('-fz:xl');
-      expect(instance.uClasses).toContain('-fz_sm');
+      expect(instance.propClasses).toContain('-fz:xl');
+      expect(instance.propClasses).toContain('-fz_sm');
       expect(instance.styles['--fz_sm']).toBe('var(--fz--l)');
     });
 
@@ -121,9 +124,9 @@ describe('LismPropsData', () => {
       const instance = new LismPropsData({
         fz: ['xl', 'l', 'm'],
       });
-      expect(instance.uClasses).toContain('-fz:xl');
-      expect(instance.uClasses).toContain('-fz_sm');
-      expect(instance.uClasses).toContain('-fz_md');
+      expect(instance.propClasses).toContain('-fz:xl');
+      expect(instance.propClasses).toContain('-fz_sm');
+      expect(instance.propClasses).toContain('-fz_md');
       expect(instance.styles['--fz_sm']).toBe('var(--fz--l)');
       expect(instance.styles['--fz_md']).toBe('var(--fz--m)');
     });
@@ -132,8 +135,8 @@ describe('LismPropsData', () => {
       const instance = new LismPropsData({
         fz: { base: '16px', sm: '18px' },
       });
-      expect(instance.uClasses).toContain('-fz');
-      expect(instance.uClasses).toContain('-fz_sm');
+      expect(instance.propClasses).toContain('-fz');
+      expect(instance.propClasses).toContain('-fz_sm');
       expect(instance.styles['--fz']).toBe('16px');
       expect(instance.styles['--fz_sm']).toBe('18px');
     });
@@ -142,33 +145,33 @@ describe('LismPropsData', () => {
   describe('analyzeTrait - Trait処理', () => {
     test('isContainer: true でトレイトクラスが追加される', () => {
       const instance = new LismPropsData({ isContainer: true });
-      expect(instance.primitiveClass).toContain('is--container');
+      expect(instance.traitClasses).toContain('is--container');
     });
 
     test('isContainer: false では何も追加されない', () => {
       const instance = new LismPropsData({ isContainer: false });
-      expect(instance.primitiveClass).not.toContain('is--container');
+      expect(instance.traitClasses).not.toContain('is--container');
     });
 
     test('isWrapper: true でトレイトクラスが追加される', () => {
       const instance = new LismPropsData({ isWrapper: true });
-      expect(instance.primitiveClass).toContain('is--wrapper');
+      expect(instance.traitClasses).toContain('is--wrapper');
     });
 
     test('isWrapper: プリセット値でトレイトとプリセットクラスが追加される', () => {
       const instance = new LismPropsData({ isWrapper: 's' });
-      expect(instance.primitiveClass).toContain('is--wrapper -contentSize:s');
+      expect(instance.traitClasses).toContain('is--wrapper -contentSize:s');
     });
 
     test('isWrapper: カスタム値でトレイトクラスと変数が追加される', () => {
       const instance = new LismPropsData({ isWrapper: '800px' });
-      expect(instance.primitiveClass).toContain('is--wrapper');
+      expect(instance.traitClasses).toContain('is--wrapper');
       expect(instance.styles['--contentSize']).toBe('800px');
     });
 
     test('isLayer: true でトレイトクラスが追加される', () => {
       const instance = new LismPropsData({ isLayer: true });
-      expect(instance.primitiveClass).toContain('is--layer');
+      expect(instance.traitClasses).toContain('is--layer');
     });
 
     test('複数のstateが同時に機能する', () => {
@@ -176,39 +179,39 @@ describe('LismPropsData', () => {
         isContainer: true,
         isLayer: true,
       });
-      expect(instance.primitiveClass).toContain('is--container');
-      expect(instance.primitiveClass).toContain('is--layer');
+      expect(instance.traitClasses).toContain('is--container');
+      expect(instance.traitClasses).toContain('is--layer');
     });
   });
 
   describe('setHovProps - hov処理', () => {
     test('hov: true で-hovクラスが追加される', () => {
       const instance = new LismPropsData({ hov: true });
-      expect(instance.uClasses).toContain('-hov');
+      expect(instance.propClasses).toContain('-hov');
     });
 
     test('hov: - で-hovクラスが追加される', () => {
       const instance = new LismPropsData({ hov: '-' });
-      expect(instance.uClasses).toContain('-hov');
+      expect(instance.propClasses).toContain('-hov');
     });
 
     test('hov: 文字列でhoverクラスが追加される', () => {
       const instance = new LismPropsData({ hov: 'fade' });
-      expect(instance.uClasses).toContain('-hov:fade');
+      expect(instance.propClasses).toContain('-hov:fade');
     });
 
     test('hov: カンマ区切りで複数のクラスが追加される', () => {
       const instance = new LismPropsData({ hov: 'fade,shadow' });
-      expect(instance.uClasses).toContain('-hov:fade');
-      expect(instance.uClasses).toContain('-hov:shadow');
+      expect(instance.propClasses).toContain('-hov:fade');
+      expect(instance.propClasses).toContain('-hov:shadow');
     });
 
     test('hov: オブジェクト形式でプロップ指定できる', () => {
       const instance = new LismPropsData({
         hov: { c: 'red', bgc: 'blue' },
       });
-      expect(instance.uClasses).toContain('-hov:c');
-      expect(instance.uClasses).toContain('-hov:bgc');
+      expect(instance.propClasses).toContain('-hov:c');
+      expect(instance.propClasses).toContain('-hov:bgc');
       expect(instance.styles['--hov-c']).toBe('var(--red)');
       expect(instance.styles['--hov-bgc']).toBe('var(--blue)');
     });
@@ -217,7 +220,7 @@ describe('LismPropsData', () => {
       const instance = new LismPropsData({
         hov: { c: true },
       });
-      expect(instance.uClasses).toContain('-hov:c');
+      expect(instance.propClasses).toContain('-hov:c');
       expect(instance.styles['--hov-c']).toBeUndefined();
     });
 
@@ -225,8 +228,8 @@ describe('LismPropsData', () => {
       const instance = new LismPropsData({
         hov: { class: 'fade,shadow' },
       });
-      expect(instance.uClasses).toContain('-hov:fade');
-      expect(instance.uClasses).toContain('-hov:shadow');
+      expect(instance.propClasses).toContain('-hov:fade');
+      expect(instance.propClasses).toContain('-hov:shadow');
     });
   });
 
@@ -358,9 +361,10 @@ describe('LismPropsData', () => {
       expect(instance.className).toContain('custom');
       expect(instance.className).toContain('c--box');
       expect(instance.className).toContain('is--container');
-      expect(instance.uClasses).toContain('-fz:xl');
-      expect(instance.uClasses).toContain('-c:base');
-      expect(instance.uClasses).toContain('-p:20');
+      expect(instance.traitClasses).toContain('is--container');
+      expect(instance.propClasses).toContain('-fz:xl');
+      expect(instance.propClasses).toContain('-c:base');
+      expect(instance.propClasses).toContain('-p:20');
       expect(instance.styles.margin).toBe('10px');
     });
 
@@ -372,11 +376,11 @@ describe('LismPropsData', () => {
         h: false,
         p: '20',
       });
-      expect(instance.uClasses).not.toContain('-fz');
-      expect(instance.uClasses).not.toContain('-c');
-      expect(instance.uClasses).not.toContain('-w');
-      expect(instance.uClasses).not.toContain('-h');
-      expect(instance.uClasses).toContain('-p:20');
+      expect(instance.propClasses).not.toContain('-fz');
+      expect(instance.propClasses).not.toContain('-c');
+      expect(instance.propClasses).not.toContain('-w');
+      expect(instance.propClasses).not.toContain('-h');
+      expect(instance.propClasses).toContain('-p:20');
     });
   });
 });

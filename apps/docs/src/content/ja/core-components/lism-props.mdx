@@ -336,25 +336,29 @@ BP対応プロパティは、配列またはオブジェクトでブレイクポ
 
 ## クラスの出力順
 
-`<Lism>` が生成する `class` 属性は、以下のような順序で出力されます
+`<Lism>` が生成する `class` 属性は、以下のような順序で出力されます。
 
 ```
-[className] [a--] [l--] [is--] [set--] [u--] [-]
+[className（c-- 含む）] [a--] [l--] [set--] [is-- / has--] [u--] [-]
 ```
 
 | # | Prop | 例 |
 |---|---|---|
-| 1 | 独自クラス（`className`） | `c--box`, `z--header`, `hoge` |
+| 1 | 独自クラス（`className` / `class`） | `c--box`, `z--header`, `hoge` |
 | 2 | `atomic` | `a--icon`, `a--divider` |
 | 3 | `layout` | `l--flex`, `l--columns` |
-| 4 | `isXxxx` | `is--wrapper`, `is--layer` |
-| 5 | `set` | `set--hov`, `has--transition` |
+| 4 | `set` | `set--hov` |
+| 5 | `isXxxx` / `hasXxxx`（Trait） | `is--wrapper`, `is--layer`, `has--transition` |
 | 6 | `util` | `u--cbox`, `u--trim` |
-| 7 | `prop={value}` | `-p:20`, `-bgc:base-2` |
+| 7 | `prop={value}` | `-p:20`, `-bgc:base-2`, `-hov:c` |
 
 
 :::note
 `layout="flow"` の `-flow:{size}` はレイアウトプリミティブ固有の設定クラスとして扱われるため、`l--flow` 直後のプリミティブ群に並びます。
+:::
+
+:::note
+`c--*` クラスは `className` で自由な位置に書けますが、可読性のため先頭に書くことを推奨します。
 :::
 
 :::note
