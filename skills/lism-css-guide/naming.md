@@ -68,15 +68,11 @@
 
 | プレフィックス | 責務 | 代表例 |
 |---|---|---|
-| `set--` | HTML 要素の基礎スタイリング / 変数のセット（`@lism-base`） | `set--plain`, `set--hov`, `set--shadow` |
+| `set--` | HTML 要素の基礎スタイリング / 変数セット | `set--plain`, `set--hov`, `set--shadow` |
 | `is--` | 〜である（役割・存在の宣言）。CSS 変数は必須ではない | `is--container`, `is--wrapper`, `is--layer` |
 | `has--` | 〜を持つ（単一機能 trait の付与）。CSS 変数でカスタマイズ可 | `has--transition`, `has--gutter`, `has--snap` |
 | `u--` | 装飾的効果（単独 or 子要素の装飾） | `u--trim`, `u--cbox`, `u--collapseGrid` |
 
-- **迷ったとき**: 「そのクラスが無くても意味が成立するか？」を基準にする。
-  - 無くても成立（あったら便利） → `u--`（装飾）
-  - 無いと機能しない → `has--`（機能 trait）
-  - 要素そのものの意味・役割を表す → `is--`（役割宣言）
 - `set--` は `@lism-base` 層で HTML 要素の基礎スタイル・変数を提供するもの。component より弱い。
 - `is--` / `has--` は `@lism-trait` 層で component より **強い**（上書き優先）。
 

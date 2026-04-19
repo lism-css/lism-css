@@ -26,7 +26,7 @@ No build step or configuration is required. Simply load the CSS file via CDN or 
 - **Lightweight** — The entire CSS bundle is approximately 30 KB (~8 KB gzipped).
 - **Zero-Build Framework** — Works with plain HTML via CDN or npm. No build tool or configuration needed.
 - **Layout-First Primitives** — Pre-built layout patterns: `l--flex`, `l--stack`, `l--grid`, `l--columns`, `l--center`, `l--sideMain`, etc.
-- **CSS Layer Structure** — `@layer` (lism-base → lism-primitive → lism-component → lism-custom → lism-utility) for clear specificity management. `lism-primitive` contains `trait` / `layout` / `atomic` sub-layers. `lism-component` is the layer for BEM-structured `c--` components. `lism-custom` is the layer for user-defined classes with custom prefixes. Minimizes specificity conflicts.
+- **CSS Layer Structure** — `@layer` (lism-base → lism-primitive → lism-component → lism-trait → lism-custom → lism-utility) for clear specificity management. `lism-primitive` contains `layout` / `atomic` sub-layers. `lism-component` is the layer for BEM-structured `c--` components. `lism-trait` is the layer for `is--` / `has--` trait classes. `lism-custom` is the layer for user-defined classes with custom prefixes. Minimizes specificity conflicts.
 - **Design Tokens** — Colors, spacing, font sizes, shadows as CSS custom properties.
 - **Flexible Property Classes** — `-{prop}:{value}` syntax (e.g., `-p:20`, `-bgc:base-2`, `-fz:l`).
 - **Responsive System** — Breakpoint classes and CSS variables (e.g., `-p_sm`, `-p_md`) use container queries by default for parent-based responsive design. Switchable to media queries.

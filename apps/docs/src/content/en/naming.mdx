@@ -92,52 +92,13 @@ The responsibility and layer assignment of each prefix is summarized below.
 
 All of `set--`, `is--`, `has--`, and `u--` attach *some* meaning to an element, but they differ in responsibility. Use the criteria below when in doubt.
 
-#### `set--` vs `is--` / `has--`
-
-| | `set--` | `is--` / `has--` |
+| | Purpose | CSS variables |
 |---|---|---|
-| Purpose | Base styling of HTML elements / variable setup | Declarative role / feature attachment |
-| Layer | `@lism-base` | `@lism-trait` |
-| Vs. Components | Weaker than components (provides foundations) | Stronger than components (takes precedence) |
-| Examples | `set--plain` (reset), `set--hov` (hover variables) | `is--container` (role), `has--transition` (feature) |
+| `set--` | Base styling of HTML elements / variable setup | Not required |
+| `is--` | “is a …” (role / existence declaration) | Not required |
+| `has--` | “has a …” (feature attachment) | Required (customization points) |
+| `u--` | Decorative effect (including child-element styling) | Not required |
 
-- The goal is resetting base styles or providing variable slots → **`set--`**
-- The goal is declaring “is a …” / “has a …” on an element → **`is--` / `has--`**
-
-
-#### `is--` vs `has--`
-
-| | `is--` | `has--` |
-|---|---|---|
-| Meaning | “is a …” (role / existence declaration) | “has a …” (feature attachment) |
-| CSS variables | Not required (if present, for tuning that role) | Required (customization points) |
-| Behavior | Structural / existence stamp | Enables some feature |
-| Examples | `is--container`, `is--wrapper`, `is--layer`, `is--boxLink` | `has--transition`, `has--gutter`, `has--snap` |
-
-- Expresses **what the element is** (role) → **`is--`**
-- Attaches **a feature** with customization points → **`has--`**
-
-
-#### `has--` vs `u--`
-
-| | `has--` | `u--` |
-|---|---|---|
-| Nature | Layout feature / single-feature trait | Decorative effect (including child-element styling) |
-| Effect on children | Makes the feature work (e.g. scroll snap) | Changes appearance (e.g. collapsed grid borders) |
-| CSS variables | Required (customization points) | Not required |
-| Examples | `has--snap` (enables scroll snap) | `u--collapseGrid` (styles grid borders) |
-
-- Attaches a layout or interaction **feature** → **`has--`**
-- Applies a decorative effect (often replaceable by direct CSS) → **`u--`**
-
-
-:::info
-When in doubt, ask **“Would the element still make sense without this class?”**
-
-- Yes, it still makes sense (nice to have) → `u--` (decoration)
-- No, the feature wouldn't work → `has--` (feature trait)
-- It describes what the element *is* → `is--` (role declaration)
-:::
 
 ## Abbreviation Rules for `{prop}`
 
