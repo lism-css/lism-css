@@ -10,8 +10,6 @@ HTML では直接クラスを付与し、Lism コンポーネントでは `set` 
 - [`set--plain`](#set--plain)
 - [`set--shadow`](#set--shadow)
 - [`set--hov`](#set--hov)
-- [`has--transition`](#has--transition)
-- [`has--gutter`](#has--gutter)
 - [`set--innerRs`](#set--innerrs)
 [詳細](https://lism-css.com/docs/set-class/)
 
@@ -26,8 +24,6 @@ HTML では直接クラスを付与し、Lism コンポーネントでは `set` 
 | `set--plain` | [`_plain.scss`](https://raw.githubusercontent.com/lism-css/lism-css/main/packages/lism-css/src/scss/base/set/_plain.scss) |
 | `set--shadow` | [`_shadow.scss`](https://raw.githubusercontent.com/lism-css/lism-css/main/packages/lism-css/src/scss/base/tokens/_shadow.scss) |
 | `set--hov` | [`_hov.scss`](https://raw.githubusercontent.com/lism-css/lism-css/main/packages/lism-css/src/scss/base/set/_hov.scss) |
-| `has--transition` | [`_transition.scss`](https://raw.githubusercontent.com/lism-css/lism-css/main/packages/lism-css/src/scss/trait/_hasTransition.scss) |
-| `has--gutter` | [`_gutter.scss`](https://raw.githubusercontent.com/lism-css/lism-css/main/packages/lism-css/src/scss/trait/_hasGutter.scss) |
 | `set--innerRs` | [`_innerRs.scss`](https://raw.githubusercontent.com/lism-css/lism-css/main/packages/lism-css/src/scss/base/set/_innerRs.scss) |
 ---
 
@@ -105,54 +101,6 @@ HTML では直接クラスを付与し、Lism コンポーネントでは `set` 
   --transitionProps: scale;
   scale: var(--_isHov, 1.1);
 }
-```
-
-
-## `has--transition`
-
-トランジション用の CSS をセットアップします。
-
-```scss
-.has--transition {
-  --duration: var(--transition-duration, 0.2s);
-  --ease: ease;
-  --delay: 0s;
-  --transitionProps: all;
-  transition: var(--duration) var(--ease) var(--delay);
-  transition-property: var(--transitionProps);
-}
-```
-
-| カスタム変数 | デフォルト | 役割 |
-|-------------|-----------|------|
-| `--transition-duration` | `0.2s` | `:root` などから全体のデフォルト duration を上書きするためのグローバル変数 |
-| `--transitionProps` | `all` | transition 対象プロパティ（要素側で初期化） |
-| `--duration` / `--ease` / `--delay` | `--transition-duration` / `ease` / `0s` | `.has--transition` 内で直接上書きできるローカル変数 |
-
-```html
-<div class="has--transition -hov:c" style="--transitionProps: color; --hov-c: var(--red);">...</div>
-```
-```jsx
-<Lism hasTransition hov={{c: 'red'}} style={{ '--transitionProps': 'color'}}>...</Lism>
-```
-
-
-
-## `has--gutter`
-
-要素に左右パディングを適用します。`--gutter-size` のデフォルトは `var(--s30)` です。
-
-```scss
-.has--gutter {
-  padding-inline: var(--gutter-size);
-}
-```
-
-```html
-<div class="has--gutter">...</div>
-```
-```jsx
-<Lism hasGutter>...</Lism>
 ```
 
 

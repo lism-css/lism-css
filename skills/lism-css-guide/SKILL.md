@@ -141,6 +141,13 @@ import { Accordion, Tabs, Button } from '@lism-css/ui/astro';
 - `is--layer` / `<Layer>`: [trait-class/is--layer.md](./trait-class/is--layer.md)
 - `is--boxLink` / `<BoxLink>`: [trait-class/is--boxLink.md](./trait-class/is--boxLink.md)
 
+**Trait Class (has--)**
+
+- `has--transition` (`hasTransition` prop): [trait-class/has--transition.md](./trait-class/has--transition.md)
+- `has--gutter` (`hasGutter` prop): [trait-class/has--gutter.md](./trait-class/has--gutter.md)
+- `has--snap` (`hasSnap` prop): [trait-class/has--snap.md](./trait-class/has--snap.md)
+- `has--mask` (`hasMask` prop): [trait-class/has--mask.md](./trait-class/has--mask.md)
+
 **Atomic Primitives**
 
 - `a--icon` / `<Icon>`: [primitives/a--icon.md](./primitives/a--icon.md)

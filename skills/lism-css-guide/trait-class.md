@@ -59,6 +59,12 @@ Lism コンポーネントでは `isContainer`, `isLayer` 等の Props として
 
 Lism コンポーネントでは `hasTransition`, `hasGutter`, `hasSnap`, `hasMask` という Props として利用できます（例: `<Lism hasTransition>`）。
 
+詳細は以下の個別ドキュメントを参照してください:
+- [has--transition](./trait-class/has--transition.md)
+- [has--gutter](./trait-class/has--gutter.md)
+- [has--snap](./trait-class/has--snap.md)
+- [has--mask](./trait-class/has--mask.md)
+
 
 ## `is--` と `has--` の判断軸
 
