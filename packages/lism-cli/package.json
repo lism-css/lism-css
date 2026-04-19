@@ -1,7 +1,19 @@
 {
   "name": "lism-cli",
   "version": "0.3.0",
-  "description": "CLI for adding Lism UI components to your project",
+  "description": "CLI for scaffolding projects and adding UI components for Lism CSS / Lism UI.",
+  "author": {
+    "name": "ddryo",
+    "url": "https://github.com/ddryo"
+  },
+  "license": "MIT",
+  "keywords": [
+    "lism-css",
+    "cli",
+    "scaffolding",
+    "astro",
+    "react"
+  ],
   "type": "module",
   "bin": {
     "lism": "./bin/lism.mjs"
@@ -25,6 +37,14 @@
     "test": "vitest run",
     "prepublishOnly": "pnpm build"
   },
+  "homepage": "https://lism-css.com/",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lism-css/lism-css/tree/main/packages/lism-cli"
+  },
+  "bugs": {
+    "url": "https://github.com/lism-css/lism-css/issues"
+  },
   "dependencies": {
     "@inquirer/prompts": "^7.0.0",
     "commander": "^13.0.0",
@@ -39,6 +59,5 @@
   },
   "engines": {
     "node": ">=18.0.0"
-  },
-  "license": "MIT"
+  }
 }

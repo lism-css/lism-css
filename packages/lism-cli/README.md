@@ -1,6 +1,6 @@
 # lism-cli
 
-[Lism CSS](https://lism-css.com) / [Lism UI](https://lism-css.com) のための CLI ツール。`lism` コマンドで新規プロジェクト生成・UI コンポーネント追加・AI スキル配置を行います。
+[Lism CSS](https://lism-css.com) / [Lism UI](https://lism-css.com/ui) のための CLI ツール。`lism` コマンドで新規プロジェクト生成・UI コンポーネント追加・AI スキル配置を行います。
 
 ## 前提条件
 
