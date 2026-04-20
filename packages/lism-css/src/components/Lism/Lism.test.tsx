@@ -1217,39 +1217,39 @@ describe('Lism', () => {
         expect(element).toHaveClass('set--revert');
       });
 
-      test('set="var:innerRs" で set--var:innerRs クラスが出力される', () => {
+      test('set="var:bdrsInner" で set--var:bdrsInner クラスが出力される', () => {
         render(
-          <Lism set="var:innerRs" data-testid="lism">
+          <Lism set="var:bdrsInner" data-testid="lism">
             test
           </Lism>
         );
         const element = screen.getByTestId('lism');
-        expect(element).toHaveClass('set--var:innerRs');
+        expect(element).toHaveClass('set--var:bdrsInner');
       });
     });
 
     describe('set 値内 `-` prefix による除外', () => {
       test('set 値内 `-name` で指定した値が除外される', () => {
         render(
-          <Lism set="var:hov var:innerRs var:sh -var:sh" data-testid="lism">
+          <Lism set="var:hov var:bdrsInner var:sh -var:sh" data-testid="lism">
             test
           </Lism>
         );
         const element = screen.getByTestId('lism');
         expect(element).toHaveClass('set--var:hov');
-        expect(element).toHaveClass('set--var:innerRs');
+        expect(element).toHaveClass('set--var:bdrsInner');
         expect(element).not.toHaveClass('set--var:sh');
       });
 
       test('複数の `-name` で複数除外できる', () => {
         render(
-          <Lism set="var:hov var:innerRs var:sh -var:hov -var:sh" data-testid="lism">
+          <Lism set="var:hov var:bdrsInner var:sh -var:hov -var:sh" data-testid="lism">
             test
           </Lism>
         );
         const element = screen.getByTestId('lism');
         expect(element).not.toHaveClass('set--var:hov');
-        expect(element).toHaveClass('set--var:innerRs');
+        expect(element).toHaveClass('set--var:bdrsInner');
         expect(element).not.toHaveClass('set--var:sh');
       });
 

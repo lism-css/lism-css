@@ -13,10 +13,12 @@ The set-- classes fall into two categories:
 | Category | Purpose | Classes |
 |----------|---------|---------|
 | Base styling | Resetting or reverting HTML element styles | `set--plain` / `set--revert` |
-| Variable setup | Setting up CSS variables only | `set--var:sh` / `set--var:hov` / `set--var:innerRs` |
+| Variable setup | Setting up CSS variables only | `set--var:sh` / `set--var:hov` / `set--var:bdrsInner` |
+
+The `{name}` in `set--var:{name}` corresponds to the name of the CSS variable each class sets up (e.g. `--sh--*` → `var:sh`, `--_isHov` / `--_notHov` → `var:hov`, `--bdrs--inner` → `var:bdrsInner`).
 
 
-### `set--plain`
+## `set--plain`
 
 A class for resetting primary styles.
 
@@ -39,7 +41,7 @@ A class for resetting primary styles.
 </Preview>
 
 
-### `set--revert`
+## `set--revert`
 
 A class for explicitly reverting to the browser's default appearance.
 On its own it carries no styles (it does not revert every property wholesale).
@@ -76,7 +78,7 @@ Classless `ul` / `ol` elements (lists with no `class` attribute at all) automati
 :::
 
 
-### `set--var:sh`
+## `set--var:sh`
 
 Elements with the `.set--var:sh` class have the `--bxsh--` variables that compose the shadow redefined.
 
@@ -133,7 +135,7 @@ By overriding the `--shc` variable here, you can adjust the color tint of the sh
 </Preview>
 
 
-### `set--var:hov`
+## `set--var:hov`
 
 Sets the hover state variables (`--_notHov`, `--_isHov``) as follows. Primarily used to **control hover styles on child elements**.
 
@@ -224,27 +226,27 @@ See the [`hover` documentation page](/en/docs/property-class/hov#set--varhov) fo
 <DocsLink path="/docs/property-class/hov#set--varhov" />
 
 
-### `set--var:innerRs`
+## `set--var:bdrsInner`
 
 A class that automatically calculates the inner border radius (`--bdrs--inner`) from the parent element's border radius (`--bdrs`) and padding (`--p`).
-Apply `set--var:innerRs` to the parent element, then use `-bdrs:inner` on the child element to apply the calculated `--bdrs--inner`.
+Apply `set--var:bdrsInner` to the parent element, then use `-bdrs:inner` on the child element to apply the calculated `--bdrs--inner`.
 
 (Both `bdrs` and `p` must be specified on the parent element.)
 
-<SrcCode path="src/scss/base/set/_innerRs.scss" />
+<SrcCode path="src/scss/base/set/_bdrsInner.scss" />
 
 <Preview>
   <PreviewTitle>Usage example</PreviewTitle>
   <PreviewArea p="30">
-    <Lism set="var:innerRs" p="15" bdrs="40" bd bxsh="20">
+    <Lism set="var:bdrsInner" p="15" bdrs="40" bd bxsh="20">
       <Frame bdrs="inner" ar="og">
         <img src="https://cdn.lism-css.com/img/u-5.jpg" width="1920" height="1280" alt="" />
       </Frame>
     </Lism>
   </PreviewArea>
   <PreviewCode label="HTML" slot="tab">
-    ```html "set--var:innerRs" "-bdrs:inner" "-p:15 -bdrs:40"
-    <div class="set--var:innerRs -p:15 -bdrs:40 -bd -bxsh:20">
+    ```html "set--var:bdrsInner" "-bdrs:inner" "-p:15 -bdrs:40"
+    <div class="set--var:bdrsInner -p:15 -bdrs:40 -bd -bxsh:20">
       <div class="l--frame -bdrs:inner -ar:og">
         <img src="https://cdn.lism-css.com/img/u-5.jpg" width="1920" height="1280" alt="" />
       </div>
@@ -252,8 +254,8 @@ Apply `set--var:innerRs` to the parent element, then use `-bdrs:inner` on the ch
     ```
   </PreviewCode>
   <PreviewCode label="JSX" slot="tab">
-    ```jsx 'set="var:innerRs"' 'bdrs="inner"' 'p="15" bdrs="40"'
-    <Lism set="var:innerRs" p="15" bdrs="40" bd bxsh="20">
+    ```jsx 'set="var:bdrsInner"' 'bdrs="inner"' 'p="15" bdrs="40"'
+    <Lism set="var:bdrsInner" p="15" bdrs="40" bd bxsh="20">
       <Frame bdrs="inner" ar="og">
         <img src="https://cdn.lism-css.com/img/u-5.jpg" width="1920" height="1280" alt="" />
       </Frame>
@@ -264,12 +266,12 @@ Apply `set--var:innerRs` to the parent element, then use `-bdrs:inner` on the ch
 
 <Spacer h="1rem" />
 
-Since `p` and `bdrs` are managed as variables even when their values change at breakpoints, `set--var:innerRs` also supports responsive border radius.
+Since `p` and `bdrs` are managed as variables even when their values change at breakpoints, `set--var:bdrsInner` also supports responsive border radius.
 
 <Preview>
   <PreviewTitle>Usage example</PreviewTitle>
   <PreviewArea p="20" resize>
-    <Lism p={[10, 15]} bd bdrs={['30', '40']} class="set--var:innerRs">
+    <Lism p={[10, 15]} bd bdrs={['30', '40']} class="set--var:bdrsInner">
       <Lism bd p="20" bdrs="inner" bgc="base-2">
         <Fragment>Example</Fragment>
       </Lism>
@@ -279,7 +281,7 @@ Since `p` and `bdrs` are managed as variables even when their values change at b
   </PreviewCode> */}
   <PreviewCode label="JSX" slot="tab">
 ```jsx
-<Lism p={[10, 15]} bd bdrs={['30', '40']} class="set--var:innerRs">
+<Lism p={[10, 15]} bd bdrs={['30', '40']} class="set--var:bdrsInner">
   <Lism bd p="20" bdrs="inner" bgc="base-2">
     Example
   </Lism>
@@ -287,5 +289,4 @@ Since `p` and `bdrs` are managed as variables even when their values change at b
 ```
   </PreviewCode>
 </Preview>
-
 
