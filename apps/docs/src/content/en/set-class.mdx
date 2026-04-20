@@ -13,9 +13,9 @@ The set-- classes fall into two categories:
 | Category | Purpose | Classes |
 |----------|---------|---------|
 | Base styling | Resetting or reverting HTML element styles | `set--plain` / `set--revert` |
-| Variable setup | Setting up CSS variables only | `set--var:sh` / `set--var:hov` / `set--var:bdrsInner` |
+| Variable setup | Setting up CSS variables only | `set--var:bxsh` / `set--var:hov` / `set--var:bdrsInner` |
 
-The `{name}` in `set--var:{name}` corresponds to the name of the CSS variable each class sets up (e.g. `--sh--*` → `var:sh`, `--_isHov` / `--_notHov` → `var:hov`, `--bdrs--inner` → `var:bdrsInner`).
+The `{name}` in `set--var:{name}` corresponds to the name of the CSS variable each class sets up (e.g. `--bxsh--*` → `var:bxsh`, `--_isHov` / `--_notHov` → `var:hov`, `--bdrs--inner` → `var:bdrsInner`).
 
 
 ## `set--plain`
@@ -78,9 +78,9 @@ Classless `ul` / `ol` elements (lists with no `class` attribute at all) automati
 :::
 
 
-## `set--var:sh`
+## `set--var:bxsh`
 
-Elements with the `.set--var:sh` class have the `--bxsh--` variables that compose the shadow redefined.
+Elements with the `.set--var:bxsh` class have the `--bxsh--` variables that compose the shadow redefined.
 
 <SrcCode path="src/scss/base/tokens/_shadow.scss" />
 
@@ -91,7 +91,7 @@ By overriding the `--shc` variable here, you can adjust the color tint of the sh
   <PreviewArea p="30" nogrid>
     <Stack g="10">
       <Text> Default: </Text>
-      <Flex className="set--var:sh -g:30" px-s="15">
+      <Flex className="set--var:bxsh -g:30" px-s="15">
         <Box bxsh="20" p="30" bdrs="20">
           <Fragment>Box</Fragment>
         </Box>
@@ -100,8 +100,8 @@ By overriding the `--shc` variable here, you can adjust the color tint of the sh
         </Box>
       </Flex>
       <Spacer h="40" />
-      <Text> Overriding variables with set--var:sh: </Text>
-      <Flex className="set--var:sh -g:30" px-s="15" style={{ '--shc': 'hsl(200 50% 50% / 20%)' }}>
+      <Text> Overriding variables with set--var:bxsh: </Text>
+      <Flex className="set--var:bxsh -g:30" px-s="15" style={{ '--shc': 'hsl(200 50% 50% / 20%)' }}>
         <Box bxsh="20" p="30" bdrs="20">
           <Fragment>Box</Fragment>
         </Box>
@@ -113,16 +113,16 @@ By overriding the `--shc` variable here, you can adjust the color tint of the sh
     <div class="a--spacer" />
   </PreviewArea>
     <PreviewCode slot="tab" label="HTML">
-    ```html "set--var:sh"
-    <div class="l--flex set--var:sh -g:30" style="--shc: hsl(200 50% 50% / 20%)">
+    ```html "set--var:bxsh"
+    <div class="l--flex set--var:bxsh -g:30" style="--shc: hsl(200 50% 50% / 20%)">
       <div class="l--box -bxsh:20 -p:30 -bdrs:20">Box</div>
       <div class="l--box -bxsh:40 -p:30 -bdrs:20">Box</div>
     </div>
     ```
   </PreviewCode>
   <PreviewCode slot="tab" label="JSX">
-    ```jsx "set--var:sh"
-    <Flex className="set--var:sh" g="30" style={{ '--shc': 'hsl(200 50% 50% / 20%)' }}>
+    ```jsx "set--var:bxsh"
+    <Flex className="set--var:bxsh" g="30" style={{ '--shc': 'hsl(200 50% 50% / 20%)' }}>
       <Box bxsh="20" p="30" bdrs="20">
         Box
       </Box>

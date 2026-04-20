@@ -68,7 +68,7 @@
 
 | プレフィックス | 責務 | 代表例 |
 |---|---|---|
-| `set--` | HTML 要素の基礎スタイリング / 変数セット | `set--plain`, `set--revert`, `set--var:hov`, `set--var:sh` |
+| `set--` | HTML 要素の基礎スタイリング / 変数セット | `set--plain`, `set--revert`, `set--var:hov`, `set--var:bxsh` |
 | `is--` | 〜である（役割・存在の宣言）。CSS 変数は必須ではない | `is--container`, `is--wrapper`, `is--layer` |
 | `has--` | 〜を持つ（単一機能 trait の付与）。CSS 変数でカスタマイズ可 | `has--transition`, `has--gutter`, `has--snap`, `has--mask` |
 | `u--` | 装飾的効果（単独 or 子要素の装飾） | `u--trim`, `u--cbox`, `u--collapseGrid` |

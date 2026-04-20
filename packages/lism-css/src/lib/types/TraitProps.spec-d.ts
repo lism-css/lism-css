@@ -95,13 +95,13 @@ describe('LismPropsBase — set / util', () => {
     it('プリセット値を受け付ける', () => {
       assertType<LismPropsBase>({ set: 'plain' });
       assertType<LismPropsBase>({ set: 'revert' });
-      assertType<LismPropsBase>({ set: 'var:sh' });
+      assertType<LismPropsBase>({ set: 'var:bxsh' });
       assertType<LismPropsBase>({ set: 'var:hov' });
       assertType<LismPropsBase>({ set: 'var:bdrsInner' });
     });
 
     it('スペース区切りで複数指定できる', () => {
-      assertType<LismPropsBase>({ set: 'var:hov var:sh' });
+      assertType<LismPropsBase>({ set: 'var:hov var:bxsh' });
     });
 
     it('`-` prefix で除外指定できる', () => {
@@ -113,7 +113,7 @@ describe('LismPropsBase — set / util', () => {
     });
 
     it('文字列配列も受け付ける（内部 API 用途）', () => {
-      assertType<LismPropsBase>({ set: ['var:hov', 'var:sh'] });
+      assertType<LismPropsBase>({ set: ['var:hov', 'var:bxsh'] });
       assertType<LismPropsBase>({ set: ['var:bdrsInner', 'custom-value'] });
     });
 
@@ -156,7 +156,7 @@ describe('LismPropsBase — set / util', () => {
 
   describe('set + util 同時指定', () => {
     it('両方同時に指定できる', () => {
-      assertType<LismPropsBase>({ set: 'var:hov var:sh', util: 'cbox trim' });
+      assertType<LismPropsBase>({ set: 'var:hov var:bxsh', util: 'cbox trim' });
     });
   });
 });

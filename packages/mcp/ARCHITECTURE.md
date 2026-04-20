@@ -119,7 +119,7 @@ packages/mcp/
 | `components-core` | components-core.md | コアコンポーネント（Lism, Box, Flex, Stack, Grid 等） |
 | `components-ui` | components-ui.md | UI コンポーネント（Accordion, Modal, Tabs, Button 等） |
 | `base-styles` | base-styles.md | ベーススタイリング・リセット CSS・HTML 要素スタイル |
-| `set-class` | set-class.md | Set クラス（set--plain, set--var:sh, set--var:hov 等） |
+| `set-class` | set-class.md | Set クラス（set--plain, set--var:bxsh, set--var:hov 等） |
 | `primitive-class` | primitive-class.md | Primitive クラスプレフィックス（is--, l--, a--）と Component クラス（c--） |
 | `utility-class` | utility-class.md | ユーティリティクラス（u--trim, u--cbox 等） |
 | `css-rules` | css-rules.md | CSS 設計方法論・Layer 構造・命名規則 |
