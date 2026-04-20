@@ -11,7 +11,7 @@
 |----------|----------|-----------------|
 | `SKILL.md` | バージョン情報・パッケージ構成・import パス・実装ルール・詳細ファイル一覧・プリミティブ別リファレンスへのリンク一覧 | `packages/lism-css/package.json`, `packages/lism-ui/package.json`, 各パッケージの exports |
 | `base-styles.md` | Reset CSS・HTML要素のベーススタイル・CSS変数（トークン）概要 | `packages/lism-css/src/scss/base/`, `packages/lism-css/src/scss/base/tokens/` |
-| `set-class.md` | `set--`クラス (`set--plain`,`set--shadow`,`set--hov`,`set--transition`,`set--gutter` 等) の一覧と用途解説 | `packages/lism-css/src/scss/base/set/`, `packages/lism-css/src/scss/base/tokens/_shadow.scss` |
+| `set-class.md` | `set--`クラス (`set--plain`,`set--revert`,`set--var:sh`,`set--var:hov`,`set--var:innerRs`) の一覧と用途解説 | `packages/lism-css/src/scss/base/set/`, `packages/lism-css/src/scss/base/tokens/_shadow.scss` |
 | `primitive-class.md` | Primitive クラス (`is--`, `l--`, `a--`) と Component クラス (`c--`) の一覧と用途（※俯瞰マップに徹する。個別 Primitive へのリンクは載せない） | `packages/lism-css/src/scss/primitives/`, `packages/lism-ui/src/`（c-- 系） |
 | `utility-class.md` | ユーティリティクラス (`u--` クラス) の一覧とProperty Class との違い | `packages/lism-css/src/scss/utility/` |
 | `property-class.md` | Property Class (`-{prop}:{value}`)の一覧、記法と出力の解説、特殊Prop（ボーダー・ホバー） | `packages/lism-css/config/defaults/props.ts`, `packages/lism-css/src/scss/_prop-config.scss`, `packages/lism-css/src/scss/props/` |
@@ -69,7 +69,7 @@
 
 | 確認したい内容 | 参照先 |
 |---|---|
-| set-- クラス一覧 | `packages/lism-css/src/scss/base/set/` 配下の SCSS、`packages/lism-css/src/scss/base/tokens/_shadow.scss`（set--shadow） |
+| set-- クラス一覧 | `packages/lism-css/src/scss/base/set/` 配下の SCSS、`packages/lism-css/src/scss/base/tokens/_shadow.scss`（set--var:sh） |
 | set prop の処理ロジック | `packages/lism-css/src/lib/helper/mergeSet.ts` |
 
 ### プリミティブクラス / コンポーネントクラス関連
