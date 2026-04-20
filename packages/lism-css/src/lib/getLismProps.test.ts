@@ -207,16 +207,11 @@ describe('getLismProps', () => {
     });
   });
 
-  describe('Lism Props処理 - true/- 値', () => {
+  describe('Lism Props処理 - true 値', () => {
     test('true値はユーティリティクラスのみ出力される', () => {
       const result = getLismProps({ bd: true });
       expect(result.className).toContain('-bd');
       expect(result.style?.borderStyle).toBeUndefined();
-    });
-
-    test('- 値はユーティリティクラスのみ出力される', () => {
-      const result = getLismProps({ w: '-' });
-      expect(result.className).toContain('-w');
     });
   });
 
@@ -305,11 +300,6 @@ describe('getLismProps', () => {
       expect(result.className).toContain('-hov');
     });
 
-    test('hov: - の場合、-hovクラスが追加される', () => {
-      const result = getLismProps({ hov: '-' });
-      expect(result.className).toContain('-hov');
-    });
-
     test('hov: 文字列の場合、hoverクラスが追加される', () => {
       const result = getLismProps({ hov: 'fade' });
       expect(result.className).toContain('-hov:fade');
@@ -356,15 +346,6 @@ describe('getLismProps', () => {
       });
       expect(result.className).toContain('-hov:c');
       expect(result.className).toContain('-hov:shadowUp');
-      expect(result.className).not.toContain('-hov:-c');
-      expect(result.style?.['--hov-c']).toBeUndefined();
-    });
-
-    test('hov: オブジェクト形式で "-" は true と同じくクラスのみ出力', () => {
-      const result = getLismProps({
-        hov: { c: '-' },
-      });
-      expect(result.className).toContain('-hov:c');
       expect(result.className).not.toContain('-hov:-c');
       expect(result.style?.['--hov-c']).toBeUndefined();
     });
