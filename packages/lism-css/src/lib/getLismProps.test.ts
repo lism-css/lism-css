@@ -377,14 +377,6 @@ describe('getLismProps', () => {
       expect(result.className).toContain('-hov:shadowUp');
       expect(result.className).toContain('-hov:fade');
     });
-
-    test('hov: オブジェクト形式で class プロップを指定できる', () => {
-      const result = getLismProps({
-        hov: { class: 'fade,shadow' },
-      });
-      expect(result.className).toContain('-hov:fade');
-      expect(result.className).toContain('-hov:shadow');
-    });
   });
 
   describe('_propConfig処理', () => {

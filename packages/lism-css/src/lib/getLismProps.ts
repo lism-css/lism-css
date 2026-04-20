@@ -400,14 +400,6 @@ export class LismPropsData {
         const hovVal = hoverData[propName];
         if (null == hovVal || '' === hovVal || false === hovVal) return;
 
-        // propNameが'class'の場合は文字列として-hov:{class}クラスを追加.(カンマ区切りで複数指定可能)
-        if (propName === 'class') {
-          splitWithComma(hovVal as string).forEach((cls) => {
-            this.addProp(`-hov:${normalizeHovClass(cls)}`);
-          });
-          return;
-        }
-
         // Property Class 名を指す propName は `-hov:-{propName}` の形式で出力する
         // true / "-" 指定時は、propName が PROPS に存在しない場合は `-` を付けない
         if (hovVal === '-' || hovVal === true) {

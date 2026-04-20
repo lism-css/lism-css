@@ -228,12 +228,6 @@ describe('LismPropsData', () => {
       expect(instance.propClasses).toContain('-hov:in:zoom');
     });
 
-    test('hov: { class } の値でも prop 短縮名は自動で - が付与される', () => {
-      const instance = new LismPropsData({ hov: { class: 'o,neutral' } });
-      expect(instance.propClasses).toContain('-hov:-o');
-      expect(instance.propClasses).toContain('-hov:neutral');
-    });
-
     test('hov: オブジェクト形式でプロップ指定できる', () => {
       const instance = new LismPropsData({
         hov: { c: 'red', bgc: 'blue' },
@@ -267,14 +261,6 @@ describe('LismPropsData', () => {
       expect(instance.propClasses).toContain('-hov:-c');
       expect(instance.propClasses).toContain('-hov:shadowUp');
       expect(instance.propClasses).toContain('-hov:fade');
-    });
-
-    test('hov: オブジェクト形式でclassプロップを指定できる', () => {
-      const instance = new LismPropsData({
-        hov: { class: 'fade,shadow' },
-      });
-      expect(instance.propClasses).toContain('-hov:fade');
-      expect(instance.propClasses).toContain('-hov:shadow');
     });
   });
 
