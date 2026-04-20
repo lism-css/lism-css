@@ -7,7 +7,7 @@ type OpenBtnProps<T extends ElementType = 'button'> = LismComponentProps<T> & {
 
 export default function OpenBtn<T extends ElementType = 'button'>({ children, modalId = '', ...props }: OpenBtnProps<T>) {
   return (
-    <Lism as="button" set="plain" hov="o" d="inline-flex" data-modal-open={modalId} {...(props as object)}>
+    <Lism as="button" set="plain" hov="-o" d="inline-flex" data-modal-open={modalId} {...(props as object)}>
       {children}
     </Lism>
   );

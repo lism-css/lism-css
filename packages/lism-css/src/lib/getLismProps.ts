@@ -380,12 +380,18 @@ export class LismPropsData {
     // 	return;
     // }
 
+    // "o"/"bgc" のような prop 短縮名直書きを -o / -bgc に正規化する（公式形式は `hov="-{prop}"`）
+    const normalizeHovClass = (cls: string): string => {
+      if (cls.startsWith('-')) return cls;
+      return cls in PROPS ? `-${cls}` : cls;
+    };
+
     if (hoverData === '-' || hoverData === true) {
       this.addProp(`-hov`);
     } else if (typeof hoverData === 'string') {
       // カンマ区切りで複数指定可能能
       splitWithComma(hoverData).forEach((cls) => {
-        this.addProp(`-hov:${cls}`);
+        this.addProp(`-hov:${normalizeHovClass(cls)}`);
       });
     } else if (typeof hoverData === 'object') {
       // hover={{c:'red', 'bgc': 'blue'}} みたいな指定の時
@@ -397,14 +403,15 @@ export class LismPropsData {
         // propNameが'class'の場合は文字列として-hov:{class}クラスを追加.(カンマ区切りで複数指定可能)
         if (propName === 'class') {
           splitWithComma(hovVal as string).forEach((cls) => {
-            this.addProp(`-hov:${cls}`);
+            this.addProp(`-hov:${normalizeHovClass(cls)}`);
           });
           return;
         }
 
         // Property Class 名を指す propName は `-hov:-{propName}` の形式で出力する
+        // true / "-" 指定時は、propName が PROPS に存在しない場合は `-` を付けない
         if (hovVal === '-' || hovVal === true) {
-          this.addProp(`-hov:-${propName}`);
+          this.addProp(`-hov:${normalizeHovClass(propName)}`);
         } else if (typeof hovVal === 'string' || typeof hovVal === 'number') {
           // トークン値の処理
           const finalHovVal = getMaybeCssVar(hovVal, getTokenKey(propName));

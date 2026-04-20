@@ -206,6 +206,34 @@ describe('LismPropsData', () => {
       expect(instance.propClasses).toContain('-hov:shadow');
     });
 
+    test('hov: 文字列が prop 短縮名と一致する場合、-{prop} に自動変換される', () => {
+      const instance = new LismPropsData({ hov: 'o' });
+      expect(instance.propClasses).toContain('-hov:-o');
+    });
+
+    test('hov: カンマ区切りでも prop 短縮名は自動で - が付与される', () => {
+      const instance = new LismPropsData({ hov: 'c,bxsh' });
+      expect(instance.propClasses).toContain('-hov:-c');
+      expect(instance.propClasses).toContain('-hov:-bxsh');
+    });
+
+    test('hov: 既に - 付きの場合はそのまま -hov:-{prop} になる', () => {
+      const instance = new LismPropsData({ hov: '-o' });
+      expect(instance.propClasses).toContain('-hov:-o');
+    });
+
+    test('hov: prop と一致しない文字列（neutral, in:zoom など）はそのまま', () => {
+      const instance = new LismPropsData({ hov: 'neutral,in:zoom' });
+      expect(instance.propClasses).toContain('-hov:neutral');
+      expect(instance.propClasses).toContain('-hov:in:zoom');
+    });
+
+    test('hov: { class } の値でも prop 短縮名は自動で - が付与される', () => {
+      const instance = new LismPropsData({ hov: { class: 'o,neutral' } });
+      expect(instance.propClasses).toContain('-hov:-o');
+      expect(instance.propClasses).toContain('-hov:neutral');
+    });
+
     test('hov: オブジェクト形式でプロップ指定できる', () => {
       const instance = new LismPropsData({
         hov: { c: 'red', bgc: 'blue' },
@@ -222,6 +250,23 @@ describe('LismPropsData', () => {
       });
       expect(instance.propClasses).toContain('-hov:-c');
       expect(instance.styles['--hov-c']).toBeUndefined();
+    });
+
+    test('hov: オブジェクト形式で "-" 値を渡すと true と同じくクラスのみ出力', () => {
+      const instance = new LismPropsData({
+        hov: { c: '-' },
+      });
+      expect(instance.propClasses).toContain('-hov:-c');
+      expect(instance.styles['--hov-c']).toBeUndefined();
+    });
+
+    test('hov: オブジェクト形式で propName が PROPS にない場合、true/"-" でも - を付けない', () => {
+      const instance = new LismPropsData({
+        hov: { c: true, shadowUp: true, fade: '-' },
+      });
+      expect(instance.propClasses).toContain('-hov:-c');
+      expect(instance.propClasses).toContain('-hov:shadowUp');
+      expect(instance.propClasses).toContain('-hov:fade');
     });
 
     test('hov: オブジェクト形式でclassプロップを指定できる', () => {

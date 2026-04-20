@@ -62,8 +62,8 @@ import './_style.css';
               set="var:hov"
             >
               <Frame as="figure" ar={['16/9', null, 'inherit']} gc={['1 / -1', null, '1']} pos="relative" h="100%" ov="h">
-                <Media src="https://cdn.lism-css.com/random/img?r=2" alt="" width="960" height="540" hasTransition hov="to:zoom" />
-                <Layer hasTransition hov="to:show" bgc="rgb(0 0 0 / 30%)" style={{ backdropFilter: 'blur(4px)' }}>
+                <Media src="https://cdn.lism-css.com/random/img?r=2" alt="" width="960" height="540" hasTransition hov="in:zoom" />
+                <Layer hasTransition hov="in:show" bgc="rgb(0 0 0 / 30%)" style={{ backdropFilter: 'blur(4px)' }}>
                   <Center h="100%" c="white">
                     <Inline fz="xl" fs="i" fw="light" lts="l" px="20" py="10">View More</Inline>
                   </Center>
@@ -75,7 +75,7 @@ import './_style.css';
                   お客様のご都合に合わせて専門スタッフが訪問面談いたします。ご相談方法やご依頼後の流れについてはまずはこちらをご覧ください。
                 </Text>
               </Stack>
-              <Flex ai="center" jc="center" p="15" bd bdrs="99" mx="30" hasTransition hov="to:reverse">
+              <Flex ai="center" jc="center" p="15" bd bdrs="99" mx="30" hasTransition hov="in:reverse">
                 <Icon icon="arrow-right" fz="120%" hasTransition />
               </Flex>
             </BoxLink>
@@ -91,10 +91,10 @@ import './_style.css';
 
 <style>
   @media (any-hover: hover) {
-    .-hov\:to\:zoom {
+    .-hov\:in\:zoom {
       scale: var(--_isHov, 1.1);
     }
-    .-hov\:to\:reverse {
+    .-hov\:in\:reverse {
       background-color: var(--_isHov, var(--black));
       color: var(--_isHov, var(--white));
     }

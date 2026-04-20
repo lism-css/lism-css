@@ -321,6 +321,28 @@ describe('getLismProps', () => {
       expect(result.className).toContain('-hov:shadow');
     });
 
+    test('hov: 文字列が prop 短縮名と一致する場合、-{prop} に自動変換される', () => {
+      const result = getLismProps({ hov: 'o' });
+      expect(result.className).toContain('-hov:-o');
+    });
+
+    test('hov: カンマ区切りでも prop 短縮名は自動で - が付与される', () => {
+      const result = getLismProps({ hov: 'c,bxsh' });
+      expect(result.className).toContain('-hov:-c');
+      expect(result.className).toContain('-hov:-bxsh');
+    });
+
+    test('hov: 既に - 付きの場合はそのまま -hov:-{prop} になる', () => {
+      const result = getLismProps({ hov: '-o' });
+      expect(result.className).toContain('-hov:-o');
+    });
+
+    test('hov: prop と一致しない文字列（neutral, in:zoom など）はそのまま', () => {
+      const result = getLismProps({ hov: 'neutral,in:zoom' });
+      expect(result.className).toContain('-hov:neutral');
+      expect(result.className).toContain('-hov:in:zoom');
+    });
+
     test('hov: オブジェクト形式でプロップ指定できる', () => {
       const result = getLismProps({
         hov: { c: 'red', bgc: 'blue' },
@@ -337,6 +359,23 @@ describe('getLismProps', () => {
       });
       expect(result.className).toContain('-hov:-c');
       expect(result.style?.['--hov-c']).toBeUndefined();
+    });
+
+    test('hov: オブジェクト形式で "-" 値を渡すと true と同じくクラスのみ出力', () => {
+      const result = getLismProps({
+        hov: { c: '-' },
+      });
+      expect(result.className).toContain('-hov:-c');
+      expect(result.style?.['--hov-c']).toBeUndefined();
+    });
+
+    test('hov: オブジェクト形式で propName が PROPS にない場合、true/"-" でも - を付けない', () => {
+      const result = getLismProps({
+        hov: { c: true, shadowUp: true, fade: '-' },
+      });
+      expect(result.className).toContain('-hov:-c');
+      expect(result.className).toContain('-hov:shadowUp');
+      expect(result.className).toContain('-hov:fade');
     });
 
     test('hov: オブジェクト形式で class プロップを指定できる', () => {
