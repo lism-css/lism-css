@@ -104,7 +104,8 @@ import { Accordion, Tabs, Button } from '@lism-css/ui/astro';
 - [naming.md](./naming.md) — 命名規則の詳細。（CSS変数名・クラス名・Property Class の `{prop}` / `{value}` の省略ルール）
 - [base-styles.md](./base-styles.md) — HTML要素のベーススタイリング。（Reset CSSやHTML要素の基本スタイルをカスタマイズできるCSS変数）
 - [set-class.md](./set-class.md) — ベーススタイル・変数セットに使用する`set--` クラスの一覧と用途。
-- [primitive-class.md](./primitive-class.md) — レイアウトを組み立てる Primitive クラス（`is--`/`l--`/`a--`）の一覧と用途。
+- [primitive-class.md](./primitive-class.md) — レイアウトを組み立てる Primitive クラス（`l--`/`a--`）の一覧と用途。
+- [trait-class.md](./trait-class.md) — 要素に役割・機能を宣言する Trait クラス（`is--`/`has--`）の一覧と用途。
 - [utility-class.md](./utility-class.md) — 具体的な用途・装飾・機能を持つユーティリティクラス（`u--` クラス）の一覧と用途。
 - [property-class.md](./property-class.md) — 単一のCSSプロパティに対応するProperty Class（`-{prop}:{value}`形式のクラス）の一覧・記法。
 - [prop-responsive.md](./prop-responsive.md) — レスポンシブ対応（ブレークポイント・コンテナクエリ）の書き方・仕様。

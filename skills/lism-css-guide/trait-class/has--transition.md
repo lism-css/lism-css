@@ -13,7 +13,7 @@
 
 ```scss
 .has--transition {
-  --duration: var(--transition-duration, 0.2s);
+  --duration: var(--transition-duration, 0.25s);
   --ease: ease;
   --delay: 0s;
   --transitionProps: all;
@@ -27,10 +27,10 @@
 | 変数 | 役割 | デフォルト |
 |------|------|-----------|
 | `--transitionProps` | transition 対象プロパティ | `all` |
-| `--duration` | トランジションの長さ | `var(--transition-duration, 0.2s)` |
+| `--duration` | トランジションの長さ | `var(--transition-duration, 0.25s)` |
 | `--ease` | イージング関数 | `ease` |
 | `--delay` | ディレイ | `0s` |
-| `--transition-duration` | 全体のデフォルト duration を `:root` などから上書きするためのグローバル変数 | `0.2s` |
+| `--transition-duration` | 全体のデフォルト duration を `:root` などから上書きするためのグローバル変数 | `0.25s` |
 
 ## Usage
 
