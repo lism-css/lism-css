@@ -389,8 +389,8 @@ export class LismPropsData {
       });
     } else if (typeof hoverData === 'object') {
       // hov={{c:'red', shadowUp: true}} のようなオブジェクト指定
-      // - 値あり（string / number） → `-hov:-{key}` + `--hov-{key}` 変数を出力
-      // - true                    → `-hov:{key}`（クラスのみ）
+      //   値あり（string / number） → `-hov:-{key}` + `--hov-{key}` 変数を出力
+      //   true                    → `-hov:{key}`（クラスのみ）
       Object.keys(hoverData).forEach((propName) => {
         const hovVal = hoverData[propName];
         if (null == hovVal || '' === hovVal || false === hovVal) return;
