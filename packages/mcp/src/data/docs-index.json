@@ -13,7 +13,7 @@
     "title": "インストール",
     "description": "Lism CSS のインストール方法と基本的な使い方を解説します。",
     "category": "guide",
-    "headings": ["CSS設計のみを導入したい場合", "Lism専用のJSXコンポーネントを使用したい場合", "Lism UI の導入", "AIツール連携"],
+    "headings": ["CSS設計のみを導入する", "クイックスタート", "React/Astro コンポーネントを使用する", "Lism UI の導入", "AIツール連携"],
     "keywords": ["install", "インストール", "CDN", "npm", "setup", "セットアップ", "導入", "MCP", "AI"],
     "snippet": "CSSを読み込むだけでも導入でき、CDN経由でも利用可能。npm パッケージとしてインストールし、lism-css/react や lism-css/astro からコンポーネントをインポートして使用。UIコンポーネントは別パッケージ @lism-css/ui として提供。AIコーディングツール向けのSkills・MCPサーバーも提供。"
   },
@@ -22,7 +22,7 @@
     "title": "CSS設計",
     "description": "Lism CSS の階層構造やクラス設計の方針など、CSS設計の全体像について解説します。",
     "category": "guide",
-    "headings": ["Lism CSSの階層構造", "デザイントークン", "CSSのクラス設計"],
+    "headings": ["Lism CSSの階層構造", "デザイントークン", "CSSのクラス設計", "独自クラスの命名と定義場所", "動的な状態管理はdata属性"],
     "keywords": [
       "CSS設計",
       "methodology",
@@ -131,7 +131,8 @@
       "Layouts",
       "Styling",
       "Background",
-      "Other CSS"
+      "Other Properties",
+      "hover"
     ],
     "keywords": [
       "property class",
@@ -307,7 +308,7 @@
     "title": "-hov",
     "description": "hover時の挙動をコントロールする -hov プロパティクラスの使い方について解説します。",
     "category": "property-class",
-    "headings": ["基本的な使い方", "`set--var:hov` と `-hov:in:xxx`"],
+    "headings": [".-hov:-{prop} の使い方", ".-hov:{preset} の使い方", ".-hov:in:{preset} の使い方", "トランジションを設定する方法"],
     "keywords": ["hover", "ホバー", "hov", "インタラクション", "animation", "set--var:hov", "has--transition", "transition"],
     "snippet": "ホバー関連のProp。-hov:-{prop} クラスでホバーエフェクトを設定。has--transition との組み合わせでアニメーション実現。set--var:hov と -hov:in:xxx クラスで親要素ホバー時の子要素スタイル制御も可能。"
   },
@@ -421,7 +422,7 @@
     "title": "DummyText",
     "description": "プロトタイピングやデザインモックアップ用のダミーテキストを出力するコンポーネントです。",
     "category": "ui",
-    "headings": ["Props", "Import", "使用例"],
+    "headings": ["How to use", "Examples"],
     "keywords": ["DummyText", "ダミー", "テスト", "プレビュー", "プレースホルダー", "lorem ipsum", "placeholder"],
     "snippet": "ダミーテキストを生成するコンポーネント。複数の言語とテキスト長に対応。@lism-css/uiパッケージから提供。"
   },
@@ -716,7 +717,7 @@
     "title": "Accordion",
     "description": "@lism-css/ui で提供する Accordion コンポーネントについて解説します。",
     "category": "ui",
-    "headings": ["基本構造", "ソースコード", "Import", "Props", "Examples"],
+    "headings": ["How to use", "Examples"],
     "keywords": ["Accordion", "アコーディオン", "開閉", "toggle", "FAQ", "折りたたみ", "collapsible"],
     "snippet": "クリックでコンテンツの開閉を切り替えるアコーディオンUI。@lism-css/uiパッケージで提供。"
   },
@@ -725,7 +726,7 @@
     "title": "Modal",
     "description": "@lism-css/ui で提供する Modal コンポーネントについて解説します。",
     "category": "ui",
-    "headings": ["How to use", "Props", "Usage"],
+    "headings": ["How to use", "Examples"],
     "keywords": ["Modal", "モーダル", "dialog", "ダイアログ", "ポップアップ", "popup"],
     "snippet": "モーダルダイアログUI。dialog要素を使用。@lism-css/uiパッケージで提供。"
   },
@@ -734,7 +735,7 @@
     "title": "Tabs",
     "description": "@lism-css/ui で提供する Tabs コンポーネントについて解説します。",
     "category": "ui",
-    "headings": ["基本構造", "CSS", "JavaScript", "Import", "Props", "Usage", "スタイルバリエーションの作成例", "Opt-in"],
+    "headings": ["How to use", "Examples", "Opt-in"],
     "keywords": ["Tabs", "タブ", "切り替え", "panel", "tab navigation"],
     "snippet": "タブ切り替えUI。タブをクリックしてコンテンツパネルを切り替える。@lism-css/uiパッケージで提供。"
   },
@@ -761,7 +762,7 @@
     "title": "Callout",
     "description": "@lism-css/ui で提供する Callout コンポーネントについて解説します。",
     "category": "ui",
-    "headings": ["How to use", "Examples", "Only lism-css", "Only Core"],
+    "headings": ["How to use", "Examples", "Only lism-css"],
     "keywords": ["Callout", "コールアウト", "補足", "note", "注意書き", "強調ボックス", "highlight"],
     "snippet": "記事の中で重要なポイントを示すためのコンポーネント。@lism-css/uiパッケージで提供。"
   },
@@ -905,7 +906,7 @@
     "title": "BalloonBox",
     "description": "Lism CSS で実装するふきだし風装飾ボックスの実装例です。",
     "category": "ui",
-    "headings": ["Import", "Props", "Usage"],
+    "headings": ["Source Code", "Props", "Usage"],
     "keywords": ["BalloonBox", "吹き出し", "ふきだし", "balloon", "装飾", "ボックス", "example"],
     "snippet": "ふきだし風装飾ボックスの作成例。variant でふきだしの方向、keycolor で色を指定。"
   },
@@ -1101,7 +1102,7 @@
     "title": "Skills",
     "description": "プロジェクトにSKILL.mdファイルを配置して、AIエージェントに Lism CSS の設計ルール・Props・トークン・命名規則を伝える方法。",
     "category": "guide",
-    "headings": ["セットアップ", "アップデート", "ファイル構成"],
+    "headings": ["セットアップ"],
     "keywords": ["skills", "SKILL.md", "AIエージェント", "設計ルール", "Claude", "コーディング支援"],
     "snippet": "プロジェクトにSKILL.mdファイルを配置することでAIエージェントにLism CSSの設計ルール・Props・トークン・命名規則を伝えられる。npxコマンドで導入・アップデート可能。"
   },
