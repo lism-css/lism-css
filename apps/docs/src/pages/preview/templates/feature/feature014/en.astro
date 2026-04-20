@@ -36,7 +36,7 @@ import './_style.css';
               p="20 30"
               bdrs="99"
               hasTransition
-              hov="reverse"
+              hov="fill"
             >
               <Inline gc="2">View More</Inline>
               <Icon icon="arrow-right" gc="3" />
@@ -66,7 +66,7 @@ import './_style.css';
               p="20 30"
               bdrs="99"
               hasTransition
-              hov="reverse"
+              hov="fill"
             >
               <Inline gc="2">View More</Inline>
               <Icon icon="arrow-right" gc="3" />
@@ -96,7 +96,7 @@ import './_style.css';
               p="20 30"
               bdrs="99"
               hasTransition
-              hov="reverse"
+              hov="fill"
             >
               <Inline gc="2">View More</Inline>
               <Icon icon="arrow-right" gc="3" />
@@ -107,3 +107,12 @@ import './_style.css';
     </Stack>
   </Container>
 </DemoLayout>
+
+<style>
+  @media (any-hover: hover) {
+    .-hov\:fill:hover {
+      background-color: var(--text) !important;
+      color: var(--base) !important;
+    }
+  }
+</style>
