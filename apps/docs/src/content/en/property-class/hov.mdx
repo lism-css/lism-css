@@ -118,9 +118,41 @@ Specify a value with the `--hov-{prop}` variable to make the property transition
   </PreviewCode>
 </Preview>
 
-:::info
-In the [`<Lism>` component](/en/docs/core-components/Lism/), passing an object like `hov={{ prop:value }}` outputs a `-hov:-prop` class paired with a `--hov-prop:value` CSS variable.
-:::
+<Spacer h="20" />
+
+
+### Specifying `hov` on the `<Lism>` component
+
+On the [`<Lism>` component](/en/docs/core-components/Lism/) (and components that extend it), you can pass either a **string** or an **object** to the `hov` prop to flexibly output `-hov` classes and `--hov-{prop}` CSS variables.
+
+
+#### When passing a string
+
+By default, the string you pass is output as-is as a `-hov:{string}` class.
+However, if the string matches a CSS props shorthand (`c`, `bgc`, `o`, etc.), it is automatically converted into the `-hov:-{prop}` form.
+
+| Input | Output class |
+|-------|--------------|
+| `hov="shadowUp"` | `-hov:shadowUp` |
+| `hov="-o"` | `-hov:-o` |
+| `hov="o"` | `-hov:-o` (auto-prefixed because it matches a shorthand) |
+| `hov="-c,-bxsh"` | `-hov:-c` + `-hov:-bxsh` (multiple classes, comma-separated) |
+
+
+#### When passing an object
+
+Mainly used to assign a **custom value** to a `.-hov:-{prop}` class.
+
+Writing `hov={{ prop: value }}` outputs a `-hov:-{prop}` class together with a `--hov-{prop}: {value}` CSS variable.
+
+If the value is `true`, no variable is emitted — only the corresponding `-hov` class. This is useful when you want to output both a **value-bearing prop** and a **preset class** (`.-hov:{preset}` or a custom class) at the same time.
+
+| Input | Output |
+|-------|--------|
+| `hov={{ c: 'red' }}` | `-hov:-c` + `--hov-c: var(--red)` |
+| `hov={{ c: true }}` | `-hov:-c` (no variable) |
+| `hov={{ c: 'red', shadowUp: true }}` | `-hov:-c` + `--hov-c: var(--red)` + `-hov:shadowUp` |
+
 
 <Spacer h="20" />
 
