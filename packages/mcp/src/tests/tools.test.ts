@@ -225,7 +225,7 @@ describe('load-markdown', () => {
     const filenames = getGuideFilenames();
     expect(filenames).toContain('SKILL.md');
     expect(filenames).toContain('primitives/l--flex.md');
-    expect(filenames).toContain('primitives/is--container.md');
+    expect(filenames).toContain('trait-class/is--container.md');
     expect(filenames).toContain('primitives/a--icon.md');
   });
 

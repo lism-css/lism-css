@@ -27,6 +27,7 @@ export default defineConfig(
       '**/.prettierrc.cjs',
       '**/.stylelintrc.mjs',
       '**/vite.config.*',
+      '**/__*',
     ],
   },
   eslintConfigPrettier,
