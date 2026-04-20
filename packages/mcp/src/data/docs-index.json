@@ -239,8 +239,8 @@
     "description": "ベーススタイルの上書きやトークン再定義に使用する set-- 形式のユーティリティクラスについて解説します。",
     "category": "guide",
     "headings": [],
-    "keywords": ["set", "set class", "set--plain", "set--shadow", "set--hov", "set--innerRs"],
-    "snippet": "ベーススタイルの上書きやトークンの再定義、機能的なプロパティを初期セットするためのクラス (.set--{style})。set--plain, set--shadow, set--hov, set--innerRs を解説。"
+    "keywords": ["set", "set class", "set--plain", "set--revert", "set--var:sh", "set--var:hov", "set--var:bdrsInner"],
+    "snippet": "HTML 要素の基礎スタイリングや変数セットを行うためのクラス (.set--{style})。set--plain / set--revert（基礎スタイリング）と set--var:sh / set--var:hov / set--var:bdrsInner（変数のセット）の 2 カテゴリで解説。"
   },
   {
     "sourcePath": "primitives.mdx",
@@ -307,9 +307,9 @@
     "title": "-hov",
     "description": "hover時の挙動をコントロールする -hov プロパティクラスの使い方について解説します。",
     "category": "property-class",
-    "headings": ["基本的な使い方", "`set--hov` と `-hov:to:xxx`"],
-    "keywords": ["hover", "ホバー", "hov", "インタラクション", "animation", "set--hov", "has--transition", "transition"],
-    "snippet": "ホバー関連のProp。-hov:{prop} クラスでホバーエフェクトを設定。has--transition との組み合わせでアニメーション実現。set--hov と -hov:to:xxx クラスで親要素ホバー時の子要素スタイル制御も可能。"
+    "headings": ["基本的な使い方", "`set--var:hov` と `-hov:to:xxx`"],
+    "keywords": ["hover", "ホバー", "hov", "インタラクション", "animation", "set--var:hov", "has--transition", "transition"],
+    "snippet": "ホバー関連のProp。-hov:{prop} クラスでホバーエフェクトを設定。has--transition との組み合わせでアニメーション実現。set--var:hov と -hov:to:xxx クラスで親要素ホバー時の子要素スタイル制御も可能。"
   },
   {
     "sourcePath": "property-class/max-sz.mdx",
@@ -1019,20 +1019,29 @@
   },
   {
     "sourcePath": "set-class.mdx",
-    "title": "set--shadow",
-    "description": "シャドウを構成するCSS変数を再定義するSetクラス。",
+    "title": "set--revert",
+    "description": "ブラウザデフォルトの見た目を明示的に復活させるSetクラス。",
     "category": "guide",
-    "headings": ["set--shadow"],
-    "keywords": ["set--shadow", "シャドウ", "影", "box-shadow", "--shc"],
-    "snippet": "set--shadowクラスを指定した要素では --bxsh-- 変数が再定義される。--shc変数でシャドウの色味をカスタマイズ可能。"
+    "headings": ["set--revert"],
+    "keywords": ["set--revert", "revert", "リバート", "list-style", "ul", "ol", "箇条書き"],
+    "snippet": "ブラウザデフォルトの見た目を明示的に復活させるクラス。単体ではスタイルを持たず、現状は ul / ol のみ対象。Property Class 付きリストで箇条書き表示を維持したい場合に使用。"
   },
   {
     "sourcePath": "set-class.mdx",
-    "title": "set--hov",
+    "title": "set--var:sh",
+    "description": "シャドウを構成するCSS変数を再定義するSetクラス。",
+    "category": "guide",
+    "headings": ["set--var:sh"],
+    "keywords": ["set--var:sh", "シャドウ", "影", "box-shadow", "--shc"],
+    "snippet": "set--var:sh クラスを指定した要素では --bxsh-- 変数が再定義される。--shc変数でシャドウの色味をカスタマイズ可能。"
+  },
+  {
+    "sourcePath": "set-class.mdx",
+    "title": "set--var:hov",
     "description": "ホバー状態の判定変数（--_isHov, --_notHov）をセットするSetクラス。",
     "category": "guide",
-    "headings": ["set--hov"],
-    "keywords": ["set--hov", "ホバー", "hover", "--_isHov", "--_notHov", "空変数トリック", "子要素ホバー"],
+    "headings": ["set--var:hov"],
+    "keywords": ["set--var:hov", "ホバー", "hover", "--_isHov", "--_notHov", "空変数トリック", "子要素ホバー"],
     "snippet": "hover/focus-within状態を空変数トリックで判定。var(--_isHov, 値)でhover時のみスタイル適用。親要素に付与して子要素のホバースタイルを制御可能。"
   },
   {
@@ -1042,15 +1051,15 @@
     "category": "guide",
     "headings": ["has--transition"],
     "keywords": ["has--transition", "トランジション", "アニメーション", "transition"],
-    "snippet": "専用のCSS変数を用いてtransitionプロパティをセットするクラス。set--hovと組み合わせてスムーズなホバーアニメーションを実現。"
+    "snippet": "専用のCSS変数を用いてtransitionプロパティをセットするクラス。set--var:hov と組み合わせてスムーズなホバーアニメーションを実現。"
   },
   {
     "sourcePath": "set-class.mdx",
-    "title": "set--innerRs",
+    "title": "set--var:bdrsInner",
     "description": "親要素の角丸とPaddingから内側の角丸を自動計算するSetクラス。",
     "category": "guide",
-    "headings": ["set--innerRs"],
-    "keywords": ["set--innerRs", "角丸", "内側角丸", "border-radius", "自動計算", "--bdrs--inner"],
+    "headings": ["set--var:bdrsInner"],
+    "keywords": ["set--var:bdrsInner", "角丸", "内側角丸", "border-radius", "自動計算", "--bdrs--inner"],
     "snippet": "親要素の --bdrs と --p から内側の角丸 --bdrs--inner を自動計算。子要素で -bdrs:inner を使って適用。レスポンシブ対応。"
   },
   {

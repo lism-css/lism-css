@@ -50,7 +50,17 @@ import './_style.css';
               <Icon icon="user" fz="2em" />
               <span>Contact via email</span>
             </Button>
-            <BoxLink layout="grid" href="#" gc="1 / -1" gtc={['1fr auto', null, '1fr 2fr auto']} ai="center" bgc="white" bdrs="10" ov="h" set="hov">
+            <BoxLink
+              layout="grid"
+              href="#"
+              gc="1 / -1"
+              gtc={['1fr auto', null, '1fr 2fr auto']}
+              ai="center"
+              bgc="white"
+              bdrs="10"
+              ov="h"
+              set="var:hov"
+            >
               <Frame as="figure" ar={['16/9', null, 'inherit']} gc={['1 / -1', null, '1']} pos="relative" h="100%" ov="h">
                 <Media src="https://cdn.lism-css.com/random/img?r=2" alt="" width="960" height="540" hasTransition hov="to:zoom" />
                 <Layer hasTransition hov="to:show" bgc="rgb(0 0 0 / 30%)" style={{ backdropFilter: 'blur(4px)' }}>

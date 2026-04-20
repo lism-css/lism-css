@@ -191,14 +191,22 @@ hr {
 ### リスト（ul, ol）
 
 ```scss
-:is(ul, ol):where(:not([class])),
-:is(ul, ol):where([class^='-']) {
+:is(ul, ol):where(:not([class])) {
   list-style: revert;
   padding-inline-start: var(--list-px-s, var(--s30));
 }
 ```
 
-クラスを持たないリスト、または Property Classしかクラスを持たない（class属性が `-` で始まる）リストに対して、ブラウザデフォルトスタイルを復活させています。
+クラスを一切持たないリストはブラウザデフォルトスタイルを自動で復活させています。
+
+Property Class 付きの `ul` / `ol`（例: `<ul class="-fz:l">`）はリスト表示が消えた状態のままとなります。箇条書き表示を維持したい場合は [`set--revert`](/docs/set-class#set--revert) を付与してください。
+
+```html
+<ul class="-fz:l set--revert">
+  <li>item 1</li>
+  <li>item 2</li>
+</ul>
+```
 
 | 変数 | フォールバック | 用途 |
 |------|------------|------|

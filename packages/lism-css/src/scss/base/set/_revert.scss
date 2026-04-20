@@ -1,0 +1,6 @@
+// HTML 要素の基礎スタイリング ― ブラウザ標準の見た目を復活させる汎用クラス
+// set--revert 単体では何も適用されず、HTML要素と組み合わせて使う想定。現状は ul / ol のみ対象だが、ユーザーが a / button など他要素に対しても自由に使える。
+:is(ul, ol).set--revert {
+  list-style: revert;
+  padding-inline-start: var(--list-px-s, var(--s30));
+}

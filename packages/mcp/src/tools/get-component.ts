@@ -27,10 +27,12 @@ function parsePrimitiveHeading(md: string): { className: string; componentName?:
   return { className: match[1], componentName: match[2] };
 }
 
+const ALIAS_SOURCE_DIRS = ['primitives/', 'trait-class/'];
+
 let classAliasMap: Map<string, string> | null = null;
 let componentAliasMap: Map<string, string> | null = null;
 
-/** primitives/*.md を走査して、クラス名由来 / React コンポーネント名由来の alias map を構築する（遅延初期化・キャッシュ）。
+/** primitives/ および trait-class/ 配下の *.md を走査して、クラス名由来 / React コンポーネント名由来の alias map を構築する（遅延初期化・キャッシュ）。
  *  angle-bracket 形式の問い合わせには componentAliasMap のみを照合し、
  *  クラス専用プリミティブへの false positive を避けるために分離している。 */
 function buildAliasMaps(): void {
@@ -38,7 +40,7 @@ function buildAliasMaps(): void {
   const classMap = new Map<string, string>();
   const componentMap = new Map<string, string>();
   for (const filename of getGuideFilenames()) {
-    if (!filename.startsWith('primitives/')) continue;
+    if (!ALIAS_SOURCE_DIRS.some((dir) => filename.startsWith(dir))) continue;
     const parsed = parsePrimitiveHeading(loadMarkdown(filename));
     if (!parsed) continue;
     classMap.set(normalizeComponentKey(parsed.className), filename);
@@ -152,7 +154,7 @@ export function registerGetComponent(server: McpServer): void {
             for (const [key, file] of map) {
               if (key.includes(normalizedKey) && !seenFiles.has(file)) {
                 seenFiles.add(file);
-                moduleCandidates.push(file.replace(/^primitives\//, '').replace(/\.md$/, ''));
+                moduleCandidates.push(file.replace(new RegExp(`^(${ALIAS_SOURCE_DIRS.join('|')})`), '').replace(/\.md$/, ''));
               }
             }
           }

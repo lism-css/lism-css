@@ -53,7 +53,7 @@ if (!isValidLang(lang)) {
 
               <FluidCols autoFill cols="24rem" g="20" my-s="20" class="templateList">
                 {items.map((item) => (
-                  <BoxLink class="templateList_link" layout="stack" href={`/${lang}/templates/${categoryId}/${item.id}`} p="10" g="20" set="hov">
+                  <BoxLink class="templateList_link" layout="stack" href={`/${lang}/templates/${categoryId}/${item.id}`} p="10" g="20" set="var:hov">
                     <Frame ar="3/2" bd bdrs="20" ov="hidden">
                       <img
                         src={`/screenshots/templates/${lang}/${categoryId}/${item.id}.png`}

@@ -95,9 +95,9 @@ hr {
 /* --------------------------------------------------
   list
 -------------------------------------------------- */
-// classを持たない、もしくは Property Classしかない(≒ Property Class で始まる) リスト要素はブラウザ標準のスタイルを復活させる。
-:is(ul, ol):where(:not([class])),
-:is(ul, ol):where([class^='-']) {
+// classを持たないリスト要素はブラウザ標準のスタイルを復活させる。
+// Property Class だけの ul/ol など、明示的に戻したい場合は `.set--revert` を付与する（base/set/_revert.scss）。
+:is(ul, ol):where(:not([class])) {
   list-style: revert;
   padding-inline-start: var(--list-px-s, var(--s30));
 }

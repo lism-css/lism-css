@@ -186,14 +186,22 @@ hr {
 ### Lists (ul, ol)
 
 ```scss
-:is(ul, ol):where(:not([class])),
-:is(ul, ol):where([class^='-']) {
+:is(ul, ol):where(:not([class])) {
   list-style: revert;
   padding-inline-start: var(--list-px-s, var(--s30));
 }
 ```
 
-While the Reset CSS removes list styles from elements with a class, this rule restores the browser default list style for lists with no class, or with only a Property Class (a class starting with `-`).
+While the Reset CSS removes list styles from elements with a class, this rule automatically restores the browser default list style for lists that have no class at all.
+
+A `ul` / `ol` decorated only with Property Classes (e.g. `<ul class="-fz:l">`) remains in the reset state. If you want to keep the list markers in that case, add [`set--revert`](/en/docs/set-class#set--revert) explicitly.
+
+```html
+<ul class="-fz:l set--revert">
+  <li>item 1</li>
+  <li>item 2</li>
+</ul>
+```
 
 | Variable | Fallback | Purpose |
 |------|------------|------|

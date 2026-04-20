@@ -1,16 +1,16 @@
 @media (any-hover: hover) {
-  .set--hov:hover {
+  .set--var\:hov:hover {
     --_notHov: ;
   }
-  .set--hov:not(:is(:hover, :focus-within)) {
+  .set--var\:hov:not(:is(:hover, :focus-within)) {
     --_isHov: ;
   }
 }
 @media (any-hover: none) {
-  .set--hov {
+  .set--var\:hov {
     --_isHov: ;
   }
 }
-.set--hov:is(:focus-visible, :focus-within) {
+.set--var\:hov:is(:focus-visible, :focus-within) {
   --_notHov: ;
 }
