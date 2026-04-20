@@ -48,7 +48,7 @@ When `href` is provided to `<BoxLink>`, the component itself renders as an `<a>`
 <Preview>
   <PreviewTitle id="boxlink-demo01">Example</PreviewTitle>
   <PreviewArea p="20">
-    <BoxLink href="#boxlink-demo01" p="30" bgc="base" bd bdrs="30" hov="o">
+    <BoxLink href="#boxlink-demo01" p="30" bgc="base" bd bdrs="30" hov="-o">
       <Group fz="xl" fw="bold">
         <Fragment>Heading text</Fragment>
       </Group>
@@ -60,7 +60,7 @@ When `href` is provided to `<BoxLink>`, the component itself renders as an `<a>`
   </PreviewArea>
   <PreviewCode slot="tab" label="JSX">
     ```jsx {1} "href="
-    <BoxLink href="#boxlink-demo01" p="30" bgc="base" bd bdrs="30" hov="o">
+    <BoxLink href="#boxlink-demo01" p="30" bgc="base" bd bdrs="30" hov="-o">
       <Group fz="xl" fw="bold">
         Heading text
       </Group>
@@ -75,7 +75,7 @@ When `href` is provided to `<BoxLink>`, the component itself renders as an `<a>`
   </PreviewCode>
   <PreviewCode slot="tab" label="HTML">
     ```html {1} "is--boxLink"
-    <a class="is--boxLink -hov:o -p:30 -bgc:base -bd -bdrs:30" href="#boxlink-demo01">
+    <a class="is--boxLink -hov:-o -p:30 -bgc:base -bd -bdrs:30" href="#boxlink-demo01">
       <p class="-fz:xl -fw:bold">Heading text</p>
       <p class="-c:text-2 -lh:s -my-s:15">
         Lorem ipsum dolor sit, amet consectetur adipisicing elit, sed do eiusmod tempor. Non facere laudantium ex eos doloribus aut dolore nisi provident.
@@ -96,7 +96,7 @@ This approach also allows you to place additional links inside the BoxLink.
 <Preview>
   <PreviewTitle id="boxlink-demo02">Example</PreviewTitle>
   <PreviewArea p="20">
-    <BoxLink as="section" p="30" bgc="base" bd bdrs="30" hasTransition hov="bxsh">
+    <BoxLink as="section" p="30" bgc="base" bd bdrs="30" hasTransition hov="-bxsh">
       <Group fz="xl" fw="bold">
         <Link isCoverLink href="#boxlink-demo02">
           <Fragment>Heading link text</Fragment>
@@ -104,7 +104,7 @@ This approach also allows you to place additional links inside the BoxLink.
       </Group>
       <DummyText c="text-2" lh="s" my-s="15" />
       <Group id="inner-link02" my-s="10">
-        <a href="#inner-link02" className="-hov:o">
+        <a href="#inner-link02" className="-hov:-o">
           <Fragment>Inner Link</Fragment>
         </a>
       </Group>
@@ -112,7 +112,7 @@ This approach also allows you to place additional links inside the BoxLink.
   </PreviewArea>
   <PreviewCode slot="tab" label="JSX">
     ```jsx 'isCoverLink'
-    <BoxLink p="30" bgc="base" bd bdrs="30" hasTransition hov="bxsh">
+    <BoxLink p="30" bgc="base" bd bdrs="30" hasTransition hov="-bxsh">
       <Group fz="xl" fw="bold">
         <Link isCoverLink href="#boxlink-demo02">
           Heading link text
@@ -123,7 +123,7 @@ This approach also allows you to place additional links inside the BoxLink.
         veniam, quis nostrud exercitation ullamco laboris nisi ut.
       </Text>
       <Group id="inner-link02" my-s="10">
-        <a href="#inner-link02" className="-hov:o">
+        <a href="#inner-link02" className="-hov:-o">
           Inner Link
         </a>
       </Group>
@@ -132,7 +132,7 @@ This approach also allows you to place additional links inside the BoxLink.
   </PreviewCode>
   <PreviewCode slot="tab" label="HTML">
     ```html "is--coverLink"
-    <div class="is--boxLink has--transition -p:30 -bgc:base -bd -bdrs:30 -hov:bxsh">
+    <div class="is--boxLink has--transition -p:30 -bgc:base -bd -bdrs:30 -hov:-bxsh">
       <div class="-fz:xl -fw:bold">
         <a class="is--coverLink" href="#boxlink-demo02">
           Heading Link
@@ -142,7 +142,7 @@ This approach also allows you to place additional links inside the BoxLink.
         Lorem ipsum dolor sit, amet consectetur adipisicing elit, sed do eiusmod tempor. Non facere laudantium ex eos doloribus aut dolore nisi provident.
       </p>
       <div id="inner-link02" class="-my-s:10">
-        <a href="#inner-link02" class="-hov:o">
+        <a href="#inner-link02" class="-hov:-o">
           Inner Link
         </a>
       </div>

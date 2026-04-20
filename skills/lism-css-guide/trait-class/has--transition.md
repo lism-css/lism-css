@@ -37,7 +37,7 @@
 ### 基本：`-hov:*` と組み合わせる
 
 ```html
-<div class="has--transition -hov:c" style="--transitionProps: color; --hov-c: var(--red);">Example</div>
+<div class="has--transition -hov:-c" style="--transitionProps: color; --hov-c: var(--red);">Example</div>
 ```
 ```jsx
 <Lism hasTransition hov={{c: 'red'}} style={{ '--transitionProps': 'color'}}>Example</Lism>
@@ -46,7 +46,7 @@
 ### `duration` を個別に上書き
 
 ```html
-<a class="is--boxLink has--transition -hov:bdc -bd -p:20" style="--hov-bdc: var(--red); --duration: 0.5s">
+<a class="is--boxLink has--transition -hov:-bdc -bd -p:20" style="--hov-bdc: var(--red); --duration: 0.5s">
   ...
 </a>
 ```
@@ -59,7 +59,7 @@
 ### `box-shadow` を変化させる例
 
 ```html
-<a href="###" class="is--boxLink has--transition -bxsh:10 -hov:bxsh -bd -p:20" style="--hov-bxsh: var(--bxsh--40)">
+<a href="###" class="is--boxLink has--transition -bxsh:10 -hov:-bxsh -bd -p:20" style="--hov-bxsh: var(--bxsh--40)">
   ...
 </a>
 ```

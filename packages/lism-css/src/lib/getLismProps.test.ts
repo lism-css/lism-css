@@ -325,8 +325,8 @@ describe('getLismProps', () => {
       const result = getLismProps({
         hov: { c: 'red', bgc: 'blue' },
       });
-      expect(result.className).toContain('-hov:c');
-      expect(result.className).toContain('-hov:bgc');
+      expect(result.className).toContain('-hov:-c');
+      expect(result.className).toContain('-hov:-bgc');
       expect(result.style?.['--hov-c']).toBe('var(--red)');
       expect(result.style?.['--hov-bgc']).toBe('var(--blue)');
     });
@@ -335,7 +335,7 @@ describe('getLismProps', () => {
       const result = getLismProps({
         hov: { c: true },
       });
-      expect(result.className).toContain('-hov:c');
+      expect(result.className).toContain('-hov:-c');
       expect(result.style?.['--hov-c']).toBeUndefined();
     });
 

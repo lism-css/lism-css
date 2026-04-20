@@ -394,19 +394,22 @@ export class LismPropsData {
         const hovVal = hoverData[propName];
         if (null == hovVal || '' === hovVal || false === hovVal) return;
 
-        // '-' の時は クラスのみ出力
-        if (hovVal === '-' || hovVal === true) {
-          this.addProp(`-hov:${propName}`);
-        } else if (propName === 'class') {
-          // propNameが'class'の場合は文字列として-hov:{class}クラスを追加.(カンマ区切りで複数指定可能)
+        // propNameが'class'の場合は文字列として-hov:{class}クラスを追加.(カンマ区切りで複数指定可能)
+        if (propName === 'class') {
           splitWithComma(hovVal as string).forEach((cls) => {
             this.addProp(`-hov:${cls}`);
           });
+          return;
+        }
+
+        // Property Class 名を指す propName は `-hov:-{propName}` の形式で出力する
+        if (hovVal === '-' || hovVal === true) {
+          this.addProp(`-hov:-${propName}`);
         } else if (typeof hovVal === 'string' || typeof hovVal === 'number') {
           // トークン値の処理
           const finalHovVal = getMaybeCssVar(hovVal, getTokenKey(propName));
 
-          this.addProp(`-hov:${propName}`);
+          this.addProp(`-hov:-${propName}`);
           this.addStyle(`--hov-${propName}`, finalHovVal);
         }
       });

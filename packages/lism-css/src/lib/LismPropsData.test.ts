@@ -210,8 +210,8 @@ describe('LismPropsData', () => {
       const instance = new LismPropsData({
         hov: { c: 'red', bgc: 'blue' },
       });
-      expect(instance.propClasses).toContain('-hov:c');
-      expect(instance.propClasses).toContain('-hov:bgc');
+      expect(instance.propClasses).toContain('-hov:-c');
+      expect(instance.propClasses).toContain('-hov:-bgc');
       expect(instance.styles['--hov-c']).toBe('var(--red)');
       expect(instance.styles['--hov-bgc']).toBe('var(--blue)');
     });
@@ -220,7 +220,7 @@ describe('LismPropsData', () => {
       const instance = new LismPropsData({
         hov: { c: true },
       });
-      expect(instance.propClasses).toContain('-hov:c');
+      expect(instance.propClasses).toContain('-hov:-c');
       expect(instance.styles['--hov-c']).toBeUndefined();
     });
 

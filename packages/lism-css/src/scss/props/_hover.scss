@@ -1,19 +1,19 @@
 @use '../_mixin' as mixin;
 
 @media (any-hover: hover) {
-  .-hov\:c:hover {
+  .-hov\:-c:hover {
     color: var(--hov-c, var(--link)) #{mixin.$maybe_important};
   }
-  .-hov\:bdc:hover {
+  .-hov\:-bdc:hover {
     border-color: var(--hov-bdc, currentColor) #{mixin.$maybe_important};
   }
-  .-hov\:bgc:hover {
+  .-hov\:-bgc:hover {
     background-color: var(--hov-bgc, var(--base-2)) #{mixin.$maybe_important};
   }
-  .-hov\:o:hover {
+  .-hov\:-o:hover {
     opacity: var(--hov-o, 0.7) #{mixin.$maybe_important};
   }
-  .-hov\:bxsh:hover {
+  .-hov\:-bxsh:hover {
     box-shadow: var(--hov-bxsh, var(--bxsh--40)) #{mixin.$maybe_important};
   }
 
@@ -24,21 +24,21 @@
 }
 
 // ------------------------------------------------------------
-// .-hov\:to
+// .-hov\:in （set--var:hov 連動の consumer class）
 // ------------------------------------------------------------
 
-.-hov\:to\:hide {
+.-hov\:in\:hide {
   --transitionProps: opacity;
   opacity: var(--_isHov, 0) #{mixin.$maybe_important};
 }
 
-.-hov\:to\:show {
+.-hov\:in\:show {
   --transitionProps: opacity, visibility;
   opacity: var(--_notHov, 0) #{mixin.$maybe_important};
   visibility: var(--_notHov, hidden) #{mixin.$maybe_important};
 }
 
-.-hov\:to\:zoom {
+.-hov\:in\:zoom {
   --transitionProps: scale;
   scale: var(--_isHov, 1.1);
 }

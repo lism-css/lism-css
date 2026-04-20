@@ -78,7 +78,7 @@ import { Accordion, Tabs, Button } from '@lism-css/ui/astro';
 | NG | OK | 理由 |
 |----|-----|------|
 | `<Heading level={3}>` | `<Heading level="3">` | `level` は文字列型（`'1'`〜`'6'`） |
-| `hov="shadow"` | `hov="bxsh"` | Lism の省略名は `bxsh`（box-shadow） |
+| `hov="shadow"` | `hov="-bxsh"` | Lism の省略名は `bxsh`（box-shadow） |
 | `bgc="secondary"` | `bgc="base-2"` | カラートークンの間違い |
 | `p="8"`, `g="6"` | `p="20"`, `g="10"` | スペーストークンの間違い |
 

@@ -29,36 +29,36 @@ Since each built-in class defines a default value, they can be used simply by ad
 
 
 <Preview>
-  <PreviewTitle>Usage examples of `.-hov:o`, `.-hov:c`, `.-hov:bxsh`</PreviewTitle>
+  <PreviewTitle>Usage examples of `.-hov:-o`, `.-hov:-c`, `.-hov:-bxsh`</PreviewTitle>
   <PreviewArea p="30">
-    <BoxLink href="###" hov="o" bgc="base-2" bd p="20">
+    <BoxLink href="###" hov="-o" bgc="base-2" bd p="20">
       <p>BoxLink</p>
       <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
     </BoxLink>
-    <BoxLink href="###" hov="c,bxsh" bd p="20">
+    <BoxLink href="###" hov="-c,-bxsh" bd p="20">
       <p>BoxLink</p>
       <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
     </BoxLink>
   </PreviewArea>
   <PreviewCode slot="tab" label="HTML">
-    ```html "-hov:o" "-hov:c" "-hov:bxsh"
-    <a href="###" class="is--boxLink -hov:o -bgc:base-2 -bd -p:20">
+    ```html "-hov:-o" "-hov:-c" "-hov:-bxsh"
+    <a href="###" class="is--boxLink -hov:-o -bgc:base-2 -bd -p:20">
       <p>BoxLink</p>
       <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
     </a>
-    <a href="###" class="is--boxLink -hov:c -hov:bxsh -bd -p:20">
+    <a href="###" class="is--boxLink -hov:-c -hov:-bxsh -bd -p:20">
       <p>BoxLink</p>
       <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
     </a>
     ```
   </PreviewCode>
   <PreviewCode slot="tab" label="JSX">
-    ```jsx 'hov="o"' 'hov="c,bxsh"'
-    <BoxLink href="###" hov="o" bgc="base-2" bd p="20">
+    ```jsx 'hov="-o"' 'hov="-c,-bxsh"'
+    <BoxLink href="###" hov="-o" bgc="base-2" bd p="20">
       <p>BoxLink</p>
       <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
     </BoxLink>
-    <BoxLink href="###" hov="c,bxsh" bd p="20">
+    <BoxLink href="###" hov="-c,-bxsh" bd p="20">
       <p>BoxLink</p>
       <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
     </BoxLink>
@@ -84,8 +84,8 @@ In the [`<Lism>` component](/en/docs/core-components/Lism/), passing a string to
     </BoxLink>
   </PreviewArea>
   <PreviewCode slot="tab" label="HTML">
-  ```html "-hov:bgc" "-hov:c" "--hov-bgc" "--hov-c"
-  <a class="is--boxLink -hov:bgc -hov:c -bgc:base-2 -p:20" style="--hov-bgc: var(--brand); --hov-c: var(--white)" href="###">
+  ```html "-hov:-bgc" "-hov:-c" "--hov-bgc" "--hov-c"
+  <a class="is--boxLink -hov:-bgc -hov:-c -bgc:base-2 -p:20" style="--hov-bgc: var(--brand); --hov-c: var(--white)" href="###">
     <p>BoxLink.</p>
     <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
   </a>
@@ -102,7 +102,7 @@ In the [`<Lism>` component](/en/docs/core-components/Lism/), passing a string to
 </Preview>
 
 :::info
-In the [`<Lism>` component](/en/docs/core-components/Lism/), passing an object like `hov={{ prop:value }}` outputs a `-hov:prop` class paired with a `--hov-prop:value` CSS variable.
+In the [`<Lism>` component](/en/docs/core-components/Lism/), passing an object like `hov={{ prop:value }}` outputs a `-hov:-prop` class paired with a `--hov-prop:value` CSS variable.
 :::
 
 <Spacer h="20" />
@@ -128,8 +128,8 @@ Combine this class with CSS variables to configure transition behavior.
     </BoxLink>
   </PreviewArea>
   <PreviewCode slot="tab" label="HTML">
-    ```html "has--transition" "-bxsh:10 -hov:bxsh" "--hov-bxsh:var(--bxsh--40)"
-    <a href="###" class="is--boxLink has--transition -bxsh:10 -hov:bxsh -bd -p:20" style="--hov-bxsh: var(--bxsh--40)">
+    ```html "has--transition" "-bxsh:10 -hov:-bxsh" "--hov-bxsh:var(--bxsh--40)"
+    <a href="###" class="is--boxLink has--transition -bxsh:10 -hov:-bxsh -bd -p:20" style="--hov-bxsh: var(--bxsh--40)">
       <p>BoxLink</p>
       <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
     </a>
@@ -156,7 +156,7 @@ Combine this class with CSS variables to configure transition behavior.
   </PreviewArea>
   <PreviewCode slot="tab" label="HTML">
     ```html "has--transition" "--duration: 0.5s"
-    <a class="is--boxLink has--transition -bd -bgc:base-2 -p:20 -hov:bdc" style="--hov-bdc: var(--red); --duration: 0.5s; --bdw: 3px" href="###">
+    <a class="is--boxLink has--transition -bd -bgc:base-2 -p:20 -hov:-bdc" style="--hov-bdc: var(--red); --duration: 0.5s; --bdw: 3px" href="###">
       <p>BoxLink</p>
       <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
     </a>
@@ -220,40 +220,40 @@ Combine this class with CSS variables to configure transition behavior.
 
 
 <div class="u--srOnly" id="set--varhov"></div>
-## `set--var:hov` and `-hov:to:xxx`
+## `set--var:hov` and `-hov:in:xxx`
 
 Lism defines a class called [`set--var:hov`](/en/docs/set-class/#set--varhov), which sets up the `--_isHov` and `--_notHov` variables.
 
 
-By leveraging `set--var:hov`, you can trigger style changes on child elements when the parent is hovered. The core package includes a small set of such child-targeting classes under the `-hov:to:xxx` naming convention by default.
+By leveraging `set--var:hov`, you can trigger style changes on child elements when the parent is hovered. The core package includes a small set of such child-targeting classes under the `-hov:in:xxx` naming convention by default.
 
 ```css
 /* Hide when parent set--var:hov is hovered */
-.-hov\:to\:hide {
+.-hov\:in\:hide {
   --transitionProps: opacity;
   opacity: var(--_isHov, 0);
 }
 
 /* Show when parent set--var:hov is hovered */
-.-hov\:to\:show {
+.-hov\:in\:show {
   --transitionProps: opacity, visibility;
   opacity: var(--_notHov, 0);
   visibility: var(--_notHov, hidden);
 }
 
 /* Zoom in when parent set--var:hov is hovered */
-.-hov\:to\:zoom {
+.-hov\:in\:zoom {
   --transitionProps: scale;
   scale: var(--_isHov, 1.1);
 }
 ```
 
 <Preview>
-  <PreviewTitle>Example using `-hov:to:show` and `-hov:to:zoom`</PreviewTitle>
+  <PreviewTitle>Example using `-hov:in:show` and `-hov:in:zoom`</PreviewTitle>
   <PreviewArea p="20">
     <Frame isBoxLink set="var:hov" href="#banner-link" ar="16/9" bdrs="30">
-      <Media isLayer hasTransition hov="to:zoom" src="https://cdn.lism-css.com/img/a-1.jpg" alt="" width="960" height="640" loading="lazy" />
-      <Layer hasTransition hov="to:show" bgc="rgb(0 0 0 / 40%)" style={{ backdropFilter: 'blur(6px)' }}>
+      <Media isLayer hasTransition hov="in:zoom" src="https://cdn.lism-css.com/img/a-1.jpg" alt="" width="960" height="640" loading="lazy" />
+      <Layer hasTransition hov="in:show" bgc="rgb(0 0 0 / 40%)" style={{ backdropFilter: 'blur(6px)' }}>
         <Center h="100%" c="#fff">
           <Inline fz="2xl" fs="italic" fw="light" lts="l" bdrs="99" px="20" py="10">
             <Fragment>View More</Fragment>
@@ -263,10 +263,10 @@ By leveraging `set--var:hov`, you can trigger style changes on child elements wh
     </Frame>
   </PreviewArea>
   <PreviewCode slot="tab" label="HTML">
-    ```html "set--var:hov" "-hov:to:show" "-hov:to:zoom" "has--transition"
+    ```html "set--var:hov" "-hov:in:show" "-hov:in:zoom" "has--transition"
     <a class="l--frame set--var:hov is--boxLink -ar:16/9 -bdrs:30" href="#banner-link">
-      <img class="is--layer has--transition -hov:to:zoom" src="https://cdn.lism-css.com/img/a-1.jpg" width="960" height="640" loading="lazy" />
-      <div class="is--layer has--transition -hov:to:show -bgc" style="--bgc: rgb(0 0 0 / 40%); backdrop-filter: blur(6px)">
+      <img class="is--layer has--transition -hov:in:zoom" src="https://cdn.lism-css.com/img/a-1.jpg" width="960" height="640" loading="lazy" />
+      <div class="is--layer has--transition -hov:in:show -bgc" style="--bgc: rgb(0 0 0 / 40%); backdrop-filter: blur(6px)">
         <div class="l--center -h:100% -c" style="--c: #fff">
           <span class="-fz:2xl -fs:italic -fw:light -lts:l -bdrs:99 -px:20 -py:10">View More</span>
         </div>
@@ -275,10 +275,10 @@ By leveraging `set--var:hov`, you can trigger style changes on child elements wh
     ```
   </PreviewCode>
   <PreviewCode slot="tab" label="JSX">
-    ```jsx 'set="var:hov"' 'hov="to:show"' 'hov="to:zoom"' 'hasTransition'
+    ```jsx 'set="var:hov"' 'hov="in:show"' 'hov="in:zoom"' 'hasTransition'
     <Frame isBoxLink set="var:hov" href="#banner-link" ar="16/9" bdrs="30">
-      <Media isLayer hasTransition hov="to:zoom" src="https://cdn.lism-css.com/img/a-1.jpg" alt="" width="960" height="640" loading="lazy" />
-      <Layer hasTransition hov="to:show" bgc="rgb(0 0 0 / 40%)" style={{ backdropFilter: 'blur(6px)' }}>
+      <Media isLayer hasTransition hov="in:zoom" src="https://cdn.lism-css.com/img/a-1.jpg" alt="" width="960" height="640" loading="lazy" />
+      <Layer hasTransition hov="in:show" bgc="rgb(0 0 0 / 40%)" style={{ backdropFilter: 'blur(6px)' }}>
         <Center h="100%" c="#fff">
           <Inline fz="2xl" fs="italic" fw="light" lts="l" bdrs="99" px="20" py="10">
             View More

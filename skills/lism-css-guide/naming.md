@@ -81,6 +81,7 @@ Property Class の形式:
 - 特定の値とセット: `-{prop}:{value}`
 - `--{prop}` 変数を受け取る: `-{prop}`
 - ブレークポイント値を受け取る: `-{prop}_{bp}`
+- 修飾子 + Property Class 合成: `-{modifier}:-{prop}`（例: `-hov:-c` は `-c` の hover バリアント）
 
 
 ## `{prop}` の省略ルール

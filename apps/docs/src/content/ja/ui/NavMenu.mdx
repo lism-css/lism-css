@@ -23,8 +23,8 @@ import { Accordion, NavMenu } from '@lism-css/ui/astro'
 
 | プロパティ | 説明 |
 |---|---|
-| <PropBadge>`<NavMenu.Root>`</PropBadge><br/>`hovBgc` | `--hov-bgc`を出力します。（`.c--navMenu_link`に`.-hov:bgc`を付けた時用）|
-| <PropBadge>`<NavMenu.Root>`</PropBadge><br/>`hovC` | `--hov-c`を出力します。 （`.c--navMenu_link`に`.-hov:c`を付けた時用）|
+| <PropBadge>`<NavMenu.Root>`</PropBadge><br/>`hovBgc` | `--hov-bgc`を出力します。（`.c--navMenu_link`に`.-hov:-bgc`を付けた時用）|
+| <PropBadge>`<NavMenu.Root>`</PropBadge><br/>`hovC` | `--hov-c`を出力します。 （`.c--navMenu_link`に`.-hov:-c`を付けた時用）|
 | <PropBadge>`<NavMenu.Root>`</PropBadge><br/>`itemP` | `--_item-p`変数を出力します。各リンクのpaddingを一括で調整できます。|
 | <PropBadge>`<NavMenu.Link>`</PropBadge><br/>`hov` | hover時のスタイルを指定できます。 |
 
@@ -63,17 +63,17 @@ import { Accordion, NavMenu } from '@lism-css/ui/astro'
   <PreviewArea p="20">
     <NavMenu.Root>
       <NavMenu.Item>
-        <NavMenu.Link href="#menu" hov="bgc">
+        <NavMenu.Link href="#menu" hov="-bgc">
           <Fragment>Menu item 1</Fragment>
         </NavMenu.Link>
       </NavMenu.Item>
       <NavMenu.Item>
-        <NavMenu.Link href="#menu" hov="bgc">
+        <NavMenu.Link href="#menu" hov="-bgc">
           <Fragment>Menu item 2</Fragment>
         </NavMenu.Link>
       </NavMenu.Item>
       <NavMenu.Item>
-        <NavMenu.Link href="#menu" hov="bgc">
+        <NavMenu.Link href="#menu" hov="-bgc">
           <Fragment>Menu item 3</Fragment>
         </NavMenu.Link>
       </NavMenu.Item>
@@ -83,17 +83,17 @@ import { Accordion, NavMenu } from '@lism-css/ui/astro'
     ```jsx
     <NavMenu.Root>
       <NavMenu.Item>
-        <NavMenu.Link href="#menu" hov="bgc">
+        <NavMenu.Link href="#menu" hov="-bgc">
           Menu item 1
         </NavMenu.Link>
       </NavMenu.Item>
       <NavMenu.Item>
-        <NavMenu.Link href="#menu" hov="bgc">
+        <NavMenu.Link href="#menu" hov="-bgc">
           Menu item 2
         </NavMenu.Link>
       </NavMenu.Item>
       <NavMenu.Item>
-        <NavMenu.Link href="#menu" hov="bgc">
+        <NavMenu.Link href="#menu" hov="-bgc">
           Menu item 3
         </NavMenu.Link>
       </NavMenu.Item>
@@ -175,13 +175,13 @@ import { Accordion, NavMenu } from '@lism-css/ui/astro'
   <PreviewTitle>`itemP`を指定</PreviewTitle>
   <PreviewArea p="30">
     <NavMenu.Root bd itemP="30">
-      <NavMenu.Item hov="bgc">
+      <NavMenu.Item hov="-bgc">
         <NavMenu.Link href="#menu1">Menu item</NavMenu.Link>
       </NavMenu.Item>
-      <NavMenu.Item hov="bgc" bd-t>
+      <NavMenu.Item hov="-bgc" bd-t>
         <NavMenu.Link href="#menu2">Menu item</NavMenu.Link>
       </NavMenu.Item>
-      <NavMenu.Item hov="bgc" bd-t>
+      <NavMenu.Item hov="-bgc" bd-t>
         <NavMenu.Link href="#menu3">Menu item</NavMenu.Link>
       </NavMenu.Item>
     </NavMenu.Root>
@@ -189,13 +189,13 @@ import { Accordion, NavMenu } from '@lism-css/ui/astro'
   <PreviewCode>
     ```jsx 'bdc="border"' 'itemP="30"'
     <NavMenu.Root bd itemP="30">
-      <NavMenu.Item hov="bgc">
+      <NavMenu.Item hov="-bgc">
         <NavMenu.Link href="#menu1">Menu item</NavMenu.Link>
       </NavMenu.Item>
-      <NavMenu.Item hov="bgc" bd-t>
+      <NavMenu.Item hov="-bgc" bd-t>
         <NavMenu.Link href="#menu2">Menu item</NavMenu.Link>
       </NavMenu.Item>
-      <NavMenu.Item hov="bgc" bd-t>
+      <NavMenu.Item hov="-bgc" bd-t>
         <NavMenu.Link href="#menu3">Menu item</NavMenu.Link>
       </NavMenu.Item>
     </NavMenu.Root>
@@ -212,32 +212,32 @@ import { Accordion, NavMenu } from '@lism-css/ui/astro'
   <PreviewArea p="20">
     <NavMenu.Root bd-y hovBgc="base-2">
       <NavMenu.Item>
-        <NavMenu.Link hov="bgc" href="#menu1">
+        <NavMenu.Link hov="-bgc" href="#menu1">
           <Fragment>Menu item 1</Fragment>
         </NavMenu.Link>
       </NavMenu.Item>
       <NavMenu.Item bd-t>
-        <NavMenu.Link hov="bgc" href="#menu2">
+        <NavMenu.Link hov="-bgc" href="#menu2">
           <Fragment>Menu item 2</Fragment>
         </NavMenu.Link>
         <NavMenu.Nest bd-t>
           <NavMenu.Item>
-            <NavMenu.Link hov="bgc" href="#child-menu1">
+            <NavMenu.Link hov="-bgc" href="#child-menu1">
               <Fragment>Nested item</Fragment>
             </NavMenu.Link>
           </NavMenu.Item>
           <NavMenu.Item bd-t>
-            <NavMenu.Link hov="bgc" href="#child-menu3">
+            <NavMenu.Link hov="-bgc" href="#child-menu3">
               <Fragment>Nested item</Fragment>
             </NavMenu.Link>
             <NavMenu.Nest bd-t>
               <NavMenu.Item>
-                <NavMenu.Link hov="bgc" href="#child-menu4">
+                <NavMenu.Link hov="-bgc" href="#child-menu4">
                   <Fragment>Nested level 2 item</Fragment>
                 </NavMenu.Link>
               </NavMenu.Item>
               <NavMenu.Item bd-t>
-                <NavMenu.Link hov="bgc" href="#child-menu5">
+                <NavMenu.Link hov="-bgc" href="#child-menu5">
                   <Fragment>Nested level 2 item</Fragment>
                 </NavMenu.Link>
               </NavMenu.Item>
@@ -251,32 +251,32 @@ import { Accordion, NavMenu } from '@lism-css/ui/astro'
     ```jsx "NavMenu.Nest"
     <NavMenu.Root bd-y hovBgc="base-2">
       <NavMenu.Item>
-        <NavMenu.Link hov="bgc" href="#menu1">
+        <NavMenu.Link hov="-bgc" href="#menu1">
           Menu item 1
         </NavMenu.Link>
       </NavMenu.Item>
       <NavMenu.Item bd-t>
-        <NavMenu.Link hov="bgc" href="#menu2">
+        <NavMenu.Link hov="-bgc" href="#menu2">
           Menu item 2
         </NavMenu.Link>
         <NavMenu.Nest bd-t>
           <NavMenu.Item>
-            <NavMenu.Link hov="bgc" href="#child-menu1">
+            <NavMenu.Link hov="-bgc" href="#child-menu1">
               Nested item
             </NavMenu.Link>
           </NavMenu.Item>
           <NavMenu.Item bd-t>
-            <NavMenu.Link hov="bgc" href="#child-menu3">
+            <NavMenu.Link hov="-bgc" href="#child-menu3">
               Nested item
             </NavMenu.Link>
             <NavMenu.Nest bd-t>
               <NavMenu.Item>
-                <NavMenu.Link hov="bgc" href="#child-menu4">
+                <NavMenu.Link hov="-bgc" href="#child-menu4">
                   Nested level 2 item
                 </NavMenu.Link>
               </NavMenu.Item>
               <NavMenu.Item bd-t>
-                <NavMenu.Link hov="bgc" href="#child-menu5">
+                <NavMenu.Link hov="-bgc" href="#child-menu5">
                   Nested level 2 item
                 </NavMenu.Link>
               </NavMenu.Item>
@@ -300,7 +300,7 @@ import { Accordion, NavMenu } from '@lism-css/ui/astro'
   <PreviewArea p="20">
     <NavMenu.Root bd-y hovBgc="base-2">
       <NavMenu.Item>
-        <NavMenu.Link hov="bgc" href="#menu1">
+        <NavMenu.Link hov="-bgc" href="#menu1">
           <Fragment>Menu item</Fragment>
         </NavMenu.Link>
       </NavMenu.Item>
@@ -308,19 +308,19 @@ import { Accordion, NavMenu } from '@lism-css/ui/astro'
         <Accordion.Root>
           <Accordion.Item>
             <Accordion.Heading>
-              <Accordion.Button hov="bgc" p="var(--_item-p)">
+              <Accordion.Button hov="-bgc" p="var(--_item-p)">
                 <Fragment>Menu item (Accordion)</Fragment>
               </Accordion.Button>
             </Accordion.Heading>
             <Accordion.Panel>
               <NavMenu.Nest>
                 <NavMenu.Item>
-                  <NavMenu.Link hov="bgc" href="#child-menu1">
+                  <NavMenu.Link hov="-bgc" href="#child-menu1">
                     <Fragment>Nested item</Fragment>
                   </NavMenu.Link>
                 </NavMenu.Item>
                 <NavMenu.Item>
-                  <NavMenu.Link hov="bgc" href="#child-menu2">
+                  <NavMenu.Link hov="-bgc" href="#child-menu2">
                     <Fragment>Nested item</Fragment>
                   </NavMenu.Link>
                 </NavMenu.Item>
@@ -335,7 +335,7 @@ import { Accordion, NavMenu } from '@lism-css/ui/astro'
     ```jsx "Accordion.Root" "NavMenu.Nest"
     <NavMenu.Root bd-y hovBgc="base-2">
       <NavMenu.Item>
-        <NavMenu.Link hov="bgc" href="#menu1">
+        <NavMenu.Link hov="-bgc" href="#menu1">
           Menu item
         </NavMenu.Link>
       </NavMenu.Item>
@@ -343,19 +343,19 @@ import { Accordion, NavMenu } from '@lism-css/ui/astro'
         <Accordion.Root>
           <Accordion.Item>
             <Accordion.Heading>
-              <Accordion.Button hov="bgc" p="var(--_item-p)">
+              <Accordion.Button hov="-bgc" p="var(--_item-p)">
                 Menu item (Accordion)
               </Accordion.Button>
             </Accordion.Heading>
             <Accordion.Panel>
               <NavMenu.Nest>
                 <NavMenu.Item>
-                  <NavMenu.Link hov="bgc" href="#child-menu1">
+                  <NavMenu.Link hov="-bgc" href="#child-menu1">
                     Nested item
                   </NavMenu.Link>
                 </NavMenu.Item>
                 <NavMenu.Item>
-                  <NavMenu.Link hov="bgc" href="#child-menu2">
+                  <NavMenu.Link hov="-bgc" href="#child-menu2">
                     Nested item
                   </NavMenu.Link>
                 </NavMenu.Item>
@@ -380,7 +380,7 @@ import { Accordion, NavMenu } from '@lism-css/ui/astro'
   <PreviewArea p="20">
     <Box min-h="15rem">
       <NavMenu.Root fxd="row" lh="s" itemP="10">
-        <NavMenu.Item hov="o">
+        <NavMenu.Item hov="-o">
           <NavMenu.Link href="#menu1">Menu item</NavMenu.Link>
         </NavMenu.Item>
         <NavMenu.Item set="var:hov" pos="relative">
@@ -389,16 +389,16 @@ import { Accordion, NavMenu } from '@lism-css/ui/astro'
               Hover Menu Item <Icon icon="caret-down" style={{ translate: '10%' }} />
             </Fragment>
           </NavMenu.Link>
-          <NavMenu.Nest fz="s" hov="to:show" pos="absolute" t="100%" px-s="0" lh="s" bgc="base" bxsh="20" bdrs="10">
-            <NavMenu.Item hov="bgc">
+          <NavMenu.Nest fz="s" hov="in:show" pos="absolute" t="100%" px-s="0" lh="s" bgc="base" bxsh="20" bdrs="10">
+            <NavMenu.Item hov="-bgc">
               <NavMenu.Link href="#child-menu1">Nested item</NavMenu.Link>
             </NavMenu.Item>
-            <NavMenu.Item hov="bgc">
+            <NavMenu.Item hov="-bgc">
               <NavMenu.Link href="#child-menu2">Nested Menu item</NavMenu.Link>
             </NavMenu.Item>
           </NavMenu.Nest>
         </NavMenu.Item>
-        <NavMenu.Item hov="o">
+        <NavMenu.Item hov="-o">
           <NavMenu.Link href="#menu1">Menu item</NavMenu.Link>
         </NavMenu.Item>
       </NavMenu.Root>
@@ -408,7 +408,7 @@ import { Accordion, NavMenu } from '@lism-css/ui/astro'
     ```jsx 'fxd="row"'
     <Box min-h="15rem">
       <NavMenu.Root fxd="row" lh="s" itemP="10">
-        <NavMenu.Item hov="o">
+        <NavMenu.Item hov="-o">
           <NavMenu.Link href="#menu1">Menu item</NavMenu.Link>
         </NavMenu.Item>
         <NavMenu.Item set="var:hov" pos="relative">
@@ -417,16 +417,16 @@ import { Accordion, NavMenu } from '@lism-css/ui/astro'
               Hover Menu Item <Icon icon="caret-down" style={{ translate: '10%' }} />
             </Fragment>
           </NavMenu.Link>
-          <NavMenu.Nest fz="s" hov="to:show" pos="absolute" t="100%" px-s="0" lh="s" bgc="base" bxsh="20" bdrs="10">
-            <NavMenu.Item hov="bgc">
+          <NavMenu.Nest fz="s" hov="in:show" pos="absolute" t="100%" px-s="0" lh="s" bgc="base" bxsh="20" bdrs="10">
+            <NavMenu.Item hov="-bgc">
               <NavMenu.Link href="#child-menu1">Nested item</NavMenu.Link>
             </NavMenu.Item>
-            <NavMenu.Item hov="bgc">
+            <NavMenu.Item hov="-bgc">
               <NavMenu.Link href="#child-menu2">Nested Menu item</NavMenu.Link>
             </NavMenu.Item>
           </NavMenu.Nest>
         </NavMenu.Item>
-        <NavMenu.Item hov="o">
+        <NavMenu.Item hov="-o">
           <NavMenu.Link href="#menu1">Menu item</NavMenu.Link>
         </NavMenu.Item>
       </NavMenu.Root>
