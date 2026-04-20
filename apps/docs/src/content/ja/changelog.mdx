@@ -9,6 +9,64 @@ v.1.0リリースまでしばらく激しい変更が続く可能性があるた
 
 <Divider bds="dashed" my="40" />
 
+## v.0.15.0 (2026.04.21)
+
+**破壊的変更**を含むリリースです。
+
+### CSSレイヤー構造の再編 (#304)
+
+- レイヤー順序を `lism-trait → lism-primitive → lism-component` に変更
+- `lism-trait` レイヤーを独立させ、`has--*` Trait Class を復活
+- クラス出力順を `set-- → trait(is--/has--) → u-- → -prop` に再設計
+- `set--mask` を `has--mask` として trait レイヤーに移行
+
+### `set--` クラスの刷新 (#304)
+
+- `var:` プレフィックスによる分類刷新
+  - `set--hov` → `set--var:hov`
+  - `set--shadow` → `set--var:sh`
+  - `set--innerRs` → `set--var:bdrsInner`
+- `set--mask` を `has--mask` として trait レイヤーに移行
+- `set--revert` を新設（`ul` / `ol` の自動判定を明示的なクラス運用に変更）
+
+### `-hov:` クラスの命名整理 (#300)
+
+- Property Class 合成系を `-hov:-{prop}` 形式に変更
+  - `-hov:c` → `-hov:-c`
+  - `-hov:bgc` → `-hov:-bgc`
+  - `-hov:bdc` → `-hov:-bdc`
+  - `-hov:o` → `-hov:-o`
+  - `-hov:bxsh` → `-hov:-bxsh`
+- `set--var:hov` 連動系を `-hov:to:*` → `-hov:in:*` に変更
+- `-hov:underline` プリセットを追加
+- `-hov:neutral` などは据え置き
+- hov 文字列指定の短縮名自動変換を廃止、オブジェクト `true` 値の挙動を統一
+- hov prop のオブジェクト指定から `class:` キー処理を削除
+
+### シャドウトークンの刷新 (#311)
+
+`--shsz--` のサイズスケールを **1段階ずつずらし**、`--shsz--5` を削除しました。旧来と同じシャドウを使うには段階を `+10` してください。
+
+| 旧トークン | 値 | 新トークン |
+|---|---|---|
+| `--shsz--10` | `0px 2px 6px` | `--shsz--20` |
+| `--shsz--20` | `0px 4px 12px` | `--shsz--30` |
+| `--shsz--30` | `0px 8px 24px` | `--shsz--40` |
+| `--shsz--40` | `0px 16px 48px` | `--shsz--50` |
+
+- 新しい `--shsz--10` は `0px 1px 3px`（新規の最小サイズ）
+- `--bxsh--50` / `--shsz--50` を新規追加
+- `--shc` の透明度を 12% → 15% に調整
+
+### その他
+
+- `prop="-"` 指定を廃止し `true` に一本化 (#310)
+- `overwriteBaseVar` を廃止し `alwaysVar` に統合、BPクラス出力を改善
+- `has--transition` の変数整理（`--transProp` → `--transitionProps`、`--hov-duration` → `--transition-duration`）とデフォルト duration を 0.25s に調整
+- `has--snap` の CSS 変数デフォルト値を要素側初期化に変更
+- `AstroLayoutProps<L>` を導入し `AstroFlowProps` / `AstroFlexProps` を削除
+- `LismElementProps` の `className` 型を `string | undefined` に明示化
+
 ## `@lism-css/ui` v.0.14.0 (2026.04.17)
 
 **破壊的変更**を含むリリースです。

@@ -9,6 +9,64 @@ Breaking changes may continue frequently until the v1.0 release, so all notable 
 
 <Divider bds="dashed" my="40" />
 
+## v.0.15.0 (2026.04.21)
+
+This release contains **breaking changes**.
+
+### CSS Layer Restructuring (#304)
+
+- Changed layer order to `lism-trait → lism-primitive → lism-component`
+- Separated `lism-trait` layer and restored `has--*` Trait Classes
+- Redesigned class output order: `set-- → trait(is--/has--) → u-- → -prop`
+- Migrated `set--mask` to `has--mask` under the trait layer
+
+### `set--` Class Overhaul (#304)
+
+- Reclassified with `var:` prefix
+  - `set--hov` → `set--var:hov`
+  - `set--shadow` → `set--var:sh`
+  - `set--innerRs` → `set--var:bdrsInner`
+- Migrated `set--mask` to `has--mask` under the trait layer
+- Added new `set--revert` (replaces automatic `ul` / `ol` detection with explicit class usage)
+
+### `-hov:` Class Naming Cleanup (#300)
+
+- Renamed Property Class composition group to `-hov:-{prop}` format
+  - `-hov:c` → `-hov:-c`
+  - `-hov:bgc` → `-hov:-bgc`
+  - `-hov:bdc` → `-hov:-bdc`
+  - `-hov:o` → `-hov:-o`
+  - `-hov:bxsh` → `-hov:-bxsh`
+- Renamed `set--var:hov` group from `-hov:to:*` to `-hov:in:*`
+- Added `-hov:underline` preset
+- `-hov:neutral` etc. remain unchanged
+- Removed auto-shortening of hov string values; unified behavior of object `true` values
+- Removed `class:` key handling from hov prop object notation
+
+### Shadow Token Overhaul (#311)
+
+The `--shsz--` scale has been **shifted down one step**, and `--shsz--5` was removed. To use the same shadow as before, shift the step by `+10`.
+
+| Old token | Value | New token |
+|---|---|---|
+| `--shsz--10` | `0px 2px 6px` | `--shsz--20` |
+| `--shsz--20` | `0px 4px 12px` | `--shsz--30` |
+| `--shsz--30` | `0px 8px 24px` | `--shsz--40` |
+| `--shsz--40` | `0px 16px 48px` | `--shsz--50` |
+
+- New `--shsz--10` is `0px 1px 3px` (the new smallest size)
+- Added `--bxsh--50` / `--shsz--50`
+- Adjusted `--shc` opacity from 12% → 15%
+
+### Other
+
+- Removed `prop="-"` notation in favor of `true` only (#310)
+- Removed `overwriteBaseVar` and merged into `alwaysVar`; improved BP class output
+- Reorganized `has--transition` variables (`--transProp` → `--transitionProps`, `--hov-duration` → `--transition-duration`) and adjusted default duration to 0.25s
+- Changed `has--snap` CSS variable defaults to element-side initialization
+- Introduced `AstroLayoutProps<L>` and removed `AstroFlowProps` / `AstroFlexProps`
+- Made `LismElementProps['className']` type explicit (`string | undefined`)
+
 ## `@lism-css/ui` v.0.14.0 (2026.04.17)
 
 This release contains **breaking changes**.
