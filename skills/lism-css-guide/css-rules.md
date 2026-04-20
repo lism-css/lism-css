@@ -23,10 +23,10 @@ Lism CSS は CSS Layers による詳細度管理を採用しています。
 Settings（トークン定義）
   → @layer lism-base（Reset CSS・トークン・.set--クラス）
       → @layer reset（リセットCSS）
+  → @layer lism-trait（.is-- / .has-- Trait Class）
   → @layer lism-primitive
       → @layer layout（.l-- Layout Primitive）
       → @layer atomic（.a-- Atomic Primitive）
-  → @layer lism-trait（.is-- / .has-- Trait Class）
   → @layer lism-component（.c-- Component Class — BEM 構造を持つ UI 部品）
   → @layer lism-custom（ユーザーカスタマイズ用）
   → @layer lism-utility（.u-- ユーティリティクラス）

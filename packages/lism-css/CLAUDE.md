@@ -71,10 +71,10 @@ React の props を CSS クラス・スタイルに変換：
 CSS Layers による詳細度管理：
 
 ```
-lism-base → lism-primitive → lism-trait → lism-component → lism-custom → lism-utility
+lism-base → lism-trait → lism-primitive → lism-component → lism-custom → lism-utility
 ```
 
-`lism-primitive` 内には `layout` / `atomic` のサブレイヤーがあり、それぞれ `l--` / `a--` を含む。`lism-trait` レイヤーには `is--`（役割宣言）と `has--`（機能付与）が含まれる。`lism-component` レイヤーは BEM 構造を持つ UI コンポーネント（`c--`）用で、コアでは空。
+`lism-trait` レイヤーには `is--`（役割宣言）と `has--`（機能付与）が含まれる。`lism-primitive` 内には `layout` / `atomic` のサブレイヤーがあり、それぞれ `l--` / `a--` を含む。`lism-trait` を `lism-primitive` より弱く配置することで、`is--boxLink` の `display: block` 等の初期化的な宣言が `l--stack` 等のレイアウトプリミティブに負けるようにしている。`lism-component` レイヤーは BEM 構造を持つ UI コンポーネント（`c--`）用で、コアでは空。
 
 ※ Props クラスは `@layer` を付けない
 
