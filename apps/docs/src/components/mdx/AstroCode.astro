@@ -16,7 +16,7 @@ interface Props {
 const { code, lang } = Astro.props;
 ---
 
-<div class="c--codeBlock set--hov -pos:relative">
+<div class="c--codeBlock set--var:hov -pos:relative">
   <Code code={code} lang={lang as any} themes={{ light: 'github-light', dark: 'github-dark' }} />
   <CopyBtn fileContent={code} />
 </div>

@@ -93,18 +93,19 @@ describe('TraitProps', () => {
 describe('LismPropsBase — set / util', () => {
   describe('set prop', () => {
     it('プリセット値を受け付ける', () => {
-      assertType<LismPropsBase>({ set: 'shadow' });
-      assertType<LismPropsBase>({ set: 'hov' });
       assertType<LismPropsBase>({ set: 'plain' });
-      assertType<LismPropsBase>({ set: 'innerRs' });
+      assertType<LismPropsBase>({ set: 'revert' });
+      assertType<LismPropsBase>({ set: 'var:sh' });
+      assertType<LismPropsBase>({ set: 'var:hov' });
+      assertType<LismPropsBase>({ set: 'var:innerRs' });
     });
 
     it('スペース区切りで複数指定できる', () => {
-      assertType<LismPropsBase>({ set: 'hov shadow' });
+      assertType<LismPropsBase>({ set: 'var:hov var:sh' });
     });
 
     it('`-` prefix で除外指定できる', () => {
-      assertType<LismPropsBase>({ set: 'hov -plain' });
+      assertType<LismPropsBase>({ set: 'var:hov -plain' });
     });
 
     it('任意の文字列も受け付ける', () => {
@@ -112,8 +113,8 @@ describe('LismPropsBase — set / util', () => {
     });
 
     it('文字列配列も受け付ける（内部 API 用途）', () => {
-      assertType<LismPropsBase>({ set: ['hov', 'shadow'] });
-      assertType<LismPropsBase>({ set: ['innerRs', 'custom-value'] });
+      assertType<LismPropsBase>({ set: ['var:hov', 'var:sh'] });
+      assertType<LismPropsBase>({ set: ['var:innerRs', 'custom-value'] });
     });
 
     it('undefined / 省略可', () => {
@@ -155,7 +156,7 @@ describe('LismPropsBase — set / util', () => {
 
   describe('set + util 同時指定', () => {
     it('両方同時に指定できる', () => {
-      assertType<LismPropsBase>({ set: 'hov shadow', util: 'cbox trim' });
+      assertType<LismPropsBase>({ set: 'var:hov var:sh', util: 'cbox trim' });
     });
   });
 });

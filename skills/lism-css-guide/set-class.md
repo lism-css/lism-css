@@ -1,16 +1,25 @@
 # `set--` クラス
 
-`@layer lism-base` に属し、特定の機能を有効にするために CSS変数やベーススタイルをセットアップするクラス群です。
-HTML では直接クラスを付与し、Lism コンポーネントでは `set` prop（`set="plain"`, `set="shadow"` 等）で指定します。
+`@layer lism-base` に属し、HTML 要素の基礎スタイリングまたは CSS 変数のセットアップだけを行うクラス群です。
+HTML では直接クラスを付与し、Lism コンポーネントでは `set` prop（`set="plain"`, `set="revert"`, `set="var:sh"` 等）で指定します。
 
 `set` prop の記法（複数値指定・`-` prefix による除外）は [components-core.md](./components-core.md#共通-props) を参照してください。
+
+set-- は目的別に 2 カテゴリに分かれます。
+
+| カテゴリ | 用途 | クラス |
+|---------|------|--------|
+| 基礎スタイリング | HTML 要素のリセット／リバート | `set--plain` / `set--revert` |
+| 変数のセット | CSS 変数のセットアップのみを行う | `set--var:sh` / `set--var:hov` / `set--var:innerRs` |
 
 ## TOC
 
 - [`set--plain`](#set--plain)
-- [`set--shadow`](#set--shadow)
-- [`set--hov`](#set--hov)
-- [`set--innerRs`](#set--innerrs)
+- [`set--revert`](#set--revert)
+- [`set--var:sh`](#set--varsh)
+- [`set--var:hov`](#set--varhov)
+- [`set--var:innerRs`](#set--varinnerrs)
+
 [詳細](https://lism-css.com/docs/set-class/)
 
 ---
@@ -22,14 +31,16 @@ HTML では直接クラスを付与し、Lism コンポーネントでは `set` 
 | クラス | ソースファイル |
 |--------|---------------|
 | `set--plain` | [`_plain.scss`](https://raw.githubusercontent.com/lism-css/lism-css/main/packages/lism-css/src/scss/base/set/_plain.scss) |
-| `set--shadow` | [`_shadow.scss`](https://raw.githubusercontent.com/lism-css/lism-css/main/packages/lism-css/src/scss/base/tokens/_shadow.scss) |
-| `set--hov` | [`_hov.scss`](https://raw.githubusercontent.com/lism-css/lism-css/main/packages/lism-css/src/scss/base/set/_hov.scss) |
-| `set--innerRs` | [`_innerRs.scss`](https://raw.githubusercontent.com/lism-css/lism-css/main/packages/lism-css/src/scss/base/set/_innerRs.scss) |
+| `set--revert` | [`_revert.scss`](https://raw.githubusercontent.com/lism-css/lism-css/main/packages/lism-css/src/scss/base/set/_revert.scss) |
+| `set--var:sh` | [`_shadow.scss`](https://raw.githubusercontent.com/lism-css/lism-css/main/packages/lism-css/src/scss/base/tokens/_shadow.scss) |
+| `set--var:hov` | [`_hov.scss`](https://raw.githubusercontent.com/lism-css/lism-css/main/packages/lism-css/src/scss/base/set/_hov.scss) |
+| `set--var:innerRs` | [`_innerRs.scss`](https://raw.githubusercontent.com/lism-css/lism-css/main/packages/lism-css/src/scss/base/set/_innerRs.scss) |
+
 ---
 
 ## `set--plain`
 
-`width`, `color`, `font`, `pading`, `border`など、ブラウザデフォルトスタイルを完全にリセットします。  
+`width`, `color`, `font`, `padding`, `border` など、ブラウザデフォルトスタイルを完全にリセットします。
 ボタン・リンク等のスタイリング時に活用します。
 
 使用例:
@@ -40,22 +51,40 @@ HTML では直接クラスを付与し、Lism コンポーネントでは `set` 
 <Lism as="button" set="plain">...</Lism>
 ```
 
-## `set--shadow`
+## `set--revert`
 
-`SHADOW`トークン変数（`--bxsh--{token}`）を再計算するためのクラスです。`:root` で定義される `--shc`（影の色）を特定要素で上書きしたい時に利用します。
+ブラウザデフォルトの見た目を明示的に復活させるためのクラスです。現状は `ul` / `ol` のみ対象。
+
+Property Class しか持たない `ul` / `ol`（例: `<ul class="-fz:l">`）では list-style が消えた状態のままになるため、箇条書き表示を維持したい場合に `set--revert` を付与します。classless な `ul` / `ol` は `_html.scss` で自動的にリバートされるため、このクラスは不要です。
 
 使用例:
-
 ```html
-<div class="l--box set--shadow -bxsh:20" style="--shc: hsl(200 50% 50% / 20%)">...</div>
+<ul class="-fz:l set--revert">
+  <li>item 1</li>
+  <li>item 2</li>
+</ul>
 ```
 ```jsx
-<Box set="shadow" bxsh='20' style={{ '--shc': 'hsl(200 50% 50% / 20%)' }}>...</Box>
+<Lism as="ul" fz="l" set="revert">
+  <li>item 1</li>
+  <li>item 2</li>
+</Lism>
+```
+
+## `set--var:sh`
+
+`SHADOW` トークン変数（`--bxsh--{token}`）を再計算するためのクラスです。`:root` で定義される `--shc`（影の色）を特定要素で上書きしたい時に利用します。
+
+使用例:
+```html
+<div class="l--box set--var:sh -bxsh:20" style="--shc: hsl(200 50% 50% / 20%)">...</div>
+```
+```jsx
+<Box set="var:sh" bxsh='20' style={{ '--shc': 'hsl(200 50% 50% / 20%)' }}>...</Box>
 ```
 
 
-
-## `set--hov`
+## `set--var:hov`
 
 ホバー状態の判定変数（`--_notHov`, `--_isHov`）を次のようにセットします。主に**子要素のホバースタイルを制御する**時に活用します。
 
@@ -82,12 +111,12 @@ HTML では直接クラスを付与し、Lism コンポーネントでは `set` 
 }
 ```
 
-さらに、親要素に`set--hov`を付与してその子要素で`--_isHov`変数と`--_notHov`変数を使うことで、親要素のhoverをトリガーとして子要素のスタイルを変化させることも可能になります。
+さらに、親要素に`set--var:hov`を付与してその子要素で`--_isHov`変数と`--_notHov`変数を使うことで、親要素のhoverをトリガーとして子要素のスタイルを変化させることも可能になります。
 
 例えば、親のボックスがhoverされたら、その内部の画像をズームするようなケースで活用でき、`-hov:to:zoom`クラスが標準で用意されています。
 
 ```html
-<a href="###" class="l--frame set--hov is--boxLink -ar:21/9 -ov:hidden">
+<a href="###" class="l--frame set--var:hov is--boxLink -ar:21/9 -ov:hidden">
   <img class="has--transition -hov:to:zoom" src="https://cdn.lism-css.com/img/a-2.jpg" width="960" height="640" loading="lazy" />
   <div class="is--layer -bgc" style="--c: #fff; --bgc: rgb(0 0 0 / 50%)"></div>
   <div class="l--center is--layer -c" style="--c: #fff;">
@@ -104,23 +133,21 @@ HTML では直接クラスを付与し、Lism コンポーネントでは `set` 
 ```
 
 
-## `set--innerRs`
+## `set--var:innerRs`
 
-親要素の角丸(`--bdrs`)とPadding(`--p`)の値から、その内側の角丸（`--bdrs--inner`）を自動計算するためのクラスです。  
-親要素に`set--innerRs`をクラスをセットし、子要素では`-bdrs:inner`をセットすることで、計算された`--bdrs--inner`をセットすることができます。
+親要素の角丸(`--bdrs`)とPadding(`--p`)の値から、その内側の角丸（`--bdrs--inner`）を自動計算するためのクラスです。
+親要素に`set--var:innerRs`をクラスをセットし、子要素では`-bdrs:inner`をセットすることで、計算された`--bdrs--inner`をセットすることができます。
 
 （親要素では`bdrs`と`p`の指定が必須となります。）
 
 使用例:
-```html "set--innerRs" "-bdrs:inner"
-<div class="set--innerRs -p:15 -bdrs:40 -bd">
+```html "set--var:innerRs" "-bdrs:inner"
+<div class="set--var:innerRs -p:15 -bdrs:40 -bd">
   <div class="-bdrs:inner">...</div>
 </div>
 ```
 ```jsx
-<Lism set="innerRs" p="15" bdrs="40" bd>
+<Lism set="var:innerRs" p="15" bdrs="40" bd>
   <Lism bdrs="inner">...</Lism>
 </Lism>
 ```
-
-

@@ -1,0 +1,7 @@
+// HTML 要素の基礎スタイリング ― ブラウザ標準の見た目を復活させる汎用クラス
+// 現状は ul / ol のみ対象（Property Class 付きの ul / ol で list-style を戻したい場合に付与）。
+// 将来 a / button など他要素の `.set--revert` も追加可能。
+:is(ul, ol).set--revert {
+  list-style: revert;
+  padding-inline-start: var(--list-px-s, var(--s30));
+}

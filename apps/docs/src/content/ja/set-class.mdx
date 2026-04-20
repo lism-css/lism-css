@@ -8,6 +8,13 @@ import { Button } from '@lism-css/ui/astro';
 
 `@lism-base` 層の中で定義される、HTML 要素の基礎スタイリングや変数セットを行うためのユーティリティクラスを `set--{className}` の形式で定義しています。
 
+set-- クラスは目的別に 2 カテゴリに分かれます。
+
+| カテゴリ | 用途 | クラス |
+|---------|------|--------|
+| 基礎スタイリング | HTML 要素のリセット／リバート | `set--plain` / `set--revert` |
+| 変数のセット | CSS 変数のセットアップのみを行う | `set--var:sh` / `set--var:hov` / `set--var:innerRs` |
+
 
 ### `set--plain`
 
@@ -32,21 +39,51 @@ import { Button } from '@lism-css/ui/astro';
 </Preview>
 
 
+### `set--revert`
 
-### `set--shadow`
+ブラウザデフォルトの見た目を明示的に復活させるためのクラスです。現状は `ul` / `ol` のみ対象で、Property Class しか付かない `ul` / `ol` で箇条書き表示を維持したい場合に付与します。
 
-`.set--shadow` クラスを指定した要素では、シャドウを構成する`--bxsh--`変数が再定義されます。  
+<SrcCode path="src/scss/base/set/_revert.scss" />
+
+<Preview>
+  <PreviewTitle>Property Class 付き `ul` に `set--revert` を適用する例</PreviewTitle>
+  <PreviewArea p="20">
+    <ul class="-fz:l set--revert">
+      <li>item 1</li>
+      <li>item 2</li>
+      <li>item 3</li>
+    </ul>
+  </PreviewArea>
+  <PreviewCode slot="tab" label="HTML">
+  ```html "set--revert"
+  <ul class="-fz:l set--revert">
+    <li>item 1</li>
+    <li>item 2</li>
+    <li>item 3</li>
+  </ul>
+  ```
+  </PreviewCode>
+</Preview>
+
+:::info
+classless な `ul` / `ol`（`class` 属性を一切持たないリスト）はブラウザ標準スタイルが自動復活します。`set--revert` は Property Class を付与した場合などに明示的にリバートしたい場合に使います。
+:::
+
+
+### `set--var:sh`
+
+`.set--var:sh` クラスを指定した要素では、シャドウを構成する`--bxsh--`変数が再定義されます。
 
 <SrcCode path="src/scss/base/tokens/_shadow.scss" />
 
-ここで`--shc`変数を上書きすることで、シャドウの色味を調整したりすることが可能です。 
+ここで`--shc`変数を上書きすることで、シャドウの色味を調整したりすることが可能です。
 
 <Preview>
   <PreviewTitle>シャドウの上書き例</PreviewTitle>
   <PreviewArea p="30" nogrid>
     <Stack g="10">
       <Text> Default: </Text>
-      <Flex className="set--shadow -g:30" px-s="15">
+      <Flex className="set--var:sh -g:30" px-s="15">
         <Box bxsh="20" p="30" bdrs="20">
           <Fragment>Box</Fragment>
         </Box>
@@ -55,8 +92,8 @@ import { Button } from '@lism-css/ui/astro';
         </Box>
       </Flex>
       <Spacer h="40" />
-      <Text> set--shadow で 変数を上書きした例: </Text>
-      <Flex className="set--shadow -g:30" px-s="15" style={{ '--shc': 'hsl(200 50% 50% / 20%)' }}>
+      <Text> set--var:sh で 変数を上書きした例: </Text>
+      <Flex className="set--var:sh -g:30" px-s="15" style={{ '--shc': 'hsl(200 50% 50% / 20%)' }}>
         <Box bxsh="20" p="30" bdrs="20">
           <Fragment>Box</Fragment>
         </Box>
@@ -68,16 +105,16 @@ import { Button } from '@lism-css/ui/astro';
     <div class="a--spacer" />
   </PreviewArea>
     <PreviewCode slot="tab" label="HTML">
-    ```html "set--shadow"
-    <div class="l--flex set--shadow -g:30" style="--shc: hsl(200 50% 50% / 20%)">
+    ```html "set--var:sh"
+    <div class="l--flex set--var:sh -g:30" style="--shc: hsl(200 50% 50% / 20%)">
       <div class="l--box -bxsh:20 -p:30 -bdrs:20">Box</div>
       <div class="l--box -bxsh:40 -p:30 -bdrs:20">Box</div>
     </div>
     ```
   </PreviewCode>
   <PreviewCode slot="tab" label="JSX">
-    ```jsx "set--shadow"
-    <Flex className="set--shadow" g="30" style={{ '--shc': 'hsl(200 50% 50% / 20%)' }}>
+    ```jsx "set--var:sh"
+    <Flex className="set--var:sh" g="30" style={{ '--shc': 'hsl(200 50% 50% / 20%)' }}>
       <Box bxsh="20" p="30" bdrs="20">
         Box
       </Box>
@@ -90,7 +127,7 @@ import { Button } from '@lism-css/ui/astro';
 </Preview>
 
 
-### `set--hov`
+### `set--var:hov`
 
 ホバー状態の判定変数（`--_notHov`, `--_isHov`）を次のようにセットします。主に**子要素のホバースタイルを制御する**時に活用します。
 
@@ -129,17 +166,17 @@ import { Button } from '@lism-css/ui/astro';
 `}>
   <PreviewTitle>`-hov:test`のプレビュー</PreviewTitle>
   <PreviewArea p="30">
-    <div className="set--hov -hov:test -p:30 -bd -bdc:current ">BOX</div>
+    <div className="set--var:hov -hov:test -p:30 -bd -bdc:current ">BOX</div>
   </PreviewArea>
   <PreviewCode>
-    ```html "set--hov -hov:test"
-    <div className="set--hov -hov:test -p:30 -bd -bdc:current ">BOX</div>
+    ```html "set--var:hov -hov:test"
+    <div className="set--var:hov -hov:test -p:30 -bd -bdc:current ">BOX</div>
     ```
   </PreviewCode>
 </Preview>
 
 
-さらに、親要素に`set--hov`を付与してその子要素で`--_isHov`変数と`--_notHov`変数を使うことで、親要素のhoverをトリガーとして子要素のスタイルを変化させることも可能になります。
+さらに、親要素に`set--var:hov`を付与してその子要素で`--_isHov`変数と`--_notHov`変数を使うことで、親要素のhoverをトリガーとして子要素のスタイルを変化させることも可能になります。
 
 例えば、親のボックスがhoverされたら、その内部の画像をズームするようなケースで活用でき、`-hov:to:zoom`クラスが標準で用意されています。
 
@@ -153,7 +190,7 @@ import { Button } from '@lism-css/ui/astro';
 <Preview>
   <PreviewTitle>`-hov:to:zoom`の使用例</PreviewTitle>
   <PreviewArea p="30">
-    <a href="###" class="l--frame set--hov is--boxLink -ar:21/9 -ov:hidden">
+    <a href="###" class="l--frame set--var:hov is--boxLink -ar:21/9 -ov:hidden">
       <img class="has--transition -hov:to:zoom" src="https://cdn.lism-css.com/img/a-2.jpg" width="960" height="640" loading="lazy" />
       <div class="is--layer -bgc" style="--c: #fff; --bgc: rgb(0 0 0 / 50%)"></div>
       <div class="l--center is--layer -c" style="--c: #fff;">
@@ -162,8 +199,8 @@ import { Button } from '@lism-css/ui/astro';
     </a>
   </PreviewArea>
   <PreviewCode>
-    ```html "set--hov" "-hov:to:zoom"
-    <a href="###" class="l--frame set--hov is--boxLink -ar:21/9 -ov:hidden">
+    ```html "set--var:hov" "-hov:to:zoom"
+    <a href="###" class="l--frame set--var:hov is--boxLink -ar:21/9 -ov:hidden">
       <img class="has--transition -hov:to:zoom" src="https://cdn.lism-css.com/img/a-2.jpg" width="960" height="640" loading="lazy" />
       <div class="is--layer -bgc" style="--c: #fff; --bgc: rgb(0 0 0 / 50%)"></div>
       <div class="l--center is--layer -c" style="--c: #fff;">
@@ -176,15 +213,15 @@ import { Button } from '@lism-css/ui/astro';
 
 
 
-活用例は [`hover`の解説ページ](/docs/property-class/hov#set--hov) を参照してください。
+活用例は [`hover`の解説ページ](/docs/property-class/hov#set--var-hov) を参照してください。
 
-<DocsLink path="/docs/property-class/hov#set--hov" />
+<DocsLink path="/docs/property-class/hov#set--var-hov" />
 
 
-### `set--innerRs`
+### `set--var:innerRs`
 
-親要素の角丸(`--bdrs`)とPadding(`--p`)の値から、その内側の角丸（`--bdrs--inner`）を自動計算するためのクラスです。  
-親要素に`set--innerRs`をクラスをセットし、子要素では`-bdrs:inner`をセットすることで、計算された`--bdrs--inner`をセットすることができます。
+親要素の角丸(`--bdrs`)とPadding(`--p`)の値から、その内側の角丸（`--bdrs--inner`）を自動計算するためのクラスです。
+親要素に`set--var:innerRs`をクラスをセットし、子要素では`-bdrs:inner`をセットすることで、計算された`--bdrs--inner`をセットすることができます。
 
 （親要素では`bdrs`と`p`の指定が必須となります。）
 
@@ -193,15 +230,15 @@ import { Button } from '@lism-css/ui/astro';
 <Preview>
   <PreviewTitle>使用例</PreviewTitle>
   <PreviewArea p="30">
-    <Lism set="innerRs" p="15" bdrs="40" bd bxsh="20">
+    <Lism set="var:innerRs" p="15" bdrs="40" bd bxsh="20">
       <Frame bdrs="inner" ar="og">
         <img src="https://cdn.lism-css.com/img/u-5.jpg" width="1920" height="1280" alt="" />
       </Frame>
     </Lism>
   </PreviewArea>
   <PreviewCode label="HTML" slot="tab">
-    ```html "set--innerRs" "-bdrs:inner" "-p:15 -bdrs:40"
-    <div class="set--innerRs -p:15 -bdrs:40 -bd -bxsh:20">
+    ```html "set--var:innerRs" "-bdrs:inner" "-p:15 -bdrs:40"
+    <div class="set--var:innerRs -p:15 -bdrs:40 -bd -bxsh:20">
       <div class="l--frame -bdrs:inner -ar:og">
         <img src="https://cdn.lism-css.com/img/u-5.jpg" width="1920" height="1280" alt="" />
       </div>
@@ -209,8 +246,8 @@ import { Button } from '@lism-css/ui/astro';
     ```
   </PreviewCode>
   <PreviewCode label="JSX" slot="tab">
-    ```jsx 'set="innerRs"' 'bdrs="inner"' 'p="15" bdrs="40"'
-    <Lism set="innerRs" p="15" bdrs="40" bd bxsh="20">
+    ```jsx 'set="var:innerRs"' 'bdrs="inner"' 'p="15" bdrs="40"'
+    <Lism set="var:innerRs" p="15" bdrs="40" bd bxsh="20">
       <Frame bdrs="inner" ar="og">
         <img src="https://cdn.lism-css.com/img/u-5.jpg" width="1920" height="1280" alt="" />
       </Frame>
@@ -221,12 +258,12 @@ import { Button } from '@lism-css/ui/astro';
 
 <Spacer h="1rem" />
 
-`p`, `bdrs`はブレイクポイントで値を変えても変数管理されているため、`set--innerRs`の角丸もレスポンシブ対応できます。
+`p`, `bdrs`はブレイクポイントで値を変えても変数管理されているため、`set--var:innerRs`の角丸もレスポンシブ対応できます。
 
 <Preview>
   <PreviewTitle>使用例</PreviewTitle>
   <PreviewArea p="20" resize>
-    <Lism p={[10, 15]} bd bdrs={['30', '40']} class="set--innerRs">
+    <Lism p={[10, 15]} bd bdrs={['30', '40']} class="set--var:innerRs">
       <Lism bd p="20" bdrs="inner" bgc="base-2">
         <Fragment>Example</Fragment>
       </Lism>
@@ -236,7 +273,7 @@ import { Button } from '@lism-css/ui/astro';
   </PreviewCode> */}
   <PreviewCode label="JSX" slot="tab">
 ```jsx
-<Lism p={[10, 15]} bd bdrs={['30', '40']} class="set--innerRs">
+<Lism p={[10, 15]} bd bdrs={['30', '40']} class="set--var:innerRs">
   <Lism bd p="20" bdrs="inner" bgc="base-2">
     Example
   </Lism>

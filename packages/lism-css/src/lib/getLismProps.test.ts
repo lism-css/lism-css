@@ -79,15 +79,15 @@ describe('getLismProps', () => {
       const result = getLismProps({
         className: 'c--box',
         layout: 'flex',
-        set: 'hov',
+        set: 'var:hov',
         isContainer: true,
         util: 'cbox',
         p: '20',
       });
       const cls = result.className as string;
       expect(cls.indexOf('c--box')).toBeLessThan(cls.indexOf('l--flex'));
-      expect(cls.indexOf('l--flex')).toBeLessThan(cls.indexOf('set--hov'));
-      expect(cls.indexOf('set--hov')).toBeLessThan(cls.indexOf('is--container'));
+      expect(cls.indexOf('l--flex')).toBeLessThan(cls.indexOf('set--var:hov'));
+      expect(cls.indexOf('set--var:hov')).toBeLessThan(cls.indexOf('is--container'));
       expect(cls.indexOf('is--container')).toBeLessThan(cls.indexOf('u--cbox'));
       expect(cls.indexOf('u--cbox')).toBeLessThan(cls.indexOf('-p:20'));
     });

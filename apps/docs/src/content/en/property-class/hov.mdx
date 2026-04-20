@@ -219,29 +219,29 @@ Combine this class with CSS variables to configure transition behavior.
 </Preview>
 
 
-<div class="u--srOnly" id="set--hov"></div>
-## `set--hov` and `-hov:to:xxx`
+<div class="u--srOnly" id="set--varhov"></div>
+## `set--var:hov` and `-hov:to:xxx`
 
-Lism defines a class called [`set--hov`](/en/docs/set-class/#set--hov), which sets up the `--_isHov` and `--_notHov` variables.
+Lism defines a class called [`set--var:hov`](/en/docs/set-class/#set--varhov), which sets up the `--_isHov` and `--_notHov` variables.
 
 
-By leveraging `set--hov`, you can trigger style changes on child elements when the parent is hovered. The core package includes a small set of such child-targeting classes under the `-hov:to:xxx` naming convention by default.
+By leveraging `set--var:hov`, you can trigger style changes on child elements when the parent is hovered. The core package includes a small set of such child-targeting classes under the `-hov:to:xxx` naming convention by default.
 
 ```css
-/* Hide when parent set--hov is hovered */
+/* Hide when parent set--var:hov is hovered */
 .-hov\:to\:hide {
   --transitionProps: opacity;
   opacity: var(--_isHov, 0);
 }
 
-/* Show when parent set--hov is hovered */
+/* Show when parent set--var:hov is hovered */
 .-hov\:to\:show {
   --transitionProps: opacity, visibility;
   opacity: var(--_notHov, 0);
   visibility: var(--_notHov, hidden);
 }
 
-/* Zoom in when parent set--hov is hovered */
+/* Zoom in when parent set--var:hov is hovered */
 .-hov\:to\:zoom {
   --transitionProps: scale;
   scale: var(--_isHov, 1.1);
@@ -251,7 +251,7 @@ By leveraging `set--hov`, you can trigger style changes on child elements when t
 <Preview>
   <PreviewTitle>Example using `-hov:to:show` and `-hov:to:zoom`</PreviewTitle>
   <PreviewArea p="20">
-    <Frame isBoxLink set="hov" href="#banner-link" ar="16/9" bdrs="30">
+    <Frame isBoxLink set="var:hov" href="#banner-link" ar="16/9" bdrs="30">
       <Media isLayer hasTransition hov="to:zoom" src="https://cdn.lism-css.com/img/a-1.jpg" alt="" width="960" height="640" loading="lazy" />
       <Layer hasTransition hov="to:show" bgc="rgb(0 0 0 / 40%)" style={{ backdropFilter: 'blur(6px)' }}>
         <Center h="100%" c="#fff">
@@ -263,8 +263,8 @@ By leveraging `set--hov`, you can trigger style changes on child elements when t
     </Frame>
   </PreviewArea>
   <PreviewCode slot="tab" label="HTML">
-    ```html "set--hov" "-hov:to:show" "-hov:to:zoom" "has--transition"
-    <a class="l--frame set--hov is--boxLink -ar:16/9 -bdrs:30" href="#banner-link">
+    ```html "set--var:hov" "-hov:to:show" "-hov:to:zoom" "has--transition"
+    <a class="l--frame set--var:hov is--boxLink -ar:16/9 -bdrs:30" href="#banner-link">
       <img class="is--layer has--transition -hov:to:zoom" src="https://cdn.lism-css.com/img/a-1.jpg" width="960" height="640" loading="lazy" />
       <div class="is--layer has--transition -hov:to:show -bgc" style="--bgc: rgb(0 0 0 / 40%); backdrop-filter: blur(6px)">
         <div class="l--center -h:100% -c" style="--c: #fff">
@@ -275,8 +275,8 @@ By leveraging `set--hov`, you can trigger style changes on child elements when t
     ```
   </PreviewCode>
   <PreviewCode slot="tab" label="JSX">
-    ```jsx 'set="hov"' 'hov="to:show"' 'hov="to:zoom"' 'hasTransition'
-    <Frame isBoxLink set="hov" href="#banner-link" ar="16/9" bdrs="30">
+    ```jsx 'set="var:hov"' 'hov="to:show"' 'hov="to:zoom"' 'hasTransition'
+    <Frame isBoxLink set="var:hov" href="#banner-link" ar="16/9" bdrs="30">
       <Media isLayer hasTransition hov="to:zoom" src="https://cdn.lism-css.com/img/a-1.jpg" alt="" width="960" height="640" loading="lazy" />
       <Layer hasTransition hov="to:show" bgc="rgb(0 0 0 / 40%)" style={{ backdropFilter: 'blur(6px)' }}>
         <Center h="100%" c="#fff">

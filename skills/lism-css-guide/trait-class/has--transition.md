@@ -70,4 +70,4 @@
 ## 関連
 
 - [`-hov:*` プロパティクラス](../property-class.md) — ホバー時の変化を定義
-- [`set--hov`](../set-class.md#set--hov) — 親のホバー状態を子要素に伝播させる仕組み
+- [`set--var:hov`](../set-class.md#set--varhov) — 親のホバー状態を子要素に伝播させる仕組み
