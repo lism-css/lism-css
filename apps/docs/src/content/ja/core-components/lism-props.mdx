@@ -168,7 +168,7 @@ Trait Class (`is--*` / `has--*`) に対応する Props です。
 | 値 | 出力形式 | 例 |
 |------|------|-----|
 | トークン値・プリセット値 | `-{prop}:{value}` クラス | `fz='l'` → `-fz:l` |
-| `true` / `"-"` | `-{prop}` クラスのみ（変数なし） | `bd` → `-bd` |
+| `true` | `-{prop}` クラスのみ（変数なし） | `bd` → `-bd` |
 | `:` で始まる値 | 強制的にユーティリティクラス化 | `p=':hoge'` → `-p:hoge` |
 | その他の値（BP対応） | `-{prop}` クラス + `--{prop}` 変数 | `fz='20px'` → `-fz` + `--fz:20px` |
 | その他の値（BP非対応） | `style` 属性に直接出力 | `o='0.7'` → `opacity:0.7` |
@@ -204,10 +204,10 @@ Trait Class (`is--*` / `has--*`) に対応する Props です。
 </Preview>
 
 <Preview>
-<PreviewTitle>`true` / `"-"` → クラスのみ（変数なし）</PreviewTitle>
+<PreviewTitle>`true` → クラスのみ（変数なし）</PreviewTitle>
 <PreviewCode>
-```jsx 'p="-"' "bdrs" "-p" "-bdrs"
-<Lism p="-" bdrs>contents</Lism>
+```jsx "p" "bdrs" "-p" "-bdrs"
+<Lism p bdrs>contents</Lism>
 // → <div class="-p -bdrs">contents</div>
 ```
 </PreviewCode>

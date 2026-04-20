@@ -103,11 +103,6 @@ describe('LismPropsData', () => {
       expect(instance.propClasses).toContain('-w');
       expect(instance.styles.width).toBeUndefined();
     });
-
-    test('- 値は property class のみ出力', () => {
-      const instance = new LismPropsData({ w: '-' });
-      expect(instance.propClasses).toContain('-w');
-    });
   });
 
   describe('analyzeProps - ブレイクポイント指定', () => {
@@ -190,11 +185,6 @@ describe('LismPropsData', () => {
       expect(instance.propClasses).toContain('-hov');
     });
 
-    test('hov: - で-hovクラスが追加される', () => {
-      const instance = new LismPropsData({ hov: '-' });
-      expect(instance.propClasses).toContain('-hov');
-    });
-
     test('hov: 文字列でhoverクラスが追加される', () => {
       const instance = new LismPropsData({ hov: 'fade' });
       expect(instance.propClasses).toContain('-hov:fade');
@@ -241,15 +231,6 @@ describe('LismPropsData', () => {
       });
       expect(instance.propClasses).toContain('-hov:c');
       expect(instance.propClasses).toContain('-hov:shadowUp');
-      expect(instance.propClasses).not.toContain('-hov:-c');
-      expect(instance.styles['--hov-c']).toBeUndefined();
-    });
-
-    test('hov: オブジェクト形式で "-" は true と同じくクラスのみ出力', () => {
-      const instance = new LismPropsData({
-        hov: { c: '-' },
-      });
-      expect(instance.propClasses).toContain('-hov:c');
       expect(instance.propClasses).not.toContain('-hov:-c');
       expect(instance.styles['--hov-c']).toBeUndefined();
     });

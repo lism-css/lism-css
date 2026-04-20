@@ -317,7 +317,7 @@ export class LismPropsData {
     }
 
     // .-prop: だけ出力するケース
-    if (true === val || '-' === val) {
+    if (true === val) {
       this.addProp(utilName);
       return;
     }
@@ -380,7 +380,7 @@ export class LismPropsData {
     // 	return;
     // }
 
-    if (hoverData === '-' || hoverData === true) {
+    if (hoverData === true) {
       this.addProp(`-hov`);
     } else if (typeof hoverData === 'string') {
       // カンマ区切りで複数指定可能（入力文字列をそのまま -hov:{...} として出力）
@@ -389,13 +389,13 @@ export class LismPropsData {
       });
     } else if (typeof hoverData === 'object') {
       // hov={{c:'red', shadowUp: true}} のようなオブジェクト指定
-      // - 値あり（string / number） → `-hov:-{key}` + `--hov-{key}` 変数を出力
-      // - true / "-"              → `-hov:{key}`（クラスのみ）
+      //   値あり（string / number） → `-hov:-{key}` + `--hov-{key}` 変数を出力
+      //   true                    → `-hov:{key}`（クラスのみ）
       Object.keys(hoverData).forEach((propName) => {
         const hovVal = hoverData[propName];
         if (null == hovVal || '' === hovVal || false === hovVal) return;
 
-        if (hovVal === '-' || hovVal === true) {
+        if (hovVal === true) {
           this.addProp(`-hov:${propName}`);
         } else if (typeof hovVal === 'string' || typeof hovVal === 'number') {
           // トークン値の処理

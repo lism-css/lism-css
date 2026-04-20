@@ -168,7 +168,7 @@ The output format is determined by the value specified via `prop={value}`:
 | Value | Output format | Example |
 |------|------|-----|
 | Token / preset value | `-{prop}:{value}` class | `fz='l'` → `-fz:l` |
-| `true` / `"-"` | `-{prop}` class only (no variable) | `bd` → `-bd` |
+| `true` | `-{prop}` class only (no variable) | `bd` → `-bd` |
 | Value starting with `:` | Forced utility class | `p=':hoge'` → `-p:hoge` |
 | Other values (BP-supported) | `-{prop}` class + `--{prop}` variable | `fz='20px'` → `-fz` + `--fz:20px` |
 | Other values (BP-unsupported) | Direct `style` attribute output | `o='0.7'` → `opacity:0.7` |
@@ -204,10 +204,10 @@ The output format is determined by the value specified via `prop={value}`:
 </Preview>
 
 <Preview>
-<PreviewTitle>`true` / `"-"` → class only (no variable)</PreviewTitle>
+<PreviewTitle>`true` → class only (no variable)</PreviewTitle>
 <PreviewCode>
-```jsx 'p="-"' "bdrs" "-p" "-bdrs"
-<Lism p="-" bdrs>contents</Lism>
+```jsx "p" "bdrs" "-p" "-bdrs"
+<Lism p bdrs>contents</Lism>
 // → <div class="-p -bdrs">contents</div>
 ```
 </PreviewCode>

@@ -113,7 +113,7 @@ import { Lism, Box, Flex, Stack, Grid, Text, Media } from 'lism-css/astro';
 | 値 | 出力形式 | 例 |
 |------|------|-----|
 | トークン値・プリセット値 | `-{prop}:{value}` クラスのみ | `fz='l'` → `class="-fz:l"` |
-| `true` または `"-"` | `-{prop}` クラスのみ（変数なし） | `bd` / `bd='-'` → `class="-bd"` |
+| `true` | `-{prop}` クラスのみ（変数なし） | `bd` / `bd={true}` → `class="-bd"` |
 | `:` で始まる値 | 強制的にクラス化 | `p=':hoge'` → `class="-p:hoge"` |
 | その他の値（レスポンシブ対応プロパティ） | `-{prop}` + `--{prop}` | `fz='20px'` → `class="-fz"` + `style="--fz:20px"` |
 | その他の値（レスポンシブ非対応プロパティ） | `style` 属性に直接出力 | `o='0.7'` → `style="opacity:0.7"` |
@@ -139,8 +139,8 @@ import { Lism, Box, Flex, Stack, Grid, Text, Media } from 'lism-css/astro';
 <Lism bd bdc="#000" bdw="2px">...</Lism>
 // 出力 → <div class="-bd" style="--bdc:#000;--bdw:2px">...</div>
 
-// `-` でクラスだけ出力（変数は親から継承したい場合などに使う）
-<Lism p='-' bdrs>...</Lism>
+// `true` でクラスだけ出力（変数は親から継承したい場合などに使う）
+<Lism p bdrs>...</Lism>
 // 出力 → <div class="-p -bdrs">...</div>
 
 // `:` で強制ユーティリティクラス化
