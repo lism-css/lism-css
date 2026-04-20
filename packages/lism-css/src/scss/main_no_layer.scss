@@ -11,12 +11,13 @@
 // base
 @use './base/index' as base;
 
+// Trait（独立レイヤー）
+// primitive より弱い位置に配置。詳細は _with_layer.scss のコメント参照。
+@use './trait/index' as trait;
+
 // Primitives
 @use './primitives/layout/index' as layout;
 @use './primitives/atomic/index' as atomic;
-
-// Trait（独立レイヤー）
-@use './trait/index' as trait;
 
 // @use './component/index' as component;
 
