@@ -41,7 +41,13 @@ A class for resetting primary styles.
 
 ### `set--revert`
 
-A class for explicitly reverting to the browser's default appearance. Currently targets only `ul` / `ol` — apply it when you want to keep list markers on a `ul` / `ol` that only has Property Classes.
+A class for explicitly reverting to the browser's default appearance.
+On its own it carries no styles (it does not revert every property wholesale).
+
+It works only when combined with specific HTML elements, and currently targets only `ul` / `ol`.
+
+In Lism CSS, list styles are reset on `ul` / `ol` elements that have any class.
+Apply `set--revert` when a list has classes but you still want to keep the list markers (for example, a list that only carries Property Classes).
 
 <SrcCode path="src/scss/base/set/_revert.scss" />
 
@@ -66,7 +72,7 @@ A class for explicitly reverting to the browser's default appearance. Currently 
 </Preview>
 
 :::info
-Classless `ul` / `ol` elements (lists with no `class` attribute at all) automatically retain the browser's default list style. Use `set--revert` when you want to explicitly revert a list that has Property Classes or other classes applied.
+Classless `ul` / `ol` elements (lists with no `class` attribute at all) automatically retain the browser's default list style, so `set--revert` is not needed.
 :::
 
 
