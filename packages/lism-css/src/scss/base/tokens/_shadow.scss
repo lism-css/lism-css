@@ -1,16 +1,16 @@
 /* --------------------------------------------------
   shadow
-    Memo: `:root` だけで --bxsh-- をセットしてしまうと --shc がその時点で固定されるので、
-          要素ごとに --shc を上書きできるよう、再セット用の set--var:bxsh クラスを併用する。
+    Memo: :root だけで --bxsh-- をセットしてしまうと --shc がその時点で固定されるので、
+    要素ごとに --shc を上書きできるよう、再セット用の set--var:bxsh クラスを併用する。
 -------------------------------------------------- */
 :root {
-  --shc: hsl(220 4% 8% / 12%);
+  --shc: hsl(220 4% 8% / 15%);
 
-  // --shsz--5: 0px 1px 3px;
-  --shsz--10: 0px 2px 6px;
-  --shsz--20: 0px 4px 12px;
-  --shsz--30: 0px 8px 24px;
-  --shsz--40: 0px 16px 48px;
+  --shsz--10: 0px 1px 3px;
+  --shsz--20: 0px 2px 6px;
+  --shsz--30: 0px 4px 12px;
+  --shsz--40: 0px 8px 24px;
+  --shsz--50: 0px 16px 48px;
 }
 
 :root,
@@ -19,4 +19,5 @@
   --bxsh--20: var(--shsz--20) var(--shc);
   --bxsh--30: var(--shsz--30) var(--shc);
   --bxsh--40: var(--shsz--40) var(--shc);
+  --bxsh--50: var(--shsz--50) var(--shc);
 }

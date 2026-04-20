@@ -7,7 +7,7 @@ export default {
   fw: ['light', 'normal', 'bold'],
   o: ['-10', '-20', '-30'],
   bdrs: ['10', '20', '30', '40', '99', 'inner'],
-  bxsh: ['10', '20', '30', '40'],
+  bxsh: ['10', '20', '30', '40', '50'],
   sz: ['xs', 's', 'm', 'l', 'xl', 'container'],
   ar: ['og'],
   space: {
