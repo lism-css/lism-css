@@ -18,7 +18,7 @@ set-- は目的別に 2 カテゴリに分かれます。
 
 - [`set--plain`](#set--plain)
 - [`set--revert`](#set--revert)
-- [`set--var:bxsh`](#set--varsh)
+- [`set--var:bxsh`](#set--varbxsh)
 - [`set--var:hov`](#set--varhov)
 - [`set--var:bdrsInner`](#set--varbdrsinner)
 
