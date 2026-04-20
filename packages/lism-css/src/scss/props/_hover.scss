@@ -1,6 +1,9 @@
 @use '../_mixin' as mixin;
 
 @media (any-hover: hover) {
+  /* ----------------------------------------
+   * .-hov:-{prop}
+   * ---------------------------------------- */
   .-hov\:-c:hover {
     color: var(--hov-c, var(--link)) #{mixin.$maybe_important};
   }
@@ -17,15 +20,23 @@
     box-shadow: var(--hov-bxsh, var(--bxsh--40)) #{mixin.$maybe_important};
   }
 
-  // 背景色が暗くも明るくても使えるように、ニュートラルグレーを配色。黒からの変化の方がわかりづらいため、グレーの中でも少し明るめを混ぜる。
+  /* ----------------------------------------
+   * .-hov:{preset}
+   * ---------------------------------------- */
+  // underlineをつけるシンプルなエフェクト
+  .-hov\:underline:hover {
+    text-decoration: underline;
+  }
+  // 背景色が暗くも明るくても使えるように、ニュートラルグレーを配色。
+  //    Memo: 黒からの変化の方がわかりづらいため、グレーの中でも少し明るめを混ぜる。
   .-hov\:neutral:hover {
     background-color: color-mix(in srgb, var(--bgc, var(--base)), hsl(220, 5%, 75%) 25%) #{mixin.$maybe_important};
   }
 }
 
-// ------------------------------------------------------------
+// ----------------------------------------
 // .-hov\:in （set--var:hov 連動の consumer class）
-// ------------------------------------------------------------
+// ----------------------------------------
 
 .-hov\:in\:hide {
   --transitionProps: opacity;
