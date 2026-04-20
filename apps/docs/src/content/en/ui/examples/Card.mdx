@@ -13,7 +13,7 @@ Examples of creating card-style content layouts.
 
 export const ExampleCard = (props) => {
   return(
-    <SideMain isBoxLink href="###" hov="bxsh" hasTransition sideW="50%" bgc="base" bdrs="20" bxsh="10" ov="hidden" {...props}>
+    <SideMain isBoxLink href="###" hov="-bxsh" hasTransition sideW="50%" bgc="base" bdrs="20" bxsh="10" ov="hidden" {...props}>
       <Frame isSide ar="16/9" >
         <Media src="https://cdn.lism-css.com/img/a-1.jpg" alt="" width="960" height="640" />
       </Frame>
@@ -52,7 +52,7 @@ Additionally, [`is--boxLink`](/en/docs/trait-class/is--boxLink/) is applied to m
 <Preview>
   <PreviewTitle>Preview</PreviewTitle>
   <PreviewArea bg=":stripe" resize p="30">
-    <SideMain isBoxLink href="###" hov="bxsh" hasTransition sideW="50%" bgc="base" bdrs="20" bxsh="10" ov="hidden">
+    <SideMain isBoxLink href="###" hov="-bxsh" hasTransition sideW="50%" bgc="base" bdrs="20" bxsh="10" ov="hidden">
       <Frame isSide ar="16/9">
         <Media src="https://cdn.lism-css.com/img/a-1.jpg" alt="" width="960" height="640" />
       </Frame>
@@ -65,7 +65,7 @@ Additionally, [`is--boxLink`](/en/docs/trait-class/is--boxLink/) is applied to m
   </PreviewArea>
   <PreviewCode slot="tab" label="JSX">
     ```jsx "SideMain" 'as="a" isBoxLink'
-    <SideMain isBoxLink href="###" hov="bxsh" hasTransition sideW="50%" bgc="base" bdrs="20" bxsh="10" ov="hidden">
+    <SideMain isBoxLink href="###" hov="-bxsh" hasTransition sideW="50%" bgc="base" bdrs="20" bxsh="10" ov="hidden">
       <Frame isSide ar="16/9">
         <Media src="https://cdn.lism-css.com/img/a-1.jpg" alt="" width="960" height="640" />
       </Frame>
@@ -91,7 +91,7 @@ When you want to make the entire card a link while also including a separate lin
 <Preview>
   <PreviewTitle>Example using `is--coverLink`</PreviewTitle>
   <PreviewArea bg=":stripe" resize p="30">
-    <SideMain isBoxLink hov="bxsh" hasTransition sideW="50%" bgc="base" bdrs="20" bxsh="10" ov="hidden">
+    <SideMain isBoxLink hov="-bxsh" hasTransition sideW="50%" bgc="base" bdrs="20" bxsh="10" ov="hidden">
       <Frame isSide ar="16/9" pos="relative">
         <Media src="https://cdn.lism-css.com/img/a-1.jpg" alt="" width="960" height="640" />
         <Link href="#badge-link" pos="absolute" t="0" r="0" fz="s" bgc="black" c="white" m="20" px="15" bdrs="99" td="none" hov="neutral">Category</Link>
@@ -107,7 +107,7 @@ When you want to make the entire card a link while also including a separate lin
   </PreviewArea>
   <PreviewCode slot="tab" label="JSX">
     ```jsx "isBoxLink" "isCoverLink"
-    <SideMain isBoxLink hov="bxsh" hasTransition sideW="50%" bgc="base" bdrs="20" bxsh="10" ov="hidden">
+    <SideMain isBoxLink hov="-bxsh" hasTransition sideW="50%" bgc="base" bdrs="20" bxsh="10" ov="hidden">
       <Frame isSide ar="16/9" pos="relative">
         <Media src="https://cdn.lism-css.com/img/a-1.jpg" alt="" width="960" height="640" />
         <Link href="#badge-link" pos="absolute" t="0" r="0" fz="s" bgc="black" c="white" m="20" px="15" bdrs="99" td="none" hov="neutral">
@@ -230,7 +230,7 @@ When you want to make the entire card a link while also including a separate lin
 <Preview>
   <PreviewTitle>When specifying an aspect ratio on the media side in Flex, it locks to that ratio when the content side is shorter.</PreviewTitle>
   <PreviewArea bg=":stripe" resize p="20">
-    <BoxLink href="#_" layout="flex" p="15" c="text" bgc="base" bd bdw="2px" bdc="base-2" bdrs="20" hov="bxsh" set="var:hov" hasTransition>
+    <BoxLink href="#_" layout="flex" p="15" c="text" bgc="base" bd bdw="2px" bdc="base-2" bdrs="20" hov="-bxsh" set="var:hov" hasTransition>
       <Frame w={['25%', '30%']} ar="1/1" fxsh="0" bdrs="10">
         <Media src="https://cdn.lism-css.com/img/a-1.jpg" alt="" width="960" height="640" />
       </Frame>
@@ -243,7 +243,7 @@ When you want to make the entire card a link while also including a separate lin
   </PreviewArea>
   <PreviewCode slot="tab" label="JSX">
     ```jsx 'ar="1/1"'
-    <BoxLink href="#_" layout="flex" p="15" c="text" bgc="base" bd bdw="2px" bdc="base-2" bdrs="20" hov="bxsh" set="var:hov" hasTransition>
+    <BoxLink href="#_" layout="flex" p="15" c="text" bgc="base" bd bdw="2px" bdc="base-2" bdrs="20" hov="-bxsh" set="var:hov" hasTransition>
       <Frame w={['25%', '30%']} ar="1/1" fxsh="0" bdrs="10">
         <Media src="https://cdn.lism-css.com/img/a-1.jpg" alt="" width="960" height="640" />
       </Frame>
@@ -282,7 +282,7 @@ An example using `Grid` to toggle between horizontal and vertical layouts at a b
       bdc="base-2"
       bdrs="20"
       bxsh="10"
-      hov="bxsh"
+      hov="-bxsh"
       set="var:hov" hasTransition
     >
       <Frame ga="img" aslf="stretch" ar={['og', '1/1']} max-w="100%" pos="relative" bdrs="20" bxsh="10">
@@ -310,7 +310,7 @@ An example using `Grid` to toggle between horizontal and vertical layouts at a b
       bdc="base-2"
       bdrs="20"
       bxsh="10"
-      hov="bxsh"
+      hov="-bxsh"
       set="var:hov" hasTransition
     >
       <Frame ga="img" aslf="stretch" ar={['og', '1/1']} max-w="100%" pos="relative" bdrs="20" bxsh="10">
@@ -334,11 +334,11 @@ An example using `Grid` to toggle between horizontal and vertical layouts at a b
 
 ### Revealing text on hover
 
-The following example requires a custom `.-hov\:to\:slide` class to be defined separately.
+The following example requires a custom `.-hov\:in\:slide` class to be defined separately.
 
 {/* Note: Adding resize to PreviewArea may affect Filter behavior. */}
 <Preview css={`
-.-hov\\:to\\:slide {
+.-hov\\:in\\:slide {
   opacity: var(--_notHov, 0);
   grid-template-rows: var(--_isHov, 1fr) var(--_notHov, 0fr);
   transition-property: margin-block, padding-block, opacity, grid-template;
@@ -354,7 +354,7 @@ The following example requires a custom `.-hov\:to\:slide` class to be defined s
         <Layer style={{ backdropFilter: 'blur(6px) brightness(1.1)' }} />
         <Box pos="relative" z="1" c="white" lh="s">
           <h3 util="trim" className="-fz:l">Card Title</h3>
-          <Grid hasTransition hov="to:slide" my="15">
+          <Grid hasTransition hov="in:slide" my="15">
             <Box ov="hidden">
               <DummyText py="5" fz="s" lh="xs" />
             </Box>
@@ -365,7 +365,7 @@ The following example requires a custom `.-hov\:to\:slide` class to be defined s
     </BoxLink>
   </PreviewArea>
   <PreviewCode slot="tab" label="JSX">
-  ```jsx 'set="var:hov"' 'hov="to:slide"'
+  ```jsx 'set="var:hov"' 'hov="in:slide"'
   <BoxLink href="#card-a" pos="relative" bdrs="20" bxsh="20" ov="hidden" set="var:hov" max-w="xs" mx="auto">
     <Frame ar="1/1">
       <img src="https://cdn.lism-css.com/img/a-1.jpg" alt="" width="960" height="640" />
@@ -375,7 +375,7 @@ The following example requires a custom `.-hov\:to\:slide` class to be defined s
       <Layer style={{ backdropFilter: 'blur(6px) brightness(1.1)' }} />
       <Box pos="relative" z="1" c="white" lh="s">
         <h3 util="trim" className="-fz:l">Card Title</h3>
-        <Grid hasTransition hov="to:slide" my="15">
+        <Grid hasTransition hov="in:slide" my="15">
           <Box ov="hidden">
             <DummyText py="5" fz="s" lh="xs" />
           </Box>
@@ -390,7 +390,7 @@ The following example requires a custom `.-hov\:to\:slide` class to be defined s
   </PreviewCode>
 <PreviewCode slot="tab" label="Additional CSS">
 ```css
-.-hov\:to\:slide {
+.-hov\:in\:slide {
   opacity: var(--_notHov, 0);
   grid-template-rows: var(--_isHov, 1fr) var(--_notHov, 0fr);
   transition-property: margin-block, padding-block, opacity, grid-template-rows;

@@ -26,7 +26,7 @@ BoxLink には主に2通りの使い方があります。
 `href` を指定すると `<BoxLink>` 自体が `<a>` タグとして出力されます。シンプルなカード全体リンクに最適。
 
 ```jsx
-<BoxLink href="/article/1" p="30" bgc="base" bd bdrs="30" hov="o">
+<BoxLink href="/article/1" p="30" bgc="base" bd bdrs="30" hov="-o">
   <Group fz="xl" fw="bold">Heading text</Group>
   <Text lh="s" my-s="15">記事の抜粋テキスト...</Text>
   <Group fz="s" c="text-2" ta="right" lh="1" my-s="10">
@@ -36,7 +36,7 @@ BoxLink には主に2通りの使い方があります。
 ```
 
 ```html
-<a class="is--boxLink -hov:o -p:30 -bgc:base -bd -bdrs:30" href="/article/1">
+<a class="is--boxLink -hov:-o -p:30 -bgc:base -bd -bdrs:30" href="/article/1">
   <p class="-fz:xl -fw:bold">Heading text</p>
   <p class="-c:text-2 -lh:s -my-s:15">記事の抜粋テキスト...</p>
   <p class="-fz:s -c:text-2 -ta:right -lh:1 -my-s:10">MORE →</p>
@@ -48,7 +48,7 @@ BoxLink には主に2通りの使い方があります。
 `<BoxLink>` は `<div>` にしたまま、内部のアンカー要素に `is--coverLink` クラスを付けてボックス全体をクリック可能にします。**BoxLink 内部にさらに別のリンクを配置したい場合はこちらを選ぶこと**。
 
 ```jsx
-<BoxLink as="section" p="30" bgc="base" bd bdrs="30" hasTransition hov="bxsh">
+<BoxLink as="section" p="30" bgc="base" bd bdrs="30" hasTransition hov="-bxsh">
   <Group fz="xl" fw="bold">
     <Link isCoverLink href="/article/1">
       Heading link text
@@ -56,19 +56,19 @@ BoxLink には主に2通りの使い方があります。
   </Group>
   <Text c="text-2" lh="s" my-s="15">記事の抜粋テキスト...</Text>
   <Group my-s="10">
-    <a href="/tag/foo" className="-hov:o">Inner Link</a>
+    <a href="/tag/foo" className="-hov:-o">Inner Link</a>
   </Group>
 </BoxLink>
 ```
 
 ```html
-<div class="is--boxLink -hov:bxsh -p:30 -bgc:base -bd -bdrs:30 has--transition">
+<div class="is--boxLink -hov:-bxsh -p:30 -bgc:base -bd -bdrs:30 has--transition">
   <div class="-fz:xl -fw:bold">
     <a class="is--coverLink" href="/article/1">Heading link text</a>
   </div>
   <p class="-c:text-2 -lh:s -my-s:15">記事の抜粋テキスト...</p>
   <div class="-my-s:10">
-    <a href="/tag/foo" class="-hov:o">Inner Link</a>
+    <a href="/tag/foo" class="-hov:-o">Inner Link</a>
   </div>
 </div>
 ```

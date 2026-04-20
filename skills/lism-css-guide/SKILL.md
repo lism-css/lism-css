@@ -1,6 +1,6 @@
 ---
 name: lism-css-guide
-description: "Lism CSS の実装ガイド。HTML・CSS・SCSSの編集、UIやページレイアウトの実装・コーディング、JSX・React・Astroでコンポーネントを実装・編集する時に参照。ユーティリティクラス・デザイントークン・レイアウトプリミティブ・命名規則・CSSのLayer規則・レスポンシブ対応・ベーススタイリングのルール・CSS設計を提供する。"
+description: "Lism CSS の設計・実装に関するガイド。CSSの編集・追加、UIコンポーネントやレイアウトの実装・編集時に参照。c--*, l--*, a--*, is--*, has--*, set--*, u--* -prop:value 形式のクラス・トークン(CSS変数)・命名規則・Layer規則・レスポンシブ対応について調べる時にも参照。
 ---
 
 # Lism CSS Best Practices
@@ -78,7 +78,7 @@ import { Accordion, Tabs, Button } from '@lism-css/ui/astro';
 | NG | OK | 理由 |
 |----|-----|------|
 | `<Heading level={3}>` | `<Heading level="3">` | `level` は文字列型（`'1'`〜`'6'`） |
-| `hov="shadow"` | `hov="bxsh"` | Lism の省略名は `bxsh`（box-shadow） |
+| `hov="shadow"` | `hov="-bxsh"` | Lism の省略名は `bxsh`（box-shadow） |
 | `bgc="secondary"` | `bgc="base-2"` | カラートークンの間違い |
 | `p="8"`, `g="6"` | `p="20"`, `g="10"` | スペーストークンの間違い |
 
@@ -114,9 +114,8 @@ import { Accordion, Tabs, Button } from '@lism-css/ui/astro';
 
 これら各ファイルの冒頭にはTOC（目次）があり、セクションごとの詳細URL・ソースURLがまとめて記載されています。
 
-### Primitive 単位の詳細リファレンス
+### クラス単位の詳細リファレンス
 
-`l--*` / `is--*` / `a--*` クラスや対応するコンポーネント（`<Flex>`, `<Grid>` 等）を使ってUIを実装する時は、以下の Primitive 別ファイルを参照してください。
 
 **Layout Primitives**
 
@@ -154,6 +153,12 @@ import { Accordion, Tabs, Button } from '@lism-css/ui/astro';
 - `a--divider` / `<Divider>`: [primitives/a--divider.md](./primitives/a--divider.md)
 - `a--spacer` / `<Spacer>`: [primitives/a--spacer.md](./primitives/a--spacer.md)
 - `a--decorator` / `<Decorator>`: [primitives/a--decorator.md](./primitives/a--decorator.md)
+
+**Property Class（特殊仕様）**
+
+- `-bd` / `-bd-{side}` 系: [property-class/bd.md](./property-class/bd.md)
+- `-hov:*` 系: [property-class/hov.md](./property-class/hov.md)
+- `-max-sz:full` / `-max-sz:container`: [property-class/max-sz.md](./property-class/max-sz.md)
 
 
 ## このスキルファイル自身のアップデート方法

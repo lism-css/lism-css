@@ -34,7 +34,7 @@ import './_style.css';
           set="var:hov"
           hasTransition
           ai="center"
-          hov="bxsh"
+          hov="-bxsh"
         >
           <Grid gtc="subgrid" g="inherit" gc={['1', null, '1 / span 2']}>
             <Flex g={['20', null, '30']} ai="center">
@@ -45,7 +45,7 @@ import './_style.css';
               <Text>目標金額を設定して貯蓄ができる「目的別預金」が登場。楽しみながら計画的な資産形成が行えます。</Text>
             </Flex>
           </Grid>
-          <Center w="fit" bd p="15" bdrs="99" hasTransition hov="to:reverse">
+          <Center w="fit" bd p="15" bdrs="99" hasTransition hov="in:reverse">
             <Icon icon="arrow-right" fz="s" />
           </Center>
         </Grid>
@@ -62,7 +62,7 @@ import './_style.css';
           set="var:hov"
           hasTransition
           ai="center"
-          hov="bxsh"
+          hov="-bxsh"
         >
           <Grid gtc="subgrid" g="inherit" gc={['1', null, '1 / span 2']}>
             <Flex g={['20', null, '30']} ai="center">
@@ -73,7 +73,7 @@ import './_style.css';
               <Text>通信の暗号化や二段階認証を導入。お客様の大切な資産と個人情報を厳重に保護します。</Text>
             </Flex>
           </Grid>
-          <Center w="fit" bd p="15" bdrs="99" hasTransition hov="to:reverse">
+          <Center w="fit" bd p="15" bdrs="99" hasTransition hov="in:reverse">
             <Icon icon="arrow-right" fz="s" />
           </Center>
         </Grid>
@@ -90,7 +90,7 @@ import './_style.css';
           set="var:hov"
           hasTransition
           ai="center"
-          hov="bxsh"
+          hov="-bxsh"
         >
           <Grid gtc="subgrid" g="inherit" gc={['1', null, '1 / span 2']}>
             <Flex g={['20', null, '30']} ai="center">
@@ -101,7 +101,7 @@ import './_style.css';
               <Text>口座開設から運用状況の確認までスマホアプリで完結。いつでも手軽に資産をチェックできます。</Text>
             </Flex>
           </Grid>
-          <Center w="fit" bd p="15" bdrs="99" hasTransition hov="to:reverse">
+          <Center w="fit" bd p="15" bdrs="99" hasTransition hov="in:reverse">
             <Icon icon="arrow-right" fz="s" />
           </Center>
         </Grid>
@@ -115,7 +115,7 @@ import './_style.css';
 
 <style is:inline>
   @media (any-hover: hover) {
-    .-hov\:to\:reverse {
+    .-hov\:in\:reverse {
       background-color: var(--_isHov, var(--text));
       color: var(--_isHov, var(--base));
       border-color: var(--text);

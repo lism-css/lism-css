@@ -186,20 +186,20 @@ Using `var(--_isHov, ...) var(--_notHov, ...)` allows you to **write both hover 
 
 By applying `set--var:hov` to a parent element and using the `--_isHov` and `--_notHov` variables on child elements, you can trigger style changes on children based on the parent's hover state.
 
-For example, this is useful for zooming an image inside a card when the parent box is hovered. The `-hov:to:zoom` class is provided out of the box for this purpose.
+For example, this is useful for zooming an image inside a card when the parent box is hovered. The `-hov:in:zoom` class is provided out of the box for this purpose.
 
 ```css
-.-hov\:to\:zoom {
+.-hov\:in\:zoom {
   --transitionProps: scale;
   scale: var(--_isHov, 1.1);
 }
 ```
 
 <Preview>
-  <PreviewTitle>Usage example of `-hov:to:zoom`</PreviewTitle>
+  <PreviewTitle>Usage example of `-hov:in:zoom`</PreviewTitle>
   <PreviewArea p="30">
     <a href="###" class="l--frame set--var:hov is--boxLink -ar:21/9 -ov:hidden">
-      <img class="has--transition -hov:to:zoom" src="https://cdn.lism-css.com/img/a-2.jpg" width="960" height="640" loading="lazy" />
+      <img class="has--transition -hov:in:zoom" src="https://cdn.lism-css.com/img/a-2.jpg" width="960" height="640" loading="lazy" />
       <div class="is--layer -bgc" style="--c: #fff; --bgc: rgb(0 0 0 / 50%)"></div>
       <div class="l--center is--layer -c" style="--c: #fff;">
         <span class="-fz:xl">Banner Link</span>
@@ -207,9 +207,9 @@ For example, this is useful for zooming an image inside a card when the parent b
     </a>
   </PreviewArea>
   <PreviewCode>
-    ```html "set--var:hov" "-hov:to:zoom"
+    ```html "set--var:hov" "-hov:in:zoom"
     <a href="###" class="l--frame set--var:hov is--boxLink -ar:21/9 -ov:hidden">
-      <img class="has--transition -hov:to:zoom" src="https://cdn.lism-css.com/img/a-2.jpg" width="960" height="640" loading="lazy" />
+      <img class="has--transition -hov:in:zoom" src="https://cdn.lism-css.com/img/a-2.jpg" width="960" height="640" loading="lazy" />
       <div class="is--layer -bgc" style="--c: #fff; --bgc: rgb(0 0 0 / 50%)"></div>
       <div class="l--center is--layer -c" style="--c: #fff;">
         <span class="-fz:xl">Banner Link</span>

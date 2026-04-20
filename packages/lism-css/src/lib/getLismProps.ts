@@ -383,30 +383,25 @@ export class LismPropsData {
     if (hoverData === '-' || hoverData === true) {
       this.addProp(`-hov`);
     } else if (typeof hoverData === 'string') {
-      // カンマ区切りで複数指定可能能
+      // カンマ区切りで複数指定可能（入力文字列をそのまま -hov:{...} として出力）
       splitWithComma(hoverData).forEach((cls) => {
         this.addProp(`-hov:${cls}`);
       });
     } else if (typeof hoverData === 'object') {
-      // hover={{c:'red', 'bgc': 'blue'}} みたいな指定の時
-
+      // hov={{c:'red', shadowUp: true}} のようなオブジェクト指定
+      // - 値あり（string / number） → `-hov:-{key}` + `--hov-{key}` 変数を出力
+      // - true / "-"              → `-hov:{key}`（クラスのみ）
       Object.keys(hoverData).forEach((propName) => {
         const hovVal = hoverData[propName];
         if (null == hovVal || '' === hovVal || false === hovVal) return;
 
-        // '-' の時は クラスのみ出力
         if (hovVal === '-' || hovVal === true) {
           this.addProp(`-hov:${propName}`);
-        } else if (propName === 'class') {
-          // propNameが'class'の場合は文字列として-hov:{class}クラスを追加.(カンマ区切りで複数指定可能)
-          splitWithComma(hovVal as string).forEach((cls) => {
-            this.addProp(`-hov:${cls}`);
-          });
         } else if (typeof hovVal === 'string' || typeof hovVal === 'number') {
           // トークン値の処理
           const finalHovVal = getMaybeCssVar(hovVal, getTokenKey(propName));
 
-          this.addProp(`-hov:${propName}`);
+          this.addProp(`-hov:-${propName}`);
           this.addStyle(`--hov-${propName}`, finalHovVal);
         }
       });

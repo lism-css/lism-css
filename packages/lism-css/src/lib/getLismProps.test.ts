@@ -321,30 +321,52 @@ describe('getLismProps', () => {
       expect(result.className).toContain('-hov:shadow');
     });
 
-    test('hov: オブジェクト形式でプロップ指定できる', () => {
+    test('hov: 文字列はそのまま -hov:{入力} として出力される（自動変換なし）', () => {
+      const result = getLismProps({ hov: 'o' });
+      expect(result.className).toContain('-hov:o');
+      expect(result.className).not.toContain('-hov:-o');
+    });
+
+    test('hov: "-" 付きで指定した場合は -hov:-{prop} として出力される', () => {
+      const result = getLismProps({ hov: '-o' });
+      expect(result.className).toContain('-hov:-o');
+    });
+
+    test('hov: カンマ区切りでもそれぞれそのまま出力される', () => {
+      const result = getLismProps({ hov: '-c,-bxsh,neutral,in:zoom' });
+      expect(result.className).toContain('-hov:-c');
+      expect(result.className).toContain('-hov:-bxsh');
+      expect(result.className).toContain('-hov:neutral');
+      expect(result.className).toContain('-hov:in:zoom');
+    });
+
+    test('hov: オブジェクト形式で値を指定すると -hov:-{key} + --hov-{key} 変数が出力される', () => {
       const result = getLismProps({
         hov: { c: 'red', bgc: 'blue' },
       });
-      expect(result.className).toContain('-hov:c');
-      expect(result.className).toContain('-hov:bgc');
+      expect(result.className).toContain('-hov:-c');
+      expect(result.className).toContain('-hov:-bgc');
       expect(result.style?.['--hov-c']).toBe('var(--red)');
       expect(result.style?.['--hov-bgc']).toBe('var(--blue)');
     });
 
-    test('hov: オブジェクト形式で true 値の場合はクラスのみ', () => {
+    test('hov: オブジェクト形式で true の場合はクラスのみ（- は付かない）', () => {
       const result = getLismProps({
-        hov: { c: true },
+        hov: { c: true, shadowUp: true },
       });
       expect(result.className).toContain('-hov:c');
+      expect(result.className).toContain('-hov:shadowUp');
+      expect(result.className).not.toContain('-hov:-c');
       expect(result.style?.['--hov-c']).toBeUndefined();
     });
 
-    test('hov: オブジェクト形式で class プロップを指定できる', () => {
+    test('hov: オブジェクト形式で "-" は true と同じくクラスのみ出力', () => {
       const result = getLismProps({
-        hov: { class: 'fade,shadow' },
+        hov: { c: '-' },
       });
-      expect(result.className).toContain('-hov:fade');
-      expect(result.className).toContain('-hov:shadow');
+      expect(result.className).toContain('-hov:c');
+      expect(result.className).not.toContain('-hov:-c');
+      expect(result.style?.['--hov-c']).toBeUndefined();
     });
   });
 
