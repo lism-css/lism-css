@@ -154,9 +154,9 @@ CSS Layer の外（最も高い詳細度）に配置され、`-{prop}(:{value})`
 
 | Prop | CSS プロパティ | プリセット値クラス | BP クラス |
 |------|--------------|-------------|-----|
-| `bxsh` | `box-shadow` | `-bxsh:0`, `-bxsh:10`, `-bxsh:20`, `-bxsh:30`, `-bxsh:40` | `-bxsh_sm`, `-bxsh_md` |
+| `bxsh` | `box-shadow` | `-bxsh:0`, `-bxsh:10`, `-bxsh:20`, `-bxsh:30`, `-bxsh:40`, `-bxsh:50` | `-bxsh_sm`, `-bxsh_md` |
 
-**注意:** `bxsh` の使用時は `set--var:sh` クラスの併用が必要です（影色 `--shc` の再計算のため）。
+**補足:** 影色（`--shc`）を要素内で上書きして再計算させたい場合は、`set--var:bxsh` クラスを併用する。
 
 ### ポジション
 

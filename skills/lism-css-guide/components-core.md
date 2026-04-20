@@ -55,7 +55,7 @@ import { Lism, Box, Flex, Stack, Grid, Text, Media } from 'lism-css/astro';
 | `variant` | `lismClass` 先頭クラスに対する BEM Modifier を付与（`c--` 専用。`a--` / `l--` には展開されない） | `variant="secondary"` |
 | `layout` | レイアウトプリミティブ（`l--{layout}`）を指定 | `layout="flow"` |
 | `atomic` | アトミックプリミティブ（`a--{atomic}`）を指定。`'divider'` / `'spacer'` / `'decorator'` が利用可能（`'icon'` は内部用） | `atomic="divider"` |
-| `set` | セットクラス（`set--{value}`）を指定。スペース区切りで複数指定可。値の先頭に `-` を付けると除外 | `set="plain"`, `set="var:hov var:sh"`, `set="-plain"` |
+| `set` | セットクラス（`set--{value}`）を指定。スペース区切りで複数指定可。値の先頭に `-` を付けると除外 | `set="plain"`, `set="var:hov var:bxsh"`, `set="-plain"` |
 | `util` | ユーティリティクラス（`u--{value}`）を指定。`set` と同様に複数指定・`-` prefix 除外が可能 | `util="cbox"`, `util="cbox trim"`, `util="-trim"` |
 | `exProps` | Lism Propsの処理をスキップして外部コンポーネントに直接渡すpropsオブジェクト | `exProps={{ size: '1em' }}` |
 
@@ -81,12 +81,12 @@ import { Lism, Box, Flex, Stack, Grid, Text, Media } from 'lism-css/astro';
 // → p, fz は Lism が処理、size は HogeIcon に直接渡される
 
 // set でセットクラスを付与（layout と同じ要領）
-<Box set="var:sh" p="30">...</Box>
-// → <div class="l--box set--var:sh -p:30">...</div>
+<Box set="var:bxsh" p="30">...</Box>
+// → <div class="l--box set--var:bxsh -p:30">...</div>
 
 // set を複数指定（スペース区切り）
-<Stack set="var:sh var:hov" p="30">...</Stack>
-// → <div class="l--stack set--var:sh set--var:hov -p:30">...</div>
+<Stack set="var:bxsh var:hov" p="30">...</Stack>
+// → <div class="l--stack set--var:bxsh set--var:hov -p:30">...</div>
 
 // `-` prefix で除外（コンポーネント内部で適用済みの set を打ち消す用途）
 <AccordionButton set="-plain">...</AccordionButton>

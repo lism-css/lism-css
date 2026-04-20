@@ -42,7 +42,7 @@ export type TraitProps = {
 };
 
 /** set prop で使われるプリセット値（エディタ補完用） */
-type SetPreset = 'plain' | 'revert' | 'var:hov' | 'var:sh' | 'var:bdrsInner';
+type SetPreset = 'plain' | 'revert' | 'var:hov' | 'var:bxsh' | 'var:bdrsInner';
 
 /**
  * set prop の値の型。プリセット値がサジェストされつつ、任意の文字列も受け付ける。
