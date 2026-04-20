@@ -380,30 +380,23 @@ export class LismPropsData {
     // 	return;
     // }
 
-    // "o"/"bgc" のような prop 短縮名直書きを -o / -bgc に正規化する（公式形式は `hov="-{prop}"`）
-    const normalizeHovClass = (cls: string): string => {
-      if (cls.startsWith('-')) return cls;
-      return cls in PROPS ? `-${cls}` : cls;
-    };
-
     if (hoverData === '-' || hoverData === true) {
       this.addProp(`-hov`);
     } else if (typeof hoverData === 'string') {
-      // カンマ区切りで複数指定可能能
+      // カンマ区切りで複数指定可能（入力文字列をそのまま -hov:{...} として出力）
       splitWithComma(hoverData).forEach((cls) => {
-        this.addProp(`-hov:${normalizeHovClass(cls)}`);
+        this.addProp(`-hov:${cls}`);
       });
     } else if (typeof hoverData === 'object') {
-      // hover={{c:'red', 'bgc': 'blue'}} みたいな指定の時
-
+      // hov={{c:'red', shadowUp: true}} のようなオブジェクト指定
+      // - 値あり（string / number） → `-hov:-{key}` + `--hov-{key}` 変数を出力
+      // - true / "-"              → `-hov:{key}`（クラスのみ）
       Object.keys(hoverData).forEach((propName) => {
         const hovVal = hoverData[propName];
         if (null == hovVal || '' === hovVal || false === hovVal) return;
 
-        // Property Class 名を指す propName は `-hov:-{propName}` の形式で出力する
-        // true / "-" 指定時は、propName が PROPS に存在しない場合は `-` を付けない
         if (hovVal === '-' || hovVal === true) {
-          this.addProp(`-hov:${normalizeHovClass(propName)}`);
+          this.addProp(`-hov:${propName}`);
         } else if (typeof hovVal === 'string' || typeof hovVal === 'number') {
           // トークン値の処理
           const finalHovVal = getMaybeCssVar(hovVal, getTokenKey(propName));

@@ -206,29 +206,26 @@ describe('LismPropsData', () => {
       expect(instance.propClasses).toContain('-hov:shadow');
     });
 
-    test('hov: 文字列が prop 短縮名と一致する場合、-{prop} に自動変換される', () => {
+    test('hov: 文字列はそのまま -hov:{入力} として出力される（自動変換なし）', () => {
       const instance = new LismPropsData({ hov: 'o' });
-      expect(instance.propClasses).toContain('-hov:-o');
+      expect(instance.propClasses).toContain('-hov:o');
+      expect(instance.propClasses).not.toContain('-hov:-o');
     });
 
-    test('hov: カンマ区切りでも prop 短縮名は自動で - が付与される', () => {
-      const instance = new LismPropsData({ hov: 'c,bxsh' });
-      expect(instance.propClasses).toContain('-hov:-c');
-      expect(instance.propClasses).toContain('-hov:-bxsh');
-    });
-
-    test('hov: 既に - 付きの場合はそのまま -hov:-{prop} になる', () => {
+    test('hov: "-" 付きで指定した場合は -hov:-{prop} として出力される', () => {
       const instance = new LismPropsData({ hov: '-o' });
       expect(instance.propClasses).toContain('-hov:-o');
     });
 
-    test('hov: prop と一致しない文字列（neutral, in:zoom など）はそのまま', () => {
-      const instance = new LismPropsData({ hov: 'neutral,in:zoom' });
+    test('hov: カンマ区切りでもそれぞれそのまま出力される', () => {
+      const instance = new LismPropsData({ hov: '-c,-bxsh,neutral,in:zoom' });
+      expect(instance.propClasses).toContain('-hov:-c');
+      expect(instance.propClasses).toContain('-hov:-bxsh');
       expect(instance.propClasses).toContain('-hov:neutral');
       expect(instance.propClasses).toContain('-hov:in:zoom');
     });
 
-    test('hov: オブジェクト形式でプロップ指定できる', () => {
+    test('hov: オブジェクト形式で値を指定すると -hov:-{key} + --hov-{key} 変数が出力される', () => {
       const instance = new LismPropsData({
         hov: { c: 'red', bgc: 'blue' },
       });
@@ -238,29 +235,23 @@ describe('LismPropsData', () => {
       expect(instance.styles['--hov-bgc']).toBe('var(--blue)');
     });
 
-    test('hov: オブジェクト形式でtrue値の場合はクラスのみ', () => {
+    test('hov: オブジェクト形式で true の場合はクラスのみ（- は付かない）', () => {
       const instance = new LismPropsData({
-        hov: { c: true },
+        hov: { c: true, shadowUp: true },
       });
-      expect(instance.propClasses).toContain('-hov:-c');
+      expect(instance.propClasses).toContain('-hov:c');
+      expect(instance.propClasses).toContain('-hov:shadowUp');
+      expect(instance.propClasses).not.toContain('-hov:-c');
       expect(instance.styles['--hov-c']).toBeUndefined();
     });
 
-    test('hov: オブジェクト形式で "-" 値を渡すと true と同じくクラスのみ出力', () => {
+    test('hov: オブジェクト形式で "-" は true と同じくクラスのみ出力', () => {
       const instance = new LismPropsData({
         hov: { c: '-' },
       });
-      expect(instance.propClasses).toContain('-hov:-c');
+      expect(instance.propClasses).toContain('-hov:c');
+      expect(instance.propClasses).not.toContain('-hov:-c');
       expect(instance.styles['--hov-c']).toBeUndefined();
-    });
-
-    test('hov: オブジェクト形式で propName が PROPS にない場合、true/"-" でも - を付けない', () => {
-      const instance = new LismPropsData({
-        hov: { c: true, shadowUp: true, fade: '-' },
-      });
-      expect(instance.propClasses).toContain('-hov:-c');
-      expect(instance.propClasses).toContain('-hov:shadowUp');
-      expect(instance.propClasses).toContain('-hov:fade');
     });
   });
 

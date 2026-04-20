@@ -82,7 +82,7 @@ Since each class ships with a default value, they can be used simply by adding t
 </Preview>
 
 :::info
-In the [`<Lism>` component](/en/docs/core-components/Lism/), passing a string to the `hov` prop automatically outputs the corresponding `-hov:xxx` class.
+In the [`<Lism>` component](/en/docs/core-components/Lism/), passing a string such as `"-o"` to the `hov` prop automatically outputs the corresponding `-hov:-o` class.
 :::
 
 <Spacer h="20" />
@@ -128,30 +128,40 @@ On the [`<Lism>` component](/en/docs/core-components/Lism/) (and components that
 
 #### When passing a string
 
-By default, the string you pass is output as-is as a `-hov:{string}` class.
-However, if the string matches a CSS props shorthand (`c`, `bgc`, `o`, etc.), it is automatically converted into the `-hov:-{prop}` form.
+The string you pass is output as-is as a `-hov:{string}` class. You can also pass multiple classes separated by commas.
 
-| Input | Output class |
-|-------|--------------|
-| `hov="shadowUp"` | `-hov:shadowUp` |
-| `hov="-o"` | `-hov:-o` |
-| `hov="o"` | `-hov:-o` (auto-prefixed because it matches a shorthand) |
-| `hov="-c,-bxsh"` | `-hov:-c` + `-hov:-bxsh` (multiple classes, comma-separated) |
+```jsx
+<Lism hov="-o">...</Lism>
+// → <div class="-hov:-o">...</div>
+
+<Lism hov="shadowUp">...</Lism>
+// → <div class="-hov:shadowUp">...</div>
+
+<Lism hov="-c,-bxsh">...</Lism>
+// → <div class="-hov:-c -hov:-bxsh">...</div>
+```
 
 
 #### When passing an object
 
 Mainly used to assign a **custom value** to a `.-hov:-{prop}` class.
 
-Writing `hov={{ prop: value }}` outputs a `-hov:-{prop}` class together with a `--hov-{prop}: {value}` CSS variable.
+Writing `hov={{ prop: value }}` adds a `-hov:-{prop}` class and sets `value` to the `--hov-{prop}` CSS variable.
 
-If the value is `true`, no variable is emitted — only the corresponding `-hov` class. This is useful when you want to output both a **value-bearing prop** and a **preset class** (`.-hov:{preset}` or a custom class) at the same time.
+```jsx
+<Lism hov={{ c: 'red' }}>...</Lism>
+// → <div class="-hov:-c" style="--hov-c: var(--red)">...</div>
+```
 
-| Input | Output |
-|-------|--------|
-| `hov={{ c: 'red' }}` | `-hov:-c` + `--hov-c: var(--red)` |
-| `hov={{ c: true }}` | `-hov:-c` (no variable) |
-| `hov={{ c: 'red', shadowUp: true }}` | `-hov:-c` + `--hov-c: var(--red)` + `-hov:shadowUp` |
+If the value is `true`, a `-hov:{key}` class is emitted. This is useful when you want to output both a **value-bearing prop** and a **preset class** (`.-hov:{preset}` or a custom class) at the same time.
+
+```jsx
+<Lism hov={{ shadowUp: true }}>...</Lism>
+// → <div class="-hov:shadowUp">...</div>
+
+<Lism hov={{ c: 'red', shadowUp: true }}>...</Lism>
+// → <div class="-hov:-c -hov:shadowUp" style="--hov-c: var(--red)">...</div>
+```
 
 
 <Spacer h="20" />
