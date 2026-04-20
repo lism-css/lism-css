@@ -10,8 +10,6 @@ HTML では直接クラスを付与し、Lism コンポーネントでは `set` 
 - [`set--plain`](#set--plain)
 - [`set--shadow`](#set--shadow)
 - [`set--hov`](#set--hov)
-- [`set--transition`](#set--transition)
-- [`set--gutter`](#set--gutter)
 - [`set--innerRs`](#set--innerrs)
 [詳細](https://lism-css.com/docs/set-class/)
 
@@ -26,8 +24,6 @@ HTML では直接クラスを付与し、Lism コンポーネントでは `set` 
 | `set--plain` | [`_plain.scss`](https://raw.githubusercontent.com/lism-css/lism-css/main/packages/lism-css/src/scss/base/set/_plain.scss) |
 | `set--shadow` | [`_shadow.scss`](https://raw.githubusercontent.com/lism-css/lism-css/main/packages/lism-css/src/scss/base/tokens/_shadow.scss) |
 | `set--hov` | [`_hov.scss`](https://raw.githubusercontent.com/lism-css/lism-css/main/packages/lism-css/src/scss/base/set/_hov.scss) |
-| `set--transition` | [`_transition.scss`](https://raw.githubusercontent.com/lism-css/lism-css/main/packages/lism-css/src/scss/base/set/_transition.scss) |
-| `set--gutter` | [`_gutter.scss`](https://raw.githubusercontent.com/lism-css/lism-css/main/packages/lism-css/src/scss/base/set/_gutter.scss) |
 | `set--innerRs` | [`_innerRs.scss`](https://raw.githubusercontent.com/lism-css/lism-css/main/packages/lism-css/src/scss/base/set/_innerRs.scss) |
 ---
 
@@ -91,8 +87,8 @@ HTML では直接クラスを付与し、Lism コンポーネントでは `set` 
 例えば、親のボックスがhoverされたら、その内部の画像をズームするようなケースで活用でき、`-hov:to:zoom`クラスが標準で用意されています。
 
 ```html
-<a href="###" class="l--frame is--boxLink set--hov -ar:21/9 -ov:hidden">
-  <img class="set--transition -hov:to:zoom" src="https://cdn.lism-css.com/img/a-2.jpg" width="960" height="640" loading="lazy" />
+<a href="###" class="l--frame set--hov is--boxLink -ar:21/9 -ov:hidden">
+  <img class="has--transition -hov:to:zoom" src="https://cdn.lism-css.com/img/a-2.jpg" width="960" height="640" loading="lazy" />
   <div class="is--layer -bgc" style="--c: #fff; --bgc: rgb(0 0 0 / 50%)"></div>
   <div class="l--center is--layer -c" style="--c: #fff;">
     <span class="-fz:xl">バナーリンク</span>
@@ -102,54 +98,9 @@ HTML では直接クラスを付与し、Lism コンポーネントでは `set` 
 
 ```css
 .-hov\:to\:zoom {
-  --transProp: scale;
+  --transitionProps: scale;
   scale: var(--_isHov, 1.1);
 }
-```
-
-
-## `set--transition`
-
-トランジション用の CSS をセットアップします。
-
-```scss
-.set--transition {
-  transition: var(--hov-duration, 0.25s) var(--hov-ease, linear) var(--hov-delay, 0s);
-  transition-property: var(--hov-prop, all);
-}
-```
-
-| カスタム変数 | デフォルト |
-|-------------|-----------|
-| `--hov-prop` | `all` |
-| `--hov-duration` | `0.25s` |
-| `--hov-ease` | `linear` |
-| `--hov-delay` | `0s` |
-
-```html
-<div class="set--transition -hov:c" style="--hov-prop: color; --hov-c: var(--red);">...</div>
-```
-```jsx
-<Lism set="transition" hov={{c: 'red'}} style={{ '--hov-prop': 'color'}}>...</Lism>
-```
-
-
-
-## `set--gutter`
-
-要素に左右パディングを適用します。`--gutter-size` のデフォルトは `var(--s30)` です。
-
-```scss
-.set--gutter {
-  padding-inline: var(--gutter-size);
-}
-```
-
-```html
-<div class="set--gutter">...</div>
-```
-```jsx
-<Lism set="gutter">...</Lism>
 ```
 
 

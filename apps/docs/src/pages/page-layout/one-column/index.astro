@@ -11,15 +11,15 @@ import { Wrapper, Box, Stack } from 'lism-css/astro';
     <DemoHeader />
     <Box as="main" py="50" fx="1" isContainer>
       <Box as="article">
-        <Wrapper as="header" set="gutter">
+        <Wrapper as="header" hasGutter>
           <h1>Page Title</h1>
         </Wrapper>
 
-        <Wrapper set="gutter" layout="flow" my-s="50">
+        <Wrapper hasGutter layout="flow" my-s="50">
           <DemoContent />
         </Wrapper>
 
-        <Wrapper as="aside" set="gutter" my-s="50">
+        <Wrapper as="aside" hasGutter my-s="50">
           <Box bgc="base-2" p="40">
             <div>Comment area, etc...</div>
           </Box>

@@ -28,4 +28,4 @@
 
 - [l--flow](./l--flow.md) — テキスト主体のフローレイアウト
 - [l--stack](./l--stack.md) — Flex 縦並び
-- [is--wrapper](./is--wrapper.md) — コンテンツ幅ラッパー
+- [is--wrapper](../trait-class/is--wrapper.md) — コンテンツ幅ラッパー

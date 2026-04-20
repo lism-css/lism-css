@@ -44,7 +44,7 @@ Rules for variable names used in Property Classes (`-{prop}:{value}`).
 | Form | Use | Example |
 |------|------|-----|
 | `--{target}-{prop}` | Property applied to an element or class (can be overridden on `:root`) | `--link-td`, `--headings-ff` |
-| `--{propName}` | Main feature variables for primitives | `--sideW`, `--mainW` |
+| `--{propName}` | Variables controlling a class's own main feature. Initialized on the element itself and cannot be given an initial value on `:root` | `--sideW`, `--mainW` |
 | `--_{item}-{propName}` | Properties for child elements of a component class (`c--`) | `--_icon-size` |
 | `--_{varName}` | Internal variables for state management | `--_isHov`, `--_notHov` |
 
@@ -55,7 +55,8 @@ Prefixes are attached to match the class classification. They are joined using t
 - Component: `c--`
 - Atomic Primitives: `a--`
 - Layout Primitives: `l--`
-- Trait Primitives: `is--`
+- Trait (role declaration): `is--`
+- Trait (feature attachment): `has--`
 - Set Class: `set--`
 - Utility Class: `u--`
 
@@ -70,6 +71,34 @@ The naming conventions for Property Classes are as follows.
 - Class paired with a specific value: `-{prop}:{value}`
 - Class that accepts a `--{prop}` variable: `-{prop}`
 - Class that accepts a breakpoint value (`--{prop}_{bp}`): `-{prop}_{bp}`
+
+
+### Responsibility of each class prefix
+
+The responsibility and layer assignment of each prefix is summarized below.
+
+| Prefix | Responsibility | Layer | Example |
+|---|---|---|---|
+| `set--` | Base styling of HTML elements / variable setup | `@lism-base` | `set--plain`, `set--hov`, `set--shadow`, `set--innerRs` |
+| `l--` | Layout Primitives (composition units) | `@lism-primitive` | `l--box`, `l--flex`, `l--grid` |
+| `a--` | Atomic Primitives (smallest units) | `@lism-primitive` | `a--icon`, `a--divider`, `a--spacer` |
+| `c--` | UI components with BEM-like structure | `@lism-component` | `c--card`, `c--button` |
+| `is--` | “is a …” (role / existence declaration) | `@lism-trait` | `is--container`, `is--wrapper`, `is--layer`, `is--boxLink` |
+| `has--` | “has a …” (single-feature trait attachment) | `@lism-trait` | `has--transition`, `has--gutter`, `has--snap` |
+| `u--` | Decorative effects (including child-element decoration) | `@lism-utility` | `u--trim`, `u--cbox`, `u--collapseGrid`, `u--clipText` |
+
+
+### When to use `is--` / `has--` / `set--` / `u--`
+
+All of `set--`, `is--`, `has--`, and `u--` attach *some* meaning to an element, but they differ in responsibility. Use the criteria below when in doubt.
+
+| | Purpose | CSS variables |
+|---|---|---|
+| `set--` | Base styling of HTML elements / variable setup | Not required |
+| `is--` | “is a …” (role / existence declaration) | Not required |
+| `has--` | “has a …” (feature attachment) | Required (customization points) |
+| `u--` | Decorative effect (including child-element styling) | Not required |
+
 
 ## Abbreviation Rules for `{prop}`
 

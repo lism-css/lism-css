@@ -19,8 +19,8 @@ const headerText = t(currentLang, 'header');
 ---
 
 <Container as="header" class="z--header" layout="flex" ai="center">
-  {/* 全体のgridレイアウトの切り替えと、ハンバーガーボタンの表示タイミングがずれないように set="gutter"は内側につける */}
-  <Flex ai="center" w="100%" g="15" set="gutter">
+  {/* 全体のgridレイアウトの切り替えと、ハンバーガーボタンの表示タイミングがずれないように hasGutterは内側につける */}
+  <Flex ai="center" w="100%" g="15" hasGutter>
     <Group mx-e="auto">
       <Link href={homeUrl} class="siteTitle" layout="flex" ai="center" g="5" fw="normal" c="inherit" td="none" hov="under">
         <img class="u--onlyLightMode" src="/logo-black.svg" alt="" aria-labelledby="site-logo-label" width="300" height="62" />

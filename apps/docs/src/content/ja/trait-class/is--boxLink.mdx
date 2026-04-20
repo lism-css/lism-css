@@ -1,52 +1,52 @@
 ---
 title: 'BoxLink (is--boxLink)'
 navtitle: 'is--boxLink'
-description: 'is--boxLink is a class that makes an entire box clickable.'
+description: 'is--boxLink は、ボックス全体をクリック可能にするクラスです。'
 ---
 import { BoxLink, Spacer, Group, Link, Text } from 'lism-css/astro';
 import { DummyText } from '@lism-css/ui/astro';
 
-`is--boxLink` is a class that makes an entire box clickable.
+`is--boxLink` は、ボックス全体をクリック可能にするクラスです。
 
 
 ## CSS
 
-<SrcCode path="src/scss/primitives/trait/_boxLink.scss" />
+<SrcCode path="src/scss/trait/_boxLink.scss" />
 
 
-## Using with Lism Components
+## Lismコンポーネントでの使い方
 
-A `<BoxLink>` component is available as an alias for `<Lism isBoxLink>`.
+`<Lism isBoxLink>` のエイリアスとして `<BoxLink>` が用意されています。
 
 ### Import
 
 <ImportPackage component="BoxLink" />
 
-### Props
+### 専用Props
 
-| Prop | Description |
+| Prop | 説明 |
 |---|---|
-|`href`| Specifies the link destination. When `href` is provided, the element renders as an `<a>` tag; otherwise it renders as a `<div>`.|
+|`href`|リンク先を指定できます。`href`が指定されている場合は`a`タグとなり、なければ`div`として出力されます。|
 
 
 ## Usage
 
-`<BoxLink>` (`.is--boxLink`) can be used in two main ways:
+`<BoxLink>`(`.is--boxLink`）は、主に次の2通りの使い方ができます。
 
-1. Render `<BoxLink>` (`.is--boxLink`) as an `<a>` tag to use it directly as a link.
-2. Render `<BoxLink>` (`.is--boxLink`) as a `<div>` and place an `a.is--coverLink` inside it.
+1. `<BoxLink>`(`.is--boxLink`）を`<a>`タグにしてそのままリンクにする。
+2. `<BoxLink>`(`.is--boxLink`）を`<div>`にして、内部に`a.is--coverLink`を配置する。
 
 :::info
-To include **additional links** inside a BoxLink, use approach 2.
+BoxLink内部に**別のリンク**も配置するには、2 を採用してください。
 :::
 
 
-### 1. Using `<BoxLink>` as an `<a>` tag
+### 1. `<BoxLink>`を`a`タグにして使う
 
-When `href` is provided to `<BoxLink>`, the component itself renders as an `<a>` tag.
+`<BoxLink>`に`href`を指定すると`<BoxLink>`自体が`<a>`タグになります。
 
 <Preview>
-  <PreviewTitle id="boxlink-demo01">Example</PreviewTitle>
+  <PreviewTitle id="boxlink-demo01">例</PreviewTitle>
   <PreviewArea p="20">
     <BoxLink href="#boxlink-demo01" p="30" bgc="base" bd bdrs="30" hov="o">
       <Group fz="xl" fw="bold">
@@ -87,16 +87,16 @@ When `href` is provided to `<BoxLink>`, the component itself renders as an `<a>`
 </Preview>
 
 
-### 2. Placing `is--coverLink` inside
+### 2. 内部に`is--coverLink`を配置する
 
-You can also make the entire box clickable by using `.is--coverLink` on an anchor element inside the BoxLink.
+内部のアンカー要素に`.is--coverLink`を併用してもボックス全体をリンクにすることができます。
 
-This approach also allows you to place additional links inside the BoxLink.
+この時、BoxLinkの内部に別のリンクも配置できます。
 
 <Preview>
-  <PreviewTitle id="boxlink-demo02">Example</PreviewTitle>
+  <PreviewTitle id="boxlink-demo02">例</PreviewTitle>
   <PreviewArea p="20">
-    <BoxLink as="section" p="30" bgc="base" bd bdrs="30" set="transition" hov="bxsh">
+    <BoxLink as="section" p="30" bgc="base" bd bdrs="30" hasTransition hov="bxsh">
       <Group fz="xl" fw="bold">
         <Link isCoverLink href="#boxlink-demo02">
           <Fragment>Heading link text</Fragment>
@@ -112,7 +112,7 @@ This approach also allows you to place additional links inside the BoxLink.
   </PreviewArea>
   <PreviewCode slot="tab" label="JSX">
     ```jsx 'isCoverLink'
-    <BoxLink p="30" bgc="base" bd bdrs="30" set="transition" hov="bxsh">
+    <BoxLink p="30" bgc="base" bd bdrs="30" hasTransition hov="bxsh">
       <Group fz="xl" fw="bold">
         <Link isCoverLink href="#boxlink-demo02">
           Heading link text
@@ -132,7 +132,7 @@ This approach also allows you to place additional links inside the BoxLink.
   </PreviewCode>
   <PreviewCode slot="tab" label="HTML">
     ```html "is--coverLink"
-    <div class="is--boxLink set--transition -p:30 -bgc:base -bd -bdrs:30 -hov:bxsh">
+    <div class="is--boxLink has--transition -p:30 -bgc:base -bd -bdrs:30 -hov:bxsh">
       <div class="-fz:xl -fw:bold">
         <a class="is--coverLink" href="#boxlink-demo02">
           Heading Link
@@ -154,11 +154,11 @@ This approach also allows you to place additional links inside the BoxLink.
 
 ## Opt-in
 
-### Extending the focus outline to the entire BoxLink on Tab key focus
+### Tabキーでフォーカスした時のアウトラインをBoxLink全体に広げる
 
-When a link is placed using `is--coverLink`, pressing the Tab key to focus will show the outline only around the link text, not the entire box.
+`is--coverLink`でリンクを設置すると、Tabキーでフォーカスした時はアウトラインがボックス全体ではなくリンクテキスト部分のみになります。
 
-If you want to extend the outline to cover the entire box, add the following CSS.
+もしこれをボックス全体に広げたい場合、以下のようなCSSを追記してください。
 
 ```css
 @supports selector(:has(*)) {
@@ -172,14 +172,14 @@ If you want to extend the outline to cover the entire box, add the following CSS
 }
 ```
 
-{/* ### Enabling text selection while holding Alt key
+{/* ### altキーを押しながらのテキスト選択を有効にしたい場合
 
-As background, there are various discussions about approaches to making an entire box clickable.
+前提として、ボックス全体をリンク化する実装方法についてはさまざまな議論があります。
 
-- When `<BoxLink>` itself is rendered as an `<a>` tag, screen readers may read the content verbosely, and it is not possible to place additional links inside the box.
-- The technique of expanding the pseudo-element of a link element to make the whole box clickable (as with `is--coverLink`) has the drawback that text selection within the box while holding the Alt key is not possible.
+- `<BoxLink>`自体を`a`タグにした場合は、スクリーンリーダーの読み上げが助長になってしまうことや、ボックス内部に別のリンクを配置できないという問題があります。
+- `is--coverLink`のようにリンク要素の擬似要素を広げてボックス全体をクリックできるようにする手法では、altキーを押しながらのリンク内テキスト選択ができなくなるという問題があります。
 
-There are other approaches as well, each with their own trade-offs. In general, choosing between the two above based on the situation is recommended, but if the latter issue is a concern, the following script can enable text selection while holding the Alt key.
+その他の手法もいくつかありますが、それぞれ別の問題があります。基本的には上の2つからその場に適した方を選べばよいと思いますが、後者の問題がどうしても気になる場合は、以下のようなスクリプトでaltキーを押しながらのテキスト選択を有効にすることもできます。
 
 ```js
 ``` */}

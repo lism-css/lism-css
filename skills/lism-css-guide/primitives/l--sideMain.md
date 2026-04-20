@@ -99,4 +99,4 @@
 - [l--grid](./l--grid.md) — ブレイクポイント切り替え型の2カラム構築に使用
 - [l--fluidCols](./l--fluidCols.md) — カラム幅ベースの自動段組
 - [l--switchCols](./l--switchCols.md) — ブレイクポイント一括切り替え型カラム
-- [is--container](./is--container.md) — レスポンシブ Property Class 利用時に必要
+- [is--container](../trait-class/is--container.md) — レスポンシブ Property Class 利用時に必要

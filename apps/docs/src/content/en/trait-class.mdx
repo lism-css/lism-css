@@ -1,0 +1,178 @@
+---
+title: 'Trait Class'
+description: 'Learn about Trait Classes: is--* for declaring roles and has--* for attaching features.'
+---
+import { Lism, Box, Frame, Media } from 'lism-css/astro';
+
+
+**Trait Classes** declare a role on an element or attach a feature to it.  
+They belong to `@layer lism-trait`.
+
+- `is--{name}`: declares a **role / existence** (“is a …”).
+- `has--{name}`: attaches a **feature** (“has a …”).
+
+
+## `is--*` (Role declaration)
+
+| Class | Description |
+|---|---|
+| <ModLink slug="is--container" /> | Defines the reference element for container queries |
+| <ModLink slug="is--wrapper" /> | Wrapper element that controls content width |
+| <ModLink slug="is--layer" /> | Overlay layer positioned over a parent element |
+| <ModLink slug="is--boxLink" /> | Makes the entire box a clickable link |
+| `is--coverLink` | A link with a clickable area covering the entire parent element (→ see <ModLink slug="is--boxLink" />) |
+| `is--side` | For the side element of `l--sideMain` (→ see <ModLink slug="l--sideMain" />) |
+| `is--skipFlow` | Cancels spacing with the next sibling inside `l--flow` (→ see <ModLink slug="l--flow" />) |
+
+
+## `has--*` (Feature attachment)
+
+
+### `has--transition`
+
+Sets the `transition` property using dedicated variables.
+
+<SrcCode path="src/scss/trait/_hasTransition.scss" />
+
+<Preview>
+  <PreviewTitle>Usage example</PreviewTitle>
+  <PreviewArea p="30">
+    <Lism hasTransition hov={{c: 'red'}} style={{ '--transitionProps': 'color'}}>Example</Lism>
+  </PreviewArea>
+  <PreviewCode label="HTML" slot="tab">
+    ```html
+    <div class="has--transition -hov:c" style="--transitionProps: color; --hov-c: var(--red);">Example</div>
+    ```
+  </PreviewCode>
+  <PreviewCode label="JSX" slot="tab">
+    ```jsx
+    <Lism hasTransition hov={{c: 'red'}} style={{ '--transitionProps': 'color'}}>Example</Lism>
+    ```
+  </PreviewCode>
+</Preview>
+
+
+See the [`hover` documentation page](/en/docs/property-class/hov#has--transition) for usage examples.
+
+<DocsLink path="/docs/property-class/hov#has--transition" />
+
+
+### `has--gutter`
+
+A class that adds predefined horizontal spacing to the left and right sides of content.
+It is provided as a separate class from padding utilities to reserve a consistent horizontal margin across the entire site.
+
+| Class name | Spacing | Default value |
+|---|---|---|
+| `has--gutter` | `--gutter-size` | `var(--s30)` |
+
+<SrcCode path="src/scss/trait/_hasGutter.scss" />
+
+<Preview>
+  <PreviewTitle>Example</PreviewTitle>
+  <PreviewArea resize p="15">
+    <Lism hasGutter>
+      <p>Lorem ipsum content...</p>
+      <p>Lorem ipsum content...</p>
+      <p>Lorem ipsum content...</p>
+    </Lism>
+  </PreviewArea>
+  <PreviewCode slot="tab" label="HTML">
+  ```html
+  <div class="has--gutter">
+    <p>Lorem ipsum content...</p>
+    <p>Lorem ipsum content...</p>
+    <p>Lorem ipsum content...</p>
+  </div>
+  ```
+  </PreviewCode>
+  <PreviewCode slot="tab" label="JSX">
+  ```jsx
+  <Lism hasGutter>
+    <p>Lorem ipsum content...</p>
+    <p>Lorem ipsum content...</p>
+    <p>Lorem ipsum content...</p>
+  </Lism>
+  ```
+  </PreviewCode>
+</Preview>
+
+
+### `has--snap`
+
+Allows `scroll-snap-` properties to be set via CSS variables.
+
+<SrcCode path="src/scss/trait/_hasSnap.scss" />
+
+| Variable | Purpose | Default |
+|---|---|---|
+| `--snapType` | Value for `scroll-snap-type` | `both mandatory` |
+| `--snapAlign` | Value for child `scroll-snap-align` | `start` |
+| `--snapStop` | Value for child `scroll-snap-stop` | `normal` |
+
+<Box class="has--snap" ov="auto" ar="16/9" bd>
+  <div className="l--frame -ar:16/9 -p:15"><img src="https://cdn.lism-css.com/img/u-1.jpg" width="960" height="640" loading="lazy" /></div>
+  <div className="l--frame -ar:16/9 -p:15"><img src="https://cdn.lism-css.com/img/u-2.jpg" width="960" height="640" loading="lazy" /></div>
+  <div className="l--frame -ar:16/9 -p:15"><img src="https://cdn.lism-css.com/img/u-3.jpg" width="960" height="640" loading="lazy" /></div>
+  <div className="l--frame -ar:16/9 -p:15"><img src="https://cdn.lism-css.com/img/u-4.jpg" width="960" height="640" loading="lazy" /></div>
+  <div className="l--frame -ar:16/9 -p:15"><img src="https://cdn.lism-css.com/img/u-5.jpg" width="960" height="640" loading="lazy" /></div>
+  <div className="l--frame -ar:16/9 -p:15"><img src="https://cdn.lism-css.com/img/u-6.jpg" width="960" height="640" loading="lazy" /></div>
+</Box>
+
+
+### `has--mask`
+
+Applies a mask to the element itself in combination with the `--maskImg` variable.
+
+<SrcCode path="src/scss/trait/_hasMask.scss" />
+
+| Variable | Purpose | Default |
+|---|---|---|
+| `--maskImg` | Mask image (SVG, etc.) | — |
+| `--maskPos` | Mask position | `50%` |
+| `--maskSize` | Mask size | `contain` |
+| `--maskRepeat` | Mask repeat | `no-repeat` |
+
+In Lism components, use `hasMask` together with `css={{ '--maskImg': getSvgUrl(svgString) }}`.
+
+<Preview>
+  <PreviewTitle>Example</PreviewTitle>
+  <PreviewArea p="10">
+    <Media
+      src="https://cdn.lism-css.com/img/u-2.jpg"
+      width="960"
+      height="640"
+      alt=""
+      loading="lazy"
+      ar="og"
+      hasMask
+      css={{ '--maskImg': `url('data:image/svg+xml,<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><path fill="%23000000" d="M170.4,25.7c16.1,14.2,23.2,38.5,24.8,61.7c1.7,23.3-1.8,45.5-12.9,62.3c-11,16.9-29.3,28.6-48.8,34.5 c-19.4,5.9-40,6.1-59.5,0.4c-19.5-5.6-37.9-17.4-51.7-34.9c-14-17.5-23.2-40.8-18-60.2c5-19.4,24.5-34.7,43.5-48.4 s37.6-25.7,59.5-29.7C129.1,7.3,154.2,11.4,170.4,25.7z" /></svg>')` }}
+    />
+  </PreviewArea>
+  <PreviewCode slot="tab" label="JSX">
+    ```jsx
+    <Media
+      src="https://cdn.lism-css.com/img/u-2.jpg"
+      width="960"
+      height="640"
+      alt=""
+      loading="lazy"
+      ar="og"
+      hasMask
+      css={{ '--maskImg': getSvgUrl(`<svg ...>...</svg>`) }}
+    />
+    ```
+  </PreviewCode>
+  <PreviewCode slot="tab" label="HTML">
+    ```html
+    <img
+      class="has--mask -ar:og"
+      src="https://cdn.lism-css.com/img/u-2.jpg"
+      width="960"
+      height="640"
+      loading="lazy"
+      style="--maskImg: url(data:image/svg+xml;base64,...);"
+    />
+    ```
+  </PreviewCode>
+</Preview>

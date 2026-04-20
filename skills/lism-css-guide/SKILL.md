@@ -134,12 +134,19 @@ import { Accordion, Tabs, Button } from '@lism-css/ui/astro';
 - `l--switchCols` / `<SwitchCols>`: [primitives/l--switchCols.md](./primitives/l--switchCols.md)
 - `l--sideMain` / `<SideMain>`: [primitives/l--sideMain.md](./primitives/l--sideMain.md)
 
-**Trait Primitives**
+**Trait Class (is--)**
 
-- `is--container` / `<Container>`: [primitives/is--container.md](./primitives/is--container.md)
-- `is--wrapper` / `<Wrapper>`: [primitives/is--wrapper.md](./primitives/is--wrapper.md)
-- `is--layer` / `<Layer>`: [primitives/is--layer.md](./primitives/is--layer.md)
-- `is--boxLink` / `<BoxLink>`: [primitives/is--boxLink.md](./primitives/is--boxLink.md)
+- `is--container` / `<Container>`: [trait-class/is--container.md](./trait-class/is--container.md)
+- `is--wrapper` / `<Wrapper>`: [trait-class/is--wrapper.md](./trait-class/is--wrapper.md)
+- `is--layer` / `<Layer>`: [trait-class/is--layer.md](./trait-class/is--layer.md)
+- `is--boxLink` / `<BoxLink>`: [trait-class/is--boxLink.md](./trait-class/is--boxLink.md)
+
+**Trait Class (has--)**
+
+- `has--transition` (`hasTransition` prop): [trait-class/has--transition.md](./trait-class/has--transition.md)
+- `has--gutter` (`hasGutter` prop): [trait-class/has--gutter.md](./trait-class/has--gutter.md)
+- `has--snap` (`hasSnap` prop): [trait-class/has--snap.md](./trait-class/has--snap.md)
+- `has--mask` (`hasMask` prop): [trait-class/has--mask.md](./trait-class/has--mask.md)
 
 **Atomic Primitives**
 

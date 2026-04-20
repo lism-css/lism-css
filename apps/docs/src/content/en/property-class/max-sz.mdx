@@ -3,7 +3,7 @@ title: '-max-sz'
 description: 'How to use the -max-sz class for controlling the maximum width of content.'
 ---
 
-import { Flex, Media, Layer, Spacer, Box, Center, Stack, Frame, BoxLink } from 'lism-css/react';
+import { Flex, Media, Layer, Spacer, Box, Center, Stack, Frame, BoxLink } from 'lism-css/astro';
 
 
 Lism provides content size tokens in the form `--sz--{sz}` (where `{sz}` = `xs`, `s`, `m`, `l`, `xl`), and corresponding `-max-sz` classes are available for each. (`-max-sz:{xs~xl}`)
@@ -18,7 +18,7 @@ The following notable classes are also available:
 
 | Class | Description |
 |---|---|
-| `-max-sz:full` | When inside a `.set--gutter` element, **expands to fill the parent** by adding the gutter spacing on top of `100%`. |
+| `-max-sz:full` | When inside a `.has--gutter` element, **expands to fill the parent** by adding the gutter spacing on top of `100%`. |
 | `-max-sz:container` | Expands to the size of the **nearest container element**. The value is updated for each `.is--container` class. |
 
 

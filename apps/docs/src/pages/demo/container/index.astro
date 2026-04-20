@@ -25,8 +25,8 @@ import './_style.scss';
 
     <h2>is--wrapper</h2>
     <p><code>.is--wrapper</code> クラスを使うと、内部のコンテンツ幅を制御できます。</p>
-    <Flow isWrapper flow="s" set="gutter">
-      <AttsLabels atts="is--wrapper, set--gutter" />
+    <Flow isWrapper flow="s" hasGutter>
+      <AttsLabels atts="is--wrapper, has--gutter" />
       <LoremContent />
       <LoremContent />
       <GutterGuide />
@@ -40,15 +40,15 @@ import './_style.scss';
       <code>--sz--s</code>,<code>--sz--l</code>をセットできるユーティリティクラスです。
     </p>
     <!-- </Container> -->
-    <Flow isWrapper="s" flow="s" set="gutter">
-      <AttsLabels atts="is--wrapper,-contentSize:s,set--gutter" />
+    <Flow isWrapper="s" flow="s" hasGutter>
+      <AttsLabels atts="is--wrapper,-contentSize:s,has--gutter" />
       <LoremContent length="m" />
       <LoremContent length="m" />
       <GutterGuide />
     </Flow>
 
-    <Flow isWrapper="l" flow="s" set="gutter">
-      <AttsLabels atts="is--wrapper,-contentSize:l,set--gutter" />
+    <Flow isWrapper="l" flow="s" hasGutter>
+      <AttsLabels atts="is--wrapper,-contentSize:l,has--gutter" />
       <LoremContent length="m" />
       <LoremContent length="m" />
       <GutterGuide />
@@ -68,8 +68,8 @@ import './_style.scss';
     <p>
       <code>is--wrapper</code> は子要素の幅を変数で制御しているため、直下にネストすると子ラッパー自身の幅も（同じ変数名なので）影響を受けます。
     </p>
-    <Flow isWrapper flow="s" set="gutter">
-      <AttsLabels atts="is--wrapper, set--gutter" />
+    <Flow isWrapper flow="s" hasGutter>
+      <AttsLabels atts="is--wrapper, has--gutter" />
       <LoremContent length="s" />
       <LoremContent length="m" />
       <Spacer h=".5rem" />

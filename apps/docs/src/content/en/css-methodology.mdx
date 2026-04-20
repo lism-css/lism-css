@@ -44,8 +44,12 @@ To address the common problem of CSS specificity becoming overly complex, Lism d
       <td class='-whs:nowrap'>Primitives<br/>`@lism-primitive`</td>
       <td>
         The layer for Primitives — the building blocks for composing layouts.<br />
-        It is further subdivided into sub-layers where `.is--{trait}`, `.l--{layout}`, and `.a--{atomic}` are defined.
+        `.l--{layout}` and `.a--{atomic}` are defined here.
       </td>
+    </tr>
+    <tr>
+      <td class='-whs:nowrap'>Trait<br/>`@lism-trait`</td>
+      <td>The layer for classes that declaratively attach a role or feature to an element (`.is--{name}`, `.has--{name}`).</td>
     </tr>
     <tr>
       <td class='-whs:nowrap'>Components<br/>`@lism-component`</td>
@@ -85,11 +89,11 @@ This section explains the design philosophy behind the core class groups in Lism
 
 ### Set Class
 
-**Set Classes** are utility classes defined within the `@lism-base` layer. They are used to override base styles, redefine tokens, or set up functional properties as initial defaults.
+**Set Classes** are utility classes defined within the `@lism-base` layer. They are used for HTML element base styling or for setting variables.
 
 | Category | Format | Example |
 |---|---|---|
-|Set Class|`.set--{style}`|`.set--plain`,<br />`.set--transition`|
+|Set Class|`.set--{style}`|`.set--plain`,<br />`.set--hov`,<br />`.set--shadow`|
 
 ### Primitive Class
 
@@ -99,21 +103,36 @@ These are further categorized into several types:
 
 | Category | Format | Example |
 |---|---|---|
-|Trait Primitives<br /><small>Classes that apply a static structural trait to an element</small>|`.is--{name}`|`.is--wrapper`,<br />`.is--container`|
 |Layout Primitives<br /><small>Primitives that serve as layout building blocks</small>|`.l--{name}`|`.l--grid`,<br />`.l--columns`|
 |Atomic Primitives<br /><small>The smallest layout unit primitives</small>|`.a--{name}`|`.a--divider`,<br />`.a--icon`|
 
 Primitive classes are standalone — they have no variations or child element classes. Only the `c--` Component Classes described next follow a BEM-like structure.
 
-#### Combination rules between Primitives
+Combining Primitives follows these rules:
 
 | Combination | Allowed | Notes |
 |---|---|---|
 | `l--` × `l--` | NG | Same category cannot be combined |
 | `a--` × `a--` | NG | Same category cannot be combined |
-| `is--` × `is--` | OK | Multiple Traits can be combined |
-| `is--` × `l--`/`a--` | OK | |
 | `l--` × `a--` | Discouraged | Not intended to coexist |
+
+### Trait Class
+
+**Trait Classes** declare a role on an element or attach a feature to it.
+
+| Category | Format | Example |
+|---|---|---|
+|`is--` Trait<br /><small>Declares a role ("is a …") on an element</small>|`.is--{name}`|`.is--container`,<br />`.is--wrapper`,<br />`.is--layer`,<br />`.is--boxLink`|
+|`has--` Trait<br /><small>Attaches a feature ("has a …") to an element</small>|`.has--{name}`|`.has--transition`,<br />`.has--gutter`,<br />`.has--snap`|
+
+The decision criteria between `is--` and `has--` are:
+
+|  | `is--` | `has--` |
+|---|---|---|
+| Meaning | "is a …" (role / existence declaration) | "has a …" (feature attachment) |
+| CSS variables | Not required | Required (provides customization points) |
+
+See the [naming guide](/en/docs/naming/) for the detailed decision criteria and usage guidelines.
 
 
 ### Component Class
@@ -218,9 +237,9 @@ See the [Responsive styling guide](/en/docs/responsive/) for details.
 
 
 
-### Naming and placing custom classes
+## Naming and placing custom classes
 
-When you add your own classes that match one of Lism CSS's existing class categories (`set--`, `is--`, `l--`, `a--`, `u--`, `-{prop}:{value}`), use the same prefix and add them to the corresponding definition layer.
+When you add your own classes that match one of Lism CSS's existing class categories (`set--`, `is--`, `has--`, `l--`, `a--`, `u--`, `-{prop}:{value}`), use the same prefix and add them to the corresponding definition layer.
 
 If you need to override an existing Lism class, do so within that same layer.
 
@@ -256,7 +275,7 @@ Place these in `@layer lism-custom`.
 ```
 
 
-### Using data attributes for dynamic state
+## Using data attributes for dynamic state
 
 For state management that is dynamically toggled by JavaScript, use data attributes.
 

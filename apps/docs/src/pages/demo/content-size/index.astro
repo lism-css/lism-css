@@ -24,12 +24,12 @@ import '../container/_style.scss';
     </Flow>
 
     <h2><code>-max-sz:full</code></h2>
-    <p><code>-max-sz:full</code> は、基本的には 100% ですが、親が <code>set--gutter</code> を持っていても全幅に広がります。</p>
+    <p><code>-max-sz:full</code> は、基本的には 100% ですが、親が <code>has--gutter</code> を持っていても全幅に広がります。</p>
     <!-- <p>また、<code>l--flow</code> の直下で <code>-max-sz:full</code> が連続すると、その間の余白は0となります。</p> -->
 
     <Spacer h="5" />
-    <Flow isWrapper flow="s" set="gutter">
-      <AttsLabels atts="is--wrapper,set--gutter" />
+    <Flow isWrapper flow="s" hasGutter>
+      <AttsLabels atts="is--wrapper,has--gutter" />
       <LoremContent />
       <FullSizeContent />
       <LoremContent />
@@ -45,14 +45,14 @@ import '../container/_style.scss';
     <p>
       <code>@propetry</code>
       が有効なブラウザでは、<b>先祖コンテナ要素</b>が呼び出された位置を基準とした幅 （<code>100cqi</code>）まで広がります。
-      <br />また、コンテナに<code>set--gutter</code>がある場合はその分を加算します。
+      <br />また、コンテナに<code>has--gutter</code>がある場合はその分を加算します。
     </p>
     <p>フルブリードレイアウトなど、親要素を飛び越えて外側まで広げたいコンテンツに活用できます。</p>
     <!-- <p><code>@propetry</code>が無効なブラウザ</p> -->
     <Spacer h="5" />
 
-    <Flow isContainer isWrapper flow="s" set="gutter">
-      <AttsLabels atts="is--wrapper,is--container,set--gutter" />
+    <Flow isContainer isWrapper flow="s" hasGutter>
+      <AttsLabels atts="is--wrapper,is--container,has--gutter" />
       <LoremContent />
       <FullSizeContent />
       <ContainerSizeContent />

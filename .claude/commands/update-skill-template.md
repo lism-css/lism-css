@@ -27,21 +27,21 @@
 
 各 Primitive に 1 ファイル。クラス名は camelCase のまま（例: `l--sideMain.md`, `l--tileGrid.md`, `is--boxLink.md`）、MDX 側は lowercase（`l--sidemain.mdx` 等）であることに注意。
 
-ファイルの対応関係は `packages/lism-css/src/scss/primitives/{layout,trait,atomic}/` 配下の SCSS と 1:1。カテゴリ別の更新内容は以下：
+ファイルの対応関係は SCSS と 1:1。カテゴリ別の更新内容は以下：
 
 | カテゴリ | 更新内容 | 主なソース参照先 |
 |----------|----------|-----------------|
 | Layout（`primitives/l--*.md`） | クラス名 / 対応コンポーネント / SCSS raw URL / 専用 Props / Usage（基本パターン + 応用）/ 関連プリミティブ | `packages/lism-css/src/scss/primitives/layout/`, `apps/docs/src/content/ja/primitives/l--*.mdx` |
-| Trait（`primitives/is--*.md`） | 同上 + Trait Primitive 固有の挙動（`href` → `<a>`、`contentSize`、`@sm`/`@md` バリエーション等） | `packages/lism-css/src/scss/primitives/trait/`, `apps/docs/src/content/ja/primitives/is--*.mdx` |
+| Trait（`trait-class/is--*.md`） | 同上 + Trait 固有の挙動（`href` → `<a>`、`contentSize`、`@sm`/`@md` バリエーション等） | `packages/lism-css/src/scss/trait/`, `apps/docs/src/content/ja/trait-class/is--*.mdx` |
 | Atomic（`primitives/a--*.md`） | クラス名 / 対応コンポーネント / 専用 Props / Usage / HTML 出力構造 | `packages/lism-css/src/scss/primitives/atomic/`, `apps/docs/src/content/ja/primitives/a--*.mdx` |
 
-各 `primitives/*.md` は以下の構成を維持すること（Phase 2 で確定したテンプレート）：
+各 `primitives/*.md` / `trait-class/*.md` は以下の構成を維持すること（Phase 2 で確定したテンプレート）：
 
 - Front matter なし、`# {クラス名} / <Component>` の h1 で開始
 - `## 基本情報`（クラス名 / コンポーネント / SCSSソース / ドキュメント）。URL は以下の形式を維持し、誤って書き換えないこと：
-    - SCSSソース: `https://raw.githubusercontent.com/lism-css/lism-css/main/packages/lism-css/src/scss/primitives/{layout|trait|atomic}/_{name}.scss`
-        - **SCSS ファイルが存在する Primitive のみ記載する**。`l--box` や `a--decorator` のように `packages/lism-css/src/scss/primitives/` 配下に対応する `_{name}.scss` を持たない Primitive では、この行自体を省略する
-    - ドキュメント（人間向け）: `https://lism-css.com/docs/primitives/{lowercase}/` — `{lowercase}` はクラス名の小文字版（例: `l--sideMain.md` → `l--sidemain`）
+    - SCSSソース: `https://raw.githubusercontent.com/lism-css/lism-css/main/packages/lism-css/src/scss/{primitives/{layout|atomic}|trait}/_{name}.scss`
+        - **SCSS ファイルが存在する Primitive / Trait のみ記載する**。`l--box` や `a--decorator` のように対応する `_{name}.scss` を持たない場合は、この行自体を省略する
+    - ドキュメント（人間向け）: Layout/Atomic は `https://lism-css.com/docs/primitives/{lowercase}/`、Trait は `https://lism-css.com/docs/trait-class/{lowercase}/` — `{lowercase}` はクラス名の小文字版（例: `l--sideMain.md` → `l--sidemain`）
 - `## 専用Props`（該当プリミティブのみ）
 - `## Usage`（JSX + HTML コードブロックのペアで記載。MDX の `<Preview>` / `<PreviewArea>` / `<PreviewCode>` / `<SrcCode>` 等のカスタムコンポーネントは廃棄）
 - 必要に応じて追加セクション（HTML 構造、動作の仕組み、特殊仕様、Opt-in スタイル、注意点 など）

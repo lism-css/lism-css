@@ -89,6 +89,6 @@
 
 ## 関連プリミティブ
 
-- [is--layer](./is--layer.md) — `l--frame` 内のオーバーレイ配置に使用
+- [is--layer](../trait-class/is--layer.md) — `l--frame` 内のオーバーレイ配置に使用
 - [l--center](./l--center.md) — フレーム内でテキストを中央配置する時に組み合わせる
 - [a--icon](./a--icon.md) — アイコン画像の表示（`src` 指定）

@@ -6,8 +6,8 @@
 
 - クラス名: `is--layer`
 - コンポーネント: `<Layer>`
-- SCSSソース: https://raw.githubusercontent.com/lism-css/lism-css/main/packages/lism-css/src/scss/primitives/trait/_layer.scss
-- ドキュメント（人間向け）: https://lism-css.com/docs/primitives/is--layer/
+- SCSSソース: https://raw.githubusercontent.com/lism-css/lism-css/main/packages/lism-css/src/scss/trait/_layer.scss
+- ドキュメント（人間向け）: https://lism-css.com/docs/trait-class/is--layer/
 
 ## 使い方
 

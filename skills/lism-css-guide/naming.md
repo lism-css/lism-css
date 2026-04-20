@@ -45,7 +45,7 @@
 | 形式 | 用途 | 例 |
 |------|------|-----|
 | `--{target}-{prop}` | 要素・クラスに対するプロパティ（`:root`で上書き可） | `--link-td`, `--headings-ff` |
-| `--{propName}` | プリミティブの主要機能変数 | `--sideW`, `--mainW` |
+| `--{propName}` | クラス自身の主要機能を制御する変数。要素側で値が初期化され、`:root` からは初期値の定義ができないもの | `--sideW`, `--mainW` |
 | `--_{item}-{propName}` | `c--` の子要素プロパティ | `--_icon-size` |
 | `--_{varName}` | 状態管理用の内部変数 | `--_isHov`, `--_notHov` |
 
@@ -57,11 +57,24 @@
 - Component: `c--`
 - Atomic Primitives: `a--`
 - Layout Primitives: `l--`
-- Trait Primitives: `is--`
+- Trait（役割宣言）: `is--`
+- Trait（機能付与）: `has--`
 - Set Class: `set--`
 - Utility Class: `u--`
 
 プレフィックスに続く名称は camelCase（例: `c--myComponent`）。
+
+**使い分けの判断軸:**
+
+| プレフィックス | 責務 | 代表例 |
+|---|---|---|
+| `set--` | HTML 要素の基礎スタイリング / 変数セット | `set--plain`, `set--hov`, `set--shadow` |
+| `is--` | 〜である（役割・存在の宣言）。CSS 変数は必須ではない | `is--container`, `is--wrapper`, `is--layer` |
+| `has--` | 〜を持つ（単一機能 trait の付与）。CSS 変数でカスタマイズ可 | `has--transition`, `has--gutter`, `has--snap`, `has--mask` |
+| `u--` | 装飾的効果（単独 or 子要素の装飾） | `u--trim`, `u--cbox`, `u--collapseGrid` |
+
+- `set--` は `@lism-base` 層で HTML 要素の基礎スタイル・変数を提供するもの。
+- `is--` / `has--` は `@lism-trait` 層に属する。
 
 Property Class の形式:
 
