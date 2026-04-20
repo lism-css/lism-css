@@ -1,10 +1,14 @@
 ---
-// import type { LismProps } from 'lism-css/types';
+import type { HTMLTag, Polymorphic } from 'astro/types';
+import type { AstroLismBaseProps } from 'lism-css/astro';
 import { Lism } from 'lism-css/astro';
 
-// Propsの定義
-// interface Props extends LismProps {}
-const { modalId = '', ...props } = Astro.props || {};
+type Props<Tag extends HTMLTag = 'button'> = Polymorphic<{ as: Tag }> &
+  AstroLismBaseProps & {
+    modalId?: string;
+  };
+
+const { modalId = '', ...props } = Astro.props;
 ---
 
 <Lism as="button" set="plain" hov="-o" d="inline-flex" data-modal-open={modalId} {...props}>

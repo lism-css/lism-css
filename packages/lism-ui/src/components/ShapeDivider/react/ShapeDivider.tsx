@@ -1,18 +1,19 @@
+import type { ElementType } from 'react';
 import { Lism, type LismComponentProps } from 'lism-css/react';
 import atts from 'lism-css/lib/helper/atts';
 import '../_style.css';
 
-type ShapeDividerProps = LismComponentProps & {
+type ShapeDividerProps<T extends ElementType = 'div'> = LismComponentProps<T> & {
   viewBox?: string;
   isAnimation?: boolean;
   isEmpty?: boolean;
-  level?: number;
+  level?: number | `${number}`;
   stretch?: string;
   offset?: string;
   flip?: string;
 };
 
-export default function ShapeDivider({
+export default function ShapeDivider<T extends ElementType = 'div'>({
   children,
   className,
   viewBox,
@@ -24,8 +25,8 @@ export default function ShapeDivider({
   flip,
   style,
   ...props
-}: ShapeDividerProps) {
-  if (level === 0) return null;
+}: ShapeDividerProps<T>) {
+  if (Number(level) === 0) return null;
 
   const computedStyle = {
     ...style,
@@ -42,7 +43,7 @@ export default function ShapeDivider({
       data-flip={flip || undefined}
       data-has-animation={isAnimation ? 'true' : undefined}
       style={computedStyle}
-      {...props}
+      {...(props as object)}
     >
       {isEmpty ? null : (
         <div className="c--shapeDivider_inner">

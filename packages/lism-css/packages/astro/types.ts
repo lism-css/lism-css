@@ -17,3 +17,6 @@ export type AstroLismBaseProps = LismProps &
 export type AstroLismFixedLayoutProps = Omit<LismProps, 'layout'> & {
   exProps?: Record<string, unknown>;
 };
+
+/** レイアウトコンポーネント向けベース型（React の LayoutComponentProps<T, L> に対応） */
+export type AstroLayoutProps<L = object> = AstroLismFixedLayoutProps & Omit<L, 'layout'>;

@@ -1,10 +1,19 @@
 ---
-import { Lism } from 'lism-css/astro';
+import type { HTMLTag, Polymorphic } from 'astro/types';
+import type { AstroLayoutProps } from 'lism-css/astro';
+import type { FlowLayoutProps } from 'lism-css/lib/types/LayoutProps';
+import { Lism, Flow } from 'lism-css/astro';
 import atts from 'lism-css/lib/helper/atts';
 
-const { class: className, accID = '__LISM_ACC_ID__', isOpen = false, ...props } = Astro.props || {};
+type Props<Tag extends HTMLTag = 'div'> = Polymorphic<{ as: Tag }> &
+  AstroLayoutProps<FlowLayoutProps> & {
+    accID?: string;
+    isOpen?: boolean;
+  };
+
+const { class: className, as = 'div', accID = '__LISM_ACC_ID__', isOpen = false, ...props } = Astro.props;
 ---
 
-<Lism class={atts(className, 'c--accordion_panel')} id={accID} hidden={isOpen ? undefined : 'until-found'} pos="relative" ov="hidden">
-  <Lism class="c--accordion_content" layout="flow" {...props}><slot /></Lism>
+<Lism as={as} class={atts(className, 'c--accordion_panel')} id={accID} hidden={isOpen ? undefined : 'until-found'} pos="relative" ov="hidden">
+  <Flow class="c--accordion_content" {...props}><slot /></Flow>
 </Lism>

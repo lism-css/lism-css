@@ -1,9 +1,10 @@
 ---
+import type { HTMLTag, Polymorphic } from 'astro/types';
 import { Flow, Lism, Center, Icon } from 'lism-css/astro';
 import atts from 'lism-css/lib/helper/atts';
 import getAlertProps, { type AlertProps } from '../getProps';
 
-type Props = AlertProps;
+type Props<Tag extends HTMLTag = 'div'> = Polymorphic<{ as: Tag }> & AlertProps;
 
 const { class: className, ...astroProps } = Astro.props;
 const { icon, layout, flow, ...alertProps } = getAlertProps(astroProps);

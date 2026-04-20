@@ -1,8 +1,13 @@
 ---
+import type { HTMLTag, Polymorphic } from 'astro/types';
+import type { AstroLayoutProps } from 'lism-css/astro';
+import type { StackProps } from 'lism-css/lib/types/LayoutProps';
 import { Stack } from 'lism-css/astro';
 import atts from 'lism-css/lib/helper/atts';
 
-const { class: className, ...props } = Astro.props;
+type Props<Tag extends HTMLTag = 'ul'> = Polymorphic<{ as: Tag }> & AstroLayoutProps<StackProps>;
+
+const { class: className, as = 'ul', ...props } = Astro.props;
 ---
 
-<Stack as="ul" class={atts(className, 'c--navMenu_nest')} px-s="20" {...props}><slot /></Stack>
+<Stack as={as} class={atts(className, 'c--navMenu_nest')} px-s="20" {...props}><slot /></Stack>

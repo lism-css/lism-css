@@ -3,11 +3,11 @@
  */
 function tabControl(e: MouseEvent): void {
   e.preventDefault();
-  const clickedButton = e.currentTarget as HTMLButtonElement;
+  const clickedButton = e.currentTarget as HTMLElement;
   toggleAriaData(clickedButton);
 }
 
-const toggleAriaData = (clickedButton: HTMLButtonElement): void => {
+const toggleAriaData = (clickedButton: HTMLElement): void => {
   const isOpend = 'true' === clickedButton.getAttribute('aria-selected');
   if (isOpend) return;
 
@@ -19,7 +19,7 @@ const toggleAriaData = (clickedButton: HTMLButtonElement): void => {
   const parentTabList = clickedButton.parentNode?.parentNode as HTMLElement | null;
   if (!parentTabList) return;
 
-  const selectedButton = parentTabList.querySelector<HTMLButtonElement>('[aria-selected="true"]');
+  const selectedButton = parentTabList.querySelector<HTMLElement>('[aria-selected="true"]');
   if (!selectedButton) return;
 
   const displayedID = selectedButton.getAttribute('aria-controls');
@@ -33,7 +33,7 @@ const toggleAriaData = (clickedButton: HTMLButtonElement): void => {
 };
 
 function setTabs(tabs: HTMLElement): void {
-  const tabBtns = tabs.querySelectorAll<HTMLButtonElement>('button[role="tab"]');
+  const tabBtns = tabs.querySelectorAll<HTMLElement>('[role="tab"]');
   tabBtns.forEach((tabBtn) => {
     tabBtn.addEventListener('click', function (e) {
       tabControl(e);

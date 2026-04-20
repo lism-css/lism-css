@@ -1,15 +1,20 @@
 ---
-// import type { LismProps } from 'lism-css/types';
+import type { HTMLTag, Polymorphic } from 'astro/types';
+import type { AstroLismBaseProps } from 'lism-css/astro';
 import { Lism } from 'lism-css/astro';
 import atts from 'lism-css/lib/helper/atts';
 
-// export interface Props extends LismProps {
-// 	isActive?: boolean;
-// 	tabId?: string | number;
-// 	index?: number;
-// }
-const { tabId = 'tab', index = 0, isActive = false, class: className, ...props } = Astro.props;
+type Props<Tag extends HTMLTag = 'div'> = Polymorphic<{ as: Tag }> &
+  AstroLismBaseProps & {
+    tabId?: string;
+    index?: number;
+    isActive?: boolean;
+  };
+
+const { tabId = 'tab', index = 0, isActive = false, class: className, as = 'div', ...props } = Astro.props;
 const controlId = `${tabId}-${index}`;
 ---
 
-<Lism id={controlId} role="tabpanel" aria-hidden={isActive ? 'false' : 'true'} class={atts(className, 'c--tabs_panel')} {...props}><slot /></Lism>
+<Lism as={as} id={controlId} role="tabpanel" aria-hidden={isActive ? 'false' : 'true'} class={atts(className, 'c--tabs_panel')} {...props}
+  ><slot /></Lism
+>

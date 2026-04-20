@@ -1,14 +1,22 @@
 ---
-import { Lism } from 'lism-css/astro';
+import type { HTMLTag, Polymorphic } from 'astro/types';
+import type { AstroLayoutProps } from 'lism-css/astro';
+import type { FlexProps } from 'lism-css/lib/types/LayoutProps';
+import { Flex } from 'lism-css/astro';
 import atts from 'lism-css/lib/helper/atts';
 import Icon from './Icon.astro';
 
-const { isOpen = false, accID = '__LISM_ACC_ID__', class: className, ...props } = Astro.props || {};
+type Props<Tag extends HTMLTag = 'button'> = Polymorphic<{ as: Tag }> &
+  AstroLayoutProps<FlexProps> & {
+    isOpen?: boolean;
+    accID?: string;
+  };
+
+const { isOpen = false, accID = '__LISM_ACC_ID__', class: className, as = 'button', ...props } = Astro.props;
 ---
 
-<Lism
-  as="button"
-  layout="flex"
+<Flex
+  as={as}
   set="plain"
   g="10"
   w="100%"
@@ -21,4 +29,4 @@ const { isOpen = false, accID = '__LISM_ACC_ID__', class: className, ...props } 
 >
   <slot />
   <Icon />
-</Lism>
+</Flex>

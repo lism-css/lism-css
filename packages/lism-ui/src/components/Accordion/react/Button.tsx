@@ -2,11 +2,12 @@
 import { useContext } from 'react';
 import type { ElementType } from 'react';
 import atts from 'lism-css/lib/helper/atts';
-import { Lism, type LismComponentProps } from 'lism-css/react';
+import { Flex, type LayoutComponentProps } from 'lism-css/react';
+import type { FlexProps } from 'lism-css/lib/types/LayoutProps';
 import { AccordionContext } from './context';
 import Icon from './Icon';
 
-type ButtonProps<T extends ElementType = 'button'> = LismComponentProps<T> & {
+type ButtonProps<T extends ElementType = 'button'> = LayoutComponentProps<T, FlexProps> & {
   accID?: string;
   isOpen?: boolean;
 };
@@ -26,10 +27,9 @@ export default function Button<T extends ElementType = 'button'>({
   const accID = ctx?.accID || _accID;
 
   return (
-    <Lism
+    <Flex
       as="button"
       className={atts(className, 'c--accordion_button')}
-      layout="flex"
       set="plain"
       g="10"
       w="100%"
@@ -41,6 +41,6 @@ export default function Button<T extends ElementType = 'button'>({
     >
       {children}
       <Icon />
-    </Lism>
+    </Flex>
   );
 }

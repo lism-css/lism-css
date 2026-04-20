@@ -1,9 +1,10 @@
 ---
+import type { HTMLTag, Polymorphic } from 'astro/types';
 import { Flow, Flex, Stack, Icon, Center } from 'lism-css/astro';
 import atts from 'lism-css/lib/helper/atts';
 import getCalloutProps, { type CalloutProps } from '../getProps';
 
-type Props = CalloutProps;
+type Props<Tag extends HTMLTag = 'div'> = Polymorphic<{ as: Tag }> & CalloutProps;
 
 const { class: className, ...astroProps } = Astro.props;
 const { icon, title, flow, ...calloutProps } = getCalloutProps(astroProps);

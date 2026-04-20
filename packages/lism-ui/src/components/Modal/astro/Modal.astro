@@ -1,10 +1,17 @@
 ---
+import type { HTMLTag, Polymorphic } from 'astro/types';
+import type { AstroLismBaseProps } from 'lism-css/astro';
 import { Lism } from 'lism-css/astro';
 import atts from 'lism-css/lib/helper/atts';
 import '../_style.css';
 
-const { class: className, duration, style, ...props } = Astro.props || {};
-const mergedStyle = duration ? { ...style, '--duration': duration } : style;
+type Props<Tag extends HTMLTag = 'dialog'> = Polymorphic<{ as: Tag }> &
+  AstroLismBaseProps & {
+    duration?: string;
+  };
+
+const { class: className, duration, style, ...props } = Astro.props;
+const mergedStyle = duration ? { ...(style as object), '--duration': duration } : style;
 ---
 
 <Lism as="dialog" class={atts(className, 'c--modal')} set="plain" style={mergedStyle} {...props}><slot /></Lism>

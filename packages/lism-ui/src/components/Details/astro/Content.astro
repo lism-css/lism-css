@@ -4,12 +4,17 @@
  * details要素の開閉されるコンテンツ部分のラッパー
  * grid-template-rows: 0fr → 1fr のアニメーションに必要
  */
-import { Lism } from 'lism-css/astro';
+import type { HTMLTag, Polymorphic } from 'astro/types';
+import type { AstroLayoutProps } from 'lism-css/astro';
+import type { FlowLayoutProps } from 'lism-css/lib/types/LayoutProps';
+import { Lism, Flow } from 'lism-css/astro';
 import atts from 'lism-css/lib/helper/atts';
 
-const { class: className, ...props } = Astro.props || {};
+type Props<Tag extends HTMLTag = 'div'> = Polymorphic<{ as: Tag }> & AstroLayoutProps<FlowLayoutProps>;
+
+const { class: className, ...props } = Astro.props;
 ---
 
 <Lism class="c--details_body">
-  <Lism layout="flow" flow="s" class={atts(className, 'c--details_content')} {...props}><slot /></Lism>
+  <Flow flow="s" class={atts(className, 'c--details_content')} {...props}><slot /></Flow>
 </Lism>

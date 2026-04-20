@@ -1,24 +1,26 @@
 ---
+import type { HTMLTag, Polymorphic } from 'astro/types';
+import type { AstroLismBaseProps } from 'lism-css/astro';
 import { Lism, Flow, Grid, Frame, Decorator } from 'lism-css/astro';
 import atts from 'lism-css/lib/helper/atts';
 import buildModifierClass from '../../../helper/buildModifierClass';
 import '../_style.css';
 
-interface Props {
-  /** 吹き出しスタイル */
-  variant?: 'speak' | 'think';
-  /** 吹き出しの方向 */
-  direction?: 'start' | 'end';
-  /** 発言者名 */
-  name?: string;
-  /** アバター画像URL */
-  avatar?: string;
-  /** キーカラー */
-  keycolor?: string;
-  /** コンテンツのフロー間隔 */
-  flow?: string;
-  [key: string]: unknown;
-}
+type Props<Tag extends HTMLTag = 'div'> = Polymorphic<{ as: Tag }> &
+  AstroLismBaseProps & {
+    /** 吹き出しスタイル */
+    variant?: 'speak' | 'think';
+    /** 吹き出しの方向 */
+    direction?: 'start' | 'end';
+    /** 発言者名 */
+    name?: string;
+    /** アバター画像URL */
+    avatar?: string;
+    /** キーカラー */
+    keycolor?: string;
+    /** コンテンツのフロー間隔 */
+    flow?: string;
+  };
 
 const { name, avatar, flow = 's', variant = 'speak', direction = 'start', class: className, ...props } = Astro.props;
 ---

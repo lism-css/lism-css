@@ -1,9 +1,16 @@
 ---
+import type { HTMLTag, Polymorphic } from 'astro/types';
+import type { AstroLismBaseProps } from 'lism-css/astro';
 import { Lism } from 'lism-css/astro';
 import atts from 'lism-css/lib/helper/atts';
 
-const { class: className, offset, style, ...props } = Astro.props || {};
-const mergedStyle = offset ? { ...style, '--offset': offset } : style;
+type Props<Tag extends HTMLTag = 'div'> = Polymorphic<{ as: Tag }> &
+  AstroLismBaseProps & {
+    offset?: string;
+  };
+
+const { class: className, as = 'div', offset, style = {}, ...props } = Astro.props;
+const mergedStyle = offset ? { ...(style as Record<string, string | undefined>), '--offset': offset } : style;
 ---
 
-<Lism class={atts(className, 'c--modal_inner')} style={mergedStyle} {...props}><slot /></Lism>
+<Lism as={as} class={atts(className, 'c--modal_inner')} style={mergedStyle} {...props}><slot /></Lism>
