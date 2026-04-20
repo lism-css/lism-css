@@ -9,6 +9,37 @@ Breaking changes may continue frequently until the v1.0 release, so all notable 
 
 <Divider bds="dashed" my="40" />
 
+## `@lism-css/ui` v.0.15.0 (2026.04.21)
+
+This release contains **breaking changes**.
+
+### Breaking Changes
+
+- Aligned with lism-css 0.15.0 (`-hov:-{prop}` / `-hov:in:*` / `set--var:*` / shadow token scale changes, etc.)
+- Changed default element of `NavMenu.Link` (Astro / React) from `span` to `a`. If you were using it without `href`, specify `as="span"` to keep the old behavior
+
+### TypeScript Support for Astro Components
+
+- Added Props types to the following Astro components
+  - Accordion / Alert / Avatar / Badge / Button / Callout / Chat / Details / Modal / NavMenu / ShapeDivider / Tabs
+- Added `Polymorphic<{as: Tag}>` generics to Astro components
+- Unified `AstroFlowProps` / `AstroFlexProps` into `AstroLayoutProps<L>`
+
+### Type System Improvements
+
+- Added `LismComponentProps<T>` generics to React components
+- Applied `LayoutComponentProps<T, L>` to layout components
+- Changed `ShapeDivider`'s `level` type to `number | \`${number}\``
+
+### Bug Fixes and Internal Improvements
+
+- Changed client scripts to use tag-agnostic selectors and types (Accordion / Tabs / Modal)
+- Made Accordion/react/Panel generic
+- Used `Flex` component in `Details/Summary`
+- Aligned `Details/Content` React implementation with Astro using `Flow`
+- Used `Flex` / `Flow` in `Accordion/Button` / `Panel`
+- Added `gen:registry` script to generate `registry-index.json`
+
 ## v.0.15.0 (2026.04.21)
 
 This release contains **breaking changes**.

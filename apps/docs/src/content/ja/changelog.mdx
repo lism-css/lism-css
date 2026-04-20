@@ -9,6 +9,37 @@ v.1.0リリースまでしばらく激しい変更が続く可能性があるた
 
 <Divider bds="dashed" my="40" />
 
+## `@lism-css/ui` v.0.15.0 (2026.04.21)
+
+**破壊的変更**を含むリリースです。
+
+### 破壊的変更
+
+- lism-css 0.15.0 への追従（`-hov:-{prop}` / `-hov:in:*` / `set--var:*` / シャドウトークンスケール変更など）
+- `NavMenu.Link`（Astro / React）のデフォルト要素を `span` → `a` に変更。`href` を渡さずに使用していた場合は `as="span"` を明示してください
+
+### Astro コンポーネントの TypeScript 対応
+
+- 以下の Astro コンポーネントに Props 型を追加
+  - Accordion / Alert / Avatar / Badge / Button / Callout / Chat / Details / Modal / NavMenu / ShapeDivider / Tabs
+- Astro コンポーネントに `Polymorphic<{as: Tag}>` ジェネリクスを追加
+- `AstroFlowProps` / `AstroFlexProps` を `AstroLayoutProps<L>` に統一
+
+### 型システムの整備
+
+- React コンポーネントに `LismComponentProps<T>` ジェネリクスを追加
+- レイアウトコンポーネントに `LayoutComponentProps<T, L>` を適用
+- `ShapeDivider` の `level` 型を `number | \`${number}\`` に変更
+
+### バグ修正・内部改善
+
+- クライアントスクリプトをタグ非依存なセレクタ・型に変更（Accordion / Tabs / Modal）
+- Accordion / react / Panel をジェネリクス化
+- `Details/Summary` で `Flex` コンポーネントを使用
+- `Details/Content` React 実装を Astro に合わせ `Flow` を使用
+- `Accordion/Button` / `Panel` で `Flex` / `Flow` を使用
+- `registry-index.json` を生成する `gen:registry` スクリプトを追加
+
 ## v.0.15.0 (2026.04.21)
 
 **破壊的変更**を含むリリースです。
