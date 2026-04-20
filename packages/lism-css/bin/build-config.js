@@ -51,7 +51,7 @@ function generateUtilities(propConfig, TOKENS) {
  * @returns {string} SCSS形式の文字列
  */
 function generatePropScss(propKey, propConfig, TOKENS) {
-  const { prop = '', bp, isVar, alwaysVar, overwriteBaseVar, important } = propConfig;
+  const { prop = '', bp, isVar, alwaysVar, important } = propConfig;
 
   // styleが定義されている場合はそれを使用、なければpropKeyをそのまま使用
   const utilities = generateUtilities(propConfig, TOKENS);
@@ -113,9 +113,6 @@ function generatePropScss(propKey, propConfig, TOKENS) {
   }
   if (alwaysVar !== undefined) {
     scss += `    alwaysVar: ${alwaysVar},\n`;
-  }
-  if (overwriteBaseVar !== undefined) {
-    scss += `    overwriteBaseVar: ${overwriteBaseVar},\n`;
   }
   if (important !== undefined) {
     scss += `    important: ${important},\n`;

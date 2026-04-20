@@ -6,13 +6,13 @@ import './_style.css';
 ---
 
 <DemoLayout title="Feature004">
-  <Container isWrapper="l" py="50" set="gutter">
+  <Container isWrapper="l" py="50" hasGutter>
     <Stack g="50">
       <Heading class="u--trim" level="2" fz="2xl" ta="center">Uncharted Experiences</Heading>
       <Columns cols={[1, null, 3]} g="30">
         <Stack g="20">
-          <Frame as="a" isBoxLink href="#" pos="relative" ar={['4/3', null, '3/4']} bdrs="10" bxsh="30" td="none" set="hov">
-            <Media isLayer src="https://cdn.lism-css.com/random/img?category=v&r=1" alt="" width="960" height="640" set="transition" hov="to:zoom" />
+          <Frame as="a" isBoxLink href="#" pos="relative" ar={['4/3', null, '3/4']} bdrs="10" bxsh="30" td="none" set="var:hov">
+            <Media isLayer src="https://cdn.lism-css.com/random/img?category=v&r=1" alt="" width="960" height="640" hasTransition hov="in:zoom" />
             <Layer bgc="rgb(0 0 0 / 20%)" />
             <Stack pos="relative" h="100%" jc="flex-end" c="white" p="30" g="20" my-s="auto">
               <Grid gtc="1fr auto" ai="end" g="30">
@@ -20,7 +20,7 @@ import './_style.css';
                   <Text fz="l" fw="bold" lh="s">Innovative Technology</Text>
                   <Text fz="s" lh="s" o="-10">Advanced Technology</Text>
                 </Stack>
-                <Flex ai="center" jc="center" bd bdc="white" p="15" bdrs="99" c="white" set="transition" hov="to:reverse">
+                <Flex ai="center" jc="center" bd bdc="white" p="15" bdrs="99" c="white" hasTransition hov="in:reverse">
                   <Icon icon="arrow-right" fz="s" />
                 </Flex>
               </Grid>
@@ -29,8 +29,8 @@ import './_style.css';
           <Text pb="20">Leveraging cutting-edge AI and robotics to support the industries of tomorrow with high-precision manufacturing.</Text>
         </Stack>
         <Stack g="20">
-          <Frame as="a" isBoxLink href="#" pos="relative" ar={['4/3', null, '3/4']} bdrs="10" bxsh="30" td="none" set="hov">
-            <Media isLayer src="https://cdn.lism-css.com/random/img?category=v&r=2" alt="" width="960" height="640" set="transition" hov="to:zoom" />
+          <Frame as="a" isBoxLink href="#" pos="relative" ar={['4/3', null, '3/4']} bdrs="10" bxsh="30" td="none" set="var:hov">
+            <Media isLayer src="https://cdn.lism-css.com/random/img?category=v&r=2" alt="" width="960" height="640" hasTransition hov="in:zoom" />
             <Layer bgc="rgb(0 0 0 / 20%)" />
             <Stack pos="relative" h="100%" jc="flex-end" c="white" p="30" g="20" my-s="auto">
               <Grid gtc="1fr auto" ai="end" g="30">
@@ -38,7 +38,7 @@ import './_style.css';
                   <Text fz="l" fw="bold" lh="s">Rigorous Quality Control</Text>
                   <Text fz="s" lh="s" o="-10">Quality First</Text>
                 </Stack>
-                <Flex ai="center" jc="center" bd bdc="white" p="15" bdrs="99" c="white" set="transition" hov="to:reverse">
+                <Flex ai="center" jc="center" bd bdc="white" p="15" bdrs="99" c="white" hasTransition hov="in:reverse">
                   <Icon icon="arrow-right" fz="s" />
                 </Flex>
               </Grid>
@@ -47,8 +47,8 @@ import './_style.css';
           <Text pb="20">Pursuing micron-level precision, we deliver trust and reliability in every product we create.</Text>
         </Stack>
         <Stack g="20">
-          <Frame as="a" isBoxLink href="#" pos="relative" ar={['4/3', null, '3/4']} bdrs="10" bxsh="30" td="none" set="hov">
-            <Media isLayer src="https://cdn.lism-css.com/random/img?category=v&r=3" alt="" width="960" height="640" set="transition" hov="to:zoom" />
+          <Frame as="a" isBoxLink href="#" pos="relative" ar={['4/3', null, '3/4']} bdrs="10" bxsh="30" td="none" set="var:hov">
+            <Media isLayer src="https://cdn.lism-css.com/random/img?category=v&r=3" alt="" width="960" height="640" hasTransition hov="in:zoom" />
             <Layer bgc="rgb(0 0 0 / 20%)" />
             <Stack pos="relative" h="100%" jc="flex-end" c="white" p="30" g="20" my-s="auto">
               <Grid gtc="1fr auto" ai="end" g="30">
@@ -56,7 +56,7 @@ import './_style.css';
                   <Text fz="l" fw="bold" lh="s">Global Supply Network</Text>
                   <Text fz="s" lh="s" o="-10">Global Network</Text>
                 </Stack>
-                <Flex ai="center" jc="center" bd bdc="white" p="15" bdrs="99" c="white" set="transition" hov="to:reverse">
+                <Flex ai="center" jc="center" bd bdc="white" p="15" bdrs="99" c="white" hasTransition hov="in:reverse">
                   <Icon icon="arrow-right" fz="s" />
                 </Flex>
               </Grid>
@@ -71,10 +71,10 @@ import './_style.css';
 
 <style>
   @media (any-hover: hover) {
-    .-hov\:to\:zoom {
+    .-hov\:in\:zoom {
       scale: var(--_isHov, 1.1);
     }
-    .-hov\:to\:reverse {
+    .-hov\:in\:reverse {
       background-color: var(--_isHov, var(--white));
       color: var(--_isHov, var(--black));
     }

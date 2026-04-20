@@ -5,7 +5,6 @@ import mdx from '@astrojs/mdx';
 import expressiveCode from 'astro-expressive-code';
 import rehypeExternalLinks from 'rehype-external-links';
 import remarkDirective from 'remark-directive';
-import { remarkLinkCard } from './src/lib/remark-linkcard';
 import { remarkDirectiveHandler } from './src/lib/remark-directive';
 import { rehypeBlockquoteCite } from './src/lib/rehype-blockquote-cite';
 import { expressiveCodeOptions } from './src/lib/expressive-code.config';
@@ -53,13 +52,12 @@ export default defineConfig({
     // module-class → primitives リネーム（#247）
     '/docs/module-class/': '/docs/primitives/',
     '/en/docs/module-class/': '/en/docs/primitives/',
-    // /docs/modules/* → /docs/primitives/* リネーム（#247）
-    // キャメルケース primitive 5 件（#252）はターゲットもキャメルケースで終端
-    '/docs/modules/is--container/': '/docs/primitives/is--container/',
-    '/docs/modules/is--wrapper/': '/docs/primitives/is--wrapper/',
-    '/docs/modules/is--layer/': '/docs/primitives/is--layer/',
-    '/docs/modules/is--boxlink/': '/docs/primitives/is--boxLink/',
-    '/docs/modules/is--vertical/': '/docs/primitives/is--vertical/',
+    // /docs/modules/* → /docs/primitives/* / /docs/trait-class/* リネーム（#247 / #305）
+    // is--* は #305 で /docs/trait-class/ 配下に移動、キャメルケース primitive 5 件（#252）はターゲットもキャメルケースで終端
+    '/docs/modules/is--container/': '/docs/trait-class/is--container/',
+    '/docs/modules/is--wrapper/': '/docs/trait-class/is--wrapper/',
+    '/docs/modules/is--layer/': '/docs/trait-class/is--layer/',
+    '/docs/modules/is--boxlink/': '/docs/trait-class/is--boxLink/',
     '/docs/modules/l--box/': '/docs/primitives/l--box/',
     '/docs/modules/l--center/': '/docs/primitives/l--center/',
     '/docs/modules/l--frame/': '/docs/primitives/l--frame/',
@@ -77,11 +75,10 @@ export default defineConfig({
     '/docs/modules/a--divider/': '/docs/primitives/a--divider/',
     '/docs/modules/a--icon/': '/docs/primitives/a--icon/',
     '/docs/modules/a--spacer/': '/docs/primitives/a--spacer/',
-    '/en/docs/modules/is--container/': '/en/docs/primitives/is--container/',
-    '/en/docs/modules/is--wrapper/': '/en/docs/primitives/is--wrapper/',
-    '/en/docs/modules/is--layer/': '/en/docs/primitives/is--layer/',
-    '/en/docs/modules/is--boxlink/': '/en/docs/primitives/is--boxLink/',
-    '/en/docs/modules/is--vertical/': '/en/docs/primitives/is--vertical/',
+    '/en/docs/modules/is--container/': '/en/docs/trait-class/is--container/',
+    '/en/docs/modules/is--wrapper/': '/en/docs/trait-class/is--wrapper/',
+    '/en/docs/modules/is--layer/': '/en/docs/trait-class/is--layer/',
+    '/en/docs/modules/is--boxlink/': '/en/docs/trait-class/is--boxLink/',
     '/en/docs/modules/l--box/': '/en/docs/primitives/l--box/',
     '/en/docs/modules/l--center/': '/en/docs/primitives/l--center/',
     '/en/docs/modules/l--frame/': '/en/docs/primitives/l--frame/',
@@ -100,20 +97,28 @@ export default defineConfig({
     '/en/docs/modules/a--icon/': '/en/docs/primitives/a--icon/',
     '/en/docs/modules/a--spacer/': '/en/docs/primitives/a--spacer/',
     // is--linkBox → is--boxLink リネーム（#245）で漏れていた旧 URL 対応
-    '/docs/modules/is--linkbox/': '/docs/primitives/is--boxLink/',
-    '/en/docs/modules/is--linkbox/': '/en/docs/primitives/is--boxLink/',
+    '/docs/modules/is--linkbox/': '/docs/trait-class/is--boxLink/',
+    '/en/docs/modules/is--linkbox/': '/en/docs/trait-class/is--boxLink/',
     // 小文字 primitive URL → キャメルケース互換リダイレクト（#252）
     // 一時的に公開されていた小文字 URL を踏んだ場合のフォールバック
-    '/docs/primitives/is--boxlink/': '/docs/primitives/is--boxLink/',
+    '/docs/primitives/is--boxlink/': '/docs/trait-class/is--boxLink/',
     '/docs/primitives/l--tilegrid/': '/docs/primitives/l--tileGrid/',
     '/docs/primitives/l--fluidcols/': '/docs/primitives/l--fluidCols/',
     '/docs/primitives/l--sidemain/': '/docs/primitives/l--sideMain/',
     '/docs/primitives/l--switchcols/': '/docs/primitives/l--switchCols/',
-    '/en/docs/primitives/is--boxlink/': '/en/docs/primitives/is--boxLink/',
+    '/en/docs/primitives/is--boxlink/': '/en/docs/trait-class/is--boxLink/',
     '/en/docs/primitives/l--tilegrid/': '/en/docs/primitives/l--tileGrid/',
     '/en/docs/primitives/l--fluidcols/': '/en/docs/primitives/l--fluidCols/',
     '/en/docs/primitives/l--sidemain/': '/en/docs/primitives/l--sideMain/',
     '/en/docs/primitives/l--switchcols/': '/en/docs/primitives/l--switchCols/',
+    // is--* の primitives/ → trait-class/ 移動（#305）
+    // is--boxLink は既に小文字互換リダイレクトがあるため、Astro のケース非依存ルーティングと衝突する camelCase 版は登録しない
+    '/docs/primitives/is--container/': '/docs/trait-class/is--container/',
+    '/docs/primitives/is--wrapper/': '/docs/trait-class/is--wrapper/',
+    '/docs/primitives/is--layer/': '/docs/trait-class/is--layer/',
+    '/en/docs/primitives/is--container/': '/en/docs/trait-class/is--container/',
+    '/en/docs/primitives/is--wrapper/': '/en/docs/trait-class/is--wrapper/',
+    '/en/docs/primitives/is--layer/': '/en/docs/trait-class/is--layer/',
   },
 
   // パスエイリアス設定
@@ -155,11 +160,10 @@ export default defineConfig({
   ],
   // CodeFileコンポーネント用のシンタックスハイライト設定
   markdown: {
-    // remarkプラグイン: :::記法とURL自動変換
+    // remarkプラグイン: :::記法のパースと変換
     remarkPlugins: [
       remarkDirective, // :::記法をパース（最初に実行）
       remarkDirectiveHandler, // directive を変換（Callout変換 & 不要な :text 記法を復元）
-      remarkLinkCard, // URLだけの段落 → <LinkCard>
     ],
     // 外部リンクを別タブで開く設定 & blockquoteのcite変換
     rehypePlugins: [[rehypeExternalLinks, { target: '_blank', rel: ['noopener', 'noreferrer'] }], rehypeBlockquoteCite],

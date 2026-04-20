@@ -1,0 +1,167 @@
+---
+title: 'Trait Class'
+description: '役割宣言の is--* と 機能付与の has--* からなる Trait Class について解説します。'
+---
+import { Lism, Box, Frame, Media } from 'lism-css/astro';
+import getSvgUrl from '@/utils/getSvgUrl';
+
+**Trait Class** は、要素に「役割」を宣言したり、「機能」を付与するためのクラス群です。  
+`@layer lism-trait` に属します。
+
+- `is--{name}`: 要素に**役割・存在**（〜である）を宣言するクラス
+- `has--{name}`: 要素に**機能**（〜を持つ）を付与するクラス
+
+
+## `is--*`（役割宣言）
+
+| クラス | 概要 |
+|---|---|
+| <ModLink slug="is--container" /> | コンテナクエリの基準要素を定義する |
+| <ModLink slug="is--wrapper" /> | コンテンツ幅を制御するラッパー要素 |
+| <ModLink slug="is--layer" /> | 親要素に重ねるオーバーレイレイヤー |
+| <ModLink slug="is--boxLink" /> | ボックス全体をリンク化する |
+| `is--coverLink` | 親要素全体に広がるクリック領域を持つリンク（→ <ModLink slug="is--boxLink" /> 参照） |
+| `is--side` | `l--sideMain` の side 要素用（→ <ModLink slug="l--sideMain" /> 参照） |
+| `is--skipFlow` | `l--flow` 内で次の兄弟との余白を打ち消す（→ <ModLink slug="l--flow" /> 参照） |
+
+
+## `has--*`（機能付与）
+
+
+### `has--transition`
+
+専用の変数を用いて、transitionプロパティをセットします。
+
+<SrcCode path="src/scss/trait/_hasTransition.scss" />
+
+<Preview>
+  <PreviewTitle>使用例</PreviewTitle>
+  <PreviewArea p="30">
+    <Lism hasTransition hov={{c: 'red'}} style={{ '--transitionProps': 'color'}}>Example</Lism>
+  </PreviewArea>
+  <PreviewCode label="HTML" slot="tab">
+    ```html
+    <div class="has--transition -hov:-c" style="--transitionProps: color; --hov-c: var(--red);">Example</div>
+    ```
+  </PreviewCode>
+  <PreviewCode label="JSX" slot="tab">
+    ```jsx
+    <Lism hasTransition hov={{c: 'red'}} style={{ '--transitionProps': 'color'}}>Example</Lism>
+    ```
+  </PreviewCode>
+</Preview>
+
+
+活用例は [`hover`の解説ページ](/docs/property-class/hov#has--transition) を参照してください。
+
+<DocsLink path="/docs/property-class/hov#has--transition" />
+
+
+### `has--gutter`
+
+コンテンツの左右にあらかじめ定義済みの余白をつけることができるクラスです。  
+サイト全体で統一した余白量を左右に確保するためのものとして、padding系のユーティリティとは別のクラスとして用意しています。
+
+| クラス名 | 余白量 |初期値 |
+|---|---|---|
+| `has--gutter` | `--gutter-size` | `var(--s30)` |
+
+<SrcCode path="src/scss/trait/_hasGutter.scss" />
+
+<Preview>
+  <PreviewTitle>例</PreviewTitle>
+  <PreviewArea resize p="15">
+    <Lism hasGutter>
+      <p>Lorem ipsum content...</p>
+      <p>Lorem ipsum content...</p>
+      <p>Lorem ipsum content...</p>
+    </Lism>
+  </PreviewArea>
+  <PreviewCode slot="tab" label="HTML">
+  ```html
+  <div class="has--gutter">
+    <p>Lorem ipsum content...</p>
+    <p>Lorem ipsum content...</p>
+    <p>Lorem ipsum content...</p>
+  </div>
+  ```
+  </PreviewCode>
+  <PreviewCode slot="tab" label="JSX">
+  ```jsx
+  <Lism hasGutter>
+    <p>Lorem ipsum content...</p>
+    <p>Lorem ipsum content...</p>
+    <p>Lorem ipsum content...</p>
+  </Lism>
+  ```
+  </PreviewCode>
+</Preview>
+
+
+### `has--snap`
+
+`scroll-snap-`系のプロパティをCSS変数でセットできるようにします。
+
+<SrcCode path="src/scss/trait/_hasSnap.scss" />
+
+| 変数 | 役割 | 初期値 |
+|---|---|---|
+| `--snapType` | `scroll-snap-type` の値 | `both mandatory` |
+| `--snapAlign` | 子要素の `scroll-snap-align` の値 | `start` |
+| `--snapStop` | 子要素の `scroll-snap-stop` の値 | `normal` |
+
+<Box class="has--snap" ov="auto" ar="16/9" bd>
+  <div className="l--frame -ar:16/9 -p:15"><img src="https://cdn.lism-css.com/img/u-1.jpg" width="960" height="640" loading="lazy" /></div>
+  <div className="l--frame -ar:16/9 -p:15"><img src="https://cdn.lism-css.com/img/u-2.jpg" width="960" height="640" loading="lazy" /></div>
+  <div className="l--frame -ar:16/9 -p:15"><img src="https://cdn.lism-css.com/img/u-3.jpg" width="960" height="640" loading="lazy" /></div>
+  <div className="l--frame -ar:16/9 -p:15"><img src="https://cdn.lism-css.com/img/u-4.jpg" width="960" height="640" loading="lazy" /></div>
+  <div className="l--frame -ar:16/9 -p:15"><img src="https://cdn.lism-css.com/img/u-5.jpg" width="960" height="640" loading="lazy" /></div>
+  <div className="l--frame -ar:16/9 -p:15"><img src="https://cdn.lism-css.com/img/u-6.jpg" width="960" height="640" loading="lazy" /></div>
+</Box>
+
+
+### `has--mask`
+
+`--maskImg` 変数と組み合わせて、自身にマスクを適用するクラスです。
+
+<SrcCode path="src/scss/trait/_hasMask.scss" />
+
+| 変数 | 役割 | 初期値 |
+|---|---|---|
+| `--maskImg` | マスク画像（SVG等） | — |
+| `--maskPos` | マスクの位置 | `50%` |
+| `--maskSize` | マスクのサイズ | `contain` |
+| `--maskRepeat` | マスクの繰り返し | `no-repeat` |
+
+
+{/* css={{ '--maskImg': getSvgUrl(`<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><path fill="#000000" d="M170.4,25.7c16.1,14.2,23.2,38.5,24.8,61.7c1.7,23.3-1.8,45.5-12.9,62.3c-11,16.9-29.3,28.6-48.8,34.5 c-19.4,5.9-40,6.1-59.5,0.4c-19.5-5.6-37.9-17.4-51.7-34.9c-14-17.5-23.2-40.8-18-60.2c5-19.4,24.5-34.7,43.5-48.4 s37.6-25.7,59.5-29.7C129.1,7.3,154.2,11.4,170.4,25.7z" /></svg>`) }} */}
+<Preview>
+  <PreviewTitle>例</PreviewTitle>
+  <PreviewArea p="10">
+    <Frame
+      hasMask
+      ar="og"
+      style={{ '--maskImg': `url('data:image/svg+xml,<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><path fill="%23000000" d="M170.4,25.7c16.1,14.2,23.2,38.5,24.8,61.7c1.7,23.3-1.8,45.5-12.9,62.3c-11,16.9-29.3,28.6-48.8,34.5 c-19.4,5.9-40,6.1-59.5,0.4c-19.5-5.6-37.9-17.4-51.7-34.9c-14-17.5-23.2-40.8-18-60.2c5-19.4,24.5-34.7,43.5-48.4 s37.6-25.7,59.5-29.7C129.1,7.3,154.2,11.4,170.4,25.7z" /></svg>')` }}
+    >
+      <img src="https://cdn.lism-css.com/img/u-2.jpg" width="960" height="640" alt="" loading="lazy" />
+    </Frame>
+  </PreviewArea>
+  <PreviewCode slot="tab" label="HTML">
+    ```html
+    <div class="l--frame has--mask -ar:og" style="--maskImg:url('data:image/svg+xml,<svg viewBox=&quot;0 0 200 200&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot;><path fill=&quot;%23000000&quot; d=&quot;M170.4,25.7c16.1,14.2,23.2,38.5,24.8,61.7c1.7,23.3-1.8,45.5-12.9,62.3c-11,16.9-29.3,28.6-48.8,34.5 c-19.4,5.9-40,6.1-59.5,0.4c-19.5-5.6-37.9-17.4-51.7-34.9c-14-17.5-23.2-40.8-18-60.2c5-19.4,24.5-34.7,43.5-48.4 s37.6-25.7,59.5-29.7C129.1,7.3,154.2,11.4,170.4,25.7z&quot; /></svg>')">
+      <img src="https://cdn.lism-css.com/img/u-2.jpg" width="960" height="640" alt="" loading="lazy" />
+    </div>
+    ```
+  </PreviewCode>
+  <PreviewCode slot="tab" label="JSX">
+    ```jsx
+    <Frame
+      hasMask
+      ar="og"
+      style={{ '--maskImg': `url('data:image/svg+xml,<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><path fill="%23000000" d="M170.4,25.7c16.1,14.2,23.2,38.5,24.8,61.7c1.7,23.3-1.8,45.5-12.9,62.3c-11,16.9-29.3,28.6-48.8,34.5 c-19.4,5.9-40,6.1-59.5,0.4c-19.5-5.6-37.9-17.4-51.7-34.9c-14-17.5-23.2-40.8-18-60.2c5-19.4,24.5-34.7,43.5-48.4 s37.6-25.7,59.5-29.7C129.1,7.3,154.2,11.4,170.4,25.7z" /></svg>')` }}
+    >
+      <img src="https://cdn.lism-css.com/img/u-2.jpg" width="960" height="640" alt="" loading="lazy" />
+    </Frame>
+    ```
+  </PreviewCode>
+</Preview>

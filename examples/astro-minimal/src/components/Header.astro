@@ -1,0 +1,47 @@
+---
+import { Lism, Flex, Frame, Cluster, Link, Icon } from 'lism-css/astro';
+---
+
+<Lism as="header" isContainer hasGutter bd-b>
+  <Flex ai="center" jc="between" py="20">
+    <Link href="/" d="inline-flex" fxsh="0">
+      <Frame w={['100px', '120px']}>
+        <img src="/logo-black.svg" alt="Lism CSS" width="120" height="24" />
+      </Frame>
+    </Link>
+    <Cluster as="nav" g={['5', '10']}>
+      <Link
+        href="https://x.com/lismcss"
+        target="_blank"
+        c="text"
+        fz="s"
+        td="none"
+        d="inline-flex"
+        ai="center"
+        g="10"
+        px="10"
+        py="5"
+        bdrs="10"
+        hov="bgc"
+      >
+        <Icon icon="logo-x" />X.com
+      </Link>
+      <Link
+        href="https://github.com/lism-css/lism-css"
+        target="_blank"
+        c="text"
+        fz="s"
+        td="none"
+        d="inline-flex"
+        ai="center"
+        g="10"
+        px="10"
+        py="5"
+        bdrs="10"
+        hov="bgc"
+      >
+        <Icon icon="logo-github" size="1.1em" />Github
+      </Link>
+    </Cluster>
+  </Flex>
+</Lism>

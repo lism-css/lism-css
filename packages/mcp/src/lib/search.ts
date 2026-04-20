@@ -115,7 +115,8 @@ export function searchDocs(entries: DocsEntry[], query: string, options?: Search
 /**
  * `sourcePath`（実 MDX ファイルの相対パス）を公開 URL のスラッグに変換する。
  *
- * - `primitives/` 配下のみファイル名の casing を保持（CSS クラス名と URL を一致させるための例外）
+ * - `primitives/` / `trait-class/` 配下のみファイル名の casing を保持
+ *   （CSS クラス名と URL を一致させるための例外）
  * - それ以外は全て小文字化（Astro content collections の `generateId` と揃える）
  *
  * IMPORTANT: `apps/docs/src/lib/contentSlug.ts` の `toContentSlug` と必ず同じロジックに保つこと。
@@ -123,11 +124,14 @@ export function searchDocs(entries: DocsEntry[], query: string, options?: Search
  * apps/docs 側を変更した場合は必ずここも合わせて更新する。
  *
  * 例:
- *   `primitives/l--tileGrid.mdx`   → `primitives/l--tileGrid`
- *   `core-components/Group.mdx`    → `core-components/group`
- *   `ui/DummyText.mdx`             → `ui/dummytext`
+ *   `primitives/l--tileGrid.mdx`    → `primitives/l--tileGrid`
+ *   `trait-class/is--boxLink.mdx`   → `trait-class/is--boxLink`
+ *   `core-components/Group.mdx`     → `core-components/group`
+ *   `ui/DummyText.mdx`              → `ui/dummytext`
  */
+const PRESERVE_CASE_PREFIXES = ['primitives/', 'trait-class/'];
+
 function sourcePathToUrlSlug(sourcePath: string): string {
   const withoutExt = sourcePath.replace(/\.mdx$/, '');
-  return withoutExt.startsWith('primitives/') ? withoutExt : withoutExt.toLowerCase();
+  return PRESERVE_CASE_PREFIXES.some((prefix) => withoutExt.startsWith(prefix)) ? withoutExt : withoutExt.toLowerCase();
 }

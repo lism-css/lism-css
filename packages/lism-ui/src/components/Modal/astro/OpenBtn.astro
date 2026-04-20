@@ -11,6 +11,6 @@ type Props<Tag extends HTMLTag = 'button'> = Polymorphic<{ as: Tag }> &
 const { modalId = '', ...props } = Astro.props;
 ---
 
-<Lism as="button" set="plain" hov="o" d="inline-flex" data-modal-open={modalId} {...props}>
+<Lism as="button" set="plain" hov="-o" d="inline-flex" data-modal-open={modalId} {...props}>
   <slot />
 </Lism>

@@ -33,20 +33,20 @@ describe('getMaybeTokenValue', () => {
       expect(getMaybeTokenValue('size', 20, TOKENS)).toBe('var(--size--20)');
     });
 
-    test('マイナスの値は n プレフィックスに変換される', () => {
+    test('マイナスの値はそのまま変数名の一部になる（実在する o トークン）', () => {
       const TOKENS = {
-        margin: new Set(['-10', '-20']),
+        o: new Set(['-10', '-20', '-30']),
       };
-      expect(getMaybeTokenValue('margin', '-10', TOKENS)).toBe('var(--margin--n10)');
-      expect(getMaybeTokenValue('margin', '-20', TOKENS)).toBe('var(--margin--n20)');
+      expect(getMaybeTokenValue('o', '-10', TOKENS)).toBe('var(--o---10)');
+      expect(getMaybeTokenValue('o', '-20', TOKENS)).toBe('var(--o---20)');
     });
 
-    test('マイナスの数値も n プレフィックスに変換される', () => {
+    test('マイナスの数値もそのまま変数名の一部になる（実在する o トークン）', () => {
       const TOKENS = {
-        margin: new Set(['-10', '-20']),
+        o: new Set(['-10', '-20', '-30']),
       };
-      expect(getMaybeTokenValue('margin', -10, TOKENS)).toBe('var(--margin--n10)');
-      expect(getMaybeTokenValue('margin', -20, TOKENS)).toBe('var(--margin--n20)');
+      expect(getMaybeTokenValue('o', -10, TOKENS)).toBe('var(--o---10)');
+      expect(getMaybeTokenValue('o', -20, TOKENS)).toBe('var(--o---20)');
     });
   });
 
@@ -74,12 +74,12 @@ describe('getMaybeTokenValue', () => {
       expect(getMaybeTokenValue('size', 20, TOKENS)).toBe('var(--size--20)');
     });
 
-    test('マイナスの値は n プレフィックスに変換される', () => {
+    test('マイナスの値はそのまま変数名の一部になる（実在する o トークン）', () => {
       const TOKENS = {
-        margin: ['-10', '-20'],
+        o: ['-10', '-20', '-30'],
       };
-      expect(getMaybeTokenValue('margin', '-10', TOKENS)).toBe('var(--margin--n10)');
-      expect(getMaybeTokenValue('margin', '-20', TOKENS)).toBe('var(--margin--n20)');
+      expect(getMaybeTokenValue('o', '-10', TOKENS)).toBe('var(--o---10)');
+      expect(getMaybeTokenValue('o', '-20', TOKENS)).toBe('var(--o---20)');
     });
   });
 
@@ -230,11 +230,11 @@ describe('getMaybeTokenValue', () => {
       expect(getMaybeTokenValue('custom', 'baz_qux', TOKENS)).toBe('var(--custom--baz_qux)');
     });
 
-    test('マイナスで始まるが負の数値ではない値', () => {
+    test('マイナスで始まる値もそのまま変数名の一部になる', () => {
       const TOKENS = {
         custom: new Set(['-webkit-fill-available']),
       };
-      expect(getMaybeTokenValue('custom', '-webkit-fill-available', TOKENS)).toBe('var(--custom--nwebkit-fill-available)');
+      expect(getMaybeTokenValue('custom', '-webkit-fill-available', TOKENS)).toBe('var(--custom---webkit-fill-available)');
     });
 
     test('空の TOKENS オブジェクト', () => {
@@ -251,43 +251,40 @@ describe('getMaybeTokenValue', () => {
   });
 
   describe('実際の使用例', () => {
-    test('スペーストークン', () => {
+    test('space トークン（pre=--s のカスタムプレフィックス形式）', () => {
       const TOKENS = {
-        space: new Set(['0', '10', '20', '30', '40', '50']),
+        space: {
+          pre: '--s',
+          values: new Set(['5', '10', '15', '20', '30', '40', '50', '60', '70', '80']),
+        },
       };
-      expect(getMaybeTokenValue('space', '20', TOKENS)).toBe('var(--space--20)');
+      expect(getMaybeTokenValue('space', '20', TOKENS)).toBe('var(--s20)');
       expect(getMaybeTokenValue('space', '100', TOKENS)).toBe('100');
     });
 
-    test('カラートークン（c と palette の組み合わせ）', () => {
+    test('カラートークン（color は c → palette の順に解決される）', () => {
       const TOKENS = {
-        c: new Set(['black', 'white', 'gray']),
-        palette: new Set(['primary', 'secondary', 'accent']),
+        c: {
+          pre: '--',
+          values: new Set(['base', 'text', 'brand', 'accent']),
+        },
+        palette: {
+          pre: '--',
+          values: new Set(['red', 'blue', 'green', 'keycolor']),
+        },
       };
-      expect(getMaybeTokenValue('color', 'black', TOKENS)).toBe('var(--c--black)');
-      expect(getMaybeTokenValue('color', 'primary', TOKENS)).toBe('var(--palette--primary)');
+      expect(getMaybeTokenValue('color', 'base', TOKENS)).toBe('var(--base)');
+      expect(getMaybeTokenValue('color', 'red', TOKENS)).toBe('var(--red)');
       expect(getMaybeTokenValue('color', 'custom', TOKENS)).toBe('custom');
     });
 
-    test('フォントサイズトークン（負の値を含む）', () => {
+    test('opacity トークン（負の値を含む実在の o トークン）', () => {
       const TOKENS = {
-        fz: new Set(['-2', '-1', '0', '1', '2', '3']),
+        o: new Set(['-10', '-20', '-30']),
       };
-      expect(getMaybeTokenValue('fz', '-2', TOKENS)).toBe('var(--fz--n2)');
-      expect(getMaybeTokenValue('fz', '0', TOKENS)).toBe('var(--fz--0)');
-      expect(getMaybeTokenValue('fz', '2', TOKENS)).toBe('var(--fz--2)');
-    });
-
-    test('カスタムプレフィックスを持つトークン', () => {
-      const TOKENS = {
-        radius: {
-          pre: '--radius--',
-          values: new Set(['sm', 'md', 'lg', 'full']),
-        },
-      };
-      expect(getMaybeTokenValue('radius', 'sm', TOKENS)).toBe('var(--radius--sm)');
-      expect(getMaybeTokenValue('radius', 'full', TOKENS)).toBe('var(--radius--full)');
-      expect(getMaybeTokenValue('radius', 'custom', TOKENS)).toBe('custom');
+      expect(getMaybeTokenValue('o', '-10', TOKENS)).toBe('var(--o---10)');
+      expect(getMaybeTokenValue('o', '-20', TOKENS)).toBe('var(--o---20)');
+      expect(getMaybeTokenValue('o', '-30', TOKENS)).toBe('var(--o---30)');
     });
   });
 });

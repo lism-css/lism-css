@@ -6,22 +6,75 @@ description: 'Lism CSS のインストール方法と基本的な使い方を解
 Lism CSSを利用するための手順を解説します。
 
 
-大きく分けて2通りの導入方法ができます。
-
-## CSS設計のみを導入したい場合
+## CSS設計のみを導入する
 
 シンプルなHTMLサイトの場合など、CSSファイルのみを読み込む場合はCDN経由で利用できます。
 
 
 <PreviewTitle>CDN経由でスタイルシートを読み込む</PreviewTitle>
 ```html
-<link href="https://cdn.jsdelivr.net/npm/lism-css@0.13.1/dist/css/main.css" rel="stylesheet" />
+<link href="https://cdn.jsdelivr.net/npm/lism-css@0.14.0/dist/css/main.css" rel="stylesheet" />
 ```
 
 もちろん、CSSファイルをダウンロードして読み込んでもOKです。
 
 
-## Lism専用のJSXコンポーネントを使用したい場合
+## クイックスタート
+
+ゼロからセットアップする場合は `create lism` を使うのが最短です。テンプレートと出力先は対話プロンプトで選択できます。
+
+<Preview>
+  <PreviewCode slot="tab" label="pnpm">
+  ```bash frame="none"
+  pnpm create lism@latest
+  ```
+  </PreviewCode>
+  <PreviewCode slot="tab" label="npm">
+  ```bash frame="none"
+  npm create lism@latest
+  ```
+  </PreviewCode>
+  <PreviewCode slot="tab" label="yarn">
+  ```bash frame="none"
+  yarn create lism
+  ```
+  </PreviewCode>
+</Preview>
+
+`lism-cli` の `lism create` と等価です。
+
+
+### テンプレートを指定して実行する
+
+`--template` オプションを付けると、対話プロンプトをスキップしてテンプレートを直接指定できます。
+
+<Preview>
+  <PreviewCode slot="tab" label="pnpm">
+  ```bash frame="none"
+  pnpm create lism@latest --template astro-minimal
+  ```
+  </PreviewCode>
+  <PreviewCode slot="tab" label="npm">
+  ```bash frame="none"
+  npm create lism@latest -- --template astro-minimal
+  ```
+  </PreviewCode>
+  <PreviewCode slot="tab" label="yarn">
+  ```bash frame="none"
+  yarn create lism --template astro-minimal
+  ```
+  </PreviewCode>
+</Preview>
+
+
+### 利用可能なテンプレート
+
+| テンプレート | 説明 |
+|---|---|
+| `astro-minimal` | Astro ベースの最小構成 |
+
+
+## React/Astro コンポーネントを使用する
 
 React(.tsx)、Astro(.astro)形式のコンポーネントを `lism-css`としてnpmパッケージで配布しています。
 
@@ -78,32 +131,6 @@ import { Box, Flex, ... } from 'lism-css/astro';
 
 
 
-:::warning
-::title[.astroを読み込む場合の注意点]
-
-`.astro`ファイルをnode_modeules内から直接読み込むことができず、追加の設定が必要な場合があります。  
-"**Directory import '...' is not supported resolving ES modules** ..." というエラーが発生した場合、`astro.config.js`の`vite.ssr.noExternal`に`"lism-css"`を追加してください。
-
-<PreviewTitle>`astro.config.js`</PreviewTitle>
-```js
-import { defineConfig } from 'astro/config';
-
-export default defineConfig({
-  // ...other settings
-  vite: {
-    ssr: {
-      noExternal: ['lism-css'],
-    },
-  },
-});
-```
-
- 
-<small>（パッケージ配布方法の改善で対応できるかどうか調整中です...）</small>
-:::
-
-
-
 ## Lism UI の導入
 
 アコーディオンやタブ、モーダルなどの**UIコンポーネント**は、別パッケージ `@lism-css/ui` として提供しています。
@@ -135,18 +162,20 @@ import { Accordion, Tabs, Button } from '@lism-css/ui/astro';
 
 ### CLI でプロジェクトにコピーする
 
-`@lism-css/cli` を使うと、UIコンポーネントのソースコードを自分のプロジェクトにコピーし、自由にカスタマイズできます。
+`lism-cli` の `lism ui add` を使うと、UIコンポーネントのソースコードを自分のプロジェクトにコピーし、自由にカスタマイズできます。コンポーネント名は `import` するときと同じ PascalCase で指定します。
 
 ```bash frame="none"
 # コンポーネントを追加（初回は対話形式でセットアップ）
-npx @lism-css/cli add accordion
+npx lism-cli ui add Accordion
 
 # 複数コンポーネントをまとめて追加
-npx @lism-css/cli add accordion modal tabs
+npx lism-cli ui add Accordion Modal Tabs NavMenu
 
 # 全コンポーネントを追加
-npx @lism-css/cli add --all
+npx lism-cli ui add --all
 ```
+
+名前は大文字小文字・ハイフン・アンダースコアを無視して解決するため、`NavMenu` / `navmenu` / `nav-menu` / `nav_menu` のいずれでも同じコンポーネントに解決されます。
 
 
 ## AIツール連携

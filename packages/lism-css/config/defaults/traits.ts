@@ -12,5 +12,8 @@ export default {
   isCoverLink: 'is--coverLink',
   isSide: 'is--side',
   isSkipFlow: 'is--skipFlow',
-  isVertical: 'is--vertical',
+  hasTransition: 'has--transition',
+  hasGutter: 'has--gutter',
+  hasSnap: 'has--snap',
+  hasMask: 'has--mask',
 } as const;

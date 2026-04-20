@@ -1,0 +1,137 @@
+import fs from 'node:fs';
+import path from 'node:path';
+import { downloadTemplate } from 'giget';
+import { select, input, confirm } from '@inquirer/prompts';
+import { logger } from '../logger.js';
+import { LISM_CSS_VERSION } from '../version.js';
+import { DEFAULT_TEMPLATES_REF, EXAMPLES_PATH, SOURCE_REPO } from '../constants.js';
+import { t, tOf } from '../i18n.js';
+
+interface LocalizedText {
+  ja: string;
+  en: string;
+}
+
+interface TemplateDef {
+  name: string;
+  label: LocalizedText;
+  description: LocalizedText;
+}
+
+/** 配信対象の examples 一覧（将来は examples ディレクトリから自動生成に置き換え可能） */
+const TEMPLATES: TemplateDef[] = [
+  {
+    name: 'astro-minimal',
+    label: { ja: 'Astro (最小構成)', en: 'Astro (minimal)' },
+    description: { ja: 'Astro ベースの最小構成', en: 'Minimal Astro setup' },
+  },
+];
+
+interface CreateOptions {
+  template?: string;
+  force?: boolean;
+}
+
+export interface RunCreateArgs {
+  template?: string;
+  targetDir?: string;
+  force?: boolean;
+}
+
+/** `lism create` / `create-lism` から共通で使える実体関数 */
+export async function runCreate({ template, targetDir, force = false }: RunCreateArgs): Promise<void> {
+  const tpl = await resolveTemplate(template);
+  const outDir = path.resolve(process.cwd(), await resolveTargetDir(targetDir, tpl.name));
+
+  if (fs.existsSync(outDir) && fs.readdirSync(outDir).length > 0 && !force) {
+    const ok = await confirm({
+      message: t('create.confirmOverwrite', { dir: outDir }),
+      default: false,
+    });
+    if (!ok) {
+      logger.warn(t('create.aborted'));
+      return;
+    }
+  }
+
+  const ref = DEFAULT_TEMPLATES_REF;
+  logger.info(t('create.fetching', { name: tpl.name, ref }));
+  await downloadTemplate(`github:${SOURCE_REPO}/${EXAMPLES_PATH}/${tpl.name}#${ref}`, {
+    dir: outDir,
+    force: true,
+    forceClean: force,
+  });
+
+  // workspace:* を公開バージョンに書き換える
+  rewriteWorkspaceDeps(outDir);
+
+  logger.success(t('create.created', { dir: outDir }));
+  logger.heading(t('create.nextSteps'));
+  const rel = path.relative(process.cwd(), outDir) || '.';
+  logger.log(`  cd ${rel}`);
+  logger.log('  npm install   # or pnpm install / yarn');
+  logger.log('  npm run dev');
+  logger.log('');
+}
+
+/** commander から呼ぶアクション */
+export async function createCommand(targetDir: string | undefined, options: CreateOptions): Promise<void> {
+  await runCreate({ template: options.template, targetDir, force: options.force });
+}
+
+async function resolveTemplate(requested?: string): Promise<TemplateDef> {
+  if (requested) {
+    const found = TEMPLATES.find((t) => t.name === requested);
+    if (!found) {
+      throw new Error(t('create.templateNotFound', { name: requested, list: TEMPLATES.map((x) => x.name).join(', ') }));
+    }
+    return found;
+  }
+  const picked = await select<string>({
+    message: t('create.promptSelectTemplate'),
+    choices: TEMPLATES.map((tpl) => ({ name: `${tOf(tpl.label)} — ${tOf(tpl.description)}`, value: tpl.name })),
+  });
+  return TEMPLATES.find((x) => x.name === picked)!;
+}
+
+async function resolveTargetDir(provided: string | undefined, templateName: string): Promise<string> {
+  if (provided) return provided;
+  return input({
+    message: t('create.promptTargetDir'),
+    default: `./${templateName}`,
+  });
+}
+
+/**
+ * 取得後の package.json 内の `workspace:*` 依存を `^{LISM_CSS_VERSION}` に書き換える。
+ * 失敗しても警告に留め、生成自体は続行する（Best Effort）。
+ */
+function rewriteWorkspaceDeps(projectDir: string): void {
+  const pkgPath = path.join(projectDir, 'package.json');
+  if (!fs.existsSync(pkgPath)) return;
+  try {
+    const pkg = JSON.parse(fs.readFileSync(pkgPath, 'utf-8')) as {
+      dependencies?: Record<string, string>;
+      devDependencies?: Record<string, string>;
+      peerDependencies?: Record<string, string>;
+    };
+    let touched = false;
+    for (const key of ['dependencies', 'devDependencies', 'peerDependencies'] as const) {
+      const deps = pkg[key];
+      if (!deps) continue;
+      for (const [name, value] of Object.entries(deps)) {
+        if (typeof value !== 'string') continue;
+        if (value.startsWith('workspace:')) {
+          deps[name] = `^${LISM_CSS_VERSION}`;
+          touched = true;
+        }
+      }
+    }
+    if (touched) {
+      fs.writeFileSync(pkgPath, JSON.stringify(pkg, null, 2) + '\n');
+      logger.log(t('create.workspaceReplaced', { version: LISM_CSS_VERSION }));
+    }
+  } catch (err) {
+    logger.warn(t('create.workspaceFailed', { reason: String(err) }));
+  }
+}

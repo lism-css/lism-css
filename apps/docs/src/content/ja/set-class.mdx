@@ -6,10 +6,19 @@ import { Lism, Box, Media, Flex, Stack, Spacer, Frame, Text } from 'lism-css/ast
 import { Button } from '@lism-css/ui/astro';
 
 
-`@lism-base`層の中で定義される、ベーススタイルの上書きやトークンの再定義、機能的なプロパティを初期セットするためのユーティリティクラスを`set--{className}`の形式で定義しています。
+`@lism-base` 層の中で定義される、HTML 要素の基礎スタイリングや変数セットを行うためのユーティリティクラスを `set--{className}` の形式で定義しています。
+
+set-- クラスは目的別に 2 カテゴリに分かれます。
+
+| カテゴリ | 用途 | クラス |
+|---------|------|--------|
+| 基礎スタイリング | HTML 要素のリセット／リバート | `set--plain` / `set--revert` |
+| 変数のセット | CSS 変数のセットアップのみを行う | `set--var:bxsh` / `set--var:hov` / `set--var:bdrsInner` |
+
+`set--var:{name}` の `{name}` は、そのクラスがセットアップする CSS 変数の名称に対応します（例: `--bxsh--*` → `var:bxsh`、`--_isHov` / `--_notHov` → `var:hov`、`--bdrs--inner` → `var:bdrsInner`）。
 
 
-### `set--plain`
+## `set--plain`
 
 主要スタイルをリセットするためのクラスです。
 
@@ -32,21 +41,57 @@ import { Button } from '@lism-css/ui/astro';
 </Preview>
 
 
+## `set--revert`
 
-### `set--shadow`
+ブラウザデフォルトの見た目を明示的に復活させるためのクラスです。
+これ単体ではスタイルは持ちません（全プロパティを revert するというようなものではない）。
 
-`.set--shadow` クラスを指定した要素では、シャドウを構成する`--bxsh--`変数が再定義されます。  
+特定の HTML 要素と組み合わせてスタイルを定義して使うものであり、現状は `ul` / `ol` のみ対象です。
+
+Lism CSS では、クラスを持つリスト（`ul` / `ol`）ではスタイルがリセットされます。
+クラスを持ちつつ、箇条書き表示を維持したい場合（Property Class しか持たないリストなど）に `set--revert` を付与します。
+
+<SrcCode path="src/scss/base/set/_revert.scss" />
+
+<Preview>
+  <PreviewTitle>Property Class 付き `ul` に `set--revert` を適用する例</PreviewTitle>
+  <PreviewArea p="20">
+    <ul class="-fz:l set--revert">
+      <li>item 1</li>
+      <li>item 2</li>
+      <li>item 3</li>
+    </ul>
+  </PreviewArea>
+  <PreviewCode slot="tab" label="HTML">
+  ```html "set--revert"
+  <ul class="-fz:l set--revert">
+    <li>item 1</li>
+    <li>item 2</li>
+    <li>item 3</li>
+  </ul>
+  ```
+  </PreviewCode>
+</Preview>
+
+:::info
+classless な `ul` / `ol`（`class` 属性を一切持たないリスト）はブラウザ標準スタイルが自動復活するため、`set--revert` は不要です。
+:::
+
+
+## `set--var:bxsh`
+
+`.set--var:bxsh` クラスを指定した要素では、シャドウを構成する `--bxsh--` 変数が再定義されます。
 
 <SrcCode path="src/scss/base/tokens/_shadow.scss" />
 
-ここで`--shc`変数を上書きすることで、シャドウの色味を調整したりすることが可能です。 
+ここで`--shc`変数を上書きすることで、シャドウの色味を調整したりすることが可能です。
 
 <Preview>
   <PreviewTitle>シャドウの上書き例</PreviewTitle>
   <PreviewArea p="30" nogrid>
     <Stack g="10">
       <Text> Default: </Text>
-      <Flex className="set--shadow -g:30" px-s="15">
+      <Flex className="set--var:bxsh -g:30" px-s="15">
         <Box bxsh="20" p="30" bdrs="20">
           <Fragment>Box</Fragment>
         </Box>
@@ -55,8 +100,8 @@ import { Button } from '@lism-css/ui/astro';
         </Box>
       </Flex>
       <Spacer h="40" />
-      <Text> set--shadow で 変数を上書きした例: </Text>
-      <Flex className="set--shadow -g:30" px-s="15" style={{ '--shc': 'hsl(200 50% 50% / 20%)' }}>
+      <Text> set--var:bxsh で 変数を上書きした例: </Text>
+      <Flex className="set--var:bxsh -g:30" px-s="15" style={{ '--shc': 'hsl(200 50% 50% / 20%)' }}>
         <Box bxsh="20" p="30" bdrs="20">
           <Fragment>Box</Fragment>
         </Box>
@@ -68,16 +113,16 @@ import { Button } from '@lism-css/ui/astro';
     <div class="a--spacer" />
   </PreviewArea>
     <PreviewCode slot="tab" label="HTML">
-    ```html "set--shadow"
-    <div class="l--flex set--shadow -g:30" style="--shc: hsl(200 50% 50% / 20%)">
+    ```html "set--var:bxsh"
+    <div class="l--flex set--var:bxsh -g:30" style="--shc: hsl(200 50% 50% / 20%)">
       <div class="l--box -bxsh:20 -p:30 -bdrs:20">Box</div>
       <div class="l--box -bxsh:40 -p:30 -bdrs:20">Box</div>
     </div>
     ```
   </PreviewCode>
   <PreviewCode slot="tab" label="JSX">
-    ```jsx "set--shadow"
-    <Flex className="set--shadow" g="30" style={{ '--shc': 'hsl(200 50% 50% / 20%)' }}>
+    ```jsx "set--var:bxsh"
+    <Flex className="set--var:bxsh" g="30" style={{ '--shc': 'hsl(200 50% 50% / 20%)' }}>
       <Box bxsh="20" p="30" bdrs="20">
         Box
       </Box>
@@ -90,7 +135,7 @@ import { Button } from '@lism-css/ui/astro';
 </Preview>
 
 
-### `set--hov`
+## `set--var:hov`
 
 ホバー状態の判定変数（`--_notHov`, `--_isHov`）を次のようにセットします。主に**子要素のホバースタイルを制御する**時に活用します。
 
@@ -116,7 +161,7 @@ import { Button } from '@lism-css/ui/astro';
 .-hov\:test {
   color: var(--_isHov, green) var(--_notHov, red); /* hover時はgreen, 非hover時はred*/
   box-shadow: var(--_isHov, var(--bxsh--30)); /* hover時はshadowをつける（非hover時は無効な値） */
-  opacity: var(--_notHov, var(--o--n20)); /* 非hover時は不透明度を下げる（hover時は無効な値） */
+  opacity: var(--_notHov, var(--o---20)); /* 非hover時は不透明度を下げる（hover時は無効な値） */
 }
 ```
 
@@ -124,37 +169,37 @@ import { Button } from '@lism-css/ui/astro';
 .-hov\\:test {
   color: var(--_isHov, green) var(--_notHov, red);
   box-shadow: var(--_isHov, var(--bxsh--30));
-  opacity: var(--_notHov, var(--o--n20));
+  opacity: var(--_notHov, var(--o---20));
 }
 `}>
   <PreviewTitle>`-hov:test`のプレビュー</PreviewTitle>
   <PreviewArea p="30">
-    <div className="set--hov -hov:test -p:30 -bd -bdc:current ">BOX</div>
+    <div className="set--var:hov -hov:test -p:30 -bd -bdc:current ">BOX</div>
   </PreviewArea>
   <PreviewCode>
-    ```html "set--hov -hov:test"
-    <div className="set--hov -hov:test -p:30 -bd -bdc:current ">BOX</div>
+    ```html "set--var:hov -hov:test"
+    <div className="set--var:hov -hov:test -p:30 -bd -bdc:current ">BOX</div>
     ```
   </PreviewCode>
 </Preview>
 
 
-さらに、親要素に`set--hov`を付与してその子要素で`--_isHov`変数と`--_notHov`変数を使うことで、親要素のhoverをトリガーとして子要素のスタイルを変化させることも可能になります。
+さらに、親要素に`set--var:hov`を付与してその子要素で`--_isHov`変数と`--_notHov`変数を使うことで、親要素のhoverをトリガーとして子要素のスタイルを変化させることも可能になります。
 
-例えば、親のボックスがhoverされたら、その内部の画像をズームするようなケースで活用でき、`-hov:to:zoom`クラスが標準で用意されています。
+例えば、親のボックスがhoverされたら、その内部の画像をズームするようなケースで活用でき、`-hov:in:zoom`クラスが標準で用意されています。
 
 ```css
-.-hov\:to\:zoom {
-  --transProp: scale;
+.-hov\:in\:zoom {
+  --transitionProps: scale;
   scale: var(--_isHov, 1.1);
 }
 ```
 
 <Preview>
-  <PreviewTitle>`-hov:to:zoom`の使用例</PreviewTitle>
+  <PreviewTitle>`-hov:in:zoom`の使用例</PreviewTitle>
   <PreviewArea p="30">
-    <a href="###" class="l--frame is--boxLink set--hov -ar:21/9 -ov:hidden">
-      <img class="set--transition -hov:to:zoom" src="https://cdn.lism-css.com/img/a-2.jpg" width="960" height="640" loading="lazy" />
+    <a href="###" class="l--frame set--var:hov is--boxLink -ar:21/9 -ov:hidden">
+      <img class="has--transition -hov:in:zoom" src="https://cdn.lism-css.com/img/a-2.jpg" width="960" height="640" loading="lazy" />
       <div class="is--layer -bgc" style="--c: #fff; --bgc: rgb(0 0 0 / 50%)"></div>
       <div class="l--center is--layer -c" style="--c: #fff;">
         <span class="-fz:xl">バナーリンク</span>
@@ -162,9 +207,9 @@ import { Button } from '@lism-css/ui/astro';
     </a>
   </PreviewArea>
   <PreviewCode>
-    ```html "set--hov" "-hov:to:zoom"
-    <a href="###" class="l--frame is--boxLink set--hov -ar:21/9 -ov:hidden">
-      <img class="set--transition -hov:to:zoom" src="https://cdn.lism-css.com/img/a-2.jpg" width="960" height="640" loading="lazy" />
+    ```html "set--var:hov" "-hov:in:zoom"
+    <a href="###" class="l--frame set--var:hov is--boxLink -ar:21/9 -ov:hidden">
+      <img class="has--transition -hov:in:zoom" src="https://cdn.lism-css.com/img/a-2.jpg" width="960" height="640" loading="lazy" />
       <div class="is--layer -bgc" style="--c: #fff; --bgc: rgb(0 0 0 / 50%)"></div>
       <div class="l--center is--layer -c" style="--c: #fff;">
         <span class="-fz:xl">バナーリンク</span>
@@ -176,61 +221,32 @@ import { Button } from '@lism-css/ui/astro';
 
 
 
-<Reference>
-活用例は [`hover`の解説ページ](/docs/property-class/hov#set--hov) を参照してください。
-</Reference>
+活用例は [`hover`の解説ページ](/docs/property-class/hov#set--varhov) を参照してください。
+
+<DocsLink path="/docs/property-class/hov#set--varhov" />
 
 
-### `set--transition`
+## `set--var:bdrsInner`
 
-専用の変数を用いて、transitionプロパティをセットします。
-
-<SrcCode path="src/scss/base/set/_transition.scss" />
-
-<Preview>
-  <PreviewTitle>使用例</PreviewTitle>
-  <PreviewArea p="30">
-    <Lism set="transition" hov={{c: 'red'}} style={{ '--hov-prop': 'color'}}>Example</Lism>
-  </PreviewArea>
-  <PreviewCode label="HTML" slot="tab">
-    ```html
-    <div class="set--transition -hov:c" style="--hov-prop: color; --hov-c: var(--red);">Example</div>
-    ```
-  </PreviewCode>
-  <PreviewCode label="JSX" slot="tab">
-    ```jsx
-    <Lism set="transition" hov={{c: 'red'}} style={{ '--hov-prop': 'color'}}>Example</Lism>
-    ```
-  </PreviewCode>
-</Preview>
-
-<Reference>
-活用例は [`hover`の解説ページ](/docs/property-class/hov#set--transition) を参照してください。
-</Reference>
-
-
-
-### `set--innerRs`
-
-親要素の角丸(`--bdrs`)とPadding(`--p`)の値から、その内側の角丸（`--bdrs--inner`）を自動計算するためのクラスです。  
-親要素に`set--innerRs`をクラスをセットし、子要素では`-bdrs:inner`をセットすることで、計算された`--bdrs--inner`をセットすることができます。
+親要素の角丸(`--bdrs`)とPadding(`--p`)の値から、その内側の角丸（`--bdrs--inner`）を自動計算するためのクラスです。
+親要素に`set--var:bdrsInner`をクラスをセットし、子要素では`-bdrs:inner`をセットすることで、計算された`--bdrs--inner`をセットすることができます。
 
 （親要素では`bdrs`と`p`の指定が必須となります。）
 
-<SrcCode path="src/scss/base/set/_innerRs.scss" />
+<SrcCode path="src/scss/base/set/_bdrsInner.scss" />
 
 <Preview>
   <PreviewTitle>使用例</PreviewTitle>
   <PreviewArea p="30">
-    <Lism set="innerRs" p="15" bdrs="40" bd bxsh="20">
+    <Lism set="var:bdrsInner" p="15" bdrs="40" bd bxsh="20">
       <Frame bdrs="inner" ar="og">
         <img src="https://cdn.lism-css.com/img/u-5.jpg" width="1920" height="1280" alt="" />
       </Frame>
     </Lism>
   </PreviewArea>
   <PreviewCode label="HTML" slot="tab">
-    ```html "set--innerRs" "-bdrs:inner" "-p:15 -bdrs:40"
-    <div class="set--innerRs -p:15 -bdrs:40 -bd -bxsh:20">
+    ```html "set--var:bdrsInner" "-bdrs:inner" "-p:15 -bdrs:40"
+    <div class="set--var:bdrsInner -p:15 -bdrs:40 -bd -bxsh:20">
       <div class="l--frame -bdrs:inner -ar:og">
         <img src="https://cdn.lism-css.com/img/u-5.jpg" width="1920" height="1280" alt="" />
       </div>
@@ -238,8 +254,8 @@ import { Button } from '@lism-css/ui/astro';
     ```
   </PreviewCode>
   <PreviewCode label="JSX" slot="tab">
-    ```jsx 'set="innerRs"' 'bdrs="inner"' 'p="15" bdrs="40"'
-    <Lism set="innerRs" p="15" bdrs="40" bd bxsh="20">
+    ```jsx 'set="var:bdrsInner"' 'bdrs="inner"' 'p="15" bdrs="40"'
+    <Lism set="var:bdrsInner" p="15" bdrs="40" bd bxsh="20">
       <Frame bdrs="inner" ar="og">
         <img src="https://cdn.lism-css.com/img/u-5.jpg" width="1920" height="1280" alt="" />
       </Frame>
@@ -250,12 +266,12 @@ import { Button } from '@lism-css/ui/astro';
 
 <Spacer h="1rem" />
 
-`p`, `bdrs`はブレイクポイントで値を変えても変数管理されているため、`set--innerRs`の角丸もレスポンシブ対応できます。
+`p`, `bdrs`はブレイクポイントで値を変えても変数管理されているため、`set--var:bdrsInner`の角丸もレスポンシブ対応できます。
 
 <Preview>
   <PreviewTitle>使用例</PreviewTitle>
   <PreviewArea p="20" resize>
-    <Lism p={[10, 15]} bd bdrs={['30', '40']} class="set--innerRs">
+    <Lism p={[10, 15]} bd bdrs={['30', '40']} class="set--var:bdrsInner">
       <Lism bd p="20" bdrs="inner" bgc="base-2">
         <Fragment>Example</Fragment>
       </Lism>
@@ -265,7 +281,7 @@ import { Button } from '@lism-css/ui/astro';
   </PreviewCode> */}
   <PreviewCode label="JSX" slot="tab">
 ```jsx
-<Lism p={[10, 15]} bd bdrs={['30', '40']} class="set--innerRs">
+<Lism p={[10, 15]} bd bdrs={['30', '40']} class="set--var:bdrsInner">
   <Lism bd p="20" bdrs="inner" bgc="base-2">
     Example
   </Lism>
@@ -273,132 +289,4 @@ import { Button } from '@lism-css/ui/astro';
 ```
   </PreviewCode>
 </Preview>
-
-
-### `set--gutter`
-
-コンテンツの左右にあらかじめ定義済みの余白をつけることができるクラスです。  
-サイト全体で統一した余白量を左右に確保するためのものとして、padding系のユーティリティとは別のクラスとして用意しています。
-
-| クラス名 | 余白量 |初期値 |
-|---|---|---|
-| `set--gutter` | `--gutter-size` | `var(--s30)` |
-
-<SrcCode path="src/scss/base/set/_gutter.scss" />
-
-<Preview>
-  <PreviewTitle>例</PreviewTitle>
-  <PreviewArea resize p="15">
-    <Lism set="gutter">
-      <p>Lorem ipsum content...</p>
-      <p>Lorem ipsum content...</p>
-      <p>Lorem ipsum content...</p>
-    </Lism>
-  </PreviewArea>
-  <PreviewCode slot="tab" label="HTML">
-  ```html
-  <div class="set--gutter">
-    <p>Lorem ipsum content...</p>
-    <p>Lorem ipsum content...</p>
-    <p>Lorem ipsum content...</p>
-  </div>
-  ```
-  </PreviewCode>
-  <PreviewCode slot="tab" label="JSX">
-  ```jsx
-  <Lism set="gutter">
-    <p>Lorem ipsum content...</p>
-    <p>Lorem ipsum content...</p>
-    <p>Lorem ipsum content...</p>
-  </Lism>
-  ```
-  </PreviewCode>
-</Preview>
-
-
-### `set--bp`
-
-特定のブレイクポイント以上でのみスタイルを適用させるためのユーティリティクラスです。
-[ブレイクポイント対応](/docs/responsive/)していないプロパティを変化させたい時のハック的手段として活用できます。
-
-<SrcCode path="src/scss/base/set/_bp.scss" />
-
-<Preview>
-  <PreviewTitle>smサイズ以上でテキストカラーを赤に変える例</PreviewTitle>
-  <PreviewArea resize>
-    <Lism set="bp" p="20" style={{ color: 'var(--_is_sm) red;' }}>
-      <p>ロレム・イプサムの座り雨。目まぐるしい文章の流れの中で、それは静かに歩く仮の言葉です。</p>
-    </Lism>
-  </PreviewArea>
-  <PreviewCode slot="tab" label="HTML">
-  ```html "set--bp" "var(--_is_sm) red"
-  <div class="set--bp -p:20" style="color: var(--_is_sm) red">
-    <p>ロレム・イプサムの座り雨。目まぐるしい文章の流れの中で、それは静かに歩く仮の言葉です。</p>
-  </div>
-  ```
-  </PreviewCode>
-  <PreviewCode slot="tab" label="JSX">
-    ```jsx 'set="bp"' "var(--_is_sm) red"
-    <Lism set="bp" p="20" style={{ color: 'var(--_is_sm) red;' }}>
-      <p>ロレム・イプサムの座り雨。目まぐるしい文章の流れの中で、それは静かに歩く仮の言葉です。</p>
-    </Lism>
-    ```
-  </PreviewCode>
-</Preview>
-
-
-{/* 
-### `set--mask`
-
-`--mask`変数と組み合わせて、自身にmaskを適用します。
-
-<SrcCode path="src/scss/base/set/_mask.scss" />
-
-Lismが提供するコンポーネントでは、`set="mask"`と`css={{ '--maskImg': getSvgUrl(svgString) }}`を組み合わせて使用します。
-
-<Preview>
-  <PreviewTitle>例</PreviewTitle>
-  <PreviewArea p="10">
-    <Media
-      src="https://cdn.lism-css.com/img/u-2.jpg"
-      width="960"
-      height="640"
-      alt=""
-      loading="lazy"
-      ar="og"
-      set="mask"
-      css={{ '--maskImg': `url('data:image/svg+xml,<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><path fill="%23000000" d="M170.4,25.7c16.1,14.2,23.2,38.5,24.8,61.7c1.7,23.3-1.8,45.5-12.9,62.3c-11,16.9-29.3,28.6-48.8,34.5 c-19.4,5.9-40,6.1-59.5,0.4c-19.5-5.6-37.9-17.4-51.7-34.9c-14-17.5-23.2-40.8-18-60.2c5-19.4,24.5-34.7,43.5-48.4 s37.6-25.7,59.5-29.7C129.1,7.3,154.2,11.4,170.4,25.7z" /></svg>')` }}
-    />
-  </PreviewArea>
-  <PreviewCode slot="tab" label="JSX">
-    ```jsx
-    <Media
-      src="https://cdn.lism-css.com/img/u-2.jpg"
-      width="960"
-      height="640"
-      alt=""
-      loading="lazy"
-      ar="og"
-      set="mask"
-      css={{ '--maskImg': getSvgUrl(`<svg ...>...</svg>`) }}
-    />
-    ```
-  </PreviewCode>
-  <PreviewCode slot="tab" label="HTML">
-    ```html
-    <img
-      class="set--mask -ar:og"
-      src="https://cdn.lism-css.com/img/u-2.jpg"
-      width="960"
-      height="640"
-      loading="lazy"
-      style="
-        --maskImg: url(data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMjAwIDIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBmaWxsPSIjMDAwMDAwIiBkPSJNMTcwLjQsMjUuN2MxNi4xLDE0LjIsMjMuMiwzOC41LDI0LjgsNjEuN2MxLjcsMjMuMy0xLjgsNDUuNS0xMi45LDYyLjNjLTExLDE2LjktMjkuMywyOC42LTQ4LjgsMzQuNSBjLTE5LjQsNS45LTQwLDYuMS01OS41LDAuNGMtMTkuNS01LjYtMzcuOS0xNy40LTUxLjctMzQuOWMtMTQtMTcuNS0yMy4yLTQwLjgtMTgtNjAuMmM1LTE5LjQsMjQuNS0zNC43LDQzLjUtNDguNCBzMzcuNi0yNS43LDU5LjUtMjkuN0MxMjkuMSw3LjMsMTU0LjIsMTEuNCwxNzAuNCwyNS43eiIgLz48L3N2Zz4=);
-      "
-    />
-    ```
-  </PreviewCode>
-</Preview>
- */}
-
 

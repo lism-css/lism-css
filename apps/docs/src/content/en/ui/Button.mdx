@@ -37,11 +37,11 @@ A component for displaying button-style links.
   <PreviewCode slot="tab" label="HTML">
     ```jsx
     <div class="l--cluster -g:15">
-      <a class="c--button c--button--fill l--flex -lh:s -py:10 -px:20 -hov:o" href="###">
+      <a class="c--button c--button--fill l--flex -lh:s -py:10 -px:20 -hov:-o" href="###">
         {' '}
         Button{' '}
       </a>
-      <a class="c--button c--button--outline l--flex -lh:s -py:10 -px:20 -hov:o" href="###">
+      <a class="c--button c--button--outline l--flex -lh:s -py:10 -px:20 -hov:-o" href="###">
         Outline
       </a>
     </div>
@@ -106,9 +106,9 @@ The source code is available on [GitHub](https://github.com/lism-css/lism-css/tr
   <PreviewCode slot="tab" label="HTML">
     ```html
     <div class="l--flex -g:15">
-      <a class="c--button l--flex -lh:s -py:10 -px:20 -hov:o" href="###">Button</a>
-      <a class="c--button l--flex -lh:s -py:10 -px:20 -hov:o -bgc:brand -bdrs:10" href="###">Button</a>
-      <a class="c--button l--flex -lh:s -py:10 -px:20 -hov:o -bgc -bdrs:99" style="--bgc: #d13d5e" href="###">
+      <a class="c--button l--flex -lh:s -py:10 -px:20 -hov:-o" href="###">Button</a>
+      <a class="c--button l--flex -lh:s -py:10 -px:20 -hov:-o -bgc:brand -bdrs:10" href="###">Button</a>
+      <a class="c--button l--flex -lh:s -py:10 -px:20 -hov:-o -bgc -bdrs:99" style="--bgc: #d13d5e" href="###">
         <svg class="a--icon"...>...</svg>Button
       </a>
     </div>
@@ -147,9 +147,9 @@ The source code is available on [GitHub](https://github.com/lism-css/lism-css/tr
   <PreviewCode slot="tab" label="HTML">
     ```html
     <div class="l--flex -g:15">
-      <a class="c--button c--button--outline l--flex -lh:s -py:10 -px:20 -hov:o" href="###">Button</a>
-      <a class="c--button c--button--outline l--flex -lh:s -py:10 -px:20 -hov:o -c:brand -bdrs:10" href="###">Button</a>
-      <a class="c--button c--button--outline l--flex -lh:s -py:10 -px:20 -hov:o -c -bdrs:99" style="--c: #d13d5e" href="###">
+      <a class="c--button c--button--outline l--flex -lh:s -py:10 -px:20 -hov:-o" href="###">Button</a>
+      <a class="c--button c--button--outline l--flex -lh:s -py:10 -px:20 -hov:-o -c:brand -bdrs:10" href="###">Button</a>
+      <a class="c--button c--button--outline l--flex -lh:s -py:10 -px:20 -hov:-o -c -bdrs:99" style="--c: #d13d5e" href="###">
         <svg class="a--icon"...>...</svg>Button
       </a>
     </div>
@@ -355,8 +355,8 @@ An example of building a Button using only lism-css, without `@lism-css/ui`.
   <PreviewTitle>Preview</PreviewTitle>
   <PreviewArea p="20" bg=":stripe" flow="s">
     <Flex g="15">
-      <Link href="###" d="inline-flex" w="fit" td="none" c="base" bgc="text" lh="s" py="10" px="20" bdrs="20" hov="o">Button</Link>
-      <Link href="###" d="inline-flex" w="fit" td="none" c="inherit" bd lh="s" py="10" px="20" bdrs="20" hov="o">Button</Link>
+      <Link href="###" d="inline-flex" w="fit" td="none" c="base" bgc="text" lh="s" py="10" px="20" bdrs="20" hov="-o">Button</Link>
+      <Link href="###" d="inline-flex" w="fit" td="none" c="inherit" bd lh="s" py="10" px="20" bdrs="20" hov="-o">Button</Link>
     </Flex>
     <Grid
       as="a"
@@ -381,8 +381,8 @@ An example of building a Button using only lism-css, without `@lism-css/ui`.
   <PreviewCode slot="tab" label="JSX">
     ```jsx
     <Flex g="15">
-      <Link href="###" d="inline-flex" w="fit" td="none" c="base" bgc="text" lh="s" py="10" px="20" bdrs="20" hov="o">Button</Link>
-      <Link href="###" d="inline-flex" w="fit" td="none" c="inherit" bd lh="s" py="10" px="20" bdrs="20" hov="o">Button</Link>
+      <Link href="###" d="inline-flex" w="fit" td="none" c="base" bgc="text" lh="s" py="10" px="20" bdrs="20" hov="-o">Button</Link>
+      <Link href="###" d="inline-flex" w="fit" td="none" c="inherit" bd lh="s" py="10" px="20" bdrs="20" hov="-o">Button</Link>
     </Flex>
     <Grid as="a" href="###" gtc="1em 1fr 1em" ji="center" ai="center" px="15" py="10" g="30" w="16rem" td="none" bgc="text" c="base" bdrs="20" hov="neutral">
       <Lism as="span" gc="2">Button</Lism>
@@ -393,8 +393,8 @@ An example of building a Button using only lism-css, without `@lism-css/ui`.
   <PreviewCode slot="tab" label="HTML">
     ```html
     <div class="l--flex -g:15">
-      <a href="###" class="-d:inline-flex -w:fit -td:none -c:base -bgc:text -lh:s -py:10 -px:20 -bdrs:20 -hov:o">Button</a>
-      <a href="###" class="-d:inline-flex -w:fit -td:none -c:inherit -bd -lh:s -py:10 -px:20 -bdrs:20 -hov:o">Button</a>
+      <a href="###" class="-d:inline-flex -w:fit -td:none -c:base -bgc:text -lh:s -py:10 -px:20 -bdrs:20 -hov:-o">Button</a>
+      <a href="###" class="-d:inline-flex -w:fit -td:none -c:inherit -bd -lh:s -py:10 -px:20 -bdrs:20 -hov:-o">Button</a>
     </div>
     <a
       class="l--grid -ji:center -ai:center -px:15 -py:10 -g:30 -w -gtc -td:none -bgc:text -c:base -bdrs:20 -hov:neutral"

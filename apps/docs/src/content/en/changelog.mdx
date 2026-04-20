@@ -9,11 +9,35 @@ Breaking changes may continue frequently until the v1.0 release, so all notable 
 
 <Divider bds="dashed" my="40" />
 
-## `@lism-css/ui` (Next Release)
+## `@lism-css/ui` v.0.14.0 (2026.04.17)
 
-**Breaking Changes**
+This release contains **breaking changes**.
 
-- Removed the `DummyImage` component. Use the CDN dummy image URL directly instead (e.g., `https://cdn.lism-css.com/dummy-image.jpg`).
+- Aligned with lism-css 0.14.0 (removed `lismClass` / `variant` props, unified to `className`)
+- Removed the `DummyImage` component (use the CDN dummy image URL directly instead, e.g. `https://cdn.lism-css.com/dummy-image.jpg`)
+- Renamed internal files for `Details` / `Tabs` to the `Root` convention
+- Added the `buildModifierClass` helper for BEM modifier composition
+- Fixed an issue where component CSS imports were not included in the built output (vite.config adjustment)
+- Fixed React/Astro initial props mismatches (6 components)
+- Split React components into the same file structure as Astro
+- Inlined `getProps` into components
+
+## v.0.14.0 (2026.04.17)
+
+This release contains **breaking changes**.
+
+- Removed `lismClass` / `variant` props in favor of unified `className`
+- Property Class renames:
+  - `ysz` → `bsz` (block-size)
+  - `isolation` → `iso`
+  - `whspace` → `whs` (white-space)
+  - `ovwrap` → `ovw` (overflow-wrap)
+- Removed `is--vertical`; migrated to Property Class `-wm:vertical-rl`
+- Disabled `set--bp`
+- Renamed negative token variables from `--o--n{N}` to `--o---{N}`
+- Removed `--sz--min` / `--sz--full` tokens
+- Removed dedicated `clipPath` / `boxSizing` props from `Decorator`
+- Changed `fluidCols` default min size to 20rem
 
 ## `@lism-css/ui` v.0.13.1 (2026.04.15)
 

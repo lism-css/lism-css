@@ -7,7 +7,7 @@ import './_style.css';
 ---
 
 <DemoLayout title="Feature014">
-  <Container isWrapper="l" bgc="base-2" py="50" set="gutter">
+  <Container isWrapper="l" bgc="base-2" py="50" hasGutter>
     <Stack g="50">
       <Stack ai="center" g="30">
         <Text class="u--trim" fz="4xl" fw="light" lts="l">Feature</Text>
@@ -16,7 +16,7 @@ import './_style.css';
       <TileGrid cols={['1', null, '3']}>
         <Grid gtr="subgrid" gr="span 3" ji="c" g="30" p={['40', null, '0 40']}>
           <Frame as="figure" ar="1/1" w="10rem" bdrs="99">
-            <Media src="https://cdn.lism-css.com/random/img?category=v&r=1" alt="" width="960" height="640" set="transition" hov="to:zoom" />
+            <Media src="https://cdn.lism-css.com/random/img?category=v&r=1" alt="" width="960" height="640" hasTransition hov="in:zoom" />
           </Frame>
           <Stack g="30">
             <Text class="u--trim" fz="l" fw="bold" ta="center">Aquamarine</Text>
@@ -35,8 +35,8 @@ import './_style.css';
               w="stretch"
               p="20 30"
               bdrs="99"
-              set="transition"
-              hov="reverse"
+              hasTransition
+              hov="fill"
             >
               <Inline gc="2">View More</Inline>
               <Icon icon="arrow-right" gc="3" />
@@ -45,7 +45,7 @@ import './_style.css';
         </Grid>
         <Grid gtr="subgrid" gr="span 3" ji="c" g="30" p={['40', null, '0 40']} bd bdw={['1px 0 0 0', null, '0 0 0 1px']} bdc="white">
           <Frame as="figure" ar="1/1" w="10rem" bdrs="99">
-            <Media src="https://cdn.lism-css.com/random/img?category=v&r=2" alt="" width="960" height="640" set="transition" hov="to:zoom" />
+            <Media src="https://cdn.lism-css.com/random/img?category=v&r=2" alt="" width="960" height="640" hasTransition hov="in:zoom" />
           </Frame>
           <Stack g="30">
             <Text class="u--trim" fz="l" fw="bold" ta="center">Rose Quartz</Text>
@@ -65,8 +65,8 @@ import './_style.css';
               w="stretch"
               p="20 30"
               bdrs="99"
-              set="transition"
-              hov="reverse"
+              hasTransition
+              hov="fill"
             >
               <Inline gc="2">View More</Inline>
               <Icon icon="arrow-right" gc="3" />
@@ -75,7 +75,7 @@ import './_style.css';
         </Grid>
         <Grid gtr="subgrid" gr="span 3" ji="c" g="30" p={['40', null, '0 40']} bd bdw={['1px 0 0 0', null, '0 0 0 1px']} bdc="white">
           <Frame as="figure" ar="1/1" w="10rem" bdrs="99">
-            <Media src="https://cdn.lism-css.com/random/img?category=v&r=3" alt="" width="960" height="640" set="transition" hov="to:zoom" />
+            <Media src="https://cdn.lism-css.com/random/img?category=v&r=3" alt="" width="960" height="640" hasTransition hov="in:zoom" />
           </Frame>
           <Stack g="30">
             <Text class="u--trim" fz="l" fw="bold" ta="center">Moonstone</Text>
@@ -95,8 +95,8 @@ import './_style.css';
               w="stretch"
               p="20 30"
               bdrs="99"
-              set="transition"
-              hov="reverse"
+              hasTransition
+              hov="fill"
             >
               <Inline gc="2">View More</Inline>
               <Icon icon="arrow-right" gc="3" />
@@ -107,3 +107,12 @@ import './_style.css';
     </Stack>
   </Container>
 </DemoLayout>
+
+<style>
+  @media (any-hover: hover) {
+    .-hov\:fill:hover {
+      background-color: var(--text) !important;
+      color: var(--base) !important;
+    }
+  }
+</style>

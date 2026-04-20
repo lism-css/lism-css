@@ -22,7 +22,6 @@ $props: (
       '2xs': 'var(--fz--2xs)',
     ),
     bp: 1,
-    alwaysVar: 1,
   ),
   'fw': (
     prop: 'font-weight',
@@ -114,9 +113,9 @@ $props: (
     prop: 'opacity',
     utilities: (
       '0': '0',
-      '-10': 'var(--o--n10)',
-      '-20': 'var(--o--n20)',
-      '-30': 'var(--o--n30)',
+      '-10': 'var(--o---10)',
+      '-20': 'var(--o---20)',
+      '-30': 'var(--o---30)',
     ),
   ),
   'v': (
@@ -317,7 +316,6 @@ $props: (
     ),
     bp: 1,
     alwaysVar: 1,
-    overwriteBaseVar: 1,
   ),
   'bxsh': (
     prop: 'box-shadow',
@@ -327,9 +325,9 @@ $props: (
       '20': 'var(--bxsh--20)',
       '30': 'var(--bxsh--30)',
       '40': 'var(--bxsh--40)',
+      '50': 'var(--bxsh--50)',
     ),
     bp: 1,
-    alwaysVar: 1,
   ),
   'pos': (
     prop: 'position',
@@ -405,7 +403,6 @@ $props: (
     ),
     bp: 1,
     alwaysVar: 1,
-    overwriteBaseVar: 1,
   ),
   'px': (
     prop: 'padding-inline',
@@ -423,7 +420,6 @@ $props: (
       '80': 'var(--s80)',
     ),
     bp: 1,
-    alwaysVar: 1,
   ),
   'py': (
     prop: 'padding-block',
@@ -441,7 +437,6 @@ $props: (
       '80': 'var(--s80)',
     ),
     bp: 1,
-    alwaysVar: 1,
   ),
   'px-s': (
     prop: 'padding-inline-start',
@@ -493,7 +488,6 @@ $props: (
     ),
     bp: 1,
     alwaysVar: 1,
-    overwriteBaseVar: 1,
   ),
   'mx': (
     prop: 'margin-inline',
@@ -512,7 +506,6 @@ $props: (
       'auto': 'auto',
     ),
     bp: 1,
-    alwaysVar: 1,
   ),
   'my': (
     prop: 'margin-block',
@@ -531,7 +524,6 @@ $props: (
       'auto': 'auto',
     ),
     bp: 1,
-    alwaysVar: 1,
   ),
   'mx-s': (
     prop: 'margin-inline-start',
@@ -609,8 +601,6 @@ $props: (
       ),
     ),
     bp: 1,
-    alwaysVar: 1,
-    overwriteBaseVar: 1,
   ),
   'cg': (
     prop: 'column-gap',
@@ -818,13 +808,13 @@ $props: (
       '-1': '-1',
     ),
   ),
-  'ovwrap': (
+  'ovw': (
     prop: 'overflow-wrap',
     utilities: (
       'anywhere': 'anywhere',
     ),
   ),
-  'whspace': (
+  'whs': (
     prop: 'white-space',
     utilities: (
       'nowrap': 'nowrap',
@@ -843,10 +833,17 @@ $props: (
       'both': 'both',
     ),
   ),
-  'isolation': (
+  'iso': (
     prop: 'isolation',
     utilities: (
       'isolate': 'isolate',
     ),
+  ),
+  'wm': (
+    prop: 'writing-mode',
+    utilities: (
+      'vertical-rl': 'vertical-rl',
+    ),
+    bp: 1,
   ),
 );

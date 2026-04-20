@@ -2,6 +2,7 @@ packages:
   - 'packages/*'
   - 'apps/*'
   - 'apps/playgrounds/*'
+  - 'examples/*'
 
 overrides:
   '@vitest/expect': $vitest
@@ -23,3 +24,6 @@ trustPolicyExclude:
 
 # サプライチェーン攻撃対策: 公開から3日未満のバージョンはインストールしない
 minimumReleaseAge: 4320
+minimumReleaseAgeExclude:
+  - 'lism-css' # 自プロジェクトのパッケージは除外
+  - '@lism-css/*'

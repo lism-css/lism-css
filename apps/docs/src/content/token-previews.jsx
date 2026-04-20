@@ -9,7 +9,7 @@ export const FzDemos = ({ lang = 'ja' }) => (
           <Inline className="is--sizeTip u--trim" fz="12px" lh="s">
             <code>{fz}</code>
           </Inline>
-          <DummyText lang={lang} length="s" fz={fz} className="-whspace:nowrap -lh:1" />
+          <DummyText lang={lang} length="s" fz={fz} className="-whs:nowrap -lh:1" />
         </Stack>
       );
     })}

@@ -9,11 +9,35 @@ v.1.0リリースまでしばらく激しい変更が続く可能性があるた
 
 <Divider bds="dashed" my="40" />
 
-## `@lism-css/ui` (次回リリース予定)
+## `@lism-css/ui` v.0.14.0 (2026.04.17)
 
-**破壊的変更**
+**破壊的変更**を含むリリースです。
 
-- `DummyImage` コンポーネントを削除しました。`cdn.lism-css.com` のダミー画像URL（例: `https://cdn.lism-css.com/dummy-image.jpg`）を直接使用してください。
+- lism-css 0.14.0 への追従（`lismClass` / `variant` props を削除し `className` 一本に集約）
+- `DummyImage` コンポーネントを削除（`cdn.lism-css.com` のダミー画像URL を直接使用してください）
+- `Details` / `Tabs` の内部ファイルを `Root` 命名規則にリネーム
+- BEM modifier 組み立て用の `buildModifierClass` ヘルパーを追加
+- `import` したコンポーネント CSS がビルド出力に含まれず読み込まれない不具合を修正（vite.config 調整）
+- React/Astro 初期 props 不一致の修正（6件）
+- React 側コンポーネントを Astro と同じファイル構成に分割
+- `getProps` をコンポーネントにインライン化し不要ファイルを削除
+
+## v.0.14.0 (2026.04.17)
+
+**破壊的変更**を含むリリースです。
+
+- `lismClass` / `variant` props を削除し、`className` 一本に集約
+- Property Class のリネーム:
+  - `ysz` → `bsz`（block-size 系）
+  - `isolation` → `iso`
+  - `whspace` → `whs`（white-space）
+  - `ovwrap` → `ovw`（overflow-wrap）
+- `is--vertical` を削除し、Property Class `-wm:vertical-rl` に移行
+- `set--bp` を無効化
+- ネガティブトークン変数を `--o--n{N}` から `--o---{N}` に変更
+- `--sz--min` / `--sz--full` トークンを削除
+- `Decorator` から `clipPath` / `boxSizing` 専用 props を削除
+- `fluidCols` のデフォルト min サイズを 20rem に変更
 
 ## `@lism-css/ui` v.0.13.1 (2026.04.15)
 

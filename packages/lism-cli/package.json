@@ -1,10 +1,30 @@
 {
-  "name": "@lism-css/cli",
-  "version": "0.1.3",
-  "description": "CLI for adding Lism UI components to your project",
+  "name": "lism-cli",
+  "version": "0.3.0",
+  "description": "CLI for scaffolding projects and adding UI components for Lism CSS / Lism UI.",
+  "author": {
+    "name": "ddryo",
+    "url": "https://github.com/ddryo"
+  },
+  "license": "MIT",
+  "keywords": [
+    "lism-css",
+    "cli",
+    "scaffolding",
+    "astro",
+    "react"
+  ],
   "type": "module",
   "bin": {
-    "lism-ui": "./bin/cli.mjs"
+    "lism": "./bin/lism.mjs"
+  },
+  "main": "./dist/lib.js",
+  "types": "./dist/lib.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/lib.d.ts",
+      "default": "./dist/lib.js"
+    }
   },
   "files": [
     "dist",
@@ -14,11 +34,22 @@
     "format": "prettier --write . --ignore-path ../../.prettierignore",
     "build": "tsup",
     "dev": "tsup --watch",
-    "prepublishOnly": "tsup"
+    "test": "vitest run",
+    "prepublishOnly": "pnpm build"
+  },
+  "homepage": "https://lism-css.com/",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lism-css/lism-css/tree/main/packages/lism-cli"
+  },
+  "bugs": {
+    "url": "https://github.com/lism-css/lism-css/issues"
   },
   "dependencies": {
     "@inquirer/prompts": "^7.0.0",
     "commander": "^13.0.0",
+    "giget": "^3.2.0",
+    "jiti": "^2.6.1",
     "picocolors": "^1.1.0"
   },
   "devDependencies": {
@@ -28,6 +59,5 @@
   },
   "engines": {
     "node": ">=18.0.0"
-  },
-  "license": "MIT"
+  }
 }

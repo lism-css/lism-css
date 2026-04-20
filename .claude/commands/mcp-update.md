@@ -3,7 +3,7 @@
 `packages/mcp/src/data/` 配下の JSON ファイルを、リポジトリの最新ソースから再生成してください。
 
 > **注:** 参照系ツール（get_overview, get_tokens, get_props_system, get_component, get_guide）は
-> `.claude/skills/lism-css-guide/*.md` を正本として Markdown を返却する構成に移行済みです。
+> `skills/lism-css-guide/*.md` を正本として Markdown を返却する構成に移行済みです。
 > スキルファイルの更新は `/update-skill-template` コマンドで行います。
 > このコマンドでは `docs-index.json` のみを更新対象とします。
 

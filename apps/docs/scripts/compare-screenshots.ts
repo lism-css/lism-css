@@ -412,6 +412,9 @@ async function main() {
     if (!isInitialRun && (changed > 0 || errors > 0)) {
       exitCode = 1;
     }
+  } catch (error) {
+    console.error('❌ エラー:', error instanceof Error ? (error.stack ?? error.message) : error);
+    exitCode = 1;
   } finally {
     if (browser) {
       await browser.close();

@@ -44,7 +44,29 @@ export const PropTable = ({data={}, ...props}) => {
 Lismでは、主要なCSSプロパティ群に対して、それらで頻繁に使用される値やトークンを手軽にセットできるようなユーティリティクラスを用意しています。  
 さらに、その中でも特に重要なCSSプロパティについてはブレイクポイント指定用クラスも用意しています。
 
-それらを [Property Class](/docs/css-methodology/#property-class) と呼んでおり、`-{prop}(:{value})`, `-{prop}_{bp}` という形式で定義しています。
+それらを **Property Class** と呼んでおり、`-{prop}(:{value})`, `-{prop}_{bp}` という形式で定義しています。
+
+<PreviewTitle>例えば以下のようなものがあります。</PreviewTitle>
+
+```css
+.-fz\:l { font-size: var(--fz--l) }
+.-fz\:xl { font-size: var(--fz--xl) }
+.-ta\:center { text-align: center }
+.-d\:none { display: none }
+.-p\:20 { --p: var(--s20) }
+
+.-d{display:var(--d)}
+.-p,[class*="-p:"]{padding:var(--p)}
+@container (min-width: 480px) {
+  .-d_sm{display:var(--d_sm)}
+  .-p_sm{padding:var(--p);--p:var(--p_sm)!important}
+}
+@container (min-width: 800px) {
+  .-d_md{display:var(--d_md)}
+  .-p_md{padding:var(--p);--p:var(--p_md)!important}
+}
+```
+
 
 このページでは、その Property Classの一覧を紹介します。
 
@@ -223,11 +245,11 @@ export const LinkSPACE = () => <a href="/docs/tokens/spacing/"><code>SPACE</code
 |`min-w`|`min-width`|`100%`|✔|
 |`min-h`|`min-height`|`100%`|✔|
 |`sz`|`inline-size`|-|-|
-|`max-sz`|`max-inline-size`|`xs`,`s`,`m`,`l`,`xl`,`min`,`full`,`container`|-|
+|`max-sz`|`max-inline-size`|`xs`,`s`,`m`,`l`,`xl`,`container`,`full`|-|
 |`min-sz`|`min-inline-size`|-|-|
-|`ysz`|`block-size`|-|-|
-|`max-ysz`|`max-block-size`|-|-|
-|`min-ysz`|`min-block-size`|-|-|
+|`bsz`|`block-size`|-|-|
+|`max-bsz`|`max-block-size`|-|-|
+|`min-bsz`|`min-block-size`|-|-|
 
 
 関連トークン: <a href="/docs/tokens/#size"><code>SIZE</code></a>
@@ -264,6 +286,7 @@ export const LinkSPACE = () => <a href="/docs/tokens/spacing/"><code>SPACE</code
 |`ov`|`overflow`| `auto`, `clip`, `hidden`|-|
 |`ov-x`|`overflow-x`|`auto`, `clip`, `scroll`|-|
 |`ov-y`|`overflow-y`|`auto`, `clip`, `scroll`|-|
+|`ovw`|`overflow-wrap`|`anywhere`|-|
 |`ar`|`aspect-ratio`|`21/9`,`16/9`,`3/2`,`1/1`,<br />`og`|✔|
 
 
@@ -427,7 +450,7 @@ export const LinkSPACE = () => <a href="/docs/tokens/spacing/"><code>SPACE</code
   ```html
   <div class="l--flex -g:20">
     <div class="-fxg:1 -bd -p:10 -bgc:base-2">Item</div>
-    <div class="-fxg:2 -bd -p:10 -bgc:base-2">Item</div>
+    <div class="-bd -p:10 -bgc:base-2" style="flex-grow: 2">Item</div>
     <div class="-fxg:1 -bd -p:10 -bgc:base-2">Item</div>
   </div>
   ```
@@ -619,10 +642,13 @@ export const LinkSPACE = () => <a href="/docs/tokens/spacing/"><code>SPACE</code
   </PreviewCode>
 </Preview>
 
-<Reference>
-borderに関する仕様は少し特殊になっています。詳しくは[borderページ](/docs/property-class/bd/)をご覧ください。
-</Reference>
 
+<Spacer h="10" />
+:::info
+borderに関する仕様は少し特殊になっていますので、詳しくは[borderページ](/docs/property-class/bd/)をご覧ください。
+:::
+
+<DocsLink path="/docs/property-class/bd/" />
 
 ## Background
 
@@ -646,36 +672,43 @@ borderに関する仕様は少し特殊になっています。詳しくは[bord
 
 
 
-## Other CSS
+## Other Properties
 
 |Shorthand|Prop|To Class|BP|
 |---|---|---|---|
 |`float`|`float`|`left`,`right`|-|
 |`clear`|`clear`|`both`|-|
-|`isolation`|`isolation`|`isolate`|-|
-|`ovwrap`|`overflow-wrap`|`anywhere`|-|
-|`whspace`|`white-space`|`nowrap`|-|
+|`iso`|`isolation`|`isolate`|-|
+|`wm`|`writing-mode`|`vertical-rl`|✔|
+|`whs`|`white-space`|`nowrap`|-|
 
 
 <Preview>
-  <PreviewTitle>Examples</PreviewTitle>
-  <PreviewArea p="30">
-    <Text whspace="nowrap" ov="hidden" bd p="10" bgc="base-2" max-sz="s">
-      <Fragment>whspace: nowrap — この長いテキストは折り返さずにはみ出します</Fragment>
-    </Text>
+  <PreviewTitle>Examples: smサイズ以上で縦書きにする例</PreviewTitle>
+  <PreviewArea p="0" resize>
+    <Flow hasGutter py="20" w="100%" h="20em" wm={[null, 'vertical-rl']}>
+      <DummyText lang="ja" length="s" />
+      <DummyText lang="ja" length="l" offset="3" />
+    </Flow>
   </PreviewArea>
   <PreviewCode slot="tab" label="HTML">
-  ```html
-  <p class="-whspace:nowrap -ov:hidden -bd -p:10 -bgc:base-2 -max-sz:s">
-    whspace: nowrap — この長いテキストは折り返さずにはみ出します
-  </p>
+  ```html "-wm_sm" "--wm_sm:"
+  <div class="l--flow has--gutter -py:20 -w:100% -h -wm_sm" style="--h: 20em; --wm_sm: vertical-rl">
+    <p>ロレム・イプサムの座り雨。目まぐるしい文章の流れの中で、それは静かに歩く仮の言葉です。</p>
+    <p>
+      Elitも穏やかに続いていきますが、積み重ねられてきた「LiberroyとFoogの取り組み」は、決するための答えというより、余白のようなものです。作業が進むにつれて、工夫や考えとともに関心が折り重なりながらも、必要以上に主張せず彼らの作品は私たちに一定の示唆を与えてくれます。
+    </p>
+  </div>
   ```
   </PreviewCode>
   <PreviewCode slot="tab" label="JSX">
-  ```jsx
-  <Text whspace="nowrap" ov="hidden" bd p="10" bgc="base-2" max-sz="s">
-    whspace: nowrap — この長いテキストは折り返さずにはみ出します
-  </Text>
+  ```jsx 'wm={[null, "vertical-rl"]}'
+  <Flow hasGutter py="20" w="100%" h="20em" wm={[null, 'vertical-rl']}>
+    <p>ロレム・イプサムの座り雨。目まぐるしい文章の流れの中で、それは静かに歩く仮の言葉です。</p>
+    <p>
+      Elitも穏やかに続いていきますが、積み重ねられてきた「LiberroyとFoogの取り組み」は、余白のようなものです。作業が進むにつれて、工夫や考えとともに関心が折り重なりながらも、必要以上に主張せず彼らの作品は私たちに一定の示唆を与えてくれます。
+    </p>
+  </Flow>
   ```
   </PreviewCode>
 </Preview>
@@ -691,3 +724,14 @@ borderに関する仕様は少し特殊になっています。詳しくは[bord
 
 {/* |`filter`|`fltr`|||
 |`backdrop-filter`|`bdfltr`||| */}
+
+
+## hover
+
+Lismでは、`:hover`時のスタイルは-hov:で始まるPropertyクラスで定義します。
+
+ただし、`-hov`系クラスは通常のPropertyクラスと比べて少し特殊な仕組みで動作します。
+
+詳しくは[hoverページ](/docs/property-class/hov/)をご覧ください。
+
+<DocsLink path="/docs/property-class/hov/" />

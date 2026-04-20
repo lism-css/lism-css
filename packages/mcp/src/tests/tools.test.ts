@@ -175,26 +175,6 @@ describe('MCP Tools (integration)', () => {
     expect(data.error).toContain('not found');
   });
 
-  it('get_component で "is--vertical" (クラス直指定) が primitives/is--vertical.md を返す', async () => {
-    const client = await createTestClient();
-    const result = await client.callTool({ name: 'get_component', arguments: { name: 'is--vertical' } });
-    expect(result.isError).toBeFalsy();
-
-    const text = getText(result);
-    expect(text).toContain('# is--vertical');
-  });
-
-  it('get_component で "<Vertical>" は React alias が無いため not found を返し is--vertical を候補に含める', async () => {
-    const client = await createTestClient();
-    const result = await client.callTool({ name: 'get_component', arguments: { name: '<Vertical>' } });
-    expect(result.isError).toBeFalsy();
-
-    const text = getText(result);
-    const data = JSON.parse(text);
-    expect(data.error).toContain('not found');
-    expect(data.suggestions).toContain('is--vertical');
-  });
-
   it('get_guide で tokens トピックが Markdown を返す', async () => {
     const client = await createTestClient();
     const result = await client.callTool({ name: 'get_guide', arguments: { topic: 'tokens' } });
@@ -245,7 +225,7 @@ describe('load-markdown', () => {
     const filenames = getGuideFilenames();
     expect(filenames).toContain('SKILL.md');
     expect(filenames).toContain('primitives/l--flex.md');
-    expect(filenames).toContain('primitives/is--container.md');
+    expect(filenames).toContain('trait-class/is--container.md');
     expect(filenames).toContain('primitives/a--icon.md');
   });
 

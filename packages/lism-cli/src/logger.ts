@@ -16,4 +16,7 @@ export const logger = {
   log(msg: string): void {
     console.log(msg);
   },
+  heading(msg: string): void {
+    console.log(pc.bold(pc.cyan(`\n▸ ${msg}`)));
+  },
 };

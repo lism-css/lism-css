@@ -1,0 +1,323 @@
+---
+title: 'Naming Conventions'
+description: 'An explanation of the Prop-name and value-name abbreviation rules for Property Classes, along with the naming conventions for CSS variables in Lism CSS.'
+---
+
+This page explains the naming conventions for class names and CSS variables in Lism CSS.
+
+## CSS Variable Naming Conventions
+
+Each block of a variable name is written in camelCase, following the basic form `--{varName}`.
+
+### Token Variables
+
+| Type | Form | Example |
+|------|------|-----|
+| Basic | `--{prop}--{token}` | `--fz--l`, `--bdrs--20`, `--bxsh--10`, `--sz--s` |
+| Color | `--{color}` | `--brand`, `--text`, `--text-2`, `--red` |
+| Spacing | `--s{Token}` | `--s10`, `--s40` |
+
+
+#### Token Variation Notation
+
+| Notation | Condition | Example |
+|------|------|-----|
+| `s`, `m`, `l`, `xl`... | When representing graduated steps above and below a base value | `--fz--s`, `--fz--l` |
+| `base` | Values set as the initial value of `:root` / `body` | `--fz--base`, `--lh--base` |
+| `10`, `20`, `30`... | When values increase stepwise from `0` (`none`) | `--bdrs--20`, `--bxsh--30` |
+| `-10`, `-20`, `-30`... | When values decrease stepwise from `0` (`none`) | `--o---10`, `--o---20` |
+| Semantic names | When none of the above fit, use a semantic name | `--ar--og` |
+
+
+### Variables for Property Classes
+
+Rules for variable names used in Property Classes (`-{prop}:{value}`).
+
+| Form | Description | Example |
+|------|------|-----|
+| `--{prop}` | The same abbreviation as the class's `{prop}` portion | `--p`, `--bgc`, `--bdrs`, `--max-sz` |
+| `--{prop}_{bp}` | Breakpoint value | `--p_sm`, `--mx_md` |
+
+
+### Other Variables
+
+| Form | Use | Example |
+|------|------|-----|
+| `--{target}-{prop}` | Property applied to an element or class (can be overridden on `:root`) | `--link-td`, `--headings-ff` |
+| `--{propName}` | Variables controlling a class's own main feature. Initialized on the element itself and cannot be given an initial value on `:root` | `--sideW`, `--mainW` |
+| `--_{item}-{propName}` | Properties for child elements of a component class (`c--`) | `--_icon-size` |
+| `--_{varName}` | Internal variables for state management | `--_isHov`, `--_notHov` |
+
+## Class Naming Conventions
+
+Prefixes are attached to match the class classification. They are joined using two hyphens (`--`).
+
+- Component: `c--`
+- Atomic Primitives: `a--`
+- Layout Primitives: `l--`
+- Trait (role declaration): `is--`
+- Trait (feature attachment): `has--`
+- Set Class: `set--`
+- Utility Class: `u--`
+
+The name that follows the prefix is written in camelCase.
+
+- NG: `c--my-component`
+- OK: `c--myComponent`
+
+
+The naming conventions for Property Classes are as follows.
+
+- Class paired with a specific value: `-{prop}:{value}`
+- Class that accepts a `--{prop}` variable: `-{prop}`
+- Class that accepts a breakpoint value (`--{prop}_{bp}`): `-{prop}_{bp}`
+
+
+### Responsibility of each class prefix
+
+The responsibility and layer assignment of each prefix is summarized below.
+
+| Prefix | Responsibility | Layer | Example |
+|---|---|---|---|
+| `set--` | Base styling of HTML elements / variable setup | `@lism-base` | `set--plain`, `set--var:hov`, `set--var:bxsh`, `set--var:bdrsInner` |
+| `l--` | Layout Primitives (composition units) | `@lism-primitive` | `l--box`, `l--flex`, `l--grid` |
+| `a--` | Atomic Primitives (smallest units) | `@lism-primitive` | `a--icon`, `a--divider`, `a--spacer` |
+| `c--` | UI components with BEM-like structure | `@lism-component` | `c--card`, `c--button` |
+| `is--` | “is a …” (role / existence declaration) | `@lism-trait` | `is--container`, `is--wrapper`, `is--layer`, `is--boxLink` |
+| `has--` | “has a …” (single-feature trait attachment) | `@lism-trait` | `has--transition`, `has--gutter`, `has--snap` |
+| `u--` | Decorative effects (including child-element decoration) | `@lism-utility` | `u--trim`, `u--cbox`, `u--collapseGrid`, `u--clipText` |
+
+
+### When to use `is--` / `has--` / `set--` / `u--`
+
+All of `set--`, `is--`, `has--`, and `u--` attach *some* meaning to an element, but they differ in responsibility. Use the criteria below when in doubt.
+
+| | Purpose | CSS variables |
+|---|---|---|
+| `set--` | Base styling of HTML elements / variable setup | Not required |
+| `is--` | “is a …” (role / existence declaration) | Not required |
+| `has--` | “has a …” (feature attachment) | Required (customization points) |
+| `u--` | Decorative effect (including child-element styling) | Not required |
+
+
+## Abbreviation Rules for `{prop}`
+
+The basic approach is to abbreviate based on [Emmet](https://docs.emmet.io/cheat-sheet/).
+
+### One-character Properties
+
+The main properties that can be abbreviated to a single character are defined as follows.
+
+<div class="c--propTable">
+| Abbreviation | Property |
+|------|------|
+| `p` | `padding` |
+| `m` | `margin` |
+| `g` | `gap` |
+| `c` | `color` |
+| `f` | `font` |
+| `w` | `width` |
+| `h` | `height` |
+| `d` | `display` |
+| `o` | `opacity` |
+| `v` | `visibility` |
+| `i` | `inset` |
+| `t` | `top` |
+| `b` | `bottom` |
+| `l` | `left` |
+| `r` | `right` |
+| `z` | `z-index` |
+</div>
+
+Among these, the only one that differs from Emmet is `opacity`.
+
+### Property Groups
+
+The following explains abbreviation rules for groups of related properties.
+- Shorthand / longhand groups such as `font/font-*`, `background/background-*`, `padding/padding-*`
+- Groups that share a common prefix, such as `text-*` (e.g. `text-align`, `text-decoration`)
+
+#### Basic form: "group abbreviation" + "abbreviation of the sub-property name"
+
+Some examples:
+
+<div class="c--propTable">
+| CSS Property | Prop |
+|-------------|------|
+| font | `f` |
+| font-size | `fz` |
+| font-weight | `fw` |
+| background | `bg` |
+| background-color | `bgc` |
+| background-image | `bgi` |
+| flex | `fx` |
+| flex-shrink | `fxsh` |
+| flex-grow | `fxg` |
+| grid-template | `gt` |
+| grid-template-columns | `gtc` |
+| grid-template-rows | `gtr` |
+</div>
+
+
+#### Directional form: "group abbreviation" + `-` + "direction"
+
+- Side properties that indicate a direction specify it with a hyphenated (`-`) suffix.
+- `inline` / `block` become `x` / `y`.
+
+<figure class="c--propTable">
+<figcaption>Example:</figcaption>
+| Direction | Suffix | Example |
+|------|-----------|-----|
+| physical | `-t` / `-b` / `-l` / `-r` | `bd-t`, `bd-b`, `bd-l`, `bd-r` |
+| inline / block | `-x` / `-y` | `bd-x`, `bd-y` |
+| start / end | `-s` / `-e` | `bd-x-s`, `bd-x-e`, `bd-y-s`, `bd-y-e` |
+| x / y | `-x` / `-y` | `ov-x`, `ov-y` |
+</figure>
+
+#### Directional exception: for `p` and `m` only, the first hyphen is omitted
+
+For `padding` and `margin`, notations like `pt`, `px`, `my` are widely adopted across CSS frameworks, so the first hyphen is omitted.
+
+<div class="c--propTable">
+| Direction | Abbreviation |
+|-------------|----------|
+| physical | `pt`, `pb`, `pl`, `pr`, `mt`, `mb`, `ml`, `mr` |
+| inline/block | `px`, `py`, `mx`, `my` |
+| start/end | `px-s`, `px-e`, `py-s`, `py-e`, `mx-s`, `mx-e`, `my-s`, `my-e` |
+</div>
+
+#### No collisions between group abbreviations
+
+An abbreviation used by one group must not be reused by another group.
+
+NG example: abbreviating `flex` to `fx`, then `flex-shrink` to `fsh`. (This breaks the consistency of the `fx` group.)
+
+### max- / min- Properties
+
+`max-` and `min-` prefixes retain their hyphen.
+
+
+<figure class="c--propTable">
+<figcaption>Example:</figcaption>
+| CSS Property | Prop |
+|-------------|------|
+| max-width | `max-w` |
+| min-width | `min-w` |
+| max-height | `max-h` |
+| min-height | `min-h` |
+</figure>
+
+### Other Properties
+
+For the remaining properties, abbreviation follows the criteria below.
+
+1. **Single word**: use as-is or abbreviate
+2. Hyphenated, or **6 characters or more**: abbreviate using Emmet style or to a degree still easily recognizable
+
+
+<figure class="c--propTable">
+<figcaption>Example:</figcaption>
+| CSS Property | Prop | Category |
+|-------------|------|------|
+| float | `float` | as-is |
+| order | `order` | as-is |
+| position | `pos` | abbreviated |
+| overflow | `ov` | abbreviated |
+| inline-size | `sz` | abbreviated |
+| block-size | `bsz` | abbreviated |
+| aspect-ratio | `ar` | abbreviated |
+| writing-mode | `wm` | abbreviated |
+| white-space | `whs` | abbreviated |
+</figure>
+
+
+### Reusing one-character abbreviations
+
+For **one-character properties that do not form a group**, the character can be reused as the front half of another hyphenated abbreviation.
+It can also be reused when the property has **only directional sub-properties**, as long as it does not collide with directional suffixes.
+
+Here are some examples.
+
+<div class="c--propTable">
+| 1-char Prop | Reuse target | Expanded example |
+|-----------|---------|--------|
+| `t` (`top`) | `text-*` | `ta` (`text-align`) |
+| `l` (`left`) | `line-*` | `lh` (`line-height`) |
+| `w` (`width`) | `writing-` | `wm` (`writing-mode`) |
+| `p` (`padding`) | `place-*` | `pi` (`place-items`) |
+</div>
+
+:::note
+`g` in `grid-*` is an exception, allowed under the special rule that `grid` is not treated as a standalone group in Lism.
+:::
+
+
+## Abbreviation Rules for `{value}`
+
+This section describes the abbreviation rules for the `{value}` portion of a Property Class `-{prop}:{value}`.
+
+### Basic rule: use the actual CSS value as-is
+
+The `{value}` portion is **not abbreviated** in principle. Since `{prop}` is already abbreviated, keeping `{value}` intact allows the combination to hint at the original property.
+
+```
+.-d:none          → display: none;
+.-d:inline-flex   → display: inline-flex;
+.-pos:relative    → position: relative;
+.-ta:center       → text-align: center;
+.-fx:1            → flex: 1;
+.-fxd:column      → flex-direction: column;
+```
+
+### When using a token value
+
+If a matching token exists, use the token value (the `{value}` portion of `--{token}--{value}`).
+
+```
+.-c:text-2        → color: var(--text-2);
+.-fz:l            → font-size: var(--fz--l);
+.-p10             → padding: var(--s10);
+.-fw:bold         → font-weight: var(--fw--bold);
+.-bdrs:20         → border-radius: var(--bdrs--20);
+.-bxsh:10         → box-shadow: var(--bxsh--10);
+```
+
+Like positive tokens, tokens whose value is `-{NUM}` also have the value concatenated as-is into the variable name.
+
+```
+.-o:-10          → opacity: var(--o---10);
+.-o:-20          → opacity: var(--o---20);
+```
+
+
+### Value notation rules
+
+Units, minus signs, and decimal points are basically kept as-is when turned into a class.
+
+```
+.-w:100%        → width: 100%;
+.-h:100%        → height: 100%;
+.-z:-1          → z-index: -1;
+.-ar:16/9       → aspect-ratio: 16/9;
+```
+
+Decimal Property Classes are not included in the core, but if you want to turn a fixed value like `opacity: 0.75` into a class, you can add CSS like the following.
+
+```css
+.-o\:0\.75{opacity: 0.75;}
+
+/* → used as <div class="-o:0.75"> */
+```
+
+### Long keyword values can be abbreviated if still understandable
+
+As an exception, values that are 6 characters or more **and** whose abbreviation is still obviously meaningful may be abbreviated.
+
+| Actual value | Abbreviation | Class example |
+|--------|------------|-----|
+| `uppercase` | `upper` | `-tt:upper` |
+| `lowercase` | `lower` | `-tt:lower` |
+| `fit-content` | `fit` | `-w:fit`, `-h:fit` |
+| `space-between` | `between` | `-ac:between`, `-jc:between` |
+| `currentColor` | `current` | `-bdc:current` |
+

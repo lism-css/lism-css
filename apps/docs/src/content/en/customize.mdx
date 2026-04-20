@@ -27,7 +27,7 @@ You can customize the output CSS by overriding SCSS variables.
 The variables defined in `lism-css/scss/_setting.scss` can be overridden.
 
 <PreviewTitle>`_setting.scss`</PreviewTitle>
-<EmbedCode dirPath="packages/lism-css" srcPath="src/scss/_setting.scss" />
+<SrcCode path="src/scss/_setting.scss" />
 
 - `$breakpoints`: Breakpoint value definitions
 - `$common_support_bp`: Breakpoints commonly supported across major Property Classes
@@ -60,9 +60,10 @@ After defining your overrides, import `lism-css/scss/main.scss` to apply the cus
 // @use '../path-to/node_modules/lism-css/scss/main_no_layer';
 ```
 
-<HelpText icon="info">Toggling `@layer` on or off is not controlled by a variable. Switch the `main.scss` file you import instead.</HelpText>
-<HelpText icon="info">When using Astro, the `../path-to/node_modules/` prefix is not needed.</HelpText>
-
+:::info
+- Toggling `@layer` on or off is not controlled by a variable. Switch the `main.scss` file you import instead.
+- When using Astro, the `../path-to/node_modules/` prefix is not needed.
+:::
 
 
 {/* For example, if you only need `sm` and `md` size support, setting `$common_support_bp` to `md` will prevent `lg` and larger breakpoint utility classes from being generated. */}
@@ -154,13 +155,13 @@ export default {
 <Preview>
   <PreviewTitle>Default values</PreviewTitle>
   <PreviewCode slot="tab" label="props">
-  <EmbedCode dirPath="packages/lism-css" srcPath="config/defaults/props.ts" />
+  <SrcCode path="config/defaults/props.ts" />
   </PreviewCode>
   <PreviewCode slot="tab" label="tokens">
-  <EmbedCode dirPath="packages/lism-css" srcPath="config/defaults/tokens.ts" />
+  <SrcCode path="config/defaults/tokens.ts" />
   </PreviewCode>
   <PreviewCode slot="tab" label="traits">
-  <EmbedCode dirPath="packages/lism-css" srcPath="config/defaults/traits.ts" />
+  <SrcCode path="config/defaults/traits.ts" />
   </PreviewCode>
 </Preview>
 
@@ -183,10 +184,10 @@ export default {
   },
   tokens: {
     // Add tokens
-    o: [...(tokens.o || []), '-5'],
+    bdrs: [...(tokens.bdrs || []), '5'],
   },
   traits: {
-    // Add props for Trait Primitive output
+    // Add props for Trait (is--* / has--*) output
     isHoge: 'is--hoge',
   },
 };
@@ -197,19 +198,19 @@ With the above customization, the following behavior is added to Lism components
 - `d='flex'` → outputs `-d:flex`
 - `d='grid'` → outputs `-d:grid`
 - `p='box'` → outputs `-p:box`
-- `o='-5'` → outputs `-o:-5`
+- `bdrs='5'` → outputs `-bdrs:5`
 - `isHoge` → outputs `is--hoge`
 
-{/* <Box p="box" bd o="-5" isHoge>Box</Box> */}
+{/* <Box p="box" bd bdrs="5" isHoge>Box</Box> */}
 
 <Preview>
   <PreviewCode slot="tab" label="HTML">
   ```jsx
-  <Box p="box" d="flex" o="-5" isHoge>Box</Box>
+  <Box p="box" d="flex" bdrs="5" isHoge>Box</Box>
 
   ↓　Output
 
-  <div class="l--box is--hoge -p:box -d:flex -o:-5">Box</div>
+  <div class="l--box is--hoge -p:box -d:flex -bdrs:5">Box</div>
   ```
   </PreviewCode>
 </Preview>
@@ -242,8 +243,8 @@ In this example, the following styles would be automatically generated into `lis
 .-p\:box {
   padding: 2em;
 }
-.-o\:-5 {
-  opacity: var(--o--n5);
+.-bdrs\:5 {
+  border-radius: var(--bdrs--5);
 }
 ```
 
@@ -256,7 +257,7 @@ Also, the styles for `is--` classes must be manually defined and loaded.
 <PreviewTitle>The following must be loaded manually:</PreviewTitle>
 ```css
 :root {
-  --o--n5: 0.9;
+  --bdrs--5: 0.125rem;
 }
 .is--hoge {
   /* ... */
@@ -294,9 +295,9 @@ You can also override SCSS variables in line with your `lism.config.js` configur
         'box': '2em',
       ),
     ),
-    'o': (
+    'bdrs': (
       utilities: (
-        '-5': 'var(--o--n5)',
+        '5': 'var(--bdrs--5)',
       ),
     ),
   )
@@ -308,12 +309,12 @@ You can also override SCSS variables in line with your `lism.config.js` configur
 // Append token definitions
 @layer lism-base {
   :root {
-    --o--n5: 0.9;
+    --bdrs--5: 0.125rem;
   }
 }
 ```
 
-{/* <Box p="box" d="flex" o="-5" isHoge bd>
+{/* <Box p="box" d="flex" bdrs="5" isHoge bd>
 <div>Box</div>
 <div>Box</div>
 </Box> */}

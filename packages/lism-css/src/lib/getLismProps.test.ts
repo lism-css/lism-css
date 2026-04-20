@@ -75,17 +75,21 @@ describe('getLismProps', () => {
   });
 
   describe('出力順', () => {
-    test('className → primitiveClass → uClasses の順で出力される', () => {
+    test('className → primitive → set → trait → util → property の順で出力される', () => {
       const result = getLismProps({
         className: 'c--box',
         layout: 'flex',
+        set: 'var:hov',
         isContainer: true,
+        util: 'cbox',
         p: '20',
       });
       const cls = result.className as string;
       expect(cls.indexOf('c--box')).toBeLessThan(cls.indexOf('l--flex'));
-      expect(cls.indexOf('l--flex')).toBeLessThan(cls.indexOf('is--container'));
-      expect(cls.indexOf('is--container')).toBeLessThan(cls.indexOf('-p:20'));
+      expect(cls.indexOf('l--flex')).toBeLessThan(cls.indexOf('set--var:hov'));
+      expect(cls.indexOf('set--var:hov')).toBeLessThan(cls.indexOf('is--container'));
+      expect(cls.indexOf('is--container')).toBeLessThan(cls.indexOf('u--cbox'));
+      expect(cls.indexOf('u--cbox')).toBeLessThan(cls.indexOf('-p:20'));
     });
   });
 
@@ -203,16 +207,11 @@ describe('getLismProps', () => {
     });
   });
 
-  describe('Lism Props処理 - true/- 値', () => {
+  describe('Lism Props処理 - true 値', () => {
     test('true値はユーティリティクラスのみ出力される', () => {
       const result = getLismProps({ bd: true });
       expect(result.className).toContain('-bd');
       expect(result.style?.borderStyle).toBeUndefined();
-    });
-
-    test('- 値はユーティリティクラスのみ出力される', () => {
-      const result = getLismProps({ w: '-' });
-      expect(result.className).toContain('-w');
     });
   });
 
@@ -301,11 +300,6 @@ describe('getLismProps', () => {
       expect(result.className).toContain('-hov');
     });
 
-    test('hov: - の場合、-hovクラスが追加される', () => {
-      const result = getLismProps({ hov: '-' });
-      expect(result.className).toContain('-hov');
-    });
-
     test('hov: 文字列の場合、hoverクラスが追加される', () => {
       const result = getLismProps({ hov: 'fade' });
       expect(result.className).toContain('-hov:fade');
@@ -317,30 +311,43 @@ describe('getLismProps', () => {
       expect(result.className).toContain('-hov:shadow');
     });
 
-    test('hov: オブジェクト形式でプロップ指定できる', () => {
+    test('hov: 文字列はそのまま -hov:{入力} として出力される（自動変換なし）', () => {
+      const result = getLismProps({ hov: 'o' });
+      expect(result.className).toContain('-hov:o');
+      expect(result.className).not.toContain('-hov:-o');
+    });
+
+    test('hov: "-" 付きで指定した場合は -hov:-{prop} として出力される', () => {
+      const result = getLismProps({ hov: '-o' });
+      expect(result.className).toContain('-hov:-o');
+    });
+
+    test('hov: カンマ区切りでもそれぞれそのまま出力される', () => {
+      const result = getLismProps({ hov: '-c,-bxsh,neutral,in:zoom' });
+      expect(result.className).toContain('-hov:-c');
+      expect(result.className).toContain('-hov:-bxsh');
+      expect(result.className).toContain('-hov:neutral');
+      expect(result.className).toContain('-hov:in:zoom');
+    });
+
+    test('hov: オブジェクト形式で値を指定すると -hov:-{key} + --hov-{key} 変数が出力される', () => {
       const result = getLismProps({
         hov: { c: 'red', bgc: 'blue' },
       });
-      expect(result.className).toContain('-hov:c');
-      expect(result.className).toContain('-hov:bgc');
+      expect(result.className).toContain('-hov:-c');
+      expect(result.className).toContain('-hov:-bgc');
       expect(result.style?.['--hov-c']).toBe('var(--red)');
       expect(result.style?.['--hov-bgc']).toBe('var(--blue)');
     });
 
-    test('hov: オブジェクト形式で true 値の場合はクラスのみ', () => {
+    test('hov: オブジェクト形式で true の場合はクラスのみ（- は付かない）', () => {
       const result = getLismProps({
-        hov: { c: true },
+        hov: { c: true, shadowUp: true },
       });
       expect(result.className).toContain('-hov:c');
+      expect(result.className).toContain('-hov:shadowUp');
+      expect(result.className).not.toContain('-hov:-c');
       expect(result.style?.['--hov-c']).toBeUndefined();
-    });
-
-    test('hov: オブジェクト形式で class プロップを指定できる', () => {
-      const result = getLismProps({
-        hov: { class: 'fade,shadow' },
-      });
-      expect(result.className).toContain('-hov:fade');
-      expect(result.className).toContain('-hov:shadow');
     });
   });
 

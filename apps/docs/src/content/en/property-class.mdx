@@ -44,7 +44,29 @@ export const PropTable = ({data={}, ...props}) => {
 Lism provides utility classes for the major CSS properties, making it easy to set frequently used values and tokens.
 For particularly important CSS properties, breakpoint-specific classes are also available.
 
-These are called [Property Classes](/en/docs/css-methodology/#property-class) and are defined in the format `-{prop}(:{value})` and `-{prop}_{bp}`.
+These are called **Property Classes** and are defined in the format `-{prop}(:{value})` and `-{prop}_{bp}`.
+
+<PreviewTitle>Here are some examples:</PreviewTitle>
+
+```css
+.-fz\:l { font-size: var(--fz--l) }
+.-fz\:xl { font-size: var(--fz--xl) }
+.-ta\:center { text-align: center }
+.-d\:none { display: none }
+.-p\:20 { --p: var(--s20) }
+
+.-d{display:var(--d)}
+.-p,[class*="-p:"]{padding:var(--p)}
+@container (min-width: 480px) {
+  .-d_sm{display:var(--d_sm)}
+  .-p_sm{padding:var(--p);--p:var(--p_sm)!important}
+}
+@container (min-width: 800px) {
+  .-d_md{display:var(--d_md)}
+  .-p_md{padding:var(--p);--p:var(--p_md)!important}
+}
+```
+
 
 This page lists all available Property Classes.
 
@@ -223,11 +245,11 @@ export const LinkSPACE = () => <a href="/en/docs/tokens/spacing/"><code>SPACE</c
 |`min-w`|`min-width`|`100%`|✔|
 |`min-h`|`min-height`|`100%`|✔|
 |`sz`|`inline-size`|-|-|
-|`max-sz`|`max-inline-size`|`xs`,`s`,`m`,`l`,`xl`,`min`,`full`,`container`|-|
+|`max-sz`|`max-inline-size`|`xs`,`s`,`m`,`l`,`xl`,`container`,`full`|-|
 |`min-sz`|`min-inline-size`|-|-|
-|`ysz`|`block-size`|-|-|
-|`max-ysz`|`max-block-size`|-|-|
-|`min-ysz`|`min-block-size`|-|-|
+|`bsz`|`block-size`|-|-|
+|`max-bsz`|`max-block-size`|-|-|
+|`min-bsz`|`min-block-size`|-|-|
 
 
 Related tokens: <a href="/en/docs/tokens/#size"><code>SIZE</code></a>
@@ -264,6 +286,7 @@ Related tokens: <a href="/en/docs/tokens/#size"><code>SIZE</code></a>
 |`ov`|`overflow`| `auto`, `clip`, `hidden`|-|
 |`ov-x`|`overflow-x`|`auto`, `clip`, `scroll`|-|
 |`ov-y`|`overflow-y`|`auto`, `clip`, `scroll`|-|
+|`ovw`|`overflow-wrap`|`anywhere`|-|
 |`ar`|`aspect-ratio`|`21/9`,`16/9`,`3/2`,`1/1`,<br />`og`|✔|
 
 
@@ -619,9 +642,13 @@ Here are some examples of positioning elements with `position: absolute`.
   </PreviewCode>
 </Preview>
 
-<Reference>
+
+<Spacer h="10" />
+:::info
 The border specification has some unique behavior. See the [border page](/en/docs/property-class/bd/) for details.
-</Reference>
+:::
+
+<DocsLink path="/docs/property-class/bd/" />
 
 
 ## Background
@@ -646,36 +673,43 @@ The border specification has some unique behavior. See the [border page](/en/doc
 
 
 
-## Other CSS
+## Other Properties
 
 |Shorthand|Prop|To Class|BP|
 |---|---|---|---|
 |`float`|`float`|`left`,`right`|-|
 |`clear`|`clear`|`both`|-|
-|`isolation`|`isolation`|`isolate`|-|
-|`ovwrap`|`overflow-wrap`|`anywhere`|-|
-|`whspace`|`white-space`|`nowrap`|-|
+|`iso`|`isolation`|`isolate`|-|
+|`wm`|`writing-mode`|`vertical-rl`|✔|
+|`whs`|`white-space`|`nowrap`|-|
 
 
 <Preview>
-  <PreviewTitle>Examples</PreviewTitle>
-  <PreviewArea p="30">
-    <Text whspace="nowrap" ov="hidden" bd p="10" bgc="base-2" max-sz="s">
-      <Fragment>whspace: nowrap — This long text will not wrap and will overflow</Fragment>
-    </Text>
+  <PreviewTitle>Examples: vertical writing at sm size and above</PreviewTitle>
+  <PreviewArea p="0" resize>
+    <Flow hasGutter py="20" w="100%" h="20em" wm={[null, 'vertical-rl']}>
+      <DummyText length="s" />
+      <DummyText length="l" offset="3" />
+    </Flow>
   </PreviewArea>
   <PreviewCode slot="tab" label="HTML">
-  ```html
-  <p class="-whspace:nowrap -ov:hidden -bd -p:10 -bgc:base-2 -max-sz:s">
-    whspace: nowrap — This long text will not wrap and will overflow
-  </p>
+  ```html "-wm_sm" "--wm_sm:"
+  <div class="l--flow has--gutter -py:20 -w:100% -h -wm_sm" style="--h: 20em; --wm_sm: vertical-rl">
+    <p>Lorem ipsum dolor sit amet. Consectetur adipiscing elit, sed do eiusmod tempor Incididunt ut.</p>
+    <p>
+      Labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut. Aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint.
+    </p>
+  </div>
   ```
   </PreviewCode>
   <PreviewCode slot="tab" label="JSX">
-  ```jsx
-  <Text whspace="nowrap" ov="hidden" bd p="10" bgc="base-2" max-sz="s">
-    whspace: nowrap — This long text will not wrap and will overflow
-  </Text>
+  ```jsx 'wm={[null, "vertical-rl"]}'
+  <Flow hasGutter py="20" w="100%" h="20em" wm={[null, 'vertical-rl']}>
+    <p>Lorem ipsum dolor sit amet. Consectetur adipiscing elit, sed do eiusmod tempor Incididunt ut.</p>
+    <p>
+      Labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut. Aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint.
+    </p>
+  </Flow>
   ```
   </PreviewCode>
 </Preview>
@@ -691,3 +725,14 @@ The border specification has some unique behavior. See the [border page](/en/doc
 
 {/* |`filter`|`fltr`|||
 |`backdrop-filter`|`bdfltr`||| */}
+
+
+## hover
+
+In Lism, styles for the `:hover` state are defined with Property classes that start with `-hov:`.
+
+However, `-hov` classes work with a slightly different mechanism compared to regular Property classes.
+
+See the [hover page](/en/docs/property-class/hov/) for details.
+
+<DocsLink path="/docs/property-class/hov/" />

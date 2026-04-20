@@ -6,7 +6,7 @@ import './_style.css';
 ---
 
 <DemoLayout title="Feature007">
-  <Container isWrapper="l" bgc="base" py="50" set="gutter">
+  <Container isWrapper="l" bgc="base" py="50" hasGutter>
     <TileGrid cols={['2', '3', '4']} rows={['4', '3']} g="20">
       <BoxLink
         href="#"
@@ -16,10 +16,11 @@ import './_style.css';
         ov="hidden"
         bdrs="30"
         bxsh="20"
-        set="hov transition"
+        set="var:hov"
+        hasTransition
       >
         <Frame isLayer>
-          <Media src="https://cdn.lism-css.com/random/img?category=v&r=1" alt="" width="960" height="640" set="transition" hov="to:zoom" />
+          <Media src="https://cdn.lism-css.com/random/img?category=v&r=1" alt="" width="960" height="640" hasTransition hov="in:zoom" />
         </Frame>
         <Layer bgc="black:20%" />
         <Grid gtr="auto auto" gtc="auto" p="30" h="100%" pos="relative">
@@ -29,7 +30,7 @@ import './_style.css';
           </Stack>
           <Flex ai="center" jc="flex-end" c="white" my-s="auto" g="20">
             <Inline fs="i">View More</Inline>
-            <Stack p="15" bd bdrs="99" set="transition" hov="to:reverse">
+            <Stack p="15" bd bdrs="99" hasTransition hov="in:reverse">
               <Icon icon="arrow-right" fz="m" />
             </Stack>
           </Flex>
@@ -43,10 +44,11 @@ import './_style.css';
         ov="hidden"
         bdrs="30"
         bxsh="20"
-        set="hov transition"
+        set="var:hov"
+        hasTransition
       >
         <Frame isLayer>
-          <Media src="https://cdn.lism-css.com/random/img?category=v&r=2" alt="" width="960" height="640" set="transition" hov="to:zoom" />
+          <Media src="https://cdn.lism-css.com/random/img?category=v&r=2" alt="" width="960" height="640" hasTransition hov="in:zoom" />
         </Frame>
         <Layer bgc="black:20%" />
         <Grid gtr="auto auto" gtc="auto" p="30" h="100%" pos="relative">
@@ -56,15 +58,25 @@ import './_style.css';
           </Stack>
           <Flex ai="center" jc="flex-end" c="white" my-s="auto" g="20">
             <Inline fs="i">View More</Inline>
-            <Stack p="15" bd bdrs="99" set="transition" hov="to:reverse">
+            <Stack p="15" bd bdrs="99" hasTransition hov="in:reverse">
               <Icon icon="arrow-right" fz="m" />
             </Stack>
           </Flex>
         </Grid>
       </BoxLink>
-      <BoxLink href="#" gr={['4', '3', '1 / span 1']} gc={['1', null, '4']} pos="relative" ov="hidden" bdrs="30" bxsh="20" set="hov transition">
+      <BoxLink
+        href="#"
+        gr={['4', '3', '1 / span 1']}
+        gc={['1', null, '4']}
+        pos="relative"
+        ov="hidden"
+        bdrs="30"
+        bxsh="20"
+        set="var:hov"
+        hasTransition
+      >
         <Frame isLayer>
-          <Media src="https://cdn.lism-css.com/random/img?category=v&r=3" alt="" width="960" height="640" set="transition" hov="to:zoom" />
+          <Media src="https://cdn.lism-css.com/random/img?category=v&r=3" alt="" width="960" height="640" hasTransition hov="in:zoom" />
         </Frame>
         <Layer bgc="black:20%" />
         <Grid gtr="auto auto" gtc="auto" p="30" h="100%" pos="relative">
@@ -74,7 +86,7 @@ import './_style.css';
           </Stack>
           <Flex ai="center" jc="flex-end" c="white" my-s="auto" g="20">
             <Inline fs="i">View More</Inline>
-            <Stack p="15" bd bdrs="99" set="transition" hov="to:reverse">
+            <Stack p="15" bd bdrs="99" hasTransition hov="in:reverse">
               <Icon icon="arrow-right" fz="m" />
             </Stack>
           </Flex>
@@ -88,10 +100,11 @@ import './_style.css';
         ov="hidden"
         bdrs="30"
         bxsh="20"
-        set="hov transition"
+        set="var:hov"
+        hasTransition
       >
         <Frame isLayer>
-          <Media src="https://cdn.lism-css.com/random/img?category=v&r=4" alt="" width="960" height="640" set="transition" hov="to:zoom" />
+          <Media src="https://cdn.lism-css.com/random/img?category=v&r=4" alt="" width="960" height="640" hasTransition hov="in:zoom" />
         </Frame>
         <Layer bgc="black:20%" />
         <Grid gtr="auto auto" gtc="auto" p="30" h="100%" pos="relative">
@@ -101,7 +114,7 @@ import './_style.css';
           </Stack>
           <Flex ai="center" jc="flex-end" c="white" my-s="auto" g="20">
             <Inline fs="i">View More</Inline>
-            <Stack p="15" bd bdrs="99" set="transition" hov="to:reverse">
+            <Stack p="15" bd bdrs="99" hasTransition hov="in:reverse">
               <Icon icon="arrow-right" fz="m" />
             </Stack>
           </Flex>
@@ -113,10 +126,10 @@ import './_style.css';
 
 <style>
   @media (any-hover: hover) {
-    .-hov\:to\:zoom {
+    .-hov\:in\:zoom {
       scale: var(--_isHov, 1.1);
     }
-    .-hov\:to\:reverse {
+    .-hov\:in\:reverse {
       background-color: var(--_isHov, var(--white));
       color: var(--_isHov, var(--black));
     }

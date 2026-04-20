@@ -4,8 +4,7 @@ navtitle: 'l--fluidCols'
 description: 'l--fluidCols は、カラム要素が指定した幅より小さくならないように自動で折り返す、ブレイクポイント非依存の段組みクラスです。'
 ---
 
-import { FluidCols, Lism, Frame } from 'lism-css/astro';
-import { DummyText } from '@lism-css/ui/astro';
+import { FluidCols, Lism } from 'lism-css/astro';
 
 
 `l--fluidCols` は、**カラム要素が指定した幅より小さくならないように自動で折り返す**、ブレイクポイントに依存しない段組みクラスです。
@@ -75,7 +74,7 @@ import { DummyText } from '@lism-css/ui/astro';
 
 `l--fluidCols`では、`grid-template-columns`の`repeat`関数の第一引数を`--autoMode` で指定することができます。（デフォルトは `auto-fit` です。）
 
-`--autoMode:auto-fill` (`autoFit`) を指定することで、要素数が少ない時の挙動が代わります。
+`--autoMode:auto-fill` (`autoFill`) を指定することで、要素数が少ない時の挙動が代わります。
 
 
 <Preview>

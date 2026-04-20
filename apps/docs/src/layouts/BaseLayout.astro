@@ -59,7 +59,7 @@ const canonicalUrl = isDev ? Astro.url.toString() : Astro.site ? new URL(Astro.u
         min-h="100svh"
       >
         <Sidebar d={['none', null, 'flex']} layout="stack" />
-        <Container isWrapper={toc ? true : 'l'} set="gutter" py="40" as="main" class="z--main">
+        <Container isWrapper={toc ? true : 'l'} hasGutter py="40" as="main" class="z--main">
           <span class="u--srOnly" id="_top" aria-hidden="true"></span>
           <slot />
           <Footer />

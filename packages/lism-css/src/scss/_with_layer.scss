@@ -4,7 +4,7 @@
 @use 'sass:meta';
 
 // レイヤー順序を明示的に宣言（詳細度: 上ほど弱い）
-@layer lism-base, lism-primitive, lism-component, lism-custom, lism-utility;
+@layer lism-base, lism-trait, lism-primitive, lism-component, lism-custom, lism-utility;
 
 @layer lism-base {
   // resetは中でも layer定義済み。 lism-base.reset となる
@@ -13,10 +13,14 @@
   @include meta.load-css('base');
 }
 
+// ユーザーが明示的に宣言する trait クラス（is--* / has--*）用レイヤー。
+// primitive より弱い位置に配置し、is--boxLink の display: block 等の
+// 初期化的な宣言がレイアウトプリミティブ（l--stack の display: flex 等）に負けるようにする。
+@layer lism-trait {
+  @include meta.load-css('trait');
+}
+
 @layer lism-primitive {
-  @layer trait {
-    @include meta.load-css('primitives/trait');
-  }
   @layer layout {
     @include meta.load-css('primitives/layout');
   }

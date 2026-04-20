@@ -91,7 +91,7 @@ packages/mcp/
         │
         │  手動で整理（/update-skill-template コマンド）
         ▼
-② .claude/skills/lism-css-guide/
+② skills/lism-css-guide/
         ├─ *.md                  # ルート直下のトピック別ガイド
         └─ modules/{l--|is--|a--}*.md  # プリミティブ単位の詳細ファイル
         │
@@ -119,7 +119,7 @@ packages/mcp/
 | `components-core` | components-core.md | コアコンポーネント（Lism, Box, Flex, Stack, Grid 等） |
 | `components-ui` | components-ui.md | UI コンポーネント（Accordion, Modal, Tabs, Button 等） |
 | `base-styles` | base-styles.md | ベーススタイリング・リセット CSS・HTML 要素スタイル |
-| `set-class` | set-class.md | Set クラス（set--plain, set--shadow, set--hov 等） |
+| `set-class` | set-class.md | Set クラス（set--plain, set--var:bxsh, set--var:hov 等） |
 | `primitive-class` | primitive-class.md | Primitive クラスプレフィックス（is--, l--, a--）と Component クラス（c--） |
 | `utility-class` | utility-class.md | ユーティリティクラス（u--trim, u--cbox 等） |
 | `css-rules` | css-rules.md | CSS 設計方法論・Layer 構造・命名規則 |
@@ -228,7 +228,7 @@ server.registerTool(
 
 ```
 参照順:
-  1. .claude/skills/lism-css-guide/ （開発時の正本）
+  1. skills/lism-css-guide/ （開発時の正本）
   2. dist/data/guides/              （npm パッケージ配布時のフォールバック）
 ```
 

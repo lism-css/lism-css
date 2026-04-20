@@ -14,7 +14,7 @@ This page introduces the base styles defined in the `@lism-base` layer.
 The Reset CSS is defined as the `@lism-base.reset` layer.
 
 <PreviewTitle>Source code</PreviewTitle>
-<EmbedCode dirPath="packages/lism-css" srcPath="src/scss/reset.scss" />
+<SrcCode path="src/scss/reset.scss" />
 
 
 The reset.css is designed to follow browser default styles as closely as possible.
@@ -33,7 +33,7 @@ Or alternatively:
 
 <PreviewTitle>Load via CDN</PreviewTitle>
 ```html
-<link href="https://cdn.jsdelivr.net/npm/lism-css@0.13.1/dist/css/reset.css" rel="stylesheet" />
+<link href="https://cdn.jsdelivr.net/npm/lism-css@0.14.0/dist/css/reset.css" rel="stylesheet" />
 ```
 
 
@@ -186,14 +186,22 @@ hr {
 ### Lists (ul, ol)
 
 ```scss
-:is(ul, ol):where(:not([class])),
-:is(ul, ol):where([class^='-']) {
+:is(ul, ol):where(:not([class])) {
   list-style: revert;
   padding-inline-start: var(--list-px-s, var(--s30));
 }
 ```
 
-While the Reset CSS removes list styles from elements with a class, this rule restores the browser default list style for lists with no class, or with only a Property Class (a class starting with `-`).
+While the Reset CSS removes list styles from elements with a class, this rule automatically restores the browser default list style for lists that have no class at all.
+
+A `ul` / `ol` decorated only with Property Classes (e.g. `<ul class="-fz:l">`) remains in the reset state. If you want to keep the list markers in that case, add [`set--revert`](/en/docs/set-class#set--revert) explicitly.
+
+```html
+<ul class="-fz:l set--revert">
+  <li>item 1</li>
+  <li>item 2</li>
+</ul>
+```
 
 | Variable | Fallback | Purpose |
 |------|------------|------|
@@ -278,14 +286,14 @@ input, button, textarea, select, ::file-selector-button {
 
 ```scss
 :disabled {
-  opacity: var(--o--n20);
+  opacity: var(--o---20);
 }
 :focus-visible {
   outline-offset: var(--focus-offset, 0px);
 }
 ```
 
-Disabled elements receive an opacity of `--o--n20` (`0.5`), and `:focus-visible` allows the outline offset to be adjusted with `--focus-offset`.
+Disabled elements receive an opacity of `--o---20` (`0.5`), and `:focus-visible` allows the outline offset to be adjusted with `--focus-offset`.
 
 
 ---
@@ -303,4 +311,4 @@ The following is a preview of HTML elements with the base styles applied above.
 </Button>
 
 <PreviewTitle>Source code</PreviewTitle>
-<EmbedCode dirPath="packages/lism-css" srcPath="src/scss/base/_html.scss" />
+<SrcCode path="src/scss/base/_html.scss" />

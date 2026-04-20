@@ -7,7 +7,7 @@ import './_style.css';
 ---
 
 <DemoLayout title="Feature011">
-  <Container isWrapper="m" bgc="base-2" py="50" set="gutter">
+  <Container isWrapper="m" bgc="base-2" py="50" hasGutter>
     <Grid
       gt={[
         '"title" "body" "link" / 1fr',
@@ -31,9 +31,10 @@ import './_style.css';
           bgc="base"
           p={['20', '30']}
           bdrs="10"
-          set="hov transition"
+          set="var:hov"
+          hasTransition
           ai="center"
-          hov="bxsh"
+          hov="-bxsh"
         >
           <Grid gtc="subgrid" g="inherit" gc={['1', null, '1 / span 2']}>
             <Flex g={['20', null, '30']} ai="center">
@@ -46,7 +47,7 @@ import './_style.css';
               >
             </Flex>
           </Grid>
-          <Center w="fit" bd p="15" bdrs="99" set="transition" hov="to:reverse">
+          <Center w="fit" bd p="15" bdrs="99" hasTransition hov="in:reverse">
             <Icon icon="arrow-right" fz="s" />
           </Center>
         </Grid>
@@ -60,9 +61,10 @@ import './_style.css';
           bgc="base"
           p={['20', '30']}
           bdrs="10"
-          set="hov transition"
+          set="var:hov"
+          hasTransition
           ai="center"
-          hov="bxsh"
+          hov="-bxsh"
         >
           <Grid gtc="subgrid" g="inherit" gc={['1', null, '1 / span 2']}>
             <Flex g={['20', null, '30']} ai="center">
@@ -75,7 +77,7 @@ import './_style.css';
               >
             </Flex>
           </Grid>
-          <Center w="fit" bd p="15" bdrs="99" set="transition" hov="to:reverse">
+          <Center w="fit" bd p="15" bdrs="99" hasTransition hov="in:reverse">
             <Icon icon="arrow-right" fz="s" />
           </Center>
         </Grid>
@@ -89,9 +91,10 @@ import './_style.css';
           bgc="base"
           p={['20', '30']}
           bdrs="10"
-          set="hov transition"
+          set="var:hov"
+          hasTransition
           ai="center"
-          hov="bxsh"
+          hov="-bxsh"
         >
           <Grid gtc="subgrid" g="inherit" gc={['1', null, '1 / span 2']}>
             <Flex g={['20', null, '30']} ai="center">
@@ -104,7 +107,7 @@ import './_style.css';
               >
             </Flex>
           </Grid>
-          <Center w="fit" bd p="15" bdrs="99" set="transition" hov="to:reverse">
+          <Center w="fit" bd p="15" bdrs="99" hasTransition hov="in:reverse">
             <Icon icon="arrow-right" fz="s" />
           </Center>
         </Grid>
@@ -118,7 +121,7 @@ import './_style.css';
 
 <style is:inline>
   @media (any-hover: hover) {
-    .-hov\:to\:reverse {
+    .-hov\:in\:reverse {
       background-color: var(--_isHov, var(--text));
       color: var(--_isHov, var(--base));
       border-color: var(--text);

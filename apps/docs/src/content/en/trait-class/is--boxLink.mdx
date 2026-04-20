@@ -1,0 +1,185 @@
+---
+title: 'BoxLink (is--boxLink)'
+navtitle: 'is--boxLink'
+description: 'is--boxLink is a class that makes an entire box clickable.'
+---
+import { BoxLink, Spacer, Group, Link, Text } from 'lism-css/astro';
+import { DummyText } from '@lism-css/ui/astro';
+
+`is--boxLink` is a class that makes an entire box clickable.
+
+
+## CSS
+
+<SrcCode path="src/scss/trait/_boxLink.scss" />
+
+
+## Using with Lism Components
+
+A `<BoxLink>` component is available as an alias for `<Lism isBoxLink>`.
+
+### Import
+
+<ImportPackage component="BoxLink" />
+
+### Props
+
+| Prop | Description |
+|---|---|
+|`href`| Specifies the link destination. When `href` is provided, the element renders as an `<a>` tag; otherwise it renders as a `<div>`.|
+
+
+## Usage
+
+`<BoxLink>` (`.is--boxLink`) can be used in two main ways:
+
+1. Render `<BoxLink>` (`.is--boxLink`) as an `<a>` tag to use it directly as a link.
+2. Render `<BoxLink>` (`.is--boxLink`) as a `<div>` and place an `a.is--coverLink` inside it.
+
+:::info
+To include **additional links** inside a BoxLink, use approach 2.
+:::
+
+
+### 1. Using `<BoxLink>` as an `<a>` tag
+
+When `href` is provided to `<BoxLink>`, the component itself renders as an `<a>` tag.
+
+<Preview>
+  <PreviewTitle id="boxlink-demo01">Example</PreviewTitle>
+  <PreviewArea p="20">
+    <BoxLink href="#boxlink-demo01" p="30" bgc="base" bd bdrs="30" hov="-o">
+      <Group fz="xl" fw="bold">
+        <Fragment>Heading text</Fragment>
+      </Group>
+      <DummyText lh="s" my-s="15" />
+      <Group fz="s" c="text-2" ta="right" lh="1" my-s="10">
+        <Fragment>MORE →</Fragment>
+      </Group>
+    </BoxLink>
+  </PreviewArea>
+  <PreviewCode slot="tab" label="JSX">
+    ```jsx {1} "href="
+    <BoxLink href="#boxlink-demo01" p="30" bgc="base" bd bdrs="30" hov="-o">
+      <Group fz="xl" fw="bold">
+        Heading text
+      </Group>
+      <Text lh="s" my-s="15">
+        Lorem ipsum dolor sit, amet consectetur adipisicing elit, sed do eiusmod tempor. Non facere laudantium ex eos doloribus aut dolore nisi provident.
+      </Text>
+      <Group fz="s" c="text-2" ta="right" lh="1" my-s="10">
+        MORE →
+      </Group>
+    </BoxLink>
+    ```
+  </PreviewCode>
+  <PreviewCode slot="tab" label="HTML">
+    ```html {1} "is--boxLink"
+    <a class="is--boxLink -hov:-o -p:30 -bgc:base -bd -bdrs:30" href="#boxlink-demo01">
+      <p class="-fz:xl -fw:bold">Heading text</p>
+      <p class="-c:text-2 -lh:s -my-s:15">
+        Lorem ipsum dolor sit, amet consectetur adipisicing elit, sed do eiusmod tempor. Non facere laudantium ex eos doloribus aut dolore nisi provident.
+      </p>
+      <p class="-fz:s -c:text-2 -ta:right -lh:1 -my-s:10">MORE →</p>
+    </a>
+    ```
+  </PreviewCode>
+</Preview>
+
+
+### 2. Placing `is--coverLink` inside
+
+You can also make the entire box clickable by using `.is--coverLink` on an anchor element inside the BoxLink.
+
+This approach also allows you to place additional links inside the BoxLink.
+
+<Preview>
+  <PreviewTitle id="boxlink-demo02">Example</PreviewTitle>
+  <PreviewArea p="20">
+    <BoxLink as="section" p="30" bgc="base" bd bdrs="30" hasTransition hov="-bxsh">
+      <Group fz="xl" fw="bold">
+        <Link isCoverLink href="#boxlink-demo02">
+          <Fragment>Heading link text</Fragment>
+        </Link>
+      </Group>
+      <DummyText c="text-2" lh="s" my-s="15" />
+      <Group id="inner-link02" my-s="10">
+        <a href="#inner-link02" className="-hov:-o">
+          <Fragment>Inner Link</Fragment>
+        </a>
+      </Group>
+    </BoxLink>
+  </PreviewArea>
+  <PreviewCode slot="tab" label="JSX">
+    ```jsx 'isCoverLink'
+    <BoxLink p="30" bgc="base" bd bdrs="30" hasTransition hov="-bxsh">
+      <Group fz="xl" fw="bold">
+        <Link isCoverLink href="#boxlink-demo02">
+          Heading link text
+        </Link>
+      </Group>
+      <Text c="text-2" lh="s" my-s="15">
+        Lorem ipsum dolor sit amet. Consectetur adipiscing elit, sed do eiusmod tempor Incididunt ut. Labore et dolore magna aliqua. Ut enim ad minim
+        veniam, quis nostrud exercitation ullamco laboris nisi ut.
+      </Text>
+      <Group id="inner-link02" my-s="10">
+        <a href="#inner-link02" className="-hov:-o">
+          Inner Link
+        </a>
+      </Group>
+    </BoxLink>
+    ```
+  </PreviewCode>
+  <PreviewCode slot="tab" label="HTML">
+    ```html "is--coverLink"
+    <div class="is--boxLink has--transition -p:30 -bgc:base -bd -bdrs:30 -hov:-bxsh">
+      <div class="-fz:xl -fw:bold">
+        <a class="is--coverLink" href="#boxlink-demo02">
+          Heading Link
+        </a>
+      </div>
+      <p class="-c:text-2 -lh:s -my-s:15">
+        Lorem ipsum dolor sit, amet consectetur adipisicing elit, sed do eiusmod tempor. Non facere laudantium ex eos doloribus aut dolore nisi provident.
+      </p>
+      <div id="inner-link02" class="-my-s:10">
+        <a href="#inner-link02" class="-hov:-o">
+          Inner Link
+        </a>
+      </div>
+    </div>
+    ```
+  </PreviewCode>
+</Preview>
+
+
+## Opt-in
+
+### Extending the focus outline to the entire BoxLink on Tab key focus
+
+When a link is placed using `is--coverLink`, pressing the Tab key to focus will show the outline only around the link text, not the entire box.
+
+If you want to extend the outline to cover the entire box, add the following CSS.
+
+```css
+@supports selector(:has(*)) {
+  .is--boxLink:has(.is--coverLink:focus-visible) {
+    outline: auto 1px;
+    outline: auto 1px -webkit-focus-ring-color;
+  }
+  .is--coverLink:focus {
+    outline: 0;
+  }
+}
+```
+
+{/* ### Enabling text selection while holding Alt key
+
+As background, there are various discussions about approaches to making an entire box clickable.
+
+- When `<BoxLink>` itself is rendered as an `<a>` tag, screen readers may read the content verbosely, and it is not possible to place additional links inside the box.
+- The technique of expanding the pseudo-element of a link element to make the whole box clickable (as with `is--coverLink`) has the drawback that text selection within the box while holding the Alt key is not possible.
+
+There are other approaches as well, each with their own trade-offs. In general, choosing between the two above based on the situation is recommended, but if the latter issue is a concern, the following script can enable text selection while holding the Alt key.
+
+```js
+``` */}

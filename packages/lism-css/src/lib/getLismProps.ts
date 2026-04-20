@@ -31,7 +31,6 @@ interface PropConfig {
   isVar?: number;
   bp?: 0 | 1;
   alwaysVar?: number;
-  overwriteBaseVar?: number;
   important?: number;
   exUtility?: Record<string, unknown>;
   customVar?: string;
@@ -58,10 +57,6 @@ export interface LismPropsBase extends TraitProps, PropValueTypes {
   forwardedRef?: React.Ref<any>;
   class?: string | null;
   className?: string;
-  /**
-   * a--* / l--* / is--* クラスを集約する内部スロット。
-   * 通常は getLayoutProps / getAtomicProps 経由で push される。
-   */
   primitiveClass?: string[];
   style?: StyleWithCustomProps;
   _propConfig?: Record<string, PropConfig>;
@@ -82,14 +77,20 @@ const getTokenKey = (propName: string): string => {
   return (propData?.token as string) || '';
 };
 
+// 出力順のためのクラスバケット（結合順の唯一の定義点）
+// - primitiveClass : a--* / l--* （getAtomicProps → getLayoutProps の順で push）
+// - setClasses     : set--*
+// - traitClasses   : is--* / has--*
+// - uClasses       : u--*
+// - propClasses    : -hov / -property
 export class LismPropsData {
   // 最終出力 className
   className: string = '';
-  // 出力順のためのクラスバケット: [primitiveClass] [uClasses]
-  // - primitiveClass : a--* / l--* / is--* の primitive クラス（getAtomicProps → getLayoutProps → analyzeTrait の順で push）
-  // - uClasses       : set--* → u--* → -property の順で push される utility クラス
   primitiveClass: string[] = [];
+  setClasses: string[] = [];
+  traitClasses: string[] = [];
   uClasses: string[] = [];
+  propClasses: string[] = [];
   styles: StyleWithCustomProps = {};
   attrs: Record<string, unknown> = {};
   _propConfig?: Record<string, PropConfig>;
@@ -137,22 +138,22 @@ export class LismPropsData {
   }
 
   // 最終クラス文字列の組み立て（出力順の唯一の確定地点）
-  // 出力順: [className&class] [primitiveClass] [uClasses]
+  // 出力順: [className&class] [primitiveClass] [setClasses] [traitClasses] [uClasses] [propClasses]
   // className と class が両方来た場合は両方マージする（atts 内で重複は除去される）。
   buildClassName(userClassName?: string, astroClassName?: string | null): string {
-    return atts(userClassName, astroClassName, this.primitiveClass, this.uClasses);
+    return atts(userClassName, astroClassName, this.primitiveClass, this.setClasses, this.traitClasses, this.uClasses, this.propClasses);
   }
 
   analyzeTrait(traitPropData: TraitPropDataObject, propVal: unknown): void {
     // isWrapper などの特別な処理が必要なレイアウトトレイト
     const { className, preset, presetClass, customVar, tokenKey } = traitPropData;
     if (propVal === true) {
-      this.primitiveClass.push(className);
+      this.traitClasses.push(className);
     } else if (preset && isPresetValue(preset, propVal)) {
-      this.primitiveClass.push(`${className} ${presetClass}:${String(propVal)}`);
+      this.traitClasses.push(`${className} ${presetClass}:${String(propVal)}`);
     } else if (propVal) {
       // カスタム値
-      this.primitiveClass.push(className);
+      this.traitClasses.push(className);
       if (tokenKey && customVar) {
         this.addStyle(customVar, getMaybeCssVar(propVal as string | number, tokenKey));
       }
@@ -161,10 +162,10 @@ export class LismPropsData {
 
   // prop解析
   analyzeProps(): void {
-    // set / util は property class の前に置きたいので先に取り出して push
+    // set / util は attrs ループの前に取り出して各バケットへ振り分ける
     const rawSet = this.extractProp('set');
     const rawUtil = this.extractProp('util');
-    mergeSet(undefined, rawSet).forEach((v) => this.addUtil(`set--${v}`));
+    mergeSet(undefined, rawSet).forEach((v) => this.addSet(v));
     mergeSet(undefined, rawUtil).forEach((v) => this.addUtil(`u--${v}`));
 
     Object.keys(this.attrs).forEach((propName) => {
@@ -175,7 +176,7 @@ export class LismPropsData {
 
         if (typeof traitPropData === 'string') {
           // そのままクラス化
-          if (propVal) this.primitiveClass.push(traitPropData);
+          if (propVal) this.traitClasses.push(traitPropData);
         } else {
           this.analyzeTrait(traitPropData, propVal);
         }
@@ -225,15 +226,18 @@ export class LismPropsData {
     });
   }
 
+  addSet(setName: string): void {
+    this.setClasses.push(`set--${setName}`);
+  }
   addUtil(util: string): void {
     this.uClasses.push(util);
   }
   addUtils(utils: string[]): void {
     this.uClasses.push(...utils);
   }
-  // addState(state) {
-  // 	this.stateClasses.push(state);
-  // }
+  addProp(prop: string): void {
+    this.propClasses.push(prop);
+  }
   addStyle(name: string, val: string | number): void {
     // CSS custom properties can accept string or number
     (this.styles as Record<string, string | number>)[name] = val;
@@ -265,7 +269,7 @@ export class LismPropsData {
     return data;
   }
 
-  // utilクラスを追加するか、styleにセットするかの分岐処理 @base
+  // propertyクラスを追加するか、styleにセットするかの分岐処理 @base
   // 値が null, undefined, '', false の時はスキップ
   setAttrs(propKey: string, val: unknown, propConfig: PropConfig = {}, bpKey: string = ''): void {
     if (null == val || '' === val || false === val) return;
@@ -278,24 +282,24 @@ export class LismPropsData {
       utilName += `_${bpKey}`;
     }
 
-    // ":"ではじまっている場合、それに続く文字列を取得してユーティリティ化
+    // ":"ではじまっている場合、それに続く文字列を取得して property class 化
     if (typeof val === 'string' && val.startsWith(':')) {
-      this.addUtil(`${utilName}:${val.replace(':', '')}`);
+      this.addProp(`${utilName}:${val.replace(':', '')}`);
       return;
     }
 
-    // ユーティリティクラス化できるかどうかをチェック
+    // property class 化できるかどうかをチェック
     if (!bpKey) {
       const { presets, tokenClass, utils, shorthands } = propConfig;
       if (presets && isPresetValue(presets, val)) {
         const valStr = typeof val === 'string' || typeof val === 'number' ? String(val) : '';
-        if (valStr) this.addUtil(`${utilName}:${valStr}`);
+        if (valStr) this.addProp(`${utilName}:${valStr}`);
         return;
       }
       // tokenもそのままクラス化する場合
       if (tokenClass && propConfig.token && isTokenValue(propConfig.token, val)) {
         const valStr = typeof val === 'string' || typeof val === 'number' ? String(val) : '';
-        if (valStr) this.addUtil(`${utilName}:${valStr}`);
+        if (valStr) this.addProp(`${utilName}:${valStr}`);
         return;
       }
 
@@ -307,14 +311,14 @@ export class LismPropsData {
         utilKey = getUtilKey(shorthands, val, true);
       }
       if (utilKey) {
-        this.addUtil(`${utilName}:${utilKey}`);
+        this.addProp(`${utilName}:${utilKey}`);
         return;
       }
     }
 
     // .-prop: だけ出力するケース
-    if (true === val || '-' === val) {
-      this.addUtil(utilName);
+    if (true === val) {
+      this.addProp(utilName);
       return;
     }
 
@@ -345,7 +349,7 @@ export class LismPropsData {
     }
 
     // .-prop & --prop / .-prop_bp & --prop_bpで 出力
-    this.addUtil(utilName);
+    this.addProp(utilName);
     this.addStyle(styleName, finalVal);
   }
 
@@ -376,33 +380,28 @@ export class LismPropsData {
     // 	return;
     // }
 
-    if (hoverData === '-' || hoverData === true) {
-      this.addUtil(`-hov`);
+    if (hoverData === true) {
+      this.addProp(`-hov`);
     } else if (typeof hoverData === 'string') {
-      // カンマ区切りで複数指定可能能
+      // カンマ区切りで複数指定可能（入力文字列をそのまま -hov:{...} として出力）
       splitWithComma(hoverData).forEach((cls) => {
-        this.addUtil(`-hov:${cls}`);
+        this.addProp(`-hov:${cls}`);
       });
     } else if (typeof hoverData === 'object') {
-      // hover={{c:'red', 'bgc': 'blue'}} みたいな指定の時
-
+      // hov={{c:'red', shadowUp: true}} のようなオブジェクト指定
+      //   値あり（string / number） → `-hov:-{key}` + `--hov-{key}` 変数を出力
+      //   true                    → `-hov:{key}`（クラスのみ）
       Object.keys(hoverData).forEach((propName) => {
         const hovVal = hoverData[propName];
         if (null == hovVal || '' === hovVal || false === hovVal) return;
 
-        // '-' の時は クラスのみ出力
-        if (hovVal === '-' || hovVal === true) {
-          this.addUtil(`-hov:${propName}`);
-        } else if (propName === 'class') {
-          // propNameが'class'の場合は文字列として-hov:{class}クラスを追加.(カンマ区切りで複数指定可能)
-          splitWithComma(hovVal as string).forEach((cls) => {
-            this.addUtil(`-hov:${cls}`);
-          });
+        if (hovVal === true) {
+          this.addProp(`-hov:${propName}`);
         } else if (typeof hovVal === 'string' || typeof hovVal === 'number') {
           // トークン値の処理
           const finalHovVal = getMaybeCssVar(hovVal, getTokenKey(propName));
 
-          this.addUtil(`-hov:${propName}`);
+          this.addProp(`-hov:-${propName}`);
           this.addStyle(`--hov-${propName}`, finalHovVal);
         }
       });

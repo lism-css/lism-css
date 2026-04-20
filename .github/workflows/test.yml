@@ -151,3 +151,11 @@ jobs:
 
       - name: Run tests
         run: pnpm test
+
+  examples-private-check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Check examples are private
+        run: node scripts/check-examples-private.mjs

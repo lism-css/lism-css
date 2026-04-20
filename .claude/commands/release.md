@@ -7,7 +7,7 @@ npm publish とデプロイはユーザーが手動で行う。
 
 `$ARGUMENTS` をスペース区切りで解釈する:
 
-- 第1引数: パッケージ識別子（`lism-css` または `lism-ui`）
+- 第1引数: パッケージ識別子（`lism-css` / `lism-ui` / `lism-cli`）
 - 第2引数: リリースバージョン（例: `0.10.0`）
 
 ## パッケージマッピング
@@ -16,6 +16,16 @@ npm publish とデプロイはユーザーが手動で行う。
 |---|---|---|---|---|
 | `lism-css` | `lism-css` | `packages/lism-css/` | `lism-css@v` | `nr publish:core` |
 | `lism-ui` | `@lism-css/ui` | `packages/lism-ui/` | `lism-ui@v` | `nr publish:ui` |
+| `lism-cli` | `lism-cli` + `create-lism` | `packages/lism-cli/` + `packages/create-lism/` | `lism-cli@v` | `nr publish:cli` |
+
+### lism-cli の特別ルール
+
+`lism-cli` は `lism-cli` と `create-lism` を **同時に同じバージョンで** publish する（`nr publish:cli` がまとめて処理する）。
+
+- `packages/lism-cli/package.json` と `packages/create-lism/package.json` の `version` を両方更新する
+- ディレクトリ判定では `packages/lism-cli/` または `packages/create-lism/` のいずれかへの変更を `lism-cli` として扱う
+- **publish 前のチェック必須**: `packages/lism-cli/src/constants.ts` の `DEFAULT_UI_REF` / `DEFAULT_SKILL_REF` / `DEFAULT_TEMPLATES_REF` が `'main'` になっていることを確認する（PR ブランチや `'dev'` のままだと公開版 CLI が壊れる）
+- `create-lism` 側は `lism-cli` を bundle で内包しているため、CLI 本体に依存変更があった場合も `create-lism` の `dependencies` 追従は不要
 
 ## 現在の状態
 
@@ -90,6 +100,8 @@ npm publish とデプロイはユーザーが手動で行う。
 空のカテゴリは省略する。コミットメッセージが日本語の場合はそのまま使用する。
 
 #### 5-B. changelog エントリ
+
+ここの changelog.mdx作成は `lism-css` と `@lism-css/ui` 更新時のみ。
 
 リリースノートの内容をもとに、changelog.mdx 用の簡潔なエントリを日本語・英語の両方で生成する。
 

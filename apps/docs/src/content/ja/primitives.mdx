@@ -1,50 +1,13 @@
 ---
 title: 'Primitive Class'
-description: 'Lism CSS のプリミティブクラス（is--, l--, a--）の分類と使い方について解説します。'
+description: 'Lism CSS のプリミティブクラス（l--, a--）の分類と使い方について解説します。'
 ---
 
 
 Lism では、レイアウトを組み立てる小さな積み木として **Primitive クラス** を提供しています。
 
-- `is--{name}`: 要素に**静的な構造的特性 (trait)** を与える Trait Primitive。
 - `l--{name}`: レイアウトの構成単位となる Layout Primitive。
 - `a--{name}`: レイアウトの最小単位となる Atomic Primitive。
-
-これらを組み合わせることで複雑なレイアウトを構築でき、`c--` で始まる **[Component Class](/docs/css-methodology/#component-class)** はこれらの Primitive を組み合わせて作られた具体的な UI 部品として位置付けられます。
-
-:::info
-Primitive クラスはバリエーション（`--outline` 等）や子要素クラス（`_header` 等）を持たない、単体で機能するクラスです。BEM 構造を持つのは `c--` の Component Class のみです。
-:::
-
-
-#### 併用ルール
-
-| 組み合わせ | 可否 | 備考 |
-|---|---|---|
-| `l--` × `l--` | NG | 同カテゴリの併用は不可 |
-| `a--` × `a--` | NG | 同カテゴリの併用は不可 |
-| `is--` × `is--` | OK | Trait は複数併用できる |
-| `l--` × `is--` | OK | |
-| `a--` × `is--` | OK | |
-| `l--` × `a--` | 非推奨 | 役割的には同居しない想定 |
-| `l--` × `c--` | OK | 例: `c--nav l--flex` |
-| `a--` × `c--` | OK | |
-
-
-## Trait Primitives
-
-要素に対して汎用的につけ外しできる、静的な構造的特性を表す Primitive 群です。
-
-| クラス | 概要 |
-|---|---|
-| <ModLink slug="is--container" /> | コンテナクエリの基準要素を定義する |
-| <ModLink slug="is--wrapper" /> | コンテンツ幅を制御するラッパー要素 |
-| <ModLink slug="is--layer" /> | 親要素に重ねるオーバーレイレイヤー |
-| <ModLink slug="is--boxLink" /> | ボックス全体をリンク化する |
-| <ModLink slug="is--vertical" /> | 縦書きモードにする |
-| `is--coverLink` | 親要素全体に広がるクリック領域を持つリンク（→ <ModLink slug="is--boxLink" /> 参照） |
-| `is--side` | `l--sideMain` の side 要素用（→ <ModLink slug="l--sideMain" /> 参照） |
-| `is--skipFlow` | `l--flow` 内で次の兄弟との余白を打ち消す（→ <ModLink slug="l--flow" /> 参照） |
 
 
 ## Layout Primitives

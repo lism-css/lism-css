@@ -3,13 +3,13 @@ import { Container, Flex, Stack, Center, Icon, Group, Inline, Link, Lism } from 
 import { Modal } from '@lism-css/ui/astro';
 ---
 
-<Container as="header" isWrapper="l" py="20" set="gutter" bxsh="10">
+<Container as="header" isWrapper="l" py="20" hasGutter bxsh="10">
   <Flex jc="between" ai="center" g="15">
     <Group fz="xl" ff="mono"><a href="/">Lism CSS</a></Group>
     <Flex mx-s="auto" g="15" d={['none', null, 'flex']}>
-      <Link href="###" hov="o" px="5" c="inherit" td="none">Menu 1</Link>
-      <Link href="###" hov="o" px="5" c="inherit" td="none">Menu 2</Link>
-      <Link href="###" hov="o" px="5" c="inherit" td="none">Menu 3</Link>
+      <Link href="###" hov="-o" px="5" c="inherit" td="none">Menu 1</Link>
+      <Link href="###" hov="-o" px="5" c="inherit" td="none">Menu 2</Link>
+      <Link href="###" hov="-o" px="5" c="inherit" td="none">Menu 3</Link>
     </Flex>
     <Center d={['grid', null, 'none']} as="button" fz="xl" className="set--plain" data-modal-open="modal-01">
       <Icon icon="menu" fz="l" />

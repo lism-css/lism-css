@@ -37,7 +37,13 @@ describe('TraitProps', () => {
       assertType<TraitProps>({ isCoverLink: true });
       assertType<TraitProps>({ isSide: true });
       assertType<TraitProps>({ isSkipFlow: true });
-      assertType<TraitProps>({ isVertical: true });
+    });
+
+    it('has-- Trait（hasGutter / hasTransition / hasSnap / hasMask）', () => {
+      assertType<TraitProps>({ hasGutter: true });
+      assertType<TraitProps>({ hasTransition: true });
+      assertType<TraitProps>({ hasSnap: true });
+      assertType<TraitProps>({ hasMask: true });
     });
   });
 
@@ -67,6 +73,7 @@ describe('TraitProps', () => {
       assertType<TraitProps>({
         isContainer: true,
         isWrapper: 's',
+        hasGutter: true,
       });
     });
   });
@@ -86,22 +93,19 @@ describe('TraitProps', () => {
 describe('LismPropsBase — set / util', () => {
   describe('set prop', () => {
     it('プリセット値を受け付ける', () => {
-      assertType<LismPropsBase>({ set: 'gutter' });
-      assertType<LismPropsBase>({ set: 'shadow' });
-      assertType<LismPropsBase>({ set: 'hov' });
-      assertType<LismPropsBase>({ set: 'transition' });
-      assertType<LismPropsBase>({ set: 'mask' });
       assertType<LismPropsBase>({ set: 'plain' });
-      assertType<LismPropsBase>({ set: 'innerRs' });
-      assertType<LismPropsBase>({ set: 'bp' });
+      assertType<LismPropsBase>({ set: 'revert' });
+      assertType<LismPropsBase>({ set: 'var:bxsh' });
+      assertType<LismPropsBase>({ set: 'var:hov' });
+      assertType<LismPropsBase>({ set: 'var:bdrsInner' });
     });
 
     it('スペース区切りで複数指定できる', () => {
-      assertType<LismPropsBase>({ set: 'hov transition' });
+      assertType<LismPropsBase>({ set: 'var:hov var:bxsh' });
     });
 
     it('`-` prefix で除外指定できる', () => {
-      assertType<LismPropsBase>({ set: 'hov -plain' });
+      assertType<LismPropsBase>({ set: 'var:hov -plain' });
     });
 
     it('任意の文字列も受け付ける', () => {
@@ -109,8 +113,8 @@ describe('LismPropsBase — set / util', () => {
     });
 
     it('文字列配列も受け付ける（内部 API 用途）', () => {
-      assertType<LismPropsBase>({ set: ['hov', 'transition'] });
-      assertType<LismPropsBase>({ set: ['gutter', 'custom-value'] });
+      assertType<LismPropsBase>({ set: ['var:hov', 'var:bxsh'] });
+      assertType<LismPropsBase>({ set: ['var:bdrsInner', 'custom-value'] });
     });
 
     it('undefined / 省略可', () => {
@@ -127,7 +131,6 @@ describe('LismPropsBase — set / util', () => {
       assertType<LismPropsBase>({ util: 'srOnly' });
       assertType<LismPropsBase>({ util: 'clipText' });
       assertType<LismPropsBase>({ util: 'collapseGrid' });
-      assertType<LismPropsBase>({ util: 'snap' });
     });
 
     it('スペース区切りで複数指定できる', () => {
@@ -153,7 +156,7 @@ describe('LismPropsBase — set / util', () => {
 
   describe('set + util 同時指定', () => {
     it('両方同時に指定できる', () => {
-      assertType<LismPropsBase>({ set: 'hov transition', util: 'cbox trim' });
+      assertType<LismPropsBase>({ set: 'var:hov var:bxsh', util: 'cbox trim' });
     });
   });
 });

@@ -6,13 +6,13 @@ import './_style.css';
 ---
 
 <DemoLayout title="Feature010">
-  <Container isWrapper="l" py="50" set="gutter">
+  <Container isWrapper="l" py="50" hasGutter>
     <Stack g="50">
       <Heading level="2" fz="2xl" fw="bold" ta="center">厳選された商品</Heading>
       <Columns cols={['1', '2', '4']} gtr="auto auto auto" g="40">
-        <Grid gtr="subgrid" gr="span 3" g="30" as="a" isBoxLink href="#" set="hov">
+        <Grid gtr="subgrid" gr="span 3" g="30" as="a" isBoxLink href="#" set="var:hov">
           <Frame as="figure" ar="1/1" bdrs="10">
-            <Media src="https://cdn.lism-css.com/random/img?r=1" alt="" width="960" height="640" set="transition" hov="to:zoom" />
+            <Media src="https://cdn.lism-css.com/random/img?r=1" alt="" width="960" height="640" hasTransition hov="in:zoom" />
           </Frame>
           <Stack g="inherit">
             <Text class="u--trim" fz="l" fw="bold">ストームシールド</Text>
@@ -20,14 +20,14 @@ import './_style.css';
               突然の雨風にも耐える高い耐久性。初心者でも簡単に設営できる、オールシーズン対応テント。
             </Text>
           </Stack>
-          <Flex g="20" ai="center" bd-b px="15" pb="10" set="transition" hov="to:cAccent">
+          <Flex g="20" ai="center" bd-b px="15" pb="10" hasTransition hov="in:cAccent">
             <Text fz="m" fx="1" fs="i">View Detail</Text>
             <Icon icon="arrow-right" fz="m" />
           </Flex>
         </Grid>
-        <Grid gtr="subgrid" gr="span 3" g="30" as="a" isBoxLink href="#" set="hov">
+        <Grid gtr="subgrid" gr="span 3" g="30" as="a" isBoxLink href="#" set="var:hov">
           <Frame as="figure" ar="1/1" bdrs="10">
-            <Media src="https://cdn.lism-css.com/random/img?r=2" alt="" width="960" height="640" set="transition" hov="to:zoom" />
+            <Media src="https://cdn.lism-css.com/random/img?r=2" alt="" width="960" height="640" hasTransition hov="in:zoom" />
           </Frame>
           <Stack g="inherit">
             <Text class="u--trim" fz="l" fw="bold">リッジウォーカー</Text>
@@ -35,27 +35,27 @@ import './_style.css';
               背中の蒸れを軽減する背面システムを採用。日帰りから小屋泊まで幅広く対応する人気モデル。
             </Text>
           </Stack>
-          <Flex g="20" ai="center" bd-b px="15" pb="10" set="transition" hov="to:cAccent">
+          <Flex g="20" ai="center" bd-b px="15" pb="10" hasTransition hov="in:cAccent">
             <Text fz="m" fx="1" fs="i">View Detail</Text>
             <Icon icon="arrow-right" fz="m" />
           </Flex>
         </Grid>
-        <Grid gtr="subgrid" gr="span 3" g="30" as="a" isBoxLink href="#" set="hov">
+        <Grid gtr="subgrid" gr="span 3" g="30" as="a" isBoxLink href="#" set="var:hov">
           <Frame as="figure" ar="1/1" bdrs="10">
-            <Media src="https://cdn.lism-css.com/random/img?r=3" alt="" width="960" height="640" set="transition" hov="to:zoom" />
+            <Media src="https://cdn.lism-css.com/random/img?r=3" alt="" width="960" height="640" hasTransition hov="in:zoom" />
           </Frame>
           <Stack g="inherit">
             <Text class="u--trim" fz="l" fw="bold">オーロラダウン</Text>
             <Text class="u--trim" fz="m" lh="s" o="-20"> 高品質な750フィルパワーのダウンを使用。-5℃まで対応し、秋冬キャンプでも快適な眠りを。 </Text>
           </Stack>
-          <Flex g="20" ai="center" bd-b px="15" pb="10" set="transition" hov="to:cAccent">
+          <Flex g="20" ai="center" bd-b px="15" pb="10" hasTransition hov="in:cAccent">
             <Text fz="m" fx="1" fs="i">View Detail</Text>
             <Icon icon="arrow-right" fz="m" />
           </Flex>
         </Grid>
-        <Grid gtr="subgrid" gr="span 3" g="30" as="a" isBoxLink href="#" set="hov">
+        <Grid gtr="subgrid" gr="span 3" g="30" as="a" isBoxLink href="#" set="var:hov">
           <Frame as="figure" ar="1/1" bdrs="10">
-            <Media src="https://cdn.lism-css.com/random/img?r=4" alt="" width="960" height="640" set="transition" hov="to:zoom" />
+            <Media src="https://cdn.lism-css.com/random/img?r=4" alt="" width="960" height="640" hasTransition hov="in:zoom" />
           </Frame>
           <Stack g="inherit">
             <Text class="u--trim" fz="l" fw="bold">フィールドリラックスチェア</Text>
@@ -63,7 +63,7 @@ import './_style.css';
               体を包み込むような快適な座り心地。軽量コンパクト設計で持ち運びも簡単。設営もあっという間です。
             </Text>
           </Stack>
-          <Flex g="20" ai="center" bd-b px="15" pb="10" set="transition" hov="to:cAccent">
+          <Flex g="20" ai="center" bd-b px="15" pb="10" hasTransition hov="in:cAccent">
             <Text fz="m" fx="1" fs="i">View Detail</Text>
             <Icon icon="arrow-right" fz="m" />
           </Flex>
@@ -75,10 +75,10 @@ import './_style.css';
 
 <style is:inline>
   @media (any-hover: hover) {
-    .-hov\:to\:zoom {
+    .-hov\:in\:zoom {
       scale: var(--_isHov, 1.1);
     }
-    .-hov\:to\:cAccent {
+    .-hov\:in\:cAccent {
       color: var(--_isHov, var(--accent));
     }
   }

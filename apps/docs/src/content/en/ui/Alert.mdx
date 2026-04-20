@@ -26,7 +26,7 @@ A component for displaying short messages with visual emphasis.
   </PreviewCode>
   <PreviewCode slot="tab" label="HTML">
     ```jsx
-    <div class="c--alert l--flex u--cbox -ai:center -p:15 -g:15 -bd -bdrs:10" style="--keycolor:var(--red)">
+    <div class="c--alert l--flex set--var:bxsh u--cbox -ai:center -p:15 -g:15 -bd -bdrs:10 -bxsh:10" style="--keycolor:var(--red)">
       <div class="l--center -c -fz:xl -fxsh:0" style="--c:var(--keycolor)">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -167,7 +167,7 @@ An example of building an Alert using only lism-css, without `@lism-css/ui`.
 <Preview>
   <PreviewTitle>Preview</PreviewTitle>
   <PreviewArea p="30" resize>
-    <SideMain set="shadow" util="cbox" keycolor="red" ai="center" p="15" g="15" bd bdrs="10" bxsh="10">
+    <SideMain set="var:bxsh" util="cbox" keycolor="red" ai="center" p="15" g="15" bd bdrs="10" bxsh="10">
       <Center isSide c="keycolor" fz="xl">
         <Icon icon="alert" />
       </Center>
@@ -178,7 +178,7 @@ An example of building an Alert using only lism-css, without `@lism-css/ui`.
   </PreviewArea>
   <PreviewCode slot="tab" label="JSX">
     ```jsx
-    <SideMain set="shadow" util="cbox" keycolor="red" ai="center" p="15" g="15" bd bdrs="10" bxsh="10">
+    <SideMain set="var:bxsh" util="cbox" keycolor="red" ai="center" p="15" g="15" bd bdrs="10" bxsh="10">
       <Center isSide c="keycolor" fz="xl">
         <Icon icon="alert" />
       </Center>
@@ -190,7 +190,7 @@ An example of building an Alert using only lism-css, without `@lism-css/ui`.
   </PreviewCode>
   <PreviewCode slot="tab" label="HTML">
     ```html
-    <div class="l--sideMain set--shadow u--cbox -ai:center -p:15 -g:15 -bd -bdrs:10 -bxsh:10" style="--keycolor: var(--red)">
+    <div class="l--sideMain set--var:bxsh u--cbox -ai:center -p:15 -g:15 -bd -bdrs:10 -bxsh:10" style="--keycolor: var(--red)">
       <div class="l--center is--side -c -fz:xl" style="--c: var(--keycolor)">
         <svg
           xmlns="http://www.w3.org/2000/svg"
