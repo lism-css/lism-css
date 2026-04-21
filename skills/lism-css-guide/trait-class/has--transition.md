@@ -6,7 +6,7 @@
 
 - クラス名: `has--transition`
 - Lism props: `hasTransition`（`<Lism hasTransition>` / `<Box hasTransition>` 等）
-- SCSSソース: https://raw.githubusercontent.com/lism-css/lism-css/main/packages/lism-css/src/scss/trait/_hasTransition.scss
+- SCSSソース: https://raw.githubusercontent.com/lism-css/lism-css/main/packages/lism-css/src/scss/trait/has/_transition.scss
 - ドキュメント（人間向け）: https://lism-css.com/docs/trait-class/#has--transition
 
 ## SCSS 定義
