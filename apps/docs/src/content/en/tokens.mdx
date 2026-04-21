@@ -152,32 +152,31 @@ The value of `--bxsh--{token}` is composed of the following variables.
 |`pp`|`--o--pp`|`-o:pp`|`0.5`|
 |`ppp`|`--o--ppp`|`-o:ppp`|`0.25`|
 
-🎵 Named after musical dynamic markings (the piano family). The more times `p` (piano / soft) is repeated, the higher the transparency.
+Named after musical dynamic markings (the piano family). The more times `p` (piano / soft) is repeated, the higher the transparency.
 
 
 <Preview>
   <PreviewTitle>Preview</PreviewTitle>
   <PreviewArea p="40">
-    {/* <DummyText pre="1: "/> */}
-    <DummyText o="mp" pre="mp: " />
-    <DummyText o="p" pre="p: " />
-    <DummyText o="pp" pre="pp: " />
-    <DummyText o="ppp" pre="ppp: " />
+    <DummyText o="mp" pre="mp: " length="s" />
+    <DummyText o="p" pre="p: " length="s" />
+    <DummyText o="pp" pre="pp: " length="s" />
+    <DummyText o="ppp" pre="ppp: " length="s" />
   </PreviewArea>
   <PreviewCode slot="tab" label="HTML">
     ```jsx
-    <p class="-o:mp">Lorem ipsum ...</p>
-    <p class="-o:p">Lorem ipsum ...</p>
-    <p class="-o:pp">Lorem ipsum ...</p>
-    <p class="-o:ppp">Lorem ipsum ...</p>
+    <p class="-o:mp">mp: Lorem ipsum ...</p>
+    <p class="-o:p">p: Lorem ipsum ...</p>
+    <p class="-o:pp">pp: Lorem ipsum ...</p>
+    <p class="-o:ppp">ppp: Lorem ipsum ...</p>
     ```
   </PreviewCode>
   <PreviewCode slot="tab" label="JSX">
     ```jsx
-    <Text o="mp">Lorem ipsum ...</Text>
-    <Text o="p">Lorem ipsum ...</Text>
-    <Text o="pp">Lorem ipsum ...</Text>
-    <Text o="ppp">Lorem ipsum ...</Text>
+    <Text o="mp">mp: Lorem ipsum ...</Text>
+    <Text o="p">p: Lorem ipsum ...</Text>
+    <Text o="pp">pp: Lorem ipsum ...</Text>
+    <Text o="ppp">ppp: Lorem ipsum ...</Text>
     ```
   </PreviewCode>
 </Preview>
