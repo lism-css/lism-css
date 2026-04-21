@@ -39,8 +39,9 @@
 
 - Front matter なし、`# {クラス名} / <Component>` の h1 で開始
 - `## 基本情報`（クラス名 / コンポーネント / SCSSソース / ドキュメント）。URL は以下の形式を維持し、誤って書き換えないこと：
-    - SCSSソース: `https://raw.githubusercontent.com/lism-css/lism-css/main/packages/lism-css/src/scss/{primitives/{layout|atomic}|trait}/_{name}.scss`
+    - SCSSソース: `https://raw.githubusercontent.com/lism-css/lism-css/main/packages/lism-css/src/scss/{primitives/{layout|atomic}|trait/{is|has}}/_{name}.scss`
         - **SCSS ファイルが存在する Primitive / Trait のみ記載する**。`l--box` や `a--decorator` のように対応する `_{name}.scss` を持たない場合は、この行自体を省略する
+        - Trait は `is--`/`has--` プレフィックスを除いた値を `{name}` として使う（例: `is--container` → `trait/is/_container.scss`、`has--transition` → `trait/has/_transition.scss`）
     - ドキュメント（人間向け）: Layout/Atomic は `https://lism-css.com/docs/primitives/{lowercase}/`、Trait は `https://lism-css.com/docs/trait-class/{lowercase}/` — `{lowercase}` はクラス名の小文字版（例: `l--withSide.md` → `l--withside`）
 - `## 専用Props`（該当プリミティブのみ）
 - `## Usage`（JSX + HTML コードブロックのペアで記載。MDX の `<Preview>` / `<PreviewArea>` / `<PreviewCode>` / `<SrcCode>` 等のカスタムコンポーネントは廃棄）
@@ -76,7 +77,10 @@
 
 | 確認したい内容 | 参照先 |
 |---|---|
-| is-- / l-- / a-- クラス | `packages/lism-css/src/scss/primitives/` 配下の SCSS（`trait/`, `layout/`, `atomic/`） |
+| is-- クラス | `packages/lism-css/src/scss/trait/is/` 配下の SCSS |
+| has-- クラス | `packages/lism-css/src/scss/trait/has/` 配下の SCSS |
+| l-- クラス | `packages/lism-css/src/scss/primitives/layout/` 配下の SCSS |
+| a-- クラス | `packages/lism-css/src/scss/primitives/atomic/` 配下の SCSS |
 | c-- クラス | `packages/lism-ui/src/`（UIコンポーネントのCSS）。ユーザー独自は `@layer lism-component` または `@layer lism-custom` |
 | プレフィックスと Layer の対応 | `packages/lism-css/src/scss/_with_layer.scss` |
 | 個別プリミティブの使い方・専用 Props | `apps/docs/src/content/ja/primitives/*.mdx`（サンプル・文言の情報源）。ファイル名は lowercase なので camelCase の Skill ファイル名との対応に注意 |

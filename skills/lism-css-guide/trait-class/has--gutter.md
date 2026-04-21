@@ -6,7 +6,7 @@
 
 - クラス名: `has--gutter`
 - Lism props: `hasGutter`（`<Lism hasGutter>` 等）
-- SCSSソース: https://raw.githubusercontent.com/lism-css/lism-css/main/packages/lism-css/src/scss/trait/_hasGutter.scss
+- SCSSソース: https://raw.githubusercontent.com/lism-css/lism-css/main/packages/lism-css/src/scss/trait/has/_gutter.scss
 - ドキュメント（人間向け）: https://lism-css.com/docs/trait-class/#has--gutter
 
 ## SCSS 定義
