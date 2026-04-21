@@ -21,7 +21,8 @@ The following Layout Primitive class names / component names / `layout` literal 
 | `l--fluidCols` / `<FluidCols>` / `layout="fluidCols"` | `l--autoColumns` / `<AutoColumns>` / `layout="autoColumns"` |
 | `l--switchCols` / `<SwitchCols>` / `layout="switchCols"` | `l--switchColumns` / `<SwitchColumns>` / `layout="switchColumns"` |
 
-No deprecated aliases are provided. Replace any usage of the old names with the new ones.
+The old React / Astro component names (`<SideMain>` / `<FluidCols>` / `<SwitchCols>`) remain as `@deprecated` aliases for now. They will be removed in the next major release, so migrate to the new names as soon as possible.
+There is no backward compatibility for the SCSS classes (`l--sideMain`, etc.) or `layout` literal values (`layout="sideMain"`, etc.) — any direct usage must be updated.
 
 <Divider bds="dashed" my="40" />
 

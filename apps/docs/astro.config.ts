@@ -115,6 +115,7 @@ export default defineConfig({
     '/en/docs/primitives/l--fluidcols/': '/en/docs/primitives/l--autoColumns/',
     '/en/docs/primitives/l--sidemain/': '/en/docs/primitives/l--withSide/',
     '/en/docs/primitives/l--switchcols/': '/en/docs/primitives/l--switchColumns/',
+    // 旧 camelCase → 新名称リダイレクト（#319）
     '/en/docs/primitives/l--fluidCols/': '/en/docs/primitives/l--autoColumns/',
     '/en/docs/primitives/l--sideMain/': '/en/docs/primitives/l--withSide/',
     '/en/docs/primitives/l--switchCols/': '/en/docs/primitives/l--switchColumns/',

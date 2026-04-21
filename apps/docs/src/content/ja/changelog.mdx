@@ -21,7 +21,8 @@ v.1.0リリースまでしばらく激しい変更が続く可能性があるた
 | `l--fluidCols` / `<FluidCols>` / `layout="fluidCols"` | `l--autoColumns` / `<AutoColumns>` / `layout="autoColumns"` |
 | `l--switchCols` / `<SwitchCols>` / `layout="switchCols"` | `l--switchColumns` / `<SwitchColumns>` / `layout="switchColumns"` |
 
-deprecated エイリアスは提供しないため、旧名称を使用している箇所はすべて新名称へ置き換えが必要です。
+React / Astro のコンポーネント名については、旧名 (`<SideMain>` / `<FluidCols>` / `<SwitchCols>`) を `@deprecated` エイリアスとして暫定的に残しています。次のメジャーアップデートで削除予定のため、新名称への置き換えを推奨します。
+SCSS クラス (`l--sideMain` 等) と `layout` リテラル値 (`layout="sideMain"` 等) には後方互換はありません。直接使用している箇所はすべて置き換えが必要です。
 
 <Divider bds="dashed" my="40" />
 
