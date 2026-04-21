@@ -9,6 +9,22 @@ v.1.0リリースまでしばらく激しい変更が続く可能性があるた
 
 <Divider bds="dashed" my="40" />
 
+## `u--trimChildren` のリネームと除外方式の整理 (#324, #326)
+
+**破壊的変更**を含むリリースです。
+
+子要素のハーフレディング分の余白を一括トリミングするユーティリティクラスを整理しました。
+
+| 旧 | 新 |
+|---|---|
+| `u--trimChildren` / `util="trimChildren"` | `u--trimAll` / `util="trimAll"` |
+
+旧 `u--trimChildren` / `util="trimChildren"` は削除されました（後方互換エイリアスなし）。直接使用している箇所はすべて置き換えが必要です。
+
+トリミング対象の指定方式も整理され、トリムすべきでない要素（`:empty`, `figure`, `picture`, `video`, `button`, `textarea`, `table`）のみを除外するシンプルな形になりました。`:empty` により `img` や `hr` などの void element、中身のない装飾 div（`a--divider` / `a--spacer` 等）は自動で除外されます。追加で除外したい要素は、利用側で `.u--trimAll > xxx { margin-block: 0 }` のように個別打ち消しで対応してください。
+
+<Divider bds="dashed" my="40" />
+
 ## `u--collapseGrid` のリネームと `u--divide` の追加 (#323)
 
 **破壊的変更**を含むリリースです。

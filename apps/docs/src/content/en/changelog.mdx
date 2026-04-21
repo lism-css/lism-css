@@ -9,6 +9,22 @@ Breaking changes may continue frequently until the v1.0 release, so all notable 
 
 <Divider bds="dashed" my="40" />
 
+## Rename `u--trimChildren` and refine the exclusion rules (#324, #326)
+
+Contains **breaking changes**.
+
+The utility class that trims half-leading margins on children has been cleaned up.
+
+| Old | New |
+|---|---|
+| `u--trimChildren` / `util="trimChildren"` | `u--trimAll` / `util="trimAll"` |
+
+The old `u--trimChildren` / `util="trimChildren"` has been removed (no backward-compatible alias). Any direct usage must be replaced.
+
+The selector strategy has also been refined to simply exclude elements that shouldn't be trimmed (`:empty`, `figure`, `picture`, `video`, `button`, `textarea`, `table`). The `:empty` pseudo-class automatically covers void elements like `img`/`hr` and empty decorative divs (e.g. `a--divider`, `a--spacer`). If you need to exclude additional elements, add a rule like `.u--trimAll > xxx { margin-block: 0 }` on the consumer side.
+
+<Divider bds="dashed" my="40" />
+
 ## Rename `u--collapseGrid` and add `u--divide` (#323)
 
 Contains **breaking changes**.
