@@ -9,18 +9,9 @@ Breaking changes may continue frequently until the v1.0 release, so all notable 
 
 <Divider bds="dashed" my="40" />
 
-## `@lism-css/ui` v.0.16.0 (2026.04.21)
+## lism-css v.0.16.0 (2026.04.21)
 
 This release contains **breaking changes**.
-
-- Aligned with lism-css 0.16.0 (Layout Primitive naming cleanup)
-- Changed the `Alert` component's `layout` prop literal value from `"sideMain"` to `"withSide"`
-
-<Divider bds="dashed" my="40" />
-
-## v.0.16.0 (2026.04.21)
-
-Contains **breaking changes**.
 
 ### Rename `u--trimChildren` and refine the exclusion rules (#324, #326)
 
@@ -79,39 +70,16 @@ There is no backward compatibility for the SCSS classes (`l--sideMain`, etc.) or
 - Changed the `-hov:-o` opacity fallback from `0.7` to `var(--o--p)`
 - Internal refactor: reorganized trait SCSS files into `is/` and `has/` subdirectories
 
-<Divider bds="dashed" my="40" />
-
-## `@lism-css/ui` v.0.15.0 (2026.04.21)
+### `@lism-css/ui` v.0.16.0 (2026.04.21)
 
 This release contains **breaking changes**.
 
-### Breaking Changes
+- Aligned with lism-css 0.16.0 (Layout Primitive naming cleanup)
+- Changed the `Alert` component's `layout` prop literal value from `"sideMain"` to `"withSide"`
 
-- Aligned with lism-css 0.15.0 (`-hov:-{prop}` / `-hov:in:*` / `set--var:*` / shadow token scale changes, etc.)
-- Changed default element of `NavMenu.Link` (Astro / React) from `span` to `a`. If you were using it without `href`, specify `as="span"` to keep the old behavior
+<Divider bds="dashed" my="40" />
 
-### TypeScript Support for Astro Components
-
-- Added Props types to the following Astro components
-  - Accordion / Alert / Avatar / Badge / Button / Callout / Chat / Details / Modal / NavMenu / ShapeDivider / Tabs
-- Added `Polymorphic<{as: Tag}>` generics to Astro components
-- Unified `AstroFlowProps` / `AstroFlexProps` into `AstroLayoutProps<L>`
-
-### Type System Improvements
-
-- Added `LismComponentProps<T>` generics to React components
-- Applied `LayoutComponentProps<T, L>` to layout components
-
-### Bug Fixes and Internal Improvements
-
-- Changed client scripts to use tag-agnostic selectors and types (Accordion / Tabs / Modal)
-- Made Accordion/react/Panel generic
-- Used `Flex` component in `Details/Summary`
-- Aligned `Details/Content` React implementation with Astro using `Flow`
-- Used `Flex` / `Flow` in `Accordion/Button` / `Panel`
-- Added `gen:registry` script to generate `registry-index.json`
-
-## v.0.15.0 (2026.04.21)
+## lism-css v.0.15.0 (2026.04.21)
 
 This release contains **breaking changes**.
 
@@ -169,7 +137,66 @@ The `--shsz--` scale has been **shifted down one step**, and `--shsz--5` was rem
 - Introduced `AstroLayoutProps<L>` and removed `AstroFlowProps` / `AstroFlexProps`
 - Made `LismElementProps['className']` type explicit (`string | undefined`)
 
-## `@lism-css/ui` v.0.14.0 (2026.04.17)
+### `@lism-css/ui` v.0.15.0 (2026.04.21)
+
+This release contains **breaking changes**.
+
+**Breaking Changes**
+
+- Aligned with lism-css 0.15.0 (`-hov:-{prop}` / `-hov:in:*` / `set--var:*` / shadow token scale changes, etc.)
+- Changed default element of `NavMenu.Link` (Astro / React) from `span` to `a`. If you were using it without `href`, specify `as="span"` to keep the old behavior
+
+**TypeScript Support for Astro Components**
+
+- Added Props types to the following Astro components
+  - Accordion / Alert / Avatar / Badge / Button / Callout / Chat / Details / Modal / NavMenu / ShapeDivider / Tabs
+- Added `Polymorphic<{as: Tag}>` generics to Astro components
+- Unified `AstroFlowProps` / `AstroFlexProps` into `AstroLayoutProps<L>`
+
+**Type System Improvements**
+
+- Added `LismComponentProps<T>` generics to React components
+- Applied `LayoutComponentProps<T, L>` to layout components
+
+**Bug Fixes and Internal Improvements**
+
+- Changed client scripts to use tag-agnostic selectors and types (Accordion / Tabs / Modal)
+- Made Accordion/react/Panel generic
+- Used `Flex` component in `Details/Summary`
+- Aligned `Details/Content` React implementation with Astro using `Flow`
+- Used `Flex` / `Flow` in `Accordion/Button` / `Panel`
+- Added `gen:registry` script to generate `registry-index.json`
+
+<Divider bds="dashed" my="40" />
+
+## lism-css v.0.14.0 (2026.04.17)
+
+This release contains **breaking changes**.
+
+### Props system cleanup
+
+- Removed `lismClass` / `variant` props in favor of unified `className`
+- Removed dedicated `clipPath` / `boxSizing` props from `Decorator`
+
+### Property Class renames
+
+- `ysz` → `bsz` (block-size)
+- `isolation` → `iso`
+- `whspace` → `whs` (white-space)
+- `ovwrap` → `ovw` (overflow-wrap)
+
+### Trait Class / token cleanup
+
+- Removed `is--vertical`; migrated to Property Class `-wm:vertical-rl`
+- Disabled `set--bp`
+- Renamed negative token variables from `--o--n{N}` to `--o---{N}`
+- Removed `--sz--min` / `--sz--full` tokens
+
+### Other
+
+- Changed `fluidCols` default min size to 20rem
+
+### `@lism-css/ui` v.0.14.0 (2026.04.17)
 
 This release contains **breaking changes**.
 
@@ -182,59 +209,62 @@ This release contains **breaking changes**.
 - Split React components into the same file structure as Astro
 - Inlined `getProps` into components
 
-## v.0.14.0 (2026.04.17)
+<Divider bds="dashed" my="40" />
 
-This release contains **breaking changes**.
+## lism-css v.0.13.1 (2026.04.15)
 
-- Removed `lismClass` / `variant` props in favor of unified `className`
-- Property Class renames:
-  - `ysz` → `bsz` (block-size)
-  - `isolation` → `iso`
-  - `whspace` → `whs` (white-space)
-  - `ovwrap` → `ovw` (overflow-wrap)
-- Removed `is--vertical`; migrated to Property Class `-wm:vertical-rl`
-- Disabled `set--bp`
-- Renamed negative token variables from `--o--n{N}` to `--o---{N}`
-- Removed `--sz--min` / `--sz--full` tokens
-- Removed dedicated `clipPath` / `boxSizing` props from `Decorator`
-- Changed `fluidCols` default min size to 20rem
+- Added the `atomic` prop
 
-## `@lism-css/ui` v.0.13.1 (2026.04.15)
+### `@lism-css/ui` v.0.13.1 (2026.04.15)
 
 - Aligned with lism-css 0.13.1
 - Cleaned up `Tabs` styles
 
-## v.0.13.1 (2026.04.15)
+<Divider bds="dashed" my="40" />
 
-- Added the `atomic` prop
+## lism-css v.0.13.0 (2026.04.14)
 
-## `@lism-css/ui` v.0.13.0 (2026.04.14)
+This release contains **breaking changes**.
+
+### Module → Primitive concept rename
+
+- Renamed concept `Module` → `Primitive`
+  - CSS layer `lism-modules` → `lism-primitive`
+  - SCSS directory `src/scss/modules` → `src/scss/primitives`
+- Added new CSS layer `lism-component`
+
+### State → Trait identifier unification
+
+Renamed `State` identifiers in the Props system to `Trait`.
+
+- Type `StateProps` → `TraitProps`
+- Constant `STATES` → `TRAITS`
+- `lism.config.js` key `states` → `traits`
+- File `config/defaults/states.ts` → `config/defaults/traits.ts`
+
+Note: Prop names such as `isContainer` / `isWrapper` and `is--*` class names are unchanged.
+
+### `set` / `util` props unification
+
+- Added `util` prop; unified `set` / `util` as strings with `-` prefix for exclusion
+
+### Trait Class / naming cleanup
+
+- Renamed `is--linkBox` → `is--boxLink`
+- Renamed `u--expandedLink` → `is--coverLink`
+- Removed `Container`'s `size` prop in favor of `isWrapper`
+
+### Other
+
+- Unified BEM element notation for `c--` components to single `_`
+- Reorganized class output order (moved `set--` / `u--` before property classes)
+
+### `@lism-css/ui` v.0.13.0 (2026.04.14)
 
 - Aligned with lism-css 0.13.0
 - Added `util` prop; unified `set` / `util` as strings with `-` prefix for exclusion
 - Moved `c--` components to the `lism-component` CSS layer
 - Unified CSS layer names to singular (`lism-components` → `lism-component`)
-
-## v.0.13.0 (2026.04.14)
-
-This release contains **breaking changes**.
-
-- Added `util` prop; unified `set` / `util` as strings with `-` prefix for exclusion
-- Renamed `is--linkBox` → `is--boxLink`
-- Renamed `u--expandedLink` → `is--coverLink`
-- Removed `Container`'s `size` prop in favor of `isWrapper`
-- Renamed concept `Module` → `Primitive`
-  - CSS layer `lism-modules` → `lism-primitive`
-  - SCSS directory `src/scss/modules` → `src/scss/primitives`
-- Added new CSS layer `lism-component`
-- Renamed `State` identifiers in the Props system to `Trait`:
-  - Type `StateProps` → `TraitProps`
-  - Constant `STATES` → `TRAITS`
-  - `lism.config.js` key `states` → `traits`
-  - File `config/defaults/states.ts` → `config/defaults/traits.ts`
-  - Note: Prop names such as `isContainer` / `isWrapper` and `is--*` class names are unchanged
-- Unified BEM element notation for `c--` components to single `_`
-- Reorganized class output order (moved `set--` / `u--` before property classes)
 
 ## `@lism-css/ui` v.0.12.0 (2026.04.10)
 

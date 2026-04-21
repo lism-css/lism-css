@@ -9,16 +9,7 @@ v.1.0リリースまでしばらく激しい変更が続く可能性があるた
 
 <Divider bds="dashed" my="40" />
 
-## `@lism-css/ui` v.0.16.0 (2026.04.21)
-
-**破壊的変更**を含むリリースです。
-
-- lism-css 0.16.0 への追従（Layout Primitive 命名整理）
-- `Alert` コンポーネントの `layout` プロパティで受け付けるリテラル値を `"sideMain"` → `"withSide"` に変更
-
-<Divider bds="dashed" my="40" />
-
-## v.0.16.0 (2026.04.21)
+## lism-css v.0.16.0 (2026.04.21)
 
 **破壊的変更**を含むリリースです。
 
@@ -79,39 +70,16 @@ SCSS クラス (`l--sideMain` 等) と `layout` リテラル値 (`layout="sideMa
 - `-hov:-o` の opacity フォールバック値を `0.7` から `var(--o--p)` に変更
 - trait の SCSS を `is/` と `has/` サブディレクトリに整理（内部リファクタ）
 
-<Divider bds="dashed" my="40" />
-
-## `@lism-css/ui` v.0.15.0 (2026.04.21)
+### `@lism-css/ui` v.0.16.0 (2026.04.21)
 
 **破壊的変更**を含むリリースです。
 
-### 破壊的変更
+- lism-css 0.16.0 への追従（Layout Primitive 命名整理）
+- `Alert` コンポーネントの `layout` プロパティで受け付けるリテラル値を `"sideMain"` → `"withSide"` に変更
 
-- lism-css 0.15.0 への追従（`-hov:-{prop}` / `-hov:in:*` / `set--var:*` / シャドウトークンスケール変更など）
-- `NavMenu.Link`（Astro / React）のデフォルト要素を `span` → `a` に変更。`href` を渡さずに使用していた場合は `as="span"` を明示してください
+<Divider bds="dashed" my="40" />
 
-### Astro コンポーネントの TypeScript 対応
-
-- 以下の Astro コンポーネントに Props 型を追加
-  - Accordion / Alert / Avatar / Badge / Button / Callout / Chat / Details / Modal / NavMenu / ShapeDivider / Tabs
-- Astro コンポーネントに `Polymorphic<{as: Tag}>` ジェネリクスを追加
-- `AstroFlowProps` / `AstroFlexProps` を `AstroLayoutProps<L>` に統一
-
-### 型システムの整備
-
-- React コンポーネントに `LismComponentProps<T>` ジェネリクスを追加
-- レイアウトコンポーネントに `LayoutComponentProps<T, L>` を適用
-
-### バグ修正・内部改善
-
-- クライアントスクリプトをタグ非依存なセレクタ・型に変更（Accordion / Tabs / Modal）
-- Accordion / react / Panel をジェネリクス化
-- `Details/Summary` で `Flex` コンポーネントを使用
-- `Details/Content` React 実装を Astro に合わせ `Flow` を使用
-- `Accordion/Button` / `Panel` で `Flex` / `Flow` を使用
-- `registry-index.json` を生成する `gen:registry` スクリプトを追加
-
-## v.0.15.0 (2026.04.21)
+## lism-css v.0.15.0 (2026.04.21)
 
 **破壊的変更**を含むリリースです。
 
@@ -169,7 +137,66 @@ SCSS クラス (`l--sideMain` 等) と `layout` リテラル値 (`layout="sideMa
 - `AstroLayoutProps<L>` を導入し `AstroFlowProps` / `AstroFlexProps` を削除
 - `LismElementProps` の `className` 型を `string | undefined` に明示化
 
-## `@lism-css/ui` v.0.14.0 (2026.04.17)
+### `@lism-css/ui` v.0.15.0 (2026.04.21)
+
+**破壊的変更**を含むリリースです。
+
+**破壊的変更**
+
+- lism-css 0.15.0 への追従（`-hov:-{prop}` / `-hov:in:*` / `set--var:*` / シャドウトークンスケール変更など）
+- `NavMenu.Link`（Astro / React）のデフォルト要素を `span` → `a` に変更。`href` を渡さずに使用していた場合は `as="span"` を明示してください
+
+**Astro コンポーネントの TypeScript 対応**
+
+- 以下の Astro コンポーネントに Props 型を追加
+  - Accordion / Alert / Avatar / Badge / Button / Callout / Chat / Details / Modal / NavMenu / ShapeDivider / Tabs
+- Astro コンポーネントに `Polymorphic<{as: Tag}>` ジェネリクスを追加
+- `AstroFlowProps` / `AstroFlexProps` を `AstroLayoutProps<L>` に統一
+
+**型システムの整備**
+
+- React コンポーネントに `LismComponentProps<T>` ジェネリクスを追加
+- レイアウトコンポーネントに `LayoutComponentProps<T, L>` を適用
+
+**バグ修正・内部改善**
+
+- クライアントスクリプトをタグ非依存なセレクタ・型に変更（Accordion / Tabs / Modal）
+- Accordion / react / Panel をジェネリクス化
+- `Details/Summary` で `Flex` コンポーネントを使用
+- `Details/Content` React 実装を Astro に合わせ `Flow` を使用
+- `Accordion/Button` / `Panel` で `Flex` / `Flow` を使用
+- `registry-index.json` を生成する `gen:registry` スクリプトを追加
+
+<Divider bds="dashed" my="40" />
+
+## lism-css v.0.14.0 (2026.04.17)
+
+**破壊的変更**を含むリリースです。
+
+### Props システムの整理
+
+- `lismClass` / `variant` props を削除し、`className` 一本に集約
+- `Decorator` から `clipPath` / `boxSizing` 専用 props を削除
+
+### Property Class のリネーム
+
+- `ysz` → `bsz`（block-size 系）
+- `isolation` → `iso`
+- `whspace` → `whs`（white-space）
+- `ovwrap` → `ovw`（overflow-wrap）
+
+### Trait Class / トークンの整理
+
+- `is--vertical` を削除し、Property Class `-wm:vertical-rl` に移行
+- `set--bp` を無効化
+- ネガティブトークン変数を `--o--n{N}` から `--o---{N}` に変更
+- `--sz--min` / `--sz--full` トークンを削除
+
+### その他
+
+- `fluidCols` のデフォルト min サイズを 20rem に変更
+
+### `@lism-css/ui` v.0.14.0 (2026.04.17)
 
 **破壊的変更**を含むリリースです。
 
@@ -182,59 +209,62 @@ SCSS クラス (`l--sideMain` 等) と `layout` リテラル値 (`layout="sideMa
 - React 側コンポーネントを Astro と同じファイル構成に分割
 - `getProps` をコンポーネントにインライン化し不要ファイルを削除
 
-## v.0.14.0 (2026.04.17)
+<Divider bds="dashed" my="40" />
 
-**破壊的変更**を含むリリースです。
+## lism-css v.0.13.1 (2026.04.15)
 
-- `lismClass` / `variant` props を削除し、`className` 一本に集約
-- Property Class のリネーム:
-  - `ysz` → `bsz`（block-size 系）
-  - `isolation` → `iso`
-  - `whspace` → `whs`（white-space）
-  - `ovwrap` → `ovw`（overflow-wrap）
-- `is--vertical` を削除し、Property Class `-wm:vertical-rl` に移行
-- `set--bp` を無効化
-- ネガティブトークン変数を `--o--n{N}` から `--o---{N}` に変更
-- `--sz--min` / `--sz--full` トークンを削除
-- `Decorator` から `clipPath` / `boxSizing` 専用 props を削除
-- `fluidCols` のデフォルト min サイズを 20rem に変更
+- `atomic` prop を新設
 
-## `@lism-css/ui` v.0.13.1 (2026.04.15)
+### `@lism-css/ui` v.0.13.1 (2026.04.15)
 
 - lism-css 0.13.1 の変更に追従
 - `Tabs` のスタイルを整理
 
-## v.0.13.1 (2026.04.15)
+<Divider bds="dashed" my="40" />
 
-- `atomic` prop を新設
+## lism-css v.0.13.0 (2026.04.14)
 
-## `@lism-css/ui` v.0.13.0 (2026.04.14)
+**破壊的変更**を含むリリースです。
+
+### Module → Primitive 概念リネーム
+
+- 概念名 `Module` → `Primitive` にリネーム
+  - CSS レイヤー `lism-modules` → `lism-primitive`
+  - SCSS ディレクトリ `src/scss/modules` → `src/scss/primitives`
+- 新規 CSS レイヤー `lism-component` を追加
+
+### State → Trait 識別子の統一
+
+Props システムの `State` 系識別子を `Trait` に統一リネーム。
+
+- 型 `StateProps` → `TraitProps`
+- 定数 `STATES` → `TRAITS`
+- `lism.config.js` の設定キー `states` → `traits`
+- 参照ファイル `config/defaults/states.ts` → `config/defaults/traits.ts`
+
+※ `isContainer`, `isWrapper` 等の props 名や `is--*` クラス名は変更なし。
+
+### `set` / `util` props の統一
+
+- `util` prop を追加し、`set` / `util` を string に統一。`-` prefix で除外する仕様に変更
+
+### Trait Class / 命名整理
+
+- `is--linkBox` を `is--boxLink` にリネーム
+- `u--expandedLink` を `is--coverLink` にリネーム
+- `Container` の `size` プロパティを廃止し、`isWrapper` に統一
+
+### その他
+
+- `c--` コンポーネントの BEM element 記法を単一 `_` に統一
+- クラス出力順を整理（`set--` / `u--` を property class より前に移動）
+
+### `@lism-css/ui` v.0.13.0 (2026.04.14)
 
 - lism-css 0.13.0 への追従
 - `util` prop を追加し、`set` / `util` を string に統一。`-` prefix で除外する仕様に変更
 - `c--` コンポーネントを `lism-component` レイヤーに移動
 - CSS レイヤー名を単数形に統一（`lism-components` → `lism-component`）
-
-## v.0.13.0 (2026.04.14)
-
-**破壊的変更**を含むリリースです。
-
-- `util` prop を追加し、`set` / `util` を string に統一。`-` prefix で除外する仕様に変更
-- `is--linkBox` を `is--boxLink` にリネーム
-- `u--expandedLink` を `is--coverLink` にリネーム
-- `Container` の `size` プロパティを廃止し、`isWrapper` に統一
-- 概念名 `Module` → `Primitive` にリネーム
-  - CSS レイヤー `lism-modules` → `lism-primitive`
-  - SCSS ディレクトリ `src/scss/modules` → `src/scss/primitives`
-- 新規 CSS レイヤー `lism-component` を追加
-- Props システムの `State` 系識別子を `Trait` に統一リネーム
-  - 型 `StateProps` → `TraitProps`
-  - 定数 `STATES` → `TRAITS`
-  - `lism.config.js` の設定キー `states` → `traits`
-  - 参照ファイル `config/defaults/states.ts` → `config/defaults/traits.ts`
-  - ※ `isContainer`, `isWrapper` 等の props 名や `is--*` クラス名は変更なし
-- `c--` コンポーネントの BEM element 記法を単一 `_` に統一
-- クラス出力順を整理（`set--` / `u--` を property class より前に移動）
 
 ## `@lism-css/ui` v.0.12.0 (2026.04.10)
 
