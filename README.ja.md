@@ -17,7 +17,7 @@
 
 Lism CSS は、WEB サイトのレイアウトを素早く、かつ美しく構築するための軽量な **CSS 設計フレームワーク**です。
 
-[Every Layout](https://every-layout.dev/) のレイアウトプリミティブ、[Tailwind CSS](https://tailwindcss.com/) のユーティリティファーストアプローチ、[ITCSS](https://www.xfive.co/blog/itcss-scalable-maintainable-css-architecture/) のレイヤリング等に着想を得て、それらを統合して設計されています。
+[Every Layout](https://every-layout.dev/) のレイアウトプリミティブやハーモニックモジュラースケーリング、[Tailwind CSS](https://tailwindcss.com/) のCSSプロパティ単位でのユーティリティファーストなアプローチから着想を得て、独自のCSS設計を組み立てました。
 
 ビルドステップや設定は不要です。CDN 経由で CSS ファイルを読み込むか、npm からインポートするだけですぐに使い始められます。React / Astro 向けのコンポーネントも提供しており、props を通じて CSS クラスとカスタムプロパティに変換されるため、ランタイムでのスタイル生成なしにコンポーネントベースの開発が可能です。
 

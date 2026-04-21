@@ -9,7 +9,7 @@
 
 Lism CSS is a lightweight **CSS design framework** for quickly and beautifully building website layouts.
 
-Inspired by [Every Layout](https://every-layout.dev/)'s layout primitives, [Tailwind CSS](https://tailwindcss.com/)'s utility-first approach, and [ITCSS](https://www.xfive.co/blog/itcss-scalable-maintainable-css-architecture/)'s layering concept, Lism CSS integrates these ideas into a cohesive architecture.
+Inspired by [Every Layout](https://every-layout.dev/)'s layout primitives and harmonic modular scaling, and by [Tailwind CSS](https://tailwindcss.com/)'s utility-first approach of single-property classes, Lism CSS is built as an original CSS design.
 
 No build step or configuration is required. Simply load the CSS file via CDN or import it from npm to get started. It also provides React and Astro components whose props are converted into CSS classes and custom properties, enabling component-based development without runtime style generation.
 
