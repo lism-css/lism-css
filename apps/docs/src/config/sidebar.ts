@@ -164,9 +164,9 @@ const docsSidebar: SidebarSection[] = [
 
       { type: 'separator' },
       '/docs/primitives/l--columns/',
-      '/docs/primitives/l--fluidCols/',
-      '/docs/primitives/l--sideMain/',
-      '/docs/primitives/l--switchCols/',
+      '/docs/primitives/l--autoColumns/',
+      '/docs/primitives/l--withSide/',
+      '/docs/primitives/l--switchColumns/',
 
       { type: 'separator' },
     ],

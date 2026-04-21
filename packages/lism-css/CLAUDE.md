@@ -47,7 +47,7 @@ components/ComponentName/
 └── script.js          # クライアントJS（BoxLink のみ）
 ```
 
-- `layout/` サブディレクトリに Box, Flow, Flex, Cluster, Stack, Grid, FluidCols, SwitchCols, SideMain, Center, Columns, Frame がある
+- `layout/` サブディレクトリに Box, Flow, Flex, Cluster, Stack, Grid, AutoColumns, SwitchColumns, WithSide, Center, Columns, Frame がある
 - `state/` サブディレクトリに Container, Wrapper, Layer, BoxLink がある
 - `atomic/` サブディレクトリに Icon, Divider, Spacer, Decorator がある
 - `Lism` コアコンポーネントは `.tsx` / `.ts` で実装されている

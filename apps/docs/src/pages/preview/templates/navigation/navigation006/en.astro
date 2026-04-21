@@ -1,7 +1,7 @@
 ---
 import DemoLayout from '@/layouts/DemoLayout.astro';
 
-import { Container, Grid, FluidCols, Icon, BoxLink, Stack, Flex, Text, Inline, Heading } from 'lism-css/astro';
+import { Container, Grid, AutoColumns, Icon, BoxLink, Stack, Flex, Text, Inline, Heading } from 'lism-css/astro';
 import { Button } from '@lism-css/ui/astro';
 import './_style.css';
 ---
@@ -13,7 +13,7 @@ import './_style.css';
         <Text class="u--trim" fz="3xl" fw="bold" ff="accent" c="gray">Navigation</Text>
         <Heading level="2" class="u--trim" fz="s" fw="normal" o="-20">Site Navigation</Heading>
       </Stack>
-      <FluidCols class="u--trimChildren" gr={['2', null, '1 / -1']} gc={['1', null, '2']} cols="14rem" g="30 40">
+      <AutoColumns class="u--trimChildren" gr={['2', null, '1 / -1']} gc={['1', null, '2']} cols="14rem" g="30 40">
         <BoxLink href="#" layout="grid" gtc="1fr auto" ai="center" g="20" py="15" hov="-c">
           <Inline>Kitchen</Inline>
           <Icon icon="caret-right" />
@@ -94,7 +94,7 @@ import './_style.css';
           <Inline>Internships</Inline>
           <Icon icon="caret-right" />
         </BoxLink>
-      </FluidCols>
+      </AutoColumns>
       <Flex gr={['3', null, '3']} gc={['1', null, '1']} g="15">
         <Button g="15" variant="outline" href="#" w={['stretch', null, 'auto']} bdrs="10" hasTransition hov={{ bgc: 'black', c: 'white' }}>
           <Inline gc="1" fz="s">View More</Inline>

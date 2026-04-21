@@ -3,7 +3,7 @@ title: 'Card'
 description: 'Lism CSS で実装するカード型コンテンツレイアウトの実装例です。'
 ---
 
-import { Box, Flex, Stack, Center, Grid, Frame, BoxLink, Layer, Columns, Media, SideMain, Group, Inline, Link, Text } from 'lism-css/astro';
+import { Box, Flex, Stack, Center, Grid, Frame, BoxLink, Layer, Columns, Media, WithSide, Group, Inline, Link, Text } from 'lism-css/astro';
 import { DummyText } from '@lism-css/ui/astro';
 import Card from '@/components/ex/Card/index.jsx';
 
@@ -13,7 +13,7 @@ import Card from '@/components/ex/Card/index.jsx';
 
 export const ExampleCard = (props) => {
   return(
-    <SideMain isBoxLink href="###" hov="-bxsh" hasTransition sideW="50%" bgc="base" bdrs="20" bxsh="10" ov="hidden" {...props}>
+    <WithSide isBoxLink href="###" hov="-bxsh" hasTransition sideW="50%" bgc="base" bdrs="20" bxsh="10" ov="hidden" {...props}>
       <Frame isSide ar="16/9" >
         <Media src="https://cdn.lism-css.com/img/a-1.jpg" alt="" width="960" height="640" />
       </Frame>
@@ -22,7 +22,7 @@ export const ExampleCard = (props) => {
         <Text util="trim" fz="s" lh="s" o="-10">ロレム・イプサムの座り雨、トマ好き学習だったエリット、しかし時と活力はそのような木々と楽しみ。</Text>
         <Inline d="inline-flex" mx-s="auto" my-s="auto" c="inherit" td="none" bd-b lh="s" p="10">View More →</Inline>
       </Stack>
-    </SideMain>
+    </WithSide>
   )
 }
 
@@ -45,14 +45,14 @@ export const ExampleImgCard = (props) => {
 
 ### 縦向き・横向きのレイアウトが自動で切り替わるカードリンク
 
-[`SideMain`](/docs/primitives/l--sideMain/)を使って構築することで、表示領域が狭くなったら縦向きレイアウトにすることができます。
+[`WithSide`](/docs/primitives/l--withSide/)を使って構築することで、表示領域が狭くなったら縦向きレイアウトにすることができます。
 
 また、[`is--boxLink`](/docs/trait-class/is--boxLink/)を適用してカードコンテンツ全体をリンクにしてみます。
 
 <Preview>
   <PreviewTitle>Preview</PreviewTitle>
   <PreviewArea bg=":stripe" resize p="30">
-    <SideMain isBoxLink href="###" hov="-bxsh" hasTransition sideW="50%" bgc="base" bdrs="20" bxsh="10" ov="hidden">
+    <WithSide isBoxLink href="###" hov="-bxsh" hasTransition sideW="50%" bgc="base" bdrs="20" bxsh="10" ov="hidden">
       <Frame isSide ar="16/9">
         <Media src="https://cdn.lism-css.com/img/a-1.jpg" alt="" width="960" height="640" />
       </Frame>
@@ -65,11 +65,11 @@ export const ExampleImgCard = (props) => {
           <Fragment>View More →</Fragment>
         </Inline>
       </Stack>
-    </SideMain>
+    </WithSide>
   </PreviewArea>
   <PreviewCode slot="tab" label="JSX">
-    ```jsx "SideMain" 'as="a" isBoxLink'
-    <SideMain isBoxLink href="###" hov="-bxsh" hasTransition sideW="50%" bgc="base" bdrs="20" bxsh="10" ov="hidden">
+    ```jsx "WithSide" 'as="a" isBoxLink'
+    <WithSide isBoxLink href="###" hov="-bxsh" hasTransition sideW="50%" bgc="base" bdrs="20" bxsh="10" ov="hidden">
       <Frame isSide ar="16/9">
         <Media src="https://cdn.lism-css.com/img/a-1.jpg" alt="" width="960" height="640" />
       </Frame>
@@ -82,7 +82,7 @@ export const ExampleImgCard = (props) => {
           View More →
         </Inline>
       </Stack>
-    </SideMain>
+    </WithSide>
     ```
   </PreviewCode>
 </Preview>
@@ -95,7 +95,7 @@ export const ExampleImgCard = (props) => {
 <Preview>
   <PreviewTitle>`is--coverLink`を使う例</PreviewTitle>
   <PreviewArea bg=":stripe" resize p="30">
-    <SideMain isBoxLink hov="-bxsh" hasTransition sideW="50%" bgc="base" bdrs="20" bxsh="10" ov="hidden">
+    <WithSide isBoxLink hov="-bxsh" hasTransition sideW="50%" bgc="base" bdrs="20" bxsh="10" ov="hidden">
       <Frame isSide ar="16/9" pos="relative">
         <Media src="https://cdn.lism-css.com/img/a-1.jpg" alt="" width="960" height="640" />
         <Link href="#badge-link" pos="absolute" t="0" r="0" fz="s" bgc="black" c="white" m="20" px="15" bdrs="99" td="none" hov="neutral">
@@ -115,11 +115,11 @@ export const ExampleImgCard = (props) => {
           <Fragment>View More →</Fragment>
         </Inline>
       </Stack>
-    </SideMain>
+    </WithSide>
   </PreviewArea>
   <PreviewCode slot="tab" label="JSX">
     ```jsx "isBoxLink" "isCoverLink"
-    <SideMain isBoxLink hov="-bxsh" hasTransition sideW="50%" bgc="base" bdrs="20" bxsh="10" ov="hidden">
+    <WithSide isBoxLink hov="-bxsh" hasTransition sideW="50%" bgc="base" bdrs="20" bxsh="10" ov="hidden">
       <Frame isSide ar="16/9" pos="relative">
         <Media src="https://cdn.lism-css.com/img/a-1.jpg" alt="" width="960" height="640" />
         <Link href="#badge-link" pos="absolute" t="0" r="0" fz="s" bgc="black" c="white" m="20" px="15" bdrs="99" td="none" hov="neutral">
@@ -139,7 +139,7 @@ export const ExampleImgCard = (props) => {
           View More →
         </Inline>
       </Stack>
-    </SideMain>
+    </WithSide>
     ```
   </PreviewCode>
 </Preview>

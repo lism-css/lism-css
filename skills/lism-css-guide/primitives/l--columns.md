@@ -68,5 +68,5 @@
 ## 関連プリミティブ
 
 - [l--tileGrid](./l--tileGrid.md) — 列数×行数を指定する均等タイル
-- [l--fluidCols](./l--fluidCols.md) — カラム幅ベースの自動段組
-- [l--switchCols](./l--switchCols.md) — 複数列 ↔ 1列切り替え
+- [l--autoColumns](./l--autoColumns.md) — カラム幅ベースの自動段組
+- [l--switchColumns](./l--switchColumns.md) — 複数列 ↔ 1列切り替え

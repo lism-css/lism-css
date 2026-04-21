@@ -1,7 +1,7 @@
 ---
 import DemoLayout from '@/layouts/DemoLayout.astro';
 
-import { Container, Grid, FluidCols, Flex, Icon, Stack, Text, Heading } from 'lism-css/astro';
+import { Container, Grid, AutoColumns, Flex, Icon, Stack, Text, Heading } from 'lism-css/astro';
 import { Button } from '@lism-css/ui/astro';
 import './_style.css';
 ---
@@ -13,7 +13,7 @@ import './_style.css';
         <Text class="u--trim" fz="2xl" fw="light" lts="l">News</Text>
         <Heading level="2" class="u--trim" fz="xs" o="-20">Latest Updates</Heading>
       </Stack>
-      <FluidCols cols="22rem" gr={['2', null, '1 / -1']} gc={['1', null, '2']} g="30">
+      <AutoColumns cols="22rem" gr={['2', null, '1 / -1']} gc={['1', null, '2']} g="30">
         <Grid gtr="subgrid" gr="span 2" g="30" isBoxLink as="a" href="#" bgc="white" p="30" bdrs="20" set="var:hov" hasTransition hov="-bxsh">
           <Grid gtc="1fr auto" g="20" jc="start" ai="center">
             <Text fz="s">2025.10.30</Text>
@@ -85,7 +85,7 @@ import './_style.css';
             </Flex>
           </Flex>
         </Grid>
-      </FluidCols>
+      </AutoColumns>
       <Flex gr={['3', null, '2']} gc="1">
         <Button href="#" jc="center" w={['stretch', null, 'auto']} min-w="8rem" fz="s" p="15" bdrs="99">View All</Button>
       </Flex>

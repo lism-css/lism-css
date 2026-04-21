@@ -26,21 +26,21 @@ describe('getLayoutProps', () => {
     });
   });
 
-  describe('sideMain レイアウト', () => {
+  describe('withSide レイアウト', () => {
     test('sideW が指定された場合、style に --sideW が設定される', () => {
-      const result = getLayoutProps('sideMain', { sideW: '200px' });
+      const result = getLayoutProps('withSide', { sideW: '200px' });
       expect(result.style).toBeDefined();
       expect(result.style?.['--sideW']).toBe('200px');
     });
 
     test('mainW が指定された場合、style に --mainW が設定される', () => {
-      const result = getLayoutProps('sideMain', { mainW: '800px' });
+      const result = getLayoutProps('withSide', { mainW: '800px' });
       expect(result.style).toBeDefined();
       expect(result.style?.['--mainW']).toBe('800px');
     });
 
     test('sideW と mainW の両方が指定された場合、両方とも設定される', () => {
-      const result = getLayoutProps('sideMain', {
+      const result = getLayoutProps('withSide', {
         sideW: '200px',
         mainW: '800px',
       });
@@ -49,17 +49,17 @@ describe('getLayoutProps', () => {
     });
 
     test('sideW が null の場合、--sideW は設定されない', () => {
-      const result = getLayoutProps('sideMain', { sideW: undefined });
+      const result = getLayoutProps('withSide', { sideW: undefined });
       expect(result.style?.['--sideW']).toBeUndefined();
     });
 
     test('sideW が undefined の場合、--sideW は設定されない', () => {
-      const result = getLayoutProps('sideMain', { sideW: undefined });
+      const result = getLayoutProps('withSide', { sideW: undefined });
       expect(result.style?.['--sideW']).toBeUndefined();
     });
 
     test('既存の style がある場合、マージされる', () => {
-      const result = getLayoutProps('sideMain', {
+      const result = getLayoutProps('withSide', {
         sideW: '200px',
         style: { color: 'red' },
       });
@@ -68,12 +68,12 @@ describe('getLayoutProps', () => {
     });
 
     test('sz トークンが適用される', () => {
-      const result = getLayoutProps('sideMain', { sideW: 's' });
+      const result = getLayoutProps('withSide', { sideW: 's' });
       expect(result.style?.['--sideW']).toBe('var(--sz--s)');
     });
 
     test('sideW と mainW 以外のpropsは維持される', () => {
-      const result = getLayoutProps('sideMain', {
+      const result = getLayoutProps('withSide', {
         sideW: '200px',
         mainW: '800px',
         otherProp: 'value',
@@ -84,25 +84,25 @@ describe('getLayoutProps', () => {
     });
   });
 
-  describe('fluidCols レイアウト', () => {
+  describe('autoColumns レイアウト', () => {
     test('autoFill が true の場合、style に --autoMode が設定される', () => {
-      const result = getLayoutProps('fluidCols', { autoFill: true });
+      const result = getLayoutProps('autoColumns', { autoFill: true });
       expect(result.style).toBeDefined();
       expect(result.style?.['--autoMode']).toBe('auto-fill');
     });
 
     test('autoFill が false の場合、--autoMode は設定されない', () => {
-      const result = getLayoutProps('fluidCols', { autoFill: false });
+      const result = getLayoutProps('autoColumns', { autoFill: false });
       expect(result.style?.['--autoMode']).toBeUndefined();
     });
 
     test('autoFill が未定義の場合、--autoMode は設定されない', () => {
-      const result = getLayoutProps('fluidCols', {});
+      const result = getLayoutProps('autoColumns', {});
       expect(result.style?.['--autoMode']).toBeUndefined();
     });
 
     test('既存の style がある場合、マージされる', () => {
-      const result = getLayoutProps('fluidCols', {
+      const result = getLayoutProps('autoColumns', {
         autoFill: true,
         style: { color: 'blue' },
       });
@@ -111,7 +111,7 @@ describe('getLayoutProps', () => {
     });
 
     test('autoFill 以外のpropsは維持される', () => {
-      const result = getLayoutProps('fluidCols', {
+      const result = getLayoutProps('autoColumns', {
         autoFill: true,
         otherProp: 'value',
       });
@@ -180,35 +180,35 @@ describe('getLayoutProps', () => {
     });
   });
 
-  describe('switchCols レイアウト', () => {
+  describe('switchColumns レイアウト', () => {
     test('breakSize が指定された場合、style に --breakSize が設定される', () => {
-      const result = getLayoutProps('switchCols', { breakSize: '600px' });
+      const result = getLayoutProps('switchColumns', { breakSize: '600px' });
       expect(result.style).toBeDefined();
       expect(result.style?.['--breakSize']).toBe('600px');
     });
 
     test('breakSize が未定義の場合、--breakSize は設定されない', () => {
-      const result = getLayoutProps('switchCols', {});
+      const result = getLayoutProps('switchColumns', {});
       expect(result.style?.['--breakSize']).toBeUndefined();
     });
 
     test('breakSize が 0 の場合、--breakSize は設定されない', () => {
-      const result = getLayoutProps('switchCols', { breakSize: 0 });
+      const result = getLayoutProps('switchColumns', { breakSize: 0 });
       expect(result.style?.['--breakSize']).toBeUndefined();
     });
 
     test('breakSize が空文字の場合、--breakSize は設定されない', () => {
-      const result = getLayoutProps('switchCols', { breakSize: '' });
+      const result = getLayoutProps('switchColumns', { breakSize: '' });
       expect(result.style?.['--breakSize']).toBeUndefined();
     });
 
     test('sz トークンが適用される', () => {
-      const result = getLayoutProps('switchCols', { breakSize: 'm' });
+      const result = getLayoutProps('switchColumns', { breakSize: 'm' });
       expect(result.style?.['--breakSize']).toBe('var(--sz--m)');
     });
 
     test('既存の style がある場合、マージされる', () => {
-      const result = getLayoutProps('switchCols', {
+      const result = getLayoutProps('switchColumns', {
         breakSize: '600px',
         style: { margin: '20px' },
       });
@@ -217,7 +217,7 @@ describe('getLayoutProps', () => {
     });
 
     test('breakSize 以外のpropsは維持される', () => {
-      const result = getLayoutProps('switchCols', {
+      const result = getLayoutProps('switchColumns', {
         breakSize: '600px',
         otherProp: 'value',
       });
@@ -246,13 +246,13 @@ describe('getLayoutProps', () => {
 
   describe('複数propsの組み合わせ', () => {
     test('primitiveClass と style が両方ある場合、正しく処理される', () => {
-      const result = getLayoutProps('sideMain', {
+      const result = getLayoutProps('withSide', {
         primitiveClass: ['custom-primitive'],
         sideW: '200px',
         style: { color: 'red' },
       });
       expect(result.primitiveClass).toContain('custom-primitive');
-      expect(result.primitiveClass).toContain('l--sideMain');
+      expect(result.primitiveClass).toContain('l--withSide');
       expect(result.style?.color).toBe('red');
       expect(result.style?.['--sideW']).toBe('200px');
     });

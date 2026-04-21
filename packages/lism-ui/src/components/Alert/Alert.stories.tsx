@@ -11,7 +11,7 @@ const meta: Meta<typeof Alert> = {
   argTypes: {
     children: { control: false },
     type: { control: 'select', options: presetTypes },
-    layout: { control: 'select', options: ['flex', 'sideMain'] },
+    layout: { control: 'select', options: ['flex', 'withSide'] },
   },
 };
 
@@ -45,11 +45,11 @@ export const Info: Story = {
   args: { type: 'info', children: '情報のメッセージです。' },
 };
 
-export const SideMain: Story = {
-  name: 'layout: sideMain',
+export const WithSide: Story = {
+  name: 'layout: withSide',
   args: {
     type: 'alert',
-    layout: 'sideMain',
+    layout: 'withSide',
     children: 'サイドメインレイアウトのアラートです。',
   },
 };

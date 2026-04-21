@@ -65,4 +65,4 @@
 
 - [l--tileGrid](./l--tileGrid.md) — 自動繰り返しのタイル型 Grid
 - [l--columns](./l--columns.md) — 等幅カラム専用
-- [l--sideMain](./l--sideMain.md) — コンテンツ幅自動切り替え型 2 カラム
+- [l--withSide](./l--withSide.md) — コンテンツ幅自動切り替え型 2 カラム

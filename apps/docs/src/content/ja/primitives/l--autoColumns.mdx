@@ -1,0 +1,116 @@
+---
+title: 'AutoColumns (l--autoColumns)'
+navtitle: 'l--autoColumns'
+description: 'l--autoColumns は、カラム要素が指定した幅より小さくならないように自動で折り返す、ブレイクポイント非依存の段組みクラスです。'
+---
+
+import { AutoColumns, Lism } from 'lism-css/astro';
+
+
+`l--autoColumns` は、**カラム要素が指定した幅より小さくならないように自動で折り返す**、ブレイクポイントに依存しない段組みクラスです。
+
+
+## CSS
+
+<SrcCode path="src/scss/primitives/layout/_autoColumns.scss" />
+
+
+## Lismコンポーネント
+
+### Import
+
+<ImportPackage component="AutoColumns" />
+
+### 専用Props
+
+| プロパティ | 説明 |
+|---|---|
+| `cols` <PropBadge type="cssvar">`--cols`</PropBadge> | カラムが維持する最小幅を指定します。
+| `autoFill` <PropBadge type="cssvar">`--autoMode`</PropBadge> | 自動折り返しのモードを`auto-fill`に切り替えます。
+
+
+## Usage
+
+### `--cols`でサイズを指定する
+<Preview>
+  <PreviewTitle>`--cols`でサイズを指定する</PreviewTitle>
+  <PreviewArea resize p="20">
+    <AutoColumns cols="16em" g="20">
+      <Lism as="div" p="20" bd>Item A</Lism>
+      <Lism as="div" p="20" bd>Item B</Lism>
+      <Lism as="div" p="20" bd>Item C</Lism>
+      <Lism as="div" p="20" bd>Item D</Lism>
+      <Lism as="div" p="20" bd>Item E</Lism>
+      <Lism as="div" p="20" bd>Item F</Lism>
+    </AutoColumns>
+  </PreviewArea>
+  <PreviewCode slot="tab" label="JSX">
+    ```jsx
+    <AutoColumns cols="16em" g="20">
+      <Lism as="div" p="20" bd>Item A</Lism>
+      <Lism as="div" p="20" bd>Item B</Lism>
+      <Lism as="div" p="20" bd>Item C</Lism>
+      <Lism as="div" p="20" bd>Item D</Lism>
+      <Lism as="div" p="20" bd>Item E</Lism>
+      <Lism as="div" p="20" bd>Item F</Lism>
+    </AutoColumns>
+    ```
+  </PreviewCode>
+  <PreviewCode slot="tab" label="HTML">
+    ```html "--cols:16em"
+    <div class="l--autoColumns -g:20" style="--cols: 16em">
+      <div class="-p:20 -bd">Item A</div>
+      <div class="-p:20 -bd">Item B</div>
+      <div class="-p:20 -bd">Item C</div>
+      <div class="-p:20 -bd">Item D</div>
+      <div class="-p:20 -bd">Item E</div>
+      <div class="-p:20 -bd">Item F</div>
+    </div>
+    ```
+  </PreviewCode>
+</Preview>
+
+### `auto-fill`を使用する
+
+`l--autoColumns`では、`grid-template-columns`の`repeat`関数の第一引数を`--autoMode` で指定することができます。（デフォルトは `auto-fit` です。）
+
+`--autoMode:auto-fill` (`autoFill`) を指定することで、要素数が少ない時の挙動が代わります。
+
+
+<Preview>
+  <PreviewTitle>`cols=12em`, `auto-fill` を使用する</PreviewTitle>
+  <PreviewArea resize p="20">
+    <AutoColumns cols="12em" autoFill g="20" fz="s">
+      <Lism as="div" p="20" bd>auto-fill</Lism>
+      <Lism as="div" p="20" bd>auto-fill</Lism>
+    </AutoColumns>
+    <AutoColumns cols="12em" g="20" fz="s">
+      <Lism as="div" p="20" bd>auto-fit</Lism>
+      <Lism as="div" p="20" bd>auto-fit</Lism>
+    </AutoColumns>
+  </PreviewArea>
+  <PreviewCode slot="tab" label="JSX">
+    ```jsx 'autoFill'
+    <AutoColumns cols="12em" autoFill g="20" fz="s">
+      <Lism as="div" p="20" bd>auto-fill</Lism>
+      <Lism as="div" p="20" bd>auto-fill</Lism>
+    </AutoColumns>
+    <AutoColumns cols="12em" g="20" fz="s">
+      <Lism as="div" p="20" bd>auto-fit</Lism>
+      <Lism as="div" p="20" bd>auto-fit</Lism>
+    </AutoColumns>
+    ```
+  </PreviewCode>
+  <PreviewCode slot="tab" label="HTML">
+    ```html "--autoMode:auto-fill"
+    <div class="l--autoColumns -g:20 -fz:s" style="--cols:12em; --autoMode:auto-fill">
+      <div class="-p:20 -bd">auto-fill</div>
+      <div class="-p:20 -bd">auto-fill</div>
+    </div>
+    <div class="l--autoColumns -g:20 -fz:s" style="--cols:12em">
+      <div class="-p:20 -bd">auto-fit</div>
+      <div class="-p:20 -bd">auto-fit</div>
+    </div>
+    ```
+  </PreviewCode>
+</Preview>

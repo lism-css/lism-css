@@ -25,7 +25,7 @@
 
 ### `primitives/` サブフォルダ配下の Primitive 詳細ファイル
 
-各 Primitive に 1 ファイル。クラス名は camelCase のまま（例: `l--sideMain.md`, `l--tileGrid.md`, `is--boxLink.md`）、MDX 側は lowercase（`l--sidemain.mdx` 等）であることに注意。
+各 Primitive に 1 ファイル。クラス名は camelCase のまま（例: `l--withSide.md`, `l--tileGrid.md`, `is--boxLink.md`）、MDX 側は lowercase（`l--withside.mdx` 等）であることに注意。
 
 ファイルの対応関係は SCSS と 1:1。カテゴリ別の更新内容は以下：
 
@@ -41,7 +41,7 @@
 - `## 基本情報`（クラス名 / コンポーネント / SCSSソース / ドキュメント）。URL は以下の形式を維持し、誤って書き換えないこと：
     - SCSSソース: `https://raw.githubusercontent.com/lism-css/lism-css/main/packages/lism-css/src/scss/{primitives/{layout|atomic}|trait}/_{name}.scss`
         - **SCSS ファイルが存在する Primitive / Trait のみ記載する**。`l--box` や `a--decorator` のように対応する `_{name}.scss` を持たない場合は、この行自体を省略する
-    - ドキュメント（人間向け）: Layout/Atomic は `https://lism-css.com/docs/primitives/{lowercase}/`、Trait は `https://lism-css.com/docs/trait-class/{lowercase}/` — `{lowercase}` はクラス名の小文字版（例: `l--sideMain.md` → `l--sidemain`）
+    - ドキュメント（人間向け）: Layout/Atomic は `https://lism-css.com/docs/primitives/{lowercase}/`、Trait は `https://lism-css.com/docs/trait-class/{lowercase}/` — `{lowercase}` はクラス名の小文字版（例: `l--withSide.md` → `l--withside`）
 - `## 専用Props`（該当プリミティブのみ）
 - `## Usage`（JSX + HTML コードブロックのペアで記載。MDX の `<Preview>` / `<PreviewArea>` / `<PreviewCode>` / `<SrcCode>` 等のカスタムコンポーネントは廃棄）
 - 必要に応じて追加セクション（HTML 構造、動作の仕組み、特殊仕様、Opt-in スタイル、注意点 など）
@@ -181,4 +181,4 @@
 - `詳細: URL` のリンクは変更しない（URL の有効性チェックは本コマンドの範囲外）
 - スキルファイル内のソースコードへのリンクは、必ず raw URL 形式（`https://raw.githubusercontent.com/lism-css/lism-css/main/{path}`）を使用すること。`https://github.com/lism-css/lism-css/blob/main/...` 形式は使わない。ディレクトリへのリンク（`tree/`）はそのまま GitHub URL で可
 - `primitives/*.md` は camelCase（実クラス名）、MDX 情報源は lowercase。同期対応を間違えないこと
-- `is--skipFlow` / `is--side` は独立した `primitives/*.md` を作らず、それぞれ `l--flow.md` / `l--sideMain.md` 内で言及する方針を維持する
+- `is--skipFlow` / `is--side` は独立した `primitives/*.md` を作らず、それぞれ `l--flow.md` / `l--withSide.md` 内で言及する方針を維持する

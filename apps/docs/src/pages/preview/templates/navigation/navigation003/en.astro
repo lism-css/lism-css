@@ -1,7 +1,7 @@
 ---
 import DemoLayout from '@/layouts/DemoLayout.astro';
 
-import { Container, Flex, FluidCols, Icon, BoxLink, Stack, Text, Heading } from 'lism-css/astro';
+import { Container, Flex, AutoColumns, Icon, BoxLink, Stack, Text, Heading } from 'lism-css/astro';
 import './_style.css';
 ---
 
@@ -10,7 +10,7 @@ import './_style.css';
     <Stack g="50">
       <Heading level="2" class="u--trim" fz="2xl" fw="bold" ta="center">Product Categories</Heading>
       <Stack g="50">
-        <FluidCols cols="18rem" g="30">
+        <AutoColumns cols="18rem" g="30">
           <BoxLink
             href="#"
             layout="flex"
@@ -163,7 +163,7 @@ import './_style.css';
               <Icon icon="arrow-right" fz="2xs" c="white" />
             </Flex>
           </BoxLink>
-        </FluidCols>
+        </AutoColumns>
         <Flex jc="flex-end">
           <BoxLink href="#" layout="flex" ai="center" g="10" hasTransition hov={{ c: 'link' }}>
             <Text class="u--trim">View All Categories</Text>

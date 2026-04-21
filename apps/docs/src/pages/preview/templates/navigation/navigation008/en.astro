@@ -1,7 +1,7 @@
 ---
 import DemoLayout from '@/layouts/DemoLayout.astro';
 
-import { Stack, Container, Frame, Flex, Grid, FluidCols, Media, Layer, Icon, Text, Heading } from 'lism-css/astro';
+import { Stack, Container, Frame, Flex, Grid, AutoColumns, Media, Layer, Icon, Text, Heading } from 'lism-css/astro';
 import { Button } from '@lism-css/ui/astro';
 import './_style.css';
 ---
@@ -18,7 +18,7 @@ import './_style.css';
           </p>
         </Stack>
         <Stack g="50">
-          <FluidCols cols="18rem" g="30">
+          <AutoColumns cols="18rem" g="30">
             <Grid gtr="subgrid" gr="span 3" g="30" p="40" bgc="white" bdrs="10">
               <Text class="u--trim" fz="xl" fw="bold">Web Director</Text>
               <Text class="u--trim" fz="s" o="-20">
@@ -123,7 +123,7 @@ import './_style.css';
                 </Button>
               </Flex>
             </Grid>
-          </FluidCols>
+          </AutoColumns>
         </Stack>
       </Stack>
     </Container>

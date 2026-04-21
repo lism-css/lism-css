@@ -8,7 +8,7 @@ export default function Alert<T extends ElementType = 'div'>({ children, classNa
 
   return (
     <Lism layout={layout} className={atts(className, 'c--alert')} {...alertProps}>
-      <Center isSide={layout === 'sideMain'} c="keycolor" fz="xl" fxsh="0">
+      <Center isSide={layout === 'withSide'} c="keycolor" fz="xl" fxsh="0">
         <Icon icon={icon} />
       </Center>
       <Flow flow={flow}>{children}</Flow>

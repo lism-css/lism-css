@@ -11,7 +11,7 @@ const { icon, layout, flow, ...alertProps } = getAlertProps(astroProps);
 ---
 
 <Lism layout={layout} class={atts(className, 'c--alert')} {...alertProps}>
-  <Center isSide={layout === 'sideMain'} c="keycolor" fz="xl" fxsh="0">
+  <Center isSide={layout === 'withSide'} c="keycolor" fz="xl" fxsh="0">
     <Icon icon={icon} />
   </Center>
   <Flow flow={flow}>

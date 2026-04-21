@@ -1,0 +1,125 @@
+---
+title: 'SwitchColumns (l--switchColumns)'
+navtitle: 'l--switchColumns'
+description: 'l--switchColumns is a class that switches between multi-column and single-column without using container queries or media queries.'
+---
+
+import { SwitchColumns, Box } from 'lism-css/astro';
+
+
+`l--switchColumns` is a class that **switches between multi-column and single-column without using container queries or media queries**.
+
+
+## CSS
+
+<SrcCode path="src/scss/primitives/layout/_switchColumns.scss" />
+
+
+## Lism Component
+
+### Import
+
+<ImportPackage component="SwitchColumns" />
+
+### Props
+
+| Property | Description |
+|---|---|
+| `breakSize` <PropBadge type="cssvar">`--breakSize`</PropBadge> | Specifies the parent width required to maintain the horizontal layout. Accepts [sz tokens](/en/docs/tokens/#size). |
+
+
+## Usage
+
+### Using with the default width
+
+<Preview>
+  <PreviewTitle>Using with the default width</PreviewTitle>
+  <PreviewArea resize p="15">
+    <SwitchColumns g="20">
+      <div class="-bgc:base-2 -p:20">Box</div>
+      <div class="-bgc:base-2 -p:20">Box</div>
+      <div class="-bgc:base-2 -p:20">Box</div>
+    </SwitchColumns>
+  </PreviewArea>
+  <PreviewCode slot="tab" label="JSX">
+    ```jsx
+    <SwitchColumns g="20">
+      <div class="-bgc:base-2 -p:20">Box</div>
+      <div class="-bgc:base-2 -p:20">Box</div>
+      <div class="-bgc:base-2 -p:20">Box</div>
+    </SwitchColumns>
+    ```
+  </PreviewCode>
+  <PreviewCode slot="tab" label="HTML">
+    ```html
+    <div class="l--switchColumns -g:20">
+      <div class="-bgc:base-2 -p:20">Box</div>
+      <div class="-bgc:base-2 -p:20">Box</div>
+      <div class="-bgc:base-2 -p:20">Box</div>
+    </div>
+    ```
+  </PreviewCode>
+</Preview>
+
+
+### Specifying breakSize
+
+<Preview>
+  <PreviewTitle>Using with a specified `breakSize`</PreviewTitle>
+  <PreviewArea resize p="15">
+    <SwitchColumns breakSize="s" g="20">
+      <div class="-bgc:base-2 -p:20">Box</div>
+      <div class="-bgc:base-2 -p:20">Box</div>
+      <div class="-bgc:base-2 -p:20">Box</div>
+    </SwitchColumns>
+  </PreviewArea>
+  <PreviewCode slot="tab" label="JSX">
+    ```jsx
+    <SwitchColumns breakSize="s" g="20">
+      <div class="-bgc:base-2 -p:20">Box</div>
+      <div class="-bgc:base-2 -p:20">Box</div>
+      <div class="-bgc:base-2 -p:20">Box</div>
+    </SwitchColumns>
+    ```
+  </PreviewCode>
+  <PreviewCode slot="tab" label="HTML">
+    ```html
+    <div class="l--switchColumns -g:20" style="--breakSize: var(--sz--s)">
+      <div class="-bgc:base-2 -p:20">Box</div>
+      <div class="-bgc:base-2 -p:20">Box</div>
+      <div class="-bgc:base-2 -p:20">Box</div>
+    </div>
+    ```
+  </PreviewCode>
+</Preview>
+
+
+### Adjusting proportions with flex-grow
+
+<Preview>
+  <PreviewTitle>Adjusting proportions by specifying `flex-grow` on child elements</PreviewTitle>
+  <PreviewArea resize p="15">
+    <SwitchColumns breakSize="s" g="20">
+      <div class="-bgc:base-2 -p:20">Box</div>
+      <div class="-bgc:base-2 -p:20" style={{ flexGrow: 2 }}>Box</div>
+    </SwitchColumns>
+  </PreviewArea>
+  <PreviewCode slot="tab" label="JSX">
+    ```jsx
+    <SwitchColumns breakSize="s" g="20">
+      <div class="-bgc:base-2 -p:20">Box</div>
+      <div class="-bgc:base-2 -p:20" style={{ flexGrow: 2 }}>
+        Box
+      </div>
+    </SwitchColumns>
+    ```
+  </PreviewCode>
+  <PreviewCode slot="tab" label="HTML">
+    ```html
+    <div class="l--switchColumns -g:20" style="--breakSize: var(--sz--s)">
+      <div class="-bgc:base-2 -p:20">Box</div>
+      <div class="-bgc:base-2 -p:20" style="flex-grow: 2">Box</div>
+    </div>
+    ```
+  </PreviewCode>
+</Preview>

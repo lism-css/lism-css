@@ -1,7 +1,7 @@
 ---
 import DemoLayout from '@/layouts/DemoLayout.astro';
 
-import { Stack, Container, Frame, FluidCols, Grid, Media, Layer, Center, Cluster, Text, Inline, Heading } from 'lism-css/astro';
+import { Stack, Container, Frame, AutoColumns, Grid, Media, Layer, Center, Cluster, Text, Inline, Heading } from 'lism-css/astro';
 import { Button } from '@lism-css/ui/astro';
 import './_style.css';
 ---
@@ -21,7 +21,7 @@ import './_style.css';
         <Button href="####" bgc="base-2" c="text" bdrs="10">ブランディング</Button>
         <Button href="####" bgc="base-2" c="text" bdrs="10">音楽</Button>
       </Cluster>
-      <FluidCols cols="20rem" g="40" ac="start">
+      <AutoColumns cols="20rem" g="40" ac="start">
         <Grid gtr="subgrid" gr="span 2" g="30" ai="start">
           <Stack as="a" isBoxLink href="#" g="30" set="var:hov">
             <Frame as="figure" ar="16/9" bdrs="20" pos="relative">
@@ -128,7 +128,7 @@ import './_style.css';
             <Button href="####" bgc="base-2" fz="s" c="text" bdrs="10">音楽</Button>
           </Cluster>
         </Grid>
-      </FluidCols>
+      </AutoColumns>
     </Stack>
   </Container>
 </DemoLayout>

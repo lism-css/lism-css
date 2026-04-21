@@ -57,5 +57,5 @@
 ## 関連プリミティブ
 
 - [l--columns](./l--columns.md) — 等幅列のみ（1D）のカラム
-- [l--fluidCols](./l--fluidCols.md) — 自動折り返し型段組
+- [l--autoColumns](./l--autoColumns.md) — 自動折り返し型段組
 - [l--grid](./l--grid.md) — 汎用 CSS Grid

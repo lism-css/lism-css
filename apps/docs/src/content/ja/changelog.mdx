@@ -9,6 +9,22 @@ v.1.0リリースまでしばらく激しい変更が続く可能性があるた
 
 <Divider bds="dashed" my="40" />
 
+## Layout Primitive の命名整理 (#319)
+
+**破壊的変更**を含むリリースです。
+
+以下の Layout Primitive のクラス名・コンポーネント名・`layout` リテラル値を変更しました。
+
+| 旧 | 新 |
+|---|---|
+| `l--sideMain` / `<SideMain>` / `layout="sideMain"` | `l--withSide` / `<WithSide>` / `layout="withSide"` |
+| `l--fluidCols` / `<FluidCols>` / `layout="fluidCols"` | `l--autoColumns` / `<AutoColumns>` / `layout="autoColumns"` |
+| `l--switchCols` / `<SwitchCols>` / `layout="switchCols"` | `l--switchColumns` / `<SwitchColumns>` / `layout="switchColumns"` |
+
+deprecated エイリアスは提供しないため、旧名称を使用している箇所はすべて新名称へ置き換えが必要です。
+
+<Divider bds="dashed" my="40" />
+
 ## `@lism-css/ui` v.0.15.0 (2026.04.21)
 
 **破壊的変更**を含むリリースです。
