@@ -2,7 +2,7 @@
 title: 'Utility Class'
 description: 'スタイルや装飾をまとめて適用できる Lism CSS のユーティリティクラスについて解説します。'
 ---
-import { Lism, Flow, Grid, Stack, Center, Box, Media, Frame, Flex, Layer, Spacer, Icon, Divider, Inline, Text } from "lism-css/astro";
+import { Lism, Flow, Grid, AutoColumns, Columns, Stack, Center, Box, Media, Frame, Flex, Layer, Spacer, Icon, Divider, Inline, Text } from "lism-css/astro";
 import { DummyText } from '@lism-css/ui/astro';
 import { Dog, Cat } from "@phosphor-icons/react";
 
@@ -280,138 +280,123 @@ import { Dog, Cat } from "@phosphor-icons/react";
 <SrcCode path="src/scss/utility/_hidden.scss" />
 
 
-## `u--collapseGrid`
+## `u--divide` & `u--cells`
+
+- `u--divide`はグリッド・フレックスボックス等の子要素間に区切り線を表示します。
+- `u--cells`はグリッド・フレックスボックス等の子要素を囲んでテーブルのセルのように表示します。
+
+<SrcCode path="src/scss/utility/_divide.scss" />
+
+:::info
+実装としてはどちらも`box-shadow`で表現しています。`border`ではないので、その点について扱いには注意が必要です。
+:::
+
+<Preview>
+  <PreviewTitle>`u--divide`と`u--cells`の比較</PreviewTitle>
+  <PreviewArea resize p="20">
+    <AutoColumns util="divide" cols="16rem" bdrs="20">
+      <Box p="15">Grid Item</Box>
+      <Box p="15">Grid Item</Box>
+      <Box p="15">Grid Item</Box>
+      <Box p="15">Grid Item</Box>
+      <Box p="15">Grid Item</Box>
+    </AutoColumns>
+    <AutoColumns util="cells" cols="16rem" bdrs="20">
+      <Box p="15">Grid Item</Box>
+      <Box p="15">Grid Item</Box>
+      <Box p="15">Grid Item</Box>
+      <Box p="15">Grid Item</Box>
+      <Box p="15">Grid Item</Box>
+    </AutoColumns>
+  </PreviewArea>
+  <PreviewCode>
+    ```jsx
+    <AutoColumns util="divide" cols="16rem" bdrs="20">
+      <Box p="15">Grid Item</Box>
+      <Box p="15">Grid Item</Box>
+      <Box p="15">Grid Item</Box>
+      <Box p="15">Grid Item</Box>
+      <Box p="15">Grid Item</Box>
+    </AutoColumns>
+    <AutoColumns util="cells" cols="16rem" bdrs="20">
+      <Box p="15">Grid Item</Box>
+      <Box p="15">Grid Item</Box>
+      <Box p="15">Grid Item</Box>
+      <Box p="15">Grid Item</Box>
+      <Box p="15">Grid Item</Box>
+    </AutoColumns>
+    ```
+  </PreviewCode>
+</Preview>
 
 
-グリッド・フレックスボックス等の子要素間に区切りとなるようなボーダーを表示します。
-
-実装としてはbox-shadowで表現していますので、少し扱いには注意が必要です。
-
-<SrcCode path="src/scss/utility/_itemDivider.scss" />
+横並び・縦並びが変わるようなレイアウトでも、`u--divide`を活用すれば簡単に要素間のボーダーを表示できます。
 
 <Preview>
   <PreviewTitle>例</PreviewTitle>
   <PreviewArea resize p="20">
-    <Grid layout="autoColumns" util="collapseGrid" cols="12rem" bdrs="20">
-      <Box p="15">Grid Item</Box>
-      <Box p="15">Grid Item</Box>
-      <Box p="15">Grid Item</Box>
-      <Box p="15">Grid Item</Box>
-      <Box p="15">Grid Item</Box>
-      <Box p="15">Grid Item</Box>
-    </Grid>
+    <Flex fxd={['column', 'row']} util="divide">
+      <Box fx="1" p="15">
+        <Fragment>Box</Fragment>
+      </Box>
+      <Box fx="1" p="15">
+        <Fragment>Box</Fragment>
+      </Box>
+      <Box fx="1" p="15">
+        <Fragment>Box</Fragment>
+      </Box>
+      <Box fx="1" p="15">
+        <Fragment>Box</Fragment>
+      </Box>
+    </Flex>
   </PreviewArea>
   <PreviewCode>
     ```jsx
-    <Grid layout="autoColumns" util="collapseGrid" cols="12rem" bdrs="20">
-      <Box p="15">Grid Item</Box>
-      <Box p="15">Grid Item</Box>
-      <Box p="15">Grid Item</Box>
-      <Box p="15">Grid Item</Box>
-      <Box p="15">Grid Item</Box>
-      <Box p="15">Grid Item</Box>
-    </Grid>
-    ```
-  </PreviewCode>
-</Preview>
-
-<Preview>
-  <PreviewTitle>pに`p='0'` `ov='clip'`をセットすると、周囲のボーダーが見えなくなります。</PreviewTitle>
-  <PreviewArea resize p="20">
-    <Grid layout="autoColumns" util="collapseGrid" cols="12rem" p="0" ov="clip">
-      <Box p="15">Grid Item</Box>
-      <Box p="15">Grid Item</Box>
-      <Box p="15">Grid Item</Box>
-      <Box p="15">Grid Item</Box>
-      <Box p="15">Grid Item</Box>
-      <Box p="15">Grid Item</Box>
-      <Box p="15">Grid Item</Box>
-    </Grid>
-  </PreviewArea>
-  <PreviewCode>
-    ```jsx
-    <Grid layout="autoColumns" util="collapseGrid" cols="12rem">
-      <Box p="15">Grid Item</Box>
-      <Box p="15">Grid Item</Box>
-      <Box p="15">Grid Item</Box>
-      <Box p="15">Grid Item</Box>
-      <Box p="15">Grid Item</Box>
-      <Box p="15">Grid Item</Box>
-      <Box p="15">Grid Item</Box>
-    </Grid>
+    <Flex fxd={['column', 'row']} util="divide">
+      <Box fx="1" p="15">Box</Box>
+      <Box fx="1" p="15">Box</Box>
+      <Box fx="1" p="15">Box</Box>
+      <Box fx="1" p="15">Box</Box>
+    </Flex>
     ```
   </PreviewCode>
 </Preview>
 
 
-その状態で親グリッドに`bd`を指定すると、要素が埋まっていないところだけボーダーを表示しないカレンダーのような表現が可能です。
+`u--divide`に`bd`を指定すると、要素が埋まっていないところが空白になっているカレンダーのようになる表現が可能です。
 
 <Preview>
   <PreviewTitle>`bd`を指定</PreviewTitle>
   <PreviewArea resize p="20">
-    <Grid layout="autoColumns" util="collapseGrid" cols="10rem" ov="clip" p="0" bd>
-      <Box p="15">Grid Item</Box>
-      <Box p="15">Grid Item</Box>
-      <Box p="15">Grid Item</Box>
-      <Box p="15">Grid Item</Box>
-      <Box p="15">Grid Item</Box>
-      <Box p="15">Grid Item</Box>
-    </Grid>
+    <Columns util="divide" cols={["4", "5"]} bd bdc="current" fz="s">
+      <Lism p="10">Item</Lism>
+      <Lism p="10">Item</Lism>
+      <Lism p="10">Item</Lism>
+      <Lism p="10">Item</Lism>
+      <Lism p="10">Item</Lism>
+      <Lism p="10">Item</Lism>
+    </Columns>
   </PreviewArea>
   <PreviewCode>
     ```jsx
-    <Grid layout="autoColumns" util="collapseGrid" cols="10rem" ov="clip" p="0" bd>
-      <Box p="15">Grid Item</Box>
-      <Box p="15">Grid Item</Box>
-      <Box p="15">Grid Item</Box>
-      <Box p="15">Grid Item</Box>
-      <Box p="15">Grid Item</Box>
-      <Box p="15">Grid Item</Box>
-    </Grid>
-    ```
-  </PreviewCode>
-</Preview>
-
-<br/>
-
-Flexboxで横並び・縦並びが変わるようなレイアウトでも、このユーティリティクラスを活用すれば簡単に要素感のボーダーを表示できます。
-
-<Preview>
-  <PreviewTitle>例</PreviewTitle>
-  <PreviewArea resize p="20">
-    <Flex fxd={['column', 'row']} util="collapseGrid">
-      <Box fx="1" p="15">
-        <Fragment>Box</Fragment>
-      </Box>
-      <Box fx="1" p="15">
-        <Fragment>Box</Fragment>
-      </Box>
-      <Box fx="1" p="15">
-        <Fragment>Box</Fragment>
-      </Box>
-      <Box fx="1" p="15">
-        <Fragment>Box</Fragment>
-      </Box>
-    </Flex>
-  </PreviewArea>
-  <PreviewCode>
-    ```jsx
-    <Flex fxd={['column', 'row']} util="collapseGrid">
-      <Box fx="1" p="15">Box</Box>
-      <Box fx="1" p="15">Box</Box>
-      <Box fx="1" p="15">Box</Box>
-      <Box fx="1" p="15">Box</Box>
-    </Flex>
+    <Columns util="divide" cols={["4", "5"]} bd bdc="current" fz="s">
+      <Lism p="10">Item</Lism>
+      <Lism p="10">Item</Lism>
+      <Lism p="10">Item</Lism>
+      <Lism p="10">Item</Lism>
+      <Lism p="10">Item</Lism>
+      <Lism p="10">Item</Lism>
+    </Columns>
     ```
   </PreviewCode>
 </Preview>
 
 
-Gridを使って table タグのような表現もできるようになります。
+Gridでも `u--cells`で table タグのような表現ができます。
 <Preview>
-  <PreviewTitle>`u--collapseGrid`を使ってテーブルのような表現にする</PreviewTitle>
+  <PreviewTitle>`u--cells`を使ってテーブルのような表現にする</PreviewTitle>
   <PreviewArea resize p="15">
-    <Grid gtc={['2fr 3fr', '1fr 2fr']} util="collapseGrid">
+    <Grid gtc={['2fr 3fr', '1fr 2fr']} util="cells">
       <Box p="15" bgc="base-2">
         <Fragment>A</Fragment>
       </Box>
@@ -430,7 +415,7 @@ Gridを使って table タグのような表現もできるようになります
   </PreviewArea>
   <PreviewCode slot="tab" label="JSX">
     ```jsx
-    <Grid gtc={['2fr 3fr', '1fr 2fr']} util="collapseGrid">
+    <Grid gtc={['2fr 3fr', '1fr 2fr']} util="cells">
       <Box p="15" bgc="base-2">
         A
       </Box>
@@ -457,7 +442,7 @@ Gridを使って table タグのような表現もできるようになります
   </PreviewCode>
   <PreviewCode slot="tab" label="HTML">
     ```html
-    <div class="l--grid u--collapseGrid -gtc -gtc_sm -bd" style="--gtc: 2fr 3fr; --gtc_sm: 1fr 2fr">
+    <div class="l--grid u--cells -gtc -gtc_sm -bd" style="--gtc: 2fr 3fr; --gtc_sm: 1fr 2fr">
       <div class="l--box -p:15 -bgc:base-2">A</div>
       <div class="l--box -p:15 -bgc:base-2">B</div>
       <div class="l--box -p:15">Lorem ipsum</div>

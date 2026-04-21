@@ -1,0 +1,18 @@
+.u--divide,
+.u--cells {
+  --bdw: 1px;
+  --bdc: var(--divider);
+  gap: var(--bdw);
+
+  & > * {
+    box-shadow: 0 0 0 var(--bdw) var(--bdc);
+  }
+}
+/* 間の区切りだけ */
+.u--divide {
+  overflow: clip;
+}
+/* 各セルを囲む */
+.u--cells {
+  padding: var(--bdw);
+}
