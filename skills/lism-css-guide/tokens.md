@@ -136,10 +136,10 @@ CSSコードを書く場合やコンポーネントのPropsに値を指定する
 
 | CSS変数 | 値 | 説明 |
 |---------|-----|------|
-| `--o--mp` | `0.9` | mezzo-piano: 軽い減衰（hover fade 等） |
-| `--o--p` | `0.75` | piano: 補助テキスト等 |
+| `--o--mp` | `0.9` | mezzo-piano: ごく軽い減衰 |
+| `--o--p` | `0.75` | piano: hover fade, 補助テキスト等 |
 | `--o--pp` | `0.5` | pianissimo: disabled, divider, decorator 等 |
-| `--o--ppp` | `0.25` | pianississimo: 背景装飾テキスト等 |
+| `--o--ppp` | `0.25` | pianississimo: 最も強く減衰 |
 
 
 ## 角丸 (bdrs)
