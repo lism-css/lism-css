@@ -35,4 +35,4 @@
 
 - [l--flex](./l--flex.md) — 汎用 Flex 横並び（折り返しなしが基本）
 - [l--stack](./l--stack.md) — Flex 縦並び
-- [l--switchCols](./l--switchCols.md) — ブレイクポイントで縦横切り替えるカラム
+- [l--switchColumns](./l--switchColumns.md) — ブレイクポイントで縦横切り替えるカラム

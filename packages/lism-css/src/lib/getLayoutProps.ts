@@ -44,18 +44,18 @@ export default function getLayoutProps<P extends InputProps>(layout: LayoutType 
 
   if (layout === 'flow') {
     return getFlowProps(rest) as Omit<P, LayoutSpecificKeys> & BaseProps;
-  } else if (layout === 'sideMain') {
-    return getSideMainProps(rest) as Omit<P, LayoutSpecificKeys> & BaseProps;
-  } else if (layout === 'fluidCols') {
-    return getLiquidProps(rest) as Omit<P, LayoutSpecificKeys> & BaseProps;
-  } else if (layout === 'switchCols') {
-    return getSwitchColsProps(rest) as Omit<P, LayoutSpecificKeys> & BaseProps;
+  } else if (layout === 'withSide') {
+    return getWithSideProps(rest) as Omit<P, LayoutSpecificKeys> & BaseProps;
+  } else if (layout === 'autoColumns') {
+    return getAutoColumnsProps(rest) as Omit<P, LayoutSpecificKeys> & BaseProps;
+  } else if (layout === 'switchColumns') {
+    return getSwitchColumnsProps(rest) as Omit<P, LayoutSpecificKeys> & BaseProps;
   }
 
   return rest as Omit<P, LayoutSpecificKeys> & BaseProps;
 }
 
-function getSideMainProps({ sideW, mainW, style, ...props }: InputProps): BaseProps {
+function getWithSideProps({ sideW, mainW, style, ...props }: InputProps): BaseProps {
   const newStyle: StyleWithCustomProps = { ...style } as StyleWithCustomProps;
   if (null != sideW) newStyle['--sideW'] = getMaybeCssVar(sideW, 'sz');
   if (null != mainW) newStyle['--mainW'] = getMaybeCssVar(mainW, 'sz');
@@ -63,7 +63,7 @@ function getSideMainProps({ sideW, mainW, style, ...props }: InputProps): BasePr
   return { ...props, style: newStyle };
 }
 
-function getLiquidProps({ autoFill, style, ...props }: InputProps): BaseProps {
+function getAutoColumnsProps({ autoFill, style, ...props }: InputProps): BaseProps {
   if (autoFill) return { ...props, style: { ...style, '--autoMode': 'auto-fill' } as StyleWithCustomProps };
   return { ...props, style };
 }
@@ -85,7 +85,7 @@ function getFlowProps({ flow, style, primitiveClass, ...props }: InputProps): Ba
   return { ...props, primitiveClass, style };
 }
 
-function getSwitchColsProps({ breakSize, style, ...props }: InputProps): BaseProps {
+function getSwitchColumnsProps({ breakSize, style, ...props }: InputProps): BaseProps {
   if (breakSize) return { ...props, style: { ...style, '--breakSize': getMaybeCssVar(breakSize, 'sz') } as StyleWithCustomProps };
   return { ...props, style };
 }

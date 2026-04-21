@@ -1,0 +1,211 @@
+---
+title: 'WithSide (l--withSide)'
+navtitle: 'l--withSide'
+description: 'l--withSide は、維持したいコンテンツの長さを基準にして、横並び・縦並びが自動で切り替わる2カラムレイアウトのクラスです。'
+---
+import { WithSide, Grid, Box } from 'lism-css/astro';
+import { DummyText } from '@lism-css/ui/astro';
+
+`l--withSide` は、メディアクエリ・コンテナクエリに依存せず、**維持したいコンテンツの長さを基準にして横並び・縦並びが自動で切り替わる2カラムレイアウト**のクラスです。
+
+
+- サイドコンテンツの横幅を`--sideW`で指定し、メインコンテンツには可能な限り維持したい横幅を`--mainW`で指定します。
+- メインコンテンツ側が`--mainW`を維持できる範囲内で横並びが維持され、それを下回ってしまう場合は縦並びへ自動で切り替わります。
+
+「画像とコンテンツ」、「メインエリアとサイドバー」のようなレイアウトに活用できます。
+
+
+## CSS
+
+<SrcCode path="src/scss/primitives/layout/_withSide.scss" />
+
+子要素の一方に`.is--side`が必要です。
+
+```pug
+div.l--withSide
+  div
+  div.is--side
+```
+
+
+## Lismコンポーネント
+
+### Import
+
+<ImportPackage component="WithSide" />
+
+### 専用Props
+
+| プロパティ | 出力 | 説明  |
+|---|---|---|
+| `sideW`| <PropBadge type="cssvar">`--sideW`</PropBadge> | side要素の横幅 |
+| `mainW` | <PropBadge type="cssvar">`--mainW`</PropBadge> | main要素で維持したい最小幅 |
+
+
+## Usage
+
+`.is--side`の横幅を`--sideW`で指定した値に固定しつつ、もう一方のメイン要素が`--mainW`で指定した横幅を下回るようになると、自動で1カラムに切り替わるようになっています。
+
+### 使用例
+
+<Preview>
+  <PreviewTitle>使用例</PreviewTitle>
+  <PreviewArea resize p="20">
+    <WithSide sideW="12rem" mainW="20rem" g="20">
+      <Box p="15" bd bdc="blue">
+        <p>Main Content</p>
+        <DummyText />
+      </Box>
+      <Box isSide p="15" bd bdc="red">
+        <p>Side Content</p>
+      </Box>
+    </WithSide>
+  </PreviewArea>
+  <PreviewCode slot="tab" label="JSX">
+    ```jsx "sideW" "isSide"
+    <WithSide sideW="12rem" mainW="20rem" g="20">
+      <Box p="15" bd bdc="blue">
+        <p>Main Content</p>
+        <p>
+          Lorem ipsum dolor sit amet. Consectetur adipiscing elit, sed do eiusmod tempor Incididunt ut. Labore et dolore magna aliqua. Ut enim ad minim
+          veniam, quis nostrud exercitation ullamco laboris nisi ut.
+        </p>
+      </Box>
+      <Box isSide p="15" bd bdc="red">
+        <p>Side Content</p>
+      </Box>
+    </WithSide>
+    ```
+  </PreviewCode>
+  <PreviewCode slot="tab" label="HTML">
+    ```html "is--side" "--sideW"
+    <div class="l--withSide -g:20" style="--sideW: 12rem; --mainW: 20rem">
+      <div class="l--box -p:15 -bd" style="--bdc: var(--blue)">
+        <p>Main Content</p>
+        <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit, sed do eiusmod tempor. Non facere laudantium ex eos doloribus aut dolore nisi.</p>
+      </div>
+      <div class="l--box is--side -p:15 -bd" style="--bdc: var(--red)">
+        <p>Side Content</p>
+      </div>
+    </div>
+    ```
+  </PreviewCode>
+</Preview>
+
+### 反転
+
+`-fxd:row-reverse`クラス（`flex-direction:row-reverse`）を併用することで、横並びの時の順番だけを反転させることができます。
+
+:::check
+これにより、横並びの時は左側、縦並びの時は下側にside要素を配置できます。
+:::
+
+<Preview>
+  <PreviewTitle>例</PreviewTitle>
+  <PreviewArea resize p="20">
+    <WithSide fxd="row-reverse" sideW="10rem" mainW="16rem" g="20">
+      <Box>
+        <DummyText />
+      </Box>
+      <Box isSide bgc="blue:20%">Side Content</Box>
+    </WithSide>
+  </PreviewArea>
+  <PreviewCode slot="tab" label="JSX">
+    ```jsx 'fxd="row-reverse"'
+    <WithSide fxd="row-reverse" sideW="10rem" mainW="16rem" g="20">
+      <Box>
+        <p>
+          Lorem ipsum dolor sit amet. Consectetur adipiscing elit, sed do eiusmod tempor Incididunt ut. Labore et dolore magna aliqua. Ut enim ad minim
+          veniam, quis nostrud exercitation ullamco laboris nisi ut.
+        </p>
+      </Box>
+      <Box isSide>Side Content</Box>
+    </WithSide>
+    ```
+  </PreviewCode>
+  <PreviewCode slot="tab" label="HTML">
+    ```html "-fxd:row-reverse"
+    <div class="l--withSide -fxd:row-reverse -g:20" style="--sideW: 10rem; --mainW: 16rem">
+      <div class="l--box">
+        <p>Lorem ipsum dolor sit amet, ...</p>
+      </div>
+      <div class="l--box is--side">Side Content</div>
+    </div>
+    ```
+  </PreviewCode>
+</Preview>
+
+
+## `Grid`を使って似たレイアウトを構成する例
+
+`WithSide`(`.l--withSide`)はブレイクポイントに依存しませんが、[`Grid`](/docs/primitives/l--grid)で構成することで、レイアウトの切り替えポイントをブレイクポイントで指定して同じようなレイアウトを構築することもできます。
+
+<Preview>
+  <PreviewTitle>`Grid`を使って`WithSide`のようなレイアウトを構築する例</PreviewTitle>
+  <PreviewArea resize p="20">
+    <Grid gta={[`'.' 'side'`, `'. side'`]} gtc={[null, '1fr 10rem']} g="20">
+      <Box>
+        <DummyText />
+      </Box>
+      <Box ga="side" bgc="blue:20%">Side Content</Box>
+    </Grid>
+  </PreviewArea>
+  <PreviewCode slot="tab" label="JSX">
+    ```jsx "gta=" "gtc="
+    <Grid gta={[`'.' 'side'`, `'. side'`]} gtc={[null, '1fr 10rem']} g="20">
+      <Box>
+        <p>
+          Lorem ipsum dolor sit amet. Consectetur adipiscing elit, sed do eiusmod tempor Incididunt ut. Labore et dolore magna aliqua. Ut enim ad minim
+          veniam, quis nostrud exercitation ullamco laboris nisi ut.
+        </p>
+      </Box>
+      <Box ga="side">Side Content</Box>
+    </Grid>
+    ```
+  </PreviewCode>
+  <PreviewCode slot="tab" label="HTML">
+    ```html "-gd -gd_sm" "'. side' / 1fr 10rem" "-ga" "--ga:side"
+    <div class="l--grid -gta -gta_sm -gtc_sm -g:20" style="--gta: '.' 'side'; --gta_sm: '. side'; --gtc_sm: 1fr 10rem">
+      <div class="l--box">
+        <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit, sed do eiusmod tempor. Non facere laudantium ex eos doloribus aut dolore nisi.</p>
+      </div>
+      <div class="l--box -ga" style="--ga: side">Side Content</div>
+    </div>
+    ```
+  </PreviewCode>
+</Preview>
+
+<Preview>
+  <PreviewTitle>`side`を左側、ブレイクポイントを`@md`にする例</PreviewTitle>
+  <PreviewArea resize p="20">
+    <Grid gta={[`'.' 'side'`, null, `'side .'`]} gtc={[null, null, '10rem 1fr']} g="20">
+      <Box>
+        <DummyText />
+      </Box>
+      <Box ga="side" bgc="blue:20%">Side Content</Box>
+    </Grid>
+  </PreviewArea>
+  <PreviewCode slot="tab" label="JSX">
+    ```jsx
+    <Grid gta={[`'.' 'side'`, null, `'side .'`]} gtc={[null, null, '10rem 1fr']} g="20">
+      <Box>
+        <p>
+          Lorem ipsum dolor sit amet. Consectetur adipiscing elit, sed do eiusmod tempor Incididunt ut. Labore et dolore magna aliqua. Ut enim ad minim
+          veniam, quis nostrud exercitation ullamco laboris nisi ut.
+        </p>
+      </Box>
+      <Box ga="side">Side Content</Box>
+    </Grid>
+    ```
+  </PreviewCode>
+  <PreviewCode slot="tab" label="HTML">
+    ```html
+    <div class="l--grid -gta -gta_md -gtc_md -g:20" style="--gta: '.' 'side'; --gta_md: 'side .'; --gtc_md: 10rem 1fr">
+      <div class="l--box">
+        <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit, sed do eiusmod tempor. Non facere laudantium ex eos doloribus aut dolore nisi.</p>
+      </div>
+      <div class="l--box -ga" style="--ga: side">Side Content</div>
+    </div>
+    ```
+  </PreviewCode>
+</Preview>

@@ -22,12 +22,12 @@ export * from './layout/Cluster';
 export * from './layout/Columns';
 export * from './layout/Flex';
 export * from './layout/Flow';
-export * from './layout/FluidCols';
+export * from './layout/AutoColumns';
 export * from './layout/Frame';
 export * from './layout/Grid';
-export * from './layout/SideMain';
+export * from './layout/WithSide';
 export * from './layout/Stack';
-export * from './layout/SwitchCols';
+export * from './layout/SwitchColumns';
 export * from './layout/TileGrid';
 
 // state (is--)

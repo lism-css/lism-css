@@ -2,7 +2,7 @@
 title: 'Alert'
 description: 'Documentation for the Alert component provided by @lism-css/ui.'
 ---
-import { Box, Flow, Icon, Layer, Center, Lism, SideMain } from 'lism-css/astro';
+import { Box, Flow, Icon, Layer, Center, Lism, WithSide } from 'lism-css/astro';
 import { Alert, DummyText } from '@lism-css/ui/astro';
 
 
@@ -49,7 +49,7 @@ A component for displaying short messages with visual emphasis.
   </PreviewCode>
 </Preview>
 
-{/* Internally uses `<SideMain>`. The content side will automatically stack vertically when its width falls below a certain threshold. */}
+{/* Internally uses `<WithSide>`. The content side will automatically stack vertically when its width falls below a certain threshold. */}
 
 
 ## How to use
@@ -86,13 +86,13 @@ The source code is available on [GitHub](https://github.com/lism-css/lism-css/tr
 <Preview>
   <PreviewTitle>Preview</PreviewTitle>
   <PreviewArea resize p="30">
-    <Alert layout="sideMain">
+    <Alert layout="withSide">
       <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore.</p>
     </Alert>
   </PreviewArea>
   <PreviewCode slot="tab" label="JSX">
     ```jsx
-    <Alert layout="sideMain">
+    <Alert layout="withSide">
       <p>Lorem ipsum dolor sit amet...</p>
     </Alert>
     ```
@@ -167,30 +167,30 @@ An example of building an Alert using only lism-css, without `@lism-css/ui`.
 <Preview>
   <PreviewTitle>Preview</PreviewTitle>
   <PreviewArea p="30" resize>
-    <SideMain set="var:bxsh" util="cbox" keycolor="red" ai="center" p="15" g="15" bd bdrs="10" bxsh="10">
+    <WithSide set="var:bxsh" util="cbox" keycolor="red" ai="center" p="15" g="15" bd bdrs="10" bxsh="10">
       <Center isSide c="keycolor" fz="xl">
         <Icon icon="alert" />
       </Center>
       <Flow flow="s">
         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore.</p>
       </Flow>
-    </SideMain>
+    </WithSide>
   </PreviewArea>
   <PreviewCode slot="tab" label="JSX">
     ```jsx
-    <SideMain set="var:bxsh" util="cbox" keycolor="red" ai="center" p="15" g="15" bd bdrs="10" bxsh="10">
+    <WithSide set="var:bxsh" util="cbox" keycolor="red" ai="center" p="15" g="15" bd bdrs="10" bxsh="10">
       <Center isSide c="keycolor" fz="xl">
         <Icon icon="alert" />
       </Center>
       <Flow flow="s">
         <p>Lorem ipsum dolor sit amet...</p>
       </Flow>
-    </SideMain>
+    </WithSide>
     ```
   </PreviewCode>
   <PreviewCode slot="tab" label="HTML">
     ```html
-    <div class="l--sideMain set--var:bxsh u--cbox -ai:center -p:15 -g:15 -bd -bdrs:10 -bxsh:10" style="--keycolor: var(--red)">
+    <div class="l--withSide set--var:bxsh u--cbox -ai:center -p:15 -g:15 -bd -bdrs:10 -bxsh:10" style="--keycolor: var(--red)">
       <div class="l--center is--side -c -fz:xl" style="--c: var(--keycolor)">
         <svg
           xmlns="http://www.w3.org/2000/svg"

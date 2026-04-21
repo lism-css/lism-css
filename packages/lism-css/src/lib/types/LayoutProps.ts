@@ -43,18 +43,18 @@ export interface FlowLayoutProps {
   layout: 'flow';
   flow?: CssValue;
 }
-export interface FluidColsProps {
-  layout: 'fluidCols';
+export interface AutoColumnsProps {
+  layout: 'autoColumns';
   autoFill?: boolean;
 }
 
-export interface SideMainProps {
-  layout: 'sideMain';
+export interface WithSideProps {
+  layout: 'withSide';
   sideW?: CssValue;
   mainW?: CssValue;
 }
-export interface SwitchColsProps {
-  layout: 'switchCols';
+export interface SwitchColumnsProps {
+  layout: 'switchColumns';
   breakSize?: CssValue;
 }
 
@@ -67,12 +67,12 @@ export type LayoutSpecificProps =
   | ColumnsProps
   | FlexProps
   | FlowLayoutProps
-  | FluidColsProps
+  | AutoColumnsProps
   | FrameProps
   | GridLayoutProps
   | StackProps
-  | SideMainProps
-  | SwitchColsProps
+  | WithSideProps
+  | SwitchColumnsProps
   | TileGridProps;
 
 // LayoutType は LayoutSpecificProps から導出（NoLayoutProps を除く）

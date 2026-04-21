@@ -9,6 +9,23 @@ v.1.0リリースまでしばらく激しい変更が続く可能性があるた
 
 <Divider bds="dashed" my="40" />
 
+## Layout Primitive の命名整理 (#319)
+
+**破壊的変更**を含むリリースです。
+
+以下の Layout Primitive のクラス名・コンポーネント名・`layout` リテラル値を変更しました。
+
+| 旧 | 新 |
+|---|---|
+| `l--sideMain` / `<SideMain>` / `layout="sideMain"` | `l--withSide` / `<WithSide>` / `layout="withSide"` |
+| `l--fluidCols` / `<FluidCols>` / `layout="fluidCols"` | `l--autoColumns` / `<AutoColumns>` / `layout="autoColumns"` |
+| `l--switchCols` / `<SwitchCols>` / `layout="switchCols"` | `l--switchColumns` / `<SwitchColumns>` / `layout="switchColumns"` |
+
+React / Astro のコンポーネント名については、旧名 (`<SideMain>` / `<FluidCols>` / `<SwitchCols>`) を `@deprecated` エイリアスとして暫定的に残しています。次のメジャーアップデートで削除予定のため、新名称への置き換えを推奨します。
+SCSS クラス (`l--sideMain` 等) と `layout` リテラル値 (`layout="sideMain"` 等) には後方互換はありません。直接使用している箇所はすべて置き換えが必要です。
+
+<Divider bds="dashed" my="40" />
+
 ## `@lism-css/ui` v.0.15.0 (2026.04.21)
 
 **破壊的変更**を含むリリースです。

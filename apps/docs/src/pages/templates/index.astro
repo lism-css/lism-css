@@ -5,7 +5,7 @@
  * カテゴリ別にテンプレートを一覧表示
  */
 import BaseLayout from '@/layouts/BaseLayout.astro';
-import { Stack, FluidCols, Frame, BoxLink, Box, Lism, Text, Inline, Heading } from 'lism-css/astro';
+import { Stack, AutoColumns, Frame, BoxLink, Box, Lism, Text, Inline, Heading } from 'lism-css/astro';
 import { templates, categoryIds, type TemplateCategoryId } from '@/config/templates';
 import { filterDraftItems } from '@/lib/templates';
 ---
@@ -32,7 +32,7 @@ import { filterDraftItems } from '@/lib/templates';
                 </Inline>
               </Heading>
 
-              <FluidCols autoFill cols="24rem" g="20" my-s="20" class="templateList">
+              <AutoColumns autoFill cols="24rem" g="20" my-s="20" class="templateList">
                 {items.map((item) => (
                   <BoxLink class="templateList_link" layout="stack" href={`/templates/${categoryId}/${item.id}`} p="10" g="20" set="var:hov">
                     {/* スクリーンショット画像をサムネイルとして表示 */}
@@ -53,7 +53,7 @@ import { filterDraftItems } from '@/lib/templates';
 										</Text> */}
                   </BoxLink>
                 ))}
-              </FluidCols>
+              </AutoColumns>
             </Box>
           );
         })

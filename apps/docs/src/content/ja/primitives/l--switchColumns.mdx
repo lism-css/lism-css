@@ -1,0 +1,123 @@
+---
+title: 'SwitchColumns (l--switchColumns)'
+navtitle: 'l--switchColumns'
+description: 'l--switchColumns は、複数列と1列の切り替えをコンテナクエリやメディアクエリを使わずに実装するクラスです。'
+---
+
+import { SwitchColumns, Box } from 'lism-css/astro';
+
+
+`l--switchColumns` は、**複数列以上↔︎1列への切り替えをコンテナクエリやメディアクエリを使わずに実装する**クラスです。
+
+
+## CSS
+
+<SrcCode path="src/scss/primitives/layout/_switchColumns.scss" />
+
+
+## Lismコンポーネント
+
+### Import
+
+<ImportPackage component="SwitchColumns" />
+
+### 専用Props
+
+| プロパティ | 説明 |
+|---|---|
+| `breakSize` <PropBadge type="cssvar">`--breakSize`</PropBadge> | 横並びを維持するのに必要な幅（親のサイズ）を指定できます。[szトークン](/docs/tokens/#size)の指定ができます。|
+
+
+## Usage
+
+### デフォルト幅で利用する
+
+<Preview>
+  <PreviewTitle>デフォルト幅で利用する例</PreviewTitle>
+  <PreviewArea resize p="15">
+    <SwitchColumns g="20">
+      <div class="-bgc:base-2 -p:20">Box</div>
+      <div class="-bgc:base-2 -p:20">Box</div>
+      <div class="-bgc:base-2 -p:20">Box</div>
+    </SwitchColumns>
+  </PreviewArea>
+  <PreviewCode slot="tab" label="JSX">
+    ```jsx
+    <SwitchColumns g="20">
+      <div class="-bgc:base-2 -p:20">Box</div>
+      <div class="-bgc:base-2 -p:20">Box</div>
+      <div class="-bgc:base-2 -p:20">Box</div>
+    </SwitchColumns>
+    ```
+  </PreviewCode>
+  <PreviewCode slot="tab" label="HTML">
+    ```html
+    <div class="l--switchColumns -g:20">
+      <div class="-bgc:base-2 -p:20">Box</div>
+      <div class="-bgc:base-2 -p:20">Box</div>
+      <div class="-bgc:base-2 -p:20">Box</div>
+    </div>
+    ```
+  </PreviewCode>
+</Preview>
+
+### breakSizeの指定
+
+<Preview>
+  <PreviewTitle>breakSizeを指定して利用する例</PreviewTitle>
+  <PreviewArea resize p="15">
+    <SwitchColumns breakSize="s" g="20">
+      <div class="-bgc:base-2 -p:20">Box</div>
+      <div class="-bgc:base-2 -p:20">Box</div>
+      <div class="-bgc:base-2 -p:20">Box</div>
+    </SwitchColumns>
+  </PreviewArea>
+  <PreviewCode slot="tab" label="JSX">
+    ```jsx
+    <SwitchColumns breakSize="s" g="20">
+      <div class="-bgc:base-2 -p:20">Box</div>
+      <div class="-bgc:base-2 -p:20">Box</div>
+      <div class="-bgc:base-2 -p:20">Box</div>
+    </SwitchColumns>
+    ```
+  </PreviewCode>
+  <PreviewCode slot="tab" label="HTML">
+    ```html
+    <div class="l--switchColumns -g:20" style="--breakSize: var(--sz--s)">
+      <div class="-bgc:base-2 -p:20">Box</div>
+      <div class="-bgc:base-2 -p:20">Box</div>
+      <div class="-bgc:base-2 -p:20">Box</div>
+    </div>
+    ```
+  </PreviewCode>
+</Preview>
+
+### flex-growで比率を調整する
+
+<Preview>
+  <PreviewTitle>子要素にflex-growを指定して比率を調整する例</PreviewTitle>
+  <PreviewArea resize p="15">
+    <SwitchColumns breakSize="s" g="20">
+      <div class="-bgc:base-2 -p:20">Box</div>
+      <div class="-bgc:base-2 -p:20" style={{ flexGrow: 2 }}>Box</div>
+    </SwitchColumns>
+  </PreviewArea>
+  <PreviewCode slot="tab" label="JSX">
+    ```jsx
+    <SwitchColumns breakSize="s" g="20">
+      <div class="-bgc:base-2 -p:20">Box</div>
+      <div class="-bgc:base-2 -p:20" style={{ flexGrow: 2 }}>
+        Box
+      </div>
+    </SwitchColumns>
+    ```
+  </PreviewCode>
+  <PreviewCode slot="tab" label="HTML">
+    ```html
+    <div class="l--switchColumns -g:20" style="--breakSize: var(--sz--s)">
+      <div class="-bgc:base-2 -p:20">Box</div>
+      <div class="-bgc:base-2 -p:20" style="flex-grow: 2">Box</div>
+    </div>
+    ```
+  </PreviewCode>
+</Preview>

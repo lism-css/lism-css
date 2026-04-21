@@ -68,7 +68,7 @@ import { Accordion, Tabs, Modal, Button } from '@lism-css/ui/astro';
 | `type` | `'alert' \| 'point' \| 'warning' \| 'check' \| 'help' \| 'info'` | `'alert'` | アラートタイプ。keycolor と icon の組み合わせプリセット |
 | `keycolor` | `string` | — | キーカラー |
 | `icon` | `ReactNode \| string` | — | カスタムアイコン |
-| `layout` | `'flex' \| 'sideMain'` | `'flex'` | レイアウトプリミティブ |
+| `layout` | `'flex' \| 'withSide'` | `'flex'` | レイアウトプリミティブ |
 | `flow` | `string` | `'s'` | コンテンツを囲む要素のフロー余白 |
 
 ```jsx

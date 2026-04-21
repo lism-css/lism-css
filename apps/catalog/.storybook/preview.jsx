@@ -20,7 +20,7 @@ const preview = {
     className: { control: 'text', table: { category: 'Common Props' } },
     layout: {
       control: 'select',
-      options: ['box', 'center', 'cluster', 'columns', 'flex', 'flow', 'frame', 'grid', 'stack', 'fluidCols', 'switchCols', 'sideMain'],
+      options: ['box', 'center', 'cluster', 'columns', 'flex', 'flow', 'frame', 'grid', 'stack', 'autoColumns', 'switchColumns', 'withSide'],
       table: { category: 'Common Props' },
     },
     set: { control: 'text', table: { category: 'State' } },

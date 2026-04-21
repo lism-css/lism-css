@@ -85,7 +85,7 @@ import { Accordion, Tabs, Button } from '@lism-css/ui/astro';
 #### NG: レスポンシブの考慮漏れ・Gridの直書き
 
 渡されたPCサイズのデザインだけをみて、カラムレイアウトを`<Grid gtc="repeat(3, 1fr)>`のように固定してしまわないようにすること。
-特に指示がなければ、レスポンシブを意識して実装する。`<Columns>`（`l--columns`）を使ってブレイクポイントで切り替えるか、`l--sideMain`や`l--fluidCols`で自動レスポンシブを採用することを検討する。
+特に指示がなければ、レスポンシブを意識して実装する。`<Columns>`（`l--columns`）を使ってブレイクポイントで切り替えるか、`l--withSide`や`l--autoColumns`で自動レスポンシブを採用することを検討する。
 
 また、Lism CSSではコンテナクエリを採用しているため、レスポンシブの値切り替えには先祖要素で `isContainer`(`is--container`クラス) が必要なことに注意。
 
@@ -130,9 +130,9 @@ import { Accordion, Tabs, Button } from '@lism-css/ui/astro';
 - `l--frame` / `<Frame>`: [primitives/l--frame.md](./primitives/l--frame.md)
 - `l--columns` / `<Columns>`: [primitives/l--columns.md](./primitives/l--columns.md)
 - `l--tileGrid` / `<TileGrid>`: [primitives/l--tileGrid.md](./primitives/l--tileGrid.md)
-- `l--fluidCols` / `<FluidCols>`: [primitives/l--fluidCols.md](./primitives/l--fluidCols.md)
-- `l--switchCols` / `<SwitchCols>`: [primitives/l--switchCols.md](./primitives/l--switchCols.md)
-- `l--sideMain` / `<SideMain>`: [primitives/l--sideMain.md](./primitives/l--sideMain.md)
+- `l--autoColumns` / `<AutoColumns>`: [primitives/l--autoColumns.md](./primitives/l--autoColumns.md)
+- `l--switchColumns` / `<SwitchColumns>`: [primitives/l--switchColumns.md](./primitives/l--switchColumns.md)
+- `l--withSide` / `<WithSide>`: [primitives/l--withSide.md](./primitives/l--withSide.md)
 
 **Trait Class (is--)**
 

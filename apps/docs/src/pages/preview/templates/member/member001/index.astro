@@ -1,7 +1,7 @@
 ---
 import DemoLayout from '@/layouts/DemoLayout.astro';
 
-import { Container, Frame, FluidCols, Media, Stack, Text, Heading } from 'lism-css/astro';
+import { Container, Frame, AutoColumns, Media, Stack, Text, Heading } from 'lism-css/astro';
 import './_style.css';
 ---
 
@@ -9,7 +9,7 @@ import './_style.css';
   <Container isWrapper="m" bgc="base" py="50" hasGutter>
     <Stack g="50">
       <Heading level="2" class="u--trim" fz="2xl" fw="bold" ta="center">スタッフ</Heading>
-      <FluidCols cols="10rem" g={['40', '50']}>
+      <AutoColumns cols="10rem" g={['40', '50']}>
         <Stack g="30" ai="center">
           <Frame as="figure" ar="1/1" w="stretch" max-w="150px" bdrs="99">
             <Media src="https://cdn.lism-css.com/random/img?category=avatar&r=1" alt="" width="960" height="640" />
@@ -82,7 +82,7 @@ import './_style.css';
             <Text class="u--trim" fz="xs" o="-10">アカウントエグゼクティブ / 営業</Text>
           </Stack>
         </Stack>
-      </FluidCols>
+      </AutoColumns>
     </Stack>
   </Container>
 </DemoLayout>

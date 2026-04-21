@@ -4,7 +4,7 @@
  * content/{lang}/ui/ 配下のMDXを一覧表示
  */
 import BaseLayout from '@/layouts/BaseLayout.astro';
-import { Stack, FluidCols, BoxLink, Frame, Lism, Media } from 'lism-css/astro';
+import { Stack, AutoColumns, BoxLink, Frame, Lism, Media } from 'lism-css/astro';
 import { getPostsByLang } from '@/lib/content';
 import { siteConfig } from '@/config/site';
 import { isRootLang, isValidLang, type LangCode } from '@/lib/i18n';
@@ -75,7 +75,7 @@ function getThumbPath(title: string): string {
         <h2>Components</h2>
         <p class="-c:text-2">Components available from <code>@lism-css/ui</code>.</p>
       </Stack>
-      <FluidCols cols="240px" g="30" my-s="40">
+      <AutoColumns cols="240px" g="30" my-s="40">
         {
           uiPosts.map((post) => {
             const postUrl = `/${lang}/ui/${post.id.replace('ui/', '')}/`;
@@ -90,7 +90,7 @@ function getThumbPath(title: string): string {
             );
           })
         }
-      </FluidCols>
+      </AutoColumns>
     </Lism>
     {
       examplePosts.length > 0 && (
@@ -99,7 +99,7 @@ function getThumbPath(title: string): string {
             <h2>Examples</h2>
             <p class="-c:text-2">Additional implementation examples and samples using Lism CSS and Lism UI.</p>
           </Stack>
-          <FluidCols cols="240px" g="30" my-s="40">
+          <AutoColumns cols="240px" g="30" my-s="40">
             {examplePosts.map((post) => {
               const postUrl = `/${lang}/ui/${post.id.replace('ui/', '')}/`;
               const thumbPath = getThumbPath(post.data.title);
@@ -112,7 +112,7 @@ function getThumbPath(title: string): string {
                 </BoxLink>
               );
             })}
-          </FluidCols>
+          </AutoColumns>
         </Lism>
       )
     }

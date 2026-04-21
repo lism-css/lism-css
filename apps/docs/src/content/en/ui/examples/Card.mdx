@@ -3,7 +3,7 @@ title: 'Card'
 description: 'Example implementation of card-style content layouts using Lism CSS.'
 ---
 
-import { Box, Flex, Stack, Center, Grid, Frame, BoxLink, Layer, Columns, Media, SideMain, Group, Inline, Link, Text } from 'lism-css/astro';
+import { Box, Flex, Stack, Center, Grid, Frame, BoxLink, Layer, Columns, Media, WithSide, Group, Inline, Link, Text } from 'lism-css/astro';
 import { DummyText } from '@lism-css/ui/astro';
 import Card from '@/components/ex/Card/index.jsx';
 
@@ -13,7 +13,7 @@ Examples of creating card-style content layouts.
 
 export const ExampleCard = (props) => {
   return(
-    <SideMain isBoxLink href="###" hov="-bxsh" hasTransition sideW="50%" bgc="base" bdrs="20" bxsh="10" ov="hidden" {...props}>
+    <WithSide isBoxLink href="###" hov="-bxsh" hasTransition sideW="50%" bgc="base" bdrs="20" bxsh="10" ov="hidden" {...props}>
       <Frame isSide ar="16/9" >
         <Media src="https://cdn.lism-css.com/img/a-1.jpg" alt="" width="960" height="640" />
       </Frame>
@@ -22,7 +22,7 @@ export const ExampleCard = (props) => {
         <Text util="trim" fz="s" lh="s" o="-10">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</Text>
         <Inline d="inline-flex" mx-s="auto" my-s="auto" c="inherit" td="none" bd-b lh="s" p="10">View More →</Inline>
       </Stack>
-    </SideMain>
+    </WithSide>
   )
 }
 
@@ -45,14 +45,14 @@ export const ExampleImgCard = (props) => {
 
 ### Card link with automatic vertical/horizontal layout switching
 
-By building with [`SideMain`](/en/docs/primitives/l--sideMain/), the layout automatically switches to vertical when the display area becomes narrow.
+By building with [`WithSide`](/en/docs/primitives/l--withSide/), the layout automatically switches to vertical when the display area becomes narrow.
 
 Additionally, [`is--boxLink`](/en/docs/trait-class/is--boxLink/) is applied to make the entire card content a link.
 
 <Preview>
   <PreviewTitle>Preview</PreviewTitle>
   <PreviewArea bg=":stripe" resize p="30">
-    <SideMain isBoxLink href="###" hov="-bxsh" hasTransition sideW="50%" bgc="base" bdrs="20" bxsh="10" ov="hidden">
+    <WithSide isBoxLink href="###" hov="-bxsh" hasTransition sideW="50%" bgc="base" bdrs="20" bxsh="10" ov="hidden">
       <Frame isSide ar="16/9">
         <Media src="https://cdn.lism-css.com/img/a-1.jpg" alt="" width="960" height="640" />
       </Frame>
@@ -61,11 +61,11 @@ Additionally, [`is--boxLink`](/en/docs/trait-class/is--boxLink/) is applied to m
         <Text util="trim" fz="s" lh="s" o="-10">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</Text>
         <Inline d="inline-flex" mx-s="auto" my-s="auto" c="inherit" td="none" bd-b lh="s" p="10">View More →</Inline>
       </Stack>
-    </SideMain>
+    </WithSide>
   </PreviewArea>
   <PreviewCode slot="tab" label="JSX">
-    ```jsx "SideMain" 'as="a" isBoxLink'
-    <SideMain isBoxLink href="###" hov="-bxsh" hasTransition sideW="50%" bgc="base" bdrs="20" bxsh="10" ov="hidden">
+    ```jsx "WithSide" 'as="a" isBoxLink'
+    <WithSide isBoxLink href="###" hov="-bxsh" hasTransition sideW="50%" bgc="base" bdrs="20" bxsh="10" ov="hidden">
       <Frame isSide ar="16/9">
         <Media src="https://cdn.lism-css.com/img/a-1.jpg" alt="" width="960" height="640" />
       </Frame>
@@ -78,7 +78,7 @@ Additionally, [`is--boxLink`](/en/docs/trait-class/is--boxLink/) is applied to m
           View More →
         </Inline>
       </Stack>
-    </SideMain>
+    </WithSide>
     ```
   </PreviewCode>
 </Preview>
@@ -91,7 +91,7 @@ When you want to make the entire card a link while also including a separate lin
 <Preview>
   <PreviewTitle>Example using `is--coverLink`</PreviewTitle>
   <PreviewArea bg=":stripe" resize p="30">
-    <SideMain isBoxLink hov="-bxsh" hasTransition sideW="50%" bgc="base" bdrs="20" bxsh="10" ov="hidden">
+    <WithSide isBoxLink hov="-bxsh" hasTransition sideW="50%" bgc="base" bdrs="20" bxsh="10" ov="hidden">
       <Frame isSide ar="16/9" pos="relative">
         <Media src="https://cdn.lism-css.com/img/a-1.jpg" alt="" width="960" height="640" />
         <Link href="#badge-link" pos="absolute" t="0" r="0" fz="s" bgc="black" c="white" m="20" px="15" bdrs="99" td="none" hov="neutral">Category</Link>
@@ -103,11 +103,11 @@ When you want to make the entire card a link while also including a separate lin
         <Text util="trim" fz="s" lh="s" o="-10">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</Text>
         <Inline d="inline-flex" mx-s="auto" my-s="auto" c="inherit" td="none" bd-b lh="s" p="10">View More →</Inline>
       </Stack>
-    </SideMain>
+    </WithSide>
   </PreviewArea>
   <PreviewCode slot="tab" label="JSX">
     ```jsx "isBoxLink" "isCoverLink"
-    <SideMain isBoxLink hov="-bxsh" hasTransition sideW="50%" bgc="base" bdrs="20" bxsh="10" ov="hidden">
+    <WithSide isBoxLink hov="-bxsh" hasTransition sideW="50%" bgc="base" bdrs="20" bxsh="10" ov="hidden">
       <Frame isSide ar="16/9" pos="relative">
         <Media src="https://cdn.lism-css.com/img/a-1.jpg" alt="" width="960" height="640" />
         <Link href="#badge-link" pos="absolute" t="0" r="0" fz="s" bgc="black" c="white" m="20" px="15" bdrs="99" td="none" hov="neutral">
@@ -127,7 +127,7 @@ When you want to make the entire card a link while also including a separate lin
           View More →
         </Inline>
       </Stack>
-    </SideMain>
+    </WithSide>
     ```
   </PreviewCode>
 </Preview>

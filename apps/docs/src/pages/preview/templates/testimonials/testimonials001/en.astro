@@ -1,7 +1,7 @@
 ---
 import DemoLayout from '@/layouts/DemoLayout.astro';
 
-import { Container, Frame, FluidCols, Grid, Media, Stack, Text, Heading } from 'lism-css/astro';
+import { Container, Frame, AutoColumns, Grid, Media, Stack, Text, Heading } from 'lism-css/astro';
 import './_style.css';
 ---
 
@@ -9,7 +9,7 @@ import './_style.css';
   <Container isWrapper="l" bgc="gray:5%" py="50" hasGutter>
     <Stack g="50">
       <Heading level="2" class="u--trim" fz="2xl" fw="bold" ta="center">Testimonials</Heading>
-      <FluidCols cols="20rem" g="30">
+      <AutoColumns cols="20rem" g="30">
         <Grid gtr="subgrid" gr="span 2" g="30" bgc="white" p="30" bdrs="20" bxsh="20">
           <Grid gtc="auto 1fr" ai="center" g="20">
             <Frame as="figure" ar="1/1" w="stretch" max-w="4.5rem" bdrs="99">
@@ -99,7 +99,7 @@ import './_style.css';
             getting ready during busy mornings.
           </Text>
         </Grid>
-      </FluidCols>
+      </AutoColumns>
     </Stack>
   </Container>
 </DemoLayout>

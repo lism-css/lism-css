@@ -25,7 +25,7 @@ No build step or configuration is required. Simply load the CSS file via CDN or 
 
 - **Lightweight** — The entire CSS bundle is approximately 30 KB (~8 KB gzipped).
 - **Zero-Build Framework** — Works with plain HTML via CDN or npm. No build tool or configuration needed.
-- **Layout-First Primitives** — Pre-built layout patterns: `l--flex`, `l--stack`, `l--grid`, `l--columns`, `l--center`, `l--sideMain`, etc.
+- **Layout-First Primitives** — Pre-built layout patterns: `l--flex`, `l--stack`, `l--grid`, `l--columns`, `l--center`, `l--withSide`, etc.
 - **CSS Layer Structure** — `@layer` (lism-base → lism-trait → lism-primitive → lism-component → lism-custom → lism-utility) for clear specificity management. `lism-trait` is the layer for `is--` / `has--` trait classes. `lism-primitive` contains `layout` / `atomic` sub-layers. `lism-component` is the layer for BEM-structured `c--` components. `lism-custom` is the layer for user-defined classes with custom prefixes. Minimizes specificity conflicts.
 - **Design Tokens** — Colors, spacing, font sizes, shadows as CSS custom properties.
 - **Flexible Property Classes** — `-{prop}:{value}` syntax (e.g., `-p:20`, `-bgc:base-2`, `-fz:l`).
@@ -116,7 +116,7 @@ import { Box, Flex, Stack, Text, Heading } from 'lism-css/astro';
 
 | Type | Examples |
 |------|---------|
-| Layout Primitive | `l--flex`, `l--grid`, `l--stack`, `l--center`, `l--columns`, `l--sideMain` |
+| Layout Primitive | `l--flex`, `l--grid`, `l--stack`, `l--center`, `l--columns`, `l--withSide` |
 | Trait Class | `is--wrapper`, `is--container`, `is--layer`, `has--transition`, `has--gutter` |
 | Property Class | `-p:20`, `-bgc:base-2`, `-fz:l`, `-ta:center` |
 | Breakpoint | `-p_sm`, `-g_md`, `-fz_lg` |
