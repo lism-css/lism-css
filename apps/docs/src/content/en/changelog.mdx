@@ -9,9 +9,11 @@ Breaking changes may continue frequently until the v1.0 release, so all notable 
 
 <Divider bds="dashed" my="40" />
 
-## Rename `u--trimChildren` and refine the exclusion rules (#324, #326)
+## v.0.16.0 (2026.04.21)
 
 Contains **breaking changes**.
+
+### Rename `u--trimChildren` and refine the exclusion rules (#324, #326)
 
 The utility class that trims half-leading margins on children has been cleaned up.
 
@@ -23,11 +25,7 @@ The old `u--trimChildren` / `util="trimChildren"` has been removed (no backward-
 
 The selector strategy has also been refined to simply exclude elements that shouldn't be trimmed (`:empty`, `figure`, `picture`, `video`, `button`, `textarea`, `table`). The `:empty` pseudo-class automatically covers void elements like `img`/`hr` and empty decorative divs (e.g. `a--divider`, `a--spacer`). If you need to exclude additional elements, add a rule like `.u--trimAll > xxx { margin-block: 0 }` on the consumer side.
 
-<Divider bds="dashed" my="40" />
-
-## Rename `u--collapseGrid` and add `u--divide` (#323)
-
-Contains **breaking changes**.
+### Rename `u--collapseGrid` and add `u--divide` (#323)
 
 The utility classes that draw dividing lines between children of a grid / flex container have been reorganized.
 
@@ -40,11 +38,7 @@ The pattern that previously required combining `u--collapseGrid` with `p="0"` an
 
 The old `u--collapseGrid` / `util="collapseGrid"` has been removed (no backward-compatible alias). Any direct usage must be replaced.
 
-<Divider bds="dashed" my="40" />
-
-## Opacity token renames (#316)
-
-Contains **breaking changes**.
+### Opacity token renames (#316)
 
 The opacity tokens have been renamed from the numeric step convention with three consecutive hyphens (`--o---10`) to semantic names derived from musical dynamic markings (the piano family). A new token for a light attenuation value (`0.9`), which had not been tokenized before, has also been added — producing a four-stage scale.
 
@@ -57,11 +51,7 @@ The opacity tokens have been renamed from the numeric step convention with three
 
 The old tokens (`--o---10/-20/-30`) and old utility classes (`-o:-10/-20/-30`) have been removed. Any direct usage must be replaced with the new names. `-o:0` (fully transparent) remains unchanged.
 
-<Divider bds="dashed" my="40" />
-
-## Layout Primitive renames (#319)
-
-Contains **breaking changes**.
+### Layout Primitive renames (#319)
 
 The following Layout Primitive class names / component names / `layout` literal values have been renamed.
 
@@ -73,6 +63,12 @@ The following Layout Primitive class names / component names / `layout` literal 
 
 The old React / Astro component names (`<SideMain>` / `<FluidCols>` / `<SwitchCols>`) remain as `@deprecated` aliases for now. They will be removed in the next major release, so migrate to the new names as soon as possible.
 There is no backward compatibility for the SCSS classes (`l--sideMain`, etc.) or `layout` literal values (`layout="sideMain"`, etc.) — any direct usage must be updated.
+
+### Other changes
+
+- Updated the formula for the top margin of headings inside `l--flow`
+- Changed the `-hov:-o` opacity fallback from `0.7` to `var(--o--p)`
+- Internal refactor: reorganized trait SCSS files into `is/` and `has/` subdirectories
 
 <Divider bds="dashed" my="40" />
 
