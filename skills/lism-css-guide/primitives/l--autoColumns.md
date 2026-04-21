@@ -11,10 +11,10 @@
 
 ## 専用Props
 
-| Prop | CSS変数 | 説明 |
-|------|--------|------|
-| `cols` | `--cols` | カラムが維持する最小幅を指定（`16em`, `320px` など） |
-| `autoFill` | `--autoMode` | `auto-fill` モードに切り替え（デフォルトは `auto-fit`） |
+| Prop | CSS変数 | デフォルト | 説明 |
+|------|--------|-----------|------|
+| `cols` | `--cols` | `20rem` | カラムが維持する最小幅を指定（`16em`, `320px` など） |
+| `autoFill` | `--autoMode` | `auto-fit` | `auto-fill` モードに切り替え |
 
 ## Usage
 

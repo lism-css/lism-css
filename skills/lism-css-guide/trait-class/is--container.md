@@ -39,8 +39,14 @@
 
 子要素側は `p={['10', '30']}` のようなブレイクポイント配列指定にすることで、親の `is--container` を基準としたコンテナクエリで値が切り替わります。
 
+## `--sz--container` の提供
+
+`is--container` は直下の子要素に `--sz--container: 100cqi` をセットします。`-max-sz:container` はこの値を参照しており、`is--container` 基準の幅まで広がります。
+
+`has--gutter` と併用した場合は `calc(100cqi + var(--gutter-size) * 2)` に自動調整され、gutter 分を含めた端〜端の幅になります。
+
 ## 関連プリミティブ
 
 - [is--wrapper](./is--wrapper.md) — コンテンツ幅ラッパー（`isContainer` と併用可）
-- [l--flow](./l--flow.md) — 記事コンテンツ向けフローレイアウト
-- [l--box](./l--box.md) — 汎用ボックス
+- [l--flow](../primitives/l--flow.md) — 記事コンテンツ向けフローレイアウト
+- [l--box](../primitives/l--box.md) — 汎用ボックス
