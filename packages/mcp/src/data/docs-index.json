@@ -230,7 +230,7 @@
     "title": "Utility Class",
     "description": "スタイルや装飾をまとめて適用できる Lism CSS のユーティリティクラスについて解説します。",
     "category": "guide",
-    "headings": ["u--cbox", "u--trim & u--trimChildren", "u--srOnly", "u--divide & u--cells", "u--clipText", "Opt-in"],
+    "headings": ["u--cbox", "u--trim & u--trimTexts", "u--srOnly", "u--divide & u--cells", "u--clipText", "Opt-in"],
     "keywords": ["utility", "ユーティリティ", "class", "クラス", "u--cbox", "u--trim", "u--srOnly", "u--divide", "u--cells", "u--clipText"],
     "snippet": "用途が明確な装飾・機能をまとめてセットするユーティリティクラス (.u--{style}) の一覧。u--cbox, u--trim, u--divide, u--cells 等を解説。"
   },
@@ -961,12 +961,12 @@
   },
   {
     "sourcePath": "utility-class.mdx",
-    "title": "u--trim / u--trimChildren",
+    "title": "u--trim / u--trimTexts",
     "description": "テキストのハーフレディング分の余白を調整するユーティリティクラス。",
     "category": "guide",
-    "headings": ["u--trim", "u--trimChildren"],
-    "keywords": ["u--trim", "u--trimChildren", "ハーフレディング", "行間調整", "テキスト余白", "margin-block", "トリム"],
-    "snippet": "u--trimは自身のmargin-blockを調整。u--trimChildrenは子要素全ての上下マージンを調整。img, figure, tableに対してはマージン調節を無効化。"
+    "headings": ["u--trim", "u--trimTexts"],
+    "keywords": ["u--trim", "u--trimTexts", "ハーフレディング", "行間調整", "テキスト余白", "margin-block", "トリム"],
+    "snippet": "u--trimは自身のmargin-blockを調整。u--trimTextsは直下のテキスト系要素（p, h1-h6, ul, ol）の上下マージンを一括調整するホワイトリスト方式のクラス。"
   },
   {
     "sourcePath": "trait-class/is--boxLink.mdx",

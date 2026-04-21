@@ -1,38 +1,14 @@
 /*
   ハーフレディングをトリミングするユーティリティクラス。
-    Memo: そのうち text-box-trim が使えるようになる
  */
-
 .u--trim {
-  // 詰まりすぎにならないようにほんの少しだけ余裕を持たせる
-  // margin-block: calc(0.5px + var(--HL) * -1);
   margin-block: calc(var(--hl) * -1);
 }
 
-// 子要素の一括トリミング
-.u--trimChildren {
-  > * {
+// 子要素のテキスト系要素を一括トリミング（ホワイトリスト方式）
+.u--trimTexts {
+  > :where(p, h1, h2, h3, h4, h5, h6, ul, ol) {
     --my: calc(var(--hl) * -1);
     margin-block: var(--my);
   }
-
-  /*
-	 * トリミング除外要素
-	 *   Memo: --hl を 0 にはしないようにする.
-	*/
-  > :where(figure, img, button) {
-    --my: 0px;
-  }
 }
-
-// .u--trimBox {
-// 	:where(&) > * {
-// 		--trimHL: calc(0.5px + var(--HL) * -1);
-// 	}
-// 	> :first-child {
-// 		margin-block-start: var(--trimHL);
-// 	}
-// 	> :last-child {
-// 		margin-block-end: var(--trimHL);
-// 	}
-// }

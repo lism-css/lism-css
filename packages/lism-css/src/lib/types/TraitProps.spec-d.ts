@@ -127,7 +127,7 @@ describe('LismPropsBase — set / util', () => {
     it('プリセット値を受け付ける', () => {
       assertType<LismPropsBase>({ util: 'cbox' });
       assertType<LismPropsBase>({ util: 'trim' });
-      assertType<LismPropsBase>({ util: 'trimChildren' });
+      assertType<LismPropsBase>({ util: 'trimTexts' });
       assertType<LismPropsBase>({ util: 'srOnly' });
       assertType<LismPropsBase>({ util: 'clipText' });
       assertType<LismPropsBase>({ util: 'divide' });

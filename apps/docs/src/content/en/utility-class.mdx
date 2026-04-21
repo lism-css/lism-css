@@ -203,11 +203,11 @@ Generates `--c`, `--bgc`, and `--bdc` from the `--keycolor` variable using `colo
 </PreviewArea>
 
 
-## `u--trim` & `u--trimChildren`
+## `u--trim` & `u--trimTexts`
 
 Classes for adjusting the half-leading spacing of text.
 
-`u--trim` adjusts only the element's own `margin-block`, while `u--trimChildren` adjusts the top and bottom margins of all child elements.
+`u--trim` adjusts only the element's own `margin-block`, while `u--trimTexts` trims the top and bottom margins of text-like child elements at once.
 
 <Preview>
   <PreviewTitle>`u--trim`</PreviewTitle>
@@ -236,12 +236,12 @@ Classes for adjusting the half-leading spacing of text.
 </Preview>
 
 
-Margin adjustment is disabled for `img`, `figure`, and `table` elements inside `u--trimChildren`.
+`u--trimTexts` uses a whitelist approach: it only targets direct `p`, `h1`–`h6`, `ul`, and `ol` children. Elements like `img`, `figure`, and `table` — which shouldn't be trimmed in the first place — are left untouched. If you need to trim other elements such as `blockquote` or `pre`, add `u--trim` to them individually.
 
 <Preview>
-  <PreviewTitle>`u--trimChildren`</PreviewTitle>
+  <PreviewTitle>`u--trimTexts`</PreviewTitle>
   <PreviewArea resize p="20">
-    <Stack util="trimChildren" bd g="30" p="30" bdrs="10" max-sz="s">
+    <Stack util="trimTexts" bd g="30" p="30" bdrs="10" max-sz="s">
       <Media ar="og" src="https://cdn.lism-css.com/img/a-1.jpg" alt="" inferSize />
       <DummyText length="s" fw="bold" fz="l" />
       <DummyText length="l" o="p" fz="s" />
@@ -249,7 +249,7 @@ Margin adjustment is disabled for `img`, `figure`, and `table` elements inside `
   </PreviewArea>
   <PreviewCode slot="tab" label="HTML">
     ```html
-    <div class="l--stack u--trimChildren -bd -g:30 -p:30 -bdrs:10">
+    <div class="l--stack u--trimTexts -bd -g:30 -p:30 -bdrs:10">
       <img class="-ar:og" src="https://cdn.lism-css.com/img/a-1.jpg" />
       <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
       <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
@@ -258,7 +258,7 @@ Margin adjustment is disabled for `img`, `figure`, and `table` elements inside `
   </PreviewCode>
   <PreviewCode slot="tab" label="JSX">
     ```jsx
-    <Stack util="trimChildren" bd g="30" p="30" bdrs="10">
+    <Stack util="trimTexts" bd g="30" p="30" bdrs="10">
       <Media ar="og" src="https://cdn.lism-css.com/img/a-1.jpg" alt="" inferSize />
       <p>Lorem ipsum dolor sit amet. Consectetur adipiscing elit, sed do eiusmod tempor Incididunt ut.</p>
       <p>

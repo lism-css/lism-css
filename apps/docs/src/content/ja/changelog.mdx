@@ -9,6 +9,22 @@ v.1.0リリースまでしばらく激しい変更が続く可能性があるた
 
 <Divider bds="dashed" my="40" />
 
+## `u--trimChildren` のリネームと対象要素のホワイトリスト化 (#324)
+
+**破壊的変更**を含むリリースです。
+
+子要素のハーフレディング分の余白を一括トリミングするユーティリティクラスを整理しました。
+
+| 旧 | 新 |
+|---|---|
+| `u--trimChildren` / `util="trimChildren"` | `u--trimTexts` / `util="trimTexts"` |
+
+旧 `u--trimChildren` / `util="trimChildren"` は削除されました（後方互換エイリアスなし）。直接使用している箇所はすべて置き換えが必要です。
+
+また、トリミング対象の指定方式もブラックリスト方式（`figure, img, button` のみ除外）からホワイトリスト方式に変更しました。直下の `p`, `h1`〜`h6`, `ul`, `ol` のみに `margin-block` を適用するようになっています。`blockquote` や `pre` などそれ以外の要素をトリムしたい場合は、個別に `u--trim` を付けて対応してください。
+
+<Divider bds="dashed" my="40" />
+
 ## `u--collapseGrid` のリネームと `u--divide` の追加 (#323)
 
 **破壊的変更**を含むリリースです。
