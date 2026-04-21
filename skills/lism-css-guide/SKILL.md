@@ -1,6 +1,6 @@
 ---
 name: lism-css-guide
-description: "Lism CSS の設計・実装に関するガイド。CSSの編集・追加、UIコンポーネントやレイアウトの実装・編集時に参照。c--*, l--*, a--*, is--*, has--*, set--*, u--* -prop:value 形式のクラス・トークン(CSS変数)・命名規則・Layer規則・レスポンシブ対応について調べる時にも参照。
+description: "Lism CSS の設計・実装に関するガイド。CSSの編集・追加、UIコンポーネントやレイアウトの実装・編集時に参照。c--*, l--*, a--*, is--*, has--*, set--*, u--* -prop:value 形式のクラス・トークン(CSS変数)・命名規則・Layer規則・レスポンシブ対応について調べる時にも参照。"
 ---
 
 # Lism CSS Best Practices
