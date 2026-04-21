@@ -5,7 +5,7 @@ export default {
   lts: ['base', 's', 'l'],
   ff: ['base', 'accent', 'mono'],
   fw: ['light', 'normal', 'bold'],
-  o: ['-10', '-20', '-30'],
+  o: ['mp', 'p', 'pp', 'ppp'],
   bdrs: ['10', '20', '30', '40', '99', 'inner'],
   bxsh: ['10', '20', '30', '40', '50'],
   sz: ['xs', 's', 'm', 'l', 'xl', 'container'],

@@ -118,7 +118,7 @@ const label = t(lang, 'postNav');
         <Lism class="c--postNav_item -prev">
           {prevPost ? (
             <a href={getLocalizedUrl(getPostUrl(prevPost.id), lang)} class="c--postNav_link">
-              <Inline class="c--postNav_label" fz="xs" o="-10">
+              <Inline class="c--postNav_label" fz="xs" o="p">
                 {label.prev}
               </Inline>
               <Inline class="c--postNav_title">{prevPost.data.navtitle || prevPost.data.title}</Inline>
@@ -132,7 +132,7 @@ const label = t(lang, 'postNav');
         <Lism class="c--postNav_item -next">
           {nextPost ? (
             <a href={getLocalizedUrl(getPostUrl(nextPost.id), lang)} class="c--postNav_link">
-              <Inline class="c--postNav_label" fz="xs" o="-10">
+              <Inline class="c--postNav_label" fz="xs" o="p">
                 {label.next}
               </Inline>
               <Inline class="c--postNav_title">{nextPost.data.navtitle || nextPost.data.title}</Inline>

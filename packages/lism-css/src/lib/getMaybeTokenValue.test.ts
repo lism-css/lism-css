@@ -33,20 +33,12 @@ describe('getMaybeTokenValue', () => {
       expect(getMaybeTokenValue('size', 20, TOKENS)).toBe('var(--size--20)');
     });
 
-    test('マイナスの値はそのまま変数名の一部になる（実在する o トークン）', () => {
+    test('セマンティック文字列のトークン値（実在する o トークン）', () => {
       const TOKENS = {
-        o: new Set(['-10', '-20', '-30']),
+        o: new Set(['mp', 'p', 'pp', 'ppp']),
       };
-      expect(getMaybeTokenValue('o', '-10', TOKENS)).toBe('var(--o---10)');
-      expect(getMaybeTokenValue('o', '-20', TOKENS)).toBe('var(--o---20)');
-    });
-
-    test('マイナスの数値もそのまま変数名の一部になる（実在する o トークン）', () => {
-      const TOKENS = {
-        o: new Set(['-10', '-20', '-30']),
-      };
-      expect(getMaybeTokenValue('o', -10, TOKENS)).toBe('var(--o---10)');
-      expect(getMaybeTokenValue('o', -20, TOKENS)).toBe('var(--o---20)');
+      expect(getMaybeTokenValue('o', 'mp', TOKENS)).toBe('var(--o--mp)');
+      expect(getMaybeTokenValue('o', 'pp', TOKENS)).toBe('var(--o--pp)');
     });
   });
 
@@ -74,12 +66,12 @@ describe('getMaybeTokenValue', () => {
       expect(getMaybeTokenValue('size', 20, TOKENS)).toBe('var(--size--20)');
     });
 
-    test('マイナスの値はそのまま変数名の一部になる（実在する o トークン）', () => {
+    test('セマンティック文字列のトークン値（実在する o トークン）', () => {
       const TOKENS = {
-        o: ['-10', '-20', '-30'],
+        o: ['mp', 'p', 'pp', 'ppp'],
       };
-      expect(getMaybeTokenValue('o', '-10', TOKENS)).toBe('var(--o---10)');
-      expect(getMaybeTokenValue('o', '-20', TOKENS)).toBe('var(--o---20)');
+      expect(getMaybeTokenValue('o', 'mp', TOKENS)).toBe('var(--o--mp)');
+      expect(getMaybeTokenValue('o', 'pp', TOKENS)).toBe('var(--o--pp)');
     });
   });
 
@@ -278,13 +270,14 @@ describe('getMaybeTokenValue', () => {
       expect(getMaybeTokenValue('color', 'custom', TOKENS)).toBe('custom');
     });
 
-    test('opacity トークン（負の値を含む実在の o トークン）', () => {
+    test('opacity トークン（音楽記号を用いた実在の o トークン）', () => {
       const TOKENS = {
-        o: new Set(['-10', '-20', '-30']),
+        o: new Set(['mp', 'p', 'pp', 'ppp']),
       };
-      expect(getMaybeTokenValue('o', '-10', TOKENS)).toBe('var(--o---10)');
-      expect(getMaybeTokenValue('o', '-20', TOKENS)).toBe('var(--o---20)');
-      expect(getMaybeTokenValue('o', '-30', TOKENS)).toBe('var(--o---30)');
+      expect(getMaybeTokenValue('o', 'mp', TOKENS)).toBe('var(--o--mp)');
+      expect(getMaybeTokenValue('o', 'p', TOKENS)).toBe('var(--o--p)');
+      expect(getMaybeTokenValue('o', 'pp', TOKENS)).toBe('var(--o--pp)');
+      expect(getMaybeTokenValue('o', 'ppp', TOKENS)).toBe('var(--o--ppp)');
     });
   });
 });

@@ -84,7 +84,7 @@ CSS Layer の外（最も高い詳細度）に配置され、`-{prop}(:{value})`
 | Prop | CSS プロパティ | プリセット値クラス | BP クラス |
 |------|--------------|-------------|-----|
 | `d` | `display` | `-d:none`, `-d:block`, `-d:flex`, `-d:inline-flex`, `-d:grid`, `-d:inline-grid`, `-d:inline`, `-d:inline-block` | `-d_sm`, `-d_md` |
-| `o` | `opacity` | `-o:0`, `-o:-10`, `-o:-20`, `-o:-30` | — |
+| `o` | `opacity` | `-o:0`, `-o:mp`, `-o:p`, `-o:pp`, `-o:ppp` | — |
 | `v` | `visibility` | `-v:hidden` | — |
 | `ov` | `overflow` | `-ov:hidden`, `-ov:auto`, `-ov:clip` | — |
 | `ov-x` | `overflow-x` | `-ov-x:clip`, `-ov-x:auto`, `-ov-x:scroll` | — |
