@@ -9,7 +9,7 @@ const meta: Meta<typeof Layer> = {
   decorators: [
     (Story) => (
       <Lism pos="relative" p="30" bgc="base-2" h="50svh">
-        <Lism as="p" o="-30" fz="2xl" ff="mono" fw="bold">
+        <Lism as="p" o="ppp" fz="2xl" ff="mono" fw="bold">
           BACKGROUND BACKGROUND BACKGROUND BACKGROUND
         </Lism>
         <Story />

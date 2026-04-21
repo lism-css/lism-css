@@ -48,7 +48,7 @@ const dateLocale = lang === 'ja' ? 'ja-JP' : 'en-US';
   <Heading level="3" class="c--postCard_title" fz="m" fw="bold" lh="xs" style={{ '--focus-offset': '2px' }}>
     <Link href={postUrl} isCoverLink>{post.data.title}</Link>
   </Heading>
-  <Text fz="xs" lh="s" o="-10">
+  <Text fz="xs" lh="s" o="p">
     {post.data.description}
   </Text>
   <Cluster g="10" my-s="auto" py-s="20">
@@ -65,7 +65,7 @@ const dateLocale = lang === 'ja' ? 'ja-JP' : 'en-US';
     }
     {
       post.data.date && (
-        <Lism as="time" datetime={post.data.date.toISOString()} fz="2xs" o="-10" mx-s="auto">
+        <Lism as="time" datetime={post.data.date.toISOString()} fz="2xs" o="p" mx-s="auto">
           {post.data.date.toLocaleDateString(dateLocale)}
         </Lism>
       )
