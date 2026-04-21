@@ -196,7 +196,7 @@ NG例: `flex` → `fx` としたうえで `flex-shrink` を `fsh` にする（`f
 ```
 .-c:text-2        → color: var(--text-2);
 .-fz:l            → font-size: var(--fz--l);
-.-p10             → padding: var(--s10);
+.-p:10            → padding: var(--s10);
 .-fw:bold         → font-weight: var(--fw--bold);
 .-bdrs:20         → border-radius: var(--bdrs--20);
 ```

@@ -492,7 +492,7 @@ Gridを使って table タグのような表現もできるようになります
   <PreviewCode label="JSX" slot="tab">
     ```jsx
     <Center>
-      <Box util="clipText" bgi="linear-gradient(45deg, var(--blue), var(--pink))">
+      <Box util="clipText" bgr="no-repeat" bgi="linear-gradient(45deg, var(--blue), var(--pink))">
         <Text fz="5xl" fw="bold" lh="1" lts="l">
           TEXT
         </Text>
@@ -502,7 +502,11 @@ Gridを使って table タグのような表現もできるようになります
   </PreviewCode>
   <PreviewCode label="HTML" slot="tab">
     ```html
-    <div class="l--box u--clipText -bgi:linear-gradient(to top, #a8edea 0%, #fed6e3 100%)"></div>
+    <div class="l--center">
+      <div class="l--box u--clipText -bgr:no-repeat" style="--bgi: linear-gradient(45deg, var(--blue), var(--pink))">
+        <p class="-fz:5xl -fw:bold -lh:1 -lts:l">TEXT</p>
+      </div>
+    </div>
     ```
   </PreviewCode>
 </Preview>
