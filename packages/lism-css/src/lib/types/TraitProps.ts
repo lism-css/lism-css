@@ -55,7 +55,7 @@ type SetPreset = 'plain' | 'revert' | 'var:hov' | 'var:bxsh' | 'var:bdrsInner';
 export type SetPropValue = WithArbitraryString<SetPreset> | WithArbitraryString<SetPreset>[];
 
 /** util prop で使われるプリセット値（既知の `u--` クラス名・エディタ補完用） */
-type UtilPreset = 'cbox' | 'trim' | 'trimTexts' | 'srOnly' | 'clipText' | 'divide' | 'cells';
+type UtilPreset = 'cbox' | 'trim' | 'trimAll' | 'srOnly' | 'clipText' | 'divide' | 'cells';
 
 /**
  * util prop の値の型。既知の `u--` クラス名がサジェストされつつ、任意の文字列も受け付ける。

@@ -27,7 +27,7 @@ Lism コンポーネントでの `util` prop による指定方法は [component
 | クラス | 用途 | ソースファイル |
 |--------|------|---------------|
 | `u--trim` | ハーフレディングのネガティブマージンでテキスト上下の余白を詰める | [`_trimHL.scss`](https://raw.githubusercontent.com/lism-css/lism-css/main/packages/lism-css/src/scss/utility/_trimHL.scss) |
-| `u--trimTexts` | 子要素のテキスト系要素（`p`, `h1`〜`h6`, `ul`, `ol`）にハーフレディングトリムを適用するホワイトリスト方式のクラス | [`_trimHL.scss`](https://raw.githubusercontent.com/lism-css/lism-css/main/packages/lism-css/src/scss/utility/_trimHL.scss) |
+| `u--trimAll` | 直下の子要素（`:empty`, `figure`, `picture`, `video`, `button`, `textarea`, `table` を除く）にハーフレディングトリムを一括適用する除外方式のクラス | [`_trimHL.scss`](https://raw.githubusercontent.com/lism-css/lism-css/main/packages/lism-css/src/scss/utility/_trimHL.scss) |
 | `u--cbox` | `--keycolor` を使い `color-mix()` で `--c` / `--bgc` / `--bdc` を自動生成する色付きボックス | [`_cbox.scss`](https://raw.githubusercontent.com/lism-css/lism-css/main/packages/lism-css/src/scss/utility/_cbox.scss) |
 | `u--divide` | Grid / Flex の子要素**間**にのみ `box-shadow` で区切り線を表示する | [`_divide.scss`](https://raw.githubusercontent.com/lism-css/lism-css/main/packages/lism-css/src/scss/utility/_divide.scss) |
 | `u--cells` | Grid / Flex の各子要素を `box-shadow` で枠囲みし、table セル風に表示する | [`_divide.scss`](https://raw.githubusercontent.com/lism-css/lism-css/main/packages/lism-css/src/scss/utility/_divide.scss) |
