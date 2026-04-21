@@ -31,7 +31,7 @@ import { DummyText } from '@lism-css/ui/astro';
   <PreviewTitle>使用例</PreviewTitle>
   <PreviewArea p="15">
     <Box pos="relative" py="40">
-      <Text fz="2xl" fw="bold" ta="center" lts="l" o="-30">
+      <Text fz="2xl" fw="bold" ta="center" lts="l" o="ppp">
         <Fragment>BACKGROUND</Fragment>
       </Text>
       <Layer p="15" bgc="purple:10%">
@@ -42,7 +42,7 @@ import { DummyText } from '@lism-css/ui/astro';
   <PreviewCode slot="tab" label="JSX">
     ```jsx
     <Box pos="relative" py="40">
-      <Text fz="2xl" fw="bold" ta="center" lts="l" o="-30">
+      <Text fz="2xl" fw="bold" ta="center" lts="l" o="ppp">
         BACKGROUND
       </Text>
       <Layer p="15" bgc="purple:10%">
@@ -54,7 +54,7 @@ import { DummyText } from '@lism-css/ui/astro';
   <PreviewCode slot="tab" label="HTML">
     ```html
     <div class="l--box -pos:relative -py:40">
-      <p class="-fz:2xl -fw:bold -ta:center -lts:l -o:-30">BACKGROUND</p>
+      <p class="-fz:2xl -fw:bold -ta:center -lts:l -o:ppp">BACKGROUND</p>
       <div class="is--layer -p:15 -bgc" style="--bgc: color-mix(in srgb, var(--purple) 10%, transparent)">
         <p>Layer Contents…</p>
       </div>
@@ -105,7 +105,7 @@ import { DummyText } from '@lism-css/ui/astro';
     <Frame ar="2/1" pos="relative">
       <img src="https://cdn.lism-css.com/img/a-1.jpg" alt="" width="960" height="640" />
       <Layer style={{ backdropFilter: 'contrast(1.1) sepia(0.4) grayscale(0.4)' }} />
-      <Text pos="absolute" b="0" r="0" p="20" lh="1" c="white" fz="xs" o="-10">
+      <Text pos="absolute" b="0" r="0" p="20" lh="1" c="white" fz="xs" o="p">
         <Fragment>Photo by xxxxxx</Fragment>
       </Text>
     </Frame>
@@ -115,7 +115,7 @@ import { DummyText } from '@lism-css/ui/astro';
     <Frame ar="2/1" pos="relative">
       <img src="https://cdn.lism-css.com/img/a-1.jpg" alt="" width="960" height="640" />
       <Layer style={{ backdropFilter: 'contrast(1.1) sepia(0.4) grayscale(0.4)' }} />
-      <Text pos="absolute" b="0" r="0" p="20" lh="1" c="white" fz="xs" o="-10">
+      <Text pos="absolute" b="0" r="0" p="20" lh="1" c="white" fz="xs" o="p">
         Photo by xxxxxx
       </Text>
     </Frame>

@@ -9,6 +9,23 @@ Breaking changes may continue frequently until the v1.0 release, so all notable 
 
 <Divider bds="dashed" my="40" />
 
+## Opacity token renames (#316)
+
+Contains **breaking changes**.
+
+The opacity tokens have been renamed from the numeric step convention with three consecutive hyphens (`--o---10`) to semantic names derived from musical dynamic markings (the piano family). A new token for a light attenuation value (`0.9`), which had not been tokenized before, has also been added — producing a four-stage scale.
+
+| Old | New | Value |
+|---|---|---|
+| — | `--o--mp` / `-o:mp` | `0.9` (new) |
+| `--o---10` / `-o:-10` | `--o--p` / `-o:p` | `0.75` |
+| `--o---20` / `-o:-20` | `--o--pp` / `-o:pp` | `0.5` |
+| `--o---30` / `-o:-30` | `--o--ppp` / `-o:ppp` | `0.25` |
+
+The old tokens (`--o---10/-20/-30`) and old utility classes (`-o:-10/-20/-30`) have been removed. Any direct usage must be replaced with the new names. `-o:0` (fully transparent) remains unchanged.
+
+<Divider bds="dashed" my="40" />
+
 ## Layout Primitive renames (#319)
 
 Contains **breaking changes**.

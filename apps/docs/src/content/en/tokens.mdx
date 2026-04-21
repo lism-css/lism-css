@@ -147,31 +147,37 @@ The value of `--bxsh--{token}` is composed of the following variables.
 
 | Token value | Variable | Class | Default value |
 |---|---|---|---|
-|`-10`|`--o---10`|`-o:-10`|`0.75`|
-|`-20`|`--o---20`|`-o:-20`|`0.5`|
-|`-30`|`--o---30`|`-o:-30`|`0.25`|
+|`mp`|`--o--mp`|`-o:mp`|`0.9`|
+|`p`|`--o--p`|`-o:p`|`0.75`|
+|`pp`|`--o--pp`|`-o:pp`|`0.5`|
+|`ppp`|`--o--ppp`|`-o:ppp`|`0.25`|
+
+🎵 Named after musical dynamic markings (the piano family). The more times `p` (piano / soft) is repeated, the higher the transparency.
 
 
 <Preview>
   <PreviewTitle>Preview</PreviewTitle>
   <PreviewArea p="40">
     {/* <DummyText pre="1: "/> */}
-    <DummyText o="-10" pre="-10: " />
-    <DummyText o="-20" pre="-20: " />
-    <DummyText o="-30" pre="-30: " />
+    <DummyText o="mp" pre="mp: " />
+    <DummyText o="p" pre="p: " />
+    <DummyText o="pp" pre="pp: " />
+    <DummyText o="ppp" pre="ppp: " />
   </PreviewArea>
   <PreviewCode slot="tab" label="HTML">
     ```jsx
-    <p class="-o:-10">Lorem ipsum ...</p>
-    <p class="-o:-20">Lorem ipsum ...</p>
-    <p class="-o:-30">Lorem ipsum ...</p>
+    <p class="-o:mp">Lorem ipsum ...</p>
+    <p class="-o:p">Lorem ipsum ...</p>
+    <p class="-o:pp">Lorem ipsum ...</p>
+    <p class="-o:ppp">Lorem ipsum ...</p>
     ```
   </PreviewCode>
   <PreviewCode slot="tab" label="JSX">
     ```jsx
-    <Text o="-10">Lorem ipsum ...</Text>
-    <Text o="-20">Lorem ipsum ...</Text>
-    <Text o="-30">Lorem ipsum ...</Text>
+    <Text o="mp">Lorem ipsum ...</Text>
+    <Text o="p">Lorem ipsum ...</Text>
+    <Text o="pp">Lorem ipsum ...</Text>
+    <Text o="ppp">Lorem ipsum ...</Text>
     ```
   </PreviewCode>
 </Preview>

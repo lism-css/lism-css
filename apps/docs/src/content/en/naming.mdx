@@ -25,8 +25,11 @@ Each block of a variable name is written in camelCase, following the basic form 
 | `s`, `m`, `l`, `xl`... | When representing graduated steps above and below a base value | `--fz--s`, `--fz--l` |
 | `base` | Values set as the initial value of `:root` / `body` | `--fz--base`, `--lh--base` |
 | `10`, `20`, `30`... | When values increase stepwise from `0` (`none`) | `--bdrs--20`, `--bxsh--30` |
-| `-10`, `-20`, `-30`... | When values decrease stepwise from `0` (`none`) | `--o---10`, `--o---20` |
 | Semantic names | When none of the above fit, use a semantic name | `--ar--og` |
+
+:::note[Exception: opacity tokens]
+🎵 The opacity tokens (`--o--mp` / `--o--p` / `--o--pp` / `--o--ppp`) use semantic names derived from musical dynamic markings (the piano family). The more times `p` (piano / soft) is repeated, the higher the transparency. Using the number of repeated letters to indicate a stage is an exception unique to opacity within Lism.
+:::
 
 
 ### Variables for Property Classes
@@ -282,11 +285,13 @@ If a matching token exists, use the token value (the `{value}` portion of `--{to
 .-bxsh:10         → box-shadow: var(--bxsh--10);
 ```
 
-Like positive tokens, tokens whose value is `-{NUM}` also have the value concatenated as-is into the variable name.
+The opacity tokens are an exception that use naming derived from musical dynamic markings, and the token values are used as-is for the class.
 
 ```
-.-o:-10          → opacity: var(--o---10);
-.-o:-20          → opacity: var(--o---20);
+.-o:mp            → opacity: var(--o--mp);
+.-o:p             → opacity: var(--o--p);
+.-o:pp            → opacity: var(--o--pp);
+.-o:ppp           → opacity: var(--o--ppp);
 ```
 
 
