@@ -2,7 +2,7 @@
 title: 'Utility Class'
 description: 'Learn about the utility classes in Lism CSS that apply bundled styles and decorations.'
 ---
-import { Lism, Flow, Grid, Stack, Center, Box, Media, Frame, Flex, Layer, Spacer, Icon, Divider, Inline, Text } from "lism-css/astro";
+import { Lism, Flow, Grid, AutoColumns, Columns, Stack, Center, Box, Media, Frame, Flex, Layer, Spacer, Icon, Divider, Inline, Text } from "lism-css/astro";
 import { DummyText } from '@lism-css/ui/astro';
 import { Dog, Cat } from "@phosphor-icons/react";
 
@@ -279,144 +279,158 @@ Use it for screen reader text and similar content.
 <SrcCode path="src/scss/utility/_hidden.scss" />
 
 
-## `u--collapseGrid`
+## `u--divide` & `u--cells`
+
+- `u--divide` displays dividing lines between children of a grid or flexbox container.
+- `u--cells` wraps each child in a border so they look like cells in a table.
+
+<SrcCode path="src/scss/utility/_divide.scss" />
+
+:::info
+- Both are implemented using `box-shadow` (not actual borders), so some care is needed when using them.
+- `u--divide` applies `overflow: clip` internally. Be aware that descendant elements intended to overflow the container — such as tooltips or dropdowns — will be unintentionally clipped.
+:::
+
+<Preview>
+  <PreviewTitle>Comparing `u--divide` and `u--cells`</PreviewTitle>
+  <PreviewArea resize p="20">
+    <AutoColumns util="divide" cols="16rem" bdrs="20">
+      <Box p="15">divide</Box>
+      <Box p="15">divide</Box>
+      <Box p="15">divide</Box>
+      <Box p="15">divide</Box>
+      <Box p="15">divide</Box>
+    </AutoColumns>
+    <AutoColumns util="cells" cols="16rem" bdrs="20">
+      <Box p="15">cells</Box>
+      <Box p="15">cells</Box>
+      <Box p="15">cells</Box>
+      <Box p="15">cells</Box>
+      <Box p="15">cells</Box>
+    </AutoColumns>
+  </PreviewArea>
+  <PreviewCode slot="tab" label="HTML">
+  ```html "u--divide" "u--cells"
+  <div class="l--autoColumns u--divide -bdrs:20" style="--cols:16rem">
+    <div class="l--box -p:15">divide</div>
+    <div class="l--box -p:15">divide</div>
+    <div class="l--box -p:15">divide</div>
+    <div class="l--box -p:15">divide</div>
+    <div class="l--box -p:15">divide</div>
+  </div>
+  <div class="l--autoColumns u--cells -bdrs:20" style="--cols:16rem">
+    <div class="l--box -p:15">cells</div>
+    <div class="l--box -p:15">cells</div>
+    <div class="l--box -p:15">cells</div>
+    <div class="l--box -p:15">cells</div>
+    <div class="l--box -p:15">cells</div>
+  </div>
+  ```
+  </PreviewCode>
+  <PreviewCode slot="tab" label="JSX">
+    ```jsx 'util="divide"' 'util="cells"'
+    <AutoColumns util="divide" cols="16rem" bdrs="20">
+      <Box p="15">divide</Box>
+      <Box p="15">divide</Box>
+      <Box p="15">divide</Box>
+      <Box p="15">divide</Box>
+      <Box p="15">divide</Box>
+    </AutoColumns>
+    <AutoColumns util="cells" cols="16rem" bdrs="20">
+      <Box p="15">cells</Box>
+      <Box p="15">cells</Box>
+      <Box p="15">cells</Box>
+      <Box p="15">cells</Box>
+      <Box p="15">cells</Box>
+    </AutoColumns>
+    ```
+  </PreviewCode>
+</Preview>
 
 
-Displays dividing borders between children of a grid or flexbox container.
-
-Implemented using `box-shadow`, so some care is needed when using it.
-
-<SrcCode path="src/scss/utility/_itemDivider.scss" />
+With `u--divide`, you can easily display dividers between items in layouts that switch between horizontal and vertical arrangements.
 
 <Preview>
   <PreviewTitle>Example</PreviewTitle>
   <PreviewArea resize p="20">
-    <Grid layout="autoColumns" util="collapseGrid" cols="12rem" bdrs="20">
-      <Box p="15">Grid Item</Box>
-      <Box p="15">Grid Item</Box>
-      <Box p="15">Grid Item</Box>
-      <Box p="15">Grid Item</Box>
-      <Box p="15">Grid Item</Box>
-      <Box p="15">Grid Item</Box>
-    </Grid>
+    <Flex fxd={['column', 'row']} util="divide">
+      <Lism fx="1" p="15">Item</Lism>
+      <Lism fx="1" p="15">Item</Lism>
+      <Lism fx="1" p="15">Item</Lism>
+      <Lism fx="1" p="15">Item</Lism>
+    </Flex>
   </PreviewArea>
-  <PreviewCode>
-    ```jsx
-    <Grid layout="autoColumns" util="collapseGrid" cols="12rem" bdrs="20">
-      <Box p="15">Grid Item</Box>
-      <Box p="15">Grid Item</Box>
-      <Box p="15">Grid Item</Box>
-      <Box p="15">Grid Item</Box>
-      <Box p="15">Grid Item</Box>
-      <Box p="15">Grid Item</Box>
-    </Grid>
+  <PreviewCode slot="tab" label="HTML">
+    ```html "u--divide"
+    <div class="l--flex u--divide -fxd:column -fxd_sm" style="--fxd_sm:row">
+      <div class="-fx:1 -p:15">Item</div>
+      <div class="-fx:1 -p:15">Item</div>
+      <div class="-fx:1 -p:15">Item</div>
+      <div class="-fx:1 -p:15">Item</div>
+    </div>
     ```
   </PreviewCode>
-</Preview>
-
-<Preview>
-  <PreviewTitle>Setting `p='0'` and `ov='clip'` on the parent hides the outer border.</PreviewTitle>
-  <PreviewArea resize p="20">
-    <Grid layout="autoColumns" util="collapseGrid" cols="12rem" p="0" ov="clip">
-      <Box p="15">Grid Item</Box>
-      <Box p="15">Grid Item</Box>
-      <Box p="15">Grid Item</Box>
-      <Box p="15">Grid Item</Box>
-      <Box p="15">Grid Item</Box>
-      <Box p="15">Grid Item</Box>
-      <Box p="15">Grid Item</Box>
-    </Grid>
-  </PreviewArea>
-  <PreviewCode>
+  <PreviewCode slot="tab" label="JSX">
     ```jsx
-    <Grid layout="autoColumns" util="collapseGrid" cols="12rem">
-      <Box p="15">Grid Item</Box>
-      <Box p="15">Grid Item</Box>
-      <Box p="15">Grid Item</Box>
-      <Box p="15">Grid Item</Box>
-      <Box p="15">Grid Item</Box>
-      <Box p="15">Grid Item</Box>
-      <Box p="15">Grid Item</Box>
-    </Grid>
+    <Flex fxd={['column', 'row']} util="divide">
+      <Lism fx="1" p="15">Item</Lism>
+      <Lism fx="1" p="15">Item</Lism>
+      <Lism fx="1" p="15">Item</Lism>
+      <Lism fx="1" p="15">Item</Lism>
+    </Flex>
     ```
   </PreviewCode>
 </Preview>
 
 
-Adding `bd` to the parent grid in that state makes it possible to create a calendar-like layout where borders are not shown in empty cells.
+Adding `bd` to a grid with `u--divide` produces a calendar-like layout where empty cells are blank.
 
 <Preview>
   <PreviewTitle>With `bd` applied</PreviewTitle>
   <PreviewArea resize p="20">
-    <Grid layout="autoColumns" util="collapseGrid" cols="10rem" ov="clip" p="0" bd>
-      <Box p="15">Grid Item</Box>
-      <Box p="15">Grid Item</Box>
-      <Box p="15">Grid Item</Box>
-      <Box p="15">Grid Item</Box>
-      <Box p="15">Grid Item</Box>
-      <Box p="15">Grid Item</Box>
-    </Grid>
+    <Columns util="divide" cols={["4", "5"]} bd bdc="current" fz="s">
+      <Lism p="10">Item</Lism>
+      <Lism p="10">Item</Lism>
+      <Lism p="10">Item</Lism>
+      <Lism p="10">Item</Lism>
+      <Lism p="10">Item</Lism>
+      <Lism p="10">Item</Lism>
+    </Columns>
   </PreviewArea>
-  <PreviewCode>
-    ```jsx
-    <Grid layout="autoColumns" util="collapseGrid" cols="10rem" ov="clip" p="0" bd>
-      <Box p="15">Grid Item</Box>
-      <Box p="15">Grid Item</Box>
-      <Box p="15">Grid Item</Box>
-      <Box p="15">Grid Item</Box>
-      <Box p="15">Grid Item</Box>
-      <Box p="15">Grid Item</Box>
-    </Grid>
+  <PreviewCode slot="tab" label="HTML">
+    ```html
+    <div class="l--columns u--divide -cols_sm -bd -bdc:current -fz:s" style="--cols:4;--cols_sm:5">
+      <div class="-p:10">Item</div>
+      <div class="-p:10">Item</div>
+      <div class="-p:10">Item</div>
+      <div class="-p:10">Item</div>
+      <div class="-p:10">Item</div>
+      <div class="-p:10">Item</div>
+    </div>
     ```
   </PreviewCode>
-</Preview>
-
-<br/>
-
-This utility class also makes it easy to display borders between items in a flexbox layout that switches between horizontal and vertical arrangements.
-
-<Preview>
-  <PreviewTitle>Example</PreviewTitle>
-  <PreviewArea resize p="20">
-    <Flex fxd={['column', 'row']} util="collapseGrid">
-      <Box fx="1" p="15">
-        <Fragment>Box</Fragment>
-      </Box>
-      <Box fx="1" p="15">
-        <Fragment>Box</Fragment>
-      </Box>
-      <Box fx="1" p="15">
-        <Fragment>Box</Fragment>
-      </Box>
-      <Box fx="1" p="15">
-        <Fragment>Box</Fragment>
-      </Box>
-    </Flex>
-  </PreviewArea>
-  <PreviewCode>
+  <PreviewCode slot="tab" label="JSX">
     ```jsx
-    <Flex fxd={['column', 'row']} util="collapseGrid">
-      <Box fx="1" p="15">Box</Box>
-      <Box fx="1" p="15">Box</Box>
-      <Box fx="1" p="15">Box</Box>
-      <Box fx="1" p="15">Box</Box>
-    </Flex>
+    <Columns util="divide" cols={["4", "5"]} bd bdc="current" fz="s">
+      <Lism p="10">Item</Lism>
+      <Lism p="10">Item</Lism>
+      <Lism p="10">Item</Lism>
+      <Lism p="10">Item</Lism>
+      <Lism p="10">Item</Lism>
+      <Lism p="10">Item</Lism>
+    </Columns>
     ```
   </PreviewCode>
 </Preview>
 
 
-You can also achieve a table-like layout using Grid.
+With Grid, `u--cells` can be used to create a table-like layout.
 <Preview>
-  <PreviewTitle>Table-like layout using `u--collapseGrid`</PreviewTitle>
+  <PreviewTitle>Table-like layout using `u--cells`</PreviewTitle>
   <PreviewArea resize p="15">
-    <Grid gtc={['2fr 3fr', '1fr 2fr']} util="collapseGrid">
-      <Box p="15" bgc="base-2">
-        <Fragment>A</Fragment>
-      </Box>
-      <Box p="15" bgc="base-2">
-        <Fragment>B</Fragment>
-      </Box>
+    <Grid gtc={['2fr 3fr', '1fr 2fr']} util="cells">
+      <Box p="15" bgc="base-2">A</Box>
+      <Box p="15" bgc="base-2">B</Box>
       <Box p="15">Lorem ipsum</Box>
       <Box p="15">
         <DummyText />
@@ -429,13 +443,9 @@ You can also achieve a table-like layout using Grid.
   </PreviewArea>
   <PreviewCode slot="tab" label="JSX">
     ```jsx
-    <Grid gtc={['2fr 3fr', '1fr 2fr']} util="collapseGrid">
-      <Box p="15" bgc="base-2">
-        A
-      </Box>
-      <Box p="15" bgc="base-2">
-        B
-      </Box>
+    <Grid gtc={['2fr 3fr', '1fr 2fr']} util="cells">
+      <Box p="15" bgc="base-2">A</Box>
+      <Box p="15" bgc="base-2">B</Box>
       <Box p="15">Lorem ipsum</Box>
       <Box p="15">
         <p>
@@ -456,7 +466,7 @@ You can also achieve a table-like layout using Grid.
   </PreviewCode>
   <PreviewCode slot="tab" label="HTML">
     ```html
-    <div class="l--grid u--collapseGrid -gtc -gtc_sm -bd" style="--gtc: 2fr 3fr; --gtc_sm: 1fr 2fr">
+    <div class="l--grid u--cells -gtc -gtc_sm -bd" style="--gtc: 2fr 3fr; --gtc_sm: 1fr 2fr">
       <div class="l--box -p:15 -bgc:base-2">A</div>
       <div class="l--box -p:15 -bgc:base-2">B</div>
       <div class="l--box -p:15">Lorem ipsum</div>

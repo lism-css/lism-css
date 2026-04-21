@@ -9,6 +9,23 @@ Breaking changes may continue frequently until the v1.0 release, so all notable 
 
 <Divider bds="dashed" my="40" />
 
+## Rename `u--collapseGrid` and add `u--divide` (#323)
+
+Contains **breaking changes**.
+
+The utility classes that draw dividing lines between children of a grid / flex container have been reorganized.
+
+| Old | New | Purpose |
+|---|---|---|
+| — | `u--divide` | Display dividers **between** children only (no outer frame) |
+| `u--collapseGrid` | `u--cells` | Wrap each child with a border (table-cell / calendar style) |
+
+The pattern that previously required combining `u--collapseGrid` with `p="0"` and `ov="clip"` to show only interior dividers is now covered by the new `u--divide` class.
+
+The old `u--collapseGrid` / `util="collapseGrid"` has been removed (no backward-compatible alias). Any direct usage must be replaced.
+
+<Divider bds="dashed" my="40" />
+
 ## Opacity token renames (#316)
 
 Contains **breaking changes**.

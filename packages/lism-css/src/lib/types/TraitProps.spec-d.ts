@@ -130,7 +130,8 @@ describe('LismPropsBase — set / util', () => {
       assertType<LismPropsBase>({ util: 'trimChildren' });
       assertType<LismPropsBase>({ util: 'srOnly' });
       assertType<LismPropsBase>({ util: 'clipText' });
-      assertType<LismPropsBase>({ util: 'collapseGrid' });
+      assertType<LismPropsBase>({ util: 'divide' });
+      assertType<LismPropsBase>({ util: 'cells' });
     });
 
     it('スペース区切りで複数指定できる', () => {
