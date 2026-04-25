@@ -81,8 +81,18 @@ describe('toUrl', () => {
     expect(toUrl('layouts/stack.mdx', 'https://lism-css.com')).toBe('https://lism-css.com/en/docs/layouts/stack/');
   });
 
-  it('ui/ は /en/ 直下', () => {
-    expect(toUrl('ui/Accordion.mdx', 'https://lism-css.com')).toBe('https://lism-css.com/en/ui/Accordion/');
+  it('ui/ は /en/ 直下（slug は小文字化される）', () => {
+    expect(toUrl('ui/Accordion.mdx', 'https://lism-css.com')).toBe('https://lism-css.com/en/ui/accordion/');
+    expect(toUrl('ui/examples/Banner.mdx', 'https://lism-css.com')).toBe('https://lism-css.com/en/ui/examples/banner/');
+  });
+
+  it('docs 系の casing は小文字化される（公開 slug と一致させる）', () => {
+    expect(toUrl('core-components/Group.mdx', 'https://lism-css.com')).toBe('https://lism-css.com/en/docs/core-components/group/');
+  });
+
+  it('primitives/ と trait-class/ は casing を保持（CSS クラス名と URL を一致させる）', () => {
+    expect(toUrl('primitives/l--autoColumns.mdx', 'https://lism-css.com')).toBe('https://lism-css.com/en/docs/primitives/l--autoColumns/');
+    expect(toUrl('trait-class/is--boxLink.mdx', 'https://lism-css.com')).toBe('https://lism-css.com/en/docs/trait-class/is--boxLink/');
   });
 
   it('siteUrl 末尾のスラッシュは正規化される', () => {

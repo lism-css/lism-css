@@ -12,6 +12,7 @@
  */
 import fs from 'node:fs/promises';
 import path from 'node:path';
+import { toContentSlug } from '../../lib/contentSlug';
 
 type FrontMatter = { title?: string; description?: string; draft?: boolean };
 type Entry = { title: string; description: string; url: string; rel: string };
@@ -69,7 +70,10 @@ export function classify(rel: string): Section | null {
 }
 
 export function toUrl(rel: string, siteUrl: string): string {
-  const slug = rel.replace(/\.mdx$/, '');
+  // Astro の Content Collection と同じ slug 正規化を適用する。
+  // primitives/ と trait-class/ のみ casing を保持し、それ以外は小文字化されるため、
+  // ここで揃えないと llms.txt のリンクが case-sensitive 環境で 404 になる。
+  const slug = toContentSlug(rel.replace(/\.mdx$/, ''));
   const base = siteUrl.replace(/\/$/, '');
   if (rel.startsWith('ui/')) return `${base}/en/${slug}/`;
   return `${base}/en/docs/${slug}/`;
