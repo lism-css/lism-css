@@ -10,6 +10,15 @@
           "value": "public, s-maxage=31536000, max-age=86400, must-revalidate"
         }
       ]
+    },
+    {
+      "source": "/:path*.md",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex"
+        }
+      ]
     }
   ]
 }
