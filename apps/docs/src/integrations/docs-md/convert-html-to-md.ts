@@ -1,9 +1,6 @@
 /**
  * ビルド後の HTML から `article[data-pagefind-body]` を抽出し、
- * Markdown に変換する最小パイプライン（PoC）。
- *
- * このフェーズではノイズ除去・Expressive Code unwrap・callout 変換 等の
- * 専用 rehype プラグインはまだ繋ぎ込まず、unified の素通しで MD 化する。
+ * 各種 rehype プラグインで整形してから Markdown に変換するパイプライン。
  */
 import fs from 'node:fs/promises';
 import { unified } from 'unified';
@@ -13,6 +10,10 @@ import remarkGfm from 'remark-gfm';
 import remarkStringify from 'remark-stringify';
 import { visit } from 'unist-util-visit';
 import type { Root as HastRoot, Element } from 'hast';
+import { rehypeStripNoise } from './rehype-strip-noise';
+import { rehypePreview } from './rehype-preview';
+import { rehypeCodeLanguage } from './rehype-code-language';
+import { rehypeCallouts } from './rehype-callouts';
 
 /**
  * data-pagefind-body を持つ <article> 要素のみを残す rehype プラグイン。
@@ -36,20 +37,34 @@ function rehypeKeepArticle() {
   };
 }
 
+/**
+ * remark-stringify は `[` を `\[` にエスケープするため、
+ * GFM Alert の `[!NOTE]` 等が `\[!NOTE]` になり Alert として認識されなくなる。
+ * 既知の Alert 種別に限定してアンエスケープする（誤爆を防ぐため種別をホワイトリスト化）。
+ */
+function unescapeGfmAlerts(md: string): string {
+  return md.replace(/\\(\[!(?:NOTE|TIP|IMPORTANT|WARNING|CAUTION)])/g, '$1');
+}
+
 export async function convertHtmlToMd(htmlPath: string, mdPath: string): Promise<void> {
   const html = await fs.readFile(htmlPath, 'utf8');
 
   const file = await unified()
     .use(rehypeParse)
     .use(rehypeKeepArticle)
+    .use(rehypeStripNoise)
+    .use(rehypePreview)
+    .use(rehypeCodeLanguage)
+    .use(rehypeCallouts)
     .use(rehypeRemark)
     .use(remarkGfm)
     .use(remarkStringify, {
       bullet: '-',
       fences: true,
       incrementListMarker: false,
+      rule: '-',
     })
     .process(html);
 
-  await fs.writeFile(mdPath, String(file));
+  await fs.writeFile(mdPath, unescapeGfmAlerts(String(file)));
 }
