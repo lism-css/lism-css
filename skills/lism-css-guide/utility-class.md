@@ -26,12 +26,12 @@ Lism コンポーネントでの `util` prop による指定方法は [component
 
 | クラス | 用途 | ソースファイル |
 |--------|------|---------------|
-| `u--trim` | ハーフレディングのネガティブマージンでテキスト上下の余白を詰める | [`_trimHL.scss`](https://raw.githubusercontent.com/lism-css/lism-css/main/packages/lism-css/src/scss/utility/_trimHL.scss) |
-| `u--trimAll` | 直下の子要素（`:empty`, `figure`, `picture`, `video`, `button`, `textarea`, `table` を除く）にハーフレディングトリムを一括適用する除外方式のクラス | [`_trimHL.scss`](https://raw.githubusercontent.com/lism-css/lism-css/main/packages/lism-css/src/scss/utility/_trimHL.scss) |
+| `u--trim` | ハーフレディングのネガティブマージンでテキスト上下の余白を詰める | [`_trim.scss`](https://raw.githubusercontent.com/lism-css/lism-css/main/packages/lism-css/src/scss/utility/_trim.scss) |
+| `u--trimAll` | 直下の子要素（`:empty`, `figure`, `picture`, `video`, `button`, `textarea`, `table` を除く）にハーフレディングトリムを一括適用する除外方式のクラス | [`_trim.scss`](https://raw.githubusercontent.com/lism-css/lism-css/main/packages/lism-css/src/scss/utility/_trim.scss) |
 | `u--cbox` | `--keycolor` を使い `color-mix()` で `--c` / `--bgc` / `--bdc` を自動生成する色付きボックス | [`_cbox.scss`](https://raw.githubusercontent.com/lism-css/lism-css/main/packages/lism-css/src/scss/utility/_cbox.scss) |
 | `u--divide` | Grid / Flex の子要素**間**にのみ `box-shadow` で区切り線を表示する | [`_divide.scss`](https://raw.githubusercontent.com/lism-css/lism-css/main/packages/lism-css/src/scss/utility/_divide.scss) |
 | `u--cells` | Grid / Flex の各子要素を `box-shadow` で枠囲みし、table セル風に表示する | [`_divide.scss`](https://raw.githubusercontent.com/lism-css/lism-css/main/packages/lism-css/src/scss/utility/_divide.scss) |
-| `u--srOnly` | スクリーンリーダー専用（視覚的に非表示）。`clip-path: inset(50%)` で実装 | [`_hidden.scss`](https://raw.githubusercontent.com/lism-css/lism-css/main/packages/lism-css/src/scss/utility/_hidden.scss) |
+| `u--srOnly` | スクリーンリーダー専用（視覚的に非表示）。`clip-path: inset(50%)` で実装 | [`_srOnly.scss`](https://raw.githubusercontent.com/lism-css/lism-css/main/packages/lism-css/src/scss/utility/_srOnly.scss) |
 | `u--clipText` | テキストで背景をクリッピング（`background-clip: text`） | [`_clipText.scss`](https://raw.githubusercontent.com/lism-css/lism-css/main/packages/lism-css/src/scss/utility/_clipText.scss) |
 
 
