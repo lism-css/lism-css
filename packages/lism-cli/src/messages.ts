@@ -370,8 +370,8 @@ export const messages = {
 
   // skill check
   'skill.check.noneInstalled': {
-    ja: 'インストール済みのスキルは見つかりませんでした。`lism skill add` で配置できます。',
-    en: 'No installed skills found. Run `lism skill add` to deploy them.',
+    ja: 'インストール済みのスキルは見つかりませんでした。`{invoke} skill add` で配置できます。',
+    en: 'No installed skills found. Run `{invoke} skill add` to deploy them.',
   },
   'skill.check.fetching': {
     ja: 'リモートスキルを取得中（ref: {ref}）...',
@@ -386,8 +386,8 @@ export const messages = {
     en: 'All skills are up to date.',
   },
   'skill.check.outdated': {
-    ja: '{count} 件のツールに差分があります。`lism skill update` で最新に更新できます。',
-    en: '{count} tools have changes. Run `lism skill update` to update them.',
+    ja: '{count} 件のツールに差分があります。`{invoke} skill update` で最新に更新できます。',
+    en: '{count} tools have changes. Run `{invoke} skill update` to update them.',
   },
   'skill.check.diffModified': {
     ja: '変更 {count}',
@@ -406,8 +406,8 @@ export const messages = {
   // config
   // ---------------------------------------------------------------------------
   'config.legacyWarning': {
-    ja: '[deprecated] {filename} は廃止予定です。"lism ui init" で lism.config.js へ移行してください。',
-    en: '[deprecated] {filename} is deprecated. Run "lism ui init" to migrate to lism.config.js.',
+    ja: '[deprecated] {filename} は廃止予定です。"{invoke} ui init" で lism.config.js へ移行してください。',
+    en: '[deprecated] {filename} is deprecated. Run "{invoke} ui init" to migrate to lism.config.js.',
   },
   'config.notFound': {
     ja: 'lism.config.js / lism.config.mjs / lism-ui.json のいずれも見つかりません。',

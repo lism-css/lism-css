@@ -5,6 +5,7 @@ import { ALL_SKILL_TOOLS, SKILL_PATHS } from './paths.js';
 import { cleanupTempDir, compareSkillDirs, fetchSkillSource, hasDiff, type SkillDiff } from './skillSource.js';
 import { DEFAULT_SKILL_REF } from '../../constants.js';
 import { t } from '../../i18n.js';
+import { getInvokeCommand } from '../../invokeCommand.js';
 
 export interface SkillCheckOptions {
   ref?: string;
@@ -16,7 +17,7 @@ export async function skillCheckCommand(options: SkillCheckOptions = {}): Promis
   const installed = ALL_SKILL_TOOLS.filter((tool) => fs.existsSync(path.join(cwd, SKILL_PATHS[tool], 'SKILL.md')));
 
   if (installed.length === 0) {
-    logger.info(t('skill.check.noneInstalled'));
+    logger.info(t('skill.check.noneInstalled', { invoke: getInvokeCommand() }));
     return;
   }
 
@@ -46,7 +47,7 @@ export async function skillCheckCommand(options: SkillCheckOptions = {}): Promis
     if (outdatedCount === 0) {
       logger.success(t('skill.check.allLatest'));
     } else {
-      logger.info(t('skill.check.outdated', { count: outdatedCount }));
+      logger.info(t('skill.check.outdated', { count: outdatedCount, invoke: getInvokeCommand() }));
     }
   } finally {
     cleanupTempDir(remoteDir);

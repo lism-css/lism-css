@@ -3,6 +3,7 @@ import path from 'node:path';
 import { createJiti } from 'jiti';
 import { logger } from './logger.js';
 import { t } from './i18n.js';
+import { getInvokeCommand } from './invokeCommand.js';
 
 const LEGACY_CONFIG_FILE = 'lism-ui.json';
 const CONFIG_SEARCH = ['lism.config.js', 'lism.config.mjs'] as const;
@@ -59,7 +60,7 @@ export async function readConfig(): Promise<LismCliConfig> {
   }
 
   if (found.kind === 'legacy-json') {
-    logger.warn(t('config.legacyWarning', { filename: LEGACY_CONFIG_FILE }));
+    logger.warn(t('config.legacyWarning', { filename: LEGACY_CONFIG_FILE, invoke: getInvokeCommand() }));
     const raw = fs.readFileSync(found.path, 'utf-8');
     const parsed = JSON.parse(raw) as LismCliConfig;
     return parsed;
