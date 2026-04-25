@@ -9,6 +9,7 @@ import { remarkDirectiveHandler } from './src/lib/remark-directive';
 import { rehypeBlockquoteCite } from './src/lib/rehype-blockquote-cite';
 import { expressiveCodeOptions } from './src/lib/expressive-code.config';
 import { loadLastmodMap } from './src/lib/sitemap-lastmod';
+import docsMd from './src/integrations/docs-md';
 
 // ビルド時のみ lastmod-map.json を読み込む（dev では不要）
 const isBuild = process.argv.includes('build');
@@ -165,6 +166,7 @@ export default defineConfig({
         return item;
       },
     }),
+    docsMd(),
   ],
   // CodeFileコンポーネント用のシンタックスハイライト設定
   markdown: {
