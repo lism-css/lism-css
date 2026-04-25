@@ -10,6 +10,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import type { AstroIntegration } from 'astro';
 import { convertHtmlToMd } from './convert-html-to-md';
+import { buildLlmsTxt } from './build-llms-txt';
 
 // 変換対象のパスプレフィックス。templates / demo / preview / page-layout / og 等は対象外
 const INCLUDE_PREFIXES = ['docs/', 'ui/', 'en/docs/', 'en/ui/'];
@@ -30,12 +31,14 @@ function pageToPaths(pathname: string, distDir: string): { html: string; md: str
 
 export default function docsMd(): AstroIntegration {
   let siteUrl = '';
+  let contentEnDir = '';
   return {
     name: 'docs-md',
     hooks: {
       'astro:config:done': ({ config }) => {
         // 絶対 URL 化のために site を保持。未設定だと .md 内のリンクが相対のままになる
         siteUrl = config.site ?? '';
+        contentEnDir = path.join(fileURLToPath(config.srcDir), 'content/en');
       },
       'astro:build:done': async ({ dir, pages, logger }) => {
         if (!siteUrl) {
@@ -58,6 +61,13 @@ export default function docsMd(): AstroIntegration {
           }
         }
         logger.info(`generated ${success} markdown files (${failed} skipped)`);
+
+        await buildLlmsTxt({
+          contentDir: contentEnDir,
+          outputPath: path.join(distDir, 'llms.txt'),
+          siteUrl,
+          logger,
+        });
       },
     },
   };
