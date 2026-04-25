@@ -1,10 +1,8 @@
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import { getInvokeCommand } from './invokeCommand';
 
-const ORIGINAL_ARGV1 = process.argv[1];
-
 function setScriptPath(value: string): void {
-  process.argv[1] = value;
+  vi.spyOn(process, 'argv', 'get').mockReturnValue(['node', value]);
 }
 
 describe('getInvokeCommand', () => {
@@ -15,7 +13,7 @@ describe('getInvokeCommand', () => {
 
   afterEach(() => {
     vi.unstubAllEnvs();
-    process.argv[1] = ORIGINAL_ARGV1;
+    vi.restoreAllMocks();
   });
 
   describe('ローカル / グローバル install', () => {
