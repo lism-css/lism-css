@@ -1,33 +1,55 @@
 /**
  * docs-md: ビルド時に MDX レンダリング後の HTML から AI 向け .md ファイルを生成する Astro integration。
  *
- * PoC フェーズ: overview ページ（ja / en）のみを対象に、最小パイプラインで .md を出力する。
- * 後続コミットで rehype プラグイン群（ノイズ除去・Expressive Code unwrap・callout 変換 等）を追加していく。
+ * astro:build:done フックで `pages` を走査し、対象パス配下のページについて
+ * `dist/{path}/index.html` → `dist/{path}.md` の変換を行う。
+ * article[data-pagefind-body] が無いページ（リダイレクト先・ランディング等）は
+ * 警告ログを出してスキップする。
  */
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import type { AstroIntegration } from 'astro';
 import { convertHtmlToMd } from './convert-html-to-md';
 
-// PoC 対象ページ。後続で routes / pages から自動収集する形に置き換える
-const POC_PAGES = ['docs/overview', 'en/docs/overview'];
+// 変換対象のパスプレフィックス。templates / demo / preview / page-layout / og 等は対象外
+const INCLUDE_PREFIXES = ['docs/', 'ui/', 'en/docs/', 'en/ui/'];
+
+function isTargetPage(pathname: string): boolean {
+  const trimmed = pathname.replace(/^\/+/, '');
+  return INCLUDE_PREFIXES.some((prefix) => trimmed.startsWith(prefix));
+}
+
+function pageToPaths(pathname: string, distDir: string): { html: string; md: string; rel: string } {
+  const trimmed = pathname.replace(/^\/+|\/+$/g, '');
+  return {
+    html: path.join(distDir, trimmed, 'index.html'),
+    md: path.join(distDir, `${trimmed}.md`),
+    rel: `${trimmed}.md`,
+  };
+}
 
 export default function docsMd(): AstroIntegration {
   return {
     name: 'docs-md',
     hooks: {
-      'astro:build:done': async ({ dir, logger }) => {
+      'astro:build:done': async ({ dir, pages, logger }) => {
         const distDir = fileURLToPath(dir);
-        for (const page of POC_PAGES) {
-          const htmlPath = path.join(distDir, page, 'index.html');
-          const mdPath = path.join(distDir, `${page}.md`);
+        let success = 0;
+        let failed = 0;
+
+        for (const page of pages) {
+          if (!isTargetPage(page.pathname)) continue;
+          const { html, md, rel } = pageToPaths(page.pathname, distDir);
           try {
-            await convertHtmlToMd(htmlPath, mdPath);
-            logger.info(`generated ${page}.md`);
+            await convertHtmlToMd(html, md);
+            success++;
           } catch (err) {
-            logger.warn(`failed to generate ${page}.md: ${(err as Error).message}`);
+            // article[data-pagefind-body] が無いページ（インデックスページ等）はここでスキップ
+            logger.warn(`skipped ${rel}: ${(err as Error).message}`);
+            failed++;
           }
         }
+        logger.info(`generated ${success} markdown files (${failed} skipped)`);
       },
     },
   };
