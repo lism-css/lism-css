@@ -44,16 +44,17 @@ function rehypeKeepArticle() {
  * GFM Alert の `[!NOTE]` 等が `\[!NOTE]` になり Alert として認識されなくなる。
  * 既知の Alert 種別に限定してアンエスケープする（誤爆を防ぐため種別をホワイトリスト化）。
  */
-function unescapeGfmAlerts(md: string): string {
+export function unescapeGfmAlerts(md: string): string {
   return md.replace(/\\(\[!(?:NOTE|TIP|IMPORTANT|WARNING|CAUTION)])/g, '$1');
 }
 
 /**
- * YAML 文字列値のためのエスケープ。改行は混入しない想定で、
- * バックスラッシュとダブルクオートのみエスケープして二重引用符で囲む。
+ * YAML 文字列値のためのエスケープ。
+ * 入力に改行が混じった場合は単一行 frontmatter が壊れるため、空白へ潰してから
+ * バックスラッシュとダブルクオートをエスケープして二重引用符で囲む。
  */
-function yamlString(value: string): string {
-  return `"${value.replace(/\\/g, '\\\\').replace(/"/g, '\\"')}"`;
+export function yamlString(value: string): string {
+  return `"${value.replace(/\r?\n/g, ' ').replace(/\\/g, '\\\\').replace(/"/g, '\\"')}"`;
 }
 
 function buildFrontmatter(meta: DocMeta): string {

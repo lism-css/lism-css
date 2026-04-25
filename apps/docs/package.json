@@ -18,7 +18,7 @@
     "screenshot:update": "npx tsx scripts/update-screenshots.ts",
     "lint": "astro sync && pnpm lint:eslint",
     "lint:eslint": "eslint '**/*.{js,mjs,ts,tsx,astro,mdx}'",
-    "test": "pnpm run typecheck"
+    "test": "vitest run && pnpm run typecheck"
   },
   "dependencies": {
     "@astrojs/mdx": "^5.0.3",

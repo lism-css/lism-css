@@ -36,7 +36,7 @@ const HEADER = `# Lism CSS
  * MDX 冒頭の YAML frontmatter から title / description / draft を抽出する。
  * フィールドは単一行のスカラーのみ想定（このリポジトリでは現状すべてその形式）。
  */
-function parseFrontmatter(content: string): FrontMatter {
+export function parseFrontmatter(content: string): FrontMatter {
   const m = content.match(/^---\r?\n([\s\S]*?)\r?\n---/);
   if (!m) return {};
   const fm: FrontMatter = {};
@@ -57,7 +57,7 @@ function parseFrontmatter(content: string): FrontMatter {
   return fm;
 }
 
-function classify(rel: string): Section | null {
+export function classify(rel: string): Section | null {
   if (rel.startsWith('_demo/') || rel === 'test.mdx') return null;
   const slug = rel.replace(/\.mdx$/, '');
   if (rel.startsWith('ui/examples/')) return 'Optional';
@@ -68,7 +68,7 @@ function classify(rel: string): Section | null {
   return 'Documentation';
 }
 
-function toUrl(rel: string, siteUrl: string): string {
+export function toUrl(rel: string, siteUrl: string): string {
   const slug = rel.replace(/\.mdx$/, '');
   const base = siteUrl.replace(/\/$/, '');
   if (rel.startsWith('ui/')) return `${base}/en/${slug}/`;

@@ -34,7 +34,7 @@ export function rehypeAbsoluteUrls(opts: { siteUrl: string }) {
   };
 }
 
-function absolutize(url: string, base: string): string {
+export function absolutize(url: string, base: string): string {
   if (SKIP_SCHEME.test(url)) return url;
   if (!url.startsWith('/')) return url;
   return new URL(url, base).toString();

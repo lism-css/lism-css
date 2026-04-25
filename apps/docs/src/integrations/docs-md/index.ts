@@ -36,30 +36,33 @@ export default function docsMd(): AstroIntegration {
     name: 'docs-md',
     hooks: {
       'astro:config:done': ({ config }) => {
-        // 絶対 URL 化のために site を保持。未設定だと .md 内のリンクが相対のままになる
-        siteUrl = config.site ?? '';
+        // 絶対 URL 化のために site を必須とする。未設定だと rehype-absolute-urls 側で
+        // `new URL('/foo', '')` が TypeError を投げて全ページ失敗するため早期に止める
+        if (!config.site) {
+          throw new Error('docs-md integration requires `site` to be set in astro.config');
+        }
+        siteUrl = config.site;
         contentEnDir = path.join(fileURLToPath(config.srcDir), 'content/en');
       },
       'astro:build:done': async ({ dir, pages, logger }) => {
-        if (!siteUrl) {
-          logger.warn('astro config `site` is not set; links in .md will remain relative');
-        }
         const distDir = fileURLToPath(dir);
         let success = 0;
         let failed = 0;
 
-        for (const page of pages) {
-          if (!isTargetPage(page.pathname)) continue;
-          const { html, md, rel } = pageToPaths(page.pathname, distDir);
-          try {
-            await convertHtmlToMd(html, md, { siteUrl });
-            success++;
-          } catch (err) {
-            // article[data-pagefind-body] が無いページ（インデックスページ等）はここでスキップ
-            logger.warn(`skipped ${rel}: ${(err as Error).message}`);
-            failed++;
-          }
-        }
+        const targets = pages.filter((p) => isTargetPage(p.pathname));
+        await Promise.all(
+          targets.map(async (page) => {
+            const { html, md, rel } = pageToPaths(page.pathname, distDir);
+            try {
+              await convertHtmlToMd(html, md, { siteUrl });
+              success++;
+            } catch (err) {
+              // article[data-pagefind-body] が無いページ（インデックスページ等）はここでスキップ
+              logger.warn(`skipped ${rel}: ${(err as Error).message}`);
+              failed++;
+            }
+          })
+        );
         logger.info(`generated ${success} markdown files (${failed} skipped)`);
 
         await buildLlmsTxt({
