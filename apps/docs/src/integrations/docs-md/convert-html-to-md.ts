@@ -14,6 +14,7 @@ import { rehypeStripNoise } from './rehype-strip-noise';
 import { rehypePreview } from './rehype-preview';
 import { rehypeCodeLanguage } from './rehype-code-language';
 import { rehypeCallouts } from './rehype-callouts';
+import { rehypeExtractMeta, META_DATA_KEY, type DocMeta } from './rehype-extract-meta';
 
 /**
  * data-pagefind-body を持つ <article> 要素のみを残す rehype プラグイン。
@@ -46,11 +47,29 @@ function unescapeGfmAlerts(md: string): string {
   return md.replace(/\\(\[!(?:NOTE|TIP|IMPORTANT|WARNING|CAUTION)])/g, '$1');
 }
 
+/**
+ * YAML 文字列値のためのエスケープ。改行は混入しない想定で、
+ * バックスラッシュとダブルクオートのみエスケープして二重引用符で囲む。
+ */
+function yamlString(value: string): string {
+  return `"${value.replace(/\\/g, '\\\\').replace(/"/g, '\\"')}"`;
+}
+
+function buildFrontmatter(meta: DocMeta): string {
+  const lines: string[] = ['---'];
+  if (meta.title) lines.push(`title: ${yamlString(meta.title)}`);
+  if (meta.description) lines.push(`description: ${yamlString(meta.description)}`);
+  if (meta.url) lines.push(`url: ${meta.url}`);
+  lines.push('---', '');
+  return lines.join('\n');
+}
+
 export async function convertHtmlToMd(htmlPath: string, mdPath: string): Promise<void> {
   const html = await fs.readFile(htmlPath, 'utf8');
 
   const file = await unified()
     .use(rehypeParse)
+    .use(rehypeExtractMeta)
     .use(rehypeKeepArticle)
     .use(rehypeStripNoise)
     .use(rehypePreview)
@@ -66,5 +85,6 @@ export async function convertHtmlToMd(htmlPath: string, mdPath: string): Promise
     })
     .process(html);
 
-  await fs.writeFile(mdPath, unescapeGfmAlerts(String(file)));
+  const meta = (file.data[META_DATA_KEY] as DocMeta | undefined) ?? {};
+  await fs.writeFile(mdPath, buildFrontmatter(meta) + unescapeGfmAlerts(String(file)));
 }
