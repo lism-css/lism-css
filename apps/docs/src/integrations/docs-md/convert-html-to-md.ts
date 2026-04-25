@@ -15,6 +15,7 @@ import { rehypePreview } from './rehype-preview';
 import { rehypeCodeLanguage } from './rehype-code-language';
 import { rehypeCallouts } from './rehype-callouts';
 import { rehypeExtractMeta, META_DATA_KEY, type DocMeta } from './rehype-extract-meta';
+import { rehypeAbsoluteUrls } from './rehype-absolute-urls';
 
 /**
  * data-pagefind-body を持つ <article> 要素のみを残す rehype プラグイン。
@@ -64,7 +65,7 @@ function buildFrontmatter(meta: DocMeta): string {
   return lines.join('\n');
 }
 
-export async function convertHtmlToMd(htmlPath: string, mdPath: string): Promise<void> {
+export async function convertHtmlToMd(htmlPath: string, mdPath: string, opts: { siteUrl: string }): Promise<void> {
   const html = await fs.readFile(htmlPath, 'utf8');
 
   const file = await unified()
@@ -75,6 +76,7 @@ export async function convertHtmlToMd(htmlPath: string, mdPath: string): Promise
     .use(rehypePreview)
     .use(rehypeCodeLanguage)
     .use(rehypeCallouts)
+    .use(rehypeAbsoluteUrls, { siteUrl: opts.siteUrl })
     .use(rehypeRemark)
     .use(remarkGfm)
     .use(remarkStringify, {

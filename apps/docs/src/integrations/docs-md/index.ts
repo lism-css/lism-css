@@ -29,10 +29,18 @@ function pageToPaths(pathname: string, distDir: string): { html: string; md: str
 }
 
 export default function docsMd(): AstroIntegration {
+  let siteUrl = '';
   return {
     name: 'docs-md',
     hooks: {
+      'astro:config:done': ({ config }) => {
+        // 絶対 URL 化のために site を保持。未設定だと .md 内のリンクが相対のままになる
+        siteUrl = config.site ?? '';
+      },
       'astro:build:done': async ({ dir, pages, logger }) => {
+        if (!siteUrl) {
+          logger.warn('astro config `site` is not set; links in .md will remain relative');
+        }
         const distDir = fileURLToPath(dir);
         let success = 0;
         let failed = 0;
@@ -41,7 +49,7 @@ export default function docsMd(): AstroIntegration {
           if (!isTargetPage(page.pathname)) continue;
           const { html, md, rel } = pageToPaths(page.pathname, distDir);
           try {
-            await convertHtmlToMd(html, md);
+            await convertHtmlToMd(html, md, { siteUrl });
             success++;
           } catch (err) {
             // article[data-pagefind-body] が無いページ（インデックスページ等）はここでスキップ
