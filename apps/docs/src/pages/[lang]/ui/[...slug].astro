@@ -61,7 +61,7 @@ const { Content, headings } = await render(entry);
 const toc = generateToc(headings);
 
 // OG画像のパス
-const ogImage = `/ui/og/${slug.replace(/^ui\//, '')}.png`;
+const ogImage = `/${lang}/ui/og/${slug.replace(/^ui\//, '')}.png`;
 ---
 
 <BaseLayout

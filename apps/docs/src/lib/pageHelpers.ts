@@ -241,27 +241,31 @@ export interface OgPath {
 
 /**
  * OG画像用のgetStaticPaths（root言語用）
+ * ui/ プレフィックスは /ui/og/* 専用エンドポイントで処理するため除外する
  */
 export async function getOgPathsForRoot(): Promise<OgPath[]> {
   const rootLang = getRootLang();
   const posts = await getPostsByLang(rootLang);
 
-  return posts.map((post) => ({
-    params: { slug: post.id },
-    props: { lang: rootLang, slug: post.id },
-  }));
+  return posts
+    .filter((post) => !post.id.startsWith('ui/'))
+    .map((post) => ({
+      params: { slug: post.id },
+      props: { lang: rootLang, slug: post.id },
+    }));
 }
 
 /**
  * OG画像用のgetStaticPaths（非root言語用）
+ * ui/ プレフィックスは /[lang]/ui/og/* 専用エンドポイントで処理するため除外する
  */
 export async function getOgPathsForNonRoot(): Promise<OgPath[]> {
   const rootLang = getRootLang();
   const nonRootLangs = langCodes.filter((lang) => !isRootLang(lang));
 
-  // root言語の全記事を取得してslugリストを作成
+  // root言語の全記事を取得してslugリストを作成（ui/ は除外）
   const rootPosts = await getPostsByLang(rootLang);
-  const rootSlugs = rootPosts.map((post) => post.id);
+  const rootSlugs = rootPosts.filter((post) => !post.id.startsWith('ui/')).map((post) => post.id);
 
   const paths: OgPath[] = [];
 
@@ -270,6 +274,48 @@ export async function getOgPathsForNonRoot(): Promise<OgPath[]> {
       paths.push({
         params: { lang, slug },
         props: { lang, slug },
+      });
+    }
+  }
+
+  return paths;
+}
+
+/**
+ * UIコンポーネントOG画像用のgetStaticPaths（root言語用）
+ * URLは ui/ プレフィックスを除去した形（例: /ui/og/accordion.png）
+ * 内部の generateOgImage には ui/ 付きの id を渡してコンテンツを引く
+ */
+export async function getUiOgPathsForRoot(): Promise<OgPath[]> {
+  const rootLang = getRootLang();
+  const posts = await getPostsByLang(rootLang);
+
+  return posts
+    .filter((post) => post.id.startsWith('ui/'))
+    .map((post) => ({
+      params: { slug: post.id.replace(/^ui\//, '') },
+      props: { lang: rootLang, slug: post.id },
+    }));
+}
+
+/**
+ * UIコンポーネントOG画像用のgetStaticPaths（非root言語用）
+ * URLは ui/ プレフィックスを除去した形（例: /en/ui/og/accordion.png）
+ */
+export async function getUiOgPathsForNonRoot(): Promise<OgPath[]> {
+  const rootLang = getRootLang();
+  const nonRootLangs = langCodes.filter((lang) => !isRootLang(lang));
+
+  const rootPosts = await getPostsByLang(rootLang);
+  const uiPosts = rootPosts.filter((post) => post.id.startsWith('ui/'));
+
+  const paths: OgPath[] = [];
+
+  for (const lang of nonRootLangs) {
+    for (const post of uiPosts) {
+      paths.push({
+        params: { lang, slug: post.id.replace(/^ui\//, '') },
+        props: { lang, slug: post.id },
       });
     }
   }
