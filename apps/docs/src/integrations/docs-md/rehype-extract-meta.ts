@@ -17,33 +17,42 @@ const TITLE_SUFFIX = /\s*[-–—]\s*Lism CSS\s*$/;
 
 export const META_DATA_KEY = 'docsMdMeta';
 
+/**
+ * HAST ツリーから <title> / <meta name="description"> / <link rel="canonical"> を抽出する。
+ * rehype プラグインからも、外部の単発呼び出し（コンパイラ無しの parse() 結果）からも使えるよう
+ * 副作用無しの純粋関数として独立させている。
+ */
+export function extractDocMetaFromTree(tree: Root): DocMeta {
+  const meta: DocMeta = {};
+
+  visit(tree, 'element', (node: Element) => {
+    if (node.tagName === 'title') {
+      const child = node.children[0];
+      if (child?.type === 'text') {
+        meta.title = child.value.replace(TITLE_SUFFIX, '').trim();
+      }
+      return;
+    }
+    if (node.tagName === 'meta' && node.properties?.name === 'description') {
+      const content = node.properties.content;
+      if (typeof content === 'string') meta.description = content;
+      return;
+    }
+    if (node.tagName === 'link') {
+      const rel = node.properties?.rel;
+      const isCanonical = Array.isArray(rel) ? rel.includes('canonical') : rel === 'canonical';
+      if (isCanonical) {
+        const href = node.properties?.href;
+        if (typeof href === 'string') meta.url = href;
+      }
+    }
+  });
+
+  return meta;
+}
+
 export function rehypeExtractMeta() {
   return (tree: Root, file: { data: Record<string, unknown> }) => {
-    const meta: DocMeta = {};
-
-    visit(tree, 'element', (node: Element) => {
-      if (node.tagName === 'title') {
-        const child = node.children[0];
-        if (child?.type === 'text') {
-          meta.title = child.value.replace(TITLE_SUFFIX, '').trim();
-        }
-        return;
-      }
-      if (node.tagName === 'meta' && node.properties?.name === 'description') {
-        const content = node.properties.content;
-        if (typeof content === 'string') meta.description = content;
-        return;
-      }
-      if (node.tagName === 'link') {
-        const rel = node.properties?.rel;
-        const isCanonical = Array.isArray(rel) ? rel.includes('canonical') : rel === 'canonical';
-        if (isCanonical) {
-          const href = node.properties?.href;
-          if (typeof href === 'string') meta.url = href;
-        }
-      }
-    });
-
-    file.data[META_DATA_KEY] = meta;
+    file.data[META_DATA_KEY] = extractDocMetaFromTree(tree);
   };
 }
