@@ -14,10 +14,10 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 import { unified } from 'unified';
 import rehypeParse from 'rehype-parse';
-import type { Root as HastRoot } from 'hast';
 import { extractDocMetaFromTree, type DocMeta } from './rehype-extract-meta';
 import { yamlString } from './convert-html-to-md';
 import { parseFrontmatter } from './build-llms-txt';
+import { walkMdx } from './util';
 import { toContentSlug } from '../../lib/contentSlug';
 
 type Logger = { warn: (msg: string) => void; info: (msg: string) => void };
@@ -29,23 +29,6 @@ async function extractHtmlMeta(htmlPath: string): Promise<DocMeta> {
   // compiler 無しで parse のみ行うため `.parse()` を直接使う（`.process()` だと未指定エラー）
   const tree = unified().use(rehypeParse).parse(html);
   return extractDocMetaFromTree(tree);
-}
-
-async function listUiMdx(uiDir: string): Promise<string[]> {
-  const out: string[] = [];
-  const walk = async (cur: string, prefix: string) => {
-    const entries = await fs.readdir(cur, { withFileTypes: true });
-    for (const e of entries) {
-      // _opt-in / _demo など、`_` 始まりは公開対象外
-      if (e.name.startsWith('_')) continue;
-      const full = path.join(cur, e.name);
-      const rel = prefix ? `${prefix}/${e.name}` : e.name;
-      if (e.isDirectory()) await walk(full, rel);
-      else if (e.name.endsWith('.mdx')) out.push(rel);
-    }
-  };
-  await walk(uiDir, '');
-  return out;
 }
 
 function formatEntry(e: Entry, urlPrefix: string): string {
@@ -68,7 +51,8 @@ export async function buildUiIndexMd(opts: {
     return;
   }
 
-  const files = await listUiMdx(uiContentDir);
+  // _opt-in / _demo など `_` 始まりは公開対象外なので走査時に除外
+  const files = await walkMdx(uiContentDir, { skipUnderscore: true });
   const components: Entry[] = [];
   const examples: Entry[] = [];
 

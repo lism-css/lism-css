@@ -4,8 +4,8 @@
  *
  * セクション分類:
  * - Getting Started: トップレベルの overview/installation/changelog/features/mcp/skills
- * - UI Components:   ui/Xxx.mdx（examples 配下と DummyText を除く）
- * - Optional:        ui/examples/*, ui/DummyText, property-class/*
+ * - UI Components:   ui/Xxx.mdx（examples 配下を除く）
+ * - Optional:        ui/examples/*, property-class/*
  * - Documentation:   それ以外すべて
  *
  * `_demo/` と `test.mdx`、`draft: true` のファイルは除外する。
@@ -13,6 +13,7 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import { toContentSlug } from '../../lib/contentSlug';
+import { walkMdx } from './util';
 
 type FrontMatter = { title?: string; description?: string; draft?: boolean };
 type Entry = { title: string; description: string; url: string; rel: string };
@@ -62,7 +63,6 @@ export function classify(rel: string): Section | null {
   if (rel.startsWith('_demo/') || rel === 'test.mdx') return null;
   const slug = rel.replace(/\.mdx$/, '');
   if (rel.startsWith('ui/examples/')) return 'Optional';
-  if (slug === 'ui/DummyText') return 'Optional';
   if (rel.startsWith('property-class/')) return 'Optional';
   if (rel.startsWith('ui/')) return 'UI Components';
   if (GS_SLUGS.has(slug)) return 'Getting Started';
@@ -80,20 +80,6 @@ export function toUrl(rel: string, siteUrl: string): string {
   return `${base}/en/docs/${slug}.md`;
 }
 
-async function listMdxFiles(dir: string): Promise<string[]> {
-  const result: string[] = [];
-  const walk = async (cur: string) => {
-    const entries = await fs.readdir(cur, { withFileTypes: true });
-    for (const e of entries) {
-      const full = path.join(cur, e.name);
-      if (e.isDirectory()) await walk(full);
-      else if (e.name.endsWith('.mdx')) result.push(full);
-    }
-  };
-  await walk(dir);
-  return result;
-}
-
 function sortEntries(section: Section, entries: Entry[]): Entry[] {
   if (section === 'Getting Started') {
     const order = new Map(GS_ORDER.map((slug, i) => [slug, i] as const));
@@ -108,15 +94,15 @@ function sortEntries(section: Section, entries: Entry[]): Entry[] {
 
 export async function buildLlmsTxt(opts: { contentDir: string; outputPath: string; siteUrl: string; logger: Logger }): Promise<void> {
   const { contentDir, outputPath, siteUrl, logger } = opts;
-  const files = await listMdxFiles(contentDir);
+  const files = await walkMdx(contentDir);
   const grouped = new Map<Section, Entry[]>();
   let count = 0;
 
-  for (const abs of files) {
-    const rel = path.relative(contentDir, abs).replace(/\\/g, '/');
+  for (const rel of files) {
     const section = classify(rel);
     if (!section) continue;
 
+    const abs = path.join(contentDir, rel);
     const content = await fs.readFile(abs, 'utf8');
     const fm = parseFrontmatter(content);
     if (fm.draft) continue;

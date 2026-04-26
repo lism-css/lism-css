@@ -59,14 +59,14 @@ describe('classify', () => {
     expect(classify('skills.mdx')).toBe('Getting Started');
   });
 
-  it('ui/examples と ui/DummyText と property-class は Optional', () => {
+  it('ui/examples と property-class は Optional', () => {
     expect(classify('ui/examples/Foo.mdx')).toBe('Optional');
-    expect(classify('ui/DummyText.mdx')).toBe('Optional');
     expect(classify('property-class/color.mdx')).toBe('Optional');
   });
 
-  it('それ以外の ui/* は UI Components', () => {
+  it('それ以外の ui/* は UI Components（DummyText も含む）', () => {
     expect(classify('ui/Accordion.mdx')).toBe('UI Components');
+    expect(classify('ui/DummyText.mdx')).toBe('UI Components');
   });
 
   it('上記いずれにも該当しなければ Documentation', () => {
