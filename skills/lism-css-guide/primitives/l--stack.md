@@ -7,7 +7,7 @@
 - クラス名: `l--stack`
 - コンポーネント: `<Stack>`
 - SCSSソース: https://raw.githubusercontent.com/lism-css/lism-css/main/packages/lism-css/src/scss/primitives/layout/_stack.scss
-- ドキュメント（人間向け）: https://lism-css.com/docs/primitives/l--stack.md
+- 公式ドキュメント: https://lism-css.com/docs/primitives/l--stack.md
 
 ## Usage
 

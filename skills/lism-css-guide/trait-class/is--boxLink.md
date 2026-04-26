@@ -7,7 +7,7 @@
 - クラス名: `is--boxLink`
 - コンポーネント: `<BoxLink>`
 - SCSSソース: https://raw.githubusercontent.com/lism-css/lism-css/main/packages/lism-css/src/scss/trait/is/_boxLink.scss
-- ドキュメント（人間向け）: https://lism-css.com/docs/trait-class/is--boxLink.md
+- 公式ドキュメント: https://lism-css.com/docs/trait-class/is--boxLink.md
 
 ## 専用Props
 

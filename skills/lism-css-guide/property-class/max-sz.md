@@ -7,7 +7,7 @@
 - クラス名: `-max-sz:{xs|s|m|l|xl|full|container}`
 - Lism props: `max-sz`（`<Lism max-sz="m">` 等）
 - SCSSソース: https://raw.githubusercontent.com/lism-css/lism-css/main/packages/lism-css/src/scss/props/_size.scss
-- ドキュメント（人間向け）: https://lism-css.com/docs/property-class/max-sz.md
+- 公式ドキュメント: https://lism-css.com/docs/property-class/max-sz.md
 
 ## トークン対応クラス
 

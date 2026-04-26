@@ -7,7 +7,7 @@
 - クラス名: `l--columns`
 - コンポーネント: `<Columns>`
 - SCSSソース: https://raw.githubusercontent.com/lism-css/lism-css/main/packages/lism-css/src/scss/primitives/layout/_columns.scss
-- ドキュメント（人間向け）: https://lism-css.com/docs/primitives/l--columns.md
+- 公式ドキュメント: https://lism-css.com/docs/primitives/l--columns.md
 
 ## 専用Props
 
