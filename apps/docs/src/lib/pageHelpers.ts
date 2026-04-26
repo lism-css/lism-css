@@ -30,25 +30,29 @@ export interface PostPathNonRoot {
 
 /**
  * 記事詳細ページ用のgetStaticPaths（root言語用）
+ * ui/ プレフィックスは /ui/* 専用ルートで処理するため除外する
  */
 export async function getPostPathsForRoot(): Promise<PostPath[]> {
   const rootLang = getRootLang();
   const posts = await getPostsByLang(rootLang);
 
-  return posts.map((entry) => ({
-    params: { slug: entry.id },
-    props: { lang: rootLang, entry },
-  }));
+  return posts
+    .filter((entry) => !entry.id.startsWith('ui/'))
+    .map((entry) => ({
+      params: { slug: entry.id },
+      props: { lang: rootLang, entry },
+    }));
 }
 
 /**
  * 記事詳細ページ用のgetStaticPaths（非root言語用）
+ * ui/ プレフィックスは /[lang]/ui/* 専用ルートで処理するため除外する
  */
 export async function getPostPathsForNonRoot(): Promise<PostPathNonRoot[]> {
   const nonRootLangs = langCodes.filter((lang) => !isRootLang(lang));
 
   // root言語の全slugを取得（非root言語でも同じslugでアクセス可能にする）
-  const rootSlugs = await getRootLangSlugs();
+  const rootSlugs = (await getRootLangSlugs()).filter((slug) => !slug.startsWith('ui/'));
 
   const paths: PostPathNonRoot[] = [];
 
