@@ -25,7 +25,7 @@ Lism CSS側が用意しているトークン値と異なるものを書かない
 | `bgc="primary"` | `bgc="brand"` | セマンティックカラーに `primary`/`secondary` は無い。ブランド色は `brand`/`accent` |
 | `bgc="secondary"` | `bgc="base-2"` | サブ背景色は `base-2`（`base-3` がユーザーによって追加定義されている可能性もある） |
 | `c="muted"` | `c="text-2"` | 補助テキスト色は `text-2` |
-| `c="danger"` | `bgc="red"` | パレットカラーから選ぶ（`red` / `orange` 等） |
+| `c="danger"` | `c="red"` | パレットカラーから選ぶ（`red` / `orange` 等） |
 
 - セマンティックカラー: `base` / `base-2` / `text` / `text-2` / `divider` / `link` / `brand` / `accent`
 - パレットカラー: `red` / `blue` / `green` / `yellow` / `purple` / `orange` / `pink` / `gray` / `white` / `black`
