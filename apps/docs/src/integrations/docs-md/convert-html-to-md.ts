@@ -12,6 +12,7 @@ import { visit } from 'unist-util-visit';
 import type { Root as HastRoot, Element } from 'hast';
 import { rehypeStripNoise } from './rehype-strip-noise';
 import { rehypePreview } from './rehype-preview';
+import { rehypeDocsLink } from './rehype-docs-link';
 import { rehypeCodeLanguage } from './rehype-code-language';
 import { rehypeCallouts } from './rehype-callouts';
 import { rehypeExtractMeta, META_DATA_KEY, type DocMeta } from './rehype-extract-meta';
@@ -75,6 +76,7 @@ export async function convertHtmlToMd(htmlPath: string, mdPath: string, opts: { 
     .use(rehypeKeepArticle)
     .use(rehypeStripNoise)
     .use(rehypePreview)
+    .use(rehypeDocsLink)
     .use(rehypeCodeLanguage)
     .use(rehypeCallouts)
     .use(rehypeAbsoluteUrls, { siteUrl: opts.siteUrl })
