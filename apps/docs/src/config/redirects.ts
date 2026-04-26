@@ -4,7 +4,6 @@ export type VercelRedirect = {
   source: string;
   destination: string;
   statusCode: 301;
-  caseSensitive: boolean;
 };
 
 export const astroRedirects: AstroRedirects = {
@@ -98,41 +97,36 @@ export const astroRedirects: AstroRedirects = {
 };
 
 // Astro の static redirects では casing 違いの出力先が衝突するため、本番互換だけ Vercel 側に逃がす。
+// Vercel の redirects はデフォルトで case-sensitive にマッチする。
 export const vercelRedirects: VercelRedirect[] = [
   {
     source: '/docs/primitives/l--fluidCols/',
     destination: '/docs/primitives/l--autoColumns/',
     statusCode: 301,
-    caseSensitive: true,
   },
   {
     source: '/docs/primitives/l--sideMain/',
     destination: '/docs/primitives/l--withSide/',
     statusCode: 301,
-    caseSensitive: true,
   },
   {
     source: '/docs/primitives/l--switchCols/',
     destination: '/docs/primitives/l--switchColumns/',
     statusCode: 301,
-    caseSensitive: true,
   },
   {
     source: '/en/docs/primitives/l--fluidCols/',
     destination: '/en/docs/primitives/l--autoColumns/',
     statusCode: 301,
-    caseSensitive: true,
   },
   {
     source: '/en/docs/primitives/l--sideMain/',
     destination: '/en/docs/primitives/l--withSide/',
     statusCode: 301,
-    caseSensitive: true,
   },
   {
     source: '/en/docs/primitives/l--switchCols/',
     destination: '/en/docs/primitives/l--switchColumns/',
     statusCode: 301,
-    caseSensitive: true,
   },
 ];
