@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import type { Root, Element, Properties } from 'hast';
-import { absolutize, rehypeAbsoluteUrls } from './rehype-absolute-urls';
+import { absolutize, normalizePathCasing, rehypeAbsoluteUrls } from './rehype-absolute-urls';
 
 const BASE = 'https://lism-css.com';
 
@@ -42,6 +42,39 @@ describe('absolutize', () => {
 
   it('クエリ・フラグメント付きルート相対も展開される', () => {
     expect(absolutize('/docs/?a=1#x', BASE)).toBe('https://lism-css.com/docs/?a=1#x');
+  });
+
+  it('大文字混じりのドキュメント URL は小文字化される', () => {
+    expect(absolutize('/docs/core-components/Lism/', BASE)).toBe('https://lism-css.com/docs/core-components/lism/');
+    expect(absolutize('/en/docs/ui/ShapeDivider/', BASE)).toBe('https://lism-css.com/en/docs/ui/shapedivider/');
+  });
+
+  it('primitives/ 配下のクラス名は preserve される', () => {
+    expect(absolutize('/docs/primitives/l--withSide/', BASE)).toBe('https://lism-css.com/docs/primitives/l--withSide/');
+    expect(absolutize('/en/docs/primitives/l--tileGrid/', BASE)).toBe('https://lism-css.com/en/docs/primitives/l--tileGrid/');
+  });
+
+  it('trait-class/ 配下のクラス名は preserve される', () => {
+    expect(absolutize('/docs/trait-class/is--boxLink/', BASE)).toBe('https://lism-css.com/docs/trait-class/is--boxLink/');
+    expect(absolutize('/en/docs/trait-class/is--boxLink/', BASE)).toBe('https://lism-css.com/en/docs/trait-class/is--boxLink/');
+  });
+
+  it('casing 正規化はクエリ・フラグメントを保持する', () => {
+    expect(absolutize('/docs/core-components/Lism/?tab=Foo#Section', BASE)).toBe('https://lism-css.com/docs/core-components/lism/?tab=Foo#Section');
+  });
+});
+
+describe('normalizePathCasing', () => {
+  it('preserve セグメントが無いパスは全て小文字化', () => {
+    expect(normalizePathCasing('/Foo/Bar/')).toBe('/foo/bar/');
+  });
+
+  it('primitives セグメント以降は preserve', () => {
+    expect(normalizePathCasing('/Docs/primitives/l--withSide/')).toBe('/docs/primitives/l--withSide/');
+  });
+
+  it('trait-class セグメント以降は preserve', () => {
+    expect(normalizePathCasing('/Docs/trait-class/is--boxLink/')).toBe('/docs/trait-class/is--boxLink/');
   });
 });
 
