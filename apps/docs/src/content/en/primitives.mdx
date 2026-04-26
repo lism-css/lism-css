@@ -31,6 +31,93 @@ Primitives that serve as the building blocks of layouts.
 | <ModLink slug="l--switchColumns" /> | Automatically switches between multi-column and single-column |
 
 
+### Usage guide for column-layout Primitives
+
+Several Primitives are available for "arranging items in columns". Pick the one that matches your intent.
+
+#### Comparison table
+
+How well each Primitive fits each use case:
+
+| Use case | <ModLink slug="l--columns" /> | <ModLink slug="l--autoColumns" /> | <ModLink slug="l--switchColumns" /> | <ModLink slug="l--withSide" /> | <ModLink slug="l--grid" /> |
+|---|---|---|---|---|---|
+| Equal-width N columns | ◯ | ◯ | ✗ | ✗ | △ |
+| Single toggle between multi-column and 1-column | ◯ | ✗ | ◯ | ✗ | △ |
+| Auto-wrapping based on a minimum column width | ✗ | ◯ | ✗ | ✗ | △ |
+| Side + main (asymmetric two-column) | △ | ✗ | ✗ | ◯ | △ |
+| BP-based column-count switching | ◯ | ✗ | ✗ | ✗ | △ |
+| Responsive without breakpoints | ✗ | ◯ | ◯ | ◯ | ✗ |
+
+Legend: ◯ suitable / △ possible but verbose / ✗ not suitable
+
+#### How to choose
+
+##### Equal-width N columns, or column count varying by breakpoint
+
+**Recommended**: <ModLink slug="l--columns" />
+
+Use `cols={3}` for a fixed column count. Pass `cols` as an array to declaratively specify column counts per breakpoint.
+
+```jsx
+<Columns cols={[1, 2, 3]} g="20">...</Columns>
+```
+
+`l--grid` with `gtc="repeat(3, 1fr)"` can produce the same visual result, but `l--columns` is more concise when all you need is equal-width columns or column-count switching.
+
+##### Auto-wrap once columns drop below a minimum width
+
+**Recommended**: <ModLink slug="l--autoColumns" />
+
+Independent of breakpoints. Lets you concisely express `auto-fit` / `auto-fill` behavior based on a minimum column width. Suitable for card lists, product lists, logo grids, etc.
+
+```jsx
+<AutoColumns cols="20rem" g="20">...</AutoColumns>
+```
+
+##### Single toggle between "horizontal" and "1 column"
+
+**Recommended**: <ModLink slug="l--switchColumns" />
+
+When the available width of the element itself drops below `breakSize`, the layout flips to a vertical stack in one step. No breakpoint or container-query setup is required, but you still define the switching threshold with `breakSize`. If you need progressive column-count changes, use `l--columns` or `l--autoColumns` instead.
+
+```jsx
+<SwitchColumns breakSize="s" g="20">...</SwitchColumns>
+```
+
+##### Side + main (asymmetric two-column) that auto-switches based on content width
+
+**Recommended**: <ModLink slug="l--withSide" />
+
+When the main side can no longer maintain `mainW`, the layout automatically switches to vertical. No breakpoint design required.
+
+```jsx
+<WithSide sideW="240px" mainW="20rem" g="20">
+  <Box>Main</Box>
+  <Box isSide>Side</Box>
+</WithSide>
+```
+
+If the media element is placed first and marked with `isSide`, you can combine `fxd="row-reverse"` to alternate the side position horizontally while keeping the media consistently on top when stacked.
+
+If you need explicit breakpoint-based switching, you can build the same look with <ModLink slug="l--grid" /> using `gta` template switching (`l--withSide` is more declarative and concise).
+
+##### Fixed row × column tile layout
+
+**Recommended**: <ModLink slug="l--tileGrid" />
+
+This is less a column-layout choice and more a Grid variant for cases where you also want to fix the row count. `cols` / `rows` concisely produce `repeat(rows, minmax(0, 1fr)) / repeat(cols, minmax(0, 1fr))`.
+
+```jsx
+<TileGrid cols="3" rows="2" g="10">...</TileGrid>
+```
+
+##### Complex layouts centered on Grid templates
+
+**Recommended**: <ModLink slug="l--grid" />
+
+A general-purpose Primitive for layouts centered on Grid templates, such as named areas, element overlays (`ga="1/1"`), and subgrid. `gta` / `gtc` themselves are Property Classes and can be used with other Primitives too, but choose `l--grid` when the Grid template is the main structure.
+
+
 ## Atomic Primitives
 
 Primitives that represent the smallest units of a layout.
