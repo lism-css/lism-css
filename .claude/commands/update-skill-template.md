@@ -42,7 +42,10 @@
     - SCSSソース: `https://raw.githubusercontent.com/lism-css/lism-css/main/packages/lism-css/src/scss/{primitives/{layout|atomic}|trait/{is|has}}/_{name}.scss`
         - **SCSS ファイルが存在する Primitive / Trait のみ記載する**。`l--box` や `a--decorator` のように対応する `_{name}.scss` を持たない場合は、この行自体を省略する
         - Trait は `is--`/`has--` プレフィックスを除いた値を `{name}` として使う（例: `is--container` → `trait/is/_container.scss`、`has--transition` → `trait/has/_transition.scss`）
-    - 公式ドキュメント: Layout/Atomic は `https://lism-css.com/docs/primitives/{lowercase}.md`、Trait は `https://lism-css.com/docs/trait-class/{lowercase}.md` — `{lowercase}` はクラス名の小文字版（例: `l--withSide.md` → `l--withside`）
+    - 公式ドキュメント: 個別ページが存在する場合は URL もクラス名そのまま（camelCase を維持）
+        - Layout / Atomic（`l--*` / `a--*`）: `https://lism-css.com/docs/primitives/{class}.md`（例: `l--withSide.md`）
+        - Trait（`is--*` / `has--*`）: `https://lism-css.com/docs/trait-class/{class}.md`（例: `is--boxLink.md`）
+        - 個別ページが未作成の場合は、一覧ページのアンカーを指す: `https://lism-css.com/docs/trait-class.md#{class}`（現状 `has--*` 系はすべて個別ページが未作成のためこの形式を使う。例: `trait-class.md#has--transition`）
 - `## 専用Props`（該当プリミティブのみ）
 - `## Usage`（JSX + HTML コードブロックのペアで記載。MDX の `<Preview>` / `<PreviewArea>` / `<PreviewCode>` / `<SrcCode>` 等のカスタムコンポーネントは廃棄）
 - 必要に応じて追加セクション（HTML 構造、動作の仕組み、特殊仕様、Opt-in スタイル、注意点 など）
