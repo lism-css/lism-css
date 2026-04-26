@@ -5,18 +5,18 @@
  */
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import { Stack, AutoColumns, BoxLink, Frame, Lism, Media } from 'lism-css/astro';
-import { getPostsByLang } from '@/lib/content';
+import { getUiPostsByLang } from '@/lib/content';
 import { getRootLang } from '@/lib/i18n';
 import fs from 'node:fs';
 import path from 'node:path';
 
-// 現在の言語の記事を取得
+// 現在の言語の UI 記事を取得
 const currentLang = getRootLang();
-const allPosts = await getPostsByLang(currentLang);
+const allUiPosts = await getUiPostsByLang(currentLang);
 
-// ui/ 配下の記事のみフィルタリング（examples配下は除く）
-const uiPosts = allPosts
-  .filter((post) => post.id.startsWith('ui/') && !post.id.startsWith('ui/examples/'))
+// examples 配下を除いた UI 記事
+const uiPosts = allUiPosts
+  .filter((post) => !post.id.startsWith('ui/examples/'))
   .sort((a, b) => {
     // order順にソート（未指定は999）
     const orderA = a.data.order ?? 999;
@@ -24,8 +24,8 @@ const uiPosts = allPosts
     return orderA - orderB;
   });
 
-// ui/examples/ 配下の記事を別途フィルタリング
-const examplePosts = allPosts
+// ui/examples/ 配下の記事
+const examplePosts = allUiPosts
   .filter((post) => post.id.startsWith('ui/examples/'))
   .sort((a, b) => {
     // order順にソート（未指定は999）

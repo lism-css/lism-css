@@ -82,10 +82,19 @@ export async function getAllPosts(includeDraft = import.meta.env.DEV): Promise<
 }
 
 /**
- * root言語の全slugを取得（非root言語のフォールバック用パス生成）
+ * docs セクションの記事一覧を取得（id が ui/ で始まらないもの）
+ * /docs/* および /[lang]/docs/* / OG / Pagefind 等の入力として使用
  */
-export async function getRootLangSlugs(includeDraft = import.meta.env.DEV): Promise<string[]> {
-  const rootLang = getRootLang();
-  const posts = await getPostsByLang(rootLang, includeDraft);
-  return posts.map((post) => post.id);
+export async function getDocsPostsByLang(lang: LangCode, includeDraft = import.meta.env.DEV): Promise<PostEntry[]> {
+  const posts = await getPostsByLang(lang, includeDraft);
+  return posts.filter((post) => !post.id.startsWith('ui/'));
+}
+
+/**
+ * UI セクションの記事一覧を取得（id が ui/ で始まるもの）
+ * /ui/* および /[lang]/ui/* / OG 等の入力として使用
+ */
+export async function getUiPostsByLang(lang: LangCode, includeDraft = import.meta.env.DEV): Promise<PostEntry[]> {
+  const posts = await getPostsByLang(lang, includeDraft);
+  return posts.filter((post) => post.id.startsWith('ui/'));
 }
