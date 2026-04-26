@@ -11,9 +11,9 @@ export const astroRedirects: AstroRedirects = {
   '/docs/': '/docs/overview/',
   // 非root言語用のリダイレクト
   '/en/docs/': '/en/docs/overview/',
-  // Dummy -> DummyText 移動に伴うリダイレクト
-  '/docs/core-components/dummy/': '/docs/ui/DummyText/',
-  '/en/docs/core-components/dummy/': '/en/docs/ui/DummyText/',
+  // Dummy -> DummyText 移動に伴うリダイレクト（/docs/core-components/ から /ui/ 配下へ移動）
+  '/docs/core-components/dummy/': '/ui/dummytext/',
+  '/en/docs/core-components/dummy/': '/en/ui/dummytext/',
   // typography -> tokens/typography に移動
   '/docs/typography/': '/docs/tokens/typography/',
   '/en/docs/typography/': '/en/docs/tokens/typography/',
