@@ -11,7 +11,7 @@ import PostNavigation from '@parts/PostNavigation.astro';
 import TranslationNotice from '@/components/TranslationNotice.astro';
 import { siteConfig } from '@/config/site';
 import { isRootLang, isValidLang, getRootLang, type LangCode } from '@/lib/i18n';
-import { getPostsByLang, getPostWithFallback } from '@/lib/content';
+import { getUiPostsByLang, getPostWithFallback } from '@/lib/content';
 import { render } from 'astro:content';
 
 // MDXでグローバルに使用するコンポーネント
@@ -21,10 +21,7 @@ export async function getStaticPaths() {
   const langCodes = Object.keys(siteConfig.langs) as LangCode[];
   const nonRootLangs = langCodes.filter((lang) => !isRootLang(lang));
   const rootLang = getRootLang();
-  const allPosts = await getPostsByLang(rootLang);
-
-  // ui/ で始まるIDのみフィルタリング
-  const uiPosts = allPosts.filter((post) => post.id.startsWith('ui/'));
+  const uiPosts = await getUiPostsByLang(rootLang);
 
   const paths = [];
   for (const lang of nonRootLangs) {

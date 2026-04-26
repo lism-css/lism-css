@@ -3,7 +3,7 @@
  * 各ページコンポーネントから呼び出して使用
  */
 import { siteConfig } from '@/config/site';
-import { getPostsByLang, getPostWithFallback, getRootLangSlugs, type PostEntry } from '@/lib/content';
+import { getPostsByLang, getDocsPostsByLang, getUiPostsByLang, getPostWithFallback, type PostEntry } from '@/lib/content';
 import { getRootLang, isRootLang, type LangCode } from '@/lib/i18n';
 import { createHash } from 'crypto';
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'fs';
@@ -30,37 +30,34 @@ export interface PostPathNonRoot {
 
 /**
  * 記事詳細ページ用のgetStaticPaths（root言語用）
- * ui/ プレフィックスは /ui/* 専用ルートで処理するため除外する
  */
 export async function getPostPathsForRoot(): Promise<PostPath[]> {
   const rootLang = getRootLang();
-  const posts = await getPostsByLang(rootLang);
+  const posts = await getDocsPostsByLang(rootLang);
 
-  return posts
-    .filter((entry) => !entry.id.startsWith('ui/'))
-    .map((entry) => ({
-      params: { slug: entry.id },
-      props: { lang: rootLang, entry },
-    }));
+  return posts.map((entry) => ({
+    params: { slug: entry.id },
+    props: { lang: rootLang, entry },
+  }));
 }
 
 /**
  * 記事詳細ページ用のgetStaticPaths（非root言語用）
- * ui/ プレフィックスは /[lang]/ui/* 専用ルートで処理するため除外する
  */
 export async function getPostPathsForNonRoot(): Promise<PostPathNonRoot[]> {
+  const rootLang = getRootLang();
   const nonRootLangs = langCodes.filter((lang) => !isRootLang(lang));
 
   // root言語の全slugを取得（非root言語でも同じslugでアクセス可能にする）
-  const rootSlugs = (await getRootLangSlugs()).filter((slug) => !slug.startsWith('ui/'));
+  const rootPosts = await getDocsPostsByLang(rootLang);
 
   const paths: PostPathNonRoot[] = [];
 
   for (const lang of nonRootLangs) {
-    for (const slug of rootSlugs) {
+    for (const post of rootPosts) {
       paths.push({
-        params: { lang, slug },
-        props: { lang, slug },
+        params: { lang, slug: post.id },
+        props: { lang, slug: post.id },
       });
     }
   }
@@ -241,39 +238,34 @@ export interface OgPath {
 
 /**
  * OG画像用のgetStaticPaths（root言語用）
- * ui/ プレフィックスは /ui/og/* 専用エンドポイントで処理するため除外する
  */
 export async function getOgPathsForRoot(): Promise<OgPath[]> {
   const rootLang = getRootLang();
-  const posts = await getPostsByLang(rootLang);
+  const posts = await getDocsPostsByLang(rootLang);
 
-  return posts
-    .filter((post) => !post.id.startsWith('ui/'))
-    .map((post) => ({
-      params: { slug: post.id },
-      props: { lang: rootLang, slug: post.id },
-    }));
+  return posts.map((post) => ({
+    params: { slug: post.id },
+    props: { lang: rootLang, slug: post.id },
+  }));
 }
 
 /**
  * OG画像用のgetStaticPaths（非root言語用）
- * ui/ プレフィックスは /[lang]/ui/og/* 専用エンドポイントで処理するため除外する
  */
 export async function getOgPathsForNonRoot(): Promise<OgPath[]> {
   const rootLang = getRootLang();
   const nonRootLangs = langCodes.filter((lang) => !isRootLang(lang));
 
-  // root言語の全記事を取得してslugリストを作成（ui/ は除外）
-  const rootPosts = await getPostsByLang(rootLang);
-  const rootSlugs = rootPosts.filter((post) => !post.id.startsWith('ui/')).map((post) => post.id);
+  // root言語の全記事を取得してslugリストを作成
+  const rootPosts = await getDocsPostsByLang(rootLang);
 
   const paths: OgPath[] = [];
 
   for (const lang of nonRootLangs) {
-    for (const slug of rootSlugs) {
+    for (const post of rootPosts) {
       paths.push({
-        params: { lang, slug },
-        props: { lang, slug },
+        params: { lang, slug: post.id },
+        props: { lang, slug: post.id },
       });
     }
   }
@@ -288,14 +280,12 @@ export async function getOgPathsForNonRoot(): Promise<OgPath[]> {
  */
 export async function getUiOgPathsForRoot(): Promise<OgPath[]> {
   const rootLang = getRootLang();
-  const posts = await getPostsByLang(rootLang);
+  const posts = await getUiPostsByLang(rootLang);
 
-  return posts
-    .filter((post) => post.id.startsWith('ui/'))
-    .map((post) => ({
-      params: { slug: post.id.replace(/^ui\//, '') },
-      props: { lang: rootLang, slug: post.id },
-    }));
+  return posts.map((post) => ({
+    params: { slug: post.id.replace(/^ui\//, '') },
+    props: { lang: rootLang, slug: post.id },
+  }));
 }
 
 /**
@@ -306,8 +296,7 @@ export async function getUiOgPathsForNonRoot(): Promise<OgPath[]> {
   const rootLang = getRootLang();
   const nonRootLangs = langCodes.filter((lang) => !isRootLang(lang));
 
-  const rootPosts = await getPostsByLang(rootLang);
-  const uiPosts = rootPosts.filter((post) => post.id.startsWith('ui/'));
+  const uiPosts = await getUiPostsByLang(rootLang);
 
   const paths: OgPath[] = [];
 

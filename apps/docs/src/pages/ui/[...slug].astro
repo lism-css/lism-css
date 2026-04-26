@@ -9,7 +9,7 @@ import { generateToc } from '@/lib/generateToc';
 import { Icon, Lism, Flow, Heading } from 'lism-css/astro';
 import PostNavigation from '@parts/PostNavigation.astro';
 import { getRootLang, type LangCode } from '@/lib/i18n';
-import { getPostsByLang, type PostEntry } from '@/lib/content';
+import { getUiPostsByLang, type PostEntry } from '@/lib/content';
 import { render } from 'astro:content';
 
 // MDXでグローバルに使用するコンポーネント
@@ -18,10 +18,7 @@ import * as mdxComponents from '@/components/mdx';
 // /ui/ セクション用のgetStaticPaths
 export async function getStaticPaths() {
   const rootLang = getRootLang();
-  const allPosts = await getPostsByLang(rootLang);
-
-  // ui/ で始まる slug のみをフィルタリング
-  const uiPosts = allPosts.filter((post) => post.id.startsWith('ui/'));
+  const uiPosts = await getUiPostsByLang(rootLang);
 
   return uiPosts.map((entry) => ({
     // slug から ui/ プレフィックスを除去
