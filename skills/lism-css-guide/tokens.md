@@ -20,7 +20,7 @@ CSSコードを書く場合やコンポーネントのPropsに値を指定する
 - [カラー](#カラー)
 - [トークン値の命名規則](#トークン値の命名規則)
 
-[詳細](https://lism-css.com/docs/tokens/)
+[詳細](https://lism-css.com/docs/tokens.md)
 
 ---
 

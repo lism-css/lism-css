@@ -7,7 +7,7 @@
 - クラス名: `l--center`
 - コンポーネント: `<Center>`
 - SCSSソース: https://raw.githubusercontent.com/lism-css/lism-css/main/packages/lism-css/src/scss/primitives/layout/_center.scss
-- ドキュメント（人間向け）: https://lism-css.com/docs/primitives/l--center/
+- 公式ドキュメント: https://lism-css.com/docs/primitives/l--center.md
 
 ## 動作の仕組み
 

@@ -7,7 +7,7 @@
 - クラス名: `l--autoColumns`
 - コンポーネント: `<AutoColumns>`
 - SCSSソース: https://raw.githubusercontent.com/lism-css/lism-css/main/packages/lism-css/src/scss/primitives/layout/_autoColumns.scss
-- ドキュメント（人間向け）: https://lism-css.com/docs/primitives/l--autoColumns/
+- 公式ドキュメント: https://lism-css.com/docs/primitives/l--autoColumns.md
 
 ## 専用Props
 

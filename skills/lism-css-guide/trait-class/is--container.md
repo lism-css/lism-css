@@ -7,7 +7,7 @@
 - クラス名: `is--container`
 - コンポーネント: `<Container>`
 - SCSSソース: https://raw.githubusercontent.com/lism-css/lism-css/main/packages/lism-css/src/scss/trait/is/_container.scss
-- ドキュメント（人間向け）: https://lism-css.com/docs/trait-class/is--container/
+- 公式ドキュメント: https://lism-css.com/docs/trait-class/is--container.md
 
 ## 使い方
 

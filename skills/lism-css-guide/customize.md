@@ -9,7 +9,7 @@
 - [`lism.config.js` でのカスタマイズ](#lismconfigjs-でのカスタマイズ)
 - [追加スタイルを読み込ませる方法](#追加スタイルを読み込ませる方法)
 
-[詳細](https://lism-css.com/docs/customize/)
+[詳細](https://lism-css.com/docs/customize.md)
 
 ---
 

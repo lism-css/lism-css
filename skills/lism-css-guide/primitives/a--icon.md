@@ -7,7 +7,7 @@
 - クラス名: `a--icon`
 - コンポーネント: `<Icon>`
 - SCSSソース: https://raw.githubusercontent.com/lism-css/lism-css/main/packages/lism-css/src/scss/primitives/atomic/_icon.scss
-- ドキュメント（人間向け）: https://lism-css.com/docs/primitives/a--icon/
+- 公式ドキュメント: https://lism-css.com/docs/primitives/a--icon.md
 
 ## 出力されるHTML構造
 

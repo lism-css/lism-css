@@ -7,7 +7,7 @@
 - クラス名: `has--snap`
 - Lism props: `hasSnap`（`<Lism hasSnap>` 等）
 - SCSSソース: https://raw.githubusercontent.com/lism-css/lism-css/main/packages/lism-css/src/scss/trait/has/_snap.scss
-- ドキュメント（人間向け）: https://lism-css.com/docs/trait-class/#has--snap
+- 公式ドキュメント: https://lism-css.com/docs/trait-class.md#has--snap
 
 ## SCSS 定義
 

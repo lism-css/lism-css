@@ -7,7 +7,7 @@
 - [`{prop}` の省略ルール](#prop-の省略ルール)
 - [`{value}` の省略ルール](#value-の省略ルール)
 
-[詳細](https://lism-css.com/docs/naming/)
+[詳細](https://lism-css.com/docs/naming.md)
 
 ---
 

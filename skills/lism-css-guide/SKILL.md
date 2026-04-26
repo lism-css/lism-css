@@ -11,7 +11,7 @@ description: "Lism CSS の設計・実装に関するガイド。CSSの編集・
 
 > **バージョン情報:** このガイドは `lism-css@0.16.0` / `@lism-css/ui@0.16.0` 時点の情報に基づいています。プロジェクトで使用中のバージョンを確認し、このガイドのバージョンと異なる場合はユーザーに通知してください。
 
-公式ドキュメント: https://lism-css.com/docs/overview/
+公式ドキュメント: https://lism-css.com/docs/overview.md
 
 
 ## インストール

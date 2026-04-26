@@ -16,7 +16,7 @@ CSS Layer の外（最も高い詳細度）に配置され、`-{prop}(:{value})`
 - [Property Class の特殊な出力タイプ](#property-class-の特殊な出力タイプ)
 - [Property Class の検索・一括修正](#property-class-の検索一括修正)
 
-[詳細](https://lism-css.com/docs/property-class/)
+[詳細](https://lism-css.com/docs/property-class.md)
 
 個別ドキュメント:
 

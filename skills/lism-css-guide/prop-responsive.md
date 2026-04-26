@@ -8,7 +8,7 @@ Lism CSS はコンテナクエリをデフォルトで採用しています。
 - [HTML / Property Class での指定](#html--property-class-での指定)
 - [Lism コンポーネントでの指定](#lism-コンポーネントでの指定)
 
-[詳細](https://lism-css.com/docs/responsive/)
+[詳細](https://lism-css.com/docs/responsive.md)
 
 ---
 

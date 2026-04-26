@@ -7,7 +7,7 @@
 - クラス名: `has--mask`
 - Lism props: `hasMask`（`<Lism hasMask>` 等）
 - SCSSソース: https://raw.githubusercontent.com/lism-css/lism-css/main/packages/lism-css/src/scss/trait/has/_mask.scss
-- ドキュメント（人間向け）: https://lism-css.com/docs/trait-class/#has--mask
+- 公式ドキュメント: https://lism-css.com/docs/trait-class.md#has--mask
 
 ## SCSS 定義
 

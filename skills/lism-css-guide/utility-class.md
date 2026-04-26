@@ -16,7 +16,7 @@ Lism コンポーネントでの `util` prop による指定方法は [component
 - [Opt-in ユーティリティ](#opt-in-ユーティリティ)
 - [ユーザー定義のユーティリティクラス](#ユーザー定義のユーティリティクラス)
 
-[詳細](https://lism-css.com/docs/utility-class/)
+[詳細](https://lism-css.com/docs/utility-class.md)
 
 ---
 

@@ -7,7 +7,7 @@
 - クラス名: `l--frame`
 - コンポーネント: `<Frame>`
 - SCSSソース: https://raw.githubusercontent.com/lism-css/lism-css/main/packages/lism-css/src/scss/primitives/layout/_frame.scss
-- ドキュメント（人間向け）: https://lism-css.com/docs/primitives/l--frame/
+- 公式ドキュメント: https://lism-css.com/docs/primitives/l--frame.md
 
 ## 専用Props
 
