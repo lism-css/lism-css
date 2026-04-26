@@ -22,7 +22,7 @@ set-- は目的別に 2 カテゴリに分かれます。
 - [`set--var:hov`](#set--varhov)
 - [`set--var:bdrsInner`](#set--varbdrsinner)
 
-[詳細](https://lism-css.com/docs/set-class/)
+[詳細](https://lism-css.com/docs/set-class.md)
 
 ---
 

@@ -7,7 +7,7 @@
 - クラス名: `a--spacer`
 - コンポーネント: `<Spacer>`
 - SCSSソース: https://raw.githubusercontent.com/lism-css/lism-css/main/packages/lism-css/src/scss/primitives/atomic/_spacer.scss
-- ドキュメント（人間向け）: https://lism-css.com/docs/primitives/a--spacer/
+- ドキュメント（人間向け）: https://lism-css.com/docs/primitives/a--spacer.md
 
 ## 専用Props
 

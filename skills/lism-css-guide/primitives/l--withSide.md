@@ -7,7 +7,7 @@
 - クラス名: `l--withSide`
 - コンポーネント: `<WithSide>`
 - SCSSソース: https://raw.githubusercontent.com/lism-css/lism-css/main/packages/lism-css/src/scss/primitives/layout/_withSide.scss
-- ドキュメント（人間向け）: https://lism-css.com/docs/primitives/l--withSide/
+- ドキュメント（人間向け）: https://lism-css.com/docs/primitives/l--withSide.md
 
 ## 動作の仕組み
 

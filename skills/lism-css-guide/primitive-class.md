@@ -10,7 +10,7 @@ Lism CSS では、レイアウトを組み立てる小さな積み木として *
 - [Layout Primitive（`l--`）](#layout-primitivel--)
 - [Atomic Primitive（`a--`）](#atomic-primitivea--)
 
-[詳細](https://lism-css.com/docs/primitives/)
+[詳細](https://lism-css.com/docs/primitives.md)
 
 ---
 

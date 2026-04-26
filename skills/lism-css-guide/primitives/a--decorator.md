@@ -6,7 +6,7 @@
 
 - クラス名: `a--decorator`
 - コンポーネント: `<Decorator>`
-- ドキュメント（人間向け）: https://lism-css.com/docs/primitives/a--decorator/
+- ドキュメント（人間向け）: https://lism-css.com/docs/primitives/a--decorator.md
 
 ## 専用Props
 

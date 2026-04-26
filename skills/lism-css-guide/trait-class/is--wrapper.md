@@ -7,7 +7,7 @@
 - クラス名: `is--wrapper`
 - コンポーネント: `<Wrapper>`
 - SCSSソース: https://raw.githubusercontent.com/lism-css/lism-css/main/packages/lism-css/src/scss/trait/is/_wrapper.scss
-- ドキュメント（人間向け）: https://lism-css.com/docs/trait-class/is--wrapper/
+- ドキュメント（人間向け）: https://lism-css.com/docs/trait-class/is--wrapper.md
 
 ## 使い方
 

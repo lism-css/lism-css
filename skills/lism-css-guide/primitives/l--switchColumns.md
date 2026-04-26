@@ -7,7 +7,7 @@
 - クラス名: `l--switchColumns`
 - コンポーネント: `<SwitchColumns>`
 - SCSSソース: https://raw.githubusercontent.com/lism-css/lism-css/main/packages/lism-css/src/scss/primitives/layout/_switchColumns.scss
-- ドキュメント（人間向け）: https://lism-css.com/docs/primitives/l--switchColumns/
+- ドキュメント（人間向け）: https://lism-css.com/docs/primitives/l--switchColumns.md
 
 ## 専用Props
 

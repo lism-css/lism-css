@@ -20,7 +20,7 @@ import { Lism, Box, Flex, Stack, Grid, Text, Media } from 'lism-css/astro';
 - [Layout Primitives](#layout-primitives)
 - [`getLismProps()`](#getlismprops--外部コンポーネントとの連携)
 
-[詳細](https://lism-css.com/docs/core-components/lism-props/)
+[詳細](https://lism-css.com/docs/core-components/lism-props.md)
 
 ---
 
