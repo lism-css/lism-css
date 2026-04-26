@@ -138,7 +138,7 @@ unified パイプラインを以下の順で適用する。
 
 ## 現在の出力（PR #331 時点）
 
-- 152 件の `.md` ファイル（各ファイル冒頭に YAML frontmatter 付与）
+- 194 件の `.md` ファイル（各ファイル冒頭に YAML frontmatter 付与）
 - `dist/llms.txt` 76 エントリ（4 セクション）
 - スキップ 2 件（`/ui/` / `/en/ui/` のインデックスページ — `data-pagefind-body` 不在のため意図通り）
 
