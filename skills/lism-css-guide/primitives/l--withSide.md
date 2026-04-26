@@ -81,6 +81,28 @@
 </div>
 ```
 
+### メディアとテキストが交互に並ぶレイアウト
+
+`l--withSide` は「メディア + テキスト」のペアを複数並べて、横並びの時はメディアの位置（左右）が交互に切り替わりつつも、縦並びの時はメディアが上側に統一されるレイアウトにも活用できる。
+
+```jsx
+<Stack isContainer g="40">
+  <WithSide sideW="40%" g="30" ai="center">
+    <Frame ar="3/2" isSide max-h="50cqw">
+      <img src="..." alt="" width="960" height="640" />
+    </Frame>
+    <Box px="10">本文テキスト...</Box>
+  </WithSide>
+
+  <WithSide fxd="row-reverse" sideW="40%" g="30" ai="center">
+    <Frame ar="3/2" isSide max-h="50cqw">
+      <img src="..." alt="" width="960" height="640" />
+    </Frame>
+    <Box px="10">本文テキスト...</Box>
+  </WithSide>
+</Stack>
+```
+
 ## `l--grid` との使い分け
 
 - **`l--withSide`**: ブレイクポイントに依存せず、コンテンツ幅で自動切り替え

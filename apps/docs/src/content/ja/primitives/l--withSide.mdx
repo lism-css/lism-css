@@ -3,7 +3,7 @@ title: 'WithSide (l--withSide)'
 navtitle: 'l--withSide'
 description: 'l--withSide は、維持したいコンテンツの長さを基準にして、横並び・縦並びが自動で切り替わる2カラムレイアウトのクラスです。'
 ---
-import { WithSide, Grid, Box } from 'lism-css/astro';
+import { WithSide, Grid, Box, Frame, Stack } from 'lism-css/astro';
 import { DummyText } from '@lism-css/ui/astro';
 
 `l--withSide` は、メディアクエリ・コンテナクエリに依存せず、**維持したいコンテンツの長さを基準にして横並び・縦並びが自動で切り替わる2カラムレイアウト**のクラスです。
@@ -130,6 +130,78 @@ div.l--withSide
         <p>Lorem ipsum dolor sit amet, ...</p>
       </div>
       <div class="l--box is--side">Side Content</div>
+    </div>
+    ```
+  </PreviewCode>
+</Preview>
+
+### メディアとテキストが交互に並ぶレイアウト
+
+画面が広い時はメディアとテキストが横並びで、画面が狭い時はメディアとテキストが縦並びになるようなレイアウトにも `l--withSide` を使うことができます。  
+
+特に、それらの組み合わせ（メディア＋本文）が複数並んで横並びの時にメディアの位置（左右）が交互に切り替わりつつも、縦並びになる時はメディアが上側に統一されるようなレイアウトで便利です。
+
+<Preview>
+  <PreviewTitle>例</PreviewTitle>
+  <PreviewArea resize p="20">
+    <Stack isContainer g="40">
+      <WithSide sideW="40%" g="30" ai="center">
+        <Frame ar="3/2" isSide max-h="50cqw">
+          <img src="https://cdn.lism-css.com/img/a-1.jpg" alt="" width="960" height="640" />
+        </Frame>
+        <Box px="10"><DummyText lang="ja" /></Box>
+      </WithSide>
+
+      <WithSide fxd="row-reverse" sideW="40%" g="30" ai="center">
+        <Frame ar="3/2" isSide max-h="50cqw">
+          <img src="https://cdn.lism-css.com/img/a-2.jpg" alt="" width="960" height="640" />
+        </Frame>
+        <Box px="10"><DummyText lang="ja" /></Box>
+      </WithSide>
+    </Stack>
+  </PreviewArea>
+  <PreviewCode slot="tab" label="JSX">
+    ```jsx
+    <Stack isContainer g="40">
+      <WithSide sideW="40%" g="30" ai="center">
+        <Frame ar="3/2" isSide max-h="50cqw">
+          <img src="https://cdn.lism-css.com/img/a-1.jpg" alt="" width="960" height="640" />
+        </Frame>
+        <Box px="10">ロレム・イプサムの座り雨。目まぐるしい文章の流れの中で、それは静かに歩く仮の言葉です。Elitも穏やかに続いていきますが、積み重ねられてきた「LiberroyとFoogの取り組み」は、余白のようなものです。</Box>
+      </WithSide>
+
+      <WithSide fxd="row-reverse" sideW="40%" g="30" ai="center">
+        <Frame ar="3/2" isSide max-h="50cqw">
+          <img src="https://cdn.lism-css.com/img/a-2.jpg" alt="" width="960" height="640" />
+        </Frame>
+        <Box px="10">ロレム・イプサムの座り雨。目まぐるしい文章の流れの中で、それは静かに歩く仮の言葉です。Elitも穏やかに続いていきますが、積み重ねられてきた「LiberroyとFoogの取り組み」は、余白のようなものです。</Box>
+      </WithSide>
+    </Stack>
+    ```
+  </PreviewCode>
+  <PreviewCode slot="tab" label="HTML">
+    ```html
+    <div class="l--stack is--container -g:40">
+      <div class="l--withSide -g:30 -ai:center" style="--sideW:40%">
+        <div class="l--frame is--side -ar:3/2 -max-h" style="--max-h:50cqw">
+          <img src="https://cdn.lism-css.com/img/a-1.jpg" alt="" width="960" height="640" />
+        </div>
+        <div class="l--box -px:10">
+          <p>
+            ロレム・イプサムの座り雨。目まぐるしい文章の流れの中で、それは静かに歩く仮の言葉です。Elitも穏やかに続いていきますが、積み重ねられてきた「LiberroyとFoogの取り組み」は、余白のようなものです。
+          </p>
+        </div>
+      </div>
+      <div class="l--withSide -fxd:row-reverse -g:30 -ai:center" style="--sideW:40%">
+        <div class="l--frame is--side -ar:3/2 -max-h" style="--max-h:50cqw">
+          <img src="https://cdn.lism-css.com/img/a-2.jpg" alt="" width="960" height="640" />
+        </div>
+        <div class="l--box -px:10">
+          <p>
+            ロレム・イプサムの座り雨。目まぐるしい文章の流れの中で、それは静かに歩く仮の言葉です。Elitも穏やかに続いていきますが、積み重ねられてきた「LiberroyとFoogの取り組み」は、余白のようなものです。
+          </p>
+        </div>
+      </div>
     </div>
     ```
   </PreviewCode>
