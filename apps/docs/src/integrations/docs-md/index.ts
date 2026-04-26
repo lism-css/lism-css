@@ -9,7 +9,7 @@
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import type { AstroIntegration } from 'astro';
-import { convertHtmlToMd } from './convert-html-to-md';
+import { ArticleNotFoundError, convertHtmlToMd } from './convert-html-to-md';
 import { buildLlmsTxt } from './build-llms-txt';
 
 // 変換対象のパスプレフィックス。templates / demo / preview / page-layout / og 等は対象外
@@ -47,7 +47,7 @@ export default function docsMd(): AstroIntegration {
       'astro:build:done': async ({ dir, pages, logger }) => {
         const distDir = fileURLToPath(dir);
         let success = 0;
-        let failed = 0;
+        let skipped = 0;
 
         const targets = pages.filter((p) => isTargetPage(p.pathname));
         await Promise.all(
@@ -57,13 +57,19 @@ export default function docsMd(): AstroIntegration {
               await convertHtmlToMd(html, md, { siteUrl });
               success++;
             } catch (err) {
-              // article[data-pagefind-body] が無いページ（インデックスページ等）はここでスキップ
-              logger.warn(`skipped ${rel}: ${(err as Error).message}`);
-              failed++;
+              // 記事本文 (article[data-pagefind-body]) 不在のページ（リダイレクト先・インデックス等）のみ skip
+              if (err instanceof ArticleNotFoundError) {
+                logger.warn(`skipped ${rel}: ${err.message}`);
+                skipped++;
+                return;
+              }
+              // それ以外（rehype プラグインの TypeError、I/O 失敗、HTML パス不整合など）は build を失敗させる
+              logger.error(`failed ${rel}: ${(err as Error).message}`);
+              throw err;
             }
           })
         );
-        logger.info(`generated ${success} markdown files (${failed} skipped)`);
+        logger.info(`generated ${success} markdown files (${skipped} skipped)`);
 
         await buildLlmsTxt({
           contentDir: contentEnDir,
