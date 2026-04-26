@@ -11,6 +11,7 @@ import { fileURLToPath } from 'node:url';
 import type { AstroIntegration } from 'astro';
 import { ArticleNotFoundError, convertHtmlToMd } from './convert-html-to-md';
 import { buildLlmsTxt } from './build-llms-txt';
+import { buildUiIndexMd } from './build-ui-index-md';
 
 // 変換対象のパスプレフィックス。templates / demo / preview / page-layout / og 等は対象外
 const INCLUDE_PREFIXES = ['docs/', 'ui/', 'en/docs/', 'en/ui/'];
@@ -32,6 +33,7 @@ function pageToPaths(pathname: string, distDir: string): { html: string; md: str
 export default function docsMd(): AstroIntegration {
   let siteUrl = '';
   let contentEnDir = '';
+  let contentJaDir = '';
   return {
     name: 'docs-md',
     hooks: {
@@ -42,7 +44,9 @@ export default function docsMd(): AstroIntegration {
           throw new Error('docs-md integration requires `site` to be set in astro.config');
         }
         siteUrl = config.site;
-        contentEnDir = path.join(fileURLToPath(config.srcDir), 'content/en');
+        const srcDir = fileURLToPath(config.srcDir);
+        contentEnDir = path.join(srcDir, 'content/en');
+        contentJaDir = path.join(srcDir, 'content/ja');
       },
       'astro:build:done': async ({ dir, pages, logger }) => {
         const distDir = fileURLToPath(dir);
@@ -70,6 +74,24 @@ export default function docsMd(): AstroIntegration {
           })
         );
         logger.info(`generated ${success} markdown files (${skipped} skipped)`);
+
+        // /ui/ と /en/ui/ の一覧ページは `data-pagefind-body` を持たないため上の変換では skip される。
+        // 個別 UI 詳細ページ (.md) へのリンク集として独立して生成する。
+        const baseUrl = siteUrl.replace(/\/$/, '');
+        await buildUiIndexMd({
+          htmlPath: path.join(distDir, 'ui/index.html'),
+          outputPath: path.join(distDir, 'ui.md'),
+          uiContentDir: path.join(contentJaDir, 'ui'),
+          uiUrlPrefix: `${baseUrl}/ui/`,
+          logger,
+        });
+        await buildUiIndexMd({
+          htmlPath: path.join(distDir, 'en/ui/index.html'),
+          outputPath: path.join(distDir, 'en/ui.md'),
+          uiContentDir: path.join(contentEnDir, 'ui'),
+          uiUrlPrefix: `${baseUrl}/en/ui/`,
+          logger,
+        });
 
         await buildLlmsTxt({
           contentDir: contentEnDir,
