@@ -102,7 +102,9 @@ Lism CSS側が用意しているトークン値と異なるものを書かない
 
 ### `is--container` 祖先なしで BP 値を使用
 
-レスポンシブ値（配列・オブジェクト・`-{prop}_{bp}` クラス）は `@container` クエリで発火するため、祖先要素のいずれかに `is--container`（コンポーネントなら `isContainer` prop）が必須。
+レスポンシブ値（配列・オブジェクト・`-{prop}_{bp}` クラス）は、デフォルト設定（SCSS 側 `$is_container_query: 1`）では `@container` クエリで発火するため、祖先要素のいずれかに `is--container`（コンポーネントなら `isContainer` prop）が必須。
+
+※ プロジェクトの SCSS 設定で `$is_container_query: 0` にして `@media` クエリ運用に切り替えている場合は、`is--container` 祖先は不要。
 
 ```jsx
 // NG: container 祖先がないので sm/md 値が発火しない
@@ -118,9 +120,22 @@ Lism CSS側が用意しているトークン値と異なるものを書かない
 
 ### BP 専用クラスをベース値なしで使う
 
+BP 専用クラス（`-{prop}_{bp}`）やコンポーネントの BP キー（`{ sm: ... }` 等）だけを指定すると、BP 未満では値が空になり意図しないレイアウト崩れを起こす。必ずベース値とセットで指定する。
+
+```jsx
+// NG: sm 未満で p が未指定になる
+<Box p={{ sm: 30 }}>...</Box>
+
+// OK: ベース値（base / 配列の先頭）を必ず添える
+<Box p={{ base: 20, sm: 30 }}>...</Box>
+<Box p={[20, 30]}>...</Box>
+```
+
+生 HTML / クラス指定で書く場合も同様：
+
 | NG | OK | 理由 |
 |---|---|---|
-| `<div class="-p_sm" style="--p_sm: var(--s30)">` | `<div class="-p:20 -p_sm" style="--p_sm: var(--s30)">` | BP 以下では値が空になるため、ベースクラス `-{prop}:{value}` も必要 |
+| `<div class="-p_sm" style="--p_sm: var(--s30)">` | `<div class="-p:20 -p_sm" style="--p_sm: var(--s30)">` | BP 未満では値が空になるため、ベースクラス `-{prop}:{value}` も必要 |
 
 ### ブレイクポイントの誤用
 
