@@ -73,10 +73,11 @@ export function toUrl(rel: string, siteUrl: string): string {
   // Astro の Content Collection と同じ slug 正規化を適用する。
   // primitives/ と trait-class/ のみ casing を保持し、それ以外は小文字化されるため、
   // ここで揃えないと llms.txt のリンクが case-sensitive 環境で 404 になる。
+  // llms.txt の慣習に従い、HTML ページではなく .md バージョンを指す。
   const slug = toContentSlug(rel.replace(/\.mdx$/, ''));
   const base = siteUrl.replace(/\/$/, '');
-  if (rel.startsWith('ui/')) return `${base}/en/${slug}/`;
-  return `${base}/en/docs/${slug}/`;
+  if (rel.startsWith('ui/')) return `${base}/en/${slug}.md`;
+  return `${base}/en/docs/${slug}.md`;
 }
 
 async function listMdxFiles(dir: string): Promise<string[]> {

@@ -106,8 +106,10 @@ unified パイプラインを以下の順で適用する。
 
 ### URL 生成（`toUrl()`）
 
-- `ui/Xxx.mdx` → `{siteUrl}/en/ui/Xxx/`
-- それ以外 → `{siteUrl}/en/docs/{slug}/`
+llms.txt の慣習に従い、HTML ページではなく `.md` バージョンを指す。
+
+- `ui/Xxx.mdx` → `{siteUrl}/en/ui/{slug}.md`
+- それ以外 → `{siteUrl}/en/docs/{slug}.md`
 
 ### 出力形式
 
