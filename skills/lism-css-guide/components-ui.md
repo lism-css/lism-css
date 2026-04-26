@@ -27,7 +27,7 @@ import { Accordion, Tabs, Modal, Button } from '@lism-css/ui/astro';
 - [DummyText](#dummytext)
 - [CLI でプロジェクトにコピーして使う](#cli-でプロジェクトにコピーして使う)
 
-[詳細](https://lism-css.com/ui/)
+[詳細](https://lism-css.com/ui.md)
 
 ---
 
