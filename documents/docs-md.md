@@ -49,11 +49,12 @@ unified パイプラインを以下の順で適用する。
 | 4 | `rehype-strip-noise` | `nav.c--postNav` / `<script>` / `<style>` / `data-astro-cid-*` / `c--copyBtn` / `c--urlCopyBtn` 等のノイズを除去 |
 | 5 | `rehype-preview` | `c--preview_area` / `c--preview_help` / `c--tabs_list` / `__decorator` / `c--preview_title` 等のプレビュー UI を除去 |
 | 6 | `rehype-code-language` | `<pre data-language="X">` の言語名を `<code class="language-X">` に転記 |
-| 7 | `rehype-callouts` | `c--callout` を GFM Alert（`> [!NOTE]` 等）に変換 |
-| 8 | `rehype-absolute-urls` | `/foo` 形式のルート相対 URL を `{siteUrl}/foo` に展開 |
-| 9 | `rehype-remark` | hast → mdast に変換 |
-| 10 | `remark-gfm` | GFM 拡張を有効化 |
-| 11 | `remark-stringify` | mdast → Markdown 文字列化（`bullet: '-'`, `rule: '-'`, `fences: true`, `incrementListMarker: false`） |
+| 7 | `rehype-docs-link` | `<a class="c--docsLink">` の中身をタイトル text のみに畳み込む（タイトル + 説明文の二重出力を抑止） |
+| 8 | `rehype-callouts` | `c--callout` を GFM Alert（`> [!NOTE]` 等）に変換 |
+| 9 | `rehype-absolute-urls` | `/foo` 形式のルート相対 URL を `{siteUrl}/foo` に展開 |
+| 10 | `rehype-remark` | hast → mdast に変換 |
+| 11 | `remark-gfm` | GFM 拡張を有効化 |
+| 12 | `remark-stringify` | mdast → Markdown 文字列化（`bullet: '-'`, `rule: '-'`, `fences: true`, `incrementListMarker: false`） |
 
 ### Callout 種別マッピング
 
@@ -137,7 +138,7 @@ unified パイプラインを以下の順で適用する。
 
 ## 現在の出力（PR #331 時点）
 
-- 194 件の `.md` ファイル（各ファイル冒頭に YAML frontmatter 付与）
+- 152 件の `.md` ファイル（各ファイル冒頭に YAML frontmatter 付与）
 - `dist/llms.txt` 76 エントリ（4 セクション）
 - スキップ 2 件（`/ui/` / `/en/ui/` のインデックスページ — `data-pagefind-body` 不在のため意図通り）
 
@@ -153,6 +154,7 @@ apps/docs/src/integrations/docs-md/
 ├── rehype-preview.ts         # プレビュー UI 除去
 ├── rehype-code-language.ts   # コード言語名の転写
 ├── rehype-callouts.ts        # callout → GFM Alert
+├── rehype-docs-link.ts       # c--docsLink の中身をタイトルのみに畳み込み
 ├── rehype-extract-meta.ts    # <head> メタ抽出
 ├── rehype-absolute-urls.ts   # ルート相対 URL → 絶対 URL
 └── util.ts                   # 共通ユーティリティ
