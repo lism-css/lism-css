@@ -7,6 +7,11 @@ packages:
 overrides:
   '@vitest/expect': $vitest
   '@vitest/spy': $vitest
+  # セキュリティ: Dependabot alert 対応（推移的依存の patch 更新）
+  'vite@<6.4.2': '^6.4.2' # GHSA: Arbitrary File Read / Path Traversal (#81, #88)
+  'vite@>=7 <7.3.2': '^7.3.2' # GHSA: Arbitrary File Read / fs.deny bypass / Path Traversal (#78, #79, #80)
+  'hono@<4.12.14': '^4.12.14' # GHSA: HTML injection / cookie / IP / path traversal 等 (#83-#89)
+  '@hono/node-server@<1.19.13': '^1.19.13' # GHSA: Middleware bypass via repeated slashes (#82)
 
 # ビルドスクリプトの実行を許可するパッケージ (pnpm 10 で必要になった)
 onlyBuiltDependencies:
