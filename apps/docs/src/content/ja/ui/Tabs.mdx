@@ -149,11 +149,6 @@ import './_opt-in/_tabs-keep-height.css'
 
 
 ### タブコンテンツを横並び配置にする
-{/* if (isHorizontal) {
-  defaultProps.gd = [null, 'var(--gd--hz)'];
-  _listProps.fxd = [null, 'column'];
-}*/}
-
 `<Tabs.Root>`(`c--tabs`)に`grid-template:'list panel' auto / auto 1fr;` を指定すると、タブリストとコンテンツが横並びになります。
 
 それと同時に、タブリスト(`c--tabs_list`)のボタンを縦並び（`flex-direction:column;`）に変更すると、以下のようなレイアウトが実現できます。
@@ -344,4 +339,3 @@ import './_opt-in/_tabs-keep-height.css'
     ```
   </PreviewCode>
 </Preview>
-

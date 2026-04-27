@@ -37,30 +37,30 @@ To address the common problem of CSS specificity becoming overly complex, Lism d
       <td>SASS configuration variables, mixins, and other constructs that do not directly output styles.</td>
     </tr>
     <tr>
-      <td>Base<br/>`@lism-base`</td>
+      <td>Base<br/>`lism-base`</td>
       <td>The layer for Reset CSS, token definitions, variable sets, and initial element styles.<br/>`set--{state}` classes are also defined here.</td>
     </tr>
     <tr>
-      <td class='-whs:nowrap'>Trait<br/>`@lism-trait`</td>
+      <td class='-whs:nowrap'>Trait<br/>`lism-trait`</td>
       <td>The layer for classes that declaratively attach a role or feature to an element (`is--{name}`, `has--{name}`).</td>
     </tr>
     <tr>
-      <td class='-whs:nowrap'>Primitives<br/>`@lism-primitive`</td>
+      <td class='-whs:nowrap'>Primitives<br/>`lism-primitive`</td>
       <td>
         The layer for Primitives — the building blocks for composing layouts.<br />
         `l--{layout}` and `a--{atomic}` are defined here.
       </td>
     </tr>
     <tr>
-      <td class='-whs:nowrap'>Components<br/>`@lism-component`</td>
+      <td class='-whs:nowrap'>Components<br/>`lism-component`</td>
       <td>The layer for UI components with BEM-like structure (`c--{name}`). Not included in the core `lism-css` — `@lism-css/ui` and user-defined `c--*` classes belong here.</td>
     </tr>
     <tr>
-      <td class='-whs:nowrap'>Custom<br/>`@lism-custom`</td>
+      <td class='-whs:nowrap'>Custom<br/>`lism-custom`</td>
       <td>A customization layer for overriding existing Lism classes or for user-defined classification classes with custom prefixes (`z--{zone}`, `p--{page}`, etc.).</td>
     </tr>
     <tr>
-      <td class='-whs:nowrap'>Utility<br/>`@lism-utility`</td>
+      <td class='-whs:nowrap'>Utility<br/>`lism-utility`</td>
       <td>The layer for utility classes with a clear purpose or style (`u--{name}`).</td>
     </tr>
     <tr>
@@ -89,7 +89,7 @@ This section explains the design philosophy behind the core class groups in Lism
 
 ### Set Class
 
-**Set Classes** are utility classes defined within the `@lism-base` layer. They are used for HTML element base styling or for setting variables.
+**Set Classes** are utility classes defined within the `lism-base` layer. They are used for HTML element base styling or for setting variables.
 
 | Category | Format | Example |
 |---|---|---|

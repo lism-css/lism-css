@@ -40,7 +40,7 @@ import { DummyText } from '@lism-css/ui/astro';
 
 | プロパティ | 説明 |
 |---|---|
-| `flow` | `--flow` の値を指定できます。<br />`s`, `l` を指定した場合、`-flow:{s\|l}` クラスが付与されます。|
+| `flow` | `--flow` の値を指定できます。<br />`s` を指定した場合は `-flow:s` クラスが付与され、それ以外の値は `-flow:` クラスと `--flow` 変数で出力されます。|
 
 
 ## Usage
@@ -167,7 +167,7 @@ import { DummyText } from '@lism-css/ui/astro';
   </PreviewCode>
 </Preview>
 
-`l--flow`は`--flow`が未定義であれば`--flow--base`がセットされますが、ネストされていると親の値を継承されることに注意してください。
+`l--flow`は`--flow`が未定義であれば`--flow--base`がセットされますが、ネストされていると親の値を継承することに注意してください。
 
 
 ### `is--skipFlow`

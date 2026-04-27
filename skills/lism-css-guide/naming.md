@@ -75,8 +75,8 @@
 | `has--` | 〜を持つ（単一機能 trait の付与）。CSS 変数でカスタマイズ可 | `has--transition`, `has--gutter`, `has--snap`, `has--mask` |
 | `u--` | 装飾的効果（単独 or 子要素の装飾） | `u--trim`, `u--cbox`, `u--divide`, `u--cells` |
 
-- `set--` は `@lism-base` 層で HTML 要素の基礎スタイル・変数を提供するもの。
-- `is--` / `has--` は `@lism-trait` 層に属する。
+- `set--` は `lism-base` 層で HTML 要素の基礎スタイル・変数を提供するもの。
+- `is--` / `has--` は `lism-trait` 層に属する。
 
 Property Class の形式:
 

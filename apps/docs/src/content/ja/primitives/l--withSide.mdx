@@ -44,7 +44,7 @@ div.l--withSide
 
 ## Usage
 
-`is--side`の横幅を`--sideW`で指定した値に固定しつつ、もう一方のメイン要素が`--mainW`で指定した横幅を下回るようになると、自動で1カラムに切り替わるようになっています。
+`is--side`の基準幅を`--sideW`で指定しつつ、もう一方のメイン要素が`--mainW`で指定した横幅を下回るようになると、自動で1カラムに切り替わるようになっています。
 
 ### 使用例
 
@@ -236,7 +236,7 @@ div.l--withSide
     ```
   </PreviewCode>
   <PreviewCode slot="tab" label="HTML">
-    ```html "-gd -gd_sm" "'. side' / 1fr 10rem" "-ga" "--ga:side"
+    ```html "-gta -gta_sm -gtc_sm" "'. side' / 1fr 10rem" "-ga" "--ga:side"
     <div class="l--grid -gta -gta_sm -gtc_sm -g:20" style="--gta: '.' 'side'; --gta_sm: '. side'; --gtc_sm: 1fr 10rem">
       <div class="l--box">
         <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit, sed do eiusmod tempor. Non facere laudantium ex eos doloribus aut dolore nisi.</p>

@@ -6,7 +6,7 @@ import { Lism, Box, Media, Flex, Stack, Spacer, Frame, Text } from 'lism-css/ast
 import { Button } from '@lism-css/ui/astro';
 
 
-Utility classes defined in the `@lism-base` layer are provided in the format `set--{className}`. They are used for HTML element base styling or for setting variables.
+Utility classes defined in the `lism-base` layer are provided in the format `set--{className}`. They are used for HTML element base styling or for setting variables.
 
 The set-- classes fall into two categories:
 
@@ -174,11 +174,11 @@ Using `var(--_isHov, ...) var(--_notHov, ...)` allows you to **write both hover 
 `}>
   <PreviewTitle>Preview of `-hov:test`</PreviewTitle>
   <PreviewArea p="30">
-    <div className="set--var:hov -hov:test -p:30 -bd -bdc:current ">BOX</div>
+    <div class="set--var:hov -hov:test -p:30 -bd -bdc:current ">BOX</div>
   </PreviewArea>
   <PreviewCode>
     ```html "set--var:hov -hov:test"
-    <div className="set--var:hov -hov:test -p:30 -bd -bdc:current ">BOX</div>
+    <div class="set--var:hov -hov:test -p:30 -bd -bdc:current ">BOX</div>
     ```
   </PreviewCode>
 </Preview>

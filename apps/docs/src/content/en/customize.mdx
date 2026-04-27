@@ -47,7 +47,7 @@ After defining your overrides, import `lism-css/scss/main.scss` to apply the cus
   $breakpoints: (
     ...,
   ),
-  $common_support_bp: 'sm|md|lg',
+  $common_support_bp: 'md', // 'sm' | 'md' | 'lg'
   $is_container_query: 1|0,
   $default_important: 0|1,
   $props: (
@@ -208,7 +208,7 @@ With the above customization, the following behavior is added to Lism components
   ```jsx
   <Box p="box" d="flex" bdrs="5" isHoge>Box</Box>
 
-  ↓　Output
+  ↓ Output
 
   <div class="l--box is--hoge -p:box -d:flex -bdrs:5">Box</div>
   ```

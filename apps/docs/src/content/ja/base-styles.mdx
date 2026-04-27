@@ -1,17 +1,17 @@
 ---
 title: 'Base Styles'
-description: '@lism-base レイヤーで定義される Reset CSS やHTML要素のベーススタイルについて解説します。'
+description: 'lism-base レイヤーで定義される Reset CSS やHTML要素のベーススタイルについて解説します。'
 ---
 import { Box, Lism, Stack, Flex, Container, Frame, Center, Spacer, Media } from 'lism-css/astro';
 import { Button, DummyText } from '@lism-css/ui/astro';
 
 
-`@lism-base`レイヤーで定義されるベーススタイルを紹介します。
+`lism-base`レイヤーで定義されるベーススタイルを紹介します。
 
 
 ## Reset CSS
 
-Reset CSS を`@lism-base.reset` レイヤーとして定義しています。
+Reset CSS を`lism-base.reset` レイヤーとして定義しています。
 
 <PreviewTitle>ソースコード</PreviewTitle>
 <SrcCode path="src/scss/reset.scss" />
@@ -40,7 +40,7 @@ import 'lism-css/reset.css';
 
 ## Base styles
 
-Reset CSS のほか、`@lism-base`レイヤーでは、`:root`で定義したトークンを活用しつつHTMLタグのデフォルトベーススタイルを定義しています。
+Reset CSS のほか、`lism-base`レイヤーでは、`:root`で定義したトークンを活用しつつHTMLタグのデフォルトベーススタイルを定義しています。
 
 
 <PreviewTitle>ソースコード</PreviewTitle>
@@ -263,7 +263,7 @@ th {
 | `--th-p` | `var(--td-p)` | 見出しセルのパディング |
 | `--th-min-sz` | `var(--td-min-sz)` | 見出しセルの最小幅 |
 
-`th` は `td` の変数をフォールバックとして参照するため、`table` で `--td-*` を設定すれば `th` にも反映されます。　　
+`th` は `td` の変数をフォールバックとして参照するため、`table` で `--td-*` を設定すれば `th` にも反映されます。
 それぞれ個別に変更したい場合は `--th-*` を指定してください。
 
 
@@ -316,4 +316,3 @@ input, button, textarea, select, ::file-selector-button {
 <Button href="/demo/html-base-style" variant="fill" target="_blank" bdrs="10" w="fit" mx="auto">
   大きい画面で見る
 </Button>
-

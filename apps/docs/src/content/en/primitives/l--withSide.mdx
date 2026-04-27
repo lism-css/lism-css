@@ -44,7 +44,7 @@ div.l--withSide
 ## Usage
 
 A child element with `is--side` is required.
-The side element's width is fixed to the value set by `--sideW`. When the main element's width falls below `--mainW`, the layout automatically switches to a single column.
+The side element uses `--sideW` as its base width. When the main element's width falls below `--mainW`, the layout automatically switches to a single column.
 
 ### Usage example
 
@@ -235,7 +235,7 @@ This is especially useful when multiple "media + text" pairs are stacked, and yo
     ```
   </PreviewCode>
   <PreviewCode slot="tab" label="HTML">
-    ```html "-gd -gd_sm" "'. side' / 1fr 10rem" "-ga" "--ga:side"
+    ```html "-gta -gta_sm -gtc_sm" "'. side' / 1fr 10rem" "-ga" "--ga:side"
     <div class="l--grid -gta -gta_sm -gtc_sm -g:20" style="--gta: '.' 'side'; --gta_sm: '. side'; --gtc_sm: 1fr 10rem">
       <div class="l--box">
         <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit, sed do eiusmod tempor. Non facere laudantium ex eos doloribus aut dolore nisi.</p>
