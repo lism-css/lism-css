@@ -6,6 +6,7 @@ CSS Layer の外（最も高い詳細度）に配置され、`-{prop}(:{value})`
 ## TOC
 
 - [基本書式](#基本書式)
+  - [プリセット外の値をクラス化する（`:value` 記法、Lism Props 限定）](#プリセット外の値をクラス化するvalue-記法lism-props-限定)
 - [表の読み方](#表の読み方)
 - [全 Prop 一覧](#全-prop-一覧)
 - [特殊な Property Class](#特殊な-property-class)
@@ -44,6 +45,16 @@ CSS Layer の外（最も高い詳細度）に配置され、`-{prop}(:{value})`
 <!-- カスタム値: .-{prop} クラス + --{prop} 変数 -->
 <div class="-w" style="--w: 200px">...</div>
 <div class="-gtc" style="--gtc: 1fr 2fr 1fr">...</div>
+```
+
+
+### プリセット外の値をクラス化する（`:value` 記法、Lism Props 限定）
+
+Lism コンポーネントの Propsに渡す値の頭に `:` を付けると、 **強制的に Property Class を出力**できる。cssを追記してトークン値を独自に増やした場合などに活用できる。
+
+```jsx
+<Text lts=":xl">...</Text>
+// → <p class="-lts:xl">...</Text>
 ```
 
 
