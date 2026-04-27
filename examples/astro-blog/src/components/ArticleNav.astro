@@ -1,0 +1,51 @@
+---
+import { Lism, Grid, Link, Stack } from 'lism-css/astro';
+
+interface NavItem {
+  title: string;
+  slug: string;
+}
+interface Props {
+  prev?: NavItem;
+  next?: NavItem;
+}
+
+const { prev, next } = Astro.props;
+---
+
+<Lism bd-t pt="30" mt="40" ff="accent">
+  <Grid gtc="1fr 1fr" g="30">
+    {
+      prev ? (
+        <Link href={`/posts/${prev.slug}/`} td="none" c="inherit" hov={{ c: 'keycolor' }} d="block">
+          <Stack g="10">
+            <Lism class="c--eyebrow" fz="10px">
+              ← PREVIOUS
+            </Lism>
+            <Lism ff="base" fz="s" fw="500" lh="s">
+              {prev.title}
+            </Lism>
+          </Stack>
+        </Link>
+      ) : (
+        <span />
+      )
+    }
+    {
+      next ? (
+        <Link href={`/posts/${next.slug}/`} td="none" c="inherit" hov={{ c: 'keycolor' }} d="block" ta="right">
+          <Stack g="10">
+            <Lism class="c--eyebrow" fz="10px">
+              NEXT →
+            </Lism>
+            <Lism ff="base" fz="s" fw="500" lh="s">
+              {next.title}
+            </Lism>
+          </Stack>
+        </Link>
+      ) : (
+        <span />
+      )
+    }
+  </Grid>
+</Lism>

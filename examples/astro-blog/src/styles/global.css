@@ -1,0 +1,260 @@
+@import 'lism-css/main.css';
+
+/* === ブログテンプレート用にトークン値・ベース値を上書き === */
+@layer lism-base {
+  :root {
+    /* 紙面のような淡いクリーム色をベースに */
+    --base: #fbfaf7;
+    --base-2: #ffffff;
+    --text: #1a1a1a;
+    --text-2: #4a4a4a;
+    --divider: #e8e6e1;
+    /* キーカラー（タグ・アクセント・リンク） */
+    --keycolor: #c8553d;
+    --link: #c8553d;
+
+    /* 本文は明朝、UI は ゴシック */
+    --ff--base: 'Noto Serif JP', 'Hiragino Mincho ProN', 'Yu Mincho', serif;
+    --ff--accent: 'Noto Sans JP', 'Hiragino Kaku Gothic ProN', 'Yu Gothic', sans-serif;
+
+    /* 行間と読み心地の調整 */
+    --lh--base: 1.85;
+  }
+}
+
+/* === ベースタイポ調整 === */
+@layer lism-base {
+  body {
+    font-feature-settings: 'palt' 1;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* 控えめテキスト */
+  .c--muted {
+    color: var(--text-2);
+    opacity: 0.85;
+  }
+
+  /* ボタン共通 cursor */
+  button {
+    cursor: pointer;
+  }
+}
+
+/* === ブログ用のコンポーネント === */
+@layer lism-component {
+  /* eyebrow（記事タイトル上の小さなラベル） */
+  .c--eyebrow {
+    font-family: var(--ff--accent);
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    color: var(--text-2);
+    text-transform: uppercase;
+  }
+
+  /* 日付（横並びの細いラベル） */
+  .c--date {
+    font-family: var(--ff--accent);
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    color: var(--text-2);
+  }
+
+  /* カテゴリーラベル */
+  .c--cat {
+    font-family: var(--ff--accent);
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    color: var(--keycolor);
+    text-transform: uppercase;
+  }
+
+  /* タグ pill */
+  .c--tag {
+    display: inline-block;
+    font-family: var(--ff--accent);
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    padding: 3px 10px;
+    border: 1px solid var(--divider);
+    border-radius: 2px;
+    color: var(--text-2);
+    background: var(--base-2);
+    text-transform: uppercase;
+  }
+  .c--tag.is--solid {
+    background: var(--text);
+    color: var(--base-2);
+    border-color: var(--text);
+  }
+
+  /* === 記事一覧（縦リスト） === */
+  .c--postList {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .c--postList > li {
+    padding-block: var(--s30);
+    border-block-end: 1px solid var(--divider);
+  }
+  .c--postList > li:first-child {
+    border-block-start: 1px solid var(--divider);
+  }
+  .c--postList a {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+    transition: opacity 0.2s;
+  }
+  .c--postList a:hover {
+    opacity: 0.7;
+  }
+
+  /* === 記事本文タイポ === */
+  .c--articleBody {
+    font-size: 15px;
+    line-height: 1.95;
+    color: var(--text);
+  }
+  .c--articleBody h2 {
+    font-size: 22px;
+    font-weight: 600;
+    margin-block: var(--s50) var(--s20);
+    padding-block-end: var(--s15);
+    border-block-end: 1px solid var(--divider);
+    letter-spacing: 0.02em;
+    scroll-margin-block-start: var(--s30);
+  }
+  .c--articleBody h2:first-child {
+    margin-block-start: 0;
+  }
+  .c--articleBody h3 {
+    font-size: 17px;
+    font-weight: 600;
+    margin-block: var(--s40) var(--s15);
+    padding-inline-start: var(--s15);
+    border-inline-start: 3px solid var(--keycolor);
+    letter-spacing: 0.02em;
+    scroll-margin-block-start: var(--s30);
+  }
+  .c--articleBody p {
+    margin-block: 0 var(--s20);
+    text-align: justify;
+  }
+  .c--articleBody blockquote {
+    margin-block: var(--s30);
+    padding: var(--s20) var(--s30);
+    background: var(--base-2);
+    border-inline-start: 3px solid var(--text-2);
+    font-size: 14px;
+    color: var(--text-2);
+    font-style: italic;
+  }
+  .c--articleBody blockquote p {
+    margin: 0;
+  }
+  .c--articleBody blockquote::before {
+    content: '“';
+    font-size: 28px;
+    color: var(--text-2);
+    margin-inline-end: var(--s5);
+    vertical-align: -4px;
+  }
+  .c--articleBody a {
+    color: var(--keycolor);
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+  }
+
+  /* === TOC（目次） === */
+  .c--toc {
+    font-family: var(--ff--accent);
+  }
+  .c--toc_label {
+    font-size: 10px;
+    letter-spacing: 0.24em;
+    color: var(--text-2);
+    padding-block-end: var(--s10);
+    border-block-end: 1px solid var(--divider);
+    text-transform: uppercase;
+  }
+  .c--toc_list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .c--toc_list a {
+    display: block;
+    padding-block: var(--s5);
+    padding-inline-start: var(--s10);
+    color: var(--text);
+    border-inline-start: 2px solid transparent;
+    text-decoration: none;
+    line-height: 1.6;
+    font-size: 12px;
+    transition:
+      color 0.2s,
+      border-color 0.2s;
+  }
+  .c--toc_list a:hover {
+    color: var(--keycolor);
+  }
+  .c--toc_list a._active {
+    color: var(--keycolor);
+    border-inline-start-color: var(--keycolor);
+  }
+  /* 子レベル（h3） */
+  .c--toc_list li[data-level='3'] > a {
+    font-size: 11px;
+    padding-inline-start: var(--s30);
+    color: var(--text-2);
+    font-weight: 400;
+  }
+
+  /* md+ で TOC を sticky にする */
+  @container (min-width: 800px) {
+    .c--tocAside {
+      position: sticky;
+      inset-block-start: var(--s40);
+    }
+  }
+
+  /* === 記事ページの全体グリッド === */
+  /* sm/base: 1カラム（header → toc → body → nav） */
+  /* md+   : 2カラム（headerは横幅全体、本文+TOC、navは横幅全体） */
+  .c--articleGrid {
+    display: grid;
+    grid-template-areas:
+      'header'
+      'toc'
+      'body'
+      'nav';
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--s40);
+  }
+  @container (min-width: 800px) {
+    .c--articleGrid {
+      grid-template-areas:
+        'header header'
+        'body   toc'
+        'nav    nav';
+      grid-template-columns: minmax(0, 1fr) 220px;
+      gap: var(--s40) var(--s50);
+    }
+  }
+  .c--articleGrid_header {
+    grid-area: header;
+  }
+  .c--articleGrid_toc {
+    grid-area: toc;
+  }
+  .c--articleGrid_body {
+    grid-area: body;
+    /* min-width:0 を入れておかないと長い code/pre 等で grid が破綻する */
+    min-inline-size: 0;
+  }
+  .c--articleGrid_nav {
+    grid-area: nav;
+  }
+}
