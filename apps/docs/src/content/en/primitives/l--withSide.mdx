@@ -18,7 +18,7 @@ This is useful for layouts such as "image and content" or "main area and sidebar
 
 <SrcCode path="src/scss/primitives/layout/_withSide.scss" />
 
-One child element must have `.is--side`.
+One child element must have `is--side`.
 
 ```pug
 div.l--withSide
@@ -43,7 +43,7 @@ div.l--withSide
 
 ## Usage
 
-A child element with `.is--side` is required.
+A child element with `is--side` is required.
 The side element's width is fixed to the value set by `--sideW`. When the main element's width falls below `--mainW`, the layout automatically switches to a single column.
 
 ### Usage example
@@ -209,7 +209,7 @@ This is especially useful when multiple "media + text" pairs are stacked, and yo
 
 ## Building a similar layout with `Grid`
 
-`WithSide` (`.l--withSide`) is not dependent on breakpoints, but you can also build a similar layout using [`Grid`](/en/docs/primitives/l--grid) where the switch point is controlled by a breakpoint.
+`WithSide` (`l--withSide`) is not dependent on breakpoints, but you can also build a similar layout using [`Grid`](/en/docs/primitives/l--grid) where the switch point is controlled by a breakpoint.
 
 <Preview>
   <PreviewTitle>Building a WithSide-like layout using `Grid`</PreviewTitle>

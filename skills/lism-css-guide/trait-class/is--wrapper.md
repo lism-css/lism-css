@@ -15,10 +15,10 @@
 
 | 指定 | 出力 |
 |------|------|
-| `isWrapper` | `.is--wrapper` |
-| `isWrapper="s"` | `.is--wrapper .-contentSize:s` |
-| `isWrapper="l"` | `.is--wrapper .-contentSize:l` |
-| `isWrapper="20rem"`（任意値） | `.is--wrapper` + `style="--contentSize: 20rem"` |
+| `isWrapper` | `is--wrapper` |
+| `isWrapper="s"` | `is--wrapper -contentSize:s` |
+| `isWrapper="l"` | `is--wrapper -contentSize:l` |
+| `isWrapper="20rem"`（任意値） | `is--wrapper` + `style="--contentSize: 20rem"` |
 
 ## 専用Props
 

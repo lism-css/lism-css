@@ -27,7 +27,7 @@ import { Modal, DummyText } from '@lism-css/ui/astro';
 
 | プロパティ | 説明 |
 |---|---|
-|`id`| Modal(`.c--modal`)にはid属性が必要です。|
+|`id`| Modal(`c--modal`)にはid属性が必要です。|
 |<PropBadge>`<Modal.Root>`</PropBadge><br/> `duration`| モーダルの開閉アニメーションの時間を指定します。`--duration`変数として出力されます。|
 |<PropBadge>`<Modal.Inner>`</PropBadge><br/> `layout`| `__inner`のレイアウト用コンポーネントを指定できます。|
 |<PropBadge>`<Modal.Inner>`</PropBadge><br/> `offset`| `__inner`の非表示時の位置をずらすためのオフセット値|
@@ -61,7 +61,7 @@ import { Modal, DummyText } from '@lism-css/ui/astro';
 - Modalは`dialog`を使用しています。display値を変更しないように注意してください。
 - `::backdrop` はアニメーションに問題があるため、dialogをスクリーン幅いっぱいにして背景色をつけて運用する前提で設計しています。
 
-{/* `<Modal.Root>`をgridレイアウト系にしてしまうと、 `<Modal.Inner>`(`.c--modal_inner`) の `max-height 100%` が効かなくなるので注意してください。 */}
+{/* `<Modal.Root>`をgridレイアウト系にしてしまうと、 `<Modal.Inner>`(`c--modal_inner`) の `max-height 100%` が効かなくなるので注意してください。 */}
 
 {/* モーダルコンテンツを中央に寄せたい場合、l--stack + jc="center" か、 root:l--stack + inner:m='auto' で実現できます。 */}
 
@@ -103,7 +103,7 @@ import { Modal, DummyText } from '@lism-css/ui/astro';
   </PreviewCode>
 </Preview>
 
-`.c--modal_body` が`overflow:auto`でスクロール可能なエリアになっていますので、常に見せておきたいコンテンツがあればその前後に配置します。
+`c--modal_body` が`overflow:auto`でスクロール可能なエリアになっていますので、常に見せておきたいコンテンツがあればその前後に配置します。
 
 <Preview>
   <PreviewTitle>`Modal`使用例 2</PreviewTitle>

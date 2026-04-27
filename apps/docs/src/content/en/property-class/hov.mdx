@@ -14,9 +14,9 @@ There are three forms of `-hov` classes:
 
 | Form | Role |
 |------|------|
-| `.-hov:-{prop}` | Reads the `--hov-{prop}` variable and changes that property on hover |
-| `.-hov:{preset}` | Applies a preset bundle of hover styles in one go |
-| `.-hov:in:{preset}` | Changes child styles in response to a parent's [`set--var:hov`](/en/docs/set-class/#set--varhov) hover state |
+| `-hov:-{prop}` | Reads the `--hov-{prop}` variable and changes that property on hover |
+| `-hov:{preset}` | Applies a preset bundle of hover styles in one go |
+| `-hov:in:{preset}` | Changes child styles in response to a parent's [`set--var:hov`](/en/docs/set-class/#set--varhov) hover state |
 
 You can also combine `-hov` classes with the [`has--transition`](/en/docs/trait-class/#has--transition) class to apply transitions.
 
@@ -27,24 +27,24 @@ The Lism core package provides several built-in classes for each form. Add your 
 <Spacer h="20" />
 
 
-## Using `.-hov:-{prop}`
+## Using `-hov:-{prop}`
 
-`.-hov:-{prop}` changes the specified property on hover to the value of the `--hov-{prop}` variable.
+`-hov:-{prop}` changes the specified property on hover to the value of the `--hov-{prop}` variable.
 The Lism core package provides the following classes by default:
 
 | Class | Target property | Default value |
 |--------|-----------------|----------------|
-| `.-hov:-c` | `color` | `var(--link)` |
-| `.-hov:-bdc` | `border-color` | `currentColor` |
-| `.-hov:-bgc` | `background-color` | `var(--base-2)` |
-| `.-hov:-o` | `opacity` | `var(--o--p)` |
-| `.-hov:-bxsh` | `box-shadow` | `var(--bxsh--50)` |
+| `-hov:-c` | `color` | `var(--link)` |
+| `-hov:-bdc` | `border-color` | `currentColor` |
+| `-hov:-bgc` | `background-color` | `var(--base-2)` |
+| `-hov:-o` | `opacity` | `var(--o--p)` |
+| `-hov:-bxsh` | `box-shadow` | `var(--bxsh--50)` |
 
 Since each class ships with a default value, they can be used simply by adding the class — no additional configuration required.
 
 
 <Preview>
-  <PreviewTitle>Usage examples of `.-hov:-o`, `.-hov:-c`, `.-hov:-bxsh`</PreviewTitle>
+  <PreviewTitle>Usage examples of `-hov:-o`, `-hov:-c`, `-hov:-bxsh`</PreviewTitle>
   <PreviewArea p="30">
     <BoxLink href="###" hov="-o" bgc="base-2" bd p="20">
       <p>BoxLink</p>
@@ -144,7 +144,7 @@ The string you pass is output as-is as a `-hov:{string}` class. You can also pas
 
 #### When passing an object
 
-Mainly used to assign a **custom value** to a `.-hov:-{prop}` class.
+Mainly used to assign a **custom value** to a `-hov:-{prop}` class.
 
 Writing `hov={{ prop: value }}` adds a `-hov:-{prop}` class and sets `value` to the `--hov-{prop}` CSS variable.
 
@@ -153,7 +153,7 @@ Writing `hov={{ prop: value }}` adds a `-hov:-{prop}` class and sets `value` to 
 // → <div class="-hov:-c" style="--hov-c: var(--red)">...</div>
 ```
 
-If the value is `true`, a `-hov:{key}` class is emitted. This is useful when you want to output both a **value-bearing prop** and a **preset class** (`.-hov:{preset}` or a custom class) at the same time.
+If the value is `true`, a `-hov:{key}` class is emitted. This is useful when you want to output both a **value-bearing prop** and a **preset class** (`-hov:{preset}` or a custom class) at the same time.
 
 ```jsx
 <Lism hov={{ shadowUp: true }}>...</Lism>
@@ -167,15 +167,15 @@ If the value is `true`, a `-hov:{key}` class is emitted. This is useful when you
 <Spacer h="20" />
 
 
-## Using `.-hov:{preset}`
+## Using `-hov:{preset}`
 
-`.-hov:{preset}` applies a named preset bundle of hover styles in one go.
+`-hov:{preset}` applies a named preset bundle of hover styles in one go.
 The Lism core package provides the following preset by default:
 
 | Class | Description |
 |--------|-------------|
-| `.-hov:underline` | Shows an underline on the text |
-| `.-hov:neutral` | Blends a neutral gray into the background color, slightly brightening it on hover |
+| `-hov:underline` | Shows an underline on the text |
+| `-hov:neutral` | Blends a neutral gray into the background color, slightly brightening it on hover |
 
 You can freely add your own presets to fit each project.
 
@@ -189,7 +189,7 @@ You can freely add your own presets to fit each project.
     translate: 0 -3px;
   }
 }`}>
-  <PreviewTitle>Adding `.-hov:shadowUp`</PreviewTitle>
+  <PreviewTitle>Adding `-hov:shadowUp`</PreviewTitle>
   <PreviewArea p="30">
     <BoxLink href="###" hasTransition hov="shadowUp" bxsh="10" bd p="20">
       <p>BoxLink</p>
@@ -227,11 +227,11 @@ You can freely add your own presets to fit each project.
 
 
 <div class="u--srOnly" id="set--varhov"></div>
-## Using `.-hov:in:{preset}`
+## Using `-hov:in:{preset}`
 
-`.-hov:in:{preset}` is used to **trigger style changes on child elements from a parent's hover state**.
+`-hov:in:{preset}` is used to **trigger style changes on child elements from a parent's hover state**.
 
-When the [`set--var:hov`](/en/docs/set-class/#set--varhov) class is applied to a parent element, the `--_isHov` and `--_notHov` variables switch based on its hover state. `.-hov:in:{preset}` reads these variables to change the child's styles accordingly.
+When the [`set--var:hov`](/en/docs/set-class/#set--varhov) class is applied to a parent element, the `--_isHov` and `--_notHov` variables switch based on its hover state. `-hov:in:{preset}` reads these variables to change the child's styles accordingly.
 
 The Lism core package provides the following classes by default:
 

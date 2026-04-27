@@ -109,7 +109,7 @@ CSS Layer の外（最も高い詳細度）に配置され、`-{prop}(:{value})`
 | `max-bsz` | `max-block-size` | — | — |
 
 **`max-sz` の特殊クラス:**
-- `-max-sz:full` — `.has--gutter` 内では gutter 分を含めた全幅に拡張
+- `-max-sz:full` — `has--gutter` 内では gutter 分を含めた全幅に拡張
 - `-max-sz:container` — コンテナ幅に合わせる（`margin-inline` で中央配置）
 
 → 詳細は [property-class/max-sz.md](./property-class/max-sz.md) 参照
@@ -275,7 +275,7 @@ SPACE トークン（全値）: `5`, `10`, `15`, `20`, `30`, `40`, `50`, `60`, `
 
 ## 特殊な Property Class
 
-以下は通常の `.-{prop}:{value}` パターンとは異なる特殊な仕組みを持つ Prop です。
+以下は通常の `-{prop}:{value}` パターンとは異なる特殊な仕組みを持つ Prop です。
 
 ### ボーダー（`bd` 系）
 
@@ -296,11 +296,11 @@ Lism CSS のボーダーは CSS 変数（`--bds` / `--bdw` / `--bdc`）で管理
 
 | 形式 | 役割 | 動作条件 |
 |------|------|---------|
-| `.-hov:-{prop}` | `--hov-{prop}` 変数で hover 時の値を変化させる | `:hover`（`@media (any-hover: hover)` 内） |
-| `.-hov:{preset}` | hover 時のスタイルをプリセットで適用 | `:hover`（同上） |
-| `.-hov:in:{preset}` | 親の `set--var:hov` を起点に子のスタイルを変化させる | 親に `set--var:hov` が必要 |
+| `-hov:-{prop}` | `--hov-{prop}` 変数で hover 時の値を変化させる | `:hover`（`@media (any-hover: hover)` 内） |
+| `-hov:{preset}` | hover 時のスタイルをプリセットで適用 | `:hover`（同上） |
+| `-hov:in:{preset}` | 親の `set--var:hov` を起点に子のスタイルを変化させる | 親に `set--var:hov` が必要 |
 
-**標準プリセット:** `.-hov:-c`, `.-hov:-bgc`, `.-hov:-bdc`, `.-hov:-o`, `.-hov:-bxsh`, `.-hov:underline`, `.-hov:neutral`, `.-hov:in:hide`, `.-hov:in:show`, `.-hov:in:zoom`
+**標準プリセット:** `-hov:-c`, `-hov:-bgc`, `-hov:-bdc`, `-hov:-o`, `-hov:-bxsh`, `-hov:underline`, `-hov:neutral`, `-hov:in:hide`, `-hov:in:show`, `-hov:in:zoom`
 
 **`<Lism>` の `hov` prop:** 文字列指定（`hov="-c"` → `-hov:-c`。自動変換なし、カンマ区切りで複数可）とオブジェクト指定（`hov={{ c: 'red' }}` → `-hov:-c` + `--hov-c: var(--red)`。値 `true` でクラスのみ出力）が可能。
 
