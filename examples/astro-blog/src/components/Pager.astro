@@ -28,14 +28,14 @@ const nextHref = currentPage < lastPage ? getPageHref(currentPage + 1) : null;
 
 {
   lastPage > 1 && (
-    <Lism as="nav" class="c--pager" aria-label="ページネーション">
+    <Lism as="nav" class="c--pager" ff="accent" fz="xs" lts=":xl" my-s="20" aria-label="ページネーション">
       <Flex jc="center" ai="center" g="10">
         {prevHref ? (
-          <Link href={prevHref} class="c--pager_nav" rel="prev">
+          <Link href={prevHref} class="c--pager_nav" c="text" td="none" py="10" px="15" tt="upper" hasTransition rel="prev">
             ← Prev
           </Link>
         ) : (
-          <Inline class="c--pager_nav is--disabled" aria-hidden="true">
+          <Inline class="c--pager_nav" c="text" py="10" px="15" tt="upper" aria-disabled="true" aria-hidden="true">
             ← Prev
           </Inline>
         )}
@@ -43,13 +43,15 @@ const nextHref = currentPage < lastPage ? getPageHref(currentPage + 1) : null;
         <Flex g="5" ai="center">
           {pages.map((p) =>
             p === 'gap' ? (
-              <Inline class="c--pager_gap">…</Inline>
+              <Inline class="c--pager_gap" c="text-2" px="5">
+                …
+              </Inline>
             ) : p === currentPage ? (
-              <Inline class="c--pager_num is--current" aria-current="page">
+              <Inline class="c--pager_num" d="inline-flex" ai="center" jc="center" px="5" c="text-2" hasTransition aria-current="page">
                 {p}
               </Inline>
             ) : (
-              <Link href={getPageHref(p)} class="c--pager_num">
+              <Link href={getPageHref(p)} class="c--pager_num" d="inline-flex" ai="center" jc="center" px="5" c="text-2" td="none" hasTransition>
                 {p}
               </Link>
             )
@@ -57,11 +59,11 @@ const nextHref = currentPage < lastPage ? getPageHref(currentPage + 1) : null;
         </Flex>
 
         {nextHref ? (
-          <Link href={nextHref} class="c--pager_nav" rel="next">
+          <Link href={nextHref} class="c--pager_nav" c="text" td="none" py="10" px="15" tt="upper" hasTransition rel="next">
             Next →
           </Link>
         ) : (
-          <Inline class="c--pager_nav is--disabled" aria-hidden="true">
+          <Inline class="c--pager_nav" c="text" py="10" px="15" tt="upper" aria-disabled="true" aria-hidden="true">
             Next →
           </Inline>
         )}
@@ -69,3 +71,36 @@ const nextHref = currentPage < lastPage ? getPageHref(currentPage + 1) : null;
     </Lism>
   )
 }
+<style>
+  @layer lism-component {
+    /* === ページャー === */
+    .c--pager_nav {
+      &:hover {
+        color: var(--brand);
+      }
+
+      &[aria-disabled='true'] {
+        color: var(--text-2);
+        opacity: 0.4;
+        pointer-events: none;
+      }
+    }
+
+    /* 28px はトークン外の固定値（数字バッジの最小サイズ）+ 視覚補正 */
+    .c--pager_num {
+      min-width: 28px;
+      height: 28px;
+      border-block-end: 1px solid transparent;
+      margin-block-end: -1px;
+
+      &:hover {
+        color: var(--brand);
+      }
+
+      &[aria-current] {
+        color: var(--text);
+        border-block-end-color: var(--brand);
+      }
+    }
+  }
+</style>

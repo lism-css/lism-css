@@ -1,5 +1,7 @@
 ---
 import { Lism, Flex, Cluster } from 'lism-css/astro';
+import Eyebrow from '@/components/Eyebrow.astro';
+import ShareBtn from '@/components/ShareBtn.astro';
 
 interface Props {
   title: string;
@@ -8,19 +10,19 @@ interface Props {
 const { title } = Astro.props;
 ---
 
-<Lism class="c--share" mt="40" pt="30" bd-t ff="accent" data-share-title={title}>
+<Lism class="c--share" my-s="40" pt="30" bd-t ff="accent" data-share-title={title}>
   <Flex g="20" ai="center" jc={['start', null, 'between']} fxw="wrap">
-    <Lism class="c--eyebrow">SHARE</Lism>
+    <Eyebrow>SHARE</Eyebrow>
     <Cluster g="10" ai="center">
-      <button type="button" class="c--shareBtn set--plain" data-share-x aria-label="X でシェア">
+      <ShareBtn data-share-x aria-label="X でシェア">
         <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
           <path
             d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"
           ></path>
         </svg>
         <span>POST</span>
-      </button>
-      <button type="button" class="c--shareBtn set--plain" data-share-copy aria-label="リンクをコピー">
+      </ShareBtn>
+      <ShareBtn data-share-copy aria-label="リンクをコピー">
         <svg
           width="14"
           height="14"
@@ -36,36 +38,16 @@ const { title } = Astro.props;
           <path d="M14 11a5 5 0 0 0-7.07 0l-3 3a5 5 0 0 0 7.07 7.07l1-1"></path>
         </svg>
         <span data-share-copy-label>COPY</span>
-      </button>
+      </ShareBtn>
     </Cluster>
   </Flex>
 </Lism>
 
 <style>
   @layer lism-component {
-    .c--shareBtn {
-      display: inline-flex;
-      align-items: center;
-      gap: var(--s5);
-      padding: var(--s10) var(--s15);
-      border: 1px solid var(--divider);
-      border-radius: 2px;
-      background: var(--base-2);
-      color: var(--text-2);
-      font-family: var(--ff--accent);
-      font-size: var(--fz--2xs);
-      letter-spacing: 0.14em;
-      line-height: 1;
-      text-transform: uppercase;
-      transition:
-        color 0.2s,
-        border-color 0.2s,
-        background 0.2s;
-    }
-    .c--shareBtn:hover,
-    .c--shareBtn.is--copied {
-      color: var(--keycolor);
-      border-color: var(--keycolor);
+    .c--shareBtn[data-is-copied] {
+      color: var(--brand);
+      --bdc: var(--brand);
     }
     .c--shareBtn svg {
       flex-shrink: 0;
@@ -89,10 +71,10 @@ const { title } = Astro.props;
     copyBtn?.addEventListener('click', async () => {
       try {
         await navigator.clipboard.writeText(window.location.href);
-        copyBtn.classList.add('is--copied');
+        copyBtn.dataset.isCopied = '';
         if (copyLabel) copyLabel.textContent = 'COPIED';
         window.setTimeout(() => {
-          copyBtn.classList.remove('is--copied');
+          delete copyBtn.dataset.isCopied;
           if (copyLabel) copyLabel.textContent = 'COPY';
         }, 1800);
       } catch {

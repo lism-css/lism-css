@@ -17,13 +17,19 @@ const tabs: { key: Current; label: string; href: string }[] = [
 ];
 ---
 
-<Cluster as="nav" g="30" class="c--catTabs" aria-label="カテゴリーで絞り込む">
+<Cluster as="nav" g="30" class="c--catTabs" bd-b ff="accent" fz="xs" lts=":2xl" aria-label="カテゴリーで絞り込む">
   {
     tabs.map((tab) => (
       <Link
         href={tab.href}
-        class:list={['c--catTab', { 'is--active': current === tab.key }]}
+        class="c--catTab"
+        d="inline-block"
+        py="15"
+        px="5"
+        c="text-2"
+        tt="upper"
         td="none"
+        hasTransition
         aria-current={current === tab.key ? 'page' : undefined}
       >
         {tab.label}
@@ -31,3 +37,23 @@ const tabs: { key: Current; label: string; href: string }[] = [
     ))
   }
 </Cluster>
+
+<style>
+  @layer lism-component {
+    /* === カテゴリータブ === */
+    /* 視覚補正（透明な下線 + 1px 食い込み）と擬似クラス・状態属性 */
+    .c--catTab {
+      border-block-end: 1px solid transparent;
+      margin-block-end: -1px;
+
+      &:hover {
+        color: var(--brand);
+      }
+
+      &[aria-current] {
+        color: var(--text);
+        border-block-end-color: var(--brand);
+      }
+    }
+  }
+</style>

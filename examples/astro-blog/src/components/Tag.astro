@@ -1,0 +1,32 @@
+---
+import { Link } from 'lism-css/astro';
+
+interface Props {
+  href: string;
+  solid?: boolean;
+  class?: string;
+}
+
+const { href, solid = false, class: className, ...rest } = Astro.props;
+
+const variant = solid ? { bdc: 'text', c: 'base-2', bgc: 'text' } : { bdc: 'divider', c: 'text-2', bgc: 'base-2' };
+---
+
+<Link
+  href={href}
+  class:list={['c--tag', solid && 'c--tag--solid', className]}
+  d="inline-block"
+  ff="accent"
+  fz="2xs"
+  lts=":xl"
+  py="5"
+  px="10"
+  bd
+  bdrs="10"
+  tt="upper"
+  td="none"
+  {...variant}
+  {...rest}
+>
+  <slot />
+</Link>

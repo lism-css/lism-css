@@ -1,0 +1,34 @@
+---
+import { Lism, Link, Inline } from 'lism-css/astro';
+
+interface Item {
+  label: string;
+  href?: string;
+  muted?: boolean;
+}
+
+interface Props {
+  items: Item[];
+  class?: string;
+}
+
+const { items, class: className, ...rest } = Astro.props;
+---
+
+<Lism className="c--breadcrumb" fz="2xs" lts=":3xl" c="text-2" class:list={[className]} {...rest}>
+  {
+    items.map((item, i) => (
+      <Fragment>
+        {i > 0 && '／ '}
+        {item.href ? (
+          <Link href={item.href} td="none" c="inherit" hov={{ c: 'brand' }}>
+            {item.label}
+          </Link>
+        ) : (
+          <Inline o="p">{item.label}</Inline>
+        )}
+        {i < items.length - 1 && ' '}
+      </Fragment>
+    ))
+  }
+</Lism>

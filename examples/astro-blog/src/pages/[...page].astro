@@ -1,11 +1,12 @@
 ---
 import { getCollection } from 'astro:content';
 import type { GetStaticPaths } from 'astro';
-import { Stack, Heading, Wrapper, Lism } from 'lism-css/astro';
-import Layout from '@/layouts/Layout.astro';
+import { Stack, Heading } from 'lism-css/astro';
+import ArchiveLayout from '@/layouts/ArchiveLayout.astro';
 import CategoryTabs from '@/components/CategoryTabs.astro';
 import PostList from '@/components/PostList.astro';
 import Pager from '@/components/Pager.astro';
+import Eyebrow from '@/components/Eyebrow.astro';
 import { siteConfig } from '@/config/site';
 
 export const getStaticPaths = (async ({ paginate }) => {
@@ -16,25 +17,21 @@ export const getStaticPaths = (async ({ paginate }) => {
 const { page } = Astro.props;
 ---
 
-<Layout title={`${siteConfig.name} — ${siteConfig.tagline}`}>
-  <Wrapper contentSize="s" hasGutter>
-    <Stack g="50">
-      {/* ページタイトル */}
-      <Stack g="15">
-        <Lism class="c--eyebrow">BLOGS</Lism>
-        <Heading level="1" fz={['2xl', null, '3xl']} fw="500" ff="base" lts="s" lh="s" m="0">
-          {siteConfig.tagline}
-        </Heading>
-      </Stack>
+<ArchiveLayout title={`${siteConfig.name} — ${siteConfig.tagline}`}>
+  {/* ページタイトル */}
+  <Stack g="15">
+    <Eyebrow>BLOGS</Eyebrow>
+    <Heading level="1" fz={['2xl', null, '3xl']} fw="500" ff="base" lts="s" lh="s" m="0">
+      {siteConfig.tagline}
+    </Heading>
+  </Stack>
 
-      {/* カテゴリータブ */}
-      <CategoryTabs current="all" />
+  {/* カテゴリータブ */}
+  <CategoryTabs current="all" />
 
-      {/* 記事リスト */}
-      <PostList posts={page.data} />
+  {/* 記事リスト */}
+  <PostList posts={page.data} />
 
-      {/* ページャー */}
-      <Pager currentPage={page.currentPage} lastPage={page.lastPage} />
-    </Stack>
-  </Wrapper>
-</Layout>
+  {/* ページャー */}
+  <Pager currentPage={page.currentPage} lastPage={page.lastPage} />
+</ArchiveLayout>

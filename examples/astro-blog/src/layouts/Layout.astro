@@ -1,8 +1,5 @@
 ---
 import '../styles/global.css';
-import { Stack, Container, Lism } from 'lism-css/astro';
-import Header from '@/components/Header.astro';
-import Footer from '@/components/Footer.astro';
 import { siteConfig } from '@/config/site';
 
 interface Props {
@@ -29,15 +26,6 @@ const { title, description = siteConfig.description } = Astro.props;
     />
   </head>
   <body>
-    {/* 全体を is--container 化してコンテナクエリベースのレスポンシブを有効に */}
-    <Container>
-      <Stack min-h="100svh" g="0">
-        <Header />
-        <Lism as="main" fxg="1" py={['40', null, '60']}>
-          <slot />
-        </Lism>
-        <Footer />
-      </Stack>
-    </Container>
+    <slot />
   </body>
 </html>

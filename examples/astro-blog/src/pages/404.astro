@@ -1,0 +1,22 @@
+---
+import { Lism, Heading, Link } from 'lism-css/astro';
+import ErrorLayout from '@/layouts/ErrorLayout.astro';
+import Eyebrow from '@/components/Eyebrow.astro';
+import { siteConfig } from '@/config/site';
+---
+
+<ErrorLayout title={`404 Not Found — ${siteConfig.name}`} description="お探しのページは見つかりませんでした。">
+  {/* eyebrow */}
+  <Eyebrow d="block"> ERROR 404 </Eyebrow>
+
+  {/* page title */}
+  <Heading level="1" fz={['3xl', null, '4xl']} fw="500" ff="base" lts="s" lh="s" m="0"> ページが見つかりません </Heading>
+
+  {/* description */}
+  <Lism as="p" c="text-2" lh="l" m="0"> お探しのページは削除されたか、URL が変更された可能性があります。 </Lism>
+
+  {/* back to home */}
+  <Lism mt="20">
+    <Link href="/" ff="accent" fz="xs" lts=":2xl" tt="upper" td="none" c="brand" hov={{ td: 'underline' }}> ← Back to Home </Link>
+  </Lism>
+</ErrorLayout>

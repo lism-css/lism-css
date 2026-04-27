@@ -1,0 +1,29 @@
+---
+import { Stack, Container, Wrapper } from 'lism-css/astro';
+import Layout from './Layout.astro';
+import Header from '@/components/Header.astro';
+import Footer from '@/components/Footer.astro';
+
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description } = Astro.props;
+---
+
+<Layout title={title} description={description}>
+  <Container>
+    <Stack min-h="100svh" g="0">
+      <Header />
+      <Stack as="main" fxg="1" py={['40', null, '60']} g="0">
+        <Wrapper contentSize="s" hasGutter>
+          <Stack g="50">
+            <slot />
+          </Stack>
+        </Wrapper>
+      </Stack>
+      <Footer my-s="60" />
+    </Stack>
+  </Container>
+</Layout>

@@ -1,10 +1,11 @@
 ---
-import { Lism, Flex, Cluster, Stack, Inline, Link, Container } from 'lism-css/astro';
+import { Flex, Cluster, Stack, Inline, Link, Container } from 'lism-css/astro';
 import { Modal } from '@lism-css/ui/astro';
+import Eyebrow from '@/components/Eyebrow.astro';
 import { NAV_ITEMS } from '@/lib/nav';
 import { siteConfig } from '@/config/site';
 
-// サイト名にドットが含まれる場合、ドット部分だけキーカラーで強調する
+// サイト名にドットが含まれる場合、ドット部分だけブランドカラーで強調する
 const [brandHead, ...brandRest] = siteConfig.name.split('.');
 const brandTail = brandRest.join('.');
 ---
@@ -15,7 +16,7 @@ const brandTail = brandRest.join('.');
       {brandHead}{
         brandTail && (
           <>
-            <Inline c="keycolor">.</Inline>
+            <Inline c="brand">.</Inline>
             {brandTail}
           </>
         )
@@ -26,7 +27,7 @@ const brandTail = brandRest.join('.');
     <Cluster as="nav" g="30" d={['none', null, 'flex']} ff="accent" fz="xs" c="text-2" lts="s">
       {
         NAV_ITEMS.map((item) => (
-          <Link href={item.href} c="inherit" td="none" hov={{ c: 'keycolor' }}>
+          <Link href={item.href} c="inherit" td="none" hov={{ c: 'brand' }}>
             {item.label}
           </Link>
         ))
@@ -41,6 +42,7 @@ const brandTail = brandRest.join('.');
       bgc="base"
       bdrs="10"
       p="10"
+      style="line-height: 0;"
       hov={{ bgc: 'divider' }}
       aria-label="メニューを開く"
     >
@@ -70,11 +72,11 @@ const brandTail = brandRest.join('.');
         aria-label="メニューを閉じる"
       />
       <Modal.Body layout="stack" g="20" px="30" py="20" ov-y="auto">
-        <Lism class="c--eyebrow">MENU</Lism>
+        <Eyebrow>MENU</Eyebrow>
         <Stack as="nav" g="15" ff="accent" fz="m">
           {
             NAV_ITEMS.map((item) => (
-              <Link href={item.href} c="inherit" td="none" py="10" bd-b bdc="divider" hov={{ c: 'keycolor' }}>
+              <Link href={item.href} c="inherit" td="none" py="10" bd-b bdc="divider" hov={{ c: 'brand' }}>
                 {item.label}
               </Link>
             ))
@@ -84,9 +86,3 @@ const brandTail = brandRest.join('.');
     </Modal.Inner>
   </Modal.Root>
 </Container>
-
-<style>
-  .c--menuTrigger {
-    line-height: 0;
-  }
-</style>

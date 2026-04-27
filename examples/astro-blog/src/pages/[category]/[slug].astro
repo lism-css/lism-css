@@ -1,10 +1,13 @@
 ---
 import { getCollection, render } from 'astro:content';
-import { Lism, Stack, Flex, Cluster, Grid, Heading, Text, Wrapper, Inline, Link } from 'lism-css/astro';
-import Layout from '@/layouts/Layout.astro';
+import { Lism, Flow, Stack, Flex, Cluster, Grid, Heading, Text } from 'lism-css/astro';
+import PostLayout from '@/layouts/PostLayout.astro';
 import TableOfContents from '@/components/TableOfContents.astro';
 import ArticleNav from '@/components/ArticleNav.astro';
 import ShareButtons from '@/components/ShareButtons.astro';
+import Breadcrumb from '@/components/Breadcrumb.astro';
+import Date from '@/components/Date.astro';
+import Tag from '@/components/Tag.astro';
 import { generateToc } from '@/lib/generateToc';
 import { CATEGORIES, parsePostId } from '@/lib/categories';
 import { siteConfig } from '@/config/site';
@@ -31,73 +34,62 @@ const { Content, headings } = await render(post);
 const toc = generateToc(headings);
 ---
 
-<Layout title={`${post.data.title} — ${siteConfig.name}`} description={post.data.excerpt}>
-  <Wrapper contentSize="l" hasGutter isContainer>
-    {/* パンくず */}
-    <Lism class="c--eyebrow" mb="30" d="block">
-      <Link href="/" td="none" c="inherit" hov={{ c: 'keycolor' }}>HOME</Link>
-      ／
-      <Link href={`/${category}/`} td="none" c="inherit" hov={{ c: 'keycolor' }}>
-        {meta.label}
-      </Link>
-      ／ {post.data.title}
+<PostLayout title={`${post.data.title} — ${siteConfig.name}`} description={post.data.excerpt}>
+  {/* パンくず */}
+  <Breadcrumb my-e="30" items={[{ label: 'HOME', href: '/' }, { label: meta.label, href: `/${category}/` }, { label: post.data.title }]} />
+
+  {/* 記事グリッド: md未満は1カラム（header → toc → body → footer）、md以上は2カラム */}
+  <Grid
+    g={['40', null, '40 50']}
+    gtc={['minmax(0, 1fr)', null, 'minmax(0, 1fr) var(--sz--toc)']}
+    gta={[`'header' 'toc' 'body' 'footer'`, null, `'header header' 'body toc' 'footer footer'`]}
+  >
+    {/* 記事ヘッダー */}
+    <Lism as="header" ga="header">
+      <Stack g="20" pb="30" bd-b>
+        <Flex g="20" ai="center" fxw="wrap">
+          <Tag href={`/${category}/`} solid>
+            {meta.label}
+          </Tag>
+          <Date>{post.data.date}</Date>
+        </Flex>
+        <Heading level="1" fz={['2xl', null, '3xl']} fw="500" ff="base" lh="s" lts="s" m="0">
+          {post.data.title}
+        </Heading>
+        <Text fz="m" c="text-2" lh="l" m="0">
+          {post.data.excerpt}
+        </Text>
+        {
+          post.data.tags.length > 0 && (
+            <Cluster g="10" ai="center">
+              {post.data.tags.map((tag) => (
+                <Tag href={`/tag/${tag}/`}>{tag}</Tag>
+              ))}
+            </Cluster>
+          )
+        }
+      </Stack>
     </Lism>
 
-    {/* 記事グリッド: md未満は1カラム（header → toc → body → footer）、md以上は2カラム */}
-    <Grid
-      g={['40', null, '40 50']}
-      gtc={['minmax(0, 1fr)', null, 'minmax(0, 1fr) 220px']}
-      gta={[`'header' 'toc' 'body' 'footer'`, null, `'header header' 'body toc' 'footer footer'`]}
-    >
-      {/* 記事ヘッダー */}
-      <Lism as="header" ga="header">
-        <Stack g="20" pb="30" bd-b>
-          <Flex g="20" ai="center" fxw="wrap">
-            <Link href={`/${category}/`} class="c--tag is--solid" td="none">
-              {meta.label}
-            </Link>
-            <Inline class="c--date">{post.data.date}</Inline>
-          </Flex>
-          <Heading level="1" fz={['2xl', null, '3xl']} fw="500" ff="base" lh="s" lts="s" m="0">
-            {post.data.title}
-          </Heading>
-          <Text fz="m" c="text-2" lh="l" m="0">
-            {post.data.excerpt}
-          </Text>
-          {
-            post.data.tags.length > 0 && (
-              <Cluster g="10" ai="center">
-                {post.data.tags.map((tag) => (
-                  <Link href={`/tag/${tag}/`} class="c--tag" td="none">
-                    {tag}
-                  </Link>
-                ))}
-              </Cluster>
-            )
-          }
-        </Stack>
+    {/* TOC */}
+    <Lism as="aside" ga="toc">
+      <Lism pos="sticky" i-y-s="40" z="1">
+        <TableOfContents toc={toc} />
       </Lism>
+    </Lism>
 
-      {/* TOC */}
-      <Lism as="aside" ga="toc">
-        <Lism pos="sticky" i-y-s="40" z="1">
-          <TableOfContents toc={toc} />
-        </Lism>
-      </Lism>
+    {/* 本文 */}
+    <Flow as="article" ga="body" min-sz="0" class="c--articleBody">
+      <Content />
+    </Flow>
 
-      {/* 本文 */}
-      <Lism as="article" ga="body" min-sz="0" class="c--articleBody">
-        <Content />
-      </Lism>
-
-      {/* フッター（シェアボタン → 前後記事ナビ） */}
-      <Lism as="footer" ga="footer">
-        <ShareButtons title={post.data.title} />
-        <ArticleNav
-          prev={prev ? { title: prev.data.title, id: prev.id } : undefined}
-          next={next ? { title: next.data.title, id: next.id } : undefined}
-        />
-      </Lism>
-    </Grid>
-  </Wrapper>
-</Layout>
+    {/* フッター（シェアボタン → 前後記事ナビ） */}
+    <Lism as="footer" ga="footer">
+      <ShareButtons title={post.data.title} />
+      <ArticleNav
+        prev={prev ? { title: prev.data.title, id: prev.id } : undefined}
+        next={next ? { title: next.data.title, id: next.id } : undefined}
+      />
+    </Lism>
+  </Grid>
+</PostLayout>

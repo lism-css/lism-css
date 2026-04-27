@@ -1,6 +1,7 @@
 ---
 import { Lism, Stack, Flex, Heading, Text, Link, Inline } from 'lism-css/astro';
 import type { CollectionEntry } from 'astro:content';
+import Date from '@/components/Date.astro';
 import { CATEGORIES, parsePostId } from '@/lib/categories';
 
 interface Props {
@@ -20,8 +21,12 @@ const { posts, showCategory = true } = Astro.props;
           <Link href={`/${post.id}/`}>
             <Stack g="10">
               <Flex g="20" ai="baseline">
-                <Inline class="c--date">{post.data.date}</Inline>
-                {showCategory && <Inline class="c--cat">{CATEGORIES[category].label}</Inline>}
+                <Date>{post.data.date}</Date>
+                {showCategory && (
+                  <Inline class="c--cat" ff="accent" fz="2xs" lts=":xl" c="brand" tt="upper">
+                    {CATEGORIES[category].label}
+                  </Inline>
+                )}
               </Flex>
               <Heading level="2" fz="l" fw="500" lh="s" m="0" ff="base">
                 {post.data.title}
@@ -36,3 +41,35 @@ const { posts, showCategory = true } = Astro.props;
     })
   }
 </Lism>
+
+<style>
+  @layer lism-component {
+    /* === 記事一覧（縦リスト） === */
+    .c--postList {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+
+      /* 先頭が子結合子なら & は省略可（& > と同じ） */
+      > li {
+        padding-block: var(--s30);
+        border-block-end: 1px solid var(--divider);
+
+        &:first-child {
+          border-block-start: 1px solid var(--divider);
+        }
+      }
+
+      a {
+        text-decoration: none;
+        color: inherit;
+        display: block;
+        transition: opacity 0.2s;
+
+        &:hover {
+          opacity: 0.7;
+        }
+      }
+    }
+  }
+</style>

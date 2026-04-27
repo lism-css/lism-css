@@ -1,11 +1,13 @@
 ---
 import { getCollection } from 'astro:content';
 import type { GetStaticPaths } from 'astro';
-import { Lism, Stack, Heading, Text, Wrapper, Link } from 'lism-css/astro';
-import Layout from '@/layouts/Layout.astro';
+import { Stack, Heading, Text } from 'lism-css/astro';
+import ArchiveLayout from '@/layouts/ArchiveLayout.astro';
 import CategoryTabs from '@/components/CategoryTabs.astro';
 import PostList from '@/components/PostList.astro';
 import Pager from '@/components/Pager.astro';
+import Breadcrumb from '@/components/Breadcrumb.astro';
+import Eyebrow from '@/components/Eyebrow.astro';
 import { CATEGORIES, CATEGORY_KEYS, parsePostId } from '@/lib/categories';
 import { siteConfig } from '@/config/site';
 
@@ -27,32 +29,25 @@ const meta = CATEGORIES[category];
 const getPageHref = (n: number) => (n === 1 ? `/${category}/` : `/${category}/${n}/`);
 ---
 
-<Layout title={`${meta.label} — ${siteConfig.name}`} description={meta.description}>
-  <Wrapper contentSize="s" hasGutter>
-    <Stack g="50">
-      {/* パンくず */}
-      <Lism class="c--eyebrow" d="block">
-        <Link href="/" td="none" c="inherit" hov={{ c: 'keycolor' }}>HOME</Link>
-        ／ {meta.label}
-      </Lism>
+<ArchiveLayout title={`${meta.label} — ${siteConfig.name}`} description={meta.description}>
+  {/* パンくず */}
+  <Breadcrumb items={[{ label: 'HOME', href: '/' }, { label: meta.label }]} />
 
-      {/* ページタイトル */}
-      <Stack g="15">
-        <Lism class="c--eyebrow">CATEGORY</Lism>
-        <Heading level="1" fz={['2xl', null, '3xl']} fw="500" ff="base" lts="s" lh="s" m="0">
-          {meta.label}
-        </Heading>
-        <Text fz="s" c="text-2" m="0">{meta.description}（{page.total} 件）</Text>
-      </Stack>
+  {/* ページタイトル */}
+  <Stack g="15">
+    <Eyebrow>CATEGORY</Eyebrow>
+    <Heading level="1" fz={['2xl', null, '3xl']} fw="500" ff="base" lts="s" lh="s" m="0">
+      {meta.label}
+    </Heading>
+    <Text fz="s" c="text-2" m="0">{meta.description}（{page.total} 件）</Text>
+  </Stack>
 
-      {/* カテゴリータブ */}
-      <CategoryTabs current={category} />
+  {/* カテゴリータブ */}
+  <CategoryTabs current={category} />
 
-      {/* 記事リスト */}
-      <PostList posts={page.data} showCategory={false} />
+  {/* 記事リスト */}
+  <PostList posts={page.data} showCategory={false} />
 
-      {/* ページャー */}
-      <Pager currentPage={page.currentPage} lastPage={page.lastPage} getPageHref={getPageHref} />
-    </Stack>
-  </Wrapper>
-</Layout>
+  {/* ページャー */}
+  <Pager currentPage={page.currentPage} lastPage={page.lastPage} getPageHref={getPageHref} />
+</ArchiveLayout>

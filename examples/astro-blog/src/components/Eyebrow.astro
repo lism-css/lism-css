@@ -1,0 +1,9 @@
+---
+import { Lism } from 'lism-css/astro';
+
+const { class: className, ...rest } = Astro.props;
+---
+
+<Lism class:list={['c--eyebrow', className]} ff="accent" fz="2xs" lts="3xl" c="text-2" tt="upper" {...rest}>
+  <slot />
+</Lism>

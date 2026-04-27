@@ -9,8 +9,8 @@ interface Props {
 const { toc } = Astro.props;
 ---
 
-<Stack class="c--toc" g="15">
-  <Lism class="c--toc_label">TABLE OF CONTENTS</Lism>
+<Stack class="c--toc" ff="accent" g="15">
+  <Lism class="c--toc_label" fz="2xs" lts="3xl" c="text-2" py-e="10" bd-b tt="upper"> TABLE OF CONTENTS </Lism>
   <ul class="c--toc_list">
     {
       toc.map((item) => (
@@ -35,11 +35,64 @@ const { toc } = Astro.props;
   </ul>
 </Stack>
 
+<style>
+  @layer lism-component {
+    /* === TOC（目次） === */
+    /* 子孫セレクタ・状態切替（data-is-active はスクロール連動でJSが切替） */
+    .c--toc_list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+
+      ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+
+      a {
+        display: block;
+        padding-block: var(--s10);
+        padding-inline-start: var(--s10);
+        color: var(--text);
+        border-inline-start: 3px solid transparent;
+        text-decoration: none;
+        line-height: 1.5;
+        font-size: var(--fz--s);
+        font-weight: var(--fw--bold);
+        transition:
+          color 0.2s,
+          border-color 0.2s;
+
+        &:hover {
+          color: var(--brand);
+        }
+
+        &[data-is-active] {
+          color: var(--brand);
+          border-inline-start-color: var(--brand);
+        }
+      }
+
+      /* 子レベル（h3） */
+      li[data-level='3'] > a {
+        font-size: var(--fz--xs);
+        padding-inline-start: var(--s30);
+        color: var(--text-2);
+        font-weight: var(--fw--normal);
+      }
+    }
+  }
+</style>
+
 <script>
   // スクロール連動で目次のアクティブ状態を更新する
+  // 「最後に上端を通過した見出し」を active にすることで、クリック遷移直後の表示と一致させる
   function initTocHighlight() {
     const tocLinks = document.querySelectorAll<HTMLAnchorElement>('[data-toc-link]');
     if (tocLinks.length === 0) return;
+
+    const OFFSET = 80;
 
     const headings: HTMLElement[] = [];
     tocLinks.forEach((link) => {
@@ -51,22 +104,51 @@ const { toc } = Astro.props;
     });
     if (headings.length === 0) return;
 
-    function setActive(slug: string) {
+    function setActive(slug: string | null) {
       tocLinks.forEach((link) => {
-        link.classList.toggle('_active', link.dataset.tocLink === slug);
+        const isActive = slug !== null && link.dataset.tocLink === slug;
+        if (isActive) {
+          link.dataset.isActive = '';
+        } else {
+          delete link.dataset.isActive;
+        }
       });
     }
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const visible = entries.filter((e) => e.isIntersecting);
-        if (visible.length === 0) return;
-        const top = visible.reduce((prev, curr) => (prev.boundingClientRect.top < curr.boundingClientRect.top ? prev : curr));
-        setActive(top.target.id);
-      },
-      { rootMargin: '-80px 0px -70% 0px', threshold: 0 }
-    );
-    headings.forEach((h) => observer.observe(h));
+    function updateActive() {
+      let current: HTMLElement | null = null;
+      for (const heading of headings) {
+        if (heading.getBoundingClientRect().top - OFFSET <= 0) {
+          current = heading;
+        } else {
+          break;
+        }
+      }
+      // 最初の見出しより上にいる場合でも、最初の項目を active にしておく
+      setActive(current ? current.id : headings[0].id);
+    }
+
+    let ticking = false;
+    function onScroll() {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => {
+        updateActive();
+        ticking = false;
+      });
+    }
+
+    // クリック時は即座に active を切り替える（スクロール完了を待たない）
+    tocLinks.forEach((link) => {
+      link.addEventListener('click', () => {
+        const slug = link.dataset.tocLink;
+        if (slug) setActive(slug);
+      });
+    });
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll);
+    updateActive();
   }
 
   document.addEventListener('DOMContentLoaded', initTocHighlight);

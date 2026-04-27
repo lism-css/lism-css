@@ -5,12 +5,12 @@
   :root {
     /* 紙面のような淡いクリーム色をベースに */
     --base: #fbfaf7;
-    --base-2: #ffffff;
+    --base-2: #f3f2ee;
     --text: #1a1a1a;
-    --text-2: #4a4a4a;
+    --text-2: #4c4c4c;
     --divider: #e8e6e1;
-    /* キーカラー（タグ・アクセント・リンク） */
-    --keycolor: #c8553d;
+    /* ブランドカラー（タグ・アクセント・リンクの軸） */
+    --brand: #c8553d;
     --link: #c8553d;
 
     /* 明朝 */
@@ -19,274 +19,82 @@
 
     /* 行間と読み心地の調整 */
     /* --lh--base: 1.85; */
-  }
-}
 
-/* === ベースタイポ調整 === */
-@layer lism-base {
+    /* 字間（lism-css のデフォルト --lts--s/--lts--l に追加） */
+    --lts--s: 0.01em;
+    --lts--base: 0.025em;
+    --lts--l: 0.05em;
+    --lts--xl: 0.1em; /* アクセント標準（cat/pager/share/tag） */
+    --lts--2xl: 0.15em; /* アクセント広め（date/catTabs） */
+    --lts--3xl: 0.2em; /* アクセント最大（eyebrow/toc_label） */
+
+    /* --sz-- */
+    --sz--toc: 220px;
+    --sz--l: calc(var(--sz--m) + var(--sz--toc) + var(--s40));
+  }
+
   body {
     font-feature-settings: 'palt' 1;
-    -webkit-font-smoothing: antialiased;
+    /* -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale; */
   }
-
-  /* 控えめテキスト */
-  .c--muted {
-    color: var(--text-2);
-    opacity: 0.85;
+  a {
+    text-underline-offset: 0.2em;
   }
-
-  /* ボタン共通 cursor */
-  button {
-    cursor: pointer;
+  code {
+    letter-spacing: normal;
   }
 }
 
 /* === ブログ用のコンポーネント === */
 @layer lism-component {
-  /* eyebrow（記事タイトル上の小さなラベル） */
-  .c--eyebrow {
-    font-family: var(--ff--accent);
-    font-size: var(--fz--2xs);
-    letter-spacing: 0.2em;
-    color: var(--text-2);
-    text-transform: uppercase;
-  }
-
-  /* 日付（横並びの細いラベル） */
-  .c--date {
-    font-family: var(--ff--accent);
-    font-size: var(--fz--2xs);
-    letter-spacing: 0.18em;
-    color: var(--text-2);
-  }
-
-  /* カテゴリーラベル */
-  .c--cat {
-    font-family: var(--ff--accent);
-    font-size: var(--fz--2xs);
-    letter-spacing: 0.14em;
-    color: var(--keycolor);
-    text-transform: uppercase;
-  }
-
-  /* タグ pill */
-  .c--tag {
-    display: inline-block;
-    font-family: var(--ff--accent);
-    font-size: var(--fz--2xs);
-    letter-spacing: 0.12em;
-    padding: 3px 10px;
-    border: 1px solid var(--divider);
-    border-radius: 2px;
-    color: var(--text-2);
-    background: var(--base-2);
-    text-transform: uppercase;
-  }
-  .c--tag.is--solid {
-    background: var(--text);
-    color: var(--base-2);
-    border-color: var(--text);
-  }
-
-  /* === カテゴリータブ === */
-  .c--catTabs {
-    border-block-end: 1px solid var(--divider);
-    font-family: var(--ff--accent);
-    font-size: var(--fz--xs);
-    letter-spacing: 0.18em;
-  }
-  .c--catTab {
-    display: inline-block;
-    padding-block: var(--s15);
-    padding-inline: var(--s5);
-    color: var(--text-2);
-    border-block-end: 1px solid transparent;
-    margin-block-end: -1px;
-    text-transform: uppercase;
-    transition:
-      color 0.2s,
-      border-color 0.2s;
-  }
-  .c--catTab:hover {
-    color: var(--keycolor);
-  }
-  .c--catTab.is--active {
-    color: var(--text);
-    border-block-end-color: var(--keycolor);
-  }
-
-  /* === 記事一覧（縦リスト） === */
-  .c--postList {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-  }
-  .c--postList > li {
-    padding-block: var(--s30);
-    border-block-end: 1px solid var(--divider);
-  }
-  .c--postList > li:first-child {
-    border-block-start: 1px solid var(--divider);
-  }
-  .c--postList a {
-    text-decoration: none;
-    color: inherit;
-    display: block;
-    transition: opacity 0.2s;
-  }
-  .c--postList a:hover {
-    opacity: 0.7;
-  }
-
-  /* === ページャー === */
-  .c--pager {
-    font-family: var(--ff--accent);
-    font-size: var(--fz--xs);
-    letter-spacing: 0.14em;
-    margin-block-start: var(--s20);
-  }
-  .c--pager_nav {
-    color: var(--text);
-    text-decoration: none;
-    padding-block: var(--s10);
-    padding-inline: var(--s15);
-    text-transform: uppercase;
-    transition: color 0.2s;
-  }
-  .c--pager_nav:hover {
-    color: var(--keycolor);
-  }
-  .c--pager_nav.is--disabled {
-    color: var(--text-2);
-    opacity: 0.4;
-  }
-  .c--pager_num {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    min-width: 28px;
-    height: 28px;
-    padding-inline: var(--s5);
-    color: var(--text-2);
-    text-decoration: none;
-    border-block-end: 1px solid transparent;
-    margin-block-end: -1px;
-    transition:
-      color 0.2s,
-      border-color 0.2s;
-  }
-  .c--pager_num:hover {
-    color: var(--keycolor);
-  }
-  .c--pager_num.is--current {
-    color: var(--text);
-    border-block-end-color: var(--keycolor);
-  }
-  .c--pager_gap {
-    color: var(--text-2);
-    padding-inline: var(--s5);
-  }
-
-  /* === 記事本文タイポ === */
+  /* === 記事本文タイポ（MDX/markdown 配下） === */
   .c--articleBody {
     font-size: var(--fz--s);
     line-height: 1.95;
     color: var(--text);
-  }
-  .c--articleBody h2 {
-    font-size: var(--fz--xl);
-    font-weight: 600;
-    margin-block: var(--s50) var(--s20);
-    padding-block-end: var(--s15);
-    border-block-end: 1px solid var(--divider);
-    letter-spacing: 0.02em;
-    scroll-margin-block-start: var(--s30);
-  }
-  .c--articleBody h2:first-child {
-    margin-block-start: 0;
-  }
-  .c--articleBody h3 {
-    font-size: var(--fz--l);
-    font-weight: 600;
-    margin-block: var(--s40) var(--s15);
-    padding-inline-start: var(--s15);
-    border-inline-start: 3px solid var(--keycolor);
-    letter-spacing: 0.02em;
-    scroll-margin-block-start: var(--s30);
-  }
-  .c--articleBody p {
-    margin-block: 0 var(--s20);
-    text-align: justify;
-  }
-  .c--articleBody blockquote {
-    margin-block: var(--s30);
-    padding: var(--s20) var(--s30);
-    background: var(--base-2);
-    border-inline-start: 3px solid var(--text-2);
-    font-size: var(--fz--s);
-    color: var(--text-2);
-    font-style: italic;
-  }
-  .c--articleBody blockquote p {
-    margin: 0;
-  }
-  .c--articleBody blockquote::before {
-    content: '“';
-    font-size: var(--fz--2xl);
-    color: var(--text-2);
-    margin-inline-end: var(--s5);
-    vertical-align: -4px;
-  }
-  .c--articleBody a {
-    color: var(--keycolor);
-    text-decoration: underline;
-    text-underline-offset: 0.2em;
-  }
 
-  /* === TOC（目次） === */
-  .c--toc {
-    font-family: var(--ff--accent);
+    /* 型セレクタは子孫として暗黙接続されるため & 不要 */
+    h2 {
+      font-size: var(--fz--xl);
+      font-weight: 600;
+      padding-block-end: var(--s15);
+      border-block-end: 1px solid var(--divider);
+      letter-spacing: var(--lts--s);
+      scroll-margin-block-start: var(--s30);
+    }
+
+    h3 {
+      font-size: var(--fz--l);
+      font-weight: 600;
+      padding-inline-start: var(--s15);
+      border-inline-start: 3px solid var(--brand);
+      letter-spacing: var(--lts--s);
+      scroll-margin-block-start: var(--s30);
+    }
+
+    p {
+      text-align: justify;
+    }
+
+    blockquote {
+      border-inline-start: 3px solid var(--text-2);
+      font-style: italic;
+    }
+
+    pre {
+      padding: var(--s20);
+      font-size: var(--fz--s);
+    }
   }
-  .c--toc_label {
-    font-size: var(--fz--2xs);
-    letter-spacing: 0.24em;
-    color: var(--text-2);
-    padding-block-end: var(--s10);
-    border-block-end: 1px solid var(--divider);
-    text-transform: uppercase;
-  }
-  .c--toc_list,
-  .c--toc_list ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-  }
-  .c--toc_list a {
-    display: block;
-    padding-block: var(--s10);
-    padding-inline-start: var(--s10);
-    color: var(--text);
-    border-inline-start: 3px solid transparent;
-    text-decoration: none;
-    line-height: 1.5;
-    font-size: var(--fz--s);
-    font-weight: var(--fw--bold);
-    transition:
-      color 0.2s,
-      border-color 0.2s;
-  }
-  .c--toc_list a:hover {
-    color: var(--keycolor);
-  }
-  .c--toc_list a._active {
-    color: var(--keycolor);
-    border-inline-start-color: var(--keycolor);
-  }
-  /* 子レベル（h3） */
-  .c--toc_list li[data-level='3'] > a {
-    font-size: var(--fz--xs);
-    padding-inline-start: var(--s30);
-    color: var(--text-2);
-    font-weight: var(--fw--normal);
-  }
+}
+
+.-lts\:3xl {
+  letter-spacing: var(--lts--3xl);
+}
+.-lts\:2xl {
+  letter-spacing: var(--lts--2xl);
+}
+.-lts\:xl {
+  letter-spacing: var(--lts--xl);
 }
