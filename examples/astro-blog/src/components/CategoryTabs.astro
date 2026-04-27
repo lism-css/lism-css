@@ -1,0 +1,33 @@
+---
+import { Cluster, Link } from 'lism-css/astro';
+import { CATEGORIES } from '@/lib/categories';
+
+type Current = 'all' | 'dev' | 'life';
+
+interface Props {
+  current: Current;
+}
+
+const { current } = Astro.props;
+
+const tabs: { key: Current; label: string; href: string }[] = [
+  { key: 'all', label: 'ALL', href: '/' },
+  { key: 'dev', label: CATEGORIES.dev.label, href: '/dev/' },
+  { key: 'life', label: CATEGORIES.life.label, href: '/life/' },
+];
+---
+
+<Cluster as="nav" g="30" class="c--catTabs" aria-label="カテゴリーで絞り込む">
+  {
+    tabs.map((tab) => (
+      <Link
+        href={tab.href}
+        class:list={['c--catTab', { 'is--active': current === tab.key }]}
+        td="none"
+        aria-current={current === tab.key ? 'page' : undefined}
+      >
+        {tab.label}
+      </Link>
+    ))
+  }
+</Cluster>

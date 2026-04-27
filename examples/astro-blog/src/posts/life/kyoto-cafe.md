@@ -2,7 +2,7 @@
 title: 京都・五条の喫茶店めぐり、三軒
 excerpt: ふらりと立ち寄った路地裏で出会った、静かで居心地の良いお店たちの記録。
 date: 2026.04.05
-category: Travel
+tags: [coffee, cafe, kyoto, travel]
 readtime: 6 min
 ---
 

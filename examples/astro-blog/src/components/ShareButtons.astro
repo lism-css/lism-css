@@ -1,0 +1,105 @@
+---
+import { Lism, Flex, Cluster } from 'lism-css/astro';
+
+interface Props {
+  title: string;
+}
+
+const { title } = Astro.props;
+---
+
+<Lism class="c--share" mt="40" pt="30" bd-t ff="accent" data-share-title={title}>
+  <Flex g="20" ai="center" jc={['start', null, 'between']} fxw="wrap">
+    <Lism class="c--eyebrow">SHARE</Lism>
+    <Cluster g="10" ai="center">
+      <button type="button" class="c--shareBtn set--plain" data-share-x aria-label="X でシェア">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path
+            d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"
+          ></path>
+        </svg>
+        <span>POST</span>
+      </button>
+      <button type="button" class="c--shareBtn set--plain" data-share-copy aria-label="リンクをコピー">
+        <svg
+          width="14"
+          height="14"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.8"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"
+        >
+          <path d="M10 13a5 5 0 0 0 7.07 0l3-3a5 5 0 0 0-7.07-7.07l-1 1"></path>
+          <path d="M14 11a5 5 0 0 0-7.07 0l-3 3a5 5 0 0 0 7.07 7.07l1-1"></path>
+        </svg>
+        <span data-share-copy-label>COPY</span>
+      </button>
+    </Cluster>
+  </Flex>
+</Lism>
+
+<style>
+  @layer lism-component {
+    .c--shareBtn {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--s5);
+      padding: var(--s10) var(--s15);
+      border: 1px solid var(--divider);
+      border-radius: 2px;
+      background: var(--base-2);
+      color: var(--text-2);
+      font-family: var(--ff--accent);
+      font-size: var(--fz--2xs);
+      letter-spacing: 0.14em;
+      line-height: 1;
+      text-transform: uppercase;
+      transition:
+        color 0.2s,
+        border-color 0.2s,
+        background 0.2s;
+    }
+    .c--shareBtn:hover,
+    .c--shareBtn.is--copied {
+      color: var(--keycolor);
+      border-color: var(--keycolor);
+    }
+    .c--shareBtn svg {
+      flex-shrink: 0;
+    }
+  }
+</style>
+
+<script>
+  function initShare(root: HTMLElement) {
+    const title = root.dataset.shareTitle ?? document.title;
+
+    const xBtn = root.querySelector<HTMLButtonElement>('[data-share-x]');
+    xBtn?.addEventListener('click', () => {
+      const url = window.location.href;
+      const intent = `https://x.com/intent/post?url=${encodeURIComponent(url)}&text=${encodeURIComponent(title)}`;
+      window.open(intent, '_blank', 'noopener,noreferrer');
+    });
+
+    const copyBtn = root.querySelector<HTMLButtonElement>('[data-share-copy]');
+    const copyLabel = root.querySelector<HTMLElement>('[data-share-copy-label]');
+    copyBtn?.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(window.location.href);
+        copyBtn.classList.add('is--copied');
+        if (copyLabel) copyLabel.textContent = 'COPIED';
+        window.setTimeout(() => {
+          copyBtn.classList.remove('is--copied');
+          if (copyLabel) copyLabel.textContent = 'COPY';
+        }, 1800);
+      } catch {
+        window.prompt('このURLをコピーしてください', window.location.href);
+      }
+    });
+  }
+
+  document.querySelectorAll<HTMLElement>('.c--share').forEach(initShare);
+</script>

@@ -1,0 +1,38 @@
+---
+import { Lism, Stack, Flex, Heading, Text, Link, Inline } from 'lism-css/astro';
+import type { CollectionEntry } from 'astro:content';
+import { CATEGORIES, parsePostId } from '@/lib/categories';
+
+interface Props {
+  posts: CollectionEntry<'posts'>[];
+  showCategory?: boolean;
+}
+
+const { posts, showCategory = true } = Astro.props;
+---
+
+<Lism as="ul" class="c--postList">
+  {
+    posts.map((post) => {
+      const { category } = parsePostId(post.id);
+      return (
+        <li>
+          <Link href={`/${post.id}/`}>
+            <Stack g="10">
+              <Flex g="20" ai="baseline">
+                <Inline class="c--date">{post.data.date}</Inline>
+                {showCategory && <Inline class="c--cat">{CATEGORIES[category].label}</Inline>}
+              </Flex>
+              <Heading level="2" fz="l" fw="500" lh="s" m="0" ff="base">
+                {post.data.title}
+              </Heading>
+              <Text fz="s" c="text-2" lh="l" m="0">
+                {post.data.excerpt}
+              </Text>
+            </Stack>
+          </Link>
+        </li>
+      );
+    })
+  }
+</Lism>

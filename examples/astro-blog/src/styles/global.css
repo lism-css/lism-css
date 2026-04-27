@@ -13,12 +13,12 @@
     --keycolor: #c8553d;
     --link: #c8553d;
 
-    /* 本文は明朝、UI は ゴシック */
+    /* 明朝 */
     --ff--base: 'Noto Serif JP', 'Hiragino Mincho ProN', 'Yu Mincho', serif;
-    --ff--accent: 'Noto Sans JP', 'Hiragino Kaku Gothic ProN', 'Yu Gothic', sans-serif;
+    /* --ff--accent: 'Noto Sans JP', 'Hiragino Kaku Gothic ProN', 'Yu Gothic', sans-serif; */
 
     /* 行間と読み心地の調整 */
-    --lh--base: 1.85;
+    /* --lh--base: 1.85; */
   }
 }
 
@@ -46,7 +46,7 @@
   /* eyebrow（記事タイトル上の小さなラベル） */
   .c--eyebrow {
     font-family: var(--ff--accent);
-    font-size: 11px;
+    font-size: var(--fz--2xs);
     letter-spacing: 0.2em;
     color: var(--text-2);
     text-transform: uppercase;
@@ -55,7 +55,7 @@
   /* 日付（横並びの細いラベル） */
   .c--date {
     font-family: var(--ff--accent);
-    font-size: 11px;
+    font-size: var(--fz--2xs);
     letter-spacing: 0.18em;
     color: var(--text-2);
   }
@@ -63,7 +63,7 @@
   /* カテゴリーラベル */
   .c--cat {
     font-family: var(--ff--accent);
-    font-size: 11px;
+    font-size: var(--fz--2xs);
     letter-spacing: 0.14em;
     color: var(--keycolor);
     text-transform: uppercase;
@@ -73,7 +73,7 @@
   .c--tag {
     display: inline-block;
     font-family: var(--ff--accent);
-    font-size: 10px;
+    font-size: var(--fz--2xs);
     letter-spacing: 0.12em;
     padding: 3px 10px;
     border: 1px solid var(--divider);
@@ -86,6 +86,33 @@
     background: var(--text);
     color: var(--base-2);
     border-color: var(--text);
+  }
+
+  /* === カテゴリータブ === */
+  .c--catTabs {
+    border-block-end: 1px solid var(--divider);
+    font-family: var(--ff--accent);
+    font-size: var(--fz--xs);
+    letter-spacing: 0.18em;
+  }
+  .c--catTab {
+    display: inline-block;
+    padding-block: var(--s15);
+    padding-inline: var(--s5);
+    color: var(--text-2);
+    border-block-end: 1px solid transparent;
+    margin-block-end: -1px;
+    text-transform: uppercase;
+    transition:
+      color 0.2s,
+      border-color 0.2s;
+  }
+  .c--catTab:hover {
+    color: var(--keycolor);
+  }
+  .c--catTab.is--active {
+    color: var(--text);
+    border-block-end-color: var(--keycolor);
   }
 
   /* === 記事一覧（縦リスト） === */
@@ -111,14 +138,63 @@
     opacity: 0.7;
   }
 
+  /* === ページャー === */
+  .c--pager {
+    font-family: var(--ff--accent);
+    font-size: var(--fz--xs);
+    letter-spacing: 0.14em;
+    margin-block-start: var(--s20);
+  }
+  .c--pager_nav {
+    color: var(--text);
+    text-decoration: none;
+    padding-block: var(--s10);
+    padding-inline: var(--s15);
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  .c--pager_nav:hover {
+    color: var(--keycolor);
+  }
+  .c--pager_nav.is--disabled {
+    color: var(--text-2);
+    opacity: 0.4;
+  }
+  .c--pager_num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 28px;
+    height: 28px;
+    padding-inline: var(--s5);
+    color: var(--text-2);
+    text-decoration: none;
+    border-block-end: 1px solid transparent;
+    margin-block-end: -1px;
+    transition:
+      color 0.2s,
+      border-color 0.2s;
+  }
+  .c--pager_num:hover {
+    color: var(--keycolor);
+  }
+  .c--pager_num.is--current {
+    color: var(--text);
+    border-block-end-color: var(--keycolor);
+  }
+  .c--pager_gap {
+    color: var(--text-2);
+    padding-inline: var(--s5);
+  }
+
   /* === 記事本文タイポ === */
   .c--articleBody {
-    font-size: 15px;
+    font-size: var(--fz--s);
     line-height: 1.95;
     color: var(--text);
   }
   .c--articleBody h2 {
-    font-size: 22px;
+    font-size: var(--fz--xl);
     font-weight: 600;
     margin-block: var(--s50) var(--s20);
     padding-block-end: var(--s15);
@@ -130,7 +206,7 @@
     margin-block-start: 0;
   }
   .c--articleBody h3 {
-    font-size: 17px;
+    font-size: var(--fz--l);
     font-weight: 600;
     margin-block: var(--s40) var(--s15);
     padding-inline-start: var(--s15);
@@ -147,7 +223,7 @@
     padding: var(--s20) var(--s30);
     background: var(--base-2);
     border-inline-start: 3px solid var(--text-2);
-    font-size: 14px;
+    font-size: var(--fz--s);
     color: var(--text-2);
     font-style: italic;
   }
@@ -156,7 +232,7 @@
   }
   .c--articleBody blockquote::before {
     content: '“';
-    font-size: 28px;
+    font-size: var(--fz--2xl);
     color: var(--text-2);
     margin-inline-end: var(--s5);
     vertical-align: -4px;
@@ -172,27 +248,29 @@
     font-family: var(--ff--accent);
   }
   .c--toc_label {
-    font-size: 10px;
+    font-size: var(--fz--2xs);
     letter-spacing: 0.24em;
     color: var(--text-2);
     padding-block-end: var(--s10);
     border-block-end: 1px solid var(--divider);
     text-transform: uppercase;
   }
-  .c--toc_list {
+  .c--toc_list,
+  .c--toc_list ul {
     list-style: none;
     padding: 0;
     margin: 0;
   }
   .c--toc_list a {
     display: block;
-    padding-block: var(--s5);
+    padding-block: var(--s10);
     padding-inline-start: var(--s10);
     color: var(--text);
-    border-inline-start: 2px solid transparent;
+    border-inline-start: 3px solid transparent;
     text-decoration: none;
-    line-height: 1.6;
-    font-size: 12px;
+    line-height: 1.5;
+    font-size: var(--fz--s);
+    font-weight: var(--fw--bold);
     transition:
       color 0.2s,
       border-color 0.2s;
@@ -206,55 +284,9 @@
   }
   /* 子レベル（h3） */
   .c--toc_list li[data-level='3'] > a {
-    font-size: 11px;
+    font-size: var(--fz--xs);
     padding-inline-start: var(--s30);
     color: var(--text-2);
-    font-weight: 400;
-  }
-
-  /* md+ で TOC を sticky にする */
-  @container (min-width: 800px) {
-    .c--tocAside {
-      position: sticky;
-      inset-block-start: var(--s40);
-    }
-  }
-
-  /* === 記事ページの全体グリッド === */
-  /* sm/base: 1カラム（header → toc → body → nav） */
-  /* md+   : 2カラム（headerは横幅全体、本文+TOC、navは横幅全体） */
-  .c--articleGrid {
-    display: grid;
-    grid-template-areas:
-      'header'
-      'toc'
-      'body'
-      'nav';
-    grid-template-columns: minmax(0, 1fr);
-    gap: var(--s40);
-  }
-  @container (min-width: 800px) {
-    .c--articleGrid {
-      grid-template-areas:
-        'header header'
-        'body   toc'
-        'nav    nav';
-      grid-template-columns: minmax(0, 1fr) 220px;
-      gap: var(--s40) var(--s50);
-    }
-  }
-  .c--articleGrid_header {
-    grid-area: header;
-  }
-  .c--articleGrid_toc {
-    grid-area: toc;
-  }
-  .c--articleGrid_body {
-    grid-area: body;
-    /* min-width:0 を入れておかないと長い code/pre 等で grid が破綻する */
-    min-inline-size: 0;
-  }
-  .c--articleGrid_nav {
-    grid-area: nav;
+    font-weight: var(--fw--normal);
   }
 }

@@ -3,7 +3,5 @@
  */
 export const NAV_ITEMS: { label: string; href: string }[] = [
   { label: 'HOME', href: '/' },
-  { label: 'ABOUT', href: '#' },
-  { label: 'CATEGORY', href: '#' },
-  { label: 'ARCHIVE', href: '#' },
+  { label: 'ABOUT', href: '/about/' },
 ];
