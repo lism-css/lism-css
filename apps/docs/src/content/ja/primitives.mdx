@@ -31,6 +31,93 @@ Lism では、レイアウトを組み立てる小さな積み木として **Pri
 | <ModLink slug="l--switchColumns" /> | 複数列と 1 列を自動切り替え |
 
 
+### カラムレイアウト Primitive の使い分けガイド
+
+「カラムを並べる」用途で使える Primitive は複数あります。意図に応じて適切なものを選んでください。
+
+#### 比較表
+
+各 Primitive がどの用途に向いているかの一覧です。
+
+| やりたいこと | <ModLink slug="l--columns" label="columns"/> | <ModLink slug="l--autoColumns" label="autoColumns" /> | <ModLink slug="l--switchColumns" label="switchColumns" /> | <ModLink slug="l--withSide" label="withSide" /> | <ModLink slug="l--grid" label="grid" /> |
+|---|---|---|---|---|---|
+| 等幅 N 列 | ◯ | ◯ | ✗ | ✗ | △ |
+| 横並び ↔ 1 列の一括切替 | ◯ | ✗ | ◯ | ✗ | △ |
+| カラム最小幅で自動折返し | ✗ | ◯ | ✗ | ✗ | △ |
+| サイド + メイン（非対称 2 カラム） | △ | ✗ | ✗ | ◯ | △ |
+| BP で列数切替 | ◯ | ✗ | ✗ | ✗ | △ |
+| 非BPでのレスポンシブ | ✗ | ◯ | ◯ | ◯ | ✗ |
+
+凡例: ◯ 適している / △ 可能だが冗長 / ✗ 不向き
+
+#### 選び方
+
+##### 等幅 N 列、または列数をブレイクポイントで切り替えたい
+
+**推奨**: <ModLink slug="l--columns" />
+
+`cols={3}` のように固定列数を書けます。`cols` を配列で渡せば、ブレイクポイントごとの列数も宣言的に書けます。
+
+```jsx
+<Columns cols={[1, 2, 3]} g="20">...</Columns>
+```
+
+`l--grid` でも `gtc="repeat(3, 1fr)"` として実現できますが、等幅 N 列や列数切替だけなら `l--columns` のほうが簡潔です。
+
+##### カラムが指定の最小幅を下回ったら自動で折り返したい
+
+**推奨**: <ModLink slug="l--autoColumns" />
+
+ブレイクポイントに依存せず、カラムの最小幅基準で `auto-fit` / `auto-fill` の挙動を簡潔に書けます。カード一覧、商品リスト、ロゴ並びなどに向いています。
+
+```jsx
+<AutoColumns cols="20rem" g="20">...</AutoColumns>
+```
+
+##### 「横並び」と「縦 1 列」を一括で切り替えたい
+
+**推奨**: <ModLink slug="l--switchColumns" />
+
+自身の利用可能幅が `breakSize` を下回ったら一気に縦並びに切り替わります。ブレイクポイント / コンテナクエリの設計は不要ですが、`breakSize` で切り替え幅を指定します。段階的に列数を変えたい場合は `l--columns` か `l--autoColumns` を選んでください。
+
+```jsx
+<SwitchColumns breakSize="s" g="20">...</SwitchColumns>
+```
+
+##### サイド + メイン（非対称 2 カラム）で、コンテンツ幅で自動切替したい
+
+**推奨**: <ModLink slug="l--withSide" />
+
+メイン側が `mainW` を維持できなくなった時点で自動で縦並びに切り替わります。ブレイクポイント設計が不要です。
+
+```jsx
+<WithSide sideW="240px" mainW="20rem" g="20">
+  <Box>Main</Box>
+  <Box isSide>Side</Box>
+</WithSide>
+```
+
+メディア側を `isSide` として先に置き、`fxd="row-reverse"` を併用すれば、横並び時は左右が交互の配置、縦並び時はメディアが上に統一されるレイアウトも作れます。
+
+ブレイクポイントで明示的に切り替えたい場合は <ModLink slug="l--grid" /> を `gta` のテンプレ切替で組むことでも同じ見た目を実現できます（`l--withSide` のほうが宣言的でシンプル）。
+
+##### 行 × 列を指定した固定タイルレイアウト
+
+**推奨**: <ModLink slug="l--tileGrid" />
+
+カラムレイアウトというより、行数も固定したい場合の Grid 派生です。`cols` / `rows` で `repeat(rows, minmax(0, 1fr)) / repeat(cols, minmax(0, 1fr))` を簡潔に書けます。
+
+```jsx
+<TileGrid cols="3" rows="2" g="10">...</TileGrid>
+```
+
+##### Grid テンプレートを主目的にした複雑な配置
+
+**推奨**: <ModLink slug="l--grid" />
+
+名前付きエリア、要素の重ね合わせ（`ga="1/1"`）、subgrid など、Grid テンプレートを中心に組むための汎用 Primitive です。`gta` / `gtc` 自体は Property Class として他の Primitive にも指定できますが、Grid テンプレートを主軸にするなら `l--grid` を選んでください。
+
+
 ## Atomic Primitives
 
 レイアウトの最小単位となる Primitive 群です。

@@ -48,6 +48,13 @@ import { Accordion, Tabs, Button } from '@lism-css/ui/astro';
 
 ## 実装ルール
 
+### コードを書く前に必ず参照
+
+レイアウト選択ミスや典型的な記法ミスを避けるため、コード生成の前に以下を確認すること：
+
+- **どの Primitive を使うか迷ったら** → [primitive-class.md の「カラムレイアウト Primitive の使い分けガイド」](./primitive-class.md#カラムレイアウト-primitive-の使い分けガイド) — 比較表と用途別の選び方で判断材料を提供
+- **コードを書く前のチェック** → [antipatterns.md](./antipatterns.md) — Token typo / Prop 型ミス / レイアウト選択ミス / レスポンシブ抜けの NG → OK カタログ
+
 ### 基本方針: できる限りLism CSSの用意しているクラス・CSS変数・コンポーネントを使って書く
 
 まずは以下のチェックリストを確認しながら、Lism CSS でできることが何かを考えてから実装方針を立ててください。
@@ -82,6 +89,8 @@ import { Accordion, Tabs, Button } from '@lism-css/ui/astro';
 | `bgc="secondary"` | `bgc="base-2"` | カラートークンの間違い |
 | `p="8"`, `g="6"` | `p="20"`, `g="10"` | スペーストークンの間違い |
 
+その他の典型的な NG パターンは [antipatterns.md](./antipatterns.md) にカタログ化されているので、コード生成前に確認すること。
+
 #### NG: レスポンシブの考慮漏れ・Gridの直書き
 
 渡されたPCサイズのデザインだけをみて、カラムレイアウトを`<Grid gtc="repeat(3, 1fr)>`のように固定してしまわないようにすること。
@@ -104,7 +113,8 @@ import { Accordion, Tabs, Button } from '@lism-css/ui/astro';
 - [naming.md](./naming.md) — 命名規則の詳細。（CSS変数名・クラス名・Property Class の `{prop}` / `{value}` の省略ルール）
 - [base-styles.md](./base-styles.md) — HTML要素のベーススタイリング。（Reset CSSやHTML要素の基本スタイルをカスタマイズできるCSS変数）
 - [set-class.md](./set-class.md) — ベーススタイル・変数セットに使用する`set--` クラスの一覧と用途。
-- [primitive-class.md](./primitive-class.md) — レイアウトを組み立てる Primitive クラス（`l--`/`a--`）の一覧と用途。
+- [primitive-class.md](./primitive-class.md) — レイアウトを組み立てる Primitive クラス（`l--`/`a--`）の一覧と用途。カラムレイアウト系の使い分けガイドも含む。
+- [antipatterns.md](./antipatterns.md) — AI が生成しがちな NG パターンと OK 対応。Token typo / Prop 型ミス / レイアウト選択ミス / レスポンシブ抜け。
 - [trait-class.md](./trait-class.md) — 要素に役割・機能を宣言する Trait クラス（`is--`/`has--`）の一覧と用途。
 - [utility-class.md](./utility-class.md) — 具体的な用途・装飾・機能を持つユーティリティクラス（`u--` クラス）の一覧と用途。
 - [property-class.md](./property-class.md) — 単一のCSSプロパティに対応するProperty Class（`-{prop}:{value}`形式のクラス）の一覧・記法。

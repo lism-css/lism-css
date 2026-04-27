@@ -194,6 +194,17 @@ describe('MCP Tools (integration)', () => {
     expect(text).toContain('md');
   });
 
+  it('get_guide で antipatterns トピックが NG/OK カタログの Markdown を返す', async () => {
+    const client = await createTestClient();
+    const result = await client.callTool({ name: 'get_guide', arguments: { topic: 'antipatterns' } });
+    expect(result.isError).toBeFalsy();
+
+    const text = getText(result);
+    expect(text).toContain('アンチパターン');
+    expect(text).toContain('NG');
+    expect(text).toContain('OK');
+  });
+
   it('search_docs が正常にデータを返す', async () => {
     const client = await createTestClient();
     const result = await client.callTool({ name: 'search_docs', arguments: { query: 'Box' } });

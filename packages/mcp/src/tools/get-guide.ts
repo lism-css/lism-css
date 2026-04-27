@@ -17,10 +17,17 @@ const GUIDE_TOPICS = {
   },
   'base-styles': { file: 'base-styles.md', label: 'Base styling, reset CSS, HTML element styles' },
   'set-class': { file: 'set-class.md', label: 'Set classes (set--plain, set--var:bxsh, set--var:hov, etc.)' },
-  'primitive-class': { file: 'primitive-class.md', label: 'Primitive class prefixes (is--, l--, a--) and Component class (c--)' },
+  'primitive-class': {
+    file: 'primitive-class.md',
+    label: 'Primitive class prefixes (is--, l--, a--) and Component class (c--), with column-layout primitive selection guide',
+  },
   'utility-class': { file: 'utility-class.md', label: 'Utility classes (u--trim, u--cbox, etc.)' },
   'css-rules': { file: 'css-rules.md', label: 'CSS methodology, layer structure, naming conventions' },
   responsive: { file: 'prop-responsive.md', label: 'Responsive design, breakpoints, container queries' },
+  antipatterns: {
+    file: 'antipatterns.md',
+    label: 'AI code-generation antipatterns: token typos, prop type mistakes, layout choice errors, responsive omissions',
+  },
 } as const;
 
 type GuideTopic = keyof typeof GUIDE_TOPICS;
