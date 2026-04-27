@@ -2,7 +2,7 @@
 title: 毎朝のルーティンを見直して気づいたこと
 excerpt: 三ヶ月続けた朝の習慣を一度ぜんぶ捨ててみた。残ったものが、本当に大切なものだった。
 date: 2026.03.28
-category: Life
+tags: [habit, routine]
 readtime: 4 min
 ---
 

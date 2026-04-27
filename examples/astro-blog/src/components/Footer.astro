@@ -1,9 +1,10 @@
 ---
 import { Lism, Center } from 'lism-css/astro';
+import { siteConfig } from '@/config/site';
 ---
 
 <Lism as="footer" bd-t mt="80" py="40" px="30">
   <Center>
-    <Lism class="c--eyebrow" ta="center" c="text-2" o="0.7"> © 2026 LISM JOURNAL — A QUIET PLACE TO READ AND THINK </Lism>
+    <Lism class="c--eyebrow" ta="center" c="text-2" o="0.7">{siteConfig.footer.copyright}</Lism>
   </Center>
 </Lism>

@@ -2,16 +2,28 @@
 import { Lism, Flex, Cluster, Stack, Inline, Link, Container } from 'lism-css/astro';
 import { Modal } from '@lism-css/ui/astro';
 import { NAV_ITEMS } from '@/lib/nav';
+import { siteConfig } from '@/config/site';
+
+// サイト名にドットが含まれる場合、ドット部分だけキーカラーで強調する
+const [brandHead, ...brandRest] = siteConfig.name.split('.');
+const brandTail = brandRest.join('.');
 ---
 
 <Container as="header" hasGutter bd-b bgc="base-2">
   <Flex ai="center" jc="between" py="20">
     <Link href="/" td="none" c="inherit" fw="600" fz="xl" ff="base" lh="xs">
-      lism<Inline c="keycolor">.</Inline>journal
+      {brandHead}{
+        brandTail && (
+          <>
+            <Inline c="keycolor">.</Inline>
+            {brandTail}
+          </>
+        )
+      }
     </Link>
 
     {/* PCナビ（md以上） */}
-    <Cluster as="nav" g="30" d={['none', null, 'flex']} ff="accent" fz="13px" c="text-2" lts="s">
+    <Cluster as="nav" g="30" d={['none', null, 'flex']} ff="accent" fz="xs" c="text-2" lts="s">
       {
         NAV_ITEMS.map((item) => (
           <Link href={item.href} c="inherit" td="none" hov={{ c: 'keycolor' }}>

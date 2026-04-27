@@ -1,0 +1,58 @@
+---
+import { getCollection } from 'astro:content';
+import type { GetStaticPaths } from 'astro';
+import { Lism, Stack, Heading, Text, Wrapper, Link, Inline } from 'lism-css/astro';
+import Layout from '@/layouts/Layout.astro';
+import PostList from '@/components/PostList.astro';
+import Pager from '@/components/Pager.astro';
+import { siteConfig } from '@/config/site';
+
+export const getStaticPaths = (async ({ paginate }) => {
+  const allPosts = await getCollection('posts');
+  const tagSet = new Set<string>();
+  for (const post of allPosts) {
+    for (const tag of post.data.tags) tagSet.add(tag);
+  }
+
+  return Array.from(tagSet).flatMap((tag) => {
+    const posts = allPosts.filter((p) => p.data.tags.includes(tag)).sort((a, b) => b.data.date.localeCompare(a.data.date));
+    return paginate(posts, {
+      params: { tag },
+      props: { tag },
+      pageSize: siteConfig.pagination.postsPerPage,
+    });
+  });
+}) satisfies GetStaticPaths;
+
+const { tag, page } = Astro.props;
+
+const getPageHref = (n: number) => (n === 1 ? `/tag/${tag}/` : `/tag/${tag}/${n}/`);
+---
+
+<Layout title={`#${tag} — ${siteConfig.name}`} description={`タグ「${tag}」の記事一覧`}>
+  <Wrapper contentSize="s" hasGutter>
+    <Stack g="50">
+      {/* パンくず */}
+      <Lism class="c--eyebrow" d="block">
+        <Link href="/" td="none" c="inherit" hov={{ c: 'keycolor' }}>HOME</Link>
+        ／ <Inline c="text-2">TAG</Inline>
+        ／ {tag.toUpperCase()}
+      </Lism>
+
+      {/* ページタイトル */}
+      <Stack g="15">
+        <Lism class="c--eyebrow">TAG</Lism>
+        <Heading level="1" fz={['2xl', null, '3xl']} fw="500" ff="base" lts="s" lh="s" m="0">
+          #{tag}
+        </Heading>
+        <Text fz="s" c="text-2" m="0">{page.total} 件の記事</Text>
+      </Stack>
+
+      {/* 記事リスト */}
+      <PostList posts={page.data} />
+
+      {/* ページャー */}
+      <Pager currentPage={page.currentPage} lastPage={page.lastPage} getPageHref={getPageHref} />
+    </Stack>
+  </Wrapper>
+</Layout>

@@ -10,9 +10,20 @@ const posts = defineCollection({
     title: z.string(),
     excerpt: z.string(),
     date: z.string(),
-    category: z.string(),
+    tags: z.array(z.string()).default([]),
     readtime: z.string(),
   }),
 });
 
-export const collections = { posts };
+const pages = defineCollection({
+  loader: glob({
+    base: './src/static-pages',
+    pattern: '**/*.md',
+  }),
+  schema: z.object({
+    title: z.string(),
+    description: z.string().optional(),
+  }),
+});
+
+export const collections = { posts, pages };

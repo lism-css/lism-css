@@ -2,7 +2,7 @@
 title: 夜更けのコーヒーと、思考の整理術
 excerpt: 深夜にだけ降りてくるアイデアがある。それを掴まえるための、私なりの小さな儀式について書いてみたい。
 date: 2026.04.18
-category: Essay
+tags: [coffee, thinking, late-night]
 readtime: 5 min
 ---
 

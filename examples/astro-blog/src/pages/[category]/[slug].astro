@@ -1,0 +1,103 @@
+---
+import { getCollection, render } from 'astro:content';
+import { Lism, Stack, Flex, Cluster, Grid, Heading, Text, Wrapper, Inline, Link } from 'lism-css/astro';
+import Layout from '@/layouts/Layout.astro';
+import TableOfContents from '@/components/TableOfContents.astro';
+import ArticleNav from '@/components/ArticleNav.astro';
+import ShareButtons from '@/components/ShareButtons.astro';
+import { generateToc } from '@/lib/generateToc';
+import { CATEGORIES, parsePostId } from '@/lib/categories';
+import { siteConfig } from '@/config/site';
+
+export async function getStaticPaths() {
+  const posts = (await getCollection('posts')).sort((a, b) => b.data.date.localeCompare(a.data.date));
+  return posts.map((post, index) => {
+    const { category, slug } = parsePostId(post.id);
+    return {
+      params: { category, slug },
+      props: {
+        post,
+        prev: posts[index - 1], // 表示順で「新しい記事」が prev に来る
+        next: posts[index + 1],
+      },
+    };
+  });
+}
+
+const { post, prev, next } = Astro.props;
+const { category } = parsePostId(post.id);
+const meta = CATEGORIES[category];
+const { Content, headings } = await render(post);
+const toc = generateToc(headings);
+---
+
+<Layout title={`${post.data.title} — ${siteConfig.name}`} description={post.data.excerpt}>
+  <Wrapper contentSize="l" hasGutter isContainer>
+    {/* パンくず */}
+    <Lism class="c--eyebrow" mb="30" d="block">
+      <Link href="/" td="none" c="inherit" hov={{ c: 'keycolor' }}>HOME</Link>
+      ／
+      <Link href={`/${category}/`} td="none" c="inherit" hov={{ c: 'keycolor' }}>
+        {meta.label}
+      </Link>
+      ／ {post.data.title}
+    </Lism>
+
+    {/* 記事グリッド: md未満は1カラム（header → toc → body → footer）、md以上は2カラム */}
+    <Grid
+      g={['40', null, '40 50']}
+      gtc={['minmax(0, 1fr)', null, 'minmax(0, 1fr) 220px']}
+      gta={[`'header' 'toc' 'body' 'footer'`, null, `'header header' 'body toc' 'footer footer'`]}
+    >
+      {/* 記事ヘッダー */}
+      <Lism as="header" ga="header">
+        <Stack g="20" pb="30" bd-b>
+          <Flex g="20" ai="center" fxw="wrap">
+            <Link href={`/${category}/`} class="c--tag is--solid" td="none">
+              {meta.label}
+            </Link>
+            <Inline class="c--date">{post.data.date}</Inline>
+          </Flex>
+          <Heading level="1" fz={['2xl', null, '3xl']} fw="500" ff="base" lh="s" lts="s" m="0">
+            {post.data.title}
+          </Heading>
+          <Text fz="m" c="text-2" lh="l" m="0">
+            {post.data.excerpt}
+          </Text>
+          {
+            post.data.tags.length > 0 && (
+              <Cluster g="10" ai="center">
+                {post.data.tags.map((tag) => (
+                  <Link href={`/tag/${tag}/`} class="c--tag" td="none">
+                    {tag}
+                  </Link>
+                ))}
+              </Cluster>
+            )
+          }
+        </Stack>
+      </Lism>
+
+      {/* TOC */}
+      <Lism as="aside" ga="toc">
+        <Lism pos="sticky" i-y-s="40" z="1">
+          <TableOfContents toc={toc} />
+        </Lism>
+      </Lism>
+
+      {/* 本文 */}
+      <Lism as="article" ga="body" min-sz="0" class="c--articleBody">
+        <Content />
+      </Lism>
+
+      {/* フッター（シェアボタン → 前後記事ナビ） */}
+      <Lism as="footer" ga="footer">
+        <ShareButtons title={post.data.title} />
+        <ArticleNav
+          prev={prev ? { title: prev.data.title, id: prev.id } : undefined}
+          next={next ? { title: next.data.title, id: next.id } : undefined}
+        />
+      </Lism>
+    </Grid>
+  </Wrapper>
+</Layout>
