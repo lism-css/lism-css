@@ -11,6 +11,7 @@ import { expressiveCodeOptions } from './src/lib/expressive-code.config';
 import { loadLastmodMap } from './src/lib/sitemap-lastmod';
 import docsMd from './src/integrations/docs-md';
 import { astroRedirects } from './src/config/redirects';
+// import lismCss from 'lism-css/vite-plugin';
 
 // ビルド時のみ lastmod-map.json を読み込む（dev では不要）
 const isBuild = process.argv.includes('build');
@@ -44,6 +45,7 @@ export default defineConfig({
     },
     // __で始まるディレクトリ/ファイルをビルドから除外するプラグイン
     plugins: [
+      // lismCss(),
       {
         name: 'ignore-underscore-prefix',
         resolveId(id, importer) {
