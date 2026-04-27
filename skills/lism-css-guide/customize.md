@@ -98,9 +98,31 @@ SCSS を直接読み込む構成では、コンパイル時に `lism-css` 本体
 
 ## `lism.config.js` でのカスタマイズ
 
-プロジェクトのルート直下に `lism.config.js` を置くことで、**コンポーネントの挙動**（受け付ける props の値や、出力されるクラス名）をカスタマイズできます。
+プロジェクトのルート直下に `lism.config.js`（または `lism.config.mjs`）を置くことで、**コンポーネントの挙動**（受け付ける props の値や、出力されるクラス名）をカスタマイズできます。
 
 > **注意**: `lism.config.js` は HTML 出力（クラス名）を変えるだけで、追加されたクラスに対する CSS は別途読み込ませる必要があります（[追加スタイルを読み込ませる方法](#追加スタイルを読み込ませる方法) を参照）。
+
+### Vite プラグインの登録（必須）
+
+`lism.config.js` を読み込ませるには、Vite（または Astro）の設定ファイルで `lism-css/vite-plugin` を登録する必要があります。**未登録の場合、ファイルを置いてもデフォルト設定のまま**になります。
+
+```js
+// astro.config.mjs
+import { defineConfig } from 'astro/config';
+import lismCss from 'lism-css/vite-plugin';
+
+export default defineConfig({
+  vite: {
+    plugins: [lismCss()],
+  },
+});
+```
+
+プラグインはプロジェクトルートから `lism.config.js` → `lism.config.mjs` の順で自動検出します。別の場所に置く場合は `configPath` で指定できます。
+
+```js
+plugins: [lismCss({ configPath: './config/lism.config.js' })],
+```
 
 ### フォーマット
 
@@ -134,11 +156,16 @@ const { props, tokens } = DEFAULT_CONFIG;
 
 export default {
   props: {
-    d: { presets: [...(props.d.presets || []), 'flex', 'grid'] },
+    // 既存propにpresetsを追加
+    ta: { presets: [...(props.ta.presets || []), 'justify'] },
+    // 既存propにutility値を追加
     p: { utils: { box: '2em' } },
+    // 新しいpropの追加（filterはデフォルトに含まれない）
+    filter: { utils: { blur: 'blur(3px)' } },
   },
   tokens: {
-    bdrs: [...(tokens.bdrs || []), '5'],
+    // tokenClass:1 のpropは、tokens を追加するだけで自動でユーティリティ化される
+    lts: [...(tokens.lts || []), 'xl'],
   },
   traits: {
     isHoge: 'is--hoge',
@@ -150,15 +177,15 @@ export default {
 
 | 入力 | 出力されるクラス |
 |------|----------------|
-| `d="flex"` | `-d:flex` |
-| `d="grid"` | `-d:grid` |
+| `ta="justify"` | `-ta:justify` |
 | `p="box"` | `-p:box` |
-| `bdrs="5"` | `-bdrs:5` |
+| `filter="blur"` | `-filter:blur` |
+| `lts="xl"` | `-lts:xl` |
 | `isHoge` | `is--hoge` |
 
 ```jsx
-<Box p="box" d="flex" bdrs="5" isHoge>Box</Box>
-// → <div class="l--box is--hoge -p:box -d:flex -bdrs:5">Box</div>
+<Box p="box" ta="justify" filter="blur" lts="xl" isHoge>Box</Box>
+// → <div class="l--box is--hoge -p:box -ta:justify -filter:blur -lts:xl">Box</div>
 ```
 
 
@@ -172,8 +199,16 @@ export default {
 
 ```css
 /* global.css */
-:root { --lts--2xl: 0.2em; }
-.-lts\:2xl { letter-spacing: var(--lts--2xl); }
+@layer lism-base {
+  :root {
+    --lts--2xl: 0.2em;
+  }
+}
+
+/* Property Class は @layer を付けない */
+.-lts\:2xl {
+  letter-spacing: var(--lts--2xl);
+}
 ```
 
 ```jsx
@@ -191,14 +226,14 @@ npx lism-css build
 `lism.config.js` の内容に基づいて `lism-css/main.css` を再生成します。上記カスタマイズ例だと、以下のスタイルが自動生成されます：
 
 ```css
-.-d\:flex { display: flex; }
-.-d\:grid { display: grid; }
+.-ta\:justify { text-align: justify; }
 .-p\:box { padding: 2em; }
-.-bdrs\:5 { border-radius: var(--bdrs--5); }
+.-filter\:blur { filter: blur(3px); }
+.-lts\:xl { letter-spacing: var(--lts--xl); }
 ```
 
 > **注意**:
-> - トークン CSS 変数（例: `--bdrs--5`）と `is--*` クラスのスタイルは自動生成されないため、手動で追加してください。
+> - 生成されるのはあくまで `var(--lts--xl)` を参照する **ユーティリティクラスまで**。参照先の CSS 変数（`:root { --lts--xl: ... }` のような **値そのもの** の定義）と `is--*` クラスのスタイルは自動生成されないため、手動で追加してください。
 > - `lism-css` パッケージ自体を上書きする処理のため、**パッケージ更新ごとに再実行**が必要です。
 
 ### 3. 手動で CSS を追記
@@ -206,8 +241,15 @@ npx lism-css build
 CLI を使わず、追加クラス分の CSS をプロジェクト側で書いて読み込ませる方法でも問題ありません。
 
 ```css
-:root { --bdrs--5: 0.125rem; }
-.is--hoge { /* ... */ }
+@layer lism-base {
+  :root {
+    --lts--xl: 0.125em;
+  }
+}
+
+@layer lism-trait {
+  .is--hoge { /* ... */ }
+}
 ```
 
 ### 4. SCSS で `lism.config.js` と整合させる
@@ -217,20 +259,16 @@ SCSS 経由で読み込む構成なら、`lism.config.js` と同じ追加分を 
 ```scss
 @use '../path-to/node_modules/lism-css/scss/setting' with (
   $props: (
-    'd': (
-      utilities: (
-        'flex': 'flex',
-        'grid': 'grid',
-      ),
-    ),
+    'ta': ( utilities: ( 'justify': 'justify' ) ),
     'p': ( utilities: ( 'box': '2em' ) ),
-    'bdrs': ( utilities: ( '5': 'var(--bdrs--5)' ) ),
+    'filter': ( utilities: ( 'blur': 'blur(3px)' ) ),
+    'lts': ( utilities: ( 'xl': 'var(--lts--xl)' ) ),
   )
 );
 @use '../path-to/node_modules/lism-css/scss/main';
 
 // トークン追記
 @layer lism-base {
-  :root { --bdrs--5: 0.125rem; }
+  :root { --lts--xl: 0.125em; }
 }
 ```
