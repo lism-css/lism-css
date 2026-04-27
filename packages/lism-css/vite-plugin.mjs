@@ -6,6 +6,10 @@ import { normalizePath } from 'vite';
 const TARGET_ID = 'lism-css/config.js';
 const SEARCH = ['lism.config.js', 'lism.config.mjs'];
 
+/**
+ * @param {{ configPath?: string }} [opts]
+ * @returns {import('vite').Plugin}
+ */
 export default function mynpm(opts = {}) {
   let root = '';
   let userPath = null;
