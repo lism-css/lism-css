@@ -1,0 +1,42 @@
+---
+import '../styles/global.css';
+import { Stack, Container, Lism } from 'lism-css/astro';
+import Header from '@/components/Header.astro';
+import Footer from '@/components/Footer.astro';
+
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description = 'A quiet place to read and think.' } = Astro.props;
+---
+
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <title>{title}</title>
+
+    {/* Webフォント */}
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600&family=Noto+Serif+JP:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    {/* 全体を is--container 化してコンテナクエリベースのレスポンシブを有効に */}
+    <Container>
+      <Stack min-h="100svh" g="0">
+        <Header />
+        <Lism as="main" fxg="1" py={['40', null, '60']}>
+          <slot />
+        </Lism>
+        <Footer />
+      </Stack>
+    </Container>
+  </body>
+</html>

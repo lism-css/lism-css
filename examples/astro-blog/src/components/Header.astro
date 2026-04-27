@@ -1,0 +1,80 @@
+---
+import { Lism, Flex, Cluster, Stack, Inline, Link, Container } from 'lism-css/astro';
+import { Modal } from '@lism-css/ui/astro';
+import { NAV_ITEMS } from '@/lib/nav';
+---
+
+<Container as="header" hasGutter bd-b bgc="base-2">
+  <Flex ai="center" jc="between" py="20">
+    <Link href="/" td="none" c="inherit" fw="600" fz="xl" ff="base" lh="xs">
+      lism<Inline c="keycolor">.</Inline>journal
+    </Link>
+
+    {/* PCナビ（md以上） */}
+    <Cluster as="nav" g="30" d={['none', null, 'flex']} ff="accent" fz="13px" c="text-2" lts="s">
+      {
+        NAV_ITEMS.map((item) => (
+          <Link href={item.href} c="inherit" td="none" hov={{ c: 'keycolor' }}>
+            {item.label}
+          </Link>
+        ))
+      }
+    </Cluster>
+
+    {/* ハンバーガーボタン（md未満） */}
+    <Modal.OpenBtn
+      modalId="site-nav"
+      class="c--menuTrigger l--center set--plain"
+      d={['inline-flex', null, 'none']}
+      bgc="base"
+      bdrs="10"
+      p="10"
+      hov={{ bgc: 'divider' }}
+      aria-label="メニューを開く"
+    >
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true">
+        <line x1="4" y1="7" x2="20" y2="7"></line>
+        <line x1="4" y1="12" x2="20" y2="12"></line>
+        <line x1="4" y1="17" x2="20" y2="17"></line>
+      </svg>
+    </Modal.OpenBtn>
+  </Flex>
+
+  {/* モバイル用モーダルナビ */}
+  <Modal.Root id="site-nav" isContainer isWrapper="s" px="20" py="40">
+    <Modal.Inner layout="stack" g="20" w="100%" max-h="100%" pos="relative" py="30" bdrs="20" bxsh="40" bgc="base-2">
+      <Modal.CloseBtn
+        modalId="site-nav"
+        autofocus
+        pos="absolute"
+        t="0"
+        r="0"
+        z="1"
+        p="10"
+        m="15"
+        bxsh="10"
+        bdrs="10"
+        bgc="base"
+        aria-label="メニューを閉じる"
+      />
+      <Modal.Body layout="stack" g="20" px="30" py="20" ov-y="auto">
+        <Lism class="c--eyebrow">MENU</Lism>
+        <Stack as="nav" g="15" ff="accent" fz="m">
+          {
+            NAV_ITEMS.map((item) => (
+              <Link href={item.href} c="inherit" td="none" py="10" bd-b bdc="divider" hov={{ c: 'keycolor' }}>
+                {item.label}
+              </Link>
+            ))
+          }
+        </Stack>
+      </Modal.Body>
+    </Modal.Inner>
+  </Modal.Root>
+</Container>
+
+<style>
+  .c--menuTrigger {
+    line-height: 0;
+  }
+</style>

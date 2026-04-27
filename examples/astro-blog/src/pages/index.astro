@@ -1,0 +1,67 @@
+---
+import { getCollection } from 'astro:content';
+import { Lism, Stack, Flex, Heading, Text, Wrapper, Link, Inline } from 'lism-css/astro';
+import Layout from '@/layouts/Layout.astro';
+
+// 記事を新しい順にソート
+const posts = (await getCollection('posts')).sort((a, b) => b.data.date.localeCompare(a.data.date));
+---
+
+<Layout title="lism.journal — 日々のこと、考えたこと">
+  <Wrapper contentSize="720px" hasGutter>
+    <Stack g="50">
+      {/* ページタイトル */}
+      <Stack g="15">
+        <Lism class="c--eyebrow">JOURNAL</Lism>
+        <Heading level="1" fz={['2xl', null, '3xl']} fw="500" ff="base" lts="s" lh="s" m="0"> 日々のこと、考えたこと </Heading>
+      </Stack>
+
+      {/* 記事リスト */}
+      <Lism as="ul" class="c--postList">
+        {
+          posts.map((post) => (
+            <li>
+              <Link href={`/posts/${post.id}/`}>
+                <Stack g="10">
+                  <Flex g="20" ai="baseline">
+                    <Inline class="c--date">{post.data.date}</Inline>
+                    <Inline class="c--cat">{post.data.category}</Inline>
+                  </Flex>
+                  <Heading level="2" fz="l" fw="500" lh="s" m="0" ff="base">
+                    {post.data.title}
+                  </Heading>
+                  <Text fz="s" c="text-2" lh="l" m="0">
+                    {post.data.excerpt}
+                  </Text>
+                </Stack>
+              </Link>
+            </li>
+          ))
+        }
+      </Lism>
+
+      {/* もっと読むボタン（ダミー） */}
+      <Flex jc="center" py="20">
+        <Lism
+          as="button"
+          type="button"
+          class="c--moreBtn"
+          set="plain"
+          ff="accent"
+          fz="xs"
+          lts="l"
+          px="40"
+          py="15"
+          bd
+          bdc="text"
+          c="text"
+          bgc="transparent"
+          hov={{ bgc: 'text', c: 'base' }}
+          hasTransition
+        >
+          もっと読む →
+        </Lism>
+      </Flex>
+    </Stack>
+  </Wrapper>
+</Layout>

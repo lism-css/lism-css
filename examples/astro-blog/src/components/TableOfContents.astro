@@ -1,0 +1,74 @@
+---
+import { Lism, Stack } from 'lism-css/astro';
+import type { TocItem } from '@/lib/generateToc';
+
+interface Props {
+  toc: TocItem[];
+}
+
+const { toc } = Astro.props;
+---
+
+<Stack class="c--toc" g="15">
+  <Lism class="c--toc_label">TABLE OF CONTENTS</Lism>
+  <ul class="c--toc_list">
+    {
+      toc.map((item) => (
+        <li data-level={item.depth}>
+          <a href={`#${item.slug}`} data-toc-link={item.slug}>
+            {item.text}
+          </a>
+          {item.children.length > 0 && (
+            <ul>
+              {item.children.map((child) => (
+                <li data-level={child.depth}>
+                  <a href={`#${child.slug}`} data-toc-link={child.slug}>
+                    {child.text}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          )}
+        </li>
+      ))
+    }
+  </ul>
+</Stack>
+
+<script>
+  // スクロール連動で目次のアクティブ状態を更新する
+  function initTocHighlight() {
+    const tocLinks = document.querySelectorAll<HTMLAnchorElement>('[data-toc-link]');
+    if (tocLinks.length === 0) return;
+
+    const headings: HTMLElement[] = [];
+    tocLinks.forEach((link) => {
+      const slug = link.dataset.tocLink;
+      if (slug) {
+        const heading = document.getElementById(slug);
+        if (heading) headings.push(heading);
+      }
+    });
+    if (headings.length === 0) return;
+
+    function setActive(slug: string) {
+      tocLinks.forEach((link) => {
+        link.classList.toggle('_active', link.dataset.tocLink === slug);
+      });
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries.filter((e) => e.isIntersecting);
+        if (visible.length === 0) return;
+        const top = visible.reduce((prev, curr) => (prev.boundingClientRect.top < curr.boundingClientRect.top ? prev : curr));
+        setActive(top.target.id);
+      },
+      { rootMargin: '-80px 0px -70% 0px', threshold: 0 }
+    );
+    headings.forEach((h) => observer.observe(h));
+  }
+
+  document.addEventListener('DOMContentLoaded', initTocHighlight);
+  document.addEventListener('astro:page-load', initTocHighlight);
+</script>
