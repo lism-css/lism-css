@@ -38,34 +38,34 @@ To address the common problem of CSS specificity becoming overly complex, Lism d
     </tr>
     <tr>
       <td>Base<br/>`@lism-base`</td>
-      <td>The layer for Reset CSS, token definitions, variable sets, and initial element styles.<br/>`.set--{state}` classes are also defined here.</td>
+      <td>The layer for Reset CSS, token definitions, variable sets, and initial element styles.<br/>`set--{state}` classes are also defined here.</td>
     </tr>
     <tr>
       <td class='-whs:nowrap'>Trait<br/>`@lism-trait`</td>
-      <td>The layer for classes that declaratively attach a role or feature to an element (`.is--{name}`, `.has--{name}`).</td>
+      <td>The layer for classes that declaratively attach a role or feature to an element (`is--{name}`, `has--{name}`).</td>
     </tr>
     <tr>
       <td class='-whs:nowrap'>Primitives<br/>`@lism-primitive`</td>
       <td>
         The layer for Primitives — the building blocks for composing layouts.<br />
-        `.l--{layout}` and `.a--{atomic}` are defined here.
+        `l--{layout}` and `a--{atomic}` are defined here.
       </td>
     </tr>
     <tr>
       <td class='-whs:nowrap'>Components<br/>`@lism-component`</td>
-      <td>The layer for UI components with BEM-like structure (`.c--{name}`). Not included in the core `lism-css` — `@lism-css/ui` and user-defined `c--*` classes belong here.</td>
+      <td>The layer for UI components with BEM-like structure (`c--{name}`). Not included in the core `lism-css` — `@lism-css/ui` and user-defined `c--*` classes belong here.</td>
     </tr>
     <tr>
       <td class='-whs:nowrap'>Custom<br/>`@lism-custom`</td>
-      <td>A customization layer for overriding existing Lism classes or for user-defined classification classes with custom prefixes (`.z--{zone}`, `.p--{page}`, etc.).</td>
+      <td>A customization layer for overriding existing Lism classes or for user-defined classification classes with custom prefixes (`z--{zone}`, `p--{page}`, etc.).</td>
     </tr>
     <tr>
       <td class='-whs:nowrap'>Utility<br/>`@lism-utility`</td>
-      <td>The layer for utility classes with a clear purpose or style (`.u--{name}`).</td>
+      <td>The layer for utility classes with a clear purpose or style (`u--{name}`).</td>
     </tr>
     <tr>
       <td class='-whs:nowrap'>Props<br/>`-`</td>
-      <td>**Property Classes** (`.-{prop}:{val}`) tied to individual CSS properties.<br />This group is the only one placed outside of layers, giving it higher specificity while still allowing reasonable coexistence with external CSS.</td>
+      <td>**Property Classes** (`-{prop}:{val}`) tied to individual CSS properties.<br />This group is the only one placed outside of layers, giving it higher specificity while still allowing reasonable coexistence with external CSS.</td>
     </tr>
   </tbody>
 </table>
@@ -93,7 +93,7 @@ This section explains the design philosophy behind the core class groups in Lism
 
 | Category | Format | Example |
 |---|---|---|
-|Set Class|`.set--{style}`|`.set--plain`,<br />`.set--var:hov`,<br />`.set--var:bxsh`|
+|Set Class|`set--{style}`|`set--plain`,<br />`set--var:hov`,<br />`set--var:bxsh`|
 
 ### Primitive Class
 
@@ -103,8 +103,8 @@ These are further categorized into several types:
 
 | Category | Format | Example |
 |---|---|---|
-|Layout Primitives<br /><small>Primitives that serve as layout building blocks</small>|`.l--{name}`|`.l--grid`,<br />`.l--columns`|
-|Atomic Primitives<br /><small>The smallest layout unit primitives</small>|`.a--{name}`|`.a--divider`,<br />`.a--icon`|
+|Layout Primitives<br /><small>Primitives that serve as layout building blocks</small>|`l--{name}`|`l--grid`,<br />`l--columns`|
+|Atomic Primitives<br /><small>The smallest layout unit primitives</small>|`a--{name}`|`a--divider`,<br />`a--icon`|
 
 Primitive classes are standalone — they have no variations or child element classes. Only the `c--` Component Classes described next follow a BEM-like structure.
 
@@ -122,8 +122,8 @@ Combining Primitives follows these rules:
 
 | Category | Format | Example |
 |---|---|---|
-|`is--` Trait<br /><small>Declares a role ("is a …") on an element</small>|`.is--{name}`|`.is--container`,<br />`.is--wrapper`,<br />`.is--layer`,<br />`.is--boxLink`|
-|`has--` Trait<br /><small>Attaches a feature ("has a …") to an element</small>|`.has--{name}`|`.has--transition`,<br />`.has--gutter`,<br />`.has--snap`|
+|`is--` Trait<br /><small>Declares a role ("is a …") on an element</small>|`is--{name}`|`is--container`,<br />`is--wrapper`,<br />`is--layer`,<br />`is--boxLink`|
+|`has--` Trait<br /><small>Attaches a feature ("has a …") to an element</small>|`has--{name}`|`has--transition`,<br />`has--gutter`,<br />`has--snap`|
 
 The decision criteria between `is--` and `has--` are:
 
@@ -155,9 +155,9 @@ Users can also freely define their own `c--` classes inside `@layer lism-compone
 
 | Category | Format | Example |
 |---|---|---|
-|Block<br /><small>The base class</small>|`.c--{name}`|`.c--button`,<br />`.c--card`|
-|Modifier<br /><small>Variation</small>|`.c--{name}--{modifier}`|`.c--button--outline`|
-|Element<br /><small>Child element</small>|`.c--{name}_{element}`|`.c--card_header`,<br />`.c--card_body`|
+|Block<br /><small>The base class</small>|`c--{name}`|`c--button`,<br />`c--card`|
+|Modifier<br /><small>Variation</small>|`c--{name}--{modifier}`|`c--button--outline`|
+|Element<br /><small>Child element</small>|`c--{name}_{element}`|`c--card_header`,<br />`c--card_body`|
 
 :::point
 Modifiers are used alongside the Block class, e.g. `.c--button.c--button--outline`.  
@@ -177,7 +177,7 @@ Utility classes with a clear decorative or functional purpose are defined as fol
 
 | Category | Format | Example |
 |---|---|---|
-|Utility Class|`.u--{style}`|`.u--cbox`,<br/>`.u--trim`|
+|Utility Class|`u--{style}`|`u--cbox`,<br/>`u--trim`|
 
 
 
@@ -192,9 +192,9 @@ Property Classes come in three formats:
 
 | Format | Description | Example |
 |---|---|---|
-|<WhsNw>`.-{prop}:{value}`</WhsNw>| Utility classes for applying the primary values or token values for each property |<WhsNw>`.-fz:l`</WhsNw>,<br/><WhsNw>`.-d:none`</WhsNw>|
-|`.-{prop}`| A class that receives the `--{prop}` variable |`.-p`,<br/>`.-fz`|
-|`.-{prop}_{bp}`| A class that receives the `--{prop}_{bp}` variable |<WhsNw>`.-p_sm`</WhsNw>,<br/>`.-p_md`|
+|<WhsNw>`-{prop}:{value}`</WhsNw>| Utility classes for applying the primary values or token values for each property |<WhsNw>`-fz:l`</WhsNw>,<br/><WhsNw>`-d:none`</WhsNw>|
+|`-{prop}`| A class that receives the `--{prop}` variable |`-p`,<br/>`-fz`|
+|`-{prop}_{bp}`| A class that receives the `--{prop}_{bp}` variable |<WhsNw>`-p_sm`</WhsNw>,<br/>`-p_md`|
 
 
 :::warning
@@ -211,7 +211,7 @@ See the [Property Class reference page](/en/docs/property-class) for the full li
 
 ### Responsive Property Classes
 
-The `.-{prop}_{bp}` class format combined with the `--{prop}_{bp}` variable format enables responsive styling.
+The `-{prop}_{bp}` class format combined with the `--{prop}_{bp}` variable format enables responsive styling.
 
 <Preview>
   <PreviewTitle>Here is a practical usage example:</PreviewTitle>
@@ -262,8 +262,8 @@ You may also define your own prefixes that don't match any of the built-in Lism 
 
 | Category Example | Format | Example |
 |---|---|---|
-|Zoning|`.z--{zoneName}` or `{zoneName}` |`.z--header`,<br />`.z--main`,<br />`.z--sidebar`|
-|Page classification|`.p--{type}-{id\|slug}` or `{slug}Page`, etc. |`.p--front`,<br />`.p--page--{slug}`|
+|Zoning|`z--{zoneName}` or `{zoneName}` |`z--header`,<br />`z--main`,<br />`z--sidebar`|
+|Page classification|`p--{type}-{id\|slug}` or `{slug}Page`, etc. |`p--front`,<br />`p--page--{slug}`|
 
 Place these in `@layer lism-custom`.
 

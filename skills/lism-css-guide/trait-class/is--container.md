@@ -15,7 +15,7 @@
 
 | Prop | 出力 |
 |------|------|
-| `isContainer` | `.is--container` |
+| `isContainer` | `is--container` |
 
 ## Usage
 

@@ -25,7 +25,7 @@
 
 ### `-max-sz:full`
 
-**親要素のサイズいっぱいに広がる**クラス。`.has--gutter` の直下では、その gutter 分を**追加で外側に**拡張する（= gutter を無視して端まで広がる）。
+**親要素のサイズいっぱいに広がる**クラス。`has--gutter` の直下では、その gutter 分を**追加で外側に**拡張する（= gutter を無視して端まで広がる）。
 
 ```scss
 .-max-sz\:full {
@@ -38,11 +38,11 @@
 }
 ```
 
-`.has--gutter` の内側で全幅画像・全幅バナーなどを配置したい時に使う。
+`has--gutter` の内側で全幅画像・全幅バナーなどを配置したい時に使う。
 
 ### `-max-sz:container`
 
-**コンテナ要素を基準としたサイズ**まで広がる。`.is--container` ごとに `--sz--container` が更新されるため、直近の container を基準にサイズ決定される。
+**コンテナ要素を基準としたサイズ**まで広がる。`is--container` ごとに `--sz--container` が更新されるため、直近の container を基準にサイズ決定される。
 
 ```scss
 .-max-sz\:container {
@@ -64,7 +64,7 @@
 <div class="-max-sz:m -mx:auto" style="max-inline-size: var(--sz--m)">...</div>
 ```
 
-### `.has--gutter` 内の全幅要素
+### `has--gutter` 内の全幅要素
 
 ```html
 <div class="has--gutter">
