@@ -32,13 +32,14 @@ interface Props {
   lang?: LangCode; // 言語コード（省略時はroot言語）
   schemaType?: SchemaType; // 指定時のみ JSON-LD を出力
   excludeFromSearch?: boolean; // 検索対象から除外するかどうか
+  noindex?: boolean; // 検索エンジンにインデックスさせない（noindex,follow を出力）
 }
 
-const { title = siteConfig.name, description, ogImage, lang = getRootLang(), schemaType } = Astro.props;
+const { title = siteConfig.name, description, ogImage, lang = getRootLang(), schemaType, noindex = false } = Astro.props;
 ---
 
 <html lang={lang}>
-  <Head title={title || siteConfig.name} description={description} ogImage={ogImage} lang={lang}>
+  <Head title={title || siteConfig.name} description={description} ogImage={ogImage} lang={lang} noindex={noindex}>
     {schemaType && <JsonLd schemaType={schemaType} title={title || siteConfig.name} description={description} lang={lang} />}
   </Head>
   <body data-pagefind-ignore>

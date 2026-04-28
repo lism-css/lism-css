@@ -34,9 +34,20 @@ interface Props {
   schemaType?: SchemaType; // 指定時のみ JSON-LD を出力
   date?: Date; // 公開日（JSON-LD の datePublished に使用）
   excludeFromSearch?: boolean; // 検索対象から除外するかどうか
+  noindex?: boolean; // 検索エンジンにインデックスさせない（noindex,follow を出力）
 }
 
-const { title = siteConfig.name, description, ogImage, toc, lang = getRootLang(), schemaType, date, excludeFromSearch = false } = Astro.props;
+const {
+  title = siteConfig.name,
+  description,
+  ogImage,
+  toc,
+  lang = getRootLang(),
+  schemaType,
+  date,
+  excludeFromSearch = false,
+  noindex = false,
+} = Astro.props;
 
 // 開発環境かどうか（ShareBtns用のURL生成に使用）
 const isDev = import.meta.env.DEV;
@@ -46,7 +57,7 @@ const canonicalUrl = isDev ? Astro.url.toString() : Astro.site ? new URL(Astro.u
 ---
 
 <html lang={lang}>
-  <Head title={title} description={description} ogImage={ogImage} lang={lang}>
+  <Head title={title} description={description} ogImage={ogImage} lang={lang} noindex={noindex}>
     {schemaType && <JsonLd schemaType={schemaType} title={title} description={description} lang={lang} date={date} />}
   </Head>
   <body {...excludeFromSearch && { 'data-pagefind-ignore': 'all' }}>

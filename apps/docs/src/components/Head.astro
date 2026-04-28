@@ -14,9 +14,10 @@ interface Props {
   description?: string;
   ogImage?: string;
   lang: LangCode;
+  noindex?: boolean; // ページ単位で noindex,follow を出力する（全体 publish フラグとは別軸）
 }
 
-const { title, description, ogImage, lang } = Astro.props;
+const { title, description, ogImage, lang, noindex = false } = Astro.props;
 
 // 開発環境かどうか
 const isDev = import.meta.env.DEV;
@@ -96,7 +97,17 @@ const enableGA = !isDev && siteConfig.publish;
   <title>{titleMetaText}</title>
   {description && <meta name="description" content={description} />}
   <link rel="canonical" href={canonicalUrl} />
-  {siteConfig.publish ? <meta name="robots" content="index, follow, max-image-preview:large" /> : <meta name="robots" content="noindex, nofollow" />}
+  {
+    siteConfig.publish ? (
+      noindex ? (
+        <meta name="robots" content="noindex, follow" />
+      ) : (
+        <meta name="robots" content="index, follow, max-image-preview:large" />
+      )
+    ) : (
+      <meta name="robots" content="noindex, nofollow" />
+    )
+  }
 
   {/* 多言語 hreflang: 検索エンジンに各言語版の存在を通知 */}
   {alternateUrls.map(({ lang: altLang, url }) => <link rel="alternate" hreflang={altLang} href={toAbsoluteUrl(url)} />)}
