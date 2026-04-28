@@ -24,10 +24,8 @@
     /* 字間（lism-css のデフォルト --lts--s/--lts--l に追加） */
     --lts--s: 0.01em;
     --lts--base: 0.025em;
-    --lts--l: 0.05em;
-    --lts--xl: 0.1em; /* アクセント標準（cat/pager/share/tag） */
-    --lts--2xl: 0.15em; /* アクセント広め（date/catTabs） */
-    --lts--3xl: 0.2em; /* アクセント最大（eyebrow/toc_label） */
+    --lts--l: 0.075em;
+    --lts--xl: 0.15em; /* アクセント（cat/date/share/eyebrow 等） */
 
     /* --sz-- */
     --sz--toc: 240px;
@@ -87,12 +85,6 @@
   }
 }
 
-.-lts\:3xl {
-  letter-spacing: var(--lts--3xl);
-}
-.-lts\:2xl {
-  letter-spacing: var(--lts--2xl);
-}
 .-lts\:xl {
   letter-spacing: var(--lts--xl);
 }
