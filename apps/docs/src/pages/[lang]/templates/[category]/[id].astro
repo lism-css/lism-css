@@ -58,7 +58,7 @@ const previewUrl = `/preview/templates/${category}/${id}/${lang}/`;
 const templatePath = `src/pages/preview/templates/${category}/${id}`;
 ---
 
-<BaseLayout title={`${template.title} - Templates`} description={template.description[lang]} excludeFromSearch>
+<BaseLayout title={`${template.title} - Templates`} description={template.description[lang]} lang={lang} excludeFromSearch noindex>
   <Flow g="30" class="templatePage">
     <Stack as="header" g="10">
       <Text fz="xs" c="text-2" tt="uppercase" lts="l">
