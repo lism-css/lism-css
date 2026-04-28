@@ -13,7 +13,7 @@ import { siteConfig } from '@/config/site';
     </Link>
 
     {/* PCナビ（md以上） */}
-    <Cluster as="nav" g="30" d={['none', null, 'flex']} ff="accent" fz="xs" c="text-2" lts="s">
+    <Cluster as="nav" g="30" d={['none', null, 'flex']} fz="s" c="text-2">
       {
         NAV_ITEMS.map((item) => (
           <Link href={item.href} c="inherit" td="none" hov={{ c: 'brand' }}>
@@ -31,7 +31,6 @@ import { siteConfig } from '@/config/site';
       bgc="base"
       bdrs="10"
       p="10"
-      style="line-height: 0;"
       hov={{ bgc: 'divider' }}
       aria-label="メニューを開く"
     >
@@ -55,9 +54,8 @@ import { siteConfig } from '@/config/site';
         z="1"
         p="10"
         m="15"
-        bxsh="10"
         bdrs="10"
-        bgc="base"
+        hov={{ bgc: 'divider' }}
         aria-label="メニューを閉じる"
       />
       <Modal.Body layout="stack" g="20" px="30" py="20" ov-y="auto">
