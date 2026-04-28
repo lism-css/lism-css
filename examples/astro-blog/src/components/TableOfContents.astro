@@ -1,5 +1,5 @@
 ---
-import { Lism, Stack, List, Group } from 'lism-css/astro';
+import { Lism, Stack, List, Group, Heading } from 'lism-css/astro';
 import type { TocItem } from '@/lib/generateToc';
 
 interface Props {
@@ -26,10 +26,10 @@ const tocLinkCommon = {
 } as const;
 ---
 
-<Group>
-  <Lism class="c--toc_label" fz="2xs" lts="l" c="text-2" p="5" util="trim">TOC</Lism>
+<Lism as="nav" aria-labelledby="toc-label">
+  <Heading id="toc-label" level="2" class="c--toc_label" fz="2xs" lts="l" fw="normal" c="text-2" p="5" util="trim">TOC</Heading>
   <Group class="c--toc" bd-y py="20">
-    <List class="c--toc_list" mx-s="5">
+    <List as="ol" class="c--toc_list" mx-s="5">
       {
         toc.map((item) => (
           <li data-level={item.depth}>
@@ -37,7 +37,7 @@ const tocLinkCommon = {
               {item.text}
             </Lism>
             {item.children.length > 0 && (
-              <ul>
+              <ol>
                 {item.children.map((child) => (
                   <li data-level={child.depth}>
                     <Lism as="a" {...tocLinkCommon} href={`#${child.slug}`} data-toc-link={child.slug} fz="2xs" fw="normal" px-s="30" c="text-2">
@@ -45,19 +45,19 @@ const tocLinkCommon = {
                     </Lism>
                   </li>
                 ))}
-              </ul>
+              </ol>
             )}
           </li>
         ))
       }
     </List>
   </Group>
-</Group>
+</Lism>
 <style>
   @layer lism-component {
     /* === TOC（目次） === */
     /* 子孫セレクタ・状態切替（data-is-active はスクロール連動でJSが切替） */
-    .c--toc ul {
+    .c--toc :is(ul, ol) {
       list-style: none;
       padding: 0;
       margin: 0;
@@ -89,8 +89,10 @@ const tocLinkCommon = {
       tocLinks.forEach((link) => {
         if (link.dataset.tocLink === slug) {
           link.dataset.isActive = '';
+          link.setAttribute('aria-current', 'location');
         } else {
           delete link.dataset.isActive;
+          link.removeAttribute('aria-current');
         }
       });
     }

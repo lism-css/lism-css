@@ -15,17 +15,19 @@ interface Props {
 const { items, class: className, ...rest } = Astro.props;
 ---
 
-<Lism className="c--breadcrumb" class:list={[className]} {...rest}>
+<Lism as="nav" aria-label="パンくず" class:list={['c--breadcrumb', className]} {...rest}>
   {
     items.map((item, i) => (
       <Fragment>
-        {i > 0 && '／ '}
+        {i > 0 && <Inline aria-hidden="true">／ </Inline>}
         {item.href ? (
           <Link href={item.href} td="none" c="inherit" hov={{ c: 'brand' }}>
             {item.label}
           </Link>
         ) : (
-          <Inline o="p">{item.label}</Inline>
+          <Inline o="p" aria-current="page">
+            {item.label}
+          </Inline>
         )}
         {i < items.length - 1 && ' '}
       </Fragment>
