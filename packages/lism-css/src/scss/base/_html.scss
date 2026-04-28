@@ -99,7 +99,7 @@ hr {
 // Property Class だけの ul/ol など、明示的に戻したい場合は `.set--revert` を付与する（base/set/_revert.scss）。
 :is(ul, ol):where(:not([class])) {
   list-style: revert;
-  padding-inline-start: var(--list-px-s, var(--s30));
+  padding-inline-start: var(--list-px-s, 1.75em);
 }
 
 dt {
