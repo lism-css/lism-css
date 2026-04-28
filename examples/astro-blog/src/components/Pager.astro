@@ -29,7 +29,7 @@ const nextHref = currentPage < lastPage ? getPageHref(currentPage + 1) : null;
 {
   lastPage > 1 && (
     <Lism as="nav" class="c--pager" ff="accent" fz="xs" my-s="20" aria-label="ページネーション">
-      <Cluster g="5">
+      <Cluster g="5" jc="center">
         {prevHref ? (
           <Center as="a" href={prevHref} class="c--pager_nav" c="text" td="none" hasTransition rel="prev">
             ←

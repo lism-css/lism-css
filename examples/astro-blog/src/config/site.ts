@@ -23,7 +23,7 @@ export const siteConfig = {
 
   // フッター
   footer: {
-    copyright: '© 2026 LISM JOURNAL — A QUIET PLACE TO READ AND THINK',
+    copyright: '© 2026 Lism CSS',
   },
 } as const;
 

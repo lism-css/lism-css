@@ -16,6 +16,7 @@
     /* 明朝 */
     --ff--base: 'Noto Serif JP', 'Hiragino Mincho ProN', 'Yu Mincho', serif;
     /* --ff--accent: 'Noto Sans JP', 'Hiragino Kaku Gothic ProN', 'Yu Gothic', sans-serif; */
+    --ff--accent: -apple-system, 'BlinkMacSystemFont', 'Hiragino Sans', sans-serif, 'Segoe UI Emoji';
 
     /* 行間と読み心地の調整 */
     /* --lh--base: 1.85; */
@@ -49,13 +50,9 @@
 }
 
 /* === ブログ用のコンポーネント === */
-@layer lism-component {
+@layer lism-base {
   /* === 記事本文タイポ（MDX/markdown 配下） === */
   .c--articleBody {
-    font-size: var(--fz--s);
-    line-height: 1.95;
-    color: var(--text);
-
     /* 型セレクタは子孫として暗黙接続されるため & 不要 */
     h2 {
       padding-block-end: var(--s20);
@@ -74,9 +71,18 @@
       font-style: italic;
     }
 
+    blockquote > p + p {
+      margin-block-start: var(--s20);
+    }
+
     pre {
       padding: var(--s20);
       font-size: var(--fz--s);
+    }
+
+    /* タスクリスト */
+    .task-list-item > input {
+      opacity: 1;
     }
   }
 }

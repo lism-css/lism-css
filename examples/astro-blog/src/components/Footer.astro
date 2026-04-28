@@ -1,13 +1,12 @@
 ---
 import { Lism, Center } from 'lism-css/astro';
-import Eyebrow from '@/components/Eyebrow.astro';
 import { siteConfig } from '@/config/site';
 ---
 
 <Lism as="footer" bd-t py="40" px="30" {...Astro.props}>
   <Center>
-    <Eyebrow ta="center" o="0.7">
+    <Lism ta="center" o="p" fz="xs">
       {siteConfig.footer.copyright}
-    </Eyebrow>
+    </Lism>
   </Center>
 </Lism>
