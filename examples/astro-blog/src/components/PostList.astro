@@ -17,10 +17,10 @@ const { posts, showCategory = true } = Astro.props;
     posts.map((post) => {
       const { category } = parsePostId(post.id);
       return (
-        <li>
+        <Lism as="li" py="30">
           <Link href={`/${post.id}/`}>
-            <Stack g="10">
-              <Flex g="20" ai="baseline">
+            <Stack g="20" util="trimAll">
+              <Flex g="15">
                 <Date>{post.data.date}</Date>
                 {showCategory && (
                   <Inline class="c--cat" ff="accent" fz="2xs" lts=":xl" c="brand" tt="upper">
@@ -28,15 +28,15 @@ const { posts, showCategory = true } = Astro.props;
                   </Inline>
                 )}
               </Flex>
-              <Heading level="2" fz="l" fw="500" lh="s" m="0" ff="base">
+              <Heading level="2" fz="l">
                 {post.data.title}
               </Heading>
-              <Text fz="s" c="text-2" lh="l" m="0">
+              <Text fz="xs" c="text-2">
                 {post.data.excerpt}
               </Text>
             </Stack>
           </Link>
-        </li>
+        </Lism>
       );
     })
   }
@@ -46,13 +46,8 @@ const { posts, showCategory = true } = Astro.props;
   @layer lism-component {
     /* === 記事一覧（縦リスト） === */
     .c--postList {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-
       /* 先頭が子結合子なら & は省略可（& > と同じ） */
       > li {
-        padding-block: var(--s30);
         border-block-end: 1px solid var(--divider);
 
         &:first-child {

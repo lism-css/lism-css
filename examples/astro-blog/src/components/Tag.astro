@@ -9,23 +9,22 @@ interface Props {
 
 const { href, solid = false, class: className, ...rest } = Astro.props;
 
-const variant = solid ? { bdc: 'text', c: 'base-2', bgc: 'text' } : { bdc: 'divider', c: 'text-2', bgc: 'base-2' };
+const variantProps = solid ? { bdc: 'text', c: 'base-2', bgc: 'text' } : { bdc: 'divider', c: 'text-2', bgc: 'base-2' };
 ---
 
 <Link
   href={href}
   class:list={['c--tag', solid && 'c--tag--solid', className]}
-  d="inline-block"
-  ff="accent"
+  set="plain"
+  d="inline-flex"
+  ai="center"
   fz="2xs"
-  lts=":xl"
+  lts="l"
+  lh="xs"
   py="5"
   px="10"
-  bd
   bdrs="10"
-  tt="upper"
-  td="none"
-  {...variant}
+  {...variantProps}
   {...rest}
 >
   <slot />

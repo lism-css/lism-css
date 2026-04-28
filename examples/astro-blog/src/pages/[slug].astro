@@ -1,8 +1,7 @@
 ---
 import { getCollection, render } from 'astro:content';
-import { Flow, Heading, Link } from 'lism-css/astro';
-import PageLayout from '@/layouts/PageLayout.astro';
-import Eyebrow from '@/components/Eyebrow.astro';
+import { Flow, Heading, Stack, Group } from 'lism-css/astro';
+import Layout from '@/layouts/Layout.astro';
 import { siteConfig } from '@/config/site';
 
 export async function getStaticPaths() {
@@ -17,20 +16,18 @@ const { page } = Astro.props;
 const { Content } = await render(page);
 ---
 
-<PageLayout title={`${page.data.title} — ${siteConfig.name}`} description={page.data.description}>
-  {/* breadcrumb */}
-  <Eyebrow d="block">
-    <Link href="/" td="none" c="inherit" hov={{ c: 'brand' }}>HOME</Link>
-    ／ {page.data.title.toUpperCase()}
-  </Eyebrow>
+<Layout title={`${page.data.title} — ${siteConfig.name}`} description={page.data.description} breadcrumb={[{ label: page.data.title.toUpperCase() }]}>
+  <Stack g="50">
+    {/* page title */}
+    <Group isWrapper hasGutter>
+      <Heading level="1" util="trim">
+        {page.data.title}
+      </Heading>
+    </Group>
 
-  {/* page title */}
-  <Heading level="1" fz={['2xl', null, '3xl']} fw="500" ff="base" lts="s" lh="s" m="0">
-    {page.data.title}
-  </Heading>
-
-  {/* body */}
-  <Flow as="article" class="c--articleBody">
-    <Content />
-  </Flow>
-</PageLayout>
+    {/* body */}
+    <Flow as="article" class="c--articleBody" isWrapper isContainer hasGutter>
+      <Content />
+    </Flow>
+  </Stack>
+</Layout>

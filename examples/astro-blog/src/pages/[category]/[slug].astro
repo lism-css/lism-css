@@ -1,11 +1,10 @@
 ---
 import { getCollection, render } from 'astro:content';
-import { Lism, Flow, Stack, Flex, Cluster, Grid, Heading, Text } from 'lism-css/astro';
-import PostLayout from '@/layouts/PostLayout.astro';
+import { Group, Flow, Stack, Cluster, WithSide, Heading, Text } from 'lism-css/astro';
+import Layout from '@/layouts/Layout.astro';
 import TableOfContents from '@/components/TableOfContents.astro';
 import ArticleNav from '@/components/ArticleNav.astro';
 import ShareButtons from '@/components/ShareButtons.astro';
-import Breadcrumb from '@/components/Breadcrumb.astro';
 import Date from '@/components/Date.astro';
 import Tag from '@/components/Tag.astro';
 import { generateToc } from '@/lib/generateToc';
@@ -34,31 +33,24 @@ const { Content, headings } = await render(post);
 const toc = generateToc(headings);
 ---
 
-<PostLayout title={`${post.data.title} — ${siteConfig.name}`} description={post.data.excerpt}>
-  {/* パンくず */}
-  <Breadcrumb my-e="30" items={[{ label: 'HOME', href: '/' }, { label: meta.label, href: `/${category}/` }, { label: post.data.title }]} />
-
-  {/* 記事グリッド: md未満は1カラム（header → toc → body → footer）、md以上は2カラム */}
-  <Grid
-    g={['40', null, '40 50']}
-    gtc={['minmax(0, 1fr)', null, 'minmax(0, 1fr) var(--sz--toc)']}
-    gta={[`'header' 'toc' 'body' 'footer'`, null, `'header header' 'body toc' 'footer footer'`]}
-  >
+<Layout
+  title={`${post.data.title} — ${siteConfig.name}`}
+  description={post.data.excerpt}
+  breadcrumb={[{ label: meta.label, href: `/${category}/` }, { label: post.data.title }]}
+>
+  <Stack g="50">
     {/* 記事ヘッダー */}
-    <Lism as="header" ga="header">
-      <Stack g="20" pb="30" bd-b>
-        <Flex g="20" ai="center" fxw="wrap">
+    <Group as="header" isWrapper="l" hasGutter>
+      <Stack g="30">
+        <Cluster g="20">
           <Tag href={`/${category}/`} solid>
             {meta.label}
           </Tag>
           <Date>{post.data.date}</Date>
-        </Flex>
-        <Heading level="1" fz={['2xl', null, '3xl']} fw="500" ff="base" lh="s" lts="s" m="0">
+        </Cluster>
+        <Heading level="1">
           {post.data.title}
         </Heading>
-        <Text fz="m" c="text-2" lh="l" m="0">
-          {post.data.excerpt}
-        </Text>
         {
           post.data.tags.length > 0 && (
             <Cluster g="10" ai="center">
@@ -69,27 +61,29 @@ const toc = generateToc(headings);
           )
         }
       </Stack>
-    </Lism>
+    </Group>
 
-    {/* TOC */}
-    <Lism as="aside" ga="toc">
-      <Lism pos="sticky" i-y-s="40" z="1">
-        <TableOfContents toc={toc} />
-      </Lism>
-    </Lism>
-
-    {/* 本文 */}
-    <Flow as="article" ga="body" min-sz="0" class="c--articleBody">
-      <Content />
-    </Flow>
+    {/* 本文 + TOC: 縦並び時は TOC → 本文、横並び時は 本文 / TOC の2カラム */}
+    <Group isWrapper="l" hasGutter>
+      <WithSide fxd="row-reverse" mainW="40em" sideW="var(--sz--toc)" g="40">
+        <Group as="aside" isSide>
+          <Group pos="sticky" t="20" z="1">
+            <TableOfContents toc={toc} />
+          </Group>
+        </Group>
+        <Flow as="article" class="c--articleBody">
+          <Content />
+        </Flow>
+      </WithSide>
+    </Group>
 
     {/* フッター（シェアボタン → 前後記事ナビ） */}
-    <Lism as="footer" ga="footer">
+    <Group as="footer" isWrapper="l" hasGutter>
       <ShareButtons title={post.data.title} />
       <ArticleNav
         prev={prev ? { title: prev.data.title, id: prev.id } : undefined}
         next={next ? { title: next.data.title, id: next.id } : undefined}
       />
-    </Lism>
-  </Grid>
-</PostLayout>
+    </Group>
+  </Stack>
+</Layout>

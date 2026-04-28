@@ -15,7 +15,7 @@ interface Props {
 const { items, class: className, ...rest } = Astro.props;
 ---
 
-<Lism className="c--breadcrumb" fz="2xs" lts=":3xl" c="text-2" class:list={[className]} {...rest}>
+<Lism className="c--breadcrumb" class:list={[className]} {...rest}>
   {
     items.map((item, i) => (
       <Fragment>

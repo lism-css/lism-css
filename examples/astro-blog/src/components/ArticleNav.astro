@@ -19,9 +19,9 @@ const { prev, next } = Astro.props;
     {
       prev ? (
         <Link href={`/${prev.id}/`} td="none" c="inherit" hov={{ c: 'brand' }} d="block">
-          <Stack g="10">
+          <Stack g="5" lh="s">
             <Eyebrow>← PREVIOUS</Eyebrow>
-            <Lism ff="base" fz="s" fw="500" lh="s">
+            <Lism fz="s" fw="bold">
               {prev.title}
             </Lism>
           </Stack>
@@ -33,9 +33,9 @@ const { prev, next } = Astro.props;
     {
       next ? (
         <Link href={`/${next.id}/`} td="none" c="inherit" hov={{ c: 'brand' }} d="block" ta="right">
-          <Stack g="10">
+          <Stack g="5" lh="s">
             <Eyebrow>NEXT →</Eyebrow>
-            <Lism ff="base" fz="s" fw="500" lh="s">
+            <Lism fz="s" fw="bold">
               {next.title}
             </Lism>
           </Stack>

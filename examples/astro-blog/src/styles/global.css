@@ -31,6 +31,8 @@
     /* --sz-- */
     --sz--toc: 220px;
     --sz--l: calc(var(--sz--m) + var(--sz--toc) + var(--s40));
+
+    --headings-fw: 500;
   }
 
   body {
@@ -56,25 +58,15 @@
 
     /* 型セレクタは子孫として暗黙接続されるため & 不要 */
     h2 {
-      font-size: var(--fz--xl);
-      font-weight: 600;
-      padding-block-end: var(--s15);
+      padding-block-end: var(--s20);
       border-block-end: 1px solid var(--divider);
-      letter-spacing: var(--lts--s);
       scroll-margin-block-start: var(--s30);
     }
 
     h3 {
-      font-size: var(--fz--l);
-      font-weight: 600;
       padding-inline-start: var(--s15);
       border-inline-start: 3px solid var(--brand);
-      letter-spacing: var(--lts--s);
       scroll-margin-block-start: var(--s30);
-    }
-
-    p {
-      text-align: justify;
     }
 
     blockquote {

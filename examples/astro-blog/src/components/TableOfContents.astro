@@ -1,5 +1,5 @@
 ---
-import { Lism, Stack } from 'lism-css/astro';
+import { Lism, Stack, List } from 'lism-css/astro';
 import type { TocItem } from '@/lib/generateToc';
 
 interface Props {
@@ -7,24 +7,41 @@ interface Props {
 }
 
 const { toc } = Astro.props;
+
+// 目次リンク共通: Property Class / Trait に寄せ、ホバー・トランジションも Lism で統一する
+const tocLinkCommon = {
+  set: 'plain',
+  d: 'block',
+  py: '5',
+  lh: 's',
+  'bd-x-s': true,
+  bdw: '2px',
+  bdc: 'transparent',
+  hasTransition: true,
+  hov: { c: 'brand' },
+  css: {
+    '--duration': '0.2s',
+    '--transitionProps': 'color, border-color',
+  },
+} as const;
 ---
 
-<Stack class="c--toc" ff="accent" g="15">
-  <Lism class="c--toc_label" fz="2xs" lts="3xl" c="text-2" py-e="10" bd-b tt="upper"> TABLE OF CONTENTS </Lism>
-  <ul class="c--toc_list">
+<Stack class="c--toc" ff="accent" g="15" py="10" bd-y>
+  <Lism class="c--toc_label" fz="2xs" lts="3xl" c="text-2">TOC</Lism>
+  <List class="c--toc_list">
     {
       toc.map((item) => (
         <li data-level={item.depth}>
-          <a href={`#${item.slug}`} data-toc-link={item.slug}>
+          <Lism as="a" {...tocLinkCommon} href={`#${item.slug}`} data-toc-link={item.slug} fz="xs" px-s="10">
             {item.text}
-          </a>
+          </Lism>
           {item.children.length > 0 && (
             <ul>
               {item.children.map((child) => (
                 <li data-level={child.depth}>
-                  <a href={`#${child.slug}`} data-toc-link={child.slug}>
+                  <Lism as="a" {...tocLinkCommon} href={`#${child.slug}`} data-toc-link={child.slug} fz="2xs" fw="normal" px-s="30" c="text-2">
                     {child.text}
-                  </a>
+                  </Lism>
                 </li>
               ))}
             </ul>
@@ -32,56 +49,24 @@ const { toc } = Astro.props;
         </li>
       ))
     }
-  </ul>
+  </List>
 </Stack>
 
 <style>
   @layer lism-component {
     /* === TOC（目次） === */
     /* 子孫セレクタ・状態切替（data-is-active はスクロール連動でJSが切替） */
-    .c--toc_list {
+    .c--toc ul {
       list-style: none;
       padding: 0;
       margin: 0;
-
-      ul {
-        list-style: none;
-        padding: 0;
-        margin: 0;
-      }
-
-      a {
-        display: block;
-        padding-block: var(--s10);
-        padding-inline-start: var(--s10);
-        color: var(--text);
-        border-inline-start: 3px solid transparent;
-        text-decoration: none;
-        line-height: 1.5;
-        font-size: var(--fz--s);
-        font-weight: var(--fw--bold);
-        transition:
-          color 0.2s,
-          border-color 0.2s;
-
-        &:hover {
-          color: var(--brand);
-        }
-
-        &[data-is-active] {
-          color: var(--brand);
-          border-inline-start-color: var(--brand);
-        }
-      }
-
-      /* 子レベル（h3） */
-      li[data-level='3'] > a {
-        font-size: var(--fz--xs);
-        padding-inline-start: var(--s30);
-        color: var(--text-2);
-        font-weight: var(--fw--normal);
-      }
     }
+  }
+  /* スクロール連動のアクティブ表示（複数プロパティ切替・data-* のみ CSS に残す） */
+  .c--toc_list [data-is-active] {
+    color: var(--brand);
+    font-weight: var(--fw--bold);
+    border-inline-start-color: var(--brand);
   }
 </style>
 

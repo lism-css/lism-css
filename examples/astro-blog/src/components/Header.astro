@@ -1,26 +1,15 @@
 ---
-import { Flex, Cluster, Stack, Inline, Link, Container } from 'lism-css/astro';
+import { Flex, Cluster, Stack, Link, Container } from 'lism-css/astro';
 import { Modal } from '@lism-css/ui/astro';
 import Eyebrow from '@/components/Eyebrow.astro';
 import { NAV_ITEMS } from '@/lib/nav';
 import { siteConfig } from '@/config/site';
-
-// サイト名にドットが含まれる場合、ドット部分だけブランドカラーで強調する
-const [brandHead, ...brandRest] = siteConfig.name.split('.');
-const brandTail = brandRest.join('.');
 ---
 
-<Container as="header" hasGutter bd-b bgc="base-2">
-  <Flex ai="center" jc="between" py="20">
-    <Link href="/" td="none" c="inherit" fw="600" fz="xl" ff="base" lh="xs">
-      {brandHead}{
-        brandTail && (
-          <>
-            <Inline c="brand">.</Inline>
-            {brandTail}
-          </>
-        )
-      }
+<Container as="header" isWrapper="l" hasGutter py="20">
+  <Flex ai="center" jc="between">
+    <Link href="/" set="plain" d="flex" fw="bold" fz="l" lh="xs">
+      {siteConfig.name}
     </Link>
 
     {/* PCナビ（md以上） */}
