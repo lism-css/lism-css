@@ -3,7 +3,6 @@ title: 'examples/astro-blog の構成'
 excerpt: Lism CSS リポジトリに同梱されている Astro ブログテンプレートの仕様。Content Collections・カテゴリ設計・ルーティング・レイアウト・主要コンポーネントを順に解説する。
 date: 2026.04.10
 tags: [Astro, Lism CSS, テンプレート]
-readtime: 8 min
 ---
 
 Lism CSS リポジトリの `examples/astro-blog/` には、Lism CSS と `@lism-css/ui` を使った Astro ブログテンプレートが入っている。この記事では、そのディレクトリ構成と動作仕様を整理する。
@@ -56,7 +55,6 @@ const posts = defineCollection({
     excerpt: z.string(),
     date: z.string(),
     tags: z.array(z.string()).default([]),
-    readtime: z.string(),
   }),
 });
 

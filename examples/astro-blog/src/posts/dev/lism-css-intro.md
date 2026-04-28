@@ -3,7 +3,6 @@ title: Lism CSS の概要
 excerpt: Lism CSS は @layer によるレイヤ管理・デザイントークン・Property Class・レイアウトプリミティブ・React/Astro コンポーネントをひとつにまとめた軽量な CSS 設計フレームワーク。主要な構成要素を整理する。
 date: 2026.04.20
 tags: [Lism CSS]
-readtime: 5 min
 ---
 
 Lism CSS は、ユーティリティクラスとコンポーネント、デザイントークン、`@layer` によるカスケード制御をひとつにまとめた CSS 設計フレームワーク。`lism-css` パッケージにコア CSS と React / Astro 向けのレイアウトコンポーネントが、`@lism-css/ui` パッケージに Accordion / Modal / Tabs / Button などの UI コンポーネントが含まれる。
