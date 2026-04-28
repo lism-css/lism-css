@@ -11,10 +11,12 @@
   > .is--side {
     flex-basis: var(--sideW);
     flex-grow: 1; /* 0 だと折り返されたときに広がらない */
+    min-width: 0;
   }
 
   > :not(.is--side) {
     flex-grow: 9999999; /* できるだけ fix側を 指定値ピッタリに近づけるためにかなり大きな数値を指定 */
     flex-basis: min(100%, var(--mainW)); /* このサイズが折り返しポイントの基準となる */
+    min-width: 0;
   }
 }
