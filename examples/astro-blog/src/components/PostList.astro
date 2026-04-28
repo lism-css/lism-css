@@ -2,7 +2,7 @@
 import { Lism, Stack, Flex, Heading, Text, Link, Inline } from 'lism-css/astro';
 import type { CollectionEntry } from 'astro:content';
 import Date from '@/components/Date.astro';
-import { CATEGORIES, parsePostId } from '@/lib/categories';
+import { CATEGORIES, parsePostId } from '@/config/categories';
 
 interface Props {
   posts: CollectionEntry<'posts'>[];
