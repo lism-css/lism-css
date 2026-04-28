@@ -1,5 +1,5 @@
 ---
-import { Lism, Flex, Inline, Link } from 'lism-css/astro';
+import { Lism, Center, Cluster } from 'lism-css/astro';
 
 interface Props {
   currentPage: number;
@@ -28,79 +28,75 @@ const nextHref = currentPage < lastPage ? getPageHref(currentPage + 1) : null;
 
 {
   lastPage > 1 && (
-    <Lism as="nav" class="c--pager" ff="accent" fz="xs" lts=":xl" my-s="20" aria-label="ページネーション">
-      <Flex jc="center" ai="center" g="10">
+    <Lism as="nav" class="c--pager" ff="accent" fz="xs" my-s="20" aria-label="ページネーション">
+      <Cluster g="5">
         {prevHref ? (
-          <Link href={prevHref} class="c--pager_nav" c="text" td="none" py="10" px="15" tt="upper" hasTransition rel="prev">
-            ← Prev
-          </Link>
+          <Center as="a" href={prevHref} class="c--pager_nav" c="text" td="none" hasTransition rel="prev">
+            ←
+          </Center>
         ) : (
-          <Inline class="c--pager_nav" c="text" py="10" px="15" tt="upper" aria-disabled="true" aria-hidden="true">
-            ← Prev
-          </Inline>
+          <Center as="span" class="c--pager_nav" c="text" aria-disabled="true" aria-hidden="true">
+            ←
+          </Center>
         )}
 
-        <Flex g="5" ai="center">
-          {pages.map((p) =>
-            p === 'gap' ? (
-              <Inline class="c--pager_gap" c="text-2" px="5">
+        <Cluster g="5">
+          {pages.map((page) =>
+            page === 'gap' ? (
+              <Center as="span" class="c--pager_num" c="text-2" px="5">
                 …
-              </Inline>
-            ) : p === currentPage ? (
-              <Inline class="c--pager_num" d="inline-flex" ai="center" jc="center" px="5" c="text-2" hasTransition aria-current="page">
-                {p}
-              </Inline>
+              </Center>
+            ) : page === currentPage ? (
+              <Center as="span" class="c--pager_num" px="5" c="text-2" hasTransition aria-current="page">
+                {page}
+              </Center>
             ) : (
-              <Link href={getPageHref(p)} class="c--pager_num" d="inline-flex" ai="center" jc="center" px="5" c="text-2" td="none" hasTransition>
-                {p}
-              </Link>
+              <Center as="a" href={getPageHref(page)} class="c--pager_num" px="5" c="text-2" td="none" hasTransition>
+                {page}
+              </Center>
             )
           )}
-        </Flex>
+        </Cluster>
 
         {nextHref ? (
-          <Link href={nextHref} class="c--pager_nav" c="text" td="none" py="10" px="15" tt="upper" hasTransition rel="next">
-            Next →
-          </Link>
+          <Center as="a" href={nextHref} class="c--pager_nav" c="text" td="none" hasTransition rel="next">
+            →
+          </Center>
         ) : (
-          <Inline class="c--pager_nav" c="text" py="10" px="15" tt="upper" aria-disabled="true" aria-hidden="true">
-            Next →
-          </Inline>
+          <Center as="span" class="c--pager_nav" c="text" aria-disabled="true" aria-hidden="true">
+            →
+          </Center>
         )}
-      </Flex>
+      </Cluster>
     </Lism>
   )
 }
 <style>
   @layer lism-component {
-    /* === ページャー === */
-    .c--pager_nav {
-      &:hover {
-        color: var(--brand);
-      }
-
-      &[aria-disabled='true'] {
-        color: var(--text-2);
-        opacity: 0.4;
-        pointer-events: none;
-      }
-    }
-
-    /* 28px はトークン外の固定値（数字バッジの最小サイズ）+ 視覚補正 */
+    .c--pager_nav,
     .c--pager_num {
       min-width: 28px;
       height: 28px;
+    }
+    .c--pager_num {
       border-block-end: 1px solid transparent;
       margin-block-end: -1px;
-
-      &:hover {
-        color: var(--brand);
-      }
-
-      &[aria-current] {
-        color: var(--text);
-        border-block-end-color: var(--brand);
-      }
     }
+  }
+  :is(a.c--pager_nav, a.c--pager_num) {
+    &:hover {
+      color: var(--brand);
+      background-color: var(--base-2);
+    }
+
+    &[aria-disabled='true'] {
+      color: var(--text-2);
+      opacity: 0.4;
+      pointer-events: none;
+    }
+  }
+  .c--pager_num[aria-current] {
+    color: var(--text);
+    border-block-end-color: var(--brand);
   }
 </style>
