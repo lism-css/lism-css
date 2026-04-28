@@ -1,0 +1,90 @@
+@import 'lism-css/main.css';
+
+/* === ブログテンプレート用にトークン値・ベース値を上書き === */
+@layer lism-base {
+  :root {
+    /* 紙面のような淡いクリーム色をベースに */
+    --base: #fbfaf7;
+    --base-2: #f3f2ee;
+    --text: #1a1a1a;
+    --text-2: #4c4c4c;
+    --divider: #e8e6e1;
+    /* ブランドカラー（タグ・アクセント・リンクの軸） */
+    --brand: #c8553d;
+    --link: #c8553d;
+
+    /* 明朝 */
+    --ff--base: 'Noto Serif JP', 'Hiragino Mincho ProN', 'Yu Mincho', serif;
+    /* --ff--accent: 'Noto Sans JP', 'Hiragino Kaku Gothic ProN', 'Yu Gothic', sans-serif; */
+    --ff--accent: -apple-system, 'BlinkMacSystemFont', 'Hiragino Sans', sans-serif, 'Segoe UI Emoji';
+
+    /* 行間と読み心地の調整 */
+    /* --lh--base: 1.85; */
+
+    /* 字間（lism-css のデフォルト --lts--s/--lts--l に追加） */
+    --lts--s: 0.01em;
+    --lts--base: 0.025em;
+    --lts--l: 0.075em;
+    --lts--xl: 0.15em; /* アクセント（cat/date/share/eyebrow 等） */
+
+    /* --sz-- */
+    --sz--toc: 240px;
+    --sz--l: calc(var(--sz--m) + var(--sz--toc) + var(--s40));
+
+    --headings-fw: 500;
+  }
+
+  body {
+    font-feature-settings: 'palt' 1;
+    /* -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale; */
+  }
+  a {
+    text-underline-offset: 0.2em;
+  }
+  code {
+    letter-spacing: normal;
+  }
+}
+
+/* === ブログ用のコンポーネント === */
+@layer lism-base {
+  /* === 記事本文タイポ（MDX/markdown 配下） === */
+  .c--articleBody {
+    /* 型セレクタは子孫として暗黙接続されるため & 不要 */
+    h2 {
+      padding-block-end: var(--s20);
+      border-block-end: 1px solid var(--divider);
+      scroll-margin-block-start: var(--s30);
+    }
+
+    h3 {
+      padding-inline-start: var(--s15);
+      border-inline-start: 3px solid var(--brand);
+      scroll-margin-block-start: var(--s30);
+    }
+
+    blockquote {
+      border-inline-start: 2px solid var(--text-2);
+      font-style: italic;
+    }
+
+    blockquote > p + p {
+      margin-block-start: var(--s20);
+    }
+
+    pre {
+      padding: var(--s20);
+      font-size: var(--fz--s);
+    }
+
+    /* タスクリスト */
+    .task-list-item > input {
+      opacity: 1;
+    }
+  }
+}
+
+.-lts\:xl {
+  letter-spacing: var(--lts--xl);
+}

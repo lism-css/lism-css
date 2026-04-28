@@ -1,0 +1,79 @@
+---
+import { Flex, Cluster, Stack, Link, Container, Inline, Icon } from 'lism-css/astro';
+import { Modal } from '@lism-css/ui/astro';
+import Eyebrow from '@/components/Eyebrow.astro';
+import { NAV_ITEMS } from '@/config/nav';
+import { siteConfig } from '@/config/site';
+---
+
+<Container as="header" isWrapper="l" hasGutter py="20">
+  <Flex ai="center" jc="between">
+    <Link href="/" set="plain" d="flex" fw="bold" fz="l" lh="xs">
+      {siteConfig.name}
+    </Link>
+
+    {/* PCナビ（md以上） */}
+    <Cluster as="nav" aria-label="メインナビゲーション" g="30" d={['none', null, 'flex']} fz="s" c="text-2">
+      {
+        NAV_ITEMS.map((item) => (
+          <Link href={item.href} c="inherit" td="none" hov={{ c: 'brand' }}>
+            {item.label}
+          </Link>
+        ))
+      }
+    </Cluster>
+
+    {/* ハンバーガーボタン（md未満） */}
+    <Modal.OpenBtn
+      modalId="site-nav"
+      class="c--menuTrigger l--center set--plain"
+      d={['inline-flex', null, 'none']}
+      bgc="base"
+      bdrs="10"
+      p="10"
+      hov={{ bgc: 'divider' }}
+      aria-labelledby="menu-open-label"
+    >
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true">
+        <line x1="4" y1="7" x2="20" y2="7"></line>
+        <line x1="4" y1="12" x2="20" y2="12"></line>
+        <line x1="4" y1="17" x2="20" y2="17"></line>
+      </svg>
+      <Inline d="none" id="menu-open-label">メニューを開く</Inline>
+    </Modal.OpenBtn>
+  </Flex>
+
+  {/* モバイル用モーダルナビ */}
+  <Modal.Root id="site-nav" isContainer isWrapper="s" px="20" py="40">
+    <Modal.Inner layout="stack" g="20" w="100%" max-h="100%" pos="relative" py="30" bdrs="20" bxsh="40" bgc="base-2">
+      <Modal.CloseBtn
+        modalId="site-nav"
+        autofocus
+        pos="absolute"
+        t="0"
+        r="0"
+        z="1"
+        p="10"
+        m="15"
+        bdrs="10"
+        hov={{ bgc: 'divider' }}
+        aria-labelledby="menu-close-label"
+      >
+        <Icon icon="x" />
+        <Inline d="none" id="menu-close-label">メニューを閉じる</Inline>
+      </Modal.CloseBtn>
+      <Modal.Body layout="stack" g="20" px="30" py="20" ov-y="auto">
+        <Eyebrow>MENU</Eyebrow>
+        <Stack as="nav" aria-label="メインナビゲーション" g="15" ff="accent" fz="m">
+          {
+            NAV_ITEMS.map((item) => (
+              <Link href={item.href} c="inherit" td="none" py="10" bd-b bdc="divider" hov={{ c: 'brand' }}>
+                {item.label}
+              </Link>
+            ))
+          }
+        </Stack>
+      </Modal.Body>
+    </Modal.Inner>
+  </Modal.Root>
+</Container>

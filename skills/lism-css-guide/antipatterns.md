@@ -200,6 +200,133 @@ Lism CSS の `is--` プレフィックスは「**〜である**」という**役
 
 ---
 
+## px / 固定値の直書き
+
+デザインデータ由来の px / rem / em をそのまま書くと、Lism CSS のスケール統一が崩れる。**書く前に [SKILL.md のデザインデータ取り込み時のフロー](./SKILL.md#デザインデータ取り込み時のフロー) に従い、ユーザーに「A: そのまま採用 / B: 最寄りトークンに丸める / C: トークン基準値を上書きする」を確認すること**。確認なしに固定値を採用しない。
+
+### スペース・サイズ
+
+| NG | OK | 理由 |
+|---|---|---|
+| `padding: 3px 10px` | `padding: var(--s5) var(--s10)` または Props で `py="5" px="10"` | `3px` はトークン外。最寄りは `--s5`(4px) |
+| `min-width: 28px; height: 28px` | `min-w` / `h` をトークン値に丸める、または基準値を上書き | `28px` はトークン外 |
+| `gap: var(--s5); padding: var(--s10) var(--s15)` を CSS で直書き | `<Lism g="5" py="10" px="15">` | Property Class / Props で書ける |
+
+### 角丸・ボーダー
+
+| NG | OK | 理由 |
+|---|---|---|
+| `border-radius: 2px` | `border-radius: var(--bdrs--10)`（4px） | 角丸トークンの最小は `--bdrs--10`（4px）。`2px` はトークン外 |
+| `border-radius: 6px` | `--bdrs--10`（4px）か `--bdrs--20`（8px）に丸める | 6px はトークン外 |
+
+### タイポグラフィ
+
+| NG | OK | 理由 |
+|---|---|---|
+| `font-size: 13px` を直書き | `font-size: var(--fz--xs)` または Props で `fz="xs"` | フォントサイズは調和数列スケール。固定値は避ける |
+| `letter-spacing: 0.02 / 0.12 / 0.14 / 0.18 / 0.2 / 0.24em` を散在 | `--lts--s/-l` を使う、または独自の `--lts--*` を `global.css` で追加 | デフォルトの `lts` トークンは `s/l` のみ。多種混在はデザイントークンとして不健全 |
+
+### 直書きしてよい例外
+
+- 1px / -1px の罫線・視覚補正（border / margin の打ち消し）
+- transform / vertical-align 等の微調整値（数 px 単位）
+- `media query` / `@container` の閾値など、ブラウザ仕様上 px 必須の値
+
+---
+
+## Property Class で書けるのに CSS で書く
+
+`c--*` を定義したくなったら、まず宣言ごとに Property Class へ落とせるか確認する。落とせる宣言を CSS に書くと、CSS が肥大化し、Property Class の利点（差分上書きの容易さ・読みやすさ）が失われる。
+
+| NG（CSS 直書き） | OK（Property Class） |
+|---|---|
+| `.c--tag { font-size: var(--fz--xs); padding: var(--s10); background: var(--base-2); border-radius: var(--bdrs--10); }` | `<span class="c--tag -fz:xs -p:10 -bgc:base-2 -bdrs:10">` |
+| `.c--eyebrow { font-size: var(--fz--2xs); color: var(--text-2); text-transform: uppercase; }` | `<span class="c--eyebrow -fz:2xs -c:text-2 -tt:uppercase">` |
+
+
+CSS に残すのは、基本的には　`::before` / `> li` などの「Primitive / Trait / Property Class で書けないセレクタ」を伴う宣言。単一要素への装飾束は呼び出し側マークアップに移す。
+
+なお、**CSS が空になっても `c--*` クラス名はマークアップに残して構わない**（むしろ推奨）。コンポーネントとしての役割をソースから読み取りやすくする目的で、意味づけ用に付けたままにする。
+
+
+---
+
+## `is--` の誤用（状態・バリエーション）
+
+Lism CSS の `is--` プレフィックスは「**〜である**」という**役割・存在の宣言**を表す trait 用（`is--container` / `is--wrapper` / `is--layer` / `is--boxLink` / `is--coverLink` / `is--skipFlow` / `is--side` 等）。ユーザーが独自に `is--*` を追加することは可能だが、**その要素の役割（trait）を宣言するもの**であることが条件で、**状態管理やスタイルバリエーション目的に流用しない**（`is--active` / `is--current` / `is--solid` などは誤用）。
+
+→ 詳細: [trait-class.md](./trait-class.md#is-trait役割宣言)
+
+`is--` と紛れがちな 2 つの用途は、Lism では別の手段で表現する：
+
+### 1. 状態管理 → `data-*` 属性を使う
+
+オン/オフが切り替わる状態（active / current / disabled / open / selected 等）は、`is--*` クラスを増やさず HTML の `data-*` 属性で表現する。CSS は属性セレクタで書く。
+
+| NG | OK |
+|---|---|
+| `<a class="c--catTab is--active">` + `.c--catTab.is--active { ... }` | `<a class="c--catTab" data-is-active>` + `.c--catTab[data-is-active] { ... }` |
+| `<li class="c--pager_num is--current">` + `.c--pager_num.is--current { ... }` | `<li class="c--pager_num" aria-current="page">` + `.c--pager_num[aria-current] { ... }` |
+| `<a class="c--pager_nav is--disabled">` + `.c--pager_nav.is--disabled { ... }` | `<a class="c--pager_nav" data-is-disabled>` + `.c--pager_nav[data-is-disabled] { ... }` |
+
+理由：
+
+- `is--*` は「役割宣言」用の trait であり、状態を表すクラスを `is--*` として増やすと意味体系（trait か state か）が混在して読みにくくなる
+- `data-*` は HTML 標準の状態表現で、JS からの切替（`element.dataset.isActive = ''` / `delete element.dataset.isActive`）も自然
+- ARIA 属性で意味が表せる場合（`aria-current` / `aria-disabled` / `aria-selected` 等）は ARIA を優先し、その属性自体を CSS セレクタにする
+
+### 2. スタイルバリエーション → BEM Modifier `c--{name}--{variant}`
+
+「同じコンポーネントの見た目違い」は、Lism CSS 公式の BEM Modifier 記法で表現する（→ [css-rules.md の Component Class](./css-rules.md#component-classc--)）。
+
+| NG | OK |
+|---|---|
+| `<span class="c--tag is--solid">` + `.c--tag.is--solid { ... }` | `<span class="c--tag c--tag--solid">` + `.c--tag.c--tag--solid { ... }` |
+| `<button class="c--button is--outline">` | `<button class="c--button c--button--outline">` |
+
+なお、Modifier であってもまずは [Property Class で表現できないか](#property-class-で書けるのに-css-で書く) を検討すること。「色だけ違う」程度ならマークアップ側で `-bgc:* -c:*` を差し替えるだけで済むことも多い。
+
+---
+
+## `--keycolor` の誤用
+
+`--keycolor` は要素単位で「軸となる色」を切り替えるための**ローカル変数**。サイト全体のブランドカラーやリンクカラーには使わない。
+
+### `:root` でのグローバル上書き
+
+| NG | OK | 理由 |
+|---|---|---|
+| `:root { --keycolor: #c8553d; }` | `:root { --brand: #c8553d; }`（または `--accent` / `--link`） | サイト共通の色は `--brand` / `--accent` / `--link` などのセマンティックカラーで定義する |
+
+### アクセントカラーとしての `keycolor` 参照
+
+| NG | OK | 理由 |
+|---|---|---|
+| `<Link c="keycolor">` | `<Link c="brand">` または `<Link c="link">` | リンク・hover などの恒常的なアクセントは `brand` / `link` を使う |
+| `hov={{ c: 'keycolor' }}` | `hov={{ c: 'brand' }}` | 同上 |
+| `border-inline-start: 3px solid var(--keycolor)`（CSS 直書き） | `border-inline-start: 3px solid var(--brand)` | 同上 |
+
+### `--keycolor` を使うべき場面
+
+「**そのボックス／コンポーネント自身の軸色**」を切り替えたい時のみ：
+
+```html
+<!-- u--cbox や c--callout など、ボックス全体の色味を局所的に切り替える -->
+<div class="u--cbox" style="--keycolor: var(--red)">
+  <p class="-c" style="--c: var(--keycolor)">danger 用カラーリング</p>
+</div>
+```
+
+```jsx
+<Lism class="u--cbox" keycolor="var(--red)">
+  <Text c="keycolor">...</Text>
+</Lism>
+```
+
+詳細: [tokens.md のキーカラー変数セクション](./tokens.md#キーカラー変数-keycolor)
+
+---
+
 ## Prop 型ミス
 
 ### Heading の `level` は文字列

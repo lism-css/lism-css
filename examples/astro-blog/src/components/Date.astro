@@ -1,0 +1,9 @@
+---
+import { Inline } from 'lism-css/astro';
+
+const { class: className, ...rest } = Astro.props;
+---
+
+<Inline class:list={['c--date', className]} ff="accent" fz="2xs" lts=":xl" c="text-2" {...rest}>
+  <slot />
+</Inline>

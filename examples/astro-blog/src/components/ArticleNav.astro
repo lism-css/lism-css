@@ -1,0 +1,48 @@
+---
+import { Lism, Grid, Link, Stack, Inline } from 'lism-css/astro';
+import Eyebrow from '@/components/Eyebrow.astro';
+
+interface NavItem {
+  title: string;
+  id: string;
+}
+interface Props {
+  prev?: NavItem;
+  next?: NavItem;
+}
+
+const { prev, next } = Astro.props;
+---
+
+<Lism as="nav" aria-label="記事ナビゲーション" bd-t pt="30" my-s="40">
+  <Grid gtc="1fr 1fr" g="30">
+    {
+      prev ? (
+        <Link href={`/${prev.id}/`} td="none" c="inherit" hov={{ c: 'brand' }} d="block">
+          <Stack g="5" lh="s">
+            <Eyebrow>
+              <Inline aria-hidden="true">←</Inline> PREVIOUS
+            </Eyebrow>
+            <Lism fz="s">{prev.title}</Lism>
+          </Stack>
+        </Link>
+      ) : (
+        <span />
+      )
+    }
+    {
+      next ? (
+        <Link href={`/${next.id}/`} td="none" c="inherit" hov={{ c: 'brand' }} d="block" ta="right">
+          <Stack g="5" lh="s">
+            <Eyebrow>
+              NEXT <Inline aria-hidden="true">→</Inline>
+            </Eyebrow>
+            <Lism fz="s">{next.title}</Lism>
+          </Stack>
+        </Link>
+      ) : (
+        <span />
+      )
+    }
+  </Grid>
+</Lism>

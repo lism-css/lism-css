@@ -1,0 +1,33 @@
+---
+import { getCollection, render } from 'astro:content';
+import { Flow, Heading, Stack, Group } from 'lism-css/astro';
+import Layout from '@/layouts/Layout.astro';
+import { siteConfig } from '@/config/site';
+
+export async function getStaticPaths() {
+  const pages = await getCollection('pages');
+  return pages.map((page) => ({
+    params: { slug: page.id },
+    props: { page },
+  }));
+}
+
+const { page } = Astro.props;
+const { Content } = await render(page);
+---
+
+<Layout title={`${page.data.title} — ${siteConfig.name}`} description={page.data.description} breadcrumb={[{ label: page.data.title.toUpperCase() }]}>
+  <Stack g="50">
+    {/* page title */}
+    <Group isWrapper hasGutter>
+      <Heading level="1" util="trim">
+        {page.data.title}
+      </Heading>
+    </Group>
+
+    {/* body */}
+    <Flow as="article" class="c--articleBody" isWrapper isContainer hasGutter>
+      <Content />
+    </Flow>
+  </Stack>
+</Layout>

@@ -1,0 +1,89 @@
+---
+import { getCollection, render } from 'astro:content';
+import { Group, Flow, Stack, Cluster, WithSide, Heading, Text } from 'lism-css/astro';
+import Layout from '@/layouts/Layout.astro';
+import TableOfContents from '@/components/TableOfContents.astro';
+import ArticleNav from '@/components/ArticleNav.astro';
+import ShareButtons from '@/components/ShareButtons.astro';
+import Date from '@/components/Date.astro';
+import Tag from '@/components/Tag.astro';
+import { generateToc } from '@/lib/generateToc';
+import { CATEGORIES, parsePostId } from '@/config/categories';
+import { siteConfig } from '@/config/site';
+
+export async function getStaticPaths() {
+  const posts = (await getCollection('posts')).sort((a, b) => b.data.date.localeCompare(a.data.date));
+  return posts.map((post, index) => {
+    const { category, slug } = parsePostId(post.id);
+    return {
+      params: { category, slug },
+      props: {
+        post,
+        prev: posts[index - 1], // 表示順で「新しい記事」が prev に来る
+        next: posts[index + 1],
+      },
+    };
+  });
+}
+
+const { post, prev, next } = Astro.props;
+const { category } = parsePostId(post.id);
+const meta = CATEGORIES[category];
+const { Content, headings } = await render(post);
+const toc = generateToc(headings);
+---
+
+<Layout
+  title={`${post.data.title} — ${siteConfig.name}`}
+  description={post.data.excerpt}
+  breadcrumb={[{ label: meta.label, href: `/${category}/` }, { label: post.data.title }]}
+>
+  <Stack g="50">
+    {/* 記事ヘッダー */}
+    <Group as="header" isWrapper="l" hasGutter>
+      <Stack g="30">
+        <Cluster g="20">
+          <Tag href={`/${category}/`} solid>
+            {meta.label}
+          </Tag>
+          <Date>{post.data.date}</Date>
+        </Cluster>
+        <Heading level="1">
+          {post.data.title}
+        </Heading>
+        {
+          post.data.tags.length > 0 && (
+            <Cluster g="10" ai="center">
+              {post.data.tags.map((tag) => (
+                <Tag href={`/tag/${tag}/`}>{tag}</Tag>
+              ))}
+            </Cluster>
+          )
+        }
+      </Stack>
+    </Group>
+
+    {/* 本文 + TOC: 縦並び時は TOC → 本文、横並び時は 本文 / TOC の2カラム */}
+    <Group isWrapper="l" hasGutter>
+      <WithSide fxd="row-reverse" mainW="40em" sideW="var(--sz--toc)" g="40">
+        <Group as="aside" isSide>
+          <Group pos="sticky" t="20" z="1">
+            <TableOfContents toc={toc} />
+          </Group>
+        </Group>
+        <Flow as="article" class="c--articleBody">
+          <Content />
+        </Flow>
+      </WithSide>
+    </Group>
+
+    {/* フッター（シェアボタン → 前後記事ナビ） */}
+    <Group as="footer" isWrapper="l" hasGutter>
+      <ShareButtons title={post.data.title} />
+      <ArticleNav
+        prev={prev ? { title: prev.data.title, id: prev.id } : undefined}
+        next={next ? { title: next.data.title, id: next.id } : undefined}
+      />
+    </Group>
+  </Stack>
+</Layout>

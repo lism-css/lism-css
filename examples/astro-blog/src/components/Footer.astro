@@ -1,0 +1,12 @@
+---
+import { Lism, Center } from 'lism-css/astro';
+import { siteConfig } from '@/config/site';
+---
+
+<Lism as="footer" bd-t py="40" px="30" {...Astro.props}>
+  <Center>
+    <Lism ta="center" o="p" fz="xs">
+      {siteConfig.footer.copyright}
+    </Lism>
+  </Center>
+</Lism>

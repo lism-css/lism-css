@@ -1,0 +1,58 @@
+---
+import '../styles/global.css';
+import { siteConfig } from '@/config/site';
+import { Container, Stack, Group } from 'lism-css/astro';
+import Header from '@/components/Header.astro';
+import Main from '@/components/Main.astro';
+import Footer from '@/components/Footer.astro';
+import Breadcrumb from '@/components/Breadcrumb.astro';
+
+interface BreadcrumbItem {
+  label: string;
+  href?: string;
+}
+
+interface Props {
+  title: string;
+  description?: string;
+  breadcrumb?: BreadcrumbItem[];
+}
+
+const { title, description = siteConfig.description, breadcrumb } = Astro.props;
+const hasBreadcrumb = Array.isArray(breadcrumb) && breadcrumb.length > 0;
+---
+
+<html lang={siteConfig.lang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <title>{title}</title>
+
+    {/* Webフォント */}
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600&family=Noto+Serif+JP:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <Container>
+      <Stack min-h="100svh" g="0">
+        <Header />
+        {
+          hasBreadcrumb && (
+            <Group isWrapper="l" hasGutter py="5" bgc="base-2" fz="11px" c="text-2">
+              <Breadcrumb items={[{ label: 'HOME', href: '/' }, ...breadcrumb!]} />
+            </Group>
+          )
+        }
+        <Main>
+          <slot />
+        </Main>
+        <Footer />
+      </Stack>
+    </Container>
+  </body>
+</html>

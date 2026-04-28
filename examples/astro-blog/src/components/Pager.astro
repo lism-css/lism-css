@@ -1,0 +1,102 @@
+---
+import { Lism, Center, Cluster } from 'lism-css/astro';
+
+interface Props {
+  currentPage: number;
+  lastPage: number;
+  getPageHref?: (n: number) => string;
+}
+
+const { currentPage, lastPage, getPageHref = (n: number) => (n === 1 ? '/' : `/${n}/`) } = Astro.props;
+
+function buildPages(current: number, last: number): (number | 'gap')[] {
+  if (last <= 7) return Array.from({ length: last }, (_, i) => i + 1);
+  const result: (number | 'gap')[] = [1];
+  if (current > 3) result.push('gap');
+  for (let i = Math.max(2, current - 1); i <= Math.min(last - 1, current + 1); i++) {
+    result.push(i);
+  }
+  if (current < last - 2) result.push('gap');
+  result.push(last);
+  return result;
+}
+
+const pages = buildPages(currentPage, lastPage);
+const prevHref = currentPage > 1 ? getPageHref(currentPage - 1) : null;
+const nextHref = currentPage < lastPage ? getPageHref(currentPage + 1) : null;
+---
+
+{
+  lastPage > 1 && (
+    <Lism as="nav" class="c--pager" ff="accent" fz="xs" my-s="20" aria-label="ページネーション">
+      <Cluster g="5" jc="center">
+        {prevHref ? (
+          <Center as="a" href={prevHref} class="c--pager_nav" c="text" td="none" hasTransition rel="prev" aria-label="前のページ">
+            <span aria-hidden="true">←</span>
+          </Center>
+        ) : (
+          <Center as="span" class="c--pager_nav" c="text" aria-label="前のページ" aria-disabled="true">
+            <span aria-hidden="true">←</span>
+          </Center>
+        )}
+
+        <Cluster g="5">
+          {pages.map((page) =>
+            page === 'gap' ? (
+              <Center as="span" class="c--pager_num" c="text-2" px="5" aria-hidden="true">
+                …
+              </Center>
+            ) : page === currentPage ? (
+              <Center as="span" class="c--pager_num" px="5" c="text-2" hasTransition aria-current="page">
+                {page}
+              </Center>
+            ) : (
+              <Center as="a" href={getPageHref(page)} class="c--pager_num" px="5" c="text-2" td="none" hasTransition>
+                {page}
+              </Center>
+            )
+          )}
+        </Cluster>
+
+        {nextHref ? (
+          <Center as="a" href={nextHref} class="c--pager_nav" c="text" td="none" hasTransition rel="next" aria-label="次のページ">
+            <span aria-hidden="true">→</span>
+          </Center>
+        ) : (
+          <Center as="span" class="c--pager_nav" c="text" aria-label="次のページ" aria-disabled="true">
+            <span aria-hidden="true">→</span>
+          </Center>
+        )}
+      </Cluster>
+    </Lism>
+  )
+}
+<style>
+  @layer lism-component {
+    .c--pager_nav,
+    .c--pager_num {
+      min-width: 28px;
+      height: 28px;
+    }
+    .c--pager_num {
+      border-block-end: 1px solid transparent;
+      margin-block-end: -1px;
+    }
+  }
+  :is(a.c--pager_nav, a.c--pager_num) {
+    &:hover {
+      color: var(--brand);
+      background-color: var(--base-2);
+    }
+
+    &[aria-disabled='true'] {
+      color: var(--text-2);
+      opacity: 0.4;
+      pointer-events: none;
+    }
+  }
+  .c--pager_num[aria-current] {
+    color: var(--text);
+    border-block-end-color: var(--brand);
+  }
+</style>

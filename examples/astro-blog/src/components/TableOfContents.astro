@@ -1,0 +1,137 @@
+---
+import { Lism, Stack, List, Group, Heading } from 'lism-css/astro';
+import type { TocItem } from '@/lib/generateToc';
+
+interface Props {
+  toc: TocItem[];
+}
+
+const { toc } = Astro.props;
+
+// 目次リンク共通: Property Class / Trait に寄せ、ホバー・トランジションも Lism で統一する
+const tocLinkCommon = {
+  set: 'plain',
+  d: 'block',
+  py: '5',
+  lh: 's',
+  'bd-x-s': true,
+  // bdw: '2px',
+  // bdc: 'transparent',
+  hasTransition: true,
+  hov: { c: 'brand' },
+  css: {
+    '--duration': '0.2s',
+    '--transitionProps': 'color, border-color',
+  },
+} as const;
+---
+
+<Lism as="nav" aria-labelledby="toc-label">
+  <Heading id="toc-label" level="2" class="c--toc_label" fz="2xs" lts="l" fw="normal" c="text-2" p="5" util="trim">TOC</Heading>
+  <Group class="c--toc" bd-y py="20">
+    <List as="ol" class="c--toc_list" mx-s="5">
+      {
+        toc.map((item) => (
+          <li data-level={item.depth}>
+            <Lism as="a" {...tocLinkCommon} href={`#${item.slug}`} data-toc-link={item.slug} fz="xs" px-s="15">
+              {item.text}
+            </Lism>
+            {item.children.length > 0 && (
+              <ol>
+                {item.children.map((child) => (
+                  <li data-level={child.depth}>
+                    <Lism as="a" {...tocLinkCommon} href={`#${child.slug}`} data-toc-link={child.slug} fz="2xs" fw="normal" px-s="30" c="text-2">
+                      {child.text}
+                    </Lism>
+                  </li>
+                ))}
+              </ol>
+            )}
+          </li>
+        ))
+      }
+    </List>
+  </Group>
+</Lism>
+<style>
+  @layer lism-component {
+    /* === TOC（目次） === */
+    /* 子孫セレクタ・状態切替（data-is-active はスクロール連動でJSが切替） */
+    .c--toc :is(ul, ol) {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+  }
+  /* スクロール連動のアクティブ表示（複数プロパティ切替・data-* のみ CSS に残す） */
+  .c--toc_list [data-is-active] {
+    color: var(--brand);
+    font-weight: var(--fw--bold);
+    border-inline-start-color: var(--brand);
+  }
+</style>
+
+<script>
+  // スクロール連動で目次のアクティブ状態を更新する
+  // 「最後に上端を通過した見出し」を active にすることで、クリック遷移直後の表示と一致させる
+  const tocLinks = Array.from(document.querySelectorAll<HTMLAnchorElement>('[data-toc-link]'));
+  const OFFSET = 80;
+
+  if (tocLinks.length > 0) {
+    const headings = tocLinks
+      .map((link) => {
+        const slug = link.dataset.tocLink;
+        return slug ? document.getElementById(slug) : null;
+      })
+      .filter((heading): heading is HTMLElement => heading !== null);
+
+    function setActive(slug: string) {
+      tocLinks.forEach((link) => {
+        if (link.dataset.tocLink === slug) {
+          link.dataset.isActive = '';
+          link.setAttribute('aria-current', 'location');
+        } else {
+          delete link.dataset.isActive;
+          link.removeAttribute('aria-current');
+        }
+      });
+    }
+
+    function updateActive() {
+      let current: HTMLElement | null = null;
+      for (const heading of headings) {
+        if (heading.getBoundingClientRect().top - OFFSET <= 0) {
+          current = heading;
+        } else {
+          break;
+        }
+      }
+      // 最初の見出しより上にいる場合でも、最初の項目を active にしておく
+      setActive(current ? current.id : headings[0].id);
+    }
+
+    let ticking = false;
+    function onScroll() {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => {
+        updateActive();
+        ticking = false;
+      });
+    }
+
+    // クリック時は即座に active を切り替える（スクロール完了を待たない）
+    tocLinks.forEach((link) => {
+      link.addEventListener('click', () => {
+        const slug = link.dataset.tocLink;
+        if (slug) setActive(slug);
+      });
+    });
+
+    if (headings.length > 0) {
+      window.addEventListener('scroll', onScroll, { passive: true });
+      window.addEventListener('resize', onScroll);
+      updateActive();
+    }
+  }
+</script>

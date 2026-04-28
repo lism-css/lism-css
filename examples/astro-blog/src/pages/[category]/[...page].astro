@@ -1,0 +1,41 @@
+---
+import { getCollection } from 'astro:content';
+import type { GetStaticPaths } from 'astro';
+import { Inline } from 'lism-css/astro';
+import ArchiveLayout from '@/layouts/ArchiveLayout.astro';
+import ArchiveHeader from '@/components/ArchiveHeader.astro';
+import PostList from '@/components/PostList.astro';
+import Pager from '@/components/Pager.astro';
+import { CATEGORIES, CATEGORY_KEYS, parsePostId } from '@/config/categories';
+import { siteConfig } from '@/config/site';
+
+export const getStaticPaths = (async ({ paginate }) => {
+  const allPosts = await getCollection('posts');
+  return CATEGORY_KEYS.flatMap((category) => {
+    const posts = allPosts.filter((p) => parsePostId(p.id).category === category).sort((a, b) => b.data.date.localeCompare(a.data.date));
+    return paginate(posts, {
+      params: { category },
+      props: { category },
+      pageSize: siteConfig.pagination.postsPerPage,
+    });
+  });
+}) satisfies GetStaticPaths;
+
+const { category, page } = Astro.props;
+const meta = CATEGORIES[category];
+
+const getPageHref = (n: number) => (n === 1 ? `/${category}/` : `/${category}/${n}/`);
+---
+
+<ArchiveLayout title={`${meta.label} — ${siteConfig.name}`} description={meta.description} breadcrumb={[{ label: meta.label }]}>
+  {/* ページタイトル */}
+  <ArchiveHeader eyebrow="CATEGORY" title={meta.label}>
+    {meta.description}<Inline fz="xs">（{page.total} 件）</Inline>
+  </ArchiveHeader>
+
+  {/* 記事リスト */}
+  <PostList posts={page.data} showCategory={false} />
+
+  {/* ページャー */}
+  <Pager currentPage={page.currentPage} lastPage={page.lastPage} getPageHref={getPageHref} />
+</ArchiveLayout>
