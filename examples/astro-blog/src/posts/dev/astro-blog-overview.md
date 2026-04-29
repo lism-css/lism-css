@@ -1,0 +1,211 @@
+---
+title: 'examples/astro-blog の構成'
+excerpt: Lism CSS リポジトリに同梱されている Astro ブログテンプレートの仕様。Content Collections・カテゴリ設計・ルーティング・レイアウト・主要コンポーネントを順に解説する。
+date: 2026.04.10
+tags: [Astro, Lism CSS, テンプレート]
+readtime: 8 min
+---
+
+Lism CSS リポジトリの `examples/astro-blog/` には、Lism CSS と `@lism-css/ui` を使った Astro ブログテンプレートが入っている。この記事では、そのディレクトリ構成と動作仕様を整理する。
+
+## 依存関係
+
+`package.json` の依存は最小限で、Astro と Lism CSS の 2 系統だけを使う。
+
+```json
+{
+  "dependencies": {
+    "@lism-css/ui": "workspace:*",
+    "astro": "^6.1.1",
+    "lism-css": "workspace:*"
+  }
+}
+```
+
+`astro.config.mjs` では `@` を `/src` にエイリアスしているだけで、それ以外のインテグレーションは入れていない。
+
+## ディレクトリ構成
+
+```
+src/
+├── components/      # Astro コンポーネント
+├── config/          # サイト設定・カテゴリ・ナビ
+├── content.config.ts
+├── layouts/         # ページレイアウト
+├── lib/             # 純粋ロジック（TOC生成など）
+├── pages/           # ルーティング
+├── posts/           # 記事 Markdown（カテゴリごとにディレクトリ）
+│   ├── dev/
+│   └── life/
+└── styles/
+    └── global.css
+```
+
+## Content Collections
+
+`src/content.config.ts` で記事用コレクションを定義している。
+
+```ts
+import { defineCollection, z } from 'astro:content';
+import { glob } from 'astro/loaders';
+
+const posts = defineCollection({
+  loader: glob({ base: './src/posts', pattern: '**/*.md' }),
+  schema: z.object({
+    title: z.string(),
+    excerpt: z.string(),
+    date: z.string(),
+    tags: z.array(z.string()).default([]),
+    readtime: z.string(),
+  }),
+});
+
+export const collections = { posts };
+```
+
+`pattern: '**/*.md'` のため、`src/posts/dev/foo.md` のようにディレクトリ階層を切れる。記事 ID は `dev/foo` のような形になり、これがそのままカテゴリ判別と URL の元になる。
+
+`/about/` のような単発の固定ページは Content Collections には載せず、`src/pages/about.astro` のように `.astro` ファイルとして直接配置している。レイアウトやコンポーネントを自由に組めるため、構造の決まらない単発ページは `.astro` の方が扱いやすい。
+
+## カテゴリ設計（ディレクトリ＝カテゴリ）
+
+カテゴリはフロントマターには書かず、`src/posts/{category}/` の置き場所で決まる。`src/config/categories.ts` にカテゴリ定義とユーティリティをまとめている。
+
+```ts
+export type CategoryKey = 'dev' | 'life';
+
+export const CATEGORIES: Record<CategoryKey, Category> = {
+  dev: { key: 'dev', label: 'DEV', description: 'Lism CSS や Astro まわりの開発メモ' },
+  life: { key: 'life', label: 'LIFE', description: '日々の暮らしと考えごと' },
+};
+
+export function parsePostId(id: string): { category: CategoryKey; slug: string } {
+  const [category, ...rest] = id.split('/');
+  if (!isCategoryKey(category)) throw new Error(`Unknown category in post id: ${id}`);
+  return { category, slug: rest.join('/') };
+}
+```
+
+`parsePostId(post.id)` で category と slug に分解する形を、ルーティングと一覧表示の両方で使い回している。
+
+## サイト設定
+
+`src/config/site.ts` にサイト名・キャッチコピー・ページネーション件数・コピーライト等をまとめている。テンプレートをカスタマイズする際の入口はここ。
+
+```ts
+export const siteConfig = {
+  name: 'lism.blog',
+  tagline: '読む、書く、考える、日々の記録',
+  lang: 'ja',
+  pagination: { postsPerPage: 4 },
+  footer: { copyright: '© 2026 Lism CSS' },
+} as const;
+```
+
+ヘッダーとモバイルメニューで共有するナビ項目は `src/config/nav.ts` に切り出してある。
+
+## ルーティング
+
+`src/pages/` 配下のファイル構成は次の通り。
+
+| パス | 内容 |
+| --- | --- |
+| `[...page].astro` | トップ（全記事一覧）＋ページネーション |
+| `[category]/[...page].astro` | カテゴリ別一覧＋ページネーション |
+| `[category]/[slug].astro` | 記事詳細 |
+| `tag/[tag]/[...page].astro` | タグ別一覧＋ページネーション |
+| `[slug].astro` | 固定ページ（`pages` コレクション） |
+| `404.astro` | 404 |
+
+ページネーションには Astro の `paginate()` を使い、1ページあたりの件数は `siteConfig.pagination.postsPerPage`（デフォルト 4）を参照する。記事詳細では `getStaticPaths` 内で記事を日付降順にソートし、`prev` / `next` を index で受け渡している。
+
+## レイアウト
+
+レイアウトは 2 つだけ。
+
+- `Layout.astro` — `<html>` から `<body>` までの土台。`<Container>` の中に `<Stack min-h="100svh">` で Header / (Breadcrumb) / Main / Footer を縦積みする。Web フォント（Noto Serif JP / Noto Sans JP）を `<head>` で読み込む。
+- `ArchiveLayout.astro` — `Layout` を基盤に、本文を `<Group isWrapper isContainer hasGutter><Stack g="50">` で囲んだ一覧用レイアウト。
+
+```astro
+<Layout title={title} breadcrumb={breadcrumb}>
+  <Group isWrapper isContainer hasGutter>
+    <Stack g="50">
+      <slot />
+    </Stack>
+  </Group>
+</Layout>
+```
+
+### 記事詳細のレイアウト構造
+
+記事詳細ページ（`[category]/[slug].astro`）は、`Stack g="50"` の中に 3 ブロックを並べる。各ブロックは `<Group isWrapper="l" hasGutter>` で同じ最大幅を共有する。
+
+```astro
+<Layout ...>
+  <Stack g="50">
+    {/* 1. 記事ヘッダー（Tag・Date・Heading・タグ一覧） */}
+    <Group as="header" isWrapper="l" hasGutter>...</Group>
+
+    {/* 2. 本文 + TOC */}
+    <Group isWrapper="l" hasGutter>
+      <WithSide fxd="row-reverse" mainW="40em" sideW="var(--sz--toc)" g="40">
+        <Group as="aside" isSide>
+          <Group pos="sticky" t="20" z="1">
+            <TableOfContents toc={toc} />
+          </Group>
+        </Group>
+        <Flow as="article" class="c--articleBody">
+          <Content />
+        </Flow>
+      </WithSide>
+    </Group>
+
+    {/* 3. 記事フッター（シェアボタン + 前後記事ナビ） */}
+    <Group as="footer" isWrapper="l" hasGutter>
+      <ShareButtons ... />
+      <ArticleNav ... />
+    </Group>
+  </Stack>
+</Layout>
+```
+
+本文と TOC の横並びには `WithSide` を使い、`fxd="row-reverse"` で TOC を右側に配置する。TOC は `position: sticky` でスクロール追従させる。
+
+`--sz--toc` は `global.css` で `240px` を割り当てている。`isWrapper="l"` が参照する `--sz--l` も `--sz--m + --sz--toc + --s40` で計算しており、TOC があっても本文が中央から大きくずれないように調整している。
+
+## スタイルの上書き
+
+`src/styles/global.css` で Lism CSS の CSS 変数を上書きしてサイトのトーンを作っている。
+
+```css
+@layer lism-base {
+  :root {
+    --base: #fbfaf7;
+    --text: #1a1a1a;
+    --brand: #c8553d;
+    --link: #c8553d;
+    --ff--base: 'Noto Serif JP', 'Hiragino Mincho ProN', 'Yu Mincho', serif;
+    --ff--accent: -apple-system, 'Hiragino Sans', sans-serif;
+    --lts--xl: 0.15em;
+    --sz--toc: 240px;
+    --sz--l: calc(var(--sz--m) + var(--sz--toc) + var(--s40));
+    --headings-fw: 500;
+  }
+}
+```
+
+加えて、`__lism.config.js` で `lts` トークンに `xl` / `2xl` / `3xl` を追加している（Property Class として `lts="xl"` を使えるようにするため）。
+
+```js
+// __lism.config.js
+import DEFAULT_CONFIG from 'lism-css/default-config';
+const { tokens } = DEFAULT_CONFIG;
+
+export default {
+  tokens: {
+    lts: [...(tokens.lts || []), 'xl', '2xl', '3xl'],
+  },
+};
+```
+
+記事本文のタイポグラフィ（h2 の下線、h3 の左ボーダー、`blockquote` の左ボーダー、`pre` の余白など）は `.c--articleBody` 配下の子孫セレクタとして `@layer lism-base` に書いている。Markdown から生成される要素にはクラスを直接付けられないため、ここだけは CSS で書く。

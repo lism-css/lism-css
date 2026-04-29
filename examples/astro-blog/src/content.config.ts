@@ -15,15 +15,4 @@ const posts = defineCollection({
   }),
 });
 
-const pages = defineCollection({
-  loader: glob({
-    base: './src/static-pages',
-    pattern: '**/*.md',
-  }),
-  schema: z.object({
-    title: z.string(),
-    description: z.string().optional(),
-  }),
-});
-
-export const collections = { posts, pages };
+export const collections = { posts };

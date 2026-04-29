@@ -18,12 +18,21 @@ export const siteConfig = {
   // ページネーション設定
   pagination: {
     // 1ページあたりの記事数（一覧ページ共通のデフォルト値）
-    postsPerPage: 4,
+    postsPerPage: 6,
   },
 
   // フッター
   footer: {
-    copyright: '© 2026 LISM JOURNAL — A QUIET PLACE TO READ AND THINK',
+    copyright: '© 2026 Lism CSS',
+    sns: [
+      { label: 'GitHub', icon: 'logo-github', href: 'https://github.com/lism-css/lism-css' },
+      { label: 'X', icon: 'logo-x', href: 'https://x.com/lismcss' },
+    ],
+    links: [
+      { label: 'About', href: '/about/' },
+      { label: 'Privacy Policy', href: '/privacy/' },
+      { label: 'Contact', href: '#' },
+    ],
   },
 } as const;
 

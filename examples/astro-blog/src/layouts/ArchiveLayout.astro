@@ -1,0 +1,25 @@
+---
+import { Group, Stack } from 'lism-css/astro';
+import Layout from './Layout.astro';
+
+interface BreadcrumbItem {
+  label: string;
+  href?: string;
+}
+
+interface Props {
+  title: string;
+  description?: string;
+  breadcrumb?: BreadcrumbItem[];
+}
+
+const { title, description, breadcrumb } = Astro.props;
+---
+
+<Layout title={title} description={description} breadcrumb={breadcrumb}>
+  <Group isWrapper isContainer hasGutter>
+    <Stack g="50">
+      <slot />
+    </Stack>
+  </Group>
+</Layout>

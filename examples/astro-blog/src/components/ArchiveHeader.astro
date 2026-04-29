@@ -1,0 +1,26 @@
+---
+import { Stack, Heading, Text } from 'lism-css/astro';
+import Eyebrow from '@/components/Eyebrow.astro';
+
+interface Props {
+  eyebrow: string;
+  title: string;
+}
+
+const { eyebrow, title } = Astro.props;
+const hasDescription = Astro.slots.has('default');
+---
+
+<Stack g="40">
+  <Stack g="20" util="trimAll">
+    <Eyebrow>{eyebrow}</Eyebrow>
+    <Heading level="1">{title}</Heading>
+  </Stack>
+  {
+    hasDescription && (
+      <Text fz="s" c="text-2" util="trim">
+        <slot />
+      </Text>
+    )
+  }
+</Stack>

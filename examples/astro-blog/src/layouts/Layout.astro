@@ -1,16 +1,25 @@
 ---
 import '../styles/global.css';
-import { Stack, Container, Lism } from 'lism-css/astro';
-import Header from '@/components/Header.astro';
-import Footer from '@/components/Footer.astro';
 import { siteConfig } from '@/config/site';
+import { Container, Stack, Group } from 'lism-css/astro';
+import Header from '@/components/Header.astro';
+import Main from '@/components/Main.astro';
+import Footer from '@/components/Footer.astro';
+import Breadcrumb from '@/components/Breadcrumb.astro';
+
+interface BreadcrumbItem {
+  label: string;
+  href?: string;
+}
 
 interface Props {
   title: string;
   description?: string;
+  breadcrumb?: BreadcrumbItem[];
 }
 
-const { title, description = siteConfig.description } = Astro.props;
+const { title, description = siteConfig.description, breadcrumb } = Astro.props;
+const hasBreadcrumb = Array.isArray(breadcrumb) && breadcrumb.length > 0;
 ---
 
 <html lang={siteConfig.lang}>
@@ -29,13 +38,19 @@ const { title, description = siteConfig.description } = Astro.props;
     />
   </head>
   <body>
-    {/* 全体を is--container 化してコンテナクエリベースのレスポンシブを有効に */}
     <Container>
       <Stack min-h="100svh" g="0">
         <Header />
-        <Lism as="main" fxg="1" py={['40', null, '60']}>
+        {
+          hasBreadcrumb && (
+            <Group isWrapper="l" hasGutter py="5" bgc="base-2" fz="11px" c="text-2">
+              <Breadcrumb items={[{ label: 'HOME', href: '/' }, ...breadcrumb!]} />
+            </Group>
+          )
+        }
+        <Main>
           <slot />
-        </Lism>
+        </Main>
         <Footer />
       </Stack>
     </Container>

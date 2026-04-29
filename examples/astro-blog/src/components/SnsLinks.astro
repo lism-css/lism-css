@@ -1,0 +1,27 @@
+---
+import { Cluster, Link, Icon } from 'lism-css/astro';
+import type { SiteConfig } from '../config/site';
+import type { ComponentProps } from 'astro/types';
+
+type ClusterProps = ComponentProps<typeof Cluster>;
+
+interface Props extends ClusterProps {
+  items: SiteConfig['footer']['sns'];
+  label?: string;
+}
+
+// フッター設定のSNS配列を受け取り、アイコンリンク一覧として表示する。
+const { items, label = 'SNSリンク', ...rest } = Astro.props;
+---
+
+<Cluster as="ul" aria-label={label} {...rest}>
+  {
+    items.map((item) => (
+      <li>
+        <Link href={item.href} aria-label={item.label} set="plain" d="inline-flex" p=".4em" bdrs="20" c="text-2" hov={{ c: 'brand', bgc: 'base-2' }}>
+          <Icon icon={item.icon} />
+        </Link>
+      </li>
+    ))
+  }
+</Cluster>

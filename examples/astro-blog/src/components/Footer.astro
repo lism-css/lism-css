@@ -1,10 +1,25 @@
 ---
-import { Lism, Center } from 'lism-css/astro';
+import { Lism, Cluster, Link, Center } from 'lism-css/astro';
 import { siteConfig } from '@/config/site';
+import SnsLinks from '@/components/SnsLinks.astro';
+import TagCloud from '@/components/TagCloud.astro';
 ---
 
-<Lism as="footer" bd-t mt="80" py="40" px="30">
-  <Center>
-    <Lism class="c--eyebrow" ta="center" c="text-2" o="0.7">{siteConfig.footer.copyright}</Lism>
+<Lism as="footer" py="40" hasGutter bd-y-s {...Astro.props}>
+  <Center g="30" max-sz="l" mx="auto">
+    <Cluster as="nav" aria-label="サイト情報" fz="xs" c="text-2" lh="xs" util="divide">
+      {
+        siteConfig.footer.links.map((item) => (
+          <Link href={item.href} set="plain" px="10" hov={{ c: 'brand' }}>
+            {item.label}
+          </Link>
+        ))
+      }
+    </Cluster>
+    <TagCloud />
+    <SnsLinks items={siteConfig.footer.sns} my="-10" />
+    <Lism ta="center" o="p" fz="xs" util="trim">
+      {siteConfig.footer.copyright}
+    </Lism>
   </Center>
 </Lism>
