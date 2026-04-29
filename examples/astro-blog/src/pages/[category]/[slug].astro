@@ -62,7 +62,7 @@ const toc = generateToc(headings);
       </Stack>
     </Group>
 
-    {/* 本文 + TOC: 縦並び時は TOC → 本文、横並び時は 本文 / TOC の2カラム */}
+    {/* 本文 + TOC */}
     <Group isWrapper="l" hasGutter>
       <WithSide fxd="row-reverse" mainW="40em" sideW="var(--sz--toc)" g="40">
         <Group as="aside" isSide>
@@ -74,15 +74,19 @@ const toc = generateToc(headings);
           <Content />
         </Flow>
       </WithSide>
-    </Group>
 
-    {/* フッター（シェアボタン → 前後記事ナビ） */}
-    <Group as="footer" isWrapper="l" hasGutter>
-      <ShareButtons title={post.data.title} />
-      <ArticleNav
-        prev={prev ? { title: prev.data.title, id: prev.id } : undefined}
-        next={next ? { title: next.data.title, id: next.id } : undefined}
-      />
+      {/* フッター（シェアボタン → 前後記事ナビ） */}
+      <Group as="footer" my-s="60">
+        <Group py="30" bd-y>
+          <ShareButtons title={post.data.title} />
+        </Group>
+        <Group py="30">
+          <ArticleNav
+            prev={prev ? { title: prev.data.title, id: prev.id } : undefined}
+            next={next ? { title: next.data.title, id: next.id } : undefined}
+          />
+        </Group>
+      </Group>
     </Group>
   </Stack>
 </Layout>

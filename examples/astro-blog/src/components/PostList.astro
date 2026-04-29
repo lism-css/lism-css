@@ -1,5 +1,5 @@
 ---
-import { Lism, Stack, Cluster, Heading, Text, Link } from 'lism-css/astro';
+import { Lism, Stack, Cluster, Heading, Text, BoxLink } from 'lism-css/astro';
 import type { CollectionEntry } from 'astro:content';
 import Date from '@/components/Date.astro';
 import Cat from '@/components/Cat.astro';
@@ -18,8 +18,8 @@ const { posts, showCategory = true } = Astro.props;
     posts.map((post) => {
       const { category } = parsePostId(post.id);
       return (
-        <Lism as="li" py="30">
-          <Link href={`/${post.id}/`}>
+        <Lism as="li">
+          <BoxLink href={`/${post.id}/`} py="30" px="5" hov="-bgc" hasTransition>
             <Stack g="20" util="trimAll">
               <Cluster g="10">
                 <Date>{post.data.date}</Date>
@@ -32,7 +32,7 @@ const { posts, showCategory = true } = Astro.props;
                 {post.data.excerpt}
               </Text>
             </Stack>
-          </Link>
+          </BoxLink>
         </Lism>
       );
     })
@@ -49,17 +49,6 @@ const { posts, showCategory = true } = Astro.props;
 
         &:first-child {
           border-block-start: 1px solid var(--divider);
-        }
-      }
-
-      a {
-        text-decoration: none;
-        color: inherit;
-        display: block;
-        transition: opacity 0.2s;
-
-        &:hover {
-          opacity: 0.7;
         }
       }
     }

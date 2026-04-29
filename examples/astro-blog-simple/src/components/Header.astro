@@ -1,47 +1,27 @@
 ---
-import { Flex, Cluster, Stack, Link, Container, Inline, Icon, Center } from 'lism-css/astro';
+import { Flex, Stack, Link, Container, Inline, Icon, Center } from 'lism-css/astro';
 import { Modal } from '@lism-css/ui/astro';
-import Eyebrow from '@/components/Eyebrow.astro';
 import SnsLinks from '@/components/SnsLinks.astro';
 import { siteConfig } from '@/config/site';
 ---
 
-<Container as="header" isWrapper="l" hasGutter py="20" pos="sticky" t="0" z="99">
+<Container as="header" isWrapper hasGutter py="20" pos="sticky" t="0" z="99">
   <Flex ai="center" jc="between">
     <Link href="/" set="plain" d="flex" fw="bold" fz="l" lh="xs">
       {siteConfig.name}
     </Link>
 
-    {/* PCナビ（md以上） */}
-    <Cluster as="nav" aria-label="メインナビゲーション" g="30" d={['none', null, 'flex']} fz="s" c="text-2">
-      {
-        siteConfig.nav.map((item) => (
-          <Link href={item.href} c="inherit" td="none" hov={{ c: 'brand' }}>
-            {item.label}
-          </Link>
-        ))
-      }
-    </Cluster>
-
     {/* ハンバーガーボタン（md未満） */}
     <Modal.OpenBtn
       modalId="site-nav"
       class="c--menuTrigger l--center set--plain"
-      d={['inline-flex', null, 'none']}
+      d="inline-flex"
       bdrs="10"
       p="0.4em"
       hov={{ bgc: 'base-2' }}
       aria-labelledby="menu-open-label"
     >
-      <Icon
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="1.8"
-        stroke-linecap="round"
-        aria-hidden="true"
-        style={{ scale: '1.1' }}
-      >
+      <Icon viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true">
         <line x1="2" y1="8" x2="22" y2="8"></line>
         <line x1="2" y1="16" x2="22" y2="16"></line>
       </Icon>
@@ -53,7 +33,7 @@ import { siteConfig } from '@/config/site';
   <Modal.Root id="site-nav" isContainer isWrapper="s" hasGutter py="40">
     <Modal.Inner layout="stack" g="20" w="100%" max-h="100%" pos="relative" p="30" bdrs="20" bxsh="40" bgc="base">
       <Flex ai="center" jc="between" mt="-5">
-        <Eyebrow>MENU</Eyebrow>
+        <Inline fz="xs" lts="l" c="text-2" tt="upper">Menu</Inline>
         <Modal.CloseBtn modalId="site-nav" autofocus p="0.4em" mx-e="-0.4em" bdrs="10" hov={{ bgc: 'base-2' }} aria-labelledby="menu-close-label">
           <Icon
             viewBox="0 0 24 24"

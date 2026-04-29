@@ -2,10 +2,10 @@
 import { getCollection } from 'astro:content';
 import type { GetStaticPaths } from 'astro';
 import ArchiveLayout from '@/layouts/ArchiveLayout.astro';
-import ArchiveHeader from '@/components/ArchiveHeader.astro';
 import PostList from '@/components/PostList.astro';
 import Pager from '@/components/Pager.astro';
 import { siteConfig } from '@/config/site';
+import { Heading } from 'lism-css/astro';
 
 export const getStaticPaths = (async ({ paginate }) => {
   const allPosts = await getCollection('posts');
@@ -29,15 +29,9 @@ const { tag, page } = Astro.props;
 const getPageHref = (n: number) => (n === 1 ? `/tag/${tag}/` : `/tag/${tag}/${n}/`);
 ---
 
-<ArchiveLayout
-  title={`#${tag} — ${siteConfig.name}`}
-  description={`タグ「${tag}」の記事一覧`}
-  breadcrumb={[{ label: 'TAG' }, { label: tag.toUpperCase() }]}
->
+<ArchiveLayout title={`#${tag} — ${siteConfig.name}`} description={`タグ「${tag}」の記事一覧`}>
   {/* ページタイトル */}
-  <ArchiveHeader eyebrow="TAG" title={`# ${tag}`}>
-    {page.total} 件の記事
-  </ArchiveHeader>
+  <Heading level="1"># {tag}</Heading>
 
   {/* 記事リスト */}
   <PostList posts={page.data} />

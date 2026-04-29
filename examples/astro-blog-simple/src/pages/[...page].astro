@@ -1,0 +1,27 @@
+---
+import { getCollection } from 'astro:content';
+import type { GetStaticPaths } from 'astro';
+import ArchiveLayout from '@/layouts/ArchiveLayout.astro';
+import PostList from '@/components/PostList.astro';
+import Pager from '@/components/Pager.astro';
+import { siteConfig } from '@/config/site';
+import { Heading } from 'lism-css/astro';
+
+export const getStaticPaths = (async ({ paginate }) => {
+  const posts = (await getCollection('posts')).sort((a, b) => b.data.date.localeCompare(a.data.date));
+  return paginate(posts, { pageSize: siteConfig.pagination.postsPerPage });
+}) satisfies GetStaticPaths;
+
+const { page } = Astro.props;
+---
+
+<ArchiveLayout title={`${siteConfig.name} — ${siteConfig.tagline}`}>
+  {/* ページタイトル */}
+  <Heading level="1">ブログ記事一覧</Heading>
+
+  {/* 記事リスト */}
+  <PostList posts={page.data} />
+
+  {/* ページャー */}
+  <Pager currentPage={page.currentPage} lastPage={page.lastPage} />
+</ArchiveLayout>

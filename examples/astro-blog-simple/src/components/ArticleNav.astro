@@ -4,7 +4,7 @@ import Eyebrow from '@/components/Eyebrow.astro';
 
 interface NavItem {
   title: string;
-  id: string;
+  slug: string;
 }
 interface Props {
   prev?: NavItem;
@@ -18,7 +18,7 @@ const { prev, next } = Astro.props;
   <Columns g="30">
     {
       prev ? (
-        <Link href={`/${prev.id}/`} td="none" c="inherit" hov={{ c: 'brand' }} d="block">
+        <Link href={`/posts/${prev.slug}/`} td="none" c="inherit" hov={{ c: 'brand' }} d="block">
           <Stack g="5" lh="s">
             <Eyebrow>
               <Inline aria-hidden="true">←</Inline> PREVIOUS
@@ -32,7 +32,7 @@ const { prev, next } = Astro.props;
     }
     {
       next ? (
-        <Link href={`/${next.id}/`} td="none" c="inherit" hov={{ c: 'brand' }} d="block" ta="right">
+        <Link href={`/posts/${next.slug}/`} td="none" c="inherit" hov={{ c: 'brand' }} d="block" ta="right">
           <Stack g="5" lh="s">
             <Eyebrow>
               NEXT <Inline aria-hidden="true">→</Inline>
