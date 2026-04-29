@@ -6,7 +6,8 @@ import ArchiveLayout from '@/layouts/ArchiveLayout.astro';
 import ArchiveHeader from '@/components/ArchiveHeader.astro';
 import PostList from '@/components/PostList.astro';
 import Pager from '@/components/Pager.astro';
-import { CATEGORIES, CATEGORY_KEYS, parsePostId } from '@/config/categories';
+import { CATEGORIES, CATEGORY_KEYS } from '@/config/categories';
+import { parsePostId } from '@/lib/posts';
 import { siteConfig } from '@/config/site';
 
 export const getStaticPaths = (async ({ paginate }) => {

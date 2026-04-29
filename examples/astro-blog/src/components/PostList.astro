@@ -3,7 +3,8 @@ import { Lism, Stack, Cluster, Heading, Text, BoxLink } from 'lism-css/astro';
 import type { CollectionEntry } from 'astro:content';
 import Date from '@/components/Date.astro';
 import Cat from '@/components/Cat.astro';
-import { CATEGORIES, parsePostId } from '@/config/categories';
+import { CATEGORIES } from '@/config/categories';
+import { parsePostId } from '@/lib/posts';
 
 interface Props {
   posts: CollectionEntry<'posts'>[];

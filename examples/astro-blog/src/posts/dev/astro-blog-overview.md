@@ -67,16 +67,20 @@ export const collections = { posts };
 
 ## カテゴリ設計（ディレクトリ＝カテゴリ）
 
-カテゴリはフロントマターには書かず、`src/posts/{category}/` の置き場所で決まる。`src/config/categories.ts` にカテゴリ定義とユーティリティをまとめている。
+カテゴリはフロントマターには書かず、`src/posts/{category}/` の置き場所で決まる。`src/config/categories.ts` にカテゴリ定義（データ）を、`src/lib/posts.ts` に post.id を扱うユーティリティ（`isCategoryKey` / `parsePostId`）を置いている。
 
 ```ts
+// src/config/categories.ts
 export type CategoryKey = 'dev' | 'life';
 
 export const CATEGORIES: Record<CategoryKey, Category> = {
   dev: { key: 'dev', label: 'DEV', description: 'Lism CSS や Astro まわりの開発メモ' },
   life: { key: 'life', label: 'LIFE', description: '日々の暮らしと考えごと' },
 };
+```
 
+```ts
+// src/lib/posts.ts
 export function parsePostId(id: string): { category: CategoryKey; slug: string } {
   const [category, ...rest] = id.split('/');
   if (!isCategoryKey(category)) throw new Error(`Unknown category in post id: ${id}`);

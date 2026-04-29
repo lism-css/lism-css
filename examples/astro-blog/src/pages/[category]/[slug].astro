@@ -9,7 +9,8 @@ import Date from '@/components/Date.astro';
 import Cat from '@/components/Cat.astro';
 import Tag from '@/components/Tag.astro';
 import { generateToc } from '@/lib/generateToc';
-import { CATEGORIES, parsePostId } from '@/config/categories';
+import { parsePostId } from '@/lib/posts';
+import { CATEGORIES } from '@/config/categories';
 import { siteConfig } from '@/config/site';
 
 export async function getStaticPaths() {
