@@ -1,5 +1,12 @@
 ---
 import { Lism } from 'lism-css/astro';
+import type { ComponentProps } from 'astro/types';
+
+type LismProps = ComponentProps<typeof Lism>;
+
+type Props = LismProps & {
+  class?: string;
+};
 
 const { class: className, ...rest } = Astro.props;
 ---

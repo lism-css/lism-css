@@ -9,13 +9,13 @@ Lism CSS リポジトリの `examples/astro-blog/` には、Lism CSS と `@lism-
 
 ## 依存関係
 
-`package.json` の依存は最小限で、Astro と Lism CSS の 2 系統だけを使う。
+`package.json` の依存は最小限で、Astro と Lism CSS / `@lism-css/ui` だけを使う。
 
 ```json
 {
   "dependencies": {
     "@lism-css/ui": "workspace:*",
-    "astro": "^6.1.1",
+    "astro": "^6.1.9",
     "lism-css": "workspace:*"
   }
 }
@@ -63,7 +63,7 @@ export const collections = { posts };
 
 `pattern: '**/*.md'` のため、`src/posts/dev/foo.md` のようにディレクトリ階層を切れる。記事 ID は `dev/foo` のような形になり、これがそのままカテゴリ判別と URL の元になる。
 
-`/about/` のような単発の固定ページは Content Collections には載せず、`src/pages/about.astro` のように `.astro` ファイルとして直接配置している。レイアウトやコンポーネントを自由に組めるため、構造の決まらない単発ページは `.astro` の方が扱いやすい。
+`/about/` や `/privacy/` のような単発の固定ページは Content Collections には載せず、`src/pages/about.astro` のように `.astro` ファイルとして直接配置しているので、レイアウトやコンポーネントを自由に組めます。
 
 ## カテゴリ設計（ディレクトリ＝カテゴリ）
 
@@ -94,9 +94,21 @@ export function parsePostId(id: string): { category: CategoryKey; slug: string }
 export const siteConfig = {
   name: 'lism.blog',
   tagline: '読む、書く、考える、日々の記録',
+  description: 'A quiet place to read and think.',
   lang: 'ja',
-  pagination: { postsPerPage: 4 },
-  footer: { copyright: '© 2026 Lism CSS' },
+  pagination: { postsPerPage: 6 },
+  footer: {
+    copyright: '© 2026 Lism CSS',
+    sns: [
+      { label: 'GitHub', icon: 'logo-github', href: 'https://github.com/lism-css/lism-css' },
+      { label: 'X', icon: 'logo-x', href: 'https://x.com/lismcss' },
+    ],
+    links: [
+      { label: 'About', href: '/about/' },
+      { label: 'Privacy Policy', href: '/privacy/' },
+      { label: 'Contact', href: '#' },
+    ],
+  },
 } as const;
 ```
 
@@ -112,17 +124,19 @@ export const siteConfig = {
 | `[category]/[...page].astro` | カテゴリ別一覧＋ページネーション |
 | `[category]/[slug].astro` | 記事詳細 |
 | `tag/[tag]/[...page].astro` | タグ別一覧＋ページネーション |
-| `[slug].astro` | 固定ページ（`pages` コレクション） |
+| `about.astro` | About |
+| `privacy.astro` | Privacy Policy |
 | `404.astro` | 404 |
 
-ページネーションには Astro の `paginate()` を使い、1ページあたりの件数は `siteConfig.pagination.postsPerPage`（デフォルト 4）を参照する。記事詳細では `getStaticPaths` 内で記事を日付降順にソートし、`prev` / `next` を index で受け渡している。
+ページネーションには Astro の `paginate()` を使い、1ページあたりの件数は `siteConfig.pagination.postsPerPage`（デフォルト 6）を参照する。記事詳細では `getStaticPaths` 内で記事を日付降順にソートし、`prev` / `next` を index で受け渡している。
 
 ## レイアウト
 
-レイアウトは 2 つだけ。
+レイアウトは 3 つ。
 
 - `Layout.astro` — `<html>` から `<body>` までの土台。`<Container>` の中に `<Stack min-h="100svh">` で Header / (Breadcrumb) / Main / Footer を縦積みする。Web フォント（Noto Serif JP / Noto Sans JP）を `<head>` で読み込む。
 - `ArchiveLayout.astro` — `Layout` を基盤に、本文を `<Group isWrapper isContainer hasGutter><Stack g="50">` で囲んだ一覧用レイアウト。
+- `PageLayout.astro` — `Layout` を基盤に、固定ページのタイトルと本文をまとめるレイアウト。本文は `<Flow as="article" class="c--pageBody" isWrapper isContainer hasGutter>` で囲む。
 
 ```astro
 <Layout title={title} breadcrumb={breadcrumb}>
@@ -141,7 +155,7 @@ export const siteConfig = {
 ```astro
 <Layout ...>
   <Stack g="50">
-    {/* 1. 記事ヘッダー（Tag・Date・Heading・タグ一覧） */}
+    {/* 1. 記事ヘッダー（Date・Cat・Heading・タグ一覧） */}
     <Group as="header" isWrapper="l" hasGutter>...</Group>
 
     {/* 2. 本文 + TOC */}
@@ -179,11 +193,17 @@ export const siteConfig = {
 @layer lism-base {
   :root {
     --base: #fbfaf7;
+    --base-2: #f3f2ee;
     --text: #1a1a1a;
+    --text-2: #4c4c4c;
+    --divider: #e8e6e1;
     --brand: #c8553d;
     --link: #c8553d;
     --ff--base: 'Noto Serif JP', 'Hiragino Mincho ProN', 'Yu Mincho', serif;
-    --ff--accent: -apple-system, 'Hiragino Sans', sans-serif;
+    --ff--accent: -apple-system, 'BlinkMacSystemFont', 'Hiragino Sans', sans-serif, 'Segoe UI Emoji';
+    --lts--s: 0.01em;
+    --lts--base: 0.025em;
+    --lts--l: 0.075em;
     --lts--xl: 0.15em;
     --sz--toc: 240px;
     --sz--l: calc(var(--sz--m) + var(--sz--toc) + var(--s40));
@@ -192,18 +212,4 @@ export const siteConfig = {
 }
 ```
 
-加えて、`__lism.config.js` で `lts` トークンに `xl` / `2xl` / `3xl` を追加している（Property Class として `lts="xl"` を使えるようにするため）。
-
-```js
-// __lism.config.js
-import DEFAULT_CONFIG from 'lism-css/default-config';
-const { tokens } = DEFAULT_CONFIG;
-
-export default {
-  tokens: {
-    lts: [...(tokens.lts || []), 'xl', '2xl', '3xl'],
-  },
-};
-```
-
-記事本文のタイポグラフィ（h2 の下線、h3 の左ボーダー、`blockquote` の左ボーダー、`pre` の余白など）は `.c--articleBody` 配下の子孫セレクタとして `@layer lism-base` に書いている。Markdown から生成される要素にはクラスを直接付けられないため、ここだけは CSS で書く。
+記事本文のタイポグラフィ（h2 の下線、`blockquote` の左ボーダーなど）は `.c--articleBody` 配下の子孫セレクタとして `@layer lism-base` に書いている。Markdown から生成される要素にはクラスを直接付けられないため、こういった部分は CSS で書いていきます。

@@ -12,6 +12,6 @@ const Tag = href ? Link : Inline;
 const linkProps = href ? { href, set: 'plain', hov: '-o,underline' } : {};
 ---
 
-<Tag class:list={['c--cat', className]} ff="accent" fz="2xs" lts=":xl" c="brand" px="5" {...linkProps} {...rest}>
+<Tag class:list={['c--cat', className]} ff="accent" fz="2xs" lts="l" c="brand" px="5" {...linkProps} {...rest}>
   <slot />
 </Tag>

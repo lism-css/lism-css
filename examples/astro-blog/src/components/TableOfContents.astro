@@ -1,6 +1,7 @@
 ---
-import { Lism, Stack, List, Group, Heading } from 'lism-css/astro';
+import { Lism, List, Group } from 'lism-css/astro';
 import type { TocItem } from '@/lib/generateToc';
+import Eyebrow from '@/components/Eyebrow.astro';
 
 interface Props {
   toc: TocItem[];
@@ -15,8 +16,6 @@ const tocLinkCommon = {
   py: '5',
   lh: 's',
   'bd-x-s': true,
-  // bdw: '2px',
-  // bdc: 'transparent',
   hasTransition: true,
   hov: { c: 'brand' },
   css: {
@@ -27,7 +26,7 @@ const tocLinkCommon = {
 ---
 
 <Lism as="nav" aria-labelledby="toc-label">
-  <Heading id="toc-label" level="2" class="c--toc_label" fz="2xs" lts="l" fw="normal" c="text-2" p="5" util="trim">TOC</Heading>
+  <Eyebrow as="h2" id="toc-label" class="c--toc_label" fw="normal" p="5" util="trim">Table of Contents</Eyebrow>
   <Group class="c--toc" bd-y py="20">
     <List as="ol" class="c--toc_list" mx-s="5">
       {
