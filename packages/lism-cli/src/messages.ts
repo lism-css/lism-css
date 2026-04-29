@@ -40,8 +40,8 @@ export const messages = {
     en: 'Target directory',
   },
   'cli.create.opt.template': {
-    ja: '使用するテンプレート名（例: astro-minimal）',
-    en: 'Template name to use (e.g. astro-minimal)',
+    ja: '使用するテンプレート名（例: minimal-astro）',
+    en: 'Template name to use (e.g. minimal-astro)',
   },
   'cli.create.opt.force': {
     ja: '既存ディレクトリを強制上書き',
@@ -147,6 +147,30 @@ export const messages = {
     ja: 'テンプレートを選択してください:',
     en: 'Select a template:',
   },
+  'create.promptSelectCategory': {
+    ja: 'カテゴリを選択してください:',
+    en: 'Select a category:',
+  },
+  'create.promptSelectVariant': {
+    ja: 'バリアントを選択してください:',
+    en: 'Select a variant:',
+  },
+  'create.promptSelectVariant.blog': {
+    ja: '機能レベルを選択してください:',
+    en: 'Select a feature level:',
+  },
+  'create.promptSelectVariant.lp': {
+    ja: '業種を選択してください:',
+    en: 'Select an industry:',
+  },
+  'create.promptSelectVariant.site': {
+    ja: '業種を選択してください:',
+    en: 'Select an industry:',
+  },
+  'create.promptSelectFramework': {
+    ja: 'フレームワークを選択してください:',
+    en: 'Select a framework:',
+  },
   'create.promptTargetDir': {
     ja: '出力先ディレクトリ:',
     en: 'Target directory:',
@@ -162,6 +186,10 @@ export const messages = {
   'create.fetching': {
     ja: 'テンプレート "{name}" を取得中（ref: {ref}）...',
     en: 'Fetching template "{name}" (ref: {ref})...',
+  },
+  'create.templatePackageMissing': {
+    ja: 'テンプレート "{name}" の取得結果に package.json がありません。取得元パスを確認してください: examples/{path}',
+    en: 'Downloaded template "{name}" does not contain package.json. Check the source path: examples/{path}',
   },
   'create.created': {
     ja: '{dir} にプロジェクトを生成しました。',

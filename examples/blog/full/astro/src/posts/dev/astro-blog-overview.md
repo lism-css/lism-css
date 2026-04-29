@@ -1,11 +1,11 @@
 ---
-title: 'examples/astro-blog-simple の構成'
-excerpt: Lism CSS リポジトリに同梱されている Astro ブログテンプレートの仕様。Content Collections・タグ・ルーティング・レイアウト・主要コンポーネントを順に解説する。
+title: 'blog-astro-full の構成'
+excerpt: Lism CSS リポジトリに同梱されている Astro ブログテンプレートの仕様。Content Collections・カテゴリ設計・ルーティング・レイアウト・主要コンポーネントを順に解説する。
 date: 2026.04.10
 tags: [Astro, Lism CSS, テンプレート]
 ---
 
-Lism CSS リポジトリの `examples/astro-blog-simple/` には、Lism CSS と `@lism-css/ui` を使った Astro ブログテンプレート（タグのみのシンプル構成）が入っている。この記事では、そのディレクトリ構成と動作仕様を整理する。
+Lism CSS リポジトリの `examples/blog/full/astro/` には、Lism CSS と `@lism-css/ui` を使った Astro ブログテンプレートが入っている。この記事では、そのディレクトリ構成と動作仕様を整理する。
 
 ## 依存関係
 
@@ -28,12 +28,14 @@ Lism CSS リポジトリの `examples/astro-blog-simple/` には、Lism CSS と 
 ```
 src/
 ├── components/      # Astro コンポーネント
-├── config/          # サイト設定・ナビ
+├── config/          # サイト設定・カテゴリ・ナビ
 ├── content.config.ts
 ├── layouts/         # ページレイアウト
 ├── lib/             # 純粋ロジック（TOC生成など）
 ├── pages/           # ルーティング
-├── posts/           # 記事 Markdown（フラットに配置）
+├── posts/           # 記事 Markdown（カテゴリごとにディレクトリ）
+│   ├── dev/
+│   └── life/
 └── styles/
     └── global.css
 ```
@@ -59,23 +61,34 @@ const posts = defineCollection({
 export const collections = { posts };
 ```
 
-記事ファイルは `src/posts/` 直下にフラットに置くだけ。記事 ID はファイル名（拡張子なし）になり、それがそのまま URL の slug として使われる。
+`pattern: '**/*.md'` のため、`src/posts/dev/foo.md` のようにディレクトリ階層を切れる。記事 ID は `dev/foo` のような形になり、これがそのままカテゴリ判別と URL の元になる。
 
 `/about/` や `/privacy/` のような単発の固定ページは Content Collections には載せず、`src/pages/about.astro` のように `.astro` ファイルとして直接配置しているので、レイアウトやコンポーネントを自由に組めます。
 
-## 記事の分類はタグのみ
+## カテゴリ設計（ディレクトリ＝カテゴリ）
 
-記事の分類はフロントマターの `tags` だけで管理する。カテゴリのような階層は持たず、必要なら複数タグを付けることで柔軟に分類できる。
+カテゴリはフロントマターには書かず、`src/posts/{category}/` の置き場所で決まる。`src/config/categories.ts` にカテゴリ定義（データ）を、`src/lib/posts.ts` に post.id を扱うユーティリティ（`isCategoryKey` / `parsePostId`）を置いている。
 
-```yaml
----
-title: 朝のルーティンについて
-date: 2026.03.28
-tags: [習慣, ライフスタイル]
----
+```ts
+// src/config/categories.ts
+export type CategoryKey = 'dev' | 'life';
+
+export const CATEGORIES: Record<CategoryKey, Category> = {
+  dev: { key: 'dev', label: 'DEV', description: 'Lism CSS や Astro まわりの開発メモ' },
+  life: { key: 'life', label: 'LIFE', description: '日々の暮らしと考えごと' },
+};
 ```
 
-タグ別アーカイブは `/tag/{tag}/` に生成され、フッターには全タグを一覧表示する `TagCloud` を配置している。
+```ts
+// src/lib/posts.ts
+export function parsePostId(id: string): { category: CategoryKey; slug: string } {
+  const [category, ...rest] = id.split('/');
+  if (!isCategoryKey(category)) throw new Error(`Unknown category in post id: ${id}`);
+  return { category, slug: rest.join('/') };
+}
+```
+
+`parsePostId(post.id)` で category と slug に分解する形を、ルーティングと一覧表示の両方で使い回している。
 
 ## サイト設定
 
@@ -116,7 +129,8 @@ export const siteConfig = {
 | パス | 内容 |
 | --- | --- |
 | `[...page].astro` | トップ（全記事一覧）＋ページネーション |
-| `posts/[slug].astro` | 記事詳細 |
+| `[category]/[...page].astro` | カテゴリ別一覧＋ページネーション |
+| `[category]/[slug].astro` | 記事詳細 |
 | `tag/[tag]/[...page].astro` | タグ別一覧＋ページネーション |
 | `about.astro` | About |
 | `privacy.astro` | Privacy Policy |
@@ -128,12 +142,12 @@ export const siteConfig = {
 
 レイアウトは 3 つ。
 
-- `Layout.astro` — `<html>` から `<body>` までの土台。`<Container>` の中に `<Stack min-h="100svh">` で Header / Main / Footer を縦積みする。Web フォント（Noto Serif JP / Noto Sans JP）を `<head>` で読み込む。
+- `Layout.astro` — `<html>` から `<body>` までの土台。`<Container>` の中に `<Stack min-h="100svh">` で Header / (Breadcrumb) / Main / Footer を縦積みする。Web フォント（Noto Serif JP / Noto Sans JP）を `<head>` で読み込む。
 - `ArchiveLayout.astro` — `Layout` を基盤に、本文を `<Group isWrapper isContainer hasGutter><Stack g="50">` で囲んだ一覧用レイアウト。
 - `PageLayout.astro` — `Layout` を基盤に、固定ページのタイトルと本文をまとめるレイアウト。本文は `<Flow as="article" class="c--pageBody" isWrapper isContainer hasGutter>` で囲む。
 
 ```astro
-<Layout title={title}>
+<Layout title={title} breadcrumb={breadcrumb}>
   <Group isWrapper isContainer hasGutter>
     <Stack g="50">
       <slot />
@@ -144,12 +158,12 @@ export const siteConfig = {
 
 ### 記事詳細のレイアウト構造
 
-記事詳細ページ（`posts/[slug].astro`）は、`Stack g="50"` の中に 3 ブロックを並べる。各ブロックは `<Group isWrapper="l" hasGutter>` で同じ最大幅を共有する。
+記事詳細ページ（`[category]/[slug].astro`）は、`Stack g="50"` の中に 3 ブロックを並べる。各ブロックは `<Group isWrapper="l" hasGutter>` で同じ最大幅を共有する。
 
 ```astro
 <Layout ...>
   <Stack g="50">
-    {/* 1. 記事ヘッダー（Date・Heading・タグ一覧） */}
+    {/* 1. 記事ヘッダー（Date・Cat・Heading・タグ一覧） */}
     <Group as="header" isWrapper="l" hasGutter>...</Group>
 
     {/* 2. 本文 + TOC */}
