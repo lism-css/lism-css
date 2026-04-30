@@ -1,0 +1,1531 @@
+---
+import DemoLayout from '@/layouts/DemoLayout.astro';
+import {
+  AutoColumns,
+  Box,
+  BoxLink,
+  Center,
+  Cluster,
+  Container,
+  Flex,
+  Frame,
+  Grid,
+  Heading,
+  Icon,
+  Inline,
+  Layer,
+  Link,
+  Lism,
+  ListItem,
+  Media,
+  Stack,
+  Text,
+  Wrapper,
+} from 'lism-css/astro';
+import { Accordion, Avatar, Button, Modal } from '@lism-css/ui/astro';
+
+export const title = 'LP002: Simple Natural LP';
+
+/** デスクトップ上部ナビ（5件） */
+const headerPrimaryNavItems = [
+  { href: '#mission', ja: 'ミッション', en: 'Mission' },
+  { href: '#feature', ja: '特長', en: 'Feature' },
+  { href: '#service', ja: 'サービス', en: 'Service' },
+  { href: '#step', ja: 'ご依頼の流れ', en: 'Step' },
+  { href: '#voice', ja: 'お客様の声', en: 'Voice' },
+] as const;
+
+/** モバイルドロワー内の全アンカー（デスクトップ行とは構成が異なる） */
+const headerMenuNavItems = [
+  { href: '#top', ja: 'トップ', en: 'Top' },
+  { href: '#mission', ja: 'ミッション', en: 'Mission' },
+  { href: '#message', ja: 'コーディネート', en: 'Message' },
+  { href: '#feature', ja: '特長', en: 'Feature' },
+  { href: '#service', ja: 'サービス', en: 'Service' },
+  { href: '#step', ja: 'ご依頼の流れ', en: 'Step' },
+  { href: '#voice', ja: 'お客様の声', en: 'Voice' },
+  { href: '#faq', ja: 'よくあるご質問', en: 'FAQ' },
+  { href: '#contact', ja: 'お問い合わせ', en: 'Contact' },
+] as const;
+
+const mvImage = {
+  src: 'https://cdn.lism-css.com/img/room/a-Rrr1UZO5Ji.jpg',
+  alt: '赤いソファと観葉植物のあるモダンなリビング',
+  width: 1920,
+  height: 1080,
+} as const;
+
+const missionImage = {
+  src: 'https://cdn.lism-css.com/img/room/u-MojU9rQhZn.jpg',
+  alt: '日差しの入るリビング。ソファ、ラグ、大きな窓と観葉植物のある室内',
+  width: 1920,
+  height: 1280,
+} as const;
+
+const missionBody =
+  '暮らしの形は、家族構成も予算も理想もそれぞれ違います。LISM Lifeは、賃貸でも戸建てでも、日々の暮らし方や悩みを丁寧にお伺いし、家具の選び方からコーディネート、必要に応じた配置やお手伝いまでを一貫して支えます。雑誌の切り抜きがなくても、イメージのかけらから具体的な部屋づくりへと一緒に形にします。小さな相談と本格的な部屋作り、どちらも「自分らしい住みよさ」へつながる一歩になればと考えています。';
+
+/**
+ * 1・2 行目のテキスト列の最大幅（Lism `max-sz`）。
+ * 従来の「列いっぱい」に戻す: `undefined` にして保存（または `max-sz={mission2TextMaxSz}` 2 行を削除）。
+ */
+const mission2TextMaxSz: 's' | undefined = 's';
+
+/** ヘッダー主ナビと同一5件 */
+const footerPrimaryNavItems = [
+  { href: '#mission', ja: 'ミッション', en: 'Mission' },
+  { href: '#feature', ja: '特長', en: 'Feature' },
+  { href: '#service', ja: 'サービス', en: 'Service' },
+  { href: '#step', ja: 'ご依頼の流れ', en: 'Step' },
+  { href: '#voice', ja: 'お客様の声', en: 'Voice' },
+] as const;
+
+const footerSnsLinks = [
+  { href: '#', icon: 'logo-x' as const, label: 'X' },
+  { href: '#', icon: 'logo-instagram' as const, label: 'Instagram' },
+  { href: '#', icon: 'logo-youtube' as const, label: 'YouTube' },
+  { href: '#', icon: 'logo-line' as const, label: 'LINE' },
+] as const;
+
+const featureImage = {
+  src: 'https://cdn.lism-css.com/img/room/u-jh2GpjGKEp.jpg',
+  alt: '明るいリビングにイエローのアームチェアとフロアランプが置かれたインテリア',
+  width: 1600,
+  height: 1067,
+};
+
+/** Lism プリセットアイコン名（ https://lism-css.com/docs/primitives/a--icon/ ） */
+type FeatureCardIcon =
+  | 'home'
+  | 'heart'
+  | 'calendar'
+  | 'book'
+  | 'chat'
+  | 'tag'
+  | 'clock'
+  | 'lightbulb'
+  | 'cart'
+  | 'star'
+  | 'bookmark'
+  | 'user'
+  | 'gear'
+  | 'arrow-right';
+
+/** カードごとの表示内容（タイトル・本文・アイコンを独立して管理） */
+const featureCards: { title: string; body: string; icon: FeatureCardIcon }[] = [
+  {
+    icon: 'home',
+    title: '賃貸でも戸建てでも、住まいの形に合わせる',
+    body: '入居期間や間取り、子どもやペットの有無に応じたご提案を心がけています。既製の家具同士の組み合わせから、小さなスペースの活かし方まで、状況に合わせて一緒に考えます。',
+  },
+  {
+    icon: 'heart',
+    title: '悩み相談から、コーディネートまで一貫して',
+    body: '雑多な要望の整理、色や素材の方向性づくり、具体的な品の候補づくりまで、必要な深さに合わせて伴走します。相談だけのご利用と、手配・設置のお願いまで、幅のある対応が可能です。',
+  },
+  {
+    icon: 'arrow-right',
+    title: '多様な取り扱いと、自社アイテムのご案内',
+    body: '暮らし方に合わせ、多様なブランドを扱い、自社企画の家具や小物のご紹介も行っています。価帯やデザインの好みに応じ、選び方の比較もお手伝いします。',
+  },
+  {
+    icon: 'book',
+    title: '予算と目的に合わせた、無理のない段取り',
+    body: 'まず手を入れたい場所から整える、将来に備え徐々に揃えるといった段階のご相談も歓迎です。想定おおよその費用感の整理や、優先度の相談にもお答えします。',
+  },
+  {
+    icon: 'chat',
+    title: '打ち合わせは来店、オンライン、お電話のいずれも可',
+    body: '日々の予定に合わせ、ヒアリングの仕方を選べます。写真や図面をお持ちの場合は共有いただくと、打ち合わせが円滑です。遠方の方も、まずは内容を伺うところから始められます。',
+  },
+];
+
+const heroImage = {
+  src: 'https://cdn.lism-css.com/img/room/a-6wASe0C2nM.jpg',
+  alt: '花の額、木机とパソコン。本棚付き日当たりの良い在宅デスク',
+  width: 1920,
+  height: 1280,
+};
+
+const serviceSubCards: {
+  index: string;
+  titleJa: string;
+  titleEn: string;
+  body: string;
+  image: { src: string; alt: string; width: number; height: number };
+}[] = [
+  {
+    index: '01',
+    titleJa: '要望の幅に合わせる',
+    titleEn: 'Scope that fits you',
+    body: '部屋づくりのご相談内容は多様です。相談だけ、家具の買い足し、間取りに合わせた一式の手配といった違いに対応し、打ち合わせからおおまかな費用感の整理までお気軽にどうぞ。',
+    image: {
+      src: 'https://cdn.lism-css.com/img/room/u-M1jaFJaeKW.jpg',
+      alt: '白ソファ、黄色系額9枚、カラークッション、フロア灯。明るいリビング',
+      width: 1920,
+      height: 1282,
+    },
+  },
+  {
+    index: '02',
+    titleJa: '好みと暮らしやすさの両立',
+    titleEn: 'Comfort and your taste',
+    body: '見た目の好みと、毎日の導線や片づけやすさを同時に考えます。流行に流されすぎない素材感や、長く手放しにくい造りの家具もご提案の対象です。',
+    image: {
+      src: 'https://cdn.lism-css.com/img/room/u-muaD49UlYx.jpg',
+      alt: '木ベッド、白木のナイトと卓上灯。グレー壁の寝室',
+      width: 1920,
+      height: 1280,
+    },
+  },
+  {
+    index: '03',
+    titleJa: 'ほっと戻れる、自分の部屋へ',
+    titleEn: 'A room to come back to',
+    body: '仕事帰りや家事の合間に、落ち着いて過ごしたい。そうした声を大切に、照明や配置の工夫、リラックスできるコーナーづくりもご一緒に考えます。',
+    image: {
+      src: 'https://cdn.lism-css.com/img/room/u-8HzizEUdqH.jpg',
+      alt: '木天井と間接灯、L字ソファ、大理石風ローテーブル、本棚。広めのリビング',
+      width: 1920,
+      height: 1283,
+    },
+  },
+];
+
+const stepImage = {
+  src: 'https://cdn.lism-css.com/img/room/a-0ojkYuqTrl.jpg',
+  alt: '日差しの入るホームオフィスとソファ、デスクが並んだ室内',
+  width: 1920,
+  height: 1080,
+};
+
+type StepCard = {
+  title: string;
+  body: string;
+  image?: { src: string; alt: string; width: number; height: number };
+};
+
+const stepCards: StepCard[] = [
+  {
+    title: 'お問い合わせと初回のヒアリング',
+    body: 'フォームやお電話、来店のいずれかでご連絡ください。ざっくりとした希望や、今いちばん困っている点を言葉に整え、次回以降の打ち合わせで詰める内容の目安を共有します。オンライン面談も選べます。',
+    image: {
+      src: 'https://cdn.lism-css.com/img/working/a_6SNi6XvWBT.jpg',
+      alt: '打ち合わせを行う室内のイメージ',
+      width: 1920,
+      height: 1280,
+    },
+  },
+  {
+    title: '暮らしの課題と、イメージのすり合わせ',
+    body: '日々の動線、収納、好みの雰囲気や色の傾向などを一緒に言葉にします。既にお持ちの家具や、残したいものの有無も伺い、後の打ち合わせが円滑になるよう整えます。',
+  },
+  {
+    title: '方向性づくりと、おおまかな費用感',
+    body: '家具の候補やレイアウト案、作業範囲のイメージを固め、優先度に沿った大まかな費用感の整理に進みます。納得いただくまで、説明のペースに合わせて調整します。',
+    image: {
+      src: 'https://cdn.lism-css.com/img/room/a-Kt7MCU3Mad.jpg',
+      alt: '明るいリビングのインテリア写真',
+      width: 1200,
+      height: 900,
+    },
+  },
+  {
+    title: '手配と設置・立ち上げの作業',
+    body: 'ご了承のうえ、家具の手配、搬入、設置や簡易な立ち上げ作業のお願いに進みます。入居日や来客の都合、マンションの管理規則の確認が必要な場合は事前に共有いただけますと助かります。',
+  },
+  {
+    title: '納品後のフォロー',
+    body: '使ってみたあとの違和感、追加で揃えたい小物の相談もお気軽にどうぞ。大きなリフォームまでは扱いませんが、配置の微調整や次の一歩の相談も同じ流れで承ります。',
+  },
+];
+
+/**
+ * アバター: 本番・CMS ではカードごとに URL がばらばらになり得るため、`avatarBase` は使わず `src` にフル URL を直書きする
+ * @see https://lism-css.com/docs/ui/avatar/
+ */
+type VoiceCard = {
+  avatar: { src: string; alt: string };
+  title: string;
+  body: string;
+  attribution: string;
+};
+
+const voiceCards: VoiceCard[] = [
+  {
+    avatar: { src: 'https://cdn.lism-css.com/img/avatar/a_DpTwx1lZU3.jpg', alt: '相談者のポートレート（1）' },
+    title: '一人暮らしの部屋で迷子でした',
+    body: '「落ち着く」は何かを言葉にするのに時間がかかりました。家具の大きさと導線の相談で、本当に買う量が決まり、開けたときの圧迫感がかなり減りました。雑多な要望に辛抱強く乗っていただき、感謝しています。',
+    attribution: '20代・ワンルーム相談',
+  },
+  {
+    avatar: { src: 'https://cdn.lism-css.com/img/avatar/a_Bp5H4TO2tS.jpg', alt: '相談者のポートレート（2）' },
+    title: '家族の物が一気所に流れ着く家でした',
+    body: '子どもが小さく、動線と収納の相談が中心でした。既製のユニットと手元の物の掛け合わせで、予算内で我慢せず使える動きになりました。途中で好みの変化も出ましたが、一緒に再調整してもらい安心でした。',
+    attribution: '30代・戸建て相談',
+  },
+  {
+    avatar: { src: 'https://cdn.lism-css.com/img/avatar/a_To1qVvQb79.jpg', alt: '相談者のポートレート（3）' },
+    title: '角部屋の形に合う家具探し',
+    body: '賃貸の角部屋で、定番サイズの家具が合わない場面が多く困っていました。寸法感とメーカーの違いを比較しながら、落ち着いた色面でまとめてもらいました。日当たりの印象も変えずに、すっきり見えています。',
+    attribution: '40代・賃貸相談',
+  },
+  {
+    avatar: { src: 'https://cdn.lism-css.com/img/avatar/a_TjjtOsU0kg.jpg', alt: '相談者のポートレート（4）' },
+    title: 'リモート用の作業机まわりを整えたい',
+    body: '在宅中心になり、本棚とデスク、照明のバランスが課題でした。小さな部屋のまま、仕切り方と照度感を相談し、作業中の集中と夕方以降の落ち着きの両方を意識した提案でした。買い足しの順序も一緒に考え助かりました。',
+    attribution: '50代・在宅併用',
+  },
+  {
+    avatar: { src: 'https://cdn.lism-css.com/img/avatar/a_syw7vEz0mS.jpg', alt: '相談者のポートレート（5）' },
+    title: '母の家の改め方を相談',
+    body: '足腰を考え、座椅子から椅子への入れ替えと、廊下の明るさの話を一緒に整理しました。派手に変えすぎず、慣れ親しんだ家財も活かしつつ、毎日の足取りを軽くする方向性で合意して進められました。',
+    attribution: '60代・家族代理の相談',
+  },
+  {
+    avatar: { src: 'https://cdn.lism-css.com/img/avatar/a_w7f7eeA81h.jpg', alt: '相談者のポートレート（6）' },
+    title: '小さな相談のつもりでした',
+    body: '最初は「このテーブルで合うか」程度の相談でしたが、他の部屋のバランスまで見てもらい、我が家向けの配色の軸を決めてもらいました。一気に全部は揃えず、段階的に揃えていく方針が腹落ちしました。',
+    attribution: '20代・初めての家具相談',
+  },
+];
+
+/** 各項目は質問・回答を独立して管理（必要に応じて初期展開を指定） */
+const faqItems: { question: string; answer: string; defaultOpen?: boolean }[] = [
+  {
+    question: 'まず相談だけ、という利用も可能ですか？',
+    answer:
+      '可能です。暮らしの悩みの整理、家具の大きさや配置の当たり前の確認、費用感の大まかな目安づくりなど、範囲に応じてお受けします。以降の手配はご希望とご了承のうえで段階的に進められます。',
+    defaultOpen: true,
+  },
+  {
+    question: '打ち合わせの合間で方針を変えたいのですが、流れを教えてください',
+    answer:
+      '中間段階で方針の修正が出ることは少なくありません。都度、優先度と費用感をすり合わせ、新しい要望に合わせて候補を入れ替えます。大きな変更の場合は、手配前に必ず合意形成を図るようにしています。',
+  },
+  {
+    question: '家具代のお支払い方法を教えてください',
+    answer:
+      '品やお取引条件により、前金・引き渡し前の一括、分割のご相談など、内容に合わせて案内します。各種のお支払い方法に対応している場合と、都度明細化する場合とがあります。初回面談で大まかな形を共有します。',
+  },
+  {
+    question: '賃貸のため、取り付けに制限があります',
+    answer:
+      '管理規則に照らし、釘やビスの可否、重い家具の搬入ルート、壁面の扱いなど、事前に確認が必要な点を一緒に洗い出します。家具選びの段階で、後から手戻りが出にくい候補に寄せることも可能です。',
+  },
+  {
+    question: '戸建てで、作業範囲の線引きを知りたいです',
+    answer:
+      '大規模なリフォームや水回りの工事専業は範囲外とさせていただくことがあり、家具の手配、搬入、設置や簡易な立ち上げに合わせたお手伝いを中心にします。線引きの個別相談は、現地や図面を共有いただけると円滑です。',
+  },
+];
+
+const bgImage = {
+  src: 'https://cdn.lism-css.com/img/room/u-N1EvhlxYpo.jpg',
+  alt: '窓から光が差し込む開放的なリビング',
+  width: 1920,
+  height: 1080,
+};
+
+/** 各フィールドの表示・name・プレースホルダーを独立して管理 */
+type ContactField =
+  | {
+      id: string;
+      name: string;
+      label: string;
+      type: 'text' | 'email';
+      placeholder: string;
+      inputMode?: 'email' | 'text';
+      autoComplete?: string;
+      /** 検証エラー時の補助テキスト（例示用。本番は状態に応じて出し分け） */
+      errorMessage?: string;
+    }
+  | {
+      id: string;
+      name: string;
+      label: string;
+      type: 'textarea';
+      placeholder: string;
+      rows: number;
+      errorMessage?: string;
+    };
+
+const contactFields: ContactField[] = [
+  {
+    id: 'lp002-contact-name',
+    name: 'name',
+    label: '名前',
+    type: 'text',
+    placeholder: '鈴木 太郎',
+    autoComplete: 'name',
+  },
+  {
+    id: 'lp002-contact-email',
+    name: 'email',
+    label: 'メールアドレス',
+    type: 'email',
+    placeholder: 'example@lism.com',
+    inputMode: 'email',
+    autoComplete: 'email',
+    errorMessage: '正しいメールアドレス形式で入力してください。',
+  },
+  {
+    id: 'lp002-contact-subject',
+    name: 'subject',
+    label: '件名',
+    type: 'text',
+    placeholder: '部屋作りのご相談',
+    autoComplete: 'off',
+  },
+  {
+    id: 'lp002-contact-message',
+    name: 'message',
+    label: '問い合わせ内容',
+    type: 'textarea',
+    placeholder: 'お問い合わせ内容はこちらにご記入ください。',
+    rows: 6,
+  },
+];
+---
+
+<DemoLayout title={title}>
+  <link rel="preconnect" href="https://fonts.googleapis.com" slot="head" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin slot="head" />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet" slot="head" />
+  <Wrapper class="z--lp002-root" contentSize="full">
+    <!-- Header -->
+
+    <Box as="header" class="z--lp002-header" pos="fixed" i="0" w="100%" z="1" hasTransition>
+      <Container class="z--lp002-header_container" isWrapper="xl" hasGutter h="100%">
+        <Grid class="z--lp002-header_inner" gtc="10rem 1fr" ai="center" h="100%">
+          <Stack class="z--lp002-header_logo">
+            <Link class="z--lp002-header_logoLink" href="#top" fz="2xl" fw="bold" lts="l" c="text" td="none" ff="accent"> LISM Life </Link>
+          </Stack>
+          <Flex jc="fe" g="30">
+            <Flex class="z--lp002-headerNav" as="ul" d={['none', null, 'inline-flex']} ai="c" g="30" fz="s" lts="l">
+              {
+                headerPrimaryNavItems.map(({ href, ja }) => (
+                  <ListItem>
+                    <Link class="z--lp002-headerNav_link" href={href} d="block" c="text" td="none" py="10" hasTransition hov="-o">
+                      {ja}
+                    </Link>
+                  </ListItem>
+                ))
+              }
+            </Flex>
+            <Box d={['none', null, 'flex']} ai="c">
+              <Button href="#contact" fz="xs" bdrs="99"> お問い合わせ </Button>
+            </Box>
+            <Modal.OpenBtn modalId="menu" d={['block', null, 'none']}>
+              <Center p="6" ai="c" jc="c">
+                <Icon icon="menu" c="text" fz="2xl" aria-hidden="true" />
+              </Center>
+            </Modal.OpenBtn>
+          </Flex>
+          <Modal.Root id="menu" class="z--lp002-header_menuModal" isContainer p="0">
+            <Modal.Inner class="z--lp002-header_menuInner" layout="stack" g="0" pos="relative" p="30" bxsh="50" offset="-100% 0">
+              <Modal.CloseBtn modalId="menu" autofocus pos="absolute" t="0" r="0" z="1" fz="xl" p="10" m="15" />
+              <Modal.Body layout="stack" g="30" py="40" fx="1" min-h="0" ov-y="auto" w="100%">
+                <Stack class="z--lp002-header_menuNav u--divide" p="0" ov="clip">
+                  {
+                    headerMenuNavItems.map(({ href, ja }) => (
+                      <BoxLink href={href} layout="grid" gtc="1fr auto" ai="c" fz="m" td="none" py="15" px="5">
+                        <Inline>{ja}</Inline>
+                        <Icon icon="caret-right" fz="s" o="pp" />
+                      </BoxLink>
+                    ))
+                  }
+                </Stack>
+              </Modal.Body>
+            </Modal.Inner>
+          </Modal.Root>
+        </Grid>
+      </Container>
+    </Box>
+    <!-- Main Content -->
+    <Container as="main" class="z--lp002-main" pos="relative" z="0">
+      <Box as="section" class="z--lp002-mv" id="top" pos="relative" ov="hidden" aria-label="メインビジュアル">
+        <Heading level="1" class="z--lp002-mv_title" m="0" ta="center" c="white" fw="bold" lts="l" ff="accent">
+          Simple<br />
+          <Inline as="span" whs="nowrap">LP Design</Inline>
+        </Heading>
+        <Box class="z--lp002-mv_imageRail">
+          <Container class="z--lp002-mv_imageInner" isWrapper="l" hasGutter h="100%">
+            <Frame class="z--lp002-mv_frame" ov="hidden" w="100%" h="100%">
+              <Lism
+                as="img"
+                class="z--lp002-mv_media"
+                src={mvImage.src}
+                alt={mvImage.alt}
+                w="100%"
+                h="100%"
+                exProps={{
+                  width: mvImage.width,
+                  height: mvImage.height,
+                  loading: 'eager',
+                  decoding: 'async',
+                  fetchpriority: 'high',
+                }}
+              />
+            </Frame>
+          </Container>
+        </Box>
+      </Box>
+
+      <Lism as="section" id="mission" isContainer class="z--lp002-mission" pos="relative" py="50" my-s="60" ov="hidden">
+        <Lism class="z--lp002-mission_bg" exProps={{ 'aria-hidden': 'true' }} />
+        <Flex fxd={['column', null, 'row']} ai={['start', null, 'stretch']} g={['40', null, '50']} pos="relative" z="1" w="100%">
+          <Flex class="z--lp002-mission_text" fxd="column" ai="start" min-w="0" w="100%">
+            <Stack g="40" ai="start">
+              <Stack g="10" ai="start">
+                <Heading level="2" m="0" fz="5xl" fw="bold" lts="l" c="text" ff="accent"> Mission </Heading>
+                <Text as="p" m="0" fz="xl" fw="bold" lts="l" c="text"> 私たちが目指すもの </Text>
+              </Stack>
+              <Text as="p" m="0" fz="m" lh="l" lts="s" c="text-2">
+                {missionBody}
+              </Text>
+            </Stack>
+          </Flex>
+          <!-- Frame 本体に padding すると l--frame のトークンと競合しやすいため、拡縮用ラッパーに右ガターを乗せる -->
+          <Lism class="z--lp002-mission_figureShell" min-w="0" w="100%">
+            <Frame as="figure" class="z--lp002-mission_figure" m="0" w="100%" min-w="0" jslf="start" ar="3/2" ov="hidden" pos="relative">
+              <img
+                src={missionImage.src}
+                width={missionImage.width}
+                height={missionImage.height}
+                alt={missionImage.alt}
+                loading="lazy"
+                decoding="async"
+                class="z--lp002-mission_img"
+              />
+            </Frame>
+          </Lism>
+        </Flex>
+      </Lism>
+
+      <Wrapper as="section" id="message" contentSize="xl" py="50" hasGutter>
+        <Container>
+          <Stack g="40" class="z--lp002-mission2">
+            <Grid gta={[`'.' 'side'`, null, `'side .'`]} gtc={[null, null, '24rem 1fr']} ai="c" g="40" w="100%">
+              <Stack g="30" w="100%" class="z--lp002-mission2-row1" max-sz={mission2TextMaxSz}>
+                <Heading level="3" fz="xl" lts="l">暮らしに合わせたコーディネート</Heading>
+                <Text>
+                  生活リズムや家族構成、日々の悩みまで丁寧にヒアリングし、あなたに合う心地よさを軸に考えをまとめます。家具の取り合わせに加え、収納の工夫や小さなレイアウトの提案も含め、長く手を放せる部屋づくりを一緒に進めます。
+                </Text>
+              </Stack>
+              <Frame ga="side" ar="3/2">
+                <Media
+                  src="https://cdn.lism-css.com/img/room/a-Kt7MCU3Mad.jpg"
+                  alt="明るいリビングをイメージしたインテリア写真"
+                  width={1200}
+                  height={900}
+                />
+              </Frame>
+            </Grid>
+            <Grid gta={[`'.' 'side'`, null, `'. side'`]} gtc={[null, null, '1fr 24rem']} ai="c" g="40" w="100%">
+              <Stack class="z--lp002-mission2-row2" w="100%" max-sz={mission2TextMaxSz} ai={[null, null, 'end']} g="30">
+                <Heading level="3" fz="xl" lts="l">想いを、部屋の形に</Heading>
+                <Text>
+                  コーディネートの方針づくりから家具の手配、必要に応じた立ち上げ作業のお手伝いまで、一つの流れとして対応します。完成イメージの写真がなくても、色や好きな雰囲気、暮らしの不満点から一緒に言葉にし、納得のいくまで整えます。
+                </Text>
+              </Stack>
+              <Frame ga="side" ar="3/2">
+                <Media
+                  src="https://cdn.lism-css.com/img/room/u-1K4PsDvC6W.jpg"
+                  alt="ワークスペースをイメージしたインテリア"
+                  width={1200}
+                  height={900}
+                />
+              </Frame>
+            </Grid>
+          </Stack>
+        </Container>
+      </Wrapper>
+
+      <Box as="section" id="feature" class="z--lp002-feature" ov-x="clip">
+        <Container isWrapper="l" hasGutter py="50">
+          <Grid gtc={['1fr', null, 'minmax(0, 1fr) minmax(0, 1fr)']} g={['30', null, '40']} ai="stretch">
+            <Stack class="z--lp002-feature_main" g="40" jc="start">
+              <Stack g="10" ai="c" class="z--lp002-feature_head">
+                <Heading level="2" fz="4xl" lts="l" m="0" ta="center" ff="accent"> Point </Heading>
+                <Text as="p" fz="m" fw="bold" lts="l" m="0" c="text" o="p" ta="center">暮らしに寄り添う特長</Text>
+              </Stack>
+
+              <Stack g="30">
+                {
+                  featureCards.map((card) => (
+                    <Stack class="z--lp002-feature_card" p="30" bgc="base" bd bdc="divider" bdrs="10">
+                      <Flex ai="start" g="20" class="z--lp002-feature_cardInner">
+                        <Icon icon={card.icon} size="2.5rem" c="text-2" />
+                        <Stack g="10" class="z--lp002-feature_cardBody">
+                          <Heading level="3" fz="l" m="0">
+                            {card.title}
+                          </Heading>
+                          <Text as="p" fz="s" m="0" c="text-2">
+                            {card.body}
+                          </Text>
+                        </Stack>
+                      </Flex>
+                    </Stack>
+                  ))
+                }
+              </Stack>
+            </Stack>
+
+            <Box class="z--lp002-feature_rail">
+              <Box class="z--lp002-feature_sticky">
+                <Frame class="z--lp002-feature_frame" ov="hidden" bdrs="0">
+                  <Media
+                    src={featureImage.src}
+                    alt={featureImage.alt}
+                    width={featureImage.width}
+                    height={featureImage.height}
+                    exProps={{ loading: 'lazy', decoding: 'async' }}
+                  />
+                </Frame>
+              </Box>
+            </Box>
+          </Grid>
+        </Container>
+      </Box>
+
+      <Box as="section" id="service" class="z--lp002-service" bgc="base-2" py="50">
+        <Container isWrapper="l" hasGutter>
+          <Stack g="50">
+            <Stack g="40">
+              <Stack g="10" ai="c">
+                <Heading level="2" fz="4xl" lts="l" m="0" ta="center" ff="accent">Service</Heading>
+                <Text as="p" fz="m" fw="bold" lts="l" m="0" c="text" o="p" ta="center">ご要望に合わせたサービス</Text>
+              </Stack>
+
+              <!-- md 未満: 1列（画像上・テキスト下）。md 以上: 2列（画像左・テキスト右） -->
+              <Grid gtc={['1fr', null, 'minmax(0, 1fr) minmax(0, 1fr)']} g={['30', null, '40']} ai="center">
+                <Frame ar="3/2" ov="hidden">
+                  <Media
+                    src={heroImage.src}
+                    alt={heroImage.alt}
+                    width={heroImage.width}
+                    height={heroImage.height}
+                    exProps={{ loading: 'lazy', decoding: 'async' }}
+                  />
+                </Frame>
+                <Stack g="20" jc="c">
+                  <Heading level="3" fz="2xl" lts="l" m="0">
+                    予算や目的に合わせ、
+                    <br />
+                    柔軟に対応します
+                  </Heading>
+                  <Text as="p" m="0" c="text-2">
+                    暮らし方や優先して整えたい場所、購入や配置までお願いしたい範囲などを伺い、無理のない形でご提案にまとめます。来店、オンライン、お電話のいずれからでも打ち合わせを受け付けています。
+                  </Text>
+                  <Text as="p" m="0" c="text-2">
+                    小さな悩み相談から、家具の買い付けに伴う作業のお願いまで、目的に合わせて一つずつ。賃貸・戸建てを問わず、住まいの性質に合う選び方を一緒に考えます。
+                  </Text>
+                </Stack>
+              </Grid>
+            </Stack>
+
+            <Stack g="40">
+              <Heading level="3" fz="xl" lts="l" m="0" ta="center">更なる特徴です</Heading>
+              <!-- md 未満: 1列。md 以上: 3列 -->
+              <Grid gtc={['1fr', null, 'repeat(3, minmax(0, 1fr))']} g="40" ai="start">
+                {
+                  serviceSubCards.map((item) => (
+                    <Flex class="z--lp002-service_card" fxd={['row-reverse', null, 'column']} ai="stretch" g="30" min-w="0">
+                      <Frame class="z--lp002-service_cardFigure" ar="3/2" ov="hidden">
+                        <Media
+                          src={item.image.src}
+                          alt={item.image.alt}
+                          width={item.image.width}
+                          height={item.image.height}
+                          exProps={{ loading: 'lazy', decoding: 'async' }}
+                        />
+                      </Frame>
+                      <Stack g="20" min-w="0" fx="1" jc="start">
+                        <Flex ai="c" g="20" util="trimAll">
+                          <Box as="span" class="z--lp002-service_num" fz="3xl" fw="bold" ff="accent" c="text" whs="nowrap">
+                            {item.index}
+                          </Box>
+                          <Box class="z--lp002-service_rule" w="1px" bgc="text" fxsh="0" />
+                          <Stack g="0" class="z--lp002-service_cardTitles" util="trimAll">
+                            <Heading level="4" fz="m" m="0">
+                              {item.titleJa}
+                            </Heading>
+                            <Text as="p" fz="xs" lh="s" m="0" c="text-2" o="p" ff="accent">
+                              {item.titleEn}
+                            </Text>
+                          </Stack>
+                        </Flex>
+                        <Text as="p" fz="s" m="0" c="text-2">
+                          {item.body}
+                        </Text>
+                      </Stack>
+                    </Flex>
+                  ))
+                }
+              </Grid>
+            </Stack>
+          </Stack>
+        </Container>
+      </Box>
+
+      <Box as="section" id="step" class="z--lp002-step" ov-x="clip">
+        <Container isWrapper="l" hasGutter py="50">
+          <Grid gtc={['1fr', null, 'minmax(0, 1fr) minmax(0, 1fr)']} g={['30', null, '40']} ai="stretch">
+            <Stack class="z--lp002-step_main" g="40" jc="start">
+              <Stack g="10" ai="c" class="z--lp002-step_head">
+                <Heading level="2" fz="4xl" lts="l" m="0" ta="center" ff="accent">Step</Heading>
+                <Text as="p" fz="m" fw="bold" lts="l" m="0" c="text" o="p" ta="center">ご依頼から納品までの流れ</Text>
+              </Stack>
+
+              <Stack g="15" ai="stretch" w="100%">
+                {
+                  stepCards.map((card, i) => (
+                    <>
+                      {i > 0 && (
+                        <Flex class="z--lp002-step_caret" jc="center" ai="center" w="100%" fxsh="0">
+                          <Icon icon="caret-down-fill" fz="2xl" />
+                        </Flex>
+                      )}
+                      <Stack class="z--lp002-step_card" g="15" p="30" bgc="base" bd bdc="divider" bdrs="10" ov="hidden" min-w="0">
+                        {card.image && (
+                          <Frame class="z--lp002-step_cardFrame" ar="3/2" ov="hidden" bdrs="0">
+                            <Media
+                              src={card.image.src}
+                              alt={card.image.alt}
+                              width={card.image.width}
+                              height={card.image.height}
+                              exProps={{ loading: 'lazy', decoding: 'async' }}
+                            />
+                          </Frame>
+                        )}
+                        <Stack g="10" class="z--lp002-step_cardBody">
+                          <Heading level="3" fz="l" m="0">
+                            {card.title}
+                          </Heading>
+                          <Text as="p" fz="s" m="0" c="text-2">
+                            {card.body}
+                          </Text>
+                        </Stack>
+                      </Stack>
+                    </>
+                  ))
+                }
+              </Stack>
+            </Stack>
+
+            <Box class="z--lp002-step_rail">
+              <Box class="z--lp002-step_sticky">
+                <Frame class="z--lp002-step_frame" ov="hidden" bdrs="0">
+                  <Media
+                    src={stepImage.src}
+                    alt={stepImage.alt}
+                    width={stepImage.width}
+                    height={stepImage.height}
+                    exProps={{ loading: 'lazy', decoding: 'async' }}
+                  />
+                </Frame>
+              </Box>
+            </Box>
+          </Grid>
+        </Container>
+      </Box>
+
+      <Box as="section" id="voice" class="z--lp002-voice" bgc="base">
+        <Container isWrapper="l" hasGutter py="50" isContainer>
+          <Stack g="40">
+            <Stack g="10" ai="c">
+              <Heading level="2" fz="4xl" lts="l" m="0" ta="center" ff="accent">Voice</Heading>
+              <Text as="p" fz="m" fw="bold" lts="l" m="0" c="text" o="p" ta="center">お客様の声です</Text>
+            </Stack>
+
+            {
+              /**
+               * md 未満: Flex + hasSnap（公式 Reel の Flex 例と同型。Grid の gaf:column は縦積みになりやすい）
+               * md 以上: AutoColumns（最小幅 24rem、折り返し）
+               * @see https://lism-css.com/docs/ui/examples/reel/
+               * @see https://lism-css.com/docs/primitives/l--autoColumns/
+               */
+            }
+            <Box class="z--lp002-voice_layout" min-w="0" w="100%">
+              <Flex class="z--lp002-voice_reel" hasSnap ov="auto" g="20" fxd="row" fxw="nowrap" ai="stretch" w="100%" min-w="0" tabindex={0}>
+                {
+                  voiceCards.map((card) => (
+                    <Box
+                      class="z--lp002-voice_card z--lp002-voice_slide"
+                      p="30"
+                      bgc="base"
+                      bd
+                      bdc="divider"
+                      bdrs="20"
+                      fxsh="0"
+                      min-w="0"
+                      min-h="0"
+                      d="flex"
+                      fxd="column"
+                      aslf="stretch"
+                    >
+                      <Stack g="20" ai="stretch" fx="1" min-h="0" jc="start">
+                        <Avatar src={card.avatar.src} alt={card.avatar.alt} size="5.5rem" mx="auto" />
+                        <Heading level="3" fz="l" fw="bold" m="0" ta="center">
+                          {card.title}
+                        </Heading>
+                        <Text as="p" fz="s" m="0" c="text" lh="l" ta="left">
+                          {card.body}
+                        </Text>
+                        <Text class="z--lp002-voice_attribution" as="p" fz="xs" m="0" c="text-2" o="p" ta="end" w="100%" mt="auto">
+                          {card.attribution}
+                        </Text>
+                      </Stack>
+                    </Box>
+                  ))
+                }
+              </Flex>
+
+              <AutoColumns class="z--lp002-voice_auto" cols="24rem" g="30" w="100%" min-w="0">
+                {
+                  voiceCards.map((card) => (
+                    <Box class="z--lp002-voice_card" p="30" bgc="base" bd bdc="divider" bdrs="20" min-w="0" d="flex" fxd="column" h="100%">
+                      <Stack g="20" ai="stretch" fx="1" min-h="0" jc="start">
+                        <Avatar src={card.avatar.src} alt={card.avatar.alt} size="5.5rem" mx="auto" />
+                        <Heading level="3" fz="l" fw="bold" m="0" ta="center">
+                          {card.title}
+                        </Heading>
+                        <Text as="p" fz="s" m="0" c="text" lh="l" ta="left">
+                          {card.body}
+                        </Text>
+                        <Text class="z--lp002-voice_attribution" as="p" fz="xs" m="0" c="text-2" o="p" ta="end" w="100%" mt="auto">
+                          {card.attribution}
+                        </Text>
+                      </Stack>
+                    </Box>
+                  ))
+                }
+              </AutoColumns>
+            </Box>
+          </Stack>
+        </Container>
+      </Box>
+
+      <Box as="section" id="faq" class="z--lp002-faq" bgc="base-2">
+        <Container isWrapper="l" hasGutter py="50">
+          <Stack g="40">
+            <Stack g="10" ai="c">
+              <Heading level="2" fz="4xl" lts="l" m="0" ta="center" ff="accent">FAQ</Heading>
+              <Text as="p" fz="m" fw="bold" lts="l" m="0" c="text" o="p" ta="center">よくあるご質問</Text>
+            </Stack>
+
+            <Accordion.Root class="z--lp002-faq_acc" p="0" g="20">
+              {
+                faqItems.map((item) => (
+                  <Accordion.Item bgc="base" bdrs="20" bxsh="10" {...(item.defaultOpen ? { 'data-opened': '' } : {})}>
+                    <Accordion.Heading p="30">
+                      <Accordion.Button fw="bold" ta="start" isOpen={item.defaultOpen === true}>
+                        {item.question}
+                      </Accordion.Button>
+                    </Accordion.Heading>
+                    <Accordion.Panel py="30" px="30" isOpen={item.defaultOpen === true}>
+                      <Text m="0" fz="s" c="text-2" lh="l">
+                        {item.answer}
+                      </Text>
+                    </Accordion.Panel>
+                  </Accordion.Item>
+                ))
+              }
+            </Accordion.Root>
+          </Stack>
+        </Container>
+      </Box>
+
+      <Box as="section" id="contact" class="z--lp002-contact" pos="relative" ov="hidden">
+        <Frame isLayer class="z--lp002-contact_mediaWrap">
+          <Lism
+            as="img"
+            class="z--lp002-contact_media"
+            src={bgImage.src}
+            alt={bgImage.alt}
+            w="100%"
+            h="100%"
+            exProps={{ width: bgImage.width, height: bgImage.height, loading: 'lazy', decoding: 'async' }}
+          />
+        </Frame>
+        <!-- 背景写真の上に半透明の黒レイヤーでコントラストを確保 -->
+        <Layer
+          pos="absolute"
+          exProps={{
+            style: {
+              inset: 0,
+              pointerEvents: 'none',
+              background: 'hsl(0 0% 0% / 0.52)',
+            },
+          }}
+        />
+        <Container class="z--lp002-contact_inner" isWrapper="l" hasGutter py="60" pos="relative">
+          <Stack g="40" ai="c">
+            <Stack g="10" ai="c" max-w="36rem" w="100%">
+              <Heading level="2" fz="4xl" lts="l" m="0" ta="center" c="white" ff="accent">Contact</Heading>
+              <Text as="p" fz="m" fw="bold" lts="l" m="0" c="white" ta="center">お問い合わせ</Text>
+            </Stack>
+
+            <Text as="p" fz="s" m="0" c="white" ta="center" lh="l" max-w="36rem" w="100%">
+              初めての方もどうぞお気軽にお問い合わせください。<br />このフォームはダミーです。
+            </Text>
+
+            <Box as="form" class="z--lp002-contact_form" max-w="36rem" w="100%" method="post" action="#">
+              <Stack g="20">
+                {
+                  contactFields.map((field) => (
+                    <Stack g="10" ai="stretch">
+                      <Lism as="label" for={field.id} fz="s" fw="bold" m="0" c="white">
+                        {field.label}
+                      </Lism>
+                      {field.type === 'textarea' ? (
+                        <textarea
+                          id={field.id}
+                          class="z--lp002-contact_input z--lp002-contact_input--textarea"
+                          name={field.name}
+                          rows={field.rows}
+                          placeholder={field.placeholder}
+                          aria-invalid={field.errorMessage ? 'true' : undefined}
+                          aria-describedby={field.errorMessage ? `${field.id}-error` : undefined}
+                        />
+                      ) : (
+                        <input
+                          id={field.id}
+                          class="z--lp002-contact_input"
+                          name={field.name}
+                          type={field.type}
+                          placeholder={field.placeholder}
+                          inputmode={field.inputMode}
+                          autocomplete={field.autoComplete}
+                          aria-invalid={field.errorMessage ? 'true' : undefined}
+                          aria-describedby={field.errorMessage ? `${field.id}-error` : undefined}
+                        />
+                      )}
+                      {/*
+                  【テンプレート用】フィールド下のエラー文サンプル（`contactFields` の `errorMessage` と対）
+                  本番でクライアント等のバリデーション表示を有効にする場合は、下の <Text> ブロックのコメントを外してください。
+                  id は `lp002-contact-email-error` のように `${field.id}-error` となり、上記 input/textarea の aria-describedby と対応します。
+
+                {field.errorMessage && (
+                  <Text
+                    class='z--lp002-contact_error'
+                    id={`${field.id}-error`}
+                    as='p'
+                    fz='xs'
+                    m='0'
+                    mt='5'
+                    c='red'
+                    role='alert'
+                  >
+                    {field.errorMessage}
+                  </Text>
+                )}
+                */}
+                    </Stack>
+                  ))
+                }
+                <button type="submit" class="z--lp002-contact_submit">この内容で送信 (dummy)</button>
+              </Stack>
+            </Box>
+          </Stack>
+        </Container>
+      </Box>
+    </Container>
+    <!-- Footer -->
+
+    <Box as="footer" class="z--lp002-footer" bgc="base-2" w="100%">
+      <Container class="z--lp002-footer_container" isContainer isWrapper="xl" py="40" hasGutter>
+        <Stack jc="c" ai="c" g="30">
+          <Stack class="z--lp002-header_logo">
+            <Link class="z--lp002-header_logoLink" href="#top" fz="2xl" fw="bold" lts="l" c="text" td="none" ff="accent"> LISM Life </Link>
+          </Stack>
+          <Flex
+            as="ul"
+            class="z--lp002-footerNav z--lp002-headerNav"
+            fxd={['column', 'column', 'row']}
+            ai={['stretch', 'stretch', 'c']}
+            jc={['start', 'start', 'c']}
+            fxw={['nowrap', 'nowrap', 'wrap']}
+            g={['0', '0', '30']}
+            w={['100%', '100%', 'auto']}
+            min-w="0"
+            fz="s"
+            lts="l"
+            m="0"
+            p="0"
+          >
+            {
+              footerPrimaryNavItems.map(({ href, ja }) => (
+                <ListItem>
+                  <Link
+                    class="z--lp002-headerNav_link"
+                    href={href}
+                    d="block"
+                    c="text"
+                    td="none"
+                    w={['100%', '100%', 'auto']}
+                    py={['15', '15', '10']}
+                    hasTransition
+                    hov="-o"
+                  >
+                    {ja}
+                  </Link>
+                </ListItem>
+              ))
+            }
+          </Flex>
+          <Cluster g="20">
+            {
+              footerSnsLinks.map(({ href, icon, label }) => (
+                <Link href={href} td="none" c="text-2" hov="-o" hasTransition aria-label={label}>
+                  <Icon icon={icon} fz="xl" />
+                </Link>
+              ))
+            }
+          </Cluster>
+          <Text as="p" fz="s" c="text-2" m="0">© 2026 Lism CSS.</Text>
+        </Stack>
+      </Container>
+    </Box>
+  </Wrapper>
+</DemoLayout>
+
+<style>
+  @layer lism-custom {
+    /**
+   * `ff:accent`（`--ff--accent`）: セリフに寄らないよう、Montserrat 以外は日本語ゴシック＋汎用 sans へ
+   * @see https://fonts.google.com/specimen/Montserrat
+   */
+    .z--lp002-root {
+      --ff--accent:
+        'Montserrat', 'Hiragino Sans', 'Hiragino Kaku Gothic ProN', 'Hiragino Kaku Gothic Pro', 'Yu Gothic', 'YuGothic', 'Noto Sans JP',
+        'BIZ UDGothic', ui-sans-serif, system-ui, sans-serif;
+    }
+
+    :root {
+      --z--lp002-header-height: 112px;
+      --z--lp002-header-height--thin: 64px;
+      --base-2: #ececec;
+    }
+
+    .z--lp002-header {
+      /* ドロワー右の「抜き」幅。ここで --s50 を別トークンや px に差し替え可 */
+      --z--lp002-header-menu-peek: var(--s50);
+      box-sizing: border-box;
+      height: var(--z--lp002-header-height);
+      background-color: transparent;
+      backdrop-filter: none;
+      -webkit-backdrop-filter: none;
+      border-block-end: 1px solid transparent;
+      box-shadow: none;
+      /* この量スクロールしてからヘッダー変化アニメーションを開始（終了は +160px スクロール地点） */
+      --z--lp002-header-scroll-animation-start: 100px;
+      --z--lp002-header-animation-range: var(--z--lp002-header-scroll-animation-start) calc(var(--z--lp002-header-scroll-animation-start) + 160px);
+      animation: z--lp002-header linear both;
+      animation-timeline: scroll(root);
+      animation-range: var(--z--lp002-header-animation-range);
+    }
+    /**
+   * スクロール後: 白の半透明 + backdrop-filter（Lism 公式ドキュメントのヘッダーに近いガラス風）
+   * @see https://lism-css.com/docs/overview/
+   */
+    @keyframes z--lp002-header {
+      to {
+        height: var(--z--lp002-header-height--thin);
+        background-color: color-mix(in srgb, var(--white) 68%, transparent);
+        backdrop-filter: blur(12px) saturate(1.08);
+        -webkit-backdrop-filter: blur(12px) saturate(1.08);
+        border-block-end: 1px solid var(--divider);
+        box-shadow: none;
+      }
+    }
+
+    /**
+   * モバイルメニュー: 左からスライド＋全高。右端は --z--lp002-header-menu-peek 分空け、
+   * そのエリア（dialog 本体のダイミング）クリックは setModal により閉じる
+   * @see https://lism-css.com/ui/modal/ ドロワー例（offset） / 公式: dialog 全面 + ::backdrop 非使用
+   */
+    :global(.z--lp002-header_menuModal.c--modal) {
+      min-height: 100svh;
+    }
+    :global(.z--lp002-header_menuModal.c--modal[open]) {
+      justify-content: flex-start;
+      align-items: flex-start;
+    }
+    /**
+   * width: Lism の l--stack / -w 等が後勝ちすると 100% 固定になり、peek を変えても右余白が動かない → !important で calc を優先
+   */
+    :global(.z--lp002-header_menuModal .c--modal_inner.z--lp002-header_menuInner) {
+      width: calc(100% - var(--z--lp002-header-menu-peek, var(--s50))) !important;
+      min-height: 100svh;
+      box-sizing: border-box;
+    }
+
+    /*
+   * .z--lp002-mv 設計トークン（Lism の --gutter-size / --s* / セマンティックカラーと併用）
+   * 子へ継承する。h1 の font-size は inherit し、本ブロックの font-size と揃えて
+   * --z--lp002-mv-title-line2-center の em が画像位置計算と一致するようにしている。
+   *
+   * [見出し・画像レールの絶対配置]
+   *   --z--lp002-mv-title-offset-from-header … 固定ヘッダー下端 → 見出し（h1）上端 までの距離
+   *   --z--lp002-mv-title-line2-center … 見出し上端 → 2行目の縦方向おおよそ中央 までの距離（line-height:1.1 想定）
+   *       → .z--lp002-mv_imageRail の top は header高 + 上記2つの合算（画像上端が 2 行目中央付近になる）
+   *   --z--lp002-mv-image-bottom-offset … .z--lp002-mv_imageRail に渡す bottom（画像列の下端オフセット）
+   *   --z--lp002-mv-image-bottom-inset … md（800px）以上で --z--lp002-mv-image-bottom-offset に切り替える量（= --gutter-size）
+   *       → md 未満の既定は has--gutter と同じ --gutter-size（:root の --gutter-size、通常 var(--s30)）
+   *
+   * [セクション全体の高さ・背景]
+   *   --z--lp002-mv-max-block-size … MV の高さ上限。実際の高さは min(100svh, 本値)。sm 幅以下は別途 100svh 固定
+   *   --z--lp002-mv-white-strip … セクション最下部の「白（--base）」帯の高さ。それより上の背景は --base-2
+   */
+    .z--lp002-mv {
+      --z--lp002-mv-title-offset-from-header: 1rem;
+      --z--lp002-mv-white-strip: 10rem;
+      --z--lp002-mv-max-block-size: 64rem;
+      --z--lp002-mv-title-line2-center: 1.75em;
+      /* md 以上: 画像レール下の余白＝gutter（has--gutter の --gutter-size） */
+      --z--lp002-mv-image-bottom-inset: var(--gutter-size);
+      --z--lp002-mv-image-bottom-offset: var(--gutter-size);
+      height: min(100svh, var(--z--lp002-mv-max-block-size));
+      min-height: min(100svh, var(--z--lp002-mv-max-block-size));
+      background: linear-gradient(
+        to bottom,
+        var(--base-2) 0,
+        var(--base-2) calc(100% - var(--z--lp002-mv-white-strip)),
+        var(--base) calc(100% - var(--z--lp002-mv-white-strip)),
+        var(--base) 100%
+      );
+      /* h1 は font-size:inherit。clamp の em 基準を画像レールの top 計算と共有する */
+      font-size: clamp(2.75rem, 1.5rem + 9vw, 6rem);
+    }
+
+    /* Lism sm = min-width 480px。幅 480px 以下では --z--lp002-mv-max-block-size を使わず高さを必ず 100svh（フルブリード時はビューポート幅≒コンテナ幅） */
+    @media (max-width: 480px) {
+      .z--lp002-mv {
+        height: 100svh;
+        min-height: 100svh;
+      }
+    }
+
+    /* Lism md = 800px。md 以上: 画像下端オフセットを --z--lp002-mv-image-bottom-inset に */
+    @media (min-width: 800px) {
+      .z--lp002-mv {
+        --z--lp002-mv-image-bottom-offset: var(--z--lp002-mv-image-bottom-inset);
+      }
+    }
+
+    .z--lp002-mv_imageRail {
+      position: absolute;
+      inset-inline: 0;
+      top: calc(var(--z--lp002-header-height) + var(--z--lp002-mv-title-offset-from-header) + var(--z--lp002-mv-title-line2-center));
+      bottom: var(--z--lp002-mv-image-bottom-offset);
+      z-index: 0;
+    }
+
+    .z--lp002-mv_imageInner {
+      margin-inline: auto;
+      height: 100%;
+    }
+
+    .z--lp002-mv_frame {
+      display: block;
+    }
+
+    .z--lp002-mv_media {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+    }
+
+    /* top = ヘッダー下端 + --z--lp002-mv-title-offset-from-header。画像上端は本要素の 2 行目中央に合わせてレール側で加算 */
+    .z--lp002-mv_title {
+      position: absolute;
+      left: 50%;
+      translate: -50% 0;
+      top: calc(var(--z--lp002-header-height) + var(--z--lp002-mv-title-offset-from-header));
+      z-index: 1;
+      line-height: 1.1;
+      pointer-events: none;
+      max-width: 100%;
+      padding-inline: var(--s10);
+      box-sizing: border-box;
+      font-size: inherit;
+    }
+
+    /* l 左: ビュー基準。右端（xl 相当）: 子孫で 100cqi＝#mission 幅 main 内でも正しい */
+    .z--lp002-mission {
+      --_mission-l-pad: max(var(--gutter-size, var(--s30)), calc((100vw - min(100vw, var(--sz--l, 1280px))) / 2));
+    }
+    .z--lp002-mission_bg {
+      position: absolute;
+      inset-block: 0;
+      z-index: 0;
+      right: 0;
+      background-color: var(--base-2, #ececec);
+      pointer-events: none;
+    }
+    @container (min-width: 800px) {
+      .z--lp002-mission_bg {
+        left: calc(var(--_mission-l-pad) + 10rem);
+      }
+    }
+    @container not (min-width: 800px) {
+      .z--lp002-mission_bg {
+        left: 10rem;
+      }
+    }
+    .z--lp002-mission_text {
+      position: relative;
+      z-index: 1;
+      box-sizing: border-box;
+      max-width: 100%;
+      padding-inline-start: var(--_mission-l-pad);
+    }
+    @container (min-width: 800px) {
+      .z--lp002-mission_text {
+        flex: 1 1 0;
+        min-width: 0;
+        padding-inline-end: var(--s20);
+        /* 行内で交差軸に伸長（min-h:auto 由来の上寄せに縛られない）→ 主軸方向の center が効く */
+        align-self: stretch;
+        justify-content: center;
+      }
+    }
+    .z--lp002-mission_figure {
+      box-sizing: border-box;
+    }
+    .z--lp002-mission_figureShell {
+      position: relative;
+      z-index: 1;
+      box-sizing: border-box;
+    }
+    @container (min-width: 800px) {
+      .z--lp002-mission_figureShell {
+        flex: 1 1 0;
+        padding-inline-end: max(1.25rem, var(--gutter-size, var(--s30)), calc((100cqi - min(100cqi, var(--sz--xl, 90rem))) / 2));
+      }
+    }
+    @container not (min-width: 800px) {
+      .z--lp002-mission_text {
+        justify-content: flex-start;
+        padding-inline-end: max(1.25rem, var(--gutter-size, var(--s30)), calc((100cqi - min(100cqi, var(--sz--xl, 90rem))) / 2));
+      }
+      .z--lp002-mission_figureShell {
+        padding-inline-start: var(--_mission-l-pad);
+        padding-inline-end: max(1.25rem, var(--gutter-size, var(--s30)), calc((100cqi - min(100cqi, var(--sz--xl, 90rem))) / 2));
+      }
+    }
+    .z--lp002-mission_img {
+      position: absolute;
+      inset: 0;
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /**
+     * md 以上: 外側を xl 左（Wrapper）〜 l 右で切る。両グリッドを max-sz:l + mx で寄せるのをやめ、
+     * 左は xl コンテンツ左端、右は l コンテンツ右端（viewport 基準の同一中心線トークン差の半分）に揃える。
+     */
+    @container (min-width: 800px) {
+      .z--lp002-mission2 {
+        box-sizing: border-box;
+        padding-inline-end: max(0px, calc((min(100vw, var(--sz--xl, 90rem)) - min(100vw, var(--sz--l, 1280px))) / 2));
+      }
+    }
+
+    /* `max-sz` 付き列をグリッドセル内で左／右に寄せる（2 列時。md 未満は 1 列のため事実上フル幅） */
+    .z--lp002-mission2-row1 {
+      justify-self: start;
+    }
+    .z--lp002-mission2-row2 {
+      text-align: start;
+      justify-self: start;
+    }
+    @container (min-width: 800px) {
+      .z--lp002-mission2-row2 {
+        text-align: end;
+        justify-self: end;
+      }
+    }
+
+    .z--lp002-footerNav {
+      list-style: none;
+    }
+
+    .z--lp002-footerNav :global(.z--lp002-headerNav_link) {
+      text-align: center;
+    }
+    @container (min-width: 800px) {
+      .z--lp002-footerNav :global(.z--lp002-headerNav_link) {
+        text-align: start;
+      }
+    }
+
+    /* md 未満: 縦並びの項目間に区切り（最後の行の下には付けない） */
+    .z--lp002-footerNav > :global(li:not(:last-child)) {
+      border-block-end: 1px solid var(--divider);
+    }
+
+    @container (min-width: 800px) {
+      .z--lp002-footerNav > :global(li:not(:last-child)) {
+        border-block-end: none;
+      }
+    }
+
+    .z--lp002-feature_rail {
+      min-width: 0;
+      /* グリッド行の高さ（＝左カラムの内容高さ）を子の % 計算に渡す */
+      align-self: stretch;
+    }
+
+    .z--lp002-feature_sticky {
+      position: relative;
+    }
+
+    .z--lp002-feature_frame {
+      aspect-ratio: 4 / 3;
+    }
+
+    @container (min-width: 800px) {
+      /**
+       * ヘッダー下端で固定。高さは「ビューポート」と「左テキスト列の高さ」の小さい方
+       * （グリッド行高＝左カラムのため、100% は左側コンテンツの高さに一致）
+       */
+      .z--lp002-feature_sticky {
+        position: sticky;
+        /* lp002 :root のヘッダー（スクロール後の高さ＝下端基準） */
+        top: var(--z--lp002-header-height--thin, 64px);
+        align-self: start;
+        height: min(calc(100dvh - var(--z--lp002-header-height--thin, 64px)), 100%);
+        min-height: 0;
+      }
+
+      .z--lp002-feature_frame {
+        aspect-ratio: auto;
+        height: 100%;
+        min-height: 0;
+      }
+
+      /**
+       * 画像列だけ右端をビューポート端まで伸ばす（左端は2カラム境界のまま）
+       * 中央寄せの `size=l` コンテナ外側〜画面右端の余白 + 右ガターを吸収
+       */
+      .z--lp002-feature_rail {
+        width: calc(100% + max(0px, (100vw - min(100vw, var(--sz--l))) / 2) + var(--gutter-size, 0px));
+        max-width: none;
+        height: 100%;
+      }
+    }
+
+    /* md 未満: カード内は画像 | テキスト Stack。md 以上: 縦積み（先祖 is--container の 800px 基準） */
+    .z--lp002-service_card {
+      min-width: 0;
+    }
+
+    .z--lp002-service_cardFigure {
+      min-width: 0;
+    }
+
+    /* sm 以下（max-width: 480px）：画像非表示。Lism の sm ブレークポイント 480px に合わせる */
+    @container (max-width: 480px) {
+      .z--lp002-service_cardFigure {
+        display: none;
+      }
+    }
+
+    @container not (min-width: 800px) {
+      /* テキスト列の高さに合わせて画像を縦いっぱい（`ar` を上書きして flex stretch を効かせる） */
+      .z--lp002-service_cardFigure {
+        flex: 0 0 38%;
+        max-width: 12rem;
+        align-self: stretch;
+        aspect-ratio: auto;
+        min-height: 0;
+      }
+    }
+
+    @container (min-width: 800px) {
+      .z--lp002-service_cardFigure {
+        width: 100%;
+        align-self: stretch;
+      }
+    }
+
+    .z--lp002-service_rule {
+      align-self: stretch;
+    }
+
+    .z--lp002-service_num {
+      line-height: 1;
+    }
+
+    /* テキスト色を 15%（残りは base）でミックス — 薄すぎる base-2 より本文に近い階調 */
+    .z--lp002-step_caret .a--icon {
+      color: color-mix(in oklch, var(--text) 15%, var(--base));
+      opacity: 1;
+    }
+
+    .z--lp002-step_main {
+      min-width: 0;
+    }
+
+    .z--lp002-step_rail {
+      min-width: 0;
+      /* グリッド行の高さを子の % 計算に渡す */
+      align-self: stretch;
+    }
+
+    .z--lp002-step_sticky {
+      position: relative;
+    }
+
+    .z--lp002-step_frame {
+      aspect-ratio: 4 / 3;
+    }
+
+    /**
+     * md 以上: グリッドの視覚順を rail | main にし、sticky・左張り出しを有効化。
+     * md 未満: DOM 順のまま（main → rail）で 1 列・テキスト上・画像下（Feature と同型）。
+     */
+    @container (min-width: 800px) {
+      .z--lp002-step_rail {
+        order: 1;
+        margin-inline-start: calc(-1 * (max(0px, (100vw - min(100vw, var(--sz--l))) / 2) + var(--gutter-size, 0px)));
+        width: calc(100% + max(0px, (100vw - min(100vw, var(--sz--l))) / 2) + var(--gutter-size, 0px));
+        max-width: none;
+        height: 100%;
+      }
+
+      .z--lp002-step_main {
+        order: 2;
+      }
+
+      .z--lp002-step_sticky {
+        position: sticky;
+        top: var(--z--lp002-header-height--thin, 64px);
+        align-self: start;
+        height: min(calc(100dvh - var(--z--lp002-header-height--thin, 64px)), 100%);
+        min-height: 0;
+      }
+
+      .z--lp002-step_frame {
+        aspect-ratio: auto;
+        height: 100%;
+        min-height: 0;
+      }
+    }
+
+    /**
+     * 横リール: 中央スナップ（has--snap の子へ --snapAlign が効く）
+     * @see https://lism-css.com/ui/examples/reel/
+     */
+    .z--lp002-voice_reel {
+      --snapType: x mandatory;
+      --snapAlign: center;
+      align-items: stretch;
+    }
+
+    /* 行内で最も高いカードに合わせてスライドの高さを揃える（h:100% は未定義高さで stretch を阻害しやすい） */
+    .z--lp002-voice_slide {
+      flex: 0 0 min(24rem, 85%);
+      align-self: stretch;
+      height: auto;
+    }
+
+    .z--lp002-voice_auto {
+      display: none;
+    }
+
+    @container (min-width: 800px) {
+      .z--lp002-voice_reel {
+        display: none !important;
+        overflow: visible;
+      }
+
+      .z--lp002-voice_auto {
+        display: grid;
+      }
+    }
+
+    .z--lp002-contact {
+      min-height: min(88vh, 52rem);
+    }
+
+    .z--lp002-contact_mediaWrap {
+      position: absolute;
+      inset: 0;
+    }
+
+    .z--lp002-contact_media {
+      display: block;
+      object-fit: cover;
+      width: 100%;
+      height: 100%;
+      /* 完全な grayscale(1) ではなく、彩度を少し残す */
+      filter: grayscale(0.55) saturate(0.72) contrast(0.96) brightness(1.02);
+    }
+
+    .z--lp002-contact_input {
+      box-sizing: border-box;
+      width: 100%;
+      margin: 0;
+      padding: var(--s15) var(--s20);
+      font: inherit;
+      font-size: var(--fz--s);
+      line-height: calc(1em + var(--hl--base) * 2);
+      color: var(--text);
+      background-color: var(--base);
+      border: 1px solid var(--divider);
+      border-radius: var(--bdrs--20);
+      box-shadow: var(--bxsh--10);
+    }
+
+    .z--lp002-contact_input::placeholder {
+      color: var(--text-2);
+      opacity: var(--o--pp);
+    }
+
+    .z--lp002-contact_input:focus-visible {
+      outline: 2px solid var(--brand);
+      outline-offset: 2px;
+    }
+
+    .z--lp002-contact_input--textarea {
+      min-height: 10rem;
+      resize: vertical;
+    }
+
+    /* ヘッダー @lism-css/ui Button（.c--button）と同じセマンティック: bg=--text, 字=--base */
+    .z--lp002-contact_submit {
+      box-sizing: border-box;
+      width: 100%;
+      margin: 0;
+      margin-block-start: var(--s10);
+      padding: var(--s15) var(--s30);
+      font: inherit;
+      font-size: var(--fz--m);
+      font-weight: var(--fw--bold);
+      letter-spacing: var(--lts--l);
+      color: var(--base);
+      cursor: pointer;
+      background-color: var(--text);
+      border: 1px solid var(--text);
+      border-radius: var(--bdrs--99);
+      box-shadow: var(--bxsh--20);
+    }
+
+    .z--lp002-contact_submit:hover {
+      opacity: 0.92;
+    }
+
+    .z--lp002-contact_submit:focus-visible {
+      outline: 2px solid var(--base);
+      outline-offset: 3px;
+    }
+  }
+</style>
