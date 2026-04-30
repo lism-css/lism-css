@@ -15,7 +15,7 @@ import { siteConfig } from '@/config/site';
     {/* PCナビ（md以上） */}
     <Cluster as="nav" aria-label="メインナビゲーション" g="30" d={['none', null, 'flex']} fz="s" c="text-2">
       {
-        siteConfig.nav.map((item) => (
+        siteConfig.header.nav.map((item) => (
           <Link href={item.href} c="inherit" td="none" hov={{ c: 'brand' }}>
             {item.label}
           </Link>
@@ -72,7 +72,7 @@ import { siteConfig } from '@/config/site';
       <Modal.Body layout="stack" g="20" ov-y="auto">
         <Stack as="nav" aria-label="メインナビゲーション" util="divide" fz="s">
           {
-            siteConfig.nav.map((item) => (
+            siteConfig.header.modalNav.map((item) => (
               <Link href={item.href} c="inherit" td="none" py="10" hov={{ c: 'brand' }}>
                 {item.label}
               </Link>

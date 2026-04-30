@@ -3,32 +3,32 @@
  * タイトル・キャッチコピー・ページネーション等、表示に関わる値はここで管理する。
  */
 export const siteConfig = {
-  // サイト名（タイトル末尾やヘッダーロゴで使用）
+  // サイト名
   name: 'lism.blog',
 
-  // キャッチコピー（トップページの大見出し）
-  tagline: '読む、書く、考える、日々の記録',
+  // キャッチコピー
+  tagline: 'ブログのキャッチコピー',
 
-  // サイトのデフォルト説明文（meta description のフォールバック）
-  description: 'A quiet place to read and think.',
+  // サイトのデフォルト説明文
+  description: 'ブログの説明文をここに入力してください。meta description に使われます。',
 
   // <html lang="..."> に使う値
   lang: 'ja',
 
   // ページネーション設定
   pagination: {
-    // 1ページあたりの記事数（一覧ページ共通のデフォルト値）
+    // 1ページあたりの記事数
     postsPerPage: 6,
   },
 
-  // ヘッダー / モバイルメニューで共通利用するナビゲーション項目
+  // ナビゲーション
   nav: [
     { label: 'Home', href: '/' },
     { label: 'About', href: '/about/' },
     { label: 'Privacy Policy', href: '/privacy/' },
   ],
 
-  // SNS リンク（ヘッダーのモバイルメニュー・フッターで共通利用）
+  // SNS リンク
   sns: [
     { label: 'GitHub', icon: 'logo-github', href: 'https://github.com/lism-css/lism-css' },
     { label: 'X', icon: 'logo-x', href: 'https://x.com/lismcss' },
@@ -37,7 +37,7 @@ export const siteConfig = {
   // フッター
   footer: {
     copyright: '© 2026 Lism CSS',
-    links: [
+    nav: [
       { label: 'About', href: '/about/' },
       { label: 'Privacy Policy', href: '/privacy/' },
       { label: 'Contact', href: '#' },

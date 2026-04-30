@@ -9,7 +9,7 @@ import TagCloud from '@/components/TagCloud.astro';
   <Center g="30" max-sz="l" mx="auto">
     <Cluster as="nav" aria-label="サイト情報" fz="xs" c="text-2" lh="xs" util="divide">
       {
-        siteConfig.footer.links.map((item) => (
+        siteConfig.footer.nav.map((item) => (
           <Link href={item.href} set="plain" px="10" hov={{ c: 'brand' }}>
             {item.label}
           </Link>
