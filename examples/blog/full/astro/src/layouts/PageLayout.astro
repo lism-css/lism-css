@@ -12,13 +12,14 @@ interface Props {
   title: string;
   description?: string;
   breadcrumb?: BreadcrumbItem[];
+  ogImage?: string;
 }
 
-const { title, description, breadcrumb } = Astro.props;
+const { title, description, breadcrumb, ogImage } = Astro.props;
 const resolvedBreadcrumb = breadcrumb ?? [{ label: title.toUpperCase() }];
 ---
 
-<Layout title={`${title} — ${siteConfig.name}`} description={description} breadcrumb={resolvedBreadcrumb}>
+<Layout title={`${title} — ${siteConfig.name}`} description={description} breadcrumb={resolvedBreadcrumb} ogImage={ogImage}>
   <Stack g="50">
     {/* page title */}
     <Group isWrapper hasGutter>

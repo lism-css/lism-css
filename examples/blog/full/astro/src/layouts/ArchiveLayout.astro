@@ -11,12 +11,13 @@ interface Props {
   title: string;
   description?: string;
   breadcrumb?: BreadcrumbItem[];
+  ogImage?: string;
 }
 
-const { title, description, breadcrumb } = Astro.props;
+const { title, description, breadcrumb, ogImage } = Astro.props;
 ---
 
-<Layout title={title} description={description} breadcrumb={breadcrumb}>
+<Layout title={title} description={description} breadcrumb={breadcrumb} ogImage={ogImage}>
   <Group isWrapper isContainer hasGutter>
     <Stack g="50">
       <slot />

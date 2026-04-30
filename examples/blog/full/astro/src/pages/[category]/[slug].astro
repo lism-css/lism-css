@@ -33,12 +33,15 @@ const { category } = parsePostId(post.id);
 const meta = CATEGORIES[category];
 const { Content, headings } = await render(post);
 const toc = generateToc(headings);
+const ogImage = `/og/${post.id}.png`;
 ---
 
 <Layout
   title={`${post.data.title} — ${siteConfig.name}`}
   description={post.data.excerpt}
   breadcrumb={[{ label: meta.label, href: `/${category}/` }, { label: post.data.title }]}
+  ogImage={ogImage}
+  ogType="article"
 >
   <Stack g="50">
     {/* 記事ヘッダー */}
