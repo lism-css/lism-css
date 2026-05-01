@@ -61,13 +61,13 @@ const posts = defineCollection({
 export const collections = { posts };
 ```
 
-`pattern: '**/*.md'` のため、`src/posts/dev/foo.md` のようにディレクトリ階層を切れる。記事 ID は `dev/foo` のような形になり、これがそのままカテゴリ判別と URL の元になる。
+`pattern: '**/*.md'` のため、`src/posts/dev/foo.md` のようにディレクトリ階層を切れる。記事 ID は `dev/foo` のような形になり、先頭ディレクトリをカテゴリ、残りを記事 slug として扱う。
 
 `/about/` や `/privacy/` のような単発の固定ページは Content Collections には載せず、`src/pages/about.astro` のように `.astro` ファイルとして直接配置しているので、レイアウトやコンポーネントを自由に組めます。
 
 ## カテゴリ設計（ディレクトリ＝カテゴリ）
 
-カテゴリはフロントマターには書かず、`src/posts/{category}/` の置き場所で決まる。`src/config/categories.ts` にカテゴリ定義（データ）を、`src/lib/posts.ts` に post.id を扱うユーティリティ（`isCategoryKey` / `parsePostId`）を置いている。
+カテゴリはフロントマターには書かず、`src/posts/{category}/` の置き場所で決まる。`src/config/categories.ts` にカテゴリ定義（データ）を、`src/lib/posts.ts` に post.id と URL を扱うユーティリティ（`isCategoryKey` / `parsePostId` / `getPostHref` / `getCategoryHref` / `getTagHref`）を置いている。
 
 ```ts
 // src/config/categories.ts
@@ -86,9 +86,22 @@ export function parsePostId(id: string): { category: CategoryKey; slug: string }
   if (!isCategoryKey(category)) throw new Error(`Unknown category in post id: ${id}`);
   return { category, slug: rest.join('/') };
 }
+
+export function getPostHref(id: string): string {
+  const { slug } = parsePostId(id);
+  return `/posts/${slug}/`;
+}
+
+export function getCategoryHref(category: CategoryKey): string {
+  return `/category/${category}/`;
+}
+
+export function getTagHref(tag: string): string {
+  return `/tag/${tag}/`;
+}
 ```
 
-`parsePostId(post.id)` で category と slug に分解する形を、ルーティングと一覧表示の両方で使い回している。
+`parsePostId(post.id)` で category と slug に分解し、URL 生成は `getPostHref()` / `getCategoryHref()` / `getTagHref()` に寄せている。記事詳細 URL にはカテゴリを含めないため、カテゴリを変えても記事 URL は変わらない。
 
 ## サイト設定
 
@@ -129,14 +142,14 @@ export const siteConfig = {
 | パス | 内容 |
 | --- | --- |
 | `[...page].astro` | トップ（全記事一覧）＋ページネーション |
-| `[category]/[...page].astro` | カテゴリ別一覧＋ページネーション |
-| `[category]/[slug].astro` | 記事詳細 |
+| `category/[category]/[...page].astro` | カテゴリ別一覧＋ページネーション |
+| `posts/[...slug].astro` | 記事詳細 |
 | `tag/[tag]/[...page].astro` | タグ別一覧＋ページネーション |
 | `about.astro` | About |
 | `privacy.astro` | Privacy Policy |
 | `404.astro` | 404 |
 
-ページネーションには Astro の `paginate()` を使い、1ページあたりの件数は `siteConfig.pagination.postsPerPage`（デフォルト 6）を参照する。記事詳細では `getStaticPaths` 内で記事を日付降順にソートし、`prev` / `next` を index で受け渡している。
+ページネーションには Astro の `paginate()` を使い、1ページあたりの件数は `siteConfig.pagination.postsPerPage`（デフォルト 6）を参照する。記事詳細では `getStaticPaths` 内で記事を日付降順にソートし、`prev` / `next` を index で受け渡している。記事詳細 URL は `/posts/{slug}/`、カテゴリ一覧 URL は `/category/{category}/`、タグ一覧 URL は `/tag/{tag}/` になる。
 
 ## レイアウト
 
@@ -158,7 +171,7 @@ export const siteConfig = {
 
 ### 記事詳細のレイアウト構造
 
-記事詳細ページ（`[category]/[slug].astro`）は、`Stack g="50"` の中に 3 ブロックを並べる。各ブロックは `<Group isWrapper="l" hasGutter>` で同じ最大幅を共有する。
+記事詳細ページ（`posts/[...slug].astro`）は、`Stack g="50"` の中に 3 ブロックを並べる。各ブロックは `<Group isWrapper="l" hasGutter>` で同じ最大幅を共有する。
 
 ```astro
 <Layout ...>

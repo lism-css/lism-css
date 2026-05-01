@@ -3,6 +3,7 @@ import { getCollection } from 'astro:content';
 import { Cluster } from 'lism-css/astro';
 import Tag from '@/components/Tag.astro';
 import { getAllTags } from '@/lib/tags';
+import { getTagHref } from '@/lib/posts';
 
 const posts = await getCollection('posts');
 const tags = getAllTags(posts);
@@ -14,7 +15,7 @@ const { tagBgc = 'base-2' } = Astro.props;
   <span class="-fz:2xs -c:text-2" aria-hidden="true">#</span>
   {
     tags.map((tag) => (
-      <Tag href={`/tag/${tag}/`} bgc={tagBgc}>
+      <Tag href={getTagHref(tag)} bgc={tagBgc}>
         {tag}
       </Tag>
     ))

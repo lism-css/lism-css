@@ -1,15 +1,18 @@
 /**
  * 記事の OG 画像エンドポイント
- * URL: /og/{category}/{slug}.png
+ * URL: /og/{slug}.png
  */
 import type { APIRoute, GetStaticPaths } from 'astro';
 import { getCollection } from 'astro:content';
 import { renderOgPng } from '@/lib/ogImage';
+import { assertUniquePostSlugs, parsePostId } from '@/lib/posts';
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const posts = await getCollection('posts');
+  assertUniquePostSlugs(posts);
+
   return posts.map((post) => ({
-    params: { slug: post.id }, // 例: "dev/lism-css-intro"
+    params: { slug: parsePostId(post.id).slug },
     props: { title: post.data.title },
   }));
 };

@@ -1,6 +1,7 @@
 ---
 import { Lism, Columns, Link, Stack, Inline } from 'lism-css/astro';
 import Eyebrow from '@/components/Eyebrow.astro';
+import { getPostHref } from '@/lib/posts';
 
 interface NavItem {
   title: string;
@@ -18,7 +19,7 @@ const { prev, next } = Astro.props;
   <Columns g="30">
     {
       prev ? (
-        <Link href={`/${prev.id}/`} td="none" c="inherit" hov={{ c: 'brand' }} d="block">
+        <Link href={getPostHref(prev.id)} td="none" c="inherit" hov={{ c: 'brand' }} d="block">
           <Stack g="5" lh="s">
             <Eyebrow>
               <Inline aria-hidden="true">←</Inline> PREVIOUS
@@ -32,7 +33,7 @@ const { prev, next } = Astro.props;
     }
     {
       next ? (
-        <Link href={`/${next.id}/`} td="none" c="inherit" hov={{ c: 'brand' }} d="block" ta="right">
+        <Link href={getPostHref(next.id)} td="none" c="inherit" hov={{ c: 'brand' }} d="block" ta="right">
           <Stack g="5" lh="s">
             <Eyebrow>
               NEXT <Inline aria-hidden="true">→</Inline>

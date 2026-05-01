@@ -9,16 +9,18 @@ import Date from '@/components/Date.astro';
 import Cat from '@/components/Cat.astro';
 import Tag from '@/components/Tag.astro';
 import { generateToc } from '@/lib/generateToc';
-import { parsePostId } from '@/lib/posts';
+import { assertUniquePostSlugs, getCategoryHref, getPostOgImageHref, getTagHref, parsePostId } from '@/lib/posts';
 import { CATEGORIES } from '@/config/categories';
 import { siteConfig } from '@/config/site';
 
 export async function getStaticPaths() {
   const posts = (await getCollection('posts')).sort((a, b) => b.data.date.localeCompare(a.data.date));
+  assertUniquePostSlugs(posts);
+
   return posts.map((post, index) => {
-    const { category, slug } = parsePostId(post.id);
+    const { slug } = parsePostId(post.id);
     return {
-      params: { category, slug },
+      params: { slug },
       props: {
         post,
         prev: posts[index - 1], // 表示順で「新しい記事」が prev に来る
@@ -31,15 +33,16 @@ export async function getStaticPaths() {
 const { post, prev, next } = Astro.props;
 const { category } = parsePostId(post.id);
 const meta = CATEGORIES[category];
+const categoryHref = getCategoryHref(category);
 const { Content, headings } = await render(post);
 const toc = generateToc(headings);
-const ogImage = `/og/${post.id}.png`;
+const ogImage = getPostOgImageHref(post.id);
 ---
 
 <Layout
   title={`${post.data.title} — ${siteConfig.name}`}
   description={post.data.excerpt}
-  breadcrumb={[{ label: meta.label, href: `/${category}/` }, { label: post.data.title }]}
+  breadcrumb={[{ label: meta.label, href: categoryHref }, { label: post.data.title }]}
   ogImage={ogImage}
   ogType="article"
 >
@@ -49,7 +52,7 @@ const ogImage = `/og/${post.id}.png`;
       <Stack g="30">
         <Cluster g="10">
           <Date>{post.data.date}</Date>
-          <Cat href={`/${category}/`}>{meta.label}</Cat>
+          <Cat href={categoryHref}>{meta.label}</Cat>
         </Cluster>
         <Heading level="1">
           {post.data.title}
@@ -58,7 +61,7 @@ const ogImage = `/og/${post.id}.png`;
           post.data.tags.length > 0 && (
             <Cluster g="10" ai="center">
               {post.data.tags.map((tag) => (
-                <Tag href={`/tag/${tag}/`}>{tag}</Tag>
+                <Tag href={getTagHref(tag)}>{tag}</Tag>
               ))}
             </Cluster>
           )

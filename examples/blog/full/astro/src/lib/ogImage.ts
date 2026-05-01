@@ -13,13 +13,13 @@ import sharp from 'sharp';
 const assetsDir = path.resolve(process.cwd(), 'src/assets/og');
 
 // アセット読み込み（モジュール初期化時に1度だけ）
-const bgImageBase64 = fs.readFileSync(path.join(assetsDir, 'og-bg.png')).toString('base64');
-const bgImageDataUrl = `data:image/png;base64,${bgImageBase64}`;
+const bgImageBase64 = fs.readFileSync(path.join(assetsDir, 'og-bg.jpg')).toString('base64');
+const bgImageDataUrl = `data:image/jpeg;base64,${bgImageBase64}`;
 
 const logoBase64 = fs.readFileSync(path.join(assetsDir, 'logo.png')).toString('base64');
 const logoDataUrl = `data:image/png;base64,${logoBase64}`;
 
-const fontData = fs.readFileSync(path.join(assetsDir, 'noto-sans-jp-600.woff'));
+const fontData = fs.readFileSync(path.join(assetsDir, 'noto-sans-jp-500.woff'));
 
 const WIDTH = 1200;
 const HEIGHT = 630;
@@ -35,6 +35,7 @@ export async function renderOgPng(title: string): Promise<Buffer> {
         position: 'relative',
       },
       children: [
+        // 背景画像
         {
           type: 'img',
           props: {
@@ -46,6 +47,20 @@ export async function renderOgPng(title: string): Promise<Buffer> {
               width: '100%',
               height: '100%',
               objectFit: 'cover',
+              opacity: 0.5,
+            },
+          },
+        },
+        // ロゴ
+        {
+          type: 'img',
+          props: {
+            src: logoDataUrl,
+            style: {
+              position: 'absolute',
+              right: 48,
+              bottom: 40,
+              height: 32,
             },
           },
         },
@@ -57,30 +72,20 @@ export async function renderOgPng(title: string): Promise<Buffer> {
               flexDirection: 'column',
               justifyContent: 'center',
               alignItems: 'flex-start',
-              padding: '80px',
-              width: '60%',
+              padding: 80,
+              width: '80%',
               height: '100%',
               position: 'relative',
             },
             children: [
               {
-                type: 'img',
-                props: {
-                  src: logoDataUrl,
-                  style: {
-                    height: '36px',
-                    marginBottom: '36px',
-                    marginTop: '-18px',
-                  },
-                },
-              },
-              {
                 type: 'div',
                 props: {
                   style: {
                     display: 'flex',
-                    fontSize: 60,
-                    fontWeight: 600,
+                    paddingBottom: 24,
+                    fontSize: 56,
+                    fontWeight: 500,
                     color: '#1a1a1a',
                     lineHeight: 1.4,
                     lineBreak: 'strict',
@@ -105,7 +110,7 @@ export async function renderOgPng(title: string): Promise<Buffer> {
       {
         name: 'Noto Sans JP',
         data: fontData,
-        weight: 600,
+        weight: 500,
         style: 'normal',
       },
     ],

@@ -1,6 +1,6 @@
 /**
  * 記事カテゴリーの定義。
- * 物理ディレクトリ（src/posts/{key}/）と URL（/{key}/）の両方で使われる。
+ * 物理ディレクトリ（src/posts/{key}/）とカテゴリ一覧 URL（/category/{key}/）で使われる。
  */
 export type CategoryKey = 'dev' | 'life';
 

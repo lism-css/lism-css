@@ -7,6 +7,7 @@ import PostList from '@/components/PostList.astro';
 import Pager from '@/components/Pager.astro';
 import { siteConfig } from '@/config/site';
 import { getAllTags } from '@/lib/tags';
+import { getTagHref } from '@/lib/posts';
 
 export const getStaticPaths = (async ({ paginate }) => {
   const allPosts = await getCollection('posts');
@@ -23,7 +24,7 @@ export const getStaticPaths = (async ({ paginate }) => {
 
 const { tag, page } = Astro.props;
 
-const getPageHref = (n: number) => (n === 1 ? `/tag/${tag}/` : `/tag/${tag}/${n}/`);
+const getPageHref = (n: number) => (n === 1 ? getTagHref(tag) : `/tag/${tag}/${n}/`);
 ---
 
 <ArchiveLayout

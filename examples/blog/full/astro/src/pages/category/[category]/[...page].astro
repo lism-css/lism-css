@@ -7,7 +7,7 @@ import ArchiveHeader from '@/components/ArchiveHeader.astro';
 import PostList from '@/components/PostList.astro';
 import Pager from '@/components/Pager.astro';
 import { CATEGORIES, CATEGORY_KEYS } from '@/config/categories';
-import { parsePostId } from '@/lib/posts';
+import { getCategoryHref, parsePostId } from '@/lib/posts';
 import { siteConfig } from '@/config/site';
 
 export const getStaticPaths = (async ({ paginate }) => {
@@ -25,7 +25,7 @@ export const getStaticPaths = (async ({ paginate }) => {
 const { category, page } = Astro.props;
 const meta = CATEGORIES[category];
 
-const getPageHref = (n: number) => (n === 1 ? `/${category}/` : `/${category}/${n}/`);
+const getPageHref = (n: number) => (n === 1 ? getCategoryHref(category) : `/category/${category}/${n}/`);
 ---
 
 <ArchiveLayout title={`${meta.label} — ${siteConfig.name}`} description={meta.description} breadcrumb={[{ label: meta.label }]}>

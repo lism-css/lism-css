@@ -4,7 +4,7 @@ import type { CollectionEntry } from 'astro:content';
 import Date from '@/components/Date.astro';
 import Cat from '@/components/Cat.astro';
 import { CATEGORIES } from '@/config/categories';
-import { parsePostId } from '@/lib/posts';
+import { getPostHref, parsePostId } from '@/lib/posts';
 
 interface Props {
   posts: CollectionEntry<'posts'>[];
@@ -20,7 +20,7 @@ const { posts, showCategory = true } = Astro.props;
       const { category } = parsePostId(post.id);
       return (
         <Lism as="li">
-          <BoxLink href={`/${post.id}/`} py="30" px="5" hov="-bgc" hasTransition>
+          <BoxLink href={getPostHref(post.id)} py="30" px="5" hov="-bgc" hasTransition>
             <Stack g="20" util="trimAll">
               <Cluster g="10">
                 <Date>{post.data.date}</Date>
