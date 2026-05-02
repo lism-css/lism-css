@@ -9,19 +9,22 @@ Lism CSS リポジトリの `examples/blog/full/astro/` には、Lism CSS と `@
 
 ## 依存関係
 
-`package.json` の依存は最小限で、Astro と Lism CSS / `@lism-css/ui` だけを使う。
+`package.json` の依存は最小限で、Astro と Lism CSS / `@lism-css/ui` に加え、MDX と `:::` 記法のためのプラグインを入れている。
 
 ```json
 {
   "dependencies": {
+    "@astrojs/mdx": "^5.0.3",
     "@lism-css/ui": "workspace:*",
     "astro": "^6.1.9",
-    "lism-css": "workspace:*"
+    "lism-css": "workspace:*",
+    "remark-directive": "^4.0.0",
+    "unist-util-visit": "^5.1.0"
   }
 }
 ```
 
-`astro.config.mjs` では `@` を `/src` にエイリアスしているだけで、それ以外のインテグレーションは入れていない。
+`astro.config.mjs` では `@astrojs/mdx` を有効化し、`markdown.remarkPlugins` に `remark-directive` と自前の変換プラグイン（`src/lib/remark-directive.mjs`）を登録している。`@` は `/src` にエイリアスしているだけで、それ以外のインテグレーションは入れていない。
 
 ## ディレクトリ構成
 
@@ -33,7 +36,7 @@ src/
 ├── layouts/         # ページレイアウト
 ├── lib/             # 純粋ロジック（TOC生成など）
 ├── pages/           # ルーティング
-├── posts/           # 記事 Markdown（カテゴリごとにディレクトリ）
+├── posts/           # 記事 MDX（カテゴリごとにディレクトリ）
 │   ├── dev/
 │   └── life/
 └── styles/
@@ -49,7 +52,7 @@ import { defineCollection, z } from 'astro:content';
 import { glob } from 'astro/loaders';
 
 const posts = defineCollection({
-  loader: glob({ base: './src/posts', pattern: '**/*.md' }),
+  loader: glob({ base: './src/posts', pattern: '**/*.mdx' }),
   schema: z.object({
     title: z.string(),
     excerpt: z.string(),
@@ -61,9 +64,31 @@ const posts = defineCollection({
 export const collections = { posts };
 ```
 
-`pattern: '**/*.md'` のため、`src/posts/dev/foo.md` のようにディレクトリ階層を切れる。記事 ID は `dev/foo` のような形になり、先頭ディレクトリをカテゴリ、残りを記事 slug として扱う。
+`pattern: '**/*.mdx'` のため、`src/posts/dev/foo.mdx` のようにディレクトリ階層を切れる。記事 ID は `dev/foo` のような形になり、先頭ディレクトリをカテゴリ、残りを記事 slug として扱う。
 
 `/about/` や `/privacy/` のような単発の固定ページは Content Collections には載せず、`src/pages/about.astro` のように `.astro` ファイルとして直接配置しているので、レイアウトやコンポーネントを自由に組めます。
+
+## MDX と Callout / Alert
+
+このテンプレートは記事を `.mdx` 前提で書く構成にしている。本文中で Astro / React コンポーネントをそのまま使えるほか、`:::` 記法で `@lism-css/ui` の `Callout` / `Alert` を呼び出せるよう、`src/lib/remark-directive.mjs` に変換プラグインを置いている。
+
+ラベル付きの `:::type[タイトル]` は `<Callout type="..." title="...">` に、ラベルを省略した `:::type` は `<Alert type="...">` に変換される。
+
+````mdx
+:::point[ラベル付きの呼び出し]
+ラベルがあるので Callout に変換されます。
+:::
+
+:::warning
+ラベルを省略するとタイトル領域のない Alert になります。
+:::
+````
+
+対応する type は `alert` / `point` / `warning` / `check` / `help`。
+
+`Callout` / `Alert` コンポーネントは `posts/[...slug].astro` で `<Content components={{ Callout, Alert }} />` としてグローバルに供給しているので、記事ファイル側で毎回 import する必要はない。
+
+なお `remark-directive` 自体は `.md` でも動作するが、このテンプレートのプラグインは `:::` を JSX ノードに変換するため、JSX を解釈できない `.md` のレンダーパイプラインでは機能しない。`content.config.ts` の `pattern` も `**/*.mdx` に絞ってあり、`.md` を置いても収集対象から外れる。
 
 ## カテゴリ設計（ディレクトリ＝カテゴリ）
 

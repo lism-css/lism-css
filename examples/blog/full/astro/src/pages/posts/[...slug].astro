@@ -1,7 +1,8 @@
 ---
 import { getCollection, render } from 'astro:content';
-import { Group, Flow, Stack, Cluster, WithSide, Heading, Text } from 'lism-css/astro';
+import { Group, Flow, Stack, Cluster, WithSide, Heading } from 'lism-css/astro';
 import Layout from '@/layouts/Layout.astro';
+import { Callout, Alert } from '@lism-css/ui/astro';
 import TableOfContents from '@/components/TableOfContents.astro';
 import ArticleNav from '@/components/ArticleNav.astro';
 import ShareButtons from '@/components/ShareButtons.astro';
@@ -78,7 +79,7 @@ const ogImage = getPostOgImageHref(post.id);
           </Group>
         </Group>
         <Flow as="article" class="c--articleBody">
-          <Content />
+          <Content components={{ Callout, Alert }} />
         </Flow>
       </WithSide>
 

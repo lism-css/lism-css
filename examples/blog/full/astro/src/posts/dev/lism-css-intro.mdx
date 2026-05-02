@@ -4,15 +4,14 @@ excerpt: Lism CSS は @layer によるレイヤ管理・デザイントークン
 date: 2026.04.20
 tags: [Lism CSS]
 ---
-import { Callout } from '@lism-css/ui/astro';
 
 Lism CSS は、ユーティリティクラスとコンポーネント、デザイントークン、`@layer` によるカスケード制御をひとつにまとめた CSS 設計フレームワーク。`lism-css` パッケージにコア CSS と React / Astro 向けのレイアウトコンポーネントが、`@lism-css/ui` パッケージに Accordion / Modal / Tabs / Button などの UI コンポーネントが含まれる。
 
 この記事では、Lism CSS を構成する主要なレイヤを順に整理する。
 
-<Callout type="note" title="このテンプレートは MDX に対応">
-  記事ファイルは `.md` / `.mdx` の両方に対応しています。`.mdx` ではこの Callout のように、本文中で Astro / React コンポーネントをそのまま使えます。
-</Callout>
+:::note[このテンプレートは MDX + directive に対応]
+記事ファイルは `.md` / `.mdx` の両方に対応しています。`:::note` のような directive 記法は remark プラグインで `<Callout>` に変換されます。利用可能な type は `alert` / `point` / `warning` / `check` / `help` / `note` / `info`。
+:::
 
 ## CSS Layers
 
