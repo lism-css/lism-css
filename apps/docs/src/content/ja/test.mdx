@@ -55,16 +55,6 @@ draft: true
 
 ```css title="CSS"
 :root {
-  /* 基準となるフォントサイズをclamp() で定義 */
-  --fz--base: clamp(1rem, 0.654rem + 1.54vw, 2rem); /* わかりやすく大袈裟に変化させています */
-
-  /* --fz-base を元にスケーリングさせる */
-  --fz--xs: calc(var(--fz--base) * (8 / 10));
-  --fz--s: calc(var(--fz--base) * (8 / 9));
-  --fz--l: calc(var(--fz--base) * (8 / 7));
-  --fz--xl: calc(var(--fz--base) * (8 / 6));
-}
-
 /* ユーティリティクラス */
 .fz--base {
   font-size: var(--fz--base);

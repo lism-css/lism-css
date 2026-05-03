@@ -83,7 +83,7 @@ CSSコードを書く場合やコンポーネントのPropsに値を指定する
 | `--fz--s` | `calc(1em * var(--fz-mol) / (var(--fz-mol) + 1))` | S（mol/(mol+1)） |
 | `--fz--xs` | `calc(1em * var(--fz-mol) / (var(--fz-mol) + 2))` | XS（mol/(mol+2)） |
 | `--fz--2xs` | `calc(1em * var(--fz-mol) / (var(--fz-mol) + 3))` | 最小（mol/(mol+3)） |
-| `--fz--base` | `var(--REM)` | 本文の基本フォントサイズ（≒ 1rem） |
+| `--fz--base` | `1rem` | 本文の基本フォントサイズ |
 | `--fz--root` | — | `:root` のフォントサイズ |
 
 `--fz-mol` を上書きすることでスケール全体を調整可能（7以上の値に対応）。

@@ -11,13 +11,11 @@
   typography・spacing トークンの定義
 -------------------------------------------------- */
 :root {
-  /** 
+  /**
    * font-size
    */
-  --REM: clamp(0.95rem, 0.915rem + 0.15vw, 1.05rem); /* 変動幅: 360px ~ 1400px */
-
   // font-size: 倍音列でのスケーリング。単位は em
-  --fz--base: var(--REM);
+  --fz--base: 1rem;
   --fz-mol: 8; // 倍音列の分母（7~ に対応）
   --fz--5xl: calc(1em * var(--fz-mol) / (var(--fz-mol) - 6));
   --fz--4xl: calc(1em * var(--fz-mol) / (var(--fz-mol) - 5));
@@ -61,7 +59,7 @@
   /** 
    * ハーフレディング: unit の倍数で構成する
    */
-  --hl-unit: calc(var(--REM) * 0.125); /* 計算単位 ≒ 2px */
+  --hl-unit: calc(var(--fz--base) * 0.125); /* 計算単位 ≒ 2px */
 
   --hl--xs: var(--hl-unit);
   --hl--s: calc(var(--hl-unit) * 2);
@@ -72,7 +70,7 @@
   /** 
    * スペーシング: フィボナッチ数列をベースにする
    */
-  --s-unit: calc(var(--REM) * 0.5); // ≒ 8px
+  --s-unit: calc(var(--fz--base) * 0.5); // ≒ 8px
 
   --s5: calc(0.5 * var(--s-unit)); // 例外
   --s10: var(--s-unit);

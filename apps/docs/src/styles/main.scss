@@ -7,6 +7,42 @@
 @use './preview';
 @use './lg';
 
+/* ----------------------------------------
+    タイポグラフィ
+ ---------------------------------------- */
+@layer lism-base {
+  :root {
+    // --REM: clamp(0.95rem, 0.915rem + 0.15vw, 1.05rem); /* 変動幅: 360px ~ 1400px */
+    --REM: clamp(0.95rem, 0.9rem + 0.2vw, 1rem); /* 変動幅: 400px ~ 800px */
+
+    // font-size: 倍音列でのスケーリング。単位は em
+    --fz--base: var(--REM);
+  }
+  /* コンテナクエリ単位でのトークン再セット */
+  .set--cqUnit {
+    --REM: clamp(0.95rem, 0.9rem + 0.2cqw, 1rem); /* lism-css の --REM の cqw 版 */
+    font-size: var(--REM);
+
+    --hl-unit: calc(var(--REM) * 0.125);
+    --hl--xs: var(--hl-unit);
+    --hl--s: calc(var(--hl-unit) * 2);
+    --hl--base: calc(var(--hl-unit) * 3);
+    --hl--l: calc(var(--hl-unit) * 4);
+
+    --s-unit: calc(var(--REM) * 0.5);
+    --s5: calc(0.5 * var(--s-unit));
+    --s10: var(--s-unit);
+    --s15: calc(1.5 * var(--s-unit));
+    --s20: calc(2 * var(--s-unit));
+    --s30: calc(3 * var(--s-unit));
+    --s40: calc(5 * var(--s-unit));
+    --s50: calc(8 * var(--s-unit));
+    --s60: calc(13 * var(--s-unit));
+    --s70: calc(21 * var(--s-unit));
+    --s80: calc(34 * var(--s-unit));
+  }
+}
+
 @layer lism-component {
   .c--propTable > table {
     min-width: 50%;
@@ -21,60 +57,22 @@
   }
 }
 
-// .u--cbox {
-// 	--code-bgc: color-mix(in srgb, #22a4d40e, currentColor 4%);
-// }
-
-// 画像のプリロードが自動挿入される時にflowのマージンがずれるので調整
-link:first-child + * {
-  --flow: 0px;
-}
-
 // 追加ユーティリティ
-
-.u--onlyLightMode {
-  display: block;
-}
-.u--onlyDarkMode {
-  display: none;
-}
-[data-theme='dark'] {
+@layer lism-utility {
   .u--onlyLightMode {
-    display: none;
-  }
-  .u--onlyDarkMode {
     display: block;
   }
-}
-
-/* -------------------------- */
-/* Custom Property Class */
-// .-hov\:under:hover {
-// 	text-decoration: underline;
-// }
-
-/* コンテナクエリ単位でのトークン再セット */
-.set--cqUnit {
-  --REM: clamp(0.95rem, 0.915rem + 0.15cqw, 1.05rem); /* lism-css の --REM の cqw 版 */
-  font-size: var(--REM);
-
-  --hl-unit: calc(var(--REM) * 0.125);
-  --hl--xs: var(--hl-unit);
-  --hl--s: calc(var(--hl-unit) * 2);
-  --hl--base: calc(var(--hl-unit) * 3);
-  --hl--l: calc(var(--hl-unit) * 4);
-
-  --s-unit: calc(var(--REM) * 0.5);
-  --s5: calc(0.5 * var(--s-unit));
-  --s10: var(--s-unit);
-  --s15: calc(1.5 * var(--s-unit));
-  --s20: calc(2 * var(--s-unit));
-  --s30: calc(3 * var(--s-unit));
-  --s40: calc(5 * var(--s-unit));
-  --s50: calc(8 * var(--s-unit));
-  --s60: calc(13 * var(--s-unit));
-  --s70: calc(21 * var(--s-unit));
-  --s80: calc(34 * var(--s-unit));
+  .u--onlyDarkMode {
+    display: none;
+  }
+  [data-theme='dark'] {
+    .u--onlyLightMode {
+      display: none;
+    }
+    .u--onlyDarkMode {
+      display: block;
+    }
+  }
 }
 
 /* ----------------------------------------
@@ -85,7 +83,16 @@ link:first-child + * {
     padding: 0 4px;
     border: 1px dashed hsla(0, 0%, 63%, 0.4);
   }
+
+  // 画像のプリロードが自動挿入される時にflowのマージンがずれるので調整
+  link:first-child + * {
+    --flow: 0px;
+  }
 }
+
+/* ----------------------------------------
+    Property Class
+ ---------------------------------------- */
 .-bd\:guide {
   border: 1px dashed rgba(160, 160, 160, 0.5);
 }
