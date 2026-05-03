@@ -51,8 +51,6 @@ import { Lism, Box, Flex, Stack, Grid, Text, Media } from 'lism-css/astro';
 | Prop | 説明 | 例 |
 |------|------|-----|
 | `as` | レンダリングする HTML 要素または外部コンポーネントを指定（デフォルト: `"div"`） | `as="section"`, `as={Image}` |
-| `lismClass` | コンポーネント基底となる `c--*` クラスを指定。`variant` による BEM 展開の対象 | `lismClass="c--myComponent"` |
-| `variant` | `lismClass` 先頭クラスに対する BEM Modifier を付与（`c--` 専用。`a--` / `l--` には展開されない） | `variant="secondary"` |
 | `layout` | レイアウトプリミティブ（`l--{layout}`）を指定 | `layout="flow"` |
 | `atomic` | アトミックプリミティブ（`a--{atomic}`）を指定。`'divider'` / `'spacer'` / `'decorator'` が利用可能（`'icon'` は内部用） | `atomic="divider"` |
 | `set` | セットクラス（`set--{value}`）を指定。スペース区切りで複数指定可。値の先頭に `-` を付けると除外 | `set="plain"`, `set="var:hov var:bxsh"`, `set="-plain"` |
@@ -68,12 +66,12 @@ import { Lism, Box, Flex, Stack, Grid, Text, Media } from 'lism-css/astro';
 <Media as={Image} src="..." p="20" bd />
 // → Image コンポーネントに { className: '-p:20 -bd' } が渡される
 
-// lismClass でコンポーネントクラスを付与
-<Lism lismClass="c--myComponent" p="10">...</Lism>
+// className でコンポーネントクラスを付与（c--* も className に直接書く）
+<Lism className="c--myComponent" p="10">...</Lism>
 // → <div class="c--myComponent -p:10">...</div>
 
-// variant でバリエーション
-<Lism lismClass="c--myComponent" variant="secondary">...</Lism>
+// BEM Modifier も className にそのまま列挙する
+<Lism className="c--myComponent c--myComponent--secondary">...</Lism>
 // → <div class="c--myComponent c--myComponent--secondary">...</div>
 
 // exProps で外部コンポーネント用プロパティを明示的に分離
