@@ -2,7 +2,7 @@ export default {
   fz: ['root', 'base', '5xl', '4xl', '3xl', '2xl', 'xl', 'l', 'm', 's', 'xs', '2xs'],
   lh: ['base', 'xs', 's', 'l'],
   hl: ['base', 'xs', 's', 'l'],
-  lts: ['base', 's', 'l'],
+  lts: ['base', 's', 'l', 'xl'],
   ff: ['base', 'accent', 'mono'],
   fw: ['light', 'normal', 'bold'],
   o: ['mp', 'p', 'pp', 'ppp'],

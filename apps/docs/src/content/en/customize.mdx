@@ -190,7 +190,7 @@ export default {
   },
   tokens: {
     // Props with tokenClass:1 are auto-classed when you add tokens
-    lts: [...(tokens.lts || []), 'xl'],
+    lts: [...(tokens.lts || []), '2xl'],
   },
   traits: {
     // Add props for Trait (is--* / has--*) output
@@ -204,17 +204,17 @@ With the above customization, the following behavior is added to Lism components
 - `ta='justify'` → outputs `-ta:justify`
 - `p='box'` → outputs `-p:box`
 - `filter='blur'` → outputs `-filter:blur`
-- `lts='xl'` → outputs `-lts:xl`
+- `lts='2xl'` → outputs `-lts:2xl`
 - `isHoge` → outputs `is--hoge`
 
 <Preview>
   <PreviewCode slot="tab" label="HTML">
   ```jsx
-  <Box p="box" ta="justify" filter="blur" lts="xl" isHoge>Box</Box>
+  <Box p="box" ta="justify" filter="blur" lts="2xl" isHoge>Box</Box>
 
   ↓ Output
 
-  <div class="l--box is--hoge -p:box -ta:justify -filter:blur -lts:xl">Box</div>
+  <div class="l--box is--hoge -p:box -ta:justify -filter:blur -lts:2xl">Box</div>
   ```
   </PreviewCode>
 </Preview>
@@ -239,7 +239,7 @@ If you only need a few custom tokens, you don't have to go as far as a CLI rebui
 /* global.css */
 @layer lism-base {
   :root {
-    --lts--2xl: 0.2em;
+    --lts--2xl: 0.15em;
   }
 }
 
@@ -272,12 +272,12 @@ In this example, the following styles would be automatically generated into `lis
 .-filter\:blur {
   filter: blur(3px);
 }
-.-lts\:xl {
-  letter-spacing: var(--lts--xl);
+.-lts\:2xl {
+  letter-spacing: var(--lts--2xl);
 }
 ```
 
-However, the build only goes as far as generating **utility classes that reference tokens**, such as `.-lts\:xl { letter-spacing: var(--lts--xl) }`. The referenced CSS variables themselves (the actual token **values**, such as `--lts--xl: 0.125em`) are not auto-generated. The same applies to `is--` class styles.
+However, the build only goes as far as generating **utility classes that reference tokens**, such as `.-lts\:2xl { letter-spacing: var(--lts--2xl) }`. The referenced CSS variables themselves (the actual token **values**, such as `--lts--2xl: 0.15em`) are not auto-generated. The same applies to `is--` class styles.
 
 You need to define these manually and load them yourself.
 
@@ -285,7 +285,7 @@ You need to define these manually and load them yourself.
 ```css
 @layer lism-base {
   :root {
-    --lts--xl: 0.125em;
+    --lts--2xl: 0.15em;
   }
 }
 
@@ -335,7 +335,7 @@ You can also override SCSS variables in line with your `lism.config.js` configur
     ),
     'lts': (
       utilities: (
-        'xl': 'var(--lts--xl)',
+        '2xl': 'var(--lts--2xl)',
       ),
     ),
   )
@@ -347,7 +347,7 @@ You can also override SCSS variables in line with your `lism.config.js` configur
 // Append token definitions
 @layer lism-base {
   :root {
-    --lts--xl: 0.125em;
+    --lts--2xl: 0.15em;
   }
 }
 ```

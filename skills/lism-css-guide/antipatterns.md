@@ -66,8 +66,8 @@ Lism CSS側が用意しているトークン値と異なるものを書かない
 Lism Props では、props.ts で事前定義されたものが `-{prop}:{value}` クラスとして出力される。それ以外の値はそのまま出力されてCSSとして無効になる。
 
 ```JSX
-// NG: 事前定義されたトークン値に合致しないため、-lts:xl は出力されない
-<Text lts="xl">...</Text>
+// NG: 事前定義されたトークン値に合致しないため、-lts:2xl は出力されない
+<Text lts="2xl">...</Text>
 ```
 
 独自にProperty Classを拡張したりトークン値を増やしたりする場合は、 [property-class.md の `:value` 記法](./property-class.md)を活用するか、[`lism.config.js`による拡張](./customize.md)が必要。
@@ -98,7 +98,7 @@ Lism Props では、props.ts で事前定義されたものが `-{prop}:{value}`
 | NG | OK | 理由 |
 |---|---|---|
 | `font-size: 13px` を直書き | `font-size: var(--fz--xs)` または Props で `fz="xs"` | フォントサイズは調和数列スケール。固定値は避ける |
-| `letter-spacing: 0.02 / 0.12 / 0.14 / 0.18 / 0.2 / 0.24em` を散在 | `--lts--s/-l` を使う、または独自の `--lts--*` を `global.css` で追加 | デフォルトの `lts` トークンは `s/l` のみ。多種混在はデザイントークンとして不健全 |
+| `letter-spacing: 0.02 / 0.12 / 0.14 / 0.18 / 0.2 / 0.24em` を散在 | `--lts--s/-l/-xl` を使う、または独自の `--lts--*` を `global.css` で追加 | デフォルトの `lts` トークンは `s/l/xl` のみ。多種混在はデザイントークンとして不健全 |
 
 ### 直書きしてよい例外
 

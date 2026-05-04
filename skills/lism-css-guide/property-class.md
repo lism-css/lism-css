@@ -53,8 +53,8 @@ CSS Layer の外（最も高い詳細度）に配置され、`-{prop}(:{value})`
 Lism コンポーネントの Propsに渡す値の頭に `:` を付けると、 **強制的に Property Class を出力**できる。cssを追記してトークン値を独自に増やした場合などに活用できる。
 
 ```jsx
-<Text lts=":xl">...</Text>
-// → <p class="-lts:xl">...</Text>
+<Text lts=":2xl">...</Text>
+// → <p class="-lts:2xl">...</Text>
 ```
 
 
@@ -83,7 +83,7 @@ Lism コンポーネントの Propsに渡す値の頭に `:` を付けると、 
 | `fs` | `font-style` | `-fs:italic` | — |
 | `lh` | `line-height`（`--hl` 経由） | `-lh:base`, `-lh:xs`, `-lh:s`, `-lh:l`, `-lh:1` | — |
 | `hl` | `--hl` 変数のみ | — | `-hl_sm`, `-hl_md` |
-| `lts` | `letter-spacing` | `-lts:base`, `-lts:s`, `-lts:l` | — |
+| `lts` | `letter-spacing` | `-lts:base`, `-lts:s`, `-lts:l`, `-lts:xl` | — |
 | `ta` | `text-align` | `-ta:center`, `-ta:left`, `-ta:right` | — |
 | `td` | `text-decoration` | `-td:none` | — |
 | `tt` | `text-transform` | `-tt:upper`, `-tt:lower` | — |
