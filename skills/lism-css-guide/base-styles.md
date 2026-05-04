@@ -66,8 +66,6 @@ Reset CSS に加え、`@layer lism-base` 内で HTML タグに基本スタイル
 |------|------------|------|
 | `--link-c` | `var(--link)` | リンクテキスト色 |
 | `--link-td` | `underline` | テキスト装飾の種類 |
-| `--link-td-thickness` | `auto` | 下線の太さ |
-| `--link-td-color` | `currentColor` | 下線の色 |
 
 ### リスト（ul, ol）
 
