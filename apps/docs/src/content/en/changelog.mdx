@@ -9,6 +9,26 @@ Breaking changes may continue frequently until the v1.0 release, so all notable 
 
 <Divider bds="dashed" my="40" />
 
+## lism-css v.0.16.2
+
+### Apply `inline-size: 100%` to direct children of `is--wrapper` (#355)
+
+Added `inline-size: 100%` to `is--wrapper > *` so that children whose natural width is below `--contentSize` (short paragraphs, `<table>`, etc.) no longer cause width mismatches under `l--stack` and other vertical flex layouts.
+
+```scss
+.is--wrapper > * {
+  inline-size: 100%;
+  max-inline-size: min(100%, var(--contentSize));
+  margin-inline: auto;
+}
+```
+
+**Side effect**: A `<table>` placed directly inside `is--wrapper` no longer falls back to its content-driven natural width — it always stretches to the wrapper width. If you need the table to keep its intrinsic width, wrap it in another element so that `is--wrapper` is not its direct parent.
+
+To prevent this from breaking the negative-margin "hang" of `-max-sz:full` inside `has--gutter` and the centered placement of `-max-sz:container`, both classes now also set `inline-size: auto` to reset the inherited `inline-size: 100%`.
+
+<Divider bds="dashed" my="40" />
+
 ## lism-css v.0.16.1 (2026.04.29)
 
 - Changed the `--list-px-s` fallback value to `1.75em`

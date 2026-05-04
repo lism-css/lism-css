@@ -80,6 +80,21 @@
 </div>
 ```
 
+## 直下の子要素の挙動
+
+`is--wrapper` 直下の子要素には次のスタイルが当たる：
+
+```scss
+.is--wrapper > * {
+  inline-size: 100%;
+  max-inline-size: min(100%, var(--contentSize));
+  margin-inline: auto;
+}
+```
+
+- `inline-size: 100%` により、自然幅が `--contentSize` 未満の要素（短い段落、`<table>` など）も常に親幅まで広げてから `max-inline-size` で制限される。これにより `l--stack` などの flex 縦並び配下でも横幅が揃い、ガタつきが起きない
+- `<table>` を直下に置くと内容依存の自然幅にはならず、常に wrapper 幅まで広がる。テーブルの自然幅を保ちたい場合は `is--wrapper` を直接の親にしないように、間に別の要素を挟む
+
 ## 関連プリミティブ
 
 - [is--container](./is--container.md) — コンテナクエリ基準（`isContainer` と併用可）
