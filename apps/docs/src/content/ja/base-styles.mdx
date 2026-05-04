@@ -154,21 +154,24 @@ code, kbd, var, samp {
 `small` や `sup`/`sub` では `--hl` を小さめの値に変更し、フォントサイズに合った行間になるよう調整しています。
 
 
-### 引用
+### 引用・整形済みテキスト
 
 ```scss
-blockquote {
+q, blockquote {
+  font-style: italic;
+}
+blockquote, pre {
   background-color: var(--base-2);
-  padding: var(--s30);
+  padding: var(--s20);
 }
 ```
 
-`blockquote` にはシンプルな背景色と余白が適用されています。
+`q` と `blockquote` にはイタリック体を、`blockquote` と `pre` にはシンプルな背景色と余白を適用しています。
 
 ### その他のテキスト要素
 
 ```scss
-legend, caption, figcaption {
+caption, figcaption {
   font-size: var(--fz--s);
 }
 ```

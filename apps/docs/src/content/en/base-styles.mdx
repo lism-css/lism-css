@@ -149,21 +149,24 @@ code, kbd, var, samp {
 For `small` and `sup`/`sub`, `--hl` is set to a smaller value to adjust the line spacing to match the font size.
 
 
-### Blockquote
+### Blockquote and preformatted text
 
 ```scss
-blockquote {
+q, blockquote {
+  font-style: italic;
+}
+blockquote, pre {
   background-color: var(--base-2);
-  padding: var(--s30);
+  padding: var(--s20);
 }
 ```
 
-A simple background color and padding are applied to `blockquote`.
+`q` and `blockquote` are displayed in italic, while `blockquote` and `pre` get a simple background color and padding.
 
 ### Other text elements
 
 ```scss
-legend, caption, figcaption {
+caption, figcaption {
   font-size: var(--fz--s);
 }
 ```
