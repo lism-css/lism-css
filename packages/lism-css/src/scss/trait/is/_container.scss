@@ -1,16 +1,18 @@
 // コンテナ定義 + 併用クラスで内部のコンテンツ幅を制御する。
 .is--container {
   container-type: inline-size;
-  // container-name: lismContainer;
 }
 
 // 最外側の is--container 直下の子要素にだけ --sz--bleed を 100cqi で上書きする。
-// 内側にネストされた is--container は再度上書きしないので、内側の子要素は外側の値を inherit で参照する
-// （= 直近 container ではなく最外側 container 幅まで広がる "full-bleed" 用途を可能にする）。
-.is--container:not(:where(.is--container .is--container)) > * {
+//   Memo: .is--container:not(:where(.is--container .is--container)) を使ってもいいがわかりにくいので、以下のようにしている
+.is--container > * {
   --sz--bleed: 100cqi;
 }
-// has--gutterがある場合はその分を加算
-.is--container.has--gutter:not(:where(.is--container .is--container)) > * {
+.is--container.has--gutter > * {
+  // has--gutterがある場合はその分を加算
   --sz--bleed: calc(100cqi + var(--gutter-size) * 2);
+}
+.is--container .is--container > * {
+  // --sz--bleed は一番先祖(最外側) の is--container で値をセットしたらあとは引き継ぐだけ
+  --sz--bleed: inherit;
 }
