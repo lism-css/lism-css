@@ -1,0 +1,49 @@
+---
+title: 'Fullwide (is--fullwide)'
+navtitle: 'is--fullwide'
+description: 'is--fullwide is a role-declaration class that expands an element to fill its parent — even past has--gutter spacing.'
+---
+
+`is--fullwide` expands an element to **fill its parent**. By default it sets `max-inline-size: 100%`, and when the parent has `has--gutter`, it adds the gutter amount and **breaks out past the gutter** to reach the parent edges.
+
+
+## CSS
+
+<SrcCode path="src/scss/trait/is/_fullwide.scss" />
+
+
+## Using with Lism Components
+
+It can be applied via the `isFullwide` property on **any component**.
+
+| Property | Output |
+|---|---|
+| `isFullwide`| `is--fullwide` |
+
+
+## Usage
+
+### Full-width content inside `has--gutter`
+
+```html
+<div class="has--gutter">
+  <p>Regular content inside the gutter</p>
+  <img class="is--fullwide" src="..." alt="" />
+  <p>Regular content inside the gutter</p>
+</div>
+```
+
+Use this when you want to place full-width images or banners that ignore the surrounding `has--gutter` spacing.
+
+## Demo
+
+Behavior demo:
+
+<PreviewFrame url='/demo/content-size' />
+
+
+## Related
+
+- <ModLink slug="is--bleed" /> — Expand up to the nearest `is--container` width
+- <ModLink slug="has--gutter" /> — Add horizontal gutter spacing
+- <ModLink slug="is--wrapper" /> — Constrain content width

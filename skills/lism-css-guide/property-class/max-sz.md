@@ -1,10 +1,10 @@
 # -max-sz（最大幅）
 
-コンテンツの最大幅（`max-inline-size`）を制御する Property Class。標準のコンテンツサイズトークン（`xs`〜`xl`）に加え、特殊挙動の `full` / `container` を持つ。
+コンテンツの最大幅（`max-inline-size`）を制御する Property Class。コンテンツサイズトークン（`xs`〜`xl`）に対応する。
 
 ## 基本情報
 
-- クラス名: `-max-sz:{xs|s|m|l|xl|full|container}`
+- クラス名: `-max-sz:{xs|s|m|l|xl}`
 - Lism props: `max-sz`（`<Lism max-sz="m">` 等）
 - SCSSソース: https://raw.githubusercontent.com/lism-css/lism-css/main/packages/lism-css/src/scss/props/_size.scss
 - 公式ドキュメント: https://lism-css.com/docs/property-class/max-sz.md
@@ -21,40 +21,6 @@
 | `-max-sz:l` | `var(--sz--l)` |
 | `-max-sz:xl` | `var(--sz--xl)` |
 
-## 特殊クラス
-
-### `-max-sz:full`
-
-**親要素のサイズいっぱいに広がる**クラス。`has--gutter` の直下では、その gutter 分を**追加で外側に**拡張する（= gutter を無視して端まで広がる）。
-
-```scss
-.-max-sz\:full {
-  max-inline-size: 100%;
-
-  :where(.has--gutter) > & {
-    inline-size: auto;
-    max-inline-size: calc(100% + var(--gutter-size) * 2);
-    margin-inline: calc(var(--gutter-size) * -1);
-  }
-}
-```
-
-`has--gutter` の内側で全幅画像・全幅バナーなどを配置したい時に使う。`inline-size: auto` は、親が `is--wrapper` の場合に当たる `inline-size: 100%` を打ち消し、負 margin による hang を効かせるためのリセット。
-
-### `-max-sz:container`
-
-**コンテナ要素を基準としたサイズ**まで広がる。`is--container` ごとに `--sz--container` が更新されるため、直近の container を基準にサイズ決定される。
-
-```scss
-.-max-sz\:container {
-  inline-size: auto;
-  max-inline-size: var(--sz--container, 100cqi);
-  margin-inline: calc(50% - var(--sz--container) / 2);
-}
-```
-
-`margin-inline` で中央配置されるので、`is--wrapper` の内側にあっても container 基準の幅に広げつつ中央に揃う。`inline-size: auto` も同じく、`is--wrapper > *` で当たる `inline-size: 100%` を打ち消すためのリセット。
-
 ## Usage
 
 ### トークン値での使用
@@ -66,28 +32,14 @@
 <div class="-max-sz:m -mx:auto" style="max-inline-size: var(--sz--m)">...</div>
 ```
 
-### `has--gutter` 内の全幅要素
+## 親要素いっぱい・コンテナ幅まで広げたい場合
 
-```html
-<div class="has--gutter">
-  <p>通常の gutter 内コンテンツ</p>
-  <img class="-max-sz:full" src="..." alt="" />
-  <p>通常の gutter 内コンテンツ</p>
-</div>
-```
+旧バージョンの `-max-sz:full` / `-max-sz:container` は v0.17.0 で Trait Class に整理され、廃止された。それぞれ以下に置き換える：
 
-### container 基準のサイズ
-
-```html
-<div class="is--container">
-  <div class="is--wrapper -contentSize:s">
-    <p>狭めのコンテンツ</p>
-    <div class="-max-sz:container">
-      container 基準まで広がる要素
-    </div>
-  </div>
-</div>
-```
+| 旧 | 新 |
+|---|---|
+| `-max-sz:full` | [`is--fullwide`](../trait-class/is--fullwide.md) |
+| `-max-sz:container` | [`is--bleed`](../trait-class/is--bleed.md) |
 
 ## DEMO
 
@@ -96,6 +48,6 @@
 
 ## 関連
 
-- [`is--container`](../trait-class/is--container.md) — `-max-sz:container` の基準となるコンテナ
+- [`is--fullwide`](../trait-class/is--fullwide.md) — 親要素のサイズいっぱいに広げる（旧 `-max-sz:full`）
+- [`is--bleed`](../trait-class/is--bleed.md) — 直近の `is--container` 幅まで広げる（旧 `-max-sz:container`）
 - [`is--wrapper`](../trait-class/is--wrapper.md) — コンテンツ幅の制限
-- [`has--gutter`](../trait-class/has--gutter.md) — `-max-sz:full` と組み合わせる左右余白

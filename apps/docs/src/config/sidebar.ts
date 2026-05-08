@@ -177,7 +177,14 @@ const docsSidebar: SidebarSection[] = [
   },
   {
     label: 'Trait Class',
-    items: ['/docs/trait-class/is--container/', '/docs/trait-class/is--wrapper/', '/docs/trait-class/is--layer/', '/docs/trait-class/is--boxLink/'],
+    items: [
+      '/docs/trait-class/is--container/',
+      '/docs/trait-class/is--wrapper/',
+      '/docs/trait-class/is--fullwide/',
+      '/docs/trait-class/is--bleed/',
+      '/docs/trait-class/is--layer/',
+      '/docs/trait-class/is--boxLink/',
+    ],
   },
   // コアコンポーネント カテゴリ
   {

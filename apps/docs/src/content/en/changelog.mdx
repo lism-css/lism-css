@@ -9,6 +9,37 @@ Breaking changes may continue frequently until the v1.0 release, so all notable 
 
 <Divider bds="dashed" my="40" />
 
+## lism-css v.0.17.0 (unreleased)
+
+This release contains **breaking changes**.
+
+### Rename `-max-sz:full` / `-max-sz:container` to `is--fullwide` / `is--bleed` (#357)
+
+Although these were provided as Property Classes, their behavior is more than a single CSS property: they also operate on `margin-inline`. Since they're really role declarations (traits), they have been moved from Property Class form to Trait Class form.
+
+| Old | New |
+|---|---|
+| `-max-sz:full` | `is--fullwide` |
+| `-max-sz:container` | `is--bleed` |
+
+`is--fullwide` / `is--bleed` are also available as `isFullwide` / `isBleed` props on Lism components, just like other `is--*` classes.
+
+```jsx
+// Old
+<Lism max-sz="full">...</Lism>
+<Lism max-sz="container">...</Lism>
+
+// New
+<Lism isFullwide>...</Lism>
+<Lism isBleed>...</Lism>
+```
+
+The old class names (`-max-sz:full` / `-max-sz:container`) have been removed with no backward-compatible alias. All direct usages must be replaced.
+
+The `max-sz` Prop value type has also been narrowed to no longer accept `'full'` / `'container'`.
+
+<Divider bds="dashed" my="40" />
+
 ## lism-css v.0.16.2
 
 ### Apply `inline-size: 100%` to direct children of `is--wrapper` (#355)

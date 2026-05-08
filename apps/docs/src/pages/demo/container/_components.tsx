@@ -82,8 +82,8 @@ export function WideContent(props: any) {
 export function FullSizeContent(props: any) {
   const { children, ...atts } = props;
   return (
-    <Lism max-sz="full" ta="center" bg=":stripe" bgc="orange:12%" {...atts}>
-      <TipCode text="-max-sz:full" color="orange" m="5" />
+    <Lism isFullwide ta="center" bg=":stripe" bgc="orange:12%" {...atts}>
+      <TipCode text="is--fullwide" color="orange" m="5" />
       {children}
     </Lism>
   );
@@ -92,8 +92,8 @@ export function FullSizeContent(props: any) {
 export function ContainerSizeContent(props: any) {
   const { children, ...atts } = props;
   return (
-    <Lism max-sz="container" ta="center" bg=":stripe" bgc="pink:12%" {...atts}>
-      <TipCode text="-max-sz:container" color="pink" m="5" />
+    <Lism isBleed ta="center" bg=":stripe" bgc="pink:12%" {...atts}>
+      <TipCode text="is--bleed" color="pink" m="5" />
       {children}
     </Lism>
   );

@@ -338,9 +338,9 @@
     "title": "-max-sz",
     "description": "コンテンツの最大幅を制御する -max-sz プロパティクラスの使い方について解説します。",
     "category": "property-class",
-    "headings": ["-max-sz:full, -max-sz:container", "DEMOページ"],
-    "keywords": ["max-sz", "max-inline-size", "最大サイズ", "幅", "full", "container"],
-    "snippet": "max-sz (max-inline-size) の Prop。xs, s, m, l, xl のサイズトークンで最大幅を指定。-max-sz:full, -max-sz:container の特殊クラスも解説。"
+    "headings": ["親要素の幅いっぱい・コンテナ幅まで広げたい場合"],
+    "keywords": ["max-sz", "max-inline-size", "最大サイズ", "幅"],
+    "snippet": "max-sz (max-inline-size) の Prop。xs, s, m, l, xl のサイズトークンで最大幅を指定。親要素いっぱい / container 幅までの拡張は is--fullwide / is--bleed を参照。"
   },
   {
     "sourcePath": "core-components/Lism.mdx",
@@ -687,6 +687,35 @@
     "headings": ["CSS", "Lismコンポーネントでの使い方", "Usage"],
     "keywords": ["Wrapper", "ラッパー", "コンテンツ幅", "max-width", "is--wrapper", "contentSize", "幅制限", "width limiter"],
     "snippet": "コンテンツ幅を制限するラッパー要素。isWrapperプロパティでどのコンポーネントからでも呼び出し可能。contentSizeで幅を指定。s, lのプリセットサイズや任意値も設定可能。"
+  },
+  {
+    "sourcePath": "trait-class/is--fullwide.mdx",
+    "title": "Fullwide / is--fullwide",
+    "description": "is--fullwide は、has--gutter 配下でも親要素のサイズいっぱいに広げる役割宣言クラスです。",
+    "category": "primitives",
+    "headings": ["CSS", "Lismコンポーネントでの使い方", "Usage", "DEMO"],
+    "keywords": ["Fullwide", "フルワイド", "fullwide", "is--fullwide", "isFullwide", "全幅", "親幅いっぱい", "has--gutter", "max-inline-size"],
+    "snippet": "親要素のサイズいっぱいに広げる役割宣言クラス。基本は max-inline-size: 100% だが、has--gutter 配下では gutter 分を加算して突き抜ける。isFullwide プロパティでどのコンポーネントからでも呼び出し可能。旧 -max-sz:full の置き換え。"
+  },
+  {
+    "sourcePath": "trait-class/is--bleed.mdx",
+    "title": "Bleed / is--bleed",
+    "description": "is--bleed は、is--wrapper の制約を越えて直近の is--container 幅まで広げる役割宣言クラスです。",
+    "category": "primitives",
+    "headings": ["CSS", "Lismコンポーネントでの使い方", "Usage", "DEMO"],
+    "keywords": [
+      "Bleed",
+      "ブリード",
+      "bleed",
+      "is--bleed",
+      "isBleed",
+      "フルブリード",
+      "container 基準",
+      "is--container",
+      "is--wrapper",
+      "max-inline-size"
+    ],
+    "snippet": "直近の is--container 幅まで広げて中央配置する役割宣言クラス。is--wrapper の内側でも wrapper の制約を越えて container 基準の幅まで広がる。viewport ではなく container 基準であることに注意。isBleed プロパティでどのコンポーネントからでも呼び出し可能。旧 -max-sz:container の置き換え。"
   },
   {
     "sourcePath": "primitives/a--icon.mdx",
@@ -1140,6 +1169,8 @@
       "has--",
       "is--container",
       "is--wrapper",
+      "is--fullwide",
+      "is--bleed",
       "is--layer",
       "is--boxLink",
       "has--transition",
@@ -1149,7 +1180,7 @@
       "役割宣言",
       "機能付与"
     ],
-    "snippet": "Trait Class は要素に「役割」を宣言（is--*）したり「機能」を付与（has--*）するためのクラス群。@layer lism-trait に属する。is--container, is--wrapper, is--layer, is--boxLink, has--transition, has--gutter, has--snap, has--mask を提供。"
+    "snippet": "Trait Class は要素に「役割」を宣言（is--*）したり「機能」を付与（has--*）するためのクラス群。@layer lism-trait に属する。is--container, is--wrapper, is--fullwide, is--bleed, is--layer, is--boxLink, has--transition, has--gutter, has--snap, has--mask を提供。"
   },
   {
     "sourcePath": "trait-class.mdx",

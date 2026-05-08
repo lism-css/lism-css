@@ -38,7 +38,7 @@ export default function ShapeDivider<T extends ElementType = 'div'>({
   return (
     <Lism
       className={atts(className, 'c--shapeDivider')}
-      max-sz="full"
+      isFullwide
       aria-hidden="true"
       data-flip={flip || undefined}
       data-has-animation={isAnimation ? 'true' : undefined}

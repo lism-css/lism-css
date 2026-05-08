@@ -3,27 +3,23 @@ title: '-max-sz'
 description: 'How to use the -max-sz class for controlling the maximum width of content.'
 ---
 
-import { Flex, Media, Layer, Spacer, Box, Center, Stack, Frame, BoxLink } from 'lism-css/astro';
-
 
 Lism provides content size tokens in the form `--sz--{sz}` (where `{sz}` = `xs`, `s`, `m`, `l`, `xl`), and corresponding `-max-sz` classes are available for each. (`-max-sz:{xs~xl}`)
 
-
-This page introduces the additional special classes beyond those.
-
-
-## -max-sz:full, -max-sz:container
-
-The following notable classes are also available:
-
-| Class | Description |
+| Class | Value |
 |---|---|
-| `-max-sz:full` | When inside a `has--gutter` element, **expands to fill the parent** by adding the gutter spacing on top of `100%`. |
-| `-max-sz:container` | Expands to the size of the **nearest container element**. The value is updated for each `is--container` class. |
+| `-max-sz:xs` | `var(--sz--xs)` |
+| `-max-sz:s` | `var(--sz--s)` |
+| `-max-sz:m` | `var(--sz--m)` |
+| `-max-sz:l` | `var(--sz--l)` |
+| `-max-sz:xl` | `var(--sz--xl)` |
 
 
-## Demo Page
+## Expanding to fill the parent or container
 
-You can see these `-max-sz` classes in action on a separate demo page.
+The behavior previously provided as `-max-sz:full` / `-max-sz:container` has been reorganized as Trait Classes.
 
-<PreviewFrame url='/demo/content-size' />
+| Purpose | Class |
+|---|---|
+| Fill the parent element (including past `has--gutter`) | <ModLink slug="is--fullwide" /> |
+| Expand up to the nearest `is--container` width (centered) | <ModLink slug="is--bleed" /> |

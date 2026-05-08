@@ -32,6 +32,8 @@ describe('TraitProps', () => {
     });
 
     it('その他のトレイト', () => {
+      assertType<TraitProps>({ isFullwide: true });
+      assertType<TraitProps>({ isBleed: true });
       assertType<TraitProps>({ isLayer: true });
       assertType<TraitProps>({ isBoxLink: true });
       assertType<TraitProps>({ isCoverLink: true });

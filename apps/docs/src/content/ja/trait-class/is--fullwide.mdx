@@ -1,0 +1,49 @@
+---
+title: 'Fullwide (is--fullwide)'
+navtitle: 'is--fullwide'
+description: 'is--fullwide は、has--gutter 配下でも親要素のサイズいっぱいに広げる役割宣言クラスです。'
+---
+
+`is--fullwide` は、要素を**親要素のサイズいっぱい**まで広げるクラスです。基本的には `max-inline-size: 100%` ですが、親が `has--gutter` の場合は gutter 分を加算して**その余白を突き抜けて**親要素の端まで広がります。
+
+
+## CSS
+
+<SrcCode path="src/scss/trait/is/_fullwide.scss" />
+
+
+## Lismコンポーネントでの使い方
+
+`isFullwide` プロパティで**どのコンポーネントからでも呼び出せるようになっています。**
+
+| プロパティ | 出力 |
+|---|---|
+| `isFullwide`| `is--fullwide` |
+
+
+## Usage
+
+### `has--gutter` 内の全幅要素
+
+```html
+<div class="has--gutter">
+  <p>通常の gutter 内コンテンツ</p>
+  <img class="is--fullwide" src="..." alt="" />
+  <p>通常の gutter 内コンテンツ</p>
+</div>
+```
+
+`has--gutter` の内側で全幅画像・全幅バナーなどを配置したい時に使います。
+
+## DEMO
+
+挙動確認用デモ:
+
+<PreviewFrame url='/demo/content-size' />
+
+
+## 関連
+
+- <ModLink slug="is--bleed" /> — 直近の `is--container` 幅まで広げる
+- <ModLink slug="has--gutter" /> — 左右余白を持たせるクラス
+- <ModLink slug="is--wrapper" /> — コンテンツ幅の制限

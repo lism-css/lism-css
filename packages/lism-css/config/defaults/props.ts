@@ -81,16 +81,7 @@ export default {
 
   sz: { prop: 'inlineSize', token: 'sz' },
   'min-sz': { prop: 'minInlineSize', token: 'sz' },
-  'max-sz': {
-    prop: 'maxInlineSize',
-    token: 'sz',
-    tokenClass: 1,
-    presets: ['full'],
-    exUtility: {
-      full: '',
-      container: '',
-    },
-  },
+  'max-sz': { prop: 'maxInlineSize', token: 'sz', tokenClass: 1 },
   bsz: { prop: 'blockSize', token: 'sz' },
   'min-bsz': { prop: 'minBlockSize', token: 'sz' },
   'max-bsz': { prop: 'maxBlockSize', token: 'sz' },

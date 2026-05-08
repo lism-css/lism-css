@@ -7,6 +7,8 @@ export default {
     customVar: '--contentSize',
     tokenKey: 'sz',
   },
+  isFullwide: 'is--fullwide',
+  isBleed: 'is--bleed',
   isLayer: 'is--layer',
   isBoxLink: 'is--boxLink',
   isCoverLink: 'is--coverLink',

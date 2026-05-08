@@ -1,0 +1,7 @@
+// 直近の is--container 幅まで広がる役割宣言。
+// 親の is--wrapper の制約を越えて container 基準の幅まで広げ、margin-inline で中央配置する。
+.is--bleed {
+  inline-size: auto; // is--wrapper > * の inline-size: 100% を打ち消し、container 幅まで広げて中央配置する
+  max-inline-size: var(--sz--container, 100cqi);
+  margin-inline: calc(50% - var(--sz--container) / 2);
+}

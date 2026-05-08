@@ -23,7 +23,7 @@ CSS Layer の外（最も高い詳細度）に配置され、`-{prop}(:{value})`
 
 - [property-class/bd.md](./property-class/bd.md) — ボーダー（`-bd` / `-bd-{side}` 系）
 - [property-class/hov.md](./property-class/hov.md) — ホバー（`-hov:*` 系）
-- [property-class/max-sz.md](./property-class/max-sz.md) — 最大幅（`-max-sz:full` / `-max-sz:container` 等）
+- [property-class/max-sz.md](./property-class/max-sz.md) — 最大幅（コンテンツサイズトークン `xs`〜`xl`）
 
 ---
 
@@ -114,16 +114,16 @@ Lism コンポーネントの Propsに渡す値の頭に `:` を付けると、 
 | `max-h` | `max-height` | `-max-h:100%` | `-max-h_sm`, `-max-h_md` |
 | `sz` | `inline-size` | — | — |
 | `min-sz` | `min-inline-size` | — | — |
-| `max-sz` | `max-inline-size` | `-max-sz:xs`, `-max-sz:s`, `-max-sz:m`, `-max-sz:l`, `-max-sz:xl`, `-max-sz:full`, `-max-sz:container` | — |
+| `max-sz` | `max-inline-size` | `-max-sz:xs`, `-max-sz:s`, `-max-sz:m`, `-max-sz:l`, `-max-sz:xl` | — |
 | `bsz` | `block-size` | — | — |
 | `min-bsz` | `min-block-size` | — | — |
 | `max-bsz` | `max-block-size` | — | — |
 
-**`max-sz` の特殊クラス:**
-- `-max-sz:full` — `has--gutter` 内では gutter 分を含めた全幅に拡張
-- `-max-sz:container` — コンテナ幅に合わせる（`margin-inline` で中央配置）
+**親幅 / コンテナ幅まで広げたい場合は Trait Class を使う:**
+- `is--fullwide`（`isFullwide` Prop） — 親要素のサイズいっぱいに広げる（`has--gutter` 配下では gutter 分を突き抜ける）
+- `is--bleed`（`isBleed` Prop） — 直近の `is--container` 幅まで広げて中央配置する
 
-→ 詳細は [property-class/max-sz.md](./property-class/max-sz.md) 参照
+→ 詳細は [trait-class/is--fullwide.md](./trait-class/is--fullwide.md) / [trait-class/is--bleed.md](./trait-class/is--bleed.md) 参照
 
 ### 背景
 

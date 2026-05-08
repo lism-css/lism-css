@@ -1,0 +1,57 @@
+---
+title: 'Bleed (is--bleed)'
+navtitle: 'is--bleed'
+description: 'is--bleed は、is--wrapper の制約を越えて、直近の is--container 幅まで広げる役割宣言クラスです。'
+---
+
+`is--bleed` は、要素を**直近の `is--container` 幅まで広げて中央配置**するクラスです。`is--wrapper` の内側にあっても、wrapper の制約を越えて container 基準の幅まで広がります。
+
+<Callout type="note">
+`bleed` は印刷用語で「裁ち落とし」を意味しますが、ここでの基準は **viewport ではなく container** です。`is--container` ごとに `--sz--container` が更新されるため、直近の container を基準に幅が決まります。viewport の端まで広げたい場合は、`is--container` を持つ最も外側のラッパーで使ってください。
+</Callout>
+
+
+## CSS
+
+<SrcCode path="src/scss/trait/is/_bleed.scss" />
+
+
+## Lismコンポーネントでの使い方
+
+`isBleed` プロパティで**どのコンポーネントからでも呼び出せるようになっています。**
+
+| プロパティ | 出力 |
+|---|---|
+| `isBleed`| `is--bleed` |
+
+
+## Usage
+
+### container 基準のサイズ
+
+```html
+<div class="is--container">
+  <div class="is--wrapper -contentSize:s">
+    <p>狭めのコンテンツ</p>
+    <div class="is--bleed">
+      container 基準まで広がる要素
+    </div>
+  </div>
+</div>
+```
+
+フルブリードレイアウトなど、`is--wrapper` の制約を超えてコンテンツを広げたい時に活用できます。
+
+
+## DEMO
+
+挙動確認用デモ:
+
+<PreviewFrame url='/demo/content-size' />
+
+
+## 関連
+
+- <ModLink slug="is--container" /> — `is--bleed` の基準となるコンテナ
+- <ModLink slug="is--fullwide" /> — 親要素のサイズいっぱいに広げる
+- <ModLink slug="is--wrapper" /> — コンテンツ幅の制限

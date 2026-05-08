@@ -1,0 +1,57 @@
+---
+title: 'Bleed (is--bleed)'
+navtitle: 'is--bleed'
+description: 'is--bleed is a role-declaration class that expands an element to the nearest is--container width, breaking out of is--wrapper constraints.'
+---
+
+`is--bleed` expands an element to **the nearest `is--container` width and centers it**. Even when nested inside an `is--wrapper`, it breaks past the wrapper constraint and stretches to the container width.
+
+<Callout type="note">
+While `bleed` is a print-design term meaning "to extend past the trim line", in Lism the reference is the **container**, not the viewport. `--sz--container` is updated per `is--container`, so width is decided based on the nearest container. If you want to extend to the viewport edges, place this class inside the outermost wrapper that carries `is--container`.
+</Callout>
+
+
+## CSS
+
+<SrcCode path="src/scss/trait/is/_bleed.scss" />
+
+
+## Using with Lism Components
+
+It can be applied via the `isBleed` property on **any component**.
+
+| Property | Output |
+|---|---|
+| `isBleed`| `is--bleed` |
+
+
+## Usage
+
+### Sizing based on container width
+
+```html
+<div class="is--container">
+  <div class="is--wrapper -contentSize:s">
+    <p>Narrow content</p>
+    <div class="is--bleed">
+      Element that expands to the container width
+    </div>
+  </div>
+</div>
+```
+
+Use this for full-bleed layouts or any case where content needs to break out of the surrounding `is--wrapper`.
+
+
+## Demo
+
+Behavior demo:
+
+<PreviewFrame url='/demo/content-size' />
+
+
+## Related
+
+- <ModLink slug="is--container" /> — Reference container for `is--bleed`
+- <ModLink slug="is--fullwide" /> — Fill the parent element
+- <ModLink slug="is--wrapper" /> — Constrain content width

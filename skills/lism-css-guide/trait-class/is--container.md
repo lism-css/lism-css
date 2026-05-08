@@ -41,7 +41,7 @@
 
 ## `--sz--container` の提供
 
-`is--container` は直下の子要素に `--sz--container: 100cqi` をセットします。`-max-sz:container` はこの値を参照しており、`is--container` 基準の幅まで広がります。
+`is--container` は直下の子要素に `--sz--container: 100cqi` をセットします。`is--bleed` はこの値を参照しており、`is--container` 基準の幅まで広がります。
 
 `has--gutter` と併用した場合は `calc(100cqi + var(--gutter-size) * 2)` に自動調整され、gutter 分を含めた端〜端の幅になります。
 
