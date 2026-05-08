@@ -9,6 +9,26 @@ v.1.0リリースまでしばらく激しい変更が続く可能性があるた
 
 <Divider bds="dashed" my="40" />
 
+## lism-css v.0.16.2
+
+### `is--wrapper` 直下の子要素に `inline-size: 100%` を付与 (#355)
+
+`is--wrapper > *` に `inline-size: 100%` を追加し、`l--stack` などの flex 縦並び配下で子要素の自然幅依存によって横幅が揃わない問題を解消しました。
+
+```scss
+.is--wrapper > * {
+  inline-size: 100%;
+  max-inline-size: min(100%, var(--contentSize));
+  margin-inline: auto;
+}
+```
+
+**副作用**: `is--wrapper` 直下に置いた `<table>` は内容依存の自然幅にはならず、常に wrapper 幅まで広がるようになりました。テーブルの自然幅を保ちたい場合は `is--wrapper` を直接の親にせず、間に別の要素を挟んでください。
+
+合わせて、上記との干渉で `has--gutter` 内の `-max-sz:full` の hang が効かなくなる問題、および `-max-sz:container` の中央配置が崩れる問題を解消するため、それぞれに `inline-size: auto` を追加しました。
+
+<Divider bds="dashed" my="40" />
+
 ## lism-css v.0.16.1 (2026.04.29)
 
 - `--list-px-s` のフォールバック値を `1.75em` に変更

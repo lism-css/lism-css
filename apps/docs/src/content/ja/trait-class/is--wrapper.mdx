@@ -12,6 +12,12 @@ import { Wrapper, Box, Lism, Spacer } from "lism-css/astro";
 
 <SrcCode path="src/scss/trait/is/_wrapper.scss" />
 
+直下の子要素には `inline-size: 100%` が当たるため、自然幅が `--contentSize` 未満の要素（短い段落や `<table>` など）も常に親幅まで広がります。これにより `l--stack` などの縦並び配下でも横幅が揃い、ガタつきが起きません。
+
+:::caution
+`<table>` を `is--wrapper` の直下に置くと内容依存の自然幅にはならず、常に wrapper 幅まで広がります。テーブルの自然幅を保ちたい場合は、`is--wrapper` を直接の親にしないように間に別の要素を挟んでください。
+:::
+
 
 ## Lismコンポーネントでの使い方
 

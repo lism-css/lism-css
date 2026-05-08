@@ -2,12 +2,14 @@
   max-inline-size: 100%;
 
   :where(.has--gutter) > & {
+    inline-size: auto; // is--wrapper > * の inline-size: 100% を打ち消し、負 margin による hang を効かせる
     max-inline-size: calc(100% + var(--gutter-size) * 2);
     margin-inline: calc(var(--gutter-size) * -1);
   }
 }
 
 .-max-sz\:container {
+  inline-size: auto; // is--wrapper > * の inline-size: 100% を打ち消し、container 幅まで広げて中央配置する
   max-inline-size: var(--sz--container, 100cqi);
   margin-inline: calc(50% - var(--sz--container) / 2);
 }

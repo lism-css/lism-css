@@ -32,13 +32,14 @@
   max-inline-size: 100%;
 
   :where(.has--gutter) > & {
+    inline-size: auto;
     max-inline-size: calc(100% + var(--gutter-size) * 2);
     margin-inline: calc(var(--gutter-size) * -1);
   }
 }
 ```
 
-`has--gutter` の内側で全幅画像・全幅バナーなどを配置したい時に使う。
+`has--gutter` の内側で全幅画像・全幅バナーなどを配置したい時に使う。`inline-size: auto` は、親が `is--wrapper` の場合に当たる `inline-size: 100%` を打ち消し、負 margin による hang を効かせるためのリセット。
 
 ### `-max-sz:container`
 
@@ -46,12 +47,13 @@
 
 ```scss
 .-max-sz\:container {
+  inline-size: auto;
   max-inline-size: var(--sz--container, 100cqi);
   margin-inline: calc(50% - var(--sz--container) / 2);
 }
 ```
 
-`margin-inline` で中央配置されるので、`is--wrapper` の内側にあっても container 基準の幅に広げつつ中央に揃う。
+`margin-inline` で中央配置されるので、`is--wrapper` の内側にあっても container 基準の幅に広げつつ中央に揃う。`inline-size: auto` も同じく、`is--wrapper > *` で当たる `inline-size: 100%` を打ち消すためのリセット。
 
 ## Usage
 
