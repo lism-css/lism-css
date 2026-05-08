@@ -89,11 +89,11 @@ export function FullSizeContent(props: any) {
   );
 }
 
-export function ContainerSizeContent(props: any) {
+export function BleedSizeContent(props: any) {
   const { children, ...atts } = props;
   return (
-    <Lism max-sz="container" ta="center" bg=":stripe" bgc="pink:12%" {...atts}>
-      <TipCode text="-max-sz:container" color="pink" m="5" />
+    <Lism max-sz="bleed" ta="center" bg=":stripe" bgc="pink:12%" {...atts}>
+      <TipCode text="-max-sz:bleed" color="pink" m="5" />
       {children}
     </Lism>
   );

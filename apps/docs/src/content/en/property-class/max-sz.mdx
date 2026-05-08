@@ -6,20 +6,27 @@ description: 'How to use the -max-sz class for controlling the maximum width of 
 import { Flex, Media, Layer, Spacer, Box, Center, Stack, Frame, BoxLink } from 'lism-css/astro';
 
 
-Lism provides content size tokens in the form `--sz--{sz}` (where `{sz}` = `xs`, `s`, `m`, `l`, `xl`), and corresponding `-max-sz` classes are available for each. (`-max-sz:{xs~xl}`)
+Lism provides content size tokens in the form `--sz--{sz}` (where `{sz}` = `xs`, `s`, `m`, `l`, `xl`), and corresponding `-max-sz` classes are available for each.
+
+| Class | CSS Variable | Value |
+|---|---|---|
+| `-max-sz:xs` | `--sz--xs` | `32rem` |
+| `-max-sz:s`  | `--sz--s`  | `42rem` |
+| `-max-sz:m`  | `--sz--m`  | `56rem` |
+| `-max-sz:l`  | `--sz--l`  | `1280px` |
+| `-max-sz:xl` | `--sz--xl` | `1600px` |
 
 
-This page introduces the additional special classes beyond those.
 
 
-## -max-sz:full, -max-sz:container
+## full & bleed
 
-The following notable classes are also available:
+In addition, `-max-sz` provides the following special preset classes:
 
 | Class | Description |
 |---|---|
-| `-max-sz:full` | When inside a `has--gutter` element, **expands to fill the parent** by adding the gutter spacing on top of `100%`. |
-| `-max-sz:container` | Expands to the size of the **nearest container element**. The value is updated for each `is--container` class. |
+| <span class="-whs:nowrap">`-max-sz:full`</span> | When placed directly inside a `has--gutter` element, this class **adds the gutter spacing on top of `100%`** to expand to **the full size of the parent**. |
+| <span class="-whs:nowrap">`-max-sz:bleed`</span> | Expands to the width of the **outermost `is--container`**, breaking through both content widths and nested containers to provide a page-wide full-bleed layout. When no `is--container` ancestor exists, it falls back to the viewport width (`100svi`). |
 
 
 ## Demo Page

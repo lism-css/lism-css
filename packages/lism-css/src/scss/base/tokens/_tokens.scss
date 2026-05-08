@@ -1,11 +1,13 @@
 /* --------------------------------------------------
-  containerサイズ保持変数
-  Memo: @property が使える環境であればコンテナのさらに親要素の幅を参照できるので、containerを1段階飛び出せる。
-        cqi を算出値で保持するために登録済みカスタムプロパティとして定義
+  bleedサイズ保持変数
+  Memo: 最外側の is--container 直下の子で 100cqi に上書きされ、それ以降は inherit で
+        子孫まで伝搬する。is--container が祖先に存在しない場合の fallback として
+        初期値に 100svi（small viewport inline size）を設定する。
+        cqi を算出値で保持するために登録済みカスタムプロパティとして定義する。
 -------------------------------------------------- */
-@property --sz--container {
+@property --sz--bleed {
   syntax: '<length-percentage>';
-  initial-value: 100cqi;
+  initial-value: 100svi;
   inherits: true;
 }
 

@@ -1,10 +1,10 @@
 # -max-sz（最大幅）
 
-コンテンツの最大幅（`max-inline-size`）を制御する Property Class。標準のコンテンツサイズトークン（`xs`〜`xl`）に加え、特殊挙動の `full` / `container` を持つ。
+コンテンツの最大幅（`max-inline-size`）を制御する Property Class。標準のコンテンツサイズトークン（`xs`〜`xl`）に加え、特殊挙動の `full` / `bleed` を持つ。
 
 ## 基本情報
 
-- クラス名: `-max-sz:{xs|s|m|l|xl|full|container}`
+- クラス名: `-max-sz:{xs|s|m|l|xl|full|bleed}`
 - Lism props: `max-sz`（`<Lism max-sz="m">` 等）
 - SCSSソース: https://raw.githubusercontent.com/lism-css/lism-css/main/packages/lism-css/src/scss/props/_size.scss
 - 公式ドキュメント: https://lism-css.com/docs/property-class/max-sz.md
@@ -41,19 +41,21 @@
 
 `has--gutter` の内側で全幅画像・全幅バナーなどを配置したい時に使う。`inline-size: auto` は、親が `is--wrapper` の場合に当たる `inline-size: 100%` を打ち消し、負 margin による hang を効かせるためのリセット。
 
-### `-max-sz:container`
+### `-max-sz:bleed`
 
-**コンテナ要素を基準としたサイズ**まで広がる。`is--container` ごとに `--sz--container` が更新されるため、直近の container を基準にサイズ決定される。
+**最外側の `is--container` 幅**まで広がる。本文幅やネストされた container を突き抜け、ページ全体の full-bleed 表現を実現する。`is--container` が祖先に存在しない場合は、ビューポート幅（`100svi`）まで広がる fallback として動作する。
 
 ```scss
-.-max-sz\:container {
+.-max-sz\:bleed {
   inline-size: auto;
-  max-inline-size: var(--sz--container, 100cqi);
-  margin-inline: calc(50% - var(--sz--container) / 2);
+  max-inline-size: var(--sz--bleed, 100svi);
+  margin-inline: calc(50% - var(--sz--bleed, 100svi) / 2);
 }
 ```
 
-`margin-inline` で中央配置されるので、`is--wrapper` の内側にあっても container 基準の幅に広げつつ中央に揃う。`inline-size: auto` も同じく、`is--wrapper > *` で当たる `inline-size: 100%` を打ち消すためのリセット。
+`--sz--bleed` は最外側の `is--container` 直下の子要素でだけ `100cqi` に上書きされ、ネストされた `is--container` は再度上書きしないため、内側の子要素は外側の値を inherit で参照する。
+
+`margin-inline` で中央配置されるので、`is--wrapper` の内側にあっても最外側 container 基準の幅に広げつつ中央に揃う。`inline-size: auto` も同じく、`is--wrapper > *` で当たる `inline-size: 100%` を打ち消すためのリセット。
 
 ## Usage
 
@@ -76,14 +78,14 @@
 </div>
 ```
 
-### container 基準のサイズ
+### 最外側 container 基準のサイズ（full-bleed）
 
 ```html
 <div class="is--container">
   <div class="is--wrapper -contentSize:s">
     <p>狭めのコンテンツ</p>
-    <div class="-max-sz:container">
-      container 基準まで広がる要素
+    <div class="-max-sz:bleed">
+      最外側 container 幅まで広がる要素（ネストされた is--container も突き抜ける）
     </div>
   </div>
 </div>
@@ -96,6 +98,6 @@
 
 ## 関連
 
-- [`is--container`](../trait-class/is--container.md) — `-max-sz:container` の基準となるコンテナ
+- [`is--container`](../trait-class/is--container.md) — `-max-sz:bleed` の基準となるコンテナ
 - [`is--wrapper`](../trait-class/is--wrapper.md) — コンテンツ幅の制限
 - [`has--gutter`](../trait-class/has--gutter.md) — `-max-sz:full` と組み合わせる左右余白
