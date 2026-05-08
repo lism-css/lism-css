@@ -13,7 +13,7 @@ Breaking changes may continue frequently until the v1.0 release, so all notable 
 
 ### Apply `inline-size: 100%` to direct children of `is--wrapper` (#355)
 
-Added `inline-size: 100%` to `is--wrapper > *` so that children whose natural width is below `--contentSize` (short paragraphs, `<table>`, etc.) no longer cause width mismatches under `l--stack` and other vertical flex layouts.
+Added `inline-size: 100%` to `is--wrapper > *` so children whose natural width is below `--contentSize` (short paragraphs, `<table>`, etc.) always stretch to the parent width, fixing width misalignment under `l--stack` and other vertical flex layouts.
 
 ```scss
 .is--wrapper > * {
