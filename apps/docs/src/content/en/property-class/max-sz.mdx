@@ -12,14 +12,14 @@ Lism provides content size tokens in the form `--sz--{sz}` (where `{sz}` = `xs`,
 This page introduces the additional special classes beyond those.
 
 
-## -max-sz:full, -max-sz:container
+## -max-sz:full, -max-sz:bleed
 
 The following notable classes are also available:
 
 | Class | Description |
 |---|---|
 | `-max-sz:full` | When inside a `has--gutter` element, **expands to fill the parent** by adding the gutter spacing on top of `100%`. |
-| `-max-sz:container` | Expands to the size of the **nearest container element**. The value is updated for each `is--container` class. |
+| `-max-sz:bleed` | Expands to the width of the **outermost `is--container`**, breaking through both content widths and nested containers to provide a page-wide full-bleed layout. When no `is--container` ancestor exists, it falls back to the viewport width (`100svi`). |
 
 
 ## Demo Page

@@ -39,11 +39,13 @@
 
 子要素側は `p={['10', '30']}` のようなブレイクポイント配列指定にすることで、親の `is--container` を基準としたコンテナクエリで値が切り替わります。
 
-## `--sz--container` の提供
+## `--sz--bleed` の提供
 
-`is--container` は直下の子要素に `--sz--container: 100cqi` をセットします。`-max-sz:container` はこの値を参照しており、`is--container` 基準の幅まで広がります。
+最外側の `is--container` は直下の子要素に `--sz--bleed: 100cqi` をセットします。`-max-sz:bleed` はこの値を参照しており、最外側の `is--container` 基準の幅まで広がります（ネストされた `is--container` は `--sz--bleed` を再上書きしないため、内側の子要素は外側の値を inherit で参照します）。
 
 `has--gutter` と併用した場合は `calc(100cqi + var(--gutter-size) * 2)` に自動調整され、gutter 分を含めた端〜端の幅になります。
+
+`@property --sz--bleed` の `initial-value` は `100svi` のため、`is--container` が祖先に存在しない場合はビューポート幅まで広がる fallback として動作します。
 
 ## 関連プリミティブ
 

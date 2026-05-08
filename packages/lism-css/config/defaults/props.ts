@@ -88,7 +88,7 @@ export default {
     presets: ['full'],
     exUtility: {
       full: '',
-      container: '',
+      bleed: '',
     },
   },
   bsz: { prop: 'blockSize', token: 'sz' },

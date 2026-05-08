@@ -5,7 +5,7 @@ import {
   // TipCode,
   GutterGuide,
   FullSizeContent,
-  ContainerSizeContent,
+  BleedSizeContent,
   LoremContent,
 } from '../container/_components.js';
 import { Lism, Box, Flow, Spacer } from 'lism-css/astro';
@@ -41,32 +41,35 @@ import '../container/_style.scss';
       <GutterGuide />
     </Flow>
 
-    <h2><code>-max-sz:container</code></h2>
+    <h2><code>-max-sz:bleed</code></h2>
     <p>
-      <code>@propetry</code>
-      が有効なブラウザでは、<b>先祖コンテナ要素</b>が呼び出された位置を基準とした幅 （<code>100cqi</code>）まで広がります。
-      <br />また、コンテナに<code>has--gutter</code>がある場合はその分を加算します。
+      <code>@property</code>
+      が有効なブラウザでは、<b>最外側の <code>is--container</code></b> の幅（<code>100cqi</code>）まで広がります。
+      <br />また、最外側のコンテナに<code>has--gutter</code>がある場合はその分を加算します。
     </p>
-    <p>フルブリードレイアウトなど、親要素を飛び越えて外側まで広げたいコンテンツに活用できます。</p>
-    <!-- <p><code>@propetry</code>が無効なブラウザ</p> -->
+    <p>
+      フルブリードレイアウトなど、本文幅やネストされた container を突き抜けてページ幅まで広げたいコンテンツに活用できます。<code>is--container</code> が祖先に存在しない場合は、ビューポート幅（<code
+        >100svi</code
+      >）まで広がる fallback として動作します。
+    </p>
     <Spacer h="5" />
 
     <Flow isContainer isWrapper flow="s" hasGutter>
       <AttsLabels atts="is--wrapper,is--container,has--gutter" />
       <LoremContent />
       <FullSizeContent />
-      <ContainerSizeContent />
+      <BleedSizeContent />
       <Spacer h="30" />
       <Flow bd>
         <AttsLabels atts="div" />
         <FullSizeContent />
-        <ContainerSizeContent />
+        <BleedSizeContent />
       </Flow>
       <Spacer h="30" />
       <Flow isContainer>
-        <AttsLabels atts="is--container" />
+        <AttsLabels atts="is--container（ネスト）" />
         <FullSizeContent />
-        <ContainerSizeContent />
+        <BleedSizeContent />
       </Flow>
 
       <GutterGuide />
