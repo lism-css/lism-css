@@ -38,6 +38,7 @@ pnpm gen:registry  # registry-index.json を再生成
 | `src/style.scss` | スタイルエントリポイント |
 | `scripts/generate-registry-index.ts` | `lism-cli` が参照するカタログ JSON を生成するスクリプト |
 | `registry-index.json` | `lism-cli` の `lism ui list` / `--all` が giget 経由で fetch するカタログ（build 時に自動再生成・commit 済み） |
+| `scripts/generate-exports.ts` | `package.json` の `exports` を `src/components/` から自動生成するスクリプト（barrel に加え `@lism-css/ui/{react,astro}/{Component}` の deep path も提供。build 時に自動再生成・commit 済み） |
 
 
 ## コンポーネント構造
