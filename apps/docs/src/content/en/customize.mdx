@@ -13,7 +13,7 @@ This page explains how to customize the CSS and component behavior available fro
 
 You can disable `@layer` by importing `lism-css/main_no_layer.css` instead of `lism-css/main.css`.
 
-Simply switching the imported CSS file is all that is needed to disable `@layer`.
+Just swap the imported CSS file — no other changes needed.
 
 
 
@@ -100,7 +100,7 @@ For each Property Class, you can adjust the output range or add utility classes.
 
 ### Notes on SCSS compilation
 
-When importing SCSS files directly, be aware that the load order relative to other lism-css CSS may be affected during compilation.
+When importing SCSS files directly, note that compilation order relative to other lism-css styles may be affected.
 
 
 ## Customizing with `lism.config.js`
@@ -172,7 +172,7 @@ export default {
 ### Customization example
 
 
-Consider the following configuration file:
+Here's an example configuration:
 
 <PreviewTitle>Customization example using lism.config.js</PreviewTitle>
 ```js
@@ -233,7 +233,7 @@ Adding props in `lism.config.js` alone does not produce styles for the correspon
 
 ### Hand-write styles for small additions
 
-If you only need a few custom tokens, you don't have to go as far as a CLI rebuild or SCSS reconfiguration. The Lism Props `:value` notation combined with hand-written rules in `global.css` is enough.
+For small additions, you don't need to rebuild via the CLI or reconfigure SCSS. The Lism Props `:value` notation combined with hand-written rules in `global.css` is enough.
 
 ```css
 /* global.css */
@@ -295,8 +295,6 @@ You need to define these manually and load them yourself.
   }
 }
 ```
-
-The build process must be re-run every time the package is updated.
 
 :::warning
 Since this command rebuilds the package styles, it must be run each time the package is updated.

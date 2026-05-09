@@ -10,7 +10,7 @@ import myImage from '@/img/img-1.jpg';
 
 
 `<Media>` is a Lism component for outputting media elements such as images and videos.  
-In the Astro version, Astro's `<Image>` is used by default. In the React version, it outputs an `<img>` tag by default.
+In the Astro version, it uses Astro's `<Image>` component by default. In the React version, it renders a plain `<img>` tag.
 
 ## Import
 
@@ -85,7 +85,7 @@ In the Astro version, Astro's `<Image>` is used by default. In the React version
 
 ### Using Next.js `<Image>`
 
-Next.js `Image` and similar components can be passed via the `as` property.
+You can pass Next.js `Image` or similar third-party components via the `as` prop.
 
 <PreviewTitle>Passing Next.js `Image` via `as`</PreviewTitle>
 ```jsx "as={Image}"
@@ -97,7 +97,7 @@ import Image from 'next/image';
 
 ### Using Astro `<Image>` / `<Picture>`
 
-In `<Media>` imported from `lism-css/astro`, the component is automatically mapped based on the `as` value.
+When using `<Media>` from `lism-css/astro`, the underlying component is resolved automatically based on the `as` value.
 
 | `as` | Output |
 |------|--------|
@@ -105,7 +105,7 @@ In `<Media>` imported from `lism-css/astro`, the component is automatically mapp
 | `"picture"` | Astro `<Picture />` |
 | `"video"` / `"iframe"` etc. | HTML tag as-is |
 
-Since `<Media>` uses Astro's `<Image />` or `<Picture />` internally, all their props are accepted.
+Because `<Media>` wraps Astro's `<Image />` or `<Picture />` internally, it accepts all of their props.
 See the official Astro docs for the full reference:
 [`<Image />`](https://docs.astro.build/en/reference/modules/astro-assets/#image-)&emsp;/&emsp;[`<Picture />`](https://docs.astro.build/en/reference/modules/astro-assets/#picture-)
 

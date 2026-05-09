@@ -63,9 +63,9 @@ svg.a--icon[aria-label="..."][role="img"]
 
 ### Using an external package
 
-Use the common Lism component properties `as` and `exProps`.
+Use the standard Lism component props `as` and `exProps`.
 
-This allows third-party packages such as `react-icons` and `@phosphor-icons/react` to be rendered through `<Icon>`.
+This lets you render icons from third-party packages like `react-icons` and `@phosphor-icons/react` through `<Icon>`.
 
 :::warning
 Note that when using a React-based icon package in Astro, you need to enable React separately on the Astro side.
@@ -90,7 +90,7 @@ import { Icon } from 'lism-css/react';
 </Preview>
 
 
-To explicitly pass properties supported by the external component (such as `SmileyIcon`), use `exProps`.
+To pass props specific to the external component (such as `SmileyIcon`), use `exProps`.
 
 <Preview>
   <PreviewTitle>Specifying props for `SmileyIcon`</PreviewTitle>

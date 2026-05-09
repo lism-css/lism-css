@@ -4,7 +4,7 @@ description: 'An overview of Lism CSS primitive classes (l--, a--) and their usa
 ---
 
 
-Lism provides **Primitive classes** as small building blocks for composing layouts.
+Lism provides **Primitive classes** as small building blocks for assembling layouts.
 
 - `l--{name}`: Layout Primitives that serve as the building blocks of layouts.
 - `a--{name}`: Atomic Primitives that represent the smallest units of a layout.
@@ -31,9 +31,9 @@ Primitives that serve as the building blocks of layouts.
 | <ModLink slug="l--switchColumns" /> | Automatically switches between multi-column and single-column |
 
 
-### Usage guide for column-layout Primitives
+### Choosing a column-layout Primitive
 
-Several Primitives are available for "arranging items in columns". Pick the one that matches your intent.
+Several Primitives can arrange items in columns. Pick the one that best fits your use case.
 
 #### Comparison table
 
@@ -97,7 +97,7 @@ When the main side can no longer maintain `mainW`, the layout automatically swit
 </WithSide>
 ```
 
-If the media element is placed first and marked with `isSide`, you can combine `fxd="row-reverse"` to alternate the side position horizontally while keeping the media consistently on top when stacked.
+If the media element is placed first and marked with `isSide`, combine `fxd="row-reverse"` to alternate sides horizontally — while still keeping the media on top when stacked.
 
 If you need explicit breakpoint-based switching, you can build the same look with <ModLink slug="l--grid" /> using `gta` template switching (`l--withSide` is more declarative and concise).
 

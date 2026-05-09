@@ -8,7 +8,7 @@ export const WhsNw = ({children}) => {
   return <span className='-whs:nowrap'>{children}</span>
 }
 
-This page explains the CSS design principles behind Lism.
+This page covers the CSS design principles behind Lism.
 
 
 {/* Key points are as follows.
@@ -85,7 +85,7 @@ See the [Tokens reference page](/en/docs/tokens/) for details.
 
 ## CSS Class Design
 
-This section explains the design philosophy behind the core class groups in Lism CSS.
+This section explains the design rationale behind the core class groups in Lism CSS.
 
 ### Set Class
 
@@ -112,8 +112,8 @@ Combining Primitives follows these rules:
 
 | Combination | Allowed | Notes |
 |---|---|---|
-| `l--` × `l--` | NG | Same category cannot be combined |
-| `a--` × `a--` | NG | Same category cannot be combined |
+| `l--` × `l--` | Not allowed | Same category cannot be combined |
+| `a--` × `a--` | Not allowed | Same category cannot be combined |
 | `l--` × `a--` | Discouraged | Not intended to coexist |
 
 ### Trait Class
@@ -125,7 +125,7 @@ Combining Primitives follows these rules:
 |`is--` Trait<br /><small>Declares a role ("is a …") on an element</small>|`is--{name}`|`is--container`,<br />`is--wrapper`,<br />`is--layer`,<br />`is--boxLink`|
 |`has--` Trait<br /><small>Attaches a feature ("has a …") to an element</small>|`has--{name}`|`has--transition`,<br />`has--gutter`,<br />`has--snap`|
 
-The decision criteria between `is--` and `has--` are:
+The criteria for choosing between `is--` and `has--` are:
 
 |  | `is--` | `has--` |
 |---|---|---|
@@ -164,7 +164,7 @@ Modifiers are used alongside the Block class, e.g. `.c--button.c--button--outlin
 Elements use a single underscore (`_`) as the separator.
 :::
 
-Combining Blocks (`.c--xxx.c--yyy`) is generally NG, but the following combinations are allowed:
+Combining Blocks (`.c--xxx.c--yyy`) is generally not allowed, but the following combinations are allowed:
 
 - Block with its own Modifier: `.c--xxx.c--xxx--variant`
 - Block with another Block's Element: `.c--xxx.c--yyy_elem`
@@ -243,7 +243,7 @@ When you add your own classes that match one of Lism CSS's existing class catego
 
 If you need to override an existing Lism class, do so within that same layer.
 
-For example, `set--` class redefinitions belong in `@layer lism-base`. In that case, define them after the Lism `main.css` is loaded, or boost the specificity by repeating the class name (e.g. `.set--xxx.set--xxx`) to ensure the override takes effect.
+`set--` overrides belong in `@layer lism-base`. Place them after the Lism `main.css` is loaded, or boost the specificity by repeating the class name (e.g. `.set--xxx.set--xxx`) to ensure the override takes effect.
 
 ```css
 @layer lism-base {

@@ -14,9 +14,9 @@ export const ColorBadge = ({color, label}) => {
     </Cluster>;
 }
 
-This page covers the color-related design tokens defined in Lism CSS. Two types are provided: semantic colors and palette colors.
+This page covers the color design tokens defined in Lism CSS: semantic colors and palette colors.
 
-## COLOR
+## Semantic Colors
 
 | Token | Variable |
 |---|---|
@@ -52,7 +52,7 @@ Adjust these colors to match your site's design.
   </Preview>
 
 
-## PALETTE
+## Palette Colors
 
 | Palette token | Variable |
 |---|---|
@@ -69,12 +69,12 @@ Adjust these colors to match your site's design.
 
 Palette colors are defined in OKLCH.
 
-`--L` is defined as the base lightness value and `--C` as the base chroma value. Adjusting these two values lets you tune the overall palette color.
+`--L` controls the base lightness and `--C` the base chroma. Adjusting these two variables shifts the entire palette at once.
 
 
 ## Using Palette Colors
 
-The `u--cbox` utility class generates `color`, `background-color`, and `border-color` from a `--keycolor` base using `color-mix()`.
+The `u--cbox` utility class derives `color`, `background-color`, and `border-color` from a `--keycolor` base value using `color-mix()`.
 
 <Preview>
   <PreviewTitle>Basic u--cbox usage</PreviewTitle>

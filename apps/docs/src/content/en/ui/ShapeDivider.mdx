@@ -24,7 +24,7 @@ A component that renders a decorative border using SVG.
 </Preview>
 
 
-## How to use
+## Usage
 
 Provided as `ShapeDivider` (`c--shapeDivider`) from the `@lism-css/ui` package.
 
@@ -53,7 +53,7 @@ The source code is available on [GitHub](https://github.com/lism-css/lism-css/tr
 
 ### Placing shapes at the top and bottom of a section
 
-By specifying `flip` to mirror the shape, you can use the same SVG path for both the top and bottom. (You can also prepare separate paths for top and bottom if preferred.)
+Use `flip` to mirror the shape, allowing you to reuse the same SVG path for both the top and bottom dividers. (Separate paths can be provided instead if preferred.)
 
 <Preview>
   <PreviewTitle>Preview</PreviewTitle>
@@ -199,7 +199,7 @@ An example with animation enabled using `isAnimation`.
 
 <Spacer h="1rem"/>
 
-### Offsetting the internal SVG
+### Adjusting position with `stretch` and `offset`
 
 When reusing the same shape at both the top and bottom, simply flipping it may look slightly off.
 In such cases, using `stretch` and `offset` to shift the SVG can produce a more natural result with the same shape.

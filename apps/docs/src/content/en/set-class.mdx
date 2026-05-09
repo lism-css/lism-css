@@ -6,7 +6,7 @@ import { Lism, Box, Media, Flex, Stack, Spacer, Frame, Text } from 'lism-css/ast
 import { Button } from '@lism-css/ui/astro/Button';
 
 
-Utility classes defined in the `lism-base` layer are provided in the format `set--{className}`. They are used for HTML element base styling or for setting variables.
+Utility classes defined in the `lism-base` layer follow the `set--{className}` format. They handle base styling for HTML elements and CSS variable setup.
 
 The set-- classes fall into two categories:
 
@@ -44,9 +44,9 @@ A class for resetting primary styles.
 ## `set--revert`
 
 A class for explicitly reverting to the browser's default appearance.
-On its own it carries no styles (it does not revert every property wholesale).
+On its own it has no effect (it does not do a wholesale revert of every property).
 
-It works only when combined with specific HTML elements, and currently targets only `ul` / `ol`.
+It only takes effect on specific HTML elements, and currently only `ul` / `ol` are supported.
 
 In Lism CSS, list styles are reset on `ul` / `ol` elements that have any class.
 Apply `set--revert` when a list has classes but you still want to keep the list markers (for example, a list that only carries Property Classes).
@@ -137,7 +137,7 @@ By overriding the `--shc` variable here, you can adjust the color tint of the sh
 
 ## `set--var:hov`
 
-Sets the hover state variables (`--_notHov`, `--_isHov``) as follows. Primarily used to **control hover styles on child elements**.
+Sets the hover state variables (`--_notHov`, `--_isHov`). Primarily used to **control hover styles on child elements**.
 
 - `--_isHov` is defined as an empty value only when not hovered (and not focus-within).
 - Conversely, `--_notHov` is defined as an empty value when hovered or focus-within.
@@ -266,7 +266,7 @@ Apply `set--var:bdrsInner` to the parent element, then use `-bdrs:inner` on the 
 
 <Spacer h="1rem" />
 
-Since `p` and `bdrs` are managed as variables even when their values change at breakpoints, `set--var:bdrsInner` also supports responsive border radius.
+Because `p` and `bdrs` are tracked as CSS variables even at different breakpoints, `set--var:bdrsInner` supports responsive border radii automatically.
 
 <Preview>
   <PreviewTitle>Usage example</PreviewTitle>

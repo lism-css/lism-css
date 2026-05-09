@@ -41,8 +41,8 @@ export const PropTable = ({data={}, ...props}) => {
 }
 
 
-Lism provides utility classes for the major CSS properties, making it easy to set frequently used values and tokens.
-For particularly important CSS properties, breakpoint-specific classes are also available.
+Lism provides utility classes for the most common CSS properties, letting you apply frequently used values and tokens with a single class.
+For the most critical properties, responsive breakpoint variants are available too.
 
 These are called **Property Classes** and are defined in the format `-{prop}(:{value})` and `-{prop}_{bp}`.
 
@@ -80,9 +80,9 @@ You can change which classes are output by [customizing via SCSS](/en/docs/custo
 ...*/}
 
 
-## How to read the tables on this page
+## Reading the Tables
 
-The tables below summarize information for each property.
+Each table covers one group of properties.
 
 | Column | Description |
 |---|---|
@@ -90,8 +90,6 @@ The tables below summarize information for each property.
 |**Property**| The corresponding CSS property |
 |**To Class**| Values that are output as Property Utility classes |
 |**BP**| Whether breakpoint support classes (`-{prop}_{bp}`) are available |
-
-The shorthand string is output as a class name. It is also the property name used with `Lism` components.
 
 
 
@@ -276,7 +274,7 @@ Related tokens: <a href="/en/docs/tokens/#size"><code>SIZE</code></a>
 </Preview>
 
 
-## Displays
+## Display
 
 |Shorthand|Prop|To Class|BP|
 |---|---|---|---|
@@ -317,7 +315,7 @@ Related tokens: <a href="/en/docs/tokens/#size"><code>SIZE</code></a>
 </Preview>
 
 
-## Positions
+## Position
 
 |Shorthand|Prop|To Class|BP|
 |---|---|---|---|
@@ -335,7 +333,7 @@ Related tokens: <a href="/en/docs/tokens/#size"><code>SIZE</code></a>
 |`i-y-s`|`inset-block-start`|-|-|
 |`i-y-e`|`inset-block-end`|-|-|
 
-Here are some examples of positioning elements with `position: absolute`.
+The examples below demonstrate positioning with `position: absolute`.
 
 
 <Preview>
@@ -729,9 +727,7 @@ The border specification has some unique behavior. See the [border page](/en/doc
 
 ## hover
 
-In Lism, styles for the `:hover` state are defined with Property classes that start with `-hov:`.
-
-However, `-hov` classes work with a slightly different mechanism compared to regular Property classes.
+In Lism, hover styles use Property Classes prefixed with `-hov:`. These work a little differently from regular Property Classes.
 
 See the [hover page](/en/docs/property-class/hov/) for details.
 

@@ -6,11 +6,11 @@ description: 'l--withSide is a two-column class that automatically switches betw
 import { WithSide, Grid, Box, Frame, Stack } from 'lism-css/astro';
 import { DummyText } from '@lism-css/ui/astro/DummyText';
 
-`l--withSide` is a two-column class that, without relying on media queries or container queries, **automatically switches between horizontal and vertical arrangements based on the content width you want to preserve**.
+`l--withSide` is a two-column class that, without relying on media queries or container queries, **automatically switches between a horizontal and vertical layout based on the minimum width you want to preserve for the main content**.
 
 
 - Specify the width of the side content with `--sideW`, and specify the width you want to preserve as much as possible for the main content with `--mainW`.
-- As long as the main content can preserve `--mainW`, the horizontal arrangement is kept; if it falls below that, it automatically switches to a vertical arrangement.
+- While the main content has enough space to maintain `--mainW`, the layout stays horizontal; once it drops below that threshold, it automatically switches to a vertical layout.
 
 This is useful for layouts such as "image and content" or "main area and sidebar".
 
@@ -137,7 +137,7 @@ This places the side element on the left when horizontal, and at the bottom when
 
 ### Layout with alternating media and text
 
-`l--withSide` can also be used for layouts where media and text are arranged horizontally on wide screens, and stacked vertically on narrow screens.
+`l--withSide` also works for layouts that show media and text side by side on wide screens and stacked on narrow screens.
 
 This is especially useful when multiple "media + text" pairs are stacked, and you want the media position (left/right) to alternate when arranged horizontally, while keeping the media at the top consistently when stacked vertically.
 

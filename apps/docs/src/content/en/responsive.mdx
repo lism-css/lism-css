@@ -5,7 +5,7 @@ description: 'Learn how Lism CSS handles responsive design with breakpoint class
 import { Lism, Box, Spacer } from "lism-css/astro";
 
 
-## Responsive Support
+## Responsive Styling
 
 In Lism, responsive support is implemented by combining classes in the `-{prop}_{bp}` format with variables in the `--{prop}_{bp}` format.
 
@@ -41,13 +41,13 @@ For details on which properties support breakpoint switching by default, refer t
 
 You can also toggle responsive support per property by [customizing via SCSS files](/en/docs/customize/).
 
-### The CSS implementation differs slightly depending on the property
+### The CSS implementation varies by property
 
 There are two patterns:
 
 
 1. Default: Properties that are simply overridden at each breakpoint
-1. Exception: Properties where the value is always accessible via the `-{prop}` variable
+2. Exception: Properties where the value is always accessible via the `-{prop}` variable
 
 <Spacer h="20"></Spacer>
 
@@ -75,7 +75,7 @@ There are two patterns:
 }
 ```
 
-Properties in the exception pattern always let you reference the value via a CSS variable. By default, only a very limited set of properties (`c`, `bgc`, `p`, `m`, `bdrs`) is implemented this way.
+Properties in the exception pattern always expose their value through a CSS variable. By default, only a very limited set of properties (`c`, `bgc`, `p`, `m`, `bdrs`) is implemented this way.
 
 :::info
 In the source code, any property with `alwaysVar: 1` set in [props.ts](https://github.com/lism-css/lism-css/blob/main/packages/lism-css/config/defaults/props.ts) is output using this pattern.
@@ -91,7 +91,7 @@ Lism adopts **container queries** by default.
 Note that with container queries, a **container element** must be defined on an ancestor element in order to switch values at breakpoints.
 :::
 
-<p class="-my-s:10">(To define a container element in Lism, `is--container` is the convenient way to do so.)</p>
+<p class="-my-s:10">(In Lism, the easiest way to define a container element is to add `is--container` to an ancestor.)</p>
 
 You can also switch from container queries to media queries by [customizing via SCSS files](/en/docs/customize/).
 
@@ -114,7 +114,7 @@ Standard support covers `sm` and `md` only. Support for `lg` and beyond requires
 
 <Spacer h="20"></Spacer>
 
-To use these breakpoints in your own project with `.scss`, you can do so as follows:
+To use these breakpoints in your own SCSS files:
 
 ```scss
 @use '../path/to/node_modules/lism-css/scss/query' as query;

@@ -18,9 +18,7 @@ The Reset CSS is defined as the `lism-base.reset` layer.
 <SrcCode path="src/scss/reset.scss" />
 
 
-The reset.css is designed to follow browser default styles as closely as possible.
-
-It is intentionally minimal, containing only what is strictly necessary.
+The reset is designed to stay as close to browser defaults as possible, keeping only what is strictly necessary.
 
 ### Loading only the Lism CSS reset.css
 
@@ -43,7 +41,7 @@ Or alternatively:
 
 In addition to the Reset CSS, the `lism-base` layer defines default base styles for HTML elements, making use of tokens defined on `:root`.
 
-Here, the styles applied to each element are introduced by group.
+The styles are presented below, grouped by element type.
 
 :::note
 For details on the CSS variables (tokens) used in each style, refer to the [Design Tokens](/en/docs/tokens/) page.
@@ -81,10 +79,10 @@ In Lism CSS, the following style is applied to **all elements**.
 }
 ```
 
-Unlike a typical declaration such as `line-height: 1.6`, this approach achieves a **fixed line spacing that is independent of font size**.
+Unlike a typical declaration such as `line-height: 1.6`, this approach produces a **fixed line spacing that does not depend on font size**.
 The formula works by defining the half-leading amount first, then adding it above and below the cap height (approximately `1em`).
 
-Because the line spacing does not grow excessively as font size increases, it helps unify the "**vertical rhythm**" in typography, allowing you to compose layouts with harmonious spacing from headings to body text.
+Because line spacing doesn't grow with font size, it unifies the "**vertical rhythm**" of your typography, letting you compose layouts with harmonious spacing from headings down to body text.
 
 For more details, see [Half-Leading (line-height)](/en/docs/tokens/half-leading/).
 
@@ -192,7 +190,7 @@ hr {
 }
 ```
 
-While the Reset CSS removes list styles from elements with a class, this rule automatically restores the browser default list style for lists that have no class at all.
+While the Reset CSS strips list styles from elements that have a class, this rule automatically restores browser defaults for lists with no class at all.
 
 A `ul` / `ol` decorated only with Property Classes (e.g. `<ul class="-fz:l">`) remains in the reset state. If you want to keep the list markers in that case, add [`set--revert`](/en/docs/set-class#set--revert) explicitly.
 

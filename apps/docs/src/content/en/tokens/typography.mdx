@@ -8,7 +8,7 @@ import { Box, Stack, Cluster, Columns, Frame, Center, Text } from 'lism-css/astr
 import { DummyText } from '@lism-css/ui/astro/DummyText';
 import { FzDemos } from "@/content/token-previews.jsx";
 
-This page covers typography-related design tokens, including font-family, font-size, and line-height.
+This page covers Lism's typography design tokens: font-family, font-size, line-height, and more.
 
 ## FF: font-family
 
@@ -54,7 +54,7 @@ Tokens for `font-weight`.
 |`normal`|`--fw--normal`|`-fw:normal`|`400`|
 |`bold`|`--fw--bold`|`-fw:bold`|`600`|
 
-Numeric utility classes `-fw:100` through `-fw:900` are also available for fine-grained weight control.
+Numeric classes `-fw:100` through `-fw:900` are also available for fine-grained weight control.
 
 <Preview>
   <PreviewTitle>Preview</PreviewTitle>
@@ -125,16 +125,16 @@ Tokens for `font-size`.
 
 ### Font Size Scaling Rules
 
-Lism defines font-size scaling based on mathematically and musically elegant harmonic series.
+Lism scales font sizes using a harmonic series — a progression valued for both its mathematical and musical elegance.
 
 :::info
 Reference: [On typography and spacing scaling design](https://css-notes.com/layout/typography-scaling/)
 :::
 
 
-This approach is sometimes called harmonic modular scaling, and is also introduced in resources such as Every Layout.
+This approach — sometimes called harmonic modular scaling — is also covered in resources like Every Layout.
 
-By default, Lism CSS uses scaling based on the **harmonic series with numerator 8**.
+By default, Lism CSS uses the **harmonic series with numerator 8** as its scale.
 
 :::note
 On this documentation site, `--fz-mol` is set to `7` for English pages.

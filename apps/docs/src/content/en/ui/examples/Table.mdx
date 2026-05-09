@@ -8,7 +8,7 @@ import { Frame } from 'lism-css/astro';
 import Table from '@/components/ex/Table/index.jsx';
 
 
-A general-purpose Table layout example that supports sticky display for the first row and first column.
+A general-purpose table layout that supports sticky headers and a sticky first column.
 
 Border styles are controlled via CSS variables to enable sticky display behavior.
 
@@ -109,7 +109,7 @@ An example of creating and using a component called `Table` (`c--table`).
 
 
 <Preview>
-  <PreviewTitle>Removing left/right borders with --bdwX and specifying th background color</PreviewTitle>
+  <PreviewTitle>Removing side borders with --bdwX and setting a `th` background color</PreviewTitle>
   <PreviewArea p="20">
     <Table thBgc="base-2" bdwX="0px">
       <thead>

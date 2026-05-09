@@ -6,9 +6,7 @@ import { Lism, Flow, Grid, AutoColumns, Columns, Stack, Center, Box, Media, Fram
 import { DummyText } from '@lism-css/ui/astro/DummyText';
 import { Dog, Cat } from "@phosphor-icons/react";
 
-This page introduces the utility classes available in Lism CSS.
-
-These classes are categorized as classes that apply a set of styles or decorations together.
+This page covers the utility classes available in Lism CSS — classes that bundle a set of styles or decorations into a single class name.
 
 
 
@@ -207,7 +205,7 @@ Generates `--c`, `--bgc`, and `--bdc` from the `--keycolor` variable using `colo
 
 Classes for adjusting the half-leading spacing of text.
 
-`u--trim` adjusts only the element's own `margin-block`, while `u--trimAll` trims the top and bottom margins of text-like child elements at once.
+`u--trim` adjusts only the element's own `margin-block`, while `u--trimAll` trims the block margins of all text-like direct children in one go.
 
 <Preview>
   <PreviewTitle>`u--trim`</PreviewTitle>
@@ -273,8 +271,7 @@ Classes for adjusting the half-leading spacing of text.
 
 ## `u--srOnly`
 
-A class for visually hiding an element.
-Use it for screen reader text and similar content.
+Visually hides an element while keeping it accessible to screen readers.
 
 <SrcCode path="src/scss/utility/_srOnly.scss" />
 
@@ -348,7 +345,7 @@ Use it for screen reader text and similar content.
 </Preview>
 
 
-With `u--divide`, you can easily display dividers between items in layouts that switch between horizontal and vertical arrangements.
+`u--divide` makes it easy to show dividers between items in layouts that switch between horizontal and vertical.
 
 <Preview>
   <PreviewTitle>Example</PreviewTitle>
@@ -520,7 +517,7 @@ A class for clipping a background with text.
 
 ## Opt-in
 
-The following are examples of useful utility classes that are not included in the Lism CSS core CSS file.
+These utility classes are not included in the Lism CSS core stylesheet, but they are useful patterns you can add yourself.
 
 ### `u--inlineCenter`
 

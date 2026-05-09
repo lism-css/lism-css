@@ -8,14 +8,14 @@ import { Box, Stack, Cluster, Columns, Frame, Center, Text } from 'lism-css/astr
 import { DummyText } from '@lism-css/ui/astro/DummyText';
 import { SpacingDemos } from "@/content/token-previews.jsx";
 
-This page covers Fibonacci-based spacing tokens and the property classes that support them.
+This page covers Lism's Fibonacci-based spacing tokens and the property classes that use them.
 
 ## SPACE: Spacing Scale
 
-Spacing uses a scaling system based on the Fibonacci sequence ((0, 1,) 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, ...).
+Spacing is built on a scale derived from the Fibonacci sequence ((0, 1,) 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, ...).
 
 By default, `0.5rem ≈ 8px` is used as the scaling unit, with token values `10`, `20`, `30`, ... `80` defined accordingly.
-However, since those intervals can feel too large in practice, `5` and `15` are included as fine-tuning exceptions for the lower end of the scale.
+However, because those gaps can feel too coarse in practice, `5` and `15` are added as fine-tuning steps at the lower end of the scale.
 ```css
 :root {
   /* Fibonacci scale with spacing unit of 8 */
@@ -53,8 +53,7 @@ Reference: [On typography and spacing scaling design](https://css-notes.com/layo
 
 ## Supported Property Classes
 
-Spacing tokens can be used with `padding`, `margin`, and `gap` property classes.
-However, **not all properties support them**.
+Spacing tokens work with `padding`, `margin`, and `gap` property classes, but **not every property has a preset class**.
 
 ### Full Support (Token Values 5–80)
 
@@ -75,7 +74,7 @@ The following properties have property classes for all spacing tokens: `5`, `10`
 
 ### No Preset Classes
 
-The following properties do not have preset spacing token property classes. However, you can still specify values via CSS custom properties (`--px-s`, etc.) or JSX props (`px-s="20"`, etc.).
+These properties have no preset spacing-token classes, but you can still specify values via CSS custom properties (`--px-s`, etc.) or JSX props (`px-s="20"`, etc.).
 
 | Property | CSS |
 |---|---|

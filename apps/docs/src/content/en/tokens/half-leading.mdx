@@ -6,9 +6,9 @@ description: 'How Lism CSS manages line-height through half-leading values, and 
 
 import { DummyText } from '@lism-css/ui/astro/DummyText';
 
-Lism CSS takes a unique approach to `line-height`, managing it through **half-leading values**.
+Lism CSS manages `line-height` through **half-leading values**, which is a somewhat unconventional approach.
 
-Half-leading refers to the spacing above and below a line of text — the space between `line-height` and the actual character height.
+Half-leading is the space above and below a line of text — the gap between the `line-height` value and the actual character height.
 
 
 ## How It Works
@@ -21,7 +21,7 @@ In Lism, the following style is applied to all elements:
 }
 ```
 
-This makes `line-height` depend on the `--hl` variable (which specifies the half-leading amount), enabling layouts where **the spacing between text remains consistent regardless of font size**.
+This ties `line-height` to the `--hl` variable (the half-leading amount), so **the spacing between text stays consistent regardless of font size**.
 
 
 ## Tokens
@@ -93,11 +93,11 @@ The `lh` class uses these variables internally:
 </Preview>
 
 
-## Benefits of Half-Leading Management
+## Why Use Half-Leading?
 
-When `line-height` is set to a typical value like `1.6`, the effective line spacing grows as the font size increases.
+With a typical `line-height` like `1.6`, the effective line spacing grows as the font size increases.
 
-This works fine for body-sized text, but for headings it becomes too large and difficult to read.
+That's fine for body text, but for headings the spacing becomes too large.
 
 By fixing the half-leading to a constant value, the distance between lines stays the same regardless of font size.
 
@@ -118,7 +118,7 @@ By fixing the half-leading to a constant value, the distance between lines stays
 
 <Spacer h="20" />
 
-Additionally, removing half-leading with utility classes becomes straightforward.
+You can also remove half-leading easily using utility classes.
 
 <DocsLink path="/docs/utility-class/#u--trim--u--trimchildren" />
 

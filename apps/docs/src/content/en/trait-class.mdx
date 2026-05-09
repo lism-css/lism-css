@@ -59,8 +59,7 @@ See the [`hover` documentation page](/en/docs/property-class/hov#has--transition
 
 ### `has--gutter`
 
-A class that adds predefined horizontal spacing to the left and right sides of content.
-It is provided as a separate class from padding utilities to reserve a consistent horizontal margin across the entire site.
+Adds consistent horizontal padding (left and right) to content. It is kept separate from the padding utilities so that you can always reserve the same site-wide gutter regardless of other padding applied.
 
 | Class name | Spacing | Default value |
 |---|---|---|
@@ -100,7 +99,7 @@ It is provided as a separate class from padding utilities to reserve a consisten
 
 ### `has--snap`
 
-Allows `scroll-snap-` properties to be set via CSS variables.
+Lets you configure `scroll-snap` properties via CSS variables.
 
 <SrcCode path="src/scss/trait/has/_snap.scss" />
 
@@ -122,7 +121,7 @@ Allows `scroll-snap-` properties to be set via CSS variables.
 
 ### `has--mask`
 
-Applies a mask to the element itself in combination with the `--maskImg` variable.
+Applies a CSS mask to the element, driven by the `--maskImg` variable.
 
 <SrcCode path="src/scss/trait/has/_mask.scss" />
 
@@ -133,7 +132,7 @@ Applies a mask to the element itself in combination with the `--maskImg` variabl
 | `--maskSize` | Mask size | `contain` |
 | `--maskRepeat` | Mask repeat | `no-repeat` |
 
-In Lism components, use `hasMask` together with `css={{ '--maskImg': getSvgUrl(svgString) }}`.
+In Lism components, pass `hasMask` along with `css={{ '--maskImg': getSvgUrl(svgString) }}`.
 
 <Preview>
   <PreviewTitle>Example</PreviewTitle>

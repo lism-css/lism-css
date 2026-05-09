@@ -5,7 +5,7 @@ description: 'A log of all notable changes and updates across Lism CSS releases.
 import { Lism, Divider, Text, Inline, Link } from 'lism-css/astro';
 
 
-Breaking changes may continue frequently until the v1.0 release, so all notable changes will be documented here.
+Breaking changes may continue until v1.0, so all notable changes are documented here.
 
 <Divider bds="dashed" my="40" />
 
@@ -47,7 +47,7 @@ The old `u--collapseGrid` / `util="collapseGrid"` has been removed (no backward-
 
 ### Opacity token renames (#316)
 
-The opacity tokens have been renamed from the numeric step convention with three consecutive hyphens (`--o---10`) to semantic names derived from musical dynamic markings (the piano family). A new token for a light attenuation value (`0.9`), which had not been tokenized before, has also been added — producing a four-stage scale.
+The opacity tokens have been renamed from the numeric step convention with three consecutive hyphens (`--o---10`) to semantic names derived from musical dynamic markings (the piano family). A new token for a light attenuation value (`0.9`) — previously untokenized — has been added, bringing the scale to four steps.
 
 | Old | New | Value |
 |---|---|---|
@@ -397,7 +397,7 @@ Note: Prop names such as `isContainer` / `isWrapper` and `is--*` class names are
 
 ## v.0.8 (Major changes)
 
-### \[Important\] line-height specification has been changed.
+### \[Breaking\] Line-height specification changed
 
 The system has been updated to manage line-height using half-leading.
 

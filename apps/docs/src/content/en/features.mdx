@@ -1,6 +1,6 @@
 ---
 title: 'Features of Lism CSS'
-description: 'A detailed look at the design philosophy and key features of Lism CSS.'
+description: 'An in-depth look at the design approach and key features of Lism CSS.'
 ---
 import { Box, Center, Flex, Frame, Icon, Spacer, Text } from "lism-css/astro";
 
@@ -51,15 +51,15 @@ This is inspired by the concept of **layout primitives** from [Every Layout](htt
 - `l--center` — Centered layout
 - `l--switchColumns` — Layout that automatically switches between columns and stacked based on container width
 
-and many more layout primitives are defined.
+among many other layout primitives.
 
 
 ## Utility design leveraging CSS variables
 
 Like [Tailwind CSS](https://tailwindcss.com/), Lism provides utility classes corresponding to individual CSS properties.  
-However, it does not generate classes for every property × every breakpoint combination.
+However, it does not generate classes for every property–breakpoint combination.
 
-Through a **unique approach combining CSS custom properties**, you can handle responsive layouts flexibly while keeping the CSS footprint small.
+Through a **unique approach built on CSS custom properties**, you can handle responsive layouts flexibly without bloating your CSS.
 
 <Preview>
   <PreviewTitle>Real-world usage example</PreviewTitle>
@@ -88,7 +88,7 @@ This allows you to **easily switch values at breakpoints** for all major CSS pro
 :::
 
 
-## A design philosophy that embraces writing CSS
+## A design approach that expects you to write CSS
 
 Lism CSS takes a different approach from [Tailwind CSS](https://tailwindcss.com/), which puts everything in HTML, and from CSS-in-JS, which encapsulates styles in JSX.
 
@@ -101,7 +101,7 @@ Rather than solving everything with classes, the expectation is that you will wr
 
 ## Layouts independent of media queries
 
-Lism CSS, drawing inspiration from [Every Layout](https://every-layout.dev/), includes several **layout primitives that automatically adapt to their container's width without relying on queries**.
+Inspired by [Every Layout](https://every-layout.dev/), Lism CSS includes several **layout primitives that automatically adapt to their container's width without relying on media queries**.
 
 - `l--autoColumns` — Column count adjusts automatically based on container width
 - `l--switchColumns` — Automatically switches between columns and stacked layout based on container width
@@ -110,8 +110,8 @@ Lism CSS, drawing inspiration from [Every Layout](https://every-layout.dev/), in
 
 ### Container queries adopted by default
 
-Of course, traditional responsive design based on breakpoints is also supported alongside these.  
-However, a distinctive feature is that **container queries are adopted by default** rather than media queries.
+Traditional breakpoint-based responsive design is also supported, of course.  
+What sets Lism apart is that **container queries are used by default** rather than media queries.
 
 :::warning
 Note that **an ancestor element must have a container definition** for responsive value switching with container queries to work correctly.
@@ -119,4 +119,4 @@ Note that **an ancestor element must have a container definition** for responsiv
 :::
 
 Beyond that, there are a few behavioral quirks to be aware of — for example, `position: fixed` behaves differently inside a container element.
-However, in return, components can autonomously switch their layout based on the width of their placement, enabling highly reusable designs that work correctly no matter where they are placed.
+However, in return, components can independently switch their layout based on the width of their context, enabling highly reusable designs that work correctly no matter where they are placed.

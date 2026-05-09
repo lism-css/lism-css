@@ -31,7 +31,7 @@ Specifies the HTML tag or external component to render. Defaults to `div`.
 <p>Lorem ipsum texts...</p>
 ```
 
-By specifying an external component, you can have `<Lism>` **render as a different external component**.
+By passing an external component, you can have `<Lism>` **delegate rendering to that component**.
 
 <Preview>
   <PreviewTitle>Example: rendering Lism's `<Media>` component using Next.js's `<Image>`</PreviewTitle>
@@ -44,8 +44,8 @@ import Image from 'next/image';
   </PreviewCode>
 </Preview>
 
-Lism Props (`p` and `bd` in the example above) are first processed to generate `className` and `style`, which are then passed to the component specified by `as`.
-This is useful when you want to use Lism Props on non-Lism components.
+Lism Props (`p` and `bd` in the example above) are processed first to produce `className` and `style`, which are then forwarded to the component specified by `as`.
+This lets you apply Lism Props to non-Lism components.
 
 
 ## `className`
@@ -157,8 +157,7 @@ For an overview of [Trait Classes](/en/docs/trait-class/), see the following.
 
 Props corresponding to [Property Class](/en/docs/property-class/) (`-{prop}:{value}`).
 
-Use the same shortened CSS property names as the `{prop}` part.
-(e.g. `font-size` can be written as `fz`, and `padding` as `p`.)
+Use the same shortened CSS property names as the `{prop}` part (e.g., `font-size` → `fz`, `padding` → `p`).
 
 
 <Spacer h="10"/>
@@ -213,7 +212,7 @@ The output format is determined by the value specified via `prop={value}`:
 </PreviewCode>
 </Preview>
 
-This is useful when you want to define the variable value in CSS, or when you want to **inherit the same variable from a parent element**.
+Use this to define the variable value in CSS or to **inherit it from a parent element**.
 
 <Preview>
 <PreviewTitle>Variable-only property → CSS variable only</PreviewTitle>
@@ -256,7 +255,7 @@ Even if no corresponding Property Class exists, prefixing a value with `:` will 
 // → <div class="-p:hoge">...</div>
 ```
 
-Add a custom class in your CSS and use it as needed.
+Define the class in your CSS and use it wherever needed.
 
 ```css
 .-p\:hoge {
@@ -316,7 +315,7 @@ For properties that do not support responsive behavior by default (i.e., no CSS 
 
 ## `exProps`
 
-Accepts **props that you want to skip Lism Props processing for** as an object.
+Accepts, as an object, **any props you want to bypass Lism Props processing for**.
 
 This is handy when a prop name of the external component specified via `as` conflicts with a Lism Prop name, and you want to explicitly mark it as belonging to the external component.
 
@@ -331,7 +330,7 @@ This is handy when a prop name of the external component specified via `as` conf
   </PreviewCode>
 </Preview>
 
-By doing this, the Lism `Icon` component processes `p` and `fz`, while the external component `Hoge` reliably receives `size`.
+This way, the Lism `Icon` component processes `p` and `fz`, while the external component `Hoge` reliably receives `size`.
 (In this particular example, `exProps` is not strictly necessary since Lism does not currently process `size`, but explicitly marking external component props ensures no future conflicts.)
 
 
@@ -363,5 +362,5 @@ The `c--*` class can be placed anywhere inside `className`, but we recommend wri
 :::
 
 :::note
-The order within the `class` attribute does not affect the CSS cascade (specificity or cascade order). This ordering exists purely for readability and consistency.
+The order within the `class` attribute does not affect the CSS cascade (specificity or source order). This ordering is purely for readability and consistency.
 :::

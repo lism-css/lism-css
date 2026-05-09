@@ -9,7 +9,7 @@ import { NavMenu } from '@lism-css/ui/astro/NavMenu';
 A component for creating navigation menu lists.
 
 
-## How to use
+## Usage
 
 Provided as `NavMenu` (`c--navMenu`) from the `@lism-css/ui` package.
 
@@ -165,7 +165,7 @@ The source code is available on [GitHub](https://github.com/lism-css/lism-css/tr
 
 Specifying `itemP` sets the `--_item-p` variable, allowing you to control the padding of all items in one place.
 
-However, if you need to change the value at a breakpoint, specify `p` on each `<NavMenu.Link>` individually.
+To change the value at a specific breakpoint, set `p` on each `<NavMenu.Link>` directly.
 
 <Preview>
   <PreviewTitle>Specifying `itemP`</PreviewTitle>
@@ -367,7 +367,7 @@ Since link padding is managed by `--_item-p`, you can use `var(--_item-p)` insid
 
 
 
-### Horizontal menu with hover-triggered child menu
+### Horizontal menu with hover-revealed submenu
 
 An example of adding `fxd='row'` to `<NavMenu.Root>` to display items horizontally.
 

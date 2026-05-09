@@ -3,7 +3,7 @@ title: 'Installation'
 description: 'Learn how to install Lism CSS and get started with the basics.'
 ---
 
-This guide explains how to set up and use Lism CSS.
+This guide walks you through setting up and using Lism CSS.
 
 
 ## CSS-only setup
@@ -104,7 +104,7 @@ React (.jsx) and Astro (.astro) components are distributed as an npm package.
 
 ### 2. Import the CSS
 
-<PreviewTitle>Import it as a global style.</PreviewTitle>
+<PreviewTitle>Import as a global style</PreviewTitle>
 ```js
 import 'lism-css/main.css';
 ```
@@ -175,7 +175,7 @@ import { Accordion, Tabs, Button } from '@lism-css/ui/react';
 
 ### Copy to your project with the CLI
 
-Using `lism-cli`'s `lism ui add`, you can copy UI component source code directly into your project and customize it freely. Component names are specified in PascalCase — the same form you use when importing.
+With `lism-cli`'s `lism ui add`, you can copy UI component source code directly into your project and customize it freely. Specify component names in PascalCase — the same form you use when importing.
 
 ```bash frame="none"
 # Add a component (interactive setup on first run)
@@ -188,7 +188,7 @@ npx lism-cli ui add Accordion Modal Tabs NavMenu
 npx lism-cli ui add --all
 ```
 
-Case, hyphens, and underscores are ignored when resolving names, so `NavMenu` / `navmenu` / `nav-menu` / `nav_menu` all resolve to the same component.
+Name resolution is case-insensitive and ignores hyphens and underscores, so `NavMenu` / `navmenu` / `nav-menu` / `nav_menu` all resolve to the same component.
 
 
 ## AI Tool Integration
