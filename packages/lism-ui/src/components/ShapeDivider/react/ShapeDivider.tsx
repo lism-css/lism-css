@@ -13,7 +13,7 @@ type ShapeDividerProps<T extends ElementType = 'div'> = LismComponentProps<T> & 
   flip?: string;
 };
 
-export default function ShapeDivider<T extends ElementType = 'div'>({
+export function ShapeDivider<T extends ElementType = 'div'>({
   children,
   className,
   viewBox,

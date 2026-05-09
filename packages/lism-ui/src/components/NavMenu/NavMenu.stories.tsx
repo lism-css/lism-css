@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import NavMenu from './react';
+import { NavMenu } from './react';
 
 const meta: Meta = {
   title: 'UI/NavMenu',

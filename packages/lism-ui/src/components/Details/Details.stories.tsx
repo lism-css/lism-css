@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { expect, userEvent, within } from 'storybook/test';
-import Details from './react';
+import { Details } from './react';
 
 const meta: Meta = {
   title: 'UI/Details',

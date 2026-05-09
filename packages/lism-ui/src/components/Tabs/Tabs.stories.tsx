@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { expect, userEvent, within } from 'storybook/test';
-import Tabs from './react';
+import { Tabs } from './react';
 
 const meta: Meta = {
   title: 'UI/Tabs',

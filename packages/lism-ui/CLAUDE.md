@@ -60,15 +60,19 @@ components/ComponentName/
 
 ### エクスポート/インポート
 
-ユーザーが以下のようにしてコンポーネントをインポートして利用できるように、各コンポーネントをエクスポートしている。
+各コンポーネントは **コンポーネント単位の deep path** からの import を推奨している（未使用コンポーネントの混入を確実に避けるため）。
 
 ```js
 // React
-import { Accordion, Modal } from '@lism-css/ui/react';
+import { Accordion } from '@lism-css/ui/react/Accordion';
+import { Modal } from '@lism-css/ui/react/Modal';
 
 // Astro
-import { Accordion, Modal } from '@lism-css/ui/astro';
+import { Accordion } from '@lism-css/ui/astro/Accordion';
+import { Modal } from '@lism-css/ui/astro/Modal';
 ```
+
+`@lism-css/ui/react` / `@lism-css/ui/astro` からの一括 import (barrel) も互換のため残しているが、ドキュメント・サンプルコードでは原則 deep path 形式を使うこと（`installation.mdx` のみ barrel についての注釈あり）。
 
 
 ## 注意事項

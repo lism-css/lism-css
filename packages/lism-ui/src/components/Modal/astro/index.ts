@@ -4,4 +4,6 @@ import Body from './Body.astro';
 import CloseBtn from './CloseBtn.astro';
 import OpenBtn from './OpenBtn.astro';
 
-export default { Root, Inner, Body, CloseBtn, OpenBtn };
+const Modal = { Root, Inner, Body, CloseBtn, OpenBtn };
+
+export { Modal };

@@ -1,1 +1,1 @@
-export { default } from './Callout';
+export { Callout } from './Callout';

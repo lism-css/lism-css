@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import Chat from './react/Chat';
+import { Chat } from './react/Chat';
 
 const meta: Meta<typeof Chat> = {
   title: 'UI/Chat',

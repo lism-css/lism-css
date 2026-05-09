@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import DummyText from './react/DummyText';
+import { DummyText } from './react/DummyText';
 
 const meta: Meta<typeof DummyText> = {
   title: 'UI/DummyText',

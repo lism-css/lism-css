@@ -4,4 +4,6 @@ import List from './List';
 import Panel from './Panel';
 import Tab from './Tab';
 
-export default { Root, List, Panel, Item, Tab };
+const Tabs = { Root, List, Panel, Item, Tab };
+
+export { Tabs };

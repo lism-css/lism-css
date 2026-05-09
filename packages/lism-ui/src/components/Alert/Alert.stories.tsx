@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import Alert from './react/Alert';
+import { Alert } from './react/Alert';
 import PRESETS from './presets';
 
 const presetTypes = Object.keys(PRESETS);

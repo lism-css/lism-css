@@ -38,11 +38,15 @@ import 'lism-css/main.css';
 ```jsx
 // React
 import { Flex, Stack, Grid, Columns } from 'lism-css/react';
-import { Accordion, Tabs, Button } from '@lism-css/ui/react';
+import { Accordion } from '@lism-css/ui/react/Accordion';
+import { Tabs } from '@lism-css/ui/react/Tabs';
+import { Button } from '@lism-css/ui/react/Button';
 
 // Astro
 import { Flex, Stack, Grid, Columns } from 'lism-css/astro';
-import { Accordion, Tabs, Button } from '@lism-css/ui/astro';
+import { Accordion } from '@lism-css/ui/astro/Accordion';
+import { Tabs } from '@lism-css/ui/astro/Tabs';
+import { Button } from '@lism-css/ui/astro/Button';
 ```
 
 

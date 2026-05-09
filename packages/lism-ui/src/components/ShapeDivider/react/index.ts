@@ -1,1 +1,1 @@
-export { default } from './ShapeDivider';
+export { ShapeDivider } from './ShapeDivider';
