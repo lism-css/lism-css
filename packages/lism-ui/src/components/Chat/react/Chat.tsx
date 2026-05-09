@@ -14,7 +14,7 @@ type Props<T extends ElementType = 'div'> = LayoutComponentProps<T, GridLayoutPr
   keycolor?: string;
 };
 
-export default function Chat<T extends ElementType = 'div'>({
+export function Chat<T extends ElementType = 'div'>({
   name,
   avatar,
   flow = 's',

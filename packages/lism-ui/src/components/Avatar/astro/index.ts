@@ -1,1 +1,3 @@
-export { default } from './Avatar.astro';
+import Avatar from './Avatar.astro';
+
+export { Avatar };

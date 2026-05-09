@@ -15,9 +15,10 @@
   "scripts": {
     "format": "prettier --write . --ignore-path ../../.prettierignore",
     "dev": "vite",
-    "build": "pnpm gen:registry && vite build && pnpm build:css",
+    "build": "pnpm gen:registry && vite build && pnpm gen:exports && pnpm build:css",
     "build:css": "node build-css.js",
     "gen:registry": "tsx scripts/generate-registry-index.ts && prettier --write registry-index.json --log-level warn",
+    "gen:exports": "tsx scripts/generate-exports.ts && prettier --write package.json --log-level warn",
     "typecheck": "tsc --noEmit && pnpm typecheck:astro",
     "typecheck:astro": "astro check --tsconfig tsconfig.astro.json",
     "test": "vitest run",
@@ -37,8 +38,99 @@
       "import": "./dist/components/react.js",
       "types": "./dist/components/react.d.ts"
     },
+    "./react/Accordion": {
+      "import": "./dist/components/Accordion/react/index.js",
+      "types": "./dist/components/Accordion/react/index.d.ts"
+    },
+    "./react/Alert": {
+      "import": "./dist/components/Alert/react/Alert.js",
+      "types": "./dist/components/Alert/react/index.d.ts"
+    },
+    "./react/Avatar": {
+      "import": "./dist/components/Avatar/react/Avatar.js",
+      "types": "./dist/components/Avatar/react/index.d.ts"
+    },
+    "./react/Badge": {
+      "import": "./dist/components/Badge/react/Badge.js",
+      "types": "./dist/components/Badge/react/index.d.ts"
+    },
+    "./react/Button": {
+      "import": "./dist/components/Button/react/Button.js",
+      "types": "./dist/components/Button/react/index.d.ts"
+    },
+    "./react/Callout": {
+      "import": "./dist/components/Callout/react/Callout.js",
+      "types": "./dist/components/Callout/react/index.d.ts"
+    },
+    "./react/Chat": {
+      "import": "./dist/components/Chat/react/Chat.js",
+      "types": "./dist/components/Chat/react/index.d.ts"
+    },
+    "./react/Details": {
+      "import": "./dist/components/Details/react/index.js",
+      "types": "./dist/components/Details/react/index.d.ts"
+    },
+    "./react/DummyText": {
+      "import": "./dist/components/DummyText/react/DummyText.js",
+      "types": "./dist/components/DummyText/react/index.d.ts"
+    },
+    "./react/Modal": {
+      "import": "./dist/components/Modal/react/index.js",
+      "types": "./dist/components/Modal/react/index.d.ts"
+    },
+    "./react/NavMenu": {
+      "import": "./dist/components/NavMenu/react/index.js",
+      "types": "./dist/components/NavMenu/react/index.d.ts"
+    },
+    "./react/ShapeDivider": {
+      "import": "./dist/components/ShapeDivider/react/ShapeDivider.js",
+      "types": "./dist/components/ShapeDivider/react/index.d.ts"
+    },
+    "./react/Tabs": {
+      "import": "./dist/components/Tabs/react/index.js",
+      "types": "./dist/components/Tabs/react/index.d.ts"
+    },
     "./astro": {
       "import": "./src/components/astro.ts"
+    },
+    "./astro/Accordion": {
+      "import": "./src/components/Accordion/astro/index.ts"
+    },
+    "./astro/Alert": {
+      "import": "./src/components/Alert/astro/index.ts"
+    },
+    "./astro/Avatar": {
+      "import": "./src/components/Avatar/astro/index.ts"
+    },
+    "./astro/Badge": {
+      "import": "./src/components/Badge/astro/index.ts"
+    },
+    "./astro/Button": {
+      "import": "./src/components/Button/astro/index.ts"
+    },
+    "./astro/Callout": {
+      "import": "./src/components/Callout/astro/index.ts"
+    },
+    "./astro/Chat": {
+      "import": "./src/components/Chat/astro/index.ts"
+    },
+    "./astro/Details": {
+      "import": "./src/components/Details/astro/index.ts"
+    },
+    "./astro/DummyText": {
+      "import": "./src/components/DummyText/astro/index.ts"
+    },
+    "./astro/Modal": {
+      "import": "./src/components/Modal/astro/index.ts"
+    },
+    "./astro/NavMenu": {
+      "import": "./src/components/NavMenu/astro/index.ts"
+    },
+    "./astro/ShapeDivider": {
+      "import": "./src/components/ShapeDivider/astro/index.ts"
+    },
+    "./astro/Tabs": {
+      "import": "./src/components/Tabs/astro/index.ts"
     },
     "./scripts/*": "./dist/scripts/*.js",
     "./style.css": "./dist/style.css"

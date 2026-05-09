@@ -1,1 +1,1 @@
-export { default } from './DummyText';
+export { DummyText } from './DummyText';

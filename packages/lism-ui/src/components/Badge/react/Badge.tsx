@@ -6,7 +6,7 @@ import '../_style.css';
 
 type BadgeOwnProps = { variant?: string };
 
-export default function Badge<T extends ElementType = 'span'>(props: LismComponentProps<T> & BadgeOwnProps) {
+export function Badge<T extends ElementType = 'span'>(props: LismComponentProps<T> & BadgeOwnProps) {
   const { variant, className, ...rest } = props as { variant?: string; className?: string } & Record<string, unknown>;
   return (
     <Lism

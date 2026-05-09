@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import Callout from './react/Callout';
+import { Callout } from './react/Callout';
 import PRESETS from './presets';
 
 const presetTypes = Object.keys(PRESETS);

@@ -1,1 +1,3 @@
-export { default } from './Chat.astro';
+import Chat from './Chat.astro';
+
+export { Chat };

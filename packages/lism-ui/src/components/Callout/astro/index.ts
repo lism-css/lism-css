@@ -1,1 +1,3 @@
-export { default } from './Callout.astro';
+import Callout from './Callout.astro';
+
+export { Callout };

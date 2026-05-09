@@ -4,4 +4,6 @@ import List from './List.astro';
 import Panel from './Panel.astro';
 import Tab from './Tab.astro';
 
-export default { Root, List, Panel, Item, Tab };
+const Tabs = { Root, List, Panel, Item, Tab };
+
+export { Tabs };

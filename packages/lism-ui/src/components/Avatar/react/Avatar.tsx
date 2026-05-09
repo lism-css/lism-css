@@ -9,7 +9,7 @@ type AvatarProps<T extends ElementType = 'div'> = LayoutComponentProps<T, FrameP
   alt?: string;
 };
 
-export default function Avatar<T extends ElementType = 'div'>({ size = '1.5em', src = '', alt = '', className, ...props }: AvatarProps<T>) {
+export function Avatar<T extends ElementType = 'div'>({ size = '1.5em', src = '', alt = '', className, ...props }: AvatarProps<T>) {
   return (
     <Frame className={atts(className, 'c--avatar')} ar="1/1" w={size} bdrs="99" {...(props as LayoutComponentProps<T, FrameProps>)}>
       <img src={src} alt={alt} width="100%" height="100%" decoding="async" />

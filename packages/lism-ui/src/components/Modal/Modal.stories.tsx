@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { expect, userEvent, within, waitFor } from 'storybook/test';
-import Modal from './react';
+import { Modal } from './react';
 
 const meta: Meta = {
   title: 'UI/Modal',

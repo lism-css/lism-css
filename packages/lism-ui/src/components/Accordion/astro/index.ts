@@ -5,4 +5,6 @@ import Button from './Button.astro';
 import Icon from './Icon.astro';
 import Panel from './Panel.astro';
 
-export default { Root, Item, Heading, Panel, Icon, Button };
+const Accordion = { Root, Item, Heading, Panel, Icon, Button };
+
+export { Accordion };

@@ -1,1 +1,3 @@
-export { default } from './ShapeDivider.astro';
+import ShapeDivider from './ShapeDivider.astro';
+
+export { ShapeDivider };

@@ -5,4 +5,6 @@ import Button from './Button';
 import Panel from './Panel';
 import Icon from './Icon';
 
-export default { Root, Item, Heading, Button, Panel, Icon };
+const Accordion = { Root, Item, Heading, Button, Panel, Icon };
+
+export { Accordion };

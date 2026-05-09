@@ -1,5 +1,5 @@
 import { Box, Inline, Stack, Center } from 'lism-css/react';
-import { DummyText } from '@lism-css/ui/react';
+import { DummyText } from '@lism-css/ui/react/DummyText';
 
 export const FzDemos = ({ lang = 'ja' }) => (
   <Stack g="20" ar="16/9" ov-y="auto" ov-x="clip" p="15">

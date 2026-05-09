@@ -3,4 +3,6 @@ import Nest from './Nest.astro';
 import Item from './Item.astro';
 import Link from './Link.astro';
 
-export default { Root, Nest, Item, Link };
+const NavMenu = { Root, Nest, Item, Link };
+
+export { NavMenu };

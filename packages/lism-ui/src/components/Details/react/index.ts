@@ -4,4 +4,6 @@ import Title from './Title';
 import Icon from './Icon';
 import Content from './Content';
 
-export default { Root, Summary, Title, Icon, Content };
+const Details = { Root, Summary, Title, Icon, Content };
+
+export { Details };

@@ -153,11 +153,24 @@ import { Box, Flex, ... } from 'lism-css/astro';
 
 ```js frame="none"
 // Reactコンポーネントをインポートする例
-import { Accordion, Tabs, Button } from '@lism-css/ui/react';
+import { Accordion } from '@lism-css/ui/react/Accordion';
+import { Tabs } from '@lism-css/ui/react/Tabs';
+import { Button } from '@lism-css/ui/react/Button';
 
 // .astro でインポートする例
-import { Accordion, Tabs, Button } from '@lism-css/ui/astro';
+import { Accordion } from '@lism-css/ui/astro/Accordion';
+import { Tabs } from '@lism-css/ui/astro/Tabs';
+import { Button } from '@lism-css/ui/astro/Button';
 ```
+
+:::tip[個別パスでの import を推奨します]
+`@lism-css/ui/react` / `@lism-css/ui/astro` から複数コンポーネントを一括で import することもできますが、ビルド環境によっては未使用コンポーネントのコードや CSS まで bundle に含まれてしまう可能性があります。**本番ビルドでは、上記のようにコンポーネント単位の deep path から import することを推奨します。**
+
+```jsx
+// 一括 import も動作はしますが、推奨はしません
+import { Accordion, Tabs, Button } from '@lism-css/ui/react';
+```
+:::
 
 
 ### CLI でプロジェクトにコピーする

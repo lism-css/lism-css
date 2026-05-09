@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { expect, userEvent, within, waitFor } from 'storybook/test';
-import Accordion from './react';
+import { Accordion } from './react';
 
 const meta: Meta = {
   title: 'UI/Accordion',

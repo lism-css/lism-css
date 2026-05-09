@@ -1,1 +1,3 @@
-export { default } from './Button.astro';
+import Button from './Button.astro';
+
+export { Button };

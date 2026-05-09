@@ -1,1 +1,3 @@
-export { default } from './DummyText.astro';
+import DummyText from './DummyText.astro';
+
+export { DummyText };

@@ -3,7 +3,7 @@ import { Flow, Flex, Stack, Icon, Center, type LismComponentProps } from 'lism-c
 import atts from 'lism-css/lib/helper/atts';
 import getCalloutProps, { type CalloutProps } from '../getProps';
 
-export default function Callout<T extends ElementType = 'div'>({ children, className, ...inputProps }: CalloutProps & LismComponentProps<T>) {
+export function Callout<T extends ElementType = 'div'>({ children, className, ...inputProps }: CalloutProps & LismComponentProps<T>) {
   const { icon, title, flow, ...calloutProps } = getCalloutProps(inputProps);
 
   return (

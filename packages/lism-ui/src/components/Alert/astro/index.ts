@@ -1,1 +1,3 @@
-export { default } from './Alert.astro';
+import Alert from './Alert.astro';
+
+export { Alert };

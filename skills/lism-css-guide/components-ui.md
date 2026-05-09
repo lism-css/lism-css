@@ -2,12 +2,20 @@
 
 `@lism-css/ui` パッケージには、Lism CSS の上に構築されたインタラクティブな UI コンポーネントが含まれます。
 
+import は **コンポーネント単位の deep path** （`@lism-css/ui/{react,astro}/<Component>`）から行うこと。`@lism-css/ui/react` / `@lism-css/ui/astro` からの一括 import は使わない。
+
 ```jsx
 // React
-import { Accordion, Tabs, Modal, Button } from '@lism-css/ui/react';
+import { Accordion } from '@lism-css/ui/react/Accordion';
+import { Tabs } from '@lism-css/ui/react/Tabs';
+import { Modal } from '@lism-css/ui/react/Modal';
+import { Button } from '@lism-css/ui/react/Button';
 
 // Astro
-import { Accordion, Tabs, Modal, Button } from '@lism-css/ui/astro';
+import { Accordion } from '@lism-css/ui/astro/Accordion';
+import { Tabs } from '@lism-css/ui/astro/Tabs';
+import { Modal } from '@lism-css/ui/astro/Modal';
+import { Button } from '@lism-css/ui/astro/Button';
 ```
 
 ## TOC

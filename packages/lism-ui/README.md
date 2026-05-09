@@ -66,10 +66,15 @@ export default defineConfig({
 
 ## Usage
 
+Each component is exposed as its own deep import path (`@lism-css/ui/{react,astro}/<Component>`). This is the recommended form — it ensures only the components you actually use are bundled.
+
+A barrel entry (`@lism-css/ui/react` / `@lism-css/ui/astro`) is also available for compatibility, but for production builds we recommend the per-component imports shown below.
+
 ### React
 
 ```jsx
-import { Accordion, Button } from '@lism-css/ui/react';
+import { Accordion } from '@lism-css/ui/react/Accordion';
+import { Button } from '@lism-css/ui/react/Button';
 import { Text } from 'lism-css/react';
 
 <Accordion.Root>
@@ -92,7 +97,8 @@ import { Text } from 'lism-css/react';
 
 ```astro
 ---
-import { Accordion, Button } from '@lism-css/ui/astro';
+import { Accordion } from '@lism-css/ui/astro/Accordion';
+import { Button } from '@lism-css/ui/astro/Button';
 import { Text } from 'lism-css/astro';
 ---
 

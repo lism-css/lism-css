@@ -153,11 +153,24 @@ import { Box, Flex, ... } from 'lism-css/astro';
 
 ```js frame="none"
 // Example: importing React components
-import { Accordion, Tabs, Button } from '@lism-css/ui/react';
+import { Accordion } from '@lism-css/ui/react/Accordion';
+import { Tabs } from '@lism-css/ui/react/Tabs';
+import { Button } from '@lism-css/ui/react/Button';
 
 // Example: importing in .astro
-import { Accordion, Tabs, Button } from '@lism-css/ui/astro';
+import { Accordion } from '@lism-css/ui/astro/Accordion';
+import { Tabs } from '@lism-css/ui/astro/Tabs';
+import { Button } from '@lism-css/ui/astro/Button';
 ```
+
+:::tip[Per-component imports are recommended]
+You can also import multiple components at once from `@lism-css/ui/react` / `@lism-css/ui/astro`, but depending on your build environment, code and CSS for unused components may end up bundled. **For production builds, we recommend importing each component from its deep path as shown above.**
+
+```jsx
+// Bulk import works, but is not recommended
+import { Accordion, Tabs, Button } from '@lism-css/ui/react';
+```
+:::
 
 
 ### Copy to your project with the CLI

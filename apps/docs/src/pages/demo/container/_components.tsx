@@ -2,7 +2,7 @@
 import React from 'react';
 
 import { Lism, Layer, Flex } from 'lism-css/react';
-import { DummyText } from '@lism-css/ui/react';
+import { DummyText } from '@lism-css/ui/react/DummyText';
 
 export function AttsLabels({ atts = '', ...props }) {
   // attsを , で分割
