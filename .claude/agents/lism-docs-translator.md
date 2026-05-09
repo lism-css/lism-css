@@ -55,12 +55,15 @@ ja版で日本語プレースホルダーテキストが使われている箇所
 ### 翻訳の品質基準
 
 - **自然な英語**: 直訳ではなく、英語圏の技術ドキュメントとして自然な表現を使う
-- **文体**: 技術ドキュメントとしてフォーマルかつ親しみやすいトーン
-- **一貫性**: 用語は統一する（例: 「コンポーネント」→ "component"、「トークン」→ "token"）
-- **簡潔さ**: 冗長な表現は避け、明確に伝える
+- **文体**: 技術ドキュメントとしてフォーマルかつ親しみやすいトーン。Tailwind CSS / MDN / Astro / Radix UI / Every Layout の docs を参考に
+- **一貫性**: 用語は統一する（下記の用語対応表を必ず参照）
+- **簡潔さ**: 冗長な表現は避け、明確に伝える。短文を不必要に分割しない（「〜です。〜です。」の直訳的な連発は1文に統合）
+- **能動態優先**: 「〜が用意されています」「〜が提供されます」のような受動態は、可能な限り `Lism provides…` / `You can use…` のような能動態に置き換える
 
 
 ## 主要な用語対応表
+
+### 基本語彙
 
 | 日本語 | 英語 |
 |--------|------|
@@ -69,11 +72,114 @@ ja版で日本語プレースホルダーテキストが使われている箇所
 | プリミティブ | primitive |
 | レイアウト | layout |
 | ユーティリティ | utility |
-| プロップ / Props | prop / props |
+| プロップ / Props | prop / props（**property ではない** — JSX/React 文脈では prop が標準） |
 | 読み込む | import / load |
 | 出力 | output |
 | 初期値 / デフォルト値 | default value |
 | 省略可 | optional |
+
+### 見出し・セクションタイトル
+
+| 日本語 | 英語 |
+|--------|------|
+| 使い方 | **Usage**（× How to use） |
+| lism-css のみ／lism-css だけ | **Without @lism-css/ui**（× Only lism-css） |
+| 〜の例／〜の作成例 | **Examples** / **Examples of X built with Lism**（× Examples of creating X / Examples of using X to display Y） |
+| 〜について | （セクションタイトルでは省略：× About X → ✅ X） |
+| レスポンシブ対応 | Responsive styling（× Responsive support） |
+| 利用ガイド | Choosing a X（× Usage guide for X） |
+
+### 表現・接続語
+
+| 日本語 | 英語 |
+|--------|------|
+| 〜したい時に便利 | Use this to… / This lets you…（× This is useful when you want to…） |
+| 〜を使うと簡単に〜できます | X makes it easy to Y / X lets you Y（× With X, you can easily Y） |
+| 以下が〜の例です／〜は次の通り | （前置きを削除して直接本題へ） |
+| もちろん〜、ただし〜 | （直接 contrast を導入。× Of course X. However Y.） |
+| 主要な | most common / key / primary（× major） |
+| 便利な／快適な | easy / smooth / productive（× convenient / comfortable） |
+| NG | Not allowed / No（× NG — 和製英語、英語docsで通じない） |
+| 重要 [変更履歴文脈] | **[Breaking]**（× [Important]） |
+| 前半／後半 | first part / second part（× front half / back half） |
+| 基本的に | generally（× basically — filler） |
+
+
+## 避けるべき直訳パターン（Before → After）
+
+### 見出し（procedure 風から名詞句へ）
+
+| Before | After | 理由 |
+|--------|-------|------|
+| `### Changing the X and adding Y` | `### Custom X with Y` | 動名詞連結はJP直訳。英語docs見出しは名詞句 |
+| `### Switching the layout` | `### Layout variants` / `### Layout options` | 動名詞→名詞句 |
+| `### Displaying X side by side` | `### Side-by-side X layout` | 同上 |
+| `### Fixing the height` | `### Fixed height` | "Fixing" はバグ修正の意に取られる |
+| `## Benefits of X Management` | `## Why Use X?` | 名詞重畳→修辞疑問形 |
+| `## How to read the tables on this page` | `## Reading the Tables` | 冗長 |
+| `## Displays` / `## Positions` | `## Display` / `## Position` | CSSプロパティ名は単数 |
+| `## COLOR` / `## PALETTE` | `## Semantic Colors` / `## Palette Colors` | all-caps 見出しは英語docsで非標準。Title Case に統一 |
+
+### 構文（受動態・冗長な前置きの解消）
+
+| Before | After |
+|--------|-------|
+| `This allows X to be rendered through Y.` | `This lets you render X through Y.` |
+| `X is provided as Y.` | `X is available as Y.` / `Lism provides X as Y.` |
+| `Here is an example of X using Y.` | `This example uses Y to X.` |
+| `The following are useful Xs that …` | `These Xs are useful for …` |
+| `By doing this, …` | `This way, …` / `As a result, …` |
+| `Consider the following configuration:` | `Here's an example configuration:` |
+| `You can do so as follows:` | （削除して直接コードブロックへ） |
+
+### 単語選択・表記揺れ
+
+| Before | After | 補足 |
+|--------|-------|------|
+| `the as property` | `the as prop` | コンポーネントAPI 文脈では prop |
+| `slightly unique` | `slightly different` | unique は absolute（程度副詞と共起しない） |
+| `× （掛け算記号）`を散文中で | `–` (en-dash) または `and` | "every property × every breakpoint" → "every property–breakpoint combination" |
+| 短文2連 `X is Y. It is Z.` | 1文に統合 | 「〜です。〜です。」の直訳 |
+| カンマ＋句点 `## Zero-build, works in any environment.` | em-dash 構成 / 句点削除 | 見出しの混在不自然 |
+
+
+## セルフチェックリスト（翻訳完了前に必ず確認）
+
+各ファイルの翻訳・更新を終えた後、以下を順に確認してから報告すること：
+
+1. **見出し統一**
+   - [ ] `## How to use` を使っていない（→ `## Usage`）
+   - [ ] `## Only lism-css` を使っていない（→ `## Without @lism-css/ui`）
+   - [ ] `### Examples of creating/using X` を使っていない（→ `### Examples of X built with Lism`）
+   - [ ] all-caps の見出しがない（`## COLOR` など）。Title Case か Sentence case に統一
+   - [ ] 動名詞始まりの見出し（`### Changing X`, `### Switching Y`, `### Adding Z`）→ 名詞句に変換可能か再検討
+
+2. **構文**
+   - [ ] `This is useful when you want to…` を使っていない（→ `Use this to…`）
+   - [ ] `With X, you can easily Y` を使っていない（→ `X makes it easy to Y`）
+   - [ ] `Here are some examples of…` / `The following are…` のような前置きを削除済み
+   - [ ] `Of course … However …` のような JP 直訳的 contrast を解消
+   - [ ] 受動態（`is provided`, `is defined`, `are used`）を能動態に置き換え可能か検討
+
+3. **語彙**
+   - [ ] `major` を `key` / `most common` に置換検討
+   - [ ] `convenient` / `comfortable` を `easy` / `smooth` に置換検討
+   - [ ] `NG` を `Not allowed` / `No` に置換
+   - [ ] `[Important]` を `[Breaking]` に（changelog 文脈の場合）
+   - [ ] `property` / `prop` の用法を確認（コンポーネントAPI は **prop**）
+   - [ ] CSSプロパティ名の単複を確認（`Display` / `Position` は単数）
+
+4. **整合性**
+   - [ ] 見出しの大文字化スタイルがファイル内で統一されている（Title Case か Sentence case）
+   - [ ] 同じ概念に同じ訳語を使っている（用語対応表参照）
+   - [ ] 短文連発を統合済み（「〜です。〜です。」の直訳がない）
+
+5. **タイポ・記号**
+   - [ ] バッククォートやマークダウン記号の閉じ忘れ・過剰がない（例: `` `--_isHov`\` `` のような余計な \\` ）
+   - [ ] 英語ネイティブから見て不自然な記号（散文中の `×` など）がない
+   - [ ] `slightly unique` のような文法誤用がない
+
+セルフチェックで問題が見つかった場合は、報告前に修正すること。
 
 
 ## 作業手順
