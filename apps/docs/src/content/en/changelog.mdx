@@ -37,6 +37,18 @@ This release contains **breaking changes**.
 - Unified styles for `blockquote` and `pre`, and added italic style to `q` and `blockquote`
 - Adjusted `lts` tokens and added `xl` size
 
+### `@lism-css/ui` v.0.17.0 (2026.05.09)
+
+**Deep path import support (#354)**
+
+- Each component can now be imported individually via `@lism-css/ui/react/{Name}` / `@lism-css/ui/astro/{Name}` deep paths.
+- Deep path import is recommended in docs and examples since it reliably avoids pulling in unused components.
+
+**Other**
+
+- All components are now exposed as named exports (barrel imports remain compatible since they were already named).
+- Added a `gen:exports` script that auto-generates `exports` from `src/components/`, regenerated and committed during build.
+
 <Divider bds="dashed" my="40" />
 
 ## lism-css v.0.16.1 (2026.04.29)

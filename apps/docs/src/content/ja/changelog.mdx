@@ -37,6 +37,18 @@ v.1.0リリースまでしばらく激しい変更が続く可能性があるた
 - `blockquote`, `pre` のスタイルを共通化し、`q`, `blockquote` にイタリックを追加
 - `lts` トークンを微調整し `xl` を追加
 
+### `@lism-css/ui` v.0.17.0 (2026.05.09)
+
+**Deep path import 対応 (#354)**
+
+- 各コンポーネントを `@lism-css/ui/react/{Name}` / `@lism-css/ui/astro/{Name}` の deep path から個別に import できるよう exports に追加
+- 未使用コンポーネントの混入を確実に避けられるため、ドキュメント・サンプルでは原則 deep path 形式を推奨
+
+**その他**
+
+- 全コンポーネントを named export に統一（barrel 経由は従来から named のため互換）
+- `src/components/` から exports を自動生成する `gen:exports` スクリプトを追加し、ビルド時に再生成・commit
+
 <Divider bds="dashed" my="40" />
 
 ## lism-css v.0.16.1 (2026.04.29)
