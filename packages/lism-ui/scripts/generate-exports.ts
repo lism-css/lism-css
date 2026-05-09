@@ -7,6 +7,7 @@ import { fileURLToPath } from 'node:url';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const PKG_ROOT = path.resolve(__dirname, '..');
 const COMPONENTS_DIR = path.resolve(PKG_ROOT, 'src/components');
+const DIST_COMPONENTS_DIR = path.resolve(PKG_ROOT, 'dist/components');
 const PKG_JSON = path.resolve(PKG_ROOT, 'package.json');
 
 interface ExportEntry {
@@ -28,13 +29,12 @@ function getComponentNames(): string[] {
     .sort();
 }
 
-// シンプル系（`react/index.ts` が単一の re-export だけ）はビルド時に index.js が出力されない
-// ため、`X.js` を直接指す。コンパウンド系は通常通り index.js。
+// シンプル系（`react/index.ts` が単一の re-export だけ）はビルド時に index.js が
+// 出力されないため、dist の実体を見て `X.js` か `index.js` を切り替える。
+// この前提で本スクリプトは vite build の後ろで走らせる必要がある。
 function getReactDistEntryFile(componentName: string): string {
-  const indexPath = path.join(COMPONENTS_DIR, componentName, 'react/index.ts');
-  const src = fs.readFileSync(indexPath, 'utf-8').trim();
-  const match = src.match(/^export\s*\{\s*default\s*\}\s*from\s*['"]\.\/([^'"]+)['"]\s*;?\s*$/);
-  return match ? `${match[1]}.js` : 'index.js';
+  const distDir = path.join(DIST_COMPONENTS_DIR, componentName, 'react');
+  return fs.existsSync(path.join(distDir, 'index.js')) ? 'index.js' : `${componentName}.js`;
 }
 
 function buildExports(componentNames: string[]): ExportsField {
