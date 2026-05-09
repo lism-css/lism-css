@@ -9,6 +9,36 @@ v.1.0リリースまでしばらく激しい変更が続く可能性があるた
 
 <Divider bds="dashed" my="40" />
 
+## lism-css v.0.17.0 (2026.05.09)
+
+**破壊的変更**を含むリリースです。
+
+### `-max-sz:bleed` の新設 (#360)
+
+- `-max-sz:container` を廃止し、最外側の `is--container` 幅まで広がる full-bleed 用途のクラスとして `-max-sz:bleed` を新設
+- `--sz--bleed` の initial-value を `100svi` にすることで、`is--container` 祖先がない場合は viewport 幅まで広がる fallback を提供
+
+### `--REM` 廃止と `--fz--base` の簡素化
+
+- `--REM` を廃止し、`--fz--base` を `1rem` に統一
+- `--hl-unit` / `--s-unit` を `--fz--base` 経由に統一
+
+### `a` タグのリンク装飾スタイル廃止
+
+- `a` タグから `--link-td-thickness` / `--link-td-color` のスタイルを廃止
+
+### Bug Fixes
+
+- `is--wrapper` 直下に `inline-size: 100%` を付与し、`stack` 配下でのガタつきを解消 (#356)
+- `--td-p` のデフォルト値を `var(--s10)` から `var(--s10) var(--s15)` に変更
+
+### その他
+
+- `blockquote`, `pre` のスタイルを共通化し、`q`, `blockquote` にイタリックを追加
+- `lts` トークンを微調整し `xl` を追加
+
+<Divider bds="dashed" my="40" />
+
 ## lism-css v.0.16.1 (2026.04.29)
 
 - `--list-px-s` のフォールバック値を `1.75em` に変更

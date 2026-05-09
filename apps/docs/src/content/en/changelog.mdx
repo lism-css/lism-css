@@ -9,6 +9,36 @@ Breaking changes may continue until v1.0, so all notable changes are documented 
 
 <Divider bds="dashed" my="40" />
 
+## lism-css v.0.17.0 (2026.05.09)
+
+This release contains **breaking changes**.
+
+### Introducing `-max-sz:bleed` (#360)
+
+- Removed `-max-sz:container` and introduced `-max-sz:bleed`, a new full-bleed utility that expands up to the outermost `is--container` width
+- Set the initial-value of `--sz--bleed` to `100svi`, providing a viewport-width fallback when no `is--container` ancestor exists
+
+### Removed `--REM` and simplified `--fz--base`
+
+- Removed `--REM` and unified `--fz--base` to `1rem`
+- Aligned `--hl-unit` / `--s-unit` to be derived from `--fz--base`
+
+### Removed link decoration styles from `a` tag
+
+- Removed `--link-td-thickness` / `--link-td-color` styles from the `a` tag
+
+### Bug Fixes
+
+- Added `inline-size: 100%` to `is--wrapper` to prevent layout shifts inside `stack` (#356)
+- Changed the default value of `--td-p` from `var(--s10)` to `var(--s10) var(--s15)`
+
+### Other
+
+- Unified styles for `blockquote` and `pre`, and added italic style to `q` and `blockquote`
+- Adjusted `lts` tokens and added `xl` size
+
+<Divider bds="dashed" my="40" />
+
 ## lism-css v.0.16.1 (2026.04.29)
 
 - Changed the `--list-px-s` fallback value to `1.75em`
