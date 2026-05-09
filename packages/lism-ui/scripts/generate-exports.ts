@@ -1,20 +1,4 @@
-/**
- * packages/lism-ui/src/components/ を走査し、package.json の `exports` フィールドを
- * 自動生成する。
- *
- * - barrel (`@lism-css/ui/{react,astro}`) に加えて、各コンポーネントを個別 import できる
- *   deep path (`@lism-css/ui/{react,astro}/{Component}`) を提供する。
- * - これにより Astro の dev サーバーで barrel 経由で全コンポーネントの `_style.css` が
- *   読み込まれる問題（#354）を回避できる。
- *
- * react エントリは dist 出力構造の都合で、コンポーネントによって参照先ファイル名が変わる:
- *   - シンプル系（`react/index.ts` が `export { default } from './X';` のみ）
- *     → ビルド時に index.js が出力されないため、`./dist/.../react/X.js` を直接参照する。
- *   - コンパウンド系（`react/index.ts` が複数モジュールを集約する）
- *     → `./dist/.../react/index.js` を参照する。
- *
- * 末尾の `./scripts/*` / `./style.css` は手書きで保持。
- */
+/** package.json の `exports` を src/components/ から自動生成する。 */
 
 import fs from 'node:fs';
 import path from 'node:path';
@@ -32,7 +16,6 @@ interface ExportEntry {
 
 type ExportsField = Record<string, ExportEntry | string>;
 
-/** components/ 配下から、astro と react の index.ts を持つディレクトリを列挙 */
 function getComponentNames(): string[] {
   return fs
     .readdirSync(COMPONENTS_DIR, { withFileTypes: true })
@@ -45,23 +28,13 @@ function getComponentNames(): string[] {
     .sort();
 }
 
-/**
- * シンプル系（`export { default } from './X';` のみ）かどうかを判定し、
- * dist で参照すべきファイル名を返す。
- *
- * - シンプル系 → 再エクスポート先のファイル名（例: `Callout.js`）
- * - コンパウンド系 → `index.js`
- */
+// シンプル系（`react/index.ts` が単一の re-export だけ）はビルド時に index.js が出力されない
+// ため、`X.js` を直接指す。コンパウンド系は通常通り index.js。
 function getReactDistEntryFile(componentName: string): string {
   const indexPath = path.join(COMPONENTS_DIR, componentName, 'react/index.ts');
   const src = fs.readFileSync(indexPath, 'utf-8').trim();
-
-  // `export { default } from './X';` パターン（前後の空白・末尾セミコロン許容）
   const match = src.match(/^export\s*\{\s*default\s*\}\s*from\s*['"]\.\/([^'"]+)['"]\s*;?\s*$/);
-  if (match) {
-    return `${match[1]}.js`;
-  }
-  return 'index.js';
+  return match ? `${match[1]}.js` : 'index.js';
 }
 
 function buildExports(componentNames: string[]): ExportsField {
@@ -98,13 +71,11 @@ function main(): void {
   const componentNames = getComponentNames();
   const nextExports = buildExports(componentNames);
 
-  const pkgRaw = fs.readFileSync(PKG_JSON, 'utf-8');
-  const pkg = JSON.parse(pkgRaw) as Record<string, unknown> & { exports?: ExportsField };
+  const pkg = JSON.parse(fs.readFileSync(PKG_JSON, 'utf-8')) as Record<string, unknown> & {
+    exports?: ExportsField;
+  };
 
-  const prevExportsJson = JSON.stringify(pkg.exports ?? {});
-  const nextExportsJson = JSON.stringify(nextExports);
-
-  if (prevExportsJson === nextExportsJson) {
+  if (JSON.stringify(pkg.exports ?? {}) === JSON.stringify(nextExports)) {
     console.log(`exports already up-to-date (${componentNames.length} components)`);
     return;
   }
