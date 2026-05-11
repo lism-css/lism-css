@@ -11,7 +11,8 @@ import Date from '@/components/Date.astro';
 import Cat from '@/components/Cat.astro';
 import Tag from '@/components/Tag.astro';
 import { generateToc } from '@/lib/generateToc';
-import { assertUniquePostSlugs, getCategoryHref, getPostOgImageHref, getTagHref, parsePostId } from '@/lib/posts';
+import { assertUniquePostSlugs, getCategoryHref, getTagHref, parsePostId } from '@/lib/posts';
+import { buildOgImageUrl } from '@/lib/ogImage';
 import { CATEGORIES } from '@/config/categories';
 import { siteConfig } from '@/config/site';
 
@@ -38,7 +39,11 @@ const meta = CATEGORIES[category];
 const categoryHref = getCategoryHref(category);
 const { Content, headings } = await render(post);
 const toc = generateToc(headings);
-const ogImage = getPostOgImageHref(post.id);
+const ogImage = buildOgImageUrl({
+  title: post.data.title,
+  head: meta.label,
+  foot: siteConfig.name,
+});
 ---
 
 <Layout

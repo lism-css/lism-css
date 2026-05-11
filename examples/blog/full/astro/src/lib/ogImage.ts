@@ -1,120 +1,52 @@
 /**
- * OG画像生成
- * - satori にオブジェクトリテラルでノードツリーを渡し、SVG を生成
- * - sharp で PNG に変換
- * - src/assets/og/ 配下のフォント・背景・ロゴを Base64 で埋め込み
- *   （public/ ではなく src/ に置くことで配信物に含めない）
+ * OG 画像 URL ビルダー
+ * loos.tools/ogimg-maker の API を利用して 1200x630 JPEG を生成する。
+ *
+ * @see https://loos.tools/ogimg-maker/guide/
  */
-import fs from 'node:fs';
-import path from 'node:path';
-import satori from 'satori';
-import sharp from 'sharp';
+import { siteConfig } from '@/config/site';
 
-const assetsDir = path.resolve(process.cwd(), 'src/assets/og');
+const ENDPOINT = 'https://loos.tools/ogimg-maker/api';
 
-// アセット読み込み（モジュール初期化時に1度だけ）
-const bgImageBase64 = fs.readFileSync(path.join(assetsDir, 'og-bg.jpg')).toString('base64');
-const bgImageDataUrl = `data:image/jpeg;base64,${bgImageBase64}`;
+export interface OgImageParams {
+  /** メインテキスト（最大120文字） */
+  title?: string;
+  /** 上部小文字（最大40文字） */
+  head?: string;
+  /** フッター補助テキスト（最大40文字） */
+  foot?: string;
+  /** レイアウト */
+  layout?: 'left' | 'center' | 'top-left';
+  /** 背景ID（例: 1-1〜1-7, 2-1〜2-11, 3-1〜3-8） */
+  type?: string;
+  /** Geometry 背景に重ねるパターンID */
+  pattern?: string;
+  /** 背景スタイル */
+  bg?: 'glass' | 'fill';
+  /** 内側フレームを表示 */
+  frame?: boolean;
+  /** カラーモード */
+  mode?: 'light' | 'dark';
+  /** 色相 0-360 */
+  h?: number;
+  /** 彩度 0-40 */
+  c?: number;
+  /** 明度 0-100 */
+  l?: number;
+}
 
-const logoBase64 = fs.readFileSync(path.join(assetsDir, 'logo.png')).toString('base64');
-const logoDataUrl = `data:image/png;base64,${logoBase64}`;
+export function buildOgImageUrl(params: OgImageParams = {}): string {
+  const merged: OgImageParams = { ...siteConfig.ogImage, ...params };
+  const search = new URLSearchParams();
 
-const fontData = fs.readFileSync(path.join(assetsDir, 'noto-sans-jp-500.woff'));
+  for (const [key, value] of Object.entries(merged)) {
+    if (value === undefined || value === null || value === '') continue;
+    if (key === 'frame') {
+      if (value) search.set('frame', '1');
+      continue;
+    }
+    search.set(key, String(value));
+  }
 
-const WIDTH = 1200;
-const HEIGHT = 630;
-
-export async function renderOgPng(title: string): Promise<Buffer> {
-  const tree = {
-    type: 'div',
-    props: {
-      style: {
-        display: 'flex',
-        width: '100%',
-        height: '100%',
-        position: 'relative',
-      },
-      children: [
-        // 背景画像
-        {
-          type: 'img',
-          props: {
-            src: bgImageDataUrl,
-            style: {
-              position: 'absolute',
-              top: 0,
-              left: 0,
-              width: '100%',
-              height: '100%',
-              objectFit: 'cover',
-              opacity: 0.5,
-            },
-          },
-        },
-        // ロゴ
-        {
-          type: 'img',
-          props: {
-            src: logoDataUrl,
-            style: {
-              position: 'absolute',
-              right: 48,
-              bottom: 40,
-              height: 32,
-            },
-          },
-        },
-        {
-          type: 'div',
-          props: {
-            style: {
-              display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'center',
-              alignItems: 'flex-start',
-              padding: 80,
-              width: '80%',
-              height: '100%',
-              position: 'relative',
-            },
-            children: [
-              {
-                type: 'div',
-                props: {
-                  style: {
-                    display: 'flex',
-                    paddingBottom: 24,
-                    fontSize: 56,
-                    fontWeight: 500,
-                    color: '#1a1a1a',
-                    lineHeight: 1.4,
-                    lineBreak: 'strict',
-                    wordBreak: 'keep-all',
-                  },
-                  children: title,
-                },
-              },
-            ],
-          },
-        },
-      ],
-    },
-  };
-
-  // satori の型は ReactNode だが、オブジェクトリテラルで同等の構造を渡す
-
-  const svg = await satori(tree as never, {
-    width: WIDTH,
-    height: HEIGHT,
-    fonts: [
-      {
-        name: 'Noto Sans JP',
-        data: fontData,
-        weight: 500,
-        style: 'normal',
-      },
-    ],
-  });
-
-  return sharp(Buffer.from(svg)).png().toBuffer();
+  return `${ENDPOINT}?${search.toString()}`;
 }

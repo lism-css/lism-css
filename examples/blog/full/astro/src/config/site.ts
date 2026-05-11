@@ -36,6 +36,14 @@ export const siteConfig = {
     ],
   },
 
+  // OG 画像のデフォルト設定（loos.tools/ogimg-maker の API パラメータ）
+  // @see https://loos.tools/ogimg-maker/guide/
+  ogImage: {
+    type: '1-5',
+    frame: '1',
+    bg: 'fill',
+  },
+
   // SNS リンク
   sns: [
     { label: 'GitHub', icon: 'logo-github', href: 'https://github.com/lism-css/lism-css' },

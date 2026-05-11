@@ -2,6 +2,7 @@
 import 'lism-css/main.css';
 import '../styles/global.css';
 import { siteConfig } from '@/config/site';
+import { buildOgImageUrl } from '@/lib/ogImage';
 import { Container, Stack, Group } from 'lism-css/astro';
 import Header from '@/components/Header.astro';
 import Main from '@/components/Main.astro';
@@ -24,9 +25,14 @@ interface Props {
 const { title, description = siteConfig.description, breadcrumb, ogImage, ogType = 'website' } = Astro.props;
 const hasBreadcrumb = Array.isArray(breadcrumb) && breadcrumb.length > 0;
 
-// og:image / og:url は絶対 URL 推奨。Astro.site が設定されていれば絶対化、なければ相対パスのまま
-const ogImagePath = ogImage ?? '/og-default.png';
-const ogImageUrl = Astro.site ? new URL(ogImagePath, Astro.site).toString() : ogImagePath;
+// og:image は loos.tools/ogimg-maker の URL を直接利用する（絶対URL）
+const ogImageUrl =
+  ogImage ??
+  buildOgImageUrl({
+    title: siteConfig.name,
+    head: siteConfig.tagline,
+  });
+// og:url は絶対 URL 推奨。Astro.site が設定されていれば絶対化、なければ相対パスのまま
 const canonicalUrl = Astro.site ? new URL(Astro.url.pathname, Astro.site).toString() : Astro.url.pathname;
 ---
 

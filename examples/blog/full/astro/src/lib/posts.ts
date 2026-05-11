@@ -24,11 +24,6 @@ export function getPostHref(id: string): string {
   return `/posts/${slug}/`;
 }
 
-export function getPostOgImageHref(id: string): string {
-  const { slug } = parsePostId(id);
-  return `/og/${slug}.png`;
-}
-
 export function getCategoryHref(category: CategoryKey): string {
   return `/category/${category}/`;
 }
