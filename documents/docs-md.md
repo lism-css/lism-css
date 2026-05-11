@@ -50,7 +50,7 @@ unified パイプラインを以下の順で適用する。
 | 5 | `rehype-preview` | `c--preview_area` / `c--preview_help` / `c--tabs_list` / `__decorator` / `c--preview_title` 等のプレビュー UI を除去 |
 | 6 | `rehype-code-language` | `<pre data-language="X">` の言語名を `<code class="language-X">` に転記 |
 | 7 | `rehype-docs-link` | `<a class="c--docsLink">` の中身をタイトル text のみに畳み込む（タイトル + 説明文の二重出力を抑止） |
-| 8 | `rehype-callouts` | `c--callout` を GFM Alert（`> [!NOTE]` 等）に変換 |
+| 8 | `rehype-callouts` | `c--docsNote` を GFM Alert（`> [!NOTE]` 等）に変換 |
 | 9 | `rehype-absolute-urls` | `/foo` 形式のルート相対 URL を `{siteUrl}/foo` に展開 |
 | 10 | `rehype-remark` | hast → mdast に変換 |
 | 11 | `remark-gfm` | GFM 拡張を有効化 |

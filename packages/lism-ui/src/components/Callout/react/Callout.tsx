@@ -9,16 +9,14 @@ export function Callout<T extends ElementType = 'div'>({ children, className, ..
   return (
     <Stack className={atts(className, 'c--callout')} {...calloutProps}>
       {title && (
-        <Flex className="c--callout_head" c="keycolor" fw="bold" ai="center" g="10">
-          <Center className="c--callout_icon" fz="xl">
-            <Icon icon={icon} />
+        <Flex c="keycolor" fw="bold" ai="center" g="10">
+          <Center>
+            <Icon icon={icon} size="1.25em" />
           </Center>
-          <span className="c--callout_title">{title}</span>
+          <span>{title}</span>
         </Flex>
       )}
-      <Flow className="c--callout_body" flow={flow}>
-        {children}
-      </Flow>
+      <Flow flow={flow}>{children}</Flow>
     </Stack>
   );
 }

@@ -1,9 +1,9 @@
 /**
- * <div class="c--callout"> を GFM Alert 風 blockquote に変換する rehype プラグイン。
+ * <div class="c--docsNote"> を GFM Alert 風 blockquote に変換する rehype プラグイン。
  *
  * 入力 HTML:
- *   <div class="c--callout" style="--keycolor:var(--blue)">
- *     <div class="c--callout_icon"><svg>...</svg></div>
+ *   <div class="c--docsNote" style="--keycolor:var(--blue)">
+ *     <div class="c--docsNote_icon"><svg>...</svg></div>
  *     <p>For more details ...</p>
  *   </div>
  *
@@ -28,7 +28,7 @@
  *   purple (help)  → NOTE
  *   未知の色 / keycolor 不在 → NOTE
  *
- * c--callout_title が含まれる場合、<strong> 段落として GFM Alert 内に保持する。
+ * c--docsNote_title が含まれる場合、<strong> 段落として GFM Alert 内に保持する。
  */
 import { visit } from 'unist-util-visit';
 import type { Root, Element, ElementContent, Parents } from 'hast';
@@ -61,13 +61,13 @@ function detectAlertType(node: Element): GfmAlertType {
 }
 
 /**
- * c--callout_title の div を <strong> 段落に変換する。
+ * c--docsNote_title の div を <strong> 段落に変換する。
  * その他の子要素はそのまま返す。
  */
 function transformChild(child: ElementContent): ElementContent {
   if (child.type !== 'element') return child;
   if (child.tagName !== 'div') return child;
-  if (!hasClass(child, 'c--callout_title')) return child;
+  if (!hasClass(child, 'c--docsNote_title')) return child;
 
   return {
     type: 'element',
@@ -89,14 +89,14 @@ export function rehypeCallouts() {
     visit(tree, 'element', (node: Element, index: number | undefined, parent: Parents | undefined) => {
       if (index === undefined || !parent) return;
       if (node.tagName !== 'div') return;
-      if (!hasClass(node, 'c--callout')) return;
+      if (!hasClass(node, 'c--docsNote')) return;
 
       const alertType = detectAlertType(node);
 
       // アイコン要素を除去し、callout_title を strong 化
       const bodyChildren: ElementContent[] = [];
       for (const child of node.children) {
-        if (child.type === 'element' && hasClass(child, 'c--callout_icon')) continue;
+        if (child.type === 'element' && hasClass(child, 'c--docsNote_icon')) continue;
         bodyChildren.push(transformChild(child));
       }
 

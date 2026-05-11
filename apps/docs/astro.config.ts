@@ -61,7 +61,8 @@ export default defineConfig({
     expressiveCode(expressiveCodeOptions),
     react(),
     mdx({
-      optimize: true,
+      // Memo: .mdx経由の lism-ui の .astro import で style読み込まないことがある不具合の原因として怪しいのでオフにしておく
+      // optimize: true,
     }),
     sitemap({
       // noindex のページは sitemap からも除外する
