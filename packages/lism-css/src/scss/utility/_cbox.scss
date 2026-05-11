@@ -3,15 +3,18 @@
   Memo: bgcの mix は transparent ではなく --base と混ぜている → 背景メディアがあるときも可読性が落ちないように + chat のように同じ背景色の装飾が一部重なっていても大丈夫なように。
 */
 .u--cbox {
-  --c: color-mix(in srgb, var(--text), var(--keycolor) var(--cbox-cPct, 32%));
-  --bgc: color-mix(in srgb, var(--base), var(--keycolor) var(--cbox-bgPct, 4%));
-  --bdc: color-mix(in srgb, transparent, var(--keycolor) var(--cbox-bdPct, 64%));
+  --mutedKeycolor: var(--keycolor);
+  --c: color-mix(in srgb, var(--text), var(--keycolor) var(--cbox-cPct, 25%));
+  --bgc: color-mix(in srgb, var(--base), var(--mutedKeycolor) var(--cbox-bgPct, 4%));
+  --bdc: color-mix(in srgb, var(--divider), var(--keycolor) var(--cbox-bdPct, 50%));
   --link-c: var(--keycolor); // --link を上書きすると、keycolorに --link が使えなくなる
+
   color: var(--c);
   background-color: var(--bgc);
 
   // 相対カラー構文をサポートしているブラウザでは、 shadowのカラーもキーカラーに寄せる
   @supports (color: oklch(from red l c h)) {
-    --shc: oklch(from var(--keycolor) calc(l / 1.5) calc(c / 1.5) h / 0.1);
+    --mutedKeycolor: oklch(from var(--keycolor) l calc(c * 0.75) h);
+    // --shc: color-mix(in srgb, var(--shadow), oklch(from var(--keycolor) l c h / 0.25) var(--cbox-shPct, 50%));
   }
 }
