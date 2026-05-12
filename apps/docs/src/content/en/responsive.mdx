@@ -107,6 +107,17 @@ Breakpoints are defined **mobile-first**, using the values 480px, 800px, and 112
 |`md`|`width >= 800px`|
 |(`lg`)|`width >= 1120px`|
 
+Each breakpoint label means "**styles apply once the size exceeds it**".  
+For example, `sm` is not "for smartphone-sized screens only" — it is a label for "applies above the `sm` size".
+
+```
+Smartphone ──┬── Tablet (portrait) ──┬── Tablet (landscape) ──┬── Laptop and up
+             │                        │                        │
+           sm(480px)               md(800px)              (lg)(1120px)
+```
+
+Example: `-d:none -d_sm:block` → hidden by default, shown at `sm` and above.
+
 :::info
 Standard support covers `sm` and `md` only. Support for `lg` and beyond requires additional [SCSS configuration customization](/en/docs/customize/).
 :::
