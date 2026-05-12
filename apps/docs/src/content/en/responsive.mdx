@@ -1,5 +1,5 @@
 ---
-title: 'Prop Responsive'
+title: 'Responsive'
 description: 'Learn how Lism CSS handles responsive design with breakpoint classes and variables.'
 ---
 import { Lism, Box, Spacer } from "lism-css/astro";
@@ -111,9 +111,9 @@ Each breakpoint label means "**styles apply once the size exceeds it**".
 For example, `sm` is not "for smartphone-sized screens only" — it is a label for "applies above the `sm` size".
 
 ```
-Smartphone ──┬── Tablet (portrait) ──┬── Tablet (landscape) ──┬── Laptop and up
-             │                        │                        │
-           sm(480px)               md(800px)              (lg)(1120px)
+Smartphone ──┬── Tablet (Portrait) ──┬── Tablet (Landscape) ──┬── Laptop and up
+             │                       │                        │
+          sm:480px                md:800px               (lg:1120px)
 ```
 
 Example: `-d:none -d_sm:block` → hidden by default, shown at `sm` and above.

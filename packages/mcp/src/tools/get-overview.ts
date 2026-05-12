@@ -5,15 +5,15 @@ import { markdownResponse, error, READ_ONLY_ANNOTATIONS } from '../lib/response.
 
 /**
  * SKILL.md を中核に、css-rules.md の Layer 構造セクションと
- * prop-responsive.md のブレークポイントセクションを付加して返す。
+ * responsive.md のブレイクポイントセクションを付加して返す。
  */
 function buildOverviewMarkdown(): string {
   const skill = loadMarkdown('SKILL.md');
   const cssRules = loadMarkdown('css-rules.md');
-  const responsive = loadMarkdown('prop-responsive.md');
+  const responsive = loadMarkdown('responsive.md');
 
   const layerSection = extractSection(cssRules, 'CSS Layer 構造');
-  const bpSection = extractSection(responsive, 'ブレークポイント');
+  const bpSection = extractSection(responsive, 'ブレイクポイント');
 
   const parts: string[] = [skill];
   if (layerSection) {

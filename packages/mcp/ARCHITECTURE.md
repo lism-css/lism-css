@@ -57,7 +57,7 @@ packages/mcp/
 │   │   ├── response.ts         # レスポンスフォーマット（Markdown / JSON / error）
 │   │   └── types.ts            # TypeScript 型定義（MetaInfo, SearchResult, DocsEntry）
 │   ├── tools/
-│   │   ├── get-overview.ts     # SKILL.md + css-rules.md の Layer 構造 + prop-responsive.md の BP
+│   │   ├── get-overview.ts     # SKILL.md + css-rules.md の Layer 構造 + responsive.md の BP
 │   │   ├── get-tokens.ts       # tokens.md をそのまま返却
 │   │   ├── get-props-system.ts # property-class.md の全文 or prop 名で絞り込み検索
 │   │   ├── get-component.ts    # modules/*.md → components-core.md → components-ui.md の順で名前解決
@@ -123,7 +123,7 @@ packages/mcp/
 | `primitive-class` | primitive-class.md | Primitive クラスプレフィックス（is--, l--, a--）と Component クラス（c--） |
 | `utility-class` | utility-class.md | ユーティリティクラス（u--trim, u--cbox 等） |
 | `css-rules` | css-rules.md | CSS 設計方法論・Layer 構造・命名規則 |
-| `responsive` | prop-responsive.md | レスポンシブ設計・ブレークポイント・コンテナクエリ |
+| `responsive` | responsive.md | レスポンシブ設計・ブレークポイント・コンテナクエリ |
 
 個別プリミティブ（`l--flex`, `is--container`, `a--icon` 等）は `get_guide` の topic としては露出しません。代わりに `get_component` から名前ベースで取得できます。
 
