@@ -10,36 +10,24 @@ vi.mock('../../helper/animation', () => ({
 import { waitAnimation } from '../../helper/animation';
 
 function createAccordionItem(opts: { opened?: boolean; hiddenValue?: string } = {}): HTMLElement {
-  const item = document.createElement('div');
-  item.className = 'c--accordion_item';
-  if (opts.opened) item.setAttribute('data-opened', '');
-
-  const heading = document.createElement('div');
-  heading.className = 'c--accordion_heading';
-
-  const button = document.createElement('button');
-  button.className = 'c--accordion_button';
-  button.setAttribute('aria-expanded', opts.opened ? 'true' : 'false');
-  heading.appendChild(button);
-
-  const panel = document.createElement('div');
-  panel.className = 'c--accordion_panel';
-  if (!opts.opened) {
-    panel.setAttribute('hidden', opts.hiddenValue ?? 'until-found');
-  }
-
-  const content = document.createElement('div');
-  content.className = 'c--accordion_content';
-  panel.appendChild(content);
-
-  item.appendChild(heading);
-  item.appendChild(panel);
-  return item;
+  const wrapper = document.createElement('div');
+  wrapper.innerHTML = `
+    <div class="c--accordion_item"${opts.opened ? ' data-opened' : ''}>
+      <div class="c--accordion_heading">
+        <button class="c--accordion_button" aria-expanded="${opts.opened ? 'true' : 'false'}"></button>
+      </div>
+      <div class="c--accordion_panel"${!opts.opened ? ` hidden="${opts.hiddenValue ?? 'until-found'}"` : ''}>
+        <div class="c--accordion_content"></div>
+      </div>
+    </div>
+  `;
+  return wrapper.firstElementChild as HTMLElement;
 }
 
 function createParent(items: HTMLElement[], opts: { allowMultiple?: boolean } = {}): HTMLElement {
-  const parent = document.createElement('div');
-  if (opts.allowMultiple) parent.setAttribute('data-allow-multiple', '');
+  const wrapper = document.createElement('div');
+  wrapper.innerHTML = `<div${opts.allowMultiple ? ' data-allow-multiple' : ''}></div>`;
+  const parent = wrapper.firstElementChild as HTMLElement;
   items.forEach((item) => parent.appendChild(item));
   return parent;
 }

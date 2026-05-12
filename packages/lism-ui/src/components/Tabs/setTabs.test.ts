@@ -2,42 +2,25 @@ import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import setTabs from './setTabs';
 
 function createTabsDOM(): { tabs: HTMLElement; tab1: HTMLElement; tab2: HTMLElement; panel1: HTMLElement; panel2: HTMLElement } {
-  const tabs = document.createElement('div');
-  tabs.className = 'c--tabs';
-
-  const list = document.createElement('div');
-  list.className = 'c--tabs_list';
-  tabs.appendChild(list);
-
-  const item1 = document.createElement('div');
-  item1.className = 'c--tabs_item';
-  const tab1 = document.createElement('button');
-  tab1.setAttribute('role', 'tab');
-  tab1.setAttribute('aria-selected', 'true');
-  tab1.setAttribute('aria-controls', 'panel1');
-  item1.appendChild(tab1);
-  list.appendChild(item1);
-
-  const item2 = document.createElement('div');
-  item2.className = 'c--tabs_item';
-  const tab2 = document.createElement('button');
-  tab2.setAttribute('role', 'tab');
-  tab2.setAttribute('aria-selected', 'false');
-  tab2.setAttribute('aria-controls', 'panel2');
-  item2.appendChild(tab2);
-  list.appendChild(item2);
-
-  const panel1 = document.createElement('div');
-  panel1.id = 'panel1';
-  panel1.setAttribute('aria-hidden', 'false');
-
-  const panel2 = document.createElement('div');
-  panel2.id = 'panel2';
-  panel2.setAttribute('aria-hidden', 'true');
-
-  tabs.appendChild(panel1);
-  tabs.appendChild(panel2);
-
+  const wrapper = document.createElement('div');
+  wrapper.innerHTML = `
+    <div class="c--tabs">
+      <div class="c--tabs_list">
+        <div class="c--tabs_item">
+          <button role="tab" aria-selected="true" aria-controls="panel1"></button>
+        </div>
+        <div class="c--tabs_item">
+          <button role="tab" aria-selected="false" aria-controls="panel2"></button>
+        </div>
+      </div>
+      <div id="panel1" aria-hidden="false"></div>
+      <div id="panel2" aria-hidden="true"></div>
+    </div>
+  `;
+  const tabs = wrapper.firstElementChild as HTMLElement;
+  const [tab1, tab2] = tabs.querySelectorAll<HTMLElement>('[role="tab"]');
+  const panel1 = tabs.querySelector<HTMLElement>('#panel1')!;
+  const panel2 = tabs.querySelector<HTMLElement>('#panel2')!;
   return { tabs, tab1, tab2, panel1, panel2 };
 }
 

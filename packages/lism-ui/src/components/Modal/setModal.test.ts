@@ -14,33 +14,29 @@ async function flushPromises(times = 3): Promise<void> {
 }
 
 function createDialogModal(id: string): HTMLDialogElement {
-  const modal = document.createElement('dialog');
-  modal.id = id;
-  modal.className = 'c--modal';
-
-  const closeBtn = document.createElement('button');
-  closeBtn.setAttribute('data-modal-close', id);
-  modal.appendChild(closeBtn);
-
-  return modal;
+  const wrapper = document.createElement('div');
+  wrapper.innerHTML = `
+    <dialog id="${id}" class="c--modal">
+      <button data-modal-close="${id}"></button>
+    </dialog>
+  `;
+  return wrapper.firstElementChild as HTMLDialogElement;
 }
 
 function createDivModal(id: string): HTMLElement {
-  const modal = document.createElement('div');
-  modal.id = id;
-  modal.className = 'c--modal';
-
-  const closeBtn = document.createElement('button');
-  closeBtn.setAttribute('data-modal-close', id);
-  modal.appendChild(closeBtn);
-
-  return modal;
+  const wrapper = document.createElement('div');
+  wrapper.innerHTML = `
+    <div id="${id}" class="c--modal">
+      <button data-modal-close="${id}"></button>
+    </div>
+  `;
+  return wrapper.firstElementChild as HTMLElement;
 }
 
 function createOpenTrigger(targetId: string): HTMLElement {
-  const btn = document.createElement('button');
-  btn.setAttribute('data-modal-open', targetId);
-  return btn;
+  const wrapper = document.createElement('div');
+  wrapper.innerHTML = `<button data-modal-open="${targetId}"></button>`;
+  return wrapper.firstElementChild as HTMLElement;
 }
 
 beforeEach(() => {
