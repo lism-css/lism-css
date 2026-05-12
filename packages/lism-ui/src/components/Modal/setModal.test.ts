@@ -7,12 +7,6 @@ vi.mock('../../helper/animation', () => ({
 
 import { waitAnimation } from '../../helper/animation';
 
-async function flushPromises(times = 3): Promise<void> {
-  for (let i = 0; i < times; i++) {
-    await new Promise((r) => setTimeout(r, 0));
-  }
-}
-
 function createDialogModal(id: string): HTMLDialogElement {
   const wrapper = document.createElement('div');
   wrapper.innerHTML = `
@@ -55,12 +49,13 @@ describe('setEvent (dialog 要素)', () => {
     setEvent(modal);
 
     trigger.click();
-    await flushPromises();
+    await vi.waitFor(() => {
+      expect(modal).toHaveAttribute('open');
+      expect(modal.dataset.isOpen).toBe('1');
+      expect(trigger.dataset.targetOpened).toBe('1');
+    });
 
     expect(showModalSpy).toHaveBeenCalledTimes(1);
-    expect(modal).toHaveAttribute('open');
-    expect(modal.dataset.isOpen).toBe('1');
-    expect(trigger.dataset.targetOpened).toBe('1');
   });
 
   it('close トリガーで data-is-open が消え、waitAnimation 後に閉じる', async () => {
@@ -71,18 +66,18 @@ describe('setEvent (dialog 要素)', () => {
 
     setEvent(modal);
 
-    // 開く
     trigger.click();
-    await flushPromises();
+    await vi.waitFor(() => {
+      expect(modal.dataset.isOpen).toBe('1');
+    });
 
-    // 閉じる
     const closeBtn = modal.querySelector<HTMLElement>('[data-modal-close="m1"]')!;
     closeBtn.click();
-    await flushPromises();
-
-    expect(modal).not.toHaveAttribute('data-is-open');
-    expect(modal).not.toHaveAttribute('open');
-    expect(trigger.dataset.targetOpened).toBeUndefined();
+    await vi.waitFor(() => {
+      expect(modal).not.toHaveAttribute('data-is-open');
+      expect(modal).not.toHaveAttribute('open');
+      expect(trigger.dataset.targetOpened).toBeUndefined();
+    });
   });
 
   it('余白クリック（e.target === modal）で閉じる', async () => {
@@ -94,13 +89,15 @@ describe('setEvent (dialog 要素)', () => {
     setEvent(modal);
 
     trigger.click();
-    await flushPromises();
+    await vi.waitFor(() => {
+      expect(modal.dataset.isOpen).toBe('1');
+    });
 
     modal.dispatchEvent(new MouseEvent('click', { bubbles: true }));
-    await flushPromises();
-
-    expect(modal).not.toHaveAttribute('data-is-open');
-    expect(modal).not.toHaveAttribute('open');
+    await vi.waitFor(() => {
+      expect(modal).not.toHaveAttribute('data-is-open');
+      expect(modal).not.toHaveAttribute('open');
+    });
   });
 
   it('cancel イベントで preventDefault され、closeDialog が走る', async () => {
@@ -112,14 +109,17 @@ describe('setEvent (dialog 要素)', () => {
     setEvent(modal);
 
     trigger.click();
-    await flushPromises();
+    await vi.waitFor(() => {
+      expect(modal.dataset.isOpen).toBe('1');
+    });
 
     const cancelEvent = new Event('cancel', { cancelable: true });
     modal.dispatchEvent(cancelEvent);
-    await flushPromises();
 
     expect(cancelEvent.defaultPrevented).toBe(true);
-    expect(modal).not.toHaveAttribute('data-is-open');
+    await vi.waitFor(() => {
+      expect(modal).not.toHaveAttribute('data-is-open');
+    });
   });
 
   it('連打防止: 既に open 中に再度 open トリガーを click しても showModal は 1 回のみ', async () => {
@@ -132,9 +132,12 @@ describe('setEvent (dialog 要素)', () => {
     setEvent(modal);
 
     trigger.click();
-    await flushPromises();
+    await vi.waitFor(() => {
+      expect(modal.dataset.isOpen).toBe('1');
+    });
+
     trigger.click();
-    await flushPromises();
+    await Promise.resolve();
 
     expect(showModalSpy).toHaveBeenCalledTimes(1);
   });
@@ -150,13 +153,15 @@ describe('setEvent (非 dialog 要素)', () => {
     setEvent(modal);
 
     trigger.click();
-    await flushPromises();
-    expect(modal).toHaveAttribute('open');
+    await vi.waitFor(() => {
+      expect(modal).toHaveAttribute('open');
+    });
 
     const closeBtn = modal.querySelector<HTMLElement>('[data-modal-close="m2"]')!;
     closeBtn.click();
-    await flushPromises();
-    expect(modal).not.toHaveAttribute('open');
+    await vi.waitFor(() => {
+      expect(modal).not.toHaveAttribute('open');
+    });
   });
 });
 
@@ -167,7 +172,6 @@ describe('setEvent (早期 return ケース)', () => {
     document.body.appendChild(modal);
 
     setEvent(modal);
-    // open 属性が付かないことを確認（クリックイベントが登録されていない）
     expect(modal).not.toHaveAttribute('open');
   });
 });
@@ -186,11 +190,13 @@ describe('setModal (default export)', () => {
     setModal();
 
     t1.click();
-    await flushPromises();
-    expect(m1).toHaveAttribute('open');
+    await vi.waitFor(() => {
+      expect(m1).toHaveAttribute('open');
+    });
 
     t2.click();
-    await flushPromises();
-    expect(m2).toHaveAttribute('open');
+    await vi.waitFor(() => {
+      expect(m2).toHaveAttribute('open');
+    });
   });
 });

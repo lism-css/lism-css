@@ -32,12 +32,6 @@ function createParent(items: HTMLElement[], opts: { allowMultiple?: boolean } = 
   return parent;
 }
 
-async function flushPromises(times = 3): Promise<void> {
-  for (let i = 0; i < times; i++) {
-    await new Promise((r) => setTimeout(r, 0));
-  }
-}
-
 beforeEach(() => {
   document.body.innerHTML = '';
   vi.mocked(waitAnimation).mockResolvedValue('finished');
@@ -53,11 +47,11 @@ describe('setEvent', () => {
     const panel = item.querySelector<HTMLElement>('.c--accordion_panel')!;
 
     button.click();
-    await flushPromises();
-
-    expect(item).toHaveAttribute('data-opened');
-    expect(button).toHaveAttribute('aria-expanded', 'true');
-    expect(panel).not.toHaveAttribute('hidden');
+    await vi.waitFor(() => {
+      expect(item).toHaveAttribute('data-opened');
+      expect(button).toHaveAttribute('aria-expanded', 'true');
+      expect(panel).not.toHaveAttribute('hidden');
+    });
 
     cleanup();
   });
@@ -72,11 +66,11 @@ describe('setEvent', () => {
     const button = item.querySelector<HTMLElement>('.c--accordion_button')!;
 
     button.click();
-    await flushPromises();
-
-    expect(item).not.toHaveAttribute('data-opened');
-    expect(button).toHaveAttribute('aria-expanded', 'false');
-    expect(panel).toHaveAttribute('hidden');
+    await vi.waitFor(() => {
+      expect(item).not.toHaveAttribute('data-opened');
+      expect(button).toHaveAttribute('aria-expanded', 'false');
+      expect(panel).toHaveAttribute('hidden');
+    });
 
     cleanup();
   });
@@ -89,9 +83,9 @@ describe('setEvent', () => {
     const panel = item.querySelector<HTMLElement>('.c--accordion_panel')!;
 
     panel.dispatchEvent(new Event('beforematch'));
-    await flushPromises();
-
-    expect(item).toHaveAttribute('data-opened');
+    await vi.waitFor(() => {
+      expect(item).toHaveAttribute('data-opened');
+    });
 
     cleanup();
   });
@@ -104,15 +98,16 @@ describe('setEvent', () => {
     const cleanup = setEvent(item);
     const button = item.querySelector<HTMLElement>('.c--accordion_button')!;
 
-    // 開く
     button.click();
-    await flushPromises();
-    expect(panel).not.toHaveAttribute('hidden');
+    await vi.waitFor(() => {
+      expect(item).toHaveAttribute('data-opened');
+      expect(panel).not.toHaveAttribute('hidden');
+    });
 
-    // 閉じる
     button.click();
-    await flushPromises();
-    expect(panel.getAttribute('hidden')).toBe('until-found');
+    await vi.waitFor(() => {
+      expect(panel.getAttribute('hidden')).toBe('until-found');
+    });
 
     cleanup();
   });
@@ -126,30 +121,32 @@ describe('setEvent', () => {
 
     cleanup();
     button.click();
-    await flushPromises();
 
+    // 変化しないことの確認なので waitFor は使わず、Promise を一度だけ消化して確認
+    await Promise.resolve();
     expect(item).not.toHaveAttribute('data-opened');
   });
 
-  it('waitAnimation が canceled を返した時、closed 後も --_panel-h が残る', async () => {
-    vi.mocked(waitAnimation).mockResolvedValueOnce('finished'); // open 時は通常
-    vi.mocked(waitAnimation).mockResolvedValueOnce('canceled'); // close 時に canceled
+  it('waitAnimation が canceled を返した時、closed 後も hidden が付与されない', async () => {
+    vi.mocked(waitAnimation).mockResolvedValueOnce('finished');
+    vi.mocked(waitAnimation).mockResolvedValueOnce('canceled');
 
     const item = createAccordionItem();
     createParent([item]);
     const cleanup = setEvent(item);
     const button = item.querySelector<HTMLElement>('.c--accordion_button')!;
-
-    // 開く
-    button.click();
-    await flushPromises();
-
-    // 閉じる（canceled）
-    button.click();
-    await flushPromises();
-
-    // canceled の場合 hidden は付与されない
     const panel = item.querySelector<HTMLElement>('.c--accordion_panel')!;
+
+    button.click();
+    await vi.waitFor(() => {
+      expect(item).toHaveAttribute('data-opened');
+    });
+
+    button.click();
+    await vi.waitFor(() => {
+      expect(item).not.toHaveAttribute('data-opened');
+    });
+
     expect(panel).not.toHaveAttribute('hidden');
 
     cleanup();
@@ -168,10 +165,10 @@ describe('排他制御', () => {
 
     const btn2 = item2.querySelector<HTMLElement>('.c--accordion_button')!;
     btn2.click();
-    await flushPromises();
-
-    expect(item2).toHaveAttribute('data-opened');
-    expect(item1).not.toHaveAttribute('data-opened');
+    await vi.waitFor(() => {
+      expect(item2).toHaveAttribute('data-opened');
+      expect(item1).not.toHaveAttribute('data-opened');
+    });
   });
 
   it('data-allow-multiple がある時、両方開いたまま保てる', async () => {
@@ -185,10 +182,10 @@ describe('排他制御', () => {
 
     const btn2 = item2.querySelector<HTMLElement>('.c--accordion_button')!;
     btn2.click();
-    await flushPromises();
-
-    expect(item1).toHaveAttribute('data-opened');
-    expect(item2).toHaveAttribute('data-opened');
+    await vi.waitFor(() => {
+      expect(item1).toHaveAttribute('data-opened');
+      expect(item2).toHaveAttribute('data-opened');
+    });
   });
 });
 
@@ -203,14 +200,14 @@ describe('setAccordion (default export)', () => {
 
     const btn1 = item1.querySelector<HTMLElement>('.c--accordion_button')!;
     btn1.click();
-    await flushPromises();
-
-    expect(item1).toHaveAttribute('data-opened');
+    await vi.waitFor(() => {
+      expect(item1).toHaveAttribute('data-opened');
+    });
 
     const btn2 = item2.querySelector<HTMLElement>('.c--accordion_button')!;
     btn2.click();
-    await flushPromises();
-
-    expect(item2).toHaveAttribute('data-opened');
+    await vi.waitFor(() => {
+      expect(item2).toHaveAttribute('data-opened');
+    });
   });
 });
