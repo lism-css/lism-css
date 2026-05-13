@@ -184,7 +184,7 @@ Lism CSS provides CSS custom properties for consistent design:
 - **Font Sizes:** `--fz--2xs` through `--fz--5xl`
 - **Border Radius:** `--bdrs--10` (0.25rem) through `--bdrs--99` (99rem)
 - **Shadows:** `--bxsh--10` through `--bxsh--50` with configurable shadow colors
-- **Container Sizes:** `--sz--xs` (32rem) through `--sz--xl` (1600px)
+- **Container Sizes:** `--sz--xs` (400px), `--sz--s` (640px), `--sz--m` (880px), `--sz--l` (1200px), `--sz--xl` (1600px)
 
 ## UI Components
 
