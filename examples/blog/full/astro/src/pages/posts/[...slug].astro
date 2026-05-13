@@ -4,6 +4,9 @@ import { Group, Flow, Stack, Cluster, WithSide, Heading } from 'lism-css/astro';
 import Layout from '@/layouts/Layout.astro';
 import { Callout } from '@lism-css/ui/astro/Callout';
 import { Alert } from '@lism-css/ui/astro/Alert';
+import LinkCardExternal from '@/components/LinkCardExternal.astro';
+import LinkCardInternal from '@/components/LinkCardInternal.astro';
+import PostLink from '@/components/PostLink.astro';
 import TableOfContents from '@/components/TableOfContents.astro';
 import ArticleNav from '@/components/ArticleNav.astro';
 import ShareButtons from '@/components/ShareButtons.astro';
@@ -85,7 +88,7 @@ const ogImage = buildOgImageUrl({
           </Group>
         </Group>
         <Flow as="article" class="c--articleBody">
-          <Content components={{ Callout, Alert }} />
+          <Content components={{ Callout, Alert, LinkCardExternal, LinkCardInternal, PostLink }} />
         </Flow>
       </WithSide>
 

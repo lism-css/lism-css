@@ -90,6 +90,28 @@ export const collections = { posts };
 
 なお `remark-directive` 自体は `.md` でも動作するが、このテンプレートのプラグインは `:::` を JSX ノードに変換するため、JSX を解釈できない `.md` のレンダーパイプラインでは機能しない。`content.config.ts` の `pattern` も `**/*.mdx` に絞ってあり、`.md` を置いても収集対象から外れる。
 
+## リンクカード（自動展開）
+
+URL 文字列だけの段落・`[[slug]]` だけの段落は、それぞれビルド時に自動でカードに展開される。`src/lib/remark-link-card.mjs` と `src/lib/remark-wiki-link.mjs` が対応する remark プラグイン。
+
+````mdx
+<!-- 外部URLだけの段落 → <LinkCardExternal>（ビルド時に OGP を fetch） -->
+https://lism-css.com/
+
+<!-- [[slug]] だけの段落 → <LinkCardInternal>（Content Collections から記事情報を引く） -->
+[[lism-css-intro]]
+
+<!-- 文中の [[slug]] → 記事タイトルを表示する <a> リンク -->
+詳しくは [[lism-css-intro]] を参照。
+
+<!-- [[slug|表示テキスト]] → エイリアス付きリンク -->
+詳しくは [[lism-css-intro|前回の記事]] を参照。
+````
+
+外部リンクの OGP は `.cache/ogp/` に MD5 ハッシュキー付き JSON でキャッシュされる（TTL 7日）。fetch に失敗したり、メタデータを上書きしたいときは MDX 上で `<LinkCardExternal href="..." title="..." description="..." />` を直書きすればよい。
+
+実際の表示サンプルは [[mdx-extensions]] にまとめてある。
+
 ## カテゴリ設計（ディレクトリ＝カテゴリ）
 
 カテゴリはフロントマターには書かず、`src/posts/{category}/` の置き場所で決まる。`src/config/categories.ts` にカテゴリ定義（データ）を、`src/lib/posts.ts` に post.id と URL を扱うユーティリティ（`isCategoryKey` / `parsePostId` / `getPostHref` / `getCategoryHref` / `getTagHref`）を置いている。

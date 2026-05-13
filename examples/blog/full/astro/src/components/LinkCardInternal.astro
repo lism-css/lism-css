@@ -1,0 +1,62 @@
+---
+/**
+ * 内部記事用のブログカード。
+ * Content Collections から slug で記事を引き、タイトル / 抜粋 / 日付 / カテゴリ / OG画像を表示する。
+ * 該当する slug が見つからない場合はビルド時にエラーで知らせる。
+ *
+ * スタイルは `./linkCard.css` を LinkCardExternal と共用する。
+ */
+import { getCollection } from 'astro:content';
+import { BoxLink, Flex, Stack, Cluster, Frame, Inline } from 'lism-css/astro';
+import Date from '@/components/Date.astro';
+import Cat from '@/components/Cat.astro';
+import { CATEGORIES } from '@/config/categories';
+import { siteConfig } from '@/config/site';
+import { getPostHref, parsePostId } from '@/lib/posts';
+import { buildOgImageUrl } from '@/lib/ogImage';
+import './linkCard.css';
+
+interface Props {
+  slug: string;
+}
+
+const { slug } = Astro.props;
+
+const posts = await getCollection('posts');
+const post = posts.find((p) => parsePostId(p.id).slug === slug);
+
+if (!post) {
+  throw new Error(`[LinkCardInternal] Post not found for slug: "${slug}"`);
+}
+
+const { category } = parsePostId(post.id);
+const meta = CATEGORIES[category];
+const href = getPostHref(post.id);
+const ogImage = buildOgImageUrl({
+  title: post.data.title,
+  head: meta.label,
+  foot: siteConfig.name,
+});
+---
+
+<BoxLink href={href} class="c--linkCard" bdrs="20" p="20" bgc="white" bd hasTransition>
+  <Flex g="20" ai="stretch" w="100%">
+    <Stack g="10" fx="1" py="5" min-w="0">
+      <Inline class="c--linkCard__title" fz="m" fw="bold" lh="s">{post.data.title}</Inline>
+      {
+        post.data.excerpt && (
+          <Inline class="c--linkCard__desc" fz="xs" lh="s" c="text-2">
+            {post.data.excerpt}
+          </Inline>
+        )
+      }
+      <Cluster class="c--linkCard__meta" g="10" ai="center" my-s="auto" py-s="10">
+        <Date>{post.data.date}</Date>
+        <Cat>{meta.label}</Cat>
+      </Cluster>
+    </Stack>
+    <Frame ar="og" d={['none', 'block']} fxsh="0" bdrs="10" class="c--linkCard__thumb">
+      <img src={ogImage} alt="" loading="lazy" />
+    </Frame>
+  </Flex>
+</BoxLink>

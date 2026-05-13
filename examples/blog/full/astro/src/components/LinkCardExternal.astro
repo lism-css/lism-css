@@ -1,0 +1,109 @@
+---
+/**
+ * 外部リンク用のブログカード。
+ * ビルド時に対象 URL の HTML から OGP を抽出してタイトル / 説明 / OG画像 / favicon を表示する。
+ * `.cache/ogp/` にキャッシュされ、TTL 内は再 fetch しない。
+ *
+ * MDX 上で直接呼び出すこともできる（fetch 失敗時の上書き用）：
+ *   <LinkCardExternal href="https://example.com" title="..." description="..." />
+ */
+import { BoxLink, Flex, Stack, Frame, Inline } from 'lism-css/astro';
+import { getOgpFromCache, saveOgpToCache, type OgpData } from '@/lib/ogp-cache';
+import './linkCard.css';
+
+interface Props {
+  href: string;
+  title?: string;
+  description?: string;
+}
+
+const { href, title: manualTitle, description: manualDescription } = Astro.props;
+
+async function fetchOgp(url: string): Promise<OgpData | null> {
+  const cached = getOgpFromCache(url);
+  if (cached) return cached;
+
+  try {
+    const response = await fetch(url, { headers: { 'User-Agent': 'bot' } });
+    if (!response.ok) {
+      console.warn(`[OGP] Failed to fetch: ${url} (${response.status})`);
+      return null;
+    }
+    const html = await response.text();
+
+    const getMeta = (key: string): string => {
+      const patterns = [
+        new RegExp(`<meta[^>]+property=["']${key}["'][^>]+content=["']([^"']+)["']`, 'i'),
+        new RegExp(`<meta[^>]+content=["']([^"']+)["'][^>]+property=["']${key}["']`, 'i'),
+        new RegExp(`<meta[^>]+name=["']${key}["'][^>]+content=["']([^"']+)["']`, 'i'),
+        new RegExp(`<meta[^>]+content=["']([^"']+)["'][^>]+name=["']${key}["']`, 'i'),
+      ];
+      for (const pattern of patterns) {
+        const match = html.match(pattern);
+        if (match) return match[1];
+      }
+      return '';
+    };
+
+    const titleTag = html.match(/<title[^>]*>([^<]+)<\/title>/i)?.[1]?.trim() ?? '';
+
+    const origin = new URL(url).origin;
+    const iconHref = html.match(/<link[^>]+rel=["'](?:shortcut )?icon["'][^>]+href=["']([^"']+)["']/i)?.[1];
+    const favicon = (() => {
+      if (!iconHref) return `${origin}/favicon.ico`;
+      if (iconHref.startsWith('http')) return iconHref;
+      if (iconHref.startsWith('//')) return `https:${iconHref}`;
+      if (iconHref.startsWith('/')) return `${origin}${iconHref}`;
+      return `${origin}/${iconHref}`;
+    })();
+
+    const data: OgpData = {
+      title: getMeta('og:title') || getMeta('twitter:title') || titleTag,
+      description: getMeta('og:description') || getMeta('twitter:description') || getMeta('description'),
+      image: getMeta('og:image') || getMeta('twitter:image'),
+      siteName: getMeta('og:site_name') || new URL(url).hostname,
+      favicon,
+    };
+
+    saveOgpToCache(url, data);
+    return data;
+  } catch (error) {
+    console.warn(`[OGP] Error fetching: ${url}`, error);
+    return null;
+  }
+}
+
+const ogp = await fetchOgp(href);
+
+const displayTitle = manualTitle || ogp?.title || href;
+const displayDescription = manualDescription || ogp?.description || '';
+const displayImage = ogp?.image || '';
+const displaySiteName = ogp?.siteName || new URL(href).hostname;
+const displayFavicon = ogp?.favicon || '';
+---
+
+<BoxLink href={href} target="_blank" rel="noopener noreferrer" class="c--linkCard" bdrs="20" p="20" bgc="white" bd hasTransition>
+  <Flex g="20" ai="stretch" w="100%">
+    <Stack g="10" fx="1" py="5" min-w="0">
+      <Inline class="c--linkCard__title" fz="m" fw="bold" lh="s">{displayTitle}</Inline>
+      {
+        displayDescription && (
+          <Inline class="c--linkCard__desc" fz="xs" lh="s" c="text-2">
+            {displayDescription}
+          </Inline>
+        )
+      }
+      <Flex class="c--linkCard__meta" g="5" ai="center" my-s="auto" py-s="10" fz="2xs" c="text-2">
+        {displayFavicon && <img src={displayFavicon} alt="" width="16" height="16" class="c--linkCard__favicon" loading="lazy" />}
+        <Inline class="c--linkCard__site" lh="1">{displaySiteName}</Inline>
+      </Flex>
+    </Stack>
+    {
+      displayImage && (
+        <Frame ar="og" d={['none', 'block']} fxsh="0" bdrs="10" class="c--linkCard__thumb">
+          <img src={displayImage} alt="" loading="lazy" />
+        </Frame>
+      )
+    }
+  </Flex>
+</BoxLink>
