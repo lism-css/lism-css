@@ -1,20 +1,55 @@
 # レスポンシブ対応
 
-Lism CSS はコンテナクエリをデフォルトで採用しています。  
-ブレークポイント: `sm: 480px`, `md: 800px`（`lg: 1120px` はカスタマイズにより利用可能）
+Lism CSS は**コンテナクエリ**をデフォルトで採用しています（メディアクエリへの切り替えは customize.md を参照）。
 
 ## TOC
 
+- [ブレイクポイント](#ブレイクポイント)
 - [HTML / Property Class での指定](#html--property-class-での指定)
 - [Lism コンポーネントでの指定](#lism-コンポーネントでの指定)
 
-[詳細](https://lism-css.com/docs/responsive.md)
+[詳細](https://lism-css.com/docs/responsive/)
 
 ---
 
+## ブレイクポイント
+
+**モバイルファースト**で定義。各ラベルは「**そのサイズを超えた時から効く**」セマンティクスです（`sm` は「スマホ専用」ではなく「`sm` を超えたサイズで効く」ラベル）。**特定デバイスサイズに依存しないシンプルな閾値**を採用しています。
+
+```
+Smartphone ──┬── Tablet (Portrait) ──┬── Tablet (Landscape) ──┬── Laptop and up
+             │                       │                        │
+          sm:480px                md:800px               (lg:1120px)
+```
+
+| BP | 値 | 効くタイミング |
+|----|-----|----------------|
+| `sm` | 480px | sm 以上 |
+| `md` | 800px | md 以上 |
+| (`lg`) | 1120px | lg 以上 |
+
+**標準サポートは `sm` / `md` のみ。** `lg` 以降を使う場合は customize.md 参照の SCSS カスタマイズが必要です。
+
+例: `-d:none -d_sm:block` → デフォルト非表示、`sm` 以上で表示。
+
+### SCSS から利用する
+
+ブレイクポイント自体を SCSS で参照する場合は `query` モジュール経由:
+
+```scss
+@use 'lism-css/scss/query' as query;
+
+@include query.bp-up('sm') {
+  // sm 以上で効くスタイル（width >= 480px）
+}
+@include query.bp-up('md') {
+  // md 以上で効くスタイル（width >= 800px）
+}
+```
+
 ## HTML / Property Class での指定
 
-ブレークポイント用のクラス `-{prop}_{bp}` と CSS変数 `--{prop}_{bp}` を組み合わせます。
+ブレイクポイント用のクラス `-{prop}_{bp}` と CSS変数 `--{prop}_{bp}` を組み合わせます。
 
 ```html
 <!-- sm 以上で p:30, md 以上で p:40 に切り替え -->
@@ -30,6 +65,7 @@ Lism CSS はコンテナクエリをデフォルトで採用しています。
 
 **仕組み:**
 - BPクラス `-{prop}_{bp}` は `@container (min-width: ...)` 内で発火し、`--{prop}_{bp}` 変数で切り替え先の値を指定
+- コンテナクエリ採用のため、レスポンシブ値を使うには祖先要素に `is--container` などコンテナ宣言が必要
 - 出力形式はプロパティによって 2 パターン（基本 / 例外）
 
 **基本パターン** — BP 用変数を直接読む:
