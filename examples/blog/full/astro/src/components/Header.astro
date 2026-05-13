@@ -93,3 +93,14 @@ import { siteConfig } from '@/config/site';
     background-color: color-mix(in srgb, var(--base) 50%, transparent);
   }
 </style>
+
+<script>
+  const header = document.querySelector<HTMLElement>('header');
+  if (header) {
+    const setHeaderH = () => {
+      document.documentElement.style.setProperty('--header-h', `${header.offsetHeight}px`);
+    };
+    setHeaderH();
+    new ResizeObserver(setHeaderH).observe(header);
+  }
+</script>
