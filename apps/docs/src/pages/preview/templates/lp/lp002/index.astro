@@ -22,7 +22,10 @@ import {
   Text,
   Wrapper,
 } from 'lism-css/astro';
-import { Accordion, Avatar, Button, Modal } from '@lism-css/ui/astro';
+import { Accordion } from '@lism-css/ui/astro/Accordion';
+import { Avatar } from '@lism-css/ui/astro/Avatar';
+import { Button } from '@lism-css/ui/astro/Button';
+import { Modal } from '@lism-css/ui/astro/Modal';
 
 export const title = 'LP002: Simple Natural LP';
 
@@ -1157,7 +1160,7 @@ const contactFields: ContactField[] = [
 
     /* l 左: ビュー基準。右端（xl 相当）: 子孫で 100cqi＝#mission 幅 main 内でも正しい */
     .z--lp002-mission {
-      --_mission-l-pad: max(var(--gutter-size, var(--s30)), calc((100vw - min(100vw, var(--sz--l, 1280px))) / 2));
+      --_mission-l-pad: max(var(--gutter-size, var(--s30)), calc((100vw - min(100vw, var(--sz--l))) / 2));
     }
     .z--lp002-mission_bg {
       position: absolute;
@@ -1205,17 +1208,17 @@ const contactFields: ContactField[] = [
     @container (min-width: 800px) {
       .z--lp002-mission_figureShell {
         flex: 1 1 0;
-        padding-inline-end: max(1.25rem, var(--gutter-size, var(--s30)), calc((100cqi - min(100cqi, var(--sz--xl, 90rem))) / 2));
+        padding-inline-end: max(1.25rem, var(--gutter-size, var(--s30)), calc((100cqi - min(100cqi, var(--sz--xl))) / 2));
       }
     }
     @container not (min-width: 800px) {
       .z--lp002-mission_text {
         justify-content: flex-start;
-        padding-inline-end: max(1.25rem, var(--gutter-size, var(--s30)), calc((100cqi - min(100cqi, var(--sz--xl, 90rem))) / 2));
+        padding-inline-end: max(1.25rem, var(--gutter-size, var(--s30)), calc((100cqi - min(100cqi, var(--sz--xl))) / 2));
       }
       .z--lp002-mission_figureShell {
         padding-inline-start: var(--_mission-l-pad);
-        padding-inline-end: max(1.25rem, var(--gutter-size, var(--s30)), calc((100cqi - min(100cqi, var(--sz--xl, 90rem))) / 2));
+        padding-inline-end: max(1.25rem, var(--gutter-size, var(--s30)), calc((100cqi - min(100cqi, var(--sz--xl))) / 2));
       }
     }
     .z--lp002-mission_img {
@@ -1234,7 +1237,7 @@ const contactFields: ContactField[] = [
     @container (min-width: 800px) {
       .z--lp002-mission2 {
         box-sizing: border-box;
-        padding-inline-end: max(0px, calc((min(100vw, var(--sz--xl, 90rem)) - min(100vw, var(--sz--l, 1280px))) / 2));
+        padding-inline-end: max(0px, calc((min(100vw, var(--sz--xl)) - min(100vw, var(--sz--l))) / 2));
       }
     }
 
