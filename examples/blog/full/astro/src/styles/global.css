@@ -45,6 +45,32 @@
   a {
     text-underline-offset: 0.2em;
   }
+
+  /* === ダークモード === */
+  :root[data-theme='dark'] {
+    --L: 72%;
+    --C: 0.25;
+
+    /* base（紙面感の対として、暖色寄りのダークトーン） */
+    --base: hsl(30, 6%, 10%);
+    --base-2: hsl(30, 6%, 18%);
+
+    /* content */
+    --text: hsl(45, 12%, 95%);
+    --text-2: hsl(45, 6%, 80%);
+    --divider: hsl(30, 4%, 24%);
+
+    /* brand / link（赤系を維持しつつ明度を上げて視認性確保） */
+    --brand: hsl(10, 64%, 64%);
+    --link: hsl(10, 56%, 66%);
+
+    /* shadow color */
+    --shc: hsl(45 20% 70% / 5%);
+
+    /* color mix */
+    --cbox-cPct: 4%;
+    --cbox-bgPct: 6%;
+  }
 }
 
 /* === ブログコンテンツのスタイリング === */

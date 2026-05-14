@@ -39,6 +39,21 @@ const canonicalUrl = Astro.site ? new URL(Astro.url.pathname, Astro.site).toStri
 <html lang={siteConfig.lang}>
   <head>
     <meta charset="utf-8" />
+    <script is:inline define:vars={{ defaultTheme: siteConfig.theme.default }}>
+      // ちらつきを防ぐため、 head 内でテーマセットする
+      (function () {
+        var stored = localStorage.getItem('theme');
+        var theme;
+        if (stored === 'light' || stored === 'dark') {
+          theme = stored;
+        } else if (defaultTheme === 'light' || defaultTheme === 'dark') {
+          theme = defaultTheme;
+        } else {
+          theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        }
+        document.documentElement.setAttribute('data-theme', theme);
+      })();
+    </script>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
     <title>{title}</title>

@@ -15,6 +15,9 @@ export const siteConfig = {
   // <html lang="..."> に使う値
   lang: 'ja',
 
+  // カラーテーマのデフォルト（'system' / 'light' / 'dark'）
+  theme: { default: 'light' as 'system' | 'light' | 'dark' },
+
   // ページネーション設定
   pagination: {
     // 1ページあたりの記事数

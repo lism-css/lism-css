@@ -4,6 +4,7 @@ import { Modal } from '@lism-css/ui/astro/Modal';
 import Eyebrow from '@/components/Eyebrow.astro';
 import SnsLinks from '@/components/SnsLinks.astro';
 import SearchModal from '@/components/SearchModal.astro';
+import ThemeSwitch from '@/components/ThemeSwitch.astro';
 import { siteConfig } from '@/config/site';
 ---
 
@@ -24,6 +25,9 @@ import { siteConfig } from '@/config/site';
           ))
         }
       </Cluster>
+
+      {/* テーマ切り替え */}
+      <ThemeSwitch />
 
       {/* 検索トリガー */}
       <Modal.OpenBtn modalId="search-modal" class="l--center" bdrs="10" p="0.4em" hov={{ bgc: 'base-2' }} aria-label="記事を検索">
