@@ -3,51 +3,61 @@ import { Flex, Cluster, Stack, Link, Container, Inline, Icon, Center } from 'lis
 import { Modal } from '@lism-css/ui/astro/Modal';
 import Eyebrow from '@/components/Eyebrow.astro';
 import SnsLinks from '@/components/SnsLinks.astro';
+import SearchModal from '@/components/SearchModal.astro';
 import { siteConfig } from '@/config/site';
 ---
 
 <Container as="header" isWrapper="l" hasGutter py="20" pos="sticky" t="0" z="99">
-  <Flex ai="center" jc="between">
+  <Flex ai="center" jc="between" g="15">
     <Link href="/" set="plain" d="flex" fw="bold" fz="l" lh="xs">
       {siteConfig.name}
     </Link>
 
-    {/* PCナビ（md以上） */}
-    <Cluster as="nav" aria-label="メインナビゲーション" g="30" d={['none', null, 'flex']} fz="s" c="text-2">
-      {
-        siteConfig.header.nav.map((item) => (
-          <Link href={item.href} c="inherit" td="none" hov={{ c: 'brand' }}>
-            {item.label}
-          </Link>
-        ))
-      }
-    </Cluster>
+    <Cluster ai="center" g="15">
+      {/* PCナビ（md以上） */}
+      <Cluster as="nav" aria-label="メインナビゲーション" g="30" d={['none', null, 'flex']} fz="s" c="text-2">
+        {
+          siteConfig.header.nav.map((item) => (
+            <Link href={item.href} c="inherit" td="none" hov={{ c: 'brand' }}>
+              {item.label}
+            </Link>
+          ))
+        }
+      </Cluster>
 
-    {/* ハンバーガーボタン（md未満） */}
-    <Modal.OpenBtn
-      modalId="site-nav"
-      class="c--menuTrigger l--center set--plain"
-      d={['inline-flex', null, 'none']}
-      bdrs="10"
-      p="0.4em"
-      hov={{ bgc: 'base-2' }}
-      aria-labelledby="menu-open-label"
-    >
-      <Icon
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="1.8"
-        stroke-linecap="round"
-        aria-hidden="true"
-        style={{ scale: '1.1' }}
+      {/* 検索トリガー */}
+      <Modal.OpenBtn modalId="search-modal" class="l--center" bdrs="10" p="0.4em" hov={{ bgc: 'base-2' }} aria-label="記事を検索">
+        <Icon icon="search" fz="l" />
+      </Modal.OpenBtn>
+
+      {/* ハンバーガーボタン（md未満） */}
+      <Modal.OpenBtn
+        modalId="site-nav"
+        class="c--menuTrigger l--center set--plain"
+        d={['inline-flex', null, 'none']}
+        bdrs="10"
+        p="0.4em"
+        hov={{ bgc: 'base-2' }}
+        aria-labelledby="menu-open-label"
       >
-        <line x1="2" y1="8" x2="22" y2="8"></line>
-        <line x1="2" y1="16" x2="22" y2="16"></line>
-      </Icon>
-      <Inline d="none" id="menu-open-label">メニューを開く</Inline>
-    </Modal.OpenBtn>
+        <Icon
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.8"
+          stroke-linecap="round"
+          aria-hidden="true"
+          style={{ scale: '1.1' }}
+        >
+          <line x1="2" y1="8" x2="22" y2="8"></line>
+          <line x1="2" y1="16" x2="22" y2="16"></line>
+        </Icon>
+        <Inline d="none" id="menu-open-label">メニューを開く</Inline>
+      </Modal.OpenBtn>
+    </Cluster>
   </Flex>
+
+  <SearchModal />
 
   {/* モバイル用モーダルナビ */}
   <Modal.Root id="site-nav" isContainer isWrapper="s" hasGutter py="40">
