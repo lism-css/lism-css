@@ -92,7 +92,7 @@ describe('preScanLang', () => {
 
   it('--lang 関連の引数がない場合は状態が保たれる', () => {
     setLang('ja');
-    preScanLang(['create', 'my-app', '--template', 'astro-minimal']);
+    preScanLang(['create', 'my-app', '--template', 'minimal-astro']);
     expect(getLang()).toBe('ja');
   });
 });

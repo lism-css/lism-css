@@ -6,24 +6,86 @@ import { logger } from '../logger.js';
 import { LISM_CSS_VERSION } from '../version.js';
 import { DEFAULT_TEMPLATES_REF, EXAMPLES_PATH, SOURCE_REPO } from '../constants.js';
 import { t, tOf } from '../i18n.js';
+import type { MessageKey } from '../messages.js';
 
 interface LocalizedText {
   ja: string;
   en: string;
 }
 
-interface TemplateDef {
-  name: string;
+type Framework = 'astro' | 'next' | 'vite';
+type CategoryId = 'minimal' | 'blog' | 'lp' | 'site';
+
+interface CategoryDef {
+  id: CategoryId;
   label: LocalizedText;
+  variantPromptKey?: MessageKey;
+}
+
+interface TemplateDef {
+  slug: string;
+  category: CategoryId;
+  variant?: string;
+  variantLabel?: LocalizedText;
+  framework: Framework;
+  sourcePath: string;
   description: LocalizedText;
 }
+
+const FRAMEWORK_LABELS: Record<Framework, LocalizedText> = {
+  astro: { ja: 'Astro', en: 'Astro' },
+  next: { ja: 'Next.js', en: 'Next.js' },
+  vite: { ja: 'Vite + React', en: 'Vite + React' },
+};
+
+const CATEGORIES: CategoryDef[] = [
+  {
+    id: 'minimal',
+    label: { ja: 'Minimal', en: 'Minimal' },
+  },
+  {
+    id: 'blog',
+    label: { ja: 'Blog', en: 'Blog' },
+    variantPromptKey: 'create.promptSelectVariant.blog',
+  },
+  {
+    id: 'lp',
+    label: { ja: 'Landing Page', en: 'Landing Page' },
+    variantPromptKey: 'create.promptSelectVariant.lp',
+  },
+  {
+    id: 'site',
+    label: { ja: 'Site', en: 'Site' },
+    variantPromptKey: 'create.promptSelectVariant.site',
+  },
+];
 
 /** 配信対象の examples 一覧（将来は examples ディレクトリから自動生成に置き換え可能） */
 const TEMPLATES: TemplateDef[] = [
   {
-    name: 'astro-minimal',
-    label: { ja: 'Astro (最小構成)', en: 'Astro (minimal)' },
+    slug: 'minimal-astro',
+    category: 'minimal',
+    framework: 'astro',
+    sourcePath: 'minimal/astro',
     description: { ja: 'Astro ベースの最小構成', en: 'Minimal Astro setup' },
+  },
+  {
+    slug: 'blog-astro-simple',
+    category: 'blog',
+    variant: 'simple',
+    variantLabel: { ja: 'Simple', en: 'Simple' },
+    framework: 'astro',
+    sourcePath: 'blog/simple/astro',
+    description: { ja: 'タグのみのシンプルな Astro ブログ', en: 'Simple Astro blog with tags' },
+  },
+  {
+    slug: 'blog-astro-full',
+    category: 'blog',
+    variant: 'full',
+    variantLabel: { ja: 'Full', en: 'Full' },
+    framework: 'astro',
+    sourcePath: 'blog/full/astro',
+    description: { ja: 'カテゴリ・目次つきの Astro ブログ', en: 'Astro blog with categories and table of contents' },
   },
 ];
 
@@ -41,7 +103,7 @@ export interface RunCreateArgs {
 /** `lism create` / `create-lism` から共通で使える実体関数 */
 export async function runCreate({ template, targetDir, force = false }: RunCreateArgs): Promise<void> {
   const tpl = await resolveTemplate(template);
-  const outDir = path.resolve(process.cwd(), await resolveTargetDir(targetDir, tpl.name));
+  const outDir = path.resolve(process.cwd(), await resolveTargetDir(targetDir, tpl.slug));
 
   if (fs.existsSync(outDir) && fs.readdirSync(outDir).length > 0 && !force) {
     const ok = await confirm({
@@ -55,12 +117,14 @@ export async function runCreate({ template, targetDir, force = false }: RunCreat
   }
 
   const ref = DEFAULT_TEMPLATES_REF;
-  logger.info(t('create.fetching', { name: tpl.name, ref }));
-  await downloadTemplate(`github:${SOURCE_REPO}/${EXAMPLES_PATH}/${tpl.name}#${ref}`, {
+  logger.info(t('create.fetching', { name: tpl.slug, ref }));
+  await downloadTemplate(`github:${SOURCE_REPO}/${EXAMPLES_PATH}/${tpl.sourcePath}#${ref}`, {
     dir: outDir,
     force: true,
     forceClean: force,
   });
+
+  ensureTemplateDownloaded(outDir, tpl);
 
   // workspace:* を公開バージョンに書き換える
   rewriteWorkspaceDeps(outDir);
@@ -81,17 +145,59 @@ export async function createCommand(targetDir: string | undefined, options: Crea
 
 async function resolveTemplate(requested?: string): Promise<TemplateDef> {
   if (requested) {
-    const found = TEMPLATES.find((t) => t.name === requested);
+    const found = TEMPLATES.find((t) => t.slug === requested);
     if (!found) {
-      throw new Error(t('create.templateNotFound', { name: requested, list: TEMPLATES.map((x) => x.name).join(', ') }));
+      throw new Error(t('create.templateNotFound', { name: requested, list: TEMPLATES.map((x) => x.slug).join(', ') }));
     }
     return found;
   }
-  const picked = await select<string>({
-    message: t('create.promptSelectTemplate'),
-    choices: TEMPLATES.map((tpl) => ({ name: `${tOf(tpl.label)} — ${tOf(tpl.description)}`, value: tpl.name })),
+
+  const category = await select<CategoryId>({
+    message: t('create.promptSelectCategory'),
+    choices: CATEGORIES.filter((category) => TEMPLATES.some((tpl) => tpl.category === category.id)).map((category) => ({
+      name: tOf(category.label),
+      value: category.id,
+    })),
   });
-  return TEMPLATES.find((x) => x.name === picked)!;
+
+  const categoryTemplates = TEMPLATES.filter((tpl) => tpl.category === category);
+  const variant = await resolveVariant(category, categoryTemplates);
+  const variantTemplates = categoryTemplates.filter((tpl) => tpl.variant === variant);
+  const framework = await resolveFramework(variantTemplates);
+
+  return variantTemplates.find((tpl) => tpl.framework === framework)!;
+}
+
+async function resolveVariant(category: CategoryId, templates: TemplateDef[]): Promise<string | undefined> {
+  const variants = [...new Set(templates.map((tpl) => tpl.variant))];
+  if (variants.length <= 1) return variants[0];
+
+  const categoryDef = CATEGORIES.find((item) => item.id === category);
+  const messageKey = categoryDef?.variantPromptKey ?? 'create.promptSelectVariant';
+
+  return select<string>({
+    message: t(messageKey),
+    choices: variants.map((variant) => {
+      const tpl = templates.find((item) => item.variant === variant)!;
+      return {
+        name: `${tOf(tpl.variantLabel ?? { ja: variant ?? '', en: variant ?? '' })} — ${tOf(tpl.description)}`,
+        value: variant!,
+      };
+    }),
+  });
+}
+
+async function resolveFramework(templates: TemplateDef[]): Promise<Framework> {
+  const frameworks = [...new Set(templates.map((tpl) => tpl.framework))];
+  if (frameworks.length === 1) return frameworks[0];
+
+  return select<Framework>({
+    message: t('create.promptSelectFramework'),
+    choices: frameworks.map((framework) => ({
+      name: tOf(FRAMEWORK_LABELS[framework]),
+      value: framework,
+    })),
+  });
 }
 
 async function resolveTargetDir(provided: string | undefined, templateName: string): Promise<string> {
@@ -100,6 +206,12 @@ async function resolveTargetDir(provided: string | undefined, templateName: stri
     message: t('create.promptTargetDir'),
     default: `./${templateName}`,
   });
+}
+
+function ensureTemplateDownloaded(projectDir: string, tpl: TemplateDef): void {
+  const pkgPath = path.join(projectDir, 'package.json');
+  if (fs.existsSync(pkgPath)) return;
+  throw new Error(t('create.templatePackageMissing', { name: tpl.slug, path: tpl.sourcePath }));
 }
 
 /**

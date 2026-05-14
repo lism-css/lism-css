@@ -1,0 +1,25 @@
+---
+/**
+ * MDXから利用するリンクカードの公開コンポーネント。
+ * 実処理は外部リンク/内部記事で大きく異なるため、ここでは種別判定だけを担う。
+ */
+import LinkCardExternal from './LinkCardExternal.astro';
+import LinkCardInternal from './LinkCardInternal.astro';
+import './linkCard.css';
+
+interface Props {
+  href: string;
+  type?: 'external' | 'internal';
+  title?: string;
+  description?: string;
+}
+
+const { href, type, title, description } = Astro.props;
+const resolvedType = type ?? (/^https?:\/\//i.test(href) ? 'external' : 'internal');
+
+if (resolvedType !== 'external' && resolvedType !== 'internal') {
+  throw new Error(`[LinkCard] Invalid type: "${resolvedType}"`);
+}
+---
+
+{resolvedType === 'external' ? <LinkCardExternal href={href} title={title} description={description} /> : <LinkCardInternal slug={href} />}

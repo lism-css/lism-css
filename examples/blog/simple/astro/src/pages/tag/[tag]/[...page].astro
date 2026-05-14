@@ -1,0 +1,38 @@
+---
+import { getCollection } from 'astro:content';
+import type { GetStaticPaths } from 'astro';
+import ArchiveLayout from '@/layouts/ArchiveLayout.astro';
+import PostList from '@/components/PostList.astro';
+import Pager from '@/components/Pager.astro';
+import { siteConfig } from '@/config/site';
+import { getAllTags } from '@/lib/tags';
+import { Heading } from 'lism-css/astro';
+
+export const getStaticPaths = (async ({ paginate }) => {
+  const allPosts = await getCollection('posts');
+
+  return getAllTags(allPosts).flatMap((tag) => {
+    const posts = allPosts.filter((p) => p.data.tags.includes(tag)).sort((a, b) => b.data.date.localeCompare(a.data.date));
+    return paginate(posts, {
+      params: { tag },
+      props: { tag },
+      pageSize: siteConfig.pagination.postsPerPage,
+    });
+  });
+}) satisfies GetStaticPaths;
+
+const { tag, page } = Astro.props;
+
+const getPageHref = (n: number) => (n === 1 ? `/tag/${tag}/` : `/tag/${tag}/${n}/`);
+---
+
+<ArchiveLayout title={`#${tag} — ${siteConfig.name}`} description={`タグ「${tag}」の記事一覧`}>
+  {/* ページタイトル */}
+  <Heading level="1"># {tag}</Heading>
+
+  {/* 記事リスト */}
+  <PostList posts={page.data} />
+
+  {/* ページャー */}
+  <Pager currentPage={page.currentPage} lastPage={page.lastPage} getPageHref={getPageHref} />
+</ArchiveLayout>

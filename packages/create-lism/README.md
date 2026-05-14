@@ -11,20 +11,20 @@
 pnpm create lism
 
 # テンプレート名と出力先を指定
-pnpm create lism --template astro-minimal ./my-app
+pnpm create lism --template minimal-astro ./my-app
 
 # npm
-npm create lism@latest -- --template astro-minimal my-app
+npm create lism@latest -- --template minimal-astro my-app
 
 # yarn
-yarn create lism --template astro-minimal my-app
+yarn create lism --template minimal-astro my-app
 ```
 
 ## オプション
 
 | オプション | 説明 |
 |-----------|------|
-| `-t, --template <name>` | 使用するテンプレート名（例: `astro-minimal`） |
+| `-t, --template <name>` | 使用するテンプレート名（例: `minimal-astro`） |
 | `-f, --force` | 既存ディレクトリを確認なしで強制上書き |
 | `-h, --help` | ヘルプ表示 |
 
@@ -32,9 +32,11 @@ yarn create lism --template astro-minimal my-app
 
 | 名前 | 説明 |
 |------|------|
-| `astro-minimal` | Astro ベースの最小構成 |
+| `minimal-astro` | Astro ベースの最小構成 |
+| `blog-astro-simple` | タグのみのシンプルな Astro ブログ |
+| `blog-astro-full` | カテゴリ・目次つきの Astro ブログ |
 
-テンプレートは [`examples/`](https://github.com/lism-css/lism-css/tree/main/examples) 配下に順次追加される予定です。
+テンプレートは [`examples/`](https://github.com/lism-css/lism-css/tree/main/examples) 配下のカテゴリ別ディレクトリに順次追加される予定です。
 
 ## 補足
 
