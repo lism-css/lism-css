@@ -1,9 +1,9 @@
 /**
- * Obsidian 流の `[[slug]]` / `[[slug|表示テキスト]]` 記法を変換する remark プラグイン。
+ * Obsidian流の`[[slug]]`/`[[slug|表示テキスト]]`記法を変換するremarkプラグイン。
  *
- * - 段落単独の `[[slug]]`（エイリアスなし）→ `<LinkCardInternal slug="..." />`
- * - 段落単独の `[[slug|alias]]`            → `<WikiLink slug="..." text="alias" />` （リンクのまま）
- * - 文中の `[[slug]]` / `[[slug|alias]]`    → `<WikiLink slug="..." [text="alias"] />`
+ * - 段落単独の`[[slug]]`（エイリアスなし）→ `<LinkCard type="internal" href="..." />`
+ * - 段落単独の`[[slug|alias]]`            → `<WikiLink slug="..." text="alias" />`（リンクのまま）
+ * - 文中の`[[slug]]`/`[[slug|alias]]`    → `<WikiLink slug="..." [text="alias"] />`
  *
  * いずれもタイトル等は受け側のコンポーネントが Content Collections から解決する。
  */
@@ -14,7 +14,7 @@ const STANDALONE_PATTERN = /^\[\[([^[\]|]+?)\]\]$/;
 
 export function remarkWikiLink() {
   return (tree) => {
-    // 1. 段落単独の `[[slug]]`（エイリアスなし）を <LinkCardInternal> に置換
+    // 1. 段落単独の`[[slug]]`（エイリアスなし）を<LinkCard>に置換
     visit(tree, 'paragraph', (node, index, parent) => {
       if (!parent || index === undefined) return;
       if (node.children.length !== 1) return;
@@ -27,8 +27,11 @@ export function remarkWikiLink() {
 
       parent.children[index] = {
         type: 'mdxJsxFlowElement',
-        name: 'LinkCardInternal',
-        attributes: [{ type: 'mdxJsxAttribute', name: 'slug', value: match[1].trim() }],
+        name: 'LinkCard',
+        attributes: [
+          { type: 'mdxJsxAttribute', name: 'type', value: 'internal' },
+          { type: 'mdxJsxAttribute', name: 'href', value: match[1].trim() },
+        ],
         children: [],
       };
     });

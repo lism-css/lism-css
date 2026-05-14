@@ -1,11 +1,11 @@
 /**
- * URL 文字列だけの段落を `<LinkCardExternal href="..." />` に変換する remark プラグイン。
+ * URL文字列だけの段落を`<LinkCard type="external" href="..." />`に変換するremarkプラグイン。
  *
  * 例:
  *   https://example.com
- *   → <LinkCardExternal href="https://example.com" />
+ *   → <LinkCard type="external" href="https://example.com" />
  *
- *   autolink 形式（`[https://example.com](https://example.com)`）も同様に変換する。
+ *   autolink形式（`[https://example.com](https://example.com)`）も同様に変換する。
  */
 import { visit } from 'unist-util-visit';
 
@@ -34,8 +34,13 @@ export function remarkLinkCard() {
 
       parent.children[index] = {
         type: 'mdxJsxFlowElement',
-        name: 'LinkCardExternal',
+        name: 'LinkCard',
         attributes: [
+          {
+            type: 'mdxJsxAttribute',
+            name: 'type',
+            value: 'external',
+          },
           {
             type: 'mdxJsxAttribute',
             name: 'href',

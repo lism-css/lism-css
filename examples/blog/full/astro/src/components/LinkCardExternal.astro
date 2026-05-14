@@ -4,12 +4,11 @@
  * ビルド時に対象 URL の HTML から OGP を抽出してタイトル / 説明 / OG画像 / favicon を表示する。
  * `.cache/ogp/` にキャッシュされ、TTL 内は再 fetch しない。
  *
- * MDX 上で直接呼び出すこともできる（fetch 失敗時の上書き用）：
- *   <LinkCardExternal href="https://example.com" title="..." description="..." />
+ * MDX上ではLinkCard経由で呼び出す：
+ *   <LinkCard type="external" href="https://example.com" title="..." description="..." />
  */
 import { BoxLink, Flex, Stack, Frame, Inline } from 'lism-css/astro';
 import { getOgpFromCache, saveOgpToCache, type OgpData } from '@/lib/ogp-cache';
-import './linkCard.css';
 
 interface Props {
   href: string;
@@ -82,7 +81,17 @@ const displaySiteName = ogp?.siteName || new URL(href).hostname;
 const displayFavicon = ogp?.favicon || '';
 ---
 
-<BoxLink href={href} target="_blank" rel="noopener noreferrer" class="c--linkCard" bdrs="20" p="20" bd hasTransition hov="-bgc,-bdc">
+<BoxLink
+  href={href}
+  target="_blank"
+  rel="noopener noreferrer"
+  class="c--linkCard c--linkCard--external"
+  bdrs="20"
+  p="20"
+  bd
+  hasTransition
+  hov="-bgc,-bdc"
+>
   <Flex g="20" ai="stretch" w="100%">
     <Stack g="10" fx="1" py="5" min-w="0">
       <Inline class="c--linkCard_title" fz="m" fw="bold" lh="s">{displayTitle}</Inline>

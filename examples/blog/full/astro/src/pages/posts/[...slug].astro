@@ -4,8 +4,7 @@ import { Group, Flow, Stack, Cluster, Grid, Heading } from 'lism-css/astro';
 import Layout from '@/layouts/Layout.astro';
 import { Callout } from '@lism-css/ui/astro/Callout';
 import { Alert } from '@lism-css/ui/astro/Alert';
-import LinkCardExternal from '@/components/LinkCardExternal.astro';
-import LinkCardInternal from '@/components/LinkCardInternal.astro';
+import LinkCard from '@/components/LinkCard.astro';
 import WikiLink from '@/components/WikiLink.astro';
 import TableOfContents from '@/components/TableOfContents.astro';
 import FixedToc from '@/components/FixedToc.astro';
@@ -85,7 +84,7 @@ const ogImage = buildOgImageUrl({
       {/* md 以上: 本文 + サイド目次の 2 カラム。md 未満: 本文のみの 1 カラムに切り替え */}
       <Grid gtc={['1fr', null, 'minmax(0, 1fr) var(--sz--toc)']} g="40">
         <Flow as="article" class="c--articleBody">
-          <Content components={{ Callout, Alert, LinkCardExternal, LinkCardInternal, WikiLink }} />
+          <Content components={{ Callout, Alert, LinkCard, WikiLink }} />
         </Flow>
         {/* サイド目次（md 以上で表示） */}
         <Group as="aside" d={['none', null, 'block']}>
