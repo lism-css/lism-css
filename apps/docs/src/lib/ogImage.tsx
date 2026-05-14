@@ -4,12 +4,12 @@ import path from 'node:path';
 
 // OG画像用のSVGを生成する
 export async function renderOgSvg(title: string, _tags: string[]) {
-  // publicディレクトリのパスを取得
-  const publicDir = path.resolve(process.cwd(), 'public');
+  // OG画像生成用アセットのディレクトリパスを取得（配信物に含めないため src 配下に配置）
+  const assetsDir = path.resolve(process.cwd(), 'src/assets/og');
 
   // 背景画像とロゴをBase64エンコードして読み込む
-  const bgImagePath = path.join(publicDir, 'og-bg.jpg');
-  const logoPath = path.join(publicDir, 'logo.png');
+  const bgImagePath = path.join(assetsDir, 'og-bg.jpg');
+  const logoPath = path.join(assetsDir, 'logo.png');
 
   const bgImageBase64 = fs.readFileSync(bgImagePath).toString('base64');
   const bgImageDataUrl = `data:image/jpeg;base64,${bgImageBase64}`;
@@ -19,7 +19,7 @@ export async function renderOgSvg(title: string, _tags: string[]) {
   const logoDataUrl = `data:image/png;base64,${logoBase64}`;
 
   // フォントをローカルファイルから読み込み
-  const fontPath = path.join(publicDir, 'fonts/noto-sans-jp-600.woff');
+  const fontPath = path.join(assetsDir, 'noto-sans-jp-600.woff');
   const fontData600 = fs.readFileSync(fontPath);
 
   return satori(
