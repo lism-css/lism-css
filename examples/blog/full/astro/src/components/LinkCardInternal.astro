@@ -39,23 +39,23 @@ const ogImage = buildOgImageUrl({
 });
 ---
 
-<BoxLink href={href} class="c--linkCard" bdrs="20" p="20" bgc="white" bd hasTransition>
+<BoxLink href={href} target="_blank" rel="noopener noreferrer" class="c--linkCard" bdrs="20" p="20" bd hasTransition hov="-bgc,-bdc">
   <Flex g="20" ai="stretch" w="100%">
     <Stack g="10" fx="1" py="5" min-w="0">
-      <Inline class="c--linkCard__title" fz="m" fw="bold" lh="s">{post.data.title}</Inline>
+      <Inline class="c--linkCard_title" fz="m" fw="bold" lh="s">{post.data.title}</Inline>
       {
         post.data.excerpt && (
-          <Inline class="c--linkCard__desc" fz="xs" lh="s" c="text-2">
+          <Inline class="c--linkCard_desc" fz="xs" lh="s" c="text-2">
             {post.data.excerpt}
           </Inline>
         )
       }
-      <Cluster class="c--linkCard__meta" g="10" ai="center" my-s="auto" py-s="10">
+      <Cluster class="c--linkCard_meta" g="10" ai="center" my-s="auto" py-s="10">
         <Date date={post.data.date} />
         <Cat>{meta.label}</Cat>
       </Cluster>
     </Stack>
-    <Frame ar="og" d={['none', 'block']} fxsh="0" bdrs="10" class="c--linkCard__thumb">
+    <Frame ar="og" d={['none', 'block']} fxsh="0" bdrs="10" class="c--linkCard_thumb">
       <img src={ogImage} alt="" loading="lazy" />
     </Frame>
   </Flex>
