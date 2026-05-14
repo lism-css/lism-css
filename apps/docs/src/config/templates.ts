@@ -27,6 +27,7 @@ const templates = {
     label: 'LP',
     items: [
       {
+        draft: true,
         id: 'lp001',
         title: 'LP001: Minimal LP',
         description: {
@@ -35,6 +36,7 @@ const templates = {
         },
       },
       {
+        draft: true,
         id: 'lp002',
         title: 'LP002: Simple Natural LP',
         description: {
@@ -43,6 +45,7 @@ const templates = {
         },
       },
       {
+        draft: true,
         id: 'lp003',
         title: 'LP003: Japanese Ryokan LP',
         description: {
