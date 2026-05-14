@@ -228,16 +228,19 @@ export const siteConfig = {
 
     {/* 2. 本文 + TOC */}
     <Group isWrapper="l" hasGutter>
-      <WithSide fxd="row-reverse" mainW="40em" sideW="var(--sz--toc)" g="40">
-        <Group as="aside" isSide>
-          <Group pos="sticky" t="20" z="1">
-            <TableOfContents toc={toc} />
-          </Group>
-        </Group>
+      {/* md 以上: 本文 + サイド目次の 2 カラム。md 未満: 本文のみの 1 カラム */}
+      <Grid gtc={['1fr', null, 'minmax(0, 1fr) var(--sz--toc)']} g="40">
         <Flow as="article" class="c--articleBody">
           <Content />
         </Flow>
-      </WithSide>
+        {/* サイド目次（md 以上で表示） */}
+        <Group as="aside" d={['none', null, 'block']}>
+          <Group pos="sticky" t="20" z="1">
+            <TableOfContents toc={toc} labelId="toc-label-side" />
+          </Group>
+        </Group>
+      </Grid>
+
     </Group>
 
     {/* 3. 記事フッター（シェアボタン + 前後記事ナビ） */}
@@ -245,11 +248,18 @@ export const siteConfig = {
       <ShareButtons ... />
       <ArticleNav ... />
     </Group>
+
+    {/* md 未満用: 画面下部の固定ボタンから開く目次モーダル */}
+    <FixedToc>
+      <TableOfContents toc={toc} labelId="toc-label-modal" />
+    </FixedToc>
   </Stack>
 </Layout>
 ```
 
-本文と TOC の横並びには `WithSide` を使い、`fxd="row-reverse"` で TOC を右側に配置する。TOC は `position: sticky` でスクロール追従させる。
+本文と TOC の横並びには `Grid` を使い、`gtc` をブレークポイント配列で指定して **`md`（800px）を境に 2 カラム ⇄ 1 カラムを切り替える**。`md` 以上では本文（`minmax(0, 1fr)`）の右にサイド目次（`var(--sz--toc)`）を並べ、目次は `position: sticky` でスクロール追従させる。
+
+`md` 未満ではサイド目次を `d={['none', null, 'block']}` で非表示にし、代わりに `FixedToc` コンポーネントを表示する。`FixedToc` は「画面右下に固定した目次ボタン＋目次モーダル」のシェルで、目次の中身は `<slot />` で受け取る（モーダルは中央表示・フェードイン）。サイド版と `FixedToc` 内に `TableOfContents` を 2 回置くが、`labelId` を分けて見出し id の重複を避けている。スクロール連動のアクティブ表示は `data-toc-link` 属性ベースなので、両方の `TableOfContents` に同時に反映される。モーダル内の目次リンクをタップしたときは、`FixedToc` のクリック委譲スクリプトが閉じるボタンを呼んでモーダルを閉じる。
 
 `--sz--toc` は `global.css` で `240px` を割り当てている。`isWrapper="l"` が参照する `--sz--l` も `--sz--m + --sz--toc + --s40` で計算しており、TOC があっても本文が中央から大きくずれないように調整している。
 
@@ -273,7 +283,7 @@ export const siteConfig = {
     --lts--base: 0.025em;
     --lts--l: 0.075em;
     --lts--xl: 0.15em;
-    --sz--toc: 240px;
+    --sz--toc: 220px;
     --sz--l: calc(var(--sz--m) + var(--sz--toc) + var(--s40));
     --headings-fw: 500;
   }

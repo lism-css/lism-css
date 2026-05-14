@@ -5,9 +5,11 @@ import Eyebrow from '@/components/Eyebrow.astro';
 
 interface Props {
   toc: TocItem[];
+  // ラベル見出しの id。サイド版とモーダル版を同一ページに置くため、インスタンスごとに一意にする
+  labelId?: string;
 }
 
-const { toc } = Astro.props;
+const { toc, labelId = 'toc-label' } = Astro.props;
 
 // 目次リンク共通: Property Class / Trait に寄せ、ホバー・トランジションも Lism で統一する
 const tocLinkCommon = {
@@ -25,8 +27,8 @@ const tocLinkCommon = {
 } as const;
 ---
 
-<Lism as="nav" aria-labelledby="toc-label">
-  <Eyebrow as="h2" id="toc-label" class="c--toc_label" fw="normal" p="5" util="trim">Table of Contents</Eyebrow>
+<Lism as="nav" aria-labelledby={labelId}>
+  <Eyebrow as="h2" id={labelId} class="c--toc_label" fw="normal" p="5" util="trim">Table of Contents</Eyebrow>
   <Group class="c--toc" bd-y py="20">
     <List as="ol" class="c--toc_list" mx-s="5">
       {
@@ -36,7 +38,7 @@ const tocLinkCommon = {
               {item.text}
             </Lism>
             {item.children.length > 0 && (
-              <ol>
+              <ol class="c--toc_sublist">
                 {item.children.map((child) => (
                   <li data-level={child.depth}>
                     <Lism as="a" {...tocLinkCommon} href={`#${child.slug}`} data-toc-link={child.slug} fz="2xs" fw="normal" px-s="30" c="text-2">
@@ -53,15 +55,9 @@ const tocLinkCommon = {
   </Group>
 </Lism>
 <style>
-  @layer lism-component {
-    /* === TOC（目次） === */
-    /* 子孫セレクタ・状態切替（data-is-active はスクロール連動でJSが切替） */
-    .c--toc :is(ul, ol) {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-    }
-  }
+  /* リストの list-style/padding リセットは lism-css のリセット層が
+     `:is(ul,ol)[class]` に対して行うため、ネストした ol にも class を付けて任せる
+     （class なしの ol は lism-css の非レイヤー規則で list-style:revert に戻され、レイヤー内の打ち消しが効かない） */
   /* スクロール連動のアクティブ表示（複数プロパティ切替・data-* のみ CSS に残す） */
   .c--toc_list [data-is-active] {
     color: var(--brand);
@@ -73,16 +69,25 @@ const tocLinkCommon = {
 <script>
   // スクロール連動で目次のアクティブ状態を更新する
   // 「最後に上端を通過した見出し」を active にすることで、クリック遷移直後の表示と一致させる
+  // 注: 目次はサイド版とモーダル版が同一ページに存在するため、tocLinks には同じ slug のリンクが
+  //     複数含まれる。setActive は data-toc-link 一致で全リンクに反映されるので両方に効く。
+  //     一方 headings は本文の見出し要素なので、id で重複排除して 1 見出し 1 エントリにする。
   const tocLinks = Array.from(document.querySelectorAll<HTMLAnchorElement>('[data-toc-link]'));
   const OFFSET = 80;
 
   if (tocLinks.length > 0) {
+    const seenHeadingIds = new Set<string>();
     const headings = tocLinks
       .map((link) => {
         const slug = link.dataset.tocLink;
         return slug ? document.getElementById(slug) : null;
       })
-      .filter((heading): heading is HTMLElement => heading !== null);
+      .filter((heading): heading is HTMLElement => heading !== null)
+      .filter((heading) => {
+        if (seenHeadingIds.has(heading.id)) return false;
+        seenHeadingIds.add(heading.id);
+        return true;
+      });
 
     function setActive(slug: string) {
       tocLinks.forEach((link) => {

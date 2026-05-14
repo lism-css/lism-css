@@ -1,6 +1,6 @@
 ---
 import { getCollection, render } from 'astro:content';
-import { Group, Flow, Stack, Cluster, WithSide, Heading } from 'lism-css/astro';
+import { Group, Flow, Stack, Cluster, Grid, Heading } from 'lism-css/astro';
 import Layout from '@/layouts/Layout.astro';
 import { Callout } from '@lism-css/ui/astro/Callout';
 import { Alert } from '@lism-css/ui/astro/Alert';
@@ -8,6 +8,7 @@ import LinkCardExternal from '@/components/LinkCardExternal.astro';
 import LinkCardInternal from '@/components/LinkCardInternal.astro';
 import PostLink from '@/components/PostLink.astro';
 import TableOfContents from '@/components/TableOfContents.astro';
+import FixedToc from '@/components/FixedToc.astro';
 import ArticleNav from '@/components/ArticleNav.astro';
 import ShareButtons from '@/components/ShareButtons.astro';
 import Date from '@/components/Date.astro';
@@ -81,16 +82,18 @@ const ogImage = buildOgImageUrl({
 
     {/* 本文 + TOC */}
     <Group isWrapper="l" hasGutter>
-      <WithSide fxd="row-reverse" mainW="40em" sideW="var(--sz--toc)" g="40">
-        <Group as="aside" isSide>
-          <Group pos="sticky" t="20" z="1">
-            <TableOfContents toc={toc} />
-          </Group>
-        </Group>
+      {/* md 以上: 本文 + サイド目次の 2 カラム。md 未満: 本文のみの 1 カラムに切り替え */}
+      <Grid gtc={['1fr', null, 'minmax(0, 1fr) var(--sz--toc)']} g="40">
         <Flow as="article" class="c--articleBody">
           <Content components={{ Callout, Alert, LinkCardExternal, LinkCardInternal, PostLink }} />
         </Flow>
-      </WithSide>
+        {/* サイド目次（md 以上で表示） */}
+        <Group as="aside" d={['none', null, 'block']}>
+          <Group pos="sticky" t="calc(var(--header-h) + var(--s10))" z="1">
+            <TableOfContents toc={toc} labelId="toc-label-side" />
+          </Group>
+        </Group>
+      </Grid>
 
       {/* フッター（シェアボタン → 前後記事ナビ） */}
       <Group as="footer" my-s="60">
@@ -106,4 +109,12 @@ const ogImage = buildOgImageUrl({
       </Group>
     </Group>
   </Stack>
+
+  {
+    /* md 未満用: 画面下部の固定ボタンから開く目次モーダル（中身はサイドと同じ TableOfContents）。
+      Stack g="50" の外（gap なしの Main 直下）に置き、空要素ぶんの余白が出ないようにする */
+  }
+  <FixedToc>
+    <TableOfContents toc={toc} labelId="toc-label-modal" />
+  </FixedToc>
 </Layout>
