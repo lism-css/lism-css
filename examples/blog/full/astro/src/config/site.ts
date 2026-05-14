@@ -26,16 +26,10 @@ export const siteConfig = {
 
   // ヘッダー
   header: {
-    // PCヘッダー用ナビ
+    // メニュー（モーダル）用ナビ
     nav: [
       { label: 'Home', href: '/' },
       { label: 'About', href: '/about/' },
-    ],
-    // モバイルモーダル用ナビ
-    modalNav: [
-      { label: 'Home', href: '/' },
-      { label: 'About', href: '/about/' },
-      { label: 'Privacy Policy', href: '/privacy/' },
     ],
   },
 

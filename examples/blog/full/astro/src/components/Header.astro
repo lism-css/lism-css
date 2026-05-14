@@ -14,18 +14,7 @@ import { siteConfig } from '@/config/site';
       {siteConfig.name}
     </Link>
 
-    <Cluster ai="center" g="15">
-      {/* PCナビ（md以上） */}
-      <Cluster as="nav" aria-label="メインナビゲーション" g="30" d={['none', null, 'flex']} fz="s" c="text-2">
-        {
-          siteConfig.header.nav.map((item) => (
-            <Link href={item.href} c="inherit" td="none" hov={{ c: 'brand' }}>
-              {item.label}
-            </Link>
-          ))
-        }
-      </Cluster>
-
+    <Cluster ai="center" g="10">
       {/* テーマ切り替え */}
       <ThemeSwitch />
 
@@ -34,11 +23,10 @@ import { siteConfig } from '@/config/site';
         <Icon icon="search" fz="l" />
       </Modal.OpenBtn>
 
-      {/* ハンバーガーボタン（md未満） */}
+      {/* メニューボタン（全幅で常時表示・PCナビと併設） */}
       <Modal.OpenBtn
         modalId="site-nav"
         class="c--menuTrigger l--center set--plain"
-        d={['inline-flex', null, 'none']}
         bdrs="10"
         p="0.4em"
         hov={{ bgc: 'base-2' }}
@@ -86,7 +74,7 @@ import { siteConfig } from '@/config/site';
       <Modal.Body layout="stack" g="20" ov-y="auto">
         <Stack as="nav" aria-label="メインナビゲーション" util="divide" fz="s">
           {
-            siteConfig.header.modalNav.map((item) => (
+            siteConfig.header.nav.map((item) => (
               <Link href={item.href} c="inherit" td="none" py="10" hov={{ c: 'brand' }}>
                 {item.label}
               </Link>
