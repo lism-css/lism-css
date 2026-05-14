@@ -23,7 +23,7 @@ const { posts, showCategory = true } = Astro.props;
           <BoxLink href={getPostHref(post.id)} py="30" px="5" hov="-bgc" hasTransition>
             <Stack g="20" util="trimAll">
               <Cluster g="10">
-                <Date>{post.data.date}</Date>
+                <Date date={post.data.date} />
                 {showCategory && <Cat>{CATEGORIES[category].label}</Cat>}
               </Cluster>
               <Heading level="2" fz="l">

@@ -61,7 +61,7 @@ const ogImage = buildOgImageUrl({
     <Group as="header" isWrapper="l" hasGutter>
       <Stack g="30">
         <Cluster g="10">
-          <Date>{post.data.date}</Date>
+          <Date date={post.data.date} />
           <Cat href={categoryHref}>{meta.label}</Cat>
         </Cluster>
         <Heading level="1">
