@@ -2,8 +2,8 @@
  * Obsidian 流の `[[slug]]` / `[[slug|表示テキスト]]` 記法を変換する remark プラグイン。
  *
  * - 段落単独の `[[slug]]`（エイリアスなし）→ `<LinkCardInternal slug="..." />`
- * - 段落単独の `[[slug|alias]]`            → `<PostLink slug="..." text="alias" />` （リンクのまま）
- * - 文中の `[[slug]]` / `[[slug|alias]]`    → `<PostLink slug="..." [text="alias"] />`
+ * - 段落単独の `[[slug|alias]]`            → `<WikiLink slug="..." text="alias" />` （リンクのまま）
+ * - 文中の `[[slug]]` / `[[slug|alias]]`    → `<WikiLink slug="..." [text="alias"] />`
  *
  * いずれもタイトル等は受け側のコンポーネントが Content Collections から解決する。
  */
@@ -33,7 +33,7 @@ export function remarkWikiLink() {
       };
     });
 
-    // 2. テキスト中の `[[slug]]` / `[[slug|alias]]` を <PostLink> に分割
+    // 2. テキスト中の `[[slug]]` / `[[slug|alias]]` を <WikiLink> に分割
     visit(tree, 'text', (node, index, parent) => {
       if (!parent || index === undefined) return;
       if (!node.value.includes('[[')) return;
@@ -55,7 +55,7 @@ export function remarkWikiLink() {
         }
         segments.push({
           type: 'mdxJsxTextElement',
-          name: 'PostLink',
+          name: 'WikiLink',
           attributes,
           children: [],
         });

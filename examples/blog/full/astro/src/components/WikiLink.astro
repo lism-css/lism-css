@@ -19,7 +19,7 @@ const posts = await getCollection('posts');
 const post = posts.find((p) => parsePostId(p.id).slug === slug);
 
 if (!post) {
-  throw new Error(`[PostLink] Post not found for slug: "${slug}"`);
+  throw new Error(`[WikiLink] Post not found for slug: "${slug}"`);
 }
 
 const href = getPostHref(post.id);
