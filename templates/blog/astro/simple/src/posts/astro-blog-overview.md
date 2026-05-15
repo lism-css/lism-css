@@ -5,7 +5,7 @@ date: 2026.04.10
 tags: [Astro, Lism CSS, テンプレート]
 ---
 
-Lism CSS リポジトリの `examples/blog/simple/astro/` には、Lism CSS と `@lism-css/ui` を使った Astro ブログテンプレート（タグのみのシンプル構成）が入っている。この記事では、そのディレクトリ構成と動作仕様を整理する。
+Lism CSS リポジトリの `templates/blog/astro/simple/` には、Lism CSS と `@lism-css/ui` を使った Astro ブログテンプレート（タグのみのシンプル構成）が入っている。この記事では、そのディレクトリ構成と動作仕様を整理する。
 
 ## 依存関係
 

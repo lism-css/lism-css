@@ -32,8 +32,8 @@ export const messages = {
 
   // create
   'cli.create.description': {
-    ja: 'examples テンプレートから新規プロジェクトを生成する',
-    en: 'Create a new project from an examples template',
+    ja: 'templates から新規プロジェクトを生成する',
+    en: 'Create a new project from a template',
   },
   'cli.create.arg.targetDir': {
     ja: '出力先ディレクトリ',
@@ -188,8 +188,8 @@ export const messages = {
     en: 'Fetching template "{name}" (ref: {ref})...',
   },
   'create.templatePackageMissing': {
-    ja: 'テンプレート "{name}" の取得結果に package.json がありません。取得元パスを確認してください: examples/{path}',
-    en: 'Downloaded template "{name}" does not contain package.json. Check the source path: examples/{path}',
+    ja: 'テンプレート "{name}" の取得結果に package.json がありません。取得元パスを確認してください: templates/{path}',
+    en: 'Downloaded template "{name}" does not contain package.json. Check the source path: templates/{path}',
   },
   'create.created': {
     ja: '{dir} にプロジェクトを生成しました。',

@@ -4,7 +4,7 @@ import { downloadTemplate } from 'giget';
 import { select, input, confirm } from '@inquirer/prompts';
 import { logger } from '../logger.js';
 import { LISM_CSS_VERSION } from '../version.js';
-import { DEFAULT_TEMPLATES_REF, EXAMPLES_PATH, SOURCE_REPO } from '../constants.js';
+import { DEFAULT_TEMPLATES_REF, SOURCE_REPO, TEMPLATES_PATH } from '../constants.js';
 import { t, tOf } from '../i18n.js';
 import type { MessageKey } from '../messages.js';
 
@@ -60,7 +60,7 @@ const CATEGORIES: CategoryDef[] = [
   },
 ];
 
-/** 配信対象の examples 一覧（将来は examples ディレクトリから自動生成に置き換え可能） */
+/** 配信対象の templates 一覧（将来は templates ディレクトリから自動生成に置き換え可能） */
 const TEMPLATES: TemplateDef[] = [
   {
     slug: 'minimal-astro',
@@ -75,7 +75,7 @@ const TEMPLATES: TemplateDef[] = [
     variant: 'simple',
     variantLabel: { ja: 'Simple', en: 'Simple' },
     framework: 'astro',
-    sourcePath: 'blog/simple/astro',
+    sourcePath: 'blog/astro/simple',
     description: { ja: 'タグのみのシンプルな Astro ブログ', en: 'Simple Astro blog with tags' },
   },
   {
@@ -84,7 +84,7 @@ const TEMPLATES: TemplateDef[] = [
     variant: 'full',
     variantLabel: { ja: 'Full', en: 'Full' },
     framework: 'astro',
-    sourcePath: 'blog/full/astro',
+    sourcePath: 'blog/astro/full',
     description: { ja: 'カテゴリ・目次つきの Astro ブログ', en: 'Astro blog with categories and table of contents' },
   },
 ];
@@ -118,7 +118,7 @@ export async function runCreate({ template, targetDir, force = false }: RunCreat
 
   const ref = DEFAULT_TEMPLATES_REF;
   logger.info(t('create.fetching', { name: tpl.slug, ref }));
-  await downloadTemplate(`github:${SOURCE_REPO}/${EXAMPLES_PATH}/${tpl.sourcePath}#${ref}`, {
+  await downloadTemplate(`github:${SOURCE_REPO}/${TEMPLATES_PATH}/${tpl.sourcePath}#${ref}`, {
     dir: outDir,
     force: true,
     forceClean: force,

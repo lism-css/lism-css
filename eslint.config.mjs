@@ -113,6 +113,16 @@ export default defineConfig(
       parserOptions: { projectService: false },
     },
   },
+  // scripts/*.mjs は型情報なしで lint する。
+  // tseslint v8 + ESLint v9 の projectService は、複数ファイルを同時に投入したときに
+  // 新規 .mjs を default project に登録し損なうことがあり、lint-staged 経由の pre-commit で
+  // "not found by the project service" になるため、これらは projectService の対象外にする。
+  {
+    files: ['scripts/*.mjs', 'packages/*/scripts/*.mjs'],
+    languageOptions: {
+      parserOptions: { projectService: false },
+    },
+  },
   ...astro.configs.recommended,
   {
     files: ['**/*.astro'],
