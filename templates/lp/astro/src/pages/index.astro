@@ -1,0 +1,66 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import { Lism, Stack, Center, Grid, Heading, Link, Text, BoxLink, Frame } from 'lism-css/astro';
+
+const variants = [
+  {
+    slug: 'minimal',
+    title: 'Minimal LP',
+    description: 'シンプルで余白を活かしたミニマルなランディングページ。',
+    thumb: 'https://cdn.lism-css.com/img/random-2510?category=minimal&r=lp-thumb-minimal',
+  },
+  {
+    slug: 'natural',
+    title: 'Simple Natural LP',
+    description: 'ナチュラルで親しみやすいデザインのランディングページ。',
+    thumb: 'https://cdn.lism-css.com/img/random-2510?category=nature&r=lp-thumb-natural',
+  },
+  {
+    slug: 'ryokan',
+    title: 'Japanese Ryokan LP',
+    description: '和の趣ある旅館サイト向けランディングページ。',
+    thumb: 'https://cdn.lism-css.com/img/random-2510?category=japan&r=lp-thumb-ryokan',
+  },
+];
+---
+
+<Layout title="Lism CSS - LP Templates">
+  <Stack min-h="100svh">
+    <Center as="header" isContainer hasGutter py="40">
+      <Stack ai="center" g="10">
+        <Heading level="1" ff="accent" fw="normal" ta="center" fz="4xl" m="0">LP Templates</Heading>
+        <Text ta="center" c="text-2" fz="s" m="0"> Lism CSS で構築したLPテンプレート集 </Text>
+      </Stack>
+    </Center>
+
+    <Lism as="section" isContainer hasGutter fxg="1" py="20">
+      <Grid gtc={['1fr', null, 'repeat(3, 1fr)']} g="30">
+        {
+          variants.map(({ slug, title, description, thumb }) => (
+            <BoxLink href={`/${slug}/`} layout="stack" g="15" set="var:hov" bdrs="20" ov="clip" bgc="base">
+              <Frame ar="16/10" ov="hidden">
+                <img src={thumb} alt={`${title} のサムネイル`} loading="lazy" />
+              </Frame>
+              <Stack g="5" px="20" py="15">
+                <Heading level="2" fz="l" fw="600" lts="l" m="0">
+                  {title}
+                </Heading>
+                <Text fz="s" c="text-2" m="0">
+                  {description}
+                </Text>
+              </Stack>
+            </BoxLink>
+          ))
+        }
+      </Grid>
+    </Lism>
+
+    <Lism as="footer" isContainer hasGutter py="40">
+      <Center>
+        <Text ta="center" c="text-2" fz="xs">
+          LP templates for <Link href="https://lism-css.com/">Lism CSS</Link>
+        </Text>
+      </Center>
+    </Lism>
+  </Stack>
+</Layout>

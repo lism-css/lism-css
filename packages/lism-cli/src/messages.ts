@@ -195,6 +195,10 @@ export const messages = {
     ja: 'テンプレート"{name}"の取得結果にindex.htmlがありません。取得元パスを確認してください: {path}',
     en: 'Downloaded template "{name}" does not contain index.html. Check the source path: {path}',
   },
+  'create.variantMissing': {
+    ja: 'variant "{variant}" のディレクトリが見つかりません。取得元パスを確認してください: {path}',
+    en: 'Variant "{variant}" directory not found. Check the source path: {path}',
+  },
   'create.created': {
     ja: '{dir} にプロジェクトを生成しました。',
     en: 'Generated project at {dir}.',

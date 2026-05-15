@@ -23,38 +23,6 @@ export interface PatternCategory {
 
 // パターンデータ（satisfiesでカテゴリ追加時に型定義の更新が不要になる）
 const patterns = {
-  lp: {
-    label: 'LP',
-    items: [
-      {
-        draft: true,
-        id: 'lp001',
-        title: 'LP001: Minimal LP',
-        description: {
-          ja: 'ミニマルなデザインと控えめなスクロール駆動アニメーションが特徴のLPパターンです。',
-          en: '',
-        },
-      },
-      {
-        draft: true,
-        id: 'lp002',
-        title: 'LP002: Simple Natural LP',
-        description: {
-          ja: 'シンプルでナチュラルな印象のLPパターンです。Lism CSSのプリミティブやトークンを活かした汎用的なレイアウトを多く採用しています。',
-          en: '',
-        },
-      },
-      {
-        draft: true,
-        id: 'lp003',
-        title: 'LP003: Japanese Ryokan LP',
-        description: {
-          ja: '日本の伝統的な旅館をイメージしたLPパターンです。Lism CSSのプリミティブやトークンを活かしつつ、変則的なレイアウトは独自クラスを定義して実現しています。',
-          en: '',
-        },
-      },
-    ],
-  },
   cta: {
     label: 'CTA',
     items: [

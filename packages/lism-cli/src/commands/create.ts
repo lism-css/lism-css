@@ -49,7 +49,22 @@ interface StaticHtmlTemplateDef extends TemplateMeta {
   sourcePath: string;
 }
 
-type TemplateDef = ProjectTemplateDef | BaseOverlayTemplateDef | StaticHtmlTemplateDef;
+/**
+ * 単一の Astro / Vite プロジェクト内に複数の variant ディレクトリ（src/pages/{variant}/）を
+ * 同居させた構成のテンプレ定義。CLI 抽出時に選択 variant の index.astro を src/pages/index.astro に
+ * 持ち上げ、他 variant ディレクトリを削除して単独プロジェクトとして仕上げる。
+ */
+interface SingleProjectVariantTemplateDef extends TemplateMeta {
+  kind: 'single-project-variant';
+  /** `templates/` 以下のプロジェクト全体パス（例: 'lp/astro'） */
+  sourcePath: string;
+  /** `src/pages/{variant}/` のディレクトリ名 */
+  variant: string;
+  /** 生成プロジェクトの package.json の name に書き換える値 */
+  packageName: string;
+}
+
+type TemplateDef = ProjectTemplateDef | BaseOverlayTemplateDef | StaticHtmlTemplateDef | SingleProjectVariantTemplateDef;
 
 type PackageJson = {
   name?: string;
@@ -125,6 +140,39 @@ const TEMPLATES: TemplateDef[] = [
     stack: 'astro',
     sourcePath: 'blog/astro/full',
     description: { ja: 'カテゴリ・目次つきの Astro ブログ', en: 'Astro blog with categories and table of contents' },
+  },
+  {
+    slug: 'lp-astro-minimal',
+    kind: 'single-project-variant',
+    category: 'lp',
+    stack: 'astro',
+    variant: 'minimal',
+    variantLabel: { ja: 'Minimal', en: 'Minimal' },
+    sourcePath: 'lp/astro',
+    packageName: 'lp-astro-minimal',
+    description: { ja: 'ミニマルな Astro ランディングページ', en: 'Minimal Astro landing page' },
+  },
+  {
+    slug: 'lp-astro-natural',
+    kind: 'single-project-variant',
+    category: 'lp',
+    stack: 'astro',
+    variant: 'natural',
+    variantLabel: { ja: 'Natural', en: 'Natural' },
+    sourcePath: 'lp/astro',
+    packageName: 'lp-astro-natural',
+    description: { ja: 'ナチュラルな雰囲気の Astro ランディングページ', en: 'Natural-themed Astro landing page' },
+  },
+  {
+    slug: 'lp-astro-ryokan',
+    kind: 'single-project-variant',
+    category: 'lp',
+    stack: 'astro',
+    variant: 'ryokan',
+    variantLabel: { ja: 'Ryokan', en: 'Ryokan' },
+    sourcePath: 'lp/astro',
+    packageName: 'lp-astro-ryokan',
+    description: { ja: '旅館・宿泊業向けの Astro ランディングページ', en: 'Astro landing page for ryokan / lodging' },
   },
 ];
 
@@ -272,6 +320,7 @@ async function downloadTemplateSource(tpl: TemplateDef, outDir: string, ref: str
     return;
   }
 
+  // single-project-variant / project / static-html は同じ取得方式
   await downloadTemplatePath(tpl.sourcePath, outDir, ref, forceClean);
 }
 
@@ -290,8 +339,48 @@ function postProcessTemplate(projectDir: string, tpl: TemplateDef): void {
     rewritePackageName(projectDir, tpl.slug);
   }
 
+  if (tpl.kind === 'single-project-variant') {
+    extractVariantPages(projectDir, tpl);
+    rewritePackageName(projectDir, tpl.packageName);
+  }
+
   // workspace:* を公開バージョンに書き換える
   rewriteWorkspaceDeps(projectDir);
+}
+
+/**
+ * `src/pages/{variant}/index.astro` を `src/pages/index.astro` に持ち上げ、
+ * 他 variant ディレクトリ（自分自身も含む `src/pages/*` 配下のサブディレクトリ）を削除する。
+ * 結果として `src/pages/index.astro` のみが残る形にする。
+ */
+function extractVariantPages(projectDir: string, tpl: SingleProjectVariantTemplateDef): void {
+  const pagesDir = path.join(projectDir, 'src', 'pages');
+  const variantDir = path.join(pagesDir, tpl.variant);
+  const variantIndex = path.join(variantDir, 'index.astro');
+  const targetIndex = path.join(pagesDir, 'index.astro');
+
+  if (!fs.existsSync(variantIndex)) {
+    throw new Error(
+      t('create.variantMissing', {
+        variant: tpl.variant,
+        path: `${formatTemplatePath(tpl.sourcePath)}/src/pages/${tpl.variant}/index.astro`,
+      })
+    );
+  }
+
+  // 既に src/pages/index.astro が一覧ページとして存在する場合は上書き
+  if (fs.existsSync(targetIndex)) {
+    fs.rmSync(targetIndex, { force: true });
+  }
+
+  // variant の index.astro を src/pages/index.astro に移動
+  fs.renameSync(variantIndex, targetIndex);
+
+  // src/pages 直下のサブディレクトリを全て削除（選択した variant + 他の variant をまとめて掃除）
+  for (const entry of fs.readdirSync(pagesDir, { withFileTypes: true })) {
+    if (!entry.isDirectory()) continue;
+    fs.rmSync(path.join(pagesDir, entry.name), { recursive: true, force: true });
+  }
 }
 
 function printNextSteps(projectDir: string, tpl: TemplateDef): void {

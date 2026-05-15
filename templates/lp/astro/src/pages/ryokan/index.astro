@@ -1,5 +1,5 @@
 ---
-import DemoLayout from '@/layouts/DemoLayout.astro';
+import Layout from '@/layouts/Layout.astro';
 import {
   Box,
   BoxLink,
@@ -25,7 +25,7 @@ import { Accordion } from '@lism-css/ui/astro/Accordion';
 import { Button } from '@lism-css/ui/astro/Button';
 import { Modal } from '@lism-css/ui/astro/Modal';
 
-export const title = 'LP003: Japanese Ryokan LP';
+export const title = 'Japanese Ryokan LP';
 
 const logoLabel = '静寂の隠れ宿';
 
@@ -71,7 +71,7 @@ const mvBgScaleMaxCss = Number(mvBgImageScaleMax).toFixed(6);
 
 /** 背景クロスフェード + scale（非表示→フェードイン→ホールド終端まで 1→mvBgImageScaleMax） */
 const mvLayeredKeyframesStyle = `@layer lism-custom {
-  @keyframes lp003-mv-bgFade {
+  @keyframes ryokan-mv-bgFade {
     0% {
       opacity: 1;
       transform: scale(${mvBgScaleJoinCss});
@@ -97,7 +97,7 @@ const mvLayeredKeyframesStyle = `@layer lism-custom {
 
 /**
  * 左右の高さ: Grid の `ai` stretch + 右列 `Flex` 内 `fx:1` の img（`min-h:0`）。
- * 旧実装: `syncAboutRightMaxHeight` + `--z--lp003-about-right-max-h`（復元は git 履歴参照）
+ * 旧実装: `syncAboutRightMaxHeight` + `--z--ryokan-about-right-max-h`（復元は git 履歴参照）
  */
 
 const aboutImgLeft = {
@@ -410,19 +410,19 @@ const reservationSites: readonly SiteCard[] = [
 ];
 ---
 
-<DemoLayout title={title}>
+<Layout title={title}>
   <link rel="preconnect" href="https://fonts.googleapis.com" slot="head" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin slot="head" />
   <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@200..900&family=Yuji+Syuku&display=swap" rel="stylesheet" slot="head" />
-  <Wrapper class="z--lp003-root" contentSize="full">
+  <Wrapper class="z--ryokan-root" contentSize="full">
     <!-- Header -->
 
-    <Lism as="header" class="z--lp003-header" pos="fixed" i="0" w="100%" z="1" hasTransition>
-      <Container class="z--lp003-header_bar" isWrapper="xl" mx="auto" hasGutter h="100%">
-        <Grid class="z--lp003-header_inner" gtc="minmax(0,auto) 1fr" ai="center" h="100%" g="20">
-          <Stack class="z--lp003-header_logo">
+    <Lism as="header" class="z--ryokan-header" pos="fixed" i="0" w="100%" z="1" hasTransition>
+      <Container class="z--ryokan-header_bar" isWrapper="xl" mx="auto" hasGutter h="100%">
+        <Grid class="z--ryokan-header_inner" gtc="minmax(0,auto) 1fr" ai="center" h="100%" g="20">
+          <Stack class="z--ryokan-header_logo">
             <Link
-              class="z--lp003-header_logoLink"
+              class="z--ryokan-header_logoLink"
               href="#"
               td="none"
               fw="normal"
@@ -436,13 +436,13 @@ const reservationSites: readonly SiteCard[] = [
               {logoLabel}
             </Link>
           </Stack>
-          <Flex class="z--lp003-header_actions" jc="fe" g="20" ai="c">
-            <Flex class="z--lp003-headerNav" as="ul" d={['none', null, 'inline-flex']} ai="c" m="0" p="0" fxw="nowrap" g={['15', null, '30']}>
+          <Flex class="z--ryokan-header_actions" jc="fe" g="20" ai="c">
+            <Flex class="z--ryokan-headerNav" as="ul" d={['none', null, 'inline-flex']} ai="c" m="0" p="0" fxw="nowrap" g={['15', null, '30']}>
               {
                 headerNavItems.map(({ href, ja, en }) => (
                   <ListItem>
                     <Link
-                      class="z--lp003-headerNav_link"
+                      class="z--ryokan-headerNav_link"
                       href={href}
                       d="grid"
                       jc="c"
@@ -456,7 +456,7 @@ const reservationSites: readonly SiteCard[] = [
                       g="5"
                     >
                       <Inline>{ja}</Inline>
-                      <Inline as="span" class="z--lp003-headerNav_en" fz="2xs" fw="normal" lts="l" lh="xs" m="0" ta="c" d="block">
+                      <Inline as="span" class="z--ryokan-headerNav_en" fz="2xs" fw="normal" lts="l" lh="xs" m="0" ta="c" d="block">
                         {en}
                       </Inline>
                     </Link>
@@ -464,7 +464,7 @@ const reservationSites: readonly SiteCard[] = [
                 ))
               }
             </Flex>
-            <Modal.OpenBtn modalId="lp003-menu" d={['block', null, 'none']}>
+            <Modal.OpenBtn modalId="ryokan-menu" d={['block', null, 'none']}>
               <Center p="5" ai="c" jc="c">
                 <Icon icon="menu" c="white" fz="2xl" aria-hidden="true" />
               </Center>
@@ -473,18 +473,18 @@ const reservationSites: readonly SiteCard[] = [
         </Grid>
       </Container>
     </Lism>
-    <Modal.Root id="lp003-menu" isContainer isWrapper="s" p="30">
+    <Modal.Root id="ryokan-menu" isContainer isWrapper="s" p="30">
       <Modal.Inner layout="stack" pos="relative" w="100%" p="30" bdrs="20" bxsh="50">
-        <Modal.CloseBtn modalId="lp003-menu" autofocus pos="absolute" t="0" r="0" z="1" fz="xl" p="10" m="15" />
+        <Modal.CloseBtn modalId="ryokan-menu" autofocus pos="absolute" t="0" r="0" z="1" fz="xl" p="10" m="15" />
         <Modal.Body layout="stack" g="30" py="40">
-          <Stack as="ul" class="z--lp003-header_menuNav" g="0" m="0" p="0" ov="clip">
+          <Stack as="ul" class="z--ryokan-header_menuNav" g="0" m="0" p="0" ov="clip">
             {
               headerNavItems.map(({ href, ja, en }) => (
                 <ListItem>
                   <BoxLink href={href} layout="grid" gtc="1fr auto" ai="c" fz="l" td="none" py="15" px="5" w="100%">
                     <Stack g="5">
                       <Inline>{ja}</Inline>
-                      <Inline as="span" class="z--lp003-header_menuNav_en" fz="s" m="0" o="pp">
+                      <Inline as="span" class="z--ryokan-header_menuNav_en" fz="s" m="0" o="pp">
                         {en}
                       </Inline>
                     </Stack>
@@ -497,7 +497,7 @@ const reservationSites: readonly SiteCard[] = [
               <BoxLink href="#reservation" layout="grid" gtc="1fr auto" ai="c" fz="l" td="none" py="15" px="5" w="100%">
                 <Stack g="5">
                   <Inline>ご予約はこちら</Inline>
-                  <Inline as="span" class="z--lp003-header_menuNav_en" fz="s" m="0" o="pp"> Reservation </Inline>
+                  <Inline as="span" class="z--ryokan-header_menuNav_en" fz="s" m="0" o="pp"> Reservation </Inline>
                 </Stack>
                 <Icon icon="caret-right" fz="s" o="pp" />
               </BoxLink>
@@ -507,9 +507,9 @@ const reservationSites: readonly SiteCard[] = [
       </Modal.Inner>
     </Modal.Root>
     <!-- Main Content -->
-    <Container as="main" class="z--lp003-main" pos="relative" z="0">
+    <Container as="main" class="z--ryokan-main" pos="relative" z="0">
       <Container
-        class="z--lp003-mv"
+        class="z--ryokan-mv"
         as="section"
         pos="relative"
         w="100%"
@@ -519,24 +519,24 @@ const reservationSites: readonly SiteCard[] = [
         ov="clip"
         style={{
           minHeight: '100svh',
-          '--z--lp003-mv-bgCycleDuration': `${mvBgCycleDuration}s`,
-          '--z--lp003-mv-lineBlurMax': `${mvLineRevealBlurPx}px`,
-          '--z--lp003-mv-lineDuration': `${mvLineRevealDuration}s`,
-          '--z--lp003-mv-lineStartDelay': `${mvLineRevealStartDelay}s`,
-          '--z--lp003-mv-lineStagger': `${mvLineRevealStagger}s`,
+          '--z--ryokan-mv-bgCycleDuration': `${mvBgCycleDuration}s`,
+          '--z--ryokan-mv-lineBlurMax': `${mvLineRevealBlurPx}px`,
+          '--z--ryokan-mv-lineDuration': `${mvLineRevealDuration}s`,
+          '--z--ryokan-mv-lineStartDelay': `${mvLineRevealStartDelay}s`,
+          '--z--ryokan-mv-lineStagger': `${mvLineRevealStagger}s`,
         }}
       >
-        <Frame isLayer class="z--lp003-mv_bg">
+        <Frame isLayer class="z--ryokan-mv_bg">
           {
             mvResolvedImages.map((src, index) => {
               const mvLayerDelay = index * mvDurationPerImage - mvBgCycleDuration;
 
               return (
                 <div
-                  class="z--lp003-mv_layer"
+                  class="z--ryokan-mv_layer"
                   style={{
-                    '--z--lp003-mv-layerBgImage': `url('${src}')`,
-                    '--z--lp003-mv-layerDelay': `${mvLayerDelay}s`,
+                    '--z--ryokan-mv-layerBgImage': `url('${src}')`,
+                    '--z--ryokan-mv-layerDelay': `${mvLayerDelay}s`,
                   }}
                 />
               );
@@ -559,10 +559,10 @@ const reservationSites: readonly SiteCard[] = [
           c="white"
           style={{ paddingBlockStart: 'calc(var(--z--header-height) + var(--s30))' }}
         >
-          <Lism as="p" class="z--lp003-mv_copy" m="0">
+          <Lism as="p" class="z--ryokan-mv_copy" m="0">
             {
               mvResolvedCopyLines.map((line, i) => (
-                <span class="z--lp003-mv_line" style={{ '--z--lp003-mv-lineIndex': i }}>
+                <span class="z--ryokan-mv_line" style={{ '--z--ryokan-mv-lineIndex': i }}>
                   {line}
                 </span>
               ))
@@ -573,30 +573,30 @@ const reservationSites: readonly SiteCard[] = [
       <!-- MV の動的 @keyframes はマージで抽出されないため、元コンポーネントと同じ set:html を明示注入 -->
       <style set:html={mvLayeredKeyframesStyle}></style>
 
-      <Lism as="section" id="about" class="z--lp003-about" isContainer py-s="60" py-e="60" bgc="black" c="white">
+      <Lism as="section" id="about" class="z--ryokan-about" isContainer py-s="60" py-e="60" bgc="black" c="white">
         <Grid
-          class="z--lp003-about_grid"
+          class="z--ryokan-about_grid"
           gtc={['1fr', '1fr', 'minmax(0, 1fr) minmax(0, 50%)']}
           cg="0"
           rg={['30', '30', '0']}
           ai={['start', 'start', 'stretch']}
         >
           <Stack
-            class="z--lp003-about_col z--lp003-about_col--left"
+            class="z--ryokan-about_col z--ryokan-about_col--left"
             g={['40', '40', '50']}
             px-e={['0', '0', '50']}
             h={['auto', 'auto', '100%']}
             min-h={['0', '0', '0']}
             min-w="0"
           >
-            <Stack class="z--lp003-about_stack" g="0" ai="start">
+            <Stack class="z--ryokan-about_stack" g="0" ai="start">
               <Text as="p" fz={['l', null, 'xl']} m="0" mb="10" lts="l" ff="base" c="white" o="pp"> About us </Text>
               <Heading level="2" fz={['2xl', null, '4xl']} fw="500" m="0" mb="50" lts="l"> 当宿について </Heading>
-              <Text class="z--lp003-about_body" as="p" m="0" fz="m" lh="l" lts="s" c="white" o="p">
+              <Text class="z--ryokan-about_body" as="p" m="0" fz="m" lh="l" lts="s" c="white" o="p">
                 {aboutBodyCopy}
               </Text>
             </Stack>
-            <Frame as="figure" class="z--lp003-about_figureLeft" ar={['16/10', '16/10', '4/3']} ov="hidden">
+            <Frame as="figure" class="z--ryokan-about_figureLeft" ar={['16/10', '16/10', '4/3']} ov="hidden">
               <img
                 src={aboutImgLeft.src}
                 alt={aboutImgLeft.alt}
@@ -609,7 +609,7 @@ const reservationSites: readonly SiteCard[] = [
           </Stack>
           <Flex
             as="figure"
-            class="z--lp003-about_figureRight"
+            class="z--ryokan-about_figureRight"
             fxd="column"
             h={['auto', 'auto', '100%']}
             min-h={['0', '0', '0']}
@@ -618,7 +618,7 @@ const reservationSites: readonly SiteCard[] = [
           >
             <Lism
               as="img"
-              class="z--lp003-about_mediaRightImg"
+              class="z--ryokan-about_mediaRightImg"
               src={aboutImgRight.src}
               alt={aboutImgRight.alt}
               fx={['0', '0', '1']}
@@ -630,22 +630,22 @@ const reservationSites: readonly SiteCard[] = [
         </Grid>
       </Lism>
 
-      <Lism as="section" id="feature" class="z--lp003-feature" bgc="base" c="text" py="60">
+      <Lism as="section" id="feature" class="z--ryokan-feature" bgc="base" c="text" py="60">
         <Container isWrapper="l" hasGutter isContainer pos="relative">
           <Grid
-            class="z--lp003-feature_grid"
+            class="z--ryokan-feature_grid"
             gtc={['1fr', '1fr', 'minmax(0, 1.05fr) minmax(0, 1fr)']}
             rg={['30', '30', '0']}
             cg={['0', '0', '50']}
             ai={['stretch', 'stretch', 'stretch']}
           >
-            <Lism as="figure" class="z--lp003-feature_figure" ov="hidden" bdrs="10">
+            <Lism as="figure" class="z--ryokan-feature_figure" ov="hidden" bdrs="10">
               <img src={featureImg.src} alt={featureImg.alt} width={featureImg.width} height={featureImg.height} loading="lazy" decoding="async" />
             </Lism>
-            <Stack class="z--lp003-feature_textCol" pos="relative" g="0" ai="stretch" min-w="0" h="100%">
-              <Lism as="span" class="z--lp003-feature_watermark" exProps={{ 'aria-hidden': 'true' }}> Experience </Lism>
+            <Stack class="z--ryokan-feature_textCol" pos="relative" g="0" ai="stretch" min-w="0" h="100%">
+              <Lism as="span" class="z--ryokan-feature_watermark" exProps={{ 'aria-hidden': 'true' }}> Experience </Lism>
               <Flex
-                class="z--lp003-feature_copyRow"
+                class="z--ryokan-feature_copyRow"
                 fxd={['column', 'column', 'row']}
                 g={['50', '50', '40']}
                 ai="stretch"
@@ -654,17 +654,17 @@ const reservationSites: readonly SiteCard[] = [
                 min-h="0"
                 w="100%"
               >
-                <Heading level="2" class="z--lp003-feature_title" m="0" fz={['2xl', null, '3xl']} fw="600" lts="l">
-                  <Box class="z--lp003-feature_titleInner" lts="l">
-                    <Inline class="z--lp003-feature_titleLine1">特別な旅と</Inline>
-                    <Inline class="z--lp003-feature_titleLine2">静寂の体験</Inline>
+                <Heading level="2" class="z--ryokan-feature_title" m="0" fz={['2xl', null, '3xl']} fw="600" lts="l">
+                  <Box class="z--ryokan-feature_titleInner" lts="l">
+                    <Inline class="z--ryokan-feature_titleLine1">特別な旅と</Inline>
+                    <Inline class="z--ryokan-feature_titleLine2">静寂の体験</Inline>
                   </Box>
                 </Heading>
-                <Stack class="z--lp003-feature_bodyStack" g="30" ai="start" min-w="0">
-                  <Text as="p" class="z--lp003-feature_lead" m="0" fz={['l', null, 'xl']} fw="600" lts="l" c="text">
+                <Stack class="z--ryokan-feature_bodyStack" g="30" ai="start" min-w="0">
+                  <Text as="p" class="z--ryokan-feature_lead" m="0" fz={['l', null, 'xl']} fw="600" lts="l" c="text">
                     {featureLead}
                   </Text>
-                  <Text as="p" class="z--lp003-feature_body" m="0" fz="m" lh="l" lts="s" c="text" max-w="100%">
+                  <Text as="p" class="z--ryokan-feature_body" m="0" fz="m" lh="l" lts="s" c="text" max-w="100%">
                     {featureBody}
                   </Text>
                 </Stack>
@@ -674,7 +674,7 @@ const reservationSites: readonly SiteCard[] = [
         </Container>
       </Lism>
 
-      <Lism as="section" id="feature2" class="z--lp003-feature2" pos="relative" ov-x="clip" c="white">
+      <Lism as="section" id="feature2" class="z--ryokan-feature2" pos="relative" ov-x="clip" c="white">
         <Frame isLayer>
           <Lism
             as="img"
@@ -749,7 +749,7 @@ const reservationSites: readonly SiteCard[] = [
               {
                 plans.map((plan) => (
                   <Flex fxd={['column', 'column', 'row-reverse']} ai="stretch" g={['30', '30', '50']} w="100%">
-                    <Frame as="figure" class="z--lp003-plans_media" m="0" ar="16/10" ov="hidden" bdrs="10" w="100%" min-w="0">
+                    <Frame as="figure" class="z--ryokan-plans_media" m="0" ar="16/10" ov="hidden" bdrs="10" w="100%" min-w="0">
                       <img
                         src={plan.image.src}
                         alt={plan.image.alt}
@@ -786,7 +786,7 @@ const reservationSites: readonly SiteCard[] = [
 
                         <Lism isContainer w="100%" min-w="0">
                           <Button
-                            class="z--lp003-plans_reserve"
+                            class="z--ryokan-plans_reserve"
                             href="#contact"
                             layout="flex"
                             w="100%"
@@ -861,17 +861,17 @@ const reservationSites: readonly SiteCard[] = [
 
       <Lism as="section" id="faq" bgc="base" c="text" py="60">
         <Container isWrapper="l" hasGutter>
-          <Grid class="z--lp003-faq_layout" w="100%" g="50" ai="stretch">
-            <Stack class="z--lp003-faq_head" g="10" ai="center" ta="center">
+          <Grid class="z--ryokan-faq_layout" w="100%" g="50" ai="stretch">
+            <Stack class="z--ryokan-faq_head" g="10" ai="center" ta="center">
               <Text as="p" m="0" fz="m" lts="l" ff="base" c="text-2" o="pp"> FAQ </Text>
               <Heading level="2" m="0" fz={['2xl', null, '3xl']} fw="500" lts="l"> よくあるご質問 </Heading>
             </Stack>
 
-            <Frame as="figure" class="z--lp003-faq_media" m="0" ar={['16/10', null, '1/1']} ov="hidden" bdrs="10" w="100%" min-w="0">
+            <Frame as="figure" class="z--ryokan-faq_media" m="0" ar={['16/10', null, '1/1']} ov="hidden" bdrs="10" w="100%" min-w="0">
               <img src={faqImage.src} alt={faqImage.alt} width={faqImage.width} height={faqImage.height} loading="lazy" decoding="async" />
             </Frame>
 
-            <Lism class="z--lp003-faq_acc" min-w="0">
+            <Lism class="z--ryokan-faq_acc" min-w="0">
               <Accordion.Root g="0" p="0" ov="visible">
                 {
                   faqItems.map((item) => (
@@ -974,7 +974,7 @@ const reservationSites: readonly SiteCard[] = [
     </Container>
     <!-- Footer -->
 
-    <Lism as="footer" id="footer" class="z--lp003-footer" bgc="black" c="white" py={['50', null, '60']}>
+    <Lism as="footer" id="footer" class="z--ryokan-footer" bgc="black" c="white" py={['50', null, '60']}>
       <Container isContainer isWrapper="xl" hasGutter>
         <Stack g={['40', null, '50']} ai="stretch" w="100%">
           <!-- キャッチコピーをロゴの左隣に。下揃え（flex-end） -->
@@ -991,7 +991,7 @@ const reservationSites: readonly SiteCard[] = [
           <Flex fxd={['column', null, 'row']} ai="end" jc="between" g={['30', null, '40']} w="100%">
             <Flex
               as="ul"
-              class="z--lp003-footer_nav"
+              class="z--ryokan-footer_nav"
               fxd={['column', null, 'row']}
               ai="stretch"
               m="0"
@@ -1006,7 +1006,7 @@ const reservationSites: readonly SiteCard[] = [
                 footerNavItems.map(({ href, ja, en }) => (
                   <ListItem>
                     <BoxLink
-                      class="z--lp003-footer_navLink"
+                      class="z--ryokan-footer_navLink"
                       href={href}
                       layout="grid"
                       gtc={['1fr auto', null, '1fr']}
@@ -1019,13 +1019,13 @@ const reservationSites: readonly SiteCard[] = [
                       c="inherit"
                       hov="-o"
                     >
-                      <Stack class="z--lp003-footer_navStack" g="5">
+                      <Stack class="z--ryokan-footer_navStack" g="5">
                         <Inline>{ja}</Inline>
-                        <Inline as="span" class="z--lp003-footer_navEn" fz="s" m="0" o="pp">
+                        <Inline as="span" class="z--ryokan-footer_navEn" fz="s" m="0" o="pp">
                           {en}
                         </Inline>
                       </Stack>
-                      <Icon class="z--lp003-footer_navCaret" icon="caret-right" fz="s" o="pp" />
+                      <Icon class="z--ryokan-footer_navCaret" icon="caret-right" fz="s" o="pp" />
                     </BoxLink>
                   </ListItem>
                 ))
@@ -1049,7 +1049,7 @@ const reservationSites: readonly SiteCard[] = [
     </Lism>
 
     <Button
-      class="z--lp003-reservationFab"
+      class="z--ryokan-reservationFab"
       href="#reservation"
       pos="fixed"
       z="99"
@@ -1080,29 +1080,29 @@ const reservationSites: readonly SiteCard[] = [
       <Inline as="span" m="0" fz="2xs" o="pp" lts="l"> Reservation </Inline>
     </Button>
   </Wrapper>
-</DemoLayout>
+</Layout>
 
 <style>
   @layer lism-custom {
-    /* lp003: 明朝ベース（Google Fonts / Noto Serif JP） */
-    .z--lp003-root {
+    /* ryokan: 明朝ベース（Google Fonts / Noto Serif JP） */
+    .z--ryokan-root {
       font-family: 'Noto Serif JP', 'Yu Mincho', YuMincho, 'Hiragino Mincho ProN', 'Hiragino Mincho Pro', serif;
       font-optical-sizing: auto;
-      /* Lism の `ff:base`（既定はゴシック系）— lp003 では日本語明朝に統一 */
+      /* Lism の `ff:base`（既定はゴシック系）— ryokan では日本語明朝に統一 */
       --ff--base: 'Noto Serif JP', 'Yu Mincho', YuMincho, 'Hiragino Mincho ProN', 'Hiragino Mincho Pro', serif;
       /* ロゴ（`ff:accent`）用: Google Fonts / Yuji Syuku（Lism タイポ `--ff--accent`） */
       --ff--accent: 'Yuji Syuku', 'Noto Serif JP', 'Yu Mincho', YuMincho, 'Hiragino Mincho ProN', 'Hiragino Mincho Pro', serif;
       /* Feature ほか和紙調のベージュ背景（セマンティック `--base` を上書き） */
       --base: hsl(38 32% 92%);
       /* #reservation の named view timeline を兄弟の FAB から参照可能に */
-      timeline-scope: --z--lp003-reservation;
+      timeline-scope: --z--ryokan-reservation;
     }
     /* Reservation がビューポートに入る進行に合わせて FAB を非表示 */
     #reservation {
-      view-timeline-name: --z--lp003-reservation;
+      view-timeline-name: --z--ryokan-reservation;
       view-timeline-axis: block;
     }
-    @keyframes lp003_reservationFab_hide {
+    @keyframes ryokan_reservationFab_hide {
       from {
         opacity: 1;
         pointer-events: auto;
@@ -1114,13 +1114,13 @@ const reservationSites: readonly SiteCard[] = [
         visibility: hidden;
       }
     }
-    .z--lp003-reservationFab {
-      animation: lp003_reservationFab_hide linear both;
-      animation-timeline: --z--lp003-reservation;
+    .z--ryokan-reservationFab {
+      animation: ryokan_reservationFab_hide linear both;
+      animation-timeline: --z--ryokan-reservation;
       animation-range: entry 0% entry 30%;
     }
     @media (prefers-reduced-motion: reduce) {
-      .z--lp003-reservationFab {
+      .z--ryokan-reservationFab {
         animation: none;
         opacity: 1;
         visibility: visible;
@@ -1172,7 +1172,7 @@ const reservationSites: readonly SiteCard[] = [
       }
     }
 
-    .z--lp003-header {
+    .z--ryokan-header {
       height: var(--z--header-height);
       color: var(--white);
       background-color: transparent;
@@ -1181,11 +1181,11 @@ const reservationSites: readonly SiteCard[] = [
       box-sizing: border-box;
       --z--header-scroll-animation-start: 80px;
       --z--header-animation-range: var(--z--header-scroll-animation-start) calc(var(--z--header-scroll-animation-start) + 140px);
-      animation: z--header_lp003 linear both;
+      animation: z--header_ryokan linear both;
       animation-timeline: scroll(root);
       animation-range: var(--z--header-animation-range);
     }
-    .z--lp003-header :where(a) {
+    .z--ryokan-header :where(a) {
       color: inherit;
     }
     /**
@@ -1193,18 +1193,18 @@ const reservationSites: readonly SiteCard[] = [
    * フッターは黒地へ `color-mix(…, var(--white) 38%, …)`。モーダルは `.c--modal_inner` の `var(--base)` 地のため `var(--text)` を使用
    * @see Footer.astro / tokens.md --text / `color-mix`
    */
-    .z--lp003-header_menuNav {
+    .z--ryokan-header_menuNav {
       list-style: none;
     }
-    .z--lp003-header_menuNav > :global(li) {
+    .z--ryokan-header_menuNav > :global(li) {
       list-style: none;
     }
-    .z--lp003-header_menuNav > :global(li:not(:last-child)) {
+    .z--ryokan-header_menuNav > :global(li:not(:last-child)) {
       border-block-end: 1px dashed color-mix(in srgb, var(--text) 38%, transparent);
     }
     /* md 以上: has--gutter の左右に s20 を上乗せ（Lism: `--gutter-size` 既定は `--s30`） */
     @media (min-width: 800px) {
-      .z--lp003-header_bar {
+      .z--ryokan-header_bar {
         padding-inline: calc(var(--gutter-size) + var(--s20));
       }
     }
@@ -1212,18 +1212,18 @@ const reservationSites: readonly SiteCard[] = [
    * ロゴは Logo.astro 内で描画されるため、Astro スコープ外。:global で子コンポーネントの a に一致させる。
    * @see https://docs.astro.build/en/guides/styling/#global-styles
    */
-    :global(.z--lp003-header_logoLink) {
+    :global(.z--ryokan-header_logoLink) {
       transform-origin: left center;
-      animation: z--lp003-header_logo_lp003 linear both;
+      animation: z--ryokan-header_logo_ryokan linear both;
       animation-timeline: scroll(root);
-      /* 継承: 先祖 `.z--lp003-header` の `--z--header-animation-range` */
+      /* 継承: 先祖 `.z--ryokan-header` の `--z--header-animation-range` */
       animation-range: var(--z--header-animation-range);
     }
     /**
    * スクロール後: 黒ベースの半透明 + backdrop-filter で奥行きをぼかし視認性を確保。
    * 下端の極細ハイライトで帯として切り分ける。
    */
-    @keyframes z--header_lp003 {
+    @keyframes z--header_ryokan {
       to {
         background-color: hsl(0 0% 0% / 0.78);
         color: var(--white);
@@ -1235,7 +1235,7 @@ const reservationSites: readonly SiteCard[] = [
           inset 0 -1px 0 hsl(0 0% 100% / 0.07);
       }
     }
-    @keyframes z--lp003-header_logo_lp003 {
+    @keyframes z--ryokan-header_logo_ryokan {
       from {
         transform: scale(1);
       }
@@ -1244,14 +1244,14 @@ const reservationSites: readonly SiteCard[] = [
         transform: scale(0.75);
       }
     }
-    .z--lp003-headerNav_en {
+    .z--ryokan-headerNav_en {
       max-height: 2.5em;
       overflow: hidden;
-      animation: z--lp003-headerNav_en_lp003 linear both;
+      animation: z--ryokan-headerNav_en_ryokan linear both;
       animation-timeline: scroll(root);
       animation-range: var(--z--header-animation-range);
     }
-    @keyframes z--lp003-headerNav_en_lp003 {
+    @keyframes z--ryokan-headerNav_en_ryokan {
       to {
         opacity: 0;
         max-height: 0;
@@ -1260,31 +1260,31 @@ const reservationSites: readonly SiteCard[] = [
       }
     }
 
-    .z--lp003-mv {
+    .z--ryokan-mv {
       background-color: #000;
     }
 
-    .z--lp003-mv_bg {
+    .z--ryokan-mv_bg {
       inset: 0;
     }
 
-    .z--lp003-mv_layer {
+    .z--ryokan-mv_layer {
       position: absolute;
       inset: 0;
-      background-image: var(--z--lp003-mv-layerBgImage);
+      background-image: var(--z--ryokan-mv-layerBgImage);
       background-size: cover;
       background-position: center;
       background-repeat: no-repeat;
       transform-origin: center center;
       opacity: 0;
       transform: scale(1);
-      animation: lp003-mv-bgFade var(--z--lp003-mv-bgCycleDuration) infinite;
+      animation: ryokan-mv-bgFade var(--z--ryokan-mv-bgCycleDuration) infinite;
       animation-timing-function: linear;
-      animation-delay: var(--z--lp003-mv-layerDelay);
+      animation-delay: var(--z--ryokan-mv-layerDelay);
     }
 
     /* MVSimple と同一の縦書きブロック */
-    .z--lp003-mv_copy {
+    .z--ryokan-mv_copy {
       font-feature-settings: 'palt' 1;
       font-size: clamp(1.1rem, 3.4vw, 1.75rem);
       line-height: 1.85;
@@ -1297,18 +1297,18 @@ const reservationSites: readonly SiteCard[] = [
       align-items: stretch;
       gap: clamp(1.4rem, 4vw, 3rem);
     }
-    .z--lp003-mv_copy .z--lp003-mv_line:first-child {
+    .z--ryokan-mv_copy .z--ryokan-mv_line:first-child {
       transform: translateY(-1em);
     }
-    .z--lp003-mv_copy .z--lp003-mv_line:last-child:not(:first-child) {
+    .z--ryokan-mv_copy .z--ryokan-mv_line:last-child:not(:first-child) {
       transform: translateY(1em);
     }
 
-    /* コピー行: ブラー＋フェード（開始は --z--lp003-mv-lineIndex でスタガード） */
-    @keyframes lp003-mv-lineReveal {
+    /* コピー行: ブラー＋フェード（開始は --z--ryokan-mv-lineIndex でスタガード） */
+    @keyframes ryokan-mv-lineReveal {
       from {
         opacity: 0;
-        filter: blur(var(--z--lp003-mv-lineBlurMax, 12px));
+        filter: blur(var(--z--ryokan-mv-lineBlurMax, 12px));
       }
       to {
         opacity: 1;
@@ -1316,23 +1316,23 @@ const reservationSites: readonly SiteCard[] = [
       }
     }
 
-    .z--lp003-mv_copy .z--lp003-mv_line {
+    .z--ryokan-mv_copy .z--ryokan-mv_line {
       opacity: 0;
-      filter: blur(var(--z--lp003-mv-lineBlurMax, 12px));
-      animation: lp003-mv-lineReveal var(--z--lp003-mv-lineDuration, 1s) ease forwards;
-      animation-delay: calc(var(--z--lp003-mv-lineStartDelay, 0s) + var(--z--lp003-mv-lineStagger, 0.2s) * var(--z--lp003-mv-lineIndex, 0));
+      filter: blur(var(--z--ryokan-mv-lineBlurMax, 12px));
+      animation: ryokan-mv-lineReveal var(--z--ryokan-mv-lineDuration, 1s) ease forwards;
+      animation-delay: calc(var(--z--ryokan-mv-lineStartDelay, 0s) + var(--z--ryokan-mv-lineStagger, 0.2s) * var(--z--ryokan-mv-lineIndex, 0));
     }
 
     @media (prefers-reduced-motion: reduce) {
-      .z--lp003-mv_layer {
+      .z--ryokan-mv_layer {
         animation: none;
         opacity: 0;
         transform: none;
       }
-      .z--lp003-mv_layer:first-child {
+      .z--ryokan-mv_layer:first-child {
         opacity: 1;
       }
-      .z--lp003-mv_copy .z--lp003-mv_line {
+      .z--ryokan-mv_copy .z--ryokan-mv_line {
         animation: none;
         opacity: 1;
         filter: none;
@@ -1342,9 +1342,9 @@ const reservationSites: readonly SiteCard[] = [
     /*
    * ビューポート全幅: 親の max-width に依存しないよう、自身を 100vw で中央に置く。
    */
-    .z--lp003-about {
-      --z--lp003-about-l-inset: max(var(--gutter-size), calc((100vw - var(--sz--l)) / 2));
-      --z--lp003-about-xl-inset: max(var(--gutter-size), calc((100vw - var(--sz--xl)) / 2));
+    .z--ryokan-about {
+      --z--ryokan-about-l-inset: max(var(--gutter-size), calc((100vw - var(--sz--l)) / 2));
+      --z--ryokan-about-xl-inset: max(var(--gutter-size), calc((100vw - var(--sz--xl)) / 2));
       position: relative;
       left: 50%;
       transform: translateX(-50%);
@@ -1353,34 +1353,34 @@ const reservationSites: readonly SiteCard[] = [
       max-width: 100vw;
       overflow-x: clip;
     }
-    .z--lp003-about_mediaRightImg {
+    .z--ryokan-about_mediaRightImg {
       display: block;
       object-fit: cover;
     }
-    .z--lp003-about_figureLeft,
-    .z--lp003-about_figureRight {
+    .z--ryokan-about_figureLeft,
+    .z--ryokan-about_figureRight {
       margin: 0;
     }
     @media (min-width: 800px) {
-      .z--lp003-about_col--left {
+      .z--ryokan-about_col--left {
         box-sizing: border-box;
         min-width: 0;
         /* 見出し・本文: グローバルな size=l の左端（Lism の px-s はカスタム計算のため CSS のみ） */
-        padding-inline-start: var(--z--lp003-about-l-inset);
+        padding-inline-start: var(--z--ryokan-about-l-inset);
       }
-      .z--lp003-about_stack {
+      .z--ryokan-about_stack {
         align-self: start;
         width: min(100%, var(--sz--l));
         min-width: 0;
       }
-      .z--lp003-about_body {
+      .z--ryokan-about_body {
         padding-inline-start: var(--s50);
       }
-      .z--lp003-about_figureLeft {
+      .z--ryokan-about_figureLeft {
         align-self: start;
         margin-block-start: auto;
         padding-block-start: var(--s30);
-        margin-inline-start: calc(var(--z--lp003-about-xl-inset) - var(--z--lp003-about-l-inset));
+        margin-inline-start: calc(var(--z--ryokan-about-xl-inset) - var(--z--ryokan-about-l-inset));
         box-sizing: border-box;
         min-inline-size: 0;
         max-inline-size: 100%;
@@ -1388,129 +1388,129 @@ const reservationSites: readonly SiteCard[] = [
       }
     }
     @media (max-width: 799px) {
-      .z--lp003-about_grid {
+      .z--ryokan-about_grid {
         padding-inline: var(--gutter-size);
         box-sizing: border-box;
       }
-      .z--lp003-about_figureLeft {
+      .z--ryokan-about_figureLeft {
         inline-size: 100%;
         max-inline-size: none;
       }
-      .z--lp003-about_mediaRightImg {
+      .z--ryokan-about_mediaRightImg {
         aspect-ratio: 4 / 3;
         block-size: auto;
       }
     }
 
     /* 左端プル: コンテナ幅 l + gutter と整合 */
-    .z--lp003-feature {
-      --z--lp003-feature-pull: max(var(--gutter-size, 0px), calc((100vw - min(100vw, var(--sz--l))) / 2));
-      --z--lp003-feature-figure-max-h: 540px;
+    .z--ryokan-feature {
+      --z--ryokan-feature-pull: max(var(--gutter-size, 0px), calc((100vw - min(100vw, var(--sz--l))) / 2));
+      --z--ryokan-feature-figure-max-h: 540px;
       position: relative;
     }
     /* isContainer 祖先幅: Lism md と同じ (min-width: 800px) / not で補集合（max-width:799 との境目ギャップを避ける） */
     @container not (min-width: 800px) {
-      .z--lp003-feature_textCol {
+      .z--ryokan-feature_textCol {
         order: 1;
       }
-      .z--lp003-feature_figure {
+      .z--ryokan-feature_figure {
         order: 2;
         margin-inline: 0;
         inline-size: 100%;
         max-inline-size: none;
         aspect-ratio: 16 / 10;
-        max-block-size: var(--z--lp003-feature-figure-max-h);
+        max-block-size: var(--z--ryokan-feature-figure-max-h);
       }
-      .z--lp003-feature_bodyStack {
+      .z--ryokan-feature_bodyStack {
         align-self: stretch;
         margin-inline-start: 0;
         max-inline-size: 100%;
       }
-      .z--lp003-feature_lead,
-      .z--lp003-feature_body {
+      .z--ryokan-feature_lead,
+      .z--ryokan-feature_body {
         text-align: start;
         text-wrap: pretty;
       }
-      .z--lp003-feature_title {
+      .z--ryokan-feature_title {
         align-self: end;
       }
     }
-    .z--lp003-feature_figure {
+    .z--ryokan-feature_figure {
       margin: 0;
       position: relative;
       box-sizing: border-box;
       align-self: stretch;
-      max-block-size: var(--z--lp003-feature-figure-max-h);
+      max-block-size: var(--z--ryokan-feature-figure-max-h);
     }
-    .z--lp003-feature_figure > img {
+    .z--ryokan-feature_figure > img {
       display: block;
       width: 100%;
       height: 100%;
       object-fit: cover;
     }
     @container (min-width: 800px) {
-      .z--lp003-feature_figure {
-        margin-inline-start: calc(-1 * var(--z--lp003-feature-pull));
-        width: calc(100% + var(--z--lp003-feature-pull));
+      .z--ryokan-feature_figure {
+        margin-inline-start: calc(-1 * var(--z--ryokan-feature-pull));
+        width: calc(100% + var(--z--ryokan-feature-pull));
         max-width: none;
         border-radius: 0 var(--bdrs--10) var(--bdrs--10) 0;
-        min-height: min(22rem, 52vw, var(--z--lp003-feature-figure-max-h));
+        min-height: min(22rem, 52vw, var(--z--ryokan-feature-figure-max-h));
       }
-      .z--lp003-feature_figure > img {
-        min-height: min(22rem, 52vw, var(--z--lp003-feature-figure-max-h));
+      .z--ryokan-feature_figure > img {
+        min-height: min(22rem, 52vw, var(--z--ryokan-feature-figure-max-h));
       }
     }
-    .z--lp003-feature_textCol {
+    .z--ryokan-feature_textCol {
       min-height: 0;
       overflow-x: visible;
     }
     /* 2列時: 見出しは上・本文は下（上端・下端揃え） */
     @container (min-width: 800px) {
-      .z--lp003-feature_copyRow {
+      .z--ryokan-feature_copyRow {
         display: grid;
         grid-template-columns: 1fr auto;
         grid-template-rows: 1fr auto;
         min-height: min(22rem, 52vw);
       }
-      .z--lp003-feature_title {
+      .z--ryokan-feature_title {
         grid-column: 2;
         grid-row: 1 / -1;
         align-self: start;
         justify-self: end;
       }
-      .z--lp003-feature_bodyStack {
+      .z--ryokan-feature_bodyStack {
         grid-column: 1;
         grid-row: 2;
         align-self: end;
         max-inline-size: min(100%, 26rem);
       }
-      .z--lp003-feature_lead,
-      .z--lp003-feature_body {
+      .z--ryokan-feature_lead,
+      .z--ryokan-feature_body {
         text-align: start;
       }
     }
-    .z--lp003-feature_title {
+    .z--ryokan-feature_title {
       flex-shrink: 0;
       line-height: 1.65;
     }
     /* 縦書き2列: 横書きの flex 列＋子に writing-mode: vertical-rl */
-    .z--lp003-feature_titleInner {
+    .z--ryokan-feature_titleInner {
       display: flex;
       flex-direction: row-reverse;
       align-items: flex-start;
       gap: 0.65em;
     }
-    .z--lp003-feature_titleLine1,
-    .z--lp003-feature_titleLine2 {
+    .z--ryokan-feature_titleLine1,
+    .z--ryokan-feature_titleLine2 {
       display: block;
       writing-mode: vertical-rl;
       text-orientation: mixed;
     }
-    .z--lp003-feature_titleLine2 {
+    .z--ryokan-feature_titleLine2 {
       transform: translateY(1em);
     }
     /* 共有。左右位置は Lism md（@container 800px）に同期 */
-    .z--lp003-feature_watermark {
+    .z--ryokan-feature_watermark {
       position: absolute;
       z-index: 0;
       margin: 0;
@@ -1529,7 +1529,7 @@ const reservationSites: readonly SiteCard[] = [
       unicode-bidi: isolate;
     }
     @container (min-width: 800px) {
-      .z--lp003-feature_watermark {
+      .z--ryokan-feature_watermark {
         inset-inline-start: 0;
         inset-inline-end: auto;
         transform-origin: left center;
@@ -1537,7 +1537,7 @@ const reservationSites: readonly SiteCard[] = [
       }
     }
     @container not (min-width: 800px) {
-      .z--lp003-feature_watermark {
+      .z--ryokan-feature_watermark {
         inset-inline-start: auto;
         inset-inline-end: 0;
         transform-origin: right center;
@@ -1550,17 +1550,17 @@ const reservationSites: readonly SiteCard[] = [
    * また -max-w:100%（max-width）と max-inline-size の併用や、flex 子の % 解決で上限が効かないことがあるため、
    * コンテナクエリ内で max-width + cqi を使い、fxd の row 切替と同じ基準で min(32rem, 40cqi) に揃える（40cqi はクエリコンテナ行内幅の 40% 相当の上限）。
    */
-    .z--lp003-plans_media {
+    .z--ryokan-plans_media {
       max-width: 100%;
     }
     @container (min-width: 800px) {
-      .z--lp003-plans_media {
+      .z--ryokan-plans_media {
         max-width: min(32rem, 40cqi);
       }
     }
 
     /* UI Button のデフォルト（--text 地）を上書きし、デザインどおり白ピル＋黒字に */
-    .z--lp003-plans_reserve.c--button {
+    .z--ryokan-plans_reserve.c--button {
       --bgc: var(--white);
       --c: var(--black);
       --bdc: var(--white);
@@ -1570,22 +1570,22 @@ const reservationSites: readonly SiteCard[] = [
    * 見出し＋（画像｜質問）をひとつの Grid で管理。
    * md 以上: 画像列と質問列を repeat(2, 1fr) で 1:1。
    */
-    .z--lp003-faq_layout {
+    .z--ryokan-faq_layout {
       display: grid;
       grid-template-areas: 'head' 'acc' 'img';
       grid-template-columns: minmax(0, 1fr);
     }
-    .z--lp003-faq_head {
+    .z--ryokan-faq_head {
       grid-area: head;
     }
-    .z--lp003-faq_acc {
+    .z--ryokan-faq_acc {
       grid-area: acc;
     }
-    .z--lp003-faq_media {
+    .z--ryokan-faq_media {
       grid-area: img;
     }
     @container (min-width: 800px) {
-      .z--lp003-faq_layout {
+      .z--ryokan-faq_layout {
         grid-template-columns: repeat(2, minmax(0, 1fr));
         grid-template-areas:
           'head head'
@@ -1593,31 +1593,31 @@ const reservationSites: readonly SiteCard[] = [
       }
     }
 
-    .z--lp003-faq_acc :global(.c--accordion_item) {
+    .z--ryokan-faq_acc :global(.c--accordion_item) {
       border-block-end: 1px solid var(--divider);
     }
-    .z--lp003-faq_acc :global(.c--accordion_item:last-of-type) {
+    .z--ryokan-faq_acc :global(.c--accordion_item:last-of-type) {
       border-block-end: none;
     }
 
-    .z--lp003-footer :where(a) {
+    .z--ryokan-footer :where(a) {
       color: inherit;
     }
-    .z--lp003-footer_nav :global(li) {
+    .z--ryokan-footer_nav :global(li) {
       list-style: none;
     }
 
     /* md 未満: 縦並びの項目間に区切り（最後の行の下には付けない） */
-    .z--lp003-footer_nav > :global(li:not(:last-child)) {
+    .z--ryokan-footer_nav > :global(li:not(:last-child)) {
       border-block-end: 1px dashed color-mix(in srgb, var(--white) 38%, transparent);
     }
 
     /* md 以上: 縦の区切りをやめ、項目の「間」だけ左に縦線（先頭左・末尾右には付けない） */
     @container (min-width: 800px) {
-      .z--lp003-footer_nav > :global(li:not(:last-child)) {
+      .z--ryokan-footer_nav > :global(li:not(:last-child)) {
         border-block-end: none;
       }
-      .z--lp003-footer_nav > :global(li + li) {
+      .z--ryokan-footer_nav > :global(li + li) {
         border-inline-start: 1px dashed color-mix(in srgb, var(--white) 38%, transparent);
         padding-inline-start: var(--s20);
         margin-inline-start: var(--s20);
@@ -1625,34 +1625,34 @@ const reservationSites: readonly SiteCard[] = [
     }
 
     /* md 未満: 左寄せ。`ta` プロパティのインラインが CSS より優先するため、指定はここに集約 */
-    .z--lp003-footer_navStack {
+    .z--ryokan-footer_navStack {
       text-align: start;
       align-items: flex-start;
     }
     @container (min-width: 800px) {
-      .z--lp003-footer_navStack {
+      .z--ryokan-footer_navStack {
         text-align: center;
         align-items: center;
       }
     }
 
     /* md 以上: caret は非表示 */
-    .z--lp003-footer_navCaret {
+    .z--ryokan-footer_navCaret {
       display: block;
     }
     @container (min-width: 800px) {
-      .z--lp003-footer_navCaret {
+      .z--ryokan-footer_navCaret {
         display: none;
       }
     }
 
     /* ピル型 FAB: UI Button のセマンティック色を上書き */
-    .z--lp003-reservationFab.c--button {
+    .z--ryokan-reservationFab.c--button {
       --bgc: var(--black);
       --c: var(--white);
       min-width: 12rem;
     }
-    .z--lp003-reservationFab:focus-visible {
+    .z--ryokan-reservationFab:focus-visible {
       outline: 2px solid color-mix(in srgb, var(--white) 50%, transparent);
       outline-offset: 3px;
     }

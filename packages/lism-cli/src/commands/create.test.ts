@@ -158,6 +158,86 @@ describe('runCreate', () => {
     expect(pkg.name).toBe('lp-astro-saas');
   });
 
+  it('single-project-variant型は選択variantのindex.astroをsrc/pages/index.astroに持ち上げ、他variantを削除しpackage.json.nameを書き換える', async () => {
+    const templates: Parameters<typeof runCreateWithTemplates>[1] = [
+      {
+        slug: 'lp-astro-natural',
+        kind: 'single-project-variant',
+        category: 'lp',
+        stack: 'astro',
+        variant: 'natural',
+        variantLabel: { ja: 'Natural', en: 'Natural' },
+        sourcePath: 'lp/astro',
+        packageName: 'lp-astro-natural',
+        description: { ja: 'Natural LP', en: 'Natural landing page' },
+      },
+    ];
+
+    vi.mocked(downloadTemplate).mockImplementation((_source, options) => {
+      const dir = (options as { dir: string }).dir;
+      fs.mkdirSync(dir, { recursive: true });
+      writePackageJson(dir, { name: 'lp-astro', dependencies: { 'lism-css': 'workspace:*' } });
+      writeFile(path.join(dir, 'src/pages/index.astro'), 'list');
+      writeFile(path.join(dir, 'src/pages/minimal/index.astro'), 'minimal');
+      writeFile(path.join(dir, 'src/pages/natural/index.astro'), 'natural');
+      writeFile(path.join(dir, 'src/pages/ryokan/index.astro'), 'ryokan');
+      return Promise.resolve({} as Awaited<ReturnType<typeof downloadTemplate>>);
+    });
+
+    await runCreateWithTemplates({ template: 'lp-astro-natural', targetDir: 'lp-app', force: true }, templates);
+
+    const outDir = path.join(tmpDir, 'lp-app');
+
+    // 選択 variant の index.astro が src/pages/index.astro に持ち上がっている
+    expect(fs.readFileSync(path.join(outDir, 'src/pages/index.astro'), 'utf-8')).toBe('natural');
+
+    // 他 variant ディレクトリ + 自分の variant ディレクトリも残らない
+    expect(fs.existsSync(path.join(outDir, 'src/pages/minimal'))).toBe(false);
+    expect(fs.existsSync(path.join(outDir, 'src/pages/natural'))).toBe(false);
+    expect(fs.existsSync(path.join(outDir, 'src/pages/ryokan'))).toBe(false);
+
+    // src/pages 直下に残るのは index.astro のみ
+    const remaining = fs.readdirSync(path.join(outDir, 'src/pages')).sort();
+    expect(remaining).toEqual(['index.astro']);
+
+    // package.json の name が packageName に書き換わる
+    const pkg = JSON.parse(fs.readFileSync(path.join(outDir, 'package.json'), 'utf-8')) as {
+      name: string;
+      dependencies: Record<string, string>;
+    };
+    expect(pkg.name).toBe('lp-astro-natural');
+    // workspace:* も同時に置換される
+    expect(pkg.dependencies['lism-css']).not.toBe('workspace:*');
+  });
+
+  it('single-project-variant型で対象variantが存在しない場合はvariantMissingを返す', async () => {
+    const templates: Parameters<typeof runCreateWithTemplates>[1] = [
+      {
+        slug: 'lp-astro-missing',
+        kind: 'single-project-variant',
+        category: 'lp',
+        stack: 'astro',
+        variant: 'missing',
+        sourcePath: 'lp/astro',
+        packageName: 'lp-astro-missing',
+        description: { ja: 'missing', en: 'missing' },
+      },
+    ];
+
+    vi.mocked(downloadTemplate).mockImplementation((_source, options) => {
+      const dir = (options as { dir: string }).dir;
+      fs.mkdirSync(dir, { recursive: true });
+      writePackageJson(dir, { name: 'lp-astro', dependencies: {} });
+      writeFile(path.join(dir, 'src/pages/index.astro'), 'list');
+      writeFile(path.join(dir, 'src/pages/minimal/index.astro'), 'minimal');
+      return Promise.resolve({} as Awaited<ReturnType<typeof downloadTemplate>>);
+    });
+
+    await expect(runCreateWithTemplates({ template: 'lp-astro-missing', targetDir: 'lp-missing', force: true }, templates)).rejects.toThrow(
+      'Variant "missing"'
+    );
+  });
+
   it('static-html型はpackage.jsonなしでもindex.htmlがあれば完了し、HTML向けNext stepsを出す', async () => {
     const templates: Parameters<typeof runCreateWithTemplates>[1] = [
       {
