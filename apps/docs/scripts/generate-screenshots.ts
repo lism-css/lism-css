@@ -4,9 +4,12 @@
  * ビルド後のdistディレクトリからプレビューサーバーを起動し、
  * 各パターンページのスクリーンショットを撮影して保存します。
  *
+ * --force 時は公開用（本番画像）に加え、比較用ベースライン
+ * （CDNランダム画像をグレーに差し替え）も同時に再撮影します。
+ *
  * 使い方:
  *   pnpm screenshot:new                # 新規のみ生成（全言語、ビルド後に実行）
- *   pnpm screenshot:force              # 全て再生成（全言語、ビルド後に実行）
+ *   pnpm screenshot:force              # 全て再生成（public + baseline、全言語）
  *   npx tsx scripts/generate-screenshots.ts cta            # カテゴリ指定（全言語）
  *   npx tsx scripts/generate-screenshots.ts cta/cta001     # パターン指定（全言語）
  *   npx tsx scripts/generate-screenshots.ts cta section    # 複数指定
@@ -20,6 +23,7 @@ import { existsSync, mkdirSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { spawn, type ChildProcess } from 'node:child_process';
+import { PNG } from 'pngjs';
 
 // 現在のディレクトリを取得
 const __filename = fileURLToPath(import.meta.url);
@@ -28,8 +32,11 @@ const ROOT_DIR = join(__dirname, '..');
 
 // 設定
 const CONFIG = {
-  // スクリーンショットの保存先
+  // 公開用スクリーンショット（本番画像）の保存先
   outputDir: join(ROOT_DIR, 'public', 'screenshots', 'patterns'),
+  // 比較用ベースライン（CDNランダム画像をグレーに差し替え）の保存先
+  // ※ compare-screenshots.ts / update-screenshots.ts と同じパス
+  baselineDir: join(ROOT_DIR, '_screenshots', 'baseline'),
   // ビューポートサイズ（3:2比率）
   viewport: { width: 1200, height: 800 },
   // プレビューサーバーのポート
@@ -169,52 +176,84 @@ function startPreviewServer(): Promise<ChildProcess> {
 }
 
 /**
- * スクリーンショットを撮影
+ * 1x1 グレーPNGバッファ（CDNランダム画像の代替用）
+ */
+function createGrayPixelPng(): Buffer {
+  const png = new PNG({ width: 1, height: 1 });
+  png.data[0] = 190;
+  png.data[1] = 190;
+  png.data[2] = 190;
+  png.data[3] = 255;
+  return PNG.sync.write(png);
+}
+
+/**
+ * ランダム画像をグレーに差し替えるルートを設定（baseline 撮影用）
+ */
+async function setupImageInterception(page: Page, grayPng: Buffer): Promise<void> {
+  await page.route('**/cdn.lism-css.com/random/img*', (route) => {
+    return route.fulfill({
+      contentType: 'image/png',
+      body: grayPng,
+    });
+  });
+}
+
+/**
+ * 指定パスにスクリーンショットを保存
+ */
+async function captureTo(page: Page, url: string, outputPath: string): Promise<{ ok: boolean; error?: string }> {
+  try {
+    const outputDir = dirname(outputPath);
+    if (!existsSync(outputDir)) {
+      mkdirSync(outputDir, { recursive: true });
+    }
+    await page.goto(url, { waitUntil: 'networkidle' });
+    await page.waitForTimeout(CONFIG.waitAfterLoad);
+    await page.screenshot({ path: outputPath, type: 'png' });
+    return { ok: true };
+  } catch (error) {
+    return { ok: false, error: error instanceof Error ? error.message : String(error) };
+  }
+}
+
+/**
+ * スクリーンショットを撮影（force 時は baseline も同時撮影）
  */
 async function takeScreenshot(
-  page: Page,
+  realPage: Page,
+  grayPage: Page | null,
   category: string,
   id: string,
   lang: Lang
 ): Promise<{ success: boolean; skipped?: boolean; error?: string }> {
   // ja はプレフィックスなし、それ以外は lang/ サブディレクトリに保存
-  const outputPath = lang === 'ja' ? join(CONFIG.outputDir, category, `${id}.png`) : join(CONFIG.outputDir, lang, category, `${id}.png`);
+  const langPrefix = lang === 'ja' ? '' : lang;
+  const publicPath = lang === 'ja' ? join(CONFIG.outputDir, category, `${id}.png`) : join(CONFIG.outputDir, lang, category, `${id}.png`);
+  const baselinePath = join(CONFIG.baselineDir, langPrefix, category, `${id}.png`);
 
   // 強制再生成でない場合、既存ファイルをスキップ
-  if (!forceRegenerate && existsSync(outputPath)) {
+  if (!forceRegenerate && existsSync(publicPath)) {
     return { success: true, skipped: true };
   }
 
-  // 出力ディレクトリを作成
-  const outputDir = dirname(outputPath);
-  if (!existsSync(outputDir)) {
-    mkdirSync(outputDir, { recursive: true });
+  // ja はデフォルトURL、それ以外は言語別プレビューページ
+  const url =
+    lang === 'ja'
+      ? `http://localhost:${CONFIG.port}/preview/patterns/${category}/${id}/`
+      : `http://localhost:${CONFIG.port}/preview/patterns/${category}/${id}/${lang}/`;
+
+  // 公開用（本番画像）
+  const r1 = await captureTo(realPage, url, publicPath);
+  if (!r1.ok) return { success: false, error: r1.error };
+
+  // force のときは baseline（CDNランダム画像をグレー差し替え）も同時更新
+  if (forceRegenerate && grayPage) {
+    const r2 = await captureTo(grayPage, url, baselinePath);
+    if (!r2.ok) return { success: false, error: r2.error };
   }
 
-  try {
-    // ja はデフォルトURL、それ以外は言語別プレビューページ
-    const url =
-      lang === 'ja'
-        ? `http://localhost:${CONFIG.port}/preview/patterns/${category}/${id}/`
-        : `http://localhost:${CONFIG.port}/preview/patterns/${category}/${id}/${lang}/`;
-    await page.goto(url, { waitUntil: 'networkidle' });
-
-    // 画像やフォントの読み込み完了を待つ
-    await page.waitForTimeout(CONFIG.waitAfterLoad);
-
-    // スクリーンショットを撮影
-    await page.screenshot({
-      path: outputPath,
-      type: 'png',
-    });
-
-    return { success: true };
-  } catch (error) {
-    return {
-      success: false,
-      error: error instanceof Error ? error.message : String(error),
-    };
-  }
+  return { success: true };
 }
 
 /**
@@ -254,9 +293,20 @@ async function main() {
     // Playwrightブラウザを起動
     console.log('🌐 ブラウザを起動中...');
     browser = await chromium.launch({ headless: true });
-    const page = await browser.newPage();
-    await page.setViewportSize(CONFIG.viewport);
-    console.log('✅ ブラウザ起動完了');
+
+    // 公開用ページ（本番画像のまま）
+    const realPage = await browser.newPage();
+    await realPage.setViewportSize(CONFIG.viewport);
+
+    // 比較用ページ（CDNランダム画像 → グレーに差し替え）。force のときだけ用意
+    let grayPage: Page | null = null;
+    if (forceRegenerate) {
+      grayPage = await browser.newPage();
+      await grayPage.setViewportSize(CONFIG.viewport);
+      await setupImageInterception(grayPage, createGrayPixelPng());
+    }
+
+    console.log(forceRegenerate ? '✅ ブラウザ起動完了（force: public + baseline 同時撮影）' : '✅ ブラウザ起動完了');
     console.log('');
 
     // 統計
@@ -271,14 +321,14 @@ async function main() {
         console.log(`\n🌐 [${lang}]`);
       }
       for (const { category, id } of patternPaths) {
-        const result = await takeScreenshot(page, category, id, lang);
+        const result = await takeScreenshot(realPage, grayPage, category, id, lang);
 
         if (result.skipped) {
           skipped++;
           process.stdout.write(`  ⏭️  ${category}/${id} (スキップ)\n`);
         } else if (result.success) {
           generated++;
-          process.stdout.write(`  ✅ ${category}/${id}\n`);
+          process.stdout.write(forceRegenerate ? `  ✅ ${category}/${id} (public & baseline)\n` : `  ✅ ${category}/${id}\n`);
         } else {
           failed++;
           process.stdout.write(`  ❌ ${category}/${id}: ${result.error}\n`);
