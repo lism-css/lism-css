@@ -41,6 +41,13 @@ export default defineConfig({
       alias: {
         '@': '/src',
         '@ui': '/src/components/ui',
+        '@templates': new URL('../../templates', import.meta.url).pathname,
+      },
+    },
+    server: {
+      fs: {
+        // monorepo ルートの templates 配下を許可
+        allow: [new URL('../../', import.meta.url).pathname],
       },
     },
     // __で始まるディレクトリ/ファイルをビルドから除外するプラグイン

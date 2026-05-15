@@ -1,25 +1,28 @@
 ---
 import Layout from '@/layouts/Layout.astro';
 import { Lism, Stack, Center, Grid, Heading, Link, Text, BoxLink, Frame } from 'lism-css/astro';
+import minimalThumb from '../../screenshots/minimal.png';
+import naturalThumb from '../../screenshots/natural.png';
+import ryokanThumb from '../../screenshots/ryokan.png';
 
 const variants = [
   {
     slug: 'minimal',
     title: 'Minimal LP',
     description: 'シンプルで余白を活かしたミニマルなランディングページ。',
-    thumb: 'https://cdn.lism-css.com/img/random-2510?category=minimal&r=lp-thumb-minimal',
+    thumb: minimalThumb,
   },
   {
     slug: 'natural',
     title: 'Simple Natural LP',
     description: 'ナチュラルで親しみやすいデザインのランディングページ。',
-    thumb: 'https://cdn.lism-css.com/img/random-2510?category=nature&r=lp-thumb-natural',
+    thumb: naturalThumb,
   },
   {
     slug: 'ryokan',
     title: 'Japanese Ryokan LP',
     description: '和の趣ある旅館サイト向けランディングページ。',
-    thumb: 'https://cdn.lism-css.com/img/random-2510?category=japan&r=lp-thumb-ryokan',
+    thumb: ryokanThumb,
   },
 ];
 ---
@@ -39,7 +42,7 @@ const variants = [
           variants.map(({ slug, title, description, thumb }) => (
             <BoxLink href={`/${slug}/`} layout="stack" g="15" set="var:hov" bdrs="20" ov="clip" bgc="base">
               <Frame ar="16/10" ov="hidden">
-                <img src={thumb} alt={`${title} のサムネイル`} loading="lazy" />
+                <img src={thumb.src} alt={`${title} のサムネイル`} loading="lazy" />
               </Frame>
               <Stack g="5" px="20" py="15">
                 <Heading level="2" fz="l" fw="600" lts="l" m="0">

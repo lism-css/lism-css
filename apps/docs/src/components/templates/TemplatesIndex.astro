@@ -1,6 +1,10 @@
 ---
-import { Stack, Columns, Text, Heading, Inline, Link, Lism } from 'lism-css/astro';
+import { Stack, Columns, Text, Heading, Inline, Link, Lism, Frame } from 'lism-css/astro';
+import { Image } from 'astro:assets';
 import { getLocalizedUrl, type LangCode } from '@/lib/i18n';
+import minimalAstroThumb from '@templates/minimal/astro/screenshots/top.png';
+import blogAstroSimpleThumb from '@templates/blog/astro/simple/screenshots/top.png';
+import blogAstroFullThumb from '@templates/blog/astro/full/screenshots/top.png';
 
 interface Props {
   lang: LangCode;
@@ -65,6 +69,7 @@ const commands = [
 const templates = [
   {
     slug: 'minimal-astro',
+    thumb: minimalAstroThumb,
     title: 'Minimal Astro',
     stack: 'Astro',
     description: isJa
@@ -75,6 +80,7 @@ const templates = [
   },
   {
     slug: 'blog-astro-simple',
+    thumb: blogAstroSimpleThumb,
     title: 'Blog Astro Simple',
     stack: 'Astro',
     description: isJa
@@ -85,6 +91,7 @@ const templates = [
   },
   {
     slug: 'blog-astro-full',
+    thumb: blogAstroFullThumb,
     title: 'Blog Astro Full',
     stack: 'Astro + MDX',
     description: isJa
@@ -144,36 +151,47 @@ const patternsUrl = getLocalizedUrl('/patterns/', lang);
     <Columns cols={[1, 2, 3]} g="20">
       {
         templates.map((template) => (
-          <Stack as="article" id={template.slug} class="c--templatesPage_card" g="20" p="20" bd bdrs="20" bgc="base">
-            <Stack g="10">
-              <Inline class="c--templatesPage_slug" fz="xs" ff="mono" c="text-2">
-                {template.slug}
-              </Inline>
-              <Heading level="3" fz="l">
-                {template.title}
-              </Heading>
-              <Inline class="c--templatesPage_badge" fz="xs" fw="bold" c="text-2" bd bdc="divider" bdrs="99">
-                {template.stack}
-              </Inline>
-            </Stack>
-            <Text c="text-2" fz="s" lh="s">
-              {template.description}
-            </Text>
-            <Stack g="10">
-              <Text fz="xs" fw="bold">
-                {copy.bestFor}
-              </Text>
+          <Stack as="article" id={template.slug} class="c--templatesPage_card" g="0" bd bdrs="20" bgc="base" ov="hidden">
+            <Frame ar="16/9" ov="hidden" bd-b bdc="divider">
+              <Image
+                src={template.thumb}
+                alt={`${template.title} のサムネイル`}
+                widths={[400, 800]}
+                sizes="(max-width: 600px) 100vw, 33vw"
+                loading="lazy"
+              />
+            </Frame>
+            <Stack p="20" g="20">
+              <Stack g="10">
+                <Inline class="c--templatesPage_slug" fz="xs" ff="mono" c="text-2">
+                  {template.slug}
+                </Inline>
+                <Heading level="3" fz="l">
+                  {template.title}
+                </Heading>
+                <Inline class="c--templatesPage_badge" fz="xs" fw="bold" c="text-2" bd bdc="divider" bdrs="99">
+                  {template.stack}
+                </Inline>
+              </Stack>
               <Text c="text-2" fz="s" lh="s">
-                {template.bestFor}
+                {template.description}
               </Text>
-            </Stack>
-            <Stack g="10">
-              <Text fz="xs" fw="bold">
-                {copy.commandLabel}
-              </Text>
-              <Lism as="pre" class="c--templatesPage_code" p="15" bdrs="20" bgc="base-2" fz="xs" lh="s">
-                <code>{template.command}</code>
-              </Lism>
+              <Stack g="10">
+                <Text fz="xs" fw="bold">
+                  {copy.bestFor}
+                </Text>
+                <Text c="text-2" fz="s" lh="s">
+                  {template.bestFor}
+                </Text>
+              </Stack>
+              <Stack g="10">
+                <Text fz="xs" fw="bold">
+                  {copy.commandLabel}
+                </Text>
+                <Lism as="pre" class="c--templatesPage_code" p="15" bdrs="20" bgc="base-2" fz="xs" lh="s">
+                  <code>{template.command}</code>
+                </Lism>
+              </Stack>
             </Stack>
           </Stack>
         ))

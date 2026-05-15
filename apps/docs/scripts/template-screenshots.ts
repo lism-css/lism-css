@@ -1,0 +1,543 @@
+/**
+ * テンプレートのスクリーンショット自動生成スクリプト
+ *
+ * 各テンプレートディレクトリ配下の screenshots.config.json を参照し、
+ * テンプレートを build → preview server 起動 → 指定パスを撮影してテンプレ配下に保存します。
+ *
+ * 使い方（リポジトリルートまたは apps/docs で実行）:
+ *   npx tsx apps/docs/scripts/template-screenshots.ts                    # 新規のみ撮影
+ *   npx tsx apps/docs/scripts/template-screenshots.ts --force            # 全テンプレ再撮影
+ *   npx tsx apps/docs/scripts/template-screenshots.ts --compare          # ベースライン比較（初回はベースライン生成）
+ *   npx tsx apps/docs/scripts/template-screenshots.ts --update           # 差分テンプレのベースライン更新
+ *   npx tsx apps/docs/scripts/template-screenshots.ts --target=minimal-astro
+ *   npx tsx apps/docs/scripts/template-screenshots.ts --target=blog/astro/simple
+ *   npx tsx apps/docs/scripts/template-screenshots.ts --no-build         # 既存 dist を使う（ビルドをスキップ）
+ *   npx tsx apps/docs/scripts/template-screenshots.ts --threshold=0.5    # compare のしきい値（%）
+ */
+
+import { chromium, type Browser, type Page } from 'playwright';
+import { existsSync, mkdirSync, readFileSync, writeFileSync, rmSync, readdirSync, statSync } from 'node:fs';
+import { join, dirname, basename, relative } from 'node:path';
+import { fileURLToPath } from 'node:url';
+import { spawn, spawnSync, type ChildProcess } from 'node:child_process';
+import net from 'node:net';
+import pixelmatch from 'pixelmatch';
+import { PNG } from 'pngjs';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+// apps/docs/scripts → リポジトリルートまで3階層遡る
+const REPO_ROOT = join(__dirname, '..', '..', '..');
+const TEMPLATES_ROOT = join(REPO_ROOT, 'templates');
+
+interface ShotDef {
+  name: string;
+  path: string;
+}
+interface TemplateConfig {
+  command?: 'preview' | 'dev';
+  port: number;
+  waitAfterLoad?: number;
+  shots: ShotDef[];
+}
+
+interface TemplateEntry {
+  /** リポジトリルートからの相対パス (例: 'templates/minimal/astro') */
+  relPath: string;
+  /** 絶対パス */
+  absPath: string;
+  /** package.json の name (例: 'minimal-astro') */
+  pkgName: string;
+  config: TemplateConfig;
+}
+
+// 引数パース
+const args = process.argv.slice(2);
+const flag = (name: string) => args.includes(`--${name}`);
+const arg = (name: string): string | undefined => {
+  const found = args.find((a) => a.startsWith(`--${name}=`));
+  return found?.split('=', 2)[1];
+};
+
+const MODE: 'new' | 'force' | 'compare' | 'update' = flag('update') ? 'update' : flag('compare') ? 'compare' : flag('force') ? 'force' : 'new';
+const SKIP_BUILD = flag('no-build');
+const TARGET = arg('target');
+const THRESHOLD = arg('threshold') ? parseFloat(arg('threshold')!) : 0.01;
+
+const VIEWPORT = { width: 1600, height: 900 } as const;
+const SERVER_READY_TIMEOUT_MS = 60_000;
+
+// ───────────────────────────────────────────
+// テンプレ列挙
+// ───────────────────────────────────────────
+
+/** templates/ 以下を再帰的に走査して screenshots.config.json を持つディレクトリを集める */
+function collectTemplates(): TemplateEntry[] {
+  const found: TemplateEntry[] = [];
+  walk(TEMPLATES_ROOT);
+  return found;
+
+  function walk(dir: string) {
+    let entries: string[] = [];
+    try {
+      entries = readdirSync(dir);
+    } catch {
+      return;
+    }
+    // このディレクトリに config があるか
+    if (entries.includes('screenshots.config.json')) {
+      const configPath = join(dir, 'screenshots.config.json');
+      const pkgPath = join(dir, 'package.json');
+      if (!existsSync(pkgPath)) {
+        console.warn(`⚠️  package.json が見つかりません: ${relative(REPO_ROOT, dir)}`);
+        return;
+      }
+      const config = JSON.parse(readFileSync(configPath, 'utf-8')) as TemplateConfig;
+      const pkg = JSON.parse(readFileSync(pkgPath, 'utf-8')) as { name?: string };
+      if (!pkg.name) {
+        console.warn(`⚠️  package.json に name がありません: ${relative(REPO_ROOT, dir)}`);
+        return;
+      }
+      found.push({
+        relPath: relative(REPO_ROOT, dir),
+        absPath: dir,
+        pkgName: pkg.name,
+        config,
+      });
+      // テンプレ配下はそれ以上掘らない
+      return;
+    }
+    // サブディレクトリを掘る（node_modules / dist / .* は除外）
+    for (const name of entries) {
+      if (name.startsWith('.')) continue;
+      if (name === 'node_modules' || name === 'dist') continue;
+      const sub = join(dir, name);
+      try {
+        if (statSync(sub).isDirectory()) walk(sub);
+      } catch {
+        /* noop */
+      }
+    }
+  }
+}
+
+function filterTemplates(templates: TemplateEntry[]): TemplateEntry[] {
+  if (!TARGET) return templates;
+  return templates.filter((t) => t.pkgName === TARGET || t.relPath === TARGET || t.relPath.endsWith(`/${TARGET}`));
+}
+
+// ───────────────────────────────────────────
+// ビルド & preview server
+// ───────────────────────────────────────────
+
+function buildTemplate(pkgName: string): boolean {
+  console.log(`🔨 build: ${pkgName}`);
+  const r = spawnSync('pnpm', ['--filter', pkgName, 'build'], {
+    cwd: REPO_ROOT,
+    stdio: 'inherit',
+  });
+  return r.status === 0;
+}
+
+function isPortInUse(port: number): Promise<boolean> {
+  return new Promise((resolve) => {
+    const tester = net.createServer();
+    tester.once('error', (err: NodeJS.ErrnoException) => {
+      resolve(err.code === 'EADDRINUSE');
+    });
+    tester.once('listening', () => {
+      tester.close(() => resolve(false));
+    });
+    tester.listen(port, '127.0.0.1');
+  });
+}
+
+/** ポートが解放されるまで待機（前テンプレの preview server が完全終了するまで） */
+async function waitForPortFree(port: number, timeoutMs = 15_000): Promise<boolean> {
+  const deadline = Date.now() + timeoutMs;
+  while (Date.now() < deadline) {
+    if (!(await isPortInUse(port))) return true;
+    await new Promise((r) => setTimeout(r, 200));
+  }
+  return false;
+}
+
+function startPreviewServer(entry: TemplateEntry): Promise<ChildProcess> {
+  const command = entry.config.command ?? 'preview';
+  const port = entry.config.port;
+  return new Promise((resolve, reject) => {
+    console.log(`📡 ${command} server 起動中 (${entry.pkgName} :${port})`);
+
+    // preview ポートはテンプレ側のデフォルトに依存するが、各 dev/preview に --port を渡して固定する
+    const server = spawn('pnpm', ['--filter', entry.pkgName, command, '--', '--port', String(port)], {
+      cwd: REPO_ROOT,
+      stdio: ['ignore', 'pipe', 'pipe'],
+      shell: false,
+      detached: true,
+    });
+
+    let resolved = false;
+    const url = `http://localhost:${port}/`;
+
+    const checkReady = async () => {
+      const ok = await waitForServer(url);
+      if (resolved) return;
+      resolved = true;
+      if (ok) {
+        console.log(`✅ server ready: ${url}`);
+        resolve(server);
+      } else {
+        try {
+          if (server.pid) process.kill(-server.pid, 'SIGTERM');
+        } catch {
+          /* noop */
+        }
+        reject(new Error('server が応答しません'));
+      }
+    };
+
+    // stdout/stderr に "localhost" が出たタイミング、または最初のデータで監視を開始
+    let watchStarted = false;
+    const onData = (buf: Buffer) => {
+      if (watchStarted) return;
+      if (buf.toString().includes('localhost') || buf.toString().includes(`:${port}`)) {
+        watchStarted = true;
+        void checkReady();
+      }
+    };
+    server.stdout?.on('data', onData);
+    server.stderr?.on('data', onData);
+
+    server.on('error', (err) => {
+      if (resolved) return;
+      resolved = true;
+      reject(new Error(`server 起動エラー: ${err.message}`));
+    });
+
+    // フォールバック: 一定時間後に強制チェック
+    setTimeout(() => {
+      if (!watchStarted) {
+        watchStarted = true;
+        void checkReady();
+      }
+    }, 2000);
+
+    setTimeout(() => {
+      if (!resolved) {
+        resolved = true;
+        try {
+          if (server.pid) process.kill(-server.pid, 'SIGTERM');
+        } catch {
+          /* noop */
+        }
+        reject(new Error('server 起動タイムアウト'));
+      }
+    }, SERVER_READY_TIMEOUT_MS);
+  });
+}
+
+async function waitForServer(url: string, maxRetries = 60, interval = 500): Promise<boolean> {
+  for (let i = 0; i < maxRetries; i++) {
+    try {
+      const res = await fetch(url);
+      if (res.ok || res.status < 500) return true;
+    } catch {
+      /* noop */
+    }
+    await new Promise((r) => setTimeout(r, interval));
+  }
+  return false;
+}
+
+function stopServer(server: ChildProcess | null) {
+  if (!server) return;
+  try {
+    if (server.pid) process.kill(-server.pid, 'SIGTERM');
+    else server.kill();
+  } catch {
+    /* noop */
+  }
+}
+
+// ───────────────────────────────────────────
+// 撮影 & 比較
+// ───────────────────────────────────────────
+
+function shotsOutputDir(entry: TemplateEntry, kind: 'public' | 'baseline' | 'diff' | 'temp') {
+  // すべて screenshots/ 配下に集約。比較系は _baseline / _diff / _temp として
+  // アンダースコア接頭辞のサブディレクトリに退避させる（apps/docs の glob で除外しやすい）。
+  if (kind === 'public') return join(entry.absPath, 'screenshots');
+  return join(entry.absPath, 'screenshots', `_${kind}`);
+}
+
+/** 1x1 グレー PNG（CDN ランダム画像の代替用） */
+function createGrayPixelPng(): Buffer {
+  const png = new PNG({ width: 1, height: 1 });
+  png.data[0] = 190;
+  png.data[1] = 190;
+  png.data[2] = 190;
+  png.data[3] = 255;
+  return PNG.sync.write(png);
+}
+
+/**
+ * ランダム画像をグレーに差し替えるルートを設定。
+ * `cdn.lism-css.com/random/img*`（旧形式）と `cdn.lism-css.com/img/random*`（新形式）を両方カバー。
+ * 固定の `img/<category>/<name>.jpg` 等は差し替えない（レイアウト比較に影響しないため）。
+ */
+async function setupImageInterception(page: Page, grayPng: Buffer): Promise<void> {
+  await page.route(/cdn\.lism-css\.com\/(random\/img|img\/random)/, (route) => route.fulfill({ contentType: 'image/png', body: grayPng }));
+}
+
+async function takeShot(page: Page, url: string, outputPath: string, waitAfterLoad: number): Promise<{ ok: boolean; error?: string }> {
+  try {
+    await page.goto(url, { waitUntil: 'networkidle' });
+    await page.waitForTimeout(waitAfterLoad);
+    mkdirSync(dirname(outputPath), { recursive: true });
+    await page.screenshot({ path: outputPath, type: 'png' });
+    return { ok: true };
+  } catch (e) {
+    return { ok: false, error: e instanceof Error ? e.message : String(e) };
+  }
+}
+
+function comparePng(baselinePath: string, candidatePath: string, diffPath: string): { diffPercent: number } {
+  const a = PNG.sync.read(readFileSync(baselinePath));
+  const b = PNG.sync.read(readFileSync(candidatePath));
+  if (a.width !== b.width || a.height !== b.height) return { diffPercent: 100 };
+  const diff = new PNG({ width: a.width, height: a.height });
+  const diffPixels = pixelmatch(a.data, b.data, diff.data, a.width, a.height, { threshold: 0.3 });
+  const diffPercent = (diffPixels / (a.width * a.height)) * 100;
+  if (diffPercent >= 0.01) {
+    mkdirSync(dirname(diffPath), { recursive: true });
+    writeFileSync(diffPath, PNG.sync.write(diff));
+  }
+  return { diffPercent };
+}
+
+// ───────────────────────────────────────────
+// 各モードの処理
+// ───────────────────────────────────────────
+
+type Stats = { generated: number; skipped: number; changed: number; unchanged: number; newCount: number; failed: number };
+
+async function processEntry(entry: TemplateEntry, browser: Browser, stats: Stats): Promise<void> {
+  console.log(`\n━━━ ${entry.pkgName} (${entry.relPath}) ━━━`);
+
+  // ポートが既に使われていたら中止（誤って別サーバを撮影しないため）
+  if (await isPortInUse(entry.config.port)) {
+    console.error(
+      `❌ ポート ${entry.config.port} は既に使用されています。screenshots.config.json で別ポートを指定するか、占有中のプロセスを停止してください`
+    );
+    stats.failed += entry.config.shots.length;
+    return;
+  }
+
+  // build フェーズ
+  if (!SKIP_BUILD && entry.config.command !== 'dev') {
+    if (!buildTemplate(entry.pkgName)) {
+      console.error(`❌ build に失敗しました: ${entry.pkgName}`);
+      stats.failed += entry.config.shots.length;
+      return;
+    }
+  }
+
+  let server: ChildProcess | null = null;
+  try {
+    server = await startPreviewServer(entry);
+
+    // 公開用ページ（CDN ランダム画像はそのまま）
+    const realPage = await browser.newPage();
+    await realPage.setViewportSize(VIEWPORT);
+
+    // 比較用ページ（CDN ランダム画像 → 1x1 グレー）。force / compare / update で使う
+    let grayPage: Page | null = null;
+    const needsGrayPage = MODE === 'force' || MODE === 'compare' || MODE === 'update';
+    if (needsGrayPage) {
+      grayPage = await browser.newPage();
+      await grayPage.setViewportSize(VIEWPORT);
+      await setupImageInterception(grayPage, createGrayPixelPng());
+    }
+
+    const waitAfterLoad = entry.config.waitAfterLoad ?? 500;
+    const baseUrl = `http://localhost:${entry.config.port}`;
+
+    if (MODE === 'new' || MODE === 'force') {
+      const publicDir = shotsOutputDir(entry, 'public');
+      const baselineDir = MODE === 'force' ? shotsOutputDir(entry, 'baseline') : null;
+      for (const shot of entry.config.shots) {
+        const publicPath = join(publicDir, `${shot.name}.png`);
+        if (MODE === 'new' && existsSync(publicPath)) {
+          stats.skipped++;
+          process.stdout.write(`  ⏭️  ${shot.name} (スキップ)\n`);
+          continue;
+        }
+        // 公開用（本物の画像）
+        const r1 = await takeShot(realPage, baseUrl + shot.path, publicPath, waitAfterLoad);
+        // force のときは baseline（グレー差し替え）も同時に撮り直す
+        let r2: { ok: boolean; error?: string } = { ok: true };
+        if (MODE === 'force' && baselineDir) {
+          const baselinePath = join(baselineDir, `${shot.name}.png`);
+          r2 = await takeShot(grayPage!, baseUrl + shot.path, baselinePath, waitAfterLoad);
+        }
+        if (r1.ok && r2.ok) {
+          stats.generated++;
+          process.stdout.write(MODE === 'force' ? `  ✅ ${shot.name} (public & baseline)\n` : `  ✅ ${shot.name}\n`);
+        } else {
+          stats.failed++;
+          process.stdout.write(`  ❌ ${shot.name}: ${r1.error ?? r2.error}\n`);
+        }
+      }
+    } else if (MODE === 'compare') {
+      const baselineDir = shotsOutputDir(entry, 'baseline');
+      const tempDir = shotsOutputDir(entry, 'temp');
+      const diffDir = shotsOutputDir(entry, 'diff');
+      const isInitial = !existsSync(baselineDir);
+      if (existsSync(diffDir)) rmSync(diffDir, { recursive: true });
+      if (existsSync(tempDir)) rmSync(tempDir, { recursive: true });
+
+      for (const shot of entry.config.shots) {
+        const baselinePath = join(baselineDir, `${shot.name}.png`);
+        const tempPath = join(tempDir, `${shot.name}.png`);
+        const diffPath = join(diffDir, `${shot.name}.png`);
+
+        if (isInitial || !existsSync(baselinePath)) {
+          // baseline はグレー差し替えありで撮影
+          const res = await takeShot(grayPage!, baseUrl + shot.path, baselinePath, waitAfterLoad);
+          if (res.ok) {
+            stats.newCount++;
+            process.stdout.write(`  🆕 ${shot.name} (baseline 生成)\n`);
+          } else {
+            stats.failed++;
+            process.stdout.write(`  ❌ ${shot.name}: ${res.error}\n`);
+          }
+          continue;
+        }
+
+        const cap = await takeShot(grayPage!, baseUrl + shot.path, tempPath, waitAfterLoad);
+        if (!cap.ok) {
+          stats.failed++;
+          process.stdout.write(`  ❌ ${shot.name}: ${cap.error}\n`);
+          continue;
+        }
+        const { diffPercent } = comparePng(baselinePath, tempPath, diffPath);
+        if (diffPercent <= THRESHOLD) {
+          stats.unchanged++;
+          process.stdout.write(`  ✅ ${shot.name} (変更なし)\n`);
+        } else {
+          stats.changed++;
+          process.stdout.write(`  ⚠️  ${shot.name} (差分: ${diffPercent.toFixed(2)}%)\n`);
+        }
+      }
+
+      // temp は破棄
+      if (existsSync(tempDir)) rmSync(tempDir, { recursive: true });
+    } else if (MODE === 'update') {
+      const baselineDir = shotsOutputDir(entry, 'baseline');
+      const diffDir = shotsOutputDir(entry, 'diff');
+      const publicDir = shotsOutputDir(entry, 'public');
+      if (!existsSync(diffDir)) {
+        console.log('  差分なし（diff ディレクトリが存在しません）');
+        return;
+      }
+      const diffFiles = readdirSync(diffDir).filter((f) => f.endsWith('.png'));
+      if (diffFiles.length === 0) {
+        console.log('  差分なし');
+        return;
+      }
+      for (const file of diffFiles) {
+        const name = basename(file, '.png');
+        const shot = entry.config.shots.find((s) => s.name === name);
+        if (!shot) {
+          process.stdout.write(`  ⚠️  ${name} は config に存在しません。スキップ\n`);
+          continue;
+        }
+        // baseline はグレー差し替えあり、public は本物の画像で更新
+        const baselinePath = join(baselineDir, `${shot.name}.png`);
+        const publicPath = join(publicDir, `${shot.name}.png`);
+        const r1 = await takeShot(grayPage!, baseUrl + shot.path, baselinePath, waitAfterLoad);
+        const r2 = await takeShot(realPage, baseUrl + shot.path, publicPath, waitAfterLoad);
+        if (r1.ok && r2.ok) {
+          stats.generated++;
+          process.stdout.write(`  ✅ ${shot.name} (baseline & public 更新)\n`);
+        } else {
+          stats.failed++;
+          process.stdout.write(`  ❌ ${shot.name}: ${r1.error ?? r2.error}\n`);
+        }
+      }
+      // 差分ディレクトリを削除
+      rmSync(diffDir, { recursive: true });
+    }
+
+    await realPage.close();
+    if (grayPage) await grayPage.close();
+  } finally {
+    stopServer(server);
+    // 次のテンプレに進む前にポートが解放されるまで待つ（重要：前 server が残ると
+    // 次テンプレの撮影で前テンプレのページを撮ってしまう）
+    const freed = await waitForPortFree(entry.config.port);
+    if (!freed) {
+      console.warn(`⚠️  ポート ${entry.config.port} の解放が確認できませんでした`);
+    }
+  }
+}
+
+async function main() {
+  console.log('🖼️  テンプレートスクリーンショット');
+  console.log(`   モード: ${MODE}`);
+  if (TARGET) console.log(`   ターゲット: ${TARGET}`);
+  if (SKIP_BUILD) console.log('   build スキップ');
+  console.log('');
+
+  const all = collectTemplates();
+  const templates = filterTemplates(all);
+  if (templates.length === 0) {
+    console.error('❌ 対象テンプレートがありません');
+    process.exit(1);
+  }
+  console.log(`📋 対象: ${templates.map((t) => t.pkgName).join(', ')}`);
+
+  console.log('🌐 ブラウザを起動...');
+  const browser = await chromium.launch({ headless: true });
+
+  const stats: Stats = { generated: 0, skipped: 0, changed: 0, unchanged: 0, newCount: 0, failed: 0 };
+  let exitCode = 0;
+
+  try {
+    for (const entry of templates) {
+      await processEntry(entry, browser, stats);
+    }
+  } catch (e) {
+    console.error('❌ エラー:', e instanceof Error ? (e.stack ?? e.message) : e);
+    exitCode = 1;
+  } finally {
+    await browser.close();
+  }
+
+  console.log('');
+  console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
+  console.log('📊 結果サマリー');
+  if (MODE === 'compare') {
+    console.log(`   変更なし: ${stats.unchanged}`);
+    console.log(`   変更あり: ${stats.changed}`);
+    if (stats.newCount > 0) console.log(`   新規 baseline: ${stats.newCount}`);
+  } else {
+    console.log(`   生成/更新: ${stats.generated}`);
+    if (stats.skipped > 0) console.log(`   スキップ: ${stats.skipped}`);
+  }
+  if (stats.failed > 0) console.log(`   失敗: ${stats.failed}`);
+  console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
+
+  if (stats.failed > 0) exitCode = 1;
+  if (MODE === 'compare' && stats.changed > 0) {
+    console.log('');
+    console.log('💡 変更を受け入れるには: pnpm screenshot:templates:update');
+    exitCode = 1;
+  }
+  process.exit(exitCode);
+}
+
+main().catch((e) => {
+  console.error('❌ エラー:', e);
+  process.exit(1);
+});
