@@ -36,7 +36,7 @@ interface Props {
   lang: LangCode;
 }
 
-const { lang } = Astro.props;
+const { lang } = Astro.props as Props;
 const { category, id } = Astro.params;
 
 if (!isValidLang(lang)) {

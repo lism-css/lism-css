@@ -25,7 +25,7 @@ interface Props {
   lang: LangCode;
 }
 
-const { lang } = Astro.props;
+const { lang } = Astro.props as Props;
 
 // 言語が無効な場合は404
 if (!isValidLang(lang)) {
