@@ -17,7 +17,6 @@ export default defineConfig(
       '**/node_modules/**',
       '**/.astro/**',
       '**/.turbo/**',
-      'apps/playgrounds/**',
       'apps/catalog/.storybook/**',
       'apps/catalog/storybook-static/**',
       'eslint.config.mjs',

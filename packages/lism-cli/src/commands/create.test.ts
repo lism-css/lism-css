@@ -70,10 +70,20 @@ describe('runCreate', () => {
   });
 
   it('stackが1件だけなら選択をスキップして自動確定する', async () => {
+    const templates: Parameters<typeof runCreateWithTemplates>[1] = [
+      {
+        slug: 'minimal-astro',
+        kind: 'project',
+        category: 'minimal',
+        stack: 'astro',
+        sourcePath: 'minimal/astro',
+        description: { ja: 'Astro minimal', en: 'Astro minimal' },
+      },
+    ];
     vi.mocked(select).mockResolvedValue('minimal' as never);
     vi.mocked(input).mockResolvedValue('picked-app' as never);
 
-    await runCreate({ force: true });
+    await runCreateWithTemplates({ force: true }, templates);
 
     expect(select).toHaveBeenCalledTimes(1);
     expect(input).toHaveBeenCalledTimes(1);

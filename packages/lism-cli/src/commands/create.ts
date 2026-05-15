@@ -99,6 +99,14 @@ const TEMPLATES: TemplateDef[] = [
     description: { ja: 'Astro ベースの最小構成', en: 'Minimal Astro setup' },
   },
   {
+    slug: 'minimal-vite',
+    kind: 'project',
+    category: 'minimal',
+    stack: 'vite',
+    sourcePath: 'minimal/vite',
+    description: { ja: 'Vite + React ベースの最小構成', en: 'Minimal Vite + React setup' },
+  },
+  {
     slug: 'blog-astro-simple',
     kind: 'project',
     category: 'blog',
