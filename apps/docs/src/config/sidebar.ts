@@ -8,7 +8,7 @@
 
 import type { LangCode } from '@/config/site';
 import { BookOpenTextIcon, SquaresFourIcon, LayoutIcon } from '@phosphor-icons/react';
-import { templates, categoryIds, type TemplateCategoryId, type TemplateItem } from './templates';
+import { patterns, categoryIds, type PatternCategoryId, type PatternItem } from './patterns';
 
 // 翻訳オブジェクトの型（root言語以外の翻訳を指定）
 type TranslateLabels = Partial<Record<Exclude<LangCode, 'ja'>, string>>;
@@ -75,8 +75,8 @@ export function getTranslatedLabel(label: string, translate: TranslateLabels | u
   return translate[lang as Exclude<LangCode, 'ja'>] || label;
 }
 
-// サイトセクションの識別子（/docs/, /ui/, /templates/ などの最初のパス部分）
-export type SiteSection = 'docs' | 'ui' | 'templates';
+// サイトセクションの識別子（/docs/, /ui/, /patterns/ などの最初のパス部分）
+export type SiteSection = 'docs' | 'ui' | 'patterns';
 
 // サイドバー設定の型
 export interface SidebarConfig {
@@ -100,8 +100,8 @@ const topLevelLinks: TopLevelLinkItem[] = [
   },
   {
     type: 'toplink',
-    label: 'Templates',
-    link: '/templates/',
+    label: 'Patterns',
+    link: '/patterns/',
     icon: LayoutIcon,
   },
 ];
@@ -202,16 +202,16 @@ const uiSidebar: SidebarSection[] = [
 // 本番環境かどうか（draft:trueのアイテムをフィルタリングするために使用）
 const isProd = import.meta.env.PROD;
 
-// /templates/ セクション用のサイドバー設定（templates.tsから動的生成）
-const templatesSidebar: SidebarSection[] = categoryIds.map((categoryId: TemplateCategoryId) => {
-  const category = templates[categoryId];
+// /patterns/ セクション用のサイドバー設定（patterns.tsから動的生成）
+const patternsSidebar: SidebarSection[] = categoryIds.map((categoryId: PatternCategoryId) => {
+  const category = patterns[categoryId];
   // 本番環境ではdraft:trueのアイテムを除外
-  const items = isProd ? (category.items as TemplateItem[]).filter((item) => !item.draft) : category.items;
+  const items = isProd ? (category.items as PatternItem[]).filter((item) => !item.draft) : category.items;
   return {
     label: category.label,
     items: items.map((item) => ({
       label: item.title,
-      link: `/templates/${categoryId}/${item.id}`,
+      link: `/patterns/${categoryId}/${item.id}`,
     })),
   };
 });
@@ -222,7 +222,7 @@ const sidebarConfig: SidebarConfig = {
   sections: {
     docs: docsSidebar,
     ui: uiSidebar,
-    templates: templatesSidebar,
+    patterns: patternsSidebar,
   },
 };
 
@@ -231,7 +231,7 @@ export default sidebarConfig;
 /**
  * URLからサイトセクションを取得するヘルパー
  * @param pathname URLのパス部分
- * @returns サイトセクション（'docs' | 'ui' | 'templates'）、該当なしの場合は 'docs' をデフォルトとして返す
+ * @returns サイトセクション（'docs' | 'ui' | 'patterns'）、該当なしの場合は 'docs' をデフォルトとして返す
  */
 export function getSiteSection(pathname: string): SiteSection {
   // パスから言語プレフィックスを除去してセクションを判定
@@ -239,8 +239,8 @@ export function getSiteSection(pathname: string): SiteSection {
   if (pathWithoutLang.startsWith('/ui/') || pathWithoutLang === '/ui') {
     return 'ui';
   }
-  if (pathWithoutLang.startsWith('/templates/') || pathWithoutLang === '/templates') {
-    return 'templates';
+  if (pathWithoutLang.startsWith('/patterns/') || pathWithoutLang === '/patterns') {
+    return 'patterns';
   }
   return 'docs';
 }
@@ -249,7 +249,7 @@ export function getSiteSection(pathname: string): SiteSection {
  * URLからslugを抽出するヘルパー
  * /docs/xxx/ → xxx（コンテンツは content/ja/xxx.mdx）
  * /ui/yyy/ → ui/yyy（コンテンツは content/ja/ui/yyy.mdx）
- * /templates/zzz/ → templates/zzz（テンプレートページ、MDXなし）
+ * /patterns/zzz/ → patterns/zzz（パターンページ、MDXなし）
  */
 export function extractSlugFromUrl(url: string): string {
   // /docs/ の場合はプレフィックスを除去（コンテンツは content/{lang}/ 直下）
@@ -260,9 +260,9 @@ export function extractSlugFromUrl(url: string): string {
   if (url.startsWith('/ui/')) {
     return 'ui/' + url.replace(/^\/ui\//, '').replace(/^\/|\/$/g, '');
   }
-  // /templates/ の場合は templates/ プレフィックスを保持
-  if (url.startsWith('/templates/')) {
-    return 'templates/' + url.replace(/^\/templates\//, '').replace(/^\/|\/$/g, '');
+  // /patterns/ の場合は patterns/ プレフィックスを保持
+  if (url.startsWith('/patterns/')) {
+    return 'patterns/' + url.replace(/^\/patterns\//, '').replace(/^\/|\/$/g, '');
   }
   // その他の場合
   return url.replace(/^\/|\/$/g, '');

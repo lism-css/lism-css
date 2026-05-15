@@ -68,7 +68,7 @@ function getGitLastModifiedMap(): Map<string, Date> {
  *
  * ページファイル:
  *   apps/docs/src/pages/index.astro             → [https://lism-css.com/]
- *   apps/docs/src/pages/templates/index.astro   → [https://lism-css.com/templates/]
+ *   apps/docs/src/pages/patterns/index.astro   → [https://lism-css.com/patterns/]
  */
 function filePathToSiteUrls(filePath: string): string[] {
   // _（アンダースコア開始）のパスは非公開ページ
@@ -103,11 +103,11 @@ function filePathToSiteUrls(filePath: string): string[] {
     // その他の動的ルートはコンテンツ由来なのでスキップ
     if (pagePath.includes('[')) return [];
 
-    // preview/templates/{cat}/{id}/index.astro → 対応するテンプレート詳細ページにもマップ
-    const previewMatch = pagePath.match(/^preview\/templates\/(.+)\/index$/);
+    // preview/patterns/{cat}/{id}/index.astro → 対応するパターン詳細ページにもマップ
+    const previewMatch = pagePath.match(/^preview\/patterns\/(.+)\/index$/);
     if (previewMatch) {
-      const templatePath = previewMatch[1];
-      return [`${SITE_URL}/preview/templates/${templatePath}/`, `${SITE_URL}/templates/${templatePath}/`];
+      const patternPath = previewMatch[1];
+      return [`${SITE_URL}/preview/patterns/${patternPath}/`, `${SITE_URL}/patterns/${patternPath}/`];
     }
 
     // index.astro → ディレクトリURL（ルートの index も正しく処理）

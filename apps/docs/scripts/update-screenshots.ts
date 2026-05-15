@@ -1,11 +1,11 @@
 /**
  * スクリーンショット更新スクリプト
  *
- * compare で検出された差分テンプレートのみを対象に、
+ * compare で検出された差分パターンのみを対象に、
  * 比較用ベースライン（グレー差し替え）と公開用スクリーンショット（本番画像）を更新します。
  *
  * 使い方:
- *   npx tsx scripts/update-screenshots.ts    # diff/ にある差分テンプレートを更新（全言語対応）
+ *   npx tsx scripts/update-screenshots.ts    # diff/ にある差分パターンを更新（全言語対応）
  */
 
 import { chromium, type Browser, type Page } from 'playwright';
@@ -31,17 +31,17 @@ const CONFIG = {
   diffDir: join(ROOT_DIR, '_screenshots', 'diff'),
   tempDir: join(ROOT_DIR, '_screenshots', 'temp'),
   // 公開用スクリーンショット（本番画像）
-  publicDir: join(ROOT_DIR, 'public', 'screenshots', 'templates'),
+  publicDir: join(ROOT_DIR, 'public', 'screenshots', 'patterns'),
   viewport: { width: 1200, height: 800 },
   port: 4000,
   waitAfterLoad: 500,
 };
 
 /**
- * _screenshots/diff/ から差分があるテンプレート一覧を取得（言語対応）
+ * _screenshots/diff/ から差分があるパターン一覧を取得（言語対応）
  * ja: diff/{category}/{id}.png, en: diff/en/{category}/{id}.png
  */
-function getDiffTemplatePaths(): Array<{ category: string; id: string; lang: Lang }> {
+function getDiffPatternPaths(): Array<{ category: string; id: string; lang: Lang }> {
   if (!existsSync(CONFIG.diffDir)) {
     return [];
   }
@@ -182,8 +182,8 @@ async function captureScreenshot(page: Page, outputDir: string, category: string
   try {
     const url =
       lang === 'ja'
-        ? `http://localhost:${CONFIG.port}/preview/templates/${category}/${id}/`
-        : `http://localhost:${CONFIG.port}/preview/templates/${category}/${id}/${lang}/`;
+        ? `http://localhost:${CONFIG.port}/preview/patterns/${category}/${id}/`
+        : `http://localhost:${CONFIG.port}/preview/patterns/${category}/${id}/${lang}/`;
     await page.goto(url, { waitUntil: 'networkidle' });
     await page.waitForTimeout(CONFIG.waitAfterLoad);
     await page.screenshot({ path: outputPath, type: 'png' });
@@ -204,15 +204,15 @@ async function main() {
     process.exit(1);
   }
 
-  // 差分テンプレートを取得
-  const templatePaths = getDiffTemplatePaths();
-  if (templatePaths.length === 0) {
-    console.log('✅ 差分テンプレートがありません。更新は不要です。');
+  // 差分パターンを取得
+  const patternPaths = getDiffPatternPaths();
+  if (patternPaths.length === 0) {
+    console.log('✅ 差分パターンがありません。更新は不要です。');
     process.exit(0);
   }
 
-  console.log(`📋 更新対象: ${templatePaths.length}件`);
-  for (const { category, id, lang } of templatePaths) {
+  console.log(`📋 更新対象: ${patternPaths.length}件`);
+  for (const { category, id, lang } of patternPaths) {
     console.log(`   - ${category}/${id}${lang !== 'ja' ? ` [${lang}]` : ''}`);
   }
   console.log('');
@@ -243,7 +243,7 @@ async function main() {
     let failed = 0;
 
     console.log('📸 撮影・更新開始...');
-    for (const { category, id, lang } of templatePaths) {
+    for (const { category, id, lang } of patternPaths) {
       const name = `${category}/${id}${lang !== 'ja' ? ` [${lang}]` : ''}`;
 
       // 比較用ベースラインを更新（グレー差し替えあり）

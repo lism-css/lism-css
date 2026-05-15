@@ -1,18 +1,18 @@
 /**
- * テンプレートのスクリーンショット自動生成スクリプト
+ * パターンのスクリーンショット自動生成スクリプト
  *
  * ビルド後のdistディレクトリからプレビューサーバーを起動し、
- * 各テンプレートページのスクリーンショットを撮影して保存します。
+ * 各パターンページのスクリーンショットを撮影して保存します。
  *
  * 使い方:
  *   pnpm screenshot:new                # 新規のみ生成（全言語、ビルド後に実行）
  *   pnpm screenshot:force              # 全て再生成（全言語、ビルド後に実行）
  *   npx tsx scripts/generate-screenshots.ts cta            # カテゴリ指定（全言語）
- *   npx tsx scripts/generate-screenshots.ts cta/cta001     # テンプレート指定（全言語）
+ *   npx tsx scripts/generate-screenshots.ts cta/cta001     # パターン指定（全言語）
  *   npx tsx scripts/generate-screenshots.ts cta section    # 複数指定
  *   npx tsx scripts/generate-screenshots.ts --lang=en      # 英語版のみ生成
  *   npx tsx scripts/generate-screenshots.ts --lang=ja      # 日本語版のみ生成
- *   npx tsx scripts/generate-screenshots.ts cta/cta001 --lang=en --force  # 特定テンプレートの英語版を再生成
+ *   npx tsx scripts/generate-screenshots.ts cta/cta001 --lang=en --force  # 特定パターンの英語版を再生成
  */
 
 import { chromium, type Browser, type Page } from 'playwright';
@@ -29,7 +29,7 @@ const ROOT_DIR = join(__dirname, '..');
 // 設定
 const CONFIG = {
   // スクリーンショットの保存先
-  outputDir: join(ROOT_DIR, 'public', 'screenshots', 'templates'),
+  outputDir: join(ROOT_DIR, 'public', 'screenshots', 'patterns'),
   // ビューポートサイズ（3:2比率）
   viewport: { width: 1200, height: 800 },
   // プレビューサーバーのポート
@@ -52,12 +52,12 @@ const targetLangs: readonly Lang[] = langValue ? [langValue as Lang] : ALL_LANGS
 const filters = args.filter((a) => !a.startsWith('--'));
 
 /**
- * テンプレート設定からパス一覧を取得（draft除外）
+ * パターン設定からパス一覧を取得（draft除外）
  */
-async function getTemplatePaths(): Promise<Array<{ category: string; id: string }>> {
-  const { templates } = await import('../src/config/templates.ts');
+async function getPatternPaths(): Promise<Array<{ category: string; id: string }>> {
+  const { patterns } = await import('../src/config/patterns.ts');
   const paths: Array<{ category: string; id: string }> = [];
-  for (const [categoryId, category] of Object.entries(templates)) {
+  for (const [categoryId, category] of Object.entries(patterns)) {
     for (const item of category.items as Array<{ id: string; draft?: boolean }>) {
       if (!item.draft) {
         paths.push({ category: categoryId, id: item.id });
@@ -68,10 +68,10 @@ async function getTemplatePaths(): Promise<Array<{ category: string; id: string 
 }
 
 /**
- * フィルタ引数でテンプレートを絞り込む
- * "cta" → カテゴリ全体, "cta/cta001" → 特定テンプレート
+ * フィルタ引数でパターンを絞り込む
+ * "cta" → カテゴリ全体, "cta/cta001" → 特定パターン
  */
-function filterTemplatePaths(paths: Array<{ category: string; id: string }>): Array<{ category: string; id: string }> {
+function filterPatternPaths(paths: Array<{ category: string; id: string }>): Array<{ category: string; id: string }> {
   if (filters.length === 0) return paths;
   return paths.filter(({ category, id }) =>
     filters.some((f) => {
@@ -195,8 +195,8 @@ async function takeScreenshot(
     // ja はデフォルトURL、それ以外は言語別プレビューページ
     const url =
       lang === 'ja'
-        ? `http://localhost:${CONFIG.port}/preview/templates/${category}/${id}/`
-        : `http://localhost:${CONFIG.port}/preview/templates/${category}/${id}/${lang}/`;
+        ? `http://localhost:${CONFIG.port}/preview/patterns/${category}/${id}/`
+        : `http://localhost:${CONFIG.port}/preview/patterns/${category}/${id}/${lang}/`;
     await page.goto(url, { waitUntil: 'networkidle' });
 
     // 画像やフォントの読み込み完了を待つ
@@ -221,7 +221,7 @@ async function takeScreenshot(
  * メイン処理
  */
 async function main() {
-  console.log('🖼️  テンプレートスクリーンショット生成');
+  console.log('🖼️  パターンスクリーンショット生成');
   console.log(`   モード: ${forceRegenerate ? '全て再生成' : '新規のみ'}`);
   console.log(`   言語: ${targetLangs.join(', ')}`);
   console.log('');
@@ -234,13 +234,13 @@ async function main() {
     process.exit(1);
   }
 
-  // テンプレートパスを取得・フィルタ
-  const allPaths = await getTemplatePaths();
-  const templatePaths = filterTemplatePaths(allPaths);
+  // パターンパスを取得・フィルタ
+  const allPaths = await getPatternPaths();
+  const patternPaths = filterPatternPaths(allPaths);
   if (filters.length > 0) {
     console.log(`   フィルタ: ${filters.join(', ')}`);
   }
-  console.log(`📋 対象テンプレート数: ${templatePaths.length}`);
+  console.log(`📋 対象パターン数: ${patternPaths.length}`);
   console.log('');
 
   // プレビューサーバーを起動
@@ -264,13 +264,13 @@ async function main() {
     let skipped = 0;
     let failed = 0;
 
-    // 各テンプレートのスクリーンショットを言語ごとに撮影
+    // 各パターンのスクリーンショットを言語ごとに撮影
     console.log('📸 スクリーンショット撮影開始...');
     for (const lang of targetLangs) {
       if (targetLangs.length > 1) {
         console.log(`\n🌐 [${lang}]`);
       }
-      for (const { category, id } of templatePaths) {
+      for (const { category, id } of patternPaths) {
         const result = await takeScreenshot(page, category, id, lang);
 
         if (result.skipped) {
