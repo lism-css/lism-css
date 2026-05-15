@@ -7,7 +7,7 @@
  */
 
 import type { LangCode } from '@/config/site';
-import { BookOpenTextIcon, SquaresFourIcon, LayoutIcon } from '@phosphor-icons/react';
+import { BookOpenTextIcon, ShapesIcon, SquaresFourIcon, LayoutIcon } from '@phosphor-icons/react';
 import { patterns, categoryIds, type PatternCategoryId, type PatternItem } from './patterns';
 
 // 翻訳オブジェクトの型（root言語以外の翻訳を指定）
@@ -75,8 +75,8 @@ export function getTranslatedLabel(label: string, translate: TranslateLabels | u
   return translate[lang as Exclude<LangCode, 'ja'>] || label;
 }
 
-// サイトセクションの識別子（/docs/, /ui/, /patterns/ などの最初のパス部分）
-export type SiteSection = 'docs' | 'ui' | 'patterns';
+// サイトセクションの識別子（/docs/, /ui/, /templates/, /patterns/ などの最初のパス部分）
+export type SiteSection = 'docs' | 'ui' | 'patterns' | 'templates';
 
 // サイドバー設定の型
 export interface SidebarConfig {
@@ -96,12 +96,18 @@ const topLevelLinks: TopLevelLinkItem[] = [
     type: 'toplink',
     label: 'Lism UI',
     link: '/ui/',
-    icon: SquaresFourIcon,
+    icon: ShapesIcon,
   },
   {
     type: 'toplink',
     label: 'Patterns',
     link: '/patterns/',
+    icon: SquaresFourIcon,
+  },
+  {
+    type: 'toplink',
+    label: 'Templates',
+    link: '/templates/',
     icon: LayoutIcon,
   },
 ];
@@ -216,6 +222,23 @@ const patternsSidebar: SidebarSection[] = categoryIds.map((categoryId: PatternCa
   };
 });
 
+// /templates/ セクション用のサイドバー設定
+const templatesSidebar: SidebarSection[] = [
+  {
+    label: 'Templates',
+    items: [
+      {
+        label: 'Project Templates',
+        link: '/templates/',
+      },
+      {
+        label: 'Patterns',
+        link: '/patterns/',
+      },
+    ],
+  },
+];
+
 // サイドバー設定をエクスポート
 const sidebarConfig: SidebarConfig = {
   topLevelLinks,
@@ -223,6 +246,7 @@ const sidebarConfig: SidebarConfig = {
     docs: docsSidebar,
     ui: uiSidebar,
     patterns: patternsSidebar,
+    templates: templatesSidebar,
   },
 };
 
@@ -231,13 +255,16 @@ export default sidebarConfig;
 /**
  * URLからサイトセクションを取得するヘルパー
  * @param pathname URLのパス部分
- * @returns サイトセクション（'docs' | 'ui' | 'patterns'）、該当なしの場合は 'docs' をデフォルトとして返す
+ * @returns サイトセクション（'docs' | 'ui' | 'templates' | 'patterns'）、該当なしの場合は 'docs' をデフォルトとして返す
  */
 export function getSiteSection(pathname: string): SiteSection {
   // パスから言語プレフィックスを除去してセクションを判定
   const pathWithoutLang = pathname.replace(/^\/(en|ja)\//, '/');
   if (pathWithoutLang.startsWith('/ui/') || pathWithoutLang === '/ui') {
     return 'ui';
+  }
+  if (pathWithoutLang.startsWith('/templates/') || pathWithoutLang === '/templates') {
+    return 'templates';
   }
   if (pathWithoutLang.startsWith('/patterns/') || pathWithoutLang === '/patterns') {
     return 'patterns';
@@ -249,6 +276,7 @@ export function getSiteSection(pathname: string): SiteSection {
  * URLからslugを抽出するヘルパー
  * /docs/xxx/ → xxx（コンテンツは content/ja/xxx.mdx）
  * /ui/yyy/ → ui/yyy（コンテンツは content/ja/ui/yyy.mdx）
+ * /templates/ → templates（テンプレートページ、MDXなし）
  * /patterns/zzz/ → patterns/zzz（パターンページ、MDXなし）
  */
 export function extractSlugFromUrl(url: string): string {
@@ -259,6 +287,10 @@ export function extractSlugFromUrl(url: string): string {
   // /ui/ の場合は ui/ プレフィックスを保持（コンテンツは content/{lang}/ui/ 配下）
   if (url.startsWith('/ui/')) {
     return 'ui/' + url.replace(/^\/ui\//, '').replace(/^\/|\/$/g, '');
+  }
+  // /templates/ の場合は templates/ プレフィックスを保持
+  if (url.startsWith('/templates/')) {
+    return 'templates/' + url.replace(/^\/templates\//, '').replace(/^\/|\/$/g, '');
   }
   // /patterns/ の場合は patterns/ プレフィックスを保持
   if (url.startsWith('/patterns/')) {

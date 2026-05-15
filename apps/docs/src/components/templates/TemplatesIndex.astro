@@ -1,0 +1,214 @@
+---
+import { Stack, Columns, Text, Heading, Inline, Link, Lism } from 'lism-css/astro';
+import { getLocalizedUrl, type LangCode } from '@/lib/i18n';
+
+interface Props {
+  lang: LangCode;
+}
+
+const { lang } = Astro.props as Props;
+const isJa = lang === 'ja';
+
+const copy = isJa
+  ? {
+      title: 'Project Templates',
+      lead: 'Lism CSSで新しいプロジェクトを始めるための雛形です。CLIの対話選択、またはテンプレートslugの直接指定で生成できます。',
+      quickStart: 'すぐに始める',
+      direct: 'テンプレートを指定する',
+      available: '利用できるテンプレート',
+      availableLead: '現在の配布対象はAstroベースの最小構成とブログ構成です。',
+      commandLead: '対話形式でカテゴリ、スタック、バリアントを選んで生成します。',
+      directLead: {
+        before: '',
+        code: '--template <slug>',
+        after: 'を指定すると、選択UIをスキップして対象テンプレートを直接取得できます。',
+      },
+      termTitle: 'TemplatesとPatternsの違い',
+      termBody: 'Templatesはプロジェクト一式を生成する雛形です。Patternsは既存サイトへコピーして使うセクション単位のパターン集です。',
+      patternsLink: 'Patternsを見る',
+      bestFor: '用途',
+      commandLabel: '生成コマンド',
+    }
+  : {
+      title: 'Project Templates',
+      lead: 'Project starters for building new sites with Lism CSS. Generate them through the interactive CLI flow or by passing a template slug directly.',
+      quickStart: 'Quick start',
+      direct: 'Choose a template directly',
+      available: 'Available templates',
+      availableLead: 'The current set includes Astro-based minimal and blog starters.',
+      commandLead: 'Start the interactive flow and choose category, stack, and variant in order.',
+      directLead: {
+        before: 'Pass ',
+        code: '--template <slug>',
+        after: ' to skip the selection UI and fetch the target template directly.',
+      },
+      termTitle: 'Templates vs. Patterns',
+      termBody: 'Templates generate a full project. Patterns are copy-and-paste section patterns for an existing site.',
+      patternsLink: 'View Patterns',
+      bestFor: 'Best for',
+      commandLabel: 'Generate command',
+    };
+
+const commands = [
+  {
+    title: copy.quickStart,
+    description: copy.commandLead,
+    command: 'pnpm create lism ./my-app',
+  },
+  {
+    title: copy.direct,
+    description: copy.directLead,
+    command: 'npx create-lism@latest ./my-app --template minimal-astro',
+  },
+];
+
+const templates = [
+  {
+    slug: 'minimal-astro',
+    title: 'Minimal Astro',
+    stack: 'Astro',
+    description: isJa
+      ? 'Astroベースの最小構成です。余計な機能を足さず、Lism CSSの導入状態から始められます。'
+      : 'A minimal Astro starter with Lism CSS already wired in.',
+    bestFor: isJa ? '小さなサイト、検証、独自構成の土台' : 'Small sites, experiments, and custom project foundations',
+    command: 'pnpm create lism --template minimal-astro ./my-app',
+  },
+  {
+    slug: 'blog-astro-simple',
+    title: 'Blog Astro Simple',
+    stack: 'Astro',
+    description: isJa
+      ? 'タグ機能を備えたシンプルなAstroブログ構成です。軽い記事サイトを素早く始められます。'
+      : 'A simple Astro blog starter with tag support for lightweight publishing.',
+    bestFor: isJa ? '個人ブログ、更新頻度の低いメディア、技術メモ' : 'Personal blogs, low-maintenance media, and technical notes',
+    command: 'pnpm create lism --template blog-astro-simple ./my-blog',
+  },
+  {
+    slug: 'blog-astro-full',
+    title: 'Blog Astro Full',
+    stack: 'Astro + MDX',
+    description: isJa
+      ? 'カテゴリ、目次、検索向け構成を含むAstroブログです。記事量が増える前提のサイトに向いています。'
+      : 'A fuller Astro blog starter with categories, table of contents, and search-ready structure.',
+    bestFor: isJa ? '本格的なブログ、ナレッジベース、記事型サイト' : 'Larger blogs, knowledge bases, and article-heavy sites',
+    command: 'pnpm create lism --template blog-astro-full ./my-blog',
+  },
+];
+
+const patternsUrl = getLocalizedUrl('/patterns/', lang);
+---
+
+<Stack g="50" class="c--templatesPage" data-pagefind-body>
+  <Stack as="header" g="30">
+    <Stack g="15">
+      <Text fz="xs" fw="bold" c="text-2">PROJECT TEMPLATES</Text>
+      <Heading level="1" fz="3xl">{copy.title}</Heading>
+      <Text c="text-2" lh="s" max-sz="m">{copy.lead}</Text>
+    </Stack>
+
+    <Columns cols={[1, 2]} g="20">
+      {
+        commands.map((item) => (
+          <Stack class="c--templatesPage_command" g="15" p="20" bd bdrs="20" bgc="base">
+            <Heading level="2" fz="l">
+              {item.title}
+            </Heading>
+            <Text c="text-2" fz="s" lh="s">
+              {typeof item.description === 'string' ? (
+                item.description
+              ) : (
+                <>
+                  {item.description.before}
+                  <Inline as="code" ff="mono">
+                    {item.description.code}
+                  </Inline>
+                  {item.description.after}
+                </>
+              )}
+            </Text>
+            <Lism as="pre" class="c--templatesPage_code" p="15" bdrs="20" bgc="base-2" fz="xs" lh="s">
+              <code>{item.command}</code>
+            </Lism>
+          </Stack>
+        ))
+      }
+    </Columns>
+  </Stack>
+
+  <Stack as="section" g="30" aria-labelledby="templates-list-title">
+    <Stack g="10">
+      <Heading id="templates-list-title" level="2" fz="2xl">{copy.available}</Heading>
+      <Text c="text-2" lh="s">{copy.availableLead}</Text>
+    </Stack>
+
+    <Columns cols={[1, 2, 3]} g="20">
+      {
+        templates.map((template) => (
+          <Stack as="article" id={template.slug} class="c--templatesPage_card" g="20" p="20" bd bdrs="20" bgc="base">
+            <Stack g="10">
+              <Inline class="c--templatesPage_slug" fz="xs" ff="mono" c="text-2">
+                {template.slug}
+              </Inline>
+              <Heading level="3" fz="l">
+                {template.title}
+              </Heading>
+              <Inline class="c--templatesPage_badge" fz="xs" fw="bold" c="text-2" bd bdc="divider" bdrs="99">
+                {template.stack}
+              </Inline>
+            </Stack>
+            <Text c="text-2" fz="s" lh="s">
+              {template.description}
+            </Text>
+            <Stack g="10">
+              <Text fz="xs" fw="bold">
+                {copy.bestFor}
+              </Text>
+              <Text c="text-2" fz="s" lh="s">
+                {template.bestFor}
+              </Text>
+            </Stack>
+            <Stack g="10">
+              <Text fz="xs" fw="bold">
+                {copy.commandLabel}
+              </Text>
+              <Lism as="pre" class="c--templatesPage_code" p="15" bdrs="20" bgc="base-2" fz="xs" lh="s">
+                <code>{template.command}</code>
+              </Lism>
+            </Stack>
+          </Stack>
+        ))
+      }
+    </Columns>
+  </Stack>
+
+  <Stack as="section" class="c--templatesPage_terms" g="15" p="20" bgc="base-2" bd-x-s bdw="4px" bdc="brand">
+    <Heading level="2" fz="xl">{copy.termTitle}</Heading>
+    <Text c="text-2" lh="s">{copy.termBody}</Text>
+    <Link href={patternsUrl}>{copy.patternsLink}</Link>
+  </Stack>
+</Stack>
+
+<style>
+  /* Columns 子要素の min-width:auto 解除（テキスト・<pre>による横幅の突き上げ防止） */
+  .c--templatesPage_command,
+  .c--templatesPage_card {
+    min-width: 0;
+  }
+
+  /* <pre>の折り返しと横スクロール挙動。Property Class で表現できない宣言のみ残す */
+  .c--templatesPage_code {
+    max-width: 100%;
+    overflow-x: auto;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+  }
+
+  .c--templatesPage_slug {
+    overflow-wrap: anywhere;
+  }
+
+  /* em ベースのコンパクトな pill。スペーストークン外の padding のみ CSS で記述 */
+  .c--templatesPage_badge {
+    padding: 0.25em 0.6em;
+  }
+</style>
