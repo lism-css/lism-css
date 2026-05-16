@@ -95,12 +95,34 @@ describe('runCreate', () => {
   });
 
   it('variantが複数ある場合はstack自動確定後に件数付きvariant選択を出す', async () => {
+    const templates: Parameters<typeof runCreateWithTemplates>[1] = [
+      {
+        slug: 'blog-astro-simple',
+        kind: 'project',
+        category: 'blog',
+        stack: 'astro',
+        variant: 'simple',
+        variantLabel: { ja: 'Simple', en: 'Simple' },
+        sourcePath: 'blog/astro/simple',
+        description: { ja: 'Simple blog', en: 'Simple blog' },
+      },
+      {
+        slug: 'blog-astro-full',
+        kind: 'project',
+        category: 'blog',
+        stack: 'astro',
+        variant: 'full',
+        variantLabel: { ja: 'Full', en: 'Full' },
+        sourcePath: 'blog/astro/full',
+        description: { ja: 'Full blog', en: 'Full blog' },
+      },
+    ];
     vi.mocked(select)
       .mockResolvedValueOnce('blog' as never)
       .mockResolvedValueOnce('simple' as never);
     vi.mocked(input).mockResolvedValue('blog-app' as never);
 
-    await runCreate({ force: true });
+    await runCreateWithTemplates({ force: true }, templates);
 
     expect(select).toHaveBeenCalledTimes(2);
     expect((vi.mocked(select).mock.calls[1][0] as { message: string }).message).toBe('Select a feature level (2 options):');
