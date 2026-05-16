@@ -3,7 +3,7 @@ import { Stack, Flex, Cluster, AutoColumns, Text, Heading, Link, Lism, Frame, In
 import { Button } from '@lism-css/ui/astro/Button';
 import { Image } from 'astro:assets';
 import { getLocalizedUrl, type LangCode } from '@/lib/i18n';
-import { templates, stackLabels, groupByCategory } from '@/config/templates';
+import { stackLabels, groupByCategory } from '@/config/templates';
 import CopyCommand from './CopyCommand.astro';
 
 interface Props {
@@ -28,6 +28,7 @@ const copy = isJa
       copy: 'コマンドをコピー',
       copied: 'コピーしました',
       preview: 'Preview',
+      details: '詳細を見る',
       thumbAlt: (title: string) => `${title} のサムネイル`,
       stat: (count: number) => `${count} templates`,
     }
@@ -45,16 +46,17 @@ const copy = isJa
       copy: 'Copy command',
       copied: 'Copied!',
       preview: 'Preview',
+      details: 'View details',
       thumbAlt: (title: string) => `${title} thumbnail`,
       stat: (count: number) => `${count} templates`,
     };
 
 const grouped = groupByCategory();
-const totalTemplates = templates.length;
 
 const patternsUrl = getLocalizedUrl('/patterns/', lang);
 
 const buildCommand = (slug: string) => `npx create lism ${slug}`;
+const buildDetailUrl = (category: string, slug: string) => getLocalizedUrl(`/templates/${category}/${slug}/`, lang);
 ---
 
 <Stack g="50" class="p--templates" data-pagefind-body>
@@ -109,16 +111,18 @@ const buildCommand = (slug: string) => `npx create lism ${slug}`;
 
           <AutoColumns cols="20em" autoFill g="30">
             {items.map((template) => (
-              <Stack as="article" id={template.slug} g="0" bd bdrs="20" bgc="base" ov="hidden">
-                <Frame ar="16/9" ov="hidden" bd-b fxsh="0">
-                  <Image
-                    src={template.thumb}
-                    alt={copy.thumbAlt(template.title[lang])}
-                    widths={[400, 800]}
-                    sizes="(max-width: 600px) 100vw, 33vw"
-                    loading="lazy"
-                  />
-                </Frame>
+              <Stack as="article" id={template.slug} g="0" bd bdrs="20" bgc="base" ov="hidden" class="p--templates_card">
+                <a href={buildDetailUrl(template.category, template.slug)} class="p--templates_thumbLink" aria-label={template.title[lang]}>
+                  <Frame ar="16/9" ov="hidden" bd-b fxsh="0">
+                    <Image
+                      src={template.thumb}
+                      alt={copy.thumbAlt(template.title[lang])}
+                      widths={[400, 800]}
+                      sizes="(max-width: 600px) 100vw, 33vw"
+                      loading="lazy"
+                    />
+                  </Frame>
+                </a>
                 <Stack p="20" g="20" fxg="1">
                   <Cluster>
                     <Inline d="inline-flex" px="10" fz="2xs" ff="mono" c="text-2" bd bdc="current" bdrs="99">
@@ -126,45 +130,64 @@ const buildCommand = (slug: string) => `npx create lism ${slug}`;
                     </Inline>
                   </Cluster>
                   <Heading level="4" fz="l" util="trim">
-                    {template.title[lang]}
+                    <a href={buildDetailUrl(template.category, template.slug)} class="p--templates_titleLink">
+                      {template.title[lang]}
+                    </a>
+                    {template.draft && (
+                      <Inline px="10" fz="2xs" bdrs="99" c="red">
+                        draft
+                      </Inline>
+                    )}
                   </Heading>
                   <Text c="text-2" fz="s" lh="s" util="trim">
                     {template.description[lang]}
                   </Text>
-                  <Flex g="10" ai="stretch" mt="auto">
+                  <Stack g="15" mt="auto">
                     <CopyCommand bdrs="10" command={buildCommand(template.slug)} copyLabel={copy.copy} copiedLabel={copy.copied} />
-                    <Button
-                      as="a"
-                      variant="fill"
-                      href={template.previewUrl ?? '#'}
-                      target={template.previewUrl ? '_blank' : undefined}
-                      rel={template.previewUrl ? 'noopener noreferrer' : undefined}
-                      bdrs="10"
-                      py="10"
-                      px="15"
-                      fz="xs"
-                      lh="xs"
-                      ai="center"
-                      g="5"
-                      class="p--templates_previewBtn"
-                    >
-                      <span>{copy.preview}</span>
-                      <svg
-                        width="12"
-                        height="12"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="2.5"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        aria-hidden="true"
+                    <Flex g="15" ai="stretch">
+                      <Button
+                        as="a"
+                        variant="fill"
+                        href={buildDetailUrl(template.category, template.slug)}
+                        bdrs="10"
+                        g="5"
+                        fz="xs"
+                        fx="1"
+                        variant="outline"
                       >
-                        <line x1="7" y1="17" x2="17" y2="7" />
-                        <polyline points="7 7 17 7 17 17" />
-                      </svg>
-                    </Button>
-                  </Flex>
+                        <span>{copy.details}</span>
+                      </Button>
+                      <Button
+                        as="a"
+                        variant="fill"
+                        href={template.previewUrl ?? '#'}
+                        target={template.previewUrl ? '_blank' : undefined}
+                        rel={template.previewUrl ? 'noopener noreferrer' : undefined}
+                        aria-disabled={template.previewUrl ? undefined : 'true'}
+                        tabindex={template.previewUrl ? undefined : -1}
+                        bdrs="10"
+                        g="5"
+                        fz="xs"
+                        fx="1"
+                      >
+                        <span>{copy.preview}</span>
+                        <svg
+                          width="12"
+                          height="12"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="2.5"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          aria-hidden="true"
+                        >
+                          <line x1="7" y1="17" x2="17" y2="7" />
+                          <polyline points="7 7 17 7 17 17" />
+                        </svg>
+                      </Button>
+                    </Flex>
+                  </Stack>
                 </Stack>
               </Stack>
             ))}
@@ -191,12 +214,30 @@ const buildCommand = (slug: string) => `npx create lism ${slug}`;
       margin: 0;
     }
 
-    /* Preview ボタン — 文字を折り返さない。背景は黒系（text/base 反転） */
-    .p--templates_previewBtn {
-      flex-shrink: 0;
-      background: var(--text);
-      color: var(--base);
-      white-space: nowrap;
+    /* [aria-disabled='true'] {
+      opacity: 0.5;
+      pointer-events: none;
+    } */
+
+    /* サムネイル：リンクとして拡大ホバー */
+    .p--templates_thumbLink {
+      display: block;
+      overflow: hidden;
+    }
+    .p--templates_thumbLink img {
+      transition: transform 0.3s ease;
+    }
+    .p--templates_thumbLink:hover img {
+      transform: scale(1.03);
+    }
+
+    /* タイトルリンク：通常文字色のまま、ホバーで装飾 */
+    .p--templates_titleLink {
+      color: inherit;
+      text-decoration: none;
+    }
+    .p--templates_titleLink:hover {
+      text-decoration: underline;
     }
   </style>
 </Stack>

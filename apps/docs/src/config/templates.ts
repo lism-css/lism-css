@@ -32,6 +32,8 @@ export interface TemplateItem {
   thumb: ImageMetadata;
   /** プレビューサイトの URL（無い場合は undefined → ボタン非表示 or 無効化） */
   previewUrl?: string;
+  /** true の場合、本番ビルドでは一覧・詳細ページ・パス生成から除外する（dev では表示） */
+  draft?: boolean;
 }
 
 export interface CategoryDef {
@@ -133,6 +135,7 @@ export const templates: TemplateItem[] = [
     },
   },
   {
+    draft: true,
     slug: 'lp-astro-minimal',
     category: 'lp',
     stack: 'astro',
@@ -144,6 +147,7 @@ export const templates: TemplateItem[] = [
     },
   },
   {
+    draft: true,
     slug: 'lp-astro-natural',
     category: 'lp',
     stack: 'astro',
@@ -155,6 +159,7 @@ export const templates: TemplateItem[] = [
     },
   },
   {
+    draft: true,
     slug: 'lp-astro-ryokan',
     category: 'lp',
     stack: 'astro',
@@ -167,8 +172,15 @@ export const templates: TemplateItem[] = [
   },
 ];
 
+/**
+ * 本番ビルドで実際に公開されるテンプレートのみを含む派生リスト。
+ * dev/preview では draft:true も含めて全件返す。
+ * 一覧・詳細ページ・getStaticPaths はすべてこのリストを参照する。
+ */
+export const visibleTemplates: TemplateItem[] = import.meta.env.PROD ? templates.filter((tpl) => !tpl.draft) : templates;
+
 /** category ごとに templates を分類した結果を返す */
-export function groupByCategory(items: TemplateItem[] = templates): Array<{ category: CategoryDef; items: TemplateItem[] }> {
+export function groupByCategory(items: TemplateItem[] = visibleTemplates): Array<{ category: CategoryDef; items: TemplateItem[] }> {
   return categories
     .map((category) => ({
       category,
@@ -178,12 +190,12 @@ export function groupByCategory(items: TemplateItem[] = templates): Array<{ cate
 }
 
 /** templates 内に存在する stack の一覧（フィルタ chips 用） */
-export function getAvailableStacks(items: TemplateItem[] = templates): Stack[] {
+export function getAvailableStacks(items: TemplateItem[] = visibleTemplates): Stack[] {
   return stackOrder.filter((stack) => items.some((tpl) => tpl.stack === stack));
 }
 
 /** stack ごとの件数を返す */
-export function countByStack(items: TemplateItem[] = templates): Record<Stack, number> {
+export function countByStack(items: TemplateItem[] = visibleTemplates): Record<Stack, number> {
   return stackOrder.reduce(
     (acc, stack) => {
       acc[stack] = items.filter((tpl) => tpl.stack === stack).length;

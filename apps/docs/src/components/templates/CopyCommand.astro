@@ -20,7 +20,7 @@ type Props = LismWrapperProps & {
 const { command, copyLabel, copiedLabel, ...rest } = Astro.props as Props;
 ---
 
-<Lism as="div" class="c--copyCmd" py="10" px="15" bgc="base-2" fz="xs" lh="xs" ff="mono" {...rest}>
+<Lism as="div" class="c--copyCmd" py="10" px="10" px-s="15" bgc="base-2" fz="xs" lh="xs" ff="mono" {...rest}>
   <code title={`$ ${command}`}>$ {command}</code>
   <button type="button" class="c--copyCmd_btn" data-copy-command={command} data-copied-label={copiedLabel} aria-label={copyLabel} title={copyLabel}>
     {/* コピーアイコン（通常時） */}

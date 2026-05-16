@@ -9,6 +9,7 @@
 import type { LangCode } from '@/config/site';
 import { BookOpenTextIcon, ShapesIcon, SquaresFourIcon, LayoutIcon } from '@phosphor-icons/react';
 import { patterns, categoryIds, type PatternCategoryId, type PatternItem } from './patterns';
+import { visibleTemplates, categories as templateCategories } from './templates';
 
 // 翻訳オブジェクトの型（root言語以外の翻訳を指定）
 type TranslateLabels = Partial<Record<Exclude<LangCode, 'ja'>, string>>;
@@ -223,20 +224,32 @@ const patternsSidebar: SidebarSection[] = categoryIds.map((categoryId: PatternCa
 });
 
 // /templates/ セクション用のサイドバー設定
+// 一覧ページへの導線 + カテゴリ別に各テンプレートの詳細ページへのリンクを動的生成
 const templatesSidebar: SidebarSection[] = [
   {
     label: 'Templates',
     items: [
       {
-        label: 'Project Templates',
+        label: 'すべてのテンプレート',
+        translate: { en: 'All templates' },
         link: '/templates/',
-      },
-      {
-        label: 'Patterns',
-        link: '/patterns/',
       },
     ],
   },
+  ...templateCategories
+    .map((category) => ({
+      category,
+      items: visibleTemplates.filter((tpl) => tpl.category === category.id),
+    }))
+    .filter(({ items }) => items.length > 0)
+    .map<SidebarSection>(({ category, items }) => ({
+      label: category.label,
+      items: items.map((tpl) => ({
+        label: tpl.title.ja,
+        translate: { en: tpl.title.en },
+        link: `/templates/${category.id}/${tpl.slug}/`,
+      })),
+    })),
 ];
 
 // サイドバー設定をエクスポート
