@@ -9,6 +9,34 @@ Breaking changes may continue until v1.0, so all notable changes are documented 
 
 <Divider bds="dashed" my="40" />
 
+## lism-css v.0.18.0 (2026.05.17)
+
+This release contains **breaking changes**.
+
+### Redesigned `--sz--*` tokens with unified px and 80px increments (#364)
+
+- Unified `--sz--*` tokens (previously mixed px and rem) to px only
+- Restructured all values as multiples of 80px (×5, ×8, ×11, ×15, ×20)
+- xs: 32rem(512px) → 400px
+- s: 42rem(672px) → 640px
+- m: 56rem(896px) → 880px
+- l: 1280px → 1200px
+- xl: 1600px (unchanged)
+
+### Expanded spacing tokens and new `set--var:s` utility (#377)
+
+- Added `s25` (~20px) / `s35` (~32px), filling `s10`–`s40` with practical 4px-step values
+- Restructured `--s-unit` to derive from `--fz--base` (`calc(var(--fz--base) * 0.5)`)
+- Added `set--var:s` utility class that switches `--s-unit` to `0.5em`, allowing spacing to scale with element font size
+- Removed `bleed` from `sz` tokens, moved to `max-sz`-specific preset
+
+### Other
+
+- Excluded `input[type='range']` from default form-field styles
+- Fine-tuned oklch values for color palette tokens
+
+<Divider bds="dashed" my="40" />
+
 ## lism-css v.0.17.0 (2026.05.09)
 
 This release contains **breaking changes**.
