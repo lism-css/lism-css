@@ -26,4 +26,10 @@ export default defineConfig({
     __LISM_CSS_VERSION__: JSON.stringify(lismCssPkg.version),
     __CLI_VERSION__: JSON.stringify(cliPkg.version),
   },
+  // tsconfig の paths（@templates/*）を bundle 時に解決
+  esbuildOptions(options) {
+    options.alias = {
+      '@templates': resolve(__dirname, '../../templates'),
+    };
+  },
 });

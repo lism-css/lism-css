@@ -55,8 +55,8 @@ export interface SingleProjectVariantTemplateDef extends TemplateMetaBase {
   sourcePath: string;
   /** `src/pages/{variant}/` のディレクトリ名 */
   variant: string;
-  /** 生成プロジェクトの package.json の name に書き換える値 */
-  packageName: string;
+  /** 生成プロジェクトの package.json の name に書き換える値。未指定時は `slug` を使う */
+  packageName?: string;
 }
 
 export type TemplateDef = ProjectTemplateDef | BaseOverlayTemplateDef | StaticHtmlTemplateDef | SingleProjectVariantTemplateDef;
@@ -107,7 +107,6 @@ export const TEMPLATES: TemplateDef[] = [
     variant: 'minimal',
     variantLabel: { ja: 'Minimal', en: 'Minimal' },
     sourcePath: 'lp/astro',
-    packageName: 'lp-astro-minimal',
     description: { ja: 'ミニマルな Astro ランディングページ', en: 'Minimal Astro landing page' },
   },
   {
@@ -118,7 +117,6 @@ export const TEMPLATES: TemplateDef[] = [
     variant: 'natural',
     variantLabel: { ja: 'Natural', en: 'Natural' },
     sourcePath: 'lp/astro',
-    packageName: 'lp-astro-natural',
     description: { ja: 'ナチュラルな雰囲気の Astro ランディングページ', en: 'Natural-themed Astro landing page' },
   },
   {
@@ -129,7 +127,6 @@ export const TEMPLATES: TemplateDef[] = [
     variant: 'ryokan',
     variantLabel: { ja: 'Ryokan', en: 'Ryokan' },
     sourcePath: 'lp/astro',
-    packageName: 'lp-astro-ryokan',
     description: { ja: '旅館・宿泊業向けの Astro ランディングページ', en: 'Astro landing page for ryokan / lodging' },
   },
 ];

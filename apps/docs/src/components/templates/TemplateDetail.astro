@@ -5,7 +5,7 @@
  * URL: /templates/{category}/{slug}/  または  /{lang}/templates/{category}/{slug}/
  * 一覧（TemplatesIndex）から遷移して使う、テンプレート1件の紹介ページ。
  */
-import { Stack, Flow, Text, Group, Cluster, Inline, Frame } from 'lism-css/astro';
+import { Stack, Flow, Text, Group, Cluster, Inline, Frame, Heading } from 'lism-css/astro';
 import { Button } from '@lism-css/ui/astro/Button';
 import { Image } from 'astro:assets';
 import { PreviewFrame, PreviewTitle } from '@/components/Preview';
@@ -51,7 +51,7 @@ const installCommand = `pnpm create lism --template ${template.slug}`;
 const previewUrl = template.previewUrl;
 ---
 
-<Flow g="30" class="templatePage">
+<Stack g="40" class="templatePage">
   {/* パンくず（一覧へ戻る） */}
   <Cluster g="10" fz="xs">
     <a href={templatesUrl} class="-c:text-2">{copy.backToList}</a>
@@ -59,7 +59,7 @@ const previewUrl = template.previewUrl;
 
   {/* ヘッダー */}
   <Stack as="header" g="10">
-    <Cluster g="10" ai="center">
+    <Cluster g="10">
       <Text fz="xs" c="text-2" tt="uppercase" lts="l">
         {category.label}
       </Text>
@@ -67,8 +67,8 @@ const previewUrl = template.previewUrl;
         {stackLabels[template.stack]}
       </Inline>
     </Cluster>
-    <Cluster g="15" ai="center">
-      <h1 class="-fz:3xl -fw:bold">{template.title[lang]}</h1>
+    <Cluster g="10">
+      <Heading level="1" fz="3xl" fw="bold">{template.title[lang]}</Heading>
       {
         template.draft && (
           <Inline d="inline-flex" px="10" fz="2xs" ff="mono" bgc="text-2" c="base" bdrs="99">
@@ -81,20 +81,20 @@ const previewUrl = template.previewUrl;
   </Stack>
 
   {/* インストールコマンド */}
-  <Stack g="15">
+  <Group>
     <PreviewTitle>{copy.install}</PreviewTitle>
     <Stack g="10" p="20" bd bdrs="20" bgc="base">
       <Text util="trim" c="text-2" fz="xs" lh="s">{copy.installLead}</Text>
       <CopyCommand bdrs="10" command={installCommand} copyLabel={copy.copy} copiedLabel={copy.copied} />
     </Stack>
-  </Stack>
+  </Group>
 
   {/* プレビュー */}
-  <Stack g="15">
+  <Group>
     <PreviewTitle>{copy.preview}</PreviewTitle>
     {
       previewUrl ? (
-        <Group layout="flow" my-s="20">
+        <Group>
           <PreviewFrame url={previewUrl} hasSizeSwitch />
           <Button
             as="a"
@@ -128,7 +128,7 @@ const previewUrl = template.previewUrl;
         </Group>
       ) : (
         <Stack g="10">
-          <Frame ar="3/2" bd bdrs="20" ov="hidden" class="templatePage_thumbFallback">
+          <Frame bd bdrs="20">
             <Image
               src={template.thumb}
               alt={copy.thumbAlt(template.title[lang])}
@@ -143,20 +143,13 @@ const previewUrl = template.previewUrl;
         </Stack>
       )
     }
-  </Stack>
-</Flow>
+  </Group>
+</Stack>
 
 <style>
   .templatePage_externalBtn {
     background: var(--text);
     color: var(--base);
     white-space: nowrap;
-  }
-
-  .templatePage_thumbFallback img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: top;
   }
 </style>

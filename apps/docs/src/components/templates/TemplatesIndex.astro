@@ -205,10 +205,11 @@ const buildDetailUrl = (category: string, slug: string) => getLocalizedUrl(`/tem
       margin: 0;
     }
 
-    /* [aria-disabled='true'] {
+    /* previewUrl 未設定の Preview ボタン等：クリック自体を抑止 */
+    [aria-disabled='true'] {
       opacity: 0.5;
       pointer-events: none;
-    } */
+    }
 
     /* サムネイル：リンクとして拡大ホバー */
     .p--templates_thumbLink {

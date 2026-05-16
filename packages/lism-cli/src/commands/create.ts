@@ -15,7 +15,7 @@ import {
   type SingleProjectVariantTemplateDef,
   type Stack as TemplateStack,
   type TemplateDef,
-} from '../../../../templates/manifest.js';
+} from '@templates/manifest.js';
 
 interface CategoryDef {
   id: CategoryId;
@@ -225,7 +225,7 @@ function postProcessTemplate(projectDir: string, tpl: TemplateDef): void {
 
   if (tpl.kind === 'single-project-variant') {
     extractVariantPages(projectDir, tpl);
-    rewritePackageName(projectDir, tpl.packageName);
+    rewritePackageName(projectDir, tpl.packageName ?? tpl.slug);
   }
 
   // 開発専用ファイル（screenshots/ と screenshots.config.json）を削除
