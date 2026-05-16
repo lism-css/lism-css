@@ -5,8 +5,7 @@
  * URL: /templates/{category}/{slug}/  または  /{lang}/templates/{category}/{slug}/
  * 一覧（TemplatesIndex）から遷移して使う、テンプレート1件の紹介ページ。
  */
-import { Stack, Flow, Text, Group, Cluster, Inline, Frame, Heading } from 'lism-css/astro';
-import { Button } from '@lism-css/ui/astro/Button';
+import { Stack, Text, Group, Cluster, Inline, Frame, Heading } from 'lism-css/astro';
 import { Image } from 'astro:assets';
 import { PreviewFrame, PreviewTitle } from '@/components/Preview';
 import { getLocalizedUrl, type LangCode } from '@/lib/i18n';
@@ -28,7 +27,6 @@ const copy = isJa
       install: 'インストールコマンド',
       installLead: '対話なしで生成する場合：',
       preview: 'プレビュー',
-      previewExternal: '実際のページを開く',
       previewMissing: 'このテンプレートはまだプレビューURLが設定されていません。',
       copy: 'コマンドをコピー',
       copied: 'コピーしました',
@@ -39,7 +37,6 @@ const copy = isJa
       install: 'Install command',
       installLead: 'Skip the interactive flow:',
       preview: 'Preview',
-      previewExternal: 'Open in a new tab',
       previewMissing: 'A preview URL is not configured for this template yet.',
       copy: 'Copy command',
       copied: 'Copied!',
@@ -91,41 +88,9 @@ const previewUrl = template.previewUrl;
 
   {/* プレビュー */}
   <Group>
-    <PreviewTitle>{copy.preview}</PreviewTitle>
     {
       previewUrl ? (
-        <Group>
-          <PreviewFrame url={previewUrl} hasSizeSwitch />
-          <Button
-            as="a"
-            href={previewUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            variant="fill"
-            bdrs="10"
-            w="fit"
-            mx="auto"
-            ai="center"
-            g="5"
-            class="templatePage_externalBtn"
-          >
-            <span>{copy.previewExternal}</span>
-            <svg
-              width="12"
-              height="12"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2.5"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              aria-hidden="true"
-            >
-              <line x1="7" y1="17" x2="17" y2="7" />
-              <polyline points="7 7 17 7 17 17" />
-            </svg>
-          </Button>
-        </Group>
+        <PreviewFrame url={previewUrl} hasSizeSwitch />
       ) : (
         <Stack g="10">
           <Frame bd bdrs="20">
@@ -145,11 +110,3 @@ const previewUrl = template.previewUrl;
     }
   </Group>
 </Stack>
-
-<style>
-  .templatePage_externalBtn {
-    background: var(--text);
-    color: var(--base);
-    white-space: nowrap;
-  }
-</style>

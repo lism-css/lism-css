@@ -7,7 +7,6 @@
  * プレビューは representative slug の 1枚だけを表示する。
  */
 import { Stack, Text, Group, Cluster, Inline, Frame, Heading } from 'lism-css/astro';
-import { Button } from '@lism-css/ui/astro/Button';
 import { Image } from 'astro:assets';
 import { PreviewFrame, PreviewTitle } from '@/components/Preview';
 import { getLocalizedUrl, type LangCode } from '@/lib/i18n';
@@ -30,7 +29,6 @@ const copy = isJa
       installCategoryLead: '対話形式で stack を選んで生成します。',
       installStackLead: 'stack を直接指定する場合：',
       preview: 'プレビュー',
-      previewExternal: '実際のページを開く',
       previewMissing: 'このテンプレートはまだプレビューURLが設定されていません。',
       copy: 'コマンドをコピー',
       copied: 'コピーしました',
@@ -42,7 +40,6 @@ const copy = isJa
       installCategoryLead: 'Pick a stack through the interactive flow.',
       installStackLead: 'Or specify a stack directly:',
       preview: 'Preview',
-      previewExternal: 'Open in a new tab',
       previewMissing: 'A preview URL is not configured for this template yet.',
       copy: 'Copy command',
       copied: 'Copied!',
@@ -110,41 +107,9 @@ const previewUrl = representative?.previewUrl;
 
   {/* プレビュー（representative slug の 1 枚のみ） */}
   <Group>
-    <PreviewTitle>{copy.preview}</PreviewTitle>
     {
       previewUrl ? (
-        <Group>
-          <PreviewFrame url={previewUrl} hasSizeSwitch />
-          <Button
-            as="a"
-            href={previewUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            variant="fill"
-            bdrs="10"
-            w="fit"
-            mx="auto"
-            ai="center"
-            g="5"
-            class="templatePage_externalBtn"
-          >
-            <span>{copy.previewExternal}</span>
-            <svg
-              width="12"
-              height="12"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2.5"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              aria-hidden="true"
-            >
-              <line x1="7" y1="17" x2="17" y2="7" />
-              <polyline points="7 7 17 7 17 17" />
-            </svg>
-          </Button>
-        </Group>
+        <PreviewFrame url={previewUrl} hasSizeSwitch />
       ) : representative ? (
         <Stack g="10">
           <Frame bd bdrs="20">
@@ -164,11 +129,3 @@ const previewUrl = representative?.previewUrl;
     }
   </Group>
 </Stack>
-
-<style>
-  .templatePage_externalBtn {
-    background: var(--text);
-    color: var(--base);
-    white-space: nowrap;
-  }
-</style>
