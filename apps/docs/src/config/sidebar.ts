@@ -224,7 +224,15 @@ const patternsSidebar: SidebarSection[] = categoryIds.map((categoryId: PatternCa
 });
 
 // /templates/ セクション用のサイドバー設定
-// 一覧ページへの導線 + カテゴリ別に各テンプレートの詳細ページへのリンクを動的生成
+// - 集約カテゴリ（aggregateView: true）はカテゴリ詳細ページへの1リンクとして「Templates」セクション内に並べる
+// - 通常カテゴリはカテゴリごとにセクション化し、各テンプレートの詳細ページへのリンクを動的生成
+const aggregateCategoryLinks: LinkItem[] = templateCategories
+  .filter((category) => category.aggregateView)
+  .map((category) => ({
+    label: category.label,
+    link: `/templates/${category.id}/`,
+  }));
+
 const templatesSidebar: SidebarSection[] = [
   {
     label: 'Templates',
@@ -234,9 +242,11 @@ const templatesSidebar: SidebarSection[] = [
         translate: { en: 'All templates' },
         link: '/templates/',
       },
+      ...aggregateCategoryLinks,
     ],
   },
   ...templateCategories
+    .filter((category) => !category.aggregateView)
     .map((category) => ({
       category,
       items: visibleTemplates.filter((tpl) => tpl.category === category.id),
