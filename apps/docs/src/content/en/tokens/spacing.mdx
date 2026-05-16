@@ -8,36 +8,56 @@ import { Box, Stack, Cluster, Columns, Frame, Center, Text } from 'lism-css/astr
 import { DummyText } from '@lism-css/ui/astro/DummyText';
 import { SpacingDemos } from "@/content/token-previews.jsx";
 
-This page covers Lism's Fibonacci-based spacing tokens and the property classes that use them.
+This page covers Lism's spacing tokens — a Fibonacci-based harmonic scale combined with practical 4px-step values — and the property classes that use them.
 
 ## SPACE: Spacing Scale
 
-Spacing is built on a scale derived from the Fibonacci sequence ((0, 1,) 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, ...).
+The main scale from `--s40` upward follows the Fibonacci sequence ((0, 1,) 1, 2, 3, 5, 8, 13, 21, 34, ...). The base unit is `--s-unit` (default `calc(var(--fz--base) * 0.5)` ≈ 8px).
 
-By default, `0.5rem ≈ 8px` is used as the scaling unit, with token values `10`, `20`, `30`, ... `80` defined accordingly.
-However, because those gaps can feel too coarse in practice, `5` and `15` are added as fine-tuning steps at the lower end of the scale.
+Because Fibonacci-only steps would leave the lower end too coarse, `--s5` (4px), `--s15` (12px), `--s25` (20px), and `--s35` (32px) are added so that everything up to `--s40` (40px) is filled in with practical 4px-step values.
+
 ```css
-:root {
-  /* Fibonacci scale with spacing unit of 8 */
-  --s-unit: calc(var(--REM) * 0.5); /* ≒ 8px */
-  --s5: calc(0.5 * var(--s-unit)); /* exception */
-  --s10: var(--s-unit);
-  --s15: calc(1.5 * var(--s-unit)); /* exception */
-  --s20: calc(2 * var(--s-unit));
-  --s30: calc(3 * var(--s-unit));
-  --s40: calc(5 * var(--s-unit));
-  --s50: calc(8 * var(--s-unit));
-  --s60: calc(13 * var(--s-unit));
-  --s70: calc(21 * var(--s-unit));
-  --s80: calc(34 * var(--s-unit));
+:root,
+.set--var\:s {
+  /* Spacing base unit ≈ 8px */
+  --s-unit: calc(var(--fz--base) * 0.5);
+
+  --s10: var(--s-unit);            /* ≒ 8px */
+  --s20: calc(var(--s-unit) * 2);  /* ≒ 16px */
+  --s30: calc(var(--s-unit) * 3);  /* ≒ 24px */
+  --s40: calc(var(--s-unit) * 5);  /* ≒ 40px */
+  --s50: calc(var(--s-unit) * 8);  /* ≒ 64px */
+  --s60: calc(var(--s-unit) * 13); /* ≒ 104px */
+  --s70: calc(var(--s-unit) * 21); /* ≒ 168px */
+  --s80: calc(var(--s-unit) * 34); /* ≒ 272px */
+
+  /* Lower-end fillers (up to s40) */
+  --s5:  calc(var(--s-unit) * 0.5); /* ≒ 4px */
+  --s15: calc(var(--s-unit) * 1.5); /* ≒ 12px */
+  --s25: calc(var(--s-unit) * 2.5); /* ≒ 20px */
+  --s35: calc(var(--s-unit) * 4);   /* ≒ 32px */
 }
+
+.set--var\:s {
+  --s-unit: 0.5em;
+}
+```
+
+Adding the `set--var:s` class swaps `--s-unit` to `0.5em` within that scope, recalculating `--s10`–`--s80` against the current font size. This is useful for parts like Buttons or Badges where internal spacing should follow the element's font size.
+
+```html
+<!-- Button padding scales with the button's own font-size -->
+<button class="set--var:s -fz:s -py:10 -px:20">...</button>
+
+<!-- You can also override --s-unit with any value -->
+<button class="set--var:s -p:10" style="--s-unit: .4375em">...</button>
 ```
 
 
 <Preview>
   <PreviewTitle>Preview</PreviewTitle>
   <PreviewArea p="20" flow="s" resize>
-    <SpacingDemos spaces={[5, 10, 15, 20, 30, 40, 50, 60, 70, 80]} isValueLabel />
+    <SpacingDemos spaces={[5, 10, 15, 20, 25, 30, 35, 40, 50, 60, 70, 80]} isValueLabel />
   </PreviewArea>
 </Preview>
 
@@ -46,18 +66,13 @@ Reference: [On typography and spacing scaling design](https://css-notes.com/layo
 :::
 
 
-{/* - ~~`1 = 0.25`, `2 = 0.5` として計算~~
-  - 1=s10, 2=s20, 3=s30, 5=s40, 8=s50, 13=s60,...
-  - 5, 15, 25, ...など、`5`の倍数は前後の値の中間値となるように計算 */}
-
-
 ## Supported Property Classes
 
 Spacing tokens work with `padding`, `margin`, and `gap` property classes, but **not every property has a preset class**.
 
 ### Full Support (Token Values 5–80)
 
-The following properties have property classes for all spacing tokens: `5`, `10`, `15`, `20`, `30`, `40`, `50`, `60`, `70`, `80`.
+The following properties have property classes for all spacing tokens: `5`, `10`, `15`, `20`, `25`, `30`, `35`, `40`, `50`, `60`, `70`, `80`.
 
 | Property | CSS | Class examples | BP |
 |---|---|---|---|
