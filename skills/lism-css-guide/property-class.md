@@ -187,13 +187,13 @@ Lism コンポーネントの Propsに渡す値の頭に `:` を付けると、 
 | `i-y-s` | `inset-block-start` | — | — |
 | `i-y-e` | `inset-block-end` | — | — |
 
-### スペーシング — Padding
+### 余白 — Padding
 
 | Prop | CSS プロパティ | プリセット値クラス | BP クラス |
 |------|--------------|-------------|-----|
-| `p` | `padding` | `-p:0`, `-p:5`, `-p:10`, `-p:20`, ... (SPACE トークン) | `-p_sm`, `-p_md` |
-| `px` | `padding-inline` | `-px:0`, `-px:5`, `-px:10`, `-px:20`, ... (SPACE トークン) | `-px_sm`, `-px_md` |
-| `py` | `padding-block` | `-py:0`, `-py:5`, `-py:10`, `-py:20`, ... (SPACE トークン) | `-py_sm`, `-py_md` |
+| `p` | `padding` | `-p:0`, `-p:5`, `-p:10`, `-p:20`, ... (SPACEトークン) | `-p_sm`, `-p_md` |
+| `px` | `padding-inline` | `-px:0`, `-px:5`, `-px:10`, `-px:20`, ... (SPACEトークン) | `-px_sm`, `-px_md` |
+| `py` | `padding-block` | `-py:0`, `-py:5`, `-py:10`, `-py:20`, ... (SPACEトークン) | `-py_sm`, `-py_md` |
 | `px-s` | `padding-inline-start` | — | `-px-s_sm`, `-px-s_md` |
 | `px-e` | `padding-inline-end` | — | `-px-e_sm`, `-px-e_md` |
 | `py-s` | `padding-block-start` | — | `-py-s_sm`, `-py-s_md` |
@@ -203,18 +203,18 @@ Lism コンポーネントの Propsに渡す値の頭に `:` を付けると、 
 | `pt` | `padding-top` | — | `-pt_sm`, `-pt_md` |
 | `pb` | `padding-bottom` | — | `-pb_sm`, `-pb_md` |
 
-SPACE トークン（全値）: `5`, `10`, `15`, `20`, `25`, `30`, `35`, `40`, `50`, `60`, `70`, `80`
+SPACEトークン（全値）: `5`, `10`, `15`, `20`, `25`, `30`, `35`, `40`, `50`, `60`, `70`, `80`
 
-### スペーシング — Margin
+### 余白 — Margin
 
 | Prop | CSS プロパティ | プリセット値クラス | BP クラス |
 |------|--------------|-------------|-----|
-| `m` | `margin` | `-m:auto`, `-m:0`, `-m:5`, `-m:10`, `-m:20`, ... (SPACE トークン) | `-m_sm`, `-m_md` |
-| `mx` | `margin-inline` | `-mx:auto`, `-mx:0`, `-mx:5`, `-mx:10`, `-mx:20`, ... (SPACE トークン) | `-mx_sm`, `-mx_md` |
-| `my` | `margin-block` | `-my:auto`, `-my:0`, `-my:5`, `-my:10`, `-my:20`, ... (SPACE トークン) | `-my_sm`, `-my_md` |
+| `m` | `margin` | `-m:auto`, `-m:0`, `-m:5`, `-m:10`, `-m:20`, ... (SPACEトークン) | `-m_sm`, `-m_md` |
+| `mx` | `margin-inline` | `-mx:auto`, `-mx:0`, `-mx:5`, `-mx:10`, `-mx:20`, ... (SPACEトークン) | `-mx_sm`, `-mx_md` |
+| `my` | `margin-block` | `-my:auto`, `-my:0`, `-my:5`, `-my:10`, `-my:20`, ... (SPACEトークン) | `-my_sm`, `-my_md` |
 | `mx-s` | `margin-inline-start` | `-mx-s:auto` | `-mx-s_sm`, `-mx-s_md` |
 | `mx-e` | `margin-inline-end` | `-mx-e:auto` | `-mx-e_sm`, `-mx-e_md` |
-| `my-s` | `margin-block-start` | `-my-s:auto`, `-my-s:0`, `-my-s:5`, `-my-s:10`, `-my-s:20`, ... (SPACE トークン) | `-my-s_sm`, `-my-s_md` |
+| `my-s` | `margin-block-start` | `-my-s:auto`, `-my-s:0`, `-my-s:5`, `-my-s:10`, `-my-s:20`, ... (SPACEトークン) | `-my-s_sm`, `-my-s_md` |
 | `my-e` | `margin-block-end` | `-my-e:auto` | `-my-e_sm`, `-my-e_md` |
 | `ml` | `margin-left` | — | `-ml_sm`, `-ml_md` |
 | `mr` | `margin-right` | — | `-mr_sm`, `-mr_md` |
@@ -225,7 +225,7 @@ SPACE トークン（全値）: `5`, `10`, `15`, `20`, `25`, `30`, `35`, `40`, `
 
 | Prop | CSS プロパティ | プリセット値クラス | BP クラス |
 |------|--------------|-------------|-----|
-| `g` | `gap` | `-g:0`, `-g:inherit`, `-g:5`, `-g:10`, `-g:20`, ... (SPACE トークン) | `-g_sm`, `-g_md` |
+| `g` | `gap` | `-g:0`, `-g:inherit`, `-g:5`, `-g:10`, `-g:20`, ... (SPACEトークン) | `-g_sm`, `-g_md` |
 | `cg` | `column-gap` | — | `-cg_sm`, `-cg_md` |
 | `rg` | `row-gap` | — | `-rg_sm`, `-rg_md` |
 
@@ -374,5 +374,4 @@ Property Class をコードベース全体で一括修正する場合、同じ P
 | HTML / className — BP対応・カスタム値 | `-p` / `-p_sm` / `-p_md` |
 | JSX Props | `p="20"` / `p={20}` / `p={[20, 30]}` |
 | getLismProps オブジェクト | `{ p: '20' }` / `{ p: 20 }` |
-
 
