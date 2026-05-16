@@ -155,28 +155,30 @@ function getPostUrl(slug: string): string {
 ---
 
 <Stack as="nav" class="siteNav set--cqUnit" g="30">
-  {/* トップレベルリンク（大きめボタンとして表示） */}
+  {/* トップレベルリンク（グラデーション枠で囲んだ集約ボタン） */}
   {
     topLevelLinks.length > 0 && (
-      <Stack class="siteNav_toplinks" g="10">
-        {topLevelLinks.map((item) => {
-          // 言語対応のパスを生成
-          const itemPath = getLocalizedUrl(item.link.endsWith('/') ? item.link : `${item.link}/`, currentLang);
-          const pathForCompare = item.link.endsWith('/') ? item.link : `${item.link}/`;
-          // 現在のセクションとマッチするかでアクティブ判定
-          const isActive = currentPathWithoutLang.startsWith(pathForCompare) || currentPathWithoutLang === item.link.replace(/\/$/, '');
-          // ラベルを現在の言語で取得
-          const itemLabel = getTranslatedLabel(item.label, item.translate, currentLang);
-          return (
-            <Link href={itemPath} data-active={isActive} set="var:hov" class="siteNav_toplink" td="none" c="inherit" lh="s">
-              <Inline layout="flex" g="5" ai="center">
-                {item.icon && <Icon icon={item.icon} />}
-                {itemLabel}
-              </Inline>
-            </Link>
-          );
-        })}
-      </Stack>
+      <div class="siteNav_toplinks">
+        <Stack class="siteNav_toplinks_inner" g="0">
+          {topLevelLinks.map((item) => {
+            // 言語対応のパスを生成
+            const itemPath = getLocalizedUrl(item.link.endsWith('/') ? item.link : `${item.link}/`, currentLang);
+            const pathForCompare = item.link.endsWith('/') ? item.link : `${item.link}/`;
+            // 現在のセクションとマッチするかでアクティブ判定
+            const isActive = currentPathWithoutLang.startsWith(pathForCompare) || currentPathWithoutLang === item.link.replace(/\/$/, '');
+            // ラベルを現在の言語で取得
+            const itemLabel = getTranslatedLabel(item.label, item.translate, currentLang);
+            return (
+              <Link href={itemPath} class="siteNav_toplink" data-active={isActive} set="plain, var:hov" lh="s">
+                <Inline layout="flex" g="5" ai="center" py="10" px="15">
+                  {item.icon && <Icon icon={item.icon} />}
+                  {itemLabel}
+                </Inline>
+              </Link>
+            );
+          })}
+        </Stack>
+      </div>
     )
   }
 
@@ -281,26 +283,33 @@ function getPostUrl(slug: string): string {
 </Stack>
 
 <style>
-  /* サイドバーナビのトップレベルリンク（大きめボタン） */
+  /* サイドバーナビのトップレベルリンク（グラデーション枠でまとめた集約ボタン） */
   .siteNav_toplinks {
-  }
-
-  .siteNav_toplink {
     background-image: linear-gradient(120deg, var(--grad_01), var(--grad_02));
     border-radius: var(--bdrs--20);
+    padding: 2px;
   }
-  .siteNav_toplink[data-active='true'] > span {
-    background-color: color-mix(in srgb, var(--base), transparent 10%);
-  }
-  /* [data-active]{} */
-  .siteNav_toplink > span {
-    padding: var(--s10) var(--s15);
-    margin: 2px;
+  .siteNav_toplinks_inner {
+    background-color: color-mix(in srgb, var(--base), transparent 8%);
     border-radius: calc(var(--bdrs--20) - 2px);
-    background-color: var(--_isHov, color-mix(in srgb, var(--base), transparent 10%)) var(--_notHov, var(--base));
+    overflow: hidden;
+    gap: 3px;
+    padding: 3px;
+  }
+  .siteNav_toplink {
+    border-radius: calc(var(--bdrs--20) - 4px);
+    color: var(--_isHov, var(--text)) var(--_notHov, var(--text-2));
+    background-color: var(--_isHov, var(--base));
+  }
+  .siteNav_toplink[data-active='true'] {
+    /* background-color: var(--text);
+    color: var(--base); */
+
+    color: var(--text);
+    background-color: var(--base);
+    box-shadow: var(--bxsh--10);
   }
   .siteNav_list > [data-nested] {
     padding-inline-start: var(--s20);
   }
-  /* .siteNav_toplink > .a--icon {} */
 </style>
