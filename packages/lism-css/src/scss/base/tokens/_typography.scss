@@ -66,28 +66,20 @@
   --hl--base: calc(var(--hl-unit) * 3);
   --hl--l: calc(var(--hl-unit) * 4);
   // --hl--xl: calc(var(--hl-unit) * 5);
-}
-:root,
-.set--var\:s {
-  /** 
-   * スペーシング: フィボナッチ数列をベースに設計する
-   */
-  --s: var(--fz--base); // spacing単位 = --fz--base → デフォルトで1rem
-  --s10: calc(var(--s) * 0.5); // ≒ 8px
-  --s20: calc(var(--s10) * 2); // ≒ 16px
-  --s30: calc(var(--s10) * 3); // ≒ 24px
-  --s40: calc(var(--s10) * 5); // ≒ 40px
-  --s50: calc(var(--s10) * 8); // ≒ 64px
-  --s60: calc(var(--s10) * 13); // ≒ 104px
-  --s70: calc(var(--s10) * 21); // ≒ 168px
-  --s80: calc(var(--s10) * 34); // ≒ 272px
 
-  // ~40までの前半部分は間を埋める
-  --s5: calc(var(--s10) * 0.5); // ≒ 4px
-  --s15: calc(var(--s10) * 1.5); // ≒ 12px
-  --s25: calc(var(--s10) * 2.5); // ≒ 20px
-  --s35: calc(var(--s10) * 4); // ≒ 32px
-}
-.set--var\:s {
-  --s: 1em;
+  /** 
+   * スペーシング: フィボナッチ数列をベースにする
+   */
+  --s-unit: calc(var(--fz--base) * 0.5); // ≒ 8px
+
+  --s5: calc(0.5 * var(--s-unit)); // 例外
+  --s10: var(--s-unit);
+  --s15: calc(1.5 * var(--s-unit)); // 例外
+  --s20: calc(2 * var(--s-unit));
+  --s30: calc(3 * var(--s-unit));
+  --s40: calc(5 * var(--s-unit));
+  --s50: calc(8 * var(--s-unit));
+  --s60: calc(13 * var(--s-unit));
+  --s70: calc(21 * var(--s-unit));
+  --s80: calc(34 * var(--s-unit));
 }
