@@ -7,10 +7,10 @@
  */
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import TemplateDetail from '@/components/templates/TemplateDetail.astro';
-import { getAllTemplatePaths, getTemplate, getCategory } from '@/lib/templates';
+import { getSingleTemplatePaths, getTemplate, getCategory } from '@/lib/templates';
 
 export function getStaticPaths() {
-  return getAllTemplatePaths().map(({ category, slug }) => ({
+  return getSingleTemplatePaths().map(({ category, slug }) => ({
     params: { category, slug },
   }));
 }

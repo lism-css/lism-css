@@ -7,14 +7,14 @@
  */
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import TemplateDetail from '@/components/templates/TemplateDetail.astro';
-import { getAllTemplatePaths, getTemplate, getCategory } from '@/lib/templates';
+import { getSingleTemplatePaths, getTemplate, getCategory } from '@/lib/templates';
 import { siteConfig } from '@/config/site';
 import { isRootLang, isValidLang, type LangCode } from '@/lib/i18n';
 
 export function getStaticPaths() {
   const langCodes = Object.keys(siteConfig.langs) as LangCode[];
   const nonRootLangs = langCodes.filter((lang) => !isRootLang(lang));
-  const templatePaths = getAllTemplatePaths();
+  const templatePaths = getSingleTemplatePaths();
 
   const paths = [];
   for (const lang of nonRootLangs) {

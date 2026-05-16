@@ -77,7 +77,9 @@ export async function runCreate({ template, targetDir, force = false }: RunCreat
 }
 
 export async function runCreateWithTemplates({ template, targetDir, force = false }: RunCreateArgs, templates: TemplateDef[]): Promise<void> {
-  const tpl = await resolveTemplate(template, templates);
+  // draft:true は CLI からは完全に隠す（一覧・選択・slug 直接指定すべて unknown 扱い）
+  const availableTemplates = templates.filter((tpl) => !tpl.draft);
+  const tpl = await resolveTemplate(template, availableTemplates);
   const outDir = path.resolve(process.cwd(), await resolveTargetDir(targetDir, tpl.slug));
 
   if (fs.existsSync(outDir) && fs.readdirSync(outDir).length > 0 && !force) {

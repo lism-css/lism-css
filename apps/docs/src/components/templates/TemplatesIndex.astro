@@ -3,7 +3,7 @@ import { Stack, Flex, Cluster, AutoColumns, Text, Heading, Link, Lism, Frame, In
 import { Button } from '@lism-css/ui/astro/Button';
 import { Image } from 'astro:assets';
 import { getLocalizedUrl, type LangCode } from '@/lib/i18n';
-import { stackLabels, groupByCategory } from '@/config/templates';
+import { stackLabels, groupByCategory, getAggregateRepresentative } from '@/config/templates';
 import CopyCommand from './CopyCommand.astro';
 
 interface Props {
@@ -57,6 +57,7 @@ const patternsUrl = getLocalizedUrl('/patterns/', lang);
 
 const buildCommand = (slug: string) => `pnpm create lism --template ${slug}`;
 const buildDetailUrl = (category: string, slug: string) => getLocalizedUrl(`/templates/${category}/${slug}/`, lang);
+const buildCategoryDetailUrl = (category: string) => getLocalizedUrl(`/templates/${category}/`, lang);
 ---
 
 <Stack g="50" class="p--templates" data-pagefind-body>
@@ -110,78 +111,156 @@ const buildDetailUrl = (category: string, slug: string) => getLocalizedUrl(`/tem
           </Stack>
 
           <AutoColumns cols="20em" autoFill g="30">
-            {items.map((template) => (
-              <Stack as="article" id={template.slug} g="0" bd bdrs="20" bgc="base" ov="hidden" class="p--templates_card">
-                <a href={buildDetailUrl(template.category, template.slug)} class="p--templates_thumbLink" aria-label={template.title[lang]}>
-                  <Frame ar="16/9" ov="hidden" bd-b fxsh="0">
-                    <Image
-                      src={template.thumb}
-                      alt={copy.thumbAlt(template.title[lang])}
-                      widths={[400, 800]}
-                      sizes="(max-width: 600px) 100vw, 33vw"
-                      loading="lazy"
-                    />
-                  </Frame>
-                </a>
-                <Stack p="20" g="20" fxg="1">
-                  <Cluster>
-                    <Inline d="inline-flex" px="10" fz="2xs" ff="mono" c="text-2" bd bdc="current" bdrs="99">
-                      {stackLabels[template.stack]}
-                    </Inline>
-                  </Cluster>
-                  <Heading level="4" fz="l" util="trim">
-                    <a href={buildDetailUrl(template.category, template.slug)} class="p--templates_titleLink">
-                      {template.title[lang]}
+            {category.aggregateView
+              ? (() => {
+                  const representative = getAggregateRepresentative(category, items) ?? items[0];
+                  const detailUrl = buildCategoryDetailUrl(category.id);
+                  const command = buildCommand(category.id);
+                  const cardTitle = category.label;
+                  const cardDescription = category.description[lang];
+                  const cardPreviewUrl = representative?.previewUrl;
+                  return (
+                    <Stack as="article" id={category.id} g="0" bd bdrs="20" bgc="base" ov="hidden" class="p--templates_card">
+                      <a href={detailUrl} class="p--templates_thumbLink" aria-label={cardTitle}>
+                        <Frame ar="16/9" ov="hidden" bd-b fxsh="0">
+                          <Image
+                            src={representative.thumb}
+                            alt={copy.thumbAlt(cardTitle)}
+                            widths={[400, 800]}
+                            sizes="(max-width: 600px) 100vw, 33vw"
+                            loading="lazy"
+                          />
+                        </Frame>
+                      </a>
+                      <Stack p="20" g="20" fxg="1">
+                        <Cluster g="5">
+                          {items.map((tpl) => (
+                            <Inline d="inline-flex" px="10" fz="2xs" ff="mono" c="text-2" bd bdc="current" bdrs="99">
+                              {stackLabels[tpl.stack]}
+                            </Inline>
+                          ))}
+                        </Cluster>
+                        <Heading level="4" fz="l" util="trim">
+                          <a href={detailUrl} class="p--templates_titleLink">
+                            {cardTitle}
+                          </a>
+                        </Heading>
+                        <Text c="text-2" fz="s" lh="s" util="trim">
+                          {cardDescription}
+                        </Text>
+                        <Stack g="15" mt="auto">
+                          <CopyCommand bdrs="10" command={command} copyLabel={copy.copy} copiedLabel={copy.copied} />
+                          <Flex g="15" ai="stretch">
+                            <Button as="a" href={detailUrl} bdrs="10" g="5" fz="xs" fx="1" variant="outline">
+                              <span>{copy.details}</span>
+                            </Button>
+                            <Button
+                              as="a"
+                              variant="fill"
+                              href={cardPreviewUrl ?? '#'}
+                              target={cardPreviewUrl ? '_blank' : undefined}
+                              rel={cardPreviewUrl ? 'noopener noreferrer' : undefined}
+                              aria-disabled={cardPreviewUrl ? undefined : 'true'}
+                              tabindex={cardPreviewUrl ? undefined : -1}
+                              bdrs="10"
+                              g="5"
+                              fz="xs"
+                              fx="1"
+                            >
+                              <span>{copy.preview}</span>
+                              <svg
+                                width="12"
+                                height="12"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="2.5"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                aria-hidden="true"
+                              >
+                                <line x1="7" y1="17" x2="17" y2="7" />
+                                <polyline points="7 7 17 7 17 17" />
+                              </svg>
+                            </Button>
+                          </Flex>
+                        </Stack>
+                      </Stack>
+                    </Stack>
+                  );
+                })()
+              : items.map((template) => (
+                  <Stack as="article" id={template.slug} g="0" bd bdrs="20" bgc="base" ov="hidden" class="p--templates_card">
+                    <a href={buildDetailUrl(template.category, template.slug)} class="p--templates_thumbLink" aria-label={template.title[lang]}>
+                      <Frame ar="16/9" ov="hidden" bd-b fxsh="0">
+                        <Image
+                          src={template.thumb}
+                          alt={copy.thumbAlt(template.title[lang])}
+                          widths={[400, 800]}
+                          sizes="(max-width: 600px) 100vw, 33vw"
+                          loading="lazy"
+                        />
+                      </Frame>
                     </a>
-                    {template.draft && (
-                      <Inline px="10" fz="2xs" bdrs="99" c="red">
-                        draft
-                      </Inline>
-                    )}
-                  </Heading>
-                  <Text c="text-2" fz="s" lh="s" util="trim">
-                    {template.description[lang]}
-                  </Text>
-                  <Stack g="15" mt="auto">
-                    <CopyCommand bdrs="10" command={buildCommand(template.slug)} copyLabel={copy.copy} copiedLabel={copy.copied} />
-                    <Flex g="15" ai="stretch">
-                      <Button as="a" href={buildDetailUrl(template.category, template.slug)} bdrs="10" g="5" fz="xs" fx="1" variant="outline">
-                        <span>{copy.details}</span>
-                      </Button>
-                      <Button
-                        as="a"
-                        variant="fill"
-                        href={template.previewUrl ?? '#'}
-                        target={template.previewUrl ? '_blank' : undefined}
-                        rel={template.previewUrl ? 'noopener noreferrer' : undefined}
-                        aria-disabled={template.previewUrl ? undefined : 'true'}
-                        tabindex={template.previewUrl ? undefined : -1}
-                        bdrs="10"
-                        g="5"
-                        fz="xs"
-                        fx="1"
-                      >
-                        <span>{copy.preview}</span>
-                        <svg
-                          width="12"
-                          height="12"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          stroke="currentColor"
-                          stroke-width="2.5"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          aria-hidden="true"
-                        >
-                          <line x1="7" y1="17" x2="17" y2="7" />
-                          <polyline points="7 7 17 7 17 17" />
-                        </svg>
-                      </Button>
-                    </Flex>
+                    <Stack p="20" g="20" fxg="1">
+                      <Cluster>
+                        <Inline d="inline-flex" px="10" fz="2xs" ff="mono" c="text-2" bd bdc="current" bdrs="99">
+                          {stackLabels[template.stack]}
+                        </Inline>
+                      </Cluster>
+                      <Heading level="4" fz="l" util="trim">
+                        <a href={buildDetailUrl(template.category, template.slug)} class="p--templates_titleLink">
+                          {template.title[lang]}
+                        </a>
+                        {template.draft && (
+                          <Inline px="10" fz="2xs" bdrs="99" c="red">
+                            draft
+                          </Inline>
+                        )}
+                      </Heading>
+                      <Text c="text-2" fz="s" lh="s" util="trim">
+                        {template.description[lang]}
+                      </Text>
+                      <Stack g="15" mt="auto">
+                        <CopyCommand bdrs="10" command={buildCommand(template.slug)} copyLabel={copy.copy} copiedLabel={copy.copied} />
+                        <Flex g="15" ai="stretch">
+                          <Button as="a" href={buildDetailUrl(template.category, template.slug)} bdrs="10" g="5" fz="xs" fx="1" variant="outline">
+                            <span>{copy.details}</span>
+                          </Button>
+                          <Button
+                            as="a"
+                            variant="fill"
+                            href={template.previewUrl ?? '#'}
+                            target={template.previewUrl ? '_blank' : undefined}
+                            rel={template.previewUrl ? 'noopener noreferrer' : undefined}
+                            aria-disabled={template.previewUrl ? undefined : 'true'}
+                            tabindex={template.previewUrl ? undefined : -1}
+                            bdrs="10"
+                            g="5"
+                            fz="xs"
+                            fx="1"
+                          >
+                            <span>{copy.preview}</span>
+                            <svg
+                              width="12"
+                              height="12"
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              stroke="currentColor"
+                              stroke-width="2.5"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              aria-hidden="true"
+                            >
+                              <line x1="7" y1="17" x2="17" y2="7" />
+                              <polyline points="7 7 17 7 17 17" />
+                            </svg>
+                          </Button>
+                        </Flex>
+                      </Stack>
+                    </Stack>
                   </Stack>
-                </Stack>
-              </Stack>
-            ))}
+                ))}
           </AutoColumns>
         </Stack>
       ))

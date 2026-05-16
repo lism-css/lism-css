@@ -5,8 +5,8 @@
  * - `packages/lism-cli/src/commands/create.ts` の TEMPLATES
  * - `apps/docs/src/config/templates.ts` の templates
  * の両方を組み立てる。CLI 側からも import されるため Astro / Vite 専用の型
- * （ImageMetadata 等）には依存しない。docs 専用フィールド（title / thumb /
- * previewUrl / draft）は docs 側で別オブジェクトとしてマージする。
+ * （ImageMetadata 等）には依存しない。サムネ画像（ImageMetadata）は docs 側で
+ * `templates/{sourcePath}/screenshots/{top または variant}.png` の規約から解決する。
  */
 
 export type Stack = 'astro' | 'next' | 'vite' | 'html';
@@ -23,7 +23,12 @@ interface TemplateMetaBase {
   stack: Stack;
   variant?: string;
   variantLabel?: LocalizedText;
+  title: LocalizedText;
   description: LocalizedText;
+  /** プレビューサイトの URL（無い場合は docs でボタン非表示） */
+  previewUrl?: string;
+  /** true の場合、CLI の一覧・選択・slug 解決から除外、docs でも本番ビルドで非表示 */
+  draft?: boolean;
 }
 
 export interface ProjectTemplateDef extends TemplateMetaBase {
@@ -69,6 +74,7 @@ export const TEMPLATES: TemplateDef[] = [
     category: 'minimal',
     stack: 'astro',
     sourcePath: 'minimal/astro',
+    title: { ja: 'Minimal Astro', en: 'Minimal Astro' },
     description: { ja: 'Astro ベースの最小構成', en: 'Minimal Astro setup' },
   },
   {
@@ -77,7 +83,9 @@ export const TEMPLATES: TemplateDef[] = [
     category: 'minimal',
     stack: 'vite',
     sourcePath: 'minimal/vite',
+    title: { ja: 'Minimal Vite', en: 'Minimal Vite' },
     description: { ja: 'Vite + React ベースの最小構成', en: 'Minimal Vite + React setup' },
+    previewUrl: 'https://lism-minimal-vite.pages.dev/',
   },
   {
     slug: 'blog-astro-simple',
@@ -87,6 +95,7 @@ export const TEMPLATES: TemplateDef[] = [
     variantLabel: { ja: 'Simple', en: 'Simple' },
     stack: 'astro',
     sourcePath: 'blog/astro/simple',
+    title: { ja: 'Blog Astro Simple', en: 'Blog Astro Simple' },
     description: { ja: 'タグのみのシンプルな Astro ブログ', en: 'Simple Astro blog with tags' },
   },
   {
@@ -97,6 +106,7 @@ export const TEMPLATES: TemplateDef[] = [
     variantLabel: { ja: 'Full', en: 'Full' },
     stack: 'astro',
     sourcePath: 'blog/astro/full',
+    title: { ja: 'Blog Astro Full', en: 'Blog Astro Full' },
     description: { ja: 'カテゴリ・目次つきの Astro ブログ', en: 'Astro blog with categories and table of contents' },
   },
   {
@@ -107,7 +117,9 @@ export const TEMPLATES: TemplateDef[] = [
     variant: 'minimal',
     variantLabel: { ja: 'Minimal', en: 'Minimal' },
     sourcePath: 'lp/astro',
+    title: { ja: 'LP Minimal', en: 'LP Minimal' },
     description: { ja: 'ミニマルな Astro ランディングページ', en: 'Minimal Astro landing page' },
+    draft: true,
   },
   {
     slug: 'lp-astro-natural',
@@ -117,7 +129,9 @@ export const TEMPLATES: TemplateDef[] = [
     variant: 'natural',
     variantLabel: { ja: 'Natural', en: 'Natural' },
     sourcePath: 'lp/astro',
+    title: { ja: 'LP Natural', en: 'LP Natural' },
     description: { ja: 'ナチュラルな雰囲気の Astro ランディングページ', en: 'Natural-themed Astro landing page' },
+    draft: true,
   },
   {
     slug: 'lp-astro-ryokan',
@@ -127,6 +141,8 @@ export const TEMPLATES: TemplateDef[] = [
     variant: 'ryokan',
     variantLabel: { ja: 'Ryokan', en: 'Ryokan' },
     sourcePath: 'lp/astro',
+    title: { ja: 'LP Ryokan', en: 'LP Ryokan' },
     description: { ja: '旅館・宿泊業向けの Astro ランディングページ', en: 'Astro landing page for ryokan / lodging' },
+    draft: true,
   },
 ];
