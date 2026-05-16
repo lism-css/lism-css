@@ -344,8 +344,27 @@ function postProcessTemplate(projectDir: string, tpl: TemplateDef): void {
     rewritePackageName(projectDir, tpl.packageName);
   }
 
+  // 開発専用ファイル（screenshots/ と screenshots.config.json）を削除
+  cleanupDevArtifacts(projectDir);
+
   // workspace:* を公開バージョンに書き換える
   rewriteWorkspaceDeps(projectDir);
+}
+
+/**
+ * テンプレートに同梱されている開発専用のスクリーンショット関連ファイルを削除する。
+ * （docs サムネ生成用なので、生成プロジェクトには不要）
+ */
+function cleanupDevArtifacts(projectDir: string): void {
+  const screenshotsDir = path.join(projectDir, 'screenshots');
+  if (fs.existsSync(screenshotsDir)) {
+    fs.rmSync(screenshotsDir, { recursive: true, force: true });
+  }
+
+  const screenshotsConfig = path.join(projectDir, 'screenshots.config.json');
+  if (fs.existsSync(screenshotsConfig)) {
+    fs.rmSync(screenshotsConfig, { force: true });
+  }
 }
 
 /**

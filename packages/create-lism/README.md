@@ -33,10 +33,14 @@ yarn create lism --template minimal-astro my-app
 | 名前 | 説明 |
 |------|------|
 | `minimal-astro` | Astro ベースの最小構成 |
+| `minimal-vite` | Vite + React ベースの最小構成 |
 | `blog-astro-simple` | タグのみのシンプルな Astro ブログ |
 | `blog-astro-full` | カテゴリ・目次つきの Astro ブログ |
+| `lp-astro-minimal` | ミニマルな Astro ランディングページ |
+| `lp-astro-natural` | ナチュラルな雰囲気の Astro ランディングページ |
+| `lp-astro-ryokan` | 旅館・宿泊業向けの Astro ランディングページ |
 
-テンプレートは [`examples/`](https://github.com/lism-css/lism-css/tree/main/examples) 配下のカテゴリ別ディレクトリに順次追加される予定です。
+テンプレートは [`templates/`](https://github.com/lism-css/lism-css/tree/main/templates) 配下のカテゴリ別ディレクトリに順次追加される予定です。
 
 ## 補足
 
