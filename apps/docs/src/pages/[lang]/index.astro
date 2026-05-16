@@ -25,7 +25,7 @@ interface Props {
   lang: LangCode;
 }
 
-const { lang } = Astro.props;
+const { lang } = Astro.props as Props;
 
 // 言語が無効な場合は404
 if (!isValidLang(lang)) {
@@ -86,10 +86,16 @@ const ecosystems = [
     href: getLocalizedUrl('/ui/', lang),
   },
   {
-    icon: '<rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/>',
+    icon: '<path d="M4 4h16v16H4z"/><path d="M8 8h8"/><path d="M8 12h8"/><path d="M8 16h5"/>',
     title: 'Templates',
-    desc: 'Ready-to-use page templates. Copy practical layout parts for landing pages, blogs, and more to get started right away.',
+    desc: 'Project starters available through pnpm create lism and npx create-lism. Start from a minimal setup or blog structure.',
     href: getLocalizedUrl('/templates/', lang),
+  },
+  {
+    icon: '<rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/>',
+    title: 'Patterns',
+    desc: 'Copy-and-paste section patterns for existing sites, including CTA, feature, navigation, and other layout parts.',
+    href: getLocalizedUrl('/patterns/', lang),
   },
 ];
 ---

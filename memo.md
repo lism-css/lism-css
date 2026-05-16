@@ -23,9 +23,9 @@ rm -rf .next/cache
 node_modules 入れ直し
 ```
 rm -rf node_modules pnpm-lock.yaml
-rm -rf apps/docs/node_modules
-rm -rf apps/playgrounds/*/node_modules
+rm -rf apps/*/node_modules
 rm -rf packages/*/node_modules
+rm -rf templates/*/*/node_modules templates/*/*/*/node_modules
 ```
 
 # Prettier と Eslint,Stylelint についてのメモ

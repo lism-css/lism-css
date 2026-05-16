@@ -1,0 +1,1660 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import {
+  Box,
+  BoxLink,
+  Center,
+  Cluster,
+  Container,
+  Flex,
+  Frame,
+  Grid,
+  Heading,
+  Icon,
+  Inline,
+  Layer,
+  Link,
+  Lism,
+  ListItem,
+  Stack,
+  Text,
+  WithSide,
+  Wrapper,
+} from 'lism-css/astro';
+import { Accordion } from '@lism-css/ui/astro/Accordion';
+import { Button } from '@lism-css/ui/astro/Button';
+import { Modal } from '@lism-css/ui/astro/Modal';
+
+export const title = 'Japanese Ryokan LP';
+
+const logoLabel = '静寂の隠れ宿';
+
+const headerNavItems = [
+  { href: '#about', ja: '当宿について', en: 'About' },
+  { href: '#feature', ja: '宿の特徴', en: 'Feature' },
+  { href: '#plans', ja: '宿泊プラン', en: 'Plan' },
+  { href: '#information', ja: '設備紹介', en: 'Facilities' },
+  { href: '#faq', ja: 'よくあるご質問', en: 'Faq' },
+] as const;
+
+const mvDefaultCopyLines = ['都会の喧騒から離れ、', '心安らぐ自然の中で', '至福のひとときを。'];
+
+const {
+  mvImages: mvImagesProp,
+  mvDurationPerImage = 7,
+  mvFadeTime = 3,
+  mvCopyLines: mvCopyLinesProp,
+  mvLineRevealStartDelay = 0.55,
+  mvLineRevealStagger = 0.72,
+  mvLineRevealDuration = 1.55,
+  mvLineRevealBlurPx = 14,
+  mvBgImageScaleMax = 1.05,
+} = Astro.props;
+
+const mvResolvedCopyLines: readonly string[] = mvCopyLinesProp && mvCopyLinesProp.length > 0 ? mvCopyLinesProp : mvDefaultCopyLines;
+
+const mvResolvedImages: readonly string[] =
+  mvImagesProp && mvImagesProp.length > 0
+    ? mvImagesProp
+    : ['https://cdn.lism-css.com/img/japan/u-Dczv0Klww4.jpg', 'https://cdn.lism-css.com/img/japan/a_JNaB1eSLPA.jpg'];
+
+const mvBgCycleDuration = mvDurationPerImage * mvResolvedImages.length;
+const mvHoldPercent = ((mvDurationPerImage - mvFadeTime) / mvBgCycleDuration) * 100;
+const mvFadeOutPercent = (mvDurationPerImage / mvBgCycleDuration) * 100;
+const mvHiddenPercent = ((mvBgCycleDuration - mvFadeTime) / mvBgCycleDuration) * 100;
+
+/** フェードイン終端（100%/0% 接続）までに進む scale。フェードイン区間でも拡大が継続する */
+const mvBgScaleGrowthSpan = 100 - mvHiddenPercent + mvHoldPercent;
+const mvBgScaleJoin = mvBgScaleGrowthSpan > 0 ? 1 + ((100 - mvHiddenPercent) / mvBgScaleGrowthSpan) * (mvBgImageScaleMax - 1) : mvBgImageScaleMax;
+const mvBgScaleJoinCss = mvBgScaleJoin.toFixed(6);
+const mvBgScaleMaxCss = Number(mvBgImageScaleMax).toFixed(6);
+
+/** 背景クロスフェード + scale（非表示→フェードイン→ホールド終端まで 1→mvBgImageScaleMax） */
+const mvLayeredKeyframesStyle = `@layer lism-custom {
+  @keyframes ryokan-mv-bgFade {
+    0% {
+      opacity: 1;
+      transform: scale(${mvBgScaleJoinCss});
+    }
+    ${mvHoldPercent}% {
+      opacity: 1;
+      transform: scale(${mvBgScaleMaxCss});
+    }
+    ${mvFadeOutPercent}% {
+      opacity: 0;
+      transform: scale(${mvBgScaleMaxCss});
+    }
+    ${mvHiddenPercent}% {
+      opacity: 0;
+      transform: scale(1);
+    }
+    100% {
+      opacity: 1;
+      transform: scale(${mvBgScaleJoinCss});
+    }
+  }
+}`;
+
+/**
+ * 左右の高さ: Grid の `ai` stretch + 右列 `Flex` 内 `fx:1` の img（`min-h:0`）。
+ * 旧実装: `syncAboutRightMaxHeight` + `--z--ryokan-about-right-max-h`（復元は git 履歴参照）
+ */
+
+const aboutImgLeft = {
+  src: 'https://cdn.lism-css.com/img/japan/u-qQGCFQFlkT.jpg',
+  alt: '池を泳ぐ鯉',
+  width: 1920,
+  height: 1280,
+};
+const aboutImgRight = {
+  src: 'https://cdn.lism-css.com/img/japan/u-lCzkkcbJUb.jpg',
+  alt: '座敷から望む秋の庭園',
+  width: 1600,
+  height: 1200,
+};
+
+const aboutBodyCopy =
+  '百余年の歴史を刻む、風格ある佇まい。古き良き日本の情緒を残しつつ、現代の快適さを融合させた空間で皆様をお迎えいたします。手入れの行き届いた日本庭園を眺め、静寂に包まれて味わう名湯は、格別な癒やし。受け継がれてきたおもてなしの心で、特別な旅を鮮やかに彩ります。四季折々の風情が移ろく庭先では、新緑の香り、深緑の日陰、紅葉の燃えるような美しさ、静かな雪化粧の趣まで、日々違う表情を呈します。佇まい、器、会席、湯、そして言葉少ななもてなし。それらすべてに至るまで、余韻深く、お客さまの記憶に残る一時を大切に紡ぎたい。都会を離れ、ここ静寂の隠れ宿で、心ほどけゆく至福のひとときをどうぞお味わいください。';
+
+/**
+ * 左右分割＋縦組み見出し。ウォーターマークの cqi は `Container` の isContainer に依存。
+ */
+
+const featureImg = {
+  src: 'https://cdn.lism-css.com/img/japan/u-L4YLmcBryx.jpg',
+  alt: '千本鳥居が続く参道',
+  width: 1920,
+  height: 1280,
+};
+
+const featureLead = '春の桜、秋の紅葉。';
+const featureBody =
+  '四季の移ろいが最も美しい瞬間を切り取る当宿は、まるで一幅の絵画のように自然と調和いたします。名湯と旬の味わいを、大切な方々とご一緒にお楽しみください。桜の頃は窓越しに淡い色の雪の様子を、夏は深い緑と風鈴の音を、秋は燃えるような紅葉と澄んだ空を、冬は静かな雪化粧と湯けむりを、それぞれ五感で味わえます。';
+
+const feature2Bg = {
+  src: 'https://cdn.lism-css.com/img/japan/u-MES3nTNrVq.jpg',
+  alt: '',
+  width: 1920,
+  height: 1080,
+} as const;
+
+/** 各要素の `src` に任意の画像URLを直指定（下記は従来どおりのプレースホルダー）。 */
+const feature2GalleryPhotos = [
+  { src: 'https://cdn.lism-css.com/img/random-2510?category=japan&r=lp003feature2-a', alt: '富士と朝焼けの風景' },
+  { src: 'https://cdn.lism-css.com/img/random-2510?category=japan&r=lp003feature2-b', alt: '日本の山並みと雲海' },
+  { src: 'https://cdn.lism-css.com/img/random-2510?category=japan&r=lp003feature2-c', alt: '湖畔の夕景' },
+  { src: 'https://cdn.lism-css.com/img/random-2510?category=japan&r=lp003feature2-d', alt: '雪化粧の峰' },
+] as const;
+
+const feature2IntroBody =
+  '静寂に包まれた隠れ宿で、四季の移ろいを五感で味わうひととき。露天風呂に身をゆだねれば木々のざわめきと鳥の声、移ろう空の色が心を解きほぐします。伝統美と現代の心地よさが溶け合う空間で、大切な方と過ごす至福の時間をお約束いたします。桜前線が北上する頃には淡い霧雨に濡れた石畳、夏の宵には蛍火が池面を揺らす。秋の名月を浴びるテラス席では、澄んだ大気の中、遠い街の明かりがまるで散りばめられた金砂のよう。冬深く雪が庭を白く覆う日には、囲炉裏端で温めた一献が旅の労をそっと癒してくれます。茶寮にて厳選した茶葉の香を嗜み、図書角では旅立ち前の一冊に触れる時間。季節折々、土地の採れを極味でお届けする献立と、人の手で丁寧に手入れを続けた庭の景色が、毎年欠かすことのない贈り物のように、お客さまの記憶に深く留まることを心より願っております。名湯の湯煙の向こうに、明日への静かな活力と、人や自然との新たな出会いを、どうぞ静かに抱いてお戻りください。';
+
+/**
+ * 画像は CDN の japan 配下（実URLは `https://cdn.lism-css.com/img/japan/u-*.jpg`）。
+ * `.../images/japan` は未使用のため `img/japan` を利用。
+ */
+type PlanStat = {
+  label: string;
+  value: string;
+};
+
+type Plan = {
+  title: string;
+  description: string;
+  stats: readonly [PlanStat, PlanStat, PlanStat];
+  image: {
+    src: string;
+    alt: string;
+    width: number;
+    height: number;
+  };
+};
+
+const plans = [
+  {
+    title: '夕朝食・露天風呂付きゆったりプラン',
+    description:
+      '季節の会席と朝の御膳、そして湯冷めしない露天風呂までひと続きの時間。お部屋でゆっくりとお食事をご堪能いただき、湯浴みの合間には庭園を眺めながらのんびりとお過ごしください。お飲み物の追加オーダーやアレルギー対応も可能ですので、ご予約時にお申し付けください。',
+    stats: [
+      { label: 'ご予約可能人数', value: '1〜2名様' },
+      { label: '料金', value: '29,800円〜' },
+      { label: 'お部屋タイプ', value: '露天付き和室' },
+    ],
+    image: {
+      src: 'https://cdn.lism-css.com/img/japan/a_YWq6k0dioX.jpg',
+      alt: '紅葉の庭園と母屋',
+      width: 1920,
+      height: 1080,
+    },
+  },
+  {
+    title: '旬会席・半露天付き特別室ステイ',
+    description:
+      'その日の仕入れで組み立てる旬会席と、半露天から望む山並みのグラデーション。記念日やご家族のお祝いに、少し贅沢なお時間をご用意いたしました。',
+    stats: [
+      { label: 'ご予約可能人数', value: '2〜4名様' },
+      { label: '料金', value: '39,800円〜' },
+      { label: 'お部屋タイプ', value: '半露天付き特別室' },
+    ],
+    image: {
+      src: 'https://cdn.lism-css.com/img/japan/a_AgvZ1VdMXz.jpg',
+      alt: '千本鳥居が続く参道',
+      width: 1920,
+      height: 1280,
+    },
+  },
+  {
+    title: '一泊朝食のみ・湯めぐり楽々プラン',
+    description:
+      '夕食は外で自由に、朝は当宿の炊きたてご飯と汁物で。近隣の外湯めぐりや散策を楽しみたい方に、身軽な滞在スタイルをご提案します。チェックアウト後の荷物預かりも承りますので、観光の前後にご活用ください。',
+    stats: [
+      { label: 'ご予約可能人数', value: '1〜3名様' },
+      { label: '料金', value: '18,500円〜' },
+      { label: 'お部屋タイプ', value: '和室10畳＋広縁' },
+    ],
+    image: {
+      src: 'https://cdn.lism-css.com/img/japan/u-qQGCFQFlkT.jpg',
+      alt: '池を泳ぐ鯉と庭園',
+      width: 1920,
+      height: 1280,
+    },
+  },
+  {
+    title: '連泊エコノミー・温泉三昧プラン',
+    description:
+      'お得な連泊料金で、名湯と静寂にどっぷり浸かる旅。お食事はシンプルな定番御膳に、湯上がりの甘味までお部屋にお届けする心地よさをご用意しました。',
+    stats: [
+      { label: 'ご予約可能人数', value: '2名様〜' },
+      { label: '料金', value: '52,000円〜 / 2泊' },
+      { label: 'お部屋タイプ', value: '和洋室ツイン' },
+    ],
+    image: {
+      src: 'https://cdn.lism-css.com/img/japan/a_BybmIMidVa.jpg',
+      alt: '座敷から望む秋の庭園',
+      width: 1600,
+      height: 1200,
+    },
+  },
+] as const satisfies readonly Plan[];
+
+/** Lism プリセットアイコン名（ https://lism-css.com/docs/primitives/a--icon/ ） */
+type InformationIcon =
+  | 'home'
+  | 'clock'
+  | 'cart'
+  | 'gear'
+  | 'book'
+  | 'chat'
+  | 'heart'
+  | 'lightbulb'
+  | 'search'
+  | 'note'
+  | 'bookmark'
+  | 'user'
+  | 'lock';
+
+type InformationItem = {
+  icon: InformationIcon;
+  title: string;
+  description: string;
+};
+
+/** 各カードのアイコン・見出し・本文は別レコードで管理（内容の差し替えが容易） */
+const informationItems = [
+  {
+    icon: 'home',
+    title: 'ロビー・ラウンジ',
+    description: '到着直後のひとときから夜の湯上がりまで。珈琲や茶菓のセルフサービスとともに、庭側の座敷席で静かにお過ごしいただけます。',
+  },
+  {
+    icon: 'clock',
+    title: '24時間対応のフロント',
+    description: 'チェックインのご案内、周辺の散策コース、タクシーや送迎の手配まで。お困りごとがあれば、いつでもお声がけください。',
+  },
+  {
+    icon: 'cart',
+    title: '館内売店・土産コーナー',
+    description: '地酒や銘菓、オリジナルタオルに浴用アメニティまで。旅のちょっとした備えやお土産選びに、ぜひお立ち寄りください。',
+  },
+  {
+    icon: 'book',
+    title: '閲覧室・書斎コーナー',
+    description: '旅館・温泉郷のガイドブックや写真集をご用意しました。湯上がりにページをめくりながら、翌日の予定をゆっくり練るのもおすすめです。',
+  },
+] as const satisfies readonly InformationItem[];
+
+const informationIntro =
+  '湯治から滞在型の寛ぎまで、館内の設備で旅のリズムを整えられます。湯殿から客室まで動線を短くし、夜遅くのご利用にも配慮した案内でお迎えいたします。';
+
+/** 各項目は質問・回答を独立して管理（必要に応じて初期展開を指定） */
+const faqItems: { question: string; answer: string; defaultOpen?: boolean }[] = [
+  {
+    question: '初めて利用するのですが難しくないですか？',
+    answer:
+      'はい、全く問題ありません。初めての方でも戸惑うことなくご利用いただけます。もしお困りの際はフロントがお問い合わせにも対応いたしますので、安心してご利用ください。',
+    defaultOpen: true,
+  },
+  {
+    question: '予約のキャンセルはできますか？',
+    answer:
+      'プランごとにキャンセル規定が定められております。ご予約確定メールに記載の期限までにマイページまたはお電話にてお手続きください。直前の変更については空室状況を確認のうえご案内いたします。',
+  },
+  {
+    question: '宿泊プランを予約後に変更したくなった場合は、どのように変更できますか？',
+    answer:
+      'ご希望の日付・人数・お部屋タイプをお知らせいただければ、空室状況を確認のうえ差し替えを承ります。アップグレードに伴う差額やキャンセル規定の適用については、フロントにてご説明いたします。',
+  },
+  {
+    question: 'チェックイン・アウトの時間は決まっていますか？',
+    answer:
+      'チェックインは15時、チェックアウトは11時を目安としております。早めのご到着や遅めのご出発をご希望の場合は、事前にフロントまでお問い合わせください。空き状況に応じてご相談に乗れます。',
+  },
+  {
+    question: 'お食事のアレルギー・苦手な食材には対応できますか？',
+    answer:
+      'ご予約時にできる限り詳しくお知らせください。取り扱いの難しい食材もございますが、可能な範囲で代替や調整をいたします。当日のご変更は調理の都合上お受けできない場合がございます。',
+  },
+  {
+    question: 'お部屋に露天風呂は付いていますか？',
+    answer:
+      'プランおよびお部屋タイプにより異なります。露天風呂付きの客室、大浴場のみのプランなどをご用意しております。ご予約画面の設備欄またはフロントまでお問い合わせください。',
+  },
+  {
+    question: 'Wi-Fi は利用できますか？',
+    answer:
+      '全館で無料の Wi-Fi をご利用いただけます。お部屋番号とご案内のパスワードで接続ください。混雑時は速度が落ちる場合がございますのでご了承ください。',
+  },
+  {
+    question: '子ども連れの宿泊は可能ですか？',
+    answer:
+      '可能です。添い寝のお子様の料金やベッドのご用意はプランにより異なります。ベビーベッドの貸し出しは台数に限りがございますので、事前にご予約ください。',
+  },
+  {
+    question: '記念日のサプライズを依頼できますか？',
+    answer:
+      'ケーキや花束の手配、お食事のメッセージプレートなど、事前にご相談いただければ可能な範囲でお手伝いいたします。ご予算やお届けタイミングをお聞きしたうえでご提案いたします。',
+  },
+  {
+    question: '近隣の観光地へのアクセスや送迎はありますか？',
+    answer:
+      '最寄り駅からの送迎は定時運行のシャトルをご利用いただけます（要予約・台数限定）。観光地までのタクシー手配や地図の貸し出しも承りますので、フロントまでお声がけください。',
+  },
+];
+
+const faqImage = {
+  src: 'https://cdn.lism-css.com/img/japan/u-v9tUs6AiFT.jpg',
+  alt: '雨上がりの石畳の路地を、赤い和傘を差して歩く舞妓さんの後ろ姿',
+  width: 1920,
+  height: 1280,
+};
+
+/** ヘッダーと同一のナビ（アンカー） */
+const footerNavItems = [
+  { href: '#about', ja: '当宿について', en: 'About' },
+  { href: '#feature', ja: '宿の特徴', en: 'Feature' },
+  { href: '#plans', ja: '宿泊プラン', en: 'Plan' },
+  { href: '#information', ja: '設備紹介', en: 'Facilities' },
+  { href: '#faq', ja: 'よくあるご質問', en: 'Faq' },
+] as const;
+
+const footerSnsLinks = [
+  { href: '#', icon: 'logo-x' as const, label: 'X' },
+  { href: '#', icon: 'logo-instagram' as const, label: 'Instagram' },
+  { href: '#', icon: 'logo-youtube' as const, label: 'YouTube' },
+  { href: '#', icon: 'logo-tiktok' as const, label: 'TikTok' },
+  { href: '#', icon: 'logo-line' as const, label: 'LINE' },
+];
+
+/** 背景（指定 URL） */
+const bgImage = {
+  src: 'https://cdn.lism-css.com/img/japan/u-xJdqvxp0ak.jpg',
+  alt: '夕暮れの京都の路地と五重塔',
+  width: 1920,
+  height: 1080,
+};
+
+/**
+ * カード用サムネイル（CDN の japan 配下。`.../images/japan` は未使用のため `img/japan` を利用）
+ * @see Plans.astro 冒頭コメント
+ */
+type SiteCard = {
+  title: string;
+  body: string;
+  href: string;
+  image: { src: string; alt: string; width: number; height: number };
+};
+
+const reservationSites: readonly SiteCard[] = [
+  {
+    title: 'トラベルトリップ',
+    body: '特典：早期予約で料金が割引になるキャンペーンを実施中です。空室カレンダーから日程を選べます。',
+    href: '#',
+    image: {
+      src: 'https://cdn.lism-css.com/img/japan/a_77prliRsZS.jpg',
+      alt: 'トラベルトリップのイメージ写真',
+      width: 1920,
+      height: 1080,
+    },
+  },
+  {
+    title: 'らくらく旅行予約',
+    body: '特典：地域密着サポート付きプランをご用意しています。変更・キャンセルは各サイトの規定に従います。',
+    href: '#',
+    image: {
+      src: 'https://cdn.lism-css.com/img/japan/a_AgvZ1VdMXz.jpg',
+      alt: 'らくらく旅行予約のイメージ写真',
+      width: 1920,
+      height: 1280,
+    },
+  },
+];
+---
+
+<Layout title={title}>
+  <link rel="preconnect" href="https://fonts.googleapis.com" slot="head" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin slot="head" />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@200..900&family=Yuji+Syuku&display=swap" rel="stylesheet" slot="head" />
+  <Wrapper class="z--ryokan-root" contentSize="full">
+    <!-- Header -->
+
+    <Lism as="header" class="z--ryokan-header" pos="fixed" i="0" w="100%" z="1" hasTransition>
+      <Container class="z--ryokan-header_bar" isWrapper="xl" mx="auto" hasGutter h="100%">
+        <Grid class="z--ryokan-header_inner" gtc="minmax(0,auto) 1fr" ai="center" h="100%" g="20">
+          <Stack class="z--ryokan-header_logo">
+            <Link
+              class="z--ryokan-header_logoLink"
+              href="#"
+              td="none"
+              fw="normal"
+              ff="accent"
+              c="white"
+              lts="l"
+              fz={['2xl', null, '3xl']}
+              lh="s"
+              whs="nowrap"
+            >
+              {logoLabel}
+            </Link>
+          </Stack>
+          <Flex class="z--ryokan-header_actions" jc="fe" g="20" ai="c">
+            <Flex class="z--ryokan-headerNav" as="ul" d={['none', null, 'inline-flex']} ai="c" m="0" p="0" fxw="nowrap" g={['15', null, '30']}>
+              {
+                headerNavItems.map(({ href, ja, en }) => (
+                  <ListItem>
+                    <Link
+                      class="z--ryokan-headerNav_link"
+                      href={href}
+                      d="grid"
+                      jc="c"
+                      ji="c"
+                      td="none"
+                      py="10"
+                      px="5"
+                      hasTransition
+                      hov="-o"
+                      ta="c"
+                      g="5"
+                    >
+                      <Inline>{ja}</Inline>
+                      <Inline as="span" class="z--ryokan-headerNav_en" fz="2xs" fw="normal" lts="l" lh="xs" m="0" ta="c" d="block">
+                        {en}
+                      </Inline>
+                    </Link>
+                  </ListItem>
+                ))
+              }
+            </Flex>
+            <Modal.OpenBtn modalId="ryokan-menu" d={['block', null, 'none']}>
+              <Center p="5" ai="c" jc="c">
+                <Icon icon="menu" c="white" fz="2xl" aria-hidden="true" />
+              </Center>
+            </Modal.OpenBtn>
+          </Flex>
+        </Grid>
+      </Container>
+    </Lism>
+    <Modal.Root id="ryokan-menu" isContainer isWrapper="s" p="30">
+      <Modal.Inner layout="stack" pos="relative" w="100%" p="30" bdrs="20" bxsh="50">
+        <Modal.CloseBtn modalId="ryokan-menu" autofocus pos="absolute" t="0" r="0" z="1" fz="xl" p="10" m="15" />
+        <Modal.Body layout="stack" g="30" py="40">
+          <Stack as="ul" class="z--ryokan-header_menuNav" g="0" m="0" p="0" ov="clip">
+            {
+              headerNavItems.map(({ href, ja, en }) => (
+                <ListItem>
+                  <BoxLink href={href} layout="grid" gtc="1fr auto" ai="c" fz="l" td="none" py="15" px="5" w="100%">
+                    <Stack g="5">
+                      <Inline>{ja}</Inline>
+                      <Inline as="span" class="z--ryokan-header_menuNav_en" fz="s" m="0" o="pp">
+                        {en}
+                      </Inline>
+                    </Stack>
+                    <Icon icon="caret-right" fz="s" o="pp" />
+                  </BoxLink>
+                </ListItem>
+              ))
+            }
+            <ListItem>
+              <BoxLink href="#reservation" layout="grid" gtc="1fr auto" ai="c" fz="l" td="none" py="15" px="5" w="100%">
+                <Stack g="5">
+                  <Inline>ご予約はこちら</Inline>
+                  <Inline as="span" class="z--ryokan-header_menuNav_en" fz="s" m="0" o="pp"> Reservation </Inline>
+                </Stack>
+                <Icon icon="caret-right" fz="s" o="pp" />
+              </BoxLink>
+            </ListItem>
+          </Stack>
+        </Modal.Body>
+      </Modal.Inner>
+    </Modal.Root>
+    <!-- Main Content -->
+    <Container as="main" class="z--ryokan-main" pos="relative" z="0">
+      <Container
+        class="z--ryokan-mv"
+        as="section"
+        pos="relative"
+        w="100%"
+        m="0"
+        p="0"
+        max-w="none"
+        ov="clip"
+        style={{
+          minHeight: '100svh',
+          '--z--ryokan-mv-bgCycleDuration': `${mvBgCycleDuration}s`,
+          '--z--ryokan-mv-lineBlurMax': `${mvLineRevealBlurPx}px`,
+          '--z--ryokan-mv-lineDuration': `${mvLineRevealDuration}s`,
+          '--z--ryokan-mv-lineStartDelay': `${mvLineRevealStartDelay}s`,
+          '--z--ryokan-mv-lineStagger': `${mvLineRevealStagger}s`,
+        }}
+      >
+        <Frame isLayer class="z--ryokan-mv_bg">
+          {
+            mvResolvedImages.map((src, index) => {
+              const mvLayerDelay = index * mvDurationPerImage - mvBgCycleDuration;
+
+              return (
+                <div
+                  class="z--ryokan-mv_layer"
+                  style={{
+                    '--z--ryokan-mv-layerBgImage': `url('${src}')`,
+                    '--z--ryokan-mv-layerDelay': `${mvLayerDelay}s`,
+                  }}
+                />
+              );
+            })
+          }
+        </Frame>
+        <Layer bgc="black:30%" exProps={{ 'aria-hidden': 'true' }} />
+        <Stack
+          pos="relative"
+          z="1"
+          ai="c"
+          jc="c"
+          g="0"
+          w="100%"
+          m="0"
+          p="0"
+          px={['20', null, '40']}
+          py-e="40"
+          min-h="100svh"
+          c="white"
+          style={{ paddingBlockStart: 'calc(var(--z--header-height) + var(--s30))' }}
+        >
+          <Lism as="p" class="z--ryokan-mv_copy" m="0">
+            {
+              mvResolvedCopyLines.map((line, i) => (
+                <span class="z--ryokan-mv_line" style={{ '--z--ryokan-mv-lineIndex': i }}>
+                  {line}
+                </span>
+              ))
+            }
+          </Lism>
+        </Stack>
+      </Container>
+      <!-- MV の動的 @keyframes はマージで抽出されないため、元コンポーネントと同じ set:html を明示注入 -->
+      <style set:html={mvLayeredKeyframesStyle}></style>
+
+      <Lism as="section" id="about" class="z--ryokan-about" isContainer py-s="60" py-e="60" bgc="black" c="white">
+        <Grid
+          class="z--ryokan-about_grid"
+          gtc={['1fr', '1fr', 'minmax(0, 1fr) minmax(0, 50%)']}
+          cg="0"
+          rg={['30', '30', '0']}
+          ai={['start', 'start', 'stretch']}
+        >
+          <Stack
+            class="z--ryokan-about_col z--ryokan-about_col--left"
+            g={['40', '40', '50']}
+            px-e={['0', '0', '50']}
+            h={['auto', 'auto', '100%']}
+            min-h={['0', '0', '0']}
+            min-w="0"
+          >
+            <Stack class="z--ryokan-about_stack" g="0" ai="start">
+              <Text as="p" fz={['l', null, 'xl']} m="0" mb="10" lts="l" ff="base" c="white" o="pp"> About us </Text>
+              <Heading level="2" fz={['2xl', null, '4xl']} fw="500" m="0" mb="50" lts="l"> 当宿について </Heading>
+              <Text class="z--ryokan-about_body" as="p" m="0" fz="m" lh="l" lts="s" c="white" o="p">
+                {aboutBodyCopy}
+              </Text>
+            </Stack>
+            <Frame as="figure" class="z--ryokan-about_figureLeft" ar={['16/10', '16/10', '4/3']} ov="hidden">
+              <img
+                src={aboutImgLeft.src}
+                alt={aboutImgLeft.alt}
+                width={aboutImgLeft.width}
+                height={aboutImgLeft.height}
+                loading="lazy"
+                decoding="async"
+              />
+            </Frame>
+          </Stack>
+          <Flex
+            as="figure"
+            class="z--ryokan-about_figureRight"
+            fxd="column"
+            h={['auto', 'auto', '100%']}
+            min-h={['0', '0', '0']}
+            pb={['0', '0', '50']}
+            ov="hidden"
+          >
+            <Lism
+              as="img"
+              class="z--ryokan-about_mediaRightImg"
+              src={aboutImgRight.src}
+              alt={aboutImgRight.alt}
+              fx={['0', '0', '1']}
+              min-h={['0', '0', '0']}
+              w="100%"
+              exProps={{ width: aboutImgRight.width, height: aboutImgRight.height, loading: 'lazy', decoding: 'async' }}
+            />
+          </Flex>
+        </Grid>
+      </Lism>
+
+      <Lism as="section" id="feature" class="z--ryokan-feature" bgc="base" c="text" py="60">
+        <Container isWrapper="l" hasGutter isContainer pos="relative">
+          <Grid
+            class="z--ryokan-feature_grid"
+            gtc={['1fr', '1fr', 'minmax(0, 1.05fr) minmax(0, 1fr)']}
+            rg={['30', '30', '0']}
+            cg={['0', '0', '50']}
+            ai={['stretch', 'stretch', 'stretch']}
+          >
+            <Lism as="figure" class="z--ryokan-feature_figure" ov="hidden" bdrs="10">
+              <img src={featureImg.src} alt={featureImg.alt} width={featureImg.width} height={featureImg.height} loading="lazy" decoding="async" />
+            </Lism>
+            <Stack class="z--ryokan-feature_textCol" pos="relative" g="0" ai="stretch" min-w="0" h="100%">
+              <Lism as="span" class="z--ryokan-feature_watermark" exProps={{ 'aria-hidden': 'true' }}> Experience </Lism>
+              <Flex
+                class="z--ryokan-feature_copyRow"
+                fxd={['column', 'column', 'row']}
+                g={['50', '50', '40']}
+                ai="stretch"
+                pos="relative"
+                fx="1"
+                min-h="0"
+                w="100%"
+              >
+                <Heading level="2" class="z--ryokan-feature_title" m="0" fz={['2xl', null, '3xl']} fw="600" lts="l">
+                  <Box class="z--ryokan-feature_titleInner" lts="l">
+                    <Inline class="z--ryokan-feature_titleLine1">特別な旅と</Inline>
+                    <Inline class="z--ryokan-feature_titleLine2">静寂の体験</Inline>
+                  </Box>
+                </Heading>
+                <Stack class="z--ryokan-feature_bodyStack" g="30" ai="start" min-w="0">
+                  <Text as="p" class="z--ryokan-feature_lead" m="0" fz={['l', null, 'xl']} fw="600" lts="l" c="text">
+                    {featureLead}
+                  </Text>
+                  <Text as="p" class="z--ryokan-feature_body" m="0" fz="m" lh="l" lts="s" c="text" max-w="100%">
+                    {featureBody}
+                  </Text>
+                </Stack>
+              </Flex>
+            </Stack>
+          </Grid>
+        </Container>
+      </Lism>
+
+      <Lism as="section" id="feature2" class="z--ryokan-feature2" pos="relative" ov-x="clip" c="white">
+        <Frame isLayer>
+          <Lism
+            as="img"
+            src={feature2Bg.src}
+            alt={feature2Bg.alt}
+            w="100%"
+            h="100%"
+            exProps={{
+              width: feature2Bg.width,
+              height: feature2Bg.height,
+              loading: 'lazy',
+              decoding: 'async',
+              'aria-hidden': 'true',
+            }}
+          />
+        </Frame>
+        <Layer bgc="black:75%" exProps={{ 'aria-hidden': 'true' }} />
+        <Container isWrapper="l" hasGutter isContainer pos="relative" z="1" pt="60" pb="0">
+          <WithSide sideW="24em" g="50" ai="start">
+            <Stack isSide g="30" ai="start" w="100%" min-w="0">
+              <Heading level="2" m="0" fz={['3xl', null, '4xl']} fw="500" lts="l" lh="l">
+                季節の移ろいを、<br />肌で感じる。
+              </Heading>
+              <Inline as="span" fz="l" ff="base" m="0" c="white" w="100%" lts="l"> Feeling the seasons </Inline>
+            </Stack>
+            <Stack g="0" ai="start" min-w="0" w="100%">
+              <Text as="p" m="0" fz="m" lh="l" lts="s" c="white" o="mp" w="100%">
+                {feature2IntroBody}
+              </Text>
+            </Stack>
+          </WithSide>
+        </Container>
+        <Container isWrapper="xl" hasGutter isContainer pos="relative" z="1" pt="0" pb="60">
+          <Grid
+            w="100%"
+            min-w="0"
+            mt="50"
+            gtc={['repeat(2, minmax(0, 1fr))', 'repeat(2, minmax(0, 1fr))', 'repeat(4, minmax(0, 1fr))']}
+            g={['20', null, '40']}
+            ai="start"
+          >
+            {
+              feature2GalleryPhotos.map(({ src, alt }, i) => (
+                <Frame
+                  as="figure"
+                  ar="4/3"
+                  m="0"
+                  w="100%"
+                  min-w="0"
+                  jslf="stretch"
+                  pos="relative"
+                  ov="hidden"
+                  mt={i === 1 || i === 3 ? ['0', '0', '40'] : '0'}
+                >
+                  <img src={src} alt={alt} width={800} height={600} loading="lazy" decoding="async" />
+                </Frame>
+              ))
+            }
+          </Grid>
+        </Container>
+      </Lism>
+
+      <Lism as="section" id="plans" bgc="black" c="white" py="60">
+        <Container isWrapper="l" hasGutter>
+          <Stack g="50" ai="stretch" w="100%">
+            <Stack g="10" ai="center" ta="center">
+              <Text as="p" m="0" fz="m" lts="l" ff="base" o="pp"> Plan </Text>
+              <Heading level="2" m="0" fz={['2xl', null, '3xl']} fw="500" lts="l"> 宿泊プラン </Heading>
+            </Stack>
+
+            <Stack g="50" w="100%" ai="stretch">
+              {
+                plans.map((plan) => (
+                  <Flex fxd={['column', 'column', 'row-reverse']} ai="stretch" g={['30', '30', '50']} w="100%">
+                    <Frame as="figure" class="z--ryokan-plans_media" m="0" ar="16/10" ov="hidden" bdrs="10" w="100%" min-w="0">
+                      <img
+                        src={plan.image.src}
+                        alt={plan.image.alt}
+                        width={plan.image.width}
+                        height={plan.image.height}
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    </Frame>
+
+                    <Flex g="30" fxd="column" fx="1" min-w="0" min-h="0" w="100%" ai="stretch" jc="space-between">
+                      <Stack g="30" ai="stretch">
+                        <Heading level="3" m="0" fz={['l', null, 'xl']} fw="500" lts="l">
+                          {plan.title}
+                        </Heading>
+                        <Text as="p" m="0" fz="s" lts="s" o="p">
+                          {plan.description}
+                        </Text>
+                      </Stack>
+
+                      <Stack g="30" ai="stretch" w="100%" fxsh="0">
+                        <Grid gtc="repeat(3, minmax(0, 1fr))" bd bdc="white:35%" bdrs="20" ov="hidden" w="100%" m="0" ai="stretch">
+                          {plan.stats.map((stat, index) => (
+                            <Stack g="10" p="15" ai="center" ta="center" bdc="white:35%" class:list={[{ '-bd-x-s': index > 0 }]}>
+                              <Text as="p" m="0" fz="xs" lts="s" o="pp">
+                                {stat.label}
+                              </Text>
+                              <Text as="p" m="0" fz="m" fw="500" lts="l">
+                                {stat.value}
+                              </Text>
+                            </Stack>
+                          ))}
+                        </Grid>
+
+                        <Lism isContainer w="100%" min-w="0">
+                          <Button
+                            class="z--ryokan-plans_reserve"
+                            href="#contact"
+                            layout="flex"
+                            w="100%"
+                            fxd={['column', 'row', 'row']}
+                            jc="center"
+                            ai={['center', 'center', 'flex-end']}
+                            g="10"
+                            bgc="white"
+                            c="black"
+                            bdrs="99"
+                            py="15"
+                            px="20"
+                            max-w="100%"
+                            ta="center"
+                          >
+                            <Inline as="span" m="0" fz="m" fw="500" lts="l">
+                              このプランを予約する
+                            </Inline>
+                            <Inline as="span" m="0" fz="xs" o="pp" lts="s">
+                              （予約サイトに移動します）
+                            </Inline>
+                          </Button>
+                        </Lism>
+                      </Stack>
+                    </Flex>
+                  </Flex>
+                ))
+              }
+            </Stack>
+          </Stack>
+        </Container>
+      </Lism>
+
+      <Lism as="section" id="information" pos="relative" bgc="black" c="white" py="60" ov="hidden">
+        <!-- Plan セクションよりわずかに明るいチャコール: 黒ベースの上に薄い白膜（Layer + bgc トークン） -->
+        <Layer aria-hidden="true" bgc="white:6%" />
+        <Container isWrapper="l" hasGutter pos="relative" z="1">
+          <Stack g="40" ai="stretch" w="100%">
+            <!-- jc=start / 狭い gap で見出しブロックのすぐ右にリード文（max-sz で折返し幅を制限） -->
+            <Flex fxd={['column', null, 'row']} g={['30', null, '50']} ai={['start', null, 'end']} jc="start" w="100%" fxw="wrap">
+              <Flex fxd="column" g="10" ai="start" min-w="0" fxsh="0" p-e={['0', null, '40']}>
+                <Text as="p" m="0" fz="s" lts="l" ff="base" o="pp"> Facilities </Text>
+                <Heading level="2" m="0" fz={['xl', null, '2xl']} fw="500" lts="l"> 館内設備 </Heading>
+              </Flex>
+              <Text as="p" m="0" fz="s" lh="l" lts="s" o="p" max-sz="s" min-w="0" fx="1">
+                {informationIntro}
+              </Text>
+            </Flex>
+
+            <Grid gtc={['1fr', null, 'repeat(2, minmax(0, 1fr))']} g="30" ai="stretch">
+              {
+                informationItems.map((item) => (
+                  <Lism bd bdrs="20" bdc="white:35%" ov="hidden" w="100%" p={['20', null, '30']}>
+                    <Flex g={['20', null, '30']} ai="center" w="100%" min-w="0">
+                      <Icon icon={item.icon} size="48px" c="white:35%" />
+                      <Stack g="10" ai="stretch" min-w="0" fx="1">
+                        <Heading level="3" m="0" fz={['m', null, 'l']} fw="500" lts="l">
+                          {item.title}
+                        </Heading>
+                        <Text as="p" m="0" fz="s" lts="s" o="p">
+                          {item.description}
+                        </Text>
+                      </Stack>
+                    </Flex>
+                  </Lism>
+                ))
+              }
+            </Grid>
+          </Stack>
+        </Container>
+      </Lism>
+
+      <Lism as="section" id="faq" bgc="base" c="text" py="60">
+        <Container isWrapper="l" hasGutter>
+          <Grid class="z--ryokan-faq_layout" w="100%" g="50" ai="stretch">
+            <Stack class="z--ryokan-faq_head" g="10" ai="center" ta="center">
+              <Text as="p" m="0" fz="m" lts="l" ff="base" c="text-2" o="pp"> FAQ </Text>
+              <Heading level="2" m="0" fz={['2xl', null, '3xl']} fw="500" lts="l"> よくあるご質問 </Heading>
+            </Stack>
+
+            <Frame as="figure" class="z--ryokan-faq_media" m="0" ar={['16/10', null, '1/1']} ov="hidden" bdrs="10" w="100%" min-w="0">
+              <img src={faqImage.src} alt={faqImage.alt} width={faqImage.width} height={faqImage.height} loading="lazy" decoding="async" />
+            </Frame>
+
+            <Lism class="z--ryokan-faq_acc" min-w="0">
+              <Accordion.Root g="0" p="0" ov="visible">
+                {
+                  faqItems.map((item) => (
+                    <Accordion.Item bgc="transparent" bdrs="0" bxsh="0" ov="visible" {...(item.defaultOpen ? { 'data-opened': '' } : {})}>
+                      <Accordion.Heading p="0">
+                        <Accordion.Button fw="500" fz={['s', null, 'm']} ta="start" py="20" isOpen={item.defaultOpen === true}>
+                          {item.question}
+                        </Accordion.Button>
+                      </Accordion.Heading>
+                      <Accordion.Panel py="0" pb="20" isOpen={item.defaultOpen === true}>
+                        <Text m="0" fz="s" c="text-2" lh="l" lts="s">
+                          {item.answer}
+                        </Text>
+                      </Accordion.Panel>
+                    </Accordion.Item>
+                  ))
+                }
+              </Accordion.Root>
+            </Lism>
+          </Grid>
+        </Container>
+      </Lism>
+
+      <Lism as="section" id="reservation" pos="relative" py="60" ov="hidden" c="white">
+        <Frame isLayer m="0">
+          <Lism
+            as="img"
+            src={bgImage.src}
+            alt={bgImage.alt}
+            w="100%"
+            h="100%"
+            exProps={{
+              width: bgImage.width,
+              height: bgImage.height,
+              loading: 'lazy',
+              decoding: 'async',
+            }}
+          />
+        </Frame>
+        <Layer bgc="black:50%" exProps={{ 'aria-hidden': 'true' }} />
+
+        <Container isWrapper="l" hasGutter pos="relative" z="1" max-sz="full">
+          <Grid isContainer gtc={['1fr', null, 'minmax(0, 0.6fr) minmax(0, 1fr)']} g={['40', null, '50']} ai="stretch">
+            <Stack g="30" ai="start" min-w="0">
+              <Stack g="10" ai="start">
+                <Text as="p" m="0" fz="m" lts="l" ff="base" o="pp"> Reservation </Text>
+                <Heading level="2" m="0" fz={['2xl', null, '3xl']} fw="500" lts="l"> ご予約はこちら </Heading>
+              </Stack>
+              <Text as="p" m="0" fz="s" lh="l" lts="s" o="p" max-sz="m">
+                お好みの予約サイトからご予約いただけます。予約完了後は各サイトから確認メールが届きます。キャンセルや変更はご利用のサイトの案内に従ってお手続きください。
+              </Text>
+            </Stack>
+
+            <Grid w="100%" min-w="0" gtc="1fr" g={['40', null, '40']} gc={['1/-1', null, '2/-1']}>
+              {
+                reservationSites.map((site) => (
+                  <Lism pos="relative" bgc="white" c="text" bdrs="20" ov="hidden" min-w="0" w="100%" set="var:bdrsInner">
+                    <Flex fxd={['column', null, 'row']} ai="stretch" w="100%" min-w="0">
+                      <Frame as="figure" m="0" ar="16/10" ov="hidden" bdrs="0" w={['100%', null, '12rem']} fxsh="0" min-w="0">
+                        <img
+                          src={site.image.src}
+                          alt={site.image.alt}
+                          width={site.image.width}
+                          height={site.image.height}
+                          loading="lazy"
+                          decoding="async"
+                        />
+                      </Frame>
+                      <Stack
+                        g="15"
+                        ai="stretch"
+                        min-h="0"
+                        min-w="0"
+                        fx="1"
+                        w="100%"
+                        m="0"
+                        px-s={['20', null, '30']}
+                        px-e={['20', null, '30']}
+                        py={['20', null, '30']}
+                        ov="auto"
+                      >
+                        <Heading level="3" m="0" fz="l" fw="600" lts="l" lh="l">
+                          {site.title}
+                        </Heading>
+                        <Text as="p" m="0" fz="s" c="text-2" lts="s" o="p">
+                          {site.body}
+                        </Text>
+                        <Button href={site.href} w="100%" bdrs="inner" py="15" px="20" fz="s" fw="500" lts="s" ta="center">
+                          サイトに移動する
+                        </Button>
+                      </Stack>
+                    </Flex>
+                  </Lism>
+                ))
+              }
+            </Grid>
+          </Grid>
+        </Container>
+      </Lism>
+    </Container>
+    <!-- Footer -->
+
+    <Lism as="footer" id="footer" class="z--ryokan-footer" bgc="black" c="white" py={['50', null, '60']}>
+      <Container isContainer isWrapper="xl" hasGutter>
+        <Stack g={['40', null, '50']} ai="stretch" w="100%">
+          <!-- キャッチコピーをロゴの左隣に。下揃え（flex-end） -->
+          <Flex fxd="row" ai="end" jc="start" fxw="wrap" g={['15', null, '40']} w="100%">
+            <Heading level="2" m="0" fz={['2xl', null, '3xl']} fw="normal" lts="l" lh="l" ff="accent">
+              {logoLabel}
+            </Heading>
+            <Text as="p" m="0" fz={['s', null, 'm']} lh="l" lts="s" o="p" max-sz="m">
+              都会の喧騒から離れ、心安らぐ自然の中で、至福のひとときを。
+            </Text>
+          </Flex>
+
+          <!-- ナビと SNS を下揃え（flex-end） -->
+          <Flex fxd={['column', null, 'row']} ai="end" jc="between" g={['30', null, '40']} w="100%">
+            <Flex
+              as="ul"
+              class="z--ryokan-footer_nav"
+              fxd={['column', null, 'row']}
+              ai="stretch"
+              m="0"
+              p="0"
+              g={['0', null, '0']}
+              fxw={['nowrap', null, 'wrap']}
+              w={['100%', null, 'auto']}
+              fx="1"
+              min-w="0"
+            >
+              {
+                footerNavItems.map(({ href, ja, en }) => (
+                  <ListItem>
+                    <BoxLink
+                      class="z--ryokan-footer_navLink"
+                      href={href}
+                      layout="grid"
+                      gtc={['1fr auto', null, '1fr']}
+                      ji={['start', 'start', 'center']}
+                      ai="center"
+                      fz="m"
+                      td="none"
+                      py={['15', null, '0']}
+                      px={['5', null, '10']}
+                      c="inherit"
+                      hov="-o"
+                    >
+                      <Stack class="z--ryokan-footer_navStack" g="5">
+                        <Inline>{ja}</Inline>
+                        <Inline as="span" class="z--ryokan-footer_navEn" fz="s" m="0" o="pp">
+                          {en}
+                        </Inline>
+                      </Stack>
+                      <Icon class="z--ryokan-footer_navCaret" icon="caret-right" fz="s" o="pp" />
+                    </BoxLink>
+                  </ListItem>
+                ))
+              }
+            </Flex>
+
+            <Cluster g="20" jc={['center', null, 'end']} ai="end" fxw="wrap" w={['100%', null, 'auto']}>
+              {
+                footerSnsLinks.map(({ href, icon, label }) => (
+                  <Link href={href} td="none" c="inherit" o="pp" hov="-o" hasTransition aria-label={label} exProps={{ style: { '--hov-o': 1 } }}>
+                    <Icon icon={icon} fz="xl" />
+                  </Link>
+                ))
+              }
+            </Cluster>
+          </Flex>
+
+          <Text as="p" m="0" fz="xs" o="pp" lts="s" ta="center"> © 2026 Lism CSS. </Text>
+        </Stack>
+      </Container>
+    </Lism>
+
+    <Button
+      class="z--ryokan-reservationFab"
+      href="#reservation"
+      pos="fixed"
+      z="99"
+      layout="flex"
+      fxd="column"
+      ai="center"
+      jc="center"
+      g="5"
+      py="10"
+      px="20"
+      bdrs="99"
+      bd
+      bdc="white:35%"
+      bgc="black"
+      c="white"
+      bxsh="20"
+      set="var:bxsh"
+      td="none"
+      fz="s"
+      lts="s"
+      ta="center"
+      style={{
+        right: 'max(var(--s30), env(safe-area-inset-right))',
+        bottom: 'max(var(--s30), env(safe-area-inset-bottom))',
+      }}
+    >
+      <Inline as="span" m="0" fz="s" fw="500" lts="s"> ご予約はこちら </Inline>
+      <Inline as="span" m="0" fz="2xs" o="pp" lts="l"> Reservation </Inline>
+    </Button>
+  </Wrapper>
+</Layout>
+
+<style>
+  @layer lism-custom {
+    /* ryokan: 明朝ベース（Google Fonts / Noto Serif JP） */
+    .z--ryokan-root {
+      font-family: 'Noto Serif JP', 'Yu Mincho', YuMincho, 'Hiragino Mincho ProN', 'Hiragino Mincho Pro', serif;
+      font-optical-sizing: auto;
+      /* Lism の `ff:base`（既定はゴシック系）— ryokan では日本語明朝に統一 */
+      --ff--base: 'Noto Serif JP', 'Yu Mincho', YuMincho, 'Hiragino Mincho ProN', 'Hiragino Mincho Pro', serif;
+      /* ロゴ（`ff:accent`）用: Google Fonts / Yuji Syuku（Lism タイポ `--ff--accent`） */
+      --ff--accent: 'Yuji Syuku', 'Noto Serif JP', 'Yu Mincho', YuMincho, 'Hiragino Mincho ProN', 'Hiragino Mincho Pro', serif;
+      /* Feature ほか和紙調のベージュ背景（セマンティック `--base` を上書き） */
+      --base: hsl(38 32% 92%);
+      /* #reservation の named view timeline を兄弟の FAB から参照可能に */
+      timeline-scope: --z--ryokan-reservation;
+    }
+    /* Reservation がビューポートに入る進行に合わせて FAB を非表示 */
+    #reservation {
+      view-timeline-name: --z--ryokan-reservation;
+      view-timeline-axis: block;
+    }
+    @keyframes ryokan_reservationFab_hide {
+      from {
+        opacity: 1;
+        pointer-events: auto;
+        visibility: visible;
+      }
+      to {
+        opacity: 0;
+        pointer-events: none;
+        visibility: hidden;
+      }
+    }
+    .z--ryokan-reservationFab {
+      animation: ryokan_reservationFab_hide linear both;
+      animation-timeline: --z--ryokan-reservation;
+      animation-range: entry 0% entry 30%;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .z--ryokan-reservationFab {
+        animation: none;
+        opacity: 1;
+        visibility: visible;
+        pointer-events: auto;
+      }
+    }
+
+    /* Root */
+    :root {
+      --z--header-height: 100px;
+      --z--header-height--thin: 56px;
+      --u--fadeIn--animation-range: entry 0% contain 20%;
+    }
+    /* Fadein */
+    .u--fadeIn {
+      view-timeline: --u--fadeIn y;
+      animation: u--fadeIn linear both;
+      animation-timeline: --u--fadeIn;
+      animation-range: var(--u--fadeIn--animation-range);
+    }
+    @keyframes u--fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(32px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    /* Background Parallax */
+    .u--bgParallax {
+      view-timeline: --u--bgParallax y;
+    }
+    .u--bgParallax .a--media {
+      position: absolute;
+      top: -20%;
+      height: 140%;
+      animation: u--bgParallax_media linear both;
+      animation-timeline: --u--bgParallax;
+      animation-range: entry 0% cover 100%;
+    }
+    @keyframes u--bgParallax_media {
+      from {
+        transform: translateY(-10%);
+      }
+      to {
+        transform: translateY(10%);
+      }
+    }
+
+    .z--ryokan-header {
+      height: var(--z--header-height);
+      color: var(--white);
+      background-color: transparent;
+      backdrop-filter: none;
+      -webkit-backdrop-filter: none;
+      box-sizing: border-box;
+      --z--header-scroll-animation-start: 80px;
+      --z--header-animation-range: var(--z--header-scroll-animation-start) calc(var(--z--header-scroll-animation-start) + 140px);
+      animation: z--header_ryokan linear both;
+      animation-timeline: scroll(root);
+      animation-range: var(--z--header-animation-range);
+    }
+    .z--ryokan-header :where(a) {
+      color: inherit;
+    }
+    /**
+   * モーダル内ナビ: Footer と同様に `li:not(:last-child)` + `border-block-end: dashed`（`u--divide` は未使用）
+   * フッターは黒地へ `color-mix(…, var(--white) 38%, …)`。モーダルは `.c--modal_inner` の `var(--base)` 地のため `var(--text)` を使用
+   * @see Footer.astro / tokens.md --text / `color-mix`
+   */
+    .z--ryokan-header_menuNav {
+      list-style: none;
+    }
+    .z--ryokan-header_menuNav > :global(li) {
+      list-style: none;
+    }
+    .z--ryokan-header_menuNav > :global(li:not(:last-child)) {
+      border-block-end: 1px dashed color-mix(in srgb, var(--text) 38%, transparent);
+    }
+    /* md 以上: has--gutter の左右に s20 を上乗せ（Lism: `--gutter-size` 既定は `--s30`） */
+    @media (min-width: 800px) {
+      .z--ryokan-header_bar {
+        padding-inline: calc(var(--gutter-size) + var(--s20));
+      }
+    }
+    /**
+   * ロゴは Logo.astro 内で描画されるため、Astro スコープ外。:global で子コンポーネントの a に一致させる。
+   * @see https://docs.astro.build/en/guides/styling/#global-styles
+   */
+    :global(.z--ryokan-header_logoLink) {
+      transform-origin: left center;
+      animation: z--ryokan-header_logo_ryokan linear both;
+      animation-timeline: scroll(root);
+      /* 継承: 先祖 `.z--ryokan-header` の `--z--header-animation-range` */
+      animation-range: var(--z--header-animation-range);
+    }
+    /**
+   * スクロール後: 黒ベースの半透明 + backdrop-filter で奥行きをぼかし視認性を確保。
+   * 下端の極細ハイライトで帯として切り分ける。
+   */
+    @keyframes z--header_ryokan {
+      to {
+        background-color: hsl(0 0% 0% / 0.78);
+        color: var(--white);
+        height: var(--z--header-height--thin);
+        backdrop-filter: blur(14px) saturate(1.12);
+        -webkit-backdrop-filter: blur(14px) saturate(1.12);
+        box-shadow:
+          0 8px 32px hsl(0 0% 0% / 0.42),
+          inset 0 -1px 0 hsl(0 0% 100% / 0.07);
+      }
+    }
+    @keyframes z--ryokan-header_logo_ryokan {
+      from {
+        transform: scale(1);
+      }
+      to {
+        /* 3xl 時も以前（2xl×0.9 相当）のスクロール後サイズ感に近づける */
+        transform: scale(0.75);
+      }
+    }
+    .z--ryokan-headerNav_en {
+      max-height: 2.5em;
+      overflow: hidden;
+      animation: z--ryokan-headerNav_en_ryokan linear both;
+      animation-timeline: scroll(root);
+      animation-range: var(--z--header-animation-range);
+    }
+    @keyframes z--ryokan-headerNav_en_ryokan {
+      to {
+        opacity: 0;
+        max-height: 0;
+        margin: 0;
+        padding: 0;
+      }
+    }
+
+    .z--ryokan-mv {
+      background-color: #000;
+    }
+
+    .z--ryokan-mv_bg {
+      inset: 0;
+    }
+
+    .z--ryokan-mv_layer {
+      position: absolute;
+      inset: 0;
+      background-image: var(--z--ryokan-mv-layerBgImage);
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      transform-origin: center center;
+      opacity: 0;
+      transform: scale(1);
+      animation: ryokan-mv-bgFade var(--z--ryokan-mv-bgCycleDuration) infinite;
+      animation-timing-function: linear;
+      animation-delay: var(--z--ryokan-mv-layerDelay);
+    }
+
+    /* MVSimple と同一の縦書きブロック */
+    .z--ryokan-mv_copy {
+      font-feature-settings: 'palt' 1;
+      font-size: clamp(1.1rem, 3.4vw, 1.75rem);
+      line-height: 1.85;
+      letter-spacing: 0.22em;
+      writing-mode: vertical-rl;
+      text-orientation: mixed;
+      display: flex;
+      flex-direction: column;
+      flex-wrap: nowrap;
+      align-items: stretch;
+      gap: clamp(1.4rem, 4vw, 3rem);
+    }
+    .z--ryokan-mv_copy .z--ryokan-mv_line:first-child {
+      transform: translateY(-1em);
+    }
+    .z--ryokan-mv_copy .z--ryokan-mv_line:last-child:not(:first-child) {
+      transform: translateY(1em);
+    }
+
+    /* コピー行: ブラー＋フェード（開始は --z--ryokan-mv-lineIndex でスタガード） */
+    @keyframes ryokan-mv-lineReveal {
+      from {
+        opacity: 0;
+        filter: blur(var(--z--ryokan-mv-lineBlurMax, 12px));
+      }
+      to {
+        opacity: 1;
+        filter: blur(0);
+      }
+    }
+
+    .z--ryokan-mv_copy .z--ryokan-mv_line {
+      opacity: 0;
+      filter: blur(var(--z--ryokan-mv-lineBlurMax, 12px));
+      animation: ryokan-mv-lineReveal var(--z--ryokan-mv-lineDuration, 1s) ease forwards;
+      animation-delay: calc(var(--z--ryokan-mv-lineStartDelay, 0s) + var(--z--ryokan-mv-lineStagger, 0.2s) * var(--z--ryokan-mv-lineIndex, 0));
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .z--ryokan-mv_layer {
+        animation: none;
+        opacity: 0;
+        transform: none;
+      }
+      .z--ryokan-mv_layer:first-child {
+        opacity: 1;
+      }
+      .z--ryokan-mv_copy .z--ryokan-mv_line {
+        animation: none;
+        opacity: 1;
+        filter: none;
+      }
+    }
+
+    /*
+   * ビューポート全幅: 親の max-width に依存しないよう、自身を 100vw で中央に置く。
+   */
+    .z--ryokan-about {
+      --z--ryokan-about-l-inset: max(var(--gutter-size), calc((100vw - var(--sz--l)) / 2));
+      --z--ryokan-about-xl-inset: max(var(--gutter-size), calc((100vw - var(--sz--xl)) / 2));
+      position: relative;
+      left: 50%;
+      transform: translateX(-50%);
+      box-sizing: border-box;
+      width: 100vw;
+      max-width: 100vw;
+      overflow-x: clip;
+    }
+    .z--ryokan-about_mediaRightImg {
+      display: block;
+      object-fit: cover;
+    }
+    .z--ryokan-about_figureLeft,
+    .z--ryokan-about_figureRight {
+      margin: 0;
+    }
+    @media (min-width: 800px) {
+      .z--ryokan-about_col--left {
+        box-sizing: border-box;
+        min-width: 0;
+        /* 見出し・本文: グローバルな size=l の左端（Lism の px-s はカスタム計算のため CSS のみ） */
+        padding-inline-start: var(--z--ryokan-about-l-inset);
+      }
+      .z--ryokan-about_stack {
+        align-self: start;
+        width: min(100%, var(--sz--l));
+        min-width: 0;
+      }
+      .z--ryokan-about_body {
+        padding-inline-start: var(--s50);
+      }
+      .z--ryokan-about_figureLeft {
+        align-self: start;
+        margin-block-start: auto;
+        padding-block-start: var(--s30);
+        margin-inline-start: calc(var(--z--ryokan-about-xl-inset) - var(--z--ryokan-about-l-inset));
+        box-sizing: border-box;
+        min-inline-size: 0;
+        max-inline-size: 100%;
+        inline-size: min(20rem, 100%);
+      }
+    }
+    @media (max-width: 799px) {
+      .z--ryokan-about_grid {
+        padding-inline: var(--gutter-size);
+        box-sizing: border-box;
+      }
+      .z--ryokan-about_figureLeft {
+        inline-size: 100%;
+        max-inline-size: none;
+      }
+      .z--ryokan-about_mediaRightImg {
+        aspect-ratio: 4 / 3;
+        block-size: auto;
+      }
+    }
+
+    /* 左端プル: コンテナ幅 l + gutter と整合 */
+    .z--ryokan-feature {
+      --z--ryokan-feature-pull: max(var(--gutter-size, 0px), calc((100vw - min(100vw, var(--sz--l))) / 2));
+      --z--ryokan-feature-figure-max-h: 540px;
+      position: relative;
+    }
+    /* isContainer 祖先幅: Lism md と同じ (min-width: 800px) / not で補集合（max-width:799 との境目ギャップを避ける） */
+    @container not (min-width: 800px) {
+      .z--ryokan-feature_textCol {
+        order: 1;
+      }
+      .z--ryokan-feature_figure {
+        order: 2;
+        margin-inline: 0;
+        inline-size: 100%;
+        max-inline-size: none;
+        aspect-ratio: 16 / 10;
+        max-block-size: var(--z--ryokan-feature-figure-max-h);
+      }
+      .z--ryokan-feature_bodyStack {
+        align-self: stretch;
+        margin-inline-start: 0;
+        max-inline-size: 100%;
+      }
+      .z--ryokan-feature_lead,
+      .z--ryokan-feature_body {
+        text-align: start;
+        text-wrap: pretty;
+      }
+      .z--ryokan-feature_title {
+        align-self: end;
+      }
+    }
+    .z--ryokan-feature_figure {
+      margin: 0;
+      position: relative;
+      box-sizing: border-box;
+      align-self: stretch;
+      max-block-size: var(--z--ryokan-feature-figure-max-h);
+    }
+    .z--ryokan-feature_figure > img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    @container (min-width: 800px) {
+      .z--ryokan-feature_figure {
+        margin-inline-start: calc(-1 * var(--z--ryokan-feature-pull));
+        width: calc(100% + var(--z--ryokan-feature-pull));
+        max-width: none;
+        border-radius: 0 var(--bdrs--10) var(--bdrs--10) 0;
+        min-height: min(22rem, 52vw, var(--z--ryokan-feature-figure-max-h));
+      }
+      .z--ryokan-feature_figure > img {
+        min-height: min(22rem, 52vw, var(--z--ryokan-feature-figure-max-h));
+      }
+    }
+    .z--ryokan-feature_textCol {
+      min-height: 0;
+      overflow-x: visible;
+    }
+    /* 2列時: 見出しは上・本文は下（上端・下端揃え） */
+    @container (min-width: 800px) {
+      .z--ryokan-feature_copyRow {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        grid-template-rows: 1fr auto;
+        min-height: min(22rem, 52vw);
+      }
+      .z--ryokan-feature_title {
+        grid-column: 2;
+        grid-row: 1 / -1;
+        align-self: start;
+        justify-self: end;
+      }
+      .z--ryokan-feature_bodyStack {
+        grid-column: 1;
+        grid-row: 2;
+        align-self: end;
+        max-inline-size: min(100%, 26rem);
+      }
+      .z--ryokan-feature_lead,
+      .z--ryokan-feature_body {
+        text-align: start;
+      }
+    }
+    .z--ryokan-feature_title {
+      flex-shrink: 0;
+      line-height: 1.65;
+    }
+    /* 縦書き2列: 横書きの flex 列＋子に writing-mode: vertical-rl */
+    .z--ryokan-feature_titleInner {
+      display: flex;
+      flex-direction: row-reverse;
+      align-items: flex-start;
+      gap: 0.65em;
+    }
+    .z--ryokan-feature_titleLine1,
+    .z--ryokan-feature_titleLine2 {
+      display: block;
+      writing-mode: vertical-rl;
+      text-orientation: mixed;
+    }
+    .z--ryokan-feature_titleLine2 {
+      transform: translateY(1em);
+    }
+    /* 共有。左右位置は Lism md（@container 800px）に同期 */
+    .z--ryokan-feature_watermark {
+      position: absolute;
+      z-index: 0;
+      margin: 0;
+      padding: 0;
+      inset-block-start: 0;
+      transform: none;
+      font-family: var(--ff--base, ui-serif, 'Times New Roman', Times, serif);
+      font-weight: 700;
+      line-height: 0.82;
+      letter-spacing: 0.03em;
+      color: rgb(0 0 0 / 0.07);
+      white-space: nowrap;
+      pointer-events: none;
+      user-select: none;
+      direction: ltr;
+      unicode-bidi: isolate;
+    }
+    @container (min-width: 800px) {
+      .z--ryokan-feature_watermark {
+        inset-inline-start: 0;
+        inset-inline-end: auto;
+        transform-origin: left center;
+        font-size: clamp(2.75rem, 11cqi, 7.5rem);
+      }
+    }
+    @container not (min-width: 800px) {
+      .z--ryokan-feature_watermark {
+        inset-inline-start: auto;
+        inset-inline-end: 0;
+        transform-origin: right center;
+        font-size: clamp(3.15rem, 14cqi, 6.5rem);
+      }
+    }
+
+    /*
+   * Lism の md は viewport の @media ではなく @container (min-width: 800px)（prop-responsive.md）。
+   * また -max-w:100%（max-width）と max-inline-size の併用や、flex 子の % 解決で上限が効かないことがあるため、
+   * コンテナクエリ内で max-width + cqi を使い、fxd の row 切替と同じ基準で min(32rem, 40cqi) に揃える（40cqi はクエリコンテナ行内幅の 40% 相当の上限）。
+   */
+    .z--ryokan-plans_media {
+      max-width: 100%;
+    }
+    @container (min-width: 800px) {
+      .z--ryokan-plans_media {
+        max-width: min(32rem, 40cqi);
+      }
+    }
+
+    /* UI Button のデフォルト（--text 地）を上書きし、デザインどおり白ピル＋黒字に */
+    .z--ryokan-plans_reserve.c--button {
+      --bgc: var(--white);
+      --c: var(--black);
+      --bdc: var(--white);
+    }
+
+    /*
+   * 見出し＋（画像｜質問）をひとつの Grid で管理。
+   * md 以上: 画像列と質問列を repeat(2, 1fr) で 1:1。
+   */
+    .z--ryokan-faq_layout {
+      display: grid;
+      grid-template-areas: 'head' 'acc' 'img';
+      grid-template-columns: minmax(0, 1fr);
+    }
+    .z--ryokan-faq_head {
+      grid-area: head;
+    }
+    .z--ryokan-faq_acc {
+      grid-area: acc;
+    }
+    .z--ryokan-faq_media {
+      grid-area: img;
+    }
+    @container (min-width: 800px) {
+      .z--ryokan-faq_layout {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        grid-template-areas:
+          'head head'
+          'img acc';
+      }
+    }
+
+    .z--ryokan-faq_acc :global(.c--accordion_item) {
+      border-block-end: 1px solid var(--divider);
+    }
+    .z--ryokan-faq_acc :global(.c--accordion_item:last-of-type) {
+      border-block-end: none;
+    }
+
+    .z--ryokan-footer :where(a) {
+      color: inherit;
+    }
+    .z--ryokan-footer_nav :global(li) {
+      list-style: none;
+    }
+
+    /* md 未満: 縦並びの項目間に区切り（最後の行の下には付けない） */
+    .z--ryokan-footer_nav > :global(li:not(:last-child)) {
+      border-block-end: 1px dashed color-mix(in srgb, var(--white) 38%, transparent);
+    }
+
+    /* md 以上: 縦の区切りをやめ、項目の「間」だけ左に縦線（先頭左・末尾右には付けない） */
+    @container (min-width: 800px) {
+      .z--ryokan-footer_nav > :global(li:not(:last-child)) {
+        border-block-end: none;
+      }
+      .z--ryokan-footer_nav > :global(li + li) {
+        border-inline-start: 1px dashed color-mix(in srgb, var(--white) 38%, transparent);
+        padding-inline-start: var(--s20);
+        margin-inline-start: var(--s20);
+      }
+    }
+
+    /* md 未満: 左寄せ。`ta` プロパティのインラインが CSS より優先するため、指定はここに集約 */
+    .z--ryokan-footer_navStack {
+      text-align: start;
+      align-items: flex-start;
+    }
+    @container (min-width: 800px) {
+      .z--ryokan-footer_navStack {
+        text-align: center;
+        align-items: center;
+      }
+    }
+
+    /* md 以上: caret は非表示 */
+    .z--ryokan-footer_navCaret {
+      display: block;
+    }
+    @container (min-width: 800px) {
+      .z--ryokan-footer_navCaret {
+        display: none;
+      }
+    }
+
+    /* ピル型 FAB: UI Button のセマンティック色を上書き */
+    .z--ryokan-reservationFab.c--button {
+      --bgc: var(--black);
+      --c: var(--white);
+      min-width: 12rem;
+    }
+    .z--ryokan-reservationFab:focus-visible {
+      outline: 2px solid color-mix(in srgb, var(--white) 50%, transparent);
+      outline-offset: 3px;
+    }
+  }
+</style>

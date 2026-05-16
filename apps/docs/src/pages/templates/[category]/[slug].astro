@@ -1,0 +1,29 @@
+---
+/**
+ * テンプレート詳細ページ（root言語：ja）
+ *
+ * URL: /templates/{category}/{slug}/
+ * 例: /templates/lp/lp-astro-ryokan/
+ */
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import TemplateDetail from '@/components/templates/TemplateDetail.astro';
+import { getSingleTemplatePaths, getTemplate, getCategory } from '@/lib/templates';
+
+export function getStaticPaths() {
+  return getSingleTemplatePaths().map(({ category, slug }) => ({
+    params: { category, slug },
+  }));
+}
+
+const { category, slug } = Astro.params;
+const template = getTemplate(category!, slug!);
+const categoryData = template ? getCategory(template.category) : undefined;
+
+if (!template || !categoryData) {
+  return Astro.redirect('/404');
+}
+---
+
+<BaseLayout title={`${template.title.ja} - Templates`} description={template.description.ja}>
+  <TemplateDetail template={template} category={categoryData} lang="ja" />
+</BaseLayout>

@@ -17,7 +17,6 @@ export default defineConfig(
       '**/node_modules/**',
       '**/.astro/**',
       '**/.turbo/**',
-      'apps/playgrounds/**',
       'apps/catalog/.storybook/**',
       'apps/catalog/storybook-static/**',
       'eslint.config.mjs',
@@ -109,6 +108,16 @@ export default defineConfig(
   {
     files: ['packages/lism-ui/src/**/astro/**/*.ts', 'packages/lism-ui/src/components/astro.ts'],
     extends: [tseslint.configs.disableTypeChecked],
+    languageOptions: {
+      parserOptions: { projectService: false },
+    },
+  },
+  // scripts/*.mjs は型情報なしで lint する。
+  // tseslint v8 + ESLint v9 の projectService は、複数ファイルを同時に投入したときに
+  // 新規 .mjs を default project に登録し損なうことがあり、lint-staged 経由の pre-commit で
+  // "not found by the project service" になるため、これらは projectService の対象外にする。
+  {
+    files: ['scripts/*.mjs', 'packages/*/scripts/*.mjs'],
     languageOptions: {
       parserOptions: { projectService: false },
     },

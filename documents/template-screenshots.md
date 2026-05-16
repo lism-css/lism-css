@@ -1,104 +1,105 @@
 # テンプレート スクリーンショット
 
-テンプレートページのサムネイル撮影と、レイアウト差分検出の仕組みについて。
+`templates/` 配下の各プロジェクトテンプレについて、プレビューサーバーを起動して自動で撮影する仕組み。
+
+撮影対象URLは各テンプレ配下の `screenshots.config.json` に宣言する。テンプレ追加時にスクリプト本体を変更する必要はない。
+
+> パターン（`apps/docs` 内のセクション集）側は [`pattern-screenshots.md`](./pattern-screenshots.md) を参照。
 
 
 ## コマンド一覧
 
 | コマンド | 説明 |
 |---------|------|
-| `pnpm screenshot:new` | 新規テンプレートのスクリーンショットを撮影（既存はスキップ） |
-| `pnpm screenshot:force` | 全テンプレートのスクリーンショットを再撮影 |
-| `pnpm screenshot:compare` | ベースラインと比較（初回はベースライン生成） |
-| `pnpm screenshot:compare --threshold 0.5` | 差分率しきい値を変更（デフォルト: 0.01%） |
-| `pnpm screenshot:update` | 差分があったテンプレートのベースラインとサムネイルを更新 |
+| `pnpm screenshot:templates` | 各テンプレを build → preview し、新規ぶんのみ撮影（公開用のみ） |
+| `pnpm screenshot:templates:force` | 全テンプレを再撮影。公開用＋ baseline の両方を上書き |
+| `pnpm screenshot:templates:compare` | ベースラインと比較（初回はベースライン生成） |
+| `pnpm screenshot:templates:update` | 差分テンプレのベースラインと公開用画像を更新 |
 
-`screenshot:new` / `screenshot:force` / `screenshot:compare` はビルドを含む。`screenshot:update` は既存の dist を使用する。
-全コマンドとも `apps/docs` ディレクトリで実行する。
+ルート（リポジトリ直下）で実行する。内部的に `pnpm --filter lism-docs ...` を呼び出す。
 
-### テンプレートの絞り込み
+### 対象を絞り込む
 
-`screenshot:new` / `screenshot:force` / `screenshot:compare` で、カテゴリやテンプレートを指定して対象を絞り込める。
+slug でも相対パスでも指定できる。
 
 ```bash
-pnpm screenshot:new cta              # カテゴリ指定
-pnpm screenshot:new cta/cta001       # テンプレート指定
-pnpm screenshot:new cta section      # 複数指定
-pnpm screenshot:compare cta          # 比較対象の絞り込み
+pnpm --filter lism-docs screenshot:templates -- --target=minimal-astro
+pnpm --filter lism-docs screenshot:templates -- --target=blog/astro/simple
+pnpm --filter lism-docs screenshot:templates -- --compare --target=lp-astro
+```
+
+### ビルドをスキップ
+
+既存の `dist/` を使う場合（例: 直前にビルドした直後など）:
+
+```bash
+pnpm --filter lism-docs screenshot:templates -- --no-build
 ```
 
 
-## サムネイル撮影（screenshot:new / screenshot:force）
+## meta 宣言（screenshots.config.json）
 
-Playwright で各テンプレートのプレビューページを撮影し、`public/screenshots/templates/` に保存する。
-サイト上のテンプレート一覧ページがこれをサムネイルとして表示する。
+各テンプレ直下にこのファイルを置くことで、撮影対象として認識される。
 
-```
-pnpm screenshot:new      # 新規のみ
-pnpm screenshot:force    # 全て再撮影
-```
-
-
-## レイアウト比較（screenshot:compare）
-
-CDN のランダム画像をグレーのプレースホルダーに差し替えた上で撮影し、ベースライン画像とピクセル比較してレイアウトの差分を検出する。
-
-### 初回（ベースライン生成）
-
-```
-pnpm screenshot:compare
+```json
+{
+  "command": "preview",
+  "port": 4321,
+  "waitAfterLoad": 500,
+  "shots": [
+    { "name": "top", "path": "/" },
+    { "name": "about", "path": "/about/" }
+  ]
+}
 ```
 
-`_screenshots/baseline/` にベースライン画像が生成される。これを Git にコミットしておく。
+| プロパティ | 型 | 既定値 | 説明 |
+|----------|---|------|------|
+| `command` | `'preview' \| 'dev'` | `'preview'` | 起動コマンド。`preview` の場合は事前にビルドが実行される |
+| `port` | number | — | プレビューサーバーのポート（テンプレごとに重複しないよう調整） |
+| `waitAfterLoad` | number | `500` | ページ読み込み後の待機ms |
+| `shots[].name` | string | — | 出力ファイル名のベース。`screenshots/{name}.png` で保存 |
+| `shots[].path` | string | — | サーバールートからのパス |
 
-### 2回目以降（比較）
-
-```
-pnpm screenshot:compare
-```
-
-ベースラインと比較し、差分があるテンプレートを通知する。差分画像は `_screenshots/diff/` に出力される。
-
-
-## ベースライン更新（screenshot:update）
-
-```
-pnpm screenshot:update
-```
-
-`_screenshots/diff/` にある差分テンプレートを対象に、以下の2つを同時に更新する:
-
-1. **比較用ベースライン** (`_screenshots/baseline/`) — グレー差し替え画像で再撮影
-2. **公開用サムネイル** (`public/screenshots/templates/`) — 本番画像で再撮影
-
-更新後、`_screenshots/diff/` と `_screenshots/temp/` は自動で削除される。
-
-
-## 運用フロー
-
-1. **CSS やテンプレートを変更した**
-   - `pnpm screenshot:compare` で意図しないレイアウト崩れがないか確認
-2. **差分が意図通り**
-   - `pnpm screenshot:update` でベースラインとサムネイルを更新 → コミット
-3. **サムネイルだけ再撮影したい場合**
-   - `pnpm screenshot:force` でサイト表示用のサムネイルを再撮影 → コミット
-4. **新しいテンプレートを追加した**
-   - `pnpm screenshot:new` で新規のサムネイルを撮影
-   - `pnpm screenshot:compare` でベースラインに追加される
+新しいテンプレを追加するときは、このファイルを置けば自動的に撮影対象に組み込まれる。
 
 
 ## ファイル構成
 
 ```
-apps/docs/
-  scripts/
-    generate-screenshots.ts    # サムネイル撮影スクリプト
-    compare-screenshots.ts     # 比較スクリプト
-    update-screenshots.ts      # 差分テンプレートの更新スクリプト
-  public/
-    screenshots/templates/     # サイト表示用サムネイル（Git管理）
-  _screenshots/
-    baseline/                  # 比較用ベースライン（Git管理）
-    diff/                      # 差分画像の出力先（Git管理外）
-    temp/                      # 比較時の一時ファイル（自動削除）
+templates/
+  minimal/astro/
+    screenshots.config.json         # 撮影対象URL定義
+    screenshots/
+      top.png                       # 公開用サムネイル（Git管理、本物の画像）
+      _baseline/                    # 比較用ベースライン（Git管理、CDNランダム画像はグレー差し替え）
+        top.png
+      _diff/                        # 差分画像（Git管理外）
+      _temp/                        # 比較時の一時ファイル（自動削除）
 ```
+
+`screenshots/` 直下の `*.png` のみが公開用サムネ。apps/docs から `import.meta.glob('@templates/*/*/screenshots/*.png')` 相当（実際は相対パス）で取得する際は、アンダースコア接頭辞の `_baseline/` などのサブディレクトリは glob パターンで自然に除外される。
+
+
+## 運用フロー
+
+1. **テンプレを変更した**
+   - `pnpm screenshot:templates:compare` で意図しないレイアウト崩れがないか確認
+2. **差分が意図通り**
+   - `pnpm screenshot:templates:update` でベースライン＆公開用画像を更新 → コミット
+3. **新しいテンプレを追加した**
+   - 直下に `screenshots.config.json` を作成
+   - `pnpm screenshot:templates` で新規分を撮影 → コミット
+4. **すべて撮り直したい**
+   - `pnpm screenshot:templates:force`
+
+
+## スクリプト
+
+[`apps/docs/scripts/template-screenshots.ts`](../apps/docs/scripts/template-screenshots.ts) に本体がある。
+
+- `templates/` 以下を再帰的に走査し、`screenshots.config.json` を持つディレクトリを撮影対象として収集
+- 各テンプレについて `pnpm --filter <name> build` → `pnpm --filter <name> preview --port <port>` で起動
+- Playwright（headless chromium）で `shots` を順次撮影
+- compare モードでは pixelmatch でベースラインと比較し、しきい値（既定 0.01%）以下なら「変更なし」とみなす
+- **CDN ランダム画像（`cdn.lism-css.com/random/img*` および `cdn.lism-css.com/img/random*`）の扱い** — baseline 撮影時（`force` / `compare` / `update` の baseline 用ページ）は 1x1 グレーに差し替えてから撮影する（pixelmatch 比較を安定させるため）。公開用サムネ撮影（`new` / `force` / `update` の public 用ページ）は本物の画像のまま撮影する。

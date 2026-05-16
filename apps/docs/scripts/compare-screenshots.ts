@@ -1,5 +1,5 @@
 /**
- * テンプレートのスクリーンショット比較スクリプト
+ * パターンのスクリーンショット比較スクリプト
  *
  * CDNのランダム画像をグレーのプレースホルダーに差し替えた上で撮影し、
  * ベースライン画像とピクセル比較してレイアウト差分を検出します。
@@ -9,8 +9,8 @@
  *   npx tsx scripts/compare-screenshots.ts --threshold 0.5    # 差分率しきい値を変更（デフォルト: 0.01%）
  *   npx tsx scripts/compare-screenshots.ts --lang=en          # 英語版のみ比較
  *   npx tsx scripts/compare-screenshots.ts cta                # カテゴリ指定（全言語）
- *   npx tsx scripts/compare-screenshots.ts cta/cta001         # テンプレート指定（全言語）
- *   npx tsx scripts/compare-screenshots.ts cta/cta001 --lang=ja  # 特定テンプレートの日本語版のみ比較
+ *   npx tsx scripts/compare-screenshots.ts cta/cta001         # パターン指定（全言語）
+ *   npx tsx scripts/compare-screenshots.ts cta/cta001 --lang=ja  # 特定パターンの日本語版のみ比較
  */
 
 import { chromium, type Browser, type Page } from 'playwright';
@@ -51,10 +51,10 @@ const targetLangs: readonly Lang[] = langValue ? [langValue as Lang] : ALL_LANGS
 const filters = args.filter((a, i) => !a.startsWith('--') && args[i - 1] !== '--threshold');
 
 /**
- * フィルタ引数でテンプレートを絞り込む
- * "cta" → カテゴリ全体, "cta/cta001" → 特定テンプレート
+ * フィルタ引数でパターンを絞り込む
+ * "cta" → カテゴリ全体, "cta/cta001" → 特定パターン
  */
-function filterTemplatePaths(paths: Array<{ category: string; id: string }>): Array<{ category: string; id: string }> {
+function filterPatternPaths(paths: Array<{ category: string; id: string }>): Array<{ category: string; id: string }> {
   if (filters.length === 0) return paths;
   return paths.filter(({ category, id }) =>
     filters.some((f) => {
@@ -84,12 +84,12 @@ function createGrayPixelPng(): Buffer {
 }
 
 /**
- * テンプレート設定からパス一覧を取得（draft除外）
+ * パターン設定からパス一覧を取得（draft除外）
  */
-async function getTemplatePaths(): Promise<Array<{ category: string; id: string }>> {
-  const { templates } = await import('../src/config/templates.ts');
+async function getPatternPaths(): Promise<Array<{ category: string; id: string }>> {
+  const { patterns } = await import('../src/config/patterns.ts');
   const paths: Array<{ category: string; id: string }> = [];
-  for (const [categoryId, category] of Object.entries(templates)) {
+  for (const [categoryId, category] of Object.entries(patterns)) {
     for (const item of category.items as Array<{ id: string; draft?: boolean }>) {
       if (!item.draft) {
         paths.push({ category: categoryId, id: item.id });
@@ -190,8 +190,8 @@ async function captureScreenshot(page: Page, outputDir: string, category: string
   try {
     const url =
       lang === 'ja'
-        ? `http://localhost:${CONFIG.port}/preview/templates/${category}/${id}/`
-        : `http://localhost:${CONFIG.port}/preview/templates/${category}/${id}/${lang}/`;
+        ? `http://localhost:${CONFIG.port}/preview/patterns/${category}/${id}/`
+        : `http://localhost:${CONFIG.port}/preview/patterns/${category}/${id}/${lang}/`;
     await page.goto(url, { waitUntil: 'networkidle' });
     await page.waitForTimeout(CONFIG.waitAfterLoad);
     await page.screenshot({ path: outputPath, type: 'png' });
@@ -237,9 +237,9 @@ function compareImages(baselinePath: string, newPath: string, diffPath: string):
 }
 
 /**
- * 1テンプレートの撮影→比較
+ * 1パターンの撮影→比較
  */
-async function processTemplate(page: Page, category: string, id: string, lang: Lang, isInitialRun: boolean): Promise<CompareResult> {
+async function processPattern(page: Page, category: string, id: string, lang: Lang, isInitialRun: boolean): Promise<CompareResult> {
   // ja はプレフィックスなし、それ以外は lang/ サブディレクトリ
   const langPrefix = lang === 'ja' ? '' : lang;
   const baselinePath = join(CONFIG.baselineDir, langPrefix, category, `${id}.png`);
@@ -284,7 +284,7 @@ async function processTemplate(page: Page, category: string, id: string, lang: L
 }
 
 async function main() {
-  console.log('🔍 テンプレートスクリーンショット比較');
+  console.log('🔍 パターンスクリーンショット比較');
   console.log(`   しきい値: ${threshold}%`);
   console.log(`   言語: ${targetLangs.join(', ')}`);
   console.log('');
@@ -297,12 +297,12 @@ async function main() {
     process.exit(1);
   }
 
-  const allPaths = await getTemplatePaths();
-  const templatePaths = filterTemplatePaths(allPaths);
+  const allPaths = await getPatternPaths();
+  const patternPaths = filterPatternPaths(allPaths);
   if (filters.length > 0) {
     console.log(`   フィルタ: ${filters.join(', ')}`);
   }
-  console.log(`📋 対象テンプレート数: ${templatePaths.length}`);
+  console.log(`📋 対象パターン数: ${patternPaths.length}`);
 
   // ベースラインの有無で初回かどうか判定
   const isInitialRun = !existsSync(CONFIG.baselineDir);
@@ -350,9 +350,9 @@ async function main() {
       if (targetLangs.length > 1) {
         console.log(`\n🌐 [${lang}]`);
       }
-      for (const { category, id } of templatePaths) {
+      for (const { category, id } of patternPaths) {
         const name = `${category}/${id}`;
-        const result = await processTemplate(page, category, id, lang, isInitialRun);
+        const result = await processPattern(page, category, id, lang, isInitialRun);
 
         switch (result.status) {
           case 'unchanged':
@@ -394,7 +394,7 @@ async function main() {
     // 変更があった場合の詳細
     if (changedItems.length > 0) {
       console.log('');
-      console.log('⚠️  変更があったテンプレート:');
+      console.log('⚠️  変更があったパターン:');
       for (const item of changedItems) {
         console.log(`   - ${item.name} (${item.diffPercent}%)`);
         console.log(`     差分画像: ${item.diffPath}`);

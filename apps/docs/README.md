@@ -53,7 +53,7 @@ src/
 ├── config/               # サイト設定
 │   ├── site.ts               # サイト全体設定・言語設定
 │   ├── sidebar.ts            # サイドバーナビ設定
-│   ├── templates.ts          # テンプレートカテゴリ設定
+│   ├── patterns.ts           # パターンカテゴリ設定
 │   └── translations.ts       # UI翻訳テキスト
 ├── content.config.ts     # コンテンツコレクションスキーマ定義
 ├── content/              # コンテンツコレクション（多言語）
@@ -74,7 +74,7 @@ src/
 │   ├── ogImage.tsx           # OG画像テンプレート
 │   ├── jsonLd.ts             # 構造化データ生成
 │   ├── sitemap-lastmod.ts    # サイトマップ用更新日付
-│   ├── templates.ts          # テンプレート取得
+│   ├── patterns.ts           # パターン取得
 │   ├── remark-directive.ts   # :::記法変換（remark）
 │   ├── rehype-blockquote-cite.ts # blockquote 拡張（rehype）
 │   └── expressive-code.config.ts
@@ -86,8 +86,8 @@ src/
 │   ├── ui/index.astro        # ui セクションのトップ
 │   ├── ui/[...slug].astro    # ui セクション
 │   ├── ui/og/[...slug].png.ts # ui 用 OG画像
-│   ├── templates/            # テンプレート一覧／詳細
-│   ├── preview/templates/    # テンプレートのプレビュー
+│   ├── patterns/             # パターン一覧／詳細
+│   ├── preview/patterns/     # パターンのプレビュー
 │   ├── demo/                 # 各種デモページ
 │   ├── page-layout/          # ページレイアウトのサンプル
 │   └── [lang]/               # 非root言語用ページ
@@ -120,4 +120,3 @@ src/
 |------------|-----|----------------|----------------|
 | docs | `/docs/xxx/` | `content/{lang}/xxx.mdx` | `src/pages/docs/[...slug].astro` |
 | ui | `/ui/xxx/` | `content/{lang}/ui/xxx.mdx` | `src/pages/ui/[...slug].astro` |
-

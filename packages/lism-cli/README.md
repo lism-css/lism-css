@@ -9,7 +9,7 @@
 ## コマンド体系
 
 ```
-lism create [targetDir] [--template <name>]   # examples から新規プロジェクト
+lism create [targetDir] [--template <name>]   # templates から新規プロジェクト
 lism ui    { init | add <names...> | list }   # Lism UI コンポーネントの追加
 lism skill { add | check | update }           # AI エージェント向け SKILL.md 配置
 ```

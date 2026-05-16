@@ -1,18 +1,22 @@
 ---
-import { Frame, Icon } from 'lism-css/astro';
+import { Stack, Frame, Icon } from 'lism-css/astro';
 import { Button } from '@lism-css/ui/astro/Button';
 import { DesktopIcon, DeviceMobileCameraIcon, DeviceTabletCameraIcon } from '@phosphor-icons/react';
 import PreviewFrameScript from './PreviewFrameScript.astro';
+import { getLangFromUrl, t } from '@/lib/i18n';
 
 interface Props {
   [key: string]: any;
 }
-const { isInline = false, hasSizeSwitch = false, url, ...props } = Astro.props;
+const { isInline = false, hasSizeSwitch = false, hasExternalLink = true, externalLinkLabel, url, ...props } = Astro.props;
+
+const lang = getLangFromUrl(Astro.url);
+const externalLabel = externalLinkLabel ?? t(lang, 'demo').openNewTab;
 ---
 
 {
   !isInline ? (
-    <>
+    <Stack g="20">
       {/* プレビューサイズ切り替えボタン */}
       {hasSizeSwitch && (
         <div class="c--previewSizeSwitcher l--flex -g:15 -jc:center" data-preview-url={url}>
@@ -28,15 +32,27 @@ const { isInline = false, hasSizeSwitch = false, url, ...props } = Astro.props;
         </div>
       )}
 
-      <Frame id="preview-iframe" class="c--previewFrame" data-preview-url={url} ar bxsh="10" mx="auto" max-w="100%" style={{ '--ar': '3/2' }}>
+      <Frame
+        id="preview-iframe"
+        class="c--previewFrame"
+        data-preview-url={url}
+        ar
+        bxsh="10"
+        mx="auto"
+        w="100%"
+        max-w="100%"
+        style={{ '--ar': '3/2' }}
+      >
         <Frame className="u--scalePreview" ar bdrs="20" bd bdw="3px" {...props}>
           <iframe src={url} width="800" height="600" style="border:0" />
         </Frame>
       </Frame>
-      <Button href={url} variant="fill" target="_blank" bdrs="10" w="fit" mx="auto">
-        大きい画面で見る
-      </Button>
-    </>
+      {hasExternalLink && (
+        <Button href={url} variant="fill" target="_blank" rel="noopener noreferrer" bdrs="10" w="fit" mx="auto">
+          {externalLabel}
+        </Button>
+      )}
+    </Stack>
   ) : (
     <Frame ar="3/2" {...props}>
       <iframe src={url} width="800" height="600" />

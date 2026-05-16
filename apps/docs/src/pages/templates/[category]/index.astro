@@ -1,0 +1,31 @@
+---
+/**
+ * カテゴリ単位の詳細ページ（root言語：ja）
+ *
+ * URL: /templates/{category}/
+ * aggregateView: true のカテゴリ（中身共通・stack 違いのみ）でのみ生成される。
+ * 例: /templates/minimal/
+ */
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import TemplateCategoryDetail from '@/components/templates/TemplateCategoryDetail.astro';
+import { getAggregatedCategoryPaths, getCategory } from '@/lib/templates';
+import { getCategoryTemplates } from '@/config/templates';
+
+export function getStaticPaths() {
+  return getAggregatedCategoryPaths().map(({ category }) => ({
+    params: { category },
+  }));
+}
+
+const { category } = Astro.params;
+const categoryData = getCategory(category!);
+const templates = categoryData ? getCategoryTemplates(categoryData.id) : [];
+
+if (!categoryData || templates.length === 0) {
+  return Astro.redirect('/404');
+}
+---
+
+<BaseLayout title={`${categoryData.label} - Templates`} description={categoryData.description.ja}>
+  <TemplateCategoryDetail category={categoryData} templates={templates} lang="ja" />
+</BaseLayout>

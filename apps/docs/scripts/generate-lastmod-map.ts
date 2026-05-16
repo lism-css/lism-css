@@ -33,11 +33,14 @@ const OUTPUT_PATH = resolve(DOCS_ROOT, 'lastmod-map.json');
 function getGitLastModifiedMap(): Map<string, Date> {
   const fileToDate = new Map<string, Date>();
 
-  const output = execSync("git log --pretty=format:'__COMMIT__%aI' --name-only -- 'apps/docs/src/content' 'apps/docs/src/pages'", {
-    encoding: 'utf-8',
-    maxBuffer: 50 * 1024 * 1024,
-    cwd: GIT_ROOT,
-  });
+  const output = execSync(
+    "git log --pretty=format:'__COMMIT__%aI' --name-only -- 'apps/docs/src/content' 'apps/docs/src/pages' 'apps/docs/src/components/templates'",
+    {
+      encoding: 'utf-8',
+      maxBuffer: 50 * 1024 * 1024,
+      cwd: GIT_ROOT,
+    }
+  );
 
   let currentDate: Date | null = null;
   for (const line of output.split('\n')) {
@@ -68,7 +71,11 @@ function getGitLastModifiedMap(): Map<string, Date> {
  *
  * ページファイル:
  *   apps/docs/src/pages/index.astro             → [https://lism-css.com/]
- *   apps/docs/src/pages/templates/index.astro   → [https://lism-css.com/templates/]
+ *   apps/docs/src/pages/patterns/index.astro   → [https://lism-css.com/patterns/]
+ *   apps/docs/src/pages/[lang]/templates/index.astro → [https://lism-css.com/en/templates/]
+ *
+ * テンプレート紹介コンポーネント:
+ *   apps/docs/src/components/templates/*.astro → [https://lism-css.com/templates/, https://lism-css.com/en/templates/]
  */
 function filePathToSiteUrls(filePath: string): string[] {
   // _（アンダースコア開始）のパスは非公開ページ
@@ -90,6 +97,12 @@ function filePathToSiteUrls(filePath: string): string[] {
     return urls;
   }
 
+  // テンプレート紹介ページの実体コンポーネント
+  const templatesComponentMatch = filePath.match(/^apps\/docs\/src\/components\/templates\/.+\.astro$/);
+  if (templatesComponentMatch) {
+    return [`${SITE_URL}/templates/`, ...NON_ROOT_LANGS.map((lang) => `${SITE_URL}/${lang}/templates/`)];
+  }
+
   // ページファイル
   const pageMatch = filePath.match(/^apps\/docs\/src\/pages\/(.+)\.astro$/);
   if (pageMatch) {
@@ -100,14 +113,24 @@ function filePathToSiteUrls(filePath: string): string[] {
       return NON_ROOT_LANGS.map((lang) => `${SITE_URL}/${lang}/`);
     }
 
+    // [lang]/templates/index.astro など、非root言語の静的ページ
+    const localizedStaticPageMatch = pagePath.match(/^\[lang\]\/(.+)$/);
+    if (localizedStaticPageMatch) {
+      const localizedPagePath = localizedStaticPageMatch[1];
+      if (!localizedPagePath.includes('[')) {
+        const urlPath = localizedPagePath.replace(/(^|\/)index$/, '');
+        return NON_ROOT_LANGS.map((lang) => `${SITE_URL}/${lang}${urlPath ? `/${urlPath}/` : '/'}`);
+      }
+    }
+
     // その他の動的ルートはコンテンツ由来なのでスキップ
     if (pagePath.includes('[')) return [];
 
-    // preview/templates/{cat}/{id}/index.astro → 対応するテンプレート詳細ページにもマップ
-    const previewMatch = pagePath.match(/^preview\/templates\/(.+)\/index$/);
+    // preview/patterns/{cat}/{id}/index.astro → 対応するパターン詳細ページにもマップ
+    const previewMatch = pagePath.match(/^preview\/patterns\/(.+)\/index$/);
     if (previewMatch) {
-      const templatePath = previewMatch[1];
-      return [`${SITE_URL}/preview/templates/${templatePath}/`, `${SITE_URL}/templates/${templatePath}/`];
+      const patternPath = previewMatch[1];
+      return [`${SITE_URL}/preview/patterns/${patternPath}/`, `${SITE_URL}/patterns/${patternPath}/`];
     }
 
     // index.astro → ディレクトリURL（ルートの index も正しく処理）

@@ -41,6 +41,13 @@ export default defineConfig({
       alias: {
         '@': '/src',
         '@ui': '/src/components/ui',
+        '@templates': new URL('../../templates', import.meta.url).pathname,
+      },
+    },
+    server: {
+      fs: {
+        // monorepo ルートの templates 配下を許可
+        allow: [new URL('../../', import.meta.url).pathname],
       },
     },
     // __で始まるディレクトリ/ファイルをビルドから除外するプラグイン
@@ -66,9 +73,9 @@ export default defineConfig({
     }),
     sitemap({
       // noindex のページは sitemap からも除外する
-      // - /templates/{category}/{id}/ : noindex,follow（一覧トップは index のため除外しない）
-      // - /preview/templates/...      : noindex,nofollow（iframe プレビュー）
-      filter: (page) => !/\/templates\/[^/]+\/[^/]+\/?$/.test(page) && !/\/preview\/templates\//.test(page),
+      // - /patterns/{category}/{id}/ : noindex,follow（一覧トップは index のため除外しない）
+      // - /preview/patterns/...      : noindex,nofollow（iframe プレビュー）
+      filter: (page) => !/\/patterns\/[^/]+\/[^/]+\/?$/.test(page) && !/\/preview\/patterns\//.test(page),
       serialize(item) {
         const lastmod = lastmodMap.get(item.url);
         if (lastmod) {
