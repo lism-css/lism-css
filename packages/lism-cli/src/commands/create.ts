@@ -8,63 +8,20 @@ import { LISM_CSS_VERSION } from '../version.js';
 import { DEFAULT_TEMPLATES_REF, SOURCE_REPO, TEMPLATES_PATH } from '../constants.js';
 import { t, tOf } from '../i18n.js';
 import type { MessageKey } from '../messages.js';
-
-interface LocalizedText {
-  ja: string;
-  en: string;
-}
-
-type TemplateStack = 'astro' | 'next' | 'vite' | 'html';
-type CategoryId = 'minimal' | 'blog' | 'lp' | 'web';
+import {
+  TEMPLATES,
+  type CategoryId,
+  type LocalizedText,
+  type SingleProjectVariantTemplateDef,
+  type Stack as TemplateStack,
+  type TemplateDef,
+} from '../../../../templates/manifest.js';
 
 interface CategoryDef {
   id: CategoryId;
   label: LocalizedText;
   variantPromptKey?: MessageKey;
 }
-
-interface TemplateMeta {
-  slug: string;
-  category: CategoryId;
-  variant?: string;
-  variantLabel?: LocalizedText;
-  stack: TemplateStack;
-  description: LocalizedText;
-}
-
-interface ProjectTemplateDef extends TemplateMeta {
-  kind: 'project';
-  sourcePath: string;
-}
-
-interface BaseOverlayTemplateDef extends TemplateMeta {
-  kind: 'base-overlay';
-  basePath: string;
-  overlayPath: string;
-  rewritePackageName?: boolean;
-}
-
-interface StaticHtmlTemplateDef extends TemplateMeta {
-  kind: 'static-html';
-  sourcePath: string;
-}
-
-/**
- * 単一の Astro / Vite プロジェクト内に複数の variant ディレクトリ（src/pages/{variant}/）を
- * 同居させた構成のテンプレ定義。CLI 抽出時に選択 variant の index.astro を src/pages/index.astro に
- * 持ち上げ、他 variant ディレクトリを削除して単独プロジェクトとして仕上げる。
- */
-interface SingleProjectVariantTemplateDef extends TemplateMeta {
-  kind: 'single-project-variant';
-  /** `templates/` 以下のプロジェクト全体パス（例: 'lp/astro'） */
-  sourcePath: string;
-  /** `src/pages/{variant}/` のディレクトリ名 */
-  variant: string;
-  /** 生成プロジェクトの package.json の name に書き換える値 */
-  packageName: string;
-}
-
-type TemplateDef = ProjectTemplateDef | BaseOverlayTemplateDef | StaticHtmlTemplateDef | SingleProjectVariantTemplateDef;
 
 type PackageJson = {
   name?: string;
@@ -100,79 +57,6 @@ const CATEGORIES: CategoryDef[] = [
     id: 'web',
     label: { ja: 'Web', en: 'Web' },
     variantPromptKey: 'create.promptSelectVariant.web',
-  },
-];
-
-/** 配信対象の templates 一覧（将来は templates ディレクトリから自動生成に置き換え可能） */
-const TEMPLATES: TemplateDef[] = [
-  {
-    slug: 'minimal-astro',
-    kind: 'project',
-    category: 'minimal',
-    stack: 'astro',
-    sourcePath: 'minimal/astro',
-    description: { ja: 'Astro ベースの最小構成', en: 'Minimal Astro setup' },
-  },
-  {
-    slug: 'minimal-vite',
-    kind: 'project',
-    category: 'minimal',
-    stack: 'vite',
-    sourcePath: 'minimal/vite',
-    description: { ja: 'Vite + React ベースの最小構成', en: 'Minimal Vite + React setup' },
-  },
-  {
-    slug: 'blog-astro-simple',
-    kind: 'project',
-    category: 'blog',
-    variant: 'simple',
-    variantLabel: { ja: 'Simple', en: 'Simple' },
-    stack: 'astro',
-    sourcePath: 'blog/astro/simple',
-    description: { ja: 'タグのみのシンプルな Astro ブログ', en: 'Simple Astro blog with tags' },
-  },
-  {
-    slug: 'blog-astro-full',
-    kind: 'project',
-    category: 'blog',
-    variant: 'full',
-    variantLabel: { ja: 'Full', en: 'Full' },
-    stack: 'astro',
-    sourcePath: 'blog/astro/full',
-    description: { ja: 'カテゴリ・目次つきの Astro ブログ', en: 'Astro blog with categories and table of contents' },
-  },
-  {
-    slug: 'lp-astro-minimal',
-    kind: 'single-project-variant',
-    category: 'lp',
-    stack: 'astro',
-    variant: 'minimal',
-    variantLabel: { ja: 'Minimal', en: 'Minimal' },
-    sourcePath: 'lp/astro',
-    packageName: 'lp-astro-minimal',
-    description: { ja: 'ミニマルな Astro ランディングページ', en: 'Minimal Astro landing page' },
-  },
-  {
-    slug: 'lp-astro-natural',
-    kind: 'single-project-variant',
-    category: 'lp',
-    stack: 'astro',
-    variant: 'natural',
-    variantLabel: { ja: 'Natural', en: 'Natural' },
-    sourcePath: 'lp/astro',
-    packageName: 'lp-astro-natural',
-    description: { ja: 'ナチュラルな雰囲気の Astro ランディングページ', en: 'Natural-themed Astro landing page' },
-  },
-  {
-    slug: 'lp-astro-ryokan',
-    kind: 'single-project-variant',
-    category: 'lp',
-    stack: 'astro',
-    variant: 'ryokan',
-    variantLabel: { ja: 'Ryokan', en: 'Ryokan' },
-    sourcePath: 'lp/astro',
-    packageName: 'lp-astro-ryokan',
-    description: { ja: '旅館・宿泊業向けの Astro ランディングページ', en: 'Astro landing page for ryokan / lodging' },
   },
 ];
 

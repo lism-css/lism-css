@@ -1,16 +1,16 @@
 /**
  * Templates 一覧データ
  *
- * テンプレート（プロジェクト雛形）のメタデータを集約。
- * Templates ページの表示に利用する。
- *
- * NOTE: 将来的には packages/lism-cli 側の TEMPLATES 定義と共通化予定（別PR）。
- *       現状は CLI 側の定義（`packages/lism-cli/src/commands/create.ts`）と
- *       手動で同期する必要がある。
+ * テンプレート定義の SSOT は `templates/manifest.ts`。
+ * このファイルでは manifest から CLI と共通のフィールド（slug/category/stack/variant 等）を
+ * 受け取り、docs 専用の表示メタデータ（title/thumb/previewUrl/draft）をマージして
+ * Templates ページが扱う `TemplateItem[]` を組み立てる。
  */
 
 import type { LangCode } from '@/config/site';
 import type { ImageMetadata } from 'astro';
+
+import { TEMPLATES as manifestTemplates, type CategoryId, type Stack, type TemplateDef } from '@templates/manifest';
 
 import minimalAstroThumb from '@templates/minimal/astro/screenshots/top.png';
 import minimalViteThumb from '@templates/minimal/vite/screenshots/top.png';
@@ -20,8 +20,7 @@ import lpAstroMinimalThumb from '@templates/lp/astro/screenshots/minimal.png';
 import lpAstroNaturalThumb from '@templates/lp/astro/screenshots/natural.png';
 import lpAstroRyokanThumb from '@templates/lp/astro/screenshots/ryokan.png';
 
-export type Stack = 'astro' | 'next' | 'vite' | 'html';
-export type CategoryId = 'minimal' | 'blog' | 'lp' | 'web';
+export type { CategoryId, Stack };
 
 export interface TemplateItem {
   slug: string;
@@ -89,11 +88,17 @@ export const stackLabels: Record<Stack, string> = {
 /** Stack のフィルタ表示順 */
 export const stackOrder: Stack[] = ['astro', 'html', 'vite', 'next'];
 
-export const templates: TemplateItem[] = [
-  {
-    slug: 'minimal-astro',
-    category: 'minimal',
-    stack: 'astro',
+/** docs 専用の表示メタデータ。manifest 側の slug をキーに紐付ける */
+interface TemplateDocsMeta {
+  title: Record<LangCode, string>;
+  description: Record<LangCode, string>;
+  thumb: ImageMetadata;
+  previewUrl?: string;
+  draft?: boolean;
+}
+
+const docsMeta: Record<string, TemplateDocsMeta> = {
+  'minimal-astro': {
     thumb: minimalAstroThumb,
     title: { ja: 'Minimal Astro', en: 'Minimal Astro' },
     description: {
@@ -101,10 +106,7 @@ export const templates: TemplateItem[] = [
       en: 'A minimal Astro starter with Lism CSS already wired in.',
     },
   },
-  {
-    slug: 'minimal-vite',
-    category: 'minimal',
-    stack: 'vite',
+  'minimal-vite': {
     thumb: minimalViteThumb,
     title: { ja: 'Minimal Vite', en: 'Minimal Vite' },
     description: {
@@ -112,10 +114,7 @@ export const templates: TemplateItem[] = [
       en: 'A minimal Vite + React starter.',
     },
   },
-  {
-    slug: 'blog-astro-simple',
-    category: 'blog',
-    stack: 'astro',
+  'blog-astro-simple': {
     thumb: blogAstroSimpleThumb,
     title: { ja: 'Blog Astro Simple', en: 'Blog Astro Simple' },
     description: {
@@ -123,10 +122,7 @@ export const templates: TemplateItem[] = [
       en: 'A simple Astro blog with tag support for lightweight publishing.',
     },
   },
-  {
-    slug: 'blog-astro-full',
-    category: 'blog',
-    stack: 'astro',
+  'blog-astro-full': {
     thumb: blogAstroFullThumb,
     title: { ja: 'Blog Astro Full', en: 'Blog Astro Full' },
     description: {
@@ -134,11 +130,8 @@ export const templates: TemplateItem[] = [
       en: 'A fuller Astro blog with categories and table of contents.',
     },
   },
-  {
+  'lp-astro-minimal': {
     draft: true,
-    slug: 'lp-astro-minimal',
-    category: 'lp',
-    stack: 'astro',
     thumb: lpAstroMinimalThumb,
     title: { ja: 'LP Minimal', en: 'LP Minimal' },
     description: {
@@ -146,11 +139,8 @@ export const templates: TemplateItem[] = [
       en: 'A minimal-style Astro landing page.',
     },
   },
-  {
+  'lp-astro-natural': {
     draft: true,
-    slug: 'lp-astro-natural',
-    category: 'lp',
-    stack: 'astro',
     thumb: lpAstroNaturalThumb,
     title: { ja: 'LP Natural', en: 'LP Natural' },
     description: {
@@ -158,11 +148,8 @@ export const templates: TemplateItem[] = [
       en: 'A natural-themed Astro landing page.',
     },
   },
-  {
+  'lp-astro-ryokan': {
     draft: true,
-    slug: 'lp-astro-ryokan',
-    category: 'lp',
-    stack: 'astro',
     thumb: lpAstroRyokanThumb,
     title: { ja: 'LP Ryokan', en: 'LP Ryokan' },
     description: {
@@ -170,7 +157,25 @@ export const templates: TemplateItem[] = [
       en: 'An Astro landing page for ryokan / lodging.',
     },
   },
-];
+};
+
+/** manifest + docs 専用メタを結合した一覧 */
+export const templates: TemplateItem[] = manifestTemplates.map((tpl: TemplateDef): TemplateItem => {
+  const meta = docsMeta[tpl.slug];
+  if (!meta) {
+    throw new Error(`[templates] docs meta is missing for slug "${tpl.slug}". Update apps/docs/src/config/templates.ts`);
+  }
+  return {
+    slug: tpl.slug,
+    category: tpl.category,
+    stack: tpl.stack,
+    title: meta.title,
+    description: meta.description,
+    thumb: meta.thumb,
+    ...(meta.previewUrl ? { previewUrl: meta.previewUrl } : {}),
+    ...(meta.draft ? { draft: meta.draft } : {}),
+  };
+});
 
 /**
  * 本番ビルドで実際に公開されるテンプレートのみを含む派生リスト。
