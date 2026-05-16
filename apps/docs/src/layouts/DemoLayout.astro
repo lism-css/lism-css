@@ -7,6 +7,7 @@
 
 // サイト設定
 import { siteConfig } from '@/config/site';
+import { Lism } from 'lism-css/astro';
 
 import 'lism-css/scss/main.scss';
 
@@ -26,8 +27,14 @@ const { title = 'Demo page' } = Astro.props;
     <meta name="robots" content="noindex, nofollow" />
   </head>
   <body>
-    <div class="is--container">
+    <div>
       <slot />
     </div>
+    {
+      /* Memo: のちほど上下方向センター寄せにする
+      <Lism min-h="100svh" layout="grid">
+      <Lism my="auto"><slot /></Lism>
+    </Lism> */
+    }
   </body>
 </html>
