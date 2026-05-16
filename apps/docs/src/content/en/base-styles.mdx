@@ -186,7 +186,7 @@ hr {
 ```scss
 :is(ul, ol):where(:not([class])) {
   list-style: revert;
-  padding-inline-start: var(--list-px-s, 1.75em);
+  padding-inline-start: var(--list-ps, 1.75em);
 }
 ```
 
@@ -203,7 +203,7 @@ A `ul` / `ol` decorated only with Property Classes (e.g. `<ul class="-fz:l">`) r
 
 | Variable | Fallback | Purpose |
 |------|------------|------|
-| `--list-px-s` | `1.75em` | List `padding-inline-start` |
+| `--list-ps` | `1.75em` | List `padding-inline-start` |
 
 
 ### Definition lists (dl)

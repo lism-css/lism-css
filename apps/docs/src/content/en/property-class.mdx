@@ -172,10 +172,10 @@ export const LinkSPACE = () => <a href="/en/docs/tokens/spacing/"><code>SPACE</c
 |`p`|`padding`|<LinkSPACE/>|✔|
 |`px`|`padding-inline`|<LinkSPACE/>|✔|
 |`py`|`padding-block`|<LinkSPACE/>|✔|
-|`px-s`|`padding-inline-start`|-|✔|
-|`px-e`|`padding-inline-end`|-|✔|
-|`py-s`|`padding-block-start`|-|✔|
-|`py-e`|`padding-block-end`|-|✔|
+|`ps`|`padding-inline-start`|-|✔|
+|`pe`|`padding-inline-end`|-|✔|
+|`pbs`|`padding-block-start`|-|✔|
+|`pbe`|`padding-block-end`|-|✔|
 |`pl`|`padding-left`|-|✔|
 |`pr`|`padding-right`|-|✔|
 |`pt`|`padding-top`|-|✔|
@@ -188,10 +188,10 @@ export const LinkSPACE = () => <a href="/en/docs/tokens/spacing/"><code>SPACE</c
 |`m`|`margin`|`auto`, <LinkSPACE/>|✔|
 |`mx`|`margin-inline`|`auto`, <LinkSPACE/>|✔|
 |`my`|`margin-block`|`auto`, <LinkSPACE/>|✔|
-|`mx-s`|`margin-inline-start`|`auto`|✔|
-|`mx-e`|`margin-inline-end`|`auto`|✔|
-|`my-s`|`margin-block-start`|`auto`, <LinkSPACE/>|✔|
-|`my-e`|`margin-block-end`|`auto`|✔|
+|`ms`|`margin-inline-start`|`auto`|✔|
+|`me`|`margin-inline-end`|`auto`|✔|
+|`mbs`|`margin-block-start`|`auto`, <LinkSPACE/>|✔|
+|`mbe`|`margin-block-end`|`auto`|✔|
 |`ml`|`margin-left`|-|✔|
 |`mr`|`margin-right`|-|✔|
 |`mt`|`margin-top`|-|✔|
@@ -205,24 +205,24 @@ export const LinkSPACE = () => <a href="/en/docs/tokens/spacing/"><code>SPACE</c
   <PreviewArea p="20" resize>
     <Lism p={['20', '30']} bd>
       <Text>Example text</Text>
-      <Text my-s="20" mx="30">
+      <Text mbs="20" mx="30">
         <Fragment>Example text</Fragment>
       </Text>
     </Lism>
   </PreviewArea>
   <PreviewCode slot="tab" label="HTML">
-  ```html "-p:20 -p_sm" "--p_sm:" "-my-s:20 -mx:30"
+  ```html "-p:20 -p_sm" "--p_sm:" "-mbs:20 -mx:30"
   <div class="-p:20 -p_sm -bd" style="--p_sm: var(--s30)">
     <p>Example text</p>
-    <p class="-my-s:20 -mx:30">Example text</p>
+    <p class="-mbs:20 -mx:30">Example text</p>
   </div>
   ```
   </PreviewCode>
   <PreviewCode slot="tab" label="JSX">
-  ```jsx "p={['20', '30']}" "my-s=\"20\"" "mx=\"30\""
+  ```jsx "p={['20', '30']}" "mbs=\"20\"" "mx=\"30\""
   <Lism p={['20', '30']} bd>
     <Text>Example text</Text>
-    <Text my-s="20" mx="30">
+    <Text mbs="20" mx="30">
       Example text
     </Text>
   </Lism>
@@ -328,10 +328,10 @@ Related tokens: <a href="/en/docs/tokens/#size"><code>SIZE</code></a>
 |`i`|`inset`|`0`|-|
 |`i-x`|`inset-inline`|-|-|
 |`i-y`|`inset-block`|-|-|
-|`i-x-s`|`inset-inline-start`|-|-|
-|`i-x-e`|`inset-inline-end`|-|-|
-|`i-y-s`|`inset-block-start`|-|-|
-|`i-y-e`|`inset-block-end`|-|-|
+|`i-s`|`inset-inline-start`|-|-|
+|`i-e`|`inset-inline-end`|-|-|
+|`i-bs`|`inset-block-start`|-|-|
+|`i-be`|`inset-block-end`|-|-|
 
 The examples below demonstrate positioning with `position: absolute`.
 
@@ -615,10 +615,10 @@ The examples below demonstrate positioning with `position: absolute`.
 |`bd-l`|`border-left`|-|-|
 |`bd-x`|`border-inline`|-|-|
 |`bd-y`|`border-block`|-|-|
-|`bd-x-s`|`border-inline-start`|-|-|
-|`bd-x-e`|`border-inline-end`|-|-|
-|`bd-y-s`|`border-block-start`|-|-|
-|`bd-y-e`|`border-block-end`|-|-|
+|`bd-s`|`border-inline-start`|-|-|
+|`bd-e`|`border-inline-end`|-|-|
+|`bd-bs`|`border-block-start`|-|-|
+|`bd-be`|`border-block-end`|-|-|
 
 
 <Preview>

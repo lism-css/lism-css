@@ -31,7 +31,7 @@ const { Content } = await render(post);
       <Heading level="1">
         {post.data.title}
       </Heading>
-      <Cluster g="15" my-s="30">
+      <Cluster g="15" mbs="30">
         <Date>{post.data.date}</Date>
         {
           post.data.tags.length > 0 && (
@@ -48,12 +48,12 @@ const { Content } = await render(post);
       </Cluster>
     </Group>
 
-    <Flow as="article" class="c--articleBody" my-s="50">
+    <Flow as="article" class="c--articleBody" mbs="50">
       <Content />
     </Flow>
 
     {/* フッター（シェアボタン → 前後記事ナビ） */}
-    <Group as="footer" my-s="60">
+    <Group as="footer" mbs="60">
       <Group py="30" bd-y>
         <ShareButtons title={post.data.title} />
       </Group>

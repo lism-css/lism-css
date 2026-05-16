@@ -23,16 +23,16 @@
 ```jsx
 <Box p="30" pos="relative">
   <p>本文テキスト...</p>
-  <Decorator size="1.25em" pos="absolute" t="0" l="0" bd-x-s bd-y-s bdc="current" />
-  <Decorator size="1.25em" pos="absolute" r="0" b="0" bd-x-e bd-y-e bdc="current" />
+  <Decorator size="1.25em" pos="absolute" t="0" l="0" bd-s bd-bs bdc="current" />
+  <Decorator size="1.25em" pos="absolute" r="0" b="0" bd-e bd-be bdc="current" />
 </Box>
 ```
 
 ```html
 <div class="l--box -p:30 -pos:relative">
   <p>本文テキスト...</p>
-  <div class="a--decorator -pos:absolute -t:0 -l:0 -bd-x-s -bd-y-s -bdc:current -ar:1/1 -w" style="--w:1.25em" aria-hidden="true"></div>
-  <div class="a--decorator -pos:absolute -r:0 -b:0 -bd-x-e -bd-y-e -bdc:current -ar:1/1 -w" style="--w:1.25em" aria-hidden="true"></div>
+  <div class="a--decorator -pos:absolute -t:0 -l:0 -bd-s -bd-bs -bdc:current -ar:1/1 -w" style="--w:1.25em" aria-hidden="true"></div>
+  <div class="a--decorator -pos:absolute -r:0 -b:0 -bd-e -bd-be -bdc:current -ar:1/1 -w" style="--w:1.25em" aria-hidden="true"></div>
 </div>
 ```
 

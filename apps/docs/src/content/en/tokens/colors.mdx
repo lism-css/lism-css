@@ -85,7 +85,7 @@ The `u--cbox` utility class derives `color`, `background-color`, and `border-col
     <Lism util="cbox" keycolor="purple" bd bdrs="20" bxsh="20" set="var:bxsh" p="20">
       <DummyText length="codes" />
     </Lism>
-    <Lism util="cbox" keycolor="brand" bdc="keycolor" bd-x-s bdw="4px" p="20">
+    <Lism util="cbox" keycolor="brand" bdc="keycolor" bd-s bdw="4px" p="20">
       <DummyText length="codes" />
     </Lism>
   </PreviewArea>
@@ -93,14 +93,14 @@ The `u--cbox` utility class derives `color`, `background-color`, and `border-col
     ```html
     <div class="u--cbox -p:20" style="--keycolor: var(--red)">...</div>
     <div class="set--var:bxsh u--cbox -bd -bdrs:20 -bxsh:20 -p:20" style="--keycolor: var(--purple)">...</div>
-    <div class="u--cbox -bd-x-s -p:20" style="--keycolor: var(--brand); --bdc: var(--keycolor); --bdw: 4px">...</div>
+    <div class="u--cbox -bd-s -p:20" style="--keycolor: var(--brand); --bdc: var(--keycolor); --bdw: 4px">...</div>
     ```
   </PreviewCode>
   <PreviewCode slot="tab" label="JSX">
     ```jsx
     <Lism util="cbox" keycolor="red" p="20">...</Lism>
     <Lism util="cbox" keycolor="purple" bd bdrs="20" bxsh="20" set="var:bxsh" p="20">...</Lism>
-    <Lism util="cbox" keycolor="brand" bdc="keycolor" bd-x-s bdw="4px" p="20">...</Lism>
+    <Lism util="cbox" keycolor="brand" bdc="keycolor" bd-s bdw="4px" p="20">...</Lism>
     ```
   </PreviewCode>
 </Preview>

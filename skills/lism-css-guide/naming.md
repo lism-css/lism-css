@@ -131,10 +131,10 @@ Emmet と異なるのは `o` (`opacity`) のみ。
 |------|-----------|-----|
 | physical | `-t` / `-b` / `-l` / `-r` | `bd-t`, `bd-b`, `bd-l`, `bd-r` |
 | inline / block | `-x` / `-y` | `bd-x`, `bd-y` |
-| start / end | `-s` / `-e` | `bd-x-s`, `bd-x-e`, `bd-y-s`, `bd-y-e` |
+| start / end | `-s` / `-e` | `bd-s`, `bd-e`, `bd-bs`, `bd-be` |
 | x / y | `-x` / `-y` | `ov-x`, `ov-y` |
 
-例外: `p`, `m` のみ最初のハイフンを省略 → `pt`, `px`, `my`, `mx-s` 等。
+例外: `p`, `m` のみ最初のハイフンを省略 → `pt`, `px`, `my`, `ms` 等。
 
 #### グループ略称の衝突禁止
 
