@@ -182,10 +182,10 @@ Lism コンポーネントの Propsに渡す値の頭に `:` を付けると、 
 | `i` | `inset` | `-i:0` | — |
 | `i-x` | `inset-inline` | — | — |
 | `i-y` | `inset-block` | — | — |
-| `i-x-s` | `inset-inline-start` | — | — |
-| `i-x-e` | `inset-inline-end` | — | — |
-| `i-y-s` | `inset-block-start` | — | — |
-| `i-y-e` | `inset-block-end` | — | — |
+| `i-s` | `inset-inline-start` | — | — |
+| `i-e` | `inset-inline-end` | — | — |
+| `i-bs` | `inset-block-start` | — | — |
+| `i-be` | `inset-block-end` | — | — |
 
 ### 余白 — Padding
 
@@ -194,10 +194,10 @@ Lism コンポーネントの Propsに渡す値の頭に `:` を付けると、 
 | `p` | `padding` | `-p:0`, `-p:5`, `-p:10`, `-p:20`, ... (SPACEトークン) | `-p_sm`, `-p_md` |
 | `px` | `padding-inline` | `-px:0`, `-px:5`, `-px:10`, `-px:20`, ... (SPACEトークン) | `-px_sm`, `-px_md` |
 | `py` | `padding-block` | `-py:0`, `-py:5`, `-py:10`, `-py:20`, ... (SPACEトークン) | `-py_sm`, `-py_md` |
-| `px-s` | `padding-inline-start` | — | `-px-s_sm`, `-px-s_md` |
-| `px-e` | `padding-inline-end` | — | `-px-e_sm`, `-px-e_md` |
-| `py-s` | `padding-block-start` | — | `-py-s_sm`, `-py-s_md` |
-| `py-e` | `padding-block-end` | — | `-py-e_sm`, `-py-e_md` |
+| `ps` | `padding-inline-start` | — | `-ps_sm`, `-ps_md` |
+| `pe` | `padding-inline-end` | — | `-pe_sm`, `-pe_md` |
+| `pbs` | `padding-block-start` | — | `-pbs_sm`, `-pbs_md` |
+| `pbe` | `padding-block-end` | — | `-pbe_sm`, `-pbe_md` |
 | `pl` | `padding-left` | — | `-pl_sm`, `-pl_md` |
 | `pr` | `padding-right` | — | `-pr_sm`, `-pr_md` |
 | `pt` | `padding-top` | — | `-pt_sm`, `-pt_md` |
@@ -212,10 +212,10 @@ SPACEトークン（全値）: `5`, `10`, `15`, `20`, `25`, `30`, `35`, `40`, `5
 | `m` | `margin` | `-m:auto`, `-m:0`, `-m:5`, `-m:10`, `-m:20`, ... (SPACEトークン) | `-m_sm`, `-m_md` |
 | `mx` | `margin-inline` | `-mx:auto`, `-mx:0`, `-mx:5`, `-mx:10`, `-mx:20`, ... (SPACEトークン) | `-mx_sm`, `-mx_md` |
 | `my` | `margin-block` | `-my:auto`, `-my:0`, `-my:5`, `-my:10`, `-my:20`, ... (SPACEトークン) | `-my_sm`, `-my_md` |
-| `mx-s` | `margin-inline-start` | `-mx-s:auto` | `-mx-s_sm`, `-mx-s_md` |
-| `mx-e` | `margin-inline-end` | `-mx-e:auto` | `-mx-e_sm`, `-mx-e_md` |
-| `my-s` | `margin-block-start` | `-my-s:auto`, `-my-s:0`, `-my-s:5`, `-my-s:10`, `-my-s:20`, ... (SPACEトークン) | `-my-s_sm`, `-my-s_md` |
-| `my-e` | `margin-block-end` | `-my-e:auto` | `-my-e_sm`, `-my-e_md` |
+| `ms` | `margin-inline-start` | `-ms:auto` | `-ms_sm`, `-ms_md` |
+| `me` | `margin-inline-end` | `-me:auto` | `-me_sm`, `-me_md` |
+| `mbs` | `margin-block-start` | `-mbs:auto`, `-mbs:0`, `-mbs:5`, `-mbs:10`, `-mbs:20`, ... (SPACEトークン) | `-mbs_sm`, `-mbs_md` |
+| `mbe` | `margin-block-end` | `-mbe:auto` | `-mbe_sm`, `-mbe_md` |
 | `ml` | `margin-left` | — | `-ml_sm`, `-ml_md` |
 | `mr` | `margin-right` | — | `-mr_sm`, `-mr_md` |
 | `mt` | `margin-top` | — | `-mt_sm`, `-mt_md` |
@@ -294,7 +294,7 @@ Lism CSS のボーダーは CSS 変数（`--bds` / `--bdw` / `--bdc`）で管理
 
 | Prop | CSS プロパティ / 変数 | 主なクラス |
 |------|-----------------------|------------|
-| `bd` | `border`（変数管理を有効化） | `-bd`, `-bd-{x\|y\|x-s\|x-e\|y-s\|y-e\|t\|b\|l\|r}`, `-bd:none` |
+| `bd` | `border`（変数管理を有効化） | `-bd`, `-bd-{x\|y\|s\|e\|bs\|be\|t\|b\|l\|r}`, `-bd:none` |
 | `bds` | `--bds` | `-bds:dashed`, `-bds:dotted`, `-bds:double` |
 | `bdc` | `--bdc` | `-bdc:brand`, `-bdc:accent`, `-bdc:divider`, `-bdc:inherit`, `-bdc:transparent`, `-bdc:current` |
 | `bdw` | `--bdw` | BP クラス: `-bdw_sm`, `-bdw_md` |

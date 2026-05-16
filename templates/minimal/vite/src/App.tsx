@@ -13,7 +13,7 @@ export default function App() {
           <Text ta="center" c="text-2" fz="xs">
             Install Lism CSS Skills for AI agents:
           </Text>
-          <Text as="pre" ff="mono" fz="s" bgc="base-2" bdrs="20" bxsh="10" px="30" py="15" my-s="10">
+          <Text as="pre" ff="mono" fz="s" bgc="base-2" bdrs="20" bxsh="10" px="30" py="15" mbs="10">
             npx skills add lism-css/lism-css
           </Text>
         </Stack>

@@ -83,25 +83,25 @@ import { SpacingDemos } from "@/content/token-previews.jsx";
 | `m` | `margin` | `-m:10`, `-m:20`, ... | ○ |
 | `mx` | `margin-inline` | `-mx:10`, `-mx:20`, ... | ○ |
 | `my` | `margin-block` | `-my:10`, `-my:20`, ... | ○ |
-| `my-s` | `margin-block-start` | `-my-s:10`, `-my-s:20`, ... | ○ |
+| `mbs` | `margin-block-start` | `-mbs:10`, `-mbs:20`, ... | ○ |
 | `g` | `gap` | `-g:10`, `-g:20`, ... | ○ |
 
 `gap` は `inherit` にも対応しています。
 
 ### プリセットクラスなし
 
-以下のプロパティには、余白トークンのプリセット property class は用意されていません。ただし、CSS変数（`--px-s` 等）や JSX prop（`px-s="20"` 等）での値指定は可能です。
+以下のプロパティには、余白トークンのプリセット property class は用意されていません。ただし、CSS変数（`--ps` 等）や JSX prop（`ps="20"` 等）での値指定は可能です。
 
 | プロパティ | CSS |
 |---|---|
-| `px-s` | `padding-inline-start` |
-| `px-e` | `padding-inline-end` |
-| `py-s` | `padding-block-start` |
-| `py-e` | `padding-block-end` |
+| `ps` | `padding-inline-start` |
+| `pe` | `padding-inline-end` |
+| `pbs` | `padding-block-start` |
+| `pbe` | `padding-block-end` |
 | `pl`, `pr`, `pt`, `pb` | 物理方向の padding |
-| `mx-s` | `margin-inline-start` |
-| `mx-e` | `margin-inline-end` |
-| `my-e` | `margin-block-end` |
+| `ms` | `margin-inline-start` |
+| `me` | `margin-inline-end` |
+| `mbe` | `margin-block-end` |
 | `ml`, `mr`, `mt`, `mb` | 物理方向の margin |
 | `cg` | `column-gap` |
 | `rg` | `row-gap` |
@@ -115,10 +115,10 @@ margin 系のプロパティには、余白トークンに加えて `auto` の p
 | `m` | `margin` | `-m:auto` |
 | `mx` | `margin-inline` | `-mx:auto` |
 | `my` | `margin-block` | `-my:auto` |
-| `mx-s` | `margin-inline-start` | `-mx-s:auto` |
-| `mx-e` | `margin-inline-end` | `-mx-e:auto` |
-| `my-s` | `margin-block-start` | `-my-s:auto` |
-| `my-e` | `margin-block-end` | `-my-e:auto` |
+| `ms` | `margin-inline-start` | `-ms:auto` |
+| `me` | `margin-inline-end` | `-me:auto` |
+| `mbs` | `margin-block-start` | `-mbs:auto` |
+| `mbe` | `margin-block-end` | `-mbe:auto` |
 
 
 各 property class の詳細は [Property Class](/docs/property-class/) の一覧表を参照してください。

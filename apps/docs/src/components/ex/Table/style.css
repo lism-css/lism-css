@@ -12,8 +12,8 @@
     --bdw-x: 1px;
 
     /* Note: collape にしているので、 1pxだと見えないことに注意。 */
-    --_thead-bd-y-e: solid 2px;
-    --_tfoot-bd-y-s: solid 2px;
+    --_thead-bd-be: solid 2px;
+    --_tfoot-bd-bs: solid 2px;
 
     border: none;
     border-collapse: collapse; /* memo: oveflow の指定によっては separate にしないとborderが表示されない場合がある. 横スクロール時には注意。 */
@@ -30,10 +30,10 @@
   }
 
   .c--table > thead {
-    border-block-end: var(--_thead-bd-y-e);
+    border-block-end: var(--_thead-bd-be);
   }
   .c--table > tfoot {
-    border-block-start: var(--_tfoot-bd-y-s);
+    border-block-start: var(--_tfoot-bd-bs);
   }
 }
 
@@ -69,5 +69,5 @@
   z-index: 2;
   inset: 0 0 calc(var(--bdw-y) * -0.5) 0;
   border-block: var(--bdw-y) var(--bds) var(--bdc);
-  border-block-end: var(--_thead-bd-y-e);
+  border-block-end: var(--_thead-bd-be);
 }

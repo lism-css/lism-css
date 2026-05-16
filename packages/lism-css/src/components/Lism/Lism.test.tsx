@@ -717,9 +717,9 @@ describe('Lism', () => {
         expect(element.getAttribute('style')).toContain('inset-block: var(--s20)');
       });
 
-      test('i-x-s（insetInlineStart）を指定すると inline style として処理される', () => {
+      test('i-s（insetInlineStart）を指定すると inline style として処理される', () => {
         render(
-          <Lism i-x-s="30" data-testid="lism">
+          <Lism i-s="30" data-testid="lism">
             test
           </Lism>
         );
@@ -727,9 +727,9 @@ describe('Lism', () => {
         expect(element.getAttribute('style')).toContain('inset-inline-start: var(--s30)');
       });
 
-      test('i-x-e（insetInlineEnd）を指定すると inline style として処理される', () => {
+      test('i-e（insetInlineEnd）を指定すると inline style として処理される', () => {
         render(
-          <Lism i-x-e="40" data-testid="lism">
+          <Lism i-e="40" data-testid="lism">
             test
           </Lism>
         );
@@ -737,9 +737,9 @@ describe('Lism', () => {
         expect(element.getAttribute('style')).toContain('inset-inline-end: var(--s40)');
       });
 
-      test('i-y-s（insetBlockStart）を指定すると inline style として処理される', () => {
+      test('i-bs（insetBlockStart）を指定すると inline style として処理される', () => {
         render(
-          <Lism i-y-s="50" data-testid="lism">
+          <Lism i-bs="50" data-testid="lism">
             test
           </Lism>
         );
@@ -747,9 +747,9 @@ describe('Lism', () => {
         expect(element.getAttribute('style')).toContain('inset-block-start: var(--s50)');
       });
 
-      test('i-y-e（insetBlockEnd）を指定すると inline style として処理される', () => {
+      test('i-be（insetBlockEnd）を指定すると inline style として処理される', () => {
         render(
-          <Lism i-y-e="60" data-testid="lism">
+          <Lism i-be="60" data-testid="lism">
             test
           </Lism>
         );

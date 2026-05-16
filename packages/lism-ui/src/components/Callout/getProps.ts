@@ -25,7 +25,7 @@ export default function getCalloutProps({ type = 'note', keycolor, icon, title, 
     p: '20',
     g: '10',
     bdc: 'keycolor',
-    'bd-x-s': true,
+    'bd-s': true,
     bdw: '3px',
     ...props,
   };

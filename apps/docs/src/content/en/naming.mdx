@@ -166,6 +166,7 @@ Some examples:
 
 - Side properties that indicate a direction specify it with a hyphenated (`-`) suffix.
 - `inline` / `block` become `x` / `y`.
+- `inline-start` / `inline-end` use `s` / `e` rather than `is` / `ie`, following conventions already common in CSS frameworks.
 
 <figure class="c--propTable">
 <figcaption>Example:</figcaption>
@@ -173,20 +174,22 @@ Some examples:
 |------|-----------|-----|
 | physical | `-t` / `-b` / `-l` / `-r` | `bd-t`, `bd-b`, `bd-l`, `bd-r` |
 | inline / block | `-x` / `-y` | `bd-x`, `bd-y` |
-| start / end | `-s` / `-e` | `bd-x-s`, `bd-x-e`, `bd-y-s`, `bd-y-e` |
+| inline-start / end | `-s` / `-e` | `bd-s`, `bd-e`, `ps`, `pe`, `ms`, `me`, `i-s`, `i-e` |
+| block-start / end | `-bs` / `-be` | `bd-bs`, `bd-be`, `pbs`, `pbe`, `mbs`, `mbe`, `i-bs`, `i-be` |
 | x / y | `-x` / `-y` | `ov-x`, `ov-y` |
 </figure>
 
-#### Directional exception: for `p` and `m` only, the first hyphen is omitted
+#### Directional exception: for `p` and `m` only, the hyphen is omitted
 
-For `padding` and `margin`, notations like `pt`, `px`, `my` are widely adopted across CSS frameworks, so the first hyphen is omitted.
+For `padding` and `margin`, notations like `pt`, `px`, `my` are widely adopted across CSS frameworks, so the hyphen is omitted.
 
 <div class="c--propTable">
 | Direction | Abbreviation |
 |-------------|----------|
 | physical | `pt`, `pb`, `pl`, `pr`, `mt`, `mb`, `ml`, `mr` |
-| inline/block | `px`, `py`, `mx`, `my` |
-| start/end | `px-s`, `px-e`, `py-s`, `py-e`, `mx-s`, `mx-e`, `my-s`, `my-e` |
+| inline / block | `px`, `py`, `mx`, `my` |
+| inline-start / end | `ps`, `pe`, `ms`, `me` |
+| block-start / end | `pbs`, `pbe`, `mbs`, `mbe` |
 </div>
 
 #### No collisions between group abbreviations
@@ -325,4 +328,3 @@ As an exception, values that are 6 characters or more **and** whose abbreviation
 | `fit-content` | `fit` | `-w:fit`, `-h:fit` |
 | `space-between` | `between` | `-ac:between`, `-jc:between` |
 | `currentColor` | `current` | `-bdc:current` |
-
