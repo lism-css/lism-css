@@ -75,6 +75,9 @@ ja版で日本語プレースホルダーテキストが使われている箇所
 |--------|------|
 | コンポーネント | component |
 | トークン | token |
+| 余白トークン/スペーシングトークン | spacing tokens（タイトル・見出しでは `Spacing Tokens`） |
+| SPACEトークン | `SPACE` token(s)（Lismの固有カテゴリ名として明示する場合のみ。一般説明では spacing tokens） |
+| 余白のスケーリング | `Spacing Scale`（`SPACE`見出しでは`SPACE: Spacing Scale`） |
 | プリミティブ | primitive |
 | レイアウト | layout |
 | ユーティリティ | utility |
@@ -164,6 +167,7 @@ ja版で日本語プレースホルダーテキストが使われている箇所
    - [ ] `## Only lism-css` を使っていない（→ `## Without @lism-css/ui`）
    - [ ] `### Examples of creating/using X` を使っていない（→ `### Examples of X built with Lism`）
    - [ ] all-caps の見出しがない（`## COLOR` など）。Title Case か Sentence case に統一
+     - 例外: Lismのトークンカテゴリ名として`SPACE: Spacing Scale`のように使う`SPACE`
    - [ ] 動名詞始まりの見出し（`### Changing X`, `### Switching Y`, `### Adding Z`）→ 名詞句に変換可能か再検討
 
 2. **構文**

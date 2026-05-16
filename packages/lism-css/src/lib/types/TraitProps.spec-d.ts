@@ -98,6 +98,7 @@ describe('LismPropsBase — set / util', () => {
       assertType<LismPropsBase>({ set: 'var:bxsh' });
       assertType<LismPropsBase>({ set: 'var:hov' });
       assertType<LismPropsBase>({ set: 'var:bdrsInner' });
+      assertType<LismPropsBase>({ set: 'var:s' });
     });
 
     it('スペース区切りで複数指定できる', () => {
@@ -114,7 +115,7 @@ describe('LismPropsBase — set / util', () => {
 
     it('文字列配列も受け付ける（内部 API 用途）', () => {
       assertType<LismPropsBase>({ set: ['var:hov', 'var:bxsh'] });
-      assertType<LismPropsBase>({ set: ['var:bdrsInner', 'custom-value'] });
+      assertType<LismPropsBase>({ set: ['var:bdrsInner', 'var:s', 'custom-value'] });
     });
 
     it('undefined / 省略可', () => {
