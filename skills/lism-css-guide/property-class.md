@@ -294,7 +294,7 @@ Lism CSS のボーダーは CSS 変数（`--bds` / `--bdw` / `--bdc`）で管理
 
 | Prop | CSS プロパティ / 変数 | 主なクラス |
 |------|-----------------------|------------|
-| `bd` | `border`（変数管理を有効化） | `-bd`, `-bd-{x\|y\|x-s\|x-e\|y-s\|y-e\|t\|b\|l\|r}`, `-bd:none` |
+| `bd` | `border`（変数管理を有効化） | `-bd`, `-bd-{x\|y\|s\|e\|bs\|be\|t\|b\|l\|r}`, `-bd:none` |
 | `bds` | `--bds` | `-bds:dashed`, `-bds:dotted`, `-bds:double` |
 | `bdc` | `--bdc` | `-bdc:brand`, `-bdc:accent`, `-bdc:divider`, `-bdc:inherit`, `-bdc:transparent`, `-bdc:current` |
 | `bdw` | `--bdw` | BP クラス: `-bdw_sm`, `-bdw_md` |
