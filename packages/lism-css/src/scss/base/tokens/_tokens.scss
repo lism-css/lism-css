@@ -16,10 +16,10 @@
    * Content size
    */
   --sz--xl: 1600px; // 80*20
-  --sz--l: 1280px; // 80*16
-  --sz--m: 56rem; // 読みやすいのが50文字程度。
-  --sz--s: 42rem;
-  --sz--xs: 32rem;
+  --sz--l: 1200px; // 80*15
+  --sz--m: 880px; // 80*11
+  --sz--s: 640px; // 80*8
+  --sz--xs: 400px; // 80*5
 
   /** 
    * カラーパレット
@@ -31,16 +31,16 @@
 
   // 基準の明度と彩度（red)
   --L: 60%;
-  --C: 0.22;
+  --C: 0.2;
 
   // パレットトークン
   --red: oklch(var(--L) var(--C) 20);
-  --orange: oklch(calc(var(--L) + 4%) calc(var(--C) - 0.01) 52);
-  --yellow: oklch(calc(var(--L) + 12%) calc(var(--C) - 0.025) 84);
-  --green: oklch(calc(var(--L) + 4%) calc(var(--C) - 0.02) 152);
-  --blue: oklch(calc(var(--L) - 2%) calc(var(--C) + 0.01) 260);
-  --purple: oklch(calc(var(--L) - 4%) calc(var(--C) + 0.02) 292);
-  --pink: oklch(calc(var(--L) + 2%) calc(var(--C) + 0.02) 348);
+  --orange: oklch(calc(var(--L) + 6%) calc(var(--C) - 0.01) 48);
+  --yellow: oklch(calc(var(--L) + 12%) calc(var(--C) - 0.02) 80);
+  --green: oklch(calc(var(--L) + 4%) calc(var(--C) - 0.01) 152);
+  --blue: oklch(calc(var(--L) - 4%) calc(var(--C) + 0.01) 264);
+  --purple: oklch(calc(var(--L) - 4%) calc(var(--C) + 0.01) 288);
+  --pink: oklch(calc(var(--L) + 2%) calc(var(--C) + 0.01) 352);
   --gray: oklch(calc(var(--L) - 4%) 0.04 256);
 
   /** 
@@ -50,18 +50,21 @@
   --accent: #d94a6a;
 
   // base (background)
-  --base: hsl(224 4% 99%);
-  --base-2: hsl(224 8% 95%);
+  --base: hsl(220 0% 99%);
+  --base-2: hsl(220 4% 95%);
 
   // text (contents)
-  --text: hsl(224 4% 8%);
-  --text-2: hsl(224 6% 32%);
+  --text: hsl(220 0% 8%);
+  --text-2: hsl(220 4% 32%);
 
-  // link
-  --link: oklch(50% 0.3 240); //hsl(224, 90%, 48%);
+  // link color
+  --link: oklch(50% 0.3 240); //hsl(220, 90%, 48%);
 
-  // divider (border)
-  --divider: hsl(224 8% 88%);
+  // divider(border) color
+  --divider: hsl(220 4% 88%);
+
+  // shadow color
+  --shadow: hsl(220 4% 8% / 12%);
 
   /**
    * opacity

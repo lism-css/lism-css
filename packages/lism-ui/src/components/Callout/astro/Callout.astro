@@ -13,15 +13,15 @@ const { icon, title, flow, ...calloutProps } = getCalloutProps(astroProps);
 <Stack class={atts(className, 'c--callout')} {...calloutProps}>
   {
     title && (
-      <Flex class="c--callout_head" c="keycolor" fw="bold" ai="center" g="10">
-        <Center class="c--callout_icon" fz="xl">
-          <Icon icon={icon} />
+      <Flex c="keycolor" fw="bold" ai="center" g="10">
+        <Center>
+          <Icon icon={icon} size="1.25em" />
         </Center>
-        <span class="c--callout_title">{title}</span>
+        <span>{title}</span>
       </Flex>
     )
   }
-  <Flow class="c--callout_body" flow={flow}>
+  <Flow flow={flow}>
     <slot />
   </Flow>
 </Stack>

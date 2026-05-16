@@ -29,14 +29,14 @@ A component for highlighting important points within an article.
   </PreviewCode>
   <PreviewCode slot="tab" label="HTML">
     ```html
-    <div class="c--callout l--stack set--var:bxsh u--cbox -p:20 -g:10 -bd-x-s -bxsh:10" style="--keycolor:var(--blue);--bdc:var(--keycolor);--bdw: 3px">
-      <div class="c--callout_head l--flex -c -fw:bold -ai:center -g:10" style="--c:var(--keycolor)">
-        <div class="c--callout_icon l--center -fz:xl">
+    <div class="c--callout l--stack u--cbox -p:20 -g:10 -bd-x-s" style="--keycolor:var(--blue);--bdc:var(--keycolor);--bdw: 3px">
+      <div class="l--flex -c -fw:bold -ai:center -g:10" style="--c:var(--keycolor)">
+        <div class="l--center">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 256 256"
-            width="1em"
-            height="1em"
+            width="1.25em"
+            height="1.25em"
             fill="currentColor"
             focusable="false"
             class="a--icon"
@@ -45,9 +45,9 @@ A component for highlighting important points within an article.
             <path d="M229.66,58.34l-32-32a8,8,0,0,0-11.32,0l-96,96A8,8,0,0,0,88,128v32a8,8,0,0,0,8,8h32a8,8,0,0,0,5.66-2.34l96-96A8,8,0,0,0,229.66,58.34ZM124.69,152H104V131.31l64-64L188.69,88ZM200,76.69,179.31,56,192,43.31,212.69,64ZM224,120v88a16,16,0,0,1-16,16H48a16,16,0,0,1-16-16V48A16,16,0,0,1,48,32h88a8,8,0,0,1,0,16H48V208H208V120a8,8,0,0,1,16,0Z"></path>
           </svg>
         </div>
-        <span class="c--callout_title">Callout Title</span>
+        <span>Callout Title</span>
       </div>
-      <div class="c--callout_body l--flow -flow:s">
+      <div class="l--flow -flow:s">
         <p>Lorem ipsum dolor sit amet...</p>
       </div>
     </div>
@@ -151,10 +151,10 @@ An example of building the component using only lism-css core elements, without 
 <Preview>
   <PreviewTitle>Preview</PreviewTitle>
   <PreviewArea p="30" resize>
-    <Stack util="cbox" keycolor="blue" p="20" g="10" bdc="keycolor" bd-x-s bdw="3px" bxsh="10" bdrs="10">
+    <Stack util="cbox" keycolor="blue" p="20" g="10" bdc="keycolor" bd-x-s bdw="3px" bdrs="10">
       <Flex c="keycolor" fw="bold" ai="center" g="10">
-        <Center className="c--note_icon" fz="xl">
-          <Icon icon="note" />
+        <Center>
+          <Icon icon="note" size="1.25em" />
         </Center>
         <span>Callout</span>
       </Flex>
@@ -165,10 +165,10 @@ An example of building the component using only lism-css core elements, without 
   </PreviewArea>
   <PreviewCode slot="tab" label="JSX">
     ```jsx
-    <Stack util="cbox" keycolor="blue" p="20" g="10" bdc="keycolor" bd-x-s bdw="3px" bxsh="10" bdrs="10">
+    <Stack util="cbox" keycolor="blue" p="20" g="10" bdc="keycolor" bd-x-s bdw="3px" bdrs="10">
       <Flex c="keycolor" fw="bold" ai="center" g="10">
-        <Center className="c--note_icon" fz="xl">
-          <Icon icon="note" />
+        <Center>
+          <Icon icon="note" size="1.25em" />
         </Center>
         <span>Callout</span>
       </Flex>
@@ -180,15 +180,15 @@ An example of building the component using only lism-css core elements, without 
   </PreviewCode>
   <PreviewCode slot="tab" label="HTML">
   ```html
-  <div class="l--stack u--cbox -p:20 -g:10 -bd-x-s -bxsh:10" style="--keycolor: var(--blue); --bdc: var(--keycolor); --bdw: 3px">
+  <div class="l--stack u--cbox -p:20 -g:10 -bd-x-s" style="--keycolor: var(--blue); --bdc: var(--keycolor); --bdw: 3px">
     <div class="l--flex -c -fw:bold -ai:center -g:10" style="--c: var(--keycolor)">
-      <div class="c--note_icon l--center -fz:xl">
+      <div class="l--center">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           class="a--icon"
           viewBox="0 0 256 256"
-          width="1em"
-          height="1em"
+          width="1.25em"
+          height="1.25em"
           fill="currentColor"
           focusable="false"
           aria-hidden="true"

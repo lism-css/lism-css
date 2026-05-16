@@ -8,7 +8,11 @@
     "outDir": "dist",
     "declaration": true,
     "skipLibCheck": true,
-    "types": ["node"]
+    "types": ["node"],
+    "baseUrl": ".",
+    "paths": {
+      "@templates/*": ["../../templates/*"]
+    }
   },
-  "include": ["src", "tsup.config.ts"]
+  "include": ["src", "tsup.config.ts", "vitest.config.ts", "../../templates/manifest.ts"]
 }

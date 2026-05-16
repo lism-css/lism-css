@@ -23,7 +23,7 @@ const GUIDE_TOPICS = {
   },
   'utility-class': { file: 'utility-class.md', label: 'Utility classes (u--trim, u--cbox, etc.)' },
   'css-rules': { file: 'css-rules.md', label: 'CSS methodology, layer structure, naming conventions' },
-  responsive: { file: 'prop-responsive.md', label: 'Responsive design, breakpoints, container queries' },
+  responsive: { file: 'responsive.md', label: 'Responsive design, breakpoints, container queries' },
   antipatterns: {
     file: 'antipatterns.md',
     label: 'AI code-generation antipatterns: token typos, prop type mistakes, layout choice errors, responsive omissions',

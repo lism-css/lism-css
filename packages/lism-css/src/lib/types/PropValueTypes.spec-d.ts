@@ -23,7 +23,25 @@ describe('PropValueTypes', () => {
     // bp: 1 なので Responsive でラップされる
     expectTypeOf<PropValueTypes['mx']>().toEqualTypeOf<
       Responsive<
-        'auto' | '0' | '5' | '10' | '15' | '20' | '30' | '40' | '50' | '60' | '70' | '80' | (string & {}) | number | boolean | null | undefined
+        | 'auto'
+        | '0'
+        | '5'
+        | '10'
+        | '15'
+        | '20'
+        | '25'
+        | '30'
+        | '35'
+        | '40'
+        | '50'
+        | '60'
+        | '70'
+        | '80'
+        | (string & {})
+        | number
+        | boolean
+        | null
+        | undefined
       >
     >();
   });
@@ -32,7 +50,25 @@ describe('PropValueTypes', () => {
     // bp: 1 なので Responsive でラップされる
     expectTypeOf<PropValueTypes['m']>().toEqualTypeOf<
       Responsive<
-        'auto' | '0' | '5' | '10' | '15' | '20' | '30' | '40' | '50' | '60' | '70' | '80' | (string & {}) | number | boolean | null | undefined
+        | 'auto'
+        | '0'
+        | '5'
+        | '10'
+        | '15'
+        | '20'
+        | '25'
+        | '30'
+        | '35'
+        | '40'
+        | '50'
+        | '60'
+        | '70'
+        | '80'
+        | (string & {})
+        | number
+        | boolean
+        | null
+        | undefined
       >
     >();
   });
@@ -88,13 +124,17 @@ describe('PropValueTypes', () => {
 
   it('cg（column-gap）には space トークンの値を設定できる（レスポンシブ対応）', () => {
     expectTypeOf<PropValueTypes['cg']>().toEqualTypeOf<
-      Responsive<'5' | '10' | '15' | '20' | '30' | '40' | '50' | '60' | '70' | '80' | (string & {}) | number | boolean | null | undefined>
+      Responsive<
+        '5' | '10' | '15' | '20' | '25' | '30' | '35' | '40' | '50' | '60' | '70' | '80' | (string & {}) | number | boolean | null | undefined
+      >
     >();
   });
 
   it('rg（row-gap）には space トークンの値を設定できる（レスポンシブ対応）', () => {
     expectTypeOf<PropValueTypes['rg']>().toEqualTypeOf<
-      Responsive<'5' | '10' | '15' | '20' | '30' | '40' | '50' | '60' | '70' | '80' | (string & {}) | number | boolean | null | undefined>
+      Responsive<
+        '5' | '10' | '15' | '20' | '25' | '30' | '35' | '40' | '50' | '60' | '70' | '80' | (string & {}) | number | boolean | null | undefined
+      >
     >();
   });
 

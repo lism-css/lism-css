@@ -13,7 +13,7 @@ Lism CSSを利用するための手順を解説します。
 
 <PreviewTitle>CDN経由でスタイルシートを読み込む</PreviewTitle>
 ```html
-<link href="https://cdn.jsdelivr.net/npm/lism-css@0.16.0/dist/css/main.css" rel="stylesheet" />
+<link href="https://cdn.jsdelivr.net/npm/lism-css@0.18.0/dist/css/main.css" rel="stylesheet" />
 ```
 
 もちろん、CSSファイルをダウンロードして読み込んでもOKです。
@@ -51,17 +51,17 @@ Lism CSSを利用するための手順を解説します。
 <Preview>
   <PreviewCode slot="tab" label="pnpm">
   ```bash frame="none"
-  pnpm create lism@latest --template astro-minimal
+  pnpm create lism@latest --template minimal-astro
   ```
   </PreviewCode>
   <PreviewCode slot="tab" label="npm">
   ```bash frame="none"
-  npm create lism@latest -- --template astro-minimal
+  npm create lism@latest -- --template minimal-astro
   ```
   </PreviewCode>
   <PreviewCode slot="tab" label="yarn">
   ```bash frame="none"
-  yarn create lism --template astro-minimal
+  yarn create lism --template minimal-astro
   ```
   </PreviewCode>
 </Preview>
@@ -71,7 +71,8 @@ Lism CSSを利用するための手順を解説します。
 
 | テンプレート | 説明 |
 |---|---|
-| `astro-minimal` | Astro ベースの最小構成 |
+| `minimal-astro` | Astro ベースの最小構成 |
+| `minimal-vite` | Vite + React ベースの最小構成 |
 
 
 ## React/Astro コンポーネントを使用する

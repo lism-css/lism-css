@@ -1,0 +1,75 @@
+---
+import { Flex, Stack, Link, Container, Inline, Icon, Center } from 'lism-css/astro';
+import { Modal } from '@lism-css/ui/astro/Modal';
+import SnsLinks from '@/components/SnsLinks.astro';
+import { siteConfig } from '@/config/site';
+---
+
+<Container as="header" isWrapper hasGutter py="20" pos="sticky" t="0" z="99">
+  <Flex ai="center" jc="between">
+    <Link href="/" set="plain" d="flex" fw="bold" fz="l" lh="xs">
+      {siteConfig.name}
+    </Link>
+
+    {/* ハンバーガーボタン（md未満） */}
+    <Modal.OpenBtn
+      modalId="site-nav"
+      class="c--menuTrigger l--center set--plain"
+      d="inline-flex"
+      bdrs="10"
+      p="0.4em"
+      hov={{ bgc: 'base-2' }}
+      aria-labelledby="menu-open-label"
+    >
+      <Icon viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true">
+        <line x1="2" y1="8" x2="22" y2="8"></line>
+        <line x1="2" y1="16" x2="22" y2="16"></line>
+      </Icon>
+      <Inline d="none" id="menu-open-label">メニューを開く</Inline>
+    </Modal.OpenBtn>
+  </Flex>
+
+  {/* モバイル用モーダルナビ */}
+  <Modal.Root id="site-nav" isContainer isWrapper="s" hasGutter py="40">
+    <Modal.Inner layout="stack" g="20" w="100%" max-h="100%" pos="relative" p="30" bdrs="20" bxsh="40" bgc="base">
+      <Flex ai="center" jc="between" mt="-5">
+        <Inline fz="xs" lts="l" c="text-2" tt="upper">Menu</Inline>
+        <Modal.CloseBtn modalId="site-nav" autofocus p="0.4em" mx-e="-0.4em" bdrs="10" hov={{ bgc: 'base-2' }} aria-labelledby="menu-close-label">
+          <Icon
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.8"
+            stroke-linecap="round"
+            aria-hidden="true"
+            style={{ scale: '1.15' }}
+          >
+            <path d="M18 6 6 18"></path><path d="m6 6 12 12"></path>
+          </Icon>
+          <Inline d="none" id="menu-close-label">メニューを閉じる</Inline>
+        </Modal.CloseBtn>
+      </Flex>
+      <Modal.Body layout="stack" g="20" ov-y="auto">
+        <Stack as="nav" aria-label="メインナビゲーション" util="divide" fz="s">
+          {
+            siteConfig.nav.map((item) => (
+              <Link href={item.href} c="inherit" td="none" py="10" hov={{ c: 'brand' }}>
+                {item.label}
+              </Link>
+            ))
+          }
+        </Stack>
+      </Modal.Body>
+      <Center my="-5">
+        <SnsLinks />
+      </Center>
+    </Modal.Inner>
+  </Modal.Root>
+</Container>
+
+<style>
+  header {
+    backdrop-filter: blur(0.5em);
+    background-color: color-mix(in srgb, var(--base) 50%, transparent);
+  }
+</style>

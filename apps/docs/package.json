@@ -16,6 +16,10 @@
     "screenshot:force": "pnpm build:astro && npx tsx scripts/generate-screenshots.ts --force",
     "screenshot:compare": "pnpm build:astro && npx tsx scripts/compare-screenshots.ts",
     "screenshot:update": "npx tsx scripts/update-screenshots.ts",
+    "screenshot:templates": "npx tsx scripts/template-screenshots.ts",
+    "screenshot:templates:force": "npx tsx scripts/template-screenshots.ts --force",
+    "screenshot:templates:compare": "npx tsx scripts/template-screenshots.ts --compare",
+    "screenshot:templates:update": "npx tsx scripts/template-screenshots.ts --update --no-build",
     "lint": "astro sync && pnpm lint:eslint",
     "lint:eslint": "eslint '**/*.{js,mjs,ts,tsx,astro,mdx}'",
     "test": "vitest run && pnpm run typecheck"

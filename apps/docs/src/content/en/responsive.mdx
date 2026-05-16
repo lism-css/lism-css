@@ -1,5 +1,5 @@
 ---
-title: 'Prop Responsive'
+title: 'Responsive'
 description: 'Learn how Lism CSS handles responsive design with breakpoint classes and variables.'
 ---
 import { Lism, Box, Spacer } from "lism-css/astro";
@@ -106,6 +106,17 @@ Breakpoints are defined **mobile-first**, using the values 480px, 800px, and 112
 |`sm`|`width >= 480px`|
 |`md`|`width >= 800px`|
 |(`lg`)|`width >= 1120px`|
+
+Each breakpoint label means "**styles apply once the size exceeds it**".  
+For example, `sm` is not "for smartphone-sized screens only" — it is a label for "applies above the `sm` size".
+
+```
+Smartphone ──┬── Tablet (Portrait) ──┬── Tablet (Landscape) ──┬── Laptop and up
+             │                       │                        │
+          sm:480px                md:800px               (lg:1120px)
+```
+
+Example: `-d:none -d_sm:block` → hidden by default, shown at `sm` and above.
 
 :::info
 Standard support covers `sm` and `md` only. Support for `lg` and beyond requires additional [SCSS configuration customization](/en/docs/customize/).

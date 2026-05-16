@@ -119,7 +119,7 @@ Lism CSS では、レイアウトを組み立てる小さな積み木として *
 #### 補足
 
 - 各 Primitive の詳細・使用例は [primitives/](./primitives/) 配下の個別ファイルを参照
-- レスポンシブな値（配列指定）を使う場合は祖先要素に `is--container` が必須（[prop-responsive.md](./prop-responsive.md)）
+- レスポンシブな値（配列指定）を使う場合は祖先要素に `is--container` が必須（[responsive.md](./responsive.md)）
 
 
 ## Atomic Primitive（`a--`）

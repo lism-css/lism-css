@@ -1,0 +1,314 @@
+---
+import { Stack, Flex, Cluster, AutoColumns, Text, Heading, Link, Lism, Frame, Inline } from 'lism-css/astro';
+import { Button } from '@lism-css/ui/astro/Button';
+import { Image } from 'astro:assets';
+import { getLocalizedUrl, type LangCode } from '@/lib/i18n';
+import { stackLabels, groupByCategory, getAggregateRepresentative } from '@/config/templates';
+import CopyCommand from './CopyCommand.astro';
+
+interface Props {
+  lang: LangCode;
+}
+
+const { lang } = Astro.props as Props;
+const isJa = lang === 'ja';
+
+const copy = isJa
+  ? {
+      title: 'Project Templates',
+      lead: 'Lism CSSで新しいプロジェクトを始めるための雛形です。CLIの対話選択、またはテンプレートslugの直接指定で生成できます。',
+      quickStart: 'クイックスタート',
+      available: '利用できるテンプレート',
+      availableLead: 'CLIから直接生成できるテンプレート一覧です。',
+      commandLead: '対話形式でカテゴリ、スタック、バリアントを選んで生成します。',
+      fullFormLead: '引数を渡すと選択UIをスキップして直接生成できます。',
+      termTitle: 'TemplatesとPatternsの違い',
+      termBody: 'Templatesはプロジェクト一式を生成する雛形です。Patternsは既存サイトへコピーして使うセクション単位・パーツ単位のパターン集です。',
+      patternsLink: 'Patternsを見る',
+      copy: 'コマンドをコピー',
+      copied: 'コピーしました',
+      preview: 'Preview',
+      details: '詳細を見る',
+      thumbAlt: (title: string) => `${title} のサムネイル`,
+      stat: (count: number) => `${count} templates`,
+    }
+  : {
+      title: 'Project Templates',
+      lead: 'Project starters for building new sites with Lism CSS. Generate them through the interactive CLI flow or by passing a template slug directly.',
+      quickStart: 'Quick start',
+      available: 'Available templates',
+      availableLead: 'Templates you can generate directly from the CLI.',
+      commandLead: 'Start the interactive flow and choose category, stack, and variant in order.',
+      fullFormLead: 'Pass arguments to skip the selection UI and generate directly.',
+      termTitle: 'Templates vs. Patterns',
+      termBody: 'Templates generate a full project. Patterns are copy-and-paste section patterns for an existing site.',
+      patternsLink: 'View Patterns',
+      copy: 'Copy command',
+      copied: 'Copied!',
+      preview: 'Preview',
+      details: 'View details',
+      thumbAlt: (title: string) => `${title} thumbnail`,
+      stat: (count: number) => `${count} templates`,
+    };
+
+const grouped = groupByCategory();
+
+const patternsUrl = getLocalizedUrl('/patterns/', lang);
+
+const buildCommand = (slug: string) => `pnpm create lism --template ${slug}`;
+const buildDetailUrl = (category: string, slug: string) => getLocalizedUrl(`/templates/${category}/${slug}/`, lang);
+const buildCategoryDetailUrl = (category: string) => getLocalizedUrl(`/templates/${category}/`, lang);
+---
+
+<Stack g="50" class="p--templates" data-pagefind-body>
+  {/* ===== ヘッダー ===== */}
+  <Stack g="20">
+    <Heading level="1">{copy.title}</Heading>
+    <Text c="text-2" lh="s" max-sz="m">{copy.lead}</Text>
+  </Stack>
+
+  {/* ===== クイックスタート ===== */}
+  <Stack as="section" g="30">
+    <Heading level="2">{copy.quickStart}</Heading>
+    <Stack g="30" p="30" bd bdrs="20" bgc="base">
+      <Text util="trim" c="text-2" fz="s" lh="s">{copy.commandLead}</Text>
+      <Lism as="pre" class="p--templates_code" p="15" bdrs="20" bgc="base-2" fz="xs" lh="s">
+        <code>pnpm create lism</code>
+      </Lism>
+      <Stack g="5">
+        <Text util="trim" c="text-2" fz="xs" lh="s">{copy.fullFormLead}</Text>
+        <Lism as="pre" class="p--templates_code p--templates_codeSub" p="10" bdrs="10" bgc="base-2" fz="xs" lh="s">
+          <code>pnpm create lism {'{targetDir}'} --template {'{slug}'}</code>
+        </Lism>
+      </Stack>
+    </Stack>
+  </Stack>
+
+  {/* ===== テンプレート一覧 ===== */}
+  <Stack as="section" g="40" aria-labelledby="templates-list-title">
+    <Stack g="20">
+      <Heading id="templates-list-title" level="2">{copy.available}</Heading>
+      <Text c="text-2" lh="s">{copy.availableLead}</Text>
+    </Stack>
+
+    {/* カテゴリ別グルーピング */}
+
+    {
+      grouped.map(({ category, items }) => (
+        <Stack g="30">
+          <Stack g="20">
+            <Cluster g="15" ai="baseline">
+              <Heading id={`templates-${category.id}`} level="3">
+                {category.label}
+              </Heading>
+              <Inline c="text-2" fz="xs" lh="s" ff="mono">
+                ({items.length})
+              </Inline>
+            </Cluster>
+            <Text c="text-2" fz="s" lh="s">
+              {category.description[lang]}
+            </Text>
+          </Stack>
+
+          <AutoColumns cols="20em" autoFill g="30">
+            {category.aggregateView
+              ? (() => {
+                  const representative = getAggregateRepresentative(category, items) ?? items[0];
+                  const detailUrl = buildCategoryDetailUrl(category.id);
+                  const command = buildCommand(category.id);
+                  const cardTitle = category.label;
+                  const cardDescription = category.description[lang];
+                  const cardPreviewUrl = representative?.previewUrl;
+                  return (
+                    <Stack as="article" id={category.id} g="0" bd bdrs="20" bgc="base" ov="hidden" class="p--templates_card">
+                      <a href={detailUrl} class="p--templates_thumbLink" aria-label={cardTitle}>
+                        <Frame ar="16/9" ov="hidden" bd-b fxsh="0">
+                          <Image
+                            src={representative.thumb}
+                            alt={copy.thumbAlt(cardTitle)}
+                            widths={[400, 800]}
+                            sizes="(max-width: 600px) 100vw, 33vw"
+                            loading="lazy"
+                          />
+                        </Frame>
+                      </a>
+                      <Stack p="20" g="20" fxg="1">
+                        <Cluster g="5">
+                          {items.map((tpl) => (
+                            <Inline d="inline-flex" px="10" fz="2xs" ff="mono" c="text-2" bd bdc="current" bdrs="99">
+                              {stackLabels[tpl.stack]}
+                            </Inline>
+                          ))}
+                        </Cluster>
+                        <Heading level="4" fz="l" util="trim">
+                          <a href={detailUrl} class="p--templates_titleLink">
+                            {cardTitle}
+                          </a>
+                        </Heading>
+                        <Text c="text-2" fz="s" lh="s" util="trim">
+                          {cardDescription}
+                        </Text>
+                        <Stack g="15" mt="auto">
+                          <CopyCommand bdrs="10" command={command} copyLabel={copy.copy} copiedLabel={copy.copied} />
+                          <Flex g="15" ai="stretch">
+                            <Button as="a" href={detailUrl} bdrs="10" g="5" fz="xs" fx="1" variant="outline">
+                              <span>{copy.details}</span>
+                            </Button>
+                            <Button
+                              as="a"
+                              variant="fill"
+                              href={cardPreviewUrl ?? '#'}
+                              target={cardPreviewUrl ? '_blank' : undefined}
+                              rel={cardPreviewUrl ? 'noopener noreferrer' : undefined}
+                              aria-disabled={cardPreviewUrl ? undefined : 'true'}
+                              tabindex={cardPreviewUrl ? undefined : -1}
+                              bdrs="10"
+                              g="5"
+                              fz="xs"
+                              fx="1"
+                            >
+                              <span>{copy.preview}</span>
+                              <svg
+                                width="12"
+                                height="12"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="2.5"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                aria-hidden="true"
+                              >
+                                <line x1="7" y1="17" x2="17" y2="7" />
+                                <polyline points="7 7 17 7 17 17" />
+                              </svg>
+                            </Button>
+                          </Flex>
+                        </Stack>
+                      </Stack>
+                    </Stack>
+                  );
+                })()
+              : items.map((template) => (
+                  <Stack as="article" id={template.slug} g="0" bd bdrs="20" bgc="base" ov="hidden" class="p--templates_card">
+                    <a href={buildDetailUrl(template.category, template.slug)} class="p--templates_thumbLink" aria-label={template.title[lang]}>
+                      <Frame ar="16/9" ov="hidden" bd-b fxsh="0">
+                        <Image
+                          src={template.thumb}
+                          alt={copy.thumbAlt(template.title[lang])}
+                          widths={[400, 800]}
+                          sizes="(max-width: 600px) 100vw, 33vw"
+                          loading="lazy"
+                        />
+                      </Frame>
+                    </a>
+                    <Stack p="20" g="20" fxg="1">
+                      <Cluster>
+                        <Inline d="inline-flex" px="10" fz="2xs" ff="mono" c="text-2" bd bdc="current" bdrs="99">
+                          {stackLabels[template.stack]}
+                        </Inline>
+                      </Cluster>
+                      <Heading level="4" fz="l" util="trim">
+                        <a href={buildDetailUrl(template.category, template.slug)} class="p--templates_titleLink">
+                          {template.title[lang]}
+                        </a>
+                        {template.draft && (
+                          <Inline px="10" fz="2xs" bdrs="99" c="red">
+                            draft
+                          </Inline>
+                        )}
+                      </Heading>
+                      <Text c="text-2" fz="s" lh="s" util="trim">
+                        {template.description[lang]}
+                      </Text>
+                      <Stack g="15" mt="auto">
+                        <CopyCommand bdrs="10" command={buildCommand(template.slug)} copyLabel={copy.copy} copiedLabel={copy.copied} />
+                        <Flex g="15" ai="stretch">
+                          <Button as="a" href={buildDetailUrl(template.category, template.slug)} bdrs="10" g="5" fz="xs" fx="1" variant="outline">
+                            <span>{copy.details}</span>
+                          </Button>
+                          <Button
+                            as="a"
+                            variant="fill"
+                            href={template.previewUrl ?? '#'}
+                            target={template.previewUrl ? '_blank' : undefined}
+                            rel={template.previewUrl ? 'noopener noreferrer' : undefined}
+                            aria-disabled={template.previewUrl ? undefined : 'true'}
+                            tabindex={template.previewUrl ? undefined : -1}
+                            bdrs="10"
+                            g="5"
+                            fz="xs"
+                            fx="1"
+                          >
+                            <span>{copy.preview}</span>
+                            <svg
+                              width="12"
+                              height="12"
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              stroke="currentColor"
+                              stroke-width="2.5"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              aria-hidden="true"
+                            >
+                              <line x1="7" y1="17" x2="17" y2="7" />
+                              <polyline points="7 7 17 7 17 17" />
+                            </svg>
+                          </Button>
+                        </Flex>
+                      </Stack>
+                    </Stack>
+                  </Stack>
+                ))}
+          </AutoColumns>
+        </Stack>
+      ))
+    }
+  </Stack>
+
+  {/* ===== Templates vs Patterns ===== */}
+  <Stack as="section" g="20">
+    <Heading level="2" fz="xl">{copy.termTitle}</Heading>
+    <Text c="text-2" lh="s">{copy.termBody}</Text>
+    <Link href={patternsUrl}>{copy.patternsLink}</Link>
+  </Stack>
+
+  <style>
+    /* Quick start カード内のコードブロック：折り返し許可 */
+    .p--templates_code {
+      max-width: 100%;
+      overflow-x: auto;
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+      margin: 0;
+    }
+
+    /* previewUrl 未設定の Preview ボタン等：クリック自体を抑止 */
+    [aria-disabled='true'] {
+      opacity: 0.5;
+      pointer-events: none;
+    }
+
+    /* サムネイル：リンクとして拡大ホバー */
+    .p--templates_thumbLink {
+      display: block;
+      overflow: hidden;
+    }
+    .p--templates_thumbLink img {
+      transition: transform 0.3s ease;
+    }
+    .p--templates_thumbLink:hover img {
+      transform: scale(1.03);
+    }
+
+    /* タイトルリンク：通常文字色のまま、ホバーで装飾 */
+    .p--templates_titleLink {
+      color: inherit;
+      text-decoration: none;
+    }
+    .p--templates_titleLink:hover {
+      text-decoration: underline;
+    }
+  </style>
+</Stack>

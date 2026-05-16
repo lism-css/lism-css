@@ -24,7 +24,7 @@ interface Props {
   lang: LangCode;
 }
 
-const { lang } = Astro.props;
+const { lang } = Astro.props as Props;
 
 if (!isValidLang(lang)) {
   return Astro.redirect('/404');

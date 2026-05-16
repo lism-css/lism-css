@@ -1,5 +1,5 @@
 ---
-title: 'Prop Responsive'
+title: 'Responsive'
 description: 'Lism CSS におけるブレイクポイントとレスポンシブ対応の仕組みについて解説します。'
 ---
 import { Lism, Box, Spacer } from "lism-css/astro";
@@ -106,6 +106,17 @@ Lismでは、デフォルトで**コンテナクエリ**を採用しています
 |`sm`|`width >= 480px`|
 |`md`|`width >= 800px`|
 |(`lg`)|`width >= 1120px`|
+
+各ブレイクポイントは「**そのサイズを超えた時から**スタイルが効く」という意味で使います。  
+たとえば `sm` は「スマホサイズ専用」ではなく、「`sm` を超えたサイズで効く」ラベルです。
+
+```
+Smartphone ──┬── Tablet (Portrait) ──┬── Tablet (Landscape) ──┬── Laptop and up
+             │                       │                        │
+          sm:480px                md:800px               (lg:1120px)
+```
+
+例: `-d:none -d_sm:block` → デフォルトでは非表示、`sm` 以上で表示。
 
 :::info
 標準でサポートされているのは`sm`,`md`までです。`lg`サイズ以降のサポートは別途[SCSSの設定ファイルのカスタマイズ](/docs/customize/)が必要です。

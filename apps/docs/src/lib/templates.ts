@@ -1,43 +1,41 @@
 /**
- * テンプレート関連のヘルパー関数
+ * Templates 関連のヘルパー関数
  */
 
-import { templates, type TemplateCategoryId, type TemplateItem } from '@/config/templates';
-
-// 本番環境かどうか（draft:trueのアイテムをフィルタリングするために使用）
-const isProd = import.meta.env.PROD;
+import { visibleTemplates, categories, type CategoryDef, type CategoryId, type TemplateItem } from '@/config/templates';
 
 /**
- * 下書き状態のアイテムをフィルタリング（本番環境のみ）
+ * カテゴリIDとslugからテンプレート情報を取得
+ * draft:true のテンプレートは本番ビルドでは取得不可（詳細ページが 404 になる）
  */
-export function filterDraftItems(items: TemplateItem[]): TemplateItem[] {
-  if (!isProd) return items; // 開発環境では全て表示
-  return items.filter((item) => !item.draft);
+export function getTemplate(categoryId: string, slug: string): TemplateItem | undefined {
+  return visibleTemplates.find((tpl) => tpl.category === categoryId && tpl.slug === slug);
 }
 
 /**
- * カテゴリIDとテンプレートIDからテンプレート情報を取得
+ * カテゴリ定義を取得
  */
-export function getTemplate(categoryId: string, templateId: string): TemplateItem | undefined {
-  const category = templates[categoryId as TemplateCategoryId];
-  if (!category) return undefined;
-  const item: TemplateItem | undefined = category.items.find((item) => item.id === templateId);
-  // 本番環境でdraft:trueの場合はundefinedを返す
-  if (isProd && item?.draft) return undefined;
-  return item;
+export function getCategory(categoryId: string): CategoryDef | undefined {
+  return categories.find((c) => c.id === categoryId);
 }
 
 /**
- * 全テンプレートのパスを生成（getStaticPaths用）
+ * slug 単位の詳細ページパスを生成（getStaticPaths 用）。
+ * aggregateView: true のカテゴリは「カテゴリ単位の1ページ」へ統合するため除外する。
  */
-export function getAllTemplatePaths(): Array<{ category: string; id: string }> {
-  const paths: Array<{ category: string; id: string }> = [];
-  for (const [categoryId, category] of Object.entries(templates)) {
-    // 本番環境ではdraft:trueのアイテムを除外
-    const items = filterDraftItems(category.items);
-    for (const item of items) {
-      paths.push({ category: categoryId, id: item.id });
-    }
-  }
-  return paths;
+export function getSingleTemplatePaths(): Array<{ category: CategoryId; slug: string }> {
+  return visibleTemplates
+    .filter((tpl) => {
+      const category = categories.find((c) => c.id === tpl.category);
+      return !category?.aggregateView;
+    })
+    .map((tpl) => ({ category: tpl.category, slug: tpl.slug }));
+}
+
+/**
+ * カテゴリ単位の詳細ページパスを生成（getStaticPaths 用）。
+ * aggregateView: true のカテゴリのみ対象。
+ */
+export function getAggregatedCategoryPaths(): Array<{ category: CategoryId }> {
+  return categories.filter((c) => c.aggregateView && visibleTemplates.some((tpl) => tpl.category === c.id)).map((c) => ({ category: c.id }));
 }

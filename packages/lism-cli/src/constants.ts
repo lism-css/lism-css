@@ -28,7 +28,7 @@ export const DEFAULT_UI_REF = 'main';
 /** `lism skill add` / `check` / `update` が参照するスキルディレクトリの ref */
 export const DEFAULT_SKILL_REF = 'main';
 
-/** `lism create` が参照する examples テンプレートの ref */
+/** `lism create` が参照する templates の ref */
 export const DEFAULT_TEMPLATES_REF = 'main';
 
 // -----------------------------------------------------------------------------
@@ -47,5 +47,5 @@ export const UI_REGISTRY_INDEX_PATH = 'packages/lism-ui/registry-index.json';
 /** スキル配信元のディレクトリ */
 export const SKILL_SOURCE_PATH = 'skills/lism-css-guide';
 
-/** examples テンプレートの配置ディレクトリ */
-export const EXAMPLES_PATH = 'examples';
+/** templates の配置ディレクトリ */
+export const TEMPLATES_PATH = 'templates';

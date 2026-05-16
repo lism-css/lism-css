@@ -9,7 +9,7 @@
 ## コマンド体系
 
 ```
-lism create [targetDir] [--template <name>]   # examples から新規プロジェクト
+lism create [targetDir] [--template <name>]   # templates から新規プロジェクト
 lism ui    { init | add <names...> | list }   # Lism UI コンポーネントの追加
 lism skill { add | check | update }           # AI エージェント向け SKILL.md 配置
 ```
@@ -23,7 +23,7 @@ lism skill { add | check | update }           # AI エージェント向け SKIL
 pnpm dlx lism-cli create
 
 # テンプレート名・出力先を指定
-pnpm dlx lism-cli create --template astro-minimal ./my-app
+pnpm dlx lism-cli create --template minimal-astro ./my-app
 ```
 
 同じ動作は `pnpm create lism` / `npm create lism@latest` でも呼び出せます（`create-lism` パッケージ経由）。

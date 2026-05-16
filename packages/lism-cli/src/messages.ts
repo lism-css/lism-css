@@ -32,16 +32,16 @@ export const messages = {
 
   // create
   'cli.create.description': {
-    ja: 'examples テンプレートから新規プロジェクトを生成する',
-    en: 'Create a new project from an examples template',
+    ja: 'templates から新規プロジェクトを生成する',
+    en: 'Create a new project from a template',
   },
   'cli.create.arg.targetDir': {
     ja: '出力先ディレクトリ',
     en: 'Target directory',
   },
   'cli.create.opt.template': {
-    ja: '使用するテンプレート名（例: astro-minimal）',
-    en: 'Template name to use (e.g. astro-minimal)',
+    ja: '使用するテンプレート名（例: minimal-astro）',
+    en: 'Template name to use (e.g. minimal-astro)',
   },
   'cli.create.opt.force': {
     ja: '既存ディレクトリを強制上書き',
@@ -143,9 +143,33 @@ export const messages = {
     ja: 'テンプレート "{name}" は見つかりません。利用可能: {list}',
     en: 'Template "{name}" not found. Available: {list}',
   },
-  'create.promptSelectTemplate': {
-    ja: 'テンプレートを選択してください:',
-    en: 'Select a template:',
+  'create.promptSelectCategory': {
+    ja: 'カテゴリを選択してください:',
+    en: 'Select a category:',
+  },
+  'create.promptSelectVariant': {
+    ja: 'バリアントを選択してください（{count}件）:',
+    en: 'Select a variant ({count} options):',
+  },
+  'create.promptSelectVariant.blog': {
+    ja: '機能レベルを選択してください（{count}件）:',
+    en: 'Select a feature level ({count} options):',
+  },
+  'create.promptSelectVariant.lp': {
+    ja: '業種を選択してください（{count}件）:',
+    en: 'Select an industry ({count} options):',
+  },
+  'create.promptSelectVariant.web': {
+    ja: '業種を選択してください（{count}件）:',
+    en: 'Select an industry ({count} options):',
+  },
+  'create.promptSelectStack': {
+    ja: 'スタックを選択してください（{count}件）:',
+    en: 'Select a stack ({count} options):',
+  },
+  'create.usingStack': {
+    ja: 'スタックは{stack}を使用します（{count}件）。',
+    en: 'Using {stack} stack ({count} option).',
   },
   'create.promptTargetDir': {
     ja: '出力先ディレクトリ:',
@@ -163,6 +187,18 @@ export const messages = {
     ja: 'テンプレート "{name}" を取得中（ref: {ref}）...',
     en: 'Fetching template "{name}" (ref: {ref})...',
   },
+  'create.templatePackageMissing': {
+    ja: 'テンプレート"{name}"の取得結果にpackage.jsonがありません。取得元パスを確認してください: {path}',
+    en: 'Downloaded template "{name}" does not contain package.json. Check the source path: {path}',
+  },
+  'create.templateIndexMissing': {
+    ja: 'テンプレート"{name}"の取得結果にindex.htmlがありません。取得元パスを確認してください: {path}',
+    en: 'Downloaded template "{name}" does not contain index.html. Check the source path: {path}',
+  },
+  'create.variantMissing': {
+    ja: 'variant "{variant}" のディレクトリが見つかりません。取得元パスを確認してください: {path}',
+    en: 'Variant "{variant}" directory not found. Check the source path: {path}',
+  },
   'create.created': {
     ja: '{dir} にプロジェクトを生成しました。',
     en: 'Generated project at {dir}.',
@@ -170,6 +206,18 @@ export const messages = {
   'create.nextSteps': {
     ja: '次のコマンドで開発を開始できます:',
     en: 'Next steps:',
+  },
+  'create.nextStepsHtmlOpen': {
+    ja: '  index.htmlをブラウザで開いてください',
+    en: '  Open index.html in your browser',
+  },
+  'create.packageNameRewritten': {
+    ja: '  package.jsonのnameを"{name}"に変更しました。',
+    en: '  Updated package.json name to "{name}".',
+  },
+  'create.packageNameFailed': {
+    ja: 'package.jsonのname書き換えに失敗しました: {reason}',
+    en: 'Failed to rewrite package.json name: {reason}',
   },
   'create.workspaceReplaced': {
     ja: '  package.json の workspace:* を ^{version} に置換しました。',

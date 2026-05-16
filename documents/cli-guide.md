@@ -40,6 +40,16 @@ nr publish:cli  # build → lism-cli publish → create-lism publish
 - 検証目的の beta publish でも `DEFAULT_*_REF` を PR ブランチに固定しないこと（壊れる）。検証時は CLI 側の `--ref` フラグで都度指定する
 
 
+## テンプレ運用メモ
+
+`templates/` 配下のテンプレートは `lism create` の配信元。SSOT は `templates/manifest.ts` の `TEMPLATES` 配列で、`packages/lism-cli/src/commands/create.ts` から import される。テンプレ追加・編集時の運用ルール：
+
+- **`templates/*/*` の `package.json` には必ず `"private": true` を付ける**（npm への誤公開防止）。`scripts/check-templates-private.mjs` で CI チェック済み。
+- **`base-overlay` 型の overlay 側には `package.json` を置かない**。CLI は base の `package.json` を採用し、overlay は差分ファイルのみ上書きする想定。overlay 側に置くと merge 後の `name` 書き換え対象が二重化し、`workspace:*` 置換のロジックも崩れる。共通化したい設定は base に集約する。
+- **`templates/lp/html/_generated/` 配下は手編集禁止**（※ `static-html` 型テンプレの実配信は #375 で追加予定）。`static-html` 型テンプレの配信元として、source（別ディレクトリ）からの生成物を置く前提のディレクトリ。手で編集すると次回再生成で消える。修正は generator 側で行う。
+- **`single-project-variant` 型**（例: `templates/lp/astro/`）は単一プロジェクトに `src/pages/{variant}/` を並べる構成。CLI 抽出時に選択 variant の `index.astro` を `src/pages/index.astro` に持ち上げ、他 variant ディレクトリを削除する。variant 追加時は `src/pages/{variant}/index.astro` を作り、`TEMPLATES` に新 slug を追加する。
+
+
 ## publish 前チェック
 
 - [ ] `constants.ts` の 3 つの ref が `'main'`

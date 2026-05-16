@@ -15,7 +15,7 @@
 | `primitive-class.md` | Primitive クラス (`is--`, `l--`, `a--`) と Component クラス (`c--`) の一覧と用途（※俯瞰マップに徹する。個別 Primitive へのリンクは載せない） | `packages/lism-css/src/scss/primitives/`, `packages/lism-ui/src/`（c-- 系） |
 | `utility-class.md` | ユーティリティクラス (`u--` クラス) の一覧とProperty Class との違い | `packages/lism-css/src/scss/utility/` |
 | `property-class.md` | Property Class (`-{prop}:{value}`)の一覧、記法と出力の解説、特殊Prop（ボーダー・ホバー） | `packages/lism-css/config/defaults/props.ts`, `packages/lism-css/src/scss/_prop-config.scss`, `packages/lism-css/src/scss/props/` |
-| `prop-responsive.md` | レスポンシブ対応 — ブレークポイント・コンテナクエリ・HTML/コンポーネントでの指定方法 | `packages/lism-css/src/scss/_query.scss`, `packages/lism-css/src/lib/getBpData.ts` |
+| `responsive.md` | レスポンシブ対応 — ブレークポイント・コンテナクエリ・HTML/コンポーネントでの指定方法 | `packages/lism-css/src/scss/_query.scss`, `packages/lism-css/src/lib/getBpData.ts` |
 | `components-core.md` | コアコンポーネント — セマンティック・Lism Props・getLismProps。Atomic/Trait/Layout の対応表には `primitives/*.md` への詳細リンクを保持する（※個別 Props・仕様の詳細は `primitives/*.md` 側に移管済み） | `packages/lism-css/src/components/`, 各パッケージの exports |
 | `components-ui.md` | UIコンポーネント（`@lism-css/ui`）— Accordion・Modal・Tabs・Button 等の Props・構造・CLI | `packages/lism-ui/src/`, 各パッケージの exports |
 | `tokens.md` | デザイントークン（余白・フォントサイズ・角丸・影・カラー・パレット） | `packages/lism-css/src/scss/base/tokens/`, `packages/lism-css/config/defaults/tokens.ts` |

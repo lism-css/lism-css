@@ -85,7 +85,7 @@ export default {
     prop: 'maxInlineSize',
     token: 'sz',
     tokenClass: 1,
-    presets: ['full'],
+    presets: ['full', 'bleed'],
     exUtility: {
       full: '',
       bleed: '',
