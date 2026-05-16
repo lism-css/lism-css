@@ -8,13 +8,13 @@ import { Box, Stack, Cluster, Columns, Frame, Center, Text } from 'lism-css/astr
 import { DummyText } from '@lism-css/ui/astro/DummyText';
 import { SpacingDemos } from "@/content/token-previews.jsx";
 
-This page covers Lism's spacing tokens — a Fibonacci-based harmonic scale combined with practical 4px-step values — and the property classes that use them.
+This page covers Lism's spacing tokens — a Fibonacci-based harmonic scale with selected lower-end filler values — and the property classes that use them.
 
 ## SPACE: Spacing Scale
 
 The main scale from `--s40` upward follows the Fibonacci sequence ((0, 1,) 1, 2, 3, 5, 8, 13, 21, 34, ...). The base unit is `--s-unit` (default `calc(var(--fz--base) * 0.5)` ≈ 8px).
 
-Because Fibonacci-only steps would leave the lower end too coarse, `--s5` (4px), `--s15` (12px), `--s25` (20px), and `--s35` (32px) are added so that everything up to `--s40` (40px) is filled in with practical 4px-step values.
+Because Fibonacci-only steps would leave the lower end too coarse, `--s5` (4px), `--s15` (12px), `--s25` (20px), and `--s35` (32px) are added as selected filler values between the main scale tokens.
 
 ```css
 :root,
@@ -123,4 +123,3 @@ Margin properties also have `auto` property classes in addition to spacing token
 For details on each property class, see the [Property Class](/en/docs/property-class/) reference table.
 
 <DocsLink path="/docs/property-class/" />
-

@@ -8,13 +8,13 @@ import { Box, Stack, Cluster, Columns, Frame, Center, Text } from 'lism-css/astr
 import { DummyText } from '@lism-css/ui/astro/DummyText';
 import { SpacingDemos } from "@/content/token-previews.jsx";
 
-フィボナッチ数列ベースの調和スケールと、4px 刻みの実用値を組み合わせたスペーシングトークン、および対応する property class について解説します。
+フィボナッチ数列ベースの調和スケールと、前半部分の中間値を組み合わせたスペーシングトークン、および対応する property class について解説します。
 
 ## SPACE: 余白のスケーリング
 
 `--s40` 以降の主軸はフィボナッチ数列 ((0, 1,) 1, 2, 3, 5, 8, 13, 21, 34, ...) に基づくスケールです。`--s-unit`（デフォルト `calc(var(--fz--base) * 0.5)` ＝ ≒ 8px）を基準単位として算出しています。
 
-それだけだと前半部分が粗いため、`--s5` (4px) / `--s15` (12px) / `--s25` (20px) / `--s35` (32px) を追加し、`--s40` (40px) までは 4px 刻みの実用値で補完しています。
+それだけだと前半部分が粗いため、`--s5` (4px) / `--s15` (12px) / `--s25` (20px) / `--s35` (32px) を、主軸トークン間を補う中間値として追加しています。
 
 ```css
 :root,

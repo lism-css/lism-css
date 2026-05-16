@@ -13,9 +13,9 @@ The set-- classes fall into two categories:
 | Category | Purpose | Classes |
 |----------|---------|---------|
 | Base styling | Resetting or reverting HTML element styles | `set--plain` / `set--revert` |
-| Variable setup | Setting up CSS variables only | `set--var:bxsh` / `set--var:hov` / `set--var:bdrsInner` |
+| Variable setup | Setting up CSS variables only | `set--var:bxsh` / `set--var:hov` / `set--var:bdrsInner` / `set--var:s` |
 
-The `{name}` in `set--var:{name}` corresponds to the name of the CSS variable each class sets up (e.g. `--bxsh--*` → `var:bxsh`, `--_isHov` / `--_notHov` → `var:hov`, `--bdrs--inner` → `var:bdrsInner`).
+The `{name}` in `set--var:{name}` corresponds to the name of the CSS variable each class sets up (e.g. `--bxsh--*` → `var:bxsh`, `--_isHov` / `--_notHov` → `var:hov`, `--bdrs--inner` → `var:bdrsInner`, `--s*` → `var:s`).
 
 
 ## `set--plain`
@@ -72,6 +72,7 @@ Apply `set--revert` when a list has classes but you still want to keep the list 
   ```
   </PreviewCode>
 </Preview>
+
 
 :::info
 Classless `ul` / `ol` elements (lists with no `class` attribute at all) automatically retain the browser's default list style, so `set--revert` is not needed.
@@ -133,6 +134,21 @@ By overriding the `--shc` variable here, you can adjust the color tint of the sh
     ```
   </PreviewCode>
 </Preview>
+
+
+## `set--var:s`
+
+A class that recalculates spacing tokens (`--s5` through `--s80`) against the current font size. Use it for parts like Buttons or Badges where internal spacing should follow the element's own font-size.
+
+<SrcCode path="src/scss/base/tokens/_space.scss" />
+
+```html
+<button class="set--var:s -fz:s -py:10 -px:20">...</button>
+```
+
+For details, see [Spacing Tokens](/en/docs/tokens/spacing/).
+
+<DocsLink path="/docs/tokens/spacing/" />
 
 
 ## `set--var:hov`
@@ -289,4 +305,3 @@ Because `p` and `bdrs` are tracked as CSS variables even at different breakpoint
 ```
   </PreviewCode>
 </Preview>
-
