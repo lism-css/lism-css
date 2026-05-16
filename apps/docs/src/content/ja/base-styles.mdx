@@ -34,7 +34,7 @@ import 'lism-css/reset.css';
 
 <PreviewTitle>CDN経由でスタイルシートを読み込む</PreviewTitle>
 ```html
-<link href="https://cdn.jsdelivr.net/npm/lism-css@0.16.0/dist/css/reset.css" rel="stylesheet" />
+<link href="https://cdn.jsdelivr.net/npm/lism-css@0.17.0/dist/css/reset.css" rel="stylesheet" />
 ```
 
 
@@ -272,7 +272,7 @@ th {
 フォームコントロールには、デフォルトで一括で統一的なスタイルが適用されます。
 
 ```scss
-input, button, textarea, select, ::file-selector-button {
+input:not([type='range']), button, textarea, select, ::file-selector-button {
   background-color: var(--controls-bgc, var(--base-2));
   border: solid 1px var(--controls-bdc, var(--divider));
   padding: var(--controls-p, var(--s5) var(--s10));
