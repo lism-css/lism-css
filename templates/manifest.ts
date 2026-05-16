@@ -97,6 +97,7 @@ export const TEMPLATES: TemplateDef[] = [
     sourcePath: 'blog/astro/simple',
     title: { ja: 'Blog Astro Simple', en: 'Blog Astro Simple' },
     description: { ja: 'タグのみのシンプルな Astro ブログ', en: 'Simple Astro blog with tags' },
+    draft: true,
   },
   {
     slug: 'blog-astro-full',
@@ -108,6 +109,7 @@ export const TEMPLATES: TemplateDef[] = [
     sourcePath: 'blog/astro/full',
     title: { ja: 'Blog Astro Full', en: 'Blog Astro Full' },
     description: { ja: 'カテゴリ・目次つきの Astro ブログ', en: 'Astro blog with categories and table of contents' },
+    draft: true,
   },
   {
     slug: 'lp-astro-minimal',
