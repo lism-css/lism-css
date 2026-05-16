@@ -1,0 +1,138 @@
+---
+/**
+ * コピーボタン付きコマンド表示
+ *
+ * テンプレートカード内などで使う、`$ {command}` の表示とクリップボードコピー機能。
+ * script は Astro により重複排除されるため、ループ内で複数回使ってもバンドルされるのは1度だけ。
+ * 親ファイルから分離することで、編集時の HMR 範囲を狭める目的もある。
+ */
+import { Lism } from 'lism-css/astro';
+import type { ComponentProps } from 'astro/types';
+
+// ComponentProps<typeof Lism> は Polymorphic / data-* 等のインデックスシグネチャを含むため interface extends 不可 → 交差型で合成
+type LismWrapperProps = ComponentProps<typeof Lism>;
+type Props = LismWrapperProps & {
+  command: string;
+  copyLabel: string;
+  copiedLabel: string;
+};
+
+const { command, copyLabel, copiedLabel, ...rest } = Astro.props as Props;
+---
+
+<Lism as="div" class="c--copyCmd" py="10" px="15" bgc="base-2" fz="xs" lh="xs" ff="mono" {...rest}>
+  <code title={`$ ${command}`}>$ {command}</code>
+  <button type="button" class="c--copyCmd_btn" data-copy-command={command} data-copied-label={copiedLabel} aria-label={copyLabel} title={copyLabel}>
+    {/* コピーアイコン（通常時） */}
+    <svg
+      class="c--copyCmd_iconCopy"
+      width="14"
+      height="14"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      aria-hidden="true"
+    >
+      <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+      <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+    </svg>
+    {/* チェックアイコン（コピー完了時） */}
+    <svg
+      class="c--copyCmd_iconCheck"
+      width="14"
+      height="14"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2.5"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      aria-hidden="true"
+    >
+      <polyline points="20 6 9 17 4 12"></polyline>
+    </svg>
+  </button>
+</Lism>
+
+<style is:global>
+  .c--copyCmd {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--s10);
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+  .c--copyCmd > code {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+
+  .c--copyCmd_btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 1.8em;
+    height: 1.8em;
+    padding: 0;
+    border: none;
+    background: transparent;
+    color: var(--text-2);
+    border-radius: var(--bdrs--10);
+    cursor: pointer;
+    transition:
+      background-color 0.15s,
+      color 0.15s;
+  }
+  .c--copyCmd_btn:hover {
+    background: var(--base);
+    color: var(--text);
+  }
+  .c--copyCmd_btn[data-copied] {
+    color: var(--brand);
+  }
+
+  /* アイコン切替：通常時はコピー、data-copied 時はチェック */
+  .c--copyCmd_iconCheck {
+    display: none;
+  }
+  .c--copyCmd_btn[data-copied] .c--copyCmd_iconCopy {
+    display: none;
+  }
+  .c--copyCmd_btn[data-copied] .c--copyCmd_iconCheck {
+    display: inline;
+  }
+</style>
+
+<script>
+  // ボタンに直接バインドする（global span 不要、ループでもバインドは1要素1回）
+  document.querySelectorAll<HTMLButtonElement>('[data-copy-command]').forEach((btn) => {
+    if (btn.dataset.copyBound === '1') return;
+    btn.dataset.copyBound = '1';
+
+    btn.addEventListener('click', async () => {
+      const cmd = btn.dataset.copyCommand;
+      if (!cmd) return;
+      const copiedLabel = btn.dataset.copiedLabel ?? 'Copied!';
+      try {
+        await navigator.clipboard.writeText(cmd);
+        btn.dataset.copied = 'true';
+        const prevLabel = btn.getAttribute('aria-label');
+        btn.setAttribute('aria-label', copiedLabel);
+        window.setTimeout(() => {
+          delete btn.dataset.copied;
+          if (prevLabel) btn.setAttribute('aria-label', prevLabel);
+        }, 1500);
+      } catch (err) {
+        console.error('Failed to copy command:', err);
+      }
+    });
+  });
+</script>
