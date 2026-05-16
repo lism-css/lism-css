@@ -113,6 +113,7 @@ const docsMeta: Record<string, TemplateDocsMeta> = {
       ja: 'Vite + React ベースの最小構成。SPA や検証用に。',
       en: 'A minimal Vite + React starter.',
     },
+    previewUrl: 'https://lism-minimal-vite.pages.dev/',
   },
   'blog-astro-simple': {
     thumb: blogAstroSimpleThumb,
