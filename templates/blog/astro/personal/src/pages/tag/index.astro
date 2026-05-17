@@ -1,0 +1,12 @@
+---
+import { Heading } from 'lism-css/astro';
+import ArchiveLayout from '@/layouts/ArchiveLayout.astro';
+import TagCloud from '@/components/TagCloud.astro';
+import { siteConfig } from '@/config/site';
+---
+
+<ArchiveLayout title={`Tags — ${siteConfig.name}`} description="タグ別の記事一覧">
+  <Heading level="1">Tags</Heading>
+
+  <TagCloud />
+</ArchiveLayout>

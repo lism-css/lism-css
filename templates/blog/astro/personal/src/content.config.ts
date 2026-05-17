@@ -10,6 +10,7 @@ const posts = defineCollection({
     title: z.string(),
     excerpt: z.string(),
     date: z.string(),
+    tags: z.array(z.string()).default([]),
   }),
 });
 

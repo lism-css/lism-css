@@ -7,7 +7,7 @@ export const siteConfig = {
   name: 'lism.blog',
 
   // キャッチコピー
-  tagline: '読む、書く、考える、日々の記録',
+  tagline: 'Web開発の学びと記録',
 
   // サイトのデフォルト説明文
   description: 'ブログの説明文をここに入力してください。meta description に使われます。',

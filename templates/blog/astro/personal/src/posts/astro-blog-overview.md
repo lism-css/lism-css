@@ -1,10 +1,11 @@
 ---
 title: 'blog-astro-personal の構成'
-excerpt: Lism CSS リポジトリに同梱されている personal 向け Astro ブログテンプレートの仕様。エッセイ・日記向けに最適化した構成と、年月アーカイブの仕組みを順に解説する。
+excerpt: Lism CSS リポジトリに同梱されている personal 向け Astro ブログテンプレートの仕様。エッセイ・日記向けに最適化した構成と、年月アーカイブ・タグの仕組みを順に解説する。
 date: 2026.05.10
+tags: ['Astro', 'テンプレート']
 ---
 
-Lism CSS リポジトリの `templates/blog/astro/personal/` には、Lism CSS と `@lism-css/ui` を使った個人ブログ（エッセイ・日記）向けの Astro テンプレートが入っている。文章中心の読み心地を重視した最小構成で、タグやカテゴリのような分類軸は持たず、代わりに **年月アーカイブ** で過去記事をたどれるようにしている。
+Lism CSS リポジトリの `templates/blog/astro/personal/` には、Lism CSS と `@lism-css/ui` を使った個人ブログ（エッセイ・日記）向けの Astro テンプレートが入っている。文章中心の読み心地を重視した最小構成で、カテゴリのような階層的な分類軸は持たず、**年月アーカイブ** と **タグ** で過去記事をたどれるようにしている。
 
 ## 依存関係
 
@@ -104,13 +105,14 @@ const ogImage = buildOgImageUrl({
 ```ts
 export const siteConfig = {
   name: 'lism.blog',
-  tagline: '日々の記録と思いつき',
+  tagline: '読む、書く、考える、日々の記録',
   description: '読書、暮らし、考えごと。ゆっくり書き留めるパーソナルブログ。',
   lang: 'ja',
   pagination: { postsPerPage: 6 },
   nav: [
     { label: 'Home', href: '/' },
     { label: 'Archive', href: '/archive/' },
+    { label: 'About', href: '/about/' },
   ],
   ogImage: { type: '1-5', frame: '1', bg: 'fill' },
   // ...

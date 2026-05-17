@@ -5,7 +5,8 @@ import ArchiveLayout from '@/layouts/ArchiveLayout.astro';
 import PostList from '@/components/PostList.astro';
 import Pager from '@/components/Pager.astro';
 import { siteConfig } from '@/config/site';
-import { Heading } from 'lism-css/astro';
+import { Stack, Heading } from 'lism-css/astro';
+import Eyebrow from '@/components/Eyebrow.astro';
 
 export const getStaticPaths = (async ({ paginate }) => {
   const posts = (await getCollection('posts')).sort((a, b) => b.data.date.localeCompare(a.data.date));
@@ -16,8 +17,11 @@ const { page } = Astro.props;
 ---
 
 <ArchiveLayout title={`${siteConfig.name} — ${siteConfig.tagline}`}>
-  {/* ページタイトル */}
-  <Heading level="1">Posts</Heading>
+  {/* キャッチコピー */}
+  <Stack g="20" util="trimAll">
+    <Eyebrow>Posts</Eyebrow>
+    <Heading level="1" lh="m">{siteConfig.tagline}</Heading>
+  </Stack>
 
   {/* 記事リスト */}
   <PostList posts={page.data} />

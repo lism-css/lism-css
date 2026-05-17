@@ -7,7 +7,7 @@ export const siteConfig = {
   name: 'lism.blog',
 
   // キャッチコピー
-  tagline: '日々の記録と思いつき',
+  tagline: '読む、書く、考える、日々の記録',
 
   // サイトのデフォルト説明文
   description: '読書、暮らし、考えごと。ゆっくり書き留めるパーソナルブログ。',
@@ -25,6 +25,8 @@ export const siteConfig = {
   nav: [
     { label: 'Home', href: '/' },
     { label: 'Archive', href: '/archive/' },
+    { label: 'Tags', href: '/tag/' },
+    { label: 'About', href: '/about/' },
   ],
 
   // OG 画像のデフォルト設定（loos.tools/ogimg-maker の API パラメータ）
@@ -47,6 +49,8 @@ export const siteConfig = {
     nav: [
       { label: 'Home', href: '/' },
       { label: 'Archive', href: '/archive/' },
+      { label: 'Tags', href: '/tag/' },
+      { label: 'About', href: '/about/' },
     ],
   },
 } as const;

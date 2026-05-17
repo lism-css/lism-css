@@ -1,0 +1,45 @@
+---
+import { Group, Flow, Heading } from 'lism-css/astro';
+import Layout from '@/layouts/Layout.astro';
+import { siteConfig } from '@/config/site';
+---
+
+<Layout title={`About — ${siteConfig.name}`} description={`${siteConfig.name} について`}>
+  <Group isWrapper isContainer hasGutter>
+    {/* ページヘッダー */}
+    <Group as="header">
+      <Heading level="1">About</Heading>
+    </Group>
+
+    {/* 本文 */}
+    <Flow as="article" class="c--articleBody" mbs="50">
+      <p>
+        はじめまして。<strong>{siteConfig.name}</strong> へようこそ。<br />
+        このブログは、本や暮らし、考えごとなど、日々の小さな記録をゆっくり書き留めるための場所です。
+      </p>
+
+      <h2>このサイトについて</h2>
+      <p>
+        このサイトは <a href="https://astro.build/">Astro</a> と <a href="https://lism-css.com/">Lism CSS</a> を使って構築されたブログテンプレートです。
+        紙面のような落ち着いた読み心地を目指して、明朝体とクリーム色の地をベースに組み立てています。
+      </p>
+      <p>
+        テンプレートのソースは <a href="https://github.com/lism-css/lism-css">リポジトリ</a> の
+        <code>templates/blog/astro/personal/</code> 配下で公開しています。
+      </p>
+
+      <h2>書いている人</h2>
+      <p>
+        ダミーのプロフィールです。コーヒーと古書、長い散歩が好き。
+        朝のひとときに、その日に気になったことや読んだ本のことをこのブログに書き留めています。
+      </p>
+      <p>
+        日々のテーマはとくに決めていません。読んでよかった本、街で見かけた風景、
+        新しく覚えた料理、考えごとの途中経過——そんなものを気の向くままに置いています。
+      </p>
+
+      <h2>連絡先</h2>
+      <p>感想やお問い合わせは、ページ下部の SNS リンクからお気軽にどうぞ。</p>
+    </Flow>
+  </Group>
+</Layout>
