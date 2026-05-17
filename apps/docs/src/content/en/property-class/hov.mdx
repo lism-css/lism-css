@@ -3,7 +3,7 @@ title: '-hov'
 description: 'How to use the -hov property classes for controlling hover behavior and transitions.'
 ---
 
-import { Flex, Media, Layer, Spacer, Box, Center, Stack, Frame, BoxLink, Inline, Text } from 'lism-css/astro';
+import { Flex, Media, Layer, Spacer, Box, Center, Stack, Frame, BoxLink, Inline, Text, Cluster, Link } from 'lism-css/astro';
 
 
 This page covers how Lism handles hover behavior with CSS.
@@ -27,7 +27,7 @@ The Lism core package provides several built-in classes for each form. Add your 
 <Spacer h="20" />
 
 
-## Using `-hov:-{prop}`
+## `-hov:-{prop}`
 
 `-hov:-{prop}` changes the specified property on hover to the value of the `--hov-{prop}` variable.
 The Lism core package provides the following classes by default:
@@ -35,54 +35,138 @@ The Lism core package provides the following classes by default:
 | Class | Target property | Default value |
 |--------|-----------------|----------------|
 | `-hov:-c` | `color` | `var(--link)` |
+| `-hov:-bgc` | `background-color` | `color-mix(in srgb, var(--bgc, var(--base)), var(--neutral) 25%)` |
 | `-hov:-bdc` | `border-color` | `currentColor` |
-| `-hov:-bgc` | `background-color` | `var(--base-2)` |
 | `-hov:-o` | `opacity` | `var(--o--p)` |
 | `-hov:-bxsh` | `box-shadow` | `var(--bxsh--50)` |
 
-Each class ships with a default value, so you can use them by simply adding the class — no extra configuration needed.
+
+### Using Default Values
+
+Each `-hov:-{prop}` class has a default value, so you can use it without setting a destination CSS variable.
+
+<Preview>
+  <PreviewTitle>The default `-hov:-bgc` value works across different background colors</PreviewTitle>
+  <PreviewArea p="30">
+    <Cluster g="10">
+      <Link href="###" hov="-bgc" c="text" bd bdc="current" px="20" py="10" lh="s" td="none" bdrs="99">
+        <Fragment>Button</Fragment>
+      </Link>
+      <Link href="###" hov="-bgc" bgc="text" c="base" px="20" py="10" lh="s" td="none" bdrs="99">
+        <Fragment>Button</Fragment>
+      </Link>
+      <Link href="###" hov="-bgc" bgc="base-2" c="text" bd px="20" py="10" lh="s" td="none" bdrs="99">
+        <Fragment>Button</Fragment>
+      </Link>
+      <Link href="###" hov="-bgc" bgc="blue" c="white" px="20" py="10" lh="s" td="none" bdrs="99">
+        <Fragment>Button</Fragment>
+      </Link>
+    </Cluster>
+  </PreviewArea>
+  <PreviewCode slot="tab" label="HTML">
+    ```html "-hov:-bgc"
+    <div class="l--cluster -g:10">
+    <a class="-hov:-bgc -c:text -bd -bdc:current -px:20 -py:10 -lh:s -td:none -bdrs:99" href="###">
+      Button
+    </a>
+    <a class="-hov:-bgc -bgc:text -c:base -px:20 -py:10 -lh:s -td:none -bdrs:99" href="###">
+      Button
+    </a>
+    <a class="-hov:-bgc -bgc:base-2 -c:text -bd -px:20 -py:10 -lh:s -td:none -bdrs:99" href="###">
+      Button
+    </a>
+    <a class="-hov:-bgc -bgc -c -px:20 -py:10 -lh:s -td:none -bdrs:99" style="--bgc:var(--blue);--c:var(--white)" href="###">
+      Button
+    </a>
+    </div>
+    ```
+  </PreviewCode>
+  <PreviewCode slot="tab" label="JSX">
+    ```jsx 'hov="-bgc"'
+    <Cluster g="10">
+      <Link href="###" hov="-bgc" c="text" bd bdc="current" px="20" py="10" lh="s" td="none" bdrs="99">
+        Button
+      </Link>
+      <Link href="###" hov="-bgc" bgc="text" c="base" px="20" py="10" lh="s" td="none" bdrs="99">
+        Button
+      </Link>
+      <Link href="###" hov="-bgc" bgc="base-2" c="text" bd px="20" py="10" lh="s" td="none" bdrs="99">
+        Button
+      </Link>
+      <Link href="###" hov="-bgc" bgc="blue" c="white" px="20" py="10" lh="s" td="none" bdrs="99">
+        Button
+      </Link>
+    </Cluster>
+    ```
+  </PreviewCode>
+</Preview>
+
+For buttons and button-like links, lowering the whole element's opacity can make the text harder to read. Use `-hov:-bgc` instead of `-hov:-o` when you only want the background to react.
+
+<Preview>
+  <PreviewTitle>Using `-hov:-o`</PreviewTitle>
+  <PreviewArea p="30">
+    <Cluster g="10">
+      <Link href="###" hov="-o" c="text" bd bdc="current" px="20" py="10" lh="s" td="none" bdrs="99">
+        <Fragment>Button</Fragment>
+      </Link>
+      <Link href="###" hov="-o" bgc="text" c="base" px="20" py="10" lh="s" td="none" bdrs="99">
+        <Fragment>Button</Fragment>
+      </Link>
+    </Cluster>
+  </PreviewArea>
+  <PreviewCode slot="tab" label="HTML">
+    ```html "-hov:-o"
+    <div class="l--cluster -g:10">
+      <a class="-hov:-o -c:text -bd -bdc:current -px:20 -py:10 -lh:s -td:none -bdrs:99" href="###">
+        Button
+      </a>
+      <a class="-hov:-o -bgc:text -c:base -px:20 -py:10 -lh:s -td:none -bdrs:99" href="###">
+        Button
+      </a>
+    </div>
+    ```
+  </PreviewCode>
+  <PreviewCode slot="tab" label="JSX">
+    ```jsx 'hov="-o"'
+    <Cluster g="10">
+      <Link href="###" hov="-o" c="text" bd bdc="current" px="20" py="10" lh="s" td="none" bdrs="99">
+        Button
+      </Link>
+      <Link href="###" hov="-o" bgc="text" c="base" px="20" py="10" lh="s" td="none" bdrs="99">
+        Button
+      </Link>
+    </Cluster>
+    ```
+  </PreviewCode>
+</Preview>
 
 
 <Preview>
-  <PreviewTitle>Usage examples of `-hov:-o`, `-hov:-c`, `-hov:-bxsh`</PreviewTitle>
+  <PreviewTitle>Default-value examples for `-hov:-c`, `-hov:-bdc`, and `-hov:-bxsh`</PreviewTitle>
   <PreviewArea p="30">
-    <BoxLink href="###" hov="-o" bgc="base-2" bd p="20">
+    <BoxLink href="###" hov="-c,-bdc,-bxsh" bd p="20">
       <p>BoxLink</p>
-      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-    </BoxLink>
-    <BoxLink href="###" hov="-c,-bxsh" bd p="20">
-      <p>BoxLink</p>
-      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
     </BoxLink>
   </PreviewArea>
   <PreviewCode slot="tab" label="HTML">
-    ```html "-hov:-o" "-hov:-c" "-hov:-bxsh"
-    <a href="###" class="is--boxLink -hov:-o -bgc:base-2 -bd -p:20">
+    ```html "-hov:-c" "-hov:-bdc" "-hov:-bxsh"
+    <a href="###" class="is--boxLink -hov:-c -hov:-bdc -hov:-bxsh -bd -p:20">
       <p>BoxLink</p>
-      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-    </a>
-    <a href="###" class="is--boxLink -hov:-c -hov:-bxsh -bd -p:20">
-      <p>BoxLink</p>
-      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
     </a>
     ```
   </PreviewCode>
   <PreviewCode slot="tab" label="JSX">
-    ```jsx 'hov="-o"' 'hov="-c,-bxsh"'
-    <BoxLink href="###" hov="-o" bgc="base-2" bd p="20">
+    ```jsx 'hov="-c,-bdc,-bxsh"'
+    <BoxLink href="###" hov="-c,-bdc,-bxsh" bd p="20">
       <p>BoxLink</p>
-      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-    </BoxLink>
-    <BoxLink href="###" hov="-c,-bxsh" bd p="20">
-      <p>BoxLink</p>
-      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
     </BoxLink>
     ```
   </PreviewCode>
 </Preview>
 
 :::info
-In the [`<Lism>` component](/en/docs/core-components/Lism/), passing a string such as `"-o"` to the `hov` prop automatically outputs the corresponding `-hov:-o` class.
+In the [`<Lism>` component](/en/docs/core-components/Lism/), passing a string such as `"-bgc"` to the `hov` prop automatically outputs the corresponding `-hov:-bgc` class.
 :::
 
 <Spacer h="20" />
@@ -167,7 +251,7 @@ If the value is `true`, a `-hov:{key}` class is emitted. This is useful when you
 <Spacer h="20" />
 
 
-## Using `-hov:{preset}`
+## `-hov:{preset}`
 
 `-hov:{preset}` applies a named preset bundle of hover styles in one go.
 The Lism core package provides the following preset by default:
@@ -175,12 +259,34 @@ The Lism core package provides the following preset by default:
 | Class | Description |
 |--------|-------------|
 | `-hov:underline` | Shows an underline on the text |
-| `-hov:neutral` | Blends a neutral gray into the background color, slightly brightening it on hover |
 
-You can freely add your own presets to fit each project.
+<Preview>
+  <PreviewTitle>Using `-hov:underline`</PreviewTitle>
+  <PreviewArea p="30">
+    <Link href="###" hov="underline" set="plain" >
+      <Fragment>Link text</Fragment>
+    </Link>
+  </PreviewArea>
+  <PreviewCode slot="tab" label="HTML">
+    ```html "-hov:underline"
+    <a class="set--plain -hov:underline" href="###">
+      Link text
+    </a>
+    ```
+  </PreviewCode>
+  <PreviewCode slot="tab" label="JSX">
+    ```jsx 'hov="underline"'
+    <Link href="###" hov="underline" set="plain" >
+      Link text
+    </Link>
+    ```
+  </PreviewCode>
+</Preview>
 
 
 ### Creating a custom `-hov` class
+
+You can freely add your own presets to fit each project.
 
 <Preview css={`
 @media (any-hover: hover) {

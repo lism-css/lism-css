@@ -143,7 +143,7 @@ Lism コンポーネントの Propsに渡す値の頭に `:` を付けると、 
 | `c` | `color` | `-c:base`, `-c:text`, `-c:text-2`, `-c:brand`, `-c:accent`, `-c:inherit` | — |
 | `keycolor` | `--keycolor` 変数のみ | — | — |
 
-セマンティックカラー: `base`, `base-2`, `text`, `text-2`, `divider`, `link`, `brand`, `accent`  
+セマンティックカラー: `base`, `base-2`, `text`, `text-2`, `divider`, `link`, `brand`, `accent`, `neutral`<br />
 パレットカラー: `red`, `blue`, `green`, `yellow`, `purple`, `orange`, `pink`, `gray`, `white`, `black`  
 キーカラー変数: `keycolor`（ユーザー定義の `--keycolor` を参照する独立変数。詳細は `tokens.md` を参照）
 
@@ -311,7 +311,7 @@ Lism CSS のボーダーは CSS 変数（`--bds` / `--bdw` / `--bdc`）で管理
 | `-hov:{preset}` | hover 時のスタイルをプリセットで適用 | `:hover`（同上） |
 | `-hov:in:{preset}` | 親の `set--var:hov` を起点に子のスタイルを変化させる | 親に `set--var:hov` が必要 |
 
-**標準プリセット:** `-hov:-c`, `-hov:-bgc`, `-hov:-bdc`, `-hov:-o`, `-hov:-bxsh`, `-hov:underline`, `-hov:neutral`, `-hov:in:hide`, `-hov:in:show`, `-hov:in:zoom`
+**標準クラス:** `-hov:-c`, `-hov:-bgc`, `-hov:-bdc`, `-hov:-o`, `-hov:-bxsh`, `-hov:underline`, `-hov:in:hide`, `-hov:in:show`, `-hov:in:zoom`
 
 **`<Lism>` の `hov` prop:** 文字列指定（`hov="-c"` → `-hov:-c`。自動変換なし、カンマ区切りで複数可）とオブジェクト指定（`hov={{ c: 'red' }}` → `-hov:-c` + `--hov-c: var(--red)`。値 `true` でクラスのみ出力）が可能。
 
@@ -374,4 +374,3 @@ Property Class をコードベース全体で一括修正する場合、同じ P
 | HTML / className — BP対応・カスタム値 | `-p` / `-p_sm` / `-p_md` |
 | JSX Props | `p="20"` / `p={20}` / `p={[20, 30]}` |
 | getLismProps オブジェクト | `{ p: '20' }` / `{ p: 20 }` |
-

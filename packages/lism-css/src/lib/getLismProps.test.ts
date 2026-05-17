@@ -323,10 +323,10 @@ describe('getLismProps', () => {
     });
 
     test('hov: カンマ区切りでもそれぞれそのまま出力される', () => {
-      const result = getLismProps({ hov: '-c,-bxsh,neutral,in:zoom' });
+      const result = getLismProps({ hov: '-c,-bxsh,custom,in:zoom' });
       expect(result.className).toContain('-hov:-c');
       expect(result.className).toContain('-hov:-bxsh');
-      expect(result.className).toContain('-hov:neutral');
+      expect(result.className).toContain('-hov:custom');
       expect(result.className).toContain('-hov:in:zoom');
     });
 

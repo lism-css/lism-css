@@ -16,7 +16,7 @@ Unlike [`Accordion`](/en/docs/ui/Accordion/), this component is implemented with
   <PreviewTitle>Preview</PreviewTitle>
   <PreviewArea p="20">
     <Details.Root bd>
-      <Details.Summary p="20" bgc="base-2" hov="neutral">
+      <Details.Summary p="20" bgc="base-2" hov="-bgc">
         <Details.Title>Details Title</Details.Title>
         <Details.Icon />
       </Details.Summary>
@@ -28,7 +28,7 @@ Unlike [`Accordion`](/en/docs/ui/Accordion/), this component is implemented with
   <PreviewCode slot="tab" label="JSX">
     ```jsx
     <Details.Root bd>
-      <Details.Summary p="20" bgc="base-2" hov="neutral">
+      <Details.Summary p="20" bgc="base-2" hov="-bgc">
         <Details.Title>Details Title</Details.Title>
         <Details.Icon />
       </Details.Summary>
@@ -41,7 +41,7 @@ Unlike [`Accordion`](/en/docs/ui/Accordion/), this component is implemented with
   <PreviewCode slot="tab" label="HTML">
     ```html
     <details class="c--details -bd">
-      <summary class="c--details_summary l--flex -g:10 -ai:center -p:20 -bgc:base-2 -hov:neutral">
+      <summary class="c--details_summary l--flex -g:10 -ai:center -p:20 -bgc:base-2 -hov:-bgc">
         <span class="c--details_title -fx:1">Details Title</span>
         <span class="c--details_icon a--icon" aria-hidden="true"></span>
       </summary>
@@ -116,7 +116,7 @@ Additionally, as a native feature of `details`/`summary`, adding a `name` attrib
   <PreviewArea p="20">
     <Stack g="10">
       <Details.Root bd name="details-group-01">
-        <Details.Summary p="20" bgc="base-2" hov="neutral">
+        <Details.Summary p="20" bgc="base-2" hov="-bgc">
           <Details.Title as="h3">Details Title</Details.Title>
           <Details.Icon />
         </Details.Summary>
@@ -125,7 +125,7 @@ Additionally, as a native feature of `details`/`summary`, adding a `name` attrib
         </Details.Content>
       </Details.Root>
       <Details.Root bd name="details-group-01">
-        <Details.Summary p="20" bgc="base-2" hov="neutral">
+        <Details.Summary p="20" bgc="base-2" hov="-bgc">
           <Details.Title as="h3">Details Title</Details.Title>
           <Details.Icon />
         </Details.Summary>
@@ -139,7 +139,7 @@ Additionally, as a native feature of `details`/`summary`, adding a `name` attrib
     ```jsx 'as="h3"' 'name="details-group-01"'
     <Stack g="10">
       <Details.Root bd name="details-group-01">
-        <Details.Summary p="20" bgc="base-2" hov="neutral">
+        <Details.Summary p="20" bgc="base-2" hov="-bgc">
           <Details.Title as="h3">Details Title</Details.Title>
           <Details.Icon />
         </Details.Summary>
@@ -148,7 +148,7 @@ Additionally, as a native feature of `details`/`summary`, adding a `name` attrib
         </Details.Content>
       </Details.Root>
       <Details.Root bd name="details-group-01">
-        <Details.Summary p="20" bgc="base-2" hov="neutral">
+        <Details.Summary p="20" bgc="base-2" hov="-bgc">
           <Details.Title as="h3">Details Title</Details.Title>
           <Details.Icon />
         </Details.Summary>
@@ -179,7 +179,7 @@ For local adjustments, override the `--duration` variable. For global adjustment
   <PreviewTitle>Example</PreviewTitle>
   <PreviewArea p="20">
     <Details.Root bd style={{ '--duration': '.4s' }}>
-      <Details.Summary p="20" bgc="base-2" hov="neutral">
+      <Details.Summary p="20" bgc="base-2" hov="-bgc">
         <Details.Icon />
         <Details.Title as="h3">Details Title</Details.Title>
       </Details.Summary>
@@ -191,7 +191,7 @@ For local adjustments, override the `--duration` variable. For global adjustment
   <PreviewCode slot="tab" label="JSX">
     ```jsx "--duration"
     <Details.Root bd style={{ '--duration': '.4s' }}>
-      <Details.Summary p="20" bgc="base-2" hov="neutral">
+      <Details.Summary p="20" bgc="base-2" hov="-bgc">
         <Details.Title as="h3">Details Title</Details.Title>
         <Details.Icon />
       </Details.Summary>

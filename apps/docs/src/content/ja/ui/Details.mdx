@@ -15,7 +15,7 @@ import { DummyText } from '@lism-css/ui/astro/DummyText';
   <PreviewTitle>Preview</PreviewTitle>
   <PreviewArea p="20">
     <Details.Root bd>
-      <Details.Summary p="20" bgc="base-2" hov="neutral">
+      <Details.Summary p="20" bgc="base-2" hov="-bgc">
         <Details.Title>Details Title</Details.Title>
         <Details.Icon />
       </Details.Summary>
@@ -27,7 +27,7 @@ import { DummyText } from '@lism-css/ui/astro/DummyText';
   <PreviewCode slot="tab" label="JSX">
     ```jsx
     <Details.Root bd>
-      <Details.Summary p="20" bgc="base-2" hov="neutral">
+      <Details.Summary p="20" bgc="base-2" hov="-bgc">
         <Details.Title>Details Title</Details.Title>
         <Details.Icon />
       </Details.Summary>
@@ -40,7 +40,7 @@ import { DummyText } from '@lism-css/ui/astro/DummyText';
   <PreviewCode slot="tab" label="HTML">
     ```html
     <details class="c--details -bd">
-      <summary class="c--details_summary l--flex -g:10 -ai:center -p:20 -bgc:base-2 -hov:neutral">
+      <summary class="c--details_summary l--flex -g:10 -ai:center -p:20 -bgc:base-2 -hov:-bgc">
         <span class="c--details_title set--plain -fx:1">Details Title</span>
         <span class="c--details_icon a--icon" aria-hidden="true"></span>
       </summary>
@@ -115,7 +115,7 @@ import { DummyText } from '@lism-css/ui/astro/DummyText';
   <PreviewArea p="20">
     <Stack g="10">
       <Details.Root bd name="details-group-01">
-        <Details.Summary p="20" bgc="base-2" hov="neutral">
+        <Details.Summary p="20" bgc="base-2" hov="-bgc">
           <Details.Title as="h3">Details Title</Details.Title>
           <Details.Icon />
         </Details.Summary>
@@ -124,7 +124,7 @@ import { DummyText } from '@lism-css/ui/astro/DummyText';
         </Details.Content>
       </Details.Root>
       <Details.Root bd name="details-group-01">
-        <Details.Summary p="20" bgc="base-2" hov="neutral">
+        <Details.Summary p="20" bgc="base-2" hov="-bgc">
           <Details.Title as="h3">Details Title</Details.Title>
           <Details.Icon />
         </Details.Summary>
@@ -138,7 +138,7 @@ import { DummyText } from '@lism-css/ui/astro/DummyText';
     ```jsx 'as="h3"' 'name="details-group-01"'
     <Stack g="10">
       <Details.Root bd name="details-group-01">
-        <Details.Summary p="20" bgc="base-2" hov="neutral">
+        <Details.Summary p="20" bgc="base-2" hov="-bgc">
           <Details.Title as="h3">Details Title</Details.Title>
           <Details.Icon />
         </Details.Summary>
@@ -147,7 +147,7 @@ import { DummyText } from '@lism-css/ui/astro/DummyText';
         </Details.Content>
       </Details.Root>
       <Details.Root bd name="details-group-01">
-        <Details.Summary p="20" bgc="base-2" hov="neutral">
+        <Details.Summary p="20" bgc="base-2" hov="-bgc">
           <Details.Title as="h3">Details Title</Details.Title>
           <Details.Icon />
         </Details.Summary>
@@ -180,7 +180,7 @@ import { DummyText } from '@lism-css/ui/astro/DummyText';
   <PreviewTitle>例</PreviewTitle>
   <PreviewArea p="20">
     <Details.Root bd style={{ '--duration': '.4s' }}>
-      <Details.Summary p="20" bgc="base-2" hov="neutral">
+      <Details.Summary p="20" bgc="base-2" hov="-bgc">
         <Details.Title as="h3">Details Title</Details.Title>
         <Details.Icon />
       </Details.Summary>
@@ -192,7 +192,7 @@ import { DummyText } from '@lism-css/ui/astro/DummyText';
   <PreviewCode slot="tab" label="JSX">
     ```jsx "--duration"
     <Details.Root bd style={{ '--duration': '.4s' }}>
-      <Details.Summary p="20" bgc="base-2" hov="neutral">
+      <Details.Summary p="20" bgc="base-2" hov="-bgc">
         <Details.Title as="h3">Details Title</Details.Title>
         <Details.Icon />
       </Details.Summary>

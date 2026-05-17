@@ -40,7 +40,7 @@ CSSコードを書く場合やコンポーネントのPropsに値を指定する
 | サイズ (sz) | `xs`, `s`, `m`, `l`, `xl`, `bleed` | `--sz--{key}` | `--sz--l` |
 | アスペクト比 (ar) | `og` | `--ar--{key}` | `--ar--og` |
 | フロー余白 (flow) | `s`, `l` | `--flow--{key}` | `--flow--s` |
-| セマンティックカラー (c) | `base`, `base-2`, `text`, `text-2`, `divider`, `link`, `brand`, `accent` | `--{name}` | `--brand` |
+| セマンティックカラー (c) | `base`, `base-2`, `text`, `text-2`, `divider`, `link`, `brand`, `accent`, `neutral` | `--{name}` | `--brand` |
 | パレットカラー (palette) | `red`, `blue`, `green`, `yellow`, `purple`, `orange`, `pink`, `gray`, `white`, `black` | `--{name}` | `--red` |
 
 
@@ -210,21 +210,22 @@ CSSコードを書く場合やコンポーネントのPropsに値を指定する
 | `--link` | `oklch(50% 0.3 240)` | リンク色 |
 | `--brand` | `#1e5f8c` | ブランド色 |
 | `--accent` | `#d94a6a` | アクセント色 |
+| `--neutral` | `hsl(220, 2%, 80%)` | hover 背景などの生成に使う中立的な補助色 |
 
 ### パレットカラー
 
-OKLCH で定義されたカラーパレット。`--L`（明度）と `--C`（彩度）の基準値を調整するとパレット全体の色味を変更可能。デフォルト: `--L: 60%`, `--C: 0.22`。
+OKLCH で定義されたカラーパレット。`--L`（明度）と `--C`（彩度）の基準値を調整するとパレット全体の色味を変更可能。デフォルト: `--L: 60%`, `--C: 0.2`。
 
 | CSS変数 | 値 |
 |---------|-----|
 | `--red` | `oklch(var(--L) var(--C) 20)` |
-| `--orange` | `oklch(calc(var(--L) + 4%) calc(var(--C) - 0.01) 52)` |
-| `--yellow` | `oklch(calc(var(--L) + 12%) calc(var(--C) - 0.025) 84)` |
-| `--green` | `oklch(calc(var(--L) + 4%) calc(var(--C) - 0.02) 152)` |
-| `--blue` | `oklch(calc(var(--L) - 2%) calc(var(--C) + 0.01) 260)` |
-| `--purple` | `oklch(calc(var(--L) - 4%) calc(var(--C) + 0.02) 292)` |
-| `--pink` | `oklch(calc(var(--L) + 2%) calc(var(--C) + 0.02) 348)` |
-| `--gray` | `oklch(calc(var(--L) - 4%) 0.04 256)` |
+| `--orange` | `oklch(calc(var(--L) + 6%) calc(var(--C) - 0.01) 48)` |
+| `--yellow` | `oklch(calc(var(--L) + 12%) calc(var(--C) - 0.02) 80)` |
+| `--green` | `oklch(calc(var(--L) + 4%) calc(var(--C) - 0.01) 152)` |
+| `--blue` | `oklch(calc(var(--L) - 4%) calc(var(--C) + 0.01) 264)` |
+| `--purple` | `oklch(calc(var(--L) - 4%) calc(var(--C) + 0.01) 288)` |
+| `--pink` | `oklch(calc(var(--L) + 2%) calc(var(--C) + 0.01) 352)` |
+| `--gray` | `oklch(calc(var(--L) - 4%) calc(var(--C) / 10) 240)` |
 | `--black` | `#000` |
 | `--white` | `#fff` |
 
