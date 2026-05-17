@@ -1,0 +1,20 @@
+---
+import { Group, Stack } from 'lism-css/astro';
+import Layout from './Layout.astro';
+
+interface Props {
+  title: string;
+  description?: string;
+  ogImage?: string;
+}
+
+const { title, description, ogImage } = Astro.props;
+---
+
+<Layout title={title} description={description} ogImage={ogImage}>
+  <Group isWrapper isContainer hasGutter>
+    <Stack g="50">
+      <slot />
+    </Stack>
+  </Group>
+</Layout>

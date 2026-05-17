@@ -1,0 +1,39 @@
+---
+import { getCollection, render } from 'astro:content';
+import { Group, Flow, Heading } from 'lism-css/astro';
+import Layout from '@/layouts/Layout.astro';
+import Date from '@/components/Date.astro';
+import { buildOgImageUrl } from '@/lib/ogImage';
+import { siteConfig } from '@/config/site';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('posts');
+  return posts.map((post) => ({
+    params: { slug: post.id },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+const ogImage = buildOgImageUrl({
+  title: post.data.title,
+  foot: siteConfig.name,
+});
+---
+
+<Layout title={`${post.data.title} — ${siteConfig.name}`} description={post.data.excerpt} ogImage={ogImage} ogType="article">
+  <Group isWrapper isContainer hasGutter>
+    {/* 記事ヘッダー */}
+    <Group as="header">
+      <Heading level="1">
+        {post.data.title}
+      </Heading>
+      <Date mbs="30">{post.data.date}</Date>
+    </Group>
+
+    <Flow as="article" class="c--articleBody" mbs="50">
+      <Content />
+    </Flow>
+  </Group>
+</Layout>

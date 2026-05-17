@@ -100,6 +100,21 @@ export const TEMPLATES: TemplateDef[] = [
     previewUrl: 'https://lism-blog-astro-minimal.pages.dev/',
   },
   {
+    slug: 'blog-astro-personal',
+    kind: 'project',
+    category: 'blog',
+    variant: 'personal',
+    variantLabel: { ja: 'Personal', en: 'Personal' },
+    stack: 'astro',
+    sourcePath: 'blog/astro/personal',
+    title: { ja: 'Blog Astro Personal', en: 'Blog Astro Personal' },
+    description: {
+      ja: '個人ブログ・エッセイ向け。年月アーカイブつきの落ち着いた Astro ブログ',
+      en: 'Personal / essay-style Astro blog with monthly archives',
+    },
+    draft: true,
+  },
+  {
     slug: 'blog-astro-full',
     kind: 'project',
     category: 'blog',

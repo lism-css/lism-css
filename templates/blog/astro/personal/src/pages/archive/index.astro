@@ -1,0 +1,35 @@
+---
+import { getCollection } from 'astro:content';
+import { Lism, Heading, Link, Cluster } from 'lism-css/astro';
+import ArchiveLayout from '@/layouts/ArchiveLayout.astro';
+import { getArchiveSummaries, getArchiveHref } from '@/lib/archive';
+import { siteConfig } from '@/config/site';
+
+const posts = await getCollection('posts');
+const summaries = getArchiveSummaries(posts);
+---
+
+<ArchiveLayout title={`Archive — ${siteConfig.name}`} description="年月別の記事一覧">
+  <Heading level="1">Archive</Heading>
+
+  <Lism as="ul" g="0">
+    {
+      summaries.map(({ year, month, count }) => (
+        <Lism as="li" bd-bs py="20">
+          <Link href={getArchiveHref(year, month)} set="plain" hov={{ c: 'brand' }}>
+            <Cluster ai="baseline" jc="between" g="20">
+              <Cluster ai="baseline" g="15">
+                <Lism fz="l" fw="500">
+                  {year}.{month}
+                </Lism>
+              </Cluster>
+              <Lism fz="xs" c="text-2">
+                {count} 件
+              </Lism>
+            </Cluster>
+          </Link>
+        </Lism>
+      ))
+    }
+  </Lism>
+</ArchiveLayout>
