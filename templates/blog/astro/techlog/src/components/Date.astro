@@ -1,0 +1,15 @@
+---
+import { Inline } from 'lism-css/astro';
+
+interface Props {
+  date: string;
+  class?: string;
+}
+
+const { date, class: className, ...rest } = Astro.props;
+const formatted = date.replaceAll('-', '.');
+---
+
+<Inline class:list={['c--date', className]} ff="accent" fz="2xs" lts="l" c="text-2" {...rest}>
+  {formatted}
+</Inline>

@@ -1,0 +1,157 @@
+---
+title: このテンプレートの MDX 拡張記法
+excerpt: テンプレート独自の MDX 拡張記法（:::記法の Callout / Alert、URL 自動展開によるリンクカード、astro-expressive-code によるコードハイライト）を実例付きで紹介します。記事を書くときのリファレンス用ダミーページ。
+date: '2026-05-01'
+tags: [MDX, テンプレート]
+---
+
+このテンプレートでは、MDX 標準の記法に加えて、本文を書きやすくするための拡張をいくつか用意しています。
+
+- `:::type[ラベル]` で `<Callout>` / `<Alert>` を呼び出す
+- URL 文字列だけの段落を外部リンクカードに展開する
+- `astro-expressive-code` によるコードハイライト
+
+この記事は、それぞれの記法と実際の見た目を確認するためのサンプルです。
+
+## Callout（`:::type[ラベル]`）
+
+`:::type[タイトル]` のようにラベルを付けると `<Callout>` に変換されます。対応 type は `point` / `check` / `help` / `warning` / `alert` の 5 種類。
+
+````mdx
+:::point[ポイント]
+記事の要点を強調したい場面に使う。
+:::
+````
+
+:::point[ポイント]
+`:::point[...]` のサンプル。記事の要点を強調したい場面に使う。リンクや `インラインコード`、**強調** が中で使えるか確認します。
+:::
+
+:::check[チェック]
+`:::check[...]` のサンプル。確認事項やチェックリストの導入に。
+:::
+
+:::help[ヘルプ]
+`:::help[...]` のサンプル。ヒントやヘルプ情報に。
+:::
+
+:::warning[警告]
+`:::warning[...]` のサンプル。注意喚起に使う。
+:::
+
+:::alert[アラート]
+`:::alert[...]` のサンプル。最も強い警告に使う。
+:::
+
+## Alert（`:::type`）
+
+ラベルを省略すると、タイトル領域のない `<Alert>` に変換されます。
+
+````mdx
+:::warning
+ラベルを省略するとタイトル領域のない Alert になります。
+:::
+````
+
+:::point
+`:::point` のサンプル（Alert）。
+:::
+
+:::check
+`:::check` のサンプル（Alert）。
+:::
+
+:::help
+`:::help` のサンプル（Alert）。
+:::
+
+:::warning
+`:::warning` のサンプル（Alert）。
+:::
+
+:::alert
+`:::alert` のサンプル（Alert）。
+:::
+
+### 内部に複数要素を含むケース
+
+`:::` の中でも基本的な Markdown はそのまま使えます。リストやリンク、強調などが破綻なく並ぶかを確認します。
+
+:::point[内部 Markdown]
+中で書ける要素の確認用サンプルです。
+
+- リスト項目 1
+- リスト項目 2
+  - 子項目
+
+[リンク](#) や `code`、**強調** が自然に並びます。
+:::
+
+## 外部リンクカード（URL 自動展開）
+
+URL文字列だけの段落は、ビルド時に対象サイトのOGPを取得して`<LinkCard type="external">`に展開されます。fetch結果は`.cache/ogp/`にMD5ハッシュ付きJSONでキャッシュされ、TTL 7日以内は再fetchしません。
+
+````mdx
+https://lism-css.com/
+````
+
+実際の表示：
+
+https://lism-css.com/
+
+https://github.com/lism-css/lism-css
+
+### 上書き
+
+fetchに失敗するサイトや、表示するタイトル・説明を自分で指定したい場合は、MDX上で`<LinkCard type="external">`を直書きできます。
+
+````mdx
+<LinkCard type="external" href="https://example.com" title="独自タイトル" description="独自の説明文をここに書く。" />
+````
+
+<LinkCard type="external" href="https://example.com" title="独自タイトル" description="独自の説明文をここに書く。" />
+
+## コードハイライト（astro-expressive-code）
+
+コードブロックのシンタックスハイライトは [`astro-expressive-code`](https://expressive-code.com/) を使用しています。`astro.config.mjs` で `themes: ['github-dark', 'github-light']` を指定しており、ページの `[data-theme='dark']` / `[data-theme='light']` 切り替えに合わせてハイライトテーマも自動で切り替わります。
+
+通常のコードブロックに加えて、ファイル名タイトル付き表示や、特定の行のハイライト、差分表示なども書けます。
+
+````mdx
+```ts title="src/lib/archive.ts" {3}
+export function getArchiveKey(date: string) {
+  const [year, month] = date.split(/[-./]/);
+  return { year, month };
+}
+```
+````
+
+```ts title="src/lib/archive.ts" {3}
+export function getArchiveKey(date: string) {
+  const [year, month] = date.split(/[-./]/);
+  return { year, month };
+}
+```
+
+````mdx
+```bash title="Terminal"
+pnpm install
+pnpm dev
+```
+````
+
+```bash title="Terminal"
+pnpm install
+pnpm dev
+```
+
+## 仕様の所在
+
+各記法を実装している remark プラグインは `src/lib/` 配下にまとまっています。
+
+| ファイル | 役割 |
+| --- | --- |
+| `remark-directive.mjs` | `:::type[label]` / `:::type` を `<Callout>` / `<Alert>` に変換 |
+| `remark-link-card.mjs` | URL単独段落を`<LinkCard type="external">`に変換 |
+
+詳細は [astro-blog-overview](/posts/astro-blog-overview/) のテンプレート解説を参照。

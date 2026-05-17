@@ -1,0 +1,57 @@
+---
+import { Lism, Stack, Cluster, Heading, Text, BoxLink } from 'lism-css/astro';
+import type { CollectionEntry } from 'astro:content';
+import Date from '@/components/Date.astro';
+import Cat from '@/components/Cat.astro';
+import { CATEGORIES } from '@/config/categories';
+import { getPostHref, parsePostId } from '@/lib/posts';
+
+interface Props {
+  posts: CollectionEntry<'posts'>[];
+  showCategory?: boolean;
+}
+
+const { posts, showCategory = true } = Astro.props;
+---
+
+<Lism as="ul" class="c--postList">
+  {
+    posts.map((post) => {
+      const { category } = parsePostId(post.id);
+      return (
+        <Lism as="li">
+          <BoxLink href={getPostHref(post.id)} py="30" px="5" hov={{ bgc: 'base-2' }} hasTransition>
+            <Stack g="20" util="trimAll">
+              <Cluster g="10">
+                <Date date={post.data.date} />
+                {showCategory && <Cat>{CATEGORIES[category].label}</Cat>}
+              </Cluster>
+              <Heading level="2" fz="l">
+                {post.data.title}
+              </Heading>
+              <Text fz="xs" c="text-2">
+                {post.data.excerpt}
+              </Text>
+            </Stack>
+          </BoxLink>
+        </Lism>
+      );
+    })
+  }
+</Lism>
+
+<style>
+  @layer lism-component {
+    /* === 記事一覧（縦リスト） === */
+    .c--postList {
+      /* 先頭が子結合子なら & は省略可（& > と同じ） */
+      > li {
+        border-block-end: 1px solid var(--divider);
+
+        &:first-child {
+          border-block-start: 1px solid var(--divider);
+        }
+      }
+    }
+  }
+</style>

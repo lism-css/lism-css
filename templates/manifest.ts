@@ -115,6 +115,21 @@ export const TEMPLATES: TemplateDef[] = [
     draft: true,
   },
   {
+    slug: 'blog-astro-techlog',
+    kind: 'project',
+    category: 'blog',
+    variant: 'techlog',
+    variantLabel: { ja: 'Tech Log', en: 'Tech Log' },
+    stack: 'astro',
+    sourcePath: 'blog/astro/techlog',
+    title: { ja: 'Blog Astro Tech Log', en: 'Blog Astro Tech Log' },
+    description: {
+      ja: '技術ブログ向け。コードハイライト・カテゴリ・タグ・TOC・年月アーカイブ・検索を装備した Astro ブログ',
+      en: 'Tech blog with code highlighting, categories, tags, TOC, monthly archives and search',
+    },
+    draft: true,
+  },
+  {
     slug: 'blog-astro-full',
     kind: 'project',
     category: 'blog',
