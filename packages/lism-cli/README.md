@@ -9,9 +9,9 @@
 ## コマンド体系
 
 ```
-lism create [targetDir] [--template <name>]   # templates から新規プロジェクト
-lism ui    { init | add <names...> | list }   # Lism UI コンポーネントの追加
-lism skill { add | check | update }           # AI エージェント向け SKILL.md 配置
+lism create [targetDir] [--template <name|category>]   # templates から新規プロジェクト
+lism ui    { init | add <names...> | list }            # Lism UI コンポーネントの追加
+lism skill { add | check | update }                    # AI エージェント向け SKILL.md 配置
 ```
 
 ## 使い方
@@ -24,6 +24,9 @@ pnpm dlx lism-cli create
 
 # テンプレート名・出力先を指定
 pnpm dlx lism-cli create --template minimal-astro ./my-app
+
+# カテゴリ名を指定（stack 以下の選択を対話で続行）
+pnpm dlx lism-cli create --template minimal ./my-app
 ```
 
 同じ動作は `pnpm create lism` / `npm create lism@latest` でも呼び出せます（`create-lism` パッケージ経由）。

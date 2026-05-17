@@ -113,10 +113,15 @@ export async function createCommand(targetDir: string | undefined, options: Crea
 async function resolveTemplate(requested: string | undefined, templates: TemplateDef[]): Promise<TemplateDef> {
   if (requested) {
     const found = templates.find((t) => t.slug === requested);
-    if (!found) {
-      throw new Error(t('create.templateNotFound', { name: requested, list: templates.map((x) => x.slug).join(', ') }));
+    if (found) return found;
+
+    const matchedCategory = CATEGORIES.find((category) => category.id === requested);
+    const categoryTemplates = matchedCategory ? templates.filter((tpl) => tpl.category === matchedCategory.id) : [];
+    if (matchedCategory && categoryTemplates.length > 0) {
+      return resolveFromCategory(matchedCategory.id, categoryTemplates);
     }
-    return found;
+
+    throw new Error(t('create.templateNotFound', { name: requested, list: templates.map((x) => x.slug).join(', ') }));
   }
 
   const category = await select<CategoryId>({
@@ -127,7 +132,13 @@ async function resolveTemplate(requested: string | undefined, templates: Templat
     })),
   });
 
-  const categoryTemplates = templates.filter((tpl) => tpl.category === category);
+  return resolveFromCategory(
+    category,
+    templates.filter((tpl) => tpl.category === category)
+  );
+}
+
+async function resolveFromCategory(category: CategoryId, categoryTemplates: TemplateDef[]): Promise<TemplateDef> {
   const stack = await resolveStack(categoryTemplates);
   const stackTemplates = categoryTemplates.filter((tpl) => tpl.stack === stack);
   const variant = await resolveVariant(category, stackTemplates);

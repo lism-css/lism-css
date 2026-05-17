@@ -40,8 +40,8 @@ export const messages = {
     en: 'Target directory',
   },
   'cli.create.opt.template': {
-    ja: '使用するテンプレート名（例: minimal-astro）',
-    en: 'Template name to use (e.g. minimal-astro)',
+    ja: '使用するテンプレート名またはカテゴリ名（例: minimal-astro / minimal）',
+    en: 'Template or category name to use (e.g. minimal-astro / minimal)',
   },
   'cli.create.opt.force': {
     ja: '既存ディレクトリを強制上書き',
