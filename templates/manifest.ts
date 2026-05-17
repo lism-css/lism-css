@@ -97,7 +97,7 @@ export const TEMPLATES: TemplateDef[] = [
     sourcePath: 'blog/astro/minimal',
     title: { ja: 'Blog Astro Minimal', en: 'Blog Astro Minimal' },
     description: { ja: '記事一覧 / 詳細 / Tags のみの最小構成の Astro ブログ', en: 'Minimal Astro blog with posts and tags only' },
-    draft: true,
+    previewUrl: 'https://lism-blog-astro-minimal.pages.dev/',
   },
   {
     slug: 'blog-astro-full',

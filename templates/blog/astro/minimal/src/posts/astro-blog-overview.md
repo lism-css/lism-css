@@ -121,7 +121,7 @@ export const siteConfig = {
 
 レイアウトは 2 つ。
 
-- `Layout.astro` — `<html>` から `<body>` までの土台。`<Container>` の中に `<Stack min-h="100svh">` で Header / Main / Footer を縦積みする。Web フォント（Noto Serif JP / Noto Sans JP）を `<head>` で読み込む。
+- `Layout.astro` — `<html>` から `<body>` までの土台。`<Container>` の中に `<Stack min-h="100svh">` で Header / Main / Footer を縦積みする。
 - `ArchiveLayout.astro` — `Layout` を基盤に、本文を `<Group isWrapper isContainer hasGutter>` で囲んだ一覧用レイアウト。
 
 ```astro
