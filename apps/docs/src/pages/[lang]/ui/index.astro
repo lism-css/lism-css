@@ -81,7 +81,7 @@ function getThumbPath(title: string): string {
             const postUrl = `/${lang}/ui/${post.id.replace('ui/', '')}/`;
             const thumbPath = getThumbPath(post.data.title);
             return (
-              <BoxLink layout="stack" href={postUrl} p="5" g="5" bdrs="20" hov="neutral" class={post.data.draft ? '_draft' : ''}>
+              <BoxLink layout="stack" href={postUrl} p="5" g="5" bdrs="20" hov="-bgc" class={post.data.draft ? '_draft' : ''}>
                 <Frame ar="3/2" bd bdrs="20" bgc="base">
                   <Media src={thumbPath} alt={post.data.title} width="360" height="240" loading="lazy" />
                 </Frame>
@@ -104,7 +104,7 @@ function getThumbPath(title: string): string {
               const postUrl = `/${lang}/ui/${post.id.replace('ui/', '')}/`;
               const thumbPath = getThumbPath(post.data.title);
               return (
-                <BoxLink layout="stack" href={postUrl} p="5" g="5" bdrs="20" hov="neutral" class={post.data.draft ? '_draft' : ''}>
+                <BoxLink layout="stack" href={postUrl} p="5" g="5" bdrs="20" hov="-bgc" class={post.data.draft ? '_draft' : ''}>
                   <Frame ar="3/2" bd bdrs="20" bgc="base">
                     <Media src={thumbPath} alt={post.data.title} width="360" height="240" loading="lazy" />
                   </Frame>
