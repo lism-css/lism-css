@@ -164,6 +164,7 @@ describe('getMaybeColorVar', () => {
       expect(getMaybeColorVar('red')).toBe('var(--red)');
       expect(getMaybeColorVar('blue')).toBe('var(--blue)');
       expect(getMaybeColorVar('green')).toBe('var(--green)');
+      expect(getMaybeColorVar('neutral')).toBe('var(--neutral)');
     });
 
     test('トークンに存在しない値はそのまま返される', () => {

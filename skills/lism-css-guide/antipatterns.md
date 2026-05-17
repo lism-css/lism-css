@@ -32,7 +32,7 @@ Lism CSS側が用意しているトークン値と異なるものを書かない
 | `c="muted"` | `c="text-2"` | 補助テキスト色は `text-2` |
 | `c="danger"` | `c="red"` | パレットカラーから選ぶ（`red` / `orange` 等） |
 
-- セマンティックカラー: `base` / `base-2` / `text` / `text-2` / `divider` / `link` / `brand` / `accent`
+- セマンティックカラー: `base` / `base-2` / `text` / `text-2` / `divider` / `link` / `brand` / `accent` / `neutral`
 - パレットカラー: `red` / `blue` / `green` / `yellow` / `purple` / `orange` / `pink` / `gray` / `white` / `black`
 
 ### スペース（`p` / `m` / `g` 等）
