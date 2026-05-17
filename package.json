@@ -29,6 +29,7 @@
     "build:templates": "turbo run build --filter=./templates/*/* --filter=./templates/*/*/*",
     "build:template": "sh -c 'turbo run build --filter=\"$1\"' --",
     "deploy:minimal-vite": "pnpm build:template minimal-vite && wrangler pages deploy templates/minimal/vite/dist --project-name=lism-minimal-vite --branch=main --commit-dirty=true --commit-message=\"deploy minimal-vite\"",
+    "deploy:blog-astro-minimal": "pnpm build:template blog-astro-minimal && wrangler pages deploy templates/blog/astro/minimal/dist --project-name=lism-blog-astro-minimal --branch=main --commit-dirty=true --commit-message=\"deploy blog-astro-minimal\"",
     "screenshot:new": "pnpm --filter lism-docs screenshot:new",
     "screenshot:force": "pnpm --filter lism-docs screenshot:force",
     "screenshot:compare": "pnpm --filter lism-docs screenshot:compare",

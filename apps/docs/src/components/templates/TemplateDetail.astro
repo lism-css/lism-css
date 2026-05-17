@@ -48,7 +48,7 @@ const installCommand = `pnpm create lism --template ${template.slug}`;
 const previewUrl = template.previewUrl;
 ---
 
-<Stack g="40" class="templatePage">
+<Stack g="40" class="p--templateDetail">
   {/* パンくず（一覧へ戻る） */}
   <Cluster g="10" fz="xs">
     <a href={templatesUrl} class="-c:text-2">{copy.backToList}</a>
@@ -93,14 +93,8 @@ const previewUrl = template.previewUrl;
         <PreviewFrame url={previewUrl} hasSizeSwitch />
       ) : (
         <Stack g="10">
-          <Frame bd bdrs="20">
-            <Image
-              src={template.thumb}
-              alt={copy.thumbAlt(template.title[lang])}
-              widths={[400, 800, 1200]}
-              sizes="(max-width: 800px) 100vw, 800px"
-              loading="lazy"
-            />
+          <Frame bd bdrs="20" w="100%">
+            <Image src={template.thumb} alt={copy.thumbAlt(template.title[lang])} loading="lazy" />
           </Frame>
           <Text c="text-2" fz="xs" lh="s" ta="center">
             {copy.previewMissing}
