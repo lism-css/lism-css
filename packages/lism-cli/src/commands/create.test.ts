@@ -287,6 +287,53 @@ describe('runCreate', () => {
     expect(console.log).toHaveBeenCalledWith('  Open index.html in your browser');
   });
 
+  it('--templateにカテゴリslugを指定するとstack選択へ降りる', async () => {
+    const templates: Parameters<typeof runCreateWithTemplates>[1] = [
+      {
+        slug: 'minimal-astro',
+        kind: 'project',
+        category: 'minimal',
+        stack: 'astro',
+        sourcePath: 'minimal/astro',
+        description: { ja: 'Astro minimal', en: 'Astro minimal' },
+      },
+      {
+        slug: 'minimal-vite',
+        kind: 'project',
+        category: 'minimal',
+        stack: 'vite',
+        sourcePath: 'minimal/vite',
+        description: { ja: 'Vite minimal', en: 'Vite minimal' },
+      },
+    ];
+    vi.mocked(select).mockResolvedValueOnce('vite' as never);
+
+    await runCreateWithTemplates({ template: 'minimal', targetDir: 'cat-app', force: true }, templates);
+
+    expect(select).toHaveBeenCalledTimes(1);
+    expect((vi.mocked(select).mock.calls[0][0] as { message: string }).message).toBe('Select a stack (2 options):');
+    expect(downloadTemplate).toHaveBeenCalledWith('github:lism-css/lism-css/templates/minimal/vite#main', {
+      dir: path.join(tmpDir, 'cat-app'),
+      force: true,
+      forceClean: true,
+    });
+  });
+
+  it('--templateにカテゴリslugを指定し対象テンプレートが0件なら従来通りエラーを返す', async () => {
+    const templates: Parameters<typeof runCreateWithTemplates>[1] = [
+      {
+        slug: 'minimal-astro',
+        kind: 'project',
+        category: 'minimal',
+        stack: 'astro',
+        sourcePath: 'minimal/astro',
+        description: { ja: 'Astro minimal', en: 'Astro minimal' },
+      },
+    ];
+
+    await expect(runCreateWithTemplates({ template: 'blog', targetDir: 'x', force: true }, templates)).rejects.toThrow('Template "blog" not found');
+  });
+
   it('templateNotFoundを返す', async () => {
     await expect(runCreateWithTemplates({ template: 'missing', targetDir: 'x', force: true }, [])).rejects.toThrow('Template "missing" not found');
   });
