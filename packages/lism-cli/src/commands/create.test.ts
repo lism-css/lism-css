@@ -97,14 +97,14 @@ describe('runCreate', () => {
   it('variantが複数ある場合はstack自動確定後に件数付きvariant選択を出す', async () => {
     const templates: Parameters<typeof runCreateWithTemplates>[1] = [
       {
-        slug: 'blog-astro-simple',
+        slug: 'blog-astro-minimal',
         kind: 'project',
         category: 'blog',
         stack: 'astro',
-        variant: 'simple',
-        variantLabel: { ja: 'Simple', en: 'Simple' },
-        sourcePath: 'blog/astro/simple',
-        description: { ja: 'Simple blog', en: 'Simple blog' },
+        variant: 'minimal',
+        variantLabel: { ja: 'Minimal', en: 'Minimal' },
+        sourcePath: 'blog/astro/minimal',
+        description: { ja: 'Minimal blog', en: 'Minimal blog' },
       },
       {
         slug: 'blog-astro-full',
@@ -119,14 +119,14 @@ describe('runCreate', () => {
     ];
     vi.mocked(select)
       .mockResolvedValueOnce('blog' as never)
-      .mockResolvedValueOnce('simple' as never);
+      .mockResolvedValueOnce('minimal' as never);
     vi.mocked(input).mockResolvedValue('blog-app' as never);
 
     await runCreateWithTemplates({ force: true }, templates);
 
     expect(select).toHaveBeenCalledTimes(2);
-    expect((vi.mocked(select).mock.calls[1][0] as { message: string }).message).toBe('Select a feature level (2 options):');
-    expect(downloadTemplate).toHaveBeenCalledWith('github:lism-css/lism-css/templates/blog/astro/simple#main', {
+    expect((vi.mocked(select).mock.calls[1][0] as { message: string }).message).toBe('Select a type (2 options):');
+    expect(downloadTemplate).toHaveBeenCalledWith('github:lism-css/lism-css/templates/blog/astro/minimal#main', {
       dir: path.join(tmpDir, 'blog-app'),
       force: true,
       forceClean: true,

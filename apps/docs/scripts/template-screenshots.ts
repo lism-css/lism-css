@@ -10,7 +10,7 @@
  *   npx tsx apps/docs/scripts/template-screenshots.ts --compare          # ベースライン比較（初回はベースライン生成）
  *   npx tsx apps/docs/scripts/template-screenshots.ts --update           # 差分テンプレのベースライン更新
  *   npx tsx apps/docs/scripts/template-screenshots.ts --target=minimal-astro
- *   npx tsx apps/docs/scripts/template-screenshots.ts --target=blog/astro/simple
+ *   npx tsx apps/docs/scripts/template-screenshots.ts --target=blog/astro/minimal
  *   npx tsx apps/docs/scripts/template-screenshots.ts --no-build         # 既存 dist を使う（ビルドをスキップ）
  *   npx tsx apps/docs/scripts/template-screenshots.ts --threshold=0.5    # compare のしきい値（%）
  */
