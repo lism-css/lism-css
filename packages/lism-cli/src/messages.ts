@@ -152,8 +152,8 @@ export const messages = {
     en: 'Select a variant ({count} options):',
   },
   'create.promptSelectVariant.blog': {
-    ja: '機能レベルを選択してください（{count}件）:',
-    en: 'Select a feature level ({count} options):',
+    ja: 'タイプを選択してください（{count}件）:',
+    en: 'Select a type ({count} options):',
   },
   'create.promptSelectVariant.lp': {
     ja: '業種を選択してください（{count}件）:',

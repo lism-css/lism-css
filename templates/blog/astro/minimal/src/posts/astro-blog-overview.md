@@ -1,11 +1,11 @@
 ---
-title: 'blog-astro-simple の構成'
-excerpt: Lism CSS リポジトリに同梱されている Astro ブログテンプレートの仕様。Content Collections・タグ・ルーティング・レイアウト・主要コンポーネントを順に解説する。
+title: 'blog-astro-minimal の構成'
+excerpt: Lism CSS リポジトリに同梱されている最小構成の Astro ブログテンプレートの仕様。Content Collections・タグ・ルーティング・レイアウト・主要コンポーネントを順に解説する。
 date: 2026.04.10
 tags: [Astro, Lism CSS, テンプレート]
 ---
 
-Lism CSS リポジトリの `templates/blog/astro/simple/` には、Lism CSS と `@lism-css/ui` を使った Astro ブログテンプレート（タグのみのシンプル構成）が入っている。この記事では、そのディレクトリ構成と動作仕様を整理する。
+Lism CSS リポジトリの `templates/blog/astro/minimal/` には、Lism CSS と `@lism-css/ui` を使った最小構成の Astro ブログテンプレート（記事一覧 / 詳細 / Tags のみ）が入っている。この記事では、そのディレクトリ構成と動作仕様を整理する。
 
 ## 依存関係
 
@@ -31,7 +31,7 @@ src/
 ├── config/          # サイト設定・ナビ
 ├── content.config.ts
 ├── layouts/         # ページレイアウト
-├── lib/             # 純粋ロジック（TOC生成など）
+├── lib/             # 純粋ロジック（タグ集計など）
 ├── pages/           # ルーティング
 ├── posts/           # 記事 Markdown（フラットに配置）
 └── styles/
@@ -61,8 +61,6 @@ export const collections = { posts };
 
 記事ファイルは `src/posts/` 直下にフラットに置くだけ。記事 ID はファイル名（拡張子なし）になり、それがそのまま URL の slug として使われる。
 
-`/about/` や `/privacy/` のような単発の固定ページは Content Collections には載せず、`src/pages/about.astro` のように `.astro` ファイルとして直接配置しているので、レイアウトやコンポーネントを自由に組めます。
-
 ## 記事の分類はタグのみ
 
 記事の分類はフロントマターの `tags` だけで管理する。カテゴリのような階層は持たず、必要なら複数タグを付けることで柔軟に分類できる。
@@ -84,13 +82,12 @@ tags: [習慣, ライフスタイル]
 ```ts
 export const siteConfig = {
   name: 'lism.blog',
-  tagline: '読む、書く、考える、日々の記録',
-  description: 'A quiet place to read and think.',
+  tagline: 'ブログのキャッチコピー',
+  description: 'ブログの説明文をここに入力してください。',
   lang: 'ja',
   pagination: { postsPerPage: 6 },
   nav: [
-    { label: 'HOME', href: '/' },
-    { label: 'ABOUT', href: '/about/' },
+    { label: 'Home', href: '/' },
   ],
   sns: [
     { label: 'GitHub', icon: 'logo-github', href: 'https://github.com/lism-css/lism-css' },
@@ -98,16 +95,14 @@ export const siteConfig = {
   ],
   footer: {
     copyright: '© 2026 Lism CSS',
-    links: [
-      { label: 'About', href: '/about/' },
-      { label: 'Privacy Policy', href: '/privacy/' },
-      { label: 'Contact', href: '#' },
+    nav: [
+      { label: 'Home', href: '/' },
     ],
   },
 } as const;
 ```
 
-ヘッダーとモバイルメニューで共有するナビ項目は `siteConfig.nav` に、SNS リンクは `siteConfig.sns` にまとめている。
+ヘッダーとモバイルメニューで共有するナビ項目は `siteConfig.nav` に、SNS リンクは `siteConfig.sns` にまとめている。About / Privacy などの固定ページが必要になったら、`src/pages/` 配下に `.astro` ファイルを追加し、`siteConfig.nav` / `siteConfig.footer.nav` に項目を足す。
 
 ## ルーティング
 
@@ -118,66 +113,42 @@ export const siteConfig = {
 | `[...page].astro` | トップ（全記事一覧）＋ページネーション |
 | `posts/[slug].astro` | 記事詳細 |
 | `tag/[tag]/[...page].astro` | タグ別一覧＋ページネーション |
-| `about.astro` | About |
-| `privacy.astro` | Privacy Policy |
 | `404.astro` | 404 |
 
-ページネーションには Astro の `paginate()` を使い、1ページあたりの件数は `siteConfig.pagination.postsPerPage`（デフォルト 6）を参照する。記事詳細では `getStaticPaths` 内で記事を日付降順にソートし、`prev` / `next` を index で受け渡している。
+ページネーションには Astro の `paginate()` を使い、1ページあたりの件数は `siteConfig.pagination.postsPerPage`（デフォルト 6）を参照する。
 
 ## レイアウト
 
-レイアウトは 3 つ。
+レイアウトは 2 つ。
 
 - `Layout.astro` — `<html>` から `<body>` までの土台。`<Container>` の中に `<Stack min-h="100svh">` で Header / Main / Footer を縦積みする。Web フォント（Noto Serif JP / Noto Sans JP）を `<head>` で読み込む。
-- `ArchiveLayout.astro` — `Layout` を基盤に、本文を `<Group isWrapper isContainer hasGutter><Stack g="50">` で囲んだ一覧用レイアウト。
-- `PageLayout.astro` — `Layout` を基盤に、固定ページのタイトルと本文をまとめるレイアウト。本文は `<Flow as="article" class="c--pageBody" isWrapper isContainer hasGutter>` で囲む。
+- `ArchiveLayout.astro` — `Layout` を基盤に、本文を `<Group isWrapper isContainer hasGutter>` で囲んだ一覧用レイアウト。
 
 ```astro
 <Layout title={title}>
   <Group isWrapper isContainer hasGutter>
-    <Stack g="50">
-      <slot />
-    </Stack>
+    <slot />
   </Group>
 </Layout>
 ```
 
 ### 記事詳細のレイアウト構造
 
-記事詳細ページ（`posts/[slug].astro`）は、`Stack g="50"` の中に 3 ブロックを並べる。各ブロックは `<Group isWrapper="l" hasGutter>` で同じ最大幅を共有する。
+記事詳細ページ（`posts/[slug].astro`）は、`Group isWrapper isContainer hasGutter` の中に「記事ヘッダー（Date・Heading・タグ一覧）」と「本文（`Flow`）」を縦に並べるだけのシンプルな構造になっている。シェアボタンや前後記事ナビ、TOC などは含めていない。必要に応じて自分で追加していくのがおすすめ。
 
 ```astro
 <Layout ...>
-  <Stack g="50">
-    {/* 1. 記事ヘッダー（Date・Heading・タグ一覧） */}
-    <Group as="header" isWrapper="l" hasGutter>...</Group>
+  <Group isWrapper isContainer hasGutter>
+    {/* 記事ヘッダー（Date・Heading・タグ一覧） */}
+    <Group as="header">...</Group>
 
-    {/* 2. 本文 + TOC */}
-    <Group isWrapper="l" hasGutter>
-      <WithSide fxd="row-reverse" mainW="40em" sideW="var(--sz--toc)" g="40">
-        <Group as="aside" isSide>
-          <Group pos="sticky" t="20" z="1">
-            <TableOfContents toc={toc} />
-          </Group>
-        </Group>
-        <Flow as="article" class="c--articleBody">
-          <Content />
-        </Flow>
-      </WithSide>
-    </Group>
-
-    {/* 3. 記事フッター（シェアボタン + 前後記事ナビ） */}
-    <Group as="footer" isWrapper="l" hasGutter>
-      <ShareButtons ... />
-      <ArticleNav ... />
-    </Group>
-  </Stack>
+    {/* 本文 */}
+    <Flow as="article" class="c--articleBody" mbs="50">
+      <Content />
+    </Flow>
+  </Group>
 </Layout>
 ```
-
-本文と TOC の横並びには `WithSide` を使い、`fxd="row-reverse"` で TOC を右側に配置する。TOC は `position: sticky` でスクロール追従させる。
-
-`--sz--toc` は `global.css` で `240px` を割り当てている。`isWrapper="l"` が参照する `--sz--l` も `--sz--m + --sz--toc + --s40` で計算しており、TOC があっても本文が中央から大きくずれないように調整している。
 
 ## スタイルの上書き
 
@@ -199,8 +170,6 @@ export const siteConfig = {
     --lts--base: 0.025em;
     --lts--l: 0.075em;
     --lts--xl: 0.15em;
-    --sz--toc: 240px;
-    --sz--l: calc(var(--sz--m) + var(--sz--toc) + var(--s40));
     --headings-fw: 500;
   }
 }

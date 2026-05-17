@@ -27,6 +27,8 @@ export default defineConfig(
       '**/.stylelintrc.mjs',
       '**/vite.config.*',
       '**/__*',
+      // 同期元（sync-templates）— 実体は各テンプレ配下にコピーされ、そちら側で lint される
+      'templates/_shared/**',
     ],
   },
   eslintConfigPrettier,

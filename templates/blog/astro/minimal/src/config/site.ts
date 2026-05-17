@@ -22,11 +22,7 @@ export const siteConfig = {
   },
 
   // ナビゲーション
-  nav: [
-    { label: 'Home', href: '/' },
-    { label: 'About', href: '/about/' },
-    { label: 'Privacy Policy', href: '/privacy/' },
-  ],
+  nav: [{ label: 'Home', href: '/' }],
 
   // SNS リンク
   sns: [
@@ -37,11 +33,7 @@ export const siteConfig = {
   // フッター
   footer: {
     copyright: '© 2026 Lism CSS',
-    nav: [
-      { label: 'About', href: '/about/' },
-      { label: 'Privacy Policy', href: '/privacy/' },
-      { label: 'Contact', href: '#' },
-    ],
+    nav: [{ label: 'Home', href: '/' }],
   },
 } as const;
 

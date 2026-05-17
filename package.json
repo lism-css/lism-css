@@ -46,6 +46,8 @@
     "publish:mcp": "pnpm run build:mcp && pnpm --filter @lism-css/mcp publish --access public",
     "publish:cli": "pnpm run build:cli && pnpm --filter lism-cli publish && pnpm --filter create-lism publish",
     "sync:cdn-versions": "node scripts/sync-cdn-versions.mjs",
+    "sync:templates": "node scripts/sync-templates.mjs",
+    "sync:templates:check": "node scripts/sync-templates.mjs --check",
     "prepare": "husky"
   },
   "keywords": [],
