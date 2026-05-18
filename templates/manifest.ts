@@ -130,18 +130,6 @@ export const TEMPLATES: TemplateDef[] = [
     draft: true,
   },
   {
-    slug: 'blog-astro-full',
-    kind: 'project',
-    category: 'blog',
-    variant: 'full',
-    variantLabel: { ja: 'Full', en: 'Full' },
-    stack: 'astro',
-    sourcePath: 'blog/astro/full',
-    title: { ja: 'Blog Full', en: 'Blog Full' },
-    description: { ja: 'カテゴリ・目次つきの Astro ブログ', en: 'Astro blog with categories and table of contents' },
-    draft: true,
-  },
-  {
     slug: 'lp-astro-minimal',
     kind: 'single-project-variant',
     category: 'lp',
