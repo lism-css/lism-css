@@ -112,7 +112,7 @@ export const TEMPLATES: TemplateDef[] = [
       ja: '個人ブログ・エッセイ向け。年月アーカイブつきの落ち着いた Astro ブログ',
       en: 'Personal / essay-style Astro blog with monthly archives',
     },
-    draft: true,
+    previewUrl: 'https://lism-blog-astro-personal.pages.dev/',
   },
   {
     slug: 'blog-astro-techlog',
@@ -127,7 +127,7 @@ export const TEMPLATES: TemplateDef[] = [
       ja: '技術ブログ向け。コードハイライト・カテゴリ・タグ・TOC・年月アーカイブ・検索を装備した Astro ブログ',
       en: 'Tech blog with code highlighting, categories, tags, TOC, monthly archives and search',
     },
-    draft: true,
+    previewUrl: 'https://lism-blog-astro-techlog.pages.dev/',
   },
   {
     slug: 'lp-astro-minimal',
