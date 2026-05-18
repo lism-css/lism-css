@@ -57,8 +57,7 @@ const ogImage = buildOgImageUrl({
   ogImage={ogImage}
   ogType="article"
 >
-  <Stack g="50">
-    {/* 記事ヘッダー */}
+  <Stack as="article" g="50">
     <Group as="header" isWrapper="l" hasGutter>
       <Cluster>
         <Cat href={categoryHref}>{meta.label}</Cat>
@@ -84,7 +83,7 @@ const ogImage = buildOgImageUrl({
     <Group isWrapper="l" hasGutter>
       {/* md 以上: 本文 + サイド目次の 2 カラム。md 未満: 本文のみの 1 カラムに切り替え */}
       <Grid gtc={['1fr', null, 'minmax(0, 1fr) var(--sz--toc)']} g="40">
-        <Flow as="article" class="c--articleBody">
+        <Flow class="c--articleBody" data-pagefind-body>
           <Content components={{ Callout, Alert, LinkCard, WikiLink }} />
         </Flow>
         {/* サイド目次（md 以上で表示） */}

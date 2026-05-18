@@ -32,8 +32,7 @@ const ogImage = buildOgImageUrl({
 ---
 
 <Layout title={`${post.data.title} — ${siteConfig.name}`} description={post.data.excerpt} ogImage={ogImage} ogType="article">
-  <Group isWrapper isContainer hasGutter>
-    {/* 記事ヘッダー */}
+  <Group as="article" isWrapper isContainer hasGutter>
     <Group as="header">
       <Heading level="1">
         {post.data.title}
@@ -52,7 +51,7 @@ const ogImage = buildOgImageUrl({
       </Cluster>
     </Group>
 
-    <Flow as="article" class="c--articleBody" mbs="50">
+    <Flow class="c--articleBody" mbs="50">
       <Content />
     </Flow>
 

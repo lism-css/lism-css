@@ -1,0 +1,51 @@
+---
+// memo: 1ノード＝li + a +（子見出しがあれば sublist）。再帰で階層を表し、親テンプレ内に map をネストしない（esbuild/TSX の誤パース回避）
+import { Link, Lism } from 'lism-css/astro';
+import type { TocItem as TocItemType } from '@/lib/generateToc';
+import Self from '@/components/TocItem.astro';
+import type { ComponentProps } from 'astro/types';
+
+type LismProps = ComponentProps<typeof Link>;
+type Props = LismProps & {
+  item: TocItemType;
+  nested?: boolean;
+};
+
+const { item, ...rest } = Astro.props;
+---
+
+<li class="c--toc_item" data-level={item.depth}>
+  <Link
+    href={'#' + item.slug}
+    data-toc-link={item.slug}
+    set="plain"
+    ps="20"
+    d="block"
+    py="5"
+    lh="s"
+    bd-s
+    hasTransition
+    hov={{ c: 'brand', bgc: 'base-2' }}
+    {...rest}
+  >
+    {item.text}
+  </Link>
+  {
+    item.children.length !== 0 ? (
+      <Lism as="ol" class="c--toc_sublist">
+        {item.children.map((child) => (
+          <Self item={child} ps="30" />
+        ))}
+      </Lism>
+    ) : null
+  }
+</li>
+
+<style>
+  @layer lism-components {
+    .c--toc_item > a {
+      --duration: 0.2s;
+      --transitionProps: color;
+    }
+  }
+</style>
