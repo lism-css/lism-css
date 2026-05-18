@@ -1,0 +1,29 @@
+---
+/**
+ * 内部記事へのインラインリンク。
+ * `[[slug]]` / `[[slug|表示テキスト]]` から生成される。
+ * 表示テキストは `text` が指定されていればそれを、なければ記事タイトルを使う。
+ */
+import { getCollection } from 'astro:content';
+import { Link } from 'lism-css/astro';
+import { getPostHref, parsePostId } from '@/lib/posts';
+
+interface Props {
+  slug: string;
+  text?: string;
+}
+
+const { slug, text } = Astro.props;
+
+const posts = await getCollection('posts');
+const post = posts.find((p) => parsePostId(p.id).slug === slug);
+
+if (!post) {
+  throw new Error(`[WikiLink] Post not found for slug: "${slug}"`);
+}
+
+const href = getPostHref(post.id);
+const label = text ?? post.data.title;
+---
+
+<Link href={href}>{label}</Link>

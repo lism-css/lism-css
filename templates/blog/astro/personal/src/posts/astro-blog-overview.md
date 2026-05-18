@@ -126,6 +126,8 @@ export const siteConfig = {
 - `Layout.astro` — `<html>` から `<body>` までの土台。OGP メタタグ・Web フォント（Noto Serif JP）の読み込み・`<Container>` の中に `<Stack min-h="100svh">` で Header / Main / Footer を縦積みする。
 - `ArchiveLayout.astro` — `Layout` を基盤に、本文を `<Group isWrapper isContainer hasGutter>` で囲んだ一覧用レイアウト。
 
+記事詳細ページでは本文の後に `ShareButtons` を置き、X投稿とURLコピーを提供している。
+
 ## スタイル
 
 `src/styles/global.css` で Lism CSS の CSS 変数を上書きし、紙面のような淡いクリーム色と明朝体（Noto Serif JP）を基調にしたトーンを作っている。

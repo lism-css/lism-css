@@ -4,6 +4,7 @@ import expressiveCode from 'astro-expressive-code';
 import remarkDirective from 'remark-directive';
 import { remarkDirectiveHandler } from './src/lib/remark-directive.mjs';
 import { remarkLinkCard } from './src/lib/remark-link-card.mjs';
+import { remarkWikiLink } from './src/lib/remark-wiki-link.mjs';
 
 export default defineConfig({
   // expressiveCode は mdx より前に置く必要がある
@@ -25,8 +26,8 @@ export default defineConfig({
   ],
   markdown: {
     // :::note などの directive 記法を <Callout> に変換
-    // URL単独段落 → <LinkCard type="external" />
-    remarkPlugins: [remarkDirective, remarkDirectiveHandler, remarkLinkCard],
+    // URL単独段落/[[slug]]単独段落 → <LinkCard />、文中の[[slug]] → <WikiLink />
+    remarkPlugins: [remarkDirective, remarkDirectiveHandler, remarkLinkCard, remarkWikiLink],
   },
   vite: {
     resolve: {

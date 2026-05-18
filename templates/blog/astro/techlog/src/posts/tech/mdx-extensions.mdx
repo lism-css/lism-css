@@ -1,6 +1,6 @@
 ---
 title: このテンプレートの MDX 拡張記法
-excerpt: テンプレート独自の MDX 拡張記法（:::記法の Callout / Alert、URL 自動展開によるリンクカード、astro-expressive-code によるコードハイライト）を実例付きで紹介します。記事を書くときのリファレンス用ダミーページ。
+excerpt: テンプレート独自の MDX 拡張記法（:::記法の Callout / Alert、URL 自動展開・[[slug]] によるリンクカード、astro-expressive-code によるコードハイライト）を実例付きで紹介します。記事を書くときのリファレンス用ダミーページ。
 date: '2026-05-01'
 tags: [MDX, テンプレート]
 ---
@@ -9,6 +9,7 @@ tags: [MDX, テンプレート]
 
 - `:::type[ラベル]` で `<Callout>` / `<Alert>` を呼び出す
 - URL 文字列だけの段落を外部リンクカードに展開する
+- `[[slug]]` で内部記事へのリンク／カードを生成する
 - `astro-expressive-code` によるコードハイライト
 
 この記事は、それぞれの記法と実際の見た目を確認するためのサンプルです。
@@ -111,6 +112,42 @@ fetchに失敗するサイトや、表示するタイトル・説明を自分で
 
 <LinkCard type="external" href="https://example.com" title="独自タイトル" description="独自の説明文をここに書く。" />
 
+## 内部リンクカード（`[[slug]]`）
+
+Obsidian風の`[[slug]]`記法で、同じブログ内の記事を参照できます。`slug`は`src/posts/{category}/`配下のファイル名（拡張子なし）です。
+
+### 段落単独でカード化
+
+`[[slug]]`を段落単独で書くと、Content Collectionsから記事情報を引いて`<LinkCard type="internal">`を出力します。
+
+````mdx
+[[lism-css-intro]]
+````
+
+[[lism-css-intro]]
+
+[[astro-blog-overview]]
+
+### 文中リンク
+
+段落の途中で`[[slug]]`を書くと、記事タイトルをテキストにしたインラインリンクになります。
+
+````mdx
+詳しくは [[lism-css-intro]] を参照してください。
+````
+
+詳しくは [[lism-css-intro]] を参照してください。
+
+### 表示テキストの上書き
+
+`[[slug|表示テキスト]]`で表示テキストを上書きできます。段落単独でもエイリアスがある場合はリンクとして扱われます（カード化したいときはエイリアス無しで書く）。
+
+````mdx
+[[lism-css-intro|前回の記事]] を参照。
+````
+
+[[lism-css-intro|前回の記事]] を参照。
+
 ## コードハイライト（astro-expressive-code）
 
 コードブロックのシンタックスハイライトは [`astro-expressive-code`](https://expressive-code.com/) を使用しています。`astro.config.mjs` で `themes: 'github-dark'` を指定しているため、ライト/ダーク両モードで同じ配色（GitHub Dark）が適用されます。複数テーマを切り替えたい場合は `themes: ['github-dark', 'github-light']` のように配列で指定し、`themeCssSelector` でサイト側のテーマ切り替えと連動させます。
@@ -153,5 +190,6 @@ pnpm dev
 | --- | --- |
 | `remark-directive.mjs` | `:::type[label]` / `:::type` を `<Callout>` / `<Alert>` に変換 |
 | `remark-link-card.mjs` | URL単独段落を`<LinkCard type="external">`に変換 |
+| `remark-wiki-link.mjs` | `[[slug]]`/`[[slug\|alias]]`を`<LinkCard type="internal">`/`<WikiLink>`に変換 |
 
-詳細は [astro-blog-overview](/posts/astro-blog-overview/) のテンプレート解説を参照。
+詳細は [[astro-blog-overview]] のテンプレート解説を参照。

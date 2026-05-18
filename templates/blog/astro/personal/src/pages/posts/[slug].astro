@@ -4,6 +4,7 @@ import { Group, Flow, Cluster, Heading } from 'lism-css/astro';
 import Layout from '@/layouts/Layout.astro';
 import Date from '@/components/Date.astro';
 import Tag from '@/components/Tag.astro';
+import ShareButtons from '@/components/ShareButtons.astro';
 import { getTagHref } from '@/lib/tags';
 import { buildOgImageUrl } from '@/lib/ogImage';
 import { siteConfig } from '@/config/site';
@@ -48,5 +49,9 @@ const ogImage = buildOgImageUrl({
     <Flow as="article" class="c--articleBody" mbs="50">
       <Content />
     </Flow>
+
+    <Group as="footer" mbs="60" py="30" bd-y>
+      <ShareButtons title={post.data.title} />
+    </Group>
   </Group>
 </Layout>

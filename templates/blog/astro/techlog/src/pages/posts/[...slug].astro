@@ -5,9 +5,11 @@ import Layout from '@/layouts/Layout.astro';
 import { Callout } from '@lism-css/ui/astro/Callout';
 import { Alert } from '@lism-css/ui/astro/Alert';
 import LinkCard from '@/components/LinkCard.astro';
+import WikiLink from '@/components/WikiLink.astro';
 import TableOfContents from '@/components/TableOfContents.astro';
 import FixedToc from '@/components/FixedToc.astro';
 import ArticleNav from '@/components/ArticleNav.astro';
+import ShareButtons from '@/components/ShareButtons.astro';
 import Date from '@/components/Date.astro';
 import Cat from '@/components/Cat.astro';
 import Tag from '@/components/Tag.astro';
@@ -82,7 +84,7 @@ const ogImage = buildOgImageUrl({
       {/* md 以上: 本文 + サイド目次の 2 カラム。md 未満: 本文のみの 1 カラムに切り替え */}
       <Grid gtc={['1fr', null, 'minmax(0, 1fr) var(--sz--toc)']} g="40">
         <Flow as="article" class="c--articleBody">
-          <Content components={{ Callout, Alert, LinkCard }} />
+          <Content components={{ Callout, Alert, LinkCard, WikiLink }} />
         </Flow>
         {/* サイド目次（md 以上で表示） */}
         <Group as="aside" d={['none', null, 'block']}>
@@ -92,9 +94,12 @@ const ogImage = buildOgImageUrl({
         </Group>
       </Grid>
 
-      {/* フッター（前後記事ナビ） */}
+      {/* フッター（シェアボタン → 前後記事ナビ） */}
       <Group as="footer" mbs="60">
-        <Group py="30" bd-bs>
+        <Group py="30" bd-y>
+          <ShareButtons title={post.data.title} />
+        </Group>
+        <Group py="30">
           <ArticleNav
             prev={prev ? { title: prev.data.title, id: prev.id } : undefined}
             next={next ? { title: next.data.title, id: next.id } : undefined}
