@@ -52,8 +52,8 @@ import { siteConfig } from '@/config/site';
   <SearchModal />
 
   {/* モバイル用モーダルナビ */}
-  <Modal.Root id="site-nav" isContainer isWrapper="s" hasGutter py="40">
-    <Modal.Inner layout="stack" g="20" w="100%" max-h="100%" pos="relative" p="30" bdrs="20" bxsh="40" bgc="base">
+  <Modal.Root id="site-nav" isContainer>
+    <Modal.Inner layout="stack" g="20" pos="relative" w="100%" max-w="320px" h="100%" ms="auto" p="30" bgc="base" offset="100px 0">
       <Flex ai="center" jc="between" mt="-5">
         <Eyebrow>MENU</Eyebrow>
         <Modal.CloseBtn modalId="site-nav" autofocus p="0.4em" me="-0.4em" bdrs="10" hov={{ bgc: 'base-2' }} aria-labelledby="menu-close-label">
@@ -72,10 +72,10 @@ import { siteConfig } from '@/config/site';
         </Modal.CloseBtn>
       </Flex>
       <Modal.Body layout="stack" g="20" ov-y="auto">
-        <Stack as="nav" aria-label="メインナビゲーション" util="divide" fz="s">
+        <Stack as="nav" aria-label="メインナビゲーション" util="divide" fz="s" bd-y>
           {
             siteConfig.header.nav.map((item) => (
-              <Link href={item.href} c="inherit" td="none" py="10" hov={{ c: 'brand' }}>
+              <Link href={item.href} set="plain" lh="s" py="15" px="5" hov={{ c: 'brand' }}>
                 {item.label}
               </Link>
             ))

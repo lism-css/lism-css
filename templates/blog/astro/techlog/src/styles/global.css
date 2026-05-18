@@ -1,68 +1,66 @@
-/* === ブログテンプレート用にトークン値・ベース値を上書き === */
 @layer lism-base {
+  /* === トークン上書き・独自定義 === */
   :root {
-    /* 紙面のような淡いクリーム色をベースに */
-    /* --base: hsl(45, 32%, 98%);
-    --base-2: hsl(45, 16%, 94%);
-    --text: hsl(45, 8%, 10%);
-    --text-2: hsl(0, 0%, 30%);
-    --divider: hsl(45, 12%, 90%); */
-    /* ブランドカラー（タグ・アクセント・リンクの軸） */
-    /* --brand: hsl(10, 56%, 50%);
-    --link: hsl(10, 48%, 50%); */
+    --base: hsl(220, 0%, 98%);
+    --base-2: hsl(220 4% 94%);
 
+    --brand: hsl(204, 64%, 30%);
+    --link: hsl(204, 80%, 50%);
+
+    /* Gen Interface JP → see: https://gen.typesetting.jp/ */
     --ff--base: 'Gen Interface JP', 'Hiragino Sans', sans-serif, 'Segoe UI Emoji';
 
-    /* 行間と読み心地の調整 */
-    /* --lh--base: 1.85; */
-
-    /* 字間（lism-css のデフォルト --lts--s/--lts--l に追加） */
+    /* 字間 */
     --lts--s: 0.01em;
     --lts--base: 0.02em;
     --lts--l: 0.05em;
     --lts--xl: 0.1em; /* アクセント（cat/date/share/eyebrow 等） */
 
-    /* --sz-- */
-    --sz--toc: 240px;
-    --sz--l: calc(var(--sz--m) + var(--sz--toc) + var(--s40));
-
+    /* ウェイト */
     --headings-fw: 500;
 
-    /* ヘッダーの高さ(jsで動的セットされる） */
+    /* コンテンツサイズ */
+    --sz--l: calc(var(--sz--m) + var(--sz--toc) + var(--s40));
+    --sz--toc: 240px;
+
+    /* ヘッダーの高さ (jsで動的セットされる） */
     --header-h: 60px;
   }
+
+  /* === 見出しジャンプ時のスクロールパディング === */
   html {
     scroll-padding-top: calc(var(--header-h) + 0.5rem);
   }
-  body {
-    font-feature-settings: 'palt' 1;
-    /* -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale; */
-  }
+
+  /* === リンクスタイル === */
   a {
-    text-underline-offset: 0.2em;
+    color: inherit;
+    text-decoration-thickness: 2px;
+    text-decoration-color: var(--link);
+  }
+  a:where(:hover, :focus-visible) {
+    text-decoration-thickness: 4px;
+    text-decoration-skip-ink: none;
   }
 
   /* === ダークモード === */
   :root[data-theme='dark'] {
-    --L: 72%;
-    --C: 0.25;
+    /* パレットカラーの明度調整 */
+    --L: 70%;
 
-    /* base（紙面感の対として、暖色寄りのダークトーン） */
-    --base: hsl(30, 6%, 10%);
-    --base-2: hsl(30, 6%, 18%);
+    --base: hsl(204, 6%, 15%);
+    --base-2: hsl(204, 4%, 12%);
 
-    /* content */
-    --text: hsl(45, 12%, 95%);
-    --text-2: hsl(45, 6%, 80%);
-    --divider: hsl(30, 4%, 24%);
+    --text: hsl(204, 2%, 94%);
+    --text-2: hsl(204, 6%, 80%);
+    --divider: hsl(204, 6%, 30%);
 
-    /* brand / link（赤系を維持しつつ明度を上げて視認性確保） */
-    --brand: hsl(10, 64%, 64%);
-    --link: hsl(10, 56%, 66%);
+    --brand: hsl(204, 64%, 64%);
+    --link: hsl(204, 80%, 64%);
 
     /* shadow color */
-    --shc: hsl(45 20% 70% / 5%);
+    --shc: hsl(204 4% 10% / 90%);
+    /* --sh-inset: inset; */
 
     /* color mix */
     --cbox-cPct: 4%;
@@ -74,30 +72,27 @@
 @layer lism-base {
   .c--articleBody {
     > h2 {
-      padding-block-end: var(--s20);
-      border-block-end: 1px solid;
+      padding-block: var(--s5);
+      padding-inline-start: calc(4px + 0.375em);
+      border-inline-start: 4px solid;
     }
 
-    > h2 + * {
-      margin-block-start: calc(var(--flow) * 1.5);
+    :not(pre) > code {
+      --hl: 1px;
+      display: inline-flex;
+      background-color: var(--base-2);
+      font-size: 0.925em;
+      padding: 3px 0.25em;
+      margin-inline: 0.125em;
+      border-radius: var(--bdrs--10);
+    }
+    a > code:is(&) {
+      text-decoration: inherit;
     }
 
     blockquote {
       border-inline-start: 2px solid var(--text-2);
-      font-style: italic;
-    }
-
-    blockquote > p + p {
-      margin-block-start: var(--s20);
-    }
-
-    pre {
-      padding: var(--s20);
-      border-radius: var(--bdrs--20);
-    }
-    code {
-      letter-spacing: normal;
-      font-size: var(--fz--s);
+      border-radius: 2px;
     }
 
     table {
@@ -113,11 +108,6 @@
     }
     thead {
       border-block-end: solid 2px;
-    }
-
-    /* タスクリスト */
-    .task-list-item > input {
-      opacity: 1;
     }
   }
 }

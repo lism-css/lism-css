@@ -96,10 +96,10 @@ const ogImage = buildOgImageUrl({
 
       {/* フッター（シェアボタン → 前後記事ナビ） */}
       <Group as="footer" mbs="60">
-        <Group py="30" bd-y>
+        <Group py="30" px="10" bd-y>
           <ShareButtons title={post.data.title} />
         </Group>
-        <Group py="30">
+        <Group py="20">
           <ArticleNav
             prev={prev ? { title: prev.data.title, id: prev.id } : undefined}
             next={next ? { title: next.data.title, id: next.id } : undefined}

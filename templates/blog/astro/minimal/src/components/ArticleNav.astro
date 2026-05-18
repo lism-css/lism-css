@@ -16,12 +16,12 @@ const { prev, next } = Astro.props;
 ---
 
 <Lism as="nav" aria-label="記事ナビゲーション">
-  <Columns g="30">
+  <Columns g="0">
     {
       prev ? (
-        <Link href={`/posts/${prev.id}/`} td="none" c="inherit" hov={{ c: 'brand' }} d="block">
+        <Link href={`/posts/${prev.id}/`} set="plain" hov={{ c: 'brand' }} d="block">
           <Stack g="5" lh="s">
-            <Eyebrow>
+            <Eyebrow c="inherit">
               <Inline aria-hidden="true">←</Inline> PREVIOUS
             </Eyebrow>
             <Lism fz="s">{prev.title}</Lism>
@@ -33,9 +33,9 @@ const { prev, next } = Astro.props;
     }
     {
       next ? (
-        <Link href={`/posts/${next.id}/`} td="none" c="inherit" hov={{ c: 'brand' }} d="block" ta="right">
+        <Link href={`/posts/${next.id}/`} set="plain" hov={{ c: 'brand' }} d="block" ta="right">
           <Stack g="5" lh="s">
-            <Eyebrow>
+            <Eyebrow c="inherit">
               NEXT <Inline aria-hidden="true">→</Inline>
             </Eyebrow>
             <Lism fz="s">{next.title}</Lism>

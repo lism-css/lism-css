@@ -14,7 +14,7 @@ const { toc, labelId = 'toc-label' } = Astro.props;
 ---
 
 <Lism as="nav" aria-labelledby={labelId}>
-  <Eyebrow as="h2" id={labelId} class="c--toc_label" fw="normal" p="5" util="trim">Table of Contents</Eyebrow>
+  <Eyebrow as="h2" id={labelId} class="c--toc_label" px="5" py="10" util="trim">Table of Contents</Eyebrow>
   <Lism class="c--toc" bd-y py="20">
     <Lism as="ol" class="c--toc_list" lh="s" fz="s" ms="1px">
       {toc.map((item) => <TocItem item={item} />)}

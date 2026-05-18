@@ -59,4 +59,4 @@ tags: [習慣, ライフスタイル]
 
 - `src/config/site.ts` — サイト名・キャッチコピー・ナビ・SNS・コピーライト等
 - `src/styles/global.css` — Lism CSS のトークン上書き。デフォルトでは `--base` と `--lts--xl` だけ有効化していて、他は候補をコメントで残してある
-- 記事本文のタイポグラフィ（`blockquote` / `pre` / `table` / タスクリストなど）は `.c--articleBody` 配下の子孫セレクタとして `@layer lism-custom` に書く（Markdown から生成される要素にはクラスを直接付けられないため）
+- 記事本文のタイポグラフィ（`blockquote` / `pre` / `table` など）は `.c--articleBody` 配下の子孫セレクタとして `@layer lism-custom` に書く（Markdown から生成される要素にはクラスを直接付けられないため）

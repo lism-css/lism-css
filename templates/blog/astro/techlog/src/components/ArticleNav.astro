@@ -16,10 +16,10 @@ const { prev, next } = Astro.props;
 ---
 
 <Lism as="nav" aria-label="記事ナビゲーション">
-  <Columns g="30">
+  <Columns g="0">
     {
       prev ? (
-        <Link href={getPostHref(prev.id)} td="none" c="inherit" hov={{ c: 'brand' }} d="block">
+        <Link href={getPostHref(prev.id)} set="plain" hov={{ bgc: 'base-2' }} d="block" p="10" py="20" bdrs="10">
           <Stack g="5" lh="s">
             <Eyebrow>
               <Inline aria-hidden="true">←</Inline> PREVIOUS
@@ -33,7 +33,7 @@ const { prev, next } = Astro.props;
     }
     {
       next ? (
-        <Link href={getPostHref(next.id)} td="none" c="inherit" hov={{ c: 'brand' }} d="block" ta="right">
+        <Link href={getPostHref(next.id)} set="plain" hov={{ bgc: 'base-2' }} d="block" ta="right" p="10" py="20">
           <Stack g="5" lh="s">
             <Eyebrow>
               NEXT <Inline aria-hidden="true">→</Inline>
