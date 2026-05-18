@@ -1,5 +1,8 @@
 ---
 import { Group, Link, Inline } from 'lism-css/astro';
+import type { ComponentProps } from 'astro/types';
+
+type GroupProps = ComponentProps<typeof Group>;
 
 interface Item {
   label: string;
@@ -7,10 +10,9 @@ interface Item {
   muted?: boolean;
 }
 
-interface Props {
+type Props = GroupProps & {
   items: Item[];
-  class?: string;
-}
+};
 
 const { items, class: className, ...rest } = Astro.props;
 ---

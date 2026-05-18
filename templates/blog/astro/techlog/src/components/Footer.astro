@@ -3,6 +3,11 @@ import { Lism, Cluster, Link, Center } from 'lism-css/astro';
 import { siteConfig } from '@/config/site';
 import SnsLinks from '@/components/SnsLinks.astro';
 import TagCloud from '@/components/TagCloud.astro';
+import type { ComponentProps } from 'astro/types';
+
+type LismProps = ComponentProps<typeof Lism>;
+
+type Props = LismProps;
 ---
 
 <Lism as="footer" py="40" hasGutter bd-bs {...Astro.props}>

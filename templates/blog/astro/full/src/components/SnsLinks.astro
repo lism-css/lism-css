@@ -5,9 +5,9 @@ import type { ComponentProps } from 'astro/types';
 
 type ClusterProps = ComponentProps<typeof Cluster>;
 
-interface Props extends ClusterProps {
+type Props = ClusterProps & {
   label?: string;
-}
+};
 
 // siteConfig.sns を参照してアイコンリンク一覧として表示する。
 const { label = 'SNSリンク', ...rest } = Astro.props;

@@ -1,5 +1,8 @@
 ---
 import { Lism, Link, Inline } from 'lism-css/astro';
+import type { ComponentProps } from 'astro/types';
+
+type LismProps = ComponentProps<typeof Lism>;
 
 interface Item {
   label: string;
@@ -7,10 +10,9 @@ interface Item {
   muted?: boolean;
 }
 
-interface Props {
+type Props = LismProps & {
   items: Item[];
-  class?: string;
-}
+};
 
 const { items, class: className, ...rest } = Astro.props;
 ---

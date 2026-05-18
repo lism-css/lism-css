@@ -33,7 +33,7 @@ export const siteConfig = {
   // @see https://loos.tools/ogimg-maker/guide/
   ogImage: {
     type: '1-5',
-    frame: '1',
+    frame: true,
     bg: 'fill',
   },
 

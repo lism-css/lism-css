@@ -1,10 +1,12 @@
 ---
 import { Inline, Link } from 'lism-css/astro';
+import type { ComponentProps } from 'astro/types';
 
-interface Props {
+type LinkProps = ComponentProps<typeof Link>;
+
+type Props = LinkProps & {
   href?: string;
-  class?: string;
-}
+};
 
 const { href, class: className, ...rest } = Astro.props;
 
