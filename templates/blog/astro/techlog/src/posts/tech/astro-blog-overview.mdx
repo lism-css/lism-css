@@ -59,8 +59,8 @@ src/
 ├── lib/             # 純粋ロジック（TOC生成・年月アーカイブ集計 など）
 ├── pages/           # ルーティング
 ├── posts/           # 記事 MDX（カテゴリごとにディレクトリ）
-│   ├── dev/
-│   └── life/
+│   ├── tech/
+│   └── column/
 └── styles/
     └── global.css
 ```
@@ -86,7 +86,7 @@ const posts = defineCollection({
 export const collections = { posts };
 ```
 
-`pattern: '**/*.mdx'` のため、`src/posts/dev/foo.mdx` のようにディレクトリ階層を切れる。記事 ID は `dev/foo` のような形になり、先頭ディレクトリをカテゴリ、残りを記事 slug として扱う。
+`pattern: '**/*.mdx'` のため、`src/posts/tech/foo.mdx` のようにディレクトリ階層を切れる。記事 ID は `tech/foo` のような形になり、先頭ディレクトリをカテゴリ、残りを記事 slug として扱う。
 
 `/about/` や `/privacy/` のような単発の固定ページは Content Collections には載せず、`src/pages/about.astro` のように `.astro` ファイルとして直接配置しているので、レイアウトやコンポーネントを自由に組める。
 
@@ -145,11 +145,11 @@ https://lism-css.com/
 
 ```ts
 // src/config/categories.ts
-export type CategoryKey = 'dev' | 'life';
+export type CategoryKey = 'tech' | 'column';
 
 export const CATEGORIES: Record<CategoryKey, Category> = {
-  dev: { key: 'dev', label: 'DEV', description: 'Lism CSS や Astro まわりの開発メモ' },
-  life: { key: 'life', label: 'LIFE', description: '日々の暮らしと考えごと' },
+  tech: { key: 'tech', label: 'TECH', description: '技術記事と開発メモ' },
+  column: { key: 'column', label: 'COLUMN', description: '技術以外のコラムと雑記' },
 };
 ```
 
@@ -251,13 +251,13 @@ export const siteConfig = {
 
 `build` スクリプトは `astro build && pagefind --site dist` の 2 段構成。Astro のビルド成果物に対して [Pagefind](https://pagefind.app/) がインデックスを生成し、`dist/pagefind/` に静的アセットとして配置される。
 
-検索 UI は `@pagefind/default-ui` を使い、`search.astro` から呼び出す。クライアントサイドのみで動くため、サーバーや外部 API は不要。`dev` 中はインデックスが存在しないので、検索を試したい場合は `nr build && nr preview` で確認する。
+検索 UI は `@pagefind/default-ui` を使い、`search.astro` から呼び出す。クライアントサイドのみで動くため、サーバーや外部 API は不要。開発中はインデックスが存在しないので、検索を試したい場合は `nr build && nr preview` で確認する。
 
 ## レイアウト
 
 レイアウトは 3 つ。
 
-- `Layout.astro` — `<html>` から `<body>` までの土台。OGP メタタグ・Web フォント（Noto Serif JP / Noto Sans JP）・カラーテーマ初期化スクリプトを `<head>` で読み込み、`<Container>` の中に `<Stack min-h="100svh">` で Header / (Breadcrumb) / Main / Footer を縦積みする。
+- `Layout.astro` — `<html>` から `<body>` までの土台。OGP メタタグ・Web フォント（Gen Interface JP）・カラーテーマ初期化スクリプトを `<head>` で読み込み、`<Container>` の中に `<Stack min-h="100svh">` で Header / (Breadcrumb) / Main / Footer を縦積みする。
 - `ArchiveLayout.astro` — `Layout` を基盤に、本文を `<Group isWrapper isContainer hasGutter><Stack g="50">` で囲んだ一覧用レイアウト。
 - `PageLayout.astro` — `Layout` を基盤に、固定ページのタイトルと本文をまとめるレイアウト。本文は `<Flow as="article" class="c--pageBody" isWrapper isContainer hasGutter>` で囲む。
 
@@ -337,8 +337,7 @@ export const siteConfig = {
     --divider: #e8e6e1;
     --brand: #c8553d;
     --link: #c8553d;
-    --ff--base: 'Noto Serif JP', 'Hiragino Mincho ProN', 'Yu Mincho', serif;
-    --ff--accent: -apple-system, 'BlinkMacSystemFont', 'Hiragino Sans', sans-serif, 'Segoe UI Emoji';
+    --ff--base: 'Gen Interface JP', 'Hiragino Sans', sans-serif, 'Segoe UI Emoji';
     --lts--s: 0.01em;
     --lts--base: 0.025em;
     --lts--l: 0.075em;

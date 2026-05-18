@@ -4,6 +4,7 @@ import type { GetStaticPaths } from 'astro';
 import { Inline } from 'lism-css/astro';
 import ArchiveLayout from '@/layouts/ArchiveLayout.astro';
 import ArchiveHeader from '@/components/ArchiveHeader.astro';
+import CategoryTabs from '@/components/CategoryTabs.astro';
 import PostList from '@/components/PostList.astro';
 import Pager from '@/components/Pager.astro';
 import { CATEGORIES, CATEGORY_KEYS } from '@/config/categories';
@@ -33,6 +34,9 @@ const getPageHref = (n: number) => (n === 1 ? getCategoryHref(category) : `/cate
   <ArchiveHeader eyebrow="CATEGORY" title={meta.label}>
     {meta.description}<Inline fz="xs">（{page.total} 件）</Inline>
   </ArchiveHeader>
+
+  {/* カテゴリタブ */}
+  <CategoryTabs current={category} />
 
   {/* 記事リスト */}
   <PostList posts={page.data} showCategory={false} />

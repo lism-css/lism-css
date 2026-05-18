@@ -2,7 +2,7 @@
  * 記事カテゴリーの定義。
  * 物理ディレクトリ（src/posts/{key}/）とカテゴリ一覧 URL（/category/{key}/）で使われる。
  */
-export type CategoryKey = 'dev' | 'life';
+export type CategoryKey = 'tech' | 'column';
 
 export interface Category {
   key: CategoryKey;
@@ -11,16 +11,16 @@ export interface Category {
 }
 
 export const CATEGORIES: Record<CategoryKey, Category> = {
-  dev: {
-    key: 'dev',
-    label: 'DEV',
-    description: '日々の開発メモ',
+  tech: {
+    key: 'tech',
+    label: 'TECH',
+    description: '技術記事と開発メモ',
   },
-  life: {
-    key: 'life',
-    label: 'LIFE',
-    description: '日々の暮らしと考えごと',
+  column: {
+    key: 'column',
+    label: 'COLUMN',
+    description: '技術以外のコラムと雑記',
   },
 };
 
-export const CATEGORY_KEYS: CategoryKey[] = ['dev', 'life'];
+export const CATEGORY_KEYS: CategoryKey[] = ['tech', 'column'];

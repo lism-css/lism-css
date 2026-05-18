@@ -5,7 +5,7 @@ export function isCategoryKey(value: string): value is CategoryKey {
 }
 
 /**
- * post.id（例: "dev/foo"）から category と URL 用 slug を分解する。
+ * post.id（例: "tech/foo"）から category と URL 用 slug を分解する。
  */
 export function parsePostId(id: string): { category: CategoryKey; slug: string } {
   const [category, ...rest] = id.split('/');
