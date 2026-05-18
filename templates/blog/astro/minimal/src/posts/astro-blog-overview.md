@@ -73,7 +73,7 @@ tags: [習慣, ライフスタイル]
 ---
 ```
 
-タグ別アーカイブは `/tag/{tag}/` に生成され、フッターには全タグを一覧表示する `TagCloud` を配置している。
+タグ別アーカイブは `/tags/{tag}/` に生成され、フッターには全タグを一覧表示する `TagCloud` を配置している。
 
 ## サイト設定
 
@@ -112,7 +112,7 @@ export const siteConfig = {
 | --- | --- |
 | `[...page].astro` | トップ（全記事一覧）＋ページネーション |
 | `posts/[slug].astro` | 記事詳細 |
-| `tag/[tag]/[...page].astro` | タグ別一覧＋ページネーション |
+| `tags/[tag]/[...page].astro` | タグ別一覧＋ページネーション |
 | `404.astro` | 404 |
 
 ページネーションには Astro の `paginate()` を使い、1ページあたりの件数は `siteConfig.pagination.postsPerPage`（デフォルト 6）を参照する。

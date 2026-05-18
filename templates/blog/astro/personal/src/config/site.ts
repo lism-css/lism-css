@@ -25,7 +25,7 @@ export const siteConfig = {
   nav: [
     { label: 'Home', href: '/' },
     { label: 'Archive', href: '/archive/' },
-    { label: 'Tags', href: '/tag/' },
+    { label: 'Tags', href: '/tags/' },
     { label: 'About', href: '/about/' },
   ],
 
@@ -49,7 +49,7 @@ export const siteConfig = {
     nav: [
       { label: 'Home', href: '/' },
       { label: 'Archive', href: '/archive/' },
-      { label: 'Tags', href: '/tag/' },
+      { label: 'Tags', href: '/tags/' },
       { label: 'About', href: '/about/' },
     ],
   },

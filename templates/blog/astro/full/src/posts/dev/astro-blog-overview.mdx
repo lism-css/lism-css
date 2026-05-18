@@ -144,7 +144,7 @@ export function getCategoryHref(category: CategoryKey): string {
 }
 
 export function getTagHref(tag: string): string {
-  return `/tag/${tag}/`;
+  return `/tags/${tag}/`;
 }
 ```
 
@@ -191,12 +191,12 @@ export const siteConfig = {
 | `[...page].astro` | トップ（全記事一覧）＋ページネーション |
 | `category/[category]/[...page].astro` | カテゴリ別一覧＋ページネーション |
 | `posts/[...slug].astro` | 記事詳細 |
-| `tag/[tag]/[...page].astro` | タグ別一覧＋ページネーション |
+| `tags/[tag]/[...page].astro` | タグ別一覧＋ページネーション |
 | `about.astro` | About |
 | `privacy.astro` | Privacy Policy |
 | `404.astro` | 404 |
 
-ページネーションには Astro の `paginate()` を使い、1ページあたりの件数は `siteConfig.pagination.postsPerPage`（デフォルト 6）を参照する。記事詳細では `getStaticPaths` 内で記事を日付降順にソートし、`prev` / `next` を index で受け渡している。記事詳細 URL は `/posts/{slug}/`、カテゴリ一覧 URL は `/category/{category}/`、タグ一覧 URL は `/tag/{tag}/` になる。
+ページネーションには Astro の `paginate()` を使い、1ページあたりの件数は `siteConfig.pagination.postsPerPage`（デフォルト 6）を参照する。記事詳細では `getStaticPaths` 内で記事を日付降順にソートし、`prev` / `next` を index で受け渡している。記事詳細 URL は `/posts/{slug}/`、カテゴリ一覧 URL は `/category/{category}/`、タグ一覧 URL は `/tags/{tag}/` になる。
 
 ## レイアウト
 

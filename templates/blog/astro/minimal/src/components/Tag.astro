@@ -4,10 +4,9 @@ import { Link } from 'lism-css/astro';
 interface Props {
   href: string;
   class?: string;
-  bgc?: string;
 }
 
-const { href, class: className, bgc = 'base-2', ...rest } = Astro.props;
+const { href, class: className, ...rest } = Astro.props;
 ---
 
 <Link
@@ -17,16 +16,12 @@ const { href, class: className, bgc = 'base-2', ...rest } = Astro.props;
   d="inline-flex"
   ai="center"
   fz="2xs"
-  lts="l"
   lh="xs"
   py="5"
-  px="10"
-  bdrs="10"
-  hov="-o"
-  bdc="divider"
+  px="5"
   c="text-2"
-  bgc={bgc}
+  hov="underline"
   {...rest}
 >
-  <slot />
+  # <slot />
 </Link>

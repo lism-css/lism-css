@@ -1,13 +1,13 @@
 ---
 import { getCollection } from 'astro:content';
 import type { GetStaticPaths } from 'astro';
+import { Stack, Heading, Text } from 'lism-css/astro';
 import ArchiveLayout from '@/layouts/ArchiveLayout.astro';
-import ArchiveHeader from '@/components/ArchiveHeader.astro';
 import PostList from '@/components/PostList.astro';
 import Pager from '@/components/Pager.astro';
+import Eyebrow from '@/components/Eyebrow.astro';
 import { siteConfig } from '@/config/site';
-import { getAllTags } from '@/lib/tags';
-import { getTagHref } from '@/lib/posts';
+import { getAllTags, getTagHref } from '@/lib/tags';
 
 export const getStaticPaths = (async ({ paginate }) => {
   const allPosts = await getCollection('posts');
@@ -24,22 +24,17 @@ export const getStaticPaths = (async ({ paginate }) => {
 
 const { tag, page } = Astro.props;
 
-const getPageHref = (n: number) => (n === 1 ? getTagHref(tag) : `/tag/${tag}/${n}/`);
+const getPageHref = (n: number) => (n === 1 ? getTagHref(tag) : `/tags/${tag}/${n}/`);
 ---
 
-<ArchiveLayout
-  title={`#${tag} — ${siteConfig.name}`}
-  description={`タグ「${tag}」の記事一覧`}
-  breadcrumb={[{ label: 'TAGS', href: '/tag/' }, { label: tag.toUpperCase() }]}
->
-  {/* ページタイトル */}
-  <ArchiveHeader eyebrow="TAG" title={`# ${tag}`}>
-    {page.total} 件の記事
-  </ArchiveHeader>
+<ArchiveLayout title={`#${tag} — ${siteConfig.name}`} description={`タグ「${tag}」の記事一覧`}>
+  <Stack g="20" util="trimAll">
+    <Eyebrow>Tag</Eyebrow>
+    <Heading level="1"># {tag}</Heading>
+    <Text fz="xs" c="text-2">{page.total} 件の記事</Text>
+  </Stack>
 
-  {/* 記事リスト */}
   <PostList posts={page.data} />
 
-  {/* ページャー */}
   <Pager currentPage={page.currentPage} lastPage={page.lastPage} getPageHref={getPageHref} />
 </ArchiveLayout>

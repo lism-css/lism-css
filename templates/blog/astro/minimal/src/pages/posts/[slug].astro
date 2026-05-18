@@ -30,11 +30,8 @@ const { Content } = await render(post);
         {
           post.data.tags.length > 0 && (
             <Cluster g="5" ai="center">
-              <span class="-c:text-2 -fz:2xs" aria-hidden="true">
-                #
-              </span>
               {post.data.tags.map((tag) => (
-                <Tag href={`/tag/${tag}/`}>{tag}</Tag>
+                <Tag href={`/tags/${tag}/`}>{tag}</Tag>
               ))}
             </Cluster>
           )

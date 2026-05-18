@@ -12,5 +12,5 @@ export function getAllTags(posts: CollectionEntry<'posts'>[]): string[] {
 }
 
 export function getTagHref(tag: string): string {
-  return `/tag/${tag}/`;
+  return `/tags/${tag}/`;
 }

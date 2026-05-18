@@ -29,7 +29,7 @@ export function getCategoryHref(category: CategoryKey): string {
 }
 
 export function getTagHref(tag: string): string {
-  return `/tag/${tag}/`;
+  return `/tags/${tag}/`;
 }
 
 /**

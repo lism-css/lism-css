@@ -6,17 +6,8 @@ import { getAllTags } from '@/lib/tags';
 
 const posts = await getCollection('posts');
 const tags = getAllTags(posts);
-
-const { tagBgc = 'base-2' } = Astro.props;
 ---
 
 <Cluster as="nav" aria-label="タグ一覧" g="5">
-  <span class="-fz:2xs -c:text-2" aria-hidden="true">#</span>
-  {
-    tags.map((tag) => (
-      <Tag href={`/tag/${tag}/`} bgc={tagBgc}>
-        {tag}
-      </Tag>
-    ))
-  }
+  {tags.map((tag) => <Tag href={`/tags/${tag}/`}>{tag}</Tag>)}
 </Cluster>

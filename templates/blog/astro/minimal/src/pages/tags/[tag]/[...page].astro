@@ -23,7 +23,7 @@ export const getStaticPaths = (async ({ paginate }) => {
 
 const { tag, page } = Astro.props;
 
-const getPageHref = (n: number) => (n === 1 ? `/tag/${tag}/` : `/tag/${tag}/${n}/`);
+const getPageHref = (n: number) => (n === 1 ? `/tags/${tag}/` : `/tags/${tag}/${n}/`);
 ---
 
 <ArchiveLayout title={`#${tag} — ${siteConfig.name}`} description={`タグ「${tag}」の記事一覧`}>
