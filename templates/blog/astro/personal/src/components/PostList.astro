@@ -1,0 +1,31 @@
+---
+import { Lism, Stack, Heading, Text, BoxLink } from 'lism-css/astro';
+import type { CollectionEntry } from 'astro:content';
+import Date from '@/components/Date.astro';
+
+interface Props {
+  posts: CollectionEntry<'posts'>[];
+}
+
+const { posts } = Astro.props;
+---
+
+<Lism as="ul" class="c--postList">
+  {
+    posts.map((post, index) => (
+      <Lism as="li" bd-be bd-bs={index === 0}>
+        <BoxLink href={`/posts/${post.id}/`} py="30" px="5" hov="-o">
+          <Stack g="20" util="trimAll">
+            <Date>{post.data.date}</Date>
+            <Heading level="2" fz="l">
+              {post.data.title}
+            </Heading>
+            <Text fz="xs" c="text-2">
+              {post.data.excerpt}
+            </Text>
+          </Stack>
+        </BoxLink>
+      </Lism>
+    ))
+  }
+</Lism>

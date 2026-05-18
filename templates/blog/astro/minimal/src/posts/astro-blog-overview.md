@@ -1,7 +1,7 @@
 ---
 title: 'blog-astro-minimal の構成'
 excerpt: Lism CSS リポジトリに同梱されている最小構成の Astro ブログテンプレートの仕様。Content Collections・タグ・ルーティング・レイアウト・主要コンポーネントを順に解説する。
-date: 2026.04.10
+date: '2026-04-10'
 tags: [Astro, Lism CSS, テンプレート]
 ---
 
@@ -68,12 +68,12 @@ export const collections = { posts };
 ```yaml
 ---
 title: 朝のルーティンについて
-date: 2026.03.28
+date: '2026-03-28'
 tags: [習慣, ライフスタイル]
 ---
 ```
 
-タグ別アーカイブは `/tag/{tag}/` に生成され、フッターには全タグを一覧表示する `TagCloud` を配置している。
+タグ別アーカイブは `/tags/{tag}/` に生成され、フッターには全タグを一覧表示する `TagCloud` を配置している。
 
 ## サイト設定
 
@@ -112,7 +112,7 @@ export const siteConfig = {
 | --- | --- |
 | `[...page].astro` | トップ（全記事一覧）＋ページネーション |
 | `posts/[slug].astro` | 記事詳細 |
-| `tag/[tag]/[...page].astro` | タグ別一覧＋ページネーション |
+| `tags/[tag]/[...page].astro` | タグ別一覧＋ページネーション |
 | `404.astro` | 404 |
 
 ページネーションには Astro の `paginate()` を使い、1ページあたりの件数は `siteConfig.pagination.postsPerPage`（デフォルト 6）を参照する。
@@ -134,7 +134,7 @@ export const siteConfig = {
 
 ### 記事詳細のレイアウト構造
 
-記事詳細ページ（`posts/[slug].astro`）は、`Group isWrapper isContainer hasGutter` の中に「記事ヘッダー（Date・Heading・タグ一覧）」と「本文（`Flow`）」を縦に並べるだけのシンプルな構造になっている。シェアボタンや前後記事ナビ、TOC などは含めていない。必要に応じて自分で追加していくのがおすすめ。
+記事詳細ページ（`posts/[slug].astro`）は、`Group isWrapper isContainer hasGutter` の中に「記事ヘッダー（Date・Heading・タグ一覧）」「本文（`Flow`）」「前後記事ナビ（`ArticleNav`）」を縦に並べるシンプルな構造になっている。シェアボタンや TOC などは含めていない。必要に応じて自分で追加していくのがおすすめ。
 
 ```astro
 <Layout ...>

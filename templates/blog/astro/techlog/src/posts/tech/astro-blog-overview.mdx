@@ -1,0 +1,367 @@
+---
+title: 'blog-astro-techlog の構成'
+excerpt: Lism CSS リポジトリに同梱されている技術ブログ向け Astro テンプレートの仕様。コードハイライト・カテゴリ・タグ・記事内 TOC・年月アーカイブ・Pagefind 検索を装備した構成を順に解説する。
+date: '2026-04-25'
+tags: [Astro, Lism CSS, テンプレート]
+---
+
+Lism CSS リポジトリの `templates/blog/astro/techlog/` には、Lism CSS と `@lism-css/ui` を使った技術ブログ向けの Astro テンプレートが入っている。コードハイライトや記事内 TOC、カテゴリ／タグ、年月アーカイブ、Pagefind による全文検索など、技術記事を書くうえで欲しい機能をまとめて揃えてある。この記事ではそのディレクトリ構成と動作仕様を整理する。
+
+## 依存関係
+
+`package.json` の依存関係は次の通り。Astro と Lism CSS / `@lism-css/ui` に加え、MDX・`:::` 記法・コードハイライト・全文検索のためのパッケージを入れている。
+
+```json
+{
+  "dependencies": {
+    "@astrojs/mdx": "^5.0.3",
+    "@lism-css/ui": "workspace:*",
+    "@pagefind/default-ui": "^1.4.0",
+    "astro": "^6.1.9",
+    "astro-expressive-code": "^0.41.7",
+    "lism-css": "workspace:*",
+    "pagefind": "^1.4.0",
+    "remark-directive": "^4.0.0",
+    "unist-util-visit": "^5.1.0"
+  }
+}
+```
+
+`astro.config.mjs` では `astro-expressive-code` と `@astrojs/mdx` を有効化し、`markdown.remarkPlugins` に `remark-directive` と自前の変換プラグイン（`src/lib/remark-directive.mjs`）、URL段落をリンクカードに展開する `src/lib/remark-link-card.mjs`、`[[slug]]`記法を内部リンクに展開する `src/lib/remark-wiki-link.mjs` を登録している。`@`は`/src`にエイリアスしている。
+
+`expressiveCode` は `mdx` より前に並べる必要がある点に注意。
+
+```js
+integrations: [
+  expressiveCode({
+    themes: 'github-dark',
+    defaultProps: { wrap: true },
+    styleOverrides: {
+      codeFontFamily: 'var(--ff--mono)',
+      borderRadius: 'var(--bdrs--10)',
+      frames: {
+        frameBoxShadowCssValue: 'none',
+      },
+    },
+  }),
+  mdx(),
+],
+```
+
+## ディレクトリ構成
+
+```
+src/
+├── components/      # Astro コンポーネント
+├── config/          # サイト設定・カテゴリ・ナビ
+├── content.config.ts
+├── layouts/         # ページレイアウト
+├── lib/             # 純粋ロジック（TOC生成・年月アーカイブ集計 など）
+├── pages/           # ルーティング
+├── posts/           # 記事 MDX（カテゴリごとにディレクトリ）
+│   ├── tech/
+│   └── column/
+└── styles/
+    └── global.css
+```
+
+## Content Collections
+
+`src/content.config.ts` で記事用コレクションを定義している。
+
+```ts
+import { defineCollection, z } from 'astro:content';
+import { glob } from 'astro/loaders';
+
+const posts = defineCollection({
+  loader: glob({ base: './src/posts', pattern: '**/*.mdx' }),
+  schema: z.object({
+    title: z.string(),
+    excerpt: z.string(),
+    date: z.string(),
+    tags: z.array(z.string()).default([]),
+  }),
+});
+
+export const collections = { posts };
+```
+
+`pattern: '**/*.mdx'` のため、`src/posts/tech/foo.mdx` のようにディレクトリ階層を切れる。記事 ID は `tech/foo` のような形になり、先頭ディレクトリをカテゴリ、残りを記事 slug として扱う。
+
+`/about/` や `/privacy/` のような単発の固定ページは Content Collections には載せず、`src/pages/about.astro` のように `.astro` ファイルとして直接配置しているので、レイアウトやコンポーネントを自由に組める。
+
+## MDX と Callout / Alert
+
+このテンプレートは記事を `.mdx` 前提で書く構成にしている。本文中で Astro / React コンポーネントをそのまま使えるほか、`:::` 記法で `@lism-css/ui` の `Callout` / `Alert` を呼び出せるよう、`src/lib/remark-directive.mjs` に変換プラグインを置いている。
+
+ラベル付きの `:::type[タイトル]` は `<Callout type="..." title="...">` に、ラベルを省略した `:::type` は `<Alert type="...">` に変換される。
+
+````mdx
+:::point[ラベル付きの呼び出し]
+ラベルがあるので Callout に変換されます。
+:::
+
+:::warning
+ラベルを省略するとタイトル領域のない Alert になります。
+:::
+````
+
+対応する type は `alert` / `point` / `warning` / `check` / `help`。
+
+`Callout` / `Alert` / `LinkCard` / `WikiLink` コンポーネントは `posts/[...slug].astro` で `<Content components={{ Callout, Alert, LinkCard, WikiLink }} />` としてグローバルに供給しているので、記事ファイル側で毎回 import する必要はない。
+
+なお `remark-directive` 自体は `.md` でも動作するが、このテンプレートのプラグインは `:::` を JSX ノードに変換するため、JSX を解釈できない `.md` のレンダーパイプラインでは機能しない。`content.config.ts` の `pattern` も `**/*.mdx` に絞ってあり、`.md` を置いても収集対象から外れる。
+
+## コードハイライト
+
+コードハイライトは [`astro-expressive-code`](https://expressive-code.com/) に任せている。Shiki ベースで動き、Astro のビルド時にコードブロックを静的にハイライト済みの HTML に変換する。クライアントランタイムは不要。
+
+テーマは `github-dark` を単一指定しており、ライト/ダーク両モードで同じ配色（GitHub Dark）を表示する。ライト/ダーク両用テーマを切り替えたい場合は `themes: ['github-dark', 'github-light']` のように配列で渡し、``themeCssSelector: (theme) => `[data-theme='${theme.type}']` `` を追加することでサイトのテーマトグルと連動させられる。
+
+````mdx
+```ts title="hello.ts"
+export function hello(name: string) {
+  return `Hello, ${name}!`;
+}
+```
+````
+
+`title="..."` でファイル名タブ、行番号や差分強調などの追加記法も Expressive Code の標準機能としてそのまま使える。フォントは `--ff--mono`、角丸は `--bdrs--xs` を参照させて Lism CSS のトークンに合わせている。
+
+## リンクカード / WikiLink（自動展開）
+
+URL文字列だけの段落は、ビルド時に自動で `<LinkCard type="external">` に展開される。対応するremarkプラグインは `src/lib/remark-link-card.mjs`。
+
+````mdx
+<!-- 外部 URL だけの段落 → <LinkCard type="external">（ビルド時に OGP を fetch） -->
+https://lism-css.com/
+````
+
+段落単独の`[[slug]]`は`<LinkCard type="internal">`に、文中の`[[slug]]`/`[[slug|表示テキスト]]`は`<WikiLink>`に展開される。対応するremarkプラグインは `src/lib/remark-wiki-link.mjs`。`slug`は`src/posts/{category}/`配下のファイル名（拡張子なし）を指定する。
+
+````mdx
+<!-- [[slug]]だけの段落 → <LinkCard type="internal">（Content Collectionsから記事情報を引く） -->
+[[lism-css-intro]]
+
+<!-- 文中の [[slug]] → 記事タイトルを表示する <a> リンク -->
+詳しくは [[lism-css-intro]] を参照。
+
+<!-- [[slug|表示テキスト]] → エイリアス付きリンク -->
+詳しくは [[lism-css-intro|前回の記事]] を参照。
+````
+
+外部リンクのOGPは`.cache/ogp/`にMD5ハッシュキー付きJSONでキャッシュされる（TTL 7日）。fetchに失敗したり、メタデータを上書きしたいときはMDX上で`<LinkCard type="external" href="..." title="..." description="..." />`を直書きすればよい。
+
+## カテゴリ設計（ディレクトリ＝カテゴリ）
+
+カテゴリはフロントマターには書かず、`src/posts/{category}/` の置き場所で決まる。`src/config/categories.ts` にカテゴリ定義（データ）を、`src/lib/posts.ts` に post.id と URL を扱うユーティリティ（`isCategoryKey` / `parsePostId` / `getPostHref` / `getCategoryHref` / `getTagHref`）を置いている。
+
+```ts
+// src/config/categories.ts
+export type CategoryKey = 'tech' | 'column';
+
+export const CATEGORIES: Record<CategoryKey, Category> = {
+  tech: { key: 'tech', label: 'TECH', description: '技術記事と開発メモ' },
+  column: { key: 'column', label: 'COLUMN', description: '技術以外のコラムと雑記' },
+};
+```
+
+```ts
+// src/lib/posts.ts
+export function parsePostId(id: string): { category: CategoryKey; slug: string } {
+  const [category, ...rest] = id.split('/');
+  if (!isCategoryKey(category)) throw new Error(`Unknown category in post id: ${id}`);
+  return { category, slug: rest.join('/') };
+}
+
+export function getPostHref(id: string): string {
+  const { slug } = parsePostId(id);
+  return `/posts/${slug}/`;
+}
+
+export function getCategoryHref(category: CategoryKey): string {
+  return `/category/${category}/`;
+}
+
+export function getTagHref(tag: string): string {
+  return `/tags/${tag}/`;
+}
+```
+
+`parsePostId(post.id)` で category と slug に分解し、URL 生成は `getPostHref()` / `getCategoryHref()` / `getTagHref()` に寄せている。記事詳細 URL にはカテゴリを含めないため、カテゴリを変えても記事 URL は変わらない。
+
+## 年月アーカイブ
+
+`src/lib/archive.ts` に年月集計のヘルパーを置いている。`getArchiveSummaries()` は記事一覧から `{ year, month, count }` の配列を新しい順で返し、`getPostsByArchive(posts, year, month)` で対象月の記事だけを抽出する。日付文字列は `YYYY-MM-DD` / `YYYY.MM.DD` / `YYYY/MM/DD` のいずれも受け付ける。
+
+```ts
+import { getArchiveSummaries, getPostsByArchive, getArchiveHref } from '@/lib/archive';
+
+const posts = await getCollection('posts');
+const summaries = getArchiveSummaries(posts); // [{ year, month, count }, ...]
+```
+
+`archive/index.astro` ではこの集計結果をそのままリスト表示し、各行から `/archive/{year}/{month}/` にリンクしている。月別ページ（`archive/[year]/[month]/[...page].astro`）では `getPostsByArchive()` で絞り込んだ記事を Astro の `paginate()` に渡してページ送りする。リンク先 URL の生成には `getArchiveHref(year, month)` を使う。
+
+## サイト設定
+
+`src/config/site.ts` にサイト名・キャッチコピー・ページネーション件数・ナビ・コピーライト等をまとめている。テンプレートをカスタマイズする際の入口はここ。
+
+```ts
+export const siteConfig = {
+  name: 'lism.blog',
+  tagline: 'Web開発の学びと記録',
+  description: 'ブログの説明文をここに入力してください。meta description に使われます。',
+  lang: 'ja',
+  theme: { default: 'light' as 'system' | 'light' | 'dark' },
+  pagination: { postsPerPage: 6 },
+  header: {
+    nav: [
+      { label: 'Home', href: '/' },
+      { label: 'About', href: '/about/' },
+      { label: 'Archive', href: '/archive/' },
+    ],
+  },
+  ogImage: { type: '1-5', frame: '1', bg: 'fill' },
+  sns: [
+    { label: 'GitHub', icon: 'logo-github', href: 'https://github.com/lism-css/lism-css' },
+    { label: 'X', icon: 'logo-x', href: 'https://x.com/lismcss' },
+  ],
+  footer: {
+    copyright: '© 2026 Lism CSS',
+    nav: [
+      { label: 'About', href: '/about/' },
+      { label: 'Archive', href: '/archive/' },
+      { label: 'Privacy Policy', href: '/privacy/' },
+      { label: 'Contact', href: '#' },
+    ],
+  },
+} as const;
+```
+
+ヘッダー（モバイルメニュー）で使うナビ項目は `siteConfig.header.nav` に、フッター用のリンクは `siteConfig.footer.nav` に、SNS リンクは `siteConfig.sns` にまとめている。Archive はヘッダー／フッターの両方に並べてある。
+
+## ルーティング
+
+`src/pages/` 配下のファイル構成は次の通り。
+
+| パス | 内容 |
+| --- | --- |
+| `[...page].astro` | トップ（全記事一覧）＋ページネーション |
+| `category/[category]/[...page].astro` | カテゴリ別一覧＋ページネーション |
+| `posts/[...slug].astro` | 記事詳細 |
+| `tags/index.astro` | タグ一覧 |
+| `tags/[tag]/[...page].astro` | タグ別一覧＋ページネーション |
+| `archive/index.astro` | 年月アーカイブの目次（年月ごとの件数を一覧） |
+| `archive/[year]/[month]/[...page].astro` | 年月別の記事一覧＋ページネーション |
+| `search.astro` | Pagefind による全文検索 UI |
+| `about.astro` | About |
+| `privacy.astro` | Privacy Policy |
+| `404.astro` | 404 |
+
+ページネーションには Astro の `paginate()` を使い、1 ページあたりの件数は `siteConfig.pagination.postsPerPage`（デフォルト 6）を参照する。記事詳細では `getStaticPaths` 内で記事を日付降順にソートし、`prev` / `next` を index で受け渡している。記事詳細 URL は `/posts/{slug}/`、カテゴリ一覧 URL は `/category/{category}/`、タグ一覧 URL は `/tags/`、タグ別 URL は `/tags/{tag}/`、年月アーカイブ URL は `/archive/{year}/{month}/` になる。
+
+## 全文検索（Pagefind）
+
+`build` スクリプトは `astro build && pagefind --site dist` の 2 段構成。Astro のビルド成果物に対して [Pagefind](https://pagefind.app/) がインデックスを生成し、`dist/pagefind/` に静的アセットとして配置される。
+
+検索 UI は `@pagefind/default-ui` を使い、`search.astro` から呼び出す。クライアントサイドのみで動くため、サーバーや外部 API は不要。開発中はインデックスが存在しないので、検索を試したい場合は `nr build && nr preview` で確認する。
+
+## レイアウト
+
+レイアウトは 3 つ。
+
+- `Layout.astro` — `<html>` から `<body>` までの土台。OGP メタタグ・Web フォント（Gen Interface JP）・カラーテーマ初期化スクリプトを `<head>` で読み込み、`<Container>` の中に `<Stack min-h="100svh">` で Header / (Breadcrumb) / Main / Footer を縦積みする。
+- `ArchiveLayout.astro` — `Layout` を基盤に、本文を `<Group isWrapper isContainer hasGutter><Stack g="50">` で囲んだ一覧用レイアウト。
+- `PageLayout.astro` — `Layout` を基盤に、固定ページのタイトルと本文をまとめるレイアウト。本文は `<Flow as="article" class="c--pageBody" isWrapper isContainer hasGutter>` で囲む。
+
+```astro
+<Layout title={title} breadcrumb={breadcrumb}>
+  <Group isWrapper isContainer hasGutter>
+    <Stack g="50">
+      <slot />
+    </Stack>
+  </Group>
+</Layout>
+```
+
+### 記事詳細のレイアウト構造
+
+記事詳細ページ（`posts/[...slug].astro`）は、`Stack g="50"` の中に 3 ブロックを並べる。各ブロックは `<Group isWrapper="l" hasGutter>` で同じ最大幅を共有する。
+
+```astro
+<Layout ...>
+  <Stack g="50">
+    {/* 1. 記事ヘッダー（Date・Cat・Heading・タグ一覧） */}
+    <Group as="header" isWrapper="l" hasGutter>...</Group>
+
+    {/* 2. 本文 + TOC */}
+    <Group isWrapper="l" hasGutter>
+      {/* md 以上: 本文 + サイド目次の 2 カラム。md 未満: 本文のみの 1 カラム */}
+      <Grid gtc={['1fr', null, 'minmax(0, 1fr) var(--sz--toc)']} g="40">
+        <Flow as="article" class="c--articleBody">
+          <Content />
+        </Flow>
+        {/* サイド目次（md 以上で表示） */}
+        <Group as="aside" d={['none', null, 'block']}>
+          <Group pos="sticky" t="20" z="1">
+            <TableOfContents toc={toc} labelId="toc-label-side" />
+          </Group>
+        </Group>
+      </Grid>
+
+    </Group>
+
+    {/* 3. 記事フッター（シェアボタン + 前後記事ナビ） */}
+    <Group as="footer" isWrapper="l" hasGutter>
+      <ShareButtons ... />
+      <ArticleNav ... />
+    </Group>
+
+    {/* md 未満用: 画面下部の固定ボタンから開く目次モーダル */}
+    <FixedToc>
+      <TableOfContents toc={toc} labelId="toc-label-modal" />
+    </FixedToc>
+  </Stack>
+</Layout>
+```
+
+本文と TOC の横並びには `Grid` を使い、`gtc` をブレークポイント配列で指定して **`md`（800px）を境に 2 カラム ⇄ 1 カラムを切り替える**。`md` 以上では本文（`minmax(0, 1fr)`）の右にサイド目次（`var(--sz--toc)`）を並べ、目次は `position: sticky` でスクロール追従させる。
+
+`md` 未満ではサイド目次を `d={['none', null, 'block']}` で非表示にし、代わりに `FixedToc` コンポーネントを表示する。`FixedToc` は「画面右下に固定した目次ボタン＋目次モーダル」のシェルで、目次の中身は `<slot />` で受け取る（モーダルは中央表示・フェードイン）。サイド版と `FixedToc` 内に `TableOfContents` を 2 回置くが、`labelId` を分けて見出し id の重複を避けている。スクロール連動のアクティブ表示は `data-toc-link` 属性ベースなので、両方の `TableOfContents` に同時に反映される。モーダル内の目次リンクをタップしたときは、`FixedToc` のクリック委譲スクリプトが閉じるボタンを呼んでモーダルを閉じる。
+
+`--sz--toc` は `global.css` で `240px` を割り当てている。`isWrapper="l"` が参照する `--sz--l` も `--sz--m + --sz--toc + --s40` で計算しており、TOC があっても本文が中央から大きくずれないように調整している。
+
+## ダークモード
+
+`siteConfig.theme.default` の値（`'system'` / `'light'` / `'dark'`）をベースに、`<html data-theme="...">` を切り替える方式。`Layout.astro` の `<head>` 先頭でちらつき防止用の小さなスクリプトを実行し、`localStorage` に保存されたユーザー設定を初回描画前に適用する。
+
+コードブロックは `expressiveCode` を `themes: 'github-dark'` の単一テーマで運用しているため、サイトのテーマ切り替えに関わらず常に GitHub Dark の配色で表示される。
+
+## スタイルの上書き
+
+`src/styles/global.css` で Lism CSS の CSS 変数を上書きしてサイトのトーンを作っている。
+
+```css
+@layer lism-base {
+  :root {
+    --base: #fbfaf7;
+    --base-2: #f3f2ee;
+    --text: #1a1a1a;
+    --text-2: #4c4c4c;
+    --divider: #e8e6e1;
+    --brand: #c8553d;
+    --link: #c8553d;
+    --ff--base: 'Gen Interface JP', 'Hiragino Sans', sans-serif, 'Segoe UI Emoji';
+    --lts--s: 0.01em;
+    --lts--base: 0.025em;
+    --lts--l: 0.075em;
+    --lts--xl: 0.15em;
+    --sz--toc: 220px;
+    --sz--l: calc(var(--sz--m) + var(--sz--toc) + var(--s40));
+    --headings-fw: 500;
+  }
+}
+```
+
+記事本文のタイポグラフィ（h2 の下線、`blockquote` の左ボーダーなど）は `.c--articleBody` 配下の子孫セレクタとして `@layer lism-base` に書いている。Markdown から生成される要素にはクラスを直接付けられないため、こうした装飾は CSS 側で記述する。

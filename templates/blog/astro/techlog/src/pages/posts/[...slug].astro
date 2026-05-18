@@ -1,0 +1,120 @@
+---
+import { getCollection, render } from 'astro:content';
+import { Group, Flow, Stack, Cluster, Grid, Heading } from 'lism-css/astro';
+import Layout from '@/layouts/Layout.astro';
+import { Callout } from '@lism-css/ui/astro/Callout';
+import { Alert } from '@lism-css/ui/astro/Alert';
+import LinkCard from '@/components/LinkCard.astro';
+import WikiLink from '@/components/WikiLink.astro';
+import TableOfContents from '@/components/TableOfContents.astro';
+import FixedToc from '@/components/FixedToc.astro';
+import ArticleNav from '@/components/ArticleNav.astro';
+import ShareButtons from '@/components/ShareButtons.astro';
+import Date from '@/components/Date.astro';
+import Cat from '@/components/Cat.astro';
+import Tag from '@/components/Tag.astro';
+import { generateToc } from '@/lib/generateToc';
+import { assertUniquePostSlugs, getCategoryHref, getTagHref, parsePostId } from '@/lib/posts';
+import { buildOgImageUrl } from '@/lib/ogImage';
+import { CATEGORIES } from '@/config/categories';
+import { siteConfig } from '@/config/site';
+
+export async function getStaticPaths() {
+  const posts = (await getCollection('posts')).sort((a, b) => b.data.date.localeCompare(a.data.date));
+  assertUniquePostSlugs(posts);
+
+  return posts.map((post, index) => {
+    const { slug } = parsePostId(post.id);
+    return {
+      params: { slug },
+      props: {
+        post,
+        prev: posts[index - 1], // 表示順で「新しい記事」が prev に来る
+        next: posts[index + 1],
+      },
+    };
+  });
+}
+
+const { post, prev, next } = Astro.props;
+const { category } = parsePostId(post.id);
+const meta = CATEGORIES[category];
+const categoryHref = getCategoryHref(category);
+const { Content, headings } = await render(post);
+const toc = generateToc(headings);
+const ogImage = buildOgImageUrl({
+  category,
+  title: post.data.title,
+  head: meta.label,
+  foot: siteConfig.name,
+});
+---
+
+<Layout
+  title={`${post.data.title} — ${siteConfig.name}`}
+  description={post.data.excerpt}
+  breadcrumb={[{ label: meta.label, href: categoryHref }, { label: post.data.title }]}
+  ogImage={ogImage}
+  ogType="article"
+>
+  <Stack g="50">
+    {/* 記事ヘッダー */}
+    <Group as="header" isWrapper="l" hasGutter>
+      <Cluster>
+        <Cat href={categoryHref}>{meta.label}</Cat>
+      </Cluster>
+      <Heading level="1" mbs="10">
+        {post.data.title}
+      </Heading>
+      <Cluster g="10" mbs="30">
+        <Date date={post.data.date} />
+        {
+          post.data.tags.length > 0 && (
+            <Cluster g="5" ai="center">
+              {post.data.tags.map((tag) => (
+                <Tag href={getTagHref(tag)}>{tag}</Tag>
+              ))}
+            </Cluster>
+          )
+        }
+      </Cluster>
+    </Group>
+
+    {/* 本文 + TOC */}
+    <Group isWrapper="l" hasGutter>
+      {/* md 以上: 本文 + サイド目次の 2 カラム。md 未満: 本文のみの 1 カラムに切り替え */}
+      <Grid gtc={['1fr', null, 'minmax(0, 1fr) var(--sz--toc)']} g="40">
+        <Flow as="article" class="c--articleBody">
+          <Content components={{ Callout, Alert, LinkCard, WikiLink }} />
+        </Flow>
+        {/* サイド目次（md 以上で表示） */}
+        <Group as="aside" d={['none', null, 'block']}>
+          <Group pos="sticky" t="calc(var(--header-h) + var(--s10))" z="1">
+            <TableOfContents toc={toc} labelId="toc-label-side" />
+          </Group>
+        </Group>
+      </Grid>
+
+      {/* フッター（シェアボタン → 前後記事ナビ） */}
+      <Group as="footer" mbs="60">
+        <Group py="30" bd-y>
+          <ShareButtons title={post.data.title} />
+        </Group>
+        <Group py="30">
+          <ArticleNav
+            prev={prev ? { title: prev.data.title, id: prev.id } : undefined}
+            next={next ? { title: next.data.title, id: next.id } : undefined}
+          />
+        </Group>
+      </Group>
+    </Group>
+  </Stack>
+
+  {
+    /* md 未満用: 画面下部の固定ボタンから開く目次モーダル（中身はサイドと同じ TableOfContents）。
+      Stack g="50" の外（gap なしの Main 直下）に置き、空要素ぶんの余白が出ないようにする */
+  }
+  <FixedToc>
+    <TableOfContents toc={toc} labelId="toc-label-modal" />
+  </FixedToc>
+</Layout>

@@ -1,0 +1,42 @@
+---
+import { Group, Link, Inline } from 'lism-css/astro';
+import type { ComponentProps } from 'astro/types';
+
+type GroupProps = ComponentProps<typeof Group>;
+
+interface Item {
+  label: string;
+  href?: string;
+  muted?: boolean;
+}
+
+type Props = GroupProps & {
+  items: Item[];
+};
+
+const { items, class: className, ...rest } = Astro.props;
+---
+
+{
+  items.length >= 3 && (
+    <Group isWrapper="l" hasGutter py="5" bgc="base-2" fz="11px" c="text-2">
+      <Group as="nav" aria-label="パンくず" class:list={['c--breadcrumb', className]} {...rest}>
+        {items.map((item, i) => (
+          <Fragment>
+            {i > 0 && <Inline aria-hidden="true">／ </Inline>}
+            {item.href ? (
+              <Link href={item.href} td="none" c="inherit" hov={{ c: 'brand' }}>
+                {item.label}
+              </Link>
+            ) : (
+              <Inline o="p" aria-current="page">
+                {item.label}
+              </Inline>
+            )}
+            {i < items.length - 1 && ' '}
+          </Fragment>
+        ))}
+      </Group>
+    </Group>
+  )
+}

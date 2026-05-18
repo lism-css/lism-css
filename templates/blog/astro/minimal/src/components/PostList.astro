@@ -1,5 +1,5 @@
 ---
-import { Lism, Stack, Heading, Text, BoxLink } from 'lism-css/astro';
+import { Lism, WithSide, Heading, Link } from 'lism-css/astro';
 import type { CollectionEntry } from 'astro:content';
 import Date from '@/components/Date.astro';
 
@@ -10,38 +10,19 @@ interface Props {
 const { posts } = Astro.props;
 ---
 
-<Lism as="ul" class="c--postList">
+<Lism as="ul" class="c--postList" layout="stack" g="20">
   {
     posts.map((post) => (
       <Lism as="li">
-        <BoxLink href={`/posts/${post.id}/`} py="30" px="5" hov="-o">
-          <Stack g="20" util="trimAll">
-            <Date>{post.data.date}</Date>
-            <Heading level="2" fz="l">
+        <WithSide cg="30" ai="center">
+          <Date isSide>{post.data.date}</Date>
+          <Heading level="2" fz="m">
+            <Link href={`/posts/${post.id}/`} set="plain" d="block" hov="underline">
               {post.data.title}
-            </Heading>
-            <Text fz="xs" c="text-2">
-              {post.data.excerpt}
-            </Text>
-          </Stack>
-        </BoxLink>
+            </Link>
+          </Heading>
+        </WithSide>
       </Lism>
     ))
   }
 </Lism>
-
-<style>
-  @layer lism-component {
-    /* === 記事一覧（縦リスト） === */
-    .c--postList {
-      /* 先頭が子結合子なら & は省略可（& > と同じ） */
-      > li {
-        border-block-end: 1px solid var(--divider);
-
-        &:first-child {
-          border-block-start: 1px solid var(--divider);
-        }
-      }
-    }
-  }
-</style>

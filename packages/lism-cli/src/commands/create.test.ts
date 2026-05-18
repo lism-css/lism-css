@@ -107,14 +107,14 @@ describe('runCreate', () => {
         description: { ja: 'Minimal blog', en: 'Minimal blog' },
       },
       {
-        slug: 'blog-astro-full',
+        slug: 'blog-astro-techlog',
         kind: 'project',
         category: 'blog',
         stack: 'astro',
-        variant: 'full',
-        variantLabel: { ja: 'Full', en: 'Full' },
-        sourcePath: 'blog/astro/full',
-        description: { ja: 'Full blog', en: 'Full blog' },
+        variant: 'techlog',
+        variantLabel: { ja: 'Tech Log', en: 'Tech Log' },
+        sourcePath: 'blog/astro/techlog',
+        description: { ja: 'Tech blog', en: 'Tech blog' },
       },
     ];
     vi.mocked(select)

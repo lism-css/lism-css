@@ -1,0 +1,140 @@
+/* === ブログテンプレート用にトークン値・ベース値を上書き === */
+@layer lism-base {
+  :root {
+    /* 紙面のような淡いクリーム色をベースに */
+    /* --base: hsl(45, 32%, 98%);
+    --base-2: hsl(45, 16%, 94%);
+    --text: hsl(45, 8%, 10%);
+    --text-2: hsl(0, 0%, 30%);
+    --divider: hsl(45, 12%, 90%); */
+    /* ブランドカラー（タグ・アクセント・リンクの軸） */
+    /* --brand: hsl(10, 56%, 50%);
+    --link: hsl(10, 48%, 50%); */
+
+    --ff--base: 'Gen Interface JP', 'Hiragino Sans', sans-serif, 'Segoe UI Emoji';
+
+    /* 行間と読み心地の調整 */
+    /* --lh--base: 1.85; */
+
+    /* 字間（lism-css のデフォルト --lts--s/--lts--l に追加） */
+    --lts--s: 0.01em;
+    --lts--base: 0.02em;
+    --lts--l: 0.05em;
+    --lts--xl: 0.1em; /* アクセント（cat/date/share/eyebrow 等） */
+
+    /* --sz-- */
+    --sz--toc: 240px;
+    --sz--l: calc(var(--sz--m) + var(--sz--toc) + var(--s40));
+
+    --headings-fw: 500;
+
+    /* ヘッダーの高さ(jsで動的セットされる） */
+    --header-h: 60px;
+  }
+  html {
+    scroll-padding-top: calc(var(--header-h) + 0.5rem);
+  }
+  body {
+    font-feature-settings: 'palt' 1;
+    /* -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale; */
+  }
+  a {
+    text-underline-offset: 0.2em;
+  }
+
+  /* === ダークモード === */
+  :root[data-theme='dark'] {
+    --L: 72%;
+    --C: 0.25;
+
+    /* base（紙面感の対として、暖色寄りのダークトーン） */
+    --base: hsl(30, 6%, 10%);
+    --base-2: hsl(30, 6%, 18%);
+
+    /* content */
+    --text: hsl(45, 12%, 95%);
+    --text-2: hsl(45, 6%, 80%);
+    --divider: hsl(30, 4%, 24%);
+
+    /* brand / link（赤系を維持しつつ明度を上げて視認性確保） */
+    --brand: hsl(10, 64%, 64%);
+    --link: hsl(10, 56%, 66%);
+
+    /* shadow color */
+    --shc: hsl(45 20% 70% / 5%);
+
+    /* color mix */
+    --cbox-cPct: 4%;
+    --cbox-bgPct: 6%;
+  }
+}
+
+/* === ブログコンテンツのスタイリング === */
+@layer lism-base {
+  .c--articleBody {
+    > h2 {
+      padding-block-end: var(--s20);
+      border-block-end: 1px solid;
+    }
+
+    > h2 + * {
+      margin-block-start: calc(var(--flow) * 1.5);
+    }
+
+    blockquote {
+      border-inline-start: 2px solid var(--text-2);
+      font-style: italic;
+    }
+
+    blockquote > p + p {
+      margin-block-start: var(--s20);
+    }
+
+    pre {
+      padding: var(--s20);
+      border-radius: var(--bdrs--20);
+    }
+    code {
+      letter-spacing: normal;
+      font-size: var(--fz--s);
+    }
+
+    table {
+      font-size: var(--fz--s);
+
+      /* memo: oveflow の指定によっては separate にしないとborderが表示されない場合があるので横スクロール時には注意。 */
+      border-collapse: collapse;
+      border-spacing: 0;
+      isolation: isolate;
+    }
+    :is(td, th) {
+      border-block: 1px solid var(--divider);
+    }
+    thead {
+      border-block-end: solid 2px;
+    }
+
+    /* タスクリスト */
+    .task-list-item > input {
+      opacity: 1;
+    }
+  }
+}
+.-lts\:xl {
+  letter-spacing: var(--lts--xl);
+}
+
+/* === Expressive Code（```ブロック）最小スタイリング === */
+.expressive-code:not(#_) {
+  /* コードタイトル */
+  .header > .title {
+    font-size: var(--fz--s);
+  }
+
+  /* コピーボタン */
+  .copy button {
+    border-radius: var(--bdrs--10);
+    --ec-frm-inlBtnBgHoverOrFocusOpa: 0.1;
+  }
+}

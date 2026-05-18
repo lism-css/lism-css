@@ -1,0 +1,33 @@
+---
+import { Link } from 'lism-css/astro';
+import type { ComponentProps } from 'astro/types';
+
+type LinkProps = ComponentProps<typeof Link>;
+
+type Props = LinkProps & {
+  href: string;
+};
+
+const { href, class: className, bgc = 'base-2', ...rest } = Astro.props;
+---
+
+<Link
+  href={href}
+  class:list={['c--tag', className]}
+  set="plain"
+  d="inline-flex"
+  ai="center"
+  fz="2xs"
+  lts="l"
+  lh="xs"
+  py="5"
+  px="10"
+  bdrs="10"
+  hov="-o"
+  bdc="divider"
+  c="text-2"
+  bgc={bgc}
+  {...rest}
+>
+  <slot />
+</Link>

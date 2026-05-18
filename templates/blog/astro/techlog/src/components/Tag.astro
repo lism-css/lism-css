@@ -1,0 +1,38 @@
+---
+import { Link, Inline } from 'lism-css/astro';
+import type { ComponentProps } from 'astro/types';
+
+type LinkProps = ComponentProps<typeof Link>;
+
+type Props = LinkProps & {
+  /** 未指定・空のときはリンクではなく span 相当（Inline）として描画する */
+  href?: string;
+};
+
+const { href, class: className, ...rest } = Astro.props;
+
+const Root = href ? Link : Inline;
+const linkProps = href ? { href, hov: 'underline' as const } : {};
+---
+
+<Root
+  class:list={['c--tag', className]}
+  set="plain var:s"
+  d="inline-flex"
+  ai="center"
+  fz="2xs"
+  lh="xs"
+  py="5"
+  px="5"
+  c="text-2"
+  {...linkProps}
+  {...rest}
+>
+  <span class="-o:p" aria-hidden="true">#</span><slot />
+</Root>
+
+<style>
+  .c--tag {
+    gap: 0.125em;
+  }
+</style>

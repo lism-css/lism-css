@@ -1,0 +1,35 @@
+---
+import { Group, Flow, Heading } from 'lism-css/astro';
+import Layout from '@/layouts/Layout.astro';
+import { siteConfig } from '@/config/site';
+---
+
+<Layout title={`About — ${siteConfig.name}`} description={`${siteConfig.name} について`}>
+  <Group isWrapper isContainer hasGutter>
+    {/* ページヘッダー */}
+    <Group as="header">
+      <Heading level="1">About</Heading>
+    </Group>
+
+    {/* 本文 */}
+    <Flow as="article" class="c--articleBody" mbs="50">
+      <p>
+        <strong>{siteConfig.name}</strong> へようこそ。<br />
+        このページは、ブログの自己紹介や運営方針などを書くためのダミーページです。
+      </p>
+
+      <h2>このサイトについて</h2>
+      <p>
+        このサイトは <a href="https://astro.build/">Astro</a> と <a href="https://lism-css.com/">Lism CSS</a> を使って構築されたブログテンプレートです。
+        テンプレートのソースは <a href="https://github.com/lism-css/lism-css">リポジトリ</a> の
+        <code>templates/blog/astro/minimal/</code> 配下で公開しています。
+      </p>
+
+      <h2>運営者について</h2>
+      <p>ここには運営者のプロフィールや経歴、興味のあるトピックなどを書きます。 ダミーの文章です。実際のサイトに合わせて自由に編集してください。</p>
+
+      <h2>連絡先</h2>
+      <p>お問い合わせやご感想は、ページ下部の SNS リンクからお気軽にどうぞ。</p>
+    </Flow>
+  </Group>
+</Layout>
