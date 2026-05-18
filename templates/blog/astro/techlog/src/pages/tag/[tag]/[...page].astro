@@ -30,7 +30,7 @@ const getPageHref = (n: number) => (n === 1 ? getTagHref(tag) : `/tag/${tag}/${n
 <ArchiveLayout
   title={`#${tag} — ${siteConfig.name}`}
   description={`タグ「${tag}」の記事一覧`}
-  breadcrumb={[{ label: 'TAG' }, { label: tag.toUpperCase() }]}
+  breadcrumb={[{ label: 'TAGS', href: '/tag/' }, { label: tag.toUpperCase() }]}
 >
   {/* ページタイトル */}
   <ArchiveHeader eyebrow="TAG" title={`# ${tag}`}>

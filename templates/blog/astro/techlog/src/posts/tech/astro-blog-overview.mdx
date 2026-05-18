@@ -205,8 +205,8 @@ export const siteConfig = {
   header: {
     nav: [
       { label: 'Home', href: '/' },
-      { label: 'Archive', href: '/archive/' },
       { label: 'About', href: '/about/' },
+      { label: 'Archive', href: '/archive/' },
     ],
   },
   ogImage: { type: '1-5', frame: '1', bg: 'fill' },
@@ -217,8 +217,8 @@ export const siteConfig = {
   footer: {
     copyright: '© 2026 Lism CSS',
     nav: [
-      { label: 'Archive', href: '/archive/' },
       { label: 'About', href: '/about/' },
+      { label: 'Archive', href: '/archive/' },
       { label: 'Privacy Policy', href: '/privacy/' },
       { label: 'Contact', href: '#' },
     ],
@@ -237,6 +237,7 @@ export const siteConfig = {
 | `[...page].astro` | トップ（全記事一覧）＋ページネーション |
 | `category/[category]/[...page].astro` | カテゴリ別一覧＋ページネーション |
 | `posts/[...slug].astro` | 記事詳細 |
+| `tag/index.astro` | タグ一覧 |
 | `tag/[tag]/[...page].astro` | タグ別一覧＋ページネーション |
 | `archive/index.astro` | 年月アーカイブの目次（年月ごとの件数を一覧） |
 | `archive/[year]/[month]/[...page].astro` | 年月別の記事一覧＋ページネーション |
@@ -245,7 +246,7 @@ export const siteConfig = {
 | `privacy.astro` | Privacy Policy |
 | `404.astro` | 404 |
 
-ページネーションには Astro の `paginate()` を使い、1 ページあたりの件数は `siteConfig.pagination.postsPerPage`（デフォルト 6）を参照する。記事詳細では `getStaticPaths` 内で記事を日付降順にソートし、`prev` / `next` を index で受け渡している。記事詳細 URL は `/posts/{slug}/`、カテゴリ一覧 URL は `/category/{category}/`、タグ一覧 URL は `/tag/{tag}/`、年月アーカイブ URL は `/archive/{year}/{month}/` になる。
+ページネーションには Astro の `paginate()` を使い、1 ページあたりの件数は `siteConfig.pagination.postsPerPage`（デフォルト 6）を参照する。記事詳細では `getStaticPaths` 内で記事を日付降順にソートし、`prev` / `next` を index で受け渡している。記事詳細 URL は `/posts/{slug}/`、カテゴリ一覧 URL は `/category/{category}/`、タグ一覧 URL は `/tag/`、タグ別 URL は `/tag/{tag}/`、年月アーカイブ URL は `/archive/{year}/{month}/` になる。
 
 ## 全文検索（Pagefind）
 

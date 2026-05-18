@@ -1,0 +1,12 @@
+---
+import ArchiveHeader from '@/components/ArchiveHeader.astro';
+import TagCloud from '@/components/TagCloud.astro';
+import { siteConfig } from '@/config/site';
+import ArchiveLayout from '@/layouts/ArchiveLayout.astro';
+---
+
+<ArchiveLayout title={`Tags — ${siteConfig.name}`} description="タグ別の記事一覧" breadcrumb={[{ label: 'TAGS' }]}>
+  <ArchiveHeader eyebrow="TAGS" title="Tags"> タグ別の記事一覧 </ArchiveHeader>
+
+  <TagCloud />
+</ArchiveLayout>

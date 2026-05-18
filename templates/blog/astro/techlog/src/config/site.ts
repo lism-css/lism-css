@@ -29,8 +29,8 @@ export const siteConfig = {
     // メニュー（モーダル）用ナビ
     nav: [
       { label: 'Home', href: '/' },
-      { label: 'Archive', href: '/archive/' },
       { label: 'About', href: '/about/' },
+      { label: 'Archive', href: '/archive/' },
     ],
   },
 
@@ -52,8 +52,8 @@ export const siteConfig = {
   footer: {
     copyright: '© 2026 Lism CSS',
     nav: [
-      { label: 'Archive', href: '/archive/' },
       { label: 'About', href: '/about/' },
+      { label: 'Archive', href: '/archive/' },
       { label: 'Privacy Policy', href: '/privacy/' },
       { label: 'Contact', href: '#' },
     ],
