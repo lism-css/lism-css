@@ -3,7 +3,7 @@ import 'lism-css/main.css';
 import '../styles/global.css';
 import { siteConfig } from '@/config/site';
 import { buildOgImageUrl } from '@/lib/ogImage';
-import { Container, Stack, Group } from 'lism-css/astro';
+import { Container, Stack } from 'lism-css/astro';
 import Header from '@/components/Header.astro';
 import Main from '@/components/Main.astro';
 import Footer from '@/components/Footer.astro';
@@ -82,13 +82,7 @@ const canonicalUrl = Astro.site ? new URL(Astro.url.pathname, Astro.site).toStri
     <Container>
       <Stack min-h="100svh" g="0">
         <Header />
-        {
-          hasBreadcrumb && (
-            <Group isWrapper="l" hasGutter py="5" bgc="base-2" fz="11px" c="text-2">
-              <Breadcrumb items={[{ label: 'HOME', href: '/' }, ...breadcrumb!]} />
-            </Group>
-          )
-        }
+        {hasBreadcrumb && <Breadcrumb items={[{ label: 'HOME', href: '/' }, ...breadcrumb!]} />}
         <Main>
           <slot />
         </Main>

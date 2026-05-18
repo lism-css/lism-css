@@ -32,7 +32,7 @@ const getPageHref = (n: number) => (n === 1 ? getCategoryHref(category) : `/cate
 <ArchiveLayout title={`${meta.label} — ${siteConfig.name}`} description={meta.description} breadcrumb={[{ label: meta.label }]}>
   {/* ページタイトル */}
   <ArchiveHeader eyebrow="CATEGORY" title={meta.label}>
-    {meta.description}<Inline fz="xs">（{page.total} 件）</Inline>
+    {meta.description}
   </ArchiveHeader>
 
   {/* カテゴリタブ */}

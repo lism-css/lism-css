@@ -20,7 +20,9 @@ const { page } = Astro.props;
 <ArchiveLayout title={`${siteConfig.name} — ${siteConfig.tagline}`}>
   <!-- <Container isWrapper="s" hasGutter g="50"> -->
   {/* ページタイトル */}
-  <ArchiveHeader eyebrow="BLOGS" title={siteConfig.tagline} />
+  <ArchiveHeader eyebrow="BLOGS" title="All Posts">
+    {siteConfig.tagline}
+  </ArchiveHeader>
 
   {/* カテゴリタブ */}
   <CategoryTabs current="all" />
