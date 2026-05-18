@@ -116,7 +116,7 @@ export const collections = { posts };
 
 コードハイライトは [`astro-expressive-code`](https://expressive-code.com/) に任せている。Shiki ベースで動き、Astro のビルド時にコードブロックを静的にハイライト済みの HTML に変換する。クライアントランタイムは不要。
 
-テーマは `github-dark` を単一指定しており、ライト/ダーク両モードで同じ配色（GitHub Dark）を表示する。ライト/ダーク両用テーマを切り替えたい場合は `themes: ['github-dark', 'github-light']` のように配列で渡し、`themeCssSelector: (theme) => \`[data-theme='${theme.type}']\`` を追加することでサイトのテーマトグルと連動させられる。
+テーマは `github-dark` を単一指定しており、ライト/ダーク両モードで同じ配色（GitHub Dark）を表示する。ライト/ダーク両用テーマを切り替えたい場合は `themes: ['github-dark', 'github-light']` のように配列で渡し、``themeCssSelector: (theme) => `[data-theme='${theme.type}']` `` を追加することでサイトのテーマトグルと連動させられる。
 
 ````mdx
 ```ts title="hello.ts"
