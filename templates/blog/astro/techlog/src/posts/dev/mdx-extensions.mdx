@@ -113,7 +113,7 @@ fetchに失敗するサイトや、表示するタイトル・説明を自分で
 
 ## コードハイライト（astro-expressive-code）
 
-コードブロックのシンタックスハイライトは [`astro-expressive-code`](https://expressive-code.com/) を使用しています。`astro.config.mjs` で `themes: ['github-dark', 'github-light']` を指定しており、ページの `[data-theme='dark']` / `[data-theme='light']` 切り替えに合わせてハイライトテーマも自動で切り替わります。
+コードブロックのシンタックスハイライトは [`astro-expressive-code`](https://expressive-code.com/) を使用しています。`astro.config.mjs` で `themes: 'github-dark'` を指定しているため、ライト/ダーク両モードで同じ配色（GitHub Dark）が適用されます。複数テーマを切り替えたい場合は `themes: ['github-dark', 'github-light']` のように配列で指定し、`themeCssSelector` でサイト側のテーマ切り替えと連動させます。
 
 通常のコードブロックに加えて、ファイル名タイトル付き表示や、特定の行のハイライト、差分表示なども書けます。
 

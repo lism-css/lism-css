@@ -127,3 +127,17 @@
 .-lts\:xl {
   letter-spacing: var(--lts--xl);
 }
+
+/* === Expressive Code（```ブロック）最小スタイリング === */
+.expressive-code:not(#_) {
+  /* コードタイトル */
+  .header > .title {
+    font-size: var(--fz--s);
+  }
+
+  /* コピーボタン */
+  .copy button {
+    border-radius: var(--bdrs--10);
+    --ec-frm-inlBtnBgHoverOrFocusOpa: 0.1;
+  }
+}

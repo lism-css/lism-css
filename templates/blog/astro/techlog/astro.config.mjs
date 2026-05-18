@@ -9,12 +9,16 @@ export default defineConfig({
   // expressiveCode は mdx より前に置く必要がある
   integrations: [
     expressiveCode({
-      themes: ['github-dark', 'github-light'],
-      themeCssSelector: (theme) => `[data-theme='${theme.type}']`,
+      // themes: ['github-light', 'github-dark'],
+      // themeCssSelector: (theme) => `[data-theme='${theme.type}']`,
+      themes: 'github-dark',
       defaultProps: { wrap: true },
       styleOverrides: {
         codeFontFamily: 'var(--ff--mono)',
-        borderRadius: 'var(--bdrs--xs)',
+        borderRadius: 'var(--bdrs--10)',
+        frames: {
+          frameBoxShadowCssValue: 'none',
+        },
       },
     }),
     mdx(),
