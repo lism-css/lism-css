@@ -2,7 +2,7 @@
 // Cloudflare Pages にデプロイするテンプレートプレビュー用に、
 // 指定された dist ディレクトリへ `_headers` を出力するヘルパー。
 // プレビュー URL (*.pages.dev) が検索インデックスされないようにする。
-import { writeFileSync, existsSync, mkdirSync } from 'node:fs';
+import { writeFileSync, statSync } from 'node:fs';
 import { resolve } from 'node:path';
 
 const target = process.argv[2];
@@ -14,8 +14,15 @@ if (!target) {
 
 const distDir = resolve(process.cwd(), target);
 
-if (!existsSync(distDir)) {
-  mkdirSync(distDir, { recursive: true });
+try {
+  const stat = statSync(distDir);
+  if (!stat.isDirectory()) {
+    console.error(`✗ ${distDir} はディレクトリではありません`);
+    process.exit(1);
+  }
+} catch {
+  console.error(`✗ ${distDir} が見つかりません。ビルドが成功しているか確認してください`);
+  process.exit(1);
 }
 
 const headersPath = resolve(distDir, '_headers');
