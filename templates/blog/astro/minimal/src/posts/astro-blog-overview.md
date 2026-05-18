@@ -134,7 +134,7 @@ export const siteConfig = {
 
 ### 記事詳細のレイアウト構造
 
-記事詳細ページ（`posts/[slug].astro`）は、`Group isWrapper isContainer hasGutter` の中に「記事ヘッダー（Date・Heading・タグ一覧）」と「本文（`Flow`）」を縦に並べるだけのシンプルな構造になっている。シェアボタンや前後記事ナビ、TOC などは含めていない。必要に応じて自分で追加していくのがおすすめ。
+記事詳細ページ（`posts/[slug].astro`）は、`Group isWrapper isContainer hasGutter` の中に「記事ヘッダー（Date・Heading・タグ一覧）」「本文（`Flow`）」「前後記事ナビ（`ArticleNav`）」を縦に並べるシンプルな構造になっている。シェアボタンや TOC などは含めていない。必要に応じて自分で追加していくのがおすすめ。
 
 ```astro
 <Layout ...>

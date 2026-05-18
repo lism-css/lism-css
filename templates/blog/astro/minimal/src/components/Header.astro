@@ -4,7 +4,7 @@ import SnsLinks from '@/components/SnsLinks.astro';
 import { siteConfig } from '@/config/site';
 ---
 
-<Container as="header" isWrapper hasGutter py="20" pos="sticky" t="0" z="99">
+<Container as="header" isWrapper hasGutter py="20">
   <Flex ai="center" jc="between" g="20">
     <Link href="/" set="plain" d="flex" fw="bold" fz="l" lh="xs">
       {siteConfig.name}
@@ -24,10 +24,3 @@ import { siteConfig } from '@/config/site';
     </Cluster>
   </Flex>
 </Container>
-
-<style>
-  header {
-    backdrop-filter: blur(0.5em);
-    background-color: color-mix(in srgb, var(--base) 50%, transparent);
-  }
-</style>

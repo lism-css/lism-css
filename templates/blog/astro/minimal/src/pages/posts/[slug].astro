@@ -4,17 +4,23 @@ import { Group, Flow, Cluster, Heading } from 'lism-css/astro';
 import Layout from '@/layouts/Layout.astro';
 import Date from '@/components/Date.astro';
 import Tag from '@/components/Tag.astro';
+import ArticleNav from '@/components/ArticleNav.astro';
 import { siteConfig } from '@/config/site';
 
 export async function getStaticPaths() {
-  const posts = await getCollection('posts');
-  return posts.map((post) => ({
+  const posts = (await getCollection('posts')).sort((a, b) => b.data.date.localeCompare(a.data.date));
+
+  return posts.map((post, index) => ({
     params: { slug: post.id },
-    props: { post },
+    props: {
+      post,
+      prev: posts[index - 1],
+      next: posts[index + 1],
+    },
   }));
 }
 
-const { post } = Astro.props;
+const { post, prev, next } = Astro.props;
 const { Content } = await render(post);
 ---
 
@@ -42,5 +48,12 @@ const { Content } = await render(post);
     <Flow as="article" class="c--articleBody" mbs="50">
       <Content />
     </Flow>
+
+    <Group as="footer" mbs="60" py="30" bd-y>
+      <ArticleNav
+        prev={prev ? { title: prev.data.title, id: prev.id } : undefined}
+        next={next ? { title: next.data.title, id: next.id } : undefined}
+      />
+    </Group>
   </Group>
 </Layout>

@@ -72,7 +72,7 @@ export const collections = { posts };
 | `archive/[year]/[month]/[...page].astro` | 年月別の記事一覧＋ページネーション |
 | `404.astro` | 404 |
 
-ページネーションには Astro の `paginate()` を使い、1ページあたりの件数は `siteConfig.pagination.postsPerPage`（デフォルト 6）を参照する。
+ページネーションには Astro の `paginate()` を使い、1ページあたりの件数は `siteConfig.pagination.postsPerPage`（デフォルト 6）を参照する。記事詳細では `getStaticPaths` 内で記事を日付降順にソートし、`prev` / `next` を index で受け渡している。
 
 ## 年月アーカイブ
 
@@ -126,7 +126,7 @@ export const siteConfig = {
 - `Layout.astro` — `<html>` から `<body>` までの土台。OGP メタタグ・Web フォント（Noto Serif JP）の読み込み・`<Container>` の中に `<Stack min-h="100svh">` で Header / Main / Footer を縦積みする。
 - `ArchiveLayout.astro` — `Layout` を基盤に、本文を `<Group isWrapper isContainer hasGutter>` で囲んだ一覧用レイアウト。
 
-記事詳細ページでは本文の後に `ShareButtons` を置き、X投稿とURLコピーを提供している。
+記事詳細ページでは本文の後に `ShareButtons` と `ArticleNav` を置き、X投稿・URLコピー・前後記事への移動を提供している。
 
 ## スタイル
 
