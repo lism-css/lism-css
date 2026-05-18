@@ -8,7 +8,7 @@ body {
   letter-spacing: var(--lts--base);
   background-color: var(--base);
   color: var(--text);
-  text-underline-offset: var(--under-offset, 0.125em);
+  text-underline-offset: var(--under-offset, 0.25em);
 }
 
 /* --------------------------------------------------
@@ -71,6 +71,11 @@ kbd,
 var,
 samp {
   font-family: var(--ff--mono);
+  letter-spacing: normal;
+}
+
+:where(blockquote > p) + p {
+  margin-block-start: var(--s10);
 }
 
 q,
