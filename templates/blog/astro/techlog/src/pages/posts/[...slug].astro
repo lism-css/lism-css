@@ -43,6 +43,7 @@ const categoryHref = getCategoryHref(category);
 const { Content, headings } = await render(post);
 const toc = generateToc(headings);
 const ogImage = buildOgImageUrl({
+  category,
   title: post.data.title,
   head: meta.label,
   foot: siteConfig.name,

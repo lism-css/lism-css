@@ -1,7 +1,7 @@
 ---
 title: 'blog-astro-personal の構成'
 excerpt: Lism CSS リポジトリに同梱されている personal 向け Astro ブログテンプレートの仕様。エッセイ・日記向けに最適化した構成と、年月アーカイブ・タグの仕組みを順に解説する。
-date: 2026.05.10
+date: '2026-05-10'
 tags: ['Astro', 'テンプレート']
 ---
 

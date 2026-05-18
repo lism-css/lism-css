@@ -18,8 +18,8 @@ const { title, description, breadcrumb, ogImage } = Astro.props;
 ---
 
 <Layout title={title} description={description} breadcrumb={breadcrumb} ogImage={ogImage}>
-  <Group isWrapper isContainer hasGutter>
-    <Stack g="50">
+  <Group isWrapper="l" isContainer hasGutter>
+    <Stack g="40">
       <slot />
     </Stack>
   </Group>

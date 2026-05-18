@@ -12,8 +12,8 @@ const { posts } = Astro.props;
 
 <Lism as="ul" class="c--postList">
   {
-    posts.map((post) => (
-      <Lism as="li">
+    posts.map((post, index) => (
+      <Lism as="li" bd-be bd-bs={index === 0}>
         <BoxLink href={`/posts/${post.id}/`} py="30" px="5" hov="-o">
           <Stack g="20" util="trimAll">
             <Date>{post.data.date}</Date>
@@ -29,19 +29,3 @@ const { posts } = Astro.props;
     ))
   }
 </Lism>
-
-<style>
-  @layer lism-component {
-    /* === 記事一覧（縦リスト） === */
-    .c--postList {
-      /* 先頭が子結合子なら & は省略可（& > と同じ） */
-      > li {
-        border-block-end: 1px solid var(--divider);
-
-        &:first-child {
-          border-block-start: 1px solid var(--divider);
-        }
-      }
-    }
-  }
-</style>

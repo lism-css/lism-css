@@ -1,7 +1,6 @@
 ---
 import { getCollection } from 'astro:content';
 import type { GetStaticPaths } from 'astro';
-import { Inline } from 'lism-css/astro';
 import ArchiveLayout from '@/layouts/ArchiveLayout.astro';
 import ArchiveHeader from '@/components/ArchiveHeader.astro';
 import CategoryTabs from '@/components/CategoryTabs.astro';
@@ -10,6 +9,7 @@ import Pager from '@/components/Pager.astro';
 import { CATEGORIES, CATEGORY_KEYS } from '@/config/categories';
 import { getCategoryHref, parsePostId } from '@/lib/posts';
 import { siteConfig } from '@/config/site';
+import { Stack } from 'lism-css/astro';
 
 export const getStaticPaths = (async ({ paginate }) => {
   const allPosts = await getCollection('posts');
@@ -35,11 +35,13 @@ const getPageHref = (n: number) => (n === 1 ? getCategoryHref(category) : `/cate
     {meta.description}
   </ArchiveHeader>
 
-  {/* カテゴリタブ */}
-  <CategoryTabs current={category} />
+  <Stack g="30">
+    {/* カテゴリタブ */}
+    <CategoryTabs current={category} />
 
-  {/* 記事リスト */}
-  <PostList posts={page.data} showCategory={false} />
+    {/* 記事リスト */}
+    <PostList posts={page.data} showCategory={false} />
+  </Stack>
 
   {/* ページャー */}
   <Pager currentPage={page.currentPage} lastPage={page.lastPage} getPageHref={getPageHref} />

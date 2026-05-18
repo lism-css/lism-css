@@ -1,7 +1,7 @@
 ---
 title: 'blog-astro-minimal の構成'
 excerpt: Lism CSS リポジトリに同梱されている最小構成の Astro ブログテンプレートの仕様。Content Collections・タグ・ルーティング・レイアウト・主要コンポーネントを順に解説する。
-date: 2026.04.10
+date: '2026-04-10'
 tags: [Astro, Lism CSS, テンプレート]
 ---
 
@@ -68,7 +68,7 @@ export const collections = { posts };
 ```yaml
 ---
 title: 朝のルーティンについて
-date: 2026.03.28
+date: '2026-03-28'
 tags: [習慣, ライフスタイル]
 ---
 ```

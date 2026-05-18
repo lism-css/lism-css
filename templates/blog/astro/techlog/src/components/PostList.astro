@@ -1,10 +1,12 @@
 ---
-import { Lism, Stack, Cluster, Heading, Text, BoxLink } from 'lism-css/astro';
+import { Lism, AutoColumns, Stack, Cluster, Heading, Text, BoxLink, Frame } from 'lism-css/astro';
 import type { CollectionEntry } from 'astro:content';
 import Date from '@/components/Date.astro';
 import Cat from '@/components/Cat.astro';
+import Tag from '@/components/Tag.astro';
 import { CATEGORIES } from '@/config/categories';
 import { getPostHref, parsePostId } from '@/lib/posts';
+import { buildOgImageUrl } from '@/lib/ogImage';
 
 interface Props {
   posts: CollectionEntry<'posts'>[];
@@ -14,44 +16,44 @@ interface Props {
 const { posts, showCategory = true } = Astro.props;
 ---
 
-<Lism as="ul" class="c--postList">
+<AutoColumns cols="20rem" g="30" as="ul" autoFill class="c--postList">
   {
-    posts.map((post) => {
+    posts.map((post, index) => {
       const { category } = parsePostId(post.id);
+      const isLazy = index >= 3;
       return (
         <Lism as="li">
-          <BoxLink href={getPostHref(post.id)} py="30" px="5" hov={{ bgc: 'base-2' }} hasTransition>
-            <Stack g="20" util="trimAll">
-              <Cluster g="10">
-                <Date date={post.data.date} />
-                {showCategory && <Cat>{CATEGORIES[category].label}</Cat>}
-              </Cluster>
+          <BoxLink layout="stack" href={getPostHref(post.id)} set="var:hov" hasTransition hov={{ bxsh: '30' }} bd h="100%" bdrs="20" ov="hidden">
+            <Frame ar="og" fxsh="0" fxg="0" pos="relative">
+              <img src={buildOgImageUrl({ category, title: post.data.title })} alt="" width="1200" height="630" loading={isLazy ? 'lazy' : 'eager'} />
+              {showCategory && (
+                <Cat pos="absolute" t="10" r="10" bgc="black" c="white">
+                  {CATEGORIES[category].label}
+                </Cat>
+              )}
+            </Frame>
+            <Stack g="20" fxg="1" p="20">
               <Heading level="2" fz="l">
                 {post.data.title}
               </Heading>
-              <Text fz="xs" c="text-2">
+              <Text fz="xs" c="text-2" lh="s">
                 {post.data.excerpt}
               </Text>
+              {/* 日付 + タグ（カード全体が BoxLink のため、Tag は href なし＝Inline 表示でネスト<a>を避ける） */}
+              <Cluster g="10" mt="auto">
+                <Date date={post.data.date} />
+                {post.data.tags.length > 0 && (
+                  <Cluster g="5">
+                    {post.data.tags.map((tag) => (
+                      <Tag px="0">{tag}</Tag>
+                    ))}
+                  </Cluster>
+                )}
+              </Cluster>
             </Stack>
           </BoxLink>
         </Lism>
       );
     })
   }
-</Lism>
-
-<style>
-  @layer lism-component {
-    /* === 記事一覧（縦リスト） === */
-    .c--postList {
-      /* 先頭が子結合子なら & は省略可（& > と同じ） */
-      > li {
-        border-block-end: 1px solid var(--divider);
-
-        &:first-child {
-          border-block-start: 1px solid var(--divider);
-        }
-      }
-    }
-  }
-</style>
+</AutoColumns>

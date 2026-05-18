@@ -5,6 +5,7 @@
  * @see https://loos.tools/ogimg-maker/guide/
  */
 import { siteConfig } from '@/config/site';
+import { CATEGORIES, type CategoryKey } from '@/config/categories';
 
 const ENDPOINT = 'https://loos.tools/ogimg-maker/api';
 
@@ -35,8 +36,15 @@ export interface OgImageParams {
   l?: number;
 }
 
-export function buildOgImageUrl(params: OgImageParams = {}): string {
-  const merged: OgImageParams = { ...siteConfig.ogImage, ...params };
+export interface BuildOgImageOptions extends OgImageParams {
+  /** 指定するとカテゴリ別のデフォルト（CATEGORIES[*].ogImage）を重ねて適用する */
+  category?: CategoryKey;
+}
+
+export function buildOgImageUrl(options: BuildOgImageOptions = {}): string {
+  const { category, ...overrides } = options;
+  const categoryDefaults = category ? (CATEGORIES[category].ogImage ?? {}) : {};
+  const merged: OgImageParams = { ...siteConfig.ogImage, ...categoryDefaults, ...overrides };
   const search = new URLSearchParams();
 
   for (const [key, value] of Object.entries(merged)) {

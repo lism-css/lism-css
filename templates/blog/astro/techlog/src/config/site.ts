@@ -37,9 +37,11 @@ export const siteConfig = {
   // OG 画像のデフォルト設定（loos.tools/ogimg-maker の API パラメータ）
   // @see https://loos.tools/ogimg-maker/guide/
   ogImage: {
-    type: '1-5',
-    frame: true,
-    bg: 'fill',
+    type: '3-4',
+    h: 238,
+    c: 6,
+    l: 84,
+    // bg: 'fill',
   },
 
   // SNS リンク

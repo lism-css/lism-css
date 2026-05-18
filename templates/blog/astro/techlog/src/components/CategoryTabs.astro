@@ -14,12 +14,12 @@ const items: Array<{ key: 'all' | CategoryKey; label: string; href: string }> = 
   ...CATEGORY_KEYS.map((k) => ({ key: k, label: CATEGORIES[k].label, href: getCategoryHref(k) })),
 ];
 
-const tabProps = { d: 'inline-flex', px: '5', py: '5', lh: 's' };
-const linkProps = { set: 'plain', c: 'text-2', hov: { c: 'brand' } };
+const tabProps = { set: 'plain, var:s', d: 'inline-flex', px: '10', py: '10', lh: 's' };
+const linkProps = { c: 'text-2', hov: { c: 'brand' } };
 ---
 
 <Lism as="nav" class="c--categoryTabs" fz="s" lts="l" aria-label="カテゴリー">
-  <Cluster g="20">
+  <Cluster g="10" bd-b>
     {
       items.map((item) =>
         item.key === current ? (
@@ -39,7 +39,7 @@ const linkProps = { set: 'plain', c: 'text-2', hov: { c: 'brand' } };
 <style>
   @layer lism-component {
     .c--categoryTabs_item {
-      /* margin-bottom: -2px; */
+      margin-bottom: -1px;
       border-bottom: 2px solid transparent;
     }
   }
