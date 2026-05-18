@@ -98,4 +98,14 @@
    *   Memo: -max-sz\:full などからも参照されるのでrootで定義している
    */
   --gutter-size: var(--s30);
+
+  /** 
+   * コンテンツ間の余白バリエーションを定義
+   */
+  --flow--base: var(--s30);
+  --flow--s: var(--s20);
+}
+
+:root:where([lang='ja']) {
+  --flow--base: var(--s35);
 }
