@@ -42,7 +42,12 @@ export default defineConfig({
             class: 'c--headingAnchor',
             ariaLabel: 'Link to this section',
           },
-          content: { type: 'text', value: '#' },
+          content: {
+            type: 'element',
+            tagName: 'span',
+            properties: { ariaHidden: 'true', dataPagefindIgnore: '' },
+            children: [{ type: 'text', value: '#' }],
+          },
           test: (node) => ['h2', 'h3'].includes(node.tagName),
         },
       ],
