@@ -6,38 +6,37 @@ import { Modal } from '@lism-css/ui/astro/Modal';
 ---
 
 {/* md 未満でのみ表示する、画面右下固定の目次ボタン */}
-<Container>
-  <Center d={['grid', null, 'none']} pos="fixed" b="0" r="0" z="99">
-    <Modal.OpenBtn
-      modalId="toc-modal"
-      class="c--fixedTocBtn l--center"
-      d={null}
-      bd
-      bgc="base"
-      bdrs="99"
-      p="10"
-      m="30"
-      g="3px"
-      bxsh="30"
-      w="3.75em"
-      ar="1/1"
-      hasTransition
-      hov={{ bgc: 'base-2', c: 'brand' }}
-      aria-labelledby="toc-open-label"
-    >
-      <Icon viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" fz="l">
-        <line x1="8" y1="6" x2="21" y2="6"></line>
-        <line x1="8" y1="12" x2="21" y2="12"></line>
-        <line x1="8" y1="18" x2="21" y2="18"></line>
-        <line x1="3" y1="6" x2="3.01" y2="6"></line>
-        <line x1="3" y1="12" x2="3.01" y2="12"></line>
-        <line x1="3" y1="18" x2="3.01" y2="18"></line>
-      </Icon>
-      <Inline fz="2xs" lh="xs">目次</Inline>
-      <Inline d="none" id="toc-open-label">目次を開く</Inline>
-    </Modal.OpenBtn>
-  </Center>
-</Container>
+
+<Center d={['grid', null, 'none']} pos="fixed" b="0" r="0" z="99">
+  <Modal.OpenBtn
+    modalId="toc-modal"
+    class="c--fixedTocBtn l--center"
+    d={null}
+    bd
+    bgc="base"
+    bdrs="99"
+    p="10"
+    m="30"
+    g="3px"
+    bxsh="30"
+    w="3.75em"
+    ar="1/1"
+    hasTransition
+    hov={{ bgc: 'base-2', c: 'brand' }}
+    aria-labelledby="toc-open-label"
+  >
+    <Icon viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" fz="l">
+      <line x1="8" y1="6" x2="21" y2="6"></line>
+      <line x1="8" y1="12" x2="21" y2="12"></line>
+      <line x1="8" y1="18" x2="21" y2="18"></line>
+      <line x1="3" y1="6" x2="3.01" y2="6"></line>
+      <line x1="3" y1="12" x2="3.01" y2="12"></line>
+      <line x1="3" y1="18" x2="3.01" y2="18"></line>
+    </Icon>
+    <Inline fz="2xs" lh="xs">目次</Inline>
+    <Inline d="none" id="toc-open-label">目次を開く</Inline>
+  </Modal.OpenBtn>
+</Center>
 
 {/* 目次モーダル本体（中央表示・フェードイン。ボトムシートではない） */}
 <Modal.Root id="toc-modal" isContainer isWrapper="s" py="40" px="30">
