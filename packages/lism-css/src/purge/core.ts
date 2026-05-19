@@ -81,7 +81,11 @@ interface SelectorConstraints {
 
 const CLASS_RE = /\.((?:\\.|[A-Za-z0-9_-])+)/g;
 const ATTR_RE = /\[\s*class\s*([*~^$|]?)=\s*(?:"([^"]*)"|'([^']*)'|([^\]\s]*))\s*\]/g;
-const FUNCTIONAL_SELECTOR_PSEUDOS = ['is', 'where'] as const;
+// `:is()` / `:where()` は内部セレクタを OR 条件として判定する
+const OR_SELECTOR_PSEUDOS = ['is', 'where'] as const;
+// `:not()` / `:has()` は内部クラスがターゲット要素のクラスではない（除外条件 / 子孫条件）ため、
+// 内部のクラスは purge 判定から除外する（normalized からも消す）
+const IGNORED_SELECTOR_PSEUDOS = ['not', 'has'] as const;
 
 function attrKey(op: AttrOp, value: string): string {
   return `${op}|${value}`;
@@ -173,17 +177,19 @@ function findParenEnd(selector: string, openParenIndex: number): number {
   return selector.length - 1;
 }
 
-function getFunctionalSelectorOpen(selector: string, start: number): number {
-  if (selector[start] !== ':' || selector[start + 1] === ':') return -1;
-  for (const name of FUNCTIONAL_SELECTOR_PSEUDOS) {
-    const open = start + name.length + 1;
-    if (selector.startsWith(`:${name}(`, start)) return open;
+function getFunctionalSelectorOpen(selector: string, start: number): { open: number; isOr: boolean } | null {
+  if (selector[start] !== ':' || selector[start + 1] === ':') return null;
+  for (const name of OR_SELECTOR_PSEUDOS) {
+    if (selector.startsWith(`:${name}(`, start)) return { open: start + name.length + 1, isOr: true };
   }
-  return -1;
+  for (const name of IGNORED_SELECTOR_PSEUDOS) {
+    if (selector.startsWith(`:${name}(`, start)) return { open: start + name.length + 1, isOr: false };
+  }
+  return null;
 }
 
-function extractFunctionalSelectorGroups(selector: string): { selector: string; groups: string[] } {
-  const groups: string[] = [];
+function extractFunctionalSelectorGroups(selector: string): { selector: string; orGroups: string[] } {
+  const orGroups: string[] = [];
   let normalized = '';
   let i = 0;
   while (i < selector.length) {
@@ -201,10 +207,10 @@ function extractFunctionalSelectorGroups(selector: string): { selector: string; 
       continue;
     }
 
-    const open = getFunctionalSelectorOpen(selector, i);
-    if (open !== -1) {
-      const end = findParenEnd(selector, open);
-      groups.push(selector.slice(open + 1, end));
+    const match = getFunctionalSelectorOpen(selector, i);
+    if (match) {
+      const end = findParenEnd(selector, match.open);
+      if (match.isOr) orGroups.push(selector.slice(match.open + 1, end));
       normalized += ' ';
       i = end + 1;
       continue;
@@ -213,7 +219,7 @@ function extractFunctionalSelectorGroups(selector: string): { selector: string; 
     normalized += c;
     i++;
   }
-  return { selector: normalized, groups };
+  return { selector: normalized, orGroups };
 }
 
 function matchesSafelist(className: string, safelist: SafelistEntry[]): boolean {
@@ -229,35 +235,54 @@ function matchesSafelist(className: string, safelist: SafelistEntry[]): boolean 
   return false;
 }
 
+function attrMatchesClass(cls: string, attr: { op: AttrOp; value: string }, tokenValue: string): boolean {
+  switch (attr.op) {
+    case '=':
+    case '~=':
+      return cls === attr.value || cls === tokenValue;
+    case '*=':
+      return cls.includes(attr.value) || cls.includes(tokenValue);
+    case '^=':
+      return cls.startsWith(attr.value) || cls.startsWith(tokenValue);
+    case '$=':
+      return cls.endsWith(attr.value) || cls.endsWith(tokenValue);
+    case '|=':
+      return cls === attr.value || cls === tokenValue || cls.startsWith(`${attr.value}-`) || cls.startsWith(`${tokenValue}-`);
+  }
+}
+
 function attrMatchesAnyUsed(attr: { op: AttrOp; value: string }, ctx: PurgeContext): boolean {
   if (!attr.value) return true;
   const key = `${attr.op}|${attr.value}`;
   const cached = ctx.attrCache.get(key);
   if (cached !== undefined) return cached;
 
-  let result = false;
   const tokenValue = attr.value.trim();
+  let result = false;
+
   for (const cls of ctx.used) {
-    switch (attr.op) {
-      case '=':
-      case '~=':
-        if (cls === attr.value || cls === tokenValue) result = true;
-        break;
-      case '*=':
-        if (cls.includes(attr.value) || cls.includes(tokenValue)) result = true;
-        break;
-      case '^=':
-        if (cls.startsWith(attr.value) || cls.startsWith(tokenValue)) result = true;
-        break;
-      case '$=':
-        if (cls.endsWith(attr.value) || cls.endsWith(tokenValue)) result = true;
-        break;
-      case '|=':
-        if (cls === attr.value || cls === tokenValue || cls.startsWith(`${attr.value}-`) || cls.startsWith(`${tokenValue}-`)) result = true;
-        break;
+    if (attrMatchesClass(cls, attr, tokenValue)) {
+      result = true;
+      break;
     }
-    if (result) break;
   }
+
+  // safelist の string エントリも used と同様に属性セレクタ照合対象にする。
+  // RegExp / function は具体的なクラス名を列挙できないため、属性セレクタを保守的に残す。
+  if (!result) {
+    for (const entry of ctx.safelist) {
+      if (typeof entry === 'string') {
+        if (attrMatchesClass(entry, attr, tokenValue)) {
+          result = true;
+          break;
+        }
+      } else {
+        result = true;
+        break;
+      }
+    }
+  }
+
   ctx.attrCache.set(key, result);
   return result;
 }
@@ -276,9 +301,9 @@ function constraintsMatch(selector: string, ctx: PurgeContext): boolean {
 }
 
 function shouldKeepSingleSelector(selector: string, ctx: PurgeContext): boolean {
-  const { selector: normalized, groups } = extractFunctionalSelectorGroups(selector);
+  const { selector: normalized, orGroups } = extractFunctionalSelectorGroups(selector);
   if (!constraintsMatch(normalized, ctx)) return false;
-  for (const group of groups) {
+  for (const group of orGroups) {
     if (shouldKeepSelectorList(group, ctx) === null) return false;
   }
   return true;

@@ -1,46 +1,29 @@
-import { readFileSync } from 'node:fs';
-import { readdir, readFile, writeFile, stat } from 'node:fs/promises';
+import { readdir, readFile, writeFile } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import { join } from 'node:path';
+import type { AstroIntegration } from 'astro';
 import { extractLismClasses } from './extract';
-import { extractKnownLismSelectors, purgeLismCss, type KnownSelectorSet, type SafelistEntry } from './core';
+import { purgeLismCss, type SafelistEntry } from './core';
 import type { LismPurgeOptions } from './vite';
+import { LISM_CSS_SIGNATURE, formatReport, loadDefaultKnownSelectors } from './shared';
 
 export type { LismPurgeOptions };
 
-interface AstroIntegrationLike {
-  name: string;
-  hooks: {
-    'astro:build:done': (params: { dir: URL; logger?: { info: (msg: string) => void } }) => Promise<void> | void;
-  };
-}
-
-const LISM_CSS_SIGNATURE = /\.(?:-[a-z]|[a-z]+--)/;
 const SCAN_EXT = /\.(html?|js|mjs|cjs)$/;
 const CSS_EXT = /\.css$/;
 
-function loadDefaultKnownSelectors(): KnownSelectorSet | undefined {
-  try {
-    const css = readFileSync(new URL(/* @vite-ignore */ '../css/main.css', import.meta.url), 'utf8');
-    return extractKnownLismSelectors(css);
-  } catch {
-    return undefined;
-  }
-}
-
 async function* walk(dir: string): AsyncGenerator<string> {
-  for (const entry of await readdir(dir)) {
-    const full = join(dir, entry);
-    const st = await stat(full);
-    if (st.isDirectory()) {
+  for (const entry of await readdir(dir, { withFileTypes: true })) {
+    const full = join(dir, entry.name);
+    if (entry.isDirectory()) {
       yield* walk(full);
-    } else {
+    } else if (entry.isFile()) {
       yield full;
     }
   }
 }
 
-export function lismPurgeAstro(options: LismPurgeOptions = {}): AstroIntegrationLike {
+export function lismPurgeAstro(options: LismPurgeOptions = {}): AstroIntegration {
   const safelist: SafelistEntry[] | undefined = options.safelist;
   const known = options.known ?? loadDefaultKnownSelectors();
   const report = options.report ?? false;
@@ -75,11 +58,7 @@ export function lismPurgeAstro(options: LismPurgeOptions = {}): AstroIntegration
         }
 
         if (report && beforeBytes > 0) {
-          const saved = beforeBytes - afterBytes;
-          const pct = ((saved / beforeBytes) * 100).toFixed(1);
-          const msg = `CSS: ${beforeBytes} → ${afterBytes} bytes (-${saved} / -${pct}%)`;
-          if (logger) logger.info(msg);
-          else console.log(`[lism-purge] ${msg}`);
+          logger.info(formatReport(beforeBytes, afterBytes));
         }
       },
     },

@@ -135,6 +135,37 @@ describe('purgeLismCss', () => {
     expect(out).toContain('visibility:visible');
   });
 
+  test('safelist 文字列で保持された Property Class に対応する属性セレクタも保持される', () => {
+    const css = `.-p,[class*="-p:"]{padding:var(--p)}`;
+    const out = purgeLismCss(css, { used: used(), safelist: ['-p:20'] });
+    expect(out).toContain('[class*="-p:"]');
+    expect(out).toContain('padding');
+  });
+
+  test('safelist に RegExp/function があれば属性セレクタは保守的に保持される', () => {
+    const css = `.-p,[class*="-p:"]{padding:var(--p)}`;
+    const outRe = purgeLismCss(css, { used: used(), safelist: [/^-p:/] });
+    expect(outRe).toContain('[class*="-p:"]');
+
+    const outFn = purgeLismCss(css, { used: used(), safelist: [(c: string) => c.startsWith('-p:')] });
+    expect(outFn).toContain('[class*="-p:"]');
+  });
+
+  test(':not(.lism-class) 内のクラスは制約から除外される（実 main.css の .l--withSide>:not(.is--side) 相当）', () => {
+    const css = `.l--withSide>:not(.is--side){flex-basis:min(100%,var(--mainW))}`;
+    // is--side が used に含まれない場合でも、l--withSide が used にあればルールは保持される
+    const out = purgeLismCss(css, { used: used('l--withSide') });
+    expect(out).toContain('.l--withSide>:not(.is--side)');
+    expect(out).toContain('flex-basis');
+  });
+
+  test(':has(.lism-class) 内のクラスは制約から除外される', () => {
+    const css = `.l--stack:has(.-hov\\:-c){gap:var(--g)}`;
+    const out = purgeLismCss(css, { used: used('l--stack') });
+    expect(out).toContain('.l--stack:has');
+    expect(out).toContain('gap');
+  });
+
   test('known に含まれない Lism 風のユーザー定義クラスは保持する', () => {
     const known = extractKnownLismSelectors(`.l--stack{display:flex}[class*=" -bd-"]{--bds:solid}`);
     const css = `.l--stack{display:flex}.l--userLayout{display:grid}[class*=" -bd-"]{--bds:solid}`;

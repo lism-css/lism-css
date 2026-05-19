@@ -1,7 +1,7 @@
-import { readFileSync } from 'node:fs';
 import type { Plugin } from 'vite';
 import { extractLismClasses } from './extract';
-import { extractKnownLismSelectors, purgeLismCss, type KnownSelectorSet, type SafelistEntry } from './core';
+import { purgeLismCss, type KnownSelectorSet, type SafelistEntry } from './core';
+import { LISM_CSS_SIGNATURE, formatReport, loadDefaultKnownSelectors } from './shared';
 
 export interface LismPurgeOptions {
   safelist?: SafelistEntry[];
@@ -9,19 +9,8 @@ export interface LismPurgeOptions {
   report?: boolean;
 }
 
-const LISM_CSS_SIGNATURE = /\.(?:-[a-z]|[a-z]+--)/;
-
 function decodeAssetSource(source: string | Uint8Array): string {
   return typeof source === 'string' ? source : new TextDecoder().decode(source);
-}
-
-function loadDefaultKnownSelectors(): KnownSelectorSet | undefined {
-  try {
-    const css = readFileSync(new URL(/* @vite-ignore */ '../css/main.css', import.meta.url), 'utf8');
-    return extractKnownLismSelectors(css);
-  } catch {
-    return undefined;
-  }
 }
 
 export function lismPurge(options: LismPurgeOptions = {}): Plugin {
@@ -58,15 +47,14 @@ export function lismPurge(options: LismPurgeOptions = {}): Plugin {
         const source = decodeAssetSource(asset.source);
         if (!LISM_CSS_SIGNATURE.test(source)) continue;
         const purged = purgeLismCss(source, { used, safelist: options.safelist, known });
+        if (purged === source) continue;
+        asset.source = purged;
         beforeBytes += source.length;
         afterBytes += purged.length;
-        asset.source = purged;
       }
 
       if (options.report && beforeBytes > 0) {
-        const saved = beforeBytes - afterBytes;
-        const pct = ((saved / beforeBytes) * 100).toFixed(1);
-        console.log(`[lism-purge] CSS: ${beforeBytes} → ${afterBytes} bytes (-${saved} / -${pct}%)`);
+        this.info(formatReport(beforeBytes, afterBytes));
       }
     },
   };
