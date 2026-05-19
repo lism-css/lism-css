@@ -42,12 +42,9 @@ export default defineConfig({
             class: 'c--headingAnchor',
             ariaLabel: 'Link to this section',
           },
-          content: {
-            type: 'element',
-            tagName: 'span',
-            properties: { ariaHidden: 'true', dataPagefindIgnore: '' },
-            children: [{ type: 'text', value: '#' }],
-          },
+          // "#" は CSS の ::after で描画する。アンカー本体にテキストを入れないことで、
+          // MDX integration が後段で再実行する rehypeHeadingIds の text 抽出に "#" が混入するのを防ぐ
+          content: [],
           test: (node) => ['h2', 'h3'].includes(node.tagName),
         },
       ],

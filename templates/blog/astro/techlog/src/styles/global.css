@@ -111,6 +111,7 @@
     }
 
     /* === 見出しアンカーリンク === */
+    /* "#" は ::after で描画する。（目次に拾われるのを回避するため） */
     .c--headingAnchor {
       color: var(--text-2);
       font-family: var(--ff--mono);
@@ -119,6 +120,9 @@
       margin-inline-start: 0.25em;
       opacity: 0;
       transition: opacity 0.15s;
+    }
+    .c--headingAnchor::after {
+      content: '#';
     }
     *:hover > .c--headingAnchor,
     .c--headingAnchor:focus-visible {
