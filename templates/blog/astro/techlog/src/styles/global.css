@@ -109,6 +109,19 @@
     thead {
       border-block-end: solid 2px;
     }
+
+    /* === 見出しアンカーリンク === */
+    .c--heading-anchor {
+      margin-inline-start: 0.3em;
+      color: var(--text-2);
+      text-decoration: none;
+      opacity: 0;
+      transition: opacity 0.15s;
+    }
+    :is(h2, h3):hover .c--heading-anchor,
+    .c--heading-anchor:focus-visible {
+      opacity: 1;
+    }
   }
 }
 .-lts\:xl {
