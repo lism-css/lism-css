@@ -1,0 +1,425 @@
+export type SafelistEntry = string | RegExp | ((className: string) => boolean);
+
+export interface PurgeOptions {
+  used: Set<string>;
+  safelist?: SafelistEntry[];
+  known?: KnownSelectorSet;
+}
+
+const NESTING_AT_RULES = new Set(['media', 'container', 'layer', 'supports', 'starting-style']);
+
+type AttrOp = '=' | '*=' | '^=' | '$=' | '~=' | '|=';
+
+export interface KnownSelectorSet {
+  classes: Set<string>;
+  attrs: Set<string>;
+}
+
+interface PurgeContext {
+  used: Set<string>;
+  safelist: SafelistEntry[];
+  known?: KnownSelectorSet;
+  attrCache: Map<string, boolean>;
+}
+
+// ---- 低レベルユーティリティ -----------------------------------------------
+
+function findStringEnd(css: string, start: number): number {
+  const quote = css[start];
+  let i = start + 1;
+  while (i < css.length) {
+    const c = css[i];
+    if (c === '\\') {
+      i += 2;
+      continue;
+    }
+    if (c === quote) return i;
+    i++;
+  }
+  return css.length - 1;
+}
+
+function findCommentEnd(css: string, start: number): number {
+  const end = css.indexOf('*/', start + 2);
+  return end === -1 ? css.length : end + 1;
+}
+
+function findBlockEnd(css: string, openBraceIndex: number): number {
+  let depth = 1;
+  let i = openBraceIndex + 1;
+  while (i < css.length) {
+    const c = css[i];
+    if (c === '/' && css[i + 1] === '*') {
+      i = findCommentEnd(css, i) + 1;
+      continue;
+    }
+    if (c === '"' || c === "'") {
+      i = findStringEnd(css, i) + 1;
+      continue;
+    }
+    if (c === '{') depth++;
+    else if (c === '}') {
+      depth--;
+      if (depth === 0) return i;
+    }
+    i++;
+  }
+  return css.length;
+}
+
+// ---- セレクタ判定 -----------------------------------------------------------
+
+function unescapeIdent(raw: string): string {
+  return raw.replace(/\\(.)/g, '$1');
+}
+
+interface SelectorConstraints {
+  classes: string[];
+  attrs: Array<{ op: AttrOp; value: string }>;
+  hasUnknownClassConstraint: boolean;
+}
+
+const CLASS_RE = /\.((?:\\.|[A-Za-z0-9_-])+)/g;
+const ATTR_RE = /\[\s*class\s*([*~^$|]?)=\s*(?:"([^"]*)"|'([^']*)'|([^\]\s]*))\s*\]/g;
+const FUNCTIONAL_SELECTOR_PSEUDOS = ['is', 'where'] as const;
+
+function attrKey(op: AttrOp, value: string): string {
+  return `${op}|${value}`;
+}
+
+function hasLismClassPrefix(className: string): boolean {
+  return className.startsWith('-') || /^(?:c|a|l|is|has|set|u)--/.test(className);
+}
+
+function isPurgeableClassName(className: string, ctx: PurgeContext): boolean {
+  if (ctx.known) return ctx.known.classes.has(className);
+  return hasLismClassPrefix(className);
+}
+
+function isPurgeableClassAttr(op: AttrOp, value: string, ctx: PurgeContext): boolean {
+  if (ctx.known) return ctx.known.attrs.has(attrKey(op, value));
+  return hasLismClassPrefix(value.trimStart());
+}
+
+function extractConstraints(selector: string, ctx: PurgeContext): SelectorConstraints {
+  const classes: string[] = [];
+  const attrs: Array<{ op: AttrOp; value: string }> = [];
+  let hasUnknownClassConstraint = false;
+  for (const m of selector.matchAll(CLASS_RE)) {
+    const className = unescapeIdent(m[1]);
+    if (isPurgeableClassName(className, ctx)) classes.push(className);
+    else hasUnknownClassConstraint = true;
+  }
+  for (const m of selector.matchAll(ATTR_RE)) {
+    const op = (m[1] ? `${m[1]}=` : '=') as AttrOp;
+    const value = m[2] ?? m[3] ?? m[4] ?? '';
+    if (isPurgeableClassAttr(op, value, ctx)) attrs.push({ op, value });
+    else hasUnknownClassConstraint = true;
+  }
+  return { classes, attrs, hasUnknownClassConstraint };
+}
+
+function splitSelectorList(selectors: string): string[] {
+  const out: string[] = [];
+  let depth = 0;
+  let start = 0;
+  for (let i = 0; i < selectors.length; i++) {
+    const c = selectors[i];
+    if (c === '(' || c === '[') depth++;
+    else if (c === ')' || c === ']') depth--;
+    else if (c === ',' && depth === 0) {
+      out.push(selectors.slice(start, i));
+      start = i + 1;
+    }
+  }
+  out.push(selectors.slice(start));
+  return out.map((s) => s.trim()).filter(Boolean);
+}
+
+function findAttributeSelectorEnd(selector: string, start: number): number {
+  let i = start + 1;
+  while (i < selector.length) {
+    const c = selector[i];
+    if (c === '"' || c === "'") {
+      i = findStringEnd(selector, i) + 1;
+      continue;
+    }
+    if (c === ']') return i;
+    i++;
+  }
+  return selector.length - 1;
+}
+
+function findParenEnd(selector: string, openParenIndex: number): number {
+  let depth = 1;
+  let i = openParenIndex + 1;
+  while (i < selector.length) {
+    const c = selector[i];
+    if (c === '"' || c === "'") {
+      i = findStringEnd(selector, i) + 1;
+      continue;
+    }
+    if (c === '[') {
+      i = findAttributeSelectorEnd(selector, i) + 1;
+      continue;
+    }
+    if (c === '(') depth++;
+    else if (c === ')') {
+      depth--;
+      if (depth === 0) return i;
+    }
+    i++;
+  }
+  return selector.length - 1;
+}
+
+function getFunctionalSelectorOpen(selector: string, start: number): number {
+  if (selector[start] !== ':' || selector[start + 1] === ':') return -1;
+  for (const name of FUNCTIONAL_SELECTOR_PSEUDOS) {
+    const open = start + name.length + 1;
+    if (selector.startsWith(`:${name}(`, start)) return open;
+  }
+  return -1;
+}
+
+function extractFunctionalSelectorGroups(selector: string): { selector: string; groups: string[] } {
+  const groups: string[] = [];
+  let normalized = '';
+  let i = 0;
+  while (i < selector.length) {
+    const c = selector[i];
+    if (c === '"' || c === "'") {
+      const end = findStringEnd(selector, i);
+      normalized += selector.slice(i, end + 1);
+      i = end + 1;
+      continue;
+    }
+    if (c === '[') {
+      const end = findAttributeSelectorEnd(selector, i);
+      normalized += selector.slice(i, end + 1);
+      i = end + 1;
+      continue;
+    }
+
+    const open = getFunctionalSelectorOpen(selector, i);
+    if (open !== -1) {
+      const end = findParenEnd(selector, open);
+      groups.push(selector.slice(open + 1, end));
+      normalized += ' ';
+      i = end + 1;
+      continue;
+    }
+
+    normalized += c;
+    i++;
+  }
+  return { selector: normalized, groups };
+}
+
+function matchesSafelist(className: string, safelist: SafelistEntry[]): boolean {
+  for (const entry of safelist) {
+    if (typeof entry === 'string') {
+      if (entry === className) return true;
+    } else if (entry instanceof RegExp) {
+      if (entry.test(className)) return true;
+    } else if (typeof entry === 'function') {
+      if (entry(className)) return true;
+    }
+  }
+  return false;
+}
+
+function attrMatchesAnyUsed(attr: { op: AttrOp; value: string }, ctx: PurgeContext): boolean {
+  if (!attr.value) return true;
+  const key = `${attr.op}|${attr.value}`;
+  const cached = ctx.attrCache.get(key);
+  if (cached !== undefined) return cached;
+
+  let result = false;
+  const tokenValue = attr.value.trim();
+  for (const cls of ctx.used) {
+    switch (attr.op) {
+      case '=':
+      case '~=':
+        if (cls === attr.value || cls === tokenValue) result = true;
+        break;
+      case '*=':
+        if (cls.includes(attr.value) || cls.includes(tokenValue)) result = true;
+        break;
+      case '^=':
+        if (cls.startsWith(attr.value) || cls.startsWith(tokenValue)) result = true;
+        break;
+      case '$=':
+        if (cls.endsWith(attr.value) || cls.endsWith(tokenValue)) result = true;
+        break;
+      case '|=':
+        if (cls === attr.value || cls === tokenValue || cls.startsWith(`${attr.value}-`) || cls.startsWith(`${tokenValue}-`)) result = true;
+        break;
+    }
+    if (result) break;
+  }
+  ctx.attrCache.set(key, result);
+  return result;
+}
+
+function constraintsMatch(selector: string, ctx: PurgeContext): boolean {
+  const { classes, attrs, hasUnknownClassConstraint } = extractConstraints(selector, ctx);
+  if (hasUnknownClassConstraint) return true;
+  if (classes.length === 0 && attrs.length === 0) return true;
+  for (const cls of classes) {
+    if (!ctx.used.has(cls) && !matchesSafelist(cls, ctx.safelist)) return false;
+  }
+  for (const attr of attrs) {
+    if (!attrMatchesAnyUsed(attr, ctx)) return false;
+  }
+  return true;
+}
+
+function shouldKeepSingleSelector(selector: string, ctx: PurgeContext): boolean {
+  const { selector: normalized, groups } = extractFunctionalSelectorGroups(selector);
+  if (!constraintsMatch(normalized, ctx)) return false;
+  for (const group of groups) {
+    if (shouldKeepSelectorList(group, ctx) === null) return false;
+  }
+  return true;
+}
+
+function shouldKeepSelectorList(selectorList: string, ctx: PurgeContext): string | null {
+  const kept: string[] = [];
+  for (const sel of splitSelectorList(selectorList)) {
+    if (shouldKeepSingleSelector(sel, ctx)) kept.push(sel);
+  }
+  return kept.length === 0 ? null : kept.join(',');
+}
+
+// ---- パース / 処理 ----------------------------------------------------------
+
+type Segment =
+  | { kind: 'rule'; header: string; body: string }
+  | { kind: 'at-block'; header: string; name: string; body: string }
+  | { kind: 'at-statement'; header: string };
+
+function* iterateTopLevel(css: string): Generator<Segment> {
+  let i = 0;
+  const n = css.length;
+  while (i < n) {
+    while (i < n) {
+      const c = css[i];
+      if (c === ' ' || c === '\n' || c === '\t' || c === '\r' || c === '\f') {
+        i++;
+        continue;
+      }
+      if (c === '/' && css[i + 1] === '*') {
+        i = findCommentEnd(css, i) + 1;
+        continue;
+      }
+      break;
+    }
+    if (i >= n) break;
+
+    const start = i;
+    let foundOpenBrace = -1;
+    let semi = -1;
+    while (i < n) {
+      const c = css[i];
+      if (c === '/' && css[i + 1] === '*') {
+        i = findCommentEnd(css, i) + 1;
+        continue;
+      }
+      if (c === '"' || c === "'") {
+        i = findStringEnd(css, i) + 1;
+        continue;
+      }
+      if (c === '{') {
+        foundOpenBrace = i;
+        break;
+      }
+      if (c === ';') {
+        semi = i;
+        break;
+      }
+      if (c === '}') break;
+      i++;
+    }
+
+    if (foundOpenBrace !== -1) {
+      const header = css.slice(start, foundOpenBrace).trim();
+      const blockEnd = findBlockEnd(css, foundOpenBrace);
+      const body = css.slice(foundOpenBrace + 1, blockEnd);
+      i = blockEnd + 1;
+      if (header.startsWith('@')) {
+        const name = header
+          .slice(1)
+          .split(/[\s({;]/, 1)[0]
+          .toLowerCase();
+        yield { kind: 'at-block', header, name, body };
+      } else {
+        yield { kind: 'rule', header, body };
+      }
+    } else if (semi !== -1) {
+      yield { kind: 'at-statement', header: css.slice(start, semi + 1).trim() };
+      i = semi + 1;
+    } else {
+      break;
+    }
+  }
+}
+
+function collectKnownSelector(selector: string, known: KnownSelectorSet): void {
+  for (const m of selector.matchAll(CLASS_RE)) {
+    known.classes.add(unescapeIdent(m[1]));
+  }
+  for (const m of selector.matchAll(ATTR_RE)) {
+    const op = (m[1] ? `${m[1]}=` : '=') as AttrOp;
+    const value = m[2] ?? m[3] ?? m[4] ?? '';
+    known.attrs.add(attrKey(op, value));
+  }
+}
+
+function collectKnownSelectors(css: string, known: KnownSelectorSet): void {
+  for (const seg of iterateTopLevel(css)) {
+    if (seg.kind === 'rule') {
+      collectKnownSelector(seg.header, known);
+    } else if (seg.kind === 'at-block') {
+      collectKnownSelectors(seg.body, known);
+    }
+  }
+}
+
+export function extractKnownLismSelectors(css: string): KnownSelectorSet {
+  const known = { classes: new Set<string>(), attrs: new Set<string>() };
+  collectKnownSelectors(css, known);
+  return known;
+}
+
+function processSegments(css: string, ctx: PurgeContext): string {
+  let out = '';
+  for (const seg of iterateTopLevel(css)) {
+    if (seg.kind === 'at-statement') {
+      out += seg.header.endsWith(';') ? `${seg.header}\n` : `${seg.header};\n`;
+      continue;
+    }
+    if (seg.kind === 'at-block') {
+      if (NESTING_AT_RULES.has(seg.name)) {
+        const inner = processSegments(seg.body, ctx);
+        if (inner.trim()) out += `${seg.header}{${inner}}\n`;
+      } else {
+        out += `${seg.header}{${seg.body}}\n`;
+      }
+      continue;
+    }
+    const kept = shouldKeepSelectorList(seg.header, ctx);
+    if (kept !== null) out += `${kept}{${seg.body}}\n`;
+  }
+  return out;
+}
+
+export function purgeLismCss(css: string, options: PurgeOptions): string {
+  const ctx: PurgeContext = {
+    used: options.used,
+    safelist: options.safelist ?? [],
+    known: options.known,
+    attrCache: new Map(),
+  };
+  return processSegments(css, ctx);
+}

@@ -35,6 +35,7 @@ const entries = {
 
   // full.css 用 preset。bin/cli.mjs が dist から読むため単独エントリとして出力する
   'config/presets/props-full': resolve(__dirname, 'config/presets/props-full.ts'),
+  'purge/index': resolve(__dirname, 'src/purge/index.ts'),
   // 'components/Box/index': resolve(__dirname, 'src/components/Box/index.js'),
 
   // ↓ scripts.jsのビルドと、setEvent.js もこれでビルドされる.
@@ -85,7 +86,7 @@ export default defineConfig({
     },
     rollupOptions: {
       plugins: [],
-      external: ['react', 'react-dom', 'react/jsx-runtime', 'lism-css/config.js'],
+      external: ['react', 'react-dom', 'react/jsx-runtime', 'lism-css/config.js', /^node:/],
       output: {
         dir: 'dist',
         // exports: 'named',
