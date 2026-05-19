@@ -122,26 +122,28 @@ describe('PropValueTypes', () => {
     >();
   });
 
-  it('cg（column-gap）には space トークンの値を設定できる（レスポンシブ対応）', () => {
+  it('cg（column-gap）には space トークンの値を設定できる（bp: 0 のため非レスポンシブ）', () => {
     expectTypeOf<PropValueTypes['cg']>().toEqualTypeOf<
-      Responsive<
-        '5' | '10' | '15' | '20' | '25' | '30' | '35' | '40' | '50' | '60' | '70' | '80' | (string & {}) | number | boolean | null | undefined
-      >
+      '5' | '10' | '15' | '20' | '25' | '30' | '35' | '40' | '50' | '60' | '70' | '80' | (string & {}) | number | boolean | null | undefined
     >();
   });
 
-  it('rg（row-gap）には space トークンの値を設定できる（レスポンシブ対応）', () => {
+  it('rg（row-gap）には space トークンの値を設定できる（bp: 0 のため非レスポンシブ）', () => {
     expectTypeOf<PropValueTypes['rg']>().toEqualTypeOf<
-      Responsive<
-        '5' | '10' | '15' | '20' | '25' | '30' | '35' | '40' | '50' | '60' | '70' | '80' | (string & {}) | number | boolean | null | undefined
-      >
+      '5' | '10' | '15' | '20' | '25' | '30' | '35' | '40' | '50' | '60' | '70' | '80' | (string & {}) | number | boolean | null | undefined
     >();
   });
 
   it('presets も utils も token もないプロパティは string | number | boolean 型で含まれる', () => {
     // bg は presets/utils/token がないが、PropValueTypes に含まれる（string | number | boolean フォールバック）
-    // bg は bp: 1 なので Responsive でラップされる
-    expectTypeOf<PropValueTypes['bg']>().toEqualTypeOf<Responsive<string | number | boolean | undefined>>();
+    // bg は bp: 0 なので Responsive でラップされない
+    expectTypeOf<PropValueTypes['bg']>().toEqualTypeOf<string | number | boolean | undefined>();
+  });
+
+  it('gtc（bp: lg）は配列形式で null を含められる', () => {
+    expectTypeOf<PropValueTypes['gtc']>().toEqualTypeOf<Responsive<'subgrid' | (string & {}) | number | boolean | null | undefined>>();
+    const gtc: PropValueTypes['gtc'] = ['auto', null, '1fr 1fr'];
+    expectTypeOf(gtc).toMatchTypeOf<PropValueTypes['gtc']>();
   });
 
   it('プリセット値を設定できる', () => {
@@ -182,15 +184,16 @@ describe('PropValueTypes', () => {
 });
 
 describe('ResponsivePropValueTypes', () => {
-  it('bp: 1 が設定されているプロパティのみが含まれる', () => {
+  it('bp が有効なプロパティのみが含まれる', () => {
     type Props = ResponsivePropValueTypes;
 
-    // bp: 1 が設定されているプロパティ（レスポンシブ対応）
+    // bp: 1 または bp: 'lg' 等が設定されているプロパティ（レスポンシブ対応）
     type FzExists = 'fz' extends keyof Props ? true : false;
     type DExists = 'd' extends keyof Props ? true : false;
     type WExists = 'w' extends keyof Props ? true : false;
     type HExists = 'h' extends keyof Props ? true : false;
     type ArExists = 'ar' extends keyof Props ? true : false;
+    type GtcExists = 'gtc' extends keyof Props ? true : false;
     type CgExists = 'cg' extends keyof Props ? true : false;
     type RgExists = 'rg' extends keyof Props ? true : false;
 
@@ -199,8 +202,9 @@ describe('ResponsivePropValueTypes', () => {
     expectTypeOf<WExists>().toEqualTypeOf<true>();
     expectTypeOf<HExists>().toEqualTypeOf<true>();
     expectTypeOf<ArExists>().toEqualTypeOf<true>();
-    expectTypeOf<CgExists>().toEqualTypeOf<true>();
-    expectTypeOf<RgExists>().toEqualTypeOf<true>();
+    expectTypeOf<GtcExists>().toEqualTypeOf<true>();
+    expectTypeOf<CgExists>().toEqualTypeOf<false>();
+    expectTypeOf<RgExists>().toEqualTypeOf<false>();
 
     // bp: 1 が設定されていないプロパティ（含まれないはず）
     type FwExists = 'fw' extends keyof Props ? true : false;

@@ -56,14 +56,14 @@ Property Class や Lism Props で Flex 関連プロパティ（`g`, `fxw`, `jc`,
 ```jsx
 <Flex g="20">
   <Lism fx="1">Flex Content</Lism>
-  <Lism fxb={['33%', '25%']}>Flex Content</Lism>
+  <Lism fxb={['50%', null, '25%']}>Flex Content</Lism>
 </Flex>
 ```
 
 ```html
 <div class="l--flex -g:20">
   <div class="-fx:1">Flex Content</div>
-  <div class="-fxb -fxb_sm" style="--fxb:33%;--fxb_sm:25%">Flex Content</div>
+  <div class="-fxb -fxb_md" style="--fxb:50%;--fxb_md:25%">Flex Content</div>
 </div>
 ```
 

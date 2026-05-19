@@ -29,7 +29,7 @@ interface PropConfig {
   utils?: Record<string, string>;
   shorthands?: Record<string, string>;
   isVar?: number;
-  bp?: 0 | 1;
+  bp?: 0 | 1 | 'sm' | 'md' | 'lg' | 'xl';
   alwaysVar?: number;
   important?: number;
   exUtility?: Record<string, unknown>;

@@ -92,14 +92,14 @@ import { Flex, Lism } from 'lism-css/astro';
   <PreviewArea resize p="30">
     <Flex g="20" className="has--itemGuide">
       <Lism fx="1">Flex Content</Lism>
-      <Lism fxb={['33%', '25%']}>Flex Content</Lism>
+      <Lism fxb={['50%', '33%', '25%']}>Flex Content</Lism>
     </Flex>
   </PreviewArea>
   <PreviewCode slot="tab" label="JSX">
   ```jsx
   <Flex g="20">
     <Lism fx="1">Flex Content</Lism>
-    <Lism fxb={['33%', '25%']}>Flex Content</Lism>
+    <Lism fxb={['50%', '33%', '25%']}>Flex Content</Lism>
   </Flex>
   ```
   </PreviewCode>
@@ -107,7 +107,7 @@ import { Flex, Lism } from 'lism-css/astro';
   ```html
   <div class="l--flex -g:20">
     <div class="-fx:1">Flex Content</div>
-    <div class="-fxb -fxb_sm" style="--fxb: 33%; --fxb_sm: 25%">Flex Content</div>
+    <div class="-fxb -fxb_sm -fxb_md" style="--fxb: 50%; --fxb_sm: 33%; --fxb_md: 25%">Flex Content</div>
   </div>
   ```
   </PreviewCode>
