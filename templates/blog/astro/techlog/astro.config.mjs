@@ -39,9 +39,8 @@ export default defineConfig({
         {
           behavior: 'append',
           properties: {
-            class: 'c--heading-anchor',
-            ariaHidden: 'true',
-            tabIndex: -1,
+            class: 'c--headingAnchor',
+            ariaLabel: 'Link to this section',
           },
           content: { type: 'text', value: '#' },
           test: (node) => ['h2', 'h3'].includes(node.tagName),
