@@ -17,6 +17,8 @@ CSSコードを書く場合やコンポーネントのPropsに値を指定する
 - [透明度 (o)](#透明度-o)
 - [角丸 (bdrs)](#角丸-bdrs)
 - [影 (bxsh)](#影-bxsh)
+- [フロー余白 (flow)](#フロー余白-flow)
+- [ガターサイズ (gutter-size)](#ガターサイズ-gutter-size)
 - [カラー](#カラー)
 - [トークン値の命名規則](#トークン値の命名規則)
 
@@ -39,7 +41,7 @@ CSSコードを書く場合やコンポーネントのPropsに値を指定する
 | 影 (bxsh) | `10`, `20`, `30`, `40`, `50` | `--bxsh--{N}` | `--bxsh--20` |
 | サイズ (sz) | `xs`, `s`, `m`, `l`, `xl`, `bleed` | `--sz--{key}` | `--sz--l` |
 | アスペクト比 (ar) | `og` | `--ar--{key}` | `--ar--og` |
-| フロー余白 (flow) | `s`, `l` | `--flow--{key}` | `--flow--s` |
+| フロー余白 (flow) | `base`, `s` | `--flow--{key}` | `--flow--base` |
 | セマンティックカラー (c) | `base`, `base-2`, `text`, `text-2`, `divider`, `link`, `brand`, `accent`, `neutral` | `--{name}` | `--brand` |
 | パレットカラー (palette) | `red`, `blue`, `green`, `yellow`, `purple`, `orange`, `pink`, `gray`, `white`, `black` | `--{name}` | `--red` |
 
@@ -192,6 +194,31 @@ CSSコードを書く場合やコンポーネントのPropsに値を指定する
 | `--shsz--30` | `0px 4px 12px` |
 | `--shsz--40` | `0px 8px 24px` |
 | `--shsz--50` | `0px 16px 48px` |
+
+
+## フロー余白 (flow)
+
+`l--flow` のコンテンツ間余白に使われるトークン。`:root` で定義されている。
+
+| CSS変数 | 値 | 説明 |
+|---------|-----|------|
+| `--flow--base` | `var(--s30)`（`lang="ja"` 時は `var(--s35)`） | `l--flow` の基準余白 |
+| `--flow--s` | `var(--s20)` | `-flow:s` で適用される小さめの余白 |
+
+
+## ガターサイズ (gutter-size)
+
+サイト全体のガター（左右余白）量を定義するルート変数。トークン体系ではなく単一の設定値で、上書きするとガター関連の挙動が一括で変わる。
+
+| CSS変数 | 値 | 説明 |
+|---------|-----|------|
+| `--gutter-size` | `var(--s30)` | ガターの基準量 |
+
+参照される主な箇所:
+
+- `has--gutter` の `padding-inline`
+- `is--container` の `--sz--bleed` 計算（`100cqi + var(--gutter-size) * 2`）
+- `-max-sz:full` の負 margin による hang 拡張
 
 
 ## カラー
