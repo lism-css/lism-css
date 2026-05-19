@@ -265,15 +265,14 @@ function cleanupDevArtifacts(projectDir: string): void {
 }
 
 /**
- * `src/pages/{variant}/index.astro` を `src/pages/index.astro` に持ち上げ、
+ * `src/pages/{variant}/` の中身を `src/pages/` 直下にマージし、
  * 他 variant ディレクトリ（自分自身も含む `src/pages/*` 配下のサブディレクトリ）を削除する。
- * 結果として `src/pages/index.astro` のみが残る形にする。
+ * variant 配下に `_style.css` 等の付随ファイルがあれば、それらも一緒に持ち上げられる。
  */
 function extractVariantPages(projectDir: string, tpl: SingleProjectVariantTemplateDef): void {
   const pagesDir = path.join(projectDir, 'src', 'pages');
   const variantDir = path.join(pagesDir, tpl.variant);
   const variantIndex = path.join(variantDir, 'index.astro');
-  const targetIndex = path.join(pagesDir, 'index.astro');
 
   if (!fs.existsSync(variantIndex)) {
     throw new Error(
@@ -284,13 +283,8 @@ function extractVariantPages(projectDir: string, tpl: SingleProjectVariantTempla
     );
   }
 
-  // 既に src/pages/index.astro が一覧ページとして存在する場合は上書き
-  if (fs.existsSync(targetIndex)) {
-    fs.rmSync(targetIndex, { force: true });
-  }
-
-  // variant の index.astro を src/pages/index.astro に移動
-  fs.renameSync(variantIndex, targetIndex);
+  // variant ディレクトリの中身を src/pages/ 直下にマージ（既存ファイルは上書き）
+  mergeDirectory(variantDir, pagesDir);
 
   // src/pages 直下のサブディレクトリを全て削除（選択した variant + 他の variant をまとめて掃除）
   for (const entry of fs.readdirSync(pagesDir, { withFileTypes: true })) {

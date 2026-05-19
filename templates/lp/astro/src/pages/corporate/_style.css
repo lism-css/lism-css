@@ -1,0 +1,172 @@
+@layer lism-custom {
+  :root {
+    --header-h: 112px;
+    --header-h--thin: 64px;
+  }
+
+  .z--header {
+    height: var(--header-h);
+  }
+
+  .z--headerNav_link,
+  .z--header_subMenu_item > a {
+    --hov-o: var(--o--pp);
+  }
+
+  /* [data-has-submenu] {
+    anchor-name: --parent-anchor;
+  } */
+  .z--header_subMenu {
+    position: absolute;
+    top: 100%;
+    right: calc(0px - var(--s40)); /* header の px分寄せれる */
+    /* right: calc(0px - var(--gutter-size) / 2); */
+
+    /* @supports (anchor-name: --x) {
+      position-anchor: --parent-anchor;
+      top: anchor(bottom);
+      justify-self: anchor-center;
+      position-try-fallbacks: flip-inline;
+      position-try-order: most-width;
+    } */
+
+    opacity: var(--_notHov, 0);
+    visibility: var(--_notHov, hidden);
+    transform: var(--_isHov, translateY(8px));
+    transition:
+      visibility 0.3s ease,
+      transform 0.3s ease,
+      opacity 0.3s ease;
+  }
+
+  /* モバイルメニュー: +/- を caret-right（fz--s）に近い視覚サイズへ */
+  .z--header_menuNav .c--accordion_icon {
+    font-size: var(--fz--s);
+    width: 1em;
+    height: 1em;
+    transform: scale(0.75);
+    transform-origin: center;
+  }
+
+  .z--mv {
+    height: 100svh;
+  }
+  .z--mv_content {
+    top: calc(var(--header-h) / 2 * -1);
+    height: calc(100% + var(--header-h) / 2);
+  }
+  .z--mv_scrollDown {
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  /* スクロール促進アイコン（無限ループ・スクロール非連動） */
+  .z--mv_scrollDownIcon {
+    animation: z--mv_scrollDownIcon 2.4s infinite;
+  }
+  @keyframes z--mv_scrollDownIcon {
+    0% {
+      transform: translateY(0);
+      opacity: 0;
+    }
+    50% {
+      opacity: 1;
+    }
+    100% {
+      transform: translateY(8px);
+      opacity: 0;
+    }
+  }
+
+  .z--about {
+    isolation: isolate;
+  }
+  .z--about .z--hgroup {
+    position: relative;
+    z-index: 1;
+  }
+  .z--about .z--about_visuals {
+    pointer-events: none;
+  }
+  .z--about .z--about_frame:nth-child(1) {
+    top: -2rem;
+    right: 90%;
+  }
+  .z--about .z--about_frame:nth-child(2) {
+    top: 6rem;
+    left: 90%;
+  }
+  .z--about .z--about_frame:nth-child(3) {
+    bottom: -6rem;
+    right: 80%;
+  }
+  @container (min-width: 800px) {
+    .z--about .z--about_frame:nth-child(1) {
+      top: -2rem;
+      right: calc(100% + 4rem);
+    }
+    .z--about .z--about_frame:nth-child(2) {
+      top: 6rem;
+      left: calc(100% + 4rem);
+    }
+    .z--about .z--about_frame:nth-child(3) {
+      bottom: -6rem;
+      right: calc(100% - 4rem);
+    }
+  }
+
+  .z--feature .z--feature_media {
+    width: 100%;
+    position: absolute;
+    top: -20%;
+    height: 140%;
+  }
+  .z--feature .z--feature_itemMedia {
+    width: 100%;
+    position: absolute;
+    top: -20%;
+    height: 140%;
+  }
+  .z--feature .z--feature_item:nth-child(even) .z--feature_itemContent {
+    justify-self: end;
+  }
+
+  @media (any-hover: hover) {
+    .-hov\:in\:zoom {
+      scale: var(--_isHov, 1.1);
+    }
+    .-hov\:in\:underline {
+      text-decoration: var(--_isHov, underline);
+    }
+  }
+
+  .z--news .z--news_media {
+    width: 100%;
+    position: absolute;
+    top: -20%;
+    height: 140%;
+  }
+
+  .z--hgroup.z--hgroup--light {
+    color: var(--white);
+  }
+  .z--hgroup .z--hgroup_subHeading {
+    position: relative;
+  }
+  .z--hgroup .z--hgroup_subHeading:before,
+  .z--hgroup .z--hgroup_subHeading:after {
+    display: block;
+    content: '';
+    width: 12px;
+    height: 1px;
+    background-color: var(--text);
+    transform-origin: center right;
+  }
+  .z--hgroup .z--hgroup_subHeading:after {
+    transform-origin: center left;
+  }
+  .z--hgroup.z--hgroup--light .z--hgroup_subHeading:before,
+  .z--hgroup.z--hgroup--light .z--hgroup_subHeading:after {
+    background-color: var(--white);
+  }
+}

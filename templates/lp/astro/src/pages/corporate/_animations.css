@@ -1,0 +1,369 @@
+/**
+ * corporate: スクロール連動アニメーション
+ * このファイルの import を外せば、ページ全体のスクロール／ビュー連動アニメーションをまとめてオフにできます。
+ */
+@layer lism-custom {
+  :root {
+    --animRange--fadeIn: entry 0% contain 20%;
+  }
+
+  /* Fadein */
+  .u--fadeIn {
+    animation: u--fadeIn linear both;
+    animation-timeline: view();
+    /* view-timeline: --vt-fadeIn y;
+    animation-timeline: --vt-fadeIn; */
+    animation-range: var(--animRange--fadeIn);
+  }
+  @keyframes u--fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(32px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Background Parallax */
+  .u--bgParallax {
+    view-timeline: --u--bgParallax y;
+  }
+  .u--bgParallax .a--media {
+    position: absolute;
+    top: -20%;
+    height: 140%;
+    animation: u--bgParallax_media linear both;
+    animation-timeline: --u--bgParallax;
+    animation-range: entry 0% cover 100%;
+  }
+  @keyframes u--bgParallax_media {
+    from {
+      transform: translateY(-10%);
+    }
+    to {
+      transform: translateY(10%);
+    }
+  }
+
+  /* Header: スクロール量で帯化（子要素の color は継承 → 1箇所で切替） */
+  .z--header {
+    /* この量スクロールしてからヘッダー変化アニメーションを開始（終了は +160px スクロール地点） */
+    --header-animRange: 100px calc(100px + 160px);
+    animation: z--header linear both;
+    animation-timeline: scroll(root);
+    animation-range: var(--header-animRange);
+  }
+  @keyframes z--header {
+    to {
+      background-color: var(--white);
+      color: var(--black);
+      height: var(--header-h--thin);
+      box-shadow: var(--bxsh--20);
+    }
+  }
+
+  /* MV: スクロールで先頭セクション全体をぼかし＋拡大 */
+  .z--mv {
+    --mv-animRange: 0px 100svh;
+  }
+  .z--mv .z--mv_frame {
+    animation: z--mv_frame linear both;
+    animation-timeline: scroll(root);
+    animation-range: var(--mv-animRange);
+  }
+  @keyframes z--mv_frame {
+    from {
+      filter: blur(0px);
+      opacity: 1;
+    }
+    to {
+      filter: blur(16px);
+      opacity: 0;
+      transform: scale(1.05);
+    }
+  }
+  .z--mv .z--mv_media {
+    animation: z--mv_media linear both;
+    animation-timeline: scroll(root);
+    animation-range: var(--mv-animRange);
+  }
+  @keyframes z--mv_media {
+    from {
+      transform: translateY(0);
+    }
+    to {
+      transform: translateY(15%);
+    }
+  }
+  .z--mv_content {
+    animation: z--mv_content linear both;
+    animation-timeline: scroll(root);
+    animation-range: var(--mv-animRange);
+  }
+  @keyframes z--mv_content {
+    from {
+      transform: scale(1);
+    }
+    to {
+      transform: scale(1.2);
+    }
+  }
+  .z--mv_scrollDown {
+    animation: z--mv_scrollDown linear both;
+    animation-timeline: scroll(root);
+    animation-range: var(--mv-animRange);
+  }
+  @keyframes z--mv_scrollDown {
+    from {
+      opacity: 1;
+    }
+    to {
+      opacity: 0;
+      transform: translateX(-50%) translateY(32px);
+      filter: blur(8px);
+    }
+  }
+
+  /* About */
+  .z--about {
+    view-timeline: --z--about-timeline y;
+    --z--about_range-start: 25%;
+    --z--about_range-end: 20%;
+  }
+  .z--about .z--about_frame {
+    animation: z--about_frame linear both;
+    animation-timeline: --z--about-timeline;
+  }
+  .z--about .z--about_frame:nth-child(1) {
+    animation-range: entry 0% cover 30%;
+  }
+  .z--about .z--about_frame:nth-child(2) {
+    animation-range: entry 20% cover 40%;
+  }
+  .z--about .z--about_frame:nth-child(3) {
+    animation-range: entry 40% cover 50%;
+  }
+  @keyframes z--about_frame {
+    from {
+      opacity: 0;
+      filter: blur(16px);
+      transform: scale(1.16);
+    }
+    to {
+      opacity: 1;
+      filter: blur(0);
+      transform: scale(1);
+    }
+  }
+  .z--about .z--about_media {
+    animation: z--about_media linear both;
+    animation-timeline: --z--about-timeline;
+    animation-range: entry cover;
+  }
+  @keyframes z--about_media {
+    from {
+      transform: scale(1.2);
+    }
+    to {
+      transform: scale(1);
+    }
+  }
+
+  /* Feature */
+  .z--feature {
+    view-timeline: --z--feature y;
+  }
+  .z--feature .z--feature_media {
+    animation: z--feature_media linear both;
+    animation-timeline: --z--feature;
+    animation-range: entry 0% cover 100%;
+  }
+  @keyframes z--feature_media {
+    from {
+      transform: translateY(-10%);
+    }
+    to {
+      transform: translateY(10%);
+    }
+  }
+  .z--feature .z--feature_item {
+    view-timeline: --z--feature_item y;
+    animation: u--fadeIn linear both;
+    animation-timeline: --z--feature_item;
+    animation-range: var(--animRange--fadeIn);
+  }
+  .z--feature .z--feature_itemMedia {
+    animation: z--feature_itemMedia linear both;
+    animation-timeline: --z--feature_item;
+    animation-range: entry 0% cover 100%;
+  }
+  @keyframes z--feature_itemMedia {
+    from {
+      transform: translateY(-10%);
+    }
+    to {
+      transform: translateY(10%);
+    }
+  }
+
+  /* Works */
+  .z--works .z--works_item {
+    view-timeline: --z--works_item y;
+    animation: z--works_item linear both;
+    animation-timeline: --z--works_item;
+    animation-range: var(--animRange--fadeIn);
+  }
+  @keyframes z--works_item {
+    from {
+      transform: translateY(32px) scale(1.04);
+      filter: blur(8px);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0) scale(1);
+      filter: blur(0);
+      opacity: 1;
+    }
+  }
+  .z--works .z--works_frame {
+    view-timeline: --z--works_frame y;
+  }
+  .z--works .z--works_media {
+    animation: z--works_media linear both;
+    animation-timeline: --z--works_frame;
+    animation-range: var(--animRange--fadeIn);
+  }
+  @keyframes z--works_media {
+    from {
+      transform: scale(1.2);
+    }
+    to {
+      transform: scale(1);
+    }
+  }
+
+  /* News */
+  .z--news {
+    view-timeline: --z--news y;
+  }
+  .z--news .z--news_media {
+    animation: z--news_media linear both;
+    animation-timeline: --z--news;
+    animation-range: entry 0% cover 100%;
+  }
+  @keyframes z--news_media {
+    from {
+      transform: translateY(-10%);
+    }
+    to {
+      transform: translateY(10%);
+    }
+  }
+  .z--news .z--news_item {
+    view-timeline: --z--news_item y;
+    animation: z--news_item linear both;
+    animation-timeline: --z--news_item;
+    animation-range: var(--animRange--fadeIn);
+  }
+  @keyframes z--news_item {
+    from {
+      opacity: 0;
+      transform: translateX(-16px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  /* FAQ */
+  .z--faq .c--accordion {
+    view-timeline: --z--faq_accordion y;
+    animation: u--fadeIn linear both;
+    animation-timeline: --z--faq_accordion;
+    animation-range: var(--animRange--fadeIn);
+  }
+
+  /* Testimonials */
+  .z--testimonials .z--testimonials_item {
+    view-timeline: --z--testimonials_item y;
+    animation: u--fadeIn linear both;
+    animation-timeline: --z--testimonials_item;
+    animation-range: var(--animRange--fadeIn);
+  }
+
+  /* Information: ページ全体の .u--fadeIn は同名 view-timeline が衝突するため、本セクションは view() で独立させる */
+  .z--information .z--information_dl {
+    animation: u--fadeIn linear both;
+    animation-timeline: view(block);
+    animation-range: var(--animRange--fadeIn);
+  }
+  .z--information .z--information_map {
+    animation: u--fadeIn linear both;
+    animation-timeline: view(block);
+    animation-range: var(--animRange--fadeIn);
+  }
+
+  /* Contact */
+  .z--contact {
+    view-timeline: --z--contact y;
+  }
+  .z--contact_media {
+    animation: z--contact_media linear both;
+    animation-timeline: --z--contact;
+    animation-range: entry 0% cover 100%;
+  }
+  @keyframes z--contact_media {
+    from {
+      transform: translateY(-10%);
+    }
+    to {
+      transform: translateY(10%);
+    }
+  }
+
+  /* Hgroup */
+  .z--hgroup {
+    view-timeline: --z--hgroup y;
+  }
+  .z--hgroup .z--hgroup_heading {
+    animation: z--hgroup_heading linear both;
+    animation-timeline: --z--hgroup;
+    animation-range: var(--animRange--fadeIn);
+  }
+  @keyframes z--hgroup_heading {
+    from {
+      opacity: 0;
+      letter-spacing: 0.1em;
+      text-indent: 0.1em;
+      transform: translateY(32px);
+    }
+    to {
+      opacity: 1;
+      letter-spacing: var(--lts--l);
+      text-indent: var(--lts--l);
+      transform: translateY(0);
+    }
+  }
+  .z--hgroup .z--hgroup_subHeading {
+    animation: z--hgroup_heading linear both;
+    animation-timeline: --z--hgroup;
+    animation-range: var(--animRange--fadeIn);
+  }
+  .z--hgroup .z--hgroup_subHeading:before,
+  .z--hgroup .z--hgroup_subHeading:after {
+    animation: z--hgroup_subHeading_beforeAfter linear both;
+    animation-timeline: --z--hgroup;
+    animation-range: contain 25% contain 45%;
+  }
+  @keyframes z--hgroup_subHeading_beforeAfter {
+    from {
+      transform: scaleX(0);
+    }
+    to {
+      transform: scaleX(1);
+    }
+  }
+}

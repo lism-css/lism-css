@@ -200,9 +200,11 @@ describe('runCreate', () => {
       fs.mkdirSync(dir, { recursive: true });
       writePackageJson(dir, { name: 'lp-astro', dependencies: { 'lism-css': 'workspace:*' } });
       writeFile(path.join(dir, 'src/pages/index.astro'), 'list');
-      writeFile(path.join(dir, 'src/pages/minimal/index.astro'), 'minimal');
+      writeFile(path.join(dir, 'src/pages/corporate/index.astro'), 'corporate');
       writeFile(path.join(dir, 'src/pages/natural/index.astro'), 'natural');
+      writeFile(path.join(dir, 'src/pages/natural/_style.css'), '.natural{}');
       writeFile(path.join(dir, 'src/pages/ryokan/index.astro'), 'ryokan');
+      writeFile(path.join(dir, 'src/pages/ryokan/_style.css'), '.ryokan{}');
       return Promise.resolve({} as Awaited<ReturnType<typeof downloadTemplate>>);
     });
 
@@ -213,14 +215,17 @@ describe('runCreate', () => {
     // 選択 variant の index.astro が src/pages/index.astro に持ち上がっている
     expect(fs.readFileSync(path.join(outDir, 'src/pages/index.astro'), 'utf-8')).toBe('natural');
 
+    // 選択 variant の付随ファイル（_style.css）も src/pages/ に持ち上がっている
+    expect(fs.readFileSync(path.join(outDir, 'src/pages/_style.css'), 'utf-8')).toBe('.natural{}');
+
     // 他 variant ディレクトリ + 自分の variant ディレクトリも残らない
-    expect(fs.existsSync(path.join(outDir, 'src/pages/minimal'))).toBe(false);
+    expect(fs.existsSync(path.join(outDir, 'src/pages/corporate'))).toBe(false);
     expect(fs.existsSync(path.join(outDir, 'src/pages/natural'))).toBe(false);
     expect(fs.existsSync(path.join(outDir, 'src/pages/ryokan'))).toBe(false);
 
-    // src/pages 直下に残るのは index.astro のみ
+    // src/pages 直下に残るのは index.astro と _style.css のみ
     const remaining = fs.readdirSync(path.join(outDir, 'src/pages')).sort();
-    expect(remaining).toEqual(['index.astro']);
+    expect(remaining).toEqual(['_style.css', 'index.astro']);
 
     // package.json の name が packageName に書き換わる
     const pkg = JSON.parse(fs.readFileSync(path.join(outDir, 'package.json'), 'utf-8')) as {
@@ -251,7 +256,7 @@ describe('runCreate', () => {
       fs.mkdirSync(dir, { recursive: true });
       writePackageJson(dir, { name: 'lp-astro', dependencies: {} });
       writeFile(path.join(dir, 'src/pages/index.astro'), 'list');
-      writeFile(path.join(dir, 'src/pages/minimal/index.astro'), 'minimal');
+      writeFile(path.join(dir, 'src/pages/corporate/index.astro'), 'corporate');
       return Promise.resolve({} as Awaited<ReturnType<typeof downloadTemplate>>);
     });
 

@@ -17,6 +17,7 @@ import {
   Layer,
   Link,
   Lism,
+  List,
   ListItem,
   Stack,
   Text,
@@ -25,8 +26,11 @@ import {
 import { Accordion } from '@lism-css/ui/astro/Accordion';
 import { Button } from '@lism-css/ui/astro/Button';
 import { Modal } from '@lism-css/ui/astro/Modal';
+import './_style.css';
+// スクロール連動アニメーション（オフにしたい場合はこの行をコメントアウト）
+import './_animations.css';
 
-export const title = 'Minimal LP';
+export const title = 'Corporate LP';
 
 /** メインナビ（デスクトップ・ドロワー先頭） */
 const headerNavItems = [
@@ -45,7 +49,8 @@ const headerOthersNavItems = [
 ] as const;
 
 const mvImage = {
-  src: 'https://cdn.lism-css.com/img/u-WFUSqJTxVc.jpg',
+  // src: 'https://cdn.lism-css.com/img/u-WFUSqJTxVc.jpg',
+  src: 'https://cdn.lism-css.com/img/building/u-hP6H5U7oIG.jpg',
   alt: 'Beautiful Landscape',
   width: 1920,
   height: 1080,
@@ -327,71 +332,47 @@ const footerSnsLinks = [
   <Wrapper contentSize="full">
     <!-- Header -->
 
-    <Container class="z--minimal-header" as="header" pos="fixed" t="0" l="0" w="100%" z="1" hasGutter hasTransition>
-      <Grid class="z--minimal-header_inner" gtc="10rem 1fr" ai="center" h="100%" px={['0', null, '40']}>
-        <Stack class="z--minimal-header_logo">
-          <Link class="z--minimal-header_logoLink" href="#" fz="xl" lts="l" c="white" td="none">
-            <Inline fw="200">The</Inline>Minimal
+    <Container class="z--header" as="header" pos="fixed" t="0" l="0" w="100%" z="1" c="white" hasGutter hasTransition>
+      <Grid class="z--header_inner" gtc="10rem 1fr" ai="center" h="100%" px={['0', null, '40']}>
+        <Stack class="z--header_logo">
+          <Link class="z--header_logoLink" href="#" set="plain" fz="xl" lts="l" td="none">
+            <Inline fw="200">Lism</Inline>Corp
           </Link>
         </Stack>
         <Flex jc="fe" g="30">
-          <Flex class="z--minimal-headerNav" as="ul" d={['none', null, 'inline-flex']} ai="c" g="30" lts="l">
+          <List class="z--headerNav" layout="flex" d={['none', null, 'flex']} ai="c" g="30" lts="l">
             {
               headerNavItems.map(({ href, en }) => (
                 <ListItem>
-                  <Link class="z--minimal-headerNav_link" href={href} d="block" c="white" td="none" py="10" hasTransition hov="-o">
+                  <Link class="z--headerNav_link" href={href} set="plain" d="block" o="mp" py="10" hasTransition hov="-o">
                     {en}
                   </Link>
                 </ListItem>
               ))
             }
-            <ListItem>
-              <Button
-                class="z--minimal-headerNav_subMenuButton"
-                href="#others"
-                set="plain"
-                hasTransition
-                d="inline-flex"
-                g="10"
-                ai="c"
-                c="white"
-                td="none"
-                px="0"
-                py="10"
-                bgc="transparent"
-                bd="none"
-                hov="-o"
-              >
+            <ListItem set="var:hov" pos="relative" data-has-submenu>
+              <Link class="z--headerNav_link" href="#others" set="plain" hasTransition d="inline-flex" g="10" ai="c" o="mp" px="0" py="10" hov="-o">
                 Others
-                <Icon icon="caret-down" fz="s" o="pp" />
-              </Button>
+                <Icon icon="caret-down" fz="s" o="p" />
+              </Link>
+              <Lism id="others-child" class="z--header_subMenu" pos="absolute" pbs="5">
+                <List bgc="base" c="text" min-w="14rem" p="20" py="15" bxsh="30" bdrs="20">
+                  {
+                    headerOthersNavItems.map(({ href, en }, index) => (
+                      <ListItem className="z--header_subMenu_item" bd-bs={index === 0 ? '' : true}>
+                        <BoxLink href={href} py="15" px="10" hasTransition hov="-o">
+                          <Inline>{en}</Inline>
+                        </BoxLink>
+                      </ListItem>
+                    ))
+                  }
+                </List>
+              </Lism>
             </ListItem>
-            <Box
-              id="others-child"
-              class="z--minimal-headerNav_subMenu"
-              set="plain"
-              bgc="base-2"
-              min-w="14rem"
-              mx="20"
-              my={[null, '5']}
-              p="20"
-              bxsh="30"
-              bdrs="20"
-            >
-              <Stack class="z--minimal-header_subMenu u--divide" p="0" ov="clip">
-                {
-                  headerOthersNavItems.map(({ href, en }) => (
-                    <BoxLink href={href} layout="grid" gtc="1fr auto" ai="c" td="none" py="15" px="10" hasTransition hov="-o">
-                      <Inline>{en}</Inline>
-                    </BoxLink>
-                  ))
-                }
-              </Stack>
-            </Box>
-          </Flex>
+          </List>
           <Modal.OpenBtn modalId="menu" d={['block', null, 'none']}>
             <Center p="10" bd bdc="divider" bdrs="10">
-              <Icon class="z--minimal-header_subMenu_buttonIcon" icon="menu" c="white" />
+              <Icon class="z--header_subMenu_buttonIcon" icon="menu" />
             </Center>
           </Modal.OpenBtn>
         </Flex>
@@ -399,7 +380,7 @@ const footerSnsLinks = [
           <Modal.Inner layout="stack" pos="relative" w="100%" p="30" bdrs="20" bxsh="50">
             <Modal.CloseBtn modalId="menu" autofocus pos="absolute" t="0" r="0" z="1" fz="xl" p="10" m="15" />
             <Modal.Body layout="stack" g="30" py="40">
-              <Stack class="z--minimal-header_menuNav u--divide" p="0" ov="clip">
+              <Stack class="z--header_menuNav u--divide" p="0" ov="clip">
                 {
                   headerNavItems.map(({ href, en }) => (
                     <BoxLink href={href} layout="grid" gtc="1fr auto" ai="c" fz="l" td="none" py="15" px="5">
@@ -416,7 +397,7 @@ const footerSnsLinks = [
                       </Accordion.Button>
                     </Accordion.Heading>
                     <Accordion.Panel p="0" ov="clip">
-                      <Stack class="z--minimal-header_menuNav_sub u--divide" ml="20" p="0" ov="clip">
+                      <Stack class="z--header_menuNav_sub u--divide" ml="20" p="0" ov="clip">
                         {
                           headerOthersNavItems.map(({ href, en }) => (
                             <BoxLink href={href} layout="grid" gtc="1fr auto" ai="c" fz="l" td="none" py="15" px="5">
@@ -436,12 +417,12 @@ const footerSnsLinks = [
       </Grid>
     </Container>
     <!-- Main Content -->
-    <Container as="main" class="z--minimal-main">
-      <Container class="z--minimal-mv" pos="relative">
-        <Frame class="z--minimal-mv_frame" pos="relative" h="100%">
+    <Container as="main" class="z--main">
+      <Container class="z--mv" pos="relative">
+        <Frame class="z--mv_frame" pos="relative" h="100%">
           <Lism
             as="img"
-            class="z--minimal-mv_media"
+            class="z--mv_media"
             src={mvImage.src}
             alt={mvImage.alt}
             w="100%"
@@ -454,32 +435,30 @@ const footerSnsLinks = [
               backgroundColor: 'hsl(0 0% 0% / 0.2)',
             }}
           />
-          <Stack class="z--minimal-mv_content" ai="c" jc="c" g="10" pos="absolute" t="0" l="0" w="100%" h="100%" c="white" hasGutter>
+          <Stack class="z--mv_content" ai="c" jc="c" g="10" pos="absolute" t="0" l="0" w="100%" h="100%" c="white" hasGutter>
             <Text as="p" fz="4xl" fw="400" ta="center" lts="l" m="0">Order and Harmony</Text>
             <Text as="p" fz="l" fw="200" ta="center" lts="l" m="0">Lorem ipsum dolor sit amet.</Text>
           </Stack>
         </Frame>
-        <BoxLink href="#about" class="z--minimal-mv_scrollDown" layout="stack" ai="center" g="5" pos="absolute" c="white">
-          <Inline as="span" class="z--minimal-mv_scrollDownText" fz="xs" fs="italic" lts="l">SCROLL DOWN</Inline>
-          <Icon class="z--minimal-mv_scrollDownIcon" icon="caret-down" fz="m" />
+        <BoxLink href="#about" class="z--mv_scrollDown" layout="stack" ai="center" g="5" pos="absolute" c="white">
+          <Inline as="span" class="z--mv_scrollDownText" fz="xs" fs="italic" lts="l">SCROLL DOWN</Inline>
+          <Icon class="z--mv_scrollDownIcon" icon="caret-down" fz="m" />
         </BoxLink>
       </Container>
 
-      <Container id="about" class="z--minimal-about" isWrapper="s" pos="relative" py="70" hasGutter>
+      <Container id="about" class="z--about" isWrapper="s" pos="relative" py="70" hasGutter>
         <Stack ai="c" jc="c" g="40" pos="relative">
-          <Stack class:list={['z--minimal-hgroup']} as="hgroup" ai="c" g="5">
-            <Heading level="2" class="z--minimal-hgroup_heading" fz="3xl" fw="400" lts="l" m="0">About</Heading>
-            <Heading level="3" class="z--minimal-hgroup_subHeading" d="inline-flex" ai="c" g="20" fz="s" fw="normal" lts="l" m="0">
-              Lism CSSとは
-            </Heading>
+          <Stack class:list={['z--hgroup']} as="hgroup" ai="c" g="5">
+            <Heading level="2" class="z--hgroup_heading" fz="3xl" fw="400" lts="l" m="0">About</Heading>
+            <Heading level="3" class="z--hgroup_subHeading" d="inline-flex" ai="c" g="20" fz="s" fw="normal" lts="l" m="0"> Lism CSSとは </Heading>
           </Stack>
-          <Box class="z--minimal-about_visuals" pos="absolute" w="100%" h="100%" z="0">
+          <Box class="z--about_visuals" pos="absolute" w="100%" h="100%" z="0">
             {
               aboutPhotos.map((photo, i) => (
-                <Frame class="z--minimal-about_frame" ar="4/3" pos="absolute" w={i === 0 ? '20rem' : '16rem'} bgc="base-2" bdrs="20">
+                <Frame class="z--about_frame" ar="4/3" pos="absolute" w={i === 0 ? '20rem' : '16rem'} bgc="base-2" bdrs="20">
                   <Lism
                     as="img"
-                    class="z--minimal-about_media"
+                    class="z--about_media"
                     src={photo.src}
                     alt={photo.alt}
                     w="100%"
@@ -491,7 +470,7 @@ const footerSnsLinks = [
               ))
             }
           </Box>
-          <Flow class="z--minimal-about_body u--fadeIn" flow="s" pos="relative" z="1">
+          <Flow class="z--about_body u--fadeIn" flow="s" pos="relative" z="1">
             <Text as="p" max-sz="full" mx="auto">
               Lism
               CSSは、Webサイトの骨組みをテンポ良く美しく作るための、軽量なCSS設計フレームワークです。設計理論に沿った一つのCSSが本体で、特別なビルド工程は必須ではありません。
@@ -512,11 +491,11 @@ const footerSnsLinks = [
         </Stack>
       </Container>
 
-      <Box id="feature" class="z--minimal-feature" pos="relative">
+      <Box id="feature" class="z--feature" pos="relative">
         <Frame isLayer>
           <Lism
             as="img"
-            class="z--minimal-feature_media"
+            class="z--feature_media"
             src={featureHero.src}
             alt={featureHero.alt}
             exProps={{ width: featureHero.width, height: featureHero.height, loading: 'lazy', decoding: 'async' }}
@@ -525,9 +504,9 @@ const footerSnsLinks = [
         <Layer style={{ filter: 'grayscale(1)', backgroundColor: 'hsl(224 4% 99% / 0.85)' }} />
         <Container isWrapper="l" py="60" hasGutter>
           <Stack g="40">
-            <Stack class:list={['z--minimal-hgroup']} as="hgroup" ai="c" g="5">
-              <Heading level="2" class="z--minimal-hgroup_heading" fz="3xl" fw="400" lts="l" m="0">Feature</Heading>
-              <Heading level="3" class="z--minimal-hgroup_subHeading" d="inline-flex" ai="c" g="20" fz="s" fw="normal" lts="l" m="0">
+            <Stack class:list={['z--hgroup']} as="hgroup" ai="c" g="5">
+              <Heading level="2" class="z--hgroup_heading" fz="3xl" fw="400" lts="l" m="0">Feature</Heading>
+              <Heading level="3" class="z--hgroup_subHeading" d="inline-flex" ai="c" g="20" fz="s" fw="normal" lts="l" m="0">
                 Lism CSSの特徴
               </Heading>
             </Stack>
@@ -539,7 +518,7 @@ const footerSnsLinks = [
                   const gta: [string, null, string] = [`'img' 'text'`, null, isReversed ? `'text img'` : `'img text'`];
                   return (
                     <Grid
-                      class="z--minimal-feature_item"
+                      class="z--feature_item"
                       gtc={['auto', null, isReversed ? '3fr 2fr' : '2fr 3fr']}
                       gta={gta}
                       g={['20', null, '30']}
@@ -548,7 +527,7 @@ const footerSnsLinks = [
                       <Frame ar="16/9" pos="relative" bdrs="20" ga="img">
                         <Lism
                           as="img"
-                          class="z--minimal-feature_itemMedia"
+                          class="z--feature_itemMedia"
                           src={card.src}
                           alt={featureDefaultCardImageMeta.alt}
                           exProps={{
@@ -559,7 +538,7 @@ const footerSnsLinks = [
                           }}
                         />
                       </Frame>
-                      <Stack class="z--minimal-feature_itemContent" g="15" max-w={['none', null, '36rem']} py="20" ga="text">
+                      <Stack class="z--feature_itemContent" g="15" max-w={['none', null, '36rem']} py="20" ga="text">
                         <Heading level="3" fz="l" m="0">
                           {card.title}
                         </Heading>
@@ -576,13 +555,11 @@ const footerSnsLinks = [
         </Container>
       </Box>
 
-      <Container id="works" class="z--minimal-works" isWrapper="l" py="60" hasGutter>
+      <Container id="works" class="z--works" isWrapper="l" py="60" hasGutter>
         <Stack g="40">
-          <Stack class:list={['z--minimal-hgroup']} as="hgroup" ai="c" g="5">
-            <Heading level="2" class="z--minimal-hgroup_heading" fz="3xl" fw="400" lts="l" m="0">Works</Heading>
-            <Heading level="3" class="z--minimal-hgroup_subHeading" d="inline-flex" ai="c" g="20" fz="s" fw="normal" lts="l" m="0">
-              制作実績
-            </Heading>
+          <Stack class:list={['z--hgroup']} as="hgroup" ai="c" g="5">
+            <Heading level="2" class="z--hgroup_heading" fz="3xl" fw="400" lts="l" m="0">Works</Heading>
+            <Heading level="3" class="z--hgroup_subHeading" d="inline-flex" ai="c" g="20" fz="s" fw="normal" lts="l" m="0"> 制作実績 </Heading>
           </Stack>
           <Text as="p" class="u--fadeIn" max-sz="full" mx="auto" m="0">
             以下はフィクションの制作例です。レイアウトプリミティブとデザイントークンを活かしつつ、公式ドキュメント「概要」に書かれている語彙とエコシステムの整理に沿う話に寄せたサンプルです。
@@ -590,11 +567,11 @@ const footerSnsLinks = [
           <AutoColumns cols="20rem" g="40">
             {
               worksItems.map((item) => (
-                <BoxLink class="z--minimal-works_item" href="#" layout="stack" set="var:hov">
-                  <Frame class="z--minimal-works_frame" ar="16/9" pos="relative" bdrs="20">
+                <BoxLink class="z--works_item" href="#" layout="stack" set="var:hov">
+                  <Frame class="z--works_frame" ar="16/9" pos="relative" bdrs="20">
                     <Lism
                       as="img"
-                      class="z--minimal-works_media"
+                      class="z--works_media"
                       src={item.src}
                       alt={worksDefaultImage.alt}
                       w="100%"
@@ -638,11 +615,11 @@ const footerSnsLinks = [
         </Stack>
       </Container>
 
-      <Box id="news" class="z--minimal-news" pos="relative">
+      <Box id="news" class="z--news" pos="relative">
         <Frame isLayer>
           <Lism
             as="img"
-            class="z--minimal-news_media"
+            class="z--news_media"
             src={newsBg.src}
             alt={newsBg.alt}
             exProps={{ width: newsBg.width, height: newsBg.height, loading: 'lazy', decoding: 'async' }}
@@ -651,16 +628,14 @@ const footerSnsLinks = [
         <Layer style={{ filter: 'grayscale(1)', backgroundColor: 'hsl(224 4% 8% / 0.85)' }} />
         <Container isWrapper="m" py="60" hasGutter>
           <Stack g="40">
-            <Stack class:list={['z--minimal-hgroup', 'z--minimal-hgroup--light']} as="hgroup" ai="c" g="5">
-              <Heading level="2" class="z--minimal-hgroup_heading" fz="3xl" fw="400" lts="l" m="0">News</Heading>
-              <Heading level="3" class="z--minimal-hgroup_subHeading" d="inline-flex" ai="c" g="20" fz="s" fw="normal" lts="l" m="0">
-                お知らせ
-              </Heading>
+            <Stack class:list={['z--hgroup', 'z--hgroup--light']} as="hgroup" ai="c" g="5">
+              <Heading level="2" class="z--hgroup_heading" fz="3xl" fw="400" lts="l" m="0">News</Heading>
+              <Heading level="3" class="z--hgroup_subHeading" d="inline-flex" ai="c" g="20" fz="s" fw="normal" lts="l" m="0"> お知らせ </Heading>
             </Stack>
             <Stack g="20" c="white">
               {
                 newsRows.map((row) => (
-                  <BoxLink class="z--minimal-news_item" href="#" layout="grid" gtc={['auto', 'auto 1fr']} g="20 40" py="15" set="var:hov">
+                  <BoxLink class="z--news_item" href="#" layout="grid" gtc={['auto', 'auto 1fr']} g="20 40" py="15" set="var:hov">
                     <Inline as="span">{row.date}</Inline>
                     <Stack g="10">
                       <Text as="p" hov="in:underline" td="none" m="0">
@@ -679,13 +654,11 @@ const footerSnsLinks = [
         </Container>
       </Box>
 
-      <Container id="faq" class="z--minimal-faq" isWrapper="m" py="60" hasGutter>
+      <Container id="faq" class="z--faq" isWrapper="m" py="60" hasGutter>
         <Stack g="40">
-          <Stack class:list={['z--minimal-hgroup']} as="hgroup" ai="c" g="5">
-            <Heading level="2" class="z--minimal-hgroup_heading" fz="3xl" fw="400" lts="l" m="0">FAQ</Heading>
-            <Heading level="3" class="z--minimal-hgroup_subHeading" d="inline-flex" ai="c" g="20" fz="s" fw="normal" lts="l" m="0">
-              よくある質問
-            </Heading>
+          <Stack class:list={['z--hgroup']} as="hgroup" ai="c" g="5">
+            <Heading level="2" class="z--hgroup_heading" fz="3xl" fw="400" lts="l" m="0">FAQ</Heading>
+            <Heading level="3" class="z--hgroup_subHeading" d="inline-flex" ai="c" g="20" fz="s" fw="normal" lts="l" m="0"> よくある質問 </Heading>
           </Stack>
           <Accordion.Root class="u--divide" p="0" ov="clip">
             {
@@ -704,18 +677,16 @@ const footerSnsLinks = [
         </Stack>
       </Container>
 
-      <Container id="testimonials" class="z--minimal-testimonials" isWrapper="l" bgc="base-2" py="60" hasGutter>
+      <Container id="testimonials" class="z--testimonials" isWrapper="l" bgc="base-2" py="60" hasGutter>
         <Stack g="40">
-          <Stack class:list={['z--minimal-hgroup']} as="hgroup" ai="c" g="5">
-            <Heading level="2" class="z--minimal-hgroup_heading" fz="3xl" fw="400" lts="l" m="0">Testimonials</Heading>
-            <Heading level="3" class="z--minimal-hgroup_subHeading" d="inline-flex" ai="c" g="20" fz="s" fw="normal" lts="l" m="0">
-              お客様の声
-            </Heading>
+          <Stack class:list={['z--hgroup']} as="hgroup" ai="c" g="5">
+            <Heading level="2" class="z--hgroup_heading" fz="3xl" fw="400" lts="l" m="0">Testimonials</Heading>
+            <Heading level="3" class="z--hgroup_subHeading" d="inline-flex" ai="c" g="20" fz="s" fw="normal" lts="l" m="0"> お客様の声 </Heading>
           </Stack>
           <AutoColumns cols="20rem" g="40">
             {
               testimonialsAvatars.map((item) => (
-                <Grid class="z--minimal-testimonials_item" gtr="subgrid" gr="span 3" g="30">
+                <Grid class="z--testimonials_item" gtr="subgrid" gr="span 3" g="30">
                   <Grid gtc="auto 1fr" ai="center" g="20">
                     <Frame as="figure" ar="1/1" w="3.5rem" bdrs="99">
                       <Lism
@@ -753,15 +724,13 @@ const footerSnsLinks = [
         </Stack>
       </Container>
 
-      <Container id="information" class="z--minimal-information" isWrapper="m" py="60" hasGutter>
+      <Container id="information" class="z--information" isWrapper="m" py="60" hasGutter>
         <Stack jc="c" g="40" w="100%">
-          <Stack class:list={['z--minimal-hgroup']} as="hgroup" ai="c" g="5">
-            <Heading level="2" class="z--minimal-hgroup_heading" fz="3xl" fw="400" lts="l" m="0">Information</Heading>
-            <Heading level="3" class="z--minimal-hgroup_subHeading" d="inline-flex" ai="c" g="20" fz="s" fw="normal" lts="l" m="0">
-              お知らせ
-            </Heading>
+          <Stack class:list={['z--hgroup']} as="hgroup" ai="c" g="5">
+            <Heading level="2" class="z--hgroup_heading" fz="3xl" fw="400" lts="l" m="0">Information</Heading>
+            <Heading level="3" class="z--hgroup_subHeading" d="inline-flex" ai="c" g="20" fz="s" fw="normal" lts="l" m="0"> お知らせ </Heading>
           </Stack>
-          <Grid as="dl" class="z--minimal-information_dl u--divide" gtc="auto 1fr" cg="40" p="0" ov="clip">
+          <Grid as="dl" class="z--information_dl u--divide" gtc="auto 1fr" cg="40" p="0" ov="clip">
             {
               informationRows.map((row) => (
                 <Grid gtc="subgrid" gc="1/-1" p="30">
@@ -771,7 +740,7 @@ const footerSnsLinks = [
               ))
             }
           </Grid>
-          <Frame class="z--minimal-information_map" ar={['1/1', '5/2']}>
+          <Frame class="z--information_map" ar={['1/1', '5/2']}>
             <iframe
               src={informationMapEmbed.src}
               width={informationMapEmbed.width}
@@ -784,11 +753,11 @@ const footerSnsLinks = [
         </Stack>
       </Container>
 
-      <Box id="contact" class="z--minimal-contact" pos="relative">
+      <Box id="contact" class="z--contact" pos="relative">
         <Frame isLayer>
           <Lism
             as="img"
-            class="z--minimal-contact_media"
+            class="z--contact_media"
             pos="absolute"
             t="-20%"
             h="140%"
@@ -801,11 +770,9 @@ const footerSnsLinks = [
         <Layer style={{ backgroundColor: 'hsl(0 0% 0% / 0.5)' }} />
         <Container isWrapper="s" bgc="base-2" py="60" h="65vh" hasGutter>
           <Stack pos="relative" jc="c" g="40" c="white" h="100%">
-            <Stack class:list={['z--minimal-hgroup', 'z--minimal-hgroup--light']} as="hgroup" ai="c" g="5">
-              <Heading level="2" class="z--minimal-hgroup_heading" fz="3xl" fw="400" lts="l" m="0">Contact</Heading>
-              <Heading level="3" class="z--minimal-hgroup_subHeading" d="inline-flex" ai="c" g="20" fz="s" fw="normal" lts="l" m="0">
-                お問い合わせ
-              </Heading>
+            <Stack class:list={['z--hgroup', 'z--hgroup--light']} as="hgroup" ai="c" g="5">
+              <Heading level="2" class="z--hgroup_heading" fz="3xl" fw="400" lts="l" m="0">Contact</Heading>
+              <Heading level="3" class="z--hgroup_subHeading" d="inline-flex" ai="c" g="20" fz="s" fw="normal" lts="l" m="0"> お問い合わせ </Heading>
             </Stack>
             <Text as="p" class="u--fadeIn" max-sz="full" mx="auto" m="0">
               本セクションはデモ用の導線です。Lism
@@ -841,9 +808,9 @@ const footerSnsLinks = [
 
     <Container as="footer" isWrapper="m" py="40" hasGutter>
       <Stack jc="c" ai="c" g="30">
-        <Stack class="z--minimal-header_logo">
+        <Stack class="z--header_logo">
           <Text as="p" fz="xl" fw="400" lts="l" m="0">
-            <Inline fw="200">The</Inline>Minimal
+            <Inline fw="200">Lism</Inline>Corp
           </Text>
         </Stack>
         <Cluster g="20">
@@ -860,527 +827,3 @@ const footerSnsLinks = [
     </Container>
   </Wrapper>
 </Layout>
-
-<style>
-  @layer lism-custom {
-    /* Root */
-    :root {
-      --z--minimal-header-height: 112px;
-      --z--minimal-header-height--thin: 64px;
-      --u--fadeIn--animation-range: entry 0% contain 20%;
-    }
-    /* Fadein */
-    .u--fadeIn {
-      view-timeline: --u--fadeIn y;
-      animation: u--fadeIn linear both;
-      animation-timeline: --u--fadeIn;
-      animation-range: var(--u--fadeIn--animation-range);
-    }
-    @keyframes u--fadeIn {
-      from {
-        opacity: 0;
-        transform: translateY(32px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-    /* Background Parallax */
-    .u--bgParallax {
-      view-timeline: --u--bgParallax y;
-    }
-    .u--bgParallax .a--media {
-      position: absolute;
-      top: -20%;
-      height: 140%;
-      animation: u--bgParallax_media linear both;
-      animation-timeline: --u--bgParallax;
-      animation-range: entry 0% cover 100%;
-    }
-    @keyframes u--bgParallax_media {
-      from {
-        transform: translateY(-10%);
-      }
-      to {
-        transform: translateY(10%);
-      }
-    }
-
-    .z--minimal-header {
-      height: var(--z--minimal-header-height);
-      /* この量スクロールしてからヘッダー変化アニメーションを開始（終了は +160px スクロール地点） */
-      --z--minimal-header-scroll-animation-start: 100px;
-      --z--minimal-header-animation-range: var(--z--minimal-header-scroll-animation-start)
-        calc(var(--z--minimal-header-scroll-animation-start) + 160px);
-      animation: z--minimal-header linear both;
-      animation-timeline: scroll(root);
-      animation-range: var(--z--minimal-header-animation-range);
-    }
-    @keyframes z--minimal-header {
-      to {
-        background-color: var(--white);
-        height: var(--z--minimal-header-height--thin);
-        box-shadow: var(--bxsh--20);
-      }
-    }
-    .z--minimal-header_logoLink {
-      animation: z--minimal-header_logoLink linear both;
-      animation-timeline: scroll(root);
-      animation-range: var(--z--minimal-header-animation-range);
-    }
-    @keyframes z--minimal-header_logoLink {
-      to {
-        color: var(--black);
-      }
-    }
-    /* Header nav */
-    .z--minimal-headerNav_subMenuButton {
-      anchor-name: --parent-anchor;
-    }
-    .z--minimal-headerNav_link,
-    .z--minimal-headerNav_subMenuButton {
-      animation: z--minimal-headerNav_link linear both;
-      animation-timeline: scroll(root);
-      animation-range: var(--z--minimal-header-animation-range);
-    }
-    @keyframes z--minimal-headerNav_link {
-      to {
-        color: var(--text-2);
-      }
-    }
-    .z--minimal-headerNav_subMenu {
-      position-anchor: --parent-anchor;
-      top: anchor(bottom);
-      justify-self: anchor-center;
-      position: absolute;
-
-      /* 画面端（右端）で切れる場合の自動回避設定 */
-      position-try-fallbacks: flip-inline;
-      position-try-order: most-width;
-
-      visibility: hidden;
-      opacity: 0;
-      transform: translateY(8px);
-      transition:
-        visibility 0.3s ease,
-        transform 0.3s ease,
-        opacity 0.3s ease;
-    }
-    .z--minimal-headerNav:has(.z--minimal-headerNav_subMenuButton:hover, .z--minimal-headerNav_subMenu:hover) .z--minimal-headerNav_subMenu {
-      visibility: visible;
-      opacity: 1;
-      transform: translateY(0);
-    }
-    /* Sub menu */
-    .z--minimal-header_subMenu_buttonIcon {
-      animation: z--minimal-header_subMenu_buttonIcon linear both;
-      animation-timeline: scroll(root);
-      animation-range: var(--z--minimal-header-animation-range);
-    }
-    @keyframes z--minimal-header_subMenu_buttonIcon {
-      to {
-        color: var(--text-2);
-      }
-    }
-    /* モバイルメニュー: +/- を caret-right（fz--s）に近い視覚サイズへ（@lism-css/ui 内 DOM は Astro スコープ外のため :global） */
-    .z--minimal-header_menuNav :global(.c--accordion_icon) {
-      font-size: var(--fz--s);
-      width: 1em;
-      height: 1em;
-      transform: scale(0.75);
-      transform-origin: center;
-    }
-
-    .z--minimal-mv {
-      --z--minimal-mv_animation-range: 0px 100svh;
-      height: 100svh;
-    }
-    .z--minimal-mv .z--minimal-mv_frame {
-      animation: z--minimal-mv_frame linear both;
-      animation-timeline: scroll(root);
-      animation-range: var(--z--minimal-mv_animation-range);
-    }
-    @keyframes z--minimal-mv_frame {
-      from {
-        filter: blur(0px);
-        opacity: 1;
-      }
-      to {
-        filter: blur(16px);
-        opacity: 0;
-        transform: scale(1.05);
-      }
-    }
-    .z--minimal-mv .z--minimal-mv_media {
-      animation: z--minimal-mv_media linear both;
-      animation-timeline: scroll(root);
-      animation-range: var(--z--minimal-mv_animation-range);
-    }
-    @keyframes z--minimal-mv_media {
-      from {
-        transform: translateY(0);
-      }
-      to {
-        transform: translateY(15%);
-      }
-    }
-    .z--minimal-mv_content {
-      top: calc(var(--z--minimal-header-height) / 2 * -1);
-      height: calc(100% + var(--z--minimal-header-height) / 2);
-      animation: z--minimal-mv_content linear both;
-      animation-timeline: scroll(root);
-      animation-range: var(--z--minimal-mv_animation-range);
-    }
-    @keyframes z--minimal-mv_content {
-      from {
-        transform: scale(1);
-      }
-      to {
-        transform: scale(1.2);
-      }
-    }
-    .z--minimal-mv_scrollDown {
-      bottom: 2rem;
-      left: 50%;
-      transform: translateX(-50%);
-      animation: z--minimal-mv_scrollDown linear both;
-      animation-timeline: scroll(root);
-      animation-range: var(--z--minimal-mv_animation-range);
-    }
-    @keyframes z--minimal-mv_scrollDown {
-      from {
-        opacity: 1;
-      }
-      to {
-        opacity: 0;
-        transform: translateX(-50%) translateY(32px);
-        filter: blur(8px);
-      }
-    }
-    .z--minimal-mv_scrollDownIcon {
-      animation: z--minimal-mv_scrollDownIcon 2.4s infinite;
-    }
-    @keyframes z--minimal-mv_scrollDownIcon {
-      0% {
-        transform: translateY(0);
-        opacity: 0;
-      }
-      50% {
-        opacity: 1;
-      }
-      100% {
-        transform: translateY(8px);
-        opacity: 0;
-      }
-    }
-
-    .z--minimal-about {
-      isolation: isolate;
-      view-timeline: --z--minimal-about-timeline y;
-      --z--minimal-about_range-start: 25%;
-      --z--minimal-about_range-end: 20%;
-    }
-    .z--minimal-about .z--minimal-hgroup {
-      position: relative;
-      z-index: 1;
-    }
-    .z--minimal-about .z--minimal-about_visuals {
-      pointer-events: none;
-    }
-    .z--minimal-about .z--minimal-about_frame {
-      animation: z--minimal-about_frame linear both;
-      animation-timeline: --z--minimal-about-timeline;
-    }
-    .z--minimal-about .z--minimal-about_frame:nth-child(1) {
-      top: -2rem;
-      right: 90%;
-      animation-range: entry 0% cover 30%;
-    }
-    .z--minimal-about .z--minimal-about_frame:nth-child(2) {
-      top: 6rem;
-      left: 90%;
-      animation-range: entry 20% cover 40%;
-    }
-    .z--minimal-about .z--minimal-about_frame:nth-child(3) {
-      bottom: -6rem;
-      right: 80%;
-      animation-range: entry 40% cover 50%;
-    }
-    @container (min-width: 800px) {
-      .z--minimal-about .z--minimal-about_frame:nth-child(1) {
-        top: -2rem;
-        right: calc(100% + 4rem);
-      }
-      .z--minimal-about .z--minimal-about_frame:nth-child(2) {
-        top: 6rem;
-        left: calc(100% + 4rem);
-      }
-      .z--minimal-about .z--minimal-about_frame:nth-child(3) {
-        bottom: -6rem;
-        right: calc(100% - 4rem);
-      }
-    }
-    @keyframes z--minimal-about_frame {
-      from {
-        opacity: 0;
-        filter: blur(16px);
-        transform: scale(1.16);
-      }
-      to {
-        opacity: 1;
-        filter: blur(0);
-        transform: scale(1);
-      }
-    }
-    .z--minimal-about .z--minimal-about_media {
-      animation: z--minimal-about_media linear both;
-      animation-timeline: --z--minimal-about-timeline;
-      animation-range: entry cover;
-    }
-    @keyframes z--minimal-about_media {
-      from {
-        transform: scale(1.2);
-      }
-      to {
-        transform: scale(1);
-      }
-    }
-
-    .z--minimal-feature {
-      view-timeline: --z--minimal-feature y;
-    }
-    .z--minimal-feature .z--minimal-feature_media {
-      width: 100%;
-      position: absolute;
-      top: -20%;
-      height: 140%;
-      animation: z--minimal-feature_media linear both;
-      animation-timeline: --z--minimal-feature;
-      animation-range: entry 0% cover 100%;
-    }
-    @keyframes z--minimal-feature_media {
-      from {
-        transform: translateY(-10%);
-      }
-      to {
-        transform: translateY(10%);
-      }
-    }
-    .z--minimal-feature .z--minimal-feature_item {
-      view-timeline: --z--minimal-feature_item y;
-      animation: u--fadeIn linear both;
-      animation-timeline: --z--minimal-feature_item;
-      animation-range: var(--u--fadeIn--animation-range);
-    }
-    .z--minimal-feature .z--minimal-feature_itemMedia {
-      width: 100%;
-      position: absolute;
-      top: -20%;
-      height: 140%;
-      animation: z--minimal-feature_itemMedia linear both;
-      animation-timeline: --z--minimal-feature_item;
-      animation-range: entry 0% cover 100%;
-    }
-    @keyframes z--minimal-feature_itemMedia {
-      from {
-        transform: translateY(-10%);
-      }
-      to {
-        transform: translateY(10%);
-      }
-    }
-    .z--minimal-feature .z--minimal-feature_item:nth-child(even) .z--minimal-feature_itemContent {
-      justify-self: end;
-    }
-
-    .z--minimal-works .z--minimal-works_item {
-      view-timeline: --z--minimal-works_item y;
-      animation: z--minimal-works_item linear both;
-      animation-timeline: --z--minimal-works_item;
-      animation-range: var(--u--fadeIn--animation-range);
-    }
-    @keyframes z--minimal-works_item {
-      from {
-        transform: translateY(32px) scale(1.04);
-        filter: blur(8px);
-        opacity: 0;
-      }
-      to {
-        transform: translateY(0) scale(1);
-        filter: blur(0);
-        opacity: 1;
-      }
-    }
-    .z--minimal-works .z--minimal-works_frame {
-      view-timeline: --z--minimal-works_frame y;
-    }
-    .z--minimal-works .z--minimal-works_media {
-      animation: z--minimal-works_media linear both;
-      animation-timeline: --z--minimal-works_frame;
-      animation-range: var(--u--fadeIn--animation-range);
-    }
-    @keyframes z--minimal-works_media {
-      from {
-        transform: scale(1.2);
-      }
-      to {
-        transform: scale(1);
-      }
-    }
-    @media (any-hover: hover) {
-      .-hov\:in\:zoom {
-        scale: var(--_isHov, 1.1);
-      }
-    }
-
-    .z--minimal-news {
-      view-timeline: --z--minimal-news y;
-    }
-    .z--minimal-news .z--minimal-news_media {
-      width: 100%;
-      position: absolute;
-      top: -20%;
-      height: 140%;
-      animation: z--minimal-news_media linear both;
-      animation-timeline: --z--minimal-news;
-      animation-range: entry 0% cover 100%;
-    }
-    @keyframes z--minimal-news_media {
-      from {
-        transform: translateY(-10%);
-      }
-      to {
-        transform: translateY(10%);
-      }
-    }
-    .z--minimal-news .z--minimal-news_item {
-      view-timeline: --z--minimal-news_item y;
-      animation: z--minimal-news_item linear both;
-      animation-timeline: --z--minimal-news_item;
-      animation-range: var(--u--fadeIn--animation-range);
-    }
-    @media (any-hover: hover) {
-      .-hov\:in\:underline {
-        text-decoration: var(--_isHov, underline);
-      }
-    }
-    @keyframes z--minimal-news_item {
-      from {
-        opacity: 0;
-        transform: translateX(-16px);
-      }
-      to {
-        opacity: 1;
-        transform: translateX(0);
-      }
-    }
-
-    .z--minimal-faq .c--accordion {
-      view-timeline: --z--minimal-faq_accordion y;
-      animation: u--fadeIn linear both;
-      animation-timeline: --z--minimal-faq_accordion;
-      animation-range: var(--u--fadeIn--animation-range);
-    }
-    @media (any-hover: hover) {
-      .-hov\:in\:underline {
-        text-decoration: var(--_isHov, underline);
-      }
-    }
-
-    .z--minimal-testimonials .z--minimal-testimonials_item {
-      view-timeline: --z--minimal-testimonials_item y;
-      animation: u--fadeIn linear both;
-      animation-timeline: --z--minimal-testimonials_item;
-      animation-range: var(--u--fadeIn--animation-range);
-    }
-
-    /* ページ全体の .u--fadeIn は同名 view-timeline が衝突するため、本セクションは view() で独立させる */
-    .z--minimal-information .z--minimal-information_dl {
-      animation: u--fadeIn linear both;
-      animation-timeline: view(block);
-      animation-range: var(--u--fadeIn--animation-range);
-    }
-    .z--minimal-information .z--minimal-information_map {
-      animation: u--fadeIn linear both;
-      animation-timeline: view(block);
-      animation-range: var(--u--fadeIn--animation-range);
-    }
-
-    .z--minimal-contact {
-      view-timeline: --z--minimal-contact y;
-    }
-    .z--minimal-contact_media {
-      animation: z--minimal-contact_media linear both;
-      animation-timeline: --z--minimal-contact;
-      animation-range: entry 0% cover 100%;
-    }
-    @keyframes z--minimal-contact_media {
-      from {
-        transform: translateY(-10%);
-      }
-      to {
-        transform: translateY(10%);
-      }
-    }
-
-    .z--minimal-hgroup {
-      view-timeline: --z--minimal-hgroup y;
-    }
-    .z--minimal-hgroup.z--minimal-hgroup--light {
-      color: var(--white);
-    }
-    .z--minimal-hgroup .z--minimal-hgroup_heading {
-      animation: z--minimal-hgroup_heading linear both;
-      animation-timeline: --z--minimal-hgroup;
-      animation-range: var(--u--fadeIn--animation-range);
-    }
-    @keyframes z--minimal-hgroup_heading {
-      from {
-        opacity: 0;
-        letter-spacing: 0.1em;
-        text-indent: 0.1em;
-        transform: translateY(32px);
-      }
-      to {
-        opacity: 1;
-        letter-spacing: var(--lts--l);
-        text-indent: var(--lts--l);
-        transform: translateY(0);
-      }
-    }
-    .z--minimal-hgroup .z--minimal-hgroup_subHeading {
-      position: relative;
-      animation: z--minimal-hgroup_heading linear both;
-      animation-timeline: --z--minimal-hgroup;
-      animation-range: var(--u--fadeIn--animation-range);
-    }
-    .z--minimal-hgroup .z--minimal-hgroup_subHeading:before,
-    .z--minimal-hgroup .z--minimal-hgroup_subHeading:after {
-      display: block;
-      content: '';
-      width: 12px;
-      height: 1px;
-      background-color: var(--text);
-      transform-origin: center right;
-      animation: z--minimal-hgroup_subHeading_beforeAfter linear both;
-      animation-timeline: --z--minimal-hgroup;
-      animation-range: contain 25% contain 45%;
-    }
-    .z--minimal-hgroup .z--minimal-hgroup_subHeading:after {
-      transform-origin: center left;
-    }
-    .z--minimal-hgroup.z--minimal-hgroup--light .z--minimal-hgroup_subHeading:before,
-    .z--minimal-hgroup.z--minimal-hgroup--light .z--minimal-hgroup_subHeading:after {
-      background-color: var(--white);
-    }
-    @keyframes z--minimal-hgroup_subHeading_beforeAfter {
-      from {
-        transform: scaleX(0);
-      }
-      to {
-        transform: scaleX(1);
-      }
-    }
-  }
-</style>
