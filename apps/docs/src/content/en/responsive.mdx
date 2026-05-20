@@ -119,7 +119,9 @@ Smartphone ──┬── Tablet (Portrait) ──┬── Tablet (Landscape) 
 Example: `-d:none -d_sm:block` → hidden by default, shown at `sm` and above.
 
 :::info
-Standard support covers `sm` and `md` only. Support for `lg` and beyond requires additional [SCSS configuration customization](/en/docs/customize/).
+Responsive Property Classes are, by default, generally supported up to `sm` and `md`.  
+However, some properties involved in the overall layout structure — `d` (display), `g` (gap), `cols`, and the grid properties (`gta` / `gtc` / `gtr` / `ga` / `gc` / `gr`) — are supported up to `lg`.  
+For other properties, using `lg` and beyond requires additional [SCSS configuration customization](/en/docs/customize/).
 :::
 
 

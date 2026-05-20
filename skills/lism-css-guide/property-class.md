@@ -82,7 +82,7 @@ Lism コンポーネントの Propsに渡す値の頭に `:` を付けると、 
 | `ff` | `font-family` | `-ff:base`, `-ff:accent`, `-ff:mono` | — |
 | `fs` | `font-style` | `-fs:italic` | — |
 | `lh` | `line-height`（`--hl` 経由） | `-lh:base`, `-lh:xs`, `-lh:s`, `-lh:l`, `-lh:1` | — |
-| `hl` | `--hl` 変数のみ | — | `-hl_sm`, `-hl_md` |
+| `hl` | `--hl` 変数のみ | — | — |
 | `lts` | `letter-spacing` | `-lts:base`, `-lts:s`, `-lts:l`, `-lts:xl` | — |
 | `ta` | `text-align` | `-ta:center`, `-ta:left`, `-ta:right` | — |
 | `td` | `text-decoration` | `-td:none` | — |
@@ -94,7 +94,7 @@ Lism コンポーネントの Propsに渡す値の頭に `:` を付けると、 
 
 | Prop | CSS プロパティ | プリセット値クラス | BP クラス |
 |------|--------------|-------------|-----|
-| `d` | `display` | `-d:none`, `-d:block`, `-d:flex`, `-d:inline-flex`, `-d:grid`, `-d:inline-grid`, `-d:inline`, `-d:inline-block` | `-d_sm`, `-d_md` |
+| `d` | `display` | `-d:none`, `-d:block`, `-d:flex`, `-d:inline-flex`, `-d:grid`, `-d:inline-grid`, `-d:inline`, `-d:inline-block` | `-d_sm`, `-d_md`, `-d_lg` |
 | `o` | `opacity` | `-o:0`, `-o:mp`, `-o:p`, `-o:pp`, `-o:ppp` | — |
 | `v` | `visibility` | `-v:hidden` | — |
 | `ov` | `overflow` | `-ov:hidden`, `-ov:auto`, `-ov:clip` | — |
@@ -129,7 +129,7 @@ Lism コンポーネントの Propsに渡す値の頭に `:` を付けると、 
 
 | Prop | CSS プロパティ | プリセット値クラス | BP クラス |
 |------|--------------|-------------|-----|
-| `bg` | `background` | — | `-bg_sm`, `-bg_md` |
+| `bg` | `background` | — | — |
 | `bgi` | `background-image` | — | — |
 | `bgr` | `background-repeat` | `-bgr:no-repeat` | — |
 | `bgp` | `background-position` | `-bgp:center` | — |
@@ -198,10 +198,10 @@ Lism コンポーネントの Propsに渡す値の頭に `:` を付けると、 
 | `pe` | `padding-inline-end` | — | `-pe_sm`, `-pe_md` |
 | `pbs` | `padding-block-start` | — | `-pbs_sm`, `-pbs_md` |
 | `pbe` | `padding-block-end` | — | `-pbe_sm`, `-pbe_md` |
-| `pl` | `padding-left` | — | `-pl_sm`, `-pl_md` |
-| `pr` | `padding-right` | — | `-pr_sm`, `-pr_md` |
-| `pt` | `padding-top` | — | `-pt_sm`, `-pt_md` |
-| `pb` | `padding-bottom` | — | `-pb_sm`, `-pb_md` |
+| `pl` | `padding-left` | — | — |
+| `pr` | `padding-right` | — | — |
+| `pt` | `padding-top` | — | — |
+| `pb` | `padding-bottom` | — | — |
 
 SPACEトークン（全値）: `5`, `10`, `15`, `20`, `25`, `30`, `35`, `40`, `50`, `60`, `70`, `80`
 
@@ -216,18 +216,18 @@ SPACEトークン（全値）: `5`, `10`, `15`, `20`, `25`, `30`, `35`, `40`, `5
 | `me` | `margin-inline-end` | `-me:auto` | `-me_sm`, `-me_md` |
 | `mbs` | `margin-block-start` | `-mbs:auto`, `-mbs:0`, `-mbs:5`, `-mbs:10`, `-mbs:20`, ... (SPACEトークン) | `-mbs_sm`, `-mbs_md` |
 | `mbe` | `margin-block-end` | `-mbe:auto` | `-mbe_sm`, `-mbe_md` |
-| `ml` | `margin-left` | — | `-ml_sm`, `-ml_md` |
-| `mr` | `margin-right` | — | `-mr_sm`, `-mr_md` |
-| `mt` | `margin-top` | — | `-mt_sm`, `-mt_md` |
-| `mb` | `margin-bottom` | — | `-mb_sm`, `-mb_md` |
+| `ml` | `margin-left` | — | — |
+| `mr` | `margin-right` | — | — |
+| `mt` | `margin-top` | — | — |
+| `mb` | `margin-bottom` | — | — |
 
 ### Gap
 
 | Prop | CSS プロパティ | プリセット値クラス | BP クラス |
 |------|--------------|-------------|-----|
-| `g` | `gap` | `-g:0`, `-g:inherit`, `-g:5`, `-g:10`, `-g:20`, ... (SPACEトークン) | `-g_sm`, `-g_md` |
-| `cg` | `column-gap` | — | `-cg_sm`, `-cg_md` |
-| `rg` | `row-gap` | — | `-rg_sm`, `-rg_md` |
+| `g` | `gap` | `-g:0`, `-g:inherit`, `-g:5`, `-g:10`, `-g:20`, ... (SPACEトークン) | `-g_sm`, `-g_md`, `-g_lg` |
+| `cg` | `column-gap` | — | — |
+| `rg` | `row-gap` | — | — |
 
 ### Flex
 
@@ -246,22 +246,22 @@ SPACEトークン（全値）: `5`, `10`, `15`, `20`, `25`, `30`, `35`, `40`, `5
 | Prop | CSS プロパティ | プリセット値クラス | BP クラス |
 |------|--------------|-------------|-----|
 | `gt` | `grid-template` | — | `-gt_sm`, `-gt_md` |
-| `gta` | `grid-template-areas` | — | `-gta_sm`, `-gta_md` |
-| `gtc` | `grid-template-columns` | `-gtc:subgrid` | `-gtc_sm`, `-gtc_md` |
-| `gtr` | `grid-template-rows` | `-gtr:subgrid` | `-gtr_sm`, `-gtr_md` |
+| `gta` | `grid-template-areas` | — | `-gta_sm`, `-gta_md`, `-gta_lg` |
+| `gtc` | `grid-template-columns` | `-gtc:subgrid` | `-gtc_sm`, `-gtc_md`, `-gtc_lg` |
+| `gtr` | `grid-template-rows` | `-gtr:subgrid` | `-gtr_sm`, `-gtr_md`, `-gtr_lg` |
 | `gaf` | `grid-auto-flow` | `-gaf:row`, `-gaf:column` | `-gaf_sm`, `-gaf_md` |
 | `gac` | `grid-auto-columns` | — | — |
 | `gar` | `grid-auto-rows` | — | — |
-| `cols` | `--cols` 変数 | — | `-cols_sm`, `-cols_md` |
+| `cols` | `--cols` 変数 | — | `-cols_sm`, `-cols_md`, `-cols_lg` |
 | `rows` | `--rows` 変数 | — | `-rows_sm`, `-rows_md` |
 
 ### Grid アイテム
 
 | Prop | CSS プロパティ | プリセット値クラス | BP クラス |
 |------|--------------|-------------|-----|
-| `ga` | `grid-area` | `-ga:1/1` | `-ga_sm`, `-ga_md` |
-| `gc` | `grid-column` | `-gc:1/-1` | `-gc_sm`, `-gc_md` |
-| `gr` | `grid-row` | `-gr:1/-1` | `-gr_sm`, `-gr_md` |
+| `ga` | `grid-area` | `-ga:1/1` | `-ga_sm`, `-ga_md`, `-ga_lg` |
+| `gc` | `grid-column` | `-gc:1/-1` | `-gc_sm`, `-gc_md`, `-gc_lg` |
+| `gr` | `grid-row` | `-gr:1/-1` | `-gr_sm`, `-gr_md`, `-gr_lg` |
 | `gcs` | `grid-column-start` | — | — |
 | `gce` | `grid-column-end` | — | — |
 | `grs` | `grid-row-start` | — | — |
