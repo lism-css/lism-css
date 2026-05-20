@@ -48,7 +48,8 @@ npm publish とデプロイはユーザーが手動で行う。
 - 対象パッケージの `package.json` の version を確認する
 - 引数で指定されたバージョンと異なる場合:
   - `package.json` の `"version"` フィールドを更新する
-  - `git add` → `git commit -m "chore: {パッケージ識別子} v{バージョン}"`
+  - **`lism-ui` の場合**: `nr build:ui` を実行し、`registry-index.json`（version 埋め込み・commit 対象の生成物）を再生成する。これを忘れると publish 時に `build:ui` が走って `registry-index.json` が更新され、git-checks（unclean working tree）で publish が失敗する
+  - `git add` → `git commit -m "chore: {パッケージ識別子} v{バージョン}"`（`lism-ui` は再生成された `registry-index.json` も同コミットに含める）
   - ユーザーにpushしていいか確認 → `git push origin dev`
 - すでに一致している場合はスキップする
 
