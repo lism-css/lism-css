@@ -329,9 +329,8 @@ describe('Lism', () => {
             </Lism>
           );
           const element = screen.getByTestId('lism');
-          // pt, pb は値を含むクラスではなく、ブレイクポイント用クラスとして処理される
-          expect(element).toHaveClass('-pt');
-          expect(element).toHaveClass('-pb');
+          // pt, pb は bp:0 のため、クラスではなくインラインスタイルで出力される
+          expect(element).toHaveStyle({ paddingTop: 'var(--s15)', paddingBottom: 'var(--s25)' });
         });
 
         test('pl, pr を指定できる（インラインスタイル）', () => {
@@ -341,9 +340,8 @@ describe('Lism', () => {
             </Lism>
           );
           const element = screen.getByTestId('lism');
-          // pl, pr は値を含むクラスではなく、ブレイクポイント用クラスとして処理される
-          expect(element).toHaveClass('-pl');
-          expect(element).toHaveClass('-pr');
+          // pl, pr は bp:0 のため、クラスではなくインラインスタイルで出力される
+          expect(element).toHaveStyle({ paddingLeft: 'var(--s10)', paddingRight: 'var(--s20)' });
         });
       });
 
@@ -385,9 +383,8 @@ describe('Lism', () => {
             </Lism>
           );
           const element = screen.getByTestId('lism');
-          // mt, mb は値を含むクラスではなく、ブレイクポイント用クラスとして処理される
-          expect(element).toHaveClass('-mt');
-          expect(element).toHaveClass('-mb');
+          // mt, mb は bp:0 のため、クラスではなくインラインスタイルで出力される
+          expect(element).toHaveStyle({ marginTop: 'var(--s10)', marginBottom: 'var(--s20)' });
         });
 
         test('ml, mr を指定できる（インラインスタイル）', () => {
@@ -397,9 +394,8 @@ describe('Lism', () => {
             </Lism>
           );
           const element = screen.getByTestId('lism');
-          // ml, mr は値を含むクラスではなく、ブレイクポイント用クラスとして処理される
-          expect(element).toHaveClass('-ml');
-          expect(element).toHaveClass('-mr');
+          // ml, mr は bp:0 のため、クラスではなくインラインスタイルで出力される
+          expect(element).toHaveStyle({ marginLeft: 'auto', marginRight: 'auto' });
         });
       });
 
@@ -431,8 +427,8 @@ describe('Lism', () => {
             </Lism>
           );
           const element = screen.getByTestId('lism');
-          expect(element).toHaveClass('-cg');
-          expect(element).toHaveStyle({ '--cg': 'var(--s20)' });
+          // cg は bp:0 のため、クラスではなくインラインスタイルで出力される
+          expect(element).toHaveStyle({ columnGap: 'var(--s20)' });
         });
 
         test('rg（row-gap）を指定できる', () => {
@@ -442,8 +438,8 @@ describe('Lism', () => {
             </Lism>
           );
           const element = screen.getByTestId('lism');
-          expect(element).toHaveClass('-rg');
-          expect(element).toHaveStyle({ '--rg': 'var(--s20)' });
+          // rg は bp:0 のため、クラスではなくインラインスタイルで出力される
+          expect(element).toHaveStyle({ rowGap: 'var(--s20)' });
         });
       });
     });
