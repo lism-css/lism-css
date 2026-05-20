@@ -34,7 +34,34 @@
       border-block-end: 1px solid;
     }
     blockquote {
-      border-inline-start: 2px solid var(--text-2);
+      --quote-size: clamp(32px, 8vw, 48px);
+      position: relative;
+      padding: calc(var(--quote-size) * 0.875);
+
+      /* 装飾用のダブルクォーテーション（左上・右下） */
+      &::before,
+      &::after {
+        position: absolute;
+        font-family: Helvetica, Arial, sans-serif;
+        font-size: var(--quote-size);
+        font-style: normal;
+        font-weight: 700;
+        line-height: 1;
+        opacity: var(--o--ppp);
+        pointer-events: none;
+      }
+
+      &::before {
+        content: '\201C'; /* “ 開き */
+        top: 0.25em;
+        left: 0.25em;
+      }
+
+      &::after {
+        content: '\201D'; /* ” 閉じ */
+        right: 0.25em;
+        bottom: -0.25em;
+      }
     }
     pre {
       border-radius: var(--bdrs--10);
