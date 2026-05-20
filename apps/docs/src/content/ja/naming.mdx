@@ -166,6 +166,7 @@ Property Classの命名規則については、以下の通りです。
 
 - 方向を示すサイドプロパティは、ハイフン（`-`）付きのサフィックスで方向を指定します。
 - `inline`/`block`は、`x`/`y` とします。
+- `inline-start`/`inline-end`は`is`/`ie`ではなく、すでに普及しているCSSフレームワークの慣習に沿って`s`/`e`とします。
 
 <figure class="c--propTable">
 <figcaption>例:</figcaption>
@@ -173,20 +174,22 @@ Property Classの命名規則については、以下の通りです。
 |------|-----------|-----|
 | physical | `-t` / `-b` / `-l` / `-r` | `bd-t`, `bd-b`, `bd-l`, `bd-r` |
 | inline / block | `-x` / `-y` | `bd-x`, `bd-y` |
-| start / end | `-s` / `-e` | `bd-x-s`, `bd-x-e`, `bd-y-s`, `bd-y-e` |
+| inline-start / end | `-s` / `-e` | `bd-s`, `bd-e`, `ps`, `pe`, `ms`, `me`, `i-s`, `i-e` |
+| block-start / end | `-bs` / `-be` | `bd-bs`, `bd-be`, `pbs`, `pbe`, `mbs`, `mbe`, `i-bs`, `i-be` |
 | x / y | `-x` / `-y` | `ov-x`, `ov-y` |
 </figure>
 
-#### 方向指定系の例外: `p`, `m` のみ、最初のハイフンを省略
+#### 方向指定系の例外: `p`, `m` のみ、ハイフンを省略
 
-`padding`, `margin` については、`pt`, `px`, `my` のような記法が CSS フレームワークで広く普及しているため、最初のハイフンを省略します。
+`padding`, `margin` については、`pt`, `px`, `my` のような記法が CSS フレームワークで広く普及しているため、ハイフンを省略します。
 
 <div class="c--propTable">
 | 方向 | 省略形|
 |-------------|----------|
 | physical | `pt`, `pb`, `pl`, `pr`, `mt`, `mb`, `ml`, `mr` |
-| inline/block  | `px`, `py`, `mx`, `my` |
-| start/end | `px-s`, `px-e`, `py-s`, `py-e`, `mx-s`, `mx-e`, `my-s`, `my-e` |
+| inline / block | `px`, `py`, `mx`, `my` |
+| inline-start / end | `ps`, `pe`, `ms`, `me` |
+| block-start / end | `pbs`, `pbe`, `mbs`, `mbe` |
 </div>
 
 #### グループ略称の衝突禁止

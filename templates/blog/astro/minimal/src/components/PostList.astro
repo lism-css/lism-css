@@ -1,0 +1,28 @@
+---
+import { Lism, WithSide, Heading, Link } from 'lism-css/astro';
+import type { CollectionEntry } from 'astro:content';
+import Date from '@/components/Date.astro';
+
+interface Props {
+  posts: CollectionEntry<'posts'>[];
+}
+
+const { posts } = Astro.props;
+---
+
+<Lism as="ul" class="c--postList" layout="stack" g="20">
+  {
+    posts.map((post) => (
+      <Lism as="li">
+        <WithSide cg="30" ai="center">
+          <Date isSide>{post.data.date}</Date>
+          <Heading level="2" fz="m">
+            <Link href={`/posts/${post.id}/`} set="plain" d="block" hov="underline">
+              {post.data.title}
+            </Link>
+          </Heading>
+        </WithSide>
+      </Lism>
+    ))
+  }
+</Lism>

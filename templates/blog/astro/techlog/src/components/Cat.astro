@@ -1,0 +1,19 @@
+---
+import { Inline, Link } from 'lism-css/astro';
+import type { ComponentProps } from 'astro/types';
+
+type LinkProps = ComponentProps<typeof Link>;
+
+type Props = LinkProps & {
+  href?: string;
+};
+
+const { href, class: className, ...rest } = Astro.props;
+
+const Tag = href ? Link : Inline;
+const linkProps = href ? { href, set: 'plain', hov: '-bgc' } : {};
+---
+
+<Tag class:list={['c--cat', className]} set="var:s" d="inline-flex" bgc="base-2" fz="2xs" lh="xs" py="5" px="10" bdrs="10" {...linkProps} {...rest}>
+  <slot />
+</Tag>

@@ -69,5 +69,5 @@ export function Title({ className, ...props }) {
   return <Lism fz="s" fw="bold" gr="3" gc="2" {...props} className={atts(className, 'c--timeline_title')} />;
 }
 export function Text({ className, ...props }) {
-  return <Lism fz="s" my-s="15" gr="4" gc="2" {...props} className={atts(className, 'c--timeline_text')} />;
+  return <Lism fz="s" mbs="15" gr="4" gc="2" {...props} className={atts(className, 'c--timeline_text')} />;
 }

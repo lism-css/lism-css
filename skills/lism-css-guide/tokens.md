@@ -17,6 +17,8 @@ CSSコードを書く場合やコンポーネントのPropsに値を指定する
 - [透明度 (o)](#透明度-o)
 - [角丸 (bdrs)](#角丸-bdrs)
 - [影 (bxsh)](#影-bxsh)
+- [フロー余白 (flow)](#フロー余白-flow)
+- [ガターサイズ (gutter-size)](#ガターサイズ-gutter-size)
 - [カラー](#カラー)
 - [トークン値の命名規則](#トークン値の命名規則)
 
@@ -39,8 +41,8 @@ CSSコードを書く場合やコンポーネントのPropsに値を指定する
 | 影 (bxsh) | `10`, `20`, `30`, `40`, `50` | `--bxsh--{N}` | `--bxsh--20` |
 | サイズ (sz) | `xs`, `s`, `m`, `l`, `xl`, `bleed` | `--sz--{key}` | `--sz--l` |
 | アスペクト比 (ar) | `og` | `--ar--{key}` | `--ar--og` |
-| フロー余白 (flow) | `s`, `l` | `--flow--{key}` | `--flow--s` |
-| セマンティックカラー (c) | `base`, `base-2`, `text`, `text-2`, `divider`, `link`, `brand`, `accent` | `--{name}` | `--brand` |
+| フロー余白 (flow) | `base`, `s` | `--flow--{key}` | `--flow--base` |
+| セマンティックカラー (c) | `base`, `base-2`, `text`, `text-2`, `divider`, `link`, `brand`, `accent`, `neutral` | `--{name}` | `--brand` |
 | パレットカラー (palette) | `red`, `blue`, `green`, `yellow`, `purple`, `orange`, `pink`, `gray`, `white`, `black` | `--{name}` | `--red` |
 
 
@@ -194,6 +196,31 @@ CSSコードを書く場合やコンポーネントのPropsに値を指定する
 | `--shsz--50` | `0px 16px 48px` |
 
 
+## フロー余白 (flow)
+
+`l--flow` のコンテンツ間余白に使われるトークン。`:root` で定義されている。
+
+| CSS変数 | 値 | 説明 |
+|---------|-----|------|
+| `--flow--base` | `var(--s30)`（`lang="ja"` 時は `var(--s35)`） | `l--flow` の基準余白 |
+| `--flow--s` | `var(--s20)` | `-flow:s` で適用される小さめの余白 |
+
+
+## ガターサイズ (gutter-size)
+
+サイト全体のガター（左右余白）量を定義するルート変数。トークン体系ではなく単一の設定値で、上書きするとガター関連の挙動が一括で変わる。
+
+| CSS変数 | 値 | 説明 |
+|---------|-----|------|
+| `--gutter-size` | `var(--s30)` | ガターの基準量 |
+
+参照される主な箇所:
+
+- `has--gutter` の `padding-inline`
+- `is--container` の `--sz--bleed` 計算（`100cqi + var(--gutter-size) * 2`）
+- `-max-sz:full` の負 margin による hang 拡張
+
+
 ## カラー
 
 ### セマンティックカラー
@@ -210,21 +237,22 @@ CSSコードを書く場合やコンポーネントのPropsに値を指定する
 | `--link` | `oklch(50% 0.3 240)` | リンク色 |
 | `--brand` | `#1e5f8c` | ブランド色 |
 | `--accent` | `#d94a6a` | アクセント色 |
+| `--neutral` | `hsl(220, 2%, 80%)` | hover 背景などの生成に使う中立的な補助色 |
 
 ### パレットカラー
 
-OKLCH で定義されたカラーパレット。`--L`（明度）と `--C`（彩度）の基準値を調整するとパレット全体の色味を変更可能。デフォルト: `--L: 60%`, `--C: 0.22`。
+OKLCH で定義されたカラーパレット。`--L`（明度）と `--C`（彩度）の基準値を調整するとパレット全体の色味を変更可能。デフォルト: `--L: 60%`, `--C: 0.2`。
 
 | CSS変数 | 値 |
 |---------|-----|
 | `--red` | `oklch(var(--L) var(--C) 20)` |
-| `--orange` | `oklch(calc(var(--L) + 4%) calc(var(--C) - 0.01) 52)` |
-| `--yellow` | `oklch(calc(var(--L) + 12%) calc(var(--C) - 0.025) 84)` |
-| `--green` | `oklch(calc(var(--L) + 4%) calc(var(--C) - 0.02) 152)` |
-| `--blue` | `oklch(calc(var(--L) - 2%) calc(var(--C) + 0.01) 260)` |
-| `--purple` | `oklch(calc(var(--L) - 4%) calc(var(--C) + 0.02) 292)` |
-| `--pink` | `oklch(calc(var(--L) + 2%) calc(var(--C) + 0.02) 348)` |
-| `--gray` | `oklch(calc(var(--L) - 4%) 0.04 256)` |
+| `--orange` | `oklch(calc(var(--L) + 6%) calc(var(--C) - 0.01) 48)` |
+| `--yellow` | `oklch(calc(var(--L) + 12%) calc(var(--C) - 0.02) 80)` |
+| `--green` | `oklch(calc(var(--L) + 4%) calc(var(--C) - 0.01) 152)` |
+| `--blue` | `oklch(calc(var(--L) - 4%) calc(var(--C) + 0.01) 264)` |
+| `--purple` | `oklch(calc(var(--L) - 4%) calc(var(--C) + 0.01) 288)` |
+| `--pink` | `oklch(calc(var(--L) + 2%) calc(var(--C) + 0.01) 352)` |
+| `--gray` | `oklch(calc(var(--L) - 4%) calc(var(--C) / 10) 240)` |
 | `--black` | `#000` |
 | `--white` | `#fff` |
 

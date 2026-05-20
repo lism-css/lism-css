@@ -329,9 +329,8 @@ describe('Lism', () => {
             </Lism>
           );
           const element = screen.getByTestId('lism');
-          // pt, pb は値を含むクラスではなく、ブレイクポイント用クラスとして処理される
-          expect(element).toHaveClass('-pt');
-          expect(element).toHaveClass('-pb');
+          // pt, pb は bp:0 のため、クラスではなくインラインスタイルで出力される
+          expect(element).toHaveStyle({ paddingTop: 'var(--s15)', paddingBottom: 'var(--s25)' });
         });
 
         test('pl, pr を指定できる（インラインスタイル）', () => {
@@ -341,9 +340,8 @@ describe('Lism', () => {
             </Lism>
           );
           const element = screen.getByTestId('lism');
-          // pl, pr は値を含むクラスではなく、ブレイクポイント用クラスとして処理される
-          expect(element).toHaveClass('-pl');
-          expect(element).toHaveClass('-pr');
+          // pl, pr は bp:0 のため、クラスではなくインラインスタイルで出力される
+          expect(element).toHaveStyle({ paddingLeft: 'var(--s10)', paddingRight: 'var(--s20)' });
         });
       });
 
@@ -385,9 +383,8 @@ describe('Lism', () => {
             </Lism>
           );
           const element = screen.getByTestId('lism');
-          // mt, mb は値を含むクラスではなく、ブレイクポイント用クラスとして処理される
-          expect(element).toHaveClass('-mt');
-          expect(element).toHaveClass('-mb');
+          // mt, mb は bp:0 のため、クラスではなくインラインスタイルで出力される
+          expect(element).toHaveStyle({ marginTop: 'var(--s10)', marginBottom: 'var(--s20)' });
         });
 
         test('ml, mr を指定できる（インラインスタイル）', () => {
@@ -397,9 +394,8 @@ describe('Lism', () => {
             </Lism>
           );
           const element = screen.getByTestId('lism');
-          // ml, mr は値を含むクラスではなく、ブレイクポイント用クラスとして処理される
-          expect(element).toHaveClass('-ml');
-          expect(element).toHaveClass('-mr');
+          // ml, mr は bp:0 のため、クラスではなくインラインスタイルで出力される
+          expect(element).toHaveStyle({ marginLeft: 'auto', marginRight: 'auto' });
         });
       });
 
@@ -431,8 +427,8 @@ describe('Lism', () => {
             </Lism>
           );
           const element = screen.getByTestId('lism');
-          expect(element).toHaveClass('-cg');
-          expect(element).toHaveStyle({ '--cg': 'var(--s20)' });
+          // cg は bp:0 のため、クラスではなくインラインスタイルで出力される
+          expect(element).toHaveStyle({ columnGap: 'var(--s20)' });
         });
 
         test('rg（row-gap）を指定できる', () => {
@@ -442,8 +438,8 @@ describe('Lism', () => {
             </Lism>
           );
           const element = screen.getByTestId('lism');
-          expect(element).toHaveClass('-rg');
-          expect(element).toHaveStyle({ '--rg': 'var(--s20)' });
+          // rg は bp:0 のため、クラスではなくインラインスタイルで出力される
+          expect(element).toHaveStyle({ rowGap: 'var(--s20)' });
         });
       });
     });
@@ -717,9 +713,9 @@ describe('Lism', () => {
         expect(element.getAttribute('style')).toContain('inset-block: var(--s20)');
       });
 
-      test('i-x-s（insetInlineStart）を指定すると inline style として処理される', () => {
+      test('i-s（insetInlineStart）を指定すると inline style として処理される', () => {
         render(
-          <Lism i-x-s="30" data-testid="lism">
+          <Lism i-s="30" data-testid="lism">
             test
           </Lism>
         );
@@ -727,9 +723,9 @@ describe('Lism', () => {
         expect(element.getAttribute('style')).toContain('inset-inline-start: var(--s30)');
       });
 
-      test('i-x-e（insetInlineEnd）を指定すると inline style として処理される', () => {
+      test('i-e（insetInlineEnd）を指定すると inline style として処理される', () => {
         render(
-          <Lism i-x-e="40" data-testid="lism">
+          <Lism i-e="40" data-testid="lism">
             test
           </Lism>
         );
@@ -737,9 +733,9 @@ describe('Lism', () => {
         expect(element.getAttribute('style')).toContain('inset-inline-end: var(--s40)');
       });
 
-      test('i-y-s（insetBlockStart）を指定すると inline style として処理される', () => {
+      test('i-bs（insetBlockStart）を指定すると inline style として処理される', () => {
         render(
-          <Lism i-y-s="50" data-testid="lism">
+          <Lism i-bs="50" data-testid="lism">
             test
           </Lism>
         );
@@ -747,9 +743,9 @@ describe('Lism', () => {
         expect(element.getAttribute('style')).toContain('inset-block-start: var(--s50)');
       });
 
-      test('i-y-e（insetBlockEnd）を指定すると inline style として処理される', () => {
+      test('i-be（insetBlockEnd）を指定すると inline style として処理される', () => {
         render(
-          <Lism i-y-e="60" data-testid="lism">
+          <Lism i-be="60" data-testid="lism">
             test
           </Lism>
         );

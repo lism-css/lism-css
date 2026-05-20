@@ -40,11 +40,11 @@ Lism では、全要素に対し、以下のスタイルが適用されていま
 
 ```css
 :root {
-  --hl-unit: calc(var(--REM) * 0.125); /* ≒ 2px */
+  --hl-unit: calc(var(--fz--base) * 0.125); /* ≒ 2px */
 }
 ```
 
-（`--REM ≒ 1rem` になっているため、`--hl-unit` は `2px`前後の値となる想定です。）
+（`--fz--base` はデフォルト `1rem` のため、`--hl-unit` は `2px`前後の値となる想定です。）
 
 
 ## `lh` クラス

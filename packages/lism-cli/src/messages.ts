@@ -40,8 +40,8 @@ export const messages = {
     en: 'Target directory',
   },
   'cli.create.opt.template': {
-    ja: '使用するテンプレート名（例: minimal-astro）',
-    en: 'Template name to use (e.g. minimal-astro)',
+    ja: '使用するテンプレート名またはカテゴリ名（例: minimal-astro / minimal）',
+    en: 'Template or category name to use (e.g. minimal-astro / minimal)',
   },
   'cli.create.opt.force': {
     ja: '既存ディレクトリを強制上書き',
@@ -152,8 +152,8 @@ export const messages = {
     en: 'Select a variant ({count} options):',
   },
   'create.promptSelectVariant.blog': {
-    ja: '機能レベルを選択してください（{count}件）:',
-    en: 'Select a feature level ({count} options):',
+    ja: 'タイプを選択してください（{count}件）:',
+    en: 'Select a type ({count} options):',
   },
   'create.promptSelectVariant.lp': {
     ja: '業種を選択してください（{count}件）:',

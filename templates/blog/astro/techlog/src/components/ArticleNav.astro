@@ -1,0 +1,49 @@
+---
+import { Lism, Columns, Link, Stack, Inline } from 'lism-css/astro';
+import Eyebrow from '@/components/Eyebrow.astro';
+import { getPostHref } from '@/lib/posts';
+
+interface NavItem {
+  title: string;
+  id: string;
+}
+interface Props {
+  prev?: NavItem;
+  next?: NavItem;
+}
+
+const { prev, next } = Astro.props;
+---
+
+<Lism as="nav" aria-label="記事ナビゲーション">
+  <Columns g="0">
+    {
+      prev ? (
+        <Link href={getPostHref(prev.id)} set="plain" hov={{ bgc: 'base-2' }} d="block" p="10" py="20" bdrs="10">
+          <Stack g="5" lh="s">
+            <Eyebrow>
+              <Inline aria-hidden="true">←</Inline> PREVIOUS
+            </Eyebrow>
+            <Lism fz="s">{prev.title}</Lism>
+          </Stack>
+        </Link>
+      ) : (
+        <span />
+      )
+    }
+    {
+      next ? (
+        <Link href={getPostHref(next.id)} set="plain" hov={{ bgc: 'base-2' }} d="block" ta="right" p="10" py="20">
+          <Stack g="5" lh="s">
+            <Eyebrow>
+              NEXT <Inline aria-hidden="true">→</Inline>
+            </Eyebrow>
+            <Lism fz="s">{next.title}</Lism>
+          </Stack>
+        </Link>
+      ) : (
+        <span />
+      )
+    }
+  </Columns>
+</Lism>

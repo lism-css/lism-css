@@ -554,7 +554,7 @@ const reservationSites: readonly SiteCard[] = [
           m="0"
           p="0"
           px={['20', null, '40']}
-          py-e="40"
+          pbe="40"
           min-h="100svh"
           c="white"
           style={{ paddingBlockStart: 'calc(var(--z--header-height) + var(--s30))' }}
@@ -573,7 +573,7 @@ const reservationSites: readonly SiteCard[] = [
       <!-- MV の動的 @keyframes はマージで抽出されないため、元コンポーネントと同じ set:html を明示注入 -->
       <style set:html={mvLayeredKeyframesStyle}></style>
 
-      <Lism as="section" id="about" class="z--ryokan-about" isContainer py-s="60" py-e="60" bgc="black" c="white">
+      <Lism as="section" id="about" class="z--ryokan-about" isContainer pbs="60" pbe="60" bgc="black" c="white">
         <Grid
           class="z--ryokan-about_grid"
           gtc={['1fr', '1fr', 'minmax(0, 1fr) minmax(0, 50%)']}
@@ -584,7 +584,7 @@ const reservationSites: readonly SiteCard[] = [
           <Stack
             class="z--ryokan-about_col z--ryokan-about_col--left"
             g={['40', '40', '50']}
-            px-e={['0', '0', '50']}
+            pe={['0', '0', '50']}
             h={['auto', 'auto', '100%']}
             min-h={['0', '0', '0']}
             min-w="0"
@@ -773,7 +773,7 @@ const reservationSites: readonly SiteCard[] = [
                       <Stack g="30" ai="stretch" w="100%" fxsh="0">
                         <Grid gtc="repeat(3, minmax(0, 1fr))" bd bdc="white:35%" bdrs="20" ov="hidden" w="100%" m="0" ai="stretch">
                           {plan.stats.map((stat, index) => (
-                            <Stack g="10" p="15" ai="center" ta="center" bdc="white:35%" class:list={[{ '-bd-x-s': index > 0 }]}>
+                            <Stack g="10" p="15" ai="center" ta="center" bdc="white:35%" class:list={[{ '-bd-s': index > 0 }]}>
                               <Text as="p" m="0" fz="xs" lts="s" o="pp">
                                 {stat.label}
                               </Text>
@@ -948,8 +948,8 @@ const reservationSites: readonly SiteCard[] = [
                         fx="1"
                         w="100%"
                         m="0"
-                        px-s={['20', null, '30']}
-                        px-e={['20', null, '30']}
+                        ps={['20', null, '30']}
+                        pe={['20', null, '30']}
                         py={['20', null, '30']}
                         ov="auto"
                       >
@@ -1365,7 +1365,7 @@ const reservationSites: readonly SiteCard[] = [
       .z--ryokan-about_col--left {
         box-sizing: border-box;
         min-width: 0;
-        /* 見出し・本文: グローバルな size=l の左端（Lism の px-s はカスタム計算のため CSS のみ） */
+        /* 見出し・本文: グローバルな size=l の左端（Lism の ps はカスタム計算のため CSS のみ） */
         padding-inline-start: var(--z--ryokan-about-l-inset);
       }
       .z--ryokan-about_stack {

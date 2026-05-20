@@ -65,7 +65,7 @@ Lism コンポーネントの Propsに渡す値の頭に `:` を付けると、 
 | **Prop** | クラス名に使う省略名（例: `-fz:l` の `fz` 部分）。Lism コンポーネントの Props 名でもある |
 | **CSS プロパティ** | 実際に制御される CSS プロパティ |
 | **プリセット値クラス** | そのまま使えるクラス名の一覧（`-{prop}:{value}` 形式）。`—` はカスタム値のみ対応 |
-| **BP クラス** | ブレークポイント対応クラス。`—` は非対応 |
+| **BP** | ブレークポイント対応クラス（`-{prop}_{bp}` 形式）のサポート状況。`✔` は `sm`・`md`、`✔ lg` は `lg` まで対応、`—` は非対応 |
 
 
 ## 全 Prop 一覧
@@ -74,15 +74,15 @@ Lism コンポーネントの Propsに渡す値の頭に `:` を付けると、 
 
 ### タイポグラフィ
 
-| Prop | CSS プロパティ | プリセット値クラス | BP クラス |
+| Prop | CSS プロパティ | プリセット値クラス | BP |
 |------|--------------|-------------|-----|
 | `f` | `font` | `-f:inherit` | — |
-| `fz` | `font-size` | `-fz:root`, `-fz:base`, `-fz:5xl`〜`-fz:2xs` | `-fz_sm`, `-fz_md` |
+| `fz` | `font-size` | `-fz:root`, `-fz:base`, `-fz:5xl`〜`-fz:2xs` | ✔ |
 | `fw` | `font-weight` | `-fw:light`, `-fw:normal`, `-fw:bold`, `-fw:100`〜`-fw:900` | — |
 | `ff` | `font-family` | `-ff:base`, `-ff:accent`, `-ff:mono` | — |
 | `fs` | `font-style` | `-fs:italic` | — |
 | `lh` | `line-height`（`--hl` 経由） | `-lh:base`, `-lh:xs`, `-lh:s`, `-lh:l`, `-lh:1` | — |
-| `hl` | `--hl` 変数のみ | — | `-hl_sm`, `-hl_md` |
+| `hl` | `--hl` 変数のみ | — | — |
 | `lts` | `letter-spacing` | `-lts:base`, `-lts:s`, `-lts:l`, `-lts:xl` | — |
 | `ta` | `text-align` | `-ta:center`, `-ta:left`, `-ta:right` | — |
 | `td` | `text-decoration` | `-td:none` | — |
@@ -92,26 +92,26 @@ Lism コンポーネントの Propsに渡す値の頭に `:` を付けると、 
 
 ### 表示・可視性
 
-| Prop | CSS プロパティ | プリセット値クラス | BP クラス |
+| Prop | CSS プロパティ | プリセット値クラス | BP |
 |------|--------------|-------------|-----|
-| `d` | `display` | `-d:none`, `-d:block`, `-d:flex`, `-d:inline-flex`, `-d:grid`, `-d:inline-grid`, `-d:inline`, `-d:inline-block` | `-d_sm`, `-d_md` |
+| `d` | `display` | `-d:none`, `-d:block`, `-d:flex`, `-d:inline-flex`, `-d:grid`, `-d:inline-grid`, `-d:inline`, `-d:inline-block` | ✔ lg |
 | `o` | `opacity` | `-o:0`, `-o:mp`, `-o:p`, `-o:pp`, `-o:ppp` | — |
 | `v` | `visibility` | `-v:hidden` | — |
 | `ov` | `overflow` | `-ov:hidden`, `-ov:auto`, `-ov:clip` | — |
 | `ov-x` | `overflow-x` | `-ov-x:clip`, `-ov-x:auto`, `-ov-x:scroll` | — |
 | `ov-y` | `overflow-y` | `-ov-y:clip`, `-ov-y:auto`, `-ov-y:scroll` | — |
-| `ar` | `aspect-ratio` | `-ar:21/9`, `-ar:16/9`, `-ar:3/2`, `-ar:1/1`, `-ar:og` | `-ar_sm`, `-ar_md` |
+| `ar` | `aspect-ratio` | `-ar:21/9`, `-ar:16/9`, `-ar:3/2`, `-ar:1/1`, `-ar:og` | ✔ |
 
 ### サイズ
 
-| Prop | CSS プロパティ | プリセット値クラス | BP クラス |
+| Prop | CSS プロパティ | プリセット値クラス | BP |
 |------|--------------|-------------|-----|
-| `w` | `width` | `-w:100%`, `-w:fit` | `-w_sm`, `-w_md` |
-| `h` | `height` | `-h:100%`, `-h:fit` | `-h_sm`, `-h_md` |
-| `min-w` | `min-width` | `-min-w:100%` | `-min-w_sm`, `-min-w_md` |
-| `max-w` | `max-width` | `-max-w:100%` | `-max-w_sm`, `-max-w_md` |
-| `min-h` | `min-height` | `-min-h:100%` | `-min-h_sm`, `-min-h_md` |
-| `max-h` | `max-height` | `-max-h:100%` | `-max-h_sm`, `-max-h_md` |
+| `w` | `width` | `-w:100%`, `-w:fit` | ✔ |
+| `h` | `height` | `-h:100%`, `-h:fit` | ✔ |
+| `min-w` | `min-width` | `-min-w:100%` | ✔ |
+| `max-w` | `max-width` | `-max-w:100%` | ✔ |
+| `min-h` | `min-height` | `-min-h:100%` | ✔ |
+| `max-h` | `max-height` | `-max-h:100%` | ✔ |
 | `sz` | `inline-size` | — | — |
 | `min-sz` | `min-inline-size` | — | — |
 | `max-sz` | `max-inline-size` | `-max-sz:xs`, `-max-sz:s`, `-max-sz:m`, `-max-sz:l`, `-max-sz:xl`, `-max-sz:full`, `-max-sz:bleed` | — |
@@ -127,9 +127,9 @@ Lism コンポーネントの Propsに渡す値の頭に `:` を付けると、 
 
 ### 背景
 
-| Prop | CSS プロパティ | プリセット値クラス | BP クラス |
+| Prop | CSS プロパティ | プリセット値クラス | BP |
 |------|--------------|-------------|-----|
-| `bg` | `background` | — | `-bg_sm`, `-bg_md` |
+| `bg` | `background` | — | — |
 | `bgi` | `background-image` | — | — |
 | `bgr` | `background-repeat` | `-bgr:no-repeat` | — |
 | `bgp` | `background-position` | `-bgp:center` | — |
@@ -138,20 +138,20 @@ Lism コンポーネントの Propsに渡す値の頭に `:` を付けると、 
 
 ### カラー
 
-| Prop | CSS プロパティ | プリセット値クラス | BP クラス |
+| Prop | CSS プロパティ | プリセット値クラス | BP |
 |------|--------------|-------------|-----|
 | `c` | `color` | `-c:base`, `-c:text`, `-c:text-2`, `-c:brand`, `-c:accent`, `-c:inherit` | — |
 | `keycolor` | `--keycolor` 変数のみ | — | — |
 
-セマンティックカラー: `base`, `base-2`, `text`, `text-2`, `divider`, `link`, `brand`, `accent`  
+セマンティックカラー: `base`, `base-2`, `text`, `text-2`, `divider`, `link`, `brand`, `accent`, `neutral`<br />
 パレットカラー: `red`, `blue`, `green`, `yellow`, `purple`, `orange`, `pink`, `gray`, `white`, `black`  
 キーカラー変数: `keycolor`（ユーザー定義の `--keycolor` を参照する独立変数。詳細は `tokens.md` を参照）
 
 ### 角丸
 
-| Prop | CSS プロパティ | プリセット値クラス | BP クラス |
+| Prop | CSS プロパティ | プリセット値クラス | BP |
 |------|--------------|-------------|-----|
-| `bdrs` | `border-radius` | `-bdrs:0`, `-bdrs:10`, `-bdrs:20`, `-bdrs:30`, `-bdrs:40`, `-bdrs:99`, `-bdrs:inner` | `-bdrs_sm`, `-bdrs_md` |
+| `bdrs` | `border-radius` | `-bdrs:0`, `-bdrs:10`, `-bdrs:20`, `-bdrs:30`, `-bdrs:40`, `-bdrs:99`, `-bdrs:inner` | ✔ |
 | `bdrs-tl` | `border-top-left-radius` | — | — |
 | `bdrs-tr` | `border-top-right-radius` | — | — |
 | `bdrs-br` | `border-bottom-right-radius` | — | — |
@@ -163,15 +163,15 @@ Lism コンポーネントの Propsに渡す値の頭に `:` を付けると、 
 
 ### 影
 
-| Prop | CSS プロパティ | プリセット値クラス | BP クラス |
+| Prop | CSS プロパティ | プリセット値クラス | BP |
 |------|--------------|-------------|-----|
-| `bxsh` | `box-shadow` | `-bxsh:0`, `-bxsh:10`, `-bxsh:20`, `-bxsh:30`, `-bxsh:40`, `-bxsh:50` | `-bxsh_sm`, `-bxsh_md` |
+| `bxsh` | `box-shadow` | `-bxsh:0`, `-bxsh:10`, `-bxsh:20`, `-bxsh:30`, `-bxsh:40`, `-bxsh:50` | ✔ |
 
 **補足:** 影色（`--shc`）を要素内で上書きして再計算させたい場合は、`set--var:bxsh` クラスを併用する。
 
 ### ポジション
 
-| Prop | CSS プロパティ | プリセット値クラス | BP クラス |
+| Prop | CSS プロパティ | プリセット値クラス | BP |
 |------|--------------|-------------|-----|
 | `pos` | `position` | `-pos:static`, `-pos:fixed`, `-pos:sticky`, `-pos:relative`, `-pos:absolute` | — |
 | `z` | `z-index` | `-z:-1`, `-z:0`, `-z:1`, `-z:99` | — |
@@ -182,86 +182,86 @@ Lism コンポーネントの Propsに渡す値の頭に `:` を付けると、 
 | `i` | `inset` | `-i:0` | — |
 | `i-x` | `inset-inline` | — | — |
 | `i-y` | `inset-block` | — | — |
-| `i-x-s` | `inset-inline-start` | — | — |
-| `i-x-e` | `inset-inline-end` | — | — |
-| `i-y-s` | `inset-block-start` | — | — |
-| `i-y-e` | `inset-block-end` | — | — |
+| `i-s` | `inset-inline-start` | — | — |
+| `i-e` | `inset-inline-end` | — | — |
+| `i-bs` | `inset-block-start` | — | — |
+| `i-be` | `inset-block-end` | — | — |
 
 ### 余白 — Padding
 
-| Prop | CSS プロパティ | プリセット値クラス | BP クラス |
+| Prop | CSS プロパティ | プリセット値クラス | BP |
 |------|--------------|-------------|-----|
-| `p` | `padding` | `-p:0`, `-p:5`, `-p:10`, `-p:20`, ... (SPACEトークン) | `-p_sm`, `-p_md` |
-| `px` | `padding-inline` | `-px:0`, `-px:5`, `-px:10`, `-px:20`, ... (SPACEトークン) | `-px_sm`, `-px_md` |
-| `py` | `padding-block` | `-py:0`, `-py:5`, `-py:10`, `-py:20`, ... (SPACEトークン) | `-py_sm`, `-py_md` |
-| `px-s` | `padding-inline-start` | — | `-px-s_sm`, `-px-s_md` |
-| `px-e` | `padding-inline-end` | — | `-px-e_sm`, `-px-e_md` |
-| `py-s` | `padding-block-start` | — | `-py-s_sm`, `-py-s_md` |
-| `py-e` | `padding-block-end` | — | `-py-e_sm`, `-py-e_md` |
-| `pl` | `padding-left` | — | `-pl_sm`, `-pl_md` |
-| `pr` | `padding-right` | — | `-pr_sm`, `-pr_md` |
-| `pt` | `padding-top` | — | `-pt_sm`, `-pt_md` |
-| `pb` | `padding-bottom` | — | `-pb_sm`, `-pb_md` |
+| `p` | `padding` | `-p:0`, `-p:5`, `-p:10`, `-p:20`, ... (SPACEトークン) | ✔ |
+| `px` | `padding-inline` | `-px:0`, `-px:5`, `-px:10`, `-px:20`, ... (SPACEトークン) | ✔ |
+| `py` | `padding-block` | `-py:0`, `-py:5`, `-py:10`, `-py:20`, ... (SPACEトークン) | ✔ |
+| `ps` | `padding-inline-start` | — | ✔ |
+| `pe` | `padding-inline-end` | — | ✔ |
+| `pbs` | `padding-block-start` | — | ✔ |
+| `pbe` | `padding-block-end` | — | ✔ |
+| `pl` | `padding-left` | — | — |
+| `pr` | `padding-right` | — | — |
+| `pt` | `padding-top` | — | — |
+| `pb` | `padding-bottom` | — | — |
 
 SPACEトークン（全値）: `5`, `10`, `15`, `20`, `25`, `30`, `35`, `40`, `50`, `60`, `70`, `80`
 
 ### 余白 — Margin
 
-| Prop | CSS プロパティ | プリセット値クラス | BP クラス |
+| Prop | CSS プロパティ | プリセット値クラス | BP |
 |------|--------------|-------------|-----|
-| `m` | `margin` | `-m:auto`, `-m:0`, `-m:5`, `-m:10`, `-m:20`, ... (SPACEトークン) | `-m_sm`, `-m_md` |
-| `mx` | `margin-inline` | `-mx:auto`, `-mx:0`, `-mx:5`, `-mx:10`, `-mx:20`, ... (SPACEトークン) | `-mx_sm`, `-mx_md` |
-| `my` | `margin-block` | `-my:auto`, `-my:0`, `-my:5`, `-my:10`, `-my:20`, ... (SPACEトークン) | `-my_sm`, `-my_md` |
-| `mx-s` | `margin-inline-start` | `-mx-s:auto` | `-mx-s_sm`, `-mx-s_md` |
-| `mx-e` | `margin-inline-end` | `-mx-e:auto` | `-mx-e_sm`, `-mx-e_md` |
-| `my-s` | `margin-block-start` | `-my-s:auto`, `-my-s:0`, `-my-s:5`, `-my-s:10`, `-my-s:20`, ... (SPACEトークン) | `-my-s_sm`, `-my-s_md` |
-| `my-e` | `margin-block-end` | `-my-e:auto` | `-my-e_sm`, `-my-e_md` |
-| `ml` | `margin-left` | — | `-ml_sm`, `-ml_md` |
-| `mr` | `margin-right` | — | `-mr_sm`, `-mr_md` |
-| `mt` | `margin-top` | — | `-mt_sm`, `-mt_md` |
-| `mb` | `margin-bottom` | — | `-mb_sm`, `-mb_md` |
+| `m` | `margin` | `-m:auto`, `-m:0`, `-m:5`, `-m:10`, `-m:20`, ... (SPACEトークン) | ✔ |
+| `mx` | `margin-inline` | `-mx:auto`, `-mx:0`, `-mx:5`, `-mx:10`, `-mx:20`, ... (SPACEトークン) | ✔ |
+| `my` | `margin-block` | `-my:auto`, `-my:0`, `-my:5`, `-my:10`, `-my:20`, ... (SPACEトークン) | ✔ |
+| `ms` | `margin-inline-start` | `-ms:auto` | ✔ |
+| `me` | `margin-inline-end` | `-me:auto` | ✔ |
+| `mbs` | `margin-block-start` | `-mbs:auto`, `-mbs:0`, `-mbs:5`, `-mbs:10`, `-mbs:20`, ... (SPACEトークン) | ✔ |
+| `mbe` | `margin-block-end` | `-mbe:auto` | ✔ |
+| `ml` | `margin-left` | — | — |
+| `mr` | `margin-right` | — | — |
+| `mt` | `margin-top` | — | — |
+| `mb` | `margin-bottom` | — | — |
 
 ### Gap
 
-| Prop | CSS プロパティ | プリセット値クラス | BP クラス |
+| Prop | CSS プロパティ | プリセット値クラス | BP |
 |------|--------------|-------------|-----|
-| `g` | `gap` | `-g:0`, `-g:inherit`, `-g:5`, `-g:10`, `-g:20`, ... (SPACEトークン) | `-g_sm`, `-g_md` |
-| `cg` | `column-gap` | — | `-cg_sm`, `-cg_md` |
-| `rg` | `row-gap` | — | `-rg_sm`, `-rg_md` |
+| `g` | `gap` | `-g:0`, `-g:inherit`, `-g:5`, `-g:10`, `-g:20`, ... (SPACEトークン) | ✔ lg |
+| `cg` | `column-gap` | — | — |
+| `rg` | `row-gap` | — | — |
 
 ### Flex
 
-| Prop | CSS プロパティ | プリセット値クラス | BP クラス |
+| Prop | CSS プロパティ | プリセット値クラス | BP |
 |------|--------------|-------------|-----|
 | `fxf` | `flex-flow` | — | — |
-| `fxw` | `flex-wrap` | `-fxw:wrap` | `-fxw_sm`, `-fxw_md` |
-| `fxd` | `flex-direction` | `-fxd:column`, `-fxd:column-reverse`, `-fxd:row-reverse` | `-fxd_sm`, `-fxd_md` |
-| `fx` | `flex` | `-fx:1` | `-fx_sm`, `-fx_md` |
+| `fxw` | `flex-wrap` | `-fxw:wrap` | ✔ |
+| `fxd` | `flex-direction` | `-fxd:column`, `-fxd:column-reverse`, `-fxd:row-reverse` | ✔ |
+| `fx` | `flex` | `-fx:1` | ✔ |
 | `fxg` | `flex-grow` | `-fxg:1` | — |
 | `fxsh` | `flex-shrink` | `-fxsh:0` | — |
-| `fxb` | `flex-basis` | — | `-fxb_sm`, `-fxb_md` |
+| `fxb` | `flex-basis` | — | ✔ |
 
 ### Grid
 
-| Prop | CSS プロパティ | プリセット値クラス | BP クラス |
+| Prop | CSS プロパティ | プリセット値クラス | BP |
 |------|--------------|-------------|-----|
-| `gt` | `grid-template` | — | `-gt_sm`, `-gt_md` |
-| `gta` | `grid-template-areas` | — | `-gta_sm`, `-gta_md` |
-| `gtc` | `grid-template-columns` | `-gtc:subgrid` | `-gtc_sm`, `-gtc_md` |
-| `gtr` | `grid-template-rows` | `-gtr:subgrid` | `-gtr_sm`, `-gtr_md` |
-| `gaf` | `grid-auto-flow` | `-gaf:row`, `-gaf:column` | `-gaf_sm`, `-gaf_md` |
+| `gt` | `grid-template` | — | ✔ |
+| `gta` | `grid-template-areas` | — | ✔ lg |
+| `gtc` | `grid-template-columns` | `-gtc:subgrid` | ✔ lg |
+| `gtr` | `grid-template-rows` | `-gtr:subgrid` | ✔ lg |
+| `gaf` | `grid-auto-flow` | `-gaf:row`, `-gaf:column` | ✔ |
 | `gac` | `grid-auto-columns` | — | — |
 | `gar` | `grid-auto-rows` | — | — |
-| `cols` | `--cols` 変数 | — | `-cols_sm`, `-cols_md` |
-| `rows` | `--rows` 変数 | — | `-rows_sm`, `-rows_md` |
+| `cols` | `--cols` 変数 | — | ✔ lg |
+| `rows` | `--rows` 変数 | — | ✔ |
 
 ### Grid アイテム
 
-| Prop | CSS プロパティ | プリセット値クラス | BP クラス |
+| Prop | CSS プロパティ | プリセット値クラス | BP |
 |------|--------------|-------------|-----|
-| `ga` | `grid-area` | `-ga:1/1` | `-ga_sm`, `-ga_md` |
-| `gc` | `grid-column` | `-gc:1/-1` | `-gc_sm`, `-gc_md` |
-| `gr` | `grid-row` | `-gr:1/-1` | `-gr_sm`, `-gr_md` |
+| `ga` | `grid-area` | `-ga:1/1` | ✔ lg |
+| `gc` | `grid-column` | `-gc:1/-1` | ✔ lg |
+| `gr` | `grid-row` | `-gr:1/-1` | ✔ lg |
 | `gcs` | `grid-column-start` | — | — |
 | `gce` | `grid-column-end` | — | — |
 | `grs` | `grid-row-start` | — | — |
@@ -269,12 +269,12 @@ SPACEトークン（全値）: `5`, `10`, `15`, `20`, `25`, `30`, `35`, `40`, `5
 
 ### 配置（Places）
 
-| Prop | CSS プロパティ | プリセット値クラス | BP クラス |
+| Prop | CSS プロパティ | プリセット値クラス | BP |
 |------|--------------|-------------|-----|
-| `ai` | `align-items` | `-ai:start`, `-ai:center`, `-ai:end`, `-ai:stretch`, `-ai:flex-start`, `-ai:flex-end` | `-ai_sm`, `-ai_md` |
-| `ac` | `align-content` | `-ac:start`, `-ac:center`, `-ac:end`, `-ac:flex-start`, `-ac:flex-end`, `-ac:between` | `-ac_sm`, `-ac_md` |
-| `ji` | `justify-items` | `-ji:start`, `-ji:center`, `-ji:end`, `-ji:stretch`, `-ji:flex-start`, `-ji:flex-end` | `-ji_sm`, `-ji_md` |
-| `jc` | `justify-content` | `-jc:start`, `-jc:center`, `-jc:end`, `-jc:flex-start`, `-jc:flex-end`, `-jc:between` | `-jc_sm`, `-jc_md` |
+| `ai` | `align-items` | `-ai:start`, `-ai:center`, `-ai:end`, `-ai:stretch`, `-ai:flex-start`, `-ai:flex-end` | ✔ |
+| `ac` | `align-content` | `-ac:start`, `-ac:center`, `-ac:end`, `-ac:flex-start`, `-ac:flex-end`, `-ac:between` | ✔ |
+| `ji` | `justify-items` | `-ji:start`, `-ji:center`, `-ji:end`, `-ji:stretch`, `-ji:flex-start`, `-ji:flex-end` | ✔ |
+| `jc` | `justify-content` | `-jc:start`, `-jc:center`, `-jc:end`, `-jc:flex-start`, `-jc:flex-end`, `-jc:between` | ✔ |
 | `pi` | `place-items` | `-pi:start`, `-pi:center`, `-pi:end` | — |
 | `pc` | `place-content` | `-pc:start`, `-pc:center`, `-pc:end` | — |
 | `aslf` | `align-self` | `-aslf:start`, `-aslf:center`, `-aslf:end`, `-aslf:stretch` | — |
@@ -294,10 +294,10 @@ Lism CSS のボーダーは CSS 変数（`--bds` / `--bdw` / `--bdc`）で管理
 
 | Prop | CSS プロパティ / 変数 | 主なクラス |
 |------|-----------------------|------------|
-| `bd` | `border`（変数管理を有効化） | `-bd`, `-bd-{x\|y\|x-s\|x-e\|y-s\|y-e\|t\|b\|l\|r}`, `-bd:none` |
+| `bd` | `border`（変数管理を有効化） | `-bd`, `-bd-{x\|y\|s\|e\|bs\|be\|t\|b\|l\|r}`, `-bd:none` |
 | `bds` | `--bds` | `-bds:dashed`, `-bds:dotted`, `-bds:double` |
 | `bdc` | `--bdc` | `-bdc:brand`, `-bdc:accent`, `-bdc:divider`, `-bdc:inherit`, `-bdc:transparent`, `-bdc:current` |
-| `bdw` | `--bdw` | BP クラス: `-bdw_sm`, `-bdw_md` |
+| `bdw` | `--bdw` | BP クラス: ✔（`-bdw_sm` / `-bdw_md`） |
 
 → 詳細（方向ごとのスタイル指定、BP での方向切り替え等）は [property-class/bd.md](./property-class/bd.md) 参照
 
@@ -311,7 +311,7 @@ Lism CSS のボーダーは CSS 変数（`--bds` / `--bdw` / `--bdc`）で管理
 | `-hov:{preset}` | hover 時のスタイルをプリセットで適用 | `:hover`（同上） |
 | `-hov:in:{preset}` | 親の `set--var:hov` を起点に子のスタイルを変化させる | 親に `set--var:hov` が必要 |
 
-**標準プリセット:** `-hov:-c`, `-hov:-bgc`, `-hov:-bdc`, `-hov:-o`, `-hov:-bxsh`, `-hov:underline`, `-hov:neutral`, `-hov:in:hide`, `-hov:in:show`, `-hov:in:zoom`
+**標準クラス:** `-hov:-c`, `-hov:-bgc`, `-hov:-bdc`, `-hov:-o`, `-hov:-bxsh`, `-hov:underline`, `-hov:in:hide`, `-hov:in:show`, `-hov:in:zoom`
 
 **`<Lism>` の `hov` prop:** 文字列指定（`hov="-c"` → `-hov:-c`。自動変換なし、カンマ区切りで複数可）とオブジェクト指定（`hov={{ c: 'red' }}` → `-hov:-c` + `--hov-c: var(--red)`。値 `true` でクラスのみ出力）が可能。
 
@@ -319,14 +319,14 @@ Lism CSS のボーダーは CSS 変数（`--bds` / `--bdw` / `--bdc`）で管理
 
 ## その他
 
-| Prop | CSS プロパティ | プリセット値クラス | BP クラス |
+| Prop | CSS プロパティ | プリセット値クラス | BP |
 |------|--------------|-------------|-----|
 | `ovw` | `overflow-wrap` | `-ovw:anywhere` | — |
 | `whs` | `white-space` | `-whs:nowrap` | — |
 | `float` | `float` | `-float:left`, `-float:right` | — |
 | `clear` | `clear` | `-clear:both` | — |
 | `iso` | `isolation` | `-iso:isolate` | — |
-| `wm` | `writing-mode` | `-wm:vertical-rl` | `-wm_sm`, `-wm_md` |
+| `wm` | `writing-mode` | `-wm:vertical-rl` | ✔ |
 
 
 ## 値の省略形（例外一覧）
@@ -374,4 +374,3 @@ Property Class をコードベース全体で一括修正する場合、同じ P
 | HTML / className — BP対応・カスタム値 | `-p` / `-p_sm` / `-p_md` |
 | JSX Props | `p="20"` / `p={20}` / `p={[20, 30]}` |
 | getLismProps オブジェクト | `{ p: '20' }` / `{ p: 20 }` |
-

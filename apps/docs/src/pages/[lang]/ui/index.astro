@@ -70,18 +70,18 @@ function getThumbPath(title: string): string {
         A collection of UI components from <code>@lism-css/ui</code>, built on Lism CSS, with implementation examples and samples.
       </p>
     </Stack>
-    <Lism as="section" my-s="50">
+    <Lism as="section" mbs="50">
       <Stack as="header" g="20">
         <h2>Components</h2>
         <p class="-c:text-2">Components available from <code>@lism-css/ui</code>.</p>
       </Stack>
-      <AutoColumns cols="240px" g="30" my-s="40">
+      <AutoColumns cols="240px" g="30" mbs="40">
         {
           uiPosts.map((post) => {
             const postUrl = `/${lang}/ui/${post.id.replace('ui/', '')}/`;
             const thumbPath = getThumbPath(post.data.title);
             return (
-              <BoxLink layout="stack" href={postUrl} p="5" g="5" bdrs="20" hov="neutral" class={post.data.draft ? '_draft' : ''}>
+              <BoxLink layout="stack" href={postUrl} p="5" g="5" bdrs="20" hov="-bgc" class={post.data.draft ? '_draft' : ''}>
                 <Frame ar="3/2" bd bdrs="20" bgc="base">
                   <Media src={thumbPath} alt={post.data.title} width="360" height="240" loading="lazy" />
                 </Frame>
@@ -94,17 +94,17 @@ function getThumbPath(title: string): string {
     </Lism>
     {
       examplePosts.length > 0 && (
-        <Lism my-s="50">
+        <Lism mbs="50">
           <Stack as="header" g="20">
             <h2>Examples</h2>
             <p class="-c:text-2">Additional implementation examples and samples using Lism CSS and Lism UI.</p>
           </Stack>
-          <AutoColumns cols="240px" g="30" my-s="40">
+          <AutoColumns cols="240px" g="30" mbs="40">
             {examplePosts.map((post) => {
               const postUrl = `/${lang}/ui/${post.id.replace('ui/', '')}/`;
               const thumbPath = getThumbPath(post.data.title);
               return (
-                <BoxLink layout="stack" href={postUrl} p="5" g="5" bdrs="20" hov="neutral" class={post.data.draft ? '_draft' : ''}>
+                <BoxLink layout="stack" href={postUrl} p="5" g="5" bdrs="20" hov="-bgc" class={post.data.draft ? '_draft' : ''}>
                   <Frame ar="3/2" bd bdrs="20" bgc="base">
                     <Media src={thumbPath} alt={post.data.title} width="360" height="240" loading="lazy" />
                   </Frame>

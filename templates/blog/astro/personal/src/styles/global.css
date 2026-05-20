@@ -1,0 +1,55 @@
+/* === トークン値・ベース値を上書き === */
+@layer lism-base {
+  :root {
+    /* 基本カラー */
+    --base: hsl(45, 32%, 98%);
+    --base-2: hsl(48, 16%, 94%);
+    --text: hsl(45, 8%, 10%);
+    --text-2: hsl(0, 0%, 30%);
+    --divider: hsl(45, 12%, 90%);
+
+    /* ブランドカラー（アクセント・リンクの軸） */
+    --brand: hsl(10, 56%, 51%);
+    --link: hsl(10, 48%, 50%);
+
+    /* 明朝 */
+    --ff--base: 'Noto Serif JP', 'Hiragino Mincho ProN', 'Yu Mincho', serif;
+    --ff--accent: -apple-system, 'BlinkMacSystemFont', 'Hiragino Sans', sans-serif, 'Segoe UI Emoji';
+
+    /* 字間 */
+    --lts--s: 0.01em;
+    --lts--base: 0.025em;
+    --lts--l: 0.075em;
+    --lts--xl: 0.15em;
+
+    --headings-fw: 500;
+  }
+}
+
+/* === ブログコンテンツのスタイリング === */
+@layer lism-base {
+  .c--articleBody {
+    > h2 {
+      padding-block-end: var(--s20);
+      border-block-end: 1px solid;
+    }
+    blockquote {
+      border-inline-start: 2px solid var(--text-2);
+    }
+    pre {
+      border-radius: var(--bdrs--10);
+      font-size: var(--fz--s);
+    }
+    table {
+      border-collapse: collapse;
+      border-spacing: 0;
+      isolation: isolate;
+    }
+    :is(td, th) {
+      border-block: 1px solid var(--divider);
+    }
+    thead {
+      border-block-end: solid 2px;
+    }
+  }
+}

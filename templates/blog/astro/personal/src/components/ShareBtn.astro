@@ -1,0 +1,33 @@
+---
+import { Lism } from 'lism-css/astro';
+import type { ComponentProps } from 'astro/types';
+
+type LismProps = ComponentProps<typeof Lism>;
+
+type Props = LismProps;
+
+const { class: className, ...rest } = Astro.props;
+---
+
+<Lism
+  as="button"
+  class:list={['c--shareBtn', className]}
+  set="plain"
+  d="inline-flex"
+  ai="center"
+  g="5"
+  py="10"
+  px="15"
+  fz="xs"
+  lts="l"
+  lh="xs"
+  tt="upper"
+  bgc="base-2"
+  bdrs="10"
+  bd
+  hasTransition
+  hov={{ c: 'brand', bdc: 'brand' }}
+  {...rest}
+>
+  <slot />
+</Lism>

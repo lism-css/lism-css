@@ -1,4 +1,4 @@
-import { describe, test, expect } from 'vitest';
+import { describe, test, expect, vi } from 'vitest';
 import getLismProps, { type LismProps } from './getLismProps';
 
 describe('getLismProps', () => {
@@ -256,6 +256,46 @@ describe('getLismProps', () => {
     });
   });
 
+  describe('bp 非対応プロパティへの BP 指定 警告', () => {
+    // bp:0 プロパティへの BP 指定は #393 で型エラーになる。
+    // ランタイム警告は JS 利用者など型チェックをすり抜けたケースの保険なので、
+    // テストでは unknown 経由のキャストで意図的に不正な値を渡して挙動を確認する。
+    test('bp:0 のプロパティに BP 指定すると警告が出る（代替プロパティを案内）', () => {
+      const spy = vi.spyOn(console, 'warn').mockImplementation(() => {});
+      getLismProps({ pl: ['10', '20'] } as unknown as LismProps);
+      // 同じ prop は 2 回目以降は警告しない
+      getLismProps({ pl: ['10', '20'] } as unknown as LismProps);
+      expect(spy).toHaveBeenCalledTimes(1);
+      const msg = spy.mock.calls[0][0] as string;
+      expect(msg).toContain('pl');
+      expect(msg).toContain('ps');
+      spy.mockRestore();
+    });
+
+    test('代替プロパティのない bp:0 プロパティは SCSS 案内のみ', () => {
+      const spy = vi.spyOn(console, 'warn').mockImplementation(() => {});
+      getLismProps({ lts: { base: '0', md: '1px' } } as unknown as LismProps);
+      expect(spy).toHaveBeenCalledTimes(1);
+      const msg = spy.mock.calls[0][0] as string;
+      expect(msg).not.toContain('logical property');
+      spy.mockRestore();
+    });
+
+    test('bp 対応プロパティに BP 指定しても警告は出ない', () => {
+      const spy = vi.spyOn(console, 'warn').mockImplementation(() => {});
+      getLismProps({ fz: ['xl', 'l'] });
+      expect(spy).not.toHaveBeenCalled();
+      spy.mockRestore();
+    });
+
+    test('bp:0 プロパティでも単一値なら警告は出ない', () => {
+      const spy = vi.spyOn(console, 'warn').mockImplementation(() => {});
+      getLismProps({ pt: '10' });
+      expect(spy).not.toHaveBeenCalled();
+      spy.mockRestore();
+    });
+  });
+
   describe('Trait処理', () => {
     test('isContainer: true の場合クラスが追加される', () => {
       const result = getLismProps({ isContainer: true });
@@ -323,10 +363,10 @@ describe('getLismProps', () => {
     });
 
     test('hov: カンマ区切りでもそれぞれそのまま出力される', () => {
-      const result = getLismProps({ hov: '-c,-bxsh,neutral,in:zoom' });
+      const result = getLismProps({ hov: '-c,-bxsh,custom,in:zoom' });
       expect(result.className).toContain('-hov:-c');
       expect(result.className).toContain('-hov:-bxsh');
-      expect(result.className).toContain('-hov:neutral');
+      expect(result.className).toContain('-hov:custom');
       expect(result.className).toContain('-hov:in:zoom');
     });
 

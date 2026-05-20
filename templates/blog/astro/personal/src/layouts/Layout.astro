@@ -1,0 +1,70 @@
+---
+import 'lism-css/main.css';
+import '../styles/global.css';
+import { siteConfig } from '@/config/site';
+import { buildOgImageUrl } from '@/lib/ogImage';
+import { Container, Stack } from 'lism-css/astro';
+import Header from '@/components/Header.astro';
+import Main from '@/components/Main.astro';
+import Footer from '@/components/Footer.astro';
+
+interface Props {
+  title: string;
+  description?: string;
+  ogImage?: string;
+  ogType?: 'website' | 'article';
+}
+
+const { title, description = siteConfig.description, ogImage, ogType = 'website' } = Astro.props;
+
+// og:image は loos.tools/ogimg-maker の URL を直接利用する（絶対URL）
+const ogImageUrl =
+  ogImage ??
+  buildOgImageUrl({
+    title: siteConfig.name,
+    head: siteConfig.tagline,
+  });
+// og:url は絶対 URL 推奨。Astro.site が設定されていれば絶対化、なければ相対パスのまま
+const canonicalUrl = Astro.site ? new URL(Astro.url.pathname, Astro.site).toString() : Astro.url.pathname;
+
+// Web フォント（Noto Serif JP）プリフェッチ用
+---
+
+<html lang={siteConfig.lang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <title>{title}</title>
+
+    {/* Open Graph */}
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content={ogType} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:image" content={ogImageUrl} />
+    <meta property="og:site_name" content={siteConfig.name} />
+
+    {/* Twitter Card */}
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImageUrl} />
+
+    {/* Webフォント */}
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  </head>
+  <body>
+    <Container>
+      <Stack min-h="100svh" g="0">
+        <Header />
+        <Main>
+          <slot />
+        </Main>
+        <Footer />
+      </Stack>
+    </Container>
+  </body>
+</html>

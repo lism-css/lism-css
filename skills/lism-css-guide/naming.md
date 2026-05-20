@@ -127,14 +127,17 @@ Emmet と異なるのは `o` (`opacity`) のみ。
 
 #### 方向指定系: 「グループ略称」 + `-` +「方向指定」
 
+`inline-start`/`inline-end`は`is`/`ie`ではなく、すでに普及しているCSSフレームワークの慣習に沿って`s`/`e`とする。
+
 | 方向 | サフィックス | 例 |
 |------|-----------|-----|
 | physical | `-t` / `-b` / `-l` / `-r` | `bd-t`, `bd-b`, `bd-l`, `bd-r` |
 | inline / block | `-x` / `-y` | `bd-x`, `bd-y` |
-| start / end | `-s` / `-e` | `bd-x-s`, `bd-x-e`, `bd-y-s`, `bd-y-e` |
+| inline-start / end | `-s` / `-e` | `bd-s`, `bd-e`, `ps`, `pe`, `ms`, `me`, `i-s`, `i-e` |
+| block-start / end | `-bs` / `-be` | `bd-bs`, `bd-be`, `pbs`, `pbe`, `mbs`, `mbe`, `i-bs`, `i-be` |
 | x / y | `-x` / `-y` | `ov-x`, `ov-y` |
 
-例外: `p`, `m` のみ最初のハイフンを省略 → `pt`, `px`, `my`, `mx-s` 等。
+例外: `p`, `m` のみハイフンを省略 → `pt`, `px`, `my`, `ms` 等。
 
 #### グループ略称の衝突禁止
 

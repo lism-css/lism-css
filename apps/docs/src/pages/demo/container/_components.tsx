@@ -66,7 +66,7 @@ export function TipCode({
 }
 
 export function GutterGuide() {
-  return <Layer className="set--gutterGuide" my-s="0" />;
+  return <Layer className="set--gutterGuide" mbs="0" />;
 }
 
 export function WideContent(props: any) {

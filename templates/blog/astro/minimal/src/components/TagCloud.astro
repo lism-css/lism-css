@@ -1,0 +1,13 @@
+---
+import { getCollection } from 'astro:content';
+import { Cluster } from 'lism-css/astro';
+import Tag from '@/components/Tag.astro';
+import { getAllTags } from '@/lib/tags';
+
+const posts = await getCollection('posts');
+const tags = getAllTags(posts);
+---
+
+<Cluster as="nav" aria-label="タグ一覧" g="5">
+  {tags.map((tag) => <Tag href={`/tags/${tag}/`}>{tag}</Tag>)}
+</Cluster>

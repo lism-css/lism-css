@@ -61,11 +61,6 @@ $props: (
     exUtility: (
     ),
   ),
-  'hl': (
-    prop: '--hl',
-    bp: 1,
-    isVar: 1,
-  ),
   'lts': (
     prop: 'letter-spacing',
     utilities: (
@@ -74,6 +69,7 @@ $props: (
       'l': 'var(--lts--l)',
       'xl': 'var(--lts--xl)',
     ),
+    bp: 0,
   ),
   'ta': (
     prop: 'text-align',
@@ -108,7 +104,7 @@ $props: (
       'inline': 'inline',
       'inline-block': 'inline-block',
     ),
-    bp: 1,
+    bp: lg,
   ),
   'o': (
     prop: 'opacity',
@@ -216,10 +212,6 @@ $props: (
     ),
     exUtility: (
     ),
-  ),
-  'bg': (
-    prop: 'background',
-    bp: 1,
   ),
   'bgr': (
     prop: 'background-repeat',
@@ -446,36 +438,20 @@ $props: (
     ),
     bp: 1,
   ),
-  'px-s': (
+  'ps': (
     prop: 'padding-inline-start',
     bp: 1,
   ),
-  'px-e': (
+  'pe': (
     prop: 'padding-inline-end',
     bp: 1,
   ),
-  'py-s': (
+  'pbs': (
     prop: 'padding-block-start',
     bp: 1,
   ),
-  'py-e': (
+  'pbe': (
     prop: 'padding-block-end',
-    bp: 1,
-  ),
-  'pl': (
-    prop: 'padding-left',
-    bp: 1,
-  ),
-  'pr': (
-    prop: 'padding-right',
-    bp: 1,
-  ),
-  'pt': (
-    prop: 'padding-top',
-    bp: 1,
-  ),
-  'pb': (
-    prop: 'padding-bottom',
     bp: 1,
   ),
   'm': (
@@ -539,21 +515,21 @@ $props: (
     ),
     bp: 1,
   ),
-  'mx-s': (
+  'ms': (
     prop: 'margin-inline-start',
     utilities: (
       'auto': 'auto',
     ),
     bp: 1,
   ),
-  'mx-e': (
+  'me': (
     prop: 'margin-inline-end',
     utilities: (
       'auto': 'auto',
     ),
     bp: 1,
   ),
-  'my-s': (
+  'mbs': (
     prop: 'margin-block-start',
     utilities: (
       '0': '0',
@@ -573,27 +549,11 @@ $props: (
     ),
     bp: 1,
   ),
-  'my-e': (
+  'mbe': (
     prop: 'margin-block-end',
     utilities: (
       'auto': 'auto',
     ),
-    bp: 1,
-  ),
-  'ml': (
-    prop: 'margin-left',
-    bp: 1,
-  ),
-  'mr': (
-    prop: 'margin-right',
-    bp: 1,
-  ),
-  'mt': (
-    prop: 'margin-top',
-    bp: 1,
-  ),
-  'mb': (
-    prop: 'margin-bottom',
     bp: 1,
   ),
   'g': (
@@ -618,19 +578,11 @@ $props: (
         'gap': 'inherit',
       ),
     ),
-    bp: 1,
-  ),
-  'cg': (
-    prop: 'column-gap',
-    bp: 1,
-  ),
-  'rg': (
-    prop: 'row-gap',
-    bp: 1,
+    bp: lg,
   ),
   'cols': (
     prop: '--cols',
-    bp: 1,
+    bp: lg,
     isVar: 1,
   ),
   'rows': (
@@ -683,21 +635,21 @@ $props: (
   ),
   'gta': (
     prop: 'grid-template-areas',
-    bp: 1,
+    bp: lg,
   ),
   'gtc': (
     prop: 'grid-template-columns',
     utilities: (
       'subgrid': 'subgrid',
     ),
-    bp: 1,
+    bp: lg,
   ),
   'gtr': (
     prop: 'grid-template-rows',
     utilities: (
       'subgrid': 'subgrid',
     ),
-    bp: 1,
+    bp: lg,
   ),
   'gaf': (
     prop: 'grid-auto-flow',
@@ -712,21 +664,21 @@ $props: (
     utilities: (
       '1\\/1': '1 / 1',
     ),
-    bp: 1,
+    bp: lg,
   ),
   'gc': (
     prop: 'grid-column',
     utilities: (
       '1\\/-1': '1 / -1',
     ),
-    bp: 1,
+    bp: lg,
   ),
   'gr': (
     prop: 'grid-row',
     utilities: (
       '1\\/-1': '1 / -1',
     ),
-    bp: 1,
+    bp: lg,
   ),
   'ai': (
     prop: 'align-items',

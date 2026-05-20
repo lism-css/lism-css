@@ -1,0 +1,153 @@
+---
+title: 'blog-astro-techlog の構成'
+excerpt: Lism CSS リポジトリに同梱されている技術ブログ向け Astro テンプレートの仕様まとめ。
+date: '2026-04-25'
+tags: [Astro, Lism CSS, テンプレート]
+---
+
+`templates/blog/astro/techlog/` は、Lism CSS と `@lism-css/ui` を使った技術ブログ向けの Astro テンプレート。コードハイライト・記事内 TOC・カテゴリ／タグ・年月アーカイブ・Pagefind 全文検索・ダークモードを揃えてある。
+
+## 依存
+
+Astro と Lism CSS / `@lism-css/ui` に加え、以下を入れている。
+
+- `@astrojs/mdx` — 記事は `.mdx` で書く
+- `astro-expressive-code` — コードハイライト
+- `remark-directive` — `:::` 記法
+- `pagefind` / `@pagefind/default-ui` — 全文検索
+
+`astro.config.mjs` で `expressiveCode` を `mdx` より前に並べ、`markdown.remarkPlugins` に自前の変換プラグイン3つ（`remark-directive` の `:::` 変換、URL/`[[slug]]` 段落のリンクカード化、文中 `[[slug]]` の WikiLink 化）を登録している。
+
+## ディレクトリ構成
+
+```
+src/
+├── components/      # Astro コンポーネント
+├── config/          # サイト設定 + カテゴリ定義
+├── content.config.ts
+├── layouts/         # Layout / ArchiveLayout / PageLayout
+├── lib/             # TOC生成・年月アーカイブ・OG画像・remarkプラグイン 等
+├── pages/           # ルーティング
+├── posts/           # 記事 MDX（カテゴリごとにディレクトリ）
+│   ├── tech/
+│   └── column/
+└── styles/global.css
+```
+
+## ルーティング
+
+| パス | 内容 |
+| --- | --- |
+| `[...page].astro` | トップ（全記事一覧）＋ページネーション |
+| `category/[category]/[...page].astro` | カテゴリ別一覧＋ページネーション |
+| `posts/[...slug].astro` | 記事詳細 |
+| `tags/index.astro` | タグ一覧 |
+| `tags/[tag]/[...page].astro` | タグ別一覧＋ページネーション |
+| `archive/index.astro` | 年月アーカイブの目次 |
+| `archive/[year]/[month]/[...page].astro` | 年月別一覧＋ページネーション |
+| `about.astro` / `privacy.astro` | 固定ページ |
+| `404.astro` | 404 |
+
+URL は `/posts/{slug}/`・`/category/{category}/`・`/tags/{tag}/`・`/archive/{year}/{month}/` の形。検索は専用ページではなく**ヘッダー右上の検索ボタンから開くモーダル**（`SearchModal`）で提供する。
+
+## カテゴリ設計（ディレクトリ＝カテゴリ）
+
+カテゴリはフロントマターには書かず、`src/posts/{category}/` の置き場所で決まる。
+
+- `src/config/categories.ts` — カテゴリ定義（`tech` / `column`）
+- `src/lib/posts.ts` — `parsePostId()` / `getPostHref()` / `getCategoryHref()` / `getTagHref()` などのユーティリティ
+
+記事詳細 URL にはカテゴリを含めない（`/posts/{slug}/`）ため、カテゴリを変えても URL は変わらない。`assertUniquePostSlugs()` がビルド時に slug の重複を検知する。
+
+## MDX と Callout / Alert
+
+`:::` 記法で `@lism-css/ui` の `Callout` / `Alert` を呼べるよう、`src/lib/remark-directive.mjs` で変換している。
+
+- `:::type[タイトル]` → `<Callout type="..." title="...">`
+- `:::type` → `<Alert type="...">`
+
+対応する type は `alert` / `point` / `warning` / `check` / `help`。
+
+````md
+:::point[ラベル付きの呼び出し]
+ラベルがあるので Callout に変換されます。
+:::
+
+:::warning
+ラベルを省略するとタイトル領域のない Alert になります。
+:::
+````
+
+`Callout` / `Alert` / `LinkCard` / `WikiLink` は `posts/[...slug].astro` で `<Content components={{ ... }} />` に渡しているので、記事ファイル側で import する必要はない。
+
+> `remark-directive` 自体は `.md` でも動くが、このプラグインは `:::` を JSX ノードに変換するため `.md` のレンダーパイプラインでは機能しない。`content.config.ts` も `**/*.mdx` に絞ってあるので `.md` は収集対象外。
+
+## リンクカード / WikiLink（自動展開）
+
+URL 文字列だけの段落、`[[slug]]` だけの段落、文中の `[[slug]]` をビルド時に自動展開する。
+
+````md
+<!-- 外部URL段落 → <LinkCard type="external">（ビルド時に OGP を fetch） -->
+https://lism-css.com/
+
+<!-- [[slug]] 段落 → <LinkCard type="internal">（Content Collections から記事情報を引く） -->
+[[lism-css-intro]]
+
+<!-- 文中の [[slug]] → 記事タイトルを表示する <a> リンク -->
+詳しくは [[lism-css-intro]] を参照。
+
+<!-- エイリアス付きリンク -->
+詳しくは [[lism-css-intro|前回の記事]] を参照。
+````
+
+`slug` は `src/posts/{category}/` 配下のファイル名（拡張子なし）。外部リンクの OGP は `.cache/ogp/` に MD5 ハッシュキー付き JSON でキャッシュされる（TTL 7日）。fetch に失敗したりメタデータを上書きしたいときは MDX 上で `<LinkCard type="external" href="..." title="..." description="..." />` を直書きすればよい。
+
+## コードハイライト
+
+[`astro-expressive-code`](https://expressive-code.com/) でビルド時に静的ハイライト（クライアントランタイム不要）。テーマは `github-dark` 単一指定で、ライト／ダーク両モードで同じ配色を表示する。両用テーマにしたい場合は `themes: ['github-dark', 'github-light']` に変えて、``themeCssSelector: (theme) => `[data-theme='${theme.type}']` `` を渡せばサイトのテーマトグルと連動する。
+
+フォントは `--ff--mono`、角丸は `--bdrs--10` を参照させて Lism CSS のトークンに揃えている。
+
+## 年月アーカイブ
+
+`src/lib/archive.ts` の `getArchiveSummaries()` / `getPostsByArchive()` で集計と絞り込み。日付文字列は `YYYY-MM-DD` / `YYYY.MM.DD` / `YYYY/MM/DD` のいずれも受け付ける。`archive/index.astro` はこの集計をリスト表示、月別ページは `getPostsByArchive()` の結果を Astro の `paginate()` に渡す。
+
+## 全文検索（Pagefind）
+
+`build` スクリプトは `astro build && pagefind --site dist`。Astro のビルド成果物に対して [Pagefind](https://pagefind.app/) がインデックスを生成し、`dist/pagefind/` に静的アセットを置く。検索 UI は `@pagefind/default-ui` を `SearchModal.astro` から呼び出し、ヘッダーの検索ボタンでモーダルとして開く。クライアントサイドのみで動くため、サーバーや外部 API は不要。
+
+開発中はインデックスが存在しないので案内メッセージに切り替わる。実検索を試す場合は `nr build && nr preview`。
+
+### 検索対象範囲の絞り込み
+
+Pagefind はデフォルトで `<body>` 全体を本文インデックスにするため、ヘッダー・パンくず・前後記事ナビなどもヒット対象になってしまう。このテンプレートでは `posts/[...slug].astro` の本文ラッパー1か所に `data-pagefind-body` を付けて、検索対象を「記事タイトル + 本文」に絞っている。
+
+```astro
+<Flow class="c--articleBody" data-pagefind-body>
+  <Content components={{ Callout, Alert, LinkCard, WikiLink }} />
+</Flow>
+```
+
+`data-pagefind-body` がサイト内に一つでも存在すると、Pagefind は属性が付いた要素だけを本文インデックスにする仕様。属性のないページ（トップ・アーカイブ・カテゴリ／タグ一覧・固定ページ）は自動的に検索結果から除外される。`<h1>` は外にあっても Pagefind がメタデータとして自動検出（本文ヒットより 5 倍のランキングブースト）するため、本文ラッパー1か所だけで「タイトル + 本文」検索が成立する。
+
+## レイアウト
+
+レイアウトは3つ。
+
+- `Layout.astro` — `<head>` で OGP・Web フォント（Gen Interface JP）・テーマ初期化スクリプトを読み込み、`<Container>` の中に `<Stack min-h="100svh">` で Header / (Breadcrumb) / Main / Footer を縦積み。`Header` 自体は `pos="sticky"` でスクロール追従させ、その実高さを `--header-h` として JS で公開する（TOC のスクロール位置調整に使う）
+- `ArchiveLayout.astro` — `Layout` を基盤に、本文を `<Group isWrapper="l" isContainer hasGutter><Stack g="40">` で囲んだ一覧用レイアウト
+- `PageLayout.astro` — `Layout` を基盤に、ページタイトル＋`<Flow as="article" class="c--pageBody">` 本文をまとめる固定ページ用レイアウト
+
+
+## ダークモード
+
+`siteConfig.theme.default`（`'system'` / `'light'` / `'dark'`）をベースに `<html data-theme="...">` を切り替える方式。`Layout.astro` の `<head>` 先頭でちらつき防止スクリプトを実行し、`localStorage` に保存されたユーザー設定を初回描画前に適用する。切り替え UI はヘッダーの `ThemeSwitch` コンポーネント。
+
+コードブロックは `expressiveCode` を `themes: 'github-dark'` 単一テーマで運用しているため、サイトのテーマ切り替えに関わらず常に GitHub Dark の配色で表示される。
+
+## カスタマイズの入口
+
+- `src/config/site.ts` — サイト名・キャッチコピー・ナビ・OG画像デフォルト（`{ type: '3-4', h: 238, c: 6, l: 84 }`）・SNS・テーマデフォルト等
+- `src/config/categories.ts` — カテゴリ定義（追加するときは型・物理ディレクトリ・必要なら OG 画像上書きをここに）
+- `src/styles/global.css` — Lism CSS のトークン上書き。`:root[data-theme='dark']` でダークモード時のトークンも上書き。`--sz--toc` / `--sz--l` / `--header-h`（JS で実高さに動的更新）もここで定義
+- 記事本文のタイポグラフィ（h2 の下線、`blockquote` の左ボーダー等）は `.c--articleBody` 配下の子孫セレクタとして `@layer lism-base` に書く（Markdown から生成される要素にはクラスを直接付けられないため）

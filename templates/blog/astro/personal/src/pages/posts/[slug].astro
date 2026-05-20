@@ -1,0 +1,70 @@
+---
+import { getCollection, render } from 'astro:content';
+import { Group, Flow, Cluster, Heading } from 'lism-css/astro';
+import Layout from '@/layouts/Layout.astro';
+import Date from '@/components/Date.astro';
+import Tag from '@/components/Tag.astro';
+import ArticleNav from '@/components/ArticleNav.astro';
+import ShareButtons from '@/components/ShareButtons.astro';
+import { getTagHref } from '@/lib/tags';
+import { buildOgImageUrl } from '@/lib/ogImage';
+import { siteConfig } from '@/config/site';
+
+export async function getStaticPaths() {
+  const posts = (await getCollection('posts')).sort((a, b) => b.data.date.localeCompare(a.data.date));
+
+  return posts.map((post, index) => ({
+    params: { slug: post.id },
+    props: {
+      post,
+      prev: posts[index - 1],
+      next: posts[index + 1],
+    },
+  }));
+}
+
+const { post, prev, next } = Astro.props;
+const { Content } = await render(post);
+const ogImage = buildOgImageUrl({
+  title: post.data.title,
+  foot: siteConfig.name,
+});
+---
+
+<Layout title={`${post.data.title} — ${siteConfig.name}`} description={post.data.excerpt} ogImage={ogImage} ogType="article">
+  <Group as="article" isWrapper isContainer hasGutter>
+    <Group as="header">
+      <Heading level="1">
+        {post.data.title}
+      </Heading>
+      <Cluster mbs="30" g="20" ai="center">
+        <Date>{post.data.date}</Date>
+        {
+          post.data.tags.length > 0 && (
+            <Cluster g="10">
+              {post.data.tags.map((tag) => (
+                <Tag href={getTagHref(tag)}>{tag}</Tag>
+              ))}
+            </Cluster>
+          )
+        }
+      </Cluster>
+    </Group>
+
+    <Flow class="c--articleBody" mbs="50">
+      <Content />
+    </Flow>
+
+    <Group as="footer" mbs="60">
+      <Group py="30" px="5" bd-y>
+        <ShareButtons title={post.data.title} />
+      </Group>
+      <Group py="30" px="5">
+        <ArticleNav
+          prev={prev ? { title: prev.data.title, id: prev.id } : undefined}
+          next={next ? { title: next.data.title, id: next.id } : undefined}
+        />
+      </Group>
+    </Group>
+  </Group>
+</Layout>

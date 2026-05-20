@@ -6,6 +6,7 @@
 - [プレフィックスとクラス分類](#プレフィックスとクラス分類)
 - [Component Class（`c--`）](#component-classc--)
 - [カスタムCSS を追加する場合](#カスタムcss-を追加する場合)
+- [独自プレフィックス](#独自プレフィックス)
 - [CSS の配置場所](#css-の配置場所)
 
 [詳細](https://lism-css.com/docs/css-methodology.md)
@@ -204,6 +205,27 @@ export default function MyCard(props) {
 
 /* NG: コンポーネントやユーティリティをレイヤー外に書かない */
 .c--my-card { ... }
+```
+
+
+### 独自プレフィックス
+
+Lism CSS の既存プレフィックス（`set--` / `is--` / `has--` / `l--` / `a--` / `c--` / `u--` / `-`）のどれにも該当しないクラスは、独自プレフィックスを付けても、プレフィックスなしで命名しても構いません。
+
+代表的な例：
+
+| 分類 | 形式 | 例 |
+|---|---|---|
+| ゾーニング（サイトの大まかな領域） | `z--{zoneName}` または `{zoneName}` | `z--header`, `z--main`, `z--sidebar`, `z--footer` |
+| ページ分類 | `p--{type}-{id\|slug}` または `{slug}Page` | `p--front`, `p--page--{slug}` |
+
+これらは、特に理由がなければ `@layer lism-custom` に配置することを推奨します。
+
+```css
+@layer lism-custom {
+  .z--header { /* ... */ }
+  .p--front { /* ... */ }
+}
 ```
 
 

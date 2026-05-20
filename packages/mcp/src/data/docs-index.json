@@ -77,7 +77,7 @@
     "category": "guide",
     "headings": ["COLOR", "Typography", "SPACE", "RADIUS", "SHADOW", "OPACITY", "SIZE"],
     "keywords": ["token", "トークン", "design token", "shadow", "radius", "opacity", "size", "color", "spacing", "typography"],
-    "snippet": "デザイントークンの一覧ページ。COLOR, Typography, SPACE, RADIUS, SHADOW, OPACITY, SIZE トークンを掲載。カラー・タイポグラフィ・余白は個別ページでも詳細を解説。"
+    "snippet": "デザイントークンの一覧ページ。COLOR, Typography, SPACE, RADIUS, SHADOW, OPACITY, SIZE トークンを掲載。SPACEは --s5〜--s80（s25/s35 を含む12段階）、SHADOWは --bxsh--10〜--bxsh--50（5段階）、OPACITYは音楽強弱記号に由来するセマンティック命名（mp/p/pp/ppp）を採用。カラー・タイポグラフィ・余白は個別ページでも詳細を解説。"
   },
   {
     "sourcePath": "tokens/colors.mdx",
@@ -112,8 +112,8 @@
     "description": "Lism CSS のフィボナッチ数列に基づく余白トークンと、対応するpropertyクラスについて解説します。",
     "category": "guide",
     "headings": ["SPACE: 余白のスケーリング", "対応する Property Class"],
-    "keywords": ["spacing", "余白", "スペーシング", "フィボナッチ", "padding", "margin", "gap", "property class"],
-    "snippet": "フィボナッチ数列に基づいた余白スケーリング（5〜80）を定義。p, px, py, m, mx, my, g等のpropertyクラスでフルサポート。方向別プロパティはBP対応のみなど、対応範囲を詳細に解説。"
+    "keywords": ["spacing", "余白", "スペーシング", "フィボナッチ", "padding", "margin", "gap", "property class", "set--var:s"],
+    "snippet": "フィボナッチ数列ベースの余白スケーリング（--s5〜--s80、s25/s35 を含む12段階）を定義。--s-unit（≒8px）を基準単位として算出。set--var:s クラスを使うと --s-unit が 0.5em に切り替わり、余白がフォントサイズ基準で再計算される。p, px, py, m, mx, my, mbs, g 等のpropertyクラスでフルサポート（トークン値 5〜80）。"
   },
   {
     "sourcePath": "property-class.mdx",
@@ -240,8 +240,8 @@
     "description": "ベーススタイルの上書きやトークン再定義に使用する set-- 形式のユーティリティクラスについて解説します。",
     "category": "guide",
     "headings": [],
-    "keywords": ["set", "set class", "set--plain", "set--revert", "set--var:bxsh", "set--var:hov", "set--var:bdrsInner"],
-    "snippet": "HTML 要素の基礎スタイリングや変数セットを行うためのクラス (.set--{style})。set--plain / set--revert（基礎スタイリング）と set--var:bxsh / set--var:hov / set--var:bdrsInner（変数のセット）の 2 カテゴリで解説。"
+    "keywords": ["set", "set class", "set--plain", "set--revert", "set--var:bxsh", "set--var:hov", "set--var:bdrsInner", "set--var:s"],
+    "snippet": "HTML 要素の基礎スタイリングや変数セットを行うためのクラス (.set--{style})。set--plain / set--revert（基礎スタイリング）と set--var:bxsh / set--var:hov / set--var:bdrsInner / set--var:s（変数のセット）の 2 カテゴリで解説。"
   },
   {
     "sourcePath": "primitives.mdx",
@@ -280,11 +280,15 @@
     "description": "Lism CSS の各バージョンにおける変更履歴をまとめています。",
     "category": "guide",
     "headings": [
+      "lism-css v.0.18.0 (2026.05.17)",
+      "`--sz--*` トークンを px 統一・80px 刻みで再設計 (#364)",
+      "spacing tokens 拡充と `set--var:s` の新設 (#377)",
       "lism-css v.0.17.0 (2026.05.09)",
       "-max-sz:bleed の新設 (#360)",
       "--REM 廃止と --fz--base の簡素化",
       "a タグのリンク装飾スタイル廃止",
       "Bug Fixes",
+      "`@lism-css/ui` v.0.17.0 (2026.05.09)",
       "lism-css v.0.16.1 (2026.04.29)",
       "lism-css v.0.16.0 (2026.04.21)",
       "`u--trimChildren` のリネームと除外方式の整理 (#324, #326)",
@@ -319,7 +323,7 @@
       "v.0.8 (大幅な変更)"
     ],
     "keywords": ["changelog", "変更履歴", "更新", "バージョン"],
-    "snippet": "Lism CSS の各バージョンにおける変更内容を記載。v.0.17.0 の破壊的変更として -max-sz:container 廃止と -max-sz:bleed 新設（#360）、--REM 廃止と --fz--base の 1rem 統一、a タグのリンク装飾スタイル廃止など。v.0.16.0 では Layout Primitive 命名整理（l--sideMain → l--withSide, l--fluidCols → l--autoColumns, l--switchCols → l--switchColumns）、u--trimChildren → u--trimAll へのリネームと除外方式整理（#324/#326）、u--collapseGrid → u--cells へのリネームと u--divide の新設（#323）、opacity トークンのセマンティック命名変更（#316）などがある。"
+    "snippet": "Lism CSS の各バージョンにおける変更内容を記載。v.0.18.0 の破壊的変更として --sz--* トークンの px 統一・80px 刻みでの再設計（#364）、spacing tokens 拡充と set--var:s 新設（s25/s35 追加、#377）など。v.0.17.0 では -max-sz:container 廃止と -max-sz:bleed 新設（#360）、--REM 廃止と --fz--base の 1rem 統一、a タグのリンク装飾スタイル廃止など。v.0.16.0 では Layout Primitive 命名整理（l--sideMain → l--withSide, l--fluidCols → l--autoColumns, l--switchCols → l--switchColumns）、u--trimChildren → u--trimAll へのリネーム（#324/#326）、opacity トークンのセマンティック命名変更（#316）などがある。"
   },
   {
     "sourcePath": "property-class/bd.mdx",
@@ -1089,6 +1093,15 @@
     "headings": ["set--var:bdrsInner"],
     "keywords": ["set--var:bdrsInner", "角丸", "内側角丸", "border-radius", "自動計算", "--bdrs--inner"],
     "snippet": "親要素の --bdrs と --p から内側の角丸 --bdrs--inner を自動計算。子要素で -bdrs:inner を使って適用。レスポンシブ対応。"
+  },
+  {
+    "sourcePath": "set-class.mdx",
+    "title": "set--var:s",
+    "description": "余白トークン（--s5〜--s80）を現在のフォントサイズ基準で再計算するSetクラス。",
+    "category": "guide",
+    "headings": ["set--var:s"],
+    "keywords": ["set--var:s", "余白", "フォントサイズ", "--s-unit", "spacing", "スペーシング", "em", "ボタン", "バッジ"],
+    "snippet": "set--var:s クラスを使うと --s-unit が 0.5em に切り替わり、--s10〜--s80 がフォントサイズ基準で再計算される。Button や Badge など、内部余白を要素自身の font-size に追従させたい部品で活用。"
   },
   {
     "sourcePath": "trait-class.mdx",

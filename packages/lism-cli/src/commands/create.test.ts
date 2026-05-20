@@ -97,36 +97,36 @@ describe('runCreate', () => {
   it('variantが複数ある場合はstack自動確定後に件数付きvariant選択を出す', async () => {
     const templates: Parameters<typeof runCreateWithTemplates>[1] = [
       {
-        slug: 'blog-astro-simple',
+        slug: 'blog-astro-minimal',
         kind: 'project',
         category: 'blog',
         stack: 'astro',
-        variant: 'simple',
-        variantLabel: { ja: 'Simple', en: 'Simple' },
-        sourcePath: 'blog/astro/simple',
-        description: { ja: 'Simple blog', en: 'Simple blog' },
+        variant: 'minimal',
+        variantLabel: { ja: 'Minimal', en: 'Minimal' },
+        sourcePath: 'blog/astro/minimal',
+        description: { ja: 'Minimal blog', en: 'Minimal blog' },
       },
       {
-        slug: 'blog-astro-full',
+        slug: 'blog-astro-techlog',
         kind: 'project',
         category: 'blog',
         stack: 'astro',
-        variant: 'full',
-        variantLabel: { ja: 'Full', en: 'Full' },
-        sourcePath: 'blog/astro/full',
-        description: { ja: 'Full blog', en: 'Full blog' },
+        variant: 'techlog',
+        variantLabel: { ja: 'Tech Log', en: 'Tech Log' },
+        sourcePath: 'blog/astro/techlog',
+        description: { ja: 'Tech blog', en: 'Tech blog' },
       },
     ];
     vi.mocked(select)
       .mockResolvedValueOnce('blog' as never)
-      .mockResolvedValueOnce('simple' as never);
+      .mockResolvedValueOnce('minimal' as never);
     vi.mocked(input).mockResolvedValue('blog-app' as never);
 
     await runCreateWithTemplates({ force: true }, templates);
 
     expect(select).toHaveBeenCalledTimes(2);
-    expect((vi.mocked(select).mock.calls[1][0] as { message: string }).message).toBe('Select a feature level (2 options):');
-    expect(downloadTemplate).toHaveBeenCalledWith('github:lism-css/lism-css/templates/blog/astro/simple#main', {
+    expect((vi.mocked(select).mock.calls[1][0] as { message: string }).message).toBe('Select a type (2 options):');
+    expect(downloadTemplate).toHaveBeenCalledWith('github:lism-css/lism-css/templates/blog/astro/minimal#main', {
       dir: path.join(tmpDir, 'blog-app'),
       force: true,
       forceClean: true,
@@ -285,6 +285,53 @@ describe('runCreate', () => {
     const outDir = path.join(tmpDir, 'html-app');
     expect(fs.existsSync(path.join(outDir, 'package.json'))).toBe(false);
     expect(console.log).toHaveBeenCalledWith('  Open index.html in your browser');
+  });
+
+  it('--templateにカテゴリslugを指定するとstack選択へ降りる', async () => {
+    const templates: Parameters<typeof runCreateWithTemplates>[1] = [
+      {
+        slug: 'minimal-astro',
+        kind: 'project',
+        category: 'minimal',
+        stack: 'astro',
+        sourcePath: 'minimal/astro',
+        description: { ja: 'Astro minimal', en: 'Astro minimal' },
+      },
+      {
+        slug: 'minimal-vite',
+        kind: 'project',
+        category: 'minimal',
+        stack: 'vite',
+        sourcePath: 'minimal/vite',
+        description: { ja: 'Vite minimal', en: 'Vite minimal' },
+      },
+    ];
+    vi.mocked(select).mockResolvedValueOnce('vite' as never);
+
+    await runCreateWithTemplates({ template: 'minimal', targetDir: 'cat-app', force: true }, templates);
+
+    expect(select).toHaveBeenCalledTimes(1);
+    expect((vi.mocked(select).mock.calls[0][0] as { message: string }).message).toBe('Select a stack (2 options):');
+    expect(downloadTemplate).toHaveBeenCalledWith('github:lism-css/lism-css/templates/minimal/vite#main', {
+      dir: path.join(tmpDir, 'cat-app'),
+      force: true,
+      forceClean: true,
+    });
+  });
+
+  it('--templateにカテゴリslugを指定し対象テンプレートが0件なら従来通りエラーを返す', async () => {
+    const templates: Parameters<typeof runCreateWithTemplates>[1] = [
+      {
+        slug: 'minimal-astro',
+        kind: 'project',
+        category: 'minimal',
+        stack: 'astro',
+        sourcePath: 'minimal/astro',
+        description: { ja: 'Astro minimal', en: 'Astro minimal' },
+      },
+    ];
+
+    await expect(runCreateWithTemplates({ template: 'blog', targetDir: 'x', force: true }, templates)).rejects.toThrow('Template "blog" not found');
   });
 
   it('templateNotFoundを返す', async () => {

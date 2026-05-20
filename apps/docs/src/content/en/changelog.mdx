@@ -9,6 +9,38 @@ Breaking changes may continue until v1.0, so all notable changes are documented 
 
 <Divider bds="dashed" my="40" />
 
+## lism-css v.0.20.0 (2026.05.20)
+
+This release contains **breaking changes**.
+
+### Renamed directional Property Classes (#378)
+
+- Unified directional properties (inline-start / block-start, etc.) into shorter, more readable names (no backward-compatible aliases, since this is v0)
+- padding / margin: `px-s/px-e/py-s/py-e` → `ps/pe/pbs/pbe`, `mx-s/mx-e/my-s/my-e` → `ms/me/mbs/mbe`
+- border: `bd-x-s/bd-x-e/bd-y-s/bd-y-e` → `bd-s/bd-e/bd-bs/bd-be`
+- inset: `i-x-s/i-x-e/i-y-s/i-y-e` → `i-s/i-e/i-bs/i-be`
+- CSS variable `--list-px-s` → `--list-ps`
+
+### Reorganized breakpoint-supported properties (#394)
+
+- Reviewed default breakpoint support to reduce the size of main.css
+- Dropped breakpoint support: `pl/pr/pt/pb`, `ml/mr/mt/mb`, `hl`, `lts`, `cg`, `rg`, `bg`
+- Extended breakpoint support up to `lg`: `d`, `cols`, `g`, `gta/gtc/gtr`, `ga/gc/gr`
+- Added a development-time warning when a breakpoint is specified on a `bp:0` property
+
+### Changed default hover color (#381)
+
+- Changed the default color of `-hov:-bgc` from `var(--base-2)` to a neutral mix (`color-mix`), so it works on both light and dark backgrounds
+- Added the `--neutral` token and removed the `-hov:neutral` class
+- Added `--hov-bgc--default` so projects can override the default
+
+### Other
+
+- Moved the `--flow` default value definition to root and set a slightly wider value for `lang="ja"`
+- Minor adjustments to base styles
+
+<Divider bds="dashed" my="40" />
+
 ## lism-css v.0.18.0 (2026.05.17)
 
 This release contains **breaking changes**.

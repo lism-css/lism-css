@@ -28,7 +28,7 @@ Smartphone ──┬── Tablet (Portrait) ──┬── Tablet (Landscape) 
 | `md` | 800px | md 以上 |
 | (`lg`) | 1120px | lg 以上 |
 
-**標準サポートは `sm` / `md` のみ。** `lg` 以降を使う場合は customize.md 参照の SCSS カスタマイズが必要です。
+**レスポンシブ対応の Property Class は、基本的に標準では `sm` / `md` まで対応。** ただし `d`（display）/ `g`（gap）/ `cols` / グリッド系（`gta` `gtc` `gtr` `ga` `gc` `gr`）など、大枠のレイアウト構造に関わる一部のプロパティは `lg` まで対応。それ以外のプロパティで `lg` 以降を使う場合は customize.md 参照の SCSS カスタマイズが必要です。
 
 例: `-d:none -d_sm:block` → デフォルト非表示、`sm` 以上で表示。
 

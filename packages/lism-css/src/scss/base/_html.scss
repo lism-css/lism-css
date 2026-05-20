@@ -8,7 +8,7 @@ body {
   letter-spacing: var(--lts--base);
   background-color: var(--base);
   color: var(--text);
-  text-underline-offset: var(--under-offset, 0.125em);
+  text-underline-offset: var(--under-offset, 0.25em);
 }
 
 /* --------------------------------------------------
@@ -71,6 +71,11 @@ kbd,
 var,
 samp {
   font-family: var(--ff--mono);
+  letter-spacing: normal;
+}
+
+:where(blockquote > p) + p {
+  margin-block-start: var(--s10);
 }
 
 q,
@@ -102,7 +107,7 @@ hr {
 // Property Class だけの ul/ol など、明示的に戻したい場合は `.set--revert` を付与する（base/set/_revert.scss）。
 :is(ul, ol):where(:not([class])) {
   list-style: revert;
-  padding-inline-start: var(--list-px-s, 1.75em);
+  padding-inline-start: var(--list-ps, 1.75em);
 }
 
 dt {

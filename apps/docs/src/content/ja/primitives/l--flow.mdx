@@ -18,9 +18,11 @@ import { DummyText } from '@lism-css/ui/astro/DummyText';
 
 | クラス名 | 余白量 |
 |---|---|
-| `l--flow` | `--flow--base` (`--s30`) |
+| `l--flow` | `--flow--base` (`--s30`、`lang="ja"` 時は `--s35`) |
 | `.l--flow.-flow:s` | `--flow--s` (`--s20`) |
 | `.l--flow.-flow:` | `--flow` |
+
+`--flow--base` / `--flow--s` は `:root` で定義されたデザイントークンです。日本語環境（`lang="ja"`）では文字密度に合わせて `--flow--base` が少し広めに上書きされます。
 
 また、見出しタグのみ余白が大きくなるようになっています。
 
@@ -167,7 +169,7 @@ import { DummyText } from '@lism-css/ui/astro/DummyText';
   </PreviewCode>
 </Preview>
 
-`l--flow`は`--flow`が未定義であれば`--flow--base`がセットされますが、ネストされていると親の値を継承することに注意してください。
+`l--flow`は`--flow`が未定義であればルートで定義された`--flow--base`がセットされますが、ネストされていると親の`--flow`を継承することに注意してください。
 
 
 ### `is--skipFlow`

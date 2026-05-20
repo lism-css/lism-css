@@ -82,25 +82,25 @@ The following properties have property classes for all spacing tokens: `5`, `10`
 | `m` | `margin` | `-m:10`, `-m:20`, ... | ○ |
 | `mx` | `margin-inline` | `-mx:10`, `-mx:20`, ... | ○ |
 | `my` | `margin-block` | `-my:10`, `-my:20`, ... | ○ |
-| `my-s` | `margin-block-start` | `-my-s:10`, `-my-s:20`, ... | ○ |
+| `mbs` | `margin-block-start` | `-mbs:10`, `-mbs:20`, ... | ○ |
 | `g` | `gap` | `-g:10`, `-g:20`, ... | ○ |
 
 `gap` also supports `inherit`.
 
 ### No Preset Classes
 
-These properties have no preset spacing-token classes, but you can still specify values via CSS custom properties (`--px-s`, etc.) or JSX props (`px-s="20"`, etc.).
+These properties have no preset spacing-token classes, but you can still specify values via CSS custom properties (`--ps`, etc.) or JSX props (`ps="20"`, etc.).
 
 | Property | CSS |
 |---|---|
-| `px-s` | `padding-inline-start` |
-| `px-e` | `padding-inline-end` |
-| `py-s` | `padding-block-start` |
-| `py-e` | `padding-block-end` |
+| `ps` | `padding-inline-start` |
+| `pe` | `padding-inline-end` |
+| `pbs` | `padding-block-start` |
+| `pbe` | `padding-block-end` |
 | `pl`, `pr`, `pt`, `pb` | Physical direction padding |
-| `mx-s` | `margin-inline-start` |
-| `mx-e` | `margin-inline-end` |
-| `my-e` | `margin-block-end` |
+| `ms` | `margin-inline-start` |
+| `me` | `margin-inline-end` |
+| `mbe` | `margin-block-end` |
 | `ml`, `mr`, `mt`, `mb` | Physical direction margin |
 | `cg` | `column-gap` |
 | `rg` | `row-gap` |
@@ -114,10 +114,10 @@ Margin properties also have `auto` property classes in addition to spacing token
 | `m` | `margin` | `-m:auto` |
 | `mx` | `margin-inline` | `-mx:auto` |
 | `my` | `margin-block` | `-my:auto` |
-| `mx-s` | `margin-inline-start` | `-mx-s:auto` |
-| `mx-e` | `margin-inline-end` | `-mx-e:auto` |
-| `my-s` | `margin-block-start` | `-my-s:auto` |
-| `my-e` | `margin-block-end` | `-my-e:auto` |
+| `ms` | `margin-inline-start` | `-ms:auto` |
+| `me` | `margin-inline-end` | `-me:auto` |
+| `mbs` | `margin-block-start` | `-mbs:auto` |
+| `mbe` | `margin-block-end` | `-mbe:auto` |
 
 
 For details on each property class, see the [Property Class](/en/docs/property-class/) reference table.

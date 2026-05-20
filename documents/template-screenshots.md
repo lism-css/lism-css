@@ -24,7 +24,7 @@ slug でも相対パスでも指定できる。
 
 ```bash
 pnpm --filter lism-docs screenshot:templates -- --target=minimal-astro
-pnpm --filter lism-docs screenshot:templates -- --target=blog/astro/simple
+pnpm --filter lism-docs screenshot:templates -- --target=blog/astro/minimal
 pnpm --filter lism-docs screenshot:templates -- --compare --target=lp-astro
 ```
 

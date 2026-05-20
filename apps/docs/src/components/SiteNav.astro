@@ -203,7 +203,7 @@ function getPostUrl(slug: string): string {
             {sectionLabel}
           </Heading>
 
-          <List class="siteNav_list" px-s="10" bd-x-s>
+          <List class="siteNav_list" ps="10" bd-s>
             {hasDirProperty(section)
               ? // dir指定の場合：ディレクトリ内の記事を自動取得
                 postsByCategory[section.dir]?.map((post) => {

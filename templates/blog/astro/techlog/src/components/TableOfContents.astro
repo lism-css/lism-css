@@ -1,0 +1,107 @@
+---
+import { Lism } from 'lism-css/astro';
+import type { TocItem as TocItemData } from '@/lib/generateToc';
+import Eyebrow from '@/components/Eyebrow.astro';
+import TocItem from '@/components/TocItem.astro';
+
+interface Props {
+  toc: TocItemData[];
+  // ラベル見出しの id。サイド版とモーダル版を同一ページに置くため、インスタンスごとに一意にする
+  labelId?: string;
+}
+
+const { toc, labelId = 'toc-label' } = Astro.props;
+---
+
+<Lism as="nav" aria-labelledby={labelId}>
+  <Eyebrow as="h2" id={labelId} class="c--toc_label" px="5" py="10" util="trim">Table of Contents</Eyebrow>
+  <Lism class="c--toc" bd-y py="20">
+    <Lism as="ol" class="c--toc_list" lh="s" fz="s" ms="1px">
+      {toc.map((item) => <TocItem item={item} />)}
+    </Lism>
+  </Lism>
+</Lism>
+
+<style is:global>
+  /* スクロール連動jsのアクティブ表示 */
+  .c--toc_list [data-is-active] {
+    color: var(--brand);
+    font-weight: var(--fw--bold);
+    border-inline-start-color: var(--brand);
+  }
+</style>
+
+<script>
+  // スクロール連動で目次のアクティブ状態を更新する
+  // 「最後に上端を通過した見出し」を active にすることで、クリック遷移直後の表示と一致させる
+  // 注: 目次はサイド版とモーダル版が同一ページに存在するため、tocLinks には同じ slug のリンクが
+  //     複数含まれる。setActive は data-toc-link 一致で全リンクに反映されるので両方に効く。
+  //     一方 headings は本文の見出し要素なので、id で重複排除して 1 見出し 1 エントリにする。
+  const tocLinks = Array.from(document.querySelectorAll<HTMLAnchorElement>('[data-toc-link]'));
+  const OFFSET = 80;
+
+  if (tocLinks.length !== 0) {
+    const seenHeadingIds: Set<string> = new Set();
+    const headings = (
+      tocLinks
+        .map((link) => {
+          const slug = link.dataset.tocLink;
+          return slug ? document.getElementById(slug) : null;
+        })
+        .filter((heading) => heading !== null) as HTMLElement[]
+    ).filter((heading) => {
+      if (seenHeadingIds.has(heading.id)) return false;
+      seenHeadingIds.add(heading.id);
+      return true;
+    });
+
+    function setActive(slug: string) {
+      tocLinks.forEach((link) => {
+        if (link.dataset.tocLink === slug) {
+          link.dataset.isActive = '';
+          link.setAttribute('aria-current', 'location');
+        } else {
+          delete link.dataset.isActive;
+          link.removeAttribute('aria-current');
+        }
+      });
+    }
+
+    function updateActive() {
+      let current: HTMLElement | null = null;
+      for (const heading of headings) {
+        if (heading.getBoundingClientRect().top - OFFSET <= 0) {
+          current = heading;
+        } else {
+          break;
+        }
+      }
+      // 最初の見出しより上にいる場合でも、最初の項目を active にしておく
+      setActive(current ? current.id : headings[0].id);
+    }
+
+    let ticking = false;
+    function onScroll() {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => {
+        updateActive();
+        ticking = false;
+      });
+    }
+
+    // クリック時は即座に active を切り替える（スクロール完了を待たない）
+    tocLinks.forEach((link) => {
+      link.addEventListener('click', () => {
+        const slug = link.dataset.tocLink;
+        if (slug) setActive(slug);
+      });
+    });
+
+    if (headings.length !== 0) {
+      window.addEventListener('scroll', onScroll, { passive: true });
+      window.addEventListener('resize', onScroll);
+      updateActive();
+    }
+  }
+</script>
