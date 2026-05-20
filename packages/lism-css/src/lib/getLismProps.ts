@@ -7,6 +7,7 @@ import isTokenValue from './isTokenValue';
 import getUtilKey from './getUtilKey';
 import getMaybeCssVar from './getMaybeCssVar';
 import getBpData from './getBpData';
+import warnUnsupportedBp from './warnUnsupportedBp';
 import atts from './helper/atts';
 import isEmptyObj from './helper/isEmptyObj';
 import filterEmptyObj from './helper/filterEmptyObj';
@@ -29,7 +30,7 @@ interface PropConfig {
   utils?: Record<string, string>;
   shorthands?: Record<string, string>;
   isVar?: number;
-  bp?: 0 | 1;
+  bp?: 0 | 1 | 'sm' | 'md' | 'lg' | 'xl';
   alwaysVar?: number;
   important?: number;
   exUtility?: Record<string, unknown>;
@@ -214,6 +215,12 @@ export class LismPropsData {
 
     // ブレイクポイント指定用のオブジェクト{base,sm,md,lg,xl}かどうかをチェック
     const { base: baseValue, ...bpValues } = getBpData(propVal);
+
+    // bp 非対応プロパティに BP 指定された場合、開発環境でのみ警告する。
+    // process.env.NODE_ENV を先頭に置き、本番ビルドではブロックごと除去されるようにする。
+    if (process.env.NODE_ENV !== 'production' && !propConfig.bp && Object.keys(bpValues).length > 0) {
+      warnUnsupportedBp(propName);
+    }
 
     // base値の処理
     this.setAttrs(propName, baseValue, propConfig);

@@ -1,4 +1,4 @@
-import { TOKENS, PROPS } from '../../../config/index';
+import { TOKENS, PROPS, BREAK_POINTS } from '../../../config/index';
 import type { WithArbitraryString, ArrayElement, ExtractArrayValues, ExtractObjectKeys, ExtractPropertyValue } from './utils';
 import type { MakeResponsive } from './ResponsiveProps';
 
@@ -71,35 +71,46 @@ type PropValueType<T> =
 // ブレイクポイント対応の判定
 // ============================================================
 
+/** bp で指定できるブレークポイント名（'lg' など個別指定用） */
+type BreakpointName = (typeof BREAK_POINTS)[number];
+
 /**
- * bp プロパティが 1 に設定されているかを判定
- * never チェックを先に行うことで、bp プロパティが存在しない場合を正しく判定
+ * bp プロパティでレスポンシブ（配列・オブジェクト形式）が有効かを判定
+ * - bp 未設定 / bp: 0 → false
+ * - bp: 1 → 全 BP からユーティリティクラス生成
+ * - bp: 'lg' 等 → 指定 BP 以降のみ（配列形式の型は bp: 1 と同様に許可）
  */
-type HasBreakpointSupport<T> = [ExtractPropertyValue<T, 'bp'>] extends [never] ? false : ExtractPropertyValue<T, 'bp'> extends 1 ? true : false;
+type HasBreakpointSupport<T> = [ExtractPropertyValue<T, 'bp'>] extends [never]
+  ? false
+  : ExtractPropertyValue<T, 'bp'> extends 0
+    ? false
+    : ExtractPropertyValue<T, 'bp'> extends 1 | BreakpointName
+      ? true
+      : false;
 
 type AllPropKeys = keyof PropsConfig;
 
 /**
- * bp: 1 が設定されているプロパティのキーを抽出
+ * bp が有効（1 またはブレークポイント名）なプロパティのキーを抽出
  */
 type PropsWithBreakpoint = {
   [K in AllPropKeys]: HasBreakpointSupport<PropsConfig[K]> extends true ? K : never;
 }[AllPropKeys];
 
 /**
- * bp: 1 が設定されていないプロパティのキーを抽出
+ * bp が無効なプロパティのキーを抽出
  */
 type PropsWithoutBreakpoint = Exclude<AllPropKeys, PropsWithBreakpoint>;
 
 /**
- * bp: 1 が設定されているプロパティの型（レスポンシブ対応あり）
+ * bp が有効なプロパティの型（レスポンシブ対応あり）
  */
 export type ResponsivePropValueTypes = {
   [K in PropsWithBreakpoint]?: PropValueType<PropsConfig[K]>;
 };
 
 /**
- * bp: 1 が設定されていないプロパティの型（レスポンシブ対応なし）
+ * bp が無効なプロパティの型（レスポンシブ対応なし）
  */
 export type NonResponsivePropValueTypes = {
   [K in PropsWithoutBreakpoint]?: PropValueType<PropsConfig[K]>;
@@ -107,13 +118,13 @@ export type NonResponsivePropValueTypes = {
 
 /**
  * PROPS 設定から生成される Props 型（レスポンシブ対応含む）
- * - bp: 1 のプロパティ: レスポンシブ対応（配列・オブジェクト形式可）
+ * - bp が有効なプロパティ: レスポンシブ対応（配列・オブジェクト形式可）
  * - bp なしのプロパティ: 単一値のみ
  * - presets/utils/token なしのプロパティ: string | number（フォールバック）
  *
  * @example
  * ```ts
- * // bp: 1 のプロパティ（fz など）
+ * // bp が有効なプロパティ（fz など）
  * fz?: 'root' | 'base' | ... | ['root', 'base'] | { base: 'root', md: 'base' }
  *
  * // bp なしのプロパティ（fw など）
