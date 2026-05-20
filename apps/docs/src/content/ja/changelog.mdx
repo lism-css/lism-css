@@ -9,6 +9,38 @@ v.1.0リリースまでしばらく激しい変更が続く可能性があるた
 
 <Divider bds="dashed" my="40" />
 
+## lism-css v.0.20.0 (2026.05.20)
+
+**破壊的変更**を含むリリースです。
+
+### 方向系 Property Class の命名整理 (#378)
+
+- inline-start / block-start などの方向プロパティを短く読みやすい新命名に統一（v0 のため後方互換 alias なし）
+- padding / margin: `px-s/px-e/py-s/py-e` → `ps/pe/pbs/pbe`、`mx-s/mx-e/my-s/my-e` → `ms/me/mbs/mbe`
+- border: `bd-x-s/bd-x-e/bd-y-s/bd-y-e` → `bd-s/bd-e/bd-bs/bd-be`
+- inset: `i-x-s/i-x-e/i-y-s/i-y-e` → `i-s/i-e/i-bs/i-be`
+- CSS変数 `--list-px-s` → `--list-ps`
+
+### ブレークポイント対応プロパティの整理 (#394)
+
+- main.css のサイズ削減のため、bp デフォルトサポートを見直し
+- bp サポート廃止: `pl/pr/pt/pb`, `ml/mr/mt/mb`, `hl`, `lts`, `cg`, `rg`, `bg`
+- bp サポートを `lg` まで拡張: `d`, `cols`, `g`, `gta/gtc/gtr`, `ga/gc/gr`
+- bp:0 のプロパティに BP 指定した際、開発時に警告を表示
+
+### hover 色のデフォルト変更 (#381)
+
+- `-hov:-bgc` のデフォルト色を `var(--base-2)` から neutral mix（`color-mix`）に変更し、ライト/ダーク両方の背景で使えるように
+- `--neutral` トークンを追加し、`-hov:neutral` クラスを廃止
+- `--hov-bgc--default` でプロジェクト側のデフォルト差し替えに対応
+
+### その他
+
+- `--flow` デフォルト値の定義位置を root へ移動し、`lang="ja"` で少し広めに設定
+- base スタイルの微調整
+
+<Divider bds="dashed" my="40" />
+
 ## lism-css v.0.18.0 (2026.05.17)
 
 **破壊的変更**を含むリリースです。
