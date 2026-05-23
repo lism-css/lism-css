@@ -237,7 +237,7 @@ function postProcessTemplate(projectDir: string, tpl: TemplateDef): void {
   }
 
   if (tpl.kind === 'single-project-variant') {
-    extractVariantPages(projectDir, tpl);
+    extractVariantFiles(projectDir, tpl);
     rewritePackageName(projectDir, tpl.packageName ?? tpl.slug);
   }
 
@@ -265,32 +265,128 @@ function cleanupDevArtifacts(projectDir: string): void {
 }
 
 /**
- * `src/pages/{variant}/` の中身を `src/pages/` 直下にマージし、
- * 他 variant ディレクトリ（自分自身も含む `src/pages/*` 配下のサブディレクトリ）を削除する。
- * variant 配下に `_style.css` 等の付随ファイルがあれば、それらも一緒に持ち上げられる。
+ * single-project-variant 用の後処理。
+ *
+ * `src/` 直下のサブディレクトリ（`src/pages/`, `src/components/`, `src/styles/`, ...）について、
+ * その中に対象 variant のディレクトリ（例: `src/components/{variant}/`）が存在するものを
+ * 「variant 規約のディレクトリ」とみなし、以下の処理を行う:
+ *
+ *   1. `src/{dir}/{variant}/` の中身を `src/{dir}/` 直下にマージ
+ *      （variant ディレクトリが空でもエラーにせず、単に何もマージしないだけ）
+ *   2. `src/{dir}/` 直下のサブディレクトリを全削除（自 variant + 他 variant をまとめて掃除）
+ *
+ * 加えて、配布ファイル内の `@/{dir}/{variant}/...` 形式の path-alias import を
+ * `@/{dir}/...` に書き換える。
+ *
+ * `src/pages/{variant}/index.astro` の存在だけは必須（無ければエラー）。
+ * その他のディレクトリ（components/styles/lib 等）では variant ディレクトリが存在しなければ
+ * 何もしない（既存ファイルはそのまま）。
  */
-function extractVariantPages(projectDir: string, tpl: SingleProjectVariantTemplateDef): void {
-  const pagesDir = path.join(projectDir, 'src', 'pages');
-  const variantDir = path.join(pagesDir, tpl.variant);
-  const variantIndex = path.join(variantDir, 'index.astro');
+function extractVariantFiles(projectDir: string, tpl: SingleProjectVariantTemplateDef): void {
+  const srcDir = path.join(projectDir, 'src');
+  const variant = tpl.variant;
 
-  if (!fs.existsSync(variantIndex)) {
+  // `src/pages/{variant}/index.astro` の存在は必須
+  const pagesVariantIndex = path.join(srcDir, 'pages', variant, 'index.astro');
+  if (!fs.existsSync(pagesVariantIndex)) {
     throw new Error(
       t('create.variantMissing', {
-        variant: tpl.variant,
-        path: `${formatTemplatePath(tpl.sourcePath)}/src/pages/${tpl.variant}/index.astro`,
+        variant,
+        path: `${formatTemplatePath(tpl.sourcePath)}/src/pages/${variant}/index.astro`,
       })
     );
   }
 
-  // variant ディレクトリの中身を src/pages/ 直下にマージ（既存ファイルは上書き）
-  mergeDirectory(variantDir, pagesDir);
+  if (!fs.existsSync(srcDir) || !fs.statSync(srcDir).isDirectory()) return;
 
-  // src/pages 直下のサブディレクトリを全て削除（選択した variant + 他の variant をまとめて掃除）
-  for (const entry of fs.readdirSync(pagesDir, { withFileTypes: true })) {
+  // `src/` 直下を走査し、variant ディレクトリを持つ parent だけ処理する
+  for (const entry of fs.readdirSync(srcDir, { withFileTypes: true })) {
     if (!entry.isDirectory()) continue;
-    fs.rmSync(path.join(pagesDir, entry.name), { recursive: true, force: true });
+    const parentDir = path.join(srcDir, entry.name); // 例: src/pages, src/components
+    const variantDirInside = path.join(parentDir, variant);
+
+    if (!fs.existsSync(variantDirInside)) continue;
+    if (!fs.statSync(variantDirInside).isDirectory()) continue;
+
+    // variant ディレクトリの中身を parent 直下にマージ（中身が空でも問題ない）
+    mergeDirectory(variantDirInside, parentDir);
+
+    // parent 直下のサブディレクトリを全て削除（自 variant も他 variant も）
+    for (const child of fs.readdirSync(parentDir, { withFileTypes: true })) {
+      if (!child.isDirectory()) continue;
+      fs.rmSync(path.join(parentDir, child.name), { recursive: true, force: true });
+    }
   }
+
+  // `@/{dir}/{variant}/...` を `@/{dir}/...` に書き換え
+  rewriteVariantAliasImports(srcDir, variant);
+}
+
+/**
+ * 配布後のファイル群に対して、path alias 経由の `@/{dir}/{variant}/...` 形式の参照を
+ * `@/{dir}/...` に置換する。variant 名にメタ文字が含まれても安全なように escape する。
+ *
+ * 対象拡張子はテキスト系のソース/スタイルのみ。マッチしないファイルはそのまま。
+ */
+const ALIAS_REWRITE_EXTENSIONS = new Set([
+  '.astro',
+  '.ts',
+  '.tsx',
+  '.js',
+  '.jsx',
+  '.mjs',
+  '.cjs',
+  '.css',
+  '.scss',
+  '.sass',
+  '.less',
+  '.md',
+  '.mdx',
+  '.vue',
+  '.svelte',
+  '.html',
+]);
+
+function rewriteVariantAliasImports(srcDir: string, variant: string): void {
+  if (!fs.existsSync(srcDir)) return;
+
+  // `@/<segment>/<variant>/` → `@/<segment>/`
+  // <segment> は `/`, クォート, 空白を含まない 1 セグメント
+  const pattern = new RegExp(`(@/[^/'"\\s\`]+)/${escapeRegExp(variant)}/`, 'g');
+
+  walkFiles(srcDir, (filePath) => {
+    const ext = path.extname(filePath);
+    if (!ALIAS_REWRITE_EXTENSIONS.has(ext)) return;
+
+    let original: string;
+    try {
+      original = fs.readFileSync(filePath, 'utf-8');
+    } catch {
+      return; // バイナリ等は無視
+    }
+    if (!original.includes(`/${variant}/`)) return; // 早期 short-circuit
+
+    const replaced = original.replace(pattern, '$1/');
+    if (replaced !== original) {
+      fs.writeFileSync(filePath, replaced);
+    }
+  });
+}
+
+function walkFiles(dir: string, callback: (filePath: string) => void): void {
+  if (!fs.existsSync(dir)) return;
+  for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+    const fp = path.join(dir, entry.name);
+    if (entry.isDirectory()) {
+      walkFiles(fp, callback);
+    } else if (entry.isFile()) {
+      callback(fp);
+    }
+  }
+}
+
+function escapeRegExp(s: string): string {
+  return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 }
 
 function printNextSteps(projectDir: string, tpl: TemplateDef): void {

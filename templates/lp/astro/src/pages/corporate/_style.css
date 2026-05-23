@@ -1,72 +1,84 @@
 @layer lism-custom {
   :root {
-    --header-h: 112px;
-    --header-h--thin: 64px;
+    --header-h--init: 96px;
+    --header-h: 64px;
+    --transition-duration: 0.25s;
+
+    scroll-padding-top: calc(var(--header-h));
   }
 
+  /* Header） */
   .z--header {
+    height: var(--header-h--init);
+    color: var(--white);
+    transition:
+      height 0.4s,
+      background-color 0.4s,
+      color 0.4s;
+  }
+
+  :root[data-scrolled] .z--header {
     height: var(--header-h);
+    background-color: var(--base);
+    color: var(--text);
+  }
+
+  /*
+    Memo: animation-timelineで実装する場合:
+    80px スクロールしてからヘッダー変化アニメーションを開始（終了は +240px スクロール地点）
+  */
+  /* .z--header {
+    --header-animRange: 80px calc(80px + 240px);
+    animation: z--header linear both;
+    animation-timeline: scroll(root);
+    animation-range: var(--header-animRange);
+  }
+  @keyframes z--header {
+    to {
+      background-color: var(--base);
+      color: var(--text);
+      height: var(--header-h);
+    }
+  } */
+
+  .z--header_subMenu {
+    opacity: var(--_notHov, 0);
+    visibility: var(--_notHov, hidden);
+    transform: var(--_isHov, translateY(8px));
+    transition-property: visibility, transform, opacity;
   }
 
   .z--headerNav_link,
   .z--header_subMenu_item > a {
     --hov-o: var(--o--pp);
+    transition-property: opacity;
   }
 
-  /* [data-has-submenu] {
-    anchor-name: --parent-anchor;
-  } */
-  .z--header_subMenu {
-    position: absolute;
-    top: 100%;
-    right: calc(0px - var(--s40)); /* header の px分寄せれる */
-    /* right: calc(0px - var(--gutter-size) / 2); */
-
-    /* @supports (anchor-name: --x) {
-      position-anchor: --parent-anchor;
-      top: anchor(bottom);
-      justify-self: anchor-center;
-      position-try-fallbacks: flip-inline;
-      position-try-order: most-width;
-    } */
-
-    opacity: var(--_notHov, 0);
-    visibility: var(--_notHov, hidden);
-    transform: var(--_isHov, translateY(8px));
-    transition:
-      visibility 0.3s ease,
-      transform 0.3s ease,
-      opacity 0.3s ease;
+  .z--header_menuNav :is(.c--accordion_icon, .a--icon) {
+    font-size: var(--fz--s);
+    opacity: var(--o--p);
   }
 
   /* モバイルメニュー: +/- を caret-right（fz--s）に近い視覚サイズへ */
   .z--header_menuNav .c--accordion_icon {
-    font-size: var(--fz--s);
     width: 1em;
     height: 1em;
-    transform: scale(0.75);
+    transform: scale(0.9);
     transform-origin: center;
   }
 
-  .z--mv {
-    height: 100svh;
-  }
   .z--mv_content {
-    top: calc(var(--header-h) / 2 * -1);
-    height: calc(100% + var(--header-h) / 2);
+    /* header分少し下げる */
+    padding-top: calc(var(--header-h) / 2);
   }
-  .z--mv_scrollDown {
-    bottom: 2rem;
-    left: 50%;
-    transform: translateX(-50%);
-  }
+
   /* スクロール促進アイコン（無限ループ・スクロール非連動） */
-  .z--mv_scrollDownIcon {
-    animation: z--mv_scrollDownIcon 2.4s infinite;
+  .c--scrollDown > .a--icon {
+    animation: scrollDown 2s infinite;
   }
-  @keyframes z--mv_scrollDownIcon {
+  @keyframes scrollDown {
     0% {
-      transform: translateY(0);
+      transform: translateY(-8px);
       opacity: 0;
     }
     50% {
@@ -81,92 +93,27 @@
   .z--about {
     isolation: isolate;
   }
-  .z--about .z--hgroup {
-    position: relative;
-    z-index: 1;
-  }
   .z--about .z--about_visuals {
     pointer-events: none;
   }
-  .z--about .z--about_frame:nth-child(1) {
+  .z--about .z--about_visual:nth-child(1) {
     top: -2rem;
-    right: 90%;
+    right: 100%;
+    translate: calc(25% - 10vw) 0;
   }
-  .z--about .z--about_frame:nth-child(2) {
+  .z--about .z--about_visual:nth-child(2) {
     top: 6rem;
-    left: 90%;
+    left: 100%;
+    translate: calc(-20% + (10vw - 80px)) 0;
   }
-  .z--about .z--about_frame:nth-child(3) {
+  .z--about .z--about_visual:nth-child(3) {
     bottom: -6rem;
-    right: 80%;
+    right: 100%;
+    translate: calc(50% - (4vw - 40px)) 0;
   }
-  @container (min-width: 800px) {
-    .z--about .z--about_frame:nth-child(1) {
-      top: -2rem;
-      right: calc(100% + 4rem);
-    }
-    .z--about .z--about_frame:nth-child(2) {
-      top: 6rem;
-      left: calc(100% + 4rem);
-    }
-    .z--about .z--about_frame:nth-child(3) {
-      bottom: -6rem;
-      right: calc(100% - 4rem);
-    }
-  }
-
-  .z--feature .z--feature_media {
-    width: 100%;
-    position: absolute;
-    top: -20%;
-    height: 140%;
-  }
-  .z--feature .z--feature_itemMedia {
-    width: 100%;
-    position: absolute;
-    top: -20%;
-    height: 140%;
-  }
-  .z--feature .z--feature_item:nth-child(even) .z--feature_itemContent {
-    justify-self: end;
-  }
-
-  @media (any-hover: hover) {
-    .-hov\:in\:zoom {
-      scale: var(--_isHov, 1.1);
-    }
-    .-hov\:in\:underline {
-      text-decoration: var(--_isHov, underline);
-    }
-  }
-
-  .z--news .z--news_media {
-    width: 100%;
-    position: absolute;
-    top: -20%;
-    height: 140%;
-  }
-
-  .z--hgroup.z--hgroup--light {
-    color: var(--white);
-  }
-  .z--hgroup .z--hgroup_subHeading {
-    position: relative;
-  }
-  .z--hgroup .z--hgroup_subHeading:before,
-  .z--hgroup .z--hgroup_subHeading:after {
-    display: block;
-    content: '';
-    width: 12px;
-    height: 1px;
-    background-color: var(--text);
-    transform-origin: center right;
-  }
-  .z--hgroup .z--hgroup_subHeading:after {
-    transform-origin: center left;
-  }
-  .z--hgroup.z--hgroup--light .z--hgroup_subHeading:before,
-  .z--hgroup.z--hgroup--light .z--hgroup_subHeading:after {
-    background-color: var(--white);
+}
+@media (any-hover: hover) {
+  .-hov\:in\:underline {
+    text-decoration: var(--_isHov, underline);
   }
 }
