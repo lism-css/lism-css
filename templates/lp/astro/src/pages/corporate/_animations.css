@@ -3,176 +3,164 @@
  * このファイルの import を外せば、ページ全体のスクロール／ビュー連動アニメーションをまとめてオフにできます。
  */
 
-:root {
-  --fadeIn-animRange: entry 0% contain 20%;
-}
+@supports (animation-timeline: scroll()) {
+  :root {
+    --fadeIn-animRange: entry 0% contain 20%;
+  }
 
-/* Fadein */
-.u--fadeIn {
-  animation: u--fadeIn linear both;
-  animation-timeline: view();
-  animation-range: var(--fadeIn-animRange);
-}
-@keyframes u--fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(32px);
+  /* Fadein */
+  .u--fadeIn {
+    animation: u--fadeIn linear both;
+    animation-timeline: view();
+    animation-range: var(--fadeIn-animRange);
   }
-  to {
-    opacity: 1;
-    transform: translateY(0);
+  @keyframes u--fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(32px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
   }
-}
 
-/* Fadein from Left: 左から横滑りで出現（news_item / feature_item 等で利用） */
-.u--fadeInL {
-  animation: u--fadeInL linear both;
-  animation-timeline: view();
-  animation-range: var(--fadeIn-animRange);
-}
-@keyframes u--fadeInL {
-  from {
-    opacity: 0;
-    transform: translateX(-16px);
+  /* Fadein from Left: 左から横滑りで出現（news_item / feature_item 等で利用） */
+  .u--fadeInL {
+    animation: u--fadeInL linear both;
+    animation-timeline: view();
+    animation-range: var(--fadeIn-animRange);
   }
-  to {
-    opacity: 1;
-    transform: translateX(0);
+  @keyframes u--fadeInL {
+    from {
+      opacity: 0;
+      transform: translateX(-16px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
   }
-}
 
-/* Background Parallax: 親に .u--bgParallax、その直下の <img> がスクロール連動で上下する背景パララックス */
-.u--bgParallax {
-  view-timeline: --bgParallax y;
-}
-.u--bgParallax > img {
-  width: 100%;
-  height: 140%;
-  position: absolute;
-  top: -20%;
-  animation: bgParallax linear both;
-  animation-timeline: --bgParallax;
-  animation-range: entry 0% cover 100%;
-}
-@keyframes bgParallax {
-  from {
-    transform: translateY(-10%);
+  /* Background Parallax: 親に .u--bgParallax、その直下の <img> がスクロール連動で上下する背景パララックス */
+  .u--bgParallax {
+    view-timeline: --bgParallax y;
   }
-  to {
-    transform: translateY(10%);
+  .u--bgParallax > img {
+    width: 100%;
+    height: 140%;
+    position: absolute;
+    top: -20%;
+    animation: bgParallax linear both;
+    animation-timeline: --bgParallax;
+    animation-range: entry 0% cover 100%;
   }
-}
+  @keyframes bgParallax {
+    from {
+      transform: translateY(-10%);
+    }
+    to {
+      transform: translateY(10%);
+    }
+  }
 
-/* Pull Back: スクロール連動でカメラが引くように scale(1.2)→1（timeline / range は CSS 変数で上書き可） */
-.u--pullBack {
-  animation: pullBack linear both;
-  animation-timeline: var(--pullBack-timeline, view());
-  animation-range: var(--pullBack-animRange, var(--fadeIn-animRange));
-}
-.l--frame:has(> .u--pullBack) {
-  view-timeline: --pullBack-frame y;
-  --pullBack-timeline: --pullBack-frame;
-}
-@keyframes pullBack {
-  from {
-    filter: blur(12px);
-    transform: scale(1.1);
+  /* Pull Back: スクロール連動でカメラが引くように scale(1.2)→1（timeline / range は CSS 変数で上書き可） */
+  .u--pullBack {
+    animation: pullBack linear both;
+    animation-timeline: var(--pullBack-timeline, view());
+    animation-range: var(--pullBack-animRange, var(--fadeIn-animRange));
   }
-  to {
-    filter: blur(0);
-    transform: scale(1);
+  .l--frame:has(> .u--pullBack) {
+    view-timeline: --pullBack-frame y;
+    --pullBack-timeline: --pullBack-frame;
   }
-}
+  @keyframes pullBack {
+    from {
+      filter: blur(12px);
+      transform: scale(1.1);
+    }
+    to {
+      filter: blur(0);
+      transform: scale(1);
+    }
+  }
 
-/* MV: スクロールで先頭セクション全体をぼかし＋拡大 */
-.z--mv {
-  --mv-animRange: 0px 100svh;
-  animation: z--mv linear both;
-  animation-timeline: scroll(root);
-  animation-range: var(--mv-animRange);
-}
-@keyframes z--mv {
-  from {
-    filter: blur(0px);
-    opacity: 1;
+  /* MV: スクロールで先頭セクション全体をぼかし＋拡大 */
+  .z--mv {
+    view-timeline: --mv y;
+    animation: z--mv linear both;
+    animation-timeline: --mv;
+    animation-range: exit;
   }
-  to {
-    filter: blur(16px);
-    opacity: 0;
-    transform: scale(1.05);
+  @keyframes z--mv {
+    from {
+      filter: blur(0px);
+      opacity: 1;
+    }
+    to {
+      filter: blur(16px);
+      opacity: 0;
+      transform: scale(1.05);
+    }
   }
-}
-.z--mv_media {
-  animation: z--mv_media linear both;
-  animation-timeline: scroll(root);
-  animation-range: var(--mv-animRange);
-}
-@keyframes z--mv_media {
-  from {
-    transform: translateY(0);
+  .z--mv_media {
+    animation: z--mv_media linear both;
+    animation-timeline: --mv;
+    animation-range: exit;
   }
-  to {
-    transform: translateY(15%);
+  @keyframes z--mv_media {
+    from {
+      transform: translateY(0);
+    }
+    to {
+      transform: translateY(15%) scale(1.1);
+    }
   }
-}
-.z--mv_content {
-  animation: z--mv_content linear both;
-  animation-timeline: scroll(root);
-  animation-range: var(--mv-animRange);
-}
-@keyframes z--mv_content {
-  from {
-    transform: scale(1);
+  .z--mv_content {
+    animation: z--mv_content linear both;
+    animation-timeline: --mv;
+    animation-range: exit;
   }
-  to {
-    transform: scale(1.2);
+  @keyframes z--mv_content {
+    from {
+      transform: scale(1);
+    }
+    to {
+      transform: scale(1.2);
+    }
   }
-}
-.c--scrollDown {
-  animation: c--scrollDown linear both;
-  animation-timeline: scroll(root);
-  animation-range: var(--mv-animRange);
-}
-@keyframes c--scrollDown {
-  from {
-    opacity: 1;
-  }
-  to {
-    opacity: 0;
-    transform: translateY(50%);
-  }
-}
 
-/* Section title */
-.c--sectionHeading {
-  animation: c--sectionHeading linear both;
-  view-timeline: --c--sectionHeading y;
-  animation-timeline: --c--sectionHeading;
-  animation-range: var(--fadeIn-animRange);
-}
-.c--sectionHeading > :not([lang='en']):before,
-.c--sectionHeading > :not([lang='en']):after {
-  animation: c--sectionHeading_beforeAfter linear both;
-  animation-timeline: --c--sectionHeading;
-  animation-range: contain 5% contain 35%;
-}
-@keyframes c--sectionHeading {
-  from {
-    opacity: 0;
-    letter-spacing: 0em;
-    transform: translateY(32px);
+  /* Section Heading */
+  .c--sectionHeading {
+    animation: c--sectionHeading linear both;
+    view-timeline: --c--sectionHeading y;
+    animation-timeline: --c--sectionHeading;
+    animation-range: var(--fadeIn-animRange);
   }
-  to {
-    opacity: 1;
-    letter-spacing: var(--lts--xl);
-    transform: translateY(0);
+  .c--sectionHeading > :not([lang='en']):before,
+  .c--sectionHeading > :not([lang='en']):after {
+    animation: c--sectionHeading_beforeAfter linear both;
+    animation-timeline: --c--sectionHeading;
+    animation-range: contain 5% contain 35%;
   }
-}
-@keyframes c--sectionHeading_beforeAfter {
-  from {
-    transform: scaleX(0);
+  @keyframes c--sectionHeading {
+    from {
+      opacity: 0;
+      letter-spacing: 0em;
+      transform: translateY(32px);
+    }
+    to {
+      opacity: 1;
+      letter-spacing: var(--lts--xl);
+      transform: translateY(0);
+    }
   }
-  to {
-    transform: scaleX(1);
+  @keyframes c--sectionHeading_beforeAfter {
+    from {
+      transform: scaleX(0);
+    }
+    to {
+      transform: scaleX(1);
+    }
   }
 }
