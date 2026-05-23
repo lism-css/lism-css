@@ -13,11 +13,11 @@ import {
   Frame,
   Grid,
   Heading,
+  Media,
   Icon,
   Inline,
   Layer,
   Link,
-  Lism,
   Stack,
   Text,
 } from 'lism-css/astro';
@@ -32,62 +32,16 @@ import './_animations.css';
 
 export const title = 'Corporate LP';
 
-const mvImage = {
-  // src: 'https://cdn.lism-css.com/img/u-WFUSqJTxVc.jpg',
-  src: 'https://cdn.lism-css.com/img/building/u-hP6H5U7oIG.jpg',
-  alt: 'Beautiful Landscape',
-  width: 1920,
-  height: 1080,
-};
+const mvImage = 'https://cdn.lism-css.com/img/building/u-hP6H5U7oIG.jpg';
 
 const aboutPhotos = [
-  {
-    src: 'https://cdn.lism-css.com/random/img/?category=working&r=1',
-    alt: 'Beautiful Landscape',
-    width: 800,
-    height: 600,
-  },
-  {
-    src: 'https://cdn.lism-css.com/random/img/?category=office&r=2',
-    alt: 'Beautiful Landscape',
-    width: 800,
-    height: 600,
-  },
-  {
-    src: 'https://cdn.lism-css.com/random/img/?r=3',
-    alt: 'Beautiful Landscape',
-    width: 800,
-    height: 600,
-  },
-] as const;
-
-/** Feature セクションと同じオーバーレイ（filter + hsl、背後の写真に程よく色が残る） */
-const aboutPhotoOverlay = {
-  filter: 'grayscale(1)',
-  backgroundColor: 'hsl(224 4% 99% / 0.85)',
-};
-
-const featureHero = {
-  src: 'https://cdn.lism-css.com/img/a-LPfuOf7uEY.jpg',
-  alt: 'Beautiful Landscape',
-  width: 960,
-  height: 640,
-};
-
-const featureDefaultCardImageMeta = {
-  alt: 'Beautiful Landscape',
-  width: 960,
-  height: 540,
-} as const;
+  'https://cdn.lism-css.com/random/img/?category=working&r=1',
+  'https://cdn.lism-css.com/random/img/?category=office&r=2',
+  'https://cdn.lism-css.com/random/img/?r=3',
+];
 
 /** 2列（md+）: 奇数カード [画像|テキスト]、偶数 [テキスト|画像]（gta+ga。参考: l--grid） */
-type FeatureCard = {
-  src: string;
-  title: string;
-  body: string;
-};
-
-const featureCards: FeatureCard[] = [
+const featureCards = [
   {
     src: 'https://cdn.lism-css.com/random/img/?r=service1',
     title: 'レイアウト設計サポート',
@@ -109,12 +63,6 @@ const featureCards: FeatureCard[] = [
     body: '公式のエコシステム表では、@lism-css/ui にアコーディオンやタブ、ボタン等のUIコンポーネント、lism-cli に UI をプロジェクトへコピーしてカスタマイズする CLI が並んでいます。React やAstro 向けの専用コンポーネント利用も、同じ概要で「より快適に」と紹介されている導入です。',
   },
 ];
-
-const worksDefaultImage = {
-  alt: 'Beautiful Landscape',
-  width: 960,
-  height: 540,
-} as const;
 
 const worksItems = [
   {
@@ -149,14 +97,8 @@ const worksItems = [
   },
 ];
 
-const newsBg = {
-  src: 'https://cdn.lism-css.com/img/a-VrLsGK9j0R.jpg',
-  alt: '',
-  width: 960,
-  height: 640,
-};
-
-const newsRows = [
+const newsBg = 'https://cdn.lism-css.com/img/a-VrLsGK9j0R.jpg';
+const newsItems = [
   {
     date: '2026.03.18',
     title: 'エコシステム紹介：@lism-css/uiの位置づけ',
@@ -188,7 +130,7 @@ const newsRows = [
 ];
 
 /** 各項目は質問・回答とも別テキストを想定 */
-const faqItems: { question: string; answer: string }[] = [
+const faqItems = [
   {
     question: 'Lism CSSとは何ですか？',
     answer:
@@ -221,13 +163,7 @@ const faqItems: { question: string; answer: string }[] = [
   },
 ];
 
-const testimonialsDefaultAvatar = {
-  width: 256,
-  height: 256,
-  alt: '',
-} as const;
-
-const testimonialsAvatars = [
+const testimonials = [
   {
     title: 'レビュー観点が揃い、差分が小さくなった',
     meta: '東京都 / 30代 / フロントエンドエンジニア',
@@ -266,7 +202,7 @@ const testimonialsAvatars = [
   },
 ];
 
-const informationRows: { term: string; description: string }[] = [
+const informations = [
   {
     term: '運営名',
     description: 'Lism CSS プロジェクト（デモ掲載用の架空組織）',
@@ -291,43 +227,27 @@ const informationRows: { term: string; description: string }[] = [
   },
 ];
 
-const informationMapEmbed = {
-  src: 'https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d7654.831243350634!2d139.76655044358094!3d35.68079012010135!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sja!2sjp!4v1769675880883!5m2!1sja!2sjp',
-  width: 1200,
-  height: 600,
-} as const;
+const mapSrc =
+  'https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d7654.831243350634!2d139.76655044358094!3d35.68079012010135!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sja!2sjp!4v1769675880883!5m2!1sja!2sjp';
 
-const contactBg = {
-  src: 'https://cdn.lism-css.com/img/building/u-SH9josk706.jpg',
-  alt: '',
-  width: 960,
-  height: 640,
-};
+const contactBg = 'https://cdn.lism-css.com/img/building/u-SH9josk706.jpg';
 
 const footerSnsLinks = [
   { href: '#', icon: 'logo-x' as const, label: 'X' },
   { href: '#', icon: 'logo-instagram' as const, label: 'Instagram' },
   { href: '#', icon: 'logo-youtube' as const, label: 'YouTube' },
-] as const;
+];
 ---
 
 <Layout title={title}>
   <div>
     <!-- Header -->
     <Header />
-    <!-- Main Content -->
+    <!-- Main -->
     <Container as="main" class="z--main">
       <Box class="z--mv" pos="relative" pos="relative" h="min(100svh,200vw)">
         <Frame class="z--mv_frame" isLayer>
-          <Lism
-            as="img"
-            class="z--mv_media"
-            src={mvImage.src}
-            alt={mvImage.alt}
-            w="100%"
-            h="100%"
-            exProps={{ width: mvImage.width, height: mvImage.height, loading: 'eager' }}
-          />
+          <Media class="z--mv_media" src={mvImage} alt="" w="100%" h="100%" width="960" height="640" loading="eager" />
           <Layer
             style={{
               backdropFilter: 'grayscale(25%)',
@@ -353,15 +273,7 @@ const footerSnsLinks = [
               aboutPhotos.map((photo, i) => (
                 <Box class="z--about_visual u--pullBack" pos="absolute" w={i === 0 ? '20rem' : '16rem'}>
                   <Frame class="u--bgParallax" pos="relative" ar="4/3" bdrs="20">
-                    <Lism
-                      as="img"
-                      src={photo.src}
-                      alt={photo.alt}
-                      w="100%"
-                      h="100%"
-                      exProps={{ width: photo.width, height: photo.height, loading: 'lazy', decoding: 'async' }}
-                    />
-                    <Layer style={aboutPhotoOverlay} />
+                    <Media src={photo} alt="" width="800" height="600" loading="lazy" o="ppp" />
                   </Frame>
                 </Box>
               ))
@@ -389,15 +301,6 @@ const footerSnsLinks = [
       </Container>
 
       <Box id="feature" class="z--feature" pos="relative" bgc="base-2">
-        <!-- <Frame isLayer class="u--bgParallax">
-          <Lism
-            as="img"
-            src={featureHero.src}
-            alt={featureHero.alt}
-            exProps={{ width: featureHero.width, height: featureHero.height, loading: 'lazy', decoding: 'async' }}
-          />
-        </Frame>
-        <Layer bgc="base:80%" style={{ backdropFilter: 'grayscale(50%)' }} /> -->
         <Container isWrapper="l" py="60" hasGutter>
           <Stack g="40">
             <SectionHeading en="Feature" ja="Lism CSSの特徴" />
@@ -407,17 +310,7 @@ const footerSnsLinks = [
                   return (
                     <WithSide sideW="40%" mainW="24rem" class="z--feature_item u--fadeInL" g={['30', null, '40']} ai="center">
                       <Frame isSide ar="16/9" pos="relative" bdrs="20" class="u--bgParallax">
-                        <Lism
-                          as="img"
-                          src={card.src}
-                          alt={featureDefaultCardImageMeta.alt}
-                          exProps={{
-                            width: featureDefaultCardImageMeta.width,
-                            height: featureDefaultCardImageMeta.height,
-                            loading: 'lazy',
-                            decoding: 'async',
-                          }}
-                        />
+                        <Media src={card.src} alt="" width="960" height="540" loading="lazy" />
                       </Frame>
                       <Stack g="30">
                         <Heading level="3" fz="l" util="trim">
@@ -447,17 +340,7 @@ const footerSnsLinks = [
               worksItems.map((item) => (
                 <BoxLink class="z--works_item u--fadeIn" href="#" layout="stack" set="var:hov" g="20">
                   <Frame class="z--works_frame" ar="16/9" pos="relative" bdrs="20">
-                    <Lism
-                      as="img"
-                      class="u--pullBack"
-                      src={item.src}
-                      alt={worksDefaultImage.alt}
-                      width={worksDefaultImage.width}
-                      height={worksDefaultImage.height}
-                      loading="lazy"
-                      hasTransition
-                      hov="in:zoom"
-                    />
+                    <Media class="u--pullBack" src={item.src} alt="" width="960" height="540" loading="lazy" hasTransition hov="in:zoom" />
                     <Layer layout="center" hasTransition hov="in:show" h="100%" c="white" bgc="black:30%" style={{ backdropFilter: 'blur(4px)' }}>
                       <Inline fz="xl" fs="italic" fw="light" lts="l">
                         View More
@@ -481,14 +364,14 @@ const footerSnsLinks = [
 
       <Box id="news" class="z--news" pos="relative">
         <Frame isLayer class="u--bgParallax">
-          <Lism as="img" src={newsBg.src} alt={newsBg.alt} width={newsBg.width} height={newsBg.height} loading="lazy" />
+          <Media src={newsBg} alt="" width="960" height="640" loading="lazy" />
         </Frame>
         <Layer bgc="black:75%" style={{ backdropFilter: 'grayscale(20%)' }} />
         <Container isWrapper layout="stack" g="40" py="60" hasGutter c="white">
           <SectionHeading en="News" ja="お知らせ" />
           <Stack g="30">
             {
-              newsRows.map((row) => (
+              newsItems.map((row) => (
                 <BoxLink
                   class="z--news_item u--fadeInL"
                   href="#"
@@ -539,18 +422,11 @@ const footerSnsLinks = [
         <SectionHeading en="Testimonials" ja="お客様の声" />
         <AutoColumns cols="20rem" g="40">
           {
-            testimonialsAvatars.map((item) => (
+            testimonials.map((item) => (
               <Grid class="z--testimonials_item u--fadeIn" gtr="subgrid" gr="span 3" g="30">
                 <Flex ai="center" g="20">
                   <Frame as="figure" ar="1/1" w="3.5rem" fxsh="0" bdrs="99">
-                    <Lism
-                      as="img"
-                      src={item.src}
-                      alt={testimonialsDefaultAvatar.alt}
-                      width={testimonialsDefaultAvatar.width}
-                      height={testimonialsDefaultAvatar.height}
-                      loading="lazy"
-                    />
+                    <Media src={item.src} alt="" width="256" height="256" loading="lazy" />
                   </Frame>
                   <Stack w="stretch" g="15">
                     <Heading level="3" class="u--trim" fz="m" lh="s">
@@ -574,7 +450,7 @@ const footerSnsLinks = [
         <SectionHeading en="Information" ja="企業情報" />
         <Grid as="dl" class="u--divide u--fadeIn" gtc="auto 1fr">
           {
-            informationRows.map((row) => (
+            informations.map((row) => (
               <Grid gtc="subgrid" gc="1/-1" py="30" px="15" g={['30', null, '40']}>
                 <dt class="u--trim">{row.term}</dt>
                 <dd class="u--trim">{row.description}</dd>
@@ -584,9 +460,9 @@ const footerSnsLinks = [
         </Grid>
         <Frame class="u--fadeIn" ar={['3/2', '16/9', '5/2']}>
           <iframe
-            src={informationMapEmbed.src}
-            width={informationMapEmbed.width}
-            height={informationMapEmbed.height}
+            src={mapSrc}
+            width="1200"
+            height="600"
             style="border:0;"
             allowfullscreen=""
             loading="lazy"
@@ -596,7 +472,7 @@ const footerSnsLinks = [
 
       <Box id="contact" class="z--contact" pos="relative">
         <Frame isLayer class="u--bgParallax">
-          <Lism as="img" src={contactBg.src} alt={contactBg.alt} width={contactBg.width} height={contactBg.height} loading="lazy" />
+          <Media src={contactBg} alt="" width="960" height="640" loading="lazy" />
         </Frame>
         <Layer style={{ backgroundColor: 'hsl(0 0% 0% / 0.75)' }} />
         <Container isWrapper="s" layout="center" g="40" pos="relative" c="white" py="60" min-h="65vh" hasGutter>
