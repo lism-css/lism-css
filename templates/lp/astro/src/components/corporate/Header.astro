@@ -28,7 +28,7 @@ const headerOthersNavItems = [
       </Link>
     </Stack>
     <Flex jc="fe" g="30">
-      <List class="z--headerNav" layout="flex" d={['none', null, 'flex']} ai="c" g="30" lts="l">
+      <List class="z--headerNav" layout="flex" d={['none', null, 'flex']} ai="center" g="30" lts="l">
         {
           headerNavItems.map(({ href, en }) => (
             <ListItem>
@@ -39,7 +39,7 @@ const headerOthersNavItems = [
           ))
         }
         <ListItem set="var:hov" pos="relative" data-has-submenu>
-          <Link class="z--headerNav_link" href="#others" set="plain" hasTransition d="inline-flex" g="10" ai="c" o="mp" px="0" py="10" hov="-o">
+          <Link class="z--headerNav_link" href="#others" set="plain" hasTransition d="inline-flex" g="10" ai="center" o="mp" px="0" py="10" hov="-o">
             Others
             <Icon icon="caret-down" fz="s" o="p" />
           </Link>
@@ -71,7 +71,7 @@ const headerOthersNavItems = [
           <Stack class="z--header_menuNav u--divide" bd-y>
             {
               headerNavItems.map(({ href, en }) => (
-                <BoxLink href={href} layout="grid" gtc="1fr auto" ai="c" fz="l" td="none" py="15" px="5">
+                <BoxLink href={href} layout="grid" gtc="1fr auto" ai="center" fz="l" td="none" py="15" px="5">
                   <Inline>{en}</Inline>
                   <Icon icon="caret-right" />
                 </BoxLink>
@@ -80,7 +80,7 @@ const headerOthersNavItems = [
             <Accordion.Root>
               <Accordion.Item>
                 <Accordion.Heading p="0" w="100%">
-                  <Accordion.Button fz="l" py="15" px="5" w="100%" td="none" g="0" ai="c" ta="left">
+                  <Accordion.Button fz="l" py="15" px="5" w="100%" td="none" g="0" ai="center" ta="left">
                     <Inline>Others</Inline>
                   </Accordion.Button>
                 </Accordion.Heading>
@@ -88,7 +88,7 @@ const headerOthersNavItems = [
                   <Stack class="z--header_menuNav_sub u--divide" ml="20" p="0" ov="clip">
                     {
                       headerOthersNavItems.map(({ href, en }) => (
-                        <BoxLink href={href} layout="grid" gtc="1fr auto" ai="c" fz="l" td="none" py="15" px="5">
+                        <BoxLink href={href} layout="grid" gtc="1fr auto" ai="center" fz="l" td="none" py="15" px="5">
                           <Inline>{en}</Inline>
                           <Icon icon="caret-right" />
                         </BoxLink>

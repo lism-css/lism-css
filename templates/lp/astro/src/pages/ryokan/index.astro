@@ -435,8 +435,8 @@ const reservationSites: readonly SiteCard[] = [
               {logoLabel}
             </Link>
           </Stack>
-          <Flex class="z--ryokan-header_actions" jc="fe" g="20" ai="c">
-            <Flex class="z--ryokan-headerNav" as="ul" d={['none', null, 'inline-flex']} ai="c" p="0" fxw="nowrap" g={['15', null, '30']}>
+          <Flex class="z--ryokan-header_actions" jc="fe" g="20" ai="center">
+            <Flex class="z--ryokan-headerNav" as="ul" d={['none', null, 'inline-flex']} ai="center" p="0" fxw="nowrap" g={['15', null, '30']}>
               {
                 headerNavItems.map(({ href, ja, en }) => (
                   <ListItem>
@@ -444,7 +444,7 @@ const reservationSites: readonly SiteCard[] = [
                       class="z--ryokan-headerNav_link"
                       href={href}
                       d="grid"
-                      jc="c"
+                      jc="center"
                       ji="c"
                       td="none"
                       py="10"
@@ -464,7 +464,7 @@ const reservationSites: readonly SiteCard[] = [
               }
             </Flex>
             <Modal.OpenBtn modalId="ryokan-menu" d={['block', null, 'none']}>
-              <Center p="5" ai="c" jc="c">
+              <Center p="5" ai="center" jc="center">
                 <Icon icon="menu" c="white" fz="2xl" aria-hidden="true" />
               </Center>
             </Modal.OpenBtn>
@@ -480,7 +480,7 @@ const reservationSites: readonly SiteCard[] = [
             {
               headerNavItems.map(({ href, ja, en }) => (
                 <ListItem>
-                  <BoxLink href={href} layout="grid" gtc="1fr auto" ai="c" fz="l" td="none" py="15" px="5" w="100%">
+                  <BoxLink href={href} layout="grid" gtc="1fr auto" ai="center" fz="l" td="none" py="15" px="5" w="100%">
                     <Stack g="5">
                       <Inline>{ja}</Inline>
                       <Inline as="span" class="z--ryokan-header_menuNav_en" fz="s" o="pp">
@@ -493,7 +493,7 @@ const reservationSites: readonly SiteCard[] = [
               ))
             }
             <ListItem>
-              <BoxLink href="#reservation" layout="grid" gtc="1fr auto" ai="c" fz="l" td="none" py="15" px="5" w="100%">
+              <BoxLink href="#reservation" layout="grid" gtc="1fr auto" ai="center" fz="l" td="none" py="15" px="5" w="100%">
                 <Stack g="5">
                   <Inline>ご予約はこちら</Inline>
                   <Inline as="span" class="z--ryokan-header_menuNav_en" fz="s" o="pp"> Reservation </Inline>
@@ -545,8 +545,8 @@ const reservationSites: readonly SiteCard[] = [
         <Stack
           pos="relative"
           z="1"
-          ai="c"
-          jc="c"
+          ai="center"
+          jc="center"
           g="0"
           w="100%"
           p="0"

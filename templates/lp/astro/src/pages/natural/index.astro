@@ -3,8 +3,6 @@ import Layout from '@/layouts/Layout.astro';
 import {
   AutoColumns,
   Box,
-  BoxLink,
-  Center,
   Cluster,
   Container,
   Flex,
@@ -15,7 +13,6 @@ import {
   Inline,
   Layer,
   Link,
-  Lism,
   ListItem,
   Media,
   Stack,
@@ -24,56 +21,12 @@ import {
 } from 'lism-css/astro';
 import { Accordion } from '@lism-css/ui/astro/Accordion';
 import { Avatar } from '@lism-css/ui/astro/Avatar';
-import { Button } from '@lism-css/ui/astro/Button';
-import { Modal } from '@lism-css/ui/astro/Modal';
+import Header from '@/components/natural/Header.astro';
+import SectionHeading from '@/components/natural/SectionHeading.astro';
+
 import './_style.css';
 
 export const title = 'Simple Natural LP';
-
-/** デスクトップ上部ナビ（5件） */
-const headerPrimaryNavItems = [
-  { href: '#mission', ja: 'ミッション', en: 'Mission' },
-  { href: '#feature', ja: '特長', en: 'Feature' },
-  { href: '#service', ja: 'サービス', en: 'Service' },
-  { href: '#step', ja: 'ご依頼の流れ', en: 'Step' },
-  { href: '#voice', ja: 'お客様の声', en: 'Voice' },
-] as const;
-
-/** モバイルドロワー内の全アンカー（デスクトップ行とは構成が異なる） */
-const headerMenuNavItems = [
-  { href: '#top', ja: 'トップ', en: 'Top' },
-  { href: '#mission', ja: 'ミッション', en: 'Mission' },
-  { href: '#message', ja: 'コーディネート', en: 'Message' },
-  { href: '#feature', ja: '特長', en: 'Feature' },
-  { href: '#service', ja: 'サービス', en: 'Service' },
-  { href: '#step', ja: 'ご依頼の流れ', en: 'Step' },
-  { href: '#voice', ja: 'お客様の声', en: 'Voice' },
-  { href: '#faq', ja: 'よくあるご質問', en: 'FAQ' },
-  { href: '#contact', ja: 'お問い合わせ', en: 'Contact' },
-] as const;
-
-const mvImage = {
-  src: 'https://cdn.lism-css.com/img/room/a-Rrr1UZO5Ji.jpg',
-  alt: '赤いソファと観葉植物のあるモダンなリビング',
-  width: 1920,
-  height: 1080,
-} as const;
-
-const missionImage = {
-  src: 'https://cdn.lism-css.com/img/room/u-MojU9rQhZn.jpg',
-  alt: '日差しの入るリビング。ソファ、ラグ、大きな窓と観葉植物のある室内',
-  width: 1920,
-  height: 1280,
-} as const;
-
-const missionBody =
-  '暮らしの形は、家族構成も予算も理想もそれぞれ違います。LISM Lifeは、賃貸でも戸建てでも、日々の暮らし方や悩みを丁寧にお伺いし、家具の選び方からコーディネート、必要に応じた配置やお手伝いまでを一貫して支えます。雑誌の切り抜きがなくても、イメージのかけらから具体的な部屋づくりへと一緒に形にします。小さな相談と本格的な部屋作り、どちらも「自分らしい住みよさ」へつながる一歩になればと考えています。';
-
-/**
- * 1・2 行目のテキスト列の最大幅（Lism `max-sz`）。
- * 従来の「列いっぱい」に戻す: `undefined` にして保存（または `max-sz={mission2TextMaxSz}` 2 行を削除）。
- */
-const mission2TextMaxSz: 's' | undefined = 's';
 
 /** ヘッダー主ナビと同一5件 */
 const footerPrimaryNavItems = [
@@ -82,82 +35,68 @@ const footerPrimaryNavItems = [
   { href: '#service', ja: 'サービス', en: 'Service' },
   { href: '#step', ja: 'ご依頼の流れ', en: 'Step' },
   { href: '#voice', ja: 'お客様の声', en: 'Voice' },
-] as const;
+];
 
 const footerSnsLinks = [
   { href: '#', icon: 'logo-x' as const, label: 'X' },
   { href: '#', icon: 'logo-instagram' as const, label: 'Instagram' },
   { href: '#', icon: 'logo-youtube' as const, label: 'YouTube' },
   { href: '#', icon: 'logo-line' as const, label: 'LINE' },
-] as const;
+];
+
+const mvImage = {
+  src: 'https://cdn.lism-css.com/img/room/a-Rrr1UZO5Ji.jpg',
+  alt: '赤いソファと観葉植物のあるモダンなリビング',
+};
+
+const missionImage = {
+  src: 'https://cdn.lism-css.com/img/room/u-MojU9rQhZn.jpg',
+  alt: '日差しの入るリビング。ソファ、ラグ、大きな窓と観葉植物のある室内',
+};
+
+const missionBody =
+  '暮らしの形は、家族構成も予算も理想もそれぞれ違います。LISM Lifeは、賃貸でも戸建てでも、日々の暮らし方や悩みを丁寧にお伺いし、家具の選び方からコーディネート、必要に応じた配置やお手伝いまでを一貫して支えます。雑誌の切り抜きがなくても、イメージのかけらから具体的な部屋づくりへと一緒に形にします。小さな相談と本格的な部屋作り、どちらも「自分らしい住みよさ」へつながる一歩になればと考えています。';
 
 const featureImage = {
   src: 'https://cdn.lism-css.com/img/room/u-jh2GpjGKEp.jpg',
   alt: '明るいリビングにイエローのアームチェアとフロアランプが置かれたインテリア',
-  width: 1600,
-  height: 1067,
 };
 
-/** Lism プリセットアイコン名（ https://lism-css.com/docs/primitives/a--icon/ ） */
-type FeatureCardIcon =
-  | 'home'
-  | 'heart'
-  | 'calendar'
-  | 'book'
-  | 'chat'
-  | 'tag'
-  | 'clock'
-  | 'lightbulb'
-  | 'cart'
-  | 'star'
-  | 'bookmark'
-  | 'user'
-  | 'gear'
-  | 'arrow-right';
-
 /** カードごとの表示内容（タイトル・本文・アイコンを独立して管理） */
-const featureCards: { title: string; body: string; icon: FeatureCardIcon }[] = [
+const featureCards = [
   {
-    icon: 'home',
+    icon: 'home' as const,
     title: '賃貸でも戸建てでも、住まいの形に合わせる',
     body: '入居期間や間取り、子どもやペットの有無に応じたご提案を心がけています。既製の家具同士の組み合わせから、小さなスペースの活かし方まで、状況に合わせて一緒に考えます。',
   },
   {
-    icon: 'heart',
+    icon: 'heart' as const,
     title: '悩み相談から、コーディネートまで一貫して',
     body: '雑多な要望の整理、色や素材の方向性づくり、具体的な品の候補づくりまで、必要な深さに合わせて伴走します。相談だけのご利用と、手配・設置のお願いまで、幅のある対応が可能です。',
   },
   {
-    icon: 'arrow-right',
+    icon: 'arrow-right' as const,
     title: '多様な取り扱いと、自社アイテムのご案内',
     body: '暮らし方に合わせ、多様なブランドを扱い、自社企画の家具や小物のご紹介も行っています。価帯やデザインの好みに応じ、選び方の比較もお手伝いします。',
   },
   {
-    icon: 'book',
+    icon: 'book' as const,
     title: '予算と目的に合わせた、無理のない段取り',
     body: 'まず手を入れたい場所から整える、将来に備え徐々に揃えるといった段階のご相談も歓迎です。想定おおよその費用感の整理や、優先度の相談にもお答えします。',
   },
   {
-    icon: 'chat',
+    icon: 'chat' as const,
     title: '打ち合わせは来店、オンライン、お電話のいずれも可',
     body: '日々の予定に合わせ、ヒアリングの仕方を選べます。写真や図面をお持ちの場合は共有いただくと、打ち合わせが円滑です。遠方の方も、まずは内容を伺うところから始められます。',
   },
 ];
 
-const heroImage = {
+const serviceLeadImage = {
   src: 'https://cdn.lism-css.com/img/room/a-6wASe0C2nM.jpg',
   alt: '花の額、木机とパソコン。本棚付き日当たりの良い在宅デスク',
-  width: 1920,
-  height: 1280,
 };
 
-const serviceSubCards: {
-  index: string;
-  titleJa: string;
-  titleEn: string;
-  body: string;
-  image: { src: string; alt: string; width: number; height: number };
-}[] = [
+const serviceSubCards = [
   {
     index: '01',
     titleJa: '要望の幅に合わせる',
@@ -166,8 +105,6 @@ const serviceSubCards: {
     image: {
       src: 'https://cdn.lism-css.com/img/room/u-M1jaFJaeKW.jpg',
       alt: '白ソファ、黄色系額9枚、カラークッション、フロア灯。明るいリビング',
-      width: 1920,
-      height: 1282,
     },
   },
   {
@@ -178,8 +115,6 @@ const serviceSubCards: {
     image: {
       src: 'https://cdn.lism-css.com/img/room/u-muaD49UlYx.jpg',
       alt: '木ベッド、白木のナイトと卓上灯。グレー壁の寝室',
-      width: 1920,
-      height: 1280,
     },
   },
   {
@@ -190,8 +125,6 @@ const serviceSubCards: {
     image: {
       src: 'https://cdn.lism-css.com/img/room/u-8HzizEUdqH.jpg',
       alt: '木天井と間接灯、L字ソファ、大理石風ローテーブル、本棚。広めのリビング',
-      width: 1920,
-      height: 1283,
     },
   },
 ];
@@ -199,25 +132,15 @@ const serviceSubCards: {
 const stepImage = {
   src: 'https://cdn.lism-css.com/img/room/a-0ojkYuqTrl.jpg',
   alt: '日差しの入るホームオフィスとソファ、デスクが並んだ室内',
-  width: 1920,
-  height: 1080,
 };
 
-type StepCard = {
-  title: string;
-  body: string;
-  image?: { src: string; alt: string; width: number; height: number };
-};
-
-const stepCards: StepCard[] = [
+const stepCards = [
   {
     title: 'お問い合わせと初回のヒアリング',
     body: 'フォームやお電話、来店のいずれかでご連絡ください。ざっくりとした希望や、今いちばん困っている点を言葉に整え、次回以降の打ち合わせで詰める内容の目安を共有します。オンライン面談も選べます。',
     image: {
       src: 'https://cdn.lism-css.com/img/working/a_6SNi6XvWBT.jpg',
       alt: '打ち合わせを行う室内のイメージ',
-      width: 1920,
-      height: 1280,
     },
   },
   {
@@ -230,8 +153,6 @@ const stepCards: StepCard[] = [
     image: {
       src: 'https://cdn.lism-css.com/img/room/a-Kt7MCU3Mad.jpg',
       alt: '明るいリビングのインテリア写真',
-      width: 1200,
-      height: 900,
     },
   },
   {
@@ -248,14 +169,7 @@ const stepCards: StepCard[] = [
  * アバター: 本番・CMS ではカードごとに URL がばらばらになり得るため、`avatarBase` は使わず `src` にフル URL を直書きする
  * @see https://lism-css.com/docs/ui/avatar/
  */
-type VoiceCard = {
-  avatar: { src: string; alt: string };
-  title: string;
-  body: string;
-  attribution: string;
-};
-
-const voiceCards: VoiceCard[] = [
+const voiceCards = [
   {
     avatar: { src: 'https://cdn.lism-css.com/img/avatar/a_DpTwx1lZU3.jpg', alt: '相談者のポートレート（1）' },
     title: '一人暮らしの部屋で迷子でした',
@@ -295,7 +209,7 @@ const voiceCards: VoiceCard[] = [
 ];
 
 /** 各項目は質問・回答を独立して管理（必要に応じて初期展開を指定） */
-const faqItems: { question: string; answer: string; defaultOpen?: boolean }[] = [
+const faqItems = [
   {
     question: 'まず相談だけ、という利用も可能ですか？',
     answer:
@@ -324,52 +238,29 @@ const faqItems: { question: string; answer: string; defaultOpen?: boolean }[] = 
   },
 ];
 
-const bgImage = {
+const contactBg = {
   src: 'https://cdn.lism-css.com/img/room/u-N1EvhlxYpo.jpg',
   alt: '窓から光が差し込む開放的なリビング',
-  width: 1920,
-  height: 1080,
 };
 
 /** 各フィールドの表示・name・プレースホルダーを独立して管理 */
-type ContactField =
-  | {
-      id: string;
-      name: string;
-      label: string;
-      type: 'text' | 'email';
-      placeholder: string;
-      inputMode?: 'email' | 'text';
-      autoComplete?: string;
-      /** 検証エラー時の補助テキスト（例示用。本番は状態に応じて出し分け） */
-      errorMessage?: string;
-    }
-  | {
-      id: string;
-      name: string;
-      label: string;
-      type: 'textarea';
-      placeholder: string;
-      rows: number;
-      errorMessage?: string;
-    };
-
-const contactFields: ContactField[] = [
+const contactFields = [
   {
     id: 'natural-contact-name',
     name: 'name',
     label: '名前',
-    type: 'text',
+    type: 'text' as const,
     placeholder: '鈴木 太郎',
     autoComplete: 'name',
+    errorMessage: '',
   },
   {
     id: 'natural-contact-email',
     name: 'email',
     label: 'メールアドレス',
-    type: 'email',
+    type: 'email' as const,
     placeholder: 'example@lism.com',
-    inputMode: 'email',
+    inputMode: 'email' as const,
     autoComplete: 'email',
     errorMessage: '正しいメールアドレス形式で入力してください。',
   },
@@ -377,17 +268,19 @@ const contactFields: ContactField[] = [
     id: 'natural-contact-subject',
     name: 'subject',
     label: '件名',
-    type: 'text',
+    type: 'text' as const,
     placeholder: '部屋作りのご相談',
     autoComplete: 'off',
+    errorMessage: '',
   },
   {
     id: 'natural-contact-message',
     name: 'message',
     label: '問い合わせ内容',
-    type: 'textarea',
+    type: 'textarea' as const,
     placeholder: 'お問い合わせ内容はこちらにご記入ください。',
     rows: 6,
+    errorMessage: '',
   },
 ];
 ---
@@ -396,164 +289,93 @@ const contactFields: ContactField[] = [
   <link rel="preconnect" href="https://fonts.googleapis.com" slot="head" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin slot="head" />
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400..700&display=swap" rel="stylesheet" slot="head" />
-  <Wrapper class="z--natural-root" contentSize="full">
+  <div>
     <!-- Header -->
-
-    <Box as="header" class="z--natural-header" pos="fixed" i="0" w="100%" z="1" hasTransition>
-      <Container class="z--natural-header_container" isWrapper="xl" hasGutter h="100%">
-        <Grid class="z--natural-header_inner" gtc="10rem 1fr" ai="center" h="100%">
-          <Stack class="z--natural-header_logo">
-            <Link class="z--natural-header_logoLink" href="#top" fz="2xl" fw="bold" lts="l" c="text" td="none" ff="accent"> LISM Life </Link>
-          </Stack>
-          <Flex jc="fe" g="30">
-            <Flex class="z--natural-headerNav" as="ul" d={['none', null, 'inline-flex']} ai="c" g="30" fz="s" lts="l">
-              {
-                headerPrimaryNavItems.map(({ href, ja }) => (
-                  <ListItem>
-                    <Link class="z--natural-headerNav_link" href={href} d="block" c="text" td="none" py="10" hasTransition hov="-o">
-                      {ja}
-                    </Link>
-                  </ListItem>
-                ))
-              }
-            </Flex>
-            <Box d={['none', null, 'flex']} ai="c">
-              <Button href="#contact" fz="xs" bdrs="99"> お問い合わせ </Button>
-            </Box>
-            <Modal.OpenBtn modalId="menu" d={['block', null, 'none']}>
-              <Center p="6" ai="c" jc="c">
-                <Icon icon="menu" c="text" fz="2xl" aria-hidden="true" />
-              </Center>
-            </Modal.OpenBtn>
-          </Flex>
-          <Modal.Root id="menu" class="z--natural-header_menuModal" isContainer p="0">
-            <Modal.Inner class="z--natural-header_menuInner" layout="stack" g="0" pos="relative" p="30" bxsh="50" offset="-100% 0">
-              <Modal.CloseBtn modalId="menu" autofocus pos="absolute" t="0" r="0" z="1" fz="xl" p="10" m="15" />
-              <Modal.Body layout="stack" g="30" py="40" fx="1" min-h="0" ov-y="auto" w="100%">
-                <Stack class="z--natural-header_menuNav u--divide" p="0" ov="clip">
-                  {
-                    headerMenuNavItems.map(({ href, ja }) => (
-                      <BoxLink href={href} layout="grid" gtc="1fr auto" ai="c" fz="m" td="none" py="15" px="5">
-                        <Inline>{ja}</Inline>
-                        <Icon icon="caret-right" fz="s" o="pp" />
-                      </BoxLink>
-                    ))
-                  }
-                </Stack>
-              </Modal.Body>
-            </Modal.Inner>
-          </Modal.Root>
-        </Grid>
-      </Container>
-    </Box>
-    <!-- Main Content -->
+    <Header />
+    <!-- Main -->
     <Container as="main" class="z--natural-main" pos="relative" z="0">
       <Box as="section" class="z--natural-mv" id="top" pos="relative" ov="hidden" aria-label="メインビジュアル">
-        <Heading level="1" class="z--natural-mv_title" m="0" ta="center" c="white" fw="bold" lts="l" ff="accent">
+        <Heading level="1" class="z--natural-mv_title" ta="center" c="white" fw="bold" lts="l" ff="accent">
           Simple<br />
-          <Inline as="span" whs="nowrap">LP Design</Inline>
+          <Inline whs="nowrap">LP Design</Inline>
         </Heading>
         <Box class="z--natural-mv_imageRail">
           <Container class="z--natural-mv_imageInner" isWrapper="l" hasGutter h="100%">
             <Frame class="z--natural-mv_frame" ov="hidden" w="100%" h="100%">
-              <Lism
-                as="img"
+              <Media
                 class="z--natural-mv_media"
                 src={mvImage.src}
                 alt={mvImage.alt}
                 w="100%"
                 h="100%"
-                exProps={{
-                  width: mvImage.width,
-                  height: mvImage.height,
-                  loading: 'eager',
-                  decoding: 'async',
-                  fetchpriority: 'high',
-                }}
+                width="1920"
+                height="1080"
+                loading="eager"
+                exProps={{ fetchpriority: 'high' }}
               />
             </Frame>
           </Container>
         </Box>
       </Box>
 
-      <Lism as="section" id="mission" isContainer class="z--natural-mission" pos="relative" py="50" mbs="60" ov="hidden">
-        <Lism class="z--natural-mission_bg" exProps={{ 'aria-hidden': 'true' }} />
+      <Container as="section" id="mission" class="z--natural-mission" pos="relative" py="50" mbs="60" ov="hidden">
+        <Box class="z--natural-mission_bg" aria-hidden="true" />
         <Flex fxd={['column', null, 'row']} ai={['start', null, 'stretch']} g={['40', null, '50']} pos="relative" z="1" w="100%">
           <Flex class="z--natural-mission_text" fxd="column" ai="start" min-w="0" w="100%">
             <Stack g="40" ai="start">
               <Stack g="10" ai="start">
-                <Heading level="2" m="0" fz="5xl" fw="bold" lts="l" c="text" ff="accent"> Mission </Heading>
-                <Text as="p" m="0" fz="xl" fw="bold" lts="l" c="text"> 私たちが目指すもの </Text>
+                <Heading level="2" fz="5xl" fw="bold" lts="l" c="text" ff="accent">Mission</Heading>
+                <Text fz="xl" fw="bold" lts="l" c="text">私たちが目指すもの</Text>
               </Stack>
-              <Text as="p" m="0" fz="m" lh="l" lts="s" c="text-2">
+              <Text fz="m" lh="l" lts="s" c="text-2">
                 {missionBody}
               </Text>
             </Stack>
           </Flex>
           <!-- Frame 本体に padding すると l--frame のトークンと競合しやすいため、拡縮用ラッパーに右ガターを乗せる -->
-          <Lism class="z--natural-mission_figureShell" min-w="0" w="100%">
-            <Frame as="figure" class="z--natural-mission_figure" m="0" w="100%" min-w="0" jslf="start" ar="3/2" ov="hidden" pos="relative">
-              <img
-                src={missionImage.src}
-                width={missionImage.width}
-                height={missionImage.height}
-                alt={missionImage.alt}
-                loading="lazy"
-                decoding="async"
-                class="z--natural-mission_img"
-              />
+          <Box class="z--natural-mission_figureShell" min-w="0" w="100%">
+            <Frame as="figure" class="z--natural-mission_figure" w="100%" min-w="0" jslf="start" ar="3/2" ov="hidden" pos="relative">
+              <Media class="z--natural-mission_img" src={missionImage.src} alt={missionImage.alt} width="1920" height="1280" loading="lazy" />
             </Frame>
-          </Lism>
+          </Box>
         </Flex>
-      </Lism>
+      </Container>
 
-      <Wrapper as="section" id="message" contentSize="xl" py="50" hasGutter>
-        <Container>
-          <Stack g="40" class="z--natural-mission2">
-            <Grid gta={[`'.' 'side'`, null, `'side .'`]} gtc={[null, null, '24rem 1fr']} ai="c" g="40" w="100%">
-              <Stack g="30" w="100%" class="z--natural-mission2-row1" max-sz={mission2TextMaxSz}>
-                <Heading level="3" fz="xl" lts="l">暮らしに合わせたコーディネート</Heading>
-                <Text>
-                  生活リズムや家族構成、日々の悩みまで丁寧にヒアリングし、あなたに合う心地よさを軸に考えをまとめます。家具の取り合わせに加え、収納の工夫や小さなレイアウトの提案も含め、長く手を放せる部屋づくりを一緒に進めます。
-                </Text>
-              </Stack>
-              <Frame ga="side" ar="3/2">
-                <Media
-                  src="https://cdn.lism-css.com/img/room/a-Kt7MCU3Mad.jpg"
-                  alt="明るいリビングをイメージしたインテリア写真"
-                  width={1200}
-                  height={900}
-                />
-              </Frame>
-            </Grid>
-            <Grid gta={[`'.' 'side'`, null, `'. side'`]} gtc={[null, null, '1fr 24rem']} ai="c" g="40" w="100%">
-              <Stack class="z--natural-mission2-row2" w="100%" max-sz={mission2TextMaxSz} ai={[null, null, 'end']} g="30">
-                <Heading level="3" fz="xl" lts="l">想いを、部屋の形に</Heading>
-                <Text>
-                  コーディネートの方針づくりから家具の手配、必要に応じた立ち上げ作業のお手伝いまで、一つの流れとして対応します。完成イメージの写真がなくても、色や好きな雰囲気、暮らしの不満点から一緒に言葉にし、納得のいくまで整えます。
-                </Text>
-              </Stack>
-              <Frame ga="side" ar="3/2">
-                <Media
-                  src="https://cdn.lism-css.com/img/room/u-1K4PsDvC6W.jpg"
-                  alt="ワークスペースをイメージしたインテリア"
-                  width={1200}
-                  height={900}
-                />
-              </Frame>
-            </Grid>
+      <Container as="section" id="message" class="z--natural-mission2" isWrapper="xl" layout="stack" g="40" py="50" hasGutter>
+        <Grid gta={[`'.' 'side'`, null, `'side .'`]} gtc={[null, null, '24rem 1fr']} ai="center" g="40" w="100%">
+          <Stack class="z--natural-mission2-row1" w="100%" max-sz="s" g="30">
+            <Heading level="3" fz="xl" lts="l">暮らしに合わせたコーディネート</Heading>
+            <Text>
+              生活リズムや家族構成、日々の悩みまで丁寧にヒアリングし、あなたに合う心地よさを軸に考えをまとめます。家具の取り合わせに加え、収納の工夫や小さなレイアウトの提案も含め、長く手を放せる部屋づくりを一緒に進めます。
+            </Text>
           </Stack>
-        </Container>
-      </Wrapper>
+          <Frame ga="side" ar="3/2">
+            <Media
+              src="https://cdn.lism-css.com/img/room/a-Kt7MCU3Mad.jpg"
+              alt="明るいリビングをイメージしたインテリア写真"
+              width="1200"
+              height="900"
+            />
+          </Frame>
+        </Grid>
+        <Grid gta={[`'.' 'side'`, null, `'. side'`]} gtc={[null, null, '1fr 24rem']} ai="center" g="40" w="100%">
+          <Stack class="z--natural-mission2-row2" w="100%" max-sz="s" ai={[null, null, 'end']} g="30">
+            <Heading level="3" fz="xl" lts="l">想いを、部屋の形に</Heading>
+            <Text>
+              コーディネートの方針づくりから家具の手配、必要に応じた立ち上げ作業のお手伝いまで、一つの流れとして対応します。完成イメージの写真がなくても、色や好きな雰囲気、暮らしの不満点から一緒に言葉にし、納得のいくまで整えます。
+            </Text>
+          </Stack>
+          <Frame ga="side" ar="3/2">
+            <Media src="https://cdn.lism-css.com/img/room/u-1K4PsDvC6W.jpg" alt="ワークスペースをイメージしたインテリア" width="1200" height="900" />
+          </Frame>
+        </Grid>
+      </Container>
 
       <Box as="section" id="feature" class="z--natural-feature" ov-x="clip">
         <Container isWrapper="l" hasGutter py="50">
           <Grid gtc={['1fr', null, 'minmax(0, 1fr) minmax(0, 1fr)']} g={['30', null, '40']} ai="stretch">
             <Stack class="z--natural-feature_main" g="40" jc="start">
-              <Stack g="10" ai="c" class="z--natural-feature_head">
-                <Heading level="2" fz="4xl" lts="l" m="0" ta="center" ff="accent"> Point </Heading>
-                <Text as="p" fz="m" fw="bold" lts="l" m="0" c="text" o="p" ta="center">暮らしに寄り添う特長</Text>
-              </Stack>
+              <SectionHeading en="Point" ja="暮らしに寄り添う特長" />
 
               <Stack g="30">
                 {
@@ -562,10 +384,10 @@ const contactFields: ContactField[] = [
                       <Flex ai="start" g="20" class="z--natural-feature_cardInner">
                         <Icon icon={card.icon} size="2.5rem" c="text-2" />
                         <Stack g="10" class="z--natural-feature_cardBody">
-                          <Heading level="3" fz="l" m="0">
+                          <Heading level="3" fz="l">
                             {card.title}
                           </Heading>
-                          <Text as="p" fz="s" m="0" c="text-2">
+                          <Text fz="s" c="text-2">
                             {card.body}
                           </Text>
                         </Stack>
@@ -579,13 +401,7 @@ const contactFields: ContactField[] = [
             <Box class="z--natural-feature_rail">
               <Box class="z--natural-feature_sticky">
                 <Frame class="z--natural-feature_frame" ov="hidden" bdrs="0">
-                  <Media
-                    src={featureImage.src}
-                    alt={featureImage.alt}
-                    width={featureImage.width}
-                    height={featureImage.height}
-                    exProps={{ loading: 'lazy', decoding: 'async' }}
-                  />
+                  <Media src={featureImage.src} alt={featureImage.alt} width="1600" height="1067" loading="lazy" />
                 </Frame>
               </Box>
             </Box>
@@ -597,32 +413,23 @@ const contactFields: ContactField[] = [
         <Container isWrapper="l" hasGutter>
           <Stack g="50">
             <Stack g="40">
-              <Stack g="10" ai="c">
-                <Heading level="2" fz="4xl" lts="l" m="0" ta="center" ff="accent">Service</Heading>
-                <Text as="p" fz="m" fw="bold" lts="l" m="0" c="text" o="p" ta="center">ご要望に合わせたサービス</Text>
-              </Stack>
+              <SectionHeading en="Service" ja="ご要望に合わせたサービス" />
 
               <!-- md 未満: 1列（画像上・テキスト下）。md 以上: 2列（画像左・テキスト右） -->
               <Grid gtc={['1fr', null, 'minmax(0, 1fr) minmax(0, 1fr)']} g={['30', null, '40']} ai="center">
                 <Frame ar="3/2" ov="hidden">
-                  <Media
-                    src={heroImage.src}
-                    alt={heroImage.alt}
-                    width={heroImage.width}
-                    height={heroImage.height}
-                    exProps={{ loading: 'lazy', decoding: 'async' }}
-                  />
+                  <Media src={serviceLeadImage.src} alt={serviceLeadImage.alt} width="1920" height="1280" loading="lazy" />
                 </Frame>
-                <Stack g="20" jc="c">
-                  <Heading level="3" fz="2xl" lts="l" m="0">
+                <Stack g="20" jc="center">
+                  <Heading level="3" fz="2xl" lts="l">
                     予算や目的に合わせ、
                     <br />
                     柔軟に対応します
                   </Heading>
-                  <Text as="p" m="0" c="text-2">
+                  <Text c="text-2">
                     暮らし方や優先して整えたい場所、購入や配置までお願いしたい範囲などを伺い、無理のない形でご提案にまとめます。来店、オンライン、お電話のいずれからでも打ち合わせを受け付けています。
                   </Text>
-                  <Text as="p" m="0" c="text-2">
+                  <Text c="text-2">
                     小さな悩み相談から、家具の買い付けに伴う作業のお願いまで、目的に合わせて一つずつ。賃貸・戸建てを問わず、住まいの性質に合う選び方を一緒に考えます。
                   </Text>
                 </Stack>
@@ -630,37 +437,31 @@ const contactFields: ContactField[] = [
             </Stack>
 
             <Stack g="40">
-              <Heading level="3" fz="xl" lts="l" m="0" ta="center">更なる特徴です</Heading>
+              <Heading level="3" fz="xl" lts="l" ta="center">更なる特徴です</Heading>
               <!-- md 未満: 1列。md 以上: 3列 -->
               <Grid gtc={['1fr', null, 'repeat(3, minmax(0, 1fr))']} g="40" ai="start">
                 {
                   serviceSubCards.map((item) => (
                     <Flex class="z--natural-service_card" fxd={['row-reverse', null, 'column']} ai="stretch" g="30" min-w="0">
                       <Frame class="z--natural-service_cardFigure" ar="3/2" ov="hidden">
-                        <Media
-                          src={item.image.src}
-                          alt={item.image.alt}
-                          width={item.image.width}
-                          height={item.image.height}
-                          exProps={{ loading: 'lazy', decoding: 'async' }}
-                        />
+                        <Media src={item.image.src} alt={item.image.alt} width="1920" height="1280" loading="lazy" />
                       </Frame>
                       <Stack g="20" min-w="0" fx="1" jc="start">
-                        <Flex ai="c" g="20" util="trimAll">
+                        <Flex ai="center" g="20" util="trimAll">
                           <Box as="span" class="z--natural-service_num" fz="3xl" fw="bold" ff="accent" c="text" whs="nowrap">
                             {item.index}
                           </Box>
                           <Box class="z--natural-service_rule" w="1px" bgc="text" fxsh="0" />
                           <Stack g="0" class="z--natural-service_cardTitles" util="trimAll">
-                            <Heading level="4" fz="m" m="0">
+                            <Heading level="4" fz="m">
                               {item.titleJa}
                             </Heading>
-                            <Text as="p" fz="xs" lh="s" m="0" c="text-2" o="p" ff="accent">
+                            <Text fz="xs" lh="s" c="text-2" o="p" ff="accent">
                               {item.titleEn}
                             </Text>
                           </Stack>
                         </Flex>
-                        <Text as="p" fz="s" m="0" c="text-2">
+                        <Text fz="s" c="text-2">
                           {item.body}
                         </Text>
                       </Stack>
@@ -677,10 +478,7 @@ const contactFields: ContactField[] = [
         <Container isWrapper="l" hasGutter py="50">
           <Grid gtc={['1fr', null, 'minmax(0, 1fr) minmax(0, 1fr)']} g={['30', null, '40']} ai="stretch">
             <Stack class="z--natural-step_main" g="40" jc="start">
-              <Stack g="10" ai="c" class="z--natural-step_head">
-                <Heading level="2" fz="4xl" lts="l" m="0" ta="center" ff="accent">Step</Heading>
-                <Text as="p" fz="m" fw="bold" lts="l" m="0" c="text" o="p" ta="center">ご依頼から納品までの流れ</Text>
-              </Stack>
+              <SectionHeading en="Step" ja="ご依頼から納品までの流れ" />
 
               <Stack g="15" ai="stretch" w="100%">
                 {
@@ -694,20 +492,14 @@ const contactFields: ContactField[] = [
                       <Stack class="z--natural-step_card" g="15" p="30" bgc="base" bd bdc="divider" bdrs="10" ov="hidden" min-w="0">
                         {card.image && (
                           <Frame class="z--natural-step_cardFrame" ar="3/2" ov="hidden" bdrs="0">
-                            <Media
-                              src={card.image.src}
-                              alt={card.image.alt}
-                              width={card.image.width}
-                              height={card.image.height}
-                              exProps={{ loading: 'lazy', decoding: 'async' }}
-                            />
+                            <Media src={card.image.src} alt={card.image.alt} width="1920" height="1280" loading="lazy" />
                           </Frame>
                         )}
                         <Stack g="10" class="z--natural-step_cardBody">
-                          <Heading level="3" fz="l" m="0">
+                          <Heading level="3" fz="l">
                             {card.title}
                           </Heading>
-                          <Text as="p" fz="s" m="0" c="text-2">
+                          <Text fz="s" c="text-2">
                             {card.body}
                           </Text>
                         </Stack>
@@ -721,13 +513,7 @@ const contactFields: ContactField[] = [
             <Box class="z--natural-step_rail">
               <Box class="z--natural-step_sticky">
                 <Frame class="z--natural-step_frame" ov="hidden" bdrs="0">
-                  <Media
-                    src={stepImage.src}
-                    alt={stepImage.alt}
-                    width={stepImage.width}
-                    height={stepImage.height}
-                    exProps={{ loading: 'lazy', decoding: 'async' }}
-                  />
+                  <Media src={stepImage.src} alt={stepImage.alt} width="1920" height="1080" loading="lazy" />
                 </Frame>
               </Box>
             </Box>
@@ -738,10 +524,7 @@ const contactFields: ContactField[] = [
       <Box as="section" id="voice" class="z--natural-voice" bgc="base">
         <Container isWrapper="l" hasGutter py="50" isContainer>
           <Stack g="40">
-            <Stack g="10" ai="c">
-              <Heading level="2" fz="4xl" lts="l" m="0" ta="center" ff="accent">Voice</Heading>
-              <Text as="p" fz="m" fw="bold" lts="l" m="0" c="text" o="p" ta="center">お客様の声です</Text>
-            </Stack>
+            <SectionHeading en="Voice" ja="お客様の声です" />
 
             {
               /**
@@ -771,13 +554,13 @@ const contactFields: ContactField[] = [
                     >
                       <Stack g="20" ai="stretch" fx="1" min-h="0" jc="start">
                         <Avatar src={card.avatar.src} alt={card.avatar.alt} size="5.5rem" mx="auto" />
-                        <Heading level="3" fz="l" fw="bold" m="0" ta="center">
+                        <Heading level="3" fz="l" fw="bold" ta="center">
                           {card.title}
                         </Heading>
-                        <Text as="p" fz="s" m="0" c="text" lh="l" ta="left">
+                        <Text fz="s" c="text" lh="l" ta="left">
                           {card.body}
                         </Text>
-                        <Text class="z--natural-voice_attribution" as="p" fz="xs" m="0" c="text-2" o="p" ta="end" w="100%" mt="auto">
+                        <Text class="z--natural-voice_attribution" as="p" fz="xs" c="text-2" o="p" ta="end" w="100%" mt="auto">
                           {card.attribution}
                         </Text>
                       </Stack>
@@ -792,13 +575,13 @@ const contactFields: ContactField[] = [
                     <Box class="z--natural-voice_card" p="30" bgc="base" bd bdc="divider" bdrs="20" min-w="0" d="flex" fxd="column" h="100%">
                       <Stack g="20" ai="stretch" fx="1" min-h="0" jc="start">
                         <Avatar src={card.avatar.src} alt={card.avatar.alt} size="5.5rem" mx="auto" />
-                        <Heading level="3" fz="l" fw="bold" m="0" ta="center">
+                        <Heading level="3" fz="l" fw="bold" ta="center">
                           {card.title}
                         </Heading>
-                        <Text as="p" fz="s" m="0" c="text" lh="l" ta="left">
+                        <Text fz="s" c="text" lh="l" ta="left">
                           {card.body}
                         </Text>
-                        <Text class="z--natural-voice_attribution" as="p" fz="xs" m="0" c="text-2" o="p" ta="end" w="100%" mt="auto">
+                        <Text class="z--natural-voice_attribution" as="p" fz="xs" c="text-2" o="p" ta="end" w="100%" mt="auto">
                           {card.attribution}
                         </Text>
                       </Stack>
@@ -814,10 +597,7 @@ const contactFields: ContactField[] = [
       <Box as="section" id="faq" class="z--natural-faq" bgc="base-2">
         <Container isWrapper="l" hasGutter py="50">
           <Stack g="40">
-            <Stack g="10" ai="c">
-              <Heading level="2" fz="4xl" lts="l" m="0" ta="center" ff="accent">FAQ</Heading>
-              <Text as="p" fz="m" fw="bold" lts="l" m="0" c="text" o="p" ta="center">よくあるご質問</Text>
-            </Stack>
+            <SectionHeading en="FAQ" ja="よくあるご質問" />
 
             <Accordion.Root class="z--natural-faq_acc" p="0" g="20">
               {
@@ -829,7 +609,7 @@ const contactFields: ContactField[] = [
                       </Accordion.Button>
                     </Accordion.Heading>
                     <Accordion.Panel py="30" px="30" isOpen={item.defaultOpen === true}>
-                      <Text m="0" fz="s" c="text-2" lh="l">
+                      <Text fz="s" c="text-2" lh="l">
                         {item.answer}
                       </Text>
                     </Accordion.Panel>
@@ -843,35 +623,24 @@ const contactFields: ContactField[] = [
 
       <Box as="section" id="contact" class="z--natural-contact" pos="relative" ov="hidden">
         <Frame isLayer class="z--natural-contact_mediaWrap">
-          <Lism
-            as="img"
+          <Media
             class="z--natural-contact_media"
-            src={bgImage.src}
-            alt={bgImage.alt}
+            src={contactBg.src}
+            alt={contactBg.alt}
             w="100%"
             h="100%"
-            exProps={{ width: bgImage.width, height: bgImage.height, loading: 'lazy', decoding: 'async' }}
+            width="1920"
+            height="1080"
+            loading="lazy"
           />
         </Frame>
         <!-- 背景写真の上に半透明の黒レイヤーでコントラストを確保 -->
-        <Layer
-          pos="absolute"
-          exProps={{
-            style: {
-              inset: 0,
-              pointerEvents: 'none',
-              background: 'hsl(0 0% 0% / 0.52)',
-            },
-          }}
-        />
+        <Layer pos="absolute" style={{ inset: 0, pointerEvents: 'none', background: 'hsl(0 0% 0% / 0.52)' }} />
         <Container class="z--natural-contact_inner" isWrapper="l" hasGutter py="60" pos="relative">
-          <Stack g="40" ai="c">
-            <Stack g="10" ai="c" max-w="36rem" w="100%">
-              <Heading level="2" fz="4xl" lts="l" m="0" ta="center" c="white" ff="accent">Contact</Heading>
-              <Text as="p" fz="m" fw="bold" lts="l" m="0" c="white" ta="center">お問い合わせ</Text>
-            </Stack>
+          <Stack g="40" ai="center">
+            <SectionHeading en="Contact" ja="お問い合わせ" c="white" />
 
-            <Text as="p" fz="s" m="0" c="white" ta="center" lh="l" max-w="36rem" w="100%">
+            <Text fz="s" c="white" ta="center" lh="l" max-w="36rem" w="100%">
               初めての方もどうぞお気軽にお問い合わせください。<br />このフォームはダミーです。
             </Text>
 
@@ -880,9 +649,9 @@ const contactFields: ContactField[] = [
                 {
                   contactFields.map((field) => (
                     <Stack g="10" ai="stretch">
-                      <Lism as="label" for={field.id} fz="s" fw="bold" m="0" c="white">
+                      <Inline as="label" for={field.id} fz="s" fw="bold" c="white">
                         {field.label}
-                      </Lism>
+                      </Inline>
                       {field.type === 'textarea' ? (
                         <textarea
                           id={field.id}
@@ -937,16 +706,15 @@ const contactFields: ContactField[] = [
       </Box>
     </Container>
     <!-- Footer -->
-
     <Box as="footer" class="z--natural-footer" bgc="base-2" w="100%">
       <Container class="z--natural-footer_container" isContainer isWrapper="xl" py="40" hasGutter>
-        <Stack jc="c" ai="c" g="30">
-          <Stack class="z--natural-header_logo">
-            <Link class="z--natural-header_logoLink" href="#top" fz="2xl" fw="bold" lts="l" c="text" td="none" ff="accent"> LISM Life </Link>
+        <Stack jc="center" ai="center" g="30">
+          <Stack class="c--logo">
+            <Link href="#top" fz="2xl" fw="bold" lts="l" c="text" td="none" ff="accent">LISM Life</Link>
           </Stack>
           <Flex
             as="ul"
-            class="z--natural-footerNav z--natural-headerNav"
+            class="z--natural-footerNav z--nav"
             fxd={['column', null, 'row']}
             ai={['stretch', null, 'c']}
             jc={['start', null, 'c']}
@@ -956,14 +724,13 @@ const contactFields: ContactField[] = [
             min-w="0"
             fz="s"
             lts="l"
-            m="0"
             p="0"
           >
             {
               footerPrimaryNavItems.map(({ href, ja }) => (
                 <ListItem>
                   <Link
-                    class="z--natural-headerNav_link"
+                    class="z--nav_link"
                     href={href}
                     d="block"
                     c="text"
@@ -988,9 +755,9 @@ const contactFields: ContactField[] = [
               ))
             }
           </Cluster>
-          <Text as="p" fz="s" c="text-2" m="0">© 2026 Lism CSS.</Text>
+          <Text fz="s" c="text-2">© 2026 Lism CSS.</Text>
         </Stack>
       </Container>
     </Box>
-  </Wrapper>
+  </div>
 </Layout>

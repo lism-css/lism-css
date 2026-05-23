@@ -1,71 +1,53 @@
 @layer lism-custom {
-  /**
-   * `ff:accent`（`--ff--accent`）: セリフに寄らないよう、Montserrat 以外は日本語ゴシック＋汎用 sans へ
-   * @see https://fonts.google.com/specimen/Montserrat
-   */
-  .z--natural-root {
-    --ff--accent:
-      'Montserrat', 'Hiragino Sans', 'Hiragino Kaku Gothic ProN', 'Hiragino Kaku Gothic Pro', 'Yu Gothic', 'YuGothic', 'Noto Sans JP', 'BIZ UDGothic',
-      ui-sans-serif, system-ui, sans-serif;
-  }
-
   :root {
-    --z--natural-header-height: 112px;
-    --z--natural-header-height--thin: 64px;
     --base-2: #ececec;
+    --ff--accent: 'Montserrat', 'Hiragino Sans', 'Noto Sans JP', 'BIZ UDGothic', ui-sans-serif, system-ui, sans-serif;
+    --z--header-height--init: 112px;
+    --z--header-height: 64px;
   }
 
-  .z--natural-header {
+  .z--header {
     /* ドロワー右の「抜き」幅。ここで --s50 を別トークンや px に差し替え可 */
-    --z--natural-header-menu-peek: var(--s50);
+    --z--header-menu-peek: var(--s50);
     box-sizing: border-box;
-    height: var(--z--natural-header-height);
+    height: var(--z--header-height--init);
     background-color: transparent;
     backdrop-filter: none;
-    -webkit-backdrop-filter: none;
     border-block-end: 1px solid transparent;
     box-shadow: none;
-    /* この量スクロールしてからヘッダー変化アニメーションを開始（終了は +160px スクロール地点） */
-    --z--natural-header-scroll-animation-start: 100px;
-    --z--natural-header-animation-range: var(--z--natural-header-scroll-animation-start) calc(var(--z--natural-header-scroll-animation-start) + 160px);
-    animation: z--natural-header linear both;
-    animation-timeline: scroll(root);
-    animation-range: var(--z--natural-header-animation-range);
+    transition:
+      height 0.4s,
+      background-color 0.4s,
+      backdrop-filter 0.4s,
+      border-block-end-color 0.4s;
   }
+
   /**
    * スクロール後: 白の半透明 + backdrop-filter（Lism 公式ドキュメントのヘッダーに近いガラス風）
    * @see https://lism-css.com/docs/overview/
    */
-  @keyframes z--natural-header {
-    to {
-      height: var(--z--natural-header-height--thin);
-      background-color: color-mix(in srgb, var(--white) 68%, transparent);
-      backdrop-filter: blur(12px) saturate(1.08);
-      -webkit-backdrop-filter: blur(12px) saturate(1.08);
-      border-block-end: 1px solid var(--divider);
-      box-shadow: none;
-    }
+  :root[data-scrolled] .z--header {
+    height: var(--z--header-height);
+    background-color: color-mix(in srgb, var(--white) 68%, transparent);
+    backdrop-filter: blur(12px) saturate(1.08);
+    border-block-end-color: var(--divider);
   }
 
   /**
-   * モバイルメニュー: 左からスライド＋全高。右端は --z--natural-header-menu-peek 分空け、
+   * モバイルメニュー: 左からスライド＋全高。右端は --z--header-menu-peek 分空け、
    * そのエリア（dialog 本体のダイミング）クリックは setModal により閉じる
    * @see https://lism-css.com/ui/modal/ ドロワー例（offset） / 公式: dialog 全面 + ::backdrop 非使用
    */
-  .z--natural-header_menuModal.c--modal {
-    min-height: 100svh;
-  }
-  .z--natural-header_menuModal.c--modal[open] {
+  /* .z--header_menuModal[open] {
     justify-content: flex-start;
     align-items: flex-start;
-  }
+  } */
   /**
    * width: Lism の l--stack / -w 等が後勝ちすると 100% 固定になり、peek を変えても右余白が動かない → !important で calc を優先
    */
-  .z--natural-header_menuModal .c--modal_inner.z--natural-header_menuInner {
-    width: calc(100% - var(--z--natural-header-menu-peek, var(--s50))) !important;
+  .z--header_menuModal .c--modal_inner {
+    /* width: calc(100% - var(--z--header-menu-peek, var(--s50))) !important; */
     min-height: 100svh;
-    box-sizing: border-box;
   }
 
   /*
@@ -124,7 +106,7 @@
   .z--natural-mv_imageRail {
     position: absolute;
     inset-inline: 0;
-    top: calc(var(--z--natural-header-height) + var(--z--natural-mv-title-offset-from-header) + var(--z--natural-mv-title-line2-center));
+    top: calc(var(--z--header-height--init) + var(--z--natural-mv-title-offset-from-header) + var(--z--natural-mv-title-line2-center));
     bottom: var(--z--natural-mv-image-bottom-offset);
     z-index: 0;
   }
@@ -151,7 +133,7 @@
     position: absolute;
     left: 50%;
     translate: -50% 0;
-    top: calc(var(--z--natural-header-height) + var(--z--natural-mv-title-offset-from-header));
+    top: calc(var(--z--header-height--init) + var(--z--natural-mv-title-offset-from-header));
     z-index: 1;
     line-height: 1.1;
     pointer-events: none;
@@ -263,11 +245,11 @@
     list-style: none;
   }
 
-  .z--natural-footerNav .z--natural-headerNav_link {
+  .z--natural-footerNav .z--nav_link {
     text-align: center;
   }
   @container (min-width: 800px) {
-    .z--natural-footerNav .z--natural-headerNav_link {
+    .z--natural-footerNav .z--nav_link {
       text-align: start;
     }
   }
@@ -283,48 +265,68 @@
     }
   }
 
-  .z--natural-feature_rail {
+  /**
+   * Feature / Step セクションは「テキスト列 + 画像レール（sticky）」の同型レイアウト。
+   * - main / rail: min-w:0 + align-self:stretch でグリッド行の高さを子の % 計算に渡す
+   * - md 以上: rail を画面端まで張り出し、sticky でヘッダー下端に固定
+   *   （高さは「ビューポート」と「対側テキスト列の高さ」の小さい方）
+   * - 差分は step だけで、rail を左に張り出させ order でテキスト列との視覚順を入れ替える
+   */
+  .z--natural-feature_main,
+  .z--natural-step_main,
+  .z--natural-feature_rail,
+  .z--natural-step_rail {
     min-width: 0;
-    /* グリッド行の高さ（＝左カラムの内容高さ）を子の % 計算に渡す */
+  }
+
+  .z--natural-feature_rail,
+  .z--natural-step_rail {
     align-self: stretch;
   }
 
-  .z--natural-feature_sticky {
+  .z--natural-feature_sticky,
+  .z--natural-step_sticky {
     position: relative;
   }
 
-  .z--natural-feature_frame {
+  .z--natural-feature_frame,
+  .z--natural-step_frame {
     aspect-ratio: 4 / 3;
   }
 
   @container (min-width: 800px) {
-    /**
-     * ヘッダー下端で固定。高さは「ビューポート」と「左テキスト列の高さ」の小さい方
-     * （グリッド行高＝左カラムのため、100% は左側コンテンツの高さに一致）
-     */
-    .z--natural-feature_sticky {
+    .z--natural-feature_sticky,
+    .z--natural-step_sticky {
       position: sticky;
-      /* natural :root のヘッダー（スクロール後の高さ＝下端基準） */
-      top: var(--z--natural-header-height--thin, 64px);
+      top: var(--z--header-height, 64px);
       align-self: start;
-      height: min(calc(100dvh - var(--z--natural-header-height--thin, 64px)), 100%);
+      height: min(calc(100dvh - var(--z--header-height, 64px)), 100%);
       min-height: 0;
     }
 
-    .z--natural-feature_frame {
+    .z--natural-feature_frame,
+    .z--natural-step_frame {
       aspect-ratio: auto;
       height: 100%;
       min-height: 0;
     }
 
-    /**
-     * 画像列だけ右端をビューポート端まで伸ばす（左端は2カラム境界のまま）
-     * 中央寄せの `size=l` コンテナ外側〜画面右端の余白 + 右ガターを吸収
-     */
-    .z--natural-feature_rail {
+    /* rail: 画像列を画面端まで伸ばす（中央寄せ `size=l` コンテナ外側〜画面端の余白 + ガターを吸収） */
+    .z--natural-feature_rail,
+    .z--natural-step_rail {
       width: calc(100% + max(0px, (100vw - min(100vw, var(--sz--l))) / 2) + var(--gutter-size, 0px));
       max-width: none;
       height: 100%;
+    }
+
+    /* step: rail を左に張り出し、order でテキスト列との視覚順を入れ替え（main は右、rail は左） */
+    .z--natural-step_rail {
+      order: 1;
+      margin-inline-start: calc(-1 * (max(0px, (100vw - min(100vw, var(--sz--l))) / 2) + var(--gutter-size, 0px)));
+    }
+
+    .z--natural-step_main {
+      order: 2;
     }
   }
 
@@ -374,56 +376,6 @@
   .z--natural-step_caret .a--icon {
     color: color-mix(in oklch, var(--text) 15%, var(--base));
     opacity: 1;
-  }
-
-  .z--natural-step_main {
-    min-width: 0;
-  }
-
-  .z--natural-step_rail {
-    min-width: 0;
-    /* グリッド行の高さを子の % 計算に渡す */
-    align-self: stretch;
-  }
-
-  .z--natural-step_sticky {
-    position: relative;
-  }
-
-  .z--natural-step_frame {
-    aspect-ratio: 4 / 3;
-  }
-
-  /**
-   * md 以上: グリッドの視覚順を rail | main にし、sticky・左張り出しを有効化。
-   * md 未満: DOM 順のまま（main → rail）で 1 列・テキスト上・画像下（Feature と同型）。
-   */
-  @container (min-width: 800px) {
-    .z--natural-step_rail {
-      order: 1;
-      margin-inline-start: calc(-1 * (max(0px, (100vw - min(100vw, var(--sz--l))) / 2) + var(--gutter-size, 0px)));
-      width: calc(100% + max(0px, (100vw - min(100vw, var(--sz--l))) / 2) + var(--gutter-size, 0px));
-      max-width: none;
-      height: 100%;
-    }
-
-    .z--natural-step_main {
-      order: 2;
-    }
-
-    .z--natural-step_sticky {
-      position: sticky;
-      top: var(--z--natural-header-height--thin, 64px);
-      align-self: start;
-      height: min(calc(100dvh - var(--z--natural-header-height--thin, 64px)), 100%);
-      min-height: 0;
-    }
-
-    .z--natural-step_frame {
-      aspect-ratio: auto;
-      height: 100%;
-      min-height: 0;
-    }
   }
 
   /**
