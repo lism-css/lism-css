@@ -5,18 +5,23 @@
  * 黒文字背景（base/base-2）と白文字背景（contact）の両方で使うため、`c` props で色を切り替える。
  */
 import { Heading, Stack, Text } from 'lism-css/astro';
+import type { ComponentProps } from 'astro/types';
 
-interface Props {
+type LismProps = ComponentProps<typeof Stack>;
+
+type Props = LismProps & {
   en: string;
   ja: string;
   level?: '1' | '2' | '3' | '4' | '5' | '6';
   c?: string;
-}
+  hasOffset?: boolean;
+};
 
-const { en, ja, level = '2', c = 'text' } = Astro.props;
+const { en, ja, level = '2', c = 'text', hasOffset = false, ...rest } = Astro.props;
+const offsetMbs = hasOffset ? 'calc((var(--hl) + 0.6em) * -1)' : undefined;
 ---
 
-<Stack g="10" ai="center">
-  <Heading level={level} fz="4xl" lts="l" m="0" ta="center" c={c} ff="accent">{en}</Heading>
-  <Text as="p" fz="m" fw="bold" lts="l" m="0" c={c} o="p" ta="center">{ja}</Text>
+<Stack g="20" ai="center" {...rest}>
+  <Heading level={level} fz={['4xl', null, hasOffset ? '5xl' : null]} lts="l" ta="center" c={c} ff="accent" util="trim" mbs={offsetMbs}>{en}</Heading>
+  <Text as="p" fz="m" fw="bold" lts="l" c={c} o="p" ta="center" util="trim">{ja}</Text>
 </Stack>

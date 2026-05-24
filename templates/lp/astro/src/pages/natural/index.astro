@@ -1,13 +1,15 @@
 ---
 import Layout from '@/layouts/Layout.astro';
 import {
-  AutoColumns,
+  Decorator,
   Box,
   Cluster,
   Container,
   Flex,
+  Center,
   Frame,
   Grid,
+  Columns,
   Heading,
   Icon,
   Inline,
@@ -17,7 +19,6 @@ import {
   Media,
   Stack,
   Text,
-  Wrapper,
 } from 'lism-css/astro';
 import { Accordion } from '@lism-css/ui/astro/Accordion';
 import { Avatar } from '@lism-css/ui/astro/Avatar';
@@ -288,68 +289,66 @@ const contactFields = [
 <Layout title={title}>
   <link rel="preconnect" href="https://fonts.googleapis.com" slot="head" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin slot="head" />
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400..700&display=swap" rel="stylesheet" slot="head" />
-  <div>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200..700&display=swap" rel="stylesheet" slot="head" />
+  <div id="top">
     <!-- Header -->
     <Header />
     <!-- Main -->
-    <Container as="main" class="z--natural-main" pos="relative" z="0">
-      <Box as="section" class="z--natural-mv" id="top" pos="relative" ov="hidden" aria-label="メインビジュアル">
-        <Heading level="1" class="z--natural-mv_title" ta="center" c="white" fw="bold" lts="l" ff="accent">
+    <Container as="main" class="z--main" iso="isolate">
+      <Box as="section" class="z--mv" hasGutter pos="relative" ov="hidden" aria-label="メインビジュアル">
+        <Heading level="1" class="z--mv_title" pos="relative" z="1" ta="center" c="white" lts="l" fw="700" ff="accent" ovw="break-word">
           Simple<br />
-          <Inline whs="nowrap">LP Design</Inline>
+          <Inline>LP Design</Inline>
         </Heading>
-        <Box class="z--natural-mv_imageRail">
-          <Container class="z--natural-mv_imageInner" isWrapper="l" hasGutter h="100%">
-            <Frame class="z--natural-mv_frame" ov="hidden" w="100%" h="100%">
-              <Media
-                class="z--natural-mv_media"
-                src={mvImage.src}
-                alt={mvImage.alt}
-                w="100%"
-                h="100%"
-                width="1920"
-                height="1080"
-                loading="eager"
-                exProps={{ fetchpriority: 'high' }}
-              />
-            </Frame>
-          </Container>
-        </Box>
+        <Layer class="z--mv_visual" isWrapper="l">
+          <Frame w="100%" h="100%">
+            <Media src={mvImage.src} alt={mvImage.alt} width="1920" height="1080" loading="eager" fetchpriority="high" />
+          </Frame>
+        </Layer>
       </Box>
 
-      <Container as="section" id="mission" class="z--natural-mission" pos="relative" py="50" mbs="60" ov="hidden">
-        <Box class="z--natural-mission_bg" aria-hidden="true" />
-        <Flex fxd={['column', null, 'row']} ai={['start', null, 'stretch']} g={['40', null, '50']} pos="relative" z="1" w="100%">
-          <Flex class="z--natural-mission_text" fxd="column" ai="start" min-w="0" w="100%">
-            <Stack g="40" ai="start">
-              <Stack g="10" ai="start">
-                <Heading level="2" fz="5xl" fw="bold" lts="l" c="text" ff="accent">Mission</Heading>
-                <Text fz="xl" fw="bold" lts="l" c="text">私たちが目指すもの</Text>
+      <Container as="section" id="mission" class="z--mission -contentSize:l" set="bleed" pos="relative" py="50" mbs="60">
+        <Layer class="z--mission_bg" bgc="base-2" ms="calc(10rem + var(--bleed))" />
+        <Columns class="z--mission_content" cols={[1, null, 2]} g={['40', null, '10', '30']} pos="relative" w="100%">
+          <Stack fx="1" hasGutter ps="var(--bleed)">
+            <Stack g="40">
+              <Stack g="10">
+                <Heading level="2" fz="5xl" lts="l" ff="accent">Mission</Heading>
+                <Text fz="xl" fw="bold" lts="l">私たちが目指すもの</Text>
               </Stack>
-              <Text fz="m" lh="l" lts="s" c="text-2">
+              <Text lh="l" lts="s" c="text-2">
                 {missionBody}
               </Text>
             </Stack>
-          </Flex>
-          <!-- Frame 本体に padding すると l--frame のトークンと競合しやすいため、拡縮用ラッパーに右ガターを乗せる -->
-          <Box class="z--natural-mission_figureShell" min-w="0" w="100%">
-            <Frame as="figure" class="z--natural-mission_figure" w="100%" min-w="0" jslf="start" ar="3/2" ov="hidden" pos="relative">
-              <Media class="z--natural-mission_img" src={missionImage.src} alt={missionImage.alt} width="1920" height="1280" loading="lazy" />
-            </Frame>
-          </Box>
-        </Flex>
+          </Stack>
+          <Frame
+            as="figure"
+            class="z--mission_figure -contentSize:xl"
+            set="bleed"
+            pos="relative"
+            fx="1"
+            w="100%"
+            h="100%"
+            ar="3/2"
+            ov="hidden"
+            pe="var(--bleed)"
+          >
+            <Media src={missionImage.src} alt={missionImage.alt} width="1920" height="1280" loading="lazy" />
+          </Frame>
+        </Columns>
       </Container>
 
-      <Container as="section" id="message" class="z--natural-mission2" isWrapper="xl" layout="stack" g="40" py="50" hasGutter>
-        <Grid gta={[`'.' 'side'`, null, `'side .'`]} gtc={[null, null, '24rem 1fr']} ai="center" g="40" w="100%">
-          <Stack class="z--natural-mission2-row1" w="100%" max-sz="s" g="30">
-            <Heading level="3" fz="xl" lts="l">暮らしに合わせたコーディネート</Heading>
-            <Text>
-              生活リズムや家族構成、日々の悩みまで丁寧にヒアリングし、あなたに合う心地よさを軸に考えをまとめます。家具の取り合わせに加え、収納の工夫や小さなレイアウトの提案も含め、長く手を放せる部屋づくりを一緒に進めます。
-            </Text>
-          </Stack>
-          <Frame ga="side" ar="3/2">
+      <Container as="section" id="message" isWrapper="l" layout="stack" g="50" mbs="60" hasGutter>
+        <Flex fxd={['column', null, 'row-reverse']} ai="center" g={['30', '40']}>
+          <Box fx="1">
+            <Stack g="30" max-sz="s">
+              <Heading level="3">暮らしに合わせたコーディネート</Heading>
+              <Text>
+                生活リズムや家族構成、日々の悩みまで丁寧にヒアリングし、あなたに合う心地よさを軸に考えをまとめます。家具の取り合わせに加え、収納の工夫や小さなレイアウトの提案も含め、長く手を放せる部屋づくりを一緒に進めます。
+              </Text>
+            </Stack>
+          </Box>
+          <Frame ar="3/2" max-w={['100%', null, '400px']}>
             <Media
               src="https://cdn.lism-css.com/img/room/a-Kt7MCU3Mad.jpg"
               alt="明るいリビングをイメージしたインテリア写真"
@@ -357,286 +356,197 @@ const contactFields = [
               height="900"
             />
           </Frame>
-        </Grid>
-        <Grid gta={[`'.' 'side'`, null, `'. side'`]} gtc={[null, null, '1fr 24rem']} ai="center" g="40" w="100%">
-          <Stack class="z--natural-mission2-row2" w="100%" max-sz="s" ai={[null, null, 'end']} g="30">
-            <Heading level="3" fz="xl" lts="l">想いを、部屋の形に</Heading>
-            <Text>
-              コーディネートの方針づくりから家具の手配、必要に応じた立ち上げ作業のお手伝いまで、一つの流れとして対応します。完成イメージの写真がなくても、色や好きな雰囲気、暮らしの不満点から一緒に言葉にし、納得のいくまで整えます。
-            </Text>
-          </Stack>
-          <Frame ga="side" ar="3/2">
+        </Flex>
+        <Flex fxd={['column', null, 'row']} ai="center" g={['30', '40']}>
+          <Box fx="1">
+            <Stack max-sz="s" g="30" ms="auto">
+              <Heading level="3" fz="xl" lts="l">想いを、部屋の形に</Heading>
+              <Text>
+                コーディネートの方針づくりから家具の手配、必要に応じた立ち上げ作業のお手伝いまで、一つの流れとして対応します。完成イメージの写真がなくても、色や好きな雰囲気、暮らしの不満点から一緒に言葉にし、納得のいくまで整えます。
+              </Text>
+            </Stack>
+          </Box>
+          <Frame ar="3/2" max-w={['100%', null, '400px']}>
             <Media src="https://cdn.lism-css.com/img/room/u-1K4PsDvC6W.jpg" alt="ワークスペースをイメージしたインテリア" width="1200" height="900" />
           </Frame>
-        </Grid>
+        </Flex>
       </Container>
 
-      <Box as="section" id="feature" class="z--natural-feature" ov-x="clip">
-        <Container isWrapper="l" hasGutter py="50">
-          <Grid gtc={['1fr', null, 'minmax(0, 1fr) minmax(0, 1fr)']} g={['30', null, '40']} ai="stretch">
-            <Stack class="z--natural-feature_main" g="40" jc="start">
-              <SectionHeading en="Point" ja="暮らしに寄り添う特長" />
-
-              <Stack g="30">
-                {
-                  featureCards.map((card) => (
-                    <Stack class="z--natural-feature_card" p="30" bgc="base" bd bdc="divider" bdrs="10">
-                      <Flex ai="start" g="20" class="z--natural-feature_cardInner">
-                        <Icon icon={card.icon} size="2.5rem" c="text-2" />
-                        <Stack g="10" class="z--natural-feature_cardBody">
-                          <Heading level="3" fz="l">
-                            {card.title}
-                          </Heading>
-                          <Text fz="s" c="text-2">
-                            {card.body}
-                          </Text>
-                        </Stack>
-                      </Flex>
-                    </Stack>
-                  ))
-                }
-              </Stack>
-            </Stack>
-
-            <Box class="z--natural-feature_rail">
-              <Box class="z--natural-feature_sticky">
-                <Frame class="z--natural-feature_frame" ov="hidden" bdrs="0">
-                  <Media src={featureImage.src} alt={featureImage.alt} width="1600" height="1067" loading="lazy" />
-                </Frame>
-              </Box>
-            </Box>
-          </Grid>
-        </Container>
-      </Box>
-
-      <Box as="section" id="service" class="z--natural-service" bgc="base-2" py="50">
-        <Container isWrapper="l" hasGutter>
-          <Stack g="50">
+      <Container as="section" id="feature" class="z--point" ov-x="clip" mbs="60">
+        <Columns cols={[1, null, 2]} g={['40', null, '10', '30']} class="set--bleed -contentSize:l">
+          <Stack class="z--point_main" g="40" jc="start" hasGutter ps="var(--bleed)">
+            <SectionHeading en="Point" ja="暮らしに寄り添う特長" />
             <Stack g="40">
-              <SectionHeading en="Service" ja="ご要望に合わせたサービス" />
-
-              <!-- md 未満: 1列（画像上・テキスト下）。md 以上: 2列（画像左・テキスト右） -->
-              <Grid gtc={['1fr', null, 'minmax(0, 1fr) minmax(0, 1fr)']} g={['30', null, '40']} ai="center">
-                <Frame ar="3/2" ov="hidden">
-                  <Media src={serviceLeadImage.src} alt={serviceLeadImage.alt} width="1920" height="1280" loading="lazy" />
-                </Frame>
-                <Stack g="20" jc="center">
-                  <Heading level="3" fz="2xl" lts="l">
-                    予算や目的に合わせ、
-                    <br />
-                    柔軟に対応します
-                  </Heading>
-                  <Text c="text-2">
-                    暮らし方や優先して整えたい場所、購入や配置までお願いしたい範囲などを伺い、無理のない形でご提案にまとめます。来店、オンライン、お電話のいずれからでも打ち合わせを受け付けています。
-                  </Text>
-                  <Text c="text-2">
-                    小さな悩み相談から、家具の買い付けに伴う作業のお願いまで、目的に合わせて一つずつ。賃貸・戸建てを問わず、住まいの性質に合う選び方を一緒に考えます。
-                  </Text>
-                </Stack>
-              </Grid>
+              {
+                featureCards.map((card) => (
+                  <Grid gtc="auto 1fr" gtr="auto auto" ai="center" g="30" rg="10" p="30" bdrs="20" bxsh="20">
+                    <Icon icon={card.icon} size="2em" c="text-2" />
+                    <Heading level="3" fz="l">
+                      {card.title}
+                    </Heading>
+                    <Text fz="s" c="text-2" gc="2">
+                      {card.body}
+                    </Text>
+                  </Grid>
+                ))
+              }
             </Stack>
+          </Stack>
+          <Frame pos="sticky" ar={['3/2', null, 'auto']} ms={['var(--gutter-size)', null, '0']}>
+            <Media src={featureImage.src} alt={featureImage.alt} width="1600" height="1067" loading="lazy" />
+          </Frame>
+        </Columns>
+      </Container>
 
-            <Stack g="40">
-              <Heading level="3" fz="xl" lts="l" ta="center">更なる特徴です</Heading>
-              <!-- md 未満: 1列。md 以上: 3列 -->
-              <Grid gtc={['1fr', null, 'repeat(3, minmax(0, 1fr))']} g="40" ai="start">
-                {
-                  serviceSubCards.map((item) => (
-                    <Flex class="z--natural-service_card" fxd={['row-reverse', null, 'column']} ai="stretch" g="30" min-w="0">
-                      <Frame class="z--natural-service_cardFigure" ar="3/2" ov="hidden">
-                        <Media src={item.image.src} alt={item.image.alt} width="1920" height="1280" loading="lazy" />
-                      </Frame>
-                      <Stack g="20" min-w="0" fx="1" jc="start">
-                        <Flex ai="center" g="20" util="trimAll">
-                          <Box as="span" class="z--natural-service_num" fz="3xl" fw="bold" ff="accent" c="text" whs="nowrap">
-                            {item.index}
-                          </Box>
-                          <Box class="z--natural-service_rule" w="1px" bgc="text" fxsh="0" />
-                          <Stack g="0" class="z--natural-service_cardTitles" util="trimAll">
-                            <Heading level="4" fz="m">
-                              {item.titleJa}
-                            </Heading>
-                            <Text fz="xs" lh="s" c="text-2" o="p" ff="accent">
-                              {item.titleEn}
-                            </Text>
-                          </Stack>
-                        </Flex>
-                        <Text fz="s" c="text-2">
-                          {item.body}
+      <Container as="section" id="service" isWrapper="l" hasGutter class="z--service" bgc="base-2" py="60" mbs="70">
+        <Stack g="50" mbs="-60">
+          <SectionHeading en="Service" ja="ご要望に合わせたサービス" hasOffset />
+          <Columns cols={[1, null, 3]} g="40" ai="start">
+            {
+              serviceSubCards.map((item) => (
+                <Flex fxd={['row-reverse', null, 'column']} g="30">
+                  <Frame ar="3/2" w={['min(40%, 16rem)', null, 'auto']} d={['none', 'block']}>
+                    <Media src={item.image.src} alt={item.image.alt} width="900" height="600" loading="lazy" />
+                  </Frame>
+                  <Stack g="30" fx="1" jc="start">
+                    <Flex ai="center" g="20">
+                      <Inline lh="1" fz="3xl" fw="bold" lts="l" ff="accent" fxsh="0">
+                        {item.index}
+                      </Inline>
+                      <Decorator aslf="stretch" w="1px" bgc="text" fxsh="0" />
+                      <Stack g="10" class="z--service_cardTitles" util="trimAll">
+                        <Heading level="3" fz="m">
+                          {item.titleJa}
+                        </Heading>
+                        <Text fz="2xs" lh="s" c="text-2" o="p" ff="accent">
+                          {item.titleEn}
                         </Text>
                       </Stack>
                     </Flex>
-                  ))
-                }
-              </Grid>
-            </Stack>
-          </Stack>
-        </Container>
-      </Box>
-
-      <Box as="section" id="step" class="z--natural-step" ov-x="clip">
-        <Container isWrapper="l" hasGutter py="50">
-          <Grid gtc={['1fr', null, 'minmax(0, 1fr) minmax(0, 1fr)']} g={['30', null, '40']} ai="stretch">
-            <Stack class="z--natural-step_main" g="40" jc="start">
-              <SectionHeading en="Step" ja="ご依頼から納品までの流れ" />
-
-              <Stack g="15" ai="stretch" w="100%">
-                {
-                  stepCards.map((card, i) => (
-                    <>
-                      {i > 0 && (
-                        <Flex class="z--natural-step_caret" jc="center" ai="center" w="100%" fxsh="0">
-                          <Icon icon="caret-down-fill" fz="2xl" />
-                        </Flex>
-                      )}
-                      <Stack class="z--natural-step_card" g="15" p="30" bgc="base" bd bdc="divider" bdrs="10" ov="hidden" min-w="0">
-                        {card.image && (
-                          <Frame class="z--natural-step_cardFrame" ar="3/2" ov="hidden" bdrs="0">
-                            <Media src={card.image.src} alt={card.image.alt} width="1920" height="1280" loading="lazy" />
-                          </Frame>
-                        )}
-                        <Stack g="10" class="z--natural-step_cardBody">
-                          <Heading level="3" fz="l">
-                            {card.title}
-                          </Heading>
-                          <Text fz="s" c="text-2">
-                            {card.body}
-                          </Text>
-                        </Stack>
-                      </Stack>
-                    </>
-                  ))
-                }
-              </Stack>
-            </Stack>
-
-            <Box class="z--natural-step_rail">
-              <Box class="z--natural-step_sticky">
-                <Frame class="z--natural-step_frame" ov="hidden" bdrs="0">
-                  <Media src={stepImage.src} alt={stepImage.alt} width="1920" height="1080" loading="lazy" />
-                </Frame>
-              </Box>
-            </Box>
-          </Grid>
-        </Container>
-      </Box>
-
-      <Box as="section" id="voice" class="z--natural-voice" bgc="base">
-        <Container isWrapper="l" hasGutter py="50" isContainer>
-          <Stack g="40">
-            <SectionHeading en="Voice" ja="お客様の声です" />
-
-            {
-              /**
-               * md 未満: Flex + hasSnap（公式 Reel の Flex 例と同型。Grid の gaf:column は縦積みになりやすい）
-               * md 以上: AutoColumns（最小幅 24rem、折り返し）
-               * @see https://lism-css.com/docs/ui/examples/reel/
-               * @see https://lism-css.com/docs/primitives/l--autoColumns/
-               */
+                    <Text fz="s" c="text-2" util="trim">
+                      {item.body}
+                    </Text>
+                  </Stack>
+                </Flex>
+              ))
             }
-            <Box class="z--natural-voice_layout" min-w="0" w="100%">
-              <Flex class="z--natural-voice_reel" hasSnap ov="auto" g="20" fxd="row" fxw="nowrap" ai="stretch" w="100%" min-w="0" tabindex={0}>
-                {
-                  voiceCards.map((card) => (
-                    <Box
-                      class="z--natural-voice_card z--natural-voice_slide"
-                      p="30"
-                      bgc="base"
-                      bd
-                      bdc="divider"
-                      bdrs="20"
-                      fxsh="0"
-                      min-w="0"
-                      min-h="0"
-                      d="flex"
-                      fxd="column"
-                      aslf="stretch"
-                    >
-                      <Stack g="20" ai="stretch" fx="1" min-h="0" jc="start">
-                        <Avatar src={card.avatar.src} alt={card.avatar.alt} size="5.5rem" mx="auto" />
-                        <Heading level="3" fz="l" fw="bold" ta="center">
-                          {card.title}
-                        </Heading>
-                        <Text fz="s" c="text" lh="l" ta="left">
-                          {card.body}
-                        </Text>
-                        <Text class="z--natural-voice_attribution" as="p" fz="xs" c="text-2" o="p" ta="end" w="100%" mt="auto">
-                          {card.attribution}
-                        </Text>
-                      </Stack>
-                    </Box>
-                  ))
-                }
-              </Flex>
+          </Columns>
 
-              <AutoColumns class="z--natural-voice_auto" cols="24rem" g="30" w="100%" min-w="0">
-                {
-                  voiceCards.map((card) => (
-                    <Box class="z--natural-voice_card" p="30" bgc="base" bd bdc="divider" bdrs="20" min-w="0" d="flex" fxd="column" h="100%">
-                      <Stack g="20" ai="stretch" fx="1" min-h="0" jc="start">
-                        <Avatar src={card.avatar.src} alt={card.avatar.alt} size="5.5rem" mx="auto" />
-                        <Heading level="3" fz="l" fw="bold" ta="center">
-                          {card.title}
-                        </Heading>
-                        <Text fz="s" c="text" lh="l" ta="left">
-                          {card.body}
-                        </Text>
-                        <Text class="z--natural-voice_attribution" as="p" fz="xs" c="text-2" o="p" ta="end" w="100%" mt="auto">
-                          {card.attribution}
-                        </Text>
-                      </Stack>
-                    </Box>
-                  ))
-                }
-              </AutoColumns>
-            </Box>
-          </Stack>
-        </Container>
-      </Box>
+          <!-- md 未満: 1列（画像上・テキスト下）。md 以上: 2列（画像左・テキスト右） -->
+          <Grid gtc={['1fr', null, 'minmax(0, 1fr) minmax(0, 1fr)']} g={['30', null, '40']} ai="center">
+            <Frame ar="3/2" ov="hidden">
+              <Media src={serviceLeadImage.src} alt={serviceLeadImage.alt} width="1920" height="1280" loading="lazy" />
+            </Frame>
+            <Stack g="20" jc="center">
+              <Heading level="3" fz="2xl" lts="l">
+                予算や目的に合わせ、
+                <br />
+                柔軟に対応します
+              </Heading>
+              <Text c="text-2">
+                暮らし方や優先して整えたい場所、購入や配置までお願いしたい範囲などを伺い、無理のない形でご提案にまとめます。来店、オンライン、お電話のいずれからでも打ち合わせを受け付けています。
+              </Text>
+              <Text c="text-2">
+                小さな悩み相談から、家具の買い付けに伴う作業のお願いまで、目的に合わせて一つずつ。賃貸・戸建てを問わず、住まいの性質に合う選び方を一緒に考えます。
+              </Text>
+            </Stack>
+          </Grid>
+        </Stack>
+      </Container>
 
-      <Box as="section" id="faq" class="z--natural-faq" bgc="base-2">
-        <Container isWrapper="l" hasGutter py="50">
-          <Stack g="40">
-            <SectionHeading en="FAQ" ja="よくあるご質問" />
-
-            <Accordion.Root class="z--natural-faq_acc" p="0" g="20">
+      <Container as="section" id="step" class="z--step" ov-x="clip" py="60">
+        <Columns cols={[1, null, 2]} g={['40', null, '10', '30']} class="set--bleed -contentSize:l">
+          <Stack g="40" jc="start" hasGutter pe="var(--bleed)">
+            <SectionHeading en="Step" ja="ご依頼から納品までの流れ" />
+            <Stack g="20">
               {
-                faqItems.map((item) => (
-                  <Accordion.Item bgc="base" bdrs="20" bxsh="10" {...(item.defaultOpen ? { 'data-opened': '' } : {})}>
-                    <Accordion.Heading p="30">
-                      <Accordion.Button fw="bold" ta="start" isOpen={item.defaultOpen === true}>
-                        {item.question}
-                      </Accordion.Button>
-                    </Accordion.Heading>
-                    <Accordion.Panel py="30" px="30" isOpen={item.defaultOpen === true}>
-                      <Text fz="s" c="text-2" lh="l">
-                        {item.answer}
+                stepCards.map((card, i) => (
+                  <>
+                    {i > 0 && (
+                      <Center fxsh="0">
+                        <Icon icon="caret-down-fill" fz="2xl" o="ppp" />
+                      </Center>
+                    )}
+                    <Stack class="z--step_card" g="30" p="30" bdrs="20" bxsh="20">
+                      {card.image && (
+                        <Frame class="z--step_cardFrame" ar="21/9" ov="hidden" bdrs="10">
+                          <Media src={card.image.src} alt={card.image.alt} width="1920" height="1280" loading="lazy" />
+                        </Frame>
+                      )}
+                      <Heading level="3" fz="l" util="trim">
+                        {card.title}
+                      </Heading>
+                      <Text fz="s" c="text-2" util="trim">
+                        {card.body}
                       </Text>
-                    </Accordion.Panel>
-                  </Accordion.Item>
+                    </Stack>
+                  </>
                 ))
               }
-            </Accordion.Root>
+            </Stack>
           </Stack>
-        </Container>
-      </Box>
+          <Frame pos="sticky" ar={['3/2', null, 'auto']} me={['var(--gutter-size)', null, '0']} order={['1', null, '-1']}>
+            <Media src={stepImage.src} alt={stepImage.alt} width="1920" height="1080" loading="lazy" />
+          </Frame>
+        </Columns>
+      </Container>
 
-      <Box as="section" id="contact" class="z--natural-contact" pos="relative" ov="hidden">
-        <Frame isLayer class="z--natural-contact_mediaWrap">
-          <Media
-            class="z--natural-contact_media"
-            src={contactBg.src}
-            alt={contactBg.alt}
-            w="100%"
-            h="100%"
-            width="1920"
-            height="1080"
-            loading="lazy"
-          />
+      <Container as="section" id="voice" isWrapper="l" hasGutter class="z--voice">
+        <Stack g="40">
+          <SectionHeading en="Voice" ja="お客様の声です" />
+          <Columns hasSnap ov="auto" g={['20', null, '30']} pbe="10" gaf={['column', 'row']} gac="85%" cols={[0, 2, null, 3]}>
+            {
+              voiceCards.map((card) => (
+                <Stack g="30" ai="center" p="30" bgc="base" bd bdrs="20">
+                  <Avatar src={card.avatar.src} alt={card.avatar.alt} size="5rem" />
+                  <Heading level="3" fz="l" util="trim">
+                    {card.title}
+                  </Heading>
+                  <Text fz="s" c="text-2" lh="l" util="trim">
+                    {card.body}
+                  </Text>
+                  <Text class="z--voice_attribution" fz="2xs" c="text-2" o="p" ta="end" w="100%" mt="auto" util="trim">
+                    {card.attribution}
+                  </Text>
+                </Stack>
+              ))
+            }
+          </Columns>
+        </Stack>
+      </Container>
+
+      <Container as="section" id="faq" class="z--faq" isWrapper hasGutter py="60" bgc="base-2" mbs="60">
+        <Stack g="40">
+          <SectionHeading en="FAQ" ja="よくあるご質問" />
+
+          <Accordion.Root class="z--faq_acc" p="0" g="20">
+            {
+              faqItems.map((item) => (
+                <Accordion.Item bgc="base" bdrs="20" bxsh="10" {...(item.defaultOpen ? { 'data-opened': '' } : {})}>
+                  <Accordion.Heading p="30">
+                    <Accordion.Button fw="bold" ta="start" isOpen={item.defaultOpen === true}>
+                      {item.question}
+                    </Accordion.Button>
+                  </Accordion.Heading>
+                  <Accordion.Panel py="30" px="30" isOpen={item.defaultOpen === true}>
+                    <Text fz="s" c="text-2" lh="l">
+                      {item.answer}
+                    </Text>
+                  </Accordion.Panel>
+                </Accordion.Item>
+              ))
+            }
+          </Accordion.Root>
+        </Stack>
+      </Container>
+
+      <Box as="section" id="contact" class="z--contact" pos="relative" ov="hidden">
+        <Frame isLayer class="z--contact_mediaWrap">
+          <Media class="z--contact_media" src={contactBg.src} alt={contactBg.alt} w="100%" h="100%" width="1920" height="1080" loading="lazy" />
         </Frame>
         <!-- 背景写真の上に半透明の黒レイヤーでコントラストを確保 -->
         <Layer pos="absolute" style={{ inset: 0, pointerEvents: 'none', background: 'hsl(0 0% 0% / 0.52)' }} />
-        <Container class="z--natural-contact_inner" isWrapper="l" hasGutter py="60" pos="relative">
+        <Container class="z--contact_inner" isWrapper="l" hasGutter py="60" pos="relative">
           <Stack g="40" ai="center">
             <SectionHeading en="Contact" ja="お問い合わせ" c="white" />
 
@@ -644,7 +554,7 @@ const contactFields = [
               初めての方もどうぞお気軽にお問い合わせください。<br />このフォームはダミーです。
             </Text>
 
-            <Box as="form" class="z--natural-contact_form" max-w="36rem" w="100%" method="post" action="#">
+            <Box as="form" class="z--contact_form" max-w="36rem" w="100%" method="post" action="#">
               <Stack g="20">
                 {
                   contactFields.map((field) => (
@@ -655,7 +565,7 @@ const contactFields = [
                       {field.type === 'textarea' ? (
                         <textarea
                           id={field.id}
-                          class="z--natural-contact_input z--natural-contact_input--textarea"
+                          class="z--contact_input z--contact_input--textarea"
                           name={field.name}
                           rows={field.rows}
                           placeholder={field.placeholder}
@@ -665,7 +575,7 @@ const contactFields = [
                       ) : (
                         <input
                           id={field.id}
-                          class="z--natural-contact_input"
+                          class="z--contact_input"
                           name={field.name}
                           type={field.type}
                           placeholder={field.placeholder}
@@ -682,7 +592,7 @@ const contactFields = [
 
                 {field.errorMessage && (
                   <Text
-                    class='z--natural-contact_error'
+                    class='z--contact_error'
                     id={`${field.id}-error`}
                     as='p'
                     fz='xs'
@@ -698,7 +608,7 @@ const contactFields = [
                     </Stack>
                   ))
                 }
-                <button type="submit" class="z--natural-contact_submit">この内容で送信 (dummy)</button>
+                <button type="submit" class="z--contact_submit">この内容で送信 (dummy)</button>
               </Stack>
             </Box>
           </Stack>
@@ -706,22 +616,21 @@ const contactFields = [
       </Box>
     </Container>
     <!-- Footer -->
-    <Box as="footer" class="z--natural-footer" bgc="base-2" w="100%">
-      <Container class="z--natural-footer_container" isContainer isWrapper="xl" py="40" hasGutter>
+    <Box as="footer" class="z--footer" bgc="base-2" w="100%">
+      <Container class="z--footer_container" isContainer isWrapper="xl" py="50" hasGutter>
         <Stack jc="center" ai="center" g="30">
           <Stack class="c--logo">
             <Link href="#top" fz="2xl" fw="bold" lts="l" c="text" td="none" ff="accent">LISM Life</Link>
           </Stack>
           <Flex
             as="ul"
-            class="z--natural-footerNav z--nav"
+            class="z--footerNav z--nav"
             fxd={['column', null, 'row']}
             ai={['stretch', null, 'c']}
             jc={['start', null, 'c']}
             fxw={['nowrap', null, 'wrap']}
             g={['0', null, '30']}
             w={['100%', null, 'auto']}
-            min-w="0"
             fz="s"
             lts="l"
             p="0"
