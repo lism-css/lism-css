@@ -183,15 +183,15 @@ describe('runCreate', () => {
   it('single-project-variant型は選択variantのindex.astroをsrc/pages/index.astroに持ち上げ、他variantを削除しpackage.json.nameを書き換える', async () => {
     const templates: Parameters<typeof runCreateWithTemplates>[1] = [
       {
-        slug: 'lp-astro-natural',
+        slug: 'lp-astro-interior',
         kind: 'single-project-variant',
         category: 'lp',
         stack: 'astro',
-        variant: 'natural',
-        variantLabel: { ja: 'Natural', en: 'Natural' },
+        variant: 'interior',
+        variantLabel: { ja: 'Interior', en: 'Interior' },
         sourcePath: 'lp/astro',
-        packageName: 'lp-astro-natural',
-        description: { ja: 'Natural LP', en: 'Natural landing page' },
+        packageName: 'lp-astro-interior',
+        description: { ja: 'Interior LP', en: 'Interior landing page' },
       },
     ];
 
@@ -201,26 +201,26 @@ describe('runCreate', () => {
       writePackageJson(dir, { name: 'lp-astro', dependencies: { 'lism-css': 'workspace:*' } });
       writeFile(path.join(dir, 'src/pages/index.astro'), 'list');
       writeFile(path.join(dir, 'src/pages/corporate/index.astro'), 'corporate');
-      writeFile(path.join(dir, 'src/pages/natural/index.astro'), 'natural');
-      writeFile(path.join(dir, 'src/pages/natural/_style.css'), '.natural{}');
+      writeFile(path.join(dir, 'src/pages/interior/index.astro'), 'interior');
+      writeFile(path.join(dir, 'src/pages/interior/_style.css'), '.interior{}');
       writeFile(path.join(dir, 'src/pages/ryokan/index.astro'), 'ryokan');
       writeFile(path.join(dir, 'src/pages/ryokan/_style.css'), '.ryokan{}');
       return Promise.resolve({} as Awaited<ReturnType<typeof downloadTemplate>>);
     });
 
-    await runCreateWithTemplates({ template: 'lp-astro-natural', targetDir: 'lp-app', force: true }, templates);
+    await runCreateWithTemplates({ template: 'lp-astro-interior', targetDir: 'lp-app', force: true }, templates);
 
     const outDir = path.join(tmpDir, 'lp-app');
 
     // 選択 variant の index.astro が src/pages/index.astro に持ち上がっている
-    expect(fs.readFileSync(path.join(outDir, 'src/pages/index.astro'), 'utf-8')).toBe('natural');
+    expect(fs.readFileSync(path.join(outDir, 'src/pages/index.astro'), 'utf-8')).toBe('interior');
 
     // 選択 variant の付随ファイル（_style.css）も src/pages/ に持ち上がっている
-    expect(fs.readFileSync(path.join(outDir, 'src/pages/_style.css'), 'utf-8')).toBe('.natural{}');
+    expect(fs.readFileSync(path.join(outDir, 'src/pages/_style.css'), 'utf-8')).toBe('.interior{}');
 
     // 他 variant ディレクトリ + 自分の variant ディレクトリも残らない
     expect(fs.existsSync(path.join(outDir, 'src/pages/corporate'))).toBe(false);
-    expect(fs.existsSync(path.join(outDir, 'src/pages/natural'))).toBe(false);
+    expect(fs.existsSync(path.join(outDir, 'src/pages/interior'))).toBe(false);
     expect(fs.existsSync(path.join(outDir, 'src/pages/ryokan'))).toBe(false);
 
     // src/pages 直下に残るのは index.astro と _style.css のみ
@@ -232,7 +232,7 @@ describe('runCreate', () => {
       name: string;
       dependencies: Record<string, string>;
     };
-    expect(pkg.name).toBe('lp-astro-natural');
+    expect(pkg.name).toBe('lp-astro-interior');
     // workspace:* も同時に置換される
     expect(pkg.dependencies['lism-css']).not.toBe('workspace:*');
   });
@@ -270,16 +270,16 @@ describe('runCreate', () => {
         ].join('\n')
       );
       writeFile(path.join(dir, 'src/pages/corporate/_style.css'), '.corporate{}');
-      writeFile(path.join(dir, 'src/pages/natural/index.astro'), 'natural');
+      writeFile(path.join(dir, 'src/pages/interior/index.astro'), 'interior');
 
       // components: variant ディレクトリ規約
       writeFile(path.join(dir, 'src/components/corporate/Hero.astro'), '<div>corp hero</div>');
       writeFile(path.join(dir, 'src/components/corporate/Heading.astro'), '<h1>corp</h1>');
-      writeFile(path.join(dir, 'src/components/natural/Hero.astro'), '<div>nat hero</div>');
+      writeFile(path.join(dir, 'src/components/interior/Hero.astro'), '<div>nat hero</div>');
 
       // styles: variant ディレクトリ規約
       writeFile(path.join(dir, 'src/styles/corporate/main.css'), '.corp-main{}');
-      writeFile(path.join(dir, 'src/styles/natural/main.css'), '.nat-main{}');
+      writeFile(path.join(dir, 'src/styles/interior/main.css'), '.nat-main{}');
 
       // lib: 共通ファイル + variant 規約は存在しない（このディレクトリは触らない）
       writeFile(path.join(dir, 'src/lib/util.ts'), 'export const x = 1;');
@@ -293,7 +293,7 @@ describe('runCreate', () => {
 
     // pages: corporate が持ち上がり、他 variant + 自 variant ディレクトリは消える
     expect(fs.existsSync(path.join(outDir, 'src/pages/corporate'))).toBe(false);
-    expect(fs.existsSync(path.join(outDir, 'src/pages/natural'))).toBe(false);
+    expect(fs.existsSync(path.join(outDir, 'src/pages/interior'))).toBe(false);
     expect(fs.readFileSync(path.join(outDir, 'src/pages/_style.css'), 'utf-8')).toBe('.corporate{}');
 
     // pages/index.astro 内の @/components/corporate/ → @/components/ に書き換え
@@ -305,13 +305,13 @@ describe('runCreate', () => {
 
     // components: corporate の中身が持ち上がり、他 variant は消える
     expect(fs.existsSync(path.join(outDir, 'src/components/corporate'))).toBe(false);
-    expect(fs.existsSync(path.join(outDir, 'src/components/natural'))).toBe(false);
+    expect(fs.existsSync(path.join(outDir, 'src/components/interior'))).toBe(false);
     expect(fs.readFileSync(path.join(outDir, 'src/components/Hero.astro'), 'utf-8')).toBe('<div>corp hero</div>');
     expect(fs.readFileSync(path.join(outDir, 'src/components/Heading.astro'), 'utf-8')).toBe('<h1>corp</h1>');
 
     // styles: 同様
     expect(fs.existsSync(path.join(outDir, 'src/styles/corporate'))).toBe(false);
-    expect(fs.existsSync(path.join(outDir, 'src/styles/natural'))).toBe(false);
+    expect(fs.existsSync(path.join(outDir, 'src/styles/interior'))).toBe(false);
     expect(fs.readFileSync(path.join(outDir, 'src/styles/main.css'), 'utf-8')).toBe('.corp-main{}');
 
     // lib: variant 規約のディレクトリではないので既存ファイルはそのまま
@@ -369,16 +369,16 @@ describe('runCreate', () => {
       writeFile(path.join(dir, 'src/pages/corporate/index.astro'), 'corp');
       // components/corporate/ は空ディレクトリだが、他 variant には中身がある
       fs.mkdirSync(path.join(dir, 'src/components/corporate'), { recursive: true });
-      writeFile(path.join(dir, 'src/components/natural/Hero.astro'), '<div>nat</div>');
+      writeFile(path.join(dir, 'src/components/interior/Hero.astro'), '<div>nat</div>');
       return Promise.resolve({} as Awaited<ReturnType<typeof downloadTemplate>>);
     });
 
     await runCreateWithTemplates({ template: 'lp-astro-corp-empty', targetDir: 'lp-corp-empty', force: true }, templates);
 
     const outDir = path.join(tmpDir, 'lp-corp-empty');
-    // corporate ディレクトリは空でもエラーにならず、natural は掃除される
+    // corporate ディレクトリは空でもエラーにならず、interior は掃除される
     expect(fs.existsSync(path.join(outDir, 'src/components/corporate'))).toBe(false);
-    expect(fs.existsSync(path.join(outDir, 'src/components/natural'))).toBe(false);
+    expect(fs.existsSync(path.join(outDir, 'src/components/interior'))).toBe(false);
     // 持ち上げる中身が無いので components 直下に追加ファイルは無いが、ディレクトリ自体は残る
     expect(fs.existsSync(path.join(outDir, 'src/components'))).toBe(true);
     expect(fs.readdirSync(path.join(outDir, 'src/components'))).toEqual([]);

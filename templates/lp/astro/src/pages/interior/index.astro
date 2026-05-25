@@ -24,12 +24,12 @@ import {
 } from 'lism-css/astro';
 import { Accordion } from '@lism-css/ui/astro/Accordion';
 import { Avatar } from '@lism-css/ui/astro/Avatar';
-import Header from '@/components/natural/Header.astro';
-import SectionHeading from '@/components/natural/SectionHeading.astro';
+import Header from '@/components/interior/Header.astro';
+import SectionHeading from '@/components/interior/SectionHeading.astro';
 
 import './_style.css';
 
-export const title = 'Simple Natural LP';
+export const title = 'LP Interior';
 
 /** ヘッダー主ナビと同一5件 */
 const footerPrimaryNavItems = [
@@ -249,7 +249,7 @@ const contactBg = {
 /** 各フィールドの表示・name・プレースホルダーを独立して管理 */
 const contactFields = [
   {
-    id: 'natural-contact-name',
+    id: 'interior-contact-name',
     name: 'name',
     label: '名前',
     type: 'text' as const,
@@ -258,7 +258,7 @@ const contactFields = [
     errorMessage: '',
   },
   {
-    id: 'natural-contact-email',
+    id: 'interior-contact-email',
     name: 'email',
     label: 'メールアドレス',
     type: 'email' as const,
@@ -268,7 +268,7 @@ const contactFields = [
     errorMessage: '正しいメールアドレス形式で入力してください。',
   },
   {
-    id: 'natural-contact-subject',
+    id: 'interior-contact-subject',
     name: 'subject',
     label: '件名',
     type: 'text' as const,
@@ -277,7 +277,7 @@ const contactFields = [
     errorMessage: '',
   },
   {
-    id: 'natural-contact-message',
+    id: 'interior-contact-message',
     name: 'message',
     label: '問い合わせ内容',
     type: 'textarea' as const,
