@@ -13,7 +13,7 @@ The set-- classes fall into two categories:
 | Category | Purpose | Classes |
 |----------|---------|---------|
 | Base styling | Resetting or reverting HTML element styles | `set--plain` / `set--revert` |
-| Variable setup | Setting up CSS variables only | `set--bxsh` / `set--hov` / `set--bdrsInner` / `set--s` |
+| Variable setup | Setting up CSS variables only | `set--bxsh` / `set--hov` / `set--bdrsInner` / `set--bleed` / `set--s` |
 
 The `{name}` in `set--{name}` corresponds to the name of the CSS variable each class sets up (e.g. `--bxsh--*` → `bxsh`, `--_isHov` / `--_notHov` → `hov`, `--bdrs--inner` → `bdrsInner`, `--s*` → `s`).
 
@@ -240,6 +240,24 @@ For example, this is useful for zooming an image inside a card when the parent b
 See the [`hover` documentation page](/en/docs/property-class/hov#set--hov) for usage examples.
 
 <DocsLink path="/docs/property-class/hov#set--hov" />
+
+
+## `set--bleed`
+
+Provides the `--bleed` variable used to position elements that overflow the content width (`--contentSize`).
+It calculates the horizontal space left next to the content width based on container query units (`100cqi`) of the outermost `is--container`. The result is clamped to at least `--gutter-size`, so the value never falls below the gutter width.
+
+<SrcCode path="src/scss/base/set/_bleed.scss" />
+
+When `--contentSize` is not specified, `--sz--m` is used as the fallback. You can override the value using classes like `-contentSize:s` or `<Lism contentSize="...">`.
+
+```html
+<div class="is--container has--gutter">
+  <div class="set--bleed -contentSize:l">
+    <!-- --bleed is defined here. Use `padding-inline: var(--bleed)` to push content out toward the wrapper edges -->
+  </div>
+</div>
+```
 
 
 ## `set--bdrsInner`

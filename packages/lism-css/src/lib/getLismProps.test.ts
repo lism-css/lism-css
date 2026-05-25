@@ -324,6 +324,23 @@ describe('getLismProps', () => {
       expect(result.style?.['--contentSize']).toBe('800px');
     });
 
+    test('contentSize: 単独でプリセット値を指定すると、クラスのみが出力される', () => {
+      const result = getLismProps({ contentSize: 'l' });
+      expect(result.className).toContain('-contentSize:l');
+      expect(result.className).not.toContain('is--wrapper');
+    });
+
+    test('contentSize: 任意値の場合、CSS変数として出力される', () => {
+      const result = getLismProps({ contentSize: '800px' });
+      expect(result.style?.['--contentSize']).toBe('800px');
+      expect(result.className ?? '').not.toContain('is--wrapper');
+    });
+
+    test('contentSize: トークン値の場合、CSS変数として出力される', () => {
+      const result = getLismProps({ contentSize: 'm' });
+      expect(result.style?.['--contentSize']).toBe('var(--sz--m)');
+    });
+
     test('複数のstate propsが同時に機能する', () => {
       const result = getLismProps({
         isContainer: true,

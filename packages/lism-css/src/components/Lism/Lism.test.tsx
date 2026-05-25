@@ -514,6 +514,37 @@ describe('Lism', () => {
         const element = screen.getByTestId('lism');
         expect(element).toHaveClass('-min-h:100%');
       });
+
+      test('contentSize にプリセット値を指定できる', () => {
+        render(
+          <Lism contentSize="l" data-testid="lism">
+            test
+          </Lism>
+        );
+        const element = screen.getByTestId('lism');
+        expect(element).toHaveClass('-contentSize:l');
+        expect(element).not.toHaveClass('is--wrapper');
+      });
+
+      test('contentSize にトークン値を指定すると CSS 変数として出力される', () => {
+        render(
+          <Lism contentSize="m" data-testid="lism">
+            test
+          </Lism>
+        );
+        const element = screen.getByTestId('lism');
+        expect(element).toHaveStyle({ '--contentSize': 'var(--sz--m)' });
+      });
+
+      test('contentSize に任意値を指定すると CSS 変数として出力される', () => {
+        render(
+          <Lism contentSize="800px" data-testid="lism">
+            test
+          </Lism>
+        );
+        const element = screen.getByTestId('lism');
+        expect(element).toHaveStyle({ '--contentSize': '800px' });
+      });
     });
 
     describe('Displays', () => {
@@ -1221,6 +1252,16 @@ describe('Lism', () => {
         );
         const element = screen.getByTestId('lism');
         expect(element).toHaveClass('set--bdrsInner');
+      });
+
+      test('set="bleed" で set--bleed クラスが出力される', () => {
+        render(
+          <Lism set="bleed" data-testid="lism">
+            test
+          </Lism>
+        );
+        const element = screen.getByTestId('lism');
+        expect(element).toHaveClass('set--bleed');
       });
     });
 
