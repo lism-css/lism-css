@@ -270,6 +270,7 @@ function cleanupDevArtifacts(projectDir: string): void {
  * `src/` 直下のサブディレクトリ（`src/pages/`, `src/components/`, `src/styles/`, ...）について、
  * その中に対象 variant のディレクトリ（例: `src/components/{variant}/`）が存在するものを
  * 「variant 規約のディレクトリ」とみなし、以下の処理を行う:
+ * （variant ディレクトリ直下はファイルのみを想定。ネストしたサブディレクトリ構成は非対応）
  *
  *   1. `src/{dir}/{variant}/` の中身を `src/{dir}/` 直下にマージ
  *      （variant ディレクトリが空でもエラーにせず、単に何もマージしないだけ）
