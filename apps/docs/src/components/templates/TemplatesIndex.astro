@@ -1,5 +1,5 @@
 ---
-import { Stack, Flex, Cluster, AutoColumns, Text, Heading, Link, Lism, Frame, Inline } from 'lism-css/astro';
+import { Spacer, Stack, Flex, Cluster, AutoColumns, Text, Heading, Link, BoxLink, Lism, Frame, Inline } from 'lism-css/astro';
 import { Button } from '@lism-css/ui/astro/Button';
 import { Image } from 'astro:assets';
 import { getLocalizedUrl, type LangCode } from '@/lib/i18n';
@@ -70,17 +70,16 @@ const buildCategoryDetailUrl = (category: string) => getLocalizedUrl(`/templates
   {/* ===== クイックスタート ===== */}
   <Stack as="section" g="30">
     <Heading level="2">{copy.quickStart}</Heading>
-    <Stack g="30" p="30" bd bdrs="20" bgc="base">
+    <Stack g="15" p="30" bd bdrs="20" bgc="base">
       <Text util="trim" c="text-2" fz="s" lh="s">{copy.commandLead}</Text>
       <Lism as="pre" class="p--templates_code" p="15" bdrs="20" bgc="base-2" fz="xs" lh="s">
         <code>pnpm create lism</code>
       </Lism>
-      <Stack g="5">
-        <Text util="trim" c="text-2" fz="xs" lh="s">{copy.fullFormLead}</Text>
-        <Lism as="pre" class="p--templates_code p--templates_codeSub" p="10" bdrs="10" bgc="base-2" fz="xs" lh="s">
-          <code>pnpm create lism {'{targetDir}'} --template {'{slug}'}</code>
-        </Lism>
-      </Stack>
+      <Spacer h="5" />
+      <Text util="trim" c="text-2" fz="xs" lh="s">{copy.fullFormLead}</Text>
+      <Lism as="pre" class="p--templates_code p--templates_codeSub" p="10" bdrs="10" bgc="base-2" fz="xs" lh="s">
+        <code>pnpm create lism {'{targetDir}'} --template {'{slug}'}</code>
+      </Lism>
     </Stack>
   </Stack>
 
@@ -110,131 +109,104 @@ const buildCategoryDetailUrl = (category: string) => getLocalizedUrl(`/templates
             </Text>
           </Stack>
 
-          <AutoColumns cols="20em" autoFill g="30">
-            {category.aggregateView
+          {() => {
+            /* カード描画用データを正規化 */
+            const cards = category.aggregateView
               ? (() => {
-                  const representative = getAggregateRepresentative(category, items) ?? items[0];
-                  const detailUrl = buildCategoryDetailUrl(category.id);
-                  const command = buildCommand(category.id);
-                  const cardTitle = category.label;
-                  const cardDescription = category.description[lang];
-                  const cardPreviewUrl = representative?.previewUrl;
-                  return (
-                    <Stack as="article" id={category.id} g="0" bd bdrs="20" bgc="base" ov="hidden" class="p--templates_card">
-                      <a href={detailUrl} class="p--templates_thumbLink" aria-label={cardTitle}>
-                        <Frame ar="16/9" ov="hidden" bd-b fxsh="0">
-                          <Image
-                            src={representative.thumb}
-                            alt={copy.thumbAlt(cardTitle)}
-                            widths={[400, 800]}
-                            sizes="(max-width: 600px) 100vw, 33vw"
-                            loading="lazy"
-                          />
-                        </Frame>
-                      </a>
-                      <Stack p="20" g="20" fxg="1">
-                        <Cluster g="5">
-                          {items.map((tpl) => (
-                            <Inline d="inline-flex" px="10" fz="2xs" ff="mono" c="text-2" bd bdc="current" bdrs="99">
-                              {stackLabels[tpl.stack]}
-                            </Inline>
-                          ))}
-                        </Cluster>
-                        <Heading level="4" fz="l" util="trim">
-                          <a href={detailUrl} class="p--templates_titleLink">
-                            {cardTitle}
-                          </a>
-                        </Heading>
-                        <Text c="text-2" fz="s" lh="s" util="trim">
-                          {cardDescription}
-                        </Text>
-                        <Stack g="15" mt="auto">
-                          <CopyCommand bdrs="10" command={command} copyLabel={copy.copy} copiedLabel={copy.copied} />
-                          <Flex g="15" ai="stretch">
-                            <Button as="a" href={detailUrl} bdrs="10" g="5" fz="xs" fx="1" variant="outline">
-                              <span>{copy.details}</span>
-                            </Button>
-                            <Button
-                              as="a"
-                              variant="fill"
-                              href={cardPreviewUrl ?? '#'}
-                              target={cardPreviewUrl ? '_blank' : undefined}
-                              rel={cardPreviewUrl ? 'noopener noreferrer' : undefined}
-                              aria-disabled={cardPreviewUrl ? undefined : 'true'}
-                              tabindex={cardPreviewUrl ? undefined : -1}
-                              bdrs="10"
-                              g="5"
-                              fz="xs"
-                              fx="1"
-                            >
-                              <span>{copy.preview}</span>
-                              <svg
-                                width="12"
-                                height="12"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                stroke="currentColor"
-                                stroke-width="2.5"
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                aria-hidden="true"
-                              >
-                                <line x1="7" y1="17" x2="17" y2="7" />
-                                <polyline points="7 7 17 7 17 17" />
-                              </svg>
-                            </Button>
-                          </Flex>
-                        </Stack>
-                      </Stack>
-                    </Stack>
-                  );
+                  const rep = getAggregateRepresentative(category, items) ?? items[0];
+                  return [
+                    {
+                      id: category.id,
+                      title: category.label,
+                      description: category.description[lang],
+                      thumb: rep.thumb,
+                      stacks: items.map((tpl) => tpl.stack),
+                      detailUrl: buildCategoryDetailUrl(category.id),
+                      command: buildCommand(category.id),
+                      previewUrl: rep?.previewUrl,
+                      features: undefined as string[] | undefined,
+                      draft: false,
+                    },
+                  ];
                 })()
-              : items.map((template) => (
-                  <Stack as="article" id={template.slug} g="0" bd bdrs="20" bgc="base" ov="hidden" class="p--templates_card">
-                    <a href={buildDetailUrl(template.category, template.slug)} class="p--templates_thumbLink" aria-label={template.title[lang]}>
-                      <Frame ar="16/9" ov="hidden" bd-b fxsh="0">
-                        <Image
-                          src={template.thumb}
-                          alt={copy.thumbAlt(template.title[lang])}
-                          widths={[400, 800]}
-                          sizes="(max-width: 600px) 100vw, 33vw"
-                          loading="lazy"
-                        />
-                      </Frame>
-                    </a>
+              : items.map((tpl) => ({
+                  id: tpl.slug,
+                  title: tpl.title[lang],
+                  description: tpl.description[lang],
+                  thumb: tpl.thumb,
+                  stacks: [tpl.stack],
+                  detailUrl: buildDetailUrl(tpl.category, tpl.slug),
+                  command: buildCommand(tpl.slug),
+                  previewUrl: tpl.previewUrl,
+                  features: tpl.features?.[lang],
+                  draft: tpl.draft,
+                }));
+
+            return (
+              <AutoColumns cols="20em" autoFill g="30">
+                {cards.map((card) => (
+                  <Stack as="article" id={card.id} g="0" bd bdrs="20" bgc="base" ov="hidden" class="p--templates_card">
+                    <BoxLink
+                      layout="frame"
+                      href={card.detailUrl}
+                      aria-label={card.title}
+                      class="p--templates_thumbLink"
+                      ar="16/9"
+                      ov="hidden"
+                      bd-b
+                      fxsh="0"
+                    >
+                      <Image
+                        src={card.thumb}
+                        alt={copy.thumbAlt(card.title)}
+                        widths={[400, 800]}
+                        sizes="(max-width: 600px) 100vw, 33vw"
+                        loading="lazy"
+                      />
+                    </BoxLink>
+
                     <Stack p="20" g="20" fxg="1">
-                      <Cluster>
-                        <Inline d="inline-flex" px="10" fz="2xs" ff="mono" c="text-2" bd bdc="current" bdrs="99">
-                          {stackLabels[template.stack]}
-                        </Inline>
+                      <Cluster g="5">
+                        {card.stacks.map((stack) => (
+                          <Inline d="inline-flex" px="10" fz="2xs" ff="mono" c="text-2" bd bdc="current" bdrs="99">
+                            {stackLabels[stack]}
+                          </Inline>
+                        ))}
                       </Cluster>
                       <Heading level="4" fz="l" util="trim">
-                        <a href={buildDetailUrl(template.category, template.slug)} class="p--templates_titleLink">
-                          {template.title[lang]}
-                        </a>
-                        {template.draft && (
+                        <Link href={card.detailUrl} set="plain" hov="underline">
+                          {card.title}
+                        </Link>
+                        {card.draft && (
                           <Inline px="10" fz="2xs" bdrs="99" c="red">
                             draft
                           </Inline>
                         )}
                       </Heading>
                       <Text c="text-2" fz="s" lh="s" util="trim">
-                        {template.description[lang]}
+                        {card.description}
                       </Text>
+                      {card.features && card.features.length > 0 && (
+                        <Cluster as="ul" g="5" cg="15" fz="xs" lh="s" class="p--templates_features">
+                          {card.features.map((feat) => (
+                            <li class="-d:flex -g:5 -c:text-2">{feat}</li>
+                          ))}
+                        </Cluster>
+                      )}
                       <Stack g="15" mt="auto">
-                        <CopyCommand bdrs="10" command={buildCommand(template.slug)} copyLabel={copy.copy} copiedLabel={copy.copied} />
+                        <CopyCommand bdrs="10" command={card.command} copyLabel={copy.copy} copiedLabel={copy.copied} />
                         <Flex g="15" ai="stretch">
-                          <Button as="a" href={buildDetailUrl(template.category, template.slug)} bdrs="10" g="5" fz="xs" fx="1" variant="outline">
+                          <Button as="a" href={card.detailUrl} bdrs="10" g="5" fz="xs" fx="1" variant="outline">
                             <span>{copy.details}</span>
                           </Button>
                           <Button
                             as="a"
                             variant="fill"
-                            href={template.previewUrl ?? '#'}
-                            target={template.previewUrl ? '_blank' : undefined}
-                            rel={template.previewUrl ? 'noopener noreferrer' : undefined}
-                            aria-disabled={template.previewUrl ? undefined : 'true'}
-                            tabindex={template.previewUrl ? undefined : -1}
+                            href={card.previewUrl ?? '#'}
+                            target={card.previewUrl ? '_blank' : undefined}
+                            rel={card.previewUrl ? 'noopener noreferrer' : undefined}
+                            aria-disabled={card.previewUrl ? undefined : 'true'}
+                            tabindex={card.previewUrl ? undefined : -1}
                             bdrs="10"
                             g="5"
                             fz="xs"
@@ -261,7 +233,9 @@ const buildCategoryDetailUrl = (category: string) => getLocalizedUrl(`/templates
                     </Stack>
                   </Stack>
                 ))}
-          </AutoColumns>
+              </AutoColumns>
+            );
+          }}
         </Stack>
       ))
     }
@@ -281,7 +255,6 @@ const buildCategoryDetailUrl = (category: string) => getLocalizedUrl(`/templates
       overflow-x: auto;
       white-space: pre-wrap;
       overflow-wrap: anywhere;
-      margin: 0;
     }
 
     /* previewUrl 未設定の Preview ボタン等：クリック自体を抑止 */
@@ -291,10 +264,6 @@ const buildCategoryDetailUrl = (category: string) => getLocalizedUrl(`/templates
     }
 
     /* サムネイル：リンクとして拡大ホバー */
-    .p--templates_thumbLink {
-      display: block;
-      overflow: hidden;
-    }
     .p--templates_thumbLink img {
       transition: transform 0.3s ease;
     }
@@ -302,13 +271,11 @@ const buildCategoryDetailUrl = (category: string) => getLocalizedUrl(`/templates
       transform: scale(1.03);
     }
 
-    /* タイトルリンク：通常文字色のまま、ホバーで装飾 */
-    .p--templates_titleLink {
-      color: inherit;
-      text-decoration: none;
-    }
-    .p--templates_titleLink:hover {
-      text-decoration: underline;
+    /* 機能リスト：✅ プレフィックス付きで縦並び */
+    .p--templates_features li::before {
+      content: '✅';
+      flex-shrink: 0;
+      font-size: 0.9em;
     }
   </style>
 </Stack>

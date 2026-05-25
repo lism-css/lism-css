@@ -17,6 +17,11 @@ export interface LocalizedText {
   en: string;
 }
 
+interface LocalizedTextList {
+  ja: string[];
+  en: string[];
+}
+
 interface TemplateMetaBase {
   slug: string;
   category: CategoryId;
@@ -29,6 +34,12 @@ interface TemplateMetaBase {
   previewUrl?: string;
   /** true の場合、CLI の一覧・選択・slug 解決から除外、docs でも本番ビルドで非表示 */
   draft?: boolean;
+  /**
+   * 紹介カードに表示する機能リスト（docs 専用 / 任意）。
+   * 各テンプレを差別化する機能だけを並べる。共通機能（sitemap 等）は
+   * カード群外のリード文で別途案内するため、ここには含めない方針。
+   */
+  features?: LocalizedTextList;
 }
 
 export interface ProjectTemplateDef extends TemplateMetaBase {
@@ -98,6 +109,10 @@ export const TEMPLATES: TemplateDef[] = [
     title: { ja: 'Blog Minimal', en: 'Blog Minimal' },
     description: { ja: '記事一覧 / 詳細 / Tags のみの最小構成の Astro ブログ', en: 'Minimal Astro blog with posts and tags only' },
     previewUrl: 'https://lism-blog-astro-minimal.pages.dev/',
+    features: {
+      ja: ['タグ', 'sitemap'],
+      en: ['Tags', 'sitemap'],
+    },
   },
   {
     slug: 'blog-astro-personal',
@@ -113,6 +128,10 @@ export const TEMPLATES: TemplateDef[] = [
       en: 'Personal / essay-style Astro blog with monthly archives',
     },
     previewUrl: 'https://lism-blog-astro-personal.pages.dev/',
+    features: {
+      ja: ['タグ', '年月アーカイブ', 'シェアボタン', 'OGP画像自動生成', 'sitemap（lastmod 対応）'],
+      en: ['Tags', 'Monthly archives', 'Share buttons', 'Auto-generated OG images', 'sitemap (with lastmod)'],
+    },
   },
   {
     slug: 'blog-astro-techlog',
@@ -128,6 +147,30 @@ export const TEMPLATES: TemplateDef[] = [
       en: 'Tech blog with code highlighting, categories, tags, TOC, monthly archives and search',
     },
     previewUrl: 'https://lism-blog-astro-techlog.pages.dev/',
+    features: {
+      ja: [
+        'カテゴリ / タグ',
+        '年月アーカイブ',
+        '検索（Pagefind）',
+        '目次',
+        'コードハイライト',
+        'ダークモード',
+        'シェアボタン',
+        'OGP画像自動生成',
+        'sitemap（lastmod 対応）',
+      ],
+      en: [
+        'Categories / Tags',
+        'Monthly archives',
+        'Search (Pagefind)',
+        'Table of contents',
+        'Code highlighting',
+        'Dark mode',
+        'Share buttons',
+        'Auto-generated OG images',
+        'sitemap (with lastmod)',
+      ],
+    },
   },
   {
     slug: 'lp-astro-corporate',

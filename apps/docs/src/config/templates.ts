@@ -38,6 +38,8 @@ export interface TemplateItem {
   previewUrl?: string;
   /** true の場合、本番ビルドでは一覧・詳細ページ・パス生成から除外する（dev では表示） */
   draft?: boolean;
+  /** 紹介カードに表示する機能リスト（任意） */
+  features?: Record<LangCode, string[]>;
 }
 
 export interface CategoryDef {
@@ -133,6 +135,7 @@ export const templates: TemplateItem[] = manifestTemplates.map(
     thumb: resolveThumb(tpl),
     ...(tpl.previewUrl ? { previewUrl: tpl.previewUrl } : {}),
     ...(tpl.draft ? { draft: tpl.draft } : {}),
+    ...(tpl.features ? { features: tpl.features } : {}),
   })
 );
 
