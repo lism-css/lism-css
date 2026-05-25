@@ -2,7 +2,7 @@ export default {
   isContainer: 'is--container',
   isWrapper: {
     className: 'is--wrapper',
-    preset: ['s', 'l'],
+    preset: ['s', 'l', 'xl'],
     presetClass: '-contentSize',
     customVar: '--contentSize',
     tokenKey: 'sz',
