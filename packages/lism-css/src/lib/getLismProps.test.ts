@@ -337,8 +337,8 @@ describe('getLismProps', () => {
     });
 
     test('contentSize: トークン値の場合、CSS変数として出力される', () => {
-      const result = getLismProps({ contentSize: 'm' });
-      expect(result.style?.['--contentSize']).toBe('var(--sz--m)');
+      const result = getLismProps({ contentSize: 'xs' });
+      expect(result.style?.['--contentSize']).toBe('var(--sz--xs)');
     });
 
     test('複数のstate propsが同時に機能する', () => {

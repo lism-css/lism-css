@@ -528,12 +528,12 @@ describe('Lism', () => {
 
       test('contentSize にトークン値を指定すると CSS 変数として出力される', () => {
         render(
-          <Lism contentSize="m" data-testid="lism">
+          <Lism contentSize="xs" data-testid="lism">
             test
           </Lism>
         );
         const element = screen.getByTestId('lism');
-        expect(element).toHaveStyle({ '--contentSize': 'var(--sz--m)' });
+        expect(element).toHaveStyle({ '--contentSize': 'var(--sz--xs)' });
       });
 
       test('contentSize に任意値を指定すると CSS 変数として出力される', () => {

@@ -118,7 +118,7 @@ Lism コンポーネントの Propsに渡す値の頭に `:` を付けると、 
 | `bsz` | `block-size` | — | — |
 | `min-bsz` | `min-block-size` | — | — |
 | `max-bsz` | `max-block-size` | — | — |
-| `contentSize` | `--contentSize` 変数のみ | `-contentSize:s`, `-contentSize:l`, `-contentSize:xl` | — |
+| `contentSize` | `--contentSize` 変数のみ | `-contentSize:s`, `-contentSize:m`, `-contentSize:l`, `-contentSize:xl` | — |
 
 **`max-sz` の特殊クラス:**
 - `-max-sz:full` — `has--gutter` 内では gutter 分を含めた全幅に拡張
@@ -128,7 +128,7 @@ Lism コンポーネントの Propsに渡す値の頭に `:` を付けると、 
 
 **`contentSize` について:**
 `--contentSize` 変数をセットする isVar タイプの Prop です。`is--wrapper` と組み合わせるとコンテンツ幅の上限となり、`set--bleed` と組み合わせると `--bleed` の計算基準値として使われます。
-プリセット値（`s`, `l`, `xl`）は `-contentSize:{value}` クラスを出力し、それ以外の任意値は `--contentSize: {value}` をスタイル属性として出力します。
+プリセット値（`s`, `m`, `l`, `xl`）は `-contentSize:{value}` クラスを出力し、それ以外の任意値は `--contentSize: {value}` をスタイル属性として出力します。
 
 ### 背景
 
