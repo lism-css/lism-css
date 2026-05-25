@@ -897,7 +897,7 @@ const reservationSites: readonly SiteCard[] = [
             <Grid w="100%" min-w="0" gtc="1fr" g="40" gc={['1/-1', null, '2/-1']}>
               {
                 reservationSites.map((site) => (
-                  <Lism pos="relative" bgc="white" c="text" bdrs="20" ov="hidden" min-w="0" w="100%" set="var:bdrsInner">
+                  <Lism pos="relative" bgc="white" c="text" bdrs="20" ov="hidden" min-w="0" w="100%" set="bdrsInner">
                     <Flex fxd={['column', null, 'row']} ai="stretch" w="100%" min-w="0">
                       <Frame as="figure" ar="16/10" ov="hidden" bdrs="0" w={['100%', null, '12rem']} fxsh="0" min-w="0">
                         <img
@@ -1028,7 +1028,7 @@ const reservationSites: readonly SiteCard[] = [
         bgc="black"
         c="white"
         bxsh="20"
-        set="var:bxsh"
+        set="bxsh"
         td="none"
         fz="s"
         lts="s"

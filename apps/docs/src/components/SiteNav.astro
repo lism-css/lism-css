@@ -154,7 +154,7 @@ function getPostUrl(slug: string): string {
 }
 ---
 
-<Stack as="nav" class="siteNav set--cqUnit set--var:s" g="30">
+<Stack as="nav" class="siteNav set--cqUnit set--s" g="30">
   {/* トップレベルリンク（グラデーション枠で囲んだ集約ボタン） */}
   {
     topLevelLinks.length > 0 && (
@@ -169,7 +169,7 @@ function getPostUrl(slug: string): string {
             // ラベルを現在の言語で取得
             const itemLabel = getTranslatedLabel(item.label, item.translate, currentLang);
             return (
-              <Link href={itemPath} class="siteNav_toplink" data-active={isActive} set="plain, var:hov" lh="s">
+              <Link href={itemPath} class="siteNav_toplink" data-active={isActive} set="plain, hov" lh="s">
                 <Inline layout="flex" g="5" ai="center" py="10" px="15">
                   {item.icon && <Icon icon={item.icon} />}
                   {itemLabel}

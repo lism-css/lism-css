@@ -40,7 +40,7 @@ const variants = [
       <Grid gtc={['1fr', null, 'repeat(3, 1fr)']} g="30">
         {
           variants.map(({ slug, title, description, thumb }) => (
-            <BoxLink href={`/${slug}/`} layout="stack" g="15" set="var:hov" bdrs="20" ov="clip" bgc="base">
+            <BoxLink href={`/${slug}/`} layout="stack" g="15" set="hov" bdrs="20" ov="clip" bgc="base">
               <Frame ar="16/10" ov="hidden">
                 <img src={thumb.src} alt={`${title} のサムネイル`} loading="lazy" />
               </Frame>

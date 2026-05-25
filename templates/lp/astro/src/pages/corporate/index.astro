@@ -338,7 +338,7 @@ const footerSnsLinks = [
           <AutoColumns cols="20rem" g="40">
             {
               worksItems.map((item) => (
-                <BoxLink class="z--works_item u--fadeIn" href="#" layout="stack" set="var:hov" g="20">
+                <BoxLink class="z--works_item u--fadeIn" href="#" layout="stack" set="hov" g="20">
                   <Frame class="z--works_frame" ar="16/9" pos="relative" bdrs="20">
                     <Media class="u--pullBack" src={item.src} alt="" width="960" height="540" loading="lazy" hasTransition hov="in:zoom" />
                     <Layer layout="center" hasTransition hov="in:show" h="100%" c="white" bgc="black:30%" style={{ backdropFilter: 'blur(4px)' }}>
@@ -372,15 +372,7 @@ const footerSnsLinks = [
           <Stack g="30">
             {
               newsItems.map((row) => (
-                <BoxLink
-                  class="z--news_item u--fadeInL"
-                  href="#"
-                  layout="grid"
-                  gtc={['auto', 'auto 1fr']}
-                  g={['10', '30', '40']}
-                  py="10"
-                  set="var:hov"
-                >
+                <BoxLink class="z--news_item u--fadeInL" href="#" layout="grid" gtc={['auto', 'auto 1fr']} g={['10', '30', '40']} py="10" set="hov">
                   <Inline>{row.date}</Inline>
                   <Stack g="10">
                     <Text hov="in:underline" td="none">

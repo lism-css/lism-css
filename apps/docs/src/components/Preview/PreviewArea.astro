@@ -9,8 +9,8 @@ const previewText = t(lang, 'preview');
 ---
 
 <Lism className="c--preview_area">
-  <div class={`c--preview_area_frame ${setCqUnit ? 'set--cqUnit set--var:s' : ''}`}>
-    <Lism class:list={['c--preview_inner', resize ? 'set--var:hov is--resize' : '']} layout="flow" p={p} {...props}>
+  <div class={`c--preview_area_frame ${setCqUnit ? 'set--cqUnit set--s' : ''}`}>
+    <Lism class:list={['c--preview_inner', resize ? 'set--hov is--resize' : '']} layout="flow" p={p} {...props}>
       <slot />
       {
         resize && (
