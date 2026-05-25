@@ -2,21 +2,23 @@
 title: 'blog-astro-techlog の構成'
 excerpt: Lism CSS リポジトリに同梱されている技術ブログ向け Astro テンプレートの仕様まとめ。
 date: '2026-04-25'
+updated: '2026-05-25'
 tags: [Astro, Lism CSS, テンプレート]
 ---
 
-`templates/blog/astro/techlog/` は、Lism CSS と `@lism-css/ui` を使った技術ブログ向けの Astro テンプレート。コードハイライト・記事内 TOC・カテゴリ／タグ・年月アーカイブ・Pagefind 全文検索・ダークモードを揃えてある。
+`templates/blog/astro/techlog/`は、Lism CSSと`@lism-css/ui`を使った技術ブログ向けのAstroテンプレート。コードハイライト・記事内TOC・カテゴリ／タグ・年月アーカイブ・Pagefind全文検索・ダークモード・sitemap/robots.txtを揃えてある。
 
 ## 依存
 
-Astro と Lism CSS / `@lism-css/ui` に加え、以下を入れている。
+AstroとLism CSS/`@lism-css/ui`に加え、以下を入れている。
 
 - `@astrojs/mdx` — 記事は `.mdx` で書く
+- `@astrojs/sitemap` — sitemap生成
 - `astro-expressive-code` — コードハイライト
 - `remark-directive` — `:::` 記法
 - `pagefind` / `@pagefind/default-ui` — 全文検索
 
-`astro.config.mjs` で `expressiveCode` を `mdx` より前に並べ、`markdown.remarkPlugins` に自前の変換プラグイン3つ（`remark-directive` の `:::` 変換、URL/`[[slug]]` 段落のリンクカード化、文中 `[[slug]]` の WikiLink 化）を登録している。
+`astro.config.mjs`で`expressiveCode`を`mdx`より前に並べ、`markdown.remarkPlugins`に自前の変換プラグイン3つ（`remark-directive`の`:::`変換、URL/`[[slug]]`段落のリンクカード化、文中`[[slug]]`のWikiLink化）を登録している。さらにsitemap integrationで、記事ごとの`lastmod`も補完する。
 
 ## ディレクトリ構成
 
@@ -26,7 +28,7 @@ src/
 ├── config/          # サイト設定 + カテゴリ定義
 ├── content.config.ts
 ├── layouts/         # Layout / ArchiveLayout / PageLayout
-├── lib/             # TOC生成・年月アーカイブ・OG画像・remarkプラグイン 等
+├── lib/             # TOC生成・年月アーカイブ・OG画像・sitemapのlastmod・remarkプラグイン等
 ├── pages/           # ルーティング
 ├── posts/           # 記事 MDX（カテゴリごとにディレクトリ）
 │   ├── tech/
@@ -46,9 +48,26 @@ src/
 | `archive/index.astro` | 年月アーカイブの目次 |
 | `archive/[year]/[month]/[...page].astro` | 年月別一覧＋ページネーション |
 | `about.astro` / `privacy.astro` | 固定ページ |
+| `robots.txt.ts` | robots.txt |
 | `404.astro` | 404 |
 
 URL は `/posts/{slug}/`・`/category/{category}/`・`/tags/{tag}/`・`/archive/{year}/{month}/` の形。検索は専用ページではなく**ヘッダー右上の検索ボタンから開くモーダル**（`SearchModal`）で提供する。
+
+## サイトマップと更新日
+
+`@astrojs/sitemap`でビルド時にサイトマップを生成する。`astro.config.mjs`の`site`はsitemap/robots.txtの基準になるので、公開前にデプロイ先ドメインへ書き換える。techlogは`src/posts/{category}/{slug}.mdx`に置いた記事を`/posts/{slug}/`で配信する都合上、sitemap integrationに`stripFirstSegment: true`を渡してカテゴリディレクトリを除いている。
+
+記事フロントマターには任意で`updated`を書ける。
+
+```yaml
+---
+title: 記事タイトル
+date: '2026-04-25'
+updated: '2026-05-25'
+---
+```
+
+`updated`があればそれを、なければ`date`をsitemapの`lastmod`に反映する。記事画面の表示や年月アーカイブの並び順には現状使っていない。
 
 ## カテゴリ設計（ディレクトリ＝カテゴリ）
 

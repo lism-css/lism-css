@@ -5,11 +5,11 @@ date: '2026-04-10'
 tags: [Astro, Lism CSS, テンプレート]
 ---
 
-`templates/blog/astro/minimal/` は、Lism CSS と `@lism-css/ui` を使った最小構成の Astro ブログテンプレート。記事一覧 / 記事詳細 / タグ別一覧 / About だけ。年月アーカイブ・カテゴリ・TOC・検索などが必要なら別のテンプレートをベースにする。
+`templates/blog/astro/minimal/`は、Lism CSSと`@lism-css/ui`を使った最小構成のAstroブログテンプレート。記事一覧/記事詳細/タグ別一覧/About/sitemap/robots.txtだけ。年月アーカイブ・カテゴリ・TOC・検索などが必要なら別のテンプレートをベースにする。
 
 ## 依存
 
-Astro と Lism CSS / `@lism-css/ui` のみ。`astro.config.mjs` は `@` → `/src` のエイリアスだけ。記事は `.md`。
+AstroとLism CSS/`@lism-css/ui`に加え、`@astrojs/sitemap`を入れている。`astro.config.mjs`はsitemap integrationと`@`→`/src`のエイリアスだけ。記事は`.md`。
 
 ## ディレクトリ構成
 
@@ -19,7 +19,7 @@ src/
 ├── config/site.ts   # サイト設定（ナビ・SNS等）
 ├── content.config.ts
 ├── layouts/         # Layout / ArchiveLayout
-├── lib/tags.ts      # タグ関連ヘルパー
+├── lib/             # タグ関連ヘルパー
 ├── pages/           # ルーティング
 ├── posts/           # 記事 Markdown（フラットに配置）
 └── styles/global.css
@@ -45,9 +45,14 @@ tags: [習慣, ライフスタイル]
 | `posts/[slug].astro` | 記事詳細 |
 | `tags/[tag]/[...page].astro` | タグ別一覧＋ページネーション |
 | `about.astro` | About |
+| `robots.txt.ts` | robots.txt |
 | `404.astro` | 404 |
 
 記事ファイル名（拡張子なし）がそのまま URL の slug。ページネーション件数は `siteConfig.pagination.postsPerPage`（デフォルト 6）。
+
+## サイトマップ
+
+`@astrojs/sitemap`でビルド時にサイトマップを生成する。`astro.config.mjs`の`site`はsitemap/robots.txtの基準になるので、公開前にデプロイ先ドメインへ書き換える。
 
 ## レイアウト
 
