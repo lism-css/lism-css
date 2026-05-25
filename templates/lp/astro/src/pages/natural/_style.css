@@ -1,29 +1,18 @@
 @layer lism-custom {
   :root {
     --base-2: #ececec;
-    --ff--accent: 'Montserrat', 'Hiragino Sans', 'Noto Sans JP', 'BIZ UDGothic', ui-sans-serif, system-ui, sans-serif;
-    --z--header-height--init: 112px;
-    --z--header-height: 64px;
-
-    --bleed--s: calc((100cqi - min(100cqi, var(--contentSize, var(--sz--m)))) / 2);
-    --bleed--m: calc((100cqi - min(100cqi, var(--contentSize, var(--sz--m)))) / 2);
-    --bleed--l: calc((100cqi - min(100cqi, var(--contentSize, var(--sz--m)))) / 2);
-    --bleed--xl: calc((100cqi - min(100cqi, var(--contentSize, var(--sz--m)))) / 2);
+    --ff--accent: 'Montserrat', sans-serif;
+    --header-h--init: 112px;
+    --header-h: 64px;
   }
 
   .set--bleed {
     --bleed: max(var(--gutter-size), calc((100cqi - min(100cqi, var(--contentSize, var(--sz--m)))) / 2));
-    /* --gutter: max(var(--gutter-size), var(--bleed)); */
   }
 
   .z--header {
-    /* ドロワー右の「抜き」幅。ここで --s50 を別トークンや px に差し替え可 */
-    --z--header-menu-peek: var(--s50);
-    height: var(--z--header-height--init);
-    background-color: transparent;
-    backdrop-filter: none;
+    height: var(--header-h--init);
     border-block-end: 1px solid transparent;
-    box-shadow: none;
     transition:
       height 0.4s,
       background-color 0.4s,
@@ -31,12 +20,8 @@
       border-block-end-color 0.4s;
   }
 
-  /**
-   * スクロール後: 白の半透明 + backdrop-filter（Lism 公式ドキュメントのヘッダーに近いガラス風）
-   * @see https://lism-css.com/docs/overview/
-   */
   :root[data-scrolled] .z--header {
-    height: var(--z--header-height);
+    height: var(--header-h);
     background-color: color-mix(in srgb, var(--white) 68%, transparent);
     backdrop-filter: blur(12px) saturate(1.08);
     border-block-end-color: var(--divider);
@@ -44,51 +29,38 @@
 
   /*
    * .z--mv 設計トークン
-   *   .z--mv 側でfont-sizeを定義し、 h1 の font-size は inheritすることで em での位置調整をしている。
-   * --mv-title-line2-center の em が画像位置計算と一致するようにしている。
+   *   .z--mv 側でfont-sizeを定義し、 h1 の font-size は inheritする。（全体を em で位置調整をしている。）
    *
-   * [見出し・画像レールの絶対配置]
-   *   --mv_title-offset … 固定ヘッダー下端 → 見出し（h1）上端 までの距離
-   *   --mv-title-line2-center … 見出し上端 → 2行目の縦方向おおよそ中央 までの距離（line-height:1.1 想定）
-   *       → .z--mv_visual の top は header高 + 上記2つの合算（画像上端が 2 行目中央付近になる）
-   *   --mv-image-bottom-offset … .z--mv_visual に渡す bottom（画像列の下端オフセット）
-   *
-   * [セクション全体の高さ・背景]
-   *   --mv-max-block-size … MV の高さ上限。
-   *   --mv-white-strip … セクション最下部の「白（--base）」帯の高さ。
+   * [見出し・画像の配置]
+   *   --_title-offset … 固定ヘッダーを考慮した値
+   *   --_mv-offset … 見出しに少し入り込むためのオフセット値
    */
   .z--mv {
-    --mv_title-offset: calc(var(--z--header-height--init) + 1rem);
-    --mv-max-block-size: min(64rem, 200vw);
-    --mv-title-line2-center: 1.75em;
-    height: min(100svh, var(--mv-max-block-size));
-    /* min-height: min(100svh, var(--mv-max-block-size)); */
-    background: linear-gradient(to bottom, var(--base-2) 80%, var(--base) 80%);
-
-    /* h1 は font-size:inherit。clamp の em 基準を画像レールの top 計算と共有する */
+    --_title-offset: calc(var(--header-h--init) + 0.5em);
+    --_mv-offset: 1.75em;
     font-size: clamp(2.75rem, 1.5rem + 9vw, 6rem);
+    height: min(100svh, min(72rem, 200vw));
+    background: linear-gradient(to bottom, var(--base-2) 80%, var(--base) 80%);
   }
 
   .z--mv_title {
     font-size: inherit;
     line-height: 1.1;
-    margin-top: var(--mv_title-offset);
+    margin-top: var(--_title-offset);
   }
 
   .z--mv_visual {
-    padding: calc(var(--mv_title-offset) + var(--mv-title-line2-center)) var(--gutter-size) var(--gutter-size);
+    padding: var(--gutter-size);
+    padding-block-start: calc(var(--_title-offset) + var(--_mv-offset));
   }
-
-  /* 左: lサイズ基準 / 右: xlサイズ基準にあわせる */
-  /* .z--mission {} */
 
   /**
    * Feature / Step セクションは「テキスト列 + 画像レール（sticky）」の同型レイアウト。
    */
   @container (min-width: 800px) {
     :is(.z--point, .z--step) .-pos\:sticky {
-      top: var(--z--header-height, 64px);
-      height: min(calc(100dvh - var(--z--header-height, 64px)), 100%);
+      top: var(--header-h, 64px);
+      height: min(calc(100dvh - var(--header-h, 64px)), 100%);
     }
   }
 
@@ -101,97 +73,19 @@
     --snapAlign: center;
   }
 
-  .z--contact_mediaWrap {
-    position: absolute;
-    inset: 0;
-  }
-
-  .z--contact_media {
-    display: block;
-    object-fit: cover;
-    width: 100%;
-    height: 100%;
-    /* 完全な grayscale(1) ではなく、彩度を少し残す */
-    filter: grayscale(0.55) saturate(0.72) contrast(0.96) brightness(1.02);
-  }
-
-  .z--contact_input {
-    width: 100%;
-    margin: 0;
+  .z--contact_field {
     padding: var(--s15) var(--s20);
-    font: inherit;
-    font-size: var(--fz--s);
-    line-height: calc(1em + var(--hl--base) * 2);
     color: var(--text);
     background-color: var(--base);
-    border: 1px solid var(--divider);
-    border-radius: var(--bdrs--20);
-    box-shadow: var(--bxsh--10);
-  }
-
-  .z--contact_input::placeholder {
-    color: var(--text-2);
-    opacity: var(--o--pp);
-  }
-
-  .z--contact_input:focus-visible {
-    outline: 2px solid var(--brand);
-    outline-offset: 2px;
-  }
-
-  .z--contact_input--textarea {
-    min-height: 10rem;
-    resize: vertical;
-  }
-
-  /* ヘッダー @lism-css/ui Button（.c--button）と同じセマンティック: bg=--text, 字=--base */
-  .z--contact_submit {
-    width: 100%;
-    margin: 0;
-    margin-block-start: var(--s10);
-    padding: var(--s15) var(--s30);
-    font: inherit;
-    font-size: var(--fz--m);
-    font-weight: var(--fw--bold);
-    letter-spacing: var(--lts--l);
-    color: var(--base);
-    cursor: pointer;
-    background-color: var(--text);
-    border: 1px solid var(--text);
-    border-radius: var(--bdrs--99);
+    border: none;
+    border-radius: var(--bdrs--10);
     box-shadow: var(--bxsh--20);
   }
 
-  .z--contact_submit:hover {
-    opacity: 0.92;
+  .z--contact_field::placeholder {
+    opacity: var(--o--pp);
   }
-
-  .z--contact_submit:focus-visible {
-    outline: 2px solid var(--base);
-    outline-offset: 3px;
-  }
-}
-
-.z--footerNav {
-  list-style: none;
-}
-
-.z--footerNav .z--nav_link {
-  text-align: center;
-}
-@container (min-width: 800px) {
-  .z--footerNav .z--nav_link {
-    text-align: start;
-  }
-}
-
-/* md 未満: 縦並びの項目間に区切り（最後の行の下には付けない） */
-.z--footerNav > li:not(:last-child) {
-  border-block-end: 1px solid var(--divider);
-}
-
-@container (min-width: 800px) {
-  .z--footerNav > li:not(:last-child) {
-    border-block-end: none;
+  textarea.z--contact_field {
+    min-height: 10rem;
   }
 }

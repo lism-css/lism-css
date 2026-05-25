@@ -1,6 +1,7 @@
 ---
 import Layout from '@/layouts/Layout.astro';
 import {
+  Lism,
   Decorator,
   Box,
   Cluster,
@@ -15,6 +16,7 @@ import {
   Inline,
   Layer,
   Link,
+  List,
   ListItem,
   Media,
   Stack,
@@ -519,16 +521,16 @@ const contactFields = [
         <Stack g="40">
           <SectionHeading en="FAQ" ja="よくあるご質問" />
 
-          <Accordion.Root class="z--faq_acc" p="0" g="20">
+          <Accordion.Root class="z--faq_acc" g="20">
             {
               faqItems.map((item) => (
                 <Accordion.Item bgc="base" bdrs="20" bxsh="10" {...(item.defaultOpen ? { 'data-opened': '' } : {})}>
-                  <Accordion.Heading p="30">
-                    <Accordion.Button fw="bold" ta="start" isOpen={item.defaultOpen === true}>
+                  <Accordion.Heading>
+                    <Accordion.Button p="30" fw="bold" hov="-o" isOpen={item.defaultOpen === true}>
                       {item.question}
                     </Accordion.Button>
                   </Accordion.Heading>
-                  <Accordion.Panel py="30" px="30" isOpen={item.defaultOpen === true}>
+                  <Accordion.Panel p="30" pbs="15" isOpen={item.defaultOpen === true}>
                     <Text fz="s" c="text-2" lh="l">
                       {item.answer}
                     </Text>
@@ -540,133 +542,111 @@ const contactFields = [
         </Stack>
       </Container>
 
-      <Box as="section" id="contact" class="z--contact" pos="relative" ov="hidden">
-        <Frame isLayer class="z--contact_mediaWrap">
-          <Media class="z--contact_media" src={contactBg.src} alt={contactBg.alt} w="100%" h="100%" width="1920" height="1080" loading="lazy" />
+      <Container as="section" id="contact" class="z--contact" py="60" pos="relative" ov="hidden">
+        <Frame isLayer>
+          <Media src={contactBg.src} alt={contactBg.alt} width="1920" height="1080" loading="lazy" />
         </Frame>
-        <!-- 背景写真の上に半透明の黒レイヤーでコントラストを確保 -->
-        <Layer pos="absolute" style={{ inset: 0, pointerEvents: 'none', background: 'hsl(0 0% 0% / 0.52)' }} />
-        <Container class="z--contact_inner" isWrapper="l" hasGutter py="60" pos="relative">
-          <Stack g="40" ai="center">
-            <SectionHeading en="Contact" ja="お問い合わせ" c="white" />
-
-            <Text fz="s" c="white" ta="center" lh="l" max-w="36rem" w="100%">
-              初めての方もどうぞお気軽にお問い合わせください。<br />このフォームはダミーです。
-            </Text>
-
-            <Box as="form" class="z--contact_form" max-w="36rem" w="100%" method="post" action="#">
-              <Stack g="20">
-                {
-                  contactFields.map((field) => (
-                    <Stack g="10" ai="stretch">
-                      <Inline as="label" for={field.id} fz="s" fw="bold" c="white">
-                        {field.label}
-                      </Inline>
-                      {field.type === 'textarea' ? (
-                        <textarea
-                          id={field.id}
-                          class="z--contact_input z--contact_input--textarea"
-                          name={field.name}
-                          rows={field.rows}
-                          placeholder={field.placeholder}
-                          aria-invalid={field.errorMessage ? 'true' : undefined}
-                          aria-describedby={field.errorMessage ? `${field.id}-error` : undefined}
-                        />
-                      ) : (
-                        <input
-                          id={field.id}
-                          class="z--contact_input"
-                          name={field.name}
-                          type={field.type}
-                          placeholder={field.placeholder}
-                          inputmode={field.inputMode}
-                          autocomplete={field.autoComplete}
-                          aria-invalid={field.errorMessage ? 'true' : undefined}
-                          aria-describedby={field.errorMessage ? `${field.id}-error` : undefined}
-                        />
-                      )}
-                      {/*
-                  【テンプレート用】フィールド下のエラー文サンプル（`contactFields` の `errorMessage` と対）
-                  本番でクライアント等のバリデーション表示を有効にする場合は、下の <Text> ブロックのコメントを外してください。
-                  id は `natural-contact-email-error` のように `${field.id}-error` となり、上記 input/textarea の aria-describedby と対応します。
-
-                {field.errorMessage && (
-                  <Text
-                    class='z--contact_error'
-                    id={`${field.id}-error`}
-                    as='p'
-                    fz='xs'
-                    m='0'
-                    mt='5'
-                    c='red'
-                    role='alert'
-                  >
-                    {field.errorMessage}
-                  </Text>
-                )}
-                */}
-                    </Stack>
-                  ))
-                }
-                <button type="submit" class="z--contact_submit">この内容で送信 (dummy)</button>
-              </Stack>
-            </Box>
-          </Stack>
-        </Container>
-      </Box>
-    </Container>
-    <!-- Footer -->
-    <Box as="footer" class="z--footer" bgc="base-2" w="100%">
-      <Container class="z--footer_container" isContainer isWrapper="xl" py="50" hasGutter>
-        <Stack jc="center" ai="center" g="30">
-          <Stack class="c--logo">
-            <Link href="#top" fz="2xl" fw="bold" lts="l" c="text" td="none" ff="accent">LISM Life</Link>
-          </Stack>
-          <Flex
-            as="ul"
-            class="z--footerNav z--nav"
-            fxd={['column', null, 'row']}
-            ai={['stretch', null, 'c']}
-            jc={['start', null, 'c']}
-            fxw={['nowrap', null, 'wrap']}
-            g={['0', null, '30']}
-            w={['100%', null, 'auto']}
-            fz="s"
-            lts="l"
-            p="0"
-          >
-            {
-              footerPrimaryNavItems.map(({ href, ja }) => (
-                <ListItem>
-                  <Link
-                    class="z--nav_link"
-                    href={href}
-                    d="block"
-                    c="text"
-                    td="none"
-                    w={['100%', null, 'auto']}
-                    py={['15', null, '10']}
-                    hasTransition
-                    hov="-o"
-                  >
-                    {ja}
-                  </Link>
-                </ListItem>
-              ))
-            }
-          </Flex>
-          <Cluster g="20">
-            {
-              footerSnsLinks.map(({ href, icon, label }) => (
-                <Link href={href} td="none" c="text-2" hov="-o" hasTransition aria-label={label}>
-                  <Icon icon={icon} fz="xl" />
-                </Link>
-              ))
-            }
-          </Cluster>
-          <Text fz="s" c="text-2">© 2026 Lism CSS.</Text>
+        <Layer bgc="neutral:70%" style={{ backdropFilter: 'saturate(0.7) brightness(0.5) blur(4px)' }} />
+        <Stack isWrapper="s" hasGutter pos="relative" g="40">
+          <SectionHeading en="Contact" ja="お問い合わせ" c="white" />
+          <Text fz="s" c="white" ta="center" lh="l">
+            初めての方もどうぞお気軽にお問い合わせください。<br />このフォームはダミーです。
+          </Text>
+          <Box as="form" class="z--contact_form" method="post" action="#">
+            <Stack g="30">
+              {
+                contactFields.map((field) => (
+                  <Stack g="10" ai="stretch">
+                    <Inline as="label" for={field.id} fz="s" c="white" util="trim">
+                      {field.label}
+                    </Inline>
+                    {field.type === 'textarea' ? (
+                      <textarea
+                        id={field.id}
+                        class="z--contact_field"
+                        name={field.name}
+                        rows={field.rows}
+                        placeholder={field.placeholder}
+                        aria-invalid={field.errorMessage ? 'true' : undefined}
+                        aria-describedby={field.errorMessage ? `${field.id}-error` : undefined}
+                      />
+                    ) : (
+                      <input
+                        id={field.id}
+                        class="z--contact_field"
+                        name={field.name}
+                        type={field.type}
+                        placeholder={field.placeholder}
+                        inputmode={field.inputMode}
+                        autocomplete={field.autoComplete}
+                        aria-invalid={field.errorMessage ? 'true' : undefined}
+                        aria-describedby={field.errorMessage ? `${field.id}-error` : undefined}
+                      />
+                    )}
+                  </Stack>
+                ))
+              }
+              <Lism
+                as="button"
+                type="submit"
+                class="z--contact_submit"
+                set="plain"
+                fw="500"
+                lh="xs"
+                mbs="20"
+                p="20"
+                c="white"
+                bgc="black"
+                hov="-bgc"
+                bdrs="99"
+              >
+                この内容で送信 (dummy)
+              </Lism>
+            </Stack>
+          </Box>
         </Stack>
       </Container>
-    </Box>
+    </Container>
+    <!-- Footer -->
+    <Container as="footer" class="z--footer" isWrapper py="50" hasGutter bgc="base-2">
+      <Stack g="30" ai="center" jc="center">
+        <Stack class="c--logo">
+          <Link href="#top" fz="2xl" fw="bold" lts="l" c="text" td="none" ff="accent">LISM Life</Link>
+        </Stack>
+        <List
+          class="z--footerNav"
+          fz="s"
+          lts="l"
+          d={['block', null, 'flex']}
+          bd-be
+          bdw={['1px', null, '0']}
+          w="100%"
+          ai="center"
+          jc="center"
+          fxw="wrap"
+          g="20"
+        >
+          {
+            footerPrimaryNavItems.map(({ href, ja }) => (
+              <ListItem bd-bs bdw={['1px', null, '0']}>
+                <Link href={href} d="block" c="text" td="none" w={['100%', null, 'auto']} px="5" py={['15', null, '5']} hasTransition hov="underline">
+                  {ja}
+                </Link>
+              </ListItem>
+            ))
+          }
+        </List>
+        <Cluster g="20">
+          {
+            footerSnsLinks.map(({ href, icon, label }) => (
+              <Link href={href} td="none" c="text-2" hov="-o" hasTransition aria-label={label}>
+                <Icon icon={icon} fz="xl" />
+              </Link>
+            ))
+          }
+        </Cluster>
+        <Text fz="s" c="text-2">© 2026 Lism CSS.</Text>
+      </Stack>
+    </Container>
   </div>
 </Layout>
