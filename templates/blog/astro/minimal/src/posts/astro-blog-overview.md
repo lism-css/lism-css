@@ -2,6 +2,7 @@
 title: 'blog-astro-minimal の構成'
 excerpt: Lism CSS リポジトリに同梱されている最小構成の Astro ブログテンプレートの仕様まとめ。
 date: '2026-04-10'
+updated: '2026-05-25'
 tags: [Astro, Lism CSS, テンプレート]
 ---
 

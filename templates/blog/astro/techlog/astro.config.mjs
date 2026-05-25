@@ -8,6 +8,12 @@ import rehypeAutolinkHeadings from 'rehype-autolink-headings';
 import { remarkDirectiveHandler } from './src/lib/remark-directive.mjs';
 import { remarkLinkCard } from './src/lib/remark-link-card.mjs';
 import { remarkWikiLink } from './src/lib/remark-wiki-link.mjs';
+import { loadPostLastmodMap } from './src/lib/sitemap-lastmod.mjs';
+
+const postLastmodMap = loadPostLastmodMap({
+  postsDir: new URL('./src/posts/', import.meta.url),
+  stripFirstSegment: true,
+});
 
 export default defineConfig({
   // TODO: デプロイ先のドメインに書き換えてください。sitemap や canonical URL に使われます。
@@ -28,7 +34,15 @@ export default defineConfig({
       },
     }),
     mdx(),
-    sitemap(),
+    sitemap({
+      serialize(item) {
+        const lastmod = postLastmodMap.get(new URL(item.url).pathname);
+        if (lastmod) {
+          item.lastmod = lastmod;
+        }
+        return item;
+      },
+    }),
   ],
   markdown: {
     // :::note などの directive 記法を <Callout> に変換
