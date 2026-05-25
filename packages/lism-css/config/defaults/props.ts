@@ -171,6 +171,7 @@ export default {
   pos: {
     prop: 'position',
     presets: ['static', 'fixed', 'sticky', 'relative', 'absolute'],
+    bp: 1,
   },
   z: { prop: 'zIndex', presets: ['-1', '0', '1', '99'] },
   t: { prop: 'top', utils: { 0: '0%' }, presets: ['50%', '100%'], token: 'space' },
@@ -316,7 +317,7 @@ export default {
     shorthands: PLACE_SHORTHANDS,
   },
   pslf: { prop: 'placeSelf', presets: PLACE_PRESETS },
-  order: { prop: 'order', presets: ['0', '-1', '1'] },
+  order: { prop: 'order', presets: ['0', '-1', '1'], bp: 1 },
 
   // transform
   // translate: {
