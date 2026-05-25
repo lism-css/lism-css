@@ -6,11 +6,11 @@ updated: '2026-05-25'
 tags: ['Astro', 'テンプレート']
 ---
 
-`templates/blog/astro/personal/` は、Lism CSS と `@lism-css/ui` を使った個人ブログ（エッセイ・日記）向けの Astro テンプレート。文章中心の読み心地を意識した構成で、**年月アーカイブ**・**タグ**・**OGP メタタグ** をひととおり揃えてある。カテゴリのような階層的な分類軸は持たない。
+`templates/blog/astro/personal/`は、Lism CSSと`@lism-css/ui`を使った個人ブログ（エッセイ・日記）向けのAstroテンプレート。文章中心の読み心地を意識した構成で、**年月アーカイブ**・**タグ**・**OGPメタタグ**・**sitemap/robots.txt**をひととおり揃えてある。カテゴリのような階層的な分類軸は持たない。
 
 ## 依存
 
-Astro と Lism CSS / `@lism-css/ui` のみ。`astro.config.mjs` は `@` → `/src` のエイリアスだけ。記事は `.md`。
+AstroとLism CSS/`@lism-css/ui`に加え、`@astrojs/sitemap`を入れている。`astro.config.mjs`はsitemap integrationと`@`→`/src`のエイリアスだけ。記事は`.md`。
 
 ## ディレクトリ構成
 
@@ -20,7 +20,7 @@ src/
 ├── config/site.ts   # サイト設定
 ├── content.config.ts
 ├── layouts/         # Layout / ArchiveLayout
-├── lib/             # 年月アーカイブ・タグ・OG 画像ヘルパー
+├── lib/             # 年月アーカイブ・タグ・OG画像・sitemapのlastmodヘルパー
 ├── pages/           # ルーティング
 ├── posts/           # 記事 Markdown（フラットに配置）
 └── styles/global.css
@@ -37,6 +37,7 @@ src/
 | `tags/index.astro` | タグ一覧 |
 | `tags/[tag]/[...page].astro` | タグ別一覧＋ページネーション |
 | `about.astro` | About |
+| `robots.txt.ts` | robots.txt |
 | `404.astro` | 404 |
 
 記事ファイル名（拡張子なし）がそのまま URL の slug。ページネーション件数は `siteConfig.pagination.postsPerPage`（デフォルト 6）。記事詳細では日付降順にソートした上で `prev` / `next` を index で受け渡す。
@@ -44,6 +45,22 @@ src/
 ## 年月アーカイブ
 
 `src/lib/archive.ts` の `getArchiveSummaries()` が記事一覧から `{ year, month, count }` の配列を新しい順で返し、`getPostsByArchive(year, month)` で対象月の記事を抽出する。`archive/index.astro` ではこれをリスト表示し、各行から `/archive/{year}/{month}/` にリンク。
+
+## サイトマップと更新日
+
+`@astrojs/sitemap`でビルド時にサイトマップを生成する。`astro.config.mjs`の`site`はsitemap/robots.txtの基準になるので、公開前にデプロイ先ドメインへ書き換える。
+
+記事フロントマターには任意で`updated`を書ける。
+
+```yaml
+---
+title: 記事タイトル
+date: '2026-05-10'
+updated: '2026-05-25'
+---
+```
+
+`updated`があればそれを、なければ`date`をsitemapの`lastmod`に反映する。記事画面の表示や年月アーカイブの並び順には現状使っていない。
 
 ## OGP
 
