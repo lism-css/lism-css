@@ -1,0 +1,76 @@
+---
+import { Box, Center, Container, Flex, Grid, Icon, Inline, Link, ListItem, Stack } from 'lism-css/astro';
+import { Button } from '@lism-css/ui/astro/Button';
+import { Modal } from '@lism-css/ui/astro/Modal';
+
+/** デスクトップ上部ナビ（5件） */
+const headerPrimaryNavItems = [
+  { href: '#mission', ja: 'ミッション', en: 'Mission' },
+  { href: '#feature', ja: '特長', en: 'Feature' },
+  { href: '#service', ja: 'サービス', en: 'Service' },
+  { href: '#step', ja: 'ご依頼の流れ', en: 'Step' },
+  { href: '#voice', ja: 'お客様の声', en: 'Voice' },
+];
+
+/** モバイルドロワー内の全アンカー（デスクトップ行とは構成が異なる） */
+const headerMenuNavItems = [
+  { href: '#top', ja: 'トップ', en: 'Top' },
+  { href: '#mission', ja: 'ミッション', en: 'Mission' },
+  { href: '#message', ja: 'コーディネート', en: 'Message' },
+  { href: '#feature', ja: '特長', en: 'Feature' },
+  { href: '#service', ja: 'サービス', en: 'Service' },
+  { href: '#step', ja: 'ご依頼の流れ', en: 'Step' },
+  { href: '#voice', ja: 'お客様の声', en: 'Voice' },
+  { href: '#faq', ja: 'よくあるご質問', en: 'FAQ' },
+  { href: '#contact', ja: 'お問い合わせ', en: 'Contact' },
+];
+---
+
+<Container as="header" class="z--header" isWrapper="xl" hasGutter pos="fixed" t="0" l="0" w="100%" z="1">
+  <Grid class="z--header_inner" gtc="auto 1fr" ai="center" h="100%">
+    <Stack class="c--logo">
+      <Link href="#top" fz="2xl" fw="bold" lts="l" c="text" td="none" ff="accent">LISM Life</Link>
+    </Stack>
+
+    <Flex class="z--nav" as="ul" d={['none', null, 'flex']} ai="center" ms="auto" g={['15', null, null, '25']} fz="s" lts="l">
+      {
+        headerPrimaryNavItems.map(({ href, ja }) => (
+          <ListItem>
+            <Link class="z--nav_link" href={href} set="plain" d="block" lh="s" p="5" hasTransition hov="-o">
+              {ja}
+            </Link>
+          </ListItem>
+        ))
+      }
+      <ListItem>
+        <Button href="#contact" fz="xs" bdrs="99">お問い合わせ</Button>
+      </ListItem>
+    </Flex>
+
+    <Box d={[null, null, 'none']} ms="auto">
+      <Modal.OpenBtn modalId="menu">
+        <Center p="6" ai="center" jc="center">
+          <Icon icon="menu" c="text" fz="2xl" aria-hidden="true" />
+        </Center>
+      </Modal.OpenBtn>
+    </Box>
+
+    <Modal.Root id="menu" class="z--header_menuModal" isContainer min-h="100svh" p="0">
+      <Modal.Inner layout="stack" g="0" pos="relative" py="30" ms="auto" bxsh="50" max-w="xs" w="100%" h="100%" offset="100% 0">
+        <Modal.CloseBtn modalId="menu" autofocus pos="absolute" t="0" r="0" z="1" fz="xl" p="10" m="15" />
+        <Modal.Body layout="stack" g="30" py="40" fx="1" min-h="0" ov-y="auto" w="100%">
+          <Stack class="z--header_menuNav u--divide">
+            {
+              headerMenuNavItems.map(({ href, ja }) => (
+                <Link href={href} set="plain" layout="grid" gtc="1fr auto" ai="center" lh="s" py="20" px="25">
+                  <Inline>{ja}</Inline>
+                  <Icon icon="caret-right" fz="s" o="pp" />
+                </Link>
+              ))
+            }
+          </Stack>
+        </Modal.Body>
+      </Modal.Inner>
+    </Modal.Root>
+  </Grid>
+</Container>
