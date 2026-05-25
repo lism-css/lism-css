@@ -1151,6 +1151,18 @@ describe('Lism', () => {
         expect(element).toHaveClass('-contentSize:l');
       });
 
+      test('isWrapper="m" は contentSize prop として扱われる', () => {
+        render(
+          <Lism isWrapper="m" data-testid="lism">
+            test
+          </Lism>
+        );
+        const element = screen.getByTestId('lism');
+        expect(element).toHaveClass('is--wrapper');
+        expect(element).toHaveClass('-contentSize:m');
+        expect(element).not.toHaveStyle({ '--contentSize': 'var(--sz--m)' });
+      });
+
       test('isLayer を指定できる', () => {
         render(
           <Lism isLayer data-testid="lism">

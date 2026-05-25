@@ -318,10 +318,24 @@ describe('getLismProps', () => {
       expect(result.className).toContain('-contentSize:s');
     });
 
+    test('isWrapper: m の場合、contentSize prop としてプリセットクラスが追加される', () => {
+      const result = getLismProps({ isWrapper: 'm' });
+      expect(result.className).toContain('is--wrapper');
+      expect(result.className).toContain('-contentSize:m');
+      expect(result.style?.['--contentSize']).toBeUndefined();
+    });
+
     test('isWrapper: カスタム値の場合、変数が設定される', () => {
       const result = getLismProps({ isWrapper: '800px' });
       expect(result.className).toContain('is--wrapper');
       expect(result.style?.['--contentSize']).toBe('800px');
+    });
+
+    test('isWrapper と contentSize を同時に指定した場合、contentSize が優先される', () => {
+      const result = getLismProps({ isWrapper: 's', contentSize: 'l' });
+      expect(result.className).toContain('is--wrapper');
+      expect(result.className).toContain('-contentSize:l');
+      expect(result.className).not.toContain('-contentSize:s');
     });
 
     test('contentSize: 単独でプリセット値を指定すると、クラスのみが出力される', () => {

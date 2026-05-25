@@ -1,12 +1,6 @@
 export default {
   isContainer: 'is--container',
-  isWrapper: {
-    className: 'is--wrapper',
-    preset: ['s', 'l', 'xl'],
-    presetClass: '-contentSize',
-    customVar: '--contentSize',
-    tokenKey: 'sz',
-  },
+  isWrapper: 'is--wrapper',
   isLayer: 'is--layer',
   isBoxLink: 'is--boxLink',
   isCoverLink: 'is--coverLink',

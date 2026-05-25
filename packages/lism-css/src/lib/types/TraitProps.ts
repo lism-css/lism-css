@@ -1,5 +1,6 @@
 import type { TRAITS } from '../../../config/index';
-import type { WithArbitraryString, ArrayElement } from './utils';
+import type { PropValueTypes } from './PropValueTypes';
+import type { WithArbitraryString } from './utils';
 
 /**
  * config/index.ts から TRAITS の型を取得
@@ -8,37 +9,34 @@ import type { WithArbitraryString, ArrayElement } from './utils';
 type TraitsConfig = typeof TRAITS;
 
 // ============================================================
-// Trait 設定の2つのパターン
+// Trait 設定のパターン
 // ============================================================
 //
-// 1. 文字列形式 (SimpleTrait)
-//    例: isContainer: 'is--container'
-//    → boolean のみ受け付ける（true/false でクラスの付与を制御）
+// 文字列形式 (SimpleTrait)
+// 例: isContainer: 'is--container'
+// → boolean のみ受け付ける（true/false でクラスの付与を制御）
 //
-// 2. preset あり (PresetTrait)
-//    例: isWrapper: { className: 'is--wrapper', preset: ['s', 'l'], ... }
-//    → プリセット値がサジェストされつつ、任意の文字列も受け付ける
+// isWrapper は現行仕様として、boolean に加えて contentSize 相当の文字列値も受け付ける。
 //
 // ============================================================
-
-/** preset を持つ Trait の値の型を抽出 */
-type PresetElement<T> = T extends { preset: readonly unknown[] } ? ArrayElement<T['preset']> : never;
 
 /**
  * Trait 設定から Props の値の型を抽出するユーティリティ型
  */
-type ExtractTraitValue<T> = T extends string
-  ? boolean // 文字列形式 → boolean のみ
-  : T extends { preset: readonly unknown[] }
-    ? WithArbitraryString<PresetElement<T>> | boolean // preset あり → プリセット値 | 任意文字列 | boolean
-    : never;
+type ExtractTraitValue<T> = T extends string ? boolean : never;
+
+type GeneratedTraitProps = {
+  [K in keyof TraitsConfig]?: ExtractTraitValue<TraitsConfig[K]>;
+};
+
+type ContentSizeStringValue = Extract<NonNullable<PropValueTypes['contentSize']>, string>;
 
 /**
  * config/index.ts の TRAITS から自動生成される Trait Props の型
  * config/index.ts の TRAITS に新しいトレイトを追加すると自動的に反映される
  */
-export type TraitProps = {
-  [K in keyof TraitsConfig]?: ExtractTraitValue<TraitsConfig[K]>;
+export type TraitProps = Omit<GeneratedTraitProps, 'isWrapper'> & {
+  isWrapper?: boolean | ContentSizeStringValue;
 };
 
 /** set prop で使われるプリセット値（エディタ補完用） */
