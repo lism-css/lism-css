@@ -2,7 +2,6 @@
 title: 'blog-astro-minimal の構成'
 excerpt: Lism CSS リポジトリに同梱されている最小構成の Astro ブログテンプレートの仕様まとめ。
 date: '2026-04-10'
-updated: '2026-05-25'
 tags: [Astro, Lism CSS, テンプレート]
 ---
 
@@ -20,7 +19,7 @@ src/
 ├── config/site.ts   # サイト設定（ナビ・SNS等）
 ├── content.config.ts
 ├── layouts/         # Layout / ArchiveLayout
-├── lib/             # タグ関連ヘルパー・sitemapのlastmod補助
+├── lib/             # タグ関連ヘルパー
 ├── pages/           # ルーティング
 ├── posts/           # 記事 Markdown（フラットに配置）
 └── styles/global.css
@@ -51,21 +50,9 @@ tags: [習慣, ライフスタイル]
 
 記事ファイル名（拡張子なし）がそのまま URL の slug。ページネーション件数は `siteConfig.pagination.postsPerPage`（デフォルト 6）。
 
-## サイトマップと更新日
+## サイトマップ
 
 `@astrojs/sitemap`でビルド時にサイトマップを生成する。`astro.config.mjs`の`site`はsitemap/robots.txtの基準になるので、公開前にデプロイ先ドメインへ書き換える。
-
-記事フロントマターには任意で`updated`を書ける。
-
-```yaml
----
-title: 記事タイトル
-date: '2026-03-28'
-updated: '2026-05-25'
----
-```
-
-`updated`があればそれを、なければ`date`をsitemapの`lastmod`に反映する。記事画面の表示には現状使っていない。
 
 ## レイアウト
 
