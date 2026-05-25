@@ -167,7 +167,7 @@ Lism コンポーネントの Propsに渡す値の頭に `:` を付けると、 
 |------|--------------|-------------|-----|
 | `bxsh` | `box-shadow` | `-bxsh:0`, `-bxsh:10`, `-bxsh:20`, `-bxsh:30`, `-bxsh:40`, `-bxsh:50` | ✔ |
 
-**補足:** 影色（`--shc`）を要素内で上書きして再計算させたい場合は、`set--var:bxsh` クラスを併用する。
+**補足:** 影色（`--shc`）を要素内で上書きして再計算させたい場合は、`set--bxsh` クラスを併用する。
 
 ### ポジション
 
@@ -309,7 +309,7 @@ Lism CSS のボーダーは CSS 変数（`--bds` / `--bdw` / `--bdc`）で管理
 |------|------|---------|
 | `-hov:-{prop}` | `--hov-{prop}` 変数で hover 時の値を変化させる | `:hover`（`@media (any-hover: hover)` 内） |
 | `-hov:{preset}` | hover 時のスタイルをプリセットで適用 | `:hover`（同上） |
-| `-hov:in:{preset}` | 親の `set--var:hov` を起点に子のスタイルを変化させる | 親に `set--var:hov` が必要 |
+| `-hov:in:{preset}` | 親の `set--hov` を起点に子のスタイルを変化させる | 親に `set--hov` が必要 |
 
 **標準クラス:** `-hov:-c`, `-hov:-bgc`, `-hov:-bdc`, `-hov:-o`, `-hov:-bxsh`, `-hov:underline`, `-hov:in:hide`, `-hov:in:show`, `-hov:in:zoom`
 

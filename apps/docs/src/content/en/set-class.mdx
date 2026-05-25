@@ -13,9 +13,9 @@ The set-- classes fall into two categories:
 | Category | Purpose | Classes |
 |----------|---------|---------|
 | Base styling | Resetting or reverting HTML element styles | `set--plain` / `set--revert` |
-| Variable setup | Setting up CSS variables only | `set--var:bxsh` / `set--var:hov` / `set--var:bdrsInner` / `set--var:s` |
+| Variable setup | Setting up CSS variables only | `set--bxsh` / `set--hov` / `set--bdrsInner` / `set--s` |
 
-The `{name}` in `set--var:{name}` corresponds to the name of the CSS variable each class sets up (e.g. `--bxsh--*` → `var:bxsh`, `--_isHov` / `--_notHov` → `var:hov`, `--bdrs--inner` → `var:bdrsInner`, `--s*` → `var:s`).
+The `{name}` in `set--{name}` corresponds to the name of the CSS variable each class sets up (e.g. `--bxsh--*` → `bxsh`, `--_isHov` / `--_notHov` → `hov`, `--bdrs--inner` → `bdrsInner`, `--s*` → `s`).
 
 
 ## `set--plain`
@@ -79,9 +79,9 @@ Classless `ul` / `ol` elements (lists with no `class` attribute at all) automati
 :::
 
 
-## `set--var:bxsh`
+## `set--bxsh`
 
-Elements with the `set--var:bxsh` class have the `--bxsh--` variables that compose the shadow redefined.
+Elements with the `set--bxsh` class have the `--bxsh--` variables that compose the shadow redefined.
 
 <SrcCode path="src/scss/base/tokens/_shadow.scss" />
 
@@ -92,7 +92,7 @@ By overriding the `--shc` variable here, you can adjust the color tint of the sh
   <PreviewArea p="30" nogrid>
     <Stack g="10">
       <Text> Default: </Text>
-      <Flex className="set--var:bxsh -g:30" ps="15">
+      <Flex className="set--bxsh -g:30" ps="15">
         <Box bxsh="20" p="30" bdrs="20">
           <Fragment>Box</Fragment>
         </Box>
@@ -101,8 +101,8 @@ By overriding the `--shc` variable here, you can adjust the color tint of the sh
         </Box>
       </Flex>
       <Spacer h="40" />
-      <Text> Overriding variables with set--var:bxsh: </Text>
-      <Flex className="set--var:bxsh -g:30" ps="15" style={{ '--shc': 'hsl(200 50% 50% / 20%)' }}>
+      <Text> Overriding variables with set--bxsh: </Text>
+      <Flex className="set--bxsh -g:30" ps="15" style={{ '--shc': 'hsl(200 50% 50% / 20%)' }}>
         <Box bxsh="20" p="30" bdrs="20">
           <Fragment>Box</Fragment>
         </Box>
@@ -114,16 +114,16 @@ By overriding the `--shc` variable here, you can adjust the color tint of the sh
     <div class="a--spacer" />
   </PreviewArea>
     <PreviewCode slot="tab" label="HTML">
-    ```html "set--var:bxsh"
-    <div class="l--flex set--var:bxsh -g:30" style="--shc: hsl(200 50% 50% / 20%)">
+    ```html "set--bxsh"
+    <div class="l--flex set--bxsh -g:30" style="--shc: hsl(200 50% 50% / 20%)">
       <div class="l--box -bxsh:20 -p:30 -bdrs:20">Box</div>
       <div class="l--box -bxsh:40 -p:30 -bdrs:20">Box</div>
     </div>
     ```
   </PreviewCode>
   <PreviewCode slot="tab" label="JSX">
-    ```jsx "set--var:bxsh"
-    <Flex className="set--var:bxsh" g="30" style={{ '--shc': 'hsl(200 50% 50% / 20%)' }}>
+    ```jsx "set--bxsh"
+    <Flex className="set--bxsh" g="30" style={{ '--shc': 'hsl(200 50% 50% / 20%)' }}>
       <Box bxsh="20" p="30" bdrs="20">
         Box
       </Box>
@@ -136,14 +136,14 @@ By overriding the `--shc` variable here, you can adjust the color tint of the sh
 </Preview>
 
 
-## `set--var:s`
+## `set--s`
 
 A class that recalculates spacing tokens (`--s5` through `--s80`) against the current font size. Use it for parts like Buttons or Badges where internal spacing should follow the element's own font-size.
 
 <SrcCode path="src/scss/base/tokens/_space.scss" />
 
 ```html
-<button class="set--var:s -fz:s -py:10 -px:20">...</button>
+<button class="set--s -fz:s -py:10 -px:20">...</button>
 ```
 
 For details, see [Spacing Tokens](/en/docs/tokens/spacing/).
@@ -151,7 +151,7 @@ For details, see [Spacing Tokens](/en/docs/tokens/spacing/).
 <DocsLink path="/docs/tokens/spacing/" />
 
 
-## `set--var:hov`
+## `set--hov`
 
 Sets the hover state variables (`--_notHov`, `--_isHov`). Primarily used to **control hover styles on child elements**.
 
@@ -190,17 +190,17 @@ Using `var(--_isHov, ...) var(--_notHov, ...)` allows you to **write both hover 
 `}>
   <PreviewTitle>Preview of `-hov:test`</PreviewTitle>
   <PreviewArea p="30">
-    <div class="set--var:hov -hov:test -p:30 -bd -bdc:current ">BOX</div>
+    <div class="set--hov -hov:test -p:30 -bd -bdc:current ">BOX</div>
   </PreviewArea>
   <PreviewCode>
-    ```html "set--var:hov -hov:test"
-    <div class="set--var:hov -hov:test -p:30 -bd -bdc:current ">BOX</div>
+    ```html "set--hov -hov:test"
+    <div class="set--hov -hov:test -p:30 -bd -bdc:current ">BOX</div>
     ```
   </PreviewCode>
 </Preview>
 
 
-By applying `set--var:hov` to a parent element and using the `--_isHov` and `--_notHov` variables on child elements, you can trigger style changes on children based on the parent's hover state.
+By applying `set--hov` to a parent element and using the `--_isHov` and `--_notHov` variables on child elements, you can trigger style changes on children based on the parent's hover state.
 
 For example, this is useful for zooming an image inside a card when the parent box is hovered. The `-hov:in:zoom` class is provided out of the box for this purpose.
 
@@ -214,7 +214,7 @@ For example, this is useful for zooming an image inside a card when the parent b
 <Preview>
   <PreviewTitle>Usage example of `-hov:in:zoom`</PreviewTitle>
   <PreviewArea p="30">
-    <a href="###" class="l--frame set--var:hov is--boxLink -ar:21/9 -ov:hidden">
+    <a href="###" class="l--frame set--hov is--boxLink -ar:21/9 -ov:hidden">
       <img class="has--transition -hov:in:zoom" src="https://cdn.lism-css.com/img/a-2.jpg" width="960" height="640" loading="lazy" />
       <div class="is--layer -bgc" style="--c: #fff; --bgc: rgb(0 0 0 / 50%)"></div>
       <div class="l--center is--layer -c" style="--c: #fff;">
@@ -223,8 +223,8 @@ For example, this is useful for zooming an image inside a card when the parent b
     </a>
   </PreviewArea>
   <PreviewCode>
-    ```html "set--var:hov" "-hov:in:zoom"
-    <a href="###" class="l--frame set--var:hov is--boxLink -ar:21/9 -ov:hidden">
+    ```html "set--hov" "-hov:in:zoom"
+    <a href="###" class="l--frame set--hov is--boxLink -ar:21/9 -ov:hidden">
       <img class="has--transition -hov:in:zoom" src="https://cdn.lism-css.com/img/a-2.jpg" width="960" height="640" loading="lazy" />
       <div class="is--layer -bgc" style="--c: #fff; --bgc: rgb(0 0 0 / 50%)"></div>
       <div class="l--center is--layer -c" style="--c: #fff;">
@@ -237,15 +237,15 @@ For example, this is useful for zooming an image inside a card when the parent b
 
 
 
-See the [`hover` documentation page](/en/docs/property-class/hov#set--varhov) for usage examples.
+See the [`hover` documentation page](/en/docs/property-class/hov#set--hov) for usage examples.
 
-<DocsLink path="/docs/property-class/hov#set--varhov" />
+<DocsLink path="/docs/property-class/hov#set--hov" />
 
 
-## `set--var:bdrsInner`
+## `set--bdrsInner`
 
 A class that automatically calculates the inner border radius (`--bdrs--inner`) from the parent element's border radius (`--bdrs`) and padding (`--p`).
-Apply `set--var:bdrsInner` to the parent element, then use `-bdrs:inner` on the child element to apply the calculated `--bdrs--inner`.
+Apply `set--bdrsInner` to the parent element, then use `-bdrs:inner` on the child element to apply the calculated `--bdrs--inner`.
 
 (Both `bdrs` and `p` must be specified on the parent element.)
 
@@ -254,15 +254,15 @@ Apply `set--var:bdrsInner` to the parent element, then use `-bdrs:inner` on the 
 <Preview>
   <PreviewTitle>Usage example</PreviewTitle>
   <PreviewArea p="30">
-    <Lism set="var:bdrsInner" p="15" bdrs="40" bd bxsh="20">
+    <Lism set="bdrsInner" p="15" bdrs="40" bd bxsh="20">
       <Frame bdrs="inner" ar="og">
         <img src="https://cdn.lism-css.com/img/u-5.jpg" width="1920" height="1280" alt="" />
       </Frame>
     </Lism>
   </PreviewArea>
   <PreviewCode label="HTML" slot="tab">
-    ```html "set--var:bdrsInner" "-bdrs:inner" "-p:15 -bdrs:40"
-    <div class="set--var:bdrsInner -p:15 -bdrs:40 -bd -bxsh:20">
+    ```html "set--bdrsInner" "-bdrs:inner" "-p:15 -bdrs:40"
+    <div class="set--bdrsInner -p:15 -bdrs:40 -bd -bxsh:20">
       <div class="l--frame -bdrs:inner -ar:og">
         <img src="https://cdn.lism-css.com/img/u-5.jpg" width="1920" height="1280" alt="" />
       </div>
@@ -270,8 +270,8 @@ Apply `set--var:bdrsInner` to the parent element, then use `-bdrs:inner` on the 
     ```
   </PreviewCode>
   <PreviewCode label="JSX" slot="tab">
-    ```jsx 'set="var:bdrsInner"' 'bdrs="inner"' 'p="15" bdrs="40"'
-    <Lism set="var:bdrsInner" p="15" bdrs="40" bd bxsh="20">
+    ```jsx 'set="bdrsInner"' 'bdrs="inner"' 'p="15" bdrs="40"'
+    <Lism set="bdrsInner" p="15" bdrs="40" bd bxsh="20">
       <Frame bdrs="inner" ar="og">
         <img src="https://cdn.lism-css.com/img/u-5.jpg" width="1920" height="1280" alt="" />
       </Frame>
@@ -282,12 +282,12 @@ Apply `set--var:bdrsInner` to the parent element, then use `-bdrs:inner` on the 
 
 <Spacer h="1rem" />
 
-Because `p` and `bdrs` are tracked as CSS variables even at different breakpoints, `set--var:bdrsInner` supports responsive border radii automatically.
+Because `p` and `bdrs` are tracked as CSS variables even at different breakpoints, `set--bdrsInner` supports responsive border radii automatically.
 
 <Preview>
   <PreviewTitle>Usage example</PreviewTitle>
   <PreviewArea p="20" resize>
-    <Lism p={[10, 15]} bd bdrs={['30', '40']} class="set--var:bdrsInner">
+    <Lism p={[10, 15]} bd bdrs={['30', '40']} class="set--bdrsInner">
       <Lism bd p="20" bdrs="inner" bgc="base-2">
         <Fragment>Example</Fragment>
       </Lism>
@@ -297,7 +297,7 @@ Because `p` and `bdrs` are tracked as CSS variables even at different breakpoint
   </PreviewCode> */}
   <PreviewCode label="JSX" slot="tab">
 ```jsx
-<Lism p={[10, 15]} bd bdrs={['30', '40']} class="set--var:bdrsInner">
+<Lism p={[10, 15]} bd bdrs={['30', '40']} class="set--bdrsInner">
   <Lism bd p="20" bdrs="inner" bgc="base-2">
     Example
   </Lism>

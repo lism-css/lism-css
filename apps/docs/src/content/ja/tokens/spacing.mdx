@@ -18,7 +18,7 @@ import { SpacingDemos } from "@/content/token-previews.jsx";
 
 ```css
 :root,
-.set--var\:s {
+.set--s {
   /* 余白単位 ≒ 8px */
   --s-unit: calc(var(--fz--base) * 0.5);
 
@@ -38,19 +38,19 @@ import { SpacingDemos } from "@/content/token-previews.jsx";
   --s35: calc(var(--s-unit) * 4);   /* ≒ 32px */
 }
 
-.set--var\:s {
+.set--s {
   --s-unit: 0.5em;
 }
 ```
 
-`set--var:s` クラスを使うと、そのスコープでは `--s-unit` が `0.5em` に切り替わり、`--s10`〜`--s80` がフォントサイズ基準で再計算されます。Button や Badge など、内部余白をフォントサイズに追従させたい部品で活用できます。
+`set--s` クラスを使うと、そのスコープでは `--s-unit` が `0.5em` に切り替わり、`--s10`〜`--s80` がフォントサイズ基準で再計算されます。Button や Badge など、内部余白をフォントサイズに追従させたい部品で活用できます。
 
 ```html
 <!-- ボタンの padding が button 自身の font-size に追従する -->
-<button class="set--var:s -fz:s -py:10 -px:20">...</button>
+<button class="set--s -fz:s -py:10 -px:20">...</button>
 
 <!-- --s-unit を任意の値で上書きすることも可能 -->
-<button class="set--var:s -p:10" style="--s-unit: .4375em">...</button>
+<button class="set--s -p:10" style="--s-unit: .4375em">...</button>
 ```
 
 

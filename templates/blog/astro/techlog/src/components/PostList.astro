@@ -23,7 +23,7 @@ const { posts, showCategory = true } = Astro.props;
       const isLazy = index >= 3;
       return (
         <Lism as="li">
-          <BoxLink layout="stack" href={getPostHref(post.id)} set="var:hov" hasTransition hov={{ bxsh: '30' }} bd h="100%" bdrs="20" ov="hidden">
+          <BoxLink layout="stack" href={getPostHref(post.id)} set="hov" hasTransition hov={{ bxsh: '30' }} bd h="100%" bdrs="20" ov="hidden">
             <Frame ar="og" fxsh="0" fxg="0" pos="relative">
               <img src={buildOgImageUrl({ category, title: post.data.title })} alt="" width="1200" height="630" loading={isLazy ? 'lazy' : 'eager'} />
               {showCategory && (

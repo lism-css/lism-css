@@ -16,7 +16,7 @@ There are three forms of `-hov` classes:
 |------|------|
 | `-hov:-{prop}` | Reads the `--hov-{prop}` variable and changes that property on hover |
 | `-hov:{preset}` | Applies a preset bundle of hover styles in one go |
-| `-hov:in:{preset}` | Changes child styles in response to a parent's [`set--var:hov`](/en/docs/set-class/#set--varhov) hover state |
+| `-hov:in:{preset}` | Changes child styles in response to a parent's [`set--hov`](/en/docs/set-class/#set--hov) hover state |
 
 You can also combine `-hov` classes with the [`has--transition`](/en/docs/trait-class/#has--transition) class to apply transitions.
 
@@ -332,30 +332,30 @@ You can freely add your own presets to fit each project.
 </Preview>
 
 
-<div class="u--srOnly" id="set--varhov"></div>
+<div class="u--srOnly" id="set--hov"></div>
 ## Using `-hov:in:{preset}`
 
 `-hov:in:{preset}` is used to **trigger style changes on child elements from a parent's hover state**.
 
-When the [`set--var:hov`](/en/docs/set-class/#set--varhov) class is applied to a parent element, the `--_isHov` and `--_notHov` variables switch based on its hover state. `-hov:in:{preset}` reads these variables to change the child's styles accordingly.
+When the [`set--hov`](/en/docs/set-class/#set--hov) class is applied to a parent element, the `--_isHov` and `--_notHov` variables switch based on its hover state. `-hov:in:{preset}` reads these variables to change the child's styles accordingly.
 
 The Lism core package provides the following classes by default:
 
 ```css
-/* Hide when parent set--var:hov is hovered */
+/* Hide when parent set--hov is hovered */
 .-hov\:in\:hide {
   --transitionProps: opacity;
   opacity: var(--_isHov, 0);
 }
 
-/* Show when parent set--var:hov is hovered */
+/* Show when parent set--hov is hovered */
 .-hov\:in\:show {
   --transitionProps: opacity, visibility;
   opacity: var(--_notHov, 0);
   visibility: var(--_notHov, hidden);
 }
 
-/* Zoom in when parent set--var:hov is hovered */
+/* Zoom in when parent set--hov is hovered */
 .-hov\:in\:zoom {
   --transitionProps: scale;
   scale: var(--_isHov, 1.1);
@@ -365,7 +365,7 @@ The Lism core package provides the following classes by default:
 <Preview>
   <PreviewTitle>Example using `-hov:in:show` and `-hov:in:zoom`</PreviewTitle>
   <PreviewArea p="20">
-    <Frame isBoxLink set="var:hov" href="#banner-link" ar="16/9" bdrs="30">
+    <Frame isBoxLink set="hov" href="#banner-link" ar="16/9" bdrs="30">
       <Media isLayer hasTransition hov="in:zoom" src="https://cdn.lism-css.com/img/a-1.jpg" alt="" width="960" height="640" loading="lazy" />
       <Layer hasTransition hov="in:show" bgc="rgb(0 0 0 / 40%)" style={{ backdropFilter: 'blur(6px)' }}>
         <Center h="100%" c="#fff">
@@ -377,8 +377,8 @@ The Lism core package provides the following classes by default:
     </Frame>
   </PreviewArea>
   <PreviewCode slot="tab" label="HTML">
-    ```html "set--var:hov" "-hov:in:show" "-hov:in:zoom" "has--transition"
-    <a class="l--frame set--var:hov is--boxLink -ar:16/9 -bdrs:30" href="#banner-link">
+    ```html "set--hov" "-hov:in:show" "-hov:in:zoom" "has--transition"
+    <a class="l--frame set--hov is--boxLink -ar:16/9 -bdrs:30" href="#banner-link">
       <img class="is--layer has--transition -hov:in:zoom" src="https://cdn.lism-css.com/img/a-1.jpg" width="960" height="640" loading="lazy" />
       <div class="is--layer has--transition -hov:in:show -bgc" style="--bgc: rgb(0 0 0 / 40%); backdrop-filter: blur(6px)">
         <div class="l--center -h:100% -c" style="--c: #fff">
@@ -389,8 +389,8 @@ The Lism core package provides the following classes by default:
     ```
   </PreviewCode>
   <PreviewCode slot="tab" label="JSX">
-    ```jsx 'set="var:hov"' 'hov="in:show"' 'hov="in:zoom"' 'hasTransition'
-    <Frame isBoxLink set="var:hov" href="#banner-link" ar="16/9" bdrs="30">
+    ```jsx 'set="hov"' 'hov="in:show"' 'hov="in:zoom"' 'hasTransition'
+    <Frame isBoxLink set="hov" href="#banner-link" ar="16/9" bdrs="30">
       <Media isLayer hasTransition hov="in:zoom" src="https://cdn.lism-css.com/img/a-1.jpg" alt="" width="960" height="640" loading="lazy" />
       <Layer hasTransition hov="in:show" bgc="rgb(0 0 0 / 40%)" style={{ backdropFilter: 'blur(6px)' }}>
         <Center h="100%" c="#fff">

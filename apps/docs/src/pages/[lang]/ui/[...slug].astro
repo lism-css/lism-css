@@ -71,7 +71,7 @@ const ogImage = `/${lang}/ui/og/${slug.replace(/^ui\//, '')}.png`;
   date={entry.data.date}
 >
   {/* フォールバック（未翻訳）ページは検索対象から除外 */}
-  <Lism as="article" class="z--article set--cqUnit set--var:s" {...!isFallback && { 'data-pagefind-body': true }}>
+  <Lism as="article" class="z--article set--cqUnit set--s" {...!isFallback && { 'data-pagefind-body': true }}>
     {/* 未翻訳の注意書き */}
     {isFallback && <TranslationNotice lang={lang} />}
 

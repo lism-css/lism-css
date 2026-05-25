@@ -112,8 +112,8 @@
     "description": "Lism CSS のフィボナッチ数列に基づく余白トークンと、対応するpropertyクラスについて解説します。",
     "category": "guide",
     "headings": ["SPACE: 余白のスケーリング", "対応する Property Class"],
-    "keywords": ["spacing", "余白", "スペーシング", "フィボナッチ", "padding", "margin", "gap", "property class", "set--var:s"],
-    "snippet": "フィボナッチ数列ベースの余白スケーリング（--s5〜--s80、s25/s35 を含む12段階）を定義。--s-unit（≒8px）を基準単位として算出。set--var:s クラスを使うと --s-unit が 0.5em に切り替わり、余白がフォントサイズ基準で再計算される。p, px, py, m, mx, my, mbs, g 等のpropertyクラスでフルサポート（トークン値 5〜80）。"
+    "keywords": ["spacing", "余白", "スペーシング", "フィボナッチ", "padding", "margin", "gap", "property class", "set--s"],
+    "snippet": "フィボナッチ数列ベースの余白スケーリング（--s5〜--s80、s25/s35 を含む12段階）を定義。--s-unit（≒8px）を基準単位として算出。set--s クラスを使うと --s-unit が 0.5em に切り替わり、余白がフォントサイズ基準で再計算される。p, px, py, m, mx, my, mbs, g 等のpropertyクラスでフルサポート（トークン値 5〜80）。"
   },
   {
     "sourcePath": "property-class.mdx",
@@ -258,8 +258,8 @@
     "description": "ベーススタイルの上書きやトークン再定義に使用する set-- 形式のユーティリティクラスについて解説します。",
     "category": "guide",
     "headings": [],
-    "keywords": ["set", "set class", "set--plain", "set--revert", "set--var:bxsh", "set--var:hov", "set--var:bdrsInner", "set--var:s"],
-    "snippet": "HTML 要素の基礎スタイリングや変数セットを行うためのクラス (.set--{style})。set--plain / set--revert（基礎スタイリング）と set--var:bxsh / set--var:hov / set--var:bdrsInner / set--var:s（変数のセット）の 2 カテゴリで解説。"
+    "keywords": ["set", "set class", "set--plain", "set--revert", "set--bxsh", "set--hov", "set--bdrsInner", "set--s"],
+    "snippet": "HTML 要素の基礎スタイリングや変数セットを行うためのクラス (.set--{style})。set--plain / set--revert（基礎スタイリング）と set--bxsh / set--hov / set--bdrsInner / set--s（変数のセット）の 2 カテゴリで解説。"
   },
   {
     "sourcePath": "primitives.mdx",
@@ -305,7 +305,7 @@
       "`@lism-css/ui` v.0.20.0 (2026.05.20)",
       "lism-css v.0.18.0 (2026.05.17)",
       "`--sz--*` トークンを px 統一・80px 刻みで再設計 (#364)",
-      "spacing tokens 拡充と `set--var:s` の新設 (#377)",
+      "spacing tokens 拡充と `set--s` の新設 (#377)",
       "lism-css v.0.17.0 (2026.05.09)",
       "-max-sz:bleed の新設 (#360)",
       "--REM 廃止と --fz--base の簡素化",
@@ -346,7 +346,7 @@
       "v.0.8 (大幅な変更)"
     ],
     "keywords": ["changelog", "変更履歴", "更新", "バージョン"],
-    "snippet": "Lism CSS の各バージョンにおける変更内容を記載。v.0.20.0 の破壊的変更として方向系 Property Class の命名整理（px-s/px-e → ps/pe、bd-x-s → bd-s 等、#378）、bp デフォルトサポート見直し（pl/pr/pt/pb 等廃止、d/g/cols/グリッド系は lg まで拡張、#394）、-hov:-bgc のデフォルト色変更と --neutral トークン追加（#381）など。v.0.18.0 では --sz--* トークンの px 統一・80px 刻みでの再設計（#364）、spacing tokens 拡充と set--var:s 新設（s25/s35 追加、#377）。v.0.17.0 では -max-sz:container 廃止と -max-sz:bleed 新設（#360）、--REM 廃止と --fz--base の 1rem 統一、a タグのリンク装飾スタイル廃止など。v.0.16.0 では Layout Primitive 命名整理（l--sideMain → l--withSide, l--fluidCols → l--autoColumns, l--switchCols → l--switchColumns）などがある。"
+    "snippet": "Lism CSS の各バージョンにおける変更内容を記載。v.0.20.0 の破壊的変更として方向系 Property Class の命名整理（px-s/px-e → ps/pe、bd-x-s → bd-s 等、#378）、bp デフォルトサポート見直し（pl/pr/pt/pb 等廃止、d/g/cols/グリッド系は lg まで拡張、#394）、-hov:-bgc のデフォルト色変更と --neutral トークン追加（#381）など。v.0.18.0 では --sz--* トークンの px 統一・80px 刻みでの再設計（#364）、spacing tokens 拡充と set--s 新設（s25/s35 追加、#377）。v.0.17.0 では -max-sz:container 廃止と -max-sz:bleed 新設（#360）、--REM 廃止と --fz--base の 1rem 統一、a タグのリンク装飾スタイル廃止など。v.0.16.0 では Layout Primitive 命名整理（l--sideMain → l--withSide, l--fluidCols → l--autoColumns, l--switchCols → l--switchColumns）などがある。"
   },
   {
     "sourcePath": "property-class/bd.mdx",
@@ -363,8 +363,8 @@
     "description": "hover時の挙動をコントロールする -hov プロパティクラスの使い方について解説します。",
     "category": "property-class",
     "headings": ["-hov:-{prop} の使い方", "-hov:{preset} の使い方", "-hov:in:{preset} の使い方", "トランジションを設定する方法"],
-    "keywords": ["hover", "ホバー", "hov", "インタラクション", "animation", "set--var:hov", "has--transition", "transition"],
-    "snippet": "ホバー関連のProp。-hov:-{prop} クラスでホバーエフェクトを設定。has--transition との組み合わせでアニメーション実現。set--var:hov と -hov:in:xxx クラスで親要素ホバー時の子要素スタイル制御も可能。"
+    "keywords": ["hover", "ホバー", "hov", "インタラクション", "animation", "set--hov", "has--transition", "transition"],
+    "snippet": "ホバー関連のProp。-hov:-{prop} クラスでホバーエフェクトを設定。has--transition との組み合わせでアニメーション実現。set--hov と -hov:in:xxx クラスで親要素ホバー時の子要素スタイル制御も可能。"
   },
   {
     "sourcePath": "property-class/max-sz.mdx",
@@ -1083,20 +1083,20 @@
   },
   {
     "sourcePath": "set-class.mdx",
-    "title": "set--var:bxsh",
+    "title": "set--bxsh",
     "description": "シャドウを構成するCSS変数を再定義するSetクラス。",
     "category": "guide",
-    "headings": ["set--var:bxsh"],
-    "keywords": ["set--var:bxsh", "シャドウ", "影", "box-shadow", "--shc"],
-    "snippet": "set--var:bxsh クラスを指定した要素では --bxsh-- 変数が再定義される。--shc変数でシャドウの色味をカスタマイズ可能。"
+    "headings": ["set--bxsh"],
+    "keywords": ["set--bxsh", "シャドウ", "影", "box-shadow", "--shc"],
+    "snippet": "set--bxsh クラスを指定した要素では --bxsh-- 変数が再定義される。--shc変数でシャドウの色味をカスタマイズ可能。"
   },
   {
     "sourcePath": "set-class.mdx",
-    "title": "set--var:hov",
+    "title": "set--hov",
     "description": "ホバー状態の判定変数（--_isHov, --_notHov）をセットするSetクラス。",
     "category": "guide",
-    "headings": ["set--var:hov"],
-    "keywords": ["set--var:hov", "ホバー", "hover", "--_isHov", "--_notHov", "空変数トリック", "子要素ホバー"],
+    "headings": ["set--hov"],
+    "keywords": ["set--hov", "ホバー", "hover", "--_isHov", "--_notHov", "空変数トリック", "子要素ホバー"],
     "snippet": "hover/focus-within状態を空変数トリックで判定。var(--_isHov, 値)でhover時のみスタイル適用。親要素に付与して子要素のホバースタイルを制御可能。"
   },
   {
@@ -1106,25 +1106,25 @@
     "category": "guide",
     "headings": ["has--transition"],
     "keywords": ["has--transition", "トランジション", "アニメーション", "transition"],
-    "snippet": "専用のCSS変数を用いてtransitionプロパティをセットするクラス。set--var:hov と組み合わせてスムーズなホバーアニメーションを実現。"
+    "snippet": "専用のCSS変数を用いてtransitionプロパティをセットするクラス。set--hov と組み合わせてスムーズなホバーアニメーションを実現。"
   },
   {
     "sourcePath": "set-class.mdx",
-    "title": "set--var:bdrsInner",
+    "title": "set--bdrsInner",
     "description": "親要素の角丸とPaddingから内側の角丸を自動計算するSetクラス。",
     "category": "guide",
-    "headings": ["set--var:bdrsInner"],
-    "keywords": ["set--var:bdrsInner", "角丸", "内側角丸", "border-radius", "自動計算", "--bdrs--inner"],
+    "headings": ["set--bdrsInner"],
+    "keywords": ["set--bdrsInner", "角丸", "内側角丸", "border-radius", "自動計算", "--bdrs--inner"],
     "snippet": "親要素の --bdrs と --p から内側の角丸 --bdrs--inner を自動計算。子要素で -bdrs:inner を使って適用。レスポンシブ対応。"
   },
   {
     "sourcePath": "set-class.mdx",
-    "title": "set--var:s",
+    "title": "set--s",
     "description": "余白トークン（--s5〜--s80）を現在のフォントサイズ基準で再計算するSetクラス。",
     "category": "guide",
-    "headings": ["set--var:s"],
-    "keywords": ["set--var:s", "余白", "フォントサイズ", "--s-unit", "spacing", "スペーシング", "em", "ボタン", "バッジ"],
-    "snippet": "set--var:s クラスを使うと --s-unit が 0.5em に切り替わり、--s10〜--s80 がフォントサイズ基準で再計算される。Button や Badge など、内部余白を要素自身の font-size に追従させたい部品で活用。"
+    "headings": ["set--s"],
+    "keywords": ["set--s", "余白", "フォントサイズ", "--s-unit", "spacing", "スペーシング", "em", "ボタン", "バッジ"],
+    "snippet": "set--s クラスを使うと --s-unit が 0.5em に切り替わり、--s10〜--s80 がフォントサイズ基準で再計算される。Button や Badge など、内部余白を要素自身の font-size に追従させたい部品で活用。"
   },
   {
     "sourcePath": "trait-class.mdx",
