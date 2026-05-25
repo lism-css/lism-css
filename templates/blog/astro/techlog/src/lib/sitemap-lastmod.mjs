@@ -17,7 +17,7 @@ export function loadPostLastmodMap({ postsDir, stripFirstSegment = false }) {
     const frontmatter = extractFrontmatter(readFileSync(filePath, 'utf8'));
     if (!frontmatter) continue;
 
-    const lastmod = toIsoDate(getFrontmatterValue(frontmatter, 'updated') ?? getFrontmatterValue(frontmatter, 'date'));
+    const lastmod = getPostLastmod(frontmatter, filePath);
     if (!lastmod) continue;
 
     lastmodMap.set(toPostPathname(postsRoot, filePath, { stripFirstSegment }), lastmod);
@@ -53,11 +53,35 @@ function normalizeYamlScalar(value) {
   let normalized = value.trim();
   if (!normalized) return undefined;
 
-  if ((normalized.startsWith("'") && normalized.endsWith("'")) || (normalized.startsWith('"') && normalized.endsWith('"'))) {
-    normalized = normalized.slice(1, -1).trim();
+  const quote = normalized[0];
+  if (quote === "'" || quote === '"') {
+    const closingIndex = normalized.indexOf(quote, 1);
+    if (closingIndex > 0) {
+      normalized = normalized.slice(1, closingIndex).trim();
+    }
+  } else {
+    normalized = normalized.replace(/(?:^|\s)#.*$/, '').trim();
   }
 
   return normalized || undefined;
+}
+
+function getPostLastmod(frontmatter, filePath) {
+  const updated = getFrontmatterValue(frontmatter, 'updated');
+  const date = getFrontmatterValue(frontmatter, 'date');
+  const updatedIso = toIsoDate(updated);
+  const dateIso = toIsoDate(date);
+
+  warnInvalidDateValue({ key: 'updated', value: updated, isoValue: updatedIso, filePath });
+  warnInvalidDateValue({ key: 'date', value: date, isoValue: dateIso, filePath });
+
+  return updatedIso ?? dateIso;
+}
+
+function warnInvalidDateValue({ key, value, isoValue, filePath }) {
+  if (value && !isoValue) {
+    console.warn(`[sitemap] Invalid ${key} value in ${filePath}: ${value}`);
+  }
 }
 
 function toIsoDate(value) {
