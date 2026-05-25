@@ -7,7 +7,7 @@ export type GroupAllowedTag = 'div' | 'section' | 'article' | 'figure' | 'nav' |
 
 export type TextAllowedTag = 'p' | 'div' | 'blockquote' | 'address' | 'figcaption' | 'pre';
 
-export type InlineAllowedTag = 'span' | 'em' | 'strong' | 'small' | 'code' | 'time' | 'i' | 'b' | 'mark' | 'abbr' | 'cite' | 'kbd';
+export type InlineAllowedTag = 'span' | 'em' | 'strong' | 'small' | 'code' | 'time' | 'i' | 'b' | 'mark' | 'abbr' | 'cite' | 'kbd' | 'label';
 
 export type ListAllowedTag = 'ul' | 'ol' | 'dl';
 
