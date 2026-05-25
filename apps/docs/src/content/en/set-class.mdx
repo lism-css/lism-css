@@ -2,7 +2,7 @@
 title: 'Set Class'
 description: 'Learn about the set-- utility classes for overriding base styles and redefining tokens.'
 ---
-import { Lism, Box, Media, Flex, Stack, Spacer, Frame, Text } from 'lism-css/astro';
+import { Lism, Container, Wrapper, Box, Columns, Media, Flex, Stack, Spacer, Frame, Text } from 'lism-css/astro';
 import { Button } from '@lism-css/ui/astro/Button';
 
 
@@ -244,20 +244,64 @@ See the [`hover` documentation page](/en/docs/property-class/hov#set--hov) for u
 
 ## `set--bleed`
 
-Provides the `--bleed` variable used to position elements that overflow the content width (`--contentSize`).
-It calculates the horizontal space left next to the content width based on container query units (`100cqi`) of the outermost `is--container`. The result is clamped to at least `--gutter-size`, so the value never falls below the gutter width.
+A class that generates the `--bleed` variable, useful for building one-side bleed layouts.
+The amount of space outside the content width (`--contentSize`) is set as its value. The gutter width (`--gutter-size`) acts as the lower bound — if the computed value falls below the gutter width, the gutter width is returned instead.
 
 <SrcCode path="src/scss/base/set/_bleed.scss" />
 
-When `--contentSize` is not specified, `--sz--m` is used as the fallback. You can override the value using classes like `-contentSize:s` or `<Lism contentSize="...">`.
+<Preview>
+  <PreviewTitle>Using `var(--bleed)` for padding</PreviewTitle>
+  <PreviewArea p="0" resize>
+    <Container>
+      <Wrapper contentSize="s" hasGutter py="30" bgc="base-2">
+        <p>Lorem ipsum dolor sit amet. Consec tetur adipi scing elit, sed do eiusmod tempor Inc ididunt ut. Labore et dolore magna aliqua.</p>
+      </Wrapper>
+      <Columns set="bleed" contentSize="s" cols={[1, 2]} g={['0', '10']} ai="center">
+        <Box hasGutter ps="var(--bleed)" py={["30", "0"]} >
+          <p>Lorem ipsum dolor sit amet. Consec tetur adipi scing elit, sed do eiusmod tempor Inc ididunt ut.</p>
+        </Box>
+        <Frame bdrs="inner" ar="3/2">
+          <img src="https://cdn.lism-css.com/img/u-5.jpg" width="1920" height="1280" alt="" />
+        </Frame>
+      </Columns>
+    </Container>
+  </PreviewArea>
+  <PreviewCode label="HTML" slot="tab">
+    ```html "--ps:var(--bleed)" "set--bleed" "-contentSize:s"
+    <div class="is--container">
+      <div class="is--wrapper has--gutter -contentSize:s -py:30 -bgc:base-2">
+        <p>Lorem ipsum dolor sit amet. Consec tetur adipi scing elit, sed do eiusmod tempor Inc ididunt ut. Labore et dolore magna aliqua.</p>
+      </div>
+      <div class="l--columns set--bleed -contentSize:s -cols_sm -g:30 -g_sm -ai:center" style="--cols:1;--cols_sm:2;--g_sm:var(--s10)">
+        <div class="l--box has--gutter -ps -py:30 -py_sm" style="--ps:var(--bleed);--py_sm:0">
+          <p>Lorem ipsum dolor sit amet. Consec tetur adipi scing elit, sed do eiusmod tempor Inc ididunt ut.</p>
+        </div>
+        <div class="l--frame -bdrs:inner -ar:3/2">
+          <img src="https://cdn.lism-css.com/img/u-5.jpg" width="1920" height="1280" alt="">
+        </div>
+      </div>
+    </div>
+    ```
+  </PreviewCode>
+  <PreviewCode label="JSX" slot="tab">
+    ```jsx 'set="bleed"' 'contentSize="s"' 'ps="var(--bleed)"'
+    <Container>
+      <Wrapper contentSize="s" hasGutter py="30" bgc="base-2">
+        <p>Lorem ipsum dolor sit amet. Consec tetur adipi scing elit, sed do eiusmod tempor Inc ididunt ut. Labore et dolore magna aliqua.</p>
+      </Wrapper>
+      <Columns set="bleed" contentSize="s" cols={[1, 2]} g={['0', '10']} ai="center">
+        <Box hasGutter ps="var(--bleed)" py={["30", "0"]} >
+          <p>Lorem ipsum dolor sit amet. Consec tetur adipi scing elit, sed do eiusmod tempor Inc ididunt ut.</p>
+        </Box>
+        <Frame bdrs="inner" ar="3/2">
+          <img src="https://cdn.lism-css.com/img/u-5.jpg" width="1920" height="1280" alt="" />
+        </Frame>
+      </Columns>
+    </Container>
+    ```
+  </PreviewCode>
+</Preview>
 
-```html
-<div class="is--container has--gutter">
-  <div class="set--bleed -contentSize:l">
-    <!-- --bleed is defined here. Use `padding-inline: var(--bleed)` to push content out toward the wrapper edges -->
-  </div>
-</div>
-```
 
 
 ## `set--bdrsInner`
