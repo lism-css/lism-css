@@ -17,7 +17,7 @@ const { label = 'SNSリンク', ...rest } = Astro.props;
   {
     siteConfig.sns.map((item) => (
       <li>
-        <Link href={item.href} aria-label={item.label} set="plain,s" d="inline-flex" p="10" bdrs="20" hov={{ c: 'brand', bgc: 'base-2' }}>
+        <Link href={item.href} aria-label={item.label} set="plain s" d="inline-flex" p="10" bdrs="20" hov={{ c: 'brand', bgc: 'base-2' }}>
           <Icon icon={item.icon} />
         </Link>
       </li>
