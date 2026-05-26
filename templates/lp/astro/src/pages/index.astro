@@ -11,20 +11,25 @@ const variants = [
     title: 'LP Corporate',
     description: 'コーポレートサイト向けの1ページ構成ランディングページ。',
     thumb: corporateThumb,
+    draft: false,
   },
   {
     slug: 'interior',
     title: 'LP Interior',
     description: 'インテリア・暮らしのコーディネートサービス向けランディングページ。',
     thumb: interiorThumb,
+    draft: false,
   },
   {
     slug: 'ryokan',
     title: 'LP Ryokan',
     description: '和の趣ある旅館サイト向けランディングページ。',
     thumb: ryokanThumb,
+    draft: true,
   },
 ];
+
+const visibleVariants = import.meta.env.PROD ? variants.filter((v) => !v.draft) : variants;
 ---
 
 <Layout title="Lism CSS - LP Templates">
@@ -39,7 +44,7 @@ const variants = [
     <Lism as="section" isContainer hasGutter fxg="1" py="20">
       <Grid gtc={['1fr', null, 'repeat(3, 1fr)']} g="30">
         {
-          variants.map(({ slug, title, description, thumb }) => (
+          visibleVariants.map(({ slug, title, description, thumb }) => (
             <BoxLink href={`/${slug}/`} layout="stack" g="15" set="hov" bdrs="20" ov="clip" bgc="base">
               <Frame ar="16/10" ov="hidden">
                 <img src={thumb.src} alt={`${title} のサムネイル`} loading="lazy" />

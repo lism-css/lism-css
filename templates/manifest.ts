@@ -182,7 +182,7 @@ export const TEMPLATES: TemplateDef[] = [
     sourcePath: 'lp/astro',
     title: { ja: 'LP Corporate', en: 'LP Corporate' },
     description: { ja: 'コーポレートサイト向けの Astro ランディングページ', en: 'Astro landing page for corporate sites' },
-    draft: true,
+    previewUrl: 'https://lism-lp-astro.pages.dev/corporate/',
   },
   {
     slug: 'lp-astro-interior',
@@ -194,7 +194,7 @@ export const TEMPLATES: TemplateDef[] = [
     sourcePath: 'lp/astro',
     title: { ja: 'LP Interior', en: 'LP Interior' },
     description: { ja: 'インテリア・暮らし系サービス向けの Astro ランディングページ', en: 'Astro landing page for interior / lifestyle services' },
-    draft: true,
+    previewUrl: 'https://lism-lp-astro.pages.dev/interior/',
   },
   {
     slug: 'lp-astro-ryokan',
