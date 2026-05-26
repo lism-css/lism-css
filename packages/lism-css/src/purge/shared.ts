@@ -1,8 +1,10 @@
 import { readFileSync } from 'node:fs';
 import { extractKnownLismSelectors, type KnownSelectorSet } from './core';
 
-// purge 対象 CSS asset 判定用シグネチャ（`.-x` または `.x--` を含むかどうか）
-export const LISM_CSS_SIGNATURE = /\.(?:-[a-z]|[a-z]+--)/;
+// purge 対象 CSS asset 判定用シグネチャ。Lism の既知プレフィックス（`l|c|a|is|has|set|u`）の BEM 風クラス、
+// または `.-x` 形式の Property Class のいずれかを含むかで判定する。
+// `.button--primary` のような一般的な BEM クラスを誤マッチさせないために、プレフィックスを限定している。
+export const LISM_CSS_SIGNATURE = /\.(?:-[a-z]|(?:l|c|a|is|has|set|u)--)/;
 
 export function loadDefaultKnownSelectors(): KnownSelectorSet | undefined {
   try {

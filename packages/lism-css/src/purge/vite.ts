@@ -1,13 +1,10 @@
 import type { Plugin } from 'vite';
 import { extractLismClasses } from './extract';
-import { purgeLismCss, type KnownSelectorSet, type SafelistEntry } from './core';
+import { purgeLismCss } from './core';
 import { LISM_CSS_SIGNATURE, formatReport, loadDefaultKnownSelectors } from './shared';
+import type { LismPurgeOptions } from './options';
 
-export interface LismPurgeOptions {
-  safelist?: SafelistEntry[];
-  known?: KnownSelectorSet;
-  report?: boolean;
-}
+export type { LismPurgeOptions } from './options';
 
 function decodeAssetSource(source: string | Uint8Array): string {
   return typeof source === 'string' ? source : new TextDecoder().decode(source);

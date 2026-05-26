@@ -35,7 +35,8 @@ const entries = {
 
   // full.css 用 preset。bin/cli.mjs が dist から読むため単独エントリとして出力する
   'config/presets/props-full': resolve(__dirname, 'config/presets/props-full.ts'),
-  'purge/index': resolve(__dirname, 'src/purge/index.ts'),
+  'purge/vite': resolve(__dirname, 'src/purge/vite.ts'),
+  'purge/astro': resolve(__dirname, 'src/purge/astro.ts'),
   // 'components/Box/index': resolve(__dirname, 'src/components/Box/index.js'),
 
   // ↓ scripts.jsのビルドと、setEvent.js もこれでビルドされる.

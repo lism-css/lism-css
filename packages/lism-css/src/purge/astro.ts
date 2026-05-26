@@ -4,10 +4,10 @@ import { join } from 'node:path';
 import type { AstroIntegration } from 'astro';
 import { extractLismClasses } from './extract';
 import { purgeLismCss, type SafelistEntry } from './core';
-import type { LismPurgeOptions } from './vite';
+import type { LismPurgeOptions } from './options';
 import { LISM_CSS_SIGNATURE, formatReport, loadDefaultKnownSelectors } from './shared';
 
-export type { LismPurgeOptions };
+export type { LismPurgeOptions } from './options';
 
 const SCAN_EXT = /\.(html?|js|mjs|cjs)$/;
 const CSS_EXT = /\.css$/;

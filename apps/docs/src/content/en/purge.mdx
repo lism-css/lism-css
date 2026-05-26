@@ -3,9 +3,7 @@ title: 'CSS Purge'
 description: 'Set up the purge plugin to strip unused Lism CSS classes at build time and ship a leaner production CSS.'
 ---
 
-`lism-css/purge` is a purge plugin that scans your build output and **keeps only the Lism CSS classes you actually use**. It ships with the `lism-css` package, so no extra install is required.
-
-Two flavors are provided: a Vite plugin and an Astro integration.
+`lism-css/purge/vite` (Vite plugin) and `lism-css/purge/astro` (Astro Integration) scan your build output and **keep only the Lism CSS classes you actually use**. They ship with the `lism-css` package, so no extra install is required.
 
 
 ## How it works
@@ -23,7 +21,7 @@ At build time, the plugin scans the generated HTML / JS for class names that fol
 ```js
 // vite.config.js
 import { defineConfig } from 'vite';
-import { lismPurge } from 'lism-css/purge';
+import { lismPurge } from 'lism-css/purge/vite';
 
 export default defineConfig({
   plugins: [lismPurge({ report: true })],
@@ -38,7 +36,7 @@ The plugin runs as `apply: 'build'` / `enforce: 'post'`, so nothing happens duri
 ```js
 // astro.config.mjs
 import { defineConfig } from 'astro/config';
-import { lismPurgeAstro } from 'lism-css/purge';
+import { lismPurgeAstro } from 'lism-css/purge/astro';
 
 export default defineConfig({
   integrations: [lismPurgeAstro({ report: true })],
