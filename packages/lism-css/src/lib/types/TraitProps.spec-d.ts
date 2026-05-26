@@ -15,13 +15,17 @@ describe('TraitProps', () => {
     it('TraitProps が TRAITS から生成されている', () => {
       // TraitProps の型は TRAITS から生成される
       type IsWrapperType = TraitProps['isWrapper'];
-      // isWrapper は "s" | "l" | undefined であることを確認
+      // isWrapper は現行仕様として contentSize 相当の文字列値も受け入れる
       const wrapper1: IsWrapperType = 's';
-      const wrapper2: IsWrapperType = 'l';
-      const wrapper3: IsWrapperType = undefined;
+      const wrapper2: IsWrapperType = 'm';
+      const wrapper3: IsWrapperType = 'l';
+      const wrapper4: IsWrapperType = 'xl';
+      const wrapper5: IsWrapperType = undefined;
       assertType<IsWrapperType>(wrapper1);
       assertType<IsWrapperType>(wrapper2);
       assertType<IsWrapperType>(wrapper3);
+      assertType<IsWrapperType>(wrapper4);
+      assertType<IsWrapperType>(wrapper5);
     });
   });
 
@@ -47,10 +51,12 @@ describe('TraitProps', () => {
     });
   });
 
-  describe('プリセット値を持つトレイトは、プリセット値・string・boolean を受け入れる', () => {
+  describe('isWrapper は contentSize 互換の文字列値・boolean を受け入れる', () => {
     it('isWrapper - プリセット値を受け入れる', () => {
       assertType<TraitProps>({ isWrapper: 's' });
+      assertType<TraitProps>({ isWrapper: 'm' });
       assertType<TraitProps>({ isWrapper: 'l' });
+      assertType<TraitProps>({ isWrapper: 'xl' });
     });
 
     it('isWrapper - string を受け入れる', () => {

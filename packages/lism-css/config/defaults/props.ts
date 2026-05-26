@@ -79,6 +79,7 @@ export default {
   'min-h': { prop: 'minHeight', presets: ['100%'], token: 'sz', bp: 1 },
   'max-h': { prop: 'maxHeight', presets: ['100%'], token: 'sz', bp: 1 },
 
+  contentSize: { isVar: 1, presets: ['s', 'm', 'l', 'xl'], token: 'sz' },
   sz: { prop: 'inlineSize', token: 'sz' },
   'min-sz': { prop: 'minInlineSize', token: 'sz' },
   'max-sz': {

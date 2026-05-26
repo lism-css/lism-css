@@ -41,17 +41,6 @@ interface PropConfig {
   [key: string]: unknown;
 }
 
-// TraitPropData based on config/defaults/traits.ts
-interface TraitPropDataObject {
-  className: string;
-  preset?: string[] | readonly string[];
-  presetClass?: string;
-  customVar?: string;
-  tokenKey?: string;
-}
-
-type TraitPropData = string | TraitPropDataObject;
-
 // LismPropsData が受け取る型（layout / atomic 処理済み）
 export interface LismPropsBase extends TraitProps, PropValueTypes {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -145,24 +134,10 @@ export class LismPropsData {
     return atts(userClassName, astroClassName, this.primitiveClass, this.setClasses, this.traitClasses, this.uClasses, this.propClasses);
   }
 
-  analyzeTrait(traitPropData: TraitPropDataObject, propVal: unknown): void {
-    // isWrapper などの特別な処理が必要なレイアウトトレイト
-    const { className, preset, presetClass, customVar, tokenKey } = traitPropData;
-    if (propVal === true) {
-      this.traitClasses.push(className);
-    } else if (preset && isPresetValue(preset, propVal)) {
-      this.traitClasses.push(`${className} ${presetClass}:${String(propVal)}`);
-    } else if (propVal) {
-      // カスタム値
-      this.traitClasses.push(className);
-      if (tokenKey && customVar) {
-        this.addStyle(customVar, getMaybeCssVar(propVal as string | number, tokenKey));
-      }
-    }
-  }
-
   // prop解析
   analyzeProps(): void {
+    this.normalizeIsWrapper();
+
     // set / util は attrs ループの前に取り出して各バケットへ振り分ける
     const rawSet = this.extractProp('set');
     const rawUtil = this.extractProp('util');
@@ -173,14 +148,8 @@ export class LismPropsData {
       // trait チェック
       if (Object.hasOwn(TRAITS, propName)) {
         const propVal = this.extractProp(propName);
-        const traitPropData = (TRAITS as Record<string, TraitPropData>)[propName];
-
-        if (typeof traitPropData === 'string') {
-          // そのままクラス化
-          if (propVal) this.traitClasses.push(traitPropData);
-        } else {
-          this.analyzeTrait(traitPropData, propVal);
-        }
+        const traitClass = (TRAITS as Record<string, string>)[propName];
+        if (propVal) this.traitClasses.push(traitClass);
       } else if (Object.hasOwn(PROPS, propName)) {
         // Lism系のプロパティかどうか
         // value取得して attrsリストから削除しておく
@@ -198,6 +167,18 @@ export class LismPropsData {
         this.addStyles(cssVales as Record<string, string | number | undefined>);
       }
     });
+  }
+
+  // isWrapper="s" 形式のサイズ指定は contentSize Prop に寄せる。
+  normalizeIsWrapper(): void {
+    const isWrapper = this.attrs.isWrapper;
+    if (isWrapper == null || isWrapper === false || isWrapper === '') return;
+    if (isWrapper !== true) {
+      if (this.attrs.contentSize === undefined) {
+        this.attrs.contentSize = isWrapper;
+      }
+      this.attrs.isWrapper = true;
+    }
   }
 
   // Lism Prop 解析

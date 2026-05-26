@@ -8,15 +8,4 @@
   }
 }
 
-// Memo: それぞれの直下要素( > * ) に対してスタイルをセットした方がネスト時の影響をなくせるが、wrapper のネストが多様されることは少ないので親側の変数管理のみで実装。
-.-contentSize\:s {
-  --contentSize: var(--sz--s);
-}
-
-.-contentSize\:l {
-  --contentSize: var(--sz--l);
-}
-
-.-contentSize\:xl {
-  --contentSize: var(--sz--xl);
-}
+// Memo: .-contentSize:s / m / l / xl は contentSize Prop の auto-generated 出力（src/scss/_prop-config.scss 経由）から自動的に props 層に出力される。

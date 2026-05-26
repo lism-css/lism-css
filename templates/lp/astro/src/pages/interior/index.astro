@@ -309,7 +309,7 @@ const contactFields = [
         </Layer>
       </Box>
 
-      <Container as="section" id="mission" class="z--mission -contentSize:l" set="bleed" pos="relative" py="50" mbs="60">
+      <Container as="section" id="mission" class="z--mission" set="bleed" contentSize="l" pos="relative" py="50" mbs="60">
         <Layer class="z--mission_bg" bgc="base-2" ms="calc(10rem + var(--bleed))" />
         <Columns class="z--mission_content" cols={[1, null, 2]} g={['40', null, '10', '30']} pos="relative" w="100%">
           <Stack fx="1" hasGutter ps="var(--bleed)">
@@ -325,8 +325,9 @@ const contactFields = [
           </Stack>
           <Frame
             as="figure"
-            class="z--mission_figure -contentSize:xl"
+            class="z--mission_figure"
             set="bleed"
+            contentSize="xl"
             pos="relative"
             fx="1"
             w="100%"
@@ -375,7 +376,7 @@ const contactFields = [
       </Container>
 
       <Container as="section" id="feature" class="z--point" ov-x="clip" mbs="60">
-        <Columns cols={[1, null, 2]} g={['40', null, '10', '30']} class="set--bleed -contentSize:l">
+        <Columns cols={[1, null, 2]} g={['40', null, '10', '30']} set="bleed" contentSize="l">
           <Stack class="z--point_main" g="40" jc="start" hasGutter ps="var(--bleed)">
             <SectionHeading en="Point" ja="暮らしに寄り添う特長" />
             <Stack g="40">
@@ -457,7 +458,7 @@ const contactFields = [
       </Container>
 
       <Container as="section" id="step" class="z--step" ov-x="clip" py="60">
-        <Columns cols={[1, null, 2]} g={['40', null, '10', '30']} class="set--bleed -contentSize:l">
+        <Columns cols={[1, null, 2]} g={['40', null, '10', '30']} set="bleed" contentSize="l">
           <Stack g="40" jc="start" hasGutter pe="var(--bleed)">
             <SectionHeading en="Step" ja="ご依頼から納品までの流れ" />
             <Stack g="20">
