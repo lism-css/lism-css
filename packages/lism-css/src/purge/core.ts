@@ -222,12 +222,19 @@ function extractFunctionalSelectorGroups(selector: string): { selector: string; 
   return { selector: normalized, orGroups };
 }
 
+function testRegExpEntry(entry: RegExp, value: string): boolean {
+  // /pattern/g や /pattern/y は test() で lastIndex が前進し、次回呼び出しの結果が
+  // 入力順に依存して揺らぐ。状態を持つフラグの場合は毎回 0 にリセットしてから判定する。
+  if (entry.global || entry.sticky) entry.lastIndex = 0;
+  return entry.test(value);
+}
+
 function matchesSafelist(className: string, safelist: SafelistEntry[]): boolean {
   for (const entry of safelist) {
     if (typeof entry === 'string') {
       if (entry === className) return true;
     } else if (entry instanceof RegExp) {
-      if (entry.test(className)) return true;
+      if (testRegExpEntry(entry, className)) return true;
     } else if (typeof entry === 'function') {
       if (entry(className)) return true;
     }
@@ -309,12 +316,14 @@ function shouldKeepSingleSelector(selector: string, ctx: PurgeContext): boolean 
   return true;
 }
 
-function shouldKeepSelectorList(selectorList: string, ctx: PurgeContext): string | null {
+function shouldKeepSelectorList(selectorList: string, ctx: PurgeContext): { kept: string; changed: boolean } | null {
+  const list = splitSelectorList(selectorList);
   const kept: string[] = [];
-  for (const sel of splitSelectorList(selectorList)) {
+  for (const sel of list) {
     if (shouldKeepSingleSelector(sel, ctx)) kept.push(sel);
   }
-  return kept.length === 0 ? null : kept.join(',');
+  if (kept.length === 0) return null;
+  return { kept: kept.join(','), changed: kept.length !== list.length };
 }
 
 // ---- パース / 処理 ----------------------------------------------------------
@@ -322,7 +331,8 @@ function shouldKeepSelectorList(selectorList: string, ctx: PurgeContext): string
 type Segment =
   | { kind: 'rule'; header: string; body: string }
   | { kind: 'at-block'; header: string; name: string; body: string }
-  | { kind: 'at-statement'; header: string };
+  | { kind: 'at-statement'; header: string }
+  | { kind: 'comment'; text: string };
 
 function* iterateTopLevel(css: string): Generator<Segment> {
   let i = 0;
@@ -335,7 +345,9 @@ function* iterateTopLevel(css: string): Generator<Segment> {
         continue;
       }
       if (c === '/' && css[i + 1] === '*') {
-        i = findCommentEnd(css, i) + 1;
+        const end = findCommentEnd(css, i) + 1;
+        yield { kind: 'comment', text: css.slice(i, end) };
+        i = end;
         continue;
       }
       break;
@@ -417,9 +429,19 @@ export function extractKnownLismSelectors(css: string): KnownSelectorSet {
   return known;
 }
 
-function processSegments(css: string, ctx: PurgeContext): string {
+interface ProcessResult {
+  css: string;
+  changed: boolean;
+}
+
+function processSegments(css: string, ctx: PurgeContext): ProcessResult {
   let out = '';
+  let changed = false;
   for (const seg of iterateTopLevel(css)) {
+    if (seg.kind === 'comment') {
+      out += `${seg.text}\n`;
+      continue;
+    }
     if (seg.kind === 'at-statement') {
       out += seg.header.endsWith(';') ? `${seg.header}\n` : `${seg.header};\n`;
       continue;
@@ -427,16 +449,27 @@ function processSegments(css: string, ctx: PurgeContext): string {
     if (seg.kind === 'at-block') {
       if (NESTING_AT_RULES.has(seg.name)) {
         const inner = processSegments(seg.body, ctx);
-        if (inner.trim()) out += `${seg.header}{${inner}}\n`;
+        if (inner.changed) changed = true;
+        if (inner.css.trim()) {
+          out += `${seg.header}{${inner.css}}\n`;
+        } else {
+          // at-block ごと空になった = 削除扱い
+          changed = true;
+        }
       } else {
         out += `${seg.header}{${seg.body}}\n`;
       }
       continue;
     }
-    const kept = shouldKeepSelectorList(seg.header, ctx);
-    if (kept !== null) out += `${kept}{${seg.body}}\n`;
+    const result = shouldKeepSelectorList(seg.header, ctx);
+    if (result === null) {
+      changed = true;
+      continue;
+    }
+    if (result.changed) changed = true;
+    out += `${result.kept}{${seg.body}}\n`;
   }
-  return out;
+  return { css: out, changed };
 }
 
 export function purgeLismCss(css: string, options: PurgeOptions): string {
@@ -446,5 +479,7 @@ export function purgeLismCss(css: string, options: PurgeOptions): string {
     known: options.known,
     attrCache: new Map(),
   };
-  return processSegments(css, ctx);
+  const result = processSegments(css, ctx);
+  // 何も削除されなければ原文を返す（再シリアライズによる空白差分も避ける）
+  return result.changed ? result.css : css;
 }

@@ -166,6 +166,48 @@ describe('purgeLismCss', () => {
     expect(out).toContain('gap');
   });
 
+  test('global フラグ付き RegExp safelist でも毎回マッチ判定が安定する', () => {
+    const css = `.-d_sm{display:var(--d_sm)}.-m\\:10{margin:var(--s10)}`;
+    const safelist = [/-d_sm|-m:10/g];
+    // 同じ RegExp インスタンスを 2 回連続で渡しても結果が変わらない（lastIndex の影響を受けない）
+    const out1 = purgeLismCss(css, { used: used(), safelist });
+    const out2 = purgeLismCss(css, { used: used(), safelist });
+    expect(out1).toContain('-d_sm');
+    expect(out1).toContain('-m\\:10');
+    expect(out2).toBe(out1);
+  });
+
+  test('sticky フラグ付き RegExp safelist でも判定が安定する', () => {
+    const css = `.-d_sm{display:var(--d_sm)}`;
+    const re = /-d_sm/y;
+    // 同じ RegExp を再利用しても lastIndex の前進で結果が崩れない
+    const out1 = purgeLismCss(css, { used: used(), safelist: [re] });
+    const out2 = purgeLismCss(css, { used: used(), safelist: [re] });
+    expect(out1).toContain('-d_sm');
+    expect(out2).toBe(out1);
+  });
+
+  test('トップレベルのコメントは保持される', () => {
+    const css = `/*! lism-css banner */\n.-p\\:20{padding:var(--s20)}`;
+    const out = purgeLismCss(css, { used: used('-p:20') });
+    expect(out).toContain('/*! lism-css banner */');
+    expect(out).toContain('-p\\:20');
+  });
+
+  test('変更がなければ原文をそのまま返す（writeback skip 可能）', () => {
+    const css = `.-p\\:20{padding:var(--s20)}\n.-m\\:10{margin:var(--s10)}`;
+    const out = purgeLismCss(css, { used: used('-p:20', '-m:10') });
+    expect(out).toBe(css);
+  });
+
+  test('@layer 内のみ削除があった場合は changed として再シリアライズされる', () => {
+    const css = `@layer lism-base{.set--plain{display:block}.set--unused{color:red}}`;
+    const out = purgeLismCss(css, { used: used('set--plain') });
+    expect(out).not.toBe(css);
+    expect(out).toContain('set--plain');
+    expect(out).not.toContain('set--unused');
+  });
+
   test('known に含まれない Lism 風のユーザー定義クラスは保持する', () => {
     const known = extractKnownLismSelectors(`.l--stack{display:flex}[class*=" -bd-"]{--bds:solid}`);
     const css = `.l--stack{display:flex}.l--userLayout{display:grid}[class*=" -bd-"]{--bds:solid}`;
