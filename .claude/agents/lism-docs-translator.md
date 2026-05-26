@@ -118,16 +118,29 @@ ja版で日本語プレースホルダーテキストが使われている箇所
 
 ### 見出し（procedure 風から名詞句へ）
 
+**前提**: `Using X` / `Adding X` / `Customizing X` のような動名詞始まり見出しは MDN / react.dev / Astro / Tailwind などでも一般的で、それ自体は問題ない。機械的に全部名詞句化しないこと。
+
+ただし以下のいずれかに該当する動名詞見出しは名詞句への書き換えを検討する:
+- **長すぎる**: 動名詞 + 関係節 / 並列で1行が長くなっているもの
+- **ファイル内で浮いている**: 同じファイル内の他の見出しが名詞句中心なのに、1〜2件だけ動名詞始まりで混在しているもの
+- **より自然な名詞句が明確に存在する**: `Fixing the height` ↔ `Fixed height` のように短く強い代替がある場合
+- **語感が誤読を招く**: `Fixing X` はバグ修正と混同されうる
+
 | Before | After | 理由 |
 |--------|-------|------|
-| `### Changing the X and adding Y` | `### Custom X with Y` | 動名詞連結はJP直訳。英語docs見出しは名詞句 |
-| `### Switching the layout` | `### Layout variants` / `### Layout options` | 動名詞→名詞句 |
-| `### Displaying X side by side` | `### Side-by-side X layout` | 同上 |
+| `### Switching between horizontal and vertical layouts at a breakpoint, with changing media aspect ratio` | `### Breakpoint-responsive horizontal/vertical layout` | 動名詞 + 関係節で長すぎる |
+| `### Changing the X and adding Y` | `### Custom X with Y` | 動名詞連結で冗長。代替の名詞句が短く強い |
 | `### Fixing the height` | `### Fixed height` | "Fixing" はバグ修正の意に取られる |
+| `### Specifying heading levels` | `### Heading levels` | より短い名詞句で十分 |
 | `## Benefits of X Management` | `## Why Use X?` | 名詞重畳→修辞疑問形 |
 | `## How to read the tables on this page` | `## Reading the Tables` | 冗長 |
 | `## Displays` / `## Positions` | `## Display` / `## Position` | CSSプロパティ名は単数 |
 | `## COLOR` / `## PALETTE` | `## Semantic Colors` / `## Palette Colors` | all-caps 見出しは英語docsで非標準。Title Case に統一 |
+
+逆に、以下は通常そのまま維持してよい:
+- `### Using Next.js <Image>` — MDN/Astro でも普通の形
+- `### Adding icons and badges` — 短く明確な動名詞 + 目的語は問題なし
+- `### Customizing Semantic Colors` — `Customizing X` は React/Tailwind docs で一般的
 
 ### 構文（受動態・冗長な前置きの解消）
 
@@ -168,7 +181,7 @@ ja版で日本語プレースホルダーテキストが使われている箇所
    - [ ] `### Examples of creating/using X` を使っていない（→ `### Examples of X built with Lism`）
    - [ ] all-caps の見出しがない（`## COLOR` など）。Title Case か Sentence case に統一
      - 例外: Lismのトークンカテゴリ名として`SPACE: Spacing Scale`のように使う`SPACE`
-   - [ ] 動名詞始まりの見出し（`### Changing X`, `### Switching Y`, `### Adding Z`）→ 名詞句に変換可能か再検討
+   - [ ] 動名詞始まり見出しは「①長すぎる ②ファイル内で他の名詞句見出しから浮いている ③より自然な名詞句が明確に存在する ④`Fixing X` のような誤読リスクがある」のいずれかに該当する場合のみ名詞句化を検討（`Using X` / `Adding X` / `Customizing X` 程度はそのままで OK）
 
 2. **構文**
    - [ ] `This is useful when you want to…` を使っていない（→ `Use this to…`）

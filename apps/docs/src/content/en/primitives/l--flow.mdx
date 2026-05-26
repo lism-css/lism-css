@@ -9,7 +9,7 @@ import { DummyText } from '@lism-css/ui/astro/DummyText';
 
 
 `l--flow` is a flow class that manages spacing between child elements using `margin`.  
-Useful for the flow layout of text-heavy content such as article bodies.
+Use it for text-heavy content layouts such as article bodies.
 
 :::point
 Directly under `l--flow`, the spacing between content items is controlled by `--flow` and `margin-block-start`.
@@ -40,7 +40,7 @@ Heading tags receive larger spacing than other elements.
 
 ### Props
 
-| Property | Description |
+| Prop | Description |
 |---|---|
 | `flow` | Sets the value of `--flow`.<br />When `s` is specified, the `-flow:s` class is applied. Any other value is emitted as the `-flow:` class together with the `--flow` variable. |
 
@@ -137,7 +137,7 @@ Heading tags receive larger spacing than other elements.
 
 
 
-### Setting a custom value
+### Custom value
 
 When a non-token value is passed to `flow`, it is output as the `-flow:` class and `--flow` CSS variable.
 
@@ -179,7 +179,7 @@ Note that `l--flow` falls back to the root-defined `--flow--base` when `--flow` 
 ### `is--skipFlow`
 
 When used as a direct child of `l--flow`, this class cancels the spacing with the following sibling element.
-This is useful when you want to place an absolutely positioned element at the start of flow content.
+Use this to place an absolutely positioned element at the start of flow content.
 
 
 <Preview>
