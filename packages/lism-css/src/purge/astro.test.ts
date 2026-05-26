@@ -1,36 +1,154 @@
 import { describe, test, expect, vi } from 'vitest';
+import { mkdir, mkdtemp, readFile, readdir, rm, stat, writeFile } from 'node:fs/promises';
+import { tmpdir } from 'node:os';
+import { dirname, join } from 'node:path';
+import { pathToFileURL } from 'node:url';
 import { lismPurgeAstro } from './astro';
 
-function getConfigSetupHook(integration: ReturnType<typeof lismPurgeAstro>) {
-  const hook = integration.hooks['astro:config:setup'];
-  if (!hook) throw new Error('astro:config:setup hook not found');
+async function setupDist(files: Record<string, string>): Promise<string> {
+  const dir = await mkdtemp(join(tmpdir(), 'lism-purge-astro-'));
+  for (const [name, content] of Object.entries(files)) {
+    const full = join(dir, name);
+    await mkdir(dirname(full), { recursive: true });
+    await writeFile(full, content, 'utf8');
+  }
+  return dir;
+}
+
+function getBuildDoneHook(integration: ReturnType<typeof lismPurgeAstro>) {
+  const hook = integration.hooks['astro:build:done'];
+  if (!hook) throw new Error('astro:build:done hook not found');
   return hook;
 }
 
-describe('lismPurgeAstro (Astro)', () => {
-  test('astro:config:setup で Vite plugin を updateConfig 経由で注入する', () => {
-    const integration = lismPurgeAstro();
-    const updateConfig = vi.fn();
-    void getConfigSetupHook(integration)({ updateConfig } as never);
+async function fileExists(path: string): Promise<boolean> {
+  try {
+    await stat(path);
+    return true;
+  } catch {
+    return false;
+  }
+}
 
-    expect(updateConfig).toHaveBeenCalledTimes(1);
-    const arg = updateConfig.mock.calls[0]?.[0] as { vite?: { plugins?: unknown[] } };
-    const plugins = arg.vite?.plugins ?? [];
-    expect(plugins).toHaveLength(1);
-    const plugin = plugins[0] as { name?: string };
-    expect(plugin?.name).toBe('lism-css:purge');
+describe('lismPurgeAstro (Astro)', () => {
+  test('lism signature を含まない CSS は書き換えられない', async () => {
+    const original = '.button--primary{color:red}';
+    const dir = await setupDist({
+      'styles.css': original,
+      'index.html': '<div class="button--primary"></div>',
+    });
+    try {
+      const integration = lismPurgeAstro();
+      const hook = getBuildDoneHook(integration);
+      const logger = { info: vi.fn(), warn: vi.fn(), error: vi.fn() };
+      await hook({
+        dir: pathToFileURL(dir + '/'),
+        logger,
+        pages: [],
+        routes: [],
+      } as never);
+      const after = await readFile(join(dir, 'styles.css'), 'utf8');
+      expect(after).toBe(original);
+    } finally {
+      await rm(dir, { recursive: true, force: true });
+    }
   });
 
-  test('options は内部の Vite plugin にそのまま渡る', () => {
-    // safelist が plugin に届くことを E2E で確認する代わりに、
-    // 注入された plugin が Vite plugin の形を保っていれば options の伝播は型/実装で保証される。
-    const integration = lismPurgeAstro({ report: true });
-    const updateConfig = vi.fn();
-    void getConfigSetupHook(integration)({ updateConfig } as never);
-    const plugin = (updateConfig.mock.calls[0]?.[0] as { vite: { plugins: unknown[] } }).vite.plugins[0] as Record<string, unknown>;
-    // Vite plugin として要求される最低限の shape
-    expect(plugin).toHaveProperty('name', 'lism-css:purge');
-    expect(plugin).toHaveProperty('apply', 'build');
-    expect(typeof plugin.generateBundle === 'function' || typeof plugin.generateBundle === 'object').toBe(true);
+  test('SSG 出力 HTML のクラスが used として認識され、CSS が purge される', async () => {
+    const cssOriginal = `.l--stack{display:flex}.l--unused{display:grid}.-p\\:20{padding:var(--p20)}`;
+    const dir = await setupDist({
+      '_astro/main.AAAA1111.css': cssOriginal,
+      'index.html': `<!DOCTYPE html><html><head><link rel="stylesheet" href="/_astro/main.AAAA1111.css"></head><body><div class="l--stack -p:20"></div></body></html>`,
+    });
+    try {
+      const integration = lismPurgeAstro();
+      const hook = getBuildDoneHook(integration);
+      const logger = { info: vi.fn(), warn: vi.fn(), error: vi.fn() };
+      await hook({
+        dir: pathToFileURL(dir + '/'),
+        logger,
+        pages: [],
+        routes: [],
+      } as never);
+
+      // 旧 hash ファイルは存在せず、新 hash ファイルが 1 つだけ存在する
+      expect(await fileExists(join(dir, '_astro/main.AAAA1111.css'))).toBe(false);
+      const entries = await readdir(join(dir, '_astro'));
+      const cssFiles = entries.filter((f) => f.endsWith('.css'));
+      expect(cssFiles).toHaveLength(1);
+      const newName = cssFiles[0];
+      expect(newName).toMatch(/^main\.[A-Za-z0-9_-]+\.css$/);
+      expect(newName).not.toBe('main.AAAA1111.css');
+
+      // CSS の中身が purge されている
+      const cssAfter = await readFile(join(dir, '_astro', newName), 'utf8');
+      expect(cssAfter).toContain('l--stack');
+      expect(cssAfter).toContain('-p\\:20');
+      expect(cssAfter).not.toContain('l--unused');
+
+      // HTML 内の参照が新ファイル名に更新されている
+      const htmlAfter = await readFile(join(dir, 'index.html'), 'utf8');
+      expect(htmlAfter).toContain(newName);
+      expect(htmlAfter).not.toContain('main.AAAA1111.css');
+    } finally {
+      await rm(dir, { recursive: true, force: true });
+    }
+  });
+
+  test('ハッシュ無し CSS は in-place で上書きされる（リネームなし）', async () => {
+    const dir = await setupDist({
+      'main.css': `.l--stack{display:flex}.l--unused{display:grid}`,
+      'index.html': `<div class="l--stack"></div>`,
+    });
+    try {
+      const integration = lismPurgeAstro();
+      const hook = getBuildDoneHook(integration);
+      const logger = { info: vi.fn(), warn: vi.fn(), error: vi.fn() };
+      await hook({
+        dir: pathToFileURL(dir + '/'),
+        logger,
+        pages: [],
+        routes: [],
+      } as never);
+      const cssAfter = await readFile(join(dir, 'main.css'), 'utf8');
+      expect(cssAfter).toContain('l--stack');
+      expect(cssAfter).not.toContain('l--unused');
+    } finally {
+      await rm(dir, { recursive: true, force: true });
+    }
+  });
+
+  test('JS / manifest 内の CSS ファイル参照もリネームに同期する', async () => {
+    const cssOriginal = `.l--grid{display:grid}.l--unused{display:flex}`;
+    const dir = await setupDist({
+      '_astro/styles.BBBB2222.css': cssOriginal,
+      'index.html': `<link rel="stylesheet" href="/_astro/styles.BBBB2222.css"><div class="l--grid"></div>`,
+      '_astro/app.js': `import "/_astro/styles.BBBB2222.css";\nconsole.log("/_astro/styles.BBBB2222.css");`,
+    });
+    try {
+      const integration = lismPurgeAstro();
+      const hook = getBuildDoneHook(integration);
+      const logger = { info: vi.fn(), warn: vi.fn(), error: vi.fn() };
+      await hook({
+        dir: pathToFileURL(dir + '/'),
+        logger,
+        pages: [],
+        routes: [],
+      } as never);
+
+      const entries = await readdir(join(dir, '_astro'));
+      const cssFiles = entries.filter((f) => f.endsWith('.css'));
+      const newName = cssFiles[0];
+      expect(newName).not.toBe('styles.BBBB2222.css');
+
+      const html = await readFile(join(dir, 'index.html'), 'utf8');
+      const js = await readFile(join(dir, '_astro/app.js'), 'utf8');
+      expect(html).toContain(newName);
+      expect(html).not.toContain('styles.BBBB2222.css');
+      expect(js).toContain(newName);
+      expect(js).not.toContain('styles.BBBB2222.css');
+    } finally {
+      await rm(dir, { recursive: true, force: true });
+    }
   });
 });
