@@ -1,0 +1,520 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import {
+  AutoColumns,
+  Box,
+  BoxLink,
+  WithSide,
+  Center,
+  Cluster,
+  Container,
+  Flex,
+  Flow,
+  Frame,
+  Grid,
+  Heading,
+  Media,
+  Icon,
+  Inline,
+  Layer,
+  Link,
+  Stack,
+  Text,
+} from 'lism-css/astro';
+import { Accordion } from '@lism-css/ui/astro/Accordion';
+import Header from '@/components/corporate/Header.astro';
+import SectionHeading from '@/components/corporate/SectionHeading.astro';
+
+// スタイル
+import './_style.css';
+
+// スクロール連動アニメーション（オフにしたい場合はこの行をコメントアウト）
+import './_animations.css';
+
+export const title = 'Corporate LP';
+
+const mvImage = 'https://cdn.lism-css.com/img/building/u-hP6H5U7oIG.jpg';
+
+const aboutPhotos = [
+  'https://cdn.lism-css.com/random/img/?category=working&r=1',
+  'https://cdn.lism-css.com/random/img/?category=office&r=2',
+  'https://cdn.lism-css.com/random/img/?r=3',
+];
+
+const featureCards = [
+  {
+    src: 'https://cdn.lism-css.com/random/img/?r=service1',
+    title: 'レイアウト設計サポート',
+    body: 'ワイヤーフレーム作成がしやすい、レイアウトファーストなプリミティブ（Stack や Flex、Grid など）を、ドキュメントに沿った組み方で扱います。骨組みを先に揃え、画面幅の切り替えに耐えるマークアップを意識した設計です。',
+  },
+  {
+    src: 'https://cdn.lism-css.com/random/img/?r=service2',
+    title: 'デザイントークン整備',
+    body: 'ハーモニックモジュラースケールに基づくタイポやスペースなど、柔軟でレスポンシブに切り替えやすいCSS変数の設計が前提です。単一プロパティに相当する Property Class でも、同じ考え方を短い表記に落とし込めます。',
+  },
+  {
+    src: 'https://cdn.lism-css.com/random/img/?r=service3',
+    title: 'AI連携ワークフロー',
+    body: 'AIコーディング向けの Skills や、@lism-css/mcp（MCPサーバー）がエコシステムに含まれ、公式ドキュメントの参照と組み合わせやすい導線として案内されています。設計上の用語は「概要」や各章で揃いやすいよう整理されています。',
+  },
+  {
+    src: 'https://cdn.lism-css.com/random/img/?r=service4',
+    title: 'UIキット／テンプレート導入',
+    body: '公式のエコシステム表では、@lism-css/ui にアコーディオンやタブ、ボタン等のUIコンポーネント、lism-cli に UI をプロジェクトへコピーしてカスタマイズする CLI が並んでいます。React やAstro 向けの専用コンポーネント利用も、同じ概要で「より快適に」と紹介されている導入です。',
+  },
+];
+
+const worksItems = [
+  {
+    src: 'https://cdn.lism-css.com/random/img/?r=works1',
+    title: 'ドキュメントサイト刷新',
+    body: '「概要」で紹介されているゼロビルド導入やWhy Lismの流れを、冒頭で噛み砕けるよう再配置する想定の自作案件。プリミティブとトークンの章へ辿れる導線だけ、先に固めています。',
+  },
+  {
+    src: 'https://cdn.lism-css.com/random/img/?r=works2',
+    title: 'デザインシステムLP',
+    body: '公式の訴求（軽量CSS一つ、レイアウトと変数、React／Astroの快適さ）をそのまま見出しに沿わせたLP案。デモのため、スクロール演出はこのページのローカルCSSに閉じています。',
+  },
+  {
+    src: 'https://cdn.lism-css.com/random/img/?r=works3',
+    title: 'ブログテンプレート適用',
+    body: 'テンプレート配布の話に寄せ、記事レイアウトをStackで積む前提の骨格だけ先に作る制作物。画像は遅延読み込みにし、本文はProperty Classの例示に使いやすい幅に留めています。',
+  },
+  {
+    src: 'https://cdn.lism-css.com/random/img/?r=works4',
+    title: 'UIコンポーネントギャラリー',
+    body: '@lism-css/ui のアコーディオンやモーダルなどを、ドキュメントの説明と同じ語彙で並べるギャラリー案。実装はサンプル閲覧用で、納品物の挙動を保証するものではありません。',
+  },
+  {
+    src: 'https://cdn.lism-css.com/random/img/?r=works5',
+    title: 'コーポレートサイト再構築',
+    body: 'エコシステム表（lism-css、@lism-css/ui、lism-cli、@lism-css/mcp）を紹介する帯を、StackとGridで折り返しやすい幅に設計。色はセマンティックトークンに寄せたまま差し替えています。',
+  },
+  {
+    src: 'https://cdn.lism-css.com/random/img/?r=works6',
+    title: '開発者向けオンボーディング',
+    body: 'SkillsとMCPの案内ページを想定し、公式のインストール・Skills・MCPの章へ飛ぶリンク集を1枚に集約。命名と@layerの説明は、必ずドキュメントを正とする前提のメモ付きです。',
+  },
+];
+
+const newsBg = 'https://cdn.lism-css.com/img/a-VrLsGK9j0R.jpg';
+const newsItems = [
+  {
+    date: '2026.03.18',
+    title: 'エコシステム紹介：@lism-css/uiの位置づけ',
+    summary:
+      '公式のエコシステム表では、@lism-css/ui にアコーディオン・タブ等のUIコンポーネント集が掲げられており、React・Astro向けに快適、という点も同じ章で補足されています。',
+    long: true,
+  },
+  {
+    date: '2026.02.04',
+    title: 'エコシステム紹介：@lism-css/mcp',
+    summary:
+      '同表では@lism-css/mcpをAIコーディング向けMCPサーバーとして案内しており、Skillsやエディタ支援の導線は公式のはじめに・MCP等の文脈を参照する形が前提です。',
+    long: false,
+  },
+  {
+    date: '2026.01.22',
+    title: '概要：ゼロビルドと拡張の導入',
+    summary:
+      'ゼロビルドでCSSを1つ読み込むだけ、という説明のあと、npmのlism-cssや@lism-css/ui、lism-cli、SCSS上書きやlism.config.js などの話が、概要で順に紹介されています。',
+    long: true,
+  },
+  {
+    date: '2025.12.10',
+    title: '「Why Lism CSS?」の要点のおさらい',
+    summary:
+      '命名規則・デザイントークン・層（@layer）やユーティリティなど、サイト全体のCSS設計をまとめて扱う、という主張は、公式の「Why Lism CSS?」等で繰り返し述べられています。',
+    long: false,
+  },
+];
+
+/** 各項目は質問・回答とも別テキストを想定 */
+const faqItems = [
+  {
+    question: 'Lism CSSとは何ですか？',
+    answer:
+      'Webサイトの骨組みをテンポ良く美しく作るための、軽量なCSS設計フレームワークです。タイポグラフィ、レイアウト向けのプリミティブ、CSS変数を活かしたユーティリティを一体で扱います。一つのCSSを読み込むだけ、という導入も可能です。',
+  },
+  {
+    question: '他のCSSフレームワークとの違いは？',
+    answer:
+      'Every Layout やTailwind、Chakra UIやMUIなどからインスピレーションを得た、独自のCSS設計です。公式の「Inspirations」に述べるとおり、レイアウトプリミティブやハーモニックモジュラースケーリング、プロパティ単位のユーティリティ方針が整理されています。',
+  },
+  {
+    question: 'ReactやAstroでも使えますか？',
+    answer:
+      'はい。lism-css パッケージに、React やAstro 向けの専用コンポーネントが含まれ、概要ページの訴求どおり扱いやすい導入が案内されています。@lism-css/ui のアコーディオン等も併用できます。',
+  },
+  {
+    question: '商用プロジェクトで利用できますか？',
+    answer:
+      '表記どおり、パッケージ群はすべて無料でオープンソース（MIT）で開発されています。利用条件の詳細は各リポジトリのライセンス表記に従ってください。',
+  },
+  {
+    question: 'カスタマイズや独自スタイルはどこに書けばよいですか？',
+    answer:
+      'SCSS 設定の上書きや lism.config.js の導入で、より柔軟にカスタマイズできる、と公式の「概要」で述べられています。自前のスタイル方針の詳細は、Customize など当該ドキュメントの章に従うのが確実です。',
+  },
+  {
+    question: '不具合や要望はどこに報告すればよいですか？',
+    answer:
+      '各OSSリポジトリ（GitHub 等）の案内に従い、Issue 等に報告する形が一般的です。本ページのデモはショーケース用のため、宛先の取り違いにご注意ください。',
+  },
+];
+
+const testimonials = [
+  {
+    title: 'レビュー観点が揃い、差分が小さくなった',
+    meta: '東京都 / 30代 / フロントエンドエンジニア',
+    src: 'https://cdn.lism-css.com/random/img/?category=avatar&r=testimonials1',
+    body: '公式の「Why Lism」に近い言い方で、命名と@layerの話を1本道にしやすくなりました。ドキュメントの用語に寄せると、レビューでの咀嚼が少なくて済みます。',
+  },
+  {
+    title: 'デザインと実装の言語が一致した',
+    meta: '大阪府 / 40代 / デザイナー（UI）',
+    src: 'https://cdn.lism-css.com/random/img/?category=avatar&r=testimonials2',
+    body: 'タイポとスペースのトークン、Property Class の往復が分かりやすく、補足文のトーン合わせが速いです。余白の指示がブレにくいのが助かります。',
+  },
+  {
+    title: 'MCPで仕様確認がループしなくなった',
+    meta: '福岡県 / 20代 / 個人開発者',
+    src: 'https://cdn.lism-css.com/random/img/?category=avatar&r=testimonials3',
+    body: 'エコシステム紹介に載る@lism-css/mcp や Skills の話に沿って、用語の当たりを会話で揃えやすいです。',
+  },
+  {
+    title: 'テンプレから最短で公開まで持っていけた',
+    meta: '愛知県 / 30代 / マークアップエンジニア',
+    src: 'https://cdn.lism-css.com/random/img/?category=avatar&r=testimonials4',
+    body: 'Inspirations の Every Layout やTailwind への言及をフックに、レイアウト方針の説明を会議で混ぜやすくなりました。プリミティブを重ねる感覚が掴めたのが大きいです。',
+  },
+  {
+    title: 'Astro案件でも迷いどころが減った',
+    meta: '北海道 / 30代 / フルスタックエンジニア',
+    src: 'https://cdn.lism-css.com/random/img/?category=avatar&r=testimonials5',
+    body: 'React・Astro 向けの専用コンポーネントの導入に、公式の説明どおり乗る形にすると初日から手が伸びます。',
+  },
+  {
+    title: '小さく始めて段階的に拡張できた',
+    meta: '沖縄県 / 40代 / テックリード',
+    src: 'https://cdn.lism-css.com/random/img/?category=avatar&r=testimonials6',
+    body: 'SCSS 上書きやlism.config.js の話は、拡張の段階でそのまま説得材料に使いやすいです。@lism-css/ui も、エコシステム表の通り、と他部署に示しやすいのが助かります。',
+  },
+];
+
+const informations = [
+  {
+    term: '運営名',
+    description: 'Lism CSS プロジェクト（デモ掲載用の架空組織）',
+  },
+  {
+    term: '所在地',
+    description: '東京都千代田区丸の内1-1-1（地図はGoogleマップ埋め込みの表示サンプル）',
+  },
+  {
+    term: '公開情報',
+    description:
+      'コアのlism-css、@lism-css/ui、lism-cli、@lism-css/mcp など、公式のエコシステム表のとおりのパッケージ群。告知や情報の一次ソースは、公式ドキュメントと各GitHub等を参照してください',
+  },
+  {
+    term: '連絡窓口',
+    description: 'OSS として各リポジトリに案内のある窓口に従ってください。本欄の住所・組織名はショーケース用の仮想表記です',
+  },
+  {
+    term: '事業内容',
+    description:
+      'ドキュメントに書かれている通り、CSS設計の理論に沿った一つのスタイルシート、レイアウト用コンポーネント、@lism-css/ui、lism-cli、@lism-css/mcp 等の配布。すべて無料でオープンソース（MIT）です',
+  },
+];
+
+const mapSrc =
+  'https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d7654.831243350634!2d139.76655044358094!3d35.68079012010135!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sja!2sjp!4v1769675880883!5m2!1sja!2sjp';
+
+const contactBg = 'https://cdn.lism-css.com/img/building/u-SH9josk706.jpg';
+
+const footerSnsLinks = [
+  { href: '#', icon: 'logo-x' as const, label: 'X' },
+  { href: '#', icon: 'logo-instagram' as const, label: 'Instagram' },
+  { href: '#', icon: 'logo-youtube' as const, label: 'YouTube' },
+];
+---
+
+<Layout title={title}>
+  <div>
+    <!-- Header -->
+    <Header />
+    <!-- Main -->
+    <Container as="main" class="z--main">
+      <Box class="z--mv" pos="relative" pos="relative" h="min(100svh,200vw)">
+        <Frame class="z--mv_frame" isLayer>
+          <Media class="z--mv_media" src={mvImage} alt="" w="100%" h="100%" width="960" height="640" loading="eager" />
+          <Layer
+            style={{
+              backdropFilter: 'grayscale(25%)',
+              backgroundColor: 'hsl(0 0% 0% / 0.25)',
+            }}
+          />
+        </Frame>
+        <Layer layout="center" class="z--mv_content" g="10" c="white" hasGutter>
+          <Heading level="1" fz="4xl" fw="normal" ta="center" lts="l">Order and Harmony</Heading>
+          <Text fz="l" fw="light" ta="center" lts="l">Lorem ipsum dolor sit amet.</Text>
+        </Layer>
+        <BoxLink layout="center" href="#about" class="c--scrollDown" pos="absolute" l="0" b="30" g="5" c="white" w="100%">
+          <Inline fz="xs" fs="italic" lts="l">SCROLL DOWN</Inline>
+          <Icon icon="caret-down" fz="m" />
+        </BoxLink>
+      </Box>
+
+      <Container id="about" class="z--about" isWrapper="s" pos="relative" py="70" hasGutter>
+        <Stack ai="center" jc="center" g="40" pos="relative">
+          <SectionHeading en="About" ja="Lism CSSとは" />
+          <Box class="z--about_visuals" pos="absolute" w="100%" h="100%" z="0">
+            {
+              aboutPhotos.map((photo, i) => (
+                <Box class="z--about_visual u--pullBack" pos="absolute" w={i === 0 ? '20rem' : '16rem'}>
+                  <Frame class="u--bgParallax" pos="relative" ar="4/3" bdrs="20">
+                    <Media src={photo} alt="" width="800" height="600" loading="lazy" o="ppp" />
+                  </Frame>
+                </Box>
+              ))
+            }
+          </Box>
+          <Flow class="z--about_body u--fadeIn" flow="s" pos="relative" z="1">
+            <Text>
+              Lism
+              CSSは、Webサイトの骨組みをテンポ良く美しく作るための、軽量なCSS設計フレームワークです。設計理論に沿った一つのCSSが本体で、特別なビルド工程は必須ではありません。
+            </Text>
+            <Text>
+              心地よいリズムのタイポグラフィ、ワイヤーフレーム向けのレイアウトファーストなプリミティブ、CSS変数を活かしたレスポンシブにも向くユーティリティ設計を揃えています。
+              Every Layout やTailwindのような考え方から着想を得た上で、独自のCSS設計にまとまっています。
+            </Text>
+            <Text>
+              ベーススタイリングや@layer階層、トークン、命名規則まで、サイト全体のCSS設計を一貫して扱える点が「Why Lism
+              CSS?」の骨子です。CSSを一つ読み込むだけで、素のHTMLからでも導入を始められます。
+            </Text>
+            <Text>
+              コアのlism-cssのほか、@lism-css/ui、lism-cli、@lism-css/mcp等を、すべて無料・オープンソース（MIT）のパッケージ群として提供しています。
+              本ページは、公式ドキュメントで述べられている性質を体験できるショーケースに近い、代表的なセクションの並びをまとめたものです。
+            </Text>
+          </Flow>
+        </Stack>
+      </Container>
+
+      <Box id="feature" class="z--feature" pos="relative" bgc="base-2">
+        <Container isWrapper="l" py="60" hasGutter>
+          <Stack g="40">
+            <SectionHeading en="Feature" ja="Lism CSSの特徴" />
+            <Stack g="40">
+              {
+                featureCards.map((card) => {
+                  return (
+                    <WithSide sideW="40%" mainW="24rem" class="z--feature_item u--fadeInL" g={['30', null, '40']} ai="center">
+                      <Frame isSide ar="16/9" pos="relative" bdrs="20" class="u--bgParallax">
+                        <Media src={card.src} alt="" width="960" height="540" loading="lazy" />
+                      </Frame>
+                      <Stack g="30">
+                        <Heading level="3" fz="l" util="trim">
+                          {card.title}
+                        </Heading>
+                        <Text util="trim" c="text-2">
+                          {card.body}
+                        </Text>
+                      </Stack>
+                    </WithSide>
+                  );
+                })
+              }
+            </Stack>
+          </Stack>
+        </Container>
+      </Box>
+
+      <Container id="works" class="z--works" isWrapper="l" py="60" hasGutter>
+        <Stack g="40">
+          <SectionHeading en="Works" ja="制作実績" />
+          <Text class="u--fadeIn">
+            以下はフィクションの制作例です。レイアウトプリミティブとデザイントークンを活かしつつ、公式ドキュメント「概要」に書かれている語彙とエコシステムの整理に沿う話に寄せたサンプルです。
+          </Text>
+          <AutoColumns cols="20rem" g="40">
+            {
+              worksItems.map((item) => (
+                <BoxLink class="z--works_item u--fadeIn" href="#" layout="stack" set="hov" g="20">
+                  <Frame class="z--works_frame" ar="16/9" pos="relative" bdrs="20">
+                    <Media class="u--pullBack" src={item.src} alt="" width="960" height="540" loading="lazy" hasTransition hov="in:zoom" />
+                    <Layer layout="center" hasTransition hov="in:show" h="100%" c="white" bgc="black:30%" style={{ backdropFilter: 'blur(4px)' }}>
+                      <Inline fz="xl" fs="italic" fw="light" lts="l">
+                        View More
+                      </Inline>
+                    </Layer>
+                  </Frame>
+                  <Stack g="20" py="5">
+                    <Heading level="3" fz="m" util="trim">
+                      {item.title}
+                    </Heading>
+                    <Text fz="s" c="text-2" util="trim">
+                      {item.body}
+                    </Text>
+                  </Stack>
+                </BoxLink>
+              ))
+            }
+          </AutoColumns>
+        </Stack>
+      </Container>
+
+      <Box id="news" class="z--news" pos="relative">
+        <Frame isLayer class="u--bgParallax">
+          <Media src={newsBg} alt="" width="960" height="640" loading="lazy" />
+        </Frame>
+        <Layer bgc="black:75%" style={{ backdropFilter: 'grayscale(20%)' }} />
+        <Container isWrapper layout="stack" g="40" py="60" hasGutter c="white">
+          <SectionHeading en="News" ja="お知らせ" />
+          <Stack g="30">
+            {
+              newsItems.map((row) => (
+                <BoxLink class="z--news_item u--fadeInL" href="#" layout="grid" gtc={['auto', 'auto 1fr']} g={['10', '30', '40']} py="10" set="hov">
+                  <Inline>{row.date}</Inline>
+                  <Stack g="10">
+                    <Text hov="in:underline" td="none">
+                      {row.title}
+                    </Text>
+                    <Text fz="s" o="p">
+                      {row.summary}
+                      {row.long ? ' あわせて Changelog も参照してください。' : ''}
+                    </Text>
+                  </Stack>
+                </BoxLink>
+              ))
+            }
+          </Stack>
+        </Container>
+      </Box>
+
+      <Container id="faq" class="z--faq" isWrapper layout="stack" g="40" py="60" hasGutter>
+        <SectionHeading en="FAQ" ja="よくある質問" />
+        <Accordion.Root class="u--divide u--fadeIn" p="0" ov="clip">
+          {
+            faqItems.map((item) => (
+              <Accordion.Item>
+                <Accordion.Heading>
+                  <Accordion.Button py="30" px="15" hov="-bgc">
+                    {item.question}
+                  </Accordion.Button>
+                </Accordion.Heading>
+                <Accordion.Panel py="30" px="15" pbs="15">
+                  <Text>{item.answer}</Text>
+                </Accordion.Panel>
+              </Accordion.Item>
+            ))
+          }
+        </Accordion.Root>
+      </Container>
+
+      <Container id="testimonials" class="z--testimonials" isWrapper="l" layout="stack" g="40" bgc="base-2" py="60" hasGutter>
+        <SectionHeading en="Testimonials" ja="お客様の声" />
+        <AutoColumns cols="20rem" g="40">
+          {
+            testimonials.map((item) => (
+              <Grid class="z--testimonials_item u--fadeIn" gtr="subgrid" gr="span 3" g="30">
+                <Flex ai="center" g="20">
+                  <Frame as="figure" ar="1/1" w="3.5rem" fxsh="0" bdrs="99">
+                    <Media src={item.src} alt="" width="256" height="256" loading="lazy" />
+                  </Frame>
+                  <Stack w="stretch" g="15">
+                    <Heading level="3" class="u--trim" fz="m" lh="s">
+                      {item.title}
+                    </Heading>
+                  </Stack>
+                </Flex>
+                <Text class="u--trim" fz="s" o="p">
+                  {item.body}
+                </Text>
+                <Text class="u--trim" jslf="end" fz="xs" fs="italic" o="pp">
+                  {item.meta}
+                </Text>
+              </Grid>
+            ))
+          }
+        </AutoColumns>
+      </Container>
+
+      <Container id="information" class="z--information" isWrapper layout="stack" g="40" py="60" hasGutter>
+        <SectionHeading en="Information" ja="企業情報" />
+        <Grid as="dl" class="u--divide u--fadeIn" gtc="auto 1fr">
+          {
+            informations.map((row) => (
+              <Grid gtc="subgrid" gc="1/-1" py="30" px="15" g={['30', null, '40']}>
+                <dt class="u--trim">{row.term}</dt>
+                <dd class="u--trim">{row.description}</dd>
+              </Grid>
+            ))
+          }
+        </Grid>
+        <Frame class="u--fadeIn" ar={['3/2', '16/9', '5/2']}>
+          <iframe
+            src={mapSrc}
+            width="1200"
+            height="600"
+            style="border:0;"
+            allowfullscreen=""
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </Frame>
+      </Container>
+
+      <Box id="contact" class="z--contact" pos="relative">
+        <Frame isLayer class="u--bgParallax">
+          <Media src={contactBg} alt="" width="960" height="640" loading="lazy" />
+        </Frame>
+        <Layer style={{ backgroundColor: 'hsl(0 0% 0% / 0.75)' }} />
+        <Container isWrapper="s" layout="center" g="40" pos="relative" c="white" py="60" min-h="65vh" hasGutter>
+          <SectionHeading en="Contact" ja="お問い合わせ" />
+          <Text class="u--fadeIn">
+            本セクションはデモ用の導線です。Lism
+            CSSは軽量なCSS設計フレームワークとして、一つのCSSを読み込むことから導入でき、React・Astro向けの専用コンポーネント利用も、公式の概要（https://lism-css.com/docs/overview/）のとおり行えます。
+            採用判断や事実の確認は、同ページおよび各リポジトリの一次情報を正としてください。
+          </Text>
+          <Cluster class="u--fadeIn" jc="center">
+            <Link
+              href="###"
+              layout="grid"
+              gtc="1em 1fr 1em"
+              ji="center"
+              ai="center"
+              px="20"
+              py="15"
+              g="15"
+              max-w="14rem"
+              td="none"
+              bgc="black"
+              c="white"
+              bdrs="99"
+              hov={{ bgc: 'rgb(25 25 25)' }}
+            >
+              <Inline gc="2"> Try Lism CSS </Inline>
+              <Icon icon="arrow-right" />
+            </Link>
+          </Cluster>
+        </Container>
+      </Box>
+    </Container>
+    <!-- Footer -->
+    <Container as="footer" isWrapper py="40" hasGutter>
+      <Center g="30">
+        <Text fz="xl" fw="400" lts="l">
+          <Inline fw="200">Lism</Inline>Corp
+        </Text>
+        <Cluster g="10">
+          {
+            footerSnsLinks.map(({ href, icon, label }) => (
+              <Link href={href} td="none" c="text-2" p="5" hov="-o" hasTransition aria-label={label}>
+                <Icon icon={icon} fz="l" />
+              </Link>
+            ))
+          }
+        </Cluster>
+        <Text fz="s" c="text-2">© 2026 Lism CSS.</Text>
+      </Center>
+    </Container>
+  </div>
+</Layout>

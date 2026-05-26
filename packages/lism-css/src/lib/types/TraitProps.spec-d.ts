@@ -15,13 +15,17 @@ describe('TraitProps', () => {
     it('TraitProps が TRAITS から生成されている', () => {
       // TraitProps の型は TRAITS から生成される
       type IsWrapperType = TraitProps['isWrapper'];
-      // isWrapper は "s" | "l" | undefined であることを確認
+      // isWrapper は現行仕様として contentSize 相当の文字列値も受け入れる
       const wrapper1: IsWrapperType = 's';
-      const wrapper2: IsWrapperType = 'l';
-      const wrapper3: IsWrapperType = undefined;
+      const wrapper2: IsWrapperType = 'm';
+      const wrapper3: IsWrapperType = 'l';
+      const wrapper4: IsWrapperType = 'xl';
+      const wrapper5: IsWrapperType = undefined;
       assertType<IsWrapperType>(wrapper1);
       assertType<IsWrapperType>(wrapper2);
       assertType<IsWrapperType>(wrapper3);
+      assertType<IsWrapperType>(wrapper4);
+      assertType<IsWrapperType>(wrapper5);
     });
   });
 
@@ -47,10 +51,12 @@ describe('TraitProps', () => {
     });
   });
 
-  describe('プリセット値を持つトレイトは、プリセット値・string・boolean を受け入れる', () => {
+  describe('isWrapper は contentSize 互換の文字列値・boolean を受け入れる', () => {
     it('isWrapper - プリセット値を受け入れる', () => {
       assertType<TraitProps>({ isWrapper: 's' });
+      assertType<TraitProps>({ isWrapper: 'm' });
       assertType<TraitProps>({ isWrapper: 'l' });
+      assertType<TraitProps>({ isWrapper: 'xl' });
     });
 
     it('isWrapper - string を受け入れる', () => {
@@ -95,18 +101,18 @@ describe('LismPropsBase — set / util', () => {
     it('プリセット値を受け付ける', () => {
       assertType<LismPropsBase>({ set: 'plain' });
       assertType<LismPropsBase>({ set: 'revert' });
-      assertType<LismPropsBase>({ set: 'var:bxsh' });
-      assertType<LismPropsBase>({ set: 'var:hov' });
-      assertType<LismPropsBase>({ set: 'var:bdrsInner' });
-      assertType<LismPropsBase>({ set: 'var:s' });
+      assertType<LismPropsBase>({ set: 'bxsh' });
+      assertType<LismPropsBase>({ set: 'hov' });
+      assertType<LismPropsBase>({ set: 'bdrsInner' });
+      assertType<LismPropsBase>({ set: 's' });
     });
 
     it('スペース区切りで複数指定できる', () => {
-      assertType<LismPropsBase>({ set: 'var:hov var:bxsh' });
+      assertType<LismPropsBase>({ set: 'hov bxsh' });
     });
 
     it('`-` prefix で除外指定できる', () => {
-      assertType<LismPropsBase>({ set: 'var:hov -plain' });
+      assertType<LismPropsBase>({ set: 'hov -plain' });
     });
 
     it('任意の文字列も受け付ける', () => {
@@ -114,8 +120,8 @@ describe('LismPropsBase — set / util', () => {
     });
 
     it('文字列配列も受け付ける（内部 API 用途）', () => {
-      assertType<LismPropsBase>({ set: ['var:hov', 'var:bxsh'] });
-      assertType<LismPropsBase>({ set: ['var:bdrsInner', 'var:s', 'custom-value'] });
+      assertType<LismPropsBase>({ set: ['hov', 'bxsh'] });
+      assertType<LismPropsBase>({ set: ['bdrsInner', 's', 'custom-value'] });
     });
 
     it('undefined / 省略可', () => {
@@ -158,7 +164,7 @@ describe('LismPropsBase — set / util', () => {
 
   describe('set + util 同時指定', () => {
     it('両方同時に指定できる', () => {
-      assertType<LismPropsBase>({ set: 'var:hov var:bxsh', util: 'cbox trim' });
+      assertType<LismPropsBase>({ set: 'hov bxsh', util: 'cbox trim' });
     });
   });
 });

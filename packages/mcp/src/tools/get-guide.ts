@@ -16,7 +16,7 @@ const GUIDE_TOPICS = {
     label: 'UI components (Accordion, Modal, Tabs, Button, etc.)',
   },
   'base-styles': { file: 'base-styles.md', label: 'Base styling, reset CSS, HTML element styles' },
-  'set-class': { file: 'set-class.md', label: 'Set classes (set--plain, set--var:bxsh, set--var:hov, etc.)' },
+  'set-class': { file: 'set-class.md', label: 'Set classes (set--plain, set--bxsh, set--hov, etc.)' },
   'primitive-class': {
     file: 'primitive-class.md',
     label: 'Primitive class prefixes (is--, l--, a--) and Component class (c--), with column-layout primitive selection guide',

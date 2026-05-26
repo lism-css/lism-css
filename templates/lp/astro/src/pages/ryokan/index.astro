@@ -19,11 +19,11 @@ import {
   Stack,
   Text,
   WithSide,
-  Wrapper,
 } from 'lism-css/astro';
 import { Accordion } from '@lism-css/ui/astro/Accordion';
 import { Button } from '@lism-css/ui/astro/Button';
 import { Modal } from '@lism-css/ui/astro/Modal';
+import './_style.css';
 
 export const title = 'Japanese Ryokan LP';
 
@@ -413,10 +413,9 @@ const reservationSites: readonly SiteCard[] = [
 <Layout title={title}>
   <link rel="preconnect" href="https://fonts.googleapis.com" slot="head" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin slot="head" />
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@200..900&family=Yuji+Syuku&display=swap" rel="stylesheet" slot="head" />
-  <Wrapper class="z--ryokan-root" contentSize="full">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400..700&family=Yuji+Syuku&display=swap" rel="stylesheet" slot="head" />
+  <Container class="z--ryokan-root">
     <!-- Header -->
-
     <Lism as="header" class="z--ryokan-header" pos="fixed" i="0" w="100%" z="1" hasTransition>
       <Container class="z--ryokan-header_bar" isWrapper="xl" mx="auto" hasGutter h="100%">
         <Grid class="z--ryokan-header_inner" gtc="minmax(0,auto) 1fr" ai="center" h="100%" g="20">
@@ -436,8 +435,8 @@ const reservationSites: readonly SiteCard[] = [
               {logoLabel}
             </Link>
           </Stack>
-          <Flex class="z--ryokan-header_actions" jc="fe" g="20" ai="c">
-            <Flex class="z--ryokan-headerNav" as="ul" d={['none', null, 'inline-flex']} ai="c" m="0" p="0" fxw="nowrap" g={['15', null, '30']}>
+          <Flex class="z--ryokan-header_actions" jc="fe" g="20" ai="center">
+            <Flex class="z--ryokan-headerNav" as="ul" d={['none', null, 'inline-flex']} ai="center" p="0" fxw="nowrap" g={['15', null, '30']}>
               {
                 headerNavItems.map(({ href, ja, en }) => (
                   <ListItem>
@@ -445,7 +444,7 @@ const reservationSites: readonly SiteCard[] = [
                       class="z--ryokan-headerNav_link"
                       href={href}
                       d="grid"
-                      jc="c"
+                      jc="center"
                       ji="c"
                       td="none"
                       py="10"
@@ -456,7 +455,7 @@ const reservationSites: readonly SiteCard[] = [
                       g="5"
                     >
                       <Inline>{ja}</Inline>
-                      <Inline as="span" class="z--ryokan-headerNav_en" fz="2xs" fw="normal" lts="l" lh="xs" m="0" ta="c" d="block">
+                      <Inline as="span" class="z--ryokan-headerNav_en" fz="2xs" fw="normal" lts="l" lh="xs" ta="c" d="block">
                         {en}
                       </Inline>
                     </Link>
@@ -465,7 +464,7 @@ const reservationSites: readonly SiteCard[] = [
               }
             </Flex>
             <Modal.OpenBtn modalId="ryokan-menu" d={['block', null, 'none']}>
-              <Center p="5" ai="c" jc="c">
+              <Center p="5" ai="center" jc="center">
                 <Icon icon="menu" c="white" fz="2xl" aria-hidden="true" />
               </Center>
             </Modal.OpenBtn>
@@ -477,14 +476,14 @@ const reservationSites: readonly SiteCard[] = [
       <Modal.Inner layout="stack" pos="relative" w="100%" p="30" bdrs="20" bxsh="50">
         <Modal.CloseBtn modalId="ryokan-menu" autofocus pos="absolute" t="0" r="0" z="1" fz="xl" p="10" m="15" />
         <Modal.Body layout="stack" g="30" py="40">
-          <Stack as="ul" class="z--ryokan-header_menuNav" g="0" m="0" p="0" ov="clip">
+          <Stack as="ul" class="z--ryokan-header_menuNav" g="0" p="0" ov="clip">
             {
               headerNavItems.map(({ href, ja, en }) => (
                 <ListItem>
-                  <BoxLink href={href} layout="grid" gtc="1fr auto" ai="c" fz="l" td="none" py="15" px="5" w="100%">
+                  <BoxLink href={href} layout="grid" gtc="1fr auto" ai="center" fz="l" td="none" py="15" px="5" w="100%">
                     <Stack g="5">
                       <Inline>{ja}</Inline>
-                      <Inline as="span" class="z--ryokan-header_menuNav_en" fz="s" m="0" o="pp">
+                      <Inline as="span" class="z--ryokan-header_menuNav_en" fz="s" o="pp">
                         {en}
                       </Inline>
                     </Stack>
@@ -494,10 +493,10 @@ const reservationSites: readonly SiteCard[] = [
               ))
             }
             <ListItem>
-              <BoxLink href="#reservation" layout="grid" gtc="1fr auto" ai="c" fz="l" td="none" py="15" px="5" w="100%">
+              <BoxLink href="#reservation" layout="grid" gtc="1fr auto" ai="center" fz="l" td="none" py="15" px="5" w="100%">
                 <Stack g="5">
                   <Inline>ご予約はこちら</Inline>
-                  <Inline as="span" class="z--ryokan-header_menuNav_en" fz="s" m="0" o="pp"> Reservation </Inline>
+                  <Inline as="span" class="z--ryokan-header_menuNav_en" fz="s" o="pp"> Reservation </Inline>
                 </Stack>
                 <Icon icon="caret-right" fz="s" o="pp" />
               </BoxLink>
@@ -513,7 +512,6 @@ const reservationSites: readonly SiteCard[] = [
         as="section"
         pos="relative"
         w="100%"
-        m="0"
         p="0"
         max-w="none"
         ov="clip"
@@ -547,19 +545,18 @@ const reservationSites: readonly SiteCard[] = [
         <Stack
           pos="relative"
           z="1"
-          ai="c"
-          jc="c"
+          ai="center"
+          jc="center"
           g="0"
           w="100%"
-          m="0"
           p="0"
           px={['20', null, '40']}
           pbe="40"
           min-h="100svh"
           c="white"
-          style={{ paddingBlockStart: 'calc(var(--z--header-height) + var(--s30))' }}
+          style={{ paddingBlockStart: 'calc(var(--header-h) + var(--s30))' }}
         >
-          <Lism as="p" class="z--ryokan-mv_copy" m="0">
+          <Lism as="p" class="z--ryokan-mv_copy">
             {
               mvResolvedCopyLines.map((line, i) => (
                 <span class="z--ryokan-mv_line" style={{ '--z--ryokan-mv-lineIndex': i }}>
@@ -574,29 +571,23 @@ const reservationSites: readonly SiteCard[] = [
       <style set:html={mvLayeredKeyframesStyle}></style>
 
       <Lism as="section" id="about" class="z--ryokan-about" isContainer pbs="60" pbe="60" bgc="black" c="white">
-        <Grid
-          class="z--ryokan-about_grid"
-          gtc={['1fr', '1fr', 'minmax(0, 1fr) minmax(0, 50%)']}
-          cg="0"
-          rg={['30', '30', '0']}
-          ai={['start', 'start', 'stretch']}
-        >
+        <Grid class="z--ryokan-about_grid" gtc={['1fr', null, 'minmax(0, 1fr) minmax(0, 50%)']} g={['30', null, '0']} ai={['start', null, 'stretch']}>
           <Stack
             class="z--ryokan-about_col z--ryokan-about_col--left"
-            g={['40', '40', '50']}
-            pe={['0', '0', '50']}
-            h={['auto', 'auto', '100%']}
-            min-h={['0', '0', '0']}
+            g={['40', null, '50']}
+            pe={['0', null, '50']}
+            h={['auto', null, '100%']}
+            min-h="0"
             min-w="0"
           >
             <Stack class="z--ryokan-about_stack" g="0" ai="start">
-              <Text as="p" fz={['l', null, 'xl']} m="0" mb="10" lts="l" ff="base" c="white" o="pp"> About us </Text>
-              <Heading level="2" fz={['2xl', null, '4xl']} fw="500" m="0" mb="50" lts="l"> 当宿について </Heading>
-              <Text class="z--ryokan-about_body" as="p" m="0" fz="m" lh="l" lts="s" c="white" o="p">
+              <Text as="p" fz={['l', null, 'xl']} mb="10" lts="l" ff="base" c="white" o="pp"> About us </Text>
+              <Heading level="2" fz={['2xl', null, '4xl']} fw="500" mb="50" lts="l"> 当宿について </Heading>
+              <Text class="z--ryokan-about_body" as="p" fz="m" lh="l" lts="s" c="white" o="p">
                 {aboutBodyCopy}
               </Text>
             </Stack>
-            <Frame as="figure" class="z--ryokan-about_figureLeft" ar={['16/10', '16/10', '4/3']} ov="hidden">
+            <Frame as="figure" class="z--ryokan-about_figureLeft" ar={['16/10', null, '4/3']} ov="hidden">
               <img
                 src={aboutImgLeft.src}
                 alt={aboutImgLeft.alt}
@@ -607,22 +598,14 @@ const reservationSites: readonly SiteCard[] = [
               />
             </Frame>
           </Stack>
-          <Flex
-            as="figure"
-            class="z--ryokan-about_figureRight"
-            fxd="column"
-            h={['auto', 'auto', '100%']}
-            min-h={['0', '0', '0']}
-            pb={['0', '0', '50']}
-            ov="hidden"
-          >
+          <Flex as="figure" class="z--ryokan-about_figureRight" fxd="column" h={['auto', null, '100%']} min-h="0" pbe={['0', null, '50']} ov="hidden">
             <Lism
               as="img"
               class="z--ryokan-about_mediaRightImg"
               src={aboutImgRight.src}
               alt={aboutImgRight.alt}
-              fx={['0', '0', '1']}
-              min-h={['0', '0', '0']}
+              fx={['0', null, '1']}
+              min-h="0"
               w="100%"
               exProps={{ width: aboutImgRight.width, height: aboutImgRight.height, loading: 'lazy', decoding: 'async' }}
             />
@@ -632,13 +615,7 @@ const reservationSites: readonly SiteCard[] = [
 
       <Lism as="section" id="feature" class="z--ryokan-feature" bgc="base" c="text" py="60">
         <Container isWrapper="l" hasGutter isContainer pos="relative">
-          <Grid
-            class="z--ryokan-feature_grid"
-            gtc={['1fr', '1fr', 'minmax(0, 1.05fr) minmax(0, 1fr)']}
-            rg={['30', '30', '0']}
-            cg={['0', '0', '50']}
-            ai={['stretch', 'stretch', 'stretch']}
-          >
+          <Grid class="z--ryokan-feature_grid" gtc={['1fr', null, 'minmax(0, 1.05fr) minmax(0, 1fr)']} g={['40', null, '50']} ai="stretch">
             <Lism as="figure" class="z--ryokan-feature_figure" ov="hidden" bdrs="10">
               <img src={featureImg.src} alt={featureImg.alt} width={featureImg.width} height={featureImg.height} loading="lazy" decoding="async" />
             </Lism>
@@ -646,25 +623,25 @@ const reservationSites: readonly SiteCard[] = [
               <Lism as="span" class="z--ryokan-feature_watermark" exProps={{ 'aria-hidden': 'true' }}> Experience </Lism>
               <Flex
                 class="z--ryokan-feature_copyRow"
-                fxd={['column', 'column', 'row']}
-                g={['50', '50', '40']}
+                fxd={['column', null, 'row']}
+                g={['50', null, '40']}
                 ai="stretch"
                 pos="relative"
                 fx="1"
                 min-h="0"
                 w="100%"
               >
-                <Heading level="2" class="z--ryokan-feature_title" m="0" fz={['2xl', null, '3xl']} fw="600" lts="l">
+                <Heading level="2" class="z--ryokan-feature_title" fz={['2xl', null, '3xl']} fw="600" lts="l">
                   <Box class="z--ryokan-feature_titleInner" lts="l">
                     <Inline class="z--ryokan-feature_titleLine1">特別な旅と</Inline>
                     <Inline class="z--ryokan-feature_titleLine2">静寂の体験</Inline>
                   </Box>
                 </Heading>
                 <Stack class="z--ryokan-feature_bodyStack" g="30" ai="start" min-w="0">
-                  <Text as="p" class="z--ryokan-feature_lead" m="0" fz={['l', null, 'xl']} fw="600" lts="l" c="text">
+                  <Text as="p" class="z--ryokan-feature_lead" fz={['l', null, 'xl']} fw="600" lts="l" c="text">
                     {featureLead}
                   </Text>
-                  <Text as="p" class="z--ryokan-feature_body" m="0" fz="m" lh="l" lts="s" c="text" max-w="100%">
+                  <Text as="p" class="z--ryokan-feature_body" fz="m" lh="l" lts="s" c="text" max-w="100%">
                     {featureBody}
                   </Text>
                 </Stack>
@@ -695,39 +672,31 @@ const reservationSites: readonly SiteCard[] = [
         <Container isWrapper="l" hasGutter isContainer pos="relative" z="1" pt="60" pb="0">
           <WithSide sideW="24em" g="50" ai="start">
             <Stack isSide g="30" ai="start" w="100%" min-w="0">
-              <Heading level="2" m="0" fz={['3xl', null, '4xl']} fw="500" lts="l" lh="l">
+              <Heading level="2" fz={['3xl', null, '4xl']} fw="500" lts="l" lh="l">
                 季節の移ろいを、<br />肌で感じる。
               </Heading>
-              <Inline as="span" fz="l" ff="base" m="0" c="white" w="100%" lts="l"> Feeling the seasons </Inline>
+              <Inline as="span" fz="l" ff="base" c="white" w="100%" lts="l"> Feeling the seasons </Inline>
             </Stack>
             <Stack g="0" ai="start" min-w="0" w="100%">
-              <Text as="p" m="0" fz="m" lh="l" lts="s" c="white" o="mp" w="100%">
+              <Text as="p" fz="m" lh="l" lts="s" c="white" o="mp" w="100%">
                 {feature2IntroBody}
               </Text>
             </Stack>
           </WithSide>
         </Container>
         <Container isWrapper="xl" hasGutter isContainer pos="relative" z="1" pt="0" pb="60">
-          <Grid
-            w="100%"
-            min-w="0"
-            mt="50"
-            gtc={['repeat(2, minmax(0, 1fr))', 'repeat(2, minmax(0, 1fr))', 'repeat(4, minmax(0, 1fr))']}
-            g={['20', null, '40']}
-            ai="start"
-          >
+          <Grid w="100%" min-w="0" mbs="50" gtc={['repeat(2, minmax(0, 1fr))', null, 'repeat(4, minmax(0, 1fr))']} g={['20', null, '40']} ai="start">
             {
               feature2GalleryPhotos.map(({ src, alt }, i) => (
                 <Frame
                   as="figure"
                   ar="4/3"
-                  m="0"
                   w="100%"
                   min-w="0"
                   jslf="stretch"
                   pos="relative"
                   ov="hidden"
-                  mt={i === 1 || i === 3 ? ['0', '0', '40'] : '0'}
+                  mbs={i === 1 || i === 3 ? ['0', null, '40'] : '0'}
                 >
                   <img src={src} alt={alt} width={800} height={600} loading="lazy" decoding="async" />
                 </Frame>
@@ -741,15 +710,15 @@ const reservationSites: readonly SiteCard[] = [
         <Container isWrapper="l" hasGutter>
           <Stack g="50" ai="stretch" w="100%">
             <Stack g="10" ai="center" ta="center">
-              <Text as="p" m="0" fz="m" lts="l" ff="base" o="pp"> Plan </Text>
-              <Heading level="2" m="0" fz={['2xl', null, '3xl']} fw="500" lts="l"> 宿泊プラン </Heading>
+              <Text as="p" fz="m" lts="l" ff="base" o="pp"> Plan </Text>
+              <Heading level="2" fz={['2xl', null, '3xl']} fw="500" lts="l"> 宿泊プラン </Heading>
             </Stack>
 
             <Stack g="50" w="100%" ai="stretch">
               {
                 plans.map((plan) => (
-                  <Flex fxd={['column', 'column', 'row-reverse']} ai="stretch" g={['30', '30', '50']} w="100%">
-                    <Frame as="figure" class="z--ryokan-plans_media" m="0" ar="16/10" ov="hidden" bdrs="10" w="100%" min-w="0">
+                  <Flex fxd={['column', null, 'row-reverse']} ai="stretch" g={['30', null, '50']} w="100%">
+                    <Frame as="figure" class="z--ryokan-plans_media" ar="16/10" ov="hidden" bdrs="10" w="100%" min-w="0">
                       <img
                         src={plan.image.src}
                         alt={plan.image.alt}
@@ -762,22 +731,22 @@ const reservationSites: readonly SiteCard[] = [
 
                     <Flex g="30" fxd="column" fx="1" min-w="0" min-h="0" w="100%" ai="stretch" jc="space-between">
                       <Stack g="30" ai="stretch">
-                        <Heading level="3" m="0" fz={['l', null, 'xl']} fw="500" lts="l">
+                        <Heading level="3" fz={['l', null, 'xl']} fw="500" lts="l">
                           {plan.title}
                         </Heading>
-                        <Text as="p" m="0" fz="s" lts="s" o="p">
+                        <Text as="p" fz="s" lts="s" o="p">
                           {plan.description}
                         </Text>
                       </Stack>
 
                       <Stack g="30" ai="stretch" w="100%" fxsh="0">
-                        <Grid gtc="repeat(3, minmax(0, 1fr))" bd bdc="white:35%" bdrs="20" ov="hidden" w="100%" m="0" ai="stretch">
+                        <Grid gtc="repeat(3, minmax(0, 1fr))" bd bdc="white:35%" bdrs="20" ov="hidden" w="100%" ai="stretch">
                           {plan.stats.map((stat, index) => (
                             <Stack g="10" p="15" ai="center" ta="center" bdc="white:35%" class:list={[{ '-bd-s': index > 0 }]}>
-                              <Text as="p" m="0" fz="xs" lts="s" o="pp">
+                              <Text as="p" fz="xs" lts="s" o="pp">
                                 {stat.label}
                               </Text>
-                              <Text as="p" m="0" fz="m" fw="500" lts="l">
+                              <Text as="p" fz="m" fw="500" lts="l">
                                 {stat.value}
                               </Text>
                             </Stack>
@@ -790,9 +759,9 @@ const reservationSites: readonly SiteCard[] = [
                             href="#contact"
                             layout="flex"
                             w="100%"
-                            fxd={['column', 'row', 'row']}
+                            fxd={['column', 'row']}
                             jc="center"
-                            ai={['center', 'center', 'flex-end']}
+                            ai={['center', null, 'flex-end']}
                             g="10"
                             bgc="white"
                             c="black"
@@ -802,10 +771,10 @@ const reservationSites: readonly SiteCard[] = [
                             max-w="100%"
                             ta="center"
                           >
-                            <Inline as="span" m="0" fz="m" fw="500" lts="l">
+                            <Inline as="span" fz="m" fw="500" lts="l">
                               このプランを予約する
                             </Inline>
-                            <Inline as="span" m="0" fz="xs" o="pp" lts="s">
+                            <Inline as="span" fz="xs" o="pp" lts="s">
                               （予約サイトに移動します）
                             </Inline>
                           </Button>
@@ -828,10 +797,10 @@ const reservationSites: readonly SiteCard[] = [
             <!-- jc=start / 狭い gap で見出しブロックのすぐ右にリード文（max-sz で折返し幅を制限） -->
             <Flex fxd={['column', null, 'row']} g={['30', null, '50']} ai={['start', null, 'end']} jc="start" w="100%" fxw="wrap">
               <Flex fxd="column" g="10" ai="start" min-w="0" fxsh="0" p-e={['0', null, '40']}>
-                <Text as="p" m="0" fz="s" lts="l" ff="base" o="pp"> Facilities </Text>
-                <Heading level="2" m="0" fz={['xl', null, '2xl']} fw="500" lts="l"> 館内設備 </Heading>
+                <Text as="p" fz="s" lts="l" ff="base" o="pp"> Facilities </Text>
+                <Heading level="2" fz={['xl', null, '2xl']} fw="500" lts="l"> 館内設備 </Heading>
               </Flex>
-              <Text as="p" m="0" fz="s" lh="l" lts="s" o="p" max-sz="s" min-w="0" fx="1">
+              <Text as="p" fz="s" lh="l" lts="s" o="p" max-sz="s" min-w="0" fx="1">
                 {informationIntro}
               </Text>
             </Flex>
@@ -843,10 +812,10 @@ const reservationSites: readonly SiteCard[] = [
                     <Flex g={['20', null, '30']} ai="center" w="100%" min-w="0">
                       <Icon icon={item.icon} size="48px" c="white:35%" />
                       <Stack g="10" ai="stretch" min-w="0" fx="1">
-                        <Heading level="3" m="0" fz={['m', null, 'l']} fw="500" lts="l">
+                        <Heading level="3" fz={['m', null, 'l']} fw="500" lts="l">
                           {item.title}
                         </Heading>
-                        <Text as="p" m="0" fz="s" lts="s" o="p">
+                        <Text as="p" fz="s" lts="s" o="p">
                           {item.description}
                         </Text>
                       </Stack>
@@ -863,11 +832,11 @@ const reservationSites: readonly SiteCard[] = [
         <Container isWrapper="l" hasGutter>
           <Grid class="z--ryokan-faq_layout" w="100%" g="50" ai="stretch">
             <Stack class="z--ryokan-faq_head" g="10" ai="center" ta="center">
-              <Text as="p" m="0" fz="m" lts="l" ff="base" c="text-2" o="pp"> FAQ </Text>
-              <Heading level="2" m="0" fz={['2xl', null, '3xl']} fw="500" lts="l"> よくあるご質問 </Heading>
+              <Text as="p" fz="m" lts="l" ff="base" c="text-2" o="pp"> FAQ </Text>
+              <Heading level="2" fz={['2xl', null, '3xl']} fw="500" lts="l"> よくあるご質問 </Heading>
             </Stack>
 
-            <Frame as="figure" class="z--ryokan-faq_media" m="0" ar={['16/10', null, '1/1']} ov="hidden" bdrs="10" w="100%" min-w="0">
+            <Frame as="figure" class="z--ryokan-faq_media" ar={['16/10', null, '1/1']} ov="hidden" bdrs="10" w="100%" min-w="0">
               <img src={faqImage.src} alt={faqImage.alt} width={faqImage.width} height={faqImage.height} loading="lazy" decoding="async" />
             </Frame>
 
@@ -882,7 +851,7 @@ const reservationSites: readonly SiteCard[] = [
                         </Accordion.Button>
                       </Accordion.Heading>
                       <Accordion.Panel py="0" pb="20" isOpen={item.defaultOpen === true}>
-                        <Text m="0" fz="s" c="text-2" lh="l" lts="s">
+                        <Text fz="s" c="text-2" lh="l" lts="s">
                           {item.answer}
                         </Text>
                       </Accordion.Panel>
@@ -896,7 +865,7 @@ const reservationSites: readonly SiteCard[] = [
       </Lism>
 
       <Lism as="section" id="reservation" pos="relative" py="60" ov="hidden" c="white">
-        <Frame isLayer m="0">
+        <Frame isLayer>
           <Lism
             as="img"
             src={bgImage.src}
@@ -917,20 +886,20 @@ const reservationSites: readonly SiteCard[] = [
           <Grid isContainer gtc={['1fr', null, 'minmax(0, 0.6fr) minmax(0, 1fr)']} g={['40', null, '50']} ai="stretch">
             <Stack g="30" ai="start" min-w="0">
               <Stack g="10" ai="start">
-                <Text as="p" m="0" fz="m" lts="l" ff="base" o="pp"> Reservation </Text>
-                <Heading level="2" m="0" fz={['2xl', null, '3xl']} fw="500" lts="l"> ご予約はこちら </Heading>
+                <Text as="p" fz="m" lts="l" ff="base" o="pp"> Reservation </Text>
+                <Heading level="2" fz={['2xl', null, '3xl']} fw="500" lts="l"> ご予約はこちら </Heading>
               </Stack>
-              <Text as="p" m="0" fz="s" lh="l" lts="s" o="p" max-sz="m">
+              <Text as="p" fz="s" lh="l" lts="s" o="p" max-sz="m">
                 お好みの予約サイトからご予約いただけます。予約完了後は各サイトから確認メールが届きます。キャンセルや変更はご利用のサイトの案内に従ってお手続きください。
               </Text>
             </Stack>
 
-            <Grid w="100%" min-w="0" gtc="1fr" g={['40', null, '40']} gc={['1/-1', null, '2/-1']}>
+            <Grid w="100%" min-w="0" gtc="1fr" g="40" gc={['1/-1', null, '2/-1']}>
               {
                 reservationSites.map((site) => (
-                  <Lism pos="relative" bgc="white" c="text" bdrs="20" ov="hidden" min-w="0" w="100%" set="var:bdrsInner">
+                  <Lism pos="relative" bgc="white" c="text" bdrs="20" ov="hidden" min-w="0" w="100%" set="bdrsInner">
                     <Flex fxd={['column', null, 'row']} ai="stretch" w="100%" min-w="0">
-                      <Frame as="figure" m="0" ar="16/10" ov="hidden" bdrs="0" w={['100%', null, '12rem']} fxsh="0" min-w="0">
+                      <Frame as="figure" ar="16/10" ov="hidden" bdrs="0" w={['100%', null, '12rem']} fxsh="0" min-w="0">
                         <img
                           src={site.image.src}
                           alt={site.image.alt}
@@ -947,16 +916,15 @@ const reservationSites: readonly SiteCard[] = [
                         min-w="0"
                         fx="1"
                         w="100%"
-                        m="0"
                         ps={['20', null, '30']}
                         pe={['20', null, '30']}
                         py={['20', null, '30']}
                         ov="auto"
                       >
-                        <Heading level="3" m="0" fz="l" fw="600" lts="l" lh="l">
+                        <Heading level="3" fz="l" fw="600" lts="l" lh="l">
                           {site.title}
                         </Heading>
-                        <Text as="p" m="0" fz="s" c="text-2" lts="s" o="p">
+                        <Text as="p" fz="s" c="text-2" lts="s" o="p">
                           {site.body}
                         </Text>
                         <Button href={site.href} w="100%" bdrs="inner" py="15" px="20" fz="s" fw="500" lts="s" ta="center">
@@ -979,12 +947,10 @@ const reservationSites: readonly SiteCard[] = [
         <Stack g={['40', null, '50']} ai="stretch" w="100%">
           <!-- キャッチコピーをロゴの左隣に。下揃え（flex-end） -->
           <Flex fxd="row" ai="end" jc="start" fxw="wrap" g={['15', null, '40']} w="100%">
-            <Heading level="2" m="0" fz={['2xl', null, '3xl']} fw="normal" lts="l" lh="l" ff="accent">
+            <Heading level="2" fz={['2xl', null, '3xl']} fw="normal" lts="l" lh="l" ff="accent">
               {logoLabel}
             </Heading>
-            <Text as="p" m="0" fz={['s', null, 'm']} lh="l" lts="s" o="p" max-sz="m">
-              都会の喧騒から離れ、心安らぐ自然の中で、至福のひとときを。
-            </Text>
+            <Text as="p" fz={['s', null, 'm']} lh="l" lts="s" o="p" max-sz="m"> 都会の喧騒から離れ、心安らぐ自然の中で、至福のひとときを。 </Text>
           </Flex>
 
           <!-- ナビと SNS を下揃え（flex-end） -->
@@ -994,9 +960,8 @@ const reservationSites: readonly SiteCard[] = [
               class="z--ryokan-footer_nav"
               fxd={['column', null, 'row']}
               ai="stretch"
-              m="0"
               p="0"
-              g={['0', null, '0']}
+              g="0"
               fxw={['nowrap', null, 'wrap']}
               w={['100%', null, 'auto']}
               fx="1"
@@ -1010,7 +975,7 @@ const reservationSites: readonly SiteCard[] = [
                       href={href}
                       layout="grid"
                       gtc={['1fr auto', null, '1fr']}
-                      ji={['start', 'start', 'center']}
+                      ji={['start', null, 'center']}
                       ai="center"
                       fz="m"
                       td="none"
@@ -1021,7 +986,7 @@ const reservationSites: readonly SiteCard[] = [
                     >
                       <Stack class="z--ryokan-footer_navStack" g="5">
                         <Inline>{ja}</Inline>
-                        <Inline as="span" class="z--ryokan-footer_navEn" fz="s" m="0" o="pp">
+                        <Inline as="span" class="z--ryokan-footer_navEn" fz="s" o="pp">
                           {en}
                         </Inline>
                       </Stack>
@@ -1043,618 +1008,34 @@ const reservationSites: readonly SiteCard[] = [
             </Cluster>
           </Flex>
 
-          <Text as="p" m="0" fz="xs" o="pp" lts="s" ta="center"> © 2026 Lism CSS. </Text>
+          <Text as="p" fz="xs" o="pp" lts="s" ta="center"> © 2026 Lism CSS. </Text>
         </Stack>
       </Container>
     </Lism>
 
-    <Button
-      class="z--ryokan-reservationFab"
-      href="#reservation"
-      pos="fixed"
-      z="99"
-      layout="flex"
-      fxd="column"
-      ai="center"
-      jc="center"
-      g="5"
-      py="10"
-      px="20"
-      bdrs="99"
-      bd
-      bdc="white:35%"
-      bgc="black"
-      c="white"
-      bxsh="20"
-      set="var:bxsh"
-      td="none"
-      fz="s"
-      lts="s"
-      ta="center"
-      style={{
-        right: 'max(var(--s30), env(safe-area-inset-right))',
-        bottom: 'max(var(--s30), env(safe-area-inset-bottom))',
-      }}
-    >
-      <Inline as="span" m="0" fz="s" fw="500" lts="s"> ご予約はこちら </Inline>
-      <Inline as="span" m="0" fz="2xs" o="pp" lts="l"> Reservation </Inline>
-    </Button>
-  </Wrapper>
+    <Lism pos="fixed" r="max(var(--s30), env(safe-area-inset-right))" b="max(var(--s30), env(safe-area-inset-bottom))" w="fit">
+      <Button
+        class="z--ryokan-reservationFab"
+        href="#reservation"
+        z="99"
+        layout="center"
+        g="5"
+        py="10"
+        px="20"
+        bdrs="99"
+        bd
+        bdc="white:35%"
+        bgc="black"
+        c="white"
+        bxsh="20"
+        set="bxsh"
+        td="none"
+        fz="s"
+        lts="s"
+      >
+        <Inline as="span" fz="s" fw="500" lts="s">ご予約はこちら</Inline>
+        <Inline as="span" fz="2xs" o="pp" lts="l">Reservation</Inline>
+      </Button>
+    </Lism>
+  </Container>
 </Layout>
-
-<style>
-  @layer lism-custom {
-    /* ryokan: 明朝ベース（Google Fonts / Noto Serif JP） */
-    .z--ryokan-root {
-      font-family: 'Noto Serif JP', 'Yu Mincho', YuMincho, 'Hiragino Mincho ProN', 'Hiragino Mincho Pro', serif;
-      font-optical-sizing: auto;
-      /* Lism の `ff:base`（既定はゴシック系）— ryokan では日本語明朝に統一 */
-      --ff--base: 'Noto Serif JP', 'Yu Mincho', YuMincho, 'Hiragino Mincho ProN', 'Hiragino Mincho Pro', serif;
-      /* ロゴ（`ff:accent`）用: Google Fonts / Yuji Syuku（Lism タイポ `--ff--accent`） */
-      --ff--accent: 'Yuji Syuku', 'Noto Serif JP', 'Yu Mincho', YuMincho, 'Hiragino Mincho ProN', 'Hiragino Mincho Pro', serif;
-      /* Feature ほか和紙調のベージュ背景（セマンティック `--base` を上書き） */
-      --base: hsl(38 32% 92%);
-      /* #reservation の named view timeline を兄弟の FAB から参照可能に */
-      timeline-scope: --z--ryokan-reservation;
-    }
-    /* Reservation がビューポートに入る進行に合わせて FAB を非表示 */
-    #reservation {
-      view-timeline-name: --z--ryokan-reservation;
-      view-timeline-axis: block;
-    }
-    @keyframes ryokan_reservationFab_hide {
-      from {
-        opacity: 1;
-        pointer-events: auto;
-        visibility: visible;
-      }
-      to {
-        opacity: 0;
-        pointer-events: none;
-        visibility: hidden;
-      }
-    }
-    .z--ryokan-reservationFab {
-      animation: ryokan_reservationFab_hide linear both;
-      animation-timeline: --z--ryokan-reservation;
-      animation-range: entry 0% entry 30%;
-    }
-    @media (prefers-reduced-motion: reduce) {
-      .z--ryokan-reservationFab {
-        animation: none;
-        opacity: 1;
-        visibility: visible;
-        pointer-events: auto;
-      }
-    }
-
-    /* Root */
-    :root {
-      --z--header-height: 100px;
-      --z--header-height--thin: 56px;
-      --u--fadeIn--animation-range: entry 0% contain 20%;
-    }
-    /* Fadein */
-    .u--fadeIn {
-      view-timeline: --u--fadeIn y;
-      animation: u--fadeIn linear both;
-      animation-timeline: --u--fadeIn;
-      animation-range: var(--u--fadeIn--animation-range);
-    }
-    @keyframes u--fadeIn {
-      from {
-        opacity: 0;
-        transform: translateY(32px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-    /* Background Parallax */
-    .u--bgParallax {
-      view-timeline: --u--bgParallax y;
-    }
-    .u--bgParallax .a--media {
-      position: absolute;
-      top: -20%;
-      height: 140%;
-      animation: u--bgParallax_media linear both;
-      animation-timeline: --u--bgParallax;
-      animation-range: entry 0% cover 100%;
-    }
-    @keyframes u--bgParallax_media {
-      from {
-        transform: translateY(-10%);
-      }
-      to {
-        transform: translateY(10%);
-      }
-    }
-
-    .z--ryokan-header {
-      height: var(--z--header-height);
-      color: var(--white);
-      background-color: transparent;
-      backdrop-filter: none;
-      -webkit-backdrop-filter: none;
-      box-sizing: border-box;
-      --z--header-scroll-animation-start: 80px;
-      --z--header-animation-range: var(--z--header-scroll-animation-start) calc(var(--z--header-scroll-animation-start) + 140px);
-      animation: z--header_ryokan linear both;
-      animation-timeline: scroll(root);
-      animation-range: var(--z--header-animation-range);
-    }
-    .z--ryokan-header :where(a) {
-      color: inherit;
-    }
-    /**
-   * モーダル内ナビ: Footer と同様に `li:not(:last-child)` + `border-block-end: dashed`（`u--divide` は未使用）
-   * フッターは黒地へ `color-mix(…, var(--white) 38%, …)`。モーダルは `.c--modal_inner` の `var(--base)` 地のため `var(--text)` を使用
-   * @see Footer.astro / tokens.md --text / `color-mix`
-   */
-    .z--ryokan-header_menuNav {
-      list-style: none;
-    }
-    .z--ryokan-header_menuNav > :global(li) {
-      list-style: none;
-    }
-    .z--ryokan-header_menuNav > :global(li:not(:last-child)) {
-      border-block-end: 1px dashed color-mix(in srgb, var(--text) 38%, transparent);
-    }
-    /* md 以上: has--gutter の左右に s20 を上乗せ（Lism: `--gutter-size` 既定は `--s30`） */
-    @media (min-width: 800px) {
-      .z--ryokan-header_bar {
-        padding-inline: calc(var(--gutter-size) + var(--s20));
-      }
-    }
-    /**
-   * ロゴは Logo.astro 内で描画されるため、Astro スコープ外。:global で子コンポーネントの a に一致させる。
-   * @see https://docs.astro.build/en/guides/styling/#global-styles
-   */
-    :global(.z--ryokan-header_logoLink) {
-      transform-origin: left center;
-      animation: z--ryokan-header_logo_ryokan linear both;
-      animation-timeline: scroll(root);
-      /* 継承: 先祖 `.z--ryokan-header` の `--z--header-animation-range` */
-      animation-range: var(--z--header-animation-range);
-    }
-    /**
-   * スクロール後: 黒ベースの半透明 + backdrop-filter で奥行きをぼかし視認性を確保。
-   * 下端の極細ハイライトで帯として切り分ける。
-   */
-    @keyframes z--header_ryokan {
-      to {
-        background-color: hsl(0 0% 0% / 0.78);
-        color: var(--white);
-        height: var(--z--header-height--thin);
-        backdrop-filter: blur(14px) saturate(1.12);
-        -webkit-backdrop-filter: blur(14px) saturate(1.12);
-        box-shadow:
-          0 8px 32px hsl(0 0% 0% / 0.42),
-          inset 0 -1px 0 hsl(0 0% 100% / 0.07);
-      }
-    }
-    @keyframes z--ryokan-header_logo_ryokan {
-      from {
-        transform: scale(1);
-      }
-      to {
-        /* 3xl 時も以前（2xl×0.9 相当）のスクロール後サイズ感に近づける */
-        transform: scale(0.75);
-      }
-    }
-    .z--ryokan-headerNav_en {
-      max-height: 2.5em;
-      overflow: hidden;
-      animation: z--ryokan-headerNav_en_ryokan linear both;
-      animation-timeline: scroll(root);
-      animation-range: var(--z--header-animation-range);
-    }
-    @keyframes z--ryokan-headerNav_en_ryokan {
-      to {
-        opacity: 0;
-        max-height: 0;
-        margin: 0;
-        padding: 0;
-      }
-    }
-
-    .z--ryokan-mv {
-      background-color: #000;
-    }
-
-    .z--ryokan-mv_bg {
-      inset: 0;
-    }
-
-    .z--ryokan-mv_layer {
-      position: absolute;
-      inset: 0;
-      background-image: var(--z--ryokan-mv-layerBgImage);
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-      transform-origin: center center;
-      opacity: 0;
-      transform: scale(1);
-      animation: ryokan-mv-bgFade var(--z--ryokan-mv-bgCycleDuration) infinite;
-      animation-timing-function: linear;
-      animation-delay: var(--z--ryokan-mv-layerDelay);
-    }
-
-    /* MVSimple と同一の縦書きブロック */
-    .z--ryokan-mv_copy {
-      font-feature-settings: 'palt' 1;
-      font-size: clamp(1.1rem, 3.4vw, 1.75rem);
-      line-height: 1.85;
-      letter-spacing: 0.22em;
-      writing-mode: vertical-rl;
-      text-orientation: mixed;
-      display: flex;
-      flex-direction: column;
-      flex-wrap: nowrap;
-      align-items: stretch;
-      gap: clamp(1.4rem, 4vw, 3rem);
-    }
-    .z--ryokan-mv_copy .z--ryokan-mv_line:first-child {
-      transform: translateY(-1em);
-    }
-    .z--ryokan-mv_copy .z--ryokan-mv_line:last-child:not(:first-child) {
-      transform: translateY(1em);
-    }
-
-    /* コピー行: ブラー＋フェード（開始は --z--ryokan-mv-lineIndex でスタガード） */
-    @keyframes ryokan-mv-lineReveal {
-      from {
-        opacity: 0;
-        filter: blur(var(--z--ryokan-mv-lineBlurMax, 12px));
-      }
-      to {
-        opacity: 1;
-        filter: blur(0);
-      }
-    }
-
-    .z--ryokan-mv_copy .z--ryokan-mv_line {
-      opacity: 0;
-      filter: blur(var(--z--ryokan-mv-lineBlurMax, 12px));
-      animation: ryokan-mv-lineReveal var(--z--ryokan-mv-lineDuration, 1s) ease forwards;
-      animation-delay: calc(var(--z--ryokan-mv-lineStartDelay, 0s) + var(--z--ryokan-mv-lineStagger, 0.2s) * var(--z--ryokan-mv-lineIndex, 0));
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      .z--ryokan-mv_layer {
-        animation: none;
-        opacity: 0;
-        transform: none;
-      }
-      .z--ryokan-mv_layer:first-child {
-        opacity: 1;
-      }
-      .z--ryokan-mv_copy .z--ryokan-mv_line {
-        animation: none;
-        opacity: 1;
-        filter: none;
-      }
-    }
-
-    /*
-   * ビューポート全幅: 親の max-width に依存しないよう、自身を 100vw で中央に置く。
-   */
-    .z--ryokan-about {
-      --z--ryokan-about-l-inset: max(var(--gutter-size), calc((100vw - var(--sz--l)) / 2));
-      --z--ryokan-about-xl-inset: max(var(--gutter-size), calc((100vw - var(--sz--xl)) / 2));
-      position: relative;
-      left: 50%;
-      transform: translateX(-50%);
-      box-sizing: border-box;
-      width: 100vw;
-      max-width: 100vw;
-      overflow-x: clip;
-    }
-    .z--ryokan-about_mediaRightImg {
-      display: block;
-      object-fit: cover;
-    }
-    .z--ryokan-about_figureLeft,
-    .z--ryokan-about_figureRight {
-      margin: 0;
-    }
-    @media (min-width: 800px) {
-      .z--ryokan-about_col--left {
-        box-sizing: border-box;
-        min-width: 0;
-        /* 見出し・本文: グローバルな size=l の左端（Lism の ps はカスタム計算のため CSS のみ） */
-        padding-inline-start: var(--z--ryokan-about-l-inset);
-      }
-      .z--ryokan-about_stack {
-        align-self: start;
-        width: min(100%, var(--sz--l));
-        min-width: 0;
-      }
-      .z--ryokan-about_body {
-        padding-inline-start: var(--s50);
-      }
-      .z--ryokan-about_figureLeft {
-        align-self: start;
-        margin-block-start: auto;
-        padding-block-start: var(--s30);
-        margin-inline-start: calc(var(--z--ryokan-about-xl-inset) - var(--z--ryokan-about-l-inset));
-        box-sizing: border-box;
-        min-inline-size: 0;
-        max-inline-size: 100%;
-        inline-size: min(20rem, 100%);
-      }
-    }
-    @media (max-width: 799px) {
-      .z--ryokan-about_grid {
-        padding-inline: var(--gutter-size);
-        box-sizing: border-box;
-      }
-      .z--ryokan-about_figureLeft {
-        inline-size: 100%;
-        max-inline-size: none;
-      }
-      .z--ryokan-about_mediaRightImg {
-        aspect-ratio: 4 / 3;
-        block-size: auto;
-      }
-    }
-
-    /* 左端プル: コンテナ幅 l + gutter と整合 */
-    .z--ryokan-feature {
-      --z--ryokan-feature-pull: max(var(--gutter-size, 0px), calc((100vw - min(100vw, var(--sz--l))) / 2));
-      --z--ryokan-feature-figure-max-h: 540px;
-      position: relative;
-    }
-    /* isContainer 祖先幅: Lism md と同じ (min-width: 800px) / not で補集合（max-width:799 との境目ギャップを避ける） */
-    @container not (min-width: 800px) {
-      .z--ryokan-feature_textCol {
-        order: 1;
-      }
-      .z--ryokan-feature_figure {
-        order: 2;
-        margin-inline: 0;
-        inline-size: 100%;
-        max-inline-size: none;
-        aspect-ratio: 16 / 10;
-        max-block-size: var(--z--ryokan-feature-figure-max-h);
-      }
-      .z--ryokan-feature_bodyStack {
-        align-self: stretch;
-        margin-inline-start: 0;
-        max-inline-size: 100%;
-      }
-      .z--ryokan-feature_lead,
-      .z--ryokan-feature_body {
-        text-align: start;
-        text-wrap: pretty;
-      }
-      .z--ryokan-feature_title {
-        align-self: end;
-      }
-    }
-    .z--ryokan-feature_figure {
-      margin: 0;
-      position: relative;
-      box-sizing: border-box;
-      align-self: stretch;
-      max-block-size: var(--z--ryokan-feature-figure-max-h);
-    }
-    .z--ryokan-feature_figure > img {
-      display: block;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-    @container (min-width: 800px) {
-      .z--ryokan-feature_figure {
-        margin-inline-start: calc(-1 * var(--z--ryokan-feature-pull));
-        width: calc(100% + var(--z--ryokan-feature-pull));
-        max-width: none;
-        border-radius: 0 var(--bdrs--10) var(--bdrs--10) 0;
-        min-height: min(22rem, 52vw, var(--z--ryokan-feature-figure-max-h));
-      }
-      .z--ryokan-feature_figure > img {
-        min-height: min(22rem, 52vw, var(--z--ryokan-feature-figure-max-h));
-      }
-    }
-    .z--ryokan-feature_textCol {
-      min-height: 0;
-      overflow-x: visible;
-    }
-    /* 2列時: 見出しは上・本文は下（上端・下端揃え） */
-    @container (min-width: 800px) {
-      .z--ryokan-feature_copyRow {
-        display: grid;
-        grid-template-columns: 1fr auto;
-        grid-template-rows: 1fr auto;
-        min-height: min(22rem, 52vw);
-      }
-      .z--ryokan-feature_title {
-        grid-column: 2;
-        grid-row: 1 / -1;
-        align-self: start;
-        justify-self: end;
-      }
-      .z--ryokan-feature_bodyStack {
-        grid-column: 1;
-        grid-row: 2;
-        align-self: end;
-        max-inline-size: min(100%, 26rem);
-      }
-      .z--ryokan-feature_lead,
-      .z--ryokan-feature_body {
-        text-align: start;
-      }
-    }
-    .z--ryokan-feature_title {
-      flex-shrink: 0;
-      line-height: 1.65;
-    }
-    /* 縦書き2列: 横書きの flex 列＋子に writing-mode: vertical-rl */
-    .z--ryokan-feature_titleInner {
-      display: flex;
-      flex-direction: row-reverse;
-      align-items: flex-start;
-      gap: 0.65em;
-    }
-    .z--ryokan-feature_titleLine1,
-    .z--ryokan-feature_titleLine2 {
-      display: block;
-      writing-mode: vertical-rl;
-      text-orientation: mixed;
-    }
-    .z--ryokan-feature_titleLine2 {
-      transform: translateY(1em);
-    }
-    /* 共有。左右位置は Lism md（@container 800px）に同期 */
-    .z--ryokan-feature_watermark {
-      position: absolute;
-      z-index: 0;
-      margin: 0;
-      padding: 0;
-      inset-block-start: 0;
-      transform: none;
-      font-family: var(--ff--base, ui-serif, 'Times New Roman', Times, serif);
-      font-weight: 700;
-      line-height: 0.82;
-      letter-spacing: 0.03em;
-      color: rgb(0 0 0 / 0.07);
-      white-space: nowrap;
-      pointer-events: none;
-      user-select: none;
-      direction: ltr;
-      unicode-bidi: isolate;
-    }
-    @container (min-width: 800px) {
-      .z--ryokan-feature_watermark {
-        inset-inline-start: 0;
-        inset-inline-end: auto;
-        transform-origin: left center;
-        font-size: clamp(2.75rem, 11cqi, 7.5rem);
-      }
-    }
-    @container not (min-width: 800px) {
-      .z--ryokan-feature_watermark {
-        inset-inline-start: auto;
-        inset-inline-end: 0;
-        transform-origin: right center;
-        font-size: clamp(3.15rem, 14cqi, 6.5rem);
-      }
-    }
-
-    /*
-   * Lism の md は viewport の @media ではなく @container (min-width: 800px)（prop-responsive.md）。
-   * また -max-w:100%（max-width）と max-inline-size の併用や、flex 子の % 解決で上限が効かないことがあるため、
-   * コンテナクエリ内で max-width + cqi を使い、fxd の row 切替と同じ基準で min(32rem, 40cqi) に揃える（40cqi はクエリコンテナ行内幅の 40% 相当の上限）。
-   */
-    .z--ryokan-plans_media {
-      max-width: 100%;
-    }
-    @container (min-width: 800px) {
-      .z--ryokan-plans_media {
-        max-width: min(32rem, 40cqi);
-      }
-    }
-
-    /* UI Button のデフォルト（--text 地）を上書きし、デザインどおり白ピル＋黒字に */
-    .z--ryokan-plans_reserve.c--button {
-      --bgc: var(--white);
-      --c: var(--black);
-      --bdc: var(--white);
-    }
-
-    /*
-   * 見出し＋（画像｜質問）をひとつの Grid で管理。
-   * md 以上: 画像列と質問列を repeat(2, 1fr) で 1:1。
-   */
-    .z--ryokan-faq_layout {
-      display: grid;
-      grid-template-areas: 'head' 'acc' 'img';
-      grid-template-columns: minmax(0, 1fr);
-    }
-    .z--ryokan-faq_head {
-      grid-area: head;
-    }
-    .z--ryokan-faq_acc {
-      grid-area: acc;
-    }
-    .z--ryokan-faq_media {
-      grid-area: img;
-    }
-    @container (min-width: 800px) {
-      .z--ryokan-faq_layout {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        grid-template-areas:
-          'head head'
-          'img acc';
-      }
-    }
-
-    .z--ryokan-faq_acc :global(.c--accordion_item) {
-      border-block-end: 1px solid var(--divider);
-    }
-    .z--ryokan-faq_acc :global(.c--accordion_item:last-of-type) {
-      border-block-end: none;
-    }
-
-    .z--ryokan-footer :where(a) {
-      color: inherit;
-    }
-    .z--ryokan-footer_nav :global(li) {
-      list-style: none;
-    }
-
-    /* md 未満: 縦並びの項目間に区切り（最後の行の下には付けない） */
-    .z--ryokan-footer_nav > :global(li:not(:last-child)) {
-      border-block-end: 1px dashed color-mix(in srgb, var(--white) 38%, transparent);
-    }
-
-    /* md 以上: 縦の区切りをやめ、項目の「間」だけ左に縦線（先頭左・末尾右には付けない） */
-    @container (min-width: 800px) {
-      .z--ryokan-footer_nav > :global(li:not(:last-child)) {
-        border-block-end: none;
-      }
-      .z--ryokan-footer_nav > :global(li + li) {
-        border-inline-start: 1px dashed color-mix(in srgb, var(--white) 38%, transparent);
-        padding-inline-start: var(--s20);
-        margin-inline-start: var(--s20);
-      }
-    }
-
-    /* md 未満: 左寄せ。`ta` プロパティのインラインが CSS より優先するため、指定はここに集約 */
-    .z--ryokan-footer_navStack {
-      text-align: start;
-      align-items: flex-start;
-    }
-    @container (min-width: 800px) {
-      .z--ryokan-footer_navStack {
-        text-align: center;
-        align-items: center;
-      }
-    }
-
-    /* md 以上: caret は非表示 */
-    .z--ryokan-footer_navCaret {
-      display: block;
-    }
-    @container (min-width: 800px) {
-      .z--ryokan-footer_navCaret {
-        display: none;
-      }
-    }
-
-    /* ピル型 FAB: UI Button のセマンティック色を上書き */
-    .z--ryokan-reservationFab.c--button {
-      --bgc: var(--black);
-      --c: var(--white);
-      min-width: 12rem;
-    }
-    .z--ryokan-reservationFab:focus-visible {
-      outline: 2px solid color-mix(in srgb, var(--white) 50%, transparent);
-      outline-offset: 3px;
-    }
-  }
-</style>

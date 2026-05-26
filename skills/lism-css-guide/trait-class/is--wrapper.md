@@ -17,14 +17,16 @@
 |------|------|
 | `isWrapper` | `is--wrapper` |
 | `isWrapper="s"` | `is--wrapper -contentSize:s` |
+| `isWrapper="m"` | `is--wrapper -contentSize:m` |
 | `isWrapper="l"` | `is--wrapper -contentSize:l` |
+| `isWrapper="xl"` | `is--wrapper -contentSize:xl` |
 | `isWrapper="20rem"`（任意値） | `is--wrapper` + `style="--contentSize: 20rem"` |
 
 ## 専用Props
 
 | Prop | 説明 |
 |------|------|
-| `contentSize` | コンテンツサイズ。`s` / `l` / トークン / 任意値 |
+| `contentSize` | コンテンツサイズ。`s` / `m` / `l` / `xl` / トークン / 任意値 |
 
 ```jsx
 // 下記の ① と ② は同じ結果

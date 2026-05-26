@@ -79,6 +79,7 @@ export default {
   'min-h': { prop: 'minHeight', presets: ['100%'], token: 'sz', bp: 1 },
   'max-h': { prop: 'maxHeight', presets: ['100%'], token: 'sz', bp: 1 },
 
+  contentSize: { isVar: 1, presets: ['s', 'm', 'l', 'xl'], token: 'sz' },
   sz: { prop: 'inlineSize', token: 'sz' },
   'min-sz': { prop: 'minInlineSize', token: 'sz' },
   'max-sz': {
@@ -171,6 +172,7 @@ export default {
   pos: {
     prop: 'position',
     presets: ['static', 'fixed', 'sticky', 'relative', 'absolute'],
+    bp: 1,
   },
   z: { prop: 'zIndex', presets: ['-1', '0', '1', '99'] },
   t: { prop: 'top', utils: { 0: '0%' }, presets: ['50%', '100%'], token: 'space' },
@@ -316,7 +318,7 @@ export default {
     shorthands: PLACE_SHORTHANDS,
   },
   pslf: { prop: 'placeSelf', presets: PLACE_PRESETS },
-  order: { prop: 'order', presets: ['0', '-1', '1'] },
+  order: { prop: 'order', presets: ['0', '-1', '1'], bp: 1 },
 
   // transform
   // translate: {

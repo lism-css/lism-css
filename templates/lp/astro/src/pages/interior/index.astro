@@ -1,0 +1,653 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import {
+  Lism,
+  Decorator,
+  Box,
+  Cluster,
+  Container,
+  Flex,
+  Center,
+  Frame,
+  Grid,
+  Columns,
+  Heading,
+  Icon,
+  Inline,
+  Layer,
+  Link,
+  List,
+  ListItem,
+  Media,
+  Stack,
+  Text,
+} from 'lism-css/astro';
+import { Accordion } from '@lism-css/ui/astro/Accordion';
+import { Avatar } from '@lism-css/ui/astro/Avatar';
+import Header from '@/components/interior/Header.astro';
+import SectionHeading from '@/components/interior/SectionHeading.astro';
+
+import './_style.css';
+
+export const title = 'LP Interior';
+
+/** ヘッダー主ナビと同一5件 */
+const footerPrimaryNavItems = [
+  { href: '#mission', ja: 'ミッション', en: 'Mission' },
+  { href: '#feature', ja: '特長', en: 'Feature' },
+  { href: '#service', ja: 'サービス', en: 'Service' },
+  { href: '#step', ja: 'ご依頼の流れ', en: 'Step' },
+  { href: '#voice', ja: 'お客様の声', en: 'Voice' },
+];
+
+const footerSnsLinks = [
+  { href: '#', icon: 'logo-x' as const, label: 'X' },
+  { href: '#', icon: 'logo-instagram' as const, label: 'Instagram' },
+  { href: '#', icon: 'logo-youtube' as const, label: 'YouTube' },
+  { href: '#', icon: 'logo-line' as const, label: 'LINE' },
+];
+
+const mvImage = {
+  src: 'https://cdn.lism-css.com/img/room/a-Rrr1UZO5Ji.jpg',
+  alt: '赤いソファと観葉植物のあるモダンなリビング',
+};
+
+const missionImage = {
+  src: 'https://cdn.lism-css.com/img/room/u-MojU9rQhZn.jpg',
+  alt: '日差しの入るリビング。ソファ、ラグ、大きな窓と観葉植物のある室内',
+};
+
+const missionBody =
+  '暮らしの形は、家族構成も予算も理想もそれぞれ違います。LISM Lifeは、賃貸でも戸建てでも、日々の暮らし方や悩みを丁寧にお伺いし、家具の選び方からコーディネート、必要に応じた配置やお手伝いまでを一貫して支えます。雑誌の切り抜きがなくても、イメージのかけらから具体的な部屋づくりへと一緒に形にします。小さな相談と本格的な部屋作り、どちらも「自分らしい住みよさ」へつながる一歩になればと考えています。';
+
+const featureImage = {
+  src: 'https://cdn.lism-css.com/img/room/u-jh2GpjGKEp.jpg',
+  alt: '明るいリビングにイエローのアームチェアとフロアランプが置かれたインテリア',
+};
+
+/** カードごとの表示内容（タイトル・本文・アイコンを独立して管理） */
+const featureCards = [
+  {
+    icon: 'home' as const,
+    title: '賃貸でも戸建てでも、住まいの形に合わせる',
+    body: '入居期間や間取り、子どもやペットの有無に応じたご提案を心がけています。既製の家具同士の組み合わせから、小さなスペースの活かし方まで、状況に合わせて一緒に考えます。',
+  },
+  {
+    icon: 'heart' as const,
+    title: '悩み相談から、コーディネートまで一貫して',
+    body: '雑多な要望の整理、色や素材の方向性づくり、具体的な品の候補づくりまで、必要な深さに合わせて伴走します。相談だけのご利用と、手配・設置のお願いまで、幅のある対応が可能です。',
+  },
+  {
+    icon: 'arrow-right' as const,
+    title: '多様な取り扱いと、自社アイテムのご案内',
+    body: '暮らし方に合わせ、多様なブランドを扱い、自社企画の家具や小物のご紹介も行っています。価帯やデザインの好みに応じ、選び方の比較もお手伝いします。',
+  },
+  {
+    icon: 'book' as const,
+    title: '予算と目的に合わせた、無理のない段取り',
+    body: 'まず手を入れたい場所から整える、将来に備え徐々に揃えるといった段階のご相談も歓迎です。想定おおよその費用感の整理や、優先度の相談にもお答えします。',
+  },
+  {
+    icon: 'chat' as const,
+    title: '打ち合わせは来店、オンライン、お電話のいずれも可',
+    body: '日々の予定に合わせ、ヒアリングの仕方を選べます。写真や図面をお持ちの場合は共有いただくと、打ち合わせが円滑です。遠方の方も、まずは内容を伺うところから始められます。',
+  },
+];
+
+const serviceLeadImage = {
+  src: 'https://cdn.lism-css.com/img/room/a-6wASe0C2nM.jpg',
+  alt: '花の額、木机とパソコン。本棚付き日当たりの良い在宅デスク',
+};
+
+const serviceSubCards = [
+  {
+    index: '01',
+    titleJa: '要望の幅に合わせる',
+    titleEn: 'Scope that fits you',
+    body: '部屋づくりのご相談内容は多様です。相談だけ、家具の買い足し、間取りに合わせた一式の手配といった違いに対応し、打ち合わせからおおまかな費用感の整理までお気軽にどうぞ。',
+    image: {
+      src: 'https://cdn.lism-css.com/img/room/u-M1jaFJaeKW.jpg',
+      alt: '白ソファ、黄色系額9枚、カラークッション、フロア灯。明るいリビング',
+    },
+  },
+  {
+    index: '02',
+    titleJa: '好みと暮らしやすさの両立',
+    titleEn: 'Comfort and your taste',
+    body: '見た目の好みと、毎日の導線や片づけやすさを同時に考えます。流行に流されすぎない素材感や、長く手放しにくい造りの家具もご提案の対象です。',
+    image: {
+      src: 'https://cdn.lism-css.com/img/room/u-muaD49UlYx.jpg',
+      alt: '木ベッド、白木のナイトと卓上灯。グレー壁の寝室',
+    },
+  },
+  {
+    index: '03',
+    titleJa: 'ほっと戻れる、自分の部屋へ',
+    titleEn: 'A room to come back to',
+    body: '仕事帰りや家事の合間に、落ち着いて過ごしたい。そうした声を大切に、照明や配置の工夫、リラックスできるコーナーづくりもご一緒に考えます。',
+    image: {
+      src: 'https://cdn.lism-css.com/img/room/u-8HzizEUdqH.jpg',
+      alt: '木天井と間接灯、L字ソファ、大理石風ローテーブル、本棚。広めのリビング',
+    },
+  },
+];
+
+const stepImage = {
+  src: 'https://cdn.lism-css.com/img/room/a-0ojkYuqTrl.jpg',
+  alt: '日差しの入るホームオフィスとソファ、デスクが並んだ室内',
+};
+
+const stepCards = [
+  {
+    title: 'お問い合わせと初回のヒアリング',
+    body: 'フォームやお電話、来店のいずれかでご連絡ください。ざっくりとした希望や、今いちばん困っている点を言葉に整え、次回以降の打ち合わせで詰める内容の目安を共有します。オンライン面談も選べます。',
+    image: {
+      src: 'https://cdn.lism-css.com/img/working/a_6SNi6XvWBT.jpg',
+      alt: '打ち合わせを行う室内のイメージ',
+    },
+  },
+  {
+    title: '暮らしの課題と、イメージのすり合わせ',
+    body: '日々の動線、収納、好みの雰囲気や色の傾向などを一緒に言葉にします。既にお持ちの家具や、残したいものの有無も伺い、後の打ち合わせが円滑になるよう整えます。',
+  },
+  {
+    title: '方向性づくりと、おおまかな費用感',
+    body: '家具の候補やレイアウト案、作業範囲のイメージを固め、優先度に沿った大まかな費用感の整理に進みます。納得いただくまで、説明のペースに合わせて調整します。',
+    image: {
+      src: 'https://cdn.lism-css.com/img/room/a-Kt7MCU3Mad.jpg',
+      alt: '明るいリビングのインテリア写真',
+    },
+  },
+  {
+    title: '手配と設置・立ち上げの作業',
+    body: 'ご了承のうえ、家具の手配、搬入、設置や簡易な立ち上げ作業のお願いに進みます。入居日や来客の都合、マンションの管理規則の確認が必要な場合は事前に共有いただけますと助かります。',
+  },
+  {
+    title: '納品後のフォロー',
+    body: '使ってみたあとの違和感、追加で揃えたい小物の相談もお気軽にどうぞ。大きなリフォームまでは扱いませんが、配置の微調整や次の一歩の相談も同じ流れで承ります。',
+  },
+];
+
+/**
+ * アバター: 本番・CMS ではカードごとに URL がばらばらになり得るため、`avatarBase` は使わず `src` にフル URL を直書きする
+ * @see https://lism-css.com/docs/ui/avatar/
+ */
+const voiceCards = [
+  {
+    avatar: { src: 'https://cdn.lism-css.com/img/avatar/a_DpTwx1lZU3.jpg', alt: '相談者のポートレート（1）' },
+    title: '一人暮らしの部屋で迷子でした',
+    body: '「落ち着く」は何かを言葉にするのに時間がかかりました。家具の大きさと導線の相談で、本当に買う量が決まり、開けたときの圧迫感がかなり減りました。雑多な要望に辛抱強く乗っていただき、感謝しています。',
+    attribution: '20代・ワンルーム相談',
+  },
+  {
+    avatar: { src: 'https://cdn.lism-css.com/img/avatar/a_Bp5H4TO2tS.jpg', alt: '相談者のポートレート（2）' },
+    title: '家族の物が一気所に流れ着く家でした',
+    body: '子どもが小さく、動線と収納の相談が中心でした。既製のユニットと手元の物の掛け合わせで、予算内で我慢せず使える動きになりました。途中で好みの変化も出ましたが、一緒に再調整してもらい安心でした。',
+    attribution: '30代・戸建て相談',
+  },
+  {
+    avatar: { src: 'https://cdn.lism-css.com/img/avatar/a_To1qVvQb79.jpg', alt: '相談者のポートレート（3）' },
+    title: '角部屋の形に合う家具探し',
+    body: '賃貸の角部屋で、定番サイズの家具が合わない場面が多く困っていました。寸法感とメーカーの違いを比較しながら、落ち着いた色面でまとめてもらいました。日当たりの印象も変えずに、すっきり見えています。',
+    attribution: '40代・賃貸相談',
+  },
+  {
+    avatar: { src: 'https://cdn.lism-css.com/img/avatar/a_TjjtOsU0kg.jpg', alt: '相談者のポートレート（4）' },
+    title: 'リモート用の作業机まわりを整えたい',
+    body: '在宅中心になり、本棚とデスク、照明のバランスが課題でした。小さな部屋のまま、仕切り方と照度感を相談し、作業中の集中と夕方以降の落ち着きの両方を意識した提案でした。買い足しの順序も一緒に考え助かりました。',
+    attribution: '50代・在宅併用',
+  },
+  {
+    avatar: { src: 'https://cdn.lism-css.com/img/avatar/a_syw7vEz0mS.jpg', alt: '相談者のポートレート（5）' },
+    title: '母の家の改め方を相談',
+    body: '足腰を考え、座椅子から椅子への入れ替えと、廊下の明るさの話を一緒に整理しました。派手に変えすぎず、慣れ親しんだ家財も活かしつつ、毎日の足取りを軽くする方向性で合意して進められました。',
+    attribution: '60代・家族代理の相談',
+  },
+  {
+    avatar: { src: 'https://cdn.lism-css.com/img/avatar/a_w7f7eeA81h.jpg', alt: '相談者のポートレート（6）' },
+    title: '小さな相談のつもりでした',
+    body: '最初は「このテーブルで合うか」程度の相談でしたが、他の部屋のバランスまで見てもらい、我が家向けの配色の軸を決めてもらいました。一気に全部は揃えず、段階的に揃えていく方針が腹落ちしました。',
+    attribution: '20代・初めての家具相談',
+  },
+];
+
+/** 各項目は質問・回答を独立して管理（必要に応じて初期展開を指定） */
+const faqItems = [
+  {
+    question: 'まず相談だけ、という利用も可能ですか？',
+    answer:
+      '可能です。暮らしの悩みの整理、家具の大きさや配置の当たり前の確認、費用感の大まかな目安づくりなど、範囲に応じてお受けします。以降の手配はご希望とご了承のうえで段階的に進められます。',
+    defaultOpen: true,
+  },
+  {
+    question: '打ち合わせの合間で方針を変えたいのですが、流れを教えてください',
+    answer:
+      '中間段階で方針の修正が出ることは少なくありません。都度、優先度と費用感をすり合わせ、新しい要望に合わせて候補を入れ替えます。大きな変更の場合は、手配前に必ず合意形成を図るようにしています。',
+  },
+  {
+    question: '家具代のお支払い方法を教えてください',
+    answer:
+      '品やお取引条件により、前金・引き渡し前の一括、分割のご相談など、内容に合わせて案内します。各種のお支払い方法に対応している場合と、都度明細化する場合とがあります。初回面談で大まかな形を共有します。',
+  },
+  {
+    question: '賃貸のため、取り付けに制限があります',
+    answer:
+      '管理規則に照らし、釘やビスの可否、重い家具の搬入ルート、壁面の扱いなど、事前に確認が必要な点を一緒に洗い出します。家具選びの段階で、後から手戻りが出にくい候補に寄せることも可能です。',
+  },
+  {
+    question: '戸建てで、作業範囲の線引きを知りたいです',
+    answer:
+      '大規模なリフォームや水回りの工事専業は範囲外とさせていただくことがあり、家具の手配、搬入、設置や簡易な立ち上げに合わせたお手伝いを中心にします。線引きの個別相談は、現地や図面を共有いただけると円滑です。',
+  },
+];
+
+const contactBg = {
+  src: 'https://cdn.lism-css.com/img/room/u-N1EvhlxYpo.jpg',
+  alt: '窓から光が差し込む開放的なリビング',
+};
+
+/** 各フィールドの表示・name・プレースホルダーを独立して管理 */
+const contactFields = [
+  {
+    id: 'interior-contact-name',
+    name: 'name',
+    label: '名前',
+    type: 'text' as const,
+    placeholder: '鈴木 太郎',
+    autoComplete: 'name',
+    errorMessage: '',
+  },
+  {
+    id: 'interior-contact-email',
+    name: 'email',
+    label: 'メールアドレス',
+    type: 'email' as const,
+    placeholder: 'example@lism.com',
+    inputMode: 'email' as const,
+    autoComplete: 'email',
+    errorMessage: '正しいメールアドレス形式で入力してください。',
+  },
+  {
+    id: 'interior-contact-subject',
+    name: 'subject',
+    label: '件名',
+    type: 'text' as const,
+    placeholder: '部屋作りのご相談',
+    autoComplete: 'off',
+    errorMessage: '',
+  },
+  {
+    id: 'interior-contact-message',
+    name: 'message',
+    label: '問い合わせ内容',
+    type: 'textarea' as const,
+    placeholder: 'お問い合わせ内容はこちらにご記入ください。',
+    rows: 6,
+    errorMessage: '',
+  },
+];
+---
+
+<Layout title={title}>
+  <link rel="preconnect" href="https://fonts.googleapis.com" slot="head" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin slot="head" />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200..700&display=swap" rel="stylesheet" slot="head" />
+  <div id="top">
+    <!-- Header -->
+    <Header />
+    <!-- Main -->
+    <Container as="main" class="z--main" iso="isolate">
+      <Box as="section" class="z--mv" hasGutter pos="relative" ov="hidden" aria-label="メインビジュアル">
+        <Heading level="1" class="z--mv_title" pos="relative" z="1" ta="center" c="white" lts="l" fw="700" ff="accent" ovw="break-word">
+          Simple<br />
+          <Inline>LP Design</Inline>
+        </Heading>
+        <Layer class="z--mv_visual" isWrapper="l">
+          <Frame w="100%" h="100%">
+            <Media src={mvImage.src} alt={mvImage.alt} width="1920" height="1080" loading="eager" fetchpriority="high" />
+          </Frame>
+        </Layer>
+      </Box>
+
+      <Container as="section" id="mission" class="z--mission" set="bleed" contentSize="l" pos="relative" py="50" mbs="60">
+        <Layer class="z--mission_bg" bgc="base-2" ms="calc(10rem + var(--bleed))" />
+        <Columns class="z--mission_content" cols={[1, null, 2]} g={['40', null, '10', '30']} pos="relative" w="100%">
+          <Stack fx="1" hasGutter ps="var(--bleed)">
+            <Stack g="40">
+              <Stack g="10">
+                <Heading level="2" fz="5xl" lts="l" ff="accent">Mission</Heading>
+                <Text fz="xl" fw="bold" lts="l">私たちが目指すもの</Text>
+              </Stack>
+              <Text lh="l" lts="s" c="text-2">
+                {missionBody}
+              </Text>
+            </Stack>
+          </Stack>
+          <Frame
+            as="figure"
+            class="z--mission_figure"
+            set="bleed"
+            contentSize="xl"
+            pos="relative"
+            fx="1"
+            w="100%"
+            h="100%"
+            ar="3/2"
+            ov="hidden"
+            pe="var(--bleed)"
+          >
+            <Media src={missionImage.src} alt={missionImage.alt} width="1920" height="1280" loading="lazy" />
+          </Frame>
+        </Columns>
+      </Container>
+
+      <Container as="section" id="message" isWrapper="l" layout="stack" g="50" mbs="60" hasGutter>
+        <Flex fxd={['column', null, 'row-reverse']} ai="center" g={['30', '40']}>
+          <Box fx="1">
+            <Stack g="30" max-sz="s">
+              <Heading level="3">暮らしに合わせたコーディネート</Heading>
+              <Text>
+                生活リズムや家族構成、日々の悩みまで丁寧にヒアリングし、あなたに合う心地よさを軸に考えをまとめます。家具の取り合わせに加え、収納の工夫や小さなレイアウトの提案も含め、長く手を放せる部屋づくりを一緒に進めます。
+              </Text>
+            </Stack>
+          </Box>
+          <Frame ar="3/2" max-w={['100%', null, '400px']}>
+            <Media
+              src="https://cdn.lism-css.com/img/room/a-Kt7MCU3Mad.jpg"
+              alt="明るいリビングをイメージしたインテリア写真"
+              width="1200"
+              height="900"
+            />
+          </Frame>
+        </Flex>
+        <Flex fxd={['column', null, 'row']} ai="center" g={['30', '40']}>
+          <Box fx="1">
+            <Stack max-sz="s" g="30" ms="auto">
+              <Heading level="3" fz="xl" lts="l">想いを、部屋の形に</Heading>
+              <Text>
+                コーディネートの方針づくりから家具の手配、必要に応じた立ち上げ作業のお手伝いまで、一つの流れとして対応します。完成イメージの写真がなくても、色や好きな雰囲気、暮らしの不満点から一緒に言葉にし、納得のいくまで整えます。
+              </Text>
+            </Stack>
+          </Box>
+          <Frame ar="3/2" max-w={['100%', null, '400px']}>
+            <Media src="https://cdn.lism-css.com/img/room/u-1K4PsDvC6W.jpg" alt="ワークスペースをイメージしたインテリア" width="1200" height="900" />
+          </Frame>
+        </Flex>
+      </Container>
+
+      <Container as="section" id="feature" class="z--point" ov-x="clip" mbs="60">
+        <Columns cols={[1, null, 2]} g={['40', null, '10', '30']} set="bleed" contentSize="l">
+          <Stack class="z--point_main" g="40" jc="start" hasGutter ps="var(--bleed)">
+            <SectionHeading en="Point" ja="暮らしに寄り添う特長" />
+            <Stack g="40">
+              {
+                featureCards.map((card) => (
+                  <Grid gtc="auto 1fr" gtr="auto auto" ai="center" g="30" rg="10" p="30" bdrs="20" bxsh="20">
+                    <Icon icon={card.icon} size="2em" c="text-2" />
+                    <Heading level="3" fz="l">
+                      {card.title}
+                    </Heading>
+                    <Text fz="s" c="text-2" gc="2">
+                      {card.body}
+                    </Text>
+                  </Grid>
+                ))
+              }
+            </Stack>
+          </Stack>
+          <Frame pos="sticky" ar={['3/2', null, 'auto']} ms={['var(--gutter-size)', null, '0']}>
+            <Media src={featureImage.src} alt={featureImage.alt} width="1600" height="1067" loading="lazy" />
+          </Frame>
+        </Columns>
+      </Container>
+
+      <Container as="section" id="service" isWrapper="l" hasGutter class="z--service" bgc="base-2" py="60" mbs="70">
+        <Stack g="50" mbs="-60">
+          <SectionHeading en="Service" ja="ご要望に合わせたサービス" hasOffset />
+          <Columns cols={[1, null, 3]} g="40" ai="start">
+            {
+              serviceSubCards.map((item) => (
+                <Flex fxd={['row-reverse', null, 'column']} g="30">
+                  <Frame ar="3/2" w={['min(40%, 16rem)', null, 'auto']} d={['none', 'block']}>
+                    <Media src={item.image.src} alt={item.image.alt} width="900" height="600" loading="lazy" />
+                  </Frame>
+                  <Stack g="30" fx="1" jc="start">
+                    <Flex ai="center" g="20">
+                      <Inline lh="1" fz="3xl" fw="bold" lts="l" ff="accent" fxsh="0">
+                        {item.index}
+                      </Inline>
+                      <Decorator aslf="stretch" w="1px" bgc="text" fxsh="0" />
+                      <Stack g="10" class="z--service_cardTitles" util="trimAll">
+                        <Heading level="3" fz="m">
+                          {item.titleJa}
+                        </Heading>
+                        <Text fz="2xs" lh="s" c="text-2" o="p" ff="accent">
+                          {item.titleEn}
+                        </Text>
+                      </Stack>
+                    </Flex>
+                    <Text fz="s" c="text-2" util="trim">
+                      {item.body}
+                    </Text>
+                  </Stack>
+                </Flex>
+              ))
+            }
+          </Columns>
+
+          <!-- md 未満: 1列（画像上・テキスト下）。md 以上: 2列（画像左・テキスト右） -->
+          <Grid gtc={['1fr', null, 'minmax(0, 1fr) minmax(0, 1fr)']} g={['30', null, '40']} ai="center">
+            <Frame ar="3/2" ov="hidden">
+              <Media src={serviceLeadImage.src} alt={serviceLeadImage.alt} width="1920" height="1280" loading="lazy" />
+            </Frame>
+            <Stack g="20" jc="center">
+              <Heading level="3" fz="2xl" lts="l">
+                予算や目的に合わせ、
+                <br />
+                柔軟に対応します
+              </Heading>
+              <Text c="text-2">
+                暮らし方や優先して整えたい場所、購入や配置までお願いしたい範囲などを伺い、無理のない形でご提案にまとめます。来店、オンライン、お電話のいずれからでも打ち合わせを受け付けています。
+              </Text>
+              <Text c="text-2">
+                小さな悩み相談から、家具の買い付けに伴う作業のお願いまで、目的に合わせて一つずつ。賃貸・戸建てを問わず、住まいの性質に合う選び方を一緒に考えます。
+              </Text>
+            </Stack>
+          </Grid>
+        </Stack>
+      </Container>
+
+      <Container as="section" id="step" class="z--step" ov-x="clip" py="60">
+        <Columns cols={[1, null, 2]} g={['40', null, '10', '30']} set="bleed" contentSize="l">
+          <Stack g="40" jc="start" hasGutter pe="var(--bleed)">
+            <SectionHeading en="Step" ja="ご依頼から納品までの流れ" />
+            <Stack g="20">
+              {
+                stepCards.map((card, i) => (
+                  <>
+                    {i > 0 && (
+                      <Center fxsh="0">
+                        <Icon icon="caret-down-fill" fz="2xl" o="ppp" />
+                      </Center>
+                    )}
+                    <Stack class="z--step_card" g="30" p="30" bdrs="20" bxsh="20">
+                      {card.image && (
+                        <Frame class="z--step_cardFrame" ar="21/9" ov="hidden" bdrs="10">
+                          <Media src={card.image.src} alt={card.image.alt} width="1920" height="1280" loading="lazy" />
+                        </Frame>
+                      )}
+                      <Heading level="3" fz="l" util="trim">
+                        {card.title}
+                      </Heading>
+                      <Text fz="s" c="text-2" util="trim">
+                        {card.body}
+                      </Text>
+                    </Stack>
+                  </>
+                ))
+              }
+            </Stack>
+          </Stack>
+          <Frame pos="sticky" ar={['3/2', null, 'auto']} me={['var(--gutter-size)', null, '0']} order={['1', null, '-1']}>
+            <Media src={stepImage.src} alt={stepImage.alt} width="1920" height="1080" loading="lazy" />
+          </Frame>
+        </Columns>
+      </Container>
+
+      <Container as="section" id="voice" isWrapper="l" hasGutter class="z--voice">
+        <Stack g="40">
+          <SectionHeading en="Voice" ja="お客様の声です" />
+          <Columns hasSnap ov="auto" g={['20', null, '30']} pbe="10" gaf={['column', 'row']} gac="85%" cols={[0, 2, null, 3]}>
+            {
+              voiceCards.map((card) => (
+                <Stack g="30" ai="center" p="30" bgc="base" bd bdrs="20">
+                  <Avatar src={card.avatar.src} alt={card.avatar.alt} size="5rem" />
+                  <Heading level="3" fz="l" util="trim">
+                    {card.title}
+                  </Heading>
+                  <Text fz="s" c="text-2" lh="l" util="trim">
+                    {card.body}
+                  </Text>
+                  <Text class="z--voice_attribution" fz="2xs" c="text-2" o="p" ta="end" w="100%" mt="auto" util="trim">
+                    {card.attribution}
+                  </Text>
+                </Stack>
+              ))
+            }
+          </Columns>
+        </Stack>
+      </Container>
+
+      <Container as="section" id="faq" class="z--faq" isWrapper hasGutter py="60" bgc="base-2" mbs="60">
+        <Stack g="40">
+          <SectionHeading en="FAQ" ja="よくあるご質問" />
+
+          <Accordion.Root class="z--faq_acc" g="20">
+            {
+              faqItems.map((item) => (
+                <Accordion.Item bgc="base" bdrs="20" bxsh="10" {...(item.defaultOpen ? { 'data-opened': '' } : {})}>
+                  <Accordion.Heading>
+                    <Accordion.Button p="30" fw="bold" hov="-o" isOpen={item.defaultOpen === true}>
+                      {item.question}
+                    </Accordion.Button>
+                  </Accordion.Heading>
+                  <Accordion.Panel p="30" pbs="15" isOpen={item.defaultOpen === true}>
+                    <Text fz="s" c="text-2" lh="l">
+                      {item.answer}
+                    </Text>
+                  </Accordion.Panel>
+                </Accordion.Item>
+              ))
+            }
+          </Accordion.Root>
+        </Stack>
+      </Container>
+
+      <Container as="section" id="contact" class="z--contact" py="60" pos="relative" ov="hidden">
+        <Frame isLayer>
+          <Media src={contactBg.src} alt={contactBg.alt} width="1920" height="1080" loading="lazy" />
+        </Frame>
+        <Layer bgc="neutral:70%" style={{ backdropFilter: 'saturate(0.7) brightness(0.5) blur(4px)' }} />
+        <Stack isWrapper="s" hasGutter pos="relative" g="40">
+          <SectionHeading en="Contact" ja="お問い合わせ" c="white" />
+          <Text fz="s" c="white" ta="center" lh="l">
+            初めての方もどうぞお気軽にお問い合わせください。<br />このフォームはダミーです。
+          </Text>
+          <Box as="form" class="z--contact_form" method="post" action="#">
+            <Stack g="30">
+              {
+                contactFields.map((field) => (
+                  <Stack g="10" ai="stretch">
+                    <Inline as="label" for={field.id} fz="s" c="white" util="trim">
+                      {field.label}
+                    </Inline>
+                    {field.type === 'textarea' ? (
+                      <textarea
+                        id={field.id}
+                        class="z--contact_field"
+                        name={field.name}
+                        rows={field.rows}
+                        placeholder={field.placeholder}
+                        aria-invalid={field.errorMessage ? 'true' : undefined}
+                        aria-describedby={field.errorMessage ? `${field.id}-error` : undefined}
+                      />
+                    ) : (
+                      <input
+                        id={field.id}
+                        class="z--contact_field"
+                        name={field.name}
+                        type={field.type}
+                        placeholder={field.placeholder}
+                        inputmode={field.inputMode}
+                        autocomplete={field.autoComplete}
+                        aria-invalid={field.errorMessage ? 'true' : undefined}
+                        aria-describedby={field.errorMessage ? `${field.id}-error` : undefined}
+                      />
+                    )}
+                  </Stack>
+                ))
+              }
+              <Lism
+                as="button"
+                type="submit"
+                class="z--contact_submit"
+                set="plain"
+                fw="500"
+                lh="xs"
+                mbs="20"
+                p="20"
+                c="white"
+                bgc="black"
+                hov="-bgc"
+                bdrs="99"
+              >
+                この内容で送信 (dummy)
+              </Lism>
+            </Stack>
+          </Box>
+        </Stack>
+      </Container>
+    </Container>
+    <!-- Footer -->
+    <Container as="footer" class="z--footer" isWrapper py="50" hasGutter bgc="base-2">
+      <Stack g="30" ai="center" jc="center">
+        <Stack class="c--logo">
+          <Link href="#top" fz="2xl" fw="bold" lts="l" c="text" td="none" ff="accent">LISM Life</Link>
+        </Stack>
+        <List
+          class="z--footerNav"
+          fz="s"
+          lts="l"
+          d={['block', null, 'flex']}
+          bd-be
+          bdw={['1px', null, '0']}
+          w="100%"
+          ai="center"
+          jc="center"
+          fxw="wrap"
+          g="20"
+        >
+          {
+            footerPrimaryNavItems.map(({ href, ja }) => (
+              <ListItem bd-bs bdw={['1px', null, '0']}>
+                <Link href={href} d="block" c="text" td="none" w={['100%', null, 'auto']} px="5" py={['15', null, '5']} hasTransition hov="underline">
+                  {ja}
+                </Link>
+              </ListItem>
+            ))
+          }
+        </List>
+        <Cluster g="20">
+          {
+            footerSnsLinks.map(({ href, icon, label }) => (
+              <Link href={href} td="none" c="text-2" hov="-o" hasTransition aria-label={label}>
+                <Icon icon={icon} fz="xl" />
+              </Link>
+            ))
+          }
+        </Cluster>
+        <Text fz="s" c="text-2">© 2026 Lism CSS.</Text>
+      </Stack>
+    </Container>
+  </div>
+</Layout>

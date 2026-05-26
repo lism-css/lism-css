@@ -9,6 +9,30 @@ v.1.0リリースまでしばらく激しい変更が続く可能性があるた
 
 <Divider bds="dashed" my="40" />
 
+## lism-css v.0.21.0 (2026.05.26)
+
+**破壊的変更**を含むリリースです。
+
+### set クラスの命名変更 (#404)
+
+- `set--var:xxx` 形式を `set--xxx` 形式へ戻しました（`set--var:hov` → `set--hov`、`set--var:bxsh` → `set--bxsh`、`set--var:bdrsInner` → `set--bdrsInner`、`set--var:s` → `set--s`）
+- `set` prop の値も同様に `set="var:hov"` → `set="hov"` のように変更
+- ベータ版のため後方互換 alias は提供していません
+
+### contentSize Prop と set--bleed の追加 (#405)
+
+- `contentSize` を Lism Prop として追加（プリセット値 `s` / `m` / `l` / `xl` はクラス、任意値は CSS 変数として出力）
+- `set--bleed` をコア CSS に追加し、片側ブリードレイアウト用の `--bleed` 変数生成を提供
+- `Wrapper` コンポーネントを `isWrapper` + `contentSize` の組み合わせに整理
+
+### その他
+
+- `isWrapper="xl"` プリセットに対応
+- `pos`・`order` プロパティにブレークポイント対応（`bp: 1`）を追加
+- `InlineAllowedTag` に `label` タグを追加
+
+<Divider bds="dashed" my="40" />
+
 ## lism-css v.0.20.0 (2026.05.20)
 
 **破壊的変更**を含むリリースです。

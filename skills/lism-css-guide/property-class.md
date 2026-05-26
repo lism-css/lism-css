@@ -118,12 +118,17 @@ Lism コンポーネントの Propsに渡す値の頭に `:` を付けると、 
 | `bsz` | `block-size` | — | — |
 | `min-bsz` | `min-block-size` | — | — |
 | `max-bsz` | `max-block-size` | — | — |
+| `contentSize` | `--contentSize` 変数のみ | `-contentSize:s`, `-contentSize:m`, `-contentSize:l`, `-contentSize:xl` | — |
 
 **`max-sz` の特殊クラス:**
 - `-max-sz:full` — `has--gutter` 内では gutter 分を含めた全幅に拡張
 - `-max-sz:bleed` — 最外側の `is--container` 幅まで広がる（`margin-inline` で中央配置、`is--container` 祖先がなければ `100svi` まで広がる）
 
 → 詳細は [property-class/max-sz.md](./property-class/max-sz.md) 参照
+
+**`contentSize` について:**
+`--contentSize` 変数をセットする isVar タイプの Prop です。`is--wrapper` と組み合わせるとコンテンツ幅の上限となり、`set--bleed` と組み合わせると `--bleed` の計算基準値として使われます。
+プリセット値（`s`, `m`, `l`, `xl`）は `-contentSize:{value}` クラスを出力し、それ以外の任意値は `--contentSize: {value}` をスタイル属性として出力します。
 
 ### 背景
 
@@ -167,7 +172,7 @@ Lism コンポーネントの Propsに渡す値の頭に `:` を付けると、 
 |------|--------------|-------------|-----|
 | `bxsh` | `box-shadow` | `-bxsh:0`, `-bxsh:10`, `-bxsh:20`, `-bxsh:30`, `-bxsh:40`, `-bxsh:50` | ✔ |
 
-**補足:** 影色（`--shc`）を要素内で上書きして再計算させたい場合は、`set--var:bxsh` クラスを併用する。
+**補足:** 影色（`--shc`）を要素内で上書きして再計算させたい場合は、`set--bxsh` クラスを併用する。
 
 ### ポジション
 
@@ -309,7 +314,7 @@ Lism CSS のボーダーは CSS 変数（`--bds` / `--bdw` / `--bdc`）で管理
 |------|------|---------|
 | `-hov:-{prop}` | `--hov-{prop}` 変数で hover 時の値を変化させる | `:hover`（`@media (any-hover: hover)` 内） |
 | `-hov:{preset}` | hover 時のスタイルをプリセットで適用 | `:hover`（同上） |
-| `-hov:in:{preset}` | 親の `set--var:hov` を起点に子のスタイルを変化させる | 親に `set--var:hov` が必要 |
+| `-hov:in:{preset}` | 親の `set--hov` を起点に子のスタイルを変化させる | 親に `set--hov` が必要 |
 
 **標準クラス:** `-hov:-c`, `-hov:-bgc`, `-hov:-bdc`, `-hov:-o`, `-hov:-bxsh`, `-hov:underline`, `-hov:in:hide`, `-hov:in:show`, `-hov:in:zoom`
 

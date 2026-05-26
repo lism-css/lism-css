@@ -17,6 +17,19 @@ const { title } = Astro.props;
     <title>{title}</title>
   </head>
   <body>
+    <div id="scroll-sentinel" class="-pos:absolute -t:0 -l:0" aria-hidden="true" style="width:1px;height:1px;pointer-events:none;"></div>
     <slot />
   </body>
 </html>
+<script>
+  const sentinel = document.getElementById('scroll-sentinel');
+  if (sentinel) {
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        document.documentElement.toggleAttribute('data-scrolled', !entry.isIntersecting);
+      },
+      { rootMargin: '120px 0px 0px 0px' }
+    );
+    io.observe(sentinel);
+  }
+</script>

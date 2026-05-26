@@ -1,5 +1,6 @@
 import { defineConfig } from 'astro/config';
 import mdx from '@astrojs/mdx';
+import sitemap from '@astrojs/sitemap';
 import expressiveCode from 'astro-expressive-code';
 import remarkDirective from 'remark-directive';
 import { rehypeHeadingIds } from '@astrojs/markdown-remark';
@@ -7,8 +8,16 @@ import rehypeAutolinkHeadings from 'rehype-autolink-headings';
 import { remarkDirectiveHandler } from './src/lib/remark-directive.mjs';
 import { remarkLinkCard } from './src/lib/remark-link-card.mjs';
 import { remarkWikiLink } from './src/lib/remark-wiki-link.mjs';
+import { loadPostLastmodMap } from './src/lib/sitemap-lastmod.mjs';
+
+const postLastmodMap = loadPostLastmodMap({
+  postsDir: new URL('./src/posts/', import.meta.url),
+  stripFirstSegment: true,
+});
 
 export default defineConfig({
+  // TODO: デプロイ先のドメインに書き換えてください。sitemap や canonical URL に使われます。
+  site: 'https://example.com/',
   // expressiveCode は mdx より前に置く必要がある
   integrations: [
     expressiveCode({
@@ -25,6 +34,15 @@ export default defineConfig({
       },
     }),
     mdx(),
+    sitemap({
+      serialize(item) {
+        const lastmod = postLastmodMap.get(new URL(item.url).pathname);
+        if (lastmod) {
+          item.lastmod = lastmod;
+        }
+        return item;
+      },
+    }),
   ],
   markdown: {
     // :::note などの directive 記法を <Callout> に変換

@@ -38,10 +38,10 @@ describe('LismPropsData', () => {
     });
 
     test('set は setClasses バケットに入る', () => {
-      const instance = new LismPropsData({ set: 'var:hov' });
-      expect(instance.setClasses).toContain('set--var:hov');
-      expect(instance.propClasses).not.toContain('set--var:hov');
-      expect(instance.uClasses).not.toContain('set--var:hov');
+      const instance = new LismPropsData({ set: 'hov' });
+      expect(instance.setClasses).toContain('set--hov');
+      expect(instance.propClasses).not.toContain('set--hov');
+      expect(instance.uClasses).not.toContain('set--hov');
     });
 
     test('trait prop (isContainer) は traitClasses バケットに入る', () => {
@@ -112,13 +112,13 @@ describe('LismPropsData', () => {
     test('全バケットに要素が同時に投入されても、それぞれが正しいバケットに振り分けられる', () => {
       const instance = new LismPropsData({
         primitiveClass: ['l--flex'],
-        set: 'var:bxsh',
+        set: 'bxsh',
         isContainer: true,
         util: 'cbox',
         p: '20',
       });
       expect(instance.primitiveClass).toEqual(['l--flex']);
-      expect(instance.setClasses).toContain('set--var:bxsh');
+      expect(instance.setClasses).toContain('set--bxsh');
       expect(instance.traitClasses).toContain('is--container');
       expect(instance.uClasses).toContain('u--cbox');
       expect(instance.propClasses).toContain('-p:20');
@@ -130,28 +130,28 @@ describe('LismPropsData', () => {
       const instance = new LismPropsData({
         className: 'c--box',
         primitiveClass: ['l--flex'],
-        set: 'var:hov',
+        set: 'hov',
         isContainer: true,
         util: 'cbox',
         p: '20',
       });
       const cls = instance.className;
       expect(cls.indexOf('c--box')).toBeLessThan(cls.indexOf('l--flex'));
-      expect(cls.indexOf('l--flex')).toBeLessThan(cls.indexOf('set--var:hov'));
-      expect(cls.indexOf('set--var:hov')).toBeLessThan(cls.indexOf('is--container'));
+      expect(cls.indexOf('l--flex')).toBeLessThan(cls.indexOf('set--hov'));
+      expect(cls.indexOf('set--hov')).toBeLessThan(cls.indexOf('is--container'));
       expect(cls.indexOf('is--container')).toBeLessThan(cls.indexOf('u--cbox'));
       expect(cls.indexOf('u--cbox')).toBeLessThan(cls.indexOf('-p:20'));
     });
 
     test('primitiveClass 空でも他のバケットは規定の順序を保つ', () => {
       const instance = new LismPropsData({
-        set: 'var:bxsh',
+        set: 'bxsh',
         hasTransition: true,
         util: 'trim',
         fz: 'xl',
       });
       const cls = instance.className;
-      expect(cls.indexOf('set--var:bxsh')).toBeLessThan(cls.indexOf('has--transition'));
+      expect(cls.indexOf('set--bxsh')).toBeLessThan(cls.indexOf('has--transition'));
       expect(cls.indexOf('has--transition')).toBeLessThan(cls.indexOf('u--trim'));
       expect(cls.indexOf('u--trim')).toBeLessThan(cls.indexOf('-fz:xl'));
     });

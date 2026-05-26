@@ -514,6 +514,37 @@ describe('Lism', () => {
         const element = screen.getByTestId('lism');
         expect(element).toHaveClass('-min-h:100%');
       });
+
+      test('contentSize にプリセット値を指定できる', () => {
+        render(
+          <Lism contentSize="l" data-testid="lism">
+            test
+          </Lism>
+        );
+        const element = screen.getByTestId('lism');
+        expect(element).toHaveClass('-contentSize:l');
+        expect(element).not.toHaveClass('is--wrapper');
+      });
+
+      test('contentSize にトークン値を指定すると CSS 変数として出力される', () => {
+        render(
+          <Lism contentSize="xs" data-testid="lism">
+            test
+          </Lism>
+        );
+        const element = screen.getByTestId('lism');
+        expect(element).toHaveStyle({ '--contentSize': 'var(--sz--xs)' });
+      });
+
+      test('contentSize に任意値を指定すると CSS 変数として出力される', () => {
+        render(
+          <Lism contentSize="800px" data-testid="lism">
+            test
+          </Lism>
+        );
+        const element = screen.getByTestId('lism');
+        expect(element).toHaveStyle({ '--contentSize': '800px' });
+      });
     });
 
     describe('Displays', () => {
@@ -1120,6 +1151,18 @@ describe('Lism', () => {
         expect(element).toHaveClass('-contentSize:l');
       });
 
+      test('isWrapper="m" は contentSize prop として扱われる', () => {
+        render(
+          <Lism isWrapper="m" data-testid="lism">
+            test
+          </Lism>
+        );
+        const element = screen.getByTestId('lism');
+        expect(element).toHaveClass('is--wrapper');
+        expect(element).toHaveClass('-contentSize:m');
+        expect(element).not.toHaveStyle({ '--contentSize': 'var(--sz--m)' });
+      });
+
       test('isLayer を指定できる', () => {
         render(
           <Lism isLayer data-testid="lism">
@@ -1162,35 +1205,35 @@ describe('Lism', () => {
     });
 
     describe('set-- Classes', () => {
-      test('set="var:bxsh" で set--var:bxsh クラスが出力される', () => {
+      test('set="bxsh" で set--bxsh クラスが出力される', () => {
         render(
-          <Lism set="var:bxsh" data-testid="lism">
+          <Lism set="bxsh" data-testid="lism">
             test
           </Lism>
         );
         const element = screen.getByTestId('lism');
-        expect(element).toHaveClass('set--var:bxsh');
+        expect(element).toHaveClass('set--bxsh');
       });
 
-      test('set="var:hov" で set--var:hov クラスが出力される', () => {
+      test('set="hov" で set--hov クラスが出力される', () => {
         render(
-          <Lism set="var:hov" data-testid="lism">
+          <Lism set="hov" data-testid="lism">
             test
           </Lism>
         );
         const element = screen.getByTestId('lism');
-        expect(element).toHaveClass('set--var:hov');
+        expect(element).toHaveClass('set--hov');
       });
 
-      test('set="var:hov var:bxsh" で複数の set-- クラスが出力される', () => {
+      test('set="hov bxsh" で複数の set-- クラスが出力される', () => {
         render(
-          <Lism set="var:hov var:bxsh" data-testid="lism">
+          <Lism set="hov bxsh" data-testid="lism">
             test
           </Lism>
         );
         const element = screen.getByTestId('lism');
-        expect(element).toHaveClass('set--var:hov');
-        expect(element).toHaveClass('set--var:bxsh');
+        expect(element).toHaveClass('set--hov');
+        expect(element).toHaveClass('set--bxsh');
       });
 
       test('set="plain" で set--plain クラスが出力される', () => {
@@ -1213,45 +1256,55 @@ describe('Lism', () => {
         expect(element).toHaveClass('set--revert');
       });
 
-      test('set="var:bdrsInner" で set--var:bdrsInner クラスが出力される', () => {
+      test('set="bdrsInner" で set--bdrsInner クラスが出力される', () => {
         render(
-          <Lism set="var:bdrsInner" data-testid="lism">
+          <Lism set="bdrsInner" data-testid="lism">
             test
           </Lism>
         );
         const element = screen.getByTestId('lism');
-        expect(element).toHaveClass('set--var:bdrsInner');
+        expect(element).toHaveClass('set--bdrsInner');
+      });
+
+      test('set="bleed" で set--bleed クラスが出力される', () => {
+        render(
+          <Lism set="bleed" data-testid="lism">
+            test
+          </Lism>
+        );
+        const element = screen.getByTestId('lism');
+        expect(element).toHaveClass('set--bleed');
       });
     });
 
     describe('set 値内 `-` prefix による除外', () => {
       test('set 値内 `-name` で指定した値が除外される', () => {
         render(
-          <Lism set="var:hov var:bdrsInner var:bxsh -var:bxsh" data-testid="lism">
+          <Lism set="hov bdrsInner bxsh -bxsh" data-testid="lism">
             test
           </Lism>
         );
         const element = screen.getByTestId('lism');
-        expect(element).toHaveClass('set--var:hov');
-        expect(element).toHaveClass('set--var:bdrsInner');
-        expect(element).not.toHaveClass('set--var:bxsh');
+        expect(element).toHaveClass('set--hov');
+        expect(element).toHaveClass('set--bdrsInner');
+        expect(element).not.toHaveClass('set--bxsh');
       });
 
       test('複数の `-name` で複数除外できる', () => {
         render(
-          <Lism set="var:hov var:bdrsInner var:bxsh -var:hov -var:bxsh" data-testid="lism">
+          <Lism set="hov bdrsInner bxsh -hov -bxsh" data-testid="lism">
             test
           </Lism>
         );
         const element = screen.getByTestId('lism');
-        expect(element).not.toHaveClass('set--var:hov');
-        expect(element).toHaveClass('set--var:bdrsInner');
-        expect(element).not.toHaveClass('set--var:bxsh');
+        expect(element).not.toHaveClass('set--hov');
+        expect(element).toHaveClass('set--bdrsInner');
+        expect(element).not.toHaveClass('set--bxsh');
       });
 
       test('全て除外すると set-- クラスが出力されない', () => {
         render(
-          <Lism set="var:bxsh -var:bxsh" data-testid="lism">
+          <Lism set="bxsh -bxsh" data-testid="lism">
             test
           </Lism>
         );
@@ -1295,12 +1348,12 @@ describe('Lism', () => {
 
       test('set と util を同時に指定できる', () => {
         render(
-          <Lism set="var:hov" util="cbox" data-testid="lism">
+          <Lism set="hov" util="cbox" data-testid="lism">
             test
           </Lism>
         );
         const element = screen.getByTestId('lism');
-        expect(element).toHaveClass('set--var:hov');
+        expect(element).toHaveClass('set--hov');
         expect(element).toHaveClass('u--cbox');
       });
     });
@@ -1372,7 +1425,7 @@ describe('Lism', () => {
     describe('複数のTrait Classを同時に指定', () => {
       test('複数のTrait Classを同時に指定できる', () => {
         render(
-          <Lism isContainer isLayer hasGutter set="var:bxsh" data-testid="lism">
+          <Lism isContainer isLayer hasGutter set="bxsh" data-testid="lism">
             test
           </Lism>
         );
@@ -1380,7 +1433,7 @@ describe('Lism', () => {
         expect(element).toHaveClass('is--container');
         expect(element).toHaveClass('is--layer');
         expect(element).toHaveClass('has--gutter');
-        expect(element).toHaveClass('set--var:bxsh');
+        expect(element).toHaveClass('set--bxsh');
       });
     });
   });

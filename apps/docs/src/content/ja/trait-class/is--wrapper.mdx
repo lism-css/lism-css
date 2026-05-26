@@ -27,7 +27,9 @@ import { Wrapper, Box, Lism, Spacer } from "lism-css/astro";
 |---|---|
 | `isWrapper`| `is--wrapper` |
 | `isWrapper='s'` | `is--wrapper`, `-contentSize:s` |
+| `isWrapper='m'` | `is--wrapper`, `-contentSize:m` |
 | `isWrapper='l'` | `is--wrapper`, `-contentSize:l` |
+| `isWrapper='xl'` | `is--wrapper`, `-contentSize:xl` |
 | `isWrapper={value}` | `is--wrapper`, `--contentSize:{value}` |
 
 `<Lism isWrapper>` のエイリアスとして、`<Wrapper>` も用意しています。
@@ -119,7 +121,7 @@ import { Wrapper, Box, Lism, Spacer } from "lism-css/astro";
 
 ### 任意のコンテナサイズをセットする
 
-s, l 以外の値をセットしたい場合は、isWrapper に任意の値をセットすると`--contentSize`変数として出力されます。
+s, m, l, xl 以外の値をセットしたい場合は、isWrapper に任意の値をセットすると`--contentSize`変数として出力されます。
 
 <Preview>
   <PreviewTitle>is--wrapper に任意の値をセットする</PreviewTitle>

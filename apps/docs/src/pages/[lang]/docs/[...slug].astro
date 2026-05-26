@@ -58,7 +58,7 @@ const ogImage = `/${lang}/docs/og/${slug}.png`;
   date={entry.data.date}
 >
   {/* フォールバック（未翻訳）ページは検索対象から除外 */}
-  <Stack as="article" class="z--article set--cqUnit set--var:s" g="40" {...!isFallback && { 'data-pagefind-body': true }}>
+  <Stack as="article" class="z--article set--cqUnit set--s" g="40" {...!isFallback && { 'data-pagefind-body': true }}>
     {/* 未翻訳の注意書き */}
     {isFallback && <TranslationNotice lang={lang} />}
 
