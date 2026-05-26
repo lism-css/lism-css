@@ -201,6 +201,23 @@ npx lism-cli ui add --all
 名前は大文字小文字・ハイフン・アンダースコアを無視して解決するため、`NavMenu` / `navmenu` / `nav-menu` / `nav_menu` のいずれでも同じコンポーネントに解決されます。
 
 
+## 未使用CSSの削除（パージ）
+
+本番ビルド時に未使用の Lism CSS クラスを取り除き、CSS ファイルを軽量化するパージプラグインを `lism-css` パッケージに同梱しています。Vite / Astro どちらの環境でも利用できます。
+
+```js
+// astro.config.mjs の例
+import { defineConfig } from 'astro/config';
+import { lismPurgeAstro } from 'lism-css/purge';
+
+export default defineConfig({
+  integrations: [lismPurgeAstro({ report: true })],
+});
+```
+
+詳しいセットアップ・オプション・safelist の指定方法は [CSS Purge](/docs/purge/) を参照してください。
+
+
 ## AIツール連携
 
 AIコーディングツール（Claude Code, Cursor, Codex など）で Lism CSS を効率よく扱うためのセットアップも用意しています。

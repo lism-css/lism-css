@@ -49,6 +49,10 @@ import { Tabs } from '@lism-css/ui/astro/Tabs';
 import { Button } from '@lism-css/ui/astro/Button';
 ```
 
+### CSS Purge（未使用CSSの削除）
+
+`lism-css/purge` を使うと、本番ビルド時に未使用の Lism CSS クラスを取り除いて出力 CSS を軽量化できます（Vite / Astro 対応）。詳細は https://lism-css.com/docs/purge/ を参照。
+
 
 ## 実装ルール
 

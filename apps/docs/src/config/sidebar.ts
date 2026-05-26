@@ -126,7 +126,7 @@ const docsSidebar: SidebarSection[] = [
   {
     label: 'はじめに',
     translate: { en: 'Getting Started' },
-    items: ['/docs/overview/', '/docs/installation/', '/docs/skills/', '/docs/mcp/', '/docs/features/', '/docs/changelog/'],
+    items: ['/docs/overview/', '/docs/installation/', '/docs/purge/', '/docs/skills/', '/docs/mcp/', '/docs/features/', '/docs/changelog/'],
   },
 
   // 概要カテゴリ
