@@ -13,7 +13,7 @@ import { ArticleNotFoundError, convertHtmlToMd } from './convert-html-to-md';
 import { buildLlmsTxt } from './build-llms-txt';
 import { buildUiIndexMd } from './build-ui-index-md';
 
-// 変換対象のパスプレフィックス。patterns / demo / preview / page-layout / og 等は対象外
+// 変換対象のパスプレフィックス。patterns / demo / preview / page-layouts / og 等は対象外
 const INCLUDE_PREFIXES = ['docs/', 'ui/', 'en/docs/', 'en/ui/'];
 
 function isTargetPage(pathname: string): boolean {
