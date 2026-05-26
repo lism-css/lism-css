@@ -9,6 +9,30 @@ Breaking changes may continue until v1.0, so all notable changes are documented 
 
 <Divider bds="dashed" my="40" />
 
+## lism-css v.0.21.0 (2026.05.26)
+
+This release contains **breaking changes**.
+
+### Renamed set classes (#404)
+
+- Reverted the `set--var:xxx` format back to `set--xxx` (`set--var:hov` → `set--hov`, `set--var:bxsh` → `set--bxsh`, `set--var:bdrsInner` → `set--bdrsInner`, `set--var:s` → `set--s`)
+- The `set` prop value is also updated accordingly (e.g., `set="var:hov"` → `set="hov"`)
+- No backward-compatibility aliases are provided since this is still a beta release
+
+### Added contentSize Prop and set--bleed (#405)
+
+- Added `contentSize` as a Lism Prop (preset values `s` / `m` / `l` / `xl` output as classes, arbitrary values as CSS variables)
+- Added `set--bleed` to the core CSS, providing `--bleed` variable generation for one-sided bleed layouts
+- Reorganized the `Wrapper` component around the `isWrapper` + `contentSize` combination
+
+### Other
+
+- Added `isWrapper="xl"` preset support
+- Added breakpoint support (`bp: 1`) for `pos` and `order` properties
+- Added `label` tag to `InlineAllowedTag`
+
+<Divider bds="dashed" my="40" />
+
 ## lism-css v.0.20.0 (2026.05.20)
 
 This release contains **breaking changes**.
