@@ -1,3 +1,5 @@
+import { createHash } from 'node:crypto';
+import { basename, dirname } from 'node:path/posix';
 import type { Plugin } from 'vite';
 import { extractLismClasses } from './extract';
 import { purgeLismCss } from './core';
@@ -8,6 +10,48 @@ export type { LismPurgeOptions } from './options';
 
 function decodeAssetSource(source: string | Uint8Array): string {
   return typeof source === 'string' ? source : new TextDecoder().decode(source);
+}
+
+const REF_EXT = /\.(html?|js|mjs|cjs|json|txt|xml|map)$/;
+const HASHED_CSS_NAME = /^(.+)([.-])([A-Za-z0-9_-]{6,})\.css$/;
+
+interface RenameInfo {
+  oldName: string;
+  newName: string;
+  oldBase: string;
+  newBase: string;
+}
+
+function shortContentHash(content: string): string {
+  return createHash('sha256').update(content).digest('hex').slice(0, 8);
+}
+
+function getRenamedCssFileName(fileName: string, content: string): RenameInfo | null {
+  const oldBase = basename(fileName);
+  const match = HASHED_CSS_NAME.exec(oldBase);
+  if (!match) return null;
+
+  const newBase = `${match[1]}${match[2]}${shortContentHash(content)}.css`;
+  if (newBase === oldBase) return null;
+
+  const dir = dirname(fileName);
+  return {
+    oldName: fileName,
+    newName: dir === '.' ? newBase : `${dir}/${newBase}`,
+    oldBase,
+    newBase,
+  };
+}
+
+function replaceRenamedReferences(content: string, renames: RenameInfo[]): string {
+  let out = content;
+  for (const { oldName, newName, oldBase, newBase } of renames) {
+    out = out.split(oldName).join(newName);
+    if (oldBase !== oldName) {
+      out = out.split(oldBase).join(newBase);
+    }
+  }
+  return out;
 }
 
 export function lismPurge(options: LismPurgeOptions = {}): Plugin {
@@ -37,6 +81,7 @@ export function lismPurge(options: LismPurgeOptions = {}): Plugin {
 
       let beforeBytes = 0;
       let afterBytes = 0;
+      const renames: RenameInfo[] = [];
 
       for (const key of cssTargets) {
         const asset = bundle[key];
@@ -46,8 +91,25 @@ export function lismPurge(options: LismPurgeOptions = {}): Plugin {
         const purged = purgeLismCss(source, { used, safelist: options.safelist, known });
         if (purged === source) continue;
         asset.source = purged;
+        const rename = getRenamedCssFileName(asset.fileName, purged);
+        if (rename) {
+          asset.fileName = rename.newName;
+          delete bundle[key];
+          bundle[rename.newName] = asset;
+          renames.push(rename);
+        }
         beforeBytes += source.length;
         afterBytes += purged.length;
+      }
+
+      if (renames.length > 0) {
+        for (const asset of Object.values(bundle)) {
+          if (asset.type === 'chunk') {
+            asset.code = replaceRenamedReferences(asset.code, renames);
+          } else if (REF_EXT.test(asset.fileName)) {
+            asset.source = replaceRenamedReferences(decodeAssetSource(asset.source), renames);
+          }
+        }
       }
 
       if (options.report && beforeBytes > 0) {
