@@ -98,10 +98,10 @@ describe('PropValueTypes', () => {
     expectTypeOf<PropValueTypes['td']>().toEqualTypeOf<'none' | (string & {}) | number | boolean | null | undefined>();
   });
 
-  it('pos には presets と utils の値を設定できる', () => {
-    expectTypeOf<PropValueTypes['pos']>().toEqualTypeOf<
-      'static' | 'fixed' | 'sticky' | 'relative' | 'absolute' | (string & {}) | number | boolean | null | undefined
-    >();
+  it('ta には presets の値を設定できる（bp 未設定のため非レスポンシブ）', () => {
+    // presets: ['center', 'left', 'right']
+    // bp 未設定なので Responsive でラップされない
+    expectTypeOf<PropValueTypes['ta']>().toEqualTypeOf<'center' | 'left' | 'right' | (string & {}) | number | boolean | null | undefined>();
   });
 
   it('ai には presets と utils の値を設定できる（レスポンシブ対応）', () => {
