@@ -1,9 +1,10 @@
 ---
-import { Spacer, Stack, Flex, Cluster, AutoColumns, Text, Heading, Link, BoxLink, Lism, Frame, Inline } from 'lism-css/astro';
+import { Stack, Flex, Cluster, AutoColumns, Text, Heading, Link, BoxLink, Lism, Inline } from 'lism-css/astro';
 import { Button } from '@lism-css/ui/astro/Button';
 import { Image } from 'astro:assets';
 import { getLocalizedUrl, type LangCode } from '@/lib/i18n';
 import { stackLabels, groupByCategory, getAggregateRepresentative } from '@/config/templates';
+import { Preview, PreviewCode } from '@/components/Preview';
 import CopyCommand from './CopyCommand.astro';
 
 interface Props {
@@ -55,7 +56,7 @@ const grouped = groupByCategory();
 
 const patternsUrl = getLocalizedUrl('/patterns/', lang);
 
-const buildCommand = (slug: string) => `pnpm create lism --template ${slug}`;
+const buildCommand = (slug: string) => `npm create lism@latest -- --template ${slug}`;
 const buildDetailUrl = (category: string, slug: string) => getLocalizedUrl(`/templates/${category}/${slug}/`, lang);
 const buildCategoryDetailUrl = (category: string) => getLocalizedUrl(`/templates/${category}/`, lang);
 ---
@@ -70,16 +71,39 @@ const buildCategoryDetailUrl = (category: string) => getLocalizedUrl(`/templates
   {/* ===== クイックスタート ===== */}
   <Stack as="section" g="30">
     <Heading level="2">{copy.quickStart}</Heading>
-    <Stack g="15" p="30" bd bdrs="20" bgc="base">
-      <Text util="trim" c="text-2" fz="s" lh="s">{copy.commandLead}</Text>
-      <Lism as="pre" class="p--templates_code" p="15" bdrs="20" bgc="base-2" fz="xs" lh="s">
-        <code>pnpm create lism</code>
-      </Lism>
-      <Spacer h="5" />
-      <Text util="trim" c="text-2" fz="xs" lh="s">{copy.fullFormLead}</Text>
-      <Lism as="pre" class="p--templates_code p--templates_codeSub" p="10" bdrs="10" bgc="base-2" fz="xs" lh="s">
-        <code>pnpm create lism {'{targetDir}'} --template {'{slug}'}</code>
-      </Lism>
+    <Stack g="40" p="30" bd bdrs="20" bgc="base">
+      {/* 対話形式 */}
+      <Stack>
+        <Text util="trim" c="text-2" fz="s" lh="s">{copy.commandLead}</Text>
+        <Preview>
+          <PreviewCode slot="tab" label="npm">
+            <Lism as="pre" class="p--templates_code" p="15" bdrs="10" bgc="base-2" fz="xs" lh="s">
+              <code>npm create lism@latest</code>
+            </Lism>
+          </PreviewCode>
+          <PreviewCode slot="tab" label="pnpm">
+            <Lism as="pre" class="p--templates_code" p="15" bdrs="10" bgc="base-2" fz="xs" lh="s">
+              <code>pnpm create lism</code>
+            </Lism>
+          </PreviewCode>
+        </Preview>
+      </Stack>
+      {/* 引数指定 */}
+      <Stack>
+        <Text util="trim" c="text-2" fz="s" lh="s">{copy.fullFormLead}</Text>
+        <Preview>
+          <PreviewCode slot="tab" label="npm">
+            <Lism as="pre" class="p--templates_code" p="15" bdrs="10" bgc="base-2" fz="xs" lh="s">
+              <code>npm create lism@latest {'{targetDir}'} -- --template {'{slug}'}</code>
+            </Lism>
+          </PreviewCode>
+          <PreviewCode slot="tab" label="pnpm">
+            <Lism as="pre" class="p--templates_code" p="15" bdrs="10" bgc="base-2" fz="xs" lh="s">
+              <code>pnpm create lism {'{targetDir}'} --template {'{slug}'}</code>
+            </Lism>
+          </PreviewCode>
+        </Preview>
+      </Stack>
     </Stack>
   </Stack>
 
