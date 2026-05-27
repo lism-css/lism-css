@@ -32,7 +32,8 @@ This release contains **breaking changes**.
 
 - Removed `--td-c` / `--td-bgc` / `--td-min-sz` / `--th-c` / `--th-bgc` / `--th-min-sz` / `--th-p` (their fallback values matched the default behavior when undefined, so they were redundant)
 - Renamed `--td-p` to `--cells-p`, now applied to both `td` and `th`
-- Final form: `td, th { padding: var(--cells-p, var(--s10) var(--s15)); }`
+- Changed the fallback from `var(--s10) var(--s15)` to `0.625em 0.875em` (now scales with the parent font size)
+- Final form: `td, th { padding: var(--cells-p, 0.625em 0.875em); }`
 
 <Divider bds="dashed" my="40" />
 

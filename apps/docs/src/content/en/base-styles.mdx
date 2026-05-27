@@ -226,13 +226,13 @@ The padding of `td` and `th` can be customized via `--cells-p`.
 
 ```scss
 td, th {
-  padding: var(--cells-p, var(--s10) var(--s15));
+  padding: var(--cells-p, 0.625em 0.875em);
 }
 ```
 
 | Variable | Fallback | Purpose |
 |------|------------|------|
-| `--cells-p` | `var(--s10) var(--s15)` | Cell padding |
+| `--cells-p` | `0.625em 0.875em` | Cell padding |
 
 
 ### Form elements

@@ -32,7 +32,8 @@ v.1.0リリースまでしばらく激しい変更が続く可能性があるた
 
 - `--td-c` / `--td-bgc` / `--td-min-sz` / `--th-c` / `--th-bgc` / `--th-min-sz` / `--th-p` を削除（未定義時の挙動と同じため不要）
 - `--td-p` を `--cells-p` にリネーム（`td`, `th` 両方に適用）
-- 最終形: `td, th { padding: var(--cells-p, var(--s10) var(--s15)); }`
+- フォールバック値を `var(--s10) var(--s15)` から `0.625em 0.875em` に変更（親フォントサイズ基準に変更）
+- 最終形: `td, th { padding: var(--cells-p, 0.625em 0.875em); }`
 
 <Divider bds="dashed" my="40" />
 
