@@ -1,0 +1,60 @@
+---
+import DemoPageLayout from '@/layouts/DemoPageLayout.astro';
+import { Lism, Wrapper, Container, Stack, Flex, Layer } from 'lism-css/astro';
+---
+
+<DemoPageLayout title="One Side Bleed Section">
+  <Stack id="wrap" min-h="100vh">
+    <!-- header -->
+    <Container as="header" isWrapper="l" hasGutter py="20" bgc="base-2" bg=":stripe">
+      <Flex jc="between" ai="center" g="15">
+        <Lism fz="l">Header</Lism>
+      </Flex>
+    </Container>
+
+    <!-- content -->
+    <Container as="main" fx="1">
+      <Wrapper as="section" contentSize="m" hasGutter layout="stack" g="20" py="50">
+        <Lism bgc="base-2" p="40" bg=":stripe">...Other Section content...</Lism>
+      </Wrapper>
+      <Lism as="section" pos="relative" iso="isolate">
+        <Layer layout="frame">
+          <img src="https://cdn.lism-css.com/img/u-2.jpg" alt="" width="1920" height="1280" />
+        </Layer>
+        <Layer bgc="black:50%" />
+        <Wrapper contentSize="m" hasGutter pos="relative" py="60" c="white">
+          <Stack g="20">
+            <h2>Section with a full-bleed media</h2>
+            <p>
+              Lorem ipsum dolor sit amet. Consectetur adipiscing elit, sed do eiusmod tempor Incididunt ut. Labore et dolore magna aliqua. Ut enim ad
+              minim veniam, quis nostrud exercitation ullamco laboris nisi ut. Aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit
+              in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint.
+            </p>
+          </Stack>
+        </Wrapper>
+      </Lism>
+      <Wrapper as="section" contentSize="m" hasGutter py="60" bgc="base-2">
+        <Stack g="20">
+          <h2>Section with a full-bleed background</h2>
+          <p>
+            Lorem ipsum dolor sit amet. Consectetur adipiscing elit, sed do eiusmod tempor Incididunt ut. Labore et dolore magna aliqua. Ut enim ad
+            minim veniam, quis nostrud exercitation ullamco laboris nisi ut. Aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit
+            in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint.
+          </p>
+        </Stack>
+      </Wrapper>
+
+      <Wrapper hasGutter layout="stack" g="20" py="50">
+        <Lism bgc="base-2" p="40" bg=":stripe">...Other Section content...</Lism>
+      </Wrapper>
+    </Container>
+
+    <!-- footer -->
+    <Container as="footer" isWrapper hasGutter py="40" bgc="base-2" bg=":stripe">
+      <Stack g="20" ai="center">
+        <Lism fz="l">Footer Area</Lism>
+        <Lism fz="s" c="text-2" util="trim">© 2026 Lism CSS.</Lism>
+      </Stack>
+    </Container>
+  </Stack>
+</DemoPageLayout>

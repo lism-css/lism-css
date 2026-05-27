@@ -5,7 +5,7 @@
     --base-2: hsl(220 4% 94%);
 
     --brand: hsl(204, 64%, 30%);
-    --link: hsl(204, 80%, 50%);
+    --link: hsl(212, 80%, 50%);
 
     /* Gen Interface JP → see: https://gen.typesetting.jp/ */
     --ff--base: 'Gen Interface JP', 'Hiragino Sans', sans-serif, 'Segoe UI Emoji';
@@ -34,12 +34,13 @@
 
   /* === リンクスタイル === */
   a {
-    color: inherit;
-    text-decoration-thickness: 2px;
+    /* color: inherit; */
+    text-decoration-thickness: 1.5px;
     text-decoration-color: var(--link);
+    text-underline-offset: 0.2em;
   }
   a:where(:hover, :focus-visible) {
-    text-decoration-thickness: 4px;
+    text-decoration-thickness: 3px;
     text-decoration-skip-ink: none;
   }
 
@@ -56,7 +57,7 @@
     --divider: hsl(204, 6%, 30%);
 
     --brand: hsl(204, 64%, 64%);
-    --link: hsl(204, 80%, 64%);
+    --link: hsl(212, 88%, 64%);
 
     /* shadow color */
     --shc: hsl(204 4% 10% / 90%);
@@ -86,7 +87,7 @@
       margin-inline: 0.125em;
       border-radius: var(--bdrs--10);
     }
-    a > code:is(&) {
+    a > code {
       text-decoration: inherit;
     }
 

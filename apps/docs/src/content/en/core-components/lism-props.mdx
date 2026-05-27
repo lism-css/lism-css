@@ -90,7 +90,7 @@ Both props accept space-separated values.
 
 ### Excluding with `-` prefix
 
-Prefix a value with `-` to exclude that identifier. This is useful when you want to remove a class that has been applied internally by a component.
+Prefix a value with `-` to exclude that identifier. Use this to remove a class that has been applied internally by a component.
 
 ```jsx
 {/* Exclude set="plain" (set--plain) that MyButton applies by default */}
@@ -142,7 +142,7 @@ Props corresponding to Trait Classes (`is--*` / `has--*`).
 | `isSide` | `is--side` | Side element |
 | `isSkipFlow` | `is--skipFlow` | Skip Flow spacing |
 | `hasTransition` | `has--transition` | Sets `transition` properties via CSS variables |
-| `hasGutter` | `has--gutter` | Reserves a unified horizontal gutter (`--gutter-size`) |
+| `hasGutter` | `has--gutter` | Reserves a unified horizontal gutter (`--gutter` / `--gutter--base`) |
 | `hasSnap` | `has--snap` | Sets `scroll-snap-*` properties via CSS variables |
 | `hasMask` | `has--mask` | Sets `mask` property via CSS variables |
 
@@ -246,7 +246,7 @@ Use this to define the variable value in CSS or to **inherit it from a parent el
 
 
 <div id="output-utility"></div>
-### Force output as a class with `:`
+### Class output with `:`
 
 Even if no corresponding Property Class exists, prefixing a value with `:` will output the string after it as a class name.
 
@@ -315,9 +315,9 @@ For properties that do not support responsive behavior by default (i.e., no CSS 
 
 ## `exProps`
 
-Accepts, as an object, **any props you want to bypass Lism Props processing for**.
+Pass an object containing **any props you want to bypass Lism Props processing for**.
 
-This is handy when a prop name of the external component specified via `as` conflicts with a Lism Prop name, and you want to explicitly mark it as belonging to the external component.
+Use this when a prop name of the external component specified via `as` conflicts with a Lism Prop name and you need to explicitly mark it as belonging to the external component.
 
 <Preview>
   <PreviewTitle>Example</PreviewTitle>
@@ -331,7 +331,7 @@ This is handy when a prop name of the external component specified via `as` conf
 </Preview>
 
 This way, the Lism `Icon` component processes `p` and `fz`, while the external component `Hoge` reliably receives `size`.
-(In this particular example, `exProps` is not strictly necessary since Lism does not currently process `size`, but explicitly marking external component props ensures no future conflicts.)
+(In this example, `exProps` is not strictly required since Lism does not currently process `size`, but explicitly marking external component props prevents future conflicts.)
 
 
 ## Class output order

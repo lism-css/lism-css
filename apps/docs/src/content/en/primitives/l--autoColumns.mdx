@@ -23,15 +23,15 @@ import { AutoColumns, Lism } from 'lism-css/astro';
 
 ### Props
 
-| Property | Description |
+| Prop | Description |
 |---|---|
 | `cols` <PropBadge type="cssvar">`--cols`</PropBadge> | Specifies the minimum width each column should maintain.
-| `autoFill` <PropBadge type="cssvar">`--autoMode`</PropBadge> | Switches the repeat mode to `auto-fill` (default is `auto-fit`).
+| `autoFit` <PropBadge type="cssvar">`--autoMode`</PropBadge> | Switches the repeat mode to `auto-fit` (default is `auto-fill`).
 
 
 ## Usage
 
-### Setting the size with `--cols`
+### Column size with `--cols`
 <Preview>
   <PreviewTitle>Setting the size with `--cols`</PreviewTitle>
   <PreviewArea resize p="20">
@@ -70,44 +70,44 @@ import { AutoColumns, Lism } from 'lism-css/astro';
   </PreviewCode>
 </Preview>
 
-### Using `auto-fill`
+### Using `auto-fit`
 
-In `l--autoColumns`, you can control the first argument of the `repeat()` function in `grid-template-columns` via `--autoMode`. (The default is `auto-fit`.)
+In `l--autoColumns`, you can control the first argument of the `repeat()` function in `grid-template-columns` via `--autoMode`. (The default is `auto-fill`.)
 
-Setting `--autoMode: auto-fill` (`autoFill`) changes the behavior when there are only a few items.
+Setting `--autoMode: auto-fit` (`autoFit`) changes the behavior when there are only a few items.
 
 
 <Preview>
-  <PreviewTitle>Using `cols=12em` with `auto-fill`</PreviewTitle>
+  <PreviewTitle>Using `cols=12em` with `auto-fit`</PreviewTitle>
   <PreviewArea resize p="20">
-    <AutoColumns cols="12em" autoFill g="20" fz="s">
+    <AutoColumns cols="12em" g="20" fz="s">
       <Lism as="div" p="20" bd>auto-fill</Lism>
       <Lism as="div" p="20" bd>auto-fill</Lism>
     </AutoColumns>
-    <AutoColumns cols="12em" g="20" fz="s">
+    <AutoColumns cols="12em" autoFit g="20" fz="s">
       <Lism as="div" p="20" bd>auto-fit</Lism>
       <Lism as="div" p="20" bd>auto-fit</Lism>
     </AutoColumns>
   </PreviewArea>
   <PreviewCode slot="tab" label="JSX">
-    ```jsx 'autoFill'
-    <AutoColumns cols="12em" autoFill g="20" fz="s">
+    ```jsx 'autoFit'
+    <AutoColumns cols="12em" g="20" fz="s">
       <Lism as="div" p="20" bd>auto-fill</Lism>
       <Lism as="div" p="20" bd>auto-fill</Lism>
     </AutoColumns>
-    <AutoColumns cols="12em" g="20" fz="s">
+    <AutoColumns cols="12em" autoFit g="20" fz="s">
       <Lism as="div" p="20" bd>auto-fit</Lism>
       <Lism as="div" p="20" bd>auto-fit</Lism>
     </AutoColumns>
     ```
   </PreviewCode>
   <PreviewCode slot="tab" label="HTML">
-    ```html "--autoMode:auto-fill"
-    <div class="l--autoColumns -g:20 -fz:s" style="--cols:12em; --autoMode:auto-fill">
+    ```html "--autoMode:auto-fit"
+    <div class="l--autoColumns -g:20 -fz:s" style="--cols:12em">
       <div class="-p:20 -bd">auto-fill</div>
       <div class="-p:20 -bd">auto-fill</div>
     </div>
-    <div class="l--autoColumns -g:20 -fz:s" style="--cols:12em">
+    <div class="l--autoColumns -g:20 -fz:s" style="--cols:12em; --autoMode:auto-fit">
       <div class="-p:20 -bd">auto-fit</div>
       <div class="-p:20 -bd">auto-fit</div>
     </div>

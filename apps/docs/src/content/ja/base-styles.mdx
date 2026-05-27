@@ -34,7 +34,7 @@ import 'lism-css/reset.css';
 
 <PreviewTitle>CDN経由でスタイルシートを読み込む</PreviewTitle>
 ```html
-<link href="https://cdn.jsdelivr.net/npm/lism-css@0.21.0/dist/css/reset.css" rel="stylesheet" />
+<link href="https://cdn.jsdelivr.net/npm/lism-css@0.22.0/dist/css/reset.css" rel="stylesheet" />
 ```
 
 
@@ -67,13 +67,14 @@ body {
   letter-spacing: var(--lts--base);
   background-color: var(--base);
   color: var(--text);
-  text-underline-offset: var(--under-offset, 0.125em);
+  text-underline-offset: 0.125em;
+  tab-size: 4;
 }
 ```
 
 `--hl` はハーフレディング（行間の上下余白）を管理するための変数です。`body` では `--hl--base` がセットされ、子要素に継承されます。
 
-`text-underline-offset` はリンクの下線位置を調整するプロパティで、`--under-offset` 変数で上書き可能です。
+`text-underline-offset` でリンクの下線位置を、`tab-size` でタブ文字の表示幅を整えています。
 
 
 ### 全要素の行間
@@ -229,42 +230,17 @@ dd + dt {
 
 ### テーブル
 
-テーブルセルの一部スタイルはCSS変数でカスタマイズ可能です。
+`td`, `th` のパディングは `--cells-p` でカスタマイズ可能です。
 
 ```scss
-table {
-  --td-c: inherit;
-  --td-bgc: transparent;
-  --td-p: var(--s10) var(--s15);
-  --td-min-sz: initial;
-}
-td {
-  color: var(--td-c);
-  background-color: var(--td-bgc);
-  padding: var(--td-p);
-  min-inline-size: var(--td-min-sz);
-}
-th {
-  color: var(--th-c, var(--td-c));
-  background-color: var(--th-bgc, var(--td-bgc));
-  padding: var(--th-p, var(--td-p));
-  min-inline-size: var(--th-min-sz, var(--td-min-sz));
+td, th {
+  padding: var(--cells-p, 0.625em 0.875em);
 }
 ```
 
 | 変数 | フォールバック | 用途 |
 |------|------------|------|
-| `--td-c` | `inherit` | セルのテキスト色 |
-| `--td-bgc` | `transparent` | セルの背景色 |
-| `--td-p` | `var(--s10) var(--s15)` | セルのパディング |
-| `--td-min-sz` | `initial` | セルの最小幅 |
-| `--th-c` | `var(--td-c)` | 見出しセルのテキスト色 |
-| `--th-bgc` | `var(--td-bgc)` | 見出しセルの背景色 |
-| `--th-p` | `var(--td-p)` | 見出しセルのパディング |
-| `--th-min-sz` | `var(--td-min-sz)` | 見出しセルの最小幅 |
-
-`th` は `td` の変数をフォールバックとして参照するため、`table` で `--td-*` を設定すれば `th` にも反映されます。
-それぞれ個別に変更したい場合は `--th-*` を指定してください。
+| `--cells-p` | `0.625em 0.875em` | セルのパディング |
 
 
 ### フォーム要素
@@ -275,8 +251,7 @@ th {
 input:not([type='range']), button, textarea, select, ::file-selector-button {
   background-color: var(--controls-bgc, var(--base-2));
   border: solid 1px var(--controls-bdc, var(--divider));
-  padding: var(--controls-p, var(--s5) var(--s10));
-  border-radius: var(--controls-bdrs, var(--bdrs--10));
+  padding: var(--controls-p, 0.25em 0.5em);
 }
 ```
 
@@ -284,8 +259,9 @@ input:not([type='range']), button, textarea, select, ::file-selector-button {
 |------|------------|------|
 | `--controls-bgc` | `var(--base-2)` | 背景色 |
 | `--controls-bdc` | `var(--divider)` | ボーダー色 |
-| `--controls-p` | `var(--s5) var(--s10)` | パディング |
-| `--controls-bdrs` | `var(--bdrs--10)` | 角丸 |
+| `--controls-p` | `0.25em 0.5em` | パディング |
+
+角丸はブラウザのデフォルトに委ねています。テーマで揃えたい場合は各セレクタに `border-radius` を直接指定してください。
 
 
 ### その他

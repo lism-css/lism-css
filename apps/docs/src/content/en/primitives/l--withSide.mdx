@@ -12,7 +12,7 @@ import { DummyText } from '@lism-css/ui/astro/DummyText';
 - Specify the width of the side content with `--sideW`, and specify the width you want to preserve as much as possible for the main content with `--mainW`.
 - While the main content has enough space to maintain `--mainW`, the layout stays horizontal; once it drops below that threshold, it automatically switches to a vertical layout.
 
-This is useful for layouts such as "image and content" or "main area and sidebar".
+Use it for layouts such as "image and content" or "main area and sidebar".
 
 ## CSS
 
@@ -35,7 +35,7 @@ div.l--withSide
 
 ### Props
 
-| Property | Output | Description |
+| Prop | Output | Description |
 |---|---|---|
 | `sideW`| <PropBadge type="cssvar">`--sideW`</PropBadge> | Width of the side element |
 | `mainW` | <PropBadge type="cssvar">`--mainW`</PropBadge> | Minimum width to maintain for the main element |
@@ -139,7 +139,7 @@ This places the side element on the left when horizontal, and at the bottom when
 
 `l--withSide` also works for layouts that show media and text side by side on wide screens and stacked on narrow screens.
 
-This is especially useful when multiple "media + text" pairs are stacked, and you want the media position (left/right) to alternate when arranged horizontally, while keeping the media at the top consistently when stacked vertically.
+Use this pattern when stacking multiple "media + text" pairs — the media alternates left/right horizontally and stays at the top consistently when stacked vertically.
 
 <Preview>
   <PreviewTitle>Example</PreviewTitle>
@@ -149,14 +149,14 @@ This is especially useful when multiple "media + text" pairs are stacked, and yo
         <Frame ar="3/2" isSide max-h="50cqw">
           <img src="https://cdn.lism-css.com/img/a-1.jpg" alt="" width="960" height="640" />
         </Frame>
-        <Box px="10"><DummyText lang="ja" /></Box>
+        <Box px="10"><DummyText /></Box>
       </WithSide>
 
       <WithSide fxd="row-reverse" sideW="40%" g="30" ai="center">
         <Frame ar="3/2" isSide max-h="50cqw">
           <img src="https://cdn.lism-css.com/img/a-2.jpg" alt="" width="960" height="640" />
         </Frame>
-        <Box px="10"><DummyText lang="ja" /></Box>
+        <Box px="10"><DummyText /></Box>
       </WithSide>
     </Stack>
   </PreviewArea>

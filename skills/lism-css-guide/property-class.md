@@ -178,7 +178,7 @@ Lism コンポーネントの Propsに渡す値の頭に `:` を付けると、 
 
 | Prop | CSS プロパティ | プリセット値クラス | BP |
 |------|--------------|-------------|-----|
-| `pos` | `position` | `-pos:static`, `-pos:fixed`, `-pos:sticky`, `-pos:relative`, `-pos:absolute` | — |
+| `pos` | `position` | `-pos:static`, `-pos:fixed`, `-pos:sticky`, `-pos:relative`, `-pos:absolute` | ✔ |
 | `z` | `z-index` | `-z:-1`, `-z:0`, `-z:1`, `-z:99` | — |
 | `t` | `top` | `-t:0`, `-t:50%`, `-t:100%` | — |
 | `l` | `left` | `-l:0`, `-l:50%`, `-l:100%` | — |
@@ -285,7 +285,7 @@ SPACEトークン（全値）: `5`, `10`, `15`, `20`, `25`, `30`, `35`, `40`, `5
 | `aslf` | `align-self` | `-aslf:start`, `-aslf:center`, `-aslf:end`, `-aslf:stretch` | — |
 | `jslf` | `justify-self` | `-jslf:start`, `-jslf:center`, `-jslf:end`, `-jslf:stretch` | — |
 | `pslf` | `place-self` | `-pslf:start`, `-pslf:center`, `-pslf:end` | — |
-| `order` | `order` | `-order:0`, `-order:-1`, `-order:1` | — |
+| `order` | `order` | `-order:0`, `-order:-1`, `-order:1` | ✔ |
 
 **コンポーネント用ショートハンド:** `ai`, `ac`, `ji`, `jc`, `aslf`, `jslf` では `s`→`start`, `e`→`end`, `c`→`center`, `fs`→`flex-start`, `fe`→`flex-end` のショートハンドが使えます。
 

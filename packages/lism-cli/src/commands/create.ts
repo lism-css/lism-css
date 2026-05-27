@@ -50,7 +50,7 @@ const CATEGORIES: CategoryDef[] = [
   },
   {
     id: 'lp',
-    label: { ja: 'Landing Page', en: 'Landing Page' },
+    label: { ja: 'LP', en: 'LP' },
     variantPromptKey: 'create.promptSelectVariant.lp',
   },
   {

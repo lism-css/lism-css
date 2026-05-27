@@ -13,19 +13,25 @@
 
 ```scss
 .has--gutter {
-  padding-inline: var(--gutter-size);
+  --gutter: var(--gutter--base);
+  padding-inline: var(--gutter);
 }
 ```
 
-`--gutter-size` はトークン (`:root`) で `var(--s30)` がデフォルト定義されている。
+ガター変数は `--flow--base` / `--flow` と同じ「基準値 + 要素ローカル機能変数」の2層構造を採る。
+
+- `--gutter--base`: `:root` で `var(--s30)` をデフォルトに持つサイト全体の基準値
+- `--gutter`: `.has--gutter` で `var(--gutter--base)` に初期化される要素ローカルの機能変数
 
 ## CSS 変数
 
 | 変数 | 役割 | デフォルト |
 |------|------|-----------|
-| `--gutter-size` | 左右の padding 量 | `var(--s30)` |
+| `--gutter--base` | サイト全体のガター基準値（`:root` 定義） | `var(--s30)` |
+| `--gutter` | `.has--gutter` 要素ローカルの機能変数 | `var(--gutter--base)` |
 
-個別要素で `--gutter-size` を上書きすれば、その要素のみ gutter 量を変更できる。
+- サイト全体の基準を変えたい場合は `:root` 等で `--gutter--base` を上書きする
+- 個別要素のみガター量を変えたい場合は、その要素で `style="--gutter: 20px"` のように `--gutter` を直接上書きする
 
 ## Usage
 
@@ -34,10 +40,20 @@
   <p>Lorem ipsum content...</p>
   <p>Lorem ipsum content...</p>
 </div>
+
+<!-- 個別要素でガター量を上書きする例 -->
+<div class="has--gutter" style="--gutter: 20px">
+  <p>Lorem ipsum content...</p>
+</div>
 ```
 ```jsx
 <Lism hasGutter>
   <p>Lorem ipsum content...</p>
+  <p>Lorem ipsum content...</p>
+</Lism>
+
+{/* 個別要素でガター量を上書きする例 */}
+<Lism hasGutter style={{ '--gutter': '20px' }}>
   <p>Lorem ipsum content...</p>
 </Lism>
 ```

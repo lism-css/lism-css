@@ -81,10 +81,10 @@ Lism CSS では、レイアウトを組み立てる小さな積み木として *
 ##### 2. カラム幅が指定値を下回ったら自動で折り返したい
 
 - **推奨**: `l--autoColumns` (`<AutoColumns cols="20rem" />`)
-- **理由**: BP に依存せず、カラム最小幅基準で `auto-fit` / `auto-fill` の挙動を簡潔に書ける
+- **理由**: BP に依存せず、カラム最小幅基準で `auto-fill` / `auto-fit` の挙動を簡潔に書ける
 - **典型例**: カード一覧、商品リスト、ロゴ並び等
 - **代替**:
-  - `l--grid`: `gtc="repeat(auto-fit, minmax(20rem, 1fr))"` を直書きできるが冗長
+  - `l--grid`: `gtc="repeat(auto-fill, minmax(20rem, 1fr))"` を直書きできるが冗長
 
 ##### 3. 「横並び」と「縦 1 列」を一括で切り替えたい（多段階の列数変化が不要）
 

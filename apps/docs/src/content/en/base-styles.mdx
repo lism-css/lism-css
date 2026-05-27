@@ -32,7 +32,7 @@ Or alternatively:
 
 <PreviewTitle>Load via CDN</PreviewTitle>
 ```html
-<link href="https://cdn.jsdelivr.net/npm/lism-css@0.21.0/dist/css/reset.css" rel="stylesheet" />
+<link href="https://cdn.jsdelivr.net/npm/lism-css@0.22.0/dist/css/reset.css" rel="stylesheet" />
 ```
 
 
@@ -60,13 +60,14 @@ body {
   letter-spacing: var(--lts--base);
   background-color: var(--base);
   color: var(--text);
-  text-underline-offset: var(--under-offset, 0.125em);
+  text-underline-offset: 0.125em;
+  tab-size: 4;
 }
 ```
 
 `--hl` is a variable that manages the half-leading (the spacing above and below a line). On `body`, `--hl--base` is set and inherited by child elements.
 
-`text-underline-offset` adjusts the position of link underlines and can be overridden with the `--under-offset` variable.
+`text-underline-offset` adjusts the position of link underlines, and `tab-size` sets the display width of tab characters.
 
 
 ### Line height for all elements
@@ -222,41 +223,17 @@ dd + dt {
 
 ### Tables
 
-Table cell styles can be customized with CSS variables.
+The padding of `td` and `th` can be customized via `--cells-p`.
 
 ```scss
-table {
-  --td-c: inherit;
-  --td-bgc: transparent;
-  --td-p: var(--s10) var(--s15);
-  --td-min-sz: initial;
-}
-td {
-  color: var(--td-c);
-  background-color: var(--td-bgc);
-  padding: var(--td-p);
-  min-inline-size: var(--td-min-sz);
-}
-th {
-  color: var(--th-c, var(--td-c));
-  background-color: var(--th-bgc, var(--td-bgc));
-  padding: var(--th-p, var(--td-p));
-  min-inline-size: var(--th-min-sz, var(--td-min-sz));
+td, th {
+  padding: var(--cells-p, 0.625em 0.875em);
 }
 ```
 
 | Variable | Fallback | Purpose |
 |------|------------|------|
-| `--td-c` | `inherit` | Cell text color |
-| `--td-bgc` | `transparent` | Cell background color |
-| `--td-p` | `var(--s10) var(--s15)` | Cell padding |
-| `--td-min-sz` | `initial` | Cell minimum width |
-| `--th-c` | `var(--td-c)` | Header cell text color |
-| `--th-bgc` | `var(--td-bgc)` | Header cell background color |
-| `--th-p` | `var(--td-p)` | Header cell padding |
-| `--th-min-sz` | `var(--td-min-sz)` | Header cell minimum width |
-
-Since `th` uses the `td` variables as fallbacks, setting `--td-*` on `table` also affects `th`. To override `th` individually, use `--th-*`.
+| `--cells-p` | `0.625em 0.875em` | Cell padding |
 
 
 ### Form elements
@@ -264,11 +241,10 @@ Since `th` uses the `td` variables as fallbacks, setting `--td-*` on `table` als
 Consistent styles are applied to form controls.
 
 ```scss
-input, button, textarea, select, ::file-selector-button {
+input:not([type='range']), button, textarea, select, ::file-selector-button {
   background-color: var(--controls-bgc, var(--base-2));
   border: solid 1px var(--controls-bdc, var(--divider));
-  padding: var(--controls-p, var(--s5) var(--s10));
-  border-radius: var(--controls-bdrs, var(--bdrs--10));
+  padding: var(--controls-p, 0.25em 0.5em);
 }
 ```
 
@@ -276,8 +252,9 @@ input, button, textarea, select, ::file-selector-button {
 |------|------------|------|
 | `--controls-bgc` | `var(--base-2)` | Background color |
 | `--controls-bdc` | `var(--divider)` | Border color |
-| `--controls-p` | `var(--s5) var(--s10)` | Padding |
-| `--controls-bdrs` | `var(--bdrs--10)` | Border radius |
+| `--controls-p` | `0.25em 0.5em` | Padding |
+
+Border radius is left to the browser default. If you want a consistent rounding, apply `border-radius` directly to each selector in your theme.
 
 
 ### Others

@@ -8,12 +8,10 @@ import { Frame } from 'lism-css/astro';
 import Table from '@/components/ex/Table/index.jsx';
 
 
-A general-purpose table layout that supports sticky headers and a sticky first column.
-
-Border styles are controlled via CSS variables to enable sticky display behavior.
+A general-purpose table layout that supports sticky headers and a sticky first column. The component uses CSS variables for border styles to support this behavior.
 
 
-## Create Component
+## Component Setup
 
 An example of creating and using a component called `Table` (`c--table`).
 
@@ -191,7 +189,7 @@ The `[data-table-sticky]` attribute accepts the following values:
   <PreviewTitle>Example of fixing thead and the first column on scroll</PreviewTitle>
   <PreviewArea p="20" _dir="rtl">
     <Frame ov="auto" max-h="20rem">
-      <Table data-table-sticky="col head" thBgc="base-2" tdMinSz="10rem">
+      <Table data-table-sticky="col head" thBgc="base-2" cellsMinSz="10rem">
         <thead>
           <tr>
             <th>Header 1</th>
@@ -297,7 +295,7 @@ The `[data-table-sticky]` attribute accepts the following values:
   <PreviewCode slot="tab" label="JSX">
     ```jsx "data-table-sticky"
     <Frame ov="auto" max-h="20rem">
-      <Table data-table-sticky="col head" thBgc="base-2" tdMinSz="10rem">
+      <Table data-table-sticky="col head" thBgc="base-2" cellsMinSz="10rem">
         <thead>...</thead>
         <tbody>...</tbody>
         <tfoot>...</tfoot>
@@ -308,7 +306,7 @@ The `[data-table-sticky]` attribute accepts the following values:
   <PreviewCode slot="tab" label="HTML">
     ```html "data-table-sticky"
     <div class="l--frame -ov:auto" style="max-height: 20rem">
-      <table class="c--table" data-table-sticky="col head" style="--th-bgc: var(--base-2); --td-min-sz: 10rem">
+      <table class="c--table" data-table-sticky="col head" style="--th-bgc: var(--base-2); --cells-min-sz: 10rem">
         <thead>
           ...
         </thead>

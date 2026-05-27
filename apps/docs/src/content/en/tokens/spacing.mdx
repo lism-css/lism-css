@@ -5,7 +5,6 @@ description: 'An overview of Fibonacci-based spacing tokens in Lism CSS and whic
 ---
 
 import { Box, Stack, Cluster, Columns, Frame, Center, Text } from 'lism-css/astro';
-import { DummyText } from '@lism-css/ui/astro/DummyText';
 import { SpacingDemos } from "@/content/token-previews.jsx";
 
 This page covers Lism's spacing tokens — a Fibonacci-based harmonic scale with selected lower-end filler values — and the property classes that use them.
@@ -43,7 +42,7 @@ Because Fibonacci-only steps would leave the lower end too coarse, `--s5` (4px),
 }
 ```
 
-Adding the `set--s` class swaps `--s-unit` to `0.5em` within that scope, recalculating `--s10`–`--s80` against the current font size. This is useful for parts like Buttons or Badges where internal spacing should follow the element's font size.
+Adding the `set--s` class swaps `--s-unit` to `0.5em` within that scope, recalculating `--s10`–`--s80` against the current font size. Use this for components like Buttons or Badges where internal spacing should scale with the element's font size.
 
 ```html
 <!-- Button padding scales with the button's own font-size -->

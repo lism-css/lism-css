@@ -1,0 +1,50 @@
+---
+import DemoPageLayout from '@/layouts/DemoPageLayout.astro';
+import { Lism, Wrapper, Container, Stack, Flex, Layer, Link } from 'lism-css/astro';
+---
+
+<DemoPageLayout title="Hero Fullscreen Section">
+  <Stack id="wrap" min-h="100vh">
+    <!-- header -->
+    <Container as="header" isWrapper="l" hasGutter pos="fixed" t="0" l="0" w="100%" z="99" py="20">
+      <Flex jc="between" ai="center" g="15">
+        <Lism fz="l">Logo</Lism>
+        <Lism>Navigation</Lism>
+      </Flex>
+    </Container>
+
+    <!-- content -->
+    <Container as="main" fx="1">
+      <Stack as="section" jc="center" pos="relative" iso="isolate" min-h="min(100svh,1200px)">
+        <Layer layout="frame">
+          <img src="https://cdn.lism-css.com/img/a-2.jpg" alt="" width="960" height="640" />
+        </Layer>
+        <Layer bgc="white:60%" />
+        <Wrapper hasGutter pos="relative" py="50">
+          <Stack g="20" ai="center">
+            <Lism as="h1" fz="5xl" lts="l" ta="center">Hero Title</Lism>
+            <Lism as="p">...Hero Subtitle...</Lism>
+          </Stack>
+        </Wrapper>
+        <Layer t="auto" layout="center" py="30" lh="xs" o="p">
+          <Link href="#other-section" set="plain" layout="stack" ai="center" fz="s" hov="-o">
+            <Lism as="span">Scroll Down</Lism>
+            <Lism as="span">↓</Lism>
+          </Link>
+        </Layer>
+      </Stack>
+      <Wrapper hasGutter layout="stack" g="20" py="60" id="other-section">
+        <h2>Other Section...</h2>
+        <p>...Content...</p>
+      </Wrapper>
+    </Container>
+
+    <!-- footer -->
+    <Container as="footer" isWrapper hasGutter py="40" bgc="base-2" bg=":stripe">
+      <Stack g="20" ai="center">
+        <Lism fz="l">Footer Area</Lism>
+        <Lism fz="s" c="text-2" util="trim">© 2026 Lism CSS.</Lism>
+      </Stack>
+    </Container>
+  </Stack>
+</DemoPageLayout>

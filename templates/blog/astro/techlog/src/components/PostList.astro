@@ -16,7 +16,7 @@ interface Props {
 const { posts, showCategory = true } = Astro.props;
 ---
 
-<AutoColumns cols="20rem" g="30" as="ul" autoFill class="c--postList">
+<AutoColumns cols="20rem" g="30" as="ul" class="c--postList">
   {
     posts.map((post, index) => {
       const { category } = parsePostId(post.id);

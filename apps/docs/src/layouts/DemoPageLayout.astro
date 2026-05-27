@@ -15,6 +15,11 @@ const { title = '', lang = 'ja' } = Astro.props;
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="robots" content="noindex,nofollow" />
     <title>Lism CSS - {title}</title>
+    <style is:global>
+      .-bg\:stripe {
+        background-image: repeating-linear-gradient(-55deg, var(--divider), var(--divider) 1px, transparent 1px, transparent 6px) !important;
+      }
+    </style>
   </head>
   <body>
     <slot />

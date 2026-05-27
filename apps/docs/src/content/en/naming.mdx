@@ -65,8 +65,8 @@ Prefixes are chosen to match each class category and joined with two hyphens (`-
 
 The name that follows the prefix is written in camelCase.
 
-- NG: `c--my-component`
-- OK: `c--myComponent`
+- Not allowed: `c--my-component`
+- Allowed: `c--myComponent`
 
 
 Property Class naming follows these conventions:
@@ -88,7 +88,7 @@ The responsibility and layer assignment of each prefix is summarized below.
 | `c--` | UI components with BEM-like structure | `lism-component` | `c--card`, `c--button` |
 | `is--` | “is a …” (role / existence declaration) | `lism-trait` | `is--container`, `is--wrapper`, `is--layer`, `is--boxLink` |
 | `has--` | “has a …” (single-feature trait attachment) | `lism-trait` | `has--transition`, `has--gutter`, `has--snap` |
-| `u--` | Decorative effects (including child-element decoration) | `lism-utility` | `u--trim`, `u--cbox`, `u--divide`, `u--cells`, `u--clipText` |
+| `u--` | Decorative effects (including child-element decoration) | `lism-utility` | `u--trim`, `u--cbox`, `u--divide`, `u--enclose`, `u--clipText` |
 
 
 ### When to use `is--` / `has--` / `set--` / `u--`
@@ -196,7 +196,7 @@ For `padding` and `margin`, notations like `pt`, `px`, `my` are widely adopted a
 
 An abbreviation used by one group must not be reused by another group.
 
-NG example: abbreviating `flex` to `fx`, then `flex-shrink` to `fsh`. (This breaks the consistency of the `fx` group.)
+Incorrect example: abbreviating `flex` to `fx`, then `flex-shrink` to `fsh`. (This breaks the consistency of the `fx` group.)
 
 ### max- / min- Properties
 

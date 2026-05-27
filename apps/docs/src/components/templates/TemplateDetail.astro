@@ -44,7 +44,7 @@ const copy = isJa
     };
 
 const templatesUrl = getLocalizedUrl('/templates/', lang);
-const installCommand = `pnpm create lism --template ${template.slug}`;
+const installCommand = `npm create lism@latest -- --template ${template.slug}`;
 const previewUrl = template.previewUrl;
 ---
 

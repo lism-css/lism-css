@@ -1,6 +1,6 @@
 # l--autoColumns / `<AutoColumns>`
 
-カラム要素が指定した幅より小さくならないように自動で折り返す、**ブレイクポイント非依存の段組みクラス**。`auto-fit` / `auto-fill` を使った流動カラムを簡潔に記述できます。
+カラム要素が指定した幅より小さくならないように自動で折り返す、**ブレイクポイント非依存の段組みクラス**。`auto-fill` / `auto-fit` を使った流動カラムを簡潔に記述できます。
 
 ## 基本情報
 
@@ -14,7 +14,7 @@
 | Prop | CSS変数 | デフォルト | 説明 |
 |------|--------|-----------|------|
 | `cols` | `--cols` | `20rem` | カラムが維持する最小幅を指定（`16em`, `320px` など） |
-| `autoFill` | `--autoMode` | `auto-fit` | `auto-fill` モードに切り替え |
+| `autoFit` | `--autoMode` | `auto-fill` | `auto-fit` モードに切り替え |
 
 ## Usage
 
@@ -38,27 +38,27 @@
 </div>
 ```
 
-### `auto-fill`を使用する
+### `auto-fit`を使用する
 
-`l--autoColumns` では、`grid-template-columns` の `repeat()` 関数の第一引数を `--autoMode` で指定できます（デフォルトは `auto-fit`）。`--autoMode:auto-fill`（`autoFill`）を指定することで、要素数が少ない時の挙動が変わります。
+`l--autoColumns` では、`grid-template-columns` の `repeat()` 関数の第一引数を `--autoMode` で指定できます（デフォルトは `auto-fill`）。`--autoMode:auto-fit`（`autoFit`）を指定することで、要素数が少ない時の挙動が変わります。
 
 ```jsx
-<AutoColumns cols="12em" autoFill g="20" fz="s">
+<AutoColumns cols="12em" g="20" fz="s">
   <Lism as="div" p="20" bd>auto-fill</Lism>
   <Lism as="div" p="20" bd>auto-fill</Lism>
 </AutoColumns>
-<AutoColumns cols="12em" g="20" fz="s">
+<AutoColumns cols="12em" autoFit g="20" fz="s">
   <Lism as="div" p="20" bd>auto-fit</Lism>
   <Lism as="div" p="20" bd>auto-fit</Lism>
 </AutoColumns>
 ```
 
 ```html
-<div class="l--autoColumns -g:20 -fz:s" style="--cols:12em; --autoMode:auto-fill">
+<div class="l--autoColumns -g:20 -fz:s" style="--cols:12em">
   <div class="-p:20 -bd">auto-fill</div>
   <div class="-p:20 -bd">auto-fill</div>
 </div>
-<div class="l--autoColumns -g:20 -fz:s" style="--cols:12em">
+<div class="l--autoColumns -g:20 -fz:s" style="--cols:12em; --autoMode:auto-fit">
   <div class="-p:20 -bd">auto-fit</div>
   <div class="-p:20 -bd">auto-fit</div>
 </div>

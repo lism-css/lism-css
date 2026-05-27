@@ -9,6 +9,32 @@ Breaking changes may continue until v1.0, so all notable changes are documented 
 
 <Divider bds="dashed" my="40" />
 
+## lism-css v.0.22.0 (2026.05.28)
+
+This release contains **breaking changes**.
+
+### AutoColumns default mode change (#408)
+
+- Changed the default mode of `AutoColumns` from `auto-fit` to `auto-fill`
+
+### Utility and token renaming
+
+- Renamed `u--cells` to `u--enclose` (#412)
+- Reorganized table cell variables under `--cells-p` (#410)
+- Restructured `--gutter-size` into `--gutter` / `--gutter--base` (#409)
+- Removed the `--under-offset` variable; set `text-underline-offset` and `tab-size` directly on body
+
+### Form control style adjustments
+
+- Removed `border-radius` from form controls
+- Changed form control `padding` to em units
+
+### Other
+
+- Reorganized and adjusted logo icon sizes
+
+<Divider bds="dashed" my="40" />
+
 ## lism-css v.0.21.0 (2026.05.26)
 
 This release contains **breaking changes**.
@@ -518,7 +544,7 @@ Note: Prop names such as `isContainer` / `isWrapper` and `is--*` class names are
   - `u-trimItems` → `u--trimChildren`
   - `set-snap` → `u--snap`
   - `-content:` → `-contentSize:`
-- Major overhaul of `@lism-css/ui`.
+- Full overhaul of `@lism-css/ui`.
 - Published `@lism-css/mcp` updated to v.0.9.0.
 
 ## v.0.8.3

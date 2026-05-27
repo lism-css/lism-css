@@ -33,8 +33,8 @@
 
   :where(.has--gutter) > & {
     inline-size: auto;
-    max-inline-size: calc(100% + var(--gutter-size) * 2);
-    margin-inline: calc(var(--gutter-size) * -1);
+    max-inline-size: calc(100% + var(--gutter) * 2);
+    margin-inline: calc(var(--gutter) * -1);
   }
 }
 ```

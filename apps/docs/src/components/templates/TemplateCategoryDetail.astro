@@ -47,7 +47,7 @@ const copy = isJa
     };
 
 const templatesUrl = getLocalizedUrl('/templates/', lang);
-const categoryCommand = `pnpm create lism --template ${category.id}`;
+const categoryCommand = `npm create lism@latest -- --template ${category.id}`;
 const representative = getAggregateRepresentative(category, templates) ?? templates[0];
 const previewUrl = representative?.previewUrl;
 ---
@@ -97,7 +97,7 @@ const previewUrl = representative?.previewUrl;
                   {stackLabels[tpl.stack]}
                 </Inline>
               </Cluster>
-              <CopyCommand bdrs="10" command={`pnpm create lism --template ${tpl.slug}`} copyLabel={copy.copy} copiedLabel={copy.copied} />
+              <CopyCommand bdrs="10" command={`npm create lism@latest -- --template ${tpl.slug}`} copyLabel={copy.copy} copiedLabel={copy.copied} />
             </Stack>
           ))
         }

@@ -276,10 +276,10 @@ Visually hides an element while keeping it accessible to screen readers.
 <SrcCode path="src/scss/utility/_srOnly.scss" />
 
 
-## `u--divide` & `u--cells`
+## `u--divide` & `u--enclose`
 
 - `u--divide` displays dividing lines between children of a grid or flexbox container.
-- `u--cells` wraps each child in a border so they look like cells in a table.
+- `u--enclose` wraps each child in a border so they look like cells in a table.
 
 <SrcCode path="src/scss/utility/_divide.scss" />
 
@@ -289,7 +289,7 @@ Visually hides an element while keeping it accessible to screen readers.
 :::
 
 <Preview>
-  <PreviewTitle>Comparing `u--divide` and `u--cells`</PreviewTitle>
+  <PreviewTitle>Comparing `u--divide` and `u--enclose`</PreviewTitle>
   <PreviewArea resize p="20">
     <AutoColumns util="divide" cols="16rem" bdrs="20">
       <Box p="15">divide</Box>
@@ -298,16 +298,16 @@ Visually hides an element while keeping it accessible to screen readers.
       <Box p="15">divide</Box>
       <Box p="15">divide</Box>
     </AutoColumns>
-    <AutoColumns util="cells" cols="16rem" bdrs="20">
-      <Box p="15">cells</Box>
-      <Box p="15">cells</Box>
-      <Box p="15">cells</Box>
-      <Box p="15">cells</Box>
-      <Box p="15">cells</Box>
+    <AutoColumns util="enclose" cols="16rem" bdrs="20">
+      <Box p="15">enclose</Box>
+      <Box p="15">enclose</Box>
+      <Box p="15">enclose</Box>
+      <Box p="15">enclose</Box>
+      <Box p="15">enclose</Box>
     </AutoColumns>
   </PreviewArea>
   <PreviewCode slot="tab" label="HTML">
-  ```html "u--divide" "u--cells"
+  ```html "u--divide" "u--enclose"
   <div class="l--autoColumns u--divide -bdrs:20" style="--cols:16rem">
     <div class="l--box -p:15">divide</div>
     <div class="l--box -p:15">divide</div>
@@ -315,17 +315,17 @@ Visually hides an element while keeping it accessible to screen readers.
     <div class="l--box -p:15">divide</div>
     <div class="l--box -p:15">divide</div>
   </div>
-  <div class="l--autoColumns u--cells -bdrs:20" style="--cols:16rem">
-    <div class="l--box -p:15">cells</div>
-    <div class="l--box -p:15">cells</div>
-    <div class="l--box -p:15">cells</div>
-    <div class="l--box -p:15">cells</div>
-    <div class="l--box -p:15">cells</div>
+  <div class="l--autoColumns u--enclose -bdrs:20" style="--cols:16rem">
+    <div class="l--box -p:15">enclose</div>
+    <div class="l--box -p:15">enclose</div>
+    <div class="l--box -p:15">enclose</div>
+    <div class="l--box -p:15">enclose</div>
+    <div class="l--box -p:15">enclose</div>
   </div>
   ```
   </PreviewCode>
   <PreviewCode slot="tab" label="JSX">
-    ```jsx 'util="divide"' 'util="cells"'
+    ```jsx 'util="divide"' 'util="enclose"'
     <AutoColumns util="divide" cols="16rem" bdrs="20">
       <Box p="15">divide</Box>
       <Box p="15">divide</Box>
@@ -333,19 +333,19 @@ Visually hides an element while keeping it accessible to screen readers.
       <Box p="15">divide</Box>
       <Box p="15">divide</Box>
     </AutoColumns>
-    <AutoColumns util="cells" cols="16rem" bdrs="20">
-      <Box p="15">cells</Box>
-      <Box p="15">cells</Box>
-      <Box p="15">cells</Box>
-      <Box p="15">cells</Box>
-      <Box p="15">cells</Box>
+    <AutoColumns util="enclose" cols="16rem" bdrs="20">
+      <Box p="15">enclose</Box>
+      <Box p="15">enclose</Box>
+      <Box p="15">enclose</Box>
+      <Box p="15">enclose</Box>
+      <Box p="15">enclose</Box>
     </AutoColumns>
     ```
   </PreviewCode>
 </Preview>
 
 
-`u--divide` makes it easy to show dividers between items in layouts that switch between horizontal and vertical.
+`u--divide` lets you show dividers between items in layouts that switch between horizontal and vertical.
 
 <Preview>
   <PreviewTitle>Example</PreviewTitle>
@@ -421,11 +421,11 @@ Adding `bd` to a grid with `u--divide` produces a calendar-like layout where emp
 </Preview>
 
 
-With Grid, `u--cells` can be used to create a table-like layout.
+With Grid, `u--enclose` can be used to create a table-like layout.
 <Preview>
-  <PreviewTitle>Table-like layout using `u--cells`</PreviewTitle>
+  <PreviewTitle>Table-like layout using `u--enclose`</PreviewTitle>
   <PreviewArea resize p="15">
-    <Grid gtc={['2fr 3fr', '1fr 2fr']} util="cells">
+    <Grid gtc={['2fr 3fr', '1fr 2fr']} util="enclose">
       <Box p="15" bgc="base-2">A</Box>
       <Box p="15" bgc="base-2">B</Box>
       <Box p="15">Lorem ipsum</Box>
@@ -440,7 +440,7 @@ With Grid, `u--cells` can be used to create a table-like layout.
   </PreviewArea>
   <PreviewCode slot="tab" label="JSX">
     ```jsx
-    <Grid gtc={['2fr 3fr', '1fr 2fr']} util="cells">
+    <Grid gtc={['2fr 3fr', '1fr 2fr']} util="enclose">
       <Box p="15" bgc="base-2">A</Box>
       <Box p="15" bgc="base-2">B</Box>
       <Box p="15">Lorem ipsum</Box>
@@ -463,7 +463,7 @@ With Grid, `u--cells` can be used to create a table-like layout.
   </PreviewCode>
   <PreviewCode slot="tab" label="HTML">
     ```html
-    <div class="l--grid u--cells -gtc -gtc_sm -bd" style="--gtc: 2fr 3fr; --gtc_sm: 1fr 2fr">
+    <div class="l--grid u--enclose -gtc -gtc_sm -bd" style="--gtc: 2fr 3fr; --gtc_sm: 1fr 2fr">
       <div class="l--box -p:15 -bgc:base-2">A</div>
       <div class="l--box -p:15 -bgc:base-2">B</div>
       <div class="l--box -p:15">Lorem ipsum</div>
