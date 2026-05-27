@@ -34,14 +34,14 @@
 
 :is(.h2, .articleContent > h2) {
   position: relative;
-  padding-left: var(--gutter-size);
+  padding-left: var(--gutter--base);
   &::after {
     content: '';
     display: block;
     position: absolute;
     top: calc(50% - 0.5lh);
     margin-block: auto;
-    // left: calc(0px - var(--gutter-size));
+    // left: calc(0px - var(--gutter--base));
     left: 0;
     width: 12px;
     height: 1lh;
