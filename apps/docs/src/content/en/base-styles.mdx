@@ -240,11 +240,10 @@ td, th {
 Consistent styles are applied to form controls.
 
 ```scss
-input, button, textarea, select, ::file-selector-button {
+input:not([type='range']), button, textarea, select, ::file-selector-button {
   background-color: var(--controls-bgc, var(--base-2));
   border: solid 1px var(--controls-bdc, var(--divider));
-  padding: var(--controls-p, var(--s5) var(--s10));
-  border-radius: var(--controls-bdrs, var(--bdrs--10));
+  padding: var(--controls-p, 0.25em 0.5em);
 }
 ```
 
@@ -252,8 +251,9 @@ input, button, textarea, select, ::file-selector-button {
 |------|------------|------|
 | `--controls-bgc` | `var(--base-2)` | Background color |
 | `--controls-bdc` | `var(--divider)` | Border color |
-| `--controls-p` | `var(--s5) var(--s10)` | Padding |
-| `--controls-bdrs` | `var(--bdrs--10)` | Border radius |
+| `--controls-p` | `0.25em 0.5em` | Padding |
+
+Border radius is left to the browser default. If you want a consistent rounding, apply `border-radius` directly to each selector in your theme.
 
 
 ### Others

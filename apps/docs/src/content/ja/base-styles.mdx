@@ -250,8 +250,7 @@ td, th {
 input:not([type='range']), button, textarea, select, ::file-selector-button {
   background-color: var(--controls-bgc, var(--base-2));
   border: solid 1px var(--controls-bdc, var(--divider));
-  padding: var(--controls-p, var(--s5) var(--s10));
-  border-radius: var(--controls-bdrs, var(--bdrs--10));
+  padding: var(--controls-p, 0.25em 0.5em);
 }
 ```
 
@@ -259,8 +258,9 @@ input:not([type='range']), button, textarea, select, ::file-selector-button {
 |------|------------|------|
 | `--controls-bgc` | `var(--base-2)` | 背景色 |
 | `--controls-bdc` | `var(--divider)` | ボーダー色 |
-| `--controls-p` | `var(--s5) var(--s10)` | パディング |
-| `--controls-bdrs` | `var(--bdrs--10)` | 角丸 |
+| `--controls-p` | `0.25em 0.5em` | パディング |
+
+角丸はブラウザのデフォルトに委ねています。テーマで揃えたい場合は各セレクタに `border-radius` を直接指定してください。
 
 
 ### その他
