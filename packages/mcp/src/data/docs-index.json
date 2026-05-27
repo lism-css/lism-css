@@ -538,7 +538,7 @@
       "v.0.8 (大幅な変更)"
     ],
     "keywords": ["changelog", "変更履歴", "更新", "バージョン"],
-    "snippet": "Lism CSS の各バージョンにおける変更内容を記載。v.0.21.0 では set クラスの命名変更（set--var:xxx → set--xxx、#404）、contentSize Prop と set--bleed の追加（#405）。v.0.20.0 の破壊的変更として方向系 Property Class の命名整理（px-s/px-e → ps/pe、bd-x-s → bd-s 等、#378）、bp デフォルトサポート見直し（pl/pr/pt/pb 等廃止、d/g/cols/グリッド系は lg まで拡張、#394）、-hov:-bgc のデフォルト色変更と --neutral トークン追加（#381）など。v.0.18.0 では --sz--* トークンの px 統一・80px 刻みでの再設計（#364）、spacing tokens 拡充と set--s 新設（s25/s35 追加、#377）。v.0.17.0 では -max-sz:container 廃止と -max-sz:bleed 新設（#360）、--REM 廃止と --fz--base の 1rem 統一、a タグのリンク装飾スタイル廃止など。v.0.16.0 では Layout Primitive 命名整理（l--sideMain → l--withSide, l--fluidCols → l--autoColumns, l--switchCols → l--switchColumns）などがある。"
+    "snippet": "Lism CSS の各バージョンにおける変更内容を記載。v.0.22.0 では AutoColumns のデフォルトを auto-fit から auto-fill へ変更し、has--gutter のCSS変数構造を --gutter-size から --gutter--base / --gutter へ整理（#409）。v.0.21.0 では set クラスの命名変更（set--var:xxx → set--xxx、#404）、contentSize Prop と set--bleed の追加（#405）。v.0.20.0 の破壊的変更として方向系 Property Class の命名整理（px-s/px-e → ps/pe、bd-x-s → bd-s 等、#378）、bp デフォルトサポート見直し（pl/pr/pt/pb 等廃止、d/g/cols/グリッド系は lg まで拡張、#394）、-hov:-bgc のデフォルト色変更と --neutral トークン追加（#381）など。v.0.18.0 では --sz--* トークンの px 統一・80px 刻みでの再設計（#364）、spacing tokens 拡充と set--s 新設（s25/s35 追加、#377）。v.0.17.0 では -max-sz:container 廃止と -max-sz:bleed 新設（#360）、--REM 廃止と --fz--base の 1rem 統一、a タグのリンク装飾スタイル廃止など。v.0.16.0 では Layout Primitive 命名整理（l--sideMain → l--withSide, l--fluidCols → l--autoColumns, l--switchCols → l--switchColumns）などがある。"
   },
   {
     "sourcePath": "property-class/bd.mdx",
@@ -1435,7 +1435,7 @@
     "category": "guide",
     "headings": ["set--bleed"],
     "keywords": ["set--bleed", "ブリード", "bleed", "full-bleed", "--bleed", "--contentSize", "片側ブリード", "ガター"],
-    "snippet": "コンテンツ幅（--contentSize）の外側の余白量を --bleed 変数としてセット。ガター幅（--gutter-size）を下限として、片側ブリードレイアウト（コンテナ外まではみ出す要素）を組む際に活用。"
+    "snippet": "コンテンツ幅（--contentSize）の外側の余白量を --bleed 変数としてセット。ガター幅（--gutter / --gutter--base）を下限として、片側ブリードレイアウト（コンテナ外まではみ出す要素）を組む際に活用。"
   },
   {
     "sourcePath": "trait-class.mdx",
@@ -1443,8 +1443,8 @@
     "description": "コンテンツの左右に統一した余白をつける Trait クラス。",
     "category": "guide",
     "headings": ["has--gutter"],
-    "keywords": ["has--gutter", "ガター", "左右余白", "サイド余白", "padding", "--gutter-size"],
-    "snippet": "サイト全体で統一した左右余白を確保するクラス。--gutter-size変数（初期値 var(--s30)）で余白量を制御。"
+    "keywords": ["has--gutter", "ガター", "左右余白", "サイド余白", "padding", "--gutter", "--gutter--base"],
+    "snippet": "サイト全体で統一した左右余白を確保するクラス。--gutter--base を基準値とし、.has--gutter が要素ローカルの --gutter へ初期化して余白量を制御。"
   },
   {
     "sourcePath": "features.mdx",

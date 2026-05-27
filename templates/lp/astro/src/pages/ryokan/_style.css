@@ -117,10 +117,10 @@
   .z--ryokan-header_menuNav > li:not(:last-child) {
     border-block-end: 1px dashed color-mix(in srgb, var(--text) 38%, transparent);
   }
-  /* md 以上: has--gutter の左右に s20 を上乗せ（Lism: `--gutter-size` 既定は `--s30`） */
+  /* md 以上: has--gutter の左右に s20 を上乗せ（Lism: `--gutter--base` 既定は `--s30`） */
   @media (min-width: 800px) {
     .z--ryokan-header_bar {
-      padding-inline: calc(var(--gutter-size) + var(--s20));
+      padding-inline: calc(var(--gutter--base) + var(--s20));
     }
   }
   .z--ryokan-header_logoLink {
@@ -254,8 +254,8 @@
    * ビューポート全幅: 親の max-width に依存しないよう、自身を 100vw で中央に置く。
    */
   .z--ryokan-about {
-    --z--ryokan-about-l-inset: max(var(--gutter-size), calc((100vw - var(--sz--l)) / 2));
-    --z--ryokan-about-xl-inset: max(var(--gutter-size), calc((100vw - var(--sz--xl)) / 2));
+    --z--ryokan-about-l-inset: max(var(--gutter--base), calc((100vw - var(--sz--l)) / 2));
+    --z--ryokan-about-xl-inset: max(var(--gutter--base), calc((100vw - var(--sz--xl)) / 2));
     position: relative;
     left: 50%;
     transform: translateX(-50%);
@@ -300,7 +300,7 @@
   }
   @media (max-width: 799px) {
     .z--ryokan-about_grid {
-      padding-inline: var(--gutter-size);
+      padding-inline: var(--gutter--base);
       box-sizing: border-box;
     }
     .z--ryokan-about_figureLeft {
@@ -315,7 +315,7 @@
 
   /* 左端プル: コンテナ幅 l + gutter と整合 */
   .z--ryokan-feature {
-    --z--ryokan-feature-pull: max(var(--gutter-size, 0px), calc((100vw - min(100vw, var(--sz--l))) / 2));
+    --z--ryokan-feature-pull: max(var(--gutter--base, 0px), calc((100vw - min(100vw, var(--sz--l))) / 2));
     --z--ryokan-feature-figure-max-h: 540px;
     position: relative;
   }

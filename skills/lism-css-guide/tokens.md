@@ -18,7 +18,7 @@ CSSコードを書く場合やコンポーネントのPropsに値を指定する
 - [角丸 (bdrs)](#角丸-bdrs)
 - [影 (bxsh)](#影-bxsh)
 - [フロー余白 (flow)](#フロー余白-flow)
-- [ガターサイズ (gutter-size)](#ガターサイズ-gutter-size)
+- [ガター (gutter)](#ガター-gutter)
 - [カラー](#カラー)
 - [トークン値の命名規則](#トークン値の命名規則)
 
@@ -206,19 +206,20 @@ CSSコードを書く場合やコンポーネントのPropsに値を指定する
 | `--flow--s` | `var(--s20)` | `-flow:s` で適用される小さめの余白 |
 
 
-## ガターサイズ (gutter-size)
+## ガター (gutter)
 
-サイト全体のガター（左右余白）量を定義するルート変数。トークン体系ではなく単一の設定値で、上書きするとガター関連の挙動が一括で変わる。
+サイト全体のガター（左右余白）量を扱う変数群。`--flow--base` / `--flow` と同じく「基準値（`:root`）+ 要素ローカル機能変数」の2層構造を採る。
 
-| CSS変数 | 値 | 説明 |
-|---------|-----|------|
-| `--gutter-size` | `var(--s30)` | ガターの基準量 |
+| CSS変数 | 初期値 | 説明 |
+|---------|--------|------|
+| `--gutter--base` | `var(--s30)` | サイトコンテンツの左右余白の基準値（`:root` で定義） |
+| `--gutter` | `var(--gutter--base)` | `.has--gutter` で要素ローカルに初期化される機能変数。要素単位で `style="--gutter: 20px"` のように上書き可能 |
 
 参照される主な箇所:
 
-- `has--gutter` の `padding-inline`
-- `is--container` の `--sz--bleed` 計算（`100cqi + var(--gutter-size) * 2`）
-- `-max-sz:full` の負 margin による hang 拡張
+- `has--gutter` の `padding-inline: var(--gutter)`
+- `is--container` の `--sz--bleed` 計算（`100cqi + var(--gutter) * 2`）
+- `-max-sz:full` の負 margin による hang 拡張（`var(--gutter)` を参照）
 
 
 ## カラー
