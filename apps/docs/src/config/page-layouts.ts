@@ -63,7 +63,16 @@ const pageLayouts = {
       ja: '404 ページのようなセンター寄せレイアウト等、その他。',
       en: 'Other layouts such as centered 404 pages.',
     },
-    items: [],
+    items: [
+      {
+        id: '404',
+        title: '404 Not Found',
+        description: {
+          ja: '404 Not Found ページのレイアウト。ヘッダーとフッターの間に、ページが見つからない旨のメッセージを中央寄せで配置します。',
+          en: 'A 404 Not Found page layout with a centered "page not found" message between the header and footer.',
+        },
+      },
+    ],
   },
 } satisfies Record<string, PageLayoutCategory>;
 
