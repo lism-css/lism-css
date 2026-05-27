@@ -43,16 +43,32 @@ const pageLayouts = {
         id: 'one-column',
         title: 'One Column',
         description: {
-          ja: '1カラム構成の記事レイアウト。タイトル・本文・コメントエリアが縦に並びます。',
-          en: 'A single-column article layout with title, body, and comment area stacked vertically.',
+          ja: '1カラムの記事レイアウト。タイトル・本文がシンプルに縦に並びます。',
+          en: 'A one-column article layout. The title and body text are arranged simply in a vertical sequence.',
         },
       },
       {
         id: 'two-columns',
         title: 'Two Columns',
         description: {
-          ja: '2カラム構成の記事レイアウト。記事本文とサイドバーが横並びになります。',
-          en: 'A two-column article layout with the article body and sidebar arranged side by side.',
+          ja: '2カラムの記事レイアウト。記事本文とサイドバーが横並びになります。',
+          en: 'A two-column article layout. The main article body and the sidebar are arranged side-by-side.',
+        },
+      },
+      {
+        id: 'one-column-hero',
+        title: 'One Column Hero',
+        description: {
+          ja: 'ヒーローセクションにタイトルを表示させる1カラムの記事レイアウト。',
+          en: 'A one-column article layout that displays the title in the hero section.',
+        },
+      },
+      {
+        id: 'two-columns-hero',
+        title: 'Two Columns Hero',
+        description: {
+          ja: 'ヒーローセクションにタイトルを表示させる2カラムの記事レイアウト。',
+          en: 'A two-column article layout that displays the title in the hero section.',
         },
       },
     ],

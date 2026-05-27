@@ -1,6 +1,6 @@
 ---
 import DemoPageLayout from '@/layouts/DemoPageLayout.astro';
-import { Group, Flow, Wrapper, Container, Stack, Flex } from 'lism-css/astro';
+import { Group, Flow, Wrapper, Container, Stack, Flex, Layer } from 'lism-css/astro';
 ---
 
 <DemoPageLayout title="One Column Layout">
@@ -14,19 +14,22 @@ import { Group, Flow, Wrapper, Container, Stack, Flex } from 'lism-css/astro';
     </Container>
 
     <!-- content -->
-    <Container as="main" py="50" fx="1">
-      <Wrapper as="article" hasGutter>
-        <Group as="header">
+    <Container as="main" fx="1">
+      <Group pos="relative" iso="isolate">
+        <Layer layout="frame">
+          <img src="https://cdn.lism-css.com/img/a-1.jpg" alt="" width="960" height="640" />
+        </Layer>
+        <Layer style={{ backdropFilter: 'blur(.5rem)' }} bgc="black:50%" />
+        <Wrapper hasGutter layout="stack" jc="center" c="white" pos="relative" z="1" py="50" min-h="25vh">
           <h1>Post Title</h1>
-        </Group>
-
-        <!-- 内部の -max-sz:full を考慮するなら Flow max-sz="full" isWrapper hasGutter -->
-        <Flow mbs="50">
+        </Wrapper>
+      </Group>
+      <Wrapper as="article" py="50" hasGutter>
+        <Flow>
           <p class="-bd">...Content...</p>
           <p class="-bd">...Content...</p>
           <p class="-bd">...Content...</p>
         </Flow>
-
         <Group as="footer" mbs="50" p="40" bgc="base-2">Post Footer</Group>
       </Wrapper>
     </Container>

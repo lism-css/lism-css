@@ -1,6 +1,6 @@
 ---
 import DemoPageLayout from '@/layouts/DemoPageLayout.astro';
-import { Flow, Stack, Wrapper, WithSide, Container, Flex, Group } from 'lism-css/astro';
+import { Flow, Stack, Wrapper, WithSide, Container, Flex, Group, Layer } from 'lism-css/astro';
 ---
 
 <DemoPageLayout title="Two Columns Layout">
@@ -14,23 +14,29 @@ import { Flow, Stack, Wrapper, WithSide, Container, Flex, Group } from 'lism-css
     </Container>
 
     <!-- content -->
-    <Container isWrapper contentSize="l" hasGutter py="50" fx="1">
-      <WithSide sideW="300px" mainW="40rem" g="40">
-        <Wrapper as="main">
-          <article>
-            <header>
-              <h1>Post Title</h1>
-            </header>
-            <Flow mbs="50">
+    <Container as="main" fx="1">
+      <Group pos="relative" iso="isolate">
+        <Layer layout="frame">
+          <img src="https://cdn.lism-css.com/img/a-1.jpg" alt="" width="960" height="640" />
+        </Layer>
+        <Layer style={{ backdropFilter: 'blur(.5rem)' }} bgc="black:50%" />
+        <Wrapper hasGutter layout="stack" jc="center" c="white" pos="relative" z="1" py="50" min-h="25vh">
+          <h1>Post Title</h1>
+        </Wrapper>
+      </Group>
+      <Wrapper contentSize="l" hasGutter py="50" fx="1">
+        <WithSide sideW="300px" mainW="40rem" g="40">
+          <Wrapper as="article">
+            <Flow>
               <p class="-bd">...Content...</p>
               <p class="-bd">...Content...</p>
               <p class="-bd">...Content...</p>
             </Flow>
             <Group as="footer" mbs="50" p="40" bgc="base-2">Post Footer</Group>
-          </article>
-        </Wrapper>
-        <Wrapper as="aside" isSide p="20" bgc="base-2" bg=":stripe" min-h="10rem">Sidebar Area</Wrapper>
-      </WithSide>
+          </Wrapper>
+          <Wrapper as="aside" isSide p="20" bgc="base-2" bg=":stripe" min-h="10rem">Sidebar Area</Wrapper>
+        </WithSide>
+      </Wrapper>
     </Container>
 
     <!-- footer -->
