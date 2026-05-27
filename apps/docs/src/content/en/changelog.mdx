@@ -20,6 +20,14 @@ This release contains **breaking changes**.
 - Existing code that used `autoFill` should now drop the prop, since `auto-fill` is now the default
 - If you need the previous `auto-fit` behavior, set `autoFit` explicitly
 
+### Reorganized the CSS variable structure of `has--gutter` (#409)
+
+- Renamed the root baseline value from `--gutter-size` to `--gutter--base`
+- Added the element-local functional variable `--gutter`, initialized by `.has--gutter` with `var(--gutter--base)`
+- Aligned gutter variables with the same two-layer structure as `--flow--base` / `--flow`
+- You can now override the gutter per element with values like `style="--gutter: 20px"`
+- Updated the `--sz--bleed` calculation in `is--container` and the negative margin behavior of `-max-sz:full` to reference `--gutter`
+
 <Divider bds="dashed" my="40" />
 
 ## lism-css v.0.21.0 (2026.05.26)
