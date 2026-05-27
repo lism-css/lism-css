@@ -1,0 +1,44 @@
+---
+import DemoPageLayout from '@/layouts/DemoPageLayout.astro';
+import { Flow, Stack, Wrapper, WithSide, Container, Flex, Group } from 'lism-css/astro';
+---
+
+<DemoPageLayout title="Two Columns Layout">
+  <Stack id="wrap" min-h="100vh">
+    <!-- header -->
+    <Container as="header" isWrapper="l" hasGutter py="20" bgc="base-2" bg=":stripe">
+      <Flex jc="between" ai="center" g="15">
+        <Group fz="l">Logo</Group>
+        <Group>Navigation</Group>
+      </Flex>
+    </Container>
+
+    <!-- content -->
+    <Container isWrapper contentSize="l" hasGutter py="50" fx="1">
+      <WithSide sideW="300px" mainW="40rem" g="40">
+        <Wrapper as="main">
+          <article>
+            <header>
+              <h1>Post Title</h1>
+            </header>
+            <Flow mbs="50">
+              <p class="-bd">...Content...</p>
+              <p class="-bd">...Content...</p>
+              <p class="-bd">...Content...</p>
+            </Flow>
+            <Group as="footer" mbs="50" p="40" bgc="base-2">Post Footer</Group>
+          </article>
+        </Wrapper>
+        <Wrapper as="aside" isSide p="20" bgc="base-2" bg=":stripe" min-h="10rem">Sidebar Area</Wrapper>
+      </WithSide>
+    </Container>
+
+    <!-- footer -->
+    <Container as="footer" isWrapper hasGutter py="40" bgc="base-2" bg=":stripe">
+      <Stack g="20" ai="center">
+        <Group fz="l">Footer Area</Group>
+        <Group fz="s" c="text-2" util="trim">© 2026 Lism CSS.</Group>
+      </Stack>
+    </Container>
+  </Stack>
+</DemoPageLayout>

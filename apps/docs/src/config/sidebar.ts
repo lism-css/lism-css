@@ -7,9 +7,10 @@
  */
 
 import type { LangCode } from '@/config/site';
-import { BookOpenTextIcon, ShapesIcon, SquaresFourIcon, LayoutIcon } from '@phosphor-icons/react';
+import { BookOpenTextIcon, ShapesIcon, SquaresFourIcon, LayoutIcon, BrowsersIcon } from '@phosphor-icons/react';
 import { patterns, categoryIds, type PatternCategoryId, type PatternItem } from './patterns';
 import { visibleTemplates, categories as templateCategories } from './templates';
+import { pageLayouts, categoryIds as pageLayoutCategoryIds, type PageLayoutCategoryId, type PageLayoutItem } from './page-layouts';
 
 // 翻訳オブジェクトの型（root言語以外の翻訳を指定）
 type TranslateLabels = Partial<Record<Exclude<LangCode, 'ja'>, string>>;
@@ -76,8 +77,8 @@ export function getTranslatedLabel(label: string, translate: TranslateLabels | u
   return translate[lang as Exclude<LangCode, 'ja'>] || label;
 }
 
-// サイトセクションの識別子（/docs/, /ui/, /templates/, /patterns/ などの最初のパス部分）
-export type SiteSection = 'docs' | 'ui' | 'patterns' | 'templates';
+// サイトセクションの識別子（/docs/, /ui/, /templates/, /patterns/, /page-layouts/ などの最初のパス部分）
+export type SiteSection = 'docs' | 'ui' | 'patterns' | 'templates' | 'page-layouts';
 
 // サイドバー設定の型
 export interface SidebarConfig {
@@ -107,9 +108,15 @@ const topLevelLinks: TopLevelLinkItem[] = [
   },
   {
     type: 'toplink',
+    label: 'Page Layouts',
+    link: '/page-layouts/',
+    icon: LayoutIcon,
+  },
+  {
+    type: 'toplink',
     label: 'Templates',
     link: '/templates/',
-    icon: LayoutIcon,
+    icon: BrowsersIcon,
   },
 ];
 
@@ -262,6 +269,24 @@ const templatesSidebar: SidebarSection[] = [
     })),
 ];
 
+// /page-layouts/ セクション用のサイドバー設定（page-layouts.tsから動的生成）
+// items が空のカテゴリは表示しない
+const pageLayoutsSidebar: SidebarSection[] = pageLayoutCategoryIds
+  .map((categoryId: PageLayoutCategoryId) => {
+    const category = pageLayouts[categoryId];
+    // 本番環境ではdraft:trueのアイテムを除外
+    const items = isProd ? (category.items as PageLayoutItem[]).filter((item) => !item.draft) : category.items;
+    return { categoryId, category, items };
+  })
+  .filter(({ items }) => items.length > 0)
+  .map<SidebarSection>(({ categoryId, category, items }) => ({
+    label: category.label,
+    items: items.map((item) => ({
+      label: item.title,
+      link: `/page-layouts/${categoryId}/${item.id}/`,
+    })),
+  }));
+
 // サイドバー設定をエクスポート
 const sidebarConfig: SidebarConfig = {
   topLevelLinks,
@@ -270,6 +295,7 @@ const sidebarConfig: SidebarConfig = {
     ui: uiSidebar,
     patterns: patternsSidebar,
     templates: templatesSidebar,
+    'page-layouts': pageLayoutsSidebar,
   },
 };
 
@@ -278,7 +304,7 @@ export default sidebarConfig;
 /**
  * URLからサイトセクションを取得するヘルパー
  * @param pathname URLのパス部分
- * @returns サイトセクション（'docs' | 'ui' | 'templates' | 'patterns'）、該当なしの場合は 'docs' をデフォルトとして返す
+ * @returns サイトセクション（'docs' | 'ui' | 'templates' | 'patterns' | 'page-layouts'）、該当なしの場合は 'docs' をデフォルトとして返す
  */
 export function getSiteSection(pathname: string): SiteSection {
   // パスから言語プレフィックスを除去してセクションを判定
@@ -288,6 +314,10 @@ export function getSiteSection(pathname: string): SiteSection {
   }
   if (pathWithoutLang.startsWith('/templates/') || pathWithoutLang === '/templates') {
     return 'templates';
+  }
+  // page-layouts は patterns より先に判定（startsWith の取り違いを防ぐため）
+  if (pathWithoutLang.startsWith('/page-layouts/') || pathWithoutLang === '/page-layouts') {
+    return 'page-layouts';
   }
   if (pathWithoutLang.startsWith('/patterns/') || pathWithoutLang === '/patterns') {
     return 'patterns';
@@ -301,6 +331,7 @@ export function getSiteSection(pathname: string): SiteSection {
  * /ui/yyy/ → ui/yyy（コンテンツは content/ja/ui/yyy.mdx）
  * /templates/ → templates（テンプレートページ、MDXなし）
  * /patterns/zzz/ → patterns/zzz（パターンページ、MDXなし）
+ * /page-layouts/zzz/ → page-layouts/zzz（ページレイアウトページ、MDXなし）
  */
 export function extractSlugFromUrl(url: string): string {
   // /docs/ の場合はプレフィックスを除去（コンテンツは content/{lang}/ 直下）
@@ -314,6 +345,10 @@ export function extractSlugFromUrl(url: string): string {
   // /templates/ の場合は templates/ プレフィックスを保持
   if (url.startsWith('/templates/')) {
     return 'templates/' + url.replace(/^\/templates\//, '').replace(/^\/|\/$/g, '');
+  }
+  // /page-layouts/ の場合は page-layouts/ プレフィックスを保持（patterns より先に判定）
+  if (url.startsWith('/page-layouts/')) {
+    return 'page-layouts/' + url.replace(/^\/page-layouts\//, '').replace(/^\/|\/$/g, '');
   }
   // /patterns/ の場合は patterns/ プレフィックスを保持
   if (url.startsWith('/patterns/')) {

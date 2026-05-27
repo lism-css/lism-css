@@ -1,0 +1,42 @@
+---
+import DemoPageLayout from '@/layouts/DemoPageLayout.astro';
+import { Group, Flow, Wrapper, Container, Stack, Flex } from 'lism-css/astro';
+---
+
+<DemoPageLayout title="One Column Layout">
+  <Stack id="wrap" min-h="100vh">
+    <!-- header -->
+    <Container as="header" isWrapper="l" hasGutter py="20" bgc="base-2" bg=":stripe">
+      <Flex jc="between" ai="center" g="15">
+        <Group fz="l">Logo</Group>
+        <Group>Navigation</Group>
+      </Flex>
+    </Container>
+
+    <!-- content -->
+    <Container as="main" py="50" fx="1">
+      <Wrapper as="article" hasGutter>
+        <Group as="header">
+          <h1>Post Title</h1>
+        </Group>
+
+        <!-- 内部の -max-sz:full を考慮するなら Flow max-sz="full" isWrapper hasGutter -->
+        <Flow mbs="50">
+          <p class="-bd">...Content...</p>
+          <p class="-bd">...Content...</p>
+          <p class="-bd">...Content...</p>
+        </Flow>
+
+        <Group as="footer" mbs="50" p="40" bgc="base-2">Post Footer</Group>
+      </Wrapper>
+    </Container>
+
+    <!-- footer -->
+    <Container as="footer" isWrapper hasGutter py="40" bgc="base-2" bg=":stripe">
+      <Stack g="20" ai="center">
+        <Group fz="l">Footer Area</Group>
+        <Group fz="s" c="text-2" util="trim">© 2026 Lism CSS.</Group>
+      </Stack>
+    </Container>
+  </Stack>
+</DemoPageLayout>

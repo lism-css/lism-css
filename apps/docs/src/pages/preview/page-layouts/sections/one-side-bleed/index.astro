@@ -1,0 +1,82 @@
+---
+import DemoPageLayout from '@/layouts/DemoPageLayout.astro';
+import { Lism, Box, Wrapper, Container, Stack, Flex, Columns, Frame } from 'lism-css/astro';
+---
+
+<DemoPageLayout title="One Side Bleed Section">
+  <Stack id="wrap" min-h="100vh">
+    <!-- header -->
+    <Container as="header" isWrapper="l" hasGutter py="20" bgc="base-2" bg=":stripe">
+      <Flex jc="between" ai="center" g="15">
+        <Lism fz="l">Header</Lism>
+      </Flex>
+    </Container>
+
+    <!-- content -->
+    <Container as="main" fx="1">
+      <Wrapper contentSize="l" hasGutter layout="stack" g="20" py="50">
+        <Lism bgc="base-2" p="40" bg=":stripe">...Other Section content...</Lism>
+      </Wrapper>
+
+      <Flex as="section" set="bleed" contentSize="l" fxd={['column', null, 'row']} g={['10', null, '0', '20']}>
+        <Box hasGutter ps="var(--bleed)" my="auto" fx="1" py="30">
+          <Stack g="20">
+            <h2>A one-sided bleed layout where media takes up 50% on alternating sides</h2>
+            <p>
+              Lorem ipsum dolor sit amet. Consectetur adipiscing elit, sed do eiusmod tempor Incididunt ut. Labore et dolore magna aliqua. Ut enim ad
+              minim veniam, quis nostrud exercitation ullamco laboris nisi ut. Aliquip ex ea commodo consequat.
+            </p>
+          </Stack>
+        </Box>
+        <Frame ar="3/2" w={['100%', null, '50%']} fxsh="0">
+          <img src="https://cdn.lism-css.com/img/u-2.jpg" alt="" width="1920" height="1280" />
+        </Frame>
+      </Flex>
+      <Flex as="section" set="bleed" contentSize="l" fxd={['column', null, 'row-reverse']} g={['10', null, '0', '20']} mbs={['40', null, '0']}>
+        <Box hasGutter pe="var(--bleed)" my="auto" fx="1" py="30">
+          <Stack g="20">
+            <h2>Section Title</h2>
+            <p>
+              Lorem ipsum dolor sit amet. Consectetur adipiscing elit, sed do eiusmod tempor Incididunt ut. Labore et dolore magna aliqua. Ut enim ad
+              minim veniam, quis nostrud exercitation ullamco laboris nisi ut. Aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit
+              in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint.
+            </p>
+          </Stack>
+        </Box>
+        <Frame ar="3/2" w={['100%', null, '50%']} fxsh="0">
+          <img src="https://cdn.lism-css.com/img/u-3.jpg" alt="" width="1920" height="1280" />
+        </Frame>
+      </Flex>
+
+      <Wrapper contentSize="l" hasGutter layout="stack" g="20" py="50">
+        <Lism bgc="base-2" p="40" bg=":stripe">...Other Section content...</Lism>
+      </Wrapper>
+
+      <Columns as="section" set="bleed" contentSize="l" cols={[1, null, 2]} ai="center" g="10">
+        <Box hasGutter ps="var(--bleed)" py="30">
+          <Stack g="20">
+            <h2>A one-sided bleed layout using Columns</h2>
+            <p>
+              Lorem ipsum dolor sit amet. Consectetur adipiscing elit, sed do eiusmod tempor Incididunt ut. Labore et dolore magna aliqua. Ut enim ad
+              minim veniam, quis nostrud exercitation ullamco laboris nisi ut. Aliquip ex ea commodo consequat.
+            </p>
+          </Stack>
+        </Box>
+        <Frame ar="3/2" aslf="stretch" px={['var(--gutter-size)', null, '0']}>
+          <img src="https://cdn.lism-css.com/img/u-2.jpg" alt="" width="1920" height="1280" />
+        </Frame>
+      </Columns>
+      <Wrapper contentSize="l" hasGutter layout="stack" g="20" py="50">
+        <Lism bgc="base-2" p="40" bg=":stripe">...Other Section content...</Lism>
+      </Wrapper>
+    </Container>
+
+    <!-- footer -->
+    <Container as="footer" isWrapper hasGutter py="40" bgc="base-2" bg=":stripe">
+      <Stack g="20" ai="center">
+        <Lism fz="l">Footer Area</Lism>
+        <Lism fz="s" c="text-2" util="trim">© 2026 Lism CSS.</Lism>
+      </Stack>
+    </Container>
+  </Stack>
+</DemoPageLayout>

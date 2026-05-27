@@ -1,0 +1,35 @@
+---
+import DemoPageLayout from '@/layouts/DemoPageLayout.astro';
+import { Stack, Container, Flex, Group, Center, Heading, Inline, Link } from 'lism-css/astro';
+---
+
+<DemoPageLayout title="404 Not Found Layout">
+  <Stack id="wrap" min-h="100vh">
+    <!-- header -->
+    <Container as="header" isWrapper="l" hasGutter py="20" bgc="base-2" bg=":stripe">
+      <Flex jc="between" ai="center" g="15">
+        <Group fz="l">Logo</Group>
+        <Group>Navigation</Group>
+      </Flex>
+    </Container>
+
+    <!-- content -->
+    <Center as="main" isContainer hasGutter fxg="1" g="40" ta="center" py="50">
+      <Heading level="1" layout="stack" fz="m" g="5">
+        <Inline fz="5xl" fw="bold">404</Inline>
+        <Inline fw="normal" lts="l" c="text-2">Page Not Found</Inline>
+      </Heading>
+      <Group mbs="20">
+        <Link href="/" set="plain" c="brand" hov="underline">Back to Home</Link>
+      </Group>
+    </Center>
+
+    <!-- footer -->
+    <Container as="footer" isWrapper hasGutter py="40" bgc="base-2" bg=":stripe">
+      <Stack g="20" ai="center">
+        <Group fz="l">Footer Area</Group>
+        <Group fz="s" c="text-2" util="trim">© 2026 Lism CSS.</Group>
+      </Stack>
+    </Container>
+  </Stack>
+</DemoPageLayout>
