@@ -2,6 +2,7 @@
 
 import { describe, test, expect, vi } from 'vitest';
 import { mkdir, mkdtemp, readFile, readdir, rm, writeFile } from 'node:fs/promises';
+import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { build } from 'vite';
 import { lismPurge } from './vite';
@@ -21,7 +22,7 @@ const known = {
 };
 
 async function setupViteProject(usedClass: string): Promise<string> {
-  const dir = await mkdtemp('/private/tmp/lism-purge-vite-');
+  const dir = await mkdtemp(join(tmpdir(), 'lism-purge-vite-'));
   await writeFile(join(dir, 'index.html'), `<div class="${usedClass}"></div><script type="module" src="/src/main.js"></script>`);
   await mkdir(join(dir, 'src'));
   await writeFile(join(dir, 'src/main.js'), 'import "./style.css";');
