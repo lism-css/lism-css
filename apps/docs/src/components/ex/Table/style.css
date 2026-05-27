@@ -29,6 +29,15 @@
     border-style: var(--bds);
   }
 
+  .c--table :is(td, th) {
+    min-inline-size: var(--td-min-sz, initial);
+  }
+  .c--table th {
+    color: var(--th-c, inherit);
+    background-color: var(--th-bgc, transparent);
+    min-inline-size: var(--th-min-sz, var(--td-min-sz, initial));
+  }
+
   .c--table > thead {
     border-block-end: var(--_thead-bd-be);
   }

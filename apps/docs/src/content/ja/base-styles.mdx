@@ -229,42 +229,17 @@ dd + dt {
 
 ### テーブル
 
-テーブルセルの一部スタイルはCSS変数でカスタマイズ可能です。
+`td`, `th` のパディングは `--cells-p` でカスタマイズ可能です。
 
 ```scss
-table {
-  --td-c: inherit;
-  --td-bgc: transparent;
-  --td-p: var(--s10) var(--s15);
-  --td-min-sz: initial;
-}
-td {
-  color: var(--td-c);
-  background-color: var(--td-bgc);
-  padding: var(--td-p);
-  min-inline-size: var(--td-min-sz);
-}
-th {
-  color: var(--th-c, var(--td-c));
-  background-color: var(--th-bgc, var(--td-bgc));
-  padding: var(--th-p, var(--td-p));
-  min-inline-size: var(--th-min-sz, var(--td-min-sz));
+td, th {
+  padding: var(--cells-p, var(--s10) var(--s15));
 }
 ```
 
 | 変数 | フォールバック | 用途 |
 |------|------------|------|
-| `--td-c` | `inherit` | セルのテキスト色 |
-| `--td-bgc` | `transparent` | セルの背景色 |
-| `--td-p` | `var(--s10) var(--s15)` | セルのパディング |
-| `--td-min-sz` | `initial` | セルの最小幅 |
-| `--th-c` | `var(--td-c)` | 見出しセルのテキスト色 |
-| `--th-bgc` | `var(--td-bgc)` | 見出しセルの背景色 |
-| `--th-p` | `var(--td-p)` | 見出しセルのパディング |
-| `--th-min-sz` | `var(--td-min-sz)` | 見出しセルの最小幅 |
-
-`th` は `td` の変数をフォールバックとして参照するため、`table` で `--td-*` を設定すれば `th` にも反映されます。
-それぞれ個別に変更したい場合は `--th-*` を指定してください。
+| `--cells-p` | `var(--s10) var(--s15)` | セルのパディング |
 
 
 ### フォーム要素

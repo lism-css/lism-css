@@ -28,6 +28,12 @@ v.1.0リリースまでしばらく激しい変更が続く可能性があるた
 - 要素単位で `style="--gutter: 20px"` のように上書きが可能に
 - `is--container` の `--sz--bleed` 計算や `-max-sz:full` の負 margin も `--gutter` を参照するように更新
 
+### テーブルセル変数を整理
+
+- `--td-c` / `--td-bgc` / `--td-min-sz` / `--th-c` / `--th-bgc` / `--th-min-sz` / `--th-p` を削除（未定義時の挙動と同じため不要）
+- `--td-p` を `--cells-p` にリネーム（`td`, `th` 両方に適用）
+- 最終形: `td, th { padding: var(--cells-p, var(--s10) var(--s15)); }`
+
 <Divider bds="dashed" my="40" />
 
 ## lism-css v.0.21.0 (2026.05.26)
