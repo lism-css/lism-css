@@ -11,6 +11,11 @@
     --bdw-y: 1px;
     --bdw-x: 1px;
 
+    --td-c: inherit;
+    --td-bgc: transparent;
+    --td-p: var(--s10) var(--s15);
+    --td-min-sz: initial;
+
     /* Note: collape にしているので、 1pxだと見えないことに注意。 */
     --_thead-bd-be: solid 2px;
     --_tfoot-bd-bs: solid 2px;
@@ -30,14 +35,16 @@
   }
 
   .c--table :is(td, th) {
-    min-inline-size: var(--td-min-sz, initial);
+    min-inline-size: var(--cells-min-sz, initial);
+  }
+  .c--table td {
+    color: var(--td-c);
+    background-color: var(--td-bgc);
   }
   .c--table th {
     color: var(--th-c, inherit);
     background-color: var(--th-bgc, transparent);
-    min-inline-size: var(--th-min-sz, var(--td-min-sz, initial));
   }
-
   .c--table > thead {
     border-block-end: var(--_thead-bd-be);
   }

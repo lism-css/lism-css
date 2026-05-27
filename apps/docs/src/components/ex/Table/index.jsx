@@ -3,17 +3,15 @@ import atts from 'lism-css/lib/helper/atts';
 import getMaybeCssVar from 'lism-css/lib/getMaybeCssVar';
 import './style.css';
 
-function getTableProps({ thBgc, thC, bdwX, bdwY, tdMinSz, thMinSz, cellsP, style = {}, ...props }) {
+function getTableProps({ thBgc, thC, bdwX, bdwY, cellsMinSz, cellsP, style = {}, ...props }) {
   if (bdwX) style['--bdw-x'] = bdwX;
   if (bdwY) style['--bdw-y'] = bdwY;
   if (thC) style['--th-c'] = getMaybeCssVar(thC, 'color');
   if (thBgc) style['--th-bgc'] = getMaybeCssVar(thBgc, 'color');
-  if (tdMinSz) style['--td-min-sz'] = tdMinSz;
-  if (thMinSz) style['--th-min-sz'] = thMinSz;
+  if (cellsMinSz) style['--cells-min-sz'] = cellsMinSz;
   if (cellsP) style['--cells-p'] = cellsP;
 
   props.style = style;
-
   return props;
 }
 
