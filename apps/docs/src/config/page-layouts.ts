@@ -56,19 +56,52 @@ const pageLayouts = {
         },
       },
       {
-        id: 'one-column-hero',
-        title: 'One Column Hero',
+        id: 'one-column-bleed-title',
+        title: 'One Column with Full-bleed Title',
         description: {
-          ja: 'ヒーローセクションにタイトルを表示させる1カラムの記事レイアウト。',
-          en: 'A one-column article layout that displays the title in the hero section.',
+          ja: 'タイトル領域を全幅 (full-bleed) で表示する1カラムの記事レイアウト。',
+          en: 'A one-column article layout with a full-bleed title area.',
         },
       },
       {
-        id: 'two-columns-hero',
-        title: 'Two Columns Hero',
+        id: 'two-columns-bleed-title',
+        title: 'Two Columns with Full-bleed Title',
         description: {
-          ja: 'ヒーローセクションにタイトルを表示させる2カラムの記事レイアウト。',
-          en: 'A two-column article layout that displays the title in the hero section.',
+          ja: 'タイトル領域を全幅 (full-bleed) で表示する2カラムの記事レイアウト。',
+          en: 'A two-column article layout with a full-bleed title area.',
+        },
+      },
+    ],
+  },
+  sections: {
+    label: 'Sections',
+    description: {
+      ja: 'ヒーローや片側ブリードなど、ページの一部に組み込めるセクション単位のレイアウト例。',
+      en: 'Section-level layout examples that can be embedded into a page, such as hero sections and one-sided bleed layouts.',
+    },
+    items: [
+      {
+        id: 'hero-fullscreen',
+        title: 'Hero Fullscreen',
+        description: {
+          ja: 'ビューポート全体を覆うヒーローセクション。背景画像にタイトルやサブテキストを重ねて表示します。',
+          en: 'A hero section that covers the entire viewport, with a title and subtitle overlaid on a background image.',
+        },
+      },
+      {
+        id: 'one-side-bleed',
+        title: 'One Side Bleed',
+        description: {
+          ja: '片側だけがコンテンツ幅を突き抜けるレイアウト。テキストとビューポート端まで広がる画像を横並びに配置します。',
+          en: 'A layout where only one side bleeds beyond the content width, placing text alongside an image that extends to the viewport edge.',
+        },
+      },
+      {
+        id: 'fullwide-sections',
+        title: 'Fullwide Sections',
+        description: {
+          ja: '背景を全幅にしつつ、コンテンツ幅を維持するレイアウトの例',
+          en: 'An example of a layout that keeps the content width fixed while making the background full-width',
         },
       },
     ],
