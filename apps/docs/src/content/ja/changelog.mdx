@@ -9,6 +9,19 @@ v.1.0リリースまでしばらく激しい変更が続く可能性があるた
 
 <Divider bds="dashed" my="40" />
 
+## lism-css v.0.22.0 (Unreleased)
+
+**破壊的変更**を含むリリースです。
+
+### `AutoColumns` のデフォルトモード変更
+
+- `l--autoColumns` の `--autoMode` の初期値を `auto-fit` から `auto-fill` に変更
+- Lismコンポーネントの専用 Prop を `autoFill` から `autoFit` にリネーム（意味も反転）
+- 既存コードで `autoFill` を指定していた箇所は、新しいデフォルト挙動と同じため Prop を削除
+- 旧デフォルトの `auto-fit` 挙動が必要な場合は `autoFit` を明示指定
+
+<Divider bds="dashed" my="40" />
+
 ## lism-css v.0.21.0 (2026.05.26)
 
 **破壊的変更**を含むリリースです。
