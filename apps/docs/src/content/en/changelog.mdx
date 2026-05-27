@@ -9,37 +9,29 @@ Breaking changes may continue until v1.0, so all notable changes are documented 
 
 <Divider bds="dashed" my="40" />
 
-## lism-css v.0.22.0 (Unreleased)
+## lism-css v.0.22.0 (2026.05.28)
 
 This release contains **breaking changes**.
 
-### Changed default mode of `AutoColumns`
+### AutoColumns default mode change (#408)
 
-- Changed the default value of `--autoMode` in `l--autoColumns` from `auto-fit` to `auto-fill`
-- Renamed the Lism component prop from `autoFill` to `autoFit` (the meaning is inverted accordingly)
-- Existing code that used `autoFill` should now drop the prop, since `auto-fill` is now the default
-- If you need the previous `auto-fit` behavior, set `autoFit` explicitly
+- Changed the default mode of `AutoColumns` from `auto-fit` to `auto-fill`
 
-### Reorganized the CSS variable structure of `has--gutter` (#409)
+### Utility and token renaming
 
-- Renamed the root baseline value from `--gutter-size` to `--gutter--base`
-- Added the element-local functional variable `--gutter`, initialized by `.has--gutter` with `var(--gutter--base)`
-- Aligned gutter variables with the same two-layer structure as `--flow--base` / `--flow`
-- You can now override the gutter per element with values like `style="--gutter: 20px"`
-- Updated the `--sz--bleed` calculation in `is--container` and the negative margin behavior of `-max-sz:full` to reference `--gutter`
+- Renamed `u--cells` to `u--enclose` (#412)
+- Reorganized table cell variables under `--cells-p` (#410)
+- Restructured `--gutter-size` into `--gutter` / `--gutter--base` (#409)
+- Removed the `--under-offset` variable; set `text-underline-offset` and `tab-size` directly on body
 
-### Simplified table cell variables
+### Form control style adjustments
 
-- Removed `--td-c` / `--td-bgc` / `--td-min-sz` / `--th-c` / `--th-bgc` / `--th-min-sz` / `--th-p` (their fallback values matched the default behavior when undefined, so they were redundant)
-- Renamed `--td-p` to `--cells-p`, now applied to both `td` and `th`
-- Changed the fallback from `var(--s10) var(--s15)` to `0.625em 0.875em` (now scales with the parent font size)
-- Final form: `td, th { padding: var(--cells-p, 0.625em 0.875em); }`
+- Removed `border-radius` from form controls
+- Changed form control `padding` to em units
 
-### Renamed `u--cells` to `u--enclose` (#411)
+### Other
 
-- The name `u--cells` poorly conveyed its effect, so it has been renamed to `u--enclose`
-- The verb pair `divide` (split) ↔ `enclose` (wrap) now clearly contrasts the two utility classes
-- No backward-compatible alias is provided; all usages must be replaced
+- Reorganized and adjusted logo icon sizes
 
 <Divider bds="dashed" my="40" />
 
