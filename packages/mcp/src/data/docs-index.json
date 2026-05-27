@@ -490,6 +490,7 @@
       "`AutoColumns` のデフォルトモード変更",
       "`has--gutter` の CSS 変数構造を整理 (#409)",
       "テーブルセル変数を整理",
+      "`u--cells` を `u--enclose` にリネーム (#411)",
       "lism-css v.0.21.0 (2026.05.26)",
       "set クラスの命名変更 (#404)",
       "contentSize Prop と set--bleed の追加 (#405)",
@@ -541,8 +542,8 @@
       "v.0.8.2",
       "v.0.8 (大幅な変更)"
     ],
-    "keywords": ["changelog", "変更履歴", "更新", "バージョン"],
-    "snippet": "Lism CSS の各バージョンにおける変更内容を記載。v.0.22.0 (Unreleased) では AutoColumns のデフォルトを auto-fit から auto-fill へ変更し、has--gutter のCSS変数構造を --gutter-size から --gutter--base / --gutter へ整理（#409）、テーブルセル変数を整理（--td-c / --td-bgc / --td-min-sz / --th-c / --th-bgc / --th-min-sz / --th-p を削除、--td-p を --cells-p にリネームして td と th 両方に適用）。v.0.21.0 では set クラスの命名変更（set--var:xxx → set--xxx、#404）、contentSize Prop と set--bleed の追加（#405）。v.0.20.0 の破壊的変更として方向系 Property Class の命名整理（px-s/px-e → ps/pe、bd-x-s → bd-s 等、#378）、bp デフォルトサポート見直し（pl/pr/pt/pb 等廃止、d/g/cols/グリッド系は lg まで拡張、#394）、-hov:-bgc のデフォルト色変更と --neutral トークン追加（#381）など。v.0.18.0 では --sz--* トークンの px 統一・80px 刻みでの再設計（#364）、spacing tokens 拡充と set--s 新設（s25/s35 追加、#377）。v.0.17.0 では -max-sz:container 廃止と -max-sz:bleed 新設（#360）、--REM 廃止と --fz--base の 1rem 統一、a タグのリンク装飾スタイル廃止など。v.0.16.0 では Layout Primitive 命名整理（l--sideMain → l--withSide, l--fluidCols → l--autoColumns, l--switchCols → l--switchColumns）などがある。"
+    "keywords": ["changelog", "変更履歴", "更新", "バージョン", "u--cells", "u--enclose", "rename", "リネーム", "migration", "移行"],
+    "snippet": "Lism CSS の各バージョンにおける変更内容を記載。v.0.22.0 (Unreleased) では AutoColumns のデフォルトを auto-fit から auto-fill へ変更し、has--gutter のCSS変数構造を --gutter-size から --gutter--base / --gutter へ整理（#409）、テーブルセル変数を整理（--td-c / --td-bgc / --td-min-sz / --th-c / --th-bgc / --th-min-sz / --th-p を削除、--td-p を --cells-p にリネームして td と th 両方に適用）、u--cells を u--enclose にリネーム（divide ↔ enclose の対比で機能を明確化、後方互換 alias なし、#411）。v.0.21.0 では set クラスの命名変更（set--var:xxx → set--xxx、#404）、contentSize Prop と set--bleed の追加（#405）。v.0.20.0 の破壊的変更として方向系 Property Class の命名整理（px-s/px-e → ps/pe、bd-x-s → bd-s 等、#378）、bp デフォルトサポート見直し（pl/pr/pt/pb 等廃止、d/g/cols/グリッド系は lg まで拡張、#394）、-hov:-bgc のデフォルト色変更と --neutral トークン追加（#381）など。v.0.18.0 では --sz--* トークンの px 統一・80px 刻みでの再設計（#364）、spacing tokens 拡充と set--s 新設（s25/s35 追加、#377）。v.0.17.0 では -max-sz:container 廃止と -max-sz:bleed 新設（#360）、--REM 廃止と --fz--base の 1rem 統一、a タグのリンク装飾スタイル廃止など。v.0.16.0 では Layout Primitive 命名整理（l--sideMain → l--withSide, l--fluidCols → l--autoColumns, l--switchCols → l--switchColumns）などがある。"
   },
   {
     "sourcePath": "property-class/bd.mdx",
