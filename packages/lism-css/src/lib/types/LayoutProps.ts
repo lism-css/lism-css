@@ -45,7 +45,7 @@ export interface FlowLayoutProps {
 }
 export interface AutoColumnsProps {
   layout: 'autoColumns';
-  autoFill?: boolean;
+  autoFit?: boolean;
 }
 
 export interface WithSideProps {

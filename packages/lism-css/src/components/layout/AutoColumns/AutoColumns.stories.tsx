@@ -7,9 +7,9 @@ const meta: Meta<typeof AutoColumns> = {
   tags: ['autodocs'],
   argTypes: {
     children: { control: false },
-    autoFill: {
+    autoFit: {
       control: 'boolean',
-      description: 'auto-fill を使用するかどうか',
+      description: 'auto-fit を使用するかどうか（デフォルトは auto-fill）',
     },
   },
 };
@@ -33,11 +33,11 @@ export const Default: Story = {
   },
 };
 
-export const WithAutoFill: Story = {
-  name: 'autoFill: true',
+export const WithAutoFit: Story = {
+  name: 'autoFit: true',
   args: {
     g: '20',
-    autoFill: true,
+    autoFit: true,
     children: <DemoItems />,
   },
 };

@@ -38,7 +38,7 @@ import { filterDraftItems } from '@/lib/page-layouts';
                 </Inline>
               </Heading>
 
-              <AutoColumns autoFill cols="24rem" g="20" mbs="20" class="pageLayoutList">
+              <AutoColumns cols="24rem" g="20" mbs="20" class="pageLayoutList">
                 {items.map((item) => (
                   <BoxLink class="pageLayoutList_link" layout="stack" href={`/page-layouts/${categoryId}/${item.id}`} p="10" g="20" set="hov">
                     {/* スクリーンショット画像をサムネイルとして表示（画像未配置でもページは壊れない） */}

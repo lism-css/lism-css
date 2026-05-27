@@ -13,7 +13,7 @@ interface PropConfig {
 // Layout固有 props（消費して除去される）
 interface LayoutOwnProps {
   flow?: CssValue;
-  autoFill?: boolean;
+  autoFit?: boolean;
   sideW?: CssValue;
   mainW?: CssValue;
   breakSize?: CssValue;
@@ -63,8 +63,8 @@ function getWithSideProps({ sideW, mainW, style, ...props }: InputProps): BasePr
   return { ...props, style: newStyle };
 }
 
-function getAutoColumnsProps({ autoFill, style, ...props }: InputProps): BaseProps {
-  if (autoFill) return { ...props, style: { ...style, '--autoMode': 'auto-fill' } as StyleWithCustomProps };
+function getAutoColumnsProps({ autoFit, style, ...props }: InputProps): BaseProps {
+  if (autoFit) return { ...props, style: { ...style, '--autoMode': 'auto-fit' } as StyleWithCustomProps };
   return { ...props, style };
 }
 

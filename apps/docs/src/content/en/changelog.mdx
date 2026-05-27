@@ -9,6 +9,19 @@ Breaking changes may continue until v1.0, so all notable changes are documented 
 
 <Divider bds="dashed" my="40" />
 
+## lism-css v.0.22.0 (Unreleased)
+
+This release contains **breaking changes**.
+
+### Changed default mode of `AutoColumns`
+
+- Changed the default value of `--autoMode` in `l--autoColumns` from `auto-fit` to `auto-fill`
+- Renamed the Lism component prop from `autoFill` to `autoFit` (the meaning is inverted accordingly)
+- Existing code that used `autoFill` should now drop the prop, since `auto-fill` is now the default
+- If you need the previous `auto-fit` behavior, set `autoFit` explicitly
+
+<Divider bds="dashed" my="40" />
+
 ## lism-css v.0.21.0 (2026.05.26)
 
 This release contains **breaking changes**.

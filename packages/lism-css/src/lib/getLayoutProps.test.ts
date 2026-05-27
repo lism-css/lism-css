@@ -85,38 +85,38 @@ describe('getLayoutProps', () => {
   });
 
   describe('autoColumns レイアウト', () => {
-    test('autoFill が true の場合、style に --autoMode が設定される', () => {
-      const result = getLayoutProps('autoColumns', { autoFill: true });
+    test('autoFit が true の場合、style に --autoMode が設定される', () => {
+      const result = getLayoutProps('autoColumns', { autoFit: true });
       expect(result.style).toBeDefined();
-      expect(result.style?.['--autoMode']).toBe('auto-fill');
+      expect(result.style?.['--autoMode']).toBe('auto-fit');
     });
 
-    test('autoFill が false の場合、--autoMode は設定されない', () => {
-      const result = getLayoutProps('autoColumns', { autoFill: false });
+    test('autoFit が false の場合、--autoMode は設定されない', () => {
+      const result = getLayoutProps('autoColumns', { autoFit: false });
       expect(result.style?.['--autoMode']).toBeUndefined();
     });
 
-    test('autoFill が未定義の場合、--autoMode は設定されない', () => {
+    test('autoFit が未定義の場合、--autoMode は設定されない', () => {
       const result = getLayoutProps('autoColumns', {});
       expect(result.style?.['--autoMode']).toBeUndefined();
     });
 
     test('既存の style がある場合、マージされる', () => {
       const result = getLayoutProps('autoColumns', {
-        autoFill: true,
+        autoFit: true,
         style: { color: 'blue' },
       });
       expect(result.style?.color).toBe('blue');
-      expect(result.style?.['--autoMode']).toBe('auto-fill');
+      expect(result.style?.['--autoMode']).toBe('auto-fit');
     });
 
-    test('autoFill 以外のpropsは維持される', () => {
+    test('autoFit 以外のpropsは維持される', () => {
       const result = getLayoutProps('autoColumns', {
-        autoFill: true,
+        autoFit: true,
         otherProp: 'value',
       });
       expect(result.otherProp).toBe('value');
-      expect((result as unknown as Record<string, unknown>).autoFill).toBeUndefined();
+      expect((result as unknown as Record<string, unknown>).autoFit).toBeUndefined();
     });
   });
 
