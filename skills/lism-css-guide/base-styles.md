@@ -49,7 +49,8 @@ Reset CSS に加え、`@layer lism-base` 内で HTML タグに基本スタイル
 | `--lts--base` | ベース字間 |
 | `--text` | テキスト色 |
 | `--base` | 背景色 |
-| `--under-offset` | `text-underline-offset`（デフォルト: `0.125em`） |
+
+加えて `text-underline-offset: 0.125em`（リンク下線位置）と `tab-size: 4`（タブ文字の表示幅）が直接指定されている。
 
 ### 見出し（h1〜h6）
 

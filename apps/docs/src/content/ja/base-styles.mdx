@@ -67,13 +67,14 @@ body {
   letter-spacing: var(--lts--base);
   background-color: var(--base);
   color: var(--text);
-  text-underline-offset: var(--under-offset, 0.125em);
+  text-underline-offset: 0.125em;
+  tab-size: 4;
 }
 ```
 
 `--hl` はハーフレディング（行間の上下余白）を管理するための変数です。`body` では `--hl--base` がセットされ、子要素に継承されます。
 
-`text-underline-offset` はリンクの下線位置を調整するプロパティで、`--under-offset` 変数で上書き可能です。
+`text-underline-offset` でリンクの下線位置を、`tab-size` でタブ文字の表示幅を整えています。
 
 
 ### 全要素の行間

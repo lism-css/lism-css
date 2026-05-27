@@ -60,13 +60,14 @@ body {
   letter-spacing: var(--lts--base);
   background-color: var(--base);
   color: var(--text);
-  text-underline-offset: var(--under-offset, 0.125em);
+  text-underline-offset: 0.125em;
+  tab-size: 4;
 }
 ```
 
 `--hl` is a variable that manages the half-leading (the spacing above and below a line). On `body`, `--hl--base` is set and inherited by child elements.
 
-`text-underline-offset` adjusts the position of link underlines and can be overridden with the `--under-offset` variable.
+`text-underline-offset` adjusts the position of link underlines, and `tab-size` sets the display width of tab characters.
 
 
 ### Line height for all elements
