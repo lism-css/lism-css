@@ -386,7 +386,7 @@
     "title": "Utility Class",
     "description": "スタイルや装飾をまとめて適用できる Lism CSS のユーティリティクラスについて解説します。",
     "category": "guide",
-    "headings": ["u--cbox", "u--trim & u--trimAll", "u--srOnly", "u--divide & u--cells", "u--clipText", "Opt-in", "u--inlineCenter"],
+    "headings": ["u--cbox", "u--trim & u--trimAll", "u--srOnly", "u--divide & u--enclose", "u--clipText", "Opt-in", "u--inlineCenter"],
     "keywords": [
       "utility",
       "ユーティリティ",
@@ -397,11 +397,11 @@
       "u--trimAll",
       "u--srOnly",
       "u--divide",
-      "u--cells",
+      "u--enclose",
       "u--clipText",
       "u--inlineCenter"
     ],
-    "snippet": "用途が明確な装飾・機能をまとめてセットするユーティリティクラス (.u--{style}) の一覧。u--cbox（keycolorベースの色自動生成）, u--trim/u--trimAll（ハーフレディング余白調整）, u--srOnly（スクリーンリーダー専用）, u--divide/u--cells（区切り線・セル枠）, u--clipText（テキストで背景クリッピング）等を解説。Opt-inとして u--inlineCenter（絵文字・インラインアイコン中央揃え）の作成例も紹介。"
+    "snippet": "用途が明確な装飾・機能をまとめてセットするユーティリティクラス (.u--{style}) の一覧。u--cbox（keycolorベースの色自動生成）, u--trim/u--trimAll（ハーフレディング余白調整）, u--srOnly（スクリーンリーダー専用）, u--divide/u--enclose（区切り線・セル枠）, u--clipText（テキストで背景クリッピング）等を解説。Opt-inとして u--inlineCenter（絵文字・インラインアイコン中央揃え）の作成例も紹介。"
   },
   {
     "sourcePath": "set-class.mdx",
@@ -490,6 +490,7 @@
       "`AutoColumns` のデフォルトモード変更",
       "`has--gutter` の CSS 変数構造を整理 (#409)",
       "テーブルセル変数を整理",
+      "`u--cells` を `u--enclose` にリネーム (#411)",
       "lism-css v.0.21.0 (2026.05.26)",
       "set クラスの命名変更 (#404)",
       "contentSize Prop と set--bleed の追加 (#405)",
@@ -541,8 +542,8 @@
       "v.0.8.2",
       "v.0.8 (大幅な変更)"
     ],
-    "keywords": ["changelog", "変更履歴", "更新", "バージョン"],
-    "snippet": "Lism CSS の各バージョンにおける変更内容を記載。v.0.22.0 (Unreleased) では AutoColumns のデフォルトを auto-fit から auto-fill へ変更し、has--gutter のCSS変数構造を --gutter-size から --gutter--base / --gutter へ整理（#409）、テーブルセル変数を整理（--td-c / --td-bgc / --td-min-sz / --th-c / --th-bgc / --th-min-sz / --th-p を削除、--td-p を --cells-p にリネームして td と th 両方に適用）。v.0.21.0 では set クラスの命名変更（set--var:xxx → set--xxx、#404）、contentSize Prop と set--bleed の追加（#405）。v.0.20.0 の破壊的変更として方向系 Property Class の命名整理（px-s/px-e → ps/pe、bd-x-s → bd-s 等、#378）、bp デフォルトサポート見直し（pl/pr/pt/pb 等廃止、d/g/cols/グリッド系は lg まで拡張、#394）、-hov:-bgc のデフォルト色変更と --neutral トークン追加（#381）など。v.0.18.0 では --sz--* トークンの px 統一・80px 刻みでの再設計（#364）、spacing tokens 拡充と set--s 新設（s25/s35 追加、#377）。v.0.17.0 では -max-sz:container 廃止と -max-sz:bleed 新設（#360）、--REM 廃止と --fz--base の 1rem 統一、a タグのリンク装飾スタイル廃止など。v.0.16.0 では Layout Primitive 命名整理（l--sideMain → l--withSide, l--fluidCols → l--autoColumns, l--switchCols → l--switchColumns）などがある。"
+    "keywords": ["changelog", "変更履歴", "更新", "バージョン", "u--cells", "u--enclose", "rename", "リネーム", "migration", "移行"],
+    "snippet": "Lism CSS の各バージョンにおける変更内容を記載。v.0.22.0 (Unreleased) では AutoColumns のデフォルトを auto-fit から auto-fill へ変更し、has--gutter のCSS変数構造を --gutter-size から --gutter--base / --gutter へ整理（#409）、テーブルセル変数を整理（--td-c / --td-bgc / --td-min-sz / --th-c / --th-bgc / --th-min-sz / --th-p を削除、--td-p を --cells-p にリネームして td と th 両方に適用）、u--cells を u--enclose にリネーム（divide ↔ enclose の対比で機能を明確化、後方互換 alias なし、#411）。v.0.21.0 では set クラスの命名変更（set--var:xxx → set--xxx、#404）、contentSize Prop と set--bleed の追加（#405）。v.0.20.0 の破壊的変更として方向系 Property Class の命名整理（px-s/px-e → ps/pe、bd-x-s → bd-s 等、#378）、bp デフォルトサポート見直し（pl/pr/pt/pb 等廃止、d/g/cols/グリッド系は lg まで拡張、#394）、-hov:-bgc のデフォルト色変更と --neutral トークン追加（#381）など。v.0.18.0 では --sz--* トークンの px 統一・80px 刻みでの再設計（#364）、spacing tokens 拡充と set--s 新設（s25/s35 追加、#377）。v.0.17.0 では -max-sz:container 廃止と -max-sz:bleed 新設（#360）、--REM 廃止と --fz--base の 1rem 統一、a タグのリンク装飾スタイル廃止など。v.0.16.0 では Layout Primitive 命名整理（l--sideMain → l--withSide, l--fluidCols → l--autoColumns, l--switchCols → l--switchColumns）などがある。"
   },
   {
     "sourcePath": "property-class/bd.mdx",
@@ -1344,12 +1345,12 @@
   },
   {
     "sourcePath": "utility-class.mdx",
-    "title": "u--divide & u--cells",
+    "title": "u--divide & u--enclose",
     "description": "グリッド・フレックス子要素間の区切り線・セル枠を表示するユーティリティクラス。",
     "category": "guide",
-    "headings": ["u--divide & u--cells"],
-    "keywords": ["u--divide", "u--cells", "グリッド区切り", "ボーダー", "テーブル風", "カレンダー", "box-shadow"],
-    "snippet": "u--divide は子要素間にのみ区切り線を表示（外周なし）。u--cells は各セルを枠で囲む（table セル／カレンダー風）。どちらも box-shadow で実装。"
+    "headings": ["u--divide & u--enclose"],
+    "keywords": ["u--divide", "u--enclose", "グリッド区切り", "ボーダー", "テーブル風", "カレンダー", "box-shadow"],
+    "snippet": "u--divide は子要素間にのみ区切り線を表示（外周なし）。u--enclose は各セルを枠で囲む（table セル／カレンダー風）。どちらも box-shadow で実装。"
   },
   {
     "sourcePath": "trait-class.mdx",

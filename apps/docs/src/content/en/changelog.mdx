@@ -35,6 +35,12 @@ This release contains **breaking changes**.
 - Changed the fallback from `var(--s10) var(--s15)` to `0.625em 0.875em` (now scales with the parent font size)
 - Final form: `td, th { padding: var(--cells-p, 0.625em 0.875em); }`
 
+### Renamed `u--cells` to `u--enclose` (#411)
+
+- The name `u--cells` poorly conveyed its effect, so it has been renamed to `u--enclose`
+- The verb pair `divide` (split) ↔ `enclose` (wrap) now clearly contrasts the two utility classes
+- No backward-compatible alias is provided; all usages must be replaced
+
 <Divider bds="dashed" my="40" />
 
 ## lism-css v.0.21.0 (2026.05.26)

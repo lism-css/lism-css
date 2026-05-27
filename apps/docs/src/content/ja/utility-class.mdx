@@ -280,10 +280,10 @@ import { Dog, Cat } from "@phosphor-icons/react";
 <SrcCode path="src/scss/utility/_srOnly.scss" />
 
 
-## `u--divide` & `u--cells`
+## `u--divide` & `u--enclose`
 
 - `u--divide`はグリッド・フレックスボックス等の子要素間に区切り線を表示します。
-- `u--cells`はグリッド・フレックスボックス等の子要素を囲んでテーブルのセルのように表示します。
+- `u--enclose`はグリッド・フレックスボックス等の子要素を囲んでテーブルのセルのように表示します。
 
 <SrcCode path="src/scss/utility/_divide.scss" />
 
@@ -293,7 +293,7 @@ import { Dog, Cat } from "@phosphor-icons/react";
 :::
 
 <Preview>
-  <PreviewTitle>`u--divide`と`u--cells`の比較</PreviewTitle>
+  <PreviewTitle>`u--divide`と`u--enclose`の比較</PreviewTitle>
   <PreviewArea resize p="20">
     <AutoColumns util="divide" cols="16rem" bdrs="20">
       <Box p="15">divide</Box>
@@ -302,16 +302,16 @@ import { Dog, Cat } from "@phosphor-icons/react";
       <Box p="15">divide</Box>
       <Box p="15">divide</Box>
     </AutoColumns>
-    <AutoColumns util="cells" cols="16rem" bdrs="20">
-      <Box p="15">cells</Box>
-      <Box p="15">cells</Box>
-      <Box p="15">cells</Box>
-      <Box p="15">cells</Box>
-      <Box p="15">cells</Box>
+    <AutoColumns util="enclose" cols="16rem" bdrs="20">
+      <Box p="15">enclose</Box>
+      <Box p="15">enclose</Box>
+      <Box p="15">enclose</Box>
+      <Box p="15">enclose</Box>
+      <Box p="15">enclose</Box>
     </AutoColumns>
   </PreviewArea>
   <PreviewCode slot="tab" label="HTML">
-  ```html "u--divide" "u--cells"
+  ```html "u--divide" "u--enclose"
   <div class="l--autoColumns u--divide -bdrs:20" style="--cols:16rem">
     <div class="l--box -p:15">divide</div>
     <div class="l--box -p:15">divide</div>
@@ -319,17 +319,17 @@ import { Dog, Cat } from "@phosphor-icons/react";
     <div class="l--box -p:15">divide</div>
     <div class="l--box -p:15">divide</div>
   </div>
-  <div class="l--autoColumns u--cells -bdrs:20" style="--cols:16rem">
-    <div class="l--box -p:15">cells</div>
-    <div class="l--box -p:15">cells</div>
-    <div class="l--box -p:15">cells</div>
-    <div class="l--box -p:15">cells</div>
-    <div class="l--box -p:15">cells</div>
+  <div class="l--autoColumns u--enclose -bdrs:20" style="--cols:16rem">
+    <div class="l--box -p:15">enclose</div>
+    <div class="l--box -p:15">enclose</div>
+    <div class="l--box -p:15">enclose</div>
+    <div class="l--box -p:15">enclose</div>
+    <div class="l--box -p:15">enclose</div>
   </div>
   ```
   </PreviewCode>
   <PreviewCode slot="tab" label="JSX">
-    ```jsx 'util="divide"' 'util="cells"'
+    ```jsx 'util="divide"' 'util="enclose"'
     <AutoColumns util="divide" cols="16rem" bdrs="20">
       <Box p="15">divide</Box>
       <Box p="15">divide</Box>
@@ -337,12 +337,12 @@ import { Dog, Cat } from "@phosphor-icons/react";
       <Box p="15">divide</Box>
       <Box p="15">divide</Box>
     </AutoColumns>
-    <AutoColumns util="cells" cols="16rem" bdrs="20">
-      <Box p="15">cells</Box>
-      <Box p="15">cells</Box>
-      <Box p="15">cells</Box>
-      <Box p="15">cells</Box>
-      <Box p="15">cells</Box>
+    <AutoColumns util="enclose" cols="16rem" bdrs="20">
+      <Box p="15">enclose</Box>
+      <Box p="15">enclose</Box>
+      <Box p="15">enclose</Box>
+      <Box p="15">enclose</Box>
+      <Box p="15">enclose</Box>
     </AutoColumns>
     ```
   </PreviewCode>
@@ -425,11 +425,11 @@ import { Dog, Cat } from "@phosphor-icons/react";
 </Preview>
 
 
-Gridでも `u--cells`で table タグのような表現ができます。
+Gridでも `u--enclose`で table タグのような表現ができます。
 <Preview>
-  <PreviewTitle>`u--cells`を使ってテーブルのような表現にする</PreviewTitle>
+  <PreviewTitle>`u--enclose`を使ってテーブルのような表現にする</PreviewTitle>
   <PreviewArea resize p="15">
-    <Grid gtc={['2fr 3fr', '1fr 2fr']} util="cells">
+    <Grid gtc={['2fr 3fr', '1fr 2fr']} util="enclose">
       <Box p="15" bgc="base-2">A</Box>
       <Box p="15" bgc="base-2">B</Box>
       <Box p="15">Lorem ipsum</Box>
@@ -444,7 +444,7 @@ Gridでも `u--cells`で table タグのような表現ができます。
   </PreviewArea>
   <PreviewCode slot="tab" label="JSX">
     ```jsx
-    <Grid gtc={['2fr 3fr', '1fr 2fr']} util="cells">
+    <Grid gtc={['2fr 3fr', '1fr 2fr']} util="enclose">
       <Box p="15" bgc="base-2">A</Box>
       <Box p="15" bgc="base-2">B</Box>
       <Box p="15">Lorem ipsum</Box>
@@ -467,7 +467,7 @@ Gridでも `u--cells`で table タグのような表現ができます。
   </PreviewCode>
   <PreviewCode slot="tab" label="HTML">
     ```html
-    <div class="l--grid u--cells -gtc -gtc_sm -bd" style="--gtc: 2fr 3fr; --gtc_sm: 1fr 2fr">
+    <div class="l--grid u--enclose -gtc -gtc_sm -bd" style="--gtc: 2fr 3fr; --gtc_sm: 1fr 2fr">
       <div class="l--box -p:15 -bgc:base-2">A</div>
       <div class="l--box -p:15 -bgc:base-2">B</div>
       <div class="l--box -p:15">Lorem ipsum</div>
