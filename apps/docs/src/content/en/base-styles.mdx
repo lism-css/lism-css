@@ -222,41 +222,17 @@ dd + dt {
 
 ### Tables
 
-Table cell styles can be customized with CSS variables.
+The padding of `td` and `th` can be customized via `--cells-p`.
 
 ```scss
-table {
-  --td-c: inherit;
-  --td-bgc: transparent;
-  --td-p: var(--s10) var(--s15);
-  --td-min-sz: initial;
-}
-td {
-  color: var(--td-c);
-  background-color: var(--td-bgc);
-  padding: var(--td-p);
-  min-inline-size: var(--td-min-sz);
-}
-th {
-  color: var(--th-c, var(--td-c));
-  background-color: var(--th-bgc, var(--td-bgc));
-  padding: var(--th-p, var(--td-p));
-  min-inline-size: var(--th-min-sz, var(--td-min-sz));
+td, th {
+  padding: var(--cells-p, 0.625em 0.875em);
 }
 ```
 
 | Variable | Fallback | Purpose |
 |------|------------|------|
-| `--td-c` | `inherit` | Cell text color |
-| `--td-bgc` | `transparent` | Cell background color |
-| `--td-p` | `var(--s10) var(--s15)` | Cell padding |
-| `--td-min-sz` | `initial` | Cell minimum width |
-| `--th-c` | `var(--td-c)` | Header cell text color |
-| `--th-bgc` | `var(--td-bgc)` | Header cell background color |
-| `--th-p` | `var(--td-p)` | Header cell padding |
-| `--th-min-sz` | `var(--td-min-sz)` | Header cell minimum width |
-
-Since `th` uses the `td` variables as fallbacks, setting `--td-*` on `table` also affects `th`. To override `th` individually, use `--th-*`.
+| `--cells-p` | `0.625em 0.875em` | Cell padding |
 
 
 ### Form elements

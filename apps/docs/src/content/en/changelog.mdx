@@ -28,6 +28,13 @@ This release contains **breaking changes**.
 - You can now override the gutter per element with values like `style="--gutter: 20px"`
 - Updated the `--sz--bleed` calculation in `is--container` and the negative margin behavior of `-max-sz:full` to reference `--gutter`
 
+### Simplified table cell variables
+
+- Removed `--td-c` / `--td-bgc` / `--td-min-sz` / `--th-c` / `--th-bgc` / `--th-min-sz` / `--th-p` (their fallback values matched the default behavior when undefined, so they were redundant)
+- Renamed `--td-p` to `--cells-p`, now applied to both `td` and `th`
+- Changed the fallback from `var(--s10) var(--s15)` to `0.625em 0.875em` (now scales with the parent font size)
+- Final form: `td, th { padding: var(--cells-p, 0.625em 0.875em); }`
+
 <Divider bds="dashed" my="40" />
 
 ## lism-css v.0.21.0 (2026.05.26)
