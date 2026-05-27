@@ -108,14 +108,14 @@ const topLevelLinks: TopLevelLinkItem[] = [
   },
   {
     type: 'toplink',
-    label: 'Templates',
-    link: '/templates/',
+    label: 'Page Layouts',
+    link: '/page-layouts/',
     icon: LayoutIcon,
   },
   {
     type: 'toplink',
-    label: 'Page Layouts',
-    link: '/page-layouts/',
+    label: 'Templates',
+    link: '/templates/',
     icon: BrowsersIcon,
   },
 ];
