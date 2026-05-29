@@ -271,8 +271,11 @@ export class LismPropsData {
     }
 
     // ":"ではじまっている場合、それに続く文字列を取得して property class 化
+    // ":" 単体（suffix なし）は「値なし = フラグ」と解釈し、val===true と同じ bare クラスを出力する。
+    // テキストフォーム等 boolean を渡せない経路から true 相当を指定できるようにするため。
     if (typeof val === 'string' && val.startsWith(':')) {
-      this.addProp(`${utilName}:${val.replace(':', '')}`);
+      const suffix = val.slice(1);
+      this.addProp(suffix ? `${utilName}:${suffix}` : utilName);
       return;
     }
 

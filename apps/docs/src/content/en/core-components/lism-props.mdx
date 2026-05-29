@@ -267,6 +267,19 @@ Define the class in your CSS and use it wherever needed.
 Using `className='-p:hoge'` also works, but passing it as a CSS Prop via `:` ensures consistent output ordering.
 :::
 
+<Spacer h="10"/>
+
+#### Passing `:` on its own
+
+If you pass just `:` without any string after it, only the `-{prop}` class is output, exactly as if you had passed `true`.
+
+```jsx
+<Lism bd=":">...</Lism>
+// → <div class="-bd">...</div>
+```
+
+This is handy when you want to enable a prop like `bd` (one that can be toggled on with `true`) from a path that cannot pass a boolean, such as text input.
+
 
 ### Responsive syntax
 
