@@ -4,7 +4,7 @@ import path from 'path';
 import { fileURLToPath, pathToFileURL } from 'url';
 import buildConfig from './build-config.js';
 import buildCSS from './build-css.js';
-import { objDeepMerge } from '../config/helper.js';
+import { objDeepMerge } from '../dist/config/helper.js';
 
 // NOTE: build-config.js を実行するための簡易CLIエントリ
 const __filename = fileURLToPath(import.meta.url);
@@ -16,7 +16,7 @@ const projectRoot = process.cwd();
 console.log('🤖 projectRoot:', projectRoot);
 
 // 設定ファイルのパス
-const defaultConfigPath = path.resolve(__dirname, '../config/default-config.js');
+const defaultConfigPath = path.resolve(__dirname, '../dist/config/default-config.js');
 
 // ユーザー設定ファイルを検索（優先順: .js → .mjs）
 const CONFIG_SEARCH = ['lism.config.js', 'lism.config.mjs'];

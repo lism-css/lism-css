@@ -205,6 +205,13 @@ describe('getLismProps', () => {
       expect(result.className).toContain('-w:fit');
       expect(result.className).toContain('-h:fit');
     });
+
+    test('":" 単体は true と同じく bare な -{prop} クラスのみ出力される', () => {
+      const result = getLismProps({ bd: ':' });
+      expect(result.className).toContain('-bd');
+      expect(result.className).not.toContain('-bd:');
+      expect(result.style?.border).toBeUndefined();
+    });
   });
 
   describe('Lism Props処理 - true 値', () => {

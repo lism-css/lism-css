@@ -1,6 +1,6 @@
 {
   "name": "lism-css",
-  "version": "0.22.0",
+  "version": "0.22.1",
   "description": "Lism CSS is a layout-first CSS framework for websites.",
   "author": {
     "name": "ddryo",
@@ -32,7 +32,6 @@
   },
   "files": [
     "dist",
-    "config",
     "config.js",
     "config.d.ts",
     "vite-plugin.js",
@@ -46,11 +45,11 @@
     ".": "./dist/index.js",
     "./config.js": "./config.js",
     "./config": {
-      "import": "./config/index.js",
+      "import": "./dist/config/index.js",
       "types": "./dist/config/index.d.ts"
     },
     "./default-config": {
-      "import": "./config/default-config.js",
+      "import": "./dist/config/default-config.js",
       "types": "./dist/config/default-config.d.ts"
     },
     "./vite-plugin": "./vite-plugin.mjs",
@@ -67,7 +66,6 @@
       "import": "./dist/components/*.js",
       "types": "./dist/components/*.d.ts"
     },
-    "./next-js/*": "./packages/next-js/*",
     "./astro": {
       "import": "./packages/astro/index.ts"
     },
@@ -113,8 +111,36 @@
   "peerDependencies": {
     "@types/react": "*",
     "@types/react-dom": "*",
+    "autoprefixer": "^10.4.0",
+    "cssnano": "^7.0.0",
+    "glob": "^11.0.0 || ^13.0.0",
+    "postcss": "^8.4.0",
     "react": "^18 || ^19",
-    "react-dom": "^18 || ^19"
+    "react-dom": "^18 || ^19",
+    "sass": "^1.70.0"
+  },
+  "peerDependenciesMeta": {
+    "@types/react": {
+      "optional": true
+    },
+    "@types/react-dom": {
+      "optional": true
+    },
+    "autoprefixer": {
+      "optional": true
+    },
+    "cssnano": {
+      "optional": true
+    },
+    "glob": {
+      "optional": true
+    },
+    "postcss": {
+      "optional": true
+    },
+    "sass": {
+      "optional": true
+    }
   },
   "sideEffects": false
 }
