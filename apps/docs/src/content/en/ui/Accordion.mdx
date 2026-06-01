@@ -71,7 +71,7 @@ Provided as `Accordion` from the `@lism-css/ui` package.
 
 ### Import
 
-<ImportPackage component="Accordion" script="setAccordion.js" packageName="@lism-css/ui" />
+<ImportPackage component="Accordion" script="accordion.js" packageName="@lism-css/ui" />
 
 The following components are available:
 
@@ -88,8 +88,11 @@ The following components are available:
 | Prop | Description |
 |---|---|
 | <PropBadge>`<Accordion.Root>`</PropBadge><br/>`allowMultiple` | Allows multiple accordions to be expanded simultaneously. By default, only one can be open at a time. |
+| <PropBadge>`<Accordion.Item>`</PropBadge><br/>`isOpen` | Expands the item by default (adds `data-opened`). Use together with `isOpen` on `<Accordion.Button>` / `<Accordion.Panel>`. |
 | <PropBadge>`<Accordion.Heading>`</PropBadge><br/>`as` | Specifies the HTML tag for the heading. Defaults to `div` (with `role="heading"` added automatically). If `h2`–`h6` is specified, `role` is not added. |
+| <PropBadge>`<Accordion.Button>`</PropBadge><br/>`isOpen` | Sets `aria-expanded` to match the initial expanded state. |
 | <PropBadge>`<Accordion.Panel>`</PropBadge><br/>`flow` | Flow layout setting passed to the content area (`__content`) inside the panel. |
+| <PropBadge>`<Accordion.Panel>`</PropBadge><br/>`isOpen` | Shows the panel by default (removes `hidden`). |
 
 
 ### Structure
@@ -187,20 +190,137 @@ The source code is available on [GitHub](https://github.com/lism-css/lism-css/tr
 </Preview>
 
 
-### Animation duration and allowing multiple panels
+### Changing the animation duration
 
 The speed of the open/close animation is controlled by the `--duration` variable, which defaults to `0.25s`.
+You can change it by setting the CSS variable on `<Accordion.Root>` (for all items) or on an individual `<Accordion.Item>`.
+
+<Preview>
+  <PreviewTitle>Preview</PreviewTitle>
+  <PreviewArea p="20">
+    <Accordion.Root bd style={{ '--duration': '.15s' }}>
+      <Accordion.Item>
+        <Accordion.Heading>
+          <Accordion.Button p="20">Accordion Example 1</Accordion.Button>
+        </Accordion.Heading>
+        <Accordion.Panel p="20" pt="5">
+          <DummyText length="l" />
+        </Accordion.Panel>
+      </Accordion.Item>
+      <Accordion.Item bd-t>
+        <Accordion.Heading>
+          <Accordion.Button p="20">Accordion Example 2</Accordion.Button>
+        </Accordion.Heading>
+        <Accordion.Panel p="20" pt="5">
+          <DummyText length="l" />
+        </Accordion.Panel>
+      </Accordion.Item>
+    </Accordion.Root>
+  </PreviewArea>
+  <PreviewCode slot="tab" label="JSX">
+```jsx "--duration"
+<Accordion.Root style={{ '--duration': '.15s' }}>
+  <Accordion.Item>
+    <Accordion.Heading>
+      <Accordion.Button p="20">Accordion Example 1</Accordion.Button>
+    </Accordion.Heading>
+    <Accordion.Panel p="20" pt="5">
+      ...
+    </Accordion.Panel>
+  </Accordion.Item>
+  ...
+</Accordion.Root>
+```
+  </PreviewCode>
+  <PreviewCode slot="tab" label="HTML">
+```html "--duration"
+<div class="c--accordion l--stack" style="--duration: 0.15s">
+  <div class="c--accordion_item">...</div>
+  <div class="c--accordion_item">...</div>
+</div>
+```
+  </PreviewCode>
+</Preview>
+
+
+### Opening the first item by default
+
+To have an item expanded from the start, specify `isOpen` on each of `<Accordion.Item>`, `<Accordion.Button>`, and `<Accordion.Panel>`.
+
+:::note
+Because `isOpen` plays a different role on each component, specify it on all three.
+On `<Accordion.Item>` it adds `data-opened` to set the panel height and icon to the open state, on `<Accordion.Button>` it controls `aria-expanded`, and on `<Accordion.Panel>` it toggles `hidden`.
+:::
+
+<Preview>
+  <PreviewTitle>Preview</PreviewTitle>
+  <PreviewArea p="20">
+    <Accordion.Root bd>
+      <Accordion.Item isOpen>
+        <Accordion.Heading>
+          <Accordion.Button p="20" isOpen>Accordion Label 1</Accordion.Button>
+        </Accordion.Heading>
+        <Accordion.Panel p="20" pt="5" isOpen>
+          <DummyText length="l" />
+        </Accordion.Panel>
+      </Accordion.Item>
+      <Accordion.Item bd-t>
+        <Accordion.Heading>
+          <Accordion.Button p="20">Accordion Label 2</Accordion.Button>
+        </Accordion.Heading>
+        <Accordion.Panel p="20" pt="5">
+          <DummyText length="l" />
+        </Accordion.Panel>
+      </Accordion.Item>
+    </Accordion.Root>
+  </PreviewArea>
+  <PreviewCode slot="tab" label="JSX">
+```jsx "isOpen"
+<Accordion.Root bd>
+  <Accordion.Item isOpen>
+    <Accordion.Heading>
+      <Accordion.Button p="20" isOpen>Accordion Label 1</Accordion.Button>
+    </Accordion.Heading>
+    <Accordion.Panel p="20" pt="5" isOpen>
+      ...
+    </Accordion.Panel>
+  </Accordion.Item>
+  <Accordion.Item bd-t>
+    <Accordion.Heading>
+      <Accordion.Button p="20">Accordion Label 2</Accordion.Button>
+    </Accordion.Heading>
+    <Accordion.Panel p="20" pt="5">
+      ...
+    </Accordion.Panel>
+  </Accordion.Item>
+</Accordion.Root>
+```
+  </PreviewCode>
+  <PreviewCode slot="tab" label="HTML">
+```html "data-opened"
+<div class="c--accordion l--stack">
+  <div class="c--accordion_item" data-opened>
+    <!-- button: aria-expanded="true" / panel: no hidden -->
+    ...
+  </div>
+  <div class="c--accordion_item">...</div>
+</div>
+```
+  </PreviewCode>
+</Preview>
+
+
+### Allowing multiple panels to be open
 
 :::note
 By default, only one accordion within the same `<Accordion.Root>` can be expanded at a time.
 Specifying `allowMultiple` allows multiple panels to be open simultaneously.
 :::
 
-
 <Preview>
   <PreviewTitle>Preview</PreviewTitle>
   <PreviewArea p="20">
-    <Accordion.Root allowMultiple bd style={{ '--duration': '.15s' }}>
+    <Accordion.Root allowMultiple bd>
       <Accordion.Item>
         <Accordion.Heading>
           <Accordion.Button p="20">Accordion Label 1</Accordion.Button>
@@ -228,9 +348,9 @@ Specifying `allowMultiple` allows multiple panels to be open simultaneously.
     </Accordion.Root>
   </PreviewArea>
   <PreviewCode slot="tab" label="JSX">
-```jsx "allowMultiple" "--duration"
-<Accordion.Root g="1px" allowMultiple>
-  <Accordion.Item style={{ '--duration': '.15s' }}>
+```jsx "allowMultiple"
+<Accordion.Root allowMultiple bd>
+  <Accordion.Item>
     <Accordion.Heading>
       <Accordion.Button p="20">Accordion Label 1</Accordion.Button>
     </Accordion.Heading>
@@ -238,7 +358,7 @@ Specifying `allowMultiple` allows multiple panels to be open simultaneously.
       ...
     </Accordion.Panel>
   </Accordion.Item>
-  <Accordion.Item style={{ '--duration': '.15s' }}>
+  <Accordion.Item bd-t>
     <Accordion.Heading>
       <Accordion.Button p="20">Accordion Label 2</Accordion.Button>
     </Accordion.Heading>
@@ -251,11 +371,11 @@ Specifying `allowMultiple` allows multiple panels to be open simultaneously.
 ```
   </PreviewCode>
   <PreviewCode slot="tab" label="HTML">
-```html "data-allow-multiple" "--duration"
+```html "data-allow-multiple"
 <div class="c--accordion l--stack" data-allow-multiple>
-  <div class="c--accordion_item" style="--duration: 0.15s">...</div>
-  <div class="c--accordion_item" style="--duration: 0.15s">...</div>
-  <div class="c--accordion_item" style="--duration: 0.15s">...</div>
+  <div class="c--accordion_item">...</div>
+  <div class="c--accordion_item">...</div>
+  <div class="c--accordion_item">...</div>
 </div>
 ```
   </PreviewCode>

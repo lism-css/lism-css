@@ -525,7 +525,7 @@ const contactFields = [
           <Accordion.Root class="z--faq_acc" g="20">
             {
               faqItems.map((item) => (
-                <Accordion.Item bgc="base" bdrs="20" bxsh="10" {...(item.defaultOpen ? { 'data-opened': '' } : {})}>
+                <Accordion.Item bgc="base" bdrs="20" bxsh="10" isOpen={item.defaultOpen === true}>
                   <Accordion.Heading>
                     <Accordion.Button p="30" fw="bold" hov="-o" isOpen={item.defaultOpen === true}>
                       {item.question}
