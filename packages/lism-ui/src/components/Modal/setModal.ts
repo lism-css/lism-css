@@ -1,5 +1,39 @@
 import { waitAnimation } from '../../helper/animation';
 
+/*
+ * dialog を showModal() で開くと背景スクロールがロックされ、ページのスクロールバーが消える。
+ * スクロールバーが実幅を持つ環境では、その幅分 viewport が広がってレイアウトが横にがたつく。
+ * これを防ぐため、開いている間だけ html に scrollbar-gutter: stable を当ててスクロールバー幅を予約する。
+ * Modal は同時に1つだけ開く前提なので、状態は「適用前の値」1つだけ保持する（null = 未適用）。
+ */
+let savedScrollbarGutter: string | null = null;
+
+/**
+ * dialog を showModal() する直前に呼ぶ。
+ *   Point: 判定・適用は showModal() の前に行う。showModal() 後はスクロールがロックされて
+ *          clientWidth が変わり、スクロールバーの有無を正しく判定できなくなる。
+ */
+const lockScrollbarGutter = (): void => {
+  if (savedScrollbarGutter !== null) return; // すでに適用中
+  const root = document.documentElement;
+  // window幅 > html の表示幅 → スクロールバーが実幅を持っている場合だけ適用する
+  if (window.innerWidth > root.clientWidth) {
+    savedScrollbarGutter = root.style.scrollbarGutter; // 元の inline style を保持して後で復元する
+    root.style.scrollbarGutter = 'stable';
+  }
+};
+
+/**
+ * dialog を close() した直後に呼ぶ。
+ *   Point: 復元は close() の後に行う。close() 前に戻すと、まだスクロールバーが無い状態で
+ *          gutter を外すことになり、close() 直後のスクロールバー復活と二重にがたつく。
+ */
+const unlockScrollbarGutter = (): void => {
+  if (savedScrollbarGutter === null) return; // 未適用なら何もしない
+  document.documentElement.style.scrollbarGutter = savedScrollbarGutter;
+  savedScrollbarGutter = null;
+};
+
 /**
  * モーダルの開閉イベントを設定する
  */
@@ -26,6 +60,7 @@ export function setEvent(modal: HTMLElement): void {
 
     // dialog 要素なら showModal()、それ以外は open 属性を付与
     if (isDialog) {
+      lockScrollbarGutter(); // showModal() でスクロールバーが消える前にスクロールバー幅を予約する
       modal.showModal();
     } else {
       modal.setAttribute('open', '');
@@ -56,6 +91,7 @@ export function setEvent(modal: HTMLElement): void {
     // アニメーション終了後、dialog を閉じる（open属性の削除）
     if (isDialog) {
       modal.close();
+      unlockScrollbarGutter(); // close() の後に scrollbar-gutter を復元する
     } else {
       modal.removeAttribute('open');
     }
