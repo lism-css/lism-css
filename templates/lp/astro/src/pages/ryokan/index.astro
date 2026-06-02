@@ -844,7 +844,7 @@ const reservationSites: readonly SiteCard[] = [
               <Accordion.Root g="0" p="0" ov="visible">
                 {
                   faqItems.map((item) => (
-                    <Accordion.Item bgc="transparent" bdrs="0" bxsh="0" ov="visible" {...(item.defaultOpen ? { 'data-opened': '' } : {})}>
+                    <Accordion.Item bgc="transparent" bdrs="0" bxsh="0" ov="visible" isOpen={item.defaultOpen === true}>
                       <Accordion.Heading p="0">
                         <Accordion.Button fw="500" fz={['s', null, 'm']} ta="start" py="20" isOpen={item.defaultOpen === true}>
                           {item.question}

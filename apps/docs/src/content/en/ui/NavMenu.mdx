@@ -26,7 +26,7 @@ Provided as `NavMenu` (`c--navMenu`) from the `@lism-css/ui` package.
 | <PropBadge>`<NavMenu.Root>`</PropBadge><br/>`hovBgc` | Outputs `--hov-bgc`. (For use when `-hov:-bgc` is applied to `c--navMenu_link`.) |
 | <PropBadge>`<NavMenu.Root>`</PropBadge><br/>`hovC` | Outputs `--hov-c`. (For use when `-hov:-c` is applied to `c--navMenu_link`.) |
 | <PropBadge>`<NavMenu.Root>`</PropBadge><br/>`itemP` | Outputs the `--_item-p` variable. Adjusts the padding of each link at once. |
-| <PropBadge>`<NavMenu.Link>`</PropBadge><br/>`hov` | Specifies the hover style. |
+| <PropBadge>`<NavMenu.Link>`</PropBadge><br/>`hov` | Specifies the hover style. Defaults to `-bgc`, changing the background color on hover. |
 
 
 ### Structure
@@ -63,17 +63,17 @@ The source code is available on [GitHub](https://github.com/lism-css/lism-css/tr
   <PreviewArea p="20">
     <NavMenu.Root>
       <NavMenu.Item>
-        <NavMenu.Link href="#menu" hov="-bgc">
+        <NavMenu.Link href="#menu">
           <Fragment>Menu item 1</Fragment>
         </NavMenu.Link>
       </NavMenu.Item>
       <NavMenu.Item>
-        <NavMenu.Link href="#menu" hov="-bgc">
+        <NavMenu.Link href="#menu">
           <Fragment>Menu item 2</Fragment>
         </NavMenu.Link>
       </NavMenu.Item>
       <NavMenu.Item>
-        <NavMenu.Link href="#menu" hov="-bgc">
+        <NavMenu.Link href="#menu">
           <Fragment>Menu item 3</Fragment>
         </NavMenu.Link>
       </NavMenu.Item>
@@ -83,17 +83,17 @@ The source code is available on [GitHub](https://github.com/lism-css/lism-css/tr
     ```jsx
     <NavMenu.Root>
       <NavMenu.Item>
-        <NavMenu.Link href="#menu" hov="-bgc">
+        <NavMenu.Link href="#menu">
           Menu item 1
         </NavMenu.Link>
       </NavMenu.Item>
       <NavMenu.Item>
-        <NavMenu.Link href="#menu" hov="-bgc">
+        <NavMenu.Link href="#menu">
           Menu item 2
         </NavMenu.Link>
       </NavMenu.Item>
       <NavMenu.Item>
-        <NavMenu.Link href="#menu" hov="-bgc">
+        <NavMenu.Link href="#menu">
           Menu item 3
         </NavMenu.Link>
       </NavMenu.Item>
@@ -111,20 +111,20 @@ The source code is available on [GitHub](https://github.com/lism-css/lism-css/tr
   <PreviewArea p="30">
     <NavMenu.Root>
       <NavMenu.Item>
-        <NavMenu.Link href="#menu1" g="15" ai="center" bgc="text" c="base" hov="-bgc">
+        <NavMenu.Link href="#menu1" g="15" ai="center" bgc="text" c="base">
           <span>Menu item</span>
           <Lism as="span" bd px="10" bdrs="10" fz="xs" fw="bold">New</Lism>
           <Icon icon="caret-right" ms="auto" />
         </NavMenu.Link>
       </NavMenu.Item>
       <NavMenu.Item>
-        <NavMenu.Link href="#menu2" g="15" ai="center" bgc="text" c="base" hov="-bgc">
+        <NavMenu.Link href="#menu2" g="15" ai="center" bgc="text" c="base">
           <span>Menu item</span>
           <Icon icon="caret-right" ms="auto" />
         </NavMenu.Link>
       </NavMenu.Item>
       <NavMenu.Item>
-        <NavMenu.Link href="#menu3" g="15" ai="center" bgc="text" c="base" hov="-bgc">
+        <NavMenu.Link href="#menu3" g="15" ai="center" bgc="text" c="base">
           <span>Menu item</span>
           <Icon icon="caret-right" ms="auto" />
         </NavMenu.Link>
@@ -135,7 +135,7 @@ The source code is available on [GitHub](https://github.com/lism-css/lism-css/tr
     ```jsx
     <NavMenu.Root>
       <NavMenu.Item>
-        <NavMenu.Link href="#menu1" g="15" ai="center" bgc="text" c="base" hov="-bgc">
+        <NavMenu.Link href="#menu1" g="15" ai="center" bgc="text" c="base">
           <span>Menu item</span>
           <Lism as="span" bd px="10" bdrs="10" fz="xs" fw="bold">
             New
@@ -144,13 +144,13 @@ The source code is available on [GitHub](https://github.com/lism-css/lism-css/tr
         </NavMenu.Link>
       </NavMenu.Item>
       <NavMenu.Item>
-        <NavMenu.Link href="#menu2" g="15" ai="center" bgc="text" c="base" hov="-bgc">
+        <NavMenu.Link href="#menu2" g="15" ai="center" bgc="text" c="base">
           <span>Menu item</span>
           <Icon icon="caret-right" ms="auto" />
         </NavMenu.Link>
       </NavMenu.Item>
       <NavMenu.Item>
-        <NavMenu.Link href="#menu3" g="15" ai="center" bgc="text" c="base" hov="-bgc">
+        <NavMenu.Link href="#menu3" g="15" ai="center" bgc="text" c="base">
           <span>Menu item</span>
           <Icon icon="caret-right" ms="auto" />
         </NavMenu.Link>
@@ -161,38 +161,43 @@ The source code is available on [GitHub](https://github.com/lism-css/lism-css/tr
 </Preview>
 
 
-### Adjusting padding for all items at once
+### Setting common styles for all items at once
 
-Specifying `itemP` sets the `--_item-p` variable, allowing you to control the padding of all items in one place.
+Some props can be specified on `NavMenu.Root` and applied to all links at once, instead of setting them directly on each `NavMenu.Link`.
 
-To change the value at a specific breakpoint, set `p` on each `<NavMenu.Link>` directly.
+- `itemP` adjusts the padding (`--_item-p`) of each `NavMenu.Link`.
+- `hovBgc` provides the hover background color (`--hov-bgc`). (Requires `-hov:-bgc` on `NavMenu.Link`.)
+- `hovC` provides the hover text color (`--hov-c`). (Requires `-hov:-c` on `NavMenu.Link`.)
+
+
+To change the padding per breakpoint, set `p` on each `<NavMenu.Link>` instead of using `itemP`.
 
 <Preview>
-  <PreviewTitle>Specifying `itemP`</PreviewTitle>
+  <PreviewTitle>Common styles on the Root</PreviewTitle>
   <PreviewArea p="30">
-    <NavMenu.Root bd itemP="30">
-      <NavMenu.Item hov="-bgc">
-        <NavMenu.Link href="#menu1">Menu item</NavMenu.Link>
+    <NavMenu.Root bd itemP="30" hovBgc="text" hovC="base">
+      <NavMenu.Item>
+        <NavMenu.Link href="#menu1" hov="-bgc,-c">Menu item</NavMenu.Link>
       </NavMenu.Item>
-      <NavMenu.Item hov="-bgc" bd-t>
-        <NavMenu.Link href="#menu2">Menu item</NavMenu.Link>
+      <NavMenu.Item bd-t>
+        <NavMenu.Link href="#menu2" hov="-bgc,-c">Menu item</NavMenu.Link>
       </NavMenu.Item>
-      <NavMenu.Item hov="-bgc" bd-t>
-        <NavMenu.Link href="#menu3">Menu item</NavMenu.Link>
+      <NavMenu.Item bd-t>
+        <NavMenu.Link href="#menu3" hov="-bgc,-c">Menu item</NavMenu.Link>
       </NavMenu.Item>
     </NavMenu.Root>
   </PreviewArea>
   <PreviewCode>
-    ```jsx 'bd' 'itemP="30"'
-    <NavMenu.Root bd itemP="30">
-      <NavMenu.Item hov="-bgc">
-        <NavMenu.Link href="#menu1">Menu item</NavMenu.Link>
+    ```jsx 'itemP="30"' 'hovBgc="text"' 'hovC="base"'
+    <NavMenu.Root bd itemP="30" hovBgc="text" hovC="base">
+      <NavMenu.Item>
+        <NavMenu.Link href="#menu1" hov="-bgc,-c">Menu item</NavMenu.Link>
       </NavMenu.Item>
-      <NavMenu.Item hov="-bgc" bd-t>
-        <NavMenu.Link href="#menu2">Menu item</NavMenu.Link>
+      <NavMenu.Item bd-t>
+        <NavMenu.Link href="#menu2" hov="-bgc,-c">Menu item</NavMenu.Link>
       </NavMenu.Item>
-      <NavMenu.Item hov="-bgc" bd-t>
-        <NavMenu.Link href="#menu3">Menu item</NavMenu.Link>
+      <NavMenu.Item bd-t>
+        <NavMenu.Link href="#menu3" hov="-bgc,-c">Menu item</NavMenu.Link>
       </NavMenu.Item>
     </NavMenu.Root>
     ```
@@ -208,32 +213,32 @@ To change the value at a specific breakpoint, set `p` on each `<NavMenu.Link>` d
   <PreviewArea p="20">
     <NavMenu.Root bd-y hovBgc="base-2">
       <NavMenu.Item>
-        <NavMenu.Link hov="-bgc" href="#menu1">
+        <NavMenu.Link href="#menu1">
           <Fragment>Menu item 1</Fragment>
         </NavMenu.Link>
       </NavMenu.Item>
       <NavMenu.Item bd-t>
-        <NavMenu.Link hov="-bgc" href="#menu2">
+        <NavMenu.Link href="#menu2">
           <Fragment>Menu item 2</Fragment>
         </NavMenu.Link>
         <NavMenu.Nest bd-t>
           <NavMenu.Item>
-            <NavMenu.Link hov="-bgc" href="#child-menu1">
+            <NavMenu.Link href="#child-menu1">
               <Fragment>Nested item</Fragment>
             </NavMenu.Link>
           </NavMenu.Item>
           <NavMenu.Item bd-t>
-            <NavMenu.Link hov="-bgc" href="#child-menu3">
+            <NavMenu.Link href="#child-menu3">
               <Fragment>Nested item</Fragment>
             </NavMenu.Link>
             <NavMenu.Nest bd-t>
               <NavMenu.Item>
-                <NavMenu.Link hov="-bgc" href="#child-menu4">
+                <NavMenu.Link href="#child-menu4">
                   <Fragment>Nested level 2 item</Fragment>
                 </NavMenu.Link>
               </NavMenu.Item>
               <NavMenu.Item bd-t>
-                <NavMenu.Link hov="-bgc" href="#child-menu5">
+                <NavMenu.Link href="#child-menu5">
                   <Fragment>Nested level 2 item</Fragment>
                 </NavMenu.Link>
               </NavMenu.Item>
@@ -247,32 +252,32 @@ To change the value at a specific breakpoint, set `p` on each `<NavMenu.Link>` d
     ```jsx "NavMenu.Nest"
     <NavMenu.Root bd-y hovBgc="base-2">
       <NavMenu.Item>
-        <NavMenu.Link hov="-bgc" href="#menu1">
+        <NavMenu.Link href="#menu1">
           Menu item 1
         </NavMenu.Link>
       </NavMenu.Item>
       <NavMenu.Item bd-t>
-        <NavMenu.Link hov="-bgc" href="#menu2">
+        <NavMenu.Link href="#menu2">
           Menu item 2
         </NavMenu.Link>
         <NavMenu.Nest bd-t>
           <NavMenu.Item>
-            <NavMenu.Link hov="-bgc" href="#child-menu1">
+            <NavMenu.Link href="#child-menu1">
               Nested item
             </NavMenu.Link>
           </NavMenu.Item>
           <NavMenu.Item bd-t>
-            <NavMenu.Link hov="-bgc" href="#child-menu3">
+            <NavMenu.Link href="#child-menu3">
               Nested item
             </NavMenu.Link>
             <NavMenu.Nest bd-t>
               <NavMenu.Item>
-                <NavMenu.Link hov="-bgc" href="#child-menu4">
+                <NavMenu.Link href="#child-menu4">
                   Nested level 2 item
                 </NavMenu.Link>
               </NavMenu.Item>
               <NavMenu.Item bd-t>
-                <NavMenu.Link hov="-bgc" href="#child-menu5">
+                <NavMenu.Link href="#child-menu5">
                   Nested level 2 item
                 </NavMenu.Link>
               </NavMenu.Item>
@@ -296,7 +301,7 @@ Since link padding is managed by `--_item-p`, you can use `var(--_item-p)` insid
   <PreviewArea p="20">
     <NavMenu.Root bd-y hovBgc="base-2">
       <NavMenu.Item>
-        <NavMenu.Link hov="-bgc" href="#menu1">
+        <NavMenu.Link href="#menu1">
           <Fragment>Menu item</Fragment>
         </NavMenu.Link>
       </NavMenu.Item>
@@ -311,12 +316,12 @@ Since link padding is managed by `--_item-p`, you can use `var(--_item-p)` insid
             <Accordion.Panel>
               <NavMenu.Nest>
                 <NavMenu.Item>
-                  <NavMenu.Link hov="-bgc" href="#child-menu1">
+                  <NavMenu.Link href="#child-menu1">
                     <Fragment>Nested item</Fragment>
                   </NavMenu.Link>
                 </NavMenu.Item>
                 <NavMenu.Item>
-                  <NavMenu.Link hov="-bgc" href="#child-menu2">
+                  <NavMenu.Link href="#child-menu2">
                     <Fragment>Nested item</Fragment>
                   </NavMenu.Link>
                 </NavMenu.Item>
@@ -331,7 +336,7 @@ Since link padding is managed by `--_item-p`, you can use `var(--_item-p)` insid
     ```jsx "Accordion.Root" "NavMenu.Nest"
     <NavMenu.Root bd-y hovBgc="base-2">
       <NavMenu.Item>
-        <NavMenu.Link hov="-bgc" href="#menu1">
+        <NavMenu.Link href="#menu1">
           Menu item
         </NavMenu.Link>
       </NavMenu.Item>
@@ -346,12 +351,12 @@ Since link padding is managed by `--_item-p`, you can use `var(--_item-p)` insid
             <Accordion.Panel>
               <NavMenu.Nest>
                 <NavMenu.Item>
-                  <NavMenu.Link hov="-bgc" href="#child-menu1">
+                  <NavMenu.Link href="#child-menu1">
                     Nested item
                   </NavMenu.Link>
                 </NavMenu.Item>
                 <NavMenu.Item>
-                  <NavMenu.Link hov="-bgc" href="#child-menu2">
+                  <NavMenu.Link href="#child-menu2">
                     Nested item
                   </NavMenu.Link>
                 </NavMenu.Item>
@@ -376,8 +381,8 @@ An example of adding `fxd='row'` to `<NavMenu.Root>` to display items horizontal
   <PreviewArea p="20">
     <Box min-h="15rem">
       <NavMenu.Root fxd="row" lh="s" itemP="10">
-        <NavMenu.Item hov="-o">
-          <NavMenu.Link href="#menu1">Menu item</NavMenu.Link>
+        <NavMenu.Item>
+          <NavMenu.Link href="#menu1" hov="-o">Menu item</NavMenu.Link>
         </NavMenu.Item>
         <NavMenu.Item set="hov" pos="relative">
           <NavMenu.Link href="#menu3" ai="center" g="5">
@@ -386,16 +391,16 @@ An example of adding `fxd='row'` to `<NavMenu.Root>` to display items horizontal
             </Fragment>
           </NavMenu.Link>
           <NavMenu.Nest fz="s" hov="in:show" pos="absolute" t="100%" ps="0" lh="s" bgc="base" bxsh="20" bdrs="10">
-            <NavMenu.Item hov="-bgc">
+            <NavMenu.Item>
               <NavMenu.Link href="#child-menu1">Nested item</NavMenu.Link>
             </NavMenu.Item>
-            <NavMenu.Item hov="-bgc">
+            <NavMenu.Item>
               <NavMenu.Link href="#child-menu2">Nested Menu item</NavMenu.Link>
             </NavMenu.Item>
           </NavMenu.Nest>
         </NavMenu.Item>
-        <NavMenu.Item hov="-o">
-          <NavMenu.Link href="#menu1">Menu item</NavMenu.Link>
+        <NavMenu.Item>
+          <NavMenu.Link href="#menu1" hov="-o">Menu item</NavMenu.Link>
         </NavMenu.Item>
       </NavMenu.Root>
     </Box>
@@ -404,8 +409,8 @@ An example of adding `fxd='row'` to `<NavMenu.Root>` to display items horizontal
     ```jsx 'fxd="row"'
     <Box min-h="15rem">
       <NavMenu.Root fxd="row" lh="s" itemP="10">
-        <NavMenu.Item hov="-o">
-          <NavMenu.Link href="#menu1">Menu item</NavMenu.Link>
+        <NavMenu.Item>
+          <NavMenu.Link href="#menu1" hov="-o">Menu item</NavMenu.Link>
         </NavMenu.Item>
         <NavMenu.Item set="hov" pos="relative">
           <NavMenu.Link href="#menu3" ai="center" g="5">
@@ -414,16 +419,16 @@ An example of adding `fxd='row'` to `<NavMenu.Root>` to display items horizontal
             </Fragment>
           </NavMenu.Link>
           <NavMenu.Nest fz="s" hov="in:show" pos="absolute" t="100%" ps="0" lh="s" bgc="base" bxsh="20" bdrs="10">
-            <NavMenu.Item hov="-bgc">
+            <NavMenu.Item>
               <NavMenu.Link href="#child-menu1">Nested item</NavMenu.Link>
             </NavMenu.Item>
-            <NavMenu.Item hov="-bgc">
+            <NavMenu.Item>
               <NavMenu.Link href="#child-menu2">Nested Menu item</NavMenu.Link>
             </NavMenu.Item>
           </NavMenu.Nest>
         </NavMenu.Item>
-        <NavMenu.Item hov="-o">
-          <NavMenu.Link href="#menu1">Menu item</NavMenu.Link>
+        <NavMenu.Item>
+          <NavMenu.Link href="#menu1" hov="-o">Menu item</NavMenu.Link>
         </NavMenu.Item>
       </NavMenu.Root>
     </Box>

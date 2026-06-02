@@ -50,6 +50,7 @@ import { Button } from '@lism-css/ui/astro/Button';
 | Prop | 対象 | 型 | デフォルト | 説明 |
 |------|------|-----|----------|------|
 | `allowMultiple` | Root | `boolean` | — | 複数アイテムの同時展開を許可 |
+| `isOpen` | Item / Button / Panel | `boolean` | `false` | アイテムを初期展開。Item・Button・Panel の3つ揃えて指定（Item=`data-opened` 付与、Button=`aria-expanded`、Panel=`hidden` 解除） |
 | `as` | Heading | `string` | `div` | 見出しのHTMLタグ。`div` 時は `role='heading'` が自動付与。`h2`〜`h6` 指定時は role なし |
 | `flow` | Panel | `string` | — | パネル内コンテンツ領域（`c--accordion_content`）のフロー余白 |
 
@@ -238,6 +239,7 @@ HTML の `details/summary` 要素をラップしたコンポーネント。Accor
 | `hovC` | Root | `string` | — | ホバー時のテキストカラー。`--hov-c` 変数として出力 |
 | `itemP` | Root | `string` | — | 各アイテムのパディング。`--_item-p` 変数として出力 |
 | `href` | Link | `string` | — | リンク先URL。指定ありで `a` 要素、なしで `span` 要素 |
+| `hov` | Link | `string` | `-bgc` | ホバー時のスタイル。デフォルトで背景色が変化 |
 
 ```jsx
 <NavMenu.Root>

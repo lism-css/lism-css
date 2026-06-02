@@ -88,8 +88,11 @@ import { DummyText } from '@lism-css/ui/astro/DummyText';
 | プロパティ | 説明 |
 |---|---|
 | <PropBadge>`<Accordion.Root>`</PropBadge><br/>`allowMultiple` | 複数のアコーディオンを同時に展開できるようにします。デフォルトでは一つしか展開できません。 |
+| <PropBadge>`<Accordion.Item>`</PropBadge><br/>`isOpen` | アイテムを初期状態で展開します（`data-opened` を付与）。`<Accordion.Button>` / `<Accordion.Panel>` の `isOpen` と併せて指定します。 |
 | <PropBadge>`<Accordion.Heading>`</PropBadge><br/>`as` | 見出しのHTMLタグを指定します。デフォルトは `div`（`role="heading"` が自動付与されます）。`h2`〜`h6` を指定すると `role` は付与されません。 |
+| <PropBadge>`<Accordion.Button>`</PropBadge><br/>`isOpen` | 初期展開状態に合わせて `aria-expanded` を設定します。 |
 | <PropBadge>`<Accordion.Panel>`</PropBadge><br/>`flow` | パネル内のコンテンツ領域（`__content`）に渡すフローレイアウトの設定。 |
+| <PropBadge>`<Accordion.Panel>`</PropBadge><br/>`isOpen` | パネルを初期表示します（`hidden` を解除）。 |
 
 
 ### 基本構造
@@ -187,20 +190,137 @@ import { DummyText } from '@lism-css/ui/astro/DummyText';
 </Preview>
 
 
-### アニメーション時間を変更し、複数同時展開を許可する
+### アニメーション時間を変更する
 
 アコーディオンの開閉アニメーションの速度は `--duration` 変数で管理されており、デフォルトは `0.25s` です。
+`<Accordion.Root>`（全体）または `<Accordion.Item>`（個別）に CSS変数として指定することで変更できます。
+
+<Preview>
+  <PreviewTitle>Preview</PreviewTitle>
+  <PreviewArea p="20">
+    <Accordion.Root bd style={{ '--duration': '.15s' }}>
+      <Accordion.Item>
+        <Accordion.Heading>
+          <Accordion.Button p="20">Accordion Example 1</Accordion.Button>
+        </Accordion.Heading>
+        <Accordion.Panel p="20" pt="5">
+          <DummyText length="l" />
+        </Accordion.Panel>
+      </Accordion.Item>
+      <Accordion.Item bd-t>
+        <Accordion.Heading>
+          <Accordion.Button p="20">Accordion Example 2</Accordion.Button>
+        </Accordion.Heading>
+        <Accordion.Panel p="20" pt="5">
+          <DummyText length="l" />
+        </Accordion.Panel>
+      </Accordion.Item>
+    </Accordion.Root>
+  </PreviewArea>
+  <PreviewCode slot="tab" label="JSX">
+```jsx "--duration"
+<Accordion.Root style={{ '--duration': '.15s' }}>
+  <Accordion.Item>
+    <Accordion.Heading>
+      <Accordion.Button p="20">Accordion Example 1</Accordion.Button>
+    </Accordion.Heading>
+    <Accordion.Panel p="20" pt="5">
+      ...
+    </Accordion.Panel>
+  </Accordion.Item>
+  ...
+</Accordion.Root>
+```
+  </PreviewCode>
+  <PreviewCode slot="tab" label="HTML">
+```html "--duration"
+<div class="c--accordion l--stack" style="--duration: 0.15s">
+  <div class="c--accordion_item">...</div>
+  <div class="c--accordion_item">...</div>
+</div>
+```
+  </PreviewCode>
+</Preview>
+
+
+### 最初の一つを開いた状態にする
+
+初期状態で展開しておきたいアイテムには、`<Accordion.Item>` / `<Accordion.Button>` / `<Accordion.Panel>` のそれぞれに `isOpen` を指定します。
+
+:::note
+`isOpen` はコンポーネントごとに役割が異なるため、3つ揃えて指定します。
+`<Accordion.Item>` では `data-opened` を付与してパネルの高さとアイコンを開いた状態にし、`<Accordion.Button>` では `aria-expanded` を、`<Accordion.Panel>` では `hidden` の切り替えを担当します。
+:::
+
+<Preview>
+  <PreviewTitle>Preview</PreviewTitle>
+  <PreviewArea p="20">
+    <Accordion.Root bd>
+      <Accordion.Item isOpen>
+        <Accordion.Heading>
+          <Accordion.Button p="20" isOpen>Accordion Label 1</Accordion.Button>
+        </Accordion.Heading>
+        <Accordion.Panel p="20" pt="5" isOpen>
+          <DummyText length="l" />
+        </Accordion.Panel>
+      </Accordion.Item>
+      <Accordion.Item bd-t>
+        <Accordion.Heading>
+          <Accordion.Button p="20">Accordion Label 2</Accordion.Button>
+        </Accordion.Heading>
+        <Accordion.Panel p="20" pt="5">
+          <DummyText length="l" />
+        </Accordion.Panel>
+      </Accordion.Item>
+    </Accordion.Root>
+  </PreviewArea>
+  <PreviewCode slot="tab" label="JSX">
+```jsx "isOpen"
+<Accordion.Root bd>
+  <Accordion.Item isOpen>
+    <Accordion.Heading>
+      <Accordion.Button p="20" isOpen>Accordion Label 1</Accordion.Button>
+    </Accordion.Heading>
+    <Accordion.Panel p="20" pt="5" isOpen>
+      ...
+    </Accordion.Panel>
+  </Accordion.Item>
+  <Accordion.Item bd-t>
+    <Accordion.Heading>
+      <Accordion.Button p="20">Accordion Label 2</Accordion.Button>
+    </Accordion.Heading>
+    <Accordion.Panel p="20" pt="5">
+      ...
+    </Accordion.Panel>
+  </Accordion.Item>
+</Accordion.Root>
+```
+  </PreviewCode>
+  <PreviewCode slot="tab" label="HTML">
+```html "data-opened"
+<div class="c--accordion l--stack">
+  <div class="c--accordion_item" data-opened>
+    <!-- button: aria-expanded="true" / panel: hidden なし -->
+    ...
+  </div>
+  <div class="c--accordion_item">...</div>
+</div>
+```
+  </PreviewCode>
+</Preview>
+
+
+### 複数同時展開を許可する
 
 :::note
 デフォルトでは、同じ `<Accordion.Root>` 内で一つのアコーディオンしか同時に展開できません。
 `allowMultiple` を指定することで、複数を同時に展開できるようになります。
 :::
 
-
 <Preview>
   <PreviewTitle>Preview</PreviewTitle>
   <PreviewArea p="20">
-    <Accordion.Root allowMultiple bd style={{ '--duration': '.15s' }}>
+    <Accordion.Root allowMultiple bd>
       <Accordion.Item>
         <Accordion.Heading>
           <Accordion.Button p="20">Accordion Label 1</Accordion.Button>
@@ -228,9 +348,9 @@ import { DummyText } from '@lism-css/ui/astro/DummyText';
     </Accordion.Root>
   </PreviewArea>
   <PreviewCode slot="tab" label="JSX">
-```jsx "allowMultiple" "--duration"
-<Accordion.Root g="1px" allowMultiple>
-  <Accordion.Item style={{ '--duration': '.15s' }}>
+```jsx "allowMultiple"
+<Accordion.Root allowMultiple bd>
+  <Accordion.Item>
     <Accordion.Heading>
       <Accordion.Button p="20">Accordion Label 1</Accordion.Button>
     </Accordion.Heading>
@@ -238,7 +358,7 @@ import { DummyText } from '@lism-css/ui/astro/DummyText';
       ...
     </Accordion.Panel>
   </Accordion.Item>
-  <Accordion.Item style={{ '--duration': '.15s' }}>
+  <Accordion.Item bd-t>
     <Accordion.Heading>
       <Accordion.Button p="20">Accordion Label 2</Accordion.Button>
     </Accordion.Heading>
@@ -251,13 +371,12 @@ import { DummyText } from '@lism-css/ui/astro/DummyText';
 ```
   </PreviewCode>
   <PreviewCode slot="tab" label="HTML">
-```html "data-allow-multiple" "--duration"
+```html "data-allow-multiple"
 <div class="c--accordion l--stack" data-allow-multiple>
-  <div class="c--accordion_item" style="--duration: 0.15s">...</div>
-  <div class="c--accordion_item" style="--duration: 0.15s">...</div>
-  <div class="c--accordion_item" style="--duration: 0.15s">...</div>
+  <div class="c--accordion_item">...</div>
+  <div class="c--accordion_item">...</div>
+  <div class="c--accordion_item">...</div>
 </div>
 ```
   </PreviewCode>
 </Preview>
-

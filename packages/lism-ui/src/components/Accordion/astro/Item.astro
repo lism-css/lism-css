@@ -10,9 +10,10 @@ import '../_style.css';
 type Props<Tag extends HTMLTag = 'div'> = Polymorphic<{ as: Tag }> &
   AstroLismBaseProps & {
     accID?: string;
+    isOpen?: boolean;
   };
 
-const { as = 'div', accID: _accID, class: className, ...restProps } = Astro.props;
+const { as = 'div', accID: _accID, isOpen = false, class: className, ...restProps } = Astro.props;
 
 // aria-controls / id 紐付け用のIDを生成（カスタム指定があればそれを使用、なければ自動生成）
 const accID = _accID || uuid();
@@ -24,11 +25,12 @@ const rendered = await Astro.slots.render('default');
 const slotHtml = rendered.includes('__LISM_ACC_ID__') ? rendered.replaceAll('__LISM_ACC_ID__', accID) : null;
 ---
 
+{/* isOpen=true のとき data-opened を付与し、初期状態で展開しておく（CSS/JS は data-opened を基準に動作） */}
 {
   slotHtml !== null ? (
-    <Lism as={as} class={atts(className, 'c--accordion_item')} set:html={slotHtml} {...restProps} />
+    <Lism as={as} class={atts(className, 'c--accordion_item')} data-opened={isOpen ? '' : undefined} set:html={slotHtml} {...restProps} />
   ) : (
-    <Lism as={as} class={atts(className, 'c--accordion_item')} {...restProps}>
+    <Lism as={as} class={atts(className, 'c--accordion_item')} data-opened={isOpen ? '' : undefined} {...restProps}>
       <slot />
     </Lism>
   )

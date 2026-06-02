@@ -26,7 +26,7 @@ import { NavMenu } from '@lism-css/ui/astro/NavMenu';
 | <PropBadge>`<NavMenu.Root>`</PropBadge><br/>`hovBgc` | `--hov-bgc`を出力します。（`c--navMenu_link`に`-hov:-bgc`を付けた時用）|
 | <PropBadge>`<NavMenu.Root>`</PropBadge><br/>`hovC` | `--hov-c`を出力します。 （`c--navMenu_link`に`-hov:-c`を付けた時用）|
 | <PropBadge>`<NavMenu.Root>`</PropBadge><br/>`itemP` | `--_item-p`変数を出力します。各リンクのpaddingを一括で調整できます。|
-| <PropBadge>`<NavMenu.Link>`</PropBadge><br/>`hov` | hover時のスタイルを指定できます。 |
+| <PropBadge>`<NavMenu.Link>`</PropBadge><br/>`hov` | hover時のスタイルを指定できます。デフォルトで`-bgc`が付与され、hover時に背景色が変化します。 |
 
 
 ### 基本構造
@@ -63,17 +63,17 @@ import { NavMenu } from '@lism-css/ui/astro/NavMenu';
   <PreviewArea p="20">
     <NavMenu.Root>
       <NavMenu.Item>
-        <NavMenu.Link href="#menu" hov="-bgc">
+        <NavMenu.Link href="#menu">
           <Fragment>Menu item 1</Fragment>
         </NavMenu.Link>
       </NavMenu.Item>
       <NavMenu.Item>
-        <NavMenu.Link href="#menu" hov="-bgc">
+        <NavMenu.Link href="#menu">
           <Fragment>Menu item 2</Fragment>
         </NavMenu.Link>
       </NavMenu.Item>
       <NavMenu.Item>
-        <NavMenu.Link href="#menu" hov="-bgc">
+        <NavMenu.Link href="#menu">
           <Fragment>Menu item 3</Fragment>
         </NavMenu.Link>
       </NavMenu.Item>
@@ -83,17 +83,17 @@ import { NavMenu } from '@lism-css/ui/astro/NavMenu';
     ```jsx
     <NavMenu.Root>
       <NavMenu.Item>
-        <NavMenu.Link href="#menu" hov="-bgc">
+        <NavMenu.Link href="#menu">
           Menu item 1
         </NavMenu.Link>
       </NavMenu.Item>
       <NavMenu.Item>
-        <NavMenu.Link href="#menu" hov="-bgc">
+        <NavMenu.Link href="#menu">
           Menu item 2
         </NavMenu.Link>
       </NavMenu.Item>
       <NavMenu.Item>
-        <NavMenu.Link href="#menu" hov="-bgc">
+        <NavMenu.Link href="#menu">
           Menu item 3
         </NavMenu.Link>
       </NavMenu.Item>
@@ -107,13 +107,14 @@ import { NavMenu } from '@lism-css/ui/astro/NavMenu';
 
 
 ### アイコンやバッジを表示する例
+
 {/* テキストをspanで囲んで -fx:1 でも可 */}
 <Preview>
   <PreviewTitle>例</PreviewTitle>
   <PreviewArea p="30">
     <NavMenu.Root>
       <NavMenu.Item>
-        <NavMenu.Link href="#menu1" g="15" ai="center" bgc="text" c="base" hov="-bgc">
+        <NavMenu.Link href="#menu1" g="15" ai="center" bgc="text" c="base">
           <span>Menu item</span>
           <Lism as="span" bd px="10" bdrs="10" fz="xs" fw="bold">
             <Fragment>New</Fragment>
@@ -122,13 +123,13 @@ import { NavMenu } from '@lism-css/ui/astro/NavMenu';
         </NavMenu.Link>
       </NavMenu.Item>
       <NavMenu.Item>
-        <NavMenu.Link href="#menu2" g="15" ai="center" bgc="text" c="base" hov="-bgc">
+        <NavMenu.Link href="#menu2" g="15" ai="center" bgc="text" c="base">
           <span>Menu item</span>
           <Icon icon="caret-right" ms="auto" />
         </NavMenu.Link>
       </NavMenu.Item>
       <NavMenu.Item>
-        <NavMenu.Link href="#menu3" g="15" ai="center" bgc="text" c="base" hov="-bgc">
+        <NavMenu.Link href="#menu3" g="15" ai="center" bgc="text" c="base">
           <span>Menu item</span>
           <Icon icon="caret-right" ms="auto" />
         </NavMenu.Link>
@@ -139,7 +140,7 @@ import { NavMenu } from '@lism-css/ui/astro/NavMenu';
     ```jsx
     <NavMenu.Root>
       <NavMenu.Item>
-        <NavMenu.Link href="#menu1" g="15" ai="center" bgc="text" c="base" hov="-bgc">
+        <NavMenu.Link href="#menu1" g="15" ai="center" bgc="text" c="base">
           <span>Menu item</span>
           <Lism as="span" bd px="10" bdrs="10" fz="xs" fw="bold">
             New
@@ -148,13 +149,13 @@ import { NavMenu } from '@lism-css/ui/astro/NavMenu';
         </NavMenu.Link>
       </NavMenu.Item>
       <NavMenu.Item>
-        <NavMenu.Link href="#menu2" g="15" ai="center" bgc="text" c="base" hov="-bgc">
+        <NavMenu.Link href="#menu2" g="15" ai="center" bgc="text" c="base">
           <span>Menu item</span>
           <Icon icon="caret-right" ms="auto" />
         </NavMenu.Link>
       </NavMenu.Item>
       <NavMenu.Item>
-        <NavMenu.Link href="#menu3" g="15" ai="center" bgc="text" c="base" hov="-bgc">
+        <NavMenu.Link href="#menu3" g="15" ai="center" bgc="text" c="base">
           <span>Menu item</span>
           <Icon icon="caret-right" ms="auto" />
         </NavMenu.Link>
@@ -165,38 +166,43 @@ import { NavMenu } from '@lism-css/ui/astro/NavMenu';
 </Preview>
 
 
-### 各リストのpaddingを一括で調整する方法
+### 各リストの共通スタイルを一括で指定する方法
 
-`itemP`を指定すると`--_item-p`変数をセットできるようになっています。
+一部のプロパティは、`NavMenu.Link`に直接propsを指定せずに、`NavMenu.Root`から一括で指定できるようになっています。
 
-ただし、ブレイクポイントで値を変更させたい場合は、`<NavMenu.Link>`それぞれに`p`を指定してください。
+- `itemP`を指定すると、`NavMenu.Link`のpadding（`--_item-p`）を調整できます。
+- `hovBgc`でhover時の背景色（`--hov-bgc`）を渡せます。（`NavMenu.Link`に`-hov:-bgc`が必要です）
+- `hovC`でhover時の文字色（`--hov-c`）を渡せます。（`NavMenu.Link`に`-hov:-c`が必要です）
+
+
+なお、paddingをブレイクポイントごとに変えたい場合は、`itemP`ではなく`<NavMenu.Link>`それぞれに`p`を指定してください。
 
 <Preview>
-  <PreviewTitle>`itemP`を指定</PreviewTitle>
+  <PreviewTitle>Rootに共通スタイルを指定</PreviewTitle>
   <PreviewArea p="30">
-    <NavMenu.Root bd itemP="30">
-      <NavMenu.Item hov="-bgc">
-        <NavMenu.Link href="#menu1">Menu item</NavMenu.Link>
+    <NavMenu.Root bd itemP="30" hovBgc="text" hovC="base">
+      <NavMenu.Item>
+        <NavMenu.Link href="#menu1" hov="-bgc,-c">Menu item</NavMenu.Link>
       </NavMenu.Item>
-      <NavMenu.Item hov="-bgc" bd-t>
-        <NavMenu.Link href="#menu2">Menu item</NavMenu.Link>
+      <NavMenu.Item bd-t>
+        <NavMenu.Link href="#menu2" hov="-bgc,-c">Menu item</NavMenu.Link>
       </NavMenu.Item>
-      <NavMenu.Item hov="-bgc" bd-t>
-        <NavMenu.Link href="#menu3">Menu item</NavMenu.Link>
+      <NavMenu.Item bd-t>
+        <NavMenu.Link href="#menu3" hov="-bgc,-c">Menu item</NavMenu.Link>
       </NavMenu.Item>
     </NavMenu.Root>
   </PreviewArea>
   <PreviewCode>
-    ```jsx 'bd' 'itemP="30"'
-    <NavMenu.Root bd itemP="30">
-      <NavMenu.Item hov="-bgc">
-        <NavMenu.Link href="#menu1">Menu item</NavMenu.Link>
+    ```jsx 'itemP="30"' 'hovBgc="text"' 'hovC="base"'
+    <NavMenu.Root bd itemP="30" hovBgc="text" hovC="base">
+      <NavMenu.Item>
+        <NavMenu.Link href="#menu1" hov="-bgc,-c">Menu item</NavMenu.Link>
       </NavMenu.Item>
-      <NavMenu.Item hov="-bgc" bd-t>
-        <NavMenu.Link href="#menu2">Menu item</NavMenu.Link>
+      <NavMenu.Item bd-t>
+        <NavMenu.Link href="#menu2" hov="-bgc,-c">Menu item</NavMenu.Link>
       </NavMenu.Item>
-      <NavMenu.Item hov="-bgc" bd-t>
-        <NavMenu.Link href="#menu3">Menu item</NavMenu.Link>
+      <NavMenu.Item bd-t>
+        <NavMenu.Link href="#menu3" hov="-bgc,-c">Menu item</NavMenu.Link>
       </NavMenu.Item>
     </NavMenu.Root>
     ```
@@ -212,32 +218,32 @@ import { NavMenu } from '@lism-css/ui/astro/NavMenu';
   <PreviewArea p="20">
     <NavMenu.Root bd-y hovBgc="base-2">
       <NavMenu.Item>
-        <NavMenu.Link hov="-bgc" href="#menu1">
+        <NavMenu.Link href="#menu1">
           <Fragment>Menu item 1</Fragment>
         </NavMenu.Link>
       </NavMenu.Item>
       <NavMenu.Item bd-t>
-        <NavMenu.Link hov="-bgc" href="#menu2">
+        <NavMenu.Link href="#menu2">
           <Fragment>Menu item 2</Fragment>
         </NavMenu.Link>
         <NavMenu.Nest bd-t>
           <NavMenu.Item>
-            <NavMenu.Link hov="-bgc" href="#child-menu1">
+            <NavMenu.Link href="#child-menu1">
               <Fragment>Nested item</Fragment>
             </NavMenu.Link>
           </NavMenu.Item>
           <NavMenu.Item bd-t>
-            <NavMenu.Link hov="-bgc" href="#child-menu3">
+            <NavMenu.Link href="#child-menu3">
               <Fragment>Nested item</Fragment>
             </NavMenu.Link>
             <NavMenu.Nest bd-t>
               <NavMenu.Item>
-                <NavMenu.Link hov="-bgc" href="#child-menu4">
+                <NavMenu.Link href="#child-menu4">
                   <Fragment>Nested level 2 item</Fragment>
                 </NavMenu.Link>
               </NavMenu.Item>
               <NavMenu.Item bd-t>
-                <NavMenu.Link hov="-bgc" href="#child-menu5">
+                <NavMenu.Link href="#child-menu5">
                   <Fragment>Nested level 2 item</Fragment>
                 </NavMenu.Link>
               </NavMenu.Item>
@@ -251,32 +257,32 @@ import { NavMenu } from '@lism-css/ui/astro/NavMenu';
     ```jsx "NavMenu.Nest"
     <NavMenu.Root bd-y hovBgc="base-2">
       <NavMenu.Item>
-        <NavMenu.Link hov="-bgc" href="#menu1">
+        <NavMenu.Link href="#menu1">
           Menu item 1
         </NavMenu.Link>
       </NavMenu.Item>
       <NavMenu.Item bd-t>
-        <NavMenu.Link hov="-bgc" href="#menu2">
+        <NavMenu.Link href="#menu2">
           Menu item 2
         </NavMenu.Link>
         <NavMenu.Nest bd-t>
           <NavMenu.Item>
-            <NavMenu.Link hov="-bgc" href="#child-menu1">
+            <NavMenu.Link href="#child-menu1">
               Nested item
             </NavMenu.Link>
           </NavMenu.Item>
           <NavMenu.Item bd-t>
-            <NavMenu.Link hov="-bgc" href="#child-menu3">
+            <NavMenu.Link href="#child-menu3">
               Nested item
             </NavMenu.Link>
             <NavMenu.Nest bd-t>
               <NavMenu.Item>
-                <NavMenu.Link hov="-bgc" href="#child-menu4">
+                <NavMenu.Link href="#child-menu4">
                   Nested level 2 item
                 </NavMenu.Link>
               </NavMenu.Item>
               <NavMenu.Item bd-t>
-                <NavMenu.Link hov="-bgc" href="#child-menu5">
+                <NavMenu.Link href="#child-menu5">
                   Nested level 2 item
                 </NavMenu.Link>
               </NavMenu.Item>
@@ -293,14 +299,14 @@ import { NavMenu } from '@lism-css/ui/astro/NavMenu';
 
 ### ネストしたメニューをアコーディオンで展開する
 
-リンクのpaddingは`--_item-p`で管理されているため、アコーディオン化した時に `var(--_item-p)`を使えば同じ量のpaddingを受け取れます。  
+リンクのpaddingは`--_item-p`で管理されているため、アコーディオン化した時に `var(--_item-p)`を使えば同じ量のpaddingを受け取れます。
 
 <Preview>
   <PreviewTitle>例</PreviewTitle>
   <PreviewArea p="20">
     <NavMenu.Root bd-y hovBgc="base-2">
       <NavMenu.Item>
-        <NavMenu.Link hov="-bgc" href="#menu1">
+        <NavMenu.Link href="#menu1">
           <Fragment>Menu item</Fragment>
         </NavMenu.Link>
       </NavMenu.Item>
@@ -315,12 +321,12 @@ import { NavMenu } from '@lism-css/ui/astro/NavMenu';
             <Accordion.Panel>
               <NavMenu.Nest>
                 <NavMenu.Item>
-                  <NavMenu.Link hov="-bgc" href="#child-menu1">
+                  <NavMenu.Link href="#child-menu1">
                     <Fragment>Nested item</Fragment>
                   </NavMenu.Link>
                 </NavMenu.Item>
                 <NavMenu.Item>
-                  <NavMenu.Link hov="-bgc" href="#child-menu2">
+                  <NavMenu.Link href="#child-menu2">
                     <Fragment>Nested item</Fragment>
                   </NavMenu.Link>
                 </NavMenu.Item>
@@ -335,7 +341,7 @@ import { NavMenu } from '@lism-css/ui/astro/NavMenu';
     ```jsx "Accordion.Root" "NavMenu.Nest"
     <NavMenu.Root bd-y hovBgc="base-2">
       <NavMenu.Item>
-        <NavMenu.Link hov="-bgc" href="#menu1">
+        <NavMenu.Link href="#menu1">
           Menu item
         </NavMenu.Link>
       </NavMenu.Item>
@@ -350,12 +356,12 @@ import { NavMenu } from '@lism-css/ui/astro/NavMenu';
             <Accordion.Panel>
               <NavMenu.Nest>
                 <NavMenu.Item>
-                  <NavMenu.Link hov="-bgc" href="#child-menu1">
+                  <NavMenu.Link href="#child-menu1">
                     Nested item
                   </NavMenu.Link>
                 </NavMenu.Item>
                 <NavMenu.Item>
-                  <NavMenu.Link hov="-bgc" href="#child-menu2">
+                  <NavMenu.Link href="#child-menu2">
                     Nested item
                   </NavMenu.Link>
                 </NavMenu.Item>
@@ -380,8 +386,8 @@ import { NavMenu } from '@lism-css/ui/astro/NavMenu';
   <PreviewArea p="20">
     <Box min-h="15rem">
       <NavMenu.Root fxd="row" lh="s" itemP="10">
-        <NavMenu.Item hov="-o">
-          <NavMenu.Link href="#menu1">Menu item</NavMenu.Link>
+        <NavMenu.Item>
+          <NavMenu.Link href="#menu1" hov="-o">Menu item</NavMenu.Link>
         </NavMenu.Item>
         <NavMenu.Item set="hov" pos="relative">
           <NavMenu.Link href="#menu3" ai="center" g="5">
@@ -390,16 +396,16 @@ import { NavMenu } from '@lism-css/ui/astro/NavMenu';
             </Fragment>
           </NavMenu.Link>
           <NavMenu.Nest fz="s" hov="in:show" pos="absolute" t="100%" ps="0" lh="s" bgc="base" bxsh="20" bdrs="10">
-            <NavMenu.Item hov="-bgc">
+            <NavMenu.Item>
               <NavMenu.Link href="#child-menu1">Nested item</NavMenu.Link>
             </NavMenu.Item>
-            <NavMenu.Item hov="-bgc">
+            <NavMenu.Item>
               <NavMenu.Link href="#child-menu2">Nested Menu item</NavMenu.Link>
             </NavMenu.Item>
           </NavMenu.Nest>
         </NavMenu.Item>
-        <NavMenu.Item hov="-o">
-          <NavMenu.Link href="#menu1">Menu item</NavMenu.Link>
+        <NavMenu.Item>
+          <NavMenu.Link href="#menu1" hov="-o">Menu item</NavMenu.Link>
         </NavMenu.Item>
       </NavMenu.Root>
     </Box>
@@ -408,8 +414,8 @@ import { NavMenu } from '@lism-css/ui/astro/NavMenu';
     ```jsx 'fxd="row"'
     <Box min-h="15rem">
       <NavMenu.Root fxd="row" lh="s" itemP="10">
-        <NavMenu.Item hov="-o">
-          <NavMenu.Link href="#menu1">Menu item</NavMenu.Link>
+        <NavMenu.Item>
+          <NavMenu.Link href="#menu1" hov="-o">Menu item</NavMenu.Link>
         </NavMenu.Item>
         <NavMenu.Item set="hov" pos="relative">
           <NavMenu.Link href="#menu3" ai="center" g="5">
@@ -418,16 +424,16 @@ import { NavMenu } from '@lism-css/ui/astro/NavMenu';
             </Fragment>
           </NavMenu.Link>
           <NavMenu.Nest fz="s" hov="in:show" pos="absolute" t="100%" ps="0" lh="s" bgc="base" bxsh="20" bdrs="10">
-            <NavMenu.Item hov="-bgc">
+            <NavMenu.Item>
               <NavMenu.Link href="#child-menu1">Nested item</NavMenu.Link>
             </NavMenu.Item>
-            <NavMenu.Item hov="-bgc">
+            <NavMenu.Item>
               <NavMenu.Link href="#child-menu2">Nested Menu item</NavMenu.Link>
             </NavMenu.Item>
           </NavMenu.Nest>
         </NavMenu.Item>
-        <NavMenu.Item hov="-o">
-          <NavMenu.Link href="#menu1">Menu item</NavMenu.Link>
+        <NavMenu.Item>
+          <NavMenu.Link href="#menu1" hov="-o">Menu item</NavMenu.Link>
         </NavMenu.Item>
       </NavMenu.Root>
     </Box>
