@@ -116,9 +116,9 @@
 .u--scalePreview {
   --w-pct: 200;
   max-width: none;
-  width: calc(1% * var(--w-pct));
-  transform: scale(calc(100 / var(--w-pct)));
-  transform-origin: 0 0;
+  /* transform:scale()ではiframe内のdialogアニメーション時に表示位置がずれるため、zoomで縮小する。 */
+  width: 100%;
+  zoom: calc(10000% / var(--w-pct));
 }
 .u--scalePreview > iframe {
   width: 100%;
