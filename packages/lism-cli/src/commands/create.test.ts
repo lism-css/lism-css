@@ -180,6 +180,99 @@ describe('runCreate', () => {
     expect(pkg.name).toBe('lp-astro-saas');
   });
 
+  it('project型はlangOverlaysに要求言語があればbase取得後にoverlayをmergeし、.langを除去する', async () => {
+    setLang('en');
+    const templates: Parameters<typeof runCreateWithTemplates>[1] = [
+      {
+        slug: 'blog-astro-minimal',
+        kind: 'project',
+        category: 'blog',
+        stack: 'astro',
+        variant: 'minimal',
+        sourcePath: 'blog/astro/minimal',
+        langOverlays: { en: 'blog/astro/minimal/.lang/en' },
+        description: { ja: 'Minimal blog', en: 'Minimal blog' },
+      },
+    ];
+    vi.mocked(downloadTemplate).mockImplementation((source, options) => {
+      const dir = (options as { dir: string }).dir;
+      fs.mkdirSync(dir, { recursive: true });
+      if (String(source).includes('/.lang/en#')) {
+        // 英語 overlay（差分のみ）
+        writeFile(path.join(dir, 'src/config/site.ts'), 'export const lang = "en";');
+        writeFile(path.join(dir, 'src/posts/first-blog.md'), 'EN post');
+      } else {
+        // base（日本語 + .lang 同梱）
+        writePackageJson(dir, { name: 'blog-astro-minimal', dependencies: { 'lism-css': 'workspace:*' } });
+        writeFile(path.join(dir, 'src/config/site.ts'), 'export const lang = "ja";');
+        writeFile(path.join(dir, 'src/posts/first-blog.md'), 'JA post');
+        writeFile(path.join(dir, '.lang/en/src/config/site.ts'), 'export const lang = "en";');
+      }
+      return Promise.resolve({} as Awaited<ReturnType<typeof downloadTemplate>>);
+    });
+
+    await runCreateWithTemplates({ template: 'blog-astro-minimal', targetDir: 'blog-app', force: true }, templates);
+
+    const outDir = path.join(tmpDir, 'blog-app');
+    // base + overlay の 2 回取得
+    expect(downloadTemplate).toHaveBeenCalledTimes(2);
+    expect(downloadTemplate).toHaveBeenNthCalledWith(1, 'github:lism-css/lism-css/templates/blog/astro/minimal#main', {
+      dir: outDir,
+      force: true,
+      forceClean: true,
+    });
+    expect(downloadTemplate).toHaveBeenNthCalledWith(2, 'github:lism-css/lism-css/templates/blog/astro/minimal/.lang/en#main', {
+      dir: expect.any(String),
+      force: true,
+      forceClean: true,
+    });
+    // overlay が base を上書きしている
+    expect(fs.readFileSync(path.join(outDir, 'src/config/site.ts'), 'utf-8')).toBe('export const lang = "en";');
+    expect(fs.readFileSync(path.join(outDir, 'src/posts/first-blog.md'), 'utf-8')).toBe('EN post');
+    // 言語 overlay 配信元（.lang）は生成プロジェクトに残らない
+    expect(fs.existsSync(path.join(outDir, '.lang'))).toBe(false);
+  });
+
+  it('project型でも要求言語にoverlayが無ければoverlayを取得せず、.langは除去する', async () => {
+    setLang('ja');
+    const templates: Parameters<typeof runCreateWithTemplates>[1] = [
+      {
+        slug: 'blog-astro-minimal',
+        kind: 'project',
+        category: 'blog',
+        stack: 'astro',
+        variant: 'minimal',
+        sourcePath: 'blog/astro/minimal',
+        langOverlays: { en: 'blog/astro/minimal/.lang/en' },
+        description: { ja: 'Minimal blog', en: 'Minimal blog' },
+      },
+    ];
+    vi.mocked(downloadTemplate).mockImplementation((_source, options) => {
+      const dir = (options as { dir: string }).dir;
+      fs.mkdirSync(dir, { recursive: true });
+      writePackageJson(dir, { name: 'blog-astro-minimal', dependencies: {} });
+      writeFile(path.join(dir, 'src/config/site.ts'), 'export const lang = "ja";');
+      writeFile(path.join(dir, '.lang/en/src/config/site.ts'), 'export const lang = "en";');
+      return Promise.resolve({} as Awaited<ReturnType<typeof downloadTemplate>>);
+    });
+
+    await runCreateWithTemplates({ template: 'blog-astro-minimal', targetDir: 'blog-ja', force: true }, templates);
+
+    const outDir = path.join(tmpDir, 'blog-ja');
+    // base のみ（ja overlay は未定義なので overlay 取得は走らない）
+    expect(downloadTemplate).toHaveBeenCalledTimes(1);
+    expect(fs.readFileSync(path.join(outDir, 'src/config/site.ts'), 'utf-8')).toBe('export const lang = "ja";');
+    expect(fs.existsSync(path.join(outDir, '.lang'))).toBe(false);
+  });
+
+  it('langOverlays未定義のproject型は--lang enでもoverlayを取得しない', async () => {
+    setLang('en');
+    // beforeEach の mock（langOverlays 無しの minimal-astro 相当）をそのまま使う
+    await runCreate({ template: 'minimal-astro', targetDir: 'my-app', force: true });
+
+    expect(downloadTemplate).toHaveBeenCalledTimes(1);
+  });
+
   it('single-project-variant型は選択variantのindex.astroをsrc/pages/index.astroに持ち上げ、他variantを削除しpackage.json.nameを書き換える', async () => {
     const templates: Parameters<typeof runCreateWithTemplates>[1] = [
       {

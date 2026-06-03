@@ -48,6 +48,7 @@ nr publish:cli  # build → lism-cli publish → create-lism publish
 - **`base-overlay` 型の overlay 側には `package.json` を置かない**。CLI は base の `package.json` を採用し、overlay は差分ファイルのみ上書きする想定。overlay 側に置くと merge 後の `name` 書き換え対象が二重化し、`workspace:*` 置換のロジックも崩れる。共通化したい設定は base に集約する。
 - **`templates/lp/html/_generated/` 配下は手編集禁止**（※ `static-html` 型テンプレの実配信は #375 で追加予定）。`static-html` 型テンプレの配信元として、source（別ディレクトリ）からの生成物を置く前提のディレクトリ。手で編集すると次回再生成で消える。修正は generator 側で行う。
 - **`single-project-variant` 型**（例: `templates/lp/astro/`）は単一プロジェクトに `src/pages/{variant}/` を並べる構成。CLI 抽出時に選択 variant の `index.astro` を `src/pages/index.astro` に持ち上げ、他 variant ディレクトリを削除する。variant 追加時は `src/pages/{variant}/index.astro` を作り、`TEMPLATES` に新 slug を追加する。
+- **言語別 overlay（`project` 型の `langOverlays`）**: `lism create` の言語（`--lang` / 検出ロケール）に対応する overlay があれば、base 取得後に差分をマージして生成テンプレ本体を多言語化する。配置は base 内の `.lang/{lang}/`（例: `blog/astro/minimal/.lang/en/`）に**差分ファイルのみ**を置き、`manifest.ts` の `langOverlays` に `{ en: 'blog/astro/minimal/.lang/en' }` のように登録する。base 言語（多くは `ja`）は `sourcePath` 自体が対応言語なので overlay を用意しない。生成物に画面文言をハードコードせず `siteConfig.ui` 等へ集約しておくと overlay 差分が小さく済む。`.lang/` は配布不要ディレクトリとして生成プロジェクトから自動削除される（`screenshots/` と同じ扱い）。
 
 
 ## publish 前チェック

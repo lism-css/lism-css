@@ -46,6 +46,14 @@ export interface ProjectTemplateDef extends TemplateMetaBase {
   kind: 'project';
   /** `templates/` 配下のプロジェクトディレクトリ（例: 'minimal/astro'） */
   sourcePath: string;
+  /**
+   * 言語別 overlay の `templates/` 配下パス（giget の source path）。
+   * 要求言語に対応する overlay があれば、`sourcePath` 取得後に差分をマージする。
+   * overlay は差分ファイルのみを置く（フル複製しない）。base 言語（多くは `ja`）は
+   * `sourcePath` 自体が対応言語なので、ここに含めない。
+   * 例: `{ en: 'blog/astro/minimal/.lang/en' }`
+   */
+  langOverlays?: Partial<Record<'ja' | 'en', string>>;
 }
 
 export interface BaseOverlayTemplateDef extends TemplateMetaBase {
@@ -106,6 +114,9 @@ export const TEMPLATES: TemplateDef[] = [
     variantLabel: { ja: 'Minimal', en: 'Minimal' },
     stack: 'astro',
     sourcePath: 'blog/astro/minimal',
+    langOverlays: {
+      en: 'blog/astro/minimal/.lang/en',
+    },
     title: { ja: 'Blog Minimal', en: 'Blog Minimal' },
     description: { ja: '記事一覧 / 詳細 / Tags のみの最小構成の Astro ブログ', en: 'Minimal Astro blog with posts and tags only' },
     previewUrl: 'https://lism-blog-astro-minimal.pages.dev/',

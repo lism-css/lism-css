@@ -10,7 +10,7 @@ import { siteConfig } from '@/config/site';
       {siteConfig.name}
     </Link>
 
-    <Cluster as="nav" aria-label="メインナビゲーション" ai="center" g="20" fz="s">
+    <Cluster as="nav" aria-label={siteConfig.ui.nav.aria} ai="center" g="20" fz="s">
       {
         siteConfig.nav
           .filter((item) => item.href !== '/')
