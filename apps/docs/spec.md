@@ -21,7 +21,7 @@
 - `astro.config.ts` - プラグイン登録
 - `src/lib/remark-callout.ts` - `:::type ... :::` → `<Callout>` 変換
 - `src/lib/rehype-blockquote-cite.ts` - blockquote の cite 属性変換
-- Callout type: `alert`（赤）, `point`（橙）, `warning`（黄）, `check`（緑）, `help`（紫）, `note`（青）
+- Callout type: `alert`（赤）, `point`/`tip`（橙）, `warning`（黄）, `check`（緑）, `help`（紫）, `info`（青）, `note`（灰）
 
 
 ## プレビューページ

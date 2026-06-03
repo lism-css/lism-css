@@ -8,13 +8,15 @@ type Props<Tag extends HTMLTag = 'div'> = Polymorphic<{ as: Tag }> & AlertProps;
 
 const { class: className, ...astroProps } = Astro.props;
 const { icon, layout, flow, ...alertProps } = getAlertProps(astroProps);
+
+// Memo: Flow部分、layout="withSide" を考慮し、 fx="1" ではなく w="100%" にしている
 ---
 
 <Lism layout={layout} class={atts(className, 'c--alert')} {...alertProps}>
   <Center isSide={layout === 'withSide'} c="keycolor" fz="xl" fxsh="0">
     <Icon icon={icon} />
   </Center>
-  <Flow flow={flow}>
+  <Flow flow={flow} w="100%">
     <slot />
   </Flow>
 </Lism>

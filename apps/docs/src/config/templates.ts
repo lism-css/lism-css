@@ -64,24 +64,24 @@ export const categories: CategoryDef[] = [
     aggregateView: true,
     aggregateRepresentativeSlug: 'minimal-vite',
     description: {
-      ja: 'Lism CSS を導入した最小構成。検証や独自構成のベース向け。',
-      en: 'Minimal starters with Lism CSS preconfigured.',
+      ja: 'Lism CSS を導入した最小構成。検証や独自構成のベースに最適です。',
+      en: 'Minimal configuration with Lism CSS. Ideal for testing or as a base for your own custom setup.',
     },
   },
   {
     id: 'blog',
     label: 'Blog',
     description: {
-      ja: '記事中心のサイト向けテンプレート。',
-      en: 'Templates for article-oriented sites.',
+      ja: 'Lism CSSで構築したブログサイト用のテンプレート。',
+      en: 'Blog site templates built with Lism CSS.',
     },
   },
   {
     id: 'lp',
     label: 'LP',
     description: {
-      ja: 'プロダクト・サービス紹介用の LP テンプレート。',
-      en: 'Landing page templates for products and services.',
+      ja: 'Lism CSSで構築したLPページ用のテンプレート。',
+      en: 'Landing page templates built with Lism CSS.',
     },
   },
   {

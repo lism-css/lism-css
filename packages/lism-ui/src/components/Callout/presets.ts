@@ -3,15 +3,18 @@ type PresetData = {
   color: string;
 };
 
+const POINT_PRESET: PresetData = {
+  icon: 'lightbulb',
+  color: 'orange',
+};
+
 const PRESETS: Record<string, PresetData> = {
   alert: {
     icon: 'alert',
     color: 'red',
   },
-  point: {
-    icon: 'lightbulb',
-    color: 'orange',
-  },
+  point: POINT_PRESET,
+  tip: POINT_PRESET,
   warning: {
     icon: 'warning',
     color: 'yellow',
@@ -24,9 +27,13 @@ const PRESETS: Record<string, PresetData> = {
     icon: 'question',
     color: 'purple',
   },
+  info: {
+    icon: 'info',
+    color: 'blue',
+  },
   note: {
     icon: 'note',
-    color: 'blue',
+    color: 'gray',
   },
 };
 

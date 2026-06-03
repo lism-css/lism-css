@@ -12,27 +12,27 @@
  *
  * :::type の使用例：
  * 入力（MDX）:
- *   :::point
+ *   :::tip
  *   ここに文章
  *   :::
  *
  * 出力（変換後）:
- *   <Callout type="point">ここに文章</Callout>
+ *   <Callout type="tip">ここに文章</Callout>
  *
  * タイトル付きの例：
  * 入力（MDX）:
- *   :::point
+ *   :::tip
  *   ::title[タイトルテキスト]
  *   ここに文章
  *   :::
  *
  * 出力（変換後）:
- *   <Callout type="point">
+ *   <Callout type="tip">
  *     <div class="c--docsNote_title">タイトルテキスト</div>
  *     ここに文章
  *   </Callout>
  *
- * 対応するtype: alert, point, warning, check, help, note, info
+ * 対応するtype: alert, point, tip, warning, check, help, note, info
  */
 import { visit } from 'unist-util-visit';
 import type { Root, Parent, RootContent } from 'mdast';
@@ -40,7 +40,7 @@ import type { Root, Parent, RootContent } from 'mdast';
 import type { ContainerDirective, TextDirective, LeafDirective } from 'mdast-util-directive';
 
 // Calloutで使用可能なtype一覧
-const CALLOUT_TYPES = ['alert', 'point', 'warning', 'check', 'help', 'note', 'info'];
+const CALLOUT_TYPES = ['alert', 'point', 'tip', 'warning', 'check', 'help', 'note', 'info'];
 
 // MDX JSX 要素の型（remark-mdx で拡張される型を簡易的に定義）
 interface MdxJsxAttribute {
