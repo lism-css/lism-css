@@ -2,32 +2,32 @@
 title: 'Alert'
 description: 'Documentation for the Alert component provided by @lism-css/ui.'
 ---
-import { Box, Flow, Icon, Layer, Center, Lism, WithSide } from 'lism-css/astro';
+import { Box, Flow, Flex, Icon, Layer, Center, Lism, WithSide } from 'lism-css/astro';
 import { Alert } from '@lism-css/ui/astro/Alert';
-import { DummyText } from '@lism-css/ui/astro/DummyText';
+import { Button } from '@lism-css/ui/astro/Button';
 
 
 
-A component for displaying short messages with visual emphasis.
+Use this component to emphasize short messages.
 
 
 <Preview>
   <PreviewTitle>Preview</PreviewTitle>
   <PreviewArea resize p="30">
     <Alert>
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+      <p>Lorem ipsum dolor sit amet. Consectetur adipiscing elit, sed do eiusmod tempor Incididunt ut.</p>
     </Alert>
   </PreviewArea>
   <PreviewCode slot="tab" label="React / Astro">
     ```jsx
     <Alert>
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+      <p>Lorem ipsum dolor sit amet. Consectetur adipiscing elit, sed do eiusmod tempor Incididunt ut.</p>
     </Alert>
     ```
   </PreviewCode>
   <PreviewCode slot="tab" label="HTML">
     ```html
-    <div class="c--alert l--flex set--bxsh u--cbox -ai:center -p:15 -g:15 -bd -bdrs:10" style="--keycolor:var(--red)">
+    <div class="c--alert l--flex u--cbox -ai:center -p:15 -g:15 -bd -bdrs:10" style="--keycolor:var(--red)">
       <div class="l--center -c -fz:xl -fxsh:0" style="--c:var(--keycolor)">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -38,24 +38,22 @@ A component for displaying short messages with visual emphasis.
           focusable="false"
           class="a--icon"
           aria-hidden="true"
-        >
-          <path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm0,192a88,88,0,1,1,88-88A88.1,88.1,0,0,1,128,216Zm-8-80V80a8,8,0,0,1,16,0v56a8,8,0,0,1-16,0Zm20,36a12,12,0,1,1-12-12A12,12,0,0,1,140,172Z"></path>
-        </svg>
+        ><path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm0,192a88,88,0,1,1,88-88A88.1,88.1,0,0,1,128,216Zm-8-80V80a8,8,0,0,1,16,0v56a8,8,0,0,1-16,0Zm20,36a12,12,0,1,1-12-12A12,12,0,0,1,140,172Z"></path></svg>
       </div>
       <div class="l--flow -flow:s">
-        <p>Lorem ipsum dolor sit amet.</p>
+        <p>Lorem ipsum dolor sit amet. Consectetur adipiscing elit, sed do eiusmod tempor Incididunt ut.</p>
       </div>
     </div>
     ```
   </PreviewCode>
 </Preview>
 
-{/* Internally uses `<WithSide>`. The content side will automatically stack vertically when its width falls below a certain threshold. */}
+{/* Internally uses `<WithSide>`. The content side automatically stacks vertically when its width falls below a certain threshold. */}
 
 
 ## Usage
 
-Provided as `Alert` from the `@lism-css/ui` package.
+Import `Alert` from the `@lism-css/ui` package.
 
 
 ### Import
@@ -67,9 +65,9 @@ Provided as `Alert` from the `@lism-css/ui` package.
 | Prop | Description |
 |---|---|
 |`type`| Specifies a keyword that sets a combination of `keycolor` and `icon`. Default: `"alert"` |
-|`icon`| Specifies the icon to pass to the [`Icon`](/en/docs/primitives/a--icon/) component. |
+|`icon`| Specifies the icon to pass to the [`Icon`](/docs/primitives/a--icon/) component. |
 |`keycolor`| Specifies the key color. |
-|`flow`| Passed to the div element wrapping the content. |
+|`flow`| Passed to the `flow` prop of the `Flow` element that wraps the content. |
 |`layout`| Switches the layout primitive. Default: `"flex"` |
 
 
@@ -82,88 +80,131 @@ The source code is available on [GitHub](https://github.com/lism-css/lism-css/tr
 
 ## Examples
 
-### Layout variants
+### Custom Color and Icon
+
+<Preview>
+  <PreviewTitle>Example</PreviewTitle>
+  <PreviewArea p="20">
+    <Alert icon="good" keycolor="green">
+      <p>icon="good" keycolor="green"</p>
+    </Alert>
+  </PreviewArea>
+  <PreviewCode slot="tab" label="JSX">
+    ```jsx
+    <Alert icon="good" keycolor="green">
+      <p>icon="good" keycolor="green"</p>
+    </Alert>
+    ```
+  </PreviewCode>
+</Preview>
+
+### Responsive Layout with `l--withSide`
+
+<Preview>
+  <PreviewTitle>Preview</PreviewTitle>
+  <PreviewArea resize p="30">
+    <Alert type="check" layout="withSide">
+      <p>On narrow screens, the icon and text stack vertically.</p>
+    </Alert>
+  </PreviewArea>
+  <PreviewCode slot="tab" label="JSX">
+    ```jsx
+    <Alert type="check" layout="withSide">
+      <p>On narrow screens, the icon and text stack vertically.</p>
+    </Alert>
+    ```
+  </PreviewCode>
+</Preview>
+
+
+### Alert with a Button and Breakpoint-Responsive Layout
+
+<Preview>
+  <PreviewTitle>Preview</PreviewTitle>
+  <PreviewArea resize p="30">
+    <Alert type="info" fxd={["column","row"]}>
+      <Flex ai="center" jc="between" fxd={["column","row"]} g="15">
+        <p>On narrow screens, the icon, text, and button stack vertically.</p>
+        <Button href="#" bdrs="10" fxsh="0" fz="s" bgc="link">Button</Button>
+      </Flex>
+    </Alert>
+  </PreviewArea>
+  <PreviewCode slot="tab" label="JSX">
+    ```jsx
+    <Alert type="info" fxd={["column","row"]}>
+      <Flex ai="center" jc="between" fxd={["column","row"]} g="15">
+        <p>On narrow screens, the icon, text, and button stack vertically.</p>
+        <Button href="#" bdrs="10" fxsh="0" fz="s" bgc="link">Button</Button>
+      </Flex>
+    </Alert>
+    ```
+  </PreviewCode>
+</Preview>
+
+
+### `l--withSide` Responsive Layout
 
 <Preview>
   <PreviewTitle>Preview</PreviewTitle>
   <PreviewArea resize p="30">
     <Alert layout="withSide">
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore.</p>
+      <p>On narrow screens, the icon and text stack vertically.</p>
     </Alert>
   </PreviewArea>
   <PreviewCode slot="tab" label="JSX">
     ```jsx
     <Alert layout="withSide">
-      <p>Lorem ipsum dolor sit amet...</p>
+      <p>On narrow screens, the icon and text stack vertically.</p>
     </Alert>
     ```
   </PreviewCode>
 </Preview>
 
 
-### Available types
+### Available Types
 
 <Preview>
   <PreviewTitle>Specifying type</PreviewTitle>
-  <PreviewArea resize p="30">
+  <PreviewArea resize p="30" flow="s">
     <Alert type="alert">
-      <DummyText lang="en" length="codes" />
+      type="alert": Example text.
     </Alert>
-    <Alert type="point">
-      <DummyText lang="en" length="codes" />
+    <Alert type="tip">
+      type="tip": Example text.
     </Alert>
     <Alert type="warning">
-      <DummyText lang="en" length="codes" />
+      type="warning": Example text.
     </Alert>
     <Alert type="check">
-      <DummyText lang="en" length="codes" />
+      type="check": Example text.
     </Alert>
     <Alert type="info">
-      <DummyText lang="en" length="codes" />
+      type="info": Example text.
     </Alert>
     <Alert type="help">
-      <DummyText lang="en" length="codes" />
+      type="help": Example text.
+    </Alert>
+    <Alert type="note">
+      type="note": Example text.
     </Alert>
   </PreviewArea>
   <PreviewCode slot="tab" label="JSX">
   ```jsx
   <Alert type="alert">...</Alert>
-  <Alert type="point">...</Alert>
+  <Alert type="tip">...</Alert>
   <Alert type="warning">...</Alert>
   <Alert type="check">...</Alert>
   <Alert type="info">...</Alert>
   <Alert type="help">...</Alert>
+  <Alert type="note">...</Alert>
   ```
   </PreviewCode>
 </Preview>
 
 
-### Specifying a custom color and icon
-
-<Preview>
-  <PreviewTitle>
-    Specifying a custom color and icon
-  </PreviewTitle>
-  <PreviewArea p="20">
-    <Alert icon="good" keycolor="pink">
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore.</p>
-    </Alert>
-  </PreviewArea>
-  <PreviewCode slot="tab" label="JSX">
-    ```jsx
-    <Alert icon="good" keycolor="pink">
-      <p>Lorem ipsum dolor sit amet...</p>
-    </Alert>
-    ```
-  </PreviewCode>
-</Preview>
-
-
-
-
 ## Without @lism-css/ui
 
-An example of building an Alert using only lism-css, without `@lism-css/ui`.
+This example builds the Alert with lism-css primitives only, without `@lism-css/ui`.
 
 <Preview>
   <PreviewTitle>Preview</PreviewTitle>
@@ -173,7 +214,7 @@ An example of building an Alert using only lism-css, without `@lism-css/ui`.
         <Icon icon="alert" />
       </Center>
       <Flow flow="s">
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore.</p>
+        <p>Lorem ipsum dolor sit amet. Consectetur adipiscing elit, sed do eiusmod tempor Incididunt ut.</p>
       </Flow>
     </WithSide>
   </PreviewArea>
@@ -184,7 +225,7 @@ An example of building an Alert using only lism-css, without `@lism-css/ui`.
         <Icon icon="alert" />
       </Center>
       <Flow flow="s">
-        <p>Lorem ipsum dolor sit amet...</p>
+        <p>Lorem ipsum dolor sit amet. Consectetur adipiscing elit, sed do eiusmod tempor Incididunt ut.</p>
       </Flow>
     </WithSide>
     ```
@@ -209,7 +250,7 @@ An example of building an Alert using only lism-css, without `@lism-css/ui`.
         </svg>
       </div>
       <div class="l--flow -flow:s">
-        <p>Lorem ipsum dolor sit amet...</p>
+        <p>Lorem ipsum dolor sit amet. Consectetur adipiscing elit, sed do eiusmod tempor Incididunt ut.</p>
       </div>
     </div>
     ```

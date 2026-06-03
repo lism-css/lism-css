@@ -2,9 +2,9 @@
 title: 'Alert'
 description: '@lism-css/ui で提供する Alert コンポーネントについて解説します。'
 ---
-import { Box, Flow, Icon, Layer, Center, Lism, WithSide } from 'lism-css/astro';
+import { Box, Flow, Flex, Icon, Layer, Center, Lism, WithSide } from 'lism-css/astro';
 import { Alert } from '@lism-css/ui/astro/Alert';
-import { DummyText } from '@lism-css/ui/astro/DummyText';
+import { Button } from '@lism-css/ui/astro/Button';
 
 
 
@@ -38,9 +38,7 @@ import { DummyText } from '@lism-css/ui/astro/DummyText';
           focusable="false"
           class="a--icon"
           aria-hidden="true"
-        >
-          <path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm0,192a88,88,0,1,1,88-88A88.1,88.1,0,0,1,128,216Zm-8-80V80a8,8,0,0,1,16,0v56a8,8,0,0,1-16,0Zm20,36a12,12,0,1,1-12-12A12,12,0,0,1,140,172Z"></path>
-        </svg>
+        ><path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm0,192a88,88,0,1,1,88-88A88.1,88.1,0,0,1,128,216Zm-8-80V80a8,8,0,0,1,16,0v56a8,8,0,0,1-16,0Zm20,36a12,12,0,1,1-12-12A12,12,0,0,1,140,172Z"></path></svg>
       </div>
       <div class="l--flow -flow:s">
         <p>ロレム・イプサムの座り雨。目まぐるしい文章の流れの中で、それは静かに歩く仮の言葉です。</p>
@@ -84,19 +82,78 @@ import { DummyText } from '@lism-css/ui/astro/DummyText';
 
 ## Examples
 
-### layout を切り替える
+### カラーとアイコンを指定する例
+
+<Preview>
+  <PreviewTitle>例</PreviewTitle>
+  <PreviewArea p="20">
+    <Alert icon="good" keycolor="green">
+      <p>icon="good" keycolor="green"</p>
+    </Alert>
+  </PreviewArea>
+  <PreviewCode slot="tab" label="JSX">
+    ```jsx
+    <Alert icon="good" keycolor="green">
+      <p>icon="good" keycolor="green"</p>
+    </Alert>
+    ```
+  </PreviewCode>
+</Preview>
+
+### `l--withSide` を使ってレスポンシブ対応
+
+<Preview>
+  <PreviewTitle>Preview</PreviewTitle>
+  <PreviewArea resize p="30">
+    <Alert type="check" layout="withSide">
+      <p>画面が狭くなるとアイコンとテキストが縦並びになります。</p>
+    </Alert>
+  </PreviewArea>
+  <PreviewCode slot="tab" label="JSX">
+    ```jsx
+    <Alert type="check" layout="withSide">
+      <p>画面が狭くなるとアイコンとテキストが縦並びになります。</p>
+    </Alert>
+    ```
+  </PreviewCode>
+</Preview>
+
+
+### ボタン付き + ブレイクポイントによるレスポンシブ対応
+
+<Preview>
+  <PreviewTitle>Preview</PreviewTitle>
+  <PreviewArea resize p="30">
+    <Alert type="info" fxd={["column","row"]}>
+      <Flex ai="center" jc="between" fxd={["column","row"]} g="15">
+        <p>画面が狭くなるとアイコン・テキスト・ボタンが縦並びになります。</p>
+        <Button href="#" bdrs="10" fxsh="0" fz="s" bgc="link">Button</Button>
+      </Flex>
+    </Alert>
+  </PreviewArea>
+  <PreviewCode slot="tab" label="JSX">
+    ```jsx
+    <Alert type="check" layout="withSide">
+      <p>画面が狭くなるとアイコン・テキスト・ボタンが縦並びになります。</p>
+    </Alert>
+    ```
+  </PreviewCode>
+</Preview>
+
+
+### `l--withSide` を使ったレスポンシブ対応
 
 <Preview>
   <PreviewTitle>Preview</PreviewTitle>
   <PreviewArea resize p="30">
     <Alert layout="withSide">
-      <p>ロレム・イプサムの座り雨。目まぐるしい文章の流れの中で、それは静かに歩く仮の言葉です。</p>
+      <p>画面が狭くなるとアイコンとテキストが縦並びになります。</p>
     </Alert>
   </PreviewArea>
   <PreviewCode slot="tab" label="JSX">
     ```jsx
     <Alert layout="withSide">
-      <p>ロレム・イプサムの座り雨。目まぐるしい文章の流れの中で、それは静かに歩く仮の言葉です。</p>
+      <p>画面が狭くなるとアイコンとテキストが縦並びになります。</p>
     </Alert>
     ```
   </PreviewCode>
@@ -107,24 +164,27 @@ import { DummyText } from '@lism-css/ui/astro/DummyText';
 
 <Preview>
   <PreviewTitle>typeの指定</PreviewTitle>
-  <PreviewArea resize p="30">
+  <PreviewArea resize p="30" flow="s">
     <Alert type="alert">
-      <DummyText lang="ja" length="codes" />
+      type="alert": Example text.
     </Alert>
     <Alert type="point">
-      <DummyText lang="ja" length="codes" />
+      type="point": Example text.
     </Alert>
     <Alert type="warning">
-      <DummyText lang="ja" length="codes" />
+      type="warning": Example text.
     </Alert>
     <Alert type="check">
-      <DummyText lang="ja" length="codes" />
+      type="check": Example text.
     </Alert>
     <Alert type="info">
-      <DummyText lang="ja" length="codes" />
+      type="info": Example text.
     </Alert>
     <Alert type="help">
-      <DummyText lang="ja" length="codes" />
+      type="help": Example text.
+    </Alert>
+    <Alert type="note">
+      type="note": Example text.
     </Alert>
   </PreviewArea>
   <PreviewCode slot="tab" label="JSX">
@@ -135,32 +195,10 @@ import { DummyText } from '@lism-css/ui/astro/DummyText';
   <Alert type="check">...</Alert>
   <Alert type="info">...</Alert>
   <Alert type="help">...</Alert>
+  <Alert type="note">...</Alert>
   ```
   </PreviewCode>
 </Preview>
-
-
-### カラーとアイコンを指定する例
-
-<Preview>
-  <PreviewTitle>
-    カラーとアイコンを指定する例
-  </PreviewTitle>
-  <PreviewArea p="20">
-    <Alert icon="good" keycolor="pink">
-      <p>ロレム・イプサムの座り雨。目まぐるしい文章の流れの中で、それは静かに歩く仮の言葉です。</p>
-    </Alert>
-  </PreviewArea>
-  <PreviewCode slot="tab" label="JSX">
-    ```jsx
-    <Alert icon="good" keycolor="pink">
-      <p>ロレム・イプサムの座り雨。目まぐるしい文章の流れの中で、それは静かに歩く仮の言葉です。</p>
-    </Alert>
-    ```
-  </PreviewCode>
-</Preview>
-
-
 
 
 ## Only lism-css

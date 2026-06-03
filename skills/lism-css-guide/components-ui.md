@@ -71,10 +71,11 @@ import { Button } from '@lism-css/ui/astro/Button';
 ソース: [Alert/](https://github.com/lism-css/lism-css/tree/main/packages/lism-ui/src/components/Alert)
 
 短めの文言を目立たせて強調表示するアラートボックス。`type` プリセットによりアイコンとカラーが自動設定される。
+プリセット: `alert`=alert/red, `point`=lightbulb/orange（`tip`も同じ）, `warning`=warning/yellow, `check`=check-circle/green, `help`=question/purple, `info`=info/blue, `note`=note/gray。
 
 | Prop | 型 | デフォルト | 説明 |
 |------|-----|----------|------|
-| `type` | `'alert' \| 'point' \| 'warning' \| 'check' \| 'help' \| 'info'` | `'alert'` | アラートタイプ。keycolor と icon の組み合わせプリセット |
+| `type` | `'alert' \| 'point' \| 'tip' \| 'warning' \| 'check' \| 'help' \| 'info' \| 'note'` | `'alert'` | アラートタイプ。keycolor と icon の組み合わせプリセット |
 | `keycolor` | `string` | — | キーカラー |
 | `icon` | `ReactNode \| string` | — | カスタムアイコン |
 | `layout` | `'flex' \| 'withSide'` | `'flex'` | レイアウトプリミティブ |
@@ -140,17 +141,18 @@ import { Button } from '@lism-css/ui/astro/Button';
 ソース: [Callout/](https://github.com/lism-css/lism-css/tree/main/packages/lism-ui/src/components/Callout)
 
 記事中の重要ポイントを示すコンポーネント。タイトルとアイコン付きの強調ボックス。`type` プリセットによりアイコンとカラーが自動設定される。
+プリセット: `alert`=alert/red, `point`=lightbulb/orange（`tip`も同じ）, `warning`=warning/yellow, `check`=check-circle/green, `help`=question/purple, `info`=info/blue, `note`=note/gray。
 
 | Prop | 型 | デフォルト | 説明 |
 |------|-----|----------|------|
-| `type` | `'note' \| 'alert' \| 'point' \| 'warning' \| 'check' \| 'help'` | `'note'` | コールアウトタイプ |
+| `type` | `'alert' \| 'point' \| 'tip' \| 'warning' \| 'check' \| 'help' \| 'info' \| 'note'` | `'note'` | コールアウトタイプ |
 | `keycolor` | `string` | — | キーカラー |
 | `icon` | `ReactNode \| string` | — | カスタムアイコン |
 | `title` | `string` | — | タイトルテキスト |
 | `flow` | `string` | `'s'` | コンテンツ部分のフロー余白 |
 
 ```jsx
-<Callout type='note' title='Important' keycolor='blue'>Important note</Callout>
+<Callout type='note' title='Note'>Supplemental note</Callout>
 ```
 
 
