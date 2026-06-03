@@ -117,11 +117,15 @@ const ecosystems = [
     </Lism>
   </TileGrid>
 
-  <Stack as="section" ai="center" g="50" py="60">
-    <Stack ai="center" g="20">
-      <Text fz="2xs" fw="500" c="text-2" tt="upper" lts="0.15em"> FEATURES </Text>
-      <Heading level="2" ta="center" fz="3xl" lts="s">洗練された設計理論</Heading>
+  <Stack as="section" ai="center" pt="180" pb="120">
+    <Stack ai="center" g="12">
+      <Text c="var(--eyebrow-c)" tt="upper" lh="1">Features</Text>
+      <Heading level="2" ta="center" fz="4xl" fw="700" lh="1.5" c="var(--heading-c)">洗練された設計理論</Heading>
     </Stack>
+    <Text ta="center" mt="30" fz="l" lh="1.75">
+      Lism CSSは、Webサイトの構造的な基盤を素早くスムーズに構築するための軽量CSSフレームワークです。<br
+      />自然で心地よいリズムがデザインに生まれるよう、CSSアーキテクチャをゼロから設計しました。
+    </Text>
 
     <Columns cols={[1, 2, 3]} g="40">
       {
@@ -149,10 +153,31 @@ const ecosystems = [
     </Columns>
   </Stack>
 
-  <Stack as="section" ai="center" g="50" py="60">
-    <Stack ai="center" g="20">
-      <Text fz="2xs" fw="500" c="text-2" tt="upper" lts="0.15em">ECOSYSTEM</Text>
-      <Heading level="2" ta="center" fz="3xl" lts="s">充実のエコシステム</Heading>
+  <Stack as="section" ai="center" pt="180" pb="120">
+    <Stack ai="center" g="12">
+      <Text c="var(--eyebrow-c)" tt="upper" lh="1">Artificial Intelligence</Text>
+      <Heading level="2" ta="center" fz="4xl" fw="700" lh="1.5" c="var(--heading-c)">AI ツール連携</Heading>
+    </Stack>
+    <Text ta="center" mt="30" fz="l" lh="1.75">
+      Lism CSSはAIエージェントとの親和性を重視して設計されています。MCPサーバーとSkills、そして機械可読なドキュメントを提供することで、 Claude
+      CodeやCursorなどのAIツールがLismの体系を正確に把握し、意図通りのコードを生成できます。
+    </Text>
+  </Stack>
+
+  <Stack as="section" ai="center" pt="180" pb="120">
+    <Stack ai="center" g="12">
+      <Text c="var(--eyebrow-c)" tt="upper" lh="1">Templates</Text>
+      <Heading level="2" ta="center" fz="4xl" fw="700" lh="1.5" c="var(--heading-c)">Lism CSS プリセット</Heading>
+    </Stack>
+    <Text ta="center" mt="30" fz="l" lh="1.75">
+      デザインのベースとして活用することも、必要な部分だけをコピー&ペーストしてプロジェクトにすぐ洗練されたレイアウトを追加することも可能です。
+    </Text>
+  </Stack>
+
+  <!-- <Stack as="section" ai="center"" py="60">
+    <Stack ai="center" g="12">
+      <Text c="text-2" tt="upper">ECOSYSTEM</Text>
+      <Heading level="2" ta="center" fz="4xl" fw="700" lh="1.5" c="var(--heading-c)">充実のエコシステム</Heading>
     </Stack>
 
     <Columns cols={[1, 2]} g="30">
@@ -181,22 +206,22 @@ const ecosystems = [
         ))
       }
     </Columns>
-  </Stack>
-
-  <Stack ai="center" g="20">
-    <Text fz="2xs" fw="500" c="text-2" tt="upper" lts="0.15em">Get Started</Text>
-    <Heading level="2" ta="center" fz="3xl" lts="s">Lism CSS、どこでも使える</Heading>
-  </Stack>
-
-  <!-- <Stack as="section" ai="center" g="20" py="60">
-    <Heading level="2" fw="normal" ta="center" fz="3xl" lts="s">Lism CSS、どこでも使える</Heading>
-    <Text ta="center" c="text-2" lh="s"> Lism CSSは、CSSファイルを一つ読み込むだけでも導入できます。 </Text>
   </Stack> -->
 
+  <Stack as="section" ai="center" pt="180" pb="120">
+    <Stack ai="center" g="12">
+      <Text c="var(--eyebrow-c)" tt="upper" lh="1">Get Started</Text>
+      <Heading level="2" ta="center" fz="4xl" fw="700" lh="1.5" c="var(--heading-c)">Lism CSS、どこでも使える</Heading>
+    </Stack>
+    <Text ta="center" mt="30" fz="l" lh="1.75">
+      ビルドプロセスもセットアップも不要。<br />Lism CSSは1つのCSSファイルを読み込むだけで導入できます。
+    </Text>
+  </Stack>
+
   {/* CTAボタン */}
-  <Flex jc="center" mbs="60">
+  <!-- <Flex jc="center" mbs="60">
     <Button variant="fill" href="/docs/installation" bdrs="99" py="15" px="30">
       <span>Getting Started</span>
     </Button>
-  </Flex>
+  </Flex> -->
 </SimpleLayout>
