@@ -1,0 +1,35 @@
+---
+import { Group, Flow, Heading } from 'lism-css/astro';
+import Layout from '@/layouts/Layout.astro';
+import { siteConfig } from '@/config/site';
+---
+
+<Layout title={`About — ${siteConfig.name}`} description={`About ${siteConfig.name}`}>
+  <Group isWrapper isContainer hasGutter>
+    {/* Page header */}
+    <Group as="header">
+      <Heading level="1">About</Heading>
+    </Group>
+
+    {/* Body */}
+    <Flow as="article" class="c--articleBody" mbs="50">
+      <p>
+        Welcome to <strong>{siteConfig.name}</strong>.<br />
+        This is a placeholder page for introducing your blog and what it's about. Edit it freely.
+      </p>
+
+      <h2>About this site</h2>
+      <p>
+        This site is a blog template built with <a href="https://astro.build/">Astro</a> and <a href="https://lism-css.com/en/">Lism CSS</a>. The
+        template source is available under
+        <code>templates/blog/astro/minimal/</code> in the <a href="https://github.com/lism-css/lism-css">repository</a>.
+      </p>
+
+      <h2>About the author</h2>
+      <p>Write the author's profile, background, and topics of interest here. This is placeholder text — edit it to match your own site.</p>
+
+      <h2>Contact</h2>
+      <p>Feel free to reach out through the social links at the bottom of the page.</p>
+    </Flow>
+  </Group>
+</Layout>

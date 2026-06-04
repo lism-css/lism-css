@@ -10,7 +10,7 @@ type Props = ClusterProps & {
 };
 
 // siteConfig.sns を参照してアイコンリンク一覧として表示する。
-const { label = 'SNSリンク', ...rest } = Astro.props;
+const { label = siteConfig.ui.sns.aria, ...rest } = Astro.props;
 ---
 
 <Cluster as="ul" aria-label={label} {...rest}>

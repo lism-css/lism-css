@@ -6,7 +6,7 @@ import { select, input, confirm } from '@inquirer/prompts';
 import { logger } from '../logger.js';
 import { LISM_CSS_VERSION } from '../version.js';
 import { DEFAULT_TEMPLATES_REF, SOURCE_REPO, TEMPLATES_PATH } from '../constants.js';
-import { t, tOf } from '../i18n.js';
+import { getLang, t, tOf, type Lang } from '../i18n.js';
 import type { MessageKey } from '../messages.js';
 import {
   TEMPLATES,
@@ -96,6 +96,9 @@ export async function runCreateWithTemplates({ template, targetDir, force = fals
   const ref = DEFAULT_TEMPLATES_REF;
   logger.info(t('create.fetching', { name: tpl.slug, ref }));
   await downloadTemplateSource(tpl, outDir, ref, force);
+
+  // 要求言語に対応する overlay があれば、base の上にマージする（生成テンプレ本体の言語切替）
+  await applyLangOverlay(tpl, outDir, ref, getLang());
 
   ensureTemplateDownloaded(outDir, tpl);
 
@@ -229,6 +232,30 @@ async function downloadTemplatePath(sourcePath: string, outDir: string, ref: str
   });
 }
 
+/**
+ * 言語別 overlay を適用する。
+ *
+ * base 取得後、要求言語に対応する `langOverlays[lang]` があれば、その差分を temp に取得して
+ * `outDir` へマージする（差分ファイルが base を上書きする）。
+ * base 言語（多くは `ja`）には overlay を用意しない方針なので、その場合は何もしない。
+ *
+ * overlay の実体はテンプレート内の `.lang/{lang}/` に同梱されており、base 取得時にも
+ * `outDir/.lang/` として降りてくるが、それは postProcessTemplate の cleanup で取り除く。
+ */
+async function applyLangOverlay(tpl: TemplateDef, outDir: string, ref: string, lang: Lang): Promise<void> {
+  if (tpl.kind !== 'project') return;
+  const overlayPath = tpl.langOverlays?.[lang];
+  if (!overlayPath) return;
+
+  const overlayDir = fs.mkdtempSync(path.join(os.tmpdir(), 'lism-template-lang-'));
+  try {
+    await downloadTemplatePath(overlayPath, overlayDir, ref, true);
+    mergeDirectory(overlayDir, outDir);
+  } finally {
+    fs.rmSync(overlayDir, { recursive: true, force: true });
+  }
+}
+
 function postProcessTemplate(projectDir: string, tpl: TemplateDef): void {
   if (tpl.kind === 'static-html') return;
 
@@ -249,8 +276,9 @@ function postProcessTemplate(projectDir: string, tpl: TemplateDef): void {
 }
 
 /**
- * テンプレートに同梱されている開発専用のスクリーンショット関連ファイルを削除する。
- * （docs サムネ生成用なので、生成プロジェクトには不要）
+ * テンプレートに同梱されている配布不要ファイルを削除する。
+ * - `screenshots/` + `screenshots.config.json`: docs サムネ生成用
+ * - `.lang/`: 言語別 overlay の配信元（base 取得時に降りてくるが、生成プロジェクトには残さない）
  */
 function cleanupDevArtifacts(projectDir: string): void {
   const screenshotsDir = path.join(projectDir, 'screenshots');
@@ -261,6 +289,11 @@ function cleanupDevArtifacts(projectDir: string): void {
   const screenshotsConfig = path.join(projectDir, 'screenshots.config.json');
   if (fs.existsSync(screenshotsConfig)) {
     fs.rmSync(screenshotsConfig, { force: true });
+  }
+
+  const langDir = path.join(projectDir, '.lang');
+  if (fs.existsSync(langDir)) {
+    fs.rmSync(langDir, { recursive: true, force: true });
   }
 }
 

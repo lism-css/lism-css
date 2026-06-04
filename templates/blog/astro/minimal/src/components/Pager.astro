@@ -1,5 +1,6 @@
 ---
 import { Lism, Center, Cluster } from 'lism-css/astro';
+import { siteConfig } from '@/config/site';
 
 interface Props {
   currentPage: number;
@@ -26,15 +27,15 @@ const prevHref = currentPage > 1 ? getPageHref(currentPage - 1) : null;
 const nextHref = currentPage < lastPage ? getPageHref(currentPage + 1) : null;
 ---
 
-<Lism as="nav" class="c--pager" ff="accent" fz="xs" mbs="20" aria-label="ページネーション">
+<Lism as="nav" class="c--pager" ff="accent" fz="xs" mbs="20" aria-label={siteConfig.ui.pager.aria}>
   <Cluster g="5" jc="center">
     {
       prevHref ? (
-        <Center as="a" href={prevHref} class="c--pager_nav" c="text" td="none" hasTransition rel="prev" aria-label="前のページ">
+        <Center as="a" href={prevHref} class="c--pager_nav" c="text" td="none" hasTransition rel="prev" aria-label={siteConfig.ui.pager.prev}>
           <span aria-hidden="true">←</span>
         </Center>
       ) : (
-        <Center as="span" class="c--pager_nav" o="pp" aria-label="前のページ" aria-disabled="true">
+        <Center as="span" class="c--pager_nav" o="pp" aria-label={siteConfig.ui.pager.prev} aria-disabled="true">
           <span aria-hidden="true">←</span>
         </Center>
       )
@@ -62,11 +63,11 @@ const nextHref = currentPage < lastPage ? getPageHref(currentPage + 1) : null;
 
     {
       nextHref ? (
-        <Center as="a" href={nextHref} class="c--pager_nav" c="text" td="none" hasTransition rel="next" aria-label="次のページ">
+        <Center as="a" href={nextHref} class="c--pager_nav" c="text" td="none" hasTransition rel="next" aria-label={siteConfig.ui.pager.next}>
           <span aria-hidden="true">→</span>
         </Center>
       ) : (
-        <Center as="span" class="c--pager_nav" o="pp" aria-label="次のページ" aria-disabled="true">
+        <Center as="span" class="c--pager_nav" o="pp" aria-label={siteConfig.ui.pager.next} aria-disabled="true">
           <span aria-hidden="true">→</span>
         </Center>
       )

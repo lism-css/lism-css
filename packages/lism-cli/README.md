@@ -27,9 +27,14 @@ pnpm dlx lism-cli create --template minimal-astro ./my-app
 
 # カテゴリ名を指定（stack 以下の選択を対話で続行）
 pnpm dlx lism-cli create --template minimal ./my-app
+
+# 言語を指定（CLI 表示 + 生成テンプレートの言語）
+pnpm dlx lism-cli create --template blog-astro-minimal --lang en ./my-blog
 ```
 
 同じ動作は `pnpm create lism` / `npm create lism@latest` でも呼び出せます（`create-lism` パッケージ経由）。
+
+`--lang <ja|en>` は CLI の表示言語に加えて、**生成されるテンプレート本体の言語**にも反映されます（未指定時は環境ロケールから自動検出）。対応言語版を持つテンプレート（例: `blog-astro-minimal`）では、指定言語のサイト文言・サンプル記事で生成されます。言語版が無いテンプレートは、指定言語に関わらず既存（ベース）の内容で生成されます。
 
 ### UI コンポーネントの追加
 
