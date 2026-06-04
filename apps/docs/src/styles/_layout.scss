@@ -1,5 +1,6 @@
 :root {
   --sz--m: 55rem;
+  --sz--header: 26.25rem; // 420px
 
   // レイアウト
   --header-h: 60px;
@@ -27,12 +28,10 @@ html {
 .z--header {
   /* grid-area: header; */
   position: sticky;
-  top: 0;
+  top: 1.5rem;
   z-index: 100;
-  border-bottom: 1px solid var(--divider);
   min-height: var(--header-h);
-  background-color: color-mix(in srgb, var(--base) 25%, transparent);
-  backdrop-filter: blur(16px);
+  padding-inline: 1rem;
 }
 
 .z--main {

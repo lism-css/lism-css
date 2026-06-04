@@ -5,22 +5,49 @@ import { siteConfig } from '@/config/site';
 // phosphor icons icon: https://phosphoricons.com/?weight=fill&q=github
 ---
 
-<Cluster class="c--snsLinks" jc="center" g="5">
+<Cluster class="c--snsLinks" jc="center" g={['15', null, '20']}>
   <a href={siteConfig.author.twitter} target="_blank" rel="noopener noreferrer" class="c--iconBtn l--center -c:inherit" title="Xへのリンク">
-    <Icon icon="logo-x" size="1.125em" />
+    <Icon icon="logo-x" size="1.0625em" />
   </a>
   <a href={siteConfig.author.github} target="_blank" rel="noopener noreferrer" class="c--iconBtn l--center -c:inherit" title="GitHubへのリンク">
-    <Icon icon="logo-github" size="1.125em" style={{ scale: '1.1' }} />
+    <Icon icon="logo-github" size="1.0625em" />
   </a>
   <a href={siteConfig.author.discord} target="_blank" rel="noopener noreferrer" class="c--iconBtn l--center -c:inherit" title="GitHubへのリンク">
-    <Icon icon="logo-discord" size="1.125em" style={{ scale: '1.1' }} />
+    <Icon icon="logo-discord" size="1.0625em" />
+  </a>
+  <a href="/en/" target="_blank" rel="noopener noreferrer" class="c--iconBtn l--center -c:inherit" title="言語切替">
+    <Icon viewBox="0 0 20 20" fill="none" label="言語切替" size="1.0625em">
+      <g clip-path="url(#language-switcher-clip)">
+        <path
+          d="M1.66675 10C1.66675 14.6025 5.39758 18.3334 10.0001 18.3334C14.6026 18.3334 18.3334 14.6025 18.3334 10C18.3334 5.39752 14.6026 1.66669 10.0001 1.66669C5.39758 1.66669 1.66675 5.39752 1.66675 10Z"
+          stroke="currentColor"
+          stroke-width="1.5"
+          stroke-linecap="round"
+          stroke-linejoin="round"></path>
+        <path
+          d="M10.8333 1.70836C10.8333 1.70836 13.3333 5.00003 13.3333 10C13.3333 15 10.8333 18.2917 10.8333 18.2917M9.16665 18.2917C9.16665 18.2917 6.66665 15 6.66665 10C6.66665 5.00003 9.16665 1.70836 9.16665 1.70836M2.19165 12.9167H17.8083M2.19165 7.08336H17.8083"
+          stroke="currentColor"
+          stroke-width="1.5"
+          stroke-linecap="round"
+          stroke-linejoin="round"></path>
+      </g>
+      <defs>
+        <clipPath id="language-switcher-clip">
+          <rect width="20" height="20" fill="white"></rect>
+        </clipPath>
+      </defs>
+    </Icon>
   </a>
 </Cluster>
 
 <style>
   .c--iconBtn {
-    padding: 0.35em;
     border-radius: 0.25em;
+    aspect-ratio: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.25rem;
   }
   .c--iconBtn:hover {
     color: var(--link);
