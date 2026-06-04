@@ -5,7 +5,7 @@ import TagCloud from '@/components/TagCloud.astro';
 import { siteConfig } from '@/config/site';
 ---
 
-<ArchiveLayout title={`Tags — ${siteConfig.name}`} description="タグ別の記事一覧">
+<ArchiveLayout title={`Tags — ${siteConfig.name}`} description={siteConfig.ui.tagsIndexDescription}>
   <Heading level="1">Tags</Heading>
 
   <TagCloud />

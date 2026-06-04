@@ -1,5 +1,6 @@
 ---
 import { Center, Icon } from 'lism-css/astro';
+import { siteConfig } from '@/config/site';
 ---
 
 <Center
@@ -10,7 +11,7 @@ import { Center, Icon } from 'lism-css/astro';
   bdrs="10"
   p="0.4em"
   hov={{ bgc: 'base-2' }}
-  aria-label="カラーテーマを切り替える"
+  aria-label={siteConfig.ui.themeSwitch.aria}
 >
   <Icon class="c--themeSwitch__icon -light" fz="l" viewBox="0 0 256 256">
     <path

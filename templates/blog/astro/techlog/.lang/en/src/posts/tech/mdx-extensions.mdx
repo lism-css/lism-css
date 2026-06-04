@@ -1,0 +1,209 @@
+---
+title: This Template's MDX Extensions
+excerpt: A hands-on tour of this template's custom MDX extensions — :::-style Callouts and Alerts, automatic URL expansion and [[slug]] link cards, and code highlighting via astro-expressive-code. A dummy reference page for when you write posts.
+date: '2026-05-10'
+tags: [MDX, Template]
+---
+
+On top of standard MDX syntax, this template adds a few extensions that make writing post content easier.
+
+- Call up a `<Callout>` / `<Alert>` with `:::type[label]`
+- Expand a paragraph containing only a URL into an external link card
+- Generate a link or card to an internal post with `[[slug]]`
+- Code highlighting via `astro-expressive-code`
+
+This post is a sample for checking each piece of syntax and how it actually looks.
+
+## Callout (`:::type[label]`)
+
+Add a label like `:::type[title]` and it is converted into a `<Callout>`. This page shows five types: `tip` / `warning` / `check` / `info` / `help` / `alert`.
+
+````md
+:::tip[Tip title]
+Use this to emphasize a key point.
+:::
+
+:::warning[Warning title]
+Use this to call attention to something.
+:::
+
+...
+````
+
+:::tip[Key point]
+A `:::tip[...]` sample. Use this to emphasize the main point of a post.
+:::
+
+:::warning[Warning]
+A `:::warning[...]` sample.
+:::
+
+:::check[Check]
+A `:::check[...]` sample.
+:::
+
+:::info[Note]
+A `:::info[...]` sample.
+:::
+
+:::help[Help]
+A `:::help[...]` sample.
+:::
+
+:::alert[Alert]
+A `:::alert[...]` sample.
+:::
+
+## Alert (`:::type`)
+
+Omit the label (`[]`) and it is converted into an `<Alert>` with no title area.
+
+````md
+:::warning
+Omit the label and you get an Alert with no title area.
+:::
+````
+
+:::tip
+A `:::tip` sample (Alert).
+:::
+
+:::warning
+A `:::warning` sample (Alert).
+:::
+
+:::check
+A `:::check` sample (Alert).
+:::
+
+:::info
+A `:::info` sample (Alert).
+:::
+
+:::help
+A `:::help` sample (Alert).
+:::
+
+:::alert
+A `:::alert` sample (Alert).
+:::
+
+### A case with multiple elements inside
+
+You can use basic Markdown directly inside `:::` as well. Let's check that lists, links, emphasis, and the like line up without breaking.
+
+:::info[Inner Markdown]
+A sample for checking the elements you can write inside.
+
+- List item 1
+- List item 2
+  - Child item
+
+A [link](#), `code`, and **emphasis** all line up naturally.
+:::
+
+## External link cards (automatic URL expansion)
+
+A paragraph containing only a URL is expanded at build time into a `<LinkCard type="external">` by fetching the target site's OGP. Fetch results are cached as JSON with an MD5 hash under `.cache/ogp/`, and within the 7-day TTL they are not re-fetched.
+
+````md
+https://lism-css.com/en/
+````
+
+How it looks:
+
+https://lism-css.com/en/
+
+https://github.com/lism-css/lism-css
+
+### Overriding
+
+For sites where the fetch fails, or when you want to set the title and description yourself, you can write `<LinkCard type="external">` directly in MDX.
+
+````md
+<LinkCard type="external" href="https://example.com" title="Custom title" description="Write your own description here." />
+````
+
+<LinkCard type="external" href="https://example.com" title="Custom title" description="Write your own description here." />
+
+## Internal link cards (`[[slug]]`)
+
+Use Obsidian-style `[[slug]]` syntax to reference a post within the same blog. The `slug` is the filename (without extension) under `src/posts/{category}/`.
+
+### Card from a standalone paragraph
+
+Write `[[slug]]` as a standalone paragraph and it pulls the post's info from Content Collections and outputs a `<LinkCard type="internal">`.
+
+````md
+[[lism-css-intro]]
+````
+
+[[lism-css-intro]]
+
+[[astro-blog-overview]]
+
+### Inline links
+
+Write `[[slug]]` in the middle of a paragraph and you get an inline link with the post title as its text.
+
+````md
+For details, see [[lism-css-intro]].
+````
+
+For details, see [[lism-css-intro]].
+
+### Overriding the display text
+
+Use `[[slug|display text]]` to override the display text. Even as a standalone paragraph, it is treated as a link when an alias is present (write it without an alias when you want a card).
+
+````md
+See [[lism-css-intro|the previous post]].
+````
+
+See [[lism-css-intro|the previous post]].
+
+## Code highlighting (astro-expressive-code)
+
+Syntax highlighting for code blocks uses [`astro-expressive-code`](https://expressive-code.com/). Because `astro.config.mjs` sets `themes: 'github-dark'`, the same color scheme (GitHub Dark) is applied in both light and dark mode. To switch between multiple themes, pass an array such as `themes: ['github-dark', 'github-light']` and use `themeCssSelector` to sync with your site's theme toggle.
+
+Beyond plain code blocks, you can also add a filename title, highlight specific lines, show diffs, and more.
+
+````md
+```ts title="src/lib/archive.ts" {3}
+export function getArchiveKey(date: string) {
+  const [year, month] = date.split(/[-./]/);
+  return { year, month };
+}
+```
+````
+
+```ts title="src/lib/archive.ts" {3}
+export function getArchiveKey(date: string) {
+  const [year, month] = date.split(/[-./]/);
+  return { year, month };
+}
+```
+
+````md
+```bash title="Terminal"
+pnpm install
+pnpm dev
+```
+````
+
+```bash title="Terminal"
+pnpm install
+pnpm dev
+```
+
+## Where the specs live
+
+The remark plugins that implement each piece of syntax are gathered under `src/lib/`.
+
+| File | Role |
+| --- | --- |
+| `remark-directive.mjs` | Converts `:::type[label]` / `:::type` into `<Callout>` / `<Alert>` |
+| `remark-link-card.mjs` | Converts a URL-only paragraph into `<LinkCard type="external">` |
+| `remark-wiki-link.mjs` | Converts `[[slug]]` / `[[slug\|alias]]` into `<LinkCard type="internal">` / `<WikiLink>` |
+
+For details, see the template walkthrough in [[astro-blog-overview]].

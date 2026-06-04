@@ -133,6 +133,9 @@ export const TEMPLATES: TemplateDef[] = [
     variantLabel: { ja: 'Personal', en: 'Personal' },
     stack: 'astro',
     sourcePath: 'blog/astro/personal',
+    langOverlays: {
+      en: 'blog/astro/personal/.lang/en',
+    },
     title: { ja: 'Blog Personal', en: 'Blog Personal' },
     description: {
       ja: '個人ブログ・エッセイ向け。年月アーカイブつきの落ち着いた Astro ブログ',
@@ -152,6 +155,9 @@ export const TEMPLATES: TemplateDef[] = [
     variantLabel: { ja: 'Tech Log', en: 'Tech Log' },
     stack: 'astro',
     sourcePath: 'blog/astro/techlog',
+    langOverlays: {
+      en: 'blog/astro/techlog/.lang/en',
+    },
     title: { ja: 'Blog Tech Log', en: 'Blog Tech Log' },
     description: {
       ja: '技術ブログ向け。コードハイライト・カテゴリ・タグ・TOC・年月アーカイブ・検索を装備した Astro ブログ',

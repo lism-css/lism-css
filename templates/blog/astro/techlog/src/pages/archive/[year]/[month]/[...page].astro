@@ -30,11 +30,11 @@ const getPageHref = (n: number) => (n === 1 ? baseHref : `${baseHref}${n}/`);
 
 <ArchiveLayout
   title={`${year}.${month} — ${siteConfig.name}`}
-  description={`${year}年${month}月の記事一覧`}
+  description={siteConfig.ui.monthArchiveDescription(year, month)}
   breadcrumb={[{ label: 'ARCHIVE', href: '/archive/' }, { label: `${year}.${month}` }]}
 >
   <ArchiveHeader eyebrow="ARCHIVE" title={`${year}.${month}`}>
-    {page.total} 件の記事
+    {siteConfig.ui.postCount(page.total)}
   </ArchiveHeader>
 
   <PostList posts={page.data} />
