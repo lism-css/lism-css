@@ -10,7 +10,7 @@ import { Stack, Text, Group, Cluster, Inline, Frame, Heading } from 'lism-css/as
 import { Image } from 'astro:assets';
 import { PreviewFrame, PreviewTitle } from '@/components/Preview';
 import { getLocalizedUrl, type LangCode } from '@/lib/i18n';
-import { stackLabels, getAggregateRepresentative, type TemplateItem, type CategoryDef } from '@/config/templates';
+import { stackLabels, getAggregateRepresentative, getThumb, type TemplateItem, type CategoryDef } from '@/config/templates';
 import CopyCommand from './CopyCommand.astro';
 
 interface Props {
@@ -114,7 +114,7 @@ const previewUrl = representative?.previewUrl;
         <Stack g="10">
           <Frame bd bdrs="20">
             <Image
-              src={representative.thumb}
+              src={getThumb(representative, lang)}
               alt={copy.thumbAlt(category.label)}
               widths={[400, 800, 1200]}
               sizes="(max-width: 800px) 100vw, 800px"
