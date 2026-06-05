@@ -1,6 +1,7 @@
 ---
 import { Stack, Lism, Text } from 'lism-css/astro';
 import { siteConfig } from '@/config/site';
+import SNSLinks from '@/components/SNSLinks.astro';
 ---
 
 <Lism as="footer" class="z--footer" mbs="auto" py="30" {...Astro.props}>
@@ -8,6 +9,7 @@ import { siteConfig } from '@/config/site';
     <!-- <Text ta="center">
 			Powered by <a href="https://lism-css.com">Lism CSS</a>
 		</Text> -->
-    <Text ta="center" o="p" translate="no"> &copy; {siteConfig.name}. All rights reserved. </Text>
+    <SNSLinks icons={['github', 'discord']} />
+    <Text ta="center" o="p" translate="no" lh="1.5" fz={['14', null, '16']}> &copy; 2026 {siteConfig.name}. </Text>
   </Stack>
 </Lism>
