@@ -628,6 +628,100 @@ describe('runCreate', () => {
     );
   });
 
+  it('single-project-variant型はlang=enでsrc/pages/en/{variant}/を抽出元に使い、ja系・他variant・enディレクトリを掃除する', async () => {
+    const templates: Parameters<typeof runCreateWithTemplates>[1] = [
+      {
+        slug: 'lp-astro-corporate',
+        kind: 'single-project-variant',
+        category: 'lp',
+        stack: 'astro',
+        variant: 'corporate',
+        sourcePath: 'lp/astro',
+        packageName: 'lp-astro-corporate',
+        description: { ja: 'Corporate LP', en: 'Corporate landing page' },
+      },
+    ];
+
+    vi.mocked(downloadTemplate).mockImplementation((_source, options) => {
+      const dir = (options as { dir: string }).dir;
+      fs.mkdirSync(dir, { recursive: true });
+      writePackageJson(dir, { name: 'lp-astro', dependencies: { 'lism-css': 'workspace:*' } });
+      // ja base（各 variant）
+      writeFile(path.join(dir, 'src/pages/index.astro'), 'gallery');
+      writeFile(path.join(dir, 'src/pages/corporate/index.astro'), 'ja corporate');
+      writeFile(path.join(dir, 'src/pages/interior/index.astro'), 'ja interior');
+      writeFile(path.join(dir, 'src/components/corporate/Header.astro'), '<div>ja corp header</div>');
+      writeFile(path.join(dir, 'src/components/interior/Header.astro'), '<div>ja interior header</div>');
+      // en 完全コピー（src/pages/en/{variant}/ + src/components/en/{variant}/）
+      writeFile(
+        path.join(dir, 'src/pages/en/corporate/index.astro'),
+        ["import Header from '@/components/en/corporate/Header.astro';", '<Header /> en corporate'].join('\n')
+      );
+      writeFile(path.join(dir, 'src/pages/en/corporate/_style.css'), '.corp{}');
+      writeFile(path.join(dir, 'src/pages/en/interior/index.astro'), 'en interior');
+      writeFile(path.join(dir, 'src/components/en/corporate/Header.astro'), '<div>en corp header</div>');
+      writeFile(path.join(dir, 'src/components/en/interior/Header.astro'), '<div>en interior header</div>');
+      return Promise.resolve({} as Awaited<ReturnType<typeof downloadTemplate>>);
+    });
+
+    await runCreateWithTemplates({ template: 'lp-astro-corporate', targetDir: 'lp-en', force: true, lang: 'en' }, templates);
+
+    const outDir = path.join(tmpDir, 'lp-en');
+
+    // en/corporate の index.astro が src/pages/index.astro に持ち上がる（ja ではなく en）
+    const indexContent = fs.readFileSync(path.join(outDir, 'src/pages/index.astro'), 'utf-8');
+    expect(indexContent).toContain('en corporate');
+    // en/corporate の付随ファイルも持ち上がる
+    expect(fs.readFileSync(path.join(outDir, 'src/pages/_style.css'), 'utf-8')).toBe('.corp{}');
+    // 2 セグメント variant でも @/components/en/corporate/ → @/components/ に書き換わる
+    expect(indexContent).toContain("import Header from '@/components/Header.astro';");
+    expect(indexContent).not.toContain('/en/corporate/');
+
+    // ja variant・他 variant・en ディレクトリは生成物に残らない
+    expect(fs.existsSync(path.join(outDir, 'src/pages/corporate'))).toBe(false);
+    expect(fs.existsSync(path.join(outDir, 'src/pages/interior'))).toBe(false);
+    expect(fs.existsSync(path.join(outDir, 'src/pages/en'))).toBe(false);
+
+    // components も en/corporate が持ち上がり、ja・他 variant・en は消える
+    expect(fs.readFileSync(path.join(outDir, 'src/components/Header.astro'), 'utf-8')).toBe('<div>en corp header</div>');
+    expect(fs.existsSync(path.join(outDir, 'src/components/corporate'))).toBe(false);
+    expect(fs.existsSync(path.join(outDir, 'src/components/interior'))).toBe(false);
+    expect(fs.existsSync(path.join(outDir, 'src/components/en'))).toBe(false);
+  });
+
+  it('single-project-variant型はlang=enでも対象variantのen版が無ければjaベースにフォールバックし、無関係なenは掃除する', async () => {
+    const templates: Parameters<typeof runCreateWithTemplates>[1] = [
+      {
+        slug: 'lp-astro-ryokan',
+        kind: 'single-project-variant',
+        category: 'lp',
+        stack: 'astro',
+        variant: 'ryokan',
+        sourcePath: 'lp/astro',
+        packageName: 'lp-astro-ryokan',
+        description: { ja: 'Ryokan LP', en: 'Ryokan landing page' },
+      },
+    ];
+
+    vi.mocked(downloadTemplate).mockImplementation((_source, options) => {
+      const dir = (options as { dir: string }).dir;
+      fs.mkdirSync(dir, { recursive: true });
+      writePackageJson(dir, { name: 'lp-astro', dependencies: {} });
+      // 対象 ryokan の en 版は無い。ja base と、別 variant の en だけが存在する
+      writeFile(path.join(dir, 'src/pages/ryokan/index.astro'), 'ja ryokan');
+      writeFile(path.join(dir, 'src/pages/en/corporate/index.astro'), 'en corporate');
+      return Promise.resolve({} as Awaited<ReturnType<typeof downloadTemplate>>);
+    });
+
+    await runCreateWithTemplates({ template: 'lp-astro-ryokan', targetDir: 'lp-ryokan-en', force: true, lang: 'en' }, templates);
+
+    const outDir = path.join(tmpDir, 'lp-ryokan-en');
+    // en/ryokan が無いので ja の ryokan にフォールバックして持ち上がる
+    expect(fs.readFileSync(path.join(outDir, 'src/pages/index.astro'), 'utf-8')).toBe('ja ryokan');
+    // 別 variant の en ディレクトリも生成物には残らない
+    expect(fs.existsSync(path.join(outDir, 'src/pages/en'))).toBe(false);
+  });
+
   it('static-html型はpackage.jsonなしでもindex.htmlがあれば完了し、HTML向けNext stepsを出す', async () => {
     const templates: Parameters<typeof runCreateWithTemplates>[1] = [
       {

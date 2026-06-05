@@ -72,6 +72,11 @@ export interface StaticHtmlTemplateDef extends TemplateMetaBase {
  * 単一の Astro / Vite プロジェクト内に複数 variant（src/pages/{variant}/）を同居させた構成。
  * CLI 抽出時に選択 variant の index.astro を src/pages/index.astro に持ち上げ、
  * 他 variant ディレクトリを削除して単独プロジェクトとして仕上げる。
+ *
+ * 言語別展開: 文章量が多くデザインごと差し替えたい LP 等では、英語版を overlay ではなく
+ * `src/pages/{lang}/{variant}/`（+ `src/components/{lang}/{variant}/` 等）の完全コピーとして同梱する。
+ * `--lang en` 等で `src/pages/{lang}/{variant}/index.astro` があればそれを抽出元に使い、
+ * 無ければ base（`variant`）へ自動フォールバックする（manifest 側の追加定義は不要）。
  */
 export interface SingleProjectVariantTemplateDef extends TemplateMetaBase {
   kind: 'single-project-variant';

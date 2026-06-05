@@ -118,7 +118,7 @@ export async function runCreateWithTemplates({ template, targetDir, force = fals
 
   ensureTemplateDownloaded(outDir, tpl);
 
-  postProcessTemplate(outDir, tpl);
+  postProcessTemplate(outDir, tpl, resolvedLang);
 
   logger.success(t('create.created', { dir: outDir }));
   printNextSteps(outDir, tpl);
@@ -299,7 +299,7 @@ async function applyLangOverlay(tpl: TemplateDef, outDir: string, ref: string, l
   }
 }
 
-function postProcessTemplate(projectDir: string, tpl: TemplateDef): void {
+function postProcessTemplate(projectDir: string, tpl: TemplateDef, lang: Lang): void {
   if (tpl.kind === 'static-html') return;
 
   if (tpl.kind === 'base-overlay' && tpl.rewritePackageName !== false) {
@@ -307,7 +307,7 @@ function postProcessTemplate(projectDir: string, tpl: TemplateDef): void {
   }
 
   if (tpl.kind === 'single-project-variant') {
-    extractVariantFiles(projectDir, tpl);
+    extractVariantFiles(projectDir, tpl, lang);
     rewritePackageName(projectDir, tpl.packageName ?? tpl.slug);
   }
 
@@ -341,6 +341,22 @@ function cleanupDevArtifacts(projectDir: string): void {
 }
 
 /**
+ * single-project-variant の言語別 variant ディレクトリを解決する。
+ *
+ * LP のように文章量が多くデザインごと差し替えたいテンプレートでは、言語別コンテンツを
+ * overlay（差分マージ）ではなく `src/pages/{lang}/{variant}/` 配下の完全コピーとして同梱する。
+ * 要求言語の `src/pages/{lang}/{variant}/index.astro` があればその 2 セグメントパス
+ * （例: `en/corporate`）を variant として返し、無ければ base 言語（`tpl.variant`）へフォールバックする。
+ *
+ * これにより、英語版を用意していない variant は要求言語に関係なく従来どおり base を生成できる。
+ */
+function resolveVariantDir(srcDir: string, variant: string, lang: Lang): string {
+  const langVariant = `${lang}/${variant}`;
+  const hasLangVariant = fs.existsSync(path.join(srcDir, 'pages', langVariant, 'index.astro'));
+  return hasLangVariant ? langVariant : variant;
+}
+
+/**
  * single-project-variant 用の後処理。
  *
  * `src/` 直下のサブディレクトリ（`src/pages/`, `src/components/`, `src/styles/`, ...）について、
@@ -355,13 +371,17 @@ function cleanupDevArtifacts(projectDir: string): void {
  * 加えて、配布ファイル内の `@/{dir}/{variant}/...` 形式の path-alias import を
  * `@/{dir}/...` に書き換える。
  *
+ * 言語別コンテンツは `resolveVariantDir()` で解決した variant パス（例: `en/corporate`）を
+ * 起点に同じ処理を行う。2 セグメントになっても `src/{dir}/{variant}/` の持ち上げ・
+ * alias 書き換えはそのまま機能する。
+ *
  * `src/pages/{variant}/index.astro` の存在だけは必須（無ければエラー）。
  * その他のディレクトリ（components/styles/lib 等）では variant ディレクトリが存在しなければ
  * 何もしない（既存ファイルはそのまま）。
  */
-function extractVariantFiles(projectDir: string, tpl: SingleProjectVariantTemplateDef): void {
+function extractVariantFiles(projectDir: string, tpl: SingleProjectVariantTemplateDef, lang: Lang): void {
   const srcDir = path.join(projectDir, 'src');
-  const variant = tpl.variant;
+  const variant = resolveVariantDir(srcDir, tpl.variant, lang);
 
   // `src/pages/{variant}/index.astro` の存在は必須
   const pagesVariantIndex = path.join(srcDir, 'pages', variant, 'index.astro');
