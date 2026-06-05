@@ -1,0 +1,63 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import { Lism, Stack, Center, Grid, Heading, Link, Text, BoxLink, Frame } from 'lism-css/astro';
+// 英語版 LP もデザインは ja 共通のため、サムネは ja のスクショを流用する（en 専用スクショ生成は別途）
+import corporateThumb from '../../../screenshots/corporate.png';
+import interiorThumb from '../../../screenshots/interior.png';
+
+const variants = [
+  {
+    slug: 'corporate',
+    title: 'LP Corporate',
+    description: 'A single-page landing page for corporate sites.',
+    thumb: corporateThumb,
+  },
+  {
+    slug: 'interior',
+    title: 'LP Interior',
+    description: 'A landing page for interior and lifestyle coordination services.',
+    thumb: interiorThumb,
+  },
+];
+---
+
+<Layout title="Lism CSS - LP Templates" lang="en">
+  <Stack min-h="100svh">
+    <Center as="header" isContainer hasGutter py="40">
+      <Stack ai="center" g="10">
+        <Heading level="1" ff="accent" fw="normal" ta="center" fz="4xl" m="0">LP Templates</Heading>
+        <Text ta="center" c="text-2" fz="s" m="0"> A collection of LP templates built with Lism CSS </Text>
+      </Stack>
+    </Center>
+
+    <Lism as="section" isContainer hasGutter fxg="1" py="20">
+      <Grid gtc={['1fr', null, 'repeat(3, 1fr)']} g="30">
+        {
+          variants.map(({ slug, title, description, thumb }) => (
+            <BoxLink href={`/en/${slug}/`} layout="stack" g="15" set="hov" bdrs="20" ov="clip" bgc="base">
+              <Frame ar="16/10" ov="hidden">
+                <img src={thumb.src} alt={`${title} thumbnail`} loading="lazy" />
+              </Frame>
+              <Stack g="5" px="20" py="15">
+                <Heading level="2" fz="l" fw="600" lts="l" m="0">
+                  {title}
+                </Heading>
+                <Text fz="s" c="text-2" m="0">
+                  {description}
+                </Text>
+              </Stack>
+            </BoxLink>
+          ))
+        }
+      </Grid>
+    </Lism>
+
+    <Lism as="footer" isContainer hasGutter py="40">
+      <Center>
+        <Text ta="center" c="text-2" fz="xs">
+          LP templates for <Link href="https://lism-css.com/en/">Lism CSS</Link>
+        </Text>
+      </Center>
+    </Lism>
+  </Stack>
+</Layout>
