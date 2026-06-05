@@ -1,0 +1,45 @@
+---
+import { Group, Flow, Heading } from 'lism-css/astro';
+import Layout from '@/layouts/Layout.astro';
+import { siteConfig } from '@/config/site';
+---
+
+<Layout title={`About — ${siteConfig.name}`} description={`About ${siteConfig.name}`}>
+  <Group isWrapper isContainer hasGutter>
+    {/* page header */}
+    <Group as="header">
+      <Heading level="1">About</Heading>
+    </Group>
+
+    {/* body */}
+    <Flow as="article" class="c--articleBody" mbs="50">
+      <p>
+        Hello, and welcome to <strong>{siteConfig.name}</strong>.<br />
+        This blog is a place to jot down small, everyday notes — about books, daily life, and whatever happens to be on my mind.
+      </p>
+
+      <h2>About this site</h2>
+      <p>
+        This site is a blog template built with <a href="https://astro.build/">Astro</a> and <a href="https://lism-css.com/en/">Lism CSS</a>. It aims
+        for a calm, print-like reading experience, built around a serif typeface and a soft cream background.
+      </p>
+      <p>
+        The template source is published in the <a href="https://github.com/lism-css/lism-css">repository</a>, under
+        <code>templates/blog/astro/personal/</code>.
+      </p>
+
+      <h2>About the author</h2>
+      <p>
+        This is a placeholder profile. A fan of coffee, secondhand books, and long walks. In the quiet of the morning, I write down whatever caught my
+        eye that day and the books I've been reading.
+      </p>
+      <p>
+        There's no fixed theme — a book worth recommending, a scene spotted around town, a new dish I just learned, a train of thought still in
+        progress. I leave them here as the mood takes me.
+      </p>
+
+      <h2>Contact</h2>
+      <p>For thoughts or inquiries, feel free to reach out through the social links at the bottom of the page.</p>
+    </Flow>
+  </Group>
+</Layout>

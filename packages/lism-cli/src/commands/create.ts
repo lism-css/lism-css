@@ -6,7 +6,7 @@ import { select, input, confirm } from '@inquirer/prompts';
 import { logger } from '../logger.js';
 import { LISM_CSS_VERSION } from '../version.js';
 import { DEFAULT_TEMPLATES_REF, SOURCE_REPO, TEMPLATES_PATH } from '../constants.js';
-import { getLang, t, tOf, type Lang } from '../i18n.js';
+import { setLang, t, tOf, type Lang } from '../i18n.js';
 import type { MessageKey } from '../messages.js';
 import {
   TEMPLATES,
@@ -65,18 +65,34 @@ interface CreateOptions {
   force?: boolean;
 }
 
+/** commander の action 第3引数（グローバル --lang を読むために最小限の構造だけ受ける） */
+interface CommandLike {
+  optsWithGlobals(): Record<string, unknown>;
+}
+
 export interface RunCreateArgs {
   template?: string;
   targetDir?: string;
   force?: boolean;
+  /**
+   * 明示指定された言語（`--lang`）。`ja` / `en` のときその言語で CLI 表示・テンプレ生成を確定する。
+   * 未指定（undefined / 不正値）の場合は、対話端末では最初に言語選択プロンプトを出し、
+   * 非対話端末（CI・パイプ等）では `en` にフォールバックする。
+   */
+  lang?: string;
 }
 
 /** `lism create` / `create-lism` から共通で使える実体関数 */
-export async function runCreate({ template, targetDir, force = false }: RunCreateArgs): Promise<void> {
-  await runCreateWithTemplates({ template, targetDir, force }, TEMPLATES);
+export async function runCreate({ template, targetDir, force = false, lang }: RunCreateArgs): Promise<void> {
+  await runCreateWithTemplates({ template, targetDir, force, lang }, TEMPLATES);
 }
 
-export async function runCreateWithTemplates({ template, targetDir, force = false }: RunCreateArgs, templates: TemplateDef[]): Promise<void> {
+export async function runCreateWithTemplates({ template, targetDir, force = false, lang }: RunCreateArgs, templates: TemplateDef[]): Promise<void> {
+  // 言語を最初に確定する。--lang 明示ならそれを使い、未指定かつ対話端末なら言語選択を出す。
+  // 選択言語で「以降の対話・ログ表示」と「生成テンプレ本体（overlay）」の両方を確定する。
+  const resolvedLang = await resolveLang(lang);
+  setLang(resolvedLang);
+
   // draft:true は CLI からは完全に隠す（一覧・選択・slug 直接指定すべて unknown 扱い）
   const availableTemplates = templates.filter((tpl) => !tpl.draft);
   const tpl = await resolveTemplate(template, availableTemplates);
@@ -98,7 +114,7 @@ export async function runCreateWithTemplates({ template, targetDir, force = fals
   await downloadTemplateSource(tpl, outDir, ref, force);
 
   // 要求言語に対応する overlay があれば、base の上にマージする（生成テンプレ本体の言語切替）
-  await applyLangOverlay(tpl, outDir, ref, getLang());
+  await applyLangOverlay(tpl, outDir, ref, resolvedLang);
 
   ensureTemplateDownloaded(outDir, tpl);
 
@@ -109,8 +125,35 @@ export async function runCreateWithTemplates({ template, targetDir, force = fals
 }
 
 /** commander から呼ぶアクション */
-export async function createCommand(targetDir: string | undefined, options: CreateOptions): Promise<void> {
-  await runCreate({ template: options.template, targetDir, force: options.force });
+export async function createCommand(targetDir: string | undefined, options: CreateOptions, command?: CommandLike): Promise<void> {
+  // ルートプログラムの `--lang` はグローバルオプションなので optsWithGlobals() で取得する。
+  const langOpt = command?.optsWithGlobals().lang;
+  const lang = typeof langOpt === 'string' ? langOpt : undefined;
+  await runCreate({ template: options.template, targetDir, force: options.force, lang });
+}
+
+/**
+ * 生成テンプレ本体・CLI 表示言語の確定。
+ *
+ * - `--lang ja` / `--lang en` が明示されていればそれを使う（プロンプトは出さない）。
+ * - 未指定（不正値含む）のとき:
+ *   - 対話端末（TTY）では、他のどのプロンプトよりも先に言語を選ばせる。
+ *     こうすることで、以降のカテゴリ／タイプ／出力先プロンプトも選択言語で表示される。
+ *   - 非対話端末（CI・パイプ等）では `en` にフォールバックする。
+ *
+ * プロンプト自体は現在の検出言語に依存せず読めるよう、`English / 日本語` の固定表示にする。
+ */
+async function resolveLang(explicit: string | undefined): Promise<Lang> {
+  if (explicit === 'ja' || explicit === 'en') return explicit;
+  if (!process.stdin.isTTY) return 'en';
+
+  return select<Lang>({
+    message: 'Select language / 言語を選択:',
+    choices: [
+      { name: 'English', value: 'en' },
+      { name: '日本語', value: 'ja' },
+    ],
+  });
 }
 
 async function resolveTemplate(requested: string | undefined, templates: TemplateDef[]): Promise<TemplateDef> {

@@ -1,0 +1,172 @@
+---
+title: 'Inside the blog-astro-techlog template'
+excerpt: A spec summary of the Astro template for tech blogs that ships with the Lism CSS repository.
+date: '2026-04-25'
+updated: '2026-05-25'
+tags: [Astro, Lism CSS, Template]
+---
+
+`templates/blog/astro/techlog/` is an Astro template for tech blogs built with Lism CSS and `@lism-css/ui`. It comes with code highlighting, in-article TOC, categories/tags, year/month archives, Pagefind full-text search, dark mode, and sitemap/robots.txt.
+
+## Dependencies
+
+On top of Astro and Lism CSS/`@lism-css/ui`, it adds the following.
+
+- `@astrojs/mdx` — posts are written in `.mdx`
+- `@astrojs/sitemap` — sitemap generation
+- `astro-expressive-code` — code highlighting
+- `remark-directive` — `:::` syntax
+- `pagefind` / `@pagefind/default-ui` — full-text search
+
+In `astro.config.mjs`, `expressiveCode` is placed before `mdx`, and `markdown.remarkPlugins` registers three custom transform plugins (the `:::` transform from `remark-directive`, turning URL/`[[slug]]` paragraphs into link cards, and turning inline `[[slug]]` into WikiLinks). The sitemap integration also fills in each post's `lastmod`.
+
+## Directory structure
+
+```
+src/
+├── components/      # Astro components
+├── config/          # Site config + category definitions
+├── content.config.ts
+├── layouts/         # Layout / ArchiveLayout / PageLayout
+├── lib/             # TOC generation, year/month archives, OG images, sitemap lastmod, remark plugins, etc.
+├── pages/           # Routing
+├── posts/           # Post MDX (one directory per category)
+│   ├── tech/
+│   └── column/
+└── styles/global.css
+```
+
+## Routing
+
+| Path | Contents |
+| --- | --- |
+| `[...page].astro` | Home (all posts) + pagination |
+| `category/[category]/[...page].astro` | Per-category list + pagination |
+| `posts/[...slug].astro` | Post detail |
+| `tags/index.astro` | Tag list |
+| `tags/[tag]/[...page].astro` | Per-tag list + pagination |
+| `archive/index.astro` | Year/month archive index |
+| `archive/[year]/[month]/[...page].astro` | Per-month list + pagination |
+| `about.astro` / `privacy.astro` | Static pages |
+| `robots.txt.ts` | robots.txt |
+| `404.astro` | 404 |
+
+URLs take the form `/posts/{slug}/`, `/category/{category}/`, `/tags/{tag}/`, and `/archive/{year}/{month}/`. Search isn't a dedicated page — it's a **modal opened from the search button in the top right of the header** (`SearchModal`).
+
+## Sitemap and update dates
+
+`@astrojs/sitemap` generates the sitemap at build time. The `site` value in `astro.config.mjs` is the basis for the sitemap and robots.txt, so rewrite it to your deployment domain before going live. Because techlog serves posts placed at `src/posts/{category}/{slug}.mdx` under `/posts/{slug}/`, the sitemap integration is passed `stripFirstSegment: true` to drop the category directory.
+
+Post frontmatter can optionally include `updated`.
+
+```yaml
+---
+title: Post title
+date: '2026-04-25'
+updated: '2026-05-25'
+---
+```
+
+If `updated` is present it's used as the sitemap's `lastmod`; otherwise `date` is used. It currently isn't used in the post view or in the ordering of year/month archives.
+
+## Category design (directory = category)
+
+Categories aren't written in frontmatter — they're determined by where a post lives under `src/posts/{category}/`.
+
+- `src/config/categories.ts` — category definitions (`tech` / `column`)
+- `src/lib/posts.ts` — utilities such as `parsePostId()` / `getPostHref()` / `getCategoryHref()` / `getTagHref()`
+
+Since the post detail URL doesn't include the category (`/posts/{slug}/`), changing a category doesn't change the URL. `assertUniquePostSlugs()` detects duplicate slugs at build time.
+
+## MDX and Callout / Alert
+
+`src/lib/remark-directive.mjs` transforms the `:::` syntax so you can call `@lism-css/ui`'s `Callout` / `Alert`.
+
+- `:::type[title]` → `<Callout type="..." title="...">`
+- `:::type` → `<Alert type="...">`
+
+The supported types are `alert` / `point` / `tip` / `warning` / `check` / `help` / `note` / `info`.
+
+````md
+:::point[A labeled callout]
+Because it has a label, it's converted to a Callout.
+:::
+
+:::warning
+Omit the label and you get an Alert with no title area.
+:::
+````
+
+`Callout` / `Alert` / `LinkCard` / `WikiLink` are passed to `<Content components={{ ... }} />` in `posts/[...slug].astro`, so you don't need to import them in the post files.
+
+> `remark-directive` itself also works with `.md`, but because this plugin converts `:::` into JSX nodes, it doesn't work in the `.md` render pipeline. `content.config.ts` is also scoped to `**/*.mdx`, so `.md` files aren't collected.
+
+## Link cards / WikiLinks (auto-expanded)
+
+Paragraphs that contain only a URL string, paragraphs that contain only a `[[slug]]`, and inline `[[slug]]` are auto-expanded at build time.
+
+````md
+<!-- External URL paragraph → <LinkCard type="external"> (fetches OGP at build time) -->
+https://lism-css.com/en/
+
+<!-- [[slug]] paragraph → <LinkCard type="internal"> (looks up post info from Content Collections) -->
+[[lism-css-intro]]
+
+<!-- Inline [[slug]] → an <a> link that displays the post title -->
+See [[lism-css-intro]] for details.
+
+<!-- Link with an alias -->
+See [[lism-css-intro|the previous post]] for details.
+````
+
+`slug` is the filename (without extension) under `src/posts/{category}/`. OGP for external links is cached in `.cache/ogp/` as JSON keyed by an MD5 hash (TTL 7 days). If a fetch fails or you want to override the metadata, just write `<LinkCard type="external" href="..." title="..." description="..." />` directly in the MDX.
+
+## Code highlighting
+
+[`astro-expressive-code`](https://expressive-code.com/) does static highlighting at build time (no client runtime needed). The theme is set to the single `github-dark`, showing the same colors in both light and dark mode. To make it a dual theme, change it to `themes: ['github-dark', 'github-light']` and pass ``themeCssSelector: (theme) => `[data-theme='${theme.type}']` `` so it syncs with the site's theme toggle.
+
+The font references `--ff--mono` and the corner radius references `--bdrs--10`, aligning them with Lism CSS tokens.
+
+## Year/month archives
+
+`getArchiveSummaries()` / `getPostsByArchive()` in `src/lib/archive.ts` handle aggregation and filtering. Date strings are accepted in any of the `YYYY-MM-DD` / `YYYY.MM.DD` / `YYYY/MM/DD` formats. `archive/index.astro` renders this aggregation as a list, and per-month pages pass the result of `getPostsByArchive()` to Astro's `paginate()`.
+
+## Full-text search (Pagefind)
+
+The `build` script is `astro build && pagefind --site dist`. [Pagefind](https://pagefind.app/) generates an index against Astro's build output and places static assets in `dist/pagefind/`. The search UI calls `@pagefind/default-ui` from `SearchModal.astro` and opens as a modal from the header's search button. Because it runs entirely client-side, no server or external API is needed.
+
+During development the index doesn't exist, so it switches to a guidance message. To try real search, run `nr build && nr preview`.
+
+### Narrowing the search scope
+
+By default Pagefind indexes the entire `<body>` as body content, so the header, breadcrumbs, prev/next post navigation, and so on become hits too. This template adds `data-pagefind-body` to a single body wrapper in `posts/[...slug].astro`, narrowing the search scope to "post title + body".
+
+```astro
+<Flow class="c--articleBody" data-pagefind-body>
+  <Content components={{ Callout, Alert, LinkCard, WikiLink }} />
+</Flow>
+```
+
+When even one `data-pagefind-body` exists on the site, Pagefind indexes only the elements that carry the attribute as body content. Pages without the attribute (home, archives, category/tag lists, static pages) are automatically excluded from search results. Even though `<h1>` sits outside the wrapper, Pagefind auto-detects it as metadata (with a 5x ranking boost over body hits), so a single body wrapper is enough to make "title + body" search work.
+
+## Layouts
+
+There are three layouts.
+
+- `Layout.astro` — loads OGP, the web font (Gen Interface JP), and the theme-init script in `<head>`, then stacks Header / (Breadcrumb) / Main / Footer vertically inside `<Container>` with `<Stack min-h="100svh">`. `Header` itself uses `pos="sticky"` to follow the scroll, and its actual height is exposed via JS as `--header-h` (used to adjust the TOC scroll position).
+- `ArchiveLayout.astro` — built on `Layout`, a list layout that wraps the body in `<Group isWrapper="l" isContainer hasGutter><Stack g="40">`
+- `PageLayout.astro` — built on `Layout`, a static-page layout that combines a page title with a `<Flow as="article" class="c--pageBody">` body
+
+
+## Dark mode
+
+It switches `<html data-theme="...">` based on `siteConfig.theme.default` (`'system'` / `'light'` / `'dark'`). A flash-prevention script runs at the top of `<head>` in `Layout.astro`, applying the user's setting saved in `localStorage` before the first paint. The toggle UI is the `ThemeSwitch` component in the header.
+
+Because code blocks run `expressiveCode` with the single `themes: 'github-dark'` theme, they always show the GitHub Dark colors regardless of the site's theme toggle.
+
+## Where to customize
+
+- `src/config/site.ts` — site name, tagline, nav, OG image defaults (`{ type: '3-4', h: 238, c: 6, l: 84 }`), social links, theme default, etc.
+- `src/config/categories.ts` — category definitions (when adding one, put the type, the physical directory, and any OG image override here)
+- `src/styles/global.css` — Lism CSS token overrides. Override the dark-mode tokens under `:root[data-theme='dark']`. `--sz--toc` / `--sz--l` / `--header-h` (dynamically updated to the actual height via JS) are also defined here.
+- Post-body typography (the underline on h2, the left border on `blockquote`, etc.) is written as descendant selectors under `.c--articleBody` in `@layer lism-base` (since you can't attach classes directly to elements generated from Markdown).

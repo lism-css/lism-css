@@ -2,6 +2,7 @@
 import { Lism, Link, Inline, Cluster } from 'lism-css/astro';
 import { CATEGORIES, CATEGORY_KEYS, type CategoryKey } from '@/config/categories';
 import { getCategoryHref } from '@/lib/posts';
+import { siteConfig } from '@/config/site';
 
 interface Props {
   current: 'all' | CategoryKey;
@@ -18,7 +19,7 @@ const tabProps = { set: 'plain s', d: 'inline-flex', px: '10', py: '10', lh: 's'
 const linkProps = { c: 'text-2', hov: { c: 'brand' } };
 ---
 
-<Lism as="nav" class="c--categoryTabs" fz="s" lts="l" aria-label="カテゴリー">
+<Lism as="nav" class="c--categoryTabs" fz="s" lts="l" aria-label={siteConfig.uiText.categoryTabs.aria}>
   <Cluster g="10" bd-b>
     {
       items.map((item) =>

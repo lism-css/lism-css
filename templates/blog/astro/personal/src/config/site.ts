@@ -1,6 +1,10 @@
 /**
  * サイト全体で使用する共通設定。
  * タイトル・キャッチコピー・ページネーション等、表示に関わる値はここで管理する。
+ *
+ * 画面に出る文言（aria-label・404・アーカイブ説明等）は `uiText` に集約している。
+ * 言語別テンプレート（`lism create --lang en`）はこのファイルごと差し替えるため、
+ * 各コンポーネント／ページは文言をハードコードせず `siteConfig.uiText.*` を参照する。
  */
 export const siteConfig = {
   // サイト名
@@ -52,6 +56,29 @@ export const siteConfig = {
       { label: 'Tags', href: '/tags/' },
       { label: 'About', href: '/about/' },
     ],
+  },
+
+  // 画面に出る固定文言（aria-label・404・アーカイブ説明等）。言語別差し替えの起点。
+  uiText: {
+    nav: { aria: 'メインナビゲーション', openMenu: 'メニューを開く', closeMenu: 'メニューを閉じる' },
+    footer: { aria: 'サイト情報' },
+    pager: { aria: 'ページネーション', prev: '前のページ', next: '次のページ' },
+    articleNav: { aria: '記事ナビゲーション' },
+    tagCloud: { aria: 'タグ一覧' },
+    sns: { aria: 'SNSリンク' },
+    share: { x: 'X でシェア', copy: 'リンクをコピー', copyPrompt: 'この URL をコピーしてください' },
+    notFound: {
+      metaDescription: 'お探しのページは見つかりませんでした。',
+      title: 'ページが見つかりません',
+      description: 'お探しのページは削除されたか、URL が変更された可能性があります。',
+    },
+    // タグ一覧 / 年月アーカイブの meta description（{tag} / {year}{month} を埋め込む）
+    tagsIndexDescription: 'タグ別の記事一覧',
+    archiveIndexDescription: '年月別の記事一覧',
+    tagArchiveDescription: (tag: string) => `タグ「${tag}」の記事一覧`,
+    monthArchiveDescription: (year: string, month: string) => `${year}年${month}月の記事一覧`,
+    // 記事件数の表示（タグ別一覧）
+    postCount: (count: number) => `${count} 件の記事`,
   },
 } as const;
 
