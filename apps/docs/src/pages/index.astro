@@ -4,10 +4,12 @@
  * Lism CSSの紹介とドキュメントへの導線
  */
 import SimpleLayout from '@/layouts/SimpleLayout.astro';
-import { Stack, TileGrid, Flex, Lism, Heading, Text, Link, Columns, BoxLink } from 'lism-css/astro';
+import { Stack, TileGrid, Flex, Lism, Heading, Text, Link, Columns, Box } from 'lism-css/astro';
 import { Button } from '@lism-css/ui/astro/Button';
 import { Icon } from 'lism-css/astro';
 import { Center } from 'lism-css/astro';
+import { Media } from 'lism-css/astro';
+import { Frame } from 'lism-css/astro';
 import Gradbox from '@/components/parts/Gradbox.astro';
 import { siteConfig } from '@/config/site';
 // import LismExDemo from '@/content/ja/_demo/LismExDemo.mdx';
@@ -45,37 +47,63 @@ const FEATURES = [
   },
 ];
 
-// エコシステム
-const ecosystems = [
+// AIツール連携
+const tools = [
   {
-    icon: '<path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>',
-    title: 'Skills',
-    desc: 'AIエージェント向けの実装ガイドスキルを用意しています。AIが Lism CSS の設計を理解し、ベストプラクティスに従ったコードを生成します。',
-    href: '/docs/skills/',
-  },
-  {
-    icon: '<rect x="4" y="4" width="16" height="16" rx="2" ry="2"/><rect x="9" y="9" width="6" height="6"/><line x1="9" y1="1" x2="9" y2="4"/><line x1="15" y1="1" x2="15" y2="4"/><line x1="9" y1="20" x2="9" y2="23"/><line x1="15" y1="20" x2="15" y2="23"/><line x1="20" y1="9" x2="23" y2="9"/><line x1="20" y1="14" x2="23" y2="14"/><line x1="1" y1="9" x2="4" y2="9"/><line x1="1" y1="14" x2="4" y2="14"/>',
     title: 'MCPサーバー',
-    desc: 'Claude Code や Cursor 等のAIコーディングツールに Lism CSSの仕様を提供。AIと協力して効率的にサイトを構築できます。',
-    href: '/docs/mcp/',
+    body: 'Claude CodeやCursor、VS Code等のAIコーディングツールにLism CSSの仕様を提供します。AIがLism CSSの最新ドキュメントやAPI情報をリアルタイムで参照しながらコーディングを支援するため、独自の命名規則に不安がある場合でも、正しいクラス名やProps指定をAIがガイドしてくれます。',
+    src: '/img/ai-02.png',
+    width: 207,
+    height: 160,
+  },
+];
+
+// プリセット
+const presets = [
+  {
+    src: '/img/preset-img-01.png',
+    width: 408,
+    height: 231,
   },
   {
-    icon: '<rect width="7" height="7" x="14" y="3" rx="1"/><path d="M10 21V8a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-5a1 1 0 0 0-1-1H3"/>',
-    title: 'UIコンポーネント',
-    desc: 'Accordion, Modal, Tabs, Button 等のインタラクティブUIを React / Astro で提供。CLIコマンドでプロジェクトに追加できます。',
-    href: '/ui/',
+    src: '/img/preset-img-02.png',
+    width: 408,
+    height: 168,
   },
   {
-    icon: '<path d="M4 4h16v16H4z"/><path d="M8 8h8"/><path d="M8 12h8"/><path d="M8 16h5"/>',
-    title: 'Templates',
-    desc: 'pnpm create lismやnpx create-lismから利用できるプロジェクト雛形です。最小構成やブログ構成からすぐに始められます。',
-    href: '/templates/',
+    src: '/img/preset-img-03.png',
+    width: 408,
+    height: 231,
   },
   {
-    icon: '<rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/>',
-    title: 'Patterns',
-    desc: '既存サイトへコピーして使えるセクション単位のパターン集です。CTAや機能紹介などのレイアウトパーツを選べます。',
-    href: '/patterns/',
+    src: '/img/preset-img-04.png',
+    width: 408,
+    height: 194,
+  },
+  {
+    src: '/img/preset-img-05.png',
+    width: 408,
+    height: 231,
+  },
+  {
+    src: '/img/preset-img-06.png',
+    width: 408,
+    height: 228,
+  },
+  {
+    src: '/img/preset-img-07.png',
+    width: 408,
+    height: 231,
+  },
+  {
+    src: '/img/preset-img-08.png',
+    width: 408,
+    height: 168,
+  },
+  {
+    src: '/img/preset-img-09.png',
+    width: 408,
+    height: 231,
   },
 ];
 ---
@@ -124,9 +152,9 @@ const ecosystems = [
       <Text c="var(--eyebrow-c)" tt="upper" lh="1" fz={['s', null, 'base']}>Features</Text>
       <Heading level="2" ta="center" fz={['2xl', null, '4xl']} fw="700" lh="1.5" c="var(--gray-hi-c)">洗練された設計理論</Heading>
     </Stack>
-    <Text ta="center" mt="30" fz="l" lh="1.75">
-      Lism CSSは、Webサイトの構造的な基盤を素早くスムーズに構築するための軽量CSSフレームワークです。<br
-      />自然で心地よいリズムがデザインに生まれるよう、CSSアーキテクチャをゼロから設計しました。
+    <Text ta="center" mt="30" fz={['s', null, 'l']} lh="1.75" max-w="52.5rem">
+      Lism
+      CSSは、Webサイトの構造的な基盤を素早くスムーズに構築するための軽量CSSフレームワークです。自然で心地よいリズムがデザインに生まれるよう、CSSアーキテクチャをゼロから設計しました。
     </Text>
 
     <Columns cols={[1, 2, 3]} g="40">
@@ -155,64 +183,46 @@ const ecosystems = [
     </Columns>
   </Stack>
 
-  <Stack as="section" ai="center" pt="180" pb="120">
+  <Stack as="section" ai="center" pbs={['120', null, '14.25rem']} pbe={['84', null, '120']}>
     <Stack ai="center" g="15">
       <Text c="var(--eyebrow-c)" tt="upper" lh="1" fz={['s', null, 'base']}>Artificial Intelligence</Text>
       <Heading level="2" ta="center" fz={['2xl', null, '4xl']} fw="700" lh="1.5" c="var(--gray-hi-c)">AI ツール連携</Heading>
     </Stack>
-    <Text ta="center" mt="30" fz="l" lh="1.75">
+    <Text ta="center" mt="30" fz={['s', null, 'l']} lh="1.75" max-w="52.5rem">
       Lism CSSはAIエージェントとの親和性を重視して設計されています。MCPサーバーとSkills、そして機械可読なドキュメントを提供することで、 Claude
       CodeやCursorなどのAIツールがLismの体系を正確に把握し、意図通りのコードを生成できます。
     </Text>
+    <Frame mbs={['48', null, '5rem']} w="clamp(11.25rem, calc(53.25vw - 2.0625rem), 24.5625rem)">
+      <Media src="/img/ai-01.png" alt="" width="393" height="240" />
+    </Frame>
+    <Columns />
   </Stack>
 
-  <Stack as="section" ai="center" pt="180" pb="120">
+  <Stack as="section" ai="center" pt="180" pbe={['84', null, '120']}>
     <Stack ai="center" g="15">
       <Text c="var(--eyebrow-c)" tt="upper" lh="1" fz={['s', null, 'base']}>Templates</Text>
       <Heading level="2" ta="center" fz={['2xl', null, '4xl']} fw="700" lh="1.5" c="var(--gray-hi-c)">Lism CSS プリセット</Heading>
     </Stack>
-    <Text ta="center" mt="30" fz="l" lh="1.75">
+    <Text ta="center" mt="30" fz={['s', null, 'base']} lh="1.75" max-w="35rem">
       デザインのベースとして活用することも、必要な部分だけをコピー&ペーストしてプロジェクトにすぐ洗練されたレイアウトを追加することも可能です。
     </Text>
     <Button href="#" bdrs="var(--bdrs--15)" bgc="var(--gray-hi-c)" mt="48" fw="500" lh="1.5">
       <span>View More</span>
       <Icon icon="caret-right" ml="8" size="16" />
     </Button>
-  </Stack>
-
-  <!-- <Stack as="section" ai="center"" py="60">
-    <Stack ai="center" g="15">
-      <Text c="text-2" tt="upper">ECOSYSTEM</Text>
-      <Heading level="2" ta="center" {['2xl', null, '4xl']} fw="700" lh="1.5" c="var(--gray-hi-c)">充実のエコシステム</Heading>
-    </Stack>
-
-    <Columns cols={[1, 2]} g="30">
+    <Box
+      mbs={['3.75rem', null, '6rem']}
+      style={{ columnCount: 3, columnGap: '0.5rem', marginInline: 'clamp(-6.375rem, calc(22.921vw - 12.106rem), 0rem)' }}
+    >
       {
-        ecosystems.map((item) => (
-          <BoxLink href={item.href} layout="stack" g="20" p="30" bd hov="-bxsh" td="none">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              set:html={item.icon}
-            />
-            <Text fz="l" fw="bold">
-              {item.title}
-            </Text>
-            <Text fz="s" c="text-2" lh="s">
-              {item.desc}
-            </Text>
-          </BoxLink>
+        presets.map((item) => (
+          <Frame bdrs="var(--bdrs--15)" bxsh="var(--bxsh--base)" bgc="white" mbe={['5', null, '10']} style={{ backdropFilter: 'blur(32px)' }}>
+            <Media src={item.src} alt="" width={item.width} height={item.height} />
+          </Frame>
         ))
       }
-    </Columns>
-  </Stack> -->
+    </Box>
+  </Stack>
 
   {/* CTA */}
   <Stack as="section" ai="center" pt="10.625rem">
@@ -232,7 +242,7 @@ const ecosystems = [
         <Text c="var(--eyebrow-c)" tt="upper" lh="1" fz={['s', null, 'base']}>Get Started</Text>
         <Heading level="2" ta="center" fz={['2xl', null, '4xl']} fw="700" lh="1.5" c="var(--gray-hi-c)">Lism CSS、どこでも使える</Heading>
       </Stack>
-      <Text ta="center" mt="30" fz="l" lh="1.75">
+      <Text ta="center" mt="30" fz={['s', null, 'base']} lh="1.75">
         ビルドプロセスもセットアップも不要。<br />Lism CSSは1つのCSSファイルを読み込むだけで導入できます。
       </Text>
       <Button href="/docs/installation" bdrs="var(--bdrs--15)" bgc="var(--gray-hi-c)" mt="48" fw="500" lh="1.5">
