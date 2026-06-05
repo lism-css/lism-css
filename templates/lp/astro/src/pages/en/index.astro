@@ -1,22 +1,26 @@
 ---
 import Layout from '@/layouts/Layout.astro';
 import { Lism, Stack, Center, Grid, Heading, Link, Text, BoxLink, Frame } from 'lism-css/astro';
-// 英語版 LP もデザインは ja 共通のため、サムネは ja のスクショを流用する（en 専用スクショ生成は別途）
-import corporateThumb from '../../../screenshots/corporate.png';
-import interiorThumb from '../../../screenshots/interior.png';
+import type { ImageMetadata } from 'astro';
+
+// 英語版 LP のサムネは en スクショ（screenshots/en/*.png）を優先し、未撮影なら ja を流用する。
+// （この一覧ページはテンプレのプレビュー専用で、lism create の生成プロジェクトには含まれない）
+const enThumbs = import.meta.glob<ImageMetadata>('../../../screenshots/en/*.png', { eager: true, import: 'default' });
+const jaThumbs = import.meta.glob<ImageMetadata>('../../../screenshots/*.png', { eager: true, import: 'default' });
+const thumbFor = (slug: string): ImageMetadata => enThumbs[`../../../screenshots/en/${slug}.png`] ?? jaThumbs[`../../../screenshots/${slug}.png`];
 
 const variants = [
   {
     slug: 'corporate',
     title: 'LP Corporate',
     description: 'A single-page landing page for corporate sites.',
-    thumb: corporateThumb,
+    thumb: thumbFor('corporate'),
   },
   {
     slug: 'interior',
     title: 'LP Interior',
     description: 'A landing page for interior and lifestyle coordination services.',
-    thumb: interiorThumb,
+    thumb: thumbFor('interior'),
   },
 ];
 ---
