@@ -27,11 +27,11 @@ const { tag, page } = Astro.props;
 const getPageHref = (n: number) => (n === 1 ? getTagHref(tag) : `/tags/${tag}/${n}/`);
 ---
 
-<ArchiveLayout title={`#${tag} — ${siteConfig.name}`} description={siteConfig.ui.tagArchiveDescription(tag)}>
+<ArchiveLayout title={`#${tag} — ${siteConfig.name}`} description={siteConfig.uiText.tagArchiveDescription(tag)}>
   <Stack g="20" util="trimAll">
     <Eyebrow>Tag</Eyebrow>
     <Heading level="1"># {tag}</Heading>
-    <Text fz="xs" c="text-2">{siteConfig.ui.postCount(page.total)}</Text>
+    <Text fz="xs" c="text-2">{siteConfig.uiText.postCount(page.total)}</Text>
   </Stack>
 
   <PostList posts={page.data} />

@@ -5,7 +5,7 @@ import { siteConfig } from '@/config/site';
 import ArchiveLayout from '@/layouts/ArchiveLayout.astro';
 ---
 
-<ArchiveLayout title={`Tags — ${siteConfig.name}`} description={siteConfig.ui.tagsIndexDescription} breadcrumb={[{ label: 'TAGS' }]}>
-  <ArchiveHeader eyebrow="TAGS" title="Tags">{siteConfig.ui.tagsIndexDescription}</ArchiveHeader>
+<ArchiveLayout title={`Tags — ${siteConfig.name}`} description={siteConfig.uiText.tagsIndexDescription} breadcrumb={[{ label: 'TAGS' }]}>
+  <ArchiveHeader eyebrow="TAGS" title="Tags">{siteConfig.uiText.tagsIndexDescription}</ArchiveHeader>
   <TagCloud />
 </ArchiveLayout>

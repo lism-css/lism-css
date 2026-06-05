@@ -10,10 +10,10 @@ const summaries = getArchiveSummaries(posts);
 const totalCount = posts.length;
 ---
 
-<ArchiveLayout title={`Archive — ${siteConfig.name}`} description={siteConfig.ui.archiveIndexDescription} breadcrumb={[{ label: 'ARCHIVE' }]}>
+<ArchiveLayout title={`Archive — ${siteConfig.name}`} description={siteConfig.uiText.archiveIndexDescription} breadcrumb={[{ label: 'ARCHIVE' }]}>
   <Stack g="40">
     <Heading level="1" util="trim">Archive</Heading>
-    <Text fz="s" c="text-2" util="trim">{siteConfig.ui.archiveTotalCount(totalCount)}</Text>
+    <Text fz="s" c="text-2" util="trim">{siteConfig.uiText.archiveTotalCount(totalCount)}</Text>
   </Stack>
 
   <List bd-be>

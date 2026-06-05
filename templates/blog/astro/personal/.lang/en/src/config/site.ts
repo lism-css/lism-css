@@ -1,7 +1,7 @@
 /**
  * English template overlay for `lism create --lang en`.
  * This file fully replaces `src/config/site.ts`, so keep its shape in sync
- * with the base (Japanese) config — components read values from `siteConfig.ui.*`.
+ * with the base (Japanese) config — components read values from `siteConfig.uiText.*`.
  */
 export const siteConfig = {
   // Site name
@@ -56,7 +56,7 @@ export const siteConfig = {
   },
 
   // Fixed UI strings (aria-labels, 404, archive descriptions, etc.). The base for language swapping.
-  ui: {
+  uiText: {
     nav: { aria: 'Main navigation', openMenu: 'Open menu', closeMenu: 'Close menu' },
     footer: { aria: 'Site information' },
     pager: { aria: 'Pagination', prev: 'Previous page', next: 'Next page' },

@@ -12,7 +12,7 @@ const tags = getAllTags(posts);
 // const {} = Astro.props;
 ---
 
-<Cluster as="nav" aria-label={siteConfig.ui.tagCloud.aria} g="5">
+<Cluster as="nav" aria-label={siteConfig.uiText.tagCloud.aria} g="5">
   <!-- <span class="-fz:2xs -c:text-2" aria-hidden="true">#</span> -->
   {tags.map((tag) => <Tag href={getTagHref(tag)}>{tag}</Tag>)}
 </Cluster>

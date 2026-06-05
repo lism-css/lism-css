@@ -9,6 +9,6 @@ const posts = await getCollection('posts');
 const tags = getAllTags(posts);
 ---
 
-<Cluster as="nav" aria-label={siteConfig.ui.tagCloud.aria} g="5">
+<Cluster as="nav" aria-label={siteConfig.uiText.tagCloud.aria} g="5">
   {tags.map((tag) => <Tag href={`/tags/${tag}/`}>{tag}</Tag>)}
 </Cluster>

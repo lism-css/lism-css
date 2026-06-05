@@ -12,7 +12,7 @@ type Props = LismProps;
 
 <Lism as="footer" py="40" hasGutter bd-bs {...Astro.props}>
   <Center g="30" max-sz="l" mx="auto">
-    <Cluster as="nav" aria-label={siteConfig.ui.footer.aria} fz="xs" c="text-2" lh="xs" util="divide">
+    <Cluster as="nav" aria-label={siteConfig.uiText.footer.aria} fz="xs" c="text-2" lh="xs" util="divide">
       {
         siteConfig.footer.nav.map((item) => (
           <Link href={item.href} set="plain" px="10" hov={{ c: 'brand' }}>

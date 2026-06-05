@@ -29,7 +29,7 @@ const baseHref = getArchiveHref(year, month);
 const getPageHref = (n: number) => (n === 1 ? baseHref : `${baseHref}${n}/`);
 ---
 
-<ArchiveLayout title={`${year}.${month} — ${siteConfig.name}`} description={siteConfig.ui.monthArchiveDescription(year, month)}>
+<ArchiveLayout title={`${year}.${month} — ${siteConfig.name}`} description={siteConfig.uiText.monthArchiveDescription(year, month)}>
   <Stack g="20" util="trimAll">
     <Eyebrow>Archive</Eyebrow>
     <Heading level="1">{year}.{month}</Heading>

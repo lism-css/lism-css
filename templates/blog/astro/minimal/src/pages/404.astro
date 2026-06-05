@@ -4,16 +4,16 @@ import Layout from '@/layouts/Layout.astro';
 import { siteConfig } from '@/config/site';
 ---
 
-<Layout title={`404 Not Found — ${siteConfig.name}`} description={siteConfig.ui.notFound.metaDescription}>
+<Layout title={`404 Not Found — ${siteConfig.name}`} description={siteConfig.uiText.notFound.metaDescription}>
   <Center isContainer hasGutter fxg="1" g="40" ta="center">
     {/* title */}
     <Heading level="1" layout="stack" fz="m" g="5">
       <Inline as="span" fz="5xl" fw="bold" ff="accent">404</Inline>
-      <Inline as="span" fz="l" fw="normal" c="text-2">{siteConfig.ui.notFound.title}</Inline>
+      <Inline as="span" fz="l" fw="normal" c="text-2">{siteConfig.uiText.notFound.title}</Inline>
     </Heading>
 
     {/* description */}
-    <Text>{siteConfig.ui.notFound.description}</Text>
+    <Text>{siteConfig.uiText.notFound.description}</Text>
 
     {/* back to home */}
     <Group mbs="20">

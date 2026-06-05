@@ -2,9 +2,9 @@
  * サイト全体で使用する共通設定。
  * タイトル・キャッチコピー・ページネーション等、表示に関わる値はここで管理する。
  *
- * 画面に出る文言（aria-label・404 等）は `ui` に集約している。
+ * 画面に出る文言（aria-label・404 等）は `uiText` に集約している。
  * 言語別テンプレート（`lism create --lang en`）はこのファイルごと差し替えるため、
- * 各コンポーネントは文言をハードコードせず `siteConfig.ui.*` を参照する。
+ * 各コンポーネントは文言をハードコードせず `siteConfig.uiText.*` を参照する。
  */
 export const siteConfig = {
   // サイト名
@@ -47,7 +47,7 @@ export const siteConfig = {
   },
 
   // 画面に出る固定文言（aria-label・404 ページ等）。言語別差し替えの起点。
-  ui: {
+  uiText: {
     nav: { aria: 'メインナビゲーション' },
     footer: { aria: 'サイト情報' },
     pager: { aria: 'ページネーション', prev: '前のページ', next: '次のページ' },
