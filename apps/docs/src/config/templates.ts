@@ -47,6 +47,8 @@ export interface TemplateItem {
   thumbEn?: ImageMetadata;
   /** プレビューサイトの URL（無い場合は undefined → ボタン非表示 or 無効化） */
   previewUrl?: string;
+  /** en 用プレビュー URL（集約サイトで en を配信している場合のみ）。無い場合は previewUrl にフォールバック */
+  previewUrlEn?: string;
   /** true の場合、本番ビルドでは一覧・詳細ページ・パス生成から除外する（dev では表示） */
   draft?: boolean;
   /** 紹介カードに表示する機能リスト（任意） */
@@ -158,6 +160,7 @@ export const templates: TemplateItem[] = manifestTemplates.map((tpl: TemplateDef
     thumb: resolveThumb(tpl),
     ...(thumbEn ? { thumbEn } : {}),
     ...(tpl.previewUrl ? { previewUrl: tpl.previewUrl } : {}),
+    ...(tpl.previewUrlEn ? { previewUrlEn: tpl.previewUrlEn } : {}),
     ...(tpl.draft ? { draft: tpl.draft } : {}),
     ...(tpl.features ? { features: tpl.features } : {}),
   };
@@ -166,6 +169,11 @@ export const templates: TemplateItem[] = manifestTemplates.map((tpl: TemplateDef
 /** 言語に応じた thumb を返す（en は en スクショ優先・未撮影なら ja にフォールバック） */
 export function getThumb(tpl: TemplateItem, lang: LangCode): ImageMetadata {
   return lang === 'en' ? (tpl.thumbEn ?? tpl.thumb) : tpl.thumb;
+}
+
+/** 言語に応じたプレビュー URL を返す（en は en 用 URL 優先・無ければ ja にフォールバック） */
+export function getPreviewUrl(tpl: TemplateItem, lang: LangCode): string | undefined {
+  return lang === 'en' ? (tpl.previewUrlEn ?? tpl.previewUrl) : tpl.previewUrl;
 }
 
 /**
