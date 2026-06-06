@@ -99,7 +99,7 @@ export type TemplateDef = ProjectTemplateDef | BaseOverlayTemplateDef | StaticHt
 /**
  * テンプレプレビュー集約サイトのオリジン。全 previewUrl をこの 1 箇所で束ねる。
  * 配信は単一 Cloudflare Pages（lism-templates）にサブパスで集約しており、
- * パス設計は build-previews.mts と対になっている:
+ * パス設計は build-previews.mjs と対になっている:
  *   - project           : /{slug}/        （en があれば /{slug}/en/）
  *   - single-project-variant（lp/astro）: /lp-astro/{variant}/（en は /lp-astro/en/{variant}/）
  */
