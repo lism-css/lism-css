@@ -32,6 +32,12 @@ interface TemplateMetaBase {
   description: LocalizedText;
   /** プレビューサイトの URL（無い場合は docs でボタン非表示） */
   previewUrl?: string;
+  /**
+   * 英語版プレビューの URL（集約サイトで en を配信しているテンプレのみ）。
+   * docs の en 表示でプレビューボタンの遷移先に使う。未指定なら ja の `previewUrl` に
+   * フォールバックする（getPreviewUrl）。
+   */
+  previewUrlEn?: string;
   /** true の場合、CLI の一覧・選択・slug 解決から除外、docs でも本番ビルドで非表示 */
   draft?: boolean;
   /**
@@ -90,6 +96,15 @@ export interface SingleProjectVariantTemplateDef extends TemplateMetaBase {
 
 export type TemplateDef = ProjectTemplateDef | BaseOverlayTemplateDef | StaticHtmlTemplateDef | SingleProjectVariantTemplateDef;
 
+/**
+ * テンプレプレビュー集約サイトのオリジン。全 previewUrl をこの 1 箇所で束ねる。
+ * 配信は単一 Cloudflare Pages（lism-templates）にサブパスで集約しており、
+ * パス設計は build-previews.mjs と対になっている:
+ *   - project           : /{slug}/        （en があれば /{slug}/en/）
+ *   - single-project-variant（lp/astro）: /lp-astro/{variant}/（en は /lp-astro/en/{variant}/）
+ */
+const PREVIEW_ORIGIN = 'https://templates.lism-css.com';
+
 /** 配信対象の templates 一覧 */
 export const TEMPLATES: TemplateDef[] = [
   {
@@ -109,7 +124,7 @@ export const TEMPLATES: TemplateDef[] = [
     sourcePath: 'minimal/vite',
     title: { ja: 'Minimal Vite', en: 'Minimal Vite' },
     description: { ja: 'Vite + React ベースの最小構成', en: 'Minimal Vite + React setup' },
-    previewUrl: 'https://lism-minimal-vite.pages.dev/',
+    previewUrl: `${PREVIEW_ORIGIN}/minimal-vite/`,
   },
   {
     slug: 'blog-astro-minimal',
@@ -124,7 +139,8 @@ export const TEMPLATES: TemplateDef[] = [
     },
     title: { ja: 'Blog Minimal', en: 'Blog Minimal' },
     description: { ja: '記事一覧 / 詳細 / Tags のみの最小構成の Astro ブログ', en: 'Minimal Astro blog with posts and tags only' },
-    previewUrl: 'https://lism-blog-astro-minimal.pages.dev/',
+    previewUrl: `${PREVIEW_ORIGIN}/blog-astro-minimal/`,
+    previewUrlEn: `${PREVIEW_ORIGIN}/blog-astro-minimal/en/`,
     features: {
       ja: ['タグ', 'sitemap'],
       en: ['Tags', 'sitemap'],
@@ -146,7 +162,8 @@ export const TEMPLATES: TemplateDef[] = [
       ja: '個人ブログ・エッセイ向け。年月アーカイブつきの落ち着いた Astro ブログ',
       en: 'Personal / essay-style Astro blog with monthly archives',
     },
-    previewUrl: 'https://lism-blog-astro-personal.pages.dev/',
+    previewUrl: `${PREVIEW_ORIGIN}/blog-astro-personal/`,
+    previewUrlEn: `${PREVIEW_ORIGIN}/blog-astro-personal/en/`,
     features: {
       ja: ['タグ', '年月アーカイブ', 'シェアボタン', 'OGP画像自動生成', 'sitemap（lastmod 対応）'],
       en: ['Tags', 'Monthly archives', 'Share buttons', 'Auto-generated OG images', 'sitemap (with lastmod)'],
@@ -168,7 +185,8 @@ export const TEMPLATES: TemplateDef[] = [
       ja: '技術ブログ向け。コードハイライト・カテゴリ・タグ・TOC・年月アーカイブ・検索を装備した Astro ブログ',
       en: 'Tech blog with code highlighting, categories, tags, TOC, monthly archives and search',
     },
-    previewUrl: 'https://lism-blog-astro-techlog.pages.dev/',
+    previewUrl: `${PREVIEW_ORIGIN}/blog-astro-techlog/`,
+    previewUrlEn: `${PREVIEW_ORIGIN}/blog-astro-techlog/en/`,
     features: {
       ja: [
         'カテゴリ / タグ',
@@ -204,7 +222,8 @@ export const TEMPLATES: TemplateDef[] = [
     sourcePath: 'lp/astro',
     title: { ja: 'LP Corporate', en: 'LP Corporate' },
     description: { ja: 'コーポレートサイト向けの Astro ランディングページ', en: 'Astro landing page for corporate sites' },
-    previewUrl: 'https://lism-lp-astro.pages.dev/corporate/',
+    previewUrl: `${PREVIEW_ORIGIN}/lp-astro/corporate/`,
+    previewUrlEn: `${PREVIEW_ORIGIN}/lp-astro/en/corporate/`,
   },
   {
     slug: 'lp-astro-interior',
@@ -216,7 +235,8 @@ export const TEMPLATES: TemplateDef[] = [
     sourcePath: 'lp/astro',
     title: { ja: 'LP Interior', en: 'LP Interior' },
     description: { ja: 'インテリア・暮らし系サービス向けの Astro ランディングページ', en: 'Astro landing page for interior / lifestyle services' },
-    previewUrl: 'https://lism-lp-astro.pages.dev/interior/',
+    previewUrl: `${PREVIEW_ORIGIN}/lp-astro/interior/`,
+    previewUrlEn: `${PREVIEW_ORIGIN}/lp-astro/en/interior/`,
   },
   {
     slug: 'lp-astro-ryokan',

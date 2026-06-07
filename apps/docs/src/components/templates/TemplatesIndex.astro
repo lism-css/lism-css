@@ -3,7 +3,7 @@ import { Stack, Flex, Cluster, AutoColumns, Text, Heading, Link, BoxLink, Lism, 
 import { Button } from '@lism-css/ui/astro/Button';
 import { Image } from 'astro:assets';
 import { getLocalizedUrl, type LangCode } from '@/lib/i18n';
-import { stackLabels, groupByCategory, getAggregateRepresentative, getThumb } from '@/config/templates';
+import { stackLabels, groupByCategory, getAggregateRepresentative, getThumb, getPreviewUrl } from '@/config/templates';
 import { Preview, PreviewCode } from '@/components/Preview';
 import CopyCommand from './CopyCommand.astro';
 
@@ -147,7 +147,7 @@ const buildCategoryDetailUrl = (category: string) => getLocalizedUrl(`/templates
                       stacks: items.map((tpl) => tpl.stack),
                       detailUrl: buildCategoryDetailUrl(category.id),
                       command: buildCommand(category.id),
-                      previewUrl: rep?.previewUrl,
+                      previewUrl: rep ? getPreviewUrl(rep, lang) : undefined,
                       features: undefined as string[] | undefined,
                       draft: false,
                     },
@@ -161,7 +161,7 @@ const buildCategoryDetailUrl = (category: string) => getLocalizedUrl(`/templates
                   stacks: [tpl.stack],
                   detailUrl: buildDetailUrl(tpl.category, tpl.slug),
                   command: buildCommand(tpl.slug),
-                  previewUrl: tpl.previewUrl,
+                  previewUrl: getPreviewUrl(tpl, lang),
                   features: tpl.features?.[lang],
                   draft: tpl.draft,
                 }));

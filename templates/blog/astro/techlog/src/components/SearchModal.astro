@@ -43,6 +43,9 @@ const isDev = import.meta.env.DEV;
       new PagefindUI({
         element: '#search',
         showSubResults: true,
+        // サブパス配信時に検索インデックス（/pagefind/）を base 付きで取得する。
+        // 既定の base='/' でも import.meta.env.BASE_URL が '/' になり従来どおり動く無害な対応。
+        bundlePath: import.meta.env.BASE_URL + 'pagefind/',
       });
     }
   });
