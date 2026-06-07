@@ -25,7 +25,7 @@ import { siteConfig } from '@/config/site';
         <line x1="2" y1="8" x2="22" y2="8"></line>
         <line x1="2" y1="16" x2="22" y2="16"></line>
       </Icon>
-      <Inline d="none" id="menu-open-label">メニューを開く</Inline>
+      <Inline d="none" id="menu-open-label">{siteConfig.uiText.nav.openMenu}</Inline>
     </Modal.OpenBtn>
   </Flex>
 
@@ -46,11 +46,11 @@ import { siteConfig } from '@/config/site';
           >
             <path d="M18 6 6 18"></path><path d="m6 6 12 12"></path>
           </Icon>
-          <Inline d="none" id="menu-close-label">メニューを閉じる</Inline>
+          <Inline d="none" id="menu-close-label">{siteConfig.uiText.nav.closeMenu}</Inline>
         </Modal.CloseBtn>
       </Flex>
       <Modal.Body layout="stack" g="20" ov-y="auto">
-        <Stack as="nav" aria-label="メインナビゲーション" util="divide" fz="s" bd-y>
+        <Stack as="nav" aria-label={siteConfig.uiText.nav.aria} util="divide" fz="s" bd-y>
           {
             siteConfig.nav.map((item) => (
               <Link href={item.href} set="plain" lh="s" py="15" px="5" hov={{ c: 'brand' }}>

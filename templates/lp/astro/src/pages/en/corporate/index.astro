@@ -1,0 +1,524 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import {
+  AutoColumns,
+  Box,
+  BoxLink,
+  WithSide,
+  Center,
+  Cluster,
+  Container,
+  Flex,
+  Flow,
+  Frame,
+  Grid,
+  Heading,
+  Media,
+  Icon,
+  Inline,
+  Layer,
+  Link,
+  Stack,
+  Text,
+} from 'lism-css/astro';
+import { Accordion } from '@lism-css/ui/astro/Accordion';
+import Header from '@/components/en/corporate/Header.astro';
+import SectionHeading from '@/components/en/corporate/SectionHeading.astro';
+
+// スタイル
+import './_style.css';
+
+// スクロール連動アニメーション（オフにしたい場合はこの行をコメントアウト）
+import './_animations.css';
+
+export const title = 'Corporate LP';
+
+const mvImage = 'https://cdn.lism-css.com/img/building/u-hP6H5U7oIG.jpg';
+
+const aboutPhotos = [
+  'https://cdn.lism-css.com/random/img/?category=working&r=1',
+  'https://cdn.lism-css.com/random/img/?category=office&r=2',
+  'https://cdn.lism-css.com/random/img/?r=3',
+];
+
+const featureCards = [
+  {
+    src: 'https://cdn.lism-css.com/random/img/?r=service1',
+    title: 'Layout Design Support',
+    body: 'Layout-first primitives — Stack, Flex, Grid, and more — make wireframing intuitive. Build your structural skeleton first, then let the markup respond gracefully to any screen width.',
+  },
+  {
+    src: 'https://cdn.lism-css.com/random/img/?r=service2',
+    title: 'Design Token Architecture',
+    body: 'Typography and spacing grounded in a harmonic modular scale give you CSS variables that scale responsively by design. The same thinking flows naturally into Property Classes for concise, single-property utilities.',
+  },
+  {
+    src: 'https://cdn.lism-css.com/random/img/?r=service3',
+    title: 'AI-Integrated Workflow',
+    body: 'The ecosystem includes AI-coding Skills and @lism-css/mcp — an MCP server — so your AI editor can reference official docs without leaving the flow. Shared terminology keeps every chapter consistent from the start.',
+  },
+  {
+    src: 'https://cdn.lism-css.com/random/img/?r=service4',
+    title: 'UI Kit & Template Setup',
+    body: 'The official ecosystem ships @lism-css/ui with accordions, tabs, buttons, and more, plus lism-cli for copying and customizing components directly in your project. Dedicated React and Astro components make the experience even smoother.',
+  },
+];
+
+const worksItems = [
+  {
+    src: 'https://cdn.lism-css.com/random/img/?r=works1',
+    title: 'Documentation Site Redesign',
+    body: 'A personal project restructuring the zero-build introduction and Why Lism narrative so readers can grasp the essentials upfront. Navigation paths to the Primitives and Tokens chapters were locked in first.',
+  },
+  {
+    src: 'https://cdn.lism-css.com/random/img/?r=works2',
+    title: 'Design System Landing Page',
+    body: 'An LP concept that maps the official value proposition — one lightweight CSS, layout primitives, variables, and comfortable React/Astro components — directly onto section headings. Scroll effects are scoped to page-local CSS for the demo.',
+  },
+  {
+    src: 'https://cdn.lism-css.com/random/img/?r=works3',
+    title: 'Blog Template Implementation',
+    body: 'A skeleton built around the template distribution story, using Stack to layer article layouts from the ground up. Images use lazy loading, and body text is kept at a width ideal for Property Class examples.',
+  },
+  {
+    src: 'https://cdn.lism-css.com/random/img/?r=works4',
+    title: 'UI Component Gallery',
+    body: 'A gallery concept that lines up @lism-css/ui accordions, modals, and more using the same vocabulary as the official docs. The implementation is for browsing samples only and does not guarantee production behavior.',
+  },
+  {
+    src: 'https://cdn.lism-css.com/random/img/?r=works5',
+    title: 'Corporate Site Rebuild',
+    body: 'An ecosystem showcase band — lism-css, @lism-css/ui, lism-cli, @lism-css/mcp — laid out with Stack and Grid to reflow naturally at any width. Colors are swapped while staying aligned with semantic tokens.',
+  },
+  {
+    src: 'https://cdn.lism-css.com/random/img/?r=works6',
+    title: 'Developer Onboarding Hub',
+    body: 'A single-page link hub for the Skills and MCP guides, pointing straight to the Install, Skills, and MCP chapters in the official docs. Naming conventions and @layer explanations include notes that defer to the docs as the source of truth.',
+  },
+];
+
+const newsBg = 'https://cdn.lism-css.com/img/a-VrLsGK9j0R.jpg';
+const newsItems = [
+  {
+    date: '2026.03.18',
+    title: 'Ecosystem Spotlight: The Role of @lism-css/ui',
+    summary:
+      'The official ecosystem overview highlights @lism-css/ui as the home for UI components like accordions and tabs, and the same section notes how comfortable it is to use with React and Astro.',
+    long: true,
+  },
+  {
+    date: '2026.02.04',
+    title: 'Ecosystem Spotlight: @lism-css/mcp',
+    summary:
+      'The ecosystem overview introduces @lism-css/mcp as an MCP server built for AI-assisted coding. Skills and editor integrations are designed to point back to the official Getting Started and MCP documentation.',
+    long: false,
+  },
+  {
+    date: '2026.01.22',
+    title: 'Overview: Zero-Build Setup and Beyond',
+    summary:
+      'The Overview section walks through getting started with a single CSS import, then progressively introduces npm packages — lism-css, @lism-css/ui, lism-cli — along with SCSS overrides and lism.config.js for deeper customization.',
+    long: true,
+  },
+  {
+    date: '2025.12.10',
+    title: 'Key Takeaways from "Why Lism CSS?"',
+    summary:
+      'Naming conventions, design tokens, @layer structure, and utilities — the argument for handling your entire site\'s CSS design in one coherent system is laid out in the official "Why Lism CSS?" chapter.',
+    long: false,
+  },
+];
+
+/** Each item expects a distinct question and answer */
+const faqItems = [
+  {
+    question: 'What is Lism CSS?',
+    answer:
+      'Lism CSS is a lightweight CSS design framework for building beautiful, well-structured websites with rhythm and precision. It unifies typography, layout-focused primitives, and CSS-variable-powered utilities in a single stylesheet — no build step required to get started.',
+  },
+  {
+    question: 'How is it different from other CSS frameworks?',
+    answer:
+      'Lism CSS draws inspiration from Every Layout, Tailwind, Chakra UI, MUI, and others, but synthesizes them into an original CSS design philosophy. As described in the official Inspirations section, it combines layout primitives, harmonic modular scaling, and per-property utility classes in a cohesive system.',
+  },
+  {
+    question: 'Does it work with React and Astro?',
+    answer:
+      'Yes. The lism-css package ships dedicated components for both React and Astro, making integration as smooth as the Overview page describes. You can also bring in UI components from @lism-css/ui, such as accordions and tabs.',
+  },
+  {
+    question: 'Can I use it in commercial projects?',
+    answer:
+      'Absolutely. All packages are free and open-source under the MIT license. Please refer to the license notice in each repository for the full terms.',
+  },
+  {
+    question: 'Where should I add custom styles?',
+    answer:
+      'The official Overview explains how SCSS overrides and lism.config.js unlock deeper customization. For details on structuring your own styles, refer to the Customize chapter in the documentation.',
+  },
+  {
+    question: 'Where do I report bugs or feature requests?',
+    answer:
+      'The standard approach is to open an Issue in the relevant OSS repository on GitHub. Note that this page is a showcase demo — please make sure you are filing in the correct repository.',
+  },
+];
+
+const testimonials = [
+  {
+    title: 'Fewer review comments, smaller diffs',
+    meta: 'Tokyo / 30s / Frontend Engineer',
+    src: 'https://cdn.lism-css.com/random/img/?category=avatar&r=testimonials1',
+    body: 'Framing naming conventions and @layer structure in terms close to "Why Lism" made code reviews much easier to navigate. When everyone uses the same vocabulary as the docs, there is far less to explain.',
+  },
+  {
+    title: 'Design and implementation finally speak the same language',
+    meta: 'Osaka / 40s / UI Designer',
+    src: 'https://cdn.lism-css.com/random/img/?category=avatar&r=testimonials2',
+    body: 'Moving between typography tokens, spacing tokens, and Property Classes is intuitive. Tone matching in annotation is faster, and spacing instructions are consistent every time.',
+  },
+  {
+    title: 'No more spec-check loops with MCP',
+    meta: 'Fukuoka / 20s / Independent Developer',
+    src: 'https://cdn.lism-css.com/random/img/?category=avatar&r=testimonials3',
+    body: 'With @lism-css/mcp and the Skills listed in the ecosystem overview, aligning terminology during AI-assisted sessions is natural and quick.',
+  },
+  {
+    title: 'From template to launch in record time',
+    meta: 'Aichi / 30s / Markup Engineer',
+    src: 'https://cdn.lism-css.com/random/img/?category=avatar&r=testimonials4',
+    body: 'References to Every Layout and Tailwind in the Inspirations section gave me a great hook for explaining the layout approach in meetings. Really clicking with the idea of composing primitives was the turning point.',
+  },
+  {
+    title: 'Fewer dead ends on Astro projects too',
+    meta: 'Hokkaido / 30s / Full-Stack Engineer',
+    src: 'https://cdn.lism-css.com/random/img/?category=avatar&r=testimonials5',
+    body: 'Following the official docs for the dedicated React and Astro components meant I was productive from day one — no guesswork required.',
+  },
+  {
+    title: 'Started small, scaled incrementally',
+    meta: 'Okinawa / 40s / Tech Lead',
+    src: 'https://cdn.lism-css.com/random/img/?category=avatar&r=testimonials6',
+    body: 'The SCSS override and lism.config.js documentation doubled as convincing materials when the team needed to expand. Pointing to the ecosystem chart for @lism-css/ui made cross-team alignment straightforward.',
+  },
+];
+
+const informations = [
+  {
+    term: 'Organization',
+    description: 'Lism CSS Project (fictional organization for demo purposes)',
+  },
+  {
+    term: 'Address',
+    description: '1-1-1 Marunouchi, Chiyoda-ku, Tokyo (map is a sample Google Maps embed)',
+  },
+  {
+    term: 'Public Releases',
+    description:
+      'Packages as listed in the official ecosystem overview: lism-css, @lism-css/ui, lism-cli, @lism-css/mcp, and more. For announcements and authoritative information, refer to the official documentation and each GitHub repository.',
+  },
+  {
+    term: 'Contact',
+    description:
+      'Please use the channels listed in each OSS repository. The address and organization name in this section are fictional, for showcase purposes only.',
+  },
+  {
+    term: 'Activities',
+    description:
+      'As described in the documentation: distributing a single stylesheet grounded in CSS design theory, layout components, @lism-css/ui, lism-cli, @lism-css/mcp, and related packages — all free and open-source (MIT).',
+  },
+];
+
+const mapSrc =
+  'https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d7654.831243350634!2d139.76655044358094!3d35.68079012010135!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sja!2sjp!4v1769675880883!5m2!1sja!2sjp';
+
+const contactBg = 'https://cdn.lism-css.com/img/building/u-SH9josk706.jpg';
+
+const footerSnsLinks = [
+  { href: '#', icon: 'logo-x' as const, label: 'X' },
+  { href: '#', icon: 'logo-instagram' as const, label: 'Instagram' },
+  { href: '#', icon: 'logo-youtube' as const, label: 'YouTube' },
+];
+---
+
+<Layout title={title} lang="en">
+  <div>
+    <!-- Header -->
+    <Header />
+    <!-- Main -->
+    <Container as="main" class="z--main">
+      <Box class="z--mv" pos="relative" pos="relative" h="min(100svh,1200px)">
+        <Frame class="z--mv_frame" isLayer>
+          <Media class="z--mv_media" src={mvImage} alt="" w="100%" h="100%" width="960" height="640" loading="eager" />
+          <Layer
+            style={{
+              backdropFilter: 'grayscale(25%)',
+              backgroundColor: 'hsl(0 0% 0% / 0.25)',
+            }}
+          />
+        </Frame>
+        <Layer layout="center" class="z--mv_content" g="10" c="white" hasGutter>
+          <Heading level="1" fz="4xl" fw="normal" ta="center" lts="l">Order and Harmony</Heading>
+          <Text fz="l" fw="light" ta="center" lts="l">Lorem ipsum dolor sit amet.</Text>
+        </Layer>
+        <BoxLink layout="center" href="#about" class="c--scrollDown" pos="absolute" l="0" b="30" g="5" c="white" w="100%">
+          <Inline fz="xs" fs="italic" lts="l">SCROLL DOWN</Inline>
+          <Icon icon="caret-down" fz="m" />
+        </BoxLink>
+      </Box>
+
+      <Container id="about" class="z--about" isWrapper="s" pos="relative" py="70" hasGutter>
+        <Stack ai="center" jc="center" g="40" pos="relative">
+          <SectionHeading en="About" ja="What is Lism CSS?" />
+          <Box class="z--about_visuals" pos="absolute" w="100%" h="100%" z="0">
+            {
+              aboutPhotos.map((photo, i) => (
+                <Box class="z--about_visual u--pullBack" pos="absolute" w={i === 0 ? '20rem' : '16rem'}>
+                  <Frame class="u--bgParallax" pos="relative" ar="4/3" bdrs="20">
+                    <Media src={photo} alt="" width="800" height="600" loading="lazy" o="ppp" />
+                  </Frame>
+                </Box>
+              ))
+            }
+          </Box>
+          <Flow class="z--about_body u--fadeIn" flow="s" pos="relative" z="1">
+            <Text>
+              Lism CSS is a lightweight CSS design framework for building beautiful, well-structured websites with rhythm and precision. A single
+              stylesheet grounded in design theory is at its core — no special build process is required to get started.
+            </Text>
+            <Text>
+              It brings together rhythmic typography, layout-first primitives built for wireframing, and utility design that leverages CSS variables
+              for responsive flexibility. Inspired by the ideas behind Every Layout and Tailwind, Lism CSS distills them into an original CSS design
+              philosophy.
+            </Text>
+            <Text>
+              The ability to handle your entire site's CSS design — base styling, @layer structure, tokens, and naming conventions — in one coherent
+              system is the core argument of "Why Lism CSS?" You can begin with a single CSS import, starting from plain HTML.
+            </Text>
+            <Text>
+              Beyond the core lism-css, the ecosystem includes @lism-css/ui, lism-cli, @lism-css/mcp, and more — all free and open-source (MIT). This
+              page is a showcase of representative sections, designed so you can experience the qualities described in the official documentation
+              firsthand.
+            </Text>
+          </Flow>
+        </Stack>
+      </Container>
+
+      <Box id="feature" class="z--feature" pos="relative" bgc="base-2">
+        <Container isWrapper="l" py="60" hasGutter>
+          <Stack g="40">
+            <SectionHeading en="Feature" ja="Core Capabilities" />
+            <Stack g="40">
+              {
+                featureCards.map((card) => {
+                  return (
+                    <WithSide sideW="40%" mainW="24rem" class="z--feature_item u--fadeInL" g={['30', null, '40']} ai="center">
+                      <Frame isSide ar="16/9" pos="relative" bdrs="20" class="u--bgParallax">
+                        <Media src={card.src} alt="" width="960" height="540" loading="lazy" />
+                      </Frame>
+                      <Stack g="30">
+                        <Heading level="3" fz="l" util="trim">
+                          {card.title}
+                        </Heading>
+                        <Text util="trim" c="text-2">
+                          {card.body}
+                        </Text>
+                      </Stack>
+                    </WithSide>
+                  );
+                })
+              }
+            </Stack>
+          </Stack>
+        </Container>
+      </Box>
+
+      <Container id="works" class="z--works" isWrapper="l" py="60" hasGutter>
+        <Stack g="40">
+          <SectionHeading en="Works" ja="Selected Projects" />
+          <Text class="u--fadeIn">
+            The following are fictional project examples. Each sample draws on layout primitives and design tokens while aligning with the vocabulary
+            and ecosystem structure described in the official Overview documentation.
+          </Text>
+          <AutoColumns cols="20rem" g="40">
+            {
+              worksItems.map((item) => (
+                <BoxLink class="z--works_item u--fadeIn" href="#" layout="stack" set="hov" g="20">
+                  <Frame class="z--works_frame" ar="16/9" pos="relative" bdrs="20">
+                    <Media class="u--pullBack" src={item.src} alt="" width="960" height="540" loading="lazy" hasTransition hov="in:zoom" />
+                    <Layer layout="center" hasTransition hov="in:show" h="100%" c="white" bgc="black:30%" style={{ backdropFilter: 'blur(4px)' }}>
+                      <Inline fz="xl" fs="italic" fw="light" lts="l">
+                        View More
+                      </Inline>
+                    </Layer>
+                  </Frame>
+                  <Stack g="20" py="5">
+                    <Heading level="3" fz="m" util="trim">
+                      {item.title}
+                    </Heading>
+                    <Text fz="s" c="text-2" util="trim">
+                      {item.body}
+                    </Text>
+                  </Stack>
+                </BoxLink>
+              ))
+            }
+          </AutoColumns>
+        </Stack>
+      </Container>
+
+      <Box id="news" class="z--news" pos="relative">
+        <Frame isLayer class="u--bgParallax">
+          <Media src={newsBg} alt="" width="960" height="640" loading="lazy" />
+        </Frame>
+        <Layer bgc="black:75%" style={{ backdropFilter: 'grayscale(20%)' }} />
+        <Container isWrapper layout="stack" g="40" py="60" hasGutter c="white">
+          <SectionHeading en="News" ja="Latest Updates" />
+          <Stack g="30">
+            {
+              newsItems.map((row) => (
+                <BoxLink class="z--news_item u--fadeInL" href="#" layout="grid" gtc={['auto', 'auto 1fr']} g={['10', '30', '40']} py="10" set="hov">
+                  <Inline>{row.date}</Inline>
+                  <Stack g="10">
+                    <Text hov="in:underline" td="none">
+                      {row.title}
+                    </Text>
+                    <Text fz="s" o="p">
+                      {row.summary}
+                      {row.long ? ' See also the Changelog for details.' : ''}
+                    </Text>
+                  </Stack>
+                </BoxLink>
+              ))
+            }
+          </Stack>
+        </Container>
+      </Box>
+
+      <Container id="faq" class="z--faq" isWrapper layout="stack" g="40" py="60" hasGutter>
+        <SectionHeading en="FAQ" ja="Common Questions" />
+        <Accordion.Root class="u--divide u--fadeIn" p="0" ov="clip">
+          {
+            faqItems.map((item) => (
+              <Accordion.Item>
+                <Accordion.Heading>
+                  <Accordion.Button py="30" px="15" hov="-bgc">
+                    {item.question}
+                  </Accordion.Button>
+                </Accordion.Heading>
+                <Accordion.Panel py="30" px="15" pbs="15">
+                  <Text>{item.answer}</Text>
+                </Accordion.Panel>
+              </Accordion.Item>
+            ))
+          }
+        </Accordion.Root>
+      </Container>
+
+      <Container id="testimonials" class="z--testimonials" isWrapper="l" layout="stack" g="40" bgc="base-2" py="60" hasGutter>
+        <SectionHeading en="Testimonials" ja="What Users Say" />
+        <AutoColumns cols="20rem" g="40">
+          {
+            testimonials.map((item) => (
+              <Grid class="z--testimonials_item u--fadeIn" gtr="subgrid" gr="span 3" g="30">
+                <Flex ai="center" g="20">
+                  <Frame as="figure" ar="1/1" w="3.5rem" fxsh="0" bdrs="99">
+                    <Media src={item.src} alt="" width="256" height="256" loading="lazy" />
+                  </Frame>
+                  <Stack w="stretch" g="15">
+                    <Heading level="3" class="u--trim" fz="m" lh="s">
+                      {item.title}
+                    </Heading>
+                  </Stack>
+                </Flex>
+                <Text class="u--trim" fz="s" o="p">
+                  {item.body}
+                </Text>
+                <Text class="u--trim" jslf="end" fz="xs" fs="italic" o="pp">
+                  {item.meta}
+                </Text>
+              </Grid>
+            ))
+          }
+        </AutoColumns>
+      </Container>
+
+      <Container id="information" class="z--information" isWrapper layout="stack" g="40" py="60" hasGutter>
+        <SectionHeading en="Information" ja="Company Overview" />
+        <Grid as="dl" class="u--divide u--fadeIn" gtc="auto 1fr">
+          {
+            informations.map((row) => (
+              <Grid gtc="subgrid" gc="1/-1" py="30" px="15" g={['30', null, '40']}>
+                <dt class="u--trim">{row.term}</dt>
+                <dd class="u--trim">{row.description}</dd>
+              </Grid>
+            ))
+          }
+        </Grid>
+        <Frame class="u--fadeIn" ar={['3/2', '16/9', '5/2']}>
+          <iframe
+            src={mapSrc}
+            width="1200"
+            height="600"
+            style="border:0;"
+            allowfullscreen=""
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </Frame>
+      </Container>
+
+      <Box id="contact" class="z--contact" pos="relative">
+        <Frame isLayer class="u--bgParallax">
+          <Media src={contactBg} alt="" width="960" height="640" loading="lazy" />
+        </Frame>
+        <Layer style={{ backgroundColor: 'hsl(0 0% 0% / 0.75)' }} />
+        <Container isWrapper="s" layout="center" g="40" pos="relative" c="white" py="60" min-h="65vh" hasGutter>
+          <SectionHeading en="Contact" ja="Get in Touch" />
+          <Text class="u--fadeIn">
+            This section is a demo contact area. Lism CSS is a lightweight CSS design framework you can adopt by importing a single stylesheet.
+            Dedicated components for React and Astro are available, as described in the official Overview (https://lism-css.com/en/docs/overview/).
+            For adoption decisions or factual verification, please rely on that page and the primary sources in each repository.
+          </Text>
+          <Cluster class="u--fadeIn" jc="center">
+            <Link
+              href="###"
+              layout="grid"
+              gtc="1em 1fr 1em"
+              ji="center"
+              ai="center"
+              px="20"
+              py="15"
+              g="15"
+              max-w="14rem"
+              td="none"
+              bgc="black"
+              c="white"
+              bdrs="99"
+              hov={{ bgc: 'rgb(25 25 25)' }}
+            >
+              <Inline gc="2"> Try Lism CSS </Inline>
+              <Icon icon="arrow-right" />
+            </Link>
+          </Cluster>
+        </Container>
+      </Box>
+    </Container>
+    <!-- Footer -->
+    <Container as="footer" isWrapper py="40" hasGutter>
+      <Center g="30">
+        <Text fz="xl" fw="400" lts="l">
+          <Inline fw="200">Lism</Inline>Corp
+        </Text>
+        <Cluster g="10">
+          {
+            footerSnsLinks.map(({ href, icon, label }) => (
+              <Link href={href} td="none" layout="center" c="text-2" p="5" hov="-o" hasTransition aria-label={label}>
+                <Icon icon={icon} fz="l" />
+              </Link>
+            ))
+          }
+        </Cluster>
+        <Text fz="s" c="text-2">© 2026 Lism CSS.</Text>
+      </Center>
+    </Container>
+  </div>
+</Layout>

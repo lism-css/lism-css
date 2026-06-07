@@ -10,7 +10,7 @@ import { Stack, Text, Group, Cluster, Inline, Frame, Heading } from 'lism-css/as
 import { Image } from 'astro:assets';
 import { PreviewFrame, PreviewTitle } from '@/components/Preview';
 import { getLocalizedUrl, type LangCode } from '@/lib/i18n';
-import { stackLabels, getAggregateRepresentative, type TemplateItem, type CategoryDef } from '@/config/templates';
+import { stackLabels, getAggregateRepresentative, getThumb, getPreviewUrl, type TemplateItem, type CategoryDef } from '@/config/templates';
 import CopyCommand from './CopyCommand.astro';
 
 interface Props {
@@ -47,9 +47,9 @@ const copy = isJa
     };
 
 const templatesUrl = getLocalizedUrl('/templates/', lang);
-const categoryCommand = `npm create lism@latest -- --template ${category.id}`;
+const categoryCommand = `npm create lism@latest -- --template ${category.id} --lang ${lang}`;
 const representative = getAggregateRepresentative(category, templates) ?? templates[0];
-const previewUrl = representative?.previewUrl;
+const previewUrl = representative ? getPreviewUrl(representative, lang) : undefined;
 ---
 
 <Stack g="40" class="p--templates">
@@ -97,7 +97,12 @@ const previewUrl = representative?.previewUrl;
                   {stackLabels[tpl.stack]}
                 </Inline>
               </Cluster>
-              <CopyCommand bdrs="10" command={`npm create lism@latest -- --template ${tpl.slug}`} copyLabel={copy.copy} copiedLabel={copy.copied} />
+              <CopyCommand
+                bdrs="10"
+                command={`npm create lism@latest -- --template ${tpl.slug} --lang ${lang}`}
+                copyLabel={copy.copy}
+                copiedLabel={copy.copied}
+              />
             </Stack>
           ))
         }
@@ -114,7 +119,7 @@ const previewUrl = representative?.previewUrl;
         <Stack g="10">
           <Frame bd bdrs="20">
             <Image
-              src={representative.thumb}
+              src={getThumb(representative, lang)}
               alt={copy.thumbAlt(category.label)}
               widths={[400, 800, 1200]}
               sizes="(max-width: 800px) 100vw, 800px"

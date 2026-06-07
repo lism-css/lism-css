@@ -26,8 +26,8 @@ export const messages = {
     en: 'CLI for Lism CSS / UI',
   },
   'cli.opt.lang': {
-    ja: 'CLI の表示言語を指定（ja | en）',
-    en: 'Display language for the CLI (ja | en)',
+    ja: 'CLI 表示と生成テンプレートの言語（ja | en、未指定なら対話時に選択）',
+    en: 'Language for the CLI and generated template (ja | en; prompted when omitted)',
   },
 
   // create

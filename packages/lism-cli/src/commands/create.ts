@@ -6,7 +6,7 @@ import { select, input, confirm } from '@inquirer/prompts';
 import { logger } from '../logger.js';
 import { LISM_CSS_VERSION } from '../version.js';
 import { DEFAULT_TEMPLATES_REF, SOURCE_REPO, TEMPLATES_PATH } from '../constants.js';
-import { t, tOf } from '../i18n.js';
+import { setLang, t, tOf, type Lang } from '../i18n.js';
 import type { MessageKey } from '../messages.js';
 import {
   TEMPLATES,
@@ -65,18 +65,34 @@ interface CreateOptions {
   force?: boolean;
 }
 
+/** commander の action 第3引数（グローバル --lang を読むために最小限の構造だけ受ける） */
+interface CommandLike {
+  optsWithGlobals(): Record<string, unknown>;
+}
+
 export interface RunCreateArgs {
   template?: string;
   targetDir?: string;
   force?: boolean;
+  /**
+   * 明示指定された言語（`--lang`）。`ja` / `en` のときその言語で CLI 表示・テンプレ生成を確定する。
+   * 未指定（undefined / 不正値）の場合は、対話端末では最初に言語選択プロンプトを出し、
+   * 非対話端末（CI・パイプ等）では `en` にフォールバックする。
+   */
+  lang?: string;
 }
 
 /** `lism create` / `create-lism` から共通で使える実体関数 */
-export async function runCreate({ template, targetDir, force = false }: RunCreateArgs): Promise<void> {
-  await runCreateWithTemplates({ template, targetDir, force }, TEMPLATES);
+export async function runCreate({ template, targetDir, force = false, lang }: RunCreateArgs): Promise<void> {
+  await runCreateWithTemplates({ template, targetDir, force, lang }, TEMPLATES);
 }
 
-export async function runCreateWithTemplates({ template, targetDir, force = false }: RunCreateArgs, templates: TemplateDef[]): Promise<void> {
+export async function runCreateWithTemplates({ template, targetDir, force = false, lang }: RunCreateArgs, templates: TemplateDef[]): Promise<void> {
+  // 言語を最初に確定する。--lang 明示ならそれを使い、未指定かつ対話端末なら言語選択を出す。
+  // 選択言語で「以降の対話・ログ表示」と「生成テンプレ本体（overlay）」の両方を確定する。
+  const resolvedLang = await resolveLang(lang);
+  setLang(resolvedLang);
+
   // draft:true は CLI からは完全に隠す（一覧・選択・slug 直接指定すべて unknown 扱い）
   const availableTemplates = templates.filter((tpl) => !tpl.draft);
   const tpl = await resolveTemplate(template, availableTemplates);
@@ -97,17 +113,47 @@ export async function runCreateWithTemplates({ template, targetDir, force = fals
   logger.info(t('create.fetching', { name: tpl.slug, ref }));
   await downloadTemplateSource(tpl, outDir, ref, force);
 
+  // 要求言語に対応する overlay があれば、base の上にマージする（生成テンプレ本体の言語切替）
+  await applyLangOverlay(tpl, outDir, ref, resolvedLang);
+
   ensureTemplateDownloaded(outDir, tpl);
 
-  postProcessTemplate(outDir, tpl);
+  postProcessTemplate(outDir, tpl, resolvedLang);
 
   logger.success(t('create.created', { dir: outDir }));
   printNextSteps(outDir, tpl);
 }
 
 /** commander から呼ぶアクション */
-export async function createCommand(targetDir: string | undefined, options: CreateOptions): Promise<void> {
-  await runCreate({ template: options.template, targetDir, force: options.force });
+export async function createCommand(targetDir: string | undefined, options: CreateOptions, command?: CommandLike): Promise<void> {
+  // ルートプログラムの `--lang` はグローバルオプションなので optsWithGlobals() で取得する。
+  const langOpt = command?.optsWithGlobals().lang;
+  const lang = typeof langOpt === 'string' ? langOpt : undefined;
+  await runCreate({ template: options.template, targetDir, force: options.force, lang });
+}
+
+/**
+ * 生成テンプレ本体・CLI 表示言語の確定。
+ *
+ * - `--lang ja` / `--lang en` が明示されていればそれを使う（プロンプトは出さない）。
+ * - 未指定（不正値含む）のとき:
+ *   - 対話端末（TTY）では、他のどのプロンプトよりも先に言語を選ばせる。
+ *     こうすることで、以降のカテゴリ／タイプ／出力先プロンプトも選択言語で表示される。
+ *   - 非対話端末（CI・パイプ等）では `en` にフォールバックする。
+ *
+ * プロンプト自体は現在の検出言語に依存せず読めるよう、`English / 日本語` の固定表示にする。
+ */
+async function resolveLang(explicit: string | undefined): Promise<Lang> {
+  if (explicit === 'ja' || explicit === 'en') return explicit;
+  if (!process.stdin.isTTY) return 'en';
+
+  return select<Lang>({
+    message: 'Select language / 言語を選択:',
+    choices: [
+      { name: 'English', value: 'en' },
+      { name: '日本語', value: 'ja' },
+    ],
+  });
 }
 
 async function resolveTemplate(requested: string | undefined, templates: TemplateDef[]): Promise<TemplateDef> {
@@ -229,7 +275,31 @@ async function downloadTemplatePath(sourcePath: string, outDir: string, ref: str
   });
 }
 
-function postProcessTemplate(projectDir: string, tpl: TemplateDef): void {
+/**
+ * 言語別 overlay を適用する。
+ *
+ * base 取得後、要求言語に対応する `langOverlays[lang]` があれば、その差分を temp に取得して
+ * `outDir` へマージする（差分ファイルが base を上書きする）。
+ * base 言語（多くは `ja`）には overlay を用意しない方針なので、その場合は何もしない。
+ *
+ * overlay の実体はテンプレート内の `.lang/{lang}/` に同梱されており、base 取得時にも
+ * `outDir/.lang/` として降りてくるが、それは postProcessTemplate の cleanup で取り除く。
+ */
+async function applyLangOverlay(tpl: TemplateDef, outDir: string, ref: string, lang: Lang): Promise<void> {
+  if (tpl.kind !== 'project') return;
+  const overlayPath = tpl.langOverlays?.[lang];
+  if (!overlayPath) return;
+
+  const overlayDir = fs.mkdtempSync(path.join(os.tmpdir(), 'lism-template-lang-'));
+  try {
+    await downloadTemplatePath(overlayPath, overlayDir, ref, true);
+    mergeDirectory(overlayDir, outDir);
+  } finally {
+    fs.rmSync(overlayDir, { recursive: true, force: true });
+  }
+}
+
+function postProcessTemplate(projectDir: string, tpl: TemplateDef, lang: Lang): void {
   if (tpl.kind === 'static-html') return;
 
   if (tpl.kind === 'base-overlay' && tpl.rewritePackageName !== false) {
@@ -237,7 +307,7 @@ function postProcessTemplate(projectDir: string, tpl: TemplateDef): void {
   }
 
   if (tpl.kind === 'single-project-variant') {
-    extractVariantFiles(projectDir, tpl);
+    extractVariantFiles(projectDir, tpl, lang);
     rewritePackageName(projectDir, tpl.packageName ?? tpl.slug);
   }
 
@@ -249,8 +319,9 @@ function postProcessTemplate(projectDir: string, tpl: TemplateDef): void {
 }
 
 /**
- * テンプレートに同梱されている開発専用のスクリーンショット関連ファイルを削除する。
- * （docs サムネ生成用なので、生成プロジェクトには不要）
+ * テンプレートに同梱されている配布不要ファイルを削除する。
+ * - `screenshots/` + `screenshots.config.json`: docs サムネ生成用
+ * - `.lang/`: 言語別 overlay の配信元（base 取得時に降りてくるが、生成プロジェクトには残さない）
  */
 function cleanupDevArtifacts(projectDir: string): void {
   const screenshotsDir = path.join(projectDir, 'screenshots');
@@ -262,6 +333,27 @@ function cleanupDevArtifacts(projectDir: string): void {
   if (fs.existsSync(screenshotsConfig)) {
     fs.rmSync(screenshotsConfig, { force: true });
   }
+
+  const langDir = path.join(projectDir, '.lang');
+  if (fs.existsSync(langDir)) {
+    fs.rmSync(langDir, { recursive: true, force: true });
+  }
+}
+
+/**
+ * single-project-variant の言語別 variant ディレクトリを解決する。
+ *
+ * LP のように文章量が多くデザインごと差し替えたいテンプレートでは、言語別コンテンツを
+ * overlay（差分マージ）ではなく `src/pages/{lang}/{variant}/` 配下の完全コピーとして同梱する。
+ * 要求言語の `src/pages/{lang}/{variant}/index.astro` があればその 2 セグメントパス
+ * （例: `en/corporate`）を variant として返し、無ければ base 言語（`tpl.variant`）へフォールバックする。
+ *
+ * これにより、英語版を用意していない variant は要求言語に関係なく従来どおり base を生成できる。
+ */
+function resolveVariantDir(srcDir: string, variant: string, lang: Lang): string {
+  const langVariant = `${lang}/${variant}`;
+  const hasLangVariant = fs.existsSync(path.join(srcDir, 'pages', langVariant, 'index.astro'));
+  return hasLangVariant ? langVariant : variant;
 }
 
 /**
@@ -279,13 +371,17 @@ function cleanupDevArtifacts(projectDir: string): void {
  * 加えて、配布ファイル内の `@/{dir}/{variant}/...` 形式の path-alias import を
  * `@/{dir}/...` に書き換える。
  *
+ * 言語別コンテンツは `resolveVariantDir()` で解決した variant パス（例: `en/corporate`）を
+ * 起点に同じ処理を行う。2 セグメントになっても `src/{dir}/{variant}/` の持ち上げ・
+ * alias 書き換えはそのまま機能する。
+ *
  * `src/pages/{variant}/index.astro` の存在だけは必須（無ければエラー）。
  * その他のディレクトリ（components/styles/lib 等）では variant ディレクトリが存在しなければ
  * 何もしない（既存ファイルはそのまま）。
  */
-function extractVariantFiles(projectDir: string, tpl: SingleProjectVariantTemplateDef): void {
+function extractVariantFiles(projectDir: string, tpl: SingleProjectVariantTemplateDef, lang: Lang): void {
   const srcDir = path.join(projectDir, 'src');
-  const variant = tpl.variant;
+  const variant = resolveVariantDir(srcDir, tpl.variant, lang);
 
   // `src/pages/{variant}/index.astro` の存在は必須
   const pagesVariantIndex = path.join(srcDir, 'pages', variant, 'index.astro');

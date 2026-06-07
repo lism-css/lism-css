@@ -9,7 +9,7 @@ import { Stack, Text, Group, Cluster, Inline, Frame, Heading } from 'lism-css/as
 import { Image } from 'astro:assets';
 import { PreviewFrame, PreviewTitle } from '@/components/Preview';
 import { getLocalizedUrl, type LangCode } from '@/lib/i18n';
-import { stackLabels, type TemplateItem, type CategoryDef } from '@/config/templates';
+import { stackLabels, getThumb, getPreviewUrl, type TemplateItem, type CategoryDef } from '@/config/templates';
 import CopyCommand from './CopyCommand.astro';
 
 interface Props {
@@ -44,8 +44,8 @@ const copy = isJa
     };
 
 const templatesUrl = getLocalizedUrl('/templates/', lang);
-const installCommand = `npm create lism@latest -- --template ${template.slug}`;
-const previewUrl = template.previewUrl;
+const installCommand = `npm create lism@latest -- --template ${template.slug} --lang ${lang}`;
+const previewUrl = getPreviewUrl(template, lang);
 ---
 
 <Stack g="40" class="p--templateDetail">
@@ -94,7 +94,7 @@ const previewUrl = template.previewUrl;
       ) : (
         <Stack g="10">
           <Frame bd bdrs="20" w="100%">
-            <Image src={template.thumb} alt={copy.thumbAlt(template.title[lang])} loading="lazy" />
+            <Image src={getThumb(template, lang)} alt={copy.thumbAlt(template.title[lang])} loading="lazy" />
           </Frame>
           <Text c="text-2" fz="xs" lh="s" ta="center">
             {copy.previewMissing}

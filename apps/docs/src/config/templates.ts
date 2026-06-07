@@ -9,6 +9,9 @@
  * thumb 解決ルール:
  * - kind === 'single-project-variant': `templates/{sourcePath}/screenshots/{variant}.png`
  * - それ以外:                          `templates/{sourcePath}/screenshots/top.png`
+ *
+ * 言語別 thumb（en）は同じ規約で `screenshots/en/` 配下を参照する。撮影済みなら
+ * `getThumb(tpl, 'en')` が en スクショを返し、未撮影なら ja にフォールバックする。
  */
 
 import type { LangCode } from '@/config/site';
@@ -17,11 +20,17 @@ import type { ImageMetadata } from 'astro';
 import { TEMPLATES as manifestTemplates, type CategoryId, type Stack, type TemplateDef } from '@templates/manifest';
 
 /**
- * templates/ 配下の screenshots/*.png を一括取得。
- * `_baseline/` 配下は差分検出用のベースライン画像なのでビルドに含めない。
+ * templates/ 配下の screenshots 画像を一括取得。
+ * `screenshots/*.png`（ja）に加え `screenshots/en/*.png`（言語別）も拾う。
+ * 比較用の `_baseline/` `_diff/` `_temp/` 配下はビルドに含めない。
  */
 const screenshotModules = import.meta.glob<{ default: ImageMetadata }>(
-  ['../../../../templates/**/screenshots/*.png', '!../../../../templates/**/_baseline/**'],
+  [
+    '../../../../templates/**/screenshots/**/*.png',
+    '!../../../../templates/**/screenshots/_baseline/**',
+    '!../../../../templates/**/screenshots/_diff/**',
+    '!../../../../templates/**/screenshots/_temp/**',
+  ],
   { eager: true }
 );
 
@@ -34,8 +43,12 @@ export interface TemplateItem {
   title: Record<LangCode, string>;
   description: Record<LangCode, string>;
   thumb: ImageMetadata;
+  /** en 用 thumb（`screenshots/en/` に撮影済みの場合のみ）。無い場合は thumb にフォールバック */
+  thumbEn?: ImageMetadata;
   /** プレビューサイトの URL（無い場合は undefined → ボタン非表示 or 無効化） */
   previewUrl?: string;
+  /** en 用プレビュー URL（集約サイトで en を配信している場合のみ）。無い場合は previewUrl にフォールバック */
+  previewUrlEn?: string;
   /** true の場合、本番ビルドでは一覧・詳細ページ・パス生成から除外する（dev では表示） */
   draft?: boolean;
   /** 紹介カードに表示する機能リスト（任意） */
@@ -49,7 +62,7 @@ export interface CategoryDef {
   /**
    * true の場合、カテゴリ内の複数テンプレートを「中身共通・stack 違い」として
    * 1枚のカードに集約表示し、詳細ページもカテゴリ単位の1ページに統合する。
-   * 一覧カードのコマンドは `npm create lism@latest -- --template {category.id}` を案内する。
+   * 一覧カードのコマンドは `npm create lism@latest -- --template {category.id} --lang {lang}` を案内する。
    */
   aggregateView?: boolean;
   /** 集約カードで代表サムネとして使う template slug（aggregateView 時のみ参照） */
@@ -110,13 +123,17 @@ function hasSourcePath(tpl: TemplateDef): tpl is Extract<TemplateDef, { sourcePa
   return 'sourcePath' in tpl;
 }
 
+/** 規約ベースの thumb ファイル名（screenshots 直下からの相対） */
+function thumbFileName(tpl: Extract<TemplateDef, { sourcePath: string }>): string {
+  return tpl.kind === 'single-project-variant' ? `${tpl.variant}.png` : 'top.png';
+}
+
 /** 規約ベースで thumb を解決（解決できなければビルド時に失敗させる） */
 function resolveThumb(tpl: TemplateDef): ImageMetadata {
   if (!hasSourcePath(tpl)) {
     throw new Error(`[templates] thumb resolution unsupported for kind "${tpl.kind}" (slug: ${tpl.slug})`);
   }
-  const file = tpl.kind === 'single-project-variant' ? `${tpl.variant}.png` : 'top.png';
-  const key = `../../../../templates/${tpl.sourcePath}/screenshots/${file}`;
+  const key = `../../../../templates/${tpl.sourcePath}/screenshots/${thumbFileName(tpl)}`;
   const mod = screenshotModules[key];
   if (!mod) {
     throw new Error(`[templates] thumb not found for slug "${tpl.slug}" at ${key}`);
@@ -124,20 +141,40 @@ function resolveThumb(tpl: TemplateDef): ImageMetadata {
   return mod.default;
 }
 
+/** en 用 thumb を解決（`screenshots/en/` 未撮影なら undefined → 呼び出し側で ja にフォールバック） */
+function resolveThumbEn(tpl: TemplateDef): ImageMetadata | undefined {
+  if (!hasSourcePath(tpl)) return undefined;
+  const key = `../../../../templates/${tpl.sourcePath}/screenshots/en/${thumbFileName(tpl)}`;
+  return screenshotModules[key]?.default;
+}
+
 /** manifest を docs 用 TemplateItem に変換 */
-export const templates: TemplateItem[] = manifestTemplates.map(
-  (tpl: TemplateDef): TemplateItem => ({
+export const templates: TemplateItem[] = manifestTemplates.map((tpl: TemplateDef): TemplateItem => {
+  const thumbEn = resolveThumbEn(tpl);
+  return {
     slug: tpl.slug,
     category: tpl.category,
     stack: tpl.stack,
     title: tpl.title,
     description: tpl.description,
     thumb: resolveThumb(tpl),
+    ...(thumbEn ? { thumbEn } : {}),
     ...(tpl.previewUrl ? { previewUrl: tpl.previewUrl } : {}),
+    ...(tpl.previewUrlEn ? { previewUrlEn: tpl.previewUrlEn } : {}),
     ...(tpl.draft ? { draft: tpl.draft } : {}),
     ...(tpl.features ? { features: tpl.features } : {}),
-  })
-);
+  };
+});
+
+/** 言語に応じた thumb を返す（en は en スクショ優先・未撮影なら ja にフォールバック） */
+export function getThumb(tpl: TemplateItem, lang: LangCode): ImageMetadata {
+  return lang === 'en' ? (tpl.thumbEn ?? tpl.thumb) : tpl.thumb;
+}
+
+/** 言語に応じたプレビュー URL を返す（en は en 用 URL 優先・無ければ ja にフォールバック） */
+export function getPreviewUrl(tpl: TemplateItem, lang: LangCode): string | undefined {
+  return lang === 'en' ? (tpl.previewUrlEn ?? tpl.previewUrl) : tpl.previewUrl;
+}
 
 /**
  * 本番ビルドで実際に公開されるテンプレートのみを含む派生リスト。

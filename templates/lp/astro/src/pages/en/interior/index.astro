@@ -1,0 +1,658 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import {
+  Lism,
+  Decorator,
+  Box,
+  Cluster,
+  Container,
+  Flex,
+  Center,
+  Frame,
+  Grid,
+  Columns,
+  Heading,
+  Icon,
+  Inline,
+  Layer,
+  Link,
+  List,
+  ListItem,
+  Media,
+  Stack,
+  Text,
+} from 'lism-css/astro';
+import { Accordion } from '@lism-css/ui/astro/Accordion';
+import { Avatar } from '@lism-css/ui/astro/Avatar';
+import Header from '@/components/en/interior/Header.astro';
+import SectionHeading from '@/components/en/interior/SectionHeading.astro';
+
+import './_style.css';
+
+export const title = 'LP Interior';
+
+/** ヘッダー主ナビと同一5件 */
+const footerPrimaryNavItems = [
+  { href: '#mission', ja: 'ミッション', en: 'Mission' },
+  { href: '#feature', ja: '特長', en: 'Feature' },
+  { href: '#service', ja: 'サービス', en: 'Service' },
+  { href: '#step', ja: 'ご依頼の流れ', en: 'Step' },
+  { href: '#voice', ja: 'お客様の声', en: 'Voice' },
+];
+
+const footerSnsLinks = [
+  { href: '#', icon: 'logo-x' as const, label: 'X' },
+  { href: '#', icon: 'logo-instagram' as const, label: 'Instagram' },
+  { href: '#', icon: 'logo-youtube' as const, label: 'YouTube' },
+  { href: '#', icon: 'logo-line' as const, label: 'LINE' },
+];
+
+const mvImage = {
+  src: 'https://cdn.lism-css.com/img/room/a-Rrr1UZO5Ji.jpg',
+  alt: 'A modern living room with a red sofa and indoor plants',
+};
+
+const missionImage = {
+  src: 'https://cdn.lism-css.com/img/room/u-MojU9rQhZn.jpg',
+  alt: 'A sunlit living room with a sofa, rug, large windows, and indoor plants',
+};
+
+const missionBody =
+  "Every home is different — different families, different budgets, different visions. At LISM Life, whether you live in a rental or a house you own, we take time to understand how you live and what's not working, then guide you through everything from furniture selection and styling to layout and setup. You don't need a mood board or a clear picture in mind — we work from even the smallest hints of what you love to bring a real room to life. Whether it's a quick consultation or a full transformation, every step is a move toward a home that feels genuinely yours.";
+
+const featureImage = {
+  src: 'https://cdn.lism-css.com/img/room/u-jh2GpjGKEp.jpg',
+  alt: 'A bright living room with a yellow armchair and floor lamp',
+};
+
+/** カードごとの表示内容（タイトル・本文・アイコンを独立して管理） */
+const featureCards = [
+  {
+    icon: 'home' as const,
+    title: 'Tailored to your home, rental or owned',
+    body: 'We consider your lease term, floor plan, and whether you have children or pets. From mixing off-the-shelf furniture to making the most of a compact space, we work through it with you.',
+  },
+  {
+    icon: 'heart' as const,
+    title: 'From first questions to full coordination',
+    body: 'We help you sort through scattered ideas, define a direction for colors and materials, and narrow down specific pieces — at whatever depth you need. Advice-only sessions and full sourcing and setup are both welcome.',
+  },
+  {
+    icon: 'arrow-right' as const,
+    title: 'Wide selection, including our own line',
+    body: 'We work with a broad range of brands to match your lifestyle, and also introduce our own original furniture and accessories. We help you compare options across price ranges and design preferences.',
+  },
+  {
+    icon: 'book' as const,
+    title: 'A realistic plan for your budget and goals',
+    body: 'Start with the one area that matters most, or build up gradually over time — either approach is welcome. We help you get a rough sense of costs and talk through what to prioritize.',
+  },
+  {
+    icon: 'chat' as const,
+    title: 'Meet in-store, online, or by phone',
+    body: "Choose whichever format fits your schedule. Sharing photos or floor plans beforehand helps the session go smoothly. If you're far away, we can start with a simple conversation online.",
+  },
+];
+
+const serviceLeadImage = {
+  src: 'https://cdn.lism-css.com/img/room/a-6wASe0C2nM.jpg',
+  alt: 'A bright home desk with framed botanical art, a wooden desk, laptop, and bookshelf',
+};
+
+const serviceSubCards = [
+  {
+    index: '01',
+    titleJa: 'Flexible scope, from chat to full setup',
+    titleEn: 'Scope that fits you',
+    body: 'Interior consultations come in all shapes. Whether you want advice only, help adding a few pieces, or a complete room sourced and arranged to your floor plan — we handle it all, from the first conversation to rough cost estimates.',
+    image: {
+      src: 'https://cdn.lism-css.com/img/room/u-M1jaFJaeKW.jpg',
+      alt: 'A bright living room with a white sofa, nine yellow-toned art frames, colorful cushions, and a floor lamp',
+    },
+  },
+  {
+    index: '02',
+    titleJa: 'Style you love, spaces that work',
+    titleEn: 'Comfort and your taste',
+    body: "We balance what looks good with how you actually move through your home day to day. That includes furniture with timeless materials and well-made construction that won't feel dated in a few years.",
+    image: {
+      src: 'https://cdn.lism-css.com/img/room/u-muaD49UlYx.jpg',
+      alt: 'A bedroom with a wooden bed, light wood nightstand, table lamp, and gray walls',
+    },
+  },
+  {
+    index: '03',
+    titleJa: "A retreat you're glad to come home to",
+    titleEn: 'A room to come back to',
+    body: 'After a long day or a busy morning, you want a place to unwind. We help you think through lighting, layout, and how to create a calm corner that truly lets you decompress.',
+    image: {
+      src: 'https://cdn.lism-css.com/img/room/u-8HzizEUdqH.jpg',
+      alt: 'A spacious living room with a wood-beam ceiling, indirect lighting, L-shaped sofa, marble-style coffee table, and bookshelf',
+    },
+  },
+];
+
+const stepImage = {
+  src: 'https://cdn.lism-css.com/img/room/a-0ojkYuqTrl.jpg',
+  alt: 'A sunlit room with a home office setup, sofa, and desk side by side',
+};
+
+const stepCards = [
+  {
+    title: 'Initial inquiry and first consultation',
+    body: "Reach out by form, phone, or in-store visit. Share a rough idea of what you're hoping for and what's bothering you most — we'll clarify what to work through in the sessions ahead. Online meetings are available too.",
+    image: {
+      src: 'https://cdn.lism-css.com/img/working/a_6SNi6XvWBT.jpg',
+      alt: 'An interior consultation session in progress',
+    },
+  },
+  {
+    title: 'Mapping your lifestyle and vision',
+    body: "We put into words your daily flow, storage needs, preferred atmosphere, and color tendencies. We also ask about what furniture you already have and what you'd like to keep, so the next session can move faster.",
+  },
+  {
+    title: 'Setting direction and rough costs',
+    body: 'We lock in furniture candidates, layout options, and the scope of work, then move to a rough cost breakdown by priority. We take the time to walk you through everything until it makes sense.',
+    image: {
+      src: 'https://cdn.lism-css.com/img/room/a-Kt7MCU3Mad.jpg',
+      alt: 'A bright, styled living room interior',
+    },
+  },
+  {
+    title: 'Sourcing, delivery, and setup',
+    body: 'With your approval, we move to sourcing, delivery, and installation. If you have move-in dates, upcoming guests, or building regulations to consider, let us know in advance so we can plan around them.',
+  },
+  {
+    title: 'After-delivery follow-up',
+    body: "If something feels off once you're living with it, or you want to add a few finishing touches, just ask. We don't handle major renovations, but layout tweaks and next-step conversations are always welcome.",
+  },
+];
+
+/**
+ * アバター: 本番・CMS ではカードごとに URL がばらばらになり得るため、`avatarBase` は使わず `src` にフル URL を直書きする
+ * @see https://lism-css.com/docs/ui/avatar/
+ */
+const voiceCards = [
+  {
+    avatar: { src: 'https://cdn.lism-css.com/img/avatar/a_DpTwx1lZU3.jpg', alt: 'Portrait of client (1)' },
+    title: 'I was completely lost in my own apartment',
+    body: 'I struggled to put into words what "relaxing" even meant to me. After talking through furniture scale and traffic flow, I knew exactly how much to buy — and the room felt so much less cramped when I walked in. Thank you for patiently working through all my scattered requests.',
+    attribution: '20s / Studio apartment',
+  },
+  {
+    avatar: { src: 'https://cdn.lism-css.com/img/avatar/a_Bp5H4TO2tS.jpg', alt: 'Portrait of client (2)' },
+    title: 'Our house was where everything landed',
+    body: 'With young kids, flow and storage were everything. By combining ready-made storage units with what we already had, we got a setup that actually works — without going over budget. When my taste shifted mid-project, they helped me readjust without any fuss.',
+    attribution: '30s / Single-family home',
+  },
+  {
+    avatar: { src: 'https://cdn.lism-css.com/img/avatar/a_To1qVvQb79.jpg', alt: 'Portrait of client (3)' },
+    title: 'Finding furniture that fits an odd corner unit',
+    body: "Standard furniture sizes just didn't work in my corner rental apartment. They compared dimensions and brands and pulled it all together in a calm, cohesive palette. The room looks clean and open without losing any of the natural light.",
+    attribution: '40s / Rental apartment',
+  },
+  {
+    avatar: { src: 'https://cdn.lism-css.com/img/avatar/a_TjjtOsU0kg.jpg', alt: 'Portrait of client (4)' },
+    title: 'Fixing up my work-from-home corner',
+    body: 'Working from home full-time made the balance of bookshelf, desk, and lighting a real issue. We talked through how to divide the space and get the light right — keeping focus during the day and winding down in the evening. Planning the order of purchases together was a huge help.',
+    attribution: '50s / Home office setup',
+  },
+  {
+    avatar: { src: 'https://cdn.lism-css.com/img/avatar/a_syw7vEz0mS.jpg', alt: 'Portrait of client (5)' },
+    title: "Making my mother's home easier to move around in",
+    body: 'We worked through replacing floor cushions with proper chairs and improving the hallway lighting with her mobility in mind. We kept the changes subtle and held onto furniture she loved, while making everyday movement noticeably easier.',
+    attribution: '60s / Consulting on behalf of parent',
+  },
+  {
+    avatar: { src: 'https://cdn.lism-css.com/img/avatar/a_w7f7eeA81h.jpg', alt: 'Portrait of client (6)' },
+    title: 'What started as one small question',
+    body: 'I came in just wondering if a table would work. They ended up looking at the whole apartment and helped me land on a color direction for the whole place. The idea of building things up gradually — rather than all at once — really clicked for me.',
+    attribution: '20s / First furniture consultation',
+  },
+];
+
+/** 各項目は質問・回答を独立して管理（必要に応じて初期展開を指定） */
+const faqItems = [
+  {
+    question: 'Can I come in just for a consultation, without committing to anything?',
+    answer:
+      "Absolutely. We can help you sort through what's bothering you at home, check standard furniture sizes and placement, or give you a rough sense of costs — whatever scope makes sense. Any sourcing or setup after that moves forward only when you're ready.",
+    defaultOpen: true,
+  },
+  {
+    question: 'What if I want to change direction partway through?',
+    answer:
+      "It happens more often than you'd think, and that's completely fine. We realign priorities and swap out options as things evolve. For any major changes, we always make sure we're on the same page before placing any orders.",
+  },
+  {
+    question: 'How does payment for furniture work?',
+    answer:
+      "It depends on the items and the terms involved. Options include a deposit upfront, full payment before delivery, or installment arrangements. We'll walk you through the specifics at the first session and provide itemized breakdowns as needed.",
+  },
+  {
+    question: "I'm in a rental and have restrictions on installation.",
+    answer:
+      "We'll go through your building's rules together — what's allowed for drilling or wall mounting, how heavier pieces can be brought in, and how to handle wall surfaces. At the furniture selection stage, we can also steer toward options that won't create headaches later.",
+  },
+  {
+    question: 'I own my home — where do you draw the line on what you handle?',
+    answer:
+      'Large-scale renovations and plumbing work fall outside our scope. We focus on furniture sourcing, delivery, placement, and light assembly. For anything where the line is unclear, sharing your floor plan or photos of the space in advance helps us map it out.',
+  },
+];
+
+const contactBg = {
+  src: 'https://cdn.lism-css.com/img/room/u-N1EvhlxYpo.jpg',
+  alt: 'An open, airy living room with light streaming through the windows',
+};
+
+/** 各フィールドの表示・name・プレースホルダーを独立して管理 */
+const contactFields = [
+  {
+    id: 'interior-contact-name',
+    name: 'name',
+    label: 'Name',
+    type: 'text' as const,
+    placeholder: 'Jane Smith',
+    autoComplete: 'name',
+    errorMessage: '',
+  },
+  {
+    id: 'interior-contact-email',
+    name: 'email',
+    label: 'Email address',
+    type: 'email' as const,
+    placeholder: 'example@lism.com',
+    inputMode: 'email' as const,
+    autoComplete: 'email',
+    errorMessage: 'Please enter a valid email address.',
+  },
+  {
+    id: 'interior-contact-subject',
+    name: 'subject',
+    label: 'Subject',
+    type: 'text' as const,
+    placeholder: 'Inquiry about styling my space',
+    autoComplete: 'off',
+    errorMessage: '',
+  },
+  {
+    id: 'interior-contact-message',
+    name: 'message',
+    label: 'Message',
+    type: 'textarea' as const,
+    placeholder: "Please describe what you're looking for or any questions you have.",
+    rows: 6,
+    errorMessage: '',
+  },
+];
+---
+
+<Layout title={title} lang="en">
+  <link rel="preconnect" href="https://fonts.googleapis.com" slot="head" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin slot="head" />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200..700&display=swap" rel="stylesheet" slot="head" />
+  <div id="top">
+    <!-- Header -->
+    <Header />
+    <!-- Main -->
+    <Container as="main" class="z--main" iso="isolate">
+      <Box as="section" class="z--mv" hasGutter pos="relative" ov="hidden" aria-label="Main visual">
+        <Heading level="1" class="z--mv_title" pos="relative" z="1" ta="center" c="white" lts="l" fw="700" ff="accent" ovw="break-word">
+          Simple<br />
+          <Inline>LP Design</Inline>
+        </Heading>
+        <Layer class="z--mv_visual" isWrapper="l">
+          <Frame w="100%" h="100%">
+            <Media src={mvImage.src} alt={mvImage.alt} width="1920" height="1080" loading="eager" fetchpriority="high" />
+          </Frame>
+        </Layer>
+      </Box>
+
+      <Container as="section" id="mission" class="z--mission" set="bleed" contentSize="l" pos="relative" py="50" mbs="60">
+        <Layer class="z--mission_bg" bgc="base-2" ms="calc(10rem + var(--bleed))" />
+        <Columns class="z--mission_content" cols={[1, null, 2]} g={['40', null, '10', '30']} pos="relative" w="100%">
+          <Stack fx="1" hasGutter ps="var(--bleed)">
+            <Stack g="40">
+              <Stack g="10">
+                <Heading level="2" fz="5xl" lts="l" ff="accent">Mission</Heading>
+                <Text fz="xl" fw="bold" lts="l">What we stand for</Text>
+              </Stack>
+              <Text lh="l" lts="s" c="text-2">
+                {missionBody}
+              </Text>
+            </Stack>
+          </Stack>
+          <Frame
+            as="figure"
+            class="z--mission_figure"
+            set="bleed"
+            contentSize="xl"
+            pos="relative"
+            fx="1"
+            w="100%"
+            h="100%"
+            ar="3/2"
+            ov="hidden"
+            pe="var(--bleed)"
+          >
+            <Media src={missionImage.src} alt={missionImage.alt} width="1920" height="1280" loading="lazy" />
+          </Frame>
+        </Columns>
+      </Container>
+
+      <Container as="section" id="message" isWrapper="l" layout="stack" g="50" mbs="60" hasGutter>
+        <Flex fxd={['column', null, 'row-reverse']} ai="center" g={['30', '40']}>
+          <Box fx="1">
+            <Stack g="30" max-sz="s">
+              <Heading level="3">Coordination built around your life</Heading>
+              <Text>
+                We take the time to understand your daily routine, household makeup, and what's not working — then build a direction around what feels
+                right for you. Beyond furniture pairings, we also look at storage solutions and small layout ideas, working toward a home you can live
+                with for the long haul.
+              </Text>
+            </Stack>
+          </Box>
+          <Frame ar="3/2" max-w={['100%', null, '400px']}>
+            <Media
+              src="https://cdn.lism-css.com/img/room/a-Kt7MCU3Mad.jpg"
+              alt="An interior photo of a bright living room"
+              width="1200"
+              height="900"
+            />
+          </Frame>
+        </Flex>
+        <Flex fxd={['column', null, 'row']} ai="center" g={['30', '40']}>
+          <Box fx="1">
+            <Stack max-sz="s" g="30" ms="auto">
+              <Heading level="3" fz="xl" lts="l">Turning your vision into a real space</Heading>
+              <Text>
+                From setting a styling direction to sourcing furniture and helping with setup, we handle it as one connected process. You don't need a
+                finished mood board — we start from colors, vibes, and what's been frustrating you, and shape it into something concrete together.
+              </Text>
+            </Stack>
+          </Box>
+          <Frame ar="3/2" max-w={['100%', null, '400px']}>
+            <Media src="https://cdn.lism-css.com/img/room/u-1K4PsDvC6W.jpg" alt="An interior styled as a workspace" width="1200" height="900" />
+          </Frame>
+        </Flex>
+      </Container>
+
+      <Container as="section" id="feature" class="z--point" ov-x="clip" mbs="60">
+        <Columns cols={[1, null, 2]} g={['40', null, '10', '30']} set="bleed" contentSize="l">
+          <Stack class="z--point_main" g="40" jc="start" hasGutter ps="var(--bleed)">
+            <SectionHeading en="Point" ja="What makes us different" />
+            <Stack g="40">
+              {
+                featureCards.map((card) => (
+                  <Grid gtc="auto 1fr" gtr="auto auto" ai="center" g="30" rg="10" p="30" bdrs="20" bxsh="20">
+                    <Icon icon={card.icon} size="2em" c="text-2" />
+                    <Heading level="3" fz="l">
+                      {card.title}
+                    </Heading>
+                    <Text fz="s" c="text-2" gc="2">
+                      {card.body}
+                    </Text>
+                  </Grid>
+                ))
+              }
+            </Stack>
+          </Stack>
+          <Frame pos="sticky" ar={['3/2', null, 'auto']} ms={['var(--gutter--base)', null, '0']}>
+            <Media src={featureImage.src} alt={featureImage.alt} width="1600" height="1067" loading="lazy" />
+          </Frame>
+        </Columns>
+      </Container>
+
+      <Container as="section" id="service" isWrapper="l" hasGutter class="z--service" bgc="base-2" py="60" mbs="70">
+        <Stack g="50" mbs="-60">
+          <SectionHeading en="Service" ja="Tailored to what you need" hasOffset />
+          <Columns cols={[1, null, 3]} g="40" ai="start">
+            {
+              serviceSubCards.map((item) => (
+                <Flex fxd={['row-reverse', null, 'column']} g="30">
+                  <Frame ar="3/2" w={['min(40%, 16rem)', null, 'auto']} d={['none', 'block']}>
+                    <Media src={item.image.src} alt={item.image.alt} width="900" height="600" loading="lazy" />
+                  </Frame>
+                  <Stack g="30" fx="1" jc="start">
+                    <Flex ai="center" g="20">
+                      <Inline lh="1" fz="3xl" fw="bold" lts="l" ff="accent" fxsh="0">
+                        {item.index}
+                      </Inline>
+                      <Decorator aslf="stretch" w="1px" bgc="text" fxsh="0" />
+                      <Stack g="10" class="z--service_cardTitles" util="trimAll">
+                        <Heading level="3" fz="m">
+                          {item.titleJa}
+                        </Heading>
+                        <Text fz="2xs" lh="s" c="text-2" o="p" ff="accent">
+                          {item.titleEn}
+                        </Text>
+                      </Stack>
+                    </Flex>
+                    <Text fz="s" c="text-2" util="trim">
+                      {item.body}
+                    </Text>
+                  </Stack>
+                </Flex>
+              ))
+            }
+          </Columns>
+
+          <!-- md 未満: 1列（画像上・テキスト下）。md 以上: 2列（画像左・テキスト右） -->
+          <Grid gtc={['1fr', null, 'minmax(0, 1fr) minmax(0, 1fr)']} g={['30', null, '40']} ai="center">
+            <Frame ar="3/2" ov="hidden">
+              <Media src={serviceLeadImage.src} alt={serviceLeadImage.alt} width="1920" height="1280" loading="lazy" />
+            </Frame>
+            <Stack g="20" jc="center">
+              <Heading level="3" fz="2xl" lts="l">
+                Flexible support,
+                <br />
+                for every budget and goal
+              </Heading>
+              <Text c="text-2">
+                We ask about your lifestyle, which areas you want to tackle first, and how much of the sourcing and setup you'd like us to handle —
+                then put together a plan that fits. Consultations are available in-store, online, or by phone.
+              </Text>
+              <Text c="text-2">
+                From a quick question to a full furniture project, we take it one step at a time. Whether you're renting or own your home, we help you
+                find the right approach for your situation.
+              </Text>
+            </Stack>
+          </Grid>
+        </Stack>
+      </Container>
+
+      <Container as="section" id="step" class="z--step" ov-x="clip" py="60">
+        <Columns cols={[1, null, 2]} g={['40', null, '10', '30']} set="bleed" contentSize="l">
+          <Stack g="40" jc="start" hasGutter pe="var(--bleed)">
+            <SectionHeading en="Step" ja="From first contact to final delivery" />
+            <Stack g="20">
+              {
+                stepCards.map((card, i) => (
+                  <>
+                    {i > 0 && (
+                      <Center fxsh="0">
+                        <Icon icon="caret-down-fill" fz="2xl" o="ppp" />
+                      </Center>
+                    )}
+                    <Stack class="z--step_card" g="30" p="30" bdrs="20" bxsh="20">
+                      {card.image && (
+                        <Frame class="z--step_cardFrame" ar="21/9" ov="hidden" bdrs="10">
+                          <Media src={card.image.src} alt={card.image.alt} width="1920" height="1280" loading="lazy" />
+                        </Frame>
+                      )}
+                      <Heading level="3" fz="l" util="trim">
+                        {card.title}
+                      </Heading>
+                      <Text fz="s" c="text-2" util="trim">
+                        {card.body}
+                      </Text>
+                    </Stack>
+                  </>
+                ))
+              }
+            </Stack>
+          </Stack>
+          <Frame pos="sticky" ar={['3/2', null, 'auto']} me={['var(--gutter--base)', null, '0']} order={['1', null, '-1']}>
+            <Media src={stepImage.src} alt={stepImage.alt} width="1920" height="1080" loading="lazy" />
+          </Frame>
+        </Columns>
+      </Container>
+
+      <Container as="section" id="voice" isWrapper="l" hasGutter class="z--voice">
+        <Stack g="40">
+          <SectionHeading en="Voice" ja="Words from our clients" />
+          <Columns hasSnap ov="auto" g={['20', null, '30']} pbe="10" gaf={['column', 'row']} gac="85%" cols={[0, 2, null, 3]}>
+            {
+              voiceCards.map((card) => (
+                <Stack g="30" ai="center" p="30" bgc="base" bd bdrs="20">
+                  <Avatar src={card.avatar.src} alt={card.avatar.alt} size="5rem" />
+                  <Heading level="3" fz="l" util="trim">
+                    {card.title}
+                  </Heading>
+                  <Text fz="s" c="text-2" lh="l" util="trim">
+                    {card.body}
+                  </Text>
+                  <Text class="z--voice_attribution" fz="2xs" c="text-2" o="p" ta="end" w="100%" mt="auto" util="trim">
+                    {card.attribution}
+                  </Text>
+                </Stack>
+              ))
+            }
+          </Columns>
+        </Stack>
+      </Container>
+
+      <Container as="section" id="faq" class="z--faq" isWrapper hasGutter py="60" bgc="base-2" mbs="60">
+        <Stack g="40">
+          <SectionHeading en="FAQ" ja="Common questions" />
+
+          <Accordion.Root class="z--faq_acc" g="20">
+            {
+              faqItems.map((item) => (
+                <Accordion.Item bgc="base" bdrs="20" bxsh="10" isOpen={item.defaultOpen === true}>
+                  <Accordion.Heading>
+                    <Accordion.Button p="30" fw="bold" hov="-o" isOpen={item.defaultOpen === true}>
+                      {item.question}
+                    </Accordion.Button>
+                  </Accordion.Heading>
+                  <Accordion.Panel p="30" pbs="15" isOpen={item.defaultOpen === true}>
+                    <Text fz="s" c="text-2" lh="l">
+                      {item.answer}
+                    </Text>
+                  </Accordion.Panel>
+                </Accordion.Item>
+              ))
+            }
+          </Accordion.Root>
+        </Stack>
+      </Container>
+
+      <Container as="section" id="contact" class="z--contact" py="60" pos="relative" ov="hidden">
+        <Frame isLayer>
+          <Media src={contactBg.src} alt={contactBg.alt} width="1920" height="1080" loading="lazy" />
+        </Frame>
+        <Layer bgc="neutral:70%" style={{ backdropFilter: 'saturate(0.7) brightness(0.5) blur(4px)' }} />
+        <Stack isWrapper="s" hasGutter pos="relative" g="40">
+          <SectionHeading en="Contact" ja="We'd love to hear from you" c="white" />
+          <Text fz="s" c="white" ta="center" lh="l">
+            First-time inquiries are always welcome — feel free to reach out.<br />This form is a dummy.
+          </Text>
+          <Box as="form" class="z--contact_form" method="post" action="#">
+            <Stack g="30">
+              {
+                contactFields.map((field) => (
+                  <Stack g="10" ai="stretch">
+                    <Inline as="label" for={field.id} fz="s" c="white" util="trim">
+                      {field.label}
+                    </Inline>
+                    {field.type === 'textarea' ? (
+                      <textarea
+                        id={field.id}
+                        class="z--contact_field"
+                        name={field.name}
+                        rows={field.rows}
+                        placeholder={field.placeholder}
+                        aria-invalid={field.errorMessage ? 'true' : undefined}
+                        aria-describedby={field.errorMessage ? `${field.id}-error` : undefined}
+                      />
+                    ) : (
+                      <input
+                        id={field.id}
+                        class="z--contact_field"
+                        name={field.name}
+                        type={field.type}
+                        placeholder={field.placeholder}
+                        inputmode={field.inputMode}
+                        autocomplete={field.autoComplete}
+                        aria-invalid={field.errorMessage ? 'true' : undefined}
+                        aria-describedby={field.errorMessage ? `${field.id}-error` : undefined}
+                      />
+                    )}
+                  </Stack>
+                ))
+              }
+              <Lism
+                as="button"
+                type="submit"
+                class="z--contact_submit"
+                set="plain"
+                fw="500"
+                lh="xs"
+                mbs="20"
+                p="20"
+                c="white"
+                bgc="black"
+                hov="-bgc"
+                bdrs="99"
+              >
+                Submit (dummy)
+              </Lism>
+            </Stack>
+          </Box>
+        </Stack>
+      </Container>
+    </Container>
+    <!-- Footer -->
+    <Container as="footer" class="z--footer" isWrapper py="50" hasGutter bgc="base-2">
+      <Stack g="30" ai="center" jc="center">
+        <Stack class="c--logo">
+          <Link href="#top" fz="2xl" fw="bold" lts="l" c="text" td="none" ff="accent">LISM Life</Link>
+        </Stack>
+        <List
+          class="z--footerNav"
+          fz="s"
+          lts="l"
+          d={['block', null, 'flex']}
+          bd-be
+          bdw={['1px', null, '0']}
+          w="100%"
+          ai="center"
+          jc="center"
+          fxw="wrap"
+          g="20"
+        >
+          {
+            footerPrimaryNavItems.map(({ href, en }) => (
+              <ListItem bd-bs bdw={['1px', null, '0']}>
+                <Link href={href} d="block" c="text" td="none" w={['100%', null, 'auto']} px="5" py={['15', null, '5']} hasTransition hov="underline">
+                  {en}
+                </Link>
+              </ListItem>
+            ))
+          }
+        </List>
+        <Cluster g="20">
+          {
+            footerSnsLinks.map(({ href, icon, label }) => (
+              <Link href={href} td="none" layout="center" c="text-2" hov="-o" hasTransition aria-label={label}>
+                <Icon icon={icon} fz="xl" />
+              </Link>
+            ))
+          }
+        </Cluster>
+        <Text fz="s" c="text-2">© 2026 Lism CSS.</Text>
+      </Stack>
+    </Container>
+  </div>
+</Layout>

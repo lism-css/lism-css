@@ -17,6 +17,8 @@ export default defineConfig(
       '**/node_modules/**',
       '**/.astro/**',
       '**/.turbo/**',
+      // 言語別テンプレ overlay（配布用の差分ファイル。tsconfig の project service 対象外）
+      '**/.lang/**',
       'apps/catalog/.storybook/**',
       'apps/catalog/storybook-static/**',
       'eslint.config.mjs',

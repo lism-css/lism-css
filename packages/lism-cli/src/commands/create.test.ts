@@ -19,6 +19,41 @@ vi.mock('@inquirer/prompts', () => ({
 
 const cwd = process.cwd();
 let tmpDir: string;
+const originalIsTTY = process.stdin.isTTY;
+
+function setStdinTTY(value: boolean | undefined): void {
+  Object.defineProperty(process.stdin, 'isTTY', { value, configurable: true });
+}
+
+/** langOverlays(en) を持つ project 型テンプレ（言語プロンプト系テスト共通） */
+const LANG_OVERLAY_TEMPLATE: Parameters<typeof runCreateWithTemplates>[1] = [
+  {
+    slug: 'blog-astro-minimal',
+    kind: 'project',
+    category: 'blog',
+    stack: 'astro',
+    variant: 'minimal',
+    sourcePath: 'blog/astro/minimal',
+    langOverlays: { en: 'blog/astro/minimal/.lang/en' },
+    description: { ja: 'Minimal blog', en: 'Minimal blog' },
+  },
+];
+
+/** base（ja + .lang/en 同梱）と en overlay（差分のみ）を返す downloadTemplate モック */
+function mockBaseWithEnOverlay(): void {
+  vi.mocked(downloadTemplate).mockImplementation((source, options) => {
+    const dir = (options as { dir: string }).dir;
+    fs.mkdirSync(dir, { recursive: true });
+    if (String(source).includes('/.lang/en#')) {
+      writeFile(path.join(dir, 'src/config/site.ts'), 'export const lang = "en";');
+    } else {
+      writePackageJson(dir, { name: 'blog-astro-minimal', dependencies: {} });
+      writeFile(path.join(dir, 'src/config/site.ts'), 'export const lang = "ja";');
+      writeFile(path.join(dir, '.lang/en/src/config/site.ts'), 'export const lang = "en";');
+    }
+    return Promise.resolve({} as Awaited<ReturnType<typeof downloadTemplate>>);
+  });
+}
 
 function writePackageJson(dir: string, pkg: Record<string, unknown>): void {
   fs.writeFileSync(path.join(dir, 'package.json'), JSON.stringify(pkg, null, 2) + '\n');
@@ -33,6 +68,9 @@ describe('runCreate', () => {
   beforeEach(() => {
     vi.clearAllMocks();
     setLang('en');
+    // 既定は非対話端末として扱い、言語選択プロンプトを出さない（en フォールバック）。
+    // 対話プロンプトを検証するテストでは個別に setStdinTTY(true) する。
+    setStdinTTY(false);
     tmpDir = fs.realpathSync(fs.mkdtempSync(path.join(os.tmpdir(), 'lism-create-')));
     process.chdir(tmpDir);
     vi.spyOn(console, 'log').mockImplementation(() => undefined);
@@ -48,6 +86,7 @@ describe('runCreate', () => {
   afterEach(() => {
     process.chdir(cwd);
     fs.rmSync(tmpDir, { recursive: true, force: true });
+    setStdinTTY(originalIsTTY);
     vi.restoreAllMocks();
   });
 
@@ -178,6 +217,183 @@ describe('runCreate', () => {
     expect(fs.existsSync(path.join(outDir, 'src/styles/variant.css'))).toBe(true);
     const pkg = JSON.parse(fs.readFileSync(path.join(outDir, 'package.json'), 'utf-8')) as { name: string };
     expect(pkg.name).toBe('lp-astro-saas');
+  });
+
+  it('project型はlangOverlaysに要求言語があればbase取得後にoverlayをmergeし、.langを除去する', async () => {
+    const templates: Parameters<typeof runCreateWithTemplates>[1] = [
+      {
+        slug: 'blog-astro-minimal',
+        kind: 'project',
+        category: 'blog',
+        stack: 'astro',
+        variant: 'minimal',
+        sourcePath: 'blog/astro/minimal',
+        langOverlays: { en: 'blog/astro/minimal/.lang/en' },
+        description: { ja: 'Minimal blog', en: 'Minimal blog' },
+      },
+    ];
+    vi.mocked(downloadTemplate).mockImplementation((source, options) => {
+      const dir = (options as { dir: string }).dir;
+      fs.mkdirSync(dir, { recursive: true });
+      if (String(source).includes('/.lang/en#')) {
+        // 英語 overlay（差分のみ）
+        writeFile(path.join(dir, 'src/config/site.ts'), 'export const lang = "en";');
+        writeFile(path.join(dir, 'src/posts/first-blog.md'), 'EN post');
+      } else {
+        // base（日本語 + .lang 同梱）
+        writePackageJson(dir, { name: 'blog-astro-minimal', dependencies: { 'lism-css': 'workspace:*' } });
+        writeFile(path.join(dir, 'src/config/site.ts'), 'export const lang = "ja";');
+        writeFile(path.join(dir, 'src/posts/first-blog.md'), 'JA post');
+        writeFile(path.join(dir, '.lang/en/src/config/site.ts'), 'export const lang = "en";');
+      }
+      return Promise.resolve({} as Awaited<ReturnType<typeof downloadTemplate>>);
+    });
+
+    await runCreateWithTemplates({ template: 'blog-astro-minimal', targetDir: 'blog-app', force: true, lang: 'en' }, templates);
+
+    const outDir = path.join(tmpDir, 'blog-app');
+    // base + overlay の 2 回取得
+    expect(downloadTemplate).toHaveBeenCalledTimes(2);
+    expect(downloadTemplate).toHaveBeenNthCalledWith(1, 'github:lism-css/lism-css/templates/blog/astro/minimal#main', {
+      dir: outDir,
+      force: true,
+      forceClean: true,
+    });
+    expect(downloadTemplate).toHaveBeenNthCalledWith(2, 'github:lism-css/lism-css/templates/blog/astro/minimal/.lang/en#main', {
+      dir: expect.any(String),
+      force: true,
+      forceClean: true,
+    });
+    // overlay が base を上書きしている
+    expect(fs.readFileSync(path.join(outDir, 'src/config/site.ts'), 'utf-8')).toBe('export const lang = "en";');
+    expect(fs.readFileSync(path.join(outDir, 'src/posts/first-blog.md'), 'utf-8')).toBe('EN post');
+    // 言語 overlay 配信元（.lang）は生成プロジェクトに残らない
+    expect(fs.existsSync(path.join(outDir, '.lang'))).toBe(false);
+  });
+
+  it('project型でも要求言語にoverlayが無ければoverlayを取得せず、.langは除去する', async () => {
+    const templates: Parameters<typeof runCreateWithTemplates>[1] = [
+      {
+        slug: 'blog-astro-minimal',
+        kind: 'project',
+        category: 'blog',
+        stack: 'astro',
+        variant: 'minimal',
+        sourcePath: 'blog/astro/minimal',
+        langOverlays: { en: 'blog/astro/minimal/.lang/en' },
+        description: { ja: 'Minimal blog', en: 'Minimal blog' },
+      },
+    ];
+    vi.mocked(downloadTemplate).mockImplementation((_source, options) => {
+      const dir = (options as { dir: string }).dir;
+      fs.mkdirSync(dir, { recursive: true });
+      writePackageJson(dir, { name: 'blog-astro-minimal', dependencies: {} });
+      writeFile(path.join(dir, 'src/config/site.ts'), 'export const lang = "ja";');
+      writeFile(path.join(dir, '.lang/en/src/config/site.ts'), 'export const lang = "en";');
+      return Promise.resolve({} as Awaited<ReturnType<typeof downloadTemplate>>);
+    });
+
+    await runCreateWithTemplates({ template: 'blog-astro-minimal', targetDir: 'blog-ja', force: true, lang: 'ja' }, templates);
+
+    const outDir = path.join(tmpDir, 'blog-ja');
+    // base のみ（ja overlay は未定義なので overlay 取得は走らない）
+    expect(downloadTemplate).toHaveBeenCalledTimes(1);
+    expect(fs.readFileSync(path.join(outDir, 'src/config/site.ts'), 'utf-8')).toBe('export const lang = "ja";');
+    expect(fs.existsSync(path.join(outDir, '.lang'))).toBe(false);
+  });
+
+  it('langOverlays未定義のproject型は--lang enでもoverlayを取得しない', async () => {
+    // beforeEach の mock（langOverlays 無しの minimal-astro 相当）をそのまま使う
+    await runCreate({ template: 'minimal-astro', targetDir: 'my-app', force: true, lang: 'en' });
+
+    expect(downloadTemplate).toHaveBeenCalledTimes(1);
+  });
+
+  it('--lang未指定+非TTYは言語プロンプトを出さずenにフォールバックし、enのoverlayを適用する', async () => {
+    setStdinTTY(false);
+    mockBaseWithEnOverlay();
+
+    await runCreateWithTemplates({ template: 'blog-astro-minimal', targetDir: 'blog-app', force: true }, LANG_OVERLAY_TEMPLATE);
+
+    expect(select).not.toHaveBeenCalled();
+    // base + en overlay の 2 回取得（en にフォールバック）
+    expect(downloadTemplate).toHaveBeenCalledTimes(2);
+    expect(fs.readFileSync(path.join(tmpDir, 'blog-app', 'src/config/site.ts'), 'utf-8')).toBe('export const lang = "en";');
+  });
+
+  it('--lang未指定+TTYは最初に言語選択を出し、選択言語(en)のoverlayを適用する', async () => {
+    setStdinTTY(true);
+    mockBaseWithEnOverlay();
+    vi.mocked(select).mockResolvedValueOnce('en' as never);
+
+    await runCreateWithTemplates({ template: 'blog-astro-minimal', targetDir: 'blog-app', force: true }, LANG_OVERLAY_TEMPLATE);
+
+    // template/targetDir 指定済みなので select は言語選択の1回だけ
+    expect(select).toHaveBeenCalledTimes(1);
+    expect((vi.mocked(select).mock.calls[0][0] as { message: string }).message).toBe('Select language / 言語を選択:');
+    // 選択した en の overlay が適用される
+    expect(downloadTemplate).toHaveBeenCalledTimes(2);
+    expect(fs.readFileSync(path.join(tmpDir, 'blog-app', 'src/config/site.ts'), 'utf-8')).toBe('export const lang = "en";');
+  });
+
+  it('--lang未指定+TTYで言語にjaを選ぶと、enのoverlayは適用されずjaベースになる', async () => {
+    setStdinTTY(true);
+    mockBaseWithEnOverlay();
+    vi.mocked(select).mockResolvedValueOnce('ja' as never);
+
+    await runCreateWithTemplates({ template: 'blog-astro-minimal', targetDir: 'blog-ja', force: true }, LANG_OVERLAY_TEMPLATE);
+
+    expect(select).toHaveBeenCalledTimes(1);
+    expect(downloadTemplate).toHaveBeenCalledTimes(1);
+    expect(fs.readFileSync(path.join(tmpDir, 'blog-ja', 'src/config/site.ts'), 'utf-8')).toBe('export const lang = "ja";');
+  });
+
+  it('--lang ja明示時はTTYでも言語プロンプトを出さずjaベースを生成する', async () => {
+    setStdinTTY(true);
+    mockBaseWithEnOverlay();
+
+    await runCreateWithTemplates({ template: 'blog-astro-minimal', targetDir: 'blog-ja', force: true, lang: 'ja' }, LANG_OVERLAY_TEMPLATE);
+
+    expect(select).not.toHaveBeenCalled();
+    expect(downloadTemplate).toHaveBeenCalledTimes(1);
+    expect(fs.readFileSync(path.join(tmpDir, 'blog-ja', 'src/config/site.ts'), 'utf-8')).toBe('export const lang = "ja";');
+  });
+
+  it('--lang未指定+TTYで対話が必要な場合、言語選択を一番最初に出す', async () => {
+    setStdinTTY(true);
+    const templates: Parameters<typeof runCreateWithTemplates>[1] = [
+      {
+        slug: 'blog-astro-minimal',
+        kind: 'project',
+        category: 'blog',
+        stack: 'astro',
+        variant: 'minimal',
+        variantLabel: { ja: 'Minimal', en: 'Minimal' },
+        sourcePath: 'blog/astro/minimal',
+        description: { ja: 'Minimal blog', en: 'Minimal blog' },
+      },
+      {
+        slug: 'blog-astro-techlog',
+        kind: 'project',
+        category: 'blog',
+        stack: 'astro',
+        variant: 'techlog',
+        variantLabel: { ja: 'Tech Log', en: 'Tech Log' },
+        sourcePath: 'blog/astro/techlog',
+        description: { ja: 'Tech blog', en: 'Tech blog' },
+      },
+    ];
+    vi.mocked(select)
+      .mockResolvedValueOnce('en' as never) // 言語
+      .mockResolvedValueOnce('blog' as never) // カテゴリ
+      .mockResolvedValueOnce('minimal' as never); // タイプ（variant）
+    vi.mocked(input).mockResolvedValue('blog-app' as never);
+
+    await runCreateWithTemplates({ force: true }, templates);
+
+    // 言語 → カテゴリ → タイプ の 3 回。1 回目が言語選択であること
+    expect(select).toHaveBeenCalledTimes(3);
+    expect((vi.mocked(select).mock.calls[0][0] as { message: string }).message).toBe('Select language / 言語を選択:');
   });
 
   it('single-project-variant型は選択variantのindex.astroをsrc/pages/index.astroに持ち上げ、他variantを削除しpackage.json.nameを書き換える', async () => {
@@ -410,6 +626,100 @@ describe('runCreate', () => {
     await expect(runCreateWithTemplates({ template: 'lp-astro-missing', targetDir: 'lp-missing', force: true }, templates)).rejects.toThrow(
       'Variant "missing"'
     );
+  });
+
+  it('single-project-variant型はlang=enでsrc/pages/en/{variant}/を抽出元に使い、ja系・他variant・enディレクトリを掃除する', async () => {
+    const templates: Parameters<typeof runCreateWithTemplates>[1] = [
+      {
+        slug: 'lp-astro-corporate',
+        kind: 'single-project-variant',
+        category: 'lp',
+        stack: 'astro',
+        variant: 'corporate',
+        sourcePath: 'lp/astro',
+        packageName: 'lp-astro-corporate',
+        description: { ja: 'Corporate LP', en: 'Corporate landing page' },
+      },
+    ];
+
+    vi.mocked(downloadTemplate).mockImplementation((_source, options) => {
+      const dir = (options as { dir: string }).dir;
+      fs.mkdirSync(dir, { recursive: true });
+      writePackageJson(dir, { name: 'lp-astro', dependencies: { 'lism-css': 'workspace:*' } });
+      // ja base（各 variant）
+      writeFile(path.join(dir, 'src/pages/index.astro'), 'gallery');
+      writeFile(path.join(dir, 'src/pages/corporate/index.astro'), 'ja corporate');
+      writeFile(path.join(dir, 'src/pages/interior/index.astro'), 'ja interior');
+      writeFile(path.join(dir, 'src/components/corporate/Header.astro'), '<div>ja corp header</div>');
+      writeFile(path.join(dir, 'src/components/interior/Header.astro'), '<div>ja interior header</div>');
+      // en 完全コピー（src/pages/en/{variant}/ + src/components/en/{variant}/）
+      writeFile(
+        path.join(dir, 'src/pages/en/corporate/index.astro'),
+        ["import Header from '@/components/en/corporate/Header.astro';", '<Header /> en corporate'].join('\n')
+      );
+      writeFile(path.join(dir, 'src/pages/en/corporate/_style.css'), '.corp{}');
+      writeFile(path.join(dir, 'src/pages/en/interior/index.astro'), 'en interior');
+      writeFile(path.join(dir, 'src/components/en/corporate/Header.astro'), '<div>en corp header</div>');
+      writeFile(path.join(dir, 'src/components/en/interior/Header.astro'), '<div>en interior header</div>');
+      return Promise.resolve({} as Awaited<ReturnType<typeof downloadTemplate>>);
+    });
+
+    await runCreateWithTemplates({ template: 'lp-astro-corporate', targetDir: 'lp-en', force: true, lang: 'en' }, templates);
+
+    const outDir = path.join(tmpDir, 'lp-en');
+
+    // en/corporate の index.astro が src/pages/index.astro に持ち上がる（ja ではなく en）
+    const indexContent = fs.readFileSync(path.join(outDir, 'src/pages/index.astro'), 'utf-8');
+    expect(indexContent).toContain('en corporate');
+    // en/corporate の付随ファイルも持ち上がる
+    expect(fs.readFileSync(path.join(outDir, 'src/pages/_style.css'), 'utf-8')).toBe('.corp{}');
+    // 2 セグメント variant でも @/components/en/corporate/ → @/components/ に書き換わる
+    expect(indexContent).toContain("import Header from '@/components/Header.astro';");
+    expect(indexContent).not.toContain('/en/corporate/');
+
+    // ja variant・他 variant・en ディレクトリは生成物に残らない
+    expect(fs.existsSync(path.join(outDir, 'src/pages/corporate'))).toBe(false);
+    expect(fs.existsSync(path.join(outDir, 'src/pages/interior'))).toBe(false);
+    expect(fs.existsSync(path.join(outDir, 'src/pages/en'))).toBe(false);
+
+    // components も en/corporate が持ち上がり、ja・他 variant・en は消える
+    expect(fs.readFileSync(path.join(outDir, 'src/components/Header.astro'), 'utf-8')).toBe('<div>en corp header</div>');
+    expect(fs.existsSync(path.join(outDir, 'src/components/corporate'))).toBe(false);
+    expect(fs.existsSync(path.join(outDir, 'src/components/interior'))).toBe(false);
+    expect(fs.existsSync(path.join(outDir, 'src/components/en'))).toBe(false);
+  });
+
+  it('single-project-variant型はlang=enでも対象variantのen版が無ければjaベースにフォールバックし、無関係なenは掃除する', async () => {
+    const templates: Parameters<typeof runCreateWithTemplates>[1] = [
+      {
+        slug: 'lp-astro-ryokan',
+        kind: 'single-project-variant',
+        category: 'lp',
+        stack: 'astro',
+        variant: 'ryokan',
+        sourcePath: 'lp/astro',
+        packageName: 'lp-astro-ryokan',
+        description: { ja: 'Ryokan LP', en: 'Ryokan landing page' },
+      },
+    ];
+
+    vi.mocked(downloadTemplate).mockImplementation((_source, options) => {
+      const dir = (options as { dir: string }).dir;
+      fs.mkdirSync(dir, { recursive: true });
+      writePackageJson(dir, { name: 'lp-astro', dependencies: {} });
+      // 対象 ryokan の en 版は無い。ja base と、別 variant の en だけが存在する
+      writeFile(path.join(dir, 'src/pages/ryokan/index.astro'), 'ja ryokan');
+      writeFile(path.join(dir, 'src/pages/en/corporate/index.astro'), 'en corporate');
+      return Promise.resolve({} as Awaited<ReturnType<typeof downloadTemplate>>);
+    });
+
+    await runCreateWithTemplates({ template: 'lp-astro-ryokan', targetDir: 'lp-ryokan-en', force: true, lang: 'en' }, templates);
+
+    const outDir = path.join(tmpDir, 'lp-ryokan-en');
+    // en/ryokan が無いので ja の ryokan にフォールバックして持ち上がる
+    expect(fs.readFileSync(path.join(outDir, 'src/pages/index.astro'), 'utf-8')).toBe('ja ryokan');
+    // 別 variant の en ディレクトリも生成物には残らない
+    expect(fs.existsSync(path.join(outDir, 'src/pages/en'))).toBe(false);
   });
 
   it('static-html型はpackage.jsonなしでもindex.htmlがあれば完了し、HTML向けNext stepsを出す', async () => {

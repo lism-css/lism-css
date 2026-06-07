@@ -4,6 +4,10 @@
  * 各テンプレートディレクトリ配下の screenshots.config.json を参照し、
  * テンプレートを build → preview server 起動 → 指定パスを撮影してテンプレ配下に保存します。
  *
+ * config に `langShots`（例: `{ en: [...] }`）があるテンプレは、通常撮影に続けて
+ * `build:template:en`（.lang/<lang> を src へマージして再ビルド）で言語別に再撮影し、
+ * `screenshots/<lang>/<name>.png` に保存します（blog の overlay 方式 en 用）。
+ *
  * 使い方（リポジトリルートまたは apps/docs で実行）:
  *   npx tsx apps/docs/scripts/template-screenshots.ts                    # 新規のみ撮影
  *   npx tsx apps/docs/scripts/template-screenshots.ts --force            # 全テンプレ再撮影
@@ -17,7 +21,7 @@
 
 import { chromium, type Browser, type Page } from 'playwright';
 import { existsSync, mkdirSync, readFileSync, writeFileSync, rmSync, readdirSync, statSync } from 'node:fs';
-import { join, dirname, basename, relative } from 'node:path';
+import { join, dirname, relative } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { spawn, spawnSync, type ChildProcess } from 'node:child_process';
 import net from 'node:net';
@@ -39,6 +43,14 @@ interface TemplateConfig {
   port: number;
   waitAfterLoad?: number;
   shots: ShotDef[];
+  /**
+   * 言語別 overlay（`.lang/<lang>/`）をマージして撮影する shots。`{ en: [...] }` 形式。
+   * 通常 build には出てこず ja と同じ path に重なる overlay 方式（blog）向け。
+   * 各 shot は `build:template:en` 等で再ビルドしたうえで撮影し、`screenshots/<lang>/<name>.png` に保存する。
+   * （LP のように en が通常 build の実ルートに含まれる場合は、langShots ではなく
+   *   `shots` に `{ name: "en/top", path: "/en/" }` のように直接書けばよい。）
+   */
+  langShots?: Record<string, ShotDef[]>;
 }
 
 interface TemplateEntry {
@@ -133,6 +145,20 @@ function filterTemplates(templates: TemplateEntry[]): TemplateEntry[] {
 function buildTemplate(pkgName: string): boolean {
   console.log(`🔨 build: ${pkgName}`);
   const r = spawnSync('pnpm', ['--filter', pkgName, 'build'], {
+    cwd: REPO_ROOT,
+    stdio: 'inherit',
+  });
+  return r.status === 0;
+}
+
+/**
+ * 言語別 overlay（.lang/<lang>/）を src へ一時マージしてビルドする。
+ * scripts/build-template-lang.mjs（= `nr build:template:en <pkg>` の実体）を呼び出す。
+ * build 後に src は復元されるため、作業ツリーは汚れない。
+ */
+function buildTemplateLang(pkgName: string, lang: string): boolean {
+  console.log(`🔨 build (${lang} overlay): ${pkgName}`);
+  const r = spawnSync('node', [join(REPO_ROOT, 'scripts', 'build-template-lang.mjs'), pkgName, lang], {
     cwd: REPO_ROOT,
     stdio: 'inherit',
   });
@@ -321,23 +347,102 @@ function comparePng(baselinePath: string, candidatePath: string, diffPath: strin
 
 type Stats = { generated: number; skipped: number; changed: number; unchanged: number; newCount: number; failed: number };
 
+/** 1テンプレの撮影単位（デフォルト言語 or 言語別 overlay）。 */
+interface Pass {
+  /** ログ用ラベル */
+  label: string;
+  /** 出力サブディレクトリ（'' = デフォルト言語, 'en' = en overlay）。出力名の接頭辞になる */
+  subdir: string;
+  /** このパスで撮影する shots（name は subdir からの相対） */
+  shots: ShotDef[];
+  /** ビルド処理。成功で true */
+  build: () => boolean;
+  /** true の場合 --no-build を無視して必ずビルドする（overlay マージは dist を上書きするため毎回必要） */
+  alwaysBuild?: boolean;
+}
+
+/** entry を撮影パス（デフォルト＋langShots）に展開する */
+function passesFor(entry: TemplateEntry): Pass[] {
+  const passes: Pass[] = [
+    {
+      label: entry.pkgName,
+      subdir: '',
+      shots: entry.config.shots,
+      build: () => buildTemplate(entry.pkgName),
+    },
+  ];
+  const langShots = entry.config.langShots ?? {};
+  for (const [lang, shots] of Object.entries(langShots)) {
+    if (!shots || shots.length === 0) continue;
+    passes.push({
+      label: `${entry.pkgName} [${lang}]`,
+      subdir: lang,
+      shots,
+      build: () => buildTemplateLang(entry.pkgName, lang),
+      alwaysBuild: true,
+    });
+  }
+  return passes;
+}
+
+/** pass の subdir を反映した出力名（screenshots/<outName>.png として保存される） */
+function outNameOf(pass: Pass, shot: ShotDef): string {
+  return pass.subdir ? `${pass.subdir}/${shot.name}` : shot.name;
+}
+
 async function processEntry(entry: TemplateEntry, browser: Browser, stats: Stats): Promise<void> {
   console.log(`\n━━━ ${entry.pkgName} (${entry.relPath}) ━━━`);
+
+  // compare は entry 単位で diff / temp を一度だけクリアする（複数パスで共有するため）
+  if (MODE === 'compare') {
+    const diffDir = shotsOutputDir(entry, 'diff');
+    const tempDir = shotsOutputDir(entry, 'temp');
+    if (existsSync(diffDir)) rmSync(diffDir, { recursive: true });
+    if (existsSync(tempDir)) rmSync(tempDir, { recursive: true });
+  }
+
+  for (const pass of passesFor(entry)) {
+    await runPass(entry, pass, browser, stats);
+  }
+
+  // compare の一時ファイルを破棄
+  if (MODE === 'compare') {
+    const tempDir = shotsOutputDir(entry, 'temp');
+    if (existsSync(tempDir)) rmSync(tempDir, { recursive: true });
+  }
+}
+
+/** 1パス（build → preview → 撮影 → 後始末）を実行する */
+async function runPass(entry: TemplateEntry, pass: Pass, browser: Browser, stats: Stats): Promise<void> {
+  if (pass.subdir) console.log(`\n  ── lang pass: ${pass.subdir} ──`);
+
+  // new モードでこのパスの公開画像が全て揃っていれば、build/preview ごとスキップ
+  // （特に overlay の再ビルドは重いので、不要なら丸ごと省く）
+  if (MODE === 'new') {
+    const publicDir = shotsOutputDir(entry, 'public');
+    const allExist = pass.shots.every((shot) => existsSync(join(publicDir, `${outNameOf(pass, shot)}.png`)));
+    if (allExist) {
+      stats.skipped += pass.shots.length;
+      console.log(`  ⏭️  ${pass.label}: 公開画像が揃っているためスキップ`);
+      return;
+    }
+  }
 
   // ポートが既に使われていたら中止（誤って別サーバを撮影しないため）
   if (await isPortInUse(entry.config.port)) {
     console.error(
       `❌ ポート ${entry.config.port} は既に使用されています。screenshots.config.json で別ポートを指定するか、占有中のプロセスを停止してください`
     );
-    stats.failed += entry.config.shots.length;
+    stats.failed += pass.shots.length;
     return;
   }
 
-  // build フェーズ
-  if (!SKIP_BUILD && entry.config.command !== 'dev') {
-    if (!buildTemplate(entry.pkgName)) {
-      console.error(`❌ build に失敗しました: ${entry.pkgName}`);
-      stats.failed += entry.config.shots.length;
+  // build フェーズ（langShots は alwaysBuild で必ず再ビルド）
+  const needsBuild = pass.alwaysBuild || (!SKIP_BUILD && entry.config.command !== 'dev');
+  if (needsBuild) {
+    if (!pass.build()) {
+      console.error(`❌ build に失敗しました: ${pass.label}`);
+      stats.failed += pass.shots.length;
       return;
     }
   }
@@ -359,125 +464,116 @@ async function processEntry(entry: TemplateEntry, browser: Browser, stats: Stats
       await setupImageInterception(grayPage, createGrayPixelPng());
     }
 
-    const waitAfterLoad = entry.config.waitAfterLoad ?? 500;
-    const baseUrl = `http://localhost:${entry.config.port}`;
-
-    if (MODE === 'new' || MODE === 'force') {
-      const publicDir = shotsOutputDir(entry, 'public');
-      const baselineDir = MODE === 'force' ? shotsOutputDir(entry, 'baseline') : null;
-      for (const shot of entry.config.shots) {
-        const publicPath = join(publicDir, `${shot.name}.png`);
-        if (MODE === 'new' && existsSync(publicPath)) {
-          stats.skipped++;
-          process.stdout.write(`  ⏭️  ${shot.name} (スキップ)\n`);
-          continue;
-        }
-        // 公開用（本物の画像）
-        const r1 = await takeShot(realPage, baseUrl + shot.path, publicPath, waitAfterLoad);
-        // force のときは baseline（グレー差し替え）も同時に撮り直す
-        let r2: { ok: boolean; error?: string } = { ok: true };
-        if (MODE === 'force' && baselineDir) {
-          const baselinePath = join(baselineDir, `${shot.name}.png`);
-          r2 = await takeShot(grayPage!, baseUrl + shot.path, baselinePath, waitAfterLoad);
-        }
-        if (r1.ok && r2.ok) {
-          stats.generated++;
-          process.stdout.write(MODE === 'force' ? `  ✅ ${shot.name} (public & baseline)\n` : `  ✅ ${shot.name}\n`);
-        } else {
-          stats.failed++;
-          process.stdout.write(`  ❌ ${shot.name}: ${r1.error ?? r2.error}\n`);
-        }
-      }
-    } else if (MODE === 'compare') {
-      const baselineDir = shotsOutputDir(entry, 'baseline');
-      const tempDir = shotsOutputDir(entry, 'temp');
-      const diffDir = shotsOutputDir(entry, 'diff');
-      const isInitial = !existsSync(baselineDir);
-      if (existsSync(diffDir)) rmSync(diffDir, { recursive: true });
-      if (existsSync(tempDir)) rmSync(tempDir, { recursive: true });
-
-      for (const shot of entry.config.shots) {
-        const baselinePath = join(baselineDir, `${shot.name}.png`);
-        const tempPath = join(tempDir, `${shot.name}.png`);
-        const diffPath = join(diffDir, `${shot.name}.png`);
-
-        if (isInitial || !existsSync(baselinePath)) {
-          // baseline はグレー差し替えありで撮影
-          const res = await takeShot(grayPage!, baseUrl + shot.path, baselinePath, waitAfterLoad);
-          if (res.ok) {
-            stats.newCount++;
-            process.stdout.write(`  🆕 ${shot.name} (baseline 生成)\n`);
-          } else {
-            stats.failed++;
-            process.stdout.write(`  ❌ ${shot.name}: ${res.error}\n`);
-          }
-          continue;
-        }
-
-        const cap = await takeShot(grayPage!, baseUrl + shot.path, tempPath, waitAfterLoad);
-        if (!cap.ok) {
-          stats.failed++;
-          process.stdout.write(`  ❌ ${shot.name}: ${cap.error}\n`);
-          continue;
-        }
-        const { diffPercent } = comparePng(baselinePath, tempPath, diffPath);
-        if (diffPercent <= THRESHOLD) {
-          stats.unchanged++;
-          process.stdout.write(`  ✅ ${shot.name} (変更なし)\n`);
-        } else {
-          stats.changed++;
-          process.stdout.write(`  ⚠️  ${shot.name} (差分: ${diffPercent.toFixed(2)}%)\n`);
-        }
-      }
-
-      // temp は破棄
-      if (existsSync(tempDir)) rmSync(tempDir, { recursive: true });
-    } else if (MODE === 'update') {
-      const baselineDir = shotsOutputDir(entry, 'baseline');
-      const diffDir = shotsOutputDir(entry, 'diff');
-      const publicDir = shotsOutputDir(entry, 'public');
-      if (!existsSync(diffDir)) {
-        console.log('  差分なし（diff ディレクトリが存在しません）');
-        return;
-      }
-      const diffFiles = readdirSync(diffDir).filter((f) => f.endsWith('.png'));
-      if (diffFiles.length === 0) {
-        console.log('  差分なし');
-        return;
-      }
-      for (const file of diffFiles) {
-        const name = basename(file, '.png');
-        const shot = entry.config.shots.find((s) => s.name === name);
-        if (!shot) {
-          process.stdout.write(`  ⚠️  ${name} は config に存在しません。スキップ\n`);
-          continue;
-        }
-        // baseline はグレー差し替えあり、public は本物の画像で更新
-        const baselinePath = join(baselineDir, `${shot.name}.png`);
-        const publicPath = join(publicDir, `${shot.name}.png`);
-        const r1 = await takeShot(grayPage!, baseUrl + shot.path, baselinePath, waitAfterLoad);
-        const r2 = await takeShot(realPage, baseUrl + shot.path, publicPath, waitAfterLoad);
-        if (r1.ok && r2.ok) {
-          stats.generated++;
-          process.stdout.write(`  ✅ ${shot.name} (baseline & public 更新)\n`);
-        } else {
-          stats.failed++;
-          process.stdout.write(`  ❌ ${shot.name}: ${r1.error ?? r2.error}\n`);
-        }
-      }
-      // 差分ディレクトリを削除
-      rmSync(diffDir, { recursive: true });
-    }
+    await captureShotSet(entry, pass, { realPage, grayPage }, stats);
 
     await realPage.close();
     if (grayPage) await grayPage.close();
   } finally {
     stopServer(server);
-    // 次のテンプレに進む前にポートが解放されるまで待つ（重要：前 server が残ると
-    // 次テンプレの撮影で前テンプレのページを撮ってしまう）
+    // 次のパス/テンプレに進む前にポートが解放されるまで待つ（重要：前 server が残ると
+    // 次の撮影で前のページを撮ってしまう）
     const freed = await waitForPortFree(entry.config.port);
     if (!freed) {
       console.warn(`⚠️  ポート ${entry.config.port} の解放が確認できませんでした`);
+    }
+  }
+}
+
+/** 起動済み preview server に対して、pass の shots をモード別に撮影する */
+async function captureShotSet(entry: TemplateEntry, pass: Pass, pages: { realPage: Page; grayPage: Page | null }, stats: Stats): Promise<void> {
+  const { realPage, grayPage } = pages;
+  const waitAfterLoad = entry.config.waitAfterLoad ?? 500;
+  const baseUrl = `http://localhost:${entry.config.port}`;
+
+  if (MODE === 'new' || MODE === 'force') {
+    const publicDir = shotsOutputDir(entry, 'public');
+    const baselineDir = MODE === 'force' ? shotsOutputDir(entry, 'baseline') : null;
+    for (const shot of pass.shots) {
+      const outName = outNameOf(pass, shot);
+      const publicPath = join(publicDir, `${outName}.png`);
+      if (MODE === 'new' && existsSync(publicPath)) {
+        stats.skipped++;
+        process.stdout.write(`  ⏭️  ${outName} (スキップ)\n`);
+        continue;
+      }
+      // 公開用（本物の画像）
+      const r1 = await takeShot(realPage, baseUrl + shot.path, publicPath, waitAfterLoad);
+      // force のときは baseline（グレー差し替え）も同時に撮り直す
+      let r2: { ok: boolean; error?: string } = { ok: true };
+      if (MODE === 'force' && baselineDir) {
+        const baselinePath = join(baselineDir, `${outName}.png`);
+        r2 = await takeShot(grayPage!, baseUrl + shot.path, baselinePath, waitAfterLoad);
+      }
+      if (r1.ok && r2.ok) {
+        stats.generated++;
+        process.stdout.write(MODE === 'force' ? `  ✅ ${outName} (public & baseline)\n` : `  ✅ ${outName}\n`);
+      } else {
+        stats.failed++;
+        process.stdout.write(`  ❌ ${outName}: ${r1.error ?? r2.error}\n`);
+      }
+    }
+  } else if (MODE === 'compare') {
+    const baselineDir = shotsOutputDir(entry, 'baseline');
+    const tempDir = shotsOutputDir(entry, 'temp');
+    const diffDir = shotsOutputDir(entry, 'diff');
+
+    for (const shot of pass.shots) {
+      const outName = outNameOf(pass, shot);
+      const baselinePath = join(baselineDir, `${outName}.png`);
+      const tempPath = join(tempDir, `${outName}.png`);
+      const diffPath = join(diffDir, `${outName}.png`);
+
+      // baseline 未生成なら（初回 / 新規 shot）グレー差し替えで生成
+      if (!existsSync(baselinePath)) {
+        const res = await takeShot(grayPage!, baseUrl + shot.path, baselinePath, waitAfterLoad);
+        if (res.ok) {
+          stats.newCount++;
+          process.stdout.write(`  🆕 ${outName} (baseline 生成)\n`);
+        } else {
+          stats.failed++;
+          process.stdout.write(`  ❌ ${outName}: ${res.error}\n`);
+        }
+        continue;
+      }
+
+      const cap = await takeShot(grayPage!, baseUrl + shot.path, tempPath, waitAfterLoad);
+      if (!cap.ok) {
+        stats.failed++;
+        process.stdout.write(`  ❌ ${outName}: ${cap.error}\n`);
+        continue;
+      }
+      const { diffPercent } = comparePng(baselinePath, tempPath, diffPath);
+      if (diffPercent <= THRESHOLD) {
+        stats.unchanged++;
+        process.stdout.write(`  ✅ ${outName} (変更なし)\n`);
+      } else {
+        stats.changed++;
+        process.stdout.write(`  ⚠️  ${outName} (差分: ${diffPercent.toFixed(2)}%)\n`);
+      }
+    }
+  } else if (MODE === 'update') {
+    const baselineDir = shotsOutputDir(entry, 'baseline');
+    const diffDir = shotsOutputDir(entry, 'diff');
+    const publicDir = shotsOutputDir(entry, 'public');
+
+    for (const shot of pass.shots) {
+      const outName = outNameOf(pass, shot);
+      const diffPath = join(diffDir, `${outName}.png`);
+      // 差分が出ている shot だけ更新（直前の compare が生成した diff を参照）
+      if (!existsSync(diffPath)) continue;
+      // baseline はグレー差し替えあり、public は本物の画像で更新
+      const baselinePath = join(baselineDir, `${outName}.png`);
+      const publicPath = join(publicDir, `${outName}.png`);
+      const r1 = await takeShot(grayPage!, baseUrl + shot.path, baselinePath, waitAfterLoad);
+      const r2 = await takeShot(realPage, baseUrl + shot.path, publicPath, waitAfterLoad);
+      if (r1.ok && r2.ok) {
+        stats.generated++;
+        rmSync(diffPath);
+        process.stdout.write(`  ✅ ${outName} (baseline & public 更新)\n`);
+      } else {
+        stats.failed++;
+        process.stdout.write(`  ❌ ${outName}: ${r1.error ?? r2.error}\n`);
+      }
     }
   }
 }

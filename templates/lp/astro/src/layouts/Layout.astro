@@ -4,12 +4,14 @@ import '@/styles/global.css';
 
 interface Props {
   title: string;
+  /** `<html lang>` に出力する言語コード。en 版ページは "en" を渡す（既定は日本語ベース） */
+  lang?: string;
 }
 
-const { title } = Astro.props;
+const { title, lang = 'ja' } = Astro.props;
 ---
 
-<html lang="ja">
+<html lang={lang}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
