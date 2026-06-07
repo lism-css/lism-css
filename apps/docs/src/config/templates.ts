@@ -62,7 +62,7 @@ export interface CategoryDef {
   /**
    * true の場合、カテゴリ内の複数テンプレートを「中身共通・stack 違い」として
    * 1枚のカードに集約表示し、詳細ページもカテゴリ単位の1ページに統合する。
-   * 一覧カードのコマンドは `npm create lism@latest -- --template {category.id}` を案内する。
+   * 一覧カードのコマンドは `npm create lism@latest -- --template {category.id} --lang {lang}` を案内する。
    */
   aggregateView?: boolean;
   /** 集約カードで代表サムネとして使う template slug（aggregateView 時のみ参照） */

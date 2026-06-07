@@ -47,7 +47,7 @@ const copy = isJa
     };
 
 const templatesUrl = getLocalizedUrl('/templates/', lang);
-const categoryCommand = `npm create lism@latest -- --template ${category.id}`;
+const categoryCommand = `npm create lism@latest -- --template ${category.id} --lang ${lang}`;
 const representative = getAggregateRepresentative(category, templates) ?? templates[0];
 const previewUrl = representative ? getPreviewUrl(representative, lang) : undefined;
 ---
@@ -97,7 +97,12 @@ const previewUrl = representative ? getPreviewUrl(representative, lang) : undefi
                   {stackLabels[tpl.stack]}
                 </Inline>
               </Cluster>
-              <CopyCommand bdrs="10" command={`npm create lism@latest -- --template ${tpl.slug}`} copyLabel={copy.copy} copiedLabel={copy.copied} />
+              <CopyCommand
+                bdrs="10"
+                command={`npm create lism@latest -- --template ${tpl.slug} --lang ${lang}`}
+                copyLabel={copy.copy}
+                copiedLabel={copy.copied}
+              />
             </Stack>
           ))
         }
