@@ -60,7 +60,7 @@ describe('detectLang', () => {
     setPlatform('darwin');
     mockedExecFileSync.mockReturnValue('(\n    "ja-JP",\n    "en-JP"\n)\n');
     expect(detectLang()).toBe('ja');
-    expect(mockedExecFileSync).toHaveBeenCalledWith('defaults', ['read', '-g', 'AppleLanguages'], expect.anything());
+    expect(mockedExecFileSync).toHaveBeenCalledWith('/usr/bin/defaults', ['read', '-g', 'AppleLanguages'], expect.anything());
   });
 
   it('macOS で AppleLanguages 先頭が en* なら ja にはしない', () => {

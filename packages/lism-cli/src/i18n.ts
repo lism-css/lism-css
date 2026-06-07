@@ -20,7 +20,8 @@ export type Lang = 'ja' | 'en';
 function detectAppleLanguage(): string | null {
   if (process.platform !== 'darwin') return null;
   try {
-    const out = execFileSync('defaults', ['read', '-g', 'AppleLanguages'], {
+    // PATH 探索による意図しないバイナリ起動を避けるため macOS 標準の絶対パスを指定する
+    const out = execFileSync('/usr/bin/defaults', ['read', '-g', 'AppleLanguages'], {
       encoding: 'utf8',
       timeout: 1000,
       stdio: ['ignore', 'pipe', 'ignore'],
