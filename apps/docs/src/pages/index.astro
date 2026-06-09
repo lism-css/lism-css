@@ -14,7 +14,7 @@ import Gradbox from '@/components/parts/Gradbox.astro';
 import { siteConfig } from '@/config/site';
 // import LismExDemo from '@/content/ja/_demo/LismExDemo.mdx';
 
-const FEATURES = [
+const features = [
   {
     icon: '<rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/>',
     title: 'レイアウトプリミティブ',
@@ -164,9 +164,9 @@ const presets = [
       CSSは、Webサイトの構造的な基盤を素早くスムーズに構築するための軽量CSSフレームワークです。自然で心地よいリズムがデザインに生まれるよう、CSSアーキテクチャをゼロから設計しました。
     </Text>
 
-    <Columns cols={[1, 2, 3]} g="40">
+    <Columns cols={[1, 2, 3]} g="40" mbs={['']}>
       {
-        FEATURES.map((card) => (
+        features.map((card) => (
           <Stack g="20" p="10">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -202,7 +202,7 @@ const presets = [
     <Frame mbs={['48', null, '5rem']} w="clamp(11.25rem, calc(53.25vw - 2.0625rem), 24.5625rem)">
       <Media src="/img/ai-01.png" alt="" width="393" height="240" />
     </Frame>
-    <Columns cols={[1, null, 2]} g="10" w="100%" mbs={['3.75rem', null, '5rem']}>
+    <Columns cols={[1, null, 2]} g="10" w="100%" mbs={['var(--s60d)', null, '5rem']}>
       {
         tools.map((item) => (
           <Stack px="48" py={['36', null, '48']} bdrs="var(--bdrs--15)" bgc="white" bxsh="var(--bxsh--base)" style={{ backdropFilter: 'blur(32px)' }}>
@@ -241,7 +241,7 @@ const presets = [
       <Icon icon="caret-right" ml="8" size="16" />
     </Button>
     <Box
-      mbs={['3.75rem', null, '6rem']}
+      mbs={['var(--s60d)', null, '6rem']}
       style={{ columnCount: 3, columnGap: '0.5rem', marginInline: 'clamp(-6.375rem, calc(22.921vw - 12.106rem), 0rem)' }}
     >
       {
