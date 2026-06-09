@@ -16,34 +16,46 @@ import { siteConfig } from '@/config/site';
 
 const features = [
   {
-    icon: '<rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/>',
     title: 'レイアウトプリミティブ',
     desc: 'Stack, Flex, Grid, Columns など、よく使うレイアウトパターンをレイアウトプリミティブとして提供。組み合わせるだけでサイトの骨組みが完成します。',
+    src: '/img/features-01.png',
+    width: 259,
+    height: 181,
   },
   {
-    icon: '<line x1="4" y1="21" x2="4" y2="14"/><line x1="4" y1="10" x2="4" y2="3"/><line x1="12" y1="21" x2="12" y2="12"/><line x1="12" y1="8" x2="12" y2="3"/><line x1="20" y1="21" x2="20" y2="16"/><line x1="20" y1="12" x2="20" y2="3"/><line x1="1" y1="14" x2="7" y2="14"/><line x1="9" y1="8" x2="15" y2="8"/><line x1="17" y1="16" x2="23" y2="16"/>',
     title: 'ハーモニックスケール',
     desc: '余白・フォントサイズ・行間を調和的な比率で設計。自然と心地よいリズムをデザインに生み出すタイポグラフィ設計です。',
+    src: '/img/features-02.png',
+    width: 245,
+    height: 198,
   },
   {
-    icon: '<circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>',
     title: 'デザイントークン',
     desc: 'カラー・フォントサイズ・余白・角丸・シャドウなどを段階的なCSS変数で一元管理。サイト全体の一貫性を保ちます。',
+    src: '/img/features-03.png',
+    width: 200,
+    height: 200,
   },
   {
-    icon: '<polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/>',
     title: 'Property Class',
     desc: '-fz:l, -p:20 のような直感的なクラス名で素早くスタイリング可能。形式が明確で短縮記法なのにAIが迷いません。',
+    src: '/img/features-04.png',
+    width: 210,
+    height: 216,
   },
   {
-    icon: '<polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/>',
     title: 'CSSレイヤー構造',
     desc: '@layer による 厳格なCSSレイヤー設計。詳細度の衝突を防ぎ、拡張性と保守性を両立します。',
+    src: '/img/features-05.png',
+    width: 250,
+    height: 193,
   },
   {
-    icon: '<rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/>',
     title: 'レスポンシブ',
     desc: 'CSS変数とクラスを組み合わせた独自のレスポンシブ手法。軽量なのに柔軟で幅広いレイアウトに対応できます。',
+    src: '/img/features-06.png',
+    width: 256,
+    height: 197,
   },
 ];
 
@@ -164,26 +176,17 @@ const presets = [
       CSSは、Webサイトの構造的な基盤を素早くスムーズに構築するための軽量CSSフレームワークです。自然で心地よいリズムがデザインに生まれるよう、CSSアーキテクチャをゼロから設計しました。
     </Text>
 
-    <Columns cols={[1, 2, 3]} g="40" mbs={['']}>
+    <Columns cols={[1, null, 3]} g="10" mbs={['var(--s60d)', null, 'var(--s96)']}>
       {
         features.map((card) => (
-          <Stack g="20" p="10">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              set:html={card.icon}
-            />
-            <Text fw="bold">{card.title}</Text>
-            <Text fz="s" c="text-2" lh="s">
+          <Stack px="48" py={['36', null, '48']} bdrs="var(--bdrs--15)" bgc="white" bxsh="var(--bxsh--base)" style={{ backdropFilter: 'blur(32px)' }}>
+            <Text fw="bold" lh="1.5" fz={['base', null, null, '2xl']}>
+              {card.title}
+            </Text>
+            <Text fz="s" c="text-2" lh="s" mt="20">
               {card.desc}
             </Text>
+            <Media src={card.src} alt="" width={card.width} height={card.height} mx="auto" mt="48" w={['11.25rem', null, `${card.width}px`]} />
           </Stack>
         ))
       }
