@@ -4,12 +4,8 @@
  * Lism CSSの紹介とドキュメントへの導線
  */
 import SimpleLayout from '@/layouts/SimpleLayout.astro';
-import { Stack, TileGrid, Flex, Lism, Heading, Text, Link, Columns, Box } from 'lism-css/astro';
+import { Stack, TileGrid, Flex, Lism, Heading, Text, Link, Columns, Box, Icon, Center, Media, Frame } from 'lism-css/astro';
 import { Button } from '@lism-css/ui/astro/Button';
-import { Icon } from 'lism-css/astro';
-import { Center } from 'lism-css/astro';
-import { Media } from 'lism-css/astro';
-import { Frame } from 'lism-css/astro';
 import Gradbox from '@/components/parts/Gradbox.astro';
 import { siteConfig } from '@/config/site';
 // import LismExDemo from '@/content/ja/_demo/LismExDemo.mdx';
@@ -179,7 +175,7 @@ const presets = [
     <Columns cols={[1, null, 3]} g="10" mbs={['var(--s60d)', null, 'var(--s96)']}>
       {
         features.map((card) => (
-          <Stack px="48" py={['36', null, '48']} bdrs="var(--bdrs--15)" bgc="white" bxsh="var(--bxsh--base)" style={{ backdropFilter: 'blur(32px)' }}>
+          <Stack class="c--card" px="48" py={['36', null, '48']}>
             <Text fw="bold" lh="1.5" fz={['base', null, null, '2xl']}>
               {card.title}
             </Text>
@@ -208,7 +204,7 @@ const presets = [
     <Columns cols={[1, null, 2]} g="10" w="100%" mbs={['var(--s60d)', null, '5rem']}>
       {
         tools.map((item) => (
-          <Stack px="48" py={['36', null, '48']} bdrs="var(--bdrs--15)" bgc="white" bxsh="var(--bxsh--base)" style={{ backdropFilter: 'blur(32px)' }}>
+          <Stack class="c--card" px="48" py={['36', null, '48']}>
             <Text fw="600" fz={['base', null, '2xl']} lh="1.5">
               {item.title}
             </Text>
@@ -249,7 +245,7 @@ const presets = [
     >
       {
         presets.map((item) => (
-          <Frame bdrs="var(--bdrs--15)" bxsh="var(--bxsh--base)" bgc="white" mbe={['5', null, '10']} style={{ backdropFilter: 'blur(32px)' }}>
+          <Frame class="c--card" mbe={['5', null, '10']}>
             <Media src={item.src} alt="" width={item.width} height={item.height} />
           </Frame>
         ))
@@ -259,18 +255,7 @@ const presets = [
 
   {/* CTA */}
   <Stack as="section" ai="center" pt="10.625rem">
-    <Center
-      ai="center"
-      w="100%"
-      max-w="l"
-      h="35rem"
-      px={['15', null, '48']}
-      py="48"
-      bdrs="var(--bdrs--15)"
-      bgc="white"
-      bxsh="var(--bxsh--base)"
-      style={{ backdropFilter: 'blur(32px)' }}
-    >
+    <Center class="c--card" ai="center" w="100%" max-w="l" h="35rem" px={['15', null, '48']} py="48">
       <Stack ai="center" g="15">
         <Text c="var(--eyebrow-c)" tt="upper" lh="1" fz={['s', null, 'base']}>Get Started</Text>
         <Heading level="2" ta="center" fz={['2xl', null, '4xl']} fw="700" lh="1.5" c="var(--gray-hi-c)">Lism CSS、どこでも使える</Heading>

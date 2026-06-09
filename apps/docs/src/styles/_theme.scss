@@ -18,6 +18,7 @@
     --sz--l: 77.5rem; // 1240px
 
     // コアと命名が被る場合は、dを付与する。例: --s10d
+    // packages/lism-css/src/scss/base/tokens/_space.scss
     --s36: calc(var(--s-unit) * 4.5); // ≒ 36px
     --s48: calc(var(--s-unit) * 6); // ≒ 48px
     --s60d: calc(var(--s-unit) * 7.5); // ≒ 60px
@@ -65,6 +66,13 @@
 }
 
 @layer lism-component {
+  .c--card {
+    border-radius: var(--bdrs--15);
+    background-color: white;
+    box-shadow: var(--bxsh--base);
+    backdrop-filter: blur(32px);
+  }
+
   :root[data-theme='dark'] {
     .c--chat {
       --cbox-bgPct: 16%;
