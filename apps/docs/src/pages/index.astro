@@ -6,8 +6,8 @@
 import SimpleLayout from '@/layouts/SimpleLayout.astro';
 import { Stack, Flex, Lism, Heading, Text, Columns, Box, Icon, Center, Media, Frame, Group } from 'lism-css/astro';
 import { Button } from '@lism-css/ui/astro/Button';
-// import Gradbox from '@/components/parts/Gradbox.astro';
 import { siteConfig } from '@/config/site';
+// import Gradbox from '@/components/parts/Gradbox.astro';
 // import LismExDemo from '@/content/ja/_demo/LismExDemo.mdx';
 
 const features = [
@@ -162,16 +162,14 @@ const presets = [
     </Lism>
   </TileGrid> -->
   <Stack as="section" ai="center" pbs={['1.25rem', null, '6.25rem']} pbe={[null, null, '120']}>
-    <Lism class="-w:fit">
-      <Heading ta="center" level="1" fw="700" fz={['2.25rem', null, '5xl']} lh="1.25" c="var(--gray-hi-c)">
-        The CSS Design <Lism as="br" d={['inherit', null, 'none']} />Framework<br />for AI and Humans
-      </Heading>
-    </Lism>
+    <Heading ta="center" level="1" fw="700" fz={['2.25rem', null, '5xl']} lh="1.25" c="var(--gray-hi-c)">
+      The CSS Design <Lism as="br" d={['inherit', null, 'none']} />Framework<br />for AI and Humans
+    </Heading>
     <Text fz="m" c="#333" mt="30">
       軽量でビルド不要。どのサイトにも導入できます。<br />
       あなたはもう、CSS設計に悩む必要はありません。
     </Text>
-    <Flex g={['15', null, '20']} ai="center" jc="center" mbs={['var(--s36)', null, 'var(--s48)']} w="100%">
+    <Flex g={['15', null, '20']} ai="center" jc="center" mbs={['36', null, '48']} w="100%">
       <Button href="/docs/installation" bdrs="var(--bdrs--15)" bgc="var(--gray-hi-c)" fw="500" lh="1.5">
         <span>Get Started</span>
         <Icon icon="caret-right" ml="8" size="16" />
@@ -214,7 +212,7 @@ const presets = [
       CSSは、Webサイトの構造的な基盤を素早くスムーズに構築するための軽量CSSフレームワークです。自然で心地よいリズムがデザインに生まれるよう、CSSアーキテクチャをゼロから設計しました。
     </Text>
 
-    <Columns cols={[1, null, 3]} g="10" mbs={['var(--s60d)', null, 'var(--s96)']}>
+    <Columns cols={[1, null, 3]} g="10" mbs={['var(--s60d)', null, '96']}>
       {
         features.map((card) => (
           <Stack class="c--shadow-box" px="48" py={['36', null, '48']}>
@@ -335,7 +333,6 @@ const presets = [
     padding: var(--s10);
     background: transparent;
     font-size: 1rem;
-    /* min-width: 16rem; */
     width: 100%;
     outline: none;
   }
