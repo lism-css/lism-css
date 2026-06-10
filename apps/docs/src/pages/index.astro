@@ -125,7 +125,7 @@ const presets = [
 <SimpleLayout title={siteConfig.name} description={siteConfig.description} schemaType="HomePage" excludeFromSearch>
   <Lism as="section" isWrapper="l" hasGutter>
     <Stack as="div" ai="center" pbs={['1.25rem', null, '6.25rem']} pbe={[null, null, '120']}>
-      <Heading ta="center" level="1" fw="700" fz={['2.25rem', null, '5xl']} lh="1.25" c="var(--gray-hi-c)">
+      <Heading ta="center" level="1" fw="700" fz={['3xl', null, '5xl']} lh="1.25" c="var(--gray-hi-c)">
         The CSS Design <Lism as="br" d={['inherit', null, 'none']} />Framework<br />for AI and Humans
       </Heading>
       <Text fz="m" c="#333" mt="30">
@@ -135,7 +135,7 @@ const presets = [
       <Flex g={['15', null, '20']} ai="center" jc="center" mbs={['36', null, '48']} w="100%">
         <Button href="/docs/installation" bdrs="var(--bdrs--15)" bgc="var(--gray-hi-c)" fw="500" lh="1.5">
           <span>Get Started</span>
-          <Icon icon="caret-right" ml="8" size="16" />
+          <Icon icon="caret-right" size="16" />
         </Button>
         <Box pos="relative" max-w={['11.5625rem', null, '16.6875rem']} w="100%">
           <input id="kv-search" class="c--kv-search c--shadow-box" type="text" placeholder="Search documentation..." autocomplete="off" />
@@ -159,7 +159,7 @@ const presets = [
         </Box>
       </Flex>
       {/* TODO: AIコード生成のイメージ図。フロント確認のため画像で配置。実装方法変更予定 */}
-      <Group bxsh="var(--bxsh--code)" bdrs="0.625rem" mbs={['var(--s36)', null, '50']}>
+      <Group bxsh="var(--bxsh--code)" bdrs="0.625rem" mbs={['36', null, '50']}>
         <Media src="/svg/code-pc.svg" alt="" width="903" height="400" d={['none', null, 'block']} />
         <Media src="/svg/code-sp.svg" alt="" width="368" height="552" d={['block', null, 'none']} />
       </Group>
@@ -244,11 +244,11 @@ const presets = [
       </Text>
       <Button href="#" bdrs="var(--bdrs--15)" bgc="var(--gray-hi-c)" mt="48" fw="500" lh="1.5">
         <span>View More</span>
-        <Icon icon="caret-right" ml="8" size="16" />
+        <Icon icon="caret-right" size="16" />
       </Button>
       <Box
-        mbs={['var(--s60d)', null, '6rem']}
-        style={{ columnCount: 3, columnGap: '0.5rem', marginInline: 'clamp(-6.375rem, calc(22.921vw - 12.106rem), 0rem)' }}
+        mbs={['var(--s60d)', null, '96']}
+        style={{ columnCount: 3, columnGap: 'var(--s10)', marginInline: 'clamp(-6.375rem, calc(22.921vw - 12.106rem), 0rem)' }}
       >
         {
           presets.map((item) => (
@@ -274,7 +274,7 @@ const presets = [
         </Text>
         <Button href="/docs/installation" bdrs="var(--bdrs--15)" bgc="var(--gray-hi-c)" mt="48" fw="500" lh="1.5">
           <span>Get Started</span>
-          <Icon icon="caret-right" ml="8" size="16" />
+          <Icon icon="caret-right" size="16" />
         </Button>
       </Center>
     </Stack>
@@ -302,7 +302,7 @@ const presets = [
   .c--kv-search {
     padding: var(--s10);
     background: transparent;
-    font-size: 1rem;
+    font-size: var(--fz--m);
     width: 100%;
     outline: none;
   }
