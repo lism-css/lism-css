@@ -55,7 +55,7 @@ export default {
   d: {
     prop: 'display',
     presets: ['none', 'block', 'flex', 'inline-flex', 'grid', 'inline-grid', 'inline', 'inline-block'],
-    bp: 'lg',
+    bp: 1,
   },
   o: { prop: 'opacity', presets: ['0'], token: 'o', tokenClass: 1 },
   v: { prop: 'visibility', presets: ['hidden'] },
@@ -231,11 +231,11 @@ export default {
     exUtility: { inherit: { gap: 'inherit' } },
     token: 'space',
     tokenClass: 1,
-    bp: 'lg',
+    bp: 1,
   },
   cg: { prop: 'columnGap', token: 'space', bp: 0 },
   rg: { prop: 'rowGap', token: 'space', bp: 0 },
-  cols: { isVar: 1, bp: 'lg' },
+  cols: { isVar: 1, bp: 1 },
   rows: { isVar: 1, bp: 1 },
 
   // flex
@@ -253,25 +253,25 @@ export default {
     prop: 'gridTemplate',
     bp: 1,
   },
-  gta: { prop: 'gridTemplateAreas', bp: 'lg' },
+  gta: { prop: 'gridTemplateAreas', bp: 1 },
   gtc: {
     prop: 'gridTemplateColumns',
     presets: ['subgrid'],
-    bp: 'lg',
+    bp: 1,
   },
   gtr: {
     prop: 'gridTemplateRows',
     presets: ['subgrid'],
-    bp: 'lg',
+    bp: 1,
   },
   gaf: { prop: 'gridAutoFlow', presets: ['row', 'column'], bp: 1 }, //dense
   gac: { prop: 'gridAutoColumns' },
   gar: { prop: 'gridAutoRows' },
 
   // grid item
-  ga: { prop: 'gridArea', utils: { '1/1': '1 / 1' }, bp: 'lg' },
-  gc: { prop: 'gridColumn', utils: { '1/-1': '1 / -1' }, bp: 'lg' },
-  gr: { prop: 'gridRow', utils: { '1/-1': '1 / -1' }, bp: 'lg' },
+  ga: { prop: 'gridArea', utils: { '1/1': '1 / 1' }, bp: 1 },
+  gc: { prop: 'gridColumn', utils: { '1/-1': '1 / -1' }, bp: 1 },
+  gr: { prop: 'gridRow', utils: { '1/-1': '1 / -1' }, bp: 1 },
   gcs: { prop: 'gridColumnStart' },
   gce: { prop: 'gridColumnEnd' },
   grs: { prop: 'gridRowStart' },

@@ -140,7 +140,7 @@ describe('PropValueTypes', () => {
     expectTypeOf<PropValueTypes['bg']>().toEqualTypeOf<string | number | boolean | undefined>();
   });
 
-  it('gtc（bp: lg）は配列形式で null を含められる', () => {
+  it('gtc（bp: 1）は配列形式で null を含められる', () => {
     expectTypeOf<PropValueTypes['gtc']>().toEqualTypeOf<Responsive<'subgrid' | (string & {}) | number | boolean | null | undefined>>();
     const gtc: PropValueTypes['gtc'] = ['auto', null, '1fr 1fr'];
     expectTypeOf(gtc).toMatchTypeOf<PropValueTypes['gtc']>();
