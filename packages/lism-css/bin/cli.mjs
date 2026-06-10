@@ -54,8 +54,14 @@ async function main() {
     // 設定をディープマージ
     const CONFIG = objDeepMerge(defaultConfig, userConfig);
 
+    // full.css 用 preset を反映した設定（マージ順: defaults < full preset < user config）
+    const propsFullPath = path.resolve(__dirname, '../dist/config/presets/props-full.js');
+    const propsFullModule = await import(pathToFileURL(propsFullPath).href);
+    const CONFIG_FULL = objDeepMerge(objDeepMerge(defaultConfig, { props: propsFullModule?.default || {} }), userConfig);
+
     // 動的インポートで同ディレクトリのスクリプトを実行
     await buildConfig(CONFIG); // SCSSの設定ファイルを出力
+    await buildConfig(CONFIG_FULL, '_prop-config-full.scss');
     await buildCSS();
     return;
   }
