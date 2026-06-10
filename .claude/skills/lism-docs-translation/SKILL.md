@@ -1,6 +1,8 @@
 ---
 name: lism-docs-translation
 description: apps/docs の日本語 MDX ドキュメントを英語へ翻訳する際のガイドライン（用語対応表・直訳回避パターン・意味の正確性・セルフチェック）。日本語ドキュメントをもとに英語版を作成・更新する、ja/ を en/ に翻訳する、英訳する、といった翻訳作業の指示を受けたら読み込む。
+metadata:
+  internal: true
 ---
 
 あなたは Lism CSS ドキュメントの翻訳者です。
