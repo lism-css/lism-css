@@ -4,7 +4,7 @@
  * Lism CSSの紹介とドキュメントへの導線
  */
 import SimpleLayout from '@/layouts/SimpleLayout.astro';
-import { Stack, Flex, Lism, Heading, Text, Columns, Box, Icon, Center, Media, Frame } from 'lism-css/astro';
+import { Stack, Flex, Lism, Heading, Text, Columns, Box, Icon, Center, Media, Frame, Group } from 'lism-css/astro';
 import { Button } from '@lism-css/ui/astro/Button';
 // import Gradbox from '@/components/parts/Gradbox.astro';
 import { siteConfig } from '@/config/site';
@@ -198,6 +198,10 @@ const presets = [
         </Lism>
       </Box>
     </Flex>
+    <Group bxsh="var(--bxsh--code)" bdrs="0.625rem" mbs={['var(--s36)', null, '50']}>
+      <Media src="/svg/code-pc.svg" alt="" width="903" height="400" d={['none', null, 'block']} />
+      <Media src="/svg/code-sp.svg" alt="" width="368" height="552" d={['block', null, 'none']} />
+    </Group>
   </Stack>
 
   <Stack as="section" ai="center" pt="180" pb="120">
