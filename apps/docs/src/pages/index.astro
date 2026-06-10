@@ -54,6 +54,9 @@ const features = [
   },
 ];
 
+// 背景ストライプ
+const stripes = Array.from({ length: 50 });
+
 // AIツール連携
 const tools = [
   {
@@ -123,6 +126,30 @@ const presets = [
 ---
 
 <SimpleLayout title={siteConfig.name} description={siteConfig.description} schemaType="HomePage" excludeFromSearch>
+  {/* 背景動画：スクロールしても固定表示 */}
+  <Box pos="fixed" i-x="0" t="0" h="100vh" z="-1" aria-hidden="true">
+    <Frame h="100%">
+      <video autoplay loop muted playsinline>
+        <source src="/video/video-kv.mp4" type="video/mp4" />
+      </video>
+    </Frame>
+    <Flex pos="absolute" i="0">
+      {
+        stripes.map(() => (
+          <Box
+            w="80px"
+            h="100%"
+            style={{
+              flexShrink: 0,
+              background: 'linear-gradient(270deg, rgba(255, 255, 255, 0.02) 0%, rgba(0, 0, 0, 0.30) 83.65%, rgba(255, 255, 255, 0.02) 100%)',
+              mixBlendMode: 'overlay',
+              backdropFilter: 'blur(90px)',
+            }}
+          />
+        ))
+      }
+    </Flex>
+  </Box>
   <Lism as="section" isWrapper="l" hasGutter>
     <Stack as="div" ai="center" pbs={['1.25rem', null, '6.25rem']} pbe={[null, null, '120']}>
       <Heading ta="center" level="1" fw="700" fz={['3xl', null, '5xl']} lh="1.25" c="var(--gray-hi-c)">
