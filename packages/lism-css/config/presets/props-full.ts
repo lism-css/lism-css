@@ -8,7 +8,7 @@ type FullPropKey = { [K in PropKey]: (typeof PROPS)[K] extends { isVar: 1 } ? ne
 
 /**
  * full.css 用の props オーバーライド設定（defaults/props.ts への差分のみ）。
- * isVar 系を除く全 props の BP サポートを 'lg' まで拡張する。
+ * isVar 系を除く全 props の BP サポートを有効化する（上限は $common_support_bp = lg に従う）。
  *
  * キーを列挙せず defaults から導出しているのは、props 追加時に
  * このファイルの追従漏れで full.css から抜け落ちるのを防ぐため。
@@ -17,7 +17,7 @@ type FullPropKey = { [K in PropKey]: (typeof PROPS)[K] extends { isVar: 1 } ? ne
 const propsFull = Object.fromEntries(
   Object.entries(PROPS)
     .filter(([, config]) => !('isVar' in config && config.isVar === 1))
-    .map(([key]) => [key, { bp: 'lg' }])
-) as Record<FullPropKey, { bp: 'lg' }>;
+    .map(([key]) => [key, { bp: 1 }])
+) as Record<FullPropKey, { bp: 1 }>;
 
 export default propsFull;
