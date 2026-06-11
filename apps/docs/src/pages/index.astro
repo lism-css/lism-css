@@ -148,20 +148,20 @@ const presets = [
     </Flex>
   </Box>
   <Lism as="section" isWrapper="l" px="20">
-    <Stack as="div" ai="center" pbs={['9rem', null, '14rem']} pbe={[null, null, '60']}>
-      <Heading ta="center" level="1" fw="700" fz={['3xl', null, '5xl']} lh="1.25" c="var(--gray-hi-c)">
-        The CSS Design <Lism as="br" d={['inherit', null, 'none']} />Framework<br />for AI and Humans
+    <Stack as="div" ai="center" pbs={{ base: '9rem', md: '14rem' }} pbe={{ md: '60' }}>
+      <Heading ta="center" level="1" fw="700" fz={{ base: '3xl', md: '5xl' }} lh="1.25" c="var(--gray-hi-c)">
+        The CSS Design <Lism as="br" d={{ base: 'inherit', md: 'none' }} />Framework<br />for AI and Humans
       </Heading>
       <Text fz="m" c="#333" mt="30">
         軽量でビルド不要。どのサイトにも導入できます。<br />
         あなたはもう、CSS設計に悩む必要はありません。
       </Text>
-      <Flex g={['15', null, '20']} ai="center" jc="center" mt="40" w="100%">
+      <Flex g={{ base: '15', md: '20' }} ai="center" jc="center" mt="40" w="100%">
         <Button href="/docs/installation" bdrs="var(--bdrs--15)" bgc="var(--gray-hi-c)" fw="500" lh="1.5">
           <span>Get Started</span>
           <Icon icon="caret-right" size="16" />
         </Button>
-        <Box pos="relative" max-w={['11.5625rem', null, '16.6875rem']} w="100%">
+        <Box pos="relative" max-w={{ base: '11.5625rem', md: '16.6875rem' }} w="100%">
           <input id="kv-search" class="c--kv-search c--shadow-box" type="text" placeholder="Search documentation..." autocomplete="off" />
           <Lism
             as="button"
@@ -174,7 +174,7 @@ const presets = [
             pos="absolute"
             r="10"
             i-y="10"
-            d={['none', null, 'flex']}
+            d={{ base: 'none', md: 'flex' }}
             hov={{ bgc: 'base-2' }}
             data-modal-open="search-modal"
           >
@@ -183,75 +183,43 @@ const presets = [
         </Box>
       </Flex>
       {/* TODO: AIコード生成のイメージ図。フロント確認のため画像で配置。実装方法変更予定 */}
-      <Group bxsh="var(--bxsh--code)" bdrs="0.625rem" mbs={['40', null, '3.5rem']}>
-        <Media src="/svg/code-pc.svg" alt="" width="903" height="400" d={['none', null, 'block']} />
-        <Media src="/svg/code-sp.svg" alt="" width="368" height="552" d={['block', null, 'none']} />
+      <Group bxsh="var(--bxsh--code)" bdrs="0.625rem" mbs={{ base: '40', md: '3.5rem' }}>
+        <Media src="/svg/code-pc.svg" alt="" width="903" height="400" d={{ base: 'none', md: 'block' }} />
+        <Media src="/svg/code-sp.svg" alt="" width="368" height="552" d={{ base: 'block', md: 'none' }} />
       </Group>
     </Stack>
   </Lism>
 
   <Lism as="section" isWrapper="l" hasGutter>
-    <Stack as="section" ai="center" py={['60', null, '70']}>
+    <Stack as="section" ai="center" py={{ base: '60', md: '70' }}>
       <Stack ai="center" g="15">
-        <Text c="var(--eyebrow-c)" tt="upper" lh="1" fz={['s', null, 'base']}>Features</Text>
-        <Heading level="2" ta="center" fz={['2xl', null, '4xl']} fw="700" lh="1.5" c="var(--gray-hi-c)">洗練された設計理論</Heading>
+        <Text c="var(--eyebrow-c)" tt="upper" lh="1" fz={{ base: 's', md: 'base' }}>Features</Text>
+        <Heading level="2" ta="center" fz={{ base: '2xl', md: '4xl' }} fw="700" lh="1.5" c="var(--gray-hi-c)">洗練された設計理論</Heading>
       </Stack>
-      <Text ta="center" mbs={['20', null, '30']} fz={['s', null, 'l']} lh="1.75" max-w="52.5rem">
+      <Text ta="center" mbs={{ base: '20', md: '30' }} fz={{ base: 's', md: 'l' }} lh="1.75" max-w="52.5rem">
         Lism
         CSSは、Webサイトの構造的な基盤を素早くスムーズに構築するための軽量CSSフレームワークです。自然で心地よいリズムがデザインに生まれるよう、CSSアーキテクチャをゼロから設計しました。
       </Text>
 
-      <Columns cols={[1, null, 3]} g="10" mbs={['50', null, '60']}>
+      <Columns cols={{ base: 1, md: 3 }} g="10" mbs={{ base: '50', md: '60' }}>
         {
           features.map((card) => (
             <Stack class="c--shadow-box" p="40">
-              <Text fw="bold" lh="1.5" fz={['base', null, null, '2xl']}>
+              <Text fw="bold" lh="1.5" fz={{ base: 'base', lg: '2xl' }}>
                 {card.title}
               </Text>
               <Text fz="s" c="text-2" lh="s" mt="20">
                 {card.desc}
               </Text>
-              <Media src={card.src} alt="" width={card.width} height={card.height} mx="auto" mt="50" w="auto" h={['9.375rem', null, '12.5rem']} />
-            </Stack>
-          ))
-        }
-      </Columns>
-    </Stack>
-  </Lism>
-
-  <Lism as="section" isWrapper="l" hasGutter>
-    <Stack as="section" ai="center" py={['60', null, '70']}>
-      <Stack ai="center" g="15">
-        <Text c="var(--eyebrow-c)" tt="upper" lh="1" fz={['s', null, 'base']}>Artificial Intelligence</Text>
-        <Heading level="2" ta="center" fz={['2xl', null, '4xl']} fw="700" lh="1.5" c="var(--gray-hi-c)">AI ツール連携</Heading>
-      </Stack>
-      <Text ta="center" mbs={['20', null, '30']} fz={['s', null, 'l']} lh="1.75" max-w="52.5rem">
-        Lism CSSはAIエージェントとの親和性を重視して設計されています。MCPサーバーとSkills、そして機械可読なドキュメントを提供することで、 Claude
-        CodeやCursorなどのAIツールがLismの体系を正確に把握し、意図通りのコードを生成できます。
-      </Text>
-      <Frame mt="50" w="clamp(11.25rem, calc(53.25vw - 2.0625rem), 24.5625rem)">
-        <Media src="/img/ai-01.png" alt="" width="393" height="240" />
-      </Frame>
-      <Columns cols={[1, null, 2]} g="10" w="100%" mt="50">
-        {
-          tools.map((item) => (
-            <Stack class="c--shadow-box" p="40">
-              <Text fw="600" fz={['base', null, '2xl']} lh="1.5">
-                {item.title}
-              </Text>
-              <Text fz={['s', null, 'base']} c="text-2" lh="1.75" mt="20" max-w={['100%', null, '30rem']}>
-                {item.body}
-              </Text>
               <Media
-                src={item.src}
+                src={card.src}
                 alt=""
-                width={item.width}
-                height={item.height}
+                width={card.width}
+                height={card.height}
+                mx="auto"
                 mt="50"
-                ms="auto"
-                me={['auto', null, '0']}
                 w="auto"
-                h={['9.375rem', null, '12.5rem']}
+                h={{ base: '9.375rem', md: '12.5rem' }}
               />
             </Stack>
           ))
@@ -261,12 +229,53 @@ const presets = [
   </Lism>
 
   <Lism as="section" isWrapper="l" hasGutter>
-    <Stack as="section" ai="center" py={['60', null, '70']}>
+    <Stack as="section" ai="center" py={{ base: '60', md: '70' }}>
       <Stack ai="center" g="15">
-        <Text c="var(--eyebrow-c)" tt="upper" lh="1" fz={['s', null, 'base']}>Templates</Text>
-        <Heading level="2" ta="center" fz={['2xl', null, '4xl']} fw="700" lh="1.5" c="var(--gray-hi-c)">Lism CSS プリセット</Heading>
+        <Text c="var(--eyebrow-c)" tt="upper" lh="1" fz={{ base: 's', md: 'base' }}>Artificial Intelligence</Text>
+        <Heading level="2" ta="center" fz={{ base: '2xl', md: '4xl' }} fw="700" lh="1.5" c="var(--gray-hi-c)">AI ツール連携</Heading>
       </Stack>
-      <Text ta="center" mbs={['20', null, '30']} fz={['s', null, 'base']} lh="1.75" max-w="35rem">
+      <Text ta="center" mbs={{ base: '20', md: '30' }} fz={{ base: 's', md: 'l' }} lh="1.75" max-w="52.5rem">
+        Lism CSSはAIエージェントとの親和性を重視して設計されています。MCPサーバーとSkills、そして機械可読なドキュメントを提供することで、 Claude
+        CodeやCursorなどのAIツールがLismの体系を正確に把握し、意図通りのコードを生成できます。
+      </Text>
+      <Frame mt="50" w="clamp(11.25rem, calc(53.25vw - 2.0625rem), 24.5625rem)">
+        <Media src="/img/ai-01.png" alt="" width="393" height="240" />
+      </Frame>
+      <Columns cols={{ base: 1, md: 2 }} g="10" w="100%" mt="50">
+        {
+          tools.map((item) => (
+            <Stack class="c--shadow-box" p="40">
+              <Text fw="600" fz={{ base: 'base', md: '2xl' }} lh="1.5">
+                {item.title}
+              </Text>
+              <Text fz={{ base: 's', md: 'base' }} c="text-2" lh="1.75" mt="20" max-w={{ base: '100%', md: '30rem' }}>
+                {item.body}
+              </Text>
+              <Media
+                src={item.src}
+                alt=""
+                width={item.width}
+                height={item.height}
+                mt="50"
+                ms="auto"
+                me={{ base: 'auto', md: '0' }}
+                w="auto"
+                h={{ base: '9.375rem', md: '12.5rem' }}
+              />
+            </Stack>
+          ))
+        }
+      </Columns>
+    </Stack>
+  </Lism>
+
+  <Lism as="section" isWrapper="l" hasGutter>
+    <Stack as="section" ai="center" py={{ base: '60', md: '70' }}>
+      <Stack ai="center" g="15">
+        <Text c="var(--eyebrow-c)" tt="upper" lh="1" fz={{ base: 's', md: 'base' }}>Templates</Text>
+        <Heading level="2" ta="center" fz={{ base: '2xl', md: '4xl' }} fw="700" lh="1.5" c="var(--gray-hi-c)">Lism CSS プリセット</Heading>
+      </Stack>
+      <Text ta="center" mbs={{ base: '20', md: '30' }} fz={{ base: 's', md: 'base' }} lh="1.75" max-w="35rem">
         デザインのベースとして活用することも、必要な部分だけをコピー&ペーストしてプロジェクトにすぐ洗練されたレイアウトを追加することも可能です。
       </Text>
       <Button href="#" bdrs="var(--bdrs--15)" bgc="var(--gray-hi-c)" mt="40" fw="500" lh="1.5">
@@ -274,12 +283,12 @@ const presets = [
         <Icon icon="caret-right" size="16" />
       </Button>
       <Box
-        mbs={['50', null, '60']}
+        mbs={{ base: '50', md: '60' }}
         style={{ columnCount: 3, columnGap: 'var(--s10)', marginInline: 'clamp(-6.375rem, calc(22.921vw - 12.106rem), 0rem)' }}
       >
         {
           presets.map((item) => (
-            <Frame class="c--shadow-box" mbe={['5', null, '10']}>
+            <Frame class="c--shadow-box" mbe={{ base: '5', md: '10' }}>
               <Media src={item.src} alt="" width={item.width} height={item.height} />
             </Frame>
           ))
@@ -291,12 +300,12 @@ const presets = [
   {/* CTA */}
   <Lism as="section" isWrapper="l" hasGutter>
     <Stack as="section" ai="center" pt="10.625rem">
-      <Center class="c--shadow-box" ai="center" w="100%" max-w="l" h="35rem" px={['15', null, '40']} py="40">
+      <Center class="c--shadow-box" ai="center" w="100%" max-w="l" h="35rem" px={{ base: '15', md: '40' }} py="40">
         <Stack ai="center" g="15">
-          <Text c="var(--eyebrow-c)" tt="upper" lh="1" fz={['s', null, 'base']}>Get Started</Text>
-          <Heading level="2" ta="center" fz={['2xl', null, '4xl']} fw="700" lh="1.5" c="var(--gray-hi-c)">Lism CSS、どこでも使える</Heading>
+          <Text c="var(--eyebrow-c)" tt="upper" lh="1" fz={{ base: 's', md: 'base' }}>Get Started</Text>
+          <Heading level="2" ta="center" fz={{ base: '2xl', md: '4xl' }} fw="700" lh="1.5" c="var(--gray-hi-c)">Lism CSS、どこでも使える</Heading>
         </Stack>
-        <Text ta="center" mbs={['20', null, '30']} fz={['s', null, 'base']} lh="1.75">
+        <Text ta="center" mbs={{ base: '20', md: '30' }} fz={{ base: 's', md: 'base' }} lh="1.75">
           ビルドプロセスもセットアップも不要。<br />Lism CSSは1つのCSSファイルを読み込むだけで導入できます。
         </Text>
         <Button href="/docs/installation" bdrs="var(--bdrs--15)" bgc="var(--gray-hi-c)" mt="40" fw="500" lh="1.5">

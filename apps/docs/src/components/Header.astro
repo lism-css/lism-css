@@ -31,27 +31,27 @@ const searchText = t(currentLang, 'search');
 
     <Link href="/docs/" c="text" fw="500" lh="1.25" lts="-0.02em" td="none" ml="auto">Docs</Link>
 
-    <SNSLinks d="flex" ms={['30', null, '35']} />
+    <SNSLinks d="flex" ms={{ base: '30', md: '35' }} />
 
     <!-- 検索トリガーボタン -->
     <Lism
       as="button"
       type="button"
       class="c--searchTrigger l--flex -ai:center"
-      px={['0', null, '10']}
-      py={['0', null, '5']}
-      ms={['15', null, '20']}
+      px={{ base: '0', md: '10' }}
+      py={{ base: '0', md: '5' }}
+      ms={{ base: '15', md: '20' }}
       g="5"
       bdrs="10"
       hov={{ bgc: 'base-2' }}
       aria-label={searchText.title}
       data-modal-open="search-modal"
     >
-      <Icon icon="search" fz={['xl', null, 'l']} />
+      <Icon icon="search" fz={{ base: 'xl', md: 'l' }} />
       <Lism
         as="kbd"
         class="c--searchTrigger_shortcut"
-        d={['none', null, 'block']}
+        d={{ base: 'none', md: 'block' }}
         p="0"
         bxsh="none"
         bd="none"
