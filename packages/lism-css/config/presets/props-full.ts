@@ -18,6 +18,33 @@ const propsFull = Object.fromEntries(
   Object.entries(PROPS)
     .filter(([, config]) => !('isVar' in config && config.isVar === 1))
     .map(([key]) => [key, { bp: 1 }])
-) as Record<FullPropKey, { bp: 1 }>;
+) as Record<FullPropKey, { bp: 1; tokenClass?: 1 }>;
+
+// スペーシング系の方向指定 props（padding / margin / gap）にも space トークンの
+// ユーティリティクラスを出力する（inset 系は position 用途のため対象外）。
+const SPACING_DIRECTION_KEYS = [
+  'ps',
+  'pe',
+  'pbs',
+  'pbe',
+  'pl',
+  'pr',
+  'pt',
+  'pb',
+  'ms',
+  'me',
+  'mbs',
+  'mbe',
+  'ml',
+  'mr',
+  'mt',
+  'mb',
+  'cg',
+  'rg',
+] as const;
+
+for (const key of SPACING_DIRECTION_KEYS) {
+  propsFull[key] = { ...propsFull[key], tokenClass: 1 };
+}
 
 export default propsFull;
