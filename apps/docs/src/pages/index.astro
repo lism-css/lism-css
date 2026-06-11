@@ -228,7 +228,20 @@ const presets = [
     </Stack>
   </Lism>
 
-  <Lism as="section" isWrapper="l" hasGutter>
+  <Lism as="section" isWrapper="l" hasGutter pos="relative">
+    {/* AIツール連携セクション背景画像 */}
+    <Group
+      pos="absolute"
+      w={{ base: '122.375rem', md: '166.375rem' }}
+      l="50%"
+      t="clamp(0.625rem, calc(1.25vw + 0.625rem), 1.25rem)"
+      ms={{ base: '-61.1875rem', md: '-83.1875rem' }}
+      z="-1"
+      max-w="none"
+      aria-hidden="true"
+    >
+      <Media src="/img/ai-bg.png" alt="" width="2662" height="1510" w="100%" h="auto" />
+    </Group>
     <Stack as="section" ai="center" py={{ base: '60', md: '70' }}>
       <Stack ai="center" g="15">
         <Text c="var(--eyebrow-c)" tt="upper" lh="1" fz={{ base: 's', md: 'base' }}>Artificial Intelligence</Text>
