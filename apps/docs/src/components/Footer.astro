@@ -4,12 +4,12 @@ import { siteConfig } from '@/config/site';
 import SNSLinks from '@/components/SNSLinks.astro';
 ---
 
-<Lism as="footer" class="z--footer" mbs="auto" pt="25" pb="35" {...Astro.props}>
-  <Stack g="20">
+<Lism as="footer" class="z--footer" mbs="auto" pt="5.125rem" pb="35" {...Astro.props}>
+  <Stack g="15">
     <!-- <Text ta="center">
 			Powered by <a href="https://lism-css.com">Lism CSS</a>
 		</Text> -->
     <SNSLinks icons={['github', 'discord']} />
-    <Text ta="center" o="p" translate="no" lh="s" fz={['s', null, 'm']}> &copy; 2026 {siteConfig.name}. </Text>
+    <Text ta="center" o="p" translate="no" lh="s" fz={{ base: 's', md: 'm' }}> &copy; 2026 {siteConfig.name}. </Text>
   </Stack>
 </Lism>
