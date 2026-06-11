@@ -127,8 +127,8 @@ const presets = [
 
 <SimpleLayout title={siteConfig.name} description={siteConfig.description} schemaType="HomePage" excludeFromSearch>
   {/* 背景動画：スクロールしても固定表示 */}
-  <Box pos="fixed" i-x="0" t="0" h="100vh" z="-1" aria-hidden="true">
-    <Frame h="100%">
+  <Box pos="fixed" i-x="0" t="0" h="100vh" z="-1" aria-hidden="true" ov="hidden">
+    <Frame h="100%" ar="16/9">
       <video autoplay loop muted playsinline>
         <source src="/video/video-kv.mp4" type="video/mp4" />
       </video>
@@ -335,6 +335,16 @@ const presets = [
 </script>
 
 <style>
+  video {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: clamp(100rem, calc(100vw + 75rem), 150rem);
+    max-width: none;
+    height: auto;
+  }
+
   .c--kv-search {
     padding: var(--s10);
     background: white;
