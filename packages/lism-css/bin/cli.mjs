@@ -54,13 +54,17 @@ async function main() {
     // 設定をディープマージ
     const CONFIG = objDeepMerge(defaultConfig, userConfig);
 
-    // full.css 用 preset を反映した設定（マージ順: defaults < full preset < user config）
+    // full.css 用 preset を反映した設定。(later wins): defaults → full preset → user config
     const propsFullPath = path.resolve(__dirname, '../dist/config/presets/props-full.js');
     const propsFullModule = await import(pathToFileURL(propsFullPath).href);
     const CONFIG_FULL = objDeepMerge(objDeepMerge(defaultConfig, { props: propsFullModule?.default || {} }), userConfig);
 
+    // isFullMode 時は main.css 側のビルドにも full preset を適用する。
+    // コンポーネント側（config/index.ts）が full 設定でクラスを出力するため、ビルド済みCSSと一致させる必要がある。
+    const isFullMode = !!userConfig.isFullMode;
+
     // 動的インポートで同ディレクトリのスクリプトを実行
-    await buildConfig(CONFIG); // SCSSの設定ファイルを出力
+    await buildConfig(isFullMode ? CONFIG_FULL : CONFIG); // SCSSの設定ファイルを出力
     await buildConfig(CONFIG_FULL, '_prop-config-full.scss');
     await buildCSS();
     return;
