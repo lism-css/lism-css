@@ -16,6 +16,45 @@ You can disable `@layer` by importing `lism-css/main_no_layer.css` instead of `l
 Just swap the imported CSS file — no other changes needed.
 
 
+## Full Build (full.css)
+
+Importing `lism-css/full.css` instead of `lism-css/main.css` gives you a "full" build that includes classes not output by default.
+
+```js
+import 'lism-css/full.css'; // For the version without @layer, use 'lism-css/full_no_layer.css'
+```
+
+In addition to everything in `main.css`, `full.css` includes:
+
+- Breakpoint support classes (such as `-pl_lg`) for all Property Classes except variable-only (`isVar`) properties
+- `SPACE` token utility classes (such as `-pl:20`) for directional spacing properties like `pl` / `mt` / `cg`
+
+This makes the CSS larger than `main.css`, so **this build is intended to be used together with a CSS purge tool that removes unused classes at build time**.
+
+
+### isFullMode
+
+Importing `full.css` alone does not change how components behave — they still use the default configuration (for example, `pl="20"` is output as an inline style).
+
+To align the component output with `full.css`, enable `isFullMode` in your `lism.config.js`.
+
+```js
+// lism.config.js
+export default {
+  isFullMode: true,
+};
+```
+
+With `isFullMode: true`, the full preset is also applied to the component props configuration, so `pl="20"` is output as the `-pl:20` class. The configuration is merged in the order "defaults → full preset → `props` in `lism.config.js`", with later entries taking precedence.
+
+:::warning
+- `isFullMode` assumes the corresponding styles are loaded via `full.css` (or a CLI rebuild with `isFullMode` enabled). If you keep the default `main.css`, the output classes will have no matching styles.
+- `isFullMode` is a build-time setting. It cannot be toggled at runtime via `window._LISM_CSS_CONFIG_`.
+- TypeScript types do not follow the full configuration, so some usages (such as breakpoint arrays for `pl`) cause type errors even with `isFullMode` (they still work at runtime).
+:::
+
+Note that running the [CLI build described below](#build-css-using-the-lism-css-cli-command) with `isFullMode` enabled also applies the full preset to `main.css`.
+
 
 ## Customizing with SCSS
 
@@ -32,7 +71,7 @@ The variables defined in `lism-css/scss/_setting.scss` can be overridden via `@u
 | Variable | Purpose |
 |----------|---------|
 | `$breakpoints` | Breakpoint value definitions |
-| `$common_support_bp` | Breakpoints commonly supported across key Property Classes |
+| `$common_support_bp` | Breakpoints commonly supported across key Property Classes (default: `'lg'`) |
 | `$is_container_query` | Whether to use container queries (`1` = container query / `0` = media query) |
 | `$default_important` | Whether to add `!important` to Property Classes by default (`0` / `1`) |
 | `$props` | Per-Property Class output configuration |
@@ -49,7 +88,7 @@ After defining your overrides, import `lism-css/scss/main.scss` to apply the cus
   $breakpoints: (
     'sm': '400px', // individual keys can be overridden
   ),
-  $common_support_bp: 'lg', // 'sm' | 'md' | 'lg'
+  $common_support_bp: 'md', // 'sm' | 'md' | 'lg' (default: 'lg'; smaller values reduce the CSS size)
   $is_container_query: 0,   // 1 = container query / 0 = media query
   $default_important: 1,    // 0 / 1
   $props: (
@@ -84,8 +123,8 @@ For each Property Class, you can adjust the output range or add utility classes.
       // Disable breakpoint-responsive classes for 'h'
     ),
     'p': (
-      bp: 'lg',
-      // Output utility classes for 'p' up to lg size
+      bp: 'md',
+      // Limit breakpoint support classes for 'p' to md size
       utilities: (
         'box': '2em',
       ),
@@ -299,6 +338,12 @@ You need to define these manually and load them yourself.
 :::warning
 Since this command rebuilds the package styles, it must be run each time the package is updated.
 :::
+
+Note that `full.css` / `full_no_layer.css` are not rebuilt by default. If you use `full.css`, run the build with the `--full` option.
+
+```bash frame="none"
+npx lism-css build --full
+```
 
 ### Adding styles manually
 
