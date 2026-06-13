@@ -38,11 +38,14 @@ export const PROPS = arrayConvertToSet(structuredClone(props));
 export const TRAITS = traits;
 
 // ブレイクポイント
-// BREAK_POINTS / BREAK_POINTS_ALL は「配列記法のインデックス→キー対応」を表す固定の契約（変更しない）。
-// 位置は base=0, sm=1, md=2, lg=3, xl=4 で固定し、xs は配列記法では書けない（後述の OBJ 側のみ）。
-export const BREAK_POINTS = ['sm', 'md', 'lg', 'xl'] as const;
-export const BREAK_POINTS_ALL = ['base', ...BREAK_POINTS] as const;
+//
+// 配列記法 p={[base, sm, md, lg, xl]} は「何番目か」だけで対応する BP が決まる。
+// この index → キーの並び順はユーザーの JSX が依存しているので、後から変えない。
+// （順番を変えて index 1 が sm 以外になると、既存の p={[20, 40]} の意味が黙ってずれてしまう）
+export const BREAK_POINTS = ['sm', 'md', 'lg', 'xl'] as const; // index 1..4 のキー（base を除く）
+export const BREAK_POINTS_ALL = ['base', ...BREAK_POINTS] as const; // index 0..4（base 込み）
 
-// オブジェクト記法（{ base, xs, sm, ... }）で BP 指定とみなすキーの集合。
-// 配列記法には無い xs を含む（xs はオブジェクト記法でのみ指定可能）。
+// オブジェクト記法 p={{ base, xs, sm, ... }} で「BP 指定」とみなすキーの集合。
+// xs は配列の index をずらさずには足せない（＝配列記法では書けない）ため、
+// オブジェクト記法専用キーとしてここにだけ含める。
 export const BREAK_POINTS_OBJ = ['base', 'xs', 'sm', 'md', 'lg', 'xl'] as const;
