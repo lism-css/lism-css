@@ -27,13 +27,13 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 // scssファイル処理
-export async function compileSCSS(src, dist) {
+export async function compileSCSS(src, dist, extraIgnore = []) {
   let files = [];
 
   // NOTE: CLI 経由で実行されると cwd がプロジェクト側になるため、
   // glob の ignore が相対解決されずに全件ヒットすることがある。
   // cwd を明示してパターンを相対指定、absolute で絶対パスを受け取る。
-  const ignore = ['**/_*.scss'];
+  const ignore = ['**/_*.scss', ...extraIgnore];
   files = globSync('**/*.scss', { cwd: src, ignore, absolute: true });
 
   console.log('▶️ [compileSCSS] files:', files);
@@ -77,11 +77,11 @@ function writeCSS(filePath, css) {
 }
 
 // デフォルトエクスポート（他から await 可能）
-export default async function buildCSS() {
+export default async function buildCSS({ ignore = [] } = {}) {
   // パス（絶対パスに変換）
   let src = path.resolve(__dirname, '../src/scss');
   let dist = path.resolve(__dirname, '../dist/css');
-  await compileSCSS(src, dist);
+  await compileSCSS(src, dist, ignore);
 
   // component
   // src = path.resolve(__dirname, '../src/components');

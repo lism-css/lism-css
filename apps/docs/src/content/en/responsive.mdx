@@ -105,7 +105,7 @@ Breakpoints are defined **mobile-first**, using the values 480px, 800px, and 112
 |---|---|
 |`sm`|`width >= 480px`|
 |`md`|`width >= 800px`|
-|(`lg`)|`width >= 1120px`|
+|`lg`|`width >= 1120px`|
 
 Each breakpoint label means "**styles apply once the size exceeds it**".  
 For example, `sm` is not "for smartphone-sized screens only" — it is a label for "applies above the `sm` size".
@@ -113,15 +113,15 @@ For example, `sm` is not "for smartphone-sized screens only" — it is a label f
 ```
 Smartphone ──┬── Tablet (Portrait) ──┬── Tablet (Landscape) ──┬── Laptop and up
              │                       │                        │
-          sm:480px                md:800px               (lg:1120px)
+          sm:480px                md:800px               lg:1120px
 ```
 
 Example: `-d:none -d_sm` + `--d_sm: block` → hidden by default, shown at `sm` and above.
 
 :::info
-Responsive Property Classes are, by default, generally supported up to `sm` and `md`.  
-However, some properties involved in the overall layout structure — `d` (display), `g` (gap), `cols`, and the grid properties (`gta` / `gtc` / `gtr` / `ga` / `gc` / `gr`) — are supported up to `lg`.  
-For other properties, using `lg` and beyond requires additional [SCSS configuration customization](/en/docs/customize/).
+Responsive Property Classes support all breakpoints (`sm`, `md`, and `lg`) by default.  
+You can check which properties are responsive in the BP column of the [Property Class list page](/en/docs/property-class/).  
+To use breakpoint classes with non-responsive properties, additional [SCSS configuration customization](/en/docs/customize/) is required.
 :::
 
 

@@ -33,6 +33,10 @@ const userConfigPath = findUserConfigPath();
 const args = process.argv.slice(2);
 const command = args[0] || '';
 
+// build コマンドのオプション。
+// --full: full.css / full_no_layer.css も生成・コンパイルする（デフォルトではビルドしない）
+const withFull = args.includes('--full');
+
 async function main() {
   // 指定がない場合、build-config を実行
   if (command === 'build') {
@@ -54,16 +58,38 @@ async function main() {
     // 設定をディープマージ
     const CONFIG = objDeepMerge(defaultConfig, userConfig);
 
+    // full.css 用 preset を反映した設定。(later wins): defaults → full preset → user config
+    const propsFullPath = path.resolve(__dirname, '../dist/config/presets/props-full.js');
+    const propsFullModule = await import(pathToFileURL(propsFullPath).href);
+    if (!propsFullModule.default) {
+      // 空のまま進めると「full ではない full.css」が黙って生成されるため、明示的にエラーにする
+      throw new Error(`props-full preset の読み込みに失敗しました: ${propsFullPath}`);
+    }
+    const CONFIG_FULL = objDeepMerge(objDeepMerge(defaultConfig, { props: propsFullModule.default }), userConfig);
+
+    // isFullMode 時は main.css 側のビルドにも full preset を適用する。
+    // コンポーネント側（config/index.ts）が full 設定でクラスを出力するため、ビルド済みCSSと一致させる必要がある。
+    const isFullMode = !!userConfig.isFullMode;
+
     // 動的インポートで同ディレクトリのスクリプトを実行
-    await buildConfig(CONFIG); // SCSSの設定ファイルを出力
-    await buildCSS();
+    await buildConfig(isFullMode ? CONFIG_FULL : CONFIG); // SCSSの設定ファイルを出力
+
+    // full 系の生成・コンパイルは --full 指定時のみ行う。
+    // （_prop-config-full.scss の生成だけスキップすると、パッケージ同梱のストック版 partial で
+    //   ユーザー設定を反映しない full.css が生成されてしまうため、コンパイル側も合わせて制御する）
+    if (withFull) {
+      await buildConfig(CONFIG_FULL, '_prop-config-full.scss');
+    }
+    await buildCSS({ ignore: withFull ? [] : ['full.scss', 'full_no_layer.scss'] });
     return;
   }
 
   if (!command) {
-    console.log('Usage: lism-css <command>');
+    console.log('Usage: lism-css <command> [options]');
     console.log('  <command>:');
     console.log('    - build : Build the CSS');
+    console.log('  [options]:');
+    console.log('    --full : Also build full.css / full_no_layer.css');
     return;
   }
 

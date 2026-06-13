@@ -65,7 +65,7 @@ Lism コンポーネントの Propsに渡す値の頭に `:` を付けると、 
 | **Prop** | クラス名に使う省略名（例: `-fz:l` の `fz` 部分）。Lism コンポーネントの Props 名でもある |
 | **CSS プロパティ** | 実際に制御される CSS プロパティ |
 | **プリセット値クラス** | そのまま使えるクラス名の一覧（`-{prop}:{value}` 形式）。`—` はカスタム値のみ対応 |
-| **BP** | ブレークポイント対応クラス（`-{prop}_{bp}` 形式）のサポート状況。`✔` は `sm`・`md`、`✔ lg` は `lg` まで対応、`—` は非対応 |
+| **BP** | ブレークポイント対応クラス（`-{prop}_{bp}` 形式）のサポート状況。`✔` は `sm`・`md`・`lg` に対応、`—` は非対応 |
 
 
 ## 全 Prop 一覧
@@ -94,7 +94,7 @@ Lism コンポーネントの Propsに渡す値の頭に `:` を付けると、 
 
 | Prop | CSS プロパティ | プリセット値クラス | BP |
 |------|--------------|-------------|-----|
-| `d` | `display` | `-d:none`, `-d:block`, `-d:flex`, `-d:inline-flex`, `-d:grid`, `-d:inline-grid`, `-d:inline`, `-d:inline-block` | ✔ lg |
+| `d` | `display` | `-d:none`, `-d:block`, `-d:flex`, `-d:inline-flex`, `-d:grid`, `-d:inline-grid`, `-d:inline`, `-d:inline-block` | ✔ |
 | `o` | `opacity` | `-o:0`, `-o:mp`, `-o:p`, `-o:pp`, `-o:ppp` | — |
 | `v` | `visibility` | `-v:hidden` | — |
 | `ov` | `overflow` | `-ov:hidden`, `-ov:auto`, `-ov:clip` | — |
@@ -230,7 +230,7 @@ SPACEトークン（全値）: `5`, `10`, `15`, `20`, `25`, `30`, `35`, `40`, `5
 
 | Prop | CSS プロパティ | プリセット値クラス | BP |
 |------|--------------|-------------|-----|
-| `g` | `gap` | `-g:0`, `-g:inherit`, `-g:5`, `-g:10`, `-g:20`, ... (SPACEトークン) | ✔ lg |
+| `g` | `gap` | `-g:0`, `-g:inherit`, `-g:5`, `-g:10`, `-g:20`, ... (SPACEトークン) | ✔ |
 | `cg` | `column-gap` | — | — |
 | `rg` | `row-gap` | — | — |
 
@@ -251,22 +251,22 @@ SPACEトークン（全値）: `5`, `10`, `15`, `20`, `25`, `30`, `35`, `40`, `5
 | Prop | CSS プロパティ | プリセット値クラス | BP |
 |------|--------------|-------------|-----|
 | `gt` | `grid-template` | — | ✔ |
-| `gta` | `grid-template-areas` | — | ✔ lg |
-| `gtc` | `grid-template-columns` | `-gtc:subgrid` | ✔ lg |
-| `gtr` | `grid-template-rows` | `-gtr:subgrid` | ✔ lg |
+| `gta` | `grid-template-areas` | — | ✔ |
+| `gtc` | `grid-template-columns` | `-gtc:subgrid` | ✔ |
+| `gtr` | `grid-template-rows` | `-gtr:subgrid` | ✔ |
 | `gaf` | `grid-auto-flow` | `-gaf:row`, `-gaf:column` | ✔ |
 | `gac` | `grid-auto-columns` | — | — |
 | `gar` | `grid-auto-rows` | — | — |
-| `cols` | `--cols` 変数 | — | ✔ lg |
+| `cols` | `--cols` 変数 | — | ✔ |
 | `rows` | `--rows` 変数 | — | ✔ |
 
 ### Grid アイテム
 
 | Prop | CSS プロパティ | プリセット値クラス | BP |
 |------|--------------|-------------|-----|
-| `ga` | `grid-area` | `-ga:1/1` | ✔ lg |
-| `gc` | `grid-column` | `-gc:1/-1` | ✔ lg |
-| `gr` | `grid-row` | `-gr:1/-1` | ✔ lg |
+| `ga` | `grid-area` | `-ga:1/1` | ✔ |
+| `gc` | `grid-column` | `-gc:1/-1` | ✔ |
+| `gr` | `grid-row` | `-gr:1/-1` | ✔ |
 | `gcs` | `grid-column-start` | — | — |
 | `gce` | `grid-column-end` | — | — |
 | `grs` | `grid-row-start` | — | — |

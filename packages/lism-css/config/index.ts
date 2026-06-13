@@ -1,4 +1,5 @@
 import defaultConfig from './default-config';
+import propsFull from './presets/props-full';
 import userConfig from 'lism-css/config.js'; // ユーザーが上書きできる
 import { objDeepMerge, arrayConvertToSet } from './helper';
 
@@ -7,8 +8,13 @@ interface Window {
 }
 declare const window: Window;
 
-// ビルド時の設定をマージ
-let mergedConfig = objDeepMerge(defaultConfig, userConfig);
+// isFullMode: full.css の読み込みを前提に、コンポーネント側の props 設定にも full preset を適用するモード。
+// 注: 静的型は defaults のまま維持する（lism.config.js での props 上書きと同じ制限。型レベルの full 対応は別途検討）。
+const isFullMode = (userConfig as { isFullMode?: boolean }).isFullMode;
+const baseConfig = isFullMode ? (objDeepMerge(defaultConfig, { props: propsFull }) as unknown as typeof defaultConfig) : defaultConfig;
+
+// ビルド時の設定をマージ。(later wins): defaults → full preset → lism.config.js
+let mergedConfig = objDeepMerge(baseConfig, userConfig);
 
 // ブラウザ環境で window._LISM_CSS_CONFIG_ があればランタイムでマージ
 if (typeof window !== 'undefined' && window._LISM_CSS_CONFIG_) {

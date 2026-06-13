@@ -31,6 +31,9 @@ function deleteDuplicateDir(filePath) {
 // ファイルパスは大文字・小文字まで一致しないと Vercel でこけるので注意。
 const entries = {
   'components/index': resolve(__dirname, 'src/components/index.ts'),
+
+  // full.css 用 preset。bin/cli.mjs が dist から読むため単独エントリとして出力する
+  'config/presets/props-full': resolve(__dirname, 'config/presets/props-full.ts'),
   // 'components/Box/index': resolve(__dirname, 'src/components/Box/index.js'),
 
   // ↓ scripts.jsのビルドと、setEvent.js もこれでビルドされる.

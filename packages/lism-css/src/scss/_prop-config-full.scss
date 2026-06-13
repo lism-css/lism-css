@@ -4,6 +4,7 @@ $props: (
     utilities: (
       'inherit': 'inherit',
     ),
+    bp: 1,
   ),
   'fz': (
     prop: 'font-size',
@@ -39,6 +40,7 @@ $props: (
       'normal': 'var(--fw--normal)',
       'bold': 'var(--fw--bold)',
     ),
+    bp: 1,
   ),
   'ff': (
     prop: 'font-family',
@@ -47,12 +49,14 @@ $props: (
       'accent': 'var(--ff--accent)',
       'mono': 'var(--ff--mono)',
     ),
+    bp: 1,
   ),
   'fs': (
     prop: 'font-style',
     utilities: (
       'italic': 'italic',
     ),
+    bp: 1,
   ),
   'lh': (
     prop: 'line-height',
@@ -60,6 +64,7 @@ $props: (
     ),
     exUtility: (
     ),
+    bp: 1,
   ),
   'lts': (
     prop: 'letter-spacing',
@@ -69,7 +74,7 @@ $props: (
       'l': 'var(--lts--l)',
       'xl': 'var(--lts--xl)',
     ),
-    bp: 0,
+    bp: 1,
   ),
   'ta': (
     prop: 'text-align',
@@ -78,12 +83,14 @@ $props: (
       'left': 'left',
       'right': 'right',
     ),
+    bp: 1,
   ),
   'td': (
     prop: 'text-decoration',
     utilities: (
       'none': 'none',
     ),
+    bp: 1,
   ),
   'tt': (
     prop: 'text-transform',
@@ -91,6 +98,7 @@ $props: (
       'upper': 'uppercase',
       'lower': 'lowercase',
     ),
+    bp: 1,
   ),
   'd': (
     prop: 'display',
@@ -115,12 +123,14 @@ $props: (
       'pp': 'var(--o--pp)',
       'ppp': 'var(--o--ppp)',
     ),
+    bp: 1,
   ),
   'v': (
     prop: 'visibility',
     utilities: (
       'hidden': 'hidden',
     ),
+    bp: 1,
   ),
   'ov': (
     prop: 'overflow',
@@ -129,6 +139,7 @@ $props: (
       'auto': 'auto',
       'clip': 'clip',
     ),
+    bp: 1,
   ),
   'ov-x': (
     prop: 'overflow-x',
@@ -137,6 +148,7 @@ $props: (
       'auto': 'auto',
       'scroll': 'scroll',
     ),
+    bp: 1,
   ),
   'ov-y': (
     prop: 'overflow-y',
@@ -145,6 +157,7 @@ $props: (
       'auto': 'auto',
       'scroll': 'scroll',
     ),
+    bp: 1,
   ),
   'ar': (
     prop: 'aspect-ratio',
@@ -211,6 +224,14 @@ $props: (
     ),
     isVar: 1,
   ),
+  'sz': (
+    prop: 'inline-size',
+    bp: 1,
+  ),
+  'min-sz': (
+    prop: 'min-inline-size',
+    bp: 1,
+  ),
   'max-sz': (
     prop: 'max-inline-size',
     utilities: (
@@ -222,18 +243,41 @@ $props: (
     ),
     exUtility: (
     ),
+    bp: 1,
+  ),
+  'bsz': (
+    prop: 'block-size',
+    bp: 1,
+  ),
+  'min-bsz': (
+    prop: 'min-block-size',
+    bp: 1,
+  ),
+  'max-bsz': (
+    prop: 'max-block-size',
+    bp: 1,
+  ),
+  'bg': (
+    prop: 'background',
+    bp: 1,
+  ),
+  'bgi': (
+    prop: 'background-image',
+    bp: 1,
   ),
   'bgr': (
     prop: 'background-repeat',
     utilities: (
       'no-repeat': 'no-repeat',
     ),
+    bp: 1,
   ),
   'bgp': (
     prop: 'background-position',
     utilities: (
       'center': 'center',
     ),
+    bp: 1,
   ),
   'bgsz': (
     prop: 'background-size',
@@ -241,6 +285,7 @@ $props: (
       'cover': 'cover',
       'contain': 'contain',
     ),
+    bp: 1,
   ),
   'bgc': (
     prop: 'background-color',
@@ -257,6 +302,7 @@ $props: (
         'background-color': 'inherit',
       ),
     ),
+    bp: 1,
     alwaysVar: 1,
   ),
   'c': (
@@ -273,6 +319,7 @@ $props: (
         'color': 'inherit',
       ),
     ),
+    bp: 1,
     alwaysVar: 1,
   ),
   'bd': (
@@ -280,6 +327,7 @@ $props: (
     utilities: (
       'none': 'none',
     ),
+    bp: 1,
   ),
   'bds': (
     prop: '--bds',
@@ -307,6 +355,46 @@ $props: (
     bp: 1,
     isVar: 1,
   ),
+  'bd-x': (
+    prop: 'border-inline',
+    bp: 1,
+  ),
+  'bd-y': (
+    prop: 'border-block',
+    bp: 1,
+  ),
+  'bd-s': (
+    prop: 'border-inline-start',
+    bp: 1,
+  ),
+  'bd-e': (
+    prop: 'border-inline-end',
+    bp: 1,
+  ),
+  'bd-bs': (
+    prop: 'border-block-start',
+    bp: 1,
+  ),
+  'bd-be': (
+    prop: 'border-block-end',
+    bp: 1,
+  ),
+  'bd-t': (
+    prop: 'border-top',
+    bp: 1,
+  ),
+  'bd-b': (
+    prop: 'border-bottom',
+    bp: 1,
+  ),
+  'bd-l': (
+    prop: 'border-left',
+    bp: 1,
+  ),
+  'bd-r': (
+    prop: 'border-right',
+    bp: 1,
+  ),
   'bdrs': (
     prop: 'border-radius',
     utilities: (
@@ -320,6 +408,38 @@ $props: (
     ),
     bp: 1,
     alwaysVar: 1,
+  ),
+  'bdrs-tl': (
+    prop: 'border-top-left-radius',
+    bp: 1,
+  ),
+  'bdrs-tr': (
+    prop: 'border-top-right-radius',
+    bp: 1,
+  ),
+  'bdrs-br': (
+    prop: 'border-bottom-right-radius',
+    bp: 1,
+  ),
+  'bdrs-bl': (
+    prop: 'border-bottom-left-radius',
+    bp: 1,
+  ),
+  'bdrs-ss': (
+    prop: 'border-start-start-radius',
+    bp: 1,
+  ),
+  'bdrs-se': (
+    prop: 'border-start-end-radius',
+    bp: 1,
+  ),
+  'bdrs-es': (
+    prop: 'border-end-start-radius',
+    bp: 1,
+  ),
+  'bdrs-ee': (
+    prop: 'border-end-end-radius',
+    bp: 1,
   ),
   'bxsh': (
     prop: 'box-shadow',
@@ -352,6 +472,7 @@ $props: (
       '99': '99',
       '-1': '-1',
     ),
+    bp: 1,
   ),
   't': (
     prop: 'top',
@@ -360,6 +481,7 @@ $props: (
       '50\\%': '50%',
       '100\\%': '100%',
     ),
+    bp: 1,
   ),
   'l': (
     prop: 'left',
@@ -368,6 +490,7 @@ $props: (
       '50\\%': '50%',
       '100\\%': '100%',
     ),
+    bp: 1,
   ),
   'r': (
     prop: 'right',
@@ -376,6 +499,7 @@ $props: (
       '50\\%': '50%',
       '100\\%': '100%',
     ),
+    bp: 1,
   ),
   'b': (
     prop: 'bottom',
@@ -384,12 +508,38 @@ $props: (
       '50\\%': '50%',
       '100\\%': '100%',
     ),
+    bp: 1,
   ),
   'i': (
     prop: 'inset',
     utilities: (
       '0': '0%',
     ),
+    bp: 1,
+  ),
+  'i-x': (
+    prop: 'inset-inline',
+    bp: 1,
+  ),
+  'i-y': (
+    prop: 'inset-block',
+    bp: 1,
+  ),
+  'i-s': (
+    prop: 'inset-inline-start',
+    bp: 1,
+  ),
+  'i-e': (
+    prop: 'inset-inline-end',
+    bp: 1,
+  ),
+  'i-bs': (
+    prop: 'inset-block-start',
+    bp: 1,
+  ),
+  'i-be': (
+    prop: 'inset-block-end',
+    bp: 1,
   ),
   'p': (
     prop: 'padding',
@@ -451,18 +601,146 @@ $props: (
   ),
   'ps': (
     prop: 'padding-inline-start',
+    utilities: (
+      '5': 'var(--s5)',
+      '10': 'var(--s10)',
+      '15': 'var(--s15)',
+      '20': 'var(--s20)',
+      '25': 'var(--s25)',
+      '30': 'var(--s30)',
+      '35': 'var(--s35)',
+      '40': 'var(--s40)',
+      '50': 'var(--s50)',
+      '60': 'var(--s60)',
+      '70': 'var(--s70)',
+      '80': 'var(--s80)',
+    ),
     bp: 1,
   ),
   'pe': (
     prop: 'padding-inline-end',
+    utilities: (
+      '5': 'var(--s5)',
+      '10': 'var(--s10)',
+      '15': 'var(--s15)',
+      '20': 'var(--s20)',
+      '25': 'var(--s25)',
+      '30': 'var(--s30)',
+      '35': 'var(--s35)',
+      '40': 'var(--s40)',
+      '50': 'var(--s50)',
+      '60': 'var(--s60)',
+      '70': 'var(--s70)',
+      '80': 'var(--s80)',
+    ),
     bp: 1,
   ),
   'pbs': (
     prop: 'padding-block-start',
+    utilities: (
+      '5': 'var(--s5)',
+      '10': 'var(--s10)',
+      '15': 'var(--s15)',
+      '20': 'var(--s20)',
+      '25': 'var(--s25)',
+      '30': 'var(--s30)',
+      '35': 'var(--s35)',
+      '40': 'var(--s40)',
+      '50': 'var(--s50)',
+      '60': 'var(--s60)',
+      '70': 'var(--s70)',
+      '80': 'var(--s80)',
+    ),
     bp: 1,
   ),
   'pbe': (
     prop: 'padding-block-end',
+    utilities: (
+      '5': 'var(--s5)',
+      '10': 'var(--s10)',
+      '15': 'var(--s15)',
+      '20': 'var(--s20)',
+      '25': 'var(--s25)',
+      '30': 'var(--s30)',
+      '35': 'var(--s35)',
+      '40': 'var(--s40)',
+      '50': 'var(--s50)',
+      '60': 'var(--s60)',
+      '70': 'var(--s70)',
+      '80': 'var(--s80)',
+    ),
+    bp: 1,
+  ),
+  'pl': (
+    prop: 'padding-left',
+    utilities: (
+      '5': 'var(--s5)',
+      '10': 'var(--s10)',
+      '15': 'var(--s15)',
+      '20': 'var(--s20)',
+      '25': 'var(--s25)',
+      '30': 'var(--s30)',
+      '35': 'var(--s35)',
+      '40': 'var(--s40)',
+      '50': 'var(--s50)',
+      '60': 'var(--s60)',
+      '70': 'var(--s70)',
+      '80': 'var(--s80)',
+    ),
+    bp: 1,
+  ),
+  'pr': (
+    prop: 'padding-right',
+    utilities: (
+      '5': 'var(--s5)',
+      '10': 'var(--s10)',
+      '15': 'var(--s15)',
+      '20': 'var(--s20)',
+      '25': 'var(--s25)',
+      '30': 'var(--s30)',
+      '35': 'var(--s35)',
+      '40': 'var(--s40)',
+      '50': 'var(--s50)',
+      '60': 'var(--s60)',
+      '70': 'var(--s70)',
+      '80': 'var(--s80)',
+    ),
+    bp: 1,
+  ),
+  'pt': (
+    prop: 'padding-top',
+    utilities: (
+      '5': 'var(--s5)',
+      '10': 'var(--s10)',
+      '15': 'var(--s15)',
+      '20': 'var(--s20)',
+      '25': 'var(--s25)',
+      '30': 'var(--s30)',
+      '35': 'var(--s35)',
+      '40': 'var(--s40)',
+      '50': 'var(--s50)',
+      '60': 'var(--s60)',
+      '70': 'var(--s70)',
+      '80': 'var(--s80)',
+    ),
+    bp: 1,
+  ),
+  'pb': (
+    prop: 'padding-bottom',
+    utilities: (
+      '5': 'var(--s5)',
+      '10': 'var(--s10)',
+      '15': 'var(--s15)',
+      '20': 'var(--s20)',
+      '25': 'var(--s25)',
+      '30': 'var(--s30)',
+      '35': 'var(--s35)',
+      '40': 'var(--s40)',
+      '50': 'var(--s50)',
+      '60': 'var(--s60)',
+      '70': 'var(--s70)',
+      '80': 'var(--s80)',
+    ),
     bp: 1,
   ),
   'm': (
@@ -529,6 +807,18 @@ $props: (
   'ms': (
     prop: 'margin-inline-start',
     utilities: (
+      '5': 'var(--s5)',
+      '10': 'var(--s10)',
+      '15': 'var(--s15)',
+      '20': 'var(--s20)',
+      '25': 'var(--s25)',
+      '30': 'var(--s30)',
+      '35': 'var(--s35)',
+      '40': 'var(--s40)',
+      '50': 'var(--s50)',
+      '60': 'var(--s60)',
+      '70': 'var(--s70)',
+      '80': 'var(--s80)',
       'auto': 'auto',
     ),
     bp: 1,
@@ -536,6 +826,18 @@ $props: (
   'me': (
     prop: 'margin-inline-end',
     utilities: (
+      '5': 'var(--s5)',
+      '10': 'var(--s10)',
+      '15': 'var(--s15)',
+      '20': 'var(--s20)',
+      '25': 'var(--s25)',
+      '30': 'var(--s30)',
+      '35': 'var(--s35)',
+      '40': 'var(--s40)',
+      '50': 'var(--s50)',
+      '60': 'var(--s60)',
+      '70': 'var(--s70)',
+      '80': 'var(--s80)',
       'auto': 'auto',
     ),
     bp: 1,
@@ -563,7 +865,91 @@ $props: (
   'mbe': (
     prop: 'margin-block-end',
     utilities: (
+      '5': 'var(--s5)',
+      '10': 'var(--s10)',
+      '15': 'var(--s15)',
+      '20': 'var(--s20)',
+      '25': 'var(--s25)',
+      '30': 'var(--s30)',
+      '35': 'var(--s35)',
+      '40': 'var(--s40)',
+      '50': 'var(--s50)',
+      '60': 'var(--s60)',
+      '70': 'var(--s70)',
+      '80': 'var(--s80)',
       'auto': 'auto',
+    ),
+    bp: 1,
+  ),
+  'ml': (
+    prop: 'margin-left',
+    utilities: (
+      '5': 'var(--s5)',
+      '10': 'var(--s10)',
+      '15': 'var(--s15)',
+      '20': 'var(--s20)',
+      '25': 'var(--s25)',
+      '30': 'var(--s30)',
+      '35': 'var(--s35)',
+      '40': 'var(--s40)',
+      '50': 'var(--s50)',
+      '60': 'var(--s60)',
+      '70': 'var(--s70)',
+      '80': 'var(--s80)',
+    ),
+    bp: 1,
+  ),
+  'mr': (
+    prop: 'margin-right',
+    utilities: (
+      '5': 'var(--s5)',
+      '10': 'var(--s10)',
+      '15': 'var(--s15)',
+      '20': 'var(--s20)',
+      '25': 'var(--s25)',
+      '30': 'var(--s30)',
+      '35': 'var(--s35)',
+      '40': 'var(--s40)',
+      '50': 'var(--s50)',
+      '60': 'var(--s60)',
+      '70': 'var(--s70)',
+      '80': 'var(--s80)',
+    ),
+    bp: 1,
+  ),
+  'mt': (
+    prop: 'margin-top',
+    utilities: (
+      '5': 'var(--s5)',
+      '10': 'var(--s10)',
+      '15': 'var(--s15)',
+      '20': 'var(--s20)',
+      '25': 'var(--s25)',
+      '30': 'var(--s30)',
+      '35': 'var(--s35)',
+      '40': 'var(--s40)',
+      '50': 'var(--s50)',
+      '60': 'var(--s60)',
+      '70': 'var(--s70)',
+      '80': 'var(--s80)',
+    ),
+    bp: 1,
+  ),
+  'mb': (
+    prop: 'margin-bottom',
+    utilities: (
+      '5': 'var(--s5)',
+      '10': 'var(--s10)',
+      '15': 'var(--s15)',
+      '20': 'var(--s20)',
+      '25': 'var(--s25)',
+      '30': 'var(--s30)',
+      '35': 'var(--s35)',
+      '40': 'var(--s40)',
+      '50': 'var(--s50)',
+      '60': 'var(--s60)',
+      '70': 'var(--s70)',
+      '80': 'var(--s80)',
     ),
     bp: 1,
   ),
@@ -591,6 +977,42 @@ $props: (
     ),
     bp: 1,
   ),
+  'cg': (
+    prop: 'column-gap',
+    utilities: (
+      '5': 'var(--s5)',
+      '10': 'var(--s10)',
+      '15': 'var(--s15)',
+      '20': 'var(--s20)',
+      '25': 'var(--s25)',
+      '30': 'var(--s30)',
+      '35': 'var(--s35)',
+      '40': 'var(--s40)',
+      '50': 'var(--s50)',
+      '60': 'var(--s60)',
+      '70': 'var(--s70)',
+      '80': 'var(--s80)',
+    ),
+    bp: 1,
+  ),
+  'rg': (
+    prop: 'row-gap',
+    utilities: (
+      '5': 'var(--s5)',
+      '10': 'var(--s10)',
+      '15': 'var(--s15)',
+      '20': 'var(--s20)',
+      '25': 'var(--s25)',
+      '30': 'var(--s30)',
+      '35': 'var(--s35)',
+      '40': 'var(--s40)',
+      '50': 'var(--s50)',
+      '60': 'var(--s60)',
+      '70': 'var(--s70)',
+      '80': 'var(--s80)',
+    ),
+    bp: 1,
+  ),
   'cols': (
     prop: '--cols',
     bp: 1,
@@ -600,6 +1022,10 @@ $props: (
     prop: '--rows',
     bp: 1,
     isVar: 1,
+  ),
+  'fxf': (
+    prop: 'flex-flow',
+    bp: 1,
   ),
   'fxw': (
     prop: 'flex-wrap',
@@ -629,12 +1055,14 @@ $props: (
     utilities: (
       '1': '1',
     ),
+    bp: 1,
   ),
   'fxsh': (
     prop: 'flex-shrink',
     utilities: (
       '0': '0',
     ),
+    bp: 1,
   ),
   'fxb': (
     prop: 'flex-basis',
@@ -670,6 +1098,14 @@ $props: (
     ),
     bp: 1,
   ),
+  'gac': (
+    prop: 'grid-auto-columns',
+    bp: 1,
+  ),
+  'gar': (
+    prop: 'grid-auto-rows',
+    bp: 1,
+  ),
   'ga': (
     prop: 'grid-area',
     utilities: (
@@ -689,6 +1125,22 @@ $props: (
     utilities: (
       '1\\/-1': '1 / -1',
     ),
+    bp: 1,
+  ),
+  'gcs': (
+    prop: 'grid-column-start',
+    bp: 1,
+  ),
+  'gce': (
+    prop: 'grid-column-end',
+    bp: 1,
+  ),
+  'grs': (
+    prop: 'grid-row-start',
+    bp: 1,
+  ),
+  'gre': (
+    prop: 'grid-row-end',
     bp: 1,
   ),
   'ai': (
@@ -746,6 +1198,7 @@ $props: (
       'center': 'center',
       'end': 'end',
     ),
+    bp: 1,
   ),
   'pc': (
     prop: 'place-content',
@@ -754,6 +1207,7 @@ $props: (
       'center': 'center',
       'end': 'end',
     ),
+    bp: 1,
   ),
   'aslf': (
     prop: 'align-self',
@@ -763,6 +1217,7 @@ $props: (
       'end': 'end',
       'stretch': 'stretch',
     ),
+    bp: 1,
   ),
   'jslf': (
     prop: 'justify-self',
@@ -772,6 +1227,7 @@ $props: (
       'end': 'end',
       'stretch': 'stretch',
     ),
+    bp: 1,
   ),
   'pslf': (
     prop: 'place-self',
@@ -780,6 +1236,7 @@ $props: (
       'center': 'center',
       'end': 'end',
     ),
+    bp: 1,
   ),
   'order': (
     prop: 'order',
@@ -795,12 +1252,14 @@ $props: (
     utilities: (
       'anywhere': 'anywhere',
     ),
+    bp: 1,
   ),
   'whs': (
     prop: 'white-space',
     utilities: (
       'nowrap': 'nowrap',
     ),
+    bp: 1,
   ),
   'float': (
     prop: 'float',
@@ -808,18 +1267,21 @@ $props: (
       'left': 'left',
       'right': 'right',
     ),
+    bp: 1,
   ),
   'clear': (
     prop: 'clear',
     utilities: (
       'both': 'both',
     ),
+    bp: 1,
   ),
   'iso': (
     prop: 'isolation',
     utilities: (
       'isolate': 'isolate',
     ),
+    bp: 1,
   ),
   'wm': (
     prop: 'writing-mode',

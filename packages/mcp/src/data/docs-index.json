@@ -372,7 +372,7 @@
       "bdi",
       "bgs"
     ],
-    "snippet": "単一のCSSプロパティに対応するユーティリティクラス。-{prop}:{value} の形式（例: -g:5, -p:20, -fz:l）。HTMLでは class=\"-g:5\" のように使用。レスポンシブ対応の -_{bp} 形式もサポート。BPカラムは sm/md 対応が ✔、lg まで対応が ✔ lg、非対応が - で示される。"
+    "snippet": "単一のCSSプロパティに対応するユーティリティクラス。-{prop}:{value} の形式（例: -g:5, -p:20, -fz:l）。HTMLでは class=\"-g:5\" のように使用。レスポンシブ対応の -_{bp} 形式もサポート。BPカラムは sm/md/lg 対応が ✔、非対応が - で示される。"
   },
   {
     "sourcePath": "responsive.mdx",
@@ -381,7 +381,7 @@
     "category": "guide",
     "headings": ["レスポンシブ対応", "プロパティによってCSSの実装の中身が少し異なります", "コンテナクエリ・メディアクエリ", "ブレイクポイント"],
     "keywords": ["responsive", "レスポンシブ", "ブレークポイント", "breakpoint", "コンテナクエリ", "container query", "sm", "md", "lg", "alwaysVar"],
-    "snippet": "CSS変数とクラスを組み合わせたレスポンシブ対応。コンテナクエリをデフォルトで採用。p={[20, 30, 40]} のような配列記法で sm/md ブレークポイントの値を指定。CSSの実装パターンは「ブレークポイントごとに上書き」と「常に変数で参照（alwaysVar）」の2種類がある。ブレークポイントは sm(480px) / md(800px) / lg(1120px) の3段階。d・g・cols・グリッド系（gtc/gta/gtr/ga/gc/gr）は lg までサポート。"
+    "snippet": "CSS変数とクラスを組み合わせたレスポンシブ対応。コンテナクエリをデフォルトで採用。p={[20, 30, 40, 50]} のような配列記法で sm/md/lg ブレークポイントの値を指定。CSSの実装パターンは「ブレークポイントごとに上書き」と「常に変数で参照（alwaysVar）」の2種類がある。ブレークポイントは sm(480px) / md(800px) / lg(1120px) の3段階で、レスポンシブ対応の Property Class は標準で lg まですべてサポート。"
   },
   {
     "sourcePath": "reset-css.mdx",
@@ -399,6 +399,8 @@
     "category": "guide",
     "headings": [
       "@layerをオフにする",
+      "全部入りビルド（full.css）を使う",
+      "isFullMode",
       "SCSS でのカスタマイズ",
       "上書き可能な変数",
       "基本フォーマット",
@@ -414,8 +416,8 @@
       "手動で追加する方法",
       "SCSSファイルへの追加上書き"
     ],
-    "keywords": ["customize", "カスタマイズ", "設定", "config", "テーマ", "theme", "SCSS"],
-    "snippet": "Lism CSS のトークンやスタイルのカスタマイズ方法について解説。SCSSの変数上書きやlism.config.jsでのコンポーネント挙動のカスタマイズが可能。"
+    "keywords": ["customize", "カスタマイズ", "設定", "config", "テーマ", "theme", "SCSS", "full.css", "isFullMode", "purge"],
+    "snippet": "Lism CSS のトークンやスタイルのカスタマイズ方法について解説。SCSSの変数上書きやlism.config.jsでのコンポーネント挙動のカスタマイズが可能。CSS purge との併用を前提とした全部入りビルド full.css（@layerなし版は full_no_layer.css）と、コンポーネント出力を full 設定に揃える isFullMode についても解説。"
   },
   {
     "sourcePath": "utility-class.mdx",

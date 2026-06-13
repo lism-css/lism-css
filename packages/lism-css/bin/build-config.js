@@ -14,7 +14,11 @@ const __dirname = path.dirname(__filename);
  * @returns {Object} ユーティリティ値のオブジェクト
  */
 function generateUtilities(propConfig, TOKENS) {
-  const { utils = {}, presets = [], token = '', tokenClass = 0 } = propConfig;
+  const { utils = {}, presets: basePresets = [], token = '', tokenClass = 0 } = propConfig;
+
+  // config 側の配列はマージ後も参照共有されているため、複製してから使う。
+  // （直接 push すると、同一プロセスで複数回ビルドした時に presets が重複する）
+  const presets = [...basePresets];
   const utilities = {};
 
   // tokenをクラス化するのであれば presetsへ追加
@@ -126,9 +130,9 @@ function generatePropScss(propKey, propConfig, TOKENS) {
 /**
  * メイン処理
  */
-export default async function buildConfig(CONFIG) {
+export default async function buildConfig(CONFIG, outputFileName = '_prop-config.scss') {
   const { tokens: TOKENS, props: PROPS } = CONFIG;
-  console.log('_prop-config.scssを生成中...');
+  console.log(`${outputFileName}を生成中...`);
 
   let scssContent = '';
 
@@ -148,8 +152,8 @@ export default async function buildConfig(CONFIG) {
   scssContent += '\n);\n';
 
   // ファイルに出力
-  const outputPath = path.join(__dirname, '../src/scss/_prop-config.scss');
+  const outputPath = path.join(__dirname, '../src/scss', outputFileName);
   await fs.promises.writeFile(outputPath, scssContent, 'utf8');
 
-  console.log(`✅ _prop-config.scssを生成しました: ${outputPath}`);
+  console.log(`✅ ${outputFileName}を生成しました: ${outputPath}`);
 }
