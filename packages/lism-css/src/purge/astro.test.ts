@@ -151,4 +151,38 @@ describe('lismPurgeAstro (Astro)', () => {
       await rm(dir, { recursive: true, force: true });
     }
   });
+
+  test('CSS sourcemap 参照を削除し、古い .css.map を削除する', async () => {
+    const dir = await setupDist({
+      '_astro/main.AAAA1111.css': `.l--stack{display:flex}.l--unused{display:grid}\n/*# sourceMappingURL=main.AAAA1111.css.map */`,
+      '_astro/main.AAAA1111.css.map': JSON.stringify({ version: 3, file: 'main.AAAA1111.css' }),
+      'index.html': `<link rel="stylesheet" href="/_astro/main.AAAA1111.css"><div class="l--stack"></div>`,
+    });
+    try {
+      const integration = lismPurgeAstro({
+        known: { classes: new Set(['l--stack', 'l--unused']), attrs: new Set() },
+      });
+      const hook = getBuildDoneHook(integration);
+      const logger = { info: vi.fn(), warn: vi.fn(), error: vi.fn() };
+      await hook({
+        dir: pathToFileURL(dir + '/'),
+        logger,
+        pages: [],
+        routes: [],
+      } as never);
+
+      const entries = await readdir(join(dir, '_astro'));
+      const cssFiles = entries.filter((f) => f.endsWith('.css'));
+      expect(cssFiles).toHaveLength(1);
+
+      const cssAfter = await readFile(join(dir, '_astro', cssFiles[0]), 'utf8');
+      expect(cssAfter).toContain('l--stack');
+      expect(cssAfter).not.toContain('l--unused');
+      expect(cssAfter).not.toContain('sourceMappingURL');
+      expect(entries.some((f) => f.endsWith('.css.map'))).toBe(false);
+      expect(await fileExists(join(dir, '_astro/main.AAAA1111.css.map'))).toBe(false);
+    } finally {
+      await rm(dir, { recursive: true, force: true });
+    }
+  });
 });

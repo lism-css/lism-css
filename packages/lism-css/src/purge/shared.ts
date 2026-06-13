@@ -27,6 +27,12 @@ export function resolveKnownSelectors(known: KnownOption | undefined): KnownSele
   return known ?? loadDefaultKnownSelectors();
 }
 
+const CSS_SOURCE_MAPPING_URL_RE = /\/\*[#@]\s*sourceMappingURL=.*?\*\//gs;
+
+export function stripCssSourceMappingUrl(css: string): string {
+  return css.replace(CSS_SOURCE_MAPPING_URL_RE, '').trimEnd();
+}
+
 export function formatReport(beforeBytes: number, afterBytes: number): string {
   const saved = beforeBytes - afterBytes;
   const pct = ((saved / beforeBytes) * 100).toFixed(1);

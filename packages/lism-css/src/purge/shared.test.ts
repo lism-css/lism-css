@@ -1,5 +1,5 @@
 import { describe, test, expect } from 'vitest';
-import { LISM_CSS_SIGNATURE, resolveKnownSelectors } from './shared';
+import { LISM_CSS_SIGNATURE, resolveKnownSelectors, stripCssSourceMappingUrl } from './shared';
 
 describe('LISM_CSS_SIGNATURE', () => {
   test('Lism の Property Class (.-x) にマッチする', () => {
@@ -50,5 +50,17 @@ describe('resolveKnownSelectors', () => {
 
   test('関数が undefined を返す場合はそのまま undefined', () => {
     expect(resolveKnownSelectors(() => undefined)).toBeUndefined();
+  });
+});
+
+describe('stripCssSourceMappingUrl', () => {
+  test('CSS の sourceMappingURL コメントを削除する', () => {
+    const css = '.-p\\:20{padding:20px}\n/*# sourceMappingURL=main.css.map */\n';
+    expect(stripCssSourceMappingUrl(css)).toBe('.-p\\:20{padding:20px}');
+  });
+
+  test('sourceMappingURL がなければ末尾以外は変えない', () => {
+    const css = '/*! lism-css */\n.-p\\:20{padding:20px}';
+    expect(stripCssSourceMappingUrl(css)).toBe(css);
   });
 });

@@ -109,4 +109,4 @@ CSS: 28100 → 13200 bytes (-14900 / -53.0%)
 - 動的にクラスを組み立てる場合は、必ず完全なクラス名（`` `-p:${size}` `` など部分文字列にしない）を残すか、`safelist` に追加してください。
 - パージ対象は Lism CSS が出力した CSS に限定されます。自前で書いた CSS や他ライブラリの CSS は変更されません。
 - Tailwind CSS など、別のフレームワークの purge 機能とは独立して動作します。
-- CSS の sourcemap には対応していません。パージはルールを削除するため、既存の sourcemap とは行がずれます。CSS の sourcemap が必要な場合はパージを無効にしてください（本番ビルドでは通常、CSS の sourcemap は無効です）。
+- CSSのsourcemapには対応していません。パージはルールを削除するため、既存のsourcemapとは行がずれます。誤ったsourcemapを参照しないよう、purge後のCSSから`sourceMappingURL`コメントを削除し、古い`.css.map`も削除します。CSSのsourcemapが必要な場合はパージを無効にしてください。

@@ -3,7 +3,7 @@ import { basename, dirname } from 'node:path/posix';
 import type { Plugin } from 'vite';
 import { extractLismClasses } from './extract';
 import { purgeLismCss } from './core';
-import { LISM_CSS_SIGNATURE, formatReport, resolveKnownSelectors } from './shared';
+import { LISM_CSS_SIGNATURE, formatReport, resolveKnownSelectors, stripCssSourceMappingUrl } from './shared';
 import type { LismPurgeOptions } from './options';
 
 export type { LismPurgeOptions } from './options';
@@ -95,15 +95,17 @@ export function lismPurge(options: LismPurgeOptions = {}): Plugin {
       let beforeBytes = 0;
       let afterBytes = 0;
       const renames: RenameInfo[] = [];
+      const staleCssMaps = new Set<string>();
 
       for (const key of cssTargets) {
         const asset = bundle[key];
         if (asset.type !== 'asset') continue;
         const source = decodeAssetSource(asset.source);
         if (!LISM_CSS_SIGNATURE.test(source)) continue;
-        const purged = purgeLismCss(source, { used, safelist: options.safelist, known });
+        const purged = stripCssSourceMappingUrl(purgeLismCss(source, { used, safelist: options.safelist, known }));
         if (purged === source) continue;
         asset.source = purged;
+        staleCssMaps.add(`${asset.fileName}.map`);
         const rename = getRenamedCssFileName(asset.fileName, purged);
         if (rename) {
           asset.fileName = rename.newName;
@@ -113,6 +115,12 @@ export function lismPurge(options: LismPurgeOptions = {}): Plugin {
         }
         beforeBytes += source.length;
         afterBytes += purged.length;
+      }
+
+      if (staleCssMaps.size > 0) {
+        for (const [key, asset] of Object.entries(bundle)) {
+          if (asset.type === 'asset' && staleCssMaps.has(asset.fileName)) delete bundle[key];
+        }
       }
 
       if (renames.length > 0) {

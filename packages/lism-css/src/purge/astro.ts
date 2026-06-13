@@ -6,7 +6,7 @@ import type { AstroIntegration } from 'astro';
 import { extractLismClasses } from './extract';
 import { purgeLismCss, type KnownSelectorSet, type SafelistEntry } from './core';
 import type { LismPurgeOptions } from './options';
-import { LISM_CSS_SIGNATURE, formatReport, resolveKnownSelectors } from './shared';
+import { LISM_CSS_SIGNATURE, formatReport, resolveKnownSelectors, stripCssSourceMappingUrl } from './shared';
 
 export type { LismPurgeOptions } from './options';
 
@@ -40,6 +40,18 @@ function shortContentHash(content: string): string {
   return createHash('sha256').update(content).digest('hex').slice(0, 8);
 }
 
+function isNoEntryError(error: unknown): boolean {
+  return typeof error === 'object' && error !== null && 'code' in error && error.code === 'ENOENT';
+}
+
+async function deleteStaleCssMap(file: string): Promise<void> {
+  try {
+    await unlink(`${file}.map`);
+  } catch (error) {
+    if (!isNoEntryError(error)) throw error;
+  }
+}
+
 interface RenameInfo {
   oldBase: string;
   newBase: string;
@@ -58,7 +70,7 @@ async function purgeCssFiles(
   for (const file of cssFiles) {
     const source = await readFile(file, 'utf8');
     if (!LISM_CSS_SIGNATURE.test(source)) continue;
-    const purged = purgeLismCss(source, { used, safelist, known });
+    const purged = stripCssSourceMappingUrl(purgeLismCss(source, { used, safelist, known }));
     if (purged === source) continue;
 
     beforeBytes += source.length;
@@ -83,6 +95,7 @@ async function purgeCssFiles(
       // ハッシュ無しの CSS は in-place 上書き
       await writeFile(file, purged, 'utf8');
     }
+    await deleteStaleCssMap(file);
   }
   return { renames, beforeBytes, afterBytes };
 }

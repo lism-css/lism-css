@@ -154,6 +154,37 @@ describe('lismPurge (Vite)', () => {
     expect(manifest['index.html'].css).toEqual([cssKey]);
   });
 
+  test('CSS sourcemap 参照を削除し、古い .css.map asset を削除する', async () => {
+    const plugin = lismPurge({ known });
+    const bundle: Record<string, unknown> = {
+      'assets/main-AAAA1111.css': {
+        type: 'asset',
+        fileName: 'assets/main-AAAA1111.css',
+        source: '.-p\\:20{padding:var(--s20)}.-m\\:10{margin:var(--s10)}\n/*# sourceMappingURL=main-AAAA1111.css.map */',
+      },
+      'assets/main-AAAA1111.css.map': {
+        type: 'asset',
+        fileName: 'assets/main-AAAA1111.css.map',
+        source: JSON.stringify({ version: 3, file: 'main-AAAA1111.css' }),
+      },
+      'index.html': {
+        type: 'asset',
+        fileName: 'index.html',
+        source: '<link rel="stylesheet" href="/assets/main-AAAA1111.css"><div class="-p:20"></div>',
+      },
+    };
+    const ctx: AnyPluginCtx = { info: vi.fn(), warn: vi.fn() };
+    await getGenerateBundle(plugin).call(ctx as never, {} as never, bundle as never, false);
+
+    expect(bundle['assets/main-AAAA1111.css']).toBeUndefined();
+    expect(bundle['assets/main-AAAA1111.css.map']).toBeUndefined();
+    const cssKey = Object.keys(bundle).find((key) => key.endsWith('.css')) as string;
+    const cssAsset = bundle[cssKey] as { source: string };
+    expect(cssAsset.source).toContain('-p\\:20');
+    expect(cssAsset.source).not.toContain('-m\\:10');
+    expect(cssAsset.source).not.toContain('sourceMappingURL');
+  });
+
   test('Vite build でも purge 後の CSS 内容に応じて hash 付きファイル名が変わる', async () => {
     const dirP = await setupViteProject('-p:20');
     const dirM = await setupViteProject('-m:10');

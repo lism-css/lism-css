@@ -109,4 +109,4 @@ CSS: 28100 → 13200 bytes (-14900 / -53.0%)
 - When you build class names dynamically, either keep them as a complete literal (`` `-p:${size}` `` and similar partial strings are not enough) or add them to `safelist`.
 - Only CSS emitted by Lism CSS is purged. Your own CSS and styles from other libraries are left untouched.
 - The plugin runs independently of other framework purgers such as Tailwind CSS.
-- CSS sourcemaps are not supported. Purge removes rules, so an existing sourcemap no longer lines up. Disable purge if you need CSS sourcemaps (production builds usually ship CSS without sourcemaps anyway).
+- CSS sourcemaps are not supported. Purge removes rules, so an existing sourcemap no longer lines up. To avoid stale mappings, purge strips `sourceMappingURL` comments from processed CSS and removes old `.css.map` files. Disable purge if you need CSS sourcemaps.
