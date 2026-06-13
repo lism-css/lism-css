@@ -3,7 +3,7 @@ import type { Responsive, ResponsiveFor, MakeResponsive } from './ResponsiveProp
 
 // ============================================================
 // Responsive（公開型）: デフォルト広告は base / sm / md / lg のみ。
-// xl / xs は LismBreakpointRegistry を declare global で拡張したときだけ解禁される。
+// xl / xs は BreakpointRegistry を declare module 'lism-css' で拡張したときだけ解禁される。
 // （このファイルでは augmentation を行わないため、常にデフォルト広告で検証している）
 // ============================================================
 
@@ -33,13 +33,13 @@ describe('Responsive（デフォルト広告: base/sm/md/lg）', () => {
     expectTypeOf(value).toExtend<Responsive<string>>();
   });
 
-  it('xl オブジェクトキーはデフォルトでは許可されない（要 LismBreakpointRegistry 拡張）', () => {
+  it('xl オブジェクトキーはデフォルトでは許可されない（要 BreakpointRegistry 拡張）', () => {
     // @ts-expect-error xl はデフォルト広告に含まれない
     const value: Responsive<string> = { base: 'a', xl: 'b' };
     expectTypeOf(value).toExtend<Responsive<string>>();
   });
 
-  it('xs オブジェクトキーはデフォルトでは許可されない（要 LismBreakpointRegistry 拡張）', () => {
+  it('xs オブジェクトキーはデフォルトでは許可されない（要 BreakpointRegistry 拡張）', () => {
     // @ts-expect-error xs はデフォルト広告に含まれない
     const value: Responsive<string> = { base: 'a', xs: 'b' };
     expectTypeOf(value).toExtend<Responsive<string>>();
@@ -113,7 +113,7 @@ describe('Responsive（デフォルト広告: base/sm/md/lg）', () => {
 
 // ============================================================
 // ResponsiveFor: 広告キーを明示的に受け取るコア型。
-// declare global を使わずに「+xl / +xs を解禁した状態」を検証する。
+// module augmentation を使わずに「+xl / +xs を解禁した状態」を検証する。
 // （位置は固定 [base, sm, md, lg, xl]。xs は配列記法には含めない）
 // ============================================================
 

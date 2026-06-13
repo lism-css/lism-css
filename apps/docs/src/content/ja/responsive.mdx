@@ -158,17 +158,18 @@ Smartphone ──┬── Tablet (Portrait) ──┬── Tablet (Landscape) 
 
 TypeScript の型・補完がデフォルトで提示・許可するブレイクポイントキーは `base` / `sm` / `md` / `lg` です（配列記法も最大4要素）。`xl` / `xs` は、デフォルトでは CSS が出力されないため型でも提示しません。
 
-`xl` / `xs` を有効化したうえで型でも使いたい場合は、プロジェクト側の型定義ファイルで `LismBreakpointRegistry` を拡張してください。
+`xl` / `xs` を有効化したうえで型でも使いたい場合は、プロジェクト側の型定義ファイルで `BreakpointRegistry` を拡張してください。
 
 ```ts
 // 例: src/lism.d.ts
-declare global {
-  interface LismBreakpointRegistry {
+import 'lism-css';
+
+declare module 'lism-css' {
+  interface BreakpointRegistry {
     xl: true; // 配列の5要素目 [.., xl] と { xl: ... } を解禁
     xs: true; // { xs: ... } を解禁（xs は配列記法では書けない）
   }
 }
-export {};
 ```
 
 :::info

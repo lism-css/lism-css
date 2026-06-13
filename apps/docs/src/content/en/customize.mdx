@@ -164,7 +164,7 @@ The default `$breakpoints` map includes `xs` and `xl` keys alongside `sm`, `md`,
 
 Defining a size for `xs` in `$breakpoints` acts as a **global switch**: all Property Classes with range-based responsive support (`bp: 1`) will automatically start outputting `xs` responsive classes (such as `-p_xs`) — no per-prop configuration is needed.
 
-This also allows you to specify `xs` in object notation on the component side (to also show `xs` in type completion, you need to extend `LismBreakpointRegistry` as described on the [Responsive page](/en/docs/responsive/#breakpoints-offered-by-type-completion)).
+This also allows you to specify `xs` in object notation on the component side (to also show `xs` in type completion, you need to extend `BreakpointRegistry` as described on the [Responsive page](/en/docs/responsive/#breakpoints-offered-by-type-completion)).
 
 ```jsx
 <Box p={{ base: 20, xs: 10, sm: 30 }} />

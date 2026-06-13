@@ -41,8 +41,12 @@
   ],
   "type": "module",
   "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "exports": {
-    ".": "./dist/index.js",
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
     "./config.js": "./config.js",
     "./config": {
       "import": "./dist/config/index.js",

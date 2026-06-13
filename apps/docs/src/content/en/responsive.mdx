@@ -158,17 +158,18 @@ To use breakpoint classes with non-responsive properties, additional [SCSS confi
 
 The TypeScript types and autocompletion defaults to offering `base`, `sm`, `md`, and `lg` as valid breakpoint keys (and array notation accepts up to 4 elements). `xl` and `xs` are not included by default because no CSS is output for them.
 
-If you want to enable `xl` or `xs` and also have them appear in type completion, extend `LismBreakpointRegistry` in a type declaration file in your project:
+If you want to enable `xl` or `xs` and also have them appear in type completion, extend `BreakpointRegistry` in a type declaration file in your project:
 
 ```ts
 // Example: src/lism.d.ts
-declare global {
-  interface LismBreakpointRegistry {
+import 'lism-css';
+
+declare module 'lism-css' {
+  interface BreakpointRegistry {
     xl: true; // Enables the 5th array element [.., xl] and { xl: ... }
     xs: true; // Enables { xs: ... } (xs cannot be used in array notation)
   }
 }
-export {};
 ```
 
 :::info
@@ -190,4 +191,3 @@ To use these breakpoints in your own SCSS files:
   // Your styles for md sizes(width >= 800px) ...
 }
 ```
-
