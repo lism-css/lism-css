@@ -1,7 +1,13 @@
 import { describe, expectTypeOf, it } from 'vitest';
-import type { Responsive, MakeResponsive } from './ResponsiveProps';
+import type { Responsive, ResponsiveFor, MakeResponsive } from './ResponsiveProps';
 
-describe('Responsive', () => {
+// ============================================================
+// Responsive（公開型）: デフォルト広告は base / sm / md / lg のみ。
+// xl / xs は BreakpointRegistry を declare module 'lism-css' で拡張したときだけ解禁される。
+// （このファイルでは augmentation を行わないため、常にデフォルト広告で検証している）
+// ============================================================
+
+describe('Responsive（デフォルト広告: base/sm/md/lg）', () => {
   it('単一値を受け付ける', () => {
     const value: Responsive<'s' | 'm' | 'l'> = 'm';
     expectTypeOf(value).toExtend<Responsive<'s' | 'm' | 'l'>>();
@@ -17,14 +23,25 @@ describe('Responsive', () => {
     expectTypeOf(value).toExtend<Responsive<'s' | 'm' | 'l'>>();
   });
 
-  it('全てのブレイクポイントキーを使用できる', () => {
+  it('デフォルトで使えるブレイクポイントキーは base/sm/md/lg', () => {
     const value: Responsive<string> = {
       base: 'base-value',
       sm: 'sm-value',
       md: 'md-value',
       lg: 'lg-value',
-      xl: 'xl-value',
     };
+    expectTypeOf(value).toExtend<Responsive<string>>();
+  });
+
+  it('xl オブジェクトキーはデフォルトでは許可されない（要 BreakpointRegistry 拡張）', () => {
+    // @ts-expect-error xl はデフォルト広告に含まれない
+    const value: Responsive<string> = { base: 'a', xl: 'b' };
+    expectTypeOf(value).toExtend<Responsive<string>>();
+  });
+
+  it('xs オブジェクトキーはデフォルトでは許可されない（要 BreakpointRegistry 拡張）', () => {
+    // @ts-expect-error xs はデフォルト広告に含まれない
+    const value: Responsive<string> = { base: 'a', xs: 'b' };
     expectTypeOf(value).toExtend<Responsive<string>>();
   });
 
@@ -48,24 +65,22 @@ describe('Responsive', () => {
     expectTypeOf(object).toExtend<Responsive<boolean>>();
   });
 
-  it('配列は最大5要素まで許可される', () => {
+  it('配列はデフォルトで最大4要素まで許可される（[base, sm, md, lg]）', () => {
     const one: Responsive<string> = ['a'];
     const two: Responsive<string> = ['a', 'b'];
     const three: Responsive<string> = ['a', 'b', 'c'];
     const four: Responsive<string> = ['a', 'b', 'c', 'd'];
-    const five: Responsive<string> = ['a', 'b', 'c', 'd', 'e'];
 
     expectTypeOf(one).toExtend<Responsive<string>>();
     expectTypeOf(two).toExtend<Responsive<string>>();
     expectTypeOf(three).toExtend<Responsive<string>>();
     expectTypeOf(four).toExtend<Responsive<string>>();
-    expectTypeOf(five).toExtend<Responsive<string>>();
   });
 
-  it('6要素以上の配列は型エラーになる', () => {
-    // @ts-expect-error 6要素以上は許可されない
-    const six: Responsive<string> = ['a', 'b', 'c', 'd', 'e', 'f'];
-    expectTypeOf(six).toExtend<Responsive<string>>();
+  it('5要素目（xl）はデフォルトでは型エラーになる', () => {
+    // @ts-expect-error 5要素目(xl)はデフォルト広告に含まれない
+    const five: Responsive<string> = ['a', 'b', 'c', 'd', 'e'];
+    expectTypeOf(five).toExtend<Responsive<string>>();
   });
 
   it('配列形式で null を含めてブレークポイントをスキップできる', () => {
@@ -93,6 +108,53 @@ describe('Responsive', () => {
     // @ts-expect-error オブジェクト形式での null は許可されない
     const value: Responsive<string> = { base: 'a', md: null };
     expectTypeOf(value).toExtend<Responsive<string>>();
+  });
+});
+
+// ============================================================
+// ResponsiveFor: 広告キーを明示的に受け取るコア型。
+// module augmentation を使わずに「+xl / +xs を解禁した状態」を検証する。
+// （位置は固定 [base, sm, md, lg, xl]。xs は配列記法には含めない）
+// ============================================================
+
+describe('ResponsiveFor（xl/xs オプトインの検証）', () => {
+  it('デフォルト相当（sm/md/lg）では xl オブジェクトキーは不可', () => {
+    type R = ResponsiveFor<string, 'sm' | 'md' | 'lg'>;
+    // @ts-expect-error xl は広告キーに含まれない
+    const value: R = { base: 'a', xl: 'b' };
+    expectTypeOf(value).toExtend<R>();
+  });
+
+  it('+xl: オブジェクトで xl を指定でき、配列も5要素まで許可される', () => {
+    type R = ResponsiveFor<string, 'sm' | 'md' | 'lg' | 'xl'>;
+    const obj: R = { base: 'a', sm: 'b', md: 'c', lg: 'd', xl: 'e' };
+    const arr5: R = ['a', 'b', 'c', 'd', 'e'];
+    expectTypeOf(obj).toExtend<R>();
+    expectTypeOf(arr5).toExtend<R>();
+  });
+
+  it('+xs: オブジェクトで xs を指定できる', () => {
+    type R = ResponsiveFor<string, 'sm' | 'md' | 'lg' | 'xs'>;
+    const obj: R = { base: 'a', xs: 'b', sm: 'c' };
+    expectTypeOf(obj).toExtend<R>();
+  });
+
+  it('+xs: xs は配列記法には含まれないため、配列は依然4要素まで', () => {
+    type R = ResponsiveFor<string, 'sm' | 'md' | 'lg' | 'xs'>;
+    const arr4: R = ['a', 'b', 'c', 'd'];
+    expectTypeOf(arr4).toExtend<R>();
+
+    // @ts-expect-error xs を解禁しても配列は4要素まで（5要素目=xlは未解禁）
+    const arr5: R = ['a', 'b', 'c', 'd', 'e'];
+    expectTypeOf(arr5).toExtend<R>();
+  });
+
+  it('+xl+xs: xl/xs 両方のオブジェクトキーと5要素配列が許可される', () => {
+    type R = ResponsiveFor<string, 'sm' | 'md' | 'lg' | 'xl' | 'xs'>;
+    const obj: R = { base: 'a', xs: 'b', sm: 'c', md: 'd', lg: 'e', xl: 'f' };
+    const arr5: R = ['a', 'b', 'c', 'd', 'e'];
+    expectTypeOf(obj).toExtend<R>();
+    expectTypeOf(arr5).toExtend<R>();
   });
 });
 

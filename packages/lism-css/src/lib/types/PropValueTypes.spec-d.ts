@@ -187,7 +187,7 @@ describe('ResponsivePropValueTypes', () => {
   it('bp が有効なプロパティのみが含まれる', () => {
     type Props = ResponsivePropValueTypes;
 
-    // bp: 1 または bp: 'lg' 等が設定されているプロパティ（レスポンシブ対応）
+    // bp: 1 または bp: ['sm', 'md'] 等が設定されているプロパティ（レスポンシブ対応）
     type FzExists = 'fz' extends keyof Props ? true : false;
     type DExists = 'd' extends keyof Props ? true : false;
     type WExists = 'w' extends keyof Props ? true : false;

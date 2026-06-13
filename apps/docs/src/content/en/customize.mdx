@@ -71,7 +71,6 @@ The variables defined in `lism-css/scss/_setting.scss` can be overridden via `@u
 | Variable | Purpose |
 |----------|---------|
 | `$breakpoints` | Breakpoint value definitions |
-| `$common_support_bp` | Breakpoints commonly supported across key Property Classes (default: `'lg'`) |
 | `$is_container_query` | Whether to use container queries (`1` = container query / `0` = media query) |
 | `$default_important` | Whether to add `!important` to Property Classes by default (`0` / `1`) |
 | `$props` | Per-Property Class output configuration |
@@ -88,7 +87,6 @@ After defining your overrides, import `lism-css/scss/main.scss` to apply the cus
   $breakpoints: (
     'sm': '400px', // individual keys can be overridden
   ),
-  $common_support_bp: 'md', // 'sm' | 'md' | 'lg' (default: 'lg'; smaller values reduce the CSS size)
   $is_container_query: 0,   // 1 = container query / 0 = media query
   $default_important: 1,    // 0 / 1
   $props: (
@@ -123,8 +121,8 @@ For each Property Class, you can adjust the output range or add utility classes.
       // Disable breakpoint-responsive classes for 'h'
     ),
     'p': (
-      bp: 'md',
-      // Limit breakpoint support classes for 'p' to md size
+      bp: ('sm', 'md'),
+      // Limit breakpoint support classes for 'p' to sm / md only
       utilities: (
         'box': '2em',
       ),
@@ -135,6 +133,48 @@ For each Property Class, you can adjust the output range or add utility classes.
 
 @use '../path-to/node_modules/lism-css/scss/main';
 ```
+
+The following values are accepted for `bp`:
+
+| `bp` value | Meaning |
+|-----------|---------|
+| `1` | Output for every breakpoint with a size defined in `$breakpoints` |
+| `0` | Do not output any breakpoint-responsive classes |
+| `('sm', 'md')`, etc. (list) | Output only the explicitly listed breakpoints |
+
+The list form is for cases where you want to restrict a specific prop to certain breakpoints. When specifying this in `lism.config.js`, use an array: `bp: ['sm', 'md']`. Note that including a disabled breakpoint (one with no size defined in `$breakpoints`, such as `xs` or `xl` by default) in the list will produce no output for that entry, and a warning will be emitted at build time.
+
+
+### Enabling xs / xl breakpoints
+
+The default `$breakpoints` map includes `xs` and `xl` keys alongside `sm`, `md`, and `lg`, but their size is `0` (disabled), so they produce no output. To use `xs` or `xl`, define its size in `$breakpoints`:
+
+```scss
+@use '../path-to/node_modules/lism-css/scss/setting' with (
+  $breakpoints: (
+    'xs': '360px', // Enable xs
+    'xl': '1440px', // Enable xl
+  )
+);
+
+@use '../path-to/node_modules/lism-css/scss/main';
+```
+
+Any breakpoint with a size in `$breakpoints` becomes active: all Property Classes with responsive support (`bp: 1`) will automatically start outputting responsive classes for that breakpoint (such as `-p_xs` / `-p_xl`) — no per-prop configuration is needed.
+
+This also allows you to specify `xs` / `xl` in object notation on the component side (to also show them in type completion, you need to extend `BreakpointRegistry` as described on the [Responsive page](/en/docs/responsive/#breakpoints-offered-by-type-completion)).
+
+```jsx
+<Box p={{ base: 20, xs: 10, sm: 30 }} />
+```
+
+:::info
+[`full.css`](#full-buildfullcss) already includes classes with `xs` enabled (using a provisional value of 360px).
+:::
+
+:::warning
+Enabling `xs` / `xl` and other breakpoints adds a block for each active breakpoint to every Property Class that uses `bp: 1`, which increases the CSS size. **This feature is designed to be used together with CSS purge.** If you are not using purge, consider using the list form of `bp` (e.g., `bp: ('sm', 'md')`) to restrict which breakpoints are output on a per-prop basis.
+:::
 
 
 ### Notes on SCSS compilation

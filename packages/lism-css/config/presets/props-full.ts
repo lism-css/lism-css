@@ -8,7 +8,7 @@ type FullPropKey = { [K in PropKey]: (typeof PROPS)[K] extends { isVar: 1 } ? ne
 
 /**
  * full.css 用の props オーバーライド設定（defaults/props.ts への差分のみ）。
- * isVar 系を除く全 props の BP サポートを有効化する（上限は $common_support_bp = lg に従う）。
+ * isVar 系を除く全 props の BP サポートを有効化する（出力BPは $breakpoints の有効BPに従う）。
  *
  * キーを列挙せず defaults から導出しているのは、props 追加時に
  * このファイルの追従漏れで full.css から抜け落ちるのを防ぐため。

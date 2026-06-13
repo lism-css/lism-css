@@ -1,4 +1,4 @@
-import { TOKENS, PROPS, BREAK_POINTS } from '../../../config/index';
+import { TOKENS, PROPS } from '../../../config/index';
 import type { WithArbitraryString, ArrayElement, ExtractArrayValues, ExtractObjectKeys, ExtractPropertyValue } from './utils';
 import type { MakeResponsive } from './ResponsiveProps';
 
@@ -71,20 +71,17 @@ type PropValueType<T> =
 // ブレイクポイント対応の判定
 // ============================================================
 
-/** bp で指定できるブレークポイント名（'lg' など個別指定用） */
-type BreakpointName = (typeof BREAK_POINTS)[number];
-
 /**
  * bp プロパティでレスポンシブ（配列・オブジェクト形式）が有効かを判定
  * - bp 未設定 / bp: 0 → false
- * - bp: 1 → 全 BP からユーティリティクラス生成
- * - bp: 'lg' 等 → 指定 BP 以降のみ（配列形式の型は bp: 1 と同様に許可）
+ * - bp: 1 → 有効 BP すべてからユーティリティクラス生成
+ * - bp: ['sm', 'md'] 等のリスト形式 → 列挙した BP のみ出力（型は bp: 1 と同様に許可）
  */
 type HasBreakpointSupport<T> = [ExtractPropertyValue<T, 'bp'>] extends [never]
   ? false
   : ExtractPropertyValue<T, 'bp'> extends 0
     ? false
-    : ExtractPropertyValue<T, 'bp'> extends 1 | BreakpointName
+    : ExtractPropertyValue<T, 'bp'> extends 1 | readonly unknown[]
       ? true
       : false;
 

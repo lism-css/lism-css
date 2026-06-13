@@ -41,6 +41,33 @@ For details on which properties support breakpoint switching by default, refer t
 
 You can also toggle responsive support per property by [customizing via SCSS files](/en/docs/customize/).
 
+
+## Array notation and object notation
+
+Responsive values can be specified in two ways: **array notation** and **object notation**.
+
+```jsx
+<Lism p={[20, 40, 50]} />                  // Array notation
+<Lism p={{ base: 20, sm: 40, md: 50 }} />  // Object notation
+```
+
+In array notation, each position is **permanently fixed** to `[base, sm, md, lg, xl]` (index 0 = `base`, 1 = `sm`, 2 = `md`, 3 = `lg`, 4 = `xl`). To skip a breakpoint in the middle, use `null`.
+
+```jsx
+<Lism p={[20, null, 50]} />  // base and md only
+```
+
+:::warning
+`xs` cannot be specified with array notation.  
+(Because positions are fixed, inserting `xs` at the front would silently shift the meaning of every existing array entry.)  
+Use **object notation** if you need `xs`.
+
+```jsx
+<Lism p={{ base: 20, xs: 10, sm: 30 }} />
+```
+:::
+
+
 ### The CSS implementation varies by property
 
 There are two patterns:
@@ -124,6 +151,31 @@ You can check which properties are responsive in the BP column of the [Property 
 To use breakpoint classes with non-responsive properties, additional [SCSS configuration customization](/en/docs/customize/) is required.
 :::
 
+`xs` and `xl` are also reserved keys, but they are undefined (disabled) by default and produce no output. See [Customize](/en/docs/customize/) to learn how to enable them.
+
+
+### Breakpoints offered by type completion
+
+The TypeScript types and autocompletion defaults to offering `base`, `sm`, `md`, and `lg` as valid breakpoint keys (and array notation accepts up to 4 elements). `xl` and `xs` are not included by default because no CSS is output for them.
+
+If you want to enable `xl` or `xs` and also have them appear in type completion, extend `BreakpointRegistry` in a type declaration file in your project:
+
+```ts
+// Example: src/lism.d.ts
+import 'lism-css';
+
+declare module 'lism-css' {
+  interface BreakpointRegistry {
+    xl: true; // Enables the 5th array element [.., xl] and { xl: ... }
+    xs: true; // Enables { xs: ... } (xs cannot be used in array notation)
+  }
+}
+```
+
+:::info
+This only widens what types and autocompletion suggest. To actually output the corresponding CSS, you also need to define sizes for `xs` / `xl` in `$breakpoints` (see [Customize](/en/docs/customize/)).
+:::
+
 
 <Spacer h="20"></Spacer>
 
@@ -139,4 +191,3 @@ To use these breakpoints in your own SCSS files:
   // Your styles for md sizes(width >= 800px) ...
 }
 ```
-

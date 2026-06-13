@@ -41,6 +41,16 @@ describe('getBpData', () => {
       });
     });
 
+    test('5要素の配列は base, sm, md, lg, xl に対応する（位置は固定・xs は配列に含まれない）', () => {
+      expect(getBpData(['a', 'b', 'c', 'd', 'e'])).toEqual({
+        base: 'a',
+        sm: 'b',
+        md: 'c',
+        lg: 'd',
+        xl: 'e',
+      });
+    });
+
     test('空配列を渡すと空オブジェクトを返す', () => {
       expect(getBpData([])).toEqual({});
     });
@@ -79,6 +89,15 @@ describe('getBpData', () => {
 
     test('smキーのみを持つオブジェクトはそのまま返す', () => {
       expect(getBpData({ sm: 'flex' })).toEqual({ sm: 'flex' });
+    });
+
+    test('xsキーを持つオブジェクトはBP指定とみなしそのまま返す（オブジェクト記法でのみ xs を指定可能）', () => {
+      const bpObj = { base: '20', xs: '10', sm: '30' };
+      expect(getBpData(bpObj)).toEqual(bpObj);
+    });
+
+    test('xsキーのみを持つオブジェクトもBP指定とみなす（方向オブジェクト扱いにしない）', () => {
+      expect(getBpData({ xs: '10' })).toEqual({ xs: '10' });
     });
 
     test('mdキーのみを持つオブジェクトはそのまま返す', () => {

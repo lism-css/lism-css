@@ -6,7 +6,13 @@
 */
 @use './prop-config-full' as full;
 @use './setting' with (
-  $props: full.$props
+  $props: full.$props,
+  // full.css は xs を有効化したスーパーセット（purge 併用前提）。
+  // main.css は xs:0(無効) のままなので、ここでのみ xs クエリサイズを定義する。
+  // 仮値 360px（確定値は #367 のBP見直しと調整）。
+  $breakpoints: (
+      'xs': '360px',
+    )
 );
 @use './with_layer';
 @use './props/index' as props;

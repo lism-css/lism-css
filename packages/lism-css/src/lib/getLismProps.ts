@@ -30,7 +30,8 @@ interface PropConfig {
   utils?: Record<string, string>;
   shorthands?: Record<string, string>;
   isVar?: number;
-  bp?: 0 | 1 | 'sm' | 'md' | 'lg' | 'xl';
+  // 0 / 1（有効BPすべて）/ ['sm','md'] 等（出力する BP の明示リスト）
+  bp?: 0 | 1 | readonly ('xs' | 'sm' | 'md' | 'lg' | 'xl')[];
   alwaysVar?: number;
   important?: number;
   exUtility?: Record<string, unknown>;
@@ -194,7 +195,7 @@ export class LismPropsData {
       propConfig = Object.assign({}, propConfig, this._propConfig[propName]);
     }
 
-    // ブレイクポイント指定用のオブジェクト{base,sm,md,lg,xl}かどうかをチェック
+    // ブレイクポイント指定用のオブジェクト{base,xs,sm,md,lg,xl}かどうかをチェック
     const { base: baseValue, ...bpValues } = getBpData(propVal);
 
     // bp 非対応プロパティに BP 指定された場合、開発環境でのみ警告する。

@@ -261,6 +261,17 @@ describe('getLismProps', () => {
       expect(result.className).toContain('-d_sm');
       expect(result.style?.['--d_sm']).toBe('none');
     });
+
+    test('xs はオブジェクト記法で指定でき、-{prop}_xs クラスと --{prop}_xs 変数を出力する', () => {
+      const result = getLismProps({
+        p: { base: '20', xs: '10', sm: '30' },
+      } as unknown as LismProps);
+      expect(result.className).toContain('-p:20');
+      expect(result.className).toContain('-p_xs');
+      expect(result.className).toContain('-p_sm');
+      expect(result.style?.['--p_xs']).toBe('var(--s10)');
+      expect(result.style?.['--p_sm']).toBe('var(--s30)');
+    });
   });
 
   describe('bp 非対応プロパティへの BP 指定 警告', () => {

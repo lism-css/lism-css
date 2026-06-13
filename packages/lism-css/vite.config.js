@@ -30,6 +30,7 @@ function deleteDuplicateDir(filePath) {
 
 // ファイルパスは大文字・小文字まで一致しないと Vercel でこけるので注意。
 const entries = {
+  index: resolve(__dirname, 'src/index.ts'),
   'components/index': resolve(__dirname, 'src/components/index.ts'),
 
   // full.css 用 preset。bin/cli.mjs が dist から読むため単独エントリとして出力する
@@ -59,6 +60,7 @@ export default defineConfig({
     setupFiles: ['./vitest.setup.ts'],
     typecheck: {
       enabled: true,
+      exclude: ['**/node_modules/**', '**/.git/**', '**/ResponsiveProps.module-augmentation.spec-d.ts'],
     },
   },
   build: {
