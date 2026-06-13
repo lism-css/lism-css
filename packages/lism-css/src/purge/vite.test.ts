@@ -117,6 +117,43 @@ describe('lismPurge (Vite)', () => {
     expect((bundle['assets/app.js'] as { code: string }).code).not.toContain('main-AAAA1111.css');
   });
 
+  test('リネーム時に chunk.viteMetadata.importedCss と manifest.json の参照も同期する', async () => {
+    const plugin = lismPurge({ known });
+    const importedCss = new Set<string>(['assets/main-AAAA1111.css']);
+    const bundle: Record<string, unknown> = {
+      'assets/main-AAAA1111.css': {
+        type: 'asset',
+        fileName: 'assets/main-AAAA1111.css',
+        source: '.-p\\:20{padding:var(--s20)}.-m\\:10{margin:var(--s10)}',
+      },
+      'assets/app.js': {
+        type: 'chunk',
+        fileName: 'assets/app.js',
+        code: 'const cls = "-p:20";',
+        // Vite が manifest / HTML の css 参照を生成する元データ
+        viteMetadata: { importedCss, importedAssets: new Set<string>() },
+      },
+      '.vite/manifest.json': {
+        type: 'asset',
+        fileName: '.vite/manifest.json',
+        source: JSON.stringify({ 'index.html': { file: 'assets/app.js', css: ['assets/main-AAAA1111.css'] } }),
+      },
+    };
+    const ctx: AnyPluginCtx = { info: vi.fn(), warn: vi.fn() };
+    await getGenerateBundle(plugin).call(ctx as never, {} as never, bundle as never, false);
+
+    const cssKey = Object.keys(bundle).find((key) => key.endsWith('.css')) as string;
+    expect(cssKey).toMatch(/^assets\/main-[a-f0-9]{8}\.css$/);
+
+    // importedCss が旧名を捨てて新名に差し替わっている
+    expect(importedCss.has('assets/main-AAAA1111.css')).toBe(false);
+    expect(importedCss.has(cssKey)).toBe(true);
+
+    // manifest.json の css 参照も新名に同期している
+    const manifest = JSON.parse((bundle['.vite/manifest.json'] as { source: string }).source);
+    expect(manifest['index.html'].css).toEqual([cssKey]);
+  });
+
   test('Vite build でも purge 後の CSS 内容に応じて hash 付きファイル名が変わる', async () => {
     const dirP = await setupViteProject('-p:20');
     const dirM = await setupViteProject('-m:10');

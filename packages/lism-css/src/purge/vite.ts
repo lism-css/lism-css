@@ -54,6 +54,19 @@ function replaceRenamedReferences(content: string, renames: RenameInfo[]): strin
   return out;
 }
 
+// chunk.viteMetadata.importedCss の旧ファイル名を新名へ差し替える。
+// manifest (`.vite/manifest.json`) や HTML の `<link>` 参照は Vite がこの Set を元に生成するため、
+// 本プラグインより後に vite:manifest / vite:build-html が走る順序でも、リネーム後の名前が反映される。
+function updateImportedCss(importedCss: Set<string> | undefined, renames: RenameInfo[]): void {
+  if (!importedCss) return;
+  for (const { oldName, newName } of renames) {
+    if (importedCss.has(oldName)) {
+      importedCss.delete(oldName);
+      importedCss.add(newName);
+    }
+  }
+}
+
 export function lismPurge(options: LismPurgeOptions = {}): Plugin {
   return {
     name: 'lism-css:purge',
@@ -106,6 +119,7 @@ export function lismPurge(options: LismPurgeOptions = {}): Plugin {
         for (const asset of Object.values(bundle)) {
           if (asset.type === 'chunk') {
             asset.code = replaceRenamedReferences(asset.code, renames);
+            updateImportedCss(asset.viteMetadata?.importedCss, renames);
           } else if (REF_EXT.test(asset.fileName)) {
             asset.source = replaceRenamedReferences(decodeAssetSource(asset.source), renames);
           }
