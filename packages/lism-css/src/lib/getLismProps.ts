@@ -30,8 +30,8 @@ interface PropConfig {
   utils?: Record<string, string>;
   shorthands?: Record<string, string>;
   isVar?: number;
-  // 0 / 1（範囲）/ 'lg' 等（上限指定の範囲）/ ['sm','md'] 等（出力する BP の明示リスト）
-  bp?: 0 | 1 | 'xs' | 'sm' | 'md' | 'lg' | 'xl' | readonly ('xs' | 'sm' | 'md' | 'lg' | 'xl')[];
+  // 0 / 1（有効BPすべて）/ ['sm','md'] 等（出力する BP の明示リスト）
+  bp?: 0 | 1 | readonly ('xs' | 'sm' | 'md' | 'lg' | 'xl')[];
   alwaysVar?: number;
   important?: number;
   exUtility?: Record<string, unknown>;

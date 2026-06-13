@@ -115,12 +115,11 @@ function generatePropScss(propKey, propConfig, TOKENS) {
       // 1要素でも SCSS にリストとして解釈させるため末尾カンマを付与する: ['sm'] → ('sm',)
       const items = bp.map((b) => `'${b}'`).join(', ');
       scss += `    bp: (${items}${bp.length === 1 ? ',' : ''}),\n`;
-    } else if (typeof bp === 'string') {
-      // 文字列（上限指定の範囲。'lg' 等）はクオートして出力
-      scss += `    bp: '${bp}',\n`;
-    } else {
+    } else if (typeof bp === 'number') {
       // 数値（0 / 1）
       scss += `    bp: ${bp},\n`;
+    } else {
+      throw new TypeError(`[lism-css] prop "${propKey}": bp must be 0, 1, or an array of breakpoint names. Received ${JSON.stringify(bp)}.`);
     }
   }
   if (isVar !== undefined) {
