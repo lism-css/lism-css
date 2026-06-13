@@ -41,7 +41,7 @@ describe('getBpData', () => {
       });
     });
 
-    test('5要素の配列は base, sm, md, lg, xl に対応する（位置は恒久固定・xs は配列に含まれない）', () => {
+    test('5要素の配列は base, sm, md, lg, xl に対応する（位置は固定・xs は配列に含まれない）', () => {
       expect(getBpData(['a', 'b', 'c', 'd', 'e'])).toEqual({
         base: 'a',
         sm: 'b',

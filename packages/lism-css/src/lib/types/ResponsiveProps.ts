@@ -13,7 +13,7 @@ import type { LimitedArray } from './utils';
  * オブジェクトキー（`{ xl: ... }` など）と配列記法の最大長が連動して広がる。
  *
  * ランタイム（`getBpData` の解釈・配列記法の位置）は `base/sm/md/lg/xl` を
- * 恒久固定で保持しており、ここで切り替えるのは「型が提示・許可するキーの範囲」だけ。
+ * 固定で保持しており、ここで切り替えるのは「型が提示・許可するキーの範囲」だけ。
  * これにより「CSS は出力されないのに型では常に許される」xl の非対称を解消する。
  *
  * @example プロジェクト側の型定義ファイル（例: `src/lism.d.ts`）で xl / xs を解禁する
@@ -39,7 +39,7 @@ declare global {
 type AdvertisedBpKey = Extract<keyof LismBreakpointRegistry, string>;
 
 /**
- * 配列記法の位置順（`base` を除く）。位置は恒久固定の契約。
+ * 配列記法の位置順（`base` を除く）。位置は固定の契約（変更しない）。
  * `xs` はこの並びに含めない（= 配列記法では書けず、オブジェクト記法のみ）。
  */
 type ArrayBpSequence = ['sm', 'md', 'lg', 'xl'];
@@ -65,7 +65,7 @@ export type ResponsiveFor<T, Bp extends string> = T | LimitedArray<T | null, Arr
 /**
  * プロパティ値をレスポンシブ対応の型に変換するユーティリティ型
  *
- * 単一の値、配列形式（位置は `[base, sm, md, lg, xl]` で恒久固定）、
+ * 単一の値、配列形式（位置は `[base, sm, md, lg, xl]` で固定）、
  * ブレイクポイントオブジェクト形式のいずれかを受け付ける。
  * 許可されるキー・配列長はデフォルトで `base/sm/md/lg`（xl/xs は {@link LismBreakpointRegistry} の拡張で解禁）。
  *

@@ -36,7 +36,7 @@ export default function getBpData(propVal: BpDataInput): BpData {
   }
 
   if (Array.isArray(propVal)) {
-    // 配列記法のインデックス→キー対応は恒久固定（[base, sm, md, lg, xl]）。xs は含まれない。
+    // 配列記法のインデックス→キー対応は固定（[base, sm, md, lg, xl]）。xs は含まれない。
     const values: Record<string, BpValue> = {};
     propVal.forEach((r, i) => {
       values[`${BREAK_POINTS_ALL[i]}`] = r;
