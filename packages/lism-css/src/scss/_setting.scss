@@ -7,11 +7,17 @@ $is_container_query: 1 !default;
 $common_support_bp: 'lg' !default;
 
 $breakpoints: () !default;
+// 正準順序のベースマップ。サイズ 0 は「無効」（_query.scss の bp-up / bp-down がスキップする）。
+// xs / xl をあらかじめキーとして並べておくことで、ユーザーが `with ($breakpoints: ('xs': '360px'))`
+// のように上書きしても map.merge が「既存キーは位置を保ったまま値だけ更新」するため、
+// 末尾追加による順序崩れ（min-width カスケード順の崩壊）を防ぐ。
 $breakpoints: map.merge(
   (
+    'xs': 0,
     'sm': '480px',
     'md': '800px',
     'lg': '1120px',
+    'xl': 0,
   ),
   $breakpoints
 );

@@ -38,5 +38,11 @@ export const PROPS = arrayConvertToSet(structuredClone(props));
 export const TRAITS = traits;
 
 // ブレイクポイント
+// BREAK_POINTS / BREAK_POINTS_ALL は「配列記法のインデックス→キー対応」を表す恒久固定の契約。
+// 位置は base=0, sm=1, md=2, lg=3, xl=4 で固定し、xs は配列記法では書けない（後述の OBJ 側のみ）。
 export const BREAK_POINTS = ['sm', 'md', 'lg', 'xl'] as const;
 export const BREAK_POINTS_ALL = ['base', ...BREAK_POINTS] as const;
+
+// オブジェクト記法（{ base, xs, sm, ... }）で BP 指定とみなすキーの集合。
+// 配列記法には無い xs を含む（xs はオブジェクト記法でのみ指定可能）。
+export const BREAK_POINTS_OBJ = ['base', 'xs', 'sm', 'md', 'lg', 'xl'] as const;

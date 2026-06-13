@@ -145,9 +145,10 @@ $bp_support_list: (); // list
 
   // BPクラスを出力するプロパティのリストを作成
 
-  // $bp_support が 1 または 文字列（'sm','md','lg'などかどうか）
-  // Memo: 文字列がくるのは、ユーザーカスタマイズでプロパティ個別にサポートするブレイクポイントを変更したい時。
-  @if $bp_support == 1 or meta.type-of($bp_support) == string {
+  // $bp_support が 1（範囲）/ 文字列（上限指定の範囲）/ リスト（出力BPの明示指定）かどうか
+  // Memo: 文字列・リストがくるのは、ユーザーカスタマイズでプロパティ個別に
+  //       サポートするブレイクポイントを変更したい時。
+  @if $bp_support == 1 or meta.type-of($bp_support) == string or meta.type-of($bp_support) == list {
     $bp_support_list: list.append($bp_support_list, $key);
   }
 }
@@ -160,7 +161,10 @@ $bp_support_list: (); // list
  */
 // setting.$breakpoints のキーだけを抽出したリストを取得
 $bp_names: map.keys(setting.$breakpoints);
+// min-width カスケード順（xs ブロック < sm ブロック < ...）を保証するため、
+// xs を先頭に並べる。無効BP（サイズ0）は Step3 の query.bp-up でスキップされる。
 $bp_outputs: (
+  'xs': [],
   'sm': [],
   'md': [],
   'lg': [],
@@ -171,38 +175,60 @@ $bp_outputs: (
 @each $key in $bp_support_list {
   $prop_data: map.get(setting.$props, $key);
   $prop_bp_data: map.get($prop_data, bp);
-  $support_bp: setting.$common_support_bp;
 
-  @if (meta.type-of($prop_bp_data) == string) {
-    // サポートするブレイクポイントの上書き指定があればそれをセット
-    $support_bp: $prop_bp_data;
-  }
-  //  @else if ($prop_bp_data == 0) {
-  // 	// 0 が渡されれば、BPサポートを無効にする
-  // 	$output_bps: 0;
-  // }
-
-  $flag: true;
-  $i: 1;
-  @while $flag {
-    $bp: list.nth($bp_names, $i);
-
-    // mapから現在のリストを取得→リスト追加→更新されたリストを再びマージ
-    $_bp_list: map.get($bp_outputs, $bp);
-    $_bp_list: list.join($_bp_list, $key);
-    $bp_outputs: map.merge(
-      $bp_outputs,
-      (
-        $bp: $_bp_list,
-      )
-    );
-
-    // サポートするBPまで辿り着いたら終了
-    @if $bp == $support_bp or $i == list.length($bp_names) {
-      $flag: false;
+  @if (meta.type-of($prop_bp_data) == list) {
+    // ── リスト形式: 列挙された BP のみを exact 出力（範囲ではなく明示指定）──
+    @each $bp in $prop_bp_data {
+      @if not map.has-key($bp_outputs, $bp) {
+        @warn "[lism-css] prop '#{$key}': bp '#{$bp}' is not a known breakpoint key; skipped.";
+      } @else {
+        // サイズ0（=$breakpoints で無効）の BP を明示指定しても出力されないため警告する
+        $_bp_size: map.get(setting.$breakpoints, $bp);
+        @if (not $_bp_size) or ($_bp_size == 0) {
+          @warn "[lism-css] prop '#{$key}': bp '#{$bp}' has no breakpoint size (disabled in $breakpoints); skipped.";
+        }
+        $_bp_list: map.get($bp_outputs, $bp);
+        $_bp_list: list.join($_bp_list, $key);
+        $bp_outputs: map.merge(
+          $bp_outputs,
+          (
+            $bp: $_bp_list,
+          )
+        );
+      }
+    }
+  } @else {
+    // ── 範囲形式（1 または 'lg' 等の文字列）──
+    // セマンティクス: 有効な最小BP（xs 起点）〜 上限まで出力する。
+    // 上限は $common_support_bp、または 'lg' 等の文字列指定で個別に上書き。
+    // ($bp_names は ('xs','sm','md','lg','xl') の順なので、$i=1 起点で自然に xs から始まる)
+    $support_bp: setting.$common_support_bp;
+    @if (meta.type-of($prop_bp_data) == string) {
+      $support_bp: $prop_bp_data;
     }
 
-    $i: $i + 1;
+    $flag: true;
+    $i: 1;
+    @while $flag {
+      $bp: list.nth($bp_names, $i);
+
+      // mapから現在のリストを取得→リスト追加→更新されたリストを再びマージ
+      $_bp_list: map.get($bp_outputs, $bp);
+      $_bp_list: list.join($_bp_list, $key);
+      $bp_outputs: map.merge(
+        $bp_outputs,
+        (
+          $bp: $_bp_list,
+        )
+      );
+
+      // サポートするBPまで辿り着いたら終了
+      @if $bp == $support_bp or $i == list.length($bp_names) {
+        $flag: false;
+      }
+
+      $i: $i + 1;
+    }
   }
 }
 // @debug $bp_outputs;

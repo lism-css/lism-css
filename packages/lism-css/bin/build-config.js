@@ -110,7 +110,18 @@ function generatePropScss(propKey, propConfig, TOKENS) {
   }
 
   if (bp !== undefined) {
-    scss += `    bp: ${bp},\n`;
+    if (Array.isArray(bp)) {
+      // リスト形式（出力する BP の明示指定）を SCSS リストへ直列化: ['sm','md'] → ('sm', 'md')
+      // 1要素でも SCSS にリストとして解釈させるため末尾カンマを付与する: ['sm'] → ('sm',)
+      const items = bp.map((b) => `'${b}'`).join(', ');
+      scss += `    bp: (${items}${bp.length === 1 ? ',' : ''}),\n`;
+    } else if (typeof bp === 'string') {
+      // 文字列（上限指定の範囲。'lg' 等）はクオートして出力
+      scss += `    bp: '${bp}',\n`;
+    } else {
+      // 数値（0 / 1）
+      scss += `    bp: ${bp},\n`;
+    }
   }
   if (isVar !== undefined) {
     scss += `    isVar: ${isVar},\n`;

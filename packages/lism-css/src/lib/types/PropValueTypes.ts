@@ -79,12 +79,13 @@ type BreakpointName = (typeof BREAK_POINTS)[number];
  * - bp 未設定 / bp: 0 → false
  * - bp: 1 → 全 BP からユーティリティクラス生成
  * - bp: 'lg' 等 → 指定 BP 以降のみ（配列形式の型は bp: 1 と同様に許可）
+ * - bp: ['sm', 'md'] 等のリスト形式 → 列挙した BP のみ出力（型は bp: 1 と同様に許可）
  */
 type HasBreakpointSupport<T> = [ExtractPropertyValue<T, 'bp'>] extends [never]
   ? false
   : ExtractPropertyValue<T, 'bp'> extends 0
     ? false
-    : ExtractPropertyValue<T, 'bp'> extends 1 | BreakpointName
+    : ExtractPropertyValue<T, 'bp'> extends 1 | BreakpointName | readonly unknown[]
       ? true
       : false;
 
